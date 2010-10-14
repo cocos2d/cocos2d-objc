@@ -121,8 +121,17 @@ enum {
 	glDisable(GL_TEXTURE_2D);
 	glDisableClientState(GL_COLOR_ARRAY);
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+
+
+	// Draws the Box2d Data in RetinaDisplay
+	glPushMatrix();
+	
+	float scale = CC_CONTENT_SCALE_FACTOR();
+	glScalef( scale, scale, 1 );
 	
 	world->DrawDebugData();
+
+	glPopMatrix();
 	
 	// restore default GL states
 	glEnable(GL_TEXTURE_2D);
