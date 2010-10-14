@@ -161,7 +161,10 @@ do	{																							\
 	EAGLView *__glView = [EAGLView viewWithFrame:[window bounds]								\
 									pixelFormat:kEAGLColorFormatRGB565							\
 									depthFormat:0 /* GL_DEPTH_COMPONENT24_OES */				\
-							 preserveBackbuffer:NO];											\
+							 preserveBackbuffer:NO												\
+								  multiSampling:NO												\
+								numberOfSamples:0												\
+													];											\
 	[__director setOpenGLView:__glView];														\
 	[window addSubview:__glView];																\
 	[window makeKeyAndVisible];																	\

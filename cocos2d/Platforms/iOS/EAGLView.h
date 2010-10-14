@@ -116,8 +116,10 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 + (id) viewWithFrame:(CGRect)frame;
 /** creates an initializes an EAGLView with a frame, a color buffer format, and 0-bit depth buffer */
 + (id) viewWithFrame:(CGRect)frame pixelFormat:(NSString*)format;
+/** creates an initializes an EAGLView with a frame, a color buffer format, a depth buffer format, and whether or not the back buffer will be retained. Multisampling will be disabled. */
++ (id) viewWithFrame:(CGRect)frame pixelFormat:(NSString*)format depthFormat:(GLuint)depth preserveBackbuffer:(BOOL)retained;
 /** creates an initializes an EAGLView with a frame, a color buffer format, a depth buffer format and possibly a MSAA multisampling color and frame buffer */
-+ (id) viewWithFrame:(CGRect)frame pixelFormat:(NSString*)format depthFormat:(GLuint)depth preserveBackbuffer:(BOOL)retained multiSampling:(BOOL) sampling numberOfSamples:(unsigned int) nSamples;
++ (id) viewWithFrame:(CGRect)frame pixelFormat:(NSString*)format depthFormat:(GLuint)depth preserveBackbuffer:(BOOL)retained multiSampling:(BOOL)sampling numberOfSamples:(unsigned int)nSamples;
 
 
 /** Initializes an EAGLView with a frame and 0-bit depth buffer, and a RGB565 color buffer */
