@@ -45,6 +45,8 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	* Barney Mattox:
 		templates use rfc1034identifier patch.
 		XCode doxygen script runs with spaces in subdirectories.	
+	* Booyah (http://booyah.com/):
+		Added support for GL sharegroup in EAGLView
 	* Brian Hammond:
 		patches for Demos
 	* Bryan/Acceleroto (http://www.acceleroto.com):
