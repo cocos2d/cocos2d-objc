@@ -801,7 +801,7 @@
 - (CGPoint)convertToWorldSpace:(CGPoint)nodePoint
 {
 	CGPoint ret = ccpMult( nodePoint, CC_CONTENT_SCALE_FACTOR() );
-	ret = CGPointApplyAffineTransform(nodePoint, [self nodeToWorldTransform]);
+	ret = CGPointApplyAffineTransform(ret, [self nodeToWorldTransform]);
 	return ccpMult( ret, 1/CC_CONTENT_SCALE_FACTOR() );
 }
 

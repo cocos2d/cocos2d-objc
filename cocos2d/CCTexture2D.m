@@ -385,15 +385,14 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 	colorSpace = CGColorSpaceCreateDeviceGray();
 	data = calloc(height, width);
 	context = CGBitmapContextCreate(data, width, height, 8, width, colorSpace, kCGImageAlphaNone);
-	
+
+	CGColorSpaceRelease(colorSpace);
+
 	if( ! context ) {
 		free(data);
 		[self release];
 		return nil;
 	}
-	
-	CGColorSpaceRelease(colorSpace);
-	
 	
 	CGContextSetGrayFillColor(context, 1.0f, 1.0f);
 	CGContextTranslateCTM(context, 0.0f, height);
