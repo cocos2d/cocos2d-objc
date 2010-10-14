@@ -298,7 +298,13 @@ CGFloat	__ccContentScaleFactor = 1;
 		}
 		
 		// alloc and init the opengl view
-		openGLView_ = [[EAGLView alloc] initWithFrame:rect pixelFormat:pFormat depthFormat:depthFormat preserveBackbuffer:NO  multiSampling:NO numberOfSamples:0];
+		openGLView_ = [[EAGLView alloc] initWithFrame:rect
+										  pixelFormat:pFormat
+										  depthFormat:depthFormat
+								   preserveBackbuffer:NO 
+										   sharegroup:nil
+										multiSampling:NO
+									  numberOfSamples:0];
 		
 		// check if the view was alloced and initialized
 		NSAssert( openGLView_, @"FATAL: Could not alloc and init the OpenGL view. ");

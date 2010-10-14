@@ -77,6 +77,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 //CLASSES:
 
 @class EAGLView;
+@class EAGLSharegroup;
 
 //PROTOCOLS:
 
@@ -105,7 +106,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 	//fsaa addition
 	BOOL					multisampling_;
-	unsigned int			requestedSamples;
+	unsigned int			requestedSamples_;
 	
 	CGSize					size_;
 	BOOL					discardFramebufferSupported_;
@@ -116,18 +117,15 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 + (id) viewWithFrame:(CGRect)frame;
 /** creates an initializes an EAGLView with a frame, a color buffer format, and 0-bit depth buffer */
 + (id) viewWithFrame:(CGRect)frame pixelFormat:(NSString*)format;
-/** creates an initializes an EAGLView with a frame, a color buffer format, a depth buffer format, and whether or not the back buffer will be retained. Multisampling will be disabled. */
-+ (id) viewWithFrame:(CGRect)frame pixelFormat:(NSString*)format depthFormat:(GLuint)depth preserveBackbuffer:(BOOL)retained;
-/** creates an initializes an EAGLView with a frame, a color buffer format, a depth buffer format and possibly a MSAA multisampling color and frame buffer */
-+ (id) viewWithFrame:(CGRect)frame pixelFormat:(NSString*)format depthFormat:(GLuint)depth preserveBackbuffer:(BOOL)retained multiSampling:(BOOL)sampling numberOfSamples:(unsigned int)nSamples;
-
+/** creates an initializes an EAGLView with a frame, a color buffer format, a depth buffer format, a sharegroup, and multisamping */
++ (id) viewWithFrame:(CGRect)frame pixelFormat:(NSString*)format depthFormat:(GLuint)depth preserveBackbuffer:(BOOL)retained sharegroup:(EAGLSharegroup*)sharegroup multiSampling:(BOOL)multisampling numberOfSamples:(unsigned int)samples;
 
 /** Initializes an EAGLView with a frame and 0-bit depth buffer, and a RGB565 color buffer */
 - (id) initWithFrame:(CGRect)frame; //These also set the current context
 /** Initializes an EAGLView with a frame, a color buffer format, and 0-bit depth buffer */
 - (id) initWithFrame:(CGRect)frame pixelFormat:(NSString*)format;
-/** Initializes an EAGLView with a frame, a color buffer format, and a depth buffer format */
-- (id) initWithFrame:(CGRect)frame pixelFormat:(NSString*)format depthFormat:(GLuint)depth preserveBackbuffer:(BOOL)retained multiSampling:(BOOL) sampling numberOfSamples:(unsigned int) nSamples;
+/** Initializes an EAGLView with a frame, a color buffer format, a depth buffer format, a sharegroup and multisampling support */
+- (id) initWithFrame:(CGRect)frame pixelFormat:(NSString*)format depthFormat:(GLuint)depth preserveBackbuffer:(BOOL)retained sharegroup:(EAGLSharegroup*)sharegroup multiSampling:(BOOL)sampling numberOfSamples:(unsigned int)nSamples;
 
 /** binds the multi sampling framebuffer */
 - (void) bindMultiSamplingFrameBuffer;

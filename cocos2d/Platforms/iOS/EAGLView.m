@@ -79,7 +79,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 //CLASS IMPLEMENTATIONS:
 
 @interface EAGLView (Private)
--(BOOL) setupSurface;
+- (BOOL) setupSurfaceWithSharegroup:(EAGLSharegroup*)sharegroup;
 - (unsigned int) convertPixelFormat:(NSString*) pixelFormat;
 @end
 
@@ -108,36 +108,39 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 + (id) viewWithFrame:(CGRect)frame pixelFormat:(NSString*)format depthFormat:(GLuint)depth preserveBackbuffer:(BOOL)retained
 {
-	return [[[self alloc] initWithFrame:frame pixelFormat:format depthFormat:depth preserveBackbuffer:retained multiSampling:NO numberOfSamples:0] autorelease];
+	return [[[self alloc] initWithFrame:frame pixelFormat:format depthFormat:depth preserveBackbuffer:retained sharegroup:nil multiSampling:NO numberOfSamples:0] autorelease];
 }
 
-+ (id) viewWithFrame:(CGRect)frame pixelFormat:(NSString*)format depthFormat:(GLuint)depth preserveBackbuffer:(BOOL)retained multiSampling:(BOOL) sampling numberOfSamples:(unsigned int) nSamples
++ (id) viewWithFrame:(CGRect)frame pixelFormat:(NSString*)format depthFormat:(GLuint)depth preserveBackbuffer:(BOOL)retained sharegroup:(EAGLSharegroup*)sharegroup multiSampling:(BOOL)multisampling numberOfSamples:(unsigned int)samples;
 {
-	return [[[self alloc] initWithFrame:frame pixelFormat:format depthFormat:depth preserveBackbuffer:retained multiSampling:sampling numberOfSamples:nSamples] autorelease];
+	return [[[self alloc] initWithFrame:frame pixelFormat:format depthFormat:depth preserveBackbuffer:retained sharegroup:sharegroup multiSampling:NO numberOfSamples:0] autorelease];
 }
 
 - (id) initWithFrame:(CGRect)frame
 {
-	return [self initWithFrame:frame pixelFormat:kEAGLColorFormatRGB565 depthFormat:0 preserveBackbuffer:NO multiSampling:NO numberOfSamples:0];
+	return [self initWithFrame:frame pixelFormat:kEAGLColorFormatRGB565 depthFormat:0 preserveBackbuffer:NO sharegroup:nil multiSampling:NO numberOfSamples:0];
 }
 
 - (id) initWithFrame:(CGRect)frame pixelFormat:(NSString*)format 
 {
-	return [self initWithFrame:frame pixelFormat:format depthFormat:0 preserveBackbuffer:NO multiSampling:NO numberOfSamples:0];
+	return [self initWithFrame:frame pixelFormat:format depthFormat:0 preserveBackbuffer:NO sharegroup:nil multiSampling:NO numberOfSamples:0];
 }
 
 - (id) initWithFrame:(CGRect)frame pixelFormat:(NSString*)format depthFormat:(GLuint)depth preserveBackbuffer:(BOOL)retained multiSampling:(BOOL) sampling numberOfSamples:(unsigned int) nSamples
+{
+	return [self initWithFrame:frame pixelFormat:format depthFormat:0 preserveBackbuffer:NO sharegroup:nil multiSampling:NO numberOfSamples:0];
+}
+
+- (id) initWithFrame:(CGRect)frame pixelFormat:(NSString*)format depthFormat:(GLuint)depth preserveBackbuffer:(BOOL)retained sharegroup:(EAGLSharegroup*)sharegroup multiSampling:(BOOL)sampling numberOfSamples:(unsigned int)nSamples
 {
 	if((self = [super initWithFrame:frame]))
 	{
 		pixelformat_ = format;
 		depthFormat_ = depth;
-		multiSampling_=sampling;
-		requestedSamples=nSamples;
+		multiSampling_= sampling;
+		requestedSamples_ = nSamples;
 		
-		size_ = frame.size;
-		
-		if( ! [self setupSurface] ) {
+		if( ! [self setupSurfaceWithSharegroup:sharegroup] ) {
 			[self release];
 			return nil;
 		}
@@ -154,11 +157,11 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 		
 		pixelformat_ = kEAGLColorFormatRGB565;
 		depthFormat_ = 0; // GL_DEPTH_COMPONENT24_OES;
-		multiSampling_=NO;
-		requestedSamples=0;
+		multiSampling_= NO;
+		requestedSamples_ = 0;
 		size_ = [eaglLayer bounds].size;
 
-		if( ! [self setupSurface] ) {
+		if( ! [self setupSurfaceWithSharegroup:nil] ) {
 			[self release];
 			return nil;
 		}
@@ -167,7 +170,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
     return self;
 }
 
--(BOOL) setupSurface
+-(BOOL) setupSurfaceWithSharegroup:(EAGLSharegroup*)sharegroup
 {
 	CAEAGLLayer *eaglLayer = (CAEAGLLayer *)self.layer;
 	
@@ -176,8 +179,12 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 									[NSNumber numberWithBool:preserveBackbuffer_], kEAGLDrawablePropertyRetainedBacking,
 									pixelformat_, kEAGLDrawablePropertyColorFormat, nil];
 	
-	//XXX number of samples should dynamic.	
-	renderer_ = [[ES1Renderer alloc] initWithDepthFormat:depthFormat_ withPixelFormat:[self convertPixelFormat:pixelformat_] withMultiSampling:multiSampling_ withNumberOfSamples:requestedSamples];
+	
+	renderer_ = [[ES1Renderer alloc] initWithDepthFormat:depthFormat_
+										 withPixelFormat:[self convertPixelFormat:pixelformat_]
+										  withSharegroup:sharegroup
+									   withMultiSampling:multiSampling_
+									 withNumberOfSamples:requestedSamples_];
 	if (!renderer_)
 		return NO;
 	

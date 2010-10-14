@@ -51,11 +51,11 @@
 	GLuint msaaFramebuffer_;
 	GLuint msaaColorbuffer_;
 	
-	unsigned int samplesToUse_;
-	BOOL multiSampling_;
+	unsigned int	samplesToUse_;
+	BOOL			multiSampling_;
 	
 	unsigned int	depthFormat_;
-	unsigned int    pixelFormat_;
+	unsigned int	pixelFormat_;
 
 	@public
 	EAGLContext *context_;

@@ -46,12 +46,18 @@
 
 @synthesize context=context_;
 
-// Create an OpenGL ES 1.1 context
-- (id)initWithDepthFormat:(GLuint)depthFormat withPixelFormat:(unsigned int) pixelFormat withMultiSampling:(BOOL) multiSampling withNumberOfSamples:(unsigned int) requestedSamples
+- (id) initWithDepthFormat:(unsigned int)depthFormat withPixelFormat:(unsigned int)pixelFormat withSharegroup:(EAGLSharegroup*)sharegroup withMultiSampling:(BOOL) multiSampling withNumberOfSamples:(unsigned int) requestedSamples
 {
     if ((self = [super init]))
     {
-        context_ = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES1];
+		if ( sharegroup == nil )
+		{
+			context_ = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES1];
+		}
+		else
+		{
+			context_ = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES1 sharegroup:sharegroup];
+		}
 
         if (!context_ || ![EAGLContext setCurrentContext:context_])
         {

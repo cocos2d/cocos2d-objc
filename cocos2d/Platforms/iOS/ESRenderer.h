@@ -37,12 +37,12 @@
 
 @protocol ESRenderer <NSObject>
 
--(id) initWithDepthFormat:(unsigned int)depthFormat  withPixelFormat:(unsigned int) pixelFormat withMultiSampling:(BOOL) multiSampling withNumberOfSamples:(unsigned int) requestedSamples;
+- (id) initWithDepthFormat:(unsigned int)depthFormat withPixelFormat:(unsigned int)pixelFormat withSharegroup:(EAGLSharegroup*)sharegroup withMultiSampling:(BOOL) multiSampling withNumberOfSamples:(unsigned int) requestedSamples;
 
-- (BOOL)resizeFromLayer:(CAEAGLLayer *)layer;
+- (BOOL) resizeFromLayer:(CAEAGLLayer *)layer;
 
--(EAGLContext*) context;
--(CGSize) backingSize;
+- (EAGLContext*) context;
+- (CGSize) backingSize;
 
 - (unsigned int) colorRenderBuffer;
 - (unsigned int) defaultFrameBuffer;
