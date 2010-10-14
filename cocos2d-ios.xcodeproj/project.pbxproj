@@ -2238,6 +2238,7 @@
 		E0C5588B11FE493B00B9E4CB /* ZwoptexTest.m in Sources */ = {isa = PBXBuildFile; fileRef = E0C5588A11FE493B00B9E4CB /* ZwoptexTest.m */; };
 		E0C5589511FE4CF100B9E4CB /* zwoptex in Resources */ = {isa = PBXBuildFile; fileRef = E0C5588E11FE4CF100B9E4CB /* zwoptex */; };
 		E0C786AD1211A40400E309E2 /* Tank.c in Sources */ = {isa = PBXBuildFile; fileRef = E0C786AC1211A40400E309E2 /* Tank.c */; };
+		E0CC4F7D12677DB400691051 /* blocks-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E0CC4F7C12677DB400691051 /* blocks-hd.png */; };
 		E0E974A51237E4EA00E3E64B /* CCDirectorMac.h in Headers */ = {isa = PBXBuildFile; fileRef = E0E9749F1237E4EA00E3E64B /* CCDirectorMac.h */; };
 		E0E974A61237E4EA00E3E64B /* CCDirectorMac.m in Sources */ = {isa = PBXBuildFile; fileRef = E0E974A01237E4EA00E3E64B /* CCDirectorMac.m */; };
 		E0E974A71237E4EA00E3E64B /* CCEventDispatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = E0E974A11237E4EA00E3E64B /* CCEventDispatcher.h */; };
@@ -4145,6 +4146,7 @@
 		E0C783B31210A39200E309E2 /* VerticalStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VerticalStack.h; sourceTree = "<group>"; };
 		E0C783B41210A39200E309E2 /* Web.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Web.h; sourceTree = "<group>"; };
 		E0C786AC1211A40400E309E2 /* Tank.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; fileEncoding = 4; path = Tank.c; sourceTree = "<group>"; };
+		E0CC4F7C12677DB400691051 /* blocks-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "blocks-hd.png"; sourceTree = "<group>"; };
 		E0E9749F1237E4EA00E3E64B /* CCDirectorMac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCDirectorMac.h; sourceTree = "<group>"; };
 		E0E974A01237E4EA00E3E64B /* CCDirectorMac.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCDirectorMac.m; sourceTree = "<group>"; };
 		E0E974A11237E4EA00E3E64B /* CCEventDispatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEventDispatcher.h; sourceTree = "<group>"; };
@@ -6368,6 +6370,7 @@
 				E0B0E70F11F8CF9F00414246 /* texture4096x4096.png */,
 				50C78DD9114833EE00D133A1 /* Fog.png */,
 				AAEA834A0FD5704400F08728 /* blocks.png */,
+				E0CC4F7C12677DB400691051 /* blocks-hd.png */,
 				506E1AD50FB34E8E00AAA494 /* test-rgba1.png */,
 				8EDF3FD90F6BE3F400F54643 /* listener-marker.png */,
 				8EDF3FDA0F6BE3F400F54643 /* source-marker.png */,
@@ -8812,6 +8815,7 @@
 				E04C63EB12382F6100A4B3E6 /* r2-hd.png in Resources */,
 				E04C646812382F9400A4B3E6 /* b1-hd.png in Resources */,
 				E04C646912382F9400A4B3E6 /* b2-hd.png in Resources */,
+				E0CC4F7D12677DB400691051 /* blocks-hd.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

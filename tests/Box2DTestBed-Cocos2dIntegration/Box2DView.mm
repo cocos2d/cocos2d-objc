@@ -186,7 +186,13 @@ enum {
 	glDisableClientState(GL_COLOR_ARRAY);
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 	
+	glPushMatrix();
+	float scale = CC_CONTENT_SCALE_FACTOR();
+	glScalef( scale, scale, 1 );
+	
 	test->m_world->DrawDebugData();
+	
+	glPopMatrix();
 	
 	// restore default GL states
 	glEnable(GL_TEXTURE_2D);
