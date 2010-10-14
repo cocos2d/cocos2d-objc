@@ -35,10 +35,8 @@
 	
 	// Create the EAGLView manually
 	EAGLView *glView = [EAGLView viewWithFrame:[window bounds]
-										   pixelFormat:kEAGLColorFormatRGBA8
-										   depthFormat:GL_DEPTH_COMPONENT24_OES
-									preserveBackbuffer:NO];
-	
+								   pixelFormat:kEAGLColorFormatRGBA8
+								   depthFormat:GL_DEPTH_COMPONENT24_OES];
 	
 	[glView setMultipleTouchEnabled:YES];
 

@@ -1367,8 +1367,7 @@ Class restartAction()
 	//   and an RGB8 color buffer
 	EAGLView *glView = [EAGLView viewWithFrame:[window bounds]
 								   pixelFormat:kEAGLColorFormatRGBA8
-								   depthFormat:GL_DEPTH_COMPONENT16_OES
-							preserveBackbuffer:NO];
+								   depthFormat:GL_DEPTH_COMPONENT16_OES];
 	[glView setMultipleTouchEnabled:YES];
 	
 	// connect it to the director

@@ -209,7 +209,7 @@
 		depthBuffer_ = 0;
 	}
 
-		if ( msaaColorbuffer_)
+	if ( msaaColorbuffer_)
 	{
 		glDeleteRenderbuffersOES(1, &msaaColorbuffer_);
 		msaaColorbuffer_ = 0;
