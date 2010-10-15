@@ -244,12 +244,12 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 			if (depthFormat_)
 			{
 				GLenum attachments[] = {GL_COLOR_ATTACHMENT0_OES, GL_DEPTH_ATTACHMENT_OES};
-				glDiscardFramebufferEXT(GL_FRAMEBUFFER_OES, 2, attachments);
+				glDiscardFramebufferEXT(GL_READ_FRAMEBUFFER_APPLE, 2, attachments);
 			}
 			else
 			{
 				GLenum attachments[] = {GL_COLOR_ATTACHMENT0_OES};
-				glDiscardFramebufferEXT(GL_FRAMEBUFFER_OES, 1, attachments);
+				glDiscardFramebufferEXT(GL_READ_FRAMEBUFFER_APPLE, 1, attachments);
 			}
 			
 			glBindRenderbufferOES(GL_RENDERBUFFER_OES, [renderer_ colorRenderBuffer]);
