@@ -97,20 +97,21 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
  */
 @interface EAGLView : UIView
 {
-    id						<ESRenderer> renderer_;	
+    id<ESRenderer>			renderer_;	
 	EAGLContext				*context_; // weak ref
 
 	NSString				*pixelformat_;
 	GLuint					depthFormat_;
 	BOOL					preserveBackbuffer_;
 
-	//fsaa addition
-	BOOL					multisampling_;
-	unsigned int			requestedSamples_;
-	
 	CGSize					size_;
 	BOOL					discardFramebufferSupported_;
 	id<EAGLTouchDelegate>   touchDelegate_;
+
+@public
+	//fsaa addition
+	BOOL					multisampling_;
+	unsigned int			requestedSamples_;
 }
 
 /** creates an initializes an EAGLView with a frame and 0-bit depth buffer, and a RGB565 color buffer. */

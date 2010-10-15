@@ -111,6 +111,7 @@ static char * glExtensions;
 		
 		glGetIntegerv(GL_MAX_TEXTURE_SIZE, &maxTextureSize_);
 		glGetIntegerv(GL_MAX_MODELVIEW_STACK_DEPTH, &maxModelviewStackDepth_);
+		glGetIntegerv(GL_MAX_SAMPLES_APPLE, &maxSamplesAllowed_);
 		
 		supportsPVRTC_ = [self checkForGLExtension:@"GL_IMG_texture_compression_pvrtc"];
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
@@ -123,6 +124,7 @@ static char * glExtensions;
 
 		CCLOG(@"cocos2d: GL_MAX_TEXTURE_SIZE: %d", maxTextureSize_);
 		CCLOG(@"cocos2d: GL_MAX_MODELVIEW_STACK_DEPTH: %d",maxModelviewStackDepth_);
+		CCLOG(@"cocos2d: GL_MAX_SAMPLES_APPLE: %d", maxSamplesAllowed_);
 		CCLOG(@"cocos2d: GL supports PVRTC: %s", (supportsPVRTC_ ? "YES" : "NO") );
 		CCLOG(@"cocos2d: GL supports BGRA8888 textures: %s", (supportsBGRA8888_ ? "YES" : "NO") );
 		CCLOG(@"cocos2d: GL supports NPOT textures: %s", (supportsNPOT_ ? "YES" : "NO") );

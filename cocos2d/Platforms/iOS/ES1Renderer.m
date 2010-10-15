@@ -87,13 +87,13 @@
 //			glBindRenderbufferOES(GL_RENDERBUFFER_OES, colorRenderbuffer_);
 		}
 		
-		pixelFormat_=pixelFormat;
-		multiSampling_=multiSampling;	
+		pixelFormat_ = pixelFormat;
+		multiSampling_ = multiSampling;	
 		if (multiSampling_)
 		{
 			GLint maxSamplesAllowed;
 			glGetIntegerv(GL_MAX_SAMPLES_APPLE, &maxSamplesAllowed);
-			samplesToUse_ = (requestedSamples > maxSamplesAllowed) ? maxSamplesAllowed : requestedSamples;
+			samplesToUse_ = MIN(maxSamplesAllowed,requestedSamples);
 			
 			/* Create the MSAA framebuffer (offscreen) */
 			glGenFramebuffersOES(1, &msaaFramebuffer_);
@@ -134,36 +134,32 @@
 		glBindRenderbufferOES(GL_RENDERBUFFER_OES, msaaColorbuffer_);
 		glRenderbufferStorageMultisampleAPPLE(GL_RENDERBUFFER_OES, samplesToUse_,pixelFormat_ , backingWidth_, backingHeight_);
 		glFramebufferRenderbufferOES(GL_FRAMEBUFFER_OES, GL_COLOR_ATTACHMENT0_OES, GL_RENDERBUFFER_OES, msaaColorbuffer_);
-		
-		if (depthFormat_ )
-		{
-			if( ! depthBuffer_ ) glGenRenderbuffersOES(1, &depthBuffer_);
-			glBindRenderbufferOES(GL_RENDERBUFFER_OES, depthBuffer_);
-			glRenderbufferStorageMultisampleAPPLE(GL_RENDERBUFFER_OES, samplesToUse_, depthFormat_,backingWidth_, backingHeight_);
-			glFramebufferRenderbufferOES(GL_FRAMEBUFFER_OES, GL_DEPTH_ATTACHMENT_OES, GL_RENDERBUFFER_OES, depthBuffer_);
-		}
-		
+
 		if (glCheckFramebufferStatusOES(GL_FRAMEBUFFER_OES) != GL_FRAMEBUFFER_COMPLETE_OES)
 		{
 			CCLOG(@"Failed to make complete framebuffer object %x", glCheckFramebufferStatusOES(GL_FRAMEBUFFER_OES));
 			return NO;
 		}
 	}
-	else if (depthFormat_) 
+
+	if (depthFormat_) 
 	{
 		if( ! depthBuffer_ )
 			glGenRenderbuffersOES(1, &depthBuffer_);
 		
 		glBindRenderbufferOES(GL_RENDERBUFFER_OES, depthBuffer_);
-		glRenderbufferStorageOES(GL_RENDERBUFFER_OES, depthFormat_, backingWidth_, backingHeight_);
+		if( multiSampling_ )
+			glRenderbufferStorageMultisampleAPPLE(GL_RENDERBUFFER_OES, samplesToUse_, depthFormat_,backingWidth_, backingHeight_);
+		else
+			glRenderbufferStorageOES(GL_RENDERBUFFER_OES, depthFormat_, backingWidth_, backingHeight_);
 		glFramebufferRenderbufferOES(GL_FRAMEBUFFER_OES, GL_DEPTH_ATTACHMENT_OES, GL_RENDERBUFFER_OES, depthBuffer_);
 		
 		// bind color buffer
 		glBindRenderbufferOES(GL_RENDERBUFFER_OES, colorRenderbuffer_);
-		
 	}
 	
 	glBindFramebufferOES(GL_FRAMEBUFFER_OES, defaultFramebuffer_);
+	
 	if (glCheckFramebufferStatusOES(GL_FRAMEBUFFER_OES) != GL_FRAMEBUFFER_COMPLETE_OES)
 	{
 		CCLOG(@"Failed to make complete framebuffer object %x", glCheckFramebufferStatusOES(GL_FRAMEBUFFER_OES));
@@ -182,8 +178,6 @@
 {
 	return [NSString stringWithFormat:@"<%@ = %08X | size = %ix%i>", [self class], self, backingWidth_, backingHeight_];
 }
-
-
 
 
 - (void)dealloc

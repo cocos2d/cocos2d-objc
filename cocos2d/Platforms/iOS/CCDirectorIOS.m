@@ -161,7 +161,8 @@ CGFloat	__ccContentScaleFactor = 1;
 		[[CCScheduler sharedScheduler] tick: dt];	
 	}
 	
-	if ([openGLView_ multiSampling]) [openGLView_ bindMultiSamplingFrameBuffer];
+	if (openGLView_->multisampling_)
+		[openGLView_ bindMultiSamplingFrameBuffer];
 	
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	
