@@ -60,6 +60,7 @@ enum {
 	BOOL			supportsBGRA8888_;
 	BOOL			supportsDiscardFramebuffer_;
 	NSUInteger		OSVersion_;
+	GLint			maxSamplesAllowed_;
 }
 
 /** the bundle we load everything from */
