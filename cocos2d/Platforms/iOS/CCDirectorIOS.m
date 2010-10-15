@@ -161,9 +161,6 @@ CGFloat	__ccContentScaleFactor = 1;
 		[[CCScheduler sharedScheduler] tick: dt];	
 	}
 	
-	if (openGLView_->multisampling_)
-		[openGLView_ bindMultiSamplingFrameBuffer];
-	
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	
 	/* to avoid flickr, nextScene MUST be here: after tick and before draw.

@@ -230,7 +230,6 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	
 	if (multiSampling_)
 	{
-	
 		/* Resolve from msaaFramebuffer to resolveFramebuffer */
 		//glDisable(GL_SCISSOR_TEST);     
 		glBindFramebufferOES(GL_READ_FRAMEBUFFER_APPLE, [renderer_ msaaFrameBuffer]);
@@ -252,16 +251,18 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 				GLenum attachments[] = {GL_COLOR_ATTACHMENT0_OES};
 				glDiscardFramebufferEXT(GL_FRAMEBUFFER_OES, 1, attachments);
 			}
+			
+			glBindRenderbufferOES(GL_RENDERBUFFER_OES, [renderer_ colorRenderBuffer]);
 	
 		}	
+		
+		// not MSAA
 		else if (depthFormat_ ) {
 			GLenum attachments[] = { GL_DEPTH_ATTACHMENT_OES};
 			glDiscardFramebufferEXT(GL_FRAMEBUFFER_OES, 1, attachments);
 		}
 	}
 	
-	if (multiSampling_)
-		glBindRenderbufferOES(GL_RENDERBUFFER_OES, [renderer_ colorRenderBuffer]);
 #endif // __IPHONE_4_0
 	
 	if(![context_ presentRenderbuffer:GL_RENDERBUFFER_OES])
@@ -269,12 +270,12 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 #if COCOS2D_DEBUG
 	CHECK_GL_ERROR();
-#endif	
-}
-
-- (void) bindMultiSamplingFrameBuffer
-{
-	glBindFramebufferOES(GL_FRAMEBUFFER_OES, [renderer_ msaaFrameBuffer]);
+#endif
+	
+	// We can safely re-bind the framebuffer here, since this will be the
+	// 1st instruction of the new main loop
+	if( multiSampling_ )
+		glBindFramebufferOES(GL_FRAMEBUFFER_OES, [renderer_ msaaFrameBuffer]);
 }
 
 - (unsigned int) convertPixelFormat:(NSString*) pixelFormat

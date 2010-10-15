@@ -108,7 +108,6 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	BOOL					discardFramebufferSupported_;
 	id<EAGLTouchDelegate>   touchDelegate_;
 
-@public
 	//fsaa addition
 	BOOL					multisampling_;
 	unsigned int			requestedSamples_;
@@ -129,9 +128,6 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 - (id) initWithFrame:(CGRect)frame pixelFormat:(NSString*)format;
 /** Initializes an EAGLView with a frame, a color buffer format, a depth buffer format, a sharegroup and multisampling support */
 - (id) initWithFrame:(CGRect)frame pixelFormat:(NSString*)format depthFormat:(GLuint)depth preserveBackbuffer:(BOOL)retained sharegroup:(EAGLSharegroup*)sharegroup multiSampling:(BOOL)sampling numberOfSamples:(unsigned int)nSamples;
-
-/** binds the multi sampling framebuffer */
-- (void) bindMultiSamplingFrameBuffer;
 
 /** pixel format: it could be RGBA8 (32-bit) or RGB565 (16-bit) */
 @property(nonatomic,readonly) NSString* pixelFormat;
