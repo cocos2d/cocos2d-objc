@@ -39,7 +39,7 @@
 
 @synthesize sprite=sprite_;
 
-// issue # 
+// issue #994 
 +(id)renderTextureWithWidth:(int)w height:(int)h pixelFormat:(CCTexture2DPixelFormat) format
 {
 	return [[[self alloc] initWithWidth:w height:h pixelFormat:format] autorelease];
@@ -100,12 +100,11 @@
 		[self addChild:sprite_];
 
 		// issue #937
-		
 		[sprite_ setBlendFunc:(ccBlendFunc){GL_ONE, GL_ONE_MINUS_SRC_ALPHA}];
 		
-		// issue #878 save opengl state
-		[self saveGLstate];
+			
 		
+				
 
 		ccglBindFramebuffer(CC_GL_FRAMEBUFFER, oldFBO_);
 	}
@@ -122,7 +121,9 @@
 
 -(void)begin
 {
-	
+	// issue #878 save opengl state
+	[self saveGLstate];
+
 	CC_DISABLE_DEFAULT_GL_STATES();
 	// Save the current matrix
 	glPushMatrix();
@@ -147,6 +148,9 @@
 
 -(void)beginWithClear:(float)r g:(float)g b:(float)b a:(float)a
 {
+	// issue #878 save opengl state
+	[self saveGLstate];
+	
 	CC_DISABLE_DEFAULT_GL_STATES();
 	// Save the current matrix
 	glPushMatrix();
@@ -228,7 +232,7 @@
 -(NSData*)getUIImageAsDataFromBuffer:(int) format
 {
 	
-	NSAssert(format != kCCTexture2DPixelFormat_RGBA8888,@"only RGBA8888 can be saved as image");
+	NSAssert(format == kCCTexture2DPixelFormat_RGBA8888,@"only RGBA8888 can be saved as image");
 	
 	CGSize s = [texture_ contentSizeInPixels];
 	int tx = s.width;
