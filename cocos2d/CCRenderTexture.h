@@ -56,6 +56,10 @@ enum
 	GLint				oldFBO_;
 	CCTexture2D*		texture_;
 	CCSprite*			sprite_;
+	
+	GLenum				pixelFormat_;
+	GLfloat				clearColor_[4];
+
 }
 
 /** The CCSprite being used.
@@ -65,11 +69,19 @@ enum
 */
 @property (nonatomic,readwrite, assign) CCSprite* sprite;
 
-/** creates a RenderTexture object with width and height in Points */
-+(id)renderTextureWithWidth:(int)width height:(int)height;
-/** initializes a RenderTexture object with width and height in Points */
--(id)initWithWidth:(int)width height:(int)height;
+/** creates a RenderTexture object with width and height in Points and a pixel format, only RGB and RGBA formats are valid */
++(id)renderTextureWithWidth:(int)w height:(int)h pixelFormat:(CCTexture2DPixelFormat) format;
+
+/** creates a RenderTexture object with width and height in Points, pixel format is RGBA8888 */
++(id)renderTextureWithWidth:(int)w height:(int)h;
+
+
+/** initializes a RenderTexture object with width and height in Points and a pixel format, only RGB and RGBA formats are valid */
+-(id)initWithWidth:(int)w height:(int)h pixelFormat:(CCTexture2DPixelFormat) format;
 -(void)begin;
+
+/** starts rendering to the texture while clearing the texture first. This is more efficient then calling -clear first and then -begin */
+-(void)beginWithClear:(float)r g:(float)g b:(float)b a:(float)a;
 -(void)end;
 
 /** clears the texture with a color */
@@ -81,8 +93,8 @@ enum
 -(BOOL)saveBuffer:(NSString*)name;
 /** saves the texture into a file. The format can be JPG or PNG */
 -(BOOL)saveBuffer:(NSString*)name format:(int)format;
-/* get buffer as UIImage */
--(UIImage *)getUIImageFromBuffer;
+/* get buffer as UIImage, can only save a render buffer which has a RGBA8888 pixel format */
+-(NSData*)getUIImageAsDataFromBuffer:(int) format;
 #endif
 
 @end
