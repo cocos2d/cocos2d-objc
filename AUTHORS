@@ -302,7 +302,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Author of bug #915 test case
 	* palter AT clozure.com
 		Texture fails gracefully if PVR image can't be loaded (patch)
-	* Patrick Wolocicz:
+	* Patrick Wolowicz:
 		mkatlas: added artifact removal by copying borders to margins
 	* Piero Tofy (http://indieappsalliance.org):
 		Author of the scraper script used to parse games data in the cocos2d site
