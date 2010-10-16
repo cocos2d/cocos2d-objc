@@ -29,32 +29,53 @@
 #import "ccMacros.h"
 #import "Support/ccUtils.h"
 
+@interface CCRenderTexture (private)
+
+-(void) saveGLstate;
+- (void) restoreGLstate;
+@end
+
 @implementation CCRenderTexture
 
 @synthesize sprite=sprite_;
 
-+(id)renderTextureWithWidth:(int)w height:(int)h
+// issue # 
++(id)renderTextureWithWidth:(int)w height:(int)h pixelFormat:(CCTexture2DPixelFormat) format
 {
-	return [[[self alloc] initWithWidth:w height:h] autorelease];
+	return [[[self alloc] initWithWidth:w height:h pixelFormat:format] autorelease];
 }
 
--(id)initWithWidth:(int)w height:(int)h
++(id)renderTextureWithWidth:(int)w height:(int)h
 {
-	self = [super init];
-	if (self)
+
+	return [[[self alloc] initWithWidth:w height:h pixelFormat:kCCTexture2DPixelFormat_RGBA8888] autorelease];	
+}
+
+-(id)initWithWidth:(int)w height:(int)h 
+{
+	return [self initWithWidth:w height:h pixelFormat:kCCTexture2DPixelFormat_RGBA8888];
+}
+
+-(id)initWithWidth:(int)w height:(int)h pixelFormat:(CCTexture2DPixelFormat) format
+{
+	if ((self = [super init]))
 	{
+		NSAssert(format != kCCTexture2DPixelFormat_A8,@"only RGB and RGBA formats are valid for a render texture");
+		
 		w *= CC_CONTENT_SCALE_FACTOR();
 		h *= CC_CONTENT_SCALE_FACTOR();
 
 		glGetIntegerv(CC_GL_FRAMEBUFFER_BINDING, &oldFBO_);
-		CCTexture2DPixelFormat format = kCCTexture2DPixelFormat_RGBA8888;  
+		
 		// textures must be power of two
 		NSUInteger powW = ccNextPOT(w);
 		NSUInteger powH = ccNextPOT(h);
 		
 		void *data = malloc((int)(powW * powH * 4));
 		memset(data, 0, (int)(powW * powH * 4));
-		texture_ = [[CCTexture2D alloc] initWithData:data pixelFormat:format pixelsWide:powW pixelsHigh:powH contentSize:CGSizeMake(w, h)];
+		pixelFormat_=format; 
+		
+		texture_ = [[CCTexture2D alloc] initWithData:data pixelFormat:pixelFormat_ pixelsWide:powW pixelsHigh:powH contentSize:CGSizeMake(w, h)];
 		free( data );
     
 		// generate FBO
@@ -70,6 +91,8 @@
 		{
 			[NSException raise:@"Render Texture" format:@"Could not attach texture to framebuffer"];
 		}
+		[texture_ setAliasTexParameters];
+		
 		sprite_ = [CCSprite spriteWithTexture:texture_];
 		
 		[texture_ release];
@@ -77,7 +100,12 @@
 		[self addChild:sprite_];
 
 		// issue #937
+		
 		[sprite_ setBlendFunc:(ccBlendFunc){GL_ONE, GL_ONE_MINUS_SRC_ALPHA}];
+		
+		// issue #878 save opengl state
+		[self saveGLstate];
+		
 
 		ccglBindFramebuffer(CC_GL_FRAMEBUFFER, oldFBO_);
 	}
@@ -91,8 +119,10 @@
 	[super dealloc];
 }
 
+
 -(void)begin
 {
+	
 	CC_DISABLE_DEFAULT_GL_STATES();
 	// Save the current matrix
 	glPushMatrix();
@@ -111,7 +141,34 @@
 	glGetIntegerv(CC_GL_FRAMEBUFFER_BINDING, &oldFBO_);
 	ccglBindFramebuffer(CC_GL_FRAMEBUFFER, fbo_);//Will direct drawing to the frame buffer created above
 	
+	//glColorMask(TRUE, TRUE, TRUE, TRUE);
 	CC_ENABLE_DEFAULT_GL_STATES();	
+}
+
+-(void)beginWithClear:(float)r g:(float)g b:(float)b a:(float)a
+{
+	CC_DISABLE_DEFAULT_GL_STATES();
+	// Save the current matrix
+	glPushMatrix();
+	
+	CGSize texSize = [texture_ contentSizeInPixels];
+	
+	// Calculate the adjustment ratios based on the old and new projections
+	CGSize size = [[CCDirector sharedDirector] displaySizeInPixels];
+	float widthRatio = size.width / texSize.width;
+	float heightRatio = size.height / texSize.height;
+	
+	// Adjust the orthographic propjection and viewport
+	ccglOrtho((float)-1.0 / widthRatio,  (float)1.0 / widthRatio, (float)-1.0 / heightRatio, (float)1.0 / heightRatio, -1,1);
+	glViewport(0, 0, texSize.width, texSize.height);
+	
+	glGetIntegerv(CC_GL_FRAMEBUFFER_BINDING, &oldFBO_);
+	ccglBindFramebuffer(CC_GL_FRAMEBUFFER, fbo_);//Will direct drawing to the frame buffer created above
+	
+	glClearColor(r, g, b, a);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	
+	CC_ENABLE_DEFAULT_GL_STATES();
 }
 
 -(void)end
@@ -121,8 +178,8 @@
 	glPopMatrix();
 	CGSize size = [[CCDirector sharedDirector] displaySizeInPixels];
 	glViewport(0, 0, size.width, size.height);
+	[self restoreGLstate];
 
-	glColorMask(TRUE, TRUE, TRUE, TRUE);
 }
 
 
@@ -131,8 +188,20 @@
 	[self begin];
 	glClearColor(r, g, b, a);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glColorMask(TRUE, TRUE, TRUE, FALSE);
+
 	[self end];
+}
+
+-(void) saveGLstate
+{
+	glGetFloatv(GL_COLOR_CLEAR_VALUE,clearColor_); 
+
+}
+
+- (void) restoreGLstate
+{
+	glClearColor(clearColor_[0], clearColor_[1], clearColor_[2], clearColor_[3]);
+
 }
 
 #pragma mark RenderTexture - Save Image
@@ -143,50 +212,57 @@
 	return [self saveBuffer:name format:kCCImageFormatJPG];
 }
 
+
 -(BOOL)saveBuffer:(NSString*)fileName format:(int)format
 {
-	UIImage *myImage				= [self getUIImageFromBuffer];
-  
 	NSArray *paths					= NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
 	NSString *documentsDirectory	= [paths objectAtIndex:0];
 	NSString *fullPath				= [documentsDirectory stringByAppendingPathComponent:fileName];
-  
-	NSData *data;
-  
-	if (format == kCCImageFormatPNG)
-		data = UIImagePNGRepresentation(myImage);
-	else
-		data = UIImageJPEGRepresentation(myImage, 1.0f);
-  
+	
+	NSData *data = [self getUIImageAsDataFromBuffer:format];
+	
 	return [data writeToFile:fullPath atomically:YES];
 }
 
-/* get buffer as UIImage */
--(UIImage *)getUIImageFromBuffer
+
+-(NSData*)getUIImageAsDataFromBuffer:(int) format
 {
+	
+	NSAssert(format != kCCTexture2DPixelFormat_RGBA8888,@"only RGBA8888 can be saved as image");
+	
 	CGSize s = [texture_ contentSizeInPixels];
 	int tx = s.width;
 	int ty = s.height;
-  
-	int bitsPerComponent			= 8;
-	int bitsPerPixel				= 32;
-	int bytesPerPixel				= (bitsPerComponent * 4)/8;
-	int bytesPerRow					= bytesPerPixel * tx;
+	
+	int bitsPerComponent=8;			
+	int bitsPerPixel=32;				
+	
+	int bytesPerRow					= (bitsPerPixel/8) * tx;
 	NSInteger myDataLength			= bytesPerRow * ty;
-  
-	NSMutableData *buffer	= [[NSMutableData alloc] initWithCapacity:myDataLength];
-	NSMutableData *pixels	= [[NSMutableData alloc] initWithCapacity:myDataLength];
-
+	
+	GLubyte *buffer	= malloc(sizeof(GLubyte)*myDataLength);
+	GLubyte *pixels	= malloc(sizeof(GLubyte)*myDataLength);
+	//GLubyte *buffer = (GLubyte *) malloc(myDataLength);
+	
 	if( ! (buffer && pixels) ) {
 		CCLOG(@"cocos2d: CCRenderTexture#getUIImageFromBuffer: not enough memory");
-		[buffer release];
-		[pixels release];
+		free(buffer);
+		free(pixels);
 		return nil;
 	}
-
+	
 	[self begin];
-	glReadPixels(0,0,tx,ty,GL_RGBA,GL_UNSIGNED_BYTE, [buffer mutableBytes]);
+	glReadPixels(0,0,tx,ty,GL_RGBA,GL_UNSIGNED_BYTE, buffer);
 	[self end];
+	
+	int x,y;
+	
+	for(y = 0; y <ty; y++) {
+		for(x = 0; x <tx * 4; x++) {
+			 pixels[((ty - 1 - y) * tx * 4 + x)] = buffer[(y * 4 * tx + x)];
+		}
+	}
+	
 	/*
 	 CGImageCreate(size_t width, size_t height,
 	 size_t bitsPerComponent, size_t bitsPerPixel, size_t bytesPerRow,
@@ -195,52 +271,33 @@
 	 CGColorRenderingIntent intent)
 	 */
 	// make data provider with data.
-  
-	CGBitmapInfo bitmapInfo			= kCGImageAlphaPremultipliedLast | kCGBitmapByteOrderDefault;
-	CGDataProviderRef provider		= CGDataProviderCreateWithData(NULL, [buffer mutableBytes], myDataLength, NULL);
+	CGBitmapInfo bitmapInfo = kCGImageAlphaPremultipliedLast | kCGBitmapByteOrderDefault;
+	CGDataProviderRef provider		= CGDataProviderCreateWithData(NULL, pixels, myDataLength, NULL);
 	CGColorSpaceRef colorSpaceRef	= CGColorSpaceCreateDeviceRGB();
 	CGImageRef iref					= CGImageCreate(tx, ty,
-                                          bitsPerComponent, bitsPerPixel, bytesPerRow,
-                                          colorSpaceRef, bitmapInfo, provider,
-                                          NULL, false,
-                                          kCGRenderingIntentDefault);
-	/* Create a bitmap context. The context draws into a bitmap which is `width'
-	 pixels wide and `height' pixels high. The number of components for each
-	 pixel is specified by `colorspace', which may also specify a destination
-	 color profile. The number of bits for each component of a pixel is
-	 specified by `bitsPerComponent'. The number of bytes per pixel is equal
-	 to `(bitsPerComponent * number of components + 7)/8'. Each row of the
-	 bitmap consists of `bytesPerRow' bytes, which must be at least `width *
-	 bytes per pixel' bytes; in addition, `bytesPerRow' must be an integer
-	 multiple of the number of bytes per pixel. `data' points a block of
-	 memory at least `bytesPerRow * height' bytes. `bitmapInfo' specifies
-	 whether the bitmap should contain an alpha channel and how it's to be
-	 generated, along with whether the components are floating-point or
-	 integer.
-   
-	 CGContextRef CGBitmapContextCreate(void *data, size_t width,
-	 size_t height, size_t bitsPerComponent, size_t bytesPerRow,
-	 CGColorSpaceRef colorspace, CGBitmapInfo bitmapInfo)
-	 */
-	CGContextRef context			= CGBitmapContextCreate([pixels mutableBytes], tx,
-                                                    ty, CGImageGetBitsPerComponent(iref), CGImageGetBytesPerRow(iref),
-                                                    CGImageGetColorSpace(iref), bitmapInfo);
-	CGContextTranslateCTM(context, 0.0f, ty);
-	CGContextScaleCTM(context, 1.0f, -1.0f);
-	CGContextDrawImage(context, CGRectMake(0.0f, 0.0f, tx, ty), iref);   
-	CGImageRef outputRef			= CGBitmapContextCreateImage(context);
-	UIImage* image					= [[UIImage alloc] initWithCGImage:outputRef];
-  
-	CGImageRelease(iref);
-	CGContextRelease(context);
+													bitsPerComponent, bitsPerPixel, bytesPerRow,
+													colorSpaceRef, bitmapInfo, provider,
+													NULL, false,
+													kCGRenderingIntentDefault);
+	
+	UIImage* image					= [[UIImage alloc] initWithCGImage:iref];
+	
+	CGImageRelease(iref);	
 	CGColorSpaceRelease(colorSpaceRef);
 	CGDataProviderRelease(provider);
-	CGImageRelease(outputRef);
+
+	NSData *data;
 	
-	[pixels release];
-	[buffer release];
-  
-	return [image autorelease];
+	if (format == kCCImageFormatPNG)
+		data = UIImagePNGRepresentation(image);
+	else
+		data = UIImageJPEGRepresentation(image, 1.0f);
+	
+	free(pixels);
+	free(buffer);
+	
+	return data;
 }
+
 #endif // iphone
 @end
