@@ -136,8 +136,8 @@ Class restartAction()
 		// It's possible to modify the RenderTexture blending function by
 //		[[target sprite] setBlendFunc:(ccBlendFunc) {GL_ONE, GL_ONE_MINUS_SRC_ALPHA}];
 		
-		// note that the render texture is a cocosnode, and contains a sprite of it's texture for convience,
-		// so we can just parent it to the scene like any other cocos node
+		// note that the render texture is a CCNode, and contains a sprite of its texture for convience,
+		// so we can just parent it to the scene like any other CCNode
 		[self addChild:target z:1];
 		
 		// create a brush image to draw into the texture with
@@ -190,8 +190,7 @@ Class restartAction()
 	[brush release];
 	[target release];
 	[[CCTextureCache sharedTextureCache] removeUnusedTextures];
-	[super dealloc];
-	
+	[super dealloc];	
 }
 
 
