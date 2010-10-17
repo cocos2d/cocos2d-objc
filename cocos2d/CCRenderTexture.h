@@ -36,7 +36,8 @@
 enum  
 {
 	kCCImageFormatJPG = 0,
-	kCCImageFormatPNG = 1
+	kCCImageFormatPNG = 1,
+	kCCImageFormatRawData =2
 };
 
 
