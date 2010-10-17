@@ -31,7 +31,7 @@
 
 @interface CCRenderTexture (private)
 
--(void) saveGLstate;
+- (void) saveGLstate;
 - (void) restoreGLstate;
 @end
 
@@ -232,7 +232,7 @@
 -(NSData*)getUIImageAsDataFromBuffer:(int) format
 {
 	
-	NSAssert(format == kCCTexture2DPixelFormat_RGBA8888,@"only RGBA8888 can be saved as image");
+	NSAssert(pixelFormat_ == kCCTexture2DPixelFormat_RGBA8888,@"only RGBA8888 can be saved as image");
 	
 	CGSize s = [texture_ contentSizeInPixels];
 	int tx = s.width;
@@ -263,42 +263,55 @@
 	
 	for(y = 0; y <ty; y++) {
 		for(x = 0; x <tx * 4; x++) {
-			 pixels[((ty - 1 - y) * tx * 4 + x)] = buffer[(y * 4 * tx + x)];
+			pixels[((ty - 1 - y) * tx * 4 + x)] = buffer[(y * 4 * tx + x)];
 		}
 	}
 	
-	/*
-	 CGImageCreate(size_t width, size_t height,
-	 size_t bitsPerComponent, size_t bitsPerPixel, size_t bytesPerRow,
-	 CGColorSpaceRef space, CGBitmapInfo bitmapInfo, CGDataProviderRef provider,
-	 const CGFloat decode[], bool shouldInterpolate,
-	 CGColorRenderingIntent intent)
-	 */
-	// make data provider with data.
-	CGBitmapInfo bitmapInfo = kCGImageAlphaPremultipliedLast | kCGBitmapByteOrderDefault;
-	CGDataProviderRef provider		= CGDataProviderCreateWithData(NULL, pixels, myDataLength, NULL);
-	CGColorSpaceRef colorSpaceRef	= CGColorSpaceCreateDeviceRGB();
-	CGImageRef iref					= CGImageCreate(tx, ty,
-													bitsPerComponent, bitsPerPixel, bytesPerRow,
-													colorSpaceRef, bitmapInfo, provider,
-													NULL, false,
-													kCGRenderingIntentDefault);
+	NSData* data;
 	
-	UIImage* image					= [[UIImage alloc] initWithCGImage:iref];
-	
-	CGImageRelease(iref);	
-	CGColorSpaceRelease(colorSpaceRef);
-	CGDataProviderRelease(provider);
-
-	NSData *data;
-	
-	if (format == kCCImageFormatPNG)
-		data = UIImagePNGRepresentation(image);
-	else
-		data = UIImageJPEGRepresentation(image, 1.0f);
-	
-	free(pixels);
-	free(buffer);
+	if (format == kCCImageFormatRawData)
+	{
+		free(buffer);
+		//data frees buffer when it is deallocated
+		data = [NSData dataWithBytesNoCopy:pixels length:myDataLength];
+		
+		
+	}
+	else {
+		
+		/*
+		 CGImageCreate(size_t width, size_t height,
+		 size_t bitsPerComponent, size_t bitsPerPixel, size_t bytesPerRow,
+		 CGColorSpaceRef space, CGBitmapInfo bitmapInfo, CGDataProviderRef provider,
+		 const CGFloat decode[], bool shouldInterpolate,
+		 CGColorRenderingIntent intent)
+		 */
+		// make data provider with data.
+		CGBitmapInfo bitmapInfo = kCGImageAlphaPremultipliedLast | kCGBitmapByteOrderDefault;
+		CGDataProviderRef provider		= CGDataProviderCreateWithData(NULL, pixels, myDataLength, NULL);
+		CGColorSpaceRef colorSpaceRef	= CGColorSpaceCreateDeviceRGB();
+		CGImageRef iref					= CGImageCreate(tx, ty,
+														bitsPerComponent, bitsPerPixel, bytesPerRow,
+														colorSpaceRef, bitmapInfo, provider,
+														NULL, false,
+														kCGRenderingIntentDefault);
+		
+		UIImage* image					= [[UIImage alloc] initWithCGImage:iref];
+		
+		CGImageRelease(iref);	
+		CGColorSpaceRelease(colorSpaceRef);
+		CGDataProviderRelease(provider);
+		
+		
+		
+		if (format == kCCImageFormatPNG)
+			data = UIImagePNGRepresentation(image);
+		else
+			data = UIImageJPEGRepresentation(image, 1.0f);
+		
+		free(pixels);
+		free(buffer);
+	}
 	
 	return data;
 }
