@@ -101,10 +101,6 @@
 
 		// issue #937
 		[sprite_ setBlendFunc:(ccBlendFunc){GL_ONE, GL_ONE_MINUS_SRC_ALPHA}];
-		
-			
-		
-				
 
 		ccglBindFramebuffer(CC_GL_FRAMEBUFFER, oldFBO_);
 	}
@@ -142,7 +138,6 @@
 	glGetIntegerv(CC_GL_FRAMEBUFFER_BINDING, &oldFBO_);
 	ccglBindFramebuffer(CC_GL_FRAMEBUFFER, fbo_);//Will direct drawing to the frame buffer created above
 	
-	//glColorMask(TRUE, TRUE, TRUE, TRUE);
 	CC_ENABLE_DEFAULT_GL_STATES();	
 }
 
@@ -186,7 +181,6 @@
 
 }
 
-
 -(void)clear:(float)r g:(float)g b:(float)b a:(float)a
 {
 	[self begin];
@@ -199,13 +193,11 @@
 -(void) saveGLstate
 {
 	glGetFloatv(GL_COLOR_CLEAR_VALUE,clearColor_); 
-
 }
 
 - (void) restoreGLstate
 {
 	glClearColor(clearColor_[0], clearColor_[1], clearColor_[2], clearColor_[3]);
-
 }
 
 #pragma mark RenderTexture - Save Image
@@ -215,7 +207,6 @@
 {
 	return [self saveBuffer:name format:kCCImageFormatJPG];
 }
-
 
 -(BOOL)saveBuffer:(NSString*)fileName format:(int)format
 {
@@ -274,11 +265,9 @@
 		free(buffer);
 		//data frees buffer when it is deallocated
 		data = [NSData dataWithBytesNoCopy:pixels length:myDataLength];
-		
-		
 	}
-	else {
-		
+	else 
+	{
 		/*
 		 CGImageCreate(size_t width, size_t height,
 		 size_t bitsPerComponent, size_t bitsPerPixel, size_t bytesPerRow,
@@ -302,8 +291,6 @@
 		CGColorSpaceRelease(colorSpaceRef);
 		CGDataProviderRelease(provider);
 		
-		
-		
 		if (format == kCCImageFormatPNG)
 			data = UIImagePNGRepresentation(image);
 		else
@@ -316,5 +303,5 @@
 	return data;
 }
 
-#endif // iphone
+#endif // __IPHONE_OS_VERSION_MAX_ALLOWED
 @end

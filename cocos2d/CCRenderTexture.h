@@ -76,13 +76,17 @@ enum
 /** creates a RenderTexture object with width and height in Points, pixel format is RGBA8888 */
 +(id)renderTextureWithWidth:(int)w height:(int)h;
 
-
 /** initializes a RenderTexture object with width and height in Points and a pixel format, only RGB and RGBA formats are valid */
 -(id)initWithWidth:(int)w height:(int)h pixelFormat:(CCTexture2DPixelFormat) format;
+
+/** starts grabbing */
 -(void)begin;
 
-/** starts rendering to the texture while clearing the texture first. This is more efficient then calling -clear first and then -begin */
+/** starts rendering to the texture while clearing the texture first.
+ This is more efficient then calling -clear first and then -begin */
 -(void)beginWithClear:(float)r g:(float)g b:(float)b a:(float)a;
+
+/** ends grabbing */
 -(void)end;
 
 /** clears the texture with a color */
@@ -96,7 +100,8 @@ enum
 -(BOOL)saveBuffer:(NSString*)name format:(int)format;
 /* get buffer as UIImage, can only save a render buffer which has a RGBA8888 pixel format */
 -(NSData*)getUIImageAsDataFromBuffer:(int) format;
-#endif
+
+#endif // __IPHONE_OS_VERSION_MAX_ALLOWED
 
 @end
 
