@@ -237,7 +237,6 @@
 	
 	GLubyte *buffer	= malloc(sizeof(GLubyte)*myDataLength);
 	GLubyte *pixels	= malloc(sizeof(GLubyte)*myDataLength);
-	//GLubyte *buffer = (GLubyte *) malloc(myDataLength);
 	
 	if( ! (buffer && pixels) ) {
 		CCLOG(@"cocos2d: CCRenderTexture#getUIImageFromBuffer: not enough memory");
@@ -266,9 +265,7 @@
 		//data frees buffer when it is deallocated
 		data = [NSData dataWithBytesNoCopy:pixels length:myDataLength];
 		
-		
-	}
-	else {
+	} else {
 		
 		/*
 		 CGImageCreate(size_t width, size_t height,
