@@ -237,7 +237,6 @@
 	
 	GLubyte *buffer	= malloc(sizeof(GLubyte)*myDataLength);
 	GLubyte *pixels	= malloc(sizeof(GLubyte)*myDataLength);
-	//GLubyte *buffer = (GLubyte *) malloc(myDataLength);
 	
 	if( ! (buffer && pixels) ) {
 		CCLOG(@"cocos2d: CCRenderTexture#getUIImageFromBuffer: not enough memory");
