@@ -146,6 +146,12 @@
 		DCCBF1BB0F6022AE0040855A /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCCBF1BA0F6022AE0040855A /* OpenGLES.framework */; };
 		DCCBF1BD0F6022AE0040855A /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCCBF1BC0F6022AE0040855A /* QuartzCore.framework */; };
 		DCCBF1BF0F6022AE0040855A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCCBF1BE0F6022AE0040855A /* UIKit.framework */; };
+		E02BB543126CA5DA006E46A2 /* ItunesArtwork in Resources */ = {isa = PBXBuildFile; fileRef = E02BB53D126CA5DA006E46A2 /* ItunesArtwork */; };
+		E02BB544126CA5DA006E46A2 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E02BB53E126CA5DA006E46A2 /* Icon@2x.png */; };
+		E02BB545126CA5DA006E46A2 /* Icon-Small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E02BB53F126CA5DA006E46A2 /* Icon-Small@2x.png */; };
+		E02BB546126CA5DA006E46A2 /* Icon-Small.png in Resources */ = {isa = PBXBuildFile; fileRef = E02BB540126CA5DA006E46A2 /* Icon-Small.png */; };
+		E02BB547126CA5DA006E46A2 /* Icon-Small-50.png in Resources */ = {isa = PBXBuildFile; fileRef = E02BB541126CA5DA006E46A2 /* Icon-Small-50.png */; };
+		E02BB548126CA5DA006E46A2 /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = E02BB542126CA5DA006E46A2 /* Icon-72.png */; };
 		E0505069122D44E8005B74CB /* CCAction.h in Headers */ = {isa = PBXBuildFile; fileRef = E0504FC3122D44E7005B74CB /* CCAction.h */; };
 		E050506A122D44E8005B74CB /* CCAction.m in Sources */ = {isa = PBXBuildFile; fileRef = E0504FC4122D44E7005B74CB /* CCAction.m */; };
 		E050506B122D44E8005B74CB /* CCActionCamera.h in Headers */ = {isa = PBXBuildFile; fileRef = E0504FC5122D44E7005B74CB /* CCActionCamera.h */; };
@@ -456,6 +462,12 @@
 		DCCBF1BA0F6022AE0040855A /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		DCCBF1BC0F6022AE0040855A /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		DCCBF1BE0F6022AE0040855A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		E02BB53D126CA5DA006E46A2 /* ItunesArtwork */ = {isa = PBXFileReference; lastKnownFileType = file; path = ItunesArtwork; sourceTree = "<group>"; };
+		E02BB53E126CA5DA006E46A2 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
+		E02BB53F126CA5DA006E46A2 /* Icon-Small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small@2x.png"; sourceTree = "<group>"; };
+		E02BB540126CA5DA006E46A2 /* Icon-Small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small.png"; sourceTree = "<group>"; };
+		E02BB541126CA5DA006E46A2 /* Icon-Small-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small-50.png"; sourceTree = "<group>"; };
+		E02BB542126CA5DA006E46A2 /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72.png"; sourceTree = "<group>"; };
 		E0504FC3122D44E7005B74CB /* CCAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAction.h; sourceTree = "<group>"; };
 		E0504FC4122D44E7005B74CB /* CCAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCAction.m; sourceTree = "<group>"; };
 		E0504FC5122D44E7005B74CB /* CCActionCamera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCActionCamera.h; sourceTree = "<group>"; };
@@ -953,6 +965,12 @@
 		50F4144210692EE7002A0D5E /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				E02BB53D126CA5DA006E46A2 /* ItunesArtwork */,
+				E02BB53E126CA5DA006E46A2 /* Icon@2x.png */,
+				E02BB53F126CA5DA006E46A2 /* Icon-Small@2x.png */,
+				E02BB540126CA5DA006E46A2 /* Icon-Small.png */,
+				E02BB541126CA5DA006E46A2 /* Icon-Small-50.png */,
+				E02BB542126CA5DA006E46A2 /* Icon-72.png */,
 				50F4144310692EE7002A0D5E /* blocks.png */,
 				50F4144410692EE7002A0D5E /* Default.png */,
 				50F4144510692EE7002A0D5E /* fps_images.png */,
@@ -1375,6 +1393,12 @@
 				50F4144910692EE7002A0D5E /* Default.png in Resources */,
 				50F4144A10692EE7002A0D5E /* fps_images.png in Resources */,
 				50F4144B10692EE7002A0D5E /* Icon.png in Resources */,
+				E02BB543126CA5DA006E46A2 /* ItunesArtwork in Resources */,
+				E02BB544126CA5DA006E46A2 /* Icon@2x.png in Resources */,
+				E02BB545126CA5DA006E46A2 /* Icon-Small@2x.png in Resources */,
+				E02BB546126CA5DA006E46A2 /* Icon-Small.png in Resources */,
+				E02BB547126CA5DA006E46A2 /* Icon-Small-50.png in Resources */,
+				E02BB548126CA5DA006E46A2 /* Icon-72.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
