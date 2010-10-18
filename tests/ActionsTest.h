@@ -106,6 +106,10 @@
 {}
 @end
 
+@interface ActionCallBlock : ActionDemo
+{}
+@end
+
 
 @interface ActionFade : ActionDemo
 {}

@@ -45,14 +45,15 @@
 		// blocks are allocated on the stack, and so you must make a copy of the block if it is 
 		// going to be used outside the current scope.  The BCA (Block Copy Autorelease) macro
 		// does this, as follows: [[block copy] autorelease]
-		id blockAction = [CCCallBlock actionWithBlock:BCA(^{
-			[label setString:@"Called Block!"];
-		})];
+		id blockAction = [CCCallBlock actionWithBlock:
+						  ^{
+							  [label setString:@"Called Block!"];
+						  }];
 		
-		void (^reusableBlock)(CCNode*) =  BCA(^(CCNode *n) {
+		void (^reusableBlock)(CCNode*) = ^(CCNode *n) {
 			// do something generic with node
 			CCLOG(@"called reusable block for %@", n);
-		});
+		};
 					
 		// tell the "label" to run the action
 		// The action will be execute once this Layer appears on the screen (not before).

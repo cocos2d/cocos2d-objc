@@ -30,9 +30,9 @@ enum {
 		
 		// Demonstrates reusing a block for multiple menu items, when it's using the CCMultiplexLayer to switch views.
 		__block Layer1* _self = self;
-		void (^reusableBlock)(id) = BCA(^(id sender) {
+		void (^reusableBlock)(id) = ^(id sender) {
 			[(CCMultiplexLayer*)_self->parent_ switchTo:[sender tag]];
-		});
+		};
 		
 		CCMenuItemSprite *item1 = [CCMenuItemSprite itemFromNormalSprite:spriteNormal selectedSprite:spriteSelected disabledSprite:spriteDisabled block:reusableBlock];
 		item1.tag = 1;
@@ -48,9 +48,9 @@ enum {
 		
 		
 		// Font Item
-		CCMenuItem *item4 = [CCMenuItemFont itemFromString: @"I toggle enable items" block:BCA(^(id sender){
+		CCMenuItem *item4 = [CCMenuItemFont itemFromString: @"I toggle enable items" block:^(id sender){
 			_self->disabledItem.isEnabled = ~_self->disabledItem.isEnabled;
-		})];
+		}];
 		
 		// Label Item (CCLabelBMFont)
 		CCLabelBMFont *label = [CCLabelBMFont labelWithString:@"configuration" fntFile:@"bitmapFontTest3.fnt"];
@@ -58,7 +58,7 @@ enum {
 		item5.tag = 3;
 		
 		// Font Item
-		CCMenuItemFont *item6 = [CCMenuItemFont itemFromString: @"Quit" block:BCA(^(id sender){
+		CCMenuItemFont *item6 = [CCMenuItemFont itemFromString: @"Quit" block:^(id sender){
 			[[CCDirector sharedDirector] end];
 			
 			// HA HA... no more terminate on sdk v3.0
@@ -67,7 +67,7 @@ enum {
 				[[UIApplication sharedApplication] performSelector:@selector(terminate)];
 			else
 				NSLog(@"YOU CAN'T TERMINATE YOUR APPLICATION PROGRAMATICALLY in SDK 3.0+");
-		})];
+		}];
 		
 		id color_action = [CCTintBy actionWithDuration:0.5f red:0 green:-255 blue:-255];
 		id color_back = [color_action reverse];
@@ -164,27 +164,27 @@ enum {
 	if( (self=[super init]) ) {
 		
 		for( int i=0;i < 2;i++ ) {
-			CCMenuItemImage *item1 = [CCMenuItemImage itemFromNormalImage:@"btn-play-normal.png" selectedImage:@"btn-play-selected.png" block:BCA(^(id sender){
+			CCMenuItemImage *item1 = [CCMenuItemImage itemFromNormalImage:@"btn-play-normal.png" selectedImage:@"btn-play-selected.png" block:^(id sender){
 				[(CCMultiplexLayer*)parent_ switchTo:0];
-			})];
+			}];
 			
-			CCMenuItemImage *item2 = [CCMenuItemImage itemFromNormalImage:@"btn-highscores-normal.png" selectedImage:@"btn-highscores-selected.png" block:BCA(^(id sender){
+			CCMenuItemImage *item2 = [CCMenuItemImage itemFromNormalImage:@"btn-highscores-normal.png" selectedImage:@"btn-highscores-selected.png" block:^(id sender){
 				CCMenu *menu = (CCMenu*)[sender parent];
 				GLubyte opacity = [menu opacity];
 				if( opacity == 128 )
 					[menu setOpacity: 255];
 				else
 					[menu setOpacity: 128];
-			})];
+			}];
 
-			CCMenuItemImage *item3 = [CCMenuItemImage itemFromNormalImage:@"btn-about-normal.png" selectedImage:@"btn-about-selected.png" block:BCA(^(id sender){
+			CCMenuItemImage *item3 = [CCMenuItemImage itemFromNormalImage:@"btn-about-normal.png" selectedImage:@"btn-about-selected.png" block:^(id sender){
 				alignedH = ! alignedH;
 				
 				if( alignedH )
 					[self alignMenusH];
 				else
 					[self alignMenusV];
-			})];
+			}];
 			
 			item1.scaleX = 1.5f;
 			item2.scaleY = 0.5f;
