@@ -27,9 +27,6 @@
 #import "CCNode.h"
 #import "CCProtocols.h"
 
-#pragma mark -
-#pragma mark CCSpriteFrame
-
 /** A CCSpriteFrame has:
 	- texture: A CCTexture2D that will be used by the CCSprite
 	- rectangle: A rectangle of the texture
@@ -90,66 +87,3 @@
 
 @end
 
-#pragma mark -
-#pragma mark CCAnimation
-
-/** an Animation object used within Sprites to perform animations */
-@interface CCAnimation : NSObject
-{
-	NSString			*name_;
-	float				delay_;
-	NSMutableArray		*frames_;
-}
-
-/** name of the animation */
-@property (nonatomic,readwrite,retain) NSString *name;
-/** delay between frames in seconds. */
-@property (nonatomic,readwrite,assign) float delay;
-/** array of frames */
-@property (nonatomic,readwrite,retain) NSMutableArray *frames;
-
-/** Creates a CCAnimation with a name
- @since v0.99.3
- */
-+(id) animationWithName:(NSString*)name;
-
-/** Creates a CCAnimation with a name and frames
- @since v0.99.3
- */
-+(id) animationWithName:(NSString*)name frames:(NSArray*)frames;
-
-/** Creates a CCAnimation with a name and delay between frames. */
-+(id) animationWithName:(NSString*)name delay:(float)delay;
-
-/** Creates a CCAnimation with a name, delay and an array of CCSpriteFrames. */
-+(id) animationWithName:(NSString*)name delay:(float)delay frames:(NSArray*)frames;
-
-/** Initializes a CCAnimation with a name
- @since v0.99.3
- */
--(id) initWithName:(NSString*)name;
-
-/** Initializes a CCAnimation with a name and frames
- @since v0.99.3
- */
--(id) initWithName:(NSString*)name frames:(NSArray*)frames;
-
-/** Initializes a CCAnimation with a name and delay between frames. */
--(id) initWithName:(NSString*)name delay:(float)delay;
-
-/** Initializes a CCAnimation with a name, delay and an array of CCSpriteFrames. */
--(id) initWithName:(NSString*)name delay:(float)delay frames:(NSArray*)frames;
-
-/** Adds a frame to a CCAnimation. */
--(void) addFrame:(CCSpriteFrame*)frame;
-
-/** Adds a frame with an image filename. Internally it will create a CCSpriteFrame and it will add it.
- Added to facilitate the migration from v0.8 to v0.9.
- */
--(void) addFrameWithFilename:(NSString*)filename;
-
-/** Adds a frame with a texture and a rect. Internally it will create a CCSpriteFrame and it will add it.
- Added to facilitate the migration from v0.8 to v0.9.
- */
--(void) addFrameWithTexture:(CCTexture2D*)texture rect:(CGRect)rect;
-@end

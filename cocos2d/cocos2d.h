@@ -62,6 +62,8 @@
 #import "CCActionProgressTimer.h"
 #import "CCActionPageTurn3D.h"
 
+#import "CCAnimation.h"
+#import "CCAnimationCache.h"
 #import "CCSprite.h"
 #import "CCSpriteFrame.h"
 #import "CCSpriteSheet.h"

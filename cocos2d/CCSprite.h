@@ -339,10 +339,16 @@ typedef enum {
 /** changes the display frame based on an animation and an index. */
 -(void) setDisplayFrame: (NSString*) animationName index:(int) frameIndex;
 
-/** returns an Animation given it's name. */
--(CCAnimation*)animationByName: (NSString*) animationName;
+/** returns an Animation given it's name.
+ 
+ @deprecated Use CCAnimationCache instead. Will be removed in 1.0.1
+ */
+-(CCAnimation*)animationByName: (NSString*) animationName DEPRECATED_ATTRIBUTE;
 
-/** adds an Animation to the Sprite. */
--(void) addAnimation: (CCAnimation*) animation;
+/** adds an Animation to the Sprite.
+ 
+ @deprecated Use CCAnimationCache instead. Will be removed in 1.0.1
+ */
+-(void) addAnimation: (CCAnimation*) animation DEPRECATED_ATTRIBUTE;
 
 @end

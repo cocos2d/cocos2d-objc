@@ -105,7 +105,7 @@ SimpleAudioEngine *soundEngine;
     [blinkAnimFrames addObject:[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"Level_Tom.png"]];
     [blinkAnimFrames addObject:[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"Level_Tom_blink.png"]];
     [blinkAnimFrames addObject:[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"Level_Tom.png"]];
-    CCAnimation *blinkAnimation = [CCAnimation animationWithName:@"blink" delay:0.1f frames:blinkAnimFrames];
+    CCAnimation *blinkAnimation = [CCAnimation animationWithFrames:blinkAnimFrames delay:0.1f];
     [_player runAction:[CCRepeatForever actionWithAction:
                      [CCSequence actions:
                       [CCAnimate actionWithAnimation:blinkAnimation restoreOriginalFrame:NO],
