@@ -35,6 +35,10 @@
 		E01E6A3E121EDCD3001A484F /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E01E6A3D121EDCD3001A484F /* ApplicationServices.framework */; };
 		E01E6B36121EDCED001A484F /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E036A79E121B5C870037C5C6 /* QuartzCore.framework */; };
 		E01E6B49121EDCF4001A484F /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E036A79C121B5C720037C5C6 /* OpenGL.framework */; };
+		E02BBC7D126CD870006E46A2 /* CCAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = E02BBC79126CD870006E46A2 /* CCAnimation.m */; };
+		E02BBC7E126CD870006E46A2 /* CCAnimation.h in Headers */ = {isa = PBXBuildFile; fileRef = E02BBC7A126CD870006E46A2 /* CCAnimation.h */; };
+		E02BBC7F126CD870006E46A2 /* CCAnimationCache.m in Sources */ = {isa = PBXBuildFile; fileRef = E02BBC7B126CD870006E46A2 /* CCAnimationCache.m */; };
+		E02BBC80126CD870006E46A2 /* CCAnimationCache.h in Headers */ = {isa = PBXBuildFile; fileRef = E02BBC7C126CD870006E46A2 /* CCAnimationCache.h */; };
 		E05052B2122D5655005B74CB /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = E076E7B11225EDD000DE0DA2 /* fps_images.png */; };
 		E0505323122D5AE6005B74CB /* 320x480-Splash-angry-01.png in Resources */ = {isa = PBXBuildFile; fileRef = E076E78F1225EDD000DE0DA2 /* 320x480-Splash-angry-01.png */; };
 		E0505324122D5AE6005B74CB /* 320x480-Splash-angry-02.png in Resources */ = {isa = PBXBuildFile; fileRef = E076E7901225EDD000DE0DA2 /* 320x480-Splash-angry-02.png */; };
@@ -3034,6 +3038,10 @@
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		E01E663D121CA00A001A484F /* libcocos2d.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libcocos2d.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		E01E6A3D121EDCD3001A484F /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = System/Library/Frameworks/ApplicationServices.framework; sourceTree = SDKROOT; };
+		E02BBC79126CD870006E46A2 /* CCAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCAnimation.m; sourceTree = "<group>"; };
+		E02BBC7A126CD870006E46A2 /* CCAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAnimation.h; sourceTree = "<group>"; };
+		E02BBC7B126CD870006E46A2 /* CCAnimationCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCAnimationCache.m; sourceTree = "<group>"; };
+		E02BBC7C126CD870006E46A2 /* CCAnimationCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAnimationCache.h; sourceTree = "<group>"; };
 		E036A79C121B5C720037C5C6 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		E036A79E121B5C870037C5C6 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		E0505401122D5AE6005B74CB /* RenderTextureTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RenderTextureTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -3924,6 +3932,10 @@
 		E076E7751225ECB100DE0DA2 /* Sprite Nodes */ = {
 			isa = PBXGroup;
 			children = (
+				E02BBC79126CD870006E46A2 /* CCAnimation.m */,
+				E02BBC7A126CD870006E46A2 /* CCAnimation.h */,
+				E02BBC7B126CD870006E46A2 /* CCAnimationCache.m */,
+				E02BBC7C126CD870006E46A2 /* CCAnimationCache.h */,
 				E076E67A1225EC7400DE0DA2 /* CCSprite.h */,
 				E076E67B1225EC7400DE0DA2 /* CCSprite.m */,
 				E076E67C1225EC7400DE0DA2 /* CCSpriteBatchNode.h */,
@@ -4392,6 +4404,8 @@
 				E076E76D1225EC7400DE0DA2 /* uthash.h in Headers */,
 				E076E76E1225EC7400DE0DA2 /* utlist.h in Headers */,
 				E076E76F1225EC7400DE0DA2 /* ZipUtils.h in Headers */,
+				E02BBC7E126CD870006E46A2 /* CCAnimation.h in Headers */,
+				E02BBC80126CD870006E46A2 /* CCAnimationCache.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7380,6 +7394,8 @@
 				E076E76A1225EC7400DE0DA2 /* TGAlib.m in Sources */,
 				E076E76C1225EC7400DE0DA2 /* TransformUtils.m in Sources */,
 				E076E7701225EC7400DE0DA2 /* ZipUtils.m in Sources */,
+				E02BBC7D126CD870006E46A2 /* CCAnimation.m in Sources */,
+				E02BBC7F126CD870006E46A2 /* CCAnimationCache.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
