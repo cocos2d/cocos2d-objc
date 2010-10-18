@@ -1,5 +1,6 @@
 version 0.99.5-rc0 - XX-XXX-2010
 . [NEW] Director: Added "hook" for notifications or any other kind of object like CCNotifications
+. [NEW] Director: Added "enableRetinaDisplay:(BOOL)enabled"
 . [NEW] EAGLView: Added support for multisampling
 . [NEW] EAGLView: Added support sharegroup
 . [FIX] Node: converToNodeSpace works on RetinaDisplay (issue #1000)

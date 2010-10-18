@@ -434,8 +434,8 @@ enum {
 	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
 		
 	// Enables High Res mode (Retina Display) on iPhone 4 and maintains low res on all other devices
-	if ([UIScreen instancesRespondToSelector:@selector(scale)])
-		[director setContentScaleFactor:[[UIScreen mainScreen] scale]];
+	if( ! [director enableRetinaDisplay:YES] )
+		CCLOG(@"Retina Display Not supported");
 	
 	// display FPS (useful when debugging)
 	[director setDisplayFPS:YES];

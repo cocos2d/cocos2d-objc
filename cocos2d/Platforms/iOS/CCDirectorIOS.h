@@ -163,12 +163,22 @@ typedef enum {
 /** The size in pixels of the surface. It could be different than the screen size.
  High-res devices might have a higher surface size than the screen size.
  In non High-res device the contentScale will be emulated.
- 
- Warning: Emulation of High-Res on iOS < 4 is an EXPERIMENTAL feature.
- 
+
+ The recommend way to enable Retina Display is by using the "enableRetinaDisplay:(BOOL)enabled" method.
+
  @since v0.99.4
  */
 -(void) setContentScaleFactor:(CGFloat)scaleFactor;
+
+/** Will enable Retina Display on devices that supports it.
+ It will enable Retina Display on iPhone4 and iPod Touch 4.
+ It will return YES, if it could enabled it, otherwise it will return NO.
+ 
+ This is the recommened way to enable Retina Display.
+ @since v0.99.5
+ */
+-(BOOL) enableRetinaDisplay:(BOOL)yes;
+
 
 /** returns the content scale factor */
 -(CGFloat) contentScaleFactor;
