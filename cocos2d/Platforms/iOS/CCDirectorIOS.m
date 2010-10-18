@@ -414,16 +414,35 @@ CGFloat	__ccContentScaleFactor = 1;
 		isContentScaleSupported_ = YES;
 	}
 	else
-	{
-		CCLOG(@"cocos2d: WARNING: calling setContentScaleFactor on iOS < 4. Using fallback mechanism");
-		/* on pre-4.0 iOS, use bounds/transform */
-		openGLView_.bounds = CGRectMake(0, 0,
-										openGLView_.bounds.size.width * __ccContentScaleFactor,
-										openGLView_.bounds.size.height * __ccContentScaleFactor);
-		openGLView_.transform = CGAffineTransformScale(openGLView_.transform, 1 / __ccContentScaleFactor, 1 / __ccContentScaleFactor); 
-		
-		isContentScaleSupported_ = NO;
-	}
+		CCLOG(@"cocos2d: 'setContentScaleFactor:' is not supported on this device");
+}
+
+-(BOOL) enableRetinaDisplay:(BOOL)enabled
+{
+	// Already enabled ?
+	if( enabled && __ccContentScaleFactor == 2 )
+		return YES;
+	
+	// Already disabled
+	if( ! enabled && __ccContentScaleFactor == 1 )
+		return YES;
+
+	// iPad doesn't support Retina Display
+	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+		return NO;
+	
+	// setContentScaleFactor is not support.
+	if (! [openGLView_ respondsToSelector:@selector(setContentScaleFactor:)])
+		return NO;
+
+	// SD device
+	if ([[UIScreen mainScreen] scale] == 1.0)
+		return NO;
+
+	float newScale = enabled ? 2 : 1;
+	[self setContentScaleFactor:newScale];
+	
+	return YES;
 }
 
 // overriden, don't call super

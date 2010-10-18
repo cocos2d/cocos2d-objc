@@ -48,8 +48,9 @@
 	// attach the openglView to the director
 	[director setOpenGLView:glView];
 	
-	// To enable Hi-Red mode (iPhone4)
-	//	[director setContentScaleFactor:2];
+	// Enables High Res mode (Retina Display) on iPhone 4 and maintains low res on all other devices
+//	if( ! [director enableRetinaDisplay:YES] )
+//		CCLOG(@"Retina Display Not supported");
 	
 	//
 	// VERY IMPORTANT:
