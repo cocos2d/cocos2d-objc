@@ -14,32 +14,34 @@ enum {
 
 static int sceneIdx=-1;
 static NSString *transitions[] = {
-					@"ActionManual",
-					@"ActionMove",
-					@"ActionRotate",
-					@"ActionScale",
-					@"ActionJump",
-					@"ActionBezier",
-					@"ActionBlink",
-					@"ActionFade",
-					@"ActionTint",
-					@"ActionAnimate",
-					@"ActionSequence",
-					@"ActionSequence2",
-					@"ActionSpawn",
-					@"ActionReverse",
-					@"ActionDelayTime",
-					@"ActionRepeat",
-					@"ActionRepeatForever",
-					@"ActionRotateToRepeat",
-					@"ActionRotateJerk",
-					@"ActionCallFunc",
-					@"ActionCallFuncND",
-					@"ActionReverseSequence",
-					@"ActionReverseSequence2",
-					@"ActionOrbit",
-					@"ActionFollow",
-					@"ActionProperty",
+	
+	@"ActionManual",
+	@"ActionMove",
+	@"ActionRotate",
+	@"ActionScale",
+	@"ActionJump",
+	@"ActionBezier",
+	@"ActionBlink",
+	@"ActionFade",
+	@"ActionTint",
+	@"ActionAnimate",
+	@"ActionSequence",
+	@"ActionSequence2",
+	@"ActionSpawn",
+	@"ActionReverse",
+	@"ActionDelayTime",
+	@"ActionRepeat",
+	@"ActionRepeatForever",
+	@"ActionRotateToRepeat",
+	@"ActionRotateJerk",
+	@"ActionCallFunc",
+	@"ActionCallFuncND",
+	@"ActionCallBlock",
+	@"ActionReverseSequence",
+	@"ActionReverseSequence2",
+	@"ActionOrbit",
+	@"ActionFollow",
+	@"ActionProperty",
 };
 
 Class nextAction()
@@ -856,6 +858,36 @@ Class restartAction()
 -(NSString *) subtitle
 {
 	return @"CallFuncND + removeFromParentAndCleanup. Grossini dissapears in 2s";
+}
+
+@end
+
+@implementation ActionCallBlock
+-(void) onEnter
+{
+	[super onEnter];
+	
+	[self centerSprites:1];
+	
+	id action = [CCSequence actions:
+				 [CCMoveBy actionWithDuration:2 position:ccp(200,0)],
+				 [CCCallBlockN actionWithBlock:
+				  ^(CCNode *node){
+					  CCLOG(@"block called");
+					  [node removeFromParentAndCleanup:YES];
+				  } ],
+				  nil ];
+	[grossini runAction:action];
+}
+
+-(NSString *) title
+{
+	return @"CallBlock";
+}
+
+-(NSString *) subtitle
+{
+	return @"CallBlockN test. Grossini should dissaper in 2 seconds";
 }
 
 @end

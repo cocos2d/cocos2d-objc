@@ -343,7 +343,7 @@
 -(id) initWithBlock:(void(^)())block {
 	if ((self = [super init])) {
 	
-		block_ = [block retain];
+		block_ = [block copy];
 	}
 	return self;
 }
@@ -380,7 +380,7 @@
 -(id) initWithBlock:(void(^)(CCNode *node))block {
 	if ((self = [super init])) {
 	
-		block_ = [block retain];
+		block_ = [block copy];
 	}
 	return self;
 }

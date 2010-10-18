@@ -7,6 +7,7 @@ version 0.99.5-rc0 - XX-XXX-2010
 . [NEW] EAGLView: Added support for multisampling
 . [NEW] EAGLView: Added support sharegroup
 . [NEW] Templates: Install HD, iPad and spotlight icons
+. [FIX] Blocks: Actions and MenuItems copy the blocks instead of retaining it (issue #1007)
 . [FIX] Node: converToNodeSpace works on RetinaDisplay (issue #1000)
 . [FIX] Node: all transform methods uses Points instead of Pixels (issue #999)
 . [FIX] RenderTexture: improved performance, improved logic, no more glMaskColor() bugs (issue #1012)

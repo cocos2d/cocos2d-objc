@@ -135,17 +135,21 @@ typedef void (*CC_CALLBACK_ND)(id, SEL, id, void *);
 
 #if NS_BLOCKS_AVAILABLE
 
-/** Executes a callback using a block
+/** Executes a callback using a block.
  */
 @interface CCCallBlock : CCActionInstant<NSCopying>
 {
 	void (^block_)();
 }
 
-/** creates the action with the specified block, to be used as a callback */
+/** creates the action with the specified block, to be used as a callback.
+ The block will be "copied".
+ */
 +(id) actionWithBlock:(void(^)())block;
 
-/** initialized the action with the specified block, to be used as a callback */
+/** initialized the action with the specified block, to be used as a callback.
+ The block will be "copied".
+ */
 -(id) initWithBlock:(void(^)())block;
 
 /** executes the callback */
@@ -154,17 +158,21 @@ typedef void (*CC_CALLBACK_ND)(id, SEL, id, void *);
 
 @class CCNode;
 
-/** Executes a callback using a block with a single CCNode parameter
+/** Executes a callback using a block with a single CCNode parameter.
  */
 @interface CCCallBlockN : CCActionInstant<NSCopying>
 {
 	void (^block_)(CCNode *);
 }
 
-/** creates the action with the specified block, to be used as a callback */
+/** creates the action with the specified block, to be used as a callback.
+ The block will be "copied".
+ */
 +(id) actionWithBlock:(void(^)(CCNode *node))block;
 
-/** initialized the action with the specified block, to be used as a callback */
+/** initialized the action with the specified block, to be used as a callback.
+ The block will be "copied".
+ */
 -(id) initWithBlock:(void(^)(CCNode *node))block;
 
 /** executes the callback */
