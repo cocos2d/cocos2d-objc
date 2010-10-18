@@ -718,6 +718,12 @@ struct transformValues_ {
 	SET_DIRTY_RECURSIVELY();
 }
 
+-(void)setPositionInPixels:(CGPoint)pos
+{
+	[super setPositionInPixels:pos];
+	SET_DIRTY_RECURSIVELY();
+}
+
 -(void)setRotation:(float)rot
 {
 	[super setRotation:rot];
