@@ -1,8 +1,12 @@
 version 0.99.5-rc0 - XX-XXX-2010
+. [NEW] AnimationCache: New class. It deprecates the CCSprite#animation methods.
+. [NEW] Animation: simplified API. Name is no longer needed. Deprecated API that uses name.
+. [NEW] Animation: Animation has its own file: CCAnimation.m
 . [NEW] Director: Added "hook" for notifications or any other kind of object like CCNotifications
 . [NEW] Director: Added "enableRetinaDisplay:(BOOL)enabled"
 . [NEW] EAGLView: Added support for multisampling
 . [NEW] EAGLView: Added support sharegroup
+. [NEW] Templates: Install HD, iPad and spotlight icons
 . [FIX] Node: converToNodeSpace works on RetinaDisplay (issue #1000)
 . [FIX] Node: all transform methods uses Points instead of Pixels (issue #999)
 . [FIX] RenderTexture: improved performance, improved logic, no more glMaskColor() bugs (issue #1012)

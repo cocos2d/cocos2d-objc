@@ -28,6 +28,7 @@
 #import "CCActionInterval.h"
 #import "CCSprite.h"
 #import "CCSpriteFrame.h"
+#import "CCAnimation.h"
 #import "CCNode.h"
 #import "Support/CGPointExtension.h"
 
@@ -1203,7 +1204,7 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
         [newArray addObject:[[element copy] autorelease]];
     }
 	
-	CCAnimation *newAnim = [CCAnimation animationWithName:animation_.name delay:animation_.delay frames:newArray];
+	CCAnimation *newAnim = [CCAnimation animationWithFrames:newArray delay:animation_.delay];
 	return [[self class] actionWithDuration:duration_ animation:newAnim restoreOriginalFrame:restoreOriginalFrame];
 }
 

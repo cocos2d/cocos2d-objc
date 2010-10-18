@@ -448,7 +448,7 @@ Class restartAction()
 	
 	[self centerSprites:1];
 	
-	CCAnimation* animation = [CCAnimation animationWithName:@"dance"];
+	CCAnimation* animation = [CCAnimation animation];
 	for( int i=1;i<15;i++)
 		[animation addFrameWithFilename: [NSString stringWithFormat:@"grossini_dance_%02d.png", i]];
 	

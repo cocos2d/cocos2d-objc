@@ -2112,6 +2112,10 @@
 		E02BB6C4126CA73F006E46A2 /* Icon-Small.png in Resources */ = {isa = PBXBuildFile; fileRef = E02BB580126CA73F006E46A2 /* Icon-Small.png */; };
 		E02BB6C5126CA73F006E46A2 /* Icon-Small-50.png in Resources */ = {isa = PBXBuildFile; fileRef = E02BB581126CA73F006E46A2 /* Icon-Small-50.png */; };
 		E02BB6C6126CA73F006E46A2 /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = E02BB582126CA73F006E46A2 /* Icon-72.png */; };
+		E02BB6D6126CA93A006E46A2 /* CCAnimationCache.h in Headers */ = {isa = PBXBuildFile; fileRef = E02BB6D4126CA93A006E46A2 /* CCAnimationCache.h */; };
+		E02BB6D7126CA93A006E46A2 /* CCAnimationCache.m in Sources */ = {isa = PBXBuildFile; fileRef = E02BB6D5126CA93A006E46A2 /* CCAnimationCache.m */; };
+		E02BB704126CADEA006E46A2 /* CCAnimation.h in Headers */ = {isa = PBXBuildFile; fileRef = E02BB702126CADEA006E46A2 /* CCAnimation.h */; };
+		E02BB705126CADEA006E46A2 /* CCAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = E02BB703126CADEA006E46A2 /* CCAnimation.m */; };
 		E04C631612382E6B00A4B3E6 /* background3-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E04C631512382E6B00A4B3E6 /* background3-hd.png */; };
 		E04C631712382E6B00A4B3E6 /* background3-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E04C631512382E6B00A4B3E6 /* background3-hd.png */; };
 		E04C631812382E6B00A4B3E6 /* background3-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E04C631512382E6B00A4B3E6 /* background3-hd.png */; };
@@ -4390,6 +4394,10 @@
 		E02BB580126CA73F006E46A2 /* Icon-Small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-Small.png"; path = "Resources/Icon-Small.png"; sourceTree = "<group>"; };
 		E02BB581126CA73F006E46A2 /* Icon-Small-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-Small-50.png"; path = "Resources/Icon-Small-50.png"; sourceTree = "<group>"; };
 		E02BB582126CA73F006E46A2 /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-72.png"; path = "Resources/Icon-72.png"; sourceTree = "<group>"; };
+		E02BB6D4126CA93A006E46A2 /* CCAnimationCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAnimationCache.h; sourceTree = "<group>"; };
+		E02BB6D5126CA93A006E46A2 /* CCAnimationCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCAnimationCache.m; sourceTree = "<group>"; };
+		E02BB702126CADEA006E46A2 /* CCAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAnimation.h; sourceTree = "<group>"; };
+		E02BB703126CADEA006E46A2 /* CCAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCAnimation.m; sourceTree = "<group>"; };
 		E04C631512382E6B00A4B3E6 /* background3-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "background3-hd.png"; sourceTree = "<group>"; };
 		E04C632012382F6100A4B3E6 /* f1-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "f1-hd.png"; sourceTree = "<group>"; };
 		E04C632112382F6100A4B3E6 /* f2-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "f2-hd.png"; sourceTree = "<group>"; };
@@ -5678,7 +5686,7 @@
 			children = (
 				50A24F010F3788C6007CAEB0 /* Base Nodes */,
 				506414C50F9C67C0007A7B24 /* Label Nodes */,
-				506414C40F9C6792007A7B24 /* Sprite Nodes */,
+				506414C40F9C6792007A7B24 /* Sprite & Animation Nodes */,
 				506414C60F9C6A3D007A7B24 /* Menu Nodes */,
 				50A24E890F378119007CAEB0 /* Particle Nodes */,
 				50CFAC3B1023661B00175934 /* TileMap and Parallax Nodes */,
@@ -6184,9 +6192,13 @@
 			name = "Layers, Scenes, Transitions Nodes";
 			sourceTree = "<group>";
 		};
-		506414C40F9C6792007A7B24 /* Sprite Nodes */ = {
+		506414C40F9C6792007A7B24 /* Sprite & Animation Nodes */ = {
 			isa = PBXGroup;
 			children = (
+				E02BB702126CADEA006E46A2 /* CCAnimation.h */,
+				E02BB703126CADEA006E46A2 /* CCAnimation.m */,
+				E02BB6D4126CA93A006E46A2 /* CCAnimationCache.h */,
+				E02BB6D5126CA93A006E46A2 /* CCAnimationCache.m */,
 				509A79950F6188420032F449 /* CCSprite.h */,
 				509A79960F6188420032F449 /* CCSprite.m */,
 				E0C3655911F0AE9B001C08F9 /* CCSpriteBatchNode.h */,
@@ -6198,7 +6210,7 @@
 				502C8BDE10A661E200D137BA /* CCSpriteFrameCache.h */,
 				502C8BDF10A661E200D137BA /* CCSpriteFrameCache.m */,
 			);
-			name = "Sprite Nodes";
+			name = "Sprite & Animation Nodes";
 			sourceTree = "<group>";
 		};
 		506414C50F9C67C0007A7B24 /* Label Nodes */ = {
@@ -7279,6 +7291,8 @@
 				E0E974A51237E4EA00E3E64B /* CCDirectorMac.h in Headers */,
 				E0E974A71237E4EA00E3E64B /* CCEventDispatcher.h in Headers */,
 				E0E974A91237E4EA00E3E64B /* MacGLView.h in Headers */,
+				E02BB6D6126CA93A006E46A2 /* CCAnimationCache.h in Headers */,
+				E02BB704126CADEA006E46A2 /* CCAnimation.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10977,6 +10991,8 @@
 				E0E974A61237E4EA00E3E64B /* CCDirectorMac.m in Sources */,
 				E0E974A81237E4EA00E3E64B /* CCEventDispatcher.m in Sources */,
 				E0E974AA1237E4EA00E3E64B /* MacGLView.m in Sources */,
+				E02BB6D7126CA93A006E46A2 /* CCAnimationCache.m in Sources */,
+				E02BB705126CADEA006E46A2 /* CCAnimation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
