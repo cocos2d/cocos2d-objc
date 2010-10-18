@@ -6,6 +6,10 @@
 //  Copyright ___ORGANIZATIONNAME___ ___YEAR___. All rights reserved.
 //
 
+//
+// RootViewController + iAd
+// If you want to support iAd, use this class as the controller of your iAd
+//
 
 #import "cocos2d.h"
 
@@ -16,26 +20,26 @@
 
 /*
  // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-    if ((self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil])) {
-        // Custom initialization
-    }
-    return self;
-}
-*/
+ - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+	if ((self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil])) {
+	// Custom initialization
+	}
+	return self;
+ }
+ */
 
 /*
-// Implement loadView to create a view hierarchy programmatically, without using a nib.
-- (void)loadView {
-}
-*/
+ // Implement loadView to create a view hierarchy programmatically, without using a nib.
+ - (void)loadView {
+ }
+ */
 
 /*
-// Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
-- (void)viewDidLoad {
-    [super viewDidLoad];
-}
-*/
+ // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
+ - (void)viewDidLoad {
+	[super viewDidLoad];
+ }
+ */
 
 
 // Override to allow orientations other than the default portrait orientation.
@@ -51,9 +55,11 @@
 	
 #if GAME_AUTOROTATION==kGameAutorotationNone
 	//
-	// EAGLView won't be autorotated
+	// EAGLView won't be autorotated.
+	// Since this method should return YES in at least 1 orientation, 
+	// we return YES only in the Portrait orientation
 	//
-	return NO;
+	return ( interfaceOrientation == UIInterfaceOrientationPortrait );
 	
 #elif GAME_AUTOROTATION==kGameAutorotationCCDirector
 	//
@@ -67,8 +73,10 @@
 		[[CCDirector sharedDirector] setDeviceOrientation: kCCDeviceOrientationLandscapeLeft];
 	}
 	
-	return NO;
-
+	// Since this method should return YES in at least 1 orientation, 
+	// we return YES only in the Portrait orientation
+	return ( interfaceOrientation == UIInterfaceOrientationPortrait );
+	
 #elif GAME_AUTOROTATION == kGameAutorotationUIViewController
 	//
 	// EAGLView will be rotated by the UIViewController
@@ -76,19 +84,14 @@
 	// Sample: Autorotate only in landscpe mode
 	//
 	// return YES for the supported orientations
-	if( interfaceOrientation == UIInterfaceOrientationLandscapeLeft ||
-	   interfaceOrientation == UIInterfaceOrientationLandscapeRight )
-		return YES;
 	
-	// Unsupported orientations:
-	// UIInterfaceOrientationPortrait, UIInterfaceOrientationPortraitUpsideDown
-	return NO;
+	return ( UIInterfaceOrientationIsLandscape( interfaceOrientation ) );
 	
 #else
 #error Unknown value in GAME_AUTOROTATION
 	
 #endif // GAME_AUTOROTATION
-
+	
 	
 	// Shold not happen
 	return NO;
@@ -106,10 +109,10 @@
 	///
 	CGRect screenRect = [[UIScreen mainScreen] bounds];
 	CGRect rect;
-
+	
 	if(toInterfaceOrientation == UIInterfaceOrientationPortrait || toInterfaceOrientation == UIInterfaceOrientationPortraitUpsideDown)		
 		rect = screenRect;
-			
+	
 	else if(toInterfaceOrientation == UIInterfaceOrientationLandscapeLeft || toInterfaceOrientation == UIInterfaceOrientationLandscapeRight)
 		rect.size = CGSizeMake( screenRect.size.height, screenRect.size.width );
 	
@@ -146,3 +149,4 @@
 
 
 @end
+
