@@ -177,7 +177,15 @@ typedef enum {
  This is the recommened way to enable Retina Display.
  @since v0.99.5
  */
--(BOOL) enableRetinaDisplay:(BOOL)yes;
+-(BOOL) enableRetinaDisplay:(BOOL)enable;
+
+/** Will force the use of HD graphics on iPad
+ 
+ Experimental stuff.
+ 
+ @since v0.99.5
+ */
+-(BOOL) enableHDiPad:(BOOL)enable;
 
 
 /** returns the content scale factor */
