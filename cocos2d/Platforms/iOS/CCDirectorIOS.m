@@ -427,11 +427,7 @@ CGFloat	__ccContentScaleFactor = 1;
 	if( ! enabled && __ccContentScaleFactor == 1 )
 		return YES;
 
-	// iPad doesn't support Retina Display
-	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-		return NO;
-	
-	// setContentScaleFactor is not support.
+	// setContentScaleFactor is not supported
 	if (! [openGLView_ respondsToSelector:@selector(setContentScaleFactor:)])
 		return NO;
 

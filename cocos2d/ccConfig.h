@@ -59,9 +59,10 @@
  If the .ttf file is not found, then it will use the standard CCFont class
  If disabled, the standard CCFont class will be used.
  
- To enable set it to a value different than 0. Enabled by default.
+ To enable set it to a value different than 0. Disabled by default.
+ If you enable, it will slow down the creation of fonts when iOS >= 4.0
  */
-#define CC_FONT_LABEL_SUPPORT	1
+#define CC_FONT_LABEL_SUPPORT	0
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 #define CC_FONT_LABEL_SUPPORT	0
 #endif
