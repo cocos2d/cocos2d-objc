@@ -168,7 +168,7 @@
 
 
 #pragma mark Layer - Callbacks
--(void) onEnter
+-(void) onEnterTransitionDidFinish
 {
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 	// register 'parent' nodes first
@@ -188,7 +188,7 @@
 #endif
 	
 	// then iterate over all the children
-	[super onEnter];
+	[super onEnterTransitionDidFinish];
 	
 	
 }
