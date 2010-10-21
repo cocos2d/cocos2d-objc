@@ -13,6 +13,7 @@ version 0.99.5-rc0 - XX-XXX-2010
 . [FIX] Node: all transform methods uses Points instead of Pixels (issue #999)
 . [FIX] RenderTexture: improved performance, improved logic, no more glMaskColor() bugs (issue #1012)
 . [FIX] Sprite: setPositionInPixels set to dirty when called (issue #1001)
+. [FIX] Templates: Fixed startup flicker (issue #947)
 . [FIX] Tests: Touch Tests works on RetinaDisplay (issue #1000)
 . [FIX] Tests: box2d tests work with RetinaDisplay
 . [FIX] Transitions: PageTurnTransition re-fixed. No more artifacts. This time is for real (issue #751)
