@@ -468,7 +468,7 @@ static BOOL _mixerRateSet = NO;
 	@synchronized(self) {
 		asynchLoadProgress_ = 0.0f;
 		CDAsynchBufferLoader *loaderOp = [[[CDAsynchBufferLoader alloc] init:loadRequests soundEngine:self] autorelease];
-		NSOperationQueue *opQ = [[[NSOperationQueue alloc] init] autorelease]; //This is going to leak?
+		NSOperationQueue *opQ = [[[NSOperationQueue alloc] init] autorelease];
 		[opQ addOperation:loaderOp];
 	}
 }	
@@ -552,6 +552,9 @@ static BOOL _mixerRateSet = NO;
 		return FALSE;
 	}	
 	
+	_buffers[soundId].format = format;
+	_buffers[soundId].sizeInBytes = size;
+	_buffers[soundId].frequencyInHertz = freq;
 	_buffers[soundId].bufferState = CD_BS_LOADED;
 	CDLOG(@"Denshion::CDSoundEngine -  =============== Buffer Loaded ===============");
 	return TRUE;
@@ -593,6 +596,57 @@ static BOOL _mixerRateSet = NO;
 		return FALSE;
 	}	
 }
+
+-(BOOL) validateBufferId:(int) soundId {
+	if (soundId < 0 || soundId >= bufferTotal) {
+		CDLOG(@"Denshion::CDSoundEngine - validateBufferId buffer outside range %i",soundId);
+		return NO;
+	} else if (_buffers[soundId].bufferState != CD_BS_LOADED) {
+		CDLOG(@"Denshion::CDSoundEngine - validateBufferId invalide buffer state %i",soundId);
+		return NO;
+	} else {
+		return YES;
+	}	
+}	
+
+-(float) bufferDurationInSeconds:(int) soundId {
+	if ([self validateBufferId:soundId]) {
+		float factor = 0.0f;
+		switch (_buffers[soundId].format) {
+			case AL_FORMAT_MONO8:
+				factor = 1.0f;
+				break;
+			case AL_FORMAT_MONO16:
+				factor = 0.5f;
+				break;
+			case AL_FORMAT_STEREO8:
+				factor = 0.5f;
+				break;
+			case AL_FORMAT_STEREO16:
+				factor = 0.25f;
+				break;
+		}	
+		return (float)_buffers[soundId].sizeInBytes/(float)_buffers[soundId].frequencyInHertz * factor;
+	} else {
+		return -1.0f;
+	}	
+}	
+
+-(ALsizei) bufferSizeInBytes:(int) soundId {
+	if ([self validateBufferId:soundId]) {
+		return _buffers[soundId].sizeInBytes;
+	} else {
+		return -1.0f;
+	}	
+}	
+
+-(ALsizei) bufferFrequencyInHertz:(int) soundId {
+	if ([self validateBufferId:soundId]) {
+		return _buffers[soundId].frequencyInHertz;
+	} else {
+		return -1.0f;
+	}	
+}	
 
 - (ALfloat) masterGain {
 	if (mute_) {
@@ -1076,6 +1130,10 @@ static BOOL _mixerRateSet = NO;
 
 -(int) soundId {
 	return _soundId;
+}	
+
+-(float) durationInSeconds {
+	return [_engine bufferDurationInSeconds:_soundId];
 }	
 
 #pragma mark CDSoundSource AudioInterrupt protocol
