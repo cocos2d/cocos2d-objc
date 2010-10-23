@@ -48,7 +48,7 @@
 
 /** Adds a CCAnimation with a name.
  */
--(void) addAnimation:(CCAnimation*)animation forName:(NSString*)name;
+-(void) addAnimation:(CCAnimation*)animation name:(NSString*)name;
 
 /** Deletes a CCAnimation from the cache.
  */

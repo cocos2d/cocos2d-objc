@@ -1,5 +1,5 @@
-version 0.99.5-rc0 - XX-XXX-2010
-. [NEW] AnimationCache: New class. It deprecates the CCSprite#animation methods.
+version 0.99.5-rc0 - 23-Oct-2010
+. [NEW] AnimationCache: New class. It deprecates the CCSprite#animation methods (issue #848)
 . [NEW] Animation: simplified API. Name is no longer needed. Deprecated API that uses name.
 . [NEW] Animation: Animation has its own file: CCAnimation.m
 . [NEW] Director: Added "hook" for notifications or any other kind of object like CCNotifications

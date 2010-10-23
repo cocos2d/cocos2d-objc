@@ -410,6 +410,8 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Author of the transformations caches. world2local, local2world runs faster.
 		fixes for Repeat action. It doesn't skip integer values
 		CocosNode#children is an explicit property
+	* Wayne Marsh:
+		AnimationCache: patch to support animation cache
 	* yarrington:
 		patches for Director
 

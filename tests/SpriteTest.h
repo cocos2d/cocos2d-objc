@@ -213,4 +213,8 @@
 {}
 @end
 
+@interface AnimationCache : SpriteDemo
+{}
+@end
+
 
