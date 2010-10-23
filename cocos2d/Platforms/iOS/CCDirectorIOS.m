@@ -401,15 +401,7 @@ CGFloat	__ccContentScaleFactor = 1;
 	// Based on code snippet from: http://developer.apple.com/iphone/prerelease/library/snippets/sp2010/sp28.html
 	if ([openGLView_ respondsToSelector:@selector(setContentScaleFactor:)])
 	{			
-		// XXX: To avoid compile warning when using Xcode 3.2.2
-		// Version 1.0 will only support Xcode 3.2.3 or newer
-		typedef void (*CC_CONTENT_SCALE)(id, SEL, float);
-		
-		SEL selector = @selector(setContentScaleFactor:);
-		CC_CONTENT_SCALE method = (CC_CONTENT_SCALE) [openGLView_ methodForSelector:selector];
-		method(openGLView_,selector, __ccContentScaleFactor);
-		
-		//		[openGLView_ setContentScaleFactor: contentScaleFactor_];
+		[openGLView_ setContentScaleFactor: __ccContentScaleFactor];
 		
 		isContentScaleSupported_ = YES;
 	}
