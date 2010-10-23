@@ -79,7 +79,7 @@ static CCAnimationCache *sharedAnimationCache_=nil;
 
 #pragma mark CCAnimationCache - load/get/del
 
--(void) addAnimation:(CCAnimation*)animation forName:(NSString*)name
+-(void) addAnimation:(CCAnimation*)animation name:(NSString*)name
 {
 	[animations_ setObject:animation forKey:name];
 }

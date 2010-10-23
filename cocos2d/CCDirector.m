@@ -34,6 +34,7 @@
 #import "CCScheduler.h"
 #import "CCActionManager.h"
 #import "CCTextureCache.h"
+#import "CCAnimationCache.h"
 #import "CCLabelAtlas.h"
 #import "ccMacros.h"
 #import "CCTransition.h"
@@ -427,6 +428,7 @@ static CCDirector *_sharedDirector = nil;
 	[CCLabelBMFont purgeCachedData];
 
 	// Purge all managers
+	[CCAnimationCache purgeSharedAnimationCache];
 	[CCSpriteFrameCache purgeSharedSpriteFrameCache];
 	[CCScheduler purgeSharedScheduler];
 	[CCActionManager purgeSharedManager];
