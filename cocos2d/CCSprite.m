@@ -624,11 +624,11 @@ struct transformValues_ {
 
 #pragma mark CCSprite - CCNode overrides
 
--(id) addChild:(CCSprite*)child z:(int)z tag:(int) aTag
+-(void) addChild:(CCSprite*)child z:(int)z tag:(int) aTag
 {
 	NSAssert( child != nil, @"Argument must be non-nil");
 	
-	id ret = [super addChild:child z:z tag:aTag];
+	[super addChild:child z:z tag:aTag];
 	
 	if( usesBatchNode_ ) {
 		NSAssert( [child isKindOfClass:[CCSprite class]], @"CCSprite only supports CCSprites as children when using CCSpriteBatchNode");
@@ -639,8 +639,6 @@ struct transformValues_ {
 	}
 	
 	hasChildren_ = YES;
-
-	return ret;
 }
 
 -(void) reorderChild:(CCSprite*)child z:(int)z

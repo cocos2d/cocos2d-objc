@@ -122,10 +122,10 @@ enum {
 /*
  * override add:
  */
--(id) addChild:(CCMenuItem*)child z:(int)z tag:(int) aTag
+-(void) addChild:(CCMenuItem*)child z:(int)z tag:(int) aTag
 {
 	NSAssert( [child isKindOfClass:[CCMenuItem class]], @"Menu only supports MenuItem objects as children");
-	return [super addChild:child z:z tag:aTag];
+	[super addChild:child z:z tag:aTag];
 }
 
 - (void) onExit

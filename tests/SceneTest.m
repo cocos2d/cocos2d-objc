@@ -58,14 +58,16 @@
 
 -(void) onPushScene: (id) sender
 {
-	CCScene * scene = [[CCScene node] addChild: [Layer2 node] z:0];
+	CCScene * scene = [CCScene node];
+	[scene addChild: [Layer2 node] z:0];
 	[[CCDirector sharedDirector] pushScene: scene];
 //	[[Director sharedDirector] replaceScene:scene];
 }
 
 -(void) onPushSceneTran: (id) sender
 {
-	CCScene * scene = [[CCScene node] addChild: [Layer2 node] z:0];
+	CCScene * scene = [CCScene node];
+	[scene addChild: [Layer2 node] z:0];
 	[[CCDirector sharedDirector] pushScene: [CCTransitionSlideInT transitionWithDuration:1 scene:scene]];
 }
 
@@ -140,11 +142,14 @@
 
 -(void) onReplaceScene:(id) sender
 {
-	[[CCDirector sharedDirector] replaceScene: [ [CCScene node] addChild: [Layer3 node] z:0] ];
+	CCScene *scene = [CCScene node];
+	[scene addChild: [Layer3 node] z:0];
+	[[CCDirector sharedDirector] replaceScene: scene];
 }
 -(void) onReplaceSceneTran:(id) sender
 {
-	CCScene *s = [[CCScene node] addChild: [Layer3 node] z:0];
+	CCScene *s = [CCScene node];
+	[s addChild: [Layer3 node] z:0];
 	[[CCDirector sharedDirector] replaceScene: [CCTransitionFlipX transitionWithDuration:2 scene:s]];
 }
 @end
