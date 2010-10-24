@@ -31,6 +31,7 @@ BOOL fadingOut;
 		sound1 = [[sae soundSourceForFile:@"dp3.caf"] retain];
 		sound2 = [[sae soundSourceForFile:@"dp1.caf"] retain];
 		sound3 = [[sae soundSourceForFile:@"dp2.caf"] retain];
+		CDLOG(@"Sound 1 duration %0.4f",sound1.durationInSeconds);
 		
 		//Used in test 3
 		fadingOut = YES;
