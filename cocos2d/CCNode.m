@@ -110,7 +110,10 @@
 -(void) setPosition: (CGPoint)newPosition
 {
 	position_ = newPosition;
-	positionInPixels_ = ccpMult( newPosition,  CC_CONTENT_SCALE_FACTOR() );
+	if( CC_CONTENT_SCALE_FACTOR() == 1 )
+		positionInPixels_ = position_;
+	else
+		positionInPixels_ = ccpMult( newPosition,  CC_CONTENT_SCALE_FACTOR() );
 	isTransformDirty_ = isInverseDirty_ = YES;
 #if CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
 	isTransformGLDirty_ = YES;
@@ -123,8 +126,12 @@
 }
 -(void) setPositionInPixels:(CGPoint)newPosition
 {
-	position_ = ccpMult( newPosition, 1/CC_CONTENT_SCALE_FACTOR() );
 	positionInPixels_ = newPosition;
+
+	if( CC_CONTENT_SCALE_FACTOR() == 1 )
+		position_ = positionInPixels_;
+	else
+		position_ = ccpMult( newPosition, 1/CC_CONTENT_SCALE_FACTOR() );
 	isTransformDirty_ = isInverseDirty_ = YES;
 #if CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
 	isTransformGLDirty_ = YES;
@@ -160,7 +167,10 @@
 {
 	if( ! CGSizeEqualToSize(size, contentSize_) ) {
 		contentSize_ = size;
-		contentSizeInPixels_ = CGSizeMake( size.width * CC_CONTENT_SCALE_FACTOR(), size.height * CC_CONTENT_SCALE_FACTOR() );
+		if( CC_CONTENT_SCALE_FACTOR() == 1 )
+			contentSizeInPixels_ = contentSize_;
+		else
+			contentSizeInPixels_ = CGSizeMake( size.width * CC_CONTENT_SCALE_FACTOR(), size.height * CC_CONTENT_SCALE_FACTOR() );
 		anchorPointInPixels_ = ccp( contentSizeInPixels_.width * anchorPoint_.x, contentSizeInPixels_.height * anchorPoint_.y );
 		isTransformDirty_ = isInverseDirty_ = YES;
 #if CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
@@ -176,8 +186,12 @@
 -(void) setContentSizeInPixels:(CGSize)size
 {
 	if( ! CGSizeEqualToSize(size, contentSizeInPixels_) ) {
-		contentSize_ = CGSizeMake( size.width / CC_CONTENT_SCALE_FACTOR(), size.height / CC_CONTENT_SCALE_FACTOR() );
 		contentSizeInPixels_ = size;
+
+		if( CC_CONTENT_SCALE_FACTOR() == 1 )
+			contentSize_ = contentSizeInPixels_;
+		else
+			contentSize_ = CGSizeMake( size.width / CC_CONTENT_SCALE_FACTOR(), size.height / CC_CONTENT_SCALE_FACTOR() );
 		anchorPointInPixels_ = ccp( contentSizeInPixels_.width * anchorPoint_.x, contentSizeInPixels_.height * anchorPoint_.y );
 		isTransformDirty_ = isInverseDirty_ = YES;
 #if CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
@@ -797,16 +811,30 @@
 
 - (CGPoint)convertToNodeSpace:(CGPoint)worldPoint
 {
-	CGPoint ret = ccpMult( worldPoint, CC_CONTENT_SCALE_FACTOR() );
-	ret = CGPointApplyAffineTransform(ret, [self worldToNodeTransform]);
-	return ccpMult( ret, 1/CC_CONTENT_SCALE_FACTOR() );
+	CGPoint ret;
+	if( CC_CONTENT_SCALE_FACTOR() == 1 )
+		ret = CGPointApplyAffineTransform(worldPoint, [self worldToNodeTransform]);
+	else {
+		ret = ccpMult( worldPoint, CC_CONTENT_SCALE_FACTOR() );
+		ret = CGPointApplyAffineTransform(ret, [self worldToNodeTransform]);
+		ret = ccpMult( ret, 1/CC_CONTENT_SCALE_FACTOR() );
+	}
+	
+	return ret;
 }
 
 - (CGPoint)convertToWorldSpace:(CGPoint)nodePoint
 {
-	CGPoint ret = ccpMult( nodePoint, CC_CONTENT_SCALE_FACTOR() );
-	ret = CGPointApplyAffineTransform(ret, [self nodeToWorldTransform]);
-	return ccpMult( ret, 1/CC_CONTENT_SCALE_FACTOR() );
+	CGPoint ret;
+	if( CC_CONTENT_SCALE_FACTOR() == 1 )
+		ret = CGPointApplyAffineTransform(nodePoint, [self nodeToWorldTransform]);
+	else {
+		ret = ccpMult( nodePoint, CC_CONTENT_SCALE_FACTOR() );
+		ret = CGPointApplyAffineTransform(ret, [self nodeToWorldTransform]);
+		ret = ccpMult( ret, 1/CC_CONTENT_SCALE_FACTOR() );
+	}
+	
+	return ret;
 }
 
 - (CGPoint)convertToNodeSpaceAR:(CGPoint)worldPoint
