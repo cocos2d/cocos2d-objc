@@ -265,8 +265,8 @@
 		// userData is always inited as nil
 		userData = nil;
 
-        //initialize parent to nil
-        parent_ = nil;
+		//initialize parent to nil
+		parent_ = nil;
 	}
 	
 	return self;

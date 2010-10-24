@@ -1,4 +1,4 @@
-version 0.99.5-rc0 - 23-Oct-2010
+version 0.99.5-rc0 - 24-Oct-2010
 . [NEW] AnimationCache: New class. It deprecates the CCSprite#animation methods (issue #848)
 . [NEW] Animation: simplified API. Name is no longer needed. Deprecated API that uses name.
 . [NEW] Animation: Animation has its own file: CCAnimation.m
@@ -15,6 +15,7 @@ version 0.99.5-rc0 - 23-Oct-2010
 . [FIX] Node: all transform methods uses Points instead of Pixels (issue #999)
 . [FIX] Node: onEnterTransitionDidFinsih is also called when added a node to a running node (issue #1018)
 . [FIX] Node: addChild returns void, and not self in order to simplify the API
+. [FIX] Node: Initializes parent_ to nil at init time
 . [FIX] RenderTexture: improved performance, improved logic, no more glMaskColor() bugs (issue #1012)
 . [FIX] Sprite: setPositionInPixels set to dirty when called (issue #1001)
 . [FIX] Templates: Fixed startup flicker (issue #947)
