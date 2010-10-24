@@ -43,6 +43,6 @@
  It returns self, so you can chain several addChilds.
  @since v0.8
  */
--(id) addChild: (CCNode*)node z:(int)z parallaxRatio:(CGPoint)c positionOffset:(CGPoint)positionOffset;
+-(void) addChild: (CCNode*)node z:(int)z parallaxRatio:(CGPoint)c positionOffset:(CGPoint)positionOffset;
 
 @end

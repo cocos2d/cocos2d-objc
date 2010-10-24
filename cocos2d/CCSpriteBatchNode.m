@@ -185,18 +185,16 @@ const NSUInteger defaultCapacity = 29;
 }
 
 // override addChild:
--(id) addChild:(CCSprite*)child z:(int)z tag:(int) aTag
+-(void) addChild:(CCSprite*)child z:(int)z tag:(int) aTag
 {
 	NSAssert( child != nil, @"Argument must be non-nil");
 	NSAssert( [child isKindOfClass:[CCSprite class]], @"CCSpriteBatchNode only supports CCSprites as children");
 	NSAssert( child.texture.name == textureAtlas_.texture.name, @"CCSprite is not using the same texture id");
 	
-	id ret = [super addChild:child z:z tag:aTag];
+	[super addChild:child z:z tag:aTag];
 	
 	NSUInteger index = [self atlasIndexForChild:child atZ:z];
-	[self insertChild:child inAtlasAtIndex:index];
-	
-	return ret;
+	[self insertChild:child inAtlasAtIndex:index];	
 }
 
 // override reorderChild

@@ -267,22 +267,19 @@ enum {
 // composition: ADD
 
 /** Adds a child to the container with z-order as 0.
- It returns self, so you can chain several addChilds.
  @since v0.7.1
  */
--(id) addChild: (CCNode*)node;
+-(void) addChild: (CCNode*)node;
 
 /** Adds a child to the container with a z-order
- It returns self, so you can chain several addChilds.
  @since v0.7.1
  */
--(id) addChild: (CCNode*)node z:(int)z;
+-(void) addChild: (CCNode*)node z:(int)z;
 
 /** Adds a child to the container with z order and tag
- It returns self, so you can chain several addChilds.
  @since v0.7.1
  */
--(id) addChild: (CCNode*)node z:(int)z tag:(int)tag;
+-(void) addChild: (CCNode*)node z:(int)z tag:(int)tag;
 
 // composition: REMOVE
 

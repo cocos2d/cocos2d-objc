@@ -496,10 +496,9 @@ int compareInts (const void * a, const void * b)
 	}
 }
 
--(id) addChild: (CCNode*)node z:(int)z tag:(int)tag
+-(void) addChild: (CCNode*)node z:(int)z tag:(int)tag
 {
 	NSAssert(NO, @"addChild: is not supported on CCTMXLayer. Instead use setTileGID:at:/tileAt:");
-	return nil;
 }
 
 -(void) removeChild:(CCSprite*)sprite cleanup:(BOOL)cleanup

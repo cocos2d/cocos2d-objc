@@ -348,7 +348,7 @@
  * If a class want's to extend the 'addChild' behaviour it only needs
  * to override this method
  */
--(id) addChild: (CCNode*) child z:(int)z tag:(int) aTag
+-(void) addChild: (CCNode*) child z:(int)z tag:(int) aTag
 {	
 	NSAssert( child != nil, @"Argument must be non-nil");
 	NSAssert( child.parent == nil, @"child already added. It can't be added again");
@@ -362,21 +362,22 @@
 	
 	[child setParent: self];
 	
-	if( isRunning_ )
+	if( isRunning_ ) {
 		[child onEnter];
-	return self;
+		[child onEnterTransitionDidFinish];
+	}
 }
 
--(id) addChild: (CCNode*) child z:(int)z
+-(void) addChild: (CCNode*) child z:(int)z
 {
 	NSAssert( child != nil, @"Argument must be non-nil");
-	return [self addChild:child z:z tag:child.tag];
+	[self addChild:child z:z tag:child.tag];
 }
 
--(id) addChild: (CCNode*) child
+-(void) addChild: (CCNode*) child
 {
 	NSAssert( child != nil, @"Argument must be non-nil");
-	return [self addChild:child z:child.zOrder tag:child.tag];
+	[self addChild:child z:child.zOrder tag:child.tag];
 }
 
 -(void) removeFromParentAndCleanup:(BOOL)cleanup
