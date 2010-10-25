@@ -48,7 +48,7 @@
 #define RENDER_IN_SUBPIXEL (NSInteger)
 #endif
 
-@interface CCNode (Private)
+@interface CCNode ()
 // lazy allocs
 -(void) childrenAlloc;
 // helper that reorder a child
@@ -479,19 +479,22 @@
 -(void) insertChild:(CCNode*)child z:(int)z
 {
 	NSUInteger index=0;
-	BOOL added = NO;
-	CCNode *a;
-	CCARRAY_FOREACH(children_, a){
-		if ( a.zOrder > z ) {
-			added = YES;
-			[ children_ insertObject:child atIndex:index];
-			break;
-		}
-		index++;
-	}
+	CCNode *a = [children_ lastObject];
 	
-	if( ! added )
+	// quick comparison to improve performance
+	if (!a || a.zOrder <= z) {
 		[children_ addObject:child];
+	}
+	else
+	{
+		CCARRAY_FOREACH(children_, a) {
+			if ( a.zOrder > z ) {
+				[children_ insertObject:child atIndex:index];
+				break;
+			}
+			index++;
+		}
+	}
 	
 	[child _setZOrder:z];
 }

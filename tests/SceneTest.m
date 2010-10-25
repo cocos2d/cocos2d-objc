@@ -39,6 +39,18 @@
 	return self;
 }
 
+-(void) onEnter
+{
+	NSLog(@"Layer1#onEnter");
+	[super onEnter];
+}
+
+-(void) onEnterTransitionDidFinish
+{
+	NSLog(@"Layer1#onEnterTransitionDidFinish");
+	[super onEnterTransitionDidFinish];
+}
+
 -(void) cleanup
 {
 	NSLog(@"Layer1#cleanup");
