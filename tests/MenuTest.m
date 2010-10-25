@@ -170,28 +170,34 @@ enum {
 {
 	if( (self=[super init]) ) {
 			
-		for( int i=0;i < 2;i++ ) {
-			CCMenuItemImage *item1 = [CCMenuItemImage itemFromNormalImage:@"btn-play-normal.png" selectedImage:@"btn-play-selected.png" target:self selector:@selector(menuCallbackBack:)];
-			CCMenuItemImage *item2 = [CCMenuItemImage itemFromNormalImage:@"btn-highscores-normal.png" selectedImage:@"btn-highscores-selected.png" target:self selector:@selector(menuCallbackOpacity:)];
-			CCMenuItemImage *item3 = [CCMenuItemImage itemFromNormalImage:@"btn-about-normal.png" selectedImage:@"btn-about-selected.png" target:self selector:@selector(menuCallbackAlign:)];
-			
-			item1.scaleX = 1.5f;
-			item2.scaleY = 0.5f;
-			item3.scaleX = 0.5f;
-			
-			CCMenu *menu = [CCMenu menuWithItems:item1, item2, item3, nil];
-			
-			menu.tag = kTagMenu;
-			
-			[self addChild:menu z:0 tag:100+i];
-			centeredMenu = menu.position;
-		}
-
-		alignedH = YES;
-		[self alignMenusH];
 	}
 
 	return self;
+}
+
+-(void) onEnter
+{	
+	[super onEnter];
+
+	for( int i=0;i < 2;i++ ) {
+		CCMenuItemImage *item1 = [CCMenuItemImage itemFromNormalImage:@"btn-play-normal.png" selectedImage:@"btn-play-selected.png" target:self selector:@selector(menuCallbackBack:)];
+		CCMenuItemImage *item2 = [CCMenuItemImage itemFromNormalImage:@"btn-highscores-normal.png" selectedImage:@"btn-highscores-selected.png" target:self selector:@selector(menuCallbackOpacity:)];
+		CCMenuItemImage *item3 = [CCMenuItemImage itemFromNormalImage:@"btn-about-normal.png" selectedImage:@"btn-about-selected.png" target:self selector:@selector(menuCallbackAlign:)];
+		
+		item1.scaleX = 1.5f;
+		item2.scaleY = 0.5f;
+		item3.scaleX = 0.5f;
+		
+		CCMenu *menu = [CCMenu menuWithItems:item1, item2, item3, nil];
+		
+		menu.tag = kTagMenu;
+		
+		[self addChild:menu z:0 tag:100+i];
+		centeredMenu = menu.position;
+	}
+	
+	alignedH = YES;
+	[self alignMenusH];
 }
 
 -(void) dealloc

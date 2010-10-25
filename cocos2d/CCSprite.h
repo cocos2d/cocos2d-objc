@@ -336,8 +336,16 @@ typedef enum {
 
 #pragma mark CCSprite - Animation
 
-/** changes the display frame based on an animation and an index. */
--(void) setDisplayFrame: (NSString*) animationName index:(int) frameIndex;
+/** changes the display frame based on an animation and an index.
+ @deprecated Will be removed in 1.0.1. Use setDisplayFrameWithAnimationName:index instead
+ */
+-(void) setDisplayFrame: (NSString*) animationName index:(int) frameIndex DEPRECATED_ATTRIBUTE;
+
+/** changes the display frame with animation name and index.
+ The animation name will be get from the CCAnimationCache
+ @since v0.99.5
+ */
+-(void) setDisplayFrameWithAnimationName:(NSString*)animationName index:(int) frameIndex;
 
 /** returns an Animation given it's name.
  
