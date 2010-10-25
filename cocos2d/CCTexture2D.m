@@ -411,8 +411,13 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 		[string drawInRect:CGRectMake(0, 0, dimensions.width, dimensions.height) withFont:uifont lineBreakMode:UILineBreakModeWordWrap alignment:alignment];
 	}
 	
-	if( ! uifont )
-		CCLOG(@"cocos2d: Texture2D: Font '%@' not found", name);
+	if( ! uifont ) {
+#if CC_FONT_LABEL_SUPPORT
+		NSLog(@"cocos2d: Texture2D: Font '%@' not found. Verify the .ttf name", name);
+#else
+		NSLog(@"cocos2d: Texture2D: Font '%@' not found. Enable CC_FONT_LABEL_SUPPORT in cocos2d/ccConfig.h", name);
+#endif
+	}
 	UIGraphicsPopContext();
 	
 	self = [self initWithData:data pixelFormat:kCCTexture2DPixelFormat_A8 pixelsWide:width pixelsHigh:height contentSize:dimensions];
