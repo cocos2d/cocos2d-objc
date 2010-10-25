@@ -175,6 +175,7 @@ enum {
 	return self;
 }
 
+// Testing issue #1018 and #1021
 -(void) onEnter
 {	
 	[super onEnter];
