@@ -470,7 +470,8 @@ Class restartTransition()
 	// On the other hand "Flip" transitions doesn't work with DepthBuffer > 0
 	EAGLView *glView = [EAGLView viewWithFrame:[window bounds]
 								   pixelFormat:kEAGLColorFormatRGBA8
-								   depthFormat:GL_DEPTH_COMPONENT24_OES];
+								   depthFormat:0 // GL_DEPTH_COMPONENT24_OES
+						];
 	[glView setMultipleTouchEnabled:YES];
 	
 	// connect it to the director
