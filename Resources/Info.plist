@@ -42,5 +42,7 @@
 	</dict>
 	<key>UIStatusBarHidden</key>
 	<true/>
+	<key>UIPrerenderedIcon</key>
+	<true/>
 </dict>
 </plist>
