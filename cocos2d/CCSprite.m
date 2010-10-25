@@ -32,6 +32,7 @@
 #import "CCSpriteFrame.h"
 #import "CCSpriteFrameCache.h"
 #import "CCAnimation.h"
+#import "CCAnimationCache.h"
 #import "CCTextureCache.h"
 #import "Support/CGPointExtension.h"
 #import "CCDrawingPrimitives.h"
@@ -877,9 +878,9 @@ struct transformValues_ {
 }
 
 //
-// CCFrameProtocol protocol
+// Frames
 //
-#pragma mark CCSprite - CCFrameProtocol protocol
+#pragma mark CCSprite - Frames
 
 -(void) setDisplayFrame:(CCSpriteFrame*)frame
 {
@@ -895,6 +896,7 @@ struct transformValues_ {
 	[self setTextureRectInPixels:frame.rectInPixels rotated:frame.rotated untrimmedSize:frame.originalSizeInPixels];
 }
 
+// XXX deprecated
 -(void) setDisplayFrame: (NSString*) animationName index:(int) frameIndex
 {
 	if( ! animations_ )
@@ -907,6 +909,22 @@ struct transformValues_ {
 	
 	[self setDisplayFrame:frame];
 }
+
+-(void) setDisplayFrameWithAnimationName: (NSString*) animationName index:(int) frameIndex
+{
+	NSAssert( animationName, @"CCSprite#setDisplayFrameWithAnimationName. animationName must not be nil");
+	
+	CCAnimation *a = [[CCAnimationCache sharedAnimationCache] animationByName:animationName];
+	
+	NSAssert( a, @"CCSprite#setDisplayFrameWithAnimationName: Frame not found");
+	
+	CCSpriteFrame *frame = [[a frames] objectAtIndex:frameIndex];
+	
+	NSAssert( frame, @"CCSprite#setDisplayFrame. Invalid frame");
+	
+	[self setDisplayFrame:frame];
+}
+
 
 -(BOOL) isFrameDisplayed:(CCSpriteFrame*)frame 
 {
