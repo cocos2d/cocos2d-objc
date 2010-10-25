@@ -267,16 +267,19 @@ enum {
 // composition: ADD
 
 /** Adds a child to the container with z-order as 0.
+ If the child is added to a 'running' node, then 'onEnter' and 'onEnterTransitionDidFinish' will be called immediately.
  @since v0.7.1
  */
 -(void) addChild: (CCNode*)node;
 
-/** Adds a child to the container with a z-order
+/** Adds a child to the container with a z-order.
+ If the child is added to a 'running' node, then 'onEnter' and 'onEnterTransitionDidFinish' will be called immediately.
  @since v0.7.1
  */
 -(void) addChild: (CCNode*)node z:(int)z;
 
-/** Adds a child to the container with z order and tag
+/** Adds a child to the container with z order and tag.
+ If the child is added to a 'running' node, then 'onEnter' and 'onEnterTransitionDidFinish' will be called immediately.
  @since v0.7.1
  */
 -(void) addChild: (CCNode*)node z:(int)z tag:(int)tag;

@@ -334,6 +334,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		migrated all cocos2d code and all test to using the CC namespace
 	* sakamoto.kazuki:
 		2d projection works OK with HighRes. patch.
+		Performance improvement in CCNode#insertChild. patch.
 	* samkass:
 		install_template.sh suports custom directory. patch.
 		install-template can be installed in user directory. patch.

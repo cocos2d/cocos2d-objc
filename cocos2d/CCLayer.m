@@ -189,8 +189,6 @@
 	
 	// then iterate over all the children
 	[super onEnterTransitionDidFinish];
-	
-	
 }
 
 -(void) onExit

@@ -16,6 +16,7 @@ version 0.99.5-rc0 - 24-Oct-2010
 . [FIX] Node: onEnterTransitionDidFinsih is also called when added a node to a running node (issue #1018)
 . [FIX] Node: addChild returns void, and not self in order to simplify the API
 . [FIX] Node: Initializes parent_ to nil at init time
+. [FIX] Node: Performance improvement in insertChild (issue #909)
 . [FIX] RenderTexture: improved performance, improved logic, no more glMaskColor() bugs (issue #1012)
 . [FIX] Sprite: setPositionInPixels set to dirty when called (issue #1001)
 . [FIX] Templates: Fixed startup flicker (issue #947)
