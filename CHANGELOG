@@ -10,7 +10,7 @@ version 0.99.5-rc0 - 25-Oct-2010
 . [NEW] Templates: Install HD, iPad and spotlight icons
 . [FIX] Blocks: Actions and MenuItems copy the blocks instead of retaining it (issue #1007)
 . [FIX] config: FONT_LABEL is disabled by default since it performs really bad on iOS >= 4.0
-. [FIX] Layer: register the events only after the transition finishes (issue #624)
+. [FIX] Layer: register accelerometer onEnterTransitionDidFinsih (issue #624)
 . [FIX] Node: converToNodeSpace works on RetinaDisplay (issue #1000)
 . [FIX] Node: all transform methods uses Points instead of Pixels (issue #999)
 . [FIX] Node: onEnterTransitionDidFinsih is also called when added a node to a running node (issue #1018)
