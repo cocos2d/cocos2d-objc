@@ -65,6 +65,8 @@ enum {
 typedef enum {
 	/** If the emitter is repositioned, the living particles won't be repositioned */
 	kCCPositionTypeFree,
+	/** If the emitter is repositioned, the living particles are positioned according to their node's position */
+	kCCPositionTypeRelative,
 	/** If the emitter is repositioned, the living particles will be repositioned too */
 	kCCPositionTypeGrouped,
 }tCCPositionType;
