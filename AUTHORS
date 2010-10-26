@@ -346,6 +346,8 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	* sflory:
 		new way to added CGImageRef to TextureMgr
 		added unicode support in BitmapFontAtlas
+	* shaydn:
+		Fixed convertoWorld/Node AR methods
 	* shire8bit:
 		PageTurnTransition: fixed artifacts
 	* Sindesso Pty Ltd & David Durbin (http://www.sindesso.com/):

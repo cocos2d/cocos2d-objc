@@ -1,3 +1,6 @@
+version 0.99.5 - xx-Nov-2010
+. [FIX] Node: convertToAR method fixed (issue #1017)
+
 version 0.99.5-rc0 - 25-Oct-2010
 . [NEW] AnimationCache: New class. It deprecates the CCSprite#animation methods (issue #848)
 . [NEW] Animation: simplified API. Name is no longer needed. Deprecated API that uses name.
