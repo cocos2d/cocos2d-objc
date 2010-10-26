@@ -222,7 +222,6 @@
 
 -(NSData*)getUIImageAsDataFromBuffer:(int) format
 {
-	NSAssert(format == kCCTexture2DPixelFormat_RGBA8888,@"only RGBA8888 can be saved as image");
 	NSAssert(pixelFormat_ == kCCTexture2DPixelFormat_RGBA8888,@"only RGBA8888 can be saved as image");
 	
 	CGSize s = [texture_ contentSizeInPixels];
