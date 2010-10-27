@@ -150,7 +150,7 @@ enum {
 	NSInteger tag_;
     
 	// user data field
-	void *userData;
+	void *userData_;
 
 	// Is running
 	BOOL isRunning_;
