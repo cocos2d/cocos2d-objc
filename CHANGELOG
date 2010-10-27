@@ -2,7 +2,8 @@ version 0.99.5 - xx-Nov-2010
 . [NEW] Particles: Added a new type kCCPositionTypeRelative. Useful for "trail" particles. Added Test.
 . [FIX] Node: convertToAR method fixed (issue #1017)
 . [FIX] Node: vertexZ works OK in RetinaDisplay mode
-. [FIX] RenderTexture: removed unneded (and dangerous) assert in getUIImageAsDataFromBuffer
+. [FIX] RenderTexture: removed unneeded and dangerous assert in getUIImageAsDataFromBuffer
+. [FIX] RenderTexture: fixed important memory leak when saving images
 
 version 0.99.5-rc0 - 25-Oct-2010
 . [NEW] AnimationCache: New class. It deprecates the CCSprite#animation methods (issue #848)
