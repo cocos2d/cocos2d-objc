@@ -1,5 +1,6 @@
 version 0.99.5 - xx-Nov-2010
 . [FIX] Node: convertToAR method fixed (issue #1017)
+. [FIX] Node: vertexZ works OK in RetinaDisplay mode
 . [FIX] RenderTexture: removed unneded (and dangerous) assert in getUIImageAsDataFromBuffer
 
 version 0.99.5-rc0 - 25-Oct-2010

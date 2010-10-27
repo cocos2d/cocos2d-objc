@@ -252,7 +252,7 @@ static CCDirector *_sharedDirector = nil;
 			glLoadIdentity();
 			ccglOrtho(0, size.width, 0, size.height, -1024, 1024);
 			glMatrixMode(GL_MODELVIEW);
-			glLoadIdentity();			
+			glLoadIdentity();
 			break;
 
 		case kCCDirectorProjection3D:
