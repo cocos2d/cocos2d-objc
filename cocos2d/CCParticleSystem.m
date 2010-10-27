@@ -382,10 +382,10 @@
 	// position
 	if( positionType_ == kCCPositionTypeFree ) {
 		CGPoint p = [self convertToWorldSpace:CGPointZero];
-		particle->startPos = ccp( p.x * CC_CONTENT_SCALE_FACTOR(), p.y * CC_CONTENT_SCALE_FACTOR() );
+		particle->startPos = ccpMult( p, CC_CONTENT_SCALE_FACTOR() );
 	}
 	else if( positionType_ == kCCPositionTypeRelative ) {
-		particle->startPos = ccp( self.position.x * CC_CONTENT_SCALE_FACTOR(), self.position.y * CC_CONTENT_SCALE_FACTOR() );
+		particle->startPos = ccpMult( position_, CC_CONTENT_SCALE_FACTOR() );
 	}
 	
 	// direction
@@ -488,7 +488,7 @@
 		currentPosition.y *= CC_CONTENT_SCALE_FACTOR();
 	}
 	else if( positionType_ == kCCPositionTypeRelative ) {
-		currentPosition = self.position;
+		currentPosition = position_;
 		currentPosition.x *= CC_CONTENT_SCALE_FACTOR();
 		currentPosition.y *= CC_CONTENT_SCALE_FACTOR();
 	}

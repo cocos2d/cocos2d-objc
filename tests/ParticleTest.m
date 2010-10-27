@@ -106,8 +106,10 @@ Class restartAction()
 		CCMenuItemImage *item3 = [CCMenuItemImage itemFromNormalImage:@"f1.png" selectedImage:@"f2.png" target:self selector:@selector(nextCallback:)];
 		
 		CCMenuItemToggle *item4 = [CCMenuItemToggle itemWithTarget:self selector:@selector(toggleCallback:) items:
-								 [CCMenuItemFont itemFromString: @"Free Movement"],
-								 [CCMenuItemFont itemFromString: @"Grouped Movement"],
+								   [CCMenuItemFont itemFromString: @"Free Movement"],
+								   [CCMenuItemFont itemFromString: @"Relative Movement"],
+								   [CCMenuItemFont itemFromString: @"Grouped Movement"],
+
 								 nil];
 		
 		CCMenu *menu = [CCMenu menuWithItems:item1, item2, item3, item4, nil];
@@ -199,7 +201,9 @@ Class restartAction()
 {
 	if( emitter.positionType == kCCPositionTypeGrouped )
 		emitter.positionType = kCCPositionTypeFree;
-	else
+	else if( emitter.positionType == kCCPositionTypeFree )
+		emitter.positionType = kCCPositionTypeRelative;
+	else if( emitter.positionType == kCCPositionTypeRelative )
 		emitter.positionType = kCCPositionTypeGrouped;
 }
 
