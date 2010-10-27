@@ -522,6 +522,10 @@ struct transformValues_ {
 			prevHonor = [(CCSprite*)p honorParentTransform];
 		}		
 	}
+	else {
+		NSAssert(NO, @"Should not happen");
+		return;
+	}
 	
 	
 	//

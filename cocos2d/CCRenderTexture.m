@@ -296,6 +296,8 @@
 		else
 			data = UIImageJPEGRepresentation(image, 1.0f);
 		
+		[image release];
+		
 		free(pixels);
 		free(buffer);
 	}

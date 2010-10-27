@@ -57,3 +57,7 @@
 @interface CameraCenterTest : TestDemo
 {}
 @end
+
+@interface ConvertToNode : TestDemo
+{}
+@end
