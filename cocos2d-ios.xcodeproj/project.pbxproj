@@ -2470,6 +2470,7 @@
 		E04C651512383CA600A4B3E6 /* background3-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E04C631512382E6B00A4B3E6 /* background3-hd.png */; };
 		E04C651612383CA800A4B3E6 /* background3-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E04C631512382E6B00A4B3E6 /* background3-hd.png */; };
 		E04C651712383CB300A4B3E6 /* background3-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E04C631512382E6B00A4B3E6 /* background3-hd.png */; };
+		E04F5BEA127F20CF008A3D27 /* test_image_rgba4444.pvr.gz in Resources */ = {isa = PBXBuildFile; fileRef = E04F5BE9127F20CF008A3D27 /* test_image_rgba4444.pvr.gz */; };
 		E062F9971247FC5400DE3932 /* grossini_dance_atlas-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E062F9961247FC5400DE3932 /* grossini_dance_atlas-hd.png */; };
 		E062F9A01247FD0300DE3932 /* grossini_dance_atlas-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E062F9961247FC5400DE3932 /* grossini_dance_atlas-hd.png */; };
 		E062F9A11247FD0700DE3932 /* grossini_dance_atlas-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E062F9961247FC5400DE3932 /* grossini_dance_atlas-hd.png */; };
@@ -4447,6 +4448,7 @@
 		E04C632312382F6100A4B3E6 /* r2-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "r2-hd.png"; sourceTree = "<group>"; };
 		E04C640412382F9300A4B3E6 /* b1-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "b1-hd.png"; sourceTree = "<group>"; };
 		E04C640512382F9300A4B3E6 /* b2-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "b2-hd.png"; sourceTree = "<group>"; };
+		E04F5BE9127F20CF008A3D27 /* test_image_rgba4444.pvr.gz */ = {isa = PBXFileReference; lastKnownFileType = archive.gzip; path = test_image_rgba4444.pvr.gz; sourceTree = "<group>"; };
 		E062F9961247FC5400DE3932 /* grossini_dance_atlas-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "grossini_dance_atlas-hd.png"; sourceTree = "<group>"; };
 		E062F9BA124801A300DE3932 /* grossini-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "grossini-hd.png"; sourceTree = "<group>"; };
 		E062F9BB124801A300DE3932 /* grossinis_sister1-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "grossinis_sister1-hd.png"; sourceTree = "<group>"; };
@@ -7164,6 +7166,7 @@
 				E0A4A05411F72D79003B9D29 /* test_image_pvrtc4bpp.pvr */,
 				E0A4A05511F72D79003B9D29 /* test_image_rgb565.pvr */,
 				E0A4A05611F72D79003B9D29 /* test_image_rgba4444.pvr */,
+				E04F5BE9127F20CF008A3D27 /* test_image_rgba4444.pvr.gz */,
 				E0A4A05711F72D79003B9D29 /* test_image_rgba5551.pvr */,
 				E0A4A05811F72D79003B9D29 /* test_image_rgba8888.pvr */,
 				5037AF1C0F49B980004DCA1F /* logo-mipmap.pvr */,
@@ -9713,6 +9716,7 @@
 				E02BB5FE126CA73F006E46A2 /* Icon-Small.png in Resources */,
 				E02BB5FF126CA73F006E46A2 /* Icon-Small-50.png in Resources */,
 				E02BB600126CA73F006E46A2 /* Icon-72.png in Resources */,
+				E04F5BEA127F20CF008A3D27 /* test_image_rgba4444.pvr.gz in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

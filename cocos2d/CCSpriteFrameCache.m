@@ -199,16 +199,28 @@ static CCSpriteFrameCache *sharedSpriteFrameCache_=nil;
 
 -(void) addSpriteFramesWithFile:(NSString*)plist
 {
-	NSString *path = [CCFileUtils fullPathFromRelativePath:plist];
-	NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:path];
+    NSString *path = [CCFileUtils fullPathFromRelativePath:plist];
+    NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:path];
 	
-	NSString *texturePath = [NSString stringWithString:plist];
-	texturePath = [texturePath stringByDeletingPathExtension];
-	texturePath = [texturePath stringByAppendingPathExtension:@"png"];
+    NSString *texturePath = nil;
+    NSDictionary *metadataDict = [dict objectForKey:@"metadata"];
+    if(metadataDict)
+    {
+        // try to read  texture file name from meta data
+        texturePath = [metadataDict objectForKey:@"textureFileName"];
+    }
 	
-	CCTexture2D *texture = [[CCTextureCache sharedTextureCache] addImage:texturePath];
+    if(!texturePath)
+    {
+        // build texture path by replacing file extension
+        texturePath = [NSString stringWithString:plist];
+        texturePath = [texturePath stringByDeletingPathExtension];
+        texturePath = [texturePath stringByAppendingPathExtension:@"png"];        
+    }
 	
-	return [self addSpriteFramesWithDictionary:dict texture:texture];
+    CCTexture2D *texture = [[CCTextureCache sharedTextureCache] addImage:texturePath];
+    
+    return [self addSpriteFramesWithDictionary:dict texture:texture];
 }
 
 -(void) addSpriteFrame:(CCSpriteFrame*)frame name:(NSString*)frameName
