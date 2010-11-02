@@ -152,6 +152,7 @@ BOOL fadingOut;
  Test fading out of background music. The test toggles between starting the music with no fade and fading it out.
  */
 -(void) testFive:(id) sender {
+	
 	CDLOG(@">>Test five");
 	if (![sae isBackgroundMusicPlaying]) {
 		CDLOG(@">> Background music is not playing");
@@ -160,7 +161,9 @@ BOOL fadingOut;
 		[sae playBackgroundMusic:@"bgm.mp3"];
 	} else {
 		[CDXPropertyModifierAction fadeBackgroundMusic:2.0f finalVolume:0.0f curveType:kIT_Exponential shouldStop:YES];
-	}	
+	}
+	
+	//CDLOG(@">>Will play background music? %i",[[CDAudioManager sharedManager] willPlayBackgroundMusic]);
 }
 
 /**
