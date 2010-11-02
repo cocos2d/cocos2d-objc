@@ -846,7 +846,10 @@ static BOOL _mixerRateSet = NO;
 			_sources[sourceIndex].attachedBufferId = buffer;
 			return source;
 		} else {
-			//Something went wrong - set error code and return failure code
+			if (alcGetCurrentContext() == NULL) {
+				CDLOG(@"Denshion::CDSoundEngine - posting bad OpenAL context message");
+				[[NSNotificationCenter defaultCenter] postNotificationName:CD_MSG_BAD_AL_CONTEXT object:nil];
+			}				
 			return CD_NO_SOURCE;
 		}	
 	} else {	
@@ -1108,7 +1111,16 @@ static BOOL _mixerRateSet = NO;
 -(BOOL) play {
 	if (enabled_) {
 		alSourcePlay(_sourceId);
-		return CDSOUNDSOURCE_ERROR_HANDLER;
+		CDSOUNDSOURCE_UPDATE_LAST_ERROR;
+		if (lastError != AL_NO_ERROR) {
+			if (alcGetCurrentContext() == NULL) {
+				CDLOG(@"Denshion::CDSoundSource - posting bad OpenAL context message");
+				[[NSNotificationCenter defaultCenter] postNotificationName:CD_MSG_BAD_AL_CONTEXT object:nil];
+			}	
+			return NO;
+		} else {
+			return YES;
+		}	
 	} else {
 		return NO;
 	}

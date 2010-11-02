@@ -103,6 +103,8 @@ Requirements:
 #define CD_SAMPLE_RATE_BASIC 8000
 #define CD_SAMPLE_RATE_DEFAULT 44100
 
+#define CD_MSG_BAD_AL_CONTEXT @"cdbadalcontext"
+
 enum bufferState {
 	CD_BS_EMPTY = 0,
 	CD_BS_LOADED = 1,
