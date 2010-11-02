@@ -170,6 +170,7 @@ enum {
 		colorBackup = ccWHITE;
 		disabledColor_ = ccc3( 126,126,126);
 		self.label = label;
+		
 	}
 	return self;
 }
@@ -193,15 +194,15 @@ enum {
 }
 -(void) setLabel:(CCNode<CCLabelProtocol, CCRGBAProtocol>*) label
 {
-	[label_ release];
-	label_ = [label retain];
-	[self setContentSize:[label_ contentSize]];
-}
+	if( label != label_ ) {
+		[self removeChild:label_ cleanup:YES];
+		[self addChild:label];
+		
+		label_ = label;
+		label_.anchorPoint = ccp(0,0);
 
-- (void) dealloc
-{
-	[label_ release];
-	[super dealloc];
+		[self setContentSize:[label_ contentSize]];
+	}
 }
 
 -(void) setString:(NSString *)string
@@ -257,11 +258,6 @@ enum {
 	}
     
 	[super setIsEnabled:enabled];
-}
-
--(void) draw
-{
-	[label_ draw];
 }
 
 - (void) setOpacity: (GLubyte)opacity
@@ -392,10 +388,6 @@ enum {
 }
 #endif // NS_BLOCKS_AVAILABLE
 
--(void) dealloc
-{
-	[super dealloc];
-}
 @end
 
 #pragma mark -
@@ -445,30 +437,42 @@ enum {
 #endif // NS_BLOCKS_AVAILABLE
 
 
--(void) dealloc
+-(void) setNormalImage:(CCNode <CCRGBAProtocol>*)image
 {
-	[normalImage_ release];
-	[selectedImage_ release];
-	[disabledImage_ release];
-	
-	[super dealloc];
+	if( image != normalImage_ ) {
+		image.anchorPoint = ccp(0,0);
+		image.visible = YES;
+		
+		[self removeChild:normalImage_ cleanup:YES];
+		[self addChild:image];
+		
+		normalImage_ = image;
+	}
 }
 
--(void) draw
+-(void) setSelectedImage:(CCNode <CCRGBAProtocol>*)image
 {
-	if(isEnabled_) {
-		if( isSelected_ )
-			[selectedImage_ draw];
-		else
-			[normalImage_ draw];
+	if( image != selectedImage_ ) {
+		image.anchorPoint = ccp(0,0);
+		image.visible = NO;
 		
-	} else {
-		if(disabledImage_ != nil)
-			[disabledImage_ draw];
+		[self removeChild:selectedImage_ cleanup:YES];
+		[self addChild:image];
 		
-		// disabled image was not provided
-		else
-			[normalImage_ draw];
+		selectedImage_ = image;
+	}
+}
+
+-(void) setDisabledImage:(CCNode <CCRGBAProtocol>*)image
+{
+	if( image != disabledImage_ ) {
+		image.anchorPoint = ccp(0,0);
+		image.visible = NO;
+		
+		[self removeChild:disabledImage_ cleanup:YES];
+		[self addChild:image];
+		
+		disabledImage_ = image;
 	}
 }
 
@@ -491,10 +495,50 @@ enum {
 {
 	return [normalImage_ opacity];
 }
+
 -(ccColor3B) color
 {
 	return [normalImage_ color];
 }
+
+-(void) selected
+{
+	[super selected];
+	[normalImage_ setVisible:NO];
+	[selectedImage_ setVisible:YES];
+	[disabledImage_ setVisible:NO];
+}
+
+-(void) unselected
+{
+	[super unselected];
+	[normalImage_ setVisible:YES];
+	[selectedImage_ setVisible:NO];
+	[disabledImage_ setVisible:NO];
+}
+
+-(void) setIsEnabled:(BOOL)enabled
+{
+	[super setIsEnabled:enabled];
+
+	if( enabled ) {
+		[normalImage_ setVisible:YES];
+		[selectedImage_ setVisible:NO];
+		[disabledImage_ setVisible:NO];
+
+	} else {
+		if( disabledImage_ ) {
+			[normalImage_ setVisible:NO];
+			[selectedImage_ setVisible:NO];
+			[disabledImage_ setVisible:YES];		
+		} else {
+			[normalImage_ setVisible:YES];
+			[selectedImage_ setVisible:NO];
+			[disabledImage_ setVisible:NO];
+		}
+	}
+}
+
 @end
 
 #pragma mark -

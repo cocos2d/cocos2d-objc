@@ -15,6 +15,7 @@ enum {
 
 #pragma mark -
 #pragma mark MainMenu
+
 @implementation Layer1
 -(id) init
 {
@@ -74,7 +75,7 @@ enum {
 			[child runAction: 
 			 [CCEaseElasticOut actionWithAction:
 			  [CCMoveBy actionWithDuration:2 position:ccp(dstPoint.x - offset,0)]
-									   period: 0.35f]
+										 period: 0.35f]
 			];
 			i++;
 		}
@@ -180,6 +181,9 @@ enum {
 {	
 	[super onEnter];
 
+	// remove previously added children
+	[self removeAllChildrenWithCleanup:YES];
+	
 	for( int i=0;i < 2;i++ ) {
 		CCMenuItemImage *item1 = [CCMenuItemImage itemFromNormalImage:@"btn-play-normal.png" selectedImage:@"btn-play-selected.png" target:self selector:@selector(menuCallbackBack:)];
 		CCMenuItemImage *item2 = [CCMenuItemImage itemFromNormalImage:@"btn-highscores-normal.png" selectedImage:@"btn-highscores-selected.png" target:self selector:@selector(menuCallbackOpacity:)];
@@ -309,83 +313,84 @@ enum {
 @implementation Layer4
 -(id) init
 {
-	[super init];
+	if( (self = [super init] ) ) {
 
-	[CCMenuItemFont setFontName: @"American Typewriter"];
-	[CCMenuItemFont setFontSize:18];
-	CCMenuItemFont *title1 = [CCMenuItemFont itemFromString: @"Sound"];
-    [title1 setIsEnabled:NO];
-	[CCMenuItemFont setFontName: @"Marker Felt"];
-	[CCMenuItemFont setFontSize:34];
-    CCMenuItemToggle *item1 = [CCMenuItemToggle itemWithTarget:self selector:@selector(menuCallback:) items:
-                             [CCMenuItemFont itemFromString: @"On"],
-                             [CCMenuItemFont itemFromString: @"Off"],
-                             nil];
-    
-	[CCMenuItemFont setFontName: @"American Typewriter"];
-	[CCMenuItemFont setFontSize:18];
-	CCMenuItemFont *title2 = [CCMenuItemFont itemFromString: @"Music"];
-    [title2 setIsEnabled:NO];
-	[CCMenuItemFont setFontName: @"Marker Felt"];
-	[CCMenuItemFont setFontSize:34];
-    CCMenuItemToggle *item2 = [CCMenuItemToggle itemWithTarget:self selector:@selector(menuCallback:) items:
-                             [CCMenuItemFont itemFromString: @"On"],
-                             [CCMenuItemFont itemFromString: @"Off"],
-                             nil];
-    
-	[CCMenuItemFont setFontName: @"American Typewriter"];
-	[CCMenuItemFont setFontSize:18];
-	CCMenuItemFont *title3 = [CCMenuItemFont itemFromString: @"Quality"];
-    [title3 setIsEnabled:NO];
-	[CCMenuItemFont setFontName: @"Marker Felt"];
-	[CCMenuItemFont setFontSize:34];
-    CCMenuItemToggle *item3 = [CCMenuItemToggle itemWithTarget:self selector:@selector(menuCallback:) items:
-                             [CCMenuItemFont itemFromString: @"High"],
-                             [CCMenuItemFont itemFromString: @"Low"],
-                             nil];
-    
-	[CCMenuItemFont setFontName: @"American Typewriter"];
-	[CCMenuItemFont setFontSize:18];
-	CCMenuItemFont *title4 = [CCMenuItemFont itemFromString: @"Orientation"];
-    [title4 setIsEnabled:NO];
-	[CCMenuItemFont setFontName: @"Marker Felt"];
-	[CCMenuItemFont setFontSize:34];
-    CCMenuItemToggle *item4 = [CCMenuItemToggle itemWithTarget:self selector:@selector(menuCallback:) items:
-                             [CCMenuItemFont itemFromString: @"Off"], nil];
-	
-	NSArray *more_items = [NSArray arrayWithObjects:
-                             [CCMenuItemFont itemFromString: @"33%"],
-                             [CCMenuItemFont itemFromString: @"66%"],
-                             [CCMenuItemFont itemFromString: @"100%"],
-                             nil];
-	// TIP: you can manipulate the items like any other NSMutableArray
-	[item4.subItems addObjectsFromArray: more_items];
-	
-    // you can change the one of the items by doing this
-    item4.selectedIndex = 2;
-    
-    [CCMenuItemFont setFontName: @"Marker Felt"];
-	[CCMenuItemFont setFontSize:34];
-	
-	CCLabelBMFont *label = [CCLabelBMFont labelWithString:@"go back" fntFile:@"bitmapFontTest3.fnt"];
-	CCMenuItemLabel *back = [CCMenuItemLabel itemWithLabel:label target:self selector:@selector(backCallback:)];
-    
-	CCMenu *menu = [CCMenu menuWithItems:
-                  title1, title2,
-                  item1, item2,
-                  title3, title4,
-                  item3, item4,
-                  back, nil]; // 9 items.
-    [menu alignItemsInColumns:
-     [NSNumber numberWithUnsignedInt:2],
-     [NSNumber numberWithUnsignedInt:2],
-     [NSNumber numberWithUnsignedInt:2],
-     [NSNumber numberWithUnsignedInt:2],
-     [NSNumber numberWithUnsignedInt:1],
-     nil
-    ]; // 2 + 2 + 2 + 2 + 1 = total count of 9.
-    
-	[self addChild: menu];
+		[CCMenuItemFont setFontName: @"American Typewriter"];
+		[CCMenuItemFont setFontSize:18];
+		CCMenuItemFont *title1 = [CCMenuItemFont itemFromString: @"Sound"];
+		[title1 setIsEnabled:NO];
+		[CCMenuItemFont setFontName: @"Marker Felt"];
+		[CCMenuItemFont setFontSize:34];
+		CCMenuItemToggle *item1 = [CCMenuItemToggle itemWithTarget:self selector:@selector(menuCallback:) items:
+								 [CCMenuItemFont itemFromString: @"On"],
+								 [CCMenuItemFont itemFromString: @"Off"],
+								 nil];
+		
+		[CCMenuItemFont setFontName: @"American Typewriter"];
+		[CCMenuItemFont setFontSize:18];
+		CCMenuItemFont *title2 = [CCMenuItemFont itemFromString: @"Music"];
+		[title2 setIsEnabled:NO];
+		[CCMenuItemFont setFontName: @"Marker Felt"];
+		[CCMenuItemFont setFontSize:34];
+		CCMenuItemToggle *item2 = [CCMenuItemToggle itemWithTarget:self selector:@selector(menuCallback:) items:
+								 [CCMenuItemFont itemFromString: @"On"],
+								 [CCMenuItemFont itemFromString: @"Off"],
+								 nil];
+		
+		[CCMenuItemFont setFontName: @"American Typewriter"];
+		[CCMenuItemFont setFontSize:18];
+		CCMenuItemFont *title3 = [CCMenuItemFont itemFromString: @"Quality"];
+		[title3 setIsEnabled:NO];
+		[CCMenuItemFont setFontName: @"Marker Felt"];
+		[CCMenuItemFont setFontSize:34];
+		CCMenuItemToggle *item3 = [CCMenuItemToggle itemWithTarget:self selector:@selector(menuCallback:) items:
+								 [CCMenuItemFont itemFromString: @"High"],
+								 [CCMenuItemFont itemFromString: @"Low"],
+								 nil];
+		
+		[CCMenuItemFont setFontName: @"American Typewriter"];
+		[CCMenuItemFont setFontSize:18];
+		CCMenuItemFont *title4 = [CCMenuItemFont itemFromString: @"Orientation"];
+		[title4 setIsEnabled:NO];
+		[CCMenuItemFont setFontName: @"Marker Felt"];
+		[CCMenuItemFont setFontSize:34];
+		CCMenuItemToggle *item4 = [CCMenuItemToggle itemWithTarget:self selector:@selector(menuCallback:) items:
+								 [CCMenuItemFont itemFromString: @"Off"], nil];
+		
+		NSArray *more_items = [NSArray arrayWithObjects:
+								 [CCMenuItemFont itemFromString: @"33%"],
+								 [CCMenuItemFont itemFromString: @"66%"],
+								 [CCMenuItemFont itemFromString: @"100%"],
+								 nil];
+		// TIP: you can manipulate the items like any other NSMutableArray
+		[item4.subItems addObjectsFromArray: more_items];
+		
+		// you can change the one of the items by doing this
+		item4.selectedIndex = 2;
+		
+		[CCMenuItemFont setFontName: @"Marker Felt"];
+		[CCMenuItemFont setFontSize:34];
+		
+		CCLabelBMFont *label = [CCLabelBMFont labelWithString:@"go back" fntFile:@"bitmapFontTest3.fnt"];
+		CCMenuItemLabel *back = [CCMenuItemLabel itemWithLabel:label target:self selector:@selector(backCallback:)];
+		
+		CCMenu *menu = [CCMenu menuWithItems:
+					  title1, title2,
+					  item1, item2,
+					  title3, title4,
+					  item3, item4,
+					  back, nil]; // 9 items.
+		[menu alignItemsInColumns:
+		 [NSNumber numberWithUnsignedInt:2],
+		 [NSNumber numberWithUnsignedInt:2],
+		 [NSNumber numberWithUnsignedInt:2],
+		 [NSNumber numberWithUnsignedInt:2],
+		 [NSNumber numberWithUnsignedInt:1],
+		 nil
+		]; // 2 + 2 + 2 + 2 + 1 = total count of 9.
+		
+		[self addChild: menu];
+	}
 	
 	return self;
 }
