@@ -31,7 +31,16 @@ extern "C" {
  *
  @since v0.8.1
  */
-int inflateMemory(unsigned char *in, unsigned int inLength, unsigned char **out);
+int ccInflateMemory(unsigned char *in, unsigned int inLength, unsigned char **out);
+
+	
+/** inflates a gzip file in memory
+ *
+ * @returns the length of the deflated buffer
+ *
+ * @since v0.99.5
+ */
+int ccInflateGZipFile(const char *filename, unsigned char **out);
 
 
 #ifdef __cplusplus
