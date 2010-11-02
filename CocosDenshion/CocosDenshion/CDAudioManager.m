@@ -236,6 +236,7 @@ extern void managerInterruptionCallback (void *inUserData, UInt32 interruptionSt
 @interface CDAudioManager (PrivateMethods)
 -(BOOL) audioSessionSetActive:(BOOL) active;
 -(BOOL) audioSessionSetCategory:(NSString*) category;
+-(void) badAlContextHandler;
 @end
 
 
@@ -390,11 +391,23 @@ static BOOL configured = FALSE;
 	
 }	
 
+/**
+ * This method is used to work around various bugs introduced in 4.x OS versions. In some circumstances the 
+ * audio session is interrupted but never resumed, this results in the loss of OpenAL audio when following 
+ * standard practices. If we detect this situation then we will attempt to resume the audio session ourselves.
+ * Known triggers: lock the device then unlock it (iOS 4.2 gm), playback a song using MPMediaPlayer (iOS 4.0)
+ */
+- (void) badAlContextHandler {
+	if (_interrupted && alcGetCurrentContext() == NULL) {
+		CDLOG(@"Denshion::CDAudioManager - bad OpenAL context detected, attempting to resume audio session");
+		[self audioSessionResumed];
+	}	
+}	
+
 - (id) init: (tAudioManagerMode) mode {
 	if ((self = [super init])) {
 		
 		//Initialise the audio session 
-		//AudioSessionInitialize(NULL, NULL,managerInterruptionCallback, self); 
 		AVAudioSession* session = [AVAudioSession sharedInstance];
 		session.delegate = self;
 	
@@ -422,6 +435,10 @@ static BOOL configured = FALSE;
 		//Used to support legacy APIs
 		backgroundMusic = [self audioSourceForChannel:BACKGROUND_MUSIC_CHANNEL];
 		backgroundMusic.delegate = self;
+		
+		//Add handler for bad al context messages, these are posted by the sound engine.
+		[[NSNotificationCenter defaultCenter] addObserver:self	selector:@selector(badAlContextHandler) name:CD_MSG_BAD_AL_CONTEXT object:nil];
+
 	}	
 	return self;		
 }	
