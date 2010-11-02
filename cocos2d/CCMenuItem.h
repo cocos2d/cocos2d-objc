@@ -28,8 +28,6 @@
 #import "CCNode.h"
 #import "CCProtocols.h"
 
-@class CCLabel;
-@class CCLabelAtlas;
 @class CCSprite;
 
 #define kItemSize 32
@@ -94,9 +92,9 @@
 /** An abstract class for "label" CCMenuItemLabel items 
  Any CCNode that supports the CCLabelProtocol protocol can be added.
  Supported nodes:
-   - CCBitmapFontAtlas
+   - CCLabelBMFont
    - CCLabelAtlas
-   - CCLabel
+   - CCLabelTTF
  */
 @interface CCMenuItemLabel : CCMenuItem  <CCRGBAProtocol>
 {
