@@ -24,9 +24,12 @@
 #import "ZipUtils.h"
 #import "../ccMacros.h"
 
+// memory in iPhone is precious
+// Should buffer factor be 1.5 instead of 2 ?
+#define BUFFER_INC_FACTOR (2)
+
 int inflateMemory_(unsigned char *in, unsigned int inLength, unsigned char **out, unsigned int *outLength)
 {
-#if 1
 	/* ret value */
 	int err = Z_OK;
 	
@@ -66,9 +69,6 @@ int inflateMemory_(unsigned char *in, unsigned int inLength, unsigned char **out
 		// not enough memory ?
 		if (err != Z_STREAM_END) {
 			
-			// memory in iPhone is precious
-			// Should buffer factor be 1.5 instead of 2 ?
-#define BUFFER_INC_FACTOR (2)
 			unsigned char *tmp = realloc(*out, bufferSize * BUFFER_INC_FACTOR);
 			
 			/* not enough memory, ouch */
@@ -90,14 +90,10 @@ int inflateMemory_(unsigned char *in, unsigned int inLength, unsigned char **out
 	*outLength = bufferSize - d_stream.avail_out;
     err = inflateEnd(&d_stream);
 	return err;
-#else
-	return 0;
-#endif
 }
 
-int inflateMemory(unsigned char *in, unsigned int inLength, unsigned char **out)
+int ccInflateMemory(unsigned char *in, unsigned int inLength, unsigned char **out)
 {
-#if 1
 	unsigned int outLength = 0;
 	int err = inflateMemory_(in, inLength, out, &outLength);
 	
@@ -120,7 +116,52 @@ int inflateMemory(unsigned char *in, unsigned int inLength, unsigned char **out)
 	}
 	
 	return outLength;
-#else
-	return 0;
-#endif
+}
+
+int ccInflateGZipFile(const char *path, unsigned char **out)
+{
+	int len, err;
+	unsigned int uncompressedLen = 0;
+	unsigned int offset = 0;
+	
+	gzFile inFile = gzopen(path, "rb");
+	if( inFile == NULL ) {
+		CCLOG(@"cocos2d: ZipUtils: error open gzip file: %s", path);
+		return -1;
+	}
+	
+	/* 512k initial decompress buffer */
+	unsigned int bufferSize = 512 * 1024;
+	
+	*out = malloc( bufferSize );
+	if( ! out ) {
+		CCLOG(@"cocos2d: ZipUtils: out of memory");
+		return -1;
+	}
+		
+	for (;;) {
+		len = gzread(inFile, *out + offset, bufferSize);
+		if (len < 0)
+			CCLOG(@"cocos2d: ZipUtils: %s", gzerror(inFile, &err) );
+		if (len == 0)
+			break;
+		
+		offset += len;
+		uncompressedLen += len;
+		
+		unsigned char *tmp = realloc(*out, bufferSize * BUFFER_INC_FACTOR);
+		
+		if( ! tmp ) {
+			CCLOG(@"cocos2d: ZipUtils: out of memory");
+			free( *out );
+			return -1;
+		}
+		
+		*out = tmp;
+	}
+			
+	if (gzclose(inFile) != Z_OK)
+		CCLOG(@"cocos2d: ZipUtils: gzclone failed");
+	
+	return uncompressedLen;
 }

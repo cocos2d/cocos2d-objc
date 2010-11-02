@@ -66,6 +66,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #import "CCConfiguration.h"
 #import "Support/ccUtils.h"
 #import "Support/CCFileUtils.h"
+#import "Support/ZipUtils.h"
 
 #pragma mark -
 #pragma mark CCTexturePVR
@@ -311,63 +312,75 @@ typedef struct _PVRTexHeader
 
 - (id)initWithContentsOfFile:(NSString *)path
 {
-    if((self = [super init]))  
-    { 
-        NSData *data = [NSData dataWithContentsOfFile:path];
+	if((self = [super init]))  
+	{ 
+		NSData *data = [NSData dataWithContentsOfFile:path];
+		NSString *lowerCase = [path lowercaseString];       
 		
-        NSString *lowerCase = [path lowercaseString];        
-        if ( [lowerCase hasSuffix:@".pvr.gz"] || [lowerCase hasSuffix:@".pvrz"] ) 
+        if ( [lowerCase hasSuffix:@".pvrz"]) 
         {
-            const unsigned char *d = [data bytes];   
-            if(!d)
+			const unsigned char *d = [data bytes];   
+			if( !d )
             {
-                CCLOG(@"Failed to load data");
-                [self release];
-                self = nil;
-                return self;
+				CCLOG(@"cocos2d: Failed to load data");
+				[self release];
+				self = nil;
+				return self;
             }
+ 
+			uLongf len = (d[0] << 24) | (d[1] << 16) | (d[2] << 8) | d[3];
+			d+=4;
             
-            uLongf len = (d[0] << 24) | (d[1] << 16) | (d[2] << 8) | d[3];
-            d+=4;
-            
-            NSMutableData *decompressed = [NSMutableData dataWithLength:len];
-            if(!decompressed)
-            {
-                CCLOG(@"Failed to allocate memory for texture");
-                [self release];
-                self = nil;                
-                return self;
+			NSMutableData *decompressed = [NSMutableData dataWithLength:len];
+			if(!decompressed)
+			{
+				CCLOG(@"cocos2d: Failed to allocate memory for texture");
+				[self release];
+				self = nil;  
+				return self;
             }
 			
-            uLongf destlen = len;
-            if(Z_OK != uncompress([decompressed mutableBytes], &destlen, d, [data length]-4))
-            {
-                CCLOG(@"Failed to uncompress data");
-                [self release];
-                self = nil;
-                return self;
-            } 
+			uLongf destlen = len;
+			if(Z_OK != uncompress([decompressed mutableBytes], &destlen, d, [data length]-4))
+			{
+				CCLOG(@"cocos2d: Failed to uncompress data");
+				[self release];
+				self = nil;
+				return self;
+			} 
+			data = decompressed;
+	
+		} else if( [lowerCase hasSuffix:@".pvr.gz"] ) {
 			
-            data = decompressed;                    
-        }
+			unsigned char *buffer;
+			int uncompressedLen = ccInflateGZipFile( [path UTF8String], &buffer );
+			if( uncompressedLen > 0 ) {
+				
+				data = [NSData dataWithBytes:buffer length:uncompressedLen];
+			} else {
+				[self release];
+				self = nil;
+				return self;
+			}
+		}
         
-        imageData_ = ccArrayNew(10);
+		imageData_ = ccArrayNew(10);
         
-        name_ = 0;
-        width_ = height_ = 0;
-        tableFormatIndex_ = -1;
-        hasAlpha_ = FALSE;
-        
-        retainName_ = NO; // cocos2d integration
+		name_ = 0;
+		width_ = height_ = 0;
+		tableFormatIndex_ = -1;
+		hasAlpha_ = FALSE;
+
+		retainName_ = NO; // cocos2d integration
 		
-        if (!data || ![self unpackPVRData:data] || ![self createGLTexture])
-        {
-            [self release];
-            self = nil;
-        }
-    }
-    
-    return self;
+		if (!data || ![self unpackPVRData:data] || ![self createGLTexture])
+		{
+			[self release];
+			self = nil;
+		}
+	}
+
+	return self;
 }
 
 - (id)initWithContentsOfURL:(NSURL *)url
