@@ -28,6 +28,34 @@
 // Should buffer factor be 1.5 instead of 2 ?
 #define BUFFER_INC_FACTOR (2)
 
+
+// helper
+int ccLoadFileIntoMemory(const char *filename, char **out) 
+{ 
+	int size = 0;
+	FILE *f = fopen(filename, "rb");
+	if( !f ) { 
+		*out = NULL;
+		return -1;
+	} 
+
+	fseek(f, 0, SEEK_END);
+	size = ftell(f);
+	fseek(f, 0, SEEK_SET);
+
+	*out = malloc(size);
+	int read = fread(*out, 1, size, f);
+	if( read != size ) { 
+		free(*out);
+		*out = NULL;
+		return -1;
+	}
+
+	fclose(f);
+
+	return size;
+}
+
 int inflateMemory_(unsigned char *in, unsigned int inLength, unsigned char **out, unsigned int *outLength)
 {
 	/* ret value */
@@ -170,4 +198,42 @@ int ccInflateGZipFile(const char *path, unsigned char **out)
 		CCLOG(@"cocos2d: ZipUtils: gzclone failed");
 
 	return offset;
+}
+
+int ccInflateCCZFile(const char *path, unsigned char **out)
+{
+	// load file into memory
+	char *compressed;
+	int fileLen  = ccLoadFileIntoMemory( path, &compressed );
+	if( fileLen < 0 ) {
+		CCLOG(@"cocos2d: Error loading CCZ compressed file");
+	}
+	
+	struct CCZHeader *header = (struct CCZHeader*) compressed;
+
+	if( header->sig[0] != 'C' || header->sig[1] != 'C' || header->sig[2] != 'Z' || header->sig[3] != '!' ) {
+		CCLOG(@"cocos2d: Invalid CCZ file");
+		return -1;
+	}
+	
+	unsigned int len = CFSwapInt32LittleToHost( header->len );
+	
+	*out = malloc( len );
+	if(! *out )
+	{
+		CCLOG(@"cocos2d: Failed to allocate memory for texture");
+		return -1;
+	}
+	
+	uLongf destlen = len;
+	unsigned int source = (int) &header->sig + sizeof(*header);
+	if(Z_OK != uncompress(*out, &destlen, (unsigned char*) source, fileLen - sizeof(struct CCZHeader) ) )
+	{
+		CCLOG(@"cocos2d: Failed to uncompress data");
+		free( *out );
+		*out = NULL;
+		return -1;
+	} 
+	
+	return len;
 }

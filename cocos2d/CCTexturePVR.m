@@ -317,41 +317,10 @@ typedef struct _PVRTexHeader
 		NSData *data = nil;
 		NSString *lowerCase = [path lowercaseString];       
 		
-        if ( [lowerCase hasSuffix:@".pvz"]) 
+        if ( [lowerCase hasSuffix:@".ccz"]) 
         {
-			data = [NSData dataWithContentsOfFile:path];
-			const unsigned char *d = [data bytes];
-			if( !d )
-            {
-				CCLOG(@"cocos2d: Failed to load data");
-				[self release];
-				self = nil;
-				return self;
-            }
- 
-			uLongf len = (d[0] << 24) | (d[1] << 16) | (d[2] << 8) | d[3];
-			d+=4;
-            
-			NSMutableData *decompressed = [NSMutableData dataWithLength:len];
-			if(!decompressed)
-			{
-				CCLOG(@"cocos2d: Failed to allocate memory for texture");
-				[self release];
-				self = nil;  
-				return self;
-            }
-			
-			uLongf destlen = len;
-			if(Z_OK != uncompress([decompressed mutableBytes], &destlen, d, [data length]-4))
-			{
-				CCLOG(@"cocos2d: Failed to uncompress data");
-				[self release];
-				self = nil;
-				return self;
-			} 
-			data = decompressed;
 	
-		} else if( [lowerCase hasSuffix:@".pvr.gz"] ) {
+		} else if( [lowerCase hasSuffix:@".gz"] ) {
 			
 			unsigned char *buffer;
 			int uncompressedLen = ccInflateGZipFile( [path UTF8String], &buffer );
