@@ -19,6 +19,16 @@
 extern "C" {
 #endif	
 	
+	/* XXX: pragma pack ??? */
+	/** @struct CCZHeader
+	 */
+	struct CCZHeader {
+		char			sig[4];				// signature. Should be 'CCZ!' 4 bytes
+		unsigned int	version;			// should be 1
+		unsigned int	compression_type;	// should be 0
+		unsigned int	len;				// size of the uncompressed file
+	};
+	
 /** @file
  * Zip helper functions
  */
@@ -34,7 +44,7 @@ extern "C" {
 int ccInflateMemory(unsigned char *in, unsigned int inLength, unsigned char **out);
 
 	
-/** inflates a gzip file in memory
+/** inflates a GZip file into memory
  *
  * @returns the length of the deflated buffer
  *
@@ -42,6 +52,14 @@ int ccInflateMemory(unsigned char *in, unsigned int inLength, unsigned char **ou
  */
 int ccInflateGZipFile(const char *filename, unsigned char **out);
 
+/** inflates a CCZ file into memory
+ *
+ * @returns the length of the deflated buffer
+ *
+ * @since v0.99.5
+ */
+int ccInflateCCZFile(const char *filename, unsigned char **out);
+	
 
 #ifdef __cplusplus
 }
