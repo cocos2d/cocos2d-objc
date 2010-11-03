@@ -108,16 +108,22 @@ Class restartAction()
 
 -(void) nextCallback: (id) sender
 {
+	CCDirector *director = [CCDirector sharedDirector];	
+	[director enableRetinaDisplay: ! hiRes_ ];
+		
 	CCScene *s = [CCScene node];
 	[s addChild: [nextAction() node]];
-	[[CCDirector sharedDirector] replaceScene: s];
+	[director replaceScene: s];
 }
 
 -(void) backCallback: (id) sender
 {
+	CCDirector *director = [CCDirector sharedDirector];	
+	[director enableRetinaDisplay: ! hiRes_ ];
+
 	CCScene *s = [CCScene node];
 	[s addChild: [backAction() node]];
-	[[CCDirector sharedDirector] replaceScene: s];
+	[director replaceScene: s];
 }
 
 -(NSString*) title
@@ -140,10 +146,15 @@ Class restartAction()
 -(id) init
 {
 	if( (self=[super init]) ) {
+		
+		hiRes_ = YES;
 
 		CGSize size = [[CCDirector sharedDirector] winSize];
+				
+		CGSize sp = [[CCDirector sharedDirector] winSizeInPixels];
+		NSLog(@"screen size: %f x %f", sp.width, sp.height);
 
-		CCSprite *sprite = [CCSprite spriteWithFile:@"grossini.png"];
+		CCSprite *sprite = [CCSprite spriteWithFile:@"background1.jpg"];
 		[self addChild:sprite];
 		
 		[sprite setPosition:ccp(size.width/2, size.height/2)];
@@ -151,9 +162,14 @@ Class restartAction()
 	return self;
 }
 
--(NSString *) title
+-(NSString*) title
 {
-	return @"Standard image";
+	return @"@Scene is HD";
+}
+
+-(NSString *) subtitle
+{
+	return @"Screen size should be 960x640";
 }
 	
 @end
@@ -168,9 +184,14 @@ Class restartAction()
 {
 	if( (self=[super init]) ) {
 		
+		hiRes_ = NO;
+
 		CGSize size = [[CCDirector sharedDirector] winSize];
 		
-		CCSprite *sprite = [CCSprite spriteWithFile:@"bugs/picture.png"];
+		CGSize sp = [[CCDirector sharedDirector] winSizeInPixels];
+		NSLog(@"screen size: %f x %f", sp.width, sp.height);
+		
+		CCSprite *sprite = [CCSprite spriteWithFile:@"background1.jpg"];
 		[self addChild:sprite];
 		
 		[sprite setPosition:ccp(size.width/2, size.height/2)];
@@ -180,12 +201,12 @@ Class restartAction()
 
 -(NSString*) title
 {
-	return @"@2x images";
+	return @"@Scene is SD";
 }
 
 -(NSString *) subtitle
 {
-	return @"Issue #910";
+	return @"Screen size should 480x320";
 }
 
 
@@ -227,7 +248,7 @@ Class restartAction()
 	
 	// Enables High Res mode (Retina Display) on iPhone 4 and maintains low res on all other devices
 	if( ! [director enableRetinaDisplay:YES] )
-		CCLOG(@"Retina Display Not supported");
+		CCLOG(@"This test only works on iPhone4");
 	
 	// make the OpenGLView a child of the main window
 	[window addSubview:glView];
