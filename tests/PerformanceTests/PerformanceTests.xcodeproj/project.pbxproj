@@ -167,6 +167,8 @@
 		50F411A91068D563002A0D5E /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = 50F411A81068D563002A0D5E /* fps_images.png */; };
 		50F48B0D1045AD2F00755CFB /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 50F48B0B1045AD2F00755CFB /* Default.png */; };
 		50F48B0E1045AD2F00755CFB /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 50F48B0C1045AD2F00755CFB /* Icon.png */; };
+		E037D9AA1280E402003D39D7 /* texture1024x1024_rgba4444.pvr.gz in Resources */ = {isa = PBXBuildFile; fileRef = E037D9A81280E402003D39D7 /* texture1024x1024_rgba4444.pvr.gz */; };
+		E037D9AB1280E402003D39D7 /* texture1024x1024_rgba4444.pvz in Resources */ = {isa = PBXBuildFile; fileRef = E037D9A91280E402003D39D7 /* texture1024x1024_rgba4444.pvz */; };
 		E0B0E63211F8C3BB00414246 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 50F48B0B1045AD2F00755CFB /* Default.png */; };
 		E0B0E63311F8C3BB00414246 /* fire-grayscale.png in Resources */ = {isa = PBXBuildFile; fileRef = 501F0DE311527BC6002BB7F1 /* fire-grayscale.png */; };
 		E0B0E63411F8C3BB00414246 /* stars-grayscale.png in Resources */ = {isa = PBXBuildFile; fileRef = 501F0DE411527BC6002BB7F1 /* stars-grayscale.png */; };
@@ -574,6 +576,8 @@
 		50F411A81068D563002A0D5E /* fps_images.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = fps_images.png; path = ../../Resources/Fonts/fps_images.png; sourceTree = SOURCE_ROOT; };
 		50F48B0B1045AD2F00755CFB /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = ../../Resources/Default.png; sourceTree = SOURCE_ROOT; };
 		50F48B0C1045AD2F00755CFB /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon.png; path = ../../Resources/Icon.png; sourceTree = SOURCE_ROOT; };
+		E037D9A81280E402003D39D7 /* texture1024x1024_rgba4444.pvr.gz */ = {isa = PBXFileReference; lastKnownFileType = archive.gzip; name = texture1024x1024_rgba4444.pvr.gz; path = ../../Resources/Images/texture1024x1024_rgba4444.pvr.gz; sourceTree = SOURCE_ROOT; };
+		E037D9A91280E402003D39D7 /* texture1024x1024_rgba4444.pvz */ = {isa = PBXFileReference; lastKnownFileType = file; name = texture1024x1024_rgba4444.pvz; path = ../../Resources/Images/texture1024x1024_rgba4444.pvz; sourceTree = SOURCE_ROOT; };
 		E0B0E64E11F8C3BB00414246 /* TexturePerformance.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TexturePerformance.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E0B0E65311F8C4A400414246 /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
 		E0B0E65411F8C4A400414246 /* AppController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppController.m; sourceTree = "<group>"; };
@@ -883,6 +887,8 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				E037D9A81280E402003D39D7 /* texture1024x1024_rgba4444.pvr.gz */,
+				E037D9A91280E402003D39D7 /* texture1024x1024_rgba4444.pvz */,
 				E0B0E72D11F8D0FE00414246 /* texture512x512_rgba4444.pvr */,
 				E0B0E72E11F8D0FE00414246 /* texture512x512.png */,
 				E0B0E72F11F8D0FE00414246 /* texture1024x1024_rgba4444.pvr */,
@@ -1731,6 +1737,8 @@
 				E0B0E73611F8D0FE00414246 /* texture1024x1024.png in Resources */,
 				E0B0E73711F8D0FE00414246 /* texture2048x2048_rgba4444.pvr in Resources */,
 				E0B0E73811F8D0FE00414246 /* texture2048x2048.png in Resources */,
+				E037D9AA1280E402003D39D7 /* texture1024x1024_rgba4444.pvr.gz in Resources */,
+				E037D9AB1280E402003D39D7 /* texture1024x1024_rgba4444.pvz in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2146,7 +2154,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 3.1;
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
-				SDKROOT = iphoneos4.1;
+				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -2169,7 +2177,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 3.1;
 				PREBINDING = NO;
-				SDKROOT = iphoneos4.1;
+				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
