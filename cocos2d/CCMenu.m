@@ -158,7 +158,6 @@ enum {
 		if ( [item visible] && [item isEnabled] ) {
 			
 			CGPoint local = [item convertToNodeSpace:touchLocation];
-			
 			CGRect r = [item rect];
 			r.origin = CGPointZero;
 			
