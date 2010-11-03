@@ -226,7 +226,7 @@
 			NSAssert( buffer != NULL, @"CCParticleSystem: error decoding textureImageData");
 				
 			unsigned char *deflated = NULL;
-			NSUInteger deflatedLen = inflateMemory(buffer, len, &deflated);
+			NSUInteger deflatedLen = ccInflateMemory(buffer, len, &deflated);
 			free( buffer );
 				
 			NSAssert( deflated != NULL, @"CCParticleSystem: error ungzipping textureImageData");

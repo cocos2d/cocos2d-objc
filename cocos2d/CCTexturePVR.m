@@ -59,11 +59,14 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 #import <Availability.h>
 
+#import <zlib.h>
+
 #import "CCTexturePVR.h"
 #import "ccMacros.h"
 #import "CCConfiguration.h"
 #import "Support/ccUtils.h"
 #import "Support/CCFileUtils.h"
+#import "Support/ZipUtils.h"
 
 #pragma mark -
 #pragma mark CCTexturePVR
@@ -309,28 +312,81 @@ typedef struct _PVRTexHeader
 
 - (id)initWithContentsOfFile:(NSString *)path
 {
-	if((self = [super init]))
-	{
-		NSData *data = [NSData dataWithContentsOfFile:path];
-		imageData_ = ccArrayNew(10);
+	if((self = [super init]))  
+	{ 
+		NSData *data = nil;
+		NSString *lowerCase = [path lowercaseString];       
 		
+        if ( [lowerCase hasSuffix:@".pvz"]) 
+        {
+			data = [NSData dataWithContentsOfFile:path];
+			const unsigned char *d = [data bytes];
+			if( !d )
+            {
+				CCLOG(@"cocos2d: Failed to load data");
+				[self release];
+				self = nil;
+				return self;
+            }
+ 
+			uLongf len = (d[0] << 24) | (d[1] << 16) | (d[2] << 8) | d[3];
+			d+=4;
+            
+			NSMutableData *decompressed = [NSMutableData dataWithLength:len];
+			if(!decompressed)
+			{
+				CCLOG(@"cocos2d: Failed to allocate memory for texture");
+				[self release];
+				self = nil;  
+				return self;
+            }
+			
+			uLongf destlen = len;
+			if(Z_OK != uncompress([decompressed mutableBytes], &destlen, d, [data length]-4))
+			{
+				CCLOG(@"cocos2d: Failed to uncompress data");
+				[self release];
+				self = nil;
+				return self;
+			} 
+			data = decompressed;
+	
+		} else if( [lowerCase hasSuffix:@".pvr.gz"] ) {
+			
+			unsigned char *buffer;
+			int uncompressedLen = ccInflateGZipFile( [path UTF8String], &buffer );
+			if( uncompressedLen > 0 ) {
+				
+				data = [NSData dataWithBytes:buffer length:uncompressedLen];
+				free( buffer );
+			} else {
+				[self release];
+				self = nil;
+				return self;
+			}
+		} else {
+			
+			data = [NSData dataWithContentsOfFile:path];
+		}
+        
+		imageData_ = ccArrayNew(10);
+        
 		name_ = 0;
 		width_ = height_ = 0;
 		tableFormatIndex_ = -1;
 		hasAlpha_ = FALSE;
-		
-		retainName_ = NO; // cocos2d integration
 
+		retainName_ = NO; // cocos2d integration
+		
 		if (!data || ![self unpackPVRData:data] || ![self createGLTexture])
 		{
 			[self release];
 			self = nil;
 		}
 	}
-	
+
 	return self;
 }
-
 
 - (id)initWithContentsOfURL:(NSURL *)url
 {

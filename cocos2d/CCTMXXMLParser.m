@@ -395,7 +395,7 @@
 		
 		if( layerAttribs & TMXLayerAttribGzip ) {
 			unsigned char *deflated;
-			inflateMemory(buffer, len, &deflated);
+			ccInflateMemory(buffer, len, &deflated);
 			free( buffer );
 			
 			if( ! deflated ) {
