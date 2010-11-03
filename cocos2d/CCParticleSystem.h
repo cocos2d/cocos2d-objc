@@ -434,5 +434,8 @@ typedef void (*CC_UPDATE_PARTICLE_IMP)(id, SEL, tCCParticle*, CGPoint);
 //! should be overriden by subclasses
 -(void) postStep;
 
+//! called in every loop.
+-(void) update: (ccTime) dt;
+
 @end
 
