@@ -2140,6 +2140,8 @@
 		E02BC2C91270E489006E46A2 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 503092B210447296005F7AFC /* libz.dylib */; };
 		E02BC2D61270E538006E46A2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B2CB170E10EE0800AE9530 /* main.m */; };
 		E02BC2EA1270E704006E46A2 /* Bug-624.m in Sources */ = {isa = PBXBuildFile; fileRef = E02BC2E91270E704006E46A2 /* Bug-624.m */; };
+		E037D9E81281BBE8003D39D7 /* background1-hd.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E0704C29123821EE009C628B /* background1-hd.jpg */; };
+		E037D9E91281BBE8003D39D7 /* background1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 50A252290F38B8DC007CAEB0 /* background1.jpg */; };
 		E04C631612382E6B00A4B3E6 /* background3-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E04C631512382E6B00A4B3E6 /* background3-hd.png */; };
 		E04C631712382E6B00A4B3E6 /* background3-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E04C631512382E6B00A4B3E6 /* background3-hd.png */; };
 		E04C631812382E6B00A4B3E6 /* background3-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E04C631512382E6B00A4B3E6 /* background3-hd.png */; };
@@ -10756,6 +10758,8 @@
 				E02BB670126CA73F006E46A2 /* Icon-Small.png in Resources */,
 				E02BB671126CA73F006E46A2 /* Icon-Small-50.png in Resources */,
 				E02BB672126CA73F006E46A2 /* Icon-72.png in Resources */,
+				E037D9E81281BBE8003D39D7 /* background1-hd.jpg in Resources */,
+				E037D9E91281BBE8003D39D7 /* background1.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

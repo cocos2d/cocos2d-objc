@@ -9,6 +9,7 @@
 
 @interface HiResDemo: CCLayer
 {
+	BOOL	hiRes_;
 }
 -(NSString*) title;
 -(NSString*) subtitle;
