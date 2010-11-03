@@ -251,8 +251,6 @@ float calculateDeltaTime( struct timeval *lastUpdate )
 	[cache removeTexture:texture];
 	
 
-	
-	
 	printf("\n\n--- PNG 1024x1024 ---\n");
 	[self performTestsPNG:@"texture1024x1024.png"];
 	
@@ -260,6 +258,26 @@ float calculateDeltaTime( struct timeval *lastUpdate )
 	printf("RGBA 4444");
 	gettimeofday(&now, NULL);	
 	texture = [cache addImage:@"texture1024x1024_rgba4444.pvr"];
+	if( texture )
+		printf("  ms:%f\n", calculateDeltaTime(&now) );
+	else
+		printf("ERROR\n");
+	[cache removeTexture:texture];
+
+	printf("--- PVR.GZ 1024x1024 ---\n");
+	printf("RGBA 4444");
+	gettimeofday(&now, NULL);	
+	texture = [cache addImage:@"texture1024x1024_rgba4444.pvr.gz"];
+	if( texture )
+		printf("  ms:%f\n", calculateDeltaTime(&now) );
+	else
+		printf("ERROR\n");
+	[cache removeTexture:texture];
+
+	printf("--- PVZ 1024x1024 ---\n");
+	printf("RGBA 4444");
+	gettimeofday(&now, NULL);	
+	texture = [cache addImage:@"texture1024x1024_rgba4444.pvz"];
 	if( texture )
 		printf("  ms:%f\n", calculateDeltaTime(&now) );
 	else

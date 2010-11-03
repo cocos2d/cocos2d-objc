@@ -120,8 +120,7 @@ int ccInflateMemory(unsigned char *in, unsigned int inLength, unsigned char **ou
 
 int ccInflateGZipFile(const char *path, unsigned char **out)
 {
-	int len, err;
-	unsigned int uncompressedLen = 0;
+	int len;
 	unsigned int offset = 0;
 	
 	gzFile inFile = gzopen(path, "rb");
@@ -130,8 +129,9 @@ int ccInflateGZipFile(const char *path, unsigned char **out)
 		return -1;
 	}
 	
-	/* 512k initial decompress buffer */
-	unsigned int bufferSize = 512 * 1024;
+	/* 256k initial decompress buffer */
+	unsigned int bufferSize = 256 * 1024;
+	unsigned int totalBufferSize = bufferSize;
 	
 	*out = malloc( bufferSize );
 	if( ! out ) {
@@ -140,17 +140,23 @@ int ccInflateGZipFile(const char *path, unsigned char **out)
 	}
 		
 	for (;;) {
+		CCLOG(@"bufferSize: %d, totalBufferSize: %d, %x", bufferSize, totalBufferSize, out);
 		len = gzread(inFile, *out + offset, bufferSize);
 		if (len < 0)
-			CCLOG(@"cocos2d: ZipUtils: %s", gzerror(inFile, &err) );
+			CCLOG(@"cocos2d: ZipUtils: error in gzread");
 		if (len == 0)
 			break;
 		
 		offset += len;
-		uncompressedLen += len;
 		
-		unsigned char *tmp = realloc(*out, bufferSize * BUFFER_INC_FACTOR);
-		
+		// finish reading the file
+		if( len < bufferSize )
+			break;
+
+		bufferSize *= BUFFER_INC_FACTOR;
+		totalBufferSize += bufferSize;
+		unsigned char *tmp = realloc(*out, totalBufferSize );
+
 		if( ! tmp ) {
 			CCLOG(@"cocos2d: ZipUtils: out of memory");
 			free( *out );
@@ -162,6 +168,6 @@ int ccInflateGZipFile(const char *path, unsigned char **out)
 			
 	if (gzclose(inFile) != Z_OK)
 		CCLOG(@"cocos2d: ZipUtils: gzclone failed");
-	
-	return uncompressedLen;
+
+	return offset;
 }

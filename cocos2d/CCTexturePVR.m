@@ -314,12 +314,13 @@ typedef struct _PVRTexHeader
 {
 	if((self = [super init]))  
 	{ 
-		NSData *data = [NSData dataWithContentsOfFile:path];
+		NSData *data = nil;
 		NSString *lowerCase = [path lowercaseString];       
 		
-        if ( [lowerCase hasSuffix:@".pvrz"]) 
+        if ( [lowerCase hasSuffix:@".pvz"]) 
         {
-			const unsigned char *d = [data bytes];   
+			data = [NSData dataWithContentsOfFile:path];
+			const unsigned char *d = [data bytes];
 			if( !d )
             {
 				CCLOG(@"cocos2d: Failed to load data");
@@ -357,11 +358,15 @@ typedef struct _PVRTexHeader
 			if( uncompressedLen > 0 ) {
 				
 				data = [NSData dataWithBytes:buffer length:uncompressedLen];
+				free( buffer );
 			} else {
 				[self release];
 				self = nil;
 				return self;
 			}
+		} else {
+			
+			data = [NSData dataWithContentsOfFile:path];
 		}
         
 		imageData_ = ccArrayNew(10);
