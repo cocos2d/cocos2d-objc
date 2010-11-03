@@ -28,6 +28,8 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		category is cocosLive is UTF8'ized
 		added sanity in scheduler
 		TileMapAtlas supports fullpath
+	* Andreas Löw (http://http://www.code-and-web.de/)
+		Added support for the PVZ file format
 	* Andy Fitter:
 		patches for Texture2D
 	* Andreas Löw (thesk):

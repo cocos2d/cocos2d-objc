@@ -1,5 +1,6 @@
 version 0.99.5 - xx-Nov-2010
 . [NEW] Particles: Added a new type kCCPositionTypeRelative. Useful for "trail" particles. Added Test.
+. [NEW] Textures: Added support for pvz and pvr.gz formats
 . [FIX] Menu: MenuItems can draw its children (issue #458)
 . [FIX] Menu: MenuItems positions can be controlled manually (issue #1013)
 . [FIX] Node: convertToAR method fixed (issue #1017)
