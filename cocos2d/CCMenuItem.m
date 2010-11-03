@@ -504,9 +504,18 @@ enum {
 -(void) selected
 {
 	[super selected];
-	[normalImage_ setVisible:NO];
-	[selectedImage_ setVisible:YES];
-	[disabledImage_ setVisible:NO];
+
+	if( selectedImage_ ) {
+		[normalImage_ setVisible:NO];
+		[selectedImage_ setVisible:YES];
+		[disabledImage_ setVisible:NO];
+		
+	} else { // there is not selected image
+	
+		[normalImage_ setVisible:YES];
+		[selectedImage_ setVisible:NO];
+		[disabledImage_ setVisible:NO];		
+	}
 }
 
 -(void) unselected
@@ -569,9 +578,11 @@ enum {
 -(id) initFromNormalImage: (NSString*) normalI selectedImage:(NSString*)selectedI disabledImage: (NSString*) disabledI target:(id)t selector:(SEL)sel
 {
 	CCNode<CCRGBAProtocol> *normalImage = [CCSprite spriteWithFile:normalI];
-	CCNode<CCRGBAProtocol> *selectedImage = [CCSprite spriteWithFile:selectedI]; 
+	CCNode<CCRGBAProtocol> *selectedImage = nil;
 	CCNode<CCRGBAProtocol> *disabledImage = nil;
 
+	if( selectedI )
+		selectedImage = [CCSprite spriteWithFile:selectedI]; 
 	if(disabledI)
 		disabledImage = [CCSprite spriteWithFile:disabledI];
 
