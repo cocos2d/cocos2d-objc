@@ -274,10 +274,10 @@ float calculateDeltaTime( struct timeval *lastUpdate )
 		printf("ERROR\n");
 	[cache removeTexture:texture];
 
-	printf("--- PVZ 1024x1024 ---\n");
+	printf("--- PVR.CCZ 1024x1024 ---\n");
 	printf("RGBA 4444");
 	gettimeofday(&now, NULL);	
-	texture = [cache addImage:@"texture1024x1024_rgba4444.pvz"];
+	texture = [cache addImage:@"texture1024x1024_rgba4444.pvr.ccz"];
 	if( texture )
 		printf("  ms:%f\n", calculateDeltaTime(&now) );
 	else
