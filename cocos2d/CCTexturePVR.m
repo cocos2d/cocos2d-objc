@@ -355,21 +355,14 @@ typedef struct _PVRTexHeader
 
 		retainName_ = NO; // cocos2d integration
 		
-		BOOL ret = [self unpackPVRData:pvrdata PVRLen:pvrlen];
+		if( ! [self unpackPVRData:pvrdata PVRLen:pvrlen] || ![self createGLTexture]  ) {
+			free(pvrdata);
+			[self release];
+			return nil;
+		}
 		
-		// Free PVR data allocated by "inflate" functions
 		free(pvrdata);
-		
-		if( ! ret ) {
-			[self release];
-			return nil;
-		}
 
-		if( ![self createGLTexture] )
-		{
-			[self release];
-			return nil;
-		}
 	}
 
 	return self;

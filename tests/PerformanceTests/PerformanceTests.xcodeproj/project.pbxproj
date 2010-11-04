@@ -168,7 +168,6 @@
 		50F48B0D1045AD2F00755CFB /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 50F48B0B1045AD2F00755CFB /* Default.png */; };
 		50F48B0E1045AD2F00755CFB /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 50F48B0C1045AD2F00755CFB /* Icon.png */; };
 		E037D9AA1280E402003D39D7 /* texture1024x1024_rgba4444.pvr.gz in Resources */ = {isa = PBXBuildFile; fileRef = E037D9A81280E402003D39D7 /* texture1024x1024_rgba4444.pvr.gz */; };
-		E037D9AB1280E402003D39D7 /* texture1024x1024_rgba4444.pvz in Resources */ = {isa = PBXBuildFile; fileRef = E037D9A91280E402003D39D7 /* texture1024x1024_rgba4444.pvz */; };
 		E0B0E63211F8C3BB00414246 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 50F48B0B1045AD2F00755CFB /* Default.png */; };
 		E0B0E63311F8C3BB00414246 /* fire-grayscale.png in Resources */ = {isa = PBXBuildFile; fileRef = 501F0DE311527BC6002BB7F1 /* fire-grayscale.png */; };
 		E0B0E63411F8C3BB00414246 /* stars-grayscale.png in Resources */ = {isa = PBXBuildFile; fileRef = 501F0DE411527BC6002BB7F1 /* stars-grayscale.png */; };
@@ -213,6 +212,7 @@
 		E0B0E73611F8D0FE00414246 /* texture1024x1024.png in Resources */ = {isa = PBXBuildFile; fileRef = E0B0E73011F8D0FE00414246 /* texture1024x1024.png */; };
 		E0B0E73711F8D0FE00414246 /* texture2048x2048_rgba4444.pvr in Resources */ = {isa = PBXBuildFile; fileRef = E0B0E73111F8D0FE00414246 /* texture2048x2048_rgba4444.pvr */; };
 		E0B0E73811F8D0FE00414246 /* texture2048x2048.png in Resources */ = {isa = PBXBuildFile; fileRef = E0B0E73211F8D0FE00414246 /* texture2048x2048.png */; };
+		E0BBAE791282FF7C007DB81E /* texture1024x1024_rgba4444.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E0BBAE781282FF7C007DB81E /* texture1024x1024_rgba4444.pvr.ccz */; };
 		E0F6BF791271108300BF4F7D /* CCAction.h in Headers */ = {isa = PBXBuildFile; fileRef = E0F6BECF1271108200BF4F7D /* CCAction.h */; };
 		E0F6BF7A1271108300BF4F7D /* CCAction.m in Sources */ = {isa = PBXBuildFile; fileRef = E0F6BED01271108200BF4F7D /* CCAction.m */; };
 		E0F6BF7B1271108300BF4F7D /* CCActionCamera.h in Headers */ = {isa = PBXBuildFile; fileRef = E0F6BED11271108300BF4F7D /* CCActionCamera.h */; };
@@ -577,7 +577,6 @@
 		50F48B0B1045AD2F00755CFB /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = ../../Resources/Default.png; sourceTree = SOURCE_ROOT; };
 		50F48B0C1045AD2F00755CFB /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon.png; path = ../../Resources/Icon.png; sourceTree = SOURCE_ROOT; };
 		E037D9A81280E402003D39D7 /* texture1024x1024_rgba4444.pvr.gz */ = {isa = PBXFileReference; lastKnownFileType = archive.gzip; name = texture1024x1024_rgba4444.pvr.gz; path = ../../Resources/Images/texture1024x1024_rgba4444.pvr.gz; sourceTree = SOURCE_ROOT; };
-		E037D9A91280E402003D39D7 /* texture1024x1024_rgba4444.pvz */ = {isa = PBXFileReference; lastKnownFileType = file; name = texture1024x1024_rgba4444.pvz; path = ../../Resources/Images/texture1024x1024_rgba4444.pvz; sourceTree = SOURCE_ROOT; };
 		E0B0E64E11F8C3BB00414246 /* TexturePerformance.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TexturePerformance.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E0B0E65311F8C4A400414246 /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
 		E0B0E65411F8C4A400414246 /* AppController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppController.m; sourceTree = "<group>"; };
@@ -604,6 +603,7 @@
 		E0B0E73011F8D0FE00414246 /* texture1024x1024.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = texture1024x1024.png; path = ../../Resources/Images/texture1024x1024.png; sourceTree = SOURCE_ROOT; };
 		E0B0E73111F8D0FE00414246 /* texture2048x2048_rgba4444.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; name = texture2048x2048_rgba4444.pvr; path = ../../Resources/Images/texture2048x2048_rgba4444.pvr; sourceTree = SOURCE_ROOT; };
 		E0B0E73211F8D0FE00414246 /* texture2048x2048.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = texture2048x2048.png; path = ../../Resources/Images/texture2048x2048.png; sourceTree = SOURCE_ROOT; };
+		E0BBAE781282FF7C007DB81E /* texture1024x1024_rgba4444.pvr.ccz */ = {isa = PBXFileReference; lastKnownFileType = file; name = texture1024x1024_rgba4444.pvr.ccz; path = ../../Resources/Images/texture1024x1024_rgba4444.pvr.ccz; sourceTree = SOURCE_ROOT; };
 		E0F6BECF1271108200BF4F7D /* CCAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAction.h; sourceTree = "<group>"; };
 		E0F6BED01271108200BF4F7D /* CCAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCAction.m; sourceTree = "<group>"; };
 		E0F6BED11271108300BF4F7D /* CCActionCamera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCActionCamera.h; sourceTree = "<group>"; };
@@ -887,8 +887,8 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				E0BBAE781282FF7C007DB81E /* texture1024x1024_rgba4444.pvr.ccz */,
 				E037D9A81280E402003D39D7 /* texture1024x1024_rgba4444.pvr.gz */,
-				E037D9A91280E402003D39D7 /* texture1024x1024_rgba4444.pvz */,
 				E0B0E72D11F8D0FE00414246 /* texture512x512_rgba4444.pvr */,
 				E0B0E72E11F8D0FE00414246 /* texture512x512.png */,
 				E0B0E72F11F8D0FE00414246 /* texture1024x1024_rgba4444.pvr */,
@@ -1738,7 +1738,7 @@
 				E0B0E73711F8D0FE00414246 /* texture2048x2048_rgba4444.pvr in Resources */,
 				E0B0E73811F8D0FE00414246 /* texture2048x2048.png in Resources */,
 				E037D9AA1280E402003D39D7 /* texture1024x1024_rgba4444.pvr.gz in Resources */,
-				E037D9AB1280E402003D39D7 /* texture1024x1024_rgba4444.pvz in Resources */,
+				E0BBAE791282FF7C007DB81E /* texture1024x1024_rgba4444.pvr.ccz in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
