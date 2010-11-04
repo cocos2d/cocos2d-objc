@@ -218,7 +218,11 @@ int ccInflateCCZFile(const char *path, unsigned char **out)
 	}
 	
 	// verify header version
-	uint32_t version = CFSwapInt32LittleToHost( header->version );
+	uint32_t version = CFSwapInt16LittleToHost( header->version );
+	if( version > 1 ) {
+		CCLOG(@"cocos2d: Unsupported CCZ header format");
+		return -1;
+	}
 
 	// verify compression format
 	if( header->compression_type != CCZ_COMPRESSION_ZLIB ) {
