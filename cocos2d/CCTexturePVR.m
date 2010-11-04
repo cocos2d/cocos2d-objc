@@ -190,7 +190,7 @@ typedef struct _PVRTexHeader
 	for( tableFormatIndex_=0; tableFormatIndex_ < (unsigned int)MAX_TABLE_ELEMENTS ; tableFormatIndex_++) {
 		if( tableFormats[tableFormatIndex_][kCCInternalPVRTextureFormat] == formatFlags ) {
 			
-			ccArrayRemoveAllObjects(imageData_);
+			numberOfMipmaps_ = 0;
 					
 			width_ = width = CFSwapInt32LittleToHost(header->width);
 			height_ = height = CFSwapInt32LittleToHost(header->height);
@@ -236,7 +236,12 @@ typedef struct _PVRTexHeader
 				dataSize = widthBlocks * heightBlocks * ((blockSize  * bpp) / 8);
 				float packetLenght = (dataLength-dataOffset);
 				packetLenght = packetLenght > dataSize ? dataSize : packetLenght;
-				ccArrayAppendObjectWithResize(imageData_, [NSData dataWithBytes:bytes+dataOffset length:packetLenght]);
+				
+				mipmaps_[numberOfMipmaps_].address = bytes+dataOffset;
+				mipmaps_[numberOfMipmaps_].len = packetLenght;
+				numberOfMipmaps_++;
+				
+				NSAssert( numberOfMipmaps_ < CC_PVRMIPMAP_MAX, @"TexturePVR: Maximum number of mimpaps reached. Increate the CC_PVRMIPMAP_MAX value");
 				
 				dataOffset += packetLenght;
 				
@@ -260,10 +265,9 @@ typedef struct _PVRTexHeader
 {
 	NSUInteger width = width_;
 	NSUInteger height = height_;
-	NSData *data;
 	GLenum err;
 	
-	if (imageData_->num > 0)
+	if (numberOfMipmaps_ > 0)
 	{
 		if (name_ != 0)
 			glDeleteTextures(1, &name_);
@@ -273,7 +277,7 @@ typedef struct _PVRTexHeader
 	}
 
 	// Generate textures with mipmaps
-	for (NSUInteger i=0; i < imageData_->num; i++)
+	for (NSUInteger i=0; i < numberOfMipmaps_; i++)
 	{
 		GLenum internalFormat = tableFormats[tableFormatIndex_][kCCInternalOpenGLInternalFormat];
 		GLenum format = tableFormats[tableFormatIndex_][kCCInternalOpenGLFormat];
@@ -285,12 +289,13 @@ typedef struct _PVRTexHeader
 			return NO;
 		}			
 		
-		data = imageData_->arr[i];
+		unsigned char *data = mipmaps_[i].address;
+		unsigned int datalen = mipmaps_[i].len;
 		
 		if( compressed)
-			glCompressedTexImage2D(GL_TEXTURE_2D, i, internalFormat, width, height, 0, [data length], [data bytes]);
+			glCompressedTexImage2D(GL_TEXTURE_2D, i, internalFormat, width, height, 0, datalen, data);
 		else 
-			glTexImage2D(GL_TEXTURE_2D, i, internalFormat, width, height, 0, format, type, [data bytes]);
+			glTexImage2D(GL_TEXTURE_2D, i, internalFormat, width, height, 0, format, type, data);
 
 		
 		err = glGetError();
@@ -303,9 +308,7 @@ typedef struct _PVRTexHeader
 		width = MAX(width >> 1, 1);
 		height = MAX(height >> 1, 1);
 	}
-	
-	ccArrayRemoveAllObjects(imageData_);
-	
+		
 	return TRUE;
 }
 
@@ -342,8 +345,8 @@ typedef struct _PVRTexHeader
 				return nil;
 			}			
 		}
-        
-		imageData_ = ccArrayNew(10);
+
+        numberOfMipmaps_ = 0;
         
 		name_ = 0;
 		width_ = height_ = 0;
@@ -403,8 +406,6 @@ typedef struct _PVRTexHeader
 - (void)dealloc
 {
 	CCLOGINFO( @"cocos2d: deallocing %@", self);
-
-	ccArrayFree(imageData_);
 	
 	if (name_ != 0 && ! retainName_ )
 		glDeleteTextures(1, &name_);
