@@ -42,3 +42,11 @@
  */
 +(NSString*) fullPathFromRelativePath:(NSString*) relPath;
 @end
+
+/** loads a file into memory.
+ the caller should release the allocated buffer.
+ 
+ @returns the size of the allocated buffer
+ @since v0.99.5
+ */
+int ccLoadFileIntoMemory(const char *filename, unsigned char **out);
