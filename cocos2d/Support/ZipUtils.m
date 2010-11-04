@@ -195,7 +195,7 @@ int ccInflateGZipFile(const char *path, unsigned char **out)
 	}
 			
 	if (gzclose(inFile) != Z_OK)
-		CCLOG(@"cocos2d: ZipUtils: gzclone failed");
+		CCLOG(@"cocos2d: ZipUtils: gzclose failed");
 
 	return offset;
 }
@@ -235,16 +235,16 @@ int ccInflateCCZFile(const char *path, unsigned char **out)
 	*out = malloc( len );
 	if(! *out )
 	{
-		CCLOG(@"cocos2d: Failed to allocate memory for texture");
+		CCLOG(@"cocos2d: CCZ: Failed to allocate memory for texture");
 		return -1;
 	}
 	
 	
 	uLongf destlen = len;
-	unsigned int source = (int) &header->sig + sizeof(*header);
-	if(Z_OK != uncompress(*out, &destlen, (unsigned char*) source, fileLen - sizeof(struct CCZHeader) ) )
+	uLongf source = (uLongf) &header->sig + sizeof(*header);
+	if(Z_OK != uncompress(*out, &destlen, (Bytef*)source, fileLen - sizeof(struct CCZHeader) ) )
 	{
-		CCLOG(@"cocos2d: Failed to uncompress data");
+		CCLOG(@"cocos2d: CCZ: Failed to uncompress data");
 		free( *out );
 		*out = NULL;
 		return -1;
