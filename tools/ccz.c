@@ -96,9 +96,9 @@ int main (int argc, const char * argv[])
     header->sig[2] = 'Z';
     header->sig[3] = '!';
     
-    header->len = OSSwapLittleToHostInt32(len);
-    header->version = OSSwapLittleToHostInt32(1);
-    header->compression_type = OSSwapLittleToHostInt32(CCZ_COMPRESSION_ZLIB);
+    header->len = OSSwapHostToLittleInt32(len);
+    header->version = OSSwapHostToLittleInt32(1);
+    header->compression_type = OSSwapHostToLittleInt32(CCZ_COMPRESSION_ZLIB);
     
     /* write data */
     char dstname[1024];
