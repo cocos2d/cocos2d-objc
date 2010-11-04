@@ -29,7 +29,7 @@
 // Should buffer factor be 1.5 instead of 2 ?
 #define BUFFER_INC_FACTOR (2)
 
-int inflateMemory_(unsigned char *in, unsigned int inLength, unsigned char **out, unsigned int *outLength)
+static int inflateMemory_(unsigned char *in, unsigned int inLength, unsigned char **out, unsigned int *outLength)
 {
 	/* ret value */
 	int err = Z_OK;
@@ -130,8 +130,8 @@ int ccInflateGZipFile(const char *path, unsigned char **out)
 		return -1;
 	}
 	
-	/* 256k initial decompress buffer */
-	unsigned int bufferSize = 256 * 1024;
+	/* 512k initial decompress buffer */
+	unsigned int bufferSize = 512 * 1024;
 	unsigned int totalBufferSize = bufferSize;
 	
 	*out = malloc( bufferSize );
@@ -141,10 +141,12 @@ int ccInflateGZipFile(const char *path, unsigned char **out)
 	}
 		
 	for (;;) {
-		CCLOG(@"bufferSize: %d, totalBufferSize: %d, %x", bufferSize, totalBufferSize, out);
 		len = gzread(inFile, *out + offset, bufferSize);
-		if (len < 0)
+		if (len < 0) {
 			CCLOG(@"cocos2d: ZipUtils: error in gzread");
+			free( *out );
+			return -1;
+		}
 		if (len == 0)
 			break;
 		
