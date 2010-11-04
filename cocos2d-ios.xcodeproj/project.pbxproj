@@ -2600,6 +2600,8 @@
 		E0B1E8041261F9E300ACD961 /* cpSpaceStep.c in Sources */ = {isa = PBXBuildFile; fileRef = E0B1E8011261F9E300ACD961 /* cpSpaceStep.c */; };
 		E0B1F6641266476800ACD961 /* ball-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E0B1F6621266476800ACD961 /* ball-hd.png */; };
 		E0B1F6651266476800ACD961 /* paddle-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E0B1F6631266476800ACD961 /* paddle-hd.png */; };
+		E0BBADE91282E838007DB81E /* test_image_rgba4444.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E0BBADE71282E838007DB81E /* test_image_rgba4444.pvr.ccz */; };
+		E0BBADEA1282E838007DB81E /* test_image_rgba4444.pvr.gz in Resources */ = {isa = PBXBuildFile; fileRef = E0BBADE81282E838007DB81E /* test_image_rgba4444.pvr.gz */; };
 		E0C3655B11F0AE9B001C08F9 /* CCSpriteBatchNode.h in Headers */ = {isa = PBXBuildFile; fileRef = E0C3655911F0AE9B001C08F9 /* CCSpriteBatchNode.h */; };
 		E0C3655C11F0AE9B001C08F9 /* CCSpriteBatchNode.m in Sources */ = {isa = PBXBuildFile; fileRef = E0C3655A11F0AE9B001C08F9 /* CCSpriteBatchNode.m */; };
 		E0C54DCA11F9CF2700B9E4CB /* ccUtils.c in Sources */ = {isa = PBXBuildFile; fileRef = E0C54DC811F9CF2700B9E4CB /* ccUtils.c */; };
@@ -4546,6 +4548,8 @@
 		E0B1E8011261F9E300ACD961 /* cpSpaceStep.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cpSpaceStep.c; sourceTree = "<group>"; };
 		E0B1F6621266476800ACD961 /* ball-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ball-hd.png"; sourceTree = "<group>"; };
 		E0B1F6631266476800ACD961 /* paddle-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "paddle-hd.png"; sourceTree = "<group>"; };
+		E0BBADE71282E838007DB81E /* test_image_rgba4444.pvr.ccz */ = {isa = PBXFileReference; lastKnownFileType = file; path = test_image_rgba4444.pvr.ccz; sourceTree = "<group>"; };
+		E0BBADE81282E838007DB81E /* test_image_rgba4444.pvr.gz */ = {isa = PBXFileReference; lastKnownFileType = archive.gzip; path = test_image_rgba4444.pvr.gz; sourceTree = "<group>"; };
 		E0C3655911F0AE9B001C08F9 /* CCSpriteBatchNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSpriteBatchNode.h; sourceTree = "<group>"; };
 		E0C3655A11F0AE9B001C08F9 /* CCSpriteBatchNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCSpriteBatchNode.m; sourceTree = "<group>"; };
 		E0C54DC811F9CF2700B9E4CB /* ccUtils.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ccUtils.c; sourceTree = "<group>"; };
@@ -7260,6 +7264,8 @@
 				E0A4A05411F72D79003B9D29 /* test_image_pvrtc4bpp.pvr */,
 				E0A4A05511F72D79003B9D29 /* test_image_rgb565.pvr */,
 				E0A4A05611F72D79003B9D29 /* test_image_rgba4444.pvr */,
+				E0BBADE71282E838007DB81E /* test_image_rgba4444.pvr.ccz */,
+				E0BBADE81282E838007DB81E /* test_image_rgba4444.pvr.gz */,
 				E0A4A05711F72D79003B9D29 /* test_image_rgba5551.pvr */,
 				E0A4A05811F72D79003B9D29 /* test_image_rgba8888.pvr */,
 				5037AF1C0F49B980004DCA1F /* logo-mipmap.pvr */,
@@ -9829,6 +9835,8 @@
 				E02BB5FE126CA73F006E46A2 /* Icon-Small.png in Resources */,
 				E02BB5FF126CA73F006E46A2 /* Icon-Small-50.png in Resources */,
 				E02BB600126CA73F006E46A2 /* Icon-72.png in Resources */,
+				E0BBADE91282E838007DB81E /* test_image_rgba4444.pvr.ccz in Resources */,
+				E0BBADEA1282E838007DB81E /* test_image_rgba4444.pvr.gz in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

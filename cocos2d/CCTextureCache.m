@@ -261,7 +261,7 @@ static CCTextureCache *sharedTextureCache;
 		NSString *lowerCase = [path lowercaseString];
 		// all images are handled by UIImage except PVR extension that is handled by our own handler
 		
-		if ( [lowerCase hasSuffix:@".pvr"] || [lowerCase hasSuffix:@".pvr.gz"] || [lowerCase hasSuffix:@".pvz"] )
+		if ( [lowerCase hasSuffix:@".pvr"] || [lowerCase hasSuffix:@".pvr.gz"] || [lowerCase hasSuffix:@".pvr.ccz"] )
 			tex = [self addPVRTCImage:fullpath];
 
 		// Only iPhone
