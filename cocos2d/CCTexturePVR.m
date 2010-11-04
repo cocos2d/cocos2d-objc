@@ -319,7 +319,18 @@ typedef struct _PVRTexHeader
 		
         if ( [lowerCase hasSuffix:@".ccz"]) 
         {
-	
+			unsigned char *buffer;
+			int uncompressedLen = ccInflateCCZFile( [path UTF8String], &buffer );
+			if( uncompressedLen > 0 ) {
+				
+				data = [NSData dataWithBytes:buffer length:uncompressedLen];
+				free( buffer );
+			} else {
+				[self release];
+				self = nil;
+				return self;
+			}
+			
 		} else if( [lowerCase hasSuffix:@".gz"] ) {
 			
 			unsigned char *buffer;

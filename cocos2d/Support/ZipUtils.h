@@ -15,6 +15,8 @@
 #ifndef __CC_ZIP_UTILS_H
 #define __CC_ZIP_UTILS_H
 
+#import <stdint.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif	
@@ -23,10 +25,17 @@ extern "C" {
 	/** @struct CCZHeader
 	 */
 	struct CCZHeader {
-		char			sig[4];				// signature. Should be 'CCZ!' 4 bytes
-		unsigned int	version;			// should be 1
-		unsigned int	compression_type;	// should be 0
-		unsigned int	len;				// size of the uncompressed file
+		uint8_t			sig[4];				// signature. Should be 'CCZ!' 4 bytes
+		uint32_t		version;			// should be 00 01 00 0
+		uint32_t		compression_type;	// should be 0
+		uint32_t		len;				// size of the uncompressed file
+	};
+	
+	enum {
+		CCZ_COMPRESSION_ZLIB,				// zlib format.
+		CCZ_COMPRESSION_BZIP2,				// bzip2 format (not supported yet)
+		CCZ_COMPRESSION_GZIP,				// gzip format (not supported yet)
+		CCZ_COMPRESSION_NONE,				// plain (not supported yet)
 	};
 	
 /** @file

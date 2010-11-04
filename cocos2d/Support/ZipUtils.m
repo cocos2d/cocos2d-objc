@@ -211,12 +211,22 @@ int ccInflateCCZFile(const char *path, unsigned char **out)
 	
 	struct CCZHeader *header = (struct CCZHeader*) compressed;
 
+	// verify header
 	if( header->sig[0] != 'C' || header->sig[1] != 'C' || header->sig[2] != 'Z' || header->sig[3] != '!' ) {
 		CCLOG(@"cocos2d: Invalid CCZ file");
 		return -1;
 	}
 	
-	unsigned int len = CFSwapInt32LittleToHost( header->len );
+	// verify header version
+	uint32_t version = CFSwapInt32LittleToHost( header->version );
+
+	// verify compression format
+	if( header->compression_type != CCZ_COMPRESSION_ZLIB ) {
+		CCLOG(@"cocos2d: CCZ Unsupported compression method");
+		return -1;
+	}
+	
+	uint32_t len = CFSwapInt32LittleToHost( header->len );
 	
 	*out = malloc( len );
 	if(! *out )
@@ -224,6 +234,7 @@ int ccInflateCCZFile(const char *path, unsigned char **out)
 		CCLOG(@"cocos2d: Failed to allocate memory for texture");
 		return -1;
 	}
+	
 	
 	uLongf destlen = len;
 	unsigned int source = (int) &header->sig + sizeof(*header);
