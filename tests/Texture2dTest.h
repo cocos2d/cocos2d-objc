@@ -80,6 +80,14 @@
 {}
 @end
 
+@interface TexturePVRRGBA4444GZ : TextureDemo
+{}
+@end
+
+@interface TexturePVRRGBA4444CCZ : TextureDemo
+{}
+@end
+
 @interface TexturePVRRGBA5551 : TextureDemo
 {}
 @end
