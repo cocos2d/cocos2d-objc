@@ -32,6 +32,33 @@
 
 static NSFileManager *__localFileManager=nil;
 
+// 
+int ccLoadFileIntoMemory(const char *filename, unsigned char **out) 
+{ 
+	int size = 0;
+	FILE *f = fopen(filename, "rb");
+	if( !f ) { 
+		*out = NULL;
+		return -1;
+	} 
+	
+	fseek(f, 0, SEEK_END);
+	size = ftell(f);
+	fseek(f, 0, SEEK_SET);
+	
+	*out = malloc(size);
+	int read = fread(*out, 1, size, f);
+	if( read != size ) { 
+		free(*out);
+		*out = NULL;
+		return -1;
+	}
+	
+	fclose(f);
+	
+	return size;
+}
+
 @implementation CCFileUtils
 
 +(NSString*) getDoubleResolutionImage:(NSString*)path

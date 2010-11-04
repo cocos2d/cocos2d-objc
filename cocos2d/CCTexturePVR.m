@@ -153,7 +153,7 @@ typedef struct _PVRTexHeader
 @synthesize retainName = retainName_;
 
 
-- (BOOL)unpackPVRData:(NSData *)data
+- (BOOL)unpackPVRData:(unsigned char*)data PVRLen:(unsigned int)len
 {
 	BOOL success = FALSE;
 	PVRTexHeader *header = NULL;
@@ -164,7 +164,7 @@ typedef struct _PVRTexHeader
 	uint8_t *bytes = NULL;
 	uint32_t formatFlags;
 	
-	header = (PVRTexHeader *)[data bytes];
+	header = (PVRTexHeader *)data;
 	
 	pvrTag = CFSwapInt32LittleToHost(header->pvrTag);
 
@@ -201,7 +201,7 @@ typedef struct _PVRTexHeader
 				hasAlpha_ = FALSE;
 			
 			dataLength = CFSwapInt32LittleToHost(header->dataLength);
-			bytes = ((uint8_t *)[data bytes]) + sizeof(PVRTexHeader);
+			bytes = ((uint8_t *)data) + sizeof(PVRTexHeader);
 			
 			// Calculate the data size for each texture level and respect the minimum number of blocks
 			while (dataOffset < dataLength)
@@ -314,39 +314,33 @@ typedef struct _PVRTexHeader
 {
 	if((self = [super init]))  
 	{ 
-		NSData *data = nil;
+		unsigned char *pvrdata = NULL;
+		unsigned int pvrlen = 0;
 		NSString *lowerCase = [path lowercaseString];       
 		
         if ( [lowerCase hasSuffix:@".ccz"]) 
         {
-			unsigned char *buffer;
-			int uncompressedLen = ccInflateCCZFile( [path UTF8String], &buffer );
-			if( uncompressedLen > 0 ) {
-				
-				data = [NSData dataWithBytes:buffer length:uncompressedLen];
-				free( buffer );
-			} else {
+			pvrlen = ccInflateCCZFile( [path UTF8String], &pvrdata );
+			if( pvrlen < 0 ) {
 				[self release];
-				self = nil;
-				return self;
+				return nil;
 			}
 			
 		} else if( [lowerCase hasSuffix:@".gz"] ) {
 			
-			unsigned char *buffer;
-			int uncompressedLen = ccInflateGZipFile( [path UTF8String], &buffer );
-			if( uncompressedLen > 0 ) {
-				
-				data = [NSData dataWithBytes:buffer length:uncompressedLen];
-				free( buffer );
-			} else {
+			pvrlen = ccInflateGZipFile( [path UTF8String], &pvrdata );
+			if( pvrlen < 0 ) {
 				[self release];
-				self = nil;
-				return self;
+				return nil;
 			}
+		
 		} else {
 			
-			data = [NSData dataWithContentsOfFile:path];
+			pvrlen = ccLoadFileIntoMemory( [path UTF8String], &pvrdata );
+			if( pvrlen < 0 ) {
+				[self release];
+				return nil;
+			}			
 		}
         
 		imageData_ = ccArrayNew(10);
@@ -358,10 +352,20 @@ typedef struct _PVRTexHeader
 
 		retainName_ = NO; // cocos2d integration
 		
-		if (!data || ![self unpackPVRData:data] || ![self createGLTexture])
+		BOOL ret = [self unpackPVRData:pvrdata PVRLen:pvrlen];
+		
+		// Free PVR data allocated by "inflate" functions
+		free(pvrdata);
+		
+		if( ! ret ) {
+			[self release];
+			return nil;
+		}
+
+		if( ![self createGLTexture] )
 		{
 			[self release];
-			self = nil;
+			return nil;
 		}
 	}
 

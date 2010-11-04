@@ -22,39 +22,12 @@
 #import <stdio.h>
 
 #import "ZipUtils.h"
+#import "CCFileUtils.h"
 #import "../ccMacros.h"
 
 // memory in iPhone is precious
 // Should buffer factor be 1.5 instead of 2 ?
 #define BUFFER_INC_FACTOR (2)
-
-
-// helper
-int ccLoadFileIntoMemory(const char *filename, char **out) 
-{ 
-	int size = 0;
-	FILE *f = fopen(filename, "rb");
-	if( !f ) { 
-		*out = NULL;
-		return -1;
-	} 
-
-	fseek(f, 0, SEEK_END);
-	size = ftell(f);
-	fseek(f, 0, SEEK_SET);
-
-	*out = malloc(size);
-	int read = fread(*out, 1, size, f);
-	if( read != size ) { 
-		free(*out);
-		*out = NULL;
-		return -1;
-	}
-
-	fclose(f);
-
-	return size;
-}
 
 int inflateMemory_(unsigned char *in, unsigned int inLength, unsigned char **out, unsigned int *outLength)
 {
@@ -203,7 +176,7 @@ int ccInflateGZipFile(const char *path, unsigned char **out)
 int ccInflateCCZFile(const char *path, unsigned char **out)
 {
 	// load file into memory
-	char *compressed;
+	unsigned char *compressed;
 	int fileLen  = ccLoadFileIntoMemory( path, &compressed );
 	if( fileLen < 0 ) {
 		CCLOG(@"cocos2d: Error loading CCZ compressed file");
