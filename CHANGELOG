@@ -7,6 +7,8 @@ version 0.99.5 - xx-Nov-2010
 . [FIX] Menu: MenuItems positions can be controlled manually (issue #1013)
 . [FIX] Node: convertToAR method fixed (issue #1017)
 . [FIX] Node: vertexZ works OK in RetinaDisplay mode
+. [FIX] Particles: Improved doxygen documentation (issue #1026)
+. [FIX] Particles: centerOfGravity renamed to sourcePosition (issue #1026)
 . [FIX] RenderTexture: removed unneeded and dangerous assert in getUIImageAsDataFromBuffer
 . [FIX] RenderTexture: fixed important memory leak when saving images
 . [FIX] TextureCache: Improved loading time of cached PVR images (issue #998)

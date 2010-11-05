@@ -62,7 +62,7 @@
 
 @implementation CCParticleSystem
 @synthesize active, duration;
-@synthesize centerOfGravity, posVar;
+@synthesize sourcePosition, posVar;
 @synthesize particleCount;
 @synthesize life, lifeVar;
 @synthesize angle, angleVar;
@@ -335,9 +335,9 @@
 	particle->timeToLive = MAX(0, life + lifeVar * CCRANDOM_MINUS1_1() );
 
 	// position
-	particle->pos.x = centerOfGravity.x + posVar.x * CCRANDOM_MINUS1_1();
+	particle->pos.x = sourcePosition.x + posVar.x * CCRANDOM_MINUS1_1();
 	particle->pos.x *= CC_CONTENT_SCALE_FACTOR();
-	particle->pos.y = centerOfGravity.y + posVar.y * CCRANDOM_MINUS1_1();
+	particle->pos.y = sourcePosition.y + posVar.y * CCRANDOM_MINUS1_1();
 	particle->pos.y *= CC_CONTENT_SCALE_FACTOR();
 	
 	// Color
