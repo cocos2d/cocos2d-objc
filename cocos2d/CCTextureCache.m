@@ -255,14 +255,11 @@ static CCTextureCache *sharedTextureCache;
 	
 	if( ! tex ) {
 		
-		// Split up directory and filename
-		NSString *fullpath = [CCFileUtils fullPathFromRelativePath: path ];
-		
 		NSString *lowerCase = [path lowercaseString];
 		// all images are handled by UIImage except PVR extension that is handled by our own handler
 		
 		if ( [lowerCase hasSuffix:@".pvr"] || [lowerCase hasSuffix:@".pvr.gz"] || [lowerCase hasSuffix:@".pvr.ccz"] )
-			tex = [self addPVRTCImage:fullpath];
+			tex = [self addPVRTCImage:path];
 
 		// Only iPhone
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
@@ -272,6 +269,9 @@ static CCTextureCache *sharedTextureCache;
 				  ( [lowerCase hasSuffix:@".jpg"] || [lowerCase hasSuffix:@".jpeg"] ) 
 				 ) {
 			// convert jpg to png before loading the texture
+			
+			NSString *fullpath = [CCFileUtils fullPathFromRelativePath: path ];
+						
 			UIImage *jpg = [[UIImage alloc] initWithContentsOfFile:fullpath];
 			UIImage *png = [[UIImage alloc] initWithData:UIImagePNGRepresentation(jpg)];
 			tex = [ [CCTexture2D alloc] initWithImage: png ];
@@ -289,6 +289,8 @@ static CCTextureCache *sharedTextureCache;
 		else {
 			
 			// prevents overloading the autorelease pool
+			NSString *fullpath = [CCFileUtils fullPathFromRelativePath: path ];
+
 			UIImage *image = [ [UIImage alloc] initWithContentsOfFile: fullpath ];
 			tex = [ [CCTexture2D alloc] initWithImage: image ];
 			[image release];
@@ -303,7 +305,9 @@ static CCTextureCache *sharedTextureCache;
 
 		// Only in Mac
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
-		else {			
+		else {
+			NSString *fullpath = [CCFileUtils fullPathFromRelativePath: path ];
+
 			NSData *data = [[NSData alloc] initWithContentsOfFile:fullpath];
 			NSBitmapImageRep *image = [[NSBitmapImageRep alloc] initWithData:data];
 			tex = [ [CCTexture2D alloc] initWithImage:[image CGImage]];
@@ -438,7 +442,10 @@ static CCTextureCache *sharedTextureCache;
 		return tex;
 	}
 	
-	tex = [[CCTexture2D alloc] initWithPVRFile: fileimage];
+	// Split up directory and filename
+	NSString *fullpath = [CCFileUtils fullPathFromRelativePath:fileimage];
+	
+	tex = [[CCTexture2D alloc] initWithPVRFile: fullpath];
 	if( tex )
 		[textures setObject: tex forKey:fileimage];
 	else

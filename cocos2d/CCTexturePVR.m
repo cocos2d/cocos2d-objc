@@ -318,7 +318,7 @@ typedef struct _PVRTexHeader
 	if((self = [super init]))  
 	{ 
 		unsigned char *pvrdata = NULL;
-		unsigned int pvrlen = 0;
+		int pvrlen = 0;
 		NSString *lowerCase = [path lowercaseString];       
 		
         if ( [lowerCase hasSuffix:@".ccz"]) 
