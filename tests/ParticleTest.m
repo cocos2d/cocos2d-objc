@@ -233,7 +233,7 @@ Class restartAction()
 
 -(void) setEmitterPosition
 {
-	if( CGPointEqualToPoint( emitter.centerOfGravity, CGPointZero ) ) 
+	if( CGPointEqualToPoint( emitter.sourcePosition, CGPointZero ) ) 
 		emitter.position = ccp(200, 70);
 }
 

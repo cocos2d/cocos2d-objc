@@ -193,19 +193,19 @@ int ccInflateCCZFile(const char *path, unsigned char **out)
 	}
 	
 	// verify header version
-	uint32_t version = CFSwapInt32LittleToHost( header->version );
+	uint32_t version = CFSwapInt32BigToHost( header->version );
 	if( version > 1 ) {
 		CCLOG(@"cocos2d: Unsupported CCZ header format");
 		return -1;
 	}
 
 	// verify compression format
-	if( CFSwapInt32LittleToHost(header->compression_type) != CCZ_COMPRESSION_ZLIB ) {
+	if( CFSwapInt32BigToHost(header->compression_type) != CCZ_COMPRESSION_ZLIB ) {
 		CCLOG(@"cocos2d: CCZ Unsupported compression method");
 		return -1;
 	}
 	
-	uint32_t len = CFSwapInt32LittleToHost( header->len );
+	uint32_t len = CFSwapInt32BigToHost( header->len );
 	
 	*out = malloc( len );
 	if(! *out )
