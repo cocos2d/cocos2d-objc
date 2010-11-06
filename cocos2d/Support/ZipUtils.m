@@ -124,6 +124,9 @@ int ccInflateGZipFile(const char *path, unsigned char **out)
 	int len;
 	unsigned int offset = 0;
 	
+	assert( out );
+	assert( &*out );
+
 	gzFile inFile = gzopen(path, "rb");
 	if( inFile == NULL ) {
 		CCLOG(@"cocos2d: ZipUtils: error open gzip file: %s", path);
@@ -177,6 +180,9 @@ int ccInflateGZipFile(const char *path, unsigned char **out)
 
 int ccInflateCCZFile(const char *path, unsigned char **out)
 {
+	assert( out );
+	assert( &*out );
+
 	// load file into memory
 	unsigned char *compressed;
 	int fileLen  = ccLoadFileIntoMemory( path, &compressed );
@@ -193,14 +199,14 @@ int ccInflateCCZFile(const char *path, unsigned char **out)
 	}
 	
 	// verify header version
-	uint32_t version = CFSwapInt32BigToHost( header->version );
-	if( version > 1 ) {
+	uint16_t version = CFSwapInt16BigToHost( header->version );
+	if( version > 2 ) {
 		CCLOG(@"cocos2d: Unsupported CCZ header format");
 		return -1;
 	}
 
 	// verify compression format
-	if( CFSwapInt32BigToHost(header->compression_type) != CCZ_COMPRESSION_ZLIB ) {
+	if( CFSwapInt16BigToHost(header->compression_type) != CCZ_COMPRESSION_ZLIB ) {
 		CCLOG(@"cocos2d: CCZ Unsupported compression method");
 		return -1;
 	}

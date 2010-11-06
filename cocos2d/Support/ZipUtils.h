@@ -26,8 +26,9 @@ extern "C" {
 	 */
 	struct CCZHeader {
 		uint8_t			sig[4];				// signature. Should be 'CCZ!' 4 bytes
-		uint32_t		version;			// should be 1
-		uint32_t		compression_type;	// See enums below
+		uint16_t		compression_type;	// should 0
+		uint16_t		version;			// should be 2 (although version type==1 is also supported)
+		uint32_t		reserved;			// Reserverd for users.
 		uint32_t		len;				// size of the uncompressed file
 	};
 	
