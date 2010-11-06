@@ -24,10 +24,12 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // Format header
 struct CCZHeader {
     uint8_t			sig[4];				// signature. Should be 'CCZ!' 4 bytes
-    uint32_t		version;			// should be 1
-    uint32_t		compression_type;	// See enums below
+    uint16_t		compression_type;	// should 0 (See below for supported formats)
+    uint16_t		version;			// should be 2 
+    uint32_t		reserved;			// Reserverd for users.
     uint32_t		len;				// size of the uncompressed file
 };
+
 
 enum {
     CCZ_COMPRESSION_ZLIB,				// zlib format.
@@ -97,8 +99,8 @@ int main (int argc, const char * argv[])
     header->sig[3] = '!';
     
     header->len = OSSwapHostToBigInt32(len);
-    header->version = OSSwapHostToBigInt32(1);
-    header->compression_type = OSSwapHostToBigInt32(CCZ_COMPRESSION_ZLIB);
+    header->version = OSSwapHostToBigInt16(2);
+    header->compression_type = OSSwapHostToBigInt16(CCZ_COMPRESSION_ZLIB);
     
     /* write data */
     char dstname[1024];

@@ -12,6 +12,7 @@ version 0.99.5 - xx-Nov-2010
 . [FIX] RenderTexture: removed unneeded and dangerous assert in getUIImageAsDataFromBuffer
 . [FIX] RenderTexture: fixed important memory leak when saving images
 . [FIX] TextureCache: Improved loading time of cached PVR images (issue #998)
+. [FIX] Texture2D: addPVRTCImage: -> addPVRImage: since it also loads non-compressed PVR images
 
 version 0.99.5-rc0 - 25-Oct-2010
 . [NEW] AnimationCache: New class. It deprecates the CCSprite#animation methods (issue #848)

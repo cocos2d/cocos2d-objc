@@ -219,6 +219,11 @@ typedef struct _PVRTexHeader
 						heightBlocks = height / 4;
 						bpp = 4;
 						break;
+					case kPVRTextureFlagTypeBGRA_8888:
+						if( [[CCConfiguration sharedConfiguration] supportsBGRA8888] ) {
+							CCLOG(@"cocos2d: TexturePVR. BGRA8888 not supported on this device");
+							return NO;
+						}
 					default:
 						blockSize = 1;
 						widthBlocks = width;

@@ -35,6 +35,9 @@ static NSFileManager *__localFileManager=nil;
 // 
 int ccLoadFileIntoMemory(const char *filename, unsigned char **out) 
 { 
+	assert( out );
+	assert( &*out );
+
 	int size = 0;
 	FILE *f = fopen(filename, "rb");
 	if( !f ) { 

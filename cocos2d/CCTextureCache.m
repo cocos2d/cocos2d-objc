@@ -259,7 +259,7 @@ static CCTextureCache *sharedTextureCache;
 		// all images are handled by UIImage except PVR extension that is handled by our own handler
 		
 		if ( [lowerCase hasSuffix:@".pvr"] || [lowerCase hasSuffix:@".pvr.gz"] || [lowerCase hasSuffix:@".pvr.ccz"] )
-			tex = [self addPVRTCImage:path];
+			tex = [self addPVRImage:path];
 
 		// Only iPhone
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
@@ -402,7 +402,7 @@ static CCTextureCache *sharedTextureCache;
 @end
 
 
-@implementation CCTextureCache (PVRTCSupport)
+@implementation CCTextureCache (PVRSupport)
 
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 -(CCTexture2D*) addPVRTCImage: (NSString*) path bpp:(int)bpp hasAlpha:(BOOL)alpha width:(int)w
@@ -432,7 +432,7 @@ static CCTextureCache *sharedTextureCache;
 }
 #endif // __IPHONE_OS_VERSION_MAX_ALLOWED
 
--(CCTexture2D*) addPVRTCImage: (NSString*) fileimage
+-(CCTexture2D*) addPVRImage: (NSString*) fileimage
 {
 	NSAssert(fileimage != nil, @"TextureCache: fileimage MUST not be nill");
 	
@@ -449,7 +449,7 @@ static CCTextureCache *sharedTextureCache;
 	if( tex )
 		[textures setObject: tex forKey:fileimage];
 	else
-		CCLOG(@"cocos2d: Couldn't add PVRTCImage:%@ in CCTextureCache",fileimage);	
+		CCLOG(@"cocos2d: Couldn't add PVRImage:%@ in CCTextureCache",fileimage);	
 	
 	return [tex autorelease];
 }

@@ -106,7 +106,7 @@
 @end
 
 
-@interface CCTextureCache (PVRTCSupport)
+@interface CCTextureCache (PVRSupport)
 
 /** Returns a Texture2D object given an PVRTC RAW filename
  * If the file image was not previously loaded, it will create a new CCTexture2D
@@ -122,14 +122,12 @@
 -(CCTexture2D*) addPVRTCImage:(NSString*)fileimage bpp:(int)bpp hasAlpha:(BOOL)alpha width:(int)w;
 #endif // __IPHONE_OS_VERSION_MAX_ALLOWED
 
-/** Returns a Texture2D object given an PVRTC filename
+/** Returns a Texture2D object given an PVR filename.
  * If the file image was not previously loaded, it will create a new CCTexture2D
  *  object and it will return it. Otherwise it will return a reference of a previosly loaded image
  *
- * IMPORTANT: This method is only defined on iOS. It is not supported on the Mac version.
- *
  */
--(CCTexture2D*) addPVRTCImage:(NSString*) filename;
+-(CCTexture2D*) addPVRImage:(NSString*) filename;
 
 @end
 
