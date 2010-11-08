@@ -13,6 +13,7 @@ version 0.99.5 - xx-Nov-2010
 . [FIX] Particles: centerOfGravity renamed to sourcePosition (issue #1026)
 . [FIX] RenderTexture: removed unneeded and dangerous assert in getUIImageAsDataFromBuffer
 . [FIX] RenderTexture: fixed important memory leak when saving images
+. [FIX] SpriteBatchNode: improved performance when drawing the batch (issue #824)
 . [FIX] TextureCache: Improved loading time of cached PVR images (issue #998)
 . [FIX] Texture2D: addPVRTCImage: -> addPVRImage: since it also loads non-compressed PVR images
 . [FIX] Tiled: images can be relative to source map (issue #787)
