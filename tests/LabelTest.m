@@ -808,17 +808,17 @@ Class restartAction()
 	id<CCLabelProtocol> label3 = (id<CCLabelProtocol>) [self getChildByTag:kTagBitmapAtlas3];
 	
 	if( ! setEmpty ) {
-		label1.string = @"not empty";
-		label2.string = @"not empty";
-		label3.string = @"hi";
+		[label1 setString: @"not empty"];
+		[label2 setString: @"not empty"];
+		[label3 setString: @"hi"];
 		
 		setEmpty = YES;
 
 	} else {
 		
-		label1.string = @"";
-		label2.string = @"";
-		label3.string = @"";
+		[label1 setString:@""];
+		[label2 setString:@""];
+		[label3 setString:@""];
 		
 		setEmpty = NO;
 	}

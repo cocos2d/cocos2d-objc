@@ -86,6 +86,19 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #endif// CC_FONT_LABEL_SUPPORT
 
 
+
+// For Labels use 32-bit textures on iPhone 3GS / iPads since A8 textures are very slow
+#if defined(__ARM_NEON__) || TARGET_IPHONE_SIMULATOR
+#define USE_TEXT_WITH_A8_TEXTURES 0
+
+// On ARMv6 use A8 textures for Labels.
+#elif defined(__arm__) || defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+#define USE_TEXT_WITH_A8_TEXTURES 1
+#else
+#error(unknown architecture)
+#endif
+
+
 //CLASS IMPLEMENTATIONS:
 
 
@@ -373,8 +386,8 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 
 - (id) initWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(CCTextAlignment)alignment fontName:(NSString*)name fontSize:(CGFloat)size
 {
-	NSUInteger width = ccNextPOT(dimensions.width);
-	NSUInteger height = ccNextPOT(dimensions.height);
+	NSUInteger POTWide = ccNextPOT(dimensions.width);
+	NSUInteger POTHigh = ccNextPOT(dimensions.height);
 	unsigned char*			data;
 	
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
@@ -382,9 +395,16 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 	CGColorSpaceRef			colorSpace;
 	id						uifont;
 	
+#if USE_TEXT_WITH_A8_TEXTURES
 	colorSpace = CGColorSpaceCreateDeviceGray();
-	data = calloc(height, width);
-	context = CGBitmapContextCreate(data, width, height, 8, width, colorSpace, kCGImageAlphaNone);
+	data = calloc(POTHigh, POTWide);
+	context = CGBitmapContextCreate(data, POTWide, POTHigh, 8, POTWide, colorSpace, kCGImageAlphaNone);
+#else
+	colorSpace = CGColorSpaceCreateDeviceRGB();
+	data = calloc(POTHigh, POTWide * 4);
+	context = CGBitmapContextCreate(data, POTWide, POTHigh, 8, 4 * POTWide, colorSpace, kCGImageAlphaPremultipliedLast | kCGBitmapByteOrder32Big);				
+#endif
+
 
 	CGColorSpaceRelease(colorSpace);
 
@@ -395,7 +415,7 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 	}
 	
 	CGContextSetGrayFillColor(context, 1.0f, 1.0f);
-	CGContextTranslateCTM(context, 0.0f, height);
+	CGContextTranslateCTM(context, 0.0f, POTHigh);
 	CGContextScaleCTM(context, 1.0f, -1.0f); //NOTE: NSString draws in UIKit referential i.e. renders upside-down compared to CGBitmapContext referential
 	
 	UIGraphicsPushContext(context);
@@ -419,8 +439,12 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 #endif
 	}
 	UIGraphicsPopContext();
-	
-	self = [self initWithData:data pixelFormat:kCCTexture2DPixelFormat_A8 pixelsWide:width pixelsHigh:height contentSize:dimensions];
+
+#if USE_TEXT_WITH_A8_TEXTURES
+	self = [self initWithData:data pixelFormat:kCCTexture2DPixelFormat_A8 pixelsWide:POTWide pixelsHigh:POTHigh contentSize:dimensions];
+#else
+	self = [self initWithData:data pixelFormat:kCCTexture2DPixelFormat_RGBA8888 pixelsWide:POTWide pixelsHigh:POTHigh contentSize:dimensions];
+#endif
 	CGContextRelease(context);
 	free(data);
 
@@ -453,20 +477,20 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 		//Disable antialias
 		[[NSGraphicsContext currentContext] setShouldAntialias:NO];	
 
-		NSImage *image = [[NSImage alloc] initWithSize:NSMakeSize(width, height)];
+		NSImage *image = [[NSImage alloc] initWithSize:NSMakeSize(POTWide, POTHigh)];
 		[image lockFocus];	
 		
-		[stringWithAttributes drawAtPoint:NSMakePoint(xPadding, height-dimensions.height)]; // draw at offset position	
+		[stringWithAttributes drawAtPoint:NSMakePoint(xPadding, POTHigh-dimensions.height)]; // draw at offset position	
 		
-		NSBitmapImageRep *bitmap = [[NSBitmapImageRep alloc] initWithFocusedViewRect:NSMakeRect (0.0f, 0.0f, width, height)];
+		NSBitmapImageRep *bitmap = [[NSBitmapImageRep alloc] initWithFocusedViewRect:NSMakeRect (0.0f, 0.0f, POTWide, POTHigh)];
 		[image unlockFocus];
 
 		data = (unsigned char*) [bitmap bitmapData];  //Use the same buffer to improve the performance.
 		
-		for(int i = 0; i<(width*height); i++) //Convert RGBA8888 to A8
+		for(int i = 0; i<(POTWide*POTHigh); i++) //Convert RGBA8888 to A8
 			data[i] = data[i*4+3];
 		
-		self = [self initWithData:data pixelFormat:kCCTexture2DPixelFormat_A8 pixelsWide:width pixelsHigh:height contentSize:dimensions];
+		self = [self initWithData:data pixelFormat:kCCTexture2DPixelFormat_A8 pixelsWide:POTWide pixelsHigh:POTHigh contentSize:dimensions];
 		
 		[bitmap release];
 		[image release]; 
