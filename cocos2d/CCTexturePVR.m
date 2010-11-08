@@ -184,7 +184,7 @@ typedef struct _PVRTexHeader
 
 	if( header->width != ccNextPOT(header->width) || header->height != ccNextPOT(header->height) ) {
 		CCLOG(@"cocos2d: WARNING: PVR NPOT textures are not supported. Regenerate it.");
-		return NO;
+		return FALSE;
 	}
 	
 	for( tableFormatIndex_=0; tableFormatIndex_ < (unsigned int)MAX_TABLE_ELEMENTS ; tableFormatIndex_++) {
@@ -220,9 +220,9 @@ typedef struct _PVRTexHeader
 						bpp = 4;
 						break;
 					case kPVRTextureFlagTypeBGRA_8888:
-						if( [[CCConfiguration sharedConfiguration] supportsBGRA8888] ) {
+						if( ! [[CCConfiguration sharedConfiguration] supportsBGRA8888] ) {
 							CCLOG(@"cocos2d: TexturePVR. BGRA8888 not supported on this device");
-							return NO;
+							return FALSE;
 						}
 					default:
 						blockSize = 1;
@@ -290,8 +290,8 @@ typedef struct _PVRTexHeader
 		BOOL compressed = tableFormats[tableFormatIndex_][kCCInternalCompressedImage];
 		
 		if( compressed && ! [[CCConfiguration sharedConfiguration] supportsPVRTC] ) {
-			CCLOG(@"cocos2d: WARNING: PVRTC images is not supported");
-			return NO;
+			CCLOG(@"cocos2d: WARNING: PVRTC images are not supported");
+			return FALSE;
 		}			
 		
 		unsigned char *data = mipmaps_[i].address;
@@ -306,7 +306,7 @@ typedef struct _PVRTexHeader
 		err = glGetError();
 		if (err != GL_NO_ERROR)
 		{
-			NSLog(@"Error uploading compressed texture level: %u . glError: 0x%04X", (unsigned int)i, err);
+			CCLOG(@"cocos2d: TexturePVR: Error uploading compressed texture level: %u . glError: 0x%04X", (unsigned int)i, err);
 			return FALSE;
 		}
 		

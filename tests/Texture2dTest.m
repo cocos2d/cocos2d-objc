@@ -594,9 +594,12 @@ Class restartAction()
 	CGSize s = [[CCDirector sharedDirector] winSize];
 	
 	CCSprite *img = [CCSprite spriteWithFile:@"test_image_bgra8888.pvr"];
-	img.position = ccp( s.width/2.0f, s.height/2.0f);
-	[self addChild:img];
-	
+	if( img ) {
+		img.position = ccp( s.width/2.0f, s.height/2.0f);
+		[self addChild:img];
+	} else {
+		NSLog(@"BGRA8888 images are not supported");
+	}
 }
 
 -(NSString *) title
