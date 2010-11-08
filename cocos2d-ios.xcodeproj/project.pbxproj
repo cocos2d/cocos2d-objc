@@ -2184,6 +2184,10 @@
 		E037DA921281EFE2003D39D7 /* edge.png in Resources */ = {isa = PBXBuildFile; fileRef = E037DA8C1281EFE2003D39D7 /* edge.png */; };
 		E037DA931281EFE2003D39D7 /* fill.png in Resources */ = {isa = PBXBuildFile; fileRef = E037DA8D1281EFE2003D39D7 /* fill.png */; };
 		E037DA941281EFE2003D39D7 /* QuestionContainerSprite.m in Sources */ = {isa = PBXBuildFile; fileRef = E037DA8F1281EFE2003D39D7 /* QuestionContainerSprite.m */; };
+		E04C0F9F12886799000C4393 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 503092B210447296005F7AFC /* libz.dylib */; };
+		E04C0FA11288679D000C4393 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 503092B210447296005F7AFC /* libz.dylib */; };
+		E04C0FA21288679E000C4393 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 503092B210447296005F7AFC /* libz.dylib */; };
+		E04C0FA3128867A1000C4393 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 503092B210447296005F7AFC /* libz.dylib */; };
 		E04C631612382E6B00A4B3E6 /* background3-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E04C631512382E6B00A4B3E6 /* background3-hd.png */; };
 		E04C631712382E6B00A4B3E6 /* background3-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E04C631512382E6B00A4B3E6 /* background3-hd.png */; };
 		E04C631812382E6B00A4B3E6 /* background3-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E04C631512382E6B00A4B3E6 /* background3-hd.png */; };
@@ -4926,6 +4930,7 @@
 				50D1E6A311BE89E60030A027 /* OpenGLES.framework in Frameworks */,
 				50D1E6A411BE89E60030A027 /* QuartzCore.framework in Frameworks */,
 				50D1E6A511BE89E60030A027 /* UIKit.framework in Frameworks */,
+				E04C0F9F12886799000C4393 /* libz.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4943,6 +4948,7 @@
 				50D1E6A811BE89E70030A027 /* OpenGLES.framework in Frameworks */,
 				50D1E6A911BE89E70030A027 /* QuartzCore.framework in Frameworks */,
 				50D1E6AA11BE89E70030A027 /* UIKit.framework in Frameworks */,
+				E04C0FA11288679D000C4393 /* libz.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4960,6 +4966,7 @@
 				50D1E6AD11BE89E80030A027 /* OpenGLES.framework in Frameworks */,
 				50D1E6AE11BE89E80030A027 /* QuartzCore.framework in Frameworks */,
 				50D1E6AF11BE89E80030A027 /* UIKit.framework in Frameworks */,
+				E04C0FA21288679E000C4393 /* libz.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4977,6 +4984,7 @@
 				50D1E6B211BE89E80030A027 /* OpenGLES.framework in Frameworks */,
 				50D1E6B311BE89E80030A027 /* QuartzCore.framework in Frameworks */,
 				50D1E6B411BE89E80030A027 /* UIKit.framework in Frameworks */,
+				E04C0FA3128867A1000C4393 /* libz.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
