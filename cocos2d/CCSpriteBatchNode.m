@@ -38,6 +38,8 @@ const NSUInteger defaultCapacity = 29;
 #pragma mark -
 #pragma mark CCSpriteBatchNode
 
+static 	SEL selUpdate = NULL;
+
 @interface CCSpriteBatchNode (private)
 -(void) updateBlendFunc;
 @end
@@ -48,6 +50,13 @@ const NSUInteger defaultCapacity = 29;
 @synthesize blendFunc = blendFunc_;
 @synthesize descendants = descendants_;
 
+
++(void) initialize
+{
+	if ( self == [CCSpriteBatchNode class] ) {
+		selUpdate = @selector(updateTransform);
+	}
+}
 /*
  * creation with CCTexture2D
  */
@@ -248,49 +257,43 @@ const NSUInteger defaultCapacity = 29;
 #pragma mark CCSpriteBatchNode - draw
 -(void) draw
 {
-	if( textureAtlas_.totalQuads == 0 )
-		return;
-	
 	// Optimization: Fast Dispatch
-	typedef BOOL (*DIRTY_IMP)(id, SEL);
 	typedef BOOL (*UPDATE_IMP)(id, SEL);
-	SEL selDirty = @selector(dirty);
-	SEL selUpdate = @selector(updateTransform);
-	DIRTY_IMP dirtyMethod = nil;
-	UPDATE_IMP updateMethod = nil;
-	
-	ccArray *array = descendants_->data;
+	UPDATE_IMP updateMethod;
 	CCSprite *child;
 	
-	// is there any child ?. compare with array->num
-	// if so, compile the isDirty and update methods
-	if( array->num > 0 ) {
-		child = array->arr[0];
-		dirtyMethod = (DIRTY_IMP) [child methodForSelector:selDirty];
-		updateMethod = (UPDATE_IMP) [child methodForSelector:selUpdate];
-	}
+	if( textureAtlas_.totalQuads == 0 )
+		return;	
 	
-	// itera
-	id *arr = array->arr;
+	ccArray *array = descendants_->data;
+	
 	NSUInteger i = array->num;
-	while (i-- > 0) {
-		child = *arr++;
+	id *arr = array->arr;
+
+	if( i > 0 ) {
 		
-		// fast dispatch
-		if( dirtyMethod(child, selDirty) )
+		// compile the update methodf
+		child = array->arr[0];
+		updateMethod = (UPDATE_IMP) [child methodForSelector:selUpdate];
+
+		while (i-- > 0) {
+			child = *arr++;
+			
+			// fast dispatch
 			updateMethod(child, selUpdate);
-		
+			
 #if CC_SPRITEBATCHNODE_DEBUG_DRAW
-		//Issue #528
-		CGRect rect = [child boundingBox];
-		CGPoint vertices[4]={
-			ccp(rect.origin.x,rect.origin.y),
-			ccp(rect.origin.x+rect.size.width,rect.origin.y),
-			ccp(rect.origin.x+rect.size.width,rect.origin.y+rect.size.height),
-			ccp(rect.origin.x,rect.origin.y+rect.size.height),
-		};
-		ccDrawPoly(vertices, 4, YES);
+			//Issue #528
+			CGRect rect = [child boundingBox];
+			CGPoint vertices[4]={
+				ccp(rect.origin.x,rect.origin.y),
+				ccp(rect.origin.x+rect.size.width,rect.origin.y),
+				ccp(rect.origin.x+rect.size.width,rect.origin.y+rect.size.height),
+				ccp(rect.origin.x,rect.origin.y+rect.size.height),
+			};
+			ccDrawPoly(vertices, 4, YES);
 #endif // CC_SPRITEBATCHNODE_DEBUG_DRAW
+		}
 	}
 	
 	// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
