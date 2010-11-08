@@ -31,17 +31,17 @@
  */
 @interface CCActionCamera : CCActionInterval <NSCopying> {
 	
-	float centerXOrig;
-	float centerYOrig;
-	float centerZOrig;
+	float centerXOrig_;
+	float centerYOrig_;
+	float centerZOrig_;
 	
-	float eyeXOrig;
-	float eyeYOrig;
-	float eyeZOrig;
+	float eyeXOrig_;
+	float eyeYOrig_;
+	float eyeZOrig_;
 	
-	float upXOrig;
-	float upYOrig;
-	float upZOrig;
+	float upXOrig_;
+	float upYOrig_;
+	float upZOrig_;
 }
 @end
 
@@ -49,17 +49,17 @@
  Orbits the camera around the center of the screen using spherical coordinates
  */
 @interface CCOrbitCamera : CCActionCamera <NSCopying> {
-	float radius;
-	float deltaRadius;
-	float angleZ;
-	float deltaAngleZ;
-	float angleX;
-	float deltaAngleX;
+	float radius_;
+	float deltaRadius_;
+	float angleZ_;
+	float deltaAngleZ_;
+	float angleX_;
+	float deltaAngleX_;
 	
-	float radZ;
-	float radDeltaZ;
-	float radX;
-	float radDeltaX;
+	float radZ_;
+	float radDeltaZ_;
+	float radX_;
+	float radDeltaX_;
 	
 }
 /** creates a CCOrbitCamera action with radius, delta-radius,  z, deltaZ, x, deltaX */
