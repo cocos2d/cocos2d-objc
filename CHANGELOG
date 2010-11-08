@@ -2,6 +2,7 @@ version 0.99.5 - xx-Nov-2010
 . [NEW] Particles: Added a new type kCCPositionTypeRelative. Useful for "trail" particles. Added Test.
 . [NEW] Textures: Added support for pvz.ccz and pvr.gz formats
 . [NEW] ZipUtils: Added generic functions to uncompress any .gz or .ccz file
+. [FIX] Actions: OrbitCamera doesn't crash on Simulator
 . [FIX] CocosDenshion: Fixed possible loss of audio on iOS 4.2
 . [FIX] Menu: MenuItems can draw its children (issue #458)
 . [FIX] Menu: MenuItems positions can be controlled manually (issue #1013)
