@@ -1,4 +1,4 @@
-version 0.99.5 - xx-Nov-2010
+version 0.99.5-rc1_GameJam - 8-Nov-2010
 . [NEW] Particles: Added a new type kCCPositionTypeRelative. Useful for "trail" particles. Added Test.
 . [NEW] Textures: Added support for pvz.ccz and pvr.gz formats
 . [NEW] Textures: TextureCache has a method to test if a texture is already cached (issue #793)
@@ -16,6 +16,7 @@ version 0.99.5 - xx-Nov-2010
 . [FIX] SpriteBatchNode: improved performance when drawing the batch (issue #824)
 . [FIX] TextureCache: Improved loading time of cached PVR images (issue #998)
 . [FIX] Texture2D: addPVRTCImage: -> addPVRImage: since it also loads non-compressed PVR images
+. [FIX] Texture2D: Use 32-bit textures when creating labels on ARM_NEON hardware. Performance improvement.
 . [FIX] Tiled: images can be relative to source map (issue #787)
 
 version 0.99.5-rc0 - 25-Oct-2010
