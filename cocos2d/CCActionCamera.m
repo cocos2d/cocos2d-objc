@@ -85,9 +85,15 @@
 	float r, zenith, azimuth;
 	
 	[self sphericalRadius: &r zenith:&zenith azimuth:&azimuth];
-	radius_ = r;
-	angleZ_ = (CGFloat)CC_RADIANS_TO_DEGREES(zenith);
-	angleX_ = (CGFloat)CC_RADIANS_TO_DEGREES(azimuth);
+	
+#if 0 // isnan() is not supported on the simulator, and isnan() always returns false.
+	if( isnan(radius_) )
+		radius_ = r;
+	if( isnan( angleZ_) )
+		angleZ_ = (CGFloat)CC_RADIANS_TO_DEGREES(zenith);
+	if( isnan( angleX_ ) )
+		angleX_ = (CGFloat)CC_RADIANS_TO_DEGREES(azimuth);
+#endif
 
 	radZ_ = (CGFloat)CC_DEGREES_TO_RADIANS(angleZ_);
 	radX_ = (CGFloat)CC_DEGREES_TO_RADIANS(angleX_);
