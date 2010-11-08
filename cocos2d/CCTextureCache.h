@@ -39,9 +39,9 @@
  */
 @interface CCTextureCache : NSObject
 {
-	NSMutableDictionary *textures;
-	NSLock				*dictLock;
-	NSLock				*contextLock;
+	NSMutableDictionary *textures_;
+	NSLock				*dictLock_;
+	NSLock				*contextLock_;
 }
 
 /** Retruns ths shared instance of the cache */
@@ -78,6 +78,11 @@
  * @since v0.8
  */
 -(CCTexture2D*) addCGImage: (CGImageRef) image forKey: (NSString *)key;
+
+/** Returns an already created texture. Returns nil if the texture doesn't exist.
+ @since v0.99.5
+ */
+-(CCTexture2D *) textureForKey:(NSString *)key;
 
 /** Purges the dictionary of loaded textures.
  * Call this method if you receive the "Memory Warning"
