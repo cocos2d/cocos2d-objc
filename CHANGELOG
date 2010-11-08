@@ -1,6 +1,7 @@
 version 0.99.5 - xx-Nov-2010
 . [NEW] Particles: Added a new type kCCPositionTypeRelative. Useful for "trail" particles. Added Test.
 . [NEW] Textures: Added support for pvz.ccz and pvr.gz formats
+. [NEW] Textures: TextureCache has a method to test if a texture is already cached (issue #793)
 . [NEW] ZipUtils: Added generic functions to uncompress any .gz or .ccz file
 . [FIX] Actions: OrbitCamera doesn't crash on Simulator
 . [FIX] CocosDenshion: Fixed possible loss of audio on iOS 4.2
@@ -14,6 +15,7 @@ version 0.99.5 - xx-Nov-2010
 . [FIX] RenderTexture: fixed important memory leak when saving images
 . [FIX] TextureCache: Improved loading time of cached PVR images (issue #998)
 . [FIX] Texture2D: addPVRTCImage: -> addPVRImage: since it also loads non-compressed PVR images
+. [FIX] Tiled: images can be relative to source map (issue #787)
 
 version 0.99.5-rc0 - 25-Oct-2010
 . [NEW] AnimationCache: New class. It deprecates the CCSprite#animation methods (issue #848)

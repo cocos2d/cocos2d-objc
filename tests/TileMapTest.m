@@ -13,31 +13,34 @@
 static int sceneIdx=-1;
 static NSString *transitions[] = {	
 
-			@"TMXIsoZorder",
-			@"TMXOrthoZorder",
-			@"TMXIsoVertexZ",
-			@"TMXOrthoVertexZ",	
-			@"TMXOrthoTest",
-			@"TMXOrthoTest2",
-			@"TMXOrthoTest3",
-			@"TMXOrthoTest4",
-			@"TMXIsoTest",
-			@"TMXIsoTest1",
-			@"TMXIsoTest2",
-			@"TMXUncompressedTest",
-			@"TMXHexTest",
-			@"TMXReadWriteTest",
-			@"TMXTilesetTest",
-			@"TMXOrthoObjectsTest",
-			@"TMXIsoObjectsTest",
-			@"TMXTilePropertyTest",
-			@"TMXResizeTest",
-			@"TMXIsoMoveLayer",
-			@"TMXOrthoMoveLayer",
-			@"TMXBug987",
+	@"TMXBug787",
 
-			@"TileMapTest",
-			@"TileMapEditTest",
+	@"TMXIsoZorder",
+	@"TMXOrthoZorder",
+	@"TMXIsoVertexZ",
+	@"TMXOrthoVertexZ",	
+	@"TMXOrthoTest",
+	@"TMXOrthoTest2",
+	@"TMXOrthoTest3",
+	@"TMXOrthoTest4",
+	@"TMXIsoTest",
+	@"TMXIsoTest1",
+	@"TMXIsoTest2",
+	@"TMXUncompressedTest",
+	@"TMXHexTest",
+	@"TMXReadWriteTest",
+	@"TMXTilesetTest",
+	@"TMXOrthoObjectsTest",
+	@"TMXIsoObjectsTest",
+	@"TMXTilePropertyTest",
+	@"TMXResizeTest",
+	@"TMXIsoMoveLayer",
+	@"TMXOrthoMoveLayer",
+	@"TMXBug987",
+	@"TMXBug787",
+
+	@"TileMapTest",
+	@"TileMapEditTest",
 };
 
 enum {
@@ -1329,6 +1332,32 @@ Class restartAction()
 -(NSString *) subtitle
 {
 	return @"You should see an square";
+}
+
+@end
+
+#pragma mark -
+#pragma mark TMXBug787
+
+@implementation TMXBug787
+-(id) init
+{
+	if( (self=[super init]) ) {		
+		CCTMXTiledMap *map = [CCTMXTiledMap tiledMapWithTMXFile:@"TileMaps/iso-test-bug787.tmx"];
+		[self addChild:map z:0 tag:kTagTileMap];
+		
+		map.scale = 0.25f;
+	}	
+	return self;
+}
+
+-(NSString *) title
+{
+	return @"TMX Bug 787";
+}
+-(NSString *) subtitle
+{
+	return @"You should see a map";
 }
 
 @end

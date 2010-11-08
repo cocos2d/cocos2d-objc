@@ -137,3 +137,7 @@
 {}
 @end
 
+@interface TMXBug787 : TileDemo
+{}
+@end
+

@@ -63,6 +63,8 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		RotateTo action rotates to shortest angle patch
 	* Clinth Harris:
 		patches for Doc generator script
+	* cmkilger:
+		TMX maps: supports loading images from a different path than the map. patch.
 	* Codemattic:
 		patches for CocosNode
 		patches for MenuItemFont
