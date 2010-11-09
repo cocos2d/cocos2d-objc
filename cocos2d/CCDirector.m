@@ -91,6 +91,7 @@ extern NSString * cocos2dVersion(void);
 @synthesize sendCleanupToScene=sendCleanupToScene_;
 @synthesize runningThread=runningThread_;
 @synthesize notificationNode=notificationNode_;
+@synthesize projectionDelegate=projectionDelegate_;
 //
 // singleton stuff
 //
@@ -137,7 +138,10 @@ static CCDirector *_sharedDirector = nil;
 		
 		// Set default projection (3D)
 		projection_ = kCCDirectorProjectionDefault;
-		
+
+		// projection delegate if "Custom" projection is used
+		projectionDelegate_ = nil;
+
 		// FPS
 		displayFPS_ = NO;
 		frames_ = 0;
@@ -164,6 +168,8 @@ static CCDirector *_sharedDirector = nil;
 	[runningScene_ release];
 	[notificationNode_ release];
 	[scenesStack_ release];
+	
+	[projectionDelegate_ release];
 	
 	_sharedDirector = nil;
 	
@@ -245,12 +251,16 @@ static CCDirector *_sharedDirector = nil;
 -(void) setProjection:(ccDirectorProjection)projection
 {
 	CGSize size = winSizeInPixels_;
+	
+	// XXX: quick & dirty hack to obtain the content scale factor
+	int scale = winSizeInPixels_.height / winSizeInPoints_.height;
+	
 	switch (projection) {
 		case kCCDirectorProjection2D:
 			glViewport(0, 0, size.width, size.height);
 			glMatrixMode(GL_PROJECTION);
 			glLoadIdentity();
-			ccglOrtho(0, size.width, 0, size.height, -1024, 1024);
+			ccglOrtho(0, size.width, 0, size.height, -1024 * scale, 1024 * scale);
 			glMatrixMode(GL_MODELVIEW);
 			glLoadIdentity();
 			break;
@@ -269,7 +279,8 @@ static CCDirector *_sharedDirector = nil;
 			break;
 			
 		case kCCDirectorProjectionCustom:
-			// if custom, ignore it. The user is resposible for setting the correct projection
+			if( projectionDelegate_ )
+				[projectionDelegate_ updateProjection];
 			break;
 			
 		default:
@@ -424,6 +435,9 @@ static CCDirector *_sharedDirector = nil;
 	FPSLabel_ = nil;
 #endif	
 
+	[projectionDelegate_ release];
+	projectionDelegate_ = nil;
+	
 	// Purge bitmap cache
 	[CCLabelBMFont purgeCachedData];
 
