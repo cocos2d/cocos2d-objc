@@ -128,7 +128,7 @@
 #define CC_SPRITEBATCHNODE_RENDER_SUBPIXEL	1
 
 
-#if defined(__ARM_NEON__) || defined(TARGET_IPHONE_SIMULATOR) || defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+#if defined(__ARM_NEON__) || TARGET_IPHONE_SIMULATOR || defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 /** @def CC_USES_VBO
  If enabled, batch nodes (texture atlas and particle system) will use VBO instead of vertex list (VBO is recommended by Apple)
  
