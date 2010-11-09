@@ -68,6 +68,7 @@
 	
 	// XXX: updateTransform will update the textureAtlas too using updateQuad.
 	// XXX: so, it should be AFTER the insertQuad
+	[sprite setDirty:YES];
 	[sprite updateTransform];
 }
 
@@ -390,6 +391,7 @@
 	unsigned int indexForZ = [self atlasIndexForExistantZ:z];
 
 	[reusedTile_ setAtlasIndex:indexForZ];
+	[reusedTile_ setDirty:YES];
 	[reusedTile_ updateTransform];
 	tiles_[z] = gid;
 	

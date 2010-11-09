@@ -28,6 +28,7 @@
 
 // OpenGL related
 #import "Platforms/CCGL.h"
+#import "CCProtocols.h"
 
 /** @typedef ccDirectorProjection
  Possible OpenGL projections used by director
@@ -122,6 +123,9 @@ and when to execute the Scenes.
 	/* projection used */
 	ccDirectorProjection projection_;
 	
+	/* Projection protocol delegate */
+	id<CCProjectionProtocol>	projectionDelegate_;
+
 	/* window size in points */
 	CGSize	winSizeInPoints_;
 	
@@ -130,7 +134,7 @@ and when to execute the Scenes.
 
 	/* the cocos2d running thread */
 	NSThread	*runningThread_;
-
+	
 #if CC_ENABLE_PROFILERS
 	ccTime accumDtForProfiler_;
 #endif
@@ -172,6 +176,11 @@ and when to execute the Scenes.
  @since v0.99.5
  */
 @property (nonatomic, readwrite, retain) id	notificationNode;
+
+/** This object will be called when the OpenGL projection is udpated and only when the kCCDirectorProjectionCustom projection is used.
+ @since v0.99.5
+ */
+@property (nonatomic, readwrite, retain) id<CCProjectionProtocol> projectionDelegate;
 
 /** returns a shared instance of the director */
 +(CCDirector *)sharedDirector;

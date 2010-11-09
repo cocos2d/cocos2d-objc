@@ -110,3 +110,12 @@
 @end
 
 
+#pragma mark -
+#pragma mark CCProjectionProtocol
+/** OpenGL projection protocol */
+@protocol CCProjectionProtocol <NSObject>
+/** Called by CCDirector when the porjection is updated, and "custom" projection is used
+ @since v0.99.5
+ */
+-(void) updateProjection;
+@end
