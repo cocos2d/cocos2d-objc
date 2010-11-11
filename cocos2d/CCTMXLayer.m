@@ -469,7 +469,8 @@ int compareInts (const void * a, const void * b)
 {
 	NSAssert( pos.x < layerSize_.width && pos.y < layerSize_.height && pos.x >=0 && pos.y >=0, @"TMXLayer: invalid position");
 	NSAssert( tiles_ && atlasIndexArray_, @"TMXLayer: the tiles map has been released");
-		
+	NSAssert( gid == 0 || gid >= tileset_.firstGid, @"TMXLayer: invalid gid" );
+
 	unsigned int currentGID = [self tileGIDAt:pos];
 	
 	if( currentGID != gid ) {

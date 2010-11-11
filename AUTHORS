@@ -304,6 +304,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	* Neophit:
 		Added support for object and objectgroup in TMXTiledMaps
 		TMXTiledMaps: objects supports offsets. patch.
+		TMXLayer: checks correct GID in tilemaps. patch.
 	* Nerezus:
 		Fixed compile error when keyboard registry is enabled
 	* NovaOblivion:
