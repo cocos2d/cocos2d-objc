@@ -32,6 +32,11 @@ typedef enum  {
 	kCCMenuStateTrackingTouch
 } tCCMenuState;
 
+enum {
+	//* priority used by the menu
+	kCCMenuTouchPriority = -128,
+};
+
 /** A CCMenu
  * 
  * Features and Limitation:
