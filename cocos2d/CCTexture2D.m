@@ -87,17 +87,14 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 
 
+
 // For Labels use 32-bit textures on iPhone 3GS / iPads since A8 textures are very slow
-#if defined(__ARM_NEON__) || TARGET_IPHONE_SIMULATOR
+#if defined(__ARM_NEON__) && CC_USE_RGBA32_LABELS_ON_NEON_ARCH
 #define USE_TEXT_WITH_A8_TEXTURES 0
 
-// On ARMv6 use A8 textures for Labels.
-#elif defined(__arm__) || defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
-#define USE_TEXT_WITH_A8_TEXTURES 1
 #else
-#error(unknown architecture)
+#define USE_TEXT_WITH_A8_TEXTURES 1
 #endif
-
 
 //CLASS IMPLEMENTATIONS:
 
