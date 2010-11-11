@@ -185,6 +185,10 @@
 {}
 @end
 
+@interface SpriteChildrenVisibilityIssue665 : SpriteDemo
+{}
+@end
+
 @interface SpriteChildrenAnchorPoint : SpriteDemo
 {}
 @end
