@@ -86,8 +86,6 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #endif// CC_FONT_LABEL_SUPPORT
 
 
-
-
 // For Labels use 32-bit textures on iPhone 3GS / iPads since A8 textures are very slow
 #if defined(__ARM_NEON__) && CC_USE_RGBA32_LABELS_ON_NEON_ARCH
 #define USE_TEXT_WITH_A8_TEXTURES 0

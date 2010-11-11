@@ -111,9 +111,9 @@ int ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 		[imagePathComponents removeLastObject];
 		NSString *imageDirectory = [NSString pathWithComponents:imagePathComponents];
 		
-		fullpath = [[CCConfiguration sharedConfiguration].loadingBundle pathForResource:file
-															 ofType:nil
-														inDirectory:imageDirectory];
+		fullpath = [[NSBundle mainBundle] pathForResource:file
+												   ofType:nil
+											  inDirectory:imageDirectory];
 	}
 	
 	if (fullpath == nil)

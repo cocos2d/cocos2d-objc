@@ -37,7 +37,6 @@
 
 @implementation CCConfiguration
 
-@synthesize loadingBundle=loadingBundle_;
 @synthesize maxTextureSize=maxTextureSize_;
 @synthesize supportsPVRTC=supportsPVRTC_;
 @synthesize maxModelviewStackDepth=maxModelviewStackDepth_;
@@ -84,8 +83,6 @@ static char * glExtensions;
 -(id) init
 {
 	if( (self=[super init])) {
-		
-		loadingBundle_ = [NSBundle mainBundle];
 		
 		// Obtain iOS version
 		OSVersion_ = 0;
