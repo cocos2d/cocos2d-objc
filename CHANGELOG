@@ -10,6 +10,7 @@ version 0.99.5-rc1_GameJam - 8-Nov-2010
 . [FIX] Director: projection is doubled in RetinaDisplay mode
 . [FIX] Menu: MenuItems can draw its children (issue #458)
 . [FIX] Menu: MenuItems positions can be controlled manually (issue #1013)
+. [FIX] Menu: Menus uses touch priority kCCMenuTouchPriority (-128) (issue #1033)
 . [FIX] Node: convertToAR method fixed (issue #1017)
 . [FIX] Node: vertexZ works OK in RetinaDisplay mode
 . [FIX] Particles: Improved doxygen documentation (issue #1026)
