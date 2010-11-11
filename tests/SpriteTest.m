@@ -751,12 +751,11 @@ Class restartAction()
 	return sprite;
 }
 
-- (BOOL)ccTouchBegan:(UITouch *)touch withEvent:(UIEvent *)event
+- (void) reorderSprite:(ccTime)dt
 {
-	NSLog(@"touch");
-	[batchNode reorderChild:sprite1 z:4];
+	[self unschedule:_cmd];
 	
-	return YES;
+	[batchNode reorderChild:sprite1 z:4];
 }
 
 // on "init" you need to initialize your instance
@@ -765,7 +764,6 @@ Class restartAction()
 	// always call "super" init
 	// Apple recommends to re-assign "self" with the "super" return value
 	if( (self=[super init] )) {
-		[[CCTouchDispatcher sharedDispatcher] addTargetedDelegate:self priority:0 swallowsTouches:YES];
 		
 		batchNode = [CCSpriteBatchNode batchNodeWithFile:@"piece.png" capacity:15];
 		[self addChild:batchNode z:1 tag:0];
@@ -778,6 +776,8 @@ Class restartAction()
 		
 		sprite3 = [self makeSpriteZ:4];
 		sprite3.position = CGPointMake(328,160);
+		
+		[self schedule:@selector(reorderSprite:) interval:2];
 	}
 	return self;
 }
@@ -789,7 +789,7 @@ Class restartAction()
 
 -(NSString *) subtitle
 {
-	return @"Touch screen to reorder 1 sprite";
+	return @"In 2 seconds 1 sprite will be reordered";
 }
 
 @end

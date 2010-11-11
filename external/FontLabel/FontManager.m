@@ -44,9 +44,9 @@ static FontManager *sharedFontManager = nil;
 }
 
 - (BOOL)loadFont:(NSString *)filename {
-	NSString *fontPath = [[CCConfiguration sharedConfiguration].loadingBundle pathForResource:filename ofType:@"ttf"];
+	NSString *fontPath = [[NSBundle mainBundle] pathForResource:filename ofType:@"ttf"];
 	if (fontPath == nil) {
-		fontPath = [[CCConfiguration sharedConfiguration].loadingBundle pathForResource:filename ofType:nil];
+		fontPath = [[NSBundle mainBundle] pathForResource:filename ofType:nil];
 	}
 	if (fontPath == nil) return NO;
 	

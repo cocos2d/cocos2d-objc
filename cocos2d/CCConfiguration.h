@@ -51,8 +51,6 @@ enum {
  */
 @interface CCConfiguration : NSObject {
 
-	NSBundle		*loadingBundle_;
-	
 	GLint			maxTextureSize_;
 	GLint			maxModelviewStackDepth_;
 	BOOL			supportsPVRTC_;
@@ -62,9 +60,6 @@ enum {
 	NSUInteger		OSVersion_;
 	GLint			maxSamplesAllowed_;
 }
-
-/** the bundle we load everything from */
-@property (nonatomic, readwrite, assign) NSBundle* loadingBundle;
 
 /** OpenGL Max texture size. */
 @property (nonatomic, readonly) GLint maxTextureSize;

@@ -53,7 +53,6 @@
 #define CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL 0
  
 
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 /** @def CC_FONT_LABEL_SUPPORT
  If enabled, FontLabel will be used to render .ttf files.
  If the .ttf file is not found, then it will use the standard UIFont class
@@ -62,12 +61,10 @@
  To enable set it to a value different than 0. Disabled by default.
  
  Warning: If you enable, it will slow down the creation of fonts when iOS >= 4.0
+ 
+ Only valid for cocos2d-ios. Not supported on cocos2d-mac
  */
 #define CC_FONT_LABEL_SUPPORT	0
-
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
-#define CC_FONT_LABEL_SUPPORT	0
-#endif
 
 /** @def CC_DIRECTOR_FAST_FPS
  If enabled, then the FPS will be drawn using CCLabelAtlas (fast rendering).
@@ -93,7 +90,7 @@
  If your game uses lot's of events (eg: touches) it might be a good idea to enable this feature.
  Otherwise, it is safe to leave it disabled.
  
- To enable set it to a value different than 0. Disabled by default.
+ To enable set it to 1. Disabled by default.
  
  @warning This feature is experimental
  */
@@ -104,7 +101,9 @@
  
  By default cocos2d-mac will run in its own thread. Enable it if your game is skipping some frames.
  
- To enable set it to a value different than 0. Disabled by default.
+ To enable set it to a 1. Disabled by default.
+
+ This is an experimental feature.
 
  Only valid for cocos2d-mac. Not supported on cocos2d-ios.
 
@@ -115,7 +114,7 @@
  If enabled, the CCNode objects (CCSprite, CCLabel,etc) will be able to render in subpixels.
  If disabled, integer pixels will be used.
  
- To enable set it to a value different than 0. Enabled by default.
+ To enable set it to 1. Enabled by default.
  */
 #define CC_COCOSNODE_RENDER_SUBPIXEL 1
 
@@ -123,7 +122,7 @@
  If enabled, the CCSprite objects rendered with CCSpriteBatchNode will be able to render in subpixels.
  If disabled, integer pixels will be used.
  
- To enable set it to a value different than 0. Enabled by default.
+ To enable set it to 1. Enabled by default.
  */
 #define CC_SPRITEBATCHNODE_RENDER_SUBPIXEL	1
 
@@ -132,7 +131,7 @@
 /** @def CC_USES_VBO
  If enabled, batch nodes (texture atlas and particle system) will use VBO instead of vertex list (VBO is recommended by Apple)
  
- To enable set it to a value different than 0.
+ To enable set it to 1.
  Enabled by default on iPhone with ARMv7 processors, iPhone Simulator and Mac
  Disabled by default on iPhone with ARMv6 processors.
  
