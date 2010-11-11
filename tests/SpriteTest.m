@@ -12,8 +12,7 @@
 
 static int sceneIdx=-1;
 static NSString *transitions[] = {	
-	@"SpriteChildrenVisibilityIssue665",
-
+	
 	@"Sprite1",
 	@"SpriteBatchNode1",
 	@"SpriteFrameTest",
@@ -31,6 +30,7 @@ static NSString *transitions[] = {
 	@"SpriteBatchNodeZOrder",
 	@"SpriteBatchNodeReorder",
 	@"SpriteBatchNodeReorderIssue744",
+	@"SpriteBatchNodeReorderIssue766",
 	@"SpriteBatchNodeReorderIssue767",
 	@"SpriteZVertex",
 	@"SpriteBatchNodeZVertex",
@@ -127,7 +127,6 @@ Class restartAction()
 			[self addChild:l z:1];
 			[l setPosition:ccp(s.width/2, s.height-80)];
 		}
-		
 		
 		CCMenuItemImage *item1 = [CCMenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
 		CCMenuItemImage *item2 = [CCMenuItemImage itemFromNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
@@ -734,6 +733,67 @@ Class restartAction()
 	return @"Should not crash";
 }
 @end
+
+@implementation SpriteBatchNodeReorderIssue766
+-(CCSprite *)makeSpriteZ:(int)aZ
+{
+	CCSprite *sprite = [CCSprite spriteWithBatchNode:batchNode rect:CGRectMake(128,0,64,64)];
+	[batchNode addChild:sprite z:aZ+1 tag:0];
+	
+	//children
+	CCSprite *spriteShadow = [CCSprite spriteWithBatchNode:batchNode rect:CGRectMake(0,0,64,64)];
+	spriteShadow.opacity = 128;
+	[sprite addChild:spriteShadow z:aZ tag:3];
+	
+	CCSprite *spriteTop = [CCSprite spriteWithBatchNode:batchNode rect:CGRectMake(64,0,64,64)];
+	[sprite addChild:spriteTop z:aZ+2 tag:3];
+	
+	return sprite;
+}
+
+- (BOOL)ccTouchBegan:(UITouch *)touch withEvent:(UIEvent *)event
+{
+	NSLog(@"touch");
+	[batchNode reorderChild:sprite1 z:4];
+	
+	return YES;
+}
+
+// on "init" you need to initialize your instance
+-(id) init
+{
+	// always call "super" init
+	// Apple recommends to re-assign "self" with the "super" return value
+	if( (self=[super init] )) {
+		[[CCTouchDispatcher sharedDispatcher] addTargetedDelegate:self priority:0 swallowsTouches:YES];
+		
+		batchNode = [CCSpriteBatchNode batchNodeWithFile:@"piece.png" capacity:15];
+		[self addChild:batchNode z:1 tag:0];
+		
+		sprite1 = [self makeSpriteZ:2];
+		sprite1.position = CGPointMake(200,160);
+		
+		sprite2= [self makeSpriteZ:3];
+		sprite2.position = CGPointMake(264,160);
+		
+		sprite3 = [self makeSpriteZ:4];
+		sprite3.position = CGPointMake(328,160);
+	}
+	return self;
+}
+
+-(NSString *) title
+{
+	return @"SpriteBatchNode: reorder issue #766";
+}
+
+-(NSString *) subtitle
+{
+	return @"Touch screen to reorder 1 sprite";
+}
+
+@end
+
 
 @implementation SpriteBatchNodeReorderIssue767
 

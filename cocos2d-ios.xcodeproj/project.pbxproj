@@ -2642,6 +2642,7 @@
 		E0C5589511FE4CF100B9E4CB /* zwoptex in Resources */ = {isa = PBXBuildFile; fileRef = E0C5588E11FE4CF100B9E4CB /* zwoptex */; };
 		E0C786AD1211A40400E309E2 /* Tank.c in Sources */ = {isa = PBXBuildFile; fileRef = E0C786AC1211A40400E309E2 /* Tank.c */; };
 		E0CC4F7D12677DB400691051 /* blocks-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E0CC4F7C12677DB400691051 /* blocks-hd.png */; };
+		E0D2D4F3128CA9E300F78C63 /* piece.png in Resources */ = {isa = PBXBuildFile; fileRef = E0D2D4F2128CA9E300F78C63 /* piece.png */; };
 		E0E974A51237E4EA00E3E64B /* CCDirectorMac.h in Headers */ = {isa = PBXBuildFile; fileRef = E0E9749F1237E4EA00E3E64B /* CCDirectorMac.h */; };
 		E0E974A61237E4EA00E3E64B /* CCDirectorMac.m in Sources */ = {isa = PBXBuildFile; fileRef = E0E974A01237E4EA00E3E64B /* CCDirectorMac.m */; };
 		E0E974A71237E4EA00E3E64B /* CCEventDispatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = E0E974A11237E4EA00E3E64B /* CCEventDispatcher.h */; };
@@ -4602,6 +4603,7 @@
 		E0C783B41210A39200E309E2 /* Web.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Web.h; sourceTree = "<group>"; };
 		E0C786AC1211A40400E309E2 /* Tank.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; fileEncoding = 4; path = Tank.c; sourceTree = "<group>"; };
 		E0CC4F7C12677DB400691051 /* blocks-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "blocks-hd.png"; sourceTree = "<group>"; };
+		E0D2D4F2128CA9E300F78C63 /* piece.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = piece.png; sourceTree = "<group>"; };
 		E0E9749F1237E4EA00E3E64B /* CCDirectorMac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCDirectorMac.h; sourceTree = "<group>"; };
 		E0E974A01237E4EA00E3E64B /* CCDirectorMac.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCDirectorMac.m; sourceTree = "<group>"; };
 		E0E974A11237E4EA00E3E64B /* CCEventDispatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEventDispatcher.h; sourceTree = "<group>"; };
@@ -6899,6 +6901,7 @@
 				50C1959C0EE4B90800829067 /* background.png */,
 				50C723DB0EC062680046C5DB /* clouds.pvrtc */,
 				506882680E957C4A00F943E5 /* atlastest.png */,
+				E0D2D4F2128CA9E300F78C63 /* piece.png */,
 			);
 			name = Images;
 			path = Resources/Images;
@@ -9319,6 +9322,7 @@
 				E02BB604126CA73F006E46A2 /* Icon-Small.png in Resources */,
 				E02BB605126CA73F006E46A2 /* Icon-Small-50.png in Resources */,
 				E02BB606126CA73F006E46A2 /* Icon-72.png in Resources */,
+				E0D2D4F3128CA9E300F78C63 /* piece.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
