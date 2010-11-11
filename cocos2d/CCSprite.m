@@ -52,6 +52,7 @@ struct transformValues_ {
 	CGPoint	scale;		// scale x and y
 	float	rotation;
 	CGPoint ap;			// anchor point in pixels
+	BOOL	visible;
 };
 
 @interface CCSprite (Private)
@@ -472,7 +473,7 @@ struct transformValues_ {
 	CGAffineTransform matrix;
 	
 	// Optimization: if it is not visible, then do nothing
-	if( ! visible_ ) {		
+	if( ! visible_ ) {
 		quad_.br.vertices = quad_.tl.vertices = quad_.tr.vertices = quad_.bl.vertices = (ccVertex3F){0,0,0};
 		[textureAtlas_ updateQuad:&quad_ atIndex:atlasIndex_];
 		dirty_ = recursiveDirty_ = NO;
@@ -505,6 +506,13 @@ struct transformValues_ {
 			struct transformValues_ tv;
 			[(CCSprite*)p getTransformValues: &tv];
 			
+			// If any of the parents are not visible, then don't draw this node
+			if( ! tv.visible ) {
+				quad_.br.vertices = quad_.tl.vertices = quad_.tr.vertices = quad_.bl.vertices = (ccVertex3F){0,0,0};
+				[textureAtlas_ updateQuad:&quad_ atIndex:atlasIndex_];
+				dirty_ = recursiveDirty_ = NO;
+				return ;
+			}
 			CGAffineTransform newMatrix = CGAffineTransformIdentity;
 			
 			// 2nd: Translate, Rotate, Scale
@@ -579,6 +587,7 @@ struct transformValues_ {
 	tv->scale.y = scaleY_;
 	tv->rotation = rotation_;
 	tv->ap = anchorPointInPixels_;
+	tv->visible = visible_;
 }
 
 #pragma mark CCSprite - draw
@@ -774,15 +783,8 @@ struct transformValues_ {
 
 -(void)setVisible:(BOOL)v
 {
-	if( v != visible_ ) {
-		[super setVisible:v];
-		if( usesBatchNode_ && ! recursiveDirty_ ) {
-			dirty_ = recursiveDirty_ = YES;
-			id child;
-			CCARRAY_FOREACH(children_, child)
-				[child setVisible:v];
-		}
-	}
+	[super setVisible:v];
+	SET_DIRTY_RECURSIVELY();
 }
 
 -(void)setFlipX:(BOOL)b

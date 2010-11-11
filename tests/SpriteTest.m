@@ -12,6 +12,8 @@
 
 static int sceneIdx=-1;
 static NSString *transitions[] = {	
+	@"SpriteChildrenVisibilityIssue665",
+
 	@"Sprite1",
 	@"SpriteBatchNode1",
 	@"SpriteFrameTest",
@@ -44,6 +46,7 @@ static NSString *transitions[] = {
 	@"SpriteBatchNodeChildren2",
 	@"SpriteBatchNodeChildrenZ",
 	@"SpriteChildrenVisibility",
+	@"SpriteChildrenVisibilityIssue665",
 	@"SpriteChildrenAnchorPoint",
 	@"SpriteBatchNodeChildrenAnchorPoint",
 	@"SpriteBatchNodeChildrenScale",
@@ -2515,7 +2518,10 @@ Class restartAction()
 		
 		sprite3 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_03.png"];
 		[sprite3 setPosition:ccp(-20,30)];
-		
+
+		// test issue #665
+//		sprite1.visible = NO;
+
 		[aParent addChild:sprite1];
 		[sprite1 addChild:sprite2 z:-2];
 		[sprite1 addChild:sprite3 z:2];
@@ -2538,6 +2544,9 @@ Class restartAction()
 		sprite3 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_03.png"];
 		[sprite3 setPosition:ccp(-20,30)];
 		
+		// test issue #665
+//		sprite1.visible = NO;
+
 		[aParent addChild:sprite1];
 		[sprite1 addChild:sprite2 z:-2];
 		[sprite1 addChild:sprite3 z:2];
@@ -2558,6 +2567,92 @@ Class restartAction()
 {
 	return @"Sprite & SpriteBatchNode Visibility";
 }
+@end
+
+#pragma mark -
+#pragma mark SpriteChildrenVisibilityIssue665
+
+@implementation SpriteChildrenVisibilityIssue665
+
+-(id) init
+{
+	if( (self=[super init]) ) {
+		
+		CGSize s = [[CCDirector sharedDirector] winSize];
+		
+		[[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"animations/grossini.plist"];
+		
+		CCNode *aParent;
+		CCSprite *sprite1, *sprite2, *sprite3;
+		//
+		// SpriteBatchNode
+		//
+		// parents
+		aParent = [CCSpriteBatchNode batchNodeWithFile:@"animations/grossini.png" capacity:50];
+		aParent.position = ccp(s.width/3, s.height/2);
+		[self addChild:aParent z:0];
+		
+		
+		
+		sprite1 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_01.png"];
+		[sprite1 setPosition:ccp(0,0)];
+		
+		sprite2 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_02.png"];
+		[sprite2 setPosition:ccp(20,30)];
+		
+		sprite3 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_03.png"];
+		[sprite3 setPosition:ccp(-20,30)];
+		
+		// test issue #665
+		sprite1.visible = NO;
+		
+		[aParent addChild:sprite1];
+		[sprite1 addChild:sprite2 z:-2];
+		[sprite1 addChild:sprite3 z:2];
+				
+		//
+		// Sprite
+		//
+		aParent = [CCNode node];
+		aParent.position = ccp(2*s.width/3, s.height/2);
+		[self addChild:aParent z:0];
+		
+		sprite1 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_01.png"];
+		[sprite1 setPosition:ccp(0,0)];
+		
+		sprite2 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_02.png"];
+		[sprite2 setPosition:ccp(20,30)];
+		
+		sprite3 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_03.png"];
+		[sprite3 setPosition:ccp(-20,30)];
+		
+		// test issue #665
+		sprite1.visible = NO;
+		
+		[aParent addChild:sprite1];
+		[sprite1 addChild:sprite2 z:-2];
+		[sprite1 addChild:sprite3 z:2];
+		
+	}	
+	return self;
+}
+
+- (void) dealloc
+{
+	[[CCSpriteFrameCache sharedSpriteFrameCache] removeUnusedSpriteFrames];
+	[super dealloc];
+}
+
+-(NSString *) title
+{
+	return @"Sprite & SpriteBatchNode Visibility";
+}
+
+-(NSString *) subtitle
+{
+	return @"No sprites should be visible";
+}
+
 @end
 
 #pragma mark -
