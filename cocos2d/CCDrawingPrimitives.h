@@ -61,7 +61,7 @@ void ccDrawPoint( CGPoint point );
 /** draws an array of points.
  @since v0.7.2
  */
-void ccDrawPoints( CGPoint *points, NSUInteger numberOfPoints );
+void ccDrawPoints( const CGPoint *points, NSUInteger numberOfPoints );
 
 /** draws a line given the origin and destination point measured in points. */
 void ccDrawLine( CGPoint origin, CGPoint destination );
@@ -69,7 +69,7 @@ void ccDrawLine( CGPoint origin, CGPoint destination );
 /** draws a poligon given a pointer to CGPoint coordiantes and the number of vertices measured in points.
  The polygon can be closed or open
  */
-void ccDrawPoly( CGPoint *vertices, NSUInteger numOfVertices, BOOL closePolygon );
+void ccDrawPoly( const CGPoint *vertices, NSUInteger numOfVertices, BOOL closePolygon );
 
 /** draws a circle given the center, radius and number of segments measured in points */
 void ccDrawCircle( CGPoint center, float radius, float angle, NSUInteger segments, BOOL drawLineToCenter);

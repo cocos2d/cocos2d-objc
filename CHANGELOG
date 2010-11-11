@@ -1,13 +1,14 @@
-version 0.99.5-rc1_GameJam - 8-Nov-2010
+version 0.99.5-rc1 - 12-Nov-2010
 . [NEW] Director: setProjection calls "updateProjection" delegate if "custom" projection is used
 . [NEW] Particles: Added a new type kCCPositionTypeRelative. Useful for "trail" particles. Added Test.
 . [NEW] Textures: Added support for pvz.ccz and pvr.gz formats
 . [NEW] Textures: TextureCache has a method to test if a texture is already cached (issue #793)
-. [NEW] ZipUtils: Added generic functions to uncompress any .gz or .ccz file
+. [NEW] ZipUtils: Added generic functions to uncompress any .gz or .ccz file (issue #1016)
 . [FIX] Actions: OrbitCamera doesn't crash on Simulator
 . [FIX] CCArray: fastRemoveObjectAtIndex works as expected (issue #1024)
 . [FIX] CocosDenshion: Fixed possible loss of audio on iOS 4.2
 . [FIX] Director: projection is doubled in RetinaDisplay mode
+. [FIX] DrawingPrimitives: don't modify the buffer in RetinaDisplay (issue #995)
 . [FIX] Menu: MenuItems can draw its children (issue #458)
 . [FIX] Menu: MenuItems positions can be controlled manually (issue #1013)
 . [FIX] Menu: Menus uses touch priority kCCMenuTouchPriority (-128) (issue #1033)
