@@ -95,7 +95,6 @@
 										 fontName:fontName_
 										 fontSize:fontSize_];
 
-
 	[self setTexture:tex];
 	[tex release];
 
