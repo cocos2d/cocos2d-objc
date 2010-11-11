@@ -25,7 +25,7 @@
 
 /* Idea of decoupling Window from Director taken from OC3D project: http://code.google.com/p/oc3d/
  */
- 
+
 #import <unistd.h>
 #import <Availability.h>
 
@@ -59,9 +59,7 @@
 #define CC_DIRECTOR_DEFAULT CCDirectorDisplayLink
 #endif
 
-#if CC_ENABLE_PROFILERS
 #import "Support/CCProfiling.h"
-#endif
 
 #define kDefaultFPS		60.0	// 60 frames per second
 
@@ -74,11 +72,6 @@ extern NSString * cocos2dVersion(void);
 -(void) showFPS;
 // calculates delta time since last time it was called
 -(void) calculateDeltaTime;
-
-#if CC_ENABLE_PROFILERS
-- (void) showProfilers;
-#endif
-
 @end
 
 @implementation CCDirector
@@ -587,15 +580,15 @@ static CCDirector *_sharedDirector = nil;
 }
 #endif
 
-#if CC_ENABLE_PROFILERS
 - (void) showProfilers {
+#if CC_ENABLE_PROFILERS
 	accumDtForProfiler_ += dt;
 	if (accumDtForProfiler_ > 1.0f) {
 		accumDtForProfiler_ = 0;
 		[[CCProfiler sharedProfiler] displayTimers];
 	}
+#endif // CC_ENABLE_PROFILERS
 }
-#endif
 
 @end
 

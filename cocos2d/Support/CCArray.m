@@ -194,7 +194,7 @@
 
 - (void) fastRemoveObjectAtIndex:(NSUInteger)index
 {
-	ccArrayFastRemoveObjectAtIndex(data, 0);
+	ccArrayFastRemoveObjectAtIndex(data, index);
 }
 
 - (void) fastRemoveObject:(id)object

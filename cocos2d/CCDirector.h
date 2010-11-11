@@ -34,13 +34,13 @@
  Possible OpenGL projections used by director
  */
 typedef enum {
-	/// sets a 2D projection (orthogonal projection)
+	/// sets a 2D projection (orthogonal projection).
 	kCCDirectorProjection2D,
 	
 	/// sets a 3D projection with a fovy=60, znear=0.5f and zfar=1500.
 	kCCDirectorProjection3D,
 	
-	/// it does nothing. But if you are using a custom projection set it this value.
+	/// it calls "updateProjection" on the projection delegate.
 	kCCDirectorProjectionCustom,
 	
 	/// Detault projection is 3D projection
@@ -62,15 +62,15 @@ and when to execute the Scenes.
  
  The CCDirector is also resposible for:
   - initializing the OpenGL ES context
-  - setting the OpenGL ES pixel format (default on is RGB565)
-  - setting the OpenGL ES buffer depth (default one is 0-bit)
-  - setting the projection (default one is 2D)
+  - setting the OpenGL pixel format (default on is RGB565)
+  - setting the OpenGL buffer depth (default one is 0-bit)
+  - setting the projection (default one is 3D)
   - setting the orientation (default one is Protrait)
  
  Since the CCDirector is a singleton, the standard way to use it is by calling:
-  - [[CCDirector sharedDirector] xxxx];
+  - [[CCDirector sharedDirector] methodName];
  
- The CCDirector also sets the default OpenGL ES context:
+ The CCDirector also sets the default OpenGL context:
   - GL_TEXTURE_2D is enabled
   - GL_VERTEX_ARRAY is enabled
   - GL_COLOR_ARRAY is enabled
@@ -134,7 +134,8 @@ and when to execute the Scenes.
 
 	/* the cocos2d running thread */
 	NSThread	*runningThread_;
-	
+
+	// profiler
 #if CC_ENABLE_PROFILERS
 	ccTime accumDtForProfiler_;
 #endif
@@ -285,8 +286,7 @@ and when to execute the Scenes.
  IMPORTANT: The CCSpriteFrameCache won't be purged. If you want to purge it, you have to purge it manually.
  @since v0.99.3
  */
--(void) purgeCachedData;
- 
+-(void) purgeCachedData; 
 
 // OpenGL Helper
 
@@ -297,5 +297,8 @@ and when to execute the Scenes.
 - (void) setAlphaBlending: (BOOL) on;
 /** enables/disables OpenGL depth test */
 - (void) setDepthTest: (BOOL) on;
+
+// Profiler
+-(void) showProfilers;
 
 @end

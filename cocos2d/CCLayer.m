@@ -277,7 +277,7 @@
 
 - (id) initWithColor:(ccColor4B)color
 {
-	CGSize s = [[CCDirector sharedDirector] winSizeInPixels];
+	CGSize s = [[CCDirector sharedDirector] winSize];
 	return [self initWithColor:color width:s.width height:s.height];
 }
 
