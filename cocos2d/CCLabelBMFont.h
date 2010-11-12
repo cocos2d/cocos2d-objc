@@ -81,19 +81,19 @@ enum {
 // XXX: Creating a public interface so that the bitmapFontArray[] is accesible
 @public
 	// The characters building up the font
-	ccBMFontDef	BMFontArray[kCCBMFontMaxChars];
+	ccBMFontDef	BMFontArray_[kCCBMFontMaxChars];
 	
 	// FNTConfig: Common Height
-	NSUInteger		commonHeight;
+	NSUInteger		commonHeight_;
 	
 	// Padding
-	ccBMFontPadding	padding;
+	ccBMFontPadding	padding_;
 	
 	// atlas name
-	NSString		*atlasName;
+	NSString		*atlasName_;
 
 	// values for kerning
-	struct _KerningHashElement	*kerningDictionary;
+	struct _KerningHashElement	*kerningDictionary_;
 }
 
 /** allocates a CCBMFontConfiguration with a FNT file */
