@@ -211,7 +211,11 @@ typedef struct _KerningHashElement
 	propertyValue = [array objectAtIndex:1];
 	NSAssert(propertyValue,@"BitmapFontAtlas file could not be found");
 	
-	atlasName_ = [propertyValue retain];
+	// Supports subdirectories
+	NSString *dir = [fntFile stringByDeletingLastPathComponent];
+	atlasName_ = [dir stringByAppendingPathComponent:propertyValue];
+
+	[atlasName_ retain];
 }
 
 -(void) parseInfoArguments:(NSString*)line
