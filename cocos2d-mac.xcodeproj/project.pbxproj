@@ -2809,6 +2809,12 @@
 		E0B930021226C0DD003FF67E /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E01E6A3D121EDCD3001A484F /* ApplicationServices.framework */; };
 		E0B930031226C0DD003FF67E /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E0F9256D1224207200EF2362 /* libz.dylib */; };
 		E0B930101226C184003FF67E /* EaseActionsTest.m in Sources */ = {isa = PBXBuildFile; fileRef = E0B9300F1226C184003FF67E /* EaseActionsTest.m */; };
+		E0C6067D128ECC110099367C /* konqa32-hd.fnt in Resources */ = {isa = PBXBuildFile; fileRef = E0C60677128ECC110099367C /* konqa32-hd.fnt */; };
+		E0C6067E128ECC110099367C /* konqa32-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E0C60678128ECC110099367C /* konqa32-hd.png */; };
+		E0C6067F128ECC110099367C /* konqa32.fnt in Resources */ = {isa = PBXBuildFile; fileRef = E0C60679128ECC110099367C /* konqa32.fnt */; };
+		E0C60680128ECC110099367C /* konqa32.png in Resources */ = {isa = PBXBuildFile; fileRef = E0C6067A128ECC110099367C /* konqa32.png */; };
+		E0C60681128ECC110099367C /* larabie-16-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E0C6067B128ECC110099367C /* larabie-16-hd.png */; };
+		E0C60682128ECC110099367C /* larabie-16.png in Resources */ = {isa = PBXBuildFile; fileRef = E0C6067C128ECC110099367C /* larabie-16.png */; };
 		E0D2D560128CB06A00F78C63 /* piece.png in Resources */ = {isa = PBXBuildFile; fileRef = E0D2D55F128CB06A00F78C63 /* piece.png */; };
 /* End PBXBuildFile section */
 
@@ -3468,6 +3474,12 @@
 		E0B930071226C0DD003FF67E /* ActionEaseTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ActionEaseTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E0B9300E1226C184003FF67E /* EaseActionsTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EaseActionsTest.h; path = tests/EaseActionsTest.h; sourceTree = "<group>"; };
 		E0B9300F1226C184003FF67E /* EaseActionsTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EaseActionsTest.m; path = tests/EaseActionsTest.m; sourceTree = "<group>"; };
+		E0C60677128ECC110099367C /* konqa32-hd.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "konqa32-hd.fnt"; sourceTree = "<group>"; };
+		E0C60678128ECC110099367C /* konqa32-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "konqa32-hd.png"; sourceTree = "<group>"; };
+		E0C60679128ECC110099367C /* konqa32.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = konqa32.fnt; sourceTree = "<group>"; };
+		E0C6067A128ECC110099367C /* konqa32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = konqa32.png; sourceTree = "<group>"; };
+		E0C6067B128ECC110099367C /* larabie-16-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "larabie-16-hd.png"; sourceTree = "<group>"; };
+		E0C6067C128ECC110099367C /* larabie-16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "larabie-16.png"; sourceTree = "<group>"; };
 		E0D2D55F128CB06A00F78C63 /* piece.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = piece.png; sourceTree = "<group>"; };
 		E0F9256D1224207200EF2362 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
@@ -4066,6 +4078,12 @@
 		E076E7A11225EDD000DE0DA2 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
+				E0C60677128ECC110099367C /* konqa32-hd.fnt */,
+				E0C60678128ECC110099367C /* konqa32-hd.png */,
+				E0C60679128ECC110099367C /* konqa32.fnt */,
+				E0C6067A128ECC110099367C /* konqa32.png */,
+				E0C6067B128ECC110099367C /* larabie-16-hd.png */,
+				E0C6067C128ECC110099367C /* larabie-16.png */,
 				E076E7A21225EDD000DE0DA2 /* A Damn Mess.ttf */,
 				E076E7A31225EDD000DE0DA2 /* Abberancy.ttf */,
 				E076E7A41225EDD000DE0DA2 /* Abduction.ttf */,
@@ -6674,6 +6692,12 @@
 				E0AC091A12280B7000EFA814 /* TileMaps in Resources */,
 				E0AC091B12280B7000EFA814 /* zwoptex in Resources */,
 				E0AC091C12280B7000EFA814 /* MainMenu.xib in Resources */,
+				E0C6067D128ECC110099367C /* konqa32-hd.fnt in Resources */,
+				E0C6067E128ECC110099367C /* konqa32-hd.png in Resources */,
+				E0C6067F128ECC110099367C /* konqa32.fnt in Resources */,
+				E0C60680128ECC110099367C /* konqa32.png in Resources */,
+				E0C60681128ECC110099367C /* larabie-16-hd.png in Resources */,
+				E0C60682128ECC110099367C /* larabie-16.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -7,6 +7,7 @@ version 0.99.5-rc1 - 12-Nov-2010
 . [FIX] Actions: OrbitCamera doesn't crash on Simulator
 . [FIX] CCArray: fastRemoveObjectAtIndex works as expected (issue #1024)
 . [FIX] CocosDenshion: Fixed possible loss of audio on iOS 4.2
+. [FIX] config: CC_FONT_LABEL_SUPPORT is again, enabled by default
 . [FIX] Configuration: removed main bundle from CCConfiguration (issue #839 issue #773)
 . [FIX] Director: projection is doubled in RetinaDisplay mode
 . [FIX] DrawingPrimitives: don't modify the buffer in RetinaDisplay (issue #995)
@@ -26,6 +27,7 @@ version 0.99.5-rc1 - 12-Nov-2010
 . [FIX] Texture2D: addPVRTCImage: -> addPVRImage: since it also loads non-compressed PVR images
 . [FIX] Texture2D: Use 32-bit textures when creating labels on ARM_NEON hardware. Performance improvement.
 		To enable it, edit ccConfig and set CC_USE_RGBA32_LABELS_ON_NEON_ARCH = 1
+. [FIX] Texture2D: Improved creation time of texts. It's not so expensive to create ZFont labels
 . [FIX] Tiled: images can be relative to source map (issue #787)
 . [FIX] Tiled: TMXLayer checks for correct GID (issue #742)
 

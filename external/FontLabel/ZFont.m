@@ -52,6 +52,7 @@
 
 - (id)init {
 	NSAssert(NO, @"-init is not valid for ZFont");
+	[self release];
 	return nil;
 }
 
