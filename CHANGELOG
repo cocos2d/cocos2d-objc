@@ -27,7 +27,7 @@ version 0.99.5-rc1 - 12-Nov-2010
 . [FIX] Texture2D: addPVRTCImage: -> addPVRImage: since it also loads non-compressed PVR images
 . [FIX] Texture2D: Use 32-bit textures when creating labels on ARM_NEON hardware. Performance improvement.
 		To enable it, edit ccConfig and set CC_USE_RGBA32_LABELS_ON_NEON_ARCH = 1
-. [FIX] Texture2D: Improved creation time of texts. It's not so expensive to create ZFont labels
+. [FIX] Texture2D: Improved creation time of texts. It's not so expensive to create ZFont labels (issue #971)
 . [FIX] Tiled: images can be relative to source map (issue #787)
 . [FIX] Tiled: TMXLayer checks for correct GID (issue #742)
 
