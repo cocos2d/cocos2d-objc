@@ -98,9 +98,12 @@
 #pragma mark CCLabelProtocol
 /** Common interface for Labels */
 @protocol CCLabelProtocol <NSObject>
-/** sets a new label using an NSString */
+/** sets a new label using an NSString.
+ The string will be copied.
+ */
 -(void) setString:(NSString*)label;
-
+/** returns the string that is rendered */
+-(NSString*) string;
 @optional
 /** sets a new label using a CString.
  It is faster than setString since it doesn't require to alloc/retain/release an NString object.

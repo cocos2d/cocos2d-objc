@@ -83,6 +83,9 @@
 
 - (void) setString:(NSString*)str
 {
+	[string_ release];
+	string_ = [str copy];
+
 	CCTexture2D *tex;
 	if( CGSizeEqualToSize( dimensions_, CGSizeZero ) )
 		tex = [[CCTexture2D alloc] initWithString:str
@@ -102,8 +105,14 @@
 	[self setTextureRect: CGRectMake(0, 0, size.width, size.height)];
 }
 
+-(NSString*) string
+{
+	return string_;
+}
+
 - (void) dealloc
 {
+	[string_ release];
 	[fontName_ release];
 	[super dealloc];
 }

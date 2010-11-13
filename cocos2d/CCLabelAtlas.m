@@ -132,13 +132,18 @@
 		[textureAtlas_ resizeCapacity: newString.length];
 
 	[string_ release];
-	string_ = [newString retain];
+	string_ = [newString copy];
 	[self updateAtlasValues];
 
 	CGSize s;
 	s.width = [string_ length] * itemWidth_;
 	s.height = itemHeight_;
 	[self setContentSizeInPixels:s];
+}
+
+-(NSString*) string
+{
+	return string_;
 }
 
 #pragma mark CCLabelAtlas - draw
