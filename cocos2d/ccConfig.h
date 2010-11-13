@@ -58,13 +58,11 @@
  If the .ttf file is not found, then it will use the standard UIFont class
  If disabled, the standard UIFont class will be used.
  
- To enable set it to a value different than 0. Disabled by default.
- 
- Warning: If you enable, it will slow down the creation of fonts when iOS >= 4.0
- 
+ To disable set it to 0. Enabled by default.
+
  Only valid for cocos2d-ios. Not supported on cocos2d-mac
  */
-#define CC_FONT_LABEL_SUPPORT	0
+#define CC_FONT_LABEL_SUPPORT	1
 
 /** @def CC_DIRECTOR_FAST_FPS
  If enabled, then the FPS will be drawn using CCLabelAtlas (fast rendering).
