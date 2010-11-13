@@ -592,13 +592,18 @@ typedef struct _KerningHashElement
 - (void) setString:(NSString*) newString
 {	
 	[string_ release];
-	string_ = [newString retain];
+	string_ = [newString copy];
 
 	CCNode *child;
 	CCARRAY_FOREACH(children_, child)
 		child.visible = NO;
 
 	[self createFontChars];
+}
+
+-(NSString*) string
+{
+	return string_;
 }
 
 -(void) setCString:(char*)label

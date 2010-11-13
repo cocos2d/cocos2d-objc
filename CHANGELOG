@@ -1,5 +1,6 @@
 version 0.99.5-rc1 - 12-Nov-2010
 . [NEW] Director: setProjection calls "updateProjection" delegate if "custom" projection is used
+. [NEW] Label: The CCLabelProtocol implements the -(NSString*)string method.
 . [NEW] Particles: Added a new type kCCPositionTypeRelative. Useful for "trail" particles. Added Test.
 . [NEW] Textures: Added support for pvz.ccz and pvr.gz formats
 . [NEW] Textures: TextureCache has a method to test if a texture is already cached (issue #793)
@@ -12,6 +13,7 @@ version 0.99.5-rc1 - 12-Nov-2010
 . [FIX] Director: projection is doubled in RetinaDisplay mode
 . [FIX] DrawingPrimitives: don't modify the buffer in RetinaDisplay (issue #995)
 . [FIX] Label: BMFontLabel simplified loading of atlas. Doesn't use CCFileUtils (issue #1031)
+. [FIX] Label: setString copies the string, and not retain it (issue #1034)
 . [FIX] Menu: MenuItems can draw its children (issue #458)
 . [FIX] Menu: MenuItems positions can be controlled manually (issue #1013)
 . [FIX] Menu: Menus uses touch priority kCCMenuTouchPriority (-128) (issue #1033)
@@ -42,7 +44,7 @@ version 0.99.5-rc0 - 25-Oct-2010
 . [NEW] EAGLView: Added support sharegroup
 . [NEW] Templates: Install HD, iPad and spotlight icons
 . [FIX] Blocks: Actions and MenuItems copy the blocks instead of retaining it (issue #1007)
-. [FIX] config: FONT_LABEL is disabled by default since it performs really bad on iOS >= 4.0
+. [FIX] config: CC_FONT_LABEL_SUPPORT is disabled by default since it performs really bad on iOS >= 4.0
 . [FIX] Layer: register accelerometer onEnterTransitionDidFinsih (issue #624)
 . [FIX] Node: converToNodeSpace works on RetinaDisplay (issue #1000)
 . [FIX] Node: all transform methods uses Points instead of Pixels (issue #999)
