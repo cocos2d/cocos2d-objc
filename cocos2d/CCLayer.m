@@ -369,6 +369,130 @@
 }
 @end
 
+
+#pragma mark -
+#pragma mark GradientLayer
+
+@implementation CCGradientLayer
+
+@synthesize endColor=endColor_, endOpacity=endOpacity_;
+@synthesize vector=vector_;
+
++ (id) layerWithColor: (ccColor4B) start fadingTo: (ccColor4B) end
+{
+    return [[[self alloc] initWithColor:start fadingTo:end] autorelease];
+}
+
++ (id) layerWithColor: (ccColor4B) start fadingTo: (ccColor4B) end alongVector: (CGPoint) v
+{
+    return [[[self alloc] initWithColor:start fadingTo:end alongVector:v] autorelease];
+}
+
+- (id) initWithColor: (ccColor4B) start fadingTo: (ccColor4B) end
+{
+    return [self initWithColor:start fadingTo:end alongVector:ccp(0, -1)];
+}
+
+- (id) initWithColor: (ccColor4B) start fadingTo: (ccColor4B) end alongVector: (CGPoint) v
+{
+    if (!(self = [super initWithColor:start])) { return self; }
+
+    endColor_.r = end.r;
+    endColor_.g = end.g;
+    endColor_.b = end.b;
+    endOpacity_ = end.a;
+
+    vector_ = v;
+    [self updateColor];
+
+    return self;
+}
+
+- (void) updateColor
+{
+    [super updateColor];
+
+    float h = pow((pow(vector_.x, 2) + pow(vector_.y, 2)), (0.5));
+    if (h == 0) { return; }
+
+    double c = sqrt(2);
+    CGPoint u = ccp(vector_.x / h, vector_.y / h);
+
+    ccColor4B S;
+    S.r = self.startColor.r;
+    S.g = self.startColor.g;
+    S.b = self.startColor.b;
+    S.a = self.startOpacity;
+
+    ccColor4B E;
+    E.r = self.endColor.r;
+    E.g = self.endColor.g;
+    E.b = self.endColor.b;
+    E.a = self.endOpacity;
+
+    // (-1, -1)
+    self->squareColors[0]  = E.r + (S.r - E.r) * ((c + u.x + u.y) / (2 * c));
+    self->squareColors[1]  = E.g + (S.g - E.g) * ((c + u.x + u.y) / (2 * c));
+    self->squareColors[2]  = E.b + (S.b - E.b) * ((c + u.x + u.y) / (2 * c));
+    self->squareColors[3]  = E.a + (S.a - E.a) * ((c + u.x + u.y) / (2 * c));
+    // (1, -1)
+    self->squareColors[4]  = E.r + (S.r - E.r) * ((c - u.x + u.y) / (2 * c));
+    self->squareColors[5]  = E.g + (S.g - E.g) * ((c - u.x + u.y) / (2 * c));
+    self->squareColors[6]  = E.b + (S.b - E.b) * ((c - u.x + u.y) / (2 * c));
+    self->squareColors[7]  = E.a + (S.a - E.a) * ((c - u.x + u.y) / (2 * c));
+    // (-1, 1)
+    self->squareColors[8]  = E.r + (S.r - E.r) * ((c + u.x - u.y) / (2 * c));
+    self->squareColors[9]  = E.g + (S.g - E.g) * ((c + u.x - u.y) / (2 * c));
+    self->squareColors[10] = E.b + (S.b - E.b) * ((c + u.x - u.y) / (2 * c));
+    self->squareColors[11] = E.a + (S.a - E.a) * ((c + u.x - u.y) / (2 * c));
+    // (1, 1)
+    self->squareColors[12] = E.r + (S.r - E.r) * ((c - u.x - u.y) / (2 * c));
+    self->squareColors[13] = E.g + (S.g - E.g) * ((c - u.x - u.y) / (2 * c));
+    self->squareColors[14] = E.b + (S.b - E.b) * ((c - u.x - u.y) / (2 * c));
+    self->squareColors[15] = E.a + (S.a - E.a) * ((c - u.x - u.y) / (2 * c));
+}
+
+-(ccColor3B) startColor
+{
+    return [self color];
+}
+
+-(GLubyte) startOpacity
+{
+    return [self opacity];
+}
+
+-(void) setStartColor:(ccColor3B)color
+{
+    self->color_ = color;
+    [self updateColor];
+}
+
+-(void) setStartOpacity: (GLubyte) o
+{
+    self->opacity_ = o;
+    [self updateColor];
+}
+
+-(void) setEndColor:(ccColor3B)color
+{
+    endColor_ = color;
+    [self updateColor];
+}
+
+-(void) setEndOpacity: (GLubyte) o
+{
+    endOpacity_ = o;
+    [self updateColor];
+}
+
+-(void) setVector: (CGPoint) v
+{
+    vector_ = v;
+    [self updateColor];
+}
+@end
+
 #pragma mark -
 #pragma mark MultiplexLayer
 
