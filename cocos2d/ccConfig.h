@@ -101,7 +101,7 @@
  
  To enable set it to a 1. Disabled by default.
 
- This is an experimental feature.
+ This is an experimental feature. Not all the features are supported.
 
  Only valid for cocos2d-mac. Not supported on cocos2d-ios.
 

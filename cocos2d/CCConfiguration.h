@@ -57,7 +57,7 @@ enum {
 	BOOL			supportsNPOT_;
 	BOOL			supportsBGRA8888_;
 	BOOL			supportsDiscardFramebuffer_;
-	NSUInteger		OSVersion_;
+	unsigned int	OSVersion_;
 	GLint			maxSamplesAllowed_;
 }
 
@@ -97,7 +97,7 @@ enum {
  
  @since v0.99.5
  */
-@property (nonatomic, readonly) NSUInteger OSVersion;
+@property (nonatomic, readonly) unsigned int OSVersion;
 
 /** returns a shared instance of the CCConfiguration */
 +(CCConfiguration *) sharedConfiguration;

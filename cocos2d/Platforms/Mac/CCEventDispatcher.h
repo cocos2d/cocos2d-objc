@@ -33,6 +33,7 @@
 #import "MacGLView.h"
 #import "../../Support/uthash.h"	// hack: uthash needs to be imported before utlist to prevent warning
 #import "../../Support/utlist.h"
+#import "../../ccConfig.h"
 
 #pragma mark -
 #pragma mark CCMouseEventDelegate
@@ -215,6 +216,12 @@ struct _listEntry;
 #pragma mark CCEventDispatcher - Touches
 
 // XXX
+
+#pragma mark CCEventDispatcher - Dispatch Events
+
+#if CC_DIRECTOR_MAC_USE_DISPLAY_LINK_THREAD
+-(void) dispatchQueuedEvents;
+#endif
 
 @end
 

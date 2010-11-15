@@ -122,10 +122,15 @@ static char * glExtensions;
 #endif
 		// It seems that somewhere between firmware iOS 3.0 and 4.2 Apple renamed
 		// GL_IMG_... to GL_APPLE.... So we should check both names
+		
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 		BOOL bgra8a = [self checkForGLExtension:@"GL_IMG_texture_format_BGRA8888"];
 		BOOL bgra8b = [self checkForGLExtension:@"GL_APPLE_texture_format_BGRA8888"];
-					   
 		supportsBGRA8888_ = bgra8a | bgra8b;
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+		supportsBGRA8888_ = [self checkForGLExtension:@"GL_EXT_bgra"];
+#endif
+					   
 		
 		supportsDiscardFramebuffer_ = [self checkForGLExtension:@"GL_EXT_discard_framebuffer"];
 
