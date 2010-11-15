@@ -12,6 +12,7 @@ version 0.99.5-rc1 - 12-Nov-2010
 . [FIX] Configuration: removed main bundle from CCConfiguration (issue #839 issue #773)
 . [FIX] Director: projection is doubled in RetinaDisplay mode
 . [FIX] DrawingPrimitives: don't modify the buffer in RetinaDisplay (issue #995)
+. [FIX] EAGLView: Doesn't crash in multithread environment (re-fixed issue #350)
 . [FIX] Label: BMFontLabel simplified loading of atlas. Doesn't use CCFileUtils (issue #1031)
 . [FIX] Label: setString copies the string, and not retain it (issue #1034)
 . [FIX] Menu: MenuItems can draw its children (issue #458)

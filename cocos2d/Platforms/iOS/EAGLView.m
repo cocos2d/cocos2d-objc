@@ -215,7 +215,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	[director reshapeProjection:size_];
 
 	// Avoid flicker. Issue #350
-	[director drawScene];	
+	[director performSelectorOnMainThread:@selector(drawScene) withObject:nil waitUntilDone:YES];
 }
 
 - (void) swapBuffers
