@@ -1,4 +1,4 @@
-version 0.99.5-rc1 - 12-Nov-2010
+version 0.99.5-rc1 - 15-Nov-2010
 . [NEW] Director: setProjection calls "updateProjection" delegate if "custom" projection is used
 . [NEW] Label: The CCLabelProtocol implements the -(NSString*)string method.
 . [NEW] Particles: Added a new type kCCPositionTypeRelative. Useful for "trail" particles. Added Test.
@@ -15,6 +15,7 @@ version 0.99.5-rc1 - 12-Nov-2010
 . [FIX] EAGLView: Doesn't crash in multithread environment (re-fixed issue #350)
 . [FIX] Label: BMFontLabel simplified loading of atlas. Doesn't use CCFileUtils (issue #1031)
 . [FIX] Label: setString copies the string, and not retain it (issue #1034)
+. [FIX] Mac: Events are dispatched when CC_DIRECTOR_MAC_USE_DISPLAY_LINK_THREAD is used
 . [FIX] Menu: MenuItems can draw its children (issue #458)
 . [FIX] Menu: MenuItems positions can be controlled manually (issue #1013)
 . [FIX] Menu: Menus uses touch priority kCCMenuTouchPriority (-128) (issue #1033)

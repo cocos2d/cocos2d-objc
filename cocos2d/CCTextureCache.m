@@ -190,8 +190,7 @@ static CCTextureCache *sharedTextureCache;
 		NSOpenGLContext *share = [view openGLContext];
 
 		auxGLcontext = [[NSOpenGLContext alloc] initWithFormat:pf shareContext:share];
-		
-		
+
 		if( ! auxGLcontext )
 			CCLOG(@"cocos2d: TextureCache: Could not create NSOpenGLContext");
 	}

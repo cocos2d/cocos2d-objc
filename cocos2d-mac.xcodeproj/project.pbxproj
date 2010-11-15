@@ -2816,6 +2816,8 @@
 		E0C60681128ECC110099367C /* larabie-16-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E0C6067B128ECC110099367C /* larabie-16-hd.png */; };
 		E0C60682128ECC110099367C /* larabie-16.png in Resources */ = {isa = PBXBuildFile; fileRef = E0C6067C128ECC110099367C /* larabie-16.png */; };
 		E0D2D560128CB06A00F78C63 /* piece.png in Resources */ = {isa = PBXBuildFile; fileRef = E0D2D55F128CB06A00F78C63 /* piece.png */; };
+		E0D44F3A1291BFFB0094708A /* test_image_rgba4444.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E0D44F381291BFFB0094708A /* test_image_rgba4444.pvr.ccz */; };
+		E0D44F3B1291BFFB0094708A /* test_image_rgba4444.pvr.gz in Resources */ = {isa = PBXBuildFile; fileRef = E0D44F391291BFFB0094708A /* test_image_rgba4444.pvr.gz */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -3035,6 +3037,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = E0B92F251226C0DD003FF67E;
 			remoteInfo = ActionEaseTest;
+		};
+		E0D44F531291C0790094708A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E050531F122D5AE6005B74CB /* RenderTextureTest */;
+			remoteInfo = RenderTextureTest;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -3481,6 +3490,8 @@
 		E0C6067B128ECC110099367C /* larabie-16-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "larabie-16-hd.png"; sourceTree = "<group>"; };
 		E0C6067C128ECC110099367C /* larabie-16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "larabie-16.png"; sourceTree = "<group>"; };
 		E0D2D55F128CB06A00F78C63 /* piece.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = piece.png; sourceTree = "<group>"; };
+		E0D44F381291BFFB0094708A /* test_image_rgba4444.pvr.ccz */ = {isa = PBXFileReference; lastKnownFileType = file; path = test_image_rgba4444.pvr.ccz; sourceTree = "<group>"; };
+		E0D44F391291BFFB0094708A /* test_image_rgba4444.pvr.gz */ = {isa = PBXFileReference; lastKnownFileType = archive.gzip; path = test_image_rgba4444.pvr.gz; sourceTree = "<group>"; };
 		E0F9256D1224207200EF2362 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -4112,6 +4123,8 @@
 		E076E7B71225EDD000DE0DA2 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				E0D44F381291BFFB0094708A /* test_image_rgba4444.pvr.ccz */,
+				E0D44F391291BFFB0094708A /* test_image_rgba4444.pvr.gz */,
 				E0D2D55F128CB06A00F78C63 /* piece.png */,
 				E076E7B81225EDD000DE0DA2 /* atlastest.png */,
 				E076E7B91225EDD000DE0DA2 /* b1.png */,
@@ -4662,6 +4675,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				E0D44F541291C0790094708A /* PBXTargetDependency */,
 				E0B92CE91226A0C9003FF67E /* PBXTargetDependency */,
 				E0B92CEB1226A0C9003FF67E /* PBXTargetDependency */,
 			);
@@ -4740,11 +4754,11 @@
 				E076E3771225C4BE00DE0DA2 /* MenuTest */,
 				E0AC084812280B7000EFA814 /* LabelTest */,
 				E0B92CE81226A0C9003FF67E /* ParallaxTest */,
+				E050531F122D5AE6005B74CB /* RenderTextureTest */,
 				E076F13512268A9800DE0DA2 /* SpriteTest */,
 				E076ECC91225FDE300DE0DA2 /* TextureTest */,
 				E076EB7E1225F82200DE0DA2 /* TiledMapTest */,
 				E076E4F01225E97900DE0DA2 /* TransitionTest */,
-				E050531F122D5AE6005B74CB /* RenderTextureTest */,
 			);
 		};
 /* End PBXProject section */
@@ -5827,6 +5841,8 @@
 				E076ED9B1225FDE300DE0DA2 /* TileMaps in Resources */,
 				E076ED9C1225FDE300DE0DA2 /* zwoptex in Resources */,
 				E076ED9D1225FDE300DE0DA2 /* MainMenu.xib in Resources */,
+				E0D44F3A1291BFFB0094708A /* test_image_rgba4444.pvr.ccz in Resources */,
+				E0D44F3B1291BFFB0094708A /* test_image_rgba4444.pvr.gz in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7718,6 +7734,11 @@
 			target = E0B92F251226C0DD003FF67E /* ActionEaseTest */;
 			targetProxy = E0B9300A1226C0F3003FF67E /* PBXContainerItemProxy */;
 		};
+		E0D44F541291C0790094708A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E050531F122D5AE6005B74CB /* RenderTextureTest */;
+			targetProxy = E0D44F531291C0790094708A /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
@@ -7743,7 +7764,7 @@
 					DEBUG,
 				);
 				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
-				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
@@ -7760,7 +7781,7 @@
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
-				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;

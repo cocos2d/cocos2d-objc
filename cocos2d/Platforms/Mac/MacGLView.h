@@ -30,6 +30,8 @@
 
 #import <Cocoa/Cocoa.h>
 
+#import "../../ccConfig.h"
+
 //PROTOCOLS:
 
 @protocol MacEventDelegate <NSObject>
@@ -58,6 +60,10 @@
 - (void)touchesMovedWithEvent:(NSEvent *)event;
 - (void)touchesEndedWithEvent:(NSEvent *)event;
 - (void)touchesCancelledWithEvent:(NSEvent *)event;
+
+#if CC_DIRECTOR_MAC_USE_DISPLAY_LINK_THREAD
+- (void)queueEvent:(NSEvent*)event selector:(SEL)selector;
+#endif
 
 @end
 

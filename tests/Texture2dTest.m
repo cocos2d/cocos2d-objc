@@ -393,7 +393,7 @@ Class restartAction()
 
 -(NSString *) title
 {
-	return @"PVR MipMap Test";
+	return @"PVRTC MipMap Test";
 }
 -(NSString *) subtitle
 {

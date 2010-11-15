@@ -80,7 +80,9 @@
 	
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 
-	[self drawScene];	
+	[self drawScene];
+	[[CCEventDispatcher sharedDispatcher] dispatchQueuedEvents];
+	
 	[[NSRunLoop currentRunLoop] run];
 	
 	[pool release];

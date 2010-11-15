@@ -36,6 +36,7 @@
 #import <OpenGL/gl.h>
 
 #import "CCDirectorMac.h"
+#import "../../ccConfig.h"
 
 
 @implementation MacGLView
@@ -107,113 +108,72 @@
 	[super dealloc];
 }
 
+#if CC_DIRECTOR_MAC_USE_DISPLAY_LINK_THREAD
+#define DISPATCH_EVENT(__event__, __selector__) [eventDelegate_ queueEvent:__event__ selector:__selector__];
+#else
+#define DISPATCH_EVENT(__event__, __selector__)												\
+	id obj = eventDelegate_;																\
+	[obj performSelector:__selector__														\
+			onThread:[(CCDirectorMac*)[CCDirector sharedDirector] runningThread]			\
+		  withObject:__event__																\
+	   waitUntilDone:NO];
+#endif
+
 #pragma mark MacGLView - Mouse events
 - (void)mouseDown:(NSEvent *)theEvent
 {
-	NSObject *obj = eventDelegate_;
-	[obj performSelector:_cmd
-				onThread:[(CCDirectorMac*)[CCDirector sharedDirector] runningThread]
-			  withObject:theEvent
-		   waitUntilDone:NO];
+	DISPATCH_EVENT(theEvent, _cmd);
 }
 
 - (void)mouseMoved:(NSEvent *)theEvent
 {
-	NSObject *obj = eventDelegate_;
-	[obj performSelector:_cmd
-				onThread:[(CCDirectorMac*)[CCDirector sharedDirector] runningThread]
-			  withObject:theEvent
-		   waitUntilDone:NO];
+	DISPATCH_EVENT(theEvent, _cmd);
 }
 
 - (void)mouseDragged:(NSEvent *)theEvent
 {
-	NSObject *obj = eventDelegate_;
-	[obj performSelector:_cmd
-				onThread:[(CCDirectorMac*)[CCDirector sharedDirector] runningThread]
-			  withObject:theEvent
-		   waitUntilDone:NO];
+	DISPATCH_EVENT(theEvent, _cmd);
 }
 
 - (void)mouseUp:(NSEvent *)theEvent
 {
-	NSObject *obj = eventDelegate_;
-	[obj performSelector:_cmd
-				onThread:[(CCDirectorMac*)[CCDirector sharedDirector] runningThread]
-			  withObject:theEvent
-		   waitUntilDone:NO];
+	DISPATCH_EVENT(theEvent, _cmd);
 }
 
 - (void)rightMouseDown:(NSEvent *)theEvent {
-	NSObject *obj = eventDelegate_;
-	[obj performSelector:_cmd
-				onThread:[(CCDirectorMac*)[CCDirector sharedDirector] runningThread]
-			  withObject:theEvent
-		   waitUntilDone:NO];
+	DISPATCH_EVENT(theEvent, _cmd);
 }
 
 - (void)rightMouseDragged:(NSEvent *)theEvent {
-	NSObject *obj = eventDelegate_;
-	[obj performSelector:_cmd
-				onThread:[(CCDirectorMac*)[CCDirector sharedDirector] runningThread]
-			  withObject:theEvent
-		   waitUntilDone:NO];
+	DISPATCH_EVENT(theEvent, _cmd);
 }
 
 - (void)rightMouseUp:(NSEvent *)theEvent {
-	NSObject *obj = eventDelegate_;
-	[obj performSelector:_cmd
-				onThread:[(CCDirectorMac*)[CCDirector sharedDirector] runningThread]
-			  withObject:theEvent
-		   waitUntilDone:NO];
+	DISPATCH_EVENT(theEvent, _cmd);
 }
 
 - (void)otherMouseDown:(NSEvent *)theEvent {
-	NSObject *obj = eventDelegate_;
-	[obj performSelector:_cmd
-				onThread:[(CCDirectorMac*)[CCDirector sharedDirector] runningThread]
-			  withObject:theEvent
-		   waitUntilDone:NO];
+	DISPATCH_EVENT(theEvent, _cmd);
 }
 
 - (void)otherMouseDragged:(NSEvent *)theEvent {
-	NSObject *obj = eventDelegate_;
-	[obj performSelector:_cmd
-				onThread:[(CCDirectorMac*)[CCDirector sharedDirector] runningThread]
-			  withObject:theEvent
-		   waitUntilDone:NO];
+	DISPATCH_EVENT(theEvent, _cmd);
 }
 
 - (void)otherMouseUp:(NSEvent *)theEvent {
-	NSObject *obj = eventDelegate_;
-	[obj performSelector:_cmd
-				onThread:[(CCDirectorMac*)[CCDirector sharedDirector] runningThread]
-			  withObject:theEvent
-		   waitUntilDone:NO];
+	DISPATCH_EVENT(theEvent, _cmd);
 }
 
 - (void)mouseEntered:(NSEvent *)theEvent {
-	NSObject *obj = eventDelegate_;
-	[obj performSelector:_cmd
-				onThread:[(CCDirectorMac*)[CCDirector sharedDirector] runningThread]
-			  withObject:theEvent
-		   waitUntilDone:NO];
+	DISPATCH_EVENT(theEvent, _cmd);
 }
 
 - (void)mouseExited:(NSEvent *)theEvent {
-	NSObject *obj = eventDelegate_;
-	[obj performSelector:_cmd
-				onThread:[(CCDirectorMac*)[CCDirector sharedDirector] runningThread]
-			  withObject:theEvent
-		   waitUntilDone:NO];
+	DISPATCH_EVENT(theEvent, _cmd);
 }
 
 -(void) scrollWheel:(NSEvent *)theEvent {
-	NSObject *obj = eventDelegate_;
-	[obj performSelector:_cmd
-				onThread:[(CCDirectorMac*)[CCDirector sharedDirector] runningThread]
-			  withObject:theEvent
-		   waitUntilDone:NO];
+	DISPATCH_EVENT(theEvent, _cmd);
 }
 
 #pragma mark MacGLView - Key events
@@ -234,56 +194,32 @@
 }
 
 - (void)keyDown:(NSEvent *)theEvent {
-	NSObject *obj = eventDelegate_;
-	[obj performSelector:_cmd
-				onThread:[(CCDirectorMac*)[CCDirector sharedDirector] runningThread]
-			  withObject:theEvent
-		   waitUntilDone:NO];
+	DISPATCH_EVENT(theEvent, _cmd);
 }
 
 - (void)keyUp:(NSEvent *)theEvent {
-	NSObject *obj = eventDelegate_;
-	[obj performSelector:_cmd
-				onThread:[(CCDirectorMac*)[CCDirector sharedDirector] runningThread]
-			  withObject:theEvent
-		   waitUntilDone:NO];
+	DISPATCH_EVENT(theEvent, _cmd);
 }
 
 #pragma mark MacGLView - Touch events
-- (void)touchesBeganWithEvent:(NSEvent *)event
+- (void)touchesBeganWithEvent:(NSEvent *)theEvent
 {
-	NSObject *obj = eventDelegate_;
-	[obj performSelector:_cmd
-				onThread:[(CCDirectorMac*)[CCDirector sharedDirector] runningThread]
-			  withObject:event
-		   waitUntilDone:NO];
+	DISPATCH_EVENT(theEvent, _cmd);
 }
 
-- (void)touchesMovedWithEvent:(NSEvent *)event
+- (void)touchesMovedWithEvent:(NSEvent *)theEvent
 {
-	NSObject *obj = eventDelegate_;
-	[obj performSelector:_cmd
-				onThread:[(CCDirectorMac*)[CCDirector sharedDirector] runningThread]
-			  withObject:event
-		   waitUntilDone:NO];
+	DISPATCH_EVENT(theEvent, _cmd);
 }
 
-- (void)touchesEndedWithEvent:(NSEvent *)event
+- (void)touchesEndedWithEvent:(NSEvent *)theEvent
 {
-	NSObject *obj = eventDelegate_;
-	[obj performSelector:_cmd
-				onThread:[(CCDirectorMac*)[CCDirector sharedDirector] runningThread]
-			  withObject:event
-		   waitUntilDone:NO];
+	DISPATCH_EVENT(theEvent, _cmd);
 }
 
-- (void)touchesCancelledWithEvent:(NSEvent *)event
+- (void)touchesCancelledWithEvent:(NSEvent *)theEvent
 {
-	NSObject *obj = eventDelegate_;
-	[obj performSelector:_cmd
-				onThread:[(CCDirectorMac*)[CCDirector sharedDirector] runningThread]
-			  withObject:event
-		   waitUntilDone:NO];
+	DISPATCH_EVENT(theEvent, _cmd);
 }
 
 @end
