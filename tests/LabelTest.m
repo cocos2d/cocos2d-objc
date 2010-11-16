@@ -11,6 +11,8 @@
 #import "LabelTest.h"
 static int sceneIdx=-1;
 static NSString *transitions[] = {
+	@"LabelGlyphDesigner",
+
 	@"LabelAtlasTest",
 	@"LabelAtlasColorTest",
 	@"Atlas3",
@@ -23,6 +25,7 @@ static NSString *transitions[] = {
 	@"LabelsEmpty",
 	@"LabelBMFontHD",
 	@"LabelAtlasHD",
+	@"LabelGlyphDesigner",
 	
 	// Not a label test. Should be moved to Atlas test
 	@"Atlas1",
@@ -903,6 +906,40 @@ Class restartAction()
 
 @end
 
+#pragma mark -
+#pragma mark LabelGlyphDesigner
+
+@implementation LabelGlyphDesigner
+-(id) init
+{
+	if( (self=[super init]) ) {
+		
+		CGSize s = [[CCDirector sharedDirector] winSize];
+		
+		CCColorLayer *layer = [CCColorLayer layerWithColor:ccc4(128,128,128,255)];
+		[self addChild:layer z:-10];
+		
+		// CCLabelBMFont
+		CCLabelBMFont *label1 = [CCLabelBMFont labelWithString:@"Testing Glyph Designer" fntFile:@"futura-48.fnt"];
+		[self addChild:label1];
+		[label1 setPosition: ccp(s.width/2, s.height/2)];
+		
+	}
+	
+	return self;
+}
+
+-(NSString*) title
+{
+	return @"Testing Glyph Designer";
+}
+
+-(NSString *) subtitle
+{
+	return @"You should see a font with shawdows and outline";
+}
+
+@end
 
 
 #pragma mark -
