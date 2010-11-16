@@ -96,3 +96,8 @@
 }
 @end
 
+@interface LabelGlyphDesigner : AtlasDemo
+{
+}
+@end
+

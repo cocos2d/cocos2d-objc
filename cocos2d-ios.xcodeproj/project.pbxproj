@@ -2367,6 +2367,8 @@
 		E080DE901239689400A647EC /* konqa32-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E080DE8C1239689400A647EC /* konqa32-hd.png */; };
 		E080DE911239689400A647EC /* konqa32.fnt in Resources */ = {isa = PBXBuildFile; fileRef = E080DE8D1239689400A647EC /* konqa32.fnt */; };
 		E080DE921239689400A647EC /* konqa32.png in Resources */ = {isa = PBXBuildFile; fileRef = E080DE8E1239689400A647EC /* konqa32.png */; };
+		E082C9141292DAD50056AC41 /* futura-48.fnt in Resources */ = {isa = PBXBuildFile; fileRef = E082C9121292DAD50056AC41 /* futura-48.fnt */; };
+		E082C9151292DAD50056AC41 /* futura-48.png in Resources */ = {isa = PBXBuildFile; fileRef = E082C9131292DAD50056AC41 /* futura-48.png */; };
 		E087B34F12785BB60076F6FF /* fps_images-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E087B34E12785BB60076F6FF /* fps_images-hd.png */; };
 		E0A4A05911F72D79003B9D29 /* test_image_bgra8888.pvr in Resources */ = {isa = PBXBuildFile; fileRef = E0A4A05211F72D79003B9D29 /* test_image_bgra8888.pvr */; };
 		E0A4A05A11F72D79003B9D29 /* test_image_pvrtc2bpp.pvr in Resources */ = {isa = PBXBuildFile; fileRef = E0A4A05311F72D79003B9D29 /* test_image_pvrtc2bpp.pvr */; };
@@ -3311,14 +3313,14 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = E037DA1B1281C7F0003D39D7 /* Bug458 */;
+			remoteGlobalIDString = E037DA1B1281C7F0003D39D7;
 			remoteInfo = Bug458;
 		};
 		E0D44E1A129198750094708A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = E02BC2A91270E489006E46A2 /* Bug624 */;
+			remoteGlobalIDString = E02BC2A91270E489006E46A2;
 			remoteInfo = Bug624;
 		};
 /* End PBXContainerItemProxy section */
@@ -4256,6 +4258,8 @@
 		E080DE8C1239689400A647EC /* konqa32-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "konqa32-hd.png"; sourceTree = "<group>"; };
 		E080DE8D1239689400A647EC /* konqa32.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = konqa32.fnt; sourceTree = "<group>"; };
 		E080DE8E1239689400A647EC /* konqa32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = konqa32.png; sourceTree = "<group>"; };
+		E082C9121292DAD50056AC41 /* futura-48.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "futura-48.fnt"; sourceTree = "<group>"; };
+		E082C9131292DAD50056AC41 /* futura-48.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "futura-48.png"; sourceTree = "<group>"; };
 		E087B34E12785BB60076F6FF /* fps_images-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fps_images-hd.png"; sourceTree = "<group>"; };
 		E0A4A05211F72D79003B9D29 /* test_image_bgra8888.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = test_image_bgra8888.pvr; sourceTree = "<group>"; };
 		E0A4A05311F72D79003B9D29 /* test_image_pvrtc2bpp.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = test_image_pvrtc2bpp.pvr; sourceTree = "<group>"; };
@@ -5970,6 +5974,8 @@
 		505463B81062868100AB7C52 /* BMFont fonts */ = {
 			isa = PBXGroup;
 			children = (
+				E082C9121292DAD50056AC41 /* futura-48.fnt */,
+				E082C9131292DAD50056AC41 /* futura-48.png */,
 				E080DE8B1239689400A647EC /* konqa32-hd.fnt */,
 				E080DE8C1239689400A647EC /* konqa32-hd.png */,
 				E080DE8D1239689400A647EC /* konqa32.fnt */,
@@ -9513,6 +9519,8 @@
 				E02BB66A126CA73F006E46A2 /* Icon-Small.png in Resources */,
 				E02BB66B126CA73F006E46A2 /* Icon-Small-50.png in Resources */,
 				E02BB66C126CA73F006E46A2 /* Icon-72.png in Resources */,
+				E082C9141292DAD50056AC41 /* futura-48.fnt in Resources */,
+				E082C9151292DAD50056AC41 /* futura-48.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
