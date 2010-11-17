@@ -81,6 +81,16 @@ int ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 
 		
 		NSString *extension = [path pathExtension];
+		
+		if( [extension isEqualToString:@"ccz"] || [extension isEqualToString:@"gz"] )
+		{
+			// All ccz / gz files should be in the format filename.xxx.ccz
+			// so we need to pull off the .xxx part of the extension as well
+			extension = [NSString stringWithFormat:@"%@.%@", [pathWithoutExtension pathExtension], extension];
+			pathWithoutExtension = [pathWithoutExtension stringByDeletingPathExtension];
+		}
+		
+		
 		NSString *retinaName = [pathWithoutExtension stringByAppendingString:CC_RETINA_DISPLAY_FILENAME_SUFFIX];
 		retinaName = [retinaName stringByAppendingPathExtension:extension];
 

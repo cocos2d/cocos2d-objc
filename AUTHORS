@@ -173,6 +173,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	* johnnyflash71:
 		TMX suports 1 tileset per layer patch
 		mkatlas.pl supports spaces in the name
+		CCFileUtils loads .ccz files correctly. patch
 	* Jordan Schidlowsky:
 		Added "relative" mode to particles
 	* jszatmary:
