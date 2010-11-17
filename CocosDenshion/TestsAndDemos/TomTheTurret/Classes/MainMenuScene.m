@@ -45,7 +45,7 @@
         
         // Add a main menu
         CCSprite *newGameSprite = [CCSprite spriteWithSpriteFrameName:@"Turret_newgame.png"];
-        CCMenuItem *newGameItem = [CCMenuItemSprite itemFromNormalSprite:newGameSprite selectedSprite:newGameSprite target:self selector:@selector(newGameSpriteTapped:)];
+        CCMenuItem *newGameItem = [CCMenuItemSprite itemFromNormalSprite:newGameSprite selectedSprite:nil target:self selector:@selector(newGameSpriteTapped:)];
         CCMenu *menu = [CCMenu menuWithItems:newGameItem, nil];
         [self addChild:menu];
         
