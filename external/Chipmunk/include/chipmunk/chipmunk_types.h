@@ -74,10 +74,14 @@ cpflerpconst(cpFloat f1, cpFloat f2, cpFloat d)
 	return f1 + cpfclamp(f2 - f1, -d, d);
 }
 
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE || TARGET_OS_MAC
 	// CGPoints are structurally the same, and allow
 	// easy interoperability with other iPhone libraries
+#if TARGET_OS_IPHONE
 	#import <CoreGraphics/CGGeometry.h>
+#else
+	#import <ApplicationServices/ApplicationServices.h>
+#endif
 	typedef CGPoint cpVect;
 #else
 	typedef struct cpVect{cpFloat x,y;} cpVect;
