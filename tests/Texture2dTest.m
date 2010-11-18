@@ -19,9 +19,6 @@ enum {
 static int sceneIdx=-1;
 static NSString *transitions[] = {
 	
-	@"TexturePVRRGB565",
-
-
 	@"TextureAlias",
 	@"TextureMipMap",
 	@"TexturePVRMipMap",
