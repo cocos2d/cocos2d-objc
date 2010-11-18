@@ -148,6 +148,7 @@ int ccInflateGZipFile(const char *path, unsigned char **out)
 		if (len < 0) {
 			CCLOG(@"cocos2d: ZipUtils: error in gzread");
 			free( *out );
+			*out = NULL;
 			return -1;
 		}
 		if (len == 0)
@@ -166,6 +167,7 @@ int ccInflateGZipFile(const char *path, unsigned char **out)
 		if( ! tmp ) {
 			CCLOG(@"cocos2d: ZipUtils: out of memory");
 			free( *out );
+			*out = NULL;
 			return -1;
 		}
 		

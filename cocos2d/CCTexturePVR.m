@@ -327,29 +327,19 @@ typedef struct _PVRTexHeader
 		NSString *lowerCase = [path lowercaseString];       
 		
         if ( [lowerCase hasSuffix:@".ccz"]) 
-        {
 			pvrlen = ccInflateCCZFile( [path UTF8String], &pvrdata );
-			if( pvrlen < 0 ) {
-				[self release];
-				return nil;
-			}
 			
-		} else if( [lowerCase hasSuffix:@".gz"] ) {
-			
+		else if( [lowerCase hasSuffix:@".gz"] )
 			pvrlen = ccInflateGZipFile( [path UTF8String], &pvrdata );
-			if( pvrlen < 0 ) {
-				[self release];
-				return nil;
-			}
 		
-		} else {
-			
+		else
 			pvrlen = ccLoadFileIntoMemory( [path UTF8String], &pvrdata );
-			if( pvrlen < 0 ) {
-				[self release];
-				return nil;
-			}			
-		}
+		
+		if( pvrlen < 0 ) {
+			[self release];
+			return nil;
+		}			
+		
 
         numberOfMipmaps_ = 0;
         
