@@ -230,16 +230,17 @@ int ccInflateCCZFile(const char *path, unsigned char **out)
 	uLongf destlen = len;
 	uLongf source = (uLongf) compressed + sizeof(*header);
 	int ret = uncompress(*out, &destlen, (Bytef*)source, fileLen - sizeof(*header) );
+
+	free( compressed );
+	
 	if( ret != Z_OK )
 	{
 		CCLOG(@"cocos2d: CCZ: Failed to uncompress data");
 		free( *out );
-		free(compressed);
 		*out = NULL;
 		return -1;
 	}
 	
-	free( compressed );
 	
 	return len;
 }
