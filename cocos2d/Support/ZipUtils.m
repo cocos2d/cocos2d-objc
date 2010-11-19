@@ -237,7 +237,9 @@ int ccInflateCCZFile(const char *path, unsigned char **out)
 		free(compressed);
 		*out = NULL;
 		return -1;
-	} 
+	}
+	
+	free( compressed );
 	
 	return len;
 }
