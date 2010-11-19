@@ -133,6 +133,10 @@ typedef enum {
 	
 	// Animations that belong to the sprite
 	NSMutableDictionary *animations_;
+
+@public
+	// used internally.
+	void (*updateMethod)(id, SEL);
 }
 
 /** whether or not the Sprite needs to be updated in the Atlas */

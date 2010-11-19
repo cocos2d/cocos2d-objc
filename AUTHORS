@@ -350,6 +350,8 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	* Scott Iisystems:
 		TextureAtlas signed math error patch
 		BezierBy#reverse patch
+	* Scott Lembcke (http://howlingmoonsoftware.com)
+		Sprite#updateTransform can be overriden
 	* Serge Kolgan:
 		patches for CocosNode
 	* sflory:
