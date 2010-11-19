@@ -1,5 +1,6 @@
 version 0.99.5 - xx-Dec-2010
 . [FIX] FileUtils: loads .gz / .ccz files correctly in RetinaDisplay mode (issue #1037)
+. [FIX] FileUtils: fixed possible memory leaks on .ccz inflater
 . [FIX] Configuration: checks for possible glErrors. Only ask for max samples if iOS >= 4 (issue #1041)
 . [TEST] Added Glyph Designer test case
  
