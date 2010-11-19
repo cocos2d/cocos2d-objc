@@ -177,6 +177,10 @@ struct transformValues_ {
 		
 		// Atlas: TexCoords
 		[self setTextureRectInPixels:CGRectZero rotated:NO untrimmedSize:CGSizeZero];
+		
+		// updateMethod selector
+		updateMethod = (__typeof__(updateMethod))[self methodForSelector:@selector(updateTransform)];
+
 	}
 	
 	return self;
