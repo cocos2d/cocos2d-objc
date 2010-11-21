@@ -46,6 +46,8 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		XCode doxygen script runs with spaces in subdirectories.	
 	* Booyah (http://booyah.com/):
 		Added support for GL sharegroup in EAGLView
+	* Brad Parks:
+		Added google search on forum
 	* Brian Hammond:
 		patches for Demos
 	* Bryan/Acceleroto (http://www.acceleroto.com):
