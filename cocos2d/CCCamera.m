@@ -30,7 +30,7 @@
 
 @implementation CCCamera
 
-@synthesize dirty;
+@synthesize dirty=dirty_;
 
 -(id) init
 {
@@ -84,18 +84,18 @@
 
 -(void) setEyeX: (float)x eyeY:(float)y eyeZ:(float)z
 {
-	eyeX_ = x;
-	eyeY_ = y;
-	eyeZ_ = z;
-	dirty = YES;	
+	eyeX_ = x * CC_CONTENT_SCALE_FACTOR();
+	eyeY_ = y * CC_CONTENT_SCALE_FACTOR();
+	eyeZ_ = z * CC_CONTENT_SCALE_FACTOR();
+	dirty_ = YES;	
 }
 
 -(void) setCenterX: (float)x centerY:(float)y centerZ:(float)z
 {
-	centerX_ = x;
-	centerY_ = y;
-	centerZ_ = z;
-	dirty = YES;
+	centerX_ = x * CC_CONTENT_SCALE_FACTOR();
+	centerY_ = y * CC_CONTENT_SCALE_FACTOR();
+	centerZ_ = z * CC_CONTENT_SCALE_FACTOR();
+	dirty_ = YES;
 }
 
 -(void) setUpX: (float)x upY:(float)y upZ:(float)z
@@ -103,21 +103,21 @@
 	upX_ = x;
 	upY_ = y;
 	upZ_ = z;
-	dirty = YES;
+	dirty_ = YES;
 }
 
 -(void) eyeX: (float*)x eyeY:(float*)y eyeZ:(float*)z
 {
-	*x = eyeX_;
-	*y = eyeY_;
-	*z = eyeZ_;
+	*x = eyeX_ / CC_CONTENT_SCALE_FACTOR();
+	*y = eyeY_ / CC_CONTENT_SCALE_FACTOR();
+	*z = eyeZ_ / CC_CONTENT_SCALE_FACTOR();
 }
 
 -(void) centerX: (float*)x centerY:(float*)y centerZ:(float*)z
 {
-	*x = centerX_;
-	*y = centerY_;
-	*z = centerZ_;
+	*x = centerX_ / CC_CONTENT_SCALE_FACTOR();
+	*y = centerY_ / CC_CONTENT_SCALE_FACTOR();
+	*z = centerZ_ / CC_CONTENT_SCALE_FACTOR();
 }
 
 -(void) upX: (float*)x upY:(float*)y upZ:(float*)z

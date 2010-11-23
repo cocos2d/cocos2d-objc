@@ -21,6 +21,11 @@ enum {
 
 static int sceneIdx=-1;
 static NSString *transitions[] = {
+	
+	@"CameraOrbitTest",
+	@"CameraZoomTest",	
+	@"CameraCenterTest",
+	
 	@"Test2",
 	@"Test4",
 	@"Test5",
@@ -591,6 +596,7 @@ Class restartAction()
 		CCSprite *sprite;
 		CCOrbitCamera *orbit;
 
+		s = [p contentSize];
 		// LEFT
 		sprite = [CCSprite spriteWithFile:@"grossini.png"];
 		sprite.scale = 0.5f;
@@ -683,13 +689,13 @@ Class restartAction()
 //		[cam setCenterX:0 centerY:0 centerZ:0];
 	
 
-		[self schedule:@selector(updateEye:)];
+		[self scheduleUpdate];
 	}
 	
 	return self;
 }
 
--(void) updateEye:(ccTime)dt
+-(void) update:(ccTime)dt
 {
 	static float z = 0;
 
