@@ -4,6 +4,7 @@ version 0.99.5 - xx-Dec-2010
 . [FIX] FileUtils: loads .gz / .ccz files correctly in RetinaDisplay mode (issue #1037)
 . [FIX] FileUtils: fixed big memory leaks on .ccz inflater
 . [FIX] Sprite: updateTransform can be overriden (issue #824)
+. [FIX-MAC] Display Link thread: async images works as expected. Enabled by default.
 . [TEST] Added Glyph Designer test case
  
 version 0.99.5-rc1 - 15-Nov-2010

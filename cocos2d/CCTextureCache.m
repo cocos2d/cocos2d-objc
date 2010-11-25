@@ -33,6 +33,11 @@
 #import "CCConfiguration.h"
 #import "Support/CCFileUtils.h"
 #import "CCDirector.h"
+#import "ccConfig.h"
+
+// needed for CCCallFuncO in Mac-display_link version
+#import "CCActionManager.h"
+#import "CCActionInstant.h"
 
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 static EAGLContext *auxGLcontext = nil;
@@ -200,11 +205,16 @@ static CCTextureCache *sharedTextureCache;
 	// load / create the texture
 	CCTexture2D *tex = [self addImage:async.data];
 	
+#if CC_DIRECTOR_MAC_USE_DISPLAY_LINK_THREAD
+	id action = [CCCallFuncO actionWithTarget:async.target selector:async.selector object:tex];
+	[[CCActionManager sharedManager] addAction:action target:async.target paused:NO];
+#else
 	// The callback will be executed on the main thread
 	[async.target performSelector:async.selector
 						 onThread:[[CCDirector sharedDirector] runningThread]
 					   withObject:tex
 					waitUntilDone:NO];
+#endif
 	
 	
 	[NSOpenGLContext clearCurrentContext];

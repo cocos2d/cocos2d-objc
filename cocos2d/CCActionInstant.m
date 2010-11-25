@@ -237,21 +237,32 @@
 -(id) initWithTarget: (id) t selector:(SEL) s
 {
 	if( (self=[super init]) ) {
-		targetCallback = [t retain];
-		selector = s;
+		targetCallback_ = [t retain];
+		selector_ = s;
 	}
 	return self;
 }
 
+-(NSString*) description
+{
+	return [NSString stringWithFormat:@"<%@ = %08X | Tag = %i | target = %@ | selector = %@>",
+			[self class],
+			self,
+			tag_,
+			[targetCallback_ class],
+			NSStringFromSelector(selector_)
+			];
+}
+
 -(void) dealloc
 {
-	[targetCallback release];
+	[targetCallback_ release];
 	[super dealloc];
 }
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	CCActionInstant *copy = [[[self class] allocWithZone: zone] initWithTarget:targetCallback selector:selector];
+	CCActionInstant *copy = [[[self class] allocWithZone: zone] initWithTarget:targetCallback_ selector:selector_];
 	return copy;
 }
 
@@ -264,7 +275,7 @@
 
 -(void) execute
 {
-	[targetCallback performSelector:selector];
+	[targetCallback_ performSelector:selector_];
 }
 @end
 
@@ -277,7 +288,7 @@
 
 -(void) execute
 {
-	[targetCallback performSelector:selector withObject:target_];
+	[targetCallback_ performSelector:selector_ withObject:target_];
 }
 @end
 
@@ -298,7 +309,7 @@
 -(id) initWithTarget:(id)t selector:(SEL)s data:(void*)d
 {
 	if( (self=[super initWithTarget:t selector:s]) ) {
-		data = d;
+		data_ = d;
 
 #if COCOS2D_DEBUG
 		NSMethodSignature * sig = [t methodSignatureForSelector:s]; // added
@@ -311,7 +322,7 @@
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	CCActionInstant *copy = [[[self class] allocWithZone: zone] initWithTarget:targetCallback selector:selector data:data];
+	CCActionInstant *copy = [[[self class] allocWithZone: zone] initWithTarget:targetCallback_ selector:selector_ data:data_];
 	return copy;
 }
 
@@ -323,9 +334,47 @@
 
 -(void) execute
 {
-	callbackMethod_(targetCallback,selector,target_, data);
+	callbackMethod_(targetCallback_,selector_,target_, data_);
 }
 @end
+
+@implementation CCCallFuncO
+
++(id) actionWithTarget: (id) t selector:(SEL) s object:(id)object
+{
+	return [[[self alloc] initWithTarget:t selector:s object:object] autorelease];
+}
+
+-(id) initWithTarget:(id) t selector:(SEL) s object:(id)object
+{
+	if( (self=[super initWithTarget:t selector:s] ) ) {
+	
+		object_ = [object retain];
+		
+	}
+	return self;
+}
+
+- (void) dealloc
+{
+	[object_ release];
+	[super dealloc];
+}
+
+-(id) copyWithZone: (NSZone*) zone
+{
+	CCActionInstant *copy = [[[self class] allocWithZone: zone] initWithTarget:targetCallback_ selector:selector_ object:object_];
+	return copy;
+}
+
+
+-(void) execute
+{
+	[targetCallback_ performSelector:selector_ withObject:object_];
+}
+
+@end
+
 
 #pragma mark -
 #pragma mark Blocks
