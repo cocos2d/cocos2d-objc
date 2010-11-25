@@ -69,6 +69,14 @@ check_dst_dir(){
 	mkdir -p "$DST_DIR"
 }
 
+copy_base_mac_files(){
+	echo ...copying cocos2d files
+	copy_files cocos2d "$LIBS_DIR"
+
+	echo ...copying CocosDenshion files
+	copy_files CocosDenshion "$LIBS_DIR"
+}
+
 copy_base_files(){
 	echo ...copying cocos2d files
 	copy_files cocos2d "$LIBS_DIR"
@@ -109,7 +117,7 @@ copy_project_templates(){
 		mkdir -p "$TEMPLATE_DIR"
 	fi
 
-	print_template_banner "Installing cocos2d template"
+	print_template_banner "Installing cocos2d iOS template"
 
 	DST_DIR="$TEMPLATE_DIR""cocos2d Application/"
 	LIBS_DIR="$DST_DIR"libs
@@ -123,7 +131,7 @@ copy_project_templates(){
 
 	echo done!
 
-	print_template_banner "Installing cocos2d + box2d template"
+	print_template_banner "Installing cocos2d iOS + box2d template"
 
 	DST_DIR="$TEMPLATE_DIR""cocos2d Box2d Application/"
 	LIBS_DIR="$DST_DIR"libs
@@ -141,7 +149,7 @@ copy_project_templates(){
 	echo done!
 
 
-	print_template_banner "Installing cocos2d + chipmunk template"
+	print_template_banner "Installing cocos2d iOS + chipmunk template"
 
 	DST_DIR="$TEMPLATE_DIR""cocos2d Chipmunk Application/"
 	LIBS_DIR="$DST_DIR"libs
@@ -157,6 +165,20 @@ copy_project_templates(){
 	copy_files external/Chipmunk "$LIBS_DIR"
 
 	echo done!
+
+	print_template_banner "Installing cocos2d Mac template"
+
+	DST_DIR="$TEMPLATE_DIR""cocos2d Application - Mac/"
+	LIBS_DIR="$DST_DIR"libs
+
+	check_dst_dir
+
+	echo ...copying template files
+	copy_files templates/cocos2d_mac/ "$DST_DIR"
+
+	copy_base_mac_files
+
+	echo done!
 }
 
 copy_file_templates(){
@@ -166,6 +188,8 @@ copy_file_templates(){
 		TEMPLATE_DIR="${BASE_TEMPLATE_DIR}/File Templates/${COCOS2D_VER}/"
 	fi
 	
+	echo ...copying file templates
+
 	DST_DIR="$TEMPLATE_DIR"
 	check_dst_dir
 

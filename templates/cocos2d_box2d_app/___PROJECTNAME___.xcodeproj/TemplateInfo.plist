@@ -3,6 +3,6 @@
 <plist version="1.0">
 <dict>
 	<key>Description</key>
-	<string>This template provides a starting point for an application that uses the cocos2d-iphone framework and the Box2d physics library.</string>
+	<string>This template provides a starting point for an application that uses cocos2d iOS and Box2d.</string>
 </dict>
 </plist>
