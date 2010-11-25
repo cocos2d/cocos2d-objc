@@ -3,6 +3,6 @@
 <plist version="1.0">
 <dict>
 	<key>Description</key>
-	<string>This template provides a starting point for an application that uses cocos2d iOS and Chipmunk.</string>
+	<string>This template provides a starting point for an application that uses cocos2d for Mac.</string>
 </dict>
 </plist>
