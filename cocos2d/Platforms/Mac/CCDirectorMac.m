@@ -233,6 +233,11 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 		[view setAcceptsTouchEvents:NO];
 //		[view setAcceptsTouchEvents:YES];
 		
+
+		// Synchronize buffer swaps with vertical refresh rate
+		[[view openGLContext] makeCurrentContext];
+		GLint swapInt = 1;
+		[[view openGLContext] setValues:&swapInt forParameter:NSOpenGLCPSwapInterval]; 
 	}
 }
 
