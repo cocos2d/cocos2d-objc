@@ -50,34 +50,41 @@
 
 - (id) initWithFrame:(NSRect)frameRect
 {
-    NSOpenGLPixelFormatAttribute attrs[] =
+	self = [self initWithFrame:frameRect shareContext:nil];
+	return self;
+}
+
+- (id) initWithFrame:(NSRect)frameRect shareContext:(NSOpenGLContext*)context
+{
+    NSOpenGLPixelFormatAttribute attribs[] =
     {
 		NSOpenGLPFAAccelerated,
 		NSOpenGLPFANoRecovery,
 		NSOpenGLPFADoubleBuffer,
 		NSOpenGLPFADepthSize, 24,
+		
 		0
     };
 	
-    NSOpenGLPixelFormat *pf = [[NSOpenGLPixelFormat alloc] initWithAttributes:attrs];
+	NSOpenGLPixelFormat *pixelFormat = [[NSOpenGLPixelFormat alloc] initWithAttributes:attribs];
 	
-    if (!pf)
+	if (!pixelFormat)
 		NSLog(@"No OpenGL pixel format");
 	
-    if (self = [super initWithFrame:frameRect pixelFormat:[pf autorelease]])
-	{
-		[[self openGLContext] makeCurrentContext];
+	if (self = [super initWithFrame:frameRect pixelFormat:[pixelFormat autorelease]]) {
+		
+		if( context )
+			[self setOpenGLContext:context];
 
 		// Synchronize buffer swaps with vertical refresh rate
 		GLint swapInt = 1;
 		[[self openGLContext] setValues:&swapInt forParameter:NSOpenGLCPSwapInterval]; 
 		
-		
-//		GLint order = -1;
-//		[[self openGLContext] setValues:&order forParameter:NSOpenGLCPSurfaceOrder];
+//             GLint order = -1;
+//             [[self openGLContext] setValues:&order forParameter:NSOpenGLCPSurfaceOrder];
 		
 		// event delegate
-		eventDelegate_ = nil;
+		eventDelegate_ = nil;		
 	}
 	
 	return self;

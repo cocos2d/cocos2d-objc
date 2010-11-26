@@ -197,8 +197,7 @@ Class restartAction()
 #endif
 		
 		CGSize s = [[CCDirector sharedDirector] winSize];
-		[self addNewSpriteWithCoords:ccp(s.width/2, s.height/2)];
-		
+		[self addNewSpriteWithCoords:ccp(s.width/2, s.height/2)];				
 	}	
 	return self;
 }

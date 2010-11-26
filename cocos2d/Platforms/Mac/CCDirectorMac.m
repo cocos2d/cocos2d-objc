@@ -62,7 +62,100 @@
 
 @implementation CCDirectorMac
 
+@synthesize isFullScreen = isFullScreen_;
 
+-(id) init
+{
+	if( (self = [super init]) ) {
+		isFullScreen_ = NO;
+		fullScreenGLView_ = nil;
+		fullScreenWindow_ = nil;
+		windowGLView_ = nil;
+	}
+	
+	return self;
+}
+
+- (void) dealloc
+{
+	[fullScreenGLView_ release];
+	[fullScreenWindow_ release];
+	[windowGLView_ release];
+	[super dealloc];
+}
+
+//
+// setFullScreen code taken from GLFullScreen example by Apple
+//
+- (void) setFullScreen:(BOOL)fullscreen
+{
+	// Mac OS X 10.6 and later offer a simplified mechanism to create full-screen contexts
+#if MAC_OS_X_VERSION_MIN_REQUIRED > MAC_OS_X_VERSION_10_5
+
+	if( isFullScreen_ != fullscreen ) {
+
+		isFullScreen_ = fullscreen;
+	
+		if( fullscreen ) {
+			
+			// create the fullscreen view/window
+			NSRect mainDisplayRect, viewRect;
+			
+			// Create a screen-sized window on the display you want to take over
+			// Note, mainDisplayRect has a non-zero origin if the key window is on a secondary display
+			mainDisplayRect = [[NSScreen mainScreen] frame];
+			fullScreenWindow_ = [[NSWindow alloc] initWithContentRect:mainDisplayRect
+															styleMask:NSBorderlessWindowMask
+															  backing:NSBackingStoreBuffered
+																defer:YES];
+			
+			// Set the window level to be above the menu bar
+			[fullScreenWindow_ setLevel:NSMainMenuWindowLevel+1];
+			
+			// Perform any other window configuration you desire
+			[fullScreenWindow_ setOpaque:YES];
+			[fullScreenWindow_ setHidesOnDeactivate:YES];
+			
+			// Create a view with a double-buffered OpenGL context and attach it to the window
+			// By specifying the non-fullscreen context as the shareContext, we automatically inherit the OpenGL objects (textures, etc) it has defined
+			viewRect = NSMakeRect(0.0, 0.0, mainDisplayRect.size.width, mainDisplayRect.size.height);
+			
+			fullScreenGLView_ = [[MacGLView alloc] initWithFrame:viewRect shareContext:[openGLView_ openGLContext]];
+
+			[fullScreenWindow_ setContentView:fullScreenGLView_];
+
+			// Show the window
+			[fullScreenWindow_ makeKeyAndOrderFront:self];
+			
+			[self setOpenGLView:fullScreenGLView_];
+
+		} else {
+			
+			[fullScreenWindow_ release];
+			[fullScreenGLView_ release];
+			fullScreenWindow_ = nil;
+			fullScreenGLView_ = nil;
+
+			[[windowGLView_ openGLContext] makeCurrentContext];
+			[self setOpenGLView:windowGLView_];
+			
+			[windowGLView_ setNeedsDisplay:YES];
+		}
+	}
+#else
+#error Full screen is not supported for Mac OS 10.5 or older yet
+#endif
+}
+
+-(void) setOpenGLView:(MacGLView *)view
+{
+	[super setOpenGLView:view];
+	
+	// cache the NSWindow and NSOpenGLView created from the NIB
+	if( ! isFullScreen_ && ! windowGLView_) {
+		windowGLView_ = [view retain];
+	}
+}
 @end
 
 
@@ -240,7 +333,6 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 		[[view openGLContext] setValues:&swapInt forParameter:NSOpenGLCPSwapInterval]; 
 	}
 }
-
 
 @end
 

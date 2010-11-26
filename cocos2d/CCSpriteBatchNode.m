@@ -254,7 +254,6 @@ static 	SEL selUpdate = NULL;
 }
 
 #pragma mark CCSpriteBatchNode - draw
-#pragma mark CCSpriteBatchNode - draw
 -(void) draw
 {
 	// Optimization: Fast Dispatch
@@ -270,9 +269,6 @@ static 	SEL selUpdate = NULL;
 
 	if( i > 0 ) {
 		
-		// compile the update methodf
-		child = array->arr[0];
-
 		while (i-- > 0) {
 			child = *arr++;
 			
