@@ -42,7 +42,20 @@
  */
 @interface CCDirectorMac : CCDirector
 {
+	BOOL			isFullScreen_;
+	
+	// cache
+	MacGLView		*fullScreenGLView_;
+	NSWindow		*fullScreenWindow_;
+	MacGLView		*windowGLView_;
 }
+
+// whether or not the view is in fullscreen mode
+@property (nonatomic, readonly) BOOL isFullScreen;
+
+// Sets the view in fullscreen or window mode
+- (void) setFullScreen:(BOOL)fullscreen;
+
 @end
 
 
