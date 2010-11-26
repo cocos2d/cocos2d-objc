@@ -6,6 +6,7 @@ version 0.99.5 - xx-Dec-2010
 . [FIX] FileUtils: fixed big memory leaks on .ccz inflater
 . [FIX] Sprite: updateTransform can be overriden (issue #824)
 . [FIX-MAC] Display Link thread: async images works as expected. Enabled by default.
+. [FIX-MAC] MacGLView: VSync is enabled when the view is loaded from the NIB
 . [TEST] Added Glyph Designer test case
 . [TEST-MAC] Added cocos2d icon to Mac tests
 
