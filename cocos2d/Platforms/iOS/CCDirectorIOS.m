@@ -195,6 +195,45 @@ CGFloat	__ccContentScaleFactor = 1;
 	[openGLView_ swapBuffers];
 }
 
+-(void) setProjection:(ccDirectorProjection)projection
+{
+	CGSize size = winSizeInPixels_;
+	
+	switch (projection) {
+		case kCCDirectorProjection2D:
+			glViewport(0, 0, size.width, size.height);
+			glMatrixMode(GL_PROJECTION);
+			glLoadIdentity();
+			ccglOrtho(0, size.width, 0, size.height, -1024 * CC_CONTENT_SCALE_FACTOR(), 1024 * CC_CONTENT_SCALE_FACTOR());
+			glMatrixMode(GL_MODELVIEW);
+			glLoadIdentity();
+			break;
+			
+		case kCCDirectorProjection3D:
+			glViewport(0, 0, size.width, size.height);
+			glMatrixMode(GL_PROJECTION);
+			glLoadIdentity();
+			gluPerspective(60, (GLfloat)size.width/size.height, 0.5f, 1500.0f);
+			
+			glMatrixMode(GL_MODELVIEW);	
+			glLoadIdentity();
+			gluLookAt( size.width/2, size.height/2, [self getZEye],
+					  size.width/2, size.height/2, 0,
+					  0.0f, 1.0f, 0.0f);			
+			break;
+			
+		case kCCDirectorProjectionCustom:
+			if( projectionDelegate_ )
+				[projectionDelegate_ updateProjection];
+			break;
+			
+		default:
+			CCLOG(@"cocos2d: Director: unrecognized projecgtion");
+			break;
+	}
+	
+	projection_ = projection;
+}
 
 #pragma mark Director Scene iPhone Specific
 
