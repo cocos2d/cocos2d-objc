@@ -3289,7 +3289,7 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = E0DA425B12A03A3C00210ACE /* FullScreenTest */;
+			remoteGlobalIDString = E0DA425B12A03A3C00210ACE;
 			remoteInfo = FullScreenTest;
 		};
 /* End PBXContainerItemProxy section */
@@ -8862,7 +8862,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Resources-Mac/cocos2d_mac_Prefix.pch";
-				INFOPLIST_FILE = "Resources-Mac/cocos2d_mac-Info copy.plist";
+				INFOPLIST_FILE = "Resources-Mac/cocos2d_mac-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -8880,7 +8880,7 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Resources-Mac/cocos2d_mac_Prefix.pch";
-				INFOPLIST_FILE = "Resources-Mac/cocos2d_mac-Info copy.plist";
+				INFOPLIST_FILE = "Resources-Mac/cocos2d_mac-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
