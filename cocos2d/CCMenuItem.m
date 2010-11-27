@@ -70,7 +70,7 @@ enum {
 		NSMethodSignature * sig = nil;
 		
 		if( rec && cb ) {
-			sig = [[rec class] instanceMethodSignatureForSelector:cb];
+			sig = [rec methodSignatureForSelector:cb];
 			
 			invocation = nil;
 			invocation = [NSInvocation invocationWithMethodSignature:sig];
