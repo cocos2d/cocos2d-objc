@@ -328,6 +328,8 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		patch: Added support for tsx tilesets in TMX tiled maps
 	* Ray Wenderlich (http://www.raywenderlich.com/)
 		co-author of sample "CocosDenshion - Tom the Turret"
+	* rickms:
+		MenuItem: added support for class methods.
 	* Robert J Payne (http://www.zwopple.com/)
 		Author of Zwoptex editor. Added support for Zwoptex
 		Added support for left,right,top,bottom trim in CCSpriteFrameCache (patch).
