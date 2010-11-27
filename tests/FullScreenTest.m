@@ -13,7 +13,9 @@
 static int sceneIdx=-1;
 static NSString *transitions[] = {	
 	
-	@"FullScreenToggle",
+	@"FullScreenScale",
+	@"FullScreenNoScale",
+
 };
 
 Class nextAction()
@@ -120,22 +122,21 @@ Class restartAction()
 @end
 
 #pragma mark -
-#pragma mark FullScreenToggle
+#pragma mark FullScreenScale
 
 
-@implementation FullScreenToggle
+@implementation FullScreenScale
 
 -(id) init
 {
 	if( (self=[super init]) ) {
 		
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
-		self.isTouchEnabled = YES;
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
-		self.isMouseEnabled = YES;
-#endif
+		CCDirectorMac *director = (CCDirectorMac*) [CCDirector sharedDirector];
+		[director setResizeMode:kCCDirectorResize_AutoScale];
 		
-		CGSize s = [[CCDirector sharedDirector] winSize];
+		self.isMouseEnabled = YES;
+		
+		CGSize s = [director winSize];
 		[self addNewSpriteWithCoords:ccp(50,50)];
 		
 		CCMenuItemFont *item = [CCMenuItemFont itemFromString:@"Toggle Fullscreen" target: self selector:@selector(toggleFullScreen:)];
@@ -203,22 +204,119 @@ Class restartAction()
 	[self addNewSpriteWithCoords: location];
 	
 	return YES;
-
 }
 #endif
 
 -(NSString *) title
 {
-	return @"FullScreen toogle (tap screen)";
+	return @"FullScreen Scale (tap screen)";
 }
 
 -(NSString *) subtitle
 {
-	return @"Press 'fullscreen' to switch between fullscreen and window mode";
+	return @"Screen should be scaled";
 }
 
 @end
 
+#pragma mark -
+#pragma mark FullScreenNoScale
+
+
+@implementation FullScreenNoScale
+
+-(id) init
+{
+	if( (self=[super init]) ) {
+		
+		CCDirectorMac *director = (CCDirectorMac*) [CCDirector sharedDirector];
+		[director setResizeMode:kCCDirectorResize_NoScale];
+
+		self.isMouseEnabled = YES;
+		
+		CGSize s = [director winSize];
+		[self addNewSpriteWithCoords:ccp(50,50)];
+		
+		CCMenuItemFont *item = [CCMenuItemFont itemFromString:@"Toggle Fullscreen" target: self selector:@selector(toggleFullScreen:)];
+		CCMenu *menu = [CCMenu menuWithItems:item, nil];
+		[self addChild:menu];
+		
+		[menu setPosition:ccp(s.width/2, s.height/2)];
+	}	
+	return self;
+}
+
+-(void) toggleFullScreen:(id)sender
+{
+	CCDirectorMac *mac = (CCDirectorMac*) [CCDirector sharedDirector];
+	
+	[mac setFullScreen: ! [mac isFullScreen]];
+}
+
+-(void) addNewSpriteWithCoords:(CGPoint)p
+{
+	int idx = CCRANDOM_0_1() * 1400 / 100;
+	int x = (idx%5) * 85;
+	int y = (idx/5) * 121;
+	
+	
+	CCSprite *sprite = [CCSprite spriteWithFile:@"grossini_dance_atlas.png" rect:CGRectMake(x,y,85,121)];
+	[self addChild:sprite];
+	
+	sprite.position = ccp( p.x, p.y);
+	
+	id action;
+	float rand = CCRANDOM_0_1();
+	
+	if( rand < 0.20 )
+		action = [CCScaleBy actionWithDuration:3 scale:2];
+	else if(rand < 0.40)
+		action = [CCRotateBy actionWithDuration:3 angle:360];
+	else if( rand < 0.60)
+		action = [CCBlink actionWithDuration:1 blinks:3];
+	else if( rand < 0.8 )
+		action = [CCTintBy actionWithDuration:2 red:0 green:-255 blue:-255];
+	else 
+		action = [CCFadeOut actionWithDuration:2];
+	id action_back = [action reverse];
+	id seq = [CCSequence actions:action, action_back, nil];
+	
+	[sprite runAction: [CCRepeatForever actionWithAction:seq]];
+}
+
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+- (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+{
+	for( UITouch *touch in touches ) {
+		CGPoint location = [touch locationInView: [touch view]];
+		
+		location = [[CCDirector sharedDirector] convertToGL: location];
+		
+		[self addNewSpriteWithCoords: location];
+	}
+}
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+-(BOOL) ccMouseUp:(NSEvent *)event
+{
+	CGPoint location = [[CCDirector sharedDirector] convertEventToGL:event];
+	[self addNewSpriteWithCoords: location];
+	
+	return YES;
+	
+}
+#endif
+
+-(NSString *) title
+{
+	return @"FullScreen No Scale (tap screen)";
+}
+
+-(NSString *) subtitle
+{
+	return @"Screen should not be scaled";
+}
+
+@end
 
 #pragma mark -
 #pragma mark AppDelegate
@@ -364,6 +462,8 @@ Class restartAction()
 	
 	CCScene *scene = [CCScene node];
 	[scene addChild: [nextAction() node]];
+	
+//	[director setProjection:kCCDirectorProjection2D];
 	
 	[director runWithScene:scene];
 }

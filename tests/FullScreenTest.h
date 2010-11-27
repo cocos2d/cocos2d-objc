@@ -29,7 +29,13 @@
 @end
 
 
-@interface FullScreenToggle : FullScreenDemo
+@interface FullScreenScale : FullScreenDemo
+{}
+-(void) addNewSpriteWithCoords:(CGPoint)p;
+@end
+
+
+@interface FullScreenNoScale : FullScreenDemo
 {}
 -(void) addNewSpriteWithCoords:(CGPoint)p;
 @end

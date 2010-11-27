@@ -52,7 +52,9 @@
 -(CGPoint) convertEventToGL:(NSEvent*)event
 {
 	NSPoint point = [openGLView_ convertPoint:[event locationInWindow] fromView:nil];
-	return NSPointToCGPoint(point);
+	CGPoint p = NSPointToCGPoint(point);
+	
+	return  [(CCDirectorMac*)self convertToLogicalCoordinates:p];
 }
 
 @end
@@ -68,9 +70,12 @@
 {
 	if( (self = [super init]) ) {
 		isFullScreen_ = NO;
+		resizeMode_ = kCCDirectorResize_AutoScale;
+		
 		fullScreenGLView_ = nil;
 		fullScreenWindow_ = nil;
 		windowGLView_ = nil;
+		winOffset_ = CGPointZero;
 	}
 	
 	return self;
@@ -139,11 +144,13 @@
 			[[windowGLView_ openGLContext] makeCurrentContext];
 			[self setOpenGLView:windowGLView_];
 			
-			[windowGLView_ setNeedsDisplay:YES];
 		}
+		
+		[openGLView_ setNeedsDisplay:YES];
 	}
 #else
 #error Full screen is not supported for Mac OS 10.5 or older yet
+#error If you don't want FullScreen support, you can safely remove these 2 lines
 #endif
 }
 
@@ -154,7 +161,127 @@
 	// cache the NSWindow and NSOpenGLView created from the NIB
 	if( ! isFullScreen_ && ! windowGLView_) {
 		windowGLView_ = [view retain];
+		originalWinSize_ = winSizeInPixels_;
 	}
+}
+
+-(int) resizeMode
+{
+	return resizeMode_;
+}
+
+-(void) setResizeMode:(int)mode
+{
+	if( mode != resizeMode_ ) {
+		resizeMode_ = mode;
+
+		[openGLView_ setNeedsDisplay: YES];
+		
+		[self setProjection:projection_];
+		
+		if( mode == kCCDirectorResize_AutoScale ) {
+			originalWinSize_ = winSizeInPixels_;
+			CCLOG(@"cocos2d: Warning. Switching back to AutoScale might break some stuff. Experimental stuff");
+		}
+	}
+}
+
+-(void) setProjection:(ccDirectorProjection)projection
+{
+	CGSize size = winSizeInPixels_;
+	
+	CGPoint offset = CGPointZero;
+	float widthAspect = size.width;
+	float heightAspect = size.height;
+	
+	
+	if( resizeMode_ == kCCDirectorResize_AutoScale && ! CGSizeEqualToSize(originalWinSize_, CGSizeZero ) ) {
+		
+		size = originalWinSize_;
+
+		float aspect = originalWinSize_.width / originalWinSize_.height;
+		widthAspect = winSizeInPixels_.width;
+		heightAspect = winSizeInPixels_.width / aspect;
+		
+		if( heightAspect > winSizeInPixels_.height ) {
+			widthAspect = winSizeInPixels_.height * aspect;
+			heightAspect = winSizeInPixels_.height;			
+		}
+		
+		winOffset_.x = (winSizeInPixels_.width - widthAspect) / 2;
+		winOffset_.y =  (winSizeInPixels_.height - heightAspect) / 2;
+		
+		offset = winOffset_;
+
+	}
+		
+	switch (projection) {
+		case kCCDirectorProjection2D:
+			glViewport(offset.x, offset.y, widthAspect, heightAspect);
+			glMatrixMode(GL_PROJECTION);
+			glLoadIdentity();
+			ccglOrtho(0, size.width, 0, size.height, -1024, 1024);
+			glMatrixMode(GL_MODELVIEW);
+			glLoadIdentity();
+			break;
+			
+		case kCCDirectorProjection3D:
+			glViewport(offset.x, offset.y, widthAspect, heightAspect);
+			glMatrixMode(GL_PROJECTION);
+			glLoadIdentity();
+			gluPerspective(60, (GLfloat)widthAspect/heightAspect, 0.1f, 1500.0f);
+			
+			glMatrixMode(GL_MODELVIEW);	
+			glLoadIdentity();
+			
+			float eyeZ = size.height * [self getZEye] / winSizeInPixels_.height;
+
+			gluLookAt( size.width/2, size.height/2, eyeZ,
+					  size.width/2, size.height/2, 0,
+					  0.0f, 1.0f, 0.0f);			
+			break;
+			
+		case kCCDirectorProjectionCustom:
+			if( projectionDelegate_ )
+				[projectionDelegate_ updateProjection];
+			break;
+			
+		default:
+			CCLOG(@"cocos2d: Director: unrecognized projecgtion");
+			break;
+	}
+	
+	projection_ = projection;
+}
+
+// If scaling is supported, then it should always return the original size
+// otherwise it should return the "real" size.
+-(CGSize) winSize
+{
+	if( resizeMode_ == kCCDirectorResize_AutoScale )
+		return originalWinSize_;
+	return winSizeInPixels_;
+}
+
+- (CGPoint) convertToLogicalCoordinates:(CGPoint)coords
+{
+	CGPoint ret;
+	
+	if( resizeMode_ == kCCDirectorResize_NoScale )
+		ret = coords;
+	
+	else {
+	
+		float x_diff = originalWinSize_.width / (winSizeInPixels_.width - winOffset_.x * 2);
+		float y_diff = originalWinSize_.height / (winSizeInPixels_.height - winOffset_.y * 2);
+		
+		float adjust_x = (winSizeInPixels_.width * x_diff - originalWinSize_.width ) / 2;
+		float adjust_y = (winSizeInPixels_.height * y_diff - originalWinSize_.height ) / 2;
+		
+		ret = CGPointMake( (x_diff * coords.x) - adjust_x, ( y_diff * coords.y ) - adjust_y );		
+	}
+	
+	return ret;
 }
 @end
 
