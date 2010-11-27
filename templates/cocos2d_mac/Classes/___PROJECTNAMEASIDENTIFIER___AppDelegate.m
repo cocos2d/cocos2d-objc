@@ -36,4 +36,12 @@
 	[super dealloc];
 }
 
+#pragma mark AppDelegate - IBActions
+
+- (IBAction)toggleFullScreen: (id)sender
+{
+	CCDirectorMac *director = (CCDirectorMac*) [CCDirector sharedDirector];
+	[director setFullScreen: ! [director isFullScreen] ];
+}
+
 @end
