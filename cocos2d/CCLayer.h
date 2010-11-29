@@ -127,15 +127,15 @@
 @end
 
 //
-// CCColorLayer
+// CCLayerColor
 //
-/** CCColorLayer is a subclass of CCLayer that implements the CCRGBAProtocol protocol.
+/** CCLayerColor is a subclass of CCLayer that implements the CCRGBAProtocol protocol.
  
  All features from CCLayer are valid, plus the following new features:
  - opacity
  - RGB colors
  */
-@interface CCColorLayer : CCLayer <CCRGBAProtocol, CCBlendProtocol>
+@interface CCLayerColor : CCLayer <CCRGBAProtocol, CCBlendProtocol>
 {
 	GLubyte		opacity_;
 	ccColor3B	color_;	
@@ -172,13 +172,22 @@
 @property (nonatomic,readwrite) ccBlendFunc blendFunc;
 @end
 
+/** CCColorLayer
+ It is the same as CCLayerColor.
+ 
+ @deprecated Use CCLayerColor instead. This class will be removed in v1.0.1
+ */
+DEPRECATED_ATTRIBUTE @interface CCColorLayer : CCLayerColor
+@end
+
+
 //
-// CCGradientLayer
+// CCLayerGradient
 //
-/** CCGradientLayer is a subclass of CCColorLayer that draws gradients across
+/** CCLayerGradient is a subclass of CCLayerColor that draws gradients across
 the background.
 
- All features from CCColorLayer are valid, plus the following new features:
+ All features from CCLayerColor are valid, plus the following new features:
  - direction
  - final color
  
@@ -190,8 +199,10 @@ the background.
  the interpolation, you will not see either the start or end color for
  non-cardinal vectors; a smooth gradient implying both end points will be still
  be drawn, however.
+ 
+ @since v0.99.5
  */
-@interface CCGradientLayer : CCColorLayer {
+@interface CCLayerGradient : CCLayerColor {
 }
 
 /** Creates a full-screen CCLayer with a gradient between start and end. */

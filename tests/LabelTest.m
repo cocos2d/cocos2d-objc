@@ -353,7 +353,7 @@ Class restartAction()
 {
 	if( (self=[super init]) ) {
 		
-		CCColorLayer *col = [CCColorLayer layerWithColor:ccc4(128,128,128,255)];
+		CCLayerColor *col = [CCLayerColor layerWithColor:ccc4(128,128,128,255)];
 		[self addChild:col z:-10];
 		
 		CCLabelBMFont *label1 = [CCLabelBMFont labelWithString:@"Test" fntFile:@"bitmapFontTest2.fnt"];
@@ -916,7 +916,7 @@ Class restartAction()
 		
 		CGSize s = [[CCDirector sharedDirector] winSize];
 		
-		CCColorLayer *layer = [CCColorLayer layerWithColor:ccc4(128,128,128,255)];
+		CCLayerColor *layer = [CCLayerColor layerWithColor:ccc4(128,128,128,255)];
 		[self addChild:layer z:-10];
 		
 		// CCLabelBMFont

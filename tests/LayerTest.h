@@ -27,3 +27,8 @@
 {
 }
 @end
+
+@interface LayerGradient : LayerTest
+{
+}
+@end
