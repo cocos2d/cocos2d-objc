@@ -158,6 +158,7 @@ enum {
 	// To reduce memory, place BOOLs that are not properties here:
 	BOOL isTransformDirty_:1;
 	BOOL isInverseDirty_:1;
+	BOOL isReorderChildDirty_:1;
 #if	CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
 	BOOL isTransformGLDirty_:1;
 #endif
@@ -318,6 +319,10 @@ enum {
  * The child MUST be already added.
  */
 -(void) reorderChild:(CCNode*)child z:(int)zOrder;
+
+/** performance improvement, Sort the children array once before drawing, instead of every time when a child is added or reordered
+ don't call this manually unless a child added needs to be removed in the same frame */
+- (void) sortAllChildren;
 
 /** Stops all running actions and schedulers
  @since v0.8
