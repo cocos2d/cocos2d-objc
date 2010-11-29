@@ -318,6 +318,8 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		mkatlas: added artifact removal by copying borders to margins
 	* Piero Tofy (http://indieappsalliance.org):
 		Author of the scraper script used to parse games data in the cocos2d site
+	* Pieter van de Bruggen
+		Added support for Gradient layer
 	* psionic81:
 		ActionManager doesn't purge running actions patch
 	* rac5372:

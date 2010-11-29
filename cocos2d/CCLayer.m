@@ -231,13 +231,13 @@
 @end
 
 #pragma mark -
-#pragma mark ColorLayer
+#pragma mark LayerColor
 
-@interface CCColorLayer (Private)
+@interface CCLayerColor (Private)
 -(void) updateColor;
 @end
 
-@implementation CCColorLayer
+@implementation CCLayerColor
 
 // Opacity and RGB color protocol
 @synthesize opacity=opacity_, color=color_;
@@ -251,7 +251,7 @@
 
 + (id) layerWithColor:(ccColor4B)color
 {
-	return [[(CCColorLayer*)[self alloc] initWithColor:color] autorelease];
+	return [[(CCLayerColor*)[self alloc] initWithColor:color] autorelease];
 }
 
 - (id) initWithColor:(ccColor4B)color width:(GLfloat)w  height:(GLfloat) h
@@ -369,11 +369,15 @@
 }
 @end
 
+// XXX Deprecated
+@implementation CCColorLayer
+@end
+
 
 #pragma mark -
-#pragma mark GradientLayer
+#pragma mark LayerGradient
 
-@implementation CCGradientLayer
+@implementation CCLayerGradient
 
 @synthesize endColor=endColor_, endOpacity=endOpacity_;
 @synthesize vector=vector_;
@@ -412,7 +416,7 @@
 {
     [super updateColor];
 
-    float h = pow((pow(vector_.x, 2) + pow(vector_.y, 2)), (0.5));
+    float h = powf((powf(vector_.x, 2) + powf(vector_.y, 2)), (0.5f));
     if (h == 0) { return; }
 
     double c = sqrt(2);

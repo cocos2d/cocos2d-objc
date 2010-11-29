@@ -12,7 +12,7 @@
 
 @class Emitter;
 
-@interface ParticleDemo : CCColorLayer
+@interface ParticleDemo : CCLayerColor
 {
 	CCParticleSystem	*emitter;
 	CCSprite			*background;

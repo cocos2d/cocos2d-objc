@@ -21,7 +21,7 @@
         int width = size.width * 0.9f - (corner.contentSize.width * 2);
         int height = size.height * 0.15f  - (corner.contentSize.height * 2);
         
-        CCColorLayer* layer = [CCColorLayer layerWithColor:ccc4(255, 255, 255, 255 * .75) width:width height:height];
+        CCLayerColor* layer = [CCLayerColor layerWithColor:ccc4(255, 255, 255, 255 * .75) width:width height:height];
         layer.position = ccp(-width / 2, -height / 2);
         
         //First button is blue,

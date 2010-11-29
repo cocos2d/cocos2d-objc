@@ -301,7 +301,7 @@ Class restartAction()
 	 */
 	if( (self=[super init]) ) {
 		
-		CCColorLayer *background = [CCColorLayer layerWithColor:ccc4(200,200,200,255)];
+		CCLayerColor *background = [CCLayerColor layerWithColor:ccc4(200,200,200,255)];
 		[self addChild:background];
 		
 		CCSprite *spr_premulti = [CCSprite spriteWithFile:@"fire.png"];
