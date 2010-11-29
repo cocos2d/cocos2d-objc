@@ -669,6 +669,9 @@ Class restartAction()
 				[asmtest reorderChild:[a objectAtIndex:i] z:9];
 		}
 		
+		//usually children get sorted before -transform but call sort now to verify order
+		[asmtest sortAllChildren];
+		
 		int prev = -1;
 		for(id child in asmtest.children)
 		{
