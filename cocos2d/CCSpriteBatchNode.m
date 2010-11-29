@@ -266,7 +266,6 @@ static SEL selSortMethod =NULL;
 		id* x=children_->data->arr;		
 		id tempItem;
 
-		
 		//insertion sort
 		for(i=1; i<length; i++)
 		{
@@ -590,6 +589,8 @@ static SEL selSortMethod =NULL;
 	ccArrayAppendObjectWithResize(descendantsData, sprite);
 	
 	NSUInteger index=descendantsData->num-1;
+	
+	sprite.atlasIndex=index;
 	
 	ccV3F_C4B_T2F_Quad quad = [sprite quad];
 	[textureAtlas_ insertQuad:&quad atIndex:index];
