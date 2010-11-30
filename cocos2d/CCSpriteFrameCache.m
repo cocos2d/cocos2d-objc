@@ -197,6 +197,18 @@ static CCSpriteFrameCache *sharedSpriteFrameCache_=nil;
 	return [self addSpriteFramesWithDictionary:dict texture:texture];
 }
 
+-(void) addSpriteFramesWithFile:(NSString*)plist textureFile:(NSString*)textureFileName
+{
+	NSAssert( textureFileName, @"Invalid texture file name");
+	CCTexture2D *texture = [[CCTextureCache sharedTextureCache] addImage:textureFileName];
+	
+	if( texture )
+		[self addSpriteFramesWithFile:plist texture:texture];
+	
+	else
+		CCLOG(@"cocos2d: CCSpriteFrameCache: couldn't load texture file. File not found: %@", textureFileName);
+}
+
 -(void) addSpriteFramesWithFile:(NSString*)plist
 {
     NSString *path = [CCFileUtils fullPathFromRelativePath:plist];
@@ -204,23 +216,29 @@ static CCSpriteFrameCache *sharedSpriteFrameCache_=nil;
 	
     NSString *texturePath = nil;
     NSDictionary *metadataDict = [dict objectForKey:@"metadata"];
-    if(metadataDict)
+    if( metadataDict )
     {
         // try to read  texture file name from meta data
         texturePath = [metadataDict objectForKey:@"textureFileName"];
     }
 	
-    if(!texturePath)
+    if( ! texturePath )
     {
         // build texture path by replacing file extension
         texturePath = [NSString stringWithString:plist];
         texturePath = [texturePath stringByDeletingPathExtension];
-        texturePath = [texturePath stringByAppendingPathExtension:@"png"];        
+        texturePath = [texturePath stringByAppendingPathExtension:@"png"];
+		
+		CCLOG(@"cocos2d: CCSpriteFrameCache: Trying to use file '%@' as texture", texturePath); 
     }
 	
     CCTexture2D *texture = [[CCTextureCache sharedTextureCache] addImage:texturePath];
-    
-    return [self addSpriteFramesWithDictionary:dict texture:texture];
+	
+	if( texture )
+		[self addSpriteFramesWithDictionary:dict texture:texture];
+	
+	else
+		CCLOG(@"cocos2d: CCSpriteFrameCache: Couldn't load texture");
 }
 
 -(void) addSpriteFrame:(CCSpriteFrame*)frame name:(NSString*)frameName

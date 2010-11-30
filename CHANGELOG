@@ -1,6 +1,7 @@
 version 0.99.5 - xx-Dec-2010
 . [NEW] Layer: Added gradient layer
 . [NEW] MenuItem: it also supports class methods
+. [NEW] SpriteFrameCache: added add
 . [NEW-MAC] Added Mac templates
 . [NEW-MAC] Added support for Fullscreen / window mode
 . [NEW-MAC] Added support for AutoScale if the window is resized / fullscreen
