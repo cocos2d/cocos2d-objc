@@ -24,13 +24,14 @@
  */
 
 #import <Availability.h>
+#import "CCParticleSystemPoint.h"
+
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 
 // opengl
 #import "Platforms/CCGL.h"
 
 // cocos2d
-#import "CCParticleSystemPoint.h"
 #import "CCTextureCache.h"
 #import "ccMacros.h"
 
@@ -203,6 +204,10 @@
 }
 @end
 
-#endif // __IPHONE_OS_VERSION_MAX_ALLOWED
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+@implementation CCParticleSystemPoint
+@end
+
+#endif // __MAC_OS_X_VERSION_MAX_ALLOWED
 
 
