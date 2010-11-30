@@ -7,6 +7,11 @@
 // local import
 #import "ParticleTest.h"
 
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#define PARTICLE_FIRE_NAME @"fire.pvr"
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+#define PARTICLE_FIRE_NAME @"fire.png"
+#endif
 enum {
 	kTagLabelAtlas = 1,
 };
@@ -87,7 +92,12 @@ Class restartAction()
 {
 	if( (self=[super initWithColor:ccc4(127,127,127,255)] )) {
 
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 		self.isTouchEnabled = YES;
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+		self.isMouseEnabled = YES;
+#endif
+		
 		
 		CGSize s = [[CCDirector sharedDirector] winSize];
 		CCLabelTTF *label = [CCLabelTTF labelWithString:[self title] fontName:@"Arial" fontSize:32];
@@ -151,6 +161,7 @@ Class restartAction()
 }
 
 
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 -(void) registerWithTouchDispatcher
 {
 	[[CCTouchDispatcher sharedDispatcher] addTargetedDelegate:self priority:0 swallowsTouches:NO];
@@ -179,6 +190,22 @@ Class restartAction()
 		pos = [background convertToWorldSpace:CGPointZero];
 	emitter.position = ccpSub(convertedLocation, pos);	
 }
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+
+
+-(BOOL) ccMouseDragged:(NSEvent *)event
+{
+	CGPoint convertedLocation = [[CCDirector sharedDirector] convertEventToGL:event];
+	
+	CGPoint pos = CGPointZero;
+	
+	if( background )
+		pos = [background convertToWorldSpace:CGPointZero];
+	emitter.position = ccpSub(convertedLocation, pos);	
+	// swallow the event. Don't propagate it
+	return YES;	
+}
+#endif // __MAC_OS_X_VERSION_MAX_ALLOWED
 
 -(void) update:(ccTime) dt
 {
@@ -270,7 +297,7 @@ Class restartAction()
 	self.emitter = [CCParticleFire node];
 	[background addChild: emitter z:10];
 	
-	emitter.texture = [[CCTextureCache sharedTextureCache] addImage: @"fire.pvr"];
+	emitter.texture = [[CCTextureCache sharedTextureCache] addImage: PARTICLE_FIRE_NAME];
 	CGPoint p = emitter.position;
 	emitter.position = ccp(p.x, 100);
 	
@@ -291,7 +318,7 @@ Class restartAction()
 	self.emitter = [CCParticleSun node];
 	[background addChild: emitter z:10];
 
-	emitter.texture = [[CCTextureCache sharedTextureCache] addImage: @"fire.pvr"];
+	emitter.texture = [[CCTextureCache sharedTextureCache] addImage: PARTICLE_FIRE_NAME];
 	
 	[self setEmitterPosition];
 }
@@ -310,7 +337,7 @@ Class restartAction()
 	self.emitter = [CCParticleGalaxy node];
 	[background addChild: emitter z:10];
 	
-	emitter.texture = [[CCTextureCache sharedTextureCache] addImage: @"fire.pvr"];
+	emitter.texture = [[CCTextureCache sharedTextureCache] addImage: PARTICLE_FIRE_NAME];
 	
 	[self setEmitterPosition];
 }
@@ -511,7 +538,7 @@ Class restartAction()
 	self.emitter = [CCParticleMeteor node];
 	[background addChild: emitter z:10];
 	
-	emitter.texture = [[CCTextureCache sharedTextureCache] addImage: @"fire.pvr"];
+	emitter.texture = [[CCTextureCache sharedTextureCache] addImage: PARTICLE_FIRE_NAME];
 	
 	[self setEmitterPosition];
 }
@@ -530,7 +557,7 @@ Class restartAction()
 	self.emitter = [CCParticleSpiral node];
 	[background addChild: emitter z:10];
 	
-	emitter.texture = [[CCTextureCache sharedTextureCache] addImage: @"fire.pvr"];
+	emitter.texture = [[CCTextureCache sharedTextureCache] addImage: PARTICLE_FIRE_NAME];
 	
 	[self setEmitterPosition];
 }
@@ -639,7 +666,7 @@ Class restartAction()
 	emitter.position = ccp( p.x, p.y-100);
 	emitter.life = 4;
 	
-	emitter.texture = [[CCTextureCache sharedTextureCache] addImage: @"fire.pvr"];
+	emitter.texture = [[CCTextureCache sharedTextureCache] addImage: PARTICLE_FIRE_NAME];
 	
 	[self setEmitterPosition];
 
@@ -1392,6 +1419,7 @@ Class restartAction()
 #pragma mark App Delegate
 
 // CLASS IMPLEMENTATIONS
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 @implementation AppController
 
 - (void) applicationDidFinishLaunching:(UIApplication*)application
@@ -1478,5 +1506,36 @@ Class restartAction()
 {
 	[[CCDirector sharedDirector] setNextDeltaTimeZero:YES];
 }
+@end
+
+
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+
+@implementation cocos2dmacAppDelegate
+
+@synthesize window=window_, glView=glView_;
+
+- (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
+	
+	
+	CCDirector *director = [CCDirector sharedDirector];
+	
+	[director setDisplayFPS:YES];
+	
+	[director setOpenGLView:glView_];
+	
+	//	[director setProjection:kCCDirectorProjection2D];
+	
+	// Enable "moving" mouse event. Default no.
+	[window_ setAcceptsMouseMovedEvents:NO];
+	
+	
+	CCScene *scene = [CCScene node];
+	[scene addChild: [nextAction() node]];
+	
+	[director runWithScene:scene];
+}
 
 @end
+#endif
+
