@@ -420,7 +420,7 @@ Class restartAction()
 		{
 			[batchNode addChild:sprites[i] z:zs[i] tag:kTagBase+i];
 		}
-		[batchNode sortAllChildren];
+//		[batchNode sortAllChildren];
 		CCProfilingEndTimingBlock(_profilingTimer);
 		
 		// remove them
@@ -515,7 +515,7 @@ Class restartAction()
 			[batchNode addChild:sprites[i] z:CCRANDOM_MINUS1_1() * 50 tag:kTagBase+i];
 		}
 		
-		[batchNode sortAllChildren];
+//		[batchNode sortAllChildren];
 	
 		// reorder them
 		CCProfilingBeginTimingBlock(_profilingTimer);
@@ -523,7 +523,7 @@ Class restartAction()
 		{
 			[batchNode reorderChild:[[batchNode children] objectAtIndex:i] z:CCRANDOM_MINUS1_1() * 50];
 		}
-		[batchNode sortAllChildren];
+//		[batchNode sortAllChildren];
 		CCProfilingEndTimingBlock(_profilingTimer);
 		
 		// remove them
