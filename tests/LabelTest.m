@@ -983,9 +983,7 @@ Class restartAction()
 	[director setProjection:kCCDirectorProjection2D];
 	
 	// Enables High Res mode (Retina Display) on iPhone 4 and maintains low res on all other devices
-	if( ! [director enableRetinaDisplay:YES] )
-		if( ! [director enableHDiPad:YES] )
-			CCLOG(@"Using SD graphics");
+	[director enableRetinaDisplay:YES];
 	
 	// make the OpenGLView a child of the main window
 	[window addSubview:glView];

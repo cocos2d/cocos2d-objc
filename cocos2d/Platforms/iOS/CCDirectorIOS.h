@@ -179,15 +179,6 @@ typedef enum {
  */
 -(BOOL) enableRetinaDisplay:(BOOL)enable;
 
-/** Will force the use of HD graphics on iPad
- 
- Experimental stuff.
- 
- @since v0.99.5
- */
--(BOOL) enableHDiPad:(BOOL)enable;
-
-
 /** returns the content scale factor */
 -(CGFloat) contentScaleFactor;
 @end

@@ -415,16 +415,6 @@ CGFloat	__ccContentScaleFactor = 1;
 
 #pragma mark Director - Retina Display
 
--(void) setProjection:(ccDirectorProjection)projection
-{
-	[super setProjection:kCCDirectorProjection2D];
-	
-	glMatrixMode(GL_PROJECTION);
-	if( __ccContentScaleFactor == 2 && ! isContentScaleSupported_ )
-		glScalef(0.5f, 0.5f, 1);
-	glMatrixMode(GL_MODELVIEW);
-}
-
 -(CGFloat) contentScaleFactor
 {
 	return __ccContentScaleFactor;
@@ -459,42 +449,6 @@ CGFloat	__ccContentScaleFactor = 1;
 		CCLOG(@"cocos2d: WARNING: calling setContentScaleFactor on iOS < 4. Using fallback mechanism");		
 		isContentScaleSupported_ = NO;
 	}
-}
-
--(BOOL) enableHDiPad:(BOOL)enabled
-{
-	// already enabled ?
-	if( enabled && __ccContentScaleFactor == 2 )
-		return YES;
-	
-	// already disabled ?
-	if( ! enabled && __ccContentScaleFactor == 1 )
-		return YES;
-	
-	
-	NSString *model = [[UIDevice currentDevice] model];
-	if([model rangeOfString:@"iPad"].location != NSNotFound)
-	{
-		// this feature only works on iPad Compatibility mode
-		if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-			return NO;
-		
-		// So, this is an iPad in iPhone Compatibility mode.
-
-		if( enabled )
-			__ccContentScaleFactor = 2;
-		else
-			__ccContentScaleFactor = 1;
-
-		isContentScaleSupported_ = NO;
-
-		// update projection
-		[self setProjection:projection_];
-
-		return YES;
-	}
-	
-	return NO;
 }
 
 -(BOOL) enableRetinaDisplay:(BOOL)enabled
