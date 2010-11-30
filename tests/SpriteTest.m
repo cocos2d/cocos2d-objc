@@ -670,7 +670,7 @@ Class restartAction()
 		}
 		
 		//usually children get sorted before -transform but call sort now to verify order
-		[asmtest sortAllChildren];
+//		[asmtest sortAllChildren];
 		
 		int prev = -1;
 		for(id child in asmtest.children)
