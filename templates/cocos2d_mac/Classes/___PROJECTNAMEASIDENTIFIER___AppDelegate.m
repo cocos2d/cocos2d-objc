@@ -14,19 +14,24 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-	CCDirector *director = [CCDirector sharedDirector];
+	CCDirectorMac *director = (CCDirectorMac*) [CCDirector sharedDirector];
 	
 	[director setDisplayFPS:YES];
 	
 	[director setOpenGLView:glView_];
-	
-//	[director setProjection:kCCDirectorProjection2D];
+
+	[director setResizeMode:kCCDirectorResize_AutoScale];
 	
 	// Enable "moving" mouse event. Default no.
 	[window_ setAcceptsMouseMovedEvents:NO];
 	
 	
 	[director runWithScene:[HelloWorld scene]];
+}
+
+- (BOOL) applicationShouldTerminateAfterLastWindowClosed: (NSApplication *) theApplication
+{
+	return YES;
 }
 
 - (void)dealloc
