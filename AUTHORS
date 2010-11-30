@@ -262,6 +262,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	* Marco Tillemans (araker):
 		RenderTexture renders images with correct blend function. patch.
 		RenderTexture: performance fixes. Improved logic.
+		Added reorder node performance test
 		Added multisampling anti-aliasing support in EAGLView, ESRenderer
 	* marcu.catalin:
 		Menu items are not consumed is items are not visible
@@ -319,7 +320,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	* Piero Tofy (http://indieappsalliance.org):
 		Author of the scraper script used to parse games data in the cocos2d site
 	* Pieter van de Bruggen
-		Added support for Gradient layer
+		Author of Gradient layer
 	* psionic81:
 		ActionManager doesn't purge running actions patch
 	* rac5372:
