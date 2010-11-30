@@ -259,7 +259,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		CCArray: improved performance in insert & delete elements
 	* marcofucci:
 		CCArray.fastRemoveObjectAtIndex patch.
-	* Marco Tillemans:
+	* Marco Tillemans (araker):
 		RenderTexture renders images with correct blend function. patch.
 		RenderTexture: performance fixes. Improved logic.
 		Added multisampling anti-aliasing support in EAGLView, ESRenderer
