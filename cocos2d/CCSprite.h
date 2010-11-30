@@ -81,7 +81,6 @@ typedef enum {
  *    - But the rendering will be slower: 1 draw per children.
  *
  * The default anchorPoint in CCSprite is (0.5, 0.5).
- *
  */
 @interface CCSprite : CCNode <CCRGBAProtocol, CCTextureProtocol>
 {
@@ -137,10 +136,8 @@ typedef enum {
 	NSMutableDictionary *animations_;
 
 @public
-	// used internally
+	// used internally.
 	void (*updateMethod)(id, SEL);
-	void (*sortMethod)(id, SEL);
-	
 }
 
 /** whether or not the Sprite needs to be updated in the Atlas */

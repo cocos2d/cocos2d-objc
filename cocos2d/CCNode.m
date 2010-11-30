@@ -246,7 +246,7 @@
 #if CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
 		isTransformGLDirty_ = YES;
 #endif
-		isReorderChildDirty_ = NO;	
+		
 		vertexZ_ = 0;
 		
 		grid_ = nil;
@@ -465,9 +465,24 @@
 // helper used by reorderChild & add
 -(void) insertChild:(CCNode*)child z:(int)z
 {
-	isReorderChildDirty_=YES;
+	NSUInteger index=0;
+	CCNode *a = [children_ lastObject];
 	
-	ccArrayAppendObjectWithResize(children_->data, child);
+	// quick comparison to improve performance
+	if (!a || a.zOrder <= z) {
+		[children_ addObject:child];
+	}
+	else
+	{
+		CCARRAY_FOREACH(children_, a) {
+			if ( a.zOrder > z ) {
+				[children_ insertObject:child atIndex:index];
+				break;
+			}
+			index++;
+		}
+	}
+	
 	[child _setZOrder:z];
 }
 
@@ -475,35 +490,12 @@
 {
 	NSAssert( child != nil, @"Child must be non-nil");
 	
-	isReorderChildDirty_=YES;
-	[child _setZOrder:z];
-}
-
-- (void) sortAllChildren
-{
-	if (isReorderChildDirty_) 
-	{	
-		int i,j,length=children_->data->num;
-		id* x=children_->data->arr;
-		id tempItem;
-		
-		//insertion sort
-		for(i=1; i<length; i++)
-		{
-			tempItem = x[i];
-			j = i-1;
-			
-			while(j>=0 && ((CCNode*) tempItem).zOrder<((CCNode*)x[j]).zOrder)
-			{
-				x[j+1] = x[j];
-				j = j-1;
-			}
-			x[j+1] = tempItem;
-		}
-		
-		//don't need to check children recursively, that's done in visit of each child
-		isReorderChildDirty_=NO;
-	}
+	[child retain];
+	[children_ removeObject:child];
+	
+	[self insertChild:child z:z];
+	
+	[child release];
 }
 
 #pragma mark CCNode Draw
@@ -531,7 +523,6 @@
 	[self transform];
 	
 	if(children_) {
-		[self sortAllChildren];
 		ccArray *arrayData = children_->data;
 		NSUInteger i=0;
 		
