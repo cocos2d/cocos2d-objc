@@ -158,7 +158,6 @@ enum {
 	// To reduce memory, place BOOLs that are not properties here:
 	BOOL isTransformDirty_:1;
 	BOOL isInverseDirty_:1;
-	BOOL isReorderChildDirty_:1;
 #if	CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
 	BOOL isTransformGLDirty_:1;
 #endif
@@ -200,7 +199,7 @@ enum {
  It's like a pin in the node where it is "attached" to its parent.
  The anchorPoint is normalized, like a percentage. (0,0) means the bottom-left corner and (1,1) means the top-right corner.
  But you can use values higher than (1,1) and lower than (0,0) too.
- The default anchorPoint is (0,0), so it starts in the bottom-left corner. Some subclasses, like CCSprite have a different default anchorPoint.
+ The default anchorPoint is (0,0). It starts in the bottom-left corner. CCSprite and other subclasses have a different default anchorPoint.
  @since v0.8
  */
 @property(nonatomic,readwrite) CGPoint anchorPoint;
@@ -319,10 +318,6 @@ enum {
  * The child MUST be already added.
  */
 -(void) reorderChild:(CCNode*)child z:(int)zOrder;
-
-/** performance improvement, Sort the children array once before drawing, instead of every time when a child is added or reordered
- don't call this manually unless a child added needs to be removed in the same frame */
-- (void) sortAllChildren;
 
 /** Stops all running actions and schedulers
  @since v0.8

@@ -55,14 +55,11 @@ struct transformValues_ {
 	BOOL	visible;
 };
 
-static SEL selSortMethod = NULL;
-
 @interface CCSprite (Private)
 -(void)updateTextureCoords:(CGRect)rect;
 -(void)updateBlendFunc;
 -(void) initAnimationDictionary;
 -(void) getTransformValues:(struct transformValues_*)tv;	// optimization
--(void) setReorderChildDirtyRecursively;
 @end
 
 @implementation CCSprite
@@ -183,10 +180,6 @@ static SEL selSortMethod = NULL;
 		
 		// updateMethod selector
 		updateMethod = (__typeof__(updateMethod))[self methodForSelector:@selector(updateTransform)];
-		
-		// sortMethod selector
-		selSortMethod = @selector(sortAllChildren);
-		sortMethod = (__typeof__(sortMethod))[self methodForSelector:selSortMethod];
 
 	}
 	
@@ -655,19 +648,16 @@ static SEL selSortMethod = NULL;
 -(void) addChild:(CCSprite*)child z:(int)z tag:(int) aTag
 {
 	NSAssert( child != nil, @"Argument must be non-nil");
-		
+	
+	[super addChild:child z:z tag:aTag];
+	
 	if( usesBatchNode_ ) {
 		NSAssert( [child isKindOfClass:[CCSprite class]], @"CCSprite only supports CCSprites as children when using CCSpriteBatchNode");
 		NSAssert( child.texture.name == textureAtlas_.texture.name, @"CCSprite is not using the same texture id");
 		
-		//put it in descendants array of batch node
-		[batchNode_ appendChild:child];	
-		
-		if (!isReorderChildDirty_) [self setReorderChildDirtyRecursively];
+		NSUInteger index = [batchNode_ atlasIndexForChild:child atZ:z];
+		[batchNode_ insertChild:child inAtlasAtIndex:index];
 	}
-	
-	//CCNode already sets isReorderChildDirty_ so this needs to be after batchNode check
-	[super addChild:child z:z tag:aTag];
 	
 	hasChildren_ = YES;
 }
@@ -679,18 +669,17 @@ static SEL selSortMethod = NULL;
 
 	if( z == child.zOrder )
 		return;
-	
-	if( usesBatchNode_ ) 
-	{	
-		
-		if (!isReorderChildDirty_) 
-		{	
-			[self setReorderChildDirtyRecursively];
-			[batchNode_ reorderBatch];
-		}	
+
+	if( usesBatchNode_ ) {
+		// XXX: Instead of removing/adding, it is more efficient to reorder manually
+		[child retain];
+		[self removeChild:child cleanup:NO];
+		[self addChild:child z:z];
+		[child release];
 	}
-	
-	[super reorderChild:child z:z];
+
+	else
+		[super reorderChild:child z:z];
 }
 
 -(void)removeChild: (CCSprite *)sprite cleanup:(BOOL)doCleanup
@@ -715,62 +704,12 @@ static SEL selSortMethod = NULL;
 	hasChildren_ = NO;
 }
 
-- (void) sortAllChildren
-{
-	if (isReorderChildDirty_) 
-	{	
-		int i,j,length=children_->data->num;
-		id* x=children_->data->arr;
-		id tempItem;
-		
-		//insertion sort
-		for(i=1; i<length; i++)
-		{
-			tempItem = x[i];
-			j = i-1;
-			
-			while(j>=0 && ((CCSprite*) tempItem).zOrder<((CCSprite*)x[j]).zOrder)
-			{
-				x[j+1] = x[j];
-				j = j-1;
-			}
-			x[j+1] = tempItem;
-		}
-		
-		if (usesBatchNode_)
-		{
-			//sorted now check all children recursively
-			CCSprite *child;
-			// fast dispatch
-			CCARRAY_FOREACH(children_, child) child->sortMethod(child,selSortMethod);
-		}
-		
-		isReorderChildDirty_=NO;
-	}
-}
-
-
-
 //
 // CCNode property overloads
 // used only when parent is CCSpriteBatchNode
 //
 #pragma mark CCSprite - property overloads
 
--(void) setReorderChildDirtyRecursively
-{
-	//only set parents flag the first time
-	if (!isReorderChildDirty_)
-	{	
-		isReorderChildDirty_=YES;
-		CCNode* node=(CCNode*) parent_;
-		while (node!=batchNode_) 
-		{
-			[(CCSprite*) node setReorderChildDirtyRecursively];
-			node=node.parent;
-		}
-	}
-}	
 
 -(void) setDirtyRecursively:(BOOL)b
 {
