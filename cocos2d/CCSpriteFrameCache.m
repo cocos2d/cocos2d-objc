@@ -222,8 +222,12 @@ static CCSpriteFrameCache *sharedSpriteFrameCache_=nil;
         texturePath = [metadataDict objectForKey:@"textureFileName"];
     }
 	
-    if( ! texturePath )
+    if( texturePath )
     {
+        // build texture path relative to plist file
+        NSString *textureBase = [path stringByDeletingLastPathComponent];
+        texturePath = [textureBase stringByAppendingPathComponent:texturePath];
+    } else {
         // build texture path by replacing file extension
         texturePath = [NSString stringWithString:plist];
         texturePath = [texturePath stringByDeletingPathExtension];
