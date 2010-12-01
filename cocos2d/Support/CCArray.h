@@ -38,10 +38,10 @@
  */
 
 #define CCARRAY_FOREACH(__array__, __object__)												\
-if (__array__)																				\
-for(id *arr = __array__->data->arr, *end = __array__->data->arr + __array__->data->num;		\
-		arr < end && ((__object__ = *arr) != nil || true);									\
-		arr++)
+if (__array__ && __array__->data->num > 0)													\
+for(id *arr = __array__->data->arr, *end = __array__->data->arr + __array__->data->num-1;	\
+	arr <= end && ((__object__ = *arr) != nil || true);										\
+	arr++)
 
 @interface CCArray : NSObject <NSFastEnumeration, NSCoding, NSCopying>
 {
