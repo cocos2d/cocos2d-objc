@@ -465,7 +465,8 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				E02A83ED129F01DF00341C97 /* English.lproj */,
+				E02A83F0129F01DF00341C97 /* MainMenu.xib */,
+				E02A83EE129F01DF00341C97 /* InfoPlist.strings */,
 				E02A83EB129F01DF00341C97 /* ___PROJECTNAMEASIDENTIFIER____Prefix.pch */,
 				E02A83EC129F01DF00341C97 /* Info.plist */,
 				E02A83F2129F01DF00341C97 /* fps_images.png */,
@@ -678,16 +679,6 @@
 				E02A83D6129F000100341C97 /* HelloWorldScene.m */,
 			);
 			path = Classes;
-			sourceTree = "<group>";
-		};
-		E02A83ED129F01DF00341C97 /* English.lproj */ = {
-			isa = PBXGroup;
-			children = (
-				E02A83EE129F01DF00341C97 /* InfoPlist.strings */,
-				E02A83F0129F01DF00341C97 /* MainMenu.xib */,
-			);
-			name = English.lproj;
-			path = Resources/English.lproj;
 			sourceTree = "<group>";
 		};
 		E02A8401129F083500341C97 /* CocosDenshion */ = {
@@ -1024,6 +1015,7 @@
 				E02A83EF129F01DF00341C97 /* English */,
 			);
 			name = InfoPlist.strings;
+			path = Resources/English.lproj;
 			sourceTree = "<group>";
 		};
 		E02A83F0129F01DF00341C97 /* MainMenu.xib */ = {
@@ -1032,6 +1024,7 @@
 				E02A83F1129F01DF00341C97 /* English */,
 			);
 			name = MainMenu.xib;
+			path = Resources/English.lproj;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
