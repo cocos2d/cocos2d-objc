@@ -141,19 +141,6 @@
 
 static int sceneIdx=0;
 static NSString *transitions[] = {
-	@"FlipXLeftOver",
-	@"FlipXRightOver",
-	@"FlipYUpOver",
-	@"FlipYDownOver",
-	@"FlipAngularLeftOver",
-	@"FlipAngularRightOver",
-	@"ZoomFlipXLeftOver",
-	@"ZoomFlipXRightOver",
-	@"ZoomFlipYUpOver",
-	@"ZoomFlipYDownOver",
-	@"ZoomFlipAngularLeftOver",
-	@"ZoomFlipAngularRightOver",
-	
 	@"CCTransitionJumpZoom",
 	@"CCTransitionCrossFade",
 	@"CCTransitionRadialCCW",
