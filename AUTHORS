@@ -404,6 +404,8 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Added ProfilingTimer: Director and Particles supports it when enabled
 	* svenito:
 		Fixed artifacts in PageTurnTransition
+	* TBBle (http://blog.tbble.org/)
+		CCSpriteFrameCache textureFileName is relative to path
 	* TheArsenik:
 		added BezierTo action
 	* thoechsm:
