@@ -187,9 +187,9 @@
 
 /** @def CC_RETINA_DISPLAY_SUPPORT
  If enabled, cocos2d supports retina display. 
- It's recommended disable it in games without retina display support, for performance reasons.
+ For performance reasons, it's recommended disable it in games without retina display support, like iPad only games.
  
- To enable set it to a value different than 0. Enabled by default.
+ To enable set it to 1. Use 0 to disable it. Enabled by default.
  
  @since v0.99.5
  */
@@ -269,3 +269,23 @@
  To enable set it to a value different than 0. Disabled by default.
  */
 #define CC_COMPATIBILITY_WITH_0_8 0
+
+
+//
+// DON'T edit this macro.
+//
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+
+#if CC_RETINA_DISPLAY_SUPPORT
+#define CC_IS_RETINA_DISPLAY_SUPPORTED 1
+#else
+#define CC_IS_RETINA_DISPLAY_SUPPORTED 0
+#endif
+
+#elif __MAC_OS_X_VERSION_MAX_ALLOWED
+
+#define CC_IS_RETINA_DISPLAY_SUPPORTED 0
+
+#endif
+
+
