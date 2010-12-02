@@ -257,6 +257,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Fixed possible crash with NPOT PVR images
 		Optimized the loading time of PVR images
 		CCArray: improved performance in insert & delete elements
+		Added option to enable/disable RetinaDisplay
 	* marcofucci:
 		CCArray.fastRemoveObjectAtIndex patch.
 	* Marco Tillemans (araker):
