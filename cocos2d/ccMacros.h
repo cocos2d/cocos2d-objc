@@ -187,12 +187,16 @@ do {															\
 
 
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#if CC_RETINA_DISPLAY_SUPPORT
 #import "Platforms/iOS/CCDirectorIOS.h"
 /** @def CC_CONTENT_SCALE_FACTOR
-	On Mac it returns 1;
-	On iPhone it returns 2 if RetinaDisplay is On. Otherwise it returns 1
-*/
+ On Mac it returns 1;
+ On iPhone it returns 2 if RetinaDisplay is On. Otherwise it returns 1
+ */
 #define CC_CONTENT_SCALE_FACTOR() __ccContentScaleFactor
+#else
+#define CC_CONTENT_SCALE_FACTOR() 1
+#endif
 #elif __MAC_OS_X_VERSION_MAX_ALLOWED
 #define CC_CONTENT_SCALE_FACTOR() 1
 #endif
