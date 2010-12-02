@@ -225,12 +225,11 @@ static CCSpriteFrameCache *sharedSpriteFrameCache_=nil;
     if( texturePath )
     {
         // build texture path relative to plist file
-        NSString *textureBase = [path stringByDeletingLastPathComponent];
+        NSString *textureBase = [plist stringByDeletingLastPathComponent];
         texturePath = [textureBase stringByAppendingPathComponent:texturePath];
     } else {
         // build texture path by replacing file extension
-        texturePath = [NSString stringWithString:plist];
-        texturePath = [texturePath stringByDeletingPathExtension];
+        texturePath = [plist stringByDeletingPathExtension];
         texturePath = [texturePath stringByAppendingPathExtension:@"png"];
 		
 		CCLOG(@"cocos2d: CCSpriteFrameCache: Trying to use file '%@' as texture", texturePath); 

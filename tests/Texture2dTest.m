@@ -701,8 +701,7 @@ Class restartAction()
 	
 	CCSprite *img = [CCSprite spriteWithFile:@"test_image_rgba4444.pvr.ccz"];
 	img.position = ccp( s.width/2.0f, s.height/2.0f);
-	[self addChild:img];
-	
+	[self addChild:img];	
 }
 
 -(NSString *) title
