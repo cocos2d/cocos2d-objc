@@ -185,6 +185,16 @@
  */
 #define CC_TEXTURE_NPOT_SUPPORT 0
 
+/** @def CC_RETINA_DISPLAY_SUPPORT
+ If enabled, cocos2d supports retina display. 
+ It's recommended disable it in games without retina display support, for performance reasons.
+ 
+ To enable set it to a value different than 0. Enabled by default.
+ 
+ @since v0.99.5
+ */
+#define CC_RETINA_DISPLAY_SUPPORT 1
+
 /** @def CC_RETINA_DISPLAY_FILENAME_SUFFIX
  It's the suffix that will be appended to the files in order to load "retina display" images.
 
