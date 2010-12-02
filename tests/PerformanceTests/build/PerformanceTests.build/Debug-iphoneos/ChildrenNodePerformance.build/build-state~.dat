@@ -1,0 +1,1351 @@
+TChildrenNodePerformance
+v7
+r0
+t312827842.252486
+cCheck dependencies
+cCpResource build/Debug-iphoneos/ChildrenNodePerformance.app/ResourceRules.plist /Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.2.sdk/ResourceRules.plist
+cProcessInfoPlistFile /Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/Debug-iphoneos/ChildrenNodePerformance.app/Info.plist ../../Resources/Info.plist
+cCopyPNGFile /Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/Debug-iphoneos/ChildrenNodePerformance.app/spritesheet1.png ../../Resources/Images/spritesheet1.png
+cCopyPNGFile /Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/Debug-iphoneos/ChildrenNodePerformance.app/Default.png ../../Resources/Default.png
+cCopyPNGFile /Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/Debug-iphoneos/ChildrenNodePerformance.app/fps_images.png ../../Resources/Fonts/fps_images.png
+cCopyPNGFile /Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/Debug-iphoneos/ChildrenNodePerformance.app/b1.png ../../Resources/Images/b1.png
+cCopyPNGFile /Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/Debug-iphoneos/ChildrenNodePerformance.app/b2.png ../../Resources/Images/b2.png
+cCopyPNGFile /Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/Debug-iphoneos/ChildrenNodePerformance.app/f1.png ../../Resources/Images/f1.png
+cCopyPNGFile /Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/Debug-iphoneos/ChildrenNodePerformance.app/f2.png ../../Resources/Images/f2.png
+cCopyPNGFile /Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/Debug-iphoneos/ChildrenNodePerformance.app/r1.png ../../Resources/Images/r1.png
+cCopyPNGFile /Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/Debug-iphoneos/ChildrenNodePerformance.app/r2.png ../../Resources/Images/r2.png
+cProcessPCH /var/folders/4k/4k8OjorbHSK0XdSpaivd1E+++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/UIKit-eyibmaxuerjjgcfoibteeihwnaty/UIKit.h.gch /Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.2.sdk/System/Library/Frameworks/UIKit.framework/Headers/UIKit.h normal armv6 objective-c com.apple.compilers.llvmgcc42
+cCompileC build/PerformanceTests.build/Debug-iphoneos/ChildrenNodePerformance.build/Objects-normal/armv6/main.o /Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/../main.m normal armv6 objective-c com.apple.compilers.llvmgcc42
+cCompileC build/PerformanceTests.build/Debug-iphoneos/ChildrenNodePerformance.build/Objects-normal/armv6/AppController.o /Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/PerformanceNodeChildrenTest/AppController.m normal armv6 objective-c com.apple.compilers.llvmgcc42
+cCompileC build/PerformanceTests.build/Debug-iphoneos/ChildrenNodePerformance.build/Objects-normal/armv6/PerformanceNodeChildrenTest.o /Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/PerformanceNodeChildrenTest/PerformanceNodeChildrenTest.m normal armv6 objective-c com.apple.compilers.llvmgcc42
+cProcessProductPackaging "/Users/ricardoquesada/Library/MobileDevice/Provisioning Profiles/517D675C-42BB-4756-9E7A-E69C1FECD9D7.mobileprovision" /Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/Debug-iphoneos/ChildrenNodePerformance.app/embedded.mobileprovision
+cProcessProductPackaging /Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.2.sdk/Entitlements.plist /Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/PerformanceTests.build/Debug-iphoneos/ChildrenNodePerformance.build/ChildrenNodePerformance.xcent
+
+N../../Resources/Info.plist
+c000000004CF3CA900000000000000515
+t1291045520
+s1301
+
+N/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.2.sdk
+c000000004CEF08650000000000000110
+t1290733669
+s272
+
+N/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.2.sdk/Entitlements.plist
+c000000004CB3DFCF00000000000001A7
+t1286856655
+s423
+
+N/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.2.sdk/ResourceRules.plist
+c000000004CB3DFCF00000000000001E5
+t1286856655
+s485
+
+N/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.2.sdk/System/Library/Frameworks/CoreGraphics.framework/CoreGraphics
+c000000004CC10EF500000000003532B0
+t1287720693
+s3486384
+
+N/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.2.sdk/System/Library/Frameworks/CoreGraphics.framework/Headers/CGGeometry.h
+c000000004CC10DCA00000000000022F0
+t1287720394
+s8944
+
+N/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.2.sdk/System/Library/Frameworks/CoreGraphics.framework/Headers/CGImage.h
+c000000004CC10DCA0000000000002650
+t1287720394
+s9808
+
+N/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.2.sdk/System/Library/Frameworks/Foundation.framework/Headers/Foundation.h
+c000000004CC10F1C0000000000001466
+t1287720732
+s5222
+
+N/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.2.sdk/System/Library/Frameworks/OpenGLES.framework/Headers/EAGL.h
+c000000004CC110BE000000000000094F
+t1287721150
+s2383
+
+N/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.2.sdk/System/Library/Frameworks/OpenGLES.framework/Headers/EAGLDrawable.h
+c000000004CC110BE0000000000000A61
+t1287721150
+s2657
+
+N/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.2.sdk/System/Library/Frameworks/OpenGLES.framework/Headers/ES1/gl.h
+c000000004CC110BE0000000000009369
+t1287721150
+s37737
+
+N/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.2.sdk/System/Library/Frameworks/OpenGLES.framework/Headers/ES1/glext.h
+c000000004CC110BE0000000000003C4A
+t1287721150
+s15434
+
+N/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.2.sdk/System/Library/Frameworks/OpenGLES.framework/OpenGLES
+c000000004CC110CB000000000002C650
+t1287721163
+s181840
+
+N/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.2.sdk/System/Library/Frameworks/QuartzCore.framework/Headers/QuartzCore.h
+c000000004CC1111C00000000000000C4
+t1287721244
+s196
+
+N/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.2.sdk/System/Library/Frameworks/QuartzCore.framework/QuartzCore
+c000000004CC1127D0000000000267530
+t1287721597
+s2520368
+
+N/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.2.sdk/System/Library/Frameworks/UIKit.framework/Headers/UIKit.h
+c000000004CC11AE60000000000000AA1
+t1287723750
+s2721
+
+N/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.2.sdk/System/Library/Frameworks/UIKit.framework/UIKit
+c000000004CC11B750000000000C769F0
+t1287723893
+s13068784
+
+N/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.2.sdk/usr/include/Availability.h
+c000000004CB3FBB80000000000001ADD
+t1286863800
+s6877
+
+N/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.2.sdk/usr/include/inttypes.h
+c000000004CB3E4B800000000000027D1
+t1286857912
+s10193
+
+N/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.2.sdk/usr/include/math.h
+c000000004CB3E44400000000000004F1
+t1286857796
+s1265
+
+N/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.2.sdk/usr/include/objc/objc.h
+c000000004CC1098E0000000000000A2F
+t1287719310
+s2607
+
+N/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.2.sdk/usr/include/stddef.h
+c000000004CB3E4B80000000000001404
+t1286857912
+s5124
+
+N/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.2.sdk/usr/include/stdlib.h
+c000000004CB3E4B80000000000002DF5
+t1286857912
+s11765
+
+N/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.2.sdk/usr/include/string.h
+c000000004CB3E4B80000000000001731
+t1286857912
+s5937
+
+N/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.2.sdk/usr/include/sys/time.h
+c000000004CBFACD90000000000001E17
+t1287630041
+s7703
+
+N/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.2.sdk/usr/lib/libz.dylib
+c000000004CC105400000000000020FF0
+t1287718208
+s135152
+
+N/Users/ricardoquesada/Library/MobileDevice/Provisioning Profiles/517D675C-42BB-4756-9E7A-E69C1FECD9D7.mobileprovision
+c000000004CC0B1E90000000000001DA0
+t1287696873
+s7584
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/cocos2d/CCAction.h
+c000000004CF3CA90000000000000167A
+t1291045520
+s5754
+i<sys/time.h>
+i<Foundation/Foundation.h>
+i"ccTypes.h"
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/cocos2d/CCActionCamera.h
+c000000004CF3CA9000000000000009BD
+t1291045520
+s2493
+i"CCActionInterval.h"
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/cocos2d/CCActionEase.h
+c000000004CF3CA900000000000001671
+t1291045520
+s5745
+i"CCActionInterval.h"
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/cocos2d/CCActionGrid.h
+c000000004CF3CA90000000000000148F
+t1291045520
+s5263
+i"CCActionInterval.h"
+i"CCActionInstant.h"
+i"CCGrid.h"
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/cocos2d/CCActionGrid3D.h
+c000000004CF3CA900000000000001A8A
+t1291045520
+s6794
+i"CCActionGrid.h"
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/cocos2d/CCActionInstant.h
+c000000004CF3CB9C00000000000013A9
+t1291045788
+s5033
+i"CCAction.h"
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/cocos2d/CCActionInterval.h
+c000000004CF3CA900000000000003268
+t1291045520
+s12904
+i"CCNode.h"
+i"CCAction.h"
+i"CCProtocols.h"
+i<sys/time.h>
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/cocos2d/CCActionManager.h
+c000000004CF3CA900000000000001072
+t1291045520
+s4210
+i"CCAction.h"
+i"Support/ccCArray.h"
+i"Support/uthash.h"
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/cocos2d/CCActionPageTurn3D.h
+c000000004CF3CA900000000000000644
+t1291045520
+s1604
+i"CCActionGrid3D.h"
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/cocos2d/CCActionProgressTimer.h
+c000000004CF3CA90000000000000088D
+t1291045520
+s2189
+i<Foundation/Foundation.h>
+i"CCProgressTimer.h"
+i"CCActionInterval.h"
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/cocos2d/CCActionTiledGrid.h
+c000000004CF3CA900000000000001A15
+t1291045520
+s6677
+i"CCActionGrid.h"
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/cocos2d/CCActionTween.h
+c000000004CF3CA900000000000000932
+t1291045520
+s2354
+i<Foundation/Foundation.h>
+i"CCActionInterval.h"
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/cocos2d/CCAnimation.h
+c000000004CF3CA90000000000000126D
+t1291045520
+s4717
+i<Foundation/Foundation.h>
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/cocos2d/CCAnimationCache.h
+c000000004CF3CA9000000000000008DE
+t1291045520
+s2270
+i<Foundation/Foundation.h>
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/cocos2d/CCAtlasNode.h
+c000000004CF3CA900000000000000C07
+t1291045520
+s3079
+i"CCTextureAtlas.h"
+i"CCNode.h"
+i"CCProtocols.h"
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/cocos2d/CCBlockSupport.h
+c000000004CF3CA90000000000000066F
+t1291045520
+s1647
+i<Foundation/Foundation.h>
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/cocos2d/CCCamera.h
+c000000004CF3CB9C0000000000000C84
+t1291045788
+s3204
+i"CCNode.h"
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/cocos2d/CCCompatibility.h
+c000000004CF3CA900000000000003891
+t1291045520
+s14481
+i<Foundation/Foundation.h>
+i"cocos2d.h"
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/cocos2d/CCConfiguration.h
+c000000004CF3CA900000000000000D36
+t1291045520
+s3382
+i<Foundation/Foundation.h>
+i"Platforms/CCGL.h"
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/cocos2d/CCDirector.h
+c000000004CF3CA9000000000000025C4
+t1291045520
+s9668
+i"ccConfig.h"
+i"ccTypes.h"
+i"Platforms/CCGL.h"
+i"CCProtocols.h"
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/cocos2d/CCDrawingPrimitives.h
+c000000004CF3CA900000000000000C32
+t1291045520
+s3122
+i<Availability.h>
+i<Foundation/Foundation.h>
+i<CoreGraphics/CGGeometry.h>
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/cocos2d/CCGrabber.h
+c000000004CF3CA9000000000000005E4
+t1291045520
+s1508
+i"Platforms/CCGL.h"
+i<Foundation/Foundation.h>
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/cocos2d/CCGrid.h
+c000000004CF3CA900000000000000E5A
+t1291045520
+s3674
+i<Foundation/Foundation.h>
+i"CCNode.h"
+i"CCCamera.h"
+i"ccTypes.h"
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/cocos2d/CCLabelAtlas.h
+c000000004CF3CA900000000000000B25
+t1291045520
+s2853
+i"CCAtlasNode.h"
+i"CCTextureAtlas.h"
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/cocos2d/CCLabelBMFont.h
+c000000004CF3CA900000000000001641
+t1291045520
+s5697
+i"CCSpriteBatchNode.h"
+i"Support/uthash.h"
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/cocos2d/CCLabelTTF.h
+c000000004CF3CA900000000000000A87
+t1291045520
+s2695
+i"CCTexture2D.h"
+i"CCSprite.h"
+i"Platforms/CCNS.h"
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/cocos2d/CCLayer.h
+c000000004CF522EC000000000000204E
+t1291133676
+s8270
+i<Availability.h>
+i<UIKit/UIKit.h>
+i"Platforms/iOS/CCTouchDelegateProtocol.h"
+i"Platforms/Mac/CCEventDispatcher.h"
+i"CCProtocols.h"
+i"CCNode.h"
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/cocos2d/CCMenu.h
+c000000004CF3CA900000000000000B29
+t1291045520
+s2857
+i"CCMenuItem.h"
+i"CCLayer.h"
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/cocos2d/CCMenuItem.h
+c000000004CF3CA9000000000000033A8
+t1291045520
+s13224
+i"CCBlockSupport.h"
+i"CCNode.h"
+i"CCProtocols.h"
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/cocos2d/CCMotionStreak.h
+c000000004CF3CA900000000000000B2A
+t1291045520
+s2858
+i<Foundation/Foundation.h>
+i"CCNode.h"
+i"CCRibbon.h"
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/cocos2d/CCNode.h
+c000000004CF5234B0000000000004486
+t1291133771
+s17542
+i<Availability.h>
+i"Platforms/CCGL.h"
+i"CCAction.h"
+i"ccTypes.h"
+i"CCTexture2D.h"
+i"CCProtocols.h"
+i"ccConfig.h"
+i"Support/CCArray.h"
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/cocos2d/CCParallaxNode.h
+c000000004CF3CA90000000000000075D
+t1291045520
+s1885
+i"CCNode.h"
+i"Support/ccCArray.h"
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/cocos2d/CCParticleExamples.h
+c000000004CF3CA900000000000000AD0
+t1291045520
+s2768
+i<Availability.h>
+i"CCParticleSystemPoint.h"
+i"CCParticleSystemQuad.h"
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/cocos2d/CCParticleSystem.h
+c000000004CF3CA9000000000000037B8
+t1291045520
+s14264
+i"CCProtocols.h"
+i"CCNode.h"
+i"ccTypes.h"
+i"ccConfig.h"
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/cocos2d/CCParticleSystemPoint.h
+c000000004CF3CA900000000000000778
+t1291045520
+s1912
+i"CCParticleSystem.h"
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/cocos2d/CCParticleSystemQuad.h
+c000000004CF3CA9000000000000009D3
+t1291045520
+s2515
+i"CCParticleSystem.h"
+i"ccConfig.h"
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/cocos2d/CCProgressTimer.h
+c000000004CF3CA900000000000000B48
+t1291045520
+s2888
+i<Foundation/Foundation.h>
+i"CCSprite.h"
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/cocos2d/CCProtocols.h
+c000000004CF3CA900000000000000F9A
+t1291045520
+s3994
+i"ccTypes.h"
+i"CCTexture2D.h"
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/cocos2d/CCRenderTexture.h
+c000000004CF3CA900000000000000F2A
+t1291045520
+s3882
+i<Foundation/Foundation.h>
+i"CCNode.h"
+i"CCSprite.h"
+i"Support/OpenGL_Internal.h"
+i<Availability.h>
+i<UIKit/UIKit.h>
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/cocos2d/CCRibbon.h
+c000000004CF3CA900000000000000FCD
+t1291045520
+s4045
+i"CCNode.h"
+i"CCTexture2D.h"
+i"CCProtocols.h"
+i"Platforms/CCGL.h"
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/cocos2d/CCScene.h
+c000000004CF3CA900000000000000677
+t1291045520
+s1655
+i"CCNode.h"
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/cocos2d/CCScheduler.h
+c000000004CF3CA9000000000000019D7
+t1291045520
+s6615
+i"Support/uthash.h"
+i"ccTypes.h"
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/cocos2d/CCSprite.h
+c000000004CF5236D000000000000345C
+t1291133805
+s13404
+i"CCNode.h"
+i"CCProtocols.h"
+i"CCTextureAtlas.h"
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/cocos2d/CCSpriteBatchNode.h
+c000000004CF522FC00000000000018F8
+t1291133692
+s6392
+i"CCNode.h"
+i"CCProtocols.h"
+i"CCTextureAtlas.h"
+i"ccMacros.h"
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/cocos2d/CCSpriteFrame.h
+c000000004CF3CA900000000000000D5A
+t1291045520
+s3418
+i<Foundation/Foundation.h>
+i"CCNode.h"
+i"CCProtocols.h"
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/cocos2d/CCSpriteFrameCache.h
+c000000004CF522EC0000000000001395
+t1291133676
+s5013
+i<Foundation/Foundation.h>
+i"CCSpriteFrame.h"
+i"CCTexture2D.h"
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/cocos2d/CCSpriteSheet.h
+c000000004CF3CA9000000000000009FE
+t1291045520
+s2558
+i"CCSpriteBatchNode.h"
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/cocos2d/CCTMXLayer.h
+c000000004CF3CA90000000000000182A
+t1291045520
+s6186
+i"CCAtlasNode.h"
+i"CCSpriteBatchNode.h"
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/cocos2d/CCTMXObjectGroup.h
+c000000004CF3CA9000000000000008D5
+t1291045520
+s2261
+i"CCSpriteSheet.h"
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/cocos2d/CCTMXTiledMap.h
+c000000004CF3CA9000000000000014D4
+t1291045520
+s5332
+i"CCSpriteSheet.h"
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/cocos2d/CCTMXXMLParser.h
+c000000004CF3CA9000000000000016B9
+t1291045520
+s5817
+i<Availability.h>
+i<Foundation/Foundation.h>
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/cocos2d/CCTexture2D.h
+c000000004CF3CB9C0000000000002C00
+t1291045788
+s11264
+i<Availability.h>
+i<UIKit/UIKit.h>
+i<Foundation/Foundation.h>
+i"Platforms/CCGL.h"
+i"Platforms/CCNS.h"
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/cocos2d/CCTextureAtlas.h
+c000000004CF3CA90000000000000145B
+t1291045520
+s5211
+i"CCTexture2D.h"
+i"ccTypes.h"
+i"ccConfig.h"
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/cocos2d/CCTextureCache.h
+c000000004CF3CA9000000000000014C2
+t1291045520
+s5314
+i<Availability.h>
+i<CoreGraphics/CGImage.h>
+i<Foundation/Foundation.h>
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/cocos2d/CCTexturePVR.h
+c000000004CF3CA900000000000000DA0
+t1291045520
+s3488
+i<Foundation/Foundation.h>
+i"Platforms/CCGL.h"
+i"CCTextureCache.h"
+i"CCTexture2D.h"
+i"ccCArray.h"
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/cocos2d/CCTileMapAtlas.h
+c000000004CF3CA900000000000000B86
+t1291045520
+s2950
+i"CCTextureAtlas.h"
+i"CCAtlasNode.h"
+i"Support/TGAlib.h"
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/cocos2d/CCTransition.h
+c000000004CF3CA900000000000002134
+t1291045520
+s8500
+i"CCScene.h"
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/cocos2d/CCTransitionPageTurn.h
+c000000004CF3CA900000000000000917
+t1291045520
+s2327
+i"CCTransition.h"
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/cocos2d/CCTransitionRadial.h
+c000000004CF3CA900000000000000630
+t1291045520
+s1584
+i"CCTransition.h"
+i"CCProgressTimer.h"
+i"CCActionProgressTimer.h"
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/cocos2d/Platforms/CCGL.h
+c000000004CF3CA900000000000000BF8
+t1291045520
+s3064
+i<Availability.h>
+i<OpenGLES/ES1/gl.h>
+i<OpenGLES/ES1/glext.h>
+i<OpenGLES/EAGL.h>
+i"iOS/glu.h"
+i"iOS/EAGLView.h"
+i<OpenGL/gl.h>
+i<OpenGL/glu.h>
+i<Cocoa/Cocoa.h>
+i"Mac/MacGLView.h"
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/cocos2d/Platforms/CCNS.h
+c000000004CF3CA900000000000000965
+t1291045520
+s2405
+i<Availability.h>
+i<Foundation/Foundation.h>
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/cocos2d/Platforms/Mac/CCDirectorMac.h
+c000000004CF3CB9C0000000000000C84
+t1291045788
+s3204
+i<Availability.h>
+i<QuartzCore/CVDisplayLink.h>
+i"../../CCDirector.h"
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/cocos2d/Platforms/Mac/CCEventDispatcher.h
+c000000004CF3CA900000000000001A06
+t1291045520
+s6662
+i<Availability.h>
+i<Cocoa/Cocoa.h>
+i"MacGLView.h"
+i"../../Support/uthash.h"
+i"../../Support/utlist.h"
+i"../../ccConfig.h"
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/cocos2d/Platforms/Mac/MacGLView.h
+c000000004CF3CB9C0000000000000B62
+t1291045788
+s2914
+i<Availability.h>
+i<Cocoa/Cocoa.h>
+i"../../ccConfig.h"
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/cocos2d/Platforms/iOS/CCDirectorIOS.h
+c000000004CF3CA900000000000002B53
+t1291045520
+s11091
+i<Availability.h>
+i"../../CCDirector.h"
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/cocos2d/Platforms/iOS/CCTouchDelegateProtocol.h
+c000000004CF3CA900000000000000BC3
+t1291045520
+s3011
+i<Availability.h>
+i<UIKit/UIKit.h>
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/cocos2d/Platforms/iOS/CCTouchDispatcher.h
+c000000004CF3CA9000000000000010CA
+t1291045520
+s4298
+i<Availability.h>
+i"CCTouchDelegateProtocol.h"
+i"EAGLView.h"
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/cocos2d/Platforms/iOS/CCTouchHandler.h
+c000000004CF3CA900000000000000D99
+t1291045520
+s3481
+i<Availability.h>
+i"CCTouchDelegateProtocol.h"
+i"CCTouchDispatcher.h"
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/cocos2d/Platforms/iOS/EAGLView.h
+c000000004CF3CA900000000000001B69
+t1291045520
+s7017
+i<Availability.h>
+i<UIKit/UIKit.h>
+i<OpenGLES/EAGL.h>
+i<OpenGLES/EAGLDrawable.h>
+i<OpenGLES/ES1/gl.h>
+i<OpenGLES/ES1/glext.h>
+i"ESRenderer.h"
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/cocos2d/Platforms/iOS/ESRenderer.h
+c000000004CF3CA90000000000000083A
+t1291045520
+s2106
+i<Availability.h>
+i<QuartzCore/QuartzCore.h>
+i<OpenGLES/EAGL.h>
+i<OpenGLES/EAGLDrawable.h>
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/cocos2d/Platforms/iOS/glu.h
+c000000004CF3CA90000000000000030D
+t1291045520
+s781
+i<Availability.h>
+i<OpenGLES/ES1/gl.h>
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/cocos2d/Support/CCArray.h
+c000000004CF3CA900000000000000BD7
+t1291045520
+s3031
+i"ccCArray.h"
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/cocos2d/Support/CCFileUtils.h
+c000000004CF3CA900000000000000748
+t1291045520
+s1864
+i<Foundation/Foundation.h>
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/cocos2d/Support/CCProfiling.h
+c000000004CF3CA9000000000000006E9
+t1291045520
+s1769
+i<Foundation/Foundation.h>
+i<sys/time.h>
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/cocos2d/Support/CGPointExtension.h
+c000000004CF3CA900000000000001EAB
+t1291045520
+s7851
+i<Availability.h>
+i<CoreGraphics/CGGeometry.h>
+i<Foundation/Foundation.h>
+i<math.h>
+i<objc/objc.h>
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/cocos2d/Support/OpenGL_Internal.h
+c000000004CF3CA9000000000000011A7
+t1291045520
+s4519
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/cocos2d/Support/TGAlib.h
+c000000004CF3CA900000000000000444
+t1291045520
+s1092
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/cocos2d/Support/ccCArray.h
+c000000004CF3CA9000000000000030F3
+t1291045520
+s12531
+i<Foundation/Foundation.h>
+i<stdlib.h>
+i<string.h>
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/cocos2d/Support/ccUtils.h
+c000000004CF3CA900000000000000204
+t1291045520
+s516
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/cocos2d/Support/uthash.h
+c000000004CF3CA90000000000000FB13
+t1291045520
+s64275
+i<string.h>
+i<stddef.h>
+i<inttypes.h>
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/cocos2d/Support/utlist.h
+c000000004CF3CA900000000000009091
+t1291045520
+s37009
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/cocos2d/ccConfig.h
+c000000004CF3CB9C0000000000002631
+t1291045788
+s9777
+i<Availability.h>
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/cocos2d/ccMacros.h
+c000000004CF3CA900000000000001CB9
+t1291045520
+s7353
+i<math.h>
+i"ccConfig.h"
+i<Foundation/Foundation.h>
+i<Availability.h>
+i"Platforms/iOS/CCDirectorIOS.h"
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/cocos2d/ccTypes.h
+c000000004CF3CA9000000000000016C0
+t1291045520
+s5824
+i<Availability.h>
+i<Foundation/Foundation.h>
+i<CoreGraphics/CGGeometry.h>
+i"Platforms/CCGL.h"
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/cocos2d/cocos2d.h
+c000000004CF3CA9000000000000010FF
+t1291045520
+s4351
+i<Availability.h>
+i"ccConfig.h"
+i"CCActionManager.h"
+i"CCAction.h"
+i"CCActionInstant.h"
+i"CCActionInterval.h"
+i"CCActionEase.h"
+i"CCActionCamera.h"
+i"CCActionTween.h"
+i"CCActionEase.h"
+i"CCActionTiledGrid.h"
+i"CCActionGrid3D.h"
+i"CCActionGrid.h"
+i"CCActionProgressTimer.h"
+i"CCActionPageTurn3D.h"
+i"CCAnimation.h"
+i"CCAnimationCache.h"
+i"CCSprite.h"
+i"CCSpriteFrame.h"
+i"CCSpriteSheet.h"
+i"CCSpriteBatchNode.h"
+i"CCSpriteFrameCache.h"
+i"CCLabelTTF.h"
+i"CCLabelBMFont.h"
+i"CCLabelAtlas.h"
+i"CCParticleSystem.h"
+i"CCParticleSystemPoint.h"
+i"CCParticleSystemQuad.h"
+i"CCParticleExamples.h"
+i"CCTexture2D.h"
+i"CCTexturePVR.h"
+i"CCTextureCache.h"
+i"CCTextureAtlas.h"
+i"CCTransition.h"
+i"CCTransitionPageTurn.h"
+i"CCTransitionRadial.h"
+i"CCTMXTiledMap.h"
+i"CCTMXLayer.h"
+i"CCTMXObjectGroup.h"
+i"CCTMXXMLParser.h"
+i"CCTileMapAtlas.h"
+i"CCLayer.h"
+i"CCMenu.h"
+i"CCMenuItem.h"
+i"CCDrawingPrimitives.h"
+i"CCScene.h"
+i"CCScheduler.h"
+i"CCBlockSupport.h"
+i"CCCamera.h"
+i"CCProtocols.h"
+i"CCNode.h"
+i"CCDirector.h"
+i"CCAtlasNode.h"
+i"CCGrabber.h"
+i"CCGrid.h"
+i"CCParallaxNode.h"
+i"CCRenderTexture.h"
+i"CCMotionStreak.h"
+i"CCConfiguration.h"
+i"ccTypes.h"
+i"ccMacros.h"
+i"Platforms/CCGL.h"
+i"Platforms/CCNS.h"
+i"Platforms/iOS/CCTouchDispatcher.h"
+i"Platforms/iOS/CCTouchDelegateProtocol.h"
+i"Platforms/iOS/CCTouchHandler.h"
+i"Platforms/iOS/EAGLView.h"
+i"Platforms/iOS/CCDirectorIOS.h"
+i"Platforms/Mac/MacGLView.h"
+i"Platforms/Mac/CCDirectorMac.h"
+i"Support/OpenGL_Internal.h"
+i"Support/CCFileUtils.h"
+i"Support/CGPointExtension.h"
+i"Support/ccCArray.h"
+i"Support/CCArray.h"
+i"Support/ccUtils.h"
+i"Support/CCProfiling.h"
+i"CCCompatibility.h"
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/../../Resources/Default.png
+c000000004CF3CA8F00000000000077AB
+t1291045519
+s30635
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/../../Resources/Fonts/fps_images.png
+c000000004CF3CA8F000000000000183B
+t1291045519
+s6203
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/../../Resources/Images/b1.png
+c000000004CF3CA8F0000000000000F25
+t1291045519
+s3877
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/../../Resources/Images/b2.png
+c000000004CF3CA8F0000000000000FBB
+t1291045519
+s4027
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/../../Resources/Images/f1.png
+c000000004CF3CA8F0000000000000F4B
+t1291045519
+s3915
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/../../Resources/Images/f2.png
+c000000004CF3CA8F0000000000000FCE
+t1291045519
+s4046
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/../../Resources/Images/r1.png
+c000000004CF3CA9000000000000007A4
+t1291045520
+s1956
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/../../Resources/Images/r2.png
+c000000004CF3CA9000000000000008A1
+t1291045520
+s2209
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/../../Resources/Images/spritesheet1.png
+c000000004CF3CA9000000000000268EC
+t1291045520
+s157932
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/../../cocos2d/cocos2d.h
+c000000004CF3CA9000000000000010FF
+t1291045520
+s4351
+i<Availability.h>
+i"ccConfig.h"
+i"CCActionManager.h"
+i"CCAction.h"
+i"CCActionInstant.h"
+i"CCActionInterval.h"
+i"CCActionEase.h"
+i"CCActionCamera.h"
+i"CCActionTween.h"
+i"CCActionEase.h"
+i"CCActionTiledGrid.h"
+i"CCActionGrid3D.h"
+i"CCActionGrid.h"
+i"CCActionProgressTimer.h"
+i"CCActionPageTurn3D.h"
+i"CCAnimation.h"
+i"CCAnimationCache.h"
+i"CCSprite.h"
+i"CCSpriteFrame.h"
+i"CCSpriteSheet.h"
+i"CCSpriteBatchNode.h"
+i"CCSpriteFrameCache.h"
+i"CCLabelTTF.h"
+i"CCLabelBMFont.h"
+i"CCLabelAtlas.h"
+i"CCParticleSystem.h"
+i"CCParticleSystemPoint.h"
+i"CCParticleSystemQuad.h"
+i"CCParticleExamples.h"
+i"CCTexture2D.h"
+i"CCTexturePVR.h"
+i"CCTextureCache.h"
+i"CCTextureAtlas.h"
+i"CCTransition.h"
+i"CCTransitionPageTurn.h"
+i"CCTransitionRadial.h"
+i"CCTMXTiledMap.h"
+i"CCTMXLayer.h"
+i"CCTMXObjectGroup.h"
+i"CCTMXXMLParser.h"
+i"CCTileMapAtlas.h"
+i"CCLayer.h"
+i"CCMenu.h"
+i"CCMenuItem.h"
+i"CCDrawingPrimitives.h"
+i"CCScene.h"
+i"CCScheduler.h"
+i"CCBlockSupport.h"
+i"CCCamera.h"
+i"CCProtocols.h"
+i"CCNode.h"
+i"CCDirector.h"
+i"CCAtlasNode.h"
+i"CCGrabber.h"
+i"CCGrid.h"
+i"CCParallaxNode.h"
+i"CCRenderTexture.h"
+i"CCMotionStreak.h"
+i"CCConfiguration.h"
+i"ccTypes.h"
+i"ccMacros.h"
+i"Platforms/CCGL.h"
+i"Platforms/CCNS.h"
+i"Platforms/iOS/CCTouchDispatcher.h"
+i"Platforms/iOS/CCTouchDelegateProtocol.h"
+i"Platforms/iOS/CCTouchHandler.h"
+i"Platforms/iOS/EAGLView.h"
+i"Platforms/iOS/CCDirectorIOS.h"
+i"Platforms/Mac/MacGLView.h"
+i"Platforms/Mac/CCDirectorMac.h"
+i"Support/OpenGL_Internal.h"
+i"Support/CCFileUtils.h"
+i"Support/CGPointExtension.h"
+i"Support/ccCArray.h"
+i"Support/CCArray.h"
+i"Support/ccUtils.h"
+i"Support/CCProfiling.h"
+i"CCCompatibility.h"
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/../main.m
+c000000004CF3CA910000000000000D5A
+t1291045521
+s3418
+i<UIKit/UIKit.h>
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/PerformanceNodeChildrenTest/AppController.h
+c000000004CF3CA9100000000000000C7
+t1291045521
+s199
+i<UIKit/UIKit.h>
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/PerformanceNodeChildrenTest/AppController.m
+c000000004CF3CA9100000000000009C5
+t1291045521
+s2501
+i"AppController.h"
+i"cocos2d.h"
+i"PerformanceNodeChildrenTest.h"
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/PerformanceNodeChildrenTest/PerformanceNodeChildrenTest.h
+c000000004CF4F29100000000000004BB
+t1291121297
+s1211
+i"cocos2d.h"
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/PerformanceNodeChildrenTest/PerformanceNodeChildrenTest.m
+c000000004CF4F2960000000000002F34
+t1291121302
+s12084
+i"cocos2d.h"
+i"PerformanceNodeChildrenTest.h"
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/Debug-iphoneos/ChildrenNodePerformance.app
+t2
+s0
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/Debug-iphoneos/ChildrenNodePerformance.app.dSYM
+t2
+s0
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/Debug-iphoneos/ChildrenNodePerformance.app/ChildrenNodePerformance
+t2
+s0
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/Debug-iphoneos/ChildrenNodePerformance.app/Default.png
+t1291135041
+s31932
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/Debug-iphoneos/ChildrenNodePerformance.app/Info.plist
+t1291135040
+s1114
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/Debug-iphoneos/ChildrenNodePerformance.app/PkgInfo
+t1291135040
+s8
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/Debug-iphoneos/ChildrenNodePerformance.app/ResourceRules.plist
+t1291135040
+s485
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/Debug-iphoneos/ChildrenNodePerformance.app/b1.png
+t1291135040
+s4285
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/Debug-iphoneos/ChildrenNodePerformance.app/b2.png
+t1291135040
+s4512
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/Debug-iphoneos/ChildrenNodePerformance.app/embedded.mobileprovision
+t1291135042
+s7584
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/Debug-iphoneos/ChildrenNodePerformance.app/f1.png
+t1291135041
+s4307
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/Debug-iphoneos/ChildrenNodePerformance.app/f2.png
+t1291135041
+s4535
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/Debug-iphoneos/ChildrenNodePerformance.app/fps_images.png
+t1291135040
+s7188
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/Debug-iphoneos/ChildrenNodePerformance.app/r1.png
+t1291135041
+s2157
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/Debug-iphoneos/ChildrenNodePerformance.app/r2.png
+t1291135041
+s2861
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/Debug-iphoneos/ChildrenNodePerformance.app/spritesheet1.png
+t1291135040
+s163760
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/Debug-iphoneos/libFontLabel.a
+c000000004CF528320000000000042B80
+t1291135026
+s273280
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/Debug-iphoneos/libcocos2d libraries.a
+c000000004CF528400000000000373970
+t1291135040
+s3619184
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/PerformanceTests.build/Debug-iphoneos/ChildrenNodePerformance.build/ChildrenNodePerformance.xcent
+t1291135042
+s452
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/PerformanceTests.build/Debug-iphoneos/ChildrenNodePerformance.build/Objects-normal/armv6/AppController.o
+t1291135042
+s62924
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/PerformanceTests.build/Debug-iphoneos/ChildrenNodePerformance.build/Objects-normal/armv6/ChildrenNodePerformance.LinkFileList
+c000000004CF528400000000000000218
+t1291135040
+s536
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/PerformanceTests.build/Debug-iphoneos/ChildrenNodePerformance.build/Objects-normal/armv6/PerformanceNodeChildrenTest.o
+t2
+s0
+
+N/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/PerformanceTests.build/Debug-iphoneos/ChildrenNodePerformance.build/Objects-normal/armv6/main.o
+t1291135042
+s6972
+
+N/var/folders/4k/4k8OjorbHSK0XdSpaivd1E+++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/UIKit-eyibmaxuerjjgcfoibteeihwnaty/UIKit.h.gch
+t1291135041
+s7730876
+
+CCheck dependencies
+r0
+lSLF07#2@18"Check dependencies312827840#312827840#0(0"0(0#1#0"8703153056#0"0#
+
+CCodeSign /Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/Debug-iphoneos/ChildrenNodePerformance.app
+r0
+
+CCompileC build/PerformanceTests.build/Debug-iphoneos/ChildrenNodePerformance.build/Objects-normal/armv6/AppController.o /Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/PerformanceNodeChildrenTest/AppController.m normal armv6 objective-c com.apple.compilers.llvmgcc42
+s312827841.933619
+e312827842.184277
+r1
+xCompileC
+xbuild/PerformanceTests.build/Debug-iphoneos/ChildrenNodePerformance.build/Objects-normal/armv6/AppController.o
+x/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/PerformanceNodeChildrenTest/AppController.m
+xnormal
+xarmv6
+xobjective-c
+xcom.apple.compilers.llvmgcc42
+lSLF07#2@117"Compile /Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/PerformanceNodeChildrenTest/AppController.m312827841#312827842#0(0"0(0#0#109"/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/PerformanceNodeChildrenTest/AppController.m8722541536#2427"    cd /Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests    setenv LANG en_US.US-ASCII    setenv PATH "/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/llvm-gcc-4.2 -x objective-c -arch armv6 -fmessage-length=0 -pipe -std=c99 -Wno-trigraphs -fpascal-strings -O0 -Werror -Wreturn-type -Wunused-variable -Wshorten-64-to-32 -DDEBUG -DCOCOS2D_DEBUG=1 -isysroot /Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.2.sdk -fvisibility=hidden -gdwarf-2 -mno-thumb -miphoneos-version-min=3.1 -iquote /Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/PerformanceTests.build/Debug-iphoneos/ChildrenNodePerformance.build/ChildrenNodePerformance-generated-files.hmap -I/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/PerformanceTests.build/Debug-iphoneos/ChildrenNodePerformance.build/ChildrenNodePerformance-own-target-headers.hmap -I/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/PerformanceTests.build/Debug-iphoneos/ChildrenNodePerformance.build/ChildrenNodePerformance-all-target-headers.hmap -iquote /Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/PerformanceTests.build/Debug-iphoneos/ChildrenNodePerformance.build/ChildrenNodePerformance-project-headers.hmap -F/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/Debug-iphoneos -I/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/Debug-iphoneos/include -I/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/PerformanceTests.build/Debug-iphoneos/ChildrenNodePerformance.build/DerivedSources/armv6 -I/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/PerformanceTests.build/Debug-iphoneos/ChildrenNodePerformance.build/DerivedSources -isysroot /Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.2.sdk -include /var/folders/4k/4k8OjorbHSK0XdSpaivd1E+++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/UIKit-eyibmaxuerjjgcfoibteeihwnaty/UIKit.h -c /Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/PerformanceNodeChildrenTest/AppController.m -o /Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/PerformanceTests.build/Debug-iphoneos/ChildrenNodePerformance.build/Objects-normal/armv6/AppController.o0#
+
+CCompileC build/PerformanceTests.build/Debug-iphoneos/ChildrenNodePerformance.build/Objects-normal/armv6/PerformanceNodeChildrenTest.o /Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/PerformanceNodeChildrenTest/PerformanceNodeChildrenTest.m normal armv6 objective-c com.apple.compilers.llvmgcc42
+s312827842.030016
+e312827842.228536
+r0
+xCompileC
+xbuild/PerformanceTests.build/Debug-iphoneos/ChildrenNodePerformance.build/Objects-normal/armv6/PerformanceNodeChildrenTest.o
+x/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/PerformanceNodeChildrenTest/PerformanceNodeChildrenTest.m
+xnormal
+xarmv6
+xobjective-c
+xcom.apple.compilers.llvmgcc42
+o/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/PerformanceNodeChildrenTest/PerformanceNodeChildrenTest.m:8:2: error: #error CC_ENABLE_PROFILERS must be enabled. Edit ccConfig.h
+o/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/PerformanceNodeChildrenTest/PerformanceNodeChildrenTest.m: In function '-[IterateSpriteSheet initWithQuantityOfNodes:]':
+o/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/PerformanceNodeChildrenTest/PerformanceNodeChildrenTest.m:220: error: 'CCProfiler' undeclared (first use in this function)
+o/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/PerformanceNodeChildrenTest/PerformanceNodeChildrenTest.m:220: error: (Each undeclared identifier is reported only once
+o/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/PerformanceNodeChildrenTest/PerformanceNodeChildrenTest.m:220: error: for each function it appears in.)
+o/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/PerformanceNodeChildrenTest/PerformanceNodeChildrenTest.m: In function '-[IterateSpriteSheet dealloc]':
+o/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/PerformanceNodeChildrenTest/PerformanceNodeChildrenTest.m:231: error: 'CCProfiler' undeclared (first use in this function)
+occ1obj: warnings being treated as errors
+o/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/PerformanceNodeChildrenTest/PerformanceNodeChildrenTest.m: In function '-[IterateSpriteSheetFastEnum update:]':
+o/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/PerformanceNodeChildrenTest/PerformanceNodeChildrenTest.m:274: warning: implicit declaration of function 'CCProfilingBeginTimingBlock'
+o/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/PerformanceNodeChildrenTest/PerformanceNodeChildrenTest.m:282: warning: implicit declaration of function 'CCProfilingEndTimingBlock'
+o/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/PerformanceNodeChildrenTest/PerformanceNodeChildrenTest.m: In function '-[AddRemoveSpriteSheet initWithQuantityOfNodes:]':
+o/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/PerformanceNodeChildrenTest/PerformanceNodeChildrenTest.m:345: error: 'CCProfiler' undeclared (first use in this function)
+o/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/PerformanceNodeChildrenTest/PerformanceNodeChildrenTest.m: In function '-[AddRemoveSpriteSheet dealloc]':
+o/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/PerformanceNodeChildrenTest/PerformanceNodeChildrenTest.m:356: error: 'CCProfiler' undeclared (first use in this function)
+o/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/PerformanceNodeChildrenTest/PerformanceNodeChildrenTest.m: In function '-[AddSpriteSheet update:]':
+o/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/PerformanceNodeChildrenTest/PerformanceNodeChildrenTest.m:423: warning: 'CCSpriteBatchNode' may not respond to '-sortAllChildren'
+o/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/PerformanceNodeChildrenTest/PerformanceNodeChildrenTest.m:423: warning: (Messages without a matching method signature
+o/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/PerformanceNodeChildrenTest/PerformanceNodeChildrenTest.m:423: warning: will be assumed to return 'id' and accept
+o/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/PerformanceNodeChildrenTest/PerformanceNodeChildrenTest.m:423: warning: '...' as arguments.)
+o/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/PerformanceNodeChildrenTest/PerformanceNodeChildrenTest.m: In function '-[ReorderSpriteSheet update:]':
+o/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/PerformanceNodeChildrenTest/PerformanceNodeChildrenTest.m:518: warning: 'CCSpriteBatchNode' may not respond to '-sortAllChildren'
+o/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/PerformanceNodeChildrenTest/PerformanceNodeChildrenTest.m:526: warning: 'CCSpriteBatchNode' may not respond to '-sortAllChildren'
+lSLF07#2@131"Compile /Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/PerformanceNodeChildrenTest/PerformanceNodeChildrenTest.m312827842#312827842#0(4092"/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/PerformanceNodeChildrenTest/PerformanceNodeChildrenTest.m:8:2: error: #error CC_ENABLE_PROFILERS must be enabled. Edit ccConfig.h/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/PerformanceNodeChildrenTest/PerformanceNodeChildrenTest.m: In function '-[IterateSpriteSheet initWithQuantityOfNodes:]':/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/PerformanceNodeChildrenTest/PerformanceNodeChildrenTest.m:220: error: 'CCProfiler' undeclared (first use in this function)/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/PerformanceNodeChildrenTest/PerformanceNodeChildrenTest.m:220: error: (Each undeclared identifier is reported only once/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/PerformanceNodeChildrenTest/PerformanceNodeChildrenTest.m:220: error: for each function it appears in.)/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/PerformanceNodeChildrenTest/PerformanceNodeChildrenTest.m: In function '-[IterateSpriteSheet dealloc]':/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/PerformanceNodeChildrenTest/PerformanceNodeChildrenTest.m:231: error: 'CCProfiler' undeclared (first use in this function)cc1obj: warnings being treated as errors/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/PerformanceNodeChildrenTest/PerformanceNodeChildrenTest.m: In function '-[IterateSpriteSheetFastEnum update:]':/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/PerformanceNodeChildrenTest/PerformanceNodeChildrenTest.m:274: warning: implicit declaration of function 'CCProfilingBeginTimingBlock'/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/PerformanceNodeChildrenTest/PerformanceNodeChildrenTest.m:282: warning: implicit declaration of function 'CCProfilingEndTimingBlock'/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/PerformanceNodeChildrenTest/PerformanceNodeChildrenTest.m: In function '-[AddRemoveSpriteSheet initWithQuantityOfNodes:]':/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/PerformanceNodeChildrenTest/PerformanceNodeChildrenTest.m:345: error: 'CCProfiler' undeclared (first use in this function)/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/PerformanceNodeChildrenTest/PerformanceNodeChildrenTest.m: In function '-[AddRemoveSpriteSheet dealloc]':/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/PerformanceNodeChildrenTest/PerformanceNodeChildrenTest.m:356: error: 'CCProfiler' undeclared (first use in this function)/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/PerformanceNodeChildrenTest/PerformanceNodeChildrenTest.m: In function '-[AddSpriteSheet update:]':/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/PerformanceNodeChildrenTest/PerformanceNodeChildrenTest.m:423: warning: 'CCSpriteBatchNode' may not respond to '-sortAllChildren'/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/PerformanceNodeChildrenTest/PerformanceNodeChildrenTest.m:423: warning: (Messages without a matching method signature/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/PerformanceNodeChildrenTest/PerformanceNodeChildrenTest.m:423: warning: will be assumed to return 'id' and accept/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/PerformanceNodeChildrenTest/PerformanceNodeChildrenTest.m:423: warning: '...' as arguments.)/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/PerformanceNodeChildrenTest/PerformanceNodeChildrenTest.m: In function '-[ReorderSpriteSheet update:]':/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/PerformanceNodeChildrenTest/PerformanceNodeChildrenTest.m:518: warning: 'CCSpriteBatchNode' may not respond to '-sortAllChildren'/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/PerformanceNodeChildrenTest/PerformanceNodeChildrenTest.m:526: warning: 'CCSpriteBatchNode' may not respond to '-sortAllChildren'11(4@59"#error CC_ENABLE_PROFILERS must be enabled. Edit ccConfig.h312827842#0#196#0(6@123"/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/PerformanceNodeChildrenTest/PerformanceNodeChildrenTest.m312814102#8#0#8#0#8"#error *0(4@52"'CCProfiler' undeclared (first use in this function)312827842#383#189#0(6@123"/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/PerformanceNodeChildrenTest/PerformanceNodeChildrenTest.m312814102#220#0#220#0#43"'*' undeclared (first use in this function)0(4@52"'CCProfiler' undeclared (first use in this function)312827842#1098#189#0(6@123"/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/PerformanceNodeChildrenTest/PerformanceNodeChildrenTest.m312814102#231#0#231#0#43"'*' undeclared (first use in this function)0(4@62"Implicit declaration of function 'CCProfilingBeginTimingBlock'312827842#1506#201#0(6@123"/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/PerformanceNodeChildrenTest/PerformanceNodeChildrenTest.m312814102#274#0#274#0#36"implicit declaration of function '*'0(4@60"Implicit declaration of function 'CCProfilingEndTimingBlock'312827842#1707#199#0(6@123"/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/PerformanceNodeChildrenTest/PerformanceNodeChildrenTest.m312814102#282#0#282#0#36"implicit declaration of function '*'0(4@52"'CCProfiler' undeclared (first use in this function)312827842#2095#189#0(6@123"/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/PerformanceNodeChildrenTest/PerformanceNodeChildrenTest.m312814102#345#0#345#0#43"'*' undeclared (first use in this function)0(4@52"'CCProfiler' undeclared (first use in this function)312827842#2456#189#0(6@123"/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/PerformanceNodeChildrenTest/PerformanceNodeChildrenTest.m312814102#356#0#356#0#43"'*' undeclared (first use in this function)0(4@57"'CCSpriteBatchNode' may not respond to '-sortAllChildren'312827842#2811#196#0(6@123"/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/PerformanceNodeChildrenTest/PerformanceNodeChildrenTest.m312814102#423#0#423#0#26"'*' may not respond to '*'0(13@108"(Messages without a matching method signature will be assumed to return 'id' and accept '...' as arguments.)312827842#3007#184#0(6@123"/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/PerformanceNodeChildrenTest/PerformanceNodeChildrenTest.m312814102#423#0#423#0#0"0(4@57"'CCSpriteBatchNode' may not respond to '-sortAllChildren'312827842#3700#196#0(6@123"/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/PerformanceNodeChildrenTest/PerformanceNodeChildrenTest.m312814102#518#0#518#0#26"'*' may not respond to '*'0(4@57"'CCSpriteBatchNode' may not respond to '-sortAllChildren'312827842#3896#196#0(6@123"/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/PerformanceNodeChildrenTest/PerformanceNodeChildrenTest.m312814102#526#0#526#0#26"'*' may not respond to '*'0(0#0#123"/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/PerformanceNodeChildrenTest/PerformanceNodeChildrenTest.m8710847936#2455"    cd /Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests    setenv LANG en_US.US-ASCII    setenv PATH "/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/llvm-gcc-4.2 -x objective-c -arch armv6 -fmessage-length=0 -pipe -std=c99 -Wno-trigraphs -fpascal-strings -O0 -Werror -Wreturn-type -Wunused-variable -Wshorten-64-to-32 -DDEBUG -DCOCOS2D_DEBUG=1 -isysroot /Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.2.sdk -fvisibility=hidden -gdwarf-2 -mno-thumb -miphoneos-version-min=3.1 -iquote /Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/PerformanceTests.build/Debug-iphoneos/ChildrenNodePerformance.build/ChildrenNodePerformance-generated-files.hmap -I/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/PerformanceTests.build/Debug-iphoneos/ChildrenNodePerformance.build/ChildrenNodePerformance-own-target-headers.hmap -I/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/PerformanceTests.build/Debug-iphoneos/ChildrenNodePerformance.build/ChildrenNodePerformance-all-target-headers.hmap -iquote /Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/PerformanceTests.build/Debug-iphoneos/ChildrenNodePerformance.build/ChildrenNodePerformance-project-headers.hmap -F/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/Debug-iphoneos -I/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/Debug-iphoneos/include -I/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/PerformanceTests.build/Debug-iphoneos/ChildrenNodePerformance.build/DerivedSources/armv6 -I/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/PerformanceTests.build/Debug-iphoneos/ChildrenNodePerformance.build/DerivedSources -isysroot /Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.2.sdk -include /var/folders/4k/4k8OjorbHSK0XdSpaivd1E+++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/UIKit-eyibmaxuerjjgcfoibteeihwnaty/UIKit.h -c /Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/PerformanceNodeChildrenTest/PerformanceNodeChildrenTest.m -o /Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/PerformanceTests.build/Debug-iphoneos/ChildrenNodePerformance.build/Objects-normal/armv6/PerformanceNodeChildrenTest.o1#
+
+CCompileC build/PerformanceTests.build/Debug-iphoneos/ChildrenNodePerformance.build/Objects-normal/armv6/main.o /Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/../main.m normal armv6 objective-c com.apple.compilers.llvmgcc42
+s312827841.932625
+e312827842.029915
+r1
+xCompileC
+xbuild/PerformanceTests.build/Debug-iphoneos/ChildrenNodePerformance.build/Objects-normal/armv6/main.o
+x/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/../main.m
+xnormal
+xarmv6
+xobjective-c
+xcom.apple.compilers.llvmgcc42
+lSLF07#2@83"Compile /Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/../main.m312827841#312827842#0(0"0(0#0#75"/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/../main.m8723863136#2384"    cd /Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests    setenv LANG en_US.US-ASCII    setenv PATH "/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/llvm-gcc-4.2 -x objective-c -arch armv6 -fmessage-length=0 -pipe -std=c99 -Wno-trigraphs -fpascal-strings -O0 -Werror -Wreturn-type -Wunused-variable -Wshorten-64-to-32 -DDEBUG -DCOCOS2D_DEBUG=1 -isysroot /Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.2.sdk -fvisibility=hidden -gdwarf-2 -mno-thumb -miphoneos-version-min=3.1 -iquote /Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/PerformanceTests.build/Debug-iphoneos/ChildrenNodePerformance.build/ChildrenNodePerformance-generated-files.hmap -I/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/PerformanceTests.build/Debug-iphoneos/ChildrenNodePerformance.build/ChildrenNodePerformance-own-target-headers.hmap -I/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/PerformanceTests.build/Debug-iphoneos/ChildrenNodePerformance.build/ChildrenNodePerformance-all-target-headers.hmap -iquote /Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/PerformanceTests.build/Debug-iphoneos/ChildrenNodePerformance.build/ChildrenNodePerformance-project-headers.hmap -F/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/Debug-iphoneos -I/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/Debug-iphoneos/include -I/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/PerformanceTests.build/Debug-iphoneos/ChildrenNodePerformance.build/DerivedSources/armv6 -I/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/PerformanceTests.build/Debug-iphoneos/ChildrenNodePerformance.build/DerivedSources -isysroot /Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.2.sdk -include /var/folders/4k/4k8OjorbHSK0XdSpaivd1E+++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/UIKit-eyibmaxuerjjgcfoibteeihwnaty/UIKit.h -c /Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/../main.m -o /Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/PerformanceTests.build/Debug-iphoneos/ChildrenNodePerformance.build/Objects-normal/armv6/main.o0#
+
+CCopyPNGFile /Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/Debug-iphoneos/ChildrenNodePerformance.app/Default.png ../../Resources/Default.png
+s312827840.361555
+e312827841.090686
+r1
+xCopyPNGFile
+x/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/Debug-iphoneos/ChildrenNodePerformance.app/Default.png
+x../../Resources/Default.png
+lSLF07#2@100"CopyPNGFile build/Debug-iphoneos/ChildrenNodePerformance.app/Default.png ../../Resources/Default.png312827840#312827841#0(0"0(0#0#93"/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/../../Resources/Default.png8700112480#675"    cd /Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests    setenv COPY_COMMAND /Developer/Library/PrivateFrameworks/DevToolsCore.framework/Resources/pbxcp    setenv PATH "/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    "/Developer/Platforms/iPhoneOS.platform/Developer/Library/Xcode/Plug-ins/iPhoneOS Build System Support.xcplugin/Contents/Resources/copypng" -compress "" /Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/../../Resources/Default.png /Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/Debug-iphoneos/ChildrenNodePerformance.app/Default.png0#
+
+CCopyPNGFile /Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/Debug-iphoneos/ChildrenNodePerformance.app/b1.png ../../Resources/Images/b1.png
+s312827840.745620
+e312827840.824606
+r1
+xCopyPNGFile
+x/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/Debug-iphoneos/ChildrenNodePerformance.app/b1.png
+x../../Resources/Images/b1.png
+lSLF07#2@97"CopyPNGFile build/Debug-iphoneos/ChildrenNodePerformance.app/b1.png ../../Resources/Images/b1.png312827840#312827840#0(0"0(0#0#95"/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/../../Resources/Images/b1.png8724509024#672"    cd /Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests    setenv COPY_COMMAND /Developer/Library/PrivateFrameworks/DevToolsCore.framework/Resources/pbxcp    setenv PATH "/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    "/Developer/Platforms/iPhoneOS.platform/Developer/Library/Xcode/Plug-ins/iPhoneOS Build System Support.xcplugin/Contents/Resources/copypng" -compress "" /Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/../../Resources/Images/b1.png /Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/Debug-iphoneos/ChildrenNodePerformance.app/b1.png0#
+
+CCopyPNGFile /Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/Debug-iphoneos/ChildrenNodePerformance.app/b2.png ../../Resources/Images/b2.png
+s312827840.824695
+e312827840.969937
+r1
+xCopyPNGFile
+x/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/Debug-iphoneos/ChildrenNodePerformance.app/b2.png
+x../../Resources/Images/b2.png
+lSLF07#2@97"CopyPNGFile build/Debug-iphoneos/ChildrenNodePerformance.app/b2.png ../../Resources/Images/b2.png312827840#312827840#0(0"0(0#0#95"/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/../../Resources/Images/b2.png8724081184#672"    cd /Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests    setenv COPY_COMMAND /Developer/Library/PrivateFrameworks/DevToolsCore.framework/Resources/pbxcp    setenv PATH "/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    "/Developer/Platforms/iPhoneOS.platform/Developer/Library/Xcode/Plug-ins/iPhoneOS Build System Support.xcplugin/Contents/Resources/copypng" -compress "" /Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/../../Resources/Images/b2.png /Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/Debug-iphoneos/ChildrenNodePerformance.app/b2.png0#
+
+CCopyPNGFile /Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/Debug-iphoneos/ChildrenNodePerformance.app/f1.png ../../Resources/Images/f1.png
+s312827840.970023
+e312827841.079528
+r1
+xCopyPNGFile
+x/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/Debug-iphoneos/ChildrenNodePerformance.app/f1.png
+x../../Resources/Images/f1.png
+lSLF07#2@97"CopyPNGFile build/Debug-iphoneos/ChildrenNodePerformance.app/f1.png ../../Resources/Images/f1.png312827840#312827841#0(0"0(0#0#95"/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/../../Resources/Images/f1.png8723679904#672"    cd /Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests    setenv COPY_COMMAND /Developer/Library/PrivateFrameworks/DevToolsCore.framework/Resources/pbxcp    setenv PATH "/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    "/Developer/Platforms/iPhoneOS.platform/Developer/Library/Xcode/Plug-ins/iPhoneOS Build System Support.xcplugin/Contents/Resources/copypng" -compress "" /Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/../../Resources/Images/f1.png /Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/Debug-iphoneos/ChildrenNodePerformance.app/f1.png0#
+
+CCopyPNGFile /Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/Debug-iphoneos/ChildrenNodePerformance.app/f2.png ../../Resources/Images/f2.png
+s312827841.079618
+e312827841.154199
+r1
+xCopyPNGFile
+x/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/Debug-iphoneos/ChildrenNodePerformance.app/f2.png
+x../../Resources/Images/f2.png
+lSLF07#2@97"CopyPNGFile build/Debug-iphoneos/ChildrenNodePerformance.app/f2.png ../../Resources/Images/f2.png312827841#312827841#0(0"0(0#0#95"/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/../../Resources/Images/f2.png8723477632#672"    cd /Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests    setenv COPY_COMMAND /Developer/Library/PrivateFrameworks/DevToolsCore.framework/Resources/pbxcp    setenv PATH "/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    "/Developer/Platforms/iPhoneOS.platform/Developer/Library/Xcode/Plug-ins/iPhoneOS Build System Support.xcplugin/Contents/Resources/copypng" -compress "" /Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/../../Resources/Images/f2.png /Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/Debug-iphoneos/ChildrenNodePerformance.app/f2.png0#
+
+CCopyPNGFile /Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/Debug-iphoneos/ChildrenNodePerformance.app/fps_images.png ../../Resources/Fonts/fps_images.png
+s312827840.642027
+e312827840.745531
+r1
+xCopyPNGFile
+x/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/Debug-iphoneos/ChildrenNodePerformance.app/fps_images.png
+x../../Resources/Fonts/fps_images.png
+lSLF07#2@112"CopyPNGFile build/Debug-iphoneos/ChildrenNodePerformance.app/fps_images.png ../../Resources/Fonts/fps_images.png312827840#312827840#0(0"0(0#0#102"/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/../../Resources/Fonts/fps_images.png8725119968#687"    cd /Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests    setenv COPY_COMMAND /Developer/Library/PrivateFrameworks/DevToolsCore.framework/Resources/pbxcp    setenv PATH "/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    "/Developer/Platforms/iPhoneOS.platform/Developer/Library/Xcode/Plug-ins/iPhoneOS Build System Support.xcplugin/Contents/Resources/copypng" -compress "" /Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/../../Resources/Fonts/fps_images.png /Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/Debug-iphoneos/ChildrenNodePerformance.app/fps_images.png0#
+
+CCopyPNGFile /Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/Debug-iphoneos/ChildrenNodePerformance.app/r1.png ../../Resources/Images/r1.png
+s312827841.090775
+e312827841.300556
+r1
+xCopyPNGFile
+x/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/Debug-iphoneos/ChildrenNodePerformance.app/r1.png
+x../../Resources/Images/r1.png
+lSLF07#2@97"CopyPNGFile build/Debug-iphoneos/ChildrenNodePerformance.app/r1.png ../../Resources/Images/r1.png312827841#312827841#0(0"0(0#0#95"/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/../../Resources/Images/r1.png8723403712#672"    cd /Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests    setenv COPY_COMMAND /Developer/Library/PrivateFrameworks/DevToolsCore.framework/Resources/pbxcp    setenv PATH "/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    "/Developer/Platforms/iPhoneOS.platform/Developer/Library/Xcode/Plug-ins/iPhoneOS Build System Support.xcplugin/Contents/Resources/copypng" -compress "" /Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/../../Resources/Images/r1.png /Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/Debug-iphoneos/ChildrenNodePerformance.app/r1.png0#
+
+CCopyPNGFile /Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/Debug-iphoneos/ChildrenNodePerformance.app/r2.png ../../Resources/Images/r2.png
+s312827841.154293
+e312827841.217282
+r1
+xCopyPNGFile
+x/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/Debug-iphoneos/ChildrenNodePerformance.app/r2.png
+x../../Resources/Images/r2.png
+lSLF07#2@97"CopyPNGFile build/Debug-iphoneos/ChildrenNodePerformance.app/r2.png ../../Resources/Images/r2.png312827841#312827841#0(0"0(0#0#95"/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/../../Resources/Images/r2.png8723191584#672"    cd /Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests    setenv COPY_COMMAND /Developer/Library/PrivateFrameworks/DevToolsCore.framework/Resources/pbxcp    setenv PATH "/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    "/Developer/Platforms/iPhoneOS.platform/Developer/Library/Xcode/Plug-ins/iPhoneOS Build System Support.xcplugin/Contents/Resources/copypng" -compress "" /Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/../../Resources/Images/r2.png /Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/Debug-iphoneos/ChildrenNodePerformance.app/r2.png0#
+
+CCopyPNGFile /Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/Debug-iphoneos/ChildrenNodePerformance.app/spritesheet1.png ../../Resources/Images/spritesheet1.png
+s312827840.359385
+e312827840.641928
+r1
+xCopyPNGFile
+x/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/Debug-iphoneos/ChildrenNodePerformance.app/spritesheet1.png
+x../../Resources/Images/spritesheet1.png
+lSLF07#2@117"CopyPNGFile build/Debug-iphoneos/ChildrenNodePerformance.app/spritesheet1.png ../../Resources/Images/spritesheet1.png312827840#312827840#0(0"0(0#0#105"/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/../../Resources/Images/spritesheet1.png8700392736#692"    cd /Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests    setenv COPY_COMMAND /Developer/Library/PrivateFrameworks/DevToolsCore.framework/Resources/pbxcp    setenv PATH "/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    "/Developer/Platforms/iPhoneOS.platform/Developer/Library/Xcode/Plug-ins/iPhoneOS Build System Support.xcplugin/Contents/Resources/copypng" -compress "" /Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/../../Resources/Images/spritesheet1.png /Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/Debug-iphoneos/ChildrenNodePerformance.app/spritesheet1.png0#
+
+CCpResource build/Debug-iphoneos/ChildrenNodePerformance.app/ResourceRules.plist /Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.2.sdk/ResourceRules.plist
+s312827840.304826
+e312827840.336028
+r1
+xCpResource
+xbuild/Debug-iphoneos/ChildrenNodePerformance.app/ResourceRules.plist
+x/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.2.sdk/ResourceRules.plist
+lSLF07#2@94"Copy /Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.2.sdk/ResourceRules.plist312827840#312827840#0(0"0(0#0#89"/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.2.sdk/ResourceRules.plist8701721888#564"    cd /Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests    setenv PATH "/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/Library/PrivateFrameworks/DevToolsCore.framework/Resources/pbxcp -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -resolve-src-symlinks /Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.2.sdk/ResourceRules.plist /Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/Debug-iphoneos/ChildrenNodePerformance.app0#
+
+CGenerateDSYMFile /Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/Debug-iphoneos/ChildrenNodePerformance.app.dSYM /Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/Debug-iphoneos/ChildrenNodePerformance.app/ChildrenNodePerformance
+r0
+
+CLd /Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/Debug-iphoneos/ChildrenNodePerformance.app/ChildrenNodePerformance normal armv6
+r0
+
+CProcessInfoPlistFile /Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/Debug-iphoneos/ChildrenNodePerformance.app/Info.plist ../../Resources/Info.plist
+s312827840.306044
+e312827840.359284
+r1
+xProcessInfoPlistFile
+x/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/Debug-iphoneos/ChildrenNodePerformance.app/Info.plist
+x../../Resources/Info.plist
+lSLF07#2@34"Process ../../Resources/Info.plist312827840#312827840#0(0"0(0#0#92"/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/../../Resources/Info.plist8701255104#726"    cd /Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests    setenv PATH "/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    builtin-infoPlistUtility ../../Resources/Info.plist -genpkginfo /Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/Debug-iphoneos/ChildrenNodePerformance.app/PkgInfo -expandbuildsettings -format binary -platform iphoneos -resourcerulesfile /Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/Debug-iphoneos/ChildrenNodePerformance.app/ResourceRules.plist -o /Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/Debug-iphoneos/ChildrenNodePerformance.app/Info.plist0#
+
+CProcessPCH /var/folders/4k/4k8OjorbHSK0XdSpaivd1E+++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/UIKit-eyibmaxuerjjgcfoibteeihwnaty/UIKit.h.gch /Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.2.sdk/System/Library/Frameworks/UIKit.framework/Headers/UIKit.h normal armv6 objective-c com.apple.compilers.llvmgcc42
+s312827841.303215
+e312827841.932421
+r1
+xProcessPCH
+x/var/folders/4k/4k8OjorbHSK0XdSpaivd1E+++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/UIKit-eyibmaxuerjjgcfoibteeihwnaty/UIKit.h.gch
+x/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.2.sdk/System/Library/Frameworks/UIKit.framework/Headers/UIKit.h
+xnormal
+xarmv6
+xobjective-c
+xcom.apple.compilers.llvmgcc42
+lSLF07#2@138"Precompile /Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.2.sdk/System/Library/Frameworks/UIKit.framework/Headers/UIKit.h312827841#312827841#0(0"0(0#0#127"/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.2.sdk/System/Library/Frameworks/UIKit.framework/Headers/UIKit.h8725811200#2270"    cd /Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests    setenv LANG en_US.US-ASCII    setenv PATH "/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/llvm-gcc-4.2 -x objective-c-header -arch armv6 -fmessage-length=0 -pipe -std=c99 -Wno-trigraphs -fpascal-strings -O0 -Werror -Wreturn-type -Wunused-variable -Wshorten-64-to-32 -DDEBUG -DCOCOS2D_DEBUG=1 -isysroot /Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.2.sdk -fvisibility=hidden -gdwarf-2 -mno-thumb -miphoneos-version-min=3.1 -iquote /Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/PerformanceTests.build/Debug-iphoneos/ChildrenNodePerformance.build/ChildrenNodePerformance-generated-files.hmap -I/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/PerformanceTests.build/Debug-iphoneos/ChildrenNodePerformance.build/ChildrenNodePerformance-own-target-headers.hmap -I/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/PerformanceTests.build/Debug-iphoneos/ChildrenNodePerformance.build/ChildrenNodePerformance-all-target-headers.hmap -iquote /Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/PerformanceTests.build/Debug-iphoneos/ChildrenNodePerformance.build/ChildrenNodePerformance-project-headers.hmap -F/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/Debug-iphoneos -I/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/Debug-iphoneos/include -I/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/PerformanceTests.build/Debug-iphoneos/ChildrenNodePerformance.build/DerivedSources/armv6 -I/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/PerformanceTests.build/Debug-iphoneos/ChildrenNodePerformance.build/DerivedSources -isysroot /Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.2.sdk -c /Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.2.sdk/System/Library/Frameworks/UIKit.framework/Headers/UIKit.h -o /var/folders/4k/4k8OjorbHSK0XdSpaivd1E+++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/UIKit-eyibmaxuerjjgcfoibteeihwnaty/UIKit.h.gch0#
+
+CProcessProductPackaging "/Users/ricardoquesada/Library/MobileDevice/Provisioning Profiles/517D675C-42BB-4756-9E7A-E69C1FECD9D7.mobileprovision" /Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/Debug-iphoneos/ChildrenNodePerformance.app/embedded.mobileprovision
+s312827842.228644
+e312827842.232003
+r1
+xProcessProductPackaging
+x/Users/ricardoquesada/Library/MobileDevice/Provisioning Profiles/517D675C-42BB-4756-9E7A-E69C1FECD9D7.mobileprovision
+x/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/Debug-iphoneos/ChildrenNodePerformance.app/embedded.mobileprovision
+lSLF07#2@217"ProcessProductPackaging "/Users/ricardoquesada/Library/MobileDevice/Provisioning Profiles/517D675C-42BB-4756-9E7A-E69C1FECD9D7.mobileprovision" build/Debug-iphoneos/ChildrenNodePerformance.app/embedded.mobileprovision312827842#312827842#0(0"0(0#0#139"/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/Debug-iphoneos/ChildrenNodePerformance.app/embedded.mobileprovision8702357088#502"    cd /Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests    setenv PATH "/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    <com.apple.tools.product-pkg-utility> "/Users/ricardoquesada/Library/MobileDevice/Provisioning Profiles/517D675C-42BB-4756-9E7A-E69C1FECD9D7.mobileprovision" -o /Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/Debug-iphoneos/ChildrenNodePerformance.app/embedded.mobileprovision0#
+
+CProcessProductPackaging /Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.2.sdk/Entitlements.plist /Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/PerformanceTests.build/Debug-iphoneos/ChildrenNodePerformance.build/ChildrenNodePerformance.xcent
+s312827842.232076
+e312827842.252421
+r1
+xProcessProductPackaging
+x/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.2.sdk/Entitlements.plist
+x/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/PerformanceTests.build/Debug-iphoneos/ChildrenNodePerformance.build/ChildrenNodePerformance.xcent
+lSLF07#2@216"ProcessProductPackaging /Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.2.sdk/Entitlements.plist build/PerformanceTests.build/Debug-iphoneos/ChildrenNodePerformance.build/ChildrenNodePerformance.xcent312827842#312827842#0(0"0(0#0#169"/Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/PerformanceTests.build/Debug-iphoneos/ChildrenNodePerformance.build/ChildrenNodePerformance.xcent8702024864#527"    cd /Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests    setenv PATH "/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    <com.apple.tools.product-pkg-utility> /Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.2.sdk/Entitlements.plist -entitlements -format xml -o /Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/PerformanceTests.build/Debug-iphoneos/ChildrenNodePerformance.build/ChildrenNodePerformance.xcent0#
+
+CTouch /Users/ricardoquesada/progs/cocos2d-iphone/tests/PerformanceTests/build/Debug-iphoneos/ChildrenNodePerformance.app
+r0
+
