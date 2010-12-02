@@ -202,7 +202,12 @@ the background.
  
  @since v0.99.5
  */
-@interface CCLayerGradient : CCLayerColor {
+@interface CCLayerGradient : CCLayerColor
+{
+	ccColor3B endColor_;
+	GLubyte startOpacity_;
+	GLubyte endOpacity_;
+	CGPoint vector_;
 }
 
 /** Creates a full-screen CCLayer with a gradient between start and end. */
@@ -216,15 +221,17 @@ the background.
 - (id) initWithColor: (ccColor4B) start fadingTo: (ccColor4B) end alongVector: (CGPoint) v;
 
 /** The starting color. */
-@property (nonatomic) ccColor3B startColor;
+- (ccColor3B) startColor;
+- (void) setStartColor:(ccColor3B)colors;
+
 /** The ending color. */
-@property (nonatomic) ccColor3B endColor;
+@property (nonatomic, readwrite) ccColor3B endColor;
 /** The starting opacity. */
-@property (nonatomic) GLubyte startOpacity;
+@property (nonatomic, readwrite) GLubyte startOpacity;
 /** The ending color. */
-@property (nonatomic) GLubyte endOpacity;
+@property (nonatomic, readwrite) GLubyte endOpacity;
 /** The vector along which to fade color. */
-@property (nonatomic) CGPoint vector;
+@property (nonatomic, readwrite) CGPoint vector;
 
 @end
 

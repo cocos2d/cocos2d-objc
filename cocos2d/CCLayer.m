@@ -240,8 +240,8 @@
 @implementation CCLayerColor
 
 // Opacity and RGB color protocol
-@synthesize opacity=opacity_, color=color_;
-@synthesize blendFunc=blendFunc_;
+@synthesize opacity = opacity_, color = color_;
+@synthesize blendFunc = blendFunc_;
 
 
 + (id) layerWithColor:(ccColor4B)color width:(GLfloat)w  height:(GLfloat) h
@@ -266,7 +266,7 @@
 		color_.b = color.b;
 		opacity_ = color.a;
 		
-		for (NSUInteger i=0; i<sizeof(squareVertices) / sizeof( squareVertices[0]); i++ )
+		for (NSUInteger i = 0; i<sizeof(squareVertices) / sizeof( squareVertices[0]); i++ )
 			squareVertices[i] = 0.0f;
 				
 		[self updateColor];
@@ -294,31 +294,27 @@
 
 - (void) changeWidth: (GLfloat) w height:(GLfloat) h
 {
-	[self setContentSize:CGSizeMake(w,h)];
+	[self setContentSize:CGSizeMake(w, h)];
 }
 
 -(void) changeWidth: (GLfloat) w
 {
-	[self setContentSize:CGSizeMake(w,contentSize_.height)];
+	[self setContentSize:CGSizeMake(w, contentSize_.height)];
 }
 
 -(void) changeHeight: (GLfloat) h
 {
-	[self setContentSize:CGSizeMake(contentSize_.width,h)];
+	[self setContentSize:CGSizeMake(contentSize_.width, h)];
 }
 
 - (void) updateColor
 {
-	for( NSUInteger i=0; i < sizeof(squareColors) / sizeof(squareColors[0]);i++ )
+	for( NSUInteger i = 0; i < 4; i++ )
 	{
-		if( i % 4 == 0 )
-			squareColors[i] = color_.r;
-		else if( i % 4 == 1)
-			squareColors[i] = color_.g;
-		else if( i % 4 ==2  )
-			squareColors[i] = color_.b;
-		else
-			squareColors[i] = opacity_;
+		squareColors[i*4]	= color_.r;
+		squareColors[i*4+1] = color_.g;
+		squareColors[i*4+2] = color_.b;
+		squareColors[i*4+3] = opacity_;
 	}
 }
 
@@ -333,11 +329,11 @@
 	glVertexPointer(2, GL_FLOAT, 0, squareVertices);
 	glColorPointer(4, GL_UNSIGNED_BYTE, 0, squareColors);
 	
-	BOOL newBlend = NO;
-	if( blendFunc_.src != CC_BLEND_SRC || blendFunc_.dst != CC_BLEND_DST ) {
-		newBlend = YES;
-		glBlendFunc(blendFunc_.src, blendFunc_.dst);
-	}
+	
+	BOOL newBlend = blendFunc_.src != CC_BLEND_SRC || blendFunc_.dst != CC_BLEND_DST;
+	if( newBlend )
+		glBlendFunc( blendFunc_.src, blendFunc_.dst );
+	
 	else if( opacity_ != 255 ) {
 		newBlend = YES;
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -379,8 +375,9 @@
 
 @implementation CCLayerGradient
 
-@synthesize endColor=endColor_, endOpacity=endOpacity_;
-@synthesize vector=vector_;
+@synthesize startOpacity = startOpacity_;
+@synthesize endColor = endColor_, endOpacity = endOpacity_;
+@synthesize vector = vector_;
 
 + (id) layerWithColor: (ccColor4B) start fadingTo: (ccColor4B) end
 {
@@ -399,88 +396,86 @@
 
 - (id) initWithColor: (ccColor4B) start fadingTo: (ccColor4B) end alongVector: (CGPoint) v
 {
-    if (!(self = [super initWithColor:start])) { return self; }
+	endColor_.r = end.r;
+	endColor_.g = end.g;
+	endColor_.b = end.b;
+	
+	endOpacity_		= end.a;
+	startOpacity_	= start.a;
+	vector_ = v;
 
-    endColor_.r = end.r;
-    endColor_.g = end.g;
-    endColor_.b = end.b;
-    endOpacity_ = end.a;
-
-    vector_ = v;
-    [self updateColor];
-
-    return self;
+	start.a	= 255;
+    return [self initWithColor:start];
 }
 
 - (void) updateColor
 {
     [super updateColor];
 
-    float h = powf((powf(vector_.x, 2) + powf(vector_.y, 2)), (0.5f));
-    if (h == 0) { return; }
+	float h = sqrtf(vector_.x*vector_.x + vector_.y*vector_.y);
+    if (h == 0)
+		return;
 
     double c = sqrt(2);
     CGPoint u = ccp(vector_.x / h, vector_.y / h);
 
-    ccColor4B S;
-    S.r = self.startColor.r;
-    S.g = self.startColor.g;
-    S.b = self.startColor.b;
-    S.a = self.startOpacity;
+	float opacityf = (float)opacity_/255.0f;
+	
+    ccColor4B S = {
+		color_.r,
+		color_.g,
+		color_.b,
+		startOpacity_*opacityf
+	};
 
-    ccColor4B E;
-    E.r = self.endColor.r;
-    E.g = self.endColor.g;
-    E.b = self.endColor.b;
-    E.a = self.endOpacity;
+    ccColor4B E = {
+		endColor_.r,
+		endColor_.g,
+		endColor_.b,
+		endOpacity_*opacityf
+	};
 
     // (-1, -1)
-    self->squareColors[0]  = E.r + (S.r - E.r) * ((c + u.x + u.y) / (2 * c));
-    self->squareColors[1]  = E.g + (S.g - E.g) * ((c + u.x + u.y) / (2 * c));
-    self->squareColors[2]  = E.b + (S.b - E.b) * ((c + u.x + u.y) / (2 * c));
-    self->squareColors[3]  = E.a + (S.a - E.a) * ((c + u.x + u.y) / (2 * c));
+	squareColors[0]  = E.r + (S.r - E.r) * ((c + u.x + u.y) / (2.0f * c));
+	squareColors[1]  = E.g + (S.g - E.g) * ((c + u.x + u.y) / (2.0f * c));
+	squareColors[2]  = E.b + (S.b - E.b) * ((c + u.x + u.y) / (2.0f * c));
+	squareColors[3]  = E.a + (S.a - E.a) * ((c + u.x + u.y) / (2.0f * c));
     // (1, -1)
-    self->squareColors[4]  = E.r + (S.r - E.r) * ((c - u.x + u.y) / (2 * c));
-    self->squareColors[5]  = E.g + (S.g - E.g) * ((c - u.x + u.y) / (2 * c));
-    self->squareColors[6]  = E.b + (S.b - E.b) * ((c - u.x + u.y) / (2 * c));
-    self->squareColors[7]  = E.a + (S.a - E.a) * ((c - u.x + u.y) / (2 * c));
-    // (-1, 1)
-    self->squareColors[8]  = E.r + (S.r - E.r) * ((c + u.x - u.y) / (2 * c));
-    self->squareColors[9]  = E.g + (S.g - E.g) * ((c + u.x - u.y) / (2 * c));
-    self->squareColors[10] = E.b + (S.b - E.b) * ((c + u.x - u.y) / (2 * c));
-    self->squareColors[11] = E.a + (S.a - E.a) * ((c + u.x - u.y) / (2 * c));
-    // (1, 1)
-    self->squareColors[12] = E.r + (S.r - E.r) * ((c - u.x - u.y) / (2 * c));
-    self->squareColors[13] = E.g + (S.g - E.g) * ((c - u.x - u.y) / (2 * c));
-    self->squareColors[14] = E.b + (S.b - E.b) * ((c - u.x - u.y) / (2 * c));
-    self->squareColors[15] = E.a + (S.a - E.a) * ((c - u.x - u.y) / (2 * c));
+	squareColors[4]  = E.r + (S.r - E.r) * ((c - u.x + u.y) / (2.0f * c));
+	squareColors[5]  = E.g + (S.g - E.g) * ((c - u.x + u.y) / (2.0f * c));
+	squareColors[6]  = E.b + (S.b - E.b) * ((c - u.x + u.y) / (2.0f * c));
+	squareColors[7]  = E.a + (S.a - E.a) * ((c - u.x + u.y) / (2.0f * c));
+	// (-1, 1)
+	squareColors[8]  = E.r + (S.r - E.r) * ((c + u.x - u.y) / (2.0f * c));
+	squareColors[9]  = E.g + (S.g - E.g) * ((c + u.x - u.y) / (2.0f * c));
+	squareColors[10] = E.b + (S.b - E.b) * ((c + u.x - u.y) / (2.0f * c));
+	squareColors[11] = E.a + (S.a - E.a) * ((c + u.x - u.y) / (2.0f * c));
+	// (1, 1)
+	squareColors[12] = E.r + (S.r - E.r) * ((c - u.x - u.y) / (2.0f * c));
+	squareColors[13] = E.g + (S.g - E.g) * ((c - u.x - u.y) / (2.0f * c));
+	squareColors[14] = E.b + (S.b - E.b) * ((c - u.x - u.y) / (2.0f * c));
+	squareColors[15] = E.a + (S.a - E.a) * ((c - u.x - u.y) / (2.0f * c));
 }
 
 -(ccColor3B) startColor
 {
-    return [self color];
+	return color_;
 }
 
--(GLubyte) startOpacity
+-(void) setStartColor:(ccColor3B)colors
 {
-    return [self opacity];
+	[self setColor:colors];
 }
 
--(void) setStartColor:(ccColor3B)color
+-(void) setEndColor:(ccColor3B)colors
 {
-    self->color_ = color;
+    endColor_ = colors;
     [self updateColor];
 }
 
 -(void) setStartOpacity: (GLubyte) o
 {
-    self->opacity_ = o;
-    [self updateColor];
-}
-
--(void) setEndColor:(ccColor3B)color
-{
-    endColor_ = color;
+	startOpacity_ = o;
     [self updateColor];
 }
 
@@ -495,6 +490,7 @@
     vector_ = v;
     [self updateColor];
 }
+
 @end
 
 #pragma mark -
