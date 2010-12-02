@@ -11,8 +11,6 @@
 #import "LabelTest.h"
 static int sceneIdx=-1;
 static NSString *transitions[] = {
-	@"LabelGlyphDesigner",
-
 	@"LabelAtlasTest",
 	@"LabelAtlasColorTest",
 	@"Atlas3",
