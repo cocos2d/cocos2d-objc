@@ -46,29 +46,6 @@ static NSOpenGLContext *auxGLcontext = nil;
 #endif
 
 
-//static NSString* loadHiResImage( NSString* path )
-//{
-//	NSString *newPath = nil;
-//
-//	if([[UIScreen mainScreen] scale] == 2.0)
-//	{
-//		NSString *path2x = [path stringByReplacingCharactersInRange:NSMakeRange([path length] - 4, 0) withString:@"@2x"];
-//		newPath = [[UIImage alloc] initWithContentsOfFile:path2x];
-//		
-//		if(!newPath)
-//		{
-//			newPath = [[UIImage alloc] initWithContentsOfFile:path];
-//		}
-//	}
-//	else
-//	{
-//		newPath = [[UIImage alloc] initWithContentsOfFile:path];
-//	}
-//	
-//	return newPath;
-//}
-
-
 @interface CCAsyncObject : NSObject
 {
 	SEL			selector_;
@@ -132,7 +109,13 @@ static CCTextureCache *sharedTextureCache;
 
 - (NSString*) description
 {
-	return [NSString stringWithFormat:@"<%@ = %08X | num of textures =  %i>", [self class], self, [textures_ count]];
+	return [NSString stringWithFormat:@"<%@ = %08X | num of textures =  %i | keys: %@>",
+			[self class],
+			self,
+			[textures_ count],
+			[textures_ allKeys]
+			];
+			
 }
 
 -(void) dealloc
