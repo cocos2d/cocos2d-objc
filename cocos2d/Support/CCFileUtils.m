@@ -62,7 +62,42 @@ int ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 	return size;
 }
 
+NSString *ccRemoveHDSuffixFromFile( NSString *path )
+{
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+	if( CC_CONTENT_SCALE_FACTOR() == 2 ) {
+				
+		NSString *name = [path lastPathComponent];
+		
+		// check if path already has the suffix.
+		if( [name rangeOfString:CC_RETINA_DISPLAY_FILENAME_SUFFIX].location != NSNotFound ) {
+			
+			CCLOG(@"cocos2d: Filename(%@) contains %@ suffix. Removing it. See cocos2d issue #1040", path, CC_RETINA_DISPLAY_FILENAME_SUFFIX);
+
+			NSString *newLastname = [name stringByReplacingOccurrencesOfString:CC_RETINA_DISPLAY_FILENAME_SUFFIX withString:@""];
+			
+			NSString *pathWithoutLastname = [path stringByDeletingLastPathComponent];
+			return [pathWithoutLastname stringByAppendingPathComponent:newLastname];
+		}		
+	}
+
+	return path;
+
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+	return path;
+
+#endif //
+
+}
+
+
 @implementation CCFileUtils
+
++(void) initialize
+{
+	if( self == [CCFileUtils class] )
+		__localFileManager = [[NSFileManager alloc] init];
+}
 
 +(NSString*) getDoubleResolutionImage:(NSString*)path
 {
@@ -72,10 +107,10 @@ int ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 		NSString *pathWithoutExtension = [path stringByDeletingPathExtension];
 		NSString *name = [pathWithoutExtension lastPathComponent];
 		
-		// check if path already has the suffix. If so, ignore it.			
+		// check if path already has the suffix.
 		if( [name rangeOfString:CC_RETINA_DISPLAY_FILENAME_SUFFIX].location != NSNotFound ) {
 		
-			CCLOG(@"cocos2d: CCFileUtils: FileName(%@) with %@. Using it.", name, CC_RETINA_DISPLAY_FILENAME_SUFFIX);			
+			CCLOG(@"cocos2d: WARNING Filename(%@) already has the suffix %@. Using it.", name, CC_RETINA_DISPLAY_FILENAME_SUFFIX);			
 			return path;
 		}
 
@@ -94,9 +129,6 @@ int ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 		NSString *retinaName = [pathWithoutExtension stringByAppendingString:CC_RETINA_DISPLAY_FILENAME_SUFFIX];
 		retinaName = [retinaName stringByAppendingPathExtension:extension];
 
-		if( ! __localFileManager ) 
-			__localFileManager = [[NSFileManager alloc] init];
-		
 		if( [__localFileManager fileExistsAtPath:retinaName] )
 			return retinaName;
 
@@ -115,11 +147,8 @@ int ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 	// only if it is not an absolute path
 	if( ! [relPath isAbsolutePath] )
 	{
-		NSMutableArray *imagePathComponents = [NSMutableArray arrayWithArray:[relPath pathComponents]];
-		NSString *file = [imagePathComponents lastObject];
-		
-		[imagePathComponents removeLastObject];
-		NSString *imageDirectory = [NSString pathWithComponents:imagePathComponents];
+		NSString *file = [relPath lastPathComponent];
+		NSString *imageDirectory = [relPath stringByDeletingLastPathComponent];
 		
 		fullpath = [[NSBundle mainBundle] pathForResource:file
 												   ofType:nil
