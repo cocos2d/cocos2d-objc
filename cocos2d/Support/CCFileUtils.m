@@ -64,7 +64,8 @@ int ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 
 NSString *ccRemoveHDSuffixFromFile( NSString *path )
 {
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#if CC_IS_RETINA_DISPLAY_SUPPORTED
+
 	if( CC_CONTENT_SCALE_FACTOR() == 2 ) {
 				
 		NSString *name = [path lastPathComponent];
@@ -81,12 +82,9 @@ NSString *ccRemoveHDSuffixFromFile( NSString *path )
 		}		
 	}
 
-	return path;
+#endif // CC_IS_RETINA_DISPLAY_SUPPORTED
 
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 	return path;
-
-#endif //
 
 }
 
@@ -101,6 +99,8 @@ NSString *ccRemoveHDSuffixFromFile( NSString *path )
 
 +(NSString*) getDoubleResolutionImage:(NSString*)path
 {
+#if CC_IS_RETINA_DISPLAY_SUPPORTED
+
 	if( CC_CONTENT_SCALE_FACTOR() == 2 )
 	{
 		
@@ -135,6 +135,8 @@ NSString *ccRemoveHDSuffixFromFile( NSString *path )
 		CCLOG(@"cocos2d: CCFileUtils: Warning HD file not found: %@", [retinaName lastPathComponent] );
 	}
 	
+#endif // CC_IS_RETINA_DISPLAY_SUPPORTED
+	
 	return path;
 }
 
@@ -158,9 +160,7 @@ NSString *ccRemoveHDSuffixFromFile( NSString *path )
 	if (fullpath == nil)
 		fullpath = relPath;
 	
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 	fullpath = [self getDoubleResolutionImage:fullpath];
-#endif // __IPHONE_OS_VERSION_MAX_ALLOWED
 	
 	return fullpath;	
 }
