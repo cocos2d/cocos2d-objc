@@ -187,23 +187,35 @@ do {															\
 
 
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+
 #if CC_RETINA_DISPLAY_SUPPORT
-#import "Platforms/iOS/CCDirectorIOS.h"
+#define CC_IS_RETINA_DISPLAY_SUPPORTED 1
+#else
+#define CC_IS_RETINA_DISPLAY_SUPPORTED 0
+#endif
+
+#elif __MAC_OS_X_VERSION_MAX_ALLOWED
+
+#define CC_IS_RETINA_DISPLAY_SUPPORTED 0
+
+#endif
+
+#if CC_IS_RETINA_DISPLAY_SUPPORTED
+
+/****************************/
+/** RETINA DISPLAY ENABLED **/
+/****************************/
+
 /** @def CC_CONTENT_SCALE_FACTOR
  On Mac it returns 1;
  On iPhone it returns 2 if RetinaDisplay is On. Otherwise it returns 1
  */
+#import "Platforms/iOS/CCDirectorIOS.h"
 #define CC_CONTENT_SCALE_FACTOR() __ccContentScaleFactor
-#else
-#define CC_CONTENT_SCALE_FACTOR() 1
-#endif
-#elif __MAC_OS_X_VERSION_MAX_ALLOWED
-#define CC_CONTENT_SCALE_FACTOR() 1
-#endif
 
 
 /** @def CC_RECT_PIXELS_TO_POINTS
-	Converts a rect in pixels to points
+ Converts a rect in pixels to points
  */
 #define CC_RECT_PIXELS_TO_POINTS(__pixels__)																		\
 	CGRectMake( (__pixels__).origin.x / CC_CONTENT_SCALE_FACTOR(), (__pixels__).origin.y / CC_CONTENT_SCALE_FACTOR(),	\
@@ -215,3 +227,15 @@ do {															\
 #define CC_RECT_POINTS_TO_PIXELS(__points__)																		\
 	CGRectMake( (__points__).origin.x * CC_CONTENT_SCALE_FACTOR(), (__points__).origin.y * CC_CONTENT_SCALE_FACTOR(),	\
 			(__points__).size.width * CC_CONTENT_SCALE_FACTOR(), (__points__).size.height * CC_CONTENT_SCALE_FACTOR() )
+
+#else
+
+/*****************************/
+/** RETINA DISPLAY DISABLED **/
+/*****************************/
+
+#define CC_CONTENT_SCALE_FACTOR() 1
+#define CC_RECT_PIXELS_TO_POINTS(__pixels__) __pixels__
+#define CC_RECT_POINTS_TO_PIXELS(__points__) __points__
+
+#endif
