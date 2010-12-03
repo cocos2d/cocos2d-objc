@@ -102,6 +102,7 @@
 #import "CCScheduler.h"
 #import "CCBlockSupport.h"
 #import "CCCamera.h"
+#import "CCChaseCamera.h"
 #import "CCProtocols.h"
 #import "CCNode.h"
 #import "CCDirector.h"

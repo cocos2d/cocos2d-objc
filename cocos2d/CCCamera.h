@@ -68,6 +68,11 @@
 /** whether of not the camera is dirty */
 @property (nonatomic,readwrite) BOOL dirty;
 
+/** allocates and initializes a camera.
+ The camera will be created as "autorelease".
+ */
++(id) camera;
+
 /** returns the Z eye */
 +(float) getZEye;
 

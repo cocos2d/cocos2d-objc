@@ -32,6 +32,11 @@
 
 @synthesize dirty=dirty_;
 
++(id) camera
+{
+	return [[[self alloc] init] autorelease];
+}
+
 -(id) init
 {
 	if( (self=[super init]) )

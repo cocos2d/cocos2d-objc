@@ -60,6 +60,52 @@
 		05CA7AFE10ED674700F12774 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */; };
 		05CA7B0010ED674700F12774 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 503092B210447296005F7AFC /* libz.dylib */; };
 		05CA7B0C10ED67CE00F12774 /* ActionsWithBlocks.m in Sources */ = {isa = PBXBuildFile; fileRef = 05CA7B0B10ED67CE00F12774 /* ActionsWithBlocks.m */; };
+		1F91CEF012A98105002DD6BC /* CCChaseCamera.h in Headers */ = {isa = PBXBuildFile; fileRef = 1F91CEEE12A98105002DD6BC /* CCChaseCamera.h */; };
+		1F91CEF112A98105002DD6BC /* CCChaseCamera.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F91CEEF12A98105002DD6BC /* CCChaseCamera.m */; };
+		1F91CF0C12A981CC002DD6BC /* b1.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659D0E72DB470085673F /* b1.png */; };
+		1F91CF0D12A981CC002DD6BC /* b2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659E0E72DB470085673F /* b2.png */; };
+		1F91CF0E12A981CC002DD6BC /* f1.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659F0E72DB470085673F /* f1.png */; };
+		1F91CF0F12A981CC002DD6BC /* f2.png in Resources */ = {isa = PBXBuildFile; fileRef = 500165A00E72DB470085673F /* f2.png */; };
+		1F91CF1012A981CC002DD6BC /* r1.png in Resources */ = {isa = PBXBuildFile; fileRef = 500165990E72DB0E0085673F /* r1.png */; };
+		1F91CF1112A981CC002DD6BC /* r2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659A0E72DB0E0085673F /* r2.png */; };
+		1F91CF1212A981CC002DD6BC /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB240E10EE4A00AE9530 /* Default.png */; };
+		1F91CF1312A981CC002DD6BC /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB250E10EE4A00AE9530 /* Icon.png */; };
+		1F91CF1412A981CC002DD6BC /* grossini.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB280E10EE4A00AE9530 /* grossini.png */; };
+		1F91CF1512A981CC002DD6BC /* grossinis_sister1.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB290E10EE4A00AE9530 /* grossinis_sister1.png */; };
+		1F91CF1612A981CC002DD6BC /* grossinis_sister2.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB2A0E10EE4A00AE9530 /* grossinis_sister2.png */; };
+		1F91CF1712A981CC002DD6BC /* fire.png in Resources */ = {isa = PBXBuildFile; fileRef = 50F9EA8F0E1AE87E000E7616 /* fire.png */; };
+		1F91CF1812A981CC002DD6BC /* fire.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 502AACF20F79715D001E3F87 /* fire.pvr */; };
+		1F91CF1912A981CC002DD6BC /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = 505464301062886600AB7C52 /* fps_images.png */; };
+		1F91CF1A12A981CC002DD6BC /* background3.png in Resources */ = {isa = PBXBuildFile; fileRef = 50479AFF100F80B000D1C71A /* background3.png */; };
+		1F91CF1B12A981CC002DD6BC /* btn-play-normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 5084D47C0EE5C7D100BD237C /* btn-play-normal.png */; };
+		1F91CF1C12A981CC002DD6BC /* btn-play-selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 5084D47D0EE5C7D100BD237C /* btn-play-selected.png */; };
+		1F91CF1D12A981CC002DD6BC /* bitmapFontTest4.png in Resources */ = {isa = PBXBuildFile; fileRef = 5054639E1062867800AB7C52 /* bitmapFontTest4.png */; };
+		1F91CF1E12A981CC002DD6BC /* bitmapFontTest4.fnt in Resources */ = {isa = PBXBuildFile; fileRef = 5054639D1062867800AB7C52 /* bitmapFontTest4.fnt */; };
+		1F91CF1F12A981CC002DD6BC /* f1-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E04C632012382F6100A4B3E6 /* f1-hd.png */; };
+		1F91CF2012A981CC002DD6BC /* f2-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E04C632112382F6100A4B3E6 /* f2-hd.png */; };
+		1F91CF2112A981CC002DD6BC /* r1-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E04C632212382F6100A4B3E6 /* r1-hd.png */; };
+		1F91CF2212A981CC002DD6BC /* r2-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E04C632312382F6100A4B3E6 /* r2-hd.png */; };
+		1F91CF2312A981CC002DD6BC /* b1-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E04C640412382F9300A4B3E6 /* b1-hd.png */; };
+		1F91CF2412A981CC002DD6BC /* b2-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E04C640512382F9300A4B3E6 /* b2-hd.png */; };
+		1F91CF2512A981CC002DD6BC /* grossini-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E062F9BA124801A300DE3932 /* grossini-hd.png */; };
+		1F91CF2612A981CC002DD6BC /* grossinis_sister1-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E062F9BB124801A300DE3932 /* grossinis_sister1-hd.png */; };
+		1F91CF2712A981CC002DD6BC /* grossinis_sister2-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E062F9BC124801A300DE3932 /* grossinis_sister2-hd.png */; };
+		1F91CF2812A981CC002DD6BC /* iTunesArtwork in Resources */ = {isa = PBXBuildFile; fileRef = E02BB57D126CA73F006E46A2 /* iTunesArtwork */; };
+		1F91CF2912A981CC002DD6BC /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E02BB57E126CA73F006E46A2 /* Icon@2x.png */; };
+		1F91CF2A12A981CC002DD6BC /* Icon-Small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E02BB57F126CA73F006E46A2 /* Icon-Small@2x.png */; };
+		1F91CF2B12A981CC002DD6BC /* Icon-Small.png in Resources */ = {isa = PBXBuildFile; fileRef = E02BB580126CA73F006E46A2 /* Icon-Small.png */; };
+		1F91CF2C12A981CC002DD6BC /* Icon-Small-50.png in Resources */ = {isa = PBXBuildFile; fileRef = E02BB581126CA73F006E46A2 /* Icon-Small-50.png */; };
+		1F91CF2D12A981CC002DD6BC /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = E02BB582126CA73F006E46A2 /* Icon-72.png */; };
+		1F91CF2F12A981CC002DD6BC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B2CB170E10EE0800AE9530 /* main.m */; };
+		1F91CF3212A981CC002DD6BC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
+		1F91CF3312A981CC002DD6BC /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
+		1F91CF3412A981CC002DD6BC /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D3623EB0D0F72F000981E51 /* CoreGraphics.framework */; };
+		1F91CF3512A981CC002DD6BC /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B920D5A79C200DBA0E3 /* OpenGLES.framework */; };
+		1F91CF3612A981CC002DD6BC /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */; };
+		1F91CF3712A981CC002DD6BC /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */; };
+		1F91CF3812A981CC002DD6BC /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 503092B210447296005F7AFC /* libz.dylib */; };
+		1F91CF3F12A98222002DD6BC /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = 50C1959C0EE4B90800829067 /* background.png */; };
+		1F91CF4D12A982B0002DD6BC /* ChaseCameraTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F91CF4C12A982B0002DD6BC /* ChaseCameraTest.m */; };
 		3BB5C8E911410A4000DD65EF /* blocks.png in Resources */ = {isa = PBXBuildFile; fileRef = AAEA834A0FD5704400F08728 /* blocks.png */; };
 		3BB5C8EF11410A5300DD65EF /* blocks.png in Resources */ = {isa = PBXBuildFile; fileRef = AAEA834A0FD5704400F08728 /* blocks.png */; };
 		495E73FD104B75090012BB52 /* r1.png in Resources */ = {isa = PBXBuildFile; fileRef = 500165990E72DB0E0085673F /* r1.png */; };
@@ -2462,6 +2508,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		1F91CF0A12A981CC002DD6BC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5018F24C0DFDEAC400C013A5;
+			remoteInfo = cocos2d;
+		};
 		50010EBC103B3DB80059EC2E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
@@ -3339,6 +3392,11 @@
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D3623EB0D0F72F000981E51 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		1F91CEEE12A98105002DD6BC /* CCChaseCamera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCChaseCamera.h; sourceTree = "<group>"; };
+		1F91CEEF12A98105002DD6BC /* CCChaseCamera.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCChaseCamera.m; sourceTree = "<group>"; };
+		1F91CF3C12A981CC002DD6BC /* cocosnodeTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = cocosnodeTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1F91CF4B12A982B0002DD6BC /* ChaseCameraTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChaseCameraTest.h; path = tests/ChaseCameraTest.h; sourceTree = "<group>"; };
+		1F91CF4C12A982B0002DD6BC /* ChaseCameraTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChaseCameraTest.m; path = tests/ChaseCameraTest.m; sourceTree = "<group>"; };
 		2D500B920D5A79C200DBA0E3 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		495E73F7104B74E20012BB52 /* RenderTextureTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RenderTextureTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -4393,6 +4451,20 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		1F91CF3112A981CC002DD6BC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1F91CF3212A981CC002DD6BC /* Foundation.framework in Frameworks */,
+				1F91CF3312A981CC002DD6BC /* UIKit.framework in Frameworks */,
+				1F91CF3412A981CC002DD6BC /* CoreGraphics.framework in Frameworks */,
+				1F91CF3512A981CC002DD6BC /* OpenGLES.framework in Frameworks */,
+				1F91CF3612A981CC002DD6BC /* QuartzCore.framework in Frameworks */,
+				1F91CF3712A981CC002DD6BC /* libcocos2d.a in Frameworks */,
+				1F91CF3812A981CC002DD6BC /* libz.dylib in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		495E73F5104B74E20012BB52 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -5291,6 +5363,7 @@
 				E0C5588611FE48E600B9E4CB /* ZwoptexTest.app */,
 				E02BC2CD1270E489006E46A2 /* Bug624.app */,
 				E037DA4C1281C7F0003D39D7 /* Bug458.app */,
+				1F91CF3C12A981CC002DD6BC /* cocosnodeTest.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -5538,6 +5611,8 @@
 				50F9E8160E1AA34E000E7616 /* ccTypes.h */,
 				509E665C0E06CD940050992C /* CCCamera.h */,
 				509E665D0E06CD940050992C /* CCCamera.m */,
+				1F91CEEE12A98105002DD6BC /* CCChaseCamera.h */,
+				1F91CEEF12A98105002DD6BC /* CCChaseCamera.m */,
 				E0EAD1F0121F522A00B0C81C /* CCConfiguration.h */,
 				503862D911007181005D2C92 /* CCConfiguration.m */,
 				50B2CCC20E119B8E00AE9530 /* CCDrawingPrimitives.h */,
@@ -6483,6 +6558,8 @@
 				50C93AC40E0BF8FC00517B01 /* ActionsTest.m */,
 				504227120FC0B96E00B992F7 /* Box2dTest.h */,
 				504227130FC0B96E00B992F7 /* Box2dTest.mm */,
+				1F91CF4B12A982B0002DD6BC /* ChaseCameraTest.h */,
+				1F91CF4C12A982B0002DD6BC /* ChaseCameraTest.m */,
 				50B2C5EB0E100F8800AE9530 /* ChipmunkAccelTouchTest.h */,
 				50B2C5EC0E100F8800AE9530 /* ChipmunkAccelTouchTest.m */,
 				506C77E50E01524200B48100 /* ClickAndMoveTest.h */,
@@ -7147,6 +7224,7 @@
 				E0E974A91237E4EA00E3E64B /* MacGLView.h in Headers */,
 				E02BB6D6126CA93A006E46A2 /* CCAnimationCache.h in Headers */,
 				E02BB704126CADEA006E46A2 /* CCAnimation.h in Headers */,
+				1F91CEF012A98105002DD6BC /* CCChaseCamera.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7369,6 +7447,24 @@
 			name = ActionsWithBlocksSample;
 			productName = "demo-rotate-world";
 			productReference = 05CA7B0410ED674700F12774 /* ActionsWithBlocksSample.app */;
+			productType = "com.apple.product-type.application";
+		};
+		1F91CF0812A981CC002DD6BC /* ChaseCameraTest */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1F91CF3912A981CC002DD6BC /* Build configuration list for PBXNativeTarget "ChaseCameraTest" */;
+			buildPhases = (
+				1F91CF0B12A981CC002DD6BC /* Resources */,
+				1F91CF2E12A981CC002DD6BC /* Sources */,
+				1F91CF3112A981CC002DD6BC /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				1F91CF0912A981CC002DD6BC /* PBXTargetDependency */,
+			);
+			name = ChaseCameraTest;
+			productName = cocosnodeTest;
+			productReference = 1F91CF3C12A981CC002DD6BC /* cocosnodeTest.app */;
 			productType = "com.apple.product-type.application";
 		};
 		495E73F6104B74E20012BB52 /* RenderTextureTest */ = {
@@ -8612,6 +8708,7 @@
 				50CBA46311CBD6FB007B009D /* Bug886 */,
 				507C0EE611D609290075E747 /* Bug899 */,
 				502BF54411E39CC30030C477 /* Bug914 */,
+				1F91CF0812A981CC002DD6BC /* ChaseCameraTest */,
 			);
 		};
 /* End PBXProject section */
@@ -8686,6 +8783,48 @@
 				E02BB598126CA73F006E46A2 /* Icon-Small.png in Resources */,
 				E02BB599126CA73F006E46A2 /* Icon-Small-50.png in Resources */,
 				E02BB59A126CA73F006E46A2 /* Icon-72.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1F91CF0B12A981CC002DD6BC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1F91CF0C12A981CC002DD6BC /* b1.png in Resources */,
+				1F91CF0D12A981CC002DD6BC /* b2.png in Resources */,
+				1F91CF0E12A981CC002DD6BC /* f1.png in Resources */,
+				1F91CF0F12A981CC002DD6BC /* f2.png in Resources */,
+				1F91CF1012A981CC002DD6BC /* r1.png in Resources */,
+				1F91CF1112A981CC002DD6BC /* r2.png in Resources */,
+				1F91CF1212A981CC002DD6BC /* Default.png in Resources */,
+				1F91CF1312A981CC002DD6BC /* Icon.png in Resources */,
+				1F91CF1412A981CC002DD6BC /* grossini.png in Resources */,
+				1F91CF1512A981CC002DD6BC /* grossinis_sister1.png in Resources */,
+				1F91CF1612A981CC002DD6BC /* grossinis_sister2.png in Resources */,
+				1F91CF1712A981CC002DD6BC /* fire.png in Resources */,
+				1F91CF1812A981CC002DD6BC /* fire.pvr in Resources */,
+				1F91CF1912A981CC002DD6BC /* fps_images.png in Resources */,
+				1F91CF1A12A981CC002DD6BC /* background3.png in Resources */,
+				1F91CF1B12A981CC002DD6BC /* btn-play-normal.png in Resources */,
+				1F91CF1C12A981CC002DD6BC /* btn-play-selected.png in Resources */,
+				1F91CF1D12A981CC002DD6BC /* bitmapFontTest4.png in Resources */,
+				1F91CF1E12A981CC002DD6BC /* bitmapFontTest4.fnt in Resources */,
+				1F91CF1F12A981CC002DD6BC /* f1-hd.png in Resources */,
+				1F91CF2012A981CC002DD6BC /* f2-hd.png in Resources */,
+				1F91CF2112A981CC002DD6BC /* r1-hd.png in Resources */,
+				1F91CF2212A981CC002DD6BC /* r2-hd.png in Resources */,
+				1F91CF2312A981CC002DD6BC /* b1-hd.png in Resources */,
+				1F91CF2412A981CC002DD6BC /* b2-hd.png in Resources */,
+				1F91CF2512A981CC002DD6BC /* grossini-hd.png in Resources */,
+				1F91CF2612A981CC002DD6BC /* grossinis_sister1-hd.png in Resources */,
+				1F91CF2712A981CC002DD6BC /* grossinis_sister2-hd.png in Resources */,
+				1F91CF2812A981CC002DD6BC /* iTunesArtwork in Resources */,
+				1F91CF2912A981CC002DD6BC /* Icon@2x.png in Resources */,
+				1F91CF2A12A981CC002DD6BC /* Icon-Small@2x.png in Resources */,
+				1F91CF2B12A981CC002DD6BC /* Icon-Small.png in Resources */,
+				1F91CF2C12A981CC002DD6BC /* Icon-Small-50.png in Resources */,
+				1F91CF2D12A981CC002DD6BC /* Icon-72.png in Resources */,
+				1F91CF3F12A98222002DD6BC /* background.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10535,6 +10674,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		1F91CF2E12A981CC002DD6BC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1F91CF2F12A981CC002DD6BC /* main.m in Sources */,
+				1F91CF4D12A982B0002DD6BC /* ChaseCameraTest.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		495E73F4104B74E20012BB52 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -10658,6 +10806,7 @@
 				E0E974AA1237E4EA00E3E64B /* MacGLView.m in Sources */,
 				E02BB6D7126CA93A006E46A2 /* CCAnimationCache.m in Sources */,
 				E02BB705126CADEA006E46A2 /* CCAnimation.m in Sources */,
+				1F91CEF112A98105002DD6BC /* CCChaseCamera.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11305,6 +11454,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		1F91CF0912A981CC002DD6BC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5018F24C0DFDEAC400C013A5 /* cocos2d */;
+			targetProxy = 1F91CF0A12A981CC002DD6BC /* PBXContainerItemProxy */;
+		};
 		50010EBB103B3DB80059EC2E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 5018F24C0DFDEAC400C013A5 /* cocos2d */;
@@ -12019,6 +12173,55 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = ActionsWithBlocksSample;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		1F91CF3A12A981CC002DD6BC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
+				INFOPLIST_FILE = Resources/Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-framework",
+					Foundation,
+					"-framework",
+					UIKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = cocosnodeTest;
+			};
+			name = Debug;
+		};
+		1F91CF3B12A981CC002DD6BC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
+				INFOPLIST_FILE = Resources/Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-framework",
+					Foundation,
+					"-framework",
+					UIKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = cocosnodeTest;
 				ZERO_LINK = NO;
 			};
 			name = Release;
@@ -14885,6 +15088,15 @@
 			buildConfigurations = (
 				05CA7B0210ED674700F12774 /* Debug */,
 				05CA7B0310ED674700F12774 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1F91CF3912A981CC002DD6BC /* Build configuration list for PBXNativeTarget "ChaseCameraTest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1F91CF3A12A981CC002DD6BC /* Debug */,
+				1F91CF3B12A981CC002DD6BC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

@@ -188,7 +188,7 @@ enum {
 @property(nonatomic,readwrite,assign) CGPoint positionInPixels;
 /** A CCCamera object that lets you move the node using a gluLookAt
 */
-@property(nonatomic,readonly) CCCamera* camera;
+@property(nonatomic,retain) CCCamera* camera;
 /** Array of children */
 @property(nonatomic,readonly) CCArray *children;
 /** A CCGrid object that is used when applying effects */

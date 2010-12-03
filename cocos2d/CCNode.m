@@ -63,6 +63,7 @@
 @synthesize children = children_;
 @synthesize visible=visible_;
 @synthesize parent=parent_;
+@synthesize camera=camera_;
 @synthesize grid=grid_;
 @synthesize zOrder=zOrder_;
 @synthesize tag=tag_;
