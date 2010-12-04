@@ -32,6 +32,7 @@ static NSString *transitions[] = {
 	@"SpriteBatchNodeReorderIssue744",
 	@"SpriteBatchNodeReorderIssue766",
 	@"SpriteBatchNodeReorderIssue767",
+	@"SpriteBatchNodeReorderSameIndex",
 	@"SpriteZVertex",
 	@"SpriteBatchNodeZVertex",
 	@"Sprite6",
@@ -736,6 +737,70 @@ Class restartAction()
 }
 @end
 
+@implementation SpriteBatchNodeReorderSameIndex
+
+- (void) reorderSprite:(ccTime)dt
+{
+	[self unschedule:_cmd];
+	
+	[batchNode reorderChild:sprite4 z:4];
+	[batchNode reorderChild:sprite5 z:4];
+	[batchNode reorderChild:sprite1 z:4];
+	
+	[batchNode sortAllChildren];
+	CCSprite* child;
+	CCARRAY_FOREACH(batchNode.descendants,child) NSLog(@"tag %i",child.tag);
+	
+}
+
+// on "init" you need to initialize your instance
+-(id) init
+{
+	// always call "super" init
+	// Apple recommends to re-assign "self" with the "super" return value
+	if( (self=[super init] )) {
+		
+		batchNode = [CCSpriteBatchNode batchNodeWithFile:@"piece.png" capacity:15];
+		[self addChild:batchNode z:1 tag:0];
+				
+		sprite1 = [CCSprite spriteWithBatchNode:batchNode rect:CGRectMake(128,0,64,64)];
+		sprite1.position = CGPointMake(100,160);
+		[batchNode addChild:sprite1 z:3 tag:1];
+		
+		sprite2= [CCSprite spriteWithBatchNode:batchNode rect:CGRectMake(128,0,64,64)];
+		sprite2.position = CGPointMake(164,160);
+		[batchNode addChild:sprite2 z:4 tag:2];
+		
+		sprite3 = [CCSprite spriteWithBatchNode:batchNode rect:CGRectMake(128,0,64,64)];
+		sprite3.position = CGPointMake(228,160);
+		[batchNode addChild:sprite3 z:4 tag:3];
+		
+		sprite4 = [CCSprite spriteWithBatchNode:batchNode rect:CGRectMake(128,0,64,64)];
+		sprite4.position = CGPointMake(292,160);
+		[batchNode addChild:sprite4 z:5 tag:4];
+		
+		sprite5 = [CCSprite spriteWithBatchNode:batchNode rect:CGRectMake(128,0,64,64)];
+		sprite5.position = CGPointMake(356,160);
+		[batchNode addChild:sprite5 z:6 tag:5];
+		
+		
+		[self schedule:@selector(reorderSprite:) interval:2];
+	}
+	return self;
+}
+
+-(NSString *) title
+{
+	return @"SpriteBatchNodeReorder same index";
+}
+
+-(NSString *) subtitle
+{
+	return @"tag order in console should be 2,3,4,5,1";
+}
+
+@end
+
 @implementation SpriteBatchNodeReorderIssue766
 -(CCSprite *)makeSpriteZ:(int)aZ
 {
@@ -786,7 +851,7 @@ Class restartAction()
 
 -(NSString *) title
 {
-	return @"SpriteBatchNode: reorder issue #766";
+	return @"SpriteBatchNodeReorder";
 }
 
 -(NSString *) subtitle
@@ -795,6 +860,7 @@ Class restartAction()
 }
 
 @end
+
 
 
 @implementation SpriteBatchNodeReorderIssue767

@@ -44,8 +44,9 @@ static SEL selSortMethod =NULL;
 
 @interface CCSpriteBatchNode (private)
 -(void) updateBlendFunc;
-- (void) sortDescendants;
 -(void) updateAtlasIndex:(CCSprite*) sprite currentIndex:(int*) curIndex;
+-(void) swap:(int) oldIndex withNewIndex:(int) newIndex;
+
 @end
 
 @implementation CCSpriteBatchNode
@@ -179,6 +180,8 @@ static SEL selSortMethod =NULL;
 	[self transform];
 	[self draw];
 	
+	mutatedIndex_=0;
+	
 	if ( grid_ && grid_.active)
 		[grid_ afterDraw:self];
 	
@@ -265,6 +268,7 @@ static SEL selSortMethod =NULL;
 		int i,j,length=children_->data->num;
 		id* x=children_->data->arr;		
 		id tempItem;
+		CCSprite *child;
 
 		//insertion sort
 		for(i=1; i<length; i++)
@@ -272,7 +276,7 @@ static SEL selSortMethod =NULL;
 			tempItem = x[i];
 			j = i-1;
 			
-			while(j>=0 && ((CCNode*) tempItem).zOrder<((CCNode*)x[j]).zOrder)
+			while(j>=0 && ( ((CCNode*) tempItem).zOrder<((CCNode*)x[j]).zOrder  || ( ((CCNode*) tempItem).mutatedIndex < ((CCNode*)x[j]).mutatedIndex ) ) )
 			{
 				x[j+1] = x[j];
 				j = j-1;
@@ -284,19 +288,14 @@ static SEL selSortMethod =NULL;
 		//sorted now check all children 
 		if ([children_ count] > 0)
 		{
-			CCSprite *child;
-			
 			//first sort all children recursively based on zOrder
 			CCARRAY_FOREACH(children_, child) child->sortMethod(child,selSortMethod);
 			
 			int *index=malloc(sizeof(int));
 			*index=0;
 			
-			//fast dispatch, give every child a new atlasIndex based on their relative zOrder (keep parent -> child relations intact)
-			CCARRAY_FOREACH(children_, child) updateAtlasIndexMethod_(self,selUpdateAtlasIndex,child,index);
-			
-			//sort descendants based on their atlasIndex
-			[self sortDescendants];
+			//fast dispatch, give every child a new atlasIndex based on their relative zOrder (keep parent -> child relations intact) and at the same time reorder descedants and the quads to the right index
+			CCARRAY_FOREACH(children_, child) updateAtlasIndexMethod_(self,selUpdateAtlasIndex,child,index);			
 		}
 		
 		isReorderChildDirty_=NO;	
@@ -307,10 +306,14 @@ static SEL selSortMethod =NULL;
 {
 	CCArray *array = [sprite children];
 	NSUInteger count = [array count];
+	int oldIndex;
 	
 	if( count == 0 )
 	{	
+		oldIndex=sprite.atlasIndex;
 		sprite.atlasIndex=*curIndex;
+		sprite.mutatedIndex=0;
+		if (oldIndex!=*curIndex) [self swap:oldIndex withNewIndex:*curIndex];
 		(*curIndex)++;
 	}
 	else
@@ -319,8 +322,12 @@ static SEL selSortMethod =NULL;
 		
 		if (((CCSprite*) (array->data->arr[0])).zOrder >= 0) 
 		{//all children are in front of the parent
+			oldIndex=sprite.atlasIndex;
 			sprite.atlasIndex=*curIndex;
+			sprite.mutatedIndex=0;
+			if (oldIndex!=*curIndex) [self swap:oldIndex withNewIndex:*curIndex];
 			(*curIndex)++;
+			
 			needNewIndex=NO;
 		}
 		
@@ -329,9 +336,13 @@ static SEL selSortMethod =NULL;
 		{
 			if (needNewIndex && child.zOrder >= 0) 
 			{
+				oldIndex=sprite.atlasIndex;
 				sprite.atlasIndex=*curIndex;
+				sprite.mutatedIndex=0;
+				if (oldIndex!=*curIndex) [self swap:oldIndex withNewIndex:*curIndex];
 				(*curIndex)++;
 				needNewIndex=NO;
+				
 			}
 			//fast dispatch
 			updateAtlasIndexMethod_(self,selUpdateAtlasIndex,child,curIndex);
@@ -339,39 +350,30 @@ static SEL selSortMethod =NULL;
 		
 		if (needNewIndex) 
 		{//all children have a zOrder < 0)
+			oldIndex=sprite.atlasIndex;
 			sprite.atlasIndex=*curIndex;
+			sprite.mutatedIndex=0;
+			if (oldIndex!=*curIndex) [self swap:oldIndex withNewIndex:*curIndex];
 			(*curIndex)++;
 		}
-	}		
+	}
 }
 
-//sort descandants based on atlasIndex
-- (void) sortDescendants
+- (void) swap:(int) oldIndex withNewIndex:(int) newIndex
 {
-	int i,j,length=descendants_->data->num;
 	id* x=descendants_->data->arr;
 	ccV3F_C4B_T2F_Quad* quads=textureAtlas_.quads;
 	
-	id tempItem;
-	ccV3F_C4B_T2F_Quad tempItemQuad;
+	id tempItem=x[oldIndex];
+	ccV3F_C4B_T2F_Quad tempItemQuad=quads[oldIndex];
 	
-	//insertion sort
-	for(i=1; i<length; i++)
-	{
-		tempItem = x[i];
-		tempItemQuad= quads[i];
-		j = i-1;
-		
-		while(j>=0 && ((CCSprite*) tempItem).atlasIndex<((CCSprite*)x[j]).atlasIndex)
-		{
-			x[j+1] = x[j];
-			quads[j+1] = quads[j];
-			j = j-1;
-		}
-		
-		x[j+1] = tempItem;
-		quads[j+1]=tempItemQuad;
-	}	
+	//update the index of other swapped item
+	((CCSprite*) x[newIndex]).atlasIndex=oldIndex;
+	
+	x[oldIndex]=x[newIndex];
+	quads[oldIndex]=quads[newIndex];
+	x[newIndex]=tempItem;
+	quads[newIndex]=tempItemQuad;
 }
 
 - (void) reorderBatch

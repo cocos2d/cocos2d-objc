@@ -134,6 +134,8 @@ and when to execute the Scenes.
 
 	/* the cocos2d running thread */
 	NSThread	*runningThread_;
+	
+	int mutatedChildren_;
 
 	// profiler
 #if CC_ENABLE_PROFILERS
@@ -300,5 +302,9 @@ and when to execute the Scenes.
 
 // Profiler
 -(void) showProfilers;
+
+//used for sorting children array
+-(int) getMutatedIndex;
+-(void) resetMutatedChildren;
 
 @end

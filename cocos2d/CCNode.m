@@ -69,6 +69,7 @@
 @synthesize vertexZ = vertexZ_;
 @synthesize isRunning=isRunning_;
 @synthesize userData=userData_;
+@synthesize mutatedIndex=mutatedIndex_;
 
 #pragma mark CCNode - Transform related properties
 
@@ -268,6 +269,8 @@
 
 		//initialize parent to nil
 		parent_ = nil;
+		
+		mutatedIndex_=0;
 	}
 	
 	return self;
@@ -365,6 +368,9 @@
 	child.tag = aTag;
 	
 	[child setParent: self];
+	
+	//CCDirector.sharedDirector->getMutatedIndex
+	[child setMutatedIndex:[[CCDirector sharedDirector] getMutatedIndex]];
 	
 	if( isRunning_ ) {
 		[child onEnter];
@@ -476,6 +482,7 @@
 	NSAssert( child != nil, @"Child must be non-nil");
 	
 	isReorderChildDirty_=YES;
+	[child setMutatedIndex:[[CCDirector sharedDirector] getMutatedIndex]];
 	[child _setZOrder:z];
 }
 
@@ -493,7 +500,7 @@
 			tempItem = x[i];
 			j = i-1;
 			
-			while(j>=0 && ((CCNode*) tempItem).zOrder<((CCNode*)x[j]).zOrder)
+			while(j>=0 && ( ((CCNode*) tempItem).zOrder<((CCNode*)x[j]).zOrder || ( ((CCNode*) tempItem).mutatedIndex < ((CCNode*)x[j]).mutatedIndex ) ) ) 
 			{
 				x[j+1] = x[j];
 				j = j-1;
@@ -502,6 +509,7 @@
 		}
 		
 		//don't need to check children recursively, that's done in visit of each child
+		
 		isReorderChildDirty_=NO;
 	}
 }
@@ -555,6 +563,8 @@
 
 	} else
 		[self draw];
+	
+	mutatedIndex_=0;
 	
 	if ( grid_ && grid_.active)
 		[grid_ afterDraw:self];
