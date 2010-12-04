@@ -316,6 +316,7 @@ typedef struct
 	CGPoint	n = ccpMult( ccp(gridSize_.x,gridSize_.y), time);
 	if ( (n.x+n.y) == 0.0f )
 		return 1.0f;
+	
 	return powf( (pos.x+pos.y) / (n.x+n.y), 6 );
 }
 
@@ -382,9 +383,9 @@ typedef struct
 -(float)testFunc:(ccGridSize)pos time:(ccTime)time
 {
 	CGPoint	n = ccpMult(ccp(gridSize_.x, gridSize_.y), (1.0f-time));
-	
 	if ( (pos.x+pos.y) == 0 )
 		return 1.0f;
+	
 	return powf( (n.x+n.y) / (pos.x+pos.y), 6 );
 }
 
@@ -402,6 +403,7 @@ typedef struct
 	CGPoint	n = ccpMult(ccp(gridSize_.x, gridSize_.y), time);
 	if ( n.y == 0 )
 		return 1.0f;
+	
 	return powf( pos.y / n.y, 6 );
 }
 
@@ -432,6 +434,7 @@ typedef struct
 	CGPoint	n = ccpMult(ccp(gridSize_.x,gridSize_.y), (1.0f - time));
 	if ( pos.y == 0 )
 		return 1.0f;
+	
 	return powf( n.y / pos.y, 6 );
 }
 

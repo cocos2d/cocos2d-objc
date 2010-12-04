@@ -4493,10 +4493,10 @@
 		E076E7751225ECB100DE0DA2 /* Sprite Nodes */ = {
 			isa = PBXGroup;
 			children = (
-				E02BBC79126CD870006E46A2 /* CCAnimation.m */,
 				E02BBC7A126CD870006E46A2 /* CCAnimation.h */,
-				E02BBC7B126CD870006E46A2 /* CCAnimationCache.m */,
+				E02BBC79126CD870006E46A2 /* CCAnimation.m */,
 				E02BBC7C126CD870006E46A2 /* CCAnimationCache.h */,
+				E02BBC7B126CD870006E46A2 /* CCAnimationCache.m */,
 				E076E67A1225EC7400DE0DA2 /* CCSprite.h */,
 				E076E67B1225EC7400DE0DA2 /* CCSprite.m */,
 				E076E67C1225EC7400DE0DA2 /* CCSpriteBatchNode.h */,

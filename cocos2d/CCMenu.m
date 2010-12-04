@@ -45,7 +45,7 @@ enum {
 
 @implementation CCMenu
 
-@synthesize opacity=opacity_, color=color_;
+@synthesize opacity = opacity_, color = color_;
 
 - (id) init
 {
@@ -499,6 +499,7 @@ enum {
 - (void) setOpacity:(GLubyte)newOpacity
 {
 	opacity_ = newOpacity;
+	
 	id<CCRGBAProtocol> item;
 	CCARRAY_FOREACH(children_, item)
 		[item setOpacity:opacity_];
@@ -507,6 +508,7 @@ enum {
 -(void) setColor:(ccColor3B)color
 {
 	color_ = color;
+	
 	id<CCRGBAProtocol> item;
 	CCARRAY_FOREACH(children_, item)
 		[item setColor:color_];

@@ -36,7 +36,8 @@ enum {
 
 /** Base class for CCAction objects.
  */
-@interface CCAction : NSObject <NSCopying> {
+@interface CCAction : NSObject <NSCopying>
+{
 	id			originalTarget_;
 	id			target_;
 	NSInteger	tag_;

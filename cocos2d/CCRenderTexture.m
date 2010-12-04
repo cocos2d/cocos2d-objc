@@ -47,7 +47,6 @@
 
 +(id)renderTextureWithWidth:(int)w height:(int)h
 {
-
 	return [[[self alloc] initWithWidth:w height:h pixelFormat:kCCTexture2DPixelFormat_RGBA8888] autorelease];	
 }
 

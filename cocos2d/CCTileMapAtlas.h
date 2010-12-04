@@ -42,7 +42,8 @@
  You SHOULD not use this class.
  Instead, use the newer TMX file format: CCTMXTiledMap
  */
-@interface CCTileMapAtlas : CCAtlasNode {
+@interface CCTileMapAtlas : CCAtlasNode
+{
 	
 	/// info about the map file
 	tImageTGA		*tgaInfo;

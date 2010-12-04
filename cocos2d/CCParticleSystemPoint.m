@@ -77,13 +77,9 @@
 }
 
 -(void) updateQuadWithParticle:(tCCParticle*)p newPosition:(CGPoint)newPos
-{
-	ccVertex2F pos;
-	pos.x = newPos.x;
-	pos.y = newPos.y;
-	
+{	
 	// place vertices and colos in array
-	vertices[particleIdx].pos = pos;
+	vertices[particleIdx].pos = (ccVertex2F) {newPos.x, newPos.y};
 	vertices[particleIdx].size = p->size;
 	vertices[particleIdx].colors = p->color;
 }
@@ -135,11 +131,9 @@
 	glPointSizePointerOES(GL_FLOAT, kPointSize, (GLvoid*) (offset+diff));
 #endif
 
-	BOOL newBlend = NO;
-	if( blendFunc_.src != CC_BLEND_SRC || blendFunc_.dst != CC_BLEND_DST ) {
-		newBlend = YES;
+	BOOL newBlend = blendFunc_.src != CC_BLEND_SRC || blendFunc_.dst != CC_BLEND_DST;
+	if( newBlend )
 		glBlendFunc( blendFunc_.src, blendFunc_.dst );
-	}
 
 
 	glDrawArrays(GL_POINTS, 0, particleIdx);

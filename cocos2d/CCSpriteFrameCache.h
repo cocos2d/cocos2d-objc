@@ -42,8 +42,8 @@
  It saves in a cache the sprite frames.
  @since v0.9
  */
-@interface CCSpriteFrameCache : NSObject {
-
+@interface CCSpriteFrameCache : NSObject
+{
 	NSMutableDictionary *spriteFrames_;
 	NSMutableDictionary *spriteFramesAliases_;
 }

@@ -45,11 +45,11 @@
 
 @implementation CCGridBase
 
-@synthesize reuseGrid=reuseGrid_;
-@synthesize texture=texture_;
-@synthesize grabber=grabber_;
-@synthesize gridSize=gridSize_;
-@synthesize step=step_;
+@synthesize reuseGrid = reuseGrid_;
+@synthesize texture = texture_;
+@synthesize grabber = grabber_;
+@synthesize gridSize = gridSize_;
+@synthesize step = step_;
 
 +(id) gridWithSize:(ccGridSize)gridSize texture:(CCTexture2D*)texture flippedTexture:(BOOL)flipped
 {
@@ -361,7 +361,7 @@
 			ccVertex3F l2[4] = { e, f, g, h };
 			
 			int tex1[4] = { a*2, b*2, c*2, d*2 };
-			CGPoint tex2[4] = { ccp(x1,y1), ccp(x2,y1), ccp(x2,y2), ccp(x1,y2) };
+			CGPoint tex2[4] = { ccp(x1, y1), ccp(x2, y1), ccp(x2, y2), ccp(x1, y2) };
 			
 			for( i = 0; i < 4; i++ )
 			{

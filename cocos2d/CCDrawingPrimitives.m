@@ -98,10 +98,10 @@ void ccDrawPoints( const CGPoint *points, NSUInteger numberOfPoints )
 
 void ccDrawLine( CGPoint origin, CGPoint destination )
 {
-	ccVertex2F vertices[2];
-	
-	vertices[0] = (ccVertex2F) {origin.x * CC_CONTENT_SCALE_FACTOR(), origin.y * CC_CONTENT_SCALE_FACTOR() };
-	vertices[1] = (ccVertex2F) {destination.x * CC_CONTENT_SCALE_FACTOR(), destination.y * CC_CONTENT_SCALE_FACTOR() };
+	ccVertex2F vertices[2] = {
+		{origin.x * CC_CONTENT_SCALE_FACTOR(), origin.y * CC_CONTENT_SCALE_FACTOR() },
+		{destination.x * CC_CONTENT_SCALE_FACTOR(), destination.y * CC_CONTENT_SCALE_FACTOR() }
+	};
 
 	// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
 	// Needed states: GL_VERTEX_ARRAY, 
