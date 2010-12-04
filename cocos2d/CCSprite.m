@@ -729,7 +729,7 @@ static SEL selSortMethod = NULL;
 			tempItem = x[i];
 			j = i-1;
 			
-			while(j>=0 && ((CCSprite*) tempItem).zOrder<((CCSprite*)x[j]).zOrder)
+			while(j>=0 && ( ((CCSprite*) tempItem).zOrder<((CCSprite*)x[j]).zOrder || ( ((CCNode*) tempItem).mutatedIndex < ((CCNode*)x[j]).mutatedIndex ) ) )
 			{
 				x[j+1] = x[j];
 				j = j-1;

@@ -542,6 +542,16 @@ static CCDirector *_sharedDirector = nil;
 }
 #endif
 
+-(int) getMutatedIndex
+{
+	return ++mutatedChildren_;	
+}
+
+- (void) resetMutatedChildren
+{
+	mutatedChildren_=0;	
+}
+
 - (void) showProfilers {
 #if CC_ENABLE_PROFILERS
 	accumDtForProfiler_ += dt;
