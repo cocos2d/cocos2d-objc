@@ -263,6 +263,11 @@
 	return winSizeInPixels_;
 }
 
+-(CGSize) winSizeInPixels
+{
+	return [self winSize];
+}
+
 - (CGPoint) convertToLogicalCoordinates:(CGPoint)coords
 {
 	CGPoint ret;
