@@ -30,7 +30,7 @@
 #import "CCTextureCache.h"
 
 @implementation CCAnimation
-@synthesize name=name_, delay=delay_, frames=frames_;
+@synthesize name = name_, delay = delay_, frames = frames_;
 
 +(id) animation
 {

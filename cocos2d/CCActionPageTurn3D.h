@@ -35,7 +35,8 @@
  * 
  * @since v0.8.2
  */
-@interface CCPageTurn3D : CCGrid3DAction {
+@interface CCPageTurn3D : CCGrid3DAction
+{
 }
 
 @end

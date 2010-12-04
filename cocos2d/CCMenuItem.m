@@ -617,7 +617,7 @@ enum {
 @implementation CCMenuItemToggle
 
 @synthesize subItems = subItems_;
-@synthesize opacity=opacity_, color=color_;
+@synthesize opacity = opacity_, color = color_;
 
 +(id) itemWithTarget: (id)t selector: (SEL)sel items: (CCMenuItem*) item, ...
 {

@@ -41,6 +41,7 @@
 {
 	if( (self=[super init]) )	
 		duration_ = 0;
+	
 	return self;
 }
 
@@ -54,14 +55,17 @@
 {
 	return YES;
 }
+
 -(void) step: (ccTime) dt
 {
 	[self update: 1];
 }
+
 -(void) update: (ccTime) t
 {
 	// ignore
 }
+
 -(CCFiniteTimeAction*) reverse
 {
 	return [[self copy] autorelease];
@@ -79,6 +83,7 @@
 	[super startWithTarget:aTarget];
 	((CCNode *)target_).visible = YES;
 }
+
 -(CCFiniteTimeAction*) reverse
 {
 	return [CCHide action];
@@ -96,6 +101,7 @@
 	[super startWithTarget:aTarget];
 	((CCNode *)target_).visible = NO;
 }
+
 -(CCFiniteTimeAction*) reverse
 {
 	return [CCShow action];
@@ -128,9 +134,8 @@
 
 -(id) initWithFlipX:(BOOL)x
 {
-	if(( self=[super init])) {
+	if(( self=[super init]))
 		flipX = x;
-	}
 	
 	return self;
 }
@@ -166,9 +171,8 @@
 
 -(id) initWithFlipY:(BOOL)y
 {
-	if(( self=[super init])) {
+	if(( self=[super init]))
 		flipY = y;
-	}
 	
 	return self;
 }
@@ -207,6 +211,7 @@
 {
 	if( (self=[super init]) )
 		position = pos;
+	
 	return self;
 }
 
@@ -221,6 +226,7 @@
 	[super startWithTarget:aTarget];
 	((CCNode *)target_).position = position;
 }
+
 @end
 
 //
@@ -265,7 +271,6 @@
 	CCActionInstant *copy = [[[self class] allocWithZone: zone] initWithTarget:targetCallback_ selector:selector_];
 	return copy;
 }
-
 
 -(void) startWithTarget:(id)aTarget
 {
@@ -347,11 +352,9 @@
 
 -(id) initWithTarget:(id) t selector:(SEL) s object:(id)object
 {
-	if( (self=[super initWithTarget:t selector:s] ) ) {
-	
+	if( (self=[super initWithTarget:t selector:s] ) )
 		object_ = [object retain];
-		
-	}
+	
 	return self;
 }
 
@@ -385,33 +388,38 @@
 
 @implementation CCCallBlock
 
-+(id) actionWithBlock:(void(^)())block {
++(id) actionWithBlock:(void(^)())block
+{
 	return [[[self alloc] initWithBlock:block] autorelease];
 }
 
--(id) initWithBlock:(void(^)())block {
-	if ((self = [super init])) {
-	
+-(id) initWithBlock:(void(^)())block
+{
+	if ((self = [super init]))
 		block_ = [block copy];
-	}
+	
 	return self;
 }
 
--(id) copyWithZone: (NSZone*) zone {
+-(id) copyWithZone: (NSZone*) zone
+{
 	CCActionInstant *copy = [[[self class] allocWithZone: zone] initWithBlock:block_];
 	return copy;
 }
 
--(void) startWithTarget:(id)aTarget {
+-(void) startWithTarget:(id)aTarget
+{
 	[super startWithTarget:aTarget];
 	[self execute];
 }
 
--(void) execute {
+-(void) execute
+{
 	block_();
 }
 
--(void) dealloc {
+-(void) dealloc
+{
 	[block_ release];
 	[super dealloc];
 }
@@ -422,33 +430,38 @@
 
 @implementation CCCallBlockN
 
-+(id) actionWithBlock:(void(^)(CCNode *node))block {
++(id) actionWithBlock:(void(^)(CCNode *node))block
+{
 	return [[[self alloc] initWithBlock:block] autorelease];
 }
 
--(id) initWithBlock:(void(^)(CCNode *node))block {
-	if ((self = [super init])) {
-	
+-(id) initWithBlock:(void(^)(CCNode *node))block
+{
+	if ((self = [super init]))
 		block_ = [block copy];
-	}
+	
 	return self;
 }
 
--(id) copyWithZone: (NSZone*) zone {
+-(id) copyWithZone: (NSZone*) zone
+{
 	CCActionInstant *copy = [[[self class] allocWithZone: zone] initWithBlock:block_];
 	return copy;
 }
 
--(void) startWithTarget:(id)aTarget {
+-(void) startWithTarget:(id)aTarget
+{
 	[super startWithTarget:aTarget];
 	[self execute];
 }
 
--(void) execute {
+-(void) execute
+{
 	block_(target_);
 }
 
--(void) dealloc {
+-(void) dealloc
+{
 	[block_ release];
 	[super dealloc];
 }

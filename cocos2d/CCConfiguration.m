@@ -37,13 +37,13 @@
 
 @implementation CCConfiguration
 
-@synthesize maxTextureSize=maxTextureSize_;
-@synthesize supportsPVRTC=supportsPVRTC_;
-@synthesize maxModelviewStackDepth=maxModelviewStackDepth_;
-@synthesize supportsNPOT=supportsNPOT_;
-@synthesize supportsBGRA8888=supportsBGRA8888_;
-@synthesize supportsDiscardFramebuffer=supportsDiscardFramebuffer_;
-@synthesize OSVersion=OSVersion_;
+@synthesize maxTextureSize = maxTextureSize_;
+@synthesize supportsPVRTC = supportsPVRTC_;
+@synthesize maxModelviewStackDepth = maxModelviewStackDepth_;
+@synthesize supportsNPOT = supportsNPOT_;
+@synthesize supportsBGRA8888 = supportsBGRA8888_;
+@synthesize supportsDiscardFramebuffer = supportsDiscardFramebuffer_;
+@synthesize OSVersion = OSVersion_;
 
 //
 // singleton stuff

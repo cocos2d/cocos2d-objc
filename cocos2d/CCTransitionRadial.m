@@ -44,10 +44,12 @@ enum {
 {
 	inSceneOnTop_ = NO;
 }
+
 -(CCProgressTimerType) radialType
 {
 	return kCCProgressTimerTypeRadialCCW;
 }
+
 -(void) onEnter
 {
 	[super onEnter];

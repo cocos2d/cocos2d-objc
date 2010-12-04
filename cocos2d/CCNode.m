@@ -61,22 +61,22 @@
 @implementation CCNode
 
 @synthesize children = children_;
-@synthesize visible=visible_;
-@synthesize parent=parent_;
-@synthesize grid=grid_;
-@synthesize zOrder=zOrder_;
-@synthesize tag=tag_;
+@synthesize visible = visible_;
+@synthesize parent = parent_;
+@synthesize grid = grid_;
+@synthesize zOrder = zOrder_;
+@synthesize tag = tag_;
 @synthesize vertexZ = vertexZ_;
-@synthesize isRunning=isRunning_;
-@synthesize userData=userData_;
+@synthesize isRunning = isRunning_;
+@synthesize userData = userData_;
 
 #pragma mark CCNode - Transform related properties
 
-@synthesize rotation=rotation_, scaleX=scaleX_, scaleY=scaleY_;
-@synthesize position=position_, positionInPixels=positionInPixels_;
-@synthesize anchorPoint=anchorPoint_, anchorPointInPixels=anchorPointInPixels_;
-@synthesize contentSize=contentSize_, contentSizeInPixels=contentSizeInPixels_;
-@synthesize isRelativeAnchorPoint=isRelativeAnchorPoint_;
+@synthesize rotation = rotation_, scaleX = scaleX_, scaleY = scaleY_;
+@synthesize position = position_, positionInPixels = positionInPixels_;
+@synthesize anchorPoint = anchorPoint_, anchorPointInPixels = anchorPointInPixels_;
+@synthesize contentSize = contentSize_, contentSizeInPixels = contentSizeInPixels_;
+@synthesize isRelativeAnchorPoint = isRelativeAnchorPoint_;
 
 // getters synthesized, setters explicit
 -(void) setRotation: (float)newRotation
@@ -113,6 +113,7 @@
 		positionInPixels_ = position_;
 	else
 		positionInPixels_ = ccpMult( newPosition,  CC_CONTENT_SCALE_FACTOR() );
+	
 	isTransformDirty_ = isInverseDirty_ = YES;
 #if CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
 	isTransformGLDirty_ = YES;
@@ -127,6 +128,7 @@
 		position_ = positionInPixels_;
 	else
 		position_ = ccpMult( newPosition, 1/CC_CONTENT_SCALE_FACTOR() );
+	
 	isTransformDirty_ = isInverseDirty_ = YES;
 #if CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
 	isTransformGLDirty_ = YES;
@@ -158,10 +160,12 @@
 {
 	if( ! CGSizeEqualToSize(size, contentSize_) ) {
 		contentSize_ = size;
+		
 		if( CC_CONTENT_SCALE_FACTOR() == 1 )
 			contentSizeInPixels_ = contentSize_;
 		else
 			contentSizeInPixels_ = CGSizeMake( size.width * CC_CONTENT_SCALE_FACTOR(), size.height * CC_CONTENT_SCALE_FACTOR() );
+		
 		anchorPointInPixels_ = ccp( contentSizeInPixels_.width * anchorPoint_.x, contentSizeInPixels_.height * anchorPoint_.y );
 		isTransformDirty_ = isInverseDirty_ = YES;
 #if CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
@@ -179,6 +183,7 @@
 			contentSize_ = contentSizeInPixels_;
 		else
 			contentSize_ = CGSizeMake( size.width / CC_CONTENT_SCALE_FACTOR(), size.height / CC_CONTENT_SCALE_FACTOR() );
+		
 		anchorPointInPixels_ = ccp( contentSizeInPixels_.width * anchorPoint_.x, contentSizeInPixels_.height * anchorPoint_.y );
 		isTransformDirty_ = isInverseDirty_ = YES;
 #if CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
@@ -277,11 +282,9 @@
 {
 	// actions
 	[self stopAllActions];
-
 	[self unscheduleAllSelectors];
 	
 	// timers
-	
 	[children_ makeObjectsPerformSelector:@selector(cleanup)];
 }
 
@@ -300,7 +303,6 @@
 	[grid_ release];
 	
 	// children
-	
 	CCNode *child;
 	CCARRAY_FOREACH(children_, child)
 		child.parent = nil;
@@ -469,9 +471,9 @@
 	CCNode *a = [children_ lastObject];
 	
 	// quick comparison to improve performance
-	if (!a || a.zOrder <= z) {
+	if (!a || a.zOrder <= z)
 		[children_ addObject:child];
-	}
+	
 	else
 	{
 		CCARRAY_FOREACH(children_, a) {
@@ -524,14 +526,14 @@
 	
 	if(children_) {
 		ccArray *arrayData = children_->data;
-		NSUInteger i=0;
+		NSUInteger i = 0;
 		
 		// draw children zOrder < 0
 		for( ; i < arrayData->num; i++ ) {
-			CCNode *child =  arrayData->arr[i];
-			if ( [child zOrder] < 0 ) {
+			CCNode *child = arrayData->arr[i];
+			if ( [child zOrder] < 0 )
 				[child visit];
-			} else
+			else
 				break;
 		}
 		
@@ -682,7 +684,6 @@
 -(CCAction*) getActionByTag:(int) aTag
 {
 	NSAssert( aTag != kCCActionTagInvalid, @"Invalid tag");
-	
 	return [[CCActionManager sharedManager] getActionByTag:aTag target:self];
 }
 
@@ -737,7 +738,6 @@
 - (void) resumeSchedulerAndActions
 {
 	[[CCScheduler sharedScheduler] resumeTarget:self];
-	
 	[[CCActionManager sharedManager] resumeTarget:self];
 }
 
@@ -760,8 +760,10 @@
 		
 		if( ! CGPointEqualToPoint(positionInPixels_, CGPointZero) )
 			transform_ = CGAffineTransformTranslate(transform_, positionInPixels_.x, positionInPixels_.y);
+		
 		if( rotation_ != 0 )
 			transform_ = CGAffineTransformRotate(transform_, -CC_DEGREES_TO_RADIANS(rotation_));
+		
 		if( ! (scaleX_ == 1 && scaleY_ == 1) ) 
 			transform_ = CGAffineTransformScale(transform_, scaleX_, scaleY_);
 		
@@ -846,6 +848,7 @@
 		anchorInPoints = anchorPointInPixels_;
 	else
 		anchorInPoints = ccpMult( anchorPointInPixels_, 1/CC_CONTENT_SCALE_FACTOR() );
+	
 	nodePoint = ccpAdd(nodePoint, anchorInPoints);
 	return [self convertToWorldSpace:nodePoint];
 }

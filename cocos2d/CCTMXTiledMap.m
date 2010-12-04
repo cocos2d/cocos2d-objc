@@ -46,11 +46,11 @@
 @end
 
 @implementation CCTMXTiledMap
-@synthesize mapSize=mapSize_;
-@synthesize tileSize=tileSize_;
-@synthesize mapOrientation=mapOrientation_;
-@synthesize objectGroups=objectGroups_;
-@synthesize properties=properties_;
+@synthesize mapSize = mapSize_;
+@synthesize tileSize = tileSize_;
+@synthesize mapOrientation = mapOrientation_;
+@synthesize objectGroups = objectGroups_;
+@synthesize properties = properties_;
 
 +(id) tiledMapWithTMXFile:(NSString*)tmxFile
 {
@@ -130,8 +130,8 @@
 
 	id iter = [mapInfo.tilesets reverseObjectEnumerator];
 	for( CCTMXTilesetInfo* tileset in iter) {
-		for( unsigned int y=0; y < size.height; y++ ) {
-			for( unsigned int x=0; x < size.width; x++ ) {
+		for( unsigned int y = 0; y < size.height; y++ ) {
+			for( unsigned int x = 0; x < size.width; x++ ) {
 				
 				unsigned int pos = x + size.width * y;
 				unsigned int gid = layerInfo.tiles[ pos ];
@@ -163,11 +163,11 @@
 
 -(CCTMXLayer*) layerNamed:(NSString *)layerName 
 {
-	for( CCTMXLayer *layer in children_ ) {
-		if([layer isKindOfClass:[CCTMXLayer class]]){
-			if( [layer.layerName isEqual:layerName] )
+	CCTMXLayer *layer;
+	CCARRAY_FOREACH(children_, layer) {
+		if([layer isKindOfClass:[CCTMXLayer class]])
+			if([layer.layerName isEqual:layerName])
 				return layer;
-		}
 	}
 	
 	// layer not found
@@ -179,7 +179,7 @@
 	for( CCTMXObjectGroup *objectGroup in objectGroups_ ) {
 		if( [objectGroup.groupName isEqual:groupName] )
 			return objectGroup;
-		}
+	}
 	
 	// objectGroup not found
 	return nil;

@@ -36,7 +36,7 @@
 
  It is a good practice to use and CCScene as the parent of all your nodes.
 */
-@interface CCScene : CCNode {
-
+@interface CCScene : CCNode
+{
 }
 @end

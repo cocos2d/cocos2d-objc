@@ -60,7 +60,7 @@
 
 @implementation CCParallaxNode
 
-@synthesize parallaxArray=parallaxArray_;
+@synthesize parallaxArray = parallaxArray_;
 
 -(id) init
 {
@@ -93,9 +93,9 @@
 	ccArrayAppendObjectWithResize(parallaxArray_, obj);
 	
 	CGPoint pos = self.position;
-	float x = pos.x * ratio.x + offset.x;
-	float y = pos.y * ratio.y + offset.y;
-	child.position = ccp(x,y);
+	pos.x = pos.x * ratio.x + offset.x;
+	pos.y = pos.y * ratio.y + offset.y;
+	child.position = pos;
 	
 	[super addChild: child z:z tag:child.tag];
 }
