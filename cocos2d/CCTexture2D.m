@@ -153,6 +153,18 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 	return self;
 }
 
+- (void) releaseData:(void*)data
+{
+	//Free data
+	free(data);
+}
+
+- (void*) keepData:(void*)data lenght:(NSUInteger)lenght
+{
+	//The texture data mustn't be saved becuase it isn't a mutable texture.
+	return data;
+}
+
 - (void) dealloc
 {
 	CCLOGINFO(@"cocos2d: deallocing %@", self);
@@ -340,7 +352,7 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 	hasPremultipliedAlpha_ = (info == kCGImageAlphaPremultipliedLast || info == kCGImageAlphaPremultipliedFirst);
 	
 	CGContextRelease(context);
-	free(data);
+	[self releaseData:data];
 	
 	return self;
 }
@@ -405,7 +417,7 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 	self = [self initWithData:data pixelFormat:kCCTexture2DPixelFormat_RGBA8888 pixelsWide:POTWide pixelsHigh:POTHigh contentSize:dimensions];
 #endif
 	CGContextRelease(context);
-	free(data);
+	[self releaseData:data];
 			
 	return self;
 }
@@ -447,9 +459,11 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 		
 		data = (unsigned char*) [bitmap bitmapData];  //Use the same buffer to improve the performance.
 		
-		for(int i = 0; i<(POTWide*POTHigh); i++) //Convert RGBA8888 to A8
+		NSUInteger textureSize = POTWide*POTHigh;
+		for(int i = 0; i<textureSize; i++) //Convert RGBA8888 to A8
 			data[i] = data[i*4+3];
 		
+		data = [self keepData:data lenght:textureSize];
 		self = [self initWithData:data pixelFormat:kCCTexture2DPixelFormat_A8 pixelsWide:POTWide pixelsHigh:POTHigh contentSize:dimensions];
 		
 		[bitmap release];
