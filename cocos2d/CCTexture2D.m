@@ -159,7 +159,7 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 	free(data);
 }
 
-- (void*) keepData:(void*)data lenght:(NSUInteger)lenght
+- (void*) keepData:(void*)data length:(NSUInteger)length
 {
 	//The texture data mustn't be saved becuase it isn't a mutable texture.
 	return data;
@@ -463,7 +463,7 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 		for(int i = 0; i<textureSize; i++) //Convert RGBA8888 to A8
 			data[i] = data[i*4+3];
 		
-		data = [self keepData:data lenght:textureSize];
+		data = [self keepData:data length:textureSize];
 		self = [self initWithData:data pixelFormat:kCCTexture2DPixelFormat_A8 pixelsWide:POTWide pixelsHigh:POTHigh contentSize:dimensions];
 		
 		[bitmap release];

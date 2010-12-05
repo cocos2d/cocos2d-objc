@@ -127,7 +127,7 @@ typedef enum {
 
 /** These functions are needed to create mutable textures */
 - (void) releaseData:(void*)data;
-- (void*) keepData:(void*)data lenght:(NSUInteger)lenght;
+- (void*) keepData:(void*)data length:(NSUInteger)length;
 
 /** pixel format of the texture */
 @property(nonatomic,readonly) CCTexture2DPixelFormat pixelFormat;

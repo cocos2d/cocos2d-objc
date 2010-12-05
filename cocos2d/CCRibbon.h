@@ -64,7 +64,7 @@
 	// Texture used
 	CCTexture2D*		texture_;
 
-	// texture lenght
+	// texture length
 	float			textureLength_;
 
 	// RGBA protocol
@@ -77,7 +77,7 @@
 /** Texture used by the ribbon. Conforms to CCTextureProtocol protocol */
 @property (nonatomic,readwrite,retain) CCTexture2D* texture;
 
-/** Texture lenghts in pixels */
+/** Texture lengths in pixels */
 @property (nonatomic,readwrite) float textureLength;
 
 /** GL blendind function */
