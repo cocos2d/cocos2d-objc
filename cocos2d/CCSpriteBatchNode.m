@@ -254,12 +254,9 @@ static 	SEL selUpdate = NULL;
 }
 
 #pragma mark CCSpriteBatchNode - draw
-#pragma mark CCSpriteBatchNode - draw
 -(void) draw
 {
 	// Optimization: Fast Dispatch
-	typedef BOOL (*UPDATE_IMP)(id, SEL);
-	UPDATE_IMP updateMethod;
 	CCSprite *child;
 	
 	if( textureAtlas_.totalQuads == 0 )
@@ -272,15 +269,11 @@ static 	SEL selUpdate = NULL;
 
 	if( i > 0 ) {
 		
-		// compile the update methodf
-		child = array->arr[0];
-		updateMethod = (UPDATE_IMP) [child methodForSelector:selUpdate];
-
 		while (i-- > 0) {
 			child = *arr++;
 			
 			// fast dispatch
-			updateMethod(child, selUpdate);
+			child->updateMethod(child, selUpdate);
 			
 #if CC_SPRITEBATCHNODE_DEBUG_DRAW
 			//Issue #528

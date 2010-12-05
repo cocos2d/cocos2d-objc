@@ -24,9 +24,12 @@
  */
 
 
+#import <Availability.h>
 #import "CCParticleSystem.h"
 
 #define CC_MAX_PARTICLE_SIZE 64
+
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 
 /** CCParticleSystemPoint is a subclass of CCParticleSystem
  Attributes of a Particle System:
@@ -51,3 +54,11 @@
 }
 @end
 
+#elif __MAC_OS_X_VERSION_MAX_ALLOWED
+
+#import "CCParticleSystemQuad.h"
+
+@interface CCParticleSystemPoint : CCParticleSystemQuad
+@end
+
+#endif

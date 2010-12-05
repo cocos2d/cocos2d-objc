@@ -66,5 +66,7 @@ enum {
 {}
 @end
 
-
+@interface ReorderSpriteSheet : AddRemoveSpriteSheet
+{}
+@end
 

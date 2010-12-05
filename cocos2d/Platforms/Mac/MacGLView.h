@@ -73,10 +73,12 @@
  */
 @interface MacGLView : NSOpenGLView {
 	id<MacEventDelegate> eventDelegate_;
-	
 }
 
 @property (nonatomic, readwrite, assign) id<MacEventDelegate> eventDelegate;
+
+// initializes the MacGLView with a frame rect and an OpenGL context
+- (id) initWithFrame:(NSRect)frameRect shareContext:(NSOpenGLContext*)context;
 
 // private
 +(void) load_;

@@ -46,6 +46,8 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		XCode doxygen script runs with spaces in subdirectories.	
 	* Booyah (http://booyah.com/):
 		Added support for GL sharegroup in EAGLView
+	* Brad Parks:
+		Added google search on forum
 	* Brian Hammond:
 		patches for Demos
 	* Bryan/Acceleroto (http://www.acceleroto.com):
@@ -173,6 +175,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	* johnnyflash71:
 		TMX suports 1 tileset per layer patch
 		mkatlas.pl supports spaces in the name
+		CCFileUtils loads .ccz files correctly. patch
 	* Jordan Schidlowsky:
 		Added "relative" mode to particles
 	* jszatmary:
@@ -254,11 +257,13 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Fixed possible crash with NPOT PVR images
 		Optimized the loading time of PVR images
 		CCArray: improved performance in insert & delete elements
+		Added option to enable/disable RetinaDisplay
 	* marcofucci:
 		CCArray.fastRemoveObjectAtIndex patch.
-	* Marco Tillemans:
+	* Marco Tillemans (araker):
 		RenderTexture renders images with correct blend function. patch.
 		RenderTexture: performance fixes. Improved logic.
+		Added reorder node performance test
 		Added multisampling anti-aliasing support in EAGLView, ESRenderer
 	* marcu.catalin:
 		Menu items are not consumed is items are not visible
@@ -315,6 +320,8 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		mkatlas: added artifact removal by copying borders to margins
 	* Piero Tofy (http://indieappsalliance.org):
 		Author of the scraper script used to parse games data in the cocos2d site
+	* Pieter van de Bruggen
+		Author of Gradient layer
 	* psionic81:
 		ActionManager doesn't purge running actions patch
 	* rac5372:
@@ -325,6 +332,8 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		patch: Added support for tsx tilesets in TMX tiled maps
 	* Ray Wenderlich (http://www.raywenderlich.com/)
 		co-author of sample "CocosDenshion - Tom the Turret"
+	* rickms:
+		MenuItem: added support for class methods.
 	* Robert J Payne (http://www.zwopple.com/)
 		Author of Zwoptex editor. Added support for Zwoptex
 		Added support for left,right,top,bottom trim in CCSpriteFrameCache (patch).
@@ -349,6 +358,8 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	* Scott Iisystems:
 		TextureAtlas signed math error patch
 		BezierBy#reverse patch
+	* Scott Lembcke (http://howlingmoonsoftware.com)
+		Sprite#updateTransform can be overriden
 	* Serge Kolgan:
 		patches for CocosNode
 	* sflory:
@@ -394,6 +405,8 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Added ProfilingTimer: Director and Particles supports it when enabled
 	* svenito:
 		Fixed artifacts in PageTurnTransition
+	* TBBle (http://blog.tbble.org/)
+		CCSpriteFrameCache textureFileName is relative to path
 	* TheArsenik:
 		added BezierTo action
 	* thoechsm:

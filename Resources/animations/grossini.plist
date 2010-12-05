@@ -245,6 +245,8 @@
 	</dict>
 	<key>metadata</key>
 	<dict>
+        <key>textureFileName</key>
+        <string>grossini.pvr.gz</string>
 		<key>format</key>
 		<integer>2</integer>
 		<key>size</key>

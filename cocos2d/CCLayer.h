@@ -127,15 +127,15 @@
 @end
 
 //
-// CCColorLayer
+// CCLayerColor
 //
-/** CCColorLayer is a subclass of CCLayer that implements the CCRGBAProtocol protocol.
+/** CCLayerColor is a subclass of CCLayer that implements the CCRGBAProtocol protocol.
  
  All features from CCLayer are valid, plus the following new features:
  - opacity
  - RGB colors
  */
-@interface CCColorLayer : CCLayer <CCRGBAProtocol, CCBlendProtocol>
+@interface CCLayerColor : CCLayer <CCRGBAProtocol, CCBlendProtocol>
 {
 	GLubyte		opacity_;
 	ccColor3B	color_;	
@@ -170,6 +170,69 @@
 @property (nonatomic,readonly) ccColor3B color;
 /** BlendFunction. Conforms to CCBlendProtocol protocol */
 @property (nonatomic,readwrite) ccBlendFunc blendFunc;
+@end
+
+/** CCColorLayer
+ It is the same as CCLayerColor.
+ 
+ @deprecated Use CCLayerColor instead. This class will be removed in v1.0.1
+ */
+DEPRECATED_ATTRIBUTE @interface CCColorLayer : CCLayerColor
+@end
+
+
+//
+// CCLayerGradient
+//
+/** CCLayerGradient is a subclass of CCLayerColor that draws gradients across
+the background.
+
+ All features from CCLayerColor are valid, plus the following new features:
+ - direction
+ - final color
+ 
+ Color is interpolated between the startColor and endColor along the given
+ vector (starting at the origin, ending at the terminus).  If no vector is
+ supplied, it defaults to (0, -1) -- a fade from top to bottom.
+ 
+ Given the nature of
+ the interpolation, you will not see either the start or end color for
+ non-cardinal vectors; a smooth gradient implying both end points will be still
+ be drawn, however.
+ 
+ @since v0.99.5
+ */
+@interface CCLayerGradient : CCLayerColor
+{
+	ccColor3B endColor_;
+	GLubyte startOpacity_;
+	GLubyte endOpacity_;
+	CGPoint vector_;
+}
+
+/** Creates a full-screen CCLayer with a gradient between start and end. */
++ (id) layerWithColor: (ccColor4B) start fadingTo: (ccColor4B) end;
+/** Creates a full-screen CCLayer with a gradient between start and end in the direction of v. */
++ (id) layerWithColor: (ccColor4B) start fadingTo: (ccColor4B) end alongVector: (CGPoint) v;
+
+/** Initializes the CCLayer with a gradient between start and end. */
+- (id) initWithColor: (ccColor4B) start fadingTo: (ccColor4B) end;
+/** Initializes the CCLayer with a gradient between start and end in the direction of v. */
+- (id) initWithColor: (ccColor4B) start fadingTo: (ccColor4B) end alongVector: (CGPoint) v;
+
+/** The starting color. */
+- (ccColor3B) startColor;
+- (void) setStartColor:(ccColor3B)colors;
+
+/** The ending color. */
+@property (nonatomic, readwrite) ccColor3B endColor;
+/** The starting opacity. */
+@property (nonatomic, readwrite) GLubyte startOpacity;
+/** The ending color. */
+@property (nonatomic, readwrite) GLubyte endOpacity;
+/** The vector along which to fade color. */
+@property (nonatomic, readwrite) CGPoint vector;
+
 @end
 
 /** CCMultipleLayer is a CCLayer with the ability to multiplex it's children.

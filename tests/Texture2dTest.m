@@ -18,7 +18,7 @@ enum {
 
 static int sceneIdx=-1;
 static NSString *transitions[] = {
-
+	
 	@"TextureAlias",
 	@"TextureMipMap",
 	@"TexturePVRMipMap",
@@ -701,8 +701,7 @@ Class restartAction()
 	
 	CCSprite *img = [CCSprite spriteWithFile:@"test_image_rgba4444.pvr.ccz"];
 	img.position = ccp( s.width/2.0f, s.height/2.0f);
-	[self addChild:img];
-	
+	[self addChild:img];	
 }
 
 -(NSString *) title
@@ -942,7 +941,7 @@ Class restartAction()
 	
 	CGSize s = [[CCDirector sharedDirector] winSize];
 		
-	CCColorLayer *background = [CCColorLayer layerWithColor:ccc4(128,128,128,255) width:s.width height:s.height];
+	CCLayerColor *background = [CCLayerColor layerWithColor:ccc4(128,128,128,255) width:s.width height:s.height];
 	[self addChild:background z:-1];
 	
 	// RGBA 8888 image (32-bit)
@@ -1355,7 +1354,7 @@ Class restartAction()
 				
 		CGSize size =[[CCDirector sharedDirector] winSize];
 	
-		CCColorLayer *background = [CCColorLayer layerWithColor:ccc4(128,128,128,255) width:size.width height:size.height];
+		CCLayerColor *background = [CCLayerColor layerWithColor:ccc4(128,128,128,255) width:size.width height:size.height];
 		[self addChild:background z:-1];
 		
 		
@@ -1725,6 +1724,17 @@ Class restartAction()
 	[scene addChild: [nextAction() node]];
 	
 	[director runWithScene:scene];
+}
+
+- (BOOL) applicationShouldTerminateAfterLastWindowClosed: (NSApplication *) theApplication
+{
+	return YES;
+}
+
+- (IBAction)toggleFullScreen: (id)sender
+{
+	CCDirectorMac *director = (CCDirectorMac*) [CCDirector sharedDirector];
+	[director setFullScreen: ! [director isFullScreen] ];
 }
 
 @end

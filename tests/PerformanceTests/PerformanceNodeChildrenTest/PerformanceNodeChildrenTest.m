@@ -24,6 +24,7 @@ static NSString *transitions[] = {
 		@"IterateSpriteSheetCArray",
 		@"AddSpriteSheet",
 		@"RemoveSpriteSheet",
+		@"ReorderSpriteSheet",
 };
 
 Class nextAction()
@@ -419,6 +420,7 @@ Class restartAction()
 		{
 			[batchNode addChild:sprites[i] z:zs[i] tag:kTagBase+i];
 		}
+//		[batchNode sortAllChildren];
 		CCProfilingEndTimingBlock(_profilingTimer);
 		
 		// remove them
@@ -487,6 +489,62 @@ Class restartAction()
 -(NSString*) profilerName
 {
 	return @"remove sprites";
+}
+@end
+
+@implementation ReorderSpriteSheet
+-(void) update:(ccTime)dt
+{
+	srandom(0);
+	
+	// 15 percent
+	int totalToAdd = currentQuantityOfNodes * 0.15f;
+	
+	if( totalToAdd > 0 ) {
+		
+		CCSprite *sprites[ totalToAdd ];
+		
+		// Don't include the sprite creation time as part of the profiling
+		for(int i=0;i<totalToAdd;i++) {
+			sprites[i] = [CCSprite spriteWithTexture:[batchNode texture] rect:CGRectMake(0,0,32,32)];
+		}
+		
+		// add them with random Z (very important!)
+		for( int i=0; i < totalToAdd;i++ )
+		{
+			[batchNode addChild:sprites[i] z:CCRANDOM_MINUS1_1() * 50 tag:kTagBase+i];
+		}
+		
+//		[batchNode sortAllChildren];
+	
+		// reorder them
+		CCProfilingBeginTimingBlock(_profilingTimer);
+		for( int i=0;i <  totalToAdd;i++)
+		{
+			[batchNode reorderChild:[[batchNode children] objectAtIndex:i] z:CCRANDOM_MINUS1_1() * 50];
+		}
+//		[batchNode sortAllChildren];
+		CCProfilingEndTimingBlock(_profilingTimer);
+		
+		// remove them
+		for( int i=0;i <  totalToAdd;i++)
+		{
+			[batchNode removeChildByTag:kTagBase+i cleanup:YES];
+		}
+	}
+}
+
+-(NSString*) title
+{
+	return @"E - Reorder from spritesheet";
+}
+-(NSString*) subtitle
+{
+	return @"Reorder %10 of total sprites placed randomly. See console";
+}
+-(NSString*) profilerName
+{
+	return @"reorder sprites";
 }
 @end
 

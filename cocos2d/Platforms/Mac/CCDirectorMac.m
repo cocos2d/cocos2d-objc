@@ -52,7 +52,9 @@
 -(CGPoint) convertEventToGL:(NSEvent*)event
 {
 	NSPoint point = [openGLView_ convertPoint:[event locationInWindow] fromView:nil];
-	return NSPointToCGPoint(point);
+	CGPoint p = NSPointToCGPoint(point);
+	
+	return  [(CCDirectorMac*)self convertToLogicalCoordinates:p];
 }
 
 @end
@@ -62,7 +64,230 @@
 
 @implementation CCDirectorMac
 
+@synthesize isFullScreen = isFullScreen_;
 
+-(id) init
+{
+	if( (self = [super init]) ) {
+		isFullScreen_ = NO;
+		resizeMode_ = kCCDirectorResize_AutoScale;
+		
+		fullScreenGLView_ = nil;
+		fullScreenWindow_ = nil;
+		windowGLView_ = nil;
+		winOffset_ = CGPointZero;
+	}
+	
+	return self;
+}
+
+- (void) dealloc
+{
+	[fullScreenGLView_ release];
+	[fullScreenWindow_ release];
+	[windowGLView_ release];
+	[super dealloc];
+}
+
+//
+// setFullScreen code taken from GLFullScreen example by Apple
+//
+- (void) setFullScreen:(BOOL)fullscreen
+{
+	// Mac OS X 10.6 and later offer a simplified mechanism to create full-screen contexts
+#if MAC_OS_X_VERSION_MIN_REQUIRED > MAC_OS_X_VERSION_10_5
+
+	if( isFullScreen_ != fullscreen ) {
+
+		isFullScreen_ = fullscreen;
+	
+		if( fullscreen ) {
+			
+			// create the fullscreen view/window
+			NSRect mainDisplayRect, viewRect;
+			
+			// Create a screen-sized window on the display you want to take over
+			// Note, mainDisplayRect has a non-zero origin if the key window is on a secondary display
+			mainDisplayRect = [[NSScreen mainScreen] frame];
+			fullScreenWindow_ = [[NSWindow alloc] initWithContentRect:mainDisplayRect
+															styleMask:NSBorderlessWindowMask
+															  backing:NSBackingStoreBuffered
+																defer:YES];
+			
+			// Set the window level to be above the menu bar
+			[fullScreenWindow_ setLevel:NSMainMenuWindowLevel+1];
+			
+			// Perform any other window configuration you desire
+			[fullScreenWindow_ setOpaque:YES];
+			[fullScreenWindow_ setHidesOnDeactivate:YES];
+			
+			// Create a view with a double-buffered OpenGL context and attach it to the window
+			// By specifying the non-fullscreen context as the shareContext, we automatically inherit the OpenGL objects (textures, etc) it has defined
+			viewRect = NSMakeRect(0.0, 0.0, mainDisplayRect.size.width, mainDisplayRect.size.height);
+			
+			fullScreenGLView_ = [[MacGLView alloc] initWithFrame:viewRect shareContext:[openGLView_ openGLContext]];
+
+			[fullScreenWindow_ setContentView:fullScreenGLView_];
+
+			// Show the window
+			[fullScreenWindow_ makeKeyAndOrderFront:self];
+			
+			[self setOpenGLView:fullScreenGLView_];
+
+		} else {
+			
+			[fullScreenWindow_ release];
+			[fullScreenGLView_ release];
+			fullScreenWindow_ = nil;
+			fullScreenGLView_ = nil;
+
+			[[windowGLView_ openGLContext] makeCurrentContext];
+			[self setOpenGLView:windowGLView_];
+			
+		}
+		
+		[openGLView_ setNeedsDisplay:YES];
+	}
+#else
+#error Full screen is not supported for Mac OS 10.5 or older yet
+#error If you don't want FullScreen support, you can safely remove these 2 lines
+#endif
+}
+
+-(void) setOpenGLView:(MacGLView *)view
+{
+	[super setOpenGLView:view];
+	
+	// cache the NSWindow and NSOpenGLView created from the NIB
+	if( ! isFullScreen_ && ! windowGLView_) {
+		windowGLView_ = [view retain];
+		originalWinSize_ = winSizeInPixels_;
+	}
+}
+
+-(int) resizeMode
+{
+	return resizeMode_;
+}
+
+-(void) setResizeMode:(int)mode
+{
+	if( mode != resizeMode_ ) {
+		resizeMode_ = mode;
+
+		[openGLView_ setNeedsDisplay: YES];
+		
+		[self setProjection:projection_];
+		
+		if( mode == kCCDirectorResize_AutoScale ) {
+			originalWinSize_ = winSizeInPixels_;
+			CCLOG(@"cocos2d: Warning. Switching back to AutoScale might break some stuff. Experimental stuff");
+		}
+	}
+}
+
+-(void) setProjection:(ccDirectorProjection)projection
+{
+	CGSize size = winSizeInPixels_;
+	
+	CGPoint offset = CGPointZero;
+	float widthAspect = size.width;
+	float heightAspect = size.height;
+	
+	
+	if( resizeMode_ == kCCDirectorResize_AutoScale && ! CGSizeEqualToSize(originalWinSize_, CGSizeZero ) ) {
+		
+		size = originalWinSize_;
+
+		float aspect = originalWinSize_.width / originalWinSize_.height;
+		widthAspect = winSizeInPixels_.width;
+		heightAspect = winSizeInPixels_.width / aspect;
+		
+		if( heightAspect > winSizeInPixels_.height ) {
+			widthAspect = winSizeInPixels_.height * aspect;
+			heightAspect = winSizeInPixels_.height;			
+		}
+		
+		winOffset_.x = (winSizeInPixels_.width - widthAspect) / 2;
+		winOffset_.y =  (winSizeInPixels_.height - heightAspect) / 2;
+		
+		offset = winOffset_;
+
+	}
+		
+	switch (projection) {
+		case kCCDirectorProjection2D:
+			glViewport(offset.x, offset.y, widthAspect, heightAspect);
+			glMatrixMode(GL_PROJECTION);
+			glLoadIdentity();
+			ccglOrtho(0, size.width, 0, size.height, -1024, 1024);
+			glMatrixMode(GL_MODELVIEW);
+			glLoadIdentity();
+			break;
+			
+		case kCCDirectorProjection3D:
+			glViewport(offset.x, offset.y, widthAspect, heightAspect);
+			glMatrixMode(GL_PROJECTION);
+			glLoadIdentity();
+			gluPerspective(60, (GLfloat)widthAspect/heightAspect, 0.1f, 1500.0f);
+			
+			glMatrixMode(GL_MODELVIEW);	
+			glLoadIdentity();
+			
+			float eyeZ = size.height * [self getZEye] / winSizeInPixels_.height;
+
+			gluLookAt( size.width/2, size.height/2, eyeZ,
+					  size.width/2, size.height/2, 0,
+					  0.0f, 1.0f, 0.0f);			
+			break;
+			
+		case kCCDirectorProjectionCustom:
+			if( projectionDelegate_ )
+				[projectionDelegate_ updateProjection];
+			break;
+			
+		default:
+			CCLOG(@"cocos2d: Director: unrecognized projecgtion");
+			break;
+	}
+	
+	projection_ = projection;
+}
+
+// If scaling is supported, then it should always return the original size
+// otherwise it should return the "real" size.
+-(CGSize) winSize
+{
+	if( resizeMode_ == kCCDirectorResize_AutoScale )
+		return originalWinSize_;
+	return winSizeInPixels_;
+}
+
+-(CGSize) winSizeInPixels
+{
+	return [self winSize];
+}
+
+- (CGPoint) convertToLogicalCoordinates:(CGPoint)coords
+{
+	CGPoint ret;
+	
+	if( resizeMode_ == kCCDirectorResize_NoScale )
+		ret = coords;
+	
+	else {
+	
+		float x_diff = originalWinSize_.width / (winSizeInPixels_.width - winOffset_.x * 2);
+		float y_diff = originalWinSize_.height / (winSizeInPixels_.height - winOffset_.y * 2);
+		
+		float adjust_x = (winSizeInPixels_.width * x_diff - originalWinSize_.width ) / 2;
+		float adjust_y = (winSizeInPixels_.height * y_diff - originalWinSize_.height ) / 2;
+		
+		ret = CGPointMake( (x_diff * coords.x) - adjust_x, ( y_diff * coords.y ) - adjust_y );		
+	}
+	
+	return ret;
+}
 @end
 
 
@@ -233,9 +458,13 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 		[view setAcceptsTouchEvents:NO];
 //		[view setAcceptsTouchEvents:YES];
 		
+
+		// Synchronize buffer swaps with vertical refresh rate
+		[[view openGLContext] makeCurrentContext];
+		GLint swapInt = 1;
+		[[view openGLContext] setValues:&swapInt forParameter:NSOpenGLCPSwapInterval]; 
 	}
 }
-
 
 @end
 

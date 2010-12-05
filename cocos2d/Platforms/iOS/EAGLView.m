@@ -227,7 +227,6 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 #ifdef __IPHONE_4_0
 	
-	
 	if (multiSampling_)
 	{
 		/* Resolve from msaaFramebuffer to resolveFramebuffer */

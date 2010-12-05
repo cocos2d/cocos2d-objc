@@ -790,7 +790,7 @@ enum {
 {
 	[super onEnter];
 	
-	CCColorLayer *l = [CCColorLayer layerWithColor:color];
+	CCLayerColor *l = [CCLayerColor layerWithColor:color];
 	[inScene_ setVisible: NO];
 	
 	[self addChild: l z:2 tag:kSceneFade];
@@ -833,7 +833,7 @@ enum {
 	// in which we are going to add our rendertextures
 	ccColor4B  color = {0,0,0,0};
 	CGSize size = [[CCDirector sharedDirector] winSize];
-	CCColorLayer * layer = [CCColorLayer layerWithColor:color];
+	CCLayerColor * layer = [CCLayerColor layerWithColor:color];
 	
 	// create the first render texture for inScene_
 	CCRenderTexture *inTexture = [CCRenderTexture renderTextureWithWidth:size.width height:size.height];

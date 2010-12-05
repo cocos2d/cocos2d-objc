@@ -141,7 +141,7 @@
 			return NO;
 		}
 	}
-
+	
 	if (depthFormat_) 
 	{
 		if( ! depthBuffer_ )
@@ -165,6 +165,8 @@
 		CCLOG(@"Failed to make complete framebuffer object %x", glCheckFramebufferStatusOES(GL_FRAMEBUFFER_OES));
 		return NO;
 	}
+
+	CHECK_GL_ERROR();
 
     return YES;
 }

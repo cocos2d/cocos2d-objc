@@ -148,6 +148,7 @@ int ccInflateGZipFile(const char *path, unsigned char **out)
 		if (len < 0) {
 			CCLOG(@"cocos2d: ZipUtils: error in gzread");
 			free( *out );
+			*out = NULL;
 			return -1;
 		}
 		if (len == 0)
@@ -166,6 +167,7 @@ int ccInflateGZipFile(const char *path, unsigned char **out)
 		if( ! tmp ) {
 			CCLOG(@"cocos2d: ZipUtils: out of memory");
 			free( *out );
+			*out = NULL;
 			return -1;
 		}
 		
@@ -184,7 +186,7 @@ int ccInflateCCZFile(const char *path, unsigned char **out)
 	assert( &*out );
 
 	// load file into memory
-	unsigned char *compressed;
+	unsigned char *compressed = NULL;
 	int fileLen  = ccLoadFileIntoMemory( path, &compressed );
 	if( fileLen < 0 ) {
 		CCLOG(@"cocos2d: Error loading CCZ compressed file");
@@ -195,6 +197,7 @@ int ccInflateCCZFile(const char *path, unsigned char **out)
 	// verify header
 	if( header->sig[0] != 'C' || header->sig[1] != 'C' || header->sig[2] != 'Z' || header->sig[3] != '!' ) {
 		CCLOG(@"cocos2d: Invalid CCZ file");
+		free(compressed);
 		return -1;
 	}
 	
@@ -202,12 +205,14 @@ int ccInflateCCZFile(const char *path, unsigned char **out)
 	uint16_t version = CFSwapInt16BigToHost( header->version );
 	if( version > 2 ) {
 		CCLOG(@"cocos2d: Unsupported CCZ header format");
+		free(compressed);
 		return -1;
 	}
 
 	// verify compression format
 	if( CFSwapInt16BigToHost(header->compression_type) != CCZ_COMPRESSION_ZLIB ) {
 		CCLOG(@"cocos2d: CCZ Unsupported compression method");
+		free(compressed);
 		return -1;
 	}
 	
@@ -217,6 +222,7 @@ int ccInflateCCZFile(const char *path, unsigned char **out)
 	if(! *out )
 	{
 		CCLOG(@"cocos2d: CCZ: Failed to allocate memory for texture");
+		free(compressed);
 		return -1;
 	}
 	
@@ -224,13 +230,17 @@ int ccInflateCCZFile(const char *path, unsigned char **out)
 	uLongf destlen = len;
 	uLongf source = (uLongf) compressed + sizeof(*header);
 	int ret = uncompress(*out, &destlen, (Bytef*)source, fileLen - sizeof(*header) );
+
+	free( compressed );
+	
 	if( ret != Z_OK )
 	{
 		CCLOG(@"cocos2d: CCZ: Failed to uncompress data");
 		free( *out );
 		*out = NULL;
 		return -1;
-	} 
+	}
+	
 	
 	return len;
 }

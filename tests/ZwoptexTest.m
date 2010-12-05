@@ -134,7 +134,7 @@ Class restartAction()
 		[[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"zwoptex/grossini.plist"];
 		[[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"zwoptex/grossini-generic.plist"];
 		
-		CCColorLayer *layer1 = [CCColorLayer layerWithColor:ccc4(255, 0, 0, 255) width:85 height:121];
+		CCLayerColor *layer1 = [CCLayerColor layerWithColor:ccc4(255, 0, 0, 255) width:85 height:121];
 		layer1.position = ccp(s.width/2-80 - (85.0f * 0.5f), s.height/2 - (121.0f * 0.5f));
 		[self addChild:layer1];
 		
@@ -145,7 +145,7 @@ Class restartAction()
 		sprite1.flipX = NO;
 		sprite1.flipY = NO;
 		
-		CCColorLayer *layer2 = [CCColorLayer layerWithColor:ccc4(255, 0, 0, 255) width:85 height:121];
+		CCLayerColor *layer2 = [CCLayerColor layerWithColor:ccc4(255, 0, 0, 255) width:85 height:121];
 		layer2.position = ccp(s.width/2+80 - (85.0f * 0.5f), s.height/2 - (121.0f * 0.5f));
 		[self addChild:layer2];
 		

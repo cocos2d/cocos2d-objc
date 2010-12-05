@@ -30,7 +30,7 @@
 
 @implementation CCCamera
 
-@synthesize dirty;
+@synthesize dirty=dirty_;
 
 -(id) init
 {
@@ -42,7 +42,7 @@
 
 - (NSString*) description
 {
-	return [NSString stringWithFormat:@"<%@ = %08X | center = (%.2f,%.2f,%.2f)>", [self class], self, centerX, centerY, centerZ];
+	return [NSString stringWithFormat:@"<%@ = %08X | center = (%.2f,%.2f,%.2f)>", [self class], self, centerX_, centerY_, centerZ_];
 }
 
 
@@ -54,24 +54,24 @@
 
 -(void) restore
 {
-	eyeX = eyeY = 0;
-	eyeZ = [CCCamera getZEye];
+	eyeX_ = eyeY_ = 0;
+	eyeZ_ = [CCCamera getZEye];
 	
-	centerX = centerY = centerZ = 0;
+	centerX_ = centerY_ = centerZ_ = 0;
 	
-	upX = 0.0f;
-	upY = 1.0f;
-	upZ = 0.0f;
+	upX_ = 0.0f;
+	upY_ = 1.0f;
+	upZ_ = 0.0f;
 	
-	dirty = NO;
+	dirty_ = NO;
 }
 
 -(void) locate
 {
-	if( dirty )
-		gluLookAt( eyeX, eyeY, eyeZ,
-				centerX, centerY, centerZ,
-				upX, upY, upZ
+	if( dirty_ )
+		gluLookAt( eyeX_, eyeY_, eyeZ_,
+				centerX_, centerY_, centerZ_,
+				upX_, upY_, upZ_
 				);
 }
 
@@ -84,47 +84,47 @@
 
 -(void) setEyeX: (float)x eyeY:(float)y eyeZ:(float)z
 {
-	eyeX = x;
-	eyeY = y;
-	eyeZ = z;
-	dirty = YES;	
+	eyeX_ = x * CC_CONTENT_SCALE_FACTOR();
+	eyeY_ = y * CC_CONTENT_SCALE_FACTOR();
+	eyeZ_ = z * CC_CONTENT_SCALE_FACTOR();
+	dirty_ = YES;	
 }
 
 -(void) setCenterX: (float)x centerY:(float)y centerZ:(float)z
 {
-	centerX = x;
-	centerY = y;
-	centerZ = z;
-	dirty = YES;
+	centerX_ = x * CC_CONTENT_SCALE_FACTOR();
+	centerY_ = y * CC_CONTENT_SCALE_FACTOR();
+	centerZ_ = z * CC_CONTENT_SCALE_FACTOR();
+	dirty_ = YES;
 }
 
 -(void) setUpX: (float)x upY:(float)y upZ:(float)z
 {
-	upX = x;
-	upY = y;
-	upZ = z;
-	dirty = YES;
+	upX_ = x;
+	upY_ = y;
+	upZ_ = z;
+	dirty_ = YES;
 }
 
 -(void) eyeX: (float*)x eyeY:(float*)y eyeZ:(float*)z
 {
-	*x = eyeX;
-	*y = eyeY;
-	*z = eyeZ;
+	*x = eyeX_ / CC_CONTENT_SCALE_FACTOR();
+	*y = eyeY_ / CC_CONTENT_SCALE_FACTOR();
+	*z = eyeZ_ / CC_CONTENT_SCALE_FACTOR();
 }
 
 -(void) centerX: (float*)x centerY:(float*)y centerZ:(float*)z
 {
-	*x = centerX;
-	*y = centerY;
-	*z = centerZ;
+	*x = centerX_ / CC_CONTENT_SCALE_FACTOR();
+	*y = centerY_ / CC_CONTENT_SCALE_FACTOR();
+	*z = centerZ_ / CC_CONTENT_SCALE_FACTOR();
 }
 
 -(void) upX: (float*)x upY:(float*)y upZ:(float*)z
 {
-	*x = upX;
-	*y = upY;
-	*z = upZ;
+	*x = upX_;
+	*y = upY_;
+	*z = upZ_;
 }
 
 @end

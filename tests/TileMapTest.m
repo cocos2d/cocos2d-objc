@@ -487,7 +487,7 @@ Class restartAction()
 -(id) init
 {
 	if( (self=[super init]) ) {
-		CCColorLayer *color = [CCColorLayer layerWithColor:ccc4(64,64,64,255)];
+		CCLayerColor *color = [CCLayerColor layerWithColor:ccc4(64,64,64,255)];
 		[self addChild:color z:-1];
 		
 		CCTMXTiledMap *map = [CCTMXTiledMap tiledMapWithTMXFile:@"TileMaps/iso-test.tmx"];
@@ -515,7 +515,7 @@ Class restartAction()
 -(id) init
 {
 	if( (self=[super init]) ) {
-		CCColorLayer *color = [CCColorLayer layerWithColor:ccc4(64,64,64,255)];
+		CCLayerColor *color = [CCLayerColor layerWithColor:ccc4(64,64,64,255)];
 		[self addChild:color z:-1];
 		
 		CCTMXTiledMap *map = [CCTMXTiledMap tiledMapWithTMXFile:@"TileMaps/iso-test1.tmx"];
@@ -542,7 +542,7 @@ Class restartAction()
 -(id) init
 {
 	if( (self=[super init]) ) {
-		CCColorLayer *color = [CCColorLayer layerWithColor:ccc4(64,64,64,255)];
+		CCLayerColor *color = [CCLayerColor layerWithColor:ccc4(64,64,64,255)];
 		[self addChild:color z:-1];
 		
 		CCTMXTiledMap *map = [CCTMXTiledMap tiledMapWithTMXFile:@"TileMaps/iso-test2.tmx"];
@@ -570,7 +570,7 @@ Class restartAction()
 -(id) init
 {
 	if( (self=[super init]) ) {
-		CCColorLayer *color = [CCColorLayer layerWithColor:ccc4(64,64,64,255)];
+		CCLayerColor *color = [CCLayerColor layerWithColor:ccc4(64,64,64,255)];
 		[self addChild:color z:-1];
 		
 		CCTMXTiledMap *map = [CCTMXTiledMap tiledMapWithTMXFile:@"TileMaps/iso-test2-uncompressed.tmx"];
@@ -606,7 +606,7 @@ Class restartAction()
 -(id) init
 {
 	if( (self=[super init]) ) {
-		CCColorLayer *color = [CCColorLayer layerWithColor:ccc4(64,64,64,255)];
+		CCLayerColor *color = [CCLayerColor layerWithColor:ccc4(64,64,64,255)];
 		[self addChild:color z:-1];
 		
 		CCTMXTiledMap *map = [CCTMXTiledMap tiledMapWithTMXFile:@"TileMaps/hexa-test.tmx"];
@@ -1512,6 +1512,17 @@ Class restartAction()
 	// Finally, run the scene
 	//
 	[director runWithScene: scene];
+}
+
+- (BOOL) applicationShouldTerminateAfterLastWindowClosed: (NSApplication *) theApplication
+{
+	return YES;
+}
+
+- (IBAction)toggleFullScreen: (id)sender
+{
+	CCDirectorMac *director = (CCDirectorMac*) [CCDirector sharedDirector];
+	[director setFullScreen: ! [director isFullScreen] ];
 }
 
 @end

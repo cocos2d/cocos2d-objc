@@ -33,7 +33,7 @@
 #import "CCConfiguration.h"
 #import "ccMacros.h"
 #import "ccConfig.h"
-
+#import "Support/OpenGL_Internal.h"
 
 @implementation CCConfiguration
 
@@ -109,7 +109,10 @@ static char * glExtensions;
 		glGetIntegerv(GL_MAX_TEXTURE_SIZE, &maxTextureSize_);
 		glGetIntegerv(GL_MAX_MODELVIEW_STACK_DEPTH, &maxModelviewStackDepth_);
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
-		glGetIntegerv(GL_MAX_SAMPLES_APPLE, &maxSamplesAllowed_);
+		if( OSVersion_ >= kCCiOSVersion_4_0 )
+			glGetIntegerv(GL_MAX_SAMPLES_APPLE, &maxSamplesAllowed_);
+		else
+			maxSamplesAllowed_ = 0;
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 		glGetIntegerv(GL_MAX_SAMPLES, &maxSamplesAllowed_);
 #endif
@@ -130,7 +133,6 @@ static char * glExtensions;
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 		supportsBGRA8888_ = [self checkForGLExtension:@"GL_EXT_bgra"];
 #endif
-					   
 		
 		supportsDiscardFramebuffer_ = [self checkForGLExtension:@"GL_EXT_discard_framebuffer"];
 
@@ -172,6 +174,8 @@ static char * glExtensions;
 			  "NO"
 #endif
 			  );
+		
+		CHECK_GL_ERROR();
 	}
 	
 	return self;

@@ -177,6 +177,10 @@ struct transformValues_ {
 		
 		// Atlas: TexCoords
 		[self setTextureRectInPixels:CGRectZero rotated:NO untrimmedSize:CGSizeZero];
+		
+		// updateMethod selector
+		updateMethod = (__typeof__(updateMethod))[self methodForSelector:@selector(updateTransform)];
+
 	}
 	
 	return self;
@@ -279,6 +283,7 @@ struct transformValues_ {
 {
 	id ret = [self initWithTexture:batchNode.texture rect:rect];
 	[self useBatchNode:batchNode];
+	
 	return ret;
 }
 
@@ -287,6 +292,7 @@ struct transformValues_ {
 	id ret = [self initWithTexture:batchNode.texture];
 	[self setTextureRectInPixels:rect rotated:NO untrimmedSize:rect.size];
 	[self useBatchNode:batchNode];
+	
 	return ret;
 }
 
@@ -493,16 +499,20 @@ struct transformValues_ {
 									   -s * scaleY_, c * scaleY_,
 									   positionInPixels_.x, positionInPixels_.y);
 		matrix = CGAffineTransformTranslate(matrix, -anchorPointInPixels_.x, -anchorPointInPixels_.y);		
-	} 
-	
-	// else do affine transformation according to the HonorParentTransform
-	else if( parent_ != batchNode_ ) {
+
+		
+	}  else { 	// parent_ != batchNode_ 
+
+		// else do affine transformation according to the HonorParentTransform
 
 		matrix = CGAffineTransformIdentity;
 		ccHonorParentTransform prevHonor = CC_HONOR_PARENT_TRANSFORM_ALL;
 		
 		for (CCNode *p = self ; p && p != batchNode_ ; p = p.parent) {
 			
+			// Might happen. Issue #1053
+			NSAssert( [p isKindOfClass:[CCSprite class]], @"CCSprite should be a CCSprite subclass. Probably you initialized an sprite with a batchnode, but you didn't add it to the batch node." );
+
 			struct transformValues_ tv;
 			[(CCSprite*)p getTransformValues: &tv];
 			
@@ -532,10 +542,6 @@ struct transformValues_ {
 			
 			prevHonor = [(CCSprite*)p honorParentTransform];
 		}		
-	}
-	else {
-		NSAssert(NO, @"Should not happen");
-		return;
 	}
 	
 	
