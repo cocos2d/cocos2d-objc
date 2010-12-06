@@ -407,6 +407,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Fixed artifacts in PageTurnTransition
 	* TBBle (http://blog.tbble.org/)
 		CCSpriteFrameCache textureFileName is relative to path
+		CCSprite: correctly overrides setIsRelativeAnchorPoint
 	* TheArsenik:
 		added BezierTo action
 	* thoechsm:
