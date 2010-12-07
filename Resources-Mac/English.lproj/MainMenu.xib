@@ -306,7 +306,7 @@
 							<int key="NSViewLayerContentsRedrawPolicy">2</int>
 							<object class="NSOpenGLPixelFormat" key="NSPixelFormat">
 								<object class="NSMutableData" key="NSPixelAttributes">
-									<bytes key="NS.bytes">AAAABQAAAGAAAAAIAAAAGAAAAAsAAAAIAAAAAA</bytes>
+									<bytes key="NS.bytes">AAAABQAAAGAAAAAIAAAAGAAAAAsAAAAIAAAADAAAACAAAAAAA</bytes>
 								</object>
 							</object>
 						</object>
