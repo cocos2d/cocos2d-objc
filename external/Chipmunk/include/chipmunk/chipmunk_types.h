@@ -2,14 +2,27 @@
    #import "TargetConditionals.h"
 #endif
 
+#if (defined TARGET_OS_IPHONE) && (!defined CP_USE_CGPOINTS)
+	#define CP_USE_CGPOINTS
+#endif
+
+#ifdef CP_USE_CGPOINTS
+	#if TARGET_OS_IPHONE
+		#import <CoreGraphics/CGGeometry.h>
+	#elif TARGET_OS_MAC
+		#import <ApplicationServices/ApplicationServices.h>
+	#endif
+	
+	#if defined(__LP64__) && __LP64__
+		#define CP_USE_DOUBLES 1
+	#else
+		#define CP_USE_DOUBLES 0
+	#endif
+#endif
+
 #ifndef CP_USE_DOUBLES
-  // Use single precision floats on the iPhone.
-  #if TARGET_OS_IPHONE
-    #define CP_USE_DOUBLES 0
-  #else
-    // use doubles by default for higher precision
-    #define CP_USE_DOUBLES 1
-  #endif
+	// use doubles by default for higher precision
+	#define CP_USE_DOUBLES 1
 #endif
 
 #if CP_USE_DOUBLES
@@ -74,10 +87,9 @@ cpflerpconst(cpFloat f1, cpFloat f2, cpFloat d)
 	return f1 + cpfclamp(f2 - f1, -d, d);
 }
 
-#if TARGET_OS_IPHONE
-	// CGPoints are structurally the same, and allow
-	// easy interoperability with other iPhone libraries
-	#import <CoreGraphics/CGGeometry.h>
+// CGPoints are structurally the same, and allow
+// easy interoperability with other Cocoa libraries
+#ifdef CP_USE_CGPOINTS
 	typedef CGPoint cpVect;
 #else
 	typedef struct cpVect{cpFloat x,y;} cpVect;
