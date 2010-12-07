@@ -26,6 +26,16 @@
 extern "C" {
 #endif
 
+#ifndef CP_ALLOW_PRIVATE_ACCESS
+	#define CP_ALLOW_PRIVATE_ACCESS 1
+#endif
+
+#if CP_ALLOW_PRIVATE_ACCESS == 1
+	#define CP_PRIVATE(symbol) symbol
+#else
+	#define CP_PRIVATE(symbol) symbol##_private
+#endif
+
 void cpMessage(const char *message, const char *condition, const char *file, int line, int isError);
 #ifdef NDEBUG
 	#define	cpAssertWarn(condition, message)
@@ -61,7 +71,7 @@ void cpMessage(const char *message, const char *condition, const char *file, int
 	#endif
 #endif
 
-// Maximum allocated size for various Chipmunk buffer sizes
+// Maximum allocated size for various Chipmunk buffers
 #define CP_BUFFER_BYTES (32*1024)
 
 #define cpmalloc malloc
@@ -99,15 +109,40 @@ void cpInitChipmunk(void);
 cpFloat cpMomentForCircle(cpFloat m, cpFloat r1, cpFloat r2, cpVect offset);
 
 /**
+	Calculate area of a hollow circle.
+*/
+cpFloat cpAreaForCircle(cpFloat r1, cpFloat r2);
+
+/**
 	Calculate the moment of inertia for a line segment.
 	Beveling radius is not supported.
 */
 cpFloat cpMomentForSegment(cpFloat m, cpVect a, cpVect b);
 
 /**
-	Calculate the moment of inertia for a solid polygon shape.
+	Calculate the area of a fattened (capsule shaped) line segment.
 */
-cpFloat cpMomentForPoly(cpFloat m, int numVerts, cpVect *verts, cpVect offset);
+cpFloat cpAreaForSegment(cpVect a, cpVect b, cpFloat r);
+
+/**
+	Calculate the moment of inertia for a solid polygon shape assuming it's center of gravity is at it's centroid. The offset is added to each vertex.
+*/
+cpFloat cpMomentForPoly(cpFloat m, int numVerts, const cpVect *verts, cpVect offset);
+
+/**
+	Calculate the signed area of a polygon.
+*/
+cpFloat cpAreaForPoly(const int numVerts, const cpVect *verts);
+
+/**
+	Calculate the natural centroid of a polygon.
+*/
+cpVect cpCentroidForPoly(const int numVerts, const cpVect *verts);
+
+/**
+	Center the polygon on the origin. (Subtracts the centroid of the polygon from each vertex)
+*/
+void cpRecenterPoly(const int numVerts, cpVect *verts);
 
 /**
 	Calculate the moment of inertia for a solid box.
