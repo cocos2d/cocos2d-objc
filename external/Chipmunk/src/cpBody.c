@@ -21,8 +21,9 @@
  
 #include <stdlib.h>
 #include <float.h>
+#include <stdarg.h>
 
-#include "chipmunk.h"
+#include "chipmunk_private.h"
 
 // initialized in cpInitChipmunk()
 cpBody cpStaticBodySingleton;
@@ -73,6 +74,21 @@ cpBody*
 cpBodyNew(cpFloat m, cpFloat i)
 {
 	return cpBodyInit(cpBodyAlloc(), m, i);
+}
+
+cpBody *
+cpBodyInitStatic(cpBody *body)
+{
+	cpBodyInit(body, (cpFloat)INFINITY, (cpFloat)INFINITY);
+	body->node.idleTime = (cpFloat)INFINITY;
+	
+	return body;
+}
+
+cpBody *
+cpBodyNewStatic()
+{
+	return cpBodyInitStatic(cpBodyAlloc());
 }
 
 void cpBodyDestroy(cpBody *body){}
@@ -173,22 +189,4 @@ cpApplyDampedSpring(cpBody *a, cpBody *b, cpVect anchr1, cpVect anchr2, cpFloat 
 	cpVect f = cpvmult(n, f_spring + f_damp);
 	cpBodyApplyForce(a, f, r1);
 	cpBodyApplyForce(b, cpvneg(f), r2);
-}
-
-cpBool
-cpBodyIsStatic(const cpBody *body)
-{
-	cpSpace *space = body->space;
-	return (space != ((cpSpace*)0) && body == &space->staticBody);
-}
-
-void cpSpaceSleepBody(cpSpace *space, cpBody *body);
-
-void
-cpBodySleep(cpBody *body)
-{
-	if(cpBodyIsSleeping(body)) return;
-	
-	cpAssert(!cpBodyIsStatic(body) && !cpBodyIsRogue(body), "Rogue and static bodies cannot be put to sleep.");
-	cpSpaceSleepBody(body->space, body);
 }

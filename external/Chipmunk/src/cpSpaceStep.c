@@ -20,10 +20,10 @@
  */
  
 #include <stdlib.h>
-#include <stdio.h>
+//#include <stdio.h>
 #include <math.h>
 
-#include "chipmunk.h"
+#include "chipmunk_private.h"
 
 #pragma mark Post Step Callback Functions
 
@@ -69,7 +69,7 @@ typedef struct cpContactBuffer {
 static cpContactBufferHeader *
 cpSpaceAllocContactBuffer(cpSpace *space)
 {
-	cpContactBuffer *buffer = (cpContactBuffer *)malloc(sizeof(cpContactBuffer));
+	cpContactBuffer *buffer = (cpContactBuffer *)cpmalloc(sizeof(cpContactBuffer));
 	cpArrayPush(space->allocatedBuffers, buffer);
 	return (cpContactBufferHeader *)buffer;
 }
@@ -178,7 +178,7 @@ queryFunc(cpShape *a, cpShape *b, cpSpace *space)
 	cpShape *shape_pair[] = {a, b};
 	cpHashValue arbHashID = CP_HASH_PAIR((size_t)a, (size_t)b);
 	cpArbiter *arb = (cpArbiter *)cpHashSetInsert(space->contactSet, arbHashID, shape_pair, space);
-	cpArbiterUpdate(arb, contacts, numContacts, handler, a, b); // retains the contacts array
+	cpArbiterUpdate(arb, contacts, numContacts, handler, a, b);
 	
 	// Call the begin function first if it's the first step
 	if(arb->state == cpArbiterStateFirstColl && !handler->begin(arb, space, handler->data)){
@@ -221,8 +221,8 @@ static cpBool
 contactSetFilter(cpArbiter *arb, cpSpace *space)
 {
 	if(space->sleepTimeThreshold != INFINITY){
-		cpBody *a = arb->private_a->body;
-		cpBody *b = arb->private_b->body;
+		cpBody *a = arb->a->body;
+		cpBody *b = arb->b->body;
 		
 		// both bodies are either static or sleeping
 		cpBool sleepingNow =
@@ -282,8 +282,6 @@ cpSpaceStep(cpSpace *space, cpFloat dt)
 	cpArray *bodies = space->bodies;
 	cpArray *constraints = space->constraints;
 	
-	space->locked = cpTrue;
-	
 	// Empty the arbiter list.
 	space->arbiters->num = 0;
 
@@ -296,11 +294,15 @@ cpSpaceStep(cpSpace *space, cpFloat dt)
 	// Pre-cache BBoxes and shape data.
 	cpSpaceHashEach(space->activeShapes, (cpSpaceHashIterator)updateBBCache, NULL);
 	
+	space->locked = cpTrue;
+	
 	// Collide!
 	cpSpacePushFreshContactBuffer(space);
 	if(space->staticShapes->handleSet->entries)
 		cpSpaceHashEach(space->activeShapes, (cpSpaceHashIterator)active2staticIter, space);
 	cpSpaceHashQueryRehash(space->activeShapes, (cpSpaceHashQueryFunc)queryFunc, space);
+	
+	space->locked = cpFalse;
 	
 	// If body sleeping is enabled, do that now.
 	if(space->sleepTimeThreshold != INFINITY){
@@ -356,7 +358,7 @@ cpSpaceStep(cpSpace *space, cpFloat dt)
 		}
 	}
 	
-	space->locked = cpFalse;
+	space->locked = cpTrue;
 	
 	// run the post solve callbacks
 	for(int i=0; i<arbiters->num; i++){
@@ -367,6 +369,8 @@ cpSpaceStep(cpSpace *space, cpFloat dt)
 		
 		arb->state = cpArbiterStateNormal;
 	}
+	
+	space->locked = cpFalse;
 	
 	// Run the post step callbacks
 	// Loop because post step callbacks may create more post step callbacks

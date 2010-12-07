@@ -56,7 +56,7 @@ typedef struct cpShapeClass {
 // Basic shape struct that the others inherit from.
 typedef struct cpShape{
 	// The "class" of a shape as defined above 
-	const cpShapeClass *klass;
+	CP_PRIVATE(const cpShapeClass *klass);
 	
 	// cpBody that the shape is attached to.
 	cpBody *body;
@@ -91,10 +91,10 @@ typedef struct cpShape{
 	// *** Internally Used Fields
 	
 	// Shapes form a linked list when added to space on a non-NULL body
-	struct cpShape *next;
+	CP_PRIVATE(struct cpShape *next);
 	
 	// Unique id used as the hash value.
-	cpHashValue hashid;
+	CP_PRIVATE(cpHashValue hashid);
 } cpShape;
 
 // Low level shape initialization func.
@@ -114,15 +114,15 @@ cpBool cpShapePointQuery(cpShape *shape, cpVect p);
 
 // Circle shape structure.
 typedef struct cpCircleShape{
-	cpShape shape;
+	CP_PRIVATE(cpShape shape);
 	
 	// Center in body space coordinates
-	cpVect c;
+	CP_PRIVATE(cpVect c);
 	// Radius.
-	cpFloat r;
+	CP_PRIVATE(cpFloat r);
 	
 	// Transformed center. (world space coordinates)
-	cpVect tc;
+	CP_PRIVATE(cpVect tc);
 } cpCircleShape;
 
 // Basic allocation functions for cpCircleShape.
@@ -135,15 +135,15 @@ CP_DeclareShapeGetter(cpCircleShape, cpFloat, Radius);
 
 // Segment shape structure.
 typedef struct cpSegmentShape{
-	cpShape shape;
+	CP_PRIVATE(cpShape shape);
 	
 	// Endpoints and normal of the segment. (body space coordinates)
-	cpVect a, b, n;
+	cpVect CP_PRIVATE(a), CP_PRIVATE(b), CP_PRIVATE(n);
 	// Radius of the segment. (Thickness)
-	cpFloat r;
+	cpFloat CP_PRIVATE(r);
 
 	// Transformed endpoints and normal. (world space coordinates)
-	cpVect ta, tb, tn;
+	cpVect CP_PRIVATE(ta), CP_PRIVATE(tb), CP_PRIVATE(tn);
 } cpSegmentShape;
 
 // Basic allocation functions for cpSegmentShape.
