@@ -19,36 +19,5 @@
  * SOFTWARE.
  */
 
-#include <stdlib.h>
-
-#include "chipmunk_private.h"
-#include "constraints/util.h"
-
-// TODO: Comment me!
-
-cpFloat cp_constraint_bias_coef = 0.1f;
-
-void cpConstraintDestroy(cpConstraint *constraint){}
-
-void
-cpConstraintFree(cpConstraint *constraint)
-{
-	if(constraint){
-		cpConstraintDestroy(constraint);
-		cpfree(constraint);
-	}
-}
-
-// *** defined in util.h
-
-void
-cpConstraintInit(cpConstraint *constraint, const cpConstraintClass *klass, cpBody *a, cpBody *b)
-{
-	constraint->klass = klass;
-	constraint->a = a;
-	constraint->b = b;
-	
-	constraint->maxForce = (cpFloat)INFINITY;
-	constraint->biasCoef = cp_constraint_bias_coef;
-	constraint->maxBias = (cpFloat)INFINITY;
-}
+#define CP_ALLOW_PRIVATE_ACCESS 1
+#include "chipmunk.h"

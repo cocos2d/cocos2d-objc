@@ -21,7 +21,7 @@
  
 #include <stdlib.h>
 
-#include "chipmunk.h"
+#include "chipmunk_private.h"
 
 #pragma mark Point Query Functions
 
@@ -47,8 +47,11 @@ void
 cpSpacePointQuery(cpSpace *space, cpVect point, cpLayers layers, cpGroup group, cpSpacePointQueryFunc func, void *data)
 {
 	pointQueryContext context = {layers, group, func, data};
-	cpSpaceHashPointQuery(space->activeShapes, point, (cpSpaceHashQueryFunc)pointQueryHelper, &context);
-	cpSpaceHashPointQuery(space->staticShapes, point, (cpSpaceHashQueryFunc)pointQueryHelper, &context);
+	
+	cpBool locked = space->locked; space->locked = cpTrue; {
+		cpSpaceHashPointQuery(space->activeShapes, point, (cpSpaceHashQueryFunc)pointQueryHelper, &context);
+		cpSpaceHashPointQuery(space->staticShapes, point, (cpSpaceHashQueryFunc)pointQueryHelper, &context);
+	} space->locked = locked;
 }
 
 static void
@@ -66,6 +69,8 @@ cpSpacePointQueryFirst(cpSpace *space, cpVect point, cpLayers layers, cpGroup gr
 	return shape;
 }
 
+
+// TODO probably should deprecate this
 void
 cpSpaceEachBody(cpSpace *space, cpSpaceBodyIterator func, void *data)
 {
@@ -108,8 +113,10 @@ cpSpaceSegmentQuery(cpSpace *space, cpVect start, cpVect end, cpLayers layers, c
 		func,
 	};
 	
-	cpSpaceHashSegmentQuery(space->staticShapes, &context, start, end, 1.0f, (cpSpaceHashSegmentQueryFunc)segQueryFunc, data);
-	cpSpaceHashSegmentQuery(space->activeShapes, &context, start, end, 1.0f, (cpSpaceHashSegmentQueryFunc)segQueryFunc, data);
+	cpBool locked = space->locked; space->locked = cpTrue; {
+		cpSpaceHashSegmentQuery(space->staticShapes, &context, start, end, 1.0f, (cpSpaceHashSegmentQueryFunc)segQueryFunc, data);
+		cpSpaceHashSegmentQuery(space->activeShapes, &context, start, end, 1.0f, (cpSpaceHashSegmentQueryFunc)segQueryFunc, data);
+	} space->locked = locked;
 }
 
 typedef struct segQueryFirstContext {
@@ -157,7 +164,7 @@ cpSpaceSegmentQueryFirst(cpSpace *space, cpVect start, cpVect end, cpLayers laye
 	return out->shape;
 }
 
-#pragma mark BB Query functions
+#pragma mark BB Query Functions
 
 typedef struct bbQueryContext {
 	cpLayers layers;
@@ -181,6 +188,69 @@ void
 cpSpaceBBQuery(cpSpace *space, cpBB bb, cpLayers layers, cpGroup group, cpSpaceBBQueryFunc func, void *data)
 {
 	bbQueryContext context = {layers, group, func, data};
-	cpSpaceHashQuery(space->activeShapes, &bb, bb, (cpSpaceHashQueryFunc)bbQueryHelper, &context);
-	cpSpaceHashQuery(space->staticShapes, &bb, bb, (cpSpaceHashQueryFunc)bbQueryHelper, &context);
+	
+	cpBool locked = space->locked; space->locked = cpTrue; {
+		cpSpaceHashQuery(space->activeShapes, &bb, bb, (cpSpaceHashQueryFunc)bbQueryHelper, &context);
+		cpSpaceHashQuery(space->staticShapes, &bb, bb, (cpSpaceHashQueryFunc)bbQueryHelper, &context);
+	} space->locked = locked;
+}
+
+#pragma mark Shape Query Functions
+
+typedef struct shapeQueryContext {
+	cpSpaceShapeQueryFunc func;
+	void *data;
+	cpBool anyCollision;
+} shapeQueryContext;
+
+// Callback from the spatial hash.
+static void
+shapeQueryHelper(cpShape *a, cpShape *b, shapeQueryContext *context)
+{
+	// Reject any of the simple cases
+	if(
+		(a->group && a->group == b->group) ||
+		!(a->layers & b->layers) ||
+		a->sensor || b->sensor
+	) return;
+	
+	cpContact contacts[CP_MAX_CONTACTS_PER_ARBITER];
+	int numContacts = 0;
+	
+	// Shape 'a' should have the lower shape type. (required by cpCollideShapes() )
+	if(a->klass->type <= b->klass->type){
+		numContacts = cpCollideShapes(a, b, contacts);
+	} else {
+		numContacts = cpCollideShapes(b, a, contacts);
+		for(int i=0; i<numContacts; i++) contacts[i].n = cpvneg(contacts[i].n);
+	}
+	
+	if(numContacts){
+		context->anyCollision = cpTrue;
+		
+		if(context->func){
+			cpContactPointSet set = {numContacts, {}};
+			for(int i=0; i<set.count; i++){
+				set.points[i].point = contacts[i].p;
+				set.points[i].normal = contacts[i].p;
+				set.points[i].dist = contacts[i].dist;
+			}
+			
+			context->func(b, &set, context->data);
+		}
+	}
+}
+
+cpBool
+cpSpaceShapeQuery(cpSpace *space, cpShape *shape, cpSpaceShapeQueryFunc func, void *data)
+{
+	cpBB bb = cpShapeCacheBB(shape);
+	shapeQueryContext context = {func, data, cpFalse};
+	
+	cpBool locked = space->locked; space->locked = cpTrue; {
+		cpSpaceHashQuery(space->activeShapes, shape, bb, (cpSpaceHashQueryFunc)shapeQueryHelper, &context);
+		cpSpaceHashQuery(space->staticShapes, shape, bb, (cpSpaceHashQueryFunc)shapeQueryHelper, &context);
+	} space->locked = locked;
+	
+	return context.anyCollision;
 }
