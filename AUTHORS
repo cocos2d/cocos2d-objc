@@ -258,6 +258,9 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Optimized the loading time of PVR images
 		CCArray: improved performance in insert & delete elements
 		Added option to enable/disable RetinaDisplay
+		Texture: Added possibility to subclass it using MutableTexture
+		Clean up several parts of the code
+		Added small performance improvements in several parts of the code
 	* marcofucci:
 		CCArray.fastRemoveObjectAtIndex patch.
 	* Marco Tillemans (araker):
