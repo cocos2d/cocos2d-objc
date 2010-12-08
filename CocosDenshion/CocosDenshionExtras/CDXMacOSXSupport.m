@@ -22,6 +22,10 @@
  $Id$
  */
 
+#import <Availability.h>
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+
 #import "CDXMacOSXSupport.h"
 #import "SimpleAudioEngine.h"
 
@@ -168,6 +172,4 @@ OSStatus AudioSessionGetProperty(UInt32 inID, UInt32 *ioDataSize, void *outData)
 - (BOOL)setPreferredIOBufferDuration:(NSTimeInterval)duration error:(NSError**)outError {return YES;}
 
 @end
-
-
-
+#endif
