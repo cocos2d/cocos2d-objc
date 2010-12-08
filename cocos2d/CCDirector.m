@@ -363,9 +363,10 @@ static CCDirector *_sharedDirector = nil;
 	[scenesStack_ removeLastObject];
 	NSUInteger c = [scenesStack_ count];
 	
-	if( c == 0 ) {
+	if( c == 0 )
 		[self end];
-	} else {
+	else {
+		sendCleanupToScene_ = YES;
 		nextScene_ = [scenesStack_ objectAtIndex:c-1];
 	}
 }
