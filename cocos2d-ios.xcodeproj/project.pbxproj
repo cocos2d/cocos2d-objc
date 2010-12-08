@@ -2430,6 +2430,7 @@
 		E0C5589511FE4CF100B9E4CB /* zwoptex in Resources */ = {isa = PBXBuildFile; fileRef = E0C5588E11FE4CF100B9E4CB /* zwoptex */; };
 		E0C786AD1211A40400E309E2 /* Tank.c in Sources */ = {isa = PBXBuildFile; fileRef = E0C786AC1211A40400E309E2 /* Tank.c */; };
 		E0CC4F7D12677DB400691051 /* blocks-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E0CC4F7C12677DB400691051 /* blocks-hd.png */; };
+		E0D2C5D412AF1067008D5DBB /* particles-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E0D2C5D312AF1067008D5DBB /* particles-hd.png */; };
 		E0D2D4F3128CA9E300F78C63 /* piece.png in Resources */ = {isa = PBXBuildFile; fileRef = E0D2D4F2128CA9E300F78C63 /* piece.png */; };
 		E0E974A51237E4EA00E3E64B /* CCDirectorMac.h in Headers */ = {isa = PBXBuildFile; fileRef = E0E9749F1237E4EA00E3E64B /* CCDirectorMac.h */; };
 		E0E974A61237E4EA00E3E64B /* CCDirectorMac.m in Sources */ = {isa = PBXBuildFile; fileRef = E0E974A01237E4EA00E3E64B /* CCDirectorMac.m */; };
@@ -4333,6 +4334,7 @@
 		E0C783B41210A39200E309E2 /* Web.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Web.h; sourceTree = "<group>"; };
 		E0C786AC1211A40400E309E2 /* Tank.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; fileEncoding = 4; path = Tank.c; sourceTree = "<group>"; };
 		E0CC4F7C12677DB400691051 /* blocks-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "blocks-hd.png"; sourceTree = "<group>"; };
+		E0D2C5D312AF1067008D5DBB /* particles-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "particles-hd.png"; sourceTree = "<group>"; };
 		E0D2D4F2128CA9E300F78C63 /* piece.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = piece.png; sourceTree = "<group>"; };
 		E0E9749F1237E4EA00E3E64B /* CCDirectorMac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCDirectorMac.h; sourceTree = "<group>"; };
 		E0E974A01237E4EA00E3E64B /* CCDirectorMac.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCDirectorMac.m; sourceTree = "<group>"; };
@@ -6287,6 +6289,7 @@
 			children = (
 				E0C54E7411F9D8C700B9E4CB /* fire_rgba8888.pvr */,
 				50B2F56511AE5C4B008D770F /* particles.png */,
+				E0D2C5D312AF1067008D5DBB /* particles-hd.png */,
 				501F0D3511527023002BB7F1 /* fire-grayscale.png */,
 				501F0D3611527023002BB7F1 /* stars-grayscale.png */,
 				501F0D3711527023002BB7F1 /* stars2-grayscale.png */,
@@ -10216,6 +10219,7 @@
 				E02BB647126CA73F006E46A2 /* Icon-Small-50.png in Resources */,
 				E02BB648126CA73F006E46A2 /* Icon-72.png in Resources */,
 				E087B34F12785BB60076F6FF /* fps_images-hd.png in Resources */,
+				E0D2C5D412AF1067008D5DBB /* particles-hd.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
