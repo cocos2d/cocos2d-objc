@@ -596,8 +596,8 @@ int compareInts (const void * a, const void * b)
 -(CGPoint) positionForOrthoAt:(CGPoint)pos
 {
 	CGPoint xy = {
-		pos.x * mapTileSize_.width + 0.49f,
-		(layerSize_.height - pos.y - 1) * mapTileSize_.height + 0.49f
+		pos.x * mapTileSize_.width,
+		(layerSize_.height - pos.y - 1) * mapTileSize_.height,
 	};
 	return xy;
 }
@@ -605,8 +605,8 @@ int compareInts (const void * a, const void * b)
 -(CGPoint) positionForIsoAt:(CGPoint)pos
 {
 	CGPoint xy = {
-		mapTileSize_.width /2 * ( layerSize_.width + pos.x - pos.y - 1) + 0.49f,
-		mapTileSize_.height /2 * (( layerSize_.height * 2 - pos.x - pos.y) - 2) + 0.49f
+		mapTileSize_.width /2 * ( layerSize_.width + pos.x - pos.y - 1),
+		mapTileSize_.height /2 * (( layerSize_.height * 2 - pos.x - pos.y) - 2),
 	};
 	return xy;
 }
@@ -618,8 +618,8 @@ int compareInts (const void * a, const void * b)
 		diffY = -mapTileSize_.height/2 ;
 	
 	CGPoint xy = {
-		pos.x * mapTileSize_.width*3/4 + 0.49f,
-		(layerSize_.height - pos.y - 1) * mapTileSize_.height + diffY + 0.49f
+		pos.x * mapTileSize_.width*3/4,
+		(layerSize_.height - pos.y - 1) * mapTileSize_.height + diffY
 	};
 	return xy;
 }
