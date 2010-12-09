@@ -20,6 +20,9 @@
 	
 	[director setOpenGLView:glView_];
 
+	// EXPERIMENTAL stuff.
+	// 'Effects' don't work correctly when autoscale is turned on.
+	// Use kCCDirectorResize_NoScale if you don't want auto-scaling.
 	[director setResizeMode:kCCDirectorResize_AutoScale];
 	
 	// Enable "moving" mouse event. Default no.

@@ -402,7 +402,7 @@ enum {
 
 -(void) menuCallback: (id) sender
 {
-	NSLog(@"selected item: %@ index:%d", [sender selectedItem], [sender selectedIndex] );
+	NSLog(@"selected item: %@ index:%lu", [sender selectedItem], [sender selectedIndex] );
 }
 
 -(void) backCallback: (id) sender
@@ -522,10 +522,9 @@ enum {
 
 @synthesize window=window_, glView=glView_;
 
-- (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
-	
-	
-	CCDirector *director = [CCDirector sharedDirector];
+- (void)applicationDidFinishLaunching:(NSNotification *)aNotification
+{
+	CCDirectorMac *director = (CCDirectorMac*) [CCDirector sharedDirector];
 	
 	[director setDisplayFPS:YES];
 	
@@ -536,6 +535,9 @@ enum {
 	// Enable "moving" mouse event. Default no.
 	[window_ setAcceptsMouseMovedEvents:NO];
 	
+	// EXPERIMENTAL stuff.
+	// 'Effects' don't work correctly when autoscale is turned on.
+	[director setResizeMode:kCCDirectorResize_AutoScale];	
 	
 	CCScene *scene = [CCScene node];
 	
