@@ -679,8 +679,8 @@ Class restartAction()
 		[self schedule:@selector(removeTiles:) interval:1];
 		
 		
-		NSLog(@"++++atlas quantity: %d", [[layer textureAtlas] totalQuads]);
-		NSLog(@"++++children: %d", [[layer children] count]);
+		NSLog(@"++++atlas quantity: %lu", [[layer textureAtlas] totalQuads]);
+		NSLog(@"++++children: %lu", [[layer children] count]);
 		
 		gid2 = 0;
 		
@@ -693,7 +693,7 @@ Class restartAction()
 	NSLog(@"removing tile: %@", sender);
 	id p = [sender parent];
 	[p removeChild:sender cleanup:YES];
-	NSLog(@"atlas quantity: %d", [[p textureAtlas] totalQuads]);
+	NSLog(@"atlas quantity: %lu", [[p textureAtlas] totalQuads]);
 }
 
 -(void) updateCol:(ccTime)dt
@@ -701,8 +701,8 @@ Class restartAction()
 	id map = [self getChildByTag:kTagTileMap];
 	CCTMXLayer *layer = (CCTMXLayer*) [map getChildByTag:0];
 		
-	NSLog(@"++++atlas quantity: %d", [[layer textureAtlas] totalQuads]);
-	NSLog(@"++++children: %d", [[layer children] count]);
+	NSLog(@"++++atlas quantity: %lu", [[layer textureAtlas] totalQuads]);
+	NSLog(@"++++children: %lu", [[layer children] count]);
 
 
 	CGSize s = [layer layerSize];
@@ -1482,20 +1482,22 @@ Class restartAction()
 
 @synthesize window=window_, glView=glView_;
 
-- (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
-	
-	
-	CCDirector *director = [CCDirector sharedDirector];
+- (void)applicationDidFinishLaunching:(NSNotification *)aNotification
+{
+	CCDirectorMac *director = (CCDirectorMac*) [CCDirector sharedDirector];
 	
 	[director setDisplayFPS:YES];
 	
 	[director setOpenGLView:glView_];
 	
-	//	[director setProjection:kCCDirectorProjection2D];
+//	[director setProjection:kCCDirectorProjection2D];
 	
 	// Enable "moving" mouse event. Default no.
 	[window_ setAcceptsMouseMovedEvents:NO];
-	
+		
+	// EXPERIMENTAL stuff.
+	// 'Effects' don't work correctly when autoscale is turned on.
+	[director setResizeMode:kCCDirectorResize_AutoScale];
 	
 	CCScene *scene = [CCScene node];
 	[scene addChild: [nextAction() node]];

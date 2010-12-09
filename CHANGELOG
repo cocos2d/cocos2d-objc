@@ -6,7 +6,7 @@ version 0.99.5 - xx-Dec-2010
 . [NEW] Texture: It is possible to use a subclass like MutableTexture
 . [NEW-MAC] Added Mac templates
 . [NEW-MAC] Added support for Fullscreen / window mode
-. [NEW-MAC] Added support for AutoScale if the window is resized / fullscreen
+. [NEW-MAC] Added support for AutoScale if the window is resized / fullscreen (EXPERIMENTAL)
 . [FIX] All: Misc cleanups in the code
 . [FIX] Camera: uses points intead of pixels. Works OK in RetinaDisplay mode (issue #1023)
 . [FIX] CCArray: fixed possible crash

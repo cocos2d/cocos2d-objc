@@ -466,10 +466,9 @@ Class restartAction()
 
 @synthesize window=window_, glView=glView_;
 
-- (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
-	
-	
-	CCDirector *director = [CCDirector sharedDirector];
+- (void)applicationDidFinishLaunching:(NSNotification *)aNotification
+{
+	CCDirectorMac *director = (CCDirectorMac*) [CCDirector sharedDirector];
 	
 	[director setDisplayFPS:YES];
 	
@@ -480,6 +479,9 @@ Class restartAction()
 	// Enable "moving" mouse event. Default no.
 	[window_ setAcceptsMouseMovedEvents:NO];
 	
+	// EXPERIMENTAL stuff.
+	// 'Effects' don't work correctly when autoscale is turned on.
+	[director setResizeMode:kCCDirectorResize_AutoScale];	
 	
 	CCScene *scene = [CCScene node];
 	[scene addChild: [nextAction() node]];
