@@ -261,6 +261,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Texture: Added possibility to subclass it using MutableTexture
 		Clean up several parts of the code
 		Added small performance improvements in several parts of the code
+		Fixed possible memory leak when popping a scene
 	* marcofucci:
 		CCArray.fastRemoveObjectAtIndex patch.
 	* Marco Tillemans (araker):
@@ -411,6 +412,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	* TBBle (http://blog.tbble.org/)
 		CCSpriteFrameCache textureFileName is relative to path
 		CCSprite: correctly overrides setIsRelativeAnchorPoint
+		libpng doesn't compile pngtest.c. patch.
 	* TheArsenik:
 		added BezierTo action
 	* thoechsm:
