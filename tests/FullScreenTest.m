@@ -453,6 +453,9 @@ Class restartAction()
 	
 	[director setOpenGLView:glView_];
 	
+	[self toggleFullScreen:self];
+
+	
 	//	[director setProjection:kCCDirectorProjection2D];
 	
 	// Enable "moving" mouse event. Default no.
