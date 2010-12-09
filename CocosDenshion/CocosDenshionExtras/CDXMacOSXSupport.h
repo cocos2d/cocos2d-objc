@@ -33,6 +33,10 @@
  AVAudioSession nothing is supported, not applicable to MacOS X.
  */
 
+#import <Availability.h>
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+
 #import <Foundation/Foundation.h>
 #import <AppKit/NSSound.h>
 
@@ -224,3 +228,5 @@ enum {
 
 - (void)inputIsAvailableChanged:(BOOL)isInputAvailable;
 @end
+
+#endif
