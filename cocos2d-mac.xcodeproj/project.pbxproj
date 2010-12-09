@@ -1514,7 +1514,6 @@
 		E076EFB31225FF5800DE0DA2 /* pngrtran.c in Sources */ = {isa = PBXBuildFile; fileRef = E076EF9A1225FF5800DE0DA2 /* pngrtran.c */; };
 		E076EFB41225FF5800DE0DA2 /* pngrutil.c in Sources */ = {isa = PBXBuildFile; fileRef = E076EF9B1225FF5800DE0DA2 /* pngrutil.c */; };
 		E076EFB51225FF5800DE0DA2 /* pngset.c in Sources */ = {isa = PBXBuildFile; fileRef = E076EF9C1225FF5800DE0DA2 /* pngset.c */; };
-		E076EFB61225FF5800DE0DA2 /* pngtest.c in Sources */ = {isa = PBXBuildFile; fileRef = E076EF9D1225FF5800DE0DA2 /* pngtest.c */; };
 		E076EFB71225FF5800DE0DA2 /* pngtrans.c in Sources */ = {isa = PBXBuildFile; fileRef = E076EF9F1225FF5800DE0DA2 /* pngtrans.c */; };
 		E076EFB81225FF5800DE0DA2 /* pngvcrd.c in Sources */ = {isa = PBXBuildFile; fileRef = E076EFA01225FF5800DE0DA2 /* pngvcrd.c */; };
 		E076EFB91225FF5800DE0DA2 /* pngwio.c in Sources */ = {isa = PBXBuildFile; fileRef = E076EFA11225FF5800DE0DA2 /* pngwio.c */; };
@@ -3932,7 +3931,6 @@
 		E076EDAE1225FE2E00DE0DA2 /* Texture2dTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Texture2dTest.h; path = tests/Texture2dTest.h; sourceTree = "<group>"; };
 		E076EDAF1225FE2E00DE0DA2 /* Texture2dTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Texture2dTest.m; path = tests/Texture2dTest.m; sourceTree = "<group>"; };
 		E076EDB91225FEAA00DE0DA2 /* liblibpng.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = liblibpng.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		E076EF881225FF5800DE0DA2 /* libpng-1.2.44.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "libpng-1.2.44.txt"; path = "external/libpng/libpng-1.2.44.txt"; sourceTree = "<group>"; };
 		E076EF8B1225FF5800DE0DA2 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = LICENSE; path = external/libpng/LICENSE; sourceTree = "<group>"; };
 		E076EF8D1225FF5800DE0DA2 /* png.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = png.c; path = external/libpng/png.c; sourceTree = "<group>"; };
 		E076EF8E1225FF5800DE0DA2 /* png.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = png.h; path = external/libpng/png.h; sourceTree = "<group>"; };
@@ -3950,7 +3948,6 @@
 		E076EF9A1225FF5800DE0DA2 /* pngrtran.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = pngrtran.c; path = external/libpng/pngrtran.c; sourceTree = "<group>"; };
 		E076EF9B1225FF5800DE0DA2 /* pngrutil.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = pngrutil.c; path = external/libpng/pngrutil.c; sourceTree = "<group>"; };
 		E076EF9C1225FF5800DE0DA2 /* pngset.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = pngset.c; path = external/libpng/pngset.c; sourceTree = "<group>"; };
-		E076EF9D1225FF5800DE0DA2 /* pngtest.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = pngtest.c; path = external/libpng/pngtest.c; sourceTree = "<group>"; };
 		E076EF9F1225FF5800DE0DA2 /* pngtrans.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = pngtrans.c; path = external/libpng/pngtrans.c; sourceTree = "<group>"; };
 		E076EFA01225FF5800DE0DA2 /* pngvcrd.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = pngvcrd.c; path = external/libpng/pngvcrd.c; sourceTree = "<group>"; };
 		E076EFA11225FF5800DE0DA2 /* pngwio.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = pngwio.c; path = external/libpng/pngwio.c; sourceTree = "<group>"; };
@@ -4853,7 +4850,6 @@
 		E076EF2D1225FEF600DE0DA2 /* libpng */ = {
 			isa = PBXGroup;
 			children = (
-				E076EF881225FF5800DE0DA2 /* libpng-1.2.44.txt */,
 				E076EFA51225FF5800DE0DA2 /* README */,
 				E076EF8B1225FF5800DE0DA2 /* LICENSE */,
 				E076EF8D1225FF5800DE0DA2 /* png.c */,
@@ -4872,7 +4868,6 @@
 				E076EF9A1225FF5800DE0DA2 /* pngrtran.c */,
 				E076EF9B1225FF5800DE0DA2 /* pngrutil.c */,
 				E076EF9C1225FF5800DE0DA2 /* pngset.c */,
-				E076EF9D1225FF5800DE0DA2 /* pngtest.c */,
 				E076EF9F1225FF5800DE0DA2 /* pngtrans.c */,
 				E076EFA01225FF5800DE0DA2 /* pngvcrd.c */,
 				E076EFA11225FF5800DE0DA2 /* pngwio.c */,
@@ -8538,7 +8533,6 @@
 				E076EFB31225FF5800DE0DA2 /* pngrtran.c in Sources */,
 				E076EFB41225FF5800DE0DA2 /* pngrutil.c in Sources */,
 				E076EFB51225FF5800DE0DA2 /* pngset.c in Sources */,
-				E076EFB61225FF5800DE0DA2 /* pngtest.c in Sources */,
 				E076EFB71225FF5800DE0DA2 /* pngtrans.c in Sources */,
 				E076EFB81225FF5800DE0DA2 /* pngvcrd.c in Sources */,
 				E076EFB91225FF5800DE0DA2 /* pngwio.c in Sources */,
