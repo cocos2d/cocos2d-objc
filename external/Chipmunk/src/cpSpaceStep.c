@@ -27,21 +27,21 @@
 
 #pragma mark Post Step Callback Functions
 
-typedef struct postStepCallback {
+typedef struct PostStepCallback {
 	cpPostStepFunc func;
 	void *obj;
 	void *data;
-} postStepCallback;
+} PostStepCallback;
 
 static cpBool
-postStepFuncSetEql(postStepCallback *a, postStepCallback *b){
+postStepFuncSetEql(PostStepCallback *a, PostStepCallback *b){
 	return a->obj == b->obj;
 }
 
 static void *
-postStepFuncSetTrans(postStepCallback *callback, void *ignored)
+postStepFuncSetTrans(PostStepCallback *callback, void *ignored)
 {
-	postStepCallback *value = (postStepCallback *)cpmalloc(sizeof(postStepCallback));
+	PostStepCallback *value = (PostStepCallback *)cpmalloc(sizeof(PostStepCallback));
 	(*value) = (*callback);
 	
 	return value;
@@ -54,8 +54,20 @@ cpSpaceAddPostStepCallback(cpSpace *space, cpPostStepFunc func, void *obj, void 
 		space->postStepCallbacks = cpHashSetNew(0, (cpHashSetEqlFunc)postStepFuncSetEql, (cpHashSetTransFunc)postStepFuncSetTrans);
 	}
 	
-	postStepCallback callback = {func, obj, data};
+	PostStepCallback callback = {func, obj, data};
 	cpHashSetInsert(space->postStepCallbacks, (cpHashValue)(size_t)obj, &callback, NULL);
+}
+
+void *
+cpSpaceGetPostStepData(cpSpace *space, void *obj)
+{
+	if(space->postStepCallbacks){
+		PostStepCallback query = {NULL, obj, NULL};
+		PostStepCallback *callback = (PostStepCallback *)cpHashSetFind(space->postStepCallbacks, (cpHashValue)(size_t)obj, &query);
+		return (callback ? callback->data : NULL);
+	} else {
+		return NULL;
+	}
 }
 
 #pragma mark Contact Buffer Functions
@@ -260,7 +272,7 @@ contactSetFilter(cpArbiter *arb, cpSpace *space)
 
 // Hashset filter func to call and throw away post step callbacks.
 static void
-postStepCallbackSetIter(postStepCallback *callback, cpSpace *space)
+postStepCallbackSetIter(PostStepCallback *callback, cpSpace *space)
 {
 	callback->func(space, callback->obj, callback->data);
 	cpfree(callback);
@@ -276,7 +288,6 @@ void
 cpSpaceStep(cpSpace *space, cpFloat dt)
 {
 	if(!dt) return; // don't step if the timestep is 0!
-	
 	cpFloat dt_inv = 1.0f/dt;
 
 	cpArray *bodies = space->bodies;
@@ -294,7 +305,7 @@ cpSpaceStep(cpSpace *space, cpFloat dt)
 	// Pre-cache BBoxes and shape data.
 	cpSpaceHashEach(space->activeShapes, (cpSpaceHashIterator)updateBBCache, NULL);
 	
-	space->locked = cpTrue;
+	cpSpaceLock(space);
 	
 	// Collide!
 	cpSpacePushFreshContactBuffer(space);
@@ -302,7 +313,7 @@ cpSpaceStep(cpSpace *space, cpFloat dt)
 		cpSpaceHashEach(space->activeShapes, (cpSpaceHashIterator)active2staticIter, space);
 	cpSpaceHashQueryRehash(space->activeShapes, (cpSpaceHashQueryFunc)queryFunc, space);
 	
-	space->locked = cpFalse;
+	cpSpaceUnlock(space);
 	
 	// If body sleeping is enabled, do that now.
 	if(space->sleepTimeThreshold != INFINITY){
@@ -358,7 +369,7 @@ cpSpaceStep(cpSpace *space, cpFloat dt)
 		}
 	}
 	
-	space->locked = cpTrue;
+	cpSpaceLock(space);
 	
 	// run the post solve callbacks
 	for(int i=0; i<arbiters->num; i++){
@@ -370,7 +381,7 @@ cpSpaceStep(cpSpace *space, cpFloat dt)
 		arb->state = cpArbiterStateNormal;
 	}
 	
-	space->locked = cpFalse;
+	cpSpaceUnlock(space);
 	
 	// Run the post step callbacks
 	// Loop because post step callbacks may create more post step callbacks

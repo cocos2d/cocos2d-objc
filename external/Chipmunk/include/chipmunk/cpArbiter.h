@@ -179,9 +179,9 @@ cpArbiterGetContactPointSet(const cpArbiter *arb)
 	
 	int i;
 	for(i=0; i<set.count; i++){
-		set.points[i].point = arb->CP_PRIVATE(contacts)[i].p;
-		set.points[i].normal = arb->CP_PRIVATE(contacts)[i].p;
-		set.points[i].dist = arb->CP_PRIVATE(contacts)[i].dist;
+		set.points[i].point = arb->CP_PRIVATE(contacts)[i].CP_PRIVATE(p);
+		set.points[i].normal = arb->CP_PRIVATE(contacts)[i].CP_PRIVATE(n);
+		set.points[i].dist = arb->CP_PRIVATE(contacts)[i].CP_PRIVATE(dist);
 	}
 	
 	return set;
