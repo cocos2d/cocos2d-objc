@@ -111,11 +111,6 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	return [[[self alloc] initWithFrame:frame pixelFormat:format depthFormat:depth preserveBackbuffer:NO sharegroup:nil multiSampling:NO numberOfSamples:0] autorelease];
 }
 
-+ (id) viewWithFrame:(CGRect)frame pixelFormat:(NSString*)format depthFormat:(GLuint)depth preserveBackbuffer:(BOOL)retained
-{
-	return [[[self alloc] initWithFrame:frame pixelFormat:format depthFormat:depth preserveBackbuffer:retained sharegroup:nil multiSampling:NO numberOfSamples:0] autorelease];
-}
-
 + (id) viewWithFrame:(CGRect)frame pixelFormat:(NSString*)format depthFormat:(GLuint)depth preserveBackbuffer:(BOOL)retained sharegroup:(EAGLSharegroup*)sharegroup multiSampling:(BOOL)multisampling numberOfSamples:(unsigned int)samples
 {
 	return [[[self alloc] initWithFrame:frame pixelFormat:format depthFormat:depth preserveBackbuffer:retained sharegroup:sharegroup multiSampling:multisampling numberOfSamples:samples] autorelease];
@@ -139,6 +134,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 		depthFormat_ = depth;
 		multiSampling_ = sampling;
 		requestedSamples_ = nSamples;
+		preserveBackbuffer_ = retained;
 		
 		if( ! [self setupSurfaceWithSharegroup:sharegroup] ) {
 			[self release];
