@@ -73,8 +73,8 @@ typedef struct cpSpace{
 	
 	// *** Internally Used Fields
 	
-	// When the space is locked, you should not add or remove objects;
-	CP_PRIVATE(cpBool locked);
+	// When the space lock count is non zero you cannot add or remove objects
+	CP_PRIVATE(int locked);
 	
 	// Time stamp. Is incremented on every call to cpSpaceStep().
 	CP_PRIVATE(cpTimestamp stamp);
@@ -88,6 +88,9 @@ typedef struct cpSpace{
 	
 	// List of groups of sleeping bodies.
 	CP_PRIVATE(cpArray *sleepingComponents);
+	
+	// List of bodies that have been flagged to be awoken.
+	CP_PRIVATE(cpArray *rousedBodies);
 	
 	// List of active arbiters for the impulse solver.
 	CP_PRIVATE(cpArray *arbiters);

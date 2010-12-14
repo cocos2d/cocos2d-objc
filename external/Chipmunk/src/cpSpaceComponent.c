@@ -55,6 +55,21 @@ componentNodeMerge(cpBody *a_root, cpBody *b_root)
 	}
 }
 
+void
+cpSpaceActivateBody(cpSpace *space, cpBody *body)
+{
+	if(space->locked){
+		// cpSpaceActivateBody() is called again once the space is unlocked
+		cpArrayPush(space->rousedBodies, body);
+	} else {
+		cpArrayPush(space->bodies, body);
+		for(cpShape *shape=body->shapesList; shape; shape=shape->next){
+			cpSpaceHashRemove(space->staticShapes, shape, shape->hashid);
+			cpSpaceHashInsert(space->activeShapes, shape, shape->hashid, shape->bb);
+		}
+	}
+}
+
 static inline void
 componentActivate(cpBody *root)
 {
@@ -62,21 +77,15 @@ componentActivate(cpBody *root)
 	
 	cpSpace *space = root->space;
 	cpAssert(space, "Trying to activate a body that was never added to a space.");
-	cpAssert(!space->locked, "Bodies can not be awakened during a query or a call to cpSpaceSte(). Put these calls into a post-step callback.");
 	
 	cpBody *body = root, *next;
 	do {
 		next = body->node.next;
 		
-		cpFloat idleTime = (cpBodyIsStatic(body) ? (cpFloat)INFINITY : 0.0f);
-		cpComponentNode node = {NULL, NULL, 0, idleTime};
+		cpComponentNode node = {NULL, NULL, 0, 0.0f};
 		body->node = node;
-		if(!cpBodyIsRogue(body)) cpArrayPush(space->bodies, body);
 		
-		for(cpShape *shape=body->shapesList; shape; shape=shape->next){
-			cpSpaceHashRemove(space->staticShapes, shape, shape->hashid);
-			cpSpaceHashInsert(space->activeShapes, shape, shape->hashid, shape->bb);
-		}
+		cpSpaceActivateBody(space, body);
 	} while((body = next) != root);
 	
 	cpArrayDeleteObj(space->sleepingComponents, root);
@@ -85,16 +94,13 @@ componentActivate(cpBody *root)
 void
 cpBodyActivate(cpBody *body)
 {
-	// Reset the idle time even if it's not in a currently sleeping component
-	// Like a body resting on or jointed to a rogue body.
-	if(!cpBodyIsStatic(body)) body->node.idleTime = 0.0f;
 	componentActivate(componentNodeRoot(body));
 }
 
 static inline void
 mergeBodies(cpSpace *space, cpArray *components, cpArray *rogueBodies, cpBody *a, cpBody *b)
 {
-	// Don't merge with the static body
+	// Ignore connections to static bodies
 	if(cpBodyIsStatic(a) || cpBodyIsStatic(b)) return;
 	
 	cpBody *a_root = componentNodeRoot(a);
@@ -110,9 +116,9 @@ mergeBodies(cpSpace *space, cpArray *components, cpArray *rogueBodies, cpBody *a
 		componentActivate(b_root);
 	} 
 	
-	// Add any rogue bodies (bodies not added to the space)
-	if(cpBodyIsRogue(a)) cpArrayPush(rogueBodies, a);
-	if(cpBodyIsRogue(b)) cpArrayPush(rogueBodies, b);
+	// Add any rogue bodies found to the list and reset the idle time of anything they touch.
+	if(cpBodyIsRogue(a)){ cpArrayPush(rogueBodies, a); b->node.idleTime = 0.0f; }
+	if(cpBodyIsRogue(b)){ cpArrayPush(rogueBodies, b); a->node.idleTime = 0.0f; }
 	
 	componentNodeMerge(a_root, b_root);
 }
@@ -160,10 +166,11 @@ cpSpaceProcessComponents(cpSpace *space, cpFloat dt)
 	cpArray *rogueBodies = cpArrayNew(16);
 	cpArray *arbiters = space->arbiters;
 	cpArray *constraints = space->constraints;
-	cpArray *components = cpArrayNew(bodies->num/8);
+	cpArray *components = cpArrayNew(space->sleepingComponents->num);
 	
 	cpFloat dv = space->idleSpeedThreshold;
 	cpFloat dvsq = (dv ? dv*dv : cpvdot(space->gravity, space->gravity)*dt*dt);
+	
 	// update idling
 	for(int i=0; i<bodies->num; i++){
 		cpBody *body = (cpBody*)bodies->arr[i];
@@ -183,10 +190,8 @@ cpSpaceProcessComponents(cpSpace *space, cpFloat dt)
 	}
 	
 	// iterate bodies and add them to their components
-	for(int i=0; i<bodies->num; i++)
-		addToComponent((cpBody*)bodies->arr[i], components);
-	for(int i=0; i<rogueBodies->num; i++)
-		addToComponent((cpBody*)rogueBodies->arr[i], components);
+	for(int i=0; i<bodies->num; i++) addToComponent((cpBody*)bodies->arr[i], components);
+	for(int i=0; i<rogueBodies->num; i++) addToComponent((cpBody*)rogueBodies->arr[i], components);
 	
 	// iterate components, copy or deactivate
 	for(int i=0; i<components->num; i++){
@@ -197,9 +202,8 @@ cpSpaceProcessComponents(cpSpace *space, cpFloat dt)
 				next = body->node.next;
 				
 				if(!cpBodyIsRogue(body)) cpArrayPush(newBodies, body);
-				body->node.next = NULL;
-				body->node.parent = NULL;
-				body->node.rank = 0;
+				cpComponentNode node = {NULL, NULL, 0, body->node.idleTime};
+				body->node = node;
 			} while((body = next) != root);
 		} else {
 			cpBody *body = root, *next;
@@ -240,9 +244,8 @@ cpBodySleepWithGroup(cpBody *body, cpBody *group){
 	if(cpBodyIsSleeping(body)) return;
 	
 	for(cpShape *shape = body->shapesList; shape; shape = shape->next){
-		cpSpaceHashRemove(space->activeShapes, shape, shape->hashid);
-		
 		cpShapeCacheBB(shape);
+		cpSpaceHashRemove(space->activeShapes, shape, shape->hashid);
 		cpSpaceHashInsert(space->staticShapes, shape, shape->hashid, shape->bb);
 	}
 	
@@ -264,21 +267,13 @@ cpBodySleepWithGroup(cpBody *body, cpBody *group){
 
 static void
 activateTouchingHelper(cpShape *shape, cpContactPointSet *points, cpArray **bodies){
-	if(*bodies == NULL) (*bodies) = cpArrayNew(0);
-	cpArrayPush(*bodies, shape->body);
+	cpBodyActivate(shape->body);
 }
 
 void
 cpSpaceActivateShapesTouchingShape(cpSpace *space, cpShape *shape){
 	cpArray *bodies = NULL;
 	cpSpaceShapeQuery(space, shape, (cpSpaceShapeQueryFunc)activateTouchingHelper, &bodies);
-	
-	if(bodies){
-		for(int i=0; i<bodies->num; i++){
-			cpBody *body = (cpBody *)bodies->arr[i];
-			cpBodyActivate(body);
-		}
-	}
 }
 
 

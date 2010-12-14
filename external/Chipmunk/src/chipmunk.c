@@ -21,6 +21,7 @@
  
 #include <stdlib.h>
 #include <stdio.h>
+#define _USE_MATH_DEFINES
 #include <math.h>
 
 #include "chipmunk.h"
@@ -44,7 +45,7 @@ cpMessage(const char *message, const char *condition, const char *file, int line
 }
 
 
-const char *cpVersionString = "5.3.3";
+const char *cpVersionString = "5.3.4";
 
 void
 cpInitChipmunk(void)
