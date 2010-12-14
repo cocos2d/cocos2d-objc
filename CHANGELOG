@@ -21,13 +21,14 @@ version 0.99.5 - xx-Dec-2010
 . [FIX] Sprite: correctly overrides setIsRelativeAnchorPoint (issue #1055)
 . [FIX] SpriteFrameCache: textureFileName is relative to path (issue #1044)
 . [FIX] Particles: QuadParticle uses Points (issue #1057)
+. [FIX] Templates: removeStartup compiles (issue #1059)
 . [FIX] Texture: PVR with non-square mipmaps generates a warning log in debug mode (issue #1052)
 . [FIX-MAC] Display Link thread: async images works as expected. Enabled by default.
 . [FIX-MAC] MacGLView: VSync is enabled when the view is loaded from the NIB
 . [TEST] Added Glyph Designer test case
 . [TEST] Added LayerGradient test
 . [TEST-MAC] Added cocos2d icon to Mac tests
-. [3RD] Chipmunk: Updated to v5.3.3
+. [3RD] Chipmunk: Updated to v5.3.4
 . [3RD] libpng: don't compile pngtest.c (issue #1058)
 
  
