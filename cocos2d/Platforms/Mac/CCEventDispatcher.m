@@ -34,6 +34,7 @@
 static CCEventDispatcher *sharedDispatcher = nil;
 
 enum  {
+	// mouse
 	kCCImplementsMouseDown			= 1 << 0,
 	kCCImplementsMouseMoved			= 1 << 1,
 	kCCImplementsMouseDragged		= 1 << 2,	
@@ -48,9 +49,10 @@ enum  {
 	kCCImplementsMouseEntered		= 1 << 11,
 	kCCImplementsMouseExited		= 1 << 12,
 		
-	
-	kCCImplementsKeyUp = 1 << 0,
-	kCCImplementsKeyDown = 1 << 1,
+	// keyboard
+	kCCImplementsKeyUp				= 1 << 0,
+	kCCImplementsKeyDown			= 1 << 1,
+	kCCImplementsFlagsChanged		= 1 << 2,
 };
 
 
@@ -233,6 +235,7 @@ static int		eventQueueCount;
 	
 	flags |= ( [delegate respondsToSelector:@selector(ccKeyUp:)] ? kCCImplementsKeyUp : 0 );
 	flags |= ( [delegate respondsToSelector:@selector(ccKeyDown:)] ? kCCImplementsKeyDown : 0 );
+	flags |= ( [delegate respondsToSelector:@selector(ccFlagsChanged:)] ? kCCImplementsFlagsChanged : 0 );
 	
 	[self addDelegate:delegate priority:priority flags:flags list:&keyboardDelegates_];
 }
@@ -494,6 +497,22 @@ static int		eventQueueCount;
 		}
 	}
 }
+
+- (void)flagsChanged:(NSEvent *)event
+{
+	if( dispatchEvents_ ) {
+		tListEntry *entry, *tmp;
+		
+		DL_FOREACH_SAFE( keyboardDelegates_, entry, tmp ) {
+			if ( entry->flags & kCCImplementsKeyUp ) {
+				void *swallows = [entry->delegate performSelector:@selector(ccFlagsChanged:) withObject:event];
+				if( swallows )
+					break;
+			}
+		}
+	}
+}
+
 
 #pragma mark CCEventDispatcher - Touch events
 

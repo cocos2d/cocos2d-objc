@@ -150,6 +150,10 @@
  Return YES to avoid propagating the event to other delegates.
  */
 -(BOOL) ccKeyDown:(NSEvent*)event;
+/** called when the "flagsChanged" event is received.
+ Return YES to avoid propagating the event to other delegates.
+ */
+-(BOOL) ccFlagsChanged:(NSEvent*)event;
 @end
 
 
