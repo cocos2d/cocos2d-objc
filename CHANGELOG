@@ -2,9 +2,10 @@ version 0.99.5 - xx-Dec-2010
 . [NEW] All: small performance improvements in all the code
 . [NEW] Layer: Added gradient layer
 . [NEW] MenuItem: it also supports class methods
-. [NEW] SpriteFrameCache: added add
-. [NEW] Texture: It is possible to use a subclass like MutableTexture
+. [NEW] SpriteFrameCache: added method to load a plist file with a texture file name
+. [NEW] Texture: It is possible to use a subclass like MutableTexture without modifying the code
 . [NEW-MAC] Added Mac templates
+. [NEW-MAC] Added "flagsChanged" keyboard event
 . [NEW-MAC] Added support for Fullscreen / window mode
 . [NEW-MAC] Added support for AutoScale if the window is resized / fullscreen (EXPERIMENTAL)
 . [FIX] All: Misc cleanups in the code
@@ -17,7 +18,7 @@ version 0.99.5 - xx-Dec-2010
 . [FIX] FileUtils: removes -hd suffix if the filename already has it (issue #1040)
 . [FIX] Node: udpated doxygen strings regarding default anchorPoint (issue #1049)
 . [FIX] Sprite: updateTransform can be overriden (issue #824)
-. [FIX] Sprite: Assert if an sprite initialized with a batchnode is not using it (issue #1053)
+. [FIX] Sprite: Assert if an sprite initialized with a batchnode and it is not using it (issue #1053)
 . [FIX] Sprite: correctly overrides setIsRelativeAnchorPoint (issue #1055)
 . [FIX] SpriteFrameCache: textureFileName is relative to path (issue #1044)
 . [FIX] Particles: QuadParticle uses Points (issue #1057)
@@ -28,6 +29,7 @@ version 0.99.5 - xx-Dec-2010
 . [TEST] Added Glyph Designer test case
 . [TEST] Added LayerGradient test
 . [TEST-MAC] Added cocos2d icon to Mac tests
+. [TEST-MAC] Added EventTest
 . [3RD] Chipmunk: Updated to v5.3.4
 . [3RD] libpng: don't compile pngtest.c (issue #1058)
 
