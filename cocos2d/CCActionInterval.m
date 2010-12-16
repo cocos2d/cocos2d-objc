@@ -846,9 +846,11 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 
 -(void) update: (ccTime) t
 {
-	ccTime slice = 1.0f / times;
-	ccTime m = fmodf(t, slice);
-	[target_ setVisible: (m > slice/2) ? YES : NO];
+	if( ! [self isDone] ) {
+		ccTime slice = 1.0f / times;
+		ccTime m = fmodf(t, slice);
+		[target_ setVisible: (m > slice/2) ? YES : NO];
+	}
 }
 
 -(CCActionInterval*) reverse
