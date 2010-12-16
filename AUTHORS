@@ -126,6 +126,8 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	* Graham Perks:
 		Atlas works with GL_CULL_FACE
 		FastDirector doesn't leak autorelease pool patch
+	* haikusw:
+		Action blink doesn't set frame as invisible when the action finishes. patch.
 	* hamm.hans:
 		Author of CrossFadeTransition
 	* Hans Larsen:
