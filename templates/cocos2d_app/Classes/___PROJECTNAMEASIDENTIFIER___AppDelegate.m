@@ -33,7 +33,7 @@
 //	sprite.position = ccp(size.width/2, size.height/2);
 //	sprite.rotation = -90;
 //	[sprite visit];
-//	[[director glView] swapBuffers];
+//	[[director openGLView] swapBuffers];
 //	CC_ENABLE_DEFAULT_GL_STATES();
 	
 #endif // GAME_AUTOROTATION == kGameAutorotationUIViewController	
