@@ -328,6 +328,8 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Author of the scraper script used to parse games data in the cocos2d site
 	* Pieter van de Bruggen
 		Author of Gradient layer
+	* psi.pk.ru:
+		EventDispatcher: flagsChanged is triggered correctly. patch
 	* psionic81:
 		ActionManager doesn't purge running actions patch
 	* rac5372:

@@ -1,3 +1,6 @@
+version 1.0-beta - XX-XXX-2011
+. [FIX-MAC]: EventDispatcher: flagsChanged is triggered correctly (issue #1066)
+
 version 0.99.5 - 16-Dec-2010
 . [NEW] All: small performance improvements in all the code
 . [NEW] Layer: Added gradient layer
