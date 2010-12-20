@@ -504,7 +504,7 @@ static int		eventQueueCount;
 		tListEntry *entry, *tmp;
 		
 		DL_FOREACH_SAFE( keyboardDelegates_, entry, tmp ) {
-			if ( entry->flags & kCCImplementsKeyUp ) {
+			if ( entry->flags & kCCImplementsFlagsChanged ) {
 				void *swallows = [entry->delegate performSelector:@selector(ccFlagsChanged:) withObject:event];
 				if( swallows )
 					break;
