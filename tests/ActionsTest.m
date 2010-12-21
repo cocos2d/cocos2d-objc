@@ -7,7 +7,6 @@
 // local import
 #import "cocos2d.h"
 #import "ActionsTest.h"
-#import "MacWindow.h"
 
 enum {
 	kTagAnimationDance = 1,

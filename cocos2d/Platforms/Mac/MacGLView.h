@@ -81,8 +81,6 @@
 // initializes the MacGLView with a frame rect and an OpenGL context
 - (id) initWithFrame:(NSRect)frameRect shareContext:(NSOpenGLContext*)context;
 
-// private
-+(void) load_;
 @end
 
 #endif // __MAC_OS_X_VERSION_MAX_ALLOWED
