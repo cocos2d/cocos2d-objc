@@ -13,12 +13,9 @@
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 @interface cocos2dmacAppDelegate : NSObject <NSApplicationDelegate>
 {
-	NSWindow	*window_;
-	MacGLView	*glView_;
+	NSWindow	*window;
 }
 
-@property (assign) IBOutlet NSWindow	*window;
-@property (assign) IBOutlet MacGLView	*glView;
 
 - (IBAction)toggleFullScreen:(id)sender;
 

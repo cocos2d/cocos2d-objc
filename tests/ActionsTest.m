@@ -7,6 +7,7 @@
 // local import
 #import "cocos2d.h"
 #import "ActionsTest.h"
+#import "MacWindow.h"
 
 enum {
 	kTagAnimationDance = 1,
@@ -1129,29 +1130,39 @@ Class restartAction()
 
 @implementation cocos2dmacAppDelegate
 
-@synthesize window=window_, glView=glView_;
-
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-	CCDirectorMac *director = (CCDirectorMac*) [CCDirector sharedDirector];
+	CGSize originalSize	= CGSizeMake(8*100, 5*100); //If fullScreen is YES, the glView will be scaled to fill completely screen.
+	//CGSize originalSize	= CGSizeZero; // No-scale
+	BOOL fullScreen		= NO;
 	
-	[director setDisplayFPS:YES];
-	
-	[director setOpenGLView:glView_];
-	
-	//	[director setProjection:kCCDirectorProjection2D];
+	/** Init cocos2d mac */
+	/**
+	 originalSize: sets the original size of the glView.
+	 For example if you want to simulate a iPhone you should set CGSizeMake(480, 320)
+	 
+	 fullScreen: if fullScreen is NO a normal window will be showed with the original Size.
+	 if fullScreen is YES then:
+		- originalSize == {0, 0}
+		the resize mode will be "No_scale"
+		- originalSize != {0, 0}
+		the resize mode will be "Auto-scale"
+	 
+	 CC_DIRECTOR_INIT configures the NSWindow and the resizing mode automatically.
+	 
+	 */
+	CC_DIRECTOR_INIT(originalSize, fullScreen);
 	
 	// Enable "moving" mouse event. Default no.
-	[window_ setAcceptsMouseMovedEvents:NO];
+	[window setAcceptsMouseMovedEvents:NO];
 	
-	// EXPERIMENTAL stuff.
-	// 'Effects' don't work correctly when autoscale is turned on.
-	[director setResizeMode:kCCDirectorResize_AutoScale];	
+	CCDirector *director = [CCDirector sharedDirector];
+	[director setDisplayFPS:YES];
 	
 	CCScene *scene = [CCScene node];
 	[scene addChild: [nextAction() node]];
 	
-	[director runWithScene:scene];
+	[[CCDirector sharedDirector] runWithScene:scene];
 }
 
 - (BOOL) applicationShouldTerminateAfterLastWindowClosed: (NSApplication *) theApplication
@@ -1161,10 +1172,9 @@ Class restartAction()
 
 - (IBAction)toggleFullScreen: (id)sender
 {
-	CCDirectorMac *director = (CCDirectorMac*) [CCDirector sharedDirector];
-	[director setFullScreen: ! [director isFullScreen] ];
+	//CCDirectorMac *director = (CCDirectorMac*) [CCDirector sharedDirector];
+	//[director setFullScreen: ! [director isFullScreen] ];
 }
 
 @end
 #endif
-

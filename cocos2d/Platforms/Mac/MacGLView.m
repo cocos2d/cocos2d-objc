@@ -61,8 +61,8 @@
 		NSOpenGLPFAAccelerated,
 		NSOpenGLPFANoRecovery,
 		NSOpenGLPFADoubleBuffer,
+		NSOpenGLPFAColorSize, 16,
 		NSOpenGLPFADepthSize, 24,
-		
 		0
     };
 	
