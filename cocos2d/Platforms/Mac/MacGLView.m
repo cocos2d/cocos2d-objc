@@ -40,13 +40,7 @@
 
 
 @implementation MacGLView
-
 @synthesize eventDelegate = eventDelegate_;
-
-+(void) load_
-{
-	NSLog(@"%@ loaded", self);
-}
 
 - (id) initWithFrame:(NSRect)frameRect
 {
