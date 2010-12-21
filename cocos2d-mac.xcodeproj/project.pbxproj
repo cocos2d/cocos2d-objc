@@ -34,6 +34,22 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		11DE8BA812C0145C00DF380D /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = E076EB2F1225EFF200DE0DA2 /* MainMenu.xib */; };
+		11DE8BA912C0145C00DF380D /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = E076EB2F1225EFF200DE0DA2 /* MainMenu.xib */; };
+		11DE8BAA12C0145C00DF380D /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = E076EB2F1225EFF200DE0DA2 /* MainMenu.xib */; };
+		11DE8BAB12C0145C00DF380D /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = E076EB2F1225EFF200DE0DA2 /* MainMenu.xib */; };
+		11DE8BAC12C0145C00DF380D /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = E076EB2F1225EFF200DE0DA2 /* MainMenu.xib */; };
+		11DE8BAD12C0145C00DF380D /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = E076EB2F1225EFF200DE0DA2 /* MainMenu.xib */; };
+		11DE8BAE12C0145C00DF380D /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = E076EB2F1225EFF200DE0DA2 /* MainMenu.xib */; };
+		11DE8BAF12C0145C00DF380D /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = E076EB2F1225EFF200DE0DA2 /* MainMenu.xib */; };
+		11DE8BB012C0145C00DF380D /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = E076EB2F1225EFF200DE0DA2 /* MainMenu.xib */; };
+		11DE8BB112C0145C00DF380D /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = E076EB2F1225EFF200DE0DA2 /* MainMenu.xib */; };
+		11DE8BB212C0145C00DF380D /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = E076EB2F1225EFF200DE0DA2 /* MainMenu.xib */; };
+		11DE8BB312C0145C00DF380D /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = E076EB2F1225EFF200DE0DA2 /* MainMenu.xib */; };
+		11DE8BB412C0145C00DF380D /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = E076EB2F1225EFF200DE0DA2 /* MainMenu.xib */; };
+		11DE8BB512C0145C00DF380D /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = E076EB2F1225EFF200DE0DA2 /* MainMenu.xib */; };
+		11DE8BB612C0145C00DF380D /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = E076EB2F1225EFF200DE0DA2 /* MainMenu.xib */; };
+		11DE8BCF12C01D4700DF380D /* MacWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 11DE8BC412C019B000DF380D /* MacWindow.m */; };
 		E01E6A3E121EDCD3001A484F /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E01E6A3D121EDCD3001A484F /* ApplicationServices.framework */; };
 		E01E6B36121EDCED001A484F /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E036A79E121B5C870037C5C6 /* QuartzCore.framework */; };
 		E01E6B49121EDCF4001A484F /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E036A79C121B5C720037C5C6 /* OpenGL.framework */; };
@@ -228,7 +244,6 @@
 		E026450612A59DA7009D04FE /* Particles in Resources */ = {isa = PBXBuildFile; fileRef = E076EADD1225EE2B00DE0DA2 /* Particles */; };
 		E026450712A59DA7009D04FE /* TileMaps in Resources */ = {isa = PBXBuildFile; fileRef = E076EADE1225EE2B00DE0DA2 /* TileMaps */; };
 		E026450812A59DA7009D04FE /* zwoptex in Resources */ = {isa = PBXBuildFile; fileRef = E076EADF1225EE2B00DE0DA2 /* zwoptex */; };
-		E026450912A59DA7009D04FE /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = E076EB2E1225EFF200DE0DA2 /* MainMenu.xib */; };
 		E026450A12A59DA7009D04FE /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = E02A8537129F11BF00341C97 /* icon.icns */; };
 		E026450C12A59DA7009D04FE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E076EAED1225EE8500DE0DA2 /* main.m */; };
 		E026450F12A59DA7009D04FE /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
@@ -449,7 +464,6 @@
 		E05053F0122D5AE6005B74CB /* Particles in Resources */ = {isa = PBXBuildFile; fileRef = E076EADD1225EE2B00DE0DA2 /* Particles */; };
 		E05053F1122D5AE6005B74CB /* TileMaps in Resources */ = {isa = PBXBuildFile; fileRef = E076EADE1225EE2B00DE0DA2 /* TileMaps */; };
 		E05053F2122D5AE6005B74CB /* zwoptex in Resources */ = {isa = PBXBuildFile; fileRef = E076EADF1225EE2B00DE0DA2 /* zwoptex */; };
-		E05053F3122D5AE6005B74CB /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = E076EB2E1225EFF200DE0DA2 /* MainMenu.xib */; };
 		E05053F5122D5AE6005B74CB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E076EAED1225EE8500DE0DA2 /* main.m */; };
 		E05053F8122D5AE6005B74CB /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		E05053F9122D5AE6005B74CB /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E036A79C121B5C720037C5C6 /* OpenGL.framework */; };
@@ -997,8 +1011,6 @@
 		E076EAE71225EE2B00DE0DA2 /* zwoptex in Resources */ = {isa = PBXBuildFile; fileRef = E076EADF1225EE2B00DE0DA2 /* zwoptex */; };
 		E076EAF01225EE8500DE0DA2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E076EAED1225EE8500DE0DA2 /* main.m */; };
 		E076EAF31225EE8500DE0DA2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E076EAED1225EE8500DE0DA2 /* main.m */; };
-		E076EB301225EFF200DE0DA2 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = E076EB2E1225EFF200DE0DA2 /* MainMenu.xib */; };
-		E076EB311225EFF200DE0DA2 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = E076EB2E1225EFF200DE0DA2 /* MainMenu.xib */; };
 		E076EB931225F82200DE0DA2 /* A Damn Mess.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E076E7A21225EDD000DE0DA2 /* A Damn Mess.ttf */; };
 		E076EB941225F82200DE0DA2 /* Abberancy.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E076E7A31225EDD000DE0DA2 /* Abberancy.ttf */; };
 		E076EB951225F82200DE0DA2 /* Abduction.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E076E7A41225EDD000DE0DA2 /* Abduction.ttf */; };
@@ -1190,7 +1202,6 @@
 		E076EC4F1225F82200DE0DA2 /* Particles in Resources */ = {isa = PBXBuildFile; fileRef = E076EADD1225EE2B00DE0DA2 /* Particles */; };
 		E076EC501225F82200DE0DA2 /* TileMaps in Resources */ = {isa = PBXBuildFile; fileRef = E076EADE1225EE2B00DE0DA2 /* TileMaps */; };
 		E076EC511225F82200DE0DA2 /* zwoptex in Resources */ = {isa = PBXBuildFile; fileRef = E076EADF1225EE2B00DE0DA2 /* zwoptex */; };
-		E076EC521225F82200DE0DA2 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = E076EB2E1225EFF200DE0DA2 /* MainMenu.xib */; };
 		E076EC551225F82200DE0DA2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E076EAED1225EE8500DE0DA2 /* main.m */; };
 		E076EC571225F82200DE0DA2 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		E076EC581225F82200DE0DA2 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E036A79C121B5C720037C5C6 /* OpenGL.framework */; };
@@ -1390,7 +1401,6 @@
 		E076ED9A1225FDE300DE0DA2 /* Particles in Resources */ = {isa = PBXBuildFile; fileRef = E076EADD1225EE2B00DE0DA2 /* Particles */; };
 		E076ED9B1225FDE300DE0DA2 /* TileMaps in Resources */ = {isa = PBXBuildFile; fileRef = E076EADE1225EE2B00DE0DA2 /* TileMaps */; };
 		E076ED9C1225FDE300DE0DA2 /* zwoptex in Resources */ = {isa = PBXBuildFile; fileRef = E076EADF1225EE2B00DE0DA2 /* zwoptex */; };
-		E076ED9D1225FDE300DE0DA2 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = E076EB2E1225EFF200DE0DA2 /* MainMenu.xib */; };
 		E076ED9F1225FDE300DE0DA2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E076EAED1225EE8500DE0DA2 /* main.m */; };
 		E076EDA21225FDE300DE0DA2 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		E076EDA31225FDE300DE0DA2 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E036A79C121B5C720037C5C6 /* OpenGL.framework */; };
@@ -1610,7 +1620,6 @@
 		E076F20812268A9800DE0DA2 /* Particles in Resources */ = {isa = PBXBuildFile; fileRef = E076EADD1225EE2B00DE0DA2 /* Particles */; };
 		E076F20912268A9800DE0DA2 /* TileMaps in Resources */ = {isa = PBXBuildFile; fileRef = E076EADE1225EE2B00DE0DA2 /* TileMaps */; };
 		E076F20A12268A9800DE0DA2 /* zwoptex in Resources */ = {isa = PBXBuildFile; fileRef = E076EADF1225EE2B00DE0DA2 /* zwoptex */; };
-		E076F20B12268A9800DE0DA2 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = E076EB2E1225EFF200DE0DA2 /* MainMenu.xib */; };
 		E076F20D12268A9800DE0DA2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E076EAED1225EE8500DE0DA2 /* main.m */; };
 		E076F21012268A9800DE0DA2 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		E076F21112268A9800DE0DA2 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E036A79C121B5C720037C5C6 /* OpenGL.framework */; };
@@ -1811,7 +1820,6 @@
 		E0AC06941228021600EFA814 /* Particles in Resources */ = {isa = PBXBuildFile; fileRef = E076EADD1225EE2B00DE0DA2 /* Particles */; };
 		E0AC06951228021600EFA814 /* TileMaps in Resources */ = {isa = PBXBuildFile; fileRef = E076EADE1225EE2B00DE0DA2 /* TileMaps */; };
 		E0AC06961228021600EFA814 /* zwoptex in Resources */ = {isa = PBXBuildFile; fileRef = E076EADF1225EE2B00DE0DA2 /* zwoptex */; };
-		E0AC06971228021600EFA814 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = E076EB2E1225EFF200DE0DA2 /* MainMenu.xib */; };
 		E0AC06991228021600EFA814 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E076EAED1225EE8500DE0DA2 /* main.m */; };
 		E0AC069C1228021600EFA814 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		E0AC069D1228021600EFA814 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E036A79C121B5C720037C5C6 /* OpenGL.framework */; };
@@ -2011,7 +2019,6 @@
 		E0AC0788122803BC00EFA814 /* Particles in Resources */ = {isa = PBXBuildFile; fileRef = E076EADD1225EE2B00DE0DA2 /* Particles */; };
 		E0AC0789122803BC00EFA814 /* TileMaps in Resources */ = {isa = PBXBuildFile; fileRef = E076EADE1225EE2B00DE0DA2 /* TileMaps */; };
 		E0AC078A122803BC00EFA814 /* zwoptex in Resources */ = {isa = PBXBuildFile; fileRef = E076EADF1225EE2B00DE0DA2 /* zwoptex */; };
-		E0AC078B122803BC00EFA814 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = E076EB2E1225EFF200DE0DA2 /* MainMenu.xib */; };
 		E0AC078D122803BC00EFA814 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E076EAED1225EE8500DE0DA2 /* main.m */; };
 		E0AC0790122803BC00EFA814 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		E0AC0791122803BC00EFA814 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E036A79C121B5C720037C5C6 /* OpenGL.framework */; };
@@ -2211,7 +2218,6 @@
 		E0AC091912280B7000EFA814 /* Particles in Resources */ = {isa = PBXBuildFile; fileRef = E076EADD1225EE2B00DE0DA2 /* Particles */; };
 		E0AC091A12280B7000EFA814 /* TileMaps in Resources */ = {isa = PBXBuildFile; fileRef = E076EADE1225EE2B00DE0DA2 /* TileMaps */; };
 		E0AC091B12280B7000EFA814 /* zwoptex in Resources */ = {isa = PBXBuildFile; fileRef = E076EADF1225EE2B00DE0DA2 /* zwoptex */; };
-		E0AC091C12280B7000EFA814 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = E076EB2E1225EFF200DE0DA2 /* MainMenu.xib */; };
 		E0AC091E12280B7000EFA814 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E076EAED1225EE8500DE0DA2 /* main.m */; };
 		E0AC092112280B7000EFA814 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		E0AC092212280B7000EFA814 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E036A79C121B5C720037C5C6 /* OpenGL.framework */; };
@@ -2411,7 +2417,6 @@
 		E0B92DBB1226A0C9003FF67E /* Particles in Resources */ = {isa = PBXBuildFile; fileRef = E076EADD1225EE2B00DE0DA2 /* Particles */; };
 		E0B92DBC1226A0C9003FF67E /* TileMaps in Resources */ = {isa = PBXBuildFile; fileRef = E076EADE1225EE2B00DE0DA2 /* TileMaps */; };
 		E0B92DBD1226A0C9003FF67E /* zwoptex in Resources */ = {isa = PBXBuildFile; fileRef = E076EADF1225EE2B00DE0DA2 /* zwoptex */; };
-		E0B92DBE1226A0C9003FF67E /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = E076EB2E1225EFF200DE0DA2 /* MainMenu.xib */; };
 		E0B92DC01226A0C9003FF67E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E076EAED1225EE8500DE0DA2 /* main.m */; };
 		E0B92DC31226A0C9003FF67E /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		E0B92DC41226A0C9003FF67E /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E036A79C121B5C720037C5C6 /* OpenGL.framework */; };
@@ -2612,7 +2617,6 @@
 		E0B92EE41226A621003FF67E /* Particles in Resources */ = {isa = PBXBuildFile; fileRef = E076EADD1225EE2B00DE0DA2 /* Particles */; };
 		E0B92EE51226A621003FF67E /* TileMaps in Resources */ = {isa = PBXBuildFile; fileRef = E076EADE1225EE2B00DE0DA2 /* TileMaps */; };
 		E0B92EE61226A621003FF67E /* zwoptex in Resources */ = {isa = PBXBuildFile; fileRef = E076EADF1225EE2B00DE0DA2 /* zwoptex */; };
-		E0B92EE71226A621003FF67E /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = E076EB2E1225EFF200DE0DA2 /* MainMenu.xib */; };
 		E0B92EE91226A621003FF67E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E076EAED1225EE8500DE0DA2 /* main.m */; };
 		E0B92EEC1226A621003FF67E /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		E0B92EED1226A621003FF67E /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E036A79C121B5C720037C5C6 /* OpenGL.framework */; };
@@ -2813,7 +2817,6 @@
 		E0B92FF61226C0DD003FF67E /* Particles in Resources */ = {isa = PBXBuildFile; fileRef = E076EADD1225EE2B00DE0DA2 /* Particles */; };
 		E0B92FF71226C0DD003FF67E /* TileMaps in Resources */ = {isa = PBXBuildFile; fileRef = E076EADE1225EE2B00DE0DA2 /* TileMaps */; };
 		E0B92FF81226C0DD003FF67E /* zwoptex in Resources */ = {isa = PBXBuildFile; fileRef = E076EADF1225EE2B00DE0DA2 /* zwoptex */; };
-		E0B92FF91226C0DD003FF67E /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = E076EB2E1225EFF200DE0DA2 /* MainMenu.xib */; };
 		E0B92FFB1226C0DD003FF67E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E076EAED1225EE8500DE0DA2 /* main.m */; };
 		E0B92FFE1226C0DD003FF67E /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		E0B92FFF1226C0DD003FF67E /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E036A79C121B5C720037C5C6 /* OpenGL.framework */; };
@@ -3019,7 +3022,6 @@
 		E0D2CECA12B93736008D5DBB /* Particles in Resources */ = {isa = PBXBuildFile; fileRef = E076EADD1225EE2B00DE0DA2 /* Particles */; };
 		E0D2CECB12B93736008D5DBB /* TileMaps in Resources */ = {isa = PBXBuildFile; fileRef = E076EADE1225EE2B00DE0DA2 /* TileMaps */; };
 		E0D2CECC12B93736008D5DBB /* zwoptex in Resources */ = {isa = PBXBuildFile; fileRef = E076EADF1225EE2B00DE0DA2 /* zwoptex */; };
-		E0D2CECD12B93736008D5DBB /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = E076EB2E1225EFF200DE0DA2 /* MainMenu.xib */; };
 		E0D2CECE12B93736008D5DBB /* konqa32-hd.fnt in Resources */ = {isa = PBXBuildFile; fileRef = E0C60677128ECC110099367C /* konqa32-hd.fnt */; };
 		E0D2CECF12B93736008D5DBB /* konqa32-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E0C60678128ECC110099367C /* konqa32-hd.png */; };
 		E0D2CED012B93736008D5DBB /* konqa32.fnt in Resources */ = {isa = PBXBuildFile; fileRef = E0C60679128ECC110099367C /* konqa32.fnt */; };
@@ -3229,7 +3231,6 @@
 		E0DA432E12A03A3C00210ACE /* Particles in Resources */ = {isa = PBXBuildFile; fileRef = E076EADD1225EE2B00DE0DA2 /* Particles */; };
 		E0DA432F12A03A3C00210ACE /* TileMaps in Resources */ = {isa = PBXBuildFile; fileRef = E076EADE1225EE2B00DE0DA2 /* TileMaps */; };
 		E0DA433012A03A3C00210ACE /* zwoptex in Resources */ = {isa = PBXBuildFile; fileRef = E076EADF1225EE2B00DE0DA2 /* zwoptex */; };
-		E0DA433112A03A3C00210ACE /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = E076EB2E1225EFF200DE0DA2 /* MainMenu.xib */; };
 		E0DA433212A03A3C00210ACE /* piece.png in Resources */ = {isa = PBXBuildFile; fileRef = E0D2D55F128CB06A00F78C63 /* piece.png */; };
 		E0DA433312A03A3C00210ACE /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = E02A8537129F11BF00341C97 /* icon.icns */; };
 		E0DA433512A03A3C00210ACE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E076EAED1225EE8500DE0DA2 /* main.m */; };
@@ -3521,6 +3522,8 @@
 
 /* Begin PBXFileReference section */
 		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
+		11DE8BC312C019B000DF380D /* MacWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MacWindow.h; sourceTree = "<group>"; };
+		11DE8BC412C019B000DF380D /* MacWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MacWindow.m; sourceTree = "<group>"; };
 		13E42FB307B3F0F600E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
@@ -3905,7 +3908,7 @@
 		E076EADF1225EE2B00DE0DA2 /* zwoptex */ = {isa = PBXFileReference; lastKnownFileType = folder; name = zwoptex; path = Resources/zwoptex; sourceTree = "<group>"; };
 		E076EAE81225EE8500DE0DA2 /* cocos2d_mac-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "cocos2d_mac-Info.plist"; path = "Resources-Mac/cocos2d_mac-Info.plist"; sourceTree = "<group>"; };
 		E076EAED1225EE8500DE0DA2 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = "Resources-Mac/main.m"; sourceTree = "<group>"; };
-		E076EB2F1225EFF200DE0DA2 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = "Resources-Mac/English.lproj/MainMenu.xib"; sourceTree = "<group>"; };
+		E076EB2F1225EFF200DE0DA2 /* MainMenu.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = MainMenu.xib; path = "Resources-Mac/MainMenu.xib"; sourceTree = "<group>"; };
 		E076EB3E1225F05200DE0DA2 /* RELEASE_NOTES */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = RELEASE_NOTES; sourceTree = "<group>"; };
 		E076EC601225F82200DE0DA2 /* TiledMapTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TiledMapTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E076EC631225F84A00DE0DA2 /* TileMapTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TileMapTest.h; path = tests/TileMapTest.h; sourceTree = "<group>"; };
@@ -4269,7 +4272,7 @@
 			isa = PBXGroup;
 			children = (
 				E02A8537129F11BF00341C97 /* icon.icns */,
-				E076EB2E1225EFF200DE0DA2 /* MainMenu.xib */,
+				E076EB2F1225EFF200DE0DA2 /* MainMenu.xib */,
 				E076EAE81225EE8500DE0DA2 /* cocos2d_mac-Info.plist */,
 				E076EAED1225EE8500DE0DA2 /* main.m */,
 				E076EADC1225EE2B00DE0DA2 /* animations */,
@@ -4388,6 +4391,8 @@
 				E076E6B51225EC7400DE0DA2 /* CCEventDispatcher.m */,
 				E076E6B61225EC7400DE0DA2 /* MacGLView.h */,
 				E076E6B71225EC7400DE0DA2 /* MacGLView.m */,
+				11DE8BC312C019B000DF380D /* MacWindow.h */,
+				11DE8BC412C019B000DF380D /* MacWindow.m */,
 			);
 			path = Mac;
 			sourceTree = "<group>";
@@ -5557,7 +5562,7 @@
 				E026450612A59DA7009D04FE /* Particles in Resources */,
 				E026450712A59DA7009D04FE /* TileMaps in Resources */,
 				E026450812A59DA7009D04FE /* zwoptex in Resources */,
-				E026450912A59DA7009D04FE /* MainMenu.xib in Resources */,
+				11DE8BB112C0145C00DF380D /* MainMenu.xib in Resources */,
 				E026450A12A59DA7009D04FE /* icon.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -5757,7 +5762,7 @@
 				E05053F0122D5AE6005B74CB /* Particles in Resources */,
 				E05053F1122D5AE6005B74CB /* TileMaps in Resources */,
 				E05053F2122D5AE6005B74CB /* zwoptex in Resources */,
-				E05053F3122D5AE6005B74CB /* MainMenu.xib in Resources */,
+				11DE8BB212C0145C00DF380D /* MainMenu.xib in Resources */,
 				E02A853C129F11BF00341C97 /* icon.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -5956,7 +5961,7 @@
 				E076EAE11225EE2B00DE0DA2 /* Particles in Resources */,
 				E076EAE21225EE2B00DE0DA2 /* TileMaps in Resources */,
 				E076EAE31225EE2B00DE0DA2 /* zwoptex in Resources */,
-				E076EB301225EFF200DE0DA2 /* MainMenu.xib in Resources */,
+				11DE8BAE12C0145C00DF380D /* MainMenu.xib in Resources */,
 				E05052B2122D5655005B74CB /* fps_images.png in Resources */,
 				E02A853F129F11BF00341C97 /* icon.icns in Resources */,
 			);
@@ -6157,7 +6162,7 @@
 				E076EAE51225EE2B00DE0DA2 /* Particles in Resources */,
 				E076EAE61225EE2B00DE0DA2 /* TileMaps in Resources */,
 				E076EAE71225EE2B00DE0DA2 /* zwoptex in Resources */,
-				E076EB311225EFF200DE0DA2 /* MainMenu.xib in Resources */,
+				11DE8BB612C0145C00DF380D /* MainMenu.xib in Resources */,
 				E02A8539129F11BF00341C97 /* icon.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -6357,7 +6362,7 @@
 				E076EC4F1225F82200DE0DA2 /* Particles in Resources */,
 				E076EC501225F82200DE0DA2 /* TileMaps in Resources */,
 				E076EC511225F82200DE0DA2 /* zwoptex in Resources */,
-				E076EC521225F82200DE0DA2 /* MainMenu.xib in Resources */,
+				11DE8BB512C0145C00DF380D /* MainMenu.xib in Resources */,
 				E02A853A129F11BF00341C97 /* icon.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -6557,7 +6562,7 @@
 				E076ED9A1225FDE300DE0DA2 /* Particles in Resources */,
 				E076ED9B1225FDE300DE0DA2 /* TileMaps in Resources */,
 				E076ED9C1225FDE300DE0DA2 /* zwoptex in Resources */,
-				E076ED9D1225FDE300DE0DA2 /* MainMenu.xib in Resources */,
+				11DE8BB412C0145C00DF380D /* MainMenu.xib in Resources */,
 				E0D44F3A1291BFFB0094708A /* test_image_rgba4444.pvr.ccz in Resources */,
 				E0D44F3B1291BFFB0094708A /* test_image_rgba4444.pvr.gz in Resources */,
 				E02A8538129F11BF00341C97 /* icon.icns in Resources */,
@@ -6759,7 +6764,7 @@
 				E076F20812268A9800DE0DA2 /* Particles in Resources */,
 				E076F20912268A9800DE0DA2 /* TileMaps in Resources */,
 				E076F20A12268A9800DE0DA2 /* zwoptex in Resources */,
-				E076F20B12268A9800DE0DA2 /* MainMenu.xib in Resources */,
+				11DE8BB312C0145C00DF380D /* MainMenu.xib in Resources */,
 				E0D2D560128CB06A00F78C63 /* piece.png in Resources */,
 				E02A853B129F11BF00341C97 /* icon.icns in Resources */,
 			);
@@ -6960,7 +6965,7 @@
 				E0AC06941228021600EFA814 /* Particles in Resources */,
 				E0AC06951228021600EFA814 /* TileMaps in Resources */,
 				E0AC06961228021600EFA814 /* zwoptex in Resources */,
-				E0AC06971228021600EFA814 /* MainMenu.xib in Resources */,
+				11DE8BA812C0145C00DF380D /* MainMenu.xib in Resources */,
 				E02A8543129F11BF00341C97 /* icon.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -7160,7 +7165,7 @@
 				E0AC0788122803BC00EFA814 /* Particles in Resources */,
 				E0AC0789122803BC00EFA814 /* TileMaps in Resources */,
 				E0AC078A122803BC00EFA814 /* zwoptex in Resources */,
-				E0AC078B122803BC00EFA814 /* MainMenu.xib in Resources */,
+				11DE8BAA12C0145C00DF380D /* MainMenu.xib in Resources */,
 				E02A8541129F11BF00341C97 /* icon.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -7360,7 +7365,7 @@
 				E0AC091912280B7000EFA814 /* Particles in Resources */,
 				E0AC091A12280B7000EFA814 /* TileMaps in Resources */,
 				E0AC091B12280B7000EFA814 /* zwoptex in Resources */,
-				E0AC091C12280B7000EFA814 /* MainMenu.xib in Resources */,
+				11DE8BAF12C0145C00DF380D /* MainMenu.xib in Resources */,
 				E0C6067D128ECC110099367C /* konqa32-hd.fnt in Resources */,
 				E0C6067E128ECC110099367C /* konqa32-hd.png in Resources */,
 				E0C6067F128ECC110099367C /* konqa32.fnt in Resources */,
@@ -7566,7 +7571,7 @@
 				E0B92DBB1226A0C9003FF67E /* Particles in Resources */,
 				E0B92DBC1226A0C9003FF67E /* TileMaps in Resources */,
 				E0B92DBD1226A0C9003FF67E /* zwoptex in Resources */,
-				E0B92DBE1226A0C9003FF67E /* MainMenu.xib in Resources */,
+				11DE8BB012C0145C00DF380D /* MainMenu.xib in Resources */,
 				E02A853D129F11BF00341C97 /* icon.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -7766,7 +7771,7 @@
 				E0B92EE41226A621003FF67E /* Particles in Resources */,
 				E0B92EE51226A621003FF67E /* TileMaps in Resources */,
 				E0B92EE61226A621003FF67E /* zwoptex in Resources */,
-				E0B92EE71226A621003FF67E /* MainMenu.xib in Resources */,
+				11DE8BAB12C0145C00DF380D /* MainMenu.xib in Resources */,
 				E02A8540129F11BF00341C97 /* icon.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -7966,7 +7971,7 @@
 				E0B92FF61226C0DD003FF67E /* Particles in Resources */,
 				E0B92FF71226C0DD003FF67E /* TileMaps in Resources */,
 				E0B92FF81226C0DD003FF67E /* zwoptex in Resources */,
-				E0B92FF91226C0DD003FF67E /* MainMenu.xib in Resources */,
+				11DE8BA912C0145C00DF380D /* MainMenu.xib in Resources */,
 				E02A8542129F11BF00341C97 /* icon.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -8166,7 +8171,7 @@
 				E0D2CECA12B93736008D5DBB /* Particles in Resources */,
 				E0D2CECB12B93736008D5DBB /* TileMaps in Resources */,
 				E0D2CECC12B93736008D5DBB /* zwoptex in Resources */,
-				E0D2CECD12B93736008D5DBB /* MainMenu.xib in Resources */,
+				11DE8BAC12C0145C00DF380D /* MainMenu.xib in Resources */,
 				E0D2CECE12B93736008D5DBB /* konqa32-hd.fnt in Resources */,
 				E0D2CECF12B93736008D5DBB /* konqa32-hd.png in Resources */,
 				E0D2CED012B93736008D5DBB /* konqa32.fnt in Resources */,
@@ -8372,7 +8377,7 @@
 				E0DA432E12A03A3C00210ACE /* Particles in Resources */,
 				E0DA432F12A03A3C00210ACE /* TileMaps in Resources */,
 				E0DA433012A03A3C00210ACE /* zwoptex in Resources */,
-				E0DA433112A03A3C00210ACE /* MainMenu.xib in Resources */,
+				11DE8BAD12C0145C00DF380D /* MainMenu.xib in Resources */,
 				E0DA433212A03A3C00210ACE /* piece.png in Resources */,
 				E0DA433312A03A3C00210ACE /* icon.icns in Resources */,
 			);
@@ -8454,6 +8459,7 @@
 				E02BBC7D126CD870006E46A2 /* CCAnimation.m in Sources */,
 				E02BBC7F126CD870006E46A2 /* CCAnimationCache.m in Sources */,
 				E026452A12A59F1E009D04FE /* CCParticleSystemPoint.m in Sources */,
+				11DE8BCF12C01D4700DF380D /* MacWindow.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8815,17 +8821,6 @@
 			targetProxy = E0DA437F12A03F9000210ACE /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		E076EB2E1225EFF200DE0DA2 /* MainMenu.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				E076EB2F1225EFF200DE0DA2 /* English */,
-			);
-			name = MainMenu.xib;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		C01FCF4F08A954540054247B /* Debug */ = {
