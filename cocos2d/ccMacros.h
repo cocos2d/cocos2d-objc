@@ -149,6 +149,9 @@ default gl blend src function. Compatible with premultiplied alpha images.
  
  @since v0.99.4
  */
+
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+
 #define CC_DIRECTOR_INIT()																		\
 do	{																							\
 	window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];					\
@@ -170,6 +173,32 @@ do	{																							\
 	[window addSubview:__glView];																\
 	[window makeKeyAndVisible];																	\
 } while(0)
+
+
+#elif __MAC_OS_X_VERSION_MAX_ALLOWED
+
+#import "MacWindow.h"
+
+#define CC_DIRECTOR_INIT(__ORIGINALSIZE__, __FULLSCREEN__)																							\
+do	{																																				\
+	NSRect frameRect = (__FULLSCREEN__) ? [[NSScreen mainScreen] frame] : NSMakeRect(0, 0, (__ORIGINALSIZE__).width, (__ORIGINALSIZE__).height);	\
+	window = [[MacWindow alloc] initWithFrame:frameRect fullScreen:(__FULLSCREEN__)];																\
+	MacGLView *__glView = [[MacGLView alloc] initWithFrame:frameRect shareContext:nil];																\
+	[window setContentView:__glView];																												\
+	CCDirector *__director = [CCDirector sharedDirector];																							\
+	[__director setDisplayFPS:NO];																													\
+	[__director setOpenGLView:__glView];																											\
+	[(CCDirectorMac*)__director setOriginalWinSize:__ORIGINALSIZE__];																				\
+	if(CGSizeEqualToSize(__ORIGINALSIZE__, CGSizeZero))																								\
+		[(CCDirectorMac*)__director setResizeMode:kCCDirectorResize_NoScale];																		\
+	else																																			\
+		[(CCDirectorMac*)__director setResizeMode:kCCDirectorResize_AutoScale];																		\
+	[window makeMainWindow];																														\
+	[window makeKeyAndOrderFront:self];																												\
+} while(0)
+
+#endif
+
  
  /** @def CC_DIRECTOR_END
   Stops and removes the director from memory.
