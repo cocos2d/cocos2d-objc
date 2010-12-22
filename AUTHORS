@@ -47,7 +47,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	* Booyah (http://booyah.com/):
 		Added support for GL sharegroup in EAGLView
 	* Brad Parks:
-		Added google search on forum
+		Web: Added google search on forum.
 	* Brian Hammond:
 		patches for Demos
 	* Bryan/Acceleroto (http://www.acceleroto.com):
@@ -171,7 +171,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Particles Quad: code easier to read and optimize
 		Several patches that uses unsigned ints instead of signed ints
 	* Jose Miguel Gomez Gonzalez (http://www.itlgames.com)
-		Author of the games tab in the cocos2d site
+		Web: Author and maintainer of the games tab in the cocos2d site
 	* jkrippy:
 		patch for menu align. takes scale into account
 	* johnnyflash71:
@@ -325,7 +325,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	* Patrick Wolowicz:
 		mkatlas: added artifact removal by copying borders to margins
 	* Piero Tofy (http://indieappsalliance.org):
-		Author of the scraper script used to parse games data in the cocos2d site
+		Web: Author of the scraper script used to parse games data in the cocos2d site
 	* Pieter van de Bruggen
 		Author of Gradient layer
 	* psi.pk.ru:
