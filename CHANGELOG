@@ -1,4 +1,5 @@
 version 1.0-beta - XX-XXX-2011
+. [NEW-MAC]: Added CC_DIRECTOR_INIT(). It is possible to create a Mac Window programatically
 . [FIX-MAC]: EventDispatcher: flagsChanged is triggered correctly (issue #1066)
 . [FIX-MAC]: Templates includes AudioToolbox and OpenAL frameworks
 
