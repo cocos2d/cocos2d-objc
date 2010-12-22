@@ -110,7 +110,7 @@
 			// Create a screen-sized window on the display you want to take over
 			// Note, mainDisplayRect has a non-zero origin if the key window is on a secondary display
 			mainDisplayRect = [[NSScreen mainScreen] frame];
-			fullScreenWindow_ = [[MacWindow alloc] initWithFrame:mainDisplayRect fullScreen:YES];
+			fullScreenWindow_ = [[MacWindow alloc] initWithFrame:mainDisplayRect fullscreen:YES];
 			
 			// Create a view with a double-buffered OpenGL context and attach it to the window
 			// By specifying the non-fullscreen context as the shareContext, we automatically inherit the OpenGL objects (textures, etc) it has defined

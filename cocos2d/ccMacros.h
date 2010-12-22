@@ -179,22 +179,18 @@ do	{																							\
 
 #import "Platforms/Mac/MacWindow.h"
 
-#define CC_DIRECTOR_INIT(__ORIGINALSIZE__, __FULLSCREEN__)																							\
-do	{																																				\
-	NSRect frameRect = (__FULLSCREEN__) ? [[NSScreen mainScreen] frame] : NSMakeRect(0, 0, (__ORIGINALSIZE__).width, (__ORIGINALSIZE__).height);	\
-	window = [[MacWindow alloc] initWithFrame:frameRect fullScreen:(__FULLSCREEN__)];																\
-	MacGLView *__glView = [[MacGLView alloc] initWithFrame:frameRect shareContext:nil];																\
-	[window setContentView:__glView];																												\
-	CCDirector *__director = [CCDirector sharedDirector];																							\
-	[__director setDisplayFPS:NO];																													\
-	[__director setOpenGLView:__glView];																											\
-	[(CCDirectorMac*)__director setOriginalWinSize:__ORIGINALSIZE__];																				\
-	if(CGSizeEqualToSize(__ORIGINALSIZE__, CGSizeZero))																								\
-		[(CCDirectorMac*)__director setResizeMode:kCCDirectorResize_NoScale];																		\
-	else																																			\
-		[(CCDirectorMac*)__director setResizeMode:kCCDirectorResize_AutoScale];																		\
-	[window makeMainWindow];																														\
-	[window makeKeyAndOrderFront:self];																												\
+#define CC_DIRECTOR_INIT(__WINSIZE__)															\
+do	{																							\
+	NSRect frameRect = NSMakeRect(0, 0, (__WINSIZE__).width, (__WINSIZE__).height);				\
+	self.window = [[MacWindow alloc] initWithFrame:frameRect fullscreen:NO];					\
+	self.glView = [[MacGLView alloc] initWithFrame:frameRect shareContext:nil];					\
+	[self.window setContentView:self.glView];													\
+	CCDirector *__director = [CCDirector sharedDirector];										\
+	[__director setDisplayFPS:NO];																\
+	[__director setOpenGLView:self.glView];														\
+	[(CCDirectorMac*)__director setOriginalWinSize:__WINSIZE__];								\
+	[self.window makeMainWindow];																\
+	[self.window makeKeyAndOrderFront:self];													\
 } while(0)
 
 #endif
