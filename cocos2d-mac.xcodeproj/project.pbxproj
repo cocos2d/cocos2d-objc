@@ -3966,7 +3966,6 @@
 		E0C6067B128ECC110099367C /* larabie-16-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "larabie-16-hd.png"; sourceTree = "<group>"; };
 		E0C6067C128ECC110099367C /* larabie-16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "larabie-16.png"; sourceTree = "<group>"; };
 		E0D2CEE212B93736008D5DBB /* EventsTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EventsTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		E0D2CEE412B93737008D5DBB /* cocos2d_mac-Info copy.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "cocos2d_mac-Info copy.plist"; path = "Resources-Mac/cocos2d_mac-Info copy.plist"; sourceTree = "<group>"; };
 		E0D2CEEE12B93923008D5DBB /* EventsTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EventsTest.h; path = tests/EventsTest.h; sourceTree = "<group>"; };
 		E0D2CEEF12B93923008D5DBB /* EventsTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EventsTest.m; path = tests/EventsTest.m; sourceTree = "<group>"; };
 		E0D2D55F128CB06A00F78C63 /* piece.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = piece.png; sourceTree = "<group>"; };
@@ -4279,7 +4278,6 @@
 				E076E78E1225EDD000DE0DA2 /* cocos2d-artwork */,
 				E076E7A11225EDD000DE0DA2 /* Fonts */,
 				E076E7B71225EDD000DE0DA2 /* Images */,
-				E0D2CEE412B93737008D5DBB /* cocos2d_mac-Info copy.plist */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
