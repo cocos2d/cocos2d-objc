@@ -105,6 +105,9 @@ enum {
 	// position of the node
 	CGPoint position_;
 	CGPoint	positionInPixels_;
+	
+	// skew angles
+	float skewX_, skewY_;
 
 	// is visible
 	BOOL visible_;
@@ -174,6 +177,9 @@ enum {
  @since v0.8
  */
 @property (nonatomic,readwrite) float vertexZ;
+
+@property(nonatomic,readwrite,assign) float skewX;
+@property(nonatomic,readwrite,assign) float skewY;
 /** The rotation (angle) of the node in degrees. 0 is the default rotation angle. Positive values rotate node CW. */
 @property(nonatomic,readwrite,assign) float rotation;
 /** The scale factor of the node. 1.0 is the default scale factor. It modifies the X and Y scale at the same time. */

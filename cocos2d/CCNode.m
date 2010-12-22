@@ -73,12 +73,32 @@
 #pragma mark CCNode - Transform related properties
 
 @synthesize rotation = rotation_, scaleX = scaleX_, scaleY = scaleY_;
+@synthesize skewX = skewX_, skewY = skewY_;
 @synthesize position = position_, positionInPixels = positionInPixels_;
 @synthesize anchorPoint = anchorPoint_, anchorPointInPixels = anchorPointInPixels_;
 @synthesize contentSize = contentSize_, contentSizeInPixels = contentSizeInPixels_;
 @synthesize isRelativeAnchorPoint = isRelativeAnchorPoint_;
 
 // getters synthesized, setters explicit
+
+-(void) setSkewX:(float)newSkewX
+{
+	skewX_ = newSkewX;
+	isTransformDirty_ = isInverseDirty_ = YES;
+#if CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
+	isTransformGLDirty_ = YES;
+#endif
+}
+
+-(void) setSkewY:(float)newSkewY
+{
+	skewY_ = newSkewY;
+	isTransformDirty_ = isInverseDirty_ = YES;
+#if CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
+	isTransformGLDirty_ = YES;
+#endif
+}
+
 -(void) setRotation: (float)newRotation
 {
 	rotation_ = newRotation;
@@ -237,6 +257,7 @@
 		
 		isRunning_ = NO;
 		
+		skewX_ = skewY_ = 0.0f;
 		rotation_ = 0.0f;
 		scaleX_ = scaleY_ = 1.0f;
 		positionInPixels_ = position_ = CGPointZero;
@@ -757,10 +778,17 @@
 		
 		if ( !isRelativeAnchorPoint_ && !CGPointEqualToPoint(anchorPointInPixels_, CGPointZero) )
 			transform_ = CGAffineTransformTranslate(transform_, anchorPointInPixels_.x, anchorPointInPixels_.y);
-		
+
 		if( ! CGPointEqualToPoint(positionInPixels_, CGPointZero) )
 			transform_ = CGAffineTransformTranslate(transform_, positionInPixels_.x, positionInPixels_.y);
 		
+		if( ! (skewX_ == 0 && skewY_ == 0) ) {
+			// create a skewed coordinate system
+			CGAffineTransform skew = CGAffineTransformMake(1.0f, tanf(CC_DEGREES_TO_RADIANS(skewY_)), tanf(CC_DEGREES_TO_RADIANS(skewX_)), 1.0f, 0.0f, 0.0f);
+			// apply the skew to the transform
+			transform_ = CGAffineTransformConcat(skew, transform_);
+		}
+
 		if( rotation_ != 0 )
 			transform_ = CGAffineTransformRotate(transform_, -CC_DEGREES_TO_RADIANS(rotation_));
 		
@@ -769,6 +797,9 @@
 		
 		if( ! CGPointEqualToPoint(anchorPointInPixels_, CGPointZero) )
 			transform_ = CGAffineTransformTranslate(transform_, -anchorPointInPixels_.x, -anchorPointInPixels_.y);
+		
+
+		CCLOG(@"CCNODE transform = %@", NSStringFromCGAffineTransform(transform_));
 		
 		isTransformDirty_ = NO;
 	}
