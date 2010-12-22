@@ -18,6 +18,7 @@ static NSString *transitions[] = {
 	@"ActionMove",
 	@"ActionRotate",
 	@"ActionScale",
+	@"ActionSkew",
 	@"ActionJump",
 	@"ActionBezier",
 	@"ActionBlink",
@@ -307,6 +308,31 @@ Class restartAction()
 -(NSString *) title
 {
 	return @"ScaleTo / ScaleBy";
+}
+
+@end
+
+@implementation ActionSkew
+-(void) onEnter
+{
+	[super onEnter];
+	
+	[self centerSprites:3];
+	
+	id actionTo = [CCSkewTo actionWithDuration:2 skewX:-37.2f skewY:37.2f];
+	id actionToBack = [CCSkewTo actionWithDuration:2 skewX:0 skewY:0];
+	id actionBy = [CCSkewBy actionWithDuration:2 skewX:0.0f skewY:-90.0f];
+	id actionBy2 = [CCSkewBy actionWithDuration:2 skewX:45.0f skewY:45.0f];
+	id actionByBack = [actionBy reverse];
+			
+	[tamara runAction:[CCSequence actions:actionTo, actionToBack, nil]];
+	[grossini runAction: [CCSequence actions:actionBy, actionByBack, nil]];
+	
+	[kathia runAction: [CCSequence actions:actionBy2, [actionBy2 reverse], nil]];	
+}
+-(NSString *) title
+{
+	return @"SkewTo / SkewBy";
 }
 
 @end
