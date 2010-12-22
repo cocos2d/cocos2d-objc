@@ -177,7 +177,7 @@ do	{																							\
 
 #elif __MAC_OS_X_VERSION_MAX_ALLOWED
 
-#import "MacWindow.h"
+#import "Platforms/Mac/MacWindow.h"
 
 #define CC_DIRECTOR_INIT(__ORIGINALSIZE__, __FULLSCREEN__)																							\
 do	{																																				\
