@@ -264,6 +264,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Clean up several parts of the code
 		Added small performance improvements in several parts of the code
 		Fixed possible memory leak when popping a scene
+		Added MacWindow and the possibility to create a Mac Widnow programatically
 	* marcofucci:
 		CCArray.fastRemoveObjectAtIndex patch.
 	* Marco Tillemans (araker):

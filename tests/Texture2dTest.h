@@ -15,8 +15,8 @@
 	MacGLView	*glView_;
 }
 
-@property (assign) IBOutlet NSWindow	*window;
-@property (assign) IBOutlet MacGLView	*glView;
+@property (readwrite, retain)	NSWindow	*window;
+@property (readwrite, retain)	MacGLView	*glView;
 
 - (IBAction)toggleFullScreen:(id)sender;
 

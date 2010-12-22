@@ -1484,34 +1484,35 @@ Class restartAction()
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-	CCDirectorMac *director = (CCDirectorMac*) [CCDirector sharedDirector];
+	CGSize winSize = CGSizeMake(640,480);
 	
-	[director setDisplayFPS:YES];
-	
-	[director setOpenGLView:glView_];
-	
-//	[director setProjection:kCCDirectorProjection2D];
+	//
+	// CC_DIRECTOR_INIT:
+	// 1. It will create an NSWindow with a given size
+	// 2. It will create a MacGLView and it will associate it with the NSWindow
+	// 3. It will register the MacGLView to the CCDirector
+	//
+	// If you want to create a fullscreen window, you should do it AFTER calling this macro
+	//	
+	CC_DIRECTOR_INIT(winSize);
 	
 	// Enable "moving" mouse event. Default no.
 	[window_ setAcceptsMouseMovedEvents:NO];
-		
+	
 	// EXPERIMENTAL stuff.
 	// 'Effects' don't work correctly when autoscale is turned on.
-	[director setResizeMode:kCCDirectorResize_AutoScale];
-	
-	CCScene *scene = [CCScene node];
-	[scene addChild: [nextAction() node]];
-	
+	CCDirectorMac *director = (CCDirectorMac*) [CCDirector sharedDirector];
+	[director setResizeMode:kCCDirectorResize_AutoScale];	
+
 	//
 	// Run all the test with 2d projection
 	//
 	[director setProjection:kCCDirectorProjection2D];
 	
+	CCScene *scene = [CCScene node];
+	[scene addChild: [nextAction() node]];
 	
-	//
-	// Finally, run the scene
-	//
-	[director runWithScene: scene];
+	[director runWithScene:scene];
 }
 
 - (BOOL) applicationShouldTerminateAfterLastWindowClosed: (NSApplication *) theApplication
