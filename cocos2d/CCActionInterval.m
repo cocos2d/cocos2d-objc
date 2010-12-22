@@ -613,6 +613,105 @@
 }
 @end
 
+
+//
+// SkewTo
+//
+#pragma mark -
+#pragma mark SkewTo
+
+@implementation CCSkewTo
++(id) actionWithDuration:(ccTime)t skewX:(float)sx skewY:(float)sy 
+{
+	return [[[self alloc] initWithDuration: t skewX:sx skewY:sy] autorelease];
+}
+
+-(id) initWithDuration:(ccTime)t skewX:(float)sx skewY:(float)sy 
+{
+	if( (self=[super initWithDuration:t]) ) {	
+		endSkewX = sx;
+		endSkewY = sy;
+	}
+	return self;
+}
+
+-(id) copyWithZone: (NSZone*) zone
+{
+	CCAction *copy = [[[self class] allocWithZone: zone] initWithDuration:[self duration] skewX:endSkewX skewY:endSkewY];
+	return copy;
+}
+
+-(void) startWithTarget:(CCNode *)aTarget
+{
+	[super startWithTarget:aTarget];
+	
+	startSkewX = [target_ skewX];
+	if (startSkewX > 0)
+		startSkewX = fmodf(startSkewX, 360.0f);
+	else
+		startSkewX = fmodf(startSkewX, -360.0f);
+	
+	deltaX = endSkewX - startSkewX;
+	if ( deltaX > 180 ) {
+		deltaX -= 360;
+	}
+	if ( deltaX < -180 ) {
+		deltaX += 360;
+	}
+	
+	startSkewY = [target_ skewY];
+	if (startSkewY > 0)
+		startSkewY = fmodf(startSkewY, 360.0f);
+	else
+		startSkewY = fmodf(startSkewY, -360.0f);
+	
+	deltaY = endSkewY - startSkewY;
+	if ( deltaY > 180 ) {
+		deltaY -= 360;
+	}
+	if ( deltaY < -180 ) {
+		deltaY += 360;
+	}
+}
+
+-(void) update: (ccTime) t
+{
+	[target_ setSkewX: (startSkewX + deltaX * t ) ];
+	[target_ setSkewY: (startSkewY + deltaY * t ) ];
+}
+
+@end
+
+//
+// CCSkewBy
+//
+@implementation CCSkewBy
+
+-(id) initWithDuration:(ccTime)t skewX:(float)deltaSkewX skewY:(float)deltaSkewY
+{
+	if( (self=[super initWithDuration:t skewX:deltaSkewX skewY:deltaSkewY]) ) {	
+		skewX = deltaSkewX;
+		skewY = deltaSkewY;
+	}
+	return self;
+}
+
+-(void) startWithTarget:(CCNode *)aTarget
+{
+	[super startWithTarget:aTarget];
+	deltaX = skewX;
+	deltaY = skewY;
+	endSkewX = startSkewX + deltaX;
+	endSkewY = startSkewY + deltaY;
+}
+
+-(CCActionInterval*) reverse
+{
+	return [[self class] actionWithDuration:duration_ skewX:-skewX skewY:-skewY];
+}
+@end
+
+
 //
 // JumpBy
 //
