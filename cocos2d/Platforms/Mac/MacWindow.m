@@ -21,12 +21,19 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+
+// Only compile this code on Mac. These files should not be included on your iOS project.
+// But in case they are included, it won't be compiled.
+#import <Availability.h>
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+
 #import "MacWindow.h"
 
 
 @implementation MacWindow
 
-- (id) initWithFrame:(NSRect)frame fullScreen:(BOOL)fullscreen
+- (id) initWithFrame:(NSRect)frame fullscreen:(BOOL)fullscreen
 {
 	int styleMask = fullscreen ? NSBackingStoreBuffered : ( NSTitledWindowMask | NSClosableWindowMask );
 	self = [self initWithContentRect:frame
@@ -59,3 +66,5 @@
 	return YES;
 }
 @end
+
+#endif // __MAC_OS_X_VERSION_MAX_ALLOWED

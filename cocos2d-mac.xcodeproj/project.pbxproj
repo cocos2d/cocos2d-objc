@@ -998,7 +998,6 @@
 		E076EAF01225EE8500DE0DA2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E076EAED1225EE8500DE0DA2 /* main.m */; };
 		E076EAF31225EE8500DE0DA2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E076EAED1225EE8500DE0DA2 /* main.m */; };
 		E076EB301225EFF200DE0DA2 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = E076EB2E1225EFF200DE0DA2 /* MainMenu.xib */; };
-		E076EB311225EFF200DE0DA2 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = E076EB2E1225EFF200DE0DA2 /* MainMenu.xib */; };
 		E076EB931225F82200DE0DA2 /* A Damn Mess.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E076E7A21225EDD000DE0DA2 /* A Damn Mess.ttf */; };
 		E076EB941225F82200DE0DA2 /* Abberancy.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E076E7A31225EDD000DE0DA2 /* Abberancy.ttf */; };
 		E076EB951225F82200DE0DA2 /* Abduction.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E076E7A41225EDD000DE0DA2 /* Abduction.ttf */; };
@@ -1190,7 +1189,6 @@
 		E076EC4F1225F82200DE0DA2 /* Particles in Resources */ = {isa = PBXBuildFile; fileRef = E076EADD1225EE2B00DE0DA2 /* Particles */; };
 		E076EC501225F82200DE0DA2 /* TileMaps in Resources */ = {isa = PBXBuildFile; fileRef = E076EADE1225EE2B00DE0DA2 /* TileMaps */; };
 		E076EC511225F82200DE0DA2 /* zwoptex in Resources */ = {isa = PBXBuildFile; fileRef = E076EADF1225EE2B00DE0DA2 /* zwoptex */; };
-		E076EC521225F82200DE0DA2 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = E076EB2E1225EFF200DE0DA2 /* MainMenu.xib */; };
 		E076EC551225F82200DE0DA2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E076EAED1225EE8500DE0DA2 /* main.m */; };
 		E076EC571225F82200DE0DA2 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		E076EC581225F82200DE0DA2 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E036A79C121B5C720037C5C6 /* OpenGL.framework */; };
@@ -1390,7 +1388,6 @@
 		E076ED9A1225FDE300DE0DA2 /* Particles in Resources */ = {isa = PBXBuildFile; fileRef = E076EADD1225EE2B00DE0DA2 /* Particles */; };
 		E076ED9B1225FDE300DE0DA2 /* TileMaps in Resources */ = {isa = PBXBuildFile; fileRef = E076EADE1225EE2B00DE0DA2 /* TileMaps */; };
 		E076ED9C1225FDE300DE0DA2 /* zwoptex in Resources */ = {isa = PBXBuildFile; fileRef = E076EADF1225EE2B00DE0DA2 /* zwoptex */; };
-		E076ED9D1225FDE300DE0DA2 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = E076EB2E1225EFF200DE0DA2 /* MainMenu.xib */; };
 		E076ED9F1225FDE300DE0DA2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E076EAED1225EE8500DE0DA2 /* main.m */; };
 		E076EDA21225FDE300DE0DA2 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		E076EDA31225FDE300DE0DA2 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E036A79C121B5C720037C5C6 /* OpenGL.framework */; };
@@ -1622,6 +1619,9 @@
 		E076F21F12268AF100DE0DA2 /* SpriteTest.m in Sources */ = {isa = PBXBuildFile; fileRef = E076F21E12268AF100DE0DA2 /* SpriteTest.m */; };
 		E08AA19B12C262B3000341BD /* MacWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = E08AA19912C262B3000341BD /* MacWindow.h */; };
 		E08AA19C12C262B3000341BD /* MacWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = E08AA19A12C262B3000341BD /* MacWindow.m */; };
+		E08AA22C12C27DEA000341BD /* MainMenu-NoWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = E08AA22A12C27DEA000341BD /* MainMenu-NoWindow.xib */; };
+		E08AA22D12C27DEA000341BD /* MainMenu-NoWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = E08AA22A12C27DEA000341BD /* MainMenu-NoWindow.xib */; };
+		E08AA22F12C27E2F000341BD /* MainMenu-NoWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = E08AA22A12C27DEA000341BD /* MainMenu-NoWindow.xib */; };
 		E0AC05D81228021600EFA814 /* A Damn Mess.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E076E7A21225EDD000DE0DA2 /* A Damn Mess.ttf */; };
 		E0AC05D91228021600EFA814 /* Abberancy.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E076E7A31225EDD000DE0DA2 /* Abberancy.ttf */; };
 		E0AC05DA1228021600EFA814 /* Abduction.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E076E7A41225EDD000DE0DA2 /* Abduction.ttf */; };
@@ -3945,6 +3945,8 @@
 		E076F21E12268AF100DE0DA2 /* SpriteTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SpriteTest.m; path = tests/SpriteTest.m; sourceTree = "<group>"; };
 		E08AA19912C262B3000341BD /* MacWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MacWindow.h; sourceTree = "<group>"; };
 		E08AA19A12C262B3000341BD /* MacWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MacWindow.m; sourceTree = "<group>"; };
+		E08AA22B12C27DEA000341BD /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = "Resources-Mac/English.lproj/MainMenu-NoWindow.xib"; sourceTree = "<group>"; };
+		E08AA23512C27E7D000341BD /* cocos2d_mac-no-window-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "cocos2d_mac-no-window-Info.plist"; path = "Resources-Mac/cocos2d_mac-no-window-Info.plist"; sourceTree = "<group>"; };
 		E0AC06A51228021600EFA814 /* ActionTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ActionTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E0AC06A81228027D00EFA814 /* ActionsTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ActionsTest.h; path = tests/ActionsTest.h; sourceTree = "<group>"; };
 		E0AC06A91228027D00EFA814 /* ActionsTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ActionsTest.m; path = tests/ActionsTest.m; sourceTree = "<group>"; };
@@ -3970,7 +3972,6 @@
 		E0C6067B128ECC110099367C /* larabie-16-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "larabie-16-hd.png"; sourceTree = "<group>"; };
 		E0C6067C128ECC110099367C /* larabie-16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "larabie-16.png"; sourceTree = "<group>"; };
 		E0D2CEE212B93736008D5DBB /* EventsTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EventsTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		E0D2CEE412B93737008D5DBB /* cocos2d_mac-Info copy.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "cocos2d_mac-Info copy.plist"; path = "Resources-Mac/cocos2d_mac-Info copy.plist"; sourceTree = "<group>"; };
 		E0D2CEEE12B93923008D5DBB /* EventsTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EventsTest.h; path = tests/EventsTest.h; sourceTree = "<group>"; };
 		E0D2CEEF12B93923008D5DBB /* EventsTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EventsTest.m; path = tests/EventsTest.m; sourceTree = "<group>"; };
 		E0D2D55F128CB06A00F78C63 /* piece.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = piece.png; sourceTree = "<group>"; };
@@ -4274,7 +4275,9 @@
 			children = (
 				E02A8537129F11BF00341C97 /* icon.icns */,
 				E076EB2E1225EFF200DE0DA2 /* MainMenu.xib */,
+				E08AA22A12C27DEA000341BD /* MainMenu-NoWindow.xib */,
 				E076EAE81225EE8500DE0DA2 /* cocos2d_mac-Info.plist */,
+				E08AA23512C27E7D000341BD /* cocos2d_mac-no-window-Info.plist */,
 				E076EAED1225EE8500DE0DA2 /* main.m */,
 				E076EADC1225EE2B00DE0DA2 /* animations */,
 				E076EADD1225EE2B00DE0DA2 /* Particles */,
@@ -4283,7 +4286,6 @@
 				E076E78E1225EDD000DE0DA2 /* cocos2d-artwork */,
 				E076E7A11225EDD000DE0DA2 /* Fonts */,
 				E076E7B71225EDD000DE0DA2 /* Images */,
-				E0D2CEE412B93737008D5DBB /* cocos2d_mac-Info copy.plist */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -6164,8 +6166,8 @@
 				E076EAE51225EE2B00DE0DA2 /* Particles in Resources */,
 				E076EAE61225EE2B00DE0DA2 /* TileMaps in Resources */,
 				E076EAE71225EE2B00DE0DA2 /* zwoptex in Resources */,
-				E076EB311225EFF200DE0DA2 /* MainMenu.xib in Resources */,
 				E02A8539129F11BF00341C97 /* icon.icns in Resources */,
+				E08AA22F12C27E2F000341BD /* MainMenu-NoWindow.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6364,8 +6366,8 @@
 				E076EC4F1225F82200DE0DA2 /* Particles in Resources */,
 				E076EC501225F82200DE0DA2 /* TileMaps in Resources */,
 				E076EC511225F82200DE0DA2 /* zwoptex in Resources */,
-				E076EC521225F82200DE0DA2 /* MainMenu.xib in Resources */,
 				E02A853A129F11BF00341C97 /* icon.icns in Resources */,
+				E08AA22C12C27DEA000341BD /* MainMenu-NoWindow.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6564,10 +6566,10 @@
 				E076ED9A1225FDE300DE0DA2 /* Particles in Resources */,
 				E076ED9B1225FDE300DE0DA2 /* TileMaps in Resources */,
 				E076ED9C1225FDE300DE0DA2 /* zwoptex in Resources */,
-				E076ED9D1225FDE300DE0DA2 /* MainMenu.xib in Resources */,
 				E0D44F3A1291BFFB0094708A /* test_image_rgba4444.pvr.ccz in Resources */,
 				E0D44F3B1291BFFB0094708A /* test_image_rgba4444.pvr.gz in Resources */,
 				E02A8538129F11BF00341C97 /* icon.icns in Resources */,
+				E08AA22D12C27DEA000341BD /* MainMenu-NoWindow.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8833,6 +8835,14 @@
 			name = MainMenu.xib;
 			sourceTree = "<group>";
 		};
+		E08AA22A12C27DEA000341BD /* MainMenu-NoWindow.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E08AA22B12C27DEA000341BD /* English */,
+			);
+			name = "MainMenu-NoWindow.xib";
+			sourceTree = "<group>";
+		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
@@ -9021,7 +9031,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Resources-Mac/cocos2d_mac_Prefix.pch";
-				INFOPLIST_FILE = "Resources-Mac/cocos2d_mac-Info.plist";
+				INFOPLIST_FILE = "Resources-Mac/cocos2d_mac-no-window-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -9039,7 +9049,7 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Resources-Mac/cocos2d_mac_Prefix.pch";
-				INFOPLIST_FILE = "Resources-Mac/cocos2d_mac-Info.plist";
+				INFOPLIST_FILE = "Resources-Mac/cocos2d_mac-no-window-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -9081,7 +9091,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Resources-Mac/cocos2d_mac_Prefix.pch";
-				INFOPLIST_FILE = "Resources-Mac/cocos2d_mac-Info.plist";
+				INFOPLIST_FILE = "Resources-Mac/cocos2d_mac-no-window-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -9099,7 +9109,7 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Resources-Mac/cocos2d_mac_Prefix.pch";
-				INFOPLIST_FILE = "Resources-Mac/cocos2d_mac-Info.plist";
+				INFOPLIST_FILE = "Resources-Mac/cocos2d_mac-no-window-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -9120,7 +9130,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Resources-Mac/cocos2d_mac_Prefix.pch";
-				INFOPLIST_FILE = "Resources-Mac/cocos2d_mac-Info.plist";
+				INFOPLIST_FILE = "Resources-Mac/cocos2d_mac-no-window-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -9138,7 +9148,7 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Resources-Mac/cocos2d_mac_Prefix.pch";
-				INFOPLIST_FILE = "Resources-Mac/cocos2d_mac-Info.plist";
+				INFOPLIST_FILE = "Resources-Mac/cocos2d_mac-no-window-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
