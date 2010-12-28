@@ -61,6 +61,10 @@
 {}
 @end
 
+@interface ActionSkewRotateScale : ActionDemo
+{}
+@end
+
 @interface ActionJump : ActionDemo
 {}
 @end
