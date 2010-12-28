@@ -782,7 +782,7 @@
 		if( ! CGPointEqualToPoint(positionInPixels_, CGPointZero) )
 			transform_ = CGAffineTransformTranslate(transform_, positionInPixels_.x, positionInPixels_.y);
 		
-		if( ! (skewX_ == 0 && skewY_ == 0) ) {
+		if( skewX_ != 0 || skewY_ != 0 ) {
 			// create a skewed coordinate system
 			CGAffineTransform skew = CGAffineTransformMake(1.0f, tanf(CC_DEGREES_TO_RADIANS(skewY_)), tanf(CC_DEGREES_TO_RADIANS(skewX_)), 1.0f, 0.0f, 0.0f);
 			// apply the skew to the transform
