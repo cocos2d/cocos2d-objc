@@ -646,12 +646,14 @@
 	[super startWithTarget:aTarget];
 	
 	startSkewX = [target_ skewX];
+	
 	if (startSkewX > 0)
-		startSkewX = fmodf(startSkewX, 360.0f);
+		startSkewX = fmodf(startSkewX, 180.0f);
 	else
-		startSkewX = fmodf(startSkewX, -360.0f);
+		startSkewX = fmodf(startSkewX, -180.0f);
 	
 	deltaX = endSkewX - startSkewX;
+	
 	if ( deltaX > 180 ) {
 		deltaX -= 360;
 	}
@@ -660,12 +662,14 @@
 	}
 	
 	startSkewY = [target_ skewY];
+		
 	if (startSkewY > 0)
 		startSkewY = fmodf(startSkewY, 360.0f);
 	else
 		startSkewY = fmodf(startSkewY, -360.0f);
 	
 	deltaY = endSkewY - startSkewY;
+	
 	if ( deltaY > 180 ) {
 		deltaY -= 360;
 	}
