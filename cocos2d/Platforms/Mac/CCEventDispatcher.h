@@ -156,6 +156,36 @@
 -(BOOL) ccFlagsChanged:(NSEvent*)event;
 @end
 
+#pragma mark -
+#pragma mark CCTouchEventDelegate
+
+/** CCTouchEventDelegate protocol.
+ Implement it in your node to receive any of touch events
+ */
+@protocol CCTouchEventDelegate <NSObject>
+@optional
+/** called when the "touchesBegan" event is received.
+ Return YES to avoid propagating the event to other delegates.
+ */
+- (BOOL)ccTouchesBeganWithEvent:(NSEvent *)event;
+
+/** called when the "touchesMoved" event is received.
+ Return YES to avoid propagating the event to other delegates.
+ */
+- (BOOL)ccTouchesMovedWithEvent:(NSEvent *)event;
+
+/** called when the "touchesEnded" event is received.
+ Return YES to avoid propagating the event to other delegates.
+ */
+- (BOOL)ccTouchesEndedWithEvent:(NSEvent *)event;
+
+/** called when the "touchesCancelled" event is received.
+ Return YES to avoid propagating the event to other delegates.
+ */
+- (BOOL)ccTouchesCancelledWithEvent:(NSEvent *)event;
+
+@end
+
 
 #pragma mark -
 #pragma mark CCEventDispatcher
@@ -177,6 +207,7 @@ struct _listEntry;
 	
 	struct	_listEntry		*keyboardDelegates_;
 	struct	_listEntry		*mouseDelegates_;
+	struct	_listEntry		*touchDelegates_;
 }
 
 @property (nonatomic, readwrite) BOOL dispatchEvents;
@@ -219,7 +250,19 @@ struct _listEntry;
 
 #pragma mark CCEventDispatcher - Touches
 
-// XXX
+/** Adds a Touch delegate to the dispatcher's list.
+ Delegates with a lower priority value will be called before higher priority values.
+ All the events will be propgated to all the delegates, unless the one delegate returns YES.
+ 
+ IMPORTANT: The delegate will be retained.
+ */
+- (void)addTouchDelegate:(id<CCTouchEventDelegate>)delegate priority:(NSInteger)priority;
+
+/** Removes a touch delegate */
+- (void)removeTouchDelegate:(id) delegate;
+
+/** Removes all touch delegates, releasing all the delegates */
+- (void)removeAllTouchDelegates;
 
 #pragma mark CCEventDispatcher - Dispatch Events
 
