@@ -48,7 +48,12 @@ enum  {
 	kCCImplementsScrollWheel		= 1 << 10,
 	kCCImplementsMouseEntered		= 1 << 11,
 	kCCImplementsMouseExited		= 1 << 12,
-		
+
+	kCCImplementsTouchesBegan		= 1 << 13,
+	kCCImplementsTouchesMoved		= 1 << 14,
+	kCCImplementsTouchesEnded		= 1 << 15,
+	kCCImplementsTouchesCancelled	        = 1 << 16,
+
 	// keyboard
 	kCCImplementsKeyUp				= 1 << 0,
 	kCCImplementsKeyDown			= 1 << 1,
@@ -112,6 +117,7 @@ static int		eventQueueCount;
 		// delegates
 		keyboardDelegates_ = NULL;
 		mouseDelegates_ = NULL;
+                touchDelegates_ = NULL;
 		
 #if	CC_DIRECTOR_MAC_USE_DISPLAY_LINK_THREAD
 		eventQueueCount = 0;
@@ -249,6 +255,29 @@ static int		eventQueueCount;
 {
 	[self removeAllDelegatesFromList:&keyboardDelegates_];
 }
+
+-(void) addTouchDelegate:(id<CCTouchEventDelegate>) delegate priority:(NSInteger)priority
+{
+	NSUInteger flags = 0;
+	
+	flags |= ( [delegate respondsToSelector:@selector(ccTouchesBeganWithEvent:)] ? kCCImplementsTouchesBegan : 0 );
+	flags |= ( [delegate respondsToSelector:@selector(ccTouchesMovedWithEvent:)] ? kCCImplementsTouchesMoved : 0 );
+	flags |= ( [delegate respondsToSelector:@selector(ccTouchesEndedWithEvent:)] ? kCCImplementsTouchesEnded : 0 );
+	flags |= ( [delegate respondsToSelector:@selector(ccTouchesCancelledWithEvent:)] ? kCCImplementsTouchesCancelled : 0 );
+	
+	[self addDelegate:delegate priority:priority flags:flags list:&touchDelegates_];
+}
+
+-(void) removeTouchDelegate:(id) delegate
+{
+	[self removeDelegate:delegate fromList:&touchDelegates_];
+}
+
+-(void) removeAllTouchDelegates
+{
+	[self removeAllDelegatesFromList:&touchDelegates_];
+}
+
 
 #pragma mark CCEventDispatcher - Mouse events
 //
@@ -518,31 +547,64 @@ static int		eventQueueCount;
 
 - (void)touchesBeganWithEvent:(NSEvent *)event
 {
-	if (dispatchEvents_ ) {
-		NSLog(@"Touch Events: Not supported yet");
-	}
+	if( dispatchEvents_ ) {
+		tListEntry *entry, *tmp;
+		
+		DL_FOREACH_SAFE( touchDelegates_, entry, tmp ) {
+			if ( entry->flags & kCCImplementsTouchesBegan) {
+				void *swallows = [entry->delegate performSelector:@selector(ccTouchesBeganWithEvent:) withObject:event];
+				if( swallows )
+					break;
+			}
+		}
+	}	
 }
 
 - (void)touchesMovedWithEvent:(NSEvent *)event
 {
-	if (dispatchEvents_ ) {
-		NSLog(@"Touch Events: Not supported yet");
-	}
+	if( dispatchEvents_ ) {
+		tListEntry *entry, *tmp;
+		
+		DL_FOREACH_SAFE( touchDelegates_, entry, tmp ) {
+			if ( entry->flags & kCCImplementsTouchesMoved) {
+				void *swallows = [entry->delegate performSelector:@selector(ccTouchesMovedWithEvent:) withObject:event];
+				if( swallows )
+					break;
+			}
+		}
+	}	
 }
 
 - (void)touchesEndedWithEvent:(NSEvent *)event
 {
-	if (dispatchEvents_ ) {
-		NSLog(@"Touch Events: Not supported yet");
-	}
+	if( dispatchEvents_ ) {
+		tListEntry *entry, *tmp;
+		
+		DL_FOREACH_SAFE( touchDelegates_, entry, tmp ) {
+			if ( entry->flags & kCCImplementsTouchesEnded) {
+				void *swallows = [entry->delegate performSelector:@selector(ccTouchesEndedWithEvent:) withObject:event];
+				if( swallows )
+					break;
+			}
+		}
+	}	
 }
 
 - (void)touchesCancelledWithEvent:(NSEvent *)event
 {
-	if (dispatchEvents_ ) {
-		NSLog(@"Touch Events: Not supported yet");
-	}
+	if( dispatchEvents_ ) {
+		tListEntry *entry, *tmp;
+		
+		DL_FOREACH_SAFE( touchDelegates_, entry, tmp ) {
+			if ( entry->flags & kCCImplementsTouchesCancelled) {
+				void *swallows = [entry->delegate performSelector:@selector(ccTouchesCancelledWithEvent:) withObject:event];
+				if( swallows )
+					break;
+			}
+		}
+	}	
 }
+
 
 #pragma mark CCEventDispatcher - queue events
 
