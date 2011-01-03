@@ -782,8 +782,6 @@
 		if( ! CGPointEqualToPoint(positionInPixels_, CGPointZero) )
 			transform_ = CGAffineTransformTranslate(transform_, positionInPixels_.x, positionInPixels_.y);
 		
-
-
 		if( rotation_ != 0 )
 			transform_ = CGAffineTransformRotate(transform_, -CC_DEGREES_TO_RADIANS(rotation_));
 		
@@ -799,10 +797,7 @@
 		
 		if( ! CGPointEqualToPoint(anchorPointInPixels_, CGPointZero) )
 			transform_ = CGAffineTransformTranslate(transform_, -anchorPointInPixels_.x, -anchorPointInPixels_.y);
-		
-
-		CCLOG(@"CCNODE transform = %@", NSStringFromCGAffineTransform(transform_));
-		
+				
 		isTransformDirty_ = NO;
 	}
 	
