@@ -636,6 +636,14 @@
 	if (rotation_ != 0.0f )
 		glRotatef( -rotation_, 0.0f, 0.0f, 1.0f );
 	
+	// skew
+	if ( (skewX_ != 0.0f) || (skewY_ != 0.0f) ) {
+		// brc-TODO: This needs testing.  We currently only use AffineMatrix caching
+		GLfloat m[6] = { 1.0f, tanf(CC_DEGREES_TO_RADIANS(skewY_), tanf(CC_DEGREES_TO_RADIANS(skewX_), 1.0f, 0.0f, 0.0f };
+		glMultMatrixf(m);
+		
+	}
+	
 	// scale
 	if (scaleX_ != 1.0f || scaleY_ != 1.0f)
 		glScalef( scaleX_, scaleY_, 1.0f );
