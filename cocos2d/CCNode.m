@@ -782,15 +782,17 @@
 		if( ! CGPointEqualToPoint(positionInPixels_, CGPointZero) )
 			transform_ = CGAffineTransformTranslate(transform_, positionInPixels_.x, positionInPixels_.y);
 		
+
+
+		if( rotation_ != 0 )
+			transform_ = CGAffineTransformRotate(transform_, -CC_DEGREES_TO_RADIANS(rotation_));
+		
 		if( skewX_ != 0 || skewY_ != 0 ) {
 			// create a skewed coordinate system
 			CGAffineTransform skew = CGAffineTransformMake(1.0f, tanf(CC_DEGREES_TO_RADIANS(skewY_)), tanf(CC_DEGREES_TO_RADIANS(skewX_)), 1.0f, 0.0f, 0.0f);
 			// apply the skew to the transform
 			transform_ = CGAffineTransformConcat(skew, transform_);
 		}
-
-		if( rotation_ != 0 )
-			transform_ = CGAffineTransformRotate(transform_, -CC_DEGREES_TO_RADIANS(rotation_));
 		
 		if( ! (scaleX_ == 1 && scaleY_ == 1) ) 
 			transform_ = CGAffineTransformScale(transform_, scaleX_, scaleY_);
