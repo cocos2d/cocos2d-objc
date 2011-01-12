@@ -89,8 +89,10 @@
 #if 0 // isnan() is not supported on the simulator, and isnan() always returns false.
 	if( isnan(radius_) )
 		radius_ = r;
+	
 	if( isnan( angleZ_) )
 		angleZ_ = (CGFloat)CC_RADIANS_TO_DEGREES(zenith);
+	
 	if( isnan( angleX_ ) )
 		angleX_ = (CGFloat)CC_RADIANS_TO_DEGREES(azimuth);
 #endif
@@ -109,8 +111,7 @@
 	float j = sinf(za) * sinf(xa) * r + centerYOrig_;
 	float k = cosf(za) * r + centerZOrig_;
 
-	[[target_ camera] setEyeX:i eyeY:j eyeZ:k];
-	
+	[[target_ camera] setEyeX:i eyeY:j eyeZ:k];	
 }
 
 -(void) sphericalRadius:(float*) newRadius zenith:(float*) zenith azimuth:(float*) azimuth
@@ -127,16 +128,16 @@
 	y = ey-cy;
 	z = ez-cz;
 	
-	r = sqrtf( powf(x,2) + powf(y,2) + powf(z,2));
-	s = sqrtf( powf(x,2) + powf(y,2));
+	r = sqrtf( x*x + y*y + z*z);
+	s = sqrtf( x*x + y*y);
 	if(s==0.0f)
-		s=FLT_EPSILON;
+		s = FLT_EPSILON;
 	if(r==0.0f)
-		r=FLT_EPSILON;
+		r = FLT_EPSILON;
 
 	*zenith = acosf( z/r);
 	if( x < 0 )
-		*azimuth= (float)M_PI - asinf(y/s);
+		*azimuth = (float)M_PI - asinf(y/s);
 	else
 		*azimuth = asinf(y/s);
 					

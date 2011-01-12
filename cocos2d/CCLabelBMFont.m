@@ -425,7 +425,7 @@ typedef struct _KerningHashElement
 
 @implementation CCLabelBMFont
 
-@synthesize opacity=opacity_, color=color_;
+@synthesize opacity = opacity_, color = color_;
 
 #pragma mark BitmapFontAtlas - Purge Cache
 +(void) purgeCachedData
@@ -616,6 +616,7 @@ typedef struct _KerningHashElement
 -(void) setColor:(ccColor3B)color
 {
 	color_ = color;
+	
 	CCSprite *child;
 	CCARRAY_FOREACH(children_, child)
 		[child setColor:color_];
@@ -632,6 +633,7 @@ typedef struct _KerningHashElement
 -(void) setOpacityModifyRGB:(BOOL)modify
 {
 	opacityModifyRGB_ = modify;
+	
 	id<CCRGBAProtocol> child;
 	CCARRAY_FOREACH(children_, child)
 		[child setOpacityModifyRGB:modify];

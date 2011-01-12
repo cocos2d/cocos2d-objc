@@ -132,11 +132,11 @@
 @end
 
 @implementation CCTMXLayer
-@synthesize layerSize = layerSize_, layerName = layerName_, tiles=tiles_;
-@synthesize tileset=tileset_;
-@synthesize layerOrientation=layerOrientation_;
-@synthesize mapTileSize=mapTileSize_;
-@synthesize properties=properties_;
+@synthesize layerSize = layerSize_, layerName = layerName_, tiles = tiles_;
+@synthesize tileset = tileset_;
+@synthesize layerOrientation = layerOrientation_;
+@synthesize mapTileSize = mapTileSize_;
+@synthesize properties = properties_;
 
 #pragma mark CCTMXLayer - init & alloc & dealloc
 
@@ -156,7 +156,7 @@
 	if( tilesetInfo )
 		tex = [[CCTextureCache sharedTextureCache] addImage:tilesetInfo.sourceImage];
 	
-	if((self=[super initWithTexture:tex capacity:capacity])) {		
+	if((self = [super initWithTexture:tex capacity:capacity])) {		
 
 		// layerInfo
 		self.layerName = layerInfo.name;
@@ -360,7 +360,8 @@
 	ccCArrayInsertValueAtIndex(atlasIndexArray_, (void*)z, indexForZ);
 	
 	// update possible children
-	for( CCSprite *sprite in children_) {
+	CCSprite *sprite;
+	CCARRAY_FOREACH(children_, sprite) {
 		unsigned int ai = [sprite atlasIndex];
 		if( ai >= indexForZ)
 			[sprite setAtlasIndex: ai+1];
@@ -442,7 +443,7 @@ int compareInts (const void * a, const void * b)
 
 -(NSUInteger) atlasIndexForExistantZ:(NSUInteger)z
 {
-	NSInteger key=z;
+	NSInteger key = z;
 	NSInteger *item = bsearch((void*)&key, (void*)&atlasIndexArray_->arr[0], atlasIndexArray_->num, sizeof(void*), compareInts);
 	
 	NSAssert( item, @"TMX atlas index not found. Shall not happen");
@@ -454,8 +455,8 @@ int compareInts (const void * a, const void * b)
 -(NSUInteger)atlasIndexForNewZ:(NSUInteger)z
 {
 	// XXX: This can be improved with a sort of binary search
-	NSUInteger i=0;
-	for( i=0; i< atlasIndexArray_->num ; i++) {
+	NSUInteger i = 0;
+	for(i = 0; i< atlasIndexArray_->num; i++) {
 		NSUInteger val = (NSUInteger) atlasIndexArray_->arr[i];
 		if( z < val )
 			break;
@@ -492,9 +493,8 @@ int compareInts (const void * a, const void * b)
 				CGRect rect = [tileset_ rectForGID:gid];
 				[sprite setTextureRectInPixels:rect rotated:NO untrimmedSize:rect.size];
 				tiles_[z] = gid;
-			} else {
+			} else
 				[self updateTileForGID:gid at:pos];
-			}
 		}
 	}
 }
@@ -545,7 +545,8 @@ int compareInts (const void * a, const void * b)
 			[textureAtlas_ removeQuadAtIndex:atlasIndex];
 
 			// update possible children
-			for( CCSprite *sprite in children_) {
+			CCSprite *sprite;
+			CCARRAY_FOREACH(children_, sprite) {
 				unsigned int ai = [sprite atlasIndex];
 				if( ai >= atlasIndex) {
 					[sprite setAtlasIndex: ai-1];
@@ -594,16 +595,20 @@ int compareInts (const void * a, const void * b)
 
 -(CGPoint) positionForOrthoAt:(CGPoint)pos
 {
-	int x = pos.x * mapTileSize_.width + 0.49f;
-	int y = (layerSize_.height - pos.y - 1) * mapTileSize_.height + 0.49f;
-	return ccp(x,y);
+	CGPoint xy = {
+		pos.x * mapTileSize_.width,
+		(layerSize_.height - pos.y - 1) * mapTileSize_.height,
+	};
+	return xy;
 }
 
 -(CGPoint) positionForIsoAt:(CGPoint)pos
 {
-	int x = mapTileSize_.width /2 * ( layerSize_.width + pos.x - pos.y - 1) + 0.49f;
-	int y = mapTileSize_.height /2 * (( layerSize_.height * 2 - pos.x - pos.y) - 2) + 0.49f;	
-	return ccp(x, y);
+	CGPoint xy = {
+		mapTileSize_.width /2 * ( layerSize_.width + pos.x - pos.y - 1),
+		mapTileSize_.height /2 * (( layerSize_.height * 2 - pos.x - pos.y) - 2),
+	};
+	return xy;
 }
 
 -(CGPoint) positionForHexAt:(CGPoint)pos
@@ -612,9 +617,11 @@ int compareInts (const void * a, const void * b)
 	if( (int)pos.x % 2 == 1 )
 		diffY = -mapTileSize_.height/2 ;
 	
-	int x =  pos.x * mapTileSize_.width*3/4 + 0.49f;
-	int y =  (layerSize_.height - pos.y - 1) * mapTileSize_.height + diffY + 0.49f;
-	return ccp(x,y);
+	CGPoint xy = {
+		pos.x * mapTileSize_.width*3/4,
+		(layerSize_.height - pos.y - 1) * mapTileSize_.height + diffY
+	};
+	return xy;
 }
 
 -(int) vertexZForPos:(CGPoint)pos

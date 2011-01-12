@@ -49,7 +49,8 @@
  
 */
 
-@interface CCCamera : NSObject {
+@interface CCCamera : NSObject
+{
     float eyeX_;
     float eyeY_;
     float eyeZ_;

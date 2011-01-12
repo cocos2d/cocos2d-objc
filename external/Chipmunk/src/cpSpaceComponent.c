@@ -21,7 +21,7 @@
  
 #include <stdlib.h>
 
-#include "chipmunk.h"
+#include "chipmunk_private.h"
 
 #pragma mark Sleeping Functions
 
@@ -55,6 +55,21 @@ componentNodeMerge(cpBody *a_root, cpBody *b_root)
 	}
 }
 
+void
+cpSpaceActivateBody(cpSpace *space, cpBody *body)
+{
+	if(space->locked){
+		// cpSpaceActivateBody() is called again once the space is unlocked
+		cpArrayPush(space->rousedBodies, body);
+	} else {
+		cpArrayPush(space->bodies, body);
+		for(cpShape *shape=body->shapesList; shape; shape=shape->next){
+			cpSpaceHashRemove(space->staticShapes, shape, shape->hashid);
+			cpSpaceHashInsert(space->activeShapes, shape, shape->hashid, shape->bb);
+		}
+	}
+}
+
 static inline void
 componentActivate(cpBody *root)
 {
@@ -69,12 +84,8 @@ componentActivate(cpBody *root)
 		
 		cpComponentNode node = {NULL, NULL, 0, 0.0f};
 		body->node = node;
-		cpArrayPush(space->bodies, body);
 		
-		for(cpShape *shape=body->shapesList; shape; shape=shape->next){
-			cpSpaceHashRemove(space->staticShapes, shape, shape->hashid);
-			cpSpaceHashInsert(space->activeShapes, shape, shape->hashid, shape->bb);
-		}
+		cpSpaceActivateBody(space, body);
 	} while((body = next) != root);
 	
 	cpArrayDeleteObj(space->sleepingComponents, root);
@@ -83,16 +94,13 @@ componentActivate(cpBody *root)
 void
 cpBodyActivate(cpBody *body)
 {
-	// Reset the idle time even if it's not in a currently sleeping component
-	// Like a body resting on or jointed to a rogue body.
-	body->node.idleTime = 0.0f;
 	componentActivate(componentNodeRoot(body));
 }
 
 static inline void
 mergeBodies(cpSpace *space, cpArray *components, cpArray *rogueBodies, cpBody *a, cpBody *b)
 {
-	// Don't merge with the static body
+	// Ignore connections to static bodies
 	if(cpBodyIsStatic(a) || cpBodyIsStatic(b)) return;
 	
 	cpBody *a_root = componentNodeRoot(a);
@@ -108,9 +116,9 @@ mergeBodies(cpSpace *space, cpArray *components, cpArray *rogueBodies, cpBody *a
 		componentActivate(b_root);
 	} 
 	
-	// Add any rogue bodies (bodies not added to the space)
-	if(!a->space) cpArrayPush(rogueBodies, a);
-	if(!b->space) cpArrayPush(rogueBodies, b);
+	// Add any rogue bodies found to the list and reset the idle time of anything they touch.
+	if(cpBodyIsRogue(a)){ cpArrayPush(rogueBodies, a); b->node.idleTime = 0.0f; }
+	if(cpBodyIsRogue(b)){ cpArrayPush(rogueBodies, b); a->node.idleTime = 0.0f; }
 	
 	componentNodeMerge(a_root, b_root);
 }
@@ -121,7 +129,7 @@ componentActive(cpBody *root, cpFloat threshold)
 	cpBody *body = root, *next;
 	do {
 		next = body->node.next;
-		if(cpBodyIsRogue(body) || body->node.idleTime < threshold) return cpTrue;
+		if(body->node.idleTime < threshold) return cpTrue;
 	} while((body = next) != root);
 	
 	return cpFalse;
@@ -158,10 +166,11 @@ cpSpaceProcessComponents(cpSpace *space, cpFloat dt)
 	cpArray *rogueBodies = cpArrayNew(16);
 	cpArray *arbiters = space->arbiters;
 	cpArray *constraints = space->constraints;
-	cpArray *components = cpArrayNew(bodies->num/8);
+	cpArray *components = cpArrayNew(space->sleepingComponents->num);
 	
 	cpFloat dv = space->idleSpeedThreshold;
 	cpFloat dvsq = (dv ? dv*dv : cpvdot(space->gravity, space->gravity)*dt*dt);
+	
 	// update idling
 	for(int i=0; i<bodies->num; i++){
 		cpBody *body = (cpBody*)bodies->arr[i];
@@ -173,7 +182,7 @@ cpSpaceProcessComponents(cpSpace *space, cpFloat dt)
 	// iterate graph edges and build forests
 	for(int i=0; i<arbiters->num; i++){
 		cpArbiter *arb = (cpArbiter*)arbiters->arr[i];
-		mergeBodies(space, components, rogueBodies, arb->private_a->body, arb->private_b->body);
+		mergeBodies(space, components, rogueBodies, arb->a->body, arb->b->body);
 	}
 	for(int j=0; j<constraints->num; j++){
 		cpConstraint *constraint = (cpConstraint *)constraints->arr[j];
@@ -181,10 +190,8 @@ cpSpaceProcessComponents(cpSpace *space, cpFloat dt)
 	}
 	
 	// iterate bodies and add them to their components
-	for(int i=0; i<bodies->num; i++)
-		addToComponent((cpBody*)bodies->arr[i], components);
-	for(int i=0; i<rogueBodies->num; i++)
-		addToComponent((cpBody*)rogueBodies->arr[i], components);
+	for(int i=0; i<bodies->num; i++) addToComponent((cpBody*)bodies->arr[i], components);
+	for(int i=0; i<rogueBodies->num; i++) addToComponent((cpBody*)rogueBodies->arr[i], components);
 	
 	// iterate components, copy or deactivate
 	for(int i=0; i<components->num; i++){
@@ -195,9 +202,8 @@ cpSpaceProcessComponents(cpSpace *space, cpFloat dt)
 				next = body->node.next;
 				
 				if(!cpBodyIsRogue(body)) cpArrayPush(newBodies, body);
-				body->node.next = NULL;
-				body->node.parent = NULL;
-				body->node.rank = 0;
+				cpComponentNode node = {NULL, NULL, 0, body->node.idleTime};
+				body->node = node;
 			} while((body = next) != root);
 		} else {
 			cpBody *body = root, *next;
@@ -221,17 +227,53 @@ cpSpaceProcessComponents(cpSpace *space, cpFloat dt)
 }
 
 void
-cpSpaceSleepBody(cpSpace *space, cpBody *body){
-	cpComponentNode node = {NULL, body, 0, 0.0f};
-	body->node = node;
+cpBodySleep(cpBody *body)
+{
+	cpBodySleepWithGroup(body, NULL);
+}
+
+void
+cpBodySleepWithGroup(cpBody *body, cpBody *group){
+	cpAssert(!cpBodyIsStatic(body) && !cpBodyIsRogue(body), "Rogue and static bodies cannot be put to sleep.");
+	
+	cpSpace *space = body->space;
+	cpAssert(space, "Cannot put a body to sleep that has not been added to a space.");
+	cpAssert(!space->locked, "Bodies can not be put to sleep during a query or a call to cpSpaceSte(). Put these calls into a post-step callback.");
+	cpAssert(!group || cpBodyIsSleeping(group), "Cannot use a non-sleeping body as a group identifier.");
+	
+	if(cpBodyIsSleeping(body)) return;
 	
 	for(cpShape *shape = body->shapesList; shape; shape = shape->next){
-		cpSpaceHashRemove(space->activeShapes, shape, shape->hashid);
-		
 		cpShapeCacheBB(shape);
+		cpSpaceHashRemove(space->activeShapes, shape, shape->hashid);
 		cpSpaceHashInsert(space->staticShapes, shape, shape->hashid, shape->bb);
 	}
 	
-	cpArrayPush(space->sleepingComponents, body);
+	if(group){
+		cpBody *root = componentNodeRoot(group);
+		
+		cpComponentNode node = {root, root->node.next, 0, 0.0f};
+		body->node = node;
+		root->node.next = body;
+	} else {
+		cpComponentNode node = {NULL, body, 0, 0.0f};
+		body->node = node;
+		
+		cpArrayPush(space->sleepingComponents, body);
+	}
+	
 	cpArrayDeleteObj(space->bodies, body);
 }
+
+static void
+activateTouchingHelper(cpShape *shape, cpContactPointSet *points, cpArray **bodies){
+	cpBodyActivate(shape->body);
+}
+
+void
+cpSpaceActivateShapesTouchingShape(cpSpace *space, cpShape *shape){
+	cpArray *bodies = NULL;
+	cpSpaceShapeQuery(space, shape, (cpSpaceShapeQueryFunc)activateTouchingHelper, &bodies);
+}
+
+

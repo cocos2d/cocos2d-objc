@@ -183,10 +183,9 @@
 	NSInteger remaining = (totalQuads_-1) - index;
 	
 	// last object doesn't need to be moved
-	if( remaining > 0) {
+	if( remaining > 0)
 		// tex coordinates
-		memmove( &quads_[index+1],&quads_[index], sizeof(quads_[0]) * remaining );		
-	}
+		memmove( &quads_[index+1],&quads_[index], sizeof(quads_[0]) * remaining );
 	
 	quads_[index] = *quad;
 }
@@ -222,10 +221,9 @@
 	
 	
 	// last object doesn't need to be moved
-	if( remaining ) {
+	if( remaining )
 		// tex coordinates
 		memmove( &quads_[index],&quads_[index+1], sizeof(quads_[0]) * remaining );
-	}
 	
 	totalQuads_--;
 }

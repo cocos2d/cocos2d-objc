@@ -47,7 +47,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	* Booyah (http://booyah.com/):
 		Added support for GL sharegroup in EAGLView
 	* Brad Parks:
-		Added google search on forum
+		Web: Added google search on forum.
 	* Brian Hammond:
 		patches for Demos
 	* Bryan/Acceleroto (http://www.acceleroto.com):
@@ -126,6 +126,8 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	* Graham Perks:
 		Atlas works with GL_CULL_FACE
 		FastDirector doesn't leak autorelease pool patch
+	* haikusw:
+		Action blink doesn't set frame as invisible when the action finishes. patch.
 	* hamm.hans:
 		Author of CrossFadeTransition
 	* Hans Larsen:
@@ -169,7 +171,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Particles Quad: code easier to read and optimize
 		Several patches that uses unsigned ints instead of signed ints
 	* Jose Miguel Gomez Gonzalez (http://www.itlgames.com)
-		Author of the games tab in the cocos2d site
+		Web: Author and maintainer of the games tab in the cocos2d site
 	* jkrippy:
 		patch for menu align. takes scale into account
 	* johnnyflash71:
@@ -258,6 +260,11 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Optimized the loading time of PVR images
 		CCArray: improved performance in insert & delete elements
 		Added option to enable/disable RetinaDisplay
+		Texture: Added possibility to subclass it using MutableTexture
+		Clean up several parts of the code
+		Added small performance improvements in several parts of the code
+		Fixed possible memory leak when popping a scene
+		Added MacWindow and the possibility to create a Mac Widnow programatically
 	* marcofucci:
 		CCArray.fastRemoveObjectAtIndex patch.
 	* Marco Tillemans (araker):
@@ -319,9 +326,11 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	* Patrick Wolowicz:
 		mkatlas: added artifact removal by copying borders to margins
 	* Piero Tofy (http://indieappsalliance.org):
-		Author of the scraper script used to parse games data in the cocos2d site
+		Web: Author of the scraper script used to parse games data in the cocos2d site
 	* Pieter van de Bruggen
 		Author of Gradient layer
+	* psi.pk.ru:
+		EventDispatcher: flagsChanged is triggered correctly. patch
 	* psionic81:
 		ActionManager doesn't purge running actions patch
 	* rac5372:
@@ -407,6 +416,8 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Fixed artifacts in PageTurnTransition
 	* TBBle (http://blog.tbble.org/)
 		CCSpriteFrameCache textureFileName is relative to path
+		CCSprite: correctly overrides setIsRelativeAnchorPoint
+		libpng doesn't compile pngtest.c. patch.
 	* TheArsenik:
 		added BezierTo action
 	* thoechsm:

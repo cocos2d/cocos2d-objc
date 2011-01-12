@@ -106,9 +106,8 @@ static CCSpriteFrameCache *sharedSpriteFrameCache_=nil;
 	int format = 0;
 	
 	// get the format
-	if(metadataDict != nil) {
+	if(metadataDict != nil)
 		format = [[metadataDict objectForKey:@"format"] intValue];
-	}
 	
 	// check the format
 	NSAssert( format >= 0 && format <= 3, @"cocos2d: WARNING: format is not supported for CCSpriteFrameCache addSpriteFramesWithDictionary:texture:");
@@ -128,9 +127,9 @@ static CCSpriteFrameCache *sharedSpriteFrameCache_=nil;
 			int ow = [[frameDict objectForKey:@"originalWidth"] intValue];
 			int oh = [[frameDict objectForKey:@"originalHeight"] intValue];
 			// check ow/oh
-			if(!ow || !oh) {
+			if(!ow || !oh)
 				CCLOG(@"cocos2d: WARNING: originalWidth/Height not found on the CCSpriteFrame. AnchorPoint won't work as expected. Regenerate the .plist");
-			}
+			
 			// abs ow/oh
 			ow = abs(ow);
 			oh = abs(oh);
@@ -204,7 +203,6 @@ static CCSpriteFrameCache *sharedSpriteFrameCache_=nil;
 	
 	if( texture )
 		[self addSpriteFramesWithFile:plist texture:texture];
-	
 	else
 		CCLOG(@"cocos2d: CCSpriteFrameCache: couldn't load texture file. File not found: %@", textureFileName);
 }
@@ -217,10 +215,9 @@ static CCSpriteFrameCache *sharedSpriteFrameCache_=nil;
     NSString *texturePath = nil;
     NSDictionary *metadataDict = [dict objectForKey:@"metadata"];
     if( metadataDict )
-    {
         // try to read  texture file name from meta data
         texturePath = [metadataDict objectForKey:@"textureFileName"];
-    }
+	
 	
     if( texturePath )
     {

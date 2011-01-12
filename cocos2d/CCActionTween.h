@@ -45,8 +45,8 @@
  
  @since v0.99.2
  */
-@interface CCActionTween : CCActionInterval {
-
+@interface CCActionTween : CCActionInterval
+{
 	NSString		*key_;
     
 	float			from_, to_;

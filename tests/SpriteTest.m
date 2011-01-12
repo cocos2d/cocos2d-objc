@@ -676,7 +676,7 @@ Class restartAction()
 		{
 			int currentIndex = [child atlasIndex];
 			NSAssert( prev == currentIndex-1, @"Child order failed");
-			NSLog(@"children %x - atlasIndex:%d", (NSUInteger)child, currentIndex);
+			NSLog(@"children %lx - atlasIndex:%d", (NSUInteger)child, currentIndex);
 			prev = currentIndex;
 		}
 		
@@ -685,7 +685,7 @@ Class restartAction()
 		{
 			int currentIndex = [child atlasIndex];
 			NSAssert( prev == currentIndex-1, @"Child order failed");
-			NSLog(@"descendant %x - atlasIndex:%d", (NSUInteger)child, currentIndex);
+			NSLog(@"descendant %lx - atlasIndex:%d", (NSUInteger)child, currentIndex);
 			prev = currentIndex;
 		}		
 	}	
@@ -3608,10 +3608,9 @@ Class restartAction()
 
 @synthesize window=window_, glView=glView_;
 
-- (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
-	
-	
-	CCDirector *director = [CCDirector sharedDirector];
+- (void)applicationDidFinishLaunching:(NSNotification *)aNotification
+{
+	CCDirectorMac *director = (CCDirectorMac*) [CCDirector sharedDirector];
 	
 	[director setDisplayFPS:YES];
 	
@@ -3625,6 +3624,9 @@ Class restartAction()
 	// Enable "moving" mouse event. Default no.
 	[window_ setAcceptsMouseMovedEvents:NO];
 	
+	// EXPERIMENTAL stuff.
+	// 'Effects' don't work correctly when autoscale is turned on.
+	[director setResizeMode:kCCDirectorResize_AutoScale];	
 	
 	CCScene *scene = [CCScene node];
 	[scene addChild: [nextAction() node]];

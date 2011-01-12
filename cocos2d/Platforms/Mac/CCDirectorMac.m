@@ -65,6 +65,7 @@
 @implementation CCDirectorMac
 
 @synthesize isFullScreen = isFullScreen_;
+@synthesize originalWinSize = originalWinSize_;
 
 -(id) init
 {
@@ -96,7 +97,7 @@
 {
 	// Mac OS X 10.6 and later offer a simplified mechanism to create full-screen contexts
 #if MAC_OS_X_VERSION_MIN_REQUIRED > MAC_OS_X_VERSION_10_5
-
+	
 	if( isFullScreen_ != fullscreen ) {
 
 		isFullScreen_ = fullscreen;
@@ -109,17 +110,7 @@
 			// Create a screen-sized window on the display you want to take over
 			// Note, mainDisplayRect has a non-zero origin if the key window is on a secondary display
 			mainDisplayRect = [[NSScreen mainScreen] frame];
-			fullScreenWindow_ = [[NSWindow alloc] initWithContentRect:mainDisplayRect
-															styleMask:NSBorderlessWindowMask
-															  backing:NSBackingStoreBuffered
-																defer:YES];
-			
-			// Set the window level to be above the menu bar
-			[fullScreenWindow_ setLevel:NSMainMenuWindowLevel+1];
-			
-			// Perform any other window configuration you desire
-			[fullScreenWindow_ setOpaque:YES];
-			[fullScreenWindow_ setHidesOnDeactivate:YES];
+			fullScreenWindow_ = [[MacWindow alloc] initWithFrame:mainDisplayRect fullscreen:YES];
 			
 			// Create a view with a double-buffered OpenGL context and attach it to the window
 			// By specifying the non-fullscreen context as the shareContext, we automatically inherit the OpenGL objects (textures, etc) it has defined

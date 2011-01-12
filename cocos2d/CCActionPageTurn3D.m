@@ -50,7 +50,7 @@
 			// Get original vertex
 			ccVertex3F	p = [self originalVertex:ccg(i,j)];
 			
-			float R = sqrtf((p.x*p.x) + ((p.y - ay)*(p.y - ay)));
+			float R = sqrtf(p.x*p.x + (p.y - ay) * (p.y - ay));
 			float r = R * sinTheta;
 			float alpha = asinf( p.x / R );
 			float beta = alpha / sinTheta;
@@ -59,9 +59,7 @@
 			// If beta > PI then we've wrapped around the cone
 			// Reduce the radius to stop these points interfering with others
 			if( beta <= M_PI)
-			{
 				p.x = ( r * sinf(beta));
-			}
 			else
 			{
 				// Force X = 0 to stop wrapped

@@ -180,7 +180,6 @@ struct transformValues_ {
 		
 		// updateMethod selector
 		updateMethod = (__typeof__(updateMethod))[self methodForSelector:@selector(updateTransform)];
-
 	}
 	
 	return self;
@@ -260,8 +259,8 @@ struct transformValues_ {
 	NSString *key = [NSString stringWithFormat:@"%08X",(unsigned long)image];
 	CCTexture2D *texture = [[CCTextureCache sharedTextureCache] addCGImage:image forKey:key];
 	
-	CGSize size = texture.contentSize;
-	CGRect rect = CGRectMake(0, 0, size.width, size.height );
+	CGRect rect = CGRectZero;
+	rect.size = texture.contentSize;
 	
 	return [self initWithTexture:texture rect:rect];
 }
@@ -273,8 +272,8 @@ struct transformValues_ {
 	// XXX: possible bug. See issue #349. New API should be added
 	CCTexture2D *texture = [[CCTextureCache sharedTextureCache] addCGImage:image forKey:key];
 	
-	CGSize size = texture.contentSize;
-	CGRect rect = CGRectMake(0, 0, size.width, size.height );
+	CGRect rect = CGRectZero;
+	rect.size = texture.contentSize;
 	
 	return [self initWithTexture:texture rect:rect];
 }
@@ -345,7 +344,6 @@ struct transformValues_ {
 {
 	[self useBatchNode:spriteSheet];
 }
-
 
 -(void) initAnimationDictionary
 {
@@ -521,7 +519,7 @@ struct transformValues_ {
 				quad_.br.vertices = quad_.tl.vertices = quad_.tr.vertices = quad_.bl.vertices = (ccVertex3F){0,0,0};
 				[textureAtlas_ updateQuad:&quad_ atIndex:atlasIndex_];
 				dirty_ = recursiveDirty_ = NO;
-				return ;
+				return;
 			}
 			CGAffineTransform newMatrix = CGAffineTransformIdentity;
 			
@@ -588,12 +586,12 @@ struct transformValues_ {
 // this fuction return the 5 values in 1 single call
 -(void) getTransformValues:(struct transformValues_*) tv
 {
-	tv->pos = positionInPixels_;
-	tv->scale.x = scaleX_;
-	tv->scale.y = scaleY_;
-	tv->rotation = rotation_;
-	tv->ap = anchorPointInPixels_;
-	tv->visible = visible_;
+	tv->pos			= positionInPixels_;
+	tv->scale.x		= scaleX_;
+	tv->scale.y		= scaleY_;
+	tv->rotation	= rotation_;
+	tv->ap			= anchorPointInPixels_;
+	tv->visible		= visible_;
 }
 
 #pragma mark CCSprite - draw
@@ -606,11 +604,9 @@ struct transformValues_ {
 	// Needed states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
 	// Unneeded states: -
 
-	BOOL newBlend = NO;
-	if( blendFunc_.src != CC_BLEND_SRC || blendFunc_.dst != CC_BLEND_DST ) {
-		newBlend = YES;
+	BOOL newBlend = blendFunc_.src != CC_BLEND_SRC || blendFunc_.dst != CC_BLEND_DST;
+	if( newBlend )
 		glBlendFunc( blendFunc_.src, blendFunc_.dst );
-	}
 
 #define kQuadSize sizeof(quad_.bl)
 	glBindTexture(GL_TEXTURE_2D, [texture_ name]);
@@ -697,7 +693,8 @@ struct transformValues_ {
 -(void)removeAllChildrenWithCleanup:(BOOL)doCleanup
 {
 	if( usesBatchNode_ ) {
-		for( CCSprite *child in children_ )
+		CCSprite *child;
+		CCARRAY_FOREACH(children_, child)
 			[batchNode_ removeSpriteFromAtlas:child];
 	}
 	
@@ -781,7 +778,7 @@ struct transformValues_ {
 	SET_DIRTY_RECURSIVELY();
 }
 
--(void)setRelativeAnchorPoint:(BOOL)relative
+-(void)setIsRelativeAnchorPoint:(BOOL)relative
 {
 	NSAssert( ! usesBatchNode_, @"relativeTransformAnchor is invalid in CCSprite");
 	[super setIsRelativeAnchorPoint:relative];
@@ -854,16 +851,16 @@ struct transformValues_ {
 
 	// special opacity for premultiplied textures
 	if( opacityModifyRGB_ )
-		[self setColor: (opacityModifyRGB_ ? colorUnmodified_ : color_ )];
+		[self setColor: colorUnmodified_];
 	
 	[self updateColor];
 }
 
 - (ccColor3B) color
 {
-	if(opacityModifyRGB_){
+	if(opacityModifyRGB_)
 		return colorUnmodified_;
-	}
+	
 	return color_;
 }
 

@@ -76,15 +76,15 @@ extern NSString * cocos2dVersion(void);
 
 @implementation CCDirector
 
-@synthesize animationInterval=animationInterval_;
+@synthesize animationInterval = animationInterval_;
 @synthesize runningScene = runningScene_;
 @synthesize displayFPS = displayFPS_;
-@synthesize nextDeltaTimeZero=nextDeltaTimeZero_;
-@synthesize isPaused=isPaused_;
-@synthesize sendCleanupToScene=sendCleanupToScene_;
-@synthesize runningThread=runningThread_;
-@synthesize notificationNode=notificationNode_;
-@synthesize projectionDelegate=projectionDelegate_;
+@synthesize nextDeltaTimeZero = nextDeltaTimeZero_;
+@synthesize isPaused = isPaused_;
+@synthesize sendCleanupToScene = sendCleanupToScene_;
+@synthesize runningThread = runningThread_;
+@synthesize notificationNode = notificationNode_;
+@synthesize projectionDelegate = projectionDelegate_;
 //
 // singleton stuff
 //
@@ -363,9 +363,10 @@ static CCDirector *_sharedDirector = nil;
 	[scenesStack_ removeLastObject];
 	NSUInteger c = [scenesStack_ count];
 	
-	if( c == 0 ) {
+	if( c == 0 )
 		[self end];
-	} else {
+	else {
+		sendCleanupToScene_ = YES;
 		nextScene_ = [scenesStack_ objectAtIndex:c-1];
 	}
 }

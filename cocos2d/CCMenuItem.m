@@ -295,7 +295,7 @@ enum {
 
 -(id) initFromString: (NSString*) value charMapFile:(NSString*) charMapFile itemWidth:(int)itemWidth itemHeight:(int)itemHeight startCharMap:(char)startCharMap target:(id) rec selector:(SEL) cb
 {
-	NSAssert( [value length] != 0, @"value lenght must be greater than 0");
+	NSAssert( [value length] != 0, @"value length must be greater than 0");
 	
 	CCLabelAtlas *label = [[CCLabelAtlas alloc] initWithString:value charMapFile:charMapFile itemWidth:itemWidth itemHeight:itemHeight startCharMap:startCharMap];
 	[label autorelease];
@@ -366,7 +366,7 @@ enum {
 
 -(id) initFromString: (NSString*) value target:(id) rec selector:(SEL) cb
 {
-	NSAssert( [value length] != 0, @"Value lenght must be greater than 0");
+	NSAssert( [value length] != 0, @"Value length must be greater than 0");
 	
 	CCLabelTTF *label = [CCLabelTTF labelWithString:value fontName:_fontName fontSize:_fontSize];
 
@@ -617,7 +617,7 @@ enum {
 @implementation CCMenuItemToggle
 
 @synthesize subItems = subItems_;
-@synthesize opacity=opacity_, color=color_;
+@synthesize opacity = opacity_, color = color_;
 
 +(id) itemWithTarget: (id)t selector: (SEL)sel items: (CCMenuItem*) item, ...
 {

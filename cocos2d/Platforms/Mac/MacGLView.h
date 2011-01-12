@@ -54,6 +54,7 @@
 // Keyboard
 - (void)keyDown:(NSEvent *)theEvent;
 - (void)keyUp:(NSEvent *)theEvent;
+- (void)flagsChanged:(NSEvent *)theEvent;
 
 // Touches
 - (void)touchesBeganWithEvent:(NSEvent *)event;

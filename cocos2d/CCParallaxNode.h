@@ -31,7 +31,8 @@
  The children will be moved faster / slower than the parent according the the parallax ratio.
  
  */
-@interface CCParallaxNode : CCNode {
+@interface CCParallaxNode : CCNode
+{
 	ccArray				*parallaxArray_;
 	CGPoint				lastPosition;
 }

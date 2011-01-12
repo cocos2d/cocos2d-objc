@@ -23,7 +23,7 @@
 #include <stdio.h>
 #include <math.h>
 
-#include "chipmunk.h"
+#include "chipmunk_private.h"
 #include "chipmunk_unsafe.h"
 
 #define CP_DefineShapeGetter(struct, type, member, name) \
@@ -82,6 +82,7 @@ cpShapeFree(cpShape *shape)
 	}
 }
 
+// TODO this function should really take a position and rotation explicitly and be renamed
 cpBB
 cpShapeCacheBB(cpShape *shape)
 {

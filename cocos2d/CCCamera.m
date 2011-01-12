@@ -30,7 +30,7 @@
 
 @implementation CCCamera
 
-@synthesize dirty=dirty_;
+@synthesize dirty = dirty_;
 
 -(id) init
 {

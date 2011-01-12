@@ -106,8 +106,9 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 
 @implementation CCTexture2D
 
-@synthesize contentSizeInPixels=size_, pixelFormat=format_, pixelsWide=width_, pixelsHigh=height_, name=name_, maxS=maxS_, maxT=maxT_;
-@synthesize hasPremultipliedAlpha=hasPremultipliedAlpha_;
+@synthesize contentSizeInPixels = size_, pixelFormat = format_, pixelsWide = width_, pixelsHigh = height_, name = name_, maxS = maxS_, maxT = maxT_;
+@synthesize hasPremultipliedAlpha = hasPremultipliedAlpha_;
+
 - (id) initWithData:(const void*)data pixelFormat:(CCTexture2DPixelFormat)pixelFormat pixelsWide:(NSUInteger)width pixelsHigh:(NSUInteger)height contentSize:(CGSize)size
 {
 	if((self = [super init])) {
@@ -150,6 +151,18 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 		hasPremultipliedAlpha_ = NO;
 	}					
 	return self;
+}
+
+- (void) releaseData:(void*)data
+{
+	//Free data
+	free(data);
+}
+
+- (void*) keepData:(void*)data length:(NSUInteger)length
+{
+	//The texture data mustn't be saved becuase it isn't a mutable texture.
+	return data;
 }
 
 - (void) dealloc
@@ -244,7 +257,7 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 			CCLOG(@"cocos2d: CCTexture2D: Using RGB565 texture since image has no alpha");
 			pixelFormat = kCCTexture2DPixelFormat_RGB565;
 		}
-	} else  {
+	} else {
 		// NOTE: No colorspace means a mask image
 		CCLOG(@"cocos2d: CCTexture2D: Using A8 texture since image is a mask");
 		pixelFormat = kCCTexture2DPixelFormat_A8;
@@ -339,7 +352,7 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 	hasPremultipliedAlpha_ = (info == kCGImageAlphaPremultipliedLast || info == kCGImageAlphaPremultipliedFirst);
 	
 	CGContextRelease(context);
-	free(data);
+	[self releaseData:data];
 	
 	return self;
 }
@@ -404,7 +417,7 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 	self = [self initWithData:data pixelFormat:kCCTexture2DPixelFormat_RGBA8888 pixelsWide:POTWide pixelsHigh:POTHigh contentSize:dimensions];
 #endif
 	CGContextRelease(context);
-	free(data);
+	[self releaseData:data];
 			
 	return self;
 }
@@ -446,9 +459,11 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 		
 		data = (unsigned char*) [bitmap bitmapData];  //Use the same buffer to improve the performance.
 		
-		for(int i = 0; i<(POTWide*POTHigh); i++) //Convert RGBA8888 to A8
+		NSUInteger textureSize = POTWide*POTHigh;
+		for(int i = 0; i<textureSize; i++) //Convert RGBA8888 to A8
 			data[i] = data[i*4+3];
 		
+		data = [self keepData:data length:textureSize];
 		self = [self initWithData:data pixelFormat:kCCTexture2DPixelFormat_A8 pixelsWide:POTWide pixelsHigh:POTHigh contentSize:dimensions];
 		
 		[bitmap release];
@@ -577,14 +592,14 @@ static BOOL PVRHaveAlphaPremultiplied_ = NO;
 		
 		GLenum format;
 		GLsizei size = length * length * bpp / 8;
-		if(hasAlpha) {
+		if(hasAlpha)
 			format = (bpp == 4) ? GL_COMPRESSED_RGBA_PVRTC_4BPPV1_IMG : GL_COMPRESSED_RGBA_PVRTC_2BPPV1_IMG;
-		} else {
+		else
 			format = (bpp == 4) ? GL_COMPRESSED_RGB_PVRTC_4BPPV1_IMG : GL_COMPRESSED_RGB_PVRTC_2BPPV1_IMG;
-		}
-		if(size < 32) {
+		
+		if(size < 32)
 			size = 32;
-		}
+		
 		glCompressedTexImage2D(GL_TEXTURE_2D, level, format, length, length, 0, size, data);
 		
 		size_ = CGSizeMake(length, length);

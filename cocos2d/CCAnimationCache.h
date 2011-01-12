@@ -34,8 +34,8 @@
  
  @since v0.99.5
  */
-@interface CCAnimationCache : NSObject {
-
+@interface CCAnimationCache : NSObject
+{
 	NSMutableDictionary *animations_;
 }
 

@@ -32,7 +32,7 @@
 
 @implementation CCGridAction
 
-@synthesize gridSize=gridSize_;
+@synthesize gridSize = gridSize_;
 
 +(id) actionWithSize:(ccGridSize)size duration:(ccTime)d
 {
@@ -61,18 +61,15 @@
 	if ( targetGrid && targetGrid.reuseGrid > 0 )
 	{
 		if ( targetGrid.active && targetGrid.gridSize.x == gridSize_.x && targetGrid.gridSize.y == gridSize_.y && [targetGrid isKindOfClass:[newgrid class]] )
-		{
 			[targetGrid reuse];
-		}
 		else
-		{
 			[NSException raise:@"GridBase" format:@"Cannot reuse grid"];
-		}
 	}
 	else
 	{
 		if ( targetGrid && targetGrid.active )
 			targetGrid.active = NO;
+		
 		t.grid = newgrid;
 		t.grid.active = YES;
 	}	
@@ -372,9 +369,7 @@
 -(id)initWithTimes:(int)times
 {
 	if ( (self = [super init]) )
-	{
 		t = times;
-	}
 	
 	return self;
 }
