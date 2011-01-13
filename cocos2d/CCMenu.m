@@ -221,7 +221,7 @@ enum {
 
 -(NSInteger) mouseDelegatePriority
 {
-	return NSIntegerMin+1;
+	return kCCMenuMousePriority+1;
 }
 
 -(CCMenuItem *) itemForMouseEvent: (NSEvent *) event
@@ -247,6 +247,9 @@ enum {
 
 -(BOOL) ccMouseUp:(NSEvent *)event
 {	
+	if( ! visible_ )
+		return NO;
+	
 	if( selectedItem_ ) {
 		[selectedItem_ unselected];
 		[selectedItem_ activate];
@@ -277,6 +280,9 @@ enum {
 
 -(BOOL) ccMouseDragged:(NSEvent *)event
 {
+	if( ! visible_ )
+		return NO;
+
 	CCMenuItem *currentItem = [self itemForMouseEvent:event];
 	
 	if (currentItem != selectedItem_) {

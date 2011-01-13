@@ -33,8 +33,11 @@ typedef enum  {
 } tCCMenuState;
 
 enum {
-	//* priority used by the menu
+	//* priority used by the menu for the touches
 	kCCMenuTouchPriority = -128,
+
+	//* priority used by the menu for the mouse
+	kCCMenuMousePriority = -128,
 };
 
 /** A CCMenu
