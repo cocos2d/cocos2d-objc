@@ -1617,6 +1617,8 @@
 		E076F21512268A9800DE0DA2 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E0F9256D1224207200EF2362 /* libz.dylib */; };
 		E076F21612268A9800DE0DA2 /* liblibpng.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E076EDB91225FEAA00DE0DA2 /* liblibpng.a */; };
 		E076F21F12268AF100DE0DA2 /* SpriteTest.m in Sources */ = {isa = PBXBuildFile; fileRef = E076F21E12268AF100DE0DA2 /* SpriteTest.m */; };
+		E0796B5812DF8A8C002442F5 /* futura-48.fnt in Resources */ = {isa = PBXBuildFile; fileRef = E0796B5612DF8A8C002442F5 /* futura-48.fnt */; };
+		E0796B5912DF8A8C002442F5 /* futura-48.png in Resources */ = {isa = PBXBuildFile; fileRef = E0796B5712DF8A8C002442F5 /* futura-48.png */; };
 		E08AA19B12C262B3000341BD /* MacWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = E08AA19912C262B3000341BD /* MacWindow.h */; };
 		E08AA19C12C262B3000341BD /* MacWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = E08AA19A12C262B3000341BD /* MacWindow.m */; };
 		E08AA22C12C27DEA000341BD /* MainMenu-NoWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = E08AA22A12C27DEA000341BD /* MainMenu-NoWindow.xib */; };
@@ -3943,6 +3945,8 @@
 		E076F21A12268A9800DE0DA2 /* SpriteTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpriteTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E076F21D12268AF100DE0DA2 /* SpriteTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SpriteTest.h; path = tests/SpriteTest.h; sourceTree = "<group>"; };
 		E076F21E12268AF100DE0DA2 /* SpriteTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SpriteTest.m; path = tests/SpriteTest.m; sourceTree = "<group>"; };
+		E0796B5612DF8A8C002442F5 /* futura-48.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "futura-48.fnt"; sourceTree = "<group>"; };
+		E0796B5712DF8A8C002442F5 /* futura-48.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "futura-48.png"; sourceTree = "<group>"; };
 		E08AA19912C262B3000341BD /* MacWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MacWindow.h; sourceTree = "<group>"; };
 		E08AA19A12C262B3000341BD /* MacWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MacWindow.m; sourceTree = "<group>"; };
 		E08AA22B12C27DEA000341BD /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = "Resources-Mac/English.lproj/MainMenu-NoWindow.xib"; sourceTree = "<group>"; };
@@ -4634,6 +4638,8 @@
 		E076E7A11225EDD000DE0DA2 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
+				E0796B5612DF8A8C002442F5 /* futura-48.fnt */,
+				E0796B5712DF8A8C002442F5 /* futura-48.png */,
 				E0C60677128ECC110099367C /* konqa32-hd.fnt */,
 				E0C60678128ECC110099367C /* konqa32-hd.png */,
 				E0C60679128ECC110099367C /* konqa32.fnt */,
@@ -7377,6 +7383,8 @@
 				E0C60681128ECC110099367C /* larabie-16-hd.png in Resources */,
 				E0C60682128ECC110099367C /* larabie-16.png in Resources */,
 				E02A853E129F11BF00341C97 /* icon.icns in Resources */,
+				E0796B5812DF8A8C002442F5 /* futura-48.fnt in Resources */,
+				E0796B5912DF8A8C002442F5 /* futura-48.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

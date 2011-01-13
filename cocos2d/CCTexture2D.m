@@ -559,7 +559,7 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 	  ]
 	 autorelease];
 	
-	return [self initWithString:string dimensions:dimensions alignment:CCTextAlignmentCenter attributedString:stringWithAttributes];
+	return [self initWithString:string dimensions:dimensions alignment:alignment attributedString:stringWithAttributes];
 		
 #endif // Mac
 }
