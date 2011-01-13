@@ -55,8 +55,9 @@
 		[self setContentSize:s];
 		self.isRelativeAnchorPoint = NO;
 
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 		isTouchEnabled_ = NO;
+
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 		isAccelerometerEnabled_ = NO;
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 		isMouseEnabled_ = NO;
@@ -113,7 +114,7 @@
 
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 
-#pragma mark CCLayer - Mouse & Keyboard events
+#pragma mark CCLayer - Mouse, Keyboard & Touch events
 
 -(NSInteger) mouseDelegatePriority
 {
@@ -163,6 +164,29 @@
 	}
 }
 
+-(NSInteger) touchDelegatePriority
+{
+	return 0;
+}
+
+-(BOOL) isTouchEnabled
+{
+	return isTouchEnabled_;
+}
+
+-(void) setIsTouchEnabled:(BOOL)enabled
+{
+	if( isTouchEnabled_ != enabled ) {
+		isTouchEnabled_ = enabled;
+		if( isRunning_ ) {
+			if( enabled )
+				[[CCEventDispatcher sharedDispatcher] addKeyboardDelegate:self priority:[self touchDelegatePriority] ];
+			else
+				[[CCEventDispatcher sharedDispatcher] removeTouchDelegate:self];
+		}
+	}
+}
+
 
 #endif // Mac
 
@@ -182,6 +206,10 @@
 	
 	if( isKeyboardEnabled_)
 		[[CCEventDispatcher sharedDispatcher] addKeyboardDelegate:self priority:[self keyboardDelegatePriority]];
+
+	if( isTouchEnabled_)
+		[[CCEventDispatcher sharedDispatcher] addTouchDelegate:self priority:[self touchDelegatePriority]];
+
 #endif
 	
 	// then iterate over all the children
@@ -216,6 +244,10 @@
 	
 	if( isKeyboardEnabled_ )
 		[[CCEventDispatcher sharedDispatcher] removeKeyboardDelegate:self];
+
+	if( isTouchEnabled_ )
+		[[CCEventDispatcher sharedDispatcher] removeTouchDelegate:self];
+
 #endif
 	
 	[super onExit];

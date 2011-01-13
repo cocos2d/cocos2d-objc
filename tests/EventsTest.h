@@ -39,3 +39,8 @@
 {
 }
 @end
+
+@interface TouchTest : EventTest
+{
+}
+@end

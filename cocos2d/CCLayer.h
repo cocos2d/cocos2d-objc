@@ -70,7 +70,7 @@
  You can enable / disable touch events with this property.
  Only the touches of this node will be affected. This "method" is not propagated to it's children.
  
- Valid only on iOS. Not valid on Mac.
+ Valid on iOS and Mac OS X v10.6 and later.
 
  @since v0.8.1
  */
@@ -87,10 +87,11 @@
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 
 
-@interface CCLayer : CCNode <CCKeyboardEventDelegate, CCMouseEventDelegate>
+@interface CCLayer : CCNode <CCKeyboardEventDelegate, CCMouseEventDelegate, CCTouchEventDelegate>
 {
 	BOOL	isMouseEnabled_;
 	BOOL	isKeyboardEnabled_;
+	BOOL	isTouchEnabled_;
 }
 
 /** whether or not it will receive mouse events.
@@ -104,6 +105,12 @@
  Valind only Mac. Not valid on iOS
  */
 @property (nonatomic, readwrite) BOOL isKeyboardEnabled;
+
+/** whether or not it will receive touch events.
+ 
+ Valid on iOS and Mac OS X v10.6 and later.
+ */
+@property (nonatomic, readwrite) BOOL isTouchEnabled;
 
 /** priority of the mouse event delegate.
  Default 0.
@@ -120,6 +127,14 @@
  Valind only Mac. Not valid on iOS 
  */
 -(NSInteger) keyboardDelegatePriority;
+
+/** priority of the touch event delegate.
+ Default 0.
+ Override this method to set another priority.
+ 
+ Valind only Mac. Not valid on iOS 
+ */
+-(NSInteger) touchDelegatePriority;
 
 #endif // mac
 

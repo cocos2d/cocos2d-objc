@@ -128,6 +128,8 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	* Graham Perks:
 		Atlas works with GL_CULL_FACE
 		FastDirector doesn't leak autorelease pool patch
+	* Greg Lington (https://github.com/greglington)
+		Added support for Touches in Mac. patch.
 	* haikusw:
 		Action blink doesn't set frame as invisible when the action finishes. patch.
 	* hamm.hans:
