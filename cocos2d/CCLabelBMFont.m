@@ -654,7 +654,7 @@ typedef struct _KerningHashElement
 }
 
 #pragma mark BitmapFontAtlas - Debug draw
-#if CC_BITMAPFONTATLAS_DEBUG_DRAW
+#if CC_LABELBMFONT_DEBUG_DRAW
 -(void) draw
 {
 	[super draw];
@@ -665,5 +665,5 @@ typedef struct _KerningHashElement
 	};
 	ccDrawPoly(vertices, 4, YES);
 }
-#endif // CC_BITMAPFONTATLAS_DEBUG_DRAW
+#endif // CC_LABELBMFONT_DEBUG_DRAW
 @end
