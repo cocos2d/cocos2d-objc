@@ -15,6 +15,7 @@ static int sceneIdx=-1;
 static NSString *transitions[] = {
 	@"KeyboardTest",
 	@"MouseTest",
+	@"TouchTest",
 
 };
 
@@ -265,6 +266,79 @@ Class restartAction()
 - (BOOL)ccScrollWheel:(NSEvent *)event
 {
 	NSLog(@"scrollWheel: %@", event);
+	return YES;
+}
+
+@end
+
+#pragma mark Touch Test
+
+@implementation TouchTest
+
+-(id) init
+{
+	if( (self=[super init]) ) {
+		
+		self.isTouchEnabled = YES;
+	}
+	
+	return self;
+}
+
+-(void) dealloc
+{
+	[super dealloc];
+}
+
+-(NSString *) title
+{
+	return @"Touch Test";
+}
+
+-(NSString *) subtitle
+{
+	return @"Touch the trackpad. See the console";
+}
+
+
+
+-(void) onEnter
+{
+	[super onEnter];
+	CCDirector *director = [CCDirector sharedDirector];
+	[[director openGLView] setAcceptsTouchEvents:YES];
+}
+
+-(void) onExit
+{
+	CCDirector *director = [CCDirector sharedDirector];
+	[[director openGLView] setAcceptsTouchEvents:NO];
+	
+	[super onExit];
+}
+
+
+-(BOOL) ccTouchesBeganWithEvent:(NSEvent *)event
+{
+	NSLog(@"touchesBegan: %@", event);
+	return YES;
+}
+
+-(BOOL) ccTouchesMovedWithEvent:(NSEvent *)event
+{
+	NSLog(@"touchesMoved: %@", event);
+	return YES;
+}
+
+-(BOOL) ccTouchesEndedWithEvent:(NSEvent *)event
+{
+	NSLog(@"touchesEnded: %@", event);
+	return YES;
+}
+
+-(BOOL) ccTouchesCancelledWithEvent:(NSEvent *)event
+{
+	NSLog(@"touchesCancelled: %@", event);
 	return YES;
 }
 

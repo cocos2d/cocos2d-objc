@@ -1,5 +1,6 @@
 version 1.0-beta - XX-XXX-2011
 . [NEW-MAC]: Added CC_DIRECTOR_INIT(). It is possible to create a Mac Window programatically
+. [NEW-MAC]: EventDispatcher: Added support for touches events
 . [FIX-MAC]: EventDispatcher: flagsChanged is triggered correctly (issue #1066)
 . [FIX-MAC]: EventDispatcher: queue & dispatch events are synced (issue #1083)
 . [FIX-MAC]: Menu: Menu doesn't hang up with invisible menus (issue #1070)
