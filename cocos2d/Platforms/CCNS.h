@@ -42,6 +42,8 @@
 #define CCTextAlignmentCenter		UITextAlignmentCenter
 #define CCTextAlignmentLeft			UITextAlignmentLeft
 #define CCTextAlignmentRight		UITextAlignmentRight
+#define CCLineBreakMode				UILineBreakMode
+#define CCLineBreakModeWordWrap		UILineBreakModeWordWrap
 
 
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
@@ -56,6 +58,9 @@
 #define CCTextAlignmentCenter		NSCenterTextAlignment
 #define CCTextAlignmentLeft			NSLeftTextAlignment
 #define CCTextAlignmentRight		NSRightTextAlignment
+#define CCLineBreakMode				NSLineBreakMode
+#define CCLineBreakModeWordWrap		NSLineBreakByWordWrapping
+
 
 #endif
 
