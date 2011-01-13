@@ -78,6 +78,8 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		patch for TMX per-tile properties
 	* Daniele Benegiamo:
 		Prevent possible memory corruption with particles when autoRemove is On. patch.
+	* David Hakim (http://webcodex.com)
+		Event Dispatcher in Mac is synced. patch.
 	* David Whatley (http://criticalthoughtgames.com/)
 		Scheduler supports the repeat parameter. patch.
 		Author of perFrameUpdate in Scheduler
