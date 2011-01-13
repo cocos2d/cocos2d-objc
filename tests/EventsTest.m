@@ -238,6 +238,30 @@ Class restartAction()
 	return YES;
 }
 
+-(BOOL) ccRightMouseDown:(NSEvent *)event
+{
+	NSLog(@"rightMouseDown: %@", event);
+	return YES;
+}
+
+-(BOOL) ccRightMouseDragged:(NSEvent *)event
+{
+	NSLog(@"rightMouseDragged: %@", event);
+	return YES;
+}
+
+-(BOOL) ccRightMouseUp:(NSEvent *)event
+{
+	NSLog(@"rightMouseUp: %@", event);
+	return YES;
+}
+
+-(BOOL) ccRightMouseMoved:(NSEvent *)event
+{
+	NSLog(@"rightMouseMoved: %@", event);
+	return YES;
+}
+
 - (BOOL)ccScrollWheel:(NSEvent *)event
 {
 	NSLog(@"scrollWheel: %@", event);
@@ -368,6 +392,8 @@ Class restartAction()
 	
 	CCScene *scene = [CCScene node];
 	[scene addChild: [nextAction() node]];
+	
+	[self toggleFullScreen:self];
 	
 	[director runWithScene:scene];
 }
