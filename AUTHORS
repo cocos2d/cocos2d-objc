@@ -86,6 +86,8 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Scheduler supports scaleTime per node
 		ActionManager supports scaleTime per node
 		Author of tests for: Scheduler:repeat, Scheduler:perFrameUpdate, Scheduler:scaleTime
+	* ddoucet
+		CCLabelTTF with alignment works OK on Mac. patch.
 	* Derek van Vliet (http://http://getsetgames.com/)
 		Added fix to make JPEG images work correctly in iOS4
 	* Dominique Bongard:

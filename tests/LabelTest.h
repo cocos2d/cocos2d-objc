@@ -103,3 +103,8 @@
 }
 @end
 
+@interface LabelTTFTest : AtlasDemo
+{
+}
+@end
+

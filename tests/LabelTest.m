@@ -24,6 +24,7 @@ static NSString *transitions[] = {
 	@"LabelBMFontHD",
 	@"LabelAtlasHD",
 	@"LabelGlyphDesigner",
+	@"LabelTTFTest",
 	
 	// Not a label test. Should be moved to Atlas test
 	@"Atlas1",
@@ -934,7 +935,46 @@ Class restartAction()
 
 -(NSString *) subtitle
 {
-	return @"You should see a font with shawdows and outline";
+	return @"You should see a font with shadows and outline";
+}
+
+@end
+
+#pragma mark -
+#pragma mark LabelTTFTest
+
+@implementation LabelTTFTest
+-(id) init
+{
+	if( (self=[super init]) ) {
+		
+		CGSize s = [[CCDirector sharedDirector] winSize];
+		
+		// CCLabelBMFont
+		CCLabelTTF *left = [CCLabelTTF labelWithString:@"alignment left" dimensions:CGSizeMake(s.width,50) alignment:CCTextAlignmentLeft fontName:@"Marker Felt" fontSize:32];
+		CCLabelTTF *center = [CCLabelTTF labelWithString:@"alignment center" dimensions:CGSizeMake(s.width,50) alignment:CCTextAlignmentCenter fontName:@"Marker Felt" fontSize:32];
+		CCLabelTTF *right = [CCLabelTTF labelWithString:@"alignment right" dimensions:CGSizeMake(s.width,50) alignment:CCTextAlignmentRight fontName:@"Marker Felt" fontSize:32];
+
+		left.position = ccp(s.width/2,200);
+		center.position = ccp(s.width/2,150);
+		right.position = ccp(s.width/2,100);
+		
+		[self addChild:left];
+		[self addChild:right];
+		[self addChild:center];
+	}
+	
+	return self;
+}
+
+-(NSString*) title
+{
+	return @"Testing CCLabelTTF";
+}
+
+-(NSString *) subtitle
+{
+	return @"You should see 3 labels aligned left, center and right";
 }
 
 @end
