@@ -551,24 +551,28 @@ static int		eventQueueCount;
 {
 	NSAssert( eventQueueCount < QUEUE_EVENT_MAX, @"CCEventDispatcher: recompile. Increment QUEUE_EVENT_MAX value");
 
-	eventQueue[eventQueueCount].selector = selector;
-	eventQueue[eventQueueCount].event = [event copy];
-	
-	eventQueueCount++;
+	@synchronized (self) {
+		eventQueue[eventQueueCount].selector = selector;
+		eventQueue[eventQueueCount].event = [event copy];
+		
+		eventQueueCount++;
+	}
 }
 
 -(void) dispatchQueuedEvents
 {
-	for( int i=0; i < eventQueueCount; i++ ) {
-		SEL sel = eventQueue[i].selector;
-		NSEvent *event = eventQueue[i].event;
+	@synchronized (self) {
+		for( int i=0; i < eventQueueCount; i++ ) {
+			SEL sel = eventQueue[i].selector;
+			NSEvent *event = eventQueue[i].event;
+			
+			[self performSelector:sel withObject:event];
+			
+			[event release];
+		}
 		
-		[self performSelector:sel withObject:event];
-		
-		[event release];
+		eventQueueCount = 0;
 	}
-	
-	eventQueueCount = 0;
 }
 #endif // CC_DIRECTOR_MAC_USE_DISPLAY_LINK_THREAD
 
