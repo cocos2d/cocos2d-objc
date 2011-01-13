@@ -174,6 +174,15 @@
 {}
 @end
 
+@interface SpriteOffsetAnchorFlip : SpriteDemo
+{}
+@end
+
+@interface SpriteBatchNodeOffsetAnchorFlip : SpriteDemo
+{}
+@end
+
+
 @interface SpriteHybrid : SpriteDemo
 {
 	BOOL	usingSpriteBatchNode;
