@@ -794,7 +794,7 @@ struct transformValues_ {
 {
 	if( flipX_ != b ) {
 		flipX_ = b;
-		[self setTextureRectInPixels:rectInPixels_ rotated:rectRotated_ untrimmedSize:rectInPixels_.size];
+		[self setTextureRectInPixels:rectInPixels_ rotated:rectRotated_ untrimmedSize:contentSizeInPixels_];
 	}
 }
 -(BOOL) flipX
@@ -806,7 +806,7 @@ struct transformValues_ {
 {
 	if( flipY_ != b ) {
 		flipY_ = b;	
-		[self setTextureRectInPixels:rectInPixels_ rotated:rectRotated_ untrimmedSize:rectInPixels_.size];
+		[self setTextureRectInPixels:rectInPixels_ rotated:rectRotated_ untrimmedSize:contentSizeInPixels_];
 	}	
 }
 -(BOOL) flipY
