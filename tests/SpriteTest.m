@@ -13,9 +13,6 @@
 static int sceneIdx=-1;
 static NSString *transitions[] = {	
 
-	@"SpriteOffsetAnchorFlip",
-	@"SpriteBatchNodeOffsetAnchorFlip",
-
 	@"Sprite1",
 	@"SpriteBatchNode1",
 	@"SpriteFrameTest",
