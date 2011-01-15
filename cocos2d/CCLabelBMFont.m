@@ -139,7 +139,10 @@ typedef struct _KerningHashElement
 - (void)parseConfigFile:(NSString*)fntFile
 {	
 	NSString *fullpath = [CCFileUtils fullPathFromRelativePath:fntFile];
-	NSString *contents = [NSString stringWithContentsOfFile:fullpath encoding:NSUTF8StringEncoding error:nil];
+	NSError *error;
+	NSString *contents = [NSString stringWithContentsOfFile:fullpath encoding:NSUTF8StringEncoding error:&error];
+
+	NSAssert1( contents, @"cocos2d: Error parsing FNTfile: %@", error);
 	
 	
 	// Move all lines in the string, which are denoted by \n, into an array
