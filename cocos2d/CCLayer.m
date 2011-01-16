@@ -180,7 +180,7 @@
 		isTouchEnabled_ = enabled;
 		if( isRunning_ ) {
 			if( enabled )
-				[[CCEventDispatcher sharedDispatcher] addKeyboardDelegate:self priority:[self touchDelegatePriority] ];
+				[[CCEventDispatcher sharedDispatcher] addTouchDelegate:self priority:[self touchDelegatePriority]];
 			else
 				[[CCEventDispatcher sharedDispatcher] removeTouchDelegate:self];
 		}
