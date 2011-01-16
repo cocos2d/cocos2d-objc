@@ -565,7 +565,7 @@ Class restartAction()
 	CCScene *scene = [CCScene node];
 	[scene addChild: [nextAction() node]];
 	
-	[self toggleFullScreen:self];
+	//[self toggleFullScreen:self];
 	
 	[director runWithScene:scene];
 }
