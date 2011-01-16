@@ -42,5 +42,9 @@
 
 @interface TouchTest : EventTest
 {
+	CCSpriteBatchNode *batch_;
+	CCSprite **sprites_;
+	NSUInteger nuSprites_;
+	NSUInteger capacity;
 }
 @end

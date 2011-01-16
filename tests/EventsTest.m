@@ -279,6 +279,25 @@ Class restartAction()
 {
 	if( (self=[super init]) ) {
 		
+		capacity = 12;
+		
+		batch_ = [CCSpriteBatchNode batchNodeWithFile:@"snow.png" capacity:capacity];
+		[self addChild:batch_];
+		
+		CGRect rect;
+		rect.origin = CGPointZero;
+		rect.size = [[batch_ texture] contentSize];
+		
+		sprites_ = (CCSprite**) malloc(sizeof(id)*capacity);
+		nuSprites_ = 0;
+		
+		for(int i = 0; i<capacity; i++)
+		{
+			sprites_[i] = [CCSprite spriteWithBatchNode:batch_ rect:rect];
+			[sprites_[i] setVisible:NO];
+			[batch_ addChild:sprites_[i]];
+		}
+		
 		self.isTouchEnabled = YES;
 	}
 	
@@ -317,30 +336,109 @@ Class restartAction()
 	[super onExit];
 }
 
-
 -(BOOL) ccTouchesBeganWithEvent:(NSEvent *)event
 {
 	NSLog(@"touchesBegan: %@", event);
+
+	NSView *view = [[CCDirector sharedDirector] openGLView];
+	NSSet *touches = [event touchesMatchingPhase:NSTouchPhaseBegan inView:view];
+	
+	for (NSTouch *touch in touches)
+	{
+		CGPoint pos = CCNSPointToCGPoint(touch.normalizedPosition);
+		// convert to absolute position
+		pos = ccpCompMult(pos, ccp(contentSize_.width, contentSize_.height));
+		
+		CCSprite *newSprite = sprites_[nuSprites_];
+		[newSprite setVisible:YES];
+		[newSprite setUserData:[touch identity]];
+		[newSprite setPosition:pos];
+		
+		nuSprites_++;
+		nuSprites_ = nuSprites_ >capacity ? capacity : nuSprites_;
+	}
 	return YES;
 }
 
 -(BOOL) ccTouchesMovedWithEvent:(NSEvent *)event
 {
 	NSLog(@"touchesMoved: %@", event);
+
+	NSView *view = [[CCDirector sharedDirector] openGLView];
+	NSSet *touches = [event touchesMatchingPhase:NSTouchPhaseMoved inView:view];
+	
+	for (NSTouch *touch in touches)
+	{
+		id <NSObject> identity = [touch identity];
+		CGPoint pos = CCNSPointToCGPoint(touch.normalizedPosition);
+		pos = ccpCompMult(pos, ccp(contentSize_.width, contentSize_.height));
+		
+		for(int i = 0; i<nuSprites_; i++)
+		{
+			CCSprite *sprite = sprites_[i];
+			if([identity isEqual:[sprite userData]])
+				[sprite setPosition:pos];
+		}
+	}
 	return YES;
 }
 
 -(BOOL) ccTouchesEndedWithEvent:(NSEvent *)event
 {
 	NSLog(@"touchesEnded: %@", event);
+
+	NSView *view = [[CCDirector sharedDirector] openGLView];
+	NSSet *touches = [event touchesMatchingPhase:NSTouchPhaseEnded inView:view];
+	
+	for (NSTouch *touch in touches)
+	{
+		id <NSObject> identity = [touch identity];
+		
+		for(int i = 0; i<nuSprites_; i++)
+		{
+			CCSprite *sprite = sprites_[i];
+			if([identity isEqual:[sprite userData]])
+			{
+				[sprite setVisible:NO];
+				[sprite setUserData:nil];
+				
+				nuSprites_--;
+				sprites_[i] = sprites_[nuSprites_];
+				sprites_[nuSprites_] = sprite;
+			}
+		}
+	}
 	return YES;
 }
 
 -(BOOL) ccTouchesCancelledWithEvent:(NSEvent *)event
 {
 	NSLog(@"touchesCancelled: %@", event);
+
+	NSView *view = [[CCDirector sharedDirector] openGLView];
+	NSSet *touches = [event touchesMatchingPhase:NSTouchPhaseCancelled inView:view];
+	
+	for (NSTouch *touch in touches)
+	{
+		id <NSObject> identity = [touch identity];
+		
+		for(int i = 0; i<nuSprites_; i++)
+		{
+			CCSprite *sprite = sprites_[i];
+			if([identity isEqual:[sprite userData]])
+			{
+				[sprite setVisible:NO];
+				[sprite setUserData:nil];
+				
+				nuSprites_--;
+				sprites_[i] = sprites_[nuSprites_];
+				sprites_[nuSprites_] = sprite;
+			}
+		}
+	}
 	return YES;
 }
+
 
 @end
 
