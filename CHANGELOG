@@ -1,7 +1,9 @@
 version 1.0-beta - XX-XXX-2011
+. [NEW] LayerGradient: Added "compress interpolation" (default mode) in order to display all graident's colors in any vector
 . [NEW-MAC]: Added CC_DIRECTOR_INIT(). It is possible to create a Mac Window programatically
 . [NEW-MAC]: EventDispatcher: Added support for touches events
 . [FIX]: Sprite: flipx/flipy don't modify the contentSize (issue #1073)
+. [FIX]: CCMultiplexLayer: Deprecated. new name is CCLayerMultiplex
 . [FIX-MAC]: EventDispatcher: flagsChanged is triggered correctly (issue #1066)
 . [FIX-MAC]: EventDispatcher: queue & dispatch events are synced (issue #1083)
 . [FIX-MAC]: LabelTTF: alignment works OK (issue #1073)

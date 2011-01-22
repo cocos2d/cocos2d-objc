@@ -163,6 +163,11 @@ enum {
 	return [[[self alloc] initWithLabel:label target:target selector:selector] autorelease];
 }
 
++(id) itemWithLabel:(CCNode<CCLabelProtocol,CCRGBAProtocol>*)label
+{
+	return [[[self alloc] initWithLabel:label target:nil selector:NULL] autorelease];
+}
+
 -(id) initWithLabel:(CCNode<CCLabelProtocol,CCRGBAProtocol>*)label target:(id)target selector:(SEL)selector
 {
 	if( (self=[super initWithTarget:target selector:selector]) ) {
