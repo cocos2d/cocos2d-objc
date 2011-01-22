@@ -457,7 +457,7 @@
 
 	// Compress Interpolation mode
 	if( compressInterpolation_ ) {
-		float h2 = 1 / ( fabsf(vector_.x) + fabsf(vector_.y) );
+		float h2 = 1 / ( fabsf(u.x) + fabsf(u.y) );
 		u = ccpMult(u, h2 * (float)c);
 	}
 	
