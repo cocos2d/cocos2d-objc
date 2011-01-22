@@ -32,6 +32,8 @@
 
 #define kItemSize 32
 
+#pragma mark -
+#pragma mark CCMenuItem
 /** CCMenuItem base class
  *
  *  Subclass CCMenuItem (or any subclass) to create your custom CCMenuItem objects.
@@ -89,6 +91,9 @@
 -(BOOL) isEnabled;
 @end
 
+#pragma mark -
+#pragma mark CCMenuItemLabel
+
 /** An abstract class for "label" CCMenuItemLabel items 
  Any CCNode that supports the CCLabelProtocol protocol can be added.
  Supported nodes:
@@ -109,6 +114,9 @@
 
 /** Label that is rendered. It can be any CCNode that implements the CCLabelProtocol */
 @property (nonatomic,readwrite,assign) CCNode<CCLabelProtocol, CCRGBAProtocol>* label;
+
+/** creates a CCMenuItemLabel with a Label. Target and selector will be nill */
++(id) itemWithLabel:(CCNode<CCLabelProtocol,CCRGBAProtocol>*)label;
 
 /** creates a CCMenuItemLabel with a Label, target and selector */
 +(id) itemWithLabel:(CCNode<CCLabelProtocol,CCRGBAProtocol>*)label target:(id)target selector:(SEL)selector;
@@ -136,6 +144,9 @@
  */
 -(void) setIsEnabled: (BOOL)enabled;
 @end
+
+#pragma mark -
+#pragma mark CCMenuItemAtlasFont
 
 /** A CCMenuItemAtlasFont
  Helper class that creates a MenuItemLabel class with a LabelAtlas
@@ -166,6 +177,9 @@
 #endif
 
 @end
+
+#pragma mark -
+#pragma mark CCMenuItemFont
 
 /** A CCMenuItemFont
  Helper class that creates a CCMenuItemLabel class with a Label
@@ -206,6 +220,9 @@
 -(id) initFromString: (NSString*) value block:(void(^)(id sender))block;
 #endif
 @end
+
+#pragma mark -
+#pragma mark CCMenuItemSprite
 
 /** CCMenuItemSprite accepts CCNode<CCRGBAProtocol> objects as items.
  The images has 3 different states:
@@ -255,6 +272,9 @@
 
 @end
 
+#pragma mark -
+#pragma mark CCMenuItemImage
+
 /** CCMenuItemImage accepts images as items.
  The images has 3 different states:
  - unselected image
@@ -291,7 +311,8 @@
 #endif
 @end
 
-
+#pragma mark -
+#pragma mark CCMenuItemToggle
 
 /** A CCMenuItemToggle
  A simple container class that "toggles" it's inner items

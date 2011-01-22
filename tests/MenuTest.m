@@ -97,12 +97,12 @@ enum {
 
 -(void) menuCallback: (id) sender
 {
-	[(CCMultiplexLayer*)parent_ switchTo:1];
+	[(CCLayerMultiplex*)parent_ switchTo:1];
 }
 
 -(void) menuCallbackConfig:(id) sender
 {
-	[(CCMultiplexLayer*)parent_ switchTo:3];
+	[(CCLayerMultiplex*)parent_ switchTo:3];
 }
 
 -(void) menuCallbackDisabled:(id) sender {
@@ -114,7 +114,7 @@ enum {
 
 -(void) menuCallback2: (id) sender
 {
-	[(CCMultiplexLayer*)parent_ switchTo:2];
+	[(CCLayerMultiplex*)parent_ switchTo:2];
 }
 
 -(void) onQuit: (id) sender
@@ -212,7 +212,7 @@ enum {
 
 -(void) menuCallbackBack: (id) sender
 {
-	[(CCMultiplexLayer*)parent_ switchTo:0];
+	[(CCLayerMultiplex*)parent_ switchTo:0];
 }
 
 -(void) menuCallbackOpacity: (id) sender
@@ -293,7 +293,7 @@ enum {
 
 -(void) menuCallback: (id) sender
 {
-	[(CCMultiplexLayer*)parent_ switchTo:0];
+	[(CCLayerMultiplex*)parent_ switchTo:0];
 }
 
 -(void) menuCallback2: (id) sender
@@ -407,7 +407,7 @@ enum {
 
 -(void) backCallback: (id) sender
 {
-	[(CCMultiplexLayer*)parent_ switchTo:0];
+	[(CCLayerMultiplex*)parent_ switchTo:0];
 }
 
 @end
@@ -459,7 +459,7 @@ enum {
 
 	CCScene *scene = [CCScene node];
 
-	CCMultiplexLayer *layer = [CCMultiplexLayer layerWithLayers: [Layer1 node], [Layer2 node], [Layer3 node], [Layer4 node], nil];
+	CCLayerMultiplex *layer = [CCLayerMultiplex layerWithLayers: [Layer1 node], [Layer2 node], [Layer3 node], [Layer4 node], nil];
 	[scene addChild: layer z:0];
 
 	[director runWithScene: scene];
@@ -541,7 +541,7 @@ enum {
 	
 	CCScene *scene = [CCScene node];
 	
-	CCMultiplexLayer *layer = [CCMultiplexLayer layerWithLayers: [Layer1 node], [Layer2 node], [Layer3 node], [Layer4 node], nil];
+	CCLayerMultiplex *layer = [CCLayerMultiplex layerWithLayers: [Layer1 node], [Layer2 node], [Layer3 node], [Layer4 node], nil];
 	[scene addChild: layer z:0];
 	
 	[director runWithScene:scene];

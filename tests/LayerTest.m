@@ -64,6 +64,13 @@ Class restartAction()
 		[self addChild: label z:1];
 		[label setPosition: ccp(s.width/2, s.height-50)];
 		
+		NSString *subtitle = [self subtitle];
+		if( subtitle ) {
+			CCLabelTTF *l = [CCLabelTTF labelWithString:subtitle fontName:@"Thonburi" fontSize:16];
+			[self addChild:l z:1];
+			[l setPosition:ccp(s.width/2, s.height-80)];
+		}		
+		
 		CCMenuItemImage *item1 = [CCMenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
 		CCMenuItemImage *item2 = [CCMenuItemImage itemFromNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
 		CCMenuItemImage *item3 = [CCMenuItemImage itemFromNormalImage:@"f1.png" selectedImage:@"f2.png" target:self selector:@selector(nextCallback:)];
@@ -109,6 +116,11 @@ Class restartAction()
 -(NSString*) title
 {
 	return @"No title";
+}
+
+-(NSString*) subtitle
+{
+	return nil;
 }
 @end
 
@@ -284,14 +296,30 @@ Class restartAction()
 {
 	if( (self=[super init] )) {
 		
-//		CGSize s = [[CCDirector sharedDirector] winSize];
-		CCLayerGradient* layer1 = [CCLayerGradient layerWithColor:ccc4(255,0,0,255) fadingTo:ccc4(0,255,0,255) alongVector:ccp(1,0)];
+		CCLayerGradient* layer1 = [CCLayerGradient layerWithColor:ccc4(255,0,0,255) fadingTo:ccc4(0,255,0,255) alongVector:ccp(0.9f, 0.9f)];
 
-		[self addChild:layer1 z:0 tag:1];
+		[self addChild:layer1 z:0 tag:kTagLayer];
 		
 		self.isTouchEnabled = YES;
+		
+		CCLabelTTF *label1 = [CCLabelTTF labelWithString:@"Compressed Interpolation: Enabled" fontName:@"Marker Felt" fontSize:26];
+		CCLabelTTF *label2 = [CCLabelTTF labelWithString:@"Compressed Interpolation: Disabled" fontName:@"Marker Felt" fontSize:26];
+		CCMenuItemLabel *item1 = [CCMenuItemLabel itemWithLabel:label1];
+		CCMenuItemLabel *item2 = [CCMenuItemLabel itemWithLabel:label2];
+		CCMenuItemToggle *item = [CCMenuItemToggle itemWithTarget:self selector:@selector(toggleItem:) items:item1, item2, nil];
+		
+		CCMenu *menu = [CCMenu menuWithItems:item, nil];
+		[self addChild:menu];
+		CGSize s = [[CCDirector sharedDirector] winSize];
+		[menu setPosition:ccp(s.width/2, 100)];
 	}
 	return self;
+}
+
+-(void) toggleItem:(id)sender
+{
+	CCLayerGradient *gradient = (CCLayerGradient*) [self getChildByTag:kTagLayer];
+	[gradient setCompressInterpolation: ! gradient.compressInterpolation];
 }
 
 -(void)ccTouchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
@@ -306,18 +334,21 @@ Class restartAction()
 	diff = ccpNormalize(diff);
 	
 	CCLayerGradient *gradient = (CCLayerGradient*) [self getChildByTag:1];
-	
+
+	NSLog(@"Gradient new vector: %f,%f",diff.x, diff.y);
 	[gradient setVector:diff];
-	
 }
 
 -(NSString *) title
 {
 	return @"LayerGradient";
 }
+
+-(NSString *) subtitle
+{
+	return @"Touch the screen and move your finger";
+}
 @end
-
-
 
 #pragma mark -
 #pragma mark AppController

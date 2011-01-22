@@ -36,9 +36,9 @@
 #import "CCProtocols.h"
 #import "CCNode.h"
 
-//
-// CCLayer
-//
+#pragma mark -
+#pragma mark CCLayer
+
 /** CCLayer is a subclass of CCNode that implements the TouchEventsDelegate protocol.
  
  All features from CCNode are valid, plus the following new features:
@@ -141,9 +141,9 @@
 
 @end
 
-//
-// CCLayerColor
-//
+#pragma mark -
+#pragma mark CCLayerColor
+
 /** CCLayerColor is a subclass of CCLayer that implements the CCRGBAProtocol protocol.
  
  All features from CCLayer are valid, plus the following new features:
@@ -154,8 +154,8 @@
 {
 	GLubyte		opacity_;
 	ccColor3B	color_;	
-	GLfloat squareVertices[4 * 2];
-	GLubyte squareColors[4 * 4];
+	ccVertex2F	squareVertices_[4];
+	ccColor4B	squareColors_[4];
 	
 	ccBlendFunc	blendFunc_;
 }
@@ -195,25 +195,26 @@
 DEPRECATED_ATTRIBUTE @interface CCColorLayer : CCLayerColor
 @end
 
+#pragma mark -
+#pragma mark CCLayerGradient
 
-//
-// CCLayerGradient
-//
 /** CCLayerGradient is a subclass of CCLayerColor that draws gradients across
 the background.
 
  All features from CCLayerColor are valid, plus the following new features:
  - direction
  - final color
+ - interpolation mode
  
  Color is interpolated between the startColor and endColor along the given
  vector (starting at the origin, ending at the terminus).  If no vector is
  supplied, it defaults to (0, -1) -- a fade from top to bottom.
  
- Given the nature of
- the interpolation, you will not see either the start or end color for
+ If 'compressInterpolation' is disabled, you will not see either the start or end color for
  non-cardinal vectors; a smooth gradient implying both end points will be still
  be drawn, however.
+ 
+ If ' compressInterpolation' is enabled (default mode) you will see both the start and end colors of the gradient.
  
  @since v0.99.5
  */
@@ -223,6 +224,7 @@ the background.
 	GLubyte startOpacity_;
 	GLubyte endOpacity_;
 	CGPoint vector_;
+	BOOL	compressInterpolation_;
 }
 
 /** Creates a full-screen CCLayer with a gradient between start and end. */
@@ -236,9 +238,7 @@ the background.
 - (id) initWithColor: (ccColor4B) start fadingTo: (ccColor4B) end alongVector: (CGPoint) v;
 
 /** The starting color. */
-- (ccColor3B) startColor;
-- (void) setStartColor:(ccColor3B)colors;
-
+@property (nonatomic, readwrite) ccColor3B startColor;
 /** The ending color. */
 @property (nonatomic, readwrite) ccColor3B endColor;
 /** The starting opacity. */
@@ -247,18 +247,25 @@ the background.
 @property (nonatomic, readwrite) GLubyte endOpacity;
 /** The vector along which to fade color. */
 @property (nonatomic, readwrite) CGPoint vector;
-
+/** Whether or not the interpolation will be compressed in order to display all the colors of the gradient both in canonical and non canonical vectors
+ Default: YES
+ */
+@property (nonatomic, readwrite) BOOL compressInterpolation;
+ 
 @end
 
-/** CCMultipleLayer is a CCLayer with the ability to multiplex it's children.
+#pragma mark -
+#pragma mark CCLayerMultiplex
+
+/** CCLayerMultiplex is a CCLayer with the ability to multiplex it's children.
  Features:
    - It supports one or more children
    - Only one children will be active a time
  */
-@interface CCMultiplexLayer : CCLayer
+@interface CCLayerMultiplex : CCLayer
 {
-	unsigned int enabledLayer;
-	NSMutableArray *layers;
+	unsigned int enabledLayer_;
+	NSMutableArray *layers_;
 }
 
 /** creates a CCMultiplexLayer with one or more layers using a variable argument list. */
@@ -274,3 +281,12 @@ the background.
  */
 -(void) switchToAndReleaseMe: (unsigned int) n;
 @end
+
+/** CCMultiplexLayer
+ It is the same as CCLayerMultiplex.
+ 
+ @deprecated Use CCLayerMultiplex instead. This class will be removed in v1.0.1
+ */
+DEPRECATED_ATTRIBUTE  @interface CCMultiplexLayer : CCLayerMultiplex
+@end
+
