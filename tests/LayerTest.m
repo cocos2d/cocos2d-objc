@@ -335,7 +335,6 @@ Class restartAction()
 	
 	CCLayerGradient *gradient = (CCLayerGradient*) [self getChildByTag:1];
 
-	NSLog(@"Gradient new vector: %f,%f",diff.x, diff.y);
 	[gradient setVector:diff];
 }
 
