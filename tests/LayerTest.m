@@ -319,7 +319,7 @@ Class restartAction()
 -(void) toggleItem:(id)sender
 {
 	CCLayerGradient *gradient = (CCLayerGradient*) [self getChildByTag:kTagLayer];
-	[gradient setCompressInterpolation: ! gradient.compressInterpolation];
+	[gradient setCompressedInterpolation: ! gradient.compressedInterpolation];
 }
 
 -(void)ccTouchesMoved:(NSSet *)touches withEvent:(UIEvent *)event

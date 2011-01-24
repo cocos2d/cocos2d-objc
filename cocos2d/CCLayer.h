@@ -210,11 +210,11 @@ the background.
  vector (starting at the origin, ending at the terminus).  If no vector is
  supplied, it defaults to (0, -1) -- a fade from top to bottom.
  
- If 'compressInterpolation' is disabled, you will not see either the start or end color for
+ If 'compressedInterpolation' is disabled, you will not see either the start or end color for
  non-cardinal vectors; a smooth gradient implying both end points will be still
  be drawn, however.
  
- If ' compressInterpolation' is enabled (default mode) you will see both the start and end colors of the gradient.
+ If ' compressedInterpolation' is enabled (default mode) you will see both the start and end colors of the gradient.
  
  @since v0.99.5
  */
@@ -224,7 +224,7 @@ the background.
 	GLubyte startOpacity_;
 	GLubyte endOpacity_;
 	CGPoint vector_;
-	BOOL	compressInterpolation_;
+	BOOL	compressedInterpolation_;
 }
 
 /** Creates a full-screen CCLayer with a gradient between start and end. */
@@ -250,7 +250,7 @@ the background.
 /** Whether or not the interpolation will be compressed in order to display all the colors of the gradient both in canonical and non canonical vectors
  Default: YES
  */
-@property (nonatomic, readwrite) BOOL compressInterpolation;
+@property (nonatomic, readwrite) BOOL compressedInterpolation;
  
 @end
 
