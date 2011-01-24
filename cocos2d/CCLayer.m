@@ -439,7 +439,7 @@
 	vector_ = v;
 	
 	start.a	= 255;
-	compressInterpolation_ = YES;
+	compressedInterpolation_ = YES;
 
 	return [super initWithColor:start];
 }
@@ -455,8 +455,8 @@
 	double c = sqrt(2);
     CGPoint u = ccp(vector_.x / h, vector_.y / h);
 
-	// Compress Interpolation mode
-	if( compressInterpolation_ ) {
+	// Compressed Interpolation mode
+	if( compressedInterpolation_ ) {
 		float h2 = 1 / ( fabsf(u.x) + fabsf(u.y) );
 		u = ccpMult(u, h2 * (float)c);
 	}
@@ -534,14 +534,14 @@
     [self updateColor];
 }
 
--(BOOL) compressInterpolation
+-(BOOL) compressedInterpolation
 {
-	return compressInterpolation_;
+	return compressedInterpolation_;
 }
 
--(void) setCompressInterpolation:(BOOL)compress
+-(void) setCompressedInterpolation:(BOOL)compress
 {
-	compressInterpolation_ = compress;
+	compressedInterpolation_ = compress;
 	[self updateColor];
 }
 @end
