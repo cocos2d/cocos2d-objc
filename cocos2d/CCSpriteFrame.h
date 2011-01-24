@@ -1,7 +1,7 @@
 /*
  * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
- * Copyright (c) 2008-2010 Ricardo Quesada
+ * Copyright (c) 2008-2011 Ricardo Quesada
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -46,10 +46,10 @@
 	CGSize			originalSizeInPixels_;
 	CCTexture2D		*texture_;
 }
-/** rect of the frame in points */
+/** rect of the frame in points. If it is updated, then rectInPixels will be updated too. */
 @property (nonatomic,readwrite) CGRect rect;
 
-/** rect of the frame in pixels */
+/** rect of the frame in pixels. If it is updated, then rect (points) will be udpated too. */
 @property (nonatomic,readwrite) CGRect rectInPixels;
 
 /** whether or not the rect of the frame is rotated ( x = x+width, y = y+height, width = height, height = width ) */

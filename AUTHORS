@@ -72,6 +72,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		patches for MenuItemFont
 	* Corey.B.Painter:
 		Speed action calls other#stop patch
+		SpriteFrame rect updates rectInPixels too. Patch
 	* craigching:
 		Correct type for objects in TMX maps. patch
 	* DaemonCollector:
