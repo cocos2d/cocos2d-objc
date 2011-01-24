@@ -4,6 +4,7 @@ version 1.0-beta - XX-XXX-2011
 . [NEW-MAC]: EventDispatcher: Added support for touches events
 . [FIX]: Sprite: flipx/flipy don't modify the contentSize (issue #1073)
 . [FIX]: CCMultiplexLayer: Deprecated. new name is CCLayerMultiplex
+. [FIX]: Templates: ItunesArtwork renamed to iTunesArtwork (issue #1092)
 . [FIX-MAC]: EventDispatcher: flagsChanged is triggered correctly (issue #1066)
 . [FIX-MAC]: EventDispatcher: queue & dispatch events are synced (issue #1083)
 . [FIX-MAC]: LabelTTF: alignment works OK (issue #1073)
