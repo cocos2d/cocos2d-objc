@@ -111,11 +111,6 @@
 #pragma mark -
 #pragma mark Sequence
 @implementation CCSequence
-+(id) actionOne: (CCFiniteTimeAction*) one two: (CCFiniteTimeAction*) two
-{	
-	return [[[self alloc] initOne:one two:two ] autorelease];
-}
-
 +(id) actions: (CCFiniteTimeAction*) action1, ...
 {
 	va_list params;
@@ -133,6 +128,21 @@
 	}
 	va_end(params);
 	return prev;
+}
+
++(id) actionsWithArray: (NSArray*) actions
+{
+	CCFiniteTimeAction *prev = [actions objectAtIndex:0];
+	
+	for (int i = 1; i < [actions count]; i++)
+		prev = [self actionOne:prev two:[actions objectAtIndex:i]];
+	
+	return prev;
+}
+
++(id) actionOne: (CCFiniteTimeAction*) one two: (CCFiniteTimeAction*) two
+{	
+	return [[[self alloc] initOne:one two:two ] autorelease];
 }
 
 -(id) initOne: (CCFiniteTimeAction*) one_ two: (CCFiniteTimeAction*) two_
@@ -340,6 +350,16 @@
 			break;
 	}
 	va_end(params);
+	return prev;
+}
+
++(id) actionsWithArray: (NSArray*) actions
+{
+	CCFiniteTimeAction *prev = [actions objectAtIndex:0];
+	
+	for (int i = 1; i < [actions count]; i++)
+		prev = [self actionOne:prev two:[actions objectAtIndex:i]];
+	
 	return prev;
 }
 
