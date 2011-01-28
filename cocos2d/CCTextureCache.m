@@ -120,7 +120,7 @@ static CCTextureCache *sharedTextureCache;
 
 -(void) dealloc
 {
-	CCLOG(@"cocos2d: deallocing %@", self);
+	CCLOGINFO(@"cocos2d: deallocing %@", self);
 
 	[textures_ release];
 	[dictLock_ release];
