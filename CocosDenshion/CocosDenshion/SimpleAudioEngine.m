@@ -194,6 +194,9 @@ static CDBufferManager *bufferManager = nil;
 
 -(void) setBackgroundMusicVolume:(float) volume
 {
+	volume = volume < 0 ? 0.0f : volume;
+    volume = volume > 1 ? 1.0f : volume;
+	
 	am.backgroundMusic.volume = volume;
 }	
 
@@ -205,6 +208,9 @@ static CDBufferManager *bufferManager = nil;
 
 -(void) setEffectsVolume:(float) volume
 {
+	volume = volume < 0 ? 0.0f : volume;
+    volume = volume > 1 ? 1.0f : volume;
+	
 	am.soundEngine.masterGain = volume;
 }	
 
