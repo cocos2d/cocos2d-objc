@@ -276,10 +276,11 @@ static SEL selSortMethod =NULL;
 			tempItem = x[i];
 			j = i-1;
 			
-			while(j>=0 && ( ((CCNode*) tempItem).zOrder<((CCNode*)x[j]).zOrder  || ( ((CCNode*) tempItem).mutatedIndex < ((CCNode*)x[j]).mutatedIndex ) ) )
+			//continue moving element downwards while zOrder is smaller or when zOrder is the same but mutatedIndex is smaller
+			while(j>=0 && ( ((CCNode*) tempItem).zOrder<((CCNode*)x[j]).zOrder || ( ((CCNode*) tempItem).zOrder == ((CCNode*)x[j]).zOrder &&  ((CCNode*) tempItem).mutatedIndex < ((CCNode*)x[j]).mutatedIndex ) ) ) 
 			{
 				x[j+1] = x[j];
-				j = j-1;
+				j--;
 			}
 			
 			x[j+1] = tempItem;
