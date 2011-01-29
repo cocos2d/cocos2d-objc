@@ -77,6 +77,17 @@
 }
 @end
 
+@interface NodeReorderSameIndex : SpriteDemo
+{
+	CCNode *node;
+	CCSprite *sprite1;
+	CCSprite *sprite2;
+	CCSprite *sprite3;	
+	CCSprite *sprite4;	
+	CCSprite *sprite5;		
+}
+@end
+
 @interface SpriteBatchNodeReorderSameIndex : SpriteDemo
 {
 	CCSpriteBatchNode *batchNode;

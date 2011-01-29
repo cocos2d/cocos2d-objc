@@ -29,6 +29,7 @@ static NSString *transitions[] = {
 	@"SpriteZOrder",
 	@"SpriteBatchNodeZOrder",
 	@"SpriteBatchNodeReorder",
+	@"NodeReorderSameIndex",
 	@"SpriteBatchNodeReorderIssue744",
 	@"SpriteBatchNodeReorderIssue766",
 	@"SpriteBatchNodeReorderIssue767",
@@ -736,6 +737,71 @@ Class restartAction()
 	return @"Should not crash";
 }
 @end
+
+@implementation NodeReorderSameIndex
+
+- (void) reorderSprite:(ccTime)dt
+{
+	[self unschedule:_cmd];
+	
+	[node reorderChild:[[node children] objectAtIndex:0] z:-4];
+	[node reorderChild:[[node children] objectAtIndex:2] z:-4];
+	[node reorderChild:[[node children] objectAtIndex:1] z:-6];
+	
+	[node sortAllChildren];
+	
+	CCSprite *child;
+	CCARRAY_FOREACH(node.children,child) NSLog(@"tag %i z %i",child.tag,child.zOrder);
+	
+}
+
+// on "init" you need to initialize your instance
+-(id) init
+{
+	// always call "super" init
+	// Apple recommends to re-assign "self" with the "super" return value
+	if( (self=[super init] )) {
+		
+		node = [CCNode node];
+		[self addChild:node z:0 tag:0];
+		
+		sprite1 = [CCSprite spriteWithFile:@"piece.png" rect:CGRectMake(128,0,64,64)];
+		sprite1.position = CGPointMake(100,160);
+		[node addChild:sprite1 z:-6 tag:1];
+		
+		sprite2= [CCSprite spriteWithFile:@"piece.png" rect:CGRectMake(128,0,64,64)];
+		sprite2.position = CGPointMake(164,160);
+		[node addChild:sprite2 z:-6 tag:2];
+		
+		sprite3 = [CCSprite spriteWithFile:@"piece.png" rect:CGRectMake(128,0,64,64)];
+		sprite3.position = CGPointMake(228,160);
+		[node addChild:sprite3 z:-4 tag:3];
+		
+		sprite4 = [CCSprite spriteWithFile:@"piece.png" rect:CGRectMake(128,0,64,64)];
+		sprite4.position = CGPointMake(292,160);
+		[node addChild:sprite4 z:-3 tag:4];
+		
+		sprite5 = [CCSprite spriteWithFile:@"piece.png" rect:CGRectMake(128,0,64,64)];
+		sprite5.position = CGPointMake(356,160);
+		[node addChild:sprite5 z:-3 tag:5];
+		
+		[self schedule:@selector(reorderSprite:) interval:1];
+	}
+	return self;
+}
+
+-(NSString *) title
+{
+	return @"node reorder same index";
+}
+
+-(NSString *) subtitle
+{
+	return @"tag order in console should be 2,1,3,4,5";
+}
+
+@end
+
 
 @implementation SpriteBatchNodeReorderSameIndex
 
