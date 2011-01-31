@@ -19,6 +19,8 @@
  * SOFTWARE.
  */
 
+//TODO delete this header?
+
 // Collides two cpShape structures.
 // Returns the number of contact points added to arr
 // which should be at least CP_MAX_CONTACTS_PER_ARBITER in length.

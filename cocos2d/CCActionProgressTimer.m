@@ -38,6 +38,7 @@
 {
 	if( (self=[super initWithDuration: t] ) )
 		to_ = v;
+	
 	return self;
 }
 

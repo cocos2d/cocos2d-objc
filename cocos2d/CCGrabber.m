@@ -40,6 +40,7 @@
 	}
 	return self;
 }
+
 -(void)grab:(CCTexture2D*)texture
 {
 	glGetIntegerv(CC_GL_FRAMEBUFFER_BINDING, &oldFBO);
@@ -53,9 +54,7 @@
 	// check if it worked (probably worth doing :) )
 	GLuint status = ccglCheckFramebufferStatus(CC_GL_FRAMEBUFFER);
 	if (status != CC_GL_FRAMEBUFFER_COMPLETE)
-	{
 		[NSException raise:@"Frame Grabber" format:@"Could not attach texture to framebuffer"];
-	}
 	
 	ccglBindFramebuffer(CC_GL_FRAMEBUFFER, oldFBO);
 }

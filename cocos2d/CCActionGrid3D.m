@@ -346,8 +346,8 @@
 
 @implementation CCRipple3D
 
-@synthesize amplitude=amplitude_;
-@synthesize amplitudeRate=amplitudeRate_;
+@synthesize amplitude = amplitude_;
+@synthesize amplitudeRate = amplitudeRate_;
 
 +(id)actionWithPosition:(CGPoint)pos radius:(float)r waves:(int)wav amplitude:(float)amp grid:(ccGridSize)gridSize duration:(ccTime)d
 {
@@ -441,7 +441,6 @@
 	CCGridAction *copy = [[[self class] allocWithZone:zone] initWithRange:randrange shakeZ:shakeZ grid:gridSize_ duration:duration_];
 	return copy;
 }
-
 
 -(void)update:(ccTime)time
 {
@@ -580,8 +579,8 @@
 
 @implementation CCTwirl
 
-@synthesize amplitude=amplitude_;
-@synthesize amplitudeRate=amplitudeRate_;
+@synthesize amplitude = amplitude_;
+@synthesize amplitudeRate = amplitudeRate_;
 
 +(id)actionWithPosition:(CGPoint)pos twirls:(int)t amplitude:(float)amp grid:(ccGridSize)gridSize duration:(ccTime)d
 {
@@ -616,13 +615,13 @@
 -(void)update:(ccTime)time
 {
 	int i, j;
-	CGPoint		c = positionInPixels_;
+	CGPoint	c = positionInPixels_;
 	
 	for( i = 0; i < (gridSize_.x+1); i++ )
 	{
 		for( j = 0; j < (gridSize_.y+1); j++ )
 		{
-			ccVertex3F	v = [self originalVertex:ccg(i,j)];
+			ccVertex3F v = [self originalVertex:ccg(i,j)];
 			
 			CGPoint	avg = ccp(i-(gridSize_.x/2.0f), j-(gridSize_.y/2.0f));
 			CGFloat r = ccpLength( avg );
@@ -630,10 +629,13 @@
 			CGFloat amp = 0.1f * amplitude_ * amplitudeRate_;
 			CGFloat a = r * cosf( (CGFloat)M_PI/2.0f + time * (CGFloat)M_PI * twirls_ * 2 ) * amp;
 			
-			CGPoint	d;
+			float cosA = cosf(a);
+			float sinA = sinf(a);
 			
-			d.x = sinf(a) * (v.y-c.y) + cosf(a) * (v.x-c.x);
-			d.y = cosf(a) * (v.y-c.y) - sinf(a) * (v.x-c.x);
+			CGPoint	d = {
+				sinA * (v.y-c.y) + cosA * (v.x-c.x),
+				cosA * (v.y-c.y) - sinA * (v.x-c.x)
+			};
 			
 			v.x = c.x + d.x;
 			v.y = c.y + d.y;

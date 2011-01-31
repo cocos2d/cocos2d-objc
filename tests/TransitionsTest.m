@@ -141,19 +141,6 @@
 
 static int sceneIdx=0;
 static NSString *transitions[] = {
-	@"FlipXLeftOver",
-	@"FlipXRightOver",
-	@"FlipYUpOver",
-	@"FlipYDownOver",
-	@"FlipAngularLeftOver",
-	@"FlipAngularRightOver",
-	@"ZoomFlipXLeftOver",
-	@"ZoomFlipXRightOver",
-	@"ZoomFlipYUpOver",
-	@"ZoomFlipYDownOver",
-	@"ZoomFlipAngularLeftOver",
-	@"ZoomFlipAngularRightOver",
-	
 	@"CCTransitionJumpZoom",
 	@"CCTransitionCrossFade",
 	@"CCTransitionRadialCCW",
@@ -570,25 +557,44 @@ Class restartTransition()
 
 @synthesize window=window_, glView=glView_;
 
-- (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
+- (void)applicationDidFinishLaunching:(NSNotification *)aNotification
+{
+	CGSize winSize = CGSizeMake(480,320);
 	
+	//
+	// CC_DIRECTOR_INIT:
+	// 1. It will create an NSWindow with a given size
+	// 2. It will create a MacGLView and it will associate it with the NSWindow
+	// 3. It will register the MacGLView to the CCDirector
+	//
+	// If you want to create a fullscreen window, you should do it AFTER calling this macro
+	//
 	
-	CCDirector *director = [CCDirector sharedDirector];
-	
-	[director setDisplayFPS:YES];
-	
-	[director setOpenGLView:glView_];
-	
-	//	[director setProjection:kCCDirectorProjection2D];
+	CC_DIRECTOR_INIT(winSize);
 	
 	// Enable "moving" mouse event. Default no.
 	[window_ setAcceptsMouseMovedEvents:NO];
 	
+	// EXPERIMENTAL stuff.
+	// 'Effects' don't work correctly when autoscale is turned on.
+	CCDirectorMac *director = (CCDirectorMac*) [CCDirector sharedDirector];
+	[director setResizeMode:kCCDirectorResize_AutoScale];	
 	
 	CCScene *scene = [CCScene node];
 	[scene addChild: [TextLayer node]];
 	
 	[director runWithScene:scene];
+}
+
+- (BOOL) applicationShouldTerminateAfterLastWindowClosed: (NSApplication *) theApplication
+{
+	return YES;
+}
+
+- (IBAction)toggleFullScreen: (id)sender
+{
+	CCDirectorMac *director = (CCDirectorMac*) [CCDirector sharedDirector];
+	[director setFullScreen: ! [director isFullScreen] ];
 }
 
 @end

@@ -39,7 +39,8 @@
  The quads are rendered using an OpenGL ES VBO.
  To render the quads using an interleaved vertex array list, you should modify the ccConfig.h file 
  */
-@interface CCTextureAtlas : NSObject {
+@interface CCTextureAtlas : NSObject
+{
 	NSUInteger			totalQuads_;
 	NSUInteger			capacity_;
 	ccV3F_C4B_T2F_Quad	*quads_;	// quads to be rendered

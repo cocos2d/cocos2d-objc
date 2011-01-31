@@ -19,6 +19,8 @@ static NSString *transitions[] = {
 	@"LayerTest1",
 	@"LayerTest2",
 	@"LayerTestBlend",
+	@"LayerGradient",
+
 };
 
 Class nextAction()
@@ -61,6 +63,13 @@ Class restartAction()
 		CCLabelTTF *label = [CCLabelTTF labelWithString:[self title] fontName:@"Arial" fontSize:32];
 		[self addChild: label z:1];
 		[label setPosition: ccp(s.width/2, s.height-50)];
+		
+		NSString *subtitle = [self subtitle];
+		if( subtitle ) {
+			CCLabelTTF *l = [CCLabelTTF labelWithString:subtitle fontName:@"Thonburi" fontSize:16];
+			[self addChild:l z:1];
+			[l setPosition:ccp(s.width/2, s.height-80)];
+		}		
 		
 		CCMenuItemImage *item1 = [CCMenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
 		CCMenuItemImage *item2 = [CCMenuItemImage itemFromNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
@@ -108,6 +117,11 @@ Class restartAction()
 {
 	return @"No title";
 }
+
+-(NSString*) subtitle
+{
+	return nil;
+}
 @end
 
 #pragma mark -
@@ -121,7 +135,7 @@ Class restartAction()
 		self.isTouchEnabled = YES;
 		
 		CGSize s = [[CCDirector sharedDirector] winSize];
-		CCColorLayer* layer = [CCColorLayer layerWithColor: ccc4(0xFF, 0x00, 0x00, 0x80)
+		CCLayerColor* layer = [CCLayerColor layerWithColor: ccc4(0xFF, 0x00, 0x00, 0x80)
 												 width: 200 
 												height: 200];
 		layer.isRelativeAnchorPoint =  YES;
@@ -133,7 +147,7 @@ Class restartAction()
 
 -(void) registerWithTouchDispatcher
 {
-	[[CCTouchDispatcher sharedDispatcher] addTargetedDelegate:self priority:INT_MIN+1 swallowsTouches:YES];
+	[[CCTouchDispatcher sharedDispatcher] addTargetedDelegate:self priority:kCCMenuTouchPriority+1 swallowsTouches:YES];
 }
 
 -(void) updateSize:(UITouch*)touch
@@ -145,7 +159,7 @@ Class restartAction()
 	
 	CGSize newSize = CGSizeMake( abs( touchLocation.x - s.width/2)*2, abs(touchLocation.y - s.height/2)*2);
 	
-	CCColorLayer *l = (CCColorLayer*) [self getChildByTag:kTagLayer];
+	CCLayerColor *l = (CCLayerColor*) [self getChildByTag:kTagLayer];
 
 //	[l changeWidth:newSize.width];
 //	[l changeHeight:newSize.height];
@@ -178,7 +192,7 @@ Class restartAction()
 
 -(NSString *) title
 {
-	return @"ColorLayer resize (tap & move)";
+	return @"LayerColor resize (tap & move)";
 }
 @end
 
@@ -191,14 +205,14 @@ Class restartAction()
 	if( (self=[super init] )) {
 		
 		CGSize s = [[CCDirector sharedDirector] winSize];
-		CCColorLayer* layer1 = [CCColorLayer layerWithColor: ccc4(255, 255, 0, 80)
+		CCLayerColor* layer1 = [CCLayerColor layerWithColor: ccc4(255, 255, 0, 80)
 												 width: 100 
 												height: 300];
 		layer1.position = ccp(s.width/3, s.height/2);
 		layer1.isRelativeAnchorPoint = YES;
 		[self addChild: layer1 z:1];
 		
-		CCColorLayer* layer2 = [CCColorLayer layerWithColor: ccc4(0, 0, 255, 255)
+		CCLayerColor* layer2 = [CCLayerColor layerWithColor: ccc4(0, 0, 255, 255)
 												 width: 100 
 												height: 300];
 		layer2.position = ccp((s.width/3)*2, s.height/2);
@@ -222,7 +236,7 @@ Class restartAction()
 
 -(NSString *) title
 {
-	return @"ColorLayer: fade and tint";
+	return @"LayerColor: fade and tint";
 }
 @end
 
@@ -235,7 +249,7 @@ Class restartAction()
 	if( (self=[super init] )) {
 		
 		CGSize s = [[CCDirector sharedDirector] winSize];
-		CCColorLayer* layer1 = [CCColorLayer layerWithColor: ccc4(255, 255, 255, 80)];
+		CCLayerColor* layer1 = [CCLayerColor layerWithColor: ccc4(255, 255, 255, 80)];
 		
 //		id actionTint = [CCTintBy actionWithDuration:0.5f red:-255 green:-127 blue:0];
 //		id actionTintBack = [actionTint reverse];
@@ -260,7 +274,7 @@ Class restartAction()
 
 -(void) newBlend:(ccTime)dt
 {
-	CCColorLayer *layer = (CCColorLayer*) [self getChildByTag:kTagLayer];
+	CCLayerColor *layer = (CCLayerColor*) [self getChildByTag:kTagLayer];
 	if( layer.blendFunc.dst == GL_ZERO )
 		[layer setBlendFunc: (ccBlendFunc) { CC_BLEND_SRC, CC_BLEND_DST } ];
 	else
@@ -270,10 +284,70 @@ Class restartAction()
 
 -(NSString *) title
 {
-	return @"ColorLayer: blend";
+	return @"LayerColor: blend";
 }
 @end
 
+#pragma mark -
+#pragma mark Example LayerGradient
+
+@implementation LayerGradient
+-(id) init
+{
+	if( (self=[super init] )) {
+		
+		CCLayerGradient* layer1 = [CCLayerGradient layerWithColor:ccc4(255,0,0,255) fadingTo:ccc4(0,255,0,255) alongVector:ccp(0.9f, 0.9f)];
+
+		[self addChild:layer1 z:0 tag:kTagLayer];
+		
+		self.isTouchEnabled = YES;
+		
+		CCLabelTTF *label1 = [CCLabelTTF labelWithString:@"Compressed Interpolation: Enabled" fontName:@"Marker Felt" fontSize:26];
+		CCLabelTTF *label2 = [CCLabelTTF labelWithString:@"Compressed Interpolation: Disabled" fontName:@"Marker Felt" fontSize:26];
+		CCMenuItemLabel *item1 = [CCMenuItemLabel itemWithLabel:label1];
+		CCMenuItemLabel *item2 = [CCMenuItemLabel itemWithLabel:label2];
+		CCMenuItemToggle *item = [CCMenuItemToggle itemWithTarget:self selector:@selector(toggleItem:) items:item1, item2, nil];
+		
+		CCMenu *menu = [CCMenu menuWithItems:item, nil];
+		[self addChild:menu];
+		CGSize s = [[CCDirector sharedDirector] winSize];
+		[menu setPosition:ccp(s.width/2, 100)];
+	}
+	return self;
+}
+
+-(void) toggleItem:(id)sender
+{
+	CCLayerGradient *gradient = (CCLayerGradient*) [self getChildByTag:kTagLayer];
+	[gradient setCompressedInterpolation: ! gradient.compressedInterpolation];
+}
+
+-(void)ccTouchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
+{
+	CGSize s = [[CCDirector sharedDirector] winSize];
+
+	UITouch *touch = [touches anyObject];
+	CGPoint start = [touch locationInView: [touch view]];	
+	start = [[CCDirector sharedDirector] convertToGL: start];
+	
+	CGPoint diff = ccpSub( ccp(s.width/2,s.height/2), start);	
+	diff = ccpNormalize(diff);
+	
+	CCLayerGradient *gradient = (CCLayerGradient*) [self getChildByTag:1];
+
+	[gradient setVector:diff];
+}
+
+-(NSString *) title
+{
+	return @"LayerGradient";
+}
+
+-(NSString *) subtitle
+{
+	return @"Touch the screen and move your finger";
+}
+@end
 
 #pragma mark -
 #pragma mark AppController
@@ -283,34 +357,50 @@ Class restartAction()
 
 - (void) applicationDidFinishLaunching:(UIApplication*)application
 {
-	// CC_DIRECTOR_INIT()
-	//
-	// 1. Initializes an EAGLView with 0-bit depth format, and RGB565 render buffer
-	// 2. EAGLView multiple touches: disabled
-	// 3. creates a UIWindow, and assign it to the "window" var (it must already be declared)
-	// 4. Parents EAGLView to the newly created window
-	// 5. Creates Display Link Director
-	// 5a. If it fails, it will use an NSTimer director
-	// 6. It will try to run at 60 FPS
-	// 7. Display FPS: NO
-	// 8. Device orientation: Portrait
-	// 9. Connects the director to the EAGLView
-	//
-	CC_DIRECTOR_INIT();
+	// Init the window
+	window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 	
-	// Obtain the shared director in order to...
+	// must be called before any othe call to the director
+	[CCDirector setDirectorType:kCCDirectorTypeDisplayLink];
+	//	[CCDirector setDirectorType:kCCDirectorTypeThreadMainLoop];
+	
+	// before creating any layer, set the landscape mode
 	CCDirector *director = [CCDirector sharedDirector];
 	
-	// Sets landscape mode
+	// landscape orientation
 	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
+	
+	// set FPS at 60
+	[director setAnimationInterval:1.0/60];
+	
+	// Display FPS: yes
+	[director setDisplayFPS:YES];
+	
+	// Create an EAGLView with a RGB8 color buffer, and a depth buffer of 24-bits
+	EAGLView *glView = [EAGLView viewWithFrame:[window bounds]
+								   pixelFormat:kEAGLColorFormatRGBA8
+						];
+	
+	// attach the openglView to the director
+	[director setOpenGLView:glView];
+	
+	// 2D projection
+	//	[director setProjection:kCCDirectorProjection2D];
 	
 	// Enables High Res mode (Retina Display) on iPhone 4 and maintains low res on all other devices
 	if( ! [director enableRetinaDisplay:YES] )
 		CCLOG(@"Retina Display Not supported");
 	
-	// Turn on display FPS
-	[director setDisplayFPS:YES];
+	// make the OpenGLView a child of the main window
+	[window addSubview:glView];
 	
+	// make main window visible
+	[window makeKeyAndVisible];	
+	
+	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
+	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
+	// You can change anytime.
+	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA8888];		
 	CCScene *scene = [CCScene node];
 	[scene addChild: [nextAction() node]];
 	

@@ -45,7 +45,7 @@ enum {
 
 @implementation CCMenu
 
-@synthesize opacity=opacity_, color=color_;
+@synthesize opacity = opacity_, color = color_;
 
 - (id) init
 {
@@ -221,7 +221,7 @@ enum {
 
 -(NSInteger) mouseDelegatePriority
 {
-	return NSIntegerMin+1;
+	return kCCMenuMousePriority+1;
 }
 
 -(CCMenuItem *) itemForMouseEvent: (NSEvent *) event
@@ -247,6 +247,9 @@ enum {
 
 -(BOOL) ccMouseUp:(NSEvent *)event
 {	
+	if( ! visible_ )
+		return NO;
+	
 	if( selectedItem_ ) {
 		[selectedItem_ unselected];
 		[selectedItem_ activate];
@@ -277,6 +280,9 @@ enum {
 
 -(BOOL) ccMouseDragged:(NSEvent *)event
 {
+	if( ! visible_ )
+		return NO;
+
 	CCMenuItem *currentItem = [self itemForMouseEvent:event];
 	
 	if (currentItem != selectedItem_) {
@@ -499,6 +505,7 @@ enum {
 - (void) setOpacity:(GLubyte)newOpacity
 {
 	opacity_ = newOpacity;
+	
 	id<CCRGBAProtocol> item;
 	CCARRAY_FOREACH(children_, item)
 		[item setOpacity:opacity_];
@@ -507,6 +514,7 @@ enum {
 -(void) setColor:(ccColor3B)color
 {
 	color_ = color;
+	
 	id<CCRGBAProtocol> item;
 	CCARRAY_FOREACH(children_, item)
 		[item setColor:color_];

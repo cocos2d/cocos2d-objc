@@ -44,25 +44,26 @@ typedef cpBB (*cpSpaceHashBBFunc)(void *obj);
 
 typedef struct cpSpaceHash{
 	// Number of cells in the table.
-	int numcells;
+	CP_PRIVATE(int numcells);
 	// Dimentions of the cells.
-	cpFloat celldim;
+	CP_PRIVATE(cpFloat celldim);
 	
 	// BBox callback.
-	cpSpaceHashBBFunc bbfunc;
+	CP_PRIVATE(cpSpaceHashBBFunc bbfunc);
 
 	// Hashset of the handles and the recycled ones.
-	cpHashSet *handleSet;
-	cpArray *pooledHandles;
+	CP_PRIVATE(cpHashSet *handleSet);
+	CP_PRIVATE(cpArray *pooledHandles);
 	
 	// The table and the recycled bins.
-	cpSpaceHashBin **table, *pooledBins;
+	CP_PRIVATE(cpSpaceHashBin **table);
+	CP_PRIVATE(cpSpaceHashBin *pooledBins);
 	
 	// list of buffers to free on destruction.
-	cpArray *allocatedBuffers;
+	CP_PRIVATE(cpArray *allocatedBuffers);
 	
 	// Incremented on each query. See cpHandle.stamp.
-	cpTimestamp stamp;
+	CP_PRIVATE(cpTimestamp stamp);
 } cpSpaceHash;
 
 //Basic allocation/destruction functions.

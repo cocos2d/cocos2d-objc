@@ -33,7 +33,6 @@
 	return [[[[self class] alloc] initWithDuration:aDuration key:aKey from:aFrom to:aTo] autorelease];
 }
 
-
 - (id)initWithDuration:(ccTime)aDuration key:(NSString *)key from:(float)from to:(float)to {
     
 	if ((self = [super initWithDuration:aDuration])) {
@@ -55,14 +54,12 @@
 
 - (void)startWithTarget:aTarget
 {
-    
 	[super startWithTarget:aTarget];
-    
 	delta_ = to_ - from_;
 }
 
-- (void) update:(ccTime) dt {
-    
+- (void) update:(ccTime) dt
+{    
 	[target_ setValue:[NSNumber numberWithFloat:to_  - delta_ * (1 - dt)] forKey:key_];
 }
 

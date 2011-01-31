@@ -256,9 +256,9 @@ static CCScheduler *sharedScheduler;
 		// Is this the 1st element ? Then set the pause level to all the selectors of this target
 		element->paused = paused;
 	
-	} else {
+	} else
 		NSAssert( element->paused == paused, @"CCScheduler. Trying to schedule a selector with a pause value different than the target");
-	}
+	
 	
 	if( element->timers == nil )
 		element->timers = ccArrayNew(10);
@@ -303,7 +303,6 @@ static CCScheduler *sharedScheduler;
 				if( timer == element->currentTimer && !element->currentTimerSalvaged ) {
 					[element->currentTimer retain];
 					element->currentTimerSalvaged = YES;
-					
 				}
 
 				ccArrayRemoveObjectAtIndex(element->timers, i );
@@ -313,9 +312,8 @@ static CCScheduler *sharedScheduler;
 					element->timerIndex--;
 
 				if( element->timers->num == 0 ) {
-					if( currentTarget == element ) {
-						currentTargetSalvaged = YES;						
-					}
+					if( currentTarget == element )
+						currentTargetSalvaged = YES;
 					else
 						[self removeHashElement: element];
 				}
@@ -345,7 +343,7 @@ static CCScheduler *sharedScheduler;
 	// empty list ?
 	if( ! *list ) {
 		DL_APPEND( *list, listElement );
-
+	
 	} else {
 		BOOL added = NO;		
 	
@@ -585,7 +583,7 @@ static CCScheduler *sharedScheduler;
 		
 		// elt, at this moment, is still valid
 		// so it is safe to ask this here (issue #490)
-		elt=elt->hh.next;
+		elt = elt->hh.next;
 		
 		// only delete currentTarget if no actions were scheduled during the cycle (issue #481)
 		if( currentTargetSalvaged && currentTarget->timers->num == 0 )

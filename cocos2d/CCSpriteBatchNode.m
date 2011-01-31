@@ -385,12 +385,11 @@ static SEL selSortMethod =NULL;
 #pragma mark CCSpriteBatchNode - draw
 -(void) draw
 {
-	// Optimization: Fast Dispatch
-	CCSprite *child;
-	
+	// Optimization: Fast Dispatch	
 	if( textureAtlas_.totalQuads == 0 )
 		return;	
 	
+	CCSprite *child;
 	ccArray *array = descendants_->data;
 	
 	NSUInteger i = array->num;
@@ -422,11 +421,9 @@ static SEL selSortMethod =NULL;
 	// Needed states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
 	// Unneeded states: -
 	
-	BOOL newBlend = NO;
-	if( blendFunc_.src != CC_BLEND_SRC || blendFunc_.dst != CC_BLEND_DST ) {
-		newBlend = YES;
+	BOOL newBlend = blendFunc_.src != CC_BLEND_SRC || blendFunc_.dst != CC_BLEND_DST;
+	if( newBlend )
 		glBlendFunc( blendFunc_.src, blendFunc_.dst );
-	}
 	
 	[textureAtlas_ drawQuads];
 	if( newBlend )
@@ -530,11 +527,12 @@ static SEL selSortMethod =NULL;
 			return p.atlasIndex;
 		else
 			return p.atlasIndex+1;
+		
 	} else {
 		// previous & sprite belong to the same branch
-		if( ( previous.zOrder < 0 && z < 0 )|| (previous.zOrder >= 0 && z >= 0) ) {
+		if( ( previous.zOrder < 0 && z < 0 )|| (previous.zOrder >= 0 && z >= 0) )
 			return [self highestAtlasIndexInChild:previous] + 1;
-		}
+		
 		// else (previous < 0 and sprite >= 0 )
 		CCSprite *p = (CCSprite*) sprite.parent;
 		return p.atlasIndex + 1;

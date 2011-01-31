@@ -28,10 +28,10 @@ enum {
 		CCSprite *spriteSelected = [CCSprite spriteWithFile:@"menuitemsprite.png" rect:CGRectMake(0,23*1,115,23)];
 		CCSprite *spriteDisabled = [CCSprite spriteWithFile:@"menuitemsprite.png" rect:CGRectMake(0,23*0,115,23)];
 		
-		// Demonstrates reusing a block for multiple menu items, when it's using the CCMultiplexLayer to switch views.
+		// Demonstrates reusing a block for multiple menu items, when it's using the CCLayerMultiplex to switch views.
 		__block Layer1* _self = self;
 		void (^reusableBlock)(id) = ^(id sender) {
-			[(CCMultiplexLayer*)_self->parent_ switchTo:[sender tag]];
+			[(CCLayerMultiplex*)_self->parent_ switchTo:[sender tag]];
 		};
 		
 		CCMenuItemSprite *item1 = [CCMenuItemSprite itemFromNormalSprite:spriteNormal selectedSprite:spriteSelected disabledSprite:spriteDisabled block:reusableBlock];
@@ -165,7 +165,7 @@ enum {
 		
 		for( int i=0;i < 2;i++ ) {
 			CCMenuItemImage *item1 = [CCMenuItemImage itemFromNormalImage:@"btn-play-normal.png" selectedImage:@"btn-play-selected.png" block:^(id sender){
-				[(CCMultiplexLayer*)parent_ switchTo:0];
+				[(CCLayerMultiplex*)parent_ switchTo:0];
 			}];
 			
 			CCMenuItemImage *item2 = [CCMenuItemImage itemFromNormalImage:@"btn-highscores-normal.png" selectedImage:@"btn-highscores-selected.png" block:^(id sender){
@@ -267,7 +267,7 @@ enum {
 
 -(void) menuCallback: (id) sender
 {
-	[(CCMultiplexLayer*)parent_ switchTo:0];
+	[(CCLayerMultiplex*)parent_ switchTo:0];
 }
 
 -(void) menuCallback2: (id) sender
@@ -380,7 +380,7 @@ enum {
 
 -(void) backCallback: (id) sender
 {
-	[(CCMultiplexLayer*)parent_ switchTo:0];
+	[(CCLayerMultiplex*)parent_ switchTo:0];
 }
 
 @end
@@ -433,7 +433,7 @@ enum {
 	
 	CCScene *scene = [CCScene node];
 	
-	CCMultiplexLayer *layer = [CCMultiplexLayer layerWithLayers: [Layer1 node], [Layer2 node], [Layer3 node], [Layer4 node], nil];
+	CCLayerMultiplex *layer = [CCLayerMultiplex layerWithLayers: [Layer1 node], [Layer2 node], [Layer3 node], [Layer4 node], nil];
 	[scene addChild: layer z:0];
 	
 	[director runWithScene: scene];

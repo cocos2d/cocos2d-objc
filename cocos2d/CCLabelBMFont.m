@@ -139,7 +139,10 @@ typedef struct _KerningHashElement
 - (void)parseConfigFile:(NSString*)fntFile
 {	
 	NSString *fullpath = [CCFileUtils fullPathFromRelativePath:fntFile];
-	NSString *contents = [NSString stringWithContentsOfFile:fullpath encoding:NSUTF8StringEncoding error:nil];
+	NSError *error;
+	NSString *contents = [NSString stringWithContentsOfFile:fullpath encoding:NSUTF8StringEncoding error:&error];
+
+	NSAssert1( contents, @"cocos2d: Error parsing FNTfile: %@", error);
 	
 	
 	// Move all lines in the string, which are denoted by \n, into an array
@@ -425,7 +428,7 @@ typedef struct _KerningHashElement
 
 @implementation CCLabelBMFont
 
-@synthesize opacity=opacity_, color=color_;
+@synthesize opacity = opacity_, color = color_;
 
 #pragma mark BitmapFontAtlas - Purge Cache
 +(void) purgeCachedData
@@ -616,6 +619,7 @@ typedef struct _KerningHashElement
 -(void) setColor:(ccColor3B)color
 {
 	color_ = color;
+	
 	CCSprite *child;
 	CCARRAY_FOREACH(children_, child)
 		[child setColor:color_];
@@ -632,6 +636,7 @@ typedef struct _KerningHashElement
 -(void) setOpacityModifyRGB:(BOOL)modify
 {
 	opacityModifyRGB_ = modify;
+	
 	id<CCRGBAProtocol> child;
 	CCARRAY_FOREACH(children_, child)
 		[child setOpacityModifyRGB:modify];
@@ -652,7 +657,7 @@ typedef struct _KerningHashElement
 }
 
 #pragma mark BitmapFontAtlas - Debug draw
-#if CC_BITMAPFONTATLAS_DEBUG_DRAW
+#if CC_LABELBMFONT_DEBUG_DRAW
 -(void) draw
 {
 	[super draw];
@@ -663,5 +668,5 @@ typedef struct _KerningHashElement
 	};
 	ccDrawPoly(vertices, 4, YES);
 }
-#endif // CC_BITMAPFONTATLAS_DEBUG_DRAW
+#endif // CC_LABELBMFONT_DEBUG_DRAW
 @end

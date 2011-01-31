@@ -30,7 +30,8 @@
  the CCIntervalAction actions.
 */ 
 @interface CCActionInstant : CCFiniteTimeAction <NSCopying>
-{}
+{
+}
 @end
 
 /** Show the node

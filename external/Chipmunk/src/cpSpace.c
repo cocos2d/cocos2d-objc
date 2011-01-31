@@ -20,11 +20,11 @@
  */
  
 #include <stdlib.h>
-#include <stdio.h>
+//#include <stdio.h>
 #include <string.h>
 #include <math.h>
 
-#include "chipmunk.h"
+#include "chipmunk_private.h"
 
 cpTimestamp cp_contact_persistence = 3;
 
@@ -37,7 +37,7 @@ contactSetEql(cpShape **shapes, cpArbiter *arb)
 	cpShape *a = shapes[0];
 	cpShape *b = shapes[1];
 	
-	return ((a == arb->private_a && b == arb->private_b) || (b == arb->private_a && a == arb->private_b));
+	return ((a == arb->a && b == arb->b) || (b == arb->a && a == arb->b));
 }
 
 // Transformation function for contactSet.
@@ -127,6 +127,8 @@ cpSpaceInit(cpSpace *space)
 	
 	space->bodies = cpArrayNew(0);
 	space->sleepingComponents = cpArrayNew(0);
+	space->rousedBodies = cpArrayNew(0);
+	
 	space->sleepTimeThreshold = INFINITY;
 	space->idleSpeedThreshold = 0.0f;
 	
@@ -144,8 +146,7 @@ cpSpaceInit(cpSpace *space)
 	
 	space->postStepCallbacks = NULL;
 	
-	cpBodyInit(&space->staticBody, INFINITY, INFINITY);
-	space->staticBody.space = space;
+	cpBodyInitStatic(&space->staticBody);
 	
 	return space;
 }
@@ -164,6 +165,7 @@ cpSpaceDestroy(cpSpace *space)
 	
 	cpArrayFree(space->bodies);
 	cpArrayFree(space->sleepingComponents);
+	cpArrayFree(space->rousedBodies);
 	
 	cpArrayFree(space->constraints);
 	
@@ -269,8 +271,8 @@ cpSpaceSetDefaultCollisionHandler(
 
 #define cpAssertSpaceUnlocked(space) \
 	cpAssert(!space->locked, \
-		"This addition/removal cannot be done safely during a call to cpSpaceStep(). " \
-		"Put these calls into a Post Step Callback." \
+		"This addition/removal cannot be done safely during a call to cpSpaceStep() or during a query. " \
+		"Put these calls into a post-step callback." \
 	);
 
 static void
@@ -299,7 +301,7 @@ cpShape *
 cpSpaceAddShape(cpSpace *space, cpShape *shape)
 {
 	cpBody *body = shape->body;
-	if(!body || body == &space->staticBody) return cpSpaceAddStaticShape(space, shape);
+	if(!body || cpBodyIsStatic(body)) return cpSpaceAddStaticShape(space, shape);
 	
 	cpAssert(!cpHashSetFind(space->activeShapes->handleSet, shape->hashid, shape),
 		"Cannot add the same shape more than once.");
@@ -314,20 +316,6 @@ cpSpaceAddShape(cpSpace *space, cpShape *shape)
 	return shape;
 }
 
-static void
-activateShapesTouchingShapeHelper(cpShape *shape, void *unused)
-{
-	cpBodyActivate(shape->body);
-}
-
-static void
-activateShapesTouchingShape(cpSpace *space, cpShape *shape)
-{
-	// TODO this query should be more precise
-	// Use shape queries once they are written
-	cpSpaceBBQuery(space, shape->bb, shape->layers, shape->group, activateShapesTouchingShapeHelper, NULL);
-}
-
 cpShape *
 cpSpaceAddStaticShape(cpSpace *space, cpShape *shape)
 {
@@ -338,7 +326,7 @@ cpSpaceAddStaticShape(cpSpace *space, cpShape *shape)
 	if(!shape->body) shape->body = &space->staticBody;
 	
 	cpShapeCacheBB(shape);
-	activateShapesTouchingShape(space, shape);
+	cpSpaceActivateShapesTouchingShape(space, shape);
 	cpSpaceHashInsert(space->staticShapes, shape, shape->hashid, shape->bb);
 	
 	return shape;
@@ -347,7 +335,7 @@ cpSpaceAddStaticShape(cpSpace *space, cpShape *shape)
 cpBody *
 cpSpaceAddBody(cpSpace *space, cpBody *body)
 {
-	cpAssertWarn(body->m != INFINITY, "Did you really mean to add an infinite mass body to the space?");
+	cpAssertWarn(!cpBodyIsStatic(body), "Static bodies cannot be added to a space as they are not meant to be simulated.");
 	cpAssert(!body->space, "Cannot add a body to a more than one space or to the same space twice.");
 //	cpAssertSpaceUnlocked(space); This should be safe as long as it's not from an integration callback
 	
@@ -382,8 +370,11 @@ typedef struct removalContext {
 static cpBool
 contactSetFilterRemovedShape(cpArbiter *arb, removalContext *context)
 {
-	if(context->shape == arb->private_a || context->shape == arb->private_b){
-		arb->handler->separate(arb, context->space, arb->handler->data);
+	if(context->shape == arb->a || context->shape == arb->b){
+		if(arb->state != cpArbiterStateCached){
+			arb->handler->separate(arb, context->space, arb->handler->data);
+		}
+		
 		cpArrayPush(context->space->pooledArbiters, arb);
 		return cpFalse;
 	}
@@ -404,7 +395,7 @@ cpSpaceRemoveShape(cpSpace *space, cpShape *shape)
 	
 	cpAssertSpaceUnlocked(space);
 	cpAssertWarn(cpHashSetFind(space->activeShapes->handleSet, shape->hashid, shape),
-		"Cannot remove a shape that was never added to the space. (Removed twice maybe?)");
+		"Cannot remove a shape that was not added to the space. (Removed twice maybe?)");
 	
 	cpBodyRemoveShape(body, shape);
 	
@@ -417,21 +408,21 @@ void
 cpSpaceRemoveStaticShape(cpSpace *space, cpShape *shape)
 {
 	cpAssertWarn(cpHashSetFind(space->staticShapes->handleSet, shape->hashid, shape),
-		"Cannot remove a static or sleeping shape that was never added to the space. (Removed twice maybe?)");
+		"Cannot remove a static or sleeping shape that was not added to the space. (Removed twice maybe?)");
 	cpAssertSpaceUnlocked(space);
 	
 	removalContext context = {space, shape};
 	cpHashSetFilter(space->contactSet, (cpHashSetFilterFunc)contactSetFilterRemovedShape, &context);
 	cpSpaceHashRemove(space->staticShapes, shape, shape->hashid);
 	
-	activateShapesTouchingShape(space, shape);
+	cpSpaceActivateShapesTouchingShape(space, shape);
 }
 
 void
 cpSpaceRemoveBody(cpSpace *space, cpBody *body)
 {
 	cpAssertWarn(body->space == space,
-		"Cannot remove a body that was never added to the space. (Removed twice maybe?)");
+		"Cannot remove a body that was not added to the space. (Removed twice maybe?)");
 	cpAssertSpaceUnlocked(space);
 	
 	cpBodyActivate(body);
@@ -443,7 +434,7 @@ void
 cpSpaceRemoveConstraint(cpSpace *space, cpConstraint *constraint)
 {
 	cpAssertWarn(cpArrayContains(space->constraints, constraint),
-		"Cannot remove a constraint that was never added to the space. (Removed twice maybe?)");
+		"Cannot remove a constraint that was not added to the space. (Removed twice maybe?)");
 //	cpAssertSpaceUnlocked(space); Should be safe as long as its not from a constraint callback.
 	
 	cpBodyActivate(constraint->a);
@@ -484,3 +475,25 @@ cpSpaceRehashShape(cpSpace *space, cpShape *shape)
 	cpSpaceHashRehashObject(space->activeShapes, shape, shape->hashid);
 	cpSpaceHashRehashObject(space->staticShapes, shape, shape->hashid);
 }
+
+void
+cpSpaceEachBody(cpSpace *space, cpSpaceBodyIterator func, void *data)
+{
+	cpArray *bodies = space->bodies;
+	
+	for(int i=0; i<bodies->num; i++){
+		func((cpBody *)bodies->arr[i], data);
+	}
+	
+	cpArray *components = space->sleepingComponents;
+	for(int i=0; i<components->num; i++){
+		cpBody *root = (cpBody *)components->arr[i];
+		cpBody *body = root, *next;
+		do {
+			next = body->node.next;
+			func(body, data);
+		} while((body = next) != root);
+	}
+}
+
+

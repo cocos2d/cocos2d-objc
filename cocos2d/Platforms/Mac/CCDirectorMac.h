@@ -67,6 +67,8 @@ enum  {
 // resize mode: with or without scaling
 @property (nonatomic, readwrite) int resizeMode;
 
+@property (nonatomic, readwrite) CGSize originalWinSize;
+
 /** Sets the view in fullscreen or window mode */
 - (void) setFullScreen:(BOOL)fullscreen;
 

@@ -1,7 +1,7 @@
 /*
  * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
- * Copyright (c) 2008-2010 Ricardo Quesada
+ * Copyright (c) 2008-2011 Ricardo Quesada
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +29,6 @@
 #import "ccMacros.h"
 
 @implementation CCSpriteFrame
-@synthesize rect = rect_, rectInPixels=rectInPixels_;
 @synthesize rotated = rotated_, offsetInPixels = offsetInPixels_, texture = texture_;
 @synthesize originalSizeInPixels=originalSizeInPixels_;
 
@@ -83,5 +82,27 @@
 {
 	CCSpriteFrame *copy = [[[self class] allocWithZone: zone] initWithTexture:texture_ rectInPixels:rectInPixels_ rotated:rotated_ offset:offsetInPixels_ originalSize:originalSizeInPixels_];
 	return copy;
+}
+
+-(CGRect) rect
+{
+	return rect_;
+}
+
+-(CGRect) rectInPixels
+{
+	return rectInPixels_;
+}
+
+-(void) setRect:(CGRect)rect
+{
+	rect_ = rect;
+	rectInPixels_ = CC_RECT_POINTS_TO_PIXELS( rect_ );
+}
+
+-(void) setRectInPixels:(CGRect)rectInPixels
+{
+	rectInPixels_ = rectInPixels;
+	rect_ = CC_RECT_PIXELS_TO_POINTS(rectInPixels);
 }
 @end

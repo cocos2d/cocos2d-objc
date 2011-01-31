@@ -382,5 +382,3 @@ typedef struct _ccBezierConfig {
  */
 -(id) initWithDuration:(ccTime)duration animation:(CCAnimation*)animation restoreOriginalFrame:(BOOL)b;
 @end
-
-

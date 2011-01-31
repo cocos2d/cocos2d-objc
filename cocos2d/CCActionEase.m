@@ -53,9 +53,9 @@
 {
 	NSAssert( action!=nil, @"Ease: arguments must be non-nil");
   
-	if( (self=[super initWithDuration: action.duration]) ) {
+	if( (self=[super initWithDuration: action.duration]) )
 		other = [action retain];
-	}
+	
 	return self;
 }
 
@@ -110,9 +110,9 @@
 
 -(id) initWithAction: (CCActionInterval*) action rate:(float)aRate
 {
-	if( (self=[super initWithAction:action ]) ) {
+	if( (self=[super initWithAction:action ]) )
 		self.rate = aRate;
-	}
+	
 	return self;
 }
 
@@ -189,6 +189,7 @@
 {
 	[other update: (t==0) ? 0 : powf(2, 10 * (t/1 - 1)) - 1 * 0.001f];
 }
+
 - (CCActionInterval*) reverse
 {
 	return [CCEaseExponentialOut actionWithAction: [other reverse]];
@@ -203,6 +204,7 @@
 {
 	[other update: (t==1) ? 1 : (-powf(2, -10 * t/1) + 1)];
 }
+
 - (CCActionInterval*) reverse
 {
 	return [CCEaseExponentialIn actionWithAction: [other reverse]];
@@ -220,6 +222,7 @@
 		t = 0.5f * powf(2, 10 * (t - 1));
 	else
 		t = 0.5f * (-powf(2, -10 * (t -1) ) + 2);
+	
 	[other update:t];
 }
 @end
@@ -236,6 +239,7 @@
 {
 	[other update:-1*cosf(t * (float)M_PI_2) +1];
 }
+
 - (CCActionInterval*) reverse
 {
 	return [CCEaseSineOut actionWithAction: [other reverse]];
@@ -250,6 +254,7 @@
 {
 	[other update:sinf(t * (float)M_PI_2)];
 }
+
 - (CCActionInterval*) reverse
 {
 	return [CCEaseSineIn actionWithAction: [other reverse]];
@@ -274,7 +279,7 @@
 //
 @implementation CCEaseElastic
 
-@synthesize period=period_;
+@synthesize period = period_;
 
 +(id) actionWithAction: (CCActionInterval*) action
 {
@@ -293,9 +298,8 @@
 
 -(id) initWithAction: (CCActionInterval*) action period:(float)period
 {
-	if( (self=[super initWithAction:action]) ) {
+	if( (self=[super initWithAction:action]) )
 		period_ = period;
-	}
 	
 	return self;
 }
@@ -322,10 +326,10 @@
 -(void) update: (ccTime) t
 {	
 	ccTime newT = 0;
-	if (t == 0 || t == 1) {
+	if (t == 0 || t == 1)
 		newT = t;
 		
-	} else {
+	else {
 		float s = period_ / 4;
 		t = t - 1;
 		newT = -powf(2, 10 * t) * sinf( (t-s) *M_PI_X_2 / period_);
@@ -382,11 +386,10 @@
 		ccTime s = period_ / 4;
 		
 		t = t -1;
-		if( t < 0 ) {
+		if( t < 0 )
 			newT = -0.5f * powf(2, 10 * t) * sinf((t - s) * M_PI_X_2 / period_);
-		} else {
+		else
 			newT = powf(2, -10 * t) * sinf((t - s) * M_PI_X_2 / period_) * 0.5f + 1;
-		}
 	}
 	[other update:newT];	
 }
@@ -521,9 +524,9 @@
 	ccTime overshoot = 1.70158f * 1.525f;
 	
 	t = t * 2;
-	if (t < 1) {
+	if (t < 1)
 		[other update: (t * t * ((overshoot + 1) * t - overshoot)) / 2];
-	} else {
+	else {
 		t = t - 2;
 		[other update: (t * t * ((overshoot + 1) * t + overshoot)) / 2 + 1];
 	}

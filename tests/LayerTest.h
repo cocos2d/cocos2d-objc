@@ -11,6 +11,7 @@
 {
 }
 -(NSString*) title;
+-(NSString*) subtitle;
 @end
 
 @interface LayerTest1 : LayerTest
@@ -24,6 +25,11 @@
 @end
 
 @interface LayerTestBlend : LayerTest
+{
+}
+@end
+
+@interface LayerGradient : LayerTest
 {
 }
 @end

@@ -97,12 +97,12 @@ enum {
 
 -(void) menuCallback: (id) sender
 {
-	[(CCMultiplexLayer*)parent_ switchTo:1];
+	[(CCLayerMultiplex*)parent_ switchTo:1];
 }
 
 -(void) menuCallbackConfig:(id) sender
 {
-	[(CCMultiplexLayer*)parent_ switchTo:3];
+	[(CCLayerMultiplex*)parent_ switchTo:3];
 }
 
 -(void) menuCallbackDisabled:(id) sender {
@@ -114,7 +114,7 @@ enum {
 
 -(void) menuCallback2: (id) sender
 {
-	[(CCMultiplexLayer*)parent_ switchTo:2];
+	[(CCLayerMultiplex*)parent_ switchTo:2];
 }
 
 -(void) onQuit: (id) sender
@@ -212,7 +212,7 @@ enum {
 
 -(void) menuCallbackBack: (id) sender
 {
-	[(CCMultiplexLayer*)parent_ switchTo:0];
+	[(CCLayerMultiplex*)parent_ switchTo:0];
 }
 
 -(void) menuCallbackOpacity: (id) sender
@@ -293,7 +293,7 @@ enum {
 
 -(void) menuCallback: (id) sender
 {
-	[(CCMultiplexLayer*)parent_ switchTo:0];
+	[(CCLayerMultiplex*)parent_ switchTo:0];
 }
 
 -(void) menuCallback2: (id) sender
@@ -402,12 +402,12 @@ enum {
 
 -(void) menuCallback: (id) sender
 {
-	NSLog(@"selected item: %@ index:%d", [sender selectedItem], [sender selectedIndex] );
+	NSLog(@"selected item: %@ index:%lu", [sender selectedItem], [sender selectedIndex] );
 }
 
 -(void) backCallback: (id) sender
 {
-	[(CCMultiplexLayer*)parent_ switchTo:0];
+	[(CCLayerMultiplex*)parent_ switchTo:0];
 }
 
 @end
@@ -459,7 +459,7 @@ enum {
 
 	CCScene *scene = [CCScene node];
 
-	CCMultiplexLayer *layer = [CCMultiplexLayer layerWithLayers: [Layer1 node], [Layer2 node], [Layer3 node], [Layer4 node], nil];
+	CCLayerMultiplex *layer = [CCLayerMultiplex layerWithLayers: [Layer1 node], [Layer2 node], [Layer3 node], [Layer4 node], nil];
 	[scene addChild: layer z:0];
 
 	[director runWithScene: scene];
@@ -522,10 +522,9 @@ enum {
 
 @synthesize window=window_, glView=glView_;
 
-- (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
-	
-	
-	CCDirector *director = [CCDirector sharedDirector];
+- (void)applicationDidFinishLaunching:(NSNotification *)aNotification
+{
+	CCDirectorMac *director = (CCDirectorMac*) [CCDirector sharedDirector];
 	
 	[director setDisplayFPS:YES];
 	
@@ -536,13 +535,27 @@ enum {
 	// Enable "moving" mouse event. Default no.
 	[window_ setAcceptsMouseMovedEvents:NO];
 	
+	// EXPERIMENTAL stuff.
+	// 'Effects' don't work correctly when autoscale is turned on.
+	[director setResizeMode:kCCDirectorResize_AutoScale];	
 	
 	CCScene *scene = [CCScene node];
 	
-	CCMultiplexLayer *layer = [CCMultiplexLayer layerWithLayers: [Layer1 node], [Layer2 node], [Layer3 node], [Layer4 node], nil];
+	CCLayerMultiplex *layer = [CCLayerMultiplex layerWithLayers: [Layer1 node], [Layer2 node], [Layer3 node], [Layer4 node], nil];
 	[scene addChild: layer z:0];
 	
 	[director runWithScene:scene];
+}
+
+- (BOOL) applicationShouldTerminateAfterLastWindowClosed: (NSApplication *) theApplication
+{
+	return YES;
+}
+
+- (IBAction)toggleFullScreen: (id)sender
+{
+	CCDirectorMac *director = (CCDirectorMac*) [CCDirector sharedDirector];
+	[director setFullScreen: ! [director isFullScreen] ];
 }
 
 @end
