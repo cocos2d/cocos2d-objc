@@ -673,11 +673,7 @@ Class restartAction()
 		}
 		
 		//usually children get sorted before -transform but call sort now to verify order
-<<<<<<< HEAD
 		[asmtest sortAllChildren];
-=======
-//		[asmtest sortAllChildren];
->>>>>>> develop
 		
 		int prev = -1;
 		for(id child in asmtest.children)
