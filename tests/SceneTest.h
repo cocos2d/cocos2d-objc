@@ -8,7 +8,7 @@
 @end
 
 
-@interface Layer1 : CCColorLayer
+@interface Layer1 : CCLayerColor
 {
 }
 -(void) onPushScene: (id) sender;
@@ -17,7 +17,7 @@
 -(void) onQuit: (id) sender;
 @end
 
-@interface Layer2 : CCColorLayer
+@interface Layer2 : CCLayerColor
 {
 	float	timeCounter;
 }
@@ -26,7 +26,7 @@
 -(void) onReplaceSceneTran: (id) sender;
 @end
 
-@interface Layer3: CCColorLayer
+@interface Layer3: CCLayerColor
 {
 }
 @end

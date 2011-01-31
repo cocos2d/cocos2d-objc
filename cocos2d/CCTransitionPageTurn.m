@@ -60,14 +60,16 @@
 	[super onEnter];
 	
 	CGSize s = [[CCDirector sharedDirector] winSize];
-	int x,y;
+	int x, y;
 	if( s.width > s.height)
 	{
-		x=16;y=12;
+		x = 16;
+		y = 12;
 	}
 	else
 	{
-		x=12;y=16;
+		x = 12;
+		y = 16;
 	}
 	
 	id action  = [self actionWithSize:ccg(x,y)];

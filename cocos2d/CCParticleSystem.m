@@ -394,10 +394,7 @@
 	// Mode Gravity: A
 	if( emitterMode_ == kCCParticleModeGravity ) {
 
-		
-		CGPoint v;
-		v.y = sinf( a );
-		v.x = cosf( a );
+		CGPoint v = {cosf( a ), sinf( a )};
 		float s = mode.A.speed + mode.A.speedVar * CCRANDOM_MINUS1_1();
 		s *= CC_CONTENT_SCALE_FACTOR();
 		
@@ -510,6 +507,7 @@
 				// radial acceleration
 				if(p->pos.x || p->pos.y)
 					radial = ccpNormalize(p->pos);
+				
 				tangential = radial;
 				radial = ccpMult(radial, p->mode.A.radialAccel);
 				

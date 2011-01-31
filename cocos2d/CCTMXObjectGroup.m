@@ -38,10 +38,10 @@
 
 @implementation CCTMXObjectGroup
 
-@synthesize groupName=groupName_;
-@synthesize objects=objects_;
-@synthesize positionOffset=positionOffset_;
-@synthesize properties=properties_;
+@synthesize groupName = groupName_;
+@synthesize objects = objects_;
+@synthesize positionOffset = positionOffset_;
+@synthesize properties = properties_;
 
 -(id) init
 {

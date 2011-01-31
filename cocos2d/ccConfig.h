@@ -100,12 +100,12 @@
  If enabled, the images will be drawn at the "correct" time, but the events might not be very responsive.
  If disabled, some frames might be skipped, but the events will be dispatched as they arrived.
  
- To enable set it to a 1, to disable it set to 0. Disabled by default.
+ To enable set it to a 1, to disable it set to 0. Enabled by default.
 
  Only valid for cocos2d-mac. Not supported on cocos2d-ios.
 
  */
-#define CC_DIRECTOR_MAC_USE_DISPLAY_LINK_THREAD 0
+#define CC_DIRECTOR_MAC_USE_DISPLAY_LINK_THREAD 1
 
 /** @def CC_COCOSNODE_RENDER_SUBPIXEL
  If enabled, the CCNode objects (CCSprite, CCLabel,etc) will be able to render in subpixels.
@@ -185,6 +185,16 @@
  */
 #define CC_TEXTURE_NPOT_SUPPORT 0
 
+/** @def CC_RETINA_DISPLAY_SUPPORT
+ If enabled, cocos2d supports retina display. 
+ For performance reasons, it's recommended disable it in games without retina display support, like iPad only games.
+ 
+ To enable set it to 1. Use 0 to disable it. Enabled by default.
+ 
+ @since v0.99.5
+ */
+#define CC_RETINA_DISPLAY_SUPPORT 1
+
 /** @def CC_RETINA_DISPLAY_FILENAME_SUFFIX
  It's the suffix that will be appended to the files in order to load "retina display" images.
 
@@ -219,7 +229,7 @@
 #define CC_SPRITE_DEBUG_DRAW 0
 
 /** @def CC_SPRITEBATCHNODE_DEBUG_DRAW
- If enabled, all subclasses of CCSprite that are rendered using an CCSpriteSheet draw a bounding box.
+ If enabled, all subclasses of CCSprite that are rendered using an CCSpriteBatchNode draw a bounding box.
  Useful for debugging purposes only. It is recommened to leave it disabled.
  
  To enable set it to a value different than 0. Disabled by default.
@@ -227,15 +237,15 @@
 #define CC_SPRITEBATCHNODE_DEBUG_DRAW 0
 
 /** @def CC_BITMAPFONTATLAS_DEBUG_DRAW
- If enabled, all subclasses of BitmapFontAtlas will draw a bounding box
+ If enabled, all subclasses of CCLabelBMFont will draw a bounding box
  Useful for debugging purposes only. It is recommened to leave it disabled.
  
  To enable set it to a value different than 0. Disabled by default.
  */
-#define CC_BITMAPFONTATLAS_DEBUG_DRAW 0
+#define CC_LABELBMFONT_DEBUG_DRAW 0
 
-/** @def CC_LABELATLAS_DEBUG_DRAW
- If enabled, all subclasses of LabeltAtlas will draw a bounding box
+/** @def CC_LABELBMFONT_DEBUG_DRAW
+ If enabled, all subclasses of CCLabeltAtlas will draw a bounding box
  Useful for debugging purposes only. It is recommened to leave it disabled.
  
  To enable set it to a value different than 0. Disabled by default.
@@ -259,3 +269,23 @@
  To enable set it to a value different than 0. Disabled by default.
  */
 #define CC_COMPATIBILITY_WITH_0_8 0
+
+
+//
+// DON'T edit this macro.
+//
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+
+#if CC_RETINA_DISPLAY_SUPPORT
+#define CC_IS_RETINA_DISPLAY_SUPPORTED 1
+#else
+#define CC_IS_RETINA_DISPLAY_SUPPORTED 0
+#endif
+
+#elif __MAC_OS_X_VERSION_MAX_ALLOWED
+
+#define CC_IS_RETINA_DISPLAY_SUPPORTED 0
+
+#endif
+
+

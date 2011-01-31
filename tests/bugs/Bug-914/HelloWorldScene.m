@@ -39,10 +39,10 @@
 		// ask director the the window size
 		CGSize size = [[CCDirector sharedDirector] winSize];
 
-		CCColorLayer *layer;
+		CCLayerColor *layer;
 		
 		for( int i=0;i < 5;i++) {
-			layer = [CCColorLayer layerWithColor:ccc4(i*20, i*20, i*20,255)];
+			layer = [CCLayerColor layerWithColor:ccc4(i*20, i*20, i*20,255)];
 			[layer setContentSize:CGSizeMake(i*100, i*100)];
 			[layer setPosition:ccp(size.width/2, size.height/2)];
 			[layer setAnchorPoint:ccp(0.5f, 0.5f)];

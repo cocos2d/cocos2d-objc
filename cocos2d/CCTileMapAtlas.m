@@ -77,6 +77,7 @@
 {
 	if( tgaInfo )
 		tgaDestroy(tgaInfo);
+	
 	tgaInfo = nil;
 
 	[posToAtlasIndex release];
@@ -88,8 +89,8 @@
 	NSAssert( tgaInfo != nil, @"tgaInfo must be non-nil");
 
 	itemsToRender = 0;
-	for(int x=0;x < tgaInfo->width; x++ ) {
-		for( int y=0; y < tgaInfo->height; y++ ) {
+	for(int x = 0;x < tgaInfo->width; x++ ) {
+		for(int y = 0; y < tgaInfo->height; y++ ) {
 			ccColor3B *ptr = (ccColor3B*) tgaInfo->imageData;
 			ccColor3B value = ptr[x + y * tgaInfo->width];
 			if( value.r )
@@ -111,9 +112,9 @@
 	
 	tgaInfo = tgaLoad( [path UTF8String] );
 #if 1
-	if( tgaInfo->status != TGA_OK ) {
+	if( tgaInfo->status != TGA_OK )
 		[NSException raise:@"TileMapAtlasLoadTGA" format:@"TileMapAtas cannot load TGA file"];
-	}
+	
 #endif
 }
 
@@ -129,9 +130,9 @@
 	
 	ccColor3B *ptr = (ccColor3B*) tgaInfo->imageData;
 	ccColor3B value = ptr[pos.x + pos.y * tgaInfo->width];
-	if( value.r == 0 ) {
+	if( value.r == 0 )
 		CCLOG(@"cocos2d: Value.r must be non 0.");
-	} else {
+	else {
 		ptr[pos.x + pos.y * tgaInfo->width] = tile;
 		
 		// XXX: this method consumes a lot of memory
@@ -210,8 +211,8 @@
 	
 	int total = 0;
 
-	for(int x=0;x < tgaInfo->width; x++ ) {
-		for( int y=0; y < tgaInfo->height; y++ ) {
+	for(int x = 0;x < tgaInfo->width; x++ ) {
+		for(int y = 0; y < tgaInfo->height; y++ ) {
 			if( total < itemsToRender ) {
 				ccColor3B *ptr = (ccColor3B*) tgaInfo->imageData;
 				ccColor3B value = ptr[x + y * tgaInfo->width];

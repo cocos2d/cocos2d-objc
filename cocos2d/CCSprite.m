@@ -187,7 +187,6 @@ static SEL selSortMethod = NULL;
 		// sortMethod selector
 		selSortMethod = @selector(sortAllChildren);
 		sortMethod = (__typeof__(sortMethod))[self methodForSelector:selSortMethod];
-
 	}
 	
 	return self;
@@ -267,8 +266,8 @@ static SEL selSortMethod = NULL;
 	NSString *key = [NSString stringWithFormat:@"%08X",(unsigned long)image];
 	CCTexture2D *texture = [[CCTextureCache sharedTextureCache] addCGImage:image forKey:key];
 	
-	CGSize size = texture.contentSize;
-	CGRect rect = CGRectMake(0, 0, size.width, size.height );
+	CGRect rect = CGRectZero;
+	rect.size = texture.contentSize;
 	
 	return [self initWithTexture:texture rect:rect];
 }
@@ -280,8 +279,8 @@ static SEL selSortMethod = NULL;
 	// XXX: possible bug. See issue #349. New API should be added
 	CCTexture2D *texture = [[CCTextureCache sharedTextureCache] addCGImage:image forKey:key];
 	
-	CGSize size = texture.contentSize;
-	CGRect rect = CGRectMake(0, 0, size.width, size.height );
+	CGRect rect = CGRectZero;
+	rect.size = texture.contentSize;
 	
 	return [self initWithTexture:texture rect:rect];
 }
@@ -290,6 +289,7 @@ static SEL selSortMethod = NULL;
 {
 	id ret = [self initWithTexture:batchNode.texture rect:rect];
 	[self useBatchNode:batchNode];
+	
 	return ret;
 }
 
@@ -298,6 +298,7 @@ static SEL selSortMethod = NULL;
 	id ret = [self initWithTexture:batchNode.texture];
 	[self setTextureRectInPixels:rect rotated:NO untrimmedSize:rect.size];
 	[self useBatchNode:batchNode];
+	
 	return ret;
 }
 
@@ -350,7 +351,6 @@ static SEL selSortMethod = NULL;
 {
 	[self useBatchNode:spriteSheet];
 }
-
 
 -(void) initAnimationDictionary
 {
@@ -504,16 +504,20 @@ static SEL selSortMethod = NULL;
 									   -s * scaleY_, c * scaleY_,
 									   positionInPixels_.x, positionInPixels_.y);
 		matrix = CGAffineTransformTranslate(matrix, -anchorPointInPixels_.x, -anchorPointInPixels_.y);		
-	} 
-	
-	// else do affine transformation according to the HonorParentTransform
-	else if( parent_ != batchNode_ ) {
+
+		
+	}  else { 	// parent_ != batchNode_ 
+
+		// else do affine transformation according to the HonorParentTransform
 
 		matrix = CGAffineTransformIdentity;
 		ccHonorParentTransform prevHonor = CC_HONOR_PARENT_TRANSFORM_ALL;
 		
 		for (CCNode *p = self ; p && p != batchNode_ ; p = p.parent) {
 			
+			// Might happen. Issue #1053
+			NSAssert( [p isKindOfClass:[CCSprite class]], @"CCSprite should be a CCSprite subclass. Probably you initialized an sprite with a batchnode, but you didn't add it to the batch node." );
+
 			struct transformValues_ tv;
 			[(CCSprite*)p getTransformValues: &tv];
 			
@@ -522,7 +526,7 @@ static SEL selSortMethod = NULL;
 				quad_.br.vertices = quad_.tl.vertices = quad_.tr.vertices = quad_.bl.vertices = (ccVertex3F){0,0,0};
 				[textureAtlas_ updateQuad:&quad_ atIndex:atlasIndex_];
 				dirty_ = recursiveDirty_ = NO;
-				return ;
+				return;
 			}
 			CGAffineTransform newMatrix = CGAffineTransformIdentity;
 			
@@ -543,10 +547,6 @@ static SEL selSortMethod = NULL;
 			
 			prevHonor = [(CCSprite*)p honorParentTransform];
 		}		
-	}
-	else {
-		NSAssert(NO, @"Should not happen");
-		return;
 	}
 	
 	
@@ -593,12 +593,12 @@ static SEL selSortMethod = NULL;
 // this fuction return the 5 values in 1 single call
 -(void) getTransformValues:(struct transformValues_*) tv
 {
-	tv->pos = positionInPixels_;
-	tv->scale.x = scaleX_;
-	tv->scale.y = scaleY_;
-	tv->rotation = rotation_;
-	tv->ap = anchorPointInPixels_;
-	tv->visible = visible_;
+	tv->pos			= positionInPixels_;
+	tv->scale.x		= scaleX_;
+	tv->scale.y		= scaleY_;
+	tv->rotation	= rotation_;
+	tv->ap			= anchorPointInPixels_;
+	tv->visible		= visible_;
 }
 
 #pragma mark CCSprite - draw
@@ -611,11 +611,9 @@ static SEL selSortMethod = NULL;
 	// Needed states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
 	// Unneeded states: -
 
-	BOOL newBlend = NO;
-	if( blendFunc_.src != CC_BLEND_SRC || blendFunc_.dst != CC_BLEND_DST ) {
-		newBlend = YES;
+	BOOL newBlend = blendFunc_.src != CC_BLEND_SRC || blendFunc_.dst != CC_BLEND_DST;
+	if( newBlend )
 		glBlendFunc( blendFunc_.src, blendFunc_.dst );
-	}
 
 #define kQuadSize sizeof(quad_.bl)
 	glBindTexture(GL_TEXTURE_2D, [texture_ name]);
@@ -706,7 +704,8 @@ static SEL selSortMethod = NULL;
 -(void)removeAllChildrenWithCleanup:(BOOL)doCleanup
 {
 	if( usesBatchNode_ ) {
-		for( CCSprite *child in children_ )
+		CCSprite *child;
+		CCARRAY_FOREACH(children_, child)
 			[batchNode_ removeSpriteFromAtlas:child];
 	}
 	
@@ -841,7 +840,7 @@ static SEL selSortMethod = NULL;
 	SET_DIRTY_RECURSIVELY();
 }
 
--(void)setRelativeAnchorPoint:(BOOL)relative
+-(void)setIsRelativeAnchorPoint:(BOOL)relative
 {
 	NSAssert( ! usesBatchNode_, @"relativeTransformAnchor is invalid in CCSprite");
 	[super setIsRelativeAnchorPoint:relative];
@@ -857,7 +856,7 @@ static SEL selSortMethod = NULL;
 {
 	if( flipX_ != b ) {
 		flipX_ = b;
-		[self setTextureRectInPixels:rectInPixels_ rotated:rectRotated_ untrimmedSize:rectInPixels_.size];
+		[self setTextureRectInPixels:rectInPixels_ rotated:rectRotated_ untrimmedSize:contentSizeInPixels_];
 	}
 }
 -(BOOL) flipX
@@ -869,7 +868,7 @@ static SEL selSortMethod = NULL;
 {
 	if( flipY_ != b ) {
 		flipY_ = b;	
-		[self setTextureRectInPixels:rectInPixels_ rotated:rectRotated_ untrimmedSize:rectInPixels_.size];
+		[self setTextureRectInPixels:rectInPixels_ rotated:rectRotated_ untrimmedSize:contentSizeInPixels_];
 	}	
 }
 -(BOOL) flipY
@@ -914,16 +913,16 @@ static SEL selSortMethod = NULL;
 
 	// special opacity for premultiplied textures
 	if( opacityModifyRGB_ )
-		[self setColor: (opacityModifyRGB_ ? colorUnmodified_ : color_ )];
+		[self setColor: colorUnmodified_];
 	
 	[self updateColor];
 }
 
 - (ccColor3B) color
 {
-	if(opacityModifyRGB_){
+	if(opacityModifyRGB_)
 		return colorUnmodified_;
-	}
+	
 	return color_;
 }
 

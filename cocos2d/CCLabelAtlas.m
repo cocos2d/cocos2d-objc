@@ -158,11 +158,9 @@
 
 	glColor4ub( color_.r, color_.g, color_.b, opacity_);
 	
-	BOOL newBlend = NO;
-	if( blendFunc_.src != CC_BLEND_SRC || blendFunc_.dst != CC_BLEND_DST ) {
-		newBlend = YES;
+	BOOL newBlend = blendFunc_.src != CC_BLEND_SRC || blendFunc_.dst != CC_BLEND_DST;
+	if( newBlend )
 		glBlendFunc( blendFunc_.src, blendFunc_.dst );
-	}
 	
 	[textureAtlas_ drawNumberOfQuads: string_.length];
 	

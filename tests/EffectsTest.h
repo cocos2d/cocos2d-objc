@@ -9,7 +9,7 @@
 }
 @end
 
-@interface TextLayer: CCColorLayer
+@interface TextLayer: CCLayerColor
 {
 }
 @end

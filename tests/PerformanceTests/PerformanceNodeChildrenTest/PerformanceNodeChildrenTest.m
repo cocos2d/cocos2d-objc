@@ -763,4 +763,3 @@ Class restartAction()
 	return @"add sprites in reverse order";
 }
 @end
-

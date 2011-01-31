@@ -200,11 +200,18 @@
 	return YES;
 }
 
-- (void)keyDown:(NSEvent *)theEvent {
+- (void)keyDown:(NSEvent *)theEvent
+{
 	DISPATCH_EVENT(theEvent, _cmd);
 }
 
-- (void)keyUp:(NSEvent *)theEvent {
+- (void)keyUp:(NSEvent *)theEvent
+{
+	DISPATCH_EVENT(theEvent, _cmd);
+}
+
+- (void)flagsChanged:(NSEvent *)theEvent
+{
 	DISPATCH_EVENT(theEvent, _cmd);
 }
 

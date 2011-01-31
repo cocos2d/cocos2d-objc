@@ -23,8 +23,8 @@
 		
         CCMenuItemSprite* sprite = [CCMenuItemSprite itemFromNormalSprite:question2 selectedSprite:question target:self selector:@selector(selectAnswer:)];
         
-        CCColorLayer* layer = [CCColorLayer layerWithColor:ccc4(0,0,255,255) width:100 height:100];
-        CCColorLayer* layer2 = [CCColorLayer layerWithColor:ccc4(255,0,0,255) width:100 height:100];
+        CCLayerColor* layer = [CCLayerColor layerWithColor:ccc4(0,0,255,255) width:100 height:100];
+        CCLayerColor* layer2 = [CCLayerColor layerWithColor:ccc4(255,0,0,255) width:100 height:100];
 		
         CCMenuItemSprite* sprite2 = [CCMenuItemSprite itemFromNormalSprite:layer selectedSprite:layer2 target:self selector:@selector(selectAnswer:)];        
         CCMenu* menu = [CCMenu menuWithItems:sprite, sprite2, nil];

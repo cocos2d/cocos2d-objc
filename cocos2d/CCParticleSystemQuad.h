@@ -53,10 +53,10 @@
 #endif
 }
 
-// initialices the indices for the vertices
+/** initialices the indices for the vertices */
 -(void) initIndices;
 
-// initilizes the text coords
+/** initilizes the texture with a rectangle measured Points */
 -(void) initTexCoordsWithRect:(CGRect)rect;
 
 /** Sets a new CCSpriteFrame as particle.
@@ -65,7 +65,7 @@
  */
 -(void)setDisplayFrame:(CCSpriteFrame*)spriteFrame;
 
-/** Sets a new texture with a rect. The rect is in pixels.
+/** Sets a new texture with a rect. The rect is in Points.
  @since v0.99.4
  */
 -(void) setTexture:(CCTexture2D *)texture withRect:(CGRect)rect;

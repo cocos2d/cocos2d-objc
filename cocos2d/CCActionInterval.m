@@ -39,7 +39,7 @@
 #pragma mark IntervalAction
 @implementation CCActionInterval
 
-@synthesize elapsed=elapsed_;
+@synthesize elapsed = elapsed_;
 
 -(id) init
 {
@@ -74,7 +74,6 @@
 	CCAction *copy = [[[self class] allocWithZone: zone] initWithDuration: [self duration] ];
 	return copy;
 }
-
 
 - (BOOL) isDone
 {
@@ -300,7 +299,7 @@
 		// fix last repeat position
 		// else it could be 0.
 		if( dt== 1.0f) {
-			r=1.0f;
+			r = 1.0f;
 			total_++; // this is the added line
 		}
 		[other_ update: MIN(r,1)];
@@ -425,9 +424,9 @@
 
 -(id) initWithDuration: (ccTime) t angle:(float) a
 {
-	if( (self=[super initWithDuration: t]) ) {	
+	if( (self=[super initWithDuration: t]) )
 		dstAngle = a;
-	}
+	
 	return self;
 }
 
@@ -474,9 +473,9 @@
 
 -(id) initWithDuration: (ccTime) t angle:(float) a
 {
-	if( (self=[super initWithDuration: t]) ) {
+	if( (self=[super initWithDuration: t]) )
 		angle = a;
-	}
+	
 	return self;
 }
 
@@ -519,9 +518,9 @@
 
 -(id) initWithDuration: (ccTime) t position: (CGPoint) p
 {
-	if( (self=[super initWithDuration: t]) ) {	
+	if( (self=[super initWithDuration: t]) )
 		endPosition = p;
-	}
+	
 	return self;
 }
 
@@ -558,9 +557,9 @@
 
 -(id) initWithDuration: (ccTime) t position: (CGPoint) p
 {
-	if( (self=[super initWithDuration: t]) ) {
+	if( (self=[super initWithDuration: t]) )
 		delta = p;
-	}
+	
 	return self;
 }
 
@@ -833,9 +832,9 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 
 -(id) initWithDuration: (ccTime) t blinks: (unsigned int) b
 {
-	if( (self=[super initWithDuration: t] ) ) {
+	if( (self=[super initWithDuration: t] ) )
 		times = b;
-	}
+	
 	return self;
 }
 
@@ -847,9 +846,11 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 
 -(void) update: (ccTime) t
 {
-	ccTime slice = 1.0f / times;
-	ccTime m = fmodf(t, slice);
-	[target_ setVisible: (m > slice/2) ? YES : NO];
+	if( ! [self isDone] ) {
+		ccTime slice = 1.0f / times;
+		ccTime m = fmodf(t, slice);
+		[target_ setVisible: (m > slice/2) ? YES : NO];
+	}
 }
 
 -(CCActionInterval*) reverse
@@ -869,6 +870,7 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 {
 	[(id<CCRGBAProtocol>) target_ setOpacity: 255 *t];
 }
+
 -(CCActionInterval*) reverse
 {
 	return [CCFadeOut actionWithDuration:duration_];
@@ -885,6 +887,7 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 {
 	[(id<CCRGBAProtocol>) target_ setOpacity: 255 *(1-t)];
 }
+
 -(CCActionInterval*) reverse
 {
 	return [CCFadeIn actionWithDuration:duration_];
@@ -906,6 +909,7 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 {
 	if( (self=[super initWithDuration: t] ) )
 		toOpacity = o;
+	
 	return self;
 }
 
@@ -940,9 +944,9 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 
 -(id) initWithDuration: (ccTime) t red:(GLubyte)r green:(GLubyte)g blue:(GLubyte)b
 {
-	if( (self=[super initWithDuration: t] ) ) {
+	if( (self=[super initWithDuration: t] ) )
 		to = ccc3(r,g,b);
-	}
+	
 	return self;
 }
 
@@ -1009,6 +1013,7 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 	id<CCRGBAProtocol> tn = (id<CCRGBAProtocol>) target_;
 	[tn setColor:ccc3( fromR + deltaR * t, fromG + deltaG * t, fromB + deltaB * t)];
 }
+
 - (CCActionInterval*) reverse
 {
 	return [CCTintBy actionWithDuration:duration_ red:-deltaR green:-deltaG blue:-deltaB];
@@ -1047,10 +1052,9 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 
 -(id) initWithAction: (CCFiniteTimeAction*) action
 {
-	if( (self=[super initWithDuration: [action duration]]) ) {
-	
+	if( (self=[super initWithDuration: [action duration]]) )
 		other = [action retain];
-	}
+	
 	return self;
 }
 
@@ -1186,13 +1190,12 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 	
 	NSUInteger idx = t * numberOfFrames;
 
-	if( idx >= numberOfFrames ) {
+	if( idx >= numberOfFrames )
 		idx = numberOfFrames -1;
-	}
+	
 	CCSprite *sprite = target_;
-	if (! [sprite isFrameDisplayed: [frames objectAtIndex: idx]] ) {
+	if (! [sprite isFrameDisplayed: [frames objectAtIndex: idx]] )
 		[sprite setDisplayFrame: [frames objectAtIndex:idx]];
-	}
 }
 
 - (CCActionInterval *) reverse
@@ -1200,9 +1203,8 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 	NSArray *oldArray = [animation_ frames];
 	NSMutableArray *newArray = [NSMutableArray arrayWithCapacity:[oldArray count]];
     NSEnumerator *enumerator = [oldArray reverseObjectEnumerator];
-    for (id element in enumerator) {
+    for (id element in enumerator)
         [newArray addObject:[[element copy] autorelease]];
-    }
 	
 	CCAnimation *newAnim = [CCAnimation animationWithFrames:newArray delay:animation_.delay];
 	return [[self class] actionWithDuration:duration_ animation:newAnim restoreOriginalFrame:restoreOriginalFrame];

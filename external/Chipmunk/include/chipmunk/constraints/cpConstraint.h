@@ -39,7 +39,7 @@ typedef struct cpConstraintClass {
 
 
 typedef struct cpConstraint {
-	const cpConstraintClass *klass;
+	CP_PRIVATE(const cpConstraintClass *klass);
 	
 	cpBody *a, *b;
 	cpFloat maxForce;
@@ -66,11 +66,11 @@ cpConstraintActivateBodies(cpConstraint *constraint)
 static inline cpFloat
 cpConstraintGetImpulse(cpConstraint *constraint)
 {
-	return constraint->klass->getImpulse(constraint);
+	return constraint->CP_PRIVATE(klass)->getImpulse(constraint);
 }
 
 #define cpConstraintCheckCast(constraint, struct) \
-	cpAssert(constraint->klass == struct##GetClass(), "Constraint is not a "#struct);
+	cpAssert(constraint->CP_PRIVATE(klass) == struct##GetClass(), "Constraint is not a "#struct);
 
 
 #define CP_DefineConstraintGetter(struct, type, member, name) \

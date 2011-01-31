@@ -80,6 +80,7 @@ typedef enum {
  *    - It supports aliasing / antialiasing
  *    - But the rendering will be slower: 1 draw per children.
  *
+ * The default anchorPoint in CCSprite is (0.5, 0.5).
  */
 @interface CCSprite : CCNode <CCRGBAProtocol, CCTextureProtocol>
 {

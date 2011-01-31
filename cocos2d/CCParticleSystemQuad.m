@@ -92,11 +92,17 @@
 	[super dealloc];
 }
 
-// rect is in pixels coordinates.
--(void) initTexCoordsWithRect:(CGRect)rect
+// rect is in Points coordinates.
+-(void) initTexCoordsWithRect:(CGRect)pointRect
 {
 	// convert to Tex coords
 	
+	CGRect rect = CGRectMake(
+							 pointRect.origin.x * CC_CONTENT_SCALE_FACTOR(),
+							 pointRect.origin.y * CC_CONTENT_SCALE_FACTOR(),
+							 pointRect.size.width * CC_CONTENT_SCALE_FACTOR(),
+							 pointRect.size.height * CC_CONTENT_SCALE_FACTOR() );
+
 	GLfloat wide = [texture_ pixelsWide];
 	GLfloat high = [texture_ pixelsHigh];
 
@@ -142,7 +148,9 @@
 
 -(void) setTexture:(CCTexture2D *)texture
 {
-	[self setTexture:texture withRect:CGRectMake(0,0, [texture pixelsWide], [texture pixelsHigh] )];
+	[self setTexture:texture withRect:CGRectMake(0,0, 
+												 [texture pixelsWide] / CC_CONTENT_SCALE_FACTOR(), 
+												 [texture pixelsHigh] / CC_CONTENT_SCALE_FACTOR() )];
 }
 
 -(void) setDisplayFrame:(CCSpriteFrame *)spriteFrame
@@ -282,13 +290,9 @@
 
 #endif // ! CC_USES_VBO
 	
-	
-	
-	BOOL newBlend = NO;
-	if( blendFunc_.src != CC_BLEND_SRC || blendFunc_.dst != CC_BLEND_DST ) {
-		newBlend = YES;
+	BOOL newBlend = blendFunc_.src != CC_BLEND_SRC || blendFunc_.dst != CC_BLEND_DST;
+	if( newBlend )
 		glBlendFunc( blendFunc_.src, blendFunc_.dst );
-	}
 	
 	NSAssert( particleIdx == particleCount, @"Abnormal error in particle quad");
 	glDrawElements(GL_TRIANGLES, particleIdx*6, GL_UNSIGNED_SHORT, indices_);

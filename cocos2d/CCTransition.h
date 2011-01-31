@@ -53,7 +53,8 @@ typedef enum {
 
 /** Base class for CCTransition scenes
  */
-@interface CCTransitionScene : CCScene {
+@interface CCTransitionScene : CCScene
+{
 	CCScene	*inScene_;
 	CCScene	*outScene_;
 	ccTime	duration_;

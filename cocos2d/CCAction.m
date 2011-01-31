@@ -39,7 +39,7 @@
 #pragma mark Action
 @implementation CCAction
 
-@synthesize tag=tag_, target=target_, originalTarget=originalTarget_;
+@synthesize tag = tag_, target = target_, originalTarget = originalTarget_;
 
 +(id) action
 {
@@ -105,7 +105,7 @@
 #pragma mark -
 #pragma mark FiniteTimeAction
 @implementation CCFiniteTimeAction
-@synthesize duration=duration_;
+@synthesize duration = duration_;
 
 - (CCFiniteTimeAction*) reverse
 {
@@ -340,7 +340,7 @@
 
 -(BOOL) isDone
 {
-	return ( ! followedNode_.isRunning );
+	return !followedNode_.isRunning;
 }
 
 -(void) stop
