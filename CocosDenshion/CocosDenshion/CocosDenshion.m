@@ -725,6 +725,12 @@ static BOOL _mixerRateSet = NO;
 
 -(int) _getSourceIndexForSourceGroup:(int)sourceGroupId 
 {
+	//Ensure source group id is valid to prevent memory corruption
+	if (sourceGroupId < 0 || sourceGroupId >= _sourceGroupTotal) {
+		CDLOG(@"Denshion::CDSoundEngine invalid source group id %i",sourceGroupId);
+		return CD_NO_SOURCE;
+	}	
+
 	int sourceIndex = -1;//Using -1 to indicate no source found
 	BOOL complete = NO;
 	ALint sourceState = 0;
@@ -818,7 +824,7 @@ static BOOL _mixerRateSet = NO;
 	gain = clampf(gain, 0.0f, 2.0f);
 #endif
 	
-	int sourceIndex = [self _getSourceIndexForSourceGroup:sourceGroupId];
+	int sourceIndex = [self _getSourceIndexForSourceGroup:sourceGroupId];//This method ensures sourceIndex is valid
 	
 	if (sourceIndex != CD_NO_SOURCE) {
 		ALint state;
@@ -917,7 +923,7 @@ static BOOL _mixerRateSet = NO;
  */
 - (void) stopSourceGroup:(int) sourceGroupId {
 	
-	if (!functioning_ || sourceGroupId >= _sourceGroupTotal) {
+	if (!functioning_ || sourceGroupId >= _sourceGroupTotal || sourceGroupId < 0) {
 		return;
 	}	
 	int sourceCount = _sourceGroups[sourceGroupId].totalSources;
@@ -953,6 +959,12 @@ static BOOL _mixerRateSet = NO;
  * no free sources available then the play request will be ignored and CD_NO_SOURCE will be returned.
  */
 - (void) setSourceGroupNonInterruptible:(int) sourceGroupId isNonInterruptible:(BOOL) isNonInterruptible {
+	//Ensure source group id is valid to prevent memory corruption
+	if (sourceGroupId < 0 || sourceGroupId >= _sourceGroupTotal) {
+		CDLOG(@"Denshion::CDSoundEngine setSourceGroupNonInterruptible invalid source group id %i",sourceGroupId);
+		return;
+	}	
+	
 	if (isNonInterruptible) {
 		_sourceGroups[sourceGroupId].nonInterruptible = true;
 	} else {
@@ -968,6 +980,12 @@ static BOOL _mixerRateSet = NO;
  * no matter what the source group mute setting is.
  */
 - (void) setSourceGroupEnabled:(int) sourceGroupId enabled:(BOOL) enabled {
+	//Ensure source group id is valid to prevent memory corruption
+	if (sourceGroupId < 0 || sourceGroupId >= _sourceGroupTotal) {
+		CDLOG(@"Denshion::CDSoundEngine setSourceGroupEnabled invalid source group id %i",sourceGroupId);
+		return;
+	}	
+	
 	if (enabled) {
 		_sourceGroups[sourceGroupId].enabled = true;
 		[self stopSourceGroup:sourceGroupId];
