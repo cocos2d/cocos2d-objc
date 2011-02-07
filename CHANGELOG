@@ -2,6 +2,9 @@ version 1.0-beta - XX-XXX-2011
 . [NEW] LayerGradient: Added "compressed interpolation" (default mode) in order to display all graident's colors in any vector
 . [NEW-MAC] Added CC_DIRECTOR_INIT(). It is possible to create a Mac Window programatically
 . [NEW-MAC] EventDispatcher: Added support for touches events
+. [FIX] CocosDenshion: Improved logging
+. [FIX] CocosDenshion: Fixed excessively large or negative gain values cause distorted audio in the simulator.
+. [FIX] CocosDenshion: Added guards to prevent memory corruption caused by invalid parameters
 . [FIX] Layer: Deprecated. CCMultiplexLayer deprecated. New name is CCLayerMultiplex
 . [FIX] Sprite: flipx/flipy don't modify the contentSize (issue #1073)
 . [FIX] SpriteFrame: setRect sets pixels too. setRectInPixels sets points too (issue #1088)
