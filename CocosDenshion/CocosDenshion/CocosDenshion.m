@@ -813,6 +813,11 @@ static BOOL _mixerRateSet = NO;
 		return CD_MUTE;
 	}	
 	
+#if TARGET_IPHONE_SIMULATOR	
+	//Fix for issue reported by Walzer, prevents speaker destruction when running in simulator ;)
+	gain = clampf(gain, 0.0f, 2.0f);
+#endif
+	
 	int sourceIndex = [self _getSourceIndexForSourceGroup:sourceGroupId];
 	
 	if (sourceIndex != CD_NO_SOURCE) {
@@ -1035,6 +1040,10 @@ static BOOL _mixerRateSet = NO;
 
 - (void) setGain:(float) newGainValue {
 	if (!mute_) {
+#if TARGET_IPHONE_SIMULATOR
+		//Fix for issue reported by Walzer, prevents speaker destruction when running in simulator ;)
+		gain = clampf(gain, 0.0f, 2.0f);
+#endif
 		alSourcef(_sourceId, AL_GAIN, newGainValue);	
 	} else {
 		_preMuteGain = newGainValue;
