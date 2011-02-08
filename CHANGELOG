@@ -11,6 +11,7 @@ version 1.0-beta - XX-XXX-2011
 . [FIX] Templates: ItunesArtwork renamed to iTunesArtwork (issue #1092)
 . [FIX] TextureCache: asyncObject#dealloc uses CCLOGINFO instead of CCLOG (issue #1096)
 . [FIX] TiledMap: TMX maps work with zlib compression (Tiled v0.6)
+. [FIX-MAC] Director: runLoop enables NSTimers events (issue #1107)
 . [FIX-MAC] EventDispatcher: flagsChanged is triggered correctly (issue #1066)
 . [FIX-MAC] EventDispatcher: queue & dispatch events are synced (issue #1083)
 . [FIX-MAC] LabelTTF: alignment works OK (issue #1073)
