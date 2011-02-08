@@ -6,6 +6,7 @@ version 1.0-beta - XX-XXX-2011
 . [FIX] CocosDenshion: Fixed excessively large or negative gain values cause distorted audio in the simulator.
 . [FIX] CocosDenshion: Added guards to prevent memory corruption caused by invalid parameters
 . [FIX] Layer: Deprecated. CCMultiplexLayer deprecated. New name is CCLayerMultiplex
+. [FIX] RenderTexture: Added possibility to save buffer in any place (issue #1100)
 . [FIX] Sprite: flipx/flipy don't modify the contentSize (issue #1073)
 . [FIX] SpriteFrame: setRect sets pixels too. setRectInPixels sets points too (issue #1088)
 . [FIX] Templates: ItunesArtwork renamed to iTunesArtwork (issue #1092)
