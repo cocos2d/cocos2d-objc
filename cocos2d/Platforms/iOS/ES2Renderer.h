@@ -57,9 +57,7 @@
 	GLuint msaaFramebuffer_;
 	GLuint msaaColorbuffer_;
 	
-	EAGLContext *context_;
-	
-	GLuint program_;
+	EAGLContext *context_;	
 }
 
 /** EAGLContext */
