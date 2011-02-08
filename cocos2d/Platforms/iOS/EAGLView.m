@@ -70,6 +70,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 #import "EAGLView.h"
 #import "ES1Renderer.h"
+#import "ES2Renderer.h"
 #import "../../CCDirector.h"
 #import "../../ccMacros.h"
 #import "../../CCConfiguration.h"
@@ -175,12 +176,19 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 									[NSNumber numberWithBool:preserveBackbuffer_], kEAGLDrawablePropertyRetainedBacking,
 									pixelformat_, kEAGLDrawablePropertyColorFormat, nil];
 	
-	
-	renderer_ = [[ES1Renderer alloc] initWithDepthFormat:depthFormat_
+	// Try ES2 renderer first
+	renderer_ = [[ES2Renderer alloc] initWithDepthFormat:depthFormat_
 										 withPixelFormat:[self convertPixelFormat:pixelformat_]
 										  withSharegroup:sharegroup
 									   withMultiSampling:multiSampling_
 									 withNumberOfSamples:requestedSamples_];
+	
+	if( ! renderer_ )
+		renderer_ = [[ES1Renderer alloc] initWithDepthFormat:depthFormat_
+											 withPixelFormat:[self convertPixelFormat:pixelformat_]
+											  withSharegroup:sharegroup
+										   withMultiSampling:multiSampling_
+										 withNumberOfSamples:requestedSamples_];
 	if (!renderer_)
 		return NO;
 	
