@@ -338,8 +338,12 @@ enum {
  But if you enable any other GL state, you should disable it after drawing your node.
  */
 -(void) draw;
+
 /** recursive method that visit its children and draw them */
 -(void) visit;
+
+-(void) visitShader;
+-(void) drawShader;
 
 // transformations
 

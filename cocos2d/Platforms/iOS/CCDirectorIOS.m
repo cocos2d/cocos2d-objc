@@ -167,19 +167,23 @@ CGFloat	__ccContentScaleFactor = 1;
 	 XXX: Which bug is this one. It seems that it can't be reproduced with v0.9 */
 	if( nextScene_ )
 		[self setNextScene];
+
+	if( ! [openGLView_ useShaders] ) {
+		glPushMatrix();
+
+		[self applyOrientation];
+		
+		// By default enable VertexArray, ColorArray, TextureCoordArray and Texture2D
+		CC_ENABLE_DEFAULT_GL_STATES();
+	}
 	
-	glPushMatrix();
-	
-	[self applyOrientation];
-	
-	// By default enable VertexArray, ColorArray, TextureCoordArray and Texture2D
-	CC_ENABLE_DEFAULT_GL_STATES();
-	
-	/* draw the scene */
-	[runningScene_ visit];
-	
-	/* draw the notification node */
-	[notificationNode_ visit];
+	if( [openGLView_ useShaders] ) {
+		[runningScene_ visitShader];
+		[notificationNode_ visitShader];
+	} else {
+		[runningScene_ visit];
+		[notificationNode_ visit];
+	}
 
 	if( displayFPS_ )
 		[self showFPS];
@@ -188,9 +192,11 @@ CGFloat	__ccContentScaleFactor = 1;
 	[self showProfilers];
 #endif
 	
-	CC_DISABLE_DEFAULT_GL_STATES();
-	
-	glPopMatrix();
+	if( ! [openGLView_ useShaders] ) {
+		CC_DISABLE_DEFAULT_GL_STATES();
+
+		glPopMatrix();
+	}
 	
 	[openGLView_ swapBuffers];
 }
@@ -199,6 +205,9 @@ CGFloat	__ccContentScaleFactor = 1;
 {
 	CGSize size = winSizeInPixels_;
 	
+	if( [openGLView_ useShaders] )
+		return;
+
 	switch (projection) {
 		case kCCDirectorProjection2D:
 			glViewport(0, 0, size.width, size.height);

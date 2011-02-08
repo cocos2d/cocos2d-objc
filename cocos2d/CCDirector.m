@@ -505,8 +505,12 @@ static CCDirector *_sharedDirector = nil;
 		[FPSLabel_ setString:str];
 		[str release];
 	}
-		
-	[FPSLabel_ draw];
+	
+	if( [openGLView_ useShaders] )
+		[FPSLabel_ drawShader];
+	else
+		[FPSLabel_ draw];
+
 }
 #else
 // display the FPS using a manually generated Texture (very slow)

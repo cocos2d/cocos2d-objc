@@ -91,6 +91,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 @synthesize touchDelegate=touchDelegate_;
 @synthesize context=context_;
 @synthesize multiSampling=multiSampling_;
+@synthesize useShaders=useShaders_;
 
 + (Class) layerClass
 {
@@ -177,18 +178,21 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 									pixelformat_, kEAGLDrawablePropertyColorFormat, nil];
 	
 	// Try ES2 renderer first
+	useShaders_ = YES;
 	renderer_ = [[ES2Renderer alloc] initWithDepthFormat:depthFormat_
 										 withPixelFormat:[self convertPixelFormat:pixelformat_]
 										  withSharegroup:sharegroup
 									   withMultiSampling:multiSampling_
 									 withNumberOfSamples:requestedSamples_];
 	
-	if( ! renderer_ )
+	if( ! renderer_ ) {
+		useShaders_ = NO;
 		renderer_ = [[ES1Renderer alloc] initWithDepthFormat:depthFormat_
 											 withPixelFormat:[self convertPixelFormat:pixelformat_]
 											  withSharegroup:sharegroup
 										   withMultiSampling:multiSampling_
 										 withNumberOfSamples:requestedSamples_];
+	}
 	if (!renderer_)
 		return NO;
 	

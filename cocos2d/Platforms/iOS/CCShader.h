@@ -7,19 +7,18 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <OpenGLES/ES2/gl.h>
+#import <OpenGLES/ES2/glext.h>
 
-
-@interface CCShader : NSObject {
-
+@interface CCShader : NSObject
+{
 	GLuint program_;
 }
 
-@interface ES2Renderer (PrivateMethods)
 - (BOOL)loadShaders;
 - (BOOL)compileShader:(GLuint *)shader type:(GLenum)type file:(NSString *)file;
 - (BOOL)linkProgram:(GLuint)prog;
 - (BOOL)validateProgram:(GLuint)prog;
-@end
 
 
 @end
