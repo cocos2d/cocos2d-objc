@@ -2428,6 +2428,8 @@
 		E0C5588B11FE493B00B9E4CB /* ZwoptexTest.m in Sources */ = {isa = PBXBuildFile; fileRef = E0C5588A11FE493B00B9E4CB /* ZwoptexTest.m */; };
 		E0C5589511FE4CF100B9E4CB /* zwoptex in Resources */ = {isa = PBXBuildFile; fileRef = E0C5588E11FE4CF100B9E4CB /* zwoptex */; };
 		E0C786AD1211A40400E309E2 /* Tank.c in Sources */ = {isa = PBXBuildFile; fileRef = E0C786AC1211A40400E309E2 /* Tank.c */; };
+		E0CA201E13019CDF0035B4B6 /* CCShader.h in Headers */ = {isa = PBXBuildFile; fileRef = E0CA201C13019CDF0035B4B6 /* CCShader.h */; };
+		E0CA201F13019CDF0035B4B6 /* CCShader.m in Sources */ = {isa = PBXBuildFile; fileRef = E0CA201D13019CDF0035B4B6 /* CCShader.m */; };
 		E0CC4F7D12677DB400691051 /* blocks-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E0CC4F7C12677DB400691051 /* blocks-hd.png */; };
 		E0D2C5D412AF1067008D5DBB /* particles-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E0D2C5D312AF1067008D5DBB /* particles-hd.png */; };
 		E0D2D4F3128CA9E300F78C63 /* piece.png in Resources */ = {isa = PBXBuildFile; fileRef = E0D2D4F2128CA9E300F78C63 /* piece.png */; };
@@ -4332,6 +4334,8 @@
 		E0C783B31210A39200E309E2 /* VerticalStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VerticalStack.h; sourceTree = "<group>"; };
 		E0C783B41210A39200E309E2 /* Web.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Web.h; sourceTree = "<group>"; };
 		E0C786AC1211A40400E309E2 /* Tank.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; fileEncoding = 4; path = Tank.c; sourceTree = "<group>"; };
+		E0CA201C13019CDF0035B4B6 /* CCShader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCShader.h; sourceTree = "<group>"; };
+		E0CA201D13019CDF0035B4B6 /* CCShader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCShader.m; sourceTree = "<group>"; };
 		E0CC4F7C12677DB400691051 /* blocks-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "blocks-hd.png"; sourceTree = "<group>"; };
 		E0D2C5D312AF1067008D5DBB /* particles-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "particles-hd.png"; sourceTree = "<group>"; };
 		E0D2D4F2128CA9E300F78C63 /* piece.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = piece.png; sourceTree = "<group>"; };
@@ -7046,6 +7050,8 @@
 				E0EAD0F0121F4B4600B0C81C /* CCTouchDispatcher.m */,
 				E0EAD0F1121F4B4600B0C81C /* CCTouchHandler.h */,
 				E0EAD0F2121F4B4600B0C81C /* CCTouchHandler.m */,
+				E0CA201C13019CDF0035B4B6 /* CCShader.h */,
+				E0CA201D13019CDF0035B4B6 /* CCShader.m */,
 				E0EAD0F3121F4B4600B0C81C /* EAGLView.h */,
 				E0EAD0F4121F4B4600B0C81C /* EAGLView.m */,
 				E0EAD0F5121F4B4600B0C81C /* ES1Renderer.h */,
@@ -7152,6 +7158,7 @@
 				E02BB6D6126CA93A006E46A2 /* CCAnimationCache.h in Headers */,
 				E02BB704126CADEA006E46A2 /* CCAnimation.h in Headers */,
 				E0DC24DE13007E4900D264C1 /* ES2Renderer.h in Headers */,
+				E0CA201E13019CDF0035B4B6 /* CCShader.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10665,6 +10672,7 @@
 				E02BB6D7126CA93A006E46A2 /* CCAnimationCache.m in Sources */,
 				E02BB705126CADEA006E46A2 /* CCAnimation.m in Sources */,
 				E0DC24DF13007E4900D264C1 /* ES2Renderer.m in Sources */,
+				E0CA201F13019CDF0035B4B6 /* CCShader.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
