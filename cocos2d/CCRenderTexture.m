@@ -28,6 +28,7 @@
 #import "CCDirector.h"
 #import "ccMacros.h"
 #import "Support/ccUtils.h"
+#import "Support/CCFileUtils.h"
 
 @interface CCRenderTexture (private)
 
