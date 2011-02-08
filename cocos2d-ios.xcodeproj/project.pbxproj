@@ -2431,6 +2431,8 @@
 		E0CC4F7D12677DB400691051 /* blocks-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E0CC4F7C12677DB400691051 /* blocks-hd.png */; };
 		E0D2C5D412AF1067008D5DBB /* particles-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E0D2C5D312AF1067008D5DBB /* particles-hd.png */; };
 		E0D2D4F3128CA9E300F78C63 /* piece.png in Resources */ = {isa = PBXBuildFile; fileRef = E0D2D4F2128CA9E300F78C63 /* piece.png */; };
+		E0DC24DE13007E4900D264C1 /* ES2Renderer.h in Headers */ = {isa = PBXBuildFile; fileRef = E0DC24DC13007E4900D264C1 /* ES2Renderer.h */; };
+		E0DC24DF13007E4900D264C1 /* ES2Renderer.m in Sources */ = {isa = PBXBuildFile; fileRef = E0DC24DD13007E4900D264C1 /* ES2Renderer.m */; };
 		E0E974A51237E4EA00E3E64B /* CCDirectorMac.h in Headers */ = {isa = PBXBuildFile; fileRef = E0E9749F1237E4EA00E3E64B /* CCDirectorMac.h */; };
 		E0E974A61237E4EA00E3E64B /* CCDirectorMac.m in Sources */ = {isa = PBXBuildFile; fileRef = E0E974A01237E4EA00E3E64B /* CCDirectorMac.m */; };
 		E0E974A71237E4EA00E3E64B /* CCEventDispatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = E0E974A11237E4EA00E3E64B /* CCEventDispatcher.h */; };
@@ -4333,6 +4335,8 @@
 		E0CC4F7C12677DB400691051 /* blocks-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "blocks-hd.png"; sourceTree = "<group>"; };
 		E0D2C5D312AF1067008D5DBB /* particles-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "particles-hd.png"; sourceTree = "<group>"; };
 		E0D2D4F2128CA9E300F78C63 /* piece.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = piece.png; sourceTree = "<group>"; };
+		E0DC24DC13007E4900D264C1 /* ES2Renderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ES2Renderer.h; sourceTree = "<group>"; };
+		E0DC24DD13007E4900D264C1 /* ES2Renderer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ES2Renderer.m; sourceTree = "<group>"; };
 		E0E9749F1237E4EA00E3E64B /* CCDirectorMac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCDirectorMac.h; sourceTree = "<group>"; };
 		E0E974A01237E4EA00E3E64B /* CCDirectorMac.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCDirectorMac.m; sourceTree = "<group>"; };
 		E0E974A11237E4EA00E3E64B /* CCEventDispatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEventDispatcher.h; sourceTree = "<group>"; };
@@ -7046,6 +7050,8 @@
 				E0EAD0F4121F4B4600B0C81C /* EAGLView.m */,
 				E0EAD0F5121F4B4600B0C81C /* ES1Renderer.h */,
 				E0EAD0F6121F4B4600B0C81C /* ES1Renderer.m */,
+				E0DC24DC13007E4900D264C1 /* ES2Renderer.h */,
+				E0DC24DD13007E4900D264C1 /* ES2Renderer.m */,
 				E0EAD0F7121F4B4600B0C81C /* ESRenderer.h */,
 				E0EAD0F8121F4B4600B0C81C /* glu.c */,
 				E0EAD0F9121F4B4600B0C81C /* glu.h */,
@@ -7145,6 +7151,7 @@
 				E0E974A91237E4EA00E3E64B /* MacGLView.h in Headers */,
 				E02BB6D6126CA93A006E46A2 /* CCAnimationCache.h in Headers */,
 				E02BB704126CADEA006E46A2 /* CCAnimation.h in Headers */,
+				E0DC24DE13007E4900D264C1 /* ES2Renderer.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10657,6 +10664,7 @@
 				E0E974AA1237E4EA00E3E64B /* MacGLView.m in Sources */,
 				E02BB6D7126CA93A006E46A2 /* CCAnimationCache.m in Sources */,
 				E02BB705126CADEA006E46A2 /* CCAnimation.m in Sources */,
+				E0DC24DF13007E4900D264C1 /* ES2Renderer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
