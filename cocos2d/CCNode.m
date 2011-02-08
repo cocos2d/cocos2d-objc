@@ -555,6 +555,45 @@
 	glPopMatrix();
 }
 
+-(void) drawShader
+{
+	// override me
+	// Only use this function to draw your staff.
+	// DON'T draw your stuff outside this method
+}
+
+-(void) visitShader
+{
+	// quick return if not visible
+	if (!visible_)
+		return;
+
+	if(children_) {
+		ccArray *arrayData = children_->data;
+		NSUInteger i = 0;
+		
+		// draw children zOrder < 0
+		for( ; i < arrayData->num; i++ ) {
+			CCNode *child = arrayData->arr[i];
+			if ( [child zOrder] < 0 )
+				[child visitShader];
+			else
+				break;
+		}
+		
+		// self draw
+		[self drawShader];
+		
+		// draw children zOrder >= 0
+		for( ; i < arrayData->num; i++ ) {
+			CCNode *child =  arrayData->arr[i];
+			[child visitShader];
+		}
+		
+	} else
+		[self drawShader];	
+}
+
 #pragma mark CCNode - Transformations
 
 -(void) transformAncestors

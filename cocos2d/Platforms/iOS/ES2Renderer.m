@@ -49,7 +49,7 @@
 			context_ = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2 sharegroup:sharegroup];
 
 
-        if (!context_ || ![EAGLContext setCurrentContext:context_] || ![self loadShaders])
+        if (!context_ || ![EAGLContext setCurrentContext:context_] )
         {
             [self release];
             return nil;
@@ -64,70 +64,6 @@
     }
 
     return self;
-}
-
-- (void)render
-{
-    // Replace the implementation of this method to do your own custom drawing
-
-    static const GLfloat squareVertices[] = {
-        -0.5f, -0.33f,
-         0.5f, -0.33f,
-        -0.5f,  0.33f,
-         0.5f,  0.33f,
-    };
-
-    static const GLubyte squareColors[] = {
-        255, 255,   0, 255,
-        0,   255, 255, 255,
-        0,     0,   0,   0,
-        255,   0, 255, 255,
-    };
-
-    static float transY = 0.0f;
-
-    // This application only creates a single context which is already set current at this point.
-    // This call is redundant, but needed if dealing with multiple contexts.
-    [EAGLContext setCurrentContext:context_];
-
-    // This application only creates a single default framebuffer which is already bound at this point.
-    // This call is redundant, but needed if dealing with multiple framebuffers.
-    glBindFramebuffer(GL_FRAMEBUFFER, defaultFramebuffer_);
-    glViewport(0, 0, backingWidth_, backingHeight_);
-
-    glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
-    glClear(GL_COLOR_BUFFER_BIT);
-
-    // Use shader program
-    glUseProgram(program_);
-
-    // Update uniform value
-    glUniform1f(uniforms[UNIFORM_TRANSLATE], (GLfloat)transY);
-    transY += 0.075f;	
-
-    // Update attribute values
-    glVertexAttribPointer(ATTRIB_VERTEX, 2, GL_FLOAT, 0, 0, squareVertices);
-    glEnableVertexAttribArray(ATTRIB_VERTEX);
-    glVertexAttribPointer(ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, 1, 0, squareColors);
-    glEnableVertexAttribArray(ATTRIB_COLOR);
-
-    // Validate program before drawing. This is a good check, but only really necessary in a debug build.
-    // DEBUG macro must be defined in your debug configurations if that's not already the case.
-#if defined(DEBUG)
-    if (![self validateProgram:program_])
-    {
-        NSLog(@"Failed to validate program: %d", program_);
-        return;
-    }
-#endif
-
-    // Draw
-    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-
-    // This application only creates a single color renderbuffer which is already bound at this point.
-    // This call is redundant, but needed if dealing with multiple renderbuffers.
-    glBindRenderbuffer(GL_RENDERBUFFER, colorRenderbuffer_);
-    [context_ presentRenderbuffer:GL_RENDERBUFFER];
 }
 
 - (BOOL)resizeFromLayer:(CAEAGLLayer *)layer
@@ -190,12 +126,6 @@
     {
         glDeleteRenderbuffers(1, &colorRenderbuffer_);
         colorRenderbuffer_ = 0;
-    }
-
-    if (program_)
-    {
-        glDeleteProgram(program_);
-        program_ = 0;
     }
 
     // Tear down context
