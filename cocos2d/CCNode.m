@@ -39,6 +39,7 @@
 #import <Availability.h>
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 #import "Platforms/iOS/CCDirectorIOS.h"
+#import "Platforms/iOS/GLProgram.h"
 #endif
 
 

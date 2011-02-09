@@ -205,8 +205,10 @@ CGFloat	__ccContentScaleFactor = 1;
 {
 	CGSize size = winSizeInPixels_;
 	
-	if( [openGLView_ useShaders] )
+	if( [openGLView_ useShaders] ) {
+		glViewport(0, 0, size.width, size.height);
 		return;
+	}
 
 	switch (projection) {
 		case kCCDirectorProjection2D:
