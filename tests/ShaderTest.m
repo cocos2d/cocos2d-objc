@@ -73,6 +73,7 @@ Class restartAction()
 	CCTexture2D	*texture_;
 	
 	ccColor3B	color_;
+	ccColor3B	colorUnmodified_;
 	GLubyte		opacity_;
 	
 }
@@ -84,8 +85,6 @@ Class restartAction()
 
 @implementation ShaderNode
 
-@synthesize color=color_;
-@synthesize opacity=opacity_;
 -(id) initWithName:(NSString*)name
 {
 	if( (self=[super init]) ) {
@@ -93,7 +92,7 @@ Class restartAction()
 		
 		texture_ = [[CCTextureCache sharedTextureCache] addImage:name];
 		
-		color_ = ccWHITE;
+		color_ = colorUnmodified_ = ccWHITE;
 		opacity_ = 255;
 
 		[self setContentSize: [texture_ contentSize]];
@@ -127,6 +126,33 @@ Class restartAction()
 {
 	[program_ release];
 	[super dealloc];
+}
+
+-(GLubyte) opacity
+{
+	return opacity_;
+}
+
+-(void) setOpacity:(GLubyte) anOpacity
+{
+	opacity_			= anOpacity;
+	
+	// special opacity for premultiplied textures
+	[self setColor: colorUnmodified_];	
+}
+
+- (ccColor3B) color
+{
+	return colorUnmodified_;
+}
+
+-(void) setColor:(ccColor3B)color3
+{
+	color_ = colorUnmodified_ = color3;
+	
+	color_.r = color3.r * opacity_/255;
+	color_.g = color3.g * opacity_/255;
+	color_.b = color3.b * opacity_/255;
 }
 
 -(void) drawShader
@@ -167,12 +193,8 @@ Class restartAction()
 		r,g,b,a,
 	};
 	
-
-	if( YES /* isTransformDirty_ */ ) {
-		CGAffineTransform affine = [self nodeToWorldTransform];
-		CGAffineToGL(&affine, &transformGL_[0] );
-		isTransformDirty_ = NO;
-	}
+	CGAffineToGL(&transformToWorld_, &transformGL_[0] );
+	isTransformDirty_ = NO;
 
 	[program_ use];	
 	
@@ -241,6 +263,9 @@ Class restartAction()
 		[node3 addChild:node3_b z:1];
 		[node3_b setPosition:ccp(10,10)];
 		[node3_b setScale:0.5f];
+		
+		id rot2 = [CCRotateBy actionWithDuration:2 angle:360];
+		[node3_b runAction:[CCRepeatForever actionWithAction:rot2]];
 		
 	}
 
