@@ -60,7 +60,7 @@ Class restartAction()
 }
 
 
-@interface ShaderNode : CCNode
+@interface ShaderNode : CCNode <CCRGBAProtocol>
 {
 	GLProgram	*program_;
 	GLuint		vertexIndex_;
@@ -68,21 +68,34 @@ Class restartAction()
 	GLuint		samplerIndex_;
 	GLuint		texCoordIndex_;
 	GLuint		matrixIndex_;
-	GLuint		anchorIndex_;
+	GLuint		projMatrixIndex_;
 
 	CCTexture2D	*texture_;
+	
+	ccColor3B	color_;
+	GLubyte		opacity_;
+	
 }
+@property (nonatomic,readwrite) ccColor3B color;
+@property (nonatomic, readwrite) GLubyte opacity;
+
+-(id) initWithName:(NSString *)name;
 @end
 
 @implementation ShaderNode
 
--(id) init
+@synthesize color=color_;
+@synthesize opacity=opacity_;
+-(id) initWithName:(NSString*)name
 {
 	if( (self=[super init]) ) {
 		
 		
-		texture_ = [[CCTextureCache sharedTextureCache] addImage:@"grossini.png"];
+		texture_ = [[CCTextureCache sharedTextureCache] addImage:name];
 		
+		color_ = ccWHITE;
+		opacity_ = 255;
+
 		[self setContentSize: [texture_ contentSize]];
 		
 		[self setAnchorPoint:ccp(0.5f, 0.5f)];
@@ -101,7 +114,7 @@ Class restartAction()
 		texCoordIndex_ = [program_ attributeIndex:@"aTexCoord"];
 
 		matrixIndex_ = [program_ uniformIndex:@"uMatrix"];
-		anchorIndex_ = [program_ uniformIndex:@"uAnchor"];
+		projMatrixIndex_ = [program_ uniformIndex:@"uProjMatrix"];		
 
 		samplerIndex_ = [program_ uniformIndex:@"sTexture"];
 		
@@ -118,6 +131,13 @@ Class restartAction()
 
 -(void) drawShader
 {
+	
+	CGSize winSize = [[CCDirector sharedDirector] winSize];
+	GLfloat projectionMatrix[16] = {
+						2.0/winSize.width, 0.0, 0.0, -1.0,
+						0.0, 2.0/winSize.height, 0.0, -1.0,
+						0.0, 0.0, -1.0, 0.0,
+						0.0, 0.0, 0.0, 1.0 };
 	
 	CGSize size = [texture_ contentSize];
 	GLfloat s = [texture_ maxS];
@@ -136,16 +156,23 @@ Class restartAction()
 						0, t,
 						s, t};
 
-	
-	GLfloat colors[] = { 1, 1, 1, 1,
-						1, 1, 1, 1,
-						1, 1, 1, 1,
-						1, 1, 1, 1,
+	GLfloat r = color_.r / 255.0f;
+	GLfloat g = color_.g / 255.0f;
+	GLfloat b = color_.b / 255.0f;
+	GLfloat a = opacity_ / 255.0f;
+
+	GLfloat colors[] = { r,g,b,a,
+		r,g,b,a,
+		r,g,b,a,
+		r,g,b,a,
 	};
 	
-	GLfloat matrix[16];
-	CGAffineTransform affine = [self nodeToParentTransform];
-	CGAffineToGL(&affine, &matrix[0]);
+
+	if( YES /* isTransformDirty_ */ ) {
+		CGAffineTransform affine = [self nodeToWorldTransform];
+		CGAffineToGL(&affine, &transformGL_[0] );
+		isTransformDirty_ = NO;
+	}
 
 	[program_ use];	
 	
@@ -159,10 +186,10 @@ Class restartAction()
 	glVertexAttribPointer(colorIndex_, 4, GL_FLOAT, GL_FALSE, 0, colors);
 	glEnableVertexAttribArray(colorIndex_);
 
+	glUniformMatrix4fv(matrixIndex_, 1, GL_FALSE, &transformGL_[0]);
+	glUniformMatrix4fv(projMatrixIndex_, 1, GL_FALSE, &projectionMatrix[0]);
 
-	glUniformMatrix4fv(matrixIndex_, 1, GL_FALSE, &matrix[0]);
-	glUniform2f(anchorIndex_, anchorPointInPixels_.x, anchorPointInPixels_.y);
-
+	
 	glActiveTexture( GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, texture_.name);
 	
@@ -180,9 +207,9 @@ Class restartAction()
 {
 	if( (self = [super init]) ) {
 
-		ShaderNode *node = [ShaderNode node];
+		ShaderNode *node = [[ShaderNode alloc] initWithName:@"grossini.png"];
 		[self addChild:node];
-		
+
 		CCMoveBy *action = [CCMoveBy actionWithDuration:2 position:ccp(200,200)];
 		[node runAction:action];
 		
@@ -191,6 +218,30 @@ Class restartAction()
 
 		CCScaleBy *scale = [CCScaleBy actionWithDuration:2 scale:2];
 		[node runAction:scale];
+		
+		ShaderNode *node2 = [[ShaderNode alloc] initWithName:@"grossinis_sister1.png"];
+		[self addChild:node2 z:1];
+		[node2 setPosition:ccp(200,200)];
+		
+		CCFadeOut *fade = [CCFadeOut actionWithDuration:2];
+		id fade_back = [fade reverse];
+		id seq = [CCSequence actions:fade, fade_back, nil];
+		[node2 runAction: [CCRepeatForever actionWithAction:seq]];
+
+		ShaderNode *node3 = [[ShaderNode alloc] initWithName:@"grossinis_sister2.png"];
+		[self addChild:node3 z:-1];
+		[node3 setPosition:ccp(100,200)];
+		
+		id moveup = [CCMoveBy actionWithDuration:2 position:ccp(0,200)];
+		id movedown = [moveup reverse];
+		id seq2 = [CCSequence actions:moveup, movedown, nil];
+		[node3 runAction:[CCRepeatForever actionWithAction:seq2]];
+
+		ShaderNode *node3_b = [[ShaderNode alloc] initWithName:@"grossinis_sister2.png"];
+		[node3 addChild:node3_b z:1];
+		[node3_b setPosition:ccp(10,10)];
+		[node3_b setScale:0.5f];
+		
 	}
 
 	return self;
