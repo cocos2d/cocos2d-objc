@@ -103,7 +103,8 @@ Requirements:
 #define CD_SAMPLE_RATE_BASIC 8000
 #define CD_SAMPLE_RATE_DEFAULT 44100
 
-#define CD_MSG_BAD_AL_CONTEXT @"cdbadalcontext"
+extern NSString * const kCDN_BadAlContext;
+extern NSString * const kCDN_AsynchLoadComplete;
 
 enum bufferState {
 	CD_BS_EMPTY = 0,
@@ -201,9 +202,10 @@ typedef struct _sourceInfo {
 	int				_sourceGroupTotal;
 	UInt32			_audioSessionCategory;
 	BOOL			_handleAudioSession;
+	ALfloat			_preMuteGain;
+	NSObject        *_mutexBufferLoad;
 	BOOL			mute_;
 	BOOL			enabled_;
-	ALfloat			_preMuteGain;
 
 	ALenum			lastErrorCode_;
 	BOOL			functioning_;

@@ -25,18 +25,7 @@
 
 #import "CDAudioManager.h"
 
-//Audio session interruption callback - used if sound engine is 
-//handling audio session interruption automatically
-/*
-extern void managerInterruptionCallback (void *inUserData, UInt32 interruptionState ) { 
-	CDAudioManager *controller = (CDAudioManager *) inUserData; 
-    if (interruptionState == kAudioSessionBeginInterruption) { 
-        [controller audioSessionInterrupted]; 
-    } else if (interruptionState == kAudioSessionEndInterruption) { 
-        [controller audioSessionResumed]; 
-    } 
-}
-*/ 
+NSString * const kCDN_AudioManagerInitialised = @"kCDN_AudioManagerInitialised";
 
 //NSOperation object used to asynchronously initialise 
 @implementation CDAsynchInitialiser
@@ -285,6 +274,7 @@ static BOOL configured = FALSE;
 			}
 			sharedManager = [[CDAudioManager alloc] init:configuredMode];
 			_sharedManagerState = kAMStateInitialised;//This is only really relevant when using asynchronous initialisation
+			[[NSNotificationCenter defaultCenter] postNotificationName:kCDN_AudioManagerInitialised object:nil];
 		}	
 	}
 	return sharedManager;
@@ -437,7 +427,7 @@ static BOOL configured = FALSE;
 		backgroundMusic.delegate = self;
 		
 		//Add handler for bad al context messages, these are posted by the sound engine.
-		[[NSNotificationCenter defaultCenter] addObserver:self	selector:@selector(badAlContextHandler) name:CD_MSG_BAD_AL_CONTEXT object:nil];
+		[[NSNotificationCenter defaultCenter] addObserver:self	selector:@selector(badAlContextHandler) name:kCDN_BadAlContext object:nil];
 
 	}	
 	return self;		
