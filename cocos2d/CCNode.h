@@ -163,6 +163,10 @@ enum {
 #if	CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
 	BOOL isTransformGLDirty_:1;
 #endif	
+
+@public
+	CGAffineTransform transformToWorld_;
+
 }
 
 /** The z order of the node relative to it's "brothers": children of the same parent */

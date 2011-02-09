@@ -5,5 +5,8 @@ uniform sampler2D sTexture;
 
 void main()
 {
-   gl_FragColor = texture2D(sTexture, vTexCoord) * vFragmentColor;
+	gl_FragColor = vFragmentColor * texture2D(sTexture, vTexCoord);
+
+//   float odd = floor(mod(gl_FragCoord.y, 2.0));	
+//	gl_FragColor *= odd;
 }

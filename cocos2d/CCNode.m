@@ -274,6 +274,8 @@
 
 		//initialize parent to nil
 		parent_ = nil;
+		
+		transformToWorld_ = CGAffineTransformIdentity;
 	}
 	
 	return self;
@@ -569,6 +571,13 @@
 	if (!visible_)
 		return;
 
+	if( isTransformGLDirty_ ) {
+		transformToWorld_ = [self nodeToParentTransform];
+		
+		if( parent_ )
+			transformToWorld_ = CGAffineTransformConcat( transformToWorld_, parent_->transformToWorld_ );
+	}
+	
 	if(children_) {
 		ccArray *arrayData = children_->data;
 		NSUInteger i = 0;
