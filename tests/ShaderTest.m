@@ -68,7 +68,6 @@ Class restartAction()
 	GLuint		samplerIndex_;
 	GLuint		texCoordIndex_;
 	GLuint		matrixIndex_;
-	GLuint		projMatrixIndex_;
 
 	CCTexture2D	*texture_;
 	
@@ -113,7 +112,6 @@ Class restartAction()
 		texCoordIndex_ = [program_ attributeIndex:@"aTexCoord"];
 
 		matrixIndex_ = [program_ uniformIndex:@"uMatrix"];
-		projMatrixIndex_ = [program_ uniformIndex:@"uProjMatrix"];		
 
 		samplerIndex_ = [program_ uniformIndex:@"sTexture"];
 		
@@ -157,14 +155,6 @@ Class restartAction()
 
 -(void) drawShader
 {
-	
-	CGSize winSize = [[CCDirector sharedDirector] winSize];
-	GLfloat projectionMatrix[16] = {
-						2.0/winSize.width, 0.0, 0.0, -1.0,
-						0.0, 2.0/winSize.height, 0.0, -1.0,
-						0.0, 0.0, -1.0, 0.0,
-						0.0, 0.0, 0.0, 1.0 };
-	
 	CGSize size = [texture_ contentSize];
 	GLfloat s = [texture_ maxS];
 	GLfloat t = [texture_ maxT];
@@ -209,8 +199,6 @@ Class restartAction()
 	glEnableVertexAttribArray(colorIndex_);
 
 	glUniformMatrix4fv(matrixIndex_, 1, GL_FALSE, &transformGL_[0]);
-	glUniformMatrix4fv(projMatrixIndex_, 1, GL_FALSE, &projectionMatrix[0]);
-
 	
 	glActiveTexture( GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, texture_.name);
