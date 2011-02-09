@@ -145,6 +145,7 @@
 #import "Support/ccCArray.h"
 #import "Support/CCArray.h"
 #import "Support/ccUtils.h"
+#import "Support/TransformUtils.h"
 
 #if CC_ENABLE_PROFILERS
 #import "Support/CCProfiling.h"
