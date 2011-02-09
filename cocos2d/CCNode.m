@@ -576,6 +576,18 @@
 		
 		if( parent_ )
 			transformToWorld_ = CGAffineTransformConcat( transformToWorld_, parent_->transformToWorld_ );
+		else {
+			CGSize winSize = [[CCDirector sharedDirector] winSize];
+
+			GLfloat projectionMatrix[16] = {
+				2.0/winSize.width, 0.0, 0.0, -1.0,
+				0.0, 2.0/winSize.height, 0.0, -1.0,
+				0.0, 0.0, -1.0, 0.0,
+				0.0, 0.0, 0.0, 1.0 };
+			
+			GLToCGAffine(&projectionMatrix[0], &transformToWorld_ );
+			transformToWorld_ = CGAffineTransformTranslate(transformToWorld_, -winSize.width/2, -winSize.height/2);
+		}
 	}
 	
 	if(children_) {
