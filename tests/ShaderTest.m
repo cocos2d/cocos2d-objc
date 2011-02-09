@@ -63,8 +63,14 @@ Class restartAction()
 @interface ShaderNode : CCNode
 {
 	GLProgram	*program_;
-	GLuint		positionIndex_;
+	GLuint		vertexIndex_;
 	GLuint		colorIndex_;
+	GLuint		samplerIndex_;
+	GLuint		texCoordIndex_;
+	GLuint		matrixIndex_;
+	GLuint		anchorIndex_;
+
+	CCTexture2D	*texture_;
 }
 @end
 
@@ -74,16 +80,31 @@ Class restartAction()
 {
 	if( (self=[super init]) ) {
 		
+		
+		texture_ = [[CCTextureCache sharedTextureCache] addImage:@"grossini.png"];
+		
+		[self setContentSize: [texture_ contentSize]];
+		
+		[self setAnchorPoint:ccp(0.5f, 0.5f)];
+
 		program_ = [[GLProgram alloc] initWithVertexShaderFilename:@"Shader.vsh"
 										   fragmentShaderFilename:@"Shader.fsh"];
 		
-		[program_ addAttribute:@"aPosition"];
+		[program_ addAttribute:@"aVertex"];
 		[program_ addAttribute:@"aColor"];
+		[program_ addAttribute:@"aTexCoord"];
 		
 		[program_ link];
 		
-		positionIndex_ = [program_ attributeIndex:@"aPosition"];
+		vertexIndex_ = [program_ attributeIndex:@"aVertex"];
 		colorIndex_ = [program_ attributeIndex:@"aColor"];
+		texCoordIndex_ = [program_ attributeIndex:@"aTexCoord"];
+
+		matrixIndex_ = [program_ uniformIndex:@"uMatrix"];
+		anchorIndex_ = [program_ uniformIndex:@"uAnchor"];
+
+		samplerIndex_ = [program_ uniformIndex:@"sTexture"];
+		
 	}
 	
 	return self;
@@ -97,24 +118,58 @@ Class restartAction()
 
 -(void) drawShader
 {
-	GLfloat vertex[] = { 0.0f, 0.5, 0.0f,
-						-0.5f, -0.5f, 0.0f,
-					0.5f, -0.5f, 0.0f };
-
-	GLfloat colors[] = { 0, 0, 1.0f, 1.0f,
-						1.0f, 0, 0, 1.0f,
-					0, 1.0f, 0, 1.0f };
 	
+	CGSize size = [texture_ contentSize];
+	GLfloat s = [texture_ maxS];
+	GLfloat t = [texture_ maxT];
+
+	// Reverse
+	GLfloat vertex[] = {
+		size.width, size.height,
+		0, size.height,
+		size.width, 0,
+		0, 0,
+	};
+
+	GLfloat texCoords[] = {0,0,
+						s, 0,
+						0, t,
+						s, t};
+
+	
+	GLfloat colors[] = { 1, 1, 1, 1,
+						1, 1, 1, 1,
+						1, 1, 1, 1,
+						1, 1, 1, 1,
+	};
+	
+	GLfloat matrix[16];
+	CGAffineTransform affine = [self nodeToParentTransform];
+	CGAffineToGL(&affine, &matrix[0]);
+
 	[program_ use];	
 	
 
-	glVertexAttribPointer(positionIndex_, 3, GL_FLOAT, GL_FALSE, 0, vertex);
-	glEnableVertexAttribArray(positionIndex_);
+	glVertexAttribPointer(vertexIndex_, 2, GL_FLOAT, GL_FALSE, 0, vertex);
+	glEnableVertexAttribArray(vertexIndex_);
+
+	glVertexAttribPointer(texCoordIndex_, 2, GL_FLOAT, GL_FALSE, 0, texCoords);
+	glEnableVertexAttribArray(texCoordIndex_);
 
 	glVertexAttribPointer(colorIndex_, 4, GL_FLOAT, GL_FALSE, 0, colors);
 	glEnableVertexAttribArray(colorIndex_);
 
-	glDrawArrays(GL_TRIANGLES, 0, 3);
+
+	glUniformMatrix4fv(matrixIndex_, 1, GL_FALSE, &matrix[0]);
+	glUniform2f(anchorIndex_, anchorPointInPixels_.x, anchorPointInPixels_.y);
+
+	glActiveTexture( GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, texture_.name);
+	
+	// Set the sampler texture unit to 0
+	glUniform1i ( samplerIndex_, 0 );
+	
+	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 }
 
 @end
@@ -127,6 +182,15 @@ Class restartAction()
 
 		ShaderNode *node = [ShaderNode node];
 		[self addChild:node];
+		
+		CCMoveBy *action = [CCMoveBy actionWithDuration:2 position:ccp(200,200)];
+		[node runAction:action];
+		
+		CCRotateBy *rot = [CCRotateBy actionWithDuration:2 angle:360];
+		[node runAction:rot];
+
+		CCScaleBy *scale = [CCScaleBy actionWithDuration:2 scale:2];
+		[node runAction:scale];
 	}
 
 	return self;
