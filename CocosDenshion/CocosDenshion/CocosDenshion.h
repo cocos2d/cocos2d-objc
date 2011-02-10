@@ -106,6 +106,14 @@ Requirements:
 extern NSString * const kCDN_BadAlContext;
 extern NSString * const kCDN_AsynchLoadComplete;
 
+extern float const kCD_PitchDefault;
+extern float const kCD_PitchLowerOneOctave;
+extern float const kCD_PitchHigherOneOctave;
+extern float const kCD_PanDefault;
+extern float const kCD_PanFullLeft;
+extern float const kCD_PanFullRight;
+extern float const kCD_GainDefault;
+
 enum bufferState {
 	CD_BS_EMPTY = 0,
 	CD_BS_LOADED = 1,
@@ -346,7 +354,7 @@ typedef struct _sourceInfo {
 @property (readonly) NSString *filePath;
 @property (readonly) int soundId;
 
-- (id)init:(int) theSoundId filePath:(NSString *) theFilePath;
+- (id)init:(int) theSoundId filePath:(const NSString *) theFilePath;
 @end
 
 /** Interpolation type */

@@ -56,6 +56,13 @@ ALvoid  alcMacOSXMixerOutputRateProc(const ALdouble value)
 
 NSString * const kCDN_BadAlContext = @"kCDN_BadAlContext";
 NSString * const kCDN_AsynchLoadComplete = @"kCDN_AsynchLoadComplete";
+float const kCD_PitchDefault = 1.0f;
+float const kCD_PitchLowerOneOctave = 0.5f;
+float const kCD_PitchHigherOneOctave = 2.0f;
+float const kCD_PanDefault = 0.0f;
+float const kCD_PanFullLeft = -1.0f;
+float const kCD_PanFullRight = 1.0f;
+float const kCD_GainDefault = 1.0f;
 
 @interface CDSoundEngine (PrivateMethods)
 -(BOOL) _initOpenAL;
@@ -1337,10 +1344,10 @@ static BOOL _mixerRateSet = NO;
 
 @synthesize filePath, soundId;
 
--(id) init:(int) theSoundId filePath:(NSString *) theFilePath {
+-(id) init:(int) theSoundId filePath:(const NSString *) theFilePath {
 	if ((self = [super init])) {
 		soundId = theSoundId;
-		filePath = theFilePath;
+		filePath = [theFilePath copy];//TODO: is retain necessary or does copy set retain count
 		[filePath retain];
 	} 
 	return self;
