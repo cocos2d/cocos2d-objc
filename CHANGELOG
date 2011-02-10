@@ -5,6 +5,7 @@ version 1.0-beta - XX-XXX-2011
 . [FIX] CocosDenshion: Improved logging
 . [FIX] CocosDenshion: Fixed excessively large or negative gain values cause distorted audio in the simulator.
 . [FIX] CocosDenshion: Added guards to prevent memory corruption caused by invalid parameters
+. [FIX] CocosDenshion: Define some constants for defaults, make const parameter on buffer asynch load method
 . [FIX] Layer: Deprecated. CCMultiplexLayer deprecated. New name is CCLayerMultiplex
 . [FIX] RenderTexture: Added possibility to save buffer in any place (issue #1100)
 . [FIX] Sprite: flipx/flipy don't modify the contentSize (issue #1073)
