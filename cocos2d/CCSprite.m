@@ -34,8 +34,10 @@
 #import "CCAnimation.h"
 #import "CCAnimationCache.h"
 #import "CCTextureCache.h"
-#import "Support/CGPointExtension.h"
 #import "CCDrawingPrimitives.h"
+#import "GLProgram.h"
+#import "Support/CGPointExtension.h"
+#import "Support/TransformUtils.h"
 
 #pragma mark -
 #pragma mark CCSprite
@@ -45,6 +47,20 @@
 #else
 #define RENDER_IN_SUBPIXEL(__A__) ( (int)(__A__))
 #endif
+
+enum {
+    ATTRIB_VERTEX,
+    ATTRIB_COLOR,
+    ATTRIB_TEXCOORD,
+    NUM_ATTRIBUTES
+};
+
+enum {
+	UNIFORM_MVP_MATRIX,
+	UNIFORM_SAMPLER,
+	NUM_UNIFORMS,
+};
+static GLuint _uniforms[NUM_UNIFORMS];
 
 // XXX: Optmization
 struct transformValues_ {
@@ -77,6 +93,24 @@ struct transformValues_ {
 @synthesize offsetPositionInPixels = offsetPositionInPixels_;
 
 
+static GLProgram * _spriteGLProgram = nil;
+
++(void) initialize
+{
+	if ( self == [CCSprite class] ) {
+		_spriteGLProgram = [[GLProgram alloc] initWithVertexShaderFilename:@"Shader.vsh"
+											fragmentShaderFilename:@"Shader.fsh"];
+		
+		[_spriteGLProgram addAttribute:@"aVertex" index:ATTRIB_VERTEX];
+		[_spriteGLProgram addAttribute:@"aColor" index:ATTRIB_COLOR];
+		[_spriteGLProgram addAttribute:@"aTexCoord" index:ATTRIB_TEXCOORD];
+		
+		[_spriteGLProgram link];
+				
+		_uniforms[UNIFORM_MVP_MATRIX] = [_spriteGLProgram uniformIndex:@"uMatrix"];
+		_uniforms[UNIFORM_SAMPLER] = [_spriteGLProgram uniformIndex:@"sTexture"];
+	}
+}
 +(id)spriteWithTexture:(CCTexture2D*)texture
 {
 	return [[[self alloc] initWithTexture:texture] autorelease];
@@ -144,6 +178,10 @@ struct transformValues_ {
 		blendFunc_.src = CC_BLEND_SRC;
 		blendFunc_.dst = CC_BLEND_DST;
 		
+		
+		// shader program
+		self.shaderProgram = _spriteGLProgram;
+
 		// update texture (calls updateBlendFunc)
 		[self setTexture:nil];
 		
@@ -165,7 +203,7 @@ struct transformValues_ {
 		hasChildren_ = NO;
 		
 		// Atlas: Color
-		ccColor4B tmpColor = {255,255,255,255};
+		ccColor4F tmpColor = {1,1,1,1};
 		quad_.bl.colors = tmpColor;
 		quad_.br.colors = tmpColor;
 		quad_.tl.colors = tmpColor;
@@ -479,7 +517,7 @@ struct transformValues_ {
 	// Optimization: if it is not visible, then do nothing
 	if( ! visible_ ) {
 		quad_.br.vertices = quad_.tl.vertices = quad_.tr.vertices = quad_.bl.vertices = (ccVertex3F){0,0,0};
-		[textureAtlas_ updateQuad:&quad_ atIndex:atlasIndex_];
+//		[textureAtlas_ updateQuad:&quad_ atIndex:atlasIndex_];
 		dirty_ = recursiveDirty_ = NO;
 		return ;
 	}
@@ -517,7 +555,7 @@ struct transformValues_ {
 			// If any of the parents are not visible, then don't draw this node
 			if( ! tv.visible ) {
 				quad_.br.vertices = quad_.tl.vertices = quad_.tr.vertices = quad_.bl.vertices = (ccVertex3F){0,0,0};
-				[textureAtlas_ updateQuad:&quad_ atIndex:atlasIndex_];
+//				[textureAtlas_ updateQuad:&quad_ atIndex:atlasIndex_];
 				dirty_ = recursiveDirty_ = NO;
 				return;
 			}
@@ -578,7 +616,7 @@ struct transformValues_ {
 	quad_.tl.vertices = (ccVertex3F) { RENDER_IN_SUBPIXEL(dx), RENDER_IN_SUBPIXEL(dy), vertexZ_ };
 	quad_.tr.vertices = (ccVertex3F) { RENDER_IN_SUBPIXEL(cx), RENDER_IN_SUBPIXEL(cy), vertexZ_ };
 		
-	[textureAtlas_ updateQuad:&quad_ atIndex:atlasIndex_];
+//	[textureAtlas_ updateQuad:&quad_ atIndex:atlasIndex_];
 	dirty_ = recursiveDirty_ = NO;
 }
 
@@ -598,47 +636,46 @@ struct transformValues_ {
 
 -(void) draw
 {
-	NSAssert(!usesBatchNode_, @"If CCSprite is being rendered by CCSpriteBatchNode, CCSprite#draw SHOULD NOT be called");
-
-	// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
-	// Needed states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
-	// Unneeded states: -
-
 	BOOL newBlend = blendFunc_.src != CC_BLEND_SRC || blendFunc_.dst != CC_BLEND_DST;
 	if( newBlend )
 		glBlendFunc( blendFunc_.src, blendFunc_.dst );
-
-#define kQuadSize sizeof(quad_.bl)
-	glBindTexture(GL_TEXTURE_2D, [texture_ name]);
 	
+	
+	GLfloat transformGL[16];	
+	CGAffineToGL(&transformToWorld_, &transformGL[0] );
+	
+	[shaderProgram_ use];	
+	
+#define kQuadSize sizeof(quad_.bl)
 	long offset = (long)&quad_;
 	
 	// vertex
-	NSInteger diff = offsetof( ccV3F_C4B_T2F, vertices);
-	glVertexPointer(3, GL_FLOAT, kQuadSize, (void*) (offset + diff) );
+	NSInteger diff = offsetof( ccV3F_C4F_T2F, vertices);
+	glVertexAttribPointer(ATTRIB_VERTEX, 3, GL_FLOAT, GL_FALSE, kQuadSize, (void*) (offset + diff));
+	glEnableVertexAttribArray(ATTRIB_VERTEX);
 	
+	// texCoods
+	diff = offsetof( ccV3F_C4F_T2F, texCoords);
+	glVertexAttribPointer(ATTRIB_TEXCOORD, 2, GL_FLOAT, GL_FALSE, kQuadSize, (void*)(offset + diff));
+	glEnableVertexAttribArray(ATTRIB_TEXCOORD);
+
 	// color
-	diff = offsetof( ccV3F_C4B_T2F, colors);
-	glColorPointer(4, GL_UNSIGNED_BYTE, kQuadSize, (void*)(offset + diff));
+	diff = offsetof( ccV3F_C4F_T2F, colors);
+	glVertexAttribPointer(ATTRIB_COLOR, 4, GL_FLOAT, GL_FALSE, kQuadSize, (void*)(offset + diff));
+	glEnableVertexAttribArray(ATTRIB_COLOR);
 	
-	// tex coords
-	diff = offsetof( ccV3F_C4B_T2F, texCoords);
-	glTexCoordPointer(2, GL_FLOAT, kQuadSize, (void*)(offset + diff));
+	glUniformMatrix4fv(_uniforms[UNIFORM_MVP_MATRIX], 1, GL_FALSE, &transformGL[0]);
+	
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, [texture_ name]);
+	
+	// Set the sampler texture unit to 0
+	glUniform1i ( _uniforms[UNIFORM_SAMPLER], 0 );
 	
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 	
 	if( newBlend )
 		glBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);
-	
-#if CC_SPRITE_DEBUG_DRAW
-	CGSize s = [self contentSize];
-	CGPoint vertices[4]={
-		ccp(0,0),ccp(s.width,0),
-		ccp(s.width,s.height),ccp(0,s.height),
-	};
-	ccDrawPoly(vertices, 4, YES);
-#endif // CC_TEXTURENODE_DEBUG_DRAW
-	
 }
 
 #pragma mark CCSprite - CCNode overrides
@@ -820,7 +857,7 @@ struct transformValues_ {
 #pragma mark CCSprite - RGBA protocol
 -(void) updateColor
 {
-	ccColor4B color4 = {color_.r, color_.g, color_.b, opacity_ };
+	ccColor4F color4 = {color_.r/255.0f, color_.g/255.0f, color_.b/255.0f, opacity_/255.0f };
 	
 	quad_.bl.colors = color4;
 	quad_.br.colors = color4;
@@ -830,7 +867,8 @@ struct transformValues_ {
 	// renders using Sprite Manager
 	if( usesBatchNode_ ) {
 		if( atlasIndex_ != CCSpriteIndexNotInitialized)
-			[textureAtlas_ updateQuad:&quad_ atIndex:atlasIndex_];
+			;
+//			[textureAtlas_ updateQuad:&quad_ atIndex:atlasIndex_];
 		else
 			// no need to set it recursively
 			// update dirty_, don't update recursiveDirty_

@@ -8,7 +8,7 @@
 // Adapted for cocos2d
 
 #import "GLProgram.h"
-#import "../../Support/CCFileUtils.h"
+#import "Support/CCFileUtils.h"
 
 // START:typedefs
 #pragma mark Function Pointer Definitions
@@ -43,14 +43,13 @@ typedef void (*GLLogFunction) (GLuint program,
 {
     if (self = [super init])
     {
-        attributes = [[NSMutableArray alloc] init];
-        uniforms = [[NSMutableArray alloc] init];
+        uniforms_ = [[NSMutableArray alloc] init];
         NSString *vertShaderPathname, *fragShaderPathname;
-        program = glCreateProgram();
+        program_ = glCreateProgram();
         
         vertShaderPathname = [CCFileUtils fullPathFromRelativePath:vShaderFilename]; 
 
-        if (![self compileShader:&vertShader 
+        if (![self compileShader:&vertShader_
                             type:GL_VERTEX_SHADER 
                             file:vertShaderPathname])
             NSLog(@"Failed to compile vertex shader");
@@ -58,13 +57,13 @@ typedef void (*GLLogFunction) (GLuint program,
         // Create and compile fragment shader
         fragShaderPathname = [CCFileUtils fullPathFromRelativePath:fShaderFilename];
 
-        if (![self compileShader:&fragShader 
+        if (![self compileShader:&fragShader_
                             type:GL_FRAGMENT_SHADER 
                             file:fragShaderPathname])
             NSLog(@"Failed to compile fragment shader");
         
-        glAttachShader(program, vertShader);
-        glAttachShader(program, fragShader);
+        glAttachShader(program_, vertShader_);
+        glAttachShader(program_, fragShader_);
     }
     
     return self;
@@ -98,25 +97,16 @@ typedef void (*GLLogFunction) (GLuint program,
 // END:compile
 #pragma mark -
 // START:addattribute
-- (void)addAttribute:(NSString *)attributeName
+- (void)addAttribute:(NSString *)attributeName index:(GLuint)index
 {
-    if (![attributes containsObject:attributeName])
-    {
-        [attributes addObject:attributeName];
-        glBindAttribLocation(program, 
-                             [attributes indexOfObject:attributeName], 
-                             [attributeName UTF8String]);
-    }
+	glBindAttribLocation(program_, 
+						 index,
+						 [attributeName UTF8String]);
 }
 // END:addattribute
-// START:indexmethods
-- (GLuint)attributeIndex:(NSString *)attributeName
-{
-    return [attributes indexOfObject:attributeName];
-}
 - (GLuint)uniformIndex:(NSString *)uniformName
 {
-    return glGetUniformLocation(program, [uniformName UTF8String]);
+    return glGetUniformLocation(program_, [uniformName UTF8String]);
 }
 // END:indexmethods
 #pragma mark -
@@ -125,17 +115,17 @@ typedef void (*GLLogFunction) (GLuint program,
 {
     GLint status;
     
-    glLinkProgram(program);
-    glValidateProgram(program);
+    glLinkProgram(program_);
+    glValidateProgram(program_);
     
-    glGetProgramiv(program, GL_LINK_STATUS, &status);
+    glGetProgramiv(program_, GL_LINK_STATUS, &status);
     if (status == GL_FALSE)
         return NO;
     
-    if (vertShader)
-        glDeleteShader(vertShader);
-    if (fragShader)
-        glDeleteShader(fragShader);
+    if (vertShader_)
+        glDeleteShader(vertShader_);
+    if (fragShader_)
+        glDeleteShader(fragShader_);
     
     return YES;
 }
@@ -143,7 +133,7 @@ typedef void (*GLLogFunction) (GLuint program,
 // START:use
 - (void)use
 {
-    glUseProgram(program);
+    glUseProgram(program_);
 }
 // END:use
 #pragma mark -
@@ -171,20 +161,20 @@ typedef void (*GLLogFunction) (GLuint program,
 // START:log
 - (NSString *)vertexShaderLog
 {
-    return [self logForOpenGLObject:vertShader 
+    return [self logForOpenGLObject:vertShader_
                        infoCallback:(GLInfoFunction)&glGetProgramiv 
                             logFunc:(GLLogFunction)&glGetProgramInfoLog];
     
 }
 - (NSString *)fragmentShaderLog
 {
-    return [self logForOpenGLObject:fragShader 
+    return [self logForOpenGLObject:fragShader_
                        infoCallback:(GLInfoFunction)&glGetProgramiv 
                             logFunc:(GLLogFunction)&glGetProgramInfoLog];
 }
 - (NSString *)programLog
 {
-    return [self logForOpenGLObject:program 
+    return [self logForOpenGLObject:program_
                        infoCallback:(GLInfoFunction)&glGetProgramiv 
                             logFunc:(GLLogFunction)&glGetProgramInfoLog];
 }
@@ -193,17 +183,16 @@ typedef void (*GLLogFunction) (GLuint program,
 // START:dealloc
 - (void)dealloc
 {
-    [attributes release];
-    [uniforms release];
+    [uniforms_ release];
   
-    if (vertShader)
-        glDeleteShader(vertShader);
+    if (vertShader_)
+        glDeleteShader(vertShader_);
         
-    if (fragShader)
-        glDeleteShader(fragShader);
+    if (fragShader_)
+        glDeleteShader(fragShader_);
     
-    if (program)
-        glDeleteProgram(program);
+    if (program_)
+        glDeleteProgram(program_);
        
     [super dealloc];
 }

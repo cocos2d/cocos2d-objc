@@ -29,8 +29,8 @@
 #import <Availability.h>
 
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
-#import <OpenGLES/ES1/gl.h>
-#import <OpenGLES/ES1/glext.h>
+#import <OpenGLES/ES2/gl.h>
+#import <OpenGLES/ES2/glext.h>
 #import <OpenGLES/EAGL.h>
 #import "iOS/glu.h"
 #import "iOS/EAGLView.h"

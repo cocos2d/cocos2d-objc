@@ -33,14 +33,13 @@
 #import "ccConfig.h"
 #import "Support/CCArray.h"
 
-#import "Platforms/iOS/GLProgram.h"
-
 enum {
 	kCCNodeTagInvalid = -1,
 };
 
 @class CCCamera;
 @class CCGridBase;
+@class GLProgram;
 
 /** CCNode is the main element. Anything thats gets drawn or contains things that get drawn is a CCNode.
  The most popular CCNodes are: CCScene, CCLayer, CCSprite, CCMenu.
@@ -126,9 +125,6 @@ enum {
 	
 	// transform
 	CGAffineTransform transform_, inverse_;
-#if	CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
-	GLfloat	transformGL_[16];
-#endif
 
 	// openGL real Z vertex
 	float vertexZ_;
@@ -153,6 +149,9 @@ enum {
     
 	// user data field
 	void *userData_;
+	
+	// Shader
+	GLProgram	*shaderProgram_;
 
 	// Is running
 	BOOL isRunning_;
@@ -160,10 +159,6 @@ enum {
 	// To reduce memory, place BOOLs that are not properties here:
 	BOOL isTransformDirty_:1;
 	BOOL isInverseDirty_:1;
-#if	CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
-	BOOL isTransformGLDirty_:1;
-#endif	
-
 @public
 	CGAffineTransform transformToWorld_;
 
@@ -241,6 +236,10 @@ enum {
 @property(nonatomic,readwrite,assign) NSInteger tag;
 /** A custom user data pointer */
 @property(nonatomic,readwrite,assign) void *userData;
+/** Shader Program
+ @since v2.0
+ */
+@property(nonatomic,readwrite,assign) GLProgram *shaderProgram;
 
 // initializators
 /** allocates and initializes a node.
@@ -347,9 +346,6 @@ enum {
 
 /** recursive method that visit its children and draw them */
 -(void) visit;
-
--(void) visitShader;
--(void) drawShader;
 
 // transformations
 

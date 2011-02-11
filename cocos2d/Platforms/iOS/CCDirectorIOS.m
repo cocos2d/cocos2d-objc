@@ -177,13 +177,8 @@ CGFloat	__ccContentScaleFactor = 1;
 		CC_ENABLE_DEFAULT_GL_STATES();
 	}
 	
-	if( [openGLView_ useShaders] ) {
-		[runningScene_ visitShader];
-		[notificationNode_ visitShader];
-	} else {
-		[runningScene_ visit];
-		[notificationNode_ visit];
-	}
+	[runningScene_ visit];
+	[notificationNode_ visit];
 
 	if( displayFPS_ )
 		[self showFPS];

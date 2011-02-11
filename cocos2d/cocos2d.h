@@ -113,6 +113,9 @@
 #import "CCMotionStreak.h"
 #import "CCConfiguration.h"
 
+// Shaders
+#import "GLProgram.h"
+
 //
 // cocos2d macros
 //
