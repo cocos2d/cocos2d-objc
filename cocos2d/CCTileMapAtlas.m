@@ -156,7 +156,7 @@
 
 -(void) updateAtlasValueAt:(ccGridSize)pos withValue:(ccColor3B)value withIndex:(int)idx
 {
-	ccV3F_C4B_T2F_Quad quad;
+	ccV3F_C4F_T2F_Quad quad;
 
 	int x = pos.x;
 	int y = pos.y;

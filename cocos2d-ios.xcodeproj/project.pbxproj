@@ -2467,8 +2467,13 @@
 		E0C786AD1211A40400E309E2 /* Tank.c in Sources */ = {isa = PBXBuildFile; fileRef = E0C786AC1211A40400E309E2 /* Tank.c */; };
 		E0C8EA0A1304D82000403770 /* GLProgram.h in Headers */ = {isa = PBXBuildFile; fileRef = E0C8EA081304D82000403770 /* GLProgram.h */; };
 		E0C8EA0B1304D82000403770 /* GLProgram.m in Sources */ = {isa = PBXBuildFile; fileRef = E0C8EA091304D82000403770 /* GLProgram.m */; };
-		E0C8EA6C1304DC6000403770 /* Shader.fsh in Resources */ = {isa = PBXBuildFile; fileRef = E03937B113020D4E00C02870 /* Shader.fsh */; };
-		E0C8EA6D1304DC6000403770 /* Shader.vsh in Resources */ = {isa = PBXBuildFile; fileRef = E03937B213020D4E00C02870 /* Shader.vsh */; };
+		E0C8EA6C1304DC6000403770 /* ShaderTextureColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = E03937B113020D4E00C02870 /* ShaderTextureColor.fsh */; };
+		E0C8EA6D1304DC6000403770 /* ShaderTextureColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = E03937B213020D4E00C02870 /* ShaderTextureColor.vsh */; };
+		E0C8EAE81305582E00403770 /* CCShaderCache.h in Headers */ = {isa = PBXBuildFile; fileRef = E0C8EAE61305582E00403770 /* CCShaderCache.h */; };
+		E0C8EAE91305582E00403770 /* CCShaderCache.m in Sources */ = {isa = PBXBuildFile; fileRef = E0C8EAE71305582E00403770 /* CCShaderCache.m */; };
+		E0C8EC3013057FA400403770 /* futura-48.fnt in Resources */ = {isa = PBXBuildFile; fileRef = E082C9121292DAD50056AC41 /* futura-48.fnt */; };
+		E0C8EC3113057FA400403770 /* futura-48.png in Resources */ = {isa = PBXBuildFile; fileRef = E082C9131292DAD50056AC41 /* futura-48.png */; };
+		E0C8EC701305857C00403770 /* animations in Resources */ = {isa = PBXBuildFile; fileRef = 502C8C9810A701D300D137BA /* animations */; };
 		E0CC4F7D12677DB400691051 /* blocks-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E0CC4F7C12677DB400691051 /* blocks-hd.png */; };
 		E0D2C5D412AF1067008D5DBB /* particles-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E0D2C5D312AF1067008D5DBB /* particles-hd.png */; };
 		E0D2D4F3128CA9E300F78C63 /* piece.png in Resources */ = {isa = PBXBuildFile; fileRef = E0D2D4F2128CA9E300F78C63 /* piece.png */; };
@@ -4292,8 +4297,8 @@
 		E039361C1301C9A400C02870 /* ShaderTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShaderTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E03936361301CA2100C02870 /* ShaderTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ShaderTest.h; path = tests/ShaderTest.h; sourceTree = "<group>"; };
 		E03936371301CA2100C02870 /* ShaderTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ShaderTest.m; path = tests/ShaderTest.m; sourceTree = "<group>"; };
-		E03937B113020D4E00C02870 /* Shader.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Shader.fsh; sourceTree = "<group>"; };
-		E03937B213020D4E00C02870 /* Shader.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Shader.vsh; sourceTree = "<group>"; };
+		E03937B113020D4E00C02870 /* ShaderTextureColor.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ShaderTextureColor.fsh; sourceTree = "<group>"; };
+		E03937B213020D4E00C02870 /* ShaderTextureColor.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ShaderTextureColor.vsh; sourceTree = "<group>"; };
 		E04C631512382E6B00A4B3E6 /* background3-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "background3-hd.png"; sourceTree = "<group>"; };
 		E04C632012382F6100A4B3E6 /* f1-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "f1-hd.png"; sourceTree = "<group>"; };
 		E04C632112382F6100A4B3E6 /* f2-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "f2-hd.png"; sourceTree = "<group>"; };
@@ -4387,6 +4392,8 @@
 		E0C786AC1211A40400E309E2 /* Tank.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; fileEncoding = 4; path = Tank.c; sourceTree = "<group>"; };
 		E0C8EA081304D82000403770 /* GLProgram.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLProgram.h; sourceTree = "<group>"; };
 		E0C8EA091304D82000403770 /* GLProgram.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLProgram.m; sourceTree = "<group>"; };
+		E0C8EAE61305582E00403770 /* CCShaderCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCShaderCache.h; sourceTree = "<group>"; };
+		E0C8EAE71305582E00403770 /* CCShaderCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCShaderCache.m; sourceTree = "<group>"; };
 		E0CC4F7C12677DB400691051 /* blocks-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "blocks-hd.png"; sourceTree = "<group>"; };
 		E0D2C5D312AF1067008D5DBB /* particles-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "particles-hd.png"; sourceTree = "<group>"; };
 		E0D2D4F2128CA9E300F78C63 /* piece.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = piece.png; sourceTree = "<group>"; };
@@ -7018,8 +7025,8 @@
 		E03937B013020D4E00C02870 /* Shaders */ = {
 			isa = PBXGroup;
 			children = (
-				E03937B113020D4E00C02870 /* Shader.fsh */,
-				E03937B213020D4E00C02870 /* Shader.vsh */,
+				E03937B113020D4E00C02870 /* ShaderTextureColor.fsh */,
+				E03937B213020D4E00C02870 /* ShaderTextureColor.vsh */,
 			);
 			name = Shaders;
 			path = Resources/Shaders;
@@ -7101,6 +7108,8 @@
 			children = (
 				E0C8EA081304D82000403770 /* GLProgram.h */,
 				E0C8EA091304D82000403770 /* GLProgram.m */,
+				E0C8EAE61305582E00403770 /* CCShaderCache.h */,
+				E0C8EAE71305582E00403770 /* CCShaderCache.m */,
 			);
 			name = "GL Shaders";
 			sourceTree = "<group>";
@@ -7246,6 +7255,7 @@
 				E02BB704126CADEA006E46A2 /* CCAnimation.h in Headers */,
 				E0DC24DE13007E4900D264C1 /* ES2Renderer.h in Headers */,
 				E0C8EA0A1304D82000403770 /* GLProgram.h in Headers */,
+				E0C8EAE81305582E00403770 /* CCShaderCache.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10610,8 +10620,11 @@
 				E039360B1301C9A400C02870 /* Icon-Small.png in Resources */,
 				E039360C1301C9A400C02870 /* Icon-Small-50.png in Resources */,
 				E039360D1301C9A400C02870 /* Icon-72.png in Resources */,
-				E0C8EA6C1304DC6000403770 /* Shader.fsh in Resources */,
-				E0C8EA6D1304DC6000403770 /* Shader.vsh in Resources */,
+				E0C8EA6C1304DC6000403770 /* ShaderTextureColor.fsh in Resources */,
+				E0C8EA6D1304DC6000403770 /* ShaderTextureColor.vsh in Resources */,
+				E0C8EC3013057FA400403770 /* futura-48.fnt in Resources */,
+				E0C8EC3113057FA400403770 /* futura-48.png in Resources */,
+				E0C8EC701305857C00403770 /* animations in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10816,6 +10829,7 @@
 				E02BB705126CADEA006E46A2 /* CCAnimation.m in Sources */,
 				E0DC24DF13007E4900D264C1 /* ES2Renderer.m in Sources */,
 				E0C8EA0B1304D82000403770 /* GLProgram.m in Sources */,
+				E0C8EAE91305582E00403770 /* CCShaderCache.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

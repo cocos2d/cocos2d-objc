@@ -31,7 +31,10 @@
 #import "CCGrid.h"
 #import "CCDrawingPrimitives.h"
 #import "CCTextureCache.h"
+#import "CCShaderCache.h"
+#import "GLProgram.h"
 #import "Support/CGPointExtension.h"
+#import "Support/TransformUtils.h"
 
 const NSUInteger defaultCapacity = 29;
 
@@ -116,6 +119,9 @@ static 	SEL selUpdate = NULL;
 		// no lazy alloc in this node
 		children_ = [[CCArray alloc] initWithCapacity:capacity];
 		descendants_ = [[CCArray alloc] initWithCapacity:capacity];
+		
+		
+		self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_TextureColor];
 	}
 	
 	return self;
@@ -149,7 +155,6 @@ static 	SEL selUpdate = NULL;
 // Don't call visit on it's children
 -(void) visit
 {
-	
 	// CAREFUL:
 	// This visit is almost identical to CocosNode#visit
 	// with the exception that it doesn't call visit on it's children
@@ -160,22 +165,29 @@ static 	SEL selUpdate = NULL;
 	if (!visible_)
 		return;
 	
-	glPushMatrix();
-	
-	if ( grid_ && grid_.active) {
-		[grid_ beforeDraw];
-		[self transformAncestors];
+	if( isTransformDirty_ ) {
+		transformToWorld_ = [self nodeToParentTransform];
+		
+		if( parent_ )
+			transformToWorld_ = CGAffineTransformConcat( transformToWorld_, parent_->transformToWorld_ );
+		else {
+			CGSize winSize = [[CCDirector sharedDirector] winSize];
+			
+			GLfloat projectionMatrix[16] = {
+				2.0/winSize.width, 0.0, 0.0, -1.0,
+				0.0, 2.0/winSize.height, 0.0, -1.0,
+				0.0, 0.0, -1.0, 0.0,
+				0.0, 0.0, 0.0, 1.0 };
+			
+			GLToCGAffine(&projectionMatrix[0], &transformToWorld_ );
+			transformToWorld_ = CGAffineTransformTranslate(transformToWorld_, -winSize.width/2, -winSize.height/2);
+		}
 	}
 	
-	[self transform];
-	
-	[self draw];
-	
-	if ( grid_ && grid_.active)
-		[grid_ afterDraw:self];
-	
-	glPopMatrix();
+	// self draw
+	[self draw];		
 }
+
 
 // XXX deprecated
 -(CCSprite*) createSpriteWithRect:(CGRect)rect
@@ -288,13 +300,17 @@ static 	SEL selUpdate = NULL;
 		}
 	}
 	
-	// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
-	// Needed states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
-	// Unneeded states: -
-	
 	BOOL newBlend = blendFunc_.src != CC_BLEND_SRC || blendFunc_.dst != CC_BLEND_DST;
 	if( newBlend )
 		glBlendFunc( blendFunc_.src, blendFunc_.dst );
+	
+	[shaderProgram_ use];
+	
+	GLfloat transformGL[16];	
+	CGAffineToGL(&transformToWorld_, &transformGL[0] );
+	
+	glUniformMatrix4fv( [shaderProgram_ uniformIndex:kCCUniformMPVMatrix], 1, GL_FALSE, &transformGL[0]);	
+	glUniform1i ( [shaderProgram_ uniformIndex:kCCUniformSampler], 0 );
 	
 	[textureAtlas_ drawQuads];
 	if( newBlend )
@@ -424,8 +440,8 @@ static 	SEL selUpdate = NULL;
 	if(textureAtlas_.totalQuads == textureAtlas_.capacity)
 		[self increaseAtlasCapacity];
 	
-//	ccV3F_C4F_T2F_Quad quad = [sprite quad];
-//	[textureAtlas_ insertQuad:&quad atIndex:index];
+	ccV3F_C4F_T2F_Quad quad = [sprite quad];
+	[textureAtlas_ insertQuad:&quad atIndex:index];
 	
 	ccArray *descendantsData = descendants_->data;
 	

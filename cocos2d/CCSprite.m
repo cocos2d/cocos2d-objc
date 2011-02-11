@@ -35,6 +35,7 @@
 #import "CCAnimationCache.h"
 #import "CCTextureCache.h"
 #import "CCDrawingPrimitives.h"
+#import "CCShaderCache.h"
 #import "GLProgram.h"
 #import "Support/CGPointExtension.h"
 #import "Support/TransformUtils.h"
@@ -47,20 +48,6 @@
 #else
 #define RENDER_IN_SUBPIXEL(__A__) ( (int)(__A__))
 #endif
-
-enum {
-    ATTRIB_VERTEX,
-    ATTRIB_COLOR,
-    ATTRIB_TEXCOORD,
-    NUM_ATTRIBUTES
-};
-
-enum {
-	UNIFORM_MVP_MATRIX,
-	UNIFORM_SAMPLER,
-	NUM_UNIFORMS,
-};
-static GLuint _uniforms[NUM_UNIFORMS];
 
 // XXX: Optmization
 struct transformValues_ {
@@ -93,24 +80,6 @@ struct transformValues_ {
 @synthesize offsetPositionInPixels = offsetPositionInPixels_;
 
 
-static GLProgram * _spriteGLProgram = nil;
-
-+(void) initialize
-{
-	if ( self == [CCSprite class] ) {
-		_spriteGLProgram = [[GLProgram alloc] initWithVertexShaderFilename:@"Shader.vsh"
-											fragmentShaderFilename:@"Shader.fsh"];
-		
-		[_spriteGLProgram addAttribute:@"aVertex" index:ATTRIB_VERTEX];
-		[_spriteGLProgram addAttribute:@"aColor" index:ATTRIB_COLOR];
-		[_spriteGLProgram addAttribute:@"aTexCoord" index:ATTRIB_TEXCOORD];
-		
-		[_spriteGLProgram link];
-				
-		_uniforms[UNIFORM_MVP_MATRIX] = [_spriteGLProgram uniformIndex:@"uMatrix"];
-		_uniforms[UNIFORM_SAMPLER] = [_spriteGLProgram uniformIndex:@"sTexture"];
-	}
-}
 +(id)spriteWithTexture:(CCTexture2D*)texture
 {
 	return [[[self alloc] initWithTexture:texture] autorelease];
@@ -180,7 +149,7 @@ static GLProgram * _spriteGLProgram = nil;
 		
 		
 		// shader program
-		self.shaderProgram = _spriteGLProgram;
+		self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_TextureColor];
 
 		// update texture (calls updateBlendFunc)
 		[self setTexture:nil];
@@ -517,7 +486,7 @@ static GLProgram * _spriteGLProgram = nil;
 	// Optimization: if it is not visible, then do nothing
 	if( ! visible_ ) {
 		quad_.br.vertices = quad_.tl.vertices = quad_.tr.vertices = quad_.bl.vertices = (ccVertex3F){0,0,0};
-//		[textureAtlas_ updateQuad:&quad_ atIndex:atlasIndex_];
+		[textureAtlas_ updateQuad:&quad_ atIndex:atlasIndex_];
 		dirty_ = recursiveDirty_ = NO;
 		return ;
 	}
@@ -555,7 +524,7 @@ static GLProgram * _spriteGLProgram = nil;
 			// If any of the parents are not visible, then don't draw this node
 			if( ! tv.visible ) {
 				quad_.br.vertices = quad_.tl.vertices = quad_.tr.vertices = quad_.bl.vertices = (ccVertex3F){0,0,0};
-//				[textureAtlas_ updateQuad:&quad_ atIndex:atlasIndex_];
+				[textureAtlas_ updateQuad:&quad_ atIndex:atlasIndex_];
 				dirty_ = recursiveDirty_ = NO;
 				return;
 			}
@@ -616,7 +585,7 @@ static GLProgram * _spriteGLProgram = nil;
 	quad_.tl.vertices = (ccVertex3F) { RENDER_IN_SUBPIXEL(dx), RENDER_IN_SUBPIXEL(dy), vertexZ_ };
 	quad_.tr.vertices = (ccVertex3F) { RENDER_IN_SUBPIXEL(cx), RENDER_IN_SUBPIXEL(cy), vertexZ_ };
 		
-//	[textureAtlas_ updateQuad:&quad_ atIndex:atlasIndex_];
+	[textureAtlas_ updateQuad:&quad_ atIndex:atlasIndex_];
 	dirty_ = recursiveDirty_ = NO;
 }
 
@@ -641,37 +610,44 @@ static GLProgram * _spriteGLProgram = nil;
 		glBlendFunc( blendFunc_.src, blendFunc_.dst );
 	
 	
+	[shaderProgram_ use];	
+
+	//
+	// Uniforms
+	//
 	GLfloat transformGL[16];	
 	CGAffineToGL(&transformToWorld_, &transformGL[0] );
 	
-	[shaderProgram_ use];	
-	
-#define kQuadSize sizeof(quad_.bl)
-	long offset = (long)&quad_;
-	
-	// vertex
-	NSInteger diff = offsetof( ccV3F_C4F_T2F, vertices);
-	glVertexAttribPointer(ATTRIB_VERTEX, 3, GL_FLOAT, GL_FALSE, kQuadSize, (void*) (offset + diff));
-	glEnableVertexAttribArray(ATTRIB_VERTEX);
-	
-	// texCoods
-	diff = offsetof( ccV3F_C4F_T2F, texCoords);
-	glVertexAttribPointer(ATTRIB_TEXCOORD, 2, GL_FLOAT, GL_FALSE, kQuadSize, (void*)(offset + diff));
-	glEnableVertexAttribArray(ATTRIB_TEXCOORD);
-
-	// color
-	diff = offsetof( ccV3F_C4F_T2F, colors);
-	glVertexAttribPointer(ATTRIB_COLOR, 4, GL_FLOAT, GL_FALSE, kQuadSize, (void*)(offset + diff));
-	glEnableVertexAttribArray(ATTRIB_COLOR);
-	
-	glUniformMatrix4fv(_uniforms[UNIFORM_MVP_MATRIX], 1, GL_FALSE, &transformGL[0]);
+	glUniformMatrix4fv( [shaderProgram_ uniformIndex:kCCUniformMPVMatrix], 1, GL_FALSE, &transformGL[0]);
 	
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, [texture_ name]);
 	
 	// Set the sampler texture unit to 0
-	glUniform1i ( _uniforms[UNIFORM_SAMPLER], 0 );
+	glUniform1i ( [shaderProgram_ uniformIndex:kCCUniformSampler], 0 );
+		
+	//
+	// Attributes
+	//
+#define kQuadSize sizeof(quad_.bl)
+	long offset = (long)&quad_;
 	
+	// vertex
+	NSInteger diff = offsetof( ccV3F_C4F_T2F, vertices);
+	glVertexAttribPointer(kCCAttribVertex, 3, GL_FLOAT, GL_FALSE, kQuadSize, (void*) (offset + diff));
+	glEnableVertexAttribArray(kCCAttribVertex);
+	
+	// texCoods
+	diff = offsetof( ccV3F_C4F_T2F, texCoords);
+	glVertexAttribPointer(kCCAttribTexCoords, 2, GL_FLOAT, GL_FALSE, kQuadSize, (void*)(offset + diff));
+	glEnableVertexAttribArray(kCCAttribTexCoords);
+
+	// color
+	diff = offsetof( ccV3F_C4F_T2F, colors);
+	glVertexAttribPointer(kCCAttribColor, 4, GL_FLOAT, GL_FALSE, kQuadSize, (void*)(offset + diff));
+	glEnableVertexAttribArray(kCCAttribColor);
+	
+
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 	
 	if( newBlend )
@@ -867,8 +843,7 @@ static GLProgram * _spriteGLProgram = nil;
 	// renders using Sprite Manager
 	if( usesBatchNode_ ) {
 		if( atlasIndex_ != CCSpriteIndexNotInitialized)
-			;
-//			[textureAtlas_ updateQuad:&quad_ atIndex:atlasIndex_];
+			[textureAtlas_ updateQuad:&quad_ atIndex:atlasIndex_];
 		else
 			// no need to set it recursively
 			// update dirty_, don't update recursiveDirty_

@@ -1,3 +1,5 @@
+// http://www.cocos2d-iphone.org
+
 attribute vec4 aVertex;
 attribute vec2 aTexCoord;
 attribute vec4 aColor;

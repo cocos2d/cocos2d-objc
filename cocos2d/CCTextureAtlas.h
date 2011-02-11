@@ -43,7 +43,7 @@
 {
 	NSUInteger			totalQuads_;
 	NSUInteger			capacity_;
-	ccV3F_C4B_T2F_Quad	*quads_;	// quads to be rendered
+	ccV3F_C4F_T2F_Quad	*quads_;	// quads to be rendered
 	GLushort			*indices_;
 	CCTexture2D			*texture_;
 #if CC_USES_VBO
@@ -58,7 +58,7 @@
 /** Texture of the texture atlas */
 @property (nonatomic,retain) CCTexture2D *texture;
 /** Quads that are going to be rendered */
-@property (nonatomic,readwrite) ccV3F_C4B_T2F_Quad *quads;
+@property (nonatomic,readwrite) ccV3F_C4F_T2F_Quad *quads;
 
 /** creates a TextureAtlas with an filename and with an initial capacity for Quads.
  * The TextureAtlas capacity can be increased in runtime.
@@ -90,13 +90,13 @@
  * index must be between 0 and the atlas capacity - 1
  @since v0.8
  */
--(void) updateQuad:(ccV3F_C4B_T2F_Quad*)quad atIndex:(NSUInteger)index;
+-(void) updateQuad:(ccV3F_C4F_T2F_Quad*)quad atIndex:(NSUInteger)index;
 
 /** Inserts a Quad (texture, vertex and color) at a certain index
  index must be between 0 and the atlas capacity - 1
  @since v0.8
  */
--(void) insertQuad:(ccV3F_C4B_T2F_Quad*)quad atIndex:(NSUInteger)index;
+-(void) insertQuad:(ccV3F_C4F_T2F_Quad*)quad atIndex:(NSUInteger)index;
 
 /** Removes the quad that is located at a certain index and inserts it at a new index
  This operation is faster than removing and inserting in a quad in 2 different steps
