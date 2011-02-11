@@ -2030,10 +2030,6 @@
 		E03936171301C9A400C02870 /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */; };
 		E03936181301C9A400C02870 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 503092B210447296005F7AFC /* libz.dylib */; };
 		E03936381301CA2100C02870 /* ShaderTest.m in Sources */ = {isa = PBXBuildFile; fileRef = E03936371301CA2100C02870 /* ShaderTest.m */; };
-		E03936DE1302054700C02870 /* GLProgram.h in Headers */ = {isa = PBXBuildFile; fileRef = E03936DC1302054700C02870 /* GLProgram.h */; };
-		E03936DF1302054700C02870 /* GLProgram.m in Sources */ = {isa = PBXBuildFile; fileRef = E03936DD1302054700C02870 /* GLProgram.m */; };
-		E03937B313020D4E00C02870 /* Shader.fsh in Resources */ = {isa = PBXBuildFile; fileRef = E03937B113020D4E00C02870 /* Shader.fsh */; };
-		E03937B413020D4E00C02870 /* Shader.vsh in Resources */ = {isa = PBXBuildFile; fileRef = E03937B213020D4E00C02870 /* Shader.vsh */; };
 		E04C0F9F12886799000C4393 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 503092B210447296005F7AFC /* libz.dylib */; };
 		E04C0FA11288679D000C4393 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 503092B210447296005F7AFC /* libz.dylib */; };
 		E04C0FA21288679E000C4393 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 503092B210447296005F7AFC /* libz.dylib */; };
@@ -2469,6 +2465,10 @@
 		E0C5588B11FE493B00B9E4CB /* ZwoptexTest.m in Sources */ = {isa = PBXBuildFile; fileRef = E0C5588A11FE493B00B9E4CB /* ZwoptexTest.m */; };
 		E0C5589511FE4CF100B9E4CB /* zwoptex in Resources */ = {isa = PBXBuildFile; fileRef = E0C5588E11FE4CF100B9E4CB /* zwoptex */; };
 		E0C786AD1211A40400E309E2 /* Tank.c in Sources */ = {isa = PBXBuildFile; fileRef = E0C786AC1211A40400E309E2 /* Tank.c */; };
+		E0C8EA0A1304D82000403770 /* GLProgram.h in Headers */ = {isa = PBXBuildFile; fileRef = E0C8EA081304D82000403770 /* GLProgram.h */; };
+		E0C8EA0B1304D82000403770 /* GLProgram.m in Sources */ = {isa = PBXBuildFile; fileRef = E0C8EA091304D82000403770 /* GLProgram.m */; };
+		E0C8EA6C1304DC6000403770 /* Shader.fsh in Resources */ = {isa = PBXBuildFile; fileRef = E03937B113020D4E00C02870 /* Shader.fsh */; };
+		E0C8EA6D1304DC6000403770 /* Shader.vsh in Resources */ = {isa = PBXBuildFile; fileRef = E03937B213020D4E00C02870 /* Shader.vsh */; };
 		E0CC4F7D12677DB400691051 /* blocks-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E0CC4F7C12677DB400691051 /* blocks-hd.png */; };
 		E0D2C5D412AF1067008D5DBB /* particles-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E0D2C5D312AF1067008D5DBB /* particles-hd.png */; };
 		E0D2D4F3128CA9E300F78C63 /* piece.png in Resources */ = {isa = PBXBuildFile; fileRef = E0D2D4F2128CA9E300F78C63 /* piece.png */; };
@@ -4292,8 +4292,6 @@
 		E039361C1301C9A400C02870 /* ShaderTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShaderTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E03936361301CA2100C02870 /* ShaderTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ShaderTest.h; path = tests/ShaderTest.h; sourceTree = "<group>"; };
 		E03936371301CA2100C02870 /* ShaderTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ShaderTest.m; path = tests/ShaderTest.m; sourceTree = "<group>"; };
-		E03936DC1302054700C02870 /* GLProgram.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLProgram.h; sourceTree = "<group>"; };
-		E03936DD1302054700C02870 /* GLProgram.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLProgram.m; sourceTree = "<group>"; };
 		E03937B113020D4E00C02870 /* Shader.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Shader.fsh; sourceTree = "<group>"; };
 		E03937B213020D4E00C02870 /* Shader.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Shader.vsh; sourceTree = "<group>"; };
 		E04C631512382E6B00A4B3E6 /* background3-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "background3-hd.png"; sourceTree = "<group>"; };
@@ -4387,6 +4385,8 @@
 		E0C783B31210A39200E309E2 /* VerticalStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VerticalStack.h; sourceTree = "<group>"; };
 		E0C783B41210A39200E309E2 /* Web.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Web.h; sourceTree = "<group>"; };
 		E0C786AC1211A40400E309E2 /* Tank.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; fileEncoding = 4; path = Tank.c; sourceTree = "<group>"; };
+		E0C8EA081304D82000403770 /* GLProgram.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLProgram.h; sourceTree = "<group>"; };
+		E0C8EA091304D82000403770 /* GLProgram.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLProgram.m; sourceTree = "<group>"; };
 		E0CC4F7C12677DB400691051 /* blocks-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "blocks-hd.png"; sourceTree = "<group>"; };
 		E0D2C5D312AF1067008D5DBB /* particles-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "particles-hd.png"; sourceTree = "<group>"; };
 		E0D2D4F2128CA9E300F78C63 /* piece.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = piece.png; sourceTree = "<group>"; };
@@ -5600,6 +5600,7 @@
 				50A24E770F3780A2007CAEB0 /* Actions */,
 				50A24E760F378092007CAEB0 /* Effects */,
 				50E1355310ADEA9400C9E7FA /* Textures */,
+				E0C8EA0C1304D82B00403770 /* GL Shaders */,
 				501CCFA30E99657C00B86F68 /* Support */,
 				05AAF16B10EE79B700CACA2B /* Block Support */,
 				E0EAD0E8121F4B4600B0C81C /* Platforms */,
@@ -7095,6 +7096,15 @@
 			path = Testbed/Tests;
 			sourceTree = "<group>";
 		};
+		E0C8EA0C1304D82B00403770 /* GL Shaders */ = {
+			isa = PBXGroup;
+			children = (
+				E0C8EA081304D82000403770 /* GLProgram.h */,
+				E0C8EA091304D82000403770 /* GLProgram.m */,
+			);
+			name = "GL Shaders";
+			sourceTree = "<group>";
+		};
 		E0E9749E1237E4EA00E3E64B /* Mac */ = {
 			isa = PBXGroup;
 			children = (
@@ -7138,8 +7148,6 @@
 				E0EAD0F7121F4B4600B0C81C /* ESRenderer.h */,
 				E0EAD0F8121F4B4600B0C81C /* glu.c */,
 				E0EAD0F9121F4B4600B0C81C /* glu.h */,
-				E03936DC1302054700C02870 /* GLProgram.h */,
-				E03936DD1302054700C02870 /* GLProgram.m */,
 			);
 			path = iOS;
 			sourceTree = "<group>";
@@ -7237,7 +7245,7 @@
 				E02BB6D6126CA93A006E46A2 /* CCAnimationCache.h in Headers */,
 				E02BB704126CADEA006E46A2 /* CCAnimation.h in Headers */,
 				E0DC24DE13007E4900D264C1 /* ES2Renderer.h in Headers */,
-				E03936DE1302054700C02870 /* GLProgram.h in Headers */,
+				E0C8EA0A1304D82000403770 /* GLProgram.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10602,8 +10610,8 @@
 				E039360B1301C9A400C02870 /* Icon-Small.png in Resources */,
 				E039360C1301C9A400C02870 /* Icon-Small-50.png in Resources */,
 				E039360D1301C9A400C02870 /* Icon-72.png in Resources */,
-				E03937B313020D4E00C02870 /* Shader.fsh in Resources */,
-				E03937B413020D4E00C02870 /* Shader.vsh in Resources */,
+				E0C8EA6C1304DC6000403770 /* Shader.fsh in Resources */,
+				E0C8EA6D1304DC6000403770 /* Shader.vsh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10807,7 +10815,7 @@
 				E02BB6D7126CA93A006E46A2 /* CCAnimationCache.m in Sources */,
 				E02BB705126CADEA006E46A2 /* CCAnimation.m in Sources */,
 				E0DC24DF13007E4900D264C1 /* ES2Renderer.m in Sources */,
-				E03936DF1302054700C02870 /* GLProgram.m in Sources */,
+				E0C8EA0B1304D82000403770 /* GLProgram.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -35,11 +35,11 @@
 #import "Support/ccCArray.h"
 #import "Support/TransformUtils.h"
 #import "ccMacros.h"
+#import "GLProgram.h"
 
 #import <Availability.h>
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 #import "Platforms/iOS/CCDirectorIOS.h"
-#import "Platforms/iOS/GLProgram.h"
 #endif
 
 
@@ -70,6 +70,7 @@
 @synthesize vertexZ = vertexZ_;
 @synthesize isRunning = isRunning_;
 @synthesize userData = userData_;
+@synthesize	shaderProgram = shaderProgram_;
 
 #pragma mark CCNode - Transform related properties
 
@@ -78,152 +79,6 @@
 @synthesize anchorPoint = anchorPoint_, anchorPointInPixels = anchorPointInPixels_;
 @synthesize contentSize = contentSize_, contentSizeInPixels = contentSizeInPixels_;
 @synthesize isRelativeAnchorPoint = isRelativeAnchorPoint_;
-
-// getters synthesized, setters explicit
--(void) setRotation: (float)newRotation
-{
-	rotation_ = newRotation;
-	isTransformDirty_ = isInverseDirty_ = YES;
-#if CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
-	isTransformGLDirty_ = YES;
-#endif
-}
-
--(void) setScaleX: (float)newScaleX
-{
-	scaleX_ = newScaleX;
-	isTransformDirty_ = isInverseDirty_ = YES;
-#if CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
-	isTransformGLDirty_ = YES;
-#endif	
-}
-
--(void) setScaleY: (float)newScaleY
-{
-	scaleY_ = newScaleY;
-	isTransformDirty_ = isInverseDirty_ = YES;
-#if CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
-	isTransformGLDirty_ = YES;
-#endif	
-}
-
--(void) setPosition: (CGPoint)newPosition
-{
-	position_ = newPosition;
-	if( CC_CONTENT_SCALE_FACTOR() == 1 )
-		positionInPixels_ = position_;
-	else
-		positionInPixels_ = ccpMult( newPosition,  CC_CONTENT_SCALE_FACTOR() );
-	
-	isTransformDirty_ = isInverseDirty_ = YES;
-#if CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
-	isTransformGLDirty_ = YES;
-#endif	
-}
-
--(void) setPositionInPixels:(CGPoint)newPosition
-{
-	positionInPixels_ = newPosition;
-
-	if( CC_CONTENT_SCALE_FACTOR() == 1 )
-		position_ = positionInPixels_;
-	else
-		position_ = ccpMult( newPosition, 1/CC_CONTENT_SCALE_FACTOR() );
-	
-	isTransformDirty_ = isInverseDirty_ = YES;
-#if CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
-	isTransformGLDirty_ = YES;
-#endif	
-}
-
--(void) setIsRelativeAnchorPoint: (BOOL)newValue
-{
-	isRelativeAnchorPoint_ = newValue;
-	isTransformDirty_ = isInverseDirty_ = YES;
-#if CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
-	isTransformGLDirty_ = YES;
-#endif	
-}
-
--(void) setAnchorPoint:(CGPoint)point
-{
-	if( ! CGPointEqualToPoint(point, anchorPoint_) ) {
-		anchorPoint_ = point;
-		anchorPointInPixels_ = ccp( contentSizeInPixels_.width * anchorPoint_.x, contentSizeInPixels_.height * anchorPoint_.y );
-		isTransformDirty_ = isInverseDirty_ = YES;
-#if CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
-		isTransformGLDirty_ = YES;
-#endif		
-	}
-}
-
--(void) setContentSize:(CGSize)size
-{
-	if( ! CGSizeEqualToSize(size, contentSize_) ) {
-		contentSize_ = size;
-		
-		if( CC_CONTENT_SCALE_FACTOR() == 1 )
-			contentSizeInPixels_ = contentSize_;
-		else
-			contentSizeInPixels_ = CGSizeMake( size.width * CC_CONTENT_SCALE_FACTOR(), size.height * CC_CONTENT_SCALE_FACTOR() );
-		
-		anchorPointInPixels_ = ccp( contentSizeInPixels_.width * anchorPoint_.x, contentSizeInPixels_.height * anchorPoint_.y );
-		isTransformDirty_ = isInverseDirty_ = YES;
-#if CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
-		isTransformGLDirty_ = YES;
-#endif		
-	}
-}
-
--(void) setContentSizeInPixels:(CGSize)size
-{
-	if( ! CGSizeEqualToSize(size, contentSizeInPixels_) ) {
-		contentSizeInPixels_ = size;
-
-		if( CC_CONTENT_SCALE_FACTOR() == 1 )
-			contentSize_ = contentSizeInPixels_;
-		else
-			contentSize_ = CGSizeMake( size.width / CC_CONTENT_SCALE_FACTOR(), size.height / CC_CONTENT_SCALE_FACTOR() );
-		
-		anchorPointInPixels_ = ccp( contentSizeInPixels_.width * anchorPoint_.x, contentSizeInPixels_.height * anchorPoint_.y );
-		isTransformDirty_ = isInverseDirty_ = YES;
-#if CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
-		isTransformGLDirty_ = YES;
-#endif		
-	}
-}
-
-- (CGRect) boundingBox
-{
-	CGRect ret = [self boundingBoxInPixels];
-	return CC_RECT_PIXELS_TO_POINTS( ret );
-}
-
-- (CGRect) boundingBoxInPixels
-{
-	CGRect rect = CGRectMake(0, 0, contentSizeInPixels_.width, contentSizeInPixels_.height);
-	return CGRectApplyAffineTransform(rect, [self nodeToParentTransform]);
-}
-
--(void) setVertexZ:(float)vertexZ
-{
-	vertexZ_ = vertexZ * CC_CONTENT_SCALE_FACTOR();
-}
-
--(float) scale
-{
-	NSAssert( scaleX_ == scaleY_, @"CCNode#scale. ScaleX != ScaleY. Don't know which one to return");
-	return scaleX_;
-}
-
--(void) setScale:(float) s
-{
-	scaleX_ = scaleY_ = s;
-	isTransformDirty_ = isInverseDirty_ = YES;
-#if CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
-	isTransformGLDirty_ = YES;
-#endif	
-}
 
 #pragma mark CCNode - Init & cleanup
 
@@ -249,9 +104,6 @@
 		isRelativeAnchorPoint_ = YES; 
 		
 		isTransformDirty_ = isInverseDirty_ = YES;
-#if CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
-		isTransformGLDirty_ = YES;
-#endif
 		
 		vertexZ_ = 0;
 		
@@ -305,6 +157,8 @@
 	
 	[grid_ release];
 	
+	[shaderProgram_ release];
+	
 	// children
 	CCNode *child;
 	CCARRAY_FOREACH(children_, child)
@@ -313,6 +167,124 @@
 	[children_ release];
 	
 	[super dealloc];
+}
+
+#pragma mark Setters
+
+// getters synthesized, setters explicit
+-(void) setRotation: (float)newRotation
+{
+	rotation_ = newRotation;
+	isTransformDirty_ = isInverseDirty_ = YES;
+}
+
+-(void) setScaleX: (float)newScaleX
+{
+	scaleX_ = newScaleX;
+	isTransformDirty_ = isInverseDirty_ = YES;
+}
+
+-(void) setScaleY: (float)newScaleY
+{
+	scaleY_ = newScaleY;
+	isTransformDirty_ = isInverseDirty_ = YES;
+}
+
+-(void) setPosition: (CGPoint)newPosition
+{
+	position_ = newPosition;
+	if( CC_CONTENT_SCALE_FACTOR() == 1 )
+		positionInPixels_ = position_;
+	else
+		positionInPixels_ = ccpMult( newPosition,  CC_CONTENT_SCALE_FACTOR() );
+	
+	isTransformDirty_ = isInverseDirty_ = YES;
+}
+
+-(void) setPositionInPixels:(CGPoint)newPosition
+{
+	positionInPixels_ = newPosition;
+	
+	if( CC_CONTENT_SCALE_FACTOR() == 1 )
+		position_ = positionInPixels_;
+	else
+		position_ = ccpMult( newPosition, 1/CC_CONTENT_SCALE_FACTOR() );
+	
+	isTransformDirty_ = isInverseDirty_ = YES;
+}
+
+-(void) setIsRelativeAnchorPoint: (BOOL)newValue
+{
+	isRelativeAnchorPoint_ = newValue;
+	isTransformDirty_ = isInverseDirty_ = YES;
+}
+
+-(void) setAnchorPoint:(CGPoint)point
+{
+	if( ! CGPointEqualToPoint(point, anchorPoint_) ) {
+		anchorPoint_ = point;
+		anchorPointInPixels_ = ccp( contentSizeInPixels_.width * anchorPoint_.x, contentSizeInPixels_.height * anchorPoint_.y );
+		isTransformDirty_ = isInverseDirty_ = YES;
+	}
+}
+
+-(void) setContentSize:(CGSize)size
+{
+	if( ! CGSizeEqualToSize(size, contentSize_) ) {
+		contentSize_ = size;
+		
+		if( CC_CONTENT_SCALE_FACTOR() == 1 )
+			contentSizeInPixels_ = contentSize_;
+		else
+			contentSizeInPixels_ = CGSizeMake( size.width * CC_CONTENT_SCALE_FACTOR(), size.height * CC_CONTENT_SCALE_FACTOR() );
+		
+		anchorPointInPixels_ = ccp( contentSizeInPixels_.width * anchorPoint_.x, contentSizeInPixels_.height * anchorPoint_.y );
+		isTransformDirty_ = isInverseDirty_ = YES;
+	}
+}
+
+-(void) setContentSizeInPixels:(CGSize)size
+{
+	if( ! CGSizeEqualToSize(size, contentSizeInPixels_) ) {
+		contentSizeInPixels_ = size;
+		
+		if( CC_CONTENT_SCALE_FACTOR() == 1 )
+			contentSize_ = contentSizeInPixels_;
+		else
+			contentSize_ = CGSizeMake( size.width / CC_CONTENT_SCALE_FACTOR(), size.height / CC_CONTENT_SCALE_FACTOR() );
+		
+		anchorPointInPixels_ = ccp( contentSizeInPixels_.width * anchorPoint_.x, contentSizeInPixels_.height * anchorPoint_.y );
+		isTransformDirty_ = isInverseDirty_ = YES;
+	}
+}
+
+- (CGRect) boundingBox
+{
+	CGRect ret = [self boundingBoxInPixels];
+	return CC_RECT_PIXELS_TO_POINTS( ret );
+}
+
+- (CGRect) boundingBoxInPixels
+{
+	CGRect rect = CGRectMake(0, 0, contentSizeInPixels_.width, contentSizeInPixels_.height);
+	return CGRectApplyAffineTransform(rect, [self nodeToParentTransform]);
+}
+
+-(void) setVertexZ:(float)vertexZ
+{
+	vertexZ_ = vertexZ * CC_CONTENT_SCALE_FACTOR();
+}
+
+-(float) scale
+{
+	NSAssert( scaleX_ == scaleY_, @"CCNode#scale. ScaleX != ScaleY. Don't know which one to return");
+	return scaleX_;
+}
+
+-(void) setScale:(float) s
+{
+	scaleX_ = scaleY_ = s;
+	isTransformDirty_ = isInverseDirty_ = YES;
 }
 
 #pragma mark CCNode Composition
@@ -508,70 +480,14 @@
 -(void) draw
 {
 	// override me
-	// Only use this function to draw your staff.
-	// DON'T draw your stuff outside this method
 }
-
 -(void) visit
 {
 	// quick return if not visible
 	if (!visible_)
 		return;
-	
-	glPushMatrix();
-	
-	if ( grid_ && grid_.active) {
-		[grid_ beforeDraw];
-		[self transformAncestors];
-	}
 
-	[self transform];
-	
-	if(children_) {
-		ccArray *arrayData = children_->data;
-		NSUInteger i = 0;
-		
-		// draw children zOrder < 0
-		for( ; i < arrayData->num; i++ ) {
-			CCNode *child = arrayData->arr[i];
-			if ( [child zOrder] < 0 )
-				[child visit];
-			else
-				break;
-		}
-		
-		// self draw
-		[self draw];
-		
-		// draw children zOrder >= 0
-		for( ; i < arrayData->num; i++ ) {
-			CCNode *child =  arrayData->arr[i];
-			[child visit];
-		}
-
-	} else
-		[self draw];
-	
-	if ( grid_ && grid_.active)
-		[grid_ afterDraw:self];
-	
-	glPopMatrix();
-}
-
--(void) drawShader
-{
-	// override me
-	// Only use this function to draw your staff.
-	// DON'T draw your stuff outside this method
-}
-
--(void) visitShader
-{
-	// quick return if not visible
-	if (!visible_)
-		return;
-
-	if( isTransformGLDirty_ ) {
+	if( isTransformDirty_ ) {
 		transformToWorld_ = [self nodeToParentTransform];
 		
 		if( parent_ )
@@ -598,99 +514,32 @@
 		for( ; i < arrayData->num; i++ ) {
 			CCNode *child = arrayData->arr[i];
 			if ( [child zOrder] < 0 )
-				[child visitShader];
+				[child visit];
 			else
 				break;
 		}
 		
 		// self draw
-		[self drawShader];
+		[self draw];
 		
 		// draw children zOrder >= 0
 		for( ; i < arrayData->num; i++ ) {
 			CCNode *child =  arrayData->arr[i];
-			[child visitShader];
+			[child visit];
 		}
 		
 	} else
-		[self drawShader];	
+		[self draw];	
 }
 
 #pragma mark CCNode - Transformations
 
 -(void) transformAncestors
 {
-	if( parent_ ) {
-		[parent_ transformAncestors];
-		[parent_ transform];
-	}
 }
 
 -(void) transform
-{	
-	// transformations
-	
-#if CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
-	// BEGIN alternative -- using cached transform
-	//
-	if( isTransformGLDirty_ ) {
-		CGAffineTransform t = [self nodeToParentTransform];
-		CGAffineToGL(&t, transformGL_);
-		isTransformGLDirty_ = NO;
-	}
-	
-	glMultMatrixf(transformGL_);
-	if( vertexZ_ )
-		glTranslatef(0, 0, vertexZ_);
-	
-	// XXX: Expensive calls. Camera should be integrated into the cached affine matrix
-	if ( camera_ && !(grid_ && grid_.active) )
-	{
-		BOOL translate = (anchorPointInPixels_.x != 0.0f || anchorPointInPixels_.y != 0.0f);
-		
-		if( translate )
-			ccglTranslate(RENDER_IN_SUBPIXEL(anchorPointInPixels_.x), RENDER_IN_SUBPIXEL(anchorPointInPixels_.y), 0);
-		
-		[camera_ locate];
-		
-		if( translate )
-			ccglTranslate(RENDER_IN_SUBPIXEL(-anchorPointInPixels_.x), RENDER_IN_SUBPIXEL(-anchorPointInPixels_.y), 0);
-	}
-	
-	
-	// END alternative
-	
-#else
-	// BEGIN original implementation
-	// 
-	// translate
-	if ( isRelativeAnchorPoint_ && (anchorPointInPixels_.x != 0 || anchorPointInPixels_.y != 0 ) )
-		glTranslatef( RENDER_IN_SUBPIXEL(-anchorPointInPixels_.x), RENDER_IN_SUBPIXEL(-anchorPointInPixels_.y), 0);
-	
-	if (anchorPointInPixels_.x != 0 || anchorPointInPixels_.y != 0)
-		glTranslatef( RENDER_IN_SUBPIXEL(positionInPixels_.x + anchorPointInPixels_.x), RENDER_IN_SUBPIXEL(positionInPixels_.y + anchorPointInPixels_.y), vertexZ_);
-	else if ( positionInPixels_.x !=0 || positionInPixels_.y !=0 || vertexZ_ != 0)
-		glTranslatef( RENDER_IN_SUBPIXEL(positionInPixels_.x), RENDER_IN_SUBPIXEL(positionInPixels_.y), vertexZ_ );
-	
-	// rotate
-	if (rotation_ != 0.0f )
-		glRotatef( -rotation_, 0.0f, 0.0f, 1.0f );
-	
-	// scale
-	if (scaleX_ != 1.0f || scaleY_ != 1.0f)
-		glScalef( scaleX_, scaleY_, 1.0f );
-	
-	if ( camera_ && !(grid_ && grid_.active) )
-		[camera_ locate];
-	
-	// restore and re-position point
-	if (anchorPointInPixels_.x != 0.0f || anchorPointInPixels_.y != 0.0f)
-		glTranslatef(RENDER_IN_SUBPIXEL(-anchorPointInPixels_.x), RENDER_IN_SUBPIXEL(-anchorPointInPixels_.y), 0);
-	
-	//
-	// END original implementation
-#endif
-	
+{
 }
 
 #pragma mark CCNode SceneManagement

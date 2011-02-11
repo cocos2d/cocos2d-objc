@@ -206,6 +206,30 @@ typedef struct _ccV2F_C4F_T2F
 	ccTex2F			texCoords;
 } ccV2F_C4F_T2F;
 
+//! a Point with a vertex point, a tex coord point and a color 4F
+typedef struct _ccV3F_C4F_T2F
+{
+	//! vertices (3F)
+	ccVertex3F		vertices;
+	//! colors (4F)
+	ccColor4F		colors;
+	//! tex coords (2F)
+	ccTex2F			texCoords;
+} ccV3F_C4F_T2F;
+
+//! 4 ccV3F_C4F_T2F
+typedef struct _ccV3F_C4F_T2F_Quad
+{
+	//! top left
+	ccV3F_C4F_T2F	tl;
+	//! bottom left
+	ccV3F_C4F_T2F	bl;
+	//! top right
+	ccV3F_C4F_T2F	tr;
+	//! bottom right
+	ccV3F_C4F_T2F	br;
+} ccV3F_C4F_T2F_Quad;
+
 //! a Point with a vertex point, a tex coord point and a color 4B
 typedef struct _ccV3F_C4B_T2F
 {

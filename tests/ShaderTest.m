@@ -59,165 +59,12 @@ Class restartAction()
 	return c;
 }
 
-
-@interface ShaderNode : CCNode <CCRGBAProtocol>
-{
-	GLProgram	*program_;
-	GLuint		vertexIndex_;
-	GLuint		colorIndex_;
-	GLuint		samplerIndex_;
-	GLuint		texCoordIndex_;
-	GLuint		matrixIndex_;
-
-	CCTexture2D	*texture_;
-	
-	ccColor3B	color_;
-	ccColor3B	colorUnmodified_;
-	GLubyte		opacity_;
-	
-}
-@property (nonatomic,readwrite) ccColor3B color;
-@property (nonatomic, readwrite) GLubyte opacity;
-
--(id) initWithName:(NSString *)name;
-@end
-
-@implementation ShaderNode
-
--(id) initWithName:(NSString*)name
-{
-	if( (self=[super init]) ) {
-		
-		
-		texture_ = [[CCTextureCache sharedTextureCache] addImage:name];
-		
-		color_ = colorUnmodified_ = ccWHITE;
-		opacity_ = 255;
-
-		[self setContentSize: [texture_ contentSize]];
-		
-		[self setAnchorPoint:ccp(0.5f, 0.5f)];
-
-		program_ = [[GLProgram alloc] initWithVertexShaderFilename:@"Shader.vsh"
-										   fragmentShaderFilename:@"Shader.fsh"];
-		
-		[program_ addAttribute:@"aVertex"];
-		[program_ addAttribute:@"aColor"];
-		[program_ addAttribute:@"aTexCoord"];
-		
-		[program_ link];
-		
-		vertexIndex_ = [program_ attributeIndex:@"aVertex"];
-		colorIndex_ = [program_ attributeIndex:@"aColor"];
-		texCoordIndex_ = [program_ attributeIndex:@"aTexCoord"];
-
-		matrixIndex_ = [program_ uniformIndex:@"uMatrix"];
-
-		samplerIndex_ = [program_ uniformIndex:@"sTexture"];
-		
-	}
-	
-	return self;
-}
-
-- (void) dealloc
-{
-	[program_ release];
-	[super dealloc];
-}
-
--(GLubyte) opacity
-{
-	return opacity_;
-}
-
--(void) setOpacity:(GLubyte) anOpacity
-{
-	opacity_			= anOpacity;
-	
-	// special opacity for premultiplied textures
-	[self setColor: colorUnmodified_];	
-}
-
-- (ccColor3B) color
-{
-	return colorUnmodified_;
-}
-
--(void) setColor:(ccColor3B)color3
-{
-	color_ = colorUnmodified_ = color3;
-	
-	color_.r = color3.r * opacity_/255;
-	color_.g = color3.g * opacity_/255;
-	color_.b = color3.b * opacity_/255;
-}
-
--(void) drawShader
-{
-	CGSize size = [texture_ contentSize];
-	GLfloat s = [texture_ maxS];
-	GLfloat t = [texture_ maxT];
-
-	// Reverse
-	GLfloat vertex[] = {
-		size.width, size.height,
-		0, size.height,
-		size.width, 0,
-		0, 0,
-	};
-
-	GLfloat texCoords[] = {0,0,
-						s, 0,
-						0, t,
-						s, t};
-
-	GLfloat r = color_.r / 255.0f;
-	GLfloat g = color_.g / 255.0f;
-	GLfloat b = color_.b / 255.0f;
-	GLfloat a = opacity_ / 255.0f;
-
-	GLfloat colors[] = { r,g,b,a,
-		r,g,b,a,
-		r,g,b,a,
-		r,g,b,a,
-	};
-	
-	CGAffineToGL(&transformToWorld_, &transformGL_[0] );
-	isTransformDirty_ = NO;
-
-	[program_ use];	
-	
-
-	glVertexAttribPointer(vertexIndex_, 2, GL_FLOAT, GL_FALSE, 0, vertex);
-	glEnableVertexAttribArray(vertexIndex_);
-
-	glVertexAttribPointer(texCoordIndex_, 2, GL_FLOAT, GL_FALSE, 0, texCoords);
-	glEnableVertexAttribArray(texCoordIndex_);
-
-	glVertexAttribPointer(colorIndex_, 4, GL_FLOAT, GL_FALSE, 0, colors);
-	glEnableVertexAttribArray(colorIndex_);
-
-	glUniformMatrix4fv(matrixIndex_, 1, GL_FALSE, &transformGL_[0]);
-	
-	glActiveTexture( GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, texture_.name);
-	
-	// Set the sampler texture unit to 0
-	glUniform1i ( samplerIndex_, 0 );
-	
-	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-}
-
-@end
-
-
 @implementation ShaderTest
 -(id) init
 {
 	if( (self = [super init]) ) {
 
-		ShaderNode *node = [[ShaderNode alloc] initWithName:@"grossini.png"];
+		CCSprite *node = [[CCSprite alloc] initWithFile:@"grossini.png"];
 		[self addChild:node];
 
 		CCMoveBy *action = [CCMoveBy actionWithDuration:2 position:ccp(200,200)];
@@ -229,7 +76,7 @@ Class restartAction()
 		CCScaleBy *scale = [CCScaleBy actionWithDuration:2 scale:2];
 		[node runAction:scale];
 		
-		ShaderNode *node2 = [[ShaderNode alloc] initWithName:@"grossinis_sister1.png"];
+		CCSprite *node2 = [[CCSprite alloc] initWithFile:@"grossinis_sister1.png"];
 		[self addChild:node2 z:1];
 		[node2 setPosition:ccp(200,200)];
 		
@@ -238,7 +85,7 @@ Class restartAction()
 		id seq = [CCSequence actions:fade, fade_back, nil];
 		[node2 runAction: [CCRepeatForever actionWithAction:seq]];
 
-		ShaderNode *node3 = [[ShaderNode alloc] initWithName:@"grossinis_sister2.png"];
+		CCSprite *node3 = [[CCSprite alloc] initWithFile:@"grossinis_sister2.png"];
 		[self addChild:node3 z:-1];
 		[node3 setPosition:ccp(100,200)];
 		
@@ -247,7 +94,7 @@ Class restartAction()
 		id seq2 = [CCSequence actions:moveup, movedown, nil];
 		[node3 runAction:[CCRepeatForever actionWithAction:seq2]];
 
-		ShaderNode *node3_b = [[ShaderNode alloc] initWithName:@"grossinis_sister2.png"];
+		CCSprite *node3_b = [[CCSprite alloc] initWithFile:@"grossinis_sister2.png"];
 		[node3 addChild:node3_b z:1];
 		[node3_b setPosition:ccp(10,10)];
 		[node3_b setScale:0.5f];
@@ -340,7 +187,7 @@ Class restartAction()
 //	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
 	
 	// Turn on display FPS
-	[director setDisplayFPS:YES];
+//	[director setDisplayFPS:YES];
 	
 	// Enables High Res mode (Retina Display) on iPhone 4 and maintains low res on all other devices
 	if( ! [director enableRetinaDisplay:YES] )
@@ -409,7 +256,7 @@ Class restartAction()
 {
 	CCDirectorMac *director = (CCDirectorMac*) [CCDirector sharedDirector];
 	
-	[director setDisplayFPS:YES];
+//	[director setDisplayFPS:YES];
 	
 	[director setOpenGLView:glView_];
 	

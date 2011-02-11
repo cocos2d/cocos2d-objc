@@ -13,16 +13,14 @@
 
 @interface GLProgram : NSObject 
 {
-	NSMutableArray  *attributes;
-	NSMutableArray  *uniforms;
-	GLuint          program,
-					vertShader, 
-					fragShader;	
+	NSMutableArray  *uniforms_;
+	GLuint          program_,
+					vertShader_,
+					fragShader_;
 }
 - (id)initWithVertexShaderFilename:(NSString *)vShaderFilename 
             fragmentShaderFilename:(NSString *)fShaderFilename;
-- (void)addAttribute:(NSString *)attributeName;
-- (GLuint)attributeIndex:(NSString *)attributeName;
+- (void)addAttribute:(NSString *)attributeName index:(GLuint)index;
 - (GLuint)uniformIndex:(NSString *)uniformName;
 - (BOOL)link;
 - (void)use;
