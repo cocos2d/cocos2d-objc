@@ -27,9 +27,21 @@
 {
 }
 -(NSString*) title;
+-(NSString*) subtitle;
+
 @end
 
-@interface Shader1 : ShaderTest
+@interface ShaderSprite : ShaderTest
+{
+}
+@end
+
+@interface ShaderSpriteBatch : ShaderTest
+{
+}
+@end
+
+@interface ShaderBMFont : ShaderTest
 {
 }
 @end

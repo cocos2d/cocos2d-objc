@@ -239,7 +239,7 @@ enum {
 /** Shader Program
  @since v2.0
  */
-@property(nonatomic,readwrite,assign) GLProgram *shaderProgram;
+@property(nonatomic,readwrite,retain) GLProgram *shaderProgram;
 
 // initializators
 /** allocates and initializes a node.

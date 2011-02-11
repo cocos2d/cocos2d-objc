@@ -128,6 +128,8 @@
 		parent_ = nil;
 		
 		transformToWorld_ = CGAffineTransformIdentity;
+		
+		shaderProgram_ = nil;
 	}
 	
 	return self;
@@ -481,6 +483,7 @@
 {
 	// override me
 }
+
 -(void) visit
 {
 	// quick return if not visible

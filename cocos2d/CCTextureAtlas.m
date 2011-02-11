@@ -29,6 +29,7 @@
 #import "ccMacros.h"
 #import "CCTexture2D.h"
 #import "CCTextureCache.h"
+#import "CCShaderCache.h"
 
 
 @interface CCTextureAtlas (Private)
@@ -162,7 +163,7 @@
 
 #pragma mark TextureAtlas - Update, Insert, Move & Remove
 
--(void) updateQuad:(ccV3F_C4B_T2F_Quad*)quad atIndex:(NSUInteger) n
+-(void) updateQuad:(ccV3F_C4F_T2F_Quad*)quad atIndex:(NSUInteger) n
 {
 	NSAssert(n < capacity_, @"updateQuadWithTexture: Invalid index");
 	
@@ -172,7 +173,7 @@
 }
 
 
--(void) insertQuad:(ccV3F_C4B_T2F_Quad*)quad atIndex:(NSUInteger)index
+-(void) insertQuad:(ccV3F_C4F_T2F_Quad*)quad atIndex:(NSUInteger)index
 {
 	NSAssert(index < capacity_, @"insertQuadWithTexture: Invalid index");
 	
@@ -208,7 +209,7 @@
 	}
 
 	// tex coordinates
-	ccV3F_C4B_T2F_Quad quadsBackup = quads_[oldIndex];
+	ccV3F_C4F_T2F_Quad quadsBackup = quads_[oldIndex];
 	memmove( &quads_[dst],&quads_[src], sizeof(quads_[0]) * howMany );
 	quads_[newIndex] = quadsBackup;
 }
@@ -281,31 +282,34 @@
 }
 
 -(void) drawNumberOfQuads: (NSUInteger) n
-{	
-	// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
-	// Needed states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
-	// Unneeded states: -
-	
+{
+	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, [texture_ name]);
+
 #define kQuadSize sizeof(quads_[0].bl)
 
 
 #if CC_USES_VBO
 	glBindBuffer(GL_ARRAY_BUFFER, buffersVBO_[0]);
-	
+
 	// XXX: update is done in draw... perhaps it should be done in a timer
 	glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(quads_[0]) * n, quads_);
-	
+
 	// vertices
-	glVertexPointer(3, GL_FLOAT, kQuadSize, (GLvoid*) offsetof( ccV3F_C4B_T2F, vertices));
-	
+	glVertexAttribPointer(kCCAttribVertex, 3, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof( ccV3F_C4F_T2F, vertices));
+	glEnableVertexAttribArray(kCCAttribVertex);
+
 	// colors
-	glColorPointer(4, GL_UNSIGNED_BYTE, kQuadSize, (GLvoid*) offsetof( ccV3F_C4B_T2F, colors));
-	
+	glVertexAttribPointer(kCCAttribColor, 4, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof( ccV3F_C4F_T2F, colors));
+	glEnableVertexAttribArray(kCCAttribColor);
+
 	// tex coords
-	glTexCoordPointer(2, GL_FLOAT, kQuadSize, (GLvoid*) offsetof( ccV3F_C4B_T2F, texCoords));
-	
+	glVertexAttribPointer(kCCAttribTexCoords, 2, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof( ccV3F_C4F_T2F, texCoords));
+	glEnableVertexAttribArray(kCCAttribTexCoords);
+
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffersVBO_[1]);
+
+
 #if CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP
 	glDrawElements(GL_TRIANGLE_STRIP, n*6, GL_UNSIGNED_SHORT, (GLvoid*)0);    
 #else
@@ -320,16 +324,19 @@
 	NSUInteger offset = (NSUInteger)quads_;
 
 	// vertex
-	NSUInteger diff = offsetof( ccV3F_C4B_T2F, vertices);
-	glVertexPointer(3, GL_FLOAT, kQuadSize, (GLvoid*) (offset + diff) );
-
-	// color
-	diff = offsetof( ccV3F_C4B_T2F, colors);
-	glColorPointer(4, GL_UNSIGNED_BYTE, kQuadSize, (GLvoid*)(offset + diff));
+	NSInteger diff = offsetof( ccV3F_C4F_T2F, vertices);
+	glVertexAttribPointer(kCCAttribVertex, 3, GL_FLOAT, GL_FALSE, kQuadSize, (void*) (offset + diff));
+	glEnableVertexAttribArray(kCCAttribVertex);
 	
-	// tex coords
-	diff = offsetof( ccV3F_C4B_T2F, texCoords);
-	glTexCoordPointer(2, GL_FLOAT, kQuadSize, (GLvoid*)(offset + diff));
+	// texCoods
+	diff = offsetof( ccV3F_C4F_T2F, texCoords);
+	glVertexAttribPointer(kCCAttribTexCoords, 2, GL_FLOAT, GL_FALSE, kQuadSize, (void*)(offset + diff));
+	glEnableVertexAttribArray(kCCAttribTexCoords);
+	
+	// color
+	diff = offsetof( ccV3F_C4F_T2F, colors);
+	glVertexAttribPointer(kCCAttribColor, 4, GL_FLOAT, GL_FALSE, kQuadSize, (void*)(offset + diff));
+	glEnableVertexAttribArray(kCCAttribColor);
 	
 #if CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP
 	glDrawElements(GL_TRIANGLE_STRIP, n*6, GL_UNSIGNED_SHORT, indices_);	

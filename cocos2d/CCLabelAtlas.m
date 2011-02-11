@@ -1,7 +1,7 @@
 /*
  * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
- * Copyright (c) 2008-2010 Ricardo Quesada
+ * Copyright (c) 2008-2011 Ricardo Quesada
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,8 +28,10 @@
 #import "ccMacros.h"
 #import "CCDrawingPrimitives.h"
 #import "CCLabelAtlas.h"
+#import "CCShaderCache.h"
+#import "GLProgram.h"
 #import "Support/CGPointExtension.h"
-
+#import "Support/TransformUtils.h"
 
 
 @implementation CCLabelAtlas
@@ -54,6 +56,8 @@
 
 		mapStartChar = c;		
 		[self setString: theString];
+		
+		self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_TextureColor];
 	}
 
 	return self;
@@ -72,7 +76,7 @@
 {
 	int n = [string_ length];
 	
-	ccV3F_C4B_T2F_Quad quad;
+	ccV3F_C4F_T2F_Quad quad;
 
 	const char *s = [string_ UTF8String];
 
@@ -120,6 +124,11 @@
 		quad.tr.vertices.y = (int)(itemHeight_);
 		quad.tr.vertices.z = 0.0f;
 		
+		ccColor4F c = { color_.r /255.0f, color_.g/255.0f, color_.b/255.0f, opacity_/255.0f };
+		quad.tl.colors = c;
+		quad.tr.colors = c;
+		quad.bl.colors = c;
+		quad.br.colors = c;
 		[textureAtlas_ updateQuad:&quad atIndex:i];
 	}
 }
@@ -150,31 +159,24 @@
 
 // XXX: overriding draw from AtlasNode
 - (void) draw
-{
-	// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
-	// Needed states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_TEXTURE_COORD_ARRAY
-	// Unneeded states: GL_COLOR_ARRAY
-	glDisableClientState(GL_COLOR_ARRAY);
-
-	glColor4ub( color_.r, color_.g, color_.b, opacity_);
-	
+{	
 	BOOL newBlend = blendFunc_.src != CC_BLEND_SRC || blendFunc_.dst != CC_BLEND_DST;
 	if( newBlend )
 		glBlendFunc( blendFunc_.src, blendFunc_.dst );
+
+	[shaderProgram_ use];
+
+	GLfloat transformGL[16];	
+	CGAffineToGL(&transformToWorld_, &transformGL[0] );
+
+	glUniformMatrix4fv( [shaderProgram_ uniformIndex:kCCUniformMPVMatrix], 1, GL_FALSE, &transformGL[0]);	
+	glUniform1i ( [shaderProgram_ uniformIndex:kCCUniformSampler], 0 );
 	
 	[textureAtlas_ drawNumberOfQuads: string_.length];
 	
 	if( newBlend )
 		glBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);
-	
-	// is this chepear than saving/restoring color state ?
-	// XXX: There is no need to restore the color to (255,255,255,255). Objects should use the color
-	// XXX: that they need
-//	glColor4ub( 255, 255, 255, 255);
-
-	// Restore Default GL state. Enable GL_COLOR_ARRAY
-	glEnableClientState(GL_COLOR_ARRAY);
-	
+		
 	
 #if CC_LABELATLAS_DEBUG_DRAW
 	CGSize s = [self contentSize];
