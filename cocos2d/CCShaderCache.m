@@ -81,13 +81,24 @@ static CCShaderCache *_sharedShaderCache;
 	p = [[GLProgram alloc] initWithVertexShaderFilename:@"Shaders/VertexColor.vert"
 											fragmentShaderFilename:@"Shaders/VertexColor.frag"];
 	
-	[p addAttribute:@"aVertex2" index:kCCAttribVertex2];
-	[p addAttribute:@"aColor2" index:kCCAttribColor2];
+	[p addAttribute:@"aVertex" index:kCCAttribVertex];
+	[p addAttribute:@"aColor" index:kCCAttribColor];
 	
 	[p link];
 	
 	[programs_ setObject:p forKey:kCCShader_VertexColor];
 	[p release];
+
+//	// Vertex shader
+//	p = [[GLProgram alloc] initWithVertexShaderFilename:@"Shaders/Vertex.vert"
+//								 fragmentShaderFilename:nil];
+//	
+//	[p addAttribute:@"aVertex" index:kCCAttribVertex];
+//	
+//	[p link];
+//	
+//	[programs_ setObject:p forKey:kCCShader_Vertex];
+//	[p release];
 	
 }
 

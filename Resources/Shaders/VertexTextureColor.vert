@@ -4,14 +4,14 @@ attribute vec4 aVertex;
 attribute vec2 aTexCoord;
 attribute vec4 aColor;
 
-uniform		mat4 uMatrix;
+uniform		mat4 uMVPMatrix;
 
 varying vec4 vFragmentColor;
 varying vec2 vTexCoord;
 
 void main()
 {
-    gl_Position = uMatrix * aVertex;
+    gl_Position = uMVPMatrix * aVertex;
 	vFragmentColor = aColor;
 	vTexCoord = aTexCoord;
 }

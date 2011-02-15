@@ -498,9 +498,9 @@
 		CGAffineTransform viewProjMat = [director viewProjectionMatrix];
 
 		CGSize winSize = [director winSize];
+		viewProjMat = CGAffineTransformTranslate(viewProjMat, -winSize.width/2, -winSize.height/2);
 		
 		transformMVP_ = CGAffineTransformConcat( transformMVP_, viewProjMat);
-		transformMVP_ = CGAffineTransformTranslate(viewProjMat, -winSize.width/2, -winSize.height/2);
 	}
 			
 	// leaf node

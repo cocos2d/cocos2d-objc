@@ -152,7 +152,6 @@ Class restartAction()
 	CGPoint diff = ccpSub(touchLocation,prevLocation);
 	
 	CCNode *node = [self getChildByTag:kTagTileMap];
-	NSLog(@"NODE: %@", node);
 	CGPoint currentPos = [node position];
 	[node setPosition: ccpAdd(currentPos, diff)];
 }
