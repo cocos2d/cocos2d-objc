@@ -24,8 +24,6 @@ typedef void (*GLLogFunction) (GLuint program,
 #pragma mark Private Extension Method Declaration
 // START:extension
 @interface GLProgram()
-{
-}
 - (BOOL)compileShader:(GLuint *)shader 
                  type:(GLenum)type 
                  file:(NSString *)file;

@@ -168,19 +168,17 @@ static 	SEL selUpdate = NULL;
 	if( isTransformDirty_ ) {
 		transformMVP_ = [self nodeToParentTransform];
 		
+		// leaf node
 		if( parent_ )
 			transformMVP_ = CGAffineTransformConcat( transformMVP_, parent_->transformMVP_ );
+		
+		// SpriteBatchNode should not be used as a root node
 		else {
-			CGSize winSize = [[CCDirector sharedDirector] winSize];
-			
-			GLfloat projectionMatrix[16] = {
-				2.0/winSize.width, 0.0, 0.0, -1.0,
-				0.0, 2.0/winSize.height, 0.0, -1.0,
-				0.0, 0.0, -1.0, 0.0,
-				0.0, 0.0, 0.0, 1.0 };
-			
-			GLToCGAffine(&projectionMatrix[0], &transformMVP_ );
-			transformMVP_ = CGAffineTransformTranslate(transformMVP_, -winSize.width/2, -winSize.height/2);
+			CCDirector *director = [CCDirector sharedDirector];
+			CGSize winSize = [director winSize];
+
+			CGAffineTransform transform = [director viewProjectionMatrix];
+			transformMVP_ = CGAffineTransformTranslate(transform, -winSize.width/2, -winSize.height/2);
 		}
 	}
 	

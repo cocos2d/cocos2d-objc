@@ -201,6 +201,11 @@
 	quad.tr.vertices.y = (int)(y * itemHeight_ + itemHeight_);
 	quad.tr.vertices.z = 0.0f;
 	
+	ccColor4F color = { color_.r/255.0f, color_.g/255.0f, color_.b/255.0f, opacity_/255.0f };
+	quad.tr.colors = color;
+	quad.tl.colors = color;
+	quad.br.colors = color;
+	quad.bl.colors = color;
 	[textureAtlas_ updateQuad:&quad atIndex:idx];
 }
 
