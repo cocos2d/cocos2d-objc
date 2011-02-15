@@ -493,10 +493,10 @@ CGFloat	__ccContentScaleFactor = 1;
 -(CGAffineTransform) viewProjectionMatrix
 {
 	GLfloat mat4[16] = {
-		2.0/winSizeInPixels_.width, 0.0, 0.0, -1.0,
-		0.0, 2.0/winSizeInPixels_.height, 0.0, -1.0,
-		0.0, 0.0, -1.0, 0.0,
-		0.0, 0.0, 0.0, 1.0
+		2.0f/winSizeInPixels_.width, 0.0f, 0.0f, -1.0f,
+		0.0f, 2.0f/winSizeInPixels_.height, 0.0f, -1.0f,
+		0.0f, 0.0f, -1.0f, 0.0f,
+		0.0f, 0.0f, 0.0f, 1.0f
 	};
 	
 	CGAffineTransform transform;
