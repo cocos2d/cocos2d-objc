@@ -1621,6 +1621,59 @@
 		E0112F56120CB406006667F8 /* CCTransitionRadial.m in Sources */ = {isa = PBXBuildFile; fileRef = E0112F52120CB406006667F8 /* CCTransitionRadial.m */; };
 		E01E6D8C121F130E001A484F /* CCLabelBMFont.h in Headers */ = {isa = PBXBuildFile; fileRef = E01E6D8A121F130E001A484F /* CCLabelBMFont.h */; };
 		E01E6D8D121F130E001A484F /* CCLabelBMFont.m in Sources */ = {isa = PBXBuildFile; fileRef = E01E6D8B121F130E001A484F /* CCLabelBMFont.m */; };
+		E0275885130ACEB100745261 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0275881130ACEB100745261 /* Shaders */; };
+		E0275886130ACEB100745261 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0275881130ACEB100745261 /* Shaders */; };
+		E0275887130ACEB100745261 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0275881130ACEB100745261 /* Shaders */; };
+		E0275888130ACEB100745261 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0275881130ACEB100745261 /* Shaders */; };
+		E0275889130ACEB100745261 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0275881130ACEB100745261 /* Shaders */; };
+		E027588A130ACEB100745261 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0275881130ACEB100745261 /* Shaders */; };
+		E027588B130ACEBB00745261 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0275881130ACEB100745261 /* Shaders */; };
+		E027588C130ACEBC00745261 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0275881130ACEB100745261 /* Shaders */; };
+		E027588D130ACEBD00745261 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0275881130ACEB100745261 /* Shaders */; };
+		E027588E130ACEBE00745261 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0275881130ACEB100745261 /* Shaders */; };
+		E027588F130ACEBF00745261 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0275881130ACEB100745261 /* Shaders */; };
+		E0275890130ACEC000745261 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0275881130ACEB100745261 /* Shaders */; };
+		E0275891130ACEC100745261 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0275881130ACEB100745261 /* Shaders */; };
+		E0275892130ACEC200745261 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0275881130ACEB100745261 /* Shaders */; };
+		E0275893130ACEC300745261 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0275881130ACEB100745261 /* Shaders */; };
+		E0275894130ACEC300745261 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0275881130ACEB100745261 /* Shaders */; };
+		E0275895130ACEC400745261 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0275881130ACEB100745261 /* Shaders */; };
+		E0275896130ACEC500745261 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0275881130ACEB100745261 /* Shaders */; };
+		E0275897130ACEC500745261 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0275881130ACEB100745261 /* Shaders */; };
+		E0275898130ACEC600745261 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0275881130ACEB100745261 /* Shaders */; };
+		E0275899130ACECA00745261 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0275881130ACEB100745261 /* Shaders */; };
+		E027589A130ACECB00745261 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0275881130ACEB100745261 /* Shaders */; };
+		E027589B130ACECC00745261 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0275881130ACEB100745261 /* Shaders */; };
+		E027589C130ACECC00745261 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0275881130ACEB100745261 /* Shaders */; };
+		E027589D130ACECD00745261 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0275881130ACEB100745261 /* Shaders */; };
+		E027589E130ACECE00745261 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0275881130ACEB100745261 /* Shaders */; };
+		E027589F130ACECF00745261 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0275881130ACEB100745261 /* Shaders */; };
+		E02758A0130ACED000745261 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0275881130ACEB100745261 /* Shaders */; };
+		E02758A1130ACED000745261 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0275881130ACEB100745261 /* Shaders */; };
+		E02758A2130ACED100745261 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0275881130ACEB100745261 /* Shaders */; };
+		E02758A3130ACED200745261 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0275881130ACEB100745261 /* Shaders */; };
+		E02758A4130ACED300745261 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0275881130ACEB100745261 /* Shaders */; };
+		E02758A5130ACED400745261 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0275881130ACEB100745261 /* Shaders */; };
+		E02758A6130ACED500745261 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0275881130ACEB100745261 /* Shaders */; };
+		E02758A7130ACED600745261 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0275881130ACEB100745261 /* Shaders */; };
+		E02758A8130ACED600745261 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0275881130ACEB100745261 /* Shaders */; };
+		E02758A9130ACED700745261 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0275881130ACEB100745261 /* Shaders */; };
+		E02758AA130ACED800745261 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0275881130ACEB100745261 /* Shaders */; };
+		E02758AB130ACED800745261 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0275881130ACEB100745261 /* Shaders */; };
+		E02758AC130ACED900745261 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0275881130ACEB100745261 /* Shaders */; };
+		E02758AD130ACEDA00745261 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0275881130ACEB100745261 /* Shaders */; };
+		E02758AE130ACEDB00745261 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0275881130ACEB100745261 /* Shaders */; };
+		E02758AF130ACEDB00745261 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0275881130ACEB100745261 /* Shaders */; };
+		E02758B0130ACEDC00745261 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0275881130ACEB100745261 /* Shaders */; };
+		E02758B1130ACEDD00745261 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0275881130ACEB100745261 /* Shaders */; };
+		E02758B2130ACEDD00745261 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0275881130ACEB100745261 /* Shaders */; };
+		E02758B3130ACEDE00745261 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0275881130ACEB100745261 /* Shaders */; };
+		E02758B4130ACEDE00745261 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0275881130ACEB100745261 /* Shaders */; };
+		E02758B5130ACEDF00745261 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0275881130ACEB100745261 /* Shaders */; };
+		E02758B6130ACEE100745261 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0275881130ACEB100745261 /* Shaders */; };
+		E02758B7130ACEE200745261 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0275881130ACEB100745261 /* Shaders */; };
+		E02758B8130ACEE200745261 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0275881130ACEB100745261 /* Shaders */; };
+		E02758B9130ACEE300745261 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0275881130ACEB100745261 /* Shaders */; };
 		E02BB583126CA73F006E46A2 /* iTunesArtwork in Resources */ = {isa = PBXBuildFile; fileRef = E02BB57D126CA73F006E46A2 /* iTunesArtwork */; };
 		E02BB584126CA73F006E46A2 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E02BB57E126CA73F006E46A2 /* Icon@2x.png */; };
 		E02BB585126CA73F006E46A2 /* Icon-Small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E02BB57F126CA73F006E46A2 /* Icon-Small@2x.png */; };
@@ -2467,8 +2520,6 @@
 		E0C786AD1211A40400E309E2 /* Tank.c in Sources */ = {isa = PBXBuildFile; fileRef = E0C786AC1211A40400E309E2 /* Tank.c */; };
 		E0C8EA0A1304D82000403770 /* GLProgram.h in Headers */ = {isa = PBXBuildFile; fileRef = E0C8EA081304D82000403770 /* GLProgram.h */; };
 		E0C8EA0B1304D82000403770 /* GLProgram.m in Sources */ = {isa = PBXBuildFile; fileRef = E0C8EA091304D82000403770 /* GLProgram.m */; };
-		E0C8EA6C1304DC6000403770 /* ShaderTextureColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = E03937B113020D4E00C02870 /* ShaderTextureColor.fsh */; };
-		E0C8EA6D1304DC6000403770 /* ShaderTextureColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = E03937B213020D4E00C02870 /* ShaderTextureColor.vsh */; };
 		E0C8EAE81305582E00403770 /* CCShaderCache.h in Headers */ = {isa = PBXBuildFile; fileRef = E0C8EAE61305582E00403770 /* CCShaderCache.h */; };
 		E0C8EAE91305582E00403770 /* CCShaderCache.m in Sources */ = {isa = PBXBuildFile; fileRef = E0C8EAE71305582E00403770 /* CCShaderCache.m */; };
 		E0C8EC3013057FA400403770 /* futura-48.fnt in Resources */ = {isa = PBXBuildFile; fileRef = E082C9121292DAD50056AC41 /* futura-48.fnt */; };
@@ -4273,6 +4324,7 @@
 		E0112F52120CB406006667F8 /* CCTransitionRadial.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCTransitionRadial.m; sourceTree = "<group>"; };
 		E01E6D8A121F130E001A484F /* CCLabelBMFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLabelBMFont.h; sourceTree = "<group>"; };
 		E01E6D8B121F130E001A484F /* CCLabelBMFont.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCLabelBMFont.m; sourceTree = "<group>"; };
+		E0275881130ACEB100745261 /* Shaders */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Shaders; path = Resources/Shaders; sourceTree = "<group>"; };
 		E02BB57D126CA73F006E46A2 /* iTunesArtwork */ = {isa = PBXFileReference; lastKnownFileType = file; name = iTunesArtwork; path = Resources/iTunesArtwork; sourceTree = "<group>"; };
 		E02BB57E126CA73F006E46A2 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon@2x.png"; path = "Resources/Icon@2x.png"; sourceTree = "<group>"; };
 		E02BB57F126CA73F006E46A2 /* Icon-Small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-Small@2x.png"; path = "Resources/Icon-Small@2x.png"; sourceTree = "<group>"; };
@@ -4297,8 +4349,6 @@
 		E039361C1301C9A400C02870 /* ShaderTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShaderTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E03936361301CA2100C02870 /* ShaderTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ShaderTest.h; path = tests/ShaderTest.h; sourceTree = "<group>"; };
 		E03936371301CA2100C02870 /* ShaderTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ShaderTest.m; path = tests/ShaderTest.m; sourceTree = "<group>"; };
-		E03937B113020D4E00C02870 /* ShaderTextureColor.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ShaderTextureColor.fsh; sourceTree = "<group>"; };
-		E03937B213020D4E00C02870 /* ShaderTextureColor.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ShaderTextureColor.vsh; sourceTree = "<group>"; };
 		E04C631512382E6B00A4B3E6 /* background3-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "background3-hd.png"; sourceTree = "<group>"; };
 		E04C632012382F6100A4B3E6 /* f1-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "f1-hd.png"; sourceTree = "<group>"; };
 		E04C632112382F6100A4B3E6 /* f2-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "f2-hd.png"; sourceTree = "<group>"; };
@@ -5403,6 +5453,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				E0275881130ACEB100745261 /* Shaders */,
 				E0C5588E11FE4CF100B9E4CB /* zwoptex */,
 				50CBA4A711CBD7FB007B009D /* bugs */,
 				50B77511119AF58100F567F4 /* Particles */,
@@ -5411,7 +5462,6 @@
 				50F489BB10458B6300755CFB /* cocos2d-artwork */,
 				505460E91061413300AB7C52 /* Fonts */,
 				50B2CB260E10EE4A00AE9530 /* Images */,
-				E03937B013020D4E00C02870 /* Shaders */,
 				8EDF3E8D0F6BD8CD00F54643 /* sfx */,
 				50B2CB2B0E10EE4A00AE9530 /* Info.plist */,
 				5050C7560F927156004BE2D8 /* InfoWithStatusBar.plist */,
@@ -7020,16 +7070,6 @@
 				E037DA8F1281EFE2003D39D7 /* QuestionContainerSprite.m */,
 			);
 			path = "Bug-458";
-			sourceTree = "<group>";
-		};
-		E03937B013020D4E00C02870 /* Shaders */ = {
-			isa = PBXGroup;
-			children = (
-				E03937B113020D4E00C02870 /* ShaderTextureColor.fsh */,
-				E03937B213020D4E00C02870 /* ShaderTextureColor.vsh */,
-			);
-			name = Shaders;
-			path = Resources/Shaders;
 			sourceTree = "<group>";
 		};
 		E0A4A24A11F899BB003B9D29 /* PVR test */ = {
@@ -8788,6 +8828,7 @@
 				E02BB658126CA73F006E46A2 /* Icon-Small.png in Resources */,
 				E02BB659126CA73F006E46A2 /* Icon-Small-50.png in Resources */,
 				E02BB65A126CA73F006E46A2 /* Icon-72.png in Resources */,
+				E027589F130ACECF00745261 /* Shaders in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8814,6 +8855,7 @@
 				E02BB598126CA73F006E46A2 /* Icon-Small.png in Resources */,
 				E02BB599126CA73F006E46A2 /* Icon-Small-50.png in Resources */,
 				E02BB59A126CA73F006E46A2 /* Icon-72.png in Resources */,
+				E0275887130ACEB100745261 /* Shaders in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8845,6 +8887,7 @@
 				E02BB61C126CA73F006E46A2 /* Icon-Small.png in Resources */,
 				E02BB61D126CA73F006E46A2 /* Icon-Small-50.png in Resources */,
 				E02BB61E126CA73F006E46A2 /* Icon-72.png in Resources */,
+				E02758A5130ACED400745261 /* Shaders in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8872,6 +8915,7 @@
 				E02BB5A4126CA73F006E46A2 /* Icon-Small.png in Resources */,
 				E02BB5A5126CA73F006E46A2 /* Icon-Small-50.png in Resources */,
 				E02BB5A6126CA73F006E46A2 /* Icon-72.png in Resources */,
+				E027588A130ACEB100745261 /* Shaders in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8913,6 +8957,7 @@
 				E02BB5F2126CA73F006E46A2 /* Icon-Small.png in Resources */,
 				E02BB5F3126CA73F006E46A2 /* Icon-Small-50.png in Resources */,
 				E02BB5F4126CA73F006E46A2 /* Icon-72.png in Resources */,
+				E02758AD130ACEDA00745261 /* Shaders in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8947,6 +8992,7 @@
 				E02BB622126CA73F006E46A2 /* Icon-Small.png in Resources */,
 				E02BB623126CA73F006E46A2 /* Icon-Small-50.png in Resources */,
 				E02BB624126CA73F006E46A2 /* Icon-72.png in Resources */,
+				E02758A4130ACED300745261 /* Shaders in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8980,6 +9026,7 @@
 				E02BB69A126CA73F006E46A2 /* Icon-Small.png in Resources */,
 				E02BB69B126CA73F006E46A2 /* Icon-Small-50.png in Resources */,
 				E02BB69C126CA73F006E46A2 /* Icon-72.png in Resources */,
+				E0275894130ACEC300745261 /* Shaders in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9022,6 +9069,7 @@
 				E02BB605126CA73F006E46A2 /* Icon-Small-50.png in Resources */,
 				E02BB606126CA73F006E46A2 /* Icon-72.png in Resources */,
 				E0D2D4F3128CA9E300F78C63 /* piece.png in Resources */,
+				E02758AA130ACED800745261 /* Shaders in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9044,6 +9092,7 @@
 				E02BB5B6126CA73F006E46A2 /* Icon-Small.png in Resources */,
 				E02BB5B7126CA73F006E46A2 /* Icon-Small-50.png in Resources */,
 				E02BB5B8126CA73F006E46A2 /* Icon-72.png in Resources */,
+				E02758B9130ACEE300745261 /* Shaders in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9073,6 +9122,7 @@
 				E02BB616126CA73F006E46A2 /* Icon-Small.png in Resources */,
 				E02BB617126CA73F006E46A2 /* Icon-Small-50.png in Resources */,
 				E02BB618126CA73F006E46A2 /* Icon-72.png in Resources */,
+				E02758A6130ACED500745261 /* Shaders in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9109,6 +9159,7 @@
 				E02BB5F8126CA73F006E46A2 /* Icon-Small.png in Resources */,
 				E02BB5F9126CA73F006E46A2 /* Icon-Small-50.png in Resources */,
 				E02BB5FA126CA73F006E46A2 /* Icon-72.png in Resources */,
+				E02758AC130ACED900745261 /* Shaders in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9132,6 +9183,7 @@
 				E02BB586126CA73F006E46A2 /* Icon-Small.png in Resources */,
 				E02BB587126CA73F006E46A2 /* Icon-Small-50.png in Resources */,
 				E02BB588126CA73F006E46A2 /* Icon-72.png in Resources */,
+				E0275889130ACEB100745261 /* Shaders in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9167,6 +9219,7 @@
 				E02BB664126CA73F006E46A2 /* Icon-Small.png in Resources */,
 				E02BB665126CA73F006E46A2 /* Icon-Small-50.png in Resources */,
 				E02BB666126CA73F006E46A2 /* Icon-72.png in Resources */,
+				E027589D130ACECD00745261 /* Shaders in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9189,6 +9242,7 @@
 				E02BB59E126CA73F006E46A2 /* Icon-Small.png in Resources */,
 				E02BB59F126CA73F006E46A2 /* Icon-Small-50.png in Resources */,
 				E02BB5A0126CA73F006E46A2 /* Icon-72.png in Resources */,
+				E0275888130ACEB100745261 /* Shaders in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9226,6 +9280,7 @@
 				E02BB58C126CA73F006E46A2 /* Icon-Small.png in Resources */,
 				E02BB58D126CA73F006E46A2 /* Icon-Small-50.png in Resources */,
 				E02BB58E126CA73F006E46A2 /* Icon-72.png in Resources */,
+				E0275885130ACEB100745261 /* Shaders in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9248,6 +9303,7 @@
 				E02BB694126CA73F006E46A2 /* Icon-Small.png in Resources */,
 				E02BB695126CA73F006E46A2 /* Icon-Small-50.png in Resources */,
 				E02BB696126CA73F006E46A2 /* Icon-72.png in Resources */,
+				E0275895130ACEC400745261 /* Shaders in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9277,6 +9333,7 @@
 				E02BB6A6126CA73F006E46A2 /* Icon-Small.png in Resources */,
 				E02BB6A7126CA73F006E46A2 /* Icon-Small-50.png in Resources */,
 				E02BB6A8126CA73F006E46A2 /* Icon-72.png in Resources */,
+				E027588E130ACEBE00745261 /* Shaders in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9319,6 +9376,7 @@
 				E02BB6AC126CA73F006E46A2 /* Icon-Small.png in Resources */,
 				E02BB6AD126CA73F006E46A2 /* Icon-Small-50.png in Resources */,
 				E02BB6AE126CA73F006E46A2 /* Icon-72.png in Resources */,
+				E027588F130ACEBF00745261 /* Shaders in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9346,6 +9404,7 @@
 				E02BB6B2126CA73F006E46A2 /* Icon-Small.png in Resources */,
 				E02BB6B3126CA73F006E46A2 /* Icon-Small-50.png in Resources */,
 				E02BB6B4126CA73F006E46A2 /* Icon-72.png in Resources */,
+				E0275890130ACEC000745261 /* Shaders in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9370,6 +9429,7 @@
 				E02BB6B8126CA73F006E46A2 /* Icon-Small.png in Resources */,
 				E02BB6B9126CA73F006E46A2 /* Icon-Small-50.png in Resources */,
 				E02BB6BA126CA73F006E46A2 /* Icon-72.png in Resources */,
+				E0275891130ACEC100745261 /* Shaders in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9516,6 +9576,7 @@
 				E02BB600126CA73F006E46A2 /* Icon-72.png in Resources */,
 				E0BBADE91282E838007DB81E /* test_image_rgba4444.pvr.ccz in Resources */,
 				E0BBADEA1282E838007DB81E /* test_image_rgba4444.pvr.gz in Resources */,
+				E02758AB130ACED800745261 /* Shaders in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9552,6 +9613,7 @@
 				E02BB68E126CA73F006E46A2 /* Icon-Small.png in Resources */,
 				E02BB68F126CA73F006E46A2 /* Icon-Small-50.png in Resources */,
 				E02BB690126CA73F006E46A2 /* Icon-72.png in Resources */,
+				E0275896130ACEC500745261 /* Shaders in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9593,6 +9655,7 @@
 				E02BB6C4126CA73F006E46A2 /* Icon-Small.png in Resources */,
 				E02BB6C5126CA73F006E46A2 /* Icon-Small-50.png in Resources */,
 				E02BB6C6126CA73F006E46A2 /* Icon-72.png in Resources */,
+				E0275893130ACEC300745261 /* Shaders in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9649,6 +9712,7 @@
 				E02BB66C126CA73F006E46A2 /* Icon-72.png in Resources */,
 				E082C9141292DAD50056AC41 /* futura-48.fnt in Resources */,
 				E082C9151292DAD50056AC41 /* futura-48.png in Resources */,
+				E027589C130ACECC00745261 /* Shaders in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9675,6 +9739,7 @@
 				E02BB6A0126CA73F006E46A2 /* Icon-Small.png in Resources */,
 				E02BB6A1126CA73F006E46A2 /* Icon-Small-50.png in Resources */,
 				E02BB6A2126CA73F006E46A2 /* Icon-72.png in Resources */,
+				E027588D130ACEBD00745261 /* Shaders in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9721,6 +9786,7 @@
 				E02BB65E126CA73F006E46A2 /* Icon-Small.png in Resources */,
 				E02BB65F126CA73F006E46A2 /* Icon-Small-50.png in Resources */,
 				E02BB660126CA73F006E46A2 /* Icon-72.png in Resources */,
+				E027589E130ACECE00745261 /* Shaders in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9751,6 +9817,7 @@
 				E02BB610126CA73F006E46A2 /* Icon-Small.png in Resources */,
 				E02BB611126CA73F006E46A2 /* Icon-Small-50.png in Resources */,
 				E02BB612126CA73F006E46A2 /* Icon-72.png in Resources */,
+				E02758A7130ACED600745261 /* Shaders in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9783,6 +9850,7 @@
 				E02BB676126CA73F006E46A2 /* Icon-Small.png in Resources */,
 				E02BB677126CA73F006E46A2 /* Icon-Small-50.png in Resources */,
 				E02BB678126CA73F006E46A2 /* Icon-72.png in Resources */,
+				E027589A130ACECB00745261 /* Shaders in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9819,6 +9887,7 @@
 				E02BB5BC126CA73F006E46A2 /* Icon-Small.png in Resources */,
 				E02BB5BD126CA73F006E46A2 /* Icon-Small-50.png in Resources */,
 				E02BB5BE126CA73F006E46A2 /* Icon-72.png in Resources */,
+				E02758B8130ACEE200745261 /* Shaders in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9854,6 +9923,7 @@
 				E02BB5CE126CA73F006E46A2 /* Icon-Small.png in Resources */,
 				E02BB5CF126CA73F006E46A2 /* Icon-Small-50.png in Resources */,
 				E02BB5D0126CA73F006E46A2 /* Icon-72.png in Resources */,
+				E02758B3130ACEDE00745261 /* Shaders in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9900,6 +9970,7 @@
 				E02BB60A126CA73F006E46A2 /* Icon-Small.png in Resources */,
 				E02BB60B126CA73F006E46A2 /* Icon-Small-50.png in Resources */,
 				E02BB60C126CA73F006E46A2 /* Icon-72.png in Resources */,
+				E02758A8130ACED600745261 /* Shaders in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9921,6 +9992,7 @@
 				E02BB6BE126CA73F006E46A2 /* Icon-Small.png in Resources */,
 				E02BB6BF126CA73F006E46A2 /* Icon-Small-50.png in Resources */,
 				E02BB6C0126CA73F006E46A2 /* Icon-72.png in Resources */,
+				E0275892130ACEC200745261 /* Shaders in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9960,6 +10032,7 @@
 				E02BB688126CA73F006E46A2 /* Icon-Small.png in Resources */,
 				E02BB689126CA73F006E46A2 /* Icon-Small-50.png in Resources */,
 				E02BB68A126CA73F006E46A2 /* Icon-72.png in Resources */,
+				E0275897130ACEC500745261 /* Shaders in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9992,6 +10065,7 @@
 				E02BB652126CA73F006E46A2 /* Icon-Small.png in Resources */,
 				E02BB653126CA73F006E46A2 /* Icon-Small-50.png in Resources */,
 				E02BB654126CA73F006E46A2 /* Icon-72.png in Resources */,
+				E02758A0130ACED000745261 /* Shaders in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10017,6 +10091,7 @@
 				E02BB5AA126CA73F006E46A2 /* Icon-Small.png in Resources */,
 				E02BB5AB126CA73F006E46A2 /* Icon-Small-50.png in Resources */,
 				E02BB5AC126CA73F006E46A2 /* Icon-72.png in Resources */,
+				E027588B130ACEBB00745261 /* Shaders in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10038,6 +10113,7 @@
 				E02BB5B0126CA73F006E46A2 /* Icon-Small.png in Resources */,
 				E02BB5B1126CA73F006E46A2 /* Icon-Small-50.png in Resources */,
 				E02BB5B2126CA73F006E46A2 /* Icon-72.png in Resources */,
+				E027588C130ACEBC00745261 /* Shaders in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10073,6 +10149,7 @@
 				E02BB64C126CA73F006E46A2 /* Icon-Small.png in Resources */,
 				E02BB64D126CA73F006E46A2 /* Icon-Small-50.png in Resources */,
 				E02BB64E126CA73F006E46A2 /* Icon-72.png in Resources */,
+				E02758A1130ACED000745261 /* Shaders in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10116,6 +10193,7 @@
 				E02BB5EC126CA73F006E46A2 /* Icon-Small.png in Resources */,
 				E02BB5ED126CA73F006E46A2 /* Icon-Small-50.png in Resources */,
 				E02BB5EE126CA73F006E46A2 /* Icon-72.png in Resources */,
+				E02758AE130ACEDB00745261 /* Shaders in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10165,6 +10243,7 @@
 				E02BB592126CA73F006E46A2 /* Icon-Small.png in Resources */,
 				E02BB593126CA73F006E46A2 /* Icon-Small-50.png in Resources */,
 				E02BB594126CA73F006E46A2 /* Icon-72.png in Resources */,
+				E0275886130ACEB100745261 /* Shaders in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10201,6 +10280,7 @@
 				E02BB5C2126CA73F006E46A2 /* Icon-Small.png in Resources */,
 				E02BB5C3126CA73F006E46A2 /* Icon-Small-50.png in Resources */,
 				E02BB5C4126CA73F006E46A2 /* Icon-72.png in Resources */,
+				E02758B7130ACEE200745261 /* Shaders in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10230,6 +10310,7 @@
 				E02BB5DA126CA73F006E46A2 /* Icon-Small.png in Resources */,
 				E02BB5DB126CA73F006E46A2 /* Icon-Small-50.png in Resources */,
 				E02BB5DC126CA73F006E46A2 /* Icon-72.png in Resources */,
+				E02758B1130ACEDD00745261 /* Shaders in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10259,6 +10340,7 @@
 				E02BB5D4126CA73F006E46A2 /* Icon-Small.png in Resources */,
 				E02BB5D5126CA73F006E46A2 /* Icon-Small-50.png in Resources */,
 				E02BB5D6126CA73F006E46A2 /* Icon-72.png in Resources */,
+				E02758B2130ACEDD00745261 /* Shaders in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10298,6 +10380,7 @@
 				E02BB682126CA73F006E46A2 /* Icon-Small.png in Resources */,
 				E02BB683126CA73F006E46A2 /* Icon-Small-50.png in Resources */,
 				E02BB684126CA73F006E46A2 /* Icon-72.png in Resources */,
+				E0275898130ACEC600745261 /* Shaders in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10345,6 +10428,7 @@
 				E02BB648126CA73F006E46A2 /* Icon-72.png in Resources */,
 				E087B34F12785BB60076F6FF /* fps_images-hd.png in Resources */,
 				E0D2C5D412AF1067008D5DBB /* particles-hd.png in Resources */,
+				E02758A2130ACED100745261 /* Shaders in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10374,6 +10458,7 @@
 				E02BB5E0126CA73F006E46A2 /* Icon-Small.png in Resources */,
 				E02BB5E1126CA73F006E46A2 /* Icon-Small-50.png in Resources */,
 				E02BB5E2126CA73F006E46A2 /* Icon-72.png in Resources */,
+				E02758B0130ACEDC00745261 /* Shaders in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10417,6 +10502,7 @@
 				E02BB672126CA73F006E46A2 /* Icon-72.png in Resources */,
 				E037D9E81281BBE8003D39D7 /* background1-hd.jpg in Resources */,
 				E037D9E91281BBE8003D39D7 /* background1.jpg in Resources */,
+				E027589B130ACECC00745261 /* Shaders in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10453,6 +10539,7 @@
 				E02BB640126CA73F006E46A2 /* Icon-Small.png in Resources */,
 				E02BB641126CA73F006E46A2 /* Icon-Small-50.png in Resources */,
 				E02BB642126CA73F006E46A2 /* Icon-72.png in Resources */,
+				E02758A3130ACED200745261 /* Shaders in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10488,6 +10575,7 @@
 				E02BB5C8126CA73F006E46A2 /* Icon-Small.png in Resources */,
 				E02BB5C9126CA73F006E46A2 /* Icon-Small-50.png in Resources */,
 				E02BB5CA126CA73F006E46A2 /* Icon-72.png in Resources */,
+				E02758B4130ACEDE00745261 /* Shaders in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10524,6 +10612,7 @@
 				E02BB67C126CA73F006E46A2 /* Icon-Small.png in Resources */,
 				E02BB67D126CA73F006E46A2 /* Icon-Small-50.png in Resources */,
 				E02BB67E126CA73F006E46A2 /* Icon-72.png in Resources */,
+				E0275899130ACECA00745261 /* Shaders in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10546,6 +10635,7 @@
 				E02BC2BB1270E489006E46A2 /* Icon-Small.png in Resources */,
 				E02BC2BC1270E489006E46A2 /* Icon-Small-50.png in Resources */,
 				E02BC2BD1270E489006E46A2 /* Icon-72.png in Resources */,
+				E02758B6130ACEE100745261 /* Shaders in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10585,6 +10675,7 @@
 				E037DA911281EFE2003D39D7 /* corner.png in Resources */,
 				E037DA921281EFE2003D39D7 /* edge.png in Resources */,
 				E037DA931281EFE2003D39D7 /* fill.png in Resources */,
+				E02758B5130ACEDF00745261 /* Shaders in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10620,11 +10711,10 @@
 				E039360B1301C9A400C02870 /* Icon-Small.png in Resources */,
 				E039360C1301C9A400C02870 /* Icon-Small-50.png in Resources */,
 				E039360D1301C9A400C02870 /* Icon-72.png in Resources */,
-				E0C8EA6C1304DC6000403770 /* ShaderTextureColor.fsh in Resources */,
-				E0C8EA6D1304DC6000403770 /* ShaderTextureColor.vsh in Resources */,
 				E0C8EC3013057FA400403770 /* futura-48.fnt in Resources */,
 				E0C8EC3113057FA400403770 /* futura-48.png in Resources */,
 				E0C8EC701305857C00403770 /* animations in Resources */,
+				E02758A9130ACED700745261 /* Shaders in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10664,6 +10754,7 @@
 				E02BB5E6126CA73F006E46A2 /* Icon-Small.png in Resources */,
 				E02BB5E7126CA73F006E46A2 /* Icon-Small-50.png in Resources */,
 				E02BB5E8126CA73F006E46A2 /* Icon-72.png in Resources */,
+				E02758AF130ACEDB00745261 /* Shaders in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

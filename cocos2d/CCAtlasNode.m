@@ -102,13 +102,6 @@
 #pragma mark CCAtlasNode - draw
 - (void) draw
 {
-	// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
-	// Needed states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_TEXTURE_COORD_ARRAY
-	// Unneeded states: GL_COLOR_ARRAY
-	glDisableClientState(GL_COLOR_ARRAY);
-
-	glColor4ub( color_.r, color_.g, color_.b, opacity_);
-
 	BOOL newBlend = blendFunc_.src != CC_BLEND_SRC || blendFunc_.dst != CC_BLEND_DST;
 	if( newBlend )
 		glBlendFunc( blendFunc_.src, blendFunc_.dst );
@@ -117,15 +110,6 @@
 		
 	if( newBlend )
 		glBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);
-	
-	// is this chepear than saving/restoring color state ?
-	// XXX: There is no need to restore the color to (255,255,255,255). Objects should use the color
-	// XXX: that they need
-//	glColor4ub( 255, 255, 255, 255);
-
-	// restore default GL state
-	glEnableClientState(GL_COLOR_ARRAY);
-
 }
 
 #pragma mark CCAtlasNode - RGBA protocol

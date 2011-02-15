@@ -127,7 +127,7 @@
 		//initialize parent to nil
 		parent_ = nil;
 		
-		transformToWorld_ = CGAffineTransformIdentity;
+		transformMVP_ = CGAffineTransformIdentity;
 		
 		shaderProgram_ = nil;
 	}
@@ -491,22 +491,23 @@
 		return;
 
 	if( isTransformDirty_ ) {
-		transformToWorld_ = [self nodeToParentTransform];
+		transformMVP_ = [self nodeToParentTransform];
 		
-		if( parent_ )
-			transformToWorld_ = CGAffineTransformConcat( transformToWorld_, parent_->transformToWorld_ );
-		else {
-			CGSize winSize = [[CCDirector sharedDirector] winSize];
-
-			GLfloat projectionMatrix[16] = {
-				2.0/winSize.width, 0.0, 0.0, -1.0,
-				0.0, 2.0/winSize.height, 0.0, -1.0,
-				0.0, 0.0, -1.0, 0.0,
-				0.0, 0.0, 0.0, 1.0 };
+		// root node
+		if(  ! parent_ ) {
 			
-			GLToCGAffine(&projectionMatrix[0], &transformToWorld_ );
-			transformToWorld_ = CGAffineTransformTranslate(transformToWorld_, -winSize.width/2, -winSize.height/2);
+			CCDirector *director = [CCDirector sharedDirector];
+			CGAffineTransform viewProjMat = [director viewProjectionMatrix];
+
+			CGSize winSize = [director winSize];
+			
+			transformMVP_ = CGAffineTransformTranslate(viewProjMat, -winSize.width/2, -winSize.height/2);
 		}
+				
+		// leaf node
+		else 
+			transformMVP_ = CGAffineTransformConcat( transformMVP_, parent_->transformMVP_ );
+
 	}
 	
 	if(children_) {

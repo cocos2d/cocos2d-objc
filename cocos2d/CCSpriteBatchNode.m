@@ -166,10 +166,10 @@ static 	SEL selUpdate = NULL;
 		return;
 	
 	if( isTransformDirty_ ) {
-		transformToWorld_ = [self nodeToParentTransform];
+		transformMVP_ = [self nodeToParentTransform];
 		
 		if( parent_ )
-			transformToWorld_ = CGAffineTransformConcat( transformToWorld_, parent_->transformToWorld_ );
+			transformMVP_ = CGAffineTransformConcat( transformMVP_, parent_->transformMVP_ );
 		else {
 			CGSize winSize = [[CCDirector sharedDirector] winSize];
 			
@@ -179,8 +179,8 @@ static 	SEL selUpdate = NULL;
 				0.0, 0.0, -1.0, 0.0,
 				0.0, 0.0, 0.0, 1.0 };
 			
-			GLToCGAffine(&projectionMatrix[0], &transformToWorld_ );
-			transformToWorld_ = CGAffineTransformTranslate(transformToWorld_, -winSize.width/2, -winSize.height/2);
+			GLToCGAffine(&projectionMatrix[0], &transformMVP_ );
+			transformMVP_ = CGAffineTransformTranslate(transformMVP_, -winSize.width/2, -winSize.height/2);
 		}
 	}
 	
@@ -306,10 +306,10 @@ static 	SEL selUpdate = NULL;
 	
 	[shaderProgram_ use];
 	
-	GLfloat transformGL[16];	
-	CGAffineToGL(&transformToWorld_, &transformGL[0] );
+	GLfloat mat4[16];	
+	CGAffineToGL(&transformMVP_, &mat4[0] );
 	
-	glUniformMatrix4fv( [shaderProgram_ uniformIndex:kCCUniformMPVMatrix], 1, GL_FALSE, &transformGL[0]);	
+	glUniformMatrix4fv( [shaderProgram_ uniformIndex:kCCUniformMPVMatrix], 1, GL_FALSE, &mat4[0]);	
 	glUniform1i ( [shaderProgram_ uniformIndex:kCCUniformSampler], 0 );
 	
 	[textureAtlas_ drawQuads];

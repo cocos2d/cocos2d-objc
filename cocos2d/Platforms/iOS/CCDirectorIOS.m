@@ -44,6 +44,7 @@
 #import "glu.h"
 #import "../../Support/OpenGL_Internal.h"
 #import "../../Support/CGPointExtension.h"
+#import "../../Support/TransformUtils.h"
 
 #import "CCLayer.h"
 
@@ -488,6 +489,38 @@ CGFloat	__ccContentScaleFactor = 1;
 }
 
 #pragma mark Director Scene Landscape
+
+-(CGAffineTransform) viewProjectionMatrix
+{
+	GLfloat mat4[16] = {
+		2.0/winSizeInPixels_.width, 0.0, 0.0, -1.0,
+		0.0, 2.0/winSizeInPixels_.height, 0.0, -1.0,
+		0.0, 0.0, -1.0, 0.0,
+		0.0, 0.0, 0.0, 1.0
+	};
+	
+	CGAffineTransform transform;
+	GLToCGAffine(&mat4[0], &transform );
+	
+	
+	switch ( deviceOrientation_ ) {
+		case CCDeviceOrientationPortrait:
+			// nothing
+			break;
+		case CCDeviceOrientationPortraitUpsideDown:
+			// upside down
+			transform = CGAffineTransformRotate(transform, CC_DEGREES_TO_RADIANS(180) );
+			break;
+		case CCDeviceOrientationLandscapeRight:
+			transform = CGAffineTransformRotate(transform, CC_DEGREES_TO_RADIANS(90) );
+			break;
+		case CCDeviceOrientationLandscapeLeft:
+			transform = CGAffineTransformRotate(transform, CC_DEGREES_TO_RADIANS(-90) );
+			break;
+	}	
+	
+	return transform;
+}
 
 -(CGPoint)convertToGL:(CGPoint)uiPoint
 {

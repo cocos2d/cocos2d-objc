@@ -679,8 +679,8 @@ Class restartAction()
 		[self schedule:@selector(removeTiles:) interval:1];
 		
 		
-		NSLog(@"++++atlas quantity: %lu", [[layer textureAtlas] totalQuads]);
-		NSLog(@"++++children: %lu", [[layer children] count]);
+		NSLog(@"++++atlas quantity: %u", [[layer textureAtlas] totalQuads]);
+		NSLog(@"++++children: %u", [[layer children] count]);
 		
 		gid2 = 0;
 		
@@ -693,7 +693,7 @@ Class restartAction()
 	NSLog(@"removing tile: %@", sender);
 	id p = [sender parent];
 	[p removeChild:sender cleanup:YES];
-	NSLog(@"atlas quantity: %lu", [[p textureAtlas] totalQuads]);
+	NSLog(@"atlas quantity: %u", [[p textureAtlas] totalQuads]);
 }
 
 -(void) updateCol:(ccTime)dt
@@ -701,8 +701,8 @@ Class restartAction()
 	id map = [self getChildByTag:kTagTileMap];
 	CCTMXLayer *layer = (CCTMXLayer*) [map getChildByTag:0];
 		
-	NSLog(@"++++atlas quantity: %lu", [[layer textureAtlas] totalQuads]);
-	NSLog(@"++++children: %lu", [[layer children] count]);
+	NSLog(@"++++atlas quantity: %u", [[layer textureAtlas] totalQuads]);
+	NSLog(@"++++children: %u", [[layer children] count]);
 
 
 	CGSize s = [layer layerSize];

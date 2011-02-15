@@ -231,6 +231,12 @@ static CCDirector *_sharedDirector = nil;
 
 #pragma mark Director - Scene OpenGL Helper
 
+-(CGAffineTransform) viewProjectionMatrix
+{
+	NSAssert(NO, @"override me");
+	return CGAffineTransformIdentity;
+}
+
 -(ccDirectorProjection) projection
 {
 	return projection_;

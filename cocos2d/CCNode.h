@@ -160,7 +160,7 @@ enum {
 	BOOL isTransformDirty_:1;
 	BOOL isInverseDirty_:1;
 @public
-	CGAffineTransform transformToWorld_;
+	CGAffineTransform transformMVP_;
 
 }
 
