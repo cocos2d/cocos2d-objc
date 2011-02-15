@@ -135,7 +135,7 @@
 /*
  The positions are updated at visit because:
    - using a timer is not guaranteed that it will called after all the positions were updated
-   - overriding "draw" will only precise if the children have a z > 0
+   - overriding "draw" will only be precise if the children have a z > 0
 */
 -(void) visit
 {
