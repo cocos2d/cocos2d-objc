@@ -167,7 +167,7 @@
 	[shaderProgram_ use];
 
 	GLfloat transformGL[16];	
-	CGAffineToGL(&transformToWorld_, &transformGL[0] );
+	CGAffineToGL(&transformMVP_, &transformGL[0] );
 
 	glUniformMatrix4fv( [shaderProgram_ uniformIndex:kCCUniformMPVMatrix], 1, GL_FALSE, &transformGL[0]);	
 	glUniform1i ( [shaderProgram_ uniformIndex:kCCUniformSampler], 0 );
