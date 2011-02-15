@@ -103,21 +103,17 @@ enum {
 	// scaling factors
 	float scaleX_, scaleY_;
 	
+	// openGL real Z vertex
+	float vertexZ_;
+	
 	// position of the node
 	CGPoint position_;
 	CGPoint	positionInPixels_;
-
-	// is visible
-	BOOL visible_;
 	
 	// anchor point in pixels
 	CGPoint anchorPointInPixels_;	
-	// anchor point normalized
+	// anchor point normalized (NOT in points)
 	CGPoint anchorPoint_;	
-	// If YES the transformtions will be relative to (-transform.x, -transform.y).
-	// Sprites, Labels and any other "small" object uses it.
-	// Scenes, Layers and other "whole screen" object don't use it.
-	BOOL isRelativeAnchorPoint_;
 	
 	// untransformed size of the node
 	CGSize	contentSize_;
@@ -126,9 +122,6 @@ enum {
 	// transform
 	CGAffineTransform transform_, inverse_;
 
-	// openGL real Z vertex
-	float vertexZ_;
-	
 	// a Camera
 	CCCamera *camera_;
 	
@@ -159,6 +152,13 @@ enum {
 	// To reduce memory, place BOOLs that are not properties here:
 	BOOL isTransformDirty_:1;
 	BOOL isInverseDirty_:1;
+	// is visible
+	BOOL visible_:1;
+	// If YES the transformtions will be relative to (-transform.x, -transform.y).
+	// Sprites, Labels and any other "small" object uses it.
+	// Scenes, Layers and other "whole screen" object don't use it.
+	BOOL isRelativeAnchorPoint_:1;	
+
 @public
 	CGAffineTransform transformMVP_;
 

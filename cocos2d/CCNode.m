@@ -490,25 +490,22 @@
 	if (!visible_)
 		return;
 
-	if( isTransformDirty_ ) {
-		transformMVP_ = [self nodeToParentTransform];
+	transformMVP_ = [self nodeToParentTransform];
+	
+	// root node
+	if(  ! parent_ ) {
+		CCDirector *director = [CCDirector sharedDirector];
+		CGAffineTransform viewProjMat = [director viewProjectionMatrix];
+
+		CGSize winSize = [director winSize];
 		
-		// root node
-		if(  ! parent_ ) {
-			
-			CCDirector *director = [CCDirector sharedDirector];
-			CGAffineTransform viewProjMat = [director viewProjectionMatrix];
-
-			CGSize winSize = [director winSize];
-			
-			transformMVP_ = CGAffineTransformTranslate(viewProjMat, -winSize.width/2, -winSize.height/2);
-		}
-				
-		// leaf node
-		else 
-			transformMVP_ = CGAffineTransformConcat( transformMVP_, parent_->transformMVP_ );
-
+		transformMVP_ = CGAffineTransformConcat( transformMVP_, viewProjMat);
+		transformMVP_ = CGAffineTransformTranslate(viewProjMat, -winSize.width/2, -winSize.height/2);
 	}
+			
+	// leaf node
+	else 
+		transformMVP_ = CGAffineTransformConcat( transformMVP_, parent_->transformMVP_ );		
 	
 	if(children_) {
 		ccArray *arrayData = children_->data;

@@ -149,7 +149,7 @@ struct transformValues_ {
 		
 		
 		// shader program
-		self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_TextureColor];
+		self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_VertexTextureColor];
 
 		// update texture (calls updateBlendFunc)
 		[self setTexture:nil];

@@ -402,7 +402,7 @@ enum {
 
 -(void) menuCallback: (id) sender
 {
-	NSLog(@"selected item: %@ index:%lu", [sender selectedItem], [sender selectedIndex] );
+	NSLog(@"selected item: %@ index:%u", [sender selectedItem], [sender selectedIndex] );
 }
 
 -(void) backCallback: (id) sender

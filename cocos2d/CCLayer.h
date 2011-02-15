@@ -155,7 +155,7 @@
 	GLubyte		opacity_;
 	ccColor3B	color_;	
 	ccVertex2F	squareVertices_[4];
-	ccColor4B	squareColors_[4];
+	ccColor4F	squareColors_[4];
 	
 	ccBlendFunc	blendFunc_;
 }

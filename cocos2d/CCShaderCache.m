@@ -64,7 +64,7 @@ static CCShaderCache *_sharedShaderCache;
 
 -(void) loadDefaultShaders
 {
-	// Texture Color shader
+	// Vertex Texture Color shader
 	GLProgram *p = [[GLProgram alloc] initWithVertexShaderFilename:@"Shaders/VertexTextureColor.vert"
 											fragmentShaderFilename:@"Shaders/VertexTextureColor.frag"];
 	
@@ -74,8 +74,21 @@ static CCShaderCache *_sharedShaderCache;
 	
 	[p link];
 	
-	[programs_ setObject:p forKey:kCCShader_TextureColor];
+	[programs_ setObject:p forKey:kCCShader_VertexTextureColor];
 	[p release];
+
+	// Vertex Color shader
+	p = [[GLProgram alloc] initWithVertexShaderFilename:@"Shaders/VertexColor.vert"
+											fragmentShaderFilename:@"Shaders/VertexColor.frag"];
+	
+	[p addAttribute:@"aVertex2" index:kCCAttribVertex2];
+	[p addAttribute:@"aColor2" index:kCCAttribColor2];
+	
+	[p link];
+	
+	[programs_ setObject:p forKey:kCCShader_VertexColor];
+	[p release];
+	
 }
 
 -(GLProgram *) programForKey:(NSString*)key
