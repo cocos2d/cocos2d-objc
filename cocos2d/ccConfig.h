@@ -218,7 +218,7 @@
  
  @since v0.99.5
  */
-#define CC_USE_RGBA32_LABELS_ON_NEON_ARCH 0
+#define CC_USE_RGBA32_LABELS_ON_NEON_ARCH 1
 
 /** @def CC_SPRITE_DEBUG_DRAW
  If enabled, all subclasses of CCSprite will draw a bounding box

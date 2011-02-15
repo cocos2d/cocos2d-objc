@@ -121,7 +121,7 @@ static 	SEL selUpdate = NULL;
 		descendants_ = [[CCArray alloc] initWithCapacity:capacity];
 		
 		
-		self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_TextureColor];
+		self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_VertexTextureColor];
 	}
 	
 	return self;
@@ -156,7 +156,7 @@ static 	SEL selUpdate = NULL;
 -(void) visit
 {
 	// CAREFUL:
-	// This visit is almost identical to CocosNode#visit
+	// This visit is almost identical to CCNode#visit
 	// with the exception that it doesn't call visit on it's children
 	//
 	// The alternative is to have a void CCSprite#visit, but
@@ -165,22 +165,21 @@ static 	SEL selUpdate = NULL;
 	if (!visible_)
 		return;
 	
-	if( isTransformDirty_ ) {
-		transformMVP_ = [self nodeToParentTransform];
+	transformMVP_ = [self nodeToParentTransform];
 		
-		// leaf node
-		if( parent_ )
-			transformMVP_ = CGAffineTransformConcat( transformMVP_, parent_->transformMVP_ );
-		
-		// SpriteBatchNode should not be used as a root node
-		else {
-			CCDirector *director = [CCDirector sharedDirector];
-			CGSize winSize = [director winSize];
+	// leaf node
+	if( parent_ )
+		transformMVP_ = CGAffineTransformConcat( transformMVP_, parent_->transformMVP_ );
+	
+	// SpriteBatchNode should not be used as a root node
+	else {
+		CCDirector *director = [CCDirector sharedDirector];
+		CGSize winSize = [director winSize];
 
-			CGAffineTransform transform = [director viewProjectionMatrix];
-			transformMVP_ = CGAffineTransformTranslate(transform, -winSize.width/2, -winSize.height/2);
-		}
-	}
+		CGAffineTransform transform = [director viewProjectionMatrix];
+		transformMVP_ = CGAffineTransformConcat( transformMVP_, transform);
+		transformMVP_ = CGAffineTransformTranslate(transform, -winSize.width/2, -winSize.height/2);
+	}		
 	
 	// self draw
 	[self draw];		
@@ -509,5 +508,11 @@ static 	SEL selUpdate = NULL;
 -(CCTexture2D*) texture
 {
 	return textureAtlas_.texture;
+}
+
+-(void) setPosition:(CGPoint)pos
+{
+	NSLog(@"%@ setPosition", self);
+	[super setPosition:pos];
 }
 @end

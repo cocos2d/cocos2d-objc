@@ -31,6 +31,9 @@
 #import "CCLayer.h"
 #import "CCDirector.h"
 #import "ccMacros.h"
+#import "CCShaderCache.h"
+#import "GLProgram.h"
+#import "Support/TransformUtils.h"
 #import "Support/CGPointExtension.h"
 
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
@@ -305,6 +308,8 @@
 				
 		[self updateColor];
 		[self setContentSize:CGSizeMake(w, h) ];
+		
+		self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_VertexColor];
 	}
 	return self;
 }
@@ -345,23 +350,20 @@
 {
 	for( NSUInteger i = 0; i < 4; i++ )
 	{
-		squareColors_[i].r = color_.r;
-		squareColors_[i].g = color_.g;
-		squareColors_[i].b = color_.b;
-		squareColors_[i].a = opacity_;
+		squareColors_[i].r = color_.r / 255.0f;
+		squareColors_[i].g = color_.g / 255.0f;
+		squareColors_[i].b = color_.b / 255.0f;
+		squareColors_[i].a = opacity_ / 255.0f;
 	}
 }
 
 - (void)draw
-{		
-	// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
-	// Needed states: GL_VERTEX_ARRAY, GL_COLOR_ARRAY
-	// Unneeded states: GL_TEXTURE_2D, GL_TEXTURE_COORD_ARRAY
-	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-	glDisable(GL_TEXTURE_2D);
-
-	glVertexPointer(2, GL_FLOAT, 0, squareVertices_);
-	glColorPointer(4, GL_UNSIGNED_BYTE, 0, squareColors_);
+{
+	//
+	// Attributes
+	//
+	glVertexAttribPointer(kCCAttribVertex, 2, GL_FLOAT, GL_FALSE, 0, squareVertices_);
+	glVertexAttribPointer(kCCAttribColor, 4, GL_FLOAT, GL_FALSE, 0, squareColors_);
 	
 	
 	BOOL newBlend = blendFunc_.src != CC_BLEND_SRC || blendFunc_.dst != CC_BLEND_DST;
@@ -373,14 +375,16 @@
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	}
 	
+	[shaderProgram_ use];
+	
+	GLfloat mat4[16];	
+	CGAffineToGL(&transformMVP_, &mat4[0] );
+	glUniformMatrix4fv( [shaderProgram_ uniformIndex:kCCUniformMPVMatrix], 1, GL_FALSE, &mat4[0]);	
+
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 	
 	if( newBlend )
 		glBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);
-	
-	// restore default GL state
-	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-	glEnable(GL_TEXTURE_2D);
 }
 
 #pragma mark Protocols
@@ -463,18 +467,18 @@
 	
 	float opacityf = (float)opacity_/255.0f;
 	
-    ccColor4B S = {
-		color_.r,
-		color_.g,
-		color_.b,
-		startOpacity_*opacityf
+    ccColor4F S = {
+		color_.r / 255.0f,
+		color_.g / 255.0f,
+		color_.b / 255.0f,
+		startOpacity_*opacityf / 255.0f,
 	};
 
-    ccColor4B E = {
-		endColor_.r,
-		endColor_.g,
-		endColor_.b,
-		endOpacity_*opacityf
+    ccColor4F E = {
+		endColor_.r / 255.0f,
+		endColor_.g / 255.0f,
+		endColor_.b / 255.0f,
+		endOpacity_*opacityf / 255.0f,
 	};
 
 
