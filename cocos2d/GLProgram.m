@@ -45,23 +45,32 @@ typedef void (*GLLogFunction) (GLuint program,
         NSString *vertShaderPathname, *fragShaderPathname;
         program_ = glCreateProgram();
         
-        vertShaderPathname = [CCFileUtils fullPathFromRelativePath:vShaderFilename]; 
+		vertShader_ = fragShader_ = 0;
 
-        if (![self compileShader:&vertShader_
-                            type:GL_VERTEX_SHADER 
-                            file:vertShaderPathname])
-            NSLog(@"Failed to compile vertex shader");
+		if( vShaderFilename ) {
+			vertShaderPathname = [CCFileUtils fullPathFromRelativePath:vShaderFilename]; 
+
+			if (![self compileShader:&vertShader_
+								type:GL_VERTEX_SHADER 
+								file:vertShaderPathname])
+				NSLog(@"Failed to compile vertex shader");
+		}
         
         // Create and compile fragment shader
-        fragShaderPathname = [CCFileUtils fullPathFromRelativePath:fShaderFilename];
+		if( fShaderFilename ) {
+			fragShaderPathname = [CCFileUtils fullPathFromRelativePath:fShaderFilename];
 
-        if (![self compileShader:&fragShader_
-                            type:GL_FRAGMENT_SHADER 
-                            file:fragShaderPathname])
-            NSLog(@"Failed to compile fragment shader");
+			if (![self compileShader:&fragShader_
+								type:GL_FRAGMENT_SHADER 
+								file:fragShaderPathname])
+				NSLog(@"Failed to compile fragment shader");
+		}
         
-        glAttachShader(program_, vertShader_);
-        glAttachShader(program_, fragShader_);
+		if( vertShader_ )
+			glAttachShader(program_, vertShader_);
+		
+		if( fragShader_ )
+			glAttachShader(program_, fragShader_);
     }
     
     return self;

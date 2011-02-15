@@ -173,12 +173,16 @@ static 	SEL selUpdate = NULL;
 	
 	// SpriteBatchNode should not be used as a root node
 	else {
+		
+		NSAssert(NO, @"CCSpriteBatchNode should NOT be root node");
 		CCDirector *director = [CCDirector sharedDirector];
+		CGAffineTransform viewProjMat = [director viewProjectionMatrix];
+		
 		CGSize winSize = [director winSize];
-
-		CGAffineTransform transform = [director viewProjectionMatrix];
-		transformMVP_ = CGAffineTransformConcat( transformMVP_, transform);
-		transformMVP_ = CGAffineTransformTranslate(transform, -winSize.width/2, -winSize.height/2);
+		viewProjMat = CGAffineTransformTranslate(viewProjMat, -winSize.width/2, -winSize.height/2);
+		
+		transformMVP_ = CGAffineTransformConcat( transformMVP_, viewProjMat);
+		
 	}		
 	
 	// self draw
@@ -508,11 +512,5 @@ static 	SEL selUpdate = NULL;
 -(CCTexture2D*) texture
 {
 	return textureAtlas_.texture;
-}
-
--(void) setPosition:(CGPoint)pos
-{
-	NSLog(@"%@ setPosition", self);
-	[super setPosition:pos];
 }
 @end

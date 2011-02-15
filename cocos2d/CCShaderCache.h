@@ -30,19 +30,17 @@ enum {
 	kCCAttribColor,
 	kCCAttribTexCoords,
 
-	kCCAttribVertex2,
-	kCCAttribColor2,
-	
 	kCCAttrib_Num,
 };
 
 
 #define kCCShader_VertexTextureColor	@"ShaderVertexTextureColor"
 #define kCCShader_VertexColor			@"ShaderVertexColor"
+#define kCCShader_Vertex				@"ShaderVertex"
 
 // uniform names
-#define kCCUniformMPVMatrix		@"uMatrix"
-#define kCCUniformSampler		@"uTexture"
+#define kCCUniformMPVMatrix				@"uMVPMatrix"
+#define kCCUniformSampler				@"uTexture"
 
 @class GLProgram;
 
