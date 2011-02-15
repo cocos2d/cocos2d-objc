@@ -25,6 +25,9 @@
 
 #import "CCAtlasNode.h"
 #import "ccMacros.h"
+#import "GLProgram.h"
+#import "CCShaderCache.h"
+#import "Support/TransformUtils.h"
 
 
 @interface CCAtlasNode ()
@@ -74,6 +77,8 @@
 		
 		[self calculateMaxItems];
 		
+		self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_VertexTextureColor];
+		
 	}
 	return self;
 }
@@ -106,6 +111,14 @@
 	if( newBlend )
 		glBlendFunc( blendFunc_.src, blendFunc_.dst );
 		
+	[shaderProgram_ use];
+	
+	GLfloat mat4[16];	
+	CGAffineToGL(&transformMVP_, &mat4[0] );
+	
+	glUniformMatrix4fv( [shaderProgram_ uniformIndex:kCCUniformMPVMatrix], 1, GL_FALSE, &mat4[0]);	
+	glUniform1i ( [shaderProgram_ uniformIndex:kCCUniformSampler], 0 );
+	
 	[textureAtlas_ drawQuads];
 		
 	if( newBlend )

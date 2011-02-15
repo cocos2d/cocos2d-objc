@@ -53,6 +53,8 @@
 
 	if( (self=[super initWithTileFile:tile tileWidth:w tileHeight:h itemsToRender: itemsToRender]) ) {
 
+		color_ = ccWHITE;
+
 		posToAtlasIndex = [[NSMutableDictionary dictionaryWithCapacity:itemsToRender] retain];
 
 		[self updateAtlasValues];
