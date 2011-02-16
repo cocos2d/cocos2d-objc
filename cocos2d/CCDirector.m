@@ -511,13 +511,7 @@ static CCDirector *_sharedDirector = nil;
 		[FPSLabel_ setString:str];
 		[str release];
 	}
-<<<<<<< HEAD
-	
 	[FPSLabel_ visit];
-=======
-
-	[FPSLabel_ draw];
->>>>>>> develop
 }
 #else
 // display the FPS using a manually generated Texture (very slow)
