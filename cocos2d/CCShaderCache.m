@@ -27,6 +27,8 @@
 
 static CCShaderCache *_sharedShaderCache;
 
+GLint ccUniforms[kCCUniform_MAX];
+
 @implementation CCShaderCache
 
 #pragma mark CCShaderCache - Alloc, Init & Dealloc

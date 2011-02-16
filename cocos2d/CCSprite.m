@@ -150,8 +150,8 @@ struct transformValues_ {
 		
 		// shader program
 		self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_VertexTextureColor];
-		uniformMVPMatrix_ = [shaderProgram_ uniformIndex:kCCUniformMPVMatrix];
-		uniformSampler_ = [shaderProgram_ uniformIndex:kCCUniformSampler];
+		uniformMVPMatrix_ = [shaderProgram_ uniformIndex:kCCUniformMPVMatrix_s];
+		uniformSampler_ = [shaderProgram_ uniformIndex:kCCUniformSampler_s];
 
 		// update texture (calls updateBlendFunc)
 		[self setTexture:nil];
