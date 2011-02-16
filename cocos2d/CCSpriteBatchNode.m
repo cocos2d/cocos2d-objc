@@ -314,8 +314,8 @@ static 	SEL selUpdate = NULL;
 	GLfloat mat4[16];	
 	CGAffineToGL(&transformMVP_, &mat4[0] );
 	
-	glUniformMatrix4fv( [shaderProgram_ uniformIndex:kCCUniformMPVMatrix], 1, GL_FALSE, &mat4[0]);	
-	glUniform1i ( [shaderProgram_ uniformIndex:kCCUniformSampler], 0 );
+	glUniformMatrix4fv( [shaderProgram_ uniformIndex:kCCUniformMPVMatrix_s], 1, GL_FALSE, &mat4[0]);	
+	glUniform1i ( [shaderProgram_ uniformIndex:kCCUniformSampler_s], 0 );
 	
 	[textureAtlas_ drawQuads];
 	if( newBlend )
