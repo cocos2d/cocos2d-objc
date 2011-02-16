@@ -28,6 +28,7 @@
 #import "CCDirector.h"
 #import "ccMacros.h"
 #import "Support/ccUtils.h"
+#import "Support/CCFileUtils.h"
 
 @interface CCRenderTexture (private)
 
@@ -209,9 +210,7 @@
 
 -(BOOL)saveBuffer:(NSString*)fileName format:(int)format
 {
-	NSArray *paths					= NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-	NSString *documentsDirectory	= [paths objectAtIndex:0];
-	NSString *fullPath				= [documentsDirectory stringByAppendingPathComponent:fileName];
+    NSString *fullPath = [CCFileUtils fullPathFromRelativePath:fileName];
 	
 	NSData *data = [self getUIImageAsDataFromBuffer:format];
 	
