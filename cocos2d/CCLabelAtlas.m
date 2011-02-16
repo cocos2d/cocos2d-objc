@@ -76,7 +76,7 @@
 {
 	int n = [string_ length];
 	
-	ccV3F_C4F_T2F_Quad quad;
+	ccV3F_C4B_T2F_Quad quad;
 
 	const char *s = [string_ UTF8String];
 
@@ -124,7 +124,7 @@
 		quad.tr.vertices.y = (int)(itemHeight_);
 		quad.tr.vertices.z = 0.0f;
 		
-		ccColor4F c = { color_.r /255.0f, color_.g/255.0f, color_.b/255.0f, opacity_/255.0f };
+		ccColor4B c = { color_.r, color_.g, color_.b, opacity_ };
 		quad.tl.colors = c;
 		quad.tr.colors = c;
 		quad.bl.colors = c;

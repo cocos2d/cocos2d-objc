@@ -63,7 +63,7 @@
 	[sprite useBatchNode:self];
 	[sprite setAtlasIndex:index];
 
-	ccV3F_C4F_T2F_Quad quad = [sprite quad];
+	ccV3F_C4B_T2F_Quad quad = [sprite quad];
 	[textureAtlas_ insertQuad:&quad atIndex:index];
 	
 	// XXX: updateTransform will update the textureAtlas too using updateQuad.

@@ -119,7 +119,7 @@ typedef enum {
 	CGPoint unflippedOffsetPositionFromCenter_;
 
 	// vertex coords, texture coords and color info
-	ccV3F_C4F_T2F_Quad quad_;
+	ccV3F_C4B_T2F_Quad quad_;
 	
 	// opacity and RGB protocol
 	GLubyte		opacity_;
@@ -131,9 +131,11 @@ typedef enum {
 	BOOL	flipX_;
 	BOOL	flipY_;
 	
-	
 	// Animations that belong to the sprite
 	NSMutableDictionary *animations_;
+	
+	
+	GLint uniformMVPMatrix_, uniformSampler_;
 
 @public
 	// used internally.
@@ -143,7 +145,7 @@ typedef enum {
 /** whether or not the Sprite needs to be updated in the Atlas */
 @property (nonatomic,readwrite) BOOL dirty;
 /** the quad (tex coords, vertex coords and color) information */
-@property (nonatomic,readonly) ccV3F_C4F_T2F_Quad quad;
+@property (nonatomic,readonly) ccV3F_C4B_T2F_Quad quad;
 /** The index used on the TextureATlas. Don't modify this value unless you know what you are doing */
 @property (nonatomic,readwrite) NSUInteger atlasIndex;
 /** returns the rect of the CCSprite in points */

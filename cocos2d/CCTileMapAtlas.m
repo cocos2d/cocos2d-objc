@@ -158,7 +158,7 @@
 
 -(void) updateAtlasValueAt:(ccGridSize)pos withValue:(ccColor3B)value withIndex:(int)idx
 {
-	ccV3F_C4F_T2F_Quad quad;
+	ccV3F_C4B_T2F_Quad quad;
 
 	int x = pos.x;
 	int y = pos.y;
@@ -203,7 +203,7 @@
 	quad.tr.vertices.y = (int)(y * itemHeight_ + itemHeight_);
 	quad.tr.vertices.z = 0.0f;
 	
-	ccColor4F color = { color_.r/255.0f, color_.g/255.0f, color_.b/255.0f, opacity_/255.0f };
+	ccColor4B color = { color_.r, color_.g, color_.b, opacity_ };
 	quad.tr.colors = color;
 	quad.tl.colors = color;
 	quad.br.colors = color;
