@@ -112,10 +112,10 @@ default gl blend src function. Compatible with premultiplied alpha images.
 	- GL_COLOR_ARRAY
  */
 #define CC_ENABLE_DEFAULT_GL_STATES() {				\
-	glEnableClientState(GL_VERTEX_ARRAY);			\
-	glEnableClientState(GL_COLOR_ARRAY);			\
-	glEnableClientState(GL_TEXTURE_COORD_ARRAY);	\
-	glEnable(GL_TEXTURE_2D);						\
+	glActiveTexture(GL_TEXTURE0);					\
+	glEnableVertexAttribArray(kCCAttribVertex);		\
+	glEnableVertexAttribArray(kCCAttribColor);		\
+	glEnableVertexAttribArray(kCCAttribTexCoords);	\
 }
 
 /** @def CC_DISABLE_DEFAULT_GL_STATES 
@@ -126,10 +126,9 @@ default gl blend src function. Compatible with premultiplied alpha images.
 	- GL_COLOR_ARRAY
  */
 #define CC_DISABLE_DEFAULT_GL_STATES() {			\
-	glDisable(GL_TEXTURE_2D);						\
-	glDisableClientState(GL_COLOR_ARRAY);			\
-	glDisableClientState(GL_TEXTURE_COORD_ARRAY);	\
-	glDisableClientState(GL_VERTEX_ARRAY);			\
+	glDisableVertexAttribArray(kCCAttribVertex);	\
+	glDisableVertexAttribArray(kCCAttribColor);		\
+	glDisableVertexAttribArray(kCCAttribTexCoords);	\
 }
 
 /** @def CC_DIRECTOR_INIT
