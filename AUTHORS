@@ -434,6 +434,8 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		update the VBO buffer with only the needed particles
 	* Thomas Visser:
 		MenuItem#rect works with anchorPoint
+	* UD7 Studios (http://ud7.com)
+		RenderTexture: Possibility to save buffer in any directory. patch.
 	* Valentin Milea:
 		clean up CocosNode, added better comments to CocosNode
 		Set transformAnchor point in Sprite

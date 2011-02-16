@@ -236,7 +236,7 @@
  */
 #define CC_SPRITEBATCHNODE_DEBUG_DRAW 0
 
-/** @def CC_BITMAPFONTATLAS_DEBUG_DRAW
+/** @def CC_LABELBMFONT_DEBUG_DRAW
  If enabled, all subclasses of CCLabelBMFont will draw a bounding box
  Useful for debugging purposes only. It is recommened to leave it disabled.
  

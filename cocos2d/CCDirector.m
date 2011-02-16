@@ -226,7 +226,7 @@ static CCDirector *_sharedDirector = nil;
 -(void) purgeCachedData
 {
 	[CCLabelBMFont purgeCachedData];	
-	[CCTextureCache purgeSharedTextureCache];
+	[[CCTextureCache sharedTextureCache] removeUnusedTextures];
 }
 
 #pragma mark Director - Scene OpenGL Helper
@@ -511,8 +511,13 @@ static CCDirector *_sharedDirector = nil;
 		[FPSLabel_ setString:str];
 		[str release];
 	}
+<<<<<<< HEAD
 	
 	[FPSLabel_ visit];
+=======
+
+	[FPSLabel_ draw];
+>>>>>>> develop
 }
 #else
 // display the FPS using a manually generated Texture (very slow)

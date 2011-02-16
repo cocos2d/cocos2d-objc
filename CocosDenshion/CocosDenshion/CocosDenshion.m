@@ -54,6 +54,16 @@ ALvoid  alcMacOSXMixerOutputRateProc(const ALdouble value)
     return;
 }
 
+NSString * const kCDN_BadAlContext = @"kCDN_BadAlContext";
+NSString * const kCDN_AsynchLoadComplete = @"kCDN_AsynchLoadComplete";
+float const kCD_PitchDefault = 1.0f;
+float const kCD_PitchLowerOneOctave = 0.5f;
+float const kCD_PitchHigherOneOctave = 2.0f;
+float const kCD_PanDefault = 0.0f;
+float const kCD_PanFullLeft = -1.0f;
+float const kCD_PanFullRight = 1.0f;
+float const kCD_GainDefault = 1.0f;
+
 @interface CDSoundEngine (PrivateMethods)
 -(BOOL) _initOpenAL;
 -(void) _testGetGain;
@@ -252,6 +262,9 @@ static BOOL _mixerRateSet = NO;
 	CDLOGINFO(@"Denshion::CDSoundEngine - free sources.");
 	free(_sources);
 	
+	//Release mutexes
+	[_mutexBufferLoad release];
+	
 	[super dealloc];
 }	
 
@@ -339,6 +352,9 @@ static BOOL _mixerRateSet = NO;
 - (id)init
 {	
 	if ((self = [super init])) {
+		
+		//Create mutexes
+		_mutexBufferLoad = [[NSObject alloc] init];
 		
 		asynchLoadProgress_ = 0.0f;
 		
@@ -483,73 +499,75 @@ static BOOL _mixerRateSet = NO;
 }	
 
 -(BOOL) loadBufferFromData:(int) soundId soundData:(ALvoid*) soundData format:(ALenum) format size:(ALsizei) size freq:(ALsizei) freq {
-	
-	if (!functioning_) {
-		//OpenAL initialisation has previously failed
-		CDLOG(@"Denshion::CDSoundEngine - Loading buffer failed because sound engine state != functioning");
-		return FALSE;
-	}
-	
-	//Ensure soundId is within array bounds otherwise memory corruption will occur
-	if (soundId < 0) {
-		CDLOG(@"Denshion::CDSoundEngine - soundId is negative");
-		return FALSE;
-	}
-	
-	if (soundId >= bufferTotal) {
-		//Need to resize the buffers
-		int requiredIncrement = CD_BUFFERS_INCREMENT;
-		while (bufferTotal + requiredIncrement < soundId) {
-			requiredIncrement += CD_BUFFERS_INCREMENT;
-		}
-		CDLOGINFO(@"Denshion::CDSoundEngine - attempting to resize buffers by %i for sound %i",requiredIncrement,soundId);
-		if (![self _resizeBuffers:requiredIncrement]) {
-			CDLOG(@"Denshion::CDSoundEngine - buffer resize failed");
+
+	@synchronized(_mutexBufferLoad) {
+		
+		if (!functioning_) {
+			//OpenAL initialisation has previously failed
+			CDLOG(@"Denshion::CDSoundEngine - Loading buffer failed because sound engine state != functioning");
 			return FALSE;
-		}	
-	}	
-	
-	if (soundData)
-	{
-		if (_buffers[soundId].bufferState != CD_BS_EMPTY) {
-			CDLOGINFO(@"Denshion::CDSoundEngine - non empty buffer, regenerating");
-			if (![self unloadBuffer:soundId]) {
-				//Deletion of buffer failed, delete buffer routine has set buffer state and lastErrorCode
-				return NO;
+		}
+		
+		//Ensure soundId is within array bounds otherwise memory corruption will occur
+		if (soundId < 0) {
+			CDLOG(@"Denshion::CDSoundEngine - soundId is negative");
+			return FALSE;
+		}
+		
+		if (soundId >= bufferTotal) {
+			//Need to resize the buffers
+			int requiredIncrement = CD_BUFFERS_INCREMENT;
+			while (bufferTotal + requiredIncrement < soundId) {
+				requiredIncrement += CD_BUFFERS_INCREMENT;
+			}
+			CDLOGINFO(@"Denshion::CDSoundEngine - attempting to resize buffers by %i for sound %i",requiredIncrement,soundId);
+			if (![self _resizeBuffers:requiredIncrement]) {
+				CDLOG(@"Denshion::CDSoundEngine - buffer resize failed");
+				return FALSE;
 			}	
 		}	
 		
+		if (soundData)
+		{
+			if (_buffers[soundId].bufferState != CD_BS_EMPTY) {
+				CDLOGINFO(@"Denshion::CDSoundEngine - non empty buffer, regenerating");
+				if (![self unloadBuffer:soundId]) {
+					//Deletion of buffer failed, delete buffer routine has set buffer state and lastErrorCode
+					return NO;
+				}	
+			}	
+			
 #ifdef CD_DEBUG
-		//Check that sample rate matches mixer rate and warn if they do not
-		if (freq != (int)_mixerSampleRate) {
-			CDLOGINFO(@"Denshion::CDSoundEngine - WARNING sample rate does not match mixer sample rate performance may not be optimal.");
-		}	
+			//Check that sample rate matches mixer rate and warn if they do not
+			if (freq != (int)_mixerSampleRate) {
+				CDLOGINFO(@"Denshion::CDSoundEngine - WARNING sample rate does not match mixer sample rate performance may not be optimal.");
+			}	
 #endif		
-		
+			
 #ifdef CD_USE_STATIC_BUFFERS
-		alBufferDataStaticProc(_buffers[soundId].bufferId, format, soundData, size, freq);
-		_buffers[soundId].bufferData = data;//Save the pointer to the new data
+			alBufferDataStaticProc(_buffers[soundId].bufferId, format, soundData, size, freq);
+			_buffers[soundId].bufferData = data;//Save the pointer to the new data
 #else		
-		alBufferData(_buffers[soundId].bufferId, format, soundData, size, freq);
+			alBufferData(_buffers[soundId].bufferId, format, soundData, size, freq);
 #endif
-		if((lastErrorCode_ = alGetError()) != AL_NO_ERROR) {
-			CDLOG(@"Denshion::CDSoundEngine -  error attaching audio to buffer: %x", lastErrorCode_);
+			if((lastErrorCode_ = alGetError()) != AL_NO_ERROR) {
+				CDLOG(@"Denshion::CDSoundEngine -  error attaching audio to buffer: %x", lastErrorCode_);
+				_buffers[soundId].bufferState = CD_BS_FAILED;
+				return FALSE;
+			} 
+		} else {
+			CDLOG(@"Denshion::CDSoundEngine Buffer data is null!");
 			_buffers[soundId].bufferState = CD_BS_FAILED;
 			return FALSE;
-		} 
-	} else {
-		CDLOG(@"Denshion::CDSoundEngine Buffer data is null!");
-		_buffers[soundId].bufferState = CD_BS_FAILED;
-		return FALSE;
-	}	
-	
-	_buffers[soundId].format = format;
-	_buffers[soundId].sizeInBytes = size;
-	_buffers[soundId].frequencyInHertz = freq;
-	_buffers[soundId].bufferState = CD_BS_LOADED;
-	CDLOGINFO(@"Denshion::CDSoundEngine Buffer %i loaded format:%i freq:%i size:%i",soundId,format,freq,size);
-	return TRUE;
-
+		}	
+		
+		_buffers[soundId].format = format;
+		_buffers[soundId].sizeInBytes = size;
+		_buffers[soundId].frequencyInHertz = freq;
+		_buffers[soundId].bufferState = CD_BS_LOADED;
+		CDLOGINFO(@"Denshion::CDSoundEngine Buffer %i loaded format:%i freq:%i size:%i",soundId,format,freq,size);
+		return TRUE;
+	}//end mutex
 }	
 
 /**
@@ -850,7 +868,7 @@ static BOOL _mixerRateSet = NO;
 		} else {
 			if (alcGetCurrentContext() == NULL) {
 				CDLOGINFO(@"Denshion::CDSoundEngine - posting bad OpenAL context message");
-				[[NSNotificationCenter defaultCenter] postNotificationName:CD_MSG_BAD_AL_CONTEXT object:nil];
+				[[NSNotificationCenter defaultCenter] postNotificationName:kCDN_BadAlContext object:nil];
 			}				
 			return CD_NO_SOURCE;
 		}	
@@ -1133,7 +1151,7 @@ static BOOL _mixerRateSet = NO;
 		if (lastError != AL_NO_ERROR) {
 			if (alcGetCurrentContext() == NULL) {
 				CDLOGINFO(@"Denshion::CDSoundSource - posting bad OpenAL context message");
-				[[NSNotificationCenter defaultCenter] postNotificationName:CD_MSG_BAD_AL_CONTEXT object:nil];
+				[[NSNotificationCenter defaultCenter] postNotificationName:kCDN_BadAlContext object:nil];
 			}	
 			return NO;
 		} else {
@@ -1305,6 +1323,7 @@ static BOOL _mixerRateSet = NO;
 	
 	//Completed
 	_soundEngine.asynchLoadProgress = 1.0f;
+	[[NSNotificationCenter defaultCenter] postNotificationName:kCDN_AsynchLoadComplete object:nil];
 	
 }	
 
@@ -1325,10 +1344,10 @@ static BOOL _mixerRateSet = NO;
 
 @synthesize filePath, soundId;
 
--(id) init:(int) theSoundId filePath:(NSString *) theFilePath {
+-(id) init:(int) theSoundId filePath:(const NSString *) theFilePath {
 	if ((self = [super init])) {
 		soundId = theSoundId;
-		filePath = theFilePath;
+		filePath = [theFilePath copy];//TODO: is retain necessary or does copy set retain count
 		[filePath retain];
 	} 
 	return self;
