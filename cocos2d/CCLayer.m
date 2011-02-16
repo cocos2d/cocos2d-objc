@@ -375,11 +375,11 @@
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	}
 	
-	[shaderProgram_ use];
+	glUseProgram( shaderProgram_->program_ );
 	
 	GLfloat mat4[16];	
 	CGAffineToGL(&transformMVP_, &mat4[0] );
-	glUniformMatrix4fv( [shaderProgram_ uniformIndex:kCCUniformMPVMatrix], 1, GL_FALSE, &mat4[0]);	
+	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformMPVMatrix], 1, GL_FALSE, &mat4[0]);	
 
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 	

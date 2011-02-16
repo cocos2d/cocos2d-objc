@@ -133,9 +133,6 @@ typedef enum {
 	
 	// Animations that belong to the sprite
 	NSMutableDictionary *animations_;
-	
-	
-	GLint uniformMVPMatrix_, uniformSampler_;
 
 @public
 	// used internally.

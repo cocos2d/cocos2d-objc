@@ -29,7 +29,7 @@
 #import "ccMacros.h"
 #import "Support/ccUtils.h"
 #import "Support/CCFileUtils.h"
-#import "CCShaderCache.h"
+#import "GLProgram.h"
 
 @interface CCRenderTexture (private)
 

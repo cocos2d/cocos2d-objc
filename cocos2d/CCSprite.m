@@ -150,8 +150,6 @@ struct transformValues_ {
 		
 		// shader program
 		self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_VertexTextureColor];
-		uniformMVPMatrix_ = [shaderProgram_ uniformIndex:kCCUniformMPVMatrix_s];
-		uniformSampler_ = [shaderProgram_ uniformIndex:kCCUniformSampler_s];
 
 		// update texture (calls updateBlendFunc)
 		[self setTexture:nil];
@@ -615,19 +613,17 @@ struct transformValues_ {
 	if( newBlend )
 		glBlendFunc( blendFunc_.src, blendFunc_.dst );
 	
-	[shaderProgram_ use];
+	glUseProgram( shaderProgram_->program_ );
 	//
 	// Uniforms
 	//
-	GLfloat transformGL[16];	
-	CGAffineToGL(&transformMVP_, &transformGL[0] );
+	GLfloat mat4[16];	
+	CGAffineToGL( &transformMVP_, &mat4[0] );
 	
-	glUniformMatrix4fv( uniformMVPMatrix_, 1, GL_FALSE, &transformGL[0]);
+	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformMPVMatrix], 1, GL_FALSE, &mat4[0]);	
+	glUniform1i ( shaderProgram_->uniforms_[kCCUniformSampler], 0 );
 	
-	glBindTexture(GL_TEXTURE_2D, [texture_ name]);
-	
-	// Set the sampler texture unit to 0
-	glUniform1i( uniformSampler_, 0 );
+	glBindTexture(GL_TEXTURE_2D, [texture_ name]);	
 		
 	//
 	// Attributes
@@ -651,10 +647,7 @@ struct transformValues_ {
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 	
 	if( newBlend )
-		glBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);
-	
-	
-	glUseProgram(0);
+		glBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);	
 }
 
 #pragma mark CCSprite - CCNode overrides
