@@ -103,7 +103,7 @@
 		// "whole screen" objects. like Scenes and Layers, should set isRelativeAnchorPoint to NO
 		isRelativeAnchorPoint_ = YES; 
 		
-		isTransformDirty_ = isInverseDirty_ = YES;
+		isTransformDirty_ = isInverseDirty_ = isTransformMVPDirty_ = YES;
 		
 		vertexZ_ = 0;
 		
@@ -177,19 +177,19 @@
 -(void) setRotation: (float)newRotation
 {
 	rotation_ = newRotation;
-	isTransformDirty_ = isInverseDirty_ = YES;
+	isTransformDirty_ = isInverseDirty_ = isTransformMVPDirty_ = YES;
 }
 
 -(void) setScaleX: (float)newScaleX
 {
 	scaleX_ = newScaleX;
-	isTransformDirty_ = isInverseDirty_ = YES;
+	isTransformDirty_ = isInverseDirty_ = isTransformMVPDirty_ = YES;
 }
 
 -(void) setScaleY: (float)newScaleY
 {
 	scaleY_ = newScaleY;
-	isTransformDirty_ = isInverseDirty_ = YES;
+	isTransformDirty_ = isInverseDirty_ = isTransformMVPDirty_ = YES;
 }
 
 -(void) setPosition: (CGPoint)newPosition
@@ -200,7 +200,7 @@
 	else
 		positionInPixels_ = ccpMult( newPosition,  CC_CONTENT_SCALE_FACTOR() );
 	
-	isTransformDirty_ = isInverseDirty_ = YES;
+	isTransformDirty_ = isInverseDirty_ = isTransformMVPDirty_ = YES;
 }
 
 -(void) setPositionInPixels:(CGPoint)newPosition
@@ -212,13 +212,13 @@
 	else
 		position_ = ccpMult( newPosition, 1/CC_CONTENT_SCALE_FACTOR() );
 	
-	isTransformDirty_ = isInverseDirty_ = YES;
+	isTransformDirty_ = isInverseDirty_ = isTransformMVPDirty_ = YES;
 }
 
 -(void) setIsRelativeAnchorPoint: (BOOL)newValue
 {
 	isRelativeAnchorPoint_ = newValue;
-	isTransformDirty_ = isInverseDirty_ = YES;
+	isTransformDirty_ = isInverseDirty_ = isTransformMVPDirty_ = YES;
 }
 
 -(void) setAnchorPoint:(CGPoint)point
@@ -226,7 +226,7 @@
 	if( ! CGPointEqualToPoint(point, anchorPoint_) ) {
 		anchorPoint_ = point;
 		anchorPointInPixels_ = ccp( contentSizeInPixels_.width * anchorPoint_.x, contentSizeInPixels_.height * anchorPoint_.y );
-		isTransformDirty_ = isInverseDirty_ = YES;
+		isTransformDirty_ = isInverseDirty_ = isTransformMVPDirty_ = YES;
 	}
 }
 
@@ -241,7 +241,7 @@
 			contentSizeInPixels_ = CGSizeMake( size.width * CC_CONTENT_SCALE_FACTOR(), size.height * CC_CONTENT_SCALE_FACTOR() );
 		
 		anchorPointInPixels_ = ccp( contentSizeInPixels_.width * anchorPoint_.x, contentSizeInPixels_.height * anchorPoint_.y );
-		isTransformDirty_ = isInverseDirty_ = YES;
+		isTransformDirty_ = isInverseDirty_ = isTransformMVPDirty_ = YES;
 	}
 }
 
@@ -256,7 +256,7 @@
 			contentSize_ = CGSizeMake( size.width / CC_CONTENT_SCALE_FACTOR(), size.height / CC_CONTENT_SCALE_FACTOR() );
 		
 		anchorPointInPixels_ = ccp( contentSizeInPixels_.width * anchorPoint_.x, contentSizeInPixels_.height * anchorPoint_.y );
-		isTransformDirty_ = isInverseDirty_ = YES;
+		isTransformDirty_ = isInverseDirty_ = isTransformMVPDirty_ = YES;
 	}
 }
 
@@ -286,7 +286,7 @@
 -(void) setScale:(float) s
 {
 	scaleX_ = scaleY_ = s;
-	isTransformDirty_ = isInverseDirty_ = YES;
+	isTransformDirty_ = isInverseDirty_ = isTransformMVPDirty_ = YES;
 }
 
 #pragma mark CCNode Composition
@@ -490,22 +490,27 @@
 	if (!visible_)
 		return;
 
-	transformMVP_ = [self nodeToParentTransform];
+	if( parent_ && parent_->isTransformMVPDirty_ )
+		isTransformMVPDirty_ = YES;
 	
-	// root node
-	if(  ! parent_ ) {
-		CCDirector *director = [CCDirector sharedDirector];
-		CGAffineTransform viewProjMat = [director viewProjectionMatrix];
+	if( isTransformMVPDirty_ ) {
+		transformMVP_ = [self nodeToParentTransform];
+	
+		// root node
+		if(  ! parent_ ) {
+			CCDirector *director = [CCDirector sharedDirector];
+			CGAffineTransform viewProjMat = [director viewProjectionMatrix];
 
-		CGSize winSize = [director winSize];
-		viewProjMat = CGAffineTransformTranslate(viewProjMat, -winSize.width/2, -winSize.height/2);
-		
-		transformMVP_ = CGAffineTransformConcat( transformMVP_, viewProjMat);
-	}
+			CGSize winSize = [director winSize];
+			viewProjMat = CGAffineTransformTranslate(viewProjMat, -winSize.width/2, -winSize.height/2);
 			
-	// leaf node
-	else 
-		transformMVP_ = CGAffineTransformConcat( transformMVP_, parent_->transformMVP_ );		
+			transformMVP_ = CGAffineTransformConcat( transformMVP_, viewProjMat);
+		}
+
+		// leaf node
+		else 
+			transformMVP_ = CGAffineTransformConcat( transformMVP_, parent_->transformMVP_ );
+	}
 	
 	if(children_) {
 		ccArray *arrayData = children_->data;
@@ -530,7 +535,9 @@
 		}
 		
 	} else
-		[self draw];	
+		[self draw];
+	
+	isTransformMVPDirty_ = NO;
 }
 
 #pragma mark CCNode - Transformations

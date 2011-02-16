@@ -161,6 +161,7 @@ enum {
 
 @public
 	CGAffineTransform transformMVP_;
+	BOOL	isTransformMVPDirty_:1;
 
 }
 

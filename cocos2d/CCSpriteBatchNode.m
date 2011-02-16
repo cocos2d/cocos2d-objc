@@ -441,7 +441,7 @@ static 	SEL selUpdate = NULL;
 	if(textureAtlas_.totalQuads == textureAtlas_.capacity)
 		[self increaseAtlasCapacity];
 	
-	ccV3F_C4F_T2F_Quad quad = [sprite quad];
+	ccV3F_C4B_T2F_Quad quad = [sprite quad];
 	[textureAtlas_ insertQuad:&quad atIndex:index];
 	
 	ccArray *descendantsData = descendants_->data;

@@ -150,6 +150,8 @@ struct transformValues_ {
 		
 		// shader program
 		self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_VertexTextureColor];
+		uniformMVPMatrix_ = [shaderProgram_ uniformIndex:kCCUniformMPVMatrix];
+		uniformSampler_ = [shaderProgram_ uniformIndex:kCCUniformSampler];
 
 		// update texture (calls updateBlendFunc)
 		[self setTexture:nil];
@@ -172,7 +174,7 @@ struct transformValues_ {
 		hasChildren_ = NO;
 		
 		// Atlas: Color
-		ccColor4F tmpColor = {1,1,1,1};
+		ccColor4B tmpColor = {255,255,255,255};
 		quad_.bl.colors = tmpColor;
 		quad_.br.colors = tmpColor;
 		quad_.tl.colors = tmpColor;
@@ -609,22 +611,20 @@ struct transformValues_ {
 	if( newBlend )
 		glBlendFunc( blendFunc_.src, blendFunc_.dst );
 	
-	
-	[shaderProgram_ use];	
-
+	[shaderProgram_ use];
 	//
 	// Uniforms
 	//
 	GLfloat transformGL[16];	
 	CGAffineToGL(&transformMVP_, &transformGL[0] );
 	
-	glUniformMatrix4fv( [shaderProgram_ uniformIndex:kCCUniformMPVMatrix], 1, GL_FALSE, &transformGL[0]);
+	glUniformMatrix4fv( uniformMVPMatrix_, 1, GL_FALSE, &transformGL[0]);
 	
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, [texture_ name]);
 	
 	// Set the sampler texture unit to 0
-	glUniform1i ( [shaderProgram_ uniformIndex:kCCUniformSampler], 0 );
+	glUniform1i( uniformSampler_, 0 );
 		
 	//
 	// Attributes
@@ -633,18 +633,18 @@ struct transformValues_ {
 	long offset = (long)&quad_;
 	
 	// vertex
-	NSInteger diff = offsetof( ccV3F_C4F_T2F, vertices);
+	NSInteger diff = offsetof( ccV3F_C4B_T2F, vertices);
 	glVertexAttribPointer(kCCAttribVertex, 3, GL_FLOAT, GL_FALSE, kQuadSize, (void*) (offset + diff));
 	glEnableVertexAttribArray(kCCAttribVertex);
 	
 	// texCoods
-	diff = offsetof( ccV3F_C4F_T2F, texCoords);
+	diff = offsetof( ccV3F_C4B_T2F, texCoords);
 	glVertexAttribPointer(kCCAttribTexCoords, 2, GL_FLOAT, GL_FALSE, kQuadSize, (void*)(offset + diff));
 	glEnableVertexAttribArray(kCCAttribTexCoords);
 
 	// color
-	diff = offsetof( ccV3F_C4F_T2F, colors);
-	glVertexAttribPointer(kCCAttribColor, 4, GL_FLOAT, GL_FALSE, kQuadSize, (void*)(offset + diff));
+	diff = offsetof( ccV3F_C4B_T2F, colors);
+	glVertexAttribPointer(kCCAttribColor, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (void*)(offset + diff));
 	glEnableVertexAttribArray(kCCAttribColor);
 	
 
@@ -652,6 +652,9 @@ struct transformValues_ {
 	
 	if( newBlend )
 		glBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);
+	
+	
+	glUseProgram(0);
 }
 
 #pragma mark CCSprite - CCNode overrides
@@ -833,7 +836,7 @@ struct transformValues_ {
 #pragma mark CCSprite - RGBA protocol
 -(void) updateColor
 {
-	ccColor4F color4 = {color_.r/255.0f, color_.g/255.0f, color_.b/255.0f, opacity_/255.0f };
+	ccColor4B color4 = {color_.r, color_.g, color_.b, opacity_};
 	
 	quad_.bl.colors = color4;
 	quad_.br.colors = color4;
