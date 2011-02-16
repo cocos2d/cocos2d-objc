@@ -456,7 +456,7 @@
     if (h == 0)
 		return;
 
-	double c = sqrt(2);
+	float c = sqrtf(2);
     CGPoint u = ccp(vector_.x / h, vector_.y / h);
 
 	// Compressed Interpolation mode
