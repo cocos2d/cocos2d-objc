@@ -187,11 +187,13 @@
 -(void) updateQuadWithParticle:(tCCParticle*)p newPosition:(CGPoint)newPos
 {
 	// colors
-	ccV2F_C4F_T2F_Quad *quad = &(quads_[particleIdx]);
-	quad->bl.colors = p->color;
-	quad->br.colors = p->color;
-	quad->tl.colors = p->color;
-	quad->tr.colors = p->color;
+	ccV2F_C4B_T2F_Quad *quad = &(quads_[particleIdx]);
+	
+	ccColor4B color = { p->color.r*255, p->color.g*255, p->color.b*255, p->color.a*255};
+	quad->bl.colors = color;
+	quad->br.colors = color;
+	quad->tl.colors = color;
+	quad->tr.colors = color;
 	
 	// vertices
 	GLfloat size_2 = p->size/2;
@@ -262,7 +264,10 @@
 // overriding draw method
 -(void) draw
 {	
-	glActiveTexture(GL_TEXTURE0);
+	// Default Attribs & States: GL_TEXTURE0, k,CCAttribVertex, kCCAttribColor, kCCAttribTexCoords
+	// Needed states: GL_TEXTURE0, k,CCAttribVertex, kCCAttribColor, kCCAttribTexCoords
+	// Unneeded states: -
+	
 	glBindTexture(GL_TEXTURE_2D, [texture_ name]);
 
 #define kQuadSize sizeof(quads_[0].bl)
@@ -271,37 +276,29 @@
 	glBindBuffer(GL_ARRAY_BUFFER, quadsID_);
 	
 	// vertices
-	glVertexAttribPointer(kCCAttribVertex, 2, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof( ccV2F_C4F_T2F, vertices));
-	glEnableVertexAttribArray(kCCAttribVertex);
+	glVertexAttribPointer(kCCAttribVertex, 2, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof( ccV2F_C4B_T2F, vertices));
 	
 	// colors
-	glVertexAttribPointer(kCCAttribColor, 4, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof( ccV2F_C4F_T2F, colors));
-	glEnableVertexAttribArray(kCCAttribColor);
+	glVertexAttribPointer(kCCAttribColor, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (GLvoid*) offsetof( ccV2F_C4B_T2F, colors));
 	
 	// tex coords
-	glVertexAttribPointer(kCCAttribTexCoords, 2, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof( ccV2F_C4F_T2F, texCoords));
-	glEnableVertexAttribArray(kCCAttribTexCoords);
-	
-	
+	glVertexAttribPointer(kCCAttribTexCoords, 2, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof( ccV2F_C4B_T2F, texCoords));
+		
 #else // vertex array list
 
 	NSUInteger offset = (NSUInteger) quads_;
 	
 	// vertex
-	NSInteger diff = offsetof( ccV2F_C4F_T2F, vertices);
+	NSInteger diff = offsetof( ccV2F_C4B_T2F, vertices);
 	glVertexAttribPointer(kCCAttribVertex, 2, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) (offset + diff));
-	glEnableVertexAttribArray(kCCAttribVertex);
 	
 	// color
-	diff = offsetof( ccV2F_C4F_T2F, colors);
-	glVertexAttribPointer(kCCAttribColor, 4, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*)(offset + diff));
-	glEnableVertexAttribArray(kCCAttribColor);
+	diff = offsetof( ccV2F_C4B_T2F, colors);
+	glVertexAttribPointer(kCCAttribColor, 4, GL_UNSIGNED_BYTE, GL_FALSE, kQuadSize, (GLvoid*)(offset + diff));
 	
 	// texCoods
-	diff = offsetof( ccV2F_C4F_T2F, texCoords);
-	glVertexAttribPointer(kCCAttribTexCoords, 2, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*)(offset + diff));
-	glEnableVertexAttribArray(kCCAttribTexCoords);
-	
+	diff = offsetof( ccV2F_C4B_T2F, texCoords);
+	glVertexAttribPointer(kCCAttribTexCoords, 2, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*)(offset + diff));	
 
 #endif // ! CC_USES_VBO
 	
