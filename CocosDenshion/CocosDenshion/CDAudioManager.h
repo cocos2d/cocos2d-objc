@@ -108,7 +108,7 @@ typedef enum {
 @property (readonly) NSString *audioSourceFilePath;
 @property (readwrite, nonatomic) NSInteger numberOfLoops;
 @property (readwrite, nonatomic) float volume;
-@property (assign) id<CDLongAudioSourceDelegate> delegate;
+@property (nonatomic, readwrite, retain) id<CDLongAudioSourceDelegate> delegate;
 /* This long audio source functions as background music */
 @property (readwrite, nonatomic) BOOL backgroundMusic;
 

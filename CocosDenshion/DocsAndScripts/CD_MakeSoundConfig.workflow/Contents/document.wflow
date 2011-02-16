@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>AMApplicationBuild</key>
+	<string>247.1</string>
+	<key>AMApplicationVersion</key>
+	<string>2.1.1</string>
+	<key>AMDocumentVersion</key>
+	<string>2</string>
+	<key>actions</key>
+	<array>
+		<dict>
+			<key>action</key>
+			<dict>
+				<key>AMAccepts</key>
+				<dict>
+					<key>Container</key>
+					<string>List</string>
+					<key>Optional</key>
+					<true/>
+					<key>Types</key>
+					<array>
+						<string>com.apple.applescript.object</string>
+					</array>
+				</dict>
+				<key>AMActionVersion</key>
+				<string>1.0</string>
+				<key>AMParameterProperties</key>
+				<dict>
+					<key>source</key>
+					<dict/>
+				</dict>
+				<key>AMProvides</key>
+				<dict>
+					<key>Container</key>
+					<string>List</string>
+					<key>Types</key>
+					<array>
+						<string>com.apple.applescript.object</string>
+					</array>
+				</dict>
+				<key>ActionBundlePath</key>
+				<string>/System/Library/Automator/Run AppleScript.action</string>
+				<key>ActionName</key>
+				<string>Run AppleScript</string>
+				<key>ActionParameters</key>
+				<dict>
+					<key>source</key>
+					<string>on run {input, parameters}		tell application "Xcode"		set projectPath to path of active project document	end tell		set sh to "PROJECT_ROOT=$(dirname " &amp; projectPath &amp; ");" &amp; ¬		"SOURCE_FILE=${PROJECT_ROOT}\"/Classes/SoundConfig.h\";" &amp; ¬		"ENUM_PREFIX=\"kSI_\";" &amp; ¬		"SOUND_DIR=${PROJECT_ROOT}\"/Sounds\";" &amp; ¬		"PRELOAD_SUBDIR=\"Preload\";" &amp; ¬		"echo ${PROJECT_ROOT};" &amp; ¬		"echo ${SOUND_DIR};" &amp; ¬		"echo ${SOURCE_FILE};" &amp; ¬		"cd ${SOUND_DIR};" &amp; ¬		"ls $SOUND_DIR | egrep \"*.wav|*.caf|*.mp3|*.aac\"  &gt; nonpreload.txt;" &amp; ¬		"ls $SOUND_DIR/$PRELOAD_SUBDIR | egrep \"*.wav|*.caf|*.mp3|*.aac\" &gt; preload.txt;" &amp; ¬		"cat nonpreload.txt &gt; soundfiles.txt;" &amp; ¬		"cat preload.txt &gt;&gt; soundfiles.txt;" &amp; ¬		"cat soundfiles.txt | sed -e 's/.*/\\@\\\"&amp;\\\"/' &gt; nsstringnames.txt;" &amp; ¬		"cat soundfiles.txt | sed 's/\\(.*\\)\\..*/\\1/' | sed -e 's/.*/'$ENUM_PREFIX'&amp;/' &gt; enums.txt;" &amp; ¬		"cat preload.txt   | sed 's/\\(.*\\)\\..*/\\1/' | sed -e 's/.*/'$ENUM_PREFIX'&amp;/' &gt; preloadenums.txt;" &amp; ¬		"PRELOAD_TOTAL=`wc -l preloadenums.txt | awk '{print $1}'`;" &amp; ¬		"SOUND_TOTAL=`wc -l nsstringnames.txt | awk '{print $1}'` ;" &amp; ¬		"date | sed 's/^/\\/\\/Auto generated: /' &gt; $SOURCE_FILE;" &amp; ¬		"echo \"#import &lt;Foundation/Foundation.h&gt;\" &gt;&gt; $SOURCE_FILE;" &amp; ¬		"echo \"#define CD_SOUND_TOTAL $SOUND_TOTAL\" &gt;&gt; $SOURCE_FILE;" &amp; ¬		"echo \"#define CD_PRELOAD_SOUND_TOTAL $PRELOAD_TOTAL\" &gt;&gt; $SOURCE_FILE;" &amp; ¬		"echo \"typedef enum { \" &gt;&gt; $SOURCE_FILE;" &amp; ¬		"cat enums.txt | sed 's/^/    /' | sed -e 's/$/,/g' -e '$ s/,$//' &gt;&gt; $SOURCE_FILE;" &amp; ¬		"echo \"} tSoundId;\" &gt;&gt; $SOURCE_FILE;" &amp; ¬		"echo \"\" &gt;&gt; $SOURCE_FILE;" &amp; ¬		"echo \"static const NSString* kCD_SoundFiles[CD_SOUND_TOTAL] = {\" &gt;&gt; $SOURCE_FILE;" &amp; ¬		"cat nsstringnames.txt | sed 's/^/    /' | sed -e 's/$/,/g' -e '$ s/,$//' &gt;&gt; $SOURCE_FILE;" &amp; ¬		"echo \"};\" &gt;&gt; $SOURCE_FILE;" &amp; ¬		"echo \"#pragma unused(kCD_SoundFiles)\" &gt;&gt; $SOURCE_FILE;" &amp; ¬		"echo \"\" &gt;&gt; $SOURCE_FILE;" &amp; ¬		"echo \"static const int kCD_PreloadSoundIds[CD_PRELOAD_SOUND_TOTAL] = {\" &gt;&gt; $SOURCE_FILE;" &amp; ¬		"cat preloadenums.txt | sed -e 's/^/    /' | sed -e 's/$/,/g' -e '$ s/,$//' &gt;&gt; $SOURCE_FILE;" &amp; ¬		"echo \"};\" &gt;&gt; $SOURCE_FILE;" &amp; ¬		"rm soundfiles.txt;" &amp; ¬		"rm preload.txt;" &amp; ¬		"rm nonpreload.txt;" &amp; ¬		"rm enums.txt;" &amp; ¬		"rm nsstringnames.txt;" &amp; "rm preloadenums.txt;"		do shell script sh			return inputend run</string>
+				</dict>
+				<key>Application</key>
+				<array>
+					<string>Automator</string>
+				</array>
+				<key>BundleIdentifier</key>
+				<string>com.apple.Automator.RunScript</string>
+				<key>CFBundleVersion</key>
+				<string>1.0</string>
+				<key>CanShowSelectedItemsWhenRun</key>
+				<false/>
+				<key>CanShowWhenRun</key>
+				<true/>
+				<key>Category</key>
+				<array>
+					<string>AMCategoryUtilities</string>
+				</array>
+				<key>Class Name</key>
+				<string>RunScriptAction</string>
+				<key>InputUUID</key>
+				<string>7704C575-3F5C-4F39-B9AE-3E15B6BD2032</string>
+				<key>Keywords</key>
+				<array>
+					<string>Run</string>
+				</array>
+				<key>OutputUUID</key>
+				<string>7E49EA45-C34C-47EA-BD17-A532407DF0BD</string>
+				<key>UUID</key>
+				<string>3726F993-8B27-4BF4-9BFA-FEFDBBE13852</string>
+				<key>UnlocalizedApplications</key>
+				<array>
+					<string>Automator</string>
+				</array>
+				<key>arguments</key>
+				<dict>
+					<key>0</key>
+					<dict>
+						<key>default value</key>
+						<string>on run {input, parameters}
+	
+	(* Your script goes here *)
+	
+	return input
+end run</string>
+						<key>name</key>
+						<string>source</string>
+						<key>required</key>
+						<string>0</string>
+						<key>type</key>
+						<string>0</string>
+						<key>uuid</key>
+						<string>0</string>
+					</dict>
+				</dict>
+				<key>isViewVisible</key>
+				<true/>
+				<key>location</key>
+				<string>438.500000:852.000000</string>
+				<key>nibPath</key>
+				<string>/System/Library/Automator/Run AppleScript.action/Contents/Resources/English.lproj/main.nib</string>
+			</dict>
+			<key>isViewVisible</key>
+			<true/>
+		</dict>
+		<dict>
+			<key>action</key>
+			<dict>
+				<key>AMAccepts</key>
+				<dict>
+					<key>Container</key>
+					<string>List</string>
+					<key>Optional</key>
+					<true/>
+					<key>Types</key>
+					<array>
+						<string>com.apple.applescript.object</string>
+					</array>
+				</dict>
+				<key>AMActionVersion</key>
+				<string>1.0</string>
+				<key>AMParameterProperties</key>
+				<dict>
+					<key>source</key>
+					<dict/>
+				</dict>
+				<key>AMProvides</key>
+				<dict>
+					<key>Container</key>
+					<string>List</string>
+					<key>Types</key>
+					<array>
+						<string>com.apple.applescript.object</string>
+					</array>
+				</dict>
+				<key>ActionBundlePath</key>
+				<string>/System/Library/Automator/Run AppleScript.action</string>
+				<key>ActionName</key>
+				<string>Run AppleScript</string>
+				<key>ActionParameters</key>
+				<dict>
+					<key>source</key>
+					<string>on run {input, parameters}		display dialog "SoundConfig.h created."		return inputend run</string>
+				</dict>
+				<key>Application</key>
+				<array>
+					<string>Automator</string>
+				</array>
+				<key>BundleIdentifier</key>
+				<string>com.apple.Automator.RunScript</string>
+				<key>CFBundleVersion</key>
+				<string>1.0</string>
+				<key>CanShowSelectedItemsWhenRun</key>
+				<false/>
+				<key>CanShowWhenRun</key>
+				<true/>
+				<key>Category</key>
+				<array>
+					<string>AMCategoryUtilities</string>
+				</array>
+				<key>Class Name</key>
+				<string>RunScriptAction</string>
+				<key>InputUUID</key>
+				<string>6294678E-AFEA-49D6-9EDC-78D51A8C8E7D</string>
+				<key>Keywords</key>
+				<array>
+					<string>Run</string>
+				</array>
+				<key>OutputUUID</key>
+				<string>023E3FDA-EC5C-48D9-9C99-A651737C43B4</string>
+				<key>UUID</key>
+				<string>30DF57E5-B3B9-4701-9C98-ABCB6B9F049C</string>
+				<key>UnlocalizedApplications</key>
+				<array>
+					<string>Automator</string>
+				</array>
+				<key>arguments</key>
+				<dict>
+					<key>0</key>
+					<dict>
+						<key>default value</key>
+						<string>on run {input, parameters}
+	
+	(* Your script goes here *)
+	
+	return input
+end run</string>
+						<key>name</key>
+						<string>source</string>
+						<key>required</key>
+						<string>0</string>
+						<key>type</key>
+						<string>0</string>
+						<key>uuid</key>
+						<string>0</string>
+					</dict>
+				</dict>
+				<key>isViewVisible</key>
+				<true/>
+				<key>location</key>
+				<string>438.500000:539.000000</string>
+				<key>nibPath</key>
+				<string>/System/Library/Automator/Run AppleScript.action/Contents/Resources/English.lproj/main.nib</string>
+			</dict>
+			<key>isViewVisible</key>
+			<true/>
+		</dict>
+	</array>
+	<key>connectors</key>
+	<dict>
+		<key>18F74644-40F4-4CCF-9611-237E4DECCB1A</key>
+		<dict>
+			<key>from</key>
+			<string>3726F993-8B27-4BF4-9BFA-FEFDBBE13852 - 3726F993-8B27-4BF4-9BFA-FEFDBBE13852</string>
+			<key>to</key>
+			<string>30DF57E5-B3B9-4701-9C98-ABCB6B9F049C - 30DF57E5-B3B9-4701-9C98-ABCB6B9F049C</string>
+		</dict>
+	</dict>
+	<key>state</key>
+	<dict>
+		<key>AMLogTabViewSelectedIndex</key>
+		<integer>0</integer>
+		<key>libraryState</key>
+		<dict>
+			<key>actionsMajorSplitViewState</key>
+			<dict>
+				<key>expandedPosition</key>
+				<real>0.0</real>
+				<key>subviewState</key>
+				<array>
+					<string>0.000000, 0.000000, 381.000000, 748.000000, NO</string>
+					<string>0.000000, 749.000000, 381.000000, 239.000000, NO</string>
+				</array>
+			</dict>
+			<key>actionsMinorSplitViewState</key>
+			<dict>
+				<key>expandedPosition</key>
+				<real>0.0</real>
+				<key>subviewState</key>
+				<array>
+					<string>0.000000, 0.000000, 163.000000, 748.000000, NO</string>
+					<string>164.000000, 0.000000, 217.000000, 748.000000, NO</string>
+				</array>
+			</dict>
+			<key>variablesMajorSplitViewState</key>
+			<dict>
+				<key>expandedPosition</key>
+				<real>0.0</real>
+				<key>subviewState</key>
+				<array>
+					<string>0.000000, 0.000000, 381.000000, 555.000000, NO</string>
+					<string>0.000000, 556.000000, 381.000000, 199.000000, NO</string>
+				</array>
+			</dict>
+			<key>variablesMinorSplitViewState</key>
+			<dict>
+				<key>expandedPosition</key>
+				<real>0.0</real>
+				<key>subviewState</key>
+				<array>
+					<string>0.000000, 0.000000, 163.000000, 555.000000, NO</string>
+					<string>164.000000, 0.000000, 217.000000, 555.000000, NO</string>
+				</array>
+			</dict>
+		</dict>
+		<key>majorSplitViewState</key>
+		<dict>
+			<key>expandedPosition</key>
+			<real>0.0</real>
+			<key>subviewState</key>
+			<array>
+				<string>0.000000, 0.000000, 381.000000, 1033.000000, NO</string>
+				<string>382.000000, 0.000000, 877.000000, 1033.000000, NO</string>
+			</array>
+		</dict>
+		<key>minorSplitViewState</key>
+		<dict>
+			<key>expandedPosition</key>
+			<real>0.0</real>
+			<key>subviewState</key>
+			<array>
+				<string>0.000000, 0.000000, 877.000000, 842.000000, NO</string>
+				<string>0.000000, 852.000000, 877.000000, 162.000000, NO</string>
+			</array>
+		</dict>
+		<key>windowFrame</key>
+		<string>{{194, 5}, {1258, 1110}}</string>
+		<key>workflowViewScrollPosition</key>
+		<string>{{0, 0}, {877, 842}}</string>
+	</dict>
+	<key>workflowMetaData</key>
+	<dict>
+		<key>workflowTypeIdentifier</key>
+		<string>com.apple.Automator.workflow</string>
+	</dict>
+</dict>
+</plist>

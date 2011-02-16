@@ -843,6 +843,7 @@ static BOOL _mixerRateSet = NO;
 	gain = (gain > 2.0f ? 2.0f : gain);
 #endif
 	
+	
 	int sourceIndex = [self _getSourceIndexForSourceGroup:sourceGroupId];//This method ensures sourceIndex is valid
 	
 	if (sourceIndex != CD_NO_SOURCE) {
@@ -891,7 +892,6 @@ static BOOL _mixerRateSet = NO;
 	alSourcei(source, AL_BUFFER, buffer);//Attach to sound data
 	if((lastErrorCode_ = alGetError()) == AL_NO_ERROR) {
 		_sources[soundSource->_sourceIndex].attachedBufferId = buffer;
-		//_sourceBufferAttachments[soundSource->_sourceIndex] = buffer;//Keep track of which
 		soundSource->_soundId = soundId;
 		return YES;
 	} else {
@@ -914,11 +914,6 @@ static BOOL _mixerRateSet = NO;
 		[self _lockSource:sourceIndex lock:YES];
 		//Try to attach to the buffer
 		if ([self _soundSourceAttachToBuffer:result soundId:soundId]) {
-			//Set to a known state
-			result.pitch = 1.0f;
-			result.pan = 0.0f;
-			result.gain = 1.0f;
-			result.looping = NO;
 			return [result autorelease];
 		} else {
 			//Release the sound source we just created, this will also unlock the source
@@ -1044,6 +1039,7 @@ static BOOL _mixerRateSet = NO;
 @implementation CDSoundSource
 
 @synthesize lastError;
+@synthesize delegate = delegate_;
 
 //Macro for handling the al error code
 #define CDSOUNDSOURCE_UPDATE_LAST_ERROR (lastError = alGetError())
@@ -1056,7 +1052,13 @@ static BOOL _mixerRateSet = NO;
 		_sourceIndex = index;
 		enabled_ = YES;
 		mute_ = NO;
+		
+		self.pitch = kCD_PitchDefault;
+		self.pan = kCD_PanDefault;
+		self.gain = kCD_GainDefault;
+		self.looping = NO;
 		_preMuteGain = self.gain;
+		_wasPlayingAtLastUpdate = NO;
 	} 
 	return self;
 }
@@ -1064,7 +1066,8 @@ static BOOL _mixerRateSet = NO;
 -(void) dealloc
 {
 	CDLOGINFO(@"Denshion::CDSoundSource deallocated %i",self->_sourceIndex);
-
+	//detach delegate
+	self.delegate = nil;
 	//Notify sound engine we are about to release
 	[_engine _soundSourcePreRelease:self];
 	[super dealloc];
@@ -1146,9 +1149,26 @@ static BOOL _mixerRateSet = NO;
 	return CDSOUNDSOURCE_ERROR_HANDLER;
 }	
 
+-(void) update {
+	//Only check if there is a delegate
+	if (delegate_) {
+		//Need to check if sound is still playing
+		if (_wasPlayingAtLastUpdate) {
+			if (!self.isPlaying) {
+				_wasPlayingAtLastUpdate = NO;
+				//Notify delegate that sound has stopped playing
+				if ([delegate_ respondsToSelector:@selector(cdSoundSourceDidFinishPlaying:)]) {
+					[delegate_ cdSoundSourceDidFinishPlaying:self];
+				}	
+			}	
+		}	
+	}	
+}	
+
 -(BOOL) play {
 	if (enabled_) {
 		alSourcePlay(_sourceId);
+		_wasPlayingAtLastUpdate = YES;
 		CDSOUNDSOURCE_UPDATE_LAST_ERROR;
 		if (lastError != AL_NO_ERROR) {
 			if (alcGetCurrentContext() == NULL) {
@@ -1349,8 +1369,7 @@ static BOOL _mixerRateSet = NO;
 -(id) init:(int) theSoundId filePath:(const NSString *) theFilePath {
 	if ((self = [super init])) {
 		soundId = theSoundId;
-		filePath = [theFilePath copy];//TODO: is retain necessary or does copy set retain count
-		[filePath retain];
+		filePath = [theFilePath copy];
 	} 
 	return self;
 }

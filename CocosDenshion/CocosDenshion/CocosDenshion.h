@@ -278,6 +278,14 @@ typedef struct _sourceInfo {
 
 @end
 
+
+@class CDSoundSource;
+@protocol CDSoundSourceDelegate <NSObject>
+@optional
+/** The sound source completed playing */
+- (void) cdSoundSourceDidFinishPlaying:(CDSoundSource *) soundSource;
+@end
+
 #pragma mark CDSoundSource
 /** CDSoundSource is a wrapper around an OpenAL sound source.
  It allows you to manipulate properties such as pitch, gain, pan and looping while the 
@@ -288,14 +296,17 @@ typedef struct _sourceInfo {
  */
 @interface CDSoundSource : NSObject <CDAudioTransportProtocol, CDAudioInterruptProtocol> {
 	ALenum lastError;
+	CDSoundEngine* _engine;
+
 @public
 	ALuint _sourceId;
 	ALuint _sourceIndex;
-	CDSoundEngine* _engine;
+	BOOL _wasPlayingAtLastUpdate;
 	int _soundId;
 	float _preMuteGain;
 	BOOL enabled_;
 	BOOL mute_;
+	id<CDSoundSourceDelegate> delegate_;
 }
 @property (readwrite, nonatomic) float pitch;
 @property (readwrite, nonatomic) float gain;
@@ -303,11 +314,13 @@ typedef struct _sourceInfo {
 @property (readwrite, nonatomic) BOOL looping;
 @property (readonly)  BOOL isPlaying;
 @property (readwrite, nonatomic) int soundId;
+@property (nonatomic, readwrite, retain) id<CDSoundSourceDelegate> delegate;
 /** Returns the duration of the attached buffer in seconds or a negative value if the buffer is invalid */
 @property (readonly) float durationInSeconds;
-
 /** Stores the last error code that occurred. Check against AL_NO_ERROR */
 @property (readonly) ALenum lastError;
+/** Call periodically to have object check its state and notify its delegate of changes*/
+-(void) update;
 /** Do not init yourself, get an instance from the sourceForSound factory method on CDSoundEngine */
 -(id)init:(ALuint) theSourceId sourceIndex:(int) index soundEngine:(CDSoundEngine*) engine;
 
@@ -329,9 +342,7 @@ typedef struct _sourceInfo {
 
 #pragma mark CDAsynchBufferLoader
 
-/** CDAsynchBufferLoader
- TODO
- */
+/** CDAsynchBufferLoader */
 @interface CDAsynchBufferLoader : NSOperation {
 	NSArray *_loadRequests;
 	CDSoundEngine *_soundEngine;

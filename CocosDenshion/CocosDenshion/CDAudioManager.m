@@ -55,6 +55,7 @@ NSString * const kCDN_AudioManagerInitialised = @"kCDN_AudioManagerInitialised";
 	CDLOGINFO(@"Denshion::CDLongAudioSource - deallocating %@", self);
 	[audioSourcePlayer release];
 	[audioSourceFilePath release];
+	self.delegate = nil;
 	[super dealloc];
 }	
 
