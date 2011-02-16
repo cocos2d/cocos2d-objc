@@ -607,6 +607,10 @@ struct transformValues_ {
 
 -(void) draw
 {
+	// Default Attribs & States: GL_TEXTURE0, k,CCAttribVertex, kCCAttribColor, kCCAttribTexCoords
+	// Needed states: GL_TEXTURE0, k,CCAttribVertex, kCCAttribColor, kCCAttribTexCoords
+	// Unneeded states: -
+	
 	BOOL newBlend = blendFunc_.src != CC_BLEND_SRC || blendFunc_.dst != CC_BLEND_DST;
 	if( newBlend )
 		glBlendFunc( blendFunc_.src, blendFunc_.dst );
@@ -620,7 +624,6 @@ struct transformValues_ {
 	
 	glUniformMatrix4fv( uniformMVPMatrix_, 1, GL_FALSE, &transformGL[0]);
 	
-	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, [texture_ name]);
 	
 	// Set the sampler texture unit to 0
@@ -635,17 +638,14 @@ struct transformValues_ {
 	// vertex
 	NSInteger diff = offsetof( ccV3F_C4B_T2F, vertices);
 	glVertexAttribPointer(kCCAttribVertex, 3, GL_FLOAT, GL_FALSE, kQuadSize, (void*) (offset + diff));
-	glEnableVertexAttribArray(kCCAttribVertex);
 	
 	// texCoods
 	diff = offsetof( ccV3F_C4B_T2F, texCoords);
 	glVertexAttribPointer(kCCAttribTexCoords, 2, GL_FLOAT, GL_FALSE, kQuadSize, (void*)(offset + diff));
-	glEnableVertexAttribArray(kCCAttribTexCoords);
 
 	// color
 	diff = offsetof( ccV3F_C4B_T2F, colors);
 	glVertexAttribPointer(kCCAttribColor, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (void*)(offset + diff));
-	glEnableVertexAttribArray(kCCAttribColor);
 	
 
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);

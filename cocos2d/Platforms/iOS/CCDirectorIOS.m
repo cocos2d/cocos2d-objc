@@ -39,6 +39,7 @@
 #import "../../CCTextureCache.h"
 #import "../../ccMacros.h"
 #import "../../CCScene.h"
+#import "../../CCShaderCache.h"
 
 // support imports
 #import "glu.h"
@@ -169,14 +170,8 @@ CGFloat	__ccContentScaleFactor = 1;
 	if( nextScene_ )
 		[self setNextScene];
 
-	if( ! [openGLView_ useShaders] ) {
-		glPushMatrix();
-
-		[self applyOrientation];
-		
-		// By default enable VertexArray, ColorArray, TextureCoordArray and Texture2D
-		CC_ENABLE_DEFAULT_GL_STATES();
-	}
+	// By default enable VertexArray, ColorArray, TextureCoordArray and Texture2D
+	CC_ENABLE_DEFAULT_GL_STATES();
 	
 	[runningScene_ visit];
 	[notificationNode_ visit];
@@ -188,11 +183,7 @@ CGFloat	__ccContentScaleFactor = 1;
 	[self showProfilers];
 #endif
 	
-	if( ! [openGLView_ useShaders] ) {
-		CC_DISABLE_DEFAULT_GL_STATES();
-
-		glPopMatrix();
-	}
+	CC_DISABLE_DEFAULT_GL_STATES();
 	
 	[openGLView_ swapBuffers];
 }
