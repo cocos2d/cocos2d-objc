@@ -75,6 +75,7 @@ GLint ccUniforms[kCCUniform_MAX];
 	[p addAttribute:@"aTexCoord" index:kCCAttribTexCoords];
 	
 	[p link];
+	[p updateUniforms];
 	
 	[programs_ setObject:p forKey:kCCShader_VertexTextureColor];
 	[p release];
@@ -87,6 +88,7 @@ GLint ccUniforms[kCCUniform_MAX];
 	[p addAttribute:@"aColor" index:kCCAttribColor];
 	
 	[p link];
+	[p updateUniforms];
 	
 	[programs_ setObject:p forKey:kCCShader_VertexColor];
 	[p release];
