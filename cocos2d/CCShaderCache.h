@@ -25,32 +25,6 @@
 #import <Foundation/Foundation.h>
 #import <OpenGLES/ES2/gl.h>
 
-enum {
-	kCCAttribVertex,
-	kCCAttribColor,
-	kCCAttribTexCoords,
-
-	kCCAttrib_MAX,
-};
-
-enum {
-	kCCUniformMPVMatrix,
-	kCCUniformSampler,
-
-	kCCUniform_MAX,
-};
-
-extern GLint ccUniforms[kCCUniform_MAX];
-
-#define kCCShader_VertexTextureColor	@"ShaderVertexTextureColor"
-#define kCCShader_VertexColor			@"ShaderVertexColor"
-#define kCCShader_Vertex				@"ShaderVertex"
-
-// uniform names
-#define kCCUniformMPVMatrix_s			@"uMVPMatrix"
-#define kCCUniformSampler_s				@"uTexture"
-
-
 @class GLProgram;
 
 @interface CCShaderCache : NSObject {

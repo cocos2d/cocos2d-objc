@@ -39,7 +39,7 @@
 #import "../../CCTextureCache.h"
 #import "../../ccMacros.h"
 #import "../../CCScene.h"
-#import "../../CCShaderCache.h"
+#import "../../GLProgram.h"
 
 // support imports
 #import "glu.h"

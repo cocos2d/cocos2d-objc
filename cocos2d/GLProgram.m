@@ -1,16 +1,30 @@
 //
-// Copyright Jeff Lamarche
+// Copyright 2011 Jeff Lamarche
 //
-// License: ???
-// Downloaded from: http://iphonedevelopment.blogspot.com/2010/11/opengl-es-20-for-ios-chapter-4.html
+// Redistribution and use in source and binary forms, with or without modification, are permitted provided
+// that the following conditions are met:
+//	1. Redistributions of source code must retain the above copyright notice, this list of conditions and
+//		the following disclaimer.
 //
+//	2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions
+//		and the following disclaimer in the documentation and/or other materials provided with the
+//		distribution.
 //
-// Adapted for cocos2d
+//	THIS SOFTWARE IS PROVIDED BY THE FREEBSD PROJECT ``AS IS'' AND ANY EXPRESS OR IMPLIED
+//	WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
+//	FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE FREEBSD PROJECT
+//	OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+//	CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+//	OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED
+//	AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+//	NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+//	ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+//
+// Adapted for cocos2d http://www.cocos2d-iphone.org
 
 #import "GLProgram.h"
 #import "Support/CCFileUtils.h"
 
-// START:typedefs
 #pragma mark Function Pointer Definitions
 typedef void (*GLInfoFunction)(GLuint program, 
                                GLenum pname, 
@@ -19,10 +33,9 @@ typedef void (*GLLogFunction) (GLuint program,
                                GLsizei bufsize, 
                                GLsizei* length, 
                                GLchar* infolog);
-// END:typedefs
 #pragma mark -
 #pragma mark Private Extension Method Declaration
-// START:extension
+
 @interface GLProgram()
 - (BOOL)compileShader:(GLuint *)shader 
                  type:(GLenum)type 
@@ -31,17 +44,15 @@ typedef void (*GLLogFunction) (GLuint program,
                     infoCallback:(GLInfoFunction)infoFunc 
                          logFunc:(GLLogFunction)logFunc;
 @end
-// END:extension
+
 #pragma mark -
 
 @implementation GLProgram
-// START:init
 - (id)initWithVertexShaderFilename:(NSString *)vShaderFilename 
             fragmentShaderFilename:(NSString *)fShaderFilename
 {
     if (self = [super init])
     {
-        uniforms_ = [[NSMutableArray alloc] init];
         NSString *vertShaderPathname, *fragShaderPathname;
         program_ = glCreateProgram();
         
@@ -71,12 +82,12 @@ typedef void (*GLLogFunction) (GLuint program,
 		
 		if( fragShader_ )
 			glAttachShader(program_, fragShader_);
+		
     }
     
     return self;
 }
-// END:init
-// START:compile
+
 - (BOOL)compileShader:(GLuint *)shader 
                  type:(GLenum)type 
                  file:(NSString *)file
@@ -101,23 +112,25 @@ typedef void (*GLLogFunction) (GLuint program,
     glGetShaderiv(*shader, GL_COMPILE_STATUS, &status);
     return status == GL_TRUE;
 }
-// END:compile
+
 #pragma mark -
-// START:addattribute
+
 - (void)addAttribute:(NSString *)attributeName index:(GLuint)index
 {
 	glBindAttribLocation(program_, 
 						 index,
 						 [attributeName UTF8String]);
 }
-// END:addattribute
-- (GLuint)uniformIndex:(NSString *)uniformName
+
+-(void) updateUniforms
 {
-    return glGetUniformLocation(program_, [uniformName UTF8String]);
-}
-// END:indexmethods
+	// update uniforms
+	uniforms_[kCCUniformMPVMatrix] = glGetUniformLocation(program_, kCCUniformMPVMatrix_s);
+	uniforms_[kCCUniformSampler] = glGetUniformLocation(program_, kCCUniformSampler_s);
+}	
+
 #pragma mark -
-// START:link
+
 - (BOOL)link
 {
     GLint status;
@@ -133,18 +146,17 @@ typedef void (*GLLogFunction) (GLuint program,
         glDeleteShader(vertShader_);
     if (fragShader_)
         glDeleteShader(fragShader_);
-    
+		
     return YES;
 }
-// END:link
-// START:use
+
 - (void)use
 {
     glUseProgram(program_);
 }
-// END:use
+
 #pragma mark -
-// START:privatelog
+
 - (NSString *)logForOpenGLObject:(GLuint)object 
                     infoCallback:(GLInfoFunction)infoFunc 
                          logFunc:(GLLogFunction)logFunc
@@ -164,8 +176,7 @@ typedef void (*GLLogFunction) (GLuint program,
     free(logBytes);
     return log;
 }
-// END:privatelog
-// START:log
+
 - (NSString *)vertexShaderLog
 {
     return [self logForOpenGLObject:vertShader_
@@ -173,6 +184,7 @@ typedef void (*GLLogFunction) (GLuint program,
                             logFunc:(GLLogFunction)&glGetProgramInfoLog];
     
 }
+
 - (NSString *)fragmentShaderLog
 {
     return [self logForOpenGLObject:fragShader_
@@ -185,13 +197,11 @@ typedef void (*GLLogFunction) (GLuint program,
                        infoCallback:(GLInfoFunction)&glGetProgramiv 
                             logFunc:(GLLogFunction)&glGetProgramInfoLog];
 }
-// END:log
+
 #pragma mark -
-// START:dealloc
+
 - (void)dealloc
 {
-    [uniforms_ release];
-  
     if (vertShader_)
         glDeleteShader(vertShader_);
         
@@ -203,5 +213,4 @@ typedef void (*GLLogFunction) (GLuint program,
        
     [super dealloc];
 }
-// END:dealloc
 @end

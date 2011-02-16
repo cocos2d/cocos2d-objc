@@ -169,13 +169,13 @@
 	if( newBlend )
 		glBlendFunc( blendFunc_.src, blendFunc_.dst );
 
-	[shaderProgram_ use];
+	glUseProgram( shaderProgram_->program_ );
 
-	GLfloat transformGL[16];	
-	CGAffineToGL(&transformMVP_, &transformGL[0] );
+	GLfloat mat4[16];	
+	CGAffineToGL(&transformMVP_, &mat4[0] );
 
-	glUniformMatrix4fv( [shaderProgram_ uniformIndex:kCCUniformMPVMatrix_s], 1, GL_FALSE, &transformGL[0]);	
-	glUniform1i ( [shaderProgram_ uniformIndex:kCCUniformSampler_s], 0 );
+	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformMPVMatrix], 1, GL_FALSE, &mat4[0]);	
+	glUniform1i ( shaderProgram_->uniforms_[kCCUniformSampler], 0 );
 	
 	[textureAtlas_ drawNumberOfQuads: string_.length];
 	

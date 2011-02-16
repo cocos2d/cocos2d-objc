@@ -29,7 +29,7 @@
 #import "ccMacros.h"
 #import "CCTexture2D.h"
 #import "CCTextureCache.h"
-#import "CCShaderCache.h"
+#import "GLProgram.h"
 
 
 @interface CCTextureAtlas (Private)
