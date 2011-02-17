@@ -32,6 +32,7 @@
 
 @class CCTexture2D;
 @class CCGrabber;
+@class GLProgram;
 
 /** Base class for other
  */
@@ -44,6 +45,9 @@
 	CGPoint		step_;
 	CCGrabber	*grabber_;
 	BOOL		isTextureFlipped_;
+	
+	GLProgram	*shaderProgram_;
+	CGAffineTransform	transformMVP_;
 }
 
 /** wheter or not the grid is active */
@@ -60,6 +64,8 @@
 @property (nonatomic, retain) CCGrabber *grabber;
 /** is texture flipped */
 @property (nonatomic, readwrite) BOOL isTextureFlipped;
+/** shader program */
+@property (nonatomic, readwrite, assign) GLProgram *shaderProgram;
 
 +(id) gridWithSize:(ccGridSize)gridSize texture:(CCTexture2D*)texture flippedTexture:(BOOL)flipped;
 +(id) gridWithSize:(ccGridSize)gridSize;

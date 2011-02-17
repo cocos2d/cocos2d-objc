@@ -12,6 +12,8 @@
 
 static int sceneIdx=-1;
 static NSString *transitions[] = {	
+//	@"SpriteZVertex",
+//	@"SpriteBatchNodeZVertex",
 
 	@"Sprite1",
 	@"SpriteBatchNode1",
@@ -905,14 +907,14 @@ Class restartAction()
 	[super onEnter];
 	
 	// TIP: don't forget to enable Alpha test
-	glEnable(GL_ALPHA_TEST);
-	glAlphaFunc(GL_GREATER, 0.0f);
+//	glEnable(GL_ALPHA_TEST);
+//	glAlphaFunc(GL_GREATER, 0.0f);
 	[[CCDirector sharedDirector] setProjection:kCCDirectorProjection3D];
 }
 
 -(void) onExit
 {
-	glDisable(GL_ALPHA_TEST);
+//	glDisable(GL_ALPHA_TEST);
 	[[CCDirector sharedDirector] setProjection:kCCDirectorProjection2D];
 	[super onExit];
 }
@@ -977,15 +979,15 @@ Class restartAction()
 	[super onEnter];
 
 	// TIP: don't forget to enable Alpha test
-	glEnable(GL_ALPHA_TEST);
-	glAlphaFunc(GL_GREATER, 0.0f);
+//	glEnable(GL_ALPHA_TEST);
+//	glAlphaFunc(GL_GREATER, 0.0f);
 	
 	[[CCDirector sharedDirector] setProjection:kCCDirectorProjection3D];
 }
 
 -(void) onExit
 {
-	glDisable(GL_ALPHA_TEST);
+//	glDisable(GL_ALPHA_TEST);
 	[[CCDirector sharedDirector] setProjection:kCCDirectorProjection2D];
 	[super onExit];
 }

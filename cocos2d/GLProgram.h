@@ -46,7 +46,7 @@ extern GLint ccUniforms[kCCUniform_MAX];
 
 #define kCCShader_VertexTextureColor	@"ShaderVertexTextureColor"
 #define kCCShader_VertexColor			@"ShaderVertexColor"
-#define kCCShader_Vertex				@"ShaderVertex"
+#define kCCShader_VertexTexture			@"ShaderVertexTexture"
 
 // uniform names
 #define kCCUniformMPVMatrix_s			"uMVPMatrix"

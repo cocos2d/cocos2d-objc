@@ -44,3 +44,60 @@ void GLToCGAffine(const GLfloat *m, CGAffineTransform *t)
 	t->a = m[0]; t->c = m[4]; t->tx = m[12];
 	t->b = m[1]; t->d = m[5]; t->ty = m[13];
 }
+
+void ccGLFrustum(GLfloat *matrix, GLfloat left, GLfloat right, GLfloat bottom, GLfloat top, GLfloat near, GLfloat far)
+{
+	GLfloat a = 2 * near / (right - left);
+	GLfloat b = 2 * near / (top - bottom);
+	GLfloat c = (right + left) / (right - left);
+	GLfloat d = (top + bottom) / (top - bottom);
+	GLfloat e = - (far + near) / (far - near);
+	GLfloat f = -2 * far * near / (far - near);
+
+	
+#define M(row,col)  matrix[col*4+row]
+    M(0, 0) = a;
+    M(0, 1) = 0;
+    M(0, 2) = 0;
+    M(0, 3) = 0;
+    M(1, 0) = 0;
+    M(1, 1) = b;
+    M(1, 2) = 0;
+    M(1, 3) = 0;
+    M(2, 0) = c;
+    M(2, 1) = d;
+    M(2, 2) = e;
+    M(2, 3) = -1;
+    M(3, 0) = 0;
+    M(3, 1) = 0;
+    M(3, 2) = f;
+    M(3, 3) = 1;
+#undef M
+}
+
+void ccGLPerspective(GLfloat *matrix, GLfloat fovy, GLfloat aspect,GLfloat zNear,GLfloat zFar )
+{
+	GLfloat xmin, xmax, ymin, ymax;
+	ymax = zNear * tan(fovy * M_PI / 360.0);
+	ymin = -ymax;
+	xmin = ymin * aspect;
+	xmax = ymax * aspect;
+	ccGLFrustum(matrix, xmin, xmax, ymin, ymax, zNear, zFar);
+}
+
+void ccMultMatrix4(GLfloat *matrix, GLfloat *matrixA, GLfloat *matrixB)
+{
+	for( int i=0; i<4; i++) {
+#define M(row,col)  matrix[row*4+col]
+#define A(row,col)  matrixA[row*4+col]
+#define B(row,col)  matrixB[row*4+col]
+		M(i,0) = (A(i,0) * B(0,0)) + (A(i,1) * B(1,0)) + (A(i,2) * B(2,0)) + (A(i,3) * B(3,0));
+		M(i,1) = (A(i,0) * B(0,1)) + (A(i,1) * B(1,1)) + (A(i,2) * B(2,1)) + (A(i,3) * B(3,1));
+		M(i,2) = (A(i,0) * B(0,2)) + (A(i,1) * B(1,2)) + (A(i,2) * B(2,2)) + (A(i,3) * B(3,2));
+		M(i,3) = (A(i,0) * B(0,3)) + (A(i,1) * B(1,3)) + (A(i,2) * B(2,3)) + (A(i,3) * B(3,3));
+#undef M
+#undef A
+#undef B
+	}
+}
+

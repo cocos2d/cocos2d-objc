@@ -27,7 +27,7 @@
 
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 #import <UIKit/UIKit.h>
-#import <OpenGLES/ES1/gl.h>
+#import <OpenGLES/ES2/gl.h>
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 #import <OpenGL/gl.h>
 #import <Foundation/Foundation.h>
@@ -35,3 +35,7 @@
 
 void CGAffineToGL(const CGAffineTransform *t, GLfloat *m);
 void GLToCGAffine(const GLfloat *m, CGAffineTransform *t);
+void ccFrustum(GLfloat *matrix, GLfloat left, GLfloat right, GLfloat bottom, GLfloat top, GLfloat near, GLfloat far);
+void ccGLPerspective(GLfloat *matrix, GLfloat fovy, GLfloat aspect,GLfloat zNear,GLfloat zFar );
+void ccMultMatrix4(GLfloat *matrix, GLfloat *matrixA, float *GLfloat);
+

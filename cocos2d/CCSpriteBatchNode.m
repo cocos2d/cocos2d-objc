@@ -175,13 +175,13 @@ static 	SEL selUpdate = NULL;
 	else {
 		
 		NSAssert(NO, @"CCSpriteBatchNode should NOT be root node");
-		CCDirector *director = [CCDirector sharedDirector];
-		CGAffineTransform viewProjMat = [director viewProjectionMatrix];
-		
-		CGSize winSize = [director winSize];
-		viewProjMat = CGAffineTransformTranslate(viewProjMat, -winSize.width/2, -winSize.height/2);
-		
-		transformMVP_ = CGAffineTransformConcat( transformMVP_, viewProjMat);
+//		CCDirector *director = [CCDirector sharedDirector];
+//		CGAffineTransform viewProjMat = [director projectionMatrix];
+//		
+//		CGSize winSize = [director winSize];
+//		viewProjMat = CGAffineTransformTranslate(viewProjMat, -winSize.width/2, -winSize.height/2);
+//		
+//		transformMVP_ = CGAffineTransformConcat( transformMVP_, viewProjMat);
 		
 	}		
 	
