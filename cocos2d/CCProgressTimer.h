@@ -57,7 +57,7 @@ typedef enum {
 	CCSprite			*sprite_;
 	
 	int					vertexDataCount_;
-	ccV2F_C4F_T2F		*vertexData_;
+	ccV2F_C4B_T2F		*vertexData_;
 }
 
 /**	Change the percentage to change progress. */
