@@ -31,10 +31,14 @@
 #import "CCTexture2D.h"
 #import "CCDirector.h"
 #import "CCGrabber.h"
+#import "GLProgram.h"
+#import "CCShaderCache.h"
 
 #import "Platforms/CCGL.h"
 #import "Support/CGPointExtension.h"
 #import "Support/ccUtils.h"
+#import "Support/TransformUtils.h"
+#import "Support/OpenGL_Internal.h"
 
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 #import "Platforms/iOS/CCDirectorIOS.h"
@@ -43,6 +47,12 @@
 #pragma mark -
 #pragma mark CCGridBase
 
+@interface CCGridBase ()
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+-(void)applyLandscape;
+#endif
+@end
+
 @implementation CCGridBase
 
 @synthesize reuseGrid = reuseGrid_;
@@ -50,6 +60,7 @@
 @synthesize grabber = grabber_;
 @synthesize gridSize = gridSize_;
 @synthesize step = step_;
+@synthesize shaderProgram = shaderProgram_;
 
 +(id) gridWithSize:(ccGridSize)gridSize texture:(CCTexture2D*)texture flippedTexture:(BOOL)flipped
 {
@@ -78,6 +89,21 @@
 		
 		grabber_ = [[CCGrabber alloc] init];
 		[grabber_ grab:texture_];
+		
+		self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_VertexTexture];
+
+		CCDirector *director = [CCDirector sharedDirector];
+		transformMVP_ = CGAffineTransformIdentity;
+		CGAffineTransform transform = [director projectionMatrix];
+		CGSize winSize = [director winSize];		
+		transform = CGAffineTransformTranslate(transform, -winSize.width/2, -winSize.height/2);
+		
+		transformMVP_ = CGAffineTransformConcat( transformMVP_, transform);
+		
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+		[self applyLandscape];
+#endif
+		
 		
 		[self calculateVertexPoints];
 	}
@@ -181,21 +207,24 @@
 	ccDeviceOrientation orientation  = [director deviceOrientation];
 
 	switch (orientation) {
-		case CCDeviceOrientationLandscapeLeft:
-			glTranslatef(w,h,0);
-			glRotatef(-90,0,0,1);
-			glTranslatef(-h,-w,0);
+		case kCCDeviceOrientationLandscapeLeft:
+			transformMVP_ = CGAffineTransformTranslate( transformMVP_, w, h );
+			transformMVP_ = CGAffineTransformRotate( transformMVP_, CC_DEGREES_TO_RADIANS(-90) );
+			transformMVP_ = CGAffineTransformTranslate( transformMVP_, -h, -w);
 			break;
-		case CCDeviceOrientationLandscapeRight:
-			glTranslatef(w,h,0);
-			glRotatef(90,0,0,1);
-			glTranslatef(-h,-w,0);
+
+		case kCCDeviceOrientationLandscapeRight:
+			transformMVP_ = CGAffineTransformTranslate( transformMVP_, w, h );
+			transformMVP_ = CGAffineTransformRotate( transformMVP_, CC_DEGREES_TO_RADIANS(90) );
+			transformMVP_ = CGAffineTransformTranslate( transformMVP_, -h, -w);			
 			break;
-		case CCDeviceOrientationPortraitUpsideDown:
-			glTranslatef(w,h,0);
-			glRotatef(180,0,0,1);
-			glTranslatef(-w,-h,0);
+
+		case kCCDeviceOrientationPortraitUpsideDown:
+			transformMVP_ = CGAffineTransformTranslate( transformMVP_, w, h );
+			transformMVP_ = CGAffineTransformRotate( transformMVP_, CC_DEGREES_TO_RADIANS(180) );
+			transformMVP_ = CGAffineTransformTranslate( transformMVP_, -w, -h);
 			break;
+
 		default:
 			break;
 	}
@@ -204,34 +233,34 @@
 
 -(void)set2DProjection
 {
-	CGSize	winSize = [[CCDirector sharedDirector] winSizeInPixels];
-	
-	glLoadIdentity();
-	glViewport(0, 0, winSize.width, winSize.height);
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	ccglOrtho(0, winSize.width, 0, winSize.height, -1024, 1024);
-	glMatrixMode(GL_MODELVIEW);
+//	CGSize	winSize = [[CCDirector sharedDirector] winSizeInPixels];
+//	
+//	glLoadIdentity();
+//	glViewport(0, 0, winSize.width, winSize.height);
+//	glMatrixMode(GL_PROJECTION);
+//	glLoadIdentity();
+//	ccglOrtho(0, winSize.width, 0, winSize.height, -1024, 1024);
+//	glMatrixMode(GL_MODELVIEW);
 }
 
 // This routine can be merged with Director
 -(void)set3DProjection
 {
-	CCDirector *director = [CCDirector sharedDirector];
-	
-	CGSize	winSize = [director displaySizeInPixels];
-	
-	glViewport(0, 0, winSize.width, winSize.height);
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	gluPerspective(60, (GLfloat)winSize.width/winSize.height, 0.5f, 1500.0f);
-	
-	glMatrixMode(GL_MODELVIEW);	
-	glLoadIdentity();
-	gluLookAt( winSize.width/2, winSize.height/2, [director getZEye],
-			  winSize.width/2, winSize.height/2, 0,
-			  0.0f, 1.0f, 0.0f
-			  );
+//	CCDirector *director = [CCDirector sharedDirector];
+//	
+//	CGSize	winSize = [director displaySizeInPixels];
+//	
+//	glViewport(0, 0, winSize.width, winSize.height);
+//	glMatrixMode(GL_PROJECTION);
+//	glLoadIdentity();
+//	gluPerspective(60, (GLfloat)winSize.width/winSize.height, 0.5f, 1500.0f);
+//	
+//	glMatrixMode(GL_MODELVIEW);	
+//	glLoadIdentity();
+//	gluLookAt( winSize.width/2, winSize.height/2, [director getZEye],
+//			  winSize.width/2, winSize.height/2, 0,
+//			  0.0f, 1.0f, 0.0f
+//			  );
 }
 
 -(void)beforeDraw
@@ -245,9 +274,6 @@
 	[grabber_ afterRender:texture_];
 	
 	[self set3DProjection];
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
-	[self applyLandscape];
-#endif
 
 	if( target.camera.dirty ) {
 
@@ -301,18 +327,38 @@
 -(void)blit
 {
 	int n = gridSize_.x * gridSize_.y;
+
+	// Default Attribs & States: GL_TEXTURE0, k,CCAttribVertex, kCCAttribColor, kCCAttribTexCoords
+	// Needed states: GL_TEXTURE0, kCCAttribVertex, kCCAttribTexCoords
+	// Unneeded states: kCCAttribColor
+	glDisableVertexAttribArray( kCCAttribColor );
 	
-	// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
-	// Needed states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_TEXTURE_COORD_ARRAY
-	// Unneeded states: GL_COLOR_ARRAY
-	glDisableClientState(GL_COLOR_ARRAY);	
+	glUseProgram( shaderProgram_->program_ );
+
+	//
+	// Uniforms
+	//
+	GLfloat mat4[16];	
+	CGAffineToGL( &transformMVP_, mat4 );
 	
-	glVertexPointer(3, GL_FLOAT, 0, vertices);
-	glTexCoordPointer(2, GL_FLOAT, 0, texCoordinates);
+	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformMPVMatrix], 1, GL_FALSE, mat4);	
+	glUniform1i ( shaderProgram_->uniforms_[kCCUniformSampler], 0 );
+	
+	//
+	// Attributes
+	//
+
+	// vertex
+	glVertexAttribPointer(kCCAttribVertex, 3, GL_FLOAT, GL_FALSE, 0, vertices);
+	
+	// texCoods
+	glVertexAttribPointer(kCCAttribTexCoords, 2, GL_FLOAT, GL_FALSE, 0, texCoordinates);
+
 	glDrawElements(GL_TRIANGLES, n*6, GL_UNSIGNED_SHORT, indices);
 	
-	// restore GL default state
-	glEnableClientState(GL_COLOR_ARRAY);
+	
+	// Restore
+	glEnableVertexAttribArray( kCCAttribColor );
 }
 
 -(void)calculateVertexPoints
@@ -441,17 +487,38 @@
 {
 	int n = gridSize_.x * gridSize_.y;
 	
-	// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
-	// Needed states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_TEXTURE_COORD_ARRAY
-	// Unneeded states: GL_COLOR_ARRAY
-	glDisableClientState(GL_COLOR_ARRAY);	
+	// Default Attribs & States: GL_TEXTURE0, k,CCAttribVertex, kCCAttribColor, kCCAttribTexCoords
+	// Needed states: GL_TEXTURE0, kCCAttribVertex, kCCAttribTexCoords
+	// Unneeded states: kCCAttribColor
+	glDisableVertexAttribArray( kCCAttribColor );
+
+
+	glUseProgram( shaderProgram_->program_ );
+
+	//
+	// Uniforms
+	//
+	GLfloat mat4[16];	
+	CGAffineToGL( &transformMVP_, mat4 );
+
+	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformMPVMatrix], 1, GL_FALSE, mat4);	
+	glUniform1i ( shaderProgram_->uniforms_[kCCUniformSampler], 0 );
+
+	//
+	// Attributes
+	//
 	
-	glVertexPointer(3, GL_FLOAT, 0, vertices);
-	glTexCoordPointer(2, GL_FLOAT, 0, texCoordinates);
+	// vertex
+	glVertexAttribPointer(kCCAttribVertex, 3, GL_FLOAT, GL_FALSE, 0, vertices);
+
+	// texCoods
+	glVertexAttribPointer(kCCAttribTexCoords, 2, GL_FLOAT, GL_FALSE, 0, texCoordinates);
+
+	
 	glDrawElements(GL_TRIANGLES, n*6, GL_UNSIGNED_SHORT, indices);
 
-	// restore default GL state
-	glEnableClientState(GL_COLOR_ARRAY);
+	// Restore
+	glEnableVertexAttribArray( kCCAttribColor );
 }
 
 -(void)calculateVertexPoints

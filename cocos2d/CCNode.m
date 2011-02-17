@@ -490,27 +490,12 @@
 	if (!visible_)
 		return;
 
-	if( parent_ && parent_->isTransformMVPDirty_ )
-		isTransformMVPDirty_ = YES;
-	
-	if( isTransformMVPDirty_ ) {
-		transformMVP_ = [self nodeToParentTransform];
-	
-		// root node
-		if(  ! parent_ ) {
-			CCDirector *director = [CCDirector sharedDirector];
-			CGAffineTransform viewProjMat = [director viewProjectionMatrix];
-
-			CGSize winSize = [director winSize];
-			viewProjMat = CGAffineTransformTranslate(viewProjMat, -winSize.width/2, -winSize.height/2);
-			
-			transformMVP_ = CGAffineTransformConcat( transformMVP_, viewProjMat);
-		}
-
-		// leaf node
-		else 
-			transformMVP_ = CGAffineTransformConcat( transformMVP_, parent_->transformMVP_ );
+	if ( grid_ && grid_.active) {
+		[grid_ beforeDraw];
+		[self transformAncestors];
 	}
+	
+	[self transform];
 	
 	if(children_) {
 		ccArray *arrayData = children_->data;
@@ -537,6 +522,9 @@
 	} else
 		[self draw];
 	
+	if ( grid_ && grid_.active)
+		[grid_ afterDraw:self];
+	
 	isTransformMVPDirty_ = NO;
 }
 
@@ -544,10 +532,36 @@
 
 -(void) transformAncestors
 {
+	if( parent_ ) {
+		[parent_ transformAncestors];
+		[parent_ transform];
+	}	
 }
 
 -(void) transform
 {
+	if( parent_ && parent_->isTransformMVPDirty_ )
+		isTransformMVPDirty_ = YES;
+	
+	if( isTransformMVPDirty_ ) {
+		transformMVP_ = [self nodeToParentTransform];
+		
+		// root node
+		if(  ! parent_ ) {
+			CCDirector *director = [CCDirector sharedDirector];
+			
+			CGAffineTransform transform = [director projectionMatrix];
+			CGSize winSize = [director winSize];
+			
+			transform = CGAffineTransformTranslate(transform, -winSize.width/2, -winSize.height/2);
+			
+			transformMVP_ = CGAffineTransformConcat( transformMVP_, transform);
+		}
+		
+		// leaf node
+		else 
+			transformMVP_ = CGAffineTransformConcat( transformMVP_, parent_->transformMVP_ );
+	}
 }
 
 #pragma mark CCNode SceneManagement

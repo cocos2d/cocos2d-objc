@@ -217,7 +217,9 @@ typedef enum {
 	
 	/* contentScaleFactor could be simulated */
 	BOOL	isContentScaleSupported_;
-	
+
+	CGAffineTransform	projectionMatrix_;
+
 	tPixelFormat pixelFormat_;					// Deprecated. Will be removed in 1.0
 	tDepthBufferFormat depthBufferFormat_;		// Deprecated. Will be removed in 1.0
 }

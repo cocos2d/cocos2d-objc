@@ -80,7 +80,9 @@ GLint ccUniforms[kCCUniform_MAX];
 	[programs_ setObject:p forKey:kCCShader_VertexTextureColor];
 	[p release];
 
+	//
 	// Vertex Color shader
+	//
 	p = [[GLProgram alloc] initWithVertexShaderFilename:@"Shaders/VertexColor.vert"
 											fragmentShaderFilename:@"Shaders/VertexColor.frag"];
 	
@@ -93,17 +95,20 @@ GLint ccUniforms[kCCUniform_MAX];
 	[programs_ setObject:p forKey:kCCShader_VertexColor];
 	[p release];
 
-//	// Vertex shader
-//	p = [[GLProgram alloc] initWithVertexShaderFilename:@"Shaders/Vertex.vert"
-//								 fragmentShaderFilename:nil];
-//	
-//	[p addAttribute:@"aVertex" index:kCCAttribVertex];
-//	
-//	[p link];
-//	
-//	[programs_ setObject:p forKey:kCCShader_Vertex];
-//	[p release];
+	//
+	// Vertex Texture shader
+	//
+	p = [[GLProgram alloc] initWithVertexShaderFilename:@"Shaders/VertexTexture.vert"
+								 fragmentShaderFilename:@"Shaders/VertexTexture.frag"];
 	
+	[p addAttribute:@"aVertex" index:kCCAttribVertex];
+	[p addAttribute:@"aTexCoord" index:kCCAttribTexCoords];
+	
+	[p link];
+	[p updateUniforms];
+	
+	[programs_ setObject:p forKey:kCCShader_VertexTexture];
+	[p release];
 }
 
 -(GLProgram *) programForKey:(NSString*)key

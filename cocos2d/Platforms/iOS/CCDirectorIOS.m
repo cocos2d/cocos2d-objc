@@ -192,33 +192,39 @@ CGFloat	__ccContentScaleFactor = 1;
 {
 	CGSize size = winSizeInPixels_;
 	
-	if( [openGLView_ useShaders] ) {
-		glViewport(0, 0, size.width, size.height);
-		return;
-	}
+	projection = kCCDirectorProjection2D;
+
+	glViewport(0, 0, size.width, size.height);
+	
 
 	switch (projection) {
 		case kCCDirectorProjection2D:
-			glViewport(0, 0, size.width, size.height);
-			glMatrixMode(GL_PROJECTION);
-			glLoadIdentity();
-			ccglOrtho(0, size.width, 0, size.height, -1024 * CC_CONTENT_SCALE_FACTOR(), 1024 * CC_CONTENT_SCALE_FACTOR());
-			glMatrixMode(GL_MODELVIEW);
-			glLoadIdentity();
+		{
+			GLfloat tmp[16] =  {
+				2.0f/size.width, 0.0f, 0.0f, -1.0f,
+				0.0f, 2.0f/size.height, 0.0f, -1.0f,
+				0.0f, 0.0f, -1.0f, 0.0f,
+				0.0f, 0.0f, 0.0f, 1.0f
+			};
+
+			GLToCGAffine( tmp, &projectionMatrix_);
+			
 			break;
+		}
 			
 		case kCCDirectorProjection3D:
-			glViewport(0, 0, size.width, size.height);
-			glMatrixMode(GL_PROJECTION);
-			glLoadIdentity();
-			gluPerspective(60, (GLfloat)size.width/size.height, 0.5f, 1500.0f);
-			
-			glMatrixMode(GL_MODELVIEW);	
-			glLoadIdentity();
-			gluLookAt( size.width/2, size.height/2, [self getZEye],
-					  size.width/2, size.height/2, 0,
-					  0.0f, 1.0f, 0.0f);			
-			break;
+		{
+				GLfloat tmp[16];
+				ccGLPerspective( tmp, 60, (GLfloat)size.width/size.height, 0.5f, 1500.0f);
+				
+//				gluLookAt( size.width/2, size.height/2, [self getZEye],
+//						  size.width/2, size.height/2, 0,
+//						  0.0f, 1.0f, 0.0f);			
+				
+				GLToCGAffine( tmp, &projectionMatrix_);
+
+				break;
+		}
 			
 		case kCCDirectorProjectionCustom:
 			if( projectionDelegate_ )
@@ -481,36 +487,26 @@ CGFloat	__ccContentScaleFactor = 1;
 
 #pragma mark Director Scene Landscape
 
--(CGAffineTransform) viewProjectionMatrix
+-(CGAffineTransform) projectionMatrix
 {
-	GLfloat mat4[16] = {
-		2.0f/winSizeInPixels_.width, 0.0f, 0.0f, -1.0f,
-		0.0f, 2.0f/winSizeInPixels_.height, 0.0f, -1.0f,
-		0.0f, 0.0f, -1.0f, 0.0f,
-		0.0f, 0.0f, 0.0f, 1.0f
-	};
-	
-	CGAffineTransform transform;
-	GLToCGAffine(&mat4[0], &transform );
-	
-	
+	CGAffineTransform ret;
 	switch ( deviceOrientation_ ) {
 		case CCDeviceOrientationPortrait:
 			// nothing
 			break;
 		case CCDeviceOrientationPortraitUpsideDown:
 			// upside down
-			transform = CGAffineTransformRotate(transform, CC_DEGREES_TO_RADIANS(180) );
+			ret = CGAffineTransformRotate(projectionMatrix_, CC_DEGREES_TO_RADIANS(180) );
 			break;
 		case CCDeviceOrientationLandscapeRight:
-			transform = CGAffineTransformRotate(transform, CC_DEGREES_TO_RADIANS(90) );
+			ret = CGAffineTransformRotate(projectionMatrix_, CC_DEGREES_TO_RADIANS(90) );
 			break;
 		case CCDeviceOrientationLandscapeLeft:
-			transform = CGAffineTransformRotate(transform, CC_DEGREES_TO_RADIANS(-90) );
+			ret = CGAffineTransformRotate(projectionMatrix_, CC_DEGREES_TO_RADIANS(-90) );
 			break;
 	}	
 	
-	return transform;
+	return ret;
 }
 
 -(CGPoint)convertToGL:(CGPoint)uiPoint
@@ -619,37 +615,6 @@ CGFloat	__ccContentScaleFactor = 1;
 				break;
 		}
 	}
-}
-
--(void) applyOrientation
-{	
-	CGSize s = winSizeInPixels_;
-	float w = s.width / 2;
-	float h = s.height / 2;
-	
-	// XXX it's using hardcoded values.
-	// What if the the screen size changes in the future?
-	switch ( deviceOrientation_ ) {
-		case CCDeviceOrientationPortrait:
-			// nothing
-			break;
-		case CCDeviceOrientationPortraitUpsideDown:
-			// upside down
-			glTranslatef(w,h,0);
-			glRotatef(180,0,0,1);
-			glTranslatef(-w,-h,0);
-			break;
-		case CCDeviceOrientationLandscapeRight:
-			glTranslatef(w,h,0);
-			glRotatef(90,0,0,1);
-			glTranslatef(-h,-w,0);
-			break;
-		case CCDeviceOrientationLandscapeLeft:
-			glTranslatef(w,h,0);
-			glRotatef(-90,0,0,1);
-			glTranslatef(-h,-w,0);
-			break;
-	}	
 }
 
 -(void) end

@@ -618,9 +618,9 @@ struct transformValues_ {
 	// Uniforms
 	//
 	GLfloat mat4[16];	
-	CGAffineToGL( &transformMVP_, &mat4[0] );
+	CGAffineToGL( &transformMVP_, mat4 );
 	
-	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformMPVMatrix], 1, GL_FALSE, &mat4[0]);	
+	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformMPVMatrix], 1, GL_FALSE, mat4);	
 	glUniform1i ( shaderProgram_->uniforms_[kCCUniformSampler], 0 );
 	
 	glBindTexture(GL_TEXTURE_2D, [texture_ name]);	
