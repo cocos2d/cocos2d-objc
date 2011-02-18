@@ -477,7 +477,7 @@ Class restartAction()
 	CCDirector *director = [CCDirector sharedDirector];
 	
 	// before creating any layer, set the landscape mode
-	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
+//	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
 	
 	// display FPS (useful when debugging)
 	[director setDisplayFPS:YES];

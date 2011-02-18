@@ -493,6 +493,7 @@ CGFloat	__ccContentScaleFactor = 1;
 	switch ( deviceOrientation_ ) {
 		case CCDeviceOrientationPortrait:
 			// nothing
+			ret = projectionMatrix_;
 			break;
 		case CCDeviceOrientationPortraitUpsideDown:
 			// upside down

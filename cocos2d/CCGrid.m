@@ -93,17 +93,12 @@
 		self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_VertexTexture];
 
 		CCDirector *director = [CCDirector sharedDirector];
-		transformMVP_ = CGAffineTransformIdentity;
+		transformProjection_ = CGAffineTransformIdentity;
 		CGAffineTransform transform = [director projectionMatrix];
 		CGSize winSize = [director winSize];		
 		transform = CGAffineTransformTranslate(transform, -winSize.width/2, -winSize.height/2);
 		
-		transformMVP_ = CGAffineTransformConcat( transformMVP_, transform);
-		
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
-		[self applyLandscape];
-#endif
-		
+		transformProjection_ = CGAffineTransformConcat( transformProjection_, transform);
 		
 		[self calculateVertexPoints];
 	}
@@ -200,6 +195,8 @@
 {
 	CCDirector *director = [CCDirector sharedDirector];
 	
+	CGAffineTransform identity = CGAffineTransformIdentity;
+	
 	CGSize winSize = [director displaySizeInPixels];
 	float w = winSize.width / 2;
 	float h = winSize.height / 2;
@@ -208,26 +205,29 @@
 
 	switch (orientation) {
 		case kCCDeviceOrientationLandscapeLeft:
-			transformMVP_ = CGAffineTransformTranslate( transformMVP_, w, h );
-			transformMVP_ = CGAffineTransformRotate( transformMVP_, CC_DEGREES_TO_RADIANS(-90) );
-			transformMVP_ = CGAffineTransformTranslate( transformMVP_, -h, -w);
+			transformProjectionRotated_ = CGAffineTransformTranslate( identity, w, h );
+			transformProjectionRotated_ = CGAffineTransformRotate( transformProjectionRotated_, CC_DEGREES_TO_RADIANS(90) );
+			transformProjectionRotated_ = CGAffineTransformTranslate( transformProjectionRotated_, -h, -w);
 			break;
 
 		case kCCDeviceOrientationLandscapeRight:
-			transformMVP_ = CGAffineTransformTranslate( transformMVP_, w, h );
-			transformMVP_ = CGAffineTransformRotate( transformMVP_, CC_DEGREES_TO_RADIANS(90) );
-			transformMVP_ = CGAffineTransformTranslate( transformMVP_, -h, -w);			
+			transformProjectionRotated_ = CGAffineTransformTranslate( identity, w, h );
+			transformProjectionRotated_ = CGAffineTransformRotate( transformProjectionRotated_, CC_DEGREES_TO_RADIANS(-90) );
+			transformProjectionRotated_ = CGAffineTransformTranslate( transformProjectionRotated_, -h, -w);			
 			break;
 
 		case kCCDeviceOrientationPortraitUpsideDown:
-			transformMVP_ = CGAffineTransformTranslate( transformMVP_, w, h );
-			transformMVP_ = CGAffineTransformRotate( transformMVP_, CC_DEGREES_TO_RADIANS(180) );
-			transformMVP_ = CGAffineTransformTranslate( transformMVP_, -w, -h);
+			transformProjectionRotated_ = CGAffineTransformTranslate( identity, w, h );
+			transformProjectionRotated_ = CGAffineTransformRotate( transformProjectionRotated_, CC_DEGREES_TO_RADIANS(180) );
+			transformProjectionRotated_ = CGAffineTransformTranslate( transformProjectionRotated_, -w, -h);
 			break;
 
 		default:
+			transformProjectionRotated_ = identity;
 			break;
 	}
+	
+	transformProjectionRotated_ = CGAffineTransformConcat( transformProjectionRotated_, transformProjection_ );
 }
 #endif
 
@@ -274,6 +274,11 @@
 	[grabber_ afterRender:texture_];
 	
 	[self set3DProjection];
+
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+	[self applyLandscape];
+#endif
+
 
 	if( target.camera.dirty ) {
 
@@ -339,7 +344,7 @@
 	// Uniforms
 	//
 	GLfloat mat4[16];	
-	CGAffineToGL( &transformMVP_, mat4 );
+	CGAffineToGL( &transformProjectionRotated_, mat4 );
 	
 	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformMPVMatrix], 1, GL_FALSE, mat4);	
 	glUniform1i ( shaderProgram_->uniforms_[kCCUniformSampler], 0 );
@@ -499,7 +504,7 @@
 	// Uniforms
 	//
 	GLfloat mat4[16];	
-	CGAffineToGL( &transformMVP_, mat4 );
+	CGAffineToGL( &transformProjectionRotated_, mat4 );
 
 	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformMPVMatrix], 1, GL_FALSE, mat4);	
 	glUniform1i ( shaderProgram_->uniforms_[kCCUniformSampler], 0 );
