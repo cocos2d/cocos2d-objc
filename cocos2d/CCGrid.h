@@ -47,7 +47,8 @@
 	BOOL		isTextureFlipped_;
 	
 	GLProgram	*shaderProgram_;
-	CGAffineTransform	transformMVP_;
+	CGAffineTransform	transformProjection_;
+	CGAffineTransform	transformProjectionRotated_;
 }
 
 /** wheter or not the grid is active */
