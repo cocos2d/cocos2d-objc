@@ -121,25 +121,25 @@
 	// issue #878 save opengl state
 	[self saveGLstate];
 
-	CC_DISABLE_DEFAULT_GL_STATES();
+//	CC_DISABLE_DEFAULT_GL_STATES();
 	// Save the current matrix
-	glPushMatrix();
+//	glPushMatrix();
 	
 	CGSize texSize = [texture_ contentSizeInPixels];
 
 	// Calculate the adjustment ratios based on the old and new projections
-	CGSize size = [[CCDirector sharedDirector] displaySizeInPixels];
-	float widthRatio = size.width / texSize.width;
-	float heightRatio = size.height / texSize.height;
+//	CGSize size = [[CCDirector sharedDirector] displaySizeInPixels];
+//	float widthRatio = size.width / texSize.width;
+//	float heightRatio = size.height / texSize.height;
 
-	// Adjust the orthographic propjection and viewport
-	ccglOrtho((float)-1.0 / widthRatio,  (float)1.0 / widthRatio, (float)-1.0 / heightRatio, (float)1.0 / heightRatio, -1,1);
+//	// Adjust the orthographic propjection and viewport
+//	ccglOrtho((float)-1.0 / widthRatio,  (float)1.0 / widthRatio, (float)-1.0 / heightRatio, (float)1.0 / heightRatio, -1,1);
 	glViewport(0, 0, texSize.width, texSize.height);
 
 	glGetIntegerv(CC_GL_FRAMEBUFFER_BINDING, &oldFBO_);
 	ccglBindFramebuffer(CC_GL_FRAMEBUFFER, fbo_);//Will direct drawing to the frame buffer created above
 	
-	CC_ENABLE_DEFAULT_GL_STATES();	
+//	CC_ENABLE_DEFAULT_GL_STATES();	
 }
 
 -(void)beginWithClear:(float)r g:(float)g b:(float)b a:(float)a
@@ -147,19 +147,19 @@
 	// issue #878 save opengl state
 	[self saveGLstate];
 	
-	CC_DISABLE_DEFAULT_GL_STATES();
-	// Save the current matrix
-	glPushMatrix();
+//	CC_DISABLE_DEFAULT_GL_STATES();
+//	// Save the current matrix
+//	glPushMatrix();
 	
 	CGSize texSize = [texture_ contentSizeInPixels];
 	
 	// Calculate the adjustment ratios based on the old and new projections
-	CGSize size = [[CCDirector sharedDirector] displaySizeInPixels];
-	float widthRatio = size.width / texSize.width;
-	float heightRatio = size.height / texSize.height;
+//	CGSize size = [[CCDirector sharedDirector] displaySizeInPixels];
+//	float widthRatio = size.width / texSize.width;
+//	float heightRatio = size.height / texSize.height;
 	
 	// Adjust the orthographic propjection and viewport
-	ccglOrtho((float)-1.0 / widthRatio,  (float)1.0 / widthRatio, (float)-1.0 / heightRatio, (float)1.0 / heightRatio, -1,1);
+//	ccglOrtho((float)-1.0 / widthRatio,  (float)1.0 / widthRatio, (float)-1.0 / heightRatio, (float)1.0 / heightRatio, -1,1);
 	glViewport(0, 0, texSize.width, texSize.height);
 	
 	glGetIntegerv(CC_GL_FRAMEBUFFER_BINDING, &oldFBO_);
@@ -168,14 +168,14 @@
 	glClearColor(r, g, b, a);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	
-	CC_ENABLE_DEFAULT_GL_STATES();
+//	CC_ENABLE_DEFAULT_GL_STATES();
 }
 
 -(void)end
 {
 	ccglBindFramebuffer(CC_GL_FRAMEBUFFER, oldFBO_);
 	// Restore the original matrix and viewport
-	glPopMatrix();
+//	glPopMatrix();
 	CGSize size = [[CCDirector sharedDirector] displaySizeInPixels];
 	glViewport(0, 0, size.width, size.height);
 	[self restoreGLstate];
