@@ -29,11 +29,11 @@ static NSString *transitions[] = {
 	@"SpriteZOrder",
 	@"SpriteBatchNodeZOrder",
 	@"SpriteBatchNodeReorder",
-	@"NodeReorderSameIndex",
 	@"SpriteBatchNodeReorderIssue744",
 	@"SpriteBatchNodeReorderIssue766",
 	@"SpriteBatchNodeReorderIssue767",
 	@"SpriteBatchNodeReorderSameIndex",
+	@"NodeSort",
 	@"SpriteZVertex",
 	@"SpriteBatchNodeZVertex",
 	@"Sprite6",
@@ -738,15 +738,15 @@ Class restartAction()
 }
 @end
 
-@implementation NodeReorderSameIndex
+@implementation NodeSort
 
 - (void) reorderSprite:(ccTime)dt
 {
 	[self unschedule:_cmd];
-	
-	[node reorderChild:[[node children] objectAtIndex:0] z:-4];
-	[node reorderChild:[[node children] objectAtIndex:2] z:-4];
-	[node reorderChild:[[node children] objectAtIndex:1] z:-6];
+	//z-4
+	[node reorderChild:[[node children] objectAtIndex:0] z:32];
+	//[node reorderChild:[[node children] objectAtIndex:2] z:-4];
+	//[node reorderChild:[[node children] objectAtIndex:1] z:-6];
 	
 	[node sortAllChildren];
 	
@@ -792,7 +792,7 @@ Class restartAction()
 
 -(NSString *) title
 {
-	return @"node reorder same index";
+	return @"node sort same index";
 }
 
 -(NSString *) subtitle

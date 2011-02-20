@@ -770,6 +770,7 @@ static SEL selSortMethod = NULL;
 			[(CCSprite*) node setReorderChildDirtyRecursively];
 			node=node.parent;
 		}
+		[batchNode_ reorderBatch];
 	}
 }	
 

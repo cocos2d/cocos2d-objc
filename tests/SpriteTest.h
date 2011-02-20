@@ -77,7 +77,7 @@
 }
 @end
 
-@interface NodeReorderSameIndex : SpriteDemo
+@interface NodeSort : SpriteDemo
 {
 	CCNode *node;
 	CCSprite *sprite1;
