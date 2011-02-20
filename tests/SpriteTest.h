@@ -99,6 +99,13 @@
 }
 @end
 
+@interface SpriteBatchNodeReorderOneChild : SpriteDemo
+{
+	CCSpriteBatchNode *batchNode_;
+	CCSprite *reorderSprite_;		
+}
+@end
+
 @interface SpriteBatchNodeReorderIssue767 : SpriteDemo
 {}
 @end
