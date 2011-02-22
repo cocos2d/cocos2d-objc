@@ -479,8 +479,10 @@ const char kProgressTextureCoords = 0x1e;
 	// Uniforms
 	//
 	GLfloat mat4[16];	
-	CGAffineToGL( &transformMVP_, &mat4[0] );	
-	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformMPVMatrix], 1, GL_FALSE, &mat4[0]);	
+	CGAffineToGL( &transformMV_, &mat4[0] );
+	
+	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformPMatrix], 1, GL_FALSE, &ccProjectionMatrix[0]);
+	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformMVMatrix], 1, GL_FALSE, &mat4[0]);	
 	glUniform1i ( shaderProgram_->uniforms_[kCCUniformSampler], 0 );
 	
 	if(!vertexData_)return;

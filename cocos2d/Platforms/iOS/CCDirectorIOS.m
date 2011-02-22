@@ -190,40 +190,31 @@ CGFloat	__ccContentScaleFactor = 1;
 
 -(void) setProjection:(ccDirectorProjection)projection
 {
-	CGSize size = winSizeInPixels_;
+	CGSize winSize = winSizeInPixels_;
 	
-	projection = kCCDirectorProjection2D;
-
-	glViewport(0, 0, size.width, size.height);
+	glViewport(0, 0, winSize.width, winSize.height);
 	
 
 	switch (projection) {
 		case kCCDirectorProjection2D:
-		{
-			GLfloat tmp[16] =  {
-				2.0f/size.width, 0.0f, 0.0f, -1.0f,
-				0.0f, 2.0f/size.height, 0.0f, -1.0f,
-				0.0f, 0.0f, -1.0f, 0.0f,
-				0.0f, 0.0f, 0.0f, 1.0f
-			};
-
-			GLToCGAffine( tmp, &projectionMatrix_);
-			
+		{			
+			ccGLOrtho( ccProjectionMatrix, 0, winSize.width, 0, winSize.height, -1024, 1024);			
 			break;
 		}
 			
 		case kCCDirectorProjection3D:
 		{
-				GLfloat tmp[16];
-				ccGLPerspective( tmp, 60, (GLfloat)size.width/size.height, 0.5f, 1500.0f);
+			GLfloat matrixA[16];
+			GLfloat matrixB[16];
+			ccGLPerspective( matrixA, 60, (GLfloat)winSize.width/winSize.height, 0.5f, 1500.0f);
 				
-//				gluLookAt( size.width/2, size.height/2, [self getZEye],
-//						  size.width/2, size.height/2, 0,
-//						  0.0f, 1.0f, 0.0f);			
-				
-				GLToCGAffine( tmp, &projectionMatrix_);
-
-				break;
+			ccGLLookAt( matrixB,
+							winSize.width/2, winSize.height/2, [self getZEye],
+							winSize.width/2, winSize.height/2, 0,
+							0.0f, 1.0f, 0.0f);			
+			
+			ccMultMatrix4( ccProjectionMatrix, matrixB, matrixA );
+			break;
 		}
 			
 		case kCCDirectorProjectionCustom:
@@ -486,29 +477,6 @@ CGFloat	__ccContentScaleFactor = 1;
 }
 
 #pragma mark Director Scene Landscape
-
--(CGAffineTransform) projectionMatrix
-{
-	CGAffineTransform ret;
-	switch ( deviceOrientation_ ) {
-		case CCDeviceOrientationPortrait:
-			// nothing
-			ret = projectionMatrix_;
-			break;
-		case CCDeviceOrientationPortraitUpsideDown:
-			// upside down
-			ret = CGAffineTransformRotate(projectionMatrix_, CC_DEGREES_TO_RADIANS(180) );
-			break;
-		case CCDeviceOrientationLandscapeRight:
-			ret = CGAffineTransformRotate(projectionMatrix_, CC_DEGREES_TO_RADIANS(90) );
-			break;
-		case CCDeviceOrientationLandscapeLeft:
-			ret = CGAffineTransformRotate(projectionMatrix_, CC_DEGREES_TO_RADIANS(-90) );
-			break;
-	}	
-	
-	return ret;
-}
 
 -(CGPoint)convertToGL:(CGPoint)uiPoint
 {

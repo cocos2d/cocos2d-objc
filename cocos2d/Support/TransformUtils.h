@@ -35,7 +35,10 @@
 
 void CGAffineToGL(const CGAffineTransform *t, GLfloat *m);
 void GLToCGAffine(const GLfloat *m, CGAffineTransform *t);
-void ccFrustum(GLfloat *matrix, GLfloat left, GLfloat right, GLfloat bottom, GLfloat top, GLfloat near, GLfloat far);
-void ccGLPerspective(GLfloat *matrix, GLfloat fovy, GLfloat aspect,GLfloat zNear,GLfloat zFar );
+
 void ccMultMatrix4(GLfloat *matrix, GLfloat *matrixA, float *GLfloat);
 
+void ccGLFrustum(GLfloat *matrix, GLfloat left, GLfloat right, GLfloat bottom, GLfloat top, GLfloat near, GLfloat far);
+void ccGLOrtho(GLfloat *matrix, GLfloat left, GLfloat right, GLfloat bottom, GLfloat top, GLfloat near, GLfloat far);
+void ccGLPerspective(GLfloat *matrix, GLfloat fovy, GLfloat aspect,GLfloat zNear,GLfloat zFar );
+void ccGLLookAt(GLfloat *matrix, GLfloat eyex, GLfloat eyey, GLfloat eyez, GLfloat centerx, GLfloat centery, GLfloat centerz, GLfloat upx, GLfloat upy, GLfloat upz);

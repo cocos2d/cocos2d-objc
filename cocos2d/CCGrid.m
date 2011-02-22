@@ -94,11 +94,9 @@
 
 		CCDirector *director = [CCDirector sharedDirector];
 		transformProjection_ = CGAffineTransformIdentity;
-		CGAffineTransform transform = [director projectionMatrix];
 		CGSize winSize = [director winSize];		
-		transform = CGAffineTransformTranslate(transform, -winSize.width/2, -winSize.height/2);
+		transformProjection_ = CGAffineTransformTranslate(transformProjection_, -winSize.width/2, -winSize.height/2);
 		
-		transformProjection_ = CGAffineTransformConcat( transformProjection_, transform);
 		
 		[self calculateVertexPoints];
 	}
@@ -223,7 +221,7 @@
 			break;
 
 		default:
-			transformProjectionRotated_ = identity;
+			transformProjectionRotated_ = CGAffineTransformTranslate( identity, w, h );
 			break;
 	}
 	
@@ -346,7 +344,8 @@
 	GLfloat mat4[16];	
 	CGAffineToGL( &transformProjectionRotated_, mat4 );
 	
-	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformMPVMatrix], 1, GL_FALSE, mat4);	
+	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformPMatrix], 1, GL_FALSE, &ccProjectionMatrix[0]);
+	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformMVMatrix], 1, GL_FALSE, mat4);	
 	glUniform1i ( shaderProgram_->uniforms_[kCCUniformSampler], 0 );
 	
 	//
@@ -506,7 +505,8 @@
 	GLfloat mat4[16];	
 	CGAffineToGL( &transformProjectionRotated_, mat4 );
 
-	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformMPVMatrix], 1, GL_FALSE, mat4);	
+	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformPMatrix], 1, GL_FALSE, &ccProjectionMatrix[0]);
+	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformMVMatrix], 1, GL_FALSE, mat4);	
 	glUniform1i ( shaderProgram_->uniforms_[kCCUniformSampler], 0 );
 
 	//

@@ -36,7 +36,8 @@ enum {
 };
 
 enum {
-	kCCUniformMPVMatrix,
+	kCCUniformPMatrix,
+	kCCUniformMVMatrix,
 	kCCUniformSampler,
 	
 	kCCUniform_MAX,
@@ -49,7 +50,8 @@ extern GLint ccUniforms[kCCUniform_MAX];
 #define kCCShader_VertexTexture			@"ShaderVertexTexture"
 
 // uniform names
-#define kCCUniformMPVMatrix_s			"uMVPMatrix"
+#define kCCUniformMVMatrix_s			"uMVMatrix"
+#define kCCUniformPMatrix_s				"uPMatrix"
 #define kCCUniformSampler_s				"uTexture"
 
 

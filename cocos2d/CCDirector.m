@@ -65,6 +65,7 @@
 
 extern NSString * cocos2dVersion(void);
 
+GLfloat ccProjectionMatrix[16];
 
 @interface CCDirector (Private)
 -(void) setNextScene;
@@ -230,12 +231,6 @@ static CCDirector *_sharedDirector = nil;
 }
 
 #pragma mark Director - Scene OpenGL Helper
-
--(CGAffineTransform) projectionMatrix
-{
-	NSAssert(NO, @"override me");
-	return CGAffineTransformIdentity;
-}
 
 -(ccDirectorProjection) projection
 {

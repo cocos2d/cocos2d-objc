@@ -101,7 +101,7 @@ typedef void (*GLLogFunction) (GLuint program,
                                               error:nil] UTF8String];
     if (!source)
     {
-        NSLog(@"Failed to load vertex shader");
+        NSLog(@"Failed to load shader");
         return NO;
     }
     
@@ -110,6 +110,14 @@ typedef void (*GLLogFunction) (GLuint program,
     glCompileShader(*shader);
     
     glGetShaderiv(*shader, GL_COMPILE_STATUS, &status);
+	
+	if( ! status ) {
+		if( type == GL_VERTEX_SHADER )
+			NSLog(@"%@: %@", file, [self vertexShaderLog] );
+		else
+			NSLog(@"%@: %@", file, [self fragmentShaderLog] );
+
+	}
     return status == GL_TRUE;
 }
 
@@ -125,7 +133,8 @@ typedef void (*GLLogFunction) (GLuint program,
 -(void) updateUniforms
 {
 	// update uniforms
-	uniforms_[kCCUniformMPVMatrix] = glGetUniformLocation(program_, kCCUniformMPVMatrix_s);
+	uniforms_[kCCUniformPMatrix] = glGetUniformLocation(program_, kCCUniformPMatrix_s);
+	uniforms_[kCCUniformMVMatrix] = glGetUniformLocation(program_, kCCUniformMVMatrix_s);
 	uniforms_[kCCUniformSampler] = glGetUniformLocation(program_, kCCUniformSampler_s);
 }	
 
