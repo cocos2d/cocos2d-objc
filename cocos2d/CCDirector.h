@@ -301,7 +301,6 @@ and when to execute the Scenes.
 // Profiler
 -(void) showProfilers;
 
-/// Mat4 projection matrix
--(CGAffineTransform) projectionMatrix;
-
 @end
+
+extern GLfloat ccProjectionMatrix[16];

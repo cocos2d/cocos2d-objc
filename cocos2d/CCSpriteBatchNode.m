@@ -165,11 +165,11 @@ static 	SEL selUpdate = NULL;
 	if (!visible_)
 		return;
 	
-	transformMVP_ = [self nodeToParentTransform];
+	transformMV_ = [self nodeToParentTransform];
 		
 	// leaf node
 	if( parent_ )
-		transformMVP_ = CGAffineTransformConcat( transformMVP_, parent_->transformMVP_ );
+		transformMV_ = CGAffineTransformConcat( transformMV_, parent_->transformMV_ );
 	
 	// SpriteBatchNode should not be used as a root node
 	else {
@@ -181,7 +181,7 @@ static 	SEL selUpdate = NULL;
 //		CGSize winSize = [director winSize];
 //		viewProjMat = CGAffineTransformTranslate(viewProjMat, -winSize.width/2, -winSize.height/2);
 //		
-//		transformMVP_ = CGAffineTransformConcat( transformMVP_, viewProjMat);
+//		transformMV_ = CGAffineTransformConcat( transformMV_, viewProjMat);
 		
 	}		
 	
@@ -312,9 +312,10 @@ static 	SEL selUpdate = NULL;
 	glUseProgram( shaderProgram_->program_ );
 	
 	GLfloat mat4[16];	
-	CGAffineToGL(&transformMVP_, &mat4[0] );
+	CGAffineToGL(&transformMV_, &mat4[0] );
 	
-	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformMPVMatrix], 1, GL_FALSE, &mat4[0]);	
+	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformPMatrix], 1, GL_FALSE, &ccProjectionMatrix[0]);
+	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformMVMatrix], 1, GL_FALSE, &mat4[0]);	
 	glUniform1i ( shaderProgram_->uniforms_[kCCUniformSampler], 0 );
 	
 	[textureAtlas_ drawQuads];

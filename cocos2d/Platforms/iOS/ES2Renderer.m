@@ -61,6 +61,8 @@
         glBindFramebuffer(GL_FRAMEBUFFER, defaultFramebuffer_);
         glBindRenderbuffer(GL_RENDERBUFFER, colorRenderbuffer_);
         glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_RENDERBUFFER, colorRenderbuffer_);
+		
+		depthFormat_ = depthFormat;
     }
 
     return self;
@@ -79,6 +81,20 @@
         NSLog(@"Failed to make complete framebuffer object %x", glCheckFramebufferStatus(GL_FRAMEBUFFER));
         return NO;
     }
+	
+	if (depthFormat_) 
+	{
+		if( ! depthBuffer_ )
+			glGenRenderbuffers(1, &depthBuffer_);
+		
+		glBindRenderbuffer(GL_RENDERBUFFER, depthBuffer_);
+		glRenderbufferStorage(GL_RENDERBUFFER, depthFormat_, backingWidth_, backingHeight_);
+		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, depthBuffer_);
+		
+		// bind color buffer
+		glBindRenderbuffer(GL_RENDERBUFFER, colorRenderbuffer_);
+	}
+	
 
     return YES;
 }
@@ -116,17 +132,20 @@
 - (void)dealloc
 {
     // Tear down GL
-    if (defaultFramebuffer_)
-    {
+    if (defaultFramebuffer_) {
         glDeleteFramebuffers(1, &defaultFramebuffer_);
         defaultFramebuffer_ = 0;
     }
 
-    if (colorRenderbuffer_)
-    {
+    if (colorRenderbuffer_) {
         glDeleteRenderbuffers(1, &colorRenderbuffer_);
         colorRenderbuffer_ = 0;
     }
+	
+	if( depthBuffer_ ) {
+		glDeleteRenderbuffers(1, &depthBuffer_ );
+		depthBuffer_ = 0;
+	}
 
     // Tear down context
     if ([EAGLContext currentContext] == context_)

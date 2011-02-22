@@ -378,8 +378,9 @@
 	glUseProgram( shaderProgram_->program_ );
 	
 	GLfloat mat4[16];	
-	CGAffineToGL(&transformMVP_, &mat4[0] );
-	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformMPVMatrix], 1, GL_FALSE, &mat4[0]);	
+	CGAffineToGL(&transformMV_, &mat4[0] );
+	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformPMatrix], 1, GL_FALSE, &ccProjectionMatrix[0]);
+	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformMVMatrix], 1, GL_FALSE, &mat4[0]);	
 
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 	

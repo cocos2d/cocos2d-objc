@@ -160,8 +160,8 @@ enum {
 	BOOL isRelativeAnchorPoint_:1;	
 
 @public
-	CGAffineTransform transformMVP_;
-	BOOL	isTransformMVPDirty_:1;
+	CGAffineTransform transformMV_;
+	BOOL	isTransformMVDirty_:1;
 
 }
 

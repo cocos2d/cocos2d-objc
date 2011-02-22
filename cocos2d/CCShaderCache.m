@@ -27,8 +27,6 @@
 
 static CCShaderCache *_sharedShaderCache;
 
-GLint ccUniforms[kCCUniform_MAX];
-
 @implementation CCShaderCache
 
 #pragma mark CCShaderCache - Alloc, Init & Dealloc
@@ -84,7 +82,7 @@ GLint ccUniforms[kCCUniform_MAX];
 	// Vertex Color shader
 	//
 	p = [[GLProgram alloc] initWithVertexShaderFilename:@"Shaders/VertexColor.vert"
-											fragmentShaderFilename:@"Shaders/VertexColor.frag"];
+								 fragmentShaderFilename:@"Shaders/VertexColor.frag"];
 	
 	[p addAttribute:@"aVertex" index:kCCAttribVertex];
 	[p addAttribute:@"aColor" index:kCCAttribColor];
