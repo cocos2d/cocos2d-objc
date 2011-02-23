@@ -36,9 +36,9 @@
 void CGAffineToGL(const CGAffineTransform *t, GLfloat *m);
 void GLToCGAffine(const GLfloat *m, CGAffineTransform *t);
 
-void ccMultMatrix4(GLfloat *matrix, GLfloat *matrixA, float *GLfloat);
+void ccMatrixMult4(GLfloat *matrix, GLfloat *matrixA, float *GLfloat);
 
-void ccGLFrustum(GLfloat *matrix, GLfloat left, GLfloat right, GLfloat bottom, GLfloat top, GLfloat near, GLfloat far);
-void ccGLOrtho(GLfloat *matrix, GLfloat left, GLfloat right, GLfloat bottom, GLfloat top, GLfloat near, GLfloat far);
-void ccGLPerspective(GLfloat *matrix, GLfloat fovy, GLfloat aspect,GLfloat zNear,GLfloat zFar );
-void ccGLLookAt(GLfloat *matrix, GLfloat eyex, GLfloat eyey, GLfloat eyez, GLfloat centerx, GLfloat centery, GLfloat centerz, GLfloat upx, GLfloat upy, GLfloat upz);
+void ccMatrixFrustum(GLfloat *matrix, GLfloat left, GLfloat right, GLfloat bottom, GLfloat top, GLfloat near, GLfloat far);
+void ccMatrixOrtho(GLfloat *matrix, GLfloat left, GLfloat right, GLfloat bottom, GLfloat top, GLfloat near, GLfloat far);
+void ccMatrixPerspective(GLfloat *matrix, GLfloat fovy, GLfloat aspect,GLfloat zNear,GLfloat zFar );
+void ccMatrixLookAt(GLfloat *matrix, GLfloat eyex, GLfloat eyey, GLfloat eyez, GLfloat centerx, GLfloat centery, GLfloat centerz, GLfloat upx, GLfloat upy, GLfloat upz);
