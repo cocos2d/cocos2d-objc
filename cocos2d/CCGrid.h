@@ -49,6 +49,7 @@
 	GLProgram	*shaderProgram_;
 	CGAffineTransform	transformProjection_;
 	CGAffineTransform	transformProjectionRotated_;
+//	CGFloat		projectionMatrix_[16];
 }
 
 /** wheter or not the grid is active */
