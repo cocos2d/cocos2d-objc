@@ -79,8 +79,9 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		patch for TMX per-tile properties
 	* Daniele Benegiamo:
 		Prevent possible memory corruption with particles when autoRemove is On. patch.
-	* David Hakim (http://webcodex.com)
+	* David Hakim (http://kretures.com)
 		Event Dispatcher in Mac is synced. patch.
+		Dispatcher in Mac supports NSTimer events. patch.
 	* David Whatley (http://criticalthoughtgames.com/)
 		Scheduler supports the repeat parameter. patch.
 		Author of perFrameUpdate in Scheduler
@@ -433,6 +434,8 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		update the VBO buffer with only the needed particles
 	* Thomas Visser:
 		MenuItem#rect works with anchorPoint
+	* UD7 Studios (http://ud7.com)
+		RenderTexture: Possibility to save buffer in any directory. patch.
 	* Valentin Milea:
 		clean up CocosNode, added better comments to CocosNode
 		Set transformAnchor point in Sprite

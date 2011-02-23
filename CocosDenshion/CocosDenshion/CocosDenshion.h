@@ -103,7 +103,16 @@ Requirements:
 #define CD_SAMPLE_RATE_BASIC 8000
 #define CD_SAMPLE_RATE_DEFAULT 44100
 
-#define CD_MSG_BAD_AL_CONTEXT @"cdbadalcontext"
+extern NSString * const kCDN_BadAlContext;
+extern NSString * const kCDN_AsynchLoadComplete;
+
+extern float const kCD_PitchDefault;
+extern float const kCD_PitchLowerOneOctave;
+extern float const kCD_PitchHigherOneOctave;
+extern float const kCD_PanDefault;
+extern float const kCD_PanFullLeft;
+extern float const kCD_PanFullRight;
+extern float const kCD_GainDefault;
 
 enum bufferState {
 	CD_BS_EMPTY = 0,
@@ -201,9 +210,10 @@ typedef struct _sourceInfo {
 	int				_sourceGroupTotal;
 	UInt32			_audioSessionCategory;
 	BOOL			_handleAudioSession;
+	ALfloat			_preMuteGain;
+	NSObject        *_mutexBufferLoad;
 	BOOL			mute_;
 	BOOL			enabled_;
-	ALfloat			_preMuteGain;
 
 	ALenum			lastErrorCode_;
 	BOOL			functioning_;
@@ -344,7 +354,7 @@ typedef struct _sourceInfo {
 @property (readonly) NSString *filePath;
 @property (readonly) int soundId;
 
-- (id)init:(int) theSoundId filePath:(NSString *) theFilePath;
+- (id)init:(int) theSoundId filePath:(const NSString *) theFilePath;
 @end
 
 /** Interpolation type */

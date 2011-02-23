@@ -181,11 +181,13 @@
 -(void) updateQuadWithParticle:(tCCParticle*)p newPosition:(CGPoint)newPos
 {
 	// colors
-	ccV2F_C4F_T2F_Quad *quad = &(quads_[particleIdx]);
-	quad->bl.colors = p->color;
-	quad->br.colors = p->color;
-	quad->tl.colors = p->color;
-	quad->tr.colors = p->color;
+	ccV2F_C4B_T2F_Quad *quad = &(quads_[particleIdx]);
+	
+	ccColor4B color = { p->color.r*255, p->color.g*255, p->color.b*255, p->color.a*255};
+	quad->bl.colors = color;
+	quad->br.colors = color;
+	quad->tl.colors = color;
+	quad->tr.colors = color;
 	
 	// vertices
 	GLfloat size_2 = p->size/2;
@@ -269,23 +271,23 @@
 
 	glVertexPointer(2,GL_FLOAT, kQuadSize, 0);
 
-	glColorPointer(4, GL_FLOAT, kQuadSize, (GLvoid*) offsetof(ccV2F_C4F_T2F,colors) );
+	glColorPointer(4, GL_UNSIGNED_BYTE, kQuadSize, (GLvoid*) offsetof(ccV2F_C4B_T2F,colors) );
 	
-	glTexCoordPointer(2, GL_FLOAT, kQuadSize, (GLvoid*) offsetof(ccV2F_C4F_T2F,texCoords) );
+	glTexCoordPointer(2, GL_FLOAT, kQuadSize, (GLvoid*) offsetof(ccV2F_C4B_T2F,texCoords) );
 #else // vertex array list
 
 	NSUInteger offset = (NSUInteger) quads_;
 
 	// vertex
-	NSUInteger diff = offsetof( ccV2F_C4F_T2F, vertices);
+	NSUInteger diff = offsetof( ccV2F_C4B_T2F, vertices);
 	glVertexPointer(2,GL_FLOAT, kQuadSize, (GLvoid*) (offset+diff) );
 	
 	// color
-	diff = offsetof( ccV2F_C4F_T2F, colors);
-	glColorPointer(4, GL_FLOAT, kQuadSize, (GLvoid*)(offset + diff));
+	diff = offsetof( ccV2F_C4B_T2F, colors);
+	glColorPointer(4, GL_UNSIGNED_BYTE, kQuadSize, (GLvoid*)(offset + diff));
 	
 	// tex coords
-	diff = offsetof( ccV2F_C4F_T2F, texCoords);
+	diff = offsetof( ccV2F_C4B_T2F, texCoords);
 	glTexCoordPointer(2, GL_FLOAT, kQuadSize, (GLvoid*)(offset + diff));		
 
 #endif // ! CC_USES_VBO

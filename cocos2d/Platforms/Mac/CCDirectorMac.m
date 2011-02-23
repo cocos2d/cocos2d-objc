@@ -205,7 +205,7 @@
 		offset = winOffset_;
 
 	}
-		
+
 	switch (projection) {
 		case kCCDirectorProjection2D:
 			glViewport(offset.x, offset.y, widthAspect, heightAspect);
@@ -299,7 +299,7 @@
 	[self drawScene];
 	[[CCEventDispatcher sharedDispatcher] dispatchQueuedEvents];
 	
-	[[NSRunLoop currentRunLoop] run];
+	[[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:nil];
 	
 	[pool release];
 
