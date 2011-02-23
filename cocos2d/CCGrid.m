@@ -232,13 +232,7 @@
 -(void)set2DProjection
 {
 //	CGSize	winSize = [[CCDirector sharedDirector] winSizeInPixels];
-//	
-//	glLoadIdentity();
-//	glViewport(0, 0, winSize.width, winSize.height);
-//	glMatrixMode(GL_PROJECTION);
-//	glLoadIdentity();
-//	ccglOrtho(0, winSize.width, 0, winSize.height, -1024, 1024);
-//	glMatrixMode(GL_MODELVIEW);
+//	ccGLOrtho( projectionMatrix_, 0, winSize.width, 0, winSize.height, -1024, 1024);
 }
 
 // This routine can be merged with Director
