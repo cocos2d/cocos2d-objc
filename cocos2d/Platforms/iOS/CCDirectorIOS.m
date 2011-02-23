@@ -197,8 +197,8 @@ CGFloat	__ccContentScaleFactor = 1;
 
 	switch (projection) {
 		case kCCDirectorProjection2D:
-		{			
-			ccGLOrtho( ccProjectionMatrix, 0, winSize.width, 0, winSize.height, -1024, 1024);			
+		{
+			ccMatrixOrtho( ccProjectionMatrix, 0, winSize.width, 0, winSize.height, -1024, 1024);			
 			break;
 		}
 			
@@ -206,14 +206,14 @@ CGFloat	__ccContentScaleFactor = 1;
 		{
 			GLfloat matrixA[16];
 			GLfloat matrixB[16];
-			ccGLPerspective( matrixA, 60, (GLfloat)winSize.width/winSize.height, 0.5f, 1500.0f);
+			ccMatrixPerspective( matrixA, 60, (GLfloat)winSize.width/winSize.height, 0.5f, 1500.0f);
 				
-			ccGLLookAt( matrixB,
+			ccMatrixLookAt( matrixB,
 							winSize.width/2, winSize.height/2, [self getZEye],
 							winSize.width/2, winSize.height/2, 0,
 							0.0f, 1.0f, 0.0f);			
 			
-			ccMultMatrix4( ccProjectionMatrix, matrixB, matrixA );
+			ccMatrixMult4( ccProjectionMatrix, matrixB, matrixA );
 			break;
 		}
 			

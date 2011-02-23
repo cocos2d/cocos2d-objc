@@ -45,7 +45,7 @@ void GLToCGAffine(const GLfloat *m, CGAffineTransform *t)
 	t->b = m[1]; t->d = m[5]; t->ty = m[13];
 }
 
-void ccGLFrustum(GLfloat *matrix, GLfloat left, GLfloat right, GLfloat bottom, GLfloat top, GLfloat near, GLfloat far)
+void ccMatrixFrustum(GLfloat *matrix, GLfloat left, GLfloat right, GLfloat bottom, GLfloat top, GLfloat near, GLfloat far)
 {
 	GLfloat a = 2 * near / (right - left);
 	GLfloat b = 2 * near / (top - bottom);
@@ -78,7 +78,7 @@ void ccGLFrustum(GLfloat *matrix, GLfloat left, GLfloat right, GLfloat bottom, G
 #undef M
 }
 
-void ccGLOrtho(GLfloat *matrix, GLfloat left, GLfloat right, GLfloat bottom, GLfloat top, GLfloat near, GLfloat far)
+void ccMatrixOrtho(GLfloat *matrix, GLfloat left, GLfloat right, GLfloat bottom, GLfloat top, GLfloat near, GLfloat far)
 {
 	GLfloat a = 2 / (right - left);
 	GLfloat b = 2 / (top - bottom);
@@ -108,7 +108,7 @@ void ccGLOrtho(GLfloat *matrix, GLfloat left, GLfloat right, GLfloat bottom, GLf
 #undef M
 }
 
-void ccGLPerspective(GLfloat *matrix, GLfloat fovy, GLfloat aspect,GLfloat zNear,GLfloat zFar )
+void ccMatrixPerspective(GLfloat *matrix, GLfloat fovy, GLfloat aspect,GLfloat zNear,GLfloat zFar )
 {
 	GLfloat xmin, xmax, ymin, ymax;
 	ymax = zNear * tan(fovy * M_PI / 360.0);
@@ -116,10 +116,10 @@ void ccGLPerspective(GLfloat *matrix, GLfloat fovy, GLfloat aspect,GLfloat zNear
 	xmin = ymin * aspect;
 	xmax = ymax * aspect;
 	printf("l:%f r:%f, b:%f, t:%f, n:%f, f:%f\n", xmin, xmax, ymin, ymax, zNear, zFar);
-	ccGLFrustum(matrix, xmin, xmax, ymin, ymax, zNear, zFar);
+	ccMatrixFrustum(matrix, xmin, xmax, ymin, ymax, zNear, zFar);
 }
 
-void ccGLLookAt(GLfloat *matrix,
+void ccMatrixLookAt(GLfloat *matrix,
 				GLfloat eyex, GLfloat eyey, GLfloat eyez,
 				GLfloat centerx, GLfloat centery, GLfloat centerz,
 				GLfloat upx, GLfloat upy, GLfloat upz)
@@ -201,7 +201,7 @@ void ccGLLookAt(GLfloat *matrix,
 #undef M
 }
 
-void ccMultMatrix4(GLfloat *matrix, GLfloat *matrixA, GLfloat *matrixB)
+void ccMatrixMult4(GLfloat *matrix, GLfloat *matrixA, GLfloat *matrixB)
 {
 	for( int i=0; i<4; i++) {
 #define M(row,col)  matrix[row*4+col]
