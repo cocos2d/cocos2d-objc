@@ -148,16 +148,18 @@ const char kProgressTextureCoords = 0x1e;
 	ret.y = tmp.y;
 	return ret;
 }
--(void)updateColor {
-	ccColor4F color = ccc4FFromccc3B(sprite_.color);
+
+-(void)updateColor
+{
+	GLubyte op = sprite_.opacity;
+	ccColor3B c3b = sprite_.color;
+	
+	ccColor4B color = { c3b.r, c3b.g, c3b.b, op };
 	if([sprite_.texture hasPremultipliedAlpha]){
-		float op = sprite_.opacity/255.f;
-		color.r *= op;
-		color.g *= op;
-		color.b *= op;
-		color.a = op;
-	} else
-		color.a = sprite_.opacity/255.f;
+		color.r *= op/255;
+		color.g *= op/255;
+		color.b *= op/255;
+	}
 	
 	if(vertexData_){
 		for (int i=0; i < vertexDataCount_; ++i) {
@@ -295,7 +297,7 @@ const char kProgressTextureCoords = 0x1e;
 	
 	if(!vertexData_) {
 		vertexDataCount_ = index + 3;
-		vertexData_ = malloc(vertexDataCount_ * sizeof(ccV2F_C4F_T2F));
+		vertexData_ = malloc(vertexDataCount_ * sizeof(ccV2F_C4B_T2F));
 		NSAssert( vertexData_, @"CCProgressTimer. Not enough memory");
 		
 		[self updateColor];
@@ -368,7 +370,7 @@ const char kProgressTextureCoords = 0x1e;
 	//	the side of the bar vertices that won't ever change.
 	if (!vertexData_) {
 		vertexDataCount_ = kProgressTextureCoordsCount;
-		vertexData_ = malloc(vertexDataCount_ * sizeof(ccV2F_C4F_T2F));
+		vertexData_ = malloc(vertexDataCount_ * sizeof(ccV2F_C4B_T2F));
 		NSAssert( vertexData_, @"CCProgressTimer. Not enough memory");
 		
 		if(type_ == kCCProgressTimerTypeHorizontalBarLR){
@@ -473,9 +475,9 @@ const char kProgressTextureCoords = 0x1e;
 	//	Replaced [texture_ drawAtPoint:CGPointZero] with my own vertexData
 	//	Everything above me and below me is copied from CCTextureNode's draw
 	glBindTexture(GL_TEXTURE_2D, sprite_.texture.name);
-	glVertexPointer(2, GL_FLOAT, sizeof(ccV2F_C4F_T2F), &vertexData_[0].vertices);
-	glTexCoordPointer(2, GL_FLOAT, sizeof(ccV2F_C4F_T2F), &vertexData_[0].texCoords);
-	glColorPointer(4, GL_FLOAT, sizeof(ccV2F_C4F_T2F), &vertexData_[0].colors);
+	glVertexPointer(2, GL_FLOAT, sizeof(ccV2F_C4B_T2F), &vertexData_[0].vertices);
+	glTexCoordPointer(2, GL_FLOAT, sizeof(ccV2F_C4B_T2F), &vertexData_[0].texCoords);
+	glColorPointer(4, GL_UNSIGNED_BYTE, sizeof(ccV2F_C4B_T2F), &vertexData_[0].colors);
 	if(type_ == kCCProgressTimerTypeRadialCCW || type_ == kCCProgressTimerTypeRadialCW){
 		glDrawArrays(GL_TRIANGLE_FAN, 0, vertexDataCount_);
 	} else if (type_ == kCCProgressTimerTypeHorizontalBarLR ||

@@ -226,7 +226,7 @@ static CCDirector *_sharedDirector = nil;
 -(void) purgeCachedData
 {
 	[CCLabelBMFont purgeCachedData];	
-	[CCTextureCache purgeSharedTextureCache];	
+	[[CCTextureCache sharedTextureCache] removeUnusedTextures];	
 }
 
 #pragma mark Director - Scene OpenGL Helper
@@ -505,7 +505,7 @@ static CCDirector *_sharedDirector = nil;
 		[FPSLabel_ setString:str];
 		[str release];
 	}
-		
+
 	[FPSLabel_ draw];
 }
 #else

@@ -24,6 +24,9 @@
  */
 
 #import <Foundation/Foundation.h>
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#import <CoreGraphics/CoreGraphics.h>
+#endif // IPHONE
 
 @class CCSpriteFrame;
 @class CCTexture2D;
