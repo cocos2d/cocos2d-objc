@@ -283,6 +283,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		RenderTexture: performance fixes. Improved logic.
 		Added reorder node performance test
 		Added multisampling anti-aliasing support in EAGLView, ESRenderer
+		RenderTexture: getUIImageFromBuffer supports RetinaDisplay. patch.
 	* marcu.catalin:
 		Menu items are not consumed is items are not visible
 	* Mark Cooke:
