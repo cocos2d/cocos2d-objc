@@ -33,6 +33,7 @@
 #import "CCTextureCache.h"
 #import "CCShaderCache.h"
 #import "GLProgram.h"
+#import "CCDirector.h"
 #import "Support/CGPointExtension.h"
 #import "Support/TransformUtils.h"
 

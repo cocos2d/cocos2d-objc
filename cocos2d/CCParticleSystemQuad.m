@@ -34,6 +34,7 @@
 #import "CCTextureCache.h"
 #import "ccMacros.h"
 #import "CCSpriteFrame.h"
+#import "CCDirector.h"
 #import "CCShaderCache.h"
 #import "GLProgram.h"
 
