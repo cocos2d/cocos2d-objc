@@ -175,6 +175,7 @@
 	return [CCRepeatForever actionWithAction:[other reverse]];
 }
 
+@synthesize action=other;
 @end
 
 //
