@@ -91,6 +91,10 @@ Example:
 	unsigned int total_;
 	CCFiniteTimeAction *other_;
 }
+
+/** Inner action. It will be copied */
+@property (nonatomic,copy) CCFiniteTimeAction *action;
+
 /** creates a CCRepeat action. Times is an unsigned integer between 1 and pow(2,30) */
 +(id) actionWithAction:(CCFiniteTimeAction*)action times: (unsigned int)times;
 /** initializes a CCRepeat action. Times is an unsigned integer between 1 and pow(2,30) */
