@@ -621,7 +621,7 @@ struct transformValues_ {
 	GLfloat mat4[16];	
 	CGAffineToGL( &transformMV_, mat4 );
 	
-	// hack. Update Z
+	// Updated Z vertex
 	mat4[14] = vertexZ_;
 	
 	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformPMatrix], 1, GL_FALSE, (GLfloat*)&ccProjectionMatrix);
