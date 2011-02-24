@@ -26,9 +26,9 @@
 #import "ccConfig.h"
 #import "ccTypes.h"
 
-// OpenGL related
-#import "Platforms/CCGL.h"
 #import "CCProtocols.h"
+#import "Platforms/CCGL.h"
+#import "Support/kazmath.h"
 
 /** @typedef ccDirectorProjection
  Possible OpenGL projections used by director
@@ -303,4 +303,4 @@ and when to execute the Scenes.
 
 @end
 
-extern GLfloat ccProjectionMatrix[16];
+extern kmMat4 ccProjectionMatrix;

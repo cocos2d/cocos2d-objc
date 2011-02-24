@@ -2393,6 +2393,8 @@
 		E04C651512383CA600A4B3E6 /* background3-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E04C631512382E6B00A4B3E6 /* background3-hd.png */; };
 		E04C651612383CA800A4B3E6 /* background3-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E04C631512382E6B00A4B3E6 /* background3-hd.png */; };
 		E04C651712383CB300A4B3E6 /* background3-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E04C631512382E6B00A4B3E6 /* background3-hd.png */; };
+		E0506BC31316E3ED00EAE33F /* kazmath.c in Sources */ = {isa = PBXBuildFile; fileRef = E0506BC11316E3ED00EAE33F /* kazmath.c */; };
+		E0506BC41316E3ED00EAE33F /* kazmath.h in Headers */ = {isa = PBXBuildFile; fileRef = E0506BC21316E3ED00EAE33F /* kazmath.h */; };
 		E062F9971247FC5400DE3932 /* grossini_dance_atlas-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E062F9961247FC5400DE3932 /* grossini_dance_atlas-hd.png */; };
 		E062F9A01247FD0300DE3932 /* grossini_dance_atlas-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E062F9961247FC5400DE3932 /* grossini_dance_atlas-hd.png */; };
 		E062F9A11247FD0700DE3932 /* grossini_dance_atlas-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E062F9961247FC5400DE3932 /* grossini_dance_atlas-hd.png */; };
@@ -4356,6 +4358,8 @@
 		E04C632312382F6100A4B3E6 /* r2-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "r2-hd.png"; sourceTree = "<group>"; };
 		E04C640412382F9300A4B3E6 /* b1-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "b1-hd.png"; sourceTree = "<group>"; };
 		E04C640512382F9300A4B3E6 /* b2-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "b2-hd.png"; sourceTree = "<group>"; };
+		E0506BC11316E3ED00EAE33F /* kazmath.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = kazmath.c; sourceTree = "<group>"; };
+		E0506BC21316E3ED00EAE33F /* kazmath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = kazmath.h; sourceTree = "<group>"; };
 		E062F9961247FC5400DE3932 /* grossini_dance_atlas-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "grossini_dance_atlas-hd.png"; sourceTree = "<group>"; };
 		E062F9BA124801A300DE3932 /* grossini-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "grossini-hd.png"; sourceTree = "<group>"; };
 		E062F9BB124801A300DE3932 /* grossinis_sister1-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "grossinis_sister1-hd.png"; sourceTree = "<group>"; };
@@ -5687,18 +5691,20 @@
 				50D898FA1192CB8300458C29 /* Data Structures */,
 				501CCFB70E99659400B86F68 /* ImageSupport */,
 				501CCFB60E99658900B86F68 /* OpenGLSupport */,
-				E0C54DC811F9CF2700B9E4CB /* ccUtils.c */,
 				E0C54DC911F9CF2700B9E4CB /* ccUtils.h */,
-				503798C40F912C2000986724 /* CGPointExtension.h */,
-				503798C50F912C2000986724 /* CGPointExtension.m */,
+				E0C54DC811F9CF2700B9E4CB /* ccUtils.c */,
 				50C508C40F7C194400799124 /* CCFileUtils.h */,
 				50C508C50F7C194400799124 /* CCFileUtils.m */,
-				50F29F6E102053370046CA73 /* base64.h */,
-				50F29F5510204FD60046CA73 /* base64.c */,
-				50F2A103102094550046CA73 /* ZipUtils.h */,
-				50F2A102102094550046CA73 /* ZipUtils.m */,
+				503798C40F912C2000986724 /* CGPointExtension.h */,
+				503798C50F912C2000986724 /* CGPointExtension.m */,
 				0529445911098D6F00E500F3 /* CCProfiling.h */,
 				0529445A11098D6F00E500F3 /* CCProfiling.m */,
+				50F29F6E102053370046CA73 /* base64.h */,
+				50F29F5510204FD60046CA73 /* base64.c */,
+				E0506BC21316E3ED00EAE33F /* kazmath.h */,
+				E0506BC11316E3ED00EAE33F /* kazmath.c */,
+				50F2A103102094550046CA73 /* ZipUtils.h */,
+				50F2A102102094550046CA73 /* ZipUtils.m */,
 			);
 			path = Support;
 			sourceTree = "<group>";
@@ -7296,6 +7302,7 @@
 				E0DC24DE13007E4900D264C1 /* ES2Renderer.h in Headers */,
 				E0C8EA0A1304D82000403770 /* GLProgram.h in Headers */,
 				E0C8EAE81305582E00403770 /* CCShaderCache.h in Headers */,
+				E0506BC41316E3ED00EAE33F /* kazmath.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10921,6 +10928,7 @@
 				E0DC24DF13007E4900D264C1 /* ES2Renderer.m in Sources */,
 				E0C8EA0B1304D82000403770 /* GLProgram.m in Sources */,
 				E0C8EAE91305582E00403770 /* CCShaderCache.m in Sources */,
+				E0506BC31316E3ED00EAE33F /* kazmath.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
