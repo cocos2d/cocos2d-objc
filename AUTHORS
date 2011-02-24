@@ -82,6 +82,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	* David Hakim (http://kretures.com)
 		Event Dispatcher in Mac is synced. patch.
 		Dispatcher in Mac supports NSTimer events. patch.
+		Menu Mac: Track "touches" works as expected. patch.
 	* David Whatley (http://criticalthoughtgames.com/)
 		Scheduler supports the repeat parameter. patch.
 		Author of perFrameUpdate in Scheduler
