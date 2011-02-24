@@ -680,7 +680,6 @@ static SEL selSortMethod = NULL;
 	
 	if( usesBatchNode_ ) 
 	{	
-		
 		if (!isReorderChildDirty_) 
 		{	
 			[self setReorderChildDirtyRecursively];
