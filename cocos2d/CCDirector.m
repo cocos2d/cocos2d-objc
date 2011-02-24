@@ -65,7 +65,7 @@
 
 extern NSString * cocos2dVersion(void);
 
-GLfloat ccProjectionMatrix[16];
+kmMat4 ccProjectionMatrix;
 
 @interface CCDirector (Private)
 -(void) setNextScene;

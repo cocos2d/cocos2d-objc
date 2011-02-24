@@ -198,22 +198,21 @@ CGFloat	__ccContentScaleFactor = 1;
 	switch (projection) {
 		case kCCDirectorProjection2D:
 		{
-			ccMatrixOrtho( ccProjectionMatrix, 0, winSize.width, 0, winSize.height, -1024, 1024);			
+			kmMat4OrthographicProjection(&ccProjectionMatrix, 0, winSize.width, 0, winSize.height, -1024, 1024);			
 			break;
 		}
 			
 		case kCCDirectorProjection3D:
 		{
-			GLfloat matrixA[16];
-			GLfloat matrixB[16];
-			ccMatrixPerspective( matrixA, 60, (GLfloat)winSize.width/winSize.height, 0.5f, 1500.0f);
-				
-			ccMatrixLookAt( matrixB,
-							winSize.width/2, winSize.height/2, [self getZEye],
-							winSize.width/2, winSize.height/2, 0,
-							0.0f, 1.0f, 0.0f);			
+			kmMat4 matrixA, matrixB;
+			kmMat4PerspectiveProjection( &matrixA, 60, (GLfloat)winSize.width/winSize.height, 0.5f, 1500.0f);
 			
-			ccMatrixMult4( ccProjectionMatrix, matrixB, matrixA );
+			kmVec3 eye = kmVec3Make(winSize.width/2, winSize.height/2, [self getZEye] );
+			kmVec3 center = kmVec3Make( winSize.width/2, winSize.height/2, 0 );
+			kmVec3 up = kmVec3Make(0,1,0);
+			kmMat4LookAt(&matrixB, &eye, &center, &up);
+			
+			kmMat4Multiply(&ccProjectionMatrix, &matrixA, &matrixB);
 			break;
 		}
 			
