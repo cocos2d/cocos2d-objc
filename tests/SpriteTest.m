@@ -31,11 +31,12 @@ static NSString *transitions[] = {
 	@"SpriteZOrder",
 	@"SpriteBatchNodeZOrder",
 	@"SpriteBatchNodeReorder",
-	@"NodeReorderSameIndex",
 	@"SpriteBatchNodeReorderIssue744",
 	@"SpriteBatchNodeReorderIssue766",
 	@"SpriteBatchNodeReorderIssue767",
 	@"SpriteBatchNodeReorderSameIndex",
+	@"SpriteBatchNodeReorderOneChild",
+	@"NodeSort",
 	@"SpriteZVertex",
 	@"SpriteBatchNodeZVertex",
 	@"Sprite6",
@@ -739,15 +740,15 @@ Class restartAction()
 }
 @end
 
-@implementation NodeReorderSameIndex
+@implementation NodeSort
 
 - (void) reorderSprite:(ccTime)dt
 {
 	[self unschedule:_cmd];
-	
-	[node reorderChild:[[node children] objectAtIndex:0] z:-4];
-	[node reorderChild:[[node children] objectAtIndex:2] z:-4];
-	[node reorderChild:[[node children] objectAtIndex:1] z:-6];
+	//z-4
+	[node reorderChild:[[node children] objectAtIndex:0] z:32];
+	//[node reorderChild:[[node children] objectAtIndex:2] z:-4];
+	//[node reorderChild:[[node children] objectAtIndex:1] z:-6];
 	
 	[node sortAllChildren];
 	
@@ -793,7 +794,7 @@ Class restartAction()
 
 -(NSString *) title
 {
-	return @"node reorder same index";
+	return @"node sort same index";
 }
 
 -(NSString *) subtitle
@@ -866,6 +867,109 @@ Class restartAction()
 	return @"tag order in console should be 2,3,4,5,1";
 }
 
+@end
+
+#pragma mark -
+#pragma mark SpriteBatchNodeReorderOneChild
+
+@implementation SpriteBatchNodeReorderOneChild
+
+-(id) init
+{
+	if( (self=[super init]) ) {
+		
+		CGSize s = [[CCDirector sharedDirector] winSize];		
+		
+		[[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"animations/ghosts.plist"];
+		
+		CCSpriteBatchNode *aParent;
+		CCSprite *l1, *l2a, *l2b, *l3a1, *l3a2, *l3b1, *l3b2;
+		
+		//
+		// SpriteBatchNode: 3 levels of children
+		//
+		
+		aParent = [CCSpriteBatchNode batchNodeWithFile:@"animations/ghosts.png"];
+		
+		batchNode_ = aParent;
+		//[[aParent texture] generateMipmap];
+		[self addChild:aParent];
+		
+		// parent
+		l1 = [CCSprite spriteWithSpriteFrameName:@"father.gif"];
+		l1.position = ccp( s.width/2, s.height/2);
+		
+		[aParent addChild:l1];
+		CGSize l1Size = [l1 contentSize];
+		
+		// child left
+		l2a = [CCSprite spriteWithSpriteFrameName:@"sister1.gif"];
+		l2a.position = ccp( -10 + l1Size.width/2, 0 + l1Size.height/2);
+		
+		[l1 addChild:l2a z:1];
+		CGSize l2aSize = [l2a contentSize];		
+		
+		
+		// child right
+		l2b = [CCSprite spriteWithSpriteFrameName:@"sister2.gif"];
+		l2b.position = ccp( +50 + l1Size.width/2, 0 + l1Size.height/2);
+		
+		[l1 addChild:l2b z:2];
+		CGSize l2bSize = [l2a contentSize];		
+		
+		
+		// child left bottom
+		l3a1 = [CCSprite spriteWithSpriteFrameName:@"child1.gif"];
+		l3a1.scale = 0.45f;
+		l3a1.position = ccp(0+l2aSize.width/2,-50+l2aSize.height/2);
+		[l2a addChild:l3a1 z:1];
+		
+		// child left top
+		l3a2 = [CCSprite spriteWithSpriteFrameName:@"child1.gif"];
+		l3a2.scale = 0.45f;
+		l3a2.position = ccp(0+l2aSize.width/2,+50+l2aSize.height/2);
+		[l2a addChild:l3a2 z:2];
+		
+		reorderSprite_ = l2a;
+		
+		// child right bottom
+		l3b1 = [CCSprite spriteWithSpriteFrameName:@"child1.gif"];
+		l3b1.scale = 0.45f;
+		l3b1.flipY = YES;
+		l3b1.position = ccp(0+l2bSize.width/2,-50+l2bSize.height/2);
+		[l2b addChild:l3b1];
+		
+		// child right top
+		l3b2 = [CCSprite spriteWithSpriteFrameName:@"child1.gif"];
+		l3b2.scale = 0.45f;
+		l3b2.flipY = YES;
+		l3b2.position = ccp(0+l2bSize.width/2,+50+l2bSize.height/2);
+		[l2b addChild:l3b2];
+		
+		[self schedule:@selector(reorderSprite:) interval:2];
+		
+	}	
+	return self;
+}
+
+
+- (void) reorderSprite:(ccTime)dt
+{
+	[self unschedule:_cmd];
+	
+	[reorderSprite_.parent reorderChild:reorderSprite_ z:-1];
+	
+	[batchNode_ sortAllChildren];
+	//CCSprite* child;
+	//CCARRAY_FOREACH(batchNode.descendants,child) NSLog(@"tag %i",child.tag);
+	
+}
+
+
+-(NSString *) title
+{
+	return @"SpriteBatchNode reorder 1 child";
+}
 @end
 
 @implementation SpriteBatchNodeReorderIssue766
