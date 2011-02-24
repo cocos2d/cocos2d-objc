@@ -27,6 +27,7 @@
 #import "ccMacros.h"
 #import "GLProgram.h"
 #import "CCShaderCache.h"
+#import "CCDirector.h"
 #import "Support/TransformUtils.h"
 
 

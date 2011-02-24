@@ -24,8 +24,13 @@
 // Adapted for cocos2d http://www.cocos2d-iphone.org
 
 #import <Foundation/Foundation.h>
+
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 #import <OpenGLES/ES2/gl.h>
 #import <OpenGLES/ES2/glext.h>
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+#import <OpenGL/gl.h>
+#endif // __MAC_OS_X_VERSION_MAX_ALLOWED
 
 enum {
 	kCCAttribVertex,

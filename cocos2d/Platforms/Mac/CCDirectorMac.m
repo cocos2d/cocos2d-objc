@@ -34,6 +34,7 @@
 #import "CCEventDispatcher.h"
 #import "MacGLView.h"
 
+#import "../../GLProgram.h"
 #import "../../CCNode.h"
 #import "../../CCScheduler.h"
 #import "../../ccMacros.h"
