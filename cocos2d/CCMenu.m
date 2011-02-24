@@ -246,19 +246,19 @@ enum {
 }
 
 -(BOOL) ccMouseUp:(NSEvent *)event
-{	
+{
 	if( ! visible_ )
 		return NO;
-	
-	if( selectedItem_ ) {
-		[selectedItem_ unselected];
-		[selectedItem_ activate];
-		
-		state_ = kCCMenuStateWaiting;
 
+	if(state_ == kCCMenuStateTrackingTouch) {
+		if( selectedItem_ ) {
+			[selectedItem_ unselected];
+			[selectedItem_ activate];
+		}
+		state_ = kCCMenuStateWaiting;
+		
 		return YES;
 	}
-	
 	return NO;
 }
 
@@ -283,17 +283,17 @@ enum {
 	if( ! visible_ )
 		return NO;
 
-	CCMenuItem *currentItem = [self itemForMouseEvent:event];
-	
-	if (currentItem != selectedItem_) {
-		[selectedItem_ unselected];
-		selectedItem_ = currentItem;
-		[selectedItem_ selected];
-	}
-	
-	// swallows event ?
-	if( currentItem && state_ == kCCMenuStateTrackingTouch )
+	if(state_ == kCCMenuStateTrackingTouch) {
+		CCMenuItem *currentItem = [self itemForMouseEvent:event];
+		
+		if (currentItem != selectedItem_) {
+			[selectedItem_ unselected];
+			selectedItem_ = currentItem;
+			[selectedItem_ selected];
+		}
+		
 		return YES;
+	}
 	return NO;
 }
 

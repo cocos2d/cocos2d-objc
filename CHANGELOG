@@ -22,6 +22,7 @@ version 1.0-beta - XX-XXX-2011
 . [FIX-MAC] EventDispatcher: queue & dispatch events are synced (issue #1083)
 . [FIX-MAC] LabelTTF: alignment works OK (issue #1073)
 . [FIX-MAC] Menu: Menu doesn't hang up with invisible menus (issue #1070)
+. [FIX-MAC] Menu: Tracking "touches" works as expected (issue #1114)
 . [FIX-MAC] Templates includes AudioToolbox and OpenAL frameworks
 
 version 0.99.5 - 16-Dec-2010
