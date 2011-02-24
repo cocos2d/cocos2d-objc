@@ -218,6 +218,67 @@
 	return [data writeToFile:fullPath atomically:YES];
 }
 
+/* get buffer as UIImage */
+-(UIImage *)getUIImageFromBuffer
+{
+    NSAssert(pixelFormat_ == kCCTexture2DPixelFormat_RGBA8888,@"only RGBA8888 can be saved as image");
+	
+	CGSize s = [texture_ contentSizeInPixels];
+	int tx = s.width;
+	int ty = s.height;
+	
+	int bitsPerComponent			= 8;
+	int bitsPerPixel				= 32;
+	int bytesPerPixel				= (bitsPerComponent * 4)/8;
+	int bytesPerRow					= bytesPerPixel * tx;
+	NSInteger myDataLength			= bytesPerRow * ty;
+	
+	NSMutableData *buffer	= [[NSMutableData alloc] initWithCapacity:myDataLength];
+	NSMutableData *pixels	= [[NSMutableData alloc] initWithCapacity:myDataLength];
+	
+	if( ! (buffer && pixels) ) {
+		CCLOG(@"cocos2d: CCRenderTexture#getUIImageFromBuffer: not enough memory");
+		[buffer release];
+		[pixels release];
+		return nil;
+	}
+	
+	[self begin];
+	glReadPixels(0,0,tx,ty,GL_RGBA,GL_UNSIGNED_BYTE, [buffer mutableBytes]);
+	[self end];
+	
+	// make data provider with data.
+	
+	CGBitmapInfo bitmapInfo	= kCGImageAlphaPremultipliedLast | kCGBitmapByteOrderDefault;
+	CGDataProviderRef provider = CGDataProviderCreateWithData(NULL, [buffer mutableBytes], myDataLength, NULL);
+	CGColorSpaceRef colorSpaceRef = CGColorSpaceCreateDeviceRGB();
+	CGImageRef iref	= CGImageCreate(tx, ty,
+									bitsPerComponent, bitsPerPixel, bytesPerRow,
+									colorSpaceRef, bitmapInfo, provider,
+									NULL, false,
+									kCGRenderingIntentDefault);
+	
+	CGContextRef context = CGBitmapContextCreate([pixels mutableBytes], tx,
+												 ty, CGImageGetBitsPerComponent(iref),
+												 CGImageGetBytesPerRow(iref), CGImageGetColorSpace(iref),
+												 bitmapInfo);
+	CGContextTranslateCTM(context, 0.0f, ty);
+	CGContextScaleCTM(context, 1.0f, -1.0f);
+	CGContextDrawImage(context, CGRectMake(0.0f, 0.0f, tx, ty), iref);
+	CGImageRef outputRef = CGBitmapContextCreateImage(context);
+	UIImage* image	= [[UIImage alloc] initWithCGImage:outputRef];
+	
+	CGImageRelease(iref);
+	CGContextRelease(context);
+	CGColorSpaceRelease(colorSpaceRef);
+	CGDataProviderRelease(provider);
+	CGImageRelease(outputRef);
+	
+	[pixels release];
+	[buffer release];
+	
+	return [image autorelease];
+}
 
 -(NSData*)getUIImageAsDataFromBuffer:(int) format
 {

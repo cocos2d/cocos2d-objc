@@ -114,6 +114,9 @@ enum {
 {
 	CCActionInterval *other;
 }
+/** Inner action. It will be copied */
+@property (nonatomic,copy) CCActionInterval *action;
+
 /** creates the action */
 +(id) actionWithAction: (CCActionInterval*) action;
 /** initializes the action */

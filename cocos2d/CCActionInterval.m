@@ -315,6 +315,8 @@
 {
 	return [[self class] actionWithAction:[other_ reverse] times:times_];
 }
+
+@synthesize action=other_;
 @end
 
 //
