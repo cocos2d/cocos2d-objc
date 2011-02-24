@@ -142,15 +142,6 @@ kmMat4* kmMat4RotationZ(kmMat4* pOut, const float radians);
  */
 kmMat4* kmMat4RotationAxisAngle(kmMat4* pOut, const kmVec3* axis, kmScalar radians);
 
-/**
- * Builds a rotation matrix from a quaternion to a rotation matrix,
- * stores the result in pOut and returns the result.
- */
-kmMat4* kmMat4RotationQuaternion(kmMat4* pOut, const kmQuaternion* pQ);
-
-/** Extracts a quaternion from a rotation matrix, stores the result in quat and returns the result */
-kmQuaternion* kmQuaternionRotationMatrix(kmQuaternion* quat, const kmMat4* pIn);
-
 /** Builds a scaling matrix */
 kmMat4* kmMat4Scaling(kmMat4* pOut, const kmScalar x, const kmScalar y, const kmScalar z);
 

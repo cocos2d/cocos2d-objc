@@ -60,7 +60,7 @@
 CGFloat	__ccContentScaleFactor = 1;
 
 #pragma mark -
-#pragma mark Director iOS
+#pragma mark Director
 
 @interface CCDirector ()
 -(void) setNextScene;
@@ -113,30 +113,22 @@ CGFloat	__ccContentScaleFactor = 1;
 
 @interface CCDirectorIOS ()
 -(BOOL)isOpenGLAttached;
--(BOOL)initOpenGLViewWithView:(UIView *)view withFrame:(CGRect)rect;
-
 -(void) updateContentScaleFactor;
-
+-(void) applyOrientationToProjectionMatrix;
 @end
 
 @implementation CCDirectorIOS
-
-@synthesize pixelFormat=pixelFormat_;
-
 - (id) init
 {  
 	if( (self=[super init]) ) {
-				
-		
-		// default values
-		pixelFormat_ = kCCPixelFormatDefault;		// DEPRECATED. Will be removed in 1.0
-		depthBufferFormat_ = 0;						// DEPRECATED. Will be removed in 1.0
-		
+
 		// portrait mode default
 		deviceOrientation_ = CCDeviceOrientationPortrait;
 		
 		__ccContentScaleFactor = 1;
 		isContentScaleSupported_ = NO;
+		
+		kmMat4Identity( &portraitOrientationMatrix_ );
 		
 		// running thread is main thread on iOS
 		runningThread_ = [NSThread currentThread];
@@ -198,7 +190,7 @@ CGFloat	__ccContentScaleFactor = 1;
 	switch (projection) {
 		case kCCDirectorProjection2D:
 		{
-			kmMat4OrthographicProjection(&ccProjectionMatrix, 0, winSize.width, 0, winSize.height, -1024, 1024);			
+			kmMat4OrthographicProjection(&portraitOrientationMatrix_, 0, winSize.width, 0, winSize.height, -1024, 1024);			
 			break;
 		}
 			
@@ -212,7 +204,7 @@ CGFloat	__ccContentScaleFactor = 1;
 			kmVec3 up = kmVec3Make(0,1,0);
 			kmMat4LookAt(&matrixB, &eye, &center, &up);
 			
-			kmMat4Multiply(&ccProjectionMatrix, &matrixA, &matrixB);
+			kmMat4Multiply(&portraitOrientationMatrix_, &matrixA, &matrixB);
 			break;
 		}
 			
@@ -227,20 +219,55 @@ CGFloat	__ccContentScaleFactor = 1;
 	}
 	
 	projection_ = projection;
+	
+	[self applyOrientationToProjectionMatrix];
 }
 
-#pragma mark Director Scene iPhone Specific
-
--(void) setPixelFormat: (tPixelFormat) format
-{	
-	NSAssert( ! [self isOpenGLAttached], @"Can't change the pixel format after the director was initialized" );	
-	pixelFormat_ = format;
-}
-
--(void) setDepthBufferFormat: (tDepthBufferFormat) format
+-(void) applyOrientationToProjectionMatrix
 {
-	NSAssert( ! [self isOpenGLAttached], @"Can't change the depth buffer format after the director was initialized");
-	depthBufferFormat_ = format;
+	CGSize s = winSizeInPixels_;
+	float w = s.width / 2;
+	float h = s.height / 2;
+	
+	kmMat4 matA, matB, matC;
+	
+	switch ( deviceOrientation_ ) {
+		case CCDeviceOrientationPortrait:
+			ccProjectionMatrix = portraitOrientationMatrix_;
+			break;
+
+		case CCDeviceOrientationPortraitUpsideDown:
+			// upside down
+			kmMat4Translation(&matA, w, h, 0);
+			kmMat4RotationZ(&matB, CC_DEGREES_TO_RADIANS(180) );
+			kmMat4Translation(&matC, -w, -h, 0);
+			
+			kmMat4Multiply(&ccProjectionMatrix, &portraitOrientationMatrix_, &matA);
+			kmMat4Multiply(&ccProjectionMatrix, &ccProjectionMatrix, &matB);
+			kmMat4Multiply(&ccProjectionMatrix, &ccProjectionMatrix, &matC);			
+			break;
+
+		case CCDeviceOrientationLandscapeRight:
+			kmMat4Translation(&matA, w, h, 0);
+			kmMat4RotationZ(&matB, CC_DEGREES_TO_RADIANS(90) );
+			kmMat4Translation(&matC, -h, -w, 0);
+			
+			kmMat4Multiply(&ccProjectionMatrix, &portraitOrientationMatrix_, &matA);
+			kmMat4Multiply(&ccProjectionMatrix, &ccProjectionMatrix, &matB);
+			kmMat4Multiply(&ccProjectionMatrix, &ccProjectionMatrix, &matC);
+			break;
+
+		case CCDeviceOrientationLandscapeLeft:
+			kmMat4Translation(&matA, w, h, 0);
+			kmMat4RotationZ(&matB, CC_DEGREES_TO_RADIANS(-90) );
+			kmMat4Translation(&matC, -h, -w, 0);
+			
+			kmMat4Multiply(&ccProjectionMatrix, &portraitOrientationMatrix_, &matA);
+			kmMat4Multiply(&ccProjectionMatrix, &ccProjectionMatrix, &matB);
+			kmMat4Multiply(&ccProjectionMatrix, &ccProjectionMatrix, &matC);
+			break;
+	}	
+	
 }
 
 #pragma mark Director Integration with a UIKit view
@@ -249,144 +276,6 @@ CGFloat	__ccContentScaleFactor = 1;
 -(BOOL)isOpenGLAttached
 {
 	return ([openGLView_ superview]!=nil);
-}
-
-// XXX: deprecated
--(BOOL)detach
-{
-	NSAssert([self isOpenGLAttached], @"FATAL: Director: Can't detach the OpenGL View, because it is not attached. Attach it first.");
-	
-	// remove from the superview
-	[openGLView_ removeFromSuperview];
-	
-	NSAssert(![self isOpenGLAttached], @"FATAL: Director: Can't detach the OpenGL View, it is still attached to the superview.");
-	
-	
-	return YES;
-}
-
-// XXX: Deprecated method
--(BOOL)attachInWindow:(UIWindow *)window
-{
-	if([self initOpenGLViewWithView:window withFrame:[window bounds]])
-	{
-		return YES;
-	}
-	
-	return NO;
-}
-
-// XXX: Deprecated method
--(BOOL)attachInView:(UIView *)view
-{
-	if([self initOpenGLViewWithView:view withFrame:[view bounds]])
-	{
-		return YES;
-	}
-	
-	return NO;
-}
-
-// XXX: Deprecated method
--(BOOL)attachInView:(UIView *)view withFrame:(CGRect)frame
-{
-	if([self initOpenGLViewWithView:view withFrame:frame])
-	{
-		return YES;
-	}
-	
-	return NO;
-}
-
-// XXX: Deprecated method
--(BOOL)initOpenGLViewWithView:(UIView *)view withFrame:(CGRect)rect
-{
-	NSAssert( ! [self isOpenGLAttached], @"FATAL: Can't re-attach the OpenGL View, because it is already attached. Detach it first");
-	
-	// check if the view is not initialized
-	if(!openGLView_)
-	{
-		// define the pixel format
-		NSString	*pFormat = nil;
-	    GLuint		depthFormat = 0;
-		
-		if(pixelFormat_==kCCPixelFormatRGBA8888)
-			pFormat = kEAGLColorFormatRGBA8;
-		else if(pixelFormat_== kCCPixelFormatRGB565)
-			pFormat = kEAGLColorFormatRGB565;
-		else {
-			CCLOG(@"cocos2d: Director: Unknown pixel format.");
-		}
-		
-		if(depthBufferFormat_ == kCCDepthBuffer16)
-			depthFormat = GL_DEPTH_COMPONENT16_OES;
-		else if(depthBufferFormat_ == kCCDepthBuffer24)
-			depthFormat = GL_DEPTH_COMPONENT24_OES;
-		else if(depthBufferFormat_ == kCCDepthBufferNone)
-			depthFormat = 0;
-		else {
-			CCLOG(@"cocos2d: Director: Unknown buffer depth.");
-		}
-		
-		// alloc and init the opengl view
-		openGLView_ = [[EAGLView alloc] initWithFrame:rect
-										  pixelFormat:pFormat
-										  depthFormat:depthFormat
-								   preserveBackbuffer:NO 
-										   sharegroup:nil
-										multiSampling:NO
-									  numberOfSamples:0];
-		
-		// check if the view was alloced and initialized
-		NSAssert( openGLView_, @"FATAL: Could not alloc and init the OpenGL view. ");
-		
-		// opaque by default (faster)
-		openGLView_.opaque = YES;		
-	}
-	else
-	{
-		// set the (new) frame of the glview
-		[openGLView_ setFrame:rect];
-	}
-	
-	winSizeInPoints_ = rect.size;
-	winSizeInPixels_ = CGSizeMake(winSizeInPoints_.width * __ccContentScaleFactor, winSizeInPoints_.height * __ccContentScaleFactor);
-	
-	
-	// set the touch delegate of the glview to self
-	[openGLView_ setTouchDelegate: [CCTouchDispatcher sharedDispatcher]];
-	
-	
-	// check if the superview has touchs enabled and enable it in our view
-	if([view isUserInteractionEnabled])
-	{
-		[openGLView_ setUserInteractionEnabled:YES];
-		[[CCTouchDispatcher sharedDispatcher] setDispatchEvents: YES];
-	}
-	else
-	{
-		[openGLView_ setUserInteractionEnabled:NO];
-		[[CCTouchDispatcher sharedDispatcher] setDispatchEvents: NO];
-	}
-	
-	// check if multi touches are enabled and set them
-	if([view isMultipleTouchEnabled])
-	{
-		[openGLView_ setMultipleTouchEnabled:YES];
-	}
-	else
-	{
-		[openGLView_ setMultipleTouchEnabled:NO];
-	}
-	
-	// add the glview to his (new) superview
-	[view addSubview:openGLView_];
-	
-	
-	NSAssert( [self isOpenGLAttached], @"FATAL: Director: Could not attach OpenGL view");
-	
-	[self setGLDefaultValues];
-	return YES;
 }
 
 -(void) setOpenGLView:(EAGLView *)view
@@ -583,6 +472,7 @@ CGFloat	__ccContentScaleFactor = 1;
 				break;
 		}
 	}
+	[self applyOrientationToProjectionMatrix];
 }
 
 -(void) end

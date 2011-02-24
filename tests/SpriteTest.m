@@ -3671,7 +3671,7 @@ Class restartAction()
 	CCDirector *director = [CCDirector sharedDirector];
 	
 	// landscape orientation
-//	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
+	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
 	
 	// set FPS at 60
 	[director setAnimationInterval:1.0/60];
