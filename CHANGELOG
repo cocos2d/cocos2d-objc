@@ -12,6 +12,7 @@ version 1.0-beta - XX-XXX-2011
 . [FIX] Particles: consumes less memory (12 bytes less per particle) and are a bit faster
 . [FIX] ProgressTimer: Consumes less memory
 . [FIX] RenderTexture: Added possibility to save buffer in any place (issue #1100)
+. [FIX] RenderTexture: re-added getUIImageFromBuffer method. Supports RetinaDisplay
 . [FIX] Sprite: flipx/flipy don't modify the contentSize (issue #1073)
 . [FIX] SpriteFrame: setRect sets pixels too. setRectInPixels sets points too (issue #1088)
 . [FIX] Templates: ItunesArtwork renamed to iTunesArtwork (issue #1092)
