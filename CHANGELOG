@@ -1,4 +1,5 @@
 version 1.0-beta - XX-XXX-2011
+. [NEW] Actions: Repeat and RepeatForEver has getter/setter for the inner action (issue #1110)
 . [NEW] LayerGradient: Added "compressed interpolation" (default mode) in order to display all graident's colors in any vector
 . [NEW-MAC] Added CC_DIRECTOR_INIT(). It is possible to create a Mac Window programatically
 . [NEW-MAC] EventDispatcher: Added support for touches events
@@ -11,6 +12,7 @@ version 1.0-beta - XX-XXX-2011
 . [FIX] Particles: consumes less memory (12 bytes less per particle) and are a bit faster
 . [FIX] ProgressTimer: Consumes less memory
 . [FIX] RenderTexture: Added possibility to save buffer in any place (issue #1100)
+. [FIX] RenderTexture: re-added getUIImageFromBuffer method. Supports RetinaDisplay
 . [FIX] Sprite: flipx/flipy don't modify the contentSize (issue #1073)
 . [FIX] SpriteFrame: setRect sets pixels too. setRectInPixels sets points too (issue #1088)
 . [FIX] Templates: ItunesArtwork renamed to iTunesArtwork (issue #1092)
@@ -21,6 +23,7 @@ version 1.0-beta - XX-XXX-2011
 . [FIX-MAC] EventDispatcher: queue & dispatch events are synced (issue #1083)
 . [FIX-MAC] LabelTTF: alignment works OK (issue #1073)
 . [FIX-MAC] Menu: Menu doesn't hang up with invisible menus (issue #1070)
+. [FIX-MAC] Menu: Tracking "touches" works as expected (issue #1114)
 . [FIX-MAC] Templates includes AudioToolbox and OpenAL frameworks
 
 version 0.99.5 - 16-Dec-2010
