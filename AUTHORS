@@ -364,6 +364,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		TMX maps possibility to access the layers patch
 		Actions: Animate copy originalFrame patch
 		Director: fixed startup flicker
+		Actions: Repeat and RepeatForever has setter/getter for inner action
 	* Rolando Abarca (funkaster) (http://rolando.cl/):
 		XCode only displays the libz dependency just once
 		added userData property in CocosNode
