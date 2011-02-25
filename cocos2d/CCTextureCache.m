@@ -144,7 +144,7 @@ static CCTextureCache *sharedTextureCache;
 	[contextLock_ lock];
 	if( auxGLcontext == nil ) {
 		auxGLcontext = [[EAGLContext alloc]
-							   initWithAPI:kEAGLRenderingAPIOpenGLES1
+							   initWithAPI:kEAGLRenderingAPIOpenGLES2
 							   sharegroup:[[[[CCDirector sharedDirector] openGLView] context] sharegroup]];
 		
 		if( ! auxGLcontext )

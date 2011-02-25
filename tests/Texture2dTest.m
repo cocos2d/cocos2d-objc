@@ -1132,6 +1132,8 @@ Class restartAction()
 	sprite.position = ccp( i % (int)size.width, (i / (int)size.width) * 32 );
 	
 	imageOffset++;
+	
+	NSLog(@"Image loaded: %@", tex);
 }
 
 -(NSString *) title
