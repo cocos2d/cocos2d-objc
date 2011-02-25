@@ -114,7 +114,6 @@ CGFloat	__ccContentScaleFactor = 1;
 @interface CCDirectorIOS ()
 -(BOOL)isOpenGLAttached;
 -(void) updateContentScaleFactor;
--(void) applyOrientationToProjectionMatrix;
 @end
 
 @implementation CCDirectorIOS
@@ -128,7 +127,7 @@ CGFloat	__ccContentScaleFactor = 1;
 		__ccContentScaleFactor = 1;
 		isContentScaleSupported_ = NO;
 		
-		kmMat4Identity( &portraitOrientationMatrix_ );
+		kmMat4Identity( &portraitProjectionMatrix_ );
 		
 		// running thread is main thread on iOS
 		runningThread_ = [NSThread currentThread];
@@ -190,7 +189,7 @@ CGFloat	__ccContentScaleFactor = 1;
 	switch (projection) {
 		case kCCDirectorProjection2D:
 		{
-			kmMat4OrthographicProjection(&portraitOrientationMatrix_, 0, winSize.width, 0, winSize.height, -1024, 1024);			
+			kmMat4OrthographicProjection(&portraitProjectionMatrix_, 0, winSize.width, 0, winSize.height, -1024, 1024);			
 			break;
 		}
 			
@@ -204,7 +203,7 @@ CGFloat	__ccContentScaleFactor = 1;
 			kmVec3 up = kmVec3Make(0,1,0);
 			kmMat4LookAt(&matrixB, &eye, &center, &up);
 			
-			kmMat4Multiply(&portraitOrientationMatrix_, &matrixA, &matrixB);
+			kmMat4Multiply(&portraitProjectionMatrix_, &matrixA, &matrixB);
 			break;
 		}
 			
@@ -220,54 +219,56 @@ CGFloat	__ccContentScaleFactor = 1;
 	
 	projection_ = projection;
 	
-	[self applyOrientationToProjectionMatrix];
+	ccProjectionMatrix = [self applyOrientationToMatrix:&portraitProjectionMatrix_];
 }
 
--(void) applyOrientationToProjectionMatrix
+-(kmMat4) applyOrientationToMatrix:(kmMat4*)inMatrix
 {
 	CGSize s = winSizeInPixels_;
 	float w = s.width / 2;
 	float h = s.height / 2;
 	
 	kmMat4 matA, matB, matC;
+	kmMat4 ret;
 	
 	switch ( deviceOrientation_ ) {
-		case CCDeviceOrientationPortrait:
-			ccProjectionMatrix = portraitOrientationMatrix_;
+		case kCCDeviceOrientationPortrait:
+			ret = portraitProjectionMatrix_;
 			break;
 
-		case CCDeviceOrientationPortraitUpsideDown:
+		case kCCDeviceOrientationPortraitUpsideDown:
 			// upside down
 			kmMat4Translation(&matA, w, h, 0);
 			kmMat4RotationZ(&matB, CC_DEGREES_TO_RADIANS(180) );
 			kmMat4Translation(&matC, -w, -h, 0);
 			
-			kmMat4Multiply(&ccProjectionMatrix, &portraitOrientationMatrix_, &matA);
-			kmMat4Multiply(&ccProjectionMatrix, &ccProjectionMatrix, &matB);
-			kmMat4Multiply(&ccProjectionMatrix, &ccProjectionMatrix, &matC);			
+			kmMat4Multiply(&ret, inMatrix, &matA);
+			kmMat4Multiply(&ret, &ret, &matB);
+			kmMat4Multiply(&ret, &ret, &matC);			
 			break;
 
-		case CCDeviceOrientationLandscapeRight:
+		case kCCDeviceOrientationLandscapeRight:
 			kmMat4Translation(&matA, w, h, 0);
 			kmMat4RotationZ(&matB, CC_DEGREES_TO_RADIANS(90) );
 			kmMat4Translation(&matC, -h, -w, 0);
 			
-			kmMat4Multiply(&ccProjectionMatrix, &portraitOrientationMatrix_, &matA);
-			kmMat4Multiply(&ccProjectionMatrix, &ccProjectionMatrix, &matB);
-			kmMat4Multiply(&ccProjectionMatrix, &ccProjectionMatrix, &matC);
+			kmMat4Multiply(&ret, inMatrix, &matA);
+			kmMat4Multiply(&ret, &ret, &matB);
+			kmMat4Multiply(&ret, &ret, &matC);
 			break;
 
-		case CCDeviceOrientationLandscapeLeft:
+		case kCCDeviceOrientationLandscapeLeft:
 			kmMat4Translation(&matA, w, h, 0);
 			kmMat4RotationZ(&matB, CC_DEGREES_TO_RADIANS(-90) );
 			kmMat4Translation(&matC, -h, -w, 0);
 			
-			kmMat4Multiply(&ccProjectionMatrix, &portraitOrientationMatrix_, &matA);
-			kmMat4Multiply(&ccProjectionMatrix, &ccProjectionMatrix, &matB);
-			kmMat4Multiply(&ccProjectionMatrix, &ccProjectionMatrix, &matC);
+			kmMat4Multiply(&ret, inMatrix, &matA);
+			kmMat4Multiply(&ret, &ret, &matB);
+			kmMat4Multiply(&ret, &ret, &matC);
 			break;
-	}	
+	}
 	
+	return ret;
 }
 
 #pragma mark Director Integration with a UIKit view
@@ -472,7 +473,7 @@ CGFloat	__ccContentScaleFactor = 1;
 				break;
 		}
 	}
-	[self applyOrientationToProjectionMatrix];
+	ccProjectionMatrix = [self applyOrientationToMatrix:&portraitProjectionMatrix_];
 }
 
 -(void) end

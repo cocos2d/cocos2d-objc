@@ -490,10 +490,8 @@
 	if (!visible_)
 		return;
 
-	if ( grid_ && grid_.active) {
+	if ( grid_ && grid_.active)
 		[grid_ beforeDraw];
-		[self transformAncestors];
-	}
 	
 	[self transform];
 	
@@ -529,14 +527,6 @@
 }
 
 #pragma mark CCNode - Transformations
-
--(void) transformAncestors
-{
-	if( parent_ ) {
-		[parent_ transformAncestors];
-		[parent_ transform];
-	}	
-}
 
 -(void) transform
 {
