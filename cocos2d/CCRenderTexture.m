@@ -67,7 +67,7 @@
 		NSUInteger powH = ccNextPOT(h);
 		
 		void *data = malloc((int)(powW * powH * 4));
-		memset(data, 64, (int)(powW * powH * 4));
+		memset(data, 0, (int)(powW * powH * 4));
 		pixelFormat_=format; 
 		
 		texture_ = [[CCTexture2D alloc] initWithData:data pixelFormat:pixelFormat_ pixelsWide:powW pixelsHigh:powH contentSize:CGSizeMake(w, h)];
@@ -104,7 +104,6 @@
 
 -(void)dealloc
 {
-//	[self removeAllChildrenWithCleanup:YES];
 	ccglDeleteFramebuffers(1, &fbo_);
 	[super dealloc];
 }
@@ -114,27 +113,19 @@
 	// issue #878 save opengl state
 	glGetFloatv(GL_COLOR_CLEAR_VALUE,clearColor_); 
 	
-//	CC_DISABLE_DEFAULT_GL_STATES();
-	// Save the current matrix
-//	glPushMatrix();
-//	CC_ENABLE_DEFAULT_GL_STATES();	
-
-//	CGSize texSize = [texture_ contentSizeInPixels];
-//
-//	// Calculate the adjustment ratios based on the old and new projections
-//	CGSize size = [[CCDirector sharedDirector] displaySizeInPixels];
-//	float widthRatio = size.width / texSize.width;
-//	float heightRatio = size.height / texSize.height;
-//
-//	// Adjust the orthographic propjection and viewport
-//	projectionMatrixBackup_ = ccProjectionMatrix;
-//	kmMat4OrthographicProjection( &ccProjectionMatrix, -1.0f / widthRatio,  1.0f / widthRatio, -1.0f / heightRatio, 1.0f / heightRatio, -1, 1);
-//	glViewport(0, 0, texSize.width, texSize.height);
+	projectionMatrixBackup_ = ccProjectionMatrix;	
+	
+	CCDirector *director = [CCDirector sharedDirector];
+	CGSize	winSize = [director winSizeInPixels];
+	
+	glViewport(0, 0, winSize.width, winSize.height);	
+	kmMat4OrthographicProjection(&ccProjectionMatrix, 0, winSize.width, 0, winSize.height, -1024, 1024);
 
 	glGetIntegerv(CC_GL_FRAMEBUFFER_BINDING, &oldFBO_);
-	ccglBindFramebuffer(CC_GL_FRAMEBUFFER, fbo_); //Will direct drawing to the frame buffer created above
+	ccglBindFramebuffer(CC_GL_FRAMEBUFFER, fbo_);
 	
-	CHECK_GL_ERROR();
+	// RenderTexture is called outside the main loop, where these states are enabled/disabled.
+	CC_ENABLE_DEFAULT_GL_STATES();
 }
 
 -(void)beginWithClear:(float)r g:(float)g b:(float)b a:(float)a
@@ -147,13 +138,15 @@
 
 -(void)end
 {
+	// RenderTexture is called outside the main loop, where these states are enabled/disabled.
+	CC_DISABLE_DEFAULT_GL_STATES();
+
 	ccglBindFramebuffer(CC_GL_FRAMEBUFFER, oldFBO_);
-	// Restore the original matrix and viewport
-//	glPopMatrix();
+
 	CGSize size = [[CCDirector sharedDirector] displaySizeInPixels];
 	glViewport(0, 0, size.width, size.height);
 
-//	ccProjectionMatrix = projectionMatrixBackup_;
+	ccProjectionMatrix = projectionMatrixBackup_;
 	glClearColor(clearColor_[0], clearColor_[1], clearColor_[2], clearColor_[3]);
 	
 	CHECK_GL_ERROR();
