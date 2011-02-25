@@ -31,12 +31,6 @@
 #import "Support/CCFileUtils.h"
 #import "GLProgram.h"
 
-@interface CCRenderTexture (private)
-
-- (void) saveGLstate;
-- (void) restoreGLstate;
-@end
-
 @implementation CCRenderTexture
 
 @synthesize sprite=sprite_;
@@ -119,8 +113,9 @@
 -(void)begin
 {
 	// issue #878 save opengl state
-	[self saveGLstate];
-
+	projectionMatrixBackup_ = ccProjectionMatrix;
+	glGetFloatv(GL_COLOR_CLEAR_VALUE,clearColor_); 
+	
 //	CC_DISABLE_DEFAULT_GL_STATES();
 	// Save the current matrix
 //	glPushMatrix();
@@ -128,47 +123,26 @@
 	CGSize texSize = [texture_ contentSizeInPixels];
 
 	// Calculate the adjustment ratios based on the old and new projections
-//	CGSize size = [[CCDirector sharedDirector] displaySizeInPixels];
-//	float widthRatio = size.width / texSize.width;
-//	float heightRatio = size.height / texSize.height;
+	CGSize size = [[CCDirector sharedDirector] displaySizeInPixels];
+	float widthRatio = size.width / texSize.width;
+	float heightRatio = size.height / texSize.height;
 
-//	// Adjust the orthographic propjection and viewport
-//	ccglOrtho((float)-1.0 / widthRatio,  (float)1.0 / widthRatio, (float)-1.0 / heightRatio, (float)1.0 / heightRatio, -1,1);
+	// Adjust the orthographic propjection and viewport
+//	kmMat4OrthographicProjection( &ccProjectionMatrix, -1.0f / widthRatio,  1.0f / widthRatio, -1.0f / heightRatio, 1.0f / heightRatio, -1, 1);
 	glViewport(0, 0, texSize.width, texSize.height);
 
 	glGetIntegerv(CC_GL_FRAMEBUFFER_BINDING, &oldFBO_);
-	ccglBindFramebuffer(CC_GL_FRAMEBUFFER, fbo_);//Will direct drawing to the frame buffer created above
+	ccglBindFramebuffer(CC_GL_FRAMEBUFFER, fbo_); //Will direct drawing to the frame buffer created above
 	
 //	CC_ENABLE_DEFAULT_GL_STATES();	
 }
 
 -(void)beginWithClear:(float)r g:(float)g b:(float)b a:(float)a
 {
-	// issue #878 save opengl state
-	[self saveGLstate];
-	
-//	CC_DISABLE_DEFAULT_GL_STATES();
-//	// Save the current matrix
-//	glPushMatrix();
-	
-	CGSize texSize = [texture_ contentSizeInPixels];
-	
-	// Calculate the adjustment ratios based on the old and new projections
-//	CGSize size = [[CCDirector sharedDirector] displaySizeInPixels];
-//	float widthRatio = size.width / texSize.width;
-//	float heightRatio = size.height / texSize.height;
-	
-	// Adjust the orthographic propjection and viewport
-//	ccglOrtho((float)-1.0 / widthRatio,  (float)1.0 / widthRatio, (float)-1.0 / heightRatio, (float)1.0 / heightRatio, -1,1);
-	glViewport(0, 0, texSize.width, texSize.height);
-	
-	glGetIntegerv(CC_GL_FRAMEBUFFER_BINDING, &oldFBO_);
-	ccglBindFramebuffer(CC_GL_FRAMEBUFFER, fbo_);//Will direct drawing to the frame buffer created above
+	[self begin];
 	
 	glClearColor(r, g, b, a);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	
-//	CC_ENABLE_DEFAULT_GL_STATES();
 }
 
 -(void)end
@@ -178,8 +152,9 @@
 //	glPopMatrix();
 	CGSize size = [[CCDirector sharedDirector] displaySizeInPixels];
 	glViewport(0, 0, size.width, size.height);
-	[self restoreGLstate];
 
+	ccProjectionMatrix = projectionMatrixBackup_;
+	glClearColor(clearColor_[0], clearColor_[1], clearColor_[2], clearColor_[3]);
 }
 
 -(void)clear:(float)r g:(float)g b:(float)b a:(float)a
@@ -189,16 +164,6 @@
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	[self end];
-}
-
--(void) saveGLstate
-{
-	glGetFloatv(GL_COLOR_CLEAR_VALUE,clearColor_); 
-}
-
-- (void) restoreGLstate
-{
-	glClearColor(clearColor_[0], clearColor_[1], clearColor_[2], clearColor_[3]);
 }
 
 #pragma mark RenderTexture - Save Image

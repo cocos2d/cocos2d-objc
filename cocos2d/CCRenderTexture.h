@@ -27,6 +27,7 @@
 #import "CCNode.h"
 #import "CCSprite.h"
 #import "Support/OpenGL_Internal.h"
+#import "Support/kazmath.h"
 
 #import <Availability.h>
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
@@ -60,6 +61,9 @@ enum
 	
 	GLenum				pixelFormat_;
 	GLfloat				clearColor_[4];
+	
+	kmMat4				projectionMatrixBackup_;
+	
 
 }
 
