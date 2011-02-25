@@ -27,6 +27,7 @@
 
 #import "CCTransition.h"
 #import "CCNode.h"
+#import "CCSprite.h"
 #import "CCDirector.h"
 #import "CCActionInterval.h"
 #import "CCActionInstant.h"

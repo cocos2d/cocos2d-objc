@@ -143,7 +143,7 @@ Class restartAction()
 		// create a brush image to draw into the texture with
 		brush = [[CCSprite spriteWithFile:@"fire.png"] retain];
 		[brush setColor:ccRED];
-//		[brush setOpacity:20];
+		[brush setOpacity:20];
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 		self.isTouchEnabled = YES;
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
@@ -228,7 +228,7 @@ Class restartAction()
 		}
 	}
 	// finish drawing and return context back to the screen
-	[target end];
+	[target end];	
 }
 
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
@@ -371,7 +371,7 @@ Class restartAction()
 	CCDirector *director = [CCDirector sharedDirector];
 	
 	// landscape orientation
-//	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
+	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
 	
 	// set FPS at 60
 	[director setAnimationInterval:1.0/60];
