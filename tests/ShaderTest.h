@@ -31,17 +31,22 @@
 
 @end
 
-@interface ShaderSprite : ShaderTest
+@interface ShaderMandelbrot : ShaderTest
 {
 }
 @end
 
-@interface ShaderSpriteBatch : ShaderTest
+@interface ShaderHeart : ShaderTest
 {
 }
 @end
 
-@interface ShaderBMFont : ShaderTest
+@interface ShaderFlower : ShaderTest
+{
+}
+@end
+
+@interface ShaderPlasma : ShaderTest
 {
 }
 @end
