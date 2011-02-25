@@ -148,8 +148,6 @@
 
 	ccProjectionMatrix = projectionMatrixBackup_;
 	glClearColor(clearColor_[0], clearColor_[1], clearColor_[2], clearColor_[3]);
-	
-	CHECK_GL_ERROR();
 }
 
 -(void)clear:(float)r g:(float)g b:(float)b a:(float)a

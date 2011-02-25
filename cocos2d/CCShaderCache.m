@@ -107,6 +107,22 @@ static CCShaderCache *_sharedShaderCache;
 	
 	[programs_ setObject:p forKey:kCCShader_VertexTexture];
 	[p release];
+
+	//
+	// Vertex Texture 1 Color shader
+	//
+	p = [[GLProgram alloc] initWithVertexShaderFilename:@"Shaders/VertexTexture1Color.vert"
+								 fragmentShaderFilename:@"Shaders/VertexTexture1Color.frag"];
+	
+	[p addAttribute:@"aVertex" index:kCCAttribVertex];
+	[p addAttribute:@"aTexCoord" index:kCCAttribTexCoords];
+	
+	[p link];
+	[p updateUniforms];
+	
+	[programs_ setObject:p forKey:kCCShader_VertexTexture1Color];
+	[p release];
+	
 }
 
 -(GLProgram *) programForKey:(NSString*)key

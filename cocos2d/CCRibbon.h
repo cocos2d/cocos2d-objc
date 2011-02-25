@@ -25,9 +25,13 @@
 
 
 #import "CCNode.h"
-#import "CCTexture2D.h"
 #import "CCProtocols.h"
 #import "Platforms/CCGL.h"
+
+#define kCCRibbon_Max 50
+
+@class GLProgram;
+@class CCTexture2D;
 
 /**
  * A CCRibbon is a dynamically generated list of polygons drawn as a single or series
@@ -52,14 +56,14 @@
 	CGPoint			lastPoint1_;
 	CGPoint			lastPoint2_;
 	CGPoint			lastLocation_;
-	int					vertCount_;
-	float				texVPos_;
-	float				curTime_;
-	float				fadeTime_;
-	float				delta_;
-	float				lastWidth_;
-	float				lastSign_;
-	BOOL				pastFirstPoint_;
+	int				vertCount_;
+	float			texVPos_;
+	float			curTime_;
+	float			fadeTime_;
+	float			delta_;
+	float			lastWidth_;
+	float			lastSign_;
+	BOOL			pastFirstPoint_;
 
 	// Texture used
 	CCTexture2D*		texture_;
@@ -72,6 +76,9 @@
 
 	// blend func
 	ccBlendFunc		blendFunc_;
+	
+	// alternative shader
+	GLProgram		*shaderProgramAlternative_;
 }
 
 /** Texture used by the ribbon. Conforms to CCTextureProtocol protocol */
@@ -103,10 +110,10 @@
 @interface CCRibbonSegment : NSObject
 {
 @public
-	GLfloat	verts[50*6];
-	GLfloat	coords[50*4];
-	GLubyte	colors[50*8];
-	float		creationTime[50];
+	GLfloat	verts[kCCRibbon_Max*6];
+	GLfloat	coords[kCCRibbon_Max*4];
+	GLubyte	colors[kCCRibbon_Max*8];
+	float		creationTime[kCCRibbon_Max];
 	BOOL		finished;
 	uint		end;
 	uint		begin;

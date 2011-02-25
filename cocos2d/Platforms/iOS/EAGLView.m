@@ -141,6 +141,8 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 			[self release];
 			return nil;
 		}
+
+		CHECK_GL_ERROR_DEBUG();
 	}
 
 	return self;
@@ -162,6 +164,8 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 			[self release];
 			return nil;
 		}
+
+		CHECK_GL_ERROR_DEBUG();
     }
 	
     return self;
@@ -193,6 +197,8 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 	discardFramebufferSupported_ = [[CCConfiguration sharedConfiguration] supportsDiscardFramebuffer];
 	
+	CHECK_GL_ERROR_DEBUG();
+	
 	return YES;
 }
 
@@ -207,6 +213,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 - (void) layoutSubviews
 {
+
     [renderer_ resizeFromLayer:(CAEAGLLayer*)self.layer];
 	size_ = [renderer_ backingSize];
 
@@ -216,6 +223,8 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 	// Avoid flicker. Issue #350
 	[director performSelectorOnMainThread:@selector(drawScene) withObject:nil waitUntilDone:YES];
+	
+	CHECK_GL_ERROR_DEBUG();
 }
 
 - (void) swapBuffers
@@ -267,9 +276,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	if(![context_ presentRenderbuffer:GL_RENDERBUFFER_OES])
 		CCLOG(@"cocos2d: Failed to swap renderbuffer in %s\n", __FUNCTION__);
 
-#if COCOS2D_DEBUG
-	CHECK_GL_ERROR();
-#endif
+	CHECK_GL_ERROR_DEBUG();
 	
 	// We can safely re-bind the framebuffer here, since this will be the
 	// 1st instruction of the new main loop

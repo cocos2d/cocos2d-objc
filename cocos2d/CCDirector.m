@@ -255,17 +255,25 @@ static CCDirector *_sharedDirector = nil;
 		
 	} else
 		glDisable(GL_BLEND);
+	
+	CHECK_GL_ERROR_DEBUG();
 }
 
 - (void) setDepthTest: (BOOL) on
 {
 	if (on) {
 		ccglClearDepth(1.0f);
+
 		glEnable(GL_DEPTH_TEST);
+
 		glDepthFunc(GL_LEQUAL);
-		glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
+
+//		glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
+
 	} else
 		glDisable( GL_DEPTH_TEST );
+
+	CHECK_GL_ERROR_DEBUG();
 }
 
 #pragma mark Director Integration with a UIKit view
@@ -288,6 +296,8 @@ static CCDirector *_sharedDirector = nil;
 
 		[self setGLDefaultValues];
 	}
+	
+	CHECK_GL_ERROR_DEBUG();
 }
 
 #pragma mark Director Scene Landscape
