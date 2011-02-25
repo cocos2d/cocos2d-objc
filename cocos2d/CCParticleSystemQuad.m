@@ -311,6 +311,7 @@
 	
 	GLfloat mat4[16];	
 	CGAffineToGL(&transformMV_, &mat4[0] );
+	mat4[14] = vertexZ_;
 		
 	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformPMatrix], 1, GL_FALSE, (GLfloat*)&ccProjectionMatrix);
 	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformMVMatrix], 1, GL_FALSE, &mat4[0]);	
