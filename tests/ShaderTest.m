@@ -12,9 +12,10 @@
 
 static int sceneIdx=-1;
 static NSString *transitions[] = {
-			@"ShaderSprite",
-			@"ShaderSpriteBatch",
-			@"ShaderBMFont",
+	@"ShaderMandelbrot",
+	@"ShaderHeart",
+	@"ShaderFlower",
+	@"ShaderPlasma",
 
 };
 
@@ -123,186 +124,229 @@ Class restartAction()
 @end
 
 #pragma mark -
-#pragma mark Example ShaderSprite
+#pragma mark ShaderNode
 
-@implementation ShaderSprite
--(id) init
+@interface ShaderNode : CCNode
+{
+	ccVertex2F	resolution_;
+	float		time_;
+	GLuint		uniformResolution, uniformTime;
+}
+
+-(void) loadShaderVertex:(NSString*)vert fragment:(NSString*)frag;
+-(id) initWithVertex:(NSString*)vert fragment:(NSString*)frag;
+@end
+
+@implementation ShaderNode
+enum {
+	SIZE_X = 256,
+	SIZE_Y = 256,
+};
+
+-(id) initWithVertex:(NSString*)vert fragment:(NSString*)frag
 {
 	if( (self=[super init] ) ) {
-
-		CGSize s = [[CCDirector sharedDirector] winSize];
-		CCLabelTTF *label = [CCLabelTTF labelWithString:@"Test" fontName:@"Marker Felt" fontSize:36];
-		label.position = ccp(s.width/2, s.height-200);
-		[self addChild:label];
 		
-		CCSprite *node = [[CCSprite alloc] initWithFile:@"grossini.png"];
-		[self addChild:node];
+		[self loadShaderVertex:vert fragment:frag];
 		
-		CCMoveBy *action = [CCMoveBy actionWithDuration:2 position:ccp(200,200)];
-		[node runAction:action];
+		time_ = 0;
+		resolution_ = (ccVertex2F) { SIZE_X/2, SIZE_Y/2 };
 		
-		CCRotateBy *rot = [CCRotateBy actionWithDuration:2 angle:360];
-		[node runAction:rot];
+		[self scheduleUpdate];
 		
-		CCScaleBy *scale = [CCScaleBy actionWithDuration:2 scale:2];
-		[node runAction:scale];
-		
-		CCSprite *node2 = [[CCSprite alloc] initWithFile:@"grossinis_sister1.png"];
-		[self addChild:node2 z:1];
-		[node2 setPosition:ccp(200,200)];
-		
-		CCFadeOut *fade = [CCFadeOut actionWithDuration:2];
-		id fade_back = [fade reverse];
-		id seq = [CCSequence actions:fade, fade_back, nil];
-		[node2 runAction: [CCRepeatForever actionWithAction:seq]];
-		
-		CCSprite *node3 = [[CCSprite alloc] initWithFile:@"grossinis_sister2.png"];
-		[self addChild:node3 z:-1];
-		[node3 setPosition:ccp(100,200)];
-		
-		id moveup = [CCMoveBy actionWithDuration:2 position:ccp(0,200)];
-		id movedown = [moveup reverse];
-		id seq2 = [CCSequence actions:moveup, movedown, nil];
-		[node3 runAction:[CCRepeatForever actionWithAction:seq2]];
-		
-		CCSprite *node3_b = [[CCSprite alloc] initWithFile:@"grossinis_sister2.png"];
-		[node3 addChild:node3_b z:1];
-		[node3_b setPosition:ccp(10,10)];
-		[node3_b setScale:0.5f];
-		
-		id rot2 = [CCRotateBy actionWithDuration:2 angle:360];
-		[node3_b runAction:[CCRepeatForever actionWithAction:rot2]];
-				
+		[self setContentSize:CGSizeMake(SIZE_X, SIZE_Y)];
+		[self setAnchorPoint:ccp(0.5f, 0.5f)];
 	}
 	
 	return self;
+}
+
+-(void) loadShaderVertex:(NSString*)vert fragment:(NSString*)frag
+{
+	GLProgram *shader = [[GLProgram alloc] initWithVertexShaderFilename:vert
+												 fragmentShaderFilename:frag];
 	
+	[shader addAttribute:@"aVertex" index:kCCAttribVertex];
+	
+	[shader link];
+	
+	[shader updateUniforms];
+	
+	uniformTime = glGetUniformLocation( shader->program_, "time");
+	
+	uniformResolution = glGetUniformLocation( shader->program_, "resolution");
+	
+	
+	self.shaderProgram = shader;
+	
+	[shader release];
+}
+
+-(void) update:(ccTime) dt
+{
+	time_ += dt;
+}
+
+
+-(void) draw
+{
+
+	float w = SIZE_X, h = SIZE_Y;
+	GLfloat vertices[12] = {0,0, w,0, w,h, 0,0, 0,h, w,h};
+
+	glUseProgram( shaderProgram_->program_ );
+
+	//
+	// Uniforms
+	//
+	GLfloat mat4[16];	
+	CGAffineToGL( &transformMV_, mat4 );
+	
+	// Updated Z vertex
+	mat4[14] = vertexZ_;
+	
+	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformPMatrix], 1, GL_FALSE, (GLfloat*)&ccProjectionMatrix);
+	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformMVMatrix], 1, GL_FALSE, mat4);	
+	
+	glUniform1f( uniformTime, time_ );
+
+	glUniform2fv( uniformResolution, 1, (GLfloat*)&resolution_ );
+	
+	glDisableVertexAttribArray(kCCAttribColor);
+	glDisableVertexAttribArray(kCCAttribTexCoords);
+
+	glVertexAttribPointer(kCCAttribVertex, 2, GL_FLOAT, GL_FALSE, 0, vertices);
+
+	glDrawArrays(GL_TRIANGLES, 0, 6);
+	
+	glEnableVertexAttribArray(kCCAttribColor);
+	glEnableVertexAttribArray(kCCAttribTexCoords);
+}
+@end
+
+
+#pragma mark -
+#pragma mark ShaderMandelbrot
+
+@implementation ShaderMandelbrot
+-(id) init
+{
+	if( (self=[super init] ) ) {
+		ShaderNode *mandel = [[ShaderNode alloc] initWithVertex:@"Shaders/Mandelbrot.vert" fragment:@"Shaders/Mandelbrot.frag"];
+		
+		CGSize s = [[CCDirector sharedDirector] winSize];
+		
+		[mandel setPosition:ccp(s.width/2, s.height/2)];
+		[self addChild:mandel];	
+	}
+	
+	return self;	
 }
 
 -(NSString *) title
 {
-	return @"Shader: Sprites";
+	return @"Shader: Frag shader";
 }
 
 -(NSString *) subtitle
 {
-	return @"Testing Sprites";
+	return @"Mandelbrot shader with Zoom";
 }
 @end
 
 #pragma mark -
-#pragma mark Example ShaderSpriteBatch
+#pragma mark ShaderHeart
 
-@implementation ShaderSpriteBatch
+@implementation ShaderHeart
 -(id) init
 {
 	if( (self=[super init] ) ) {
-
+		ShaderNode *node = [[ShaderNode alloc] initWithVertex:@"Shaders/Heart.vert" fragment:@"Shaders/Heart.frag"];
 		
-		CGSize s = [[CCDirector sharedDirector] winSize];
-
-		[[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"animations/ghosts.plist" textureFile:@"animations/ghosts.png"];
-		
-		CCNode *aParent;
-		CCSprite *l1, *l2a, *l2b, *l3a1, *l3a2, *l3b1, *l3b2;
-		
-		//
-		// SpriteBatchNode: 3 levels of children
-		//
-		
-		aParent = [CCSpriteBatchNode batchNodeWithFile:@"animations/ghosts.png"];
-		[self addChild:aParent z:0];
-		
-		// parent
-		l1 = [CCSprite spriteWithSpriteFrameName:@"father.gif"];
-		l1.position = ccp( s.width/2, s.height/2);
-		[aParent addChild:l1 z:0];
-		CGSize l1Size = [l1 contentSize];
-		
-		// child left
-		l2a = [CCSprite spriteWithSpriteFrameName:@"sister1.gif"];
-		l2a.position = ccp( -25 + l1Size.width/2, 0 + l1Size.height/2);
-		[l1 addChild:l2a z:-1];
-		CGSize l2aSize = [l2a contentSize];		
-		
-		
-		// child right
-		l2b = [CCSprite spriteWithSpriteFrameName:@"sister2.gif"];
-		l2b.position = ccp( +25 + l1Size.width/2, 0 + l1Size.height/2);
-		[l1 addChild:l2b z:1];
-		CGSize l2bSize = [l2a contentSize];	
-		
-		// child left bottom
-		l3a1 = [CCSprite spriteWithSpriteFrameName:@"child1.gif"];
-		l3a1.scale = 0.65f;
-		l3a1.position = ccp(0+l2aSize.width/2,-50+l2aSize.height/2);
-		[l2a addChild:l3a1 z:-1];
-		
-		// child left top
-		l3a2 = [CCSprite spriteWithSpriteFrameName:@"child1.gif"];
-		l3a2.scale = 0.65f;
-		l3a2.position = ccp(0+l2aSize.width/2,+50+l2aSize.height/2);
-		[l2a addChild:l3a2 z:1];
-		
-		// child right bottom
-		l3b1 = [CCSprite spriteWithSpriteFrameName:@"child1.gif"];
-		l3b1.scale = 0.65f;
-		l3b1.position = ccp(0+l2bSize.width/2,-50+l2bSize.height/2);
-		[l2b addChild:l3b1 z:-1];
-		
-		// child right top
-		l3b2 = [CCSprite spriteWithSpriteFrameName:@"child1.gif"];
-		l3b2.scale = 0.65f;
-		l3b2.position = ccp(0+l2bSize.width/2,+50+l2bSize.height/2);
-		[l2b addChild:l3b2 z:1];
-				
+//		CGSize s = [[CCDirector sharedDirector] winSize];
+//		[node setPosition:ccp(s.width/2, s.height/2)];
+		[self addChild:node];	
 	}
 	
-	return self;
-	
+	return self;	
 }
 
 -(NSString *) title
 {
-	return @"Batch Sprites";
+	return @"Shader: Frag shader";
 }
 
 -(NSString *) subtitle
 {
-	return @"Testing Batched sprites with shaders";
+	return @"Tunnel";
 }
 @end
 
-#pragma mark Example ShaderBMFont
+#pragma mark -
+#pragma mark ShaderFlower
 
-@implementation ShaderBMFont
+@implementation ShaderFlower
 -(id) init
 {
 	if( (self=[super init] ) ) {
+		ShaderNode *node = [[ShaderNode alloc] initWithVertex:@"Shaders/Flower.vert" fragment:@"Shaders/Flower.frag"];
 		
-		CGSize s = [[CCDirector sharedDirector] winSize];
-		CCLabelBMFont *label1 = [CCLabelBMFont labelWithString:@"Testing" fntFile:@"futura-48.fnt"];
-		[self addChild:label1];
-		[label1 setPosition: ccp(s.width/2, s.height/2)];
+//		CGSize s = [[CCDirector sharedDirector] winSize];
+//		[node setPosition:ccp(s.width/2, s.height/2)];
+
+		[self addChild:node];	
 	}
 	
-	return self;
-	
+	return self;	
 }
 
 -(NSString *) title
 {
-	return @"Shader: BMFont";
+	return @"Shader: Frag shader";
 }
 
 -(NSString *) subtitle
 {
-	return @"Testing BMFont";
+	return @"Flower";
 }
 @end
+
+#pragma mark -
+#pragma mark ShaderPlasma
+
+@implementation ShaderPlasma
+-(id) init
+{
+	if( (self=[super init] ) ) {
+		ShaderNode *node = [[ShaderNode alloc] initWithVertex:@"Shaders/Plasma.vert" fragment:@"Shaders/Plasma.frag"];
+		
+		CGSize s = [[CCDirector sharedDirector] winSize];
+		[node setPosition:ccp(s.width/2, s.height/2)];
+		
+		[self addChild:node];	
+	}
+	
+	return self;	
+}
+
+-(NSString *) title
+{
+	return @"Shader: Frag shader";
+}
+
+-(NSString *) subtitle
+{
+	return @"Plasma";
+}
+@end
+
+
 
 // CLASS IMPLEMENTATIONS
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+
+#pragma mark -
+#pragma mark AppController
 
 @implementation AppController
 
@@ -333,8 +377,8 @@ Class restartAction()
 	[director setDisplayFPS:YES];
 	
 	// Enables High Res mode (Retina Display) on iPhone 4 and maintains low res on all other devices
-	if( ! [director enableRetinaDisplay:YES] )
-		CCLOG(@"Retina Display Not supported");
+//	if( ! [director enableRetinaDisplay:YES] )
+//		CCLOG(@"Retina Display Not supported");
 	
 	CCScene *scene = [CCScene node];
 	[scene addChild: [nextAction() node]];
@@ -402,8 +446,10 @@ Class restartAction()
 	[director setDisplayFPS:YES];
 	
 	[director setOpenGLView:glView_];
-	
-	//	[director setProjection:kCCDirectorProjection2D];
+
+//	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
+
+//	[director setProjection:kCCDirectorProjection2D];
 	
 	// Enable "moving" mouse event. Default no.
 	[window_ setAcceptsMouseMovedEvents:NO];
