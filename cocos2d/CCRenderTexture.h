@@ -44,10 +44,10 @@ enum
 
 /**
  CCRenderTexture is a generic rendering target. To render things into it,
- simply construct a render target, call begin on it, call visit on any cocos
+ simply construct a render target, call begin on it, call visit on any cocos2d
  scenes or objects to render them, and call end. For convienience, render texture
  adds a sprite as it's display child with the results, so you can simply add
- the render texture to your scene and treat it like any other CocosNode.
+ the render texture to your scene and treat it like any other CCNode.
  There are also functions for saving the render texture to disk in PNG or JPG format.
  
  @since v0.8.1

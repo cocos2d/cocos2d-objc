@@ -67,7 +67,7 @@
 		NSUInteger powH = ccNextPOT(h);
 		
 		void *data = malloc((int)(powW * powH * 4));
-		memset(data, 0, (int)(powW * powH * 4));
+		memset(data, 64, (int)(powW * powH * 4));
 		pixelFormat_=format; 
 		
 		texture_ = [[CCTexture2D alloc] initWithData:data pixelFormat:pixelFormat_ pixelsWide:powW pixelsHigh:powH contentSize:CGSizeMake(w, h)];
@@ -109,32 +109,32 @@
 	[super dealloc];
 }
 
-
 -(void)begin
 {
 	// issue #878 save opengl state
-	projectionMatrixBackup_ = ccProjectionMatrix;
 	glGetFloatv(GL_COLOR_CLEAR_VALUE,clearColor_); 
 	
 //	CC_DISABLE_DEFAULT_GL_STATES();
 	// Save the current matrix
 //	glPushMatrix();
-	
-	CGSize texSize = [texture_ contentSizeInPixels];
+//	CC_ENABLE_DEFAULT_GL_STATES();	
 
-	// Calculate the adjustment ratios based on the old and new projections
-	CGSize size = [[CCDirector sharedDirector] displaySizeInPixels];
-	float widthRatio = size.width / texSize.width;
-	float heightRatio = size.height / texSize.height;
-
-	// Adjust the orthographic propjection and viewport
+//	CGSize texSize = [texture_ contentSizeInPixels];
+//
+//	// Calculate the adjustment ratios based on the old and new projections
+//	CGSize size = [[CCDirector sharedDirector] displaySizeInPixels];
+//	float widthRatio = size.width / texSize.width;
+//	float heightRatio = size.height / texSize.height;
+//
+//	// Adjust the orthographic propjection and viewport
+//	projectionMatrixBackup_ = ccProjectionMatrix;
 //	kmMat4OrthographicProjection( &ccProjectionMatrix, -1.0f / widthRatio,  1.0f / widthRatio, -1.0f / heightRatio, 1.0f / heightRatio, -1, 1);
-	glViewport(0, 0, texSize.width, texSize.height);
+//	glViewport(0, 0, texSize.width, texSize.height);
 
 	glGetIntegerv(CC_GL_FRAMEBUFFER_BINDING, &oldFBO_);
 	ccglBindFramebuffer(CC_GL_FRAMEBUFFER, fbo_); //Will direct drawing to the frame buffer created above
 	
-//	CC_ENABLE_DEFAULT_GL_STATES();	
+	CHECK_GL_ERROR();
 }
 
 -(void)beginWithClear:(float)r g:(float)g b:(float)b a:(float)a
@@ -153,8 +153,10 @@
 	CGSize size = [[CCDirector sharedDirector] displaySizeInPixels];
 	glViewport(0, 0, size.width, size.height);
 
-	ccProjectionMatrix = projectionMatrixBackup_;
+//	ccProjectionMatrix = projectionMatrixBackup_;
 	glClearColor(clearColor_[0], clearColor_[1], clearColor_[2], clearColor_[3]);
+	
+	CHECK_GL_ERROR();
 }
 
 -(void)clear:(float)r g:(float)g b:(float)b a:(float)a

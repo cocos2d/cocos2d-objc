@@ -142,7 +142,8 @@ Class restartAction()
 		
 		// create a brush image to draw into the texture with
 		brush = [[CCSprite spriteWithFile:@"fire.png"] retain];
-		[brush setOpacity:20];
+		[brush setColor:ccRED];
+//		[brush setOpacity:20];
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 		self.isTouchEnabled = YES;
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
@@ -370,7 +371,7 @@ Class restartAction()
 	CCDirector *director = [CCDirector sharedDirector];
 	
 	// landscape orientation
-	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
+//	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
 	
 	// set FPS at 60
 	[director setAnimationInterval:1.0/60];
@@ -387,7 +388,7 @@ Class restartAction()
 	[director setOpenGLView:glView];
 	
 	// 2D projection
-//	[director setProjection:kCCDirectorProjection2D];
+	[director setProjection:kCCDirectorProjection2D];
 	
 	// Enables High Res mode (Retina Display) on iPhone 4 and maintains low res on all other devices
 	if( ! [director enableRetinaDisplay:YES] )
