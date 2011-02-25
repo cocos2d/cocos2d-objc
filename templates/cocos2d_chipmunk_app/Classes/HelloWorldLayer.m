@@ -1,5 +1,5 @@
 //
-//  HelloWorldScene.m
+//  HelloWorldLayer.m
 //  ___PROJECTNAME___
 //
 //  Created by ___FULLUSERNAME___ on ___DATE___.
@@ -8,7 +8,7 @@
 
 
 // Import the interfaces
-#import "HelloWorldScene.h"
+#import "HelloWorldLayer.h"
 
 enum {
 	kTagBatchNode = 1,
@@ -31,16 +31,16 @@ eachShape(void *ptr, void* unused)
 	}
 }
 
-// HelloWorld implementation
-@implementation HelloWorld
+// HelloWorldLayer implementation
+@implementation HelloWorldLayer
 
-+(id) scene
++(CCScene *) scene
 {
 	// 'scene' is an autorelease object.
 	CCScene *scene = [CCScene node];
 	
 	// 'layer' is an autorelease object.
-	HelloWorld *layer = [HelloWorld node];
+	HelloWorldLayer *layer = [HelloWorldLayer node];
 	
 	// add layer as a child to scene
 	[scene addChild: layer];
@@ -48,7 +48,6 @@ eachShape(void *ptr, void* unused)
 	// return the scene
 	return scene;
 }
-
 
 -(void) addNewSpriteX: (float)x y:(float)y
 {
@@ -89,8 +88,12 @@ eachShape(void *ptr, void* unused)
 	cpSpaceAddShape(space, shape);
 	
 }
+
+// on "init" you need to initialize your instance
 -(id) init
 {
+	// always call "super" init
+	// Apple recommends to re-assign "self" with the "super" return value
 	if( (self=[super init])) {
 		
 		self.isTouchEnabled = YES;
@@ -136,8 +139,18 @@ eachShape(void *ptr, void* unused)
 		
 		[self schedule: @selector(step:)];
 	}
-	
 	return self;
+}
+
+// on "dealloc" you need to release all your retained objects
+- (void) dealloc
+{
+	// in case you have something to dealloc, do it in this method
+	cpSpaceFree(space);
+	space = NULL;
+	
+	// don't forget to call "super dealloc"
+	[super dealloc];
 }
 
 -(void) onEnter
