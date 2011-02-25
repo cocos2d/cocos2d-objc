@@ -111,8 +111,8 @@ typedef enum {
  */
 @interface CCDirector (iOSExtension)
 
-// rotates the screen if an orientation differnent than Portrait is used
--(void) applyOrientation;
+// rotates the matrix if needed
+-(kmMat4) applyOrientationToMatrix:(kmMat4*)matrix;
 
 /** Sets the device orientation.
  If the orientation is going to be controlled by an UIViewController, then the orientation should be Portrait
@@ -180,7 +180,7 @@ typedef enum {
 	/* contentScaleFactor could be simulated */
 	BOOL	isContentScaleSupported_;
 	
-	kmMat4	portraitOrientationMatrix_;
+	kmMat4	portraitProjectionMatrix_;
 }
 @end
 

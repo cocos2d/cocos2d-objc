@@ -29,6 +29,7 @@
 #import "CCNode.h"
 #import "CCCamera.h"
 #import "ccTypes.h"
+#import "Support/kazmath.h"
 
 @class CCTexture2D;
 @class CCGrabber;
@@ -47,9 +48,9 @@
 	BOOL		isTextureFlipped_;
 	
 	GLProgram	*shaderProgram_;
-	CGAffineTransform	transformProjection_;
-	CGAffineTransform	transformProjectionRotated_;
-//	CGFloat		projectionMatrix_[16];
+	kmMat4		projectionBackup_;
+	kmMat4		projection3D_;
+	kmMat4		modelViewMat_;
 }
 
 /** wheter or not the grid is active */
