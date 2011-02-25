@@ -16,6 +16,7 @@ version 1.0-beta - XX-XXX-2011
 . [FIX] Sprite: flipx/flipy don't modify the contentSize (issue #1073)
 . [FIX] SpriteFrame: setRect sets pixels too. setRectInPixels sets points too (issue #1088)
 . [FIX] Templates: ItunesArtwork renamed to iTunesArtwork (issue #1092)
+. [FIX] Templates: HelloWorld -> HelloWorldLayer and other improvements (issue #873)
 . [FIX] TextureCache: asyncObject#dealloc uses CCLOGINFO instead of CCLOG (issue #1096)
 . [FIX] TiledMap: TMX maps work with zlib compression (Tiled v0.6)
 . [FIX-MAC] Director: runLoop enables NSTimers events (issue #1107)

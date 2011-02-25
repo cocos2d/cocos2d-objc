@@ -337,6 +337,11 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Texture fails gracefully if PVR image can't be loaded (patch)
 	* Patrick Wolowicz:
 		mkatlas: added artifact removal by copying borders to margins
+	* Paul Hampson (TBBle) (http://blog.tbble.org/)
+		CCSpriteFrameCache textureFileName is relative to path
+		CCSprite: correctly overrides setIsRelativeAnchorPoint
+		libpng doesn't compile pngtest.c. patch.
+		Templates: HelloWorld -> HelloWorldLayer and other improvements. patch.
 	* Piero Tofy (http://indieappsalliance.org):
 		Web: Author of the scraper script used to parse games data in the cocos2d site
 	* Pieter van de Bruggen
@@ -427,10 +432,6 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Added ProfilingTimer: Director and Particles supports it when enabled
 	* svenito:
 		Fixed artifacts in PageTurnTransition
-	* TBBle (http://blog.tbble.org/)
-		CCSpriteFrameCache textureFileName is relative to path
-		CCSprite: correctly overrides setIsRelativeAnchorPoint
-		libpng doesn't compile pngtest.c. patch.
 	* TheArsenik:
 		added BezierTo action
 	* thoechsm:
