@@ -72,6 +72,10 @@ Class restartAction()
 		item2.position = ccp( s.width/2, 30);
 		item3.position = ccp( s.width/2 + 100,30);
 		[self addChild: menu z:1];
+		
+		
+		CCLayerColor *background = [CCLayerColor layerWithColor:(ccColor4B){255,0,0,255}];
+		[self addChild:background z:-10];
 	}
 
 	return self;
