@@ -217,6 +217,7 @@ Class restartAction()
 	// 9. Connects the director to the EAGLView
 	//
 	CC_DIRECTOR_INIT();
+
 	
 	// Obtain the shared director in order to...
 	CCDirector *director = [CCDirector sharedDirector];

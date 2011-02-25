@@ -147,15 +147,14 @@ CGFloat	__ccContentScaleFactor = 1;
 - (void) drawScene
 {    
 	/* calculate "global" dt */
-	[self calculateDeltaTime];
+	[self calculateDeltaTime];	
 	
 	/* tick before glClear: issue #533 */
-	if( ! isPaused_ ) {
+	if( ! isPaused_ )
 		[[CCScheduler sharedScheduler] tick: dt];	
-	}
-	
+
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	
+
 	/* to avoid flickr, nextScene MUST be here: after tick and before draw.
 	 XXX: Which bug is this one. It seems that it can't be reproduced with v0.9 */
 	if( nextScene_ )
@@ -163,18 +162,19 @@ CGFloat	__ccContentScaleFactor = 1;
 
 	// By default enable VertexArray, ColorArray, TextureCoordArray and Texture2D
 	CC_ENABLE_DEFAULT_GL_STATES();
-	
+
 	[runningScene_ visit];
+
 	[notificationNode_ visit];
 
 	if( displayFPS_ )
 		[self showFPS];
-	
+
+	CC_DISABLE_DEFAULT_GL_STATES();
+
 #if CC_ENABLE_PROFILERS
 	[self showProfilers];
 #endif
-	
-	CC_DISABLE_DEFAULT_GL_STATES();
 	
 	[openGLView_ swapBuffers];
 }

@@ -31,6 +31,7 @@
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 
 
+#import "../../Support/OpenGL_Internal.h"
 #import "ES2Renderer.h"
 
 @implementation ES2Renderer
@@ -48,7 +49,6 @@
 		else 
 			context_ = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2 sharegroup:sharegroup];
 
-
         if (!context_ || ![EAGLContext setCurrentContext:context_] )
         {
             [self release];
@@ -63,6 +63,8 @@
         glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_RENDERBUFFER, colorRenderbuffer_);
 		
 		depthFormat_ = depthFormat;
+		
+		CHECK_GL_ERROR_DEBUG();
     }
 
     return self;
@@ -72,6 +74,7 @@
 {
     // Allocate color buffer backing based on the current layer size
     glBindRenderbuffer(GL_RENDERBUFFER, colorRenderbuffer_);
+
     [context_ renderbufferStorage:GL_RENDERBUFFER fromDrawable:layer];
     glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_WIDTH, &backingWidth_);
     glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_HEIGHT, &backingHeight_);
@@ -81,20 +84,23 @@
         NSLog(@"Failed to make complete framebuffer object %x", glCheckFramebufferStatus(GL_FRAMEBUFFER));
         return NO;
     }
-	
+
 	if (depthFormat_) 
 	{
 		if( ! depthBuffer_ )
 			glGenRenderbuffers(1, &depthBuffer_);
-		
+	
 		glBindRenderbuffer(GL_RENDERBUFFER, depthBuffer_);
+
 		glRenderbufferStorage(GL_RENDERBUFFER, depthFormat_, backingWidth_, backingHeight_);
+
 		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, depthBuffer_);
 		
 		// bind color buffer
 		glBindRenderbuffer(GL_RENDERBUFFER, colorRenderbuffer_);
 	}
-	
+
+	CHECK_GL_ERROR_DEBUG();
 
     return YES;
 }

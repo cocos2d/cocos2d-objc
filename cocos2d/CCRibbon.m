@@ -40,8 +40,13 @@
 
 #import "CCRibbon.h"
 #import "CCTextureCache.h"
-#import "Support/CGPointExtension.h"
+#import "CCTexture2D.h"
 #import "ccMacros.h"
+#import "GLProgram.h"
+#import "CCShaderCache.h"
+#import "Support/TransformUtils.h"
+#import "Support/CGPointExtension.h"
+#import "Support/OpenGL_Internal.h"
 
 //
 // Ribbon
@@ -62,7 +67,6 @@
 	self = [super init];
 	if (self)
 	{
-		
 		segments_ = [[NSMutableArray alloc] init];
 		deletedSegments_ = [[NSMutableArray alloc] init];
 
@@ -95,6 +99,11 @@
 		/* default texture parameter */
 		ccTexParams params = { GL_LINEAR, GL_LINEAR, GL_REPEAT, GL_REPEAT };
 		[texture_ setTexParameters:&params];
+		
+		self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_VertexTextureColor];
+		shaderProgramAlternative_ = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_VertexTexture1Color];
+		[shaderProgramAlternative_ retain];
+
 	}
 	return self;
 }
@@ -104,6 +113,9 @@
 	[segments_ release];
 	[deletedSegments_ release];
 	[texture_ release];
+	[shaderProgram_ release];
+	[shaderProgramAlternative_ release];
+
 	[super dealloc];
 }
 
@@ -164,12 +176,12 @@
 	}
 	[segments_ removeObjectsInArray:deletedSegments_];
 	// is the segment full?
-	if (seg->end >= 50)
+	if (seg->end >= kCCRibbon_Max)
 		[segments_ removeObjectsInArray:deletedSegments_];
 	// grab last segment and append to it if it's not full
 	seg = [segments_ lastObject];
 	// is the segment full?
-	if (seg->end >= 50)
+	if (seg->end >= kCCRibbon_Max)
 	{
 		CCRibbonSegment* newSeg;
 		// grab it from the cache if we can
@@ -253,10 +265,28 @@
 {
 	if ([segments_ count] > 0)
 	{
-		// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
-		// Needed states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_TEXTURE_COORD_ARRAY
-		// Unneeded states: GL_COLOR_ARRAY
-		glDisableClientState(GL_COLOR_ARRAY);
+		//
+		// Uniforms
+		//
+		GLfloat mat4[16];	
+		CGAffineToGL( &transformMV_, mat4 );
+		
+		// Updated Z vertex
+		mat4[14] = vertexZ_;
+		
+		GLProgram *program = curTime_ ? shaderProgram_ : shaderProgramAlternative_;
+		
+		glUseProgram( program->program_ );	
+		
+		glUniformMatrix4fv( program->uniforms_[kCCUniformPMatrix], 1, GL_FALSE, (GLfloat*)&ccProjectionMatrix);
+		glUniformMatrix4fv( program->uniforms_[kCCUniformMVMatrix], 1, GL_FALSE, mat4);	
+		glUniform1i( program->uniforms_[kCCUniformSampler], 0 );
+
+		if( ! curTime_ ) {
+			ccColor4F color = { color_.r/255.0f, color_.g/255.0f, color_.b/255.0f, color_.a/255.0f };
+			glUniform4fv( program->uniforms_[kCCUniformOneColor], 1, (CGFloat*)&color );
+			glDisableVertexAttribArray(kCCAttribColor);
+		}
 		
 		glBindTexture(GL_TEXTURE_2D, [texture_ name]);
 
@@ -264,14 +294,15 @@
 		if( newBlend )
 			glBlendFunc( blendFunc_.src, blendFunc_.dst );
 
-		for (CCRibbonSegment* seg in segments_)
+		for (CCRibbonSegment* seg in segments_) {
 			[seg draw:curTime_ fadeTime:fadeTime_ color:color_];
+		}
 
 		if( newBlend )
 			glBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);
-		
-		// restore default GL state
-		glEnableClientState( GL_COLOR_ARRAY );
+
+		if( ! curTime_ )
+			glEnableVertexAttribArray(kCCAttribColor);
 	}
 }
 
@@ -330,21 +361,13 @@
 	GLubyte r = color.r;
 	GLubyte g = color.g;
 	GLubyte b = color.b;
-	GLubyte a = color.a;
-
-	if (begin < 50)
+	
+	if (begin < kCCRibbon_Max)
 	{
 		// the motion streak class will call update and cause time to change, thus, if curTime_ != 0
 		// we have to generate alpha for the ribbon each frame.
-		if (curTime == 0)
+		if (curTime )
 		{
-			// no alpha over time, so just set the color
-			glColor4ub(r,g,b,a);
-		}
-		else
-		{
-			// generate alpha/color for each point
-			glEnableClientState(GL_COLOR_ARRAY);
 			uint i = begin;
 			for (; i < end; ++i)
 			{
@@ -368,10 +391,17 @@
 					colors[idx+7] = colors[idx+3];
 				}
 			}
-			glColorPointer(4, GL_UNSIGNED_BYTE, 0, &colors[begin*8]);
+
+			// color
+			glVertexAttribPointer(kCCAttribColor, 4, GL_UNSIGNED_BYTE, GL_TRUE, 0, &colors[begin*8]);
+			
 		}
-		glVertexPointer(3, GL_FLOAT, 0, &verts[begin*6]);
-		glTexCoordPointer(2, GL_FLOAT, 0, &coords[begin*4]);
+		// position
+		glVertexAttribPointer(kCCAttribVertex, 3, GL_FLOAT, GL_FALSE, 0, &verts[begin*6]);
+		
+		// texCoods
+		glVertexAttribPointer(kCCAttribTexCoords, 2, GL_FLOAT, GL_FALSE, 0, &coords[begin*4]);
+				
 		glDrawArrays(GL_TRIANGLE_STRIP, 0, (end - begin) * 2);
 	}
 	else

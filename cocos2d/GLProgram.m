@@ -135,6 +135,7 @@ typedef void (*GLLogFunction) (GLuint program,
 	// update uniforms
 	uniforms_[kCCUniformPMatrix] = glGetUniformLocation(program_, kCCUniformPMatrix_s);
 	uniforms_[kCCUniformMVMatrix] = glGetUniformLocation(program_, kCCUniformMVMatrix_s);
+	uniforms_[kCCUniformOneColor] = glGetUniformLocation(program_, kCCUniformOneColor_s);
 	uniforms_[kCCUniformSampler] = glGetUniformLocation(program_, kCCUniformSampler_s);
 }	
 

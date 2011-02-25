@@ -105,7 +105,7 @@ kmVec4* kmVec4Transform(kmVec4* pOut, const kmVec4* pV, const kmMat4* pM);
  * @Params pOut - A pointer to the matrix to set to identity
  * @Return Returns pOut so that the call can be nested
  */
-kmMat4* const kmMat4Identity(kmMat4* pOut);
+const kmMat4* kmMat4Identity(kmMat4* pOut);
 
 /** Multiplies pM1 with pM2, stores the result in pOut, returns pOut. */
 kmMat4* kmMat4Multiply(kmMat4* pOut, const kmMat4* pM1, const kmMat4* pM2);
@@ -164,14 +164,14 @@ void kmMatSwap(kmMat4 * pIn, int r1, int c1, int r2, int c2);
 #pragma mark Projection
 
 /** Creates a perspective projection matrix in the same way as gluPerspective. */
-kmMat4* const kmMat4PerspectiveProjection(kmMat4* pOut, kmScalar fovY, kmScalar aspect, kmScalar zNear, kmScalar zFar);
+const kmMat4* kmMat4PerspectiveProjection(kmMat4* pOut, kmScalar fovY, kmScalar aspect, kmScalar zNear, kmScalar zFar);
 
 /** Creates an orthographic projection matrix like glOrtho */
-kmMat4* const kmMat4OrthographicProjection(kmMat4* pOut, kmScalar left, kmScalar right, kmScalar bottom, kmScalar top, kmScalar nearVal, kmScalar farVal);
+const kmMat4* kmMat4OrthographicProjection(kmMat4* pOut, kmScalar left, kmScalar right, kmScalar bottom, kmScalar top, kmScalar nearVal, kmScalar farVal);
 
 /**
  * Builds a translation matrix in the same way as gluLookAt().
  * the resulting matrix is stored in pOut. pOut is returned.
  */
-kmMat4* const kmMat4LookAt(kmMat4* pOut, const struct kmVec3* pEye, const struct kmVec3* pCenter, const struct kmVec3* pUp);
+const kmMat4* kmMat4LookAt(kmMat4* pOut, const struct kmVec3* pEye, const struct kmVec3* pCenter, const struct kmVec3* pUp);
 

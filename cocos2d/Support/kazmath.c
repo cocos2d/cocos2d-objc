@@ -157,7 +157,7 @@ kmVec4* kmVec4Transform(kmVec4* pOut, const kmVec4* pV, const kmMat4* pM) {
 #pragma mark -
 #pragma mark Mat4
 
-kmMat4* const kmMat4Identity(kmMat4* pOut)
+const kmMat4* kmMat4Identity(kmMat4* pOut)
 {
 	memset(pOut->mat, 0, sizeof(float) * 16);
 	pOut->mat[0] = pOut->mat[5] = pOut->mat[10] = pOut->mat[15] = 1.0f;
@@ -242,22 +242,22 @@ kmMat4* kmMat4RotationYXZ(kmMat4* pOut, const kmScalar xRadians, const kmScalar 
 	m[0] = (cy * cz) + (sx * sy * sz);
 	m[1] = cx * sz;
 	m[2] = (cy * sx * sz) - (cz * sy);
-	m[3] = 0.0;
+	m[3] = 0.0f;
 	
 	m[4] = (cz * sx * sy) - (cy * sz);
 	m[5] = cx * cz;
 	m[6] = (cy * cz * sx) + (sy * sz);
-	m[7] = 0.0;
+	m[7] = 0.0f;
 	
 	m[8] = cx * sy;
 	m[9] = -sx;
 	m[10] = cx * cy;
-	m[11] = 0.0;
+	m[11] = 0.0f;
 	
-	m[12] = 0.0;
-	m[13] = 0.0;
-	m[14] = 0.0;
-	m[15] = 1.0;
+	m[12] = 0.0f;
+	m[13] = 0.0f;
+	m[14] = 0.0f;
+	m[15] = 1.0f;
 	
 	return pOut;
 }
@@ -285,22 +285,22 @@ kmMat4* kmMat4RotationZYX(kmMat4* pOut, const kmScalar xRadians, const kmScalar 
 	m[0] = cy * cz;
 	m[1] = cy * sz;
 	m[2] = -sy;
-	m[3] = 0.0;
+	m[3] = 0.0f;
 	
 	m[4] = -(cx * sz) + (sx * sy * cz);
 	m[5] = (cx * cz) + (sx * sy * sz);
 	m[6] = sx * cy;
-	m[7] = 0.0;
+	m[7] = 0.0f;
 	
 	m[8] = (sx * sz) + (cx * sy * cz);
 	m[9] = -(sx * cz) + (cx * sy * sz);
 	m[10] = cx * cy;
-	m[11] = 0.0;
+	m[11] = 0.0f;
 	
-	m[12] = 0.0;
-	m[13] = 0.0;
-	m[14] = 0.0;
-	m[15] = 1.0;
+	m[12] = 0.0f;
+	m[13] = 0.0f;
+	m[14] = 0.0f;
+	m[15] = 1.0f;
 	
 	return pOut;
 }
@@ -489,22 +489,22 @@ kmMat4* kmMat4Transformation(kmMat4* pOut, const kmVec3 translation, const kmVec
 	m[0] *= scale.x;
 	m[1] *= scale.x;
 	m[2] *= scale.x;
-	m[3] = 0.0;
+	m[3] = 0.0f;
 	
 	m[4] *= scale.y;
 	m[5] *= scale.y;
 	m[6] *= scale.y;
-	m[7] = 0.0;
+	m[7] = 0.0f;
 	
 	m[8] *= scale.z;
 	m[9] *= scale.z;
 	m[10] *= scale.z;
-	m[11] = 0.0;
+	m[11] = 0.0f;
 	
 	m[12] = translation.x;
 	m[13] = translation.y;
 	m[14] = translation.z;
-	m[15] = 1.0;
+	m[15] = 1.0f;
 	
 	return pOut;
 }
@@ -530,7 +530,7 @@ void kmMatSwap(kmMat4* pIn, int r1, int c1, int r2, int c2) {
  * Creates a perspective projection matrix in the
  * same way as gluPerspective
  */
-kmMat4* const kmMat4PerspectiveProjection(kmMat4* pOut, kmScalar fovY,
+const kmMat4* kmMat4PerspectiveProjection(kmMat4* pOut, kmScalar fovY,
 										  kmScalar aspect, kmScalar zNear,
 										  kmScalar zFar)
 {
@@ -540,7 +540,7 @@ kmMat4* const kmMat4PerspectiveProjection(kmMat4* pOut, kmScalar fovY,
 
 	kmScalar r = DEGREES_TO_RADIANS(fovY / 2);
 	kmScalar deltaZ = zFar - zNear;
-	kmScalar s = sin(r);
+	kmScalar s = sinf(r);
     kmScalar cotangent = 0;
 	
 	if (deltaZ == 0 || s == 0 || aspect == 0) {
@@ -548,7 +548,7 @@ kmMat4* const kmMat4PerspectiveProjection(kmMat4* pOut, kmScalar fovY,
 	}
 	
     //cos(r) / sin(r) = cot(r)
-	cotangent = cos(r) / s;
+	cotangent = cosf(r) / s;
 	
 	kmMat4Identity(pOut);
 	pOut->mat[0] = cotangent / aspect;
@@ -562,7 +562,7 @@ kmMat4* const kmMat4PerspectiveProjection(kmMat4* pOut, kmScalar fovY,
 }
 
 /** Creates an orthographic projection matrix like glOrtho */
-kmMat4* const kmMat4OrthographicProjection(kmMat4* pOut, kmScalar left,
+const kmMat4* kmMat4OrthographicProjection(kmMat4* pOut, kmScalar left,
 										   kmScalar right, kmScalar bottom,
 										   kmScalar top, kmScalar nearVal,
 										   kmScalar farVal)
@@ -586,7 +586,7 @@ kmMat4* const kmMat4OrthographicProjection(kmMat4* pOut, kmScalar left,
  * Builds a translation matrix in the same way as gluLookAt()
  * the resulting matrix is stored in pOut. pOut is returned.
  */
-kmMat4* const kmMat4LookAt(kmMat4* pOut, const kmVec3* pEye,
+const kmMat4* kmMat4LookAt(kmMat4* pOut, const kmVec3* pEye,
 						   const kmVec3* pCenter, const kmVec3* pUp)
 {
     kmVec3 f, up, s, u;
