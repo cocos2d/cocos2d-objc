@@ -358,14 +358,13 @@ enum {
 {
 	if( (self=[super initWithTexture:texture rect:rect]) ) {
 		
-		CGSize s = [[CCDirector sharedDirector] displaySizeInPixels];
+		CGSize s = [texture_ contentSizeInPixels];
 	
-		blur_ = ccp(1/s.width*2, 1/s.height*2);
+		blur_ = ccp(1/s.width, 1/s.height);
 		sub_[0] = sub_[1] = sub_[2] = sub_[3] = 0;
 		
 		GLProgram *shader = [[GLProgram alloc] initWithVertexShaderFilename:@"Shaders/VertexTextureColor.vert"
 													 fragmentShaderFilename:@"Shaders/Blur.frag"];
-//													 fragmentShaderFilename:@"Shaders/VertexTextureColor.frag"];
 
 		CHECK_GL_ERROR_DEBUG();
 
