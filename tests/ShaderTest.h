@@ -50,3 +50,8 @@
 {
 }
 @end
+
+@interface ShaderBlur : ShaderTest
+{
+}
+@end

@@ -16,7 +16,7 @@ static NSString *transitions[] = {
 	@"ShaderHeart",
 	@"ShaderFlower",
 	@"ShaderPlasma",
-
+	@"ShaderBlur",
 };
 
 Class nextAction()
@@ -340,6 +340,160 @@ enum {
 }
 @end
 
+#pragma mark -
+#pragma mark ShaderBlur
+
+@interface SpriteBlur : CCSprite
+{
+	CGPoint blur_;
+	CGFloat	sub_[4];
+	
+	GLuint	blurLocation;
+	GLuint	subLocation;
+}
+@end
+
+@implementation SpriteBlur
+-(id) initWithTexture:(CCTexture2D*)texture rect:(CGRect)rect
+{
+	if( (self=[super initWithTexture:texture rect:rect]) ) {
+		
+		CGSize s = [[CCDirector sharedDirector] displaySizeInPixels];
+	
+		blur_ = ccp(1/s.width*2, 1/s.height*2);
+		sub_[0] = sub_[1] = sub_[2] = sub_[3] = 0;
+		
+		GLProgram *shader = [[GLProgram alloc] initWithVertexShaderFilename:@"Shaders/VertexTextureColor.vert"
+													 fragmentShaderFilename:@"Shaders/Blur.frag"];
+//													 fragmentShaderFilename:@"Shaders/VertexTextureColor.frag"];
+
+		CHECK_GL_ERROR_DEBUG();
+
+		[shader addAttribute:@"aVertex" index:kCCAttribVertex];
+		[shader addAttribute:@"aColor" index:kCCAttribColor];
+		[shader addAttribute:@"aTexCoord" index:kCCAttribTexCoords];
+		
+		CHECK_GL_ERROR_DEBUG();
+		
+		[shader link];
+
+		CHECK_GL_ERROR_DEBUG();
+		
+		[shader updateUniforms];
+
+		CHECK_GL_ERROR_DEBUG();
+
+		blurLocation = glGetUniformLocation( shader->program_, "blurSize");
+		subLocation = glGetUniformLocation( shader->program_, "subtract");
+		
+		CHECK_GL_ERROR_DEBUG();
+
+		self.shaderProgram = shader;
+		
+		[shader release];
+	}
+	
+	return self;
+}
+
+-(void) draw
+{
+	// Default Attribs & States: GL_TEXTURE0, k,CCAttribVertex, kCCAttribColor, kCCAttribTexCoords
+	// Needed states: GL_TEXTURE0, k,CCAttribVertex, kCCAttribColor, kCCAttribTexCoords
+	// Unneeded states: -
+	
+	BOOL newBlend = blendFunc_.src != CC_BLEND_SRC || blendFunc_.dst != CC_BLEND_DST;
+	if( newBlend )
+		glBlendFunc( blendFunc_.src, blendFunc_.dst );
+	
+	glUseProgram( shaderProgram_->program_ );
+	
+	CHECK_GL_ERROR_DEBUG();
+	
+	//
+	// Uniforms
+	//
+	GLfloat mat4[16];	
+	CGAffineToGL( &transformMV_, mat4 );
+	
+	// Updated Z vertex
+	mat4[14] = vertexZ_;
+	
+	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformPMatrix], 1, GL_FALSE, (GLfloat*)&ccProjectionMatrix);
+	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformMVMatrix], 1, GL_FALSE, mat4);	
+	glUniform1i ( shaderProgram_->uniforms_[kCCUniformSampler], 0 );
+	CHECK_GL_ERROR_DEBUG();
+
+	
+	glUniform2f( blurLocation, blur_.x, blur_.y );
+	glUniform4f( subLocation, sub_[0], sub_[1], sub_[2], sub_[3] );
+	
+	CHECK_GL_ERROR_DEBUG();
+
+	
+	glBindTexture(GL_TEXTURE_2D, [texture_ name]);	
+	
+	//
+	// Attributes
+	//
+#define kQuadSize sizeof(quad_.bl)
+	long offset = (long)&quad_;
+	
+	// vertex
+	NSInteger diff = offsetof( ccV3F_C4B_T2F, vertices);
+	glVertexAttribPointer(kCCAttribVertex, 3, GL_FLOAT, GL_FALSE, kQuadSize, (void*) (offset + diff));
+	
+	// texCoods
+	diff = offsetof( ccV3F_C4B_T2F, texCoords);
+	glVertexAttribPointer(kCCAttribTexCoords, 2, GL_FLOAT, GL_FALSE, kQuadSize, (void*)(offset + diff));
+	
+	// color
+	diff = offsetof( ccV3F_C4B_T2F, colors);
+	glVertexAttribPointer(kCCAttribColor, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (void*)(offset + diff));
+	
+	
+	CHECK_GL_ERROR_DEBUG();
+
+	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+	
+	if( newBlend )
+		glBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);	
+	
+	CHECK_GL_ERROR_DEBUG();
+}
+@end
+
+
+@implementation ShaderBlur
+-(id) init
+{
+	if( (self=[super init] ) ) {
+
+		CCSprite *blurSprite = [SpriteBlur spriteWithFile:@"grossini.png"];
+		CCSprite *sprite = [CCSprite spriteWithFile:@"grossini.png"];
+		
+		
+		CGSize s = [[CCDirector sharedDirector] winSize];
+		[blurSprite setPosition:ccp(s.width/3, s.height/2)];
+		[sprite setPosition:ccp(2*s.width/3, s.height/2)];
+		
+		[self addChild:blurSprite];	
+		[self addChild:sprite];	
+	}
+	
+	return self;	
+}
+
+-(NSString *) title
+{
+	return @"Shader: Frag shader";
+}
+
+-(NSString *) subtitle
+{
+	return @"Blur";
+}
+@end
 
 
 // CLASS IMPLEMENTATIONS
