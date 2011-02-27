@@ -36,6 +36,12 @@
 }
 @end
 
+@interface ShaderJulia : ShaderTest
+{
+}
+@end
+
+
 @interface ShaderHeart : ShaderTest
 {
 }
