@@ -13,6 +13,7 @@
 static int sceneIdx=-1;
 static NSString *transitions[] = {
 	@"ShaderMandelbrot",
+	@"ShaderJulia",
 	@"ShaderHeart",
 	@"ShaderFlower",
 	@"ShaderPlasma",
@@ -253,6 +254,36 @@ enum {
 	return @"Mandelbrot shader with Zoom";
 }
 @end
+
+#pragma mark -
+#pragma mark ShaderJulia
+
+@implementation ShaderJulia
+-(id) init
+{
+	if( (self=[super init] ) ) {
+		ShaderNode *mandel = [[ShaderNode alloc] initWithVertex:@"Shaders/Julia.vert" fragment:@"Shaders/Julia.frag"];
+		
+//		CGSize s = [[CCDirector sharedDirector] winSize];
+//		[mandel setPosition:ccp(s.width/2, s.height/2)];
+		
+		[self addChild:mandel];	
+	}
+	
+	return self;	
+}
+
+-(NSString *) title
+{
+	return @"Shader: Frag shader";
+}
+
+-(NSString *) subtitle
+{
+	return @"Julia shader";
+}
+@end
+
 
 #pragma mark -
 #pragma mark ShaderHeart
