@@ -48,8 +48,13 @@
 
 - (IBAction)toggleFullScreen: (id)sender
 {
-	CCDirectorMac *director = (CCDirectorMac*) [CCDirector sharedDirector];
-	[director setFullScreen: ! [director isFullScreen] ];
+	MacGLView *view=[[CCDirector sharedDirector] openGLView];
+	if (![view isInFullScreenMode]) {
+		[view enterFullScreenMode:[NSScreen mainScreen] withOptions: nil];
+	} else {
+		[view exitFullScreenModeWithOptions:nil];
+		[view.window makeFirstResponder: view];
+	}
 }
 
 @end
