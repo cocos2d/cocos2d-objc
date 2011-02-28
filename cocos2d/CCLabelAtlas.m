@@ -58,7 +58,7 @@
 		mapStartChar = c;		
 		[self setString: theString];
 		
-		self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_VertexTextureColor];
+		self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTextureColor];
 	}
 
 	return self;

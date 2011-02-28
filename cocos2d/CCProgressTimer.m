@@ -78,7 +78,7 @@ const char kProgressTextureCoords = 0x1e;
 		self.type = kCCProgressTimerTypeRadialCCW;
 		
 		// shader program
-		self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_VertexTextureColor];
+		self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTextureColor];
 	}
 	return self;
 }
@@ -499,7 +499,7 @@ const char kProgressTextureCoords = 0x1e;
 	//	Everything above me and below me is copied from CCTextureNode's draw
 	glBindTexture(GL_TEXTURE_2D, sprite_.texture.name);
 
-	glVertexAttribPointer(kCCAttribVertex, 2, GL_FLOAT, GL_FALSE, sizeof(ccV2F_C4B_T2F), &vertexData_[0].vertices);
+	glVertexAttribPointer(kCCAttribPosition, 2, GL_FLOAT, GL_FALSE, sizeof(ccV2F_C4B_T2F), &vertexData_[0].vertices);
 	glVertexAttribPointer(kCCAttribTexCoords, 2, GL_FLOAT, GL_FALSE, sizeof(ccV2F_C4B_T2F), &vertexData_[0].texCoords);
 	glVertexAttribPointer(kCCAttribColor, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(ccV2F_C4B_T2F), &vertexData_[0].colors);
 	

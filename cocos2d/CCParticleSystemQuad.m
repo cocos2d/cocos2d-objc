@@ -81,7 +81,7 @@
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 #endif // CC_USES_VBO
 		
-		self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_VertexTextureColor];
+		self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTextureColor];
 		
 	}
 		
@@ -277,7 +277,7 @@
 	glBindBuffer(GL_ARRAY_BUFFER, quadsID_);
 	
 	// vertices
-	glVertexAttribPointer(kCCAttribVertex, 2, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof( ccV2F_C4B_T2F, vertices));
+	glVertexAttribPointer(kCCAttribPosition, 2, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof( ccV2F_C4B_T2F, vertices));
 	
 	// colors
 	glVertexAttribPointer(kCCAttribColor, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (GLvoid*) offsetof( ccV2F_C4B_T2F, colors));
@@ -291,7 +291,7 @@
 	
 	// vertex
 	NSInteger diff = offsetof( ccV2F_C4B_T2F, vertices);
-	glVertexAttribPointer(kCCAttribVertex, 2, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) (offset + diff));
+	glVertexAttribPointer(kCCAttribPosition, 2, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) (offset + diff));
 	
 	// color
 	diff = offsetof( ccV2F_C4B_T2F, colors);

@@ -122,7 +122,7 @@ static 	SEL selUpdate = NULL;
 		descendants_ = [[CCArray alloc] initWithCapacity:capacity];
 		
 		
-		self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_VertexTextureColor];
+		self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTextureColor];
 	}
 	
 	return self;

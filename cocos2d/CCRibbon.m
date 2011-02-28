@@ -100,8 +100,8 @@
 		ccTexParams params = { GL_LINEAR, GL_LINEAR, GL_REPEAT, GL_REPEAT };
 		[texture_ setTexParameters:&params];
 		
-		self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_VertexTextureColor];
-		shaderProgramAlternative_ = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_VertexTexture1Color];
+		self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTextureColor];
+		shaderProgramAlternative_ = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTextureColor];
 		[shaderProgramAlternative_ retain];
 
 	}
@@ -284,8 +284,8 @@
 
 		if( ! curTime_ ) {
 			ccColor4F color = { color_.r/255.0f, color_.g/255.0f, color_.b/255.0f, color_.a/255.0f };
-			glUniform4fv( program->uniforms_[kCCUniformOneColor], 1, (CGFloat*)&color );
 			glDisableVertexAttribArray(kCCAttribColor);
+			glVertexAttrib4fv(kCCAttribColor, (CGFloat*)&color);
 		}
 		
 		glBindTexture(GL_TEXTURE_2D, [texture_ name]);
@@ -301,6 +301,7 @@
 		if( newBlend )
 			glBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);
 
+		// Restore default state
 		if( ! curTime_ )
 			glEnableVertexAttribArray(kCCAttribColor);
 	}
@@ -397,7 +398,7 @@
 			
 		}
 		// position
-		glVertexAttribPointer(kCCAttribVertex, 3, GL_FLOAT, GL_FALSE, 0, &verts[begin*6]);
+		glVertexAttribPointer(kCCAttribPosition, 3, GL_FLOAT, GL_FALSE, 0, &verts[begin*6]);
 		
 		// texCoods
 		glVertexAttribPointer(kCCAttribTexCoords, 2, GL_FLOAT, GL_FALSE, 0, &coords[begin*4]);

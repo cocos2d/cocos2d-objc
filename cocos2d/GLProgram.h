@@ -33,7 +33,7 @@
 #endif // __MAC_OS_X_VERSION_MAX_ALLOWED
 
 enum {
-	kCCAttribVertex,
+	kCCAttribPosition,
 	kCCAttribColor,
 	kCCAttribTexCoords,
 	
@@ -43,7 +43,6 @@ enum {
 enum {
 	kCCUniformPMatrix,
 	kCCUniformMVMatrix,
-	kCCUniformOneColor,
 	kCCUniformSampler,
 
 	kCCUniform_MAX,
@@ -51,16 +50,19 @@ enum {
 
 extern GLint ccUniforms[kCCUniform_MAX];
 
-#define kCCShader_VertexTextureColor	@"ShaderVertexTextureColor"
-#define kCCShader_VertexColor			@"ShaderVertexColor"
-#define kCCShader_VertexTexture			@"ShaderVertexTexture"
-#define kCCShader_VertexTexture1Color	@"ShaderVertexTexture1Color"
+#define kCCShader_PositionTextureColor	@"ShaderPositionTextureColor"
+#define kCCShader_PositionColor			@"ShaderPositionColor"
+#define kCCShader_PositionTexture		@"ShaderPositionTexture"
 
 // uniform names
-#define kCCUniformMVMatrix_s			"uMVMatrix"
-#define kCCUniformPMatrix_s				"uPMatrix"
-#define kCCUniformOneColor_s			"uOneColor"
-#define kCCUniformSampler_s				"uTexture"
+#define kCCUniformMVMatrix_s			"u_MVMatrix"
+#define kCCUniformPMatrix_s				"u_PMatrix"
+#define kCCUniformSampler_s				"u_texture"
+
+// Attribute names
+#define	kCCAttributeNameColor			@"a_color"
+#define	kCCAttributeNamePosition		@"a_position"
+#define	kCCAttributeNameTexCoord		@"a_texCoord"
 
 
 /** GLProgram

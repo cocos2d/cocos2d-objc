@@ -6,7 +6,6 @@ precision highp float;
 
 uniform float time;
 uniform vec2 resolution;
-uniform vec4 mouse;
 
 void main(void)
 {

@@ -1,11 +1,11 @@
 // http://www.cocos2d-iphone.org
 
-attribute vec4 aVertex;
+attribute vec4 a_position;
 
-uniform		mat4 uMVMatrix;
-uniform		mat4 uPMatrix;
+uniform		mat4 u_MVMatrix;
+uniform		mat4 u_PMatrix;
 
 void main()
 {
-    gl_Position = uPMatrix * uMVMatrix * aVertex;
+    gl_Position = u_PMatrix * u_MVMatrix * a_position;
 }

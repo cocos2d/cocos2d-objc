@@ -546,6 +546,21 @@
 		else 
 			transformMV_ = CGAffineTransformConcat( transformMV_, parent_->transformMV_ );
 	}
+	
+	// XXX: Expensive calls. Camera should be integrated into the cached affine matrix
+	if ( camera_ && !(grid_ && grid_.active) )
+	{
+//		BOOL translate = (anchorPointInPixels_.x != 0.0f || anchorPointInPixels_.y != 0.0f);
+//		
+//		if( translate )
+//			ccglTranslate(RENDER_IN_SUBPIXEL(anchorPointInPixels_.x), RENDER_IN_SUBPIXEL(anchorPointInPixels_.y), 0);
+//		
+//		[camera_ locate];
+//		
+//		if( translate )
+//			ccglTranslate(RENDER_IN_SUBPIXEL(-anchorPointInPixels_.x), RENDER_IN_SUBPIXEL(-anchorPointInPixels_.y), 0);
+	}
+	
 }
 
 #pragma mark CCNode SceneManagement

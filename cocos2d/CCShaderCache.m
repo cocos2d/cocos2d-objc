@@ -65,64 +65,48 @@ static CCShaderCache *_sharedShaderCache;
 -(void) loadDefaultShaders
 {
 	// Vertex Texture Color shader
-	GLProgram *p = [[GLProgram alloc] initWithVertexShaderFilename:@"Shaders/VertexTextureColor.vert"
-											fragmentShaderFilename:@"Shaders/VertexTextureColor.frag"];
+	GLProgram *p = [[GLProgram alloc] initWithVertexShaderFilename:@"Shaders/PositionTextureColor.vert"
+											fragmentShaderFilename:@"Shaders/PositionTextureColor.frag"];
 	
-	[p addAttribute:@"aVertex" index:kCCAttribVertex];
-	[p addAttribute:@"aColor" index:kCCAttribColor];
-	[p addAttribute:@"aTexCoord" index:kCCAttribTexCoords];
+	[p addAttribute:kCCAttributeNamePosition index:kCCAttribPosition];
+	[p addAttribute:kCCAttributeNameColor index:kCCAttribColor];
+	[p addAttribute:kCCAttributeNameTexCoord index:kCCAttribTexCoords];
 	
 	[p link];
 	[p updateUniforms];
 	
-	[programs_ setObject:p forKey:kCCShader_VertexTextureColor];
+	[programs_ setObject:p forKey:kCCShader_PositionTextureColor];
 	[p release];
 
 	//
 	// Vertex Color shader
 	//
-	p = [[GLProgram alloc] initWithVertexShaderFilename:@"Shaders/VertexColor.vert"
-								 fragmentShaderFilename:@"Shaders/VertexColor.frag"];
+	p = [[GLProgram alloc] initWithVertexShaderFilename:@"Shaders/PositionColor.vert"
+								 fragmentShaderFilename:@"Shaders/PositionColor.frag"];
 	
-	[p addAttribute:@"aVertex" index:kCCAttribVertex];
-	[p addAttribute:@"aColor" index:kCCAttribColor];
+	[p addAttribute:kCCAttributeNamePosition index:kCCAttribPosition];
+	[p addAttribute:kCCAttributeNameColor index:kCCAttribColor];
 	
 	[p link];
 	[p updateUniforms];
 	
-	[programs_ setObject:p forKey:kCCShader_VertexColor];
+	[programs_ setObject:p forKey:kCCShader_PositionColor];
 	[p release];
 
 	//
 	// Vertex Texture shader
 	//
-	p = [[GLProgram alloc] initWithVertexShaderFilename:@"Shaders/VertexTexture.vert"
-								 fragmentShaderFilename:@"Shaders/VertexTexture.frag"];
+	p = [[GLProgram alloc] initWithVertexShaderFilename:@"Shaders/PositionTexture.vert"
+								 fragmentShaderFilename:@"Shaders/PositionTexture.frag"];
 	
-	[p addAttribute:@"aVertex" index:kCCAttribVertex];
-	[p addAttribute:@"aTexCoord" index:kCCAttribTexCoords];
-	
-	[p link];
-	[p updateUniforms];
-	
-	[programs_ setObject:p forKey:kCCShader_VertexTexture];
-	[p release];
-
-	//
-	// Vertex Texture 1 Color shader
-	//
-	p = [[GLProgram alloc] initWithVertexShaderFilename:@"Shaders/VertexTexture1Color.vert"
-								 fragmentShaderFilename:@"Shaders/VertexTexture1Color.frag"];
-	
-	[p addAttribute:@"aVertex" index:kCCAttribVertex];
-	[p addAttribute:@"aTexCoord" index:kCCAttribTexCoords];
+	[p addAttribute:kCCAttributeNamePosition index:kCCAttribPosition];
+	[p addAttribute:kCCAttributeNameTexCoord index:kCCAttribTexCoords];
 	
 	[p link];
 	[p updateUniforms];
 	
-	[programs_ setObject:p forKey:kCCShader_VertexTexture1Color];
-	[p release];
-	
+	[programs_ setObject:p forKey:kCCShader_PositionTexture];
+	[p release];	
 }
 
 -(GLProgram *) programForKey:(NSString*)key

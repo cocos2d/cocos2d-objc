@@ -84,7 +84,7 @@
 		grabber_ = [[CCGrabber alloc] init];
 		[grabber_ grab:texture_];
 		
-		self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_VertexTexture];
+		self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTexture];
 
 		[self calculateVertexPoints];
 	}
@@ -284,7 +284,7 @@
 	int n = gridSize_.x * gridSize_.y;
 
 	// Default Attribs & States: GL_TEXTURE0, k,CCAttribVertex, kCCAttribColor, kCCAttribTexCoords
-	// Needed states: GL_TEXTURE0, kCCAttribVertex, kCCAttribTexCoords
+	// Needed states: GL_TEXTURE0, kCCAttribPosition, kCCAttribTexCoords
 	// Unneeded states: kCCAttribColor
 	glDisableVertexAttribArray( kCCAttribColor );
 	
@@ -302,7 +302,7 @@
 	//
 
 	// vertex
-	glVertexAttribPointer(kCCAttribVertex, 3, GL_FLOAT, GL_FALSE, 0, vertices);
+	glVertexAttribPointer(kCCAttribPosition, 3, GL_FLOAT, GL_FALSE, 0, vertices);
 	
 	// texCoods
 	glVertexAttribPointer(kCCAttribTexCoords, 2, GL_FLOAT, GL_FALSE, 0, texCoordinates);
@@ -441,7 +441,7 @@
 	int n = gridSize_.x * gridSize_.y;
 	
 	// Default Attribs & States: GL_TEXTURE0, k,CCAttribVertex, kCCAttribColor, kCCAttribTexCoords
-	// Needed states: GL_TEXTURE0, kCCAttribVertex, kCCAttribTexCoords
+	// Needed states: GL_TEXTURE0, kCCAttribPosition, kCCAttribTexCoords
 	// Unneeded states: kCCAttribColor
 	glDisableVertexAttribArray( kCCAttribColor );
 
@@ -460,7 +460,7 @@
 	//
 	
 	// vertex
-	glVertexAttribPointer(kCCAttribVertex, 3, GL_FLOAT, GL_FALSE, 0, vertices);
+	glVertexAttribPointer(kCCAttribPosition, 3, GL_FLOAT, GL_FALSE, 0, vertices);
 
 	// texCoods
 	glVertexAttribPointer(kCCAttribTexCoords, 2, GL_FLOAT, GL_FALSE, 0, texCoordinates);
