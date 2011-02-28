@@ -7,6 +7,7 @@ version 1.0-beta - XX-XXX-2011
 . [FIX] CocosDenshion: Fixed excessively large or negative gain values cause distorted audio in the simulator.
 . [FIX] CocosDenshion: Added guards to prevent memory corruption caused by invalid parameters
 . [FIX] CocosDenshion: Define some constants for defaults, make const parameter on buffer asynch load method
+. [FIX] CCArray: insertObjectAtIndex checks bounds (issue #1121)
 . [FIX] Director: Fixed possible crash when purging the TextureCache
 . [FIX] Layer: Deprecated. CCMultiplexLayer deprecated. New name is CCLayerMultiplex
 . [FIX] Particles: consumes less memory (12 bytes less per particle) and are a bit faster
