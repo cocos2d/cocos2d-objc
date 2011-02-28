@@ -309,7 +309,7 @@
 		[self updateColor];
 		[self setContentSize:CGSizeMake(w, h) ];
 		
-		self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_VertexColor];
+		self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionColor];
 	}
 	return self;
 }
@@ -362,7 +362,7 @@
 	//
 	// Attributes
 	//
-	glVertexAttribPointer(kCCAttribVertex, 2, GL_FLOAT, GL_FALSE, 0, squareVertices_);
+	glVertexAttribPointer(kCCAttribPosition, 2, GL_FLOAT, GL_FALSE, 0, squareVertices_);
 	glVertexAttribPointer(kCCAttribColor, 4, GL_FLOAT, GL_FALSE, 0, squareColors_);
 	
 	

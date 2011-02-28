@@ -167,7 +167,7 @@ enum {
 	GLProgram *shader = [[GLProgram alloc] initWithVertexShaderFilename:vert
 												 fragmentShaderFilename:frag];
 	
-	[shader addAttribute:@"aVertex" index:kCCAttribVertex];
+	[shader addAttribute:@"aVertex" index:kCCAttribPosition];
 	
 	[shader link];
 	
@@ -216,7 +216,7 @@ enum {
 	glDisableVertexAttribArray(kCCAttribColor);
 	glDisableVertexAttribArray(kCCAttribTexCoords);
 
-	glVertexAttribPointer(kCCAttribVertex, 2, GL_FLOAT, GL_FALSE, 0, vertices);
+	glVertexAttribPointer(kCCAttribPosition, 2, GL_FLOAT, GL_FALSE, 0, vertices);
 
 	glDrawArrays(GL_TRIANGLES, 0, 6);
 	
@@ -399,7 +399,7 @@ enum {
 
 		CHECK_GL_ERROR_DEBUG();
 
-		[shader addAttribute:@"aVertex" index:kCCAttribVertex];
+		[shader addAttribute:@"aVertex" index:kCCAttribPosition];
 		[shader addAttribute:@"aColor" index:kCCAttribColor];
 		[shader addAttribute:@"aTexCoord" index:kCCAttribTexCoords];
 		
@@ -471,7 +471,7 @@ enum {
 	
 	// vertex
 	NSInteger diff = offsetof( ccV3F_C4B_T2F, vertices);
-	glVertexAttribPointer(kCCAttribVertex, 3, GL_FLOAT, GL_FALSE, kQuadSize, (void*) (offset + diff));
+	glVertexAttribPointer(kCCAttribPosition, 3, GL_FLOAT, GL_FALSE, kQuadSize, (void*) (offset + diff));
 	
 	// texCoods
 	diff = offsetof( ccV3F_C4B_T2F, texCoords);
