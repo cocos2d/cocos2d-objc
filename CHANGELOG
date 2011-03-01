@@ -1,4 +1,4 @@
-version 1.0-beta - XX-XXX-2011
+version 1.0-beta - 01-Mar-2011
 . [NEW] Actions: Repeat and RepeatForEver has getter/setter for the inner action (issue #1110)
 . [NEW] LayerGradient: Added "compressed interpolation" (default mode) in order to display all graident's colors in any vector
 . [NEW-MAC] Added CC_DIRECTOR_INIT(). It is possible to create a Mac Window programatically
@@ -7,6 +7,7 @@ version 1.0-beta - XX-XXX-2011
 . [FIX] CocosDenshion: Fixed excessively large or negative gain values cause distorted audio in the simulator.
 . [FIX] CocosDenshion: Added guards to prevent memory corruption caused by invalid parameters
 . [FIX] CocosDenshion: Define some constants for defaults, make const parameter on buffer asynch load method
+. [FIX] CCArray: insertObjectAtIndex checks bounds (issue #1121)
 . [FIX] Director: Fixed possible crash when purging the TextureCache
 . [FIX] Layer: Deprecated. CCMultiplexLayer deprecated. New name is CCLayerMultiplex
 . [FIX] Particles: consumes less memory (12 bytes less per particle) and are a bit faster
@@ -16,6 +17,7 @@ version 1.0-beta - XX-XXX-2011
 . [FIX] Sprite: flipx/flipy don't modify the contentSize (issue #1073)
 . [FIX] SpriteFrame: setRect sets pixels too. setRectInPixels sets points too (issue #1088)
 . [FIX] Templates: ItunesArtwork renamed to iTunesArtwork (issue #1092)
+. [FIX] Templates: HelloWorld -> HelloWorldLayer and other improvements (issue #873)
 . [FIX] TextureCache: asyncObject#dealloc uses CCLOGINFO instead of CCLOG (issue #1096)
 . [FIX] TiledMap: TMX maps work with zlib compression (Tiled v0.6)
 . [FIX-MAC] Director: runLoop enables NSTimers events (issue #1107)
