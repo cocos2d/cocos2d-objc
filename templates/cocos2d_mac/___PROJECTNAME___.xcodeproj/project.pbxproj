@@ -11,7 +11,6 @@
 		E01E6B36121EDCED001A484F /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E036A79E121B5C870037C5C6 /* QuartzCore.framework */; };
 		E01E6B49121EDCF4001A484F /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E036A79C121B5C720037C5C6 /* OpenGL.framework */; };
 		E02A83D9129F000100341C97 /* ___PROJECTNAMEASIDENTIFIER___AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E02A83D3129F000100341C97 /* ___PROJECTNAMEASIDENTIFIER___AppDelegate.m */; };
-		E02A83DA129F000100341C97 /* HelloWorldScene.m in Sources */ = {isa = PBXBuildFile; fileRef = E02A83D6129F000100341C97 /* HelloWorldScene.m */; };
 		E02A83F6129F01DF00341C97 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E02A83EE129F01DF00341C97 /* InfoPlist.strings */; };
 		E02A83F7129F01DF00341C97 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = E02A83F0129F01DF00341C97 /* MainMenu.xib */; };
 		E02A83F8129F01DF00341C97 /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = E02A83F2129F01DF00341C97 /* fps_images.png */; };
@@ -30,6 +29,7 @@
 		E02A8484129F083600341C97 /* CDXPropertyModifierAction.h in Headers */ = {isa = PBXBuildFile; fileRef = E02A840F129F083500341C97 /* CDXPropertyModifierAction.h */; };
 		E02A8485129F083600341C97 /* CDXPropertyModifierAction.m in Sources */ = {isa = PBXBuildFile; fileRef = E02A8410129F083500341C97 /* CDXPropertyModifierAction.m */; };
 		E02A8529129F109200341C97 /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = E02A8528129F109200341C97 /* icon.icns */; };
+		E0507118131760D700EAE33F /* HelloWorldLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E0507117131760D700EAE33F /* HelloWorldLayer.m */; };
 		E076E5B71225E97900DE0DA2 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		E076E5B81225E97900DE0DA2 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E036A79C121B5C720037C5C6 /* OpenGL.framework */; };
 		E076E5B91225E97900DE0DA2 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E036A79E121B5C870037C5C6 /* QuartzCore.framework */; };
@@ -213,8 +213,6 @@
 		E01E6A3D121EDCD3001A484F /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = System/Library/Frameworks/ApplicationServices.framework; sourceTree = SDKROOT; };
 		E02A83D2129F000100341C97 /* ___PROJECTNAMEASIDENTIFIER___AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "___PROJECTNAMEASIDENTIFIER___AppDelegate.h"; sourceTree = "<group>"; };
 		E02A83D3129F000100341C97 /* ___PROJECTNAMEASIDENTIFIER___AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "___PROJECTNAMEASIDENTIFIER___AppDelegate.m"; sourceTree = "<group>"; };
-		E02A83D5129F000100341C97 /* HelloWorldScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelloWorldScene.h; sourceTree = "<group>"; };
-		E02A83D6129F000100341C97 /* HelloWorldScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HelloWorldScene.m; sourceTree = "<group>"; };
 		E02A83EB129F01DF00341C97 /* ___PROJECTNAMEASIDENTIFIER____Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "___PROJECTNAMEASIDENTIFIER____Prefix.pch"; path = "Resources/___PROJECTNAMEASIDENTIFIER____Prefix.pch"; sourceTree = "<group>"; };
 		E02A83EC129F01DF00341C97 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Resources/Info.plist; sourceTree = "<group>"; };
 		E02A83EF129F01DF00341C97 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = InfoPlist.strings; sourceTree = "<group>"; };
@@ -237,6 +235,8 @@
 		E02A8528129F109200341C97 /* icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = icon.icns; path = Resources/icon.icns; sourceTree = "<group>"; };
 		E036A79C121B5C720037C5C6 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		E036A79E121B5C870037C5C6 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		E0507116131760D700EAE33F /* HelloWorldLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelloWorldLayer.h; sourceTree = "<group>"; };
+		E0507117131760D700EAE33F /* HelloWorldLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HelloWorldLayer.m; sourceTree = "<group>"; };
 		E076E5C01225E97900DE0DA2 /* ___PROJECTNAME___.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "___PROJECTNAME___.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E076E61F1225EC1E00DE0DA2 /* LICENSE.cocos2d */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.cocos2d; sourceTree = "<group>"; };
 		E076E6201225EC1E00DE0DA2 /* LICENSE.cocosdenshion */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.cocosdenshion; sourceTree = "<group>"; };
@@ -500,11 +500,11 @@
 		E02A83D1129F000100341C97 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				E0507116131760D700EAE33F /* HelloWorldLayer.h */,
+				E0507117131760D700EAE33F /* HelloWorldLayer.m */,
 				E02A83FB129F023B00341C97 /* main.m */,
 				E02A83D2129F000100341C97 /* ___PROJECTNAMEASIDENTIFIER___AppDelegate.h */,
 				E02A83D3129F000100341C97 /* ___PROJECTNAMEASIDENTIFIER___AppDelegate.m */,
-				E02A83D5129F000100341C97 /* HelloWorldScene.h */,
-				E02A83D6129F000100341C97 /* HelloWorldScene.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -1009,8 +1009,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				E02A83D9129F000100341C97 /* ___PROJECTNAMEASIDENTIFIER___AppDelegate.m in Sources */,
-				E02A83DA129F000100341C97 /* HelloWorldScene.m in Sources */,
 				E02A83FC129F023B00341C97 /* main.m in Sources */,
+				E0507118131760D700EAE33F /* HelloWorldLayer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

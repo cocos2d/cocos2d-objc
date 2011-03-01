@@ -1,5 +1,5 @@
 //
-//  HelloWorldScene.h
+//  HelloWorldLayer.h
 //  ___PROJECTNAME___
 //
 //  Created by ___FULLUSERNAME___ on ___DATE___.
@@ -12,16 +12,15 @@
 #import "Box2D.h"
 #import "GLES-Render.h"
 
-// HelloWorld Layer
-@interface HelloWorld : CCLayer
+// HelloWorldLayer
+@interface HelloWorldLayer : CCLayer
 {
 	b2World* world;
 	GLESDebugDraw *m_debugDraw;
 }
 
-// returns a Scene that contains the HelloWorld as the only child
-+(id) scene;
-
+// returns a CCScene that contains the HelloWorldLayer as the only child
++(CCScene *) scene;
 // adds a new sprite at a given coordinate
 -(void) addNewSpriteWithCoords:(CGPoint)p;
 

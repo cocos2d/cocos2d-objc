@@ -10,7 +10,7 @@
 
 #import "___PROJECTNAMEASIDENTIFIER___AppDelegate.h"
 #import "GameConfig.h"
-#import "HelloWorldScene.h"
+#import "HelloWorldLayer.h"
 #import "RootViewController.h"
 
 @implementation ___PROJECTNAMEASIDENTIFIER___AppDelegate
@@ -110,7 +110,7 @@
 	[self removeStartupFlicker];
 	
 	// Run the intro Scene
-	[[CCDirector sharedDirector] runWithScene: [HelloWorld scene]];		
+	[[CCDirector sharedDirector] runWithScene: [HelloWorldLayer scene]];
 }
 
 
