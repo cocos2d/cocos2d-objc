@@ -14,8 +14,6 @@ enum {
 
 static int sceneIdx=-1;
 static NSString *transitions[] = {
-	@"ActionBlink",
-	
 	@"ActionManual",
 	@"ActionMove",
 	@"ActionRotate",

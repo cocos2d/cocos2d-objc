@@ -7,7 +7,7 @@
 //
 
 #import "___PROJECTNAMEASIDENTIFIER___AppDelegate.h"
-#import "HelloWorldScene.h"
+#import "HelloWorldLayer.h"
 
 @implementation ___PROJECTNAMEASIDENTIFIER___AppDelegate
 @synthesize window=window_, glView=glView_;
@@ -29,7 +29,7 @@
 	[window_ setAcceptsMouseMovedEvents:NO];
 	
 	
-	[director runWithScene:[HelloWorld scene]];
+	[director runWithScene:[HelloWorldLayer scene]];
 }
 
 - (BOOL) applicationShouldTerminateAfterLastWindowClosed: (NSApplication *) theApplication

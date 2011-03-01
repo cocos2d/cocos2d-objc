@@ -6,19 +6,20 @@
 //  Copyright ___ORGANIZATIONNAME___ ___YEAR___. All rights reserved.
 //
 
+
 // Import the interfaces
-#import "HelloWorldScene.h"
+#import "HelloWorldLayer.h"
 
-// HelloWorld implementation
-@implementation HelloWorld
+// HelloWorldLayer implementation
+@implementation HelloWorldLayer
 
-+(id) scene
++(CCScene *) scene
 {
 	// 'scene' is an autorelease object.
 	CCScene *scene = [CCScene node];
 	
 	// 'layer' is an autorelease object.
-	HelloWorld *layer = [HelloWorld node];
+	HelloWorldLayer *layer = [HelloWorldLayer node];
 	
 	// add layer as a child to scene
 	[scene addChild: layer];
@@ -32,7 +33,7 @@
 {
 	// always call "super" init
 	// Apple recommends to re-assign "self" with the "super" return value
-	if( (self=[super init] )) {
+	if( (self=[super init])) {
 		
 		// create and initialize a Label
 		CCLabelTTF *label = [CCLabelTTF labelWithString:@"Hello World" fontName:@"Marker Felt" fontSize:64];
