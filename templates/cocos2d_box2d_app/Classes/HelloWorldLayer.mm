@@ -1,5 +1,5 @@
 //
-//  HelloWorldScene.mm
+//  HelloWorldLayer.mm
 //  ___PROJECTNAME___
 //
 //  Created by ___FULLUSERNAME___ on ___DATE___.
@@ -8,7 +8,7 @@
 
 
 // Import the interfaces
-#import "HelloWorldScene.h"
+#import "HelloWorldLayer.h"
 
 //Pixel to metres ratio. Box2D uses metres as the unit for measurement.
 //This ratio defines how many pixels correspond to 1 Box2D "metre"
@@ -24,16 +24,16 @@ enum {
 };
 
 
-// HelloWorld implementation
-@implementation HelloWorld
+// HelloWorldLayer implementation
+@implementation HelloWorldLayer
 
-+(id) scene
++(CCScene *) scene
 {
 	// 'scene' is an autorelease object.
 	CCScene *scene = [CCScene node];
 	
 	// 'layer' is an autorelease object.
-	HelloWorld *layer = [HelloWorld node];
+	HelloWorldLayer *layer = [HelloWorldLayer node];
 	
 	// add layer as a child to scene
 	[scene addChild: layer];
@@ -42,9 +42,11 @@ enum {
 	return scene;
 }
 
-// initialize your instance here
+// on "init" you need to initialize your instance
 -(id) init
 {
+	// always call "super" init
+	// Apple recommends to re-assign "self" with the "super" return value
 	if( (self=[super init])) {
 		
 		// enable touches

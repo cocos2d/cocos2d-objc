@@ -81,8 +81,6 @@
 	return self;
 }
 
-
-
 - (id) initWithCoder:(NSCoder*)coder
 {
 	self = [self initWithNSArray:[coder decodeObjectForKey:@"nsarray"]];
@@ -92,8 +90,6 @@
 {
 	[coder encodeObject:[self getNSArray] forKey:@"nsarray"];
 }
-
-
 
 - (NSUInteger) count
 {
@@ -112,9 +108,7 @@
 
 - (id) objectAtIndex:(NSUInteger)index
 {
-	if( index >= data->num )
-		[NSException raise:NSRangeException
-					format: @"index out of range in objectAtIndex(%d)", data->num ];
+	NSAssert2( index < data->num && index >= 0, @"index out of range in objectAtIndex(%d), index %i", data->num, index );
 	
 	return data->arr[index];
 }
@@ -166,9 +160,8 @@
 
 - (void) removeLastObject
 {
-	if( data->num == 0 )
-		[NSException raise:NSRangeException
-					format: @"no objects added"];
+	NSAssert( data->num > 0, @"no objects added" );
+
 	ccArrayRemoveObjectAtIndex(data, data->num-1);
 }
 
