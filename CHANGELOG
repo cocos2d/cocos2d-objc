@@ -1,4 +1,4 @@
-version 1.0-beta - XX-XXX-2011
+version 1.0-beta - 01-Mar-2011
 . [NEW] Actions: Repeat and RepeatForEver has getter/setter for the inner action (issue #1110)
 . [NEW] LayerGradient: Added "compressed interpolation" (default mode) in order to display all graident's colors in any vector
 . [NEW-MAC] Added CC_DIRECTOR_INIT(). It is possible to create a Mac Window programatically
