@@ -338,6 +338,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Texture fails gracefully if PVR image can't be loaded (patch)
 	* Patrick Wolowicz:
 		mkatlas: added artifact removal by copying borders to margins
+		FontLabel: supports parenthese and apostrophes when word wrapping.
 	* Paul Hampson (TBBle) (http://blog.tbble.org/)
 		CCSpriteFrameCache textureFileName is relative to path
 		CCSprite: correctly overrides setIsRelativeAnchorPoint

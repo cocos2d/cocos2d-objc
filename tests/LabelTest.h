@@ -108,3 +108,8 @@
 }
 @end
 
+@interface LabelTTFMultiline : AtlasDemo
+{
+}
+@end
+
