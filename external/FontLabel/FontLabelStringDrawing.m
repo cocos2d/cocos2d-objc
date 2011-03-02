@@ -456,7 +456,7 @@ static CGSize drawOrSizeTextConstrainedToSize(BOOL performDraw, NSString *string
 	READ_GLYPHS();
 	
 	NSMutableCharacterSet *alphaCharset = [NSMutableCharacterSet alphanumericCharacterSet];
-    [alphaCharset addCharactersInString:@"'\u2019\u02BC"]; // apostrophes
+	[alphaCharset addCharactersInString:@"([{'\"\u2019\u02BC"];
 	
 	// scan left-to-right looking for newlines or until we hit the width constraint
 	// When we hit a wrapping point, calculate truncation as follows:

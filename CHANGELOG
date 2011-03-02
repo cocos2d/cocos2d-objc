@@ -1,5 +1,5 @@
 version 1.0-rc - XX-Apr-2011
-. [3RD] FontLabel: Fixes issues with wrapping and apostraphes and hyphens.
+. [3RD] FontLabel: Fixes issues with wrapping and apostraphes and hyphens (issue #1124)
 
 version 1.0-beta - 01-Mar-2011
 . [NEW] Actions: Repeat and RepeatForEver has getter/setter for the inner action (issue #1110)

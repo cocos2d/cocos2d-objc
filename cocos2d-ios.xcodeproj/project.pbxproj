@@ -2303,6 +2303,14 @@
 		E04C651512383CA600A4B3E6 /* background3-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E04C631512382E6B00A4B3E6 /* background3-hd.png */; };
 		E04C651612383CA800A4B3E6 /* background3-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E04C631512382E6B00A4B3E6 /* background3-hd.png */; };
 		E04C651712383CB300A4B3E6 /* background3-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E04C631512382E6B00A4B3E6 /* background3-hd.png */; };
+		E0507A95131EDEB700EAE33F /* A Damn Mess.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 505460EA1061413300AB7C52 /* A Damn Mess.ttf */; };
+		E0507A96131EDEB700EAE33F /* Abberancy.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 505460EB1061413300AB7C52 /* Abberancy.ttf */; };
+		E0507A97131EDEB700EAE33F /* Abduction.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 505460EC1061413300AB7C52 /* Abduction.ttf */; };
+		E0507A98131EDEB700EAE33F /* Paint Boy.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 505460ED1061413300AB7C52 /* Paint Boy.ttf */; };
+		E0507A99131EDEB700EAE33F /* Schwarzwald Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 505460EE1061413300AB7C52 /* Schwarzwald Regular.ttf */; };
+		E0507A9A131EDEB700EAE33F /* Scissor Cuts.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 505460EF1061413300AB7C52 /* Scissor Cuts.ttf */; };
+		E0507AC3131EE42200EAE33F /* MarkerFelt.ttc in Resources */ = {isa = PBXBuildFile; fileRef = E0507AC2131EE42200EAE33F /* MarkerFelt.ttc */; };
+		E0507AC4131EE42200EAE33F /* MarkerFelt.ttc in Resources */ = {isa = PBXBuildFile; fileRef = E0507AC2131EE42200EAE33F /* MarkerFelt.ttc */; };
 		E062F9971247FC5400DE3932 /* grossini_dance_atlas-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E062F9961247FC5400DE3932 /* grossini_dance_atlas-hd.png */; };
 		E062F9A01247FD0300DE3932 /* grossini_dance_atlas-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E062F9961247FC5400DE3932 /* grossini_dance_atlas-hd.png */; };
 		E062F9A11247FD0700DE3932 /* grossini_dance_atlas-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E062F9961247FC5400DE3932 /* grossini_dance_atlas-hd.png */; };
@@ -4246,6 +4254,7 @@
 		E04C632312382F6100A4B3E6 /* r2-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "r2-hd.png"; sourceTree = "<group>"; };
 		E04C640412382F9300A4B3E6 /* b1-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "b1-hd.png"; sourceTree = "<group>"; };
 		E04C640512382F9300A4B3E6 /* b2-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "b2-hd.png"; sourceTree = "<group>"; };
+		E0507AC2131EE42200EAE33F /* MarkerFelt.ttc */ = {isa = PBXFileReference; lastKnownFileType = file; path = MarkerFelt.ttc; sourceTree = "<group>"; };
 		E062F9961247FC5400DE3932 /* grossini_dance_atlas-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "grossini_dance_atlas-hd.png"; sourceTree = "<group>"; };
 		E062F9BA124801A300DE3932 /* grossini-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "grossini-hd.png"; sourceTree = "<group>"; };
 		E062F9BB124801A300DE3932 /* grossinis_sister1-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "grossinis_sister1-hd.png"; sourceTree = "<group>"; };
@@ -5958,6 +5967,7 @@
 		505463961062864900AB7C52 /* TTF fonts */ = {
 			isa = PBXGroup;
 			children = (
+				E0507AC2131EE42200EAE33F /* MarkerFelt.ttc */,
 				505460EA1061413300AB7C52 /* A Damn Mess.ttf */,
 				505460EB1061413300AB7C52 /* Abberancy.ttf */,
 				505460EC1061413300AB7C52 /* Abduction.ttf */,
@@ -9519,6 +9529,13 @@
 				E02BB66C126CA73F006E46A2 /* Icon-72.png in Resources */,
 				E082C9141292DAD50056AC41 /* futura-48.fnt in Resources */,
 				E082C9151292DAD50056AC41 /* futura-48.png in Resources */,
+				E0507A95131EDEB700EAE33F /* A Damn Mess.ttf in Resources */,
+				E0507A96131EDEB700EAE33F /* Abberancy.ttf in Resources */,
+				E0507A97131EDEB700EAE33F /* Abduction.ttf in Resources */,
+				E0507A98131EDEB700EAE33F /* Paint Boy.ttf in Resources */,
+				E0507A99131EDEB700EAE33F /* Schwarzwald Regular.ttf in Resources */,
+				E0507A9A131EDEB700EAE33F /* Scissor Cuts.ttf in Resources */,
+				E0507AC3131EE42200EAE33F /* MarkerFelt.ttc in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10394,6 +10411,7 @@
 				E02BB67C126CA73F006E46A2 /* Icon-Small.png in Resources */,
 				E02BB67D126CA73F006E46A2 /* Icon-Small-50.png in Resources */,
 				E02BB67E126CA73F006E46A2 /* Icon-72.png in Resources */,
+				E0507AC4131EE42200EAE33F /* MarkerFelt.ttc in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -13213,6 +13231,7 @@
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
+					"-all_load",
 					"-ObjC",
 					"-framework",
 					Foundation,
@@ -13237,6 +13256,7 @@
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
+					"-all_load",
 					"-ObjC",
 					"-framework",
 					Foundation,
