@@ -1,15 +1,18 @@
+version 1.0-rc - XX-Apr-2011
+. [3RD] FontLabel: Fixes issues with wrapping and apostraphes and hyphens.
+
 version 1.0-beta - 01-Mar-2011
 . [NEW] Actions: Repeat and RepeatForEver has getter/setter for the inner action (issue #1110)
 . [NEW] LayerGradient: Added "compressed interpolation" (default mode) in order to display all graident's colors in any vector
 . [NEW-MAC] Added CC_DIRECTOR_INIT(). It is possible to create a Mac Window programatically
-. [NEW-MAC] EventDispatcher: Added support for touches events
+. [NEW-MAC] EventDispatcher: Added support for Touch events
 . [FIX] CocosDenshion: Improved logging
 . [FIX] CocosDenshion: Fixed excessively large or negative gain values cause distorted audio in the simulator.
 . [FIX] CocosDenshion: Added guards to prevent memory corruption caused by invalid parameters
 . [FIX] CocosDenshion: Define some constants for defaults, make const parameter on buffer asynch load method
 . [FIX] CCArray: insertObjectAtIndex checks bounds (issue #1121)
 . [FIX] Director: Fixed possible crash when purging the TextureCache
-. [FIX] Layer: Deprecated. CCMultiplexLayer deprecated. New name is CCLayerMultiplex
+. [FIX] Layer: CCMultiplexLayer deprecated. New name is CCLayerMultiplex
 . [FIX] Particles: consumes less memory (12 bytes less per particle) and are a bit faster
 . [FIX] ProgressTimer: Consumes less memory
 . [FIX] RenderTexture: Added possibility to save buffer in any place (issue #1100)
