@@ -31,17 +31,9 @@
  */
 typedef enum {
 	/// Radial Counter-Clockwise 
-	kCCProgressTimerTypeRadialCCW,
-	/// Radial ClockWise
-	kCCProgressTimerTypeRadialCW,
-	/// Horizontal Left-Right
-	kCCProgressTimerTypeHorizontalBarLR,
-	/// Horizontal Right-Left
-	kCCProgressTimerTypeHorizontalBarRL,
-	/// Vertical Bottom-top
-	kCCProgressTimerTypeVerticalBarBT,
-	/// Vertical Top-Bottom
-	kCCProgressTimerTypeVerticalBarTB,
+	kCCProgressTimerTypeRadial,
+	/// Bar
+	kCCProgressTimerTypeBar,
 } CCProgressTimerType;
 
 /**
@@ -50,18 +42,44 @@ typedef enum {
  The progress can be Radial, Horizontal or vertical.
  @since v0.99.1
  */
-@interface CCProgressTimer : CCNode
-{
+@interface CCProgressTimer : CCNode<CCRGBAProtocol> {
 	CCProgressTimerType	type_;
 	float				percentage_;
 	CCSprite			*sprite_;
 	
 	int					vertexDataCount_;
 	ccV2F_C4B_T2F		*vertexData_;
+	CGPoint				midpoint_;
+	CGPoint				barChangeRate_;
+	BOOL				reverse_;
 }
-
+@property ccColor3B color;
+@property GLubyte opacity;
 /**	Change the percentage to change progress. */
 @property (nonatomic, readwrite) CCProgressTimerType type;
+@property (nonatomic, readwrite) BOOL reverse;
+@property (readonly) ccV2F_C4B_T2F *vertexData;
+@property (readonly) int vertexDataCount;
+
+/**
+ *	Midpoint is used to modify the progress start position.
+ *	If you're using radials type then the midpoint changes the center point
+ *	If you're using bar type the the midpoint changes the bar growth
+ *		it expands from the center but clamps to the sprites edge so:
+ *		you want a left to right then set the midpoint all the way to ccp(0,y)
+ *		you want a right to left then set the midpoint all the way to ccp(1,y)
+ *		you want a bottom to top then set the midpoint all the way to ccp(x,0)
+ *		you want a top to bottom then set the midpoint all the way to ccp(x,1)
+ */
+@property (nonatomic, readwrite) CGPoint midpoint;
+
+/**
+ *	This allows the bar type to move the component at a specific rate
+ *	Set the component to 0 to make sure it stays at 100%.
+ *	For example you want a left to right bar but not have the height stay 100%
+ *	Set the rate to be ccp(0,1); and set the midpoint to = ccp(0,.5f);
+ */
+@property (nonatomic, readwrite) CGPoint barChangeRate;
 
 /** Percentages are from 0 to 100 */
 @property (nonatomic, readwrite) float percentage;
@@ -69,15 +87,7 @@ typedef enum {
 /** The image to show the progress percentage */
 @property (nonatomic, readwrite, retain) CCSprite *sprite;
 
-
-/** Creates a progress timer with an image filename as the shape the timer goes through */
-+ (id) progressWithFile:(NSString*) filename;
-/** Initializes  a progress timer with an image filename as the shape the timer goes through */
-- (id) initWithFile:(NSString*) filename;
-
-/** Creates a progress timer with the texture as the shape the timer goes through */
-+ (id) progressWithTexture:(CCTexture2D*) texture;
-/** Creates a progress timer with the texture as the shape the timer goes through */
-- (id) initWithTexture:(CCTexture2D*) texture;
-
+/** Creates a progress timer with the sprite as the shape the timer goes through */
++ (id) progressWithSprite:(CCSprite*) sprite;
+- (id) initWithSprite:(CCSprite*) sprite;
 @end

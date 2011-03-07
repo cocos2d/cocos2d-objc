@@ -45,9 +45,9 @@ enum {
 	inSceneOnTop_ = NO;
 }
 
--(CCProgressTimerType) radialType
+-(BOOL) clockWise
 {
-	return kCCProgressTimerTypeRadialCCW;
+	return NO;
 }
 
 -(void) onEnter
@@ -56,7 +56,7 @@ enum {
 	// create a transparent color layer
 	// in which we are going to add our rendertextures
 	CGSize size = [[CCDirector sharedDirector] winSize];
-		
+	
 	// create the second render texture for outScene
 	CCRenderTexture *outTexture = [CCRenderTexture renderTextureWithWidth:size.width height:size.height];
 	outTexture.sprite.anchorPoint= ccp(0.5f,0.5f);
@@ -73,15 +73,16 @@ enum {
 	[self hideOutShowIn];
 	
 	//	We need the texture in RenderTexture.
-	CCProgressTimer *outNode = [CCProgressTimer progressWithTexture:outTexture.sprite.texture];
+	CCProgressTimer *outNode = [CCProgressTimer progressWithSprite:outTexture.sprite];
 	// but it's flipped upside down so we flip the sprite
 	outNode.sprite.flipY = YES;
+	outNode.type = kCCProgressTimerTypeRadial;
 	//	Return the radial type that we want to use
-	outNode.type = [self radialType];
+	outNode.reverse = [self clockWise];
 	outNode.percentage = 100.f;
 	outNode.position = ccp(size.width/2, size.height/2);
 	outNode.anchorPoint = ccp(0.5f,0.5f);
-			
+	
 	// create the blend action
 	CCActionInterval * layerAction = [CCSequence actions:
 									  [CCProgressFromTo actionWithDuration:duration_ from:100.f to:0.f],
@@ -107,9 +108,9 @@ enum {
 #pragma mark Transition Radial CW
 
 @implementation CCTransitionRadialCW
--(CCProgressTimerType) radialType
+-(BOOL) clockWise
 {
-	return kCCProgressTimerTypeRadialCW;
+	return YES;
 }
 @end
 

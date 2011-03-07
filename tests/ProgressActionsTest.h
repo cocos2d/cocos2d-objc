@@ -31,4 +31,7 @@
 {}
 @end
 
+@interface SpriteProgressBarVarious : SpriteDemo
+{}
+@end
 
