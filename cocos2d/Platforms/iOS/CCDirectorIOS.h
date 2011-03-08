@@ -50,45 +50,6 @@ typedef enum {
 	CCDeviceOrientationLandscapeRight = kCCDeviceOrientationLandscapeRight,
 } ccDeviceOrientation;
 
-/** @typedef tPixelFormat
- Possible Pixel Formats for the OpenGL View.
- 
- @deprecated Will be removed in v1.0
- */
-typedef enum {
-	/** RGB565 pixel format. No alpha. 16-bit. (Default) */
-	kCCPixelFormatRGB565,
-	/** RGBA format. 32-bit. Needed for some 3D effects. It is not as fast as the RGB565 format. */
-	kCCPixelFormatRGBA8888,
-	/** default pixel format */
-	kCCPixelFormatDefault = kCCPixelFormatRGB565,
-	
-	// backward compatibility stuff
-	kPixelFormatRGB565 = kCCPixelFormatRGB565,
-	kRGB565 = kCCPixelFormatRGB565,
-	kPixelFormatRGBA8888 = kCCPixelFormatRGBA8888,
-	kRGBA8 = kCCPixelFormatRGBA8888,
-} tPixelFormat;
-
-/** @typedef tDepthBufferFormat
- Possible DepthBuffer Formats for the OpenGLView.
- Use 16 or 24 bit depth buffers if you are going to use real 3D objects.
- 
- @deprecated Will be removed in v1.0
- */
-typedef enum {
-	/// A Depth Buffer of 0 bits will be used (default)
-	kCCDepthBufferNone,
-	/// A depth buffer of 16 bits will be used
-	kCCDepthBuffer16,
-	/// A depth buffer of 24 bits will be used
-	kCCDepthBuffer24,
-	
-	// backward compatibility stuff
-	kDepthBuffer16 = kCCDepthBuffer16,
-	kDepthBuffer24 = kCCDepthBuffer24,
-} tDepthBufferFormat;
-
 /** @typedef ccDirectorType
  Possible Director Types.
  @since v0.8.2
@@ -218,56 +179,7 @@ typedef enum {
 	/* contentScaleFactor could be simulated */
 	BOOL	isContentScaleSupported_;
 	
-	tPixelFormat pixelFormat_;					// Deprecated. Will be removed in 1.0
-	tDepthBufferFormat depthBufferFormat_;		// Deprecated. Will be removed in 1.0
 }
-
-// iPhone Specific
-
-/** Pixel format used to create the context */
-@property (nonatomic,readonly) tPixelFormat pixelFormat DEPRECATED_ATTRIBUTE;
-
-/** Uses a new pixel format for the EAGLView.
- Call this class method before attaching it to a UIView
- Default pixel format: kRGB565. Supported pixel formats: kRGBA8 and kRGB565
- 
- @deprecated Set the pixel format when creating the EAGLView. This method will be removed in v1.0
- */
--(void) setPixelFormat: (tPixelFormat)p DEPRECATED_ATTRIBUTE;
-
-/** Change depth buffer format of the render buffer.
- Call this class method before attaching it to a UIWindow/UIView
- Default depth buffer: 0 (none).  Supported: kCCDepthBufferNone, kCCDepthBuffer16, and kCCDepthBuffer24
- 
- @deprecated Set the depth buffer format when creating the EAGLView. This method will be removed in v1.0
- */
--(void) setDepthBufferFormat: (tDepthBufferFormat)db DEPRECATED_ATTRIBUTE;
-
-// Integration with UIKit
-/** detach the cocos2d view from the view/window */
--(BOOL)detach DEPRECATED_ATTRIBUTE;
-
-/** attach in UIWindow using the full frame.
- It will create a EAGLView.
- 
- @deprecated set setOpenGLView instead. Will be removed in v1.0
- */
--(BOOL)attachInWindow:(UIWindow *)window DEPRECATED_ATTRIBUTE;
-
-/** attach in UIView using the full frame.
- It will create a EAGLView.
- 
- @deprecated set setOpenGLView instead. Will be removed in v1.0
- */
--(BOOL)attachInView:(UIView *)view DEPRECATED_ATTRIBUTE;
-
-/** attach in UIView using the given frame.
- It will create a EAGLView and use it.
- 
- @deprecated set setOpenGLView instead. Will be removed in v1.0
- */
--(BOOL)attachInView:(UIView *)view withFrame:(CGRect)frame DEPRECATED_ATTRIBUTE;
-
 @end
 
 /** FastDirector is a Director that triggers the main loop as fast as possible.
