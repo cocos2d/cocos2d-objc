@@ -10,10 +10,11 @@
 
 static int sceneIdx=-1;
 static NSString *transitions[] = {
-				@"SpriteProgressToRadial",
-				@"SpriteProgressToHorizontal",
-				@"SpriteProgressToVertical",
-
+	@"SpriteProgressToRadial",
+	@"SpriteProgressToHorizontal",
+	@"SpriteProgressToVertical",
+	@"SpriteProgressBarVarious",
+	
 };
 
 enum {
@@ -24,7 +25,7 @@ enum {
 
 Class nextAction()
 {
-
+	
 	sceneIdx++;
 	sceneIdx = sceneIdx % ( sizeof(transitions) / sizeof(transitions[0]) );
 	NSString *r = transitions[sceneIdx];
@@ -55,13 +56,13 @@ Class restartAction()
 -(id) init
 {
 	if( (self=[super init])) {
-
+		
 		CGSize s = [[CCDirector sharedDirector] winSize];
-				
+		
 		CCLabelTTF *label = [CCLabelTTF labelWithString:[self title] fontName:@"Arial" fontSize:32];
 		[self addChild: label];
 		[label setPosition: ccp(s.width/2, s.height-50)];
-
+		
 		CCMenuItemImage *item1 = [CCMenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
 		CCMenuItemImage *item2 = [CCMenuItemImage itemFromNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
 		CCMenuItemImage *item3 = [CCMenuItemImage itemFromNormalImage:@"f1.png" selectedImage:@"f2.png" target:self selector:@selector(nextCallback:)];
@@ -77,7 +78,7 @@ Class restartAction()
 		CCLayerColor *background = [CCLayerColor layerWithColor:(ccColor4B){255,0,0,255}];
 		[self addChild:background z:-10];
 	}
-
+	
 	return self;
 }
 
@@ -124,18 +125,20 @@ Class restartAction()
 	[super onEnter];
 	
 	CGSize s = [[CCDirector sharedDirector] winSize];
-
+	
 	CCProgressTo *to1 = [CCProgressTo actionWithDuration:2 percent:100];
 	CCProgressTo *to2 = [CCProgressTo actionWithDuration:2 percent:100];
-
-	CCProgressTimer *left = [CCProgressTimer progressWithFile:@"grossinis_sister1.png"];
-	left.type = kCCProgressTimerTypeRadialCW;
+	
+	CCProgressTimer *left = [CCProgressTimer progressWithSprite:[CCSprite spriteWithFile:@"grossinis_sister1.png"]];
+	left.type = kCCProgressTimerTypeRadial;
 	[self addChild:left];
 	[left setPosition:ccp(100, s.height/2)];
 	[left runAction: [CCRepeatForever actionWithAction:to1]];
 	
-	CCProgressTimer *right = [CCProgressTimer progressWithFile:@"blocks.png"];
-	right.type = kCCProgressTimerTypeRadialCCW;
+	CCProgressTimer *right = [CCProgressTimer progressWithSprite:[CCSprite spriteWithFile:@"blocks.png"]];
+	right.type = kCCProgressTimerTypeRadial;
+	//	Makes the radial CCW
+	right.reverse = YES;
 	[self addChild:right];
 	[right setPosition:ccp(s.width-100, s.height/2)];
 	[right runAction: [CCRepeatForever actionWithAction:to2]];
@@ -160,14 +163,22 @@ Class restartAction()
 	CCProgressTo *to1 = [CCProgressTo actionWithDuration:2 percent:100];
 	CCProgressTo *to2 = [CCProgressTo actionWithDuration:2 percent:100];
 	
-	CCProgressTimer *left = [CCProgressTimer progressWithFile:@"grossinis_sister1.png"];
-	left.type = kCCProgressTimerTypeHorizontalBarLR;
+	CCProgressTimer *left = [CCProgressTimer progressWithSprite:[CCSprite spriteWithFile:@"grossinis_sister1.png"]];
+	left.type = kCCProgressTimerTypeBar;
+	//	Setup for a bar starting from the left since the midpoint is 0 for the x
+	left.midpoint = ccp(0, 0);
+	//	Setup for a horizontal bar since the bar change rate is 0 for y meaning no vertical change
+	left.barChangeRate = ccp(1,0);
 	[self addChild:left];
 	[left setPosition:ccp(100, s.height/2)];
 	[left runAction: [CCRepeatForever actionWithAction:to1]];
 	
-	CCProgressTimer *right = [CCProgressTimer progressWithFile:@"grossinis_sister2.png"];
-	right.type = kCCProgressTimerTypeHorizontalBarRL;
+	CCProgressTimer *right = [CCProgressTimer progressWithSprite:[CCSprite spriteWithFile:@"grossinis_sister2.png"]];
+	right.type = kCCProgressTimerTypeBar;
+	//	Setup for a bar starting from the left since the midpoint is 1 for the x
+	right.midpoint = ccp(1,0);
+	//	Setup for a horizontal bar since the bar change rate is 0 for y meaning no vertical change
+	right.barChangeRate = ccp(1,0);
 	[self addChild:right];
 	[right setPosition:ccp(s.width-100, s.height/2)];
 	[right runAction: [CCRepeatForever actionWithAction:to2]];
@@ -192,14 +203,23 @@ Class restartAction()
 	CCProgressTo *to1 = [CCProgressTo actionWithDuration:2 percent:100];
 	CCProgressTo *to2 = [CCProgressTo actionWithDuration:2 percent:100];
 	
-	CCProgressTimer *left = [CCProgressTimer progressWithFile:@"grossinis_sister1.png"];
-	left.type = kCCProgressTimerTypeVerticalBarBT;
+	CCProgressTimer *left = [CCProgressTimer progressWithSprite:[CCSprite spriteWithFile:@"grossinis_sister1.png"]];
+	left.type = kCCProgressTimerTypeBar;
+	
+	//	Setup for a bar starting from the bottom since the midpoint is 0 for the y
+	left.midpoint = ccp(0,0);
+	//	Setup for a vertical bar since the bar change rate is 0 for x meaning no horizontal change
+	left.barChangeRate = ccp(0,1);
 	[self addChild:left];
 	[left setPosition:ccp(100, s.height/2)];
 	[left runAction: [CCRepeatForever actionWithAction:to1]];
 	
-	CCProgressTimer *right = [CCProgressTimer progressWithFile:@"grossinis_sister2.png"];
-	right.type = kCCProgressTimerTypeVerticalBarTB;
+	CCProgressTimer *right = [CCProgressTimer progressWithSprite:[CCSprite spriteWithFile:@"grossinis_sister2.png"]];
+	right.type = kCCProgressTimerTypeBar;
+	//	Setup for a bar starting from the bottom since the midpoint is 0 for the y
+	right.midpoint = ccp(0,1);
+	//	Setup for a vertical bar since the bar change rate is 0 for x meaning no horizontal change
+	right.barChangeRate = ccp(0,1);
 	[self addChild:right];
 	[right setPosition:ccp(s.width-100, s.height/2)];
 	[right runAction: [CCRepeatForever actionWithAction:to2]];
@@ -208,6 +228,54 @@ Class restartAction()
 -(NSString *) title
 {
 	return @"ProgressTo Vertical";
+}
+@end
+
+
+@implementation SpriteProgressBarVarious
+-(void) onEnter
+{
+	[super onEnter];
+	
+	CGSize s = [[CCDirector sharedDirector] winSize];
+	
+	CCProgressTo *to = [CCProgressTo actionWithDuration:2 percent:100];
+	
+	CCProgressTimer *left = [CCProgressTimer progressWithSprite:[CCSprite spriteWithFile:@"grossinis_sister1.png"]];
+	left.type = kCCProgressTimerTypeBar;
+	
+	//	Setup for a bar starting from the bottom since the midpoint is 0 for the y
+	left.midpoint = ccp(.5f, .5f);
+	//	Setup for a vertical bar since the bar change rate is 0 for x meaning no horizontal change
+	left.barChangeRate = ccp(1,0);
+	[self addChild:left];
+	[left setPosition:ccp(100, s.height/2)];
+	[left runAction:[CCRepeatForever actionWithAction:[[to copy]autorelease]]];
+	
+	CCProgressTimer *middle = [CCProgressTimer progressWithSprite:[CCSprite spriteWithFile:@"grossinis_sister2.png"]];
+	middle.type = kCCProgressTimerTypeBar;
+	//	Setup for a bar starting from the bottom since the midpoint is 0 for the y
+	middle.midpoint = ccp(.5f, .5f);
+	//	Setup for a vertical bar since the bar change rate is 0 for x meaning no horizontal change
+	middle.barChangeRate = ccp(1, 1);
+	[self addChild:middle];
+	[middle setPosition:ccp(s.width/2, s.height/2)];
+	[middle runAction:[CCRepeatForever actionWithAction:[[to copy]autorelease]]];
+	
+	CCProgressTimer *right = [CCProgressTimer progressWithSprite:[CCSprite spriteWithFile:@"grossinis_sister2.png"]];
+	right.type = kCCProgressTimerTypeBar;
+	//	Setup for a bar starting from the bottom since the midpoint is 0 for the y
+	right.midpoint = ccp(.5f, .5f);
+	//	Setup for a vertical bar since the bar change rate is 0 for x meaning no horizontal change
+	right.barChangeRate = ccp(0, 1);
+	[self addChild:right];
+	[right setPosition:ccp(s.width-100, s.height/2)];
+	[right runAction:[CCRepeatForever actionWithAction:[[to copy]autorelease]]];
+}
+
+-(NSString *) title
+{
+	return @"ProgressTo Bar Mid";
 }
 @end
 
