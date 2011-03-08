@@ -29,8 +29,6 @@
 #import "CCTextureAtlas.h"
 
 @class CCSpriteBatchNode;
-@class CCSpriteSheet;
-@class CCSpriteSheetInternalOnly;
 @class CCSpriteFrame;
 @class CCAnimation;
 
@@ -277,11 +275,11 @@ typedef enum {
  */
 -(id) initWithCGImage:(CGImageRef)image key:(NSString*)key;
 
-/** Initializes an sprite with an CCSpriteSheet and a rect in points
+/** Initializes an sprite with an CCSpriteBatchNode and a rect in points
  */
 -(id) initWithBatchNode:(CCSpriteBatchNode*)batchNode rect:(CGRect)rect;
 
-/** Initializes an sprite with an CCSpriteSheet and a rect in pixels
+/** Initializes an sprite with an CCSpriteBatchNode and a rect in pixels
  @since v0.99.5
  */
 -(id) initWithBatchNode:(CCSpriteBatchNode*)batchNode rectInPixels:(CGRect)rect;

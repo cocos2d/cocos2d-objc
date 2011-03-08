@@ -105,6 +105,5 @@ typedef struct _hashElement
  */
 -(void) resumeTarget:(id)target;
 
-
 @end
 
