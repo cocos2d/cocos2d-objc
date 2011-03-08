@@ -139,20 +139,6 @@
 #define CC_USES_VBO 0
 #endif
 
-/** @def CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
- If enabled, CCNode will transform the nodes using a cached Affine matrix.
- If disabled, the node will be transformed using glTranslate,glRotate,glScale.
- Using the affine matrix only requires 2 GL calls.
- Using the translate/rotate/scale requires 5 GL calls.
- But computing the Affine matrix is relative expensive.
- But according to performance tests, Affine matrix performs better.
- This parameter doesn't affect SpriteSheet nodes.
- 
- To enable set it to a value different than 0. Enabled by default.
-
- */
-#define CC_NODE_TRANSFORM_USING_AFFINE_MATRIX 1
-
 /** @def CC_OPTIMIZE_BLEND_FUNC_FOR_PREMULTIPLIED_ALPHA
  If most of your imamges have pre-multiplied alpha, set it to 1 (if you are going to use .PNG/.JPG file images).
  Only set to 0 if ALL your images by-pass Apple UIImage loading system (eg: if you use libpng or PVR images)
@@ -244,7 +230,7 @@
  */
 #define CC_LABELBMFONT_DEBUG_DRAW 0
 
-/** @def CC_LABELBMFONT_DEBUG_DRAW
+/** @def CC_LABELATLAS_DEBUG_DRAW
  If enabled, all subclasses of CCLabeltAtlas will draw a bounding box
  Useful for debugging purposes only. It is recommened to leave it disabled.
  
@@ -260,16 +246,6 @@
  To enable set it to a value different than 0. Disabled by default.
  */
 #define CC_ENABLE_PROFILERS 0
-
-/** @def CC_COMPATIBILITY_WITH_0_8
- Enable it if you want to support v0.8 compatbility.
- Basically, classes without namespaces will work.
- It is recommended to disable compatibility once you have migrated your game to v0.9 to avoid class name polution
- 
- To enable set it to a value different than 0. Disabled by default.
- */
-#define CC_COMPATIBILITY_WITH_0_8 0
-
 
 //
 // DON'T edit this macro.

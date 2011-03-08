@@ -160,13 +160,6 @@ static char * glExtensions;
 #endif
 			  );
 
-		CCLOG(@"cocos2d: compiled with Affine Matrix transformation in CCNode : %s",
-#if CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
-			  "YES"
-#else
-			  "NO"
-#endif
-			  );
 		
 		CCLOG(@"cocos2d: compiled with Profiling Support: %s",
 #if CC_ENABLE_PROFILERS
