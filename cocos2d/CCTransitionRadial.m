@@ -78,7 +78,7 @@ enum {
 	outNode.sprite.flipY = YES;
 	outNode.type = kCCProgressTimerTypeRadial;
 	//	Return the radial type that we want to use
-	outNode.reverse = [self clockWise];
+	outNode.reverseProgress = [self clockWise];
 	outNode.percentage = 100.f;
 	outNode.position = ccp(size.width/2, size.height/2);
 	outNode.anchorPoint = ccp(0.5f,0.5f);

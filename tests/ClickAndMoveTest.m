@@ -20,7 +20,7 @@ enum
 		
 		CCSprite *sprite = [CCSprite spriteWithFile: @"grossini.png"];
 		
-		id layer = [CCColorLayer layerWithColor: ccc4(255,255,0,255)];
+		id layer = [CCLayerColor layerWithColor: ccc4(255,255,0,255)];
 		[self addChild: layer z:-1];
 			
 		[self addChild: sprite z:0 tag:kTagSprite];
