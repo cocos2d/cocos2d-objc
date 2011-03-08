@@ -30,7 +30,7 @@
 #import "CCTextureCache.h"
 
 @implementation CCAnimation
-@synthesize name = name_, delay = delay_, frames = frames_;
+@synthesize delay = delay_, frames = frames_;
 
 +(id) animation
 {
@@ -50,21 +50,6 @@
 +(id) animationWithName:(NSString*)name
 {
 	return [[[self alloc] initWithName:name] autorelease];
-}
-
-+(id) animationWithName:(NSString*)name frames:(NSArray*)frames
-{
-	return [[[self alloc] initWithName:name frames:frames] autorelease];
-}
-
-+(id) animationWithName:(NSString*)aname delay:(float)d frames:(NSArray*)array
-{
-	return [[[self alloc] initWithName:aname delay:d frames:array] autorelease];
-}
-
-+(id) animationWithName:(NSString*)aname delay:(float)d
-{
-	return [[[self alloc] initWithName:aname delay:d] autorelease];
 }
 
 -(id) init
@@ -87,27 +72,11 @@
 	return self;
 }
 
--(id) initWithName:(NSString*)name
-{
-	return [self initWithName:name delay:0 frames:nil];
-}
-
--(id) initWithName:(NSString*)name frames:(NSArray*)frames
-{
-	return [self initWithName:name delay:0 frames:frames];
-}
-
--(id) initWithName:(NSString*)t delay:(float)d
-{
-	return [self initWithName:t delay:d frames:nil];
-}
-
 -(id) initWithName:(NSString*)name delay:(float)delay frames:(NSArray*)array
 {
 	if( (self=[super init]) ) {
 		
 		delay_ = delay;
-		self.name = name;
 		self.frames = [NSMutableArray arrayWithArray:array];
 	}
 	return self;
@@ -124,7 +93,6 @@
 -(void) dealloc
 {
 	CCLOGINFO( @"cocos2d: deallocing %@",self);
-	[name_ release];
 	[frames_ release];
 	[super dealloc];
 }

@@ -406,10 +406,6 @@
 }
 @end
 
-// XXX Deprecated
-@implementation CCColorLayer
-@end
-
 
 #pragma mark -
 #pragma mark LayerGradient
@@ -618,8 +614,4 @@
 	
 	[self addChild: [layers_ objectAtIndex:n]];		
 }
-@end
-
-// XXX Deprecated
-@implementation CCMultiplexLayer
 @end

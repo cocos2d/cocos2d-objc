@@ -334,11 +334,4 @@ static CCSpriteFrameCache *sharedSpriteFrameCache_=nil;
 	return frame;
 }
 
-#pragma mark CCSpriteFrameCache - sprite creation
-
--(CCSprite*) createSpriteWithFrameName:(NSString*)name
-{
-	CCSpriteFrame *frame = [spriteFrames_ objectForKey:name];
-	return [CCSprite spriteWithSpriteFrame:frame];
-}
 @end

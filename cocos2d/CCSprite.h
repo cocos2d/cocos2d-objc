@@ -223,11 +223,6 @@ typedef enum {
  */
 +(id) spriteWithFile:(NSString*)filename rect:(CGRect)rect;
 
-/** Creates an sprite with a CGImageRef.
- @deprecated Use spriteWithCGImage:key: instead. Will be removed in v1.0 final
- */
-+(id) spriteWithCGImage: (CGImageRef)image DEPRECATED_ATTRIBUTE;
-
 /** Creates an sprite with a CGImageRef and a key.
  The key is used by the CCTextureCache to know if a texture was already created with this CGImage.
  For example, a valid key is: @"sprite_frame_01".
@@ -240,9 +235,6 @@ typedef enum {
 /** Creates an sprite with an CCBatchNode and a rect
  */
 +(id) spriteWithBatchNode:(CCSpriteBatchNode*)batchNode rect:(CGRect)rect;
-
-+(id) spriteWithSpriteSheet:(CCSpriteSheetInternalOnly*)spritesheet rect:(CGRect)rect DEPRECATED_ATTRIBUTE;
-
 
 /** Initializes an sprite with a texture.
  The rect used will be the size of the texture.
@@ -277,11 +269,6 @@ typedef enum {
  */
 -(id) initWithFile:(NSString*)filename rect:(CGRect)rect;
 
-/** Initializes an sprite with a CGImageRef
- @deprecated Use spriteWithCGImage:key: instead. Will be removed in v1.0 final
- */
--(id) initWithCGImage: (CGImageRef)image DEPRECATED_ATTRIBUTE;
-
 /** Initializes an sprite with a CGImageRef and a key
  The key is used by the CCTextureCache to know if a texture was already created with this CGImage.
  For example, a valid key is: @"sprite_frame_01".
@@ -293,7 +280,6 @@ typedef enum {
 /** Initializes an sprite with an CCSpriteSheet and a rect in points
  */
 -(id) initWithBatchNode:(CCSpriteBatchNode*)batchNode rect:(CGRect)rect;
--(id) initWithSpriteSheet:(CCSpriteSheetInternalOnly*)spritesheet rect:(CGRect)rect DEPRECATED_ATTRIBUTE;
 
 /** Initializes an sprite with an CCSpriteSheet and a rect in pixels
  @since v0.99.5
@@ -324,7 +310,6 @@ typedef enum {
  @since v0.99.0
  */
 -(void) useBatchNode:(CCSpriteBatchNode*)batchNode;
--(void) useSpriteSheetRender:(CCSpriteSheetInternalOnly*)spriteSheet DEPRECATED_ATTRIBUTE;
 
 
 #pragma mark CCSprite - Frames
@@ -340,27 +325,9 @@ typedef enum {
 
 #pragma mark CCSprite - Animation
 
-/** changes the display frame based on an animation and an index.
- @deprecated Will be removed in 1.0.1. Use setDisplayFrameWithAnimationName:index instead
- */
--(void) setDisplayFrame: (NSString*) animationName index:(int) frameIndex DEPRECATED_ATTRIBUTE;
-
 /** changes the display frame with animation name and index.
  The animation name will be get from the CCAnimationCache
  @since v0.99.5
  */
 -(void) setDisplayFrameWithAnimationName:(NSString*)animationName index:(int) frameIndex;
-
-/** returns an Animation given it's name.
- 
- @deprecated Use CCAnimationCache instead. Will be removed in 1.0.1
- */
--(CCAnimation*)animationByName: (NSString*) animationName DEPRECATED_ATTRIBUTE;
-
-/** adds an Animation to the Sprite.
- 
- @deprecated Use CCAnimationCache instead. Will be removed in 1.0.1
- */
--(void) addAnimation: (CCAnimation*) animation DEPRECATED_ATTRIBUTE;
-
 @end
