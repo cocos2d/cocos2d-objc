@@ -127,7 +127,7 @@ struct transformValues_ {
 		dirty_ = recursiveDirty_ = NO;
 		
 		// by default use "Self Render".
-		// if the sprite is added to an SpriteSheet, then it will automatically switch to "SpriteSheet Render"
+		// if the sprite is added to a batchnode, then it will automatically switch to "batchnode Render"
 		[self useSelfRender];
 		
 		opacityModifyRGB_			= YES;
@@ -350,7 +350,7 @@ struct transformValues_ {
 	offsetPositionInPixels_.y = relativeOffsetInPixels.y + (contentSizeInPixels_.height - rectInPixels_.size.height) / 2;
 	
 	
-	// rendering using SpriteSheet
+	// rendering using batch node
 	if( usesBatchNode_ ) {
 		// update dirty_, don't update recursiveDirty_
 		dirty_ = YES;

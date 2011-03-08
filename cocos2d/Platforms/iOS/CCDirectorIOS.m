@@ -112,7 +112,6 @@ CGFloat	__ccContentScaleFactor = 1;
 #pragma mark CCDirectorIOS
 
 @interface CCDirectorIOS ()
--(BOOL)isOpenGLAttached;
 -(void) updateContentScaleFactor;
 @end
 
@@ -120,7 +119,7 @@ CGFloat	__ccContentScaleFactor = 1;
 - (id) init
 {  
 	if( (self=[super init]) ) {
-
+				
 		// portrait mode default
 		deviceOrientation_ = CCDeviceOrientationPortrait;
 		
@@ -272,12 +271,6 @@ CGFloat	__ccContentScaleFactor = 1;
 }
 
 #pragma mark Director Integration with a UIKit view
-
-// is the view currently attached
--(BOOL)isOpenGLAttached
-{
-	return ([openGLView_ superview]!=nil);
-}
 
 -(void) setOpenGLView:(EAGLView *)view
 {
