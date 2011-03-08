@@ -138,7 +138,7 @@ Class restartAction()
 	CCProgressTimer *right = [CCProgressTimer progressWithSprite:[CCSprite spriteWithFile:@"blocks.png"]];
 	right.type = kCCProgressTimerTypeRadial;
 	//	Makes the radial CCW
-	right.reverse = YES;
+	right.reverseProgress = YES;
 	[self addChild:right];
 	[right setPosition:ccp(s.width-100, s.height/2)];
 	[right runAction: [CCRepeatForever actionWithAction:to2]];
