@@ -51,13 +51,13 @@ typedef enum {
 	ccV2F_C4B_T2F		*vertexData_;
 	CGPoint				midpoint_;
 	CGPoint				barChangeRate_;
-	BOOL				reverseProgress_;
+	BOOL				reverseDirection_;
 }
 @property ccColor3B color;
 @property GLubyte opacity;
 /**	Change the percentage to change progress. */
 @property (nonatomic, readwrite) CCProgressTimerType type;
-@property (nonatomic, readwrite) BOOL reverseProgress;
+@property (nonatomic, readwrite) BOOL reverseDirection;
 @property (readonly) ccV2F_C4B_T2F *vertexData;
 @property (readonly) int vertexDataCount;
 

@@ -52,7 +52,7 @@ const char kCCProgressTextureCoords = 0x4b;
 @synthesize percentage = percentage_;
 @synthesize sprite = sprite_;
 @synthesize type = type_;
-@synthesize reverseProgress = reverseProgress_;
+@synthesize reverseDirection = reverseDirection_;
 @synthesize midpoint = midpoint_;
 @synthesize barChangeRate = barChangeRate_;
 @synthesize vertexData = vertexData_;
@@ -72,7 +72,7 @@ const char kCCProgressTextureCoords = 0x4b;
 		
 		self.anchorPoint = ccp(0.5f,0.5f);
 		type_ = kCCProgressTimerTypeRadial;
-		reverseProgress_ = NO;
+		reverseDirection_ = NO;
 		midpoint_ = ccp(.5f, .5f);
 		barChangeRate_ = ccp(1,1);
 
@@ -135,8 +135,8 @@ const char kCCProgressTextureCoords = 0x4b;
 }
 -(void)setReverseProgress:(BOOL)reverse
 {
-	if( reverseProgress_ != reverse ) {
-		reverseProgress_ = reverse;
+	if( reverseDirection_ != reverse ) {
+		reverseDirection_ = reverse;
 		
 		//	release all previous information
 		if(vertexData_){
@@ -246,7 +246,7 @@ const char kCCProgressTextureCoords = 0x4b;
 	
 	float alpha = percentage_ / 100.f;
 	
-	float angle = 2.f*((float)M_PI) * ( reverseProgress_ == YES ? alpha : 1.f - alpha);
+	float angle = 2.f*((float)M_PI) * ( reverseDirection_ == YES ? alpha : 1.f - alpha);
 	
 	//	We find the vector to do a hit detection based on the percentage
 	//	We know the first vector is the one @ 12 o'clock (top,mid) so we rotate 
@@ -404,7 +404,7 @@ const char kCCProgressTextureCoords = 0x4b;
 	}
 	
 	
-	if (!reverseProgress_) {
+	if (!reverseDirection_) {
 		if(!vertexData_) {
 			vertexDataCount_ = 4;
 			vertexData_ = malloc(vertexDataCount_ * sizeof(ccV2F_C4B_T2F));
@@ -469,7 +469,7 @@ const char kCCProgressTextureCoords = 0x4b;
 -(CGPoint)boundaryTexCoord:(char)index
 {
 	if (index < kProgressTextureCoordsCount) {
-		if (reverseProgress_) {
+		if (reverseDirection_) {
 			return ccp((kCCProgressTextureCoords>>(7-(index<<1)))&1,(kCCProgressTextureCoords>>(7-((index<<1)+1)))&1);
 		} else {
 			return ccp((kCCProgressTextureCoords>>((index<<1)+1))&1,(kCCProgressTextureCoords>>(index<<1))&1);
@@ -514,7 +514,7 @@ const char kCCProgressTextureCoords = 0x4b;
 	if(type_ == kCCProgressTimerTypeRadial){
 		glDrawArrays(GL_TRIANGLE_FAN, 0, vertexDataCount_);
 	} else if (type_ == kCCProgressTimerTypeBar) {
-		if (!reverseProgress_) {
+		if (!reverseDirection_) {
 			glDrawArrays(GL_TRIANGLE_STRIP, 0, vertexDataCount_);
 		} else {
 			glDrawArrays(GL_TRIANGLE_STRIP, 0, vertexDataCount_/2);
