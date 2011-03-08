@@ -216,6 +216,8 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 			ccpCompOp, ccpLerp, ccpFuzzyEqual, ccpCompMult, ccpAngleSigned, ccpAngle,
 			ccpRotateByAngle, ccpLineIntersect
 		Author of sample "CocosDenshion - Fancy Rat Metering Demo"
+		Added BarMid to CCProgressTo
+		CCProgressTimer: Improved API 
 	* Leonardo Kasperavičius (http://www.instantgames.com.br/):
 		original author of QuadParticleSystem class
 		Author of the original Bezier action
@@ -338,6 +340,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Texture fails gracefully if PVR image can't be loaded (patch)
 	* Patrick Wolowicz:
 		mkatlas: added artifact removal by copying borders to margins
+		FontLabel: supports parenthese and apostrophes when word wrapping.
 	* Paul Hampson (TBBle) (http://blog.tbble.org/)
 		CCSpriteFrameCache textureFileName is relative to path
 		CCSprite: correctly overrides setIsRelativeAnchorPoint

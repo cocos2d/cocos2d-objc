@@ -51,7 +51,7 @@ typedef void (*GLLogFunction) (GLuint program,
 - (id)initWithVertexShaderFilename:(NSString *)vShaderFilename 
             fragmentShaderFilename:(NSString *)fShaderFilename
 {
-    if (self = [super init])
+    if ((self = [super init]) )
     {
         NSString *vertShaderPathname, *fragShaderPathname;
         program_ = glCreateProgram();
