@@ -160,11 +160,6 @@ enum {
 /** creates a BMFont label with an initial string and the FNT file */
 +(id) labelWithString:(NSString*)string fntFile:(NSString*)fntFile;
 
-/** creates a BMFont label with an initial string and the FNT file
- @deprecated Will be removed in 1.0.1. Use "labelWithString" instead.
- */
-+(id) bitmapFontAtlasWithString:(NSString*)string fntFile:(NSString*)fntFile DEPRECATED_ATTRIBUTE;
-
 /** init a BMFont label with an initial string and the FNT file */
 -(id) initWithString:(NSString*)string fntFile:(NSString*)fntFile;
 
@@ -179,11 +174,4 @@ CCBMFontConfiguration * FNTConfigLoadFile( NSString *file );
  */
 void FNTConfigRemoveCache( void );
 
-
-
-/** CCBitmapFontAtlas
- @deprecated Use CCLabelBMFont instead. Will be removed 1.0.1
- */
-DEPRECATED_ATTRIBUTE @interface CCBitmapFontAtlas : CCLabelBMFont
-@end
 

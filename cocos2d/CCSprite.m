@@ -27,7 +27,6 @@
 
 #import "ccConfig.h"
 #import "CCSpriteBatchNode.h"
-#import "CCSpriteSheet.h"
 #import "CCSprite.h"
 #import "CCSpriteFrame.h"
 #import "CCSpriteFrameCache.h"
@@ -112,12 +111,6 @@ struct transformValues_ {
 	return [self spriteWithSpriteFrame:frame];
 }
 
-// XXX: deprecated
-+(id)spriteWithCGImage:(CGImageRef)image
-{
-	return [[[self alloc] initWithCGImage:image] autorelease];
-}
-
 +(id)spriteWithCGImage:(CGImageRef)image key:(NSString*)key
 {
 	return [[[self alloc] initWithCGImage:image key:key] autorelease];
@@ -126,10 +119,6 @@ struct transformValues_ {
 +(id) spriteWithBatchNode:(CCSpriteBatchNode*)batchNode rect:(CGRect)rect
 {
 	return [[[self alloc] initWithBatchNode:batchNode rect:rect] autorelease];
-}
-+(id) spriteWithSpriteSheet:(CCSpriteSheetInternalOnly*)spritesheet rect:(CGRect)rect // XXX DEPRECATED
-{
-	return [self spriteWithBatchNode:spritesheet rect:rect];
 }
 
 -(id) init
@@ -258,21 +247,6 @@ struct transformValues_ {
 	return [self initWithSpriteFrame:frame];
 }
 
-// XXX: deprecated
-- (id) initWithCGImage: (CGImageRef)image
-{
-	NSAssert(image!=nil, @"Invalid CGImageRef for sprite");
-
-	// XXX: possible bug. See issue #349. New API should be added
-	NSString *key = [NSString stringWithFormat:@"%08X",(unsigned long)image];
-	CCTexture2D *texture = [[CCTextureCache sharedTextureCache] addCGImage:image forKey:key];
-	
-	CGRect rect = CGRectZero;
-	rect.size = texture.contentSize;
-	
-	return [self initWithTexture:texture rect:rect];
-}
-
 - (id) initWithCGImage:(CGImageRef)image key:(NSString*)key
 {
 	NSAssert(image!=nil, @"Invalid CGImageRef for sprite");
@@ -301,11 +275,6 @@ struct transformValues_ {
 	[self useBatchNode:batchNode];
 	
 	return ret;
-}
-
--(id) initWithSpriteSheet:(CCSpriteSheetInternalOnly*)spritesheet rect:(CGRect)rect // XXX DEPRECATED
-{
-	return [self initWithBatchNode:spritesheet rect:rect];
 }
 
 - (NSString*) description
@@ -347,10 +316,6 @@ struct transformValues_ {
 	usesBatchNode_ = YES;
 	textureAtlas_ = [batchNode textureAtlas]; // weak ref
 	batchNode_ = batchNode; // weak ref
-}
--(void) useSpriteSheetRender:(CCSpriteSheetInternalOnly*)spriteSheet // XXX DEPRECATED
-{
-	[self useBatchNode:spriteSheet];
 }
 
 -(void) initAnimationDictionary
@@ -922,20 +887,6 @@ struct transformValues_ {
 	[self setTextureRectInPixels:frame.rectInPixels rotated:frame.rotated untrimmedSize:frame.originalSizeInPixels];
 }
 
-// XXX deprecated
--(void) setDisplayFrame: (NSString*) animationName index:(int) frameIndex
-{
-	if( ! animations_ )
-		[self initAnimationDictionary];
-	
-	CCAnimation *a = [animations_ objectForKey: animationName];
-	CCSpriteFrame *frame = [[a frames] objectAtIndex:frameIndex];
-	
-	NSAssert( frame, @"CCSprite#setDisplayFrame. Invalid frame");
-	
-	[self setDisplayFrame:frame];
-}
-
 -(void) setDisplayFrameWithAnimationName: (NSString*) animationName index:(int) frameIndex
 {
 	NSAssert( animationName, @"CCSprite#setDisplayFrameWithAnimationName. animationName must not be nil");
@@ -962,15 +913,6 @@ struct transformValues_ {
 -(CCSpriteFrame*) displayedFrame
 {
 	return [CCSpriteFrame frameWithTexture:self.texture rect:rect_];
-}
-
--(void) addAnimation: (CCAnimation*) anim
-{
-	// lazy alloc
-	if( ! animations_ )
-		[self initAnimationDictionary];
-	
-	[animations_ setObject:anim forKey:[anim name]];
 }
 
 -(CCAnimation*)animationByName: (NSString*) animationName

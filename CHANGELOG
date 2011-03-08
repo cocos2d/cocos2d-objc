@@ -1,5 +1,8 @@
 version 2.0-alpha XX-Apr-2011
-. [NEW] RadialEffects: Improved API. Added new Effect: Mid Bar
+. [NEW] CProgressTimer: 
+            -Convenience class constructor now passes in CCSprite (this gives developers easier access to timer with CCSpriteFrames, CCSprites, etc)
+            - Reduced the progress timer types to just radial and bar - added in reverse, midpoint, barChangeRate to be have more flexible options to modify the progress.
+. [FIX] All: Removed deprecated methods and classes
 
 version 1.0-rc - XX-Apr-2011
 . [3RD] FontLabel: Fixes issues with wrapping and apostraphes and hyphens (issue #1124)

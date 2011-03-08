@@ -91,6 +91,9 @@ typedef struct _KerningHashElement
 -(void) purgeKerningDictionary;
 @end
 
+#pragma -
+#pragma mark CCBMFontConfiguration
+
 @implementation CCBMFontConfiguration
 
 +(id) configurationWithFNTFile:(NSString*)FNTfile
@@ -426,6 +429,9 @@ typedef struct _KerningHashElement
 
 @end
 
+#pragma -
+#pragma mark CCLabelBMFont
+
 @implementation CCLabelBMFont
 
 @synthesize opacity = opacity_, color = color_;
@@ -441,12 +447,6 @@ typedef struct _KerningHashElement
 +(id) labelWithString:(NSString *)string fntFile:(NSString *)fntFile
 {
 	return [[[self alloc] initWithString:string fntFile:fntFile] autorelease];
-}
-
-// XXX - deprecated - Will be removed in 1.0.1
-+(id) bitmapFontAtlasWithString:(NSString*)string fntFile:(NSString*)fntFile
-{
-	return [self labelWithString:string fntFile:fntFile];
 }
 
 -(id) initWithString:(NSString*)theString fntFile:(NSString*)fntFile
