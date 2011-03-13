@@ -75,7 +75,7 @@ void GLESDebugDraw::DrawCircle(const b2Vec2& center, float32 radius, const b2Col
 {
 		
 	const float32 k_segments = 16.0f;
-	int vertexCount=16;
+	uint vertexCount=16;
 	const float32 k_increment = 2.0f * b2_pi / k_segments;
 	float32 theta = 0.0f;
 	
@@ -98,7 +98,7 @@ void GLESDebugDraw::DrawSolidCircle(const b2Vec2& center, float32 radius, const 
 {
 		
 	const float32 k_segments = 16.0f;
-	int vertexCount=16;
+	uint vertexCount=16;
 	const float32 k_increment = 2.0f * b2_pi / k_segments;
 	float32 theta = 0.0f;
 	
