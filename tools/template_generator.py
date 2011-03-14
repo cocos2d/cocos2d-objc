@@ -1,4 +1,5 @@
 #!/usr/bin/python
+# -*- coding: utf-8 -*-
 # ----------------------------------------------------------------------------
 # Xcode 4 template generator for cocos2d project
 # (c) 2011 Ricardo Quesada
