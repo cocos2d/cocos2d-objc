@@ -12,15 +12,6 @@
 	<true/>
 	<key>Definitions</key>
 	<dict>
-		<key>Info.plist</key>
-		<dict>
-			<key>Group</key>
-			<string>Supporting Files</string>
-			<key>Path</key>
-			<string>Info.plist</string>
-			<key>TargetIndices</key>
-			<array/>
-		</dict>
 		<key>Prefix.pch</key>
 		<dict>
 			<key>Group</key>
@@ -89,7 +80,6 @@
 	<string>Xcode.Xcode3.ProjectTemplateUnitKind</string>
 	<key>Nodes</key>
 	<array>
-		<string>Info.plist</string>
 		<string>Prefix.pch</string>
 		<string>main.m</string>
 		<string>AppDelegate.h</string>
