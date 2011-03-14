@@ -210,15 +210,11 @@ copy_file_templates(){
 copy_xcode4_project_templates(){
 	TEMPLATE_DIR="$HOME/Library/Developer/Xcode/Templates/cocos2d/"
 
-	if [[ ! -d "$TEMPLATE_DIR" ]]; then
-		echo '...creating cocos2d template directory'
-		echo ''
-		mkdir -p "$TEMPLATE_DIR"
-	fi
-
 	print_template_banner "Installing Xcode 4 cocos2d iOS template"
 
 	DST_DIR="$TEMPLATE_DIR"
+    check_dst_dir
+
 	LIBS_DIR="$DST_DIR""cocos2dlibs.xctemplate/libs/"
 
     mkdir -p "$LIBS_DIR"
