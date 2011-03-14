@@ -125,7 +125,7 @@ copy_project_templates(){
 	check_dst_dir
 
 	echo ...copying template files
-	copy_files templates/cocos2d_app/ "$DST_DIR"
+	copy_files templates/Xcode3_templates/cocos2d_app/ "$DST_DIR"
 
 	copy_base_files
 
@@ -139,7 +139,7 @@ copy_project_templates(){
 	check_dst_dir
 
 	echo ...copying template files
-	copy_files templates/cocos2d_box2d_app/ "$DST_DIR"
+	copy_files templates/Xcode3_templates/cocos2d_box2d_app/ "$DST_DIR"
 
 	copy_base_files
 
@@ -157,7 +157,7 @@ copy_project_templates(){
 	check_dst_dir
 
 	echo ...copying template files
-	copy_files templates/cocos2d_chipmunk_app/ "$DST_DIR"
+	copy_files templates/Xcode3_templates/cocos2d_chipmunk_app/ "$DST_DIR"
 
 	copy_base_files
 
@@ -174,7 +174,7 @@ copy_project_templates(){
 	check_dst_dir
 
 	echo ...copying template files
-	copy_files templates/cocos2d_mac/ "$DST_DIR"
+	copy_files templates/Xcode3_templates/cocos2d_mac/ "$DST_DIR"
 
 	copy_base_mac_files
 
@@ -201,7 +201,7 @@ copy_file_templates(){
 	
 	print_template_banner "Installing CCNode file templates..."
 	
-	copy_files "templates/file-templates/CCNode class" "$DST_DIR"
+	copy_files "templates/Xcode3_templates/file-templates/CCNode class" "$DST_DIR"
 	
 	echo done!
 }
