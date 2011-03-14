@@ -130,6 +130,8 @@
     <string>Resources</string>
     <key>Path</key>
     <string>Resources/Info.plist</string>
+    <key>TargetIndices</key>
+    <array/>
   </dict>
   <key>Resources/iTunesArtwork</key>
   <dict>

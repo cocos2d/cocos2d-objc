@@ -49,7 +49,7 @@
 				<key>GCC_PREFIX_HEADER</key>
 				<string>___PACKAGENAME___/Prefix.pch</string>
 				<key>INFOPLIST_FILE</key>
-				<string>___PACKAGENAME___/Info.plist</string>
+				<string>___PACKAGENAME___/Resources/Info.plist</string>
 			</dict>
 		</dict>
 	</array>
