@@ -283,22 +283,6 @@
     <key>Path</key>
     <string>libs/cocos2d/CCCamera.m</string>
   </dict>
-  <key>libs/cocos2d/CCCompatibility.h</key>
-  <dict>
-    <key>Group</key>
-    <string>cocos2d</string>
-    <key>Path</key>
-    <string>libs/cocos2d/CCCompatibility.h</string>
-    <key>TargetIndices</key>
-    <array/>
-  </dict>
-  <key>libs/cocos2d/CCCompatibility.m</key>
-  <dict>
-    <key>Group</key>
-    <string>cocos2d</string>
-    <key>Path</key>
-    <string>libs/cocos2d/CCCompatibility.m</string>
-  </dict>
   <key>libs/cocos2d/ccConfig.h</key>
   <dict>
     <key>Group</key>
@@ -757,22 +741,6 @@
     <string>cocos2d</string>
     <key>Path</key>
     <string>libs/cocos2d/CCSpriteFrameCache.m</string>
-  </dict>
-  <key>libs/cocos2d/CCSpriteSheet.h</key>
-  <dict>
-    <key>Group</key>
-    <string>cocos2d</string>
-    <key>Path</key>
-    <string>libs/cocos2d/CCSpriteSheet.h</string>
-    <key>TargetIndices</key>
-    <array/>
-  </dict>
-  <key>libs/cocos2d/CCSpriteSheet.m</key>
-  <dict>
-    <key>Group</key>
-    <string>cocos2d</string>
-    <key>Path</key>
-    <string>libs/cocos2d/CCSpriteSheet.m</string>
   </dict>
   <key>libs/cocos2d/CCTexture2D.h</key>
   <dict>
@@ -1577,13 +1545,6 @@
     <key>Path</key>
     <string>libs/FontLabel/ZFont.m</string>
   </dict>
-  <key>libs/README</key>
-  <dict>
-    <key>Group</key>
-    <string>Unknown Group</string>
-    <key>Path</key>
-    <string>libs/README</string>
-  </dict>
   <key>libs/TouchJSON/CDataScanner.h</key>
   <dict>
     <key>Group</key>
@@ -1749,8 +1710,6 @@
   <string>libs/cocos2d/CCBlockSupport.m</string>
   <string>libs/cocos2d/CCCamera.h</string>
   <string>libs/cocos2d/CCCamera.m</string>
-  <string>libs/cocos2d/CCCompatibility.h</string>
-  <string>libs/cocos2d/CCCompatibility.m</string>
   <string>libs/cocos2d/ccConfig.h</string>
   <string>libs/cocos2d/CCConfiguration.h</string>
   <string>libs/cocos2d/CCConfiguration.m</string>
@@ -1808,8 +1767,6 @@
   <string>libs/cocos2d/CCSpriteFrame.m</string>
   <string>libs/cocos2d/CCSpriteFrameCache.h</string>
   <string>libs/cocos2d/CCSpriteFrameCache.m</string>
-  <string>libs/cocos2d/CCSpriteSheet.h</string>
-  <string>libs/cocos2d/CCSpriteSheet.m</string>
   <string>libs/cocos2d/CCTexture2D.h</string>
   <string>libs/cocos2d/CCTexture2D.m</string>
   <string>libs/cocos2d/CCTextureAtlas.h</string>
@@ -1909,7 +1866,6 @@
   <string>libs/FontLabel/ZAttributedStringPrivate.h</string>
   <string>libs/FontLabel/ZFont.h</string>
   <string>libs/FontLabel/ZFont.m</string>
-  <string>libs/README</string>
   <string>libs/TouchJSON/CDataScanner.h</string>
   <string>libs/TouchJSON/CDataScanner.m</string>
   <string>libs/TouchJSON/Extensions/CDataScanner_Extensions.h</string>
