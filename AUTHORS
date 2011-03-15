@@ -61,8 +61,9 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		oapcity + color works with premultiplied textures. patch.
 		Director: fixed startup flicker
 		Fixed the artifact in textures atlas with no border.
-	* cjlesh:
+	* cjlesh (cjl):
 		RotateTo action rotates to shortest angle patch
+        Templates: Installer can be run from any directory. patch.
 	* Clinth Harris:
 		patches for Doc generator script
 	* cmkilger:

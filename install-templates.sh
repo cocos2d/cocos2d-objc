@@ -5,6 +5,7 @@ echo 'cocos2d-iphone template installer'
 COCOS2D_VER='cocos2d 1.0.0'
 BASE_TEMPLATE_DIR="/Library/Application Support/Developer/Shared/Xcode"
 BASE_TEMPLATE_USER_DIR="$HOME/Library/Application Support/Developer/Shared/Xcode"
+SCRIPT_DIR=$(dirname $0)
 
 force=
 user_dir=
@@ -51,7 +52,10 @@ fi
 
 
 copy_files(){
-	rsync -r --exclude=.svn "$1" "$2"
+    SRC_DIR="${SCRIPT_DIR}/${1}"
+    echo ${SRC_DIR}
+    echo ${2}
+	rsync -r --exclude=.svn "$SRC_DIR" "$2"
 }
 
 check_dst_dir(){
