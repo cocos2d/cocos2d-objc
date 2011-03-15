@@ -46,12 +46,18 @@
 				<key>GCC_OPTIMIZATION_LEVEL</key>
 				<string>0</string>
 				<key>GCC_PREPROCESSOR_DEFINITIONS</key>
-				<string>DEBUG</string>
+                <array>
+                    <string>DEBUG</string>
+                    <string>COCOS2D_DEBUG=1</string>
+                </array>
 				<key>GCC_SYMBOLS_PRIVATE_EXTERN</key>
 				<string>NO</string>
 			</dict>
 			<key>Release</key>
-			<dict/>
+			<dict>
+				<key>GCC_PREPROCESSOR_DEFINITIONS</key>
+                <string>NDEBUG</string>
+			</dict>
 		</dict>
 		<key>SharedSettings</key>
 		<dict>

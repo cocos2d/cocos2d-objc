@@ -22,6 +22,8 @@
 			<string>com.apple.compilers.llvmgcc42</string>
 			<key>IPHONEOS_DEPLOYMENT_TARGET</key>
 			<string>latest_iphoneos</string>
+			<key>CODE_SIGN_IDENTITY[sdk=iphoneos*]</key>
+			<string>iPhone Developer</string>
 		</dict>
 		<key>Configurations</key>
 		<dict>
@@ -30,11 +32,6 @@
 				<key>OTHER_CFLAGS</key>
 				<string>-DNS_BLOCK_ASSERTIONS=1</string>
 			</dict>
-		</dict>
-		<key>SharedSettings</key>
-		<dict>
-			<key>CODE_SIGN_IDENTITY[sdk=iphoneos*]</key>
-			<string>iPhone Developer</string>
 		</dict>
 	</dict>
 	<key>Targets</key>
@@ -55,6 +52,8 @@
 			<dict>
 				<key>GCC_THUMB_SUPPORT[arch=armv6]</key>
 				<string></string>
+				<key>OTHER_LDFLAGS</key>
+				<string>-lz</string>
 			</dict>
 			<key>Configurations</key>
 			<dict>
