@@ -53,8 +53,6 @@ fi
 
 copy_files(){
     SRC_DIR="${SCRIPT_DIR}/${1}"
-    echo ${SRC_DIR}
-    echo ${2}
 	rsync -r --exclude=.svn "$SRC_DIR" "$2"
 }
 
