@@ -228,7 +228,7 @@ copy_xcode4_project_templates(){
 
 	echo done!
 
-	print_template_banner "Installing Xcode 4 chipmunk iOS template"
+	print_template_banner "Installing Xcode 4 Chipmunk iOS template"
 
 
 	LIBS_DIR="$DST_DIR""chipmunklib.xctemplate/libs/"
@@ -236,6 +236,17 @@ copy_xcode4_project_templates(){
 
 	echo ...copying Chipmunk files
 	copy_files external/Chipmunk "$LIBS_DIR"
+
+	echo done!
+
+	print_template_banner "Installing Xcode 4 Box2d iOS template"
+
+
+	LIBS_DIR="$DST_DIR""box2dlib.xctemplate/libs/"
+    mkdir -p "$LIBS_DIR"
+
+	echo ...copying Box2d files
+	copy_files external/Box2d/Box2D "$LIBS_DIR"
 
 	echo done!
 }
