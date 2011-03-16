@@ -41,7 +41,7 @@ class Xcode4Template(object):
         self.directory = directory
         self.files_to_include = []
         self.wildcard = '*'
-        self.ignore_extensions = ['h','txt']
+        self.ignore_extensions = ['h','txt','html','patch']
         self.group = group                  # fixed group name
         self.group_index = 1                # automatic group name taken from path
         self.output = []

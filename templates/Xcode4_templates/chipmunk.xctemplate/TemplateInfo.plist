@@ -7,6 +7,7 @@
 		<string>com.cocos2d.bundlebase</string>
 		<string>com.cocos2d.iosbase</string>
 		<string>com.cocos2d.cocos2dlib</string>
+		<string>com.cocos2d.chipmunklib</string>
 	</array>
 	<key>Concrete</key>
 	<true/>
@@ -73,9 +74,9 @@
 		</dict>
 	</dict>
 	<key>Description</key>
-	<string>This template provides a starting point for an application that uses cocos2d for iOS. It includes CocosDenshion, FontLabel and cocosLive.</string>
+	<string>This template provides a starting point for an application that uses cocos2d and Chipmunk for iOS. It includes CocosDenshion, FontLabel and cocosLive.</string>
 	<key>Identifier</key>
-	<string>com.cocos2d.cocos2dOnlyIOSTemplate</string>
+	<string>com.cocos2d.cocos2dChipmunkIOSTemplate</string>
 	<key>Kind</key>
 	<string>Xcode.Xcode3.ProjectTemplateUnitKind</string>
 	<key>Nodes</key>
@@ -112,5 +113,17 @@
 			</dict>
 		</dict>
 	</array>
+	<key>Targets</key>
+	<array>
+		<dict>
+			<key>SharedSettings</key>
+			<dict>
+                <key>ALWAYS_SEARCH_USER_PATHS</key>
+                <string>YES</string>
+                <key>USER_HEADER_SEARCH_PATHS</key>
+                <string>___PACKAGENAME___/libs/Chipmunk/include/chipmunk</string>
+            </dict>
+        </dict>
+    </array>
 </dict>
 </plist>

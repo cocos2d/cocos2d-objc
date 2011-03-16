@@ -67,7 +67,7 @@
 			<string>YES</string>
 			<key>GCC_WARN_UNUSED_VARIABLE</key>
 			<string>YES</string>
-		</dict>
+        </dict>
 	</dict>
 	<key>Targets</key>
 	<array>
