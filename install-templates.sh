@@ -217,7 +217,7 @@ copy_xcode4_project_templates(){
 	DST_DIR="$TEMPLATE_DIR"
     check_dst_dir
 
-	LIBS_DIR="$DST_DIR""cocos2dlibs.xctemplate/libs/"
+	LIBS_DIR="$DST_DIR""cocos2dlib.xctemplate/libs/"
 
     mkdir -p "$LIBS_DIR"
 
@@ -225,6 +225,17 @@ copy_xcode4_project_templates(){
 
 	echo ...copying template files
 	copy_files templates/Xcode4_templates/ "$DST_DIR"
+
+	echo done!
+
+	print_template_banner "Installing Xcode 4 chipmunk iOS template"
+
+
+	LIBS_DIR="$DST_DIR""chipmunklib.xctemplate/libs/"
+    mkdir -p "$LIBS_DIR"
+
+	echo ...copying Chipmunk files
+	copy_files external/Chipmunk "$LIBS_DIR"
 
 	echo done!
 }
