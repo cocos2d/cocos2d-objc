@@ -72,6 +72,13 @@
 			<key>Path</key>
 			<string>AppDelegate.m</string>
 		</dict>
+	  <key>Resources/grossini_dance_atlas.png</key>
+	  <dict>
+		<key>Group</key>
+		<string>Resources</string>
+		<key>Path</key>
+		<string>Resources/grossini_dance_atlas.png</string>
+	  </dict>
 	</dict>
 	<key>Description</key>
 	<string>This template provides a starting point for an application that uses cocos2d and Chipmunk for iOS. It includes CocosDenshion, FontLabel and cocosLive.</string>
@@ -90,6 +97,7 @@
 		<string>HelloWorldLayer.h</string>
 		<string>HelloWorldLayer.m</string>
 		<string>GameConfig.h</string>
+		<string>Resources/grossini_dance_atlas.png</string>
 	</array>
 	<key>Options</key>
 	<array>
@@ -118,12 +126,12 @@
 		<dict>
 			<key>SharedSettings</key>
 			<dict>
-                <key>ALWAYS_SEARCH_USER_PATHS</key>
-                <string>YES</string>
-                <key>USER_HEADER_SEARCH_PATHS</key>
-                <string>___PACKAGENAME___/libs/Chipmunk/include/chipmunk</string>
-            </dict>
-        </dict>
-    </array>
+				<key>ALWAYS_SEARCH_USER_PATHS</key>
+				<string>YES</string>
+				<key>USER_HEADER_SEARCH_PATHS</key>
+				<string>___PACKAGENAME___/libs/Chipmunk/include/chipmunk</string>
+			</dict>
+		</dict>
+	</array>
 </dict>
 </plist>
