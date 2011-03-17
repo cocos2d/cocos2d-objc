@@ -6,6 +6,7 @@ version 1.0-rc - XX-Apr-2011
 . [FIX] Documentation: onExit doxystring improved (issue #1135)
 . [FIX] ProgressTimer: fixed underflow in setPercentage() (issue #1123)
 . [FIX-MAC] Director: Compiles in Mac when "slow" FPS are selected (issue #1126)
+. [FIX-MAC] Director: Fullscreen reuses the OpenGL view.
 . [3RD] FontLabel: Fixes issues with wrapping and apostraphes and hyphens (issue #1124)
 . [3RD] TouchJSON: Updated to "master" from March, 5 2011 (issue #1128)
 

@@ -277,6 +277,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Added MacWindow and the possibility to create a Mac Widnow programatically
 		Improved Mac Touch tests
 		Fixed bug regarding Mac touch test in Layer
+        Mac Director reuses OpenGL view in fullscreen mode
 	* marcofucci:
 		CCArray.fastRemoveObjectAtIndex patch.
 	* Marco Tillemans (araker):
