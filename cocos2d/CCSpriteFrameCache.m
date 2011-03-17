@@ -182,6 +182,13 @@ static CCSpriteFrameCache *sharedSpriteFrameCache_=nil;
 													originalSize:spriteSourceSize];
 		}
 
+        // make sure we aren't clobbering an entry
+        if( [spriteFrames_ objectForKey:frameDictKey] != nil )
+        {
+            CCLOG(@"cocos2d: WARNING: Clobbering an existing spriteFrame (%@) in the spriteFrameCache", frameDictKey);
+        }
+
+        
 		// add sprite frame
 		[spriteFrames_ setObject:spriteFrame forKey:frameDictKey];
 		[spriteFrame release];
