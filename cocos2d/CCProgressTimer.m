@@ -94,14 +94,8 @@ const char kCCProgressTextureCoords = 0x4b;
 
 -(void)setPercentage:(float) percentage
 {
-	if(percentage_ != percentage){
-		if(percentage_ < 0.f)
-			percentage_ = 0.f;
-		else if(percentage > 100.0f)
-			percentage_  = 100.f;
-		else
-			percentage_ = percentage;
-		
+	if(percentage_ != percentage) {
+        percentage_ = clampf( percentage, 0, 100);		
 		[self updateProgress];
 	}
 }
