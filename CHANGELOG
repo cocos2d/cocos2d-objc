@@ -1,15 +1,28 @@
+version 1.0-rc - XX-Apr-2011
+. [NEW] Templates: Added Xcode4 templates for cocos2d, cocos2d+box2d, cocos2d+chipmunk
+. [NEW] Tempaltes: Possibility to run the installer from any directory
+. [FIX] All: Removed many deprecated methods and classes that were scheduled for removal on v1.0
+. [FIX] Documentation: Drawing primitives fixed syntax error (issue #1127)
+. [FIX] Documentation: onExit doxystring improved (issue #1135)
+. [FIX] ProgressTimer: fixed underflow in setPercentage() (issue #1123)
+. [FIX] Xcode: TexturePVR compiles when using cocos2d as an external library (issue #1132)
+. [FIX-MAC] Director: Compiles in Mac when "slow" FPS are selected (issue #1126)
+. [FIX-MAC] Director: Fullscreen reuses the OpenGL view.
+. [3RD] FontLabel: Fixes issues with wrapping and apostraphes and hyphens (issue #1124)
+. [3RD] TouchJSON: Updated to "master" from March, 5 2011 (issue #1128)
+
 version 1.0-beta - 01-Mar-2011
 . [NEW] Actions: Repeat and RepeatForEver has getter/setter for the inner action (issue #1110)
 . [NEW] LayerGradient: Added "compressed interpolation" (default mode) in order to display all graident's colors in any vector
 . [NEW-MAC] Added CC_DIRECTOR_INIT(). It is possible to create a Mac Window programatically
-. [NEW-MAC] EventDispatcher: Added support for touches events
+. [NEW-MAC] EventDispatcher: Added support for Touch events
 . [FIX] CocosDenshion: Improved logging
 . [FIX] CocosDenshion: Fixed excessively large or negative gain values cause distorted audio in the simulator.
 . [FIX] CocosDenshion: Added guards to prevent memory corruption caused by invalid parameters
 . [FIX] CocosDenshion: Define some constants for defaults, make const parameter on buffer asynch load method
 . [FIX] CCArray: insertObjectAtIndex checks bounds (issue #1121)
 . [FIX] Director: Fixed possible crash when purging the TextureCache
-. [FIX] Layer: Deprecated. CCMultiplexLayer deprecated. New name is CCLayerMultiplex
+. [FIX] Layer: CCMultiplexLayer deprecated. New name is CCLayerMultiplex
 . [FIX] Particles: consumes less memory (12 bytes less per particle) and are a bit faster
 . [FIX] ProgressTimer: Consumes less memory
 . [FIX] RenderTexture: Added possibility to save buffer in any place (issue #1100)

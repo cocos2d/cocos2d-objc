@@ -61,8 +61,9 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		oapcity + color works with premultiplied textures. patch.
 		Director: fixed startup flicker
 		Fixed the artifact in textures atlas with no border.
-	* cjlesh:
+	* cjlesh (cjl):
 		RotateTo action rotates to shortest angle patch
+        Templates: Installer can be run from any directory. patch.
 	* Clinth Harris:
 		patches for Doc generator script
 	* cmkilger:
@@ -276,6 +277,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Added MacWindow and the possibility to create a Mac Widnow programatically
 		Improved Mac Touch tests
 		Fixed bug regarding Mac touch test in Layer
+        Mac Director reuses OpenGL view in fullscreen mode
 	* marcofucci:
 		CCArray.fastRemoveObjectAtIndex patch.
 	* Marco Tillemans (araker):
@@ -323,6 +325,8 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Device and Simulator behaves identically with premultiplied images. patch.
 	* Musical Geometry:
 		Improved SpriteSheet doxygen documentation (patch)
+    * mzornek:
+        ProgressTimer: setPercentage no longer has underflow (patch)
 	* nash8114:
 		Sprite#isFrameDisplayed works ok with offsets. patch.
 		GLES-DebugDraw#drawCircle draws non-solid circles. patch.
@@ -338,6 +342,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Texture fails gracefully if PVR image can't be loaded (patch)
 	* Patrick Wolowicz:
 		mkatlas: added artifact removal by copying borders to margins
+		FontLabel: supports parenthese and apostrophes when word wrapping.
 	* Paul Hampson (TBBle) (http://blog.tbble.org/)
 		CCSpriteFrameCache textureFileName is relative to path
 		CCSprite: correctly overrides setIsRelativeAnchorPoint
@@ -346,7 +351,9 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	* Piero Tofy (http://indieappsalliance.org):
 		Web: Author of the scraper script used to parse games data in the cocos2d site
 	* Pieter van de Bruggen
-		Author of Gradient layer
+		Author of Gradient layer  
+    * podhraski.tomislav:
+        Mac Director compiles when slow FPS are selected. patch.
 	* psi.pk.ru:
 		EventDispatcher: flagsChanged is triggered correctly. patch
 	* psionic81:
