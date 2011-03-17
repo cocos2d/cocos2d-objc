@@ -84,6 +84,12 @@
  */
 -(CCTexture2D *) textureForKey:(NSString *)key;
 
+/** Returns first found key for already created texture if it exists in textureCache. 
+ * Returns nil if the texture == nil or not present in textureCache.
+ * @since XXX 
+ */
+-(NSString *) keyForTexture: (CCTexture2D *) tex;
+
 /** Purges the dictionary of loaded textures.
  * Call this method if you receive the "Memory Warning"
  * In the short term: it will free some resources preventing your app from being killed

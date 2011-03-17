@@ -45,6 +45,8 @@
 	CGPoint			offsetInPixels_;
 	CGSize			originalSizeInPixels_;
 	CCTexture2D		*texture_;
+	BOOL			usesRetainedTexture_;
+	NSString		*textureKey_;
 }
 /** rect of the frame in points. If it is updated, then rectInPixels will be updated too. */
 @property (nonatomic,readwrite) CGRect rect;
@@ -61,8 +63,26 @@
 /** original size of the trimmed image in pixels */
 @property (nonatomic,readwrite) CGSize originalSizeInPixels;
 
-/** texture of the frame */
+/** texture of the frame.
+ * returns retained texture if usesRetainedTexture == YES 
+ * returns CCTextureCache::addImage result if usesRetainedTexture == NO
+ * will change usesRetainedTexture to YES if new texture will be set via setter.
+ */
 @property (nonatomic, retain, readwrite) CCTexture2D *texture;
+
+/** textureKey of the frame.
+ * returns textureKey if usesRetainedTexture == NO 
+ * returns CCTextureCache::keyForTexture if usesRetainedTexture == YES
+ * will change usesRetainedTexture to NO, if will be set via setter, if such 
+ * new textureKey is present in textureCache
+ */
+@property (nonatomic, copy, readwrite) NSString *textureKey;
+
+/** Shows the mode of the frame.
+ * if YES - retains the texture
+ * if NO - uses textureKey to get texture from textureCache
+ */
+@property (nonatomic, readonly) BOOL usesRetainedTexture;
 
 /** Create a CCSpriteFrame with a texture, rect in points.
  It is assumed that the frame was not trimmed.
