@@ -171,7 +171,7 @@ static CCSpriteFrameCache *sharedSpriteFrameCache_=nil;
 				if( [spriteFramesAliases_ objectForKey:alias] )
 					CCLOG(@"cocos2d: WARNING: an alias with name %@ already exists",alias);
 				
-				[spriteFramesAliases_ setObject:frameDictKey forKey:alias];
+				[spriteFramesAliases_ setObject:[CCSpriteFrameCache makeCacheKeyFromName: name basekey:frameDictKey] forKey:alias];
 			}
 			
 			// create frame
