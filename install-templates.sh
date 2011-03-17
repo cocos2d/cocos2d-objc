@@ -5,6 +5,7 @@ echo 'cocos2d-iphone template installer'
 COCOS2D_VER='cocos2d 1.0.0'
 BASE_TEMPLATE_DIR="/Library/Application Support/Developer/Shared/Xcode"
 BASE_TEMPLATE_USER_DIR="$HOME/Library/Application Support/Developer/Shared/Xcode"
+SCRIPT_DIR=$(dirname $0)
 
 force=
 user_dir=
@@ -51,7 +52,8 @@ fi
 
 
 copy_files(){
-	rsync -r --exclude=.svn "$1" "$2"
+    SRC_DIR="${SCRIPT_DIR}/${1}"
+	rsync -r --exclude=.svn "$SRC_DIR" "$2"
 }
 
 check_dst_dir(){
@@ -125,7 +127,7 @@ copy_project_templates(){
 	check_dst_dir
 
 	echo ...copying template files
-	copy_files templates/cocos2d_app/ "$DST_DIR"
+	copy_files templates/Xcode3_templates/cocos2d_app/ "$DST_DIR"
 
 	copy_base_files
 
@@ -139,7 +141,7 @@ copy_project_templates(){
 	check_dst_dir
 
 	echo ...copying template files
-	copy_files templates/cocos2d_box2d_app/ "$DST_DIR"
+	copy_files templates/Xcode3_templates/cocos2d_box2d_app/ "$DST_DIR"
 
 	copy_base_files
 
@@ -157,7 +159,7 @@ copy_project_templates(){
 	check_dst_dir
 
 	echo ...copying template files
-	copy_files templates/cocos2d_chipmunk_app/ "$DST_DIR"
+	copy_files templates/Xcode3_templates/cocos2d_chipmunk_app/ "$DST_DIR"
 
 	copy_base_files
 
@@ -174,7 +176,7 @@ copy_project_templates(){
 	check_dst_dir
 
 	echo ...copying template files
-	copy_files templates/cocos2d_mac/ "$DST_DIR"
+	copy_files templates/Xcode3_templates/cocos2d_mac/ "$DST_DIR"
 
 	copy_base_mac_files
 
@@ -201,11 +203,58 @@ copy_file_templates(){
 	
 	print_template_banner "Installing CCNode file templates..."
 	
-	copy_files "templates/file-templates/CCNode class" "$DST_DIR"
+	copy_files "templates/Xcode3_templates/file-templates/CCNode class" "$DST_DIR"
 	
 	echo done!
 }
 
-copy_project_templates
+# Xcode4 templates
+copy_xcode4_project_templates(){
+	TEMPLATE_DIR="$HOME/Library/Developer/Xcode/Templates/cocos2d/"
 
+	print_template_banner "Installing Xcode 4 cocos2d iOS template"
+
+	DST_DIR="$TEMPLATE_DIR"
+    check_dst_dir
+
+	LIBS_DIR="$DST_DIR""cocos2dlib.xctemplate/libs/"
+
+    mkdir -p "$LIBS_DIR"
+
+    copy_base_files
+
+	echo ...copying template files
+	copy_files templates/Xcode4_templates/ "$DST_DIR"
+
+	echo done!
+
+	print_template_banner "Installing Xcode 4 Chipmunk iOS template"
+
+
+	LIBS_DIR="$DST_DIR""chipmunklib.xctemplate/libs/"
+    mkdir -p "$LIBS_DIR"
+
+	echo ...copying Chipmunk files
+	copy_files external/Chipmunk "$LIBS_DIR"
+
+	echo done!
+
+	print_template_banner "Installing Xcode 4 Box2d iOS template"
+
+
+	LIBS_DIR="$DST_DIR""box2dlib.xctemplate/libs/"
+    mkdir -p "$LIBS_DIR"
+
+	echo ...copying Box2d files
+	copy_files external/Box2d/Box2D "$LIBS_DIR"
+
+	echo done!
+}
+
+# copy Xcode4 templates
+copy_xcode4_project_templates
+
+# copy Xcode3 templates
+copy_project_templates
 copy_file_templates
+

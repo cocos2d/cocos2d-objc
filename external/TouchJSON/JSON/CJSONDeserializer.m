@@ -1,9 +1,9 @@
 //
 //  CJSONDeserializer.m
-//  TouchJSON
+//  TouchCode
 //
 //  Created by Jonathan Wight on 12/15/2005.
-//  Copyright (c) 2005 Jonathan Wight
+//  Copyright 2005 toxicsoftware.com. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person
 //  obtaining a copy of this software and associated documentation
@@ -34,51 +34,128 @@
 
 NSString *const kJSONDeserializerErrorDomain  = @"CJSONDeserializerErrorDomain";
 
+@interface CJSONDeserializer ()
+@end
+
 @implementation CJSONDeserializer
 
+@synthesize scanner;
+@synthesize options;
+
 + (id)deserializer
-{
-return([[[self alloc] init] autorelease]);
-}
+    {
+    return([[[self alloc] init] autorelease]);
+    }
 
-- (id)deserializeAsDictionary:(NSData *)inData error:(NSError **)outError;
-{
-if (inData == NULL || [inData length] == 0)
-	{
-	if (outError)
-		*outError = [NSError errorWithDomain:kJSONDeserializerErrorDomain code:-1 userInfo:NULL];
+- (id)init
+    {
+    if ((self = [super init]) != NULL)
+        {
+        }
+    return(self);
+    }
 
-	return(NULL);
-	}
-CJSONScanner *theScanner = [CJSONScanner scannerWithData:inData];
-NSDictionary *theDictionary = NULL;
-if ([theScanner scanJSONDictionary:&theDictionary error:outError] == YES)
-	return(theDictionary);
-else
-	return(NULL);
-}
-
-@end
+- (void)dealloc
+    {
+    [scanner release];
+    scanner = NULL;
+    //
+    [super dealloc];
+    }
 
 #pragma mark -
 
-@implementation CJSONDeserializer (CJSONDeserializer_Deprecated)
+- (CJSONScanner *)scanner
+    {
+    if (scanner == NULL)
+        {
+        scanner = [[CJSONScanner alloc] init];
+        }
+    return(scanner);
+    }
+
+- (id)nullObject
+    {
+    return(self.scanner.nullObject);
+    }
+
+- (void)setNullObject:(id)inNullObject
+    {
+    self.scanner.nullObject = inNullObject;
+    }
+
+#pragma mark -
+
+- (NSStringEncoding)allowedEncoding
+    {
+    return(self.scanner.allowedEncoding);
+    }
+
+- (void)setAllowedEncoding:(NSStringEncoding)inAllowedEncoding
+    {
+    self.scanner.allowedEncoding = inAllowedEncoding;
+    }
+
+#pragma mark -
 
 - (id)deserialize:(NSData *)inData error:(NSError **)outError
-{
-if (inData == NULL || [inData length] == 0)
-	{
-	if (outError)
-		*outError = [NSError errorWithDomain:kJSONDeserializerErrorDomain code:-1 userInfo:NULL];
+    {
+    if (inData == NULL || [inData length] == 0)
+        {
+        if (outError)
+            *outError = [NSError errorWithDomain:kJSONDeserializerErrorDomain code:kJSONScannerErrorCode_NothingToScan userInfo:NULL];
 
-	return(NULL);
-	}
-CJSONScanner *theScanner = [CJSONScanner scannerWithData:inData];
-id theObject = NULL;
-if ([theScanner scanJSONObject:&theObject error:outError] == YES)
-	return(theObject);
-else
-	return(NULL);
-}
+        return(NULL);
+        }
+    if ([self.scanner setData:inData error:outError] == NO)
+        {
+        return(NULL);
+        }
+    id theObject = NULL;
+    if ([self.scanner scanJSONObject:&theObject error:outError] == YES)
+        return(theObject);
+    else
+        return(NULL);
+    }
+
+- (id)deserializeAsDictionary:(NSData *)inData error:(NSError **)outError
+    {
+    if (inData == NULL || [inData length] == 0)
+        {
+        if (outError)
+            *outError = [NSError errorWithDomain:kJSONDeserializerErrorDomain code:kJSONScannerErrorCode_NothingToScan userInfo:NULL];
+
+        return(NULL);
+        }
+    if ([self.scanner setData:inData error:outError] == NO)
+        {
+        return(NULL);
+        }
+    NSDictionary *theDictionary = NULL;
+    if ([self.scanner scanJSONDictionary:&theDictionary error:outError] == YES)
+        return(theDictionary);
+    else
+        return(NULL);
+    }
+
+- (id)deserializeAsArray:(NSData *)inData error:(NSError **)outError
+    {
+    if (inData == NULL || [inData length] == 0)
+        {
+        if (outError)
+            *outError = [NSError errorWithDomain:kJSONDeserializerErrorDomain code:kJSONScannerErrorCode_NothingToScan userInfo:NULL];
+
+        return(NULL);
+        }
+    if ([self.scanner setData:inData error:outError] == NO)
+        {
+        return(NULL);
+        }
+    NSArray *theArray = NULL;
+    if ([self.scanner scanJSONArray:&theArray error:outError] == YES)
+        return(theArray);
+    else
+        return(NULL);
+    }
 
 @end

@@ -25,6 +25,7 @@ static NSString *transitions[] = {
 	@"LabelAtlasHD",
 	@"LabelGlyphDesigner",
 	@"LabelTTFTest",
+	@"LabelTTFMultiline",
 	
 	// Not a label test. Should be moved to Atlas test
 	@"Atlas1",
@@ -978,6 +979,41 @@ Class restartAction()
 }
 
 @end
+
+#pragma mark -
+#pragma mark LabelTTFMultiline
+
+@implementation LabelTTFMultiline
+-(id) init
+{
+	if( (self=[super init]) ) {
+		
+		CGSize s = [[CCDirector sharedDirector] winSize];
+		
+		// CCLabelBMFont
+//		CCLabelTTF *center =  [[CCLabelTTF alloc] initWithString:@"Bla bla bla bla bla bla bla bla bla bla bla (bla)" dimensions:CGSizeMake(150,84) alignment:UITextAlignmentLeft fontName: @"MarkerFelt.ttc" fontSize: 14];
+
+		CCLabelTTF *center = [CCLabelTTF labelWithString:@"word wrap \"testing\" (bla0) bla1 'bla2' [bla3] (bla4) {bla5} {bla6} [bla7] (bla8) [bla9] 'bla0' \"bla1\"" dimensions:CGSizeMake(s.width/2,200) alignment:CCTextAlignmentCenter fontName:@"MarkerFelt.ttc" fontSize:32];
+		center.position = ccp(s.width/2,150);
+		
+		[self addChild:center];
+	}
+	
+	return self;
+}
+
+-(NSString*) title
+{
+	return @"Testing CCLabelTTF Word Wrap";
+}
+
+-(NSString *) subtitle
+{
+	return @"Word wrap using CCLabelTTF";
+}
+
+@end
+
 
 
 #pragma mark -

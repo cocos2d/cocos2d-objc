@@ -266,7 +266,7 @@ enum {
 -(void) onEnterTransitionDidFinish;
 /** callback that is called every time the CCNode leaves the 'stage'.
  If the CCNode leaves the 'stage' with a transition, this callback is called when the transition finishes.
- During onExit you can't a "sister/brother" node.
+ During onExit you can't access a sibling node.
  */
 -(void) onExit;
 

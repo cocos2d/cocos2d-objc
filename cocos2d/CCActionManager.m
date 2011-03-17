@@ -132,12 +132,6 @@ static CCActionManager *sharedManager_ = nil;
 
 #pragma mark ActionManager - Pause / Resume
 
-// XXX DEPRECATED. REMOVE IN 1.0
--(void) pauseAllActionsForTarget:(id)target
-{
-	[self pauseTarget:target];
-}
-
 -(void) pauseTarget:(id)target
 {
 	tHashElement *element = NULL;
@@ -146,12 +140,6 @@ static CCActionManager *sharedManager_ = nil;
 		element->paused = YES;
 //	else
 //		CCLOG(@"cocos2d: pauseAllActions: Target not found");
-}
-
-// XXX DEPRECATED. REMOVE IN 1.0
--(void) resumeAllActionsForTarget:(id)target
-{
-	[self resumeTarget:target];
 }
 
 -(void) resumeTarget:(id)target

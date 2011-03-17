@@ -71,7 +71,7 @@
 	if (!pixelFormat)
 		NSLog(@"No OpenGL pixel format");
 	
-	if (self = [super initWithFrame:frameRect pixelFormat:[pixelFormat autorelease]]) {
+	if( (self = [super initWithFrame:frameRect pixelFormat:[pixelFormat autorelease]]) ) {
 		
 		if( context )
 			[self setOpenGLContext:context];

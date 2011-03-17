@@ -1,9 +1,9 @@
 //
 //  CDataScanner.h
-//  TouchJSON
+//  TouchCode
 //
 //  Created by Jonathan Wight on 04/16/08.
-//  Copyright (c) 2008 Jonathan Wight
+//  Copyright 2008 toxicsoftware.com. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person
 //  obtaining a copy of this software and associated documentation
@@ -38,15 +38,14 @@
 	u_int8_t *end;
 	u_int8_t *current;
 	NSUInteger length;
-	
-	NSCharacterSet *doubleCharacters;
 }
 
 @property (readwrite, nonatomic, retain) NSData *data;
 @property (readwrite, nonatomic, assign) NSUInteger scanLocation;
+@property (readonly, nonatomic, assign) NSUInteger bytesRemaining;
 @property (readonly, nonatomic, assign) BOOL isAtEnd;
 
-+ (id)scannerWithData:(NSData *)inData;
+- (id)initWithData:(NSData *)inData;
 
 - (unichar)currentCharacter;
 - (unichar)scanCharacter;
@@ -60,9 +59,13 @@
 - (BOOL)scanUpToCharactersFromSet:(NSCharacterSet *)set intoString:(NSString **)outValue; // inSet must only contain 7-bit ASCII characters
 
 - (BOOL)scanNumber:(NSNumber **)outValue;
+- (BOOL)scanDecimalNumber:(NSDecimalNumber **)outValue;
+
+- (BOOL)scanDataOfLength:(NSUInteger)inLength intoData:(NSData **)outData;
 
 - (void)skipWhitespace;
 
 - (NSString *)remainingString;
+- (NSData *)remainingData;
 
 @end

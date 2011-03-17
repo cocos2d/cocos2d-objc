@@ -1,9 +1,9 @@
 //
 //  CDataScanner_Extensions.h
-//  TouchJSON
+//  TouchCode
 //
 //  Created by Jonathan Wight on 12/08/2005.
-//  Copyright (c) 2005 Jonathan Wight
+//  Copyright 2005 toxicsoftware.com. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person
 //  obtaining a copy of this software and associated documentation
@@ -33,5 +33,8 @@
 
 - (BOOL)scanCStyleComment:(NSString **)outComment;
 - (BOOL)scanCPlusPlusStyleComment:(NSString **)outComment;
+
+- (NSUInteger)lineOfScanLocation;
+- (NSDictionary *)userInfoForScanLocation;
 
 @end
