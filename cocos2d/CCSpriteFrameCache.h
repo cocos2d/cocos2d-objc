@@ -55,10 +55,15 @@
  */
 +(void)purgeSharedSpriteFrameCache;
 
+/** Generates the key that will be used to index in to the cache dictionary
+ can be used to build the key from outside frame cache
+ */
++(NSString*) makeCacheKeyFromName: (NSString*)name basekey:(NSString*)key;
 
 /** Adds multiple Sprite Frames with a dictionary. The texture will be associated with the created sprite frames.
+ The name is used in the cache key so that sprite names don't have to be unique across all sprite sheets.
  */
--(void) addSpriteFramesWithDictionary:(NSDictionary*)dictionary texture:(CCTexture2D*)texture;
+-(void) addSpriteFramesWithDictionary:(NSDictionary*)dictionary texture:(CCTexture2D*)texture name:(NSString*)name;
 
 /** Adds multiple Sprite Frames from a plist file.
  * A texture will be loaded automatically. The texture name will composed by replacing the .plist suffix with .png
@@ -66,9 +71,19 @@
  */
 -(void) addSpriteFramesWithFile:(NSString*)plist;
 
+/** Adds multiple Sprite Frames from a plist file.
+ Adds a name to the sprite frame name hashes.
+ */
+-(void) addSpriteFramesWithFile:(NSString*)plist name:(NSString*)name;
+
 /** Adds multiple Sprite Frames from a plist file. The texture will be associated with the created sprite frames.
  */
 -(void) addSpriteFramesWithFile:(NSString*)plist texture:(CCTexture2D*)texture;
+
+/** Adds multiple Sprite Frames from a plist file. The texture will be associated with the created sprite frames.
+ Adds a name to the sprite frame name hashes.
+ */
+-(void) addSpriteFramesWithFile:(NSString*)plist texture:(CCTexture2D*)texture name:(NSString*)name;
 
 /** Adds multiple Sprite Frames from a plist file. The texture will be associated with the created sprite frames.
  @since v0.99.5
