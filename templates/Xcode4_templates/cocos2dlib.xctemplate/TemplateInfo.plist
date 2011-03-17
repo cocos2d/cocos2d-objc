@@ -1577,22 +1577,6 @@
     <key>Path</key>
     <string>libs/TouchJSON/Extensions/CDataScanner_Extensions.m</string>
   </dict>
-  <key>libs/TouchJSON/Extensions/NSCharacterSet_Extensions.h</key>
-  <dict>
-    <key>Group</key>
-    <string>TouchJSON</string>
-    <key>Path</key>
-    <string>libs/TouchJSON/Extensions/NSCharacterSet_Extensions.h</string>
-    <key>TargetIndices</key>
-    <array/>
-  </dict>
-  <key>libs/TouchJSON/Extensions/NSCharacterSet_Extensions.m</key>
-  <dict>
-    <key>Group</key>
-    <string>TouchJSON</string>
-    <key>Path</key>
-    <string>libs/TouchJSON/Extensions/NSCharacterSet_Extensions.m</string>
-  </dict>
   <key>libs/TouchJSON/Extensions/NSDictionary_JSONExtensions.h</key>
   <dict>
     <key>Group</key>
@@ -1608,22 +1592,6 @@
     <string>TouchJSON</string>
     <key>Path</key>
     <string>libs/TouchJSON/Extensions/NSDictionary_JSONExtensions.m</string>
-  </dict>
-  <key>libs/TouchJSON/Extensions/NSScanner_Extensions.h</key>
-  <dict>
-    <key>Group</key>
-    <string>TouchJSON</string>
-    <key>Path</key>
-    <string>libs/TouchJSON/Extensions/NSScanner_Extensions.h</string>
-    <key>TargetIndices</key>
-    <array/>
-  </dict>
-  <key>libs/TouchJSON/Extensions/NSScanner_Extensions.m</key>
-  <dict>
-    <key>Group</key>
-    <string>TouchJSON</string>
-    <key>Path</key>
-    <string>libs/TouchJSON/Extensions/NSScanner_Extensions.m</string>
   </dict>
   <key>libs/TouchJSON/JSON/CJSONDeserializer.h</key>
   <dict>
@@ -1672,6 +1640,15 @@
     <string>TouchJSON</string>
     <key>Path</key>
     <string>libs/TouchJSON/JSON/CJSONSerializer.m</string>
+  </dict>
+  <key>libs/TouchJSON/JSON/JSONRepresentation.h</key>
+  <dict>
+    <key>Group</key>
+    <string>TouchJSON</string>
+    <key>Path</key>
+    <string>libs/TouchJSON/JSON/JSONRepresentation.h</string>
+    <key>TargetIndices</key>
+    <array/>
   </dict>
 </dict>
 <key>Nodes</key>
@@ -1870,18 +1847,15 @@
   <string>libs/TouchJSON/CDataScanner.m</string>
   <string>libs/TouchJSON/Extensions/CDataScanner_Extensions.h</string>
   <string>libs/TouchJSON/Extensions/CDataScanner_Extensions.m</string>
-  <string>libs/TouchJSON/Extensions/NSCharacterSet_Extensions.h</string>
-  <string>libs/TouchJSON/Extensions/NSCharacterSet_Extensions.m</string>
   <string>libs/TouchJSON/Extensions/NSDictionary_JSONExtensions.h</string>
   <string>libs/TouchJSON/Extensions/NSDictionary_JSONExtensions.m</string>
-  <string>libs/TouchJSON/Extensions/NSScanner_Extensions.h</string>
-  <string>libs/TouchJSON/Extensions/NSScanner_Extensions.m</string>
   <string>libs/TouchJSON/JSON/CJSONDeserializer.h</string>
   <string>libs/TouchJSON/JSON/CJSONDeserializer.m</string>
   <string>libs/TouchJSON/JSON/CJSONScanner.h</string>
   <string>libs/TouchJSON/JSON/CJSONScanner.m</string>
   <string>libs/TouchJSON/JSON/CJSONSerializer.h</string>
   <string>libs/TouchJSON/JSON/CJSONSerializer.m</string>
+  <string>libs/TouchJSON/JSON/JSONRepresentation.h</string>
 </array>
 </dict>
 </plist>
