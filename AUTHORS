@@ -350,7 +350,9 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	* Piero Tofy (http://indieappsalliance.org):
 		Web: Author of the scraper script used to parse games data in the cocos2d site
 	* Pieter van de Bruggen
-		Author of Gradient layer
+		Author of Gradient layer  
+    * podhraski.tomislav:
+        Mac Director compiles when slow FPS are selected. patch.
 	* psi.pk.ru:
 		EventDispatcher: flagsChanged is triggered correctly. patch
 	* psionic81:
