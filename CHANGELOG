@@ -6,6 +6,7 @@ version 1.0-rc - XX-Apr-2011
 . [FIX] ProgressTimer: fixed underflow in setPercentage() (issue #1123)
 . [FIX-MAC] Director: Compiles in Mac when "slow" FPS are selected (issue #1126)
 . [3RD] FontLabel: Fixes issues with wrapping and apostraphes and hyphens (issue #1124)
+. [3RD] TouchJSON: Updated to "master" from March, 5 2011 (issue #1128)
 
 version 1.0-beta - 01-Mar-2011
 . [NEW] Actions: Repeat and RepeatForEver has getter/setter for the inner action (issue #1110)

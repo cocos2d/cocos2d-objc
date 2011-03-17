@@ -191,12 +191,8 @@
 		501755C10F335CAE00624901 /* CDataScanner.m in Sources */ = {isa = PBXBuildFile; fileRef = 501755AF0F335CAE00624901 /* CDataScanner.m */; };
 		501755C20F335CAE00624901 /* CDataScanner_Extensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 501755B10F335CAE00624901 /* CDataScanner_Extensions.h */; };
 		501755C30F335CAE00624901 /* CDataScanner_Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 501755B20F335CAE00624901 /* CDataScanner_Extensions.m */; };
-		501755C40F335CAE00624901 /* NSCharacterSet_Extensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 501755B30F335CAE00624901 /* NSCharacterSet_Extensions.h */; };
-		501755C50F335CAE00624901 /* NSCharacterSet_Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 501755B40F335CAE00624901 /* NSCharacterSet_Extensions.m */; };
 		501755C60F335CAE00624901 /* NSDictionary_JSONExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 501755B50F335CAE00624901 /* NSDictionary_JSONExtensions.h */; };
 		501755C70F335CAE00624901 /* NSDictionary_JSONExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 501755B60F335CAE00624901 /* NSDictionary_JSONExtensions.m */; };
-		501755C80F335CAE00624901 /* NSScanner_Extensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 501755B70F335CAE00624901 /* NSScanner_Extensions.h */; };
-		501755C90F335CAE00624901 /* NSScanner_Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 501755B80F335CAE00624901 /* NSScanner_Extensions.m */; };
 		501755CA0F335CAE00624901 /* CJSONDeserializer.h in Headers */ = {isa = PBXBuildFile; fileRef = 501755BA0F335CAE00624901 /* CJSONDeserializer.h */; };
 		501755CB0F335CAE00624901 /* CJSONDeserializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 501755BB0F335CAE00624901 /* CJSONDeserializer.m */; };
 		501755CC0F335CAE00624901 /* CJSONScanner.h in Headers */ = {isa = PBXBuildFile; fileRef = 501755BC0F335CAE00624901 /* CJSONScanner.h */; };
@@ -2437,6 +2433,7 @@
 		E0CC4F7D12677DB400691051 /* blocks-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E0CC4F7C12677DB400691051 /* blocks-hd.png */; };
 		E0D2C5D412AF1067008D5DBB /* particles-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E0D2C5D312AF1067008D5DBB /* particles-hd.png */; };
 		E0D2D4F3128CA9E300F78C63 /* piece.png in Resources */ = {isa = PBXBuildFile; fileRef = E0D2D4F2128CA9E300F78C63 /* piece.png */; };
+		E0DE4B2B13327ED100DC4F36 /* JSONRepresentation.h in Headers */ = {isa = PBXBuildFile; fileRef = E0DE4B2A13327ED100DC4F36 /* JSONRepresentation.h */; };
 		E0E974A51237E4EA00E3E64B /* CCDirectorMac.h in Headers */ = {isa = PBXBuildFile; fileRef = E0E9749F1237E4EA00E3E64B /* CCDirectorMac.h */; };
 		E0E974A61237E4EA00E3E64B /* CCDirectorMac.m in Sources */ = {isa = PBXBuildFile; fileRef = E0E974A01237E4EA00E3E64B /* CCDirectorMac.m */; };
 		E0E974A71237E4EA00E3E64B /* CCEventDispatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = E0E974A11237E4EA00E3E64B /* CCEventDispatcher.h */; };
@@ -3404,12 +3401,8 @@
 		501755AF0F335CAE00624901 /* CDataScanner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDataScanner.m; sourceTree = "<group>"; };
 		501755B10F335CAE00624901 /* CDataScanner_Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDataScanner_Extensions.h; sourceTree = "<group>"; };
 		501755B20F335CAE00624901 /* CDataScanner_Extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDataScanner_Extensions.m; sourceTree = "<group>"; };
-		501755B30F335CAE00624901 /* NSCharacterSet_Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSCharacterSet_Extensions.h; sourceTree = "<group>"; };
-		501755B40F335CAE00624901 /* NSCharacterSet_Extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSCharacterSet_Extensions.m; sourceTree = "<group>"; };
 		501755B50F335CAE00624901 /* NSDictionary_JSONExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSDictionary_JSONExtensions.h; sourceTree = "<group>"; };
 		501755B60F335CAE00624901 /* NSDictionary_JSONExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDictionary_JSONExtensions.m; sourceTree = "<group>"; };
-		501755B70F335CAE00624901 /* NSScanner_Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSScanner_Extensions.h; sourceTree = "<group>"; };
-		501755B80F335CAE00624901 /* NSScanner_Extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSScanner_Extensions.m; sourceTree = "<group>"; };
 		501755BA0F335CAE00624901 /* CJSONDeserializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CJSONDeserializer.h; sourceTree = "<group>"; };
 		501755BB0F335CAE00624901 /* CJSONDeserializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CJSONDeserializer.m; sourceTree = "<group>"; };
 		501755BC0F335CAE00624901 /* CJSONScanner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CJSONScanner.h; sourceTree = "<group>"; };
@@ -4338,6 +4331,7 @@
 		E0CC4F7C12677DB400691051 /* blocks-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "blocks-hd.png"; sourceTree = "<group>"; };
 		E0D2C5D312AF1067008D5DBB /* particles-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "particles-hd.png"; sourceTree = "<group>"; };
 		E0D2D4F2128CA9E300F78C63 /* piece.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = piece.png; sourceTree = "<group>"; };
+		E0DE4B2A13327ED100DC4F36 /* JSONRepresentation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONRepresentation.h; sourceTree = "<group>"; };
 		E0E9749F1237E4EA00E3E64B /* CCDirectorMac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCDirectorMac.h; sourceTree = "<group>"; };
 		E0E974A01237E4EA00E3E64B /* CCDirectorMac.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCDirectorMac.m; sourceTree = "<group>"; };
 		E0E974A11237E4EA00E3E64B /* CCEventDispatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEventDispatcher.h; sourceTree = "<group>"; };
@@ -5435,12 +5429,8 @@
 			children = (
 				501755B10F335CAE00624901 /* CDataScanner_Extensions.h */,
 				501755B20F335CAE00624901 /* CDataScanner_Extensions.m */,
-				501755B30F335CAE00624901 /* NSCharacterSet_Extensions.h */,
-				501755B40F335CAE00624901 /* NSCharacterSet_Extensions.m */,
 				501755B50F335CAE00624901 /* NSDictionary_JSONExtensions.h */,
 				501755B60F335CAE00624901 /* NSDictionary_JSONExtensions.m */,
-				501755B70F335CAE00624901 /* NSScanner_Extensions.h */,
-				501755B80F335CAE00624901 /* NSScanner_Extensions.m */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -5454,6 +5444,7 @@
 				501755BD0F335CAE00624901 /* CJSONScanner.m */,
 				501755BE0F335CAE00624901 /* CJSONSerializer.h */,
 				501755BF0F335CAE00624901 /* CJSONSerializer.m */,
+				E0DE4B2A13327ED100DC4F36 /* JSONRepresentation.h */,
 			);
 			path = JSON;
 			sourceTree = "<group>";
@@ -7237,12 +7228,11 @@
 			files = (
 				501755C00F335CAE00624901 /* CDataScanner.h in Headers */,
 				501755C20F335CAE00624901 /* CDataScanner_Extensions.h in Headers */,
-				501755C40F335CAE00624901 /* NSCharacterSet_Extensions.h in Headers */,
 				501755C60F335CAE00624901 /* NSDictionary_JSONExtensions.h in Headers */,
-				501755C80F335CAE00624901 /* NSScanner_Extensions.h in Headers */,
 				501755CA0F335CAE00624901 /* CJSONDeserializer.h in Headers */,
 				501755CC0F335CAE00624901 /* CJSONScanner.h in Headers */,
 				501755CE0F335CAE00624901 /* CJSONSerializer.h in Headers */,
+				E0DE4B2B13327ED100DC4F36 /* JSONRepresentation.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11010,9 +11000,7 @@
 			files = (
 				501755C10F335CAE00624901 /* CDataScanner.m in Sources */,
 				501755C30F335CAE00624901 /* CDataScanner_Extensions.m in Sources */,
-				501755C50F335CAE00624901 /* NSCharacterSet_Extensions.m in Sources */,
 				501755C70F335CAE00624901 /* NSDictionary_JSONExtensions.m in Sources */,
-				501755C90F335CAE00624901 /* NSScanner_Extensions.m in Sources */,
 				501755CB0F335CAE00624901 /* CJSONDeserializer.m in Sources */,
 				501755CD0F335CAE00624901 /* CJSONScanner.m in Sources */,
 				501755CF0F335CAE00624901 /* CJSONSerializer.m in Sources */,
