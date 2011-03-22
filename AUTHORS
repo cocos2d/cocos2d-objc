@@ -287,6 +287,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Added multisampling anti-aliasing support in EAGLView, ESRenderer
 		RenderTexture: getUIImageFromBuffer supports RetinaDisplay. patch.
 		CCArray: check for bounds in insertObjectAtIndex. patch.
+		TextureAtlas: added the possibility to draw the Quads in parts
 	* marcu.catalin:
 		Menu items are not consumed is items are not visible
 	* Mark Cooke:
