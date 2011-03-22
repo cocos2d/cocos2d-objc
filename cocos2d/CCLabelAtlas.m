@@ -162,7 +162,7 @@
 	if( newBlend )
 		glBlendFunc( blendFunc_.src, blendFunc_.dst );
 	
-	[textureAtlas_ drawNumberOfQuads: string_.length];
+	[textureAtlas_ drawNumberOfQuads:string_.length fromIndex:0];
 	
 	if( newBlend )
 		glBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);

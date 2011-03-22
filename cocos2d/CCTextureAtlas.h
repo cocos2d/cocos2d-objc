@@ -118,7 +118,7 @@
 -(void) removeAllQuads;
  
 
-/** resize the capacity of the Texture Atlas.
+/** resize the capacity of the CCTextureAtlas.
  * The new capacity can be lower or higher than the current one
  * It returns YES if the resize was successful.
  * If it fails to resize the capacity it will return NO with a new capacity of 0.
@@ -130,6 +130,14 @@
  * n can't be greater than the capacity of the Atlas
  */
 -(void) drawNumberOfQuads: (NSUInteger) n;
+
+
+/** draws n quads from an index (offset).
+ n + start can't be greater than the capacity of the atlas
+ 
+ @since v1.0
+ */
+-(void) drawNumberOfQuads: (NSUInteger) n fromIndex: (NSUInteger) start;
 
 /** draws all the Atlas's Quads
  */

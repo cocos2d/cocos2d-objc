@@ -277,24 +277,29 @@
 
 -(void) drawQuads
 {
-	return [self drawNumberOfQuads: totalQuads_];
+	[self drawNumberOfQuads: totalQuads_ fromIndex:0];
 }
 
 -(void) drawNumberOfQuads: (NSUInteger) n
 {	
+	[self drawNumberOfQuads:n fromIndex:0];
+}
+
+-(void) drawNumberOfQuads: (NSUInteger) n fromIndex: (NSUInteger) start
+{
 	// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
 	// Needed states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
 	// Unneeded states: -
 	
 	glBindTexture(GL_TEXTURE_2D, [texture_ name]);
 #define kQuadSize sizeof(quads_[0].bl)
-
-
+    
+    
 #if CC_USES_VBO
 	glBindBuffer(GL_ARRAY_BUFFER, buffersVBO_[0]);
 	
 	// XXX: update is done in draw... perhaps it should be done in a timer
-	glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(quads_[0]) * n, quads_);
+	glBufferSubData(GL_ARRAY_BUFFER, sizeof(quads_[0])*start, sizeof(quads_[0]) * n , &quads_[start] );
 	
 	// vertices
 	glVertexPointer(3, GL_FLOAT, kQuadSize, (GLvoid*) offsetof( ccV3F_C4B_T2F, vertices));
@@ -307,9 +312,9 @@
 	
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffersVBO_[1]);
 #if CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP
-	glDrawElements(GL_TRIANGLE_STRIP, n*6, GL_UNSIGNED_SHORT, (GLvoid*)0);    
+	glDrawElements(GL_TRIANGLE_STRIP, n*6, GL_UNSIGNED_SHORT, (GLvoid*) (start*6*sizeof(indices_[0])) );
 #else
-	glDrawElements(GL_TRIANGLES, n*6, GL_UNSIGNED_SHORT, (GLvoid*)0); 
+	glDrawElements(GL_TRIANGLES, n*6, GL_UNSIGNED_SHORT, (GLvoid*) (start*6*sizeof(indices_[0])) );
 #endif // CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP
 	
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -318,11 +323,11 @@
 #else // ! CC_USES_VBO
 	
 	NSUInteger offset = (NSUInteger)quads_;
-
+    
 	// vertex
 	NSUInteger diff = offsetof( ccV3F_C4B_T2F, vertices);
 	glVertexPointer(3, GL_FLOAT, kQuadSize, (GLvoid*) (offset + diff) );
-
+    
 	// color
 	diff = offsetof( ccV3F_C4B_T2F, colors);
 	glColorPointer(4, GL_UNSIGNED_BYTE, kQuadSize, (GLvoid*)(offset + diff));
@@ -332,12 +337,11 @@
 	glTexCoordPointer(2, GL_FLOAT, kQuadSize, (GLvoid*)(offset + diff));
 	
 #if CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP
-	glDrawElements(GL_TRIANGLE_STRIP, n*6, GL_UNSIGNED_SHORT, indices_);	
+	glDrawElements(GL_TRIANGLE_STRIP, n*6, GL_UNSIGNED_SHORT, indices_ + start * 6 );
 #else
-	glDrawElements(GL_TRIANGLES, n*6, GL_UNSIGNED_SHORT, indices_);	
+	glDrawElements(GL_TRIANGLES, n*6, GL_UNSIGNED_SHORT, indices_ + start * 6 );
 #endif
 	
 #endif // CC_USES_VBO
 }
-
 @end
