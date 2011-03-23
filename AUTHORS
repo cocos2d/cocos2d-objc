@@ -74,6 +74,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	* Corey.B.Painter:
 		Speed action calls other#stop patch
 		SpriteFrame rect updates rectInPixels too. Patch
+		Added exchangeObject and exchangeObjectAtIndex in CCArray. Patch.
 	* craigching:
 		Correct type for objects in TMX maps. patch
 	* DaemonCollector:
