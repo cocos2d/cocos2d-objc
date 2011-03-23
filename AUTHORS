@@ -199,6 +199,8 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Director#convertToUI works as expected. patch.
 	* jtbowden
 		RotateTo uses min distance patch
+	* Karthik Chokkaram (http://bluefroggaming.com/)
+		Added helper method to create CCSpawn and CCSequence with an NSArray
 	* kasatani:
 		AtlasSprite index 0 is not overwritten
 	* keisuke.hata:

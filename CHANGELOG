@@ -1,4 +1,5 @@
 version 1.0-rc - XX-Apr-2011
+. [NEW] Actions: Added the possibility to create a CCSpawn and CCSequence with an NSArray
 . [NEW] Templates: Added Xcode4 templates for cocos2d, cocos2d+box2d, cocos2d+chipmunk
 . [NEW] Tempaltes: Possibility to run the installer from any directory
 . [NEW] TextureAtlas: added possibility to draw the quads in parts
