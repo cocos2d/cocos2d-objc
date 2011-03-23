@@ -14,6 +14,7 @@ version 1.0-rc - XX-Apr-2011
 . [FIX-MAC] Director: Fullscreen reuses the OpenGL view.
 . [3RD] FontLabel: Fixes issues with wrapping and apostraphes and hyphens (issue #1124)
 . [3RD] TouchJSON: Updated to "master" from March, 5 2011 (issue #1128)
+. [3RD] uthash / utlist: Updated to version 1.9.3
 
 version 1.0-beta - 01-Mar-2011
 . [NEW] Actions: Repeat and RepeatForEver has getter/setter for the inner action (issue #1110)
