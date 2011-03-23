@@ -12415,7 +12415,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				PREBINDING = NO;
 				PRODUCT_NAME = "cocos2d-documentation";
-				SKIP_INSTALL = NO;
 			};
 			name = Debug;
 		};
@@ -12429,7 +12428,6 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				PREBINDING = NO;
 				PRODUCT_NAME = "cocos2d-documentation";
-				SKIP_INSTALL = NO;
 				ZERO_LINK = NO;
 			};
 			name = Release;
