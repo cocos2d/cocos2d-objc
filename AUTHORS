@@ -182,6 +182,8 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Several patches that uses unsigned ints instead of signed ints
 	* Jose Miguel Gomez Gonzalez (http://www.itlgames.com)
 		Web: Author and maintainer of the games tab in the cocos2d site
+	* Josh Heidebrecht (http://www.somacreates.com):
+		Added SKIP_INSTALL=yes into Xcode4 project for the static libraries
 	* jkrippy:
 		patch for menu align. takes scale into account
 	* johnnyflash71:
