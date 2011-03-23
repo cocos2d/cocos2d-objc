@@ -39,7 +39,7 @@
 
 - (void)dealloc
 {
-	[[CCDirector sharedDirector] release];
+	[[CCDirector sharedDirector] end];
 	[window_ release];
 	[super dealloc];
 }

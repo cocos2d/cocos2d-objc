@@ -49,10 +49,8 @@
 				<string>OpenGL</string>
 				<string>OpenAL</string>
 				<string>AudioToolbox</string>
-				<string>AVFoundation</string>
 				<string>AppKit</string>
 				<string>Foundation</string>
-				<string>CoreGraphics</string>
 			</array>
 			<key>SharedSettings</key>
 			<dict>
