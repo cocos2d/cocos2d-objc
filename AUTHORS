@@ -252,7 +252,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		author of CCPropertyAction 
 	* magicyu (crmagicxxx):
 		CocosLive client supports ranking request patch
-	* manucorporat (manu.valladolid) (http://www.abstractionworks.com/):
+	* manucorporat (manu.valladolid) (http://forzefield.com/):
 		added isPaused property to Director
 		patches for the setColor API for the RGBA protocol
 		MenuItemLabel: color is saved when item is disabled
