@@ -283,6 +283,8 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Improved Mac Touch tests
 		Fixed bug regarding Mac touch test in Layer
         Mac Director reuses OpenGL view in fullscreen mode
+		ccpLineIntersect: doesn't produce false positives for collisions. patch.
+		CGPointExtensions cleanup.
 	* marcofucci:
 		CCArray.fastRemoveObjectAtIndex patch.
 	* Marco Tillemans (araker):
