@@ -103,7 +103,8 @@ How to contribute to the project
 --------------------------------
 
 Did you find a bug ? Do you have feature request ? Do you want to merge a feature ?
-	* [contributing to cocos2d][3]
+
+  * [contributing to cocos2d][3]
 
 
 [1]: http://www.cocos2d-iphone.org "cocos2d for iPhone"
