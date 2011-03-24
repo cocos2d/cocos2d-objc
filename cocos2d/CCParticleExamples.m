@@ -39,7 +39,7 @@
 	return [self initWithTotalParticles:1500];
 }
 
--(id) initWithTotalParticles:(int)p
+-(id) initWithTotalParticles:(NSUInteger)p
 {
 	if( (self=[super initWithTotalParticles:p]) ) {
 		// duration
@@ -116,7 +116,7 @@
 	return [self initWithTotalParticles:250];
 }
 
--(id) initWithTotalParticles:(int) p
+-(id) initWithTotalParticles:(NSUInteger) p
 {
 	if( (self=[super initWithTotalParticles:p]) ) {
 
@@ -196,7 +196,7 @@
 	return [self initWithTotalParticles:350];
 }
 
--(id) initWithTotalParticles:(int) p
+-(id) initWithTotalParticles:(NSUInteger) p
 {
 	if( (self=[super initWithTotalParticles:p]) ) {
 
@@ -276,7 +276,7 @@
 	return [self initWithTotalParticles:200];
 }
 
--(id) initWithTotalParticles:(int)p
+-(id) initWithTotalParticles:(NSUInteger)p
 {
 	if( (self=[super initWithTotalParticles:p]) ) {
 
@@ -359,7 +359,7 @@
 	return [self initWithTotalParticles:250];
 }
 
--(id) initWithTotalParticles:(int) p
+-(id) initWithTotalParticles:(NSUInteger) p
 {
 	if( (self=[super initWithTotalParticles:p]) ) {
 	
@@ -442,7 +442,7 @@
 	return [self initWithTotalParticles:150];
 }
 
--(id) initWithTotalParticles:(int) p
+-(id) initWithTotalParticles:(NSUInteger) p
 {
 	if( (self=[super initWithTotalParticles:p]) ) {
 
@@ -525,7 +525,7 @@
 	return [self initWithTotalParticles:500];
 }
 
--(id) initWithTotalParticles:(int) p
+-(id) initWithTotalParticles:(NSUInteger) p
 {
 	if( (self=[super initWithTotalParticles:p]) ) {
 	
@@ -608,7 +608,7 @@
 	return [self initWithTotalParticles:700];
 }
 
--(id) initWithTotalParticles:(int)p
+-(id) initWithTotalParticles:(NSUInteger)p
 {
 	if( (self=[super initWithTotalParticles:p]) ) {
 	
@@ -690,7 +690,7 @@
 	return [self initWithTotalParticles:200];
 }
 
--(id) initWithTotalParticles:(int) p
+-(id) initWithTotalParticles:(NSUInteger) p
 {
 	if( (self=[super initWithTotalParticles:p]) ) {
 	
@@ -766,7 +766,7 @@
 	return [self initWithTotalParticles:700];
 }
 
--(id) initWithTotalParticles:(int)p
+-(id) initWithTotalParticles:(NSUInteger)p
 {
 	if( (self=[super initWithTotalParticles:p]) ) {
 	
@@ -848,7 +848,7 @@
 	return [self initWithTotalParticles:1000];
 }
 
--(id) initWithTotalParticles:(int)p
+-(id) initWithTotalParticles:(NSUInteger)p
 {
 	if( (self=[super initWithTotalParticles:p]) ) {
 	

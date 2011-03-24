@@ -70,7 +70,7 @@
 
 -(void) updateAtlasValues
 {
-	int n = [string_ length];
+	NSInteger n = [string_ length];
 	
 	ccV3F_C4B_T2F_Quad quad;
 
