@@ -113,12 +113,11 @@ float ccpAngleSigned(CGPoint a, CGPoint b)
 
 CGPoint ccpRotateByAngle(CGPoint v, CGPoint pivot, float angle)
 {
-	CGPoint r = ccpSub(v, pivot);
-	float t = r.x;
+    CGPoint r = ccpSub(v, pivot);
 	float cosa = cosf(angle), sina = sinf(angle);
-	r.x = t*cosa - r.y*sina;
-	r.y = t*sina + r.y*cosa;
-	r = ccpAdd(r, pivot);
+	float t = r.x;
+    r.x = t*cosa - r.y*sina + pivot.x;
+	r.y = t*sina + r.y*cosa + pivot.y;
 	return r;
 }
 
@@ -162,11 +161,11 @@ BOOL ccpLineIntersect(CGPoint A, CGPoint B,
     A.x = ABpos*theCos-C2.x;
     A.y = ABpos*theSin-C2.y;
     
-    *S = ABpos/distAB;
     newX = sqrtf((A.x*A.x+A.y*A.y)/(C.x*C.x+C.y*C.y));
-    if((A.y<0) != (C.y<0) || (A.x<0) != (C.x<0))
+    if(((A.y<0) != (C.y<0)) || ((A.x<0) != (C.x<0)))
         newX *= -1.0f;
     
+    *S = ABpos/distAB;
     *T = newX;
     
     // Success.
