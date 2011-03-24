@@ -3466,8 +3466,7 @@
 		502C664E0DFEFD6800E4107D /* RotateWorldTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RotateWorldTest.m; path = tests/RotateWorldTest.m; sourceTree = "<group>"; };
 		502C6C6A0FB87970002BF3C2 /* CCParallaxNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCParallaxNode.h; sourceTree = "<group>"; };
 		502C6C6B0FB87970002BF3C2 /* CCParallaxNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCParallaxNode.m; sourceTree = "<group>"; };
-		502C8BCC10A65D0F00D137BA /* LICENSE.cocos2d */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.cocos2d; sourceTree = "<group>"; };
-		502C8BCD10A65D0F00D137BA /* LICENSE.cocosdenshion */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.cocosdenshion; sourceTree = "<group>"; };
+		502C8BCC10A65D0F00D137BA /* LICENSE_cocos2d.txt */ = {isa = PBXFileReference; fileEncoding = 4; path = LICENSE_cocos2d.txt; sourceTree = "<group>"; };
 		502C8BDE10A661E200D137BA /* CCSpriteFrameCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSpriteFrameCache.h; sourceTree = "<group>"; };
 		502C8BDF10A661E200D137BA /* CCSpriteFrameCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCSpriteFrameCache.m; sourceTree = "<group>"; };
 		502C8C9810A701D300D137BA /* animations */ = {isa = PBXFileReference; lastKnownFileType = folder; name = animations; path = Resources/animations; sourceTree = "<group>"; };
@@ -4248,6 +4247,13 @@
 		E062F9BA124801A300DE3932 /* grossini-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "grossini-hd.png"; sourceTree = "<group>"; };
 		E062F9BB124801A300DE3932 /* grossinis_sister1-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "grossinis_sister1-hd.png"; sourceTree = "<group>"; };
 		E062F9BC124801A300DE3932 /* grossinis_sister2-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "grossinis_sister2-hd.png"; sourceTree = "<group>"; };
+		E06F4AD7133BAA00006739B6 /* LICENSE_artwork.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE_artwork.txt; sourceTree = "<group>"; };
+		E06F4AD8133BAA00006739B6 /* LICENSE_Box2D.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE_Box2D.txt; sourceTree = "<group>"; };
+		E06F4AD9133BAA00006739B6 /* LICENSE_Chipmunk.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE_Chipmunk.txt; sourceTree = "<group>"; };
+		E06F4ADA133BAA00006739B6 /* LICENSE_CocosDenshion.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE_CocosDenshion.txt; sourceTree = "<group>"; };
+		E06F4ADB133BAA00006739B6 /* LICENSE_FontLabel.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE_FontLabel.txt; sourceTree = "<group>"; };
+		E06F4ADC133BAA00006739B6 /* LICENSE_libpng.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE_libpng.txt; sourceTree = "<group>"; };
+		E06F4ADD133BAA00006739B6 /* LICENSE_TouchJSON.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE_TouchJSON.txt; sourceTree = "<group>"; };
 		E0704C29123821EE009C628B /* background1-hd.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "background1-hd.jpg"; sourceTree = "<group>"; };
 		E0704C2A123821EE009C628B /* background2-hd.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "background2-hd.jpg"; sourceTree = "<group>"; };
 		E080DE8B1239689400A647EC /* konqa32-hd.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "konqa32-hd.fnt"; sourceTree = "<group>"; };
@@ -5301,8 +5307,14 @@
 				508A4A2310B47A46004B9CC3 /* RELEASE_NOTES */,
 				50B2C9BF0E109A5900AE9530 /* CHANGELOG */,
 				50AC0A500EC34DD400EB5EDC /* DONORS */,
-				502C8BCC10A65D0F00D137BA /* LICENSE.cocos2d */,
-				502C8BCD10A65D0F00D137BA /* LICENSE.cocosdenshion */,
+				502C8BCC10A65D0F00D137BA /* LICENSE_cocos2d.txt */,
+				E06F4AD7133BAA00006739B6 /* LICENSE_artwork.txt */,
+				E06F4AD8133BAA00006739B6 /* LICENSE_Box2D.txt */,
+				E06F4AD9133BAA00006739B6 /* LICENSE_Chipmunk.txt */,
+				E06F4ADA133BAA00006739B6 /* LICENSE_CocosDenshion.txt */,
+				E06F4ADB133BAA00006739B6 /* LICENSE_FontLabel.txt */,
+				E06F4ADC133BAA00006739B6 /* LICENSE_libpng.txt */,
+				E06F4ADD133BAA00006739B6 /* LICENSE_TouchJSON.txt */,
 				5018F2510DFDEAFF00C013A5 /* cocos2d */,
 				5052213411B3D38A0061670F /* CocosDenshion */,
 				509B3A100F31027600F2FB95 /* cocoslive */,

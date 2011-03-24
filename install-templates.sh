@@ -99,16 +99,19 @@ copy_base_files(){
 copy_cocos2d_files(){
 	echo ...copying cocos2d files
 	copy_files cocos2d "$LIBS_DIR"
+    copy_files LICENSE_cocos2d.txt "$LIBS_DIR"
 }
 
 copy_cocosdenshion_files(){
 	echo ...copying CocosDenshion files
 	copy_files CocosDenshion/CocosDenshion "$LIBS_DIR"
+    copy_files LICENSE_CocosDenshion.txt "$LIBS_DIR"
 }
 
 copy_fontlabel_files(){
 	echo ...copying FontLabel files
 	copy_files external/FontLabel "$LIBS_DIR"
+    copy_files LICENSE_FontLabel.txt "$LIBS_DIR"
 }
 
 copy_cocoslive_files(){
@@ -117,6 +120,7 @@ copy_cocoslive_files(){
 
 	echo ...copying TouchJSON files
 	copy_files external/TouchJSON "$LIBS_DIR"
+    copy_files LICENSE_TouchJSON.txt "$LIBS_DIR"
 }
 
 print_template_banner(){
@@ -269,6 +273,7 @@ copy_xcode4_project_templates(){
 
 	echo ...copying Chipmunk files
 	copy_files external/Chipmunk "$LIBS_DIR"
+    copy_files LICENSE_Chipmunk.txt "$LIBS_DIR"
 
 	echo done!
 
@@ -280,6 +285,7 @@ copy_xcode4_project_templates(){
 
 	echo ...copying Box2d files
 	copy_files external/Box2d/Box2D "$LIBS_DIR"
+    copy_files LICENSE_Box2D.txt "$LIBS_DIR"
 
 	echo done!
 }
