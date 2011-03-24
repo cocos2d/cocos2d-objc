@@ -420,7 +420,7 @@ typedef void (*CC_UPDATE_PARTICLE_IMP)(id, SEL, tCCParticle*, CGPoint);
 -(id) initWithDictionary:(NSDictionary*)dictionary;
 
 //! Initializes a system with a fixed number of particles
--(id) initWithTotalParticles:(int) numberOfParticles;
+-(id) initWithTotalParticles:(NSUInteger) numberOfParticles;
 //! Add a particle to the emitter
 -(BOOL) addParticle;
 //! Initializes a particle

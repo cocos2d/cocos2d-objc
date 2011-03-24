@@ -95,6 +95,10 @@
 {}
 @end
 
+@interface TMXGIDObjectsTest : TileDemo
+{}
+@end
+
 @interface TMXResizeTest : TileDemo
 {}
 @end

@@ -48,9 +48,8 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #import <Foundation/Foundation.h>
 
 #import "Platforms/CCGL.h"
-#import "CCTextureCache.h"
 #import "CCTexture2D.h"
-#import "ccCArray.h"
+
 
 #pragma mark -
 #pragma mark CCTexturePVR

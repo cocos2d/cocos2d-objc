@@ -28,7 +28,7 @@
  *
  */
 
-#import "CCSpriteSheet.h"
+#import "CCNode.h"
 
 
 @class CCTMXObjectGroup;

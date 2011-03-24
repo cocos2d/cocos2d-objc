@@ -132,12 +132,6 @@ static CCActionManager *sharedManager_ = nil;
 
 #pragma mark ActionManager - Pause / Resume
 
-// XXX DEPRECATED. REMOVE IN 1.0
--(void) pauseAllActionsForTarget:(id)target
-{
-	[self pauseTarget:target];
-}
-
 -(void) pauseTarget:(id)target
 {
 	tHashElement *element = NULL;
@@ -146,12 +140,6 @@ static CCActionManager *sharedManager_ = nil;
 		element->paused = YES;
 //	else
 //		CCLOG(@"cocos2d: pauseAllActions: Target not found");
-}
-
-// XXX DEPRECATED. REMOVE IN 1.0
--(void) resumeAllActionsForTarget:(id)target
-{
-	[self resumeTarget:target];
 }
 
 -(void) resumeTarget:(id)target
@@ -243,7 +231,7 @@ static CCActionManager *sharedManager_ = nil;
 //	}
 }
 
--(void) removeActionByTag:(int) aTag target:(id)target
+-(void) removeActionByTag:(NSInteger)aTag target:(id)target
 {
 	NSAssert( aTag != kCCActionTagInvalid, @"Invalid tag");
 	NSAssert( target != nil, @"Target should be ! nil");
@@ -268,7 +256,7 @@ static CCActionManager *sharedManager_ = nil;
 
 #pragma mark ActionManager - get
 
--(CCAction*) getActionByTag:(int)aTag target:(id)target
+-(CCAction*) getActionByTag:(NSInteger)aTag target:(id)target
 {
 	NSAssert( aTag != kCCActionTagInvalid, @"Invalid tag");
 
@@ -293,7 +281,7 @@ static CCActionManager *sharedManager_ = nil;
 	return nil;
 }
 
--(int) numberOfRunningActionsInTarget:(id) target
+-(NSUInteger) numberOfRunningActionsInTarget:(id) target
 {
 	tHashElement *element = NULL;
 	HASH_FIND_INT(targets, &target, element);

@@ -27,7 +27,6 @@
 
 #import "ccConfig.h"
 #import "CCSpriteBatchNode.h"
-#import "CCSpriteSheet.h"
 #import "CCSprite.h"
 #import "CCSpriteFrame.h"
 #import "CCSpriteFrameCache.h"
@@ -108,12 +107,6 @@ struct transformValues_ {
 	return [self spriteWithSpriteFrame:frame];
 }
 
-// XXX: deprecated
-+(id)spriteWithCGImage:(CGImageRef)image
-{
-	return [[[self alloc] initWithCGImage:image] autorelease];
-}
-
 +(id)spriteWithCGImage:(CGImageRef)image key:(NSString*)key
 {
 	return [[[self alloc] initWithCGImage:image key:key] autorelease];
@@ -123,10 +116,6 @@ struct transformValues_ {
 {
 	return [[[self alloc] initWithBatchNode:batchNode rect:rect] autorelease];
 }
-+(id) spriteWithSpriteSheet:(CCSpriteSheetInternalOnly*)spritesheet rect:(CGRect)rect // XXX DEPRECATED
-{
-	return [self spriteWithBatchNode:spritesheet rect:rect];
-}
 
 -(id) init
 {
@@ -134,7 +123,7 @@ struct transformValues_ {
 		dirty_ = recursiveDirty_ = NO;
 		
 		// by default use "Self Render".
-		// if the sprite is added to an SpriteSheet, then it will automatically switch to "SpriteSheet Render"
+		// if the sprite is added to a batchnode, then it will automatically switch to "batchnode Render"
 		[self useSelfRender];
 		
 		opacityModifyRGB_			= YES;
@@ -295,11 +284,6 @@ struct transformValues_ {
 	return ret;
 }
 
--(id) initWithSpriteSheet:(CCSpriteSheetInternalOnly*)spritesheet rect:(CGRect)rect // XXX DEPRECATED
-{
-	return [self initWithBatchNode:spritesheet rect:rect];
-}
-
 - (NSString*) description
 {
 	return [NSString stringWithFormat:@"<%@ = %08X | Rect = (%.2f,%.2f,%.2f,%.2f) | tag = %i | atlasIndex = %i>", [self class], self,
@@ -340,10 +324,6 @@ struct transformValues_ {
 	textureAtlas_ = [batchNode textureAtlas]; // weak ref
 	batchNode_ = batchNode; // weak ref
 }
--(void) useSpriteSheetRender:(CCSpriteSheetInternalOnly*)spriteSheet // XXX DEPRECATED
-{
-	[self useBatchNode:spriteSheet];
-}
 
 -(void) initAnimationDictionary
 {
@@ -377,7 +357,7 @@ struct transformValues_ {
 	offsetPositionInPixels_.y = relativeOffsetInPixels.y + (contentSizeInPixels_.height - rectInPixels_.size.height) / 2;
 	
 	
-	// rendering using SpriteSheet
+	// rendering using batch node
 	if( usesBatchNode_ ) {
 		// update dirty_, don't update recursiveDirty_
 		dirty_ = YES;
@@ -643,7 +623,7 @@ struct transformValues_ {
 
 #pragma mark CCSprite - CCNode overrides
 
--(void) addChild:(CCSprite*)child z:(int)z tag:(int) aTag
+-(void) addChild:(CCSprite*)child z:(NSInteger)z tag:(NSInteger) aTag
 {
 	NSAssert( child != nil, @"Argument must be non-nil");
 	
@@ -660,7 +640,7 @@ struct transformValues_ {
 	hasChildren_ = YES;
 }
 
--(void) reorderChild:(CCSprite*)child z:(int)z
+-(void) reorderChild:(CCSprite*)child z:(NSInteger)z
 {
 	NSAssert( child != nil, @"Child must be non-nil");
 	NSAssert( [children_ containsObject:child], @"Child doesn't belong to Sprite" );

@@ -40,10 +40,10 @@
 typedef struct _listEntry
 {
 	struct	_listEntry *prev, *next;
-	TICK_IMP impMethod;
-	id		target;				// not retained (retained by hashUpdateEntry)
-	int		priority;
-	BOOL	paused;
+	TICK_IMP	impMethod;
+	id			target;				// not retained (retained by hashUpdateEntry)
+	NSInteger	priority;
+	BOOL		paused;
 	
 } tListEntry;
 
@@ -225,21 +225,6 @@ static CCScheduler *sharedScheduler;
 	free(element);
 }
 
--(void) scheduleTimer: (CCTimer*) t
-{
-	NSAssert(NO, @"Not implemented. Use scheduleSelector:forTarget:");
-}
-
--(void) unscheduleTimer: (CCTimer*) t
-{
-	NSAssert(NO, @"Not implemented. Use unscheduleSelector:forTarget:");
-}
-
--(void) unscheduleAllTimers
-{
-	NSAssert(NO, @"Not implemented. Use unscheduleAllSelectors");
-}
-
 -(void) scheduleSelector:(SEL)selector forTarget:(id)target interval:(ccTime)interval paused:(BOOL)paused
 {
 	NSAssert( selector != nil, @"Argument selector must be non-nil");
@@ -329,7 +314,7 @@ static CCScheduler *sharedScheduler;
 
 #pragma mark CCScheduler - Update Specific
 
--(void) priorityIn:(tListEntry**)list target:(id)target priority:(int)priority paused:(BOOL)paused
+-(void) priorityIn:(tListEntry**)list target:(id)target priority:(NSInteger)priority paused:(BOOL)paused
 {
 	tListEntry *listElement = malloc( sizeof(*listElement) );
 
@@ -397,7 +382,7 @@ static CCScheduler *sharedScheduler;
 	HASH_ADD_INT(hashForUpdates, target, hashElement );	
 }
 
--(void) scheduleUpdateForTarget:(id)target priority:(int)priority paused:(BOOL)paused
+-(void) scheduleUpdateForTarget:(id)target priority:(NSInteger)priority paused:(BOOL)paused
 {
 #if COCOS2D_DEBUG >= 1
 	tHashUpdateEntry * hashElement = NULL;

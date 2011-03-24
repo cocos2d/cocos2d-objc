@@ -49,7 +49,7 @@ extern "C" {
   - ccDrawCubicBezier
 
  You can change the color, width and other property by calling the
-   glColor4ub(), glLineWitdh(), glPointSize().
+   glColor4ub(), glLineWidth(), glPointSize().
  
  @warning These functions draws the Line, Point, Polygon, immediately. They aren't batched. If you are going to make a game that depends on these primitives, I suggest creating a batch.
  */

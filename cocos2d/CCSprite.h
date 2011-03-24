@@ -29,8 +29,6 @@
 #import "CCTextureAtlas.h"
 
 @class CCSpriteBatchNode;
-@class CCSpriteSheet;
-@class CCSpriteSheetInternalOnly;
 @class CCSpriteFrame;
 @class CCAnimation;
 
@@ -144,7 +142,7 @@ typedef enum {
 @property (nonatomic,readwrite) BOOL dirty;
 /** the quad (tex coords, vertex coords and color) information */
 @property (nonatomic,readonly) ccV3F_C4B_T2F_Quad quad;
-/** The index used on the TextureATlas. Don't modify this value unless you know what you are doing */
+/** The index used on the TextureAtlas. Don't modify this value unless you know what you are doing */
 @property (nonatomic,readwrite) NSUInteger atlasIndex;
 /** returns the rect of the CCSprite in points */
 @property (nonatomic,readonly) CGRect textureRect;
@@ -224,11 +222,6 @@ typedef enum {
  */
 +(id) spriteWithFile:(NSString*)filename rect:(CGRect)rect;
 
-/** Creates an sprite with a CGImageRef.
- @deprecated Use spriteWithCGImage:key: instead. Will be removed in v1.0 final
- */
-+(id) spriteWithCGImage: (CGImageRef)image DEPRECATED_ATTRIBUTE;
-
 /** Creates an sprite with a CGImageRef and a key.
  The key is used by the CCTextureCache to know if a texture was already created with this CGImage.
  For example, a valid key is: @"sprite_frame_01".
@@ -241,8 +234,6 @@ typedef enum {
 /** Creates an sprite with an CCBatchNode and a rect
  */
 +(id) spriteWithBatchNode:(CCSpriteBatchNode*)batchNode rect:(CGRect)rect;
-
-+(id) spriteWithSpriteSheet:(CCSpriteSheetInternalOnly*)spritesheet rect:(CGRect)rect DEPRECATED_ATTRIBUTE;
 
 
 /** Initializes an sprite with a texture.
@@ -278,11 +269,6 @@ typedef enum {
  */
 -(id) initWithFile:(NSString*)filename rect:(CGRect)rect;
 
-/** Initializes an sprite with a CGImageRef
- @deprecated Use spriteWithCGImage:key: instead. Will be removed in v1.0 final
- */
--(id) initWithCGImage: (CGImageRef)image DEPRECATED_ATTRIBUTE;
-
 /** Initializes an sprite with a CGImageRef and a key
  The key is used by the CCTextureCache to know if a texture was already created with this CGImage.
  For example, a valid key is: @"sprite_frame_01".
@@ -291,12 +277,11 @@ typedef enum {
  */
 -(id) initWithCGImage:(CGImageRef)image key:(NSString*)key;
 
-/** Initializes an sprite with an CCSpriteSheet and a rect in points
+/** Initializes an sprite with an CCSpriteBatchNode and a rect in points
  */
 -(id) initWithBatchNode:(CCSpriteBatchNode*)batchNode rect:(CGRect)rect;
--(id) initWithSpriteSheet:(CCSpriteSheetInternalOnly*)spritesheet rect:(CGRect)rect DEPRECATED_ATTRIBUTE;
 
-/** Initializes an sprite with an CCSpriteSheet and a rect in pixels
+/** Initializes an sprite with an CCSpriteBatchNode and a rect in pixels
  @since v0.99.5
  */
 -(id) initWithBatchNode:(CCSpriteBatchNode*)batchNode rectInPixels:(CGRect)rect;
@@ -325,7 +310,6 @@ typedef enum {
  @since v0.99.0
  */
 -(void) useBatchNode:(CCSpriteBatchNode*)batchNode;
--(void) useSpriteSheetRender:(CCSpriteSheetInternalOnly*)spriteSheet DEPRECATED_ATTRIBUTE;
 
 
 #pragma mark CCSprite - Frames
