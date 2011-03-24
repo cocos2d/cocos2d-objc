@@ -112,18 +112,16 @@ float ccpAngleSigned(CGPoint a, CGPoint b)
 
 CGPoint ccpRotateByAngle(CGPoint v, CGPoint pivot, float angle)
 {
-	float t = v.x - pivot.x;
-	float cosa = cosf(angle), sina = sinf(angle);
-    CGPoint r = {
-        t*cosa - r.y*sina + pivot.x,
-        t*sina + r.y*cosa + pivot.y
-    };
+    CGPoint r = ccpSub(v, pivot);
+	float cosa = cosf(angle), sina = sinf(angle), t = r.x;
+    r.x = t*cosa - r.y*sina + pivot.x;
+	r.y = t*sina + r.y*cosa + pivot.y;
 	return r;
 }
 
 BOOL ccpLineIntersect(CGPoint A, CGPoint B,
-                             CGPoint C, CGPoint D,
-                             float *S, float *T)
+                      CGPoint C, CGPoint D,
+                      float *S, float *T)
 {    
     // FAIL: Line undefined
     if (A.x==B.x && A.y==B.y || C.x==D.x && C.y==D.y) return NO;
@@ -161,11 +159,11 @@ BOOL ccpLineIntersect(CGPoint A, CGPoint B,
     A.x = ABpos*theCos-C2.x;
     A.y = ABpos*theSin-C2.y;
     
-    *S = ABpos/distAB;
     newX = sqrtf((A.x*A.x+A.y*A.y)/(C.x*C.x+C.y*C.y));
-    if((A.y<0) != (C.y<0) || (A.x<0) != (C.x<0))
+    if(((A.y<0) != (C.y<0)) || ((A.x<0) != (C.x<0)))
         newX *= -1.0f;
     
+    *S = ABpos/distAB;
     *T = newX;
     
     // Success.
