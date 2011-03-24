@@ -76,7 +76,7 @@ float clampf(float value, float min_inclusive, float max_inclusive)
 
 CGPoint ccpClamp(CGPoint p, CGPoint min_inclusive, CGPoint max_inclusive)
 {
-	return ccp(clampf(p.x,min_inclusive.x,max_inclusive.x), clampf(p.y, min_inclusive.y, max_inclusive.y));
+	return ccp(clampf(p.x, min_inclusive.x,max_inclusive.x), clampf(p.y, min_inclusive.y, max_inclusive.y));
 }
 
 CGPoint ccpFromSize(CGSize s)
@@ -84,7 +84,8 @@ CGPoint ccpFromSize(CGSize s)
 	return ccp(s.width, s.height);
 }
 
-CGPoint ccpCompOp(CGPoint p, float (*opFunc)(float)){
+CGPoint ccpCompOp(CGPoint p, float (*opFunc)(float))
+{
 	return ccp(opFunc(p.x), opFunc(p.y));
 }
 
@@ -103,25 +104,27 @@ CGPoint ccpCompMult(CGPoint a, CGPoint b)
 
 float ccpAngleSigned(CGPoint a, CGPoint b)
 {
-	CGPoint a2 = ccpNormalize(a);	CGPoint b2 = ccpNormalize(b);
+	CGPoint a2 = ccpNormalize(a), b2 = ccpNormalize(b);
 	float angle = atan2f(a2.x * b2.y - a2.y * b2.x, ccpDot(a2, b2));
 	if( fabs(angle) < kCGPointEpsilon ) return 0.f;
 	return angle;
 }
 
-CGPoint ccpRotateByAngle(CGPoint v, CGPoint pivot, float angle) {
-	CGPoint r = ccpSub(v, pivot);
-	float t = r.x;
+CGPoint ccpRotateByAngle(CGPoint v, CGPoint pivot, float angle)
+{
+	float t = v.x - pivot.x;
 	float cosa = cosf(angle), sina = sinf(angle);
-	r.x = t*cosa - r.y*sina;
-	r.y = t*sina + r.y*cosa;
-	r = ccpAdd(r, pivot);
+    CGPoint r = {
+        t*cosa - r.y*sina + pivot.x,
+        t*sina + r.y*cosa + pivot.y
+    };
 	return r;
 }
 
 BOOL ccpLineIntersect(CGPoint p1, CGPoint p2, 
 					  CGPoint p3, CGPoint p4,
-					  float *s, float *t){
+					  float *s, float *t)
+{
 	CGPoint p13, p43, p21;
 	float d1343, d4321, d1321, d4343, d2121;
 	float numer, denom;
