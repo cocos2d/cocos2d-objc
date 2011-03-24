@@ -148,7 +148,7 @@ static inline void ccArrayInsertObjectAtIndex(ccArray *arr, id object, NSUIntege
 	
 	ccArrayEnsureExtraCapacity(arr, 1);
 	
-	int remaining = arr->num - index;
+	NSUInteger remaining = arr->num - index;
 	if( remaining > 0)
 		memmove(&arr->arr[index+1], &arr->arr[index], sizeof(id) * remaining );
 	
@@ -182,7 +182,7 @@ static inline void ccArrayRemoveObjectAtIndex(ccArray *arr, NSUInteger index)
 	[arr->arr[index] release];
 	arr->num--;
 	
-	int remaining = arr->num - index;
+	NSUInteger remaining = arr->num - index;
 	if(remaining>0)
 		memmove(&arr->arr[index], &arr->arr[index+1], remaining * sizeof(id));
 }
@@ -314,7 +314,7 @@ static inline void ccCArrayInsertValueAtIndex( ccCArray *arr, void *value, NSUIn
 {
 	assert( index < arr->max );
 	
-	int remaining = arr->num - index;
+	NSUInteger remaining = arr->num - index;
 	
 	// last Value doesn't need to be moved
 	if( remaining > 0) {

@@ -41,7 +41,7 @@
 
 @implementation CCParticleSystemPoint
 
--(id) initWithTotalParticles:(int) numberOfParticles
+-(id) initWithTotalParticles:(NSUInteger) numberOfParticles
 {
 	if( (self=[super initWithTotalParticles:numberOfParticles]) ) {
 

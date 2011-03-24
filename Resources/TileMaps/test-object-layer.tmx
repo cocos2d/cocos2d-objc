@@ -9,7 +9,7 @@
   </data>
  </layer>
  <objectgroup name="Object Layer 1" width="14" height="8">
-  <object gid="31" x="97" y="250"/>
+  <object name="sandro" gid="31" x="97" y="250"/>
   <object gid="31" x="119" y="237"/>
   <object gid="31" x="140" y="218"/>
   <object gid="31" x="160" y="199"/>
