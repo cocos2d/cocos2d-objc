@@ -1,7 +1,7 @@
 /*
  * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
- * Copyright (c) 2010 Abstraction Works. http://www.abstractionworks.com
+ * Copyright (c) 2010 ForzeFied Studios S.L. http://forzefield.com
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -107,7 +107,7 @@
 
 - (id) objectAtIndex:(NSUInteger)index
 {
-	NSAssert2( index < data->num && index >= 0, @"index out of range in objectAtIndex(%d), index %i", data->num, index );
+	NSAssert2( index < data->num, @"index out of range in objectAtIndex(%d), index %i", data->num, index );
 	
 	return data->arr[index];
 }
@@ -217,6 +217,7 @@
 {
 	ccArraySwapObjectsAtIndexes(data, index1, index2);
 }
+
 
 #pragma mark Sending Messages to Elements
 
