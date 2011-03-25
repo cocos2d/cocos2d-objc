@@ -231,8 +231,11 @@ enum {
 	// subclass to change the default action
 	if(isEnabled_) {	
 		[super selected];
-		[self stopActionByTag:kZoomActionTag];
-		originalScale_ = self.scale;
+        if([self getChildByTag:kZoomActionTag])
+            [self stopActionByTag:kZoomActionTag];
+        else
+            originalScale_ = self.scale;
+        
 		CCAction *zoomAction = [CCScaleTo actionWithDuration:0.1f scale:originalScale_ * 1.2f];
 		zoomAction.tag = kZoomActionTag;
 		[self runAction:zoomAction];
