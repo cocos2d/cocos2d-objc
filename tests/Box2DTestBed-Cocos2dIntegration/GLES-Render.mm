@@ -23,6 +23,7 @@
 // http://www.cocos2d-iphone.org
 //
 
+#import "cocos2d.h"
 #include "GLES-Render.h"
 
 
@@ -40,13 +41,15 @@ GLESDebugDraw::GLESDebugDraw( float32 ratio )
 {
 }
 
-
 void GLESDebugDraw::DrawPolygon(const b2Vec2* old_vertices, int32 vertexCount, const b2Color& color)
 {
-	b2Vec2 vertices[vertexCount];
+	ccVertex2F vertices[vertexCount];
+	
 	for( int i=0;i<vertexCount;i++) {
-		vertices[i] = old_vertices[i];
-		vertices[i] *= mRatio;
+		b2Vec2 tmp = old_vertices[i];
+		tmp *= mRatio;
+		vertices[i].x = tmp.x;
+		vertices[i].y = tmp.y;
 	}
 
 	glColor4f(color.r, color.g, color.b,1);
@@ -56,10 +59,14 @@ void GLESDebugDraw::DrawPolygon(const b2Vec2* old_vertices, int32 vertexCount, c
 
 void GLESDebugDraw::DrawSolidPolygon(const b2Vec2* old_vertices, int32 vertexCount, const b2Color& color)
 {
-	b2Vec2 vertices[vertexCount];
+	ccVertex2F vertices[vertexCount];
+	
 	for( int i=0;i<vertexCount;i++) {
-		vertices[i] = old_vertices[i];
-		vertices[i] *= mRatio;
+		b2Vec2 tmp = old_vertices[i];
+		tmp = old_vertices[i];
+		tmp *= mRatio;
+		vertices[i].x = tmp.x;
+		vertices[i].y = tmp.y;
 	}
 	
 	glVertexPointer(2, GL_FLOAT, 0, vertices);
@@ -75,7 +82,7 @@ void GLESDebugDraw::DrawCircle(const b2Vec2& center, float32 radius, const b2Col
 {
 		
 	const float32 k_segments = 16.0f;
-	uint vertexCount=16;
+	int vertexCount=16;
 	const float32 k_increment = 2.0f * b2_pi / k_segments;
 	float32 theta = 0.0f;
 	
@@ -98,7 +105,7 @@ void GLESDebugDraw::DrawSolidCircle(const b2Vec2& center, float32 radius, const 
 {
 		
 	const float32 k_segments = 16.0f;
-	uint vertexCount=16;
+	int vertexCount=16;
 	const float32 k_increment = 2.0f * b2_pi / k_segments;
 	float32 theta = 0.0f;
 	
