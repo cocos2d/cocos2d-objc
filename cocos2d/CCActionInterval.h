@@ -1,7 +1,7 @@
 /*
  * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
- * Copyright (c) 2008-2010 Ricardo Quesada
+ * Copyright (c) 2008-2011 Ricardo Quesada
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -350,7 +350,7 @@ typedef struct _ccBezierConfig {
 */
 @interface CCReverseTime : CCActionInterval <NSCopying>
 {
-	CCFiniteTimeAction * other;
+	CCFiniteTimeAction * other_;
 }
 /** creates the action */
 +(id) actionWithAction: (CCFiniteTimeAction*) action;
