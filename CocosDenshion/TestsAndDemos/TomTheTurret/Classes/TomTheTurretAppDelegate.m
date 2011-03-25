@@ -155,7 +155,7 @@
     self.mainMenuScene = nil;
     self.storyScene = nil;
     self.actionScene = nil;
-	[[CCDirector sharedDirector] release];
+	[[CCDirector sharedDirector] end];
 	[window release];
 	[super dealloc];
 }
