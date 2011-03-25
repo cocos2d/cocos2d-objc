@@ -89,18 +89,18 @@ Example:
  */
 @interface CCRepeat : CCActionInterval <NSCopying>
 {
-	unsigned int times_;
-	unsigned int total_;
+	NSUInteger times_;
+	NSUInteger total_;
 	CCFiniteTimeAction *innerAction_;
 }
 
 /** Inner action */
 @property (nonatomic,readwrite,retain) CCFiniteTimeAction *innerAction;
 
-/** creates a CCRepeat action. Times is an unsigned integer between 1 and pow(2,30) */
-+(id) actionWithAction:(CCFiniteTimeAction*)action times: (unsigned int)times;
-/** initializes a CCRepeat action. Times is an unsigned integer between 1 and pow(2,30) */
--(id) initWithAction:(CCFiniteTimeAction*)action times: (unsigned int)times;
+/** creates a CCRepeat action. Times is an unsigned integer between 1 and MAX_UINT */
++(id) actionWithAction:(CCFiniteTimeAction*)action times: (NSUInteger)times;
+/** initializes a CCRepeat action. Times is an unsigned integer between 1 and MAX_UINT */
+-(id) initWithAction:(CCFiniteTimeAction*)action times: (NSUInteger)times;
 @end
 
 /** Spawn a new action immediately
@@ -267,12 +267,12 @@ typedef struct _ccBezierConfig {
 */
 @interface CCBlink : CCActionInterval <NSCopying>
 {
-	int times;
+	NSUInteger times_;
 }
 /** creates the action */
-+(id) actionWithDuration: (ccTime)duration blinks:(unsigned int)blinks;
++(id) actionWithDuration: (ccTime)duration blinks:(NSUInteger)blinks;
 /** initilizes the action */
--(id) initWithDuration: (ccTime)duration blinks:(unsigned int)blinks;
+-(id) initWithDuration: (ccTime)duration blinks:(NSUInteger)blinks;
 @end
 
 /** Fades In an object that implements the CCRGBAProtocol protocol. It modifies the opacity from 0 to 255.

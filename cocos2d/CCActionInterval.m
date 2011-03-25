@@ -243,12 +243,12 @@
 @implementation CCRepeat
 @synthesize innerAction=innerAction_;
 
-+(id) actionWithAction:(CCFiniteTimeAction*)action times:(unsigned int)times
++(id) actionWithAction:(CCFiniteTimeAction*)action times:(NSUInteger)times
 {
 	return [[[self alloc] initWithAction:action times:times] autorelease];
 }
 
--(id) initWithAction:(CCFiniteTimeAction*)action times:(unsigned int)times
+-(id) initWithAction:(CCFiniteTimeAction*)action times:(NSUInteger)times
 {
 	ccTime d = [action duration] * times;
 
@@ -856,29 +856,29 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 #pragma mark -
 #pragma mark Blink
 @implementation CCBlink
-+(id) actionWithDuration: (ccTime) t blinks: (unsigned int) b
++(id) actionWithDuration: (ccTime) t blinks: (NSUInteger) b
 {
 	return [[[ self alloc] initWithDuration: t blinks: b] autorelease];
 }
 
--(id) initWithDuration: (ccTime) t blinks: (unsigned int) b
+-(id) initWithDuration: (ccTime) t blinks: (NSUInteger) b
 {
 	if( (self=[super initWithDuration: t] ) )
-		times = b;
+		times_ = b;
 	
 	return self;
 }
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	CCAction *copy = [[[self class] allocWithZone: zone] initWithDuration: [self duration] blinks: times];
+	CCAction *copy = [[[self class] allocWithZone: zone] initWithDuration: [self duration] blinks: times_];
 	return copy;
 }
 
 -(void) update: (ccTime) t
 {
 	if( ! [self isDone] ) {
-		ccTime slice = 1.0f / times;
+		ccTime slice = 1.0f / times_;
 		ccTime m = fmodf(t, slice);
 		[target_ setVisible: (m > slice/2) ? YES : NO];
 	}
@@ -887,7 +887,7 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 -(CCActionInterval*) reverse
 {
 	// return 'self'
-	return [[self class] actionWithDuration:duration_ blinks: times];
+	return [[self class] actionWithDuration:duration_ blinks: times_];
 }
 @end
 

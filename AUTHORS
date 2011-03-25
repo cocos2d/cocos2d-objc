@@ -54,7 +54,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		patch for CocosDenshion
 	* chere.loque:
 		Fixed memory leak in CCGridBase when initializing the texture
-	* CJ Hanson (myBuddyCJ, wiseganesha, CJeazy):
+	* CJ Hanson (myBuddyCJ, wiseganesha, CJeazy) (http://www.hansoninteractive.com/):
 		RenderTexture generates UIImages patch
 		correct channel in SimpleAudioEngine patch
 		Added Ease Elastic actions
