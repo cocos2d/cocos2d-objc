@@ -69,9 +69,9 @@ Example:
  */
 @interface CCSequence : CCActionInterval <NSCopying>
 {
-	CCFiniteTimeAction *actions[2];
-	ccTime split;
-	int last;
+	CCFiniteTimeAction *actions_[2];
+	ccTime split_;
+	int last_;
 }
 /** helper contructor to create an array of sequenceable actions */
 +(id) actions: (CCFiniteTimeAction*) action1, ... NS_REQUIRES_NIL_TERMINATION;
@@ -91,11 +91,11 @@ Example:
 {
 	unsigned int times_;
 	unsigned int total_;
-	CCFiniteTimeAction *other_;
+	CCFiniteTimeAction *innerAction_;
 }
 
-/** Inner action. It will be copied */
-@property (nonatomic,copy) CCFiniteTimeAction *action;
+/** Inner action */
+@property (nonatomic,readwrite,retain) CCFiniteTimeAction *innerAction;
 
 /** creates a CCRepeat action. Times is an unsigned integer between 1 and pow(2,30) */
 +(id) actionWithAction:(CCFiniteTimeAction*)action times: (unsigned int)times;
@@ -107,8 +107,8 @@ Example:
  */
 @interface CCSpawn : CCActionInterval <NSCopying>
 {
-	CCFiniteTimeAction *one;
-	CCFiniteTimeAction *two;
+	CCFiniteTimeAction *one_;
+	CCFiniteTimeAction *two_;
 }
 /** helper constructor to create an array of spawned actions */
 +(id) actions: (CCFiniteTimeAction*) action1, ... NS_REQUIRES_NIL_TERMINATION;
