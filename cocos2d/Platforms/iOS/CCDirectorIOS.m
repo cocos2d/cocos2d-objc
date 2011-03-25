@@ -338,9 +338,6 @@ CGFloat	__ccContentScaleFactor = 1;
 			ret.y = newX;
 			break;
 	}
-	
-//	if( __ccContentScaleFactor != 1 && isContentScaleSupported_ )
-//		ret = ccpMult(ret, __ccContentScaleFactor);
 	return ret;
 }
 
@@ -361,12 +358,9 @@ CGFloat	__ccContentScaleFactor = 1;
 			uiPoint = ccp(glPoint.y, glPoint.x);
 			break;
 		case CCDeviceOrientationLandscapeRight:
-			// Can't use oppositeX/Y because x/y are flipped
-			uiPoint = ccp(winSize.width-glPoint.y, winSize.height-glPoint.x);
+			uiPoint = ccp(oppositeY, oppositeX);
 			break;
 	}
-	
-	uiPoint = ccpMult(uiPoint, 1/__ccContentScaleFactor);
 	return uiPoint;
 }
 
