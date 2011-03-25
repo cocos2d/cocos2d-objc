@@ -1,7 +1,7 @@
 /*
  * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
- * Copyright (c) 2008-2010 Ricardo Quesada
+ * Copyright (c) 2008-2011 Ricardo Quesada
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -148,8 +148,8 @@
 -(id) initOne: (CCFiniteTimeAction*) one two: (CCFiniteTimeAction*) two
 {
 	NSAssert( one!=nil && two!=nil, @"Sequence: arguments must be non-nil");
-	NSAssert( one!=actions_[0] && two!=actions_[1], @"Sequence: re-init using the same parameters is not supported");
-	NSAssert( one!=actions_[1] && two!=actions_[0], @"Sequence: re-init using the same parameters is not supported");
+	NSAssert( one!=actions_[0] && one!=actions_[1], @"Sequence: re-init using the same parameters is not supported");
+	NSAssert( two!=actions_[1] && two!=actions_[0], @"Sequence: re-init using the same parameters is not supported");
 		
 	ccTime d = [one duration] + [two duration];
 	
@@ -377,8 +377,8 @@
 -(id) initOne: (CCFiniteTimeAction*) one two: (CCFiniteTimeAction*) two
 {
 	NSAssert( one!=nil && two!=nil, @"Spawn: arguments must be non-nil");
-	NSAssert( one!=one_ && two!=two_, @"Spawn: reinit using same parameters is not supported");
-	NSAssert( one!=two_ && two!=one_, @"Spawn: reinit using same parameters is not supported");
+	NSAssert( one!=one_ && one!=two_, @"Spawn: reinit using same parameters is not supported");
+	NSAssert( two!=two_ && two!=one_, @"Spawn: reinit using same parameters is not supported");
 
 	ccTime d1 = [one duration];
 	ccTime d2 = [two duration];	
@@ -1084,12 +1084,12 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 -(id) initWithAction: (CCFiniteTimeAction*) action
 {
 	NSAssert(action != nil, @"CCReverseTime: action should not be nil");
-	NSAssert(action != other, @"CCReverseTime: re-init doesn't support using the same arguments");
+	NSAssert(action != other_, @"CCReverseTime: re-init doesn't support using the same arguments");
 
 	if( (self=[super initWithDuration: [action duration]]) ) {
 		// Don't leak if action is reused
-		[other release];
-		other = [action retain];
+		[other_ release];
+		other_ = [action retain];
 	}
 	
 	return self;
@@ -1097,35 +1097,35 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	return [[[self class] allocWithZone: zone] initWithAction:[[other copy] autorelease] ];
+	return [[[self class] allocWithZone: zone] initWithAction:[[other_ copy] autorelease] ];
 }
 
 -(void) dealloc
 {
-	[other release];
+	[other_ release];
 	[super dealloc];
 }
 
 -(void) startWithTarget:(id)aTarget
 {
 	[super startWithTarget:aTarget];
-	[other startWithTarget:target_];
+	[other_ startWithTarget:target_];
 }
 
 -(void) stop
 {
-	[other stop];
+	[other_ stop];
 	[super stop];
 }
 
 -(void) update:(ccTime)t
 {
-	[other update:1-t];
+	[other_ update:1-t];
 }
 
 -(CCActionInterval*) reverse
 {
-	return [[other copy] autorelease];
+	return [[other_ copy] autorelease];
 }
 @end
 
