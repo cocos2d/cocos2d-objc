@@ -13,6 +13,7 @@ version 1.0-rc - 28-Mar-2011
 . [FIX] Documentation: onExit doxystring improved (issue #1135)
 . [FIX] MenuItemToggle: Don't scale up if it is pressed several times (issue #948)
 . [FIX] ProgressTimer: fixed underflow in setPercentage() (issue #1123)
+. [FIX] RenderTexture: Don't enable default GL states. It's not its responsibility (issue #1145)
 . [FIX] Templates: Don't generate analyze warnings in Xcode4 (issue #1142)
 . [FIX] Xcode: TexturePVR compiles when using cocos2d as an external library (issue #1132)
 . [FIX] Xcode: Added SKIP_INSTALL=YES in libraries for Xcode4 (issue #1137)
