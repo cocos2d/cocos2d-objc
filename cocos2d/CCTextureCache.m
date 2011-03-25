@@ -268,10 +268,12 @@ static CCTextureCache *sharedTextureCache;
 			// convert jpg to png before loading the texture
 			
 			NSString *fullpath = [CCFileUtils fullPathFromRelativePath: path ];
+			BOOL isRetina = [CCFileUtils isRetina: path];
 						
 			UIImage *jpg = [[UIImage alloc] initWithContentsOfFile:fullpath];
 			UIImage *png = [[UIImage alloc] initWithData:UIImagePNGRepresentation(jpg)];
 			tex = [ [CCTexture2D alloc] initWithImage: png ];
+			tex.isRetina = isRetina;
 			[png release];
 			[jpg release];
 			
@@ -287,9 +289,11 @@ static CCTextureCache *sharedTextureCache;
 			
 			// prevents overloading the autorelease pool
 			NSString *fullpath = [CCFileUtils fullPathFromRelativePath: path ];
-
+			BOOL isRetina = [CCFileUtils isRetina: path];
+			
 			UIImage *image = [ [UIImage alloc] initWithContentsOfFile: fullpath ];
 			tex = [ [CCTexture2D alloc] initWithImage: image ];
+			tex.isRetina = isRetina;
 			[image release];
 			
 			if( tex )
@@ -304,6 +308,7 @@ static CCTextureCache *sharedTextureCache;
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 		else {
 			NSString *fullpath = [CCFileUtils fullPathFromRelativePath: path ];
+			BOOL isRetina = [CCFileUtils isRetina: path];
 
 			NSData *data = [[NSData alloc] initWithContentsOfFile:fullpath];
 			NSBitmapImageRep *image = [[NSBitmapImageRep alloc] initWithData:data];
@@ -424,6 +429,8 @@ static CCTextureCache *sharedTextureCache;
 	
 	// Split up directory and filename
 	NSString *fullpath = [CCFileUtils fullPathFromRelativePath:path];
+	BOOL isRetina = [CCFileUtils isRetina: path];
+	tex.isRetina = isRetina;
 	
 	NSData *nsdata = [[NSData alloc] initWithContentsOfFile:fullpath];
 	tex = [[CCTexture2D alloc] initWithPVRTCData:[nsdata bytes] level:0 bpp:bpp hasAlpha:alpha length:w];
@@ -453,6 +460,8 @@ static CCTextureCache *sharedTextureCache;
 	
 	// Split up directory and filename
 	NSString *fullpath = [CCFileUtils fullPathFromRelativePath:path];
+	BOOL isRetina = [CCFileUtils isRetina: path];
+	tex.isRetina = isRetina;
 	
 	tex = [[CCTexture2D alloc] initWithPVRFile: fullpath];
 	if( tex )

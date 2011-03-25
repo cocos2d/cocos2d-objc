@@ -140,6 +140,29 @@ NSString *ccRemoveHDSuffixFromFile( NSString *path )
 	return path;
 }
 
++(BOOL) isRetina:(NSString*) relPath
+{
+	NSAssert(relPath != nil, @"CCFileUtils: Invalid path");
+	
+	NSString *fullpath = nil;
+	
+	// only if it is not an absolute path
+	if( ! [relPath isAbsolutePath] )
+	{
+		NSString *file = [relPath lastPathComponent];
+		NSString *imageDirectory = [relPath stringByDeletingLastPathComponent];
+		
+		fullpath = [[NSBundle mainBundle] pathForResource:file
+												   ofType:nil
+											  inDirectory:imageDirectory];
+	}
+	
+	if (fullpath == nil)
+		fullpath = relPath;
+	
+	return !(fullpath == [self getDoubleResolutionImage:fullpath]) ;
+}
+
 +(NSString*) fullPathFromRelativePath:(NSString*) relPath
 {
 	NSAssert(relPath != nil, @"CCFileUtils: Invalid path");

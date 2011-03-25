@@ -121,6 +121,7 @@ typedef enum {
 	GLfloat						maxS_,
 								maxT_;
 	BOOL						hasPremultipliedAlpha_;
+	BOOL						isRetina;
 }
 /** Intializes with a texture2d with data */
 - (id) initWithData:(const void*)data pixelFormat:(CCTexture2DPixelFormat)pixelFormat pixelsWide:(NSUInteger)width pixelsHigh:(NSUInteger)height contentSize:(CGSize)size;
@@ -136,6 +137,8 @@ typedef enum {
 /** hight in pixels */
 @property(nonatomic,readonly) NSUInteger pixelsHigh;
 
+
+@property(readwrite) BOOL isRetina;
 /** texture name */
 @property(nonatomic,readonly) GLuint name;
 

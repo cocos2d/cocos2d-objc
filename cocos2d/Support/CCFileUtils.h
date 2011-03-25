@@ -41,6 +41,9 @@
  
  */
 +(NSString*) fullPathFromRelativePath:(NSString*) relPath;
+
+
++(BOOL) isRetina:(NSString*) relPath;
 @end
 
 /** loads a file into memory.
