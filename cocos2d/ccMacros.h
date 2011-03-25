@@ -127,8 +127,8 @@ default gl blend src function. Compatible with premultiplied alpha images.
  */
 #define CC_DISABLE_DEFAULT_GL_STATES() {			\
 	glDisable(GL_TEXTURE_2D);						\
-	glDisableClientState(GL_COLOR_ARRAY);			\
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);	\
+	glDisableClientState(GL_COLOR_ARRAY);			\
 	glDisableClientState(GL_VERTEX_ARRAY);			\
 }
 

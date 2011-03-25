@@ -359,6 +359,8 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		CCSprite: correctly overrides setIsRelativeAnchorPoint
 		libpng doesn't compile pngtest.c. patch.
 		Templates: HelloWorld -> HelloWorldLayer and other improvements. patch.
+	* pfg2009:
+		RenderTexture doesn't enable default GL states. patch.
 	* Piero Tofy (http://indieappsalliance.org):
 		Web: Author of the scraper script used to parse games data in the cocos2d site
 	* Pieter van de Bruggen

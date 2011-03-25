@@ -60,6 +60,7 @@ enum
 	
 	GLenum				pixelFormat_;
 	GLfloat				clearColor_[4];
+	BOOL				restoreColor_;
 
 }
 
