@@ -26,7 +26,13 @@
 #ifndef GLES_RENDER_H
 #define GLES_RENDER_H
 
+#import <Availability.h>
+
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#import <OpenGLES/EAGL.h>
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 #import <OpenGL/OpenGL.h>
+#endif
 
 #include "Box2D.h"
 
