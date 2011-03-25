@@ -170,6 +170,8 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		patches for CocosDenshion
 		CocosNode: parent set to nil after onExit patch
 		BitmapFontAtlas supports sub-directories patch
+	* Jason Felice (http://http://bluefroggaming.com/)
+		convertToUI works OK in RetinaDisplay. patch.
 	* Joe Vennix:
 		patches for CocosNode
 	* Jon Kean (http://twitter.com/awesomestsoft):

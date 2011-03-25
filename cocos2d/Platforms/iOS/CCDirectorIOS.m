@@ -358,7 +358,8 @@ CGFloat	__ccContentScaleFactor = 1;
 			uiPoint = ccp(glPoint.y, glPoint.x);
 			break;
 		case CCDeviceOrientationLandscapeRight:
-			uiPoint = ccp(oppositeY, oppositeX);
+			// Can't use oppositeX/Y because x/y are flipped
+			uiPoint = ccp(winSize.width-glPoint.y, winSize.height-glPoint.x);
 			break;
 	}
 	return uiPoint;
