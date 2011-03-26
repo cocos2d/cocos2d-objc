@@ -126,7 +126,7 @@ BOOL ccpLineIntersect(CGPoint A, CGPoint B,
 					  float *S, float *T)
 {    
     // FAIL: Line undefined
-    if (A.x==B.x && A.y==B.y || C.x==D.x && C.y==D.y) return NO;
+    if ( (A.x==B.x && A.y==B.y) || (C.x==D.x && C.y==D.y) ) return NO;
     
     //  Translate system to make A the origin
     B.x-=A.x; B.y-=A.y;
