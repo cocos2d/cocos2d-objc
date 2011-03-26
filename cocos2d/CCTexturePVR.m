@@ -260,7 +260,7 @@ typedef struct _PVRTexHeader
 	}
 	
 	if( ! success )
-		CCLOG(@"cocos2d: WARNING: Unssupported PVR Pixel Format: 0x%2x", formatFlags);
+		CCLOG(@"cocos2d: WARNING: Unsupported PVR Pixel Format: 0x%2x. Re-encode it with a OpenGL pixel format variant", formatFlags);
 	
 	return success;
 }
@@ -359,7 +359,6 @@ typedef struct _PVRTexHeader
 		}
 		
 		free(pvrdata);
-
 	}
 
 	return self;

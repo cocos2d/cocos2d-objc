@@ -4,6 +4,7 @@ version 1.0-rc - 28-Mar-2011
 . [NEW] Templates: Added Xcode4 templates for cocos2d, cocos2d+box2d, cocos2d+chipmunk both for iOS and Mac OS X
 . [NEW] Templates: Possibility to run the installer from any directory
 . [NEW] Tests: Added DirectorTest
+. [NEW] Tests: Added Texture2d subtest for an unsupported PVR pixel format
 . [NEW] TextureAtlas: added possibility to draw the quads in parts
 . [FIX] All: Removed many deprecated methods and classes that were scheduled for removal on v1.0
 . [FIX] Actions: Instant, "base" actions, ReverseTime, Spawn and Sequence don't leak memory if actions are reused

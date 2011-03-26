@@ -2371,6 +2371,7 @@
 		E082C9141292DAD50056AC41 /* futura-48.fnt in Resources */ = {isa = PBXBuildFile; fileRef = E082C9121292DAD50056AC41 /* futura-48.fnt */; };
 		E082C9151292DAD50056AC41 /* futura-48.png in Resources */ = {isa = PBXBuildFile; fileRef = E082C9131292DAD50056AC41 /* futura-48.png */; };
 		E087B34F12785BB60076F6FF /* fps_images-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E087B34E12785BB60076F6FF /* fps_images-hd.png */; };
+		E098B2DD133E471D00FD53A3 /* test_image-bad_encoding.pvr in Resources */ = {isa = PBXBuildFile; fileRef = E098B2DC133E471D00FD53A3 /* test_image-bad_encoding.pvr */; };
 		E0A4A05911F72D79003B9D29 /* test_image_bgra8888.pvr in Resources */ = {isa = PBXBuildFile; fileRef = E0A4A05211F72D79003B9D29 /* test_image_bgra8888.pvr */; };
 		E0A4A05A11F72D79003B9D29 /* test_image_pvrtc2bpp.pvr in Resources */ = {isa = PBXBuildFile; fileRef = E0A4A05311F72D79003B9D29 /* test_image_pvrtc2bpp.pvr */; };
 		E0A4A05B11F72D79003B9D29 /* test_image_pvrtc4bpp.pvr in Resources */ = {isa = PBXBuildFile; fileRef = E0A4A05411F72D79003B9D29 /* test_image_pvrtc4bpp.pvr */; };
@@ -4305,6 +4306,7 @@
 		E082C9121292DAD50056AC41 /* futura-48.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "futura-48.fnt"; sourceTree = "<group>"; };
 		E082C9131292DAD50056AC41 /* futura-48.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "futura-48.png"; sourceTree = "<group>"; };
 		E087B34E12785BB60076F6FF /* fps_images-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fps_images-hd.png"; sourceTree = "<group>"; };
+		E098B2DC133E471D00FD53A3 /* test_image-bad_encoding.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = "test_image-bad_encoding.pvr"; sourceTree = "<group>"; };
 		E0A4A05211F72D79003B9D29 /* test_image_bgra8888.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = test_image_bgra8888.pvr; sourceTree = "<group>"; };
 		E0A4A05311F72D79003B9D29 /* test_image_pvrtc2bpp.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = test_image_pvrtc2bpp.pvr; sourceTree = "<group>"; };
 		E0A4A05411F72D79003B9D29 /* test_image_pvrtc4bpp.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = test_image_pvrtc4bpp.pvr; sourceTree = "<group>"; };
@@ -7009,6 +7011,7 @@
 		E0A4A24A11F899BB003B9D29 /* PVR test */ = {
 			isa = PBXGroup;
 			children = (
+				E098B2DC133E471D00FD53A3 /* test_image-bad_encoding.pvr */,
 				500044020F3CC15D00A5FBF4 /* test_image.pvr */,
 				500044030F3CC15D00A5FBF4 /* test_image.pvrraw */,
 				E0A4A20A11F76CBC003B9D29 /* grossini_128x256_mipmap.pvr */,
@@ -9472,6 +9475,7 @@
 				E02BB600126CA73F006E46A2 /* Icon-72.png in Resources */,
 				E0BBADE91282E838007DB81E /* test_image_rgba4444.pvr.ccz in Resources */,
 				E0BBADEA1282E838007DB81E /* test_image_rgba4444.pvr.gz in Resources */,
+				E098B2DD133E471D00FD53A3 /* test_image-bad_encoding.pvr in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
