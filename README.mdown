@@ -39,7 +39,7 @@ Main features
    * Point based: iPhone4 + RetinaDisplay mode compatible
    * Language: objective-c
    * Open Source: Compatible with open and closed source projects
-   * OpenGL ES 1.1  / OpenGL 1.5 based
+   * OpenGL ES 1.1 (iOS) / OpenGL 1.5 based (Mac)
 
 
 This library does not work with the toolchain, but it should be easy to port it to it.
@@ -90,12 +90,9 @@ Select the test you want to view in both drop downs and hit Build and Go.
 How to start a new game
 -----------------------
 
-Run the 'install-templates.sh' script as root:
+Run the 'install-templates.sh' script:
     $ cd cocos2d-iphone
-    $ sudo ./install-templates.sh
-or with `-u` to install the templates in your user directory:
-    $ cd cocos2d-iphone
-    $ ./install-templates.sh -u
+    $ ./install-templates.sh -u -f
 And then open XCode -> New Project -> User Templates -> cocos2d
 
 
