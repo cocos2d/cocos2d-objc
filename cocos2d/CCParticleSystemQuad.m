@@ -47,7 +47,7 @@
 
 
 // overriding the init method
--(id) initWithTotalParticles:(int) numberOfParticles
+-(id) initWithTotalParticles:(NSUInteger) numberOfParticles
 {
 	// base initialization
 	if( (self=[super initWithTotalParticles:numberOfParticles]) ) {
@@ -173,8 +173,8 @@
 -(void) initIndices
 {
 	for( NSUInteger i=0;i< totalParticles;i++) {
-		const int i6 = i*6;
-		const int i4 = i*4;
+		const NSUInteger i6 = i*6;
+		const NSUInteger i4 = i*4;
 		indices_[i6+0] = (GLushort) i4+0;
 		indices_[i6+1] = (GLushort) i4+1;
 		indices_[i6+2] = (GLushort) i4+2;
@@ -320,7 +320,7 @@
 	
 	
 	NSAssert( particleIdx == particleCount, @"Abnormal error in particle quad");
-	glDrawElements(GL_TRIANGLES, particleIdx*6, GL_UNSIGNED_SHORT, indices_);
+	glDrawElements(GL_TRIANGLES, (GLsizei) particleIdx*6, GL_UNSIGNED_SHORT, indices_);
 	
 	// restore blend state
 	if( newBlend )

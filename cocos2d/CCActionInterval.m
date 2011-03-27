@@ -1,7 +1,7 @@
 /*
  * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
- * Copyright (c) 2008-2010 Ricardo Quesada
+ * Copyright (c) 2008-2011 Ricardo Quesada
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -111,11 +111,6 @@
 #pragma mark -
 #pragma mark Sequence
 @implementation CCSequence
-+(id) actionOne: (CCFiniteTimeAction*) one two: (CCFiniteTimeAction*) two
-{	
-	return [[[self alloc] initOne:one two:two ] autorelease];
-}
-
 +(id) actions: (CCFiniteTimeAction*) action1, ...
 {
 	va_list params;
@@ -135,47 +130,66 @@
 	return prev;
 }
 
--(id) initOne: (CCFiniteTimeAction*) one_ two: (CCFiniteTimeAction*) two_
++(id) actionsWithArray: (NSArray*) actions
 {
-	NSAssert( one_!=nil, @"Sequence: argument one must be non-nil");
-	NSAssert( two_!=nil, @"Sequence: argument two must be non-nil");
+	CCFiniteTimeAction *prev = [actions objectAtIndex:0];
+	
+	for (int i = 1; i < [actions count]; i++)
+		prev = [self actionOne:prev two:[actions objectAtIndex:i]];
+	
+	return prev;
+}
 
-	CCFiniteTimeAction *one = one_;
-	CCFiniteTimeAction *two = two_;
++(id) actionOne: (CCFiniteTimeAction*) one two: (CCFiniteTimeAction*) two
+{	
+	return [[[self alloc] initOne:one two:two ] autorelease];
+}
+
+-(id) initOne: (CCFiniteTimeAction*) one two: (CCFiniteTimeAction*) two
+{
+	NSAssert( one!=nil && two!=nil, @"Sequence: arguments must be non-nil");
+	NSAssert( one!=actions_[0] && one!=actions_[1], @"Sequence: re-init using the same parameters is not supported");
+	NSAssert( two!=actions_[1] && two!=actions_[0], @"Sequence: re-init using the same parameters is not supported");
 		
 	ccTime d = [one duration] + [two duration];
-	[super initWithDuration: d];
 	
-	actions[0] = [one retain];
-	actions[1] = [two retain];
+	if( (self=[super initWithDuration: d]) ) {
+
+		// XXX: Supports re-init without leaking. Fails if one==one_ || two==two_
+		[actions_[0] release];
+		[actions_[1] release];
+
+		actions_[0] = [one retain];
+		actions_[1] = [two retain];
+	}
 	
 	return self;
 }
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	CCAction *copy = [[[self class] allocWithZone:zone] initOne:[[actions[0] copy] autorelease] two:[[actions[1] copy] autorelease] ];
+	CCAction *copy = [[[self class] allocWithZone:zone] initOne:[[actions_[0] copy] autorelease] two:[[actions_[1] copy] autorelease] ];
 	return copy;
 }
 
 -(void) dealloc
 {
-	[actions[0] release];
-	[actions[1] release];
+	[actions_[0] release];
+	[actions_[1] release];
 	[super dealloc];
 }
 
 -(void) startWithTarget:(id)aTarget
 {
 	[super startWithTarget:aTarget];	
-	split = [actions[0] duration] / duration_;
-	last = -1;
+	split_ = [actions_[0] duration] / duration_;
+	last_ = -1;
 }
 
 -(void) stop
 {
-	[actions[0] stop];
-	[actions[1] stop];
+	[actions_[0] stop];
+	[actions_[1] stop];
 	[super stop];
 }
 
@@ -184,40 +198,40 @@
 	int found = 0;
 	ccTime new_t = 0.0f;
 	
-	if( t >= split ) {
+	if( t >= split_ ) {
 		found = 1;
-		if ( split == 1 )
+		if ( split_ == 1 )
 			new_t = 1;
 		else
-			new_t = (t-split) / (1 - split );
+			new_t = (t-split_) / (1 - split_ );
 	} else {
 		found = 0;
-		if( split != 0 )
-			new_t = t / split;
+		if( split_ != 0 )
+			new_t = t / split_;
 		else
 			new_t = 1;
 	}
 	
-	if (last == -1 && found==1)	{
-		[actions[0] startWithTarget:target_];
-		[actions[0] update:1.0f];
-		[actions[0] stop];
+	if (last_ == -1 && found==1)	{
+		[actions_[0] startWithTarget:target_];
+		[actions_[0] update:1.0f];
+		[actions_[0] stop];
 	}
 
-	if (last != found ) {
-		if( last != -1 ) {
-			[actions[last] update: 1.0f];
-			[actions[last] stop];
+	if (last_ != found ) {
+		if( last_ != -1 ) {
+			[actions_[last_] update: 1.0f];
+			[actions_[last_] stop];
 		}
-		[actions[found] startWithTarget:target_];
+		[actions_[found] startWithTarget:target_];
 	}
-	[actions[found] update: new_t];
-	last = found;
+	[actions_[found] update: new_t];
+	last_ = found;
 }
 
 - (CCActionInterval *) reverse
 {
-	return [[self class] actionOne: [actions[1] reverse] two: [actions[0] reverse ] ];
+	return [[self class] actionOne: [actions_[1] reverse] two: [actions_[0] reverse ] ];
 }
 @end
 
@@ -227,18 +241,20 @@
 #pragma mark -
 #pragma mark CCRepeat
 @implementation CCRepeat
-+(id) actionWithAction:(CCFiniteTimeAction*)action times:(unsigned int)times
+@synthesize innerAction=innerAction_;
+
++(id) actionWithAction:(CCFiniteTimeAction*)action times:(NSUInteger)times
 {
 	return [[[self alloc] initWithAction:action times:times] autorelease];
 }
 
--(id) initWithAction:(CCFiniteTimeAction*)action times:(unsigned int)times
+-(id) initWithAction:(CCFiniteTimeAction*)action times:(NSUInteger)times
 {
 	ccTime d = [action duration] * times;
 
 	if( (self=[super initWithDuration: d ]) ) {
 		times_ = times;
-		other_ = [action retain];
+		self.innerAction = action;
 
 		total_ = 0;
 	}
@@ -247,13 +263,13 @@
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	CCAction *copy = [[[self class] allocWithZone:zone] initWithAction:[[other_ copy] autorelease] times:times_];
+	CCAction *copy = [[[self class] allocWithZone:zone] initWithAction:[[innerAction_ copy] autorelease] times:times_];
 	return copy;
 }
 
 -(void) dealloc
 {
-	[other_ release];
+	[innerAction_ release];
 	[super dealloc];
 }
 
@@ -261,12 +277,12 @@
 {
 	total_ = 0;
 	[super startWithTarget:aTarget];
-	[other_ startWithTarget:aTarget];
+	[innerAction_ startWithTarget:aTarget];
 }
 
 -(void) stop
 {    
-    [other_ stop];
+    [innerAction_ stop];
 	[super stop];
 }
 
@@ -277,19 +293,19 @@
 {
 	ccTime t = dt * times_;
 	if( t > total_+1 ) {
-		[other_ update:1.0f];
+		[innerAction_ update:1.0f];
 		total_++;
-		[other_ stop];
-		[other_ startWithTarget:target_];
+		[innerAction_ stop];
+		[innerAction_ startWithTarget:target_];
 		
 		// repeat is over ?
 		if( total_== times_ )
 			// so, set it in the original position
-			[other_ update:0];
+			[innerAction_ update:0];
 		else {
 			// no ? start next repeat with the right update
 			// to prevent jerk (issue #390)
-			[other_ update: t-total_];
+			[innerAction_ update: t-total_];
 		}
 
 	} else {
@@ -302,7 +318,7 @@
 			r = 1.0f;
 			total_++; // this is the added line
 		}
-		[other_ update: MIN(r,1)];
+		[innerAction_ update: MIN(r,1)];
 	}
 }
 
@@ -313,10 +329,8 @@
 
 - (CCActionInterval *) reverse
 {
-	return [[self class] actionWithAction:[other_ reverse] times:times_];
+	return [[self class] actionWithAction:[innerAction_ reverse] times:times_];
 }
-
-@synthesize action=other_;
 @end
 
 //
@@ -345,70 +359,85 @@
 	return prev;
 }
 
++(id) actionsWithArray: (NSArray*) actions
+{
+	CCFiniteTimeAction *prev = [actions objectAtIndex:0];
+	
+	for (int i = 1; i < [actions count]; i++)
+		prev = [self actionOne:prev two:[actions objectAtIndex:i]];
+	
+	return prev;
+}
+
 +(id) actionOne: (CCFiniteTimeAction*) one two: (CCFiniteTimeAction*) two
 {	
 	return [[[self alloc] initOne:one two:two ] autorelease];
 }
 
--(id) initOne: (CCFiniteTimeAction*) one_ two: (CCFiniteTimeAction*) two_
+-(id) initOne: (CCFiniteTimeAction*) one two: (CCFiniteTimeAction*) two
 {
-	NSAssert( one_!=nil, @"Spawn: argument one must be non-nil");
-	NSAssert( two_!=nil, @"Spawn: argument two must be non-nil");
+	NSAssert( one!=nil && two!=nil, @"Spawn: arguments must be non-nil");
+	NSAssert( one!=one_ && one!=two_, @"Spawn: reinit using same parameters is not supported");
+	NSAssert( two!=two_ && two!=one_, @"Spawn: reinit using same parameters is not supported");
 
-	ccTime d1 = [one_ duration];
-	ccTime d2 = [two_ duration];	
+	ccTime d1 = [one duration];
+	ccTime d2 = [two duration];	
 	
-	[super initWithDuration: fmaxf(d1,d2)];
+	[super initWithDuration: MAX(d1,d2)];
 
-	one = one_;
-	two = two_;
+	// XXX: Supports re-init without leaking. Fails if one==one_ || two==two_
+	[one_ release];
+	[two_ release];
+
+	one_ = one;
+	two_ = two;
 
 	if( d1 > d2 )
-		two = [CCSequence actionOne: two_ two:[CCDelayTime actionWithDuration: (d1-d2)] ];
+		two_ = [CCSequence actionOne:two two:[CCDelayTime actionWithDuration: (d1-d2)] ];
 	else if( d1 < d2)
-		one = [CCSequence actionOne: one_ two: [CCDelayTime actionWithDuration: (d2-d1)] ];
+		one_ = [CCSequence actionOne:one two: [CCDelayTime actionWithDuration: (d2-d1)] ];
 	
-	[one retain];
-	[two retain];
+	[one_ retain];
+	[two_ retain];
 	return self;
 }
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	CCAction *copy = [[[self class] allocWithZone: zone] initOne: [[one copy] autorelease] two: [[two copy] autorelease] ];
+	CCAction *copy = [[[self class] allocWithZone: zone] initOne: [[one_ copy] autorelease] two: [[two_ copy] autorelease] ];
 	return copy;
 }
 
 -(void) dealloc
 {
-	[one release];
-	[two release];
+	[one_ release];
+	[two_ release];
 	[super dealloc];
 }
 
 -(void) startWithTarget:(id)aTarget
 {
 	[super startWithTarget:aTarget];
-	[one startWithTarget:target_];
-	[two startWithTarget:target_];
+	[one_ startWithTarget:target_];
+	[two_ startWithTarget:target_];
 }
 
 -(void) stop
 {
-	[one stop];
-	[two stop];
+	[one_ stop];
+	[two_ stop];
 	[super stop];
 }
 
 -(void) update: (ccTime) t
 {
-	[one update:t];
-	[two update:t];
+	[one_ update:t];
+	[two_ update:t];
 }
 
 - (CCActionInterval *) reverse
 {
-	return [[self class] actionOne: [one reverse] two: [two reverse ] ];
+	return [[self class] actionOne: [one_ reverse] two: [two_ reverse ] ];
 }
 @end
 
@@ -827,29 +856,29 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 #pragma mark -
 #pragma mark Blink
 @implementation CCBlink
-+(id) actionWithDuration: (ccTime) t blinks: (unsigned int) b
++(id) actionWithDuration: (ccTime) t blinks: (NSUInteger) b
 {
 	return [[[ self alloc] initWithDuration: t blinks: b] autorelease];
 }
 
--(id) initWithDuration: (ccTime) t blinks: (unsigned int) b
+-(id) initWithDuration: (ccTime) t blinks: (NSUInteger) b
 {
 	if( (self=[super initWithDuration: t] ) )
-		times = b;
+		times_ = b;
 	
 	return self;
 }
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	CCAction *copy = [[[self class] allocWithZone: zone] initWithDuration: [self duration] blinks: times];
+	CCAction *copy = [[[self class] allocWithZone: zone] initWithDuration: [self duration] blinks: times_];
 	return copy;
 }
 
 -(void) update: (ccTime) t
 {
 	if( ! [self isDone] ) {
-		ccTime slice = 1.0f / times;
+		ccTime slice = 1.0f / times_;
 		ccTime m = fmodf(t, slice);
 		[target_ setVisible: (m > slice/2) ? YES : NO];
 	}
@@ -858,7 +887,7 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 -(CCActionInterval*) reverse
 {
 	// return 'self'
-	return [[self class] actionWithDuration:duration_ blinks: times];
+	return [[self class] actionWithDuration:duration_ blinks: times_];
 }
 @end
 
@@ -1054,43 +1083,49 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 
 -(id) initWithAction: (CCFiniteTimeAction*) action
 {
-	if( (self=[super initWithDuration: [action duration]]) )
-		other = [action retain];
+	NSAssert(action != nil, @"CCReverseTime: action should not be nil");
+	NSAssert(action != other_, @"CCReverseTime: re-init doesn't support using the same arguments");
+
+	if( (self=[super initWithDuration: [action duration]]) ) {
+		// Don't leak if action is reused
+		[other_ release];
+		other_ = [action retain];
+	}
 	
 	return self;
 }
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	return [[[self class] allocWithZone: zone] initWithAction:[[other copy] autorelease] ];
+	return [[[self class] allocWithZone: zone] initWithAction:[[other_ copy] autorelease] ];
 }
 
 -(void) dealloc
 {
-	[other release];
+	[other_ release];
 	[super dealloc];
 }
 
 -(void) startWithTarget:(id)aTarget
 {
 	[super startWithTarget:aTarget];
-	[other startWithTarget:target_];
+	[other_ startWithTarget:target_];
 }
 
 -(void) stop
 {
-	[other stop];
+	[other_ stop];
 	[super stop];
 }
 
 -(void) update:(ccTime)t
 {
-	[other update:1-t];
+	[other_ update:1-t];
 }
 
 -(CCActionInterval*) reverse
 {
-	return [[other copy] autorelease];
+	return [[other_ copy] autorelease];
 }
 @end
 

@@ -288,7 +288,7 @@ CDSoundSource *toneSource;
 				
 				CFURLRef fileURL = nil;
 				NSString *path = [CDUtilities fullPathFromRelativePath:@"808_120bpm.wav"];
-				fileURL = (CFURLRef)[[NSURL fileURLWithPath:path] retain];
+				fileURL = (CFURLRef)[NSURL fileURLWithPath:path];
 				ALenum  format;
 				ALsizei size;
 				ALsizei freq;

@@ -153,7 +153,7 @@ typedef struct _PVRTexHeader
 @synthesize retainName = retainName_;
 
 
-- (BOOL)unpackPVRData:(unsigned char*)data PVRLen:(unsigned int)len
+- (BOOL)unpackPVRData:(unsigned char*)data PVRLen:(NSUInteger)len
 {
 	BOOL success = FALSE;
 	PVRTexHeader *header = NULL;
@@ -260,7 +260,7 @@ typedef struct _PVRTexHeader
 	}
 	
 	if( ! success )
-		CCLOG(@"cocos2d: WARNING: Unssupported PVR Pixel Format: 0x%2x", formatFlags);
+		CCLOG(@"cocos2d: WARNING: Unsupported PVR Pixel Format: 0x%2x. Re-encode it with a OpenGL pixel format variant", formatFlags);
 	
 	return success;
 }
@@ -268,8 +268,8 @@ typedef struct _PVRTexHeader
 
 - (BOOL)createGLTexture
 {
-	NSUInteger width = width_;
-	NSUInteger height = height_;
+	GLsizei width = width_;
+	GLsizei height = height_;
 	GLenum err;
 	
 	if (numberOfMipmaps_ > 0)
@@ -282,7 +282,7 @@ typedef struct _PVRTexHeader
 	}
 
 	// Generate textures with mipmaps
-	for (NSUInteger i=0; i < numberOfMipmaps_; i++)
+	for (unsigned int i=0; i < numberOfMipmaps_; i++)
 	{
 		GLenum internalFormat = tableFormats[tableFormatIndex_][kCCInternalOpenGLInternalFormat];
 		GLenum format = tableFormats[tableFormatIndex_][kCCInternalOpenGLFormat];
@@ -325,7 +325,7 @@ typedef struct _PVRTexHeader
 	if((self = [super init]))  
 	{ 
 		unsigned char *pvrdata = NULL;
-		int pvrlen = 0;
+		NSInteger pvrlen = 0;
 		NSString *lowerCase = [path lowercaseString];       
 		
         if ( [lowerCase hasSuffix:@".ccz"]) 
@@ -359,7 +359,6 @@ typedef struct _PVRTexHeader
 		}
 		
 		free(pvrdata);
-
 	}
 
 	return self;

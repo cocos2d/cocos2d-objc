@@ -115,6 +115,6 @@
 -(void) removeSpriteFromAtlas:(CCSprite*)sprite;
 
 -(NSUInteger) rebuildIndexInOrder:(CCSprite*)parent atlasIndex:(NSUInteger)index;
--(NSUInteger) atlasIndexForChild:(CCSprite*)sprite atZ:(int)z;
+-(NSUInteger) atlasIndexForChild:(CCSprite*)sprite atZ:(NSInteger)z;
 
 @end

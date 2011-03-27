@@ -264,6 +264,7 @@ Class restartAction()
 			[brush setRotation:rand()%360];
 			float r = ((float)(rand()%50)/50.f) + 0.25f;
 			[brush setScale:r];
+
 			// Call visit to draw the brush, don't call draw..
 			[brush visit];
 		}
@@ -317,6 +318,10 @@ Class restartAction()
 		
 		// It's possible to modify the RenderTexture blending function by
 //		[[rend sprite] setBlendFunc:(ccBlendFunc) {GL_ONE, GL_ONE_MINUS_SRC_ALPHA}];
+
+		// All cocos2d nodes assumes that these states are enabled.
+		// Since we are drawing outside the "draw" event, we need to turn them on manually
+		CC_ENABLE_DEFAULT_GL_STATES();
 
 		[rend begin];
 		[spr_premulti visit];
