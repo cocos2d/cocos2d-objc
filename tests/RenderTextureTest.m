@@ -204,10 +204,6 @@ Class restartAction()
 	CGPoint end = [touch previousLocationInView:[touch view]];
 	end = [[CCDirector sharedDirector] convertToGL:end];
 	
-	// All cocos2d nodes assumes that these states are enabled.
-	// Since we are drawing outside the "draw" event, we need to turn them on manually
-	CC_ENABLE_DEFAULT_GL_STATES();
-
 	// begin drawing to the render texture
 	[target begin];
 	
@@ -252,10 +248,6 @@ Class restartAction()
 	CGPoint start = currentLocation;
 	CGPoint end = lastLocation;
 	
-	// All cocos2d nodes assumes that these states are enabled.
-	// Since we are drawing outside the "draw" event, we need to turn them on manually
-	CC_ENABLE_DEFAULT_GL_STATES();
-
 	// begin drawing to the render texture
 	[target begin];
 	
@@ -283,9 +275,6 @@ Class restartAction()
 	[target end];
 	
 	lastLocation = currentLocation;
-	
-	// Disable the states, that were turned on manually
-	CC_DISABLE_DEFAULT_GL_STATES();
 	
 	// swallow the event. Don't propagate it
 	return YES;
@@ -340,9 +329,6 @@ Class restartAction()
 		[spr_premulti visit];
 		[spr_nonpremulti visit];
 		[rend end]; 
-		
-		// disable teh states that were turned on manually
-		CC_DISABLE_DEFAULT_GL_STATES();
 		
 		CGSize s = [[CCDirector sharedDirector] winSize];
 		
