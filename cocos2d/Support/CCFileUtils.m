@@ -33,12 +33,12 @@
 static NSFileManager *__localFileManager=nil;
 
 // 
-int ccLoadFileIntoMemory(const char *filename, unsigned char **out) 
+NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out) 
 { 
 	assert( out );
 	assert( &*out );
 
-	int size = 0;
+	size_t size = 0;
 	FILE *f = fopen(filename, "rb");
 	if( !f ) { 
 		*out = NULL;
@@ -50,7 +50,7 @@ int ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 	fseek(f, 0, SEEK_SET);
 	
 	*out = malloc(size);
-	int read = fread(*out, 1, size, f);
+	size_t read = fread(*out, 1, size, f);
 	if( read != size ) { 
 		free(*out);
 		*out = NULL;

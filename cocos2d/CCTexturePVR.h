@@ -99,14 +99,22 @@ enum {
 	BOOL retainName_;
 }
 
+/** initializes a CCTexturePVR with a path */
 - (id)initWithContentsOfFile:(NSString *)path;
+/** initializes a CCTexturePVR with an URL */
 - (id)initWithContentsOfURL:(NSURL *)url;
+/** creates and initializes a CCTexturePVR with a path */
 + (id)pvrTextureWithContentsOfFile:(NSString *)path;
+/** creates and initializes a CCTexturePVR with an URL */
 + (id)pvrTextureWithContentsOfURL:(NSURL *)url;
 
+/** texture id name */
 @property (nonatomic,readonly) GLuint name;
+/** texture width */
 @property (nonatomic,readonly) uint32_t width;
+/** texture height */
 @property (nonatomic,readonly) uint32_t height;
+/** whether or not the texture has alpha */
 @property (nonatomic,readonly) BOOL hasAlpha;
 
 // cocos2d integration

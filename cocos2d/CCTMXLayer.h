@@ -67,25 +67,23 @@
 	NSString			*layerName_;
 	CGSize				layerSize_;
 	CGSize				mapTileSize_;
-	unsigned int		*tiles_;
-	int					layerOrientation_;
+	uint32_t			*tiles_;			// GID are 32 bit
+	NSUInteger			layerOrientation_;
 	NSMutableArray		*properties_;
 	
 	unsigned char		opacity_; // TMX Layer supports opacity
 	
-	unsigned int		minGID_;
-	unsigned int		maxGID_;
+	NSUInteger			minGID_;
+	NSUInteger			maxGID_;
 	
 	// Only used when vertexZ is used
-	int					vertexZvalue_;
+	NSInteger			vertexZvalue_;
 	BOOL				useAutomaticVertexZ_;
 	float				alphaFuncValue_;
 	
 	// used for optimization
 	CCSprite		*reusedTile_;
 	ccCArray		*atlasIndexArray_;
-	
-	
 }
 /** name of the layer */
 @property (nonatomic,readwrite,retain) NSString *layerName;
@@ -94,11 +92,11 @@
 /** size of the map's tile (could be differnt from the tile's size) */
 @property (nonatomic,readwrite) CGSize mapTileSize;
 /** pointer to the map of tiles */
-@property (nonatomic,readwrite) unsigned int *tiles;
+@property (nonatomic,readwrite) uint32_t *tiles;
 /** Tilset information for the layer */
 @property (nonatomic,readwrite,retain) CCTMXTilesetInfo *tileset;
 /** Layer orientation, which is the same as the map orientation */
-@property (nonatomic,readwrite) int layerOrientation;
+@property (nonatomic,readwrite) NSUInteger layerOrientation;
 /** properties from the layer. They can be added using Tiled */
 @property (nonatomic,readwrite,retain) NSMutableArray *properties;
 
@@ -126,13 +124,13 @@
  if it returns 0, it means that the tile is empty.
  This method requires the the tile map has not been previously released (eg. don't call [layer releaseMap])
  */
--(unsigned int) tileGIDAt:(CGPoint)tileCoordinate;
+-(uint32_t) tileGIDAt:(CGPoint)tileCoordinate;
 
 /** sets the tile gid (gid = tile global id) at a given tile coordinate.
  The Tile GID can be obtained by using the method "tileGIDAt" or by using the TMX editor -> Tileset Mgr +1.
  If a tile is already placed at that position, then it will be removed.
  */
--(void) setTileGID:(unsigned int)gid at:(CGPoint)tileCoordinate;
+-(void) setTileGID:(uint32_t)gid at:(CGPoint)tileCoordinate;
 
 /** removes a tile at given tile coordinate */
 -(void) removeTileAt:(CGPoint)tileCoordinate;
@@ -149,5 +147,5 @@
 /** CCTMXLayer doesn't support adding a CCSprite manually.
  @warning addchild:z:tag: is not supported on CCTMXLayer. Instead of setTileGID:at:/tileAt:
  */
--(void) addChild: (CCNode*)node z:(int)z tag:(int)tag;
+-(void) addChild: (CCNode*)node z:(NSInteger)z tag:(NSInteger)tag;
 @end

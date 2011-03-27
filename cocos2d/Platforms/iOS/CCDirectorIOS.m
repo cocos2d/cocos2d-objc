@@ -343,9 +343,6 @@ CGFloat	__ccContentScaleFactor = 1;
 			ret.y = newX;
 			break;
 	}
-	
-//	if( __ccContentScaleFactor != 1 && isContentScaleSupported_ )
-//		ret = ccpMult(ret, __ccContentScaleFactor);
 	return ret;
 }
 
@@ -370,8 +367,6 @@ CGFloat	__ccContentScaleFactor = 1;
 			uiPoint = ccp(winSize.width-glPoint.y, winSize.height-glPoint.x);
 			break;
 	}
-	
-	uiPoint = ccpMult(uiPoint, 1/__ccContentScaleFactor);
 	return uiPoint;
 }
 
