@@ -222,7 +222,7 @@
 			
 			// if it fails, try to get it from the base64-gzipped data			
 			unsigned char *buffer = NULL;
-			NSUInteger len = base64Decode((unsigned char*)[textureData UTF8String], [textureData length], &buffer);
+			int len = base64Decode((unsigned char*)[textureData UTF8String], (unsigned int)[textureData length], &buffer);
 			NSAssert( buffer != NULL, @"CCParticleSystem: error decoding textureImageData");
 				
 			unsigned char *deflated = NULL;
@@ -252,7 +252,7 @@
 	return self;
 }
 
--(id) initWithTotalParticles:(int) numberOfParticles
+-(id) initWithTotalParticles:(NSUInteger) numberOfParticles
 {
 	if( (self=[super init]) ) {
 

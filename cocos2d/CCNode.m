@@ -53,9 +53,9 @@
 // lazy allocs
 -(void) childrenAlloc;
 // helper that reorder a child
--(void) insertChild:(CCNode*)child z:(int)z;
+-(void) insertChild:(CCNode*)child z:(NSInteger)z;
 // used internally to alter the zOrder variable. DON'T call this method manually
--(void) _setZOrder:(int) z;
+-(void) _setZOrder:(NSInteger) z;
 -(void) detachChild:(CCNode *)child cleanup:(BOOL)doCleanup;
 @end
 
@@ -314,7 +314,7 @@
 	return camera_;
 }
 
--(CCNode*) getChildByTag:(int) aTag
+-(CCNode*) getChildByTag:(NSInteger) aTag
 {
 	NSAssert( aTag != kCCNodeTagInvalid, @"Invalid tag");
 	
@@ -331,7 +331,7 @@
  * If a class want's to extend the 'addChild' behaviour it only needs
  * to override this method
  */
--(void) addChild: (CCNode*) child z:(int)z tag:(int) aTag
+-(void) addChild: (CCNode*) child z:(NSInteger)z tag:(NSInteger) aTag
 {	
 	NSAssert( child != nil, @"Argument must be non-nil");
 	NSAssert( child.parent == nil, @"child already added. It can't be added again");
@@ -351,7 +351,7 @@
 	}
 }
 
--(void) addChild: (CCNode*) child z:(int)z
+-(void) addChild: (CCNode*) child z:(NSInteger)z
 {
 	NSAssert( child != nil, @"Argument must be non-nil");
 	[self addChild:child z:z tag:child.tag];
@@ -382,7 +382,7 @@
 		[self detachChild:child cleanup:cleanup];
 }
 
--(void) removeChildByTag:(int)aTag cleanup:(BOOL)cleanup
+-(void) removeChildByTag:(NSInteger)aTag cleanup:(BOOL)cleanup
 {
 	NSAssert( aTag != kCCNodeTagInvalid, @"Invalid tag");
 	
@@ -436,13 +436,13 @@
 }
 
 // used internally to alter the zOrder variable. DON'T call this method manually
--(void) _setZOrder:(int) z
+-(void) _setZOrder:(NSInteger) z
 {
 	zOrder_ = z;
 }
 
 // helper used by reorderChild & add
--(void) insertChild:(CCNode*)child z:(int)z
+-(void) insertChild:(CCNode*)child z:(NSInteger)z
 {
 	NSUInteger index=0;
 	CCNode *a = [children_ lastObject];
@@ -465,7 +465,7 @@
 	[child _setZOrder:z];
 }
 
--(void) reorderChild:(CCNode*) child z:(int)z
+-(void) reorderChild:(CCNode*) child z:(NSInteger)z
 {
 	NSAssert( child != nil, @"Child must be non-nil");
 	
@@ -606,19 +606,19 @@
 	[[CCActionManager sharedManager] removeAction:action];
 }
 
--(void) stopActionByTag:(int)aTag
+-(void) stopActionByTag:(NSInteger)aTag
 {
 	NSAssert( aTag != kCCActionTagInvalid, @"Invalid tag");
 	[[CCActionManager sharedManager] removeActionByTag:aTag target:self];
 }
 
--(CCAction*) getActionByTag:(int) aTag
+-(CCAction*) getActionByTag:(NSInteger) aTag
 {
 	NSAssert( aTag != kCCActionTagInvalid, @"Invalid tag");
 	return [[CCActionManager sharedManager] getActionByTag:aTag target:self];
 }
 
--(int) numberOfRunningActions
+-(NSUInteger) numberOfRunningActions
 {
 	return [[CCActionManager sharedManager] numberOfRunningActionsInTarget:self];
 }
@@ -630,7 +630,7 @@
 	[self scheduleUpdateWithPriority:0];
 }
 
--(void) scheduleUpdateWithPriority:(int)priority
+-(void) scheduleUpdateWithPriority:(NSInteger)priority
 {
 	[[CCScheduler sharedScheduler] scheduleUpdateForTarget:self priority:priority paused:!isRunning_];
 }

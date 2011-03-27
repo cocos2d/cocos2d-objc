@@ -80,12 +80,12 @@
 	[super dealloc];
 }
 
--(void) addChild:(CCNode*)child z:(int)z tag:(int)tag
+-(void) addChild:(CCNode*)child z:(NSInteger)z tag:(NSInteger)tag
 {
 	NSAssert(NO,@"ParallaxNode: use addChild:z:parallaxRatio:positionOffset instead");
 }
 
--(void) addChild: (CCNode*) child z:(int)z parallaxRatio:(CGPoint)ratio positionOffset:(CGPoint)offset
+-(void) addChild: (CCNode*) child z:(NSInteger)z parallaxRatio:(CGPoint)ratio positionOffset:(CGPoint)offset
 {
 	NSAssert( child != nil, @"Argument must be non-nil");
 	CGPointObject *obj = [CGPointObject pointWithCGPoint:ratio offset:offset];

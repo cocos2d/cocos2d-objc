@@ -503,17 +503,17 @@ typedef struct _KerningHashElement
 
 -(void) createFontChars
 {
-	int nextFontPositionX = 0;
-	int nextFontPositionY = 0;
+	NSInteger nextFontPositionX = 0;
+	NSInteger nextFontPositionY = 0;
 	unichar prev = -1;
-	int kerningAmount = 0;
+	NSInteger kerningAmount = 0;
 	
 	CGSize tmpSize = CGSizeZero;
 
-	int longestLine = 0;
-	int totalHeight = 0;
+	NSInteger longestLine = 0;
+	NSUInteger totalHeight = 0;
 	
-	int quantityOfLines = 1;
+	NSUInteger quantityOfLines = 1;
 
 	NSUInteger stringLen = [string_ length];
 	if( ! stringLen )

@@ -96,8 +96,8 @@
 	CCDirector *director = [CCDirector sharedDirector];
 	CGSize s = [director winSizeInPixels];
 	
-	unsigned int POTWide = ccNextPOT(s.width);
-	unsigned int POTHigh = ccNextPOT(s.height);
+	unsigned long POTWide = ccNextPOT(s.width);
+	unsigned long POTHigh = ccNextPOT(s.height);
 	
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 	EAGLView *glview = [[CCDirector sharedDirector] openGLView];
@@ -281,7 +281,7 @@
 
 -(void)blit
 {
-	int n = gridSize_.x * gridSize_.y;
+	NSInteger n = gridSize_.x * gridSize_.y;
 
 	// Default Attribs & States: GL_TEXTURE0, k,CCAttribVertex, kCCAttribColor, kCCAttribTexCoords
 	// Needed states: GL_TEXTURE0, kCCAttribPosition, kCCAttribTexCoords
@@ -307,8 +307,7 @@
 	// texCoods
 	glVertexAttribPointer(kCCAttribTexCoords, 2, GL_FLOAT, GL_FALSE, 0, texCoordinates);
 
-	glDrawElements(GL_TRIANGLES, n*6, GL_UNSIGNED_SHORT, indices);
-	
+	glDrawElements(GL_TRIANGLES, (GLsizei)n*6, GL_UNSIGNED_SHORT, indices);	
 	
 	// Restore
 	glEnableVertexAttribArray( kCCAttribColor );
@@ -335,7 +334,7 @@
 	{
 		for( y = 0; y < gridSize_.y; y++ )
 		{
-			int idx = (y * gridSize_.x) + x;
+			NSInteger idx = (y * gridSize_.x) + x;
 			
 			float x1 = x * step_.x;
 			float x2 = x1 + step_.x;
@@ -382,7 +381,7 @@
 
 -(ccVertex3F)vertex:(ccGridSize)pos
 {
-	int	index = (pos.x * (gridSize_.y+1) + pos.y) * 3;
+	NSInteger index = (pos.x * (gridSize_.y+1) + pos.y) * 3;
 	float *vertArray = (float *)vertices;
 	
 	ccVertex3F	vert = { vertArray[index], vertArray[index+1], vertArray[index+2] };
@@ -392,7 +391,7 @@
 
 -(ccVertex3F)originalVertex:(ccGridSize)pos
 {
-	int	index = (pos.x * (gridSize_.y+1) + pos.y) * 3;
+	NSInteger index = (pos.x * (gridSize_.y+1) + pos.y) * 3;
 	float *vertArray = (float *)originalVertices;
 	
 	ccVertex3F	vert = { vertArray[index], vertArray[index+1], vertArray[index+2] };
@@ -402,7 +401,7 @@
 
 -(void)setVertex:(ccGridSize)pos vertex:(ccVertex3F)vertex
 {
-	int	index = (pos.x * (gridSize_.y+1) + pos.y) * 3;
+	NSInteger index = (pos.x * (gridSize_.y+1) + pos.y) * 3;
 	float *vertArray = (float *)vertices;
 	vertArray[index] = vertex.x;
 	vertArray[index+1] = vertex.y;
@@ -438,7 +437,7 @@
 
 -(void)blit
 {
-	int n = gridSize_.x * gridSize_.y;
+	NSInteger n = gridSize_.x * gridSize_.y;
 	
 	// Default Attribs & States: GL_TEXTURE0, k,CCAttribVertex, kCCAttribColor, kCCAttribTexCoords
 	// Needed states: GL_TEXTURE0, kCCAttribPosition, kCCAttribTexCoords
@@ -466,7 +465,7 @@
 	glVertexAttribPointer(kCCAttribTexCoords, 2, GL_FLOAT, GL_FALSE, 0, texCoordinates);
 
 	
-	glDrawElements(GL_TRIANGLES, n*6, GL_UNSIGNED_SHORT, indices);
+	glDrawElements(GL_TRIANGLES, (GLsizei) n*6, GL_UNSIGNED_SHORT, indices);
 
 	// Restore
 	glEnableVertexAttribArray( kCCAttribColor );
@@ -478,7 +477,7 @@
 	float height = (float)texture_.pixelsHigh;
 	float imageH = texture_.contentSizeInPixels.height;
 	
-	int numQuads = gridSize_.x * gridSize_.y;
+	NSInteger numQuads = gridSize_.x * gridSize_.y;
 	
 	vertices = malloc(numQuads*12*sizeof(GLfloat));
 	originalVertices = malloc(numQuads*12*sizeof(GLfloat));
@@ -548,14 +547,14 @@
 
 -(void)setTile:(ccGridSize)pos coords:(ccQuad3)coords
 {
-	int idx = (gridSize_.y * pos.x + pos.y) * 4 * 3;
+	NSInteger idx = (gridSize_.y * pos.x + pos.y) * 4 * 3;
 	float *vertArray = (float*)vertices;
 	memcpy(&vertArray[idx], &coords, sizeof(ccQuad3));
 }
 
 -(ccQuad3)originalTile:(ccGridSize)pos
 {
-	int idx = (gridSize_.y * pos.x + pos.y) * 4 * 3;
+	NSInteger idx = (gridSize_.y * pos.x + pos.y) * 4 * 3;
 	float *vertArray = (float*)originalVertices;
 	
 	ccQuad3 ret;
@@ -566,7 +565,7 @@
 
 -(ccQuad3)tile:(ccGridSize)pos
 {
-	int idx = (gridSize_.y * pos.x + pos.y) * 4 * 3;
+	NSInteger idx = (gridSize_.y * pos.x + pos.y) * 4 * 3;
 	float *vertArray = (float*)vertices;
 	
 	ccQuad3 ret;
@@ -579,7 +578,7 @@
 {
 	if ( reuseGrid_ > 0 )
 	{
-		int numQuads = gridSize_.x * gridSize_.y;
+		NSInteger numQuads = gridSize_.x * gridSize_.y;
 		
 		memcpy(originalVertices, vertices, numQuads*12*sizeof(GLfloat));
 		reuseGrid_--;

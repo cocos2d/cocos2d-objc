@@ -141,7 +141,7 @@ typedef enum {
 @property (nonatomic,readwrite) BOOL dirty;
 /** the quad (tex coords, vertex coords and color) information */
 @property (nonatomic,readonly) ccV3F_C4B_T2F_Quad quad;
-/** The index used on the TextureATlas. Don't modify this value unless you know what you are doing */
+/** The index used on the TextureAtlas. Don't modify this value unless you know what you are doing */
 @property (nonatomic,readwrite) NSUInteger atlasIndex;
 /** returns the rect of the CCSprite in points */
 @property (nonatomic,readonly) CGRect textureRect;

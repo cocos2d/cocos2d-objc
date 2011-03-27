@@ -110,6 +110,10 @@
 {}
 @end
 
+@interface TexturePVRBadEncoding : TextureDemo
+{}
+@end
+
 @interface TexturePVRMipMap : TextureDemo
 {}
 @end

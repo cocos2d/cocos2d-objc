@@ -68,7 +68,7 @@
 
 -(void) updateAtlasValues
 {
-	int n = [string_ length];
+	NSInteger n = [string_ length];
 	
 	ccV3F_C4B_T2F_Quad quad;
 
@@ -173,7 +173,7 @@
 	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformMVMatrix], 1, GL_FALSE, &mat4[0]);	
 	glUniform1i ( shaderProgram_->uniforms_[kCCUniformSampler], 0 );
 	
-	[textureAtlas_ drawNumberOfQuads: string_.length];
+	[textureAtlas_ drawNumberOfQuads:string_.length fromIndex:0];
 	
 	if( newBlend )
 		glBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);

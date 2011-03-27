@@ -390,7 +390,7 @@
 		CCTMXLayerInfo *layer = [layers_ lastObject];
 		
 		unsigned char *buffer;
-		len = base64Decode((unsigned char*)[currentString UTF8String], [currentString length], &buffer);
+		len = base64Decode((unsigned char*)[currentString UTF8String], (unsigned int) [currentString length], &buffer);
 		if( ! buffer ) {
 			CCLOG(@"cocos2d: TiledMap: decode data error");
 			return;

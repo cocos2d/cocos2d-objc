@@ -1,7 +1,7 @@
 /*
  * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
- * Copyright (c) 2010 Abstraction Works. http://www.abstractionworks.com
+ * Copyright (c) 2010 ForzeField Studios S.L. http://forzefield.com
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -59,22 +59,27 @@ for(id *arr = __array__->data->arr, *end = __array__->data->arr + __array__->dat
 - (id) initWithNSArray:(NSArray*)otherArray;
 
 
+// Querying an Array
+
 - (NSUInteger) count;
 - (NSUInteger) capacity;
 - (NSUInteger) indexOfObject:(id)object;
 - (id) objectAtIndex:(NSUInteger)index;
-- (id) lastObject;
-- (id) randomObject;
 - (BOOL) containsObject:(id)object;
+- (id) randomObject;
+- (id) lastObject;
+- (NSArray*) getNSArray;
 
-#pragma mark Adding Objects
+
+// Adding Objects
 
 - (void) addObject:(id)object;
 - (void) addObjectsFromArray:(CCArray*)otherArray;
 - (void) addObjectsFromNSArray:(NSArray*)otherArray;
 - (void) insertObject:(id)object atIndex:(NSUInteger)index;
 
-#pragma mark Removing Objects
+
+// Removing Objects
 
 - (void) removeLastObject;
 - (void) removeObject:(id)object;
@@ -84,9 +89,17 @@ for(id *arr = __array__->data->arr, *end = __array__->data->arr + __array__->dat
 - (void) fastRemoveObject:(id)object;
 - (void) fastRemoveObjectAtIndex:(NSUInteger)index;
 
+
+// Rearranging Content
+
+- (void) exchangeObject:(id)object1 withObject:(id)object2;
+- (void) exchangeObjectAtIndex:(NSUInteger)index1 withObjectAtIndex:(NSUInteger)index2;
+
+
+// Sending Messages to Elements
+
 - (void) makeObjectsPerformSelector:(SEL)aSelector;
 - (void) makeObjectsPerformSelector:(SEL)aSelector withObject:(id)object;
 
-- (NSArray*) getNSArray;
 
 @end
