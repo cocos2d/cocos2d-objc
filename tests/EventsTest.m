@@ -152,7 +152,7 @@ Class restartAction()
 
 -(BOOL) ccFlagsChanged:(NSEvent*)event
 {
-	NSLog(@"flags changed: 0x%lx", [event modifierFlags] );
+	NSLog(@"flags changed: 0x%x", (unsigned int) [event modifierFlags] );
 	return YES;
 }
 

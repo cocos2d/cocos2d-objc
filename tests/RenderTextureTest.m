@@ -228,6 +228,9 @@ Class restartAction()
 	}
 	// finish drawing and return context back to the screen
 	[target end];
+	
+	// Disable the states, that were turned on manually
+	CC_DISABLE_DEFAULT_GL_STATES();
 }
 
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
@@ -263,6 +266,7 @@ Class restartAction()
 			[brush setRotation:rand()%360];
 			float r = ((float)(rand()%50)/50.f) + 0.25f;
 			[brush setScale:r];
+
 			// Call visit to draw the brush, don't call draw..
 			[brush visit];
 		}
@@ -316,6 +320,10 @@ Class restartAction()
 		
 		// It's possible to modify the RenderTexture blending function by
 //		[[rend sprite] setBlendFunc:(ccBlendFunc) {GL_ONE, GL_ONE_MINUS_SRC_ALPHA}];
+
+		// All cocos2d nodes assumes that these states are enabled.
+		// Since we are drawing outside the "draw" event, we need to turn them on manually
+		CC_ENABLE_DEFAULT_GL_STATES();
 
 		[rend begin];
 		[spr_premulti visit];

@@ -283,13 +283,13 @@ enum {
  If the child is added to a 'running' node, then 'onEnter' and 'onEnterTransitionDidFinish' will be called immediately.
  @since v0.7.1
  */
--(void) addChild: (CCNode*)node z:(int)z;
+-(void) addChild: (CCNode*)node z:(NSInteger)z;
 
 /** Adds a child to the container with z order and tag.
  If the child is added to a 'running' node, then 'onEnter' and 'onEnterTransitionDidFinish' will be called immediately.
  @since v0.7.1
  */
--(void) addChild: (CCNode*)node z:(int)z tag:(int)tag;
+-(void) addChild: (CCNode*)node z:(NSInteger)z tag:(NSInteger)tag;
 
 // composition: REMOVE
 
@@ -307,7 +307,7 @@ enum {
 /** Removes a child from the container by tag value. It will also cleanup all running actions depending on the cleanup parameter
  @since v0.7.1
  */
--(void) removeChildByTag:(int) tag cleanup:(BOOL)cleanup;
+-(void) removeChildByTag:(NSInteger) tag cleanup:(BOOL)cleanup;
 
 /** Removes all children from the container and do a cleanup all running actions depending on the cleanup parameter.
  @since v0.7.1
@@ -319,12 +319,12 @@ enum {
  @return returns a CCNode object
  @since v0.7.1
  */
--(CCNode*) getChildByTag:(int) tag;
+-(CCNode*) getChildByTag:(NSInteger) tag;
 
 /** Reorders a child according to a new z value.
  * The child MUST be already added.
  */
--(void) reorderChild:(CCNode*)child z:(int)zOrder;
+-(void) reorderChild:(CCNode*)child z:(NSInteger)zOrder;
 
 /** performance improvement, Sort the children array once before drawing, instead of every time when a child is added or reordered
  don't call this manually unless a child added needs to be removed in the same frame */
@@ -397,18 +397,18 @@ enum {
 /** Removes an action from the running action list given its tag
  @since v0.7.1
 */
--(void) stopActionByTag:(int) tag;
+-(void) stopActionByTag:(NSInteger) tag;
 /** Gets an action from the running action list given its tag
  @since v0.7.1
  @return the Action the with the given tag
  */
--(CCAction*) getActionByTag:(int) tag;
+-(CCAction*) getActionByTag:(NSInteger) tag;
 /** Returns the numbers of actions that are running plus the ones that are schedule to run (actions in actionsToAdd and actions arrays). 
  * Composable actions are counted as 1 action. Example:
  *    If you are running 1 Sequence of 7 actions, it will return 1.
  *    If you are running 7 Sequences of 2 actions, it will return 7.
  */
--(int) numberOfRunningActions;
+-(NSUInteger) numberOfRunningActions;
 
 // timers
 
@@ -429,7 +429,7 @@ enum {
 
  @since v0.99.3
  */
--(void) scheduleUpdateWithPriority:(int)priority;
+-(void) scheduleUpdateWithPriority:(NSInteger)priority;
 
 /* unschedules the "update" method.
  

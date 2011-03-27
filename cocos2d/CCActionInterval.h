@@ -1,7 +1,7 @@
 /*
  * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
- * Copyright (c) 2008-2010 Ricardo Quesada
+ * Copyright (c) 2008-2011 Ricardo Quesada
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -69,12 +69,14 @@ Example:
  */
 @interface CCSequence : CCActionInterval <NSCopying>
 {
-	CCFiniteTimeAction *actions[2];
-	ccTime split;
-	int last;
+	CCFiniteTimeAction *actions_[2];
+	ccTime split_;
+	int last_;
 }
 /** helper contructor to create an array of sequenceable actions */
 +(id) actions: (CCFiniteTimeAction*) action1, ... NS_REQUIRES_NIL_TERMINATION;
+/** helper contructor to create an array of sequenceable actions given an array */
++(id) actionsWithArray: (NSArray*) actions;
 /** creates the action */
 +(id) actionOne:(CCFiniteTimeAction*)actionOne two:(CCFiniteTimeAction*)actionTwo;
 /** initializes the action */
@@ -87,29 +89,31 @@ Example:
  */
 @interface CCRepeat : CCActionInterval <NSCopying>
 {
-	unsigned int times_;
-	unsigned int total_;
-	CCFiniteTimeAction *other_;
+	NSUInteger times_;
+	NSUInteger total_;
+	CCFiniteTimeAction *innerAction_;
 }
 
-/** Inner action. It will be copied */
-@property (nonatomic,copy) CCFiniteTimeAction *action;
+/** Inner action */
+@property (nonatomic,readwrite,retain) CCFiniteTimeAction *innerAction;
 
-/** creates a CCRepeat action. Times is an unsigned integer between 1 and pow(2,30) */
-+(id) actionWithAction:(CCFiniteTimeAction*)action times: (unsigned int)times;
-/** initializes a CCRepeat action. Times is an unsigned integer between 1 and pow(2,30) */
--(id) initWithAction:(CCFiniteTimeAction*)action times: (unsigned int)times;
+/** creates a CCRepeat action. Times is an unsigned integer between 1 and MAX_UINT */
++(id) actionWithAction:(CCFiniteTimeAction*)action times: (NSUInteger)times;
+/** initializes a CCRepeat action. Times is an unsigned integer between 1 and MAX_UINT */
+-(id) initWithAction:(CCFiniteTimeAction*)action times: (NSUInteger)times;
 @end
 
 /** Spawn a new action immediately
  */
 @interface CCSpawn : CCActionInterval <NSCopying>
 {
-	CCFiniteTimeAction *one;
-	CCFiniteTimeAction *two;
+	CCFiniteTimeAction *one_;
+	CCFiniteTimeAction *two_;
 }
 /** helper constructor to create an array of spawned actions */
 +(id) actions: (CCFiniteTimeAction*) action1, ... NS_REQUIRES_NIL_TERMINATION;
+/** helper contructor to create an array of spawned actions given an array */
++(id) actionsWithArray: (NSArray*) actions;
 /** creates the Spawn action */
 +(id) actionOne: (CCFiniteTimeAction*) one two:(CCFiniteTimeAction*) two;
 /** initializes the Spawn action with the 2 actions to spawn */
@@ -263,12 +267,12 @@ typedef struct _ccBezierConfig {
 */
 @interface CCBlink : CCActionInterval <NSCopying>
 {
-	int times;
+	NSUInteger times_;
 }
 /** creates the action */
-+(id) actionWithDuration: (ccTime)duration blinks:(unsigned int)blinks;
++(id) actionWithDuration: (ccTime)duration blinks:(NSUInteger)blinks;
 /** initilizes the action */
--(id) initWithDuration: (ccTime)duration blinks:(unsigned int)blinks;
+-(id) initWithDuration: (ccTime)duration blinks:(NSUInteger)blinks;
 @end
 
 /** Fades In an object that implements the CCRGBAProtocol protocol. It modifies the opacity from 0 to 255.
@@ -346,7 +350,7 @@ typedef struct _ccBezierConfig {
 */
 @interface CCReverseTime : CCActionInterval <NSCopying>
 {
-	CCFiniteTimeAction * other;
+	CCFiniteTimeAction * other_;
 }
 /** creates the action */
 +(id) actionWithAction: (CCFiniteTimeAction*) action;

@@ -569,7 +569,7 @@ Class restartAction()
 {
 	id sprite = [self getChildByTag:kTagSprite1];
 	
-	int z = [sprite zOrder];
+	NSInteger z = [sprite zOrder];
 	
 	if( z < -1 )
 		dir = 1;
@@ -632,7 +632,7 @@ Class restartAction()
 	id batch = [self getChildByTag:kTagSpriteBatchNode];
 	id sprite = [batch getChildByTag:kTagSprite1];
 	
-	int z = [sprite zOrder];
+	NSInteger z = [sprite zOrder];
 	
 	if( z < -1 )
 		dir = 1;
@@ -676,21 +676,21 @@ Class restartAction()
 		//usually children get sorted before -transform but call sort now to verify order
 		[asmtest sortAllChildren];
 		
-		int prev = -1;
+		NSInteger prev = -1;
 		for(id child in asmtest.children)
 		{
-			int currentIndex = [child atlasIndex];
+			NSUInteger currentIndex = [child atlasIndex];
 			NSAssert( prev == currentIndex-1, @"Child order failed");
-			NSLog(@"children %x - atlasIndex:%d", (NSUInteger)child, currentIndex);
+			NSLog(@"children %x - atlasIndex:%d", (unsigned int)child, (unsigned int) currentIndex);
 			prev = currentIndex;
 		}
 		
 		prev = -1;
 		for(id child in asmtest.descendants)
 		{
-			int currentIndex = [child atlasIndex];
+			NSUInteger currentIndex = [child atlasIndex];
 			NSAssert( prev == currentIndex-1, @"Child order failed");
-			NSLog(@"descendant %x - atlasIndex:%d", (NSUInteger)child, currentIndex);
+			NSLog(@"descendant %x - atlasIndex:%d", (unsigned int)child, (unsigned int) currentIndex);
 			prev = currentIndex;
 		}		
 	}	
@@ -753,7 +753,7 @@ Class restartAction()
 	[node sortAllChildren];
 	
 	CCSprite *child;
-	CCARRAY_FOREACH(node.children,child) NSLog(@"tag %i z %i",child.tag,child.zOrder);
+	CCARRAY_FOREACH(node.children,child) NSLog(@"tag %i z %i",(int)child.tag,(int)child.zOrder);
 	
 }
 
@@ -817,7 +817,7 @@ Class restartAction()
 	
 	[batchNode sortAllChildren];
 	CCSprite* child;
-	CCARRAY_FOREACH(batchNode.descendants,child) NSLog(@"tag %i",child.tag);
+	CCARRAY_FOREACH(batchNode.descendants,child) NSLog(@"tag %i",(int)child.tag);
 	
 }
 

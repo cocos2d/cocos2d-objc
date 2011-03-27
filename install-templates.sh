@@ -96,6 +96,33 @@ copy_base_files(){
 	copy_files external/TouchJSON "$LIBS_DIR"
 }
 
+copy_cocos2d_files(){
+	echo ...copying cocos2d files
+	copy_files cocos2d "$LIBS_DIR"
+    copy_files LICENSE_cocos2d.txt "$LIBS_DIR"
+}
+
+copy_cocosdenshion_files(){
+	echo ...copying CocosDenshion files
+	copy_files CocosDenshion/CocosDenshion "$LIBS_DIR"
+    copy_files LICENSE_CocosDenshion.txt "$LIBS_DIR"
+}
+
+copy_fontlabel_files(){
+	echo ...copying FontLabel files
+	copy_files external/FontLabel "$LIBS_DIR"
+    copy_files LICENSE_FontLabel.txt "$LIBS_DIR"
+}
+
+copy_cocoslive_files(){
+	echo ...copying cocoslive files
+	copy_files cocoslive "$LIBS_DIR"
+
+	echo ...copying TouchJSON files
+	copy_files external/TouchJSON "$LIBS_DIR"
+    copy_files LICENSE_TouchJSON.txt "$LIBS_DIR"
+}
+
 print_template_banner(){
 	echo ''
 	echo ''
@@ -217,11 +244,21 @@ copy_xcode4_project_templates(){
 	DST_DIR="$TEMPLATE_DIR"
     check_dst_dir
 
-	LIBS_DIR="$DST_DIR""cocos2dlib.xctemplate/libs/"
-
+	LIBS_DIR="$DST_DIR""lib_cocos2d.xctemplate/libs/"
     mkdir -p "$LIBS_DIR"
+    copy_cocos2d_files
 
-    copy_base_files
+	LIBS_DIR="$DST_DIR""lib_cocoslive.xctemplate/libs/"
+    mkdir -p "$LIBS_DIR"
+    copy_cocoslive_files
+
+	LIBS_DIR="$DST_DIR""lib_cocosdenshion.xctemplate/libs/"
+    mkdir -p "$LIBS_DIR"
+    copy_cocosdenshion_files
+
+	LIBS_DIR="$DST_DIR""lib_fontlabel.xctemplate/libs/"
+    mkdir -p "$LIBS_DIR"
+    copy_fontlabel_files
 
 	echo ...copying template files
 	copy_files templates/Xcode4_templates/ "$DST_DIR"
@@ -231,22 +268,24 @@ copy_xcode4_project_templates(){
 	print_template_banner "Installing Xcode 4 Chipmunk iOS template"
 
 
-	LIBS_DIR="$DST_DIR""chipmunklib.xctemplate/libs/"
+	LIBS_DIR="$DST_DIR""lib_chipmunk.xctemplate/libs/"
     mkdir -p "$LIBS_DIR"
 
 	echo ...copying Chipmunk files
 	copy_files external/Chipmunk "$LIBS_DIR"
+    copy_files LICENSE_Chipmunk.txt "$LIBS_DIR"
 
 	echo done!
 
 	print_template_banner "Installing Xcode 4 Box2d iOS template"
 
 
-	LIBS_DIR="$DST_DIR""box2dlib.xctemplate/libs/"
+	LIBS_DIR="$DST_DIR""lib_box2d.xctemplate/libs/"
     mkdir -p "$LIBS_DIR"
 
 	echo ...copying Box2d files
 	copy_files external/Box2d/Box2D "$LIBS_DIR"
+    copy_files LICENSE_Box2D.txt "$LIBS_DIR"
 
 	echo done!
 }

@@ -31,7 +31,7 @@
 @interface CCTileMapAtlas (Private)
 -(void) loadTGAfile:(NSString*)file;
 -(void) calculateItemsToRender;
--(void) updateAtlasValueAt:(ccGridSize)pos withValue:(ccColor3B)value withIndex:(int)idx;
+-(void) updateAtlasValueAt:(ccGridSize)pos withValue:(ccColor3B)value withIndex:(NSUInteger)idx;
 @end
 
 
@@ -154,12 +154,12 @@
 	return value;	
 }
 
--(void) updateAtlasValueAt:(ccGridSize)pos withValue:(ccColor3B)value withIndex:(int)idx
+-(void) updateAtlasValueAt:(ccGridSize)pos withValue:(ccColor3B)value withIndex:(NSUInteger)idx
 {
 	ccV3F_C4B_T2F_Quad quad;
 
-	int x = pos.x;
-	int y = pos.y;
+	NSInteger x = pos.x;
+	NSInteger y = pos.y;
 	float row = (value.r % itemsPerRow_);
 	float col = (value.r / itemsPerRow_);
 	

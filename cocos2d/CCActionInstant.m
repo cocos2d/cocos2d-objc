@@ -235,6 +235,9 @@
 #pragma mark CCCallFunc
 
 @implementation CCCallFunc
+
+@synthesize targetCallback = targetCallback_;
+
 +(id) actionWithTarget: (id) t selector:(SEL) s
 {
 	return [[[self alloc] initWithTarget: t selector: s] autorelease];
@@ -243,7 +246,7 @@
 -(id) initWithTarget: (id) t selector:(SEL) s
 {
 	if( (self=[super init]) ) {
-		targetCallback_ = [t retain];
+		self.targetCallback = t;
 		selector_ = s;
 	}
 	return self;
@@ -344,6 +347,7 @@
 @end
 
 @implementation CCCallFuncO
+@synthesize  object = object_;
 
 +(id) actionWithTarget: (id) t selector:(SEL) s object:(id)object
 {
@@ -353,7 +357,7 @@
 -(id) initWithTarget:(id) t selector:(SEL) s object:(id)object
 {
 	if( (self=[super initWithTarget:t selector:s] ) )
-		object_ = [object retain];
+		self.object = object;
 	
 	return self;
 }
