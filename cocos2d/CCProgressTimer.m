@@ -358,6 +358,7 @@ const char kProgressTextureCoords = 0x1e;
 	CGPoint tMax = ccp(sprite_.texture.maxS,sprite_.texture.maxT);
 	
 	unsigned char vIndexes[2] = {0,0};
+	unsigned char index = 0;
 	
 	//	We know vertex data is always equal to the 4 corners
 	//	If we don't have vertex data then we create it here and populate
@@ -381,7 +382,7 @@ const char kProgressTextureCoords = 0x1e;
 			vertexData_[vIndexes[1] = 2].texCoords = (ccTex2F){tMax.x, 0};
 		}
 		
-		unsigned char index = vIndexes[0];
+		index = vIndexes[0];
 		vertexData_[index].vertices = [self vertexFromTexCoord:ccp(vertexData_[index].texCoords.u, vertexData_[index].texCoords.v)];
 		
 		index = vIndexes[1];
@@ -389,13 +390,13 @@ const char kProgressTextureCoords = 0x1e;
 		
 		if (sprite_.flipY || sprite_.flipX) {
 			if (sprite_.flipX) {
-				unsigned char index = vIndexes[0];
+				index = vIndexes[0];
 				vertexData_[index].texCoords.u = tMax.x - vertexData_[index].texCoords.u;
 				index = vIndexes[1];
 				vertexData_[index].texCoords.u = tMax.x - vertexData_[index].texCoords.u;
 			}
 			if(sprite_.flipY){
-				unsigned char index = vIndexes[0];
+				index = vIndexes[0];
 				vertexData_[index].texCoords.v = tMax.y - vertexData_[index].texCoords.v;
 				index = vIndexes[1];
 				vertexData_[index].texCoords.v = tMax.y - vertexData_[index].texCoords.v;
@@ -419,20 +420,20 @@ const char kProgressTextureCoords = 0x1e;
 		vertexData_[vIndexes[1] = 3].texCoords = (ccTex2F){tMax.x, tMax.y*alpha};
 	}
 	
-	unsigned char index = vIndexes[0];
+	index = vIndexes[0];
 	vertexData_[index].vertices = [self vertexFromTexCoord:ccp(vertexData_[index].texCoords.u, vertexData_[index].texCoords.v)];
 	index = vIndexes[1];
 	vertexData_[index].vertices = [self vertexFromTexCoord:ccp(vertexData_[index].texCoords.u, vertexData_[index].texCoords.v)];
 	
 	if (sprite_.flipY || sprite_.flipX) {
 		if (sprite_.flipX) {
-			unsigned char index = vIndexes[0];
+			index = vIndexes[0];
 			vertexData_[index].texCoords.u = tMax.x - vertexData_[index].texCoords.u;
 			index = vIndexes[1];
 			vertexData_[index].texCoords.u = tMax.x - vertexData_[index].texCoords.u;
 		}
 		if(sprite_.flipY){
-			unsigned char index = vIndexes[0];
+			index = vIndexes[0];
 			vertexData_[index].texCoords.v = tMax.y - vertexData_[index].texCoords.v;
 			index = vIndexes[1];
 			vertexData_[index].texCoords.v = tMax.y - vertexData_[index].texCoords.v;

@@ -441,8 +441,8 @@ static 	SEL selUpdate = NULL;
 	
 	// add children recursively
 	CCARRAY_FOREACH(sprite.children, child){
-		NSUInteger index = [self atlasIndexForChild:child atZ: child.zOrder];
-		[self insertChild:child inAtlasAtIndex:index];
+		NSUInteger idx = [self atlasIndexForChild:child atZ: child.zOrder];
+		[self insertChild:child inAtlasAtIndex:idx];
 	}
 }
 
