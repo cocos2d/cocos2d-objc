@@ -312,9 +312,11 @@ Class restartAction()
 		CCLayerColor *background = [CCLayerColor layerWithColor:ccc4(200,200,200,255)];
 		[self addChild:background];
 		
+		// A1
 		CCSprite *spr_premulti = [CCSprite spriteWithFile:@"fire.png"];
 		[spr_premulti setPosition:ccp(16,48)];
 
+		// B1
 		CCSprite *spr_nonpremulti = [CCSprite spriteWithFile:@"fire_rgba8888.pvr"];
 		[spr_nonpremulti setPosition:ccp(16,16)];
 
@@ -325,12 +327,12 @@ Class restartAction()
 		// It's possible to modify the RenderTexture blending function by
 //		[[rend sprite] setBlendFunc:(ccBlendFunc) {GL_ONE, GL_ONE_MINUS_SRC_ALPHA}];
 
-		// All cocos2d nodes assumes that these states are enabled.
-		// Since we are drawing outside the "draw" event, we need to turn them on manually
-		CC_ENABLE_DEFAULT_GL_STATES();
-
 		[rend begin];
+		
+		// A2
 		[spr_premulti visit];
+		
+		// B2
 		[spr_nonpremulti visit];
 		[rend end]; 
 		
@@ -391,7 +393,7 @@ Class restartAction()
 	
 	// Create an EAGLView with a RGB8 color buffer, and a depth buffer of 24-bits
 	EAGLView *glView = [EAGLView viewWithFrame:[window bounds]
-								   pixelFormat:kEAGLColorFormatRGB565
+								   pixelFormat:kEAGLColorFormatRGBA8
 								   depthFormat:GL_DEPTH_COMPONENT24_OES];
 	
 	// attach the openglView to the director
