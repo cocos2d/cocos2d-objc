@@ -138,7 +138,7 @@ Class restartAction()
 		
 		// note that the render texture is a CCNode, and contains a sprite of its texture for convience,
 		// so we can just parent it to the scene like any other CCNode
-		[self addChild:target z:1];
+		[self addChild:target z:-1];
 		
 		// create a brush image to draw into the texture with
 		brush = [[CCSprite spriteWithFile:@"fire.png"] retain];
@@ -152,9 +152,11 @@ Class restartAction()
 		
 		// Save Image menu
 		[CCMenuItemFont setFontSize:16];
-		CCMenuItem *item = [CCMenuItemFont itemFromString:@"Save Image" target:self selector:@selector(saveImage:)];
-		CCMenu *menu = [CCMenu menuWithItems:item, nil];
+		CCMenuItem *item1 = [CCMenuItemFont itemFromString:@"Save Image" target:self selector:@selector(saveImage:)];
+		CCMenuItem *item2 = [CCMenuItemFont itemFromString:@"Clear" target:self selector:@selector(clearImage:)];
+		CCMenu *menu = [CCMenu menuWithItems:item1, item2, nil];
 		[self addChild:menu];
+		[menu alignItemsVertically];
 		[menu setPosition:ccp(s.width-80, s.height-30)];
 	}
 	return self;
@@ -168,6 +170,11 @@ Class restartAction()
 -(NSString*) subtitle
 {
 	return @"Press 'Save Image' to create an snapshot of the render texture";
+}
+
+-(void) clearImage:(id)sender
+{
+	[target clear:CCRANDOM_0_1() g:CCRANDOM_0_1() b:CCRANDOM_0_1() a:CCRANDOM_0_1()];
 }
 
 -(void) saveImage:(id)sender
@@ -222,6 +229,7 @@ Class restartAction()
 			[brush setRotation:rand()%360];
 			float r = ((float)(rand()%50)/50.f) + 0.25f;
 			[brush setScale:r];
+			[brush setColor:ccc3(CCRANDOM_0_1()*127+128, 255, 255) ];
 			// Call visit to draw the brush, don't call draw..
 			[brush visit];
 		}
@@ -277,7 +285,6 @@ Class restartAction()
 	return YES;
 	
 }
-
 #endif // __MAC_OS_X_VERSION_MAX_ALLOWED
 @end
 
@@ -352,7 +359,6 @@ Class restartAction()
 {
 	return @"All images should be equal...";
 }
-
 @end
 
 #pragma mark -
