@@ -227,10 +227,7 @@ Class restartAction()
 		}
 	}
 	// finish drawing and return context back to the screen
-	[target end];
-	
-	// Disable the states, that were turned on manually
-	CC_DISABLE_DEFAULT_GL_STATES();
+	[target end];	
 }
 
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
