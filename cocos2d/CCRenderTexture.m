@@ -30,12 +30,6 @@
 #import "Support/ccUtils.h"
 #import "Support/CCFileUtils.h"
 
-@interface CCRenderTexture (private)
-
-- (void) saveGLstate;
-- (void) restoreGLstate;
-@end
-
 @implementation CCRenderTexture
 
 @synthesize sprite=sprite_;
@@ -114,60 +108,53 @@
 	[super dealloc];
 }
 
-
 -(void)begin
 {
-	// issue #878 save opengl state
-	[self saveGLstate];
-
-	CC_DISABLE_DEFAULT_GL_STATES();
 	// Save the current matrix
 	glPushMatrix();
 	
 	CGSize texSize = [texture_ contentSizeInPixels];
-
+	
+	
 	// Calculate the adjustment ratios based on the old and new projections
 	CGSize size = [[CCDirector sharedDirector] displaySizeInPixels];
 	float widthRatio = size.width / texSize.width;
 	float heightRatio = size.height / texSize.height;
-
+	
+	
 	// Adjust the orthographic propjection and viewport
 	ccglOrtho((float)-1.0 / widthRatio,  (float)1.0 / widthRatio, (float)-1.0 / heightRatio, (float)1.0 / heightRatio, -1,1);
 	glViewport(0, 0, texSize.width, texSize.height);
-
+	
+	
 	glGetIntegerv(CC_GL_FRAMEBUFFER_BINDING, &oldFBO_);
 	ccglBindFramebuffer(CC_GL_FRAMEBUFFER, fbo_);//Will direct drawing to the frame buffer created above
 	
-	CC_ENABLE_DEFAULT_GL_STATES();	
+	// Issue #1145
+	// There is no need to enable the default GL states here
+	// but since CCRenderTexture is mostly used outside the "render" loop
+	// these states needs to be enabled.
+	// Since this bug was discovered in API-freeze (very close of 1.0 release)
+	// This bug won't be fixed to prevent incompatibilities with code.
+	// 
+	// If you understand the above mentioned message, then you can comment the following line
+	// and enable the gl states manually, in case you need them.
+	CC_ENABLE_DEFAULT_GL_STATES();
 }
 
 -(void)beginWithClear:(float)r g:(float)g b:(float)b a:(float)a
 {
-	// issue #878 save opengl state
-	[self saveGLstate];
-	
-	CC_DISABLE_DEFAULT_GL_STATES();
-	// Save the current matrix
-	glPushMatrix();
-	
-	CGSize texSize = [texture_ contentSizeInPixels];
-	
-	// Calculate the adjustment ratios based on the old and new projections
-	CGSize size = [[CCDirector sharedDirector] displaySizeInPixels];
-	float widthRatio = size.width / texSize.width;
-	float heightRatio = size.height / texSize.height;
-	
-	// Adjust the orthographic propjection and viewport
-	ccglOrtho((float)-1.0 / widthRatio,  (float)1.0 / widthRatio, (float)-1.0 / heightRatio, (float)1.0 / heightRatio, -1,1);
-	glViewport(0, 0, texSize.width, texSize.height);
-	
-	glGetIntegerv(CC_GL_FRAMEBUFFER_BINDING, &oldFBO_);
-	ccglBindFramebuffer(CC_GL_FRAMEBUFFER, fbo_);//Will direct drawing to the frame buffer created above
-	
+	[self begin];
+
+	// save clear color
+	GLfloat	clearColor[4];
+	glGetFloatv(GL_COLOR_CLEAR_VALUE,clearColor); 
+
 	glClearColor(r, g, b, a);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	
-	CC_ENABLE_DEFAULT_GL_STATES();
+
+	// restore clear color
+	glClearColor(clearColor[0], clearColor[1], clearColor[2], clearColor[3]);
 }
 
 -(void)end
@@ -177,27 +164,12 @@
 	glPopMatrix();
 	CGSize size = [[CCDirector sharedDirector] displaySizeInPixels];
 	glViewport(0, 0, size.width, size.height);
-	[self restoreGLstate];
-
 }
 
 -(void)clear:(float)r g:(float)g b:(float)b a:(float)a
 {
-	[self begin];
-	glClearColor(r, g, b, a);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
+	[self beginWithClear:r g:g b:b a:a];
 	[self end];
-}
-
--(void) saveGLstate
-{
-	glGetFloatv(GL_COLOR_CLEAR_VALUE,clearColor_); 
-}
-
-- (void) restoreGLstate
-{
-	glClearColor(clearColor_[0], clearColor_[1], clearColor_[2], clearColor_[3]);
 }
 
 #pragma mark RenderTexture - Save Image

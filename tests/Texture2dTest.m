@@ -39,6 +39,7 @@ static NSString *transitions[] = {
 	@"TexturePVRA8",
 	@"TexturePVRI8",
 	@"TexturePVRAI88",
+	@"TexturePVRBadEncoding",
 	@"TexturePNG",
 	@"TextureBMP",
 	@"TextureJPEG",
@@ -812,6 +813,37 @@ Class restartAction()
 	return @"PVR + AI88 Test";
 }
 @end
+
+#pragma mark -
+#pragma mark TexturePVR Bad Encoding
+
+// Image generated using PVRTexTool:
+// http://www.imgtec.com/powervr/insider/powervr-pvrtextool.asp
+
+@implementation TexturePVRBadEncoding
+-(void) onEnter
+{
+	[super onEnter];
+	CGSize s = [[CCDirector sharedDirector] winSize];
+	
+	CCSprite *img = [CCSprite spriteWithFile:@"test_image-bad_encoding.pvr"];
+	if( img ) {
+		img.position = ccp( s.width/2.0f, s.height/2.0f);
+		[self addChild:img];
+	}
+}
+
+-(NSString *) title
+{
+	return @"PVR Unsupported encoding";
+}
+-(NSString *) subtitle
+{
+	return @"You should not see any image";
+}
+
+@end
+
 
 #pragma mark -
 #pragma mark TexturePVR Non Square
@@ -1727,6 +1759,9 @@ Class restartAction()
 	CCDirectorMac *director = (CCDirectorMac*) [CCDirector sharedDirector];
 	[director setResizeMode:kCCDirectorResize_AutoScale];	
 	
+	// Turn on display FPS
+	[director setDisplayFPS:YES];
+
 	CCScene *scene = [CCScene node];
 	[scene addChild: [nextAction() node]];
 	

@@ -54,12 +54,29 @@ class Xcode4Template(object):
                 self.files_to_include.append( currentFile )
 
     #
+    # append the definitions
+    #
+    def append_definition( self, output_body, path, group, dont_index ):
+        output_body.append("\t\t<key>%s</key>" % path )
+
+        output_body.append("\t\t<dict>")
+        if group:
+            output_body.append("\t\t\t<key>Group</key>\n\t\t\t<string>%s</string>" % group)
+
+        output_body.append("\t\t\t<key>Path</key>\n\t\t\t<string>%s</string>" % path )
+
+        if dont_index:
+            output_body.append("\t\t\t<key>TargetIndices</key>\n\t\t\t<array/>")
+
+        output_body.append("\t\t</dict>")
+
+    #
     # Generate the "Definitions" section
     #
     def generate_definitions( self ):
-        output_header = "<key>Definitions</key>"
-        output_dict_open = "<dict>"
-        output_dict_close = "</dict>"
+        output_header = "\t<key>Definitions</key>"
+        output_dict_open = "\t<dict>"
+        output_dict_close = "\t</dict>"
 
         output_body = []
         for path in self.files_to_include:
@@ -76,7 +93,7 @@ class Xcode4Template(object):
                     group = subdirs[self.group_index]
                 else:
                     # error
-                    group = 'Unknown Group'
+                    group = None
 
             # get the extension
             filename = os.path.basename(path)
@@ -85,29 +102,7 @@ class Xcode4Template(object):
             if len(name_extension) == 2:
                 extension = name_extension[1]
 
-            output_body.append("  <key>%s</key>" % path )
-
-            # if extension is in array of ignored extesions,
-            # then add it to the "TargetIndices" == empty group
-            if extension in self.ignore_extensions:
-                output_body.append("""  <dict>
-    <key>Group</key>
-    <string>%s</string>
-    <key>Path</key>
-    <string>%s</string>
-    <key>TargetIndices</key>
-    <array/>
-  </dict>""" % (group, path) )
-
-            # Add it to the correct TargetIndices
-            else:
-                output_body.append("""  <dict>
-    <key>Group</key>
-    <string>%s</string>
-    <key>Path</key>
-    <string>%s</string>
-  </dict>""" % (group, path) )
-
+            self.append_definition( output_body, path, group, extension in self.ignore_extensions )
 
         self.output.append( output_header )
         self.output.append( output_dict_open )
@@ -118,13 +113,13 @@ class Xcode4Template(object):
     # Generates the "Nodes" section
     #
     def generate_nodes( self ):
-        output_header = "<key>Nodes</key>"
-        output_open = "<array>"
-        output_close = "</array>"
+        output_header = "\t<key>Nodes</key>"
+        output_open = "\t<array>"
+        output_close = "\t</array>"
 
         output_body = []
         for path in self.files_to_include:
-            output_body.append("  <string>%s</string>" % path )
+            output_body.append("\t\t<string>%s</string>" % path )
 
         self.output.append( output_header )
         self.output.append( output_open )

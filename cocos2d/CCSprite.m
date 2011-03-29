@@ -623,7 +623,7 @@ struct transformValues_ {
 
 #pragma mark CCSprite - CCNode overrides
 
--(void) addChild:(CCSprite*)child z:(int)z tag:(int) aTag
+-(void) addChild:(CCSprite*)child z:(NSInteger)z tag:(NSInteger) aTag
 {
 	NSAssert( child != nil, @"Argument must be non-nil");
 	
@@ -640,7 +640,7 @@ struct transformValues_ {
 	hasChildren_ = YES;
 }
 
--(void) reorderChild:(CCSprite*)child z:(int)z
+-(void) reorderChild:(CCSprite*)child z:(NSInteger)z
 {
 	NSAssert( child != nil, @"Child must be non-nil");
 	NSAssert( [children_ containsObject:child], @"Child doesn't belong to Sprite" );

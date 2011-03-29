@@ -42,14 +42,14 @@
 	CCTextureAtlas	*textureAtlas_;
 
 	// chars per row
-	int				itemsPerRow_;
+	NSUInteger		itemsPerRow_;
 	// chars per column
-	int				itemsPerColumn_;
+	NSUInteger		itemsPerColumn_;
 		
 	// width of each char
-	int				itemWidth_;
+	NSUInteger		itemWidth_;
 	// height of each char
-	int				itemHeight_;
+	NSUInteger		itemHeight_;
 
 	// blend function
 	ccBlendFunc		blendFunc_;
@@ -74,10 +74,10 @@
 
 
 /** creates a CCAtlasNode  with an Atlas file the width and height of each item measured in points and the quantity of items to render*/
-+(id) atlasWithTileFile:(NSString*)tile tileWidth:(int)w tileHeight:(int)h itemsToRender: (int) c;
++(id) atlasWithTileFile:(NSString*)tile tileWidth:(NSUInteger)w tileHeight:(NSUInteger)h itemsToRender: (NSUInteger) c;
 
 /** initializes an CCAtlasNode  with an Atlas file the width and height of each item measured in points and the quantity of items to render*/
--(id) initWithTileFile:(NSString*)tile tileWidth:(int)w tileHeight:(int)h itemsToRender: (int) c;
+-(id) initWithTileFile:(NSString*)tile tileWidth:(NSUInteger)w tileHeight:(NSUInteger)h itemsToRender: (NSUInteger) c;
 
 /** updates the Atlas (indexed vertex array).
  * Shall be overriden in subclasses

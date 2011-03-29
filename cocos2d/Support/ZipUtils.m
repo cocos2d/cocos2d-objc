@@ -187,7 +187,7 @@ int ccInflateCCZFile(const char *path, unsigned char **out)
 
 	// load file into memory
 	unsigned char *compressed = NULL;
-	int fileLen  = ccLoadFileIntoMemory( path, &compressed );
+	NSInteger fileLen  = ccLoadFileIntoMemory( path, &compressed );
 	if( fileLen < 0 ) {
 		CCLOG(@"cocos2d: Error loading CCZ compressed file");
 	}
