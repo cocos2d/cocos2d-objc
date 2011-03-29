@@ -402,24 +402,6 @@ static CCTextureCache *sharedTextureCache;
     return [textures_ objectForKey:key];    
 }
 
-- (NSString *) keyForTexture: (CCTexture2D *) tex
-{
-    if( ! tex )
-        return nil;
-        
-    [dictLock_ lock];
-        
-    NSArray *keys = [textures_ allKeysForObject:tex];
-    
-    [dictLock_ unlock];
-    
-    if ([keys count])
-    {
-        return [keys objectAtIndex:0];
-    }
-    return nil;
-}
-
 @end
 
 

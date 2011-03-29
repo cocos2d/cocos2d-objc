@@ -29,56 +29,8 @@
 #import "ccMacros.h"
 
 @implementation CCSpriteFrame
-@synthesize rotated = rotated_, offsetInPixels = offsetInPixels_;
+@synthesize rotated = rotated_, offsetInPixels = offsetInPixels_, texture = texture_;
 @synthesize originalSizeInPixels=originalSizeInPixels_;
-@synthesize usesRetainedTexture = usesRetainedTexture_;
-
-@dynamic texture;
-- (CCTexture2D *) texture
-{
-	if (self.usesRetainedTexture)
-		return texture_;
-	
-	return [[CCTextureCache sharedTextureCache] addImage: textureKey_];
-}
-
-- (void) setTexture:(CCTexture2D *) newTexture
-{
-	if (newTexture != texture_)
-	{
-		[texture_ release];
-		texture_ = [newTexture retain];
-		
-		if (texture_)
-		{
-			usesRetainedTexture_ = YES;
-			[textureKey_ release];
-			textureKey_ = nil;
-		}
-	}
-}
-
-@dynamic textureKey;
-- (NSString *) textureKey
-{
-	if (!self.usesRetainedTexture)
-		return textureKey_;
-	
-	return [[CCTextureCache sharedTextureCache] keyForTexture: texture_];
-}
-
-- (void) setTextureKey:(NSString *) newTextureKey
-{
-	if (newTextureKey)
-	{
-		[textureKey_ release];
-		textureKey_ = [newTextureKey copy];
-		
-		usesRetainedTexture_ = NO;
-		[texture_ release];
-		texture_ = nil;
-	}
-}
 
 +(id) frameWithTexture:(CCTexture2D*)texture rect:(CGRect)rect
 {
@@ -99,13 +51,7 @@
 -(id) initWithTexture:(CCTexture2D*)texture rectInPixels:(CGRect)rect rotated:(BOOL)rotated offset:(CGPoint)offset originalSize:(CGSize)originalSize
 {
 	if( (self=[super init]) ) {
-		
-		NSString *key = [[CCTextureCache sharedTextureCache] keyForTexture: texture];
-		if (key)
-			self.textureKey = key;
-		else
-			self.texture = texture;		
-		
+		self.texture = texture;
 		rectInPixels_ = rect;
 		rect_ = CC_RECT_PIXELS_TO_POINTS( rect );
 		rotated_ = rotated;
@@ -129,7 +75,6 @@
 {
 	CCLOGINFO( @"cocos2d: deallocing %@",self);
 	[texture_ release];
-	[textureKey_ release];
 	[super dealloc];
 }
 
