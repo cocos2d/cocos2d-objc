@@ -42,6 +42,17 @@
 -(void) addNewSpriteWithCoords:(CGPoint)p;
 @end
 
+@interface FullScreenIssue1071Test: FullScreenDemo
+{
+	//weak ref
+	CCMenuItemFont *issueTestItem_;
+}
+
+- (void) loadSomethingAsyncInFullscreen: (id) sender;
+
+@end
+
+
 
 
 
