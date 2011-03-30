@@ -54,8 +54,8 @@
 		ribbon_ = [CCRibbon ribbonWithWidth:width_ image:path length:length color:color fade:fade];
 		[self addChild:ribbon_];
 
-		// update ribbon position
-		[self scheduleUpdate];
+		// update ribbon position. Use schedule:interval and not scheduleUpdated. issue #1075
+		[self schedule:@selector(update:) interval:0];
 	}
 	return self;
 }

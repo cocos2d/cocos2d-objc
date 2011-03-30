@@ -545,7 +545,6 @@ int compareInts (const void * a, const void * b)
 			[textureAtlas_ removeQuadAtIndex:atlasIndex];
 
 			// update possible children
-			CCSprite *sprite;
 			CCARRAY_FOREACH(children_, sprite) {
 				NSUInteger ai = [sprite atlasIndex];
 				if( ai >= atlasIndex) {

@@ -5,7 +5,7 @@ version 2.0-alpha XX-Apr-2011
 . [FIX] All: Removed deprecated methods and classes that were scheduled for removal post 1.0
 . [FIX] CCProgressTimer: reverse renamed to reverseDirection in order to prevent possible collision with action#reverse
 
-version 1.0-rc - 28-Mar-2011
+version 1.0-rc - 29-Mar-2011
 . [NEW] Actions: Added the possibility to create a CCSpawn and CCSequence with an NSArray
 . [NEW] CCArray: Added exchangeObject & exchangeObjectAtIndex (issue #1085)
 . [NEW] Templates: Added Xcode4 templates for cocos2d, cocos2d+box2d, cocos2d+chipmunk both for iOS and Mac OS X
@@ -21,7 +21,8 @@ version 1.0-rc - 28-Mar-2011
 . [FIX] Documentation: onExit doxystring improved (issue #1135)
 . [FIX] MenuItemToggle: Don't scale up if it is pressed several times (issue #948)
 . [FIX] ProgressTimer: fixed underflow in setPercentage() (issue #1123)
-. [FIX] RenderTexture: Enable default GL states (but not disable them) (mitigated issue #1145)
+. [FIX] RenderTexture: Only enable default GL states, without disabling them (mitigated issue #1145)
+. [FIX] StreakMotion: fixed flicker introduced in v0.99.x (issue #1075)
 . [FIX] Templates: Don't generate analyze warnings in Xcode4 (issue #1142)
 . [FIX] Xcode: TexturePVR compiles when using cocos2d as an external library (issue #1132)
 . [FIX] Xcode: Added SKIP_INSTALL=YES in libraries for Xcode4 (issue #1137)

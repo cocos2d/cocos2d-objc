@@ -31,11 +31,6 @@
 #import "Support/CCFileUtils.h"
 #import "GLProgram.h"
 
-@interface CCRenderTexture ()
-- (void) saveGLColor;
-- (void) restoreGLColor;
-@end
-
 @implementation CCRenderTexture
 
 @synthesize sprite=sprite_;
@@ -114,19 +109,7 @@
 }
 
 -(void)begin
-{
-	[self beginWithClear:-1 g:-1 b:-1 a:-1];
-}
-
--(void)beginWithClear:(float)r g:(float)g b:(float)b a:(float)a
-{
-	// issue #878 save opengl state
-	if( a != -1 ) {
-		[self saveGLColor];
-		restoreColor_ = YES;
-	} else
-		restoreColor_ = NO;
-	
+{	
 	projectionMatrixBackup_ = ccProjectionMatrix;	
 	
 	CCDirector *director = [CCDirector sharedDirector];
@@ -137,12 +120,7 @@
 	
 	glGetIntegerv(CC_GL_FRAMEBUFFER_BINDING, &oldFBO_);
 	ccglBindFramebuffer(CC_GL_FRAMEBUFFER, fbo_);
-	
-	if( a != -1 ) {
-		glClearColor(r, g, b, a);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	}
-	
+
 	// Issue #1145
 	// There is no need to enable the default GL states here
 	// but since CCRenderTexture is mostly used outside the "render" loop
@@ -155,33 +133,35 @@
 	CC_ENABLE_DEFAULT_GL_STATES();
 }
 
+-(void)beginWithClear:(float)r g:(float)g b:(float)b a:(float)a
+{
+	[self begin];
+
+	// save clear color
+	GLfloat	clearColor[4];
+	glGetFloatv(GL_COLOR_CLEAR_VALUE,clearColor); 
+
+	glClearColor(r, g, b, a);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	// restore clear color
+	glClearColor(clearColor[0], clearColor[1], clearColor[2], clearColor[3]);
+}
+
 -(void)end
 {
 	ccglBindFramebuffer(CC_GL_FRAMEBUFFER, oldFBO_);
-
+	
 	CGSize size = [[CCDirector sharedDirector] displaySizeInPixels];
 	glViewport(0, 0, size.width, size.height);
 	
 	ccProjectionMatrix = projectionMatrixBackup_;
-
-	if( restoreColor_ )
-		[self restoreGLColor];
 }
 
 -(void)clear:(float)r g:(float)g b:(float)b a:(float)a
 {
 	[self beginWithClear:r g:g b:b a:a];
 	[self end];
-}
-
--(void) saveGLColor
-{
-	glGetFloatv(GL_COLOR_CLEAR_VALUE,clearColor_); 
-}
-
-- (void) restoreGLColor
-{
-	glClearColor(clearColor_[0], clearColor_[1], clearColor_[2], clearColor_[3]);
 }
 
 #pragma mark RenderTexture - Save Image
