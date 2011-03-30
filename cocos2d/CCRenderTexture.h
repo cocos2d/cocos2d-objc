@@ -59,9 +59,6 @@ enum
 	CCSprite*			sprite_;
 	
 	GLenum				pixelFormat_;
-	GLfloat				clearColor_[4];
-	BOOL				restoreColor_;
-
 }
 
 /** The CCSprite being used.

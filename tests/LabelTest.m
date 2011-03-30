@@ -988,6 +988,7 @@ Class restartAction()
 {
 	if( (self=[super init]) ) {
 		
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 		CGSize s = [[CCDirector sharedDirector] winSize];
 		
 		// CCLabelBMFont
@@ -997,6 +998,7 @@ Class restartAction()
 		center.position = ccp(s.width/2,150);
 		
 		[self addChild:center];
+#endif // __IPHONE_OS_VERSION_MAX_ALLOWED
 	}
 	
 	return self;
@@ -1009,7 +1011,11 @@ Class restartAction()
 
 -(NSString *) subtitle
 {
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 	return @"Word wrap using CCLabelTTF";
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+	return @"Custom TTF are not supported in Mac OS X";
+#endif
 }
 
 @end

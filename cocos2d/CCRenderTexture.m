@@ -30,11 +30,6 @@
 #import "Support/ccUtils.h"
 #import "Support/CCFileUtils.h"
 
-@interface CCRenderTexture ()
-- (void) saveGLColor;
-- (void) restoreGLColor;
-@end
-
 @implementation CCRenderTexture
 
 @synthesize sprite=sprite_;
@@ -115,44 +110,25 @@
 
 -(void)begin
 {
-	// don't clear the frame buffer
-	[self beginWithClear:-1 g:-1 b:-1 a:-1];
-}
-
--(void)beginWithClear:(float)r g:(float)g b:(float)b a:(float)a
-{
-	if( a != -1 ) {
-		[self saveGLColor];
-		restoreColor_ = YES;
-	} else
-		restoreColor_ = NO;
-	
-
 	// Save the current matrix
 	glPushMatrix();
 	
 	CGSize texSize = [texture_ contentSizeInPixels];
-
-
+	
+	
 	// Calculate the adjustment ratios based on the old and new projections
 	CGSize size = [[CCDirector sharedDirector] displaySizeInPixels];
 	float widthRatio = size.width / texSize.width;
 	float heightRatio = size.height / texSize.height;
-
-
+	
+	
 	// Adjust the orthographic propjection and viewport
 	ccglOrtho((float)-1.0 / widthRatio,  (float)1.0 / widthRatio, (float)-1.0 / heightRatio, (float)1.0 / heightRatio, -1,1);
 	glViewport(0, 0, texSize.width, texSize.height);
-
-
+	
+	
 	glGetIntegerv(CC_GL_FRAMEBUFFER_BINDING, &oldFBO_);
 	ccglBindFramebuffer(CC_GL_FRAMEBUFFER, fbo_);//Will direct drawing to the frame buffer created above
-
-
-	if( a != -1 ) {
-		glClearColor(r, g, b, a);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	}
 	
 	// Issue #1145
 	// There is no need to enable the default GL states here
@@ -166,6 +142,21 @@
 	CC_ENABLE_DEFAULT_GL_STATES();
 }
 
+-(void)beginWithClear:(float)r g:(float)g b:(float)b a:(float)a
+{
+	[self begin];
+
+	// save clear color
+	GLfloat	clearColor[4];
+	glGetFloatv(GL_COLOR_CLEAR_VALUE,clearColor); 
+
+	glClearColor(r, g, b, a);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	// restore clear color
+	glClearColor(clearColor[0], clearColor[1], clearColor[2], clearColor[3]);
+}
+
 -(void)end
 {
 	ccglBindFramebuffer(CC_GL_FRAMEBUFFER, oldFBO_);
@@ -173,25 +164,12 @@
 	glPopMatrix();
 	CGSize size = [[CCDirector sharedDirector] displaySizeInPixels];
 	glViewport(0, 0, size.width, size.height);
-	
-	if( restoreColor_ )
-		[self restoreGLColor];
 }
 
 -(void)clear:(float)r g:(float)g b:(float)b a:(float)a
 {
 	[self beginWithClear:r g:g b:b a:a];
 	[self end];
-}
-
--(void) saveGLColor
-{
-	glGetFloatv(GL_COLOR_CLEAR_VALUE,clearColor_); 
-}
-
-- (void) restoreGLColor
-{
-	glClearColor(clearColor_[0], clearColor_[1], clearColor_[2], clearColor_[3]);
 }
 
 #pragma mark RenderTexture - Save Image
