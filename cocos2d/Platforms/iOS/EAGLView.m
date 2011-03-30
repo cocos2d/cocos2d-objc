@@ -69,7 +69,6 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #import <QuartzCore/QuartzCore.h>
 
 #import "EAGLView.h"
-#import "ES1Renderer.h"
 #import "ES2Renderer.h"
 #import "../../CCDirector.h"
 #import "../../ccMacros.h"

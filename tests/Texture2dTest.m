@@ -1761,6 +1761,9 @@ Class restartAction()
 	CCDirectorMac *director = (CCDirectorMac*) [CCDirector sharedDirector];
 	[director setResizeMode:kCCDirectorResize_AutoScale];	
 	
+	// Turn on display FPS
+	[director setDisplayFPS:YES];
+
 	CCScene *scene = [CCScene node];
 	[scene addChild: [nextAction() node]];
 	

@@ -81,6 +81,9 @@
 		// retained in property
 		self.texture = tex;
 
+		// Re-initialization is not allowed
+		NSAssert(quads_==nil && indices_==nil, @"CCTextureAtlas re-initialization is not allowed");
+		
 		quads_ = calloc( sizeof(quads_[0]) * capacity_, 1 );
 		indices_ = calloc( sizeof(indices_[0]) * capacity_ * 6, 1 );
 		

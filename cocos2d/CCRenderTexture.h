@@ -60,9 +60,7 @@ enum
 	CCSprite*			sprite_;
 	
 	GLenum				pixelFormat_;
-	GLfloat				clearColor_[4];	
-	BOOL				restoreColor_;
-	kmMat4				projectionMatrixBackup_;	
+	kmMat4				projectionMatrixBackup_;
 }
 
 /** The CCSprite being used.
