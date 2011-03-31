@@ -39,6 +39,10 @@
 #import "../../CCScheduler.h"
 #import "../../ccMacros.h"
 
+#import "../../Support/OpenGL_Internal.h"
+#import "../../Support/CGPointExtension.h"
+#import "../../Support/TransformUtils.h"
+
 #pragma mark -
 #pragma mark Director Mac extensions
 
@@ -195,58 +199,31 @@
 
 -(void) setProjection:(ccDirectorProjection)projection
 {
-	CGSize size = winSizeInPixels_;
+	CGSize winSize = winSizeInPixels_;
 	
-	CGPoint offset = CGPointZero;
-	float widthAspect = size.width;
-	float heightAspect = size.height;
+	glViewport(0, 0, winSize.width, winSize.height);
 	
 	
-	if( resizeMode_ == kCCDirectorResize_AutoScale && ! CGSizeEqualToSize(originalWinSize_, CGSizeZero ) ) {
-		
-		size = originalWinSize_;
-
-		float aspect = originalWinSize_.width / originalWinSize_.height;
-		widthAspect = winSizeInPixels_.width;
-		heightAspect = winSizeInPixels_.width / aspect;
-		
-		if( heightAspect > winSizeInPixels_.height ) {
-			widthAspect = winSizeInPixels_.height * aspect;
-			heightAspect = winSizeInPixels_.height;			
-		}
-		
-		winOffset_.x = (winSizeInPixels_.width - widthAspect) / 2;
-		winOffset_.y =  (winSizeInPixels_.height - heightAspect) / 2;
-		
-		offset = winOffset_;
-
-	}
-
 	switch (projection) {
 		case kCCDirectorProjection2D:
-			glViewport(offset.x, offset.y, widthAspect, heightAspect);
-			glMatrixMode(GL_PROJECTION);
-			glLoadIdentity();
-			ccglOrtho(0, size.width, 0, size.height, -1024, 1024);
-			glMatrixMode(GL_MODELVIEW);
-			glLoadIdentity();
+		{
+			kmMat4OrthographicProjection(&ccProjectionMatrix, 0, winSize.width, 0, winSize.height, -1024, 1024);			
 			break;
+		}
 			
 		case kCCDirectorProjection3D:
-			glViewport(offset.x, offset.y, widthAspect, heightAspect);
-			glMatrixMode(GL_PROJECTION);
-			glLoadIdentity();
-			gluPerspective(60, (GLfloat)widthAspect/heightAspect, 0.1f, 1500.0f);
+		{
+			kmMat4 matrixA, matrixB;
+			kmMat4PerspectiveProjection( &matrixA, 60, (GLfloat)winSize.width/winSize.height, 0.5f, 1500.0f);
 			
-			glMatrixMode(GL_MODELVIEW);	
-			glLoadIdentity();
+			kmVec3 eye = kmVec3Make(winSize.width/2, winSize.height/2, [self getZEye] );
+			kmVec3 center = kmVec3Make( winSize.width/2, winSize.height/2, 0 );
+			kmVec3 up = kmVec3Make(0,1,0);
+			kmMat4LookAt(&matrixB, &eye, &center, &up);
 			
-			float eyeZ = size.height * [self getZEye] / winSizeInPixels_.height;
-
-			gluLookAt( size.width/2, size.height/2, eyeZ,
-					  size.width/2, size.height/2, 0,
-					  0.0f, 1.0f, 0.0f);			
+			kmMat4Multiply(&ccProjectionMatrix, &matrixA, &matrixB);
 			break;
+		}
 			
 		case kCCDirectorProjectionCustom:
 			if( projectionDelegate_ )

@@ -39,7 +39,7 @@ Main features
    * Point based: iPhone4 + RetinaDisplay mode compatible
    * Language: objective-c
    * Open Source: Compatible with open and closed source projects
-   * OpenGL ES 1.1 (iOS) / OpenGL 1.5 based (Mac)
+   * OpenGL ES 2.0 (iOS) / OpenGL 2.1 based (Mac)
 
 
 This library does not work with the toolchain, but it should be easy to port it to it.

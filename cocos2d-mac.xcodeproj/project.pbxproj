@@ -462,21 +462,6 @@
 		E0506A8113169AD500EAE33F /* CCShaderCache.m in Sources */ = {isa = PBXBuildFile; fileRef = E0506A7D13169AD500EAE33F /* CCShaderCache.m */; };
 		E0506A8213169AD500EAE33F /* GLProgram.h in Headers */ = {isa = PBXBuildFile; fileRef = E0506A7E13169AD500EAE33F /* GLProgram.h */; };
 		E0506A8313169AD500EAE33F /* GLProgram.m in Sources */ = {isa = PBXBuildFile; fileRef = E0506A7F13169AD500EAE33F /* GLProgram.m */; };
-		E0506A8D13169B0700EAE33F /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0506A8513169B0700EAE33F /* Shaders */; };
-		E0506A8E13169B0700EAE33F /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0506A8513169B0700EAE33F /* Shaders */; };
-		E0506A8F13169B0700EAE33F /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0506A8513169B0700EAE33F /* Shaders */; };
-		E0506A9013169B0700EAE33F /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0506A8513169B0700EAE33F /* Shaders */; };
-		E0506A9113169B0700EAE33F /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0506A8513169B0700EAE33F /* Shaders */; };
-		E0506A9213169B0700EAE33F /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0506A8513169B0700EAE33F /* Shaders */; };
-		E0506A9313169B0700EAE33F /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0506A8513169B0700EAE33F /* Shaders */; };
-		E0506A9413169B0700EAE33F /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0506A8513169B0700EAE33F /* Shaders */; };
-		E0506A9513169B0700EAE33F /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0506A8513169B0700EAE33F /* Shaders */; };
-		E0506A9613169B0700EAE33F /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0506A8513169B0700EAE33F /* Shaders */; };
-		E0506A9713169B0700EAE33F /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0506A8513169B0700EAE33F /* Shaders */; };
-		E0506A9813169B0700EAE33F /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0506A8513169B0700EAE33F /* Shaders */; };
-		E0506A9913169B0700EAE33F /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0506A8513169B0700EAE33F /* Shaders */; };
-		E0506A9A13169B0700EAE33F /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0506A8513169B0700EAE33F /* Shaders */; };
-		E0506A9B13169B0700EAE33F /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0506A8513169B0700EAE33F /* Shaders */; };
 		E076E43E1225C4BE00DE0DA2 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		E076E43F1225C4BE00DE0DA2 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E036A79C121B5C720037C5C6 /* OpenGL.framework */; };
 		E076E4401225C4BE00DE0DA2 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E036A79E121B5C870037C5C6 /* QuartzCore.framework */; };
@@ -3061,6 +3046,37 @@
 		E0D2D560128CB06A00F78C63 /* piece.png in Resources */ = {isa = PBXBuildFile; fileRef = E0D2D55F128CB06A00F78C63 /* piece.png */; };
 		E0D44F3A1291BFFB0094708A /* test_image_rgba4444.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E0D44F381291BFFB0094708A /* test_image_rgba4444.pvr.ccz */; };
 		E0D44F3B1291BFFB0094708A /* test_image_rgba4444.pvr.gz in Resources */ = {isa = PBXBuildFile; fileRef = E0D44F391291BFFB0094708A /* test_image_rgba4444.pvr.gz */; };
+		E0D5D6E5134402B600A7B1B9 /* kazmath.c in Sources */ = {isa = PBXBuildFile; fileRef = E0D5D6E31344028500A7B1B9 /* kazmath.c */; };
+		E0D5D6E6134402B600A7B1B9 /* kazmath.h in Headers */ = {isa = PBXBuildFile; fileRef = E0D5D6E41344028500A7B1B9 /* kazmath.h */; };
+		E0D5D6E8134403D200A7B1B9 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0D5D6E7134403D200A7B1B9 /* Shaders */; };
+		E0D5D6E9134403D200A7B1B9 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0D5D6E7134403D200A7B1B9 /* Shaders */; };
+		E0D5D6EA134403D200A7B1B9 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0D5D6E7134403D200A7B1B9 /* Shaders */; };
+		E0D5D6EB134403D200A7B1B9 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0D5D6E7134403D200A7B1B9 /* Shaders */; };
+		E0D5D6EC134403D200A7B1B9 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0D5D6E7134403D200A7B1B9 /* Shaders */; };
+		E0D5D6ED134403D200A7B1B9 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0D5D6E7134403D200A7B1B9 /* Shaders */; };
+		E0D5D6EE134403D200A7B1B9 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0D5D6E7134403D200A7B1B9 /* Shaders */; };
+		E0D5D6EF134403D200A7B1B9 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0D5D6E7134403D200A7B1B9 /* Shaders */; };
+		E0D5D6F0134403D200A7B1B9 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0D5D6E7134403D200A7B1B9 /* Shaders */; };
+		E0D5D6F1134403D200A7B1B9 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0D5D6E7134403D200A7B1B9 /* Shaders */; };
+		E0D5D6F2134403D200A7B1B9 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0D5D6E7134403D200A7B1B9 /* Shaders */; };
+		E0D5D6F3134403D200A7B1B9 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0D5D6E7134403D200A7B1B9 /* Shaders */; };
+		E0D5D6F4134403D200A7B1B9 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0D5D6E7134403D200A7B1B9 /* Shaders */; };
+		E0D5D6F5134403D200A7B1B9 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0D5D6E7134403D200A7B1B9 /* Shaders */; };
+		E0D5D6F6134403D200A7B1B9 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0D5D6E7134403D200A7B1B9 /* Shaders */; };
+		E0D5D7151344056600A7B1B9 /* CCDirectorIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = E0D5D6FC1344056600A7B1B9 /* CCDirectorIOS.h */; };
+		E0D5D7161344056600A7B1B9 /* CCDirectorIOS.m in Sources */ = {isa = PBXBuildFile; fileRef = E0D5D6FD1344056600A7B1B9 /* CCDirectorIOS.m */; };
+		E0D5D7171344056600A7B1B9 /* CCTouchDelegateProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = E0D5D6FE1344056600A7B1B9 /* CCTouchDelegateProtocol.h */; };
+		E0D5D7181344056600A7B1B9 /* CCTouchDispatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = E0D5D6FF1344056600A7B1B9 /* CCTouchDispatcher.h */; };
+		E0D5D7191344056600A7B1B9 /* CCTouchDispatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = E0D5D7001344056600A7B1B9 /* CCTouchDispatcher.m */; };
+		E0D5D71A1344056600A7B1B9 /* CCTouchHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = E0D5D7011344056600A7B1B9 /* CCTouchHandler.h */; };
+		E0D5D71B1344056600A7B1B9 /* CCTouchHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = E0D5D7021344056600A7B1B9 /* CCTouchHandler.m */; };
+		E0D5D71C1344056600A7B1B9 /* EAGLView.h in Headers */ = {isa = PBXBuildFile; fileRef = E0D5D7031344056600A7B1B9 /* EAGLView.h */; };
+		E0D5D71D1344056600A7B1B9 /* EAGLView.m in Sources */ = {isa = PBXBuildFile; fileRef = E0D5D7041344056600A7B1B9 /* EAGLView.m */; };
+		E0D5D71E1344056600A7B1B9 /* ES2Renderer.h in Headers */ = {isa = PBXBuildFile; fileRef = E0D5D7051344056600A7B1B9 /* ES2Renderer.h */; };
+		E0D5D71F1344056600A7B1B9 /* ES2Renderer.m in Sources */ = {isa = PBXBuildFile; fileRef = E0D5D7061344056600A7B1B9 /* ES2Renderer.m */; };
+		E0D5D7201344056600A7B1B9 /* ESRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = E0D5D7071344056600A7B1B9 /* ESRenderer.h */; };
+		E0D5D7211344056600A7B1B9 /* glu.c in Sources */ = {isa = PBXBuildFile; fileRef = E0D5D7081344056600A7B1B9 /* glu.c */; };
+		E0D5D7221344056600A7B1B9 /* glu.h in Headers */ = {isa = PBXBuildFile; fileRef = E0D5D7091344056600A7B1B9 /* glu.h */; };
 		E0DA427212A03A3C00210ACE /* A Damn Mess.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E076E7A21225EDD000DE0DA2 /* A Damn Mess.ttf */; };
 		E0DA427312A03A3C00210ACE /* Abberancy.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E076E7A31225EDD000DE0DA2 /* Abberancy.ttf */; };
 		E0DA427412A03A3C00210ACE /* Abduction.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E076E7A41225EDD000DE0DA2 /* Abduction.ttf */; };
@@ -3568,14 +3584,11 @@
 		E0506A7D13169AD500EAE33F /* CCShaderCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCShaderCache.m; sourceTree = "<group>"; };
 		E0506A7E13169AD500EAE33F /* GLProgram.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLProgram.h; sourceTree = "<group>"; };
 		E0506A7F13169AD500EAE33F /* GLProgram.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLProgram.m; sourceTree = "<group>"; };
-		E0506A8513169B0700EAE33F /* Shaders */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Shaders; path = Resources/Shaders; sourceTree = "<group>"; };
 		E076E4471225C4BE00DE0DA2 /* MenuTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MenuTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E076E5C01225E97900DE0DA2 /* TransitionTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TransitionTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E076E61C1225EC1E00DE0DA2 /* AUTHORS */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = AUTHORS; sourceTree = "<group>"; };
 		E076E61D1225EC1E00DE0DA2 /* CHANGELOG */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CHANGELOG; sourceTree = "<group>"; };
 		E076E61E1225EC1E00DE0DA2 /* DONORS */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = DONORS; sourceTree = "<group>"; };
-		E076E61F1225EC1E00DE0DA2 /* LICENSE.cocos2d */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.cocos2d; sourceTree = "<group>"; };
-		E076E6201225EC1E00DE0DA2 /* LICENSE.cocosdenshion */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.cocosdenshion; sourceTree = "<group>"; };
 		E076E6211225EC1E00DE0DA2 /* README.mdown */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.mdown; sourceTree = "<group>"; };
 		E076E6221225EC4E00DE0DA2 /* MenuTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MenuTest.h; path = tests/MenuTest.h; sourceTree = "<group>"; };
 		E076E6231225EC4E00DE0DA2 /* MenuTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MenuTest.m; path = tests/MenuTest.m; sourceTree = "<group>"; };
@@ -4005,6 +4018,31 @@
 		E0D2D55F128CB06A00F78C63 /* piece.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = piece.png; sourceTree = "<group>"; };
 		E0D44F381291BFFB0094708A /* test_image_rgba4444.pvr.ccz */ = {isa = PBXFileReference; lastKnownFileType = file; path = test_image_rgba4444.pvr.ccz; sourceTree = "<group>"; };
 		E0D44F391291BFFB0094708A /* test_image_rgba4444.pvr.gz */ = {isa = PBXFileReference; lastKnownFileType = archive.gzip; path = test_image_rgba4444.pvr.gz; sourceTree = "<group>"; };
+		E0D5D6DB1343FAEF00A7B1B9 /* LICENSE_artwork.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE_artwork.txt; sourceTree = "<group>"; };
+		E0D5D6DC1343FAEF00A7B1B9 /* LICENSE_Box2D.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE_Box2D.txt; sourceTree = "<group>"; };
+		E0D5D6DD1343FAEF00A7B1B9 /* LICENSE_Chipmunk.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE_Chipmunk.txt; sourceTree = "<group>"; };
+		E0D5D6DE1343FAEF00A7B1B9 /* LICENSE_cocos2d.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE_cocos2d.txt; sourceTree = "<group>"; };
+		E0D5D6DF1343FAEF00A7B1B9 /* LICENSE_cocosdenshion.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE_cocosdenshion.txt; sourceTree = "<group>"; };
+		E0D5D6E01343FAEF00A7B1B9 /* LICENSE_FontLabel.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE_FontLabel.txt; sourceTree = "<group>"; };
+		E0D5D6E11343FAEF00A7B1B9 /* LICENSE_libpng.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE_libpng.txt; sourceTree = "<group>"; };
+		E0D5D6E21343FAEF00A7B1B9 /* LICENSE_TouchJSON.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE_TouchJSON.txt; sourceTree = "<group>"; };
+		E0D5D6E31344028500A7B1B9 /* kazmath.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = kazmath.c; sourceTree = "<group>"; };
+		E0D5D6E41344028500A7B1B9 /* kazmath.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = kazmath.h; sourceTree = "<group>"; };
+		E0D5D6E7134403D200A7B1B9 /* Shaders */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Shaders; path = Resources/Shaders; sourceTree = "<group>"; };
+		E0D5D6FC1344056600A7B1B9 /* CCDirectorIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCDirectorIOS.h; sourceTree = "<group>"; };
+		E0D5D6FD1344056600A7B1B9 /* CCDirectorIOS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCDirectorIOS.m; sourceTree = "<group>"; };
+		E0D5D6FE1344056600A7B1B9 /* CCTouchDelegateProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTouchDelegateProtocol.h; sourceTree = "<group>"; };
+		E0D5D6FF1344056600A7B1B9 /* CCTouchDispatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTouchDispatcher.h; sourceTree = "<group>"; };
+		E0D5D7001344056600A7B1B9 /* CCTouchDispatcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCTouchDispatcher.m; sourceTree = "<group>"; };
+		E0D5D7011344056600A7B1B9 /* CCTouchHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTouchHandler.h; sourceTree = "<group>"; };
+		E0D5D7021344056600A7B1B9 /* CCTouchHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCTouchHandler.m; sourceTree = "<group>"; };
+		E0D5D7031344056600A7B1B9 /* EAGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EAGLView.h; sourceTree = "<group>"; };
+		E0D5D7041344056600A7B1B9 /* EAGLView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EAGLView.m; sourceTree = "<group>"; };
+		E0D5D7051344056600A7B1B9 /* ES2Renderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ES2Renderer.h; sourceTree = "<group>"; };
+		E0D5D7061344056600A7B1B9 /* ES2Renderer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ES2Renderer.m; sourceTree = "<group>"; };
+		E0D5D7071344056600A7B1B9 /* ESRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESRenderer.h; sourceTree = "<group>"; };
+		E0D5D7081344056600A7B1B9 /* glu.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = glu.c; sourceTree = "<group>"; };
+		E0D5D7091344056600A7B1B9 /* glu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = glu.h; sourceTree = "<group>"; };
 		E0DA434212A03A3C00210ACE /* FullScreenTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FullScreenTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E0DA434812A03AE100210ACE /* FullScreenTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FullScreenTest.m; path = tests/FullScreenTest.m; sourceTree = "<group>"; };
 		E0DA434A12A03B0C00210ACE /* FullScreenTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FullScreenTest.h; path = tests/FullScreenTest.h; sourceTree = "<group>"; };
@@ -4286,8 +4324,14 @@
 				E076EB3E1225F05200DE0DA2 /* RELEASE_NOTES */,
 				E076E61D1225EC1E00DE0DA2 /* CHANGELOG */,
 				E076E61E1225EC1E00DE0DA2 /* DONORS */,
-				E076E61F1225EC1E00DE0DA2 /* LICENSE.cocos2d */,
-				E076E6201225EC1E00DE0DA2 /* LICENSE.cocosdenshion */,
+				E0D5D6DE1343FAEF00A7B1B9 /* LICENSE_cocos2d.txt */,
+				E0D5D6DB1343FAEF00A7B1B9 /* LICENSE_artwork.txt */,
+				E0D5D6DC1343FAEF00A7B1B9 /* LICENSE_Box2D.txt */,
+				E0D5D6DD1343FAEF00A7B1B9 /* LICENSE_Chipmunk.txt */,
+				E0D5D6DF1343FAEF00A7B1B9 /* LICENSE_cocosdenshion.txt */,
+				E0D5D6E01343FAEF00A7B1B9 /* LICENSE_FontLabel.txt */,
+				E0D5D6E11343FAEF00A7B1B9 /* LICENSE_libpng.txt */,
+				E0D5D6E21343FAEF00A7B1B9 /* LICENSE_TouchJSON.txt */,
 				E076E6281225EC7400DE0DA2 /* cocos2d */,
 				E076E4531225C53300DE0DA2 /* Tests */,
 				E076EF801225FF3E00DE0DA2 /* external */,
@@ -4309,7 +4353,7 @@
 				E076EAED1225EE8500DE0DA2 /* main.m */,
 				E076EADC1225EE2B00DE0DA2 /* animations */,
 				E076EADD1225EE2B00DE0DA2 /* Particles */,
-				E0506A8513169B0700EAE33F /* Shaders */,
+				E0D5D6E7134403D200A7B1B9 /* Shaders */,
 				E076EADE1225EE2B00DE0DA2 /* TileMaps */,
 				E076EADF1225EE2B00DE0DA2 /* zwoptex */,
 				E076E78E1225EDD000DE0DA2 /* cocos2d-artwork */,
@@ -4419,9 +4463,10 @@
 		E076E69F1225EC7400DE0DA2 /* Platforms */ = {
 			isa = PBXGroup;
 			children = (
+				E0D5D6FB1344056600A7B1B9 /* iOS */,
+				E076E6B11225EC7400DE0DA2 /* Mac */,
 				E076E6A01225EC7400DE0DA2 /* CCGL.h */,
 				E076E6A11225EC7400DE0DA2 /* CCNS.h */,
-				E076E6B11225EC7400DE0DA2 /* Mac */,
 			);
 			path = Platforms;
 			sourceTree = "<group>";
@@ -4457,6 +4502,8 @@
 				E076E6C31225EC7400DE0DA2 /* ccUtils.h */,
 				E076E6C41225EC7400DE0DA2 /* CGPointExtension.h */,
 				E076E6C51225EC7400DE0DA2 /* CGPointExtension.m */,
+				E0D5D6E31344028500A7B1B9 /* kazmath.c */,
+				E0D5D6E41344028500A7B1B9 /* kazmath.h */,
 				E076E6C61225EC7400DE0DA2 /* OpenGL_Internal.h */,
 				E076E6C71225EC7400DE0DA2 /* TGAlib.h */,
 				E076E6C81225EC7400DE0DA2 /* TGAlib.m */,
@@ -4941,6 +4988,27 @@
 			name = external;
 			sourceTree = "<group>";
 		};
+		E0D5D6FB1344056600A7B1B9 /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				E0D5D6FC1344056600A7B1B9 /* CCDirectorIOS.h */,
+				E0D5D6FD1344056600A7B1B9 /* CCDirectorIOS.m */,
+				E0D5D6FE1344056600A7B1B9 /* CCTouchDelegateProtocol.h */,
+				E0D5D6FF1344056600A7B1B9 /* CCTouchDispatcher.h */,
+				E0D5D7001344056600A7B1B9 /* CCTouchDispatcher.m */,
+				E0D5D7011344056600A7B1B9 /* CCTouchHandler.h */,
+				E0D5D7021344056600A7B1B9 /* CCTouchHandler.m */,
+				E0D5D7031344056600A7B1B9 /* EAGLView.h */,
+				E0D5D7041344056600A7B1B9 /* EAGLView.m */,
+				E0D5D7051344056600A7B1B9 /* ES2Renderer.h */,
+				E0D5D7061344056600A7B1B9 /* ES2Renderer.m */,
+				E0D5D7071344056600A7B1B9 /* ESRenderer.h */,
+				E0D5D7081344056600A7B1B9 /* glu.c */,
+				E0D5D7091344056600A7B1B9 /* glu.h */,
+			);
+			path = iOS;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -5030,6 +5098,15 @@
 				E08AA19B12C262B3000341BD /* MacWindow.h in Headers */,
 				E0506A8013169AD500EAE33F /* CCShaderCache.h in Headers */,
 				E0506A8213169AD500EAE33F /* GLProgram.h in Headers */,
+				E0D5D6E6134402B600A7B1B9 /* kazmath.h in Headers */,
+				E0D5D7151344056600A7B1B9 /* CCDirectorIOS.h in Headers */,
+				E0D5D7171344056600A7B1B9 /* CCTouchDelegateProtocol.h in Headers */,
+				E0D5D7181344056600A7B1B9 /* CCTouchDispatcher.h in Headers */,
+				E0D5D71A1344056600A7B1B9 /* CCTouchHandler.h in Headers */,
+				E0D5D71C1344056600A7B1B9 /* EAGLView.h in Headers */,
+				E0D5D71E1344056600A7B1B9 /* ES2Renderer.h in Headers */,
+				E0D5D7201344056600A7B1B9 /* ESRenderer.h in Headers */,
+				E0D5D7221344056600A7B1B9 /* glu.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5613,7 +5690,7 @@
 				E026450812A59DA7009D04FE /* zwoptex in Resources */,
 				E026450912A59DA7009D04FE /* MainMenu.xib in Resources */,
 				E026450A12A59DA7009D04FE /* icon.icns in Resources */,
-				E0506A9613169B0700EAE33F /* Shaders in Resources */,
+				E0D5D6F1134403D200A7B1B9 /* Shaders in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5814,7 +5891,7 @@
 				E05053F2122D5AE6005B74CB /* zwoptex in Resources */,
 				E05053F3122D5AE6005B74CB /* MainMenu.xib in Resources */,
 				E02A853C129F11BF00341C97 /* icon.icns in Resources */,
-				E0506A9713169B0700EAE33F /* Shaders in Resources */,
+				E0D5D6F2134403D200A7B1B9 /* Shaders in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6015,7 +6092,7 @@
 				E076EB301225EFF200DE0DA2 /* MainMenu.xib in Resources */,
 				E05052B2122D5655005B74CB /* fps_images.png in Resources */,
 				E02A853F129F11BF00341C97 /* icon.icns in Resources */,
-				E0506A9313169B0700EAE33F /* Shaders in Resources */,
+				E0D5D6EE134403D200A7B1B9 /* Shaders in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6216,7 +6293,7 @@
 				E076EAE71225EE2B00DE0DA2 /* zwoptex in Resources */,
 				E02A8539129F11BF00341C97 /* icon.icns in Resources */,
 				E08AA22F12C27E2F000341BD /* MainMenu-NoWindow.xib in Resources */,
-				E0506A9B13169B0700EAE33F /* Shaders in Resources */,
+				E0D5D6F6134403D200A7B1B9 /* Shaders in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6417,7 +6494,7 @@
 				E076EC511225F82200DE0DA2 /* zwoptex in Resources */,
 				E02A853A129F11BF00341C97 /* icon.icns in Resources */,
 				E08AA22C12C27DEA000341BD /* MainMenu-NoWindow.xib in Resources */,
-				E0506A9A13169B0700EAE33F /* Shaders in Resources */,
+				E0D5D6F5134403D200A7B1B9 /* Shaders in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6620,7 +6697,7 @@
 				E0D44F3B1291BFFB0094708A /* test_image_rgba4444.pvr.gz in Resources */,
 				E02A8538129F11BF00341C97 /* icon.icns in Resources */,
 				E08AA22D12C27DEA000341BD /* MainMenu-NoWindow.xib in Resources */,
-				E0506A9913169B0700EAE33F /* Shaders in Resources */,
+				E0D5D6F4134403D200A7B1B9 /* Shaders in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6822,7 +6899,7 @@
 				E076F20B12268A9800DE0DA2 /* MainMenu.xib in Resources */,
 				E0D2D560128CB06A00F78C63 /* piece.png in Resources */,
 				E02A853B129F11BF00341C97 /* icon.icns in Resources */,
-				E0506A9813169B0700EAE33F /* Shaders in Resources */,
+				E0D5D6F3134403D200A7B1B9 /* Shaders in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7023,7 +7100,7 @@
 				E0AC06961228021600EFA814 /* zwoptex in Resources */,
 				E0AC06971228021600EFA814 /* MainMenu.xib in Resources */,
 				E02A8543129F11BF00341C97 /* icon.icns in Resources */,
-				E0506A8D13169B0700EAE33F /* Shaders in Resources */,
+				E0D5D6E8134403D200A7B1B9 /* Shaders in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7224,7 +7301,7 @@
 				E0AC078A122803BC00EFA814 /* zwoptex in Resources */,
 				E0AC078B122803BC00EFA814 /* MainMenu.xib in Resources */,
 				E02A8541129F11BF00341C97 /* icon.icns in Resources */,
-				E0506A8F13169B0700EAE33F /* Shaders in Resources */,
+				E0D5D6EA134403D200A7B1B9 /* Shaders in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7433,7 +7510,7 @@
 				E02A853E129F11BF00341C97 /* icon.icns in Resources */,
 				E0796B5812DF8A8C002442F5 /* futura-48.fnt in Resources */,
 				E0796B5912DF8A8C002442F5 /* futura-48.png in Resources */,
-				E0506A9413169B0700EAE33F /* Shaders in Resources */,
+				E0D5D6EF134403D200A7B1B9 /* Shaders in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7634,7 +7711,7 @@
 				E0B92DBD1226A0C9003FF67E /* zwoptex in Resources */,
 				E0B92DBE1226A0C9003FF67E /* MainMenu.xib in Resources */,
 				E02A853D129F11BF00341C97 /* icon.icns in Resources */,
-				E0506A9513169B0700EAE33F /* Shaders in Resources */,
+				E0D5D6F0134403D200A7B1B9 /* Shaders in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7835,7 +7912,7 @@
 				E0B92EE61226A621003FF67E /* zwoptex in Resources */,
 				E0B92EE71226A621003FF67E /* MainMenu.xib in Resources */,
 				E02A8540129F11BF00341C97 /* icon.icns in Resources */,
-				E0506A9013169B0700EAE33F /* Shaders in Resources */,
+				E0D5D6EB134403D200A7B1B9 /* Shaders in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8036,7 +8113,7 @@
 				E0B92FF81226C0DD003FF67E /* zwoptex in Resources */,
 				E0B92FF91226C0DD003FF67E /* MainMenu.xib in Resources */,
 				E02A8542129F11BF00341C97 /* icon.icns in Resources */,
-				E0506A8E13169B0700EAE33F /* Shaders in Resources */,
+				E0D5D6E9134403D200A7B1B9 /* Shaders in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8243,7 +8320,7 @@
 				E0D2CED212B93736008D5DBB /* larabie-16-hd.png in Resources */,
 				E0D2CED312B93736008D5DBB /* larabie-16.png in Resources */,
 				E0D2CED412B93736008D5DBB /* icon.icns in Resources */,
-				E0506A9113169B0700EAE33F /* Shaders in Resources */,
+				E0D5D6EC134403D200A7B1B9 /* Shaders in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8445,7 +8522,7 @@
 				E0DA433112A03A3C00210ACE /* MainMenu.xib in Resources */,
 				E0DA433212A03A3C00210ACE /* piece.png in Resources */,
 				E0DA433312A03A3C00210ACE /* icon.icns in Resources */,
-				E0506A9213169B0700EAE33F /* Shaders in Resources */,
+				E0D5D6ED134403D200A7B1B9 /* Shaders in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8528,6 +8605,13 @@
 				E08AA19C12C262B3000341BD /* MacWindow.m in Sources */,
 				E0506A8113169AD500EAE33F /* CCShaderCache.m in Sources */,
 				E0506A8313169AD500EAE33F /* GLProgram.m in Sources */,
+				E0D5D6E5134402B600A7B1B9 /* kazmath.c in Sources */,
+				E0D5D7161344056600A7B1B9 /* CCDirectorIOS.m in Sources */,
+				E0D5D7191344056600A7B1B9 /* CCTouchDispatcher.m in Sources */,
+				E0D5D71B1344056600A7B1B9 /* CCTouchHandler.m in Sources */,
+				E0D5D71D1344056600A7B1B9 /* EAGLView.m in Sources */,
+				E0D5D71F1344056600A7B1B9 /* ES2Renderer.m in Sources */,
+				E0D5D7211344056600A7B1B9 /* glu.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8922,7 +9006,7 @@
 				);
 				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
@@ -8939,7 +9023,7 @@
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
