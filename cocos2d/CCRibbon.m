@@ -38,6 +38,7 @@
  */
 
 
+#import "CCDirector.h"
 #import "CCRibbon.h"
 #import "CCTextureCache.h"
 #import "CCTexture2D.h"
@@ -285,7 +286,7 @@
 		if( ! curTime_ ) {
 			ccColor4F color = { color_.r/255.0f, color_.g/255.0f, color_.b/255.0f, color_.a/255.0f };
 			glDisableVertexAttribArray(kCCAttribColor);
-			glVertexAttrib4fv(kCCAttribColor, (CGFloat*)&color);
+			glVertexAttrib4fv(kCCAttribColor, (GLfloat*)&color);
 		}
 		
 		glBindTexture(GL_TEXTURE_2D, [texture_ name]);
