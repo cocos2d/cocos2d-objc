@@ -1,7 +1,7 @@
 // http://www.cocos2d-iphone.org
 
 #ifdef GL_ES
-precision lowp vec2;
+precision lowp float;
 #endif
 
 varying vec2 v_texCoord;
