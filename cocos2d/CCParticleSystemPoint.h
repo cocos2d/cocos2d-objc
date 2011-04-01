@@ -25,40 +25,8 @@
 
 
 #import <Availability.h>
-#import "CCParticleSystem.h"
-
-#define CC_MAX_PARTICLE_SIZE 64
-
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
-
-/** CCParticleSystemPoint is a subclass of CCParticleSystem
- Attributes of a Particle System:
- * All the attributes of Particle System
-
- Features:
-  * consumes small memory: uses 1 vertex (x,y) per particle, no need to assign tex coordinates
-  * size can't be bigger than 64
-  * the system can't be scaled since the particles are rendered using GL_POINT_SPRITE
- 
- Limitations:
-  * On 3rd gen iPhone devices and iPads, this node performs MUCH slower than CCParticleSystemQuad.
- */
-@interface CCParticleSystemPoint : CCParticleSystem
-{	
-	// Array of (x,y,size) 
-	ccPointSprite *vertices;
-	// vertices buffer id
-#if CC_USES_VBO
-	GLuint	verticesID;
-#endif
-}
-@end
-
-#elif __MAC_OS_X_VERSION_MAX_ALLOWED
 
 #import "CCParticleSystemQuad.h"
 
 @interface CCParticleSystemPoint : CCParticleSystemQuad
 @end
-
-#endif
