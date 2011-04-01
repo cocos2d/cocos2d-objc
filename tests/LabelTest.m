@@ -11,6 +11,8 @@
 #import "LabelTest.h"
 static int sceneIdx=-1;
 static NSString *transitions[] = {
+	@"LabelTTFA8Test",
+
 	@"LabelAtlasTest",
 	@"LabelAtlasColorTest",
 	@"Atlas3",
@@ -1019,6 +1021,43 @@ Class restartAction()
 }
 
 @end
+
+#pragma mark -
+#pragma mark LabelTTFA8Test
+
+@implementation LabelTTFA8Test
+-(id) init
+{
+	if( (self=[super init]) ) {
+		
+		CGSize s = [[CCDirector sharedDirector] winSize];
+		
+		CCLayerColor *layer = [CCLayerColor layerWithColor:ccc4(128,128,128,255)];
+		[self addChild:layer z:-10];
+		
+		// CCLabelBMFont
+		CCLabelTTF *label1 = [CCLabelTTF labelWithString:@"Testing A8 Format" fontName:@"Marker Felt" fontSize:48];
+		[self addChild:label1];
+		[label1 setColor:ccRED];
+		[label1 setPosition: ccp(s.width/2, s.height/2)];
+		
+	}
+	
+	return self;
+}
+
+-(NSString*) title
+{
+	return @"Testing A8 Format";
+}
+
+-(NSString *) subtitle
+{
+	return @"You should see RED label in the center of the screen";
+}
+
+@end
+
 
 
 

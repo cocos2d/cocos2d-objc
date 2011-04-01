@@ -347,9 +347,9 @@ const char kCCProgressTextureCoords = 0x4b;
 		vertexData_[1].vertices = [self vertexFromAlphaPoint:topMid];
 		
 		for(int i = 0; i < index; ++i){
-			CGPoint alpha = [self boundaryTexCoord:i];
-			vertexData_[i+2].texCoords = [self textureCoordFromAlphaPoint:alpha];
-			vertexData_[i+2].vertices = [self vertexFromAlphaPoint:alpha];
+			CGPoint alphaPoint = [self boundaryTexCoord:i];
+			vertexData_[i+2].texCoords = [self textureCoordFromAlphaPoint:alphaPoint];
+			vertexData_[i+2].vertices = [self vertexFromAlphaPoint:alphaPoint];
 		}
 	}
 	
