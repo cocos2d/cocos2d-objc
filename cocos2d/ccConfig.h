@@ -196,7 +196,7 @@
 /** @def CC_USE_RGBA32_LABELS_ON_NEON_ARCH
  If enabled, it will use RGBA8888 (32-bit textures) on Neon devices for CCLabelTTF objects.
  If it is disabled, or if it is used on another architecture it will use A8 (8-bit textures).
- On Neon devices, RGBA8888 textures are 6% faster than A8 textures, but then will consule 4x memory.
+ On Neon devices, RGBA8888 textures are 6% faster than A8 textures, but then will consume 4x memory.
  
  This feature is disabled by default.
  
@@ -204,7 +204,7 @@
  
  @since v0.99.5
  */
-#define CC_USE_RGBA32_LABELS_ON_NEON_ARCH 1
+#define CC_USE_RGBA32_LABELS_ON_NEON_ARCH 0
 
 /** @def CC_SPRITE_DEBUG_DRAW
  If enabled, all subclasses of CCSprite will draw a bounding box

@@ -50,9 +50,10 @@ enum {
 
 extern GLint ccUniforms[kCCUniform_MAX];
 
-#define kCCShader_PositionTextureColor	@"ShaderPositionTextureColor"
-#define kCCShader_PositionColor			@"ShaderPositionColor"
-#define kCCShader_PositionTexture		@"ShaderPositionTexture"
+#define kCCShader_PositionTextureColor		@"ShaderPositionTextureColor"
+#define kCCShader_PositionColor				@"ShaderPositionColor"
+#define kCCShader_PositionTexture			@"ShaderPositionTexture"
+#define kCCShader_PositionTextureA8Color	@"ShaderPositionTextureA8Color"
 
 // uniform names
 #define kCCUniformMVMatrix_s			"u_MVMatrix"

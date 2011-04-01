@@ -113,3 +113,8 @@
 }
 @end
 
+@interface LabelTTFA8Test : AtlasDemo
+{
+}
+@end
+
