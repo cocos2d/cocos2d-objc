@@ -11,8 +11,6 @@
 #import "LabelTest.h"
 static int sceneIdx=-1;
 static NSString *transitions[] = {
-	@"LabelTTFA8Test",
-
 	@"LabelAtlasTest",
 	@"LabelAtlasColorTest",
 	@"Atlas3",
@@ -28,6 +26,7 @@ static NSString *transitions[] = {
 	@"LabelGlyphDesigner",
 	@"LabelTTFTest",
 	@"LabelTTFMultiline",
+	@"LabelTTFA8Test",
 	
 	// Not a label test. Should be moved to Atlas test
 	@"Atlas1",
@@ -1041,6 +1040,11 @@ Class restartAction()
 		[label1 setColor:ccRED];
 		[label1 setPosition: ccp(s.width/2, s.height/2)];
 		
+		CCFadeOut *fadeOut = [CCFadeOut actionWithDuration:2];
+		CCFadeIn *fadeIn = [CCFadeIn actionWithDuration:2];
+		CCSequence *seq = [CCSequence actions:fadeOut, fadeIn, nil];
+		CCRepeatForever *forever = [CCRepeatForever actionWithAction:seq];
+		[label1 runAction:forever];
 	}
 	
 	return self;
@@ -1053,7 +1057,7 @@ Class restartAction()
 
 -(NSString *) subtitle
 {
-	return @"You should see RED label in the center of the screen";
+	return @"RED label, fading In and Out in the center of the screen";
 }
 
 @end
