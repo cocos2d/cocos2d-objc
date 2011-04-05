@@ -48,6 +48,7 @@
 	CCTexture2D			*texture_;
 #if CC_USES_VBO
 	GLuint				buffersVBO_[2]; //0: vertex  1: indices
+	BOOL				dirty_; //indicates whether or not the array buffer of the VBO needs to be updated
 #endif // CC_USES_VBO
 }
 
@@ -116,7 +117,6 @@
  @since v0.7.2
  */
 -(void) removeAllQuads;
- 
 
 /** resize the capacity of the CCTextureAtlas.
  * The new capacity can be lower or higher than the current one
