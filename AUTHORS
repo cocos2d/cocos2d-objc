@@ -137,6 +137,8 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		FastDirector doesn't leak autorelease pool patch
 	* Greg Lington (https://github.com/greglington)
 		Added support for Touches in Mac. patch.
+	* Greg Woods:
+		Added Test case for bug 1159
 	* haikusw:
 		Action blink doesn't set frame as invisible when the action finishes. patch.
 	* hamm.hans:
