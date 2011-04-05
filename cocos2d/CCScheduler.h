@@ -110,6 +110,8 @@ struct _hashUpdateEntry;
 	// Optimization
 	TICK_IMP			impMethod;
 	SEL					updateSelector;
+    
+    BOOL updateHashLocked; // If true unschedule will not remove anything from a hash. Elements will only be marked for deletion.
 }
 
 /** Modifies the time of all scheduled callbacks.

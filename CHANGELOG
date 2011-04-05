@@ -1,3 +1,7 @@
+version 1.0-rc2 - XX-Apr-2011
+. [FIX] Scheduler: Fixed possible crash when unscheduling a sibling
+. [FIX] TextureAtlas: Render "static" VBO batches between 6~10 % faster.
+
 version 1.0-rc - 29-Mar-2011
 . [NEW] Actions: Added the possibility to create a CCSpawn and CCSequence with an NSArray
 . [NEW] CCArray: Added exchangeObject & exchangeObjectAtIndex (issue #1085)
