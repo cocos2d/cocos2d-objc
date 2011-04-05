@@ -298,6 +298,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		RenderTexture: getUIImageFromBuffer supports RetinaDisplay. patch.
 		CCArray: check for bounds in insertObjectAtIndex. patch.
 		TextureAtlas: added the possibility to draw the Quads in parts
+		TextureAtlas: Render "static" VBO batches between 6~10% faster. patch.
 	* marcu.catalin:
 		Menu items are not consumed is items are not visible
 	* Mark Cooke:
@@ -455,8 +456,9 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Fixed artifacts in PageTurnTransition
 	* TheArsenik:
 		added BezierTo action
-	* thoechsm:
+	* Thomas Hoechsmann (Zombie) (http://www.gamedrs.com)
 		update the VBO buffer with only the needed particles
+		Fixed possible crash in Scheduler when unscheduling a sibling
 	* Thomas Visser:
 		MenuItem#rect works with anchorPoint
 	* UD7 Studios (http://ud7.com)
