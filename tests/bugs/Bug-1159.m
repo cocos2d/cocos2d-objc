@@ -16,6 +16,8 @@
     CCScene *scene = [CCScene node];
     Bug1159 *layer = [self node];
 	[scene addChild:layer];
+	
+//	scene.scale = 1.5f;
     return scene;
 }
 
@@ -84,7 +86,7 @@
 	
 	// Create an EAGLView with a RGB8 color buffer, and a depth buffer of 24-bits
     EAGLView *glView = [EAGLView viewWithFrame:[window bounds]
-								   pixelFormat:kEAGLColorFormatRGBA8
+								   pixelFormat:kEAGLColorFormatRGB565
 								   depthFormat:GL_DEPTH_COMPONENT24_OES];
 	
 	// attach the openglView to the director
