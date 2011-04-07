@@ -25,12 +25,15 @@
 {
     if ((self = [super init]))
 	{
-		CCSprite *background = [CCSprite spriteWithFile:@"bugs/1159-background.png"];
-		background.position = ccp(512.0, 384.0);
+		CGSize s = [[CCDirector sharedDirector] winSize];
+
+		CCLayerColor *background = [CCLayerColor layerWithColor:ccc4(255, 0, 255, 255)];
 		[self addChild:background];
 		
-		CCSprite *sprite_a = [CCSprite spriteWithFile:@"bugs/1159-sprite_a.png"];
-		sprite_a.position = ccp(0.0, 384.0);
+		CCLayerColor *sprite_a = [CCLayerColor layerWithColor:ccc4(255, 0, 0, 255) width:700 height:700];
+		sprite_a.anchorPoint = ccp(0.5f, 0.5f);
+		[sprite_a setIsRelativeAnchorPoint:YES];
+		sprite_a.position = ccp(0.0, s.height/2);
 		[self addChild:sprite_a];
 		
 		[sprite_a runAction:[CCRepeatForever actionWithAction:[CCSequence actions:
@@ -38,15 +41,17 @@
 															   [CCMoveTo actionWithDuration:1.0 position:ccp(0.0, 384.0)],
 															   nil]]];
 		
-		CCSprite *sprite_b = [CCSprite spriteWithFile:@"bugs/1159-sprite_b.png"];
-		sprite_b.position = ccp(512.0, 384.0);
+		CCLayerColor *sprite_b = [CCLayerColor layerWithColor:ccc4(0, 0, 255, 255) width:400 height:400];
+		sprite_b.anchorPoint = ccp(0.5f, 0.5f);
+		[sprite_b setIsRelativeAnchorPoint:YES];
+		sprite_b.position = ccp(s.width/2, s.height/2);
 		[self addChild:sprite_b];
 		
 		CCMenuItemLabel *label = [CCMenuItemLabel itemWithLabel:[CCLabelTTF labelWithString:@"Flip Me"
 																				   fontName:@"Helvetica"
 																				   fontSize:24]
 														  block:^(id sender){
-															  [self doPageFlip];
+															  [[CCDirector sharedDirector] replaceScene:[CCTransitionPageTurn transitionWithDuration:1.0 scene:[Bug1159 scene]]];
 														  }
 								  ];
 		CCMenu *menu = [CCMenu menuWithItems:label, nil];
@@ -54,11 +59,6 @@
 		[self addChild:menu];
 	}
 	return self;
-}
-
--(void)doPageFlip
-{
-	[[CCDirector sharedDirector] replaceScene:[CCTransitionPageTurn transitionWithDuration:1.0 scene:[Bug1159 scene]]];
 }
 
 @end
@@ -86,7 +86,7 @@
 	
 	// Create an EAGLView with a RGB8 color buffer, and a depth buffer of 24-bits
     EAGLView *glView = [EAGLView viewWithFrame:[window bounds]
-								   pixelFormat:kEAGLColorFormatRGB565
+								   pixelFormat:kEAGLColorFormatRGBA8
 								   depthFormat:GL_DEPTH_COMPONENT24_OES];
 	
 	// attach the openglView to the director
