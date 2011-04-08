@@ -43,8 +43,8 @@ typedef struct _listEntry
 	TICK_IMP	impMethod;
 	id			target;				// not retained (retained by hashUpdateEntry)
 	NSInteger	priority;
-	BOOL		paused;
-	
+	BOOL		paused;	
+    BOOL    markedForDeletion;		// selector will no longer be called and entry will be removed at end of the next tick
 } tListEntry;
 
 typedef struct _hashUpdateEntry
@@ -198,6 +198,7 @@ static CCScheduler *sharedScheduler;
 		currentTarget = nil;
 		currentTargetSalvaged = NO;
 		hashForSelectors = nil;
+        updateHashLocked = NO;
 	}
 
 	return self;
@@ -323,7 +324,7 @@ static CCScheduler *sharedScheduler;
 	listElement->paused = paused;
 	listElement->impMethod = (TICK_IMP) [target methodForSelector:updateSelector];
 	listElement->next = listElement->prev = NULL;
-	
+    listElement->markedForDeletion = NO;
 	
 	// empty list ?
 	if( ! *list ) {
@@ -369,6 +370,7 @@ static CCScheduler *sharedScheduler;
 	
 	listElement->target = target;
 	listElement->paused = paused;
+    listElement->markedForDeletion = NO;
 	listElement->impMethod = (TICK_IMP) [target methodForSelector:updateSelector];
 	
 	DL_APPEND(*list, listElement);
@@ -384,11 +386,18 @@ static CCScheduler *sharedScheduler;
 
 -(void) scheduleUpdateForTarget:(id)target priority:(NSInteger)priority paused:(BOOL)paused
 {
-#if COCOS2D_DEBUG >= 1
 	tHashUpdateEntry * hashElement = NULL;
 	HASH_FIND_INT(hashForUpdates, &target, hashElement);
-	NSAssert( hashElement == NULL, @"CCScheduler: You can't re-schedule an 'update' selector'. Unschedule it first");
+    if(hashElement)
+    {
+#if COCOS2D_DEBUG >= 1        
+        NSAssert( hashElement->entry->markedForDeletion, @"CCScheduler: You can't re-schedule an 'update' selector'. Unschedule it first");
 #endif	
+        // TODO : check if priority has changed!
+        
+        hashElement->entry->markedForDeletion = NO;
+        return;
+    }
 		
 	// most of the updates are going to be 0, that's way there
 	// is an special list for updates with priority 0
@@ -402,6 +411,23 @@ static CCScheduler *sharedScheduler;
 		[self priorityIn:&updatesPos target:target priority:priority paused:paused];
 }
 
+- (void) removeUpdateFromHash:(tListEntry*)entry
+{
+    tHashUpdateEntry * element = NULL;
+    
+    HASH_FIND_INT(hashForUpdates, &entry->target, element);
+    if( element ) {
+        // list entry
+        DL_DELETE( *element->list, element->entry );
+        free( element->entry );
+        
+        // hash entry
+        [element->target release];
+        HASH_DEL( hashForUpdates, element);
+        free(element);
+    }
+}
+
 -(void) unscheduleUpdateForTarget:(id)target
 {
 	if( target == nil )
@@ -409,16 +435,20 @@ static CCScheduler *sharedScheduler;
 	
 	tHashUpdateEntry * element = NULL;
 	HASH_FIND_INT(hashForUpdates, &target, element);
-	if( element ) {
-	
-		// list entry
-		DL_DELETE( *element->list, element->entry );
-		free( element->entry );
-	
-		// hash entry
-		[element->target release];
-		HASH_DEL( hashForUpdates, element);
-		free(element);
+	if( element ) {    
+        if(updateHashLocked)
+            element->entry->markedForDeletion = YES;
+        else
+            [self removeUpdateFromHash:element->entry];
+        
+//		// list entry
+//		DL_DELETE( *element->list, element->entry );
+//		free( element->entry );
+//	
+//		// hash entry
+//		[element->target release];
+//		HASH_DEL( hashForUpdates, element);
+//		free(element);
 	}
 }
 
@@ -516,6 +546,8 @@ static CCScheduler *sharedScheduler;
 
 -(void) tick: (ccTime) dt
 {
+    updateHashLocked = YES;
+    
 	if( timeScale_ != 1.0f )
 		dt *= timeScale_;
 	
@@ -524,19 +556,21 @@ static CCScheduler *sharedScheduler;
 
 	// updates with priority < 0
 	DL_FOREACH_SAFE( updatesNeg, entry, tmp ) {
-		if( ! entry->paused )
+		if( ! entry->paused && !entry->markedForDeletion )
 			entry->impMethod( entry->target, updateSelector, dt );
 	}
 
 	// updates with priority == 0
 	DL_FOREACH_SAFE( updates0, entry, tmp ) {
-		if( ! entry->paused )
+		if( ! entry->paused && !entry->markedForDeletion )
+        {
 			entry->impMethod( entry->target, updateSelector, dt );
+        }
 	}
 	
 	// updates with priority > 0
 	DL_FOREACH_SAFE( updatesPos, entry, tmp ) {
-		if( ! entry->paused )
+		if( ! entry->paused  && !entry->markedForDeletion )
 			entry->impMethod( entry->target, updateSelector, dt );
 	}
 	
@@ -575,8 +609,33 @@ static CCScheduler *sharedScheduler;
 			[self removeHashElement:currentTarget];		
 	}
 	
+    // delete all updates that are morked for deletion
+    // updates with priority < 0
+	DL_FOREACH_SAFE( updatesNeg, entry, tmp ) {
+		if(entry->markedForDeletion )
+        {
+            [self removeUpdateFromHash:entry];
+        }
+	}
+    
+	// updates with priority == 0
+	DL_FOREACH_SAFE( updates0, entry, tmp ) {
+		if(entry->markedForDeletion )
+        {
+            [self removeUpdateFromHash:entry];
+        }
+	}
+	
+	// updates with priority > 0
+	DL_FOREACH_SAFE( updatesPos, entry, tmp ) {
+		if(entry->markedForDeletion )
+        {
+            [self removeUpdateFromHash:entry];
+        }
+	}
+
+    updateHashLocked = NO;
 	currentTarget = nil;
 }
-
 @end
 

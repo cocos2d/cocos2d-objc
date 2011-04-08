@@ -202,17 +202,22 @@ CGFloat	__ccContentScaleFactor = 1;
 			break;
 			
 		case kCCDirectorProjection3D:
+		{
+			float zeye = [self getZEye];
+
 			glViewport(0, 0, size.width, size.height);
 			glMatrixMode(GL_PROJECTION);
 			glLoadIdentity();
-			gluPerspective(60, (GLfloat)size.width/size.height, 0.5f, 1500.0f);
-			
+//			gluPerspective(60, (GLfloat)size.width/size.height, zeye-size.height/2, zeye+size.height/2 );
+			gluPerspective(60, (GLfloat)size.width/size.height, 0.5f, 1500);
+
 			glMatrixMode(GL_MODELVIEW);	
 			glLoadIdentity();
-			gluLookAt( size.width/2, size.height/2, [self getZEye],
+			gluLookAt( size.width/2, size.height/2, zeye,
 					  size.width/2, size.height/2, 0,
-					  0.0f, 1.0f, 0.0f);			
+					  0.0f, 1.0f, 0.0f);
 			break;
+		}
 			
 		case kCCDirectorProjectionCustom:
 			if( projectionDelegate_ )
