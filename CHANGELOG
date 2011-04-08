@@ -4,6 +4,7 @@ version 1.0-rc2 - XX-Apr-2011
 . [FIX] Templates: Xcode 3 templates fixed. Removed unused files in cocos2d lib. Added missing files from TouchJSON
 . [FIX] Templates: ARMv6 devices uses "none" autorotation to improve speed
 . [FIX] Templates: Added Xcode 4 "File" templates both for iOS and Mac OS X
+. [FIX] Templates: Uses CFBundleIconFiles in Info.plist instead of "Icon Files" (issue #1151)
 . [FIX] TextureAtlas: Render "static" VBO batches between 6~10 % faster (issue #1150)
 
 version 1.0-rc - 29-Mar-2011
