@@ -60,7 +60,7 @@ check_dst_dir(){
 	if [[ -d $DST_DIR ]];  then
 		if [[ $force ]]; then
 			echo "removing old libraries: ${DST_DIR}"
-			rm -rf $DST_DIR
+			rm -rf "$DST_DIR"
 		else
 			echo "templates already installed. To force a re-install use the '-f' parameter"
 			exit 1
@@ -287,6 +287,19 @@ copy_xcode4_project_templates(){
 	copy_files external/Box2d/Box2D "$LIBS_DIR"
     copy_files LICENSE_Box2D.txt "$LIBS_DIR"
 
+	echo done!
+
+
+    # Move File Templates to correct position
+	DST_DIR="$HOME/Library/Developer/Xcode/Templates/File Templates/cocos2d/"
+	OLD_DIR="$HOME/Library/Developer/Xcode/Templates/cocos2d/"
+	
+	print_template_banner "Installing CCNode file templates..."
+
+    check_dst_dir
+	
+	mv -f "$OLD_DIR""/CCNode class.xctemplate" "$DST_DIR"
+	
 	echo done!
 }
 
