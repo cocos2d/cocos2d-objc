@@ -13,6 +13,8 @@
 static int sceneIdx=-1;
 static NSString *transitions[] = {	
 
+    @"TMXGIDObjectsTest",
+    
 	@"TMXIsoZorder",
 	@"TMXOrthoZorder",
 	@"TMXIsoVertexZ",
@@ -30,6 +32,7 @@ static NSString *transitions[] = {
 	@"TMXTilesetTest",
 	@"TMXOrthoObjectsTest",
 	@"TMXIsoObjectsTest",
+    @"TMXGIDObjectsTest",
 	@"TMXTilePropertyTest",
 	@"TMXResizeTest",
 	@"TMXIsoMoveLayer",
@@ -679,8 +682,8 @@ Class restartAction()
 		[self schedule:@selector(removeTiles:) interval:1];
 		
 		
-		NSLog(@"++++atlas quantity: %lu", [[layer textureAtlas] totalQuads]);
-		NSLog(@"++++children: %lu", [[layer children] count]);
+		NSLog(@"++++atlas quantity: %u", (unsigned int) [[layer textureAtlas] totalQuads]);
+		NSLog(@"++++children: %u", (unsigned int) [[layer children] count]);
 		
 		gid2 = 0;
 		
@@ -693,7 +696,7 @@ Class restartAction()
 	NSLog(@"removing tile: %@", sender);
 	id p = [sender parent];
 	[p removeChild:sender cleanup:YES];
-	NSLog(@"atlas quantity: %lu", [[p textureAtlas] totalQuads]);
+	NSLog(@"atlas quantity: %u", (unsigned int) [[p textureAtlas] totalQuads]);
 }
 
 -(void) updateCol:(ccTime)dt
@@ -701,8 +704,8 @@ Class restartAction()
 	id map = [self getChildByTag:kTagTileMap];
 	CCTMXLayer *layer = (CCTMXLayer*) [map getChildByTag:0];
 		
-	NSLog(@"++++atlas quantity: %lu", [[layer textureAtlas] totalQuads]);
-	NSLog(@"++++children: %lu", [[layer children] count]);
+	NSLog(@"++++atlas quantity: %u", (unsigned int) [[layer textureAtlas] totalQuads]);
+	NSLog(@"++++children: %u", (unsigned int) [[layer children] count]);
 
 
 	CGSize s = [layer layerSize];
@@ -893,6 +896,64 @@ Class restartAction()
 	return @"You need to parse them manually. See bug #810";
 }
 @end
+
+#pragma mark -
+#pragma mark TMXGIDObjectsTest
+
+@implementation TMXGIDObjectsTest
+-(id) init
+{
+	if( (self=[super init]) ) {
+		
+		CCTMXTiledMap *map = [CCTMXTiledMap tiledMapWithTMXFile:@"TileMaps/test-object-layer.tmx"];
+		[self addChild:map z:-1 tag:kTagTileMap];
+		
+		CGSize s = map.contentSize;
+		NSLog(@"ContentSize: %f, %f", s.width,s.height);
+		
+		NSLog(@"----> Iterating over all the group objets");
+		CCTMXObjectGroup *group = [map objectGroupNamed:@"Object Group 1"];
+		for( NSDictionary *dict in group.objects) {
+			NSLog(@"object: %@", dict);
+		}
+	}	
+	return self;
+}
+
+-(void) draw
+{
+	CCTMXTiledMap *map = (CCTMXTiledMap*) [self getChildByTag:kTagTileMap];
+	CCTMXObjectGroup *group = [map objectGroupNamed:@"Object Group 1"];
+	for( NSDictionary *dict in group.objects) {
+		int x = [[dict objectForKey:@"x"] intValue];
+		int y = [[dict objectForKey:@"y"] intValue];
+		int width = [[dict objectForKey:@"width"] intValue];
+		int height = [[dict objectForKey:@"height"] intValue];
+		
+		glLineWidth(3);
+		
+		ccDrawLine( ccp(x,y), ccp(x+width,y) );
+		ccDrawLine( ccp(x+width,y), ccp(x+width,y+height) );
+		ccDrawLine( ccp(x+width,y+height), ccp(x,y+height) );
+		ccDrawLine( ccp(x,y+height), ccp(x,y) );
+        
+		
+		glLineWidth(1);
+	}
+}
+
+-(NSString *) title
+{
+	return @"TMX GID objects";
+}
+
+-(NSString*) subtitle
+{
+	return @"Tiles are created from an object group";
+}
+@end
+
+
 #pragma mark -
 #pragma mark TMXTilePropertyTest
 
@@ -1508,6 +1569,8 @@ Class restartAction()
 	// Run all the test with 2d projection
 	//
 	[director setProjection:kCCDirectorProjection2D];
+    
+    [director setDisplayFPS:YES];
 	
 	CCScene *scene = [CCScene node];
 	[scene addChild: [nextAction() node]];

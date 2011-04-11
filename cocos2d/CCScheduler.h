@@ -110,6 +110,8 @@ struct _hashUpdateEntry;
 	// Optimization
 	TICK_IMP			impMethod;
 	SEL					updateSelector;
+    
+    BOOL updateHashLocked; // If true unschedule will not remove anything from a hash. Elements will only be marked for deletion.
 }
 
 /** Modifies the time of all scheduled callbacks.
@@ -148,7 +150,7 @@ struct _hashUpdateEntry;
  The lower the priority, the earlier it is called.
  @since v0.99.3
  */
--(void) scheduleUpdateForTarget:(id)target priority:(int)priority paused:(BOOL)paused;
+-(void) scheduleUpdateForTarget:(id)target priority:(NSInteger)priority paused:(BOOL)paused;
 
 /** Unshedules a selector for a given target.
  If you want to unschedule the "update", use unscheudleUpdateForTarget.

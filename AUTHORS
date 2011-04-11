@@ -54,15 +54,16 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		patch for CocosDenshion
 	* chere.loque:
 		Fixed memory leak in CCGridBase when initializing the texture
-	* CJ Hanson (myBuddyCJ, wiseganesha, CJeazy):
+	* CJ Hanson (myBuddyCJ, wiseganesha, CJeazy) (http://www.hansoninteractive.com/):
 		RenderTexture generates UIImages patch
 		correct channel in SimpleAudioEngine patch
 		Added Ease Elastic actions
 		oapcity + color works with premultiplied textures. patch.
 		Director: fixed startup flicker
 		Fixed the artifact in textures atlas with no border.
-	* cjlesh:
+	* cjlesh (cjl):
 		RotateTo action rotates to shortest angle patch
+        Templates: Installer can be run from any directory. patch.
 	* Clinth Harris:
 		patches for Doc generator script
 	* cmkilger:
@@ -73,6 +74,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	* Corey.B.Painter:
 		Speed action calls other#stop patch
 		SpriteFrame rect updates rectInPixels too. Patch
+		Added exchangeObject and exchangeObjectAtIndex in CCArray. Patch.
 	* craigching:
 		Correct type for objects in TMX maps. patch
 	* DaemonCollector:
@@ -93,6 +95,8 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		CCLabelTTF with alignment works OK on Mac. patch.
 	* Derek van Vliet (http://http://getsetgames.com/)
 		Added fix to make JPEG images work correctly in iOS4
+	* Dmitriy Vakhania
+		Added Xcode4 File templates
 	* Dominique Bongard:
 		patches for CocosDenshion
 		Scheduler fires Timer the 1st time with dt=0
@@ -135,6 +139,8 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		FastDirector doesn't leak autorelease pool patch
 	* Greg Lington (https://github.com/greglington)
 		Added support for Touches in Mac. patch.
+	* Greg Woods:
+		Added Test case for bug 1159
 	* haikusw:
 		Action blink doesn't set frame as invisible when the action finishes. patch.
 	* hamm.hans:
@@ -168,6 +174,8 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		patches for CocosDenshion
 		CocosNode: parent set to nil after onExit patch
 		BitmapFontAtlas supports sub-directories patch
+	* Jason Felice (http://http://bluefroggaming.com/)
+		convertToUI works OK in RetinaDisplay. patch.
 	* Joe Vennix:
 		patches for CocosNode
 	* Jon Kean (http://twitter.com/awesomestsoft):
@@ -181,6 +189,8 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Several patches that uses unsigned ints instead of signed ints
 	* Jose Miguel Gomez Gonzalez (http://www.itlgames.com)
 		Web: Author and maintainer of the games tab in the cocos2d site
+	* Josh Heidebrecht (http://www.somacreates.com):
+		Added SKIP_INSTALL=yes into Xcode4 project for the static libraries
 	* jkrippy:
 		patch for menu align. takes scale into account
 	* johnnyflash71:
@@ -196,6 +206,8 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Director#convertToUI works as expected. patch.
 	* jtbowden
 		RotateTo uses min distance patch
+	* Karthik Chokkaram (http://bluefroggaming.com/)
+		Added helper method to create CCSpawn and CCSequence with an NSArray
 	* kasatani:
 		AtlasSprite index 0 is not overwritten
 	* keisuke.hata:
@@ -246,7 +258,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		author of CCPropertyAction 
 	* magicyu (crmagicxxx):
 		CocosLive client supports ranking request patch
-	* manucorporat (manu.valladolid) (http://www.abstractionworks.com/):
+	* manucorporat (manu.valladolid) (http://forzefield.com/):
 		added isPaused property to Director
 		patches for the setColor API for the RGBA protocol
 		MenuItemLabel: color is saved when item is disabled
@@ -276,6 +288,10 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Added MacWindow and the possibility to create a Mac Widnow programatically
 		Improved Mac Touch tests
 		Fixed bug regarding Mac touch test in Layer
+        Mac Director reuses OpenGL view in fullscreen mode
+		ccpLineIntersect: doesn't produce false positives for collisions. patch.
+		CGPointExtensions cleanup.
+		MenuToggleItem doesn't scale up if pressed several times. patch.
 	* marcofucci:
 		CCArray.fastRemoveObjectAtIndex patch.
 	* Marco Tillemans (araker):
@@ -285,6 +301,8 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Added multisampling anti-aliasing support in EAGLView, ESRenderer
 		RenderTexture: getUIImageFromBuffer supports RetinaDisplay. patch.
 		CCArray: check for bounds in insertObjectAtIndex. patch.
+		TextureAtlas: added the possibility to draw the Quads in parts
+		TextureAtlas: Render "static" VBO batches between 6~10% faster. patch.
 	* marcu.catalin:
 		Menu items are not consumed is items are not visible
 	* Mark Cooke:
@@ -323,6 +341,8 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Device and Simulator behaves identically with premultiplied images. patch.
 	* Musical Geometry:
 		Improved SpriteSheet doxygen documentation (patch)
+    * mzornek:
+        ProgressTimer: setPercentage no longer has underflow (patch)
 	* nash8114:
 		Sprite#isFrameDisplayed works ok with offsets. patch.
 		GLES-DebugDraw#drawCircle draws non-solid circles. patch.
@@ -344,10 +364,14 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		CCSprite: correctly overrides setIsRelativeAnchorPoint
 		libpng doesn't compile pngtest.c. patch.
 		Templates: HelloWorld -> HelloWorldLayer and other improvements. patch.
+	* pfg2009:
+		RenderTexture doesn't enable default GL states. patch.
 	* Piero Tofy (http://indieappsalliance.org):
 		Web: Author of the scraper script used to parse games data in the cocos2d site
 	* Pieter van de Bruggen
-		Author of Gradient layer
+		Author of Gradient layer  
+    * podhraski.tomislav:
+        Mac Director compiles when slow FPS are selected. patch.
 	* psi.pk.ru:
 		EventDispatcher: flagsChanged is triggered correctly. patch
 	* psionic81:
@@ -436,8 +460,9 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Fixed artifacts in PageTurnTransition
 	* TheArsenik:
 		added BezierTo action
-	* thoechsm:
+	* Thomas Hoechsmann (Zombie) (http://www.gamedrs.com)
 		update the VBO buffer with only the needed particles
+		Fixed possible crash in Scheduler when unscheduling a sibling
 	* Thomas Visser:
 		MenuItem#rect works with anchorPoint
 	* UD7 Studios (http://ud7.com)

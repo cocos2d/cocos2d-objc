@@ -44,8 +44,7 @@
 @end
 
 @interface RenderTextureIssue937 : RenderTextureTest
-{
-}
+{}
 @end
 
 

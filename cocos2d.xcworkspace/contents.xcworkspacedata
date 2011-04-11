@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <FileRef
+      location = "group:cocos2d-mac.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:cocos2d-ios.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:tests/PerformanceTests/cocos2d-ios-PerformanceTests.xcodeproj">
+   </FileRef>
+</Workspace>

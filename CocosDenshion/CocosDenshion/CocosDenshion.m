@@ -70,7 +70,7 @@ float const kCD_GainDefault = 1.0f;
 -(void) _dumpSourceGroupsInfo;
 -(void) _getSourceIndexForSourceGroup;
 -(void) _freeSourceGroups;
--(BOOL) _setUpSourceGroups:(int[]) definitions total:(int) total; 
+-(BOOL) _setUpSourceGroups:(int[]) definitions total:(NSUInteger) total; 
 @end
 
 #pragma mark -
@@ -268,7 +268,7 @@ static BOOL _mixerRateSet = NO;
 	[super dealloc];
 }	
 
--(int) sourceGroupTotal {
+-(NSUInteger) sourceGroupTotal {
 	return _sourceGroupTotal;
 }	
 
@@ -286,7 +286,7 @@ static BOOL _mixerRateSet = NO;
 	}	
 }	
 
--(BOOL) _redefineSourceGroups:(int[]) definitions total:(int) total
+-(BOOL) _redefineSourceGroups:(int[]) definitions total:(NSUInteger) total
 {
 	if (_sourceGroups) {
 		//Stop all sounds
@@ -297,7 +297,7 @@ static BOOL _mixerRateSet = NO;
 	return [self _setUpSourceGroups:definitions total:total];
 }	
 
--(BOOL) _setUpSourceGroups:(int[]) definitions total:(int) total 
+-(BOOL) _setUpSourceGroups:(int[]) definitions total:(NSUInteger) total 
 {
 	_sourceGroups = (sourceGroup *)malloc( sizeof(_sourceGroups[0]) * total);
 	if(!_sourceGroups) {
@@ -326,18 +326,18 @@ static BOOL _mixerRateSet = NO;
 	return YES;
 }
 
--(void) defineSourceGroups:(int[]) sourceGroupDefinitions total:(int) total {
+-(void) defineSourceGroups:(int[]) sourceGroupDefinitions total:(NSUInteger) total {
 	[self _redefineSourceGroups:sourceGroupDefinitions total:total];
 }
 
 -(void) defineSourceGroups:(NSArray*) sourceGroupDefinitions {
 	CDLOGINFO(@"Denshion::CDSoundEngine - source groups defined by NSArray.");
-	int totalDefs = [sourceGroupDefinitions count];
+	NSUInteger totalDefs = [sourceGroupDefinitions count];
 	int* defs = (int *)malloc( sizeof(int) * totalDefs);
 	int currentIndex = 0;
 	for (id currentDef in sourceGroupDefinitions) {
 		if ([currentDef isKindOfClass:[NSNumber class]]) {
-			defs[currentIndex] = [(NSNumber*)currentDef integerValue];
+			defs[currentIndex] = (int)[(NSNumber*)currentDef integerValue];
 			CDLOGINFO(@"Denshion::CDSoundEngine - found definition %i.",defs[currentIndex]);
 		} else {
 			CDLOG(@"Denshion::CDSoundEngine - warning, did not understand source definition.");

@@ -1,9 +1,9 @@
 //
-//  NSScanner_Extensions.m
-//  TouchJSON
+//  CDataScanner_Extensions.m
+//  TouchCode
 //
 //  Created by Jonathan Wight on 12/08/2005.
-//  Copyright (c) 2005 Jonathan Wight
+//  Copyright 2005 toxicsoftware.com. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person
 //  obtaining a copy of this software and associated documentation
@@ -29,7 +29,12 @@
 
 #import "CDataScanner_Extensions.h"
 
-#import "NSCharacterSet_Extensions.h"
+#define LF 0x000a // Line Feed
+#define FF 0x000c // Form Feed
+#define CR 0x000d // Carriage Return
+#define NEL 0x0085 // Next Line
+#define LS 0x2028 // Line Separator
+#define PS 0x2029 // Paragraph Separator
 
 @implementation CDataScanner (CDataScanner_Extensions)
 
@@ -59,22 +64,72 @@ else
 }
 
 - (BOOL)scanCPlusPlusStyleComment:(NSString **)outComment
-{
-if ([self scanString:@"//" intoString:NULL] == YES)
-	{
-	NSString *theComment = NULL;
-	[self scanUpToCharactersFromSet:[NSCharacterSet linebreaksCharacterSet] intoString:&theComment];
-	[self scanCharactersFromSet:[NSCharacterSet linebreaksCharacterSet] intoString:NULL];
+    {
+    if ([self scanString:@"//" intoString:NULL] == YES)
+        {
+        unichar theCharacters[] = { LF, FF, CR, NEL, LS, PS, };
+        NSCharacterSet *theLineBreaksCharacterSet = [NSCharacterSet characterSetWithCharactersInString:[NSString stringWithCharacters:theCharacters length:sizeof(theCharacters) / sizeof(*theCharacters)]];
 
-	if (outComment != NULL)
-		*outComment = theComment;
+        NSString *theComment = NULL;
+        [self scanUpToCharactersFromSet:theLineBreaksCharacterSet intoString:&theComment];
+        [self scanCharactersFromSet:theLineBreaksCharacterSet intoString:NULL];
 
-	return(YES);
-	}
-else
-	{
-	return(NO);
-	}
-}
+        if (outComment != NULL)
+            *outComment = theComment;
+
+        return(YES);
+        }
+    else
+        {
+        return(NO);
+        }
+    }
+
+- (NSUInteger)lineOfScanLocation
+    {
+    NSUInteger theLine = 0;
+    for (const u_int8_t *C = start; C < current; ++C)
+        {
+        // TODO: JIW What about MS-DOS line endings you bastard! (Also other unicode line endings)
+        if (*C == '\n' || *C == '\r')
+            {
+            ++theLine;
+            }
+        }
+    return(theLine);
+    }
+
+- (NSDictionary *)userInfoForScanLocation
+    {
+    NSUInteger theLine = 0;
+    const u_int8_t *theLineStart = start;
+    for (const u_int8_t *C = start; C < current; ++C)
+        {
+        if (*C == '\n' || *C == '\r')
+            {
+            theLineStart = C - 1;
+            ++theLine;
+            }
+        }
+
+    NSUInteger theCharacter = current - theLineStart;
+
+    NSRange theStartRange = NSIntersectionRange((NSRange){ .location = MAX((NSInteger)self.scanLocation - 20, 0), .length = 20 + (NSInteger)self.scanLocation - 20 }, (NSRange){ .location = 0, .length = self.data.length });
+    NSRange theEndRange = NSIntersectionRange((NSRange){ .location = self.scanLocation, .length = 20 }, (NSRange){ .location = 0, .length = self.data.length });
+
+
+    NSString *theSnippet = [NSString stringWithFormat:@"%@!HERE>!%@",
+        [[[NSString alloc] initWithData:[self.data subdataWithRange:theStartRange] encoding:NSUTF8StringEncoding] autorelease],
+        [[[NSString alloc] initWithData:[self.data subdataWithRange:theEndRange] encoding:NSUTF8StringEncoding] autorelease]
+        ];
+
+    NSDictionary *theUserInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+        [NSNumber numberWithUnsignedInteger:theLine], @"line",
+        [NSNumber numberWithUnsignedInteger:theCharacter], @"character",
+        [NSNumber numberWithUnsignedInteger:self.scanLocation], @"location",
+        theSnippet, @"snippet",
+        NULL];
+    return(theUserInfo);    
+    }
 
 @end

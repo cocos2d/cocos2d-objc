@@ -16,7 +16,7 @@ Main features
      * Trasformation Actions: Move, Rotate, Scale, Fade, Tint, etc.
      * Composable actions: Sequence, Spawn, Repeat, Reverse
      * Ease Actions: Exp, Sin, Cubic, Elastic, etc.
-     * Misc actions: CallFunc, OrbitCamera
+     * Misc actions: CallFunc, OrbitCamera, Follow, Tween
    * Basic menus and buttons
    * Integrated with physics engines: Box2d and Chipmunk
    * Particle system
@@ -27,19 +27,19 @@ Main features
    * Tile Map support: Orthogonal, Isometric and Hexagonal
    * Parallax scrolling
    * Motion Streak
-   * Render Texture
+   * Render To Texture
    * High Score server (cocosLive library)
    * Touch/Accelerometer on iOS
-   * Mouse/Keyboard on Mac
-   * Portrait and Landscape mode
-   * Sound Engine support (CocosDenshion library)
+   * Touch/Mouse/Keyboard on Mac
+   * Portrait and Landscape mode on iOS
+   * Sound Engine support (CocosDenshion library) based on OpenAL
    * Integrated Pause/Resume
    * Integrated Slow motion/Fast forward
    * Fast textures: PVR compressed and uncompressed textures
    * Point based: iPhone4 + RetinaDisplay mode compatible
    * Language: objective-c
    * Open Source: Compatible with open and closed source projects
-   * OpenGL ES 1.1  / OpenGL 1.5 based
+   * OpenGL ES 1.1 (iOS) / OpenGL 1.5 based (Mac)
 
 
 This library does not work with the toolchain, but it should be easy to port it to it.
@@ -90,14 +90,20 @@ Select the test you want to view in both drop downs and hit Build and Go.
 How to start a new game
 -----------------------
 
-Run the 'install-templates.sh' script as root:
+Run the 'install-templates.sh' script:
     $ cd cocos2d-iphone
-    $ sudo ./install-templates.sh
-or with `-u` to install the templates in your user directory:
-    $ cd cocos2d-iphone
-    $ ./install-templates.sh -u
+    $ ./install-templates.sh -u -f
 And then open XCode -> New Project -> User Templates -> cocos2d
+
+
+How to contribute to the project
+--------------------------------
+
+Did you find a bug ? Do you have feature request ? Do you want to merge a feature ?
+
+  * [contributing to cocos2d][3]
 
 
 [1]: http://www.cocos2d-iphone.org "cocos2d for iPhone"
 [2]: http://www.cocos2d.org "cocos2d"
+[3]: http://www.cocos2d-iphone.org/wiki/doku.php/faq#i_found_a_bug_i_have_an_enhancement_proposal_what_should_i_do "contributing to cocos2d"

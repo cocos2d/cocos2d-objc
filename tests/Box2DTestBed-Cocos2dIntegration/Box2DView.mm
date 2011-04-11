@@ -167,7 +167,7 @@ enum {
 
 -(NSString*) title
 {
-	return [NSString stringWithCString:entry->name];
+	return [NSString stringWithCString:entry->name encoding:NSUTF8StringEncoding];
 }
 
 - (void)tick:(ccTime) dt
