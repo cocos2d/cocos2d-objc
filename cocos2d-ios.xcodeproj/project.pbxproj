@@ -1856,6 +1856,8 @@
 		E037DA921281EFE2003D39D7 /* edge.png in Resources */ = {isa = PBXBuildFile; fileRef = E037DA8C1281EFE2003D39D7 /* edge.png */; };
 		E037DA931281EFE2003D39D7 /* fill.png in Resources */ = {isa = PBXBuildFile; fileRef = E037DA8D1281EFE2003D39D7 /* fill.png */; };
 		E037DA941281EFE2003D39D7 /* QuestionContainerSprite.m in Sources */ = {isa = PBXBuildFile; fileRef = E037DA8F1281EFE2003D39D7 /* QuestionContainerSprite.m */; };
+		E03A4F291354E2F100D4B515 /* ccShaderState.c in Sources */ = {isa = PBXBuildFile; fileRef = E03A4F271354E2F000D4B515 /* ccShaderState.c */; };
+		E03A4F2A1354E2F100D4B515 /* ccShaderState.h in Headers */ = {isa = PBXBuildFile; fileRef = E03A4F281354E2F000D4B515 /* ccShaderState.h */; };
 		E04C0F9F12886799000C4393 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 503092B210447296005F7AFC /* libz.dylib */; };
 		E04C0FA11288679D000C4393 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 503092B210447296005F7AFC /* libz.dylib */; };
 		E04C0FA21288679E000C4393 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 503092B210447296005F7AFC /* libz.dylib */; };
@@ -4057,6 +4059,8 @@
 		E037DA8D1281EFE2003D39D7 /* fill.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fill.png; sourceTree = "<group>"; };
 		E037DA8E1281EFE2003D39D7 /* QuestionContainerSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuestionContainerSprite.h; sourceTree = "<group>"; };
 		E037DA8F1281EFE2003D39D7 /* QuestionContainerSprite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuestionContainerSprite.m; sourceTree = "<group>"; };
+		E03A4F271354E2F000D4B515 /* ccShaderState.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ccShaderState.c; sourceTree = "<group>"; };
+		E03A4F281354E2F000D4B515 /* ccShaderState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccShaderState.h; sourceTree = "<group>"; };
 		E04C631512382E6B00A4B3E6 /* background3-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "background3-hd.png"; sourceTree = "<group>"; };
 		E04C632012382F6100A4B3E6 /* f1-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "f1-hd.png"; sourceTree = "<group>"; };
 		E04C632112382F6100A4B3E6 /* f2-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "f2-hd.png"; sourceTree = "<group>"; };
@@ -6589,6 +6593,8 @@
 				E0BC7D9A1342CE7B001B4DCC /* CCShaderCache.m */,
 				E0BC7D9B1342CE7B001B4DCC /* GLProgram.h */,
 				E0BC7D9C1342CE7B001B4DCC /* GLProgram.m */,
+				E03A4F271354E2F000D4B515 /* ccShaderState.c */,
+				E03A4F281354E2F000D4B515 /* ccShaderState.h */,
 			);
 			name = Shaders;
 			sourceTree = "<group>";
@@ -6791,6 +6797,7 @@
 				E0BC7DA51342CECE001B4DCC /* kazmath.h in Headers */,
 				E0BC7DA81342CF27001B4DCC /* ES2Renderer.h in Headers */,
 				E0CC11871353E8A100080D9D /* neon_matrix_impl.h in Headers */,
+				E03A4F2A1354E2F100D4B515 /* ccShaderState.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10173,6 +10180,7 @@
 				E0BC7DA41342CECE001B4DCC /* kazmath.c in Sources */,
 				E0BC7DA91342CF27001B4DCC /* ES2Renderer.m in Sources */,
 				E0CC11881353E8A100080D9D /* neon_matrix_impl.c in Sources */,
+				E03A4F291354E2F100D4B515 /* ccShaderState.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -13806,7 +13814,10 @@
 				EXCLUDED_RECURSIVE_SEARCH_PATH_SUBDIRECTORIES = ".git *.nib *.lproj *.framework *.gch *.xcode* (*) CVS .svn";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_FAST_MATH = YES;
-				GCC_PREPROCESSOR_DEFINITIONS = "";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					NS_BLOCK_ASSERTIONS,
+					NDEBUG,
+				);
 				GCC_STRICT_ALIASING = YES;
 				GCC_THUMB_SUPPORT = No;
 				"GCC_THUMB_SUPPORT[arch=armv6]" = NO;
@@ -13821,10 +13832,7 @@
 				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
-				OTHER_CFLAGS = (
-					"-DNS_BLOCK_ASSERTIONS",
-					"-DNDEBUG",
-				);
+				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = (
 					"-all_load",
 					"-ObjC",

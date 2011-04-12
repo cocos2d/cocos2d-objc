@@ -33,6 +33,7 @@
 #import "CCGrabber.h"
 #import "GLProgram.h"
 #import "CCShaderCache.h"
+#import "ccShaderState.h"
 
 #import "Platforms/CCGL.h"
 #import "Support/CGPointExtension.h"
@@ -85,6 +86,7 @@
 		[grabber_ grab:texture_];
 		
 		self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTexture];
+		updatedUniforms_ = NO;
 
 		[self calculateVertexPoints];
 	}
@@ -288,14 +290,16 @@
 	// Unneeded states: kCCAttribColor
 	glDisableVertexAttribArray( kCCAttribColor );
 	
-	glUseProgram( shaderProgram_->program_ );
 
-	//
-	// Uniforms
-	//	
-	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformPMatrix], 1, GL_FALSE, (GLfloat*)&projection3D_);
-	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformMVMatrix], 1, GL_FALSE, (GLfloat*)&modelViewMat_);
-	glUniform1i ( shaderProgram_->uniforms_[kCCUniformSampler], 0 );
+	ccShaderUseProgram( shaderProgram_->program_ );
+
+	if( ! updatedUniforms_ ) {
+		glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformPMatrix], 1, GL_FALSE, (GLfloat*)&ccProjectionMatrix);
+		glUniform1i ( shaderProgram_->uniforms_[kCCUniformSampler], 0 );
+		updatedUniforms_ = YES;
+	}
+	
+	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformMVMatrix], 1, GL_FALSE, modelViewMat_.mat);
 	
 	//
 	// Attributes
@@ -444,15 +448,15 @@
 	// Unneeded states: kCCAttribColor
 	glDisableVertexAttribArray( kCCAttribColor );
 
-
-	glUseProgram( shaderProgram_->program_ );
-
-	//
-	// Uniforms
-	//
-	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformPMatrix], 1, GL_FALSE, (GLfloat*)&projection3D_);
-	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformMVMatrix], 1, GL_FALSE, (GLfloat*)&modelViewMat_);
-	glUniform1i ( shaderProgram_->uniforms_[kCCUniformSampler], 0 );
+	ccShaderUseProgram( shaderProgram_->program_ );
+	
+	if( ! updatedUniforms_ ) {
+		glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformPMatrix], 1, GL_FALSE, (GLfloat*)&ccProjectionMatrix);
+		glUniform1i ( shaderProgram_->uniforms_[kCCUniformSampler], 0 );
+		updatedUniforms_ = YES;
+	}
+	
+	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformMVMatrix], 1, GL_FALSE, modelViewMat_.mat);
 
 	//
 	// Attributes

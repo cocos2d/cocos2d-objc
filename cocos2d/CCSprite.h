@@ -90,27 +90,27 @@ typedef enum {
 	NSUInteger				atlasIndex_;			// Absolute (real) Index on the batch node
 	CCSpriteBatchNode		*batchNode_;			// Used batch node (weak reference)
 	ccHonorParentTransform	honorParentTransform_;	// whether or not to transform according to its parent transformations
-	BOOL					dirty_;					// Sprite needs to be updated
-	BOOL					recursiveDirty_;		// Subchildren needs to be updated
-	BOOL					hasChildren_;			// optimization to check if it contain children
+	BOOL					dirty_:1;				// Sprite needs to be updated
+	BOOL					recursiveDirty_:1;		// Subchildren needs to be updated
+	BOOL					hasChildren_:1;			// optimization to check if it contain children
 	
 	//
 	// Data used when the sprite is self-rendered
 	//
 	ccBlendFunc				blendFunc_;				// Needed for the texture protocol
 	CCTexture2D				*texture_;				// Texture used to render the sprite
-
+	
 	//
 	// Shared data
 	//
 
-	// whether or not it's parent is a CCSpriteBatchNode
-	BOOL	usesBatchNode_;
-
 	// texture
 	CGRect	rect_;
 	CGRect	rectInPixels_;
-	BOOL	rectRotated_;
+	BOOL	rectRotated_:1;
+
+	// whether or not it's parent is a CCSpriteBatchNode
+	BOOL	usesBatchNode_:1;
 	
 	// Offset Position (used by Zwoptex)
 	CGPoint	offsetPositionInPixels_;
@@ -123,14 +123,11 @@ typedef enum {
 	GLubyte		opacity_;
 	ccColor3B	color_;
 	ccColor3B	colorUnmodified_;
-	BOOL		opacityModifyRGB_;
+	BOOL		opacityModifyRGB_:1;
 	
 	// image is flipped
-	BOOL	flipX_;
-	BOOL	flipY_;
-	
-	// Animations that belong to the sprite
-	NSMutableDictionary *animations_;
+	BOOL	flipX_:1;
+	BOOL	flipY_:1;
 
 @public
 	// used internally.
