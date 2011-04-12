@@ -71,7 +71,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #import "Platforms/CCGL.h"
 #import "Platforms/CCNS.h"
 
-
+#import "ccGLState.h"
 #import "CCTexture2D.h"
 #import "ccConfig.h"
 #import "ccMacros.h"
@@ -107,7 +107,7 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 {
 	if((self = [super init])) {
 		glGenTextures(1, &name_);
-		glBindTexture(GL_TEXTURE_2D, name_);
+		ccglBindTexture2D( name_ );
 
 		[self setAntiAliasTexParameters];
 		
@@ -563,7 +563,7 @@ static BOOL PVRHaveAlphaPremultiplied_ = NO;
 	
 	if((self = [super init])) {
 		glGenTextures(1, &name_);
-		glBindTexture(GL_TEXTURE_2D, name_);
+		ccglBindTexture2D( name_ );
 		
 		[self setAntiAliasTexParameters];
 		
@@ -643,7 +643,8 @@ static BOOL PVRHaveAlphaPremultiplied_ = NO;
 								point.x,			height  + point.y,	0.0f,
 								width + point.x,	height  + point.y,	0.0f };
 	
-	glBindTexture(GL_TEXTURE_2D, name_);
+	ccglBindTexture2D( name_ );
+
 	glVertexPointer(3, GL_FLOAT, 0, vertices);
 	glTexCoordPointer(2, GL_FLOAT, 0, coordinates);
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
@@ -661,7 +662,7 @@ static BOOL PVRHaveAlphaPremultiplied_ = NO;
 							rect.origin.x,							rect.origin.y + rect.size.height,		/*0.0f,*/
 							rect.origin.x + rect.size.width,		rect.origin.y + rect.size.height,		/*0.0f*/ };
 	
-	glBindTexture(GL_TEXTURE_2D, name_);
+	ccglBindTexture2D( name_ );
 	glVertexPointer(2, GL_FLOAT, 0, vertices);
 	glTexCoordPointer(2, GL_FLOAT, 0, coordinates);
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
@@ -681,7 +682,7 @@ static BOOL PVRHaveAlphaPremultiplied_ = NO;
 -(void) generateMipmap
 {
 	NSAssert( width_ == ccNextPOT(width_) && height_ == ccNextPOT(height_), @"Mimpap texture only works in POT textures");
-	glBindTexture( GL_TEXTURE_2D, name_ );
+	ccglBindTexture2D( name_ );
 	ccglGenerateMipmap(GL_TEXTURE_2D);
 }
 
@@ -690,9 +691,11 @@ static BOOL PVRHaveAlphaPremultiplied_ = NO;
 	NSAssert( (width_ == ccNextPOT(width_) && height_ == ccNextPOT(height_)) ||
 			 (texParams->wrapS == GL_CLAMP_TO_EDGE && texParams->wrapT == GL_CLAMP_TO_EDGE),
 			 @"GL_CLAMP_TO_EDGE should be used in NPOT textures");
-	glBindTexture( GL_TEXTURE_2D, self.name );
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, texParams->minFilter );
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, texParams->magFilter );
+
+	ccglBindTexture2D( name_ );
+
+	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, texParams->minFilter );
+	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, texParams->magFilter );
 	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, texParams->wrapS );
 	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, texParams->wrapT );
 }

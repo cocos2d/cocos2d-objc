@@ -22,15 +22,19 @@
  * THE SOFTWARE.
  */
 
-#include "ccShaderState.h"
+#include "ccGLState.h"
 
-GLuint ccShaderCurrentProgram = 0;
-int		ccShaderMatrixDirty = 0;
+GLuint	_ccCurrentShaderProgram = 0;
+GLuint	_ccCurrentTextureID = 0;
+int		_ccShaderMatrixDirty = 0;
+GLenum	_ccBlendingSource = 0;
+GLenum	_ccBlendingDest = 0;
 
-void ccShaderUseProgram( GLuint program )
+
+void ccglUseProgram( GLuint program )
 {
-	if( program != ccShaderCurrentProgram ) {
-		ccShaderCurrentProgram = program;
+	if( program != _ccCurrentShaderProgram ) {
+		_ccCurrentShaderProgram = program;
 		glUseProgram(program);
 	}
 }
@@ -44,3 +48,19 @@ void ccShaderSetProjectionMatrix( kmMat4 *matrix )
 	
 }
 
+void ccglBindTexture2D( GLuint textureID )
+{
+	if( textureID != _ccCurrentTextureID ) {
+		_ccCurrentTextureID = textureID;
+		glBindTexture(GL_TEXTURE_2D, textureID );
+	}
+}
+
+void ccglBlendFunc(GLenum sfactor, GLenum dfactor)
+{
+	if( sfactor != _ccBlendingSource || dfactor != _ccBlendingDest ) {
+		_ccBlendingSource = sfactor;
+		_ccBlendingDest = dfactor;
+		glBlendFunc( sfactor, dfactor );
+	}
+}

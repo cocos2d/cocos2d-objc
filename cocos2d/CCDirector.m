@@ -43,6 +43,7 @@
 #import "CCTexture2D.h"
 #import "CCLabelBMFont.h"
 #import "CCLayer.h"
+#import "ccGLState.h"
 
 // support imports
 #import "Platforms/CCGL.h"
@@ -251,7 +252,7 @@ static CCDirector *_sharedDirector = nil;
 {
 	if (on) {
 		glEnable(GL_BLEND);
-		glBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);
+		ccglBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);
 		
 	} else
 		glDisable(GL_BLEND);
@@ -537,13 +538,13 @@ static CCDirector *_sharedDirector = nil;
 	// Unneeded states: GL_COLOR_ARRAY
 	glDisableClientState(GL_COLOR_ARRAY);
 	
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	ccglBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	
 	glColor4ub(224,224,244,200);
 	[texture drawAtPoint: ccp(5,2)];
 	[texture release];
 	
-	glBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);
+	ccglBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);
 	
 	// restore default GL state
 	glEnableClientState(GL_COLOR_ARRAY);

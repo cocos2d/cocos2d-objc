@@ -30,6 +30,7 @@
 #import "CCTexture2D.h"
 #import "CCTextureCache.h"
 #import "GLProgram.h"
+#import "ccGLState.h"
 
 
 @interface CCTextureAtlas (Private)
@@ -315,7 +316,7 @@
 	// Needed states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
 	// Unneeded states: -
 
-	glBindTexture(GL_TEXTURE_2D, [texture_ name]);
+	ccglBindTexture2D( [texture_ name] );
 
 #define kQuadSize sizeof(quads_[0].bl)
 #if CC_USES_VBO
