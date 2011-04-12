@@ -33,9 +33,10 @@
  * See header file kazmath.h for full API documentation.
  */
 
-#import "kazmath.h"
-#import <memory.h>
-#import <math.h>
+#include <memory.h>
+#include <math.h>
+#include "kazmath.h"
+#include "neon_matrix_impl.h"
 
 #pragma mark -
 #pragma mark vec3
@@ -165,8 +166,14 @@ const kmMat4* kmMat4Identity(kmMat4* pOut)
 }
 
 // Multiplies pM1 with pM2, stores the result in pOut, returns pOut
-kmMat4* kmMat4Multiply(kmMat4* pOut, const kmMat4* pM1, const kmMat4* pM2) {
+kmMat4* kmMat4Multiply(kmMat4* pOut, const kmMat4* pM1, const kmMat4* pM2)
+{	
+#ifdef __ARM_NEON__
+	NEON_Matrix4Mul( pM2->mat, pM1->mat, pOut->mat);
+	return pOut;
+#else
 	float mat[16];
+	
 	const float *m1 = pM1->mat, *m2 = pM2->mat;
 	
 	mat[0] = m1[0] * m2[0] + m1[4] * m2[1] + m1[8] * m2[2] + m1[12] * m2[3];
@@ -188,10 +195,12 @@ kmMat4* kmMat4Multiply(kmMat4* pOut, const kmMat4* pM1, const kmMat4* pM2) {
 	mat[13] = m1[1] * m2[12] + m1[5] * m2[13] + m1[9] * m2[14] + m1[13] * m2[15];
 	mat[14] = m1[2] * m2[12] + m1[6] * m2[13] + m1[10] * m2[14] + m1[14] * m2[15];
 	mat[15] = m1[3] * m2[12] + m1[7] * m2[13] + m1[11] * m2[14] + m1[15] * m2[15];
-	
-	memcpy(pOut->mat, mat, sizeof(float)*16);
-	
+
+	memcpy(pOut->mat, mat, sizeof(float)*16);	
 	return pOut;
+
+#endif // ! __ARM_NEON__
+
 }
 
 // Builds a translation matrix. All other elements in the matrix
