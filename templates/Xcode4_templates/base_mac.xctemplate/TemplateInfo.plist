@@ -78,54 +78,65 @@
 			</dict>
 		</dict>
 	</array>
-
 	<key>Definitions</key>
 	<dict>
-	  <key>Resources/English.lproj/InfoPlist.strings</key>
-	  <dict>
-	    <key>Group</key>
-	    <string>Resources</string>
-	    <key>Path</key>
-	    <string>Resources/English.lproj/InfoPlist.strings</string>
-	  </dict>
-	  <key>Resources/English.lproj/MainMenu.xib</key>
-	  <dict>
-	    <key>Group</key>
-	    <string>Resources</string>
-	    <key>Path</key>
-	    <string>Resources/English.lproj/MainMenu.xib</string>
-	  </dict>
-	  <key>Resources/fps_images.png</key>
-	  <dict>
-	    <key>Group</key>
-	    <string>Resources</string>
-	    <key>Path</key>
-	    <string>Resources/fps_images.png</string>
-	  </dict>
-	  <key>Resources/icon.icns</key>
-	  <dict>
-	    <key>Group</key>
-	    <string>Resources</string>
-	    <key>Path</key>
-	    <string>Resources/icon.icns</string>
-	  </dict>
-	  <key>Resources/Info.plist</key>
-	  <dict>
-	    <key>Group</key>
-	    <string>Resources</string>
-	    <key>Path</key>
-	    <string>Resources/Info.plist</string>
-        <key>TargetIndices</key>
-        <array/>
-	  </dict>
+		<key>Resources/English.lproj/InfoPlist.strings</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>Resources</string>
+				<string>English.lproj</string>
+			</array>
+			<key>Path</key>
+			<string>Resources/English.lproj/InfoPlist.strings</string>
+		</dict>
+		<key>Resources/English.lproj/MainMenu.xib</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>Resources</string>
+				<string>English.lproj</string>
+			</array>
+			<key>Path</key>
+			<string>Resources/English.lproj/MainMenu.xib</string>
+		</dict>
+		<key>Resources/fps_images.png</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>Resources</string>
+			</array>
+			<key>Path</key>
+			<string>Resources/fps_images.png</string>
+		</dict>
+		<key>Resources/icon.icns</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>Resources</string>
+			</array>
+			<key>Path</key>
+			<string>Resources/icon.icns</string>
+		</dict>
+		<key>Resources/Info.plist</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>Resources</string>
+			</array>
+			<key>Path</key>
+			<string>Resources/Info.plist</string>
+ 			<key>TargetIndices</key>
+ 			<array/>
+		</dict>
 	</dict>
 	<key>Nodes</key>
 	<array>
-	  <string>Resources/English.lproj/InfoPlist.strings</string>
-	  <string>Resources/English.lproj/MainMenu.xib</string>
-	  <string>Resources/fps_images.png</string>
-	  <string>Resources/icon.icns</string>
-	  <string>Resources/Info.plist</string>
+		<string>Resources/English.lproj/InfoPlist.strings</string>
+		<string>Resources/English.lproj/MainMenu.xib</string>
+		<string>Resources/fps_images.png</string>
+		<string>Resources/icon.icns</string>
+		<string>Resources/Info.plist</string>
 	</array>
 </dict>
 </plist>

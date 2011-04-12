@@ -926,6 +926,8 @@ void b2World::DrawShape(b2Fixture* fixture, const b2Transform& xf, const b2Color
 			m_debugDraw->DrawSolidPolygon(vertices, vertexCount, color);
 		}
 		break;
+	default:	// cocos2d patch. Prevents compiler warning in llvm 2.0
+			break;
 	}
 }
 

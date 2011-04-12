@@ -1,13 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!-- File autogenrated by cocos2d/tools/template_generator.py DO NOT EDIT IT MANUALLY -->
 <plist version="1.0">
 <dict>
+	<key>Description</key>
+	<string>This template provides an starting point for cocos2d for iOS.</string>
+	<key>Identifier</key>
+	<string>com.cocos2d.box2dlib</string>
+	<key>Kind</key>
+	<string>Xcode.Xcode3.ProjectTemplateUnitKind</string>
+
 	<key>Definitions</key>
 	<dict>
 		<key>libs/Box2D/Box2D.h</key>
 		<dict>
 			<key>Group</key>
-			<string>Box2D</string>
+			<array>
+				<string>libs</string>
+				<string>Box2D</string>
+			</array>
 			<key>Path</key>
 			<string>libs/Box2D/Box2D.h</string>
 			<key>TargetIndices</key>
@@ -16,14 +27,22 @@
 		<key>libs/Box2D/Collision/b2BroadPhase.cpp</key>
 		<dict>
 			<key>Group</key>
-			<string>Box2D</string>
+			<array>
+				<string>libs</string>
+				<string>Box2D</string>
+				<string>Collision</string>
+			</array>
 			<key>Path</key>
 			<string>libs/Box2D/Collision/b2BroadPhase.cpp</string>
 		</dict>
 		<key>libs/Box2D/Collision/b2BroadPhase.h</key>
 		<dict>
 			<key>Group</key>
-			<string>Box2D</string>
+			<array>
+				<string>libs</string>
+				<string>Box2D</string>
+				<string>Collision</string>
+			</array>
 			<key>Path</key>
 			<string>libs/Box2D/Collision/b2BroadPhase.h</string>
 			<key>TargetIndices</key>
@@ -32,28 +51,44 @@
 		<key>libs/Box2D/Collision/b2CollideCircle.cpp</key>
 		<dict>
 			<key>Group</key>
-			<string>Box2D</string>
+			<array>
+				<string>libs</string>
+				<string>Box2D</string>
+				<string>Collision</string>
+			</array>
 			<key>Path</key>
 			<string>libs/Box2D/Collision/b2CollideCircle.cpp</string>
 		</dict>
 		<key>libs/Box2D/Collision/b2CollidePolygon.cpp</key>
 		<dict>
 			<key>Group</key>
-			<string>Box2D</string>
+			<array>
+				<string>libs</string>
+				<string>Box2D</string>
+				<string>Collision</string>
+			</array>
 			<key>Path</key>
 			<string>libs/Box2D/Collision/b2CollidePolygon.cpp</string>
 		</dict>
 		<key>libs/Box2D/Collision/b2Collision.cpp</key>
 		<dict>
 			<key>Group</key>
-			<string>Box2D</string>
+			<array>
+				<string>libs</string>
+				<string>Box2D</string>
+				<string>Collision</string>
+			</array>
 			<key>Path</key>
 			<string>libs/Box2D/Collision/b2Collision.cpp</string>
 		</dict>
 		<key>libs/Box2D/Collision/b2Collision.h</key>
 		<dict>
 			<key>Group</key>
-			<string>Box2D</string>
+			<array>
+				<string>libs</string>
+				<string>Box2D</string>
+				<string>Collision</string>
+			</array>
 			<key>Path</key>
 			<string>libs/Box2D/Collision/b2Collision.h</string>
 			<key>TargetIndices</key>
@@ -62,14 +97,22 @@
 		<key>libs/Box2D/Collision/b2Distance.cpp</key>
 		<dict>
 			<key>Group</key>
-			<string>Box2D</string>
+			<array>
+				<string>libs</string>
+				<string>Box2D</string>
+				<string>Collision</string>
+			</array>
 			<key>Path</key>
 			<string>libs/Box2D/Collision/b2Distance.cpp</string>
 		</dict>
 		<key>libs/Box2D/Collision/b2Distance.h</key>
 		<dict>
 			<key>Group</key>
-			<string>Box2D</string>
+			<array>
+				<string>libs</string>
+				<string>Box2D</string>
+				<string>Collision</string>
+			</array>
 			<key>Path</key>
 			<string>libs/Box2D/Collision/b2Distance.h</string>
 			<key>TargetIndices</key>
@@ -78,14 +121,22 @@
 		<key>libs/Box2D/Collision/b2DynamicTree.cpp</key>
 		<dict>
 			<key>Group</key>
-			<string>Box2D</string>
+			<array>
+				<string>libs</string>
+				<string>Box2D</string>
+				<string>Collision</string>
+			</array>
 			<key>Path</key>
 			<string>libs/Box2D/Collision/b2DynamicTree.cpp</string>
 		</dict>
 		<key>libs/Box2D/Collision/b2DynamicTree.h</key>
 		<dict>
 			<key>Group</key>
-			<string>Box2D</string>
+			<array>
+				<string>libs</string>
+				<string>Box2D</string>
+				<string>Collision</string>
+			</array>
 			<key>Path</key>
 			<string>libs/Box2D/Collision/b2DynamicTree.h</string>
 			<key>TargetIndices</key>
@@ -94,14 +145,22 @@
 		<key>libs/Box2D/Collision/b2TimeOfImpact.cpp</key>
 		<dict>
 			<key>Group</key>
-			<string>Box2D</string>
+			<array>
+				<string>libs</string>
+				<string>Box2D</string>
+				<string>Collision</string>
+			</array>
 			<key>Path</key>
 			<string>libs/Box2D/Collision/b2TimeOfImpact.cpp</string>
 		</dict>
 		<key>libs/Box2D/Collision/b2TimeOfImpact.h</key>
 		<dict>
 			<key>Group</key>
-			<string>Box2D</string>
+			<array>
+				<string>libs</string>
+				<string>Box2D</string>
+				<string>Collision</string>
+			</array>
 			<key>Path</key>
 			<string>libs/Box2D/Collision/b2TimeOfImpact.h</string>
 			<key>TargetIndices</key>
@@ -110,14 +169,24 @@
 		<key>libs/Box2D/Collision/Shapes/b2CircleShape.cpp</key>
 		<dict>
 			<key>Group</key>
-			<string>Box2D</string>
+			<array>
+				<string>libs</string>
+				<string>Box2D</string>
+				<string>Collision</string>
+				<string>Shapes</string>
+			</array>
 			<key>Path</key>
 			<string>libs/Box2D/Collision/Shapes/b2CircleShape.cpp</string>
 		</dict>
 		<key>libs/Box2D/Collision/Shapes/b2CircleShape.h</key>
 		<dict>
 			<key>Group</key>
-			<string>Box2D</string>
+			<array>
+				<string>libs</string>
+				<string>Box2D</string>
+				<string>Collision</string>
+				<string>Shapes</string>
+			</array>
 			<key>Path</key>
 			<string>libs/Box2D/Collision/Shapes/b2CircleShape.h</string>
 			<key>TargetIndices</key>
@@ -126,14 +195,24 @@
 		<key>libs/Box2D/Collision/Shapes/b2PolygonShape.cpp</key>
 		<dict>
 			<key>Group</key>
-			<string>Box2D</string>
+			<array>
+				<string>libs</string>
+				<string>Box2D</string>
+				<string>Collision</string>
+				<string>Shapes</string>
+			</array>
 			<key>Path</key>
 			<string>libs/Box2D/Collision/Shapes/b2PolygonShape.cpp</string>
 		</dict>
 		<key>libs/Box2D/Collision/Shapes/b2PolygonShape.h</key>
 		<dict>
 			<key>Group</key>
-			<string>Box2D</string>
+			<array>
+				<string>libs</string>
+				<string>Box2D</string>
+				<string>Collision</string>
+				<string>Shapes</string>
+			</array>
 			<key>Path</key>
 			<string>libs/Box2D/Collision/Shapes/b2PolygonShape.h</string>
 			<key>TargetIndices</key>
@@ -142,7 +221,12 @@
 		<key>libs/Box2D/Collision/Shapes/b2Shape.h</key>
 		<dict>
 			<key>Group</key>
-			<string>Box2D</string>
+			<array>
+				<string>libs</string>
+				<string>Box2D</string>
+				<string>Collision</string>
+				<string>Shapes</string>
+			</array>
 			<key>Path</key>
 			<string>libs/Box2D/Collision/Shapes/b2Shape.h</string>
 			<key>TargetIndices</key>
@@ -151,14 +235,22 @@
 		<key>libs/Box2D/Common/b2BlockAllocator.cpp</key>
 		<dict>
 			<key>Group</key>
-			<string>Box2D</string>
+			<array>
+				<string>libs</string>
+				<string>Box2D</string>
+				<string>Common</string>
+			</array>
 			<key>Path</key>
 			<string>libs/Box2D/Common/b2BlockAllocator.cpp</string>
 		</dict>
 		<key>libs/Box2D/Common/b2BlockAllocator.h</key>
 		<dict>
 			<key>Group</key>
-			<string>Box2D</string>
+			<array>
+				<string>libs</string>
+				<string>Box2D</string>
+				<string>Common</string>
+			</array>
 			<key>Path</key>
 			<string>libs/Box2D/Common/b2BlockAllocator.h</string>
 			<key>TargetIndices</key>
@@ -167,14 +259,22 @@
 		<key>libs/Box2D/Common/b2Math.cpp</key>
 		<dict>
 			<key>Group</key>
-			<string>Box2D</string>
+			<array>
+				<string>libs</string>
+				<string>Box2D</string>
+				<string>Common</string>
+			</array>
 			<key>Path</key>
 			<string>libs/Box2D/Common/b2Math.cpp</string>
 		</dict>
 		<key>libs/Box2D/Common/b2Math.h</key>
 		<dict>
 			<key>Group</key>
-			<string>Box2D</string>
+			<array>
+				<string>libs</string>
+				<string>Box2D</string>
+				<string>Common</string>
+			</array>
 			<key>Path</key>
 			<string>libs/Box2D/Common/b2Math.h</string>
 			<key>TargetIndices</key>
@@ -183,14 +283,22 @@
 		<key>libs/Box2D/Common/b2Settings.cpp</key>
 		<dict>
 			<key>Group</key>
-			<string>Box2D</string>
+			<array>
+				<string>libs</string>
+				<string>Box2D</string>
+				<string>Common</string>
+			</array>
 			<key>Path</key>
 			<string>libs/Box2D/Common/b2Settings.cpp</string>
 		</dict>
 		<key>libs/Box2D/Common/b2Settings.h</key>
 		<dict>
 			<key>Group</key>
-			<string>Box2D</string>
+			<array>
+				<string>libs</string>
+				<string>Box2D</string>
+				<string>Common</string>
+			</array>
 			<key>Path</key>
 			<string>libs/Box2D/Common/b2Settings.h</string>
 			<key>TargetIndices</key>
@@ -199,14 +307,22 @@
 		<key>libs/Box2D/Common/b2StackAllocator.cpp</key>
 		<dict>
 			<key>Group</key>
-			<string>Box2D</string>
+			<array>
+				<string>libs</string>
+				<string>Box2D</string>
+				<string>Common</string>
+			</array>
 			<key>Path</key>
 			<string>libs/Box2D/Common/b2StackAllocator.cpp</string>
 		</dict>
 		<key>libs/Box2D/Common/b2StackAllocator.h</key>
 		<dict>
 			<key>Group</key>
-			<string>Box2D</string>
+			<array>
+				<string>libs</string>
+				<string>Box2D</string>
+				<string>Common</string>
+			</array>
 			<key>Path</key>
 			<string>libs/Box2D/Common/b2StackAllocator.h</string>
 			<key>TargetIndices</key>
@@ -215,14 +331,22 @@
 		<key>libs/Box2D/Dynamics/b2Body.cpp</key>
 		<dict>
 			<key>Group</key>
-			<string>Box2D</string>
+			<array>
+				<string>libs</string>
+				<string>Box2D</string>
+				<string>Dynamics</string>
+			</array>
 			<key>Path</key>
 			<string>libs/Box2D/Dynamics/b2Body.cpp</string>
 		</dict>
 		<key>libs/Box2D/Dynamics/b2Body.h</key>
 		<dict>
 			<key>Group</key>
-			<string>Box2D</string>
+			<array>
+				<string>libs</string>
+				<string>Box2D</string>
+				<string>Dynamics</string>
+			</array>
 			<key>Path</key>
 			<string>libs/Box2D/Dynamics/b2Body.h</string>
 			<key>TargetIndices</key>
@@ -231,14 +355,22 @@
 		<key>libs/Box2D/Dynamics/b2ContactManager.cpp</key>
 		<dict>
 			<key>Group</key>
-			<string>Box2D</string>
+			<array>
+				<string>libs</string>
+				<string>Box2D</string>
+				<string>Dynamics</string>
+			</array>
 			<key>Path</key>
 			<string>libs/Box2D/Dynamics/b2ContactManager.cpp</string>
 		</dict>
 		<key>libs/Box2D/Dynamics/b2ContactManager.h</key>
 		<dict>
 			<key>Group</key>
-			<string>Box2D</string>
+			<array>
+				<string>libs</string>
+				<string>Box2D</string>
+				<string>Dynamics</string>
+			</array>
 			<key>Path</key>
 			<string>libs/Box2D/Dynamics/b2ContactManager.h</string>
 			<key>TargetIndices</key>
@@ -247,14 +379,22 @@
 		<key>libs/Box2D/Dynamics/b2Fixture.cpp</key>
 		<dict>
 			<key>Group</key>
-			<string>Box2D</string>
+			<array>
+				<string>libs</string>
+				<string>Box2D</string>
+				<string>Dynamics</string>
+			</array>
 			<key>Path</key>
 			<string>libs/Box2D/Dynamics/b2Fixture.cpp</string>
 		</dict>
 		<key>libs/Box2D/Dynamics/b2Fixture.h</key>
 		<dict>
 			<key>Group</key>
-			<string>Box2D</string>
+			<array>
+				<string>libs</string>
+				<string>Box2D</string>
+				<string>Dynamics</string>
+			</array>
 			<key>Path</key>
 			<string>libs/Box2D/Dynamics/b2Fixture.h</string>
 			<key>TargetIndices</key>
@@ -263,14 +403,22 @@
 		<key>libs/Box2D/Dynamics/b2Island.cpp</key>
 		<dict>
 			<key>Group</key>
-			<string>Box2D</string>
+			<array>
+				<string>libs</string>
+				<string>Box2D</string>
+				<string>Dynamics</string>
+			</array>
 			<key>Path</key>
 			<string>libs/Box2D/Dynamics/b2Island.cpp</string>
 		</dict>
 		<key>libs/Box2D/Dynamics/b2Island.h</key>
 		<dict>
 			<key>Group</key>
-			<string>Box2D</string>
+			<array>
+				<string>libs</string>
+				<string>Box2D</string>
+				<string>Dynamics</string>
+			</array>
 			<key>Path</key>
 			<string>libs/Box2D/Dynamics/b2Island.h</string>
 			<key>TargetIndices</key>
@@ -279,7 +427,11 @@
 		<key>libs/Box2D/Dynamics/b2TimeStep.h</key>
 		<dict>
 			<key>Group</key>
-			<string>Box2D</string>
+			<array>
+				<string>libs</string>
+				<string>Box2D</string>
+				<string>Dynamics</string>
+			</array>
 			<key>Path</key>
 			<string>libs/Box2D/Dynamics/b2TimeStep.h</string>
 			<key>TargetIndices</key>
@@ -288,14 +440,22 @@
 		<key>libs/Box2D/Dynamics/b2World.cpp</key>
 		<dict>
 			<key>Group</key>
-			<string>Box2D</string>
+			<array>
+				<string>libs</string>
+				<string>Box2D</string>
+				<string>Dynamics</string>
+			</array>
 			<key>Path</key>
 			<string>libs/Box2D/Dynamics/b2World.cpp</string>
 		</dict>
 		<key>libs/Box2D/Dynamics/b2World.h</key>
 		<dict>
 			<key>Group</key>
-			<string>Box2D</string>
+			<array>
+				<string>libs</string>
+				<string>Box2D</string>
+				<string>Dynamics</string>
+			</array>
 			<key>Path</key>
 			<string>libs/Box2D/Dynamics/b2World.h</string>
 			<key>TargetIndices</key>
@@ -304,14 +464,22 @@
 		<key>libs/Box2D/Dynamics/b2WorldCallbacks.cpp</key>
 		<dict>
 			<key>Group</key>
-			<string>Box2D</string>
+			<array>
+				<string>libs</string>
+				<string>Box2D</string>
+				<string>Dynamics</string>
+			</array>
 			<key>Path</key>
 			<string>libs/Box2D/Dynamics/b2WorldCallbacks.cpp</string>
 		</dict>
 		<key>libs/Box2D/Dynamics/b2WorldCallbacks.h</key>
 		<dict>
 			<key>Group</key>
-			<string>Box2D</string>
+			<array>
+				<string>libs</string>
+				<string>Box2D</string>
+				<string>Dynamics</string>
+			</array>
 			<key>Path</key>
 			<string>libs/Box2D/Dynamics/b2WorldCallbacks.h</string>
 			<key>TargetIndices</key>
@@ -320,14 +488,24 @@
 		<key>libs/Box2D/Dynamics/Contacts/b2CircleContact.cpp</key>
 		<dict>
 			<key>Group</key>
-			<string>Box2D</string>
+			<array>
+				<string>libs</string>
+				<string>Box2D</string>
+				<string>Dynamics</string>
+				<string>Contacts</string>
+			</array>
 			<key>Path</key>
 			<string>libs/Box2D/Dynamics/Contacts/b2CircleContact.cpp</string>
 		</dict>
 		<key>libs/Box2D/Dynamics/Contacts/b2CircleContact.h</key>
 		<dict>
 			<key>Group</key>
-			<string>Box2D</string>
+			<array>
+				<string>libs</string>
+				<string>Box2D</string>
+				<string>Dynamics</string>
+				<string>Contacts</string>
+			</array>
 			<key>Path</key>
 			<string>libs/Box2D/Dynamics/Contacts/b2CircleContact.h</string>
 			<key>TargetIndices</key>
@@ -336,14 +514,24 @@
 		<key>libs/Box2D/Dynamics/Contacts/b2Contact.cpp</key>
 		<dict>
 			<key>Group</key>
-			<string>Box2D</string>
+			<array>
+				<string>libs</string>
+				<string>Box2D</string>
+				<string>Dynamics</string>
+				<string>Contacts</string>
+			</array>
 			<key>Path</key>
 			<string>libs/Box2D/Dynamics/Contacts/b2Contact.cpp</string>
 		</dict>
 		<key>libs/Box2D/Dynamics/Contacts/b2Contact.h</key>
 		<dict>
 			<key>Group</key>
-			<string>Box2D</string>
+			<array>
+				<string>libs</string>
+				<string>Box2D</string>
+				<string>Dynamics</string>
+				<string>Contacts</string>
+			</array>
 			<key>Path</key>
 			<string>libs/Box2D/Dynamics/Contacts/b2Contact.h</string>
 			<key>TargetIndices</key>
@@ -352,14 +540,24 @@
 		<key>libs/Box2D/Dynamics/Contacts/b2ContactSolver.cpp</key>
 		<dict>
 			<key>Group</key>
-			<string>Box2D</string>
+			<array>
+				<string>libs</string>
+				<string>Box2D</string>
+				<string>Dynamics</string>
+				<string>Contacts</string>
+			</array>
 			<key>Path</key>
 			<string>libs/Box2D/Dynamics/Contacts/b2ContactSolver.cpp</string>
 		</dict>
 		<key>libs/Box2D/Dynamics/Contacts/b2ContactSolver.h</key>
 		<dict>
 			<key>Group</key>
-			<string>Box2D</string>
+			<array>
+				<string>libs</string>
+				<string>Box2D</string>
+				<string>Dynamics</string>
+				<string>Contacts</string>
+			</array>
 			<key>Path</key>
 			<string>libs/Box2D/Dynamics/Contacts/b2ContactSolver.h</string>
 			<key>TargetIndices</key>
@@ -368,7 +566,12 @@
 		<key>libs/Box2D/Dynamics/Contacts/b2NullContact.h</key>
 		<dict>
 			<key>Group</key>
-			<string>Box2D</string>
+			<array>
+				<string>libs</string>
+				<string>Box2D</string>
+				<string>Dynamics</string>
+				<string>Contacts</string>
+			</array>
 			<key>Path</key>
 			<string>libs/Box2D/Dynamics/Contacts/b2NullContact.h</string>
 			<key>TargetIndices</key>
@@ -377,14 +580,24 @@
 		<key>libs/Box2D/Dynamics/Contacts/b2PolygonAndCircleContact.cpp</key>
 		<dict>
 			<key>Group</key>
-			<string>Box2D</string>
+			<array>
+				<string>libs</string>
+				<string>Box2D</string>
+				<string>Dynamics</string>
+				<string>Contacts</string>
+			</array>
 			<key>Path</key>
 			<string>libs/Box2D/Dynamics/Contacts/b2PolygonAndCircleContact.cpp</string>
 		</dict>
 		<key>libs/Box2D/Dynamics/Contacts/b2PolygonAndCircleContact.h</key>
 		<dict>
 			<key>Group</key>
-			<string>Box2D</string>
+			<array>
+				<string>libs</string>
+				<string>Box2D</string>
+				<string>Dynamics</string>
+				<string>Contacts</string>
+			</array>
 			<key>Path</key>
 			<string>libs/Box2D/Dynamics/Contacts/b2PolygonAndCircleContact.h</string>
 			<key>TargetIndices</key>
@@ -393,14 +606,24 @@
 		<key>libs/Box2D/Dynamics/Contacts/b2PolygonContact.cpp</key>
 		<dict>
 			<key>Group</key>
-			<string>Box2D</string>
+			<array>
+				<string>libs</string>
+				<string>Box2D</string>
+				<string>Dynamics</string>
+				<string>Contacts</string>
+			</array>
 			<key>Path</key>
 			<string>libs/Box2D/Dynamics/Contacts/b2PolygonContact.cpp</string>
 		</dict>
 		<key>libs/Box2D/Dynamics/Contacts/b2PolygonContact.h</key>
 		<dict>
 			<key>Group</key>
-			<string>Box2D</string>
+			<array>
+				<string>libs</string>
+				<string>Box2D</string>
+				<string>Dynamics</string>
+				<string>Contacts</string>
+			</array>
 			<key>Path</key>
 			<string>libs/Box2D/Dynamics/Contacts/b2PolygonContact.h</string>
 			<key>TargetIndices</key>
@@ -409,14 +632,24 @@
 		<key>libs/Box2D/Dynamics/Contacts/b2TOISolver.cpp</key>
 		<dict>
 			<key>Group</key>
-			<string>Box2D</string>
+			<array>
+				<string>libs</string>
+				<string>Box2D</string>
+				<string>Dynamics</string>
+				<string>Contacts</string>
+			</array>
 			<key>Path</key>
 			<string>libs/Box2D/Dynamics/Contacts/b2TOISolver.cpp</string>
 		</dict>
 		<key>libs/Box2D/Dynamics/Contacts/b2TOISolver.h</key>
 		<dict>
 			<key>Group</key>
-			<string>Box2D</string>
+			<array>
+				<string>libs</string>
+				<string>Box2D</string>
+				<string>Dynamics</string>
+				<string>Contacts</string>
+			</array>
 			<key>Path</key>
 			<string>libs/Box2D/Dynamics/Contacts/b2TOISolver.h</string>
 			<key>TargetIndices</key>
@@ -425,14 +658,24 @@
 		<key>libs/Box2D/Dynamics/Joints/b2DistanceJoint.cpp</key>
 		<dict>
 			<key>Group</key>
-			<string>Box2D</string>
+			<array>
+				<string>libs</string>
+				<string>Box2D</string>
+				<string>Dynamics</string>
+				<string>Joints</string>
+			</array>
 			<key>Path</key>
 			<string>libs/Box2D/Dynamics/Joints/b2DistanceJoint.cpp</string>
 		</dict>
 		<key>libs/Box2D/Dynamics/Joints/b2DistanceJoint.h</key>
 		<dict>
 			<key>Group</key>
-			<string>Box2D</string>
+			<array>
+				<string>libs</string>
+				<string>Box2D</string>
+				<string>Dynamics</string>
+				<string>Joints</string>
+			</array>
 			<key>Path</key>
 			<string>libs/Box2D/Dynamics/Joints/b2DistanceJoint.h</string>
 			<key>TargetIndices</key>
@@ -441,14 +684,24 @@
 		<key>libs/Box2D/Dynamics/Joints/b2FrictionJoint.cpp</key>
 		<dict>
 			<key>Group</key>
-			<string>Box2D</string>
+			<array>
+				<string>libs</string>
+				<string>Box2D</string>
+				<string>Dynamics</string>
+				<string>Joints</string>
+			</array>
 			<key>Path</key>
 			<string>libs/Box2D/Dynamics/Joints/b2FrictionJoint.cpp</string>
 		</dict>
 		<key>libs/Box2D/Dynamics/Joints/b2FrictionJoint.h</key>
 		<dict>
 			<key>Group</key>
-			<string>Box2D</string>
+			<array>
+				<string>libs</string>
+				<string>Box2D</string>
+				<string>Dynamics</string>
+				<string>Joints</string>
+			</array>
 			<key>Path</key>
 			<string>libs/Box2D/Dynamics/Joints/b2FrictionJoint.h</string>
 			<key>TargetIndices</key>
@@ -457,14 +710,24 @@
 		<key>libs/Box2D/Dynamics/Joints/b2GearJoint.cpp</key>
 		<dict>
 			<key>Group</key>
-			<string>Box2D</string>
+			<array>
+				<string>libs</string>
+				<string>Box2D</string>
+				<string>Dynamics</string>
+				<string>Joints</string>
+			</array>
 			<key>Path</key>
 			<string>libs/Box2D/Dynamics/Joints/b2GearJoint.cpp</string>
 		</dict>
 		<key>libs/Box2D/Dynamics/Joints/b2GearJoint.h</key>
 		<dict>
 			<key>Group</key>
-			<string>Box2D</string>
+			<array>
+				<string>libs</string>
+				<string>Box2D</string>
+				<string>Dynamics</string>
+				<string>Joints</string>
+			</array>
 			<key>Path</key>
 			<string>libs/Box2D/Dynamics/Joints/b2GearJoint.h</string>
 			<key>TargetIndices</key>
@@ -473,14 +736,24 @@
 		<key>libs/Box2D/Dynamics/Joints/b2Joint.cpp</key>
 		<dict>
 			<key>Group</key>
-			<string>Box2D</string>
+			<array>
+				<string>libs</string>
+				<string>Box2D</string>
+				<string>Dynamics</string>
+				<string>Joints</string>
+			</array>
 			<key>Path</key>
 			<string>libs/Box2D/Dynamics/Joints/b2Joint.cpp</string>
 		</dict>
 		<key>libs/Box2D/Dynamics/Joints/b2Joint.h</key>
 		<dict>
 			<key>Group</key>
-			<string>Box2D</string>
+			<array>
+				<string>libs</string>
+				<string>Box2D</string>
+				<string>Dynamics</string>
+				<string>Joints</string>
+			</array>
 			<key>Path</key>
 			<string>libs/Box2D/Dynamics/Joints/b2Joint.h</string>
 			<key>TargetIndices</key>
@@ -489,14 +762,24 @@
 		<key>libs/Box2D/Dynamics/Joints/b2LineJoint.cpp</key>
 		<dict>
 			<key>Group</key>
-			<string>Box2D</string>
+			<array>
+				<string>libs</string>
+				<string>Box2D</string>
+				<string>Dynamics</string>
+				<string>Joints</string>
+			</array>
 			<key>Path</key>
 			<string>libs/Box2D/Dynamics/Joints/b2LineJoint.cpp</string>
 		</dict>
 		<key>libs/Box2D/Dynamics/Joints/b2LineJoint.h</key>
 		<dict>
 			<key>Group</key>
-			<string>Box2D</string>
+			<array>
+				<string>libs</string>
+				<string>Box2D</string>
+				<string>Dynamics</string>
+				<string>Joints</string>
+			</array>
 			<key>Path</key>
 			<string>libs/Box2D/Dynamics/Joints/b2LineJoint.h</string>
 			<key>TargetIndices</key>
@@ -505,14 +788,24 @@
 		<key>libs/Box2D/Dynamics/Joints/b2MouseJoint.cpp</key>
 		<dict>
 			<key>Group</key>
-			<string>Box2D</string>
+			<array>
+				<string>libs</string>
+				<string>Box2D</string>
+				<string>Dynamics</string>
+				<string>Joints</string>
+			</array>
 			<key>Path</key>
 			<string>libs/Box2D/Dynamics/Joints/b2MouseJoint.cpp</string>
 		</dict>
 		<key>libs/Box2D/Dynamics/Joints/b2MouseJoint.h</key>
 		<dict>
 			<key>Group</key>
-			<string>Box2D</string>
+			<array>
+				<string>libs</string>
+				<string>Box2D</string>
+				<string>Dynamics</string>
+				<string>Joints</string>
+			</array>
 			<key>Path</key>
 			<string>libs/Box2D/Dynamics/Joints/b2MouseJoint.h</string>
 			<key>TargetIndices</key>
@@ -521,14 +814,24 @@
 		<key>libs/Box2D/Dynamics/Joints/b2PrismaticJoint.cpp</key>
 		<dict>
 			<key>Group</key>
-			<string>Box2D</string>
+			<array>
+				<string>libs</string>
+				<string>Box2D</string>
+				<string>Dynamics</string>
+				<string>Joints</string>
+			</array>
 			<key>Path</key>
 			<string>libs/Box2D/Dynamics/Joints/b2PrismaticJoint.cpp</string>
 		</dict>
 		<key>libs/Box2D/Dynamics/Joints/b2PrismaticJoint.h</key>
 		<dict>
 			<key>Group</key>
-			<string>Box2D</string>
+			<array>
+				<string>libs</string>
+				<string>Box2D</string>
+				<string>Dynamics</string>
+				<string>Joints</string>
+			</array>
 			<key>Path</key>
 			<string>libs/Box2D/Dynamics/Joints/b2PrismaticJoint.h</string>
 			<key>TargetIndices</key>
@@ -537,14 +840,24 @@
 		<key>libs/Box2D/Dynamics/Joints/b2PulleyJoint.cpp</key>
 		<dict>
 			<key>Group</key>
-			<string>Box2D</string>
+			<array>
+				<string>libs</string>
+				<string>Box2D</string>
+				<string>Dynamics</string>
+				<string>Joints</string>
+			</array>
 			<key>Path</key>
 			<string>libs/Box2D/Dynamics/Joints/b2PulleyJoint.cpp</string>
 		</dict>
 		<key>libs/Box2D/Dynamics/Joints/b2PulleyJoint.h</key>
 		<dict>
 			<key>Group</key>
-			<string>Box2D</string>
+			<array>
+				<string>libs</string>
+				<string>Box2D</string>
+				<string>Dynamics</string>
+				<string>Joints</string>
+			</array>
 			<key>Path</key>
 			<string>libs/Box2D/Dynamics/Joints/b2PulleyJoint.h</string>
 			<key>TargetIndices</key>
@@ -553,14 +866,24 @@
 		<key>libs/Box2D/Dynamics/Joints/b2RevoluteJoint.cpp</key>
 		<dict>
 			<key>Group</key>
-			<string>Box2D</string>
+			<array>
+				<string>libs</string>
+				<string>Box2D</string>
+				<string>Dynamics</string>
+				<string>Joints</string>
+			</array>
 			<key>Path</key>
 			<string>libs/Box2D/Dynamics/Joints/b2RevoluteJoint.cpp</string>
 		</dict>
 		<key>libs/Box2D/Dynamics/Joints/b2RevoluteJoint.h</key>
 		<dict>
 			<key>Group</key>
-			<string>Box2D</string>
+			<array>
+				<string>libs</string>
+				<string>Box2D</string>
+				<string>Dynamics</string>
+				<string>Joints</string>
+			</array>
 			<key>Path</key>
 			<string>libs/Box2D/Dynamics/Joints/b2RevoluteJoint.h</string>
 			<key>TargetIndices</key>
@@ -569,14 +892,24 @@
 		<key>libs/Box2D/Dynamics/Joints/b2WeldJoint.cpp</key>
 		<dict>
 			<key>Group</key>
-			<string>Box2D</string>
+			<array>
+				<string>libs</string>
+				<string>Box2D</string>
+				<string>Dynamics</string>
+				<string>Joints</string>
+			</array>
 			<key>Path</key>
 			<string>libs/Box2D/Dynamics/Joints/b2WeldJoint.cpp</string>
 		</dict>
 		<key>libs/Box2D/Dynamics/Joints/b2WeldJoint.h</key>
 		<dict>
 			<key>Group</key>
-			<string>Box2D</string>
+			<array>
+				<string>libs</string>
+				<string>Box2D</string>
+				<string>Dynamics</string>
+				<string>Joints</string>
+			</array>
 			<key>Path</key>
 			<string>libs/Box2D/Dynamics/Joints/b2WeldJoint.h</string>
 			<key>TargetIndices</key>
@@ -584,18 +917,16 @@
 		</dict>
 		<key>libs/LICENSE_Box2D.txt</key>
 		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+			</array>
 			<key>Path</key>
 			<string>libs/LICENSE_Box2D.txt</string>
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
 	</dict>
-	<key>Description</key>
-	<string>This template provides an starting point for cocos2d for iOS.</string>
-	<key>Identifier</key>
-	<string>com.cocos2d.box2dlib</string>
-	<key>Kind</key>
-	<string>Xcode.Xcode3.ProjectTemplateUnitKind</string>
 	<key>Nodes</key>
 	<array>
 		<string>libs/Box2D/Box2D.h</string>
