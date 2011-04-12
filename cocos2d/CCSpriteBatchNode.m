@@ -139,6 +139,8 @@ static 	SEL selUpdate = NULL;
 // Don't call visit on it's children
 -(void) visit
 {
+	NSAssert(parent_ != nil, @"CCSpriteBatchNode should NOT be root node");
+
 	// CAREFUL:
 	// This visit is almost identical to CCNode#visit
 	// with the exception that it doesn't call visit on it's children
@@ -148,26 +150,15 @@ static 	SEL selUpdate = NULL;
 	//
 	if (!visible_)
 		return;
+
+	// Convert 3x3 into 4x4 matrix
+	CGAffineTransform tmpAffine = [self nodeToParentTransform];
+	CGAffineToGL(&tmpAffine, transformMV_.mat);
 	
-	transformMV_ = [self nodeToParentTransform];
-		
-	// leaf node
-	if( parent_ )
-		transformMV_ = CGAffineTransformConcat( transformMV_, parent_->transformMV_ );
-	
-	// SpriteBatchNode should not be used as a root node
-	else {
-		
-		NSAssert(NO, @"CCSpriteBatchNode should NOT be root node");
-//		CCDirector *director = [CCDirector sharedDirector];
-//		CGAffineTransform viewProjMat = [director projectionMatrix];
-//		
-//		CGSize winSize = [director winSize];
-//		viewProjMat = CGAffineTransformTranslate(viewProjMat, -winSize.width/2, -winSize.height/2);
-//		
-//		transformMV_ = CGAffineTransformConcat( transformMV_, viewProjMat);
-		
-	}		
+	// Update Z vertex manually
+	transformMV_.mat[14] = vertexZ_;
+
+	kmMat4Multiply(&transformMV_, &parent_->transformMV_, &transformMV_);
 	
 	// self draw
 	[self draw];		
@@ -278,12 +269,12 @@ static 	SEL selUpdate = NULL;
 	
 	glUseProgram( shaderProgram_->program_ );
 	
-	GLfloat mat4[16];	
-	CGAffineToGL(&transformMV_, &mat4[0] );
-	mat4[14] = vertexZ_;
+//	GLfloat mat4[16];	
+//	CGAffineToGL(&transformMV_, &mat4[0] );
+//	mat4[14] = vertexZ_;
 	
 	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformPMatrix], 1, GL_FALSE, (GLfloat*)&ccProjectionMatrix);
-	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformMVMatrix], 1, GL_FALSE, &mat4[0]);	
+	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformMVMatrix], 1, GL_FALSE, transformMV_.mat);
 	glUniform1i ( shaderProgram_->uniforms_[kCCUniformSampler], 0 );
 	
 	[textureAtlas_ drawQuads];

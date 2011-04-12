@@ -269,18 +269,12 @@
 		//
 		// Uniforms
 		//
-		GLfloat mat4[16];	
-		CGAffineToGL( &transformMV_, mat4 );
-		
-		// Updated Z vertex
-		mat4[14] = vertexZ_;
-		
 		GLProgram *program = curTime_ ? shaderProgram_ : shaderProgramAlternative_;
 		
 		glUseProgram( program->program_ );	
 		
 		glUniformMatrix4fv( program->uniforms_[kCCUniformPMatrix], 1, GL_FALSE, (GLfloat*)&ccProjectionMatrix);
-		glUniformMatrix4fv( program->uniforms_[kCCUniformMVMatrix], 1, GL_FALSE, mat4);	
+		glUniformMatrix4fv( program->uniforms_[kCCUniformMVMatrix], 1, GL_FALSE, transformMV_.mat);
 		glUniform1i( program->uniforms_[kCCUniformSampler], 0 );
 
 		if( ! curTime_ ) {

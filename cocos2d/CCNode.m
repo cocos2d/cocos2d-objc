@@ -127,7 +127,7 @@
 		//initialize parent to nil
 		parent_ = nil;
 		
-		transformMV_ = CGAffineTransformIdentity;
+		kmMat4Identity( &transformMV_ );
 		
 		shaderProgram_ = nil;
 	}
@@ -534,17 +534,22 @@
 		isTransformMVDirty_ = YES;
 	
 	if( isTransformMVDirty_ ) {
-		transformMV_ = [self nodeToParentTransform];
+
+		// Convert 3x3 into 4x4 matrix
+		CGAffineTransform tmpAffine = [self nodeToParentTransform];
+		CGAffineToGL(&tmpAffine, transformMV_.mat);
+		
+		// Update Z vertex manually
+		transformMV_.mat[14] = vertexZ_;
 		
 		// root node
 		if(  ! parent_ ) {
-
-//			transformMV_ = CGAffineTransformIdentity;			
+//			transformMV_ = CGAffineTransformIdentity;
 		}
 		
 		// leaf node
 		else 
-			transformMV_ = CGAffineTransformConcat( transformMV_, parent_->transformMV_ );
+			kmMat4Multiply(&transformMV_, &parent_->transformMV_, &transformMV_ );
 	}
 	
 	// XXX: Expensive calls. Camera should be integrated into the cached affine matrix

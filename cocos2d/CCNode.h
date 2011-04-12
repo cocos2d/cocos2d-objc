@@ -32,6 +32,7 @@
 #import "CCProtocols.h"
 #import "ccConfig.h"
 #import "Support/CCArray.h"
+#import "Support/kazmath.h"
 
 enum {
 	kCCNodeTagInvalid = -1,
@@ -160,7 +161,7 @@ enum {
 	BOOL isRelativeAnchorPoint_:1;	
 
 @public
-	CGAffineTransform transformMV_;
+	kmMat4	transformMV_;
 	BOOL	isTransformMVDirty_:1;
 
 }
