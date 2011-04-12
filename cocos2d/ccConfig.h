@@ -52,18 +52,6 @@
  */
 #define CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL 0
  
-
-/** @def CC_FONT_LABEL_SUPPORT
- If enabled, FontLabel will be used to render .ttf files.
- If the .ttf file is not found, then it will use the standard UIFont class
- If disabled, the standard UIFont class will be used.
- 
- To disable set it to 0. Enabled by default.
-
- Only valid for cocos2d-ios. Not supported on cocos2d-mac
- */
-#define CC_FONT_LABEL_SUPPORT	1
-
 /** @def CC_DIRECTOR_FAST_FPS
  If enabled, then the FPS will be drawn using CCLabelAtlas (fast rendering).
  You will need to add the fps_images.png to your project.

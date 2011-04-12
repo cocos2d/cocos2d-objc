@@ -79,12 +79,6 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #import "Support/ccUtils.h"
 #import "CCTexturePVR.h"
 
-#if defined(__IPHONE_OS_VERSION_MAX_ALLOWED) && CC_FONT_LABEL_SUPPORT
-// FontLabel support
-#import "FontManager.h"
-#import "FontLabelStringDrawing.h"
-#endif// CC_FONT_LABEL_SUPPORT
-
 
 // For Labels use 32-bit textures on iPhone 3GS / iPads since A8 textures are very slow
 #if ( defined(__ARM_NEON__) || TARGET_IPHONE_SIMULATOR ) && CC_USE_RGBA32_LABELS_ON_NEON_ARCH
@@ -403,12 +397,7 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 	// normal fonts
 	if( [uifont isKindOfClass:[UIFont class] ] )
 		[string drawInRect:CGRectMake(0, 0, dimensions.width, dimensions.height) withFont:uifont lineBreakMode:UILineBreakModeWordWrap alignment:alignment];
-	
-#if CC_FONT_LABEL_SUPPORT
-	else // ZFont class 
-		[string drawInRect:CGRectMake(0, 0, dimensions.width, dimensions.height) withZFont:uifont lineBreakMode:UILineBreakModeWordWrap alignment:alignment];
-#endif
-	
+
 	UIGraphicsPopContext();
 	
 #if USE_TEXT_WITH_A8_TEXTURES
@@ -487,14 +476,6 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 	font = [UIFont fontWithName:name size:size];
 	if( font )
 		dim = [string sizeWithFont:font];
-
-#if CC_FONT_LABEL_SUPPORT
-	if( ! font ){
-		font = [[FontManager sharedManager] zFontWithName:name pointSize:size];
-		if (font)
-			dim = [string sizeWithZFont:font];
-	}
-#endif // CC_FONT_LABEL_SUPPORT
 	
 	if( ! font ) {
 		CCLOG(@"cocos2d: Unable to load font %@", name);
@@ -533,10 +514,6 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 
 	uifont = [UIFont fontWithName:name size:size];
 
-#if CC_FONT_LABEL_SUPPORT
-	if( ! uifont )
-		uifont = [[FontManager sharedManager] zFontWithName:name pointSize:size];
-#endif // CC_FONT_LABEL_SUPPORT
 	if( ! uifont ) {
 		CCLOG(@"cocos2d: Texture2d: Invalid Font: %@. Verify the .ttf name", name);
 		[self release];
