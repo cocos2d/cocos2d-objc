@@ -29,7 +29,7 @@
 #import "CCTextureCache.h"
 #import "GLProgram.h"
 #import "CCShaderCache.h"
-#import "ccShaderState.h"
+#import "ccGLState.h"
 #import "CCDirector.h"
 #import "Support/CGPointExtension.h"
 #import "Support/TransformUtils.h"
@@ -475,24 +475,21 @@ const char kCCProgressTextureCoords = 0x4b;
 
 -(void)draw
 {
-	if(!vertexData_)return;
-	if(!sprite_)return;
-	BOOL newBlend = NO;
-	if( sprite_.blendFunc.src != CC_BLEND_SRC || sprite_.blendFunc.dst != CC_BLEND_DST ) {
-		newBlend = YES;
-		glBlendFunc( sprite_.blendFunc.src, sprite_.blendFunc.dst );
-	}
+	if( ! vertexData_ || ! sprite_)
+		return;
+	
+	ccglBlendFunc( sprite_.blendFunc.src, sprite_.blendFunc.dst );
 
     // Default Attribs & States: GL_TEXTURE0, k,CCAttribVertex, kCCAttribColor, kCCAttribTexCoords
 	// Needed states: GL_TEXTURE0, k,CCAttribVertex, kCCAttribColor, kCCAttribTexCoords
 	// Unneeded states: -
 	
-	ccShaderUseProgram( shaderProgram_->program_ );	
+	ccglUseProgram( shaderProgram_->program_ );	
 	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformPMatrix], 1, GL_FALSE, (GLfloat*)&ccProjectionMatrix);
 	glUniform1i ( shaderProgram_->uniforms_[kCCUniformSampler], 0 );
+	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformMVMatrix], 1, GL_FALSE, transformMV_.mat);
 
-    glBindTexture(GL_TEXTURE_2D, sprite_.texture.name);
-
+	ccglBindTexture2D( sprite_.texture.name );
 	
     glVertexAttribPointer( kCCAttribPosition, 2, GL_FLOAT, GL_FALSE, sizeof(vertexData_[0]) , &vertexData_[0].vertices);
     glVertexAttribPointer( kCCAttribTexCoords, 2, GL_FLOAT, GL_FALSE, sizeof(vertexData_[0]), &vertexData_[0].texCoords);
@@ -508,9 +505,6 @@ const char kCCProgressTextureCoords = 0x4b;
 			glDrawArrays(GL_TRIANGLE_STRIP, 4, vertexDataCount_/2);
 		}
 	}
-	///	========================================================================
-	if( newBlend )
-		glBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);
 }
 
 @end

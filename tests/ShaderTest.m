@@ -195,19 +195,14 @@ enum {
 	float w = SIZE_X, h = SIZE_Y;
 	GLfloat vertices[12] = {0,0, w,0, w,h, 0,0, 0,h, w,h};
 
-	glUseProgram( shaderProgram_->program_ );
+	ccglUseProgram( shaderProgram_->program_ );
 
 	//
 	// Uniforms
 	//
-	GLfloat mat4[16];	
-	CGAffineToGL( &transformMV_, mat4 );
-	
-	// Updated Z vertex
-	mat4[14] = vertexZ_;
 	
 	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformPMatrix], 1, GL_FALSE, (GLfloat*)&ccProjectionMatrix);
-	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformMVMatrix], 1, GL_FALSE, mat4);	
+	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformMVMatrix], 1, GL_FALSE, transformMV_.mat);
 	
 	glUniform1f( uniformTime, time_ );
 
@@ -394,7 +389,7 @@ enum {
 		blur_ = ccp(1/s.width, 1/s.height);
 		sub_[0] = sub_[1] = sub_[2] = sub_[3] = 0;
 		
-		GLProgram *shader = [[GLProgram alloc] initWithVertexShaderFilename:@"Shaders/VertexTextureColor.vert"
+		GLProgram *shader = [[GLProgram alloc] initWithVertexShaderFilename:@"Shaders/PositionTextureColor.vert"
 													 fragmentShaderFilename:@"Shaders/Blur.frag"];
 
 		CHECK_GL_ERROR_DEBUG();
@@ -432,25 +427,22 @@ enum {
 	// Needed states: GL_TEXTURE0, k,CCAttribVertex, kCCAttribColor, kCCAttribTexCoords
 	// Unneeded states: -
 	
-	BOOL newBlend = blendFunc_.src != CC_BLEND_SRC || blendFunc_.dst != CC_BLEND_DST;
-	if( newBlend )
-		glBlendFunc( blendFunc_.src, blendFunc_.dst );
+	CHECK_GL_ERROR_DEBUG();
+
+	ccglBlendFunc( blendFunc_.src, blendFunc_.dst );
+
+	CHECK_GL_ERROR_DEBUG();
 	
-	glUseProgram( shaderProgram_->program_ );
+	ccglUseProgram( shaderProgram_->program_ );
 	
 	CHECK_GL_ERROR_DEBUG();
 	
 	//
 	// Uniforms
 	//
-	GLfloat mat4[16];	
-	CGAffineToGL( &transformMV_, mat4 );
-	
-	// Updated Z vertex
-	mat4[14] = vertexZ_;
 	
 	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformPMatrix], 1, GL_FALSE, (GLfloat*)&ccProjectionMatrix);
-	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformMVMatrix], 1, GL_FALSE, mat4);	
+	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformMVMatrix], 1, GL_FALSE, transformMV_.mat);	
 	glUniform1i ( shaderProgram_->uniforms_[kCCUniformSampler], 0 );
 	CHECK_GL_ERROR_DEBUG();
 
@@ -461,7 +453,7 @@ enum {
 	CHECK_GL_ERROR_DEBUG();
 
 	
-	glBindTexture(GL_TEXTURE_2D, [texture_ name]);	
+	ccglBindTexture2D( [texture_ name]);	
 	
 	//
 	// Attributes
@@ -485,10 +477,7 @@ enum {
 	CHECK_GL_ERROR_DEBUG();
 
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-	
-	if( newBlend )
-		glBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);	
-	
+
 	CHECK_GL_ERROR_DEBUG();
 }
 @end

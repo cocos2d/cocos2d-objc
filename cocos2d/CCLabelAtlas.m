@@ -30,7 +30,7 @@
 #import "CCLabelAtlas.h"
 #import "CCShaderCache.h"
 #import "GLProgram.h"
-#import "ccShaderState.h"
+#import "ccGLState.h"
 #import "CCDirector.h"
 #import "Support/CGPointExtension.h"
 #import "Support/TransformUtils.h"
@@ -159,12 +159,9 @@
 	// Needed states: GL_TEXTURE0, k,CCAttribVertex, kCCAttribColor, kCCAttribTexCoords
 	// Unneeded states: -
 	
-	
-	BOOL newBlend = blendFunc_.src != CC_BLEND_SRC || blendFunc_.dst != CC_BLEND_DST;
-	if( newBlend )
-		glBlendFunc( blendFunc_.src, blendFunc_.dst );
+	ccglBlendFunc( blendFunc_.src, blendFunc_.dst );
 
-	ccShaderUseProgram( shaderProgram_->program_ );
+	ccglUseProgram( shaderProgram_->program_ );
 	
 	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformPMatrix], 1, GL_FALSE, (GLfloat*)&ccProjectionMatrix);
 	glUniform1i ( shaderProgram_->uniforms_[kCCUniformSampler], 0 );
@@ -172,10 +169,6 @@
 	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformMVMatrix], 1, GL_FALSE, transformMV_.mat);
 	
 	[textureAtlas_ drawNumberOfQuads:string_.length fromIndex:0];
-	
-	if( newBlend )
-		glBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);
-		
 	
 #if CC_LABELATLAS_DEBUG_DRAW
 	CGSize s = [self contentSize];

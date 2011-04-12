@@ -33,7 +33,7 @@
 #import "CCGrabber.h"
 #import "GLProgram.h"
 #import "CCShaderCache.h"
-#import "ccShaderState.h"
+#import "ccGLState.h"
 
 #import "Platforms/CCGL.h"
 #import "Support/CGPointExtension.h"
@@ -240,8 +240,8 @@
 		ccglTranslate(-offset.x, -offset.y, 0);
 #endif
 	}
-		
-	glBindTexture(GL_TEXTURE_2D, texture_.name);
+	
+	ccglBindTexture2D(texture_.name);
 
 	[self blit];
 	
@@ -291,7 +291,7 @@
 	glDisableVertexAttribArray( kCCAttribColor );
 	
 
-	ccShaderUseProgram( shaderProgram_->program_ );
+	ccglUseProgram( shaderProgram_->program_ );
 
 	if( ! updatedUniforms_ ) {
 		glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformPMatrix], 1, GL_FALSE, (GLfloat*)&ccProjectionMatrix);
@@ -448,7 +448,7 @@
 	// Unneeded states: kCCAttribColor
 	glDisableVertexAttribArray( kCCAttribColor );
 
-	ccShaderUseProgram( shaderProgram_->program_ );
+	ccglUseProgram( shaderProgram_->program_ );
 	
 	if( ! updatedUniforms_ ) {
 		glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformPMatrix], 1, GL_FALSE, (GLfloat*)&ccProjectionMatrix);

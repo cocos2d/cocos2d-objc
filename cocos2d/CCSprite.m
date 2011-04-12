@@ -35,7 +35,7 @@
 #import "CCTextureCache.h"
 #import "CCDrawingPrimitives.h"
 #import "CCShaderCache.h"
-#import "ccShaderState.h"
+#import "ccGLState.h"
 #import "GLProgram.h"
 #import "CCDirector.h"
 #import "Support/CGPointExtension.h"
@@ -567,16 +567,14 @@ struct transformValues_ {
 	// Needed states: GL_TEXTURE0, k,CCAttribVertex, kCCAttribColor, kCCAttribTexCoords
 	// Unneeded states: -
 	
-	BOOL newBlend = blendFunc_.src != CC_BLEND_SRC || blendFunc_.dst != CC_BLEND_DST;
-	if( newBlend )
-		glBlendFunc( blendFunc_.src, blendFunc_.dst );
+	ccglBlendFunc( blendFunc_.src, blendFunc_.dst );
 	
-	ccShaderUseProgram( shaderProgram_->program_ );
+	ccglUseProgram( shaderProgram_->program_ );
 	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformPMatrix], 1, GL_FALSE, (GLfloat*)&ccProjectionMatrix);
 	glUniform1i ( shaderProgram_->uniforms_[kCCUniformSampler], 0 );
 	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformMVMatrix], 1, GL_FALSE, transformMV_.mat);
 	
-	glBindTexture(GL_TEXTURE_2D, [texture_ name]);	
+	ccglBindTexture2D( [texture_ name] );
 		
 	//
 	// Attributes
@@ -597,10 +595,7 @@ struct transformValues_ {
 	glVertexAttribPointer(kCCAttribColor, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (void*)(offset + diff));
 	
 
-	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-	
-	if( newBlend )
-		glBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);	
+	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);	
 }
 
 #pragma mark CCSprite - CCNode overrides

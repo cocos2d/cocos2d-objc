@@ -36,7 +36,7 @@
 #import "CCSpriteFrame.h"
 #import "CCDirector.h"
 #import "CCShaderCache.h"
-#import "ccShaderState.h"
+#import "ccGLState.h"
 #import "GLProgram.h"
 
 // support
@@ -270,7 +270,7 @@
 	// Needed states: GL_TEXTURE0, k,CCAttribVertex, kCCAttribColor, kCCAttribTexCoords
 	// Unneeded states: -
 	
-	glBindTexture(GL_TEXTURE_2D, [texture_ name]);
+	ccglBindTexture2D( [texture_ name] );
 
 #define kQuadSize sizeof(quads_[0].bl)
 
@@ -304,20 +304,14 @@
 
 #endif // ! CC_USES_VBO
 	
-	BOOL newBlend = blendFunc_.src != CC_BLEND_SRC || blendFunc_.dst != CC_BLEND_DST;
-	if( newBlend )
-		glBlendFunc( blendFunc_.src, blendFunc_.dst );
+	ccglBlendFunc( blendFunc_.src, blendFunc_.dst );
 	
-	ccShaderUseProgram( shaderProgram_->program_ );	
+	ccglUseProgram( shaderProgram_->program_ );	
 	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformPMatrix], 1, GL_FALSE, (GLfloat*)&ccProjectionMatrix);
 	glUniform1i ( shaderProgram_->uniforms_[kCCUniformSampler], 0 );
 	
 	NSAssert( particleIdx == particleCount, @"Abnormal error in particle quad");
 	glDrawElements(GL_TRIANGLES, (GLsizei) particleIdx*6, GL_UNSIGNED_SHORT, indices_);
-	
-	// restore blend state
-	if( newBlend )
-		glBlendFunc( CC_BLEND_SRC, CC_BLEND_DST );
 
 #if CC_USES_VBO
 	glBindBuffer(GL_ARRAY_BUFFER, 0);

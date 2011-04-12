@@ -64,6 +64,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #import "CCTexturePVR.h"
 #import "ccMacros.h"
 #import "CCConfiguration.h"
+#import "ccGLState.h"
 #import "Support/ccUtils.h"
 #import "Support/CCFileUtils.h"
 #import "Support/ZipUtils.h"
@@ -278,7 +279,8 @@ typedef struct _PVRTexHeader
 			glDeleteTextures(1, &name_);
 		
 		glGenTextures(1, &name_);
-		glBindTexture(GL_TEXTURE_2D, name_);
+		ccglBindTexture2D( name_ );
+
 	}
 
 	// Generate textures with mipmaps

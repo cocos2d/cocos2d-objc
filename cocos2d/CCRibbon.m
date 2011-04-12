@@ -45,7 +45,7 @@
 #import "ccMacros.h"
 #import "GLProgram.h"
 #import "CCShaderCache.h"
-#import "ccShaderState.h"
+#import "ccGLState.h"
 #import "Support/TransformUtils.h"
 #import "Support/CGPointExtension.h"
 #import "Support/OpenGL_Internal.h"
@@ -272,7 +272,7 @@
 		//
 		GLProgram *program = curTime_ ? shaderProgram_ : shaderProgramAlternative_;
 		
-		ccShaderUseProgram( program->program_ );		
+		ccglUseProgram( program->program_ );		
 		glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformPMatrix], 1, GL_FALSE, (GLfloat*)&ccProjectionMatrix);
 		glUniform1i ( shaderProgram_->uniforms_[kCCUniformSampler], 0 );
 
@@ -282,18 +282,13 @@
 			glVertexAttrib4fv(kCCAttribColor, (GLfloat*)&color);
 		}
 		
-		glBindTexture(GL_TEXTURE_2D, [texture_ name]);
+		ccglBindTexture2D( [texture_ name] );
 
-		BOOL newBlend = blendFunc_.src != CC_BLEND_SRC || blendFunc_.dst != CC_BLEND_DST;
-		if( newBlend )
-			glBlendFunc( blendFunc_.src, blendFunc_.dst );
+		ccglBlendFunc( blendFunc_.src, blendFunc_.dst );
 
 		for (CCRibbonSegment* seg in segments_) {
 			[seg draw:curTime_ fadeTime:fadeTime_ color:color_];
 		}
-
-		if( newBlend )
-			glBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);
 
 		// Restore default state
 		if( ! curTime_ )

@@ -33,7 +33,7 @@
 #import "ccMacros.h"
 #import "CCShaderCache.h"
 #import "GLProgram.h"
-#import "ccShaderState.h"
+#import "ccGLState.h"
 #import "Support/TransformUtils.h"
 #import "Support/CGPointExtension.h"
 
@@ -367,23 +367,16 @@
 	glVertexAttribPointer(kCCAttribColor, 4, GL_FLOAT, GL_FALSE, 0, squareColors_);
 	
 	
-	BOOL newBlend = blendFunc_.src != CC_BLEND_SRC || blendFunc_.dst != CC_BLEND_DST;
-	if( newBlend )
-		glBlendFunc( blendFunc_.src, blendFunc_.dst );
+	if( opacity_ != 255 )
+		ccglBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	else
+		ccglBlendFunc( blendFunc_.src, blendFunc_.dst );
 	
-	else if( opacity_ != 255 ) {
-		newBlend = YES;
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	}
-
-	ccShaderUseProgram( shaderProgram_->program_ );
+	ccglUseProgram( shaderProgram_->program_ );
 	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformPMatrix], 1, GL_FALSE, (GLfloat*)&ccProjectionMatrix);
 	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformMVMatrix], 1, GL_FALSE, transformMV_.mat);
 
-	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-	
-	if( newBlend )
-		glBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);
+	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);	
 }
 
 #pragma mark Protocols
