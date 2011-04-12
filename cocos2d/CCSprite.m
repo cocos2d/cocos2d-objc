@@ -35,6 +35,7 @@
 #import "CCTextureCache.h"
 #import "CCDrawingPrimitives.h"
 #import "CCShaderCache.h"
+#import "ccShaderState.h"
 #import "GLProgram.h"
 #import "CCDirector.h"
 #import "Support/CGPointExtension.h"
@@ -148,9 +149,6 @@ struct transformValues_ {
 		bzero(&quad_, sizeof(quad_));
 		
 		flipY_ = flipX_ = NO;
-		
-		// lazy alloc
-		animations_ = nil;
 		
 		// default transform anchor: center
 		anchorPoint_ =  ccp(0.5f, 0.5f);
@@ -289,7 +287,6 @@ struct transformValues_ {
 - (void) dealloc
 {
 	[texture_ release];
-	[animations_ release];
 	[super dealloc];
 }
 
@@ -316,11 +313,6 @@ struct transformValues_ {
 	usesBatchNode_ = YES;
 	textureAtlas_ = [batchNode textureAtlas]; // weak ref
 	batchNode_ = batchNode; // weak ref
-}
-
--(void) initAnimationDictionary
-{
-	animations_ = [[NSMutableDictionary alloc] initWithCapacity:2];
 }
 
 -(void)setTextureRect:(CGRect)rect
@@ -579,13 +571,10 @@ struct transformValues_ {
 	if( newBlend )
 		glBlendFunc( blendFunc_.src, blendFunc_.dst );
 	
-	glUseProgram( shaderProgram_->program_ );
-	//
-	// Uniforms
-	//
+	ccShaderUseProgram( shaderProgram_->program_ );
 	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformPMatrix], 1, GL_FALSE, (GLfloat*)&ccProjectionMatrix);
-	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformMVMatrix], 1, GL_FALSE, transformMV_.mat);
 	glUniform1i ( shaderProgram_->uniforms_[kCCUniformSampler], 0 );
+	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformMVMatrix], 1, GL_FALSE, transformMV_.mat);
 	
 	glBindTexture(GL_TEXTURE_2D, [texture_ name]);	
 		
@@ -907,12 +896,6 @@ struct transformValues_ {
 -(CCSpriteFrame*) displayedFrame
 {
 	return [CCSpriteFrame frameWithTexture:self.texture rect:rect_];
-}
-
--(CCAnimation*)animationByName: (NSString*) animationName
-{
-	NSAssert( animationName != nil, @"animationName parameter must be non nil");
-    return [animations_ objectForKey:animationName];
 }
 
 #pragma mark CCSprite - CocosNodeTexture protocol

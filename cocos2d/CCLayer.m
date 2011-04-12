@@ -33,6 +33,7 @@
 #import "ccMacros.h"
 #import "CCShaderCache.h"
 #import "GLProgram.h"
+#import "ccShaderState.h"
 #import "Support/TransformUtils.h"
 #import "Support/CGPointExtension.h"
 
@@ -374,11 +375,10 @@
 		newBlend = YES;
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	}
-	
-	glUseProgram( shaderProgram_->program_ );
-	
+
+	ccShaderUseProgram( shaderProgram_->program_ );
 	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformPMatrix], 1, GL_FALSE, (GLfloat*)&ccProjectionMatrix);
-	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformMVMatrix], 1, GL_FALSE, transformMV_.mat);	
+	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformMVMatrix], 1, GL_FALSE, transformMV_.mat);
 
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 	

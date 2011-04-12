@@ -48,8 +48,6 @@ enum {
 	kCCUniform_MAX,
 };
 
-extern GLint ccUniforms[kCCUniform_MAX];
-
 #define kCCShader_PositionTextureColor		@"ShaderPositionTextureColor"
 #define kCCShader_PositionColor				@"ShaderPositionColor"
 #define kCCShader_PositionTexture			@"ShaderPositionTexture"

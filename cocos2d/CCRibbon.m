@@ -45,6 +45,7 @@
 #import "ccMacros.h"
 #import "GLProgram.h"
 #import "CCShaderCache.h"
+#import "ccShaderState.h"
 #import "Support/TransformUtils.h"
 #import "Support/CGPointExtension.h"
 #import "Support/OpenGL_Internal.h"
@@ -271,11 +272,9 @@
 		//
 		GLProgram *program = curTime_ ? shaderProgram_ : shaderProgramAlternative_;
 		
-		glUseProgram( program->program_ );	
-		
-		glUniformMatrix4fv( program->uniforms_[kCCUniformPMatrix], 1, GL_FALSE, (GLfloat*)&ccProjectionMatrix);
-		glUniformMatrix4fv( program->uniforms_[kCCUniformMVMatrix], 1, GL_FALSE, transformMV_.mat);
-		glUniform1i( program->uniforms_[kCCUniformSampler], 0 );
+		ccShaderUseProgram( program->program_ );		
+		glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformPMatrix], 1, GL_FALSE, (GLfloat*)&ccProjectionMatrix);
+		glUniform1i ( shaderProgram_->uniforms_[kCCUniformSampler], 0 );
 
 		if( ! curTime_ ) {
 			ccColor4F color = { color_.r/255.0f, color_.g/255.0f, color_.b/255.0f, color_.a/255.0f };

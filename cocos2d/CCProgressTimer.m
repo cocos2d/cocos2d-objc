@@ -29,6 +29,7 @@
 #import "CCTextureCache.h"
 #import "GLProgram.h"
 #import "CCShaderCache.h"
+#import "ccShaderState.h"
 #import "CCDirector.h"
 #import "Support/CGPointExtension.h"
 #import "Support/TransformUtils.h"
@@ -486,13 +487,9 @@ const char kCCProgressTextureCoords = 0x4b;
 	// Needed states: GL_TEXTURE0, k,CCAttribVertex, kCCAttribColor, kCCAttribTexCoords
 	// Unneeded states: -
 	
-	glUseProgram( shaderProgram_->program_ );
-	//
-	// Uniforms
-	//
+	ccShaderUseProgram( shaderProgram_->program_ );	
 	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformPMatrix], 1, GL_FALSE, (GLfloat*)&ccProjectionMatrix);
-	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformMVMatrix], 1, GL_FALSE, transformMV_.mat);
-	glUniform1i( shaderProgram_->uniforms_[kCCUniformSampler], 0 );
+	glUniform1i ( shaderProgram_->uniforms_[kCCUniformSampler], 0 );
 
     glBindTexture(GL_TEXTURE_2D, sprite_.texture.name);
 

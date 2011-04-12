@@ -33,6 +33,7 @@
 #import "CCTextureCache.h"
 #import "CCShaderCache.h"
 #import "GLProgram.h"
+#import "ccShaderState.h"
 #import "CCDirector.h"
 #import "Support/CGPointExtension.h"
 #import "Support/TransformUtils.h"
@@ -267,15 +268,11 @@ static 	SEL selUpdate = NULL;
 	if( newBlend )
 		glBlendFunc( blendFunc_.src, blendFunc_.dst );
 	
-	glUseProgram( shaderProgram_->program_ );
-	
-//	GLfloat mat4[16];	
-//	CGAffineToGL(&transformMV_, &mat4[0] );
-//	mat4[14] = vertexZ_;
-	
+	ccShaderUseProgram( shaderProgram_->program_ );	
 	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformPMatrix], 1, GL_FALSE, (GLfloat*)&ccProjectionMatrix);
-	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformMVMatrix], 1, GL_FALSE, transformMV_.mat);
 	glUniform1i ( shaderProgram_->uniforms_[kCCUniformSampler], 0 );
+	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformMVMatrix], 1, GL_FALSE, transformMV_.mat);
+
 	
 	[textureAtlas_ drawQuads];
 	if( newBlend )

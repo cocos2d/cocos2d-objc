@@ -302,13 +302,12 @@
 	if( ! camera_ ) {
 		camera_ = [[CCCamera alloc] init];
 		
-		// by default, center camera at the Sprite's anchor point
-		//		[camera_ setCenterX:anchorPointInPixels_.x centerY:anchorPointInPixels_.y centerZ:0];
-		//		[camera_ setEyeX:anchorPointInPixels_.x eyeY:anchorPointInPixels_.y eyeZ:1];
-		
-		//		[camera_ setCenterX:0 centerY:0 centerZ:0];
-		//		[camera_ setEyeX:0 eyeY:0 eyeZ:1];
-		
+// by default, center camera at the Sprite's anchor point
+//		[camera_ setCenterX:anchorPointInPixels_.x centerY:anchorPointInPixels_.y centerZ:0];
+//		[camera_ setEyeX:anchorPointInPixels_.x eyeY:anchorPointInPixels_.y eyeZ:1];
+
+//		[camera_ setCenterX:0 centerY:0 centerZ:0];
+//		[camera_ setEyeX:0 eyeY:0 eyeZ:1];
 	}
 	
 	return camera_;

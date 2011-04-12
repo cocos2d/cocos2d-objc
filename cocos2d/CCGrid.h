@@ -51,6 +51,7 @@
 	kmMat4		projectionBackup_;
 	kmMat4		projection3D_;
 	kmMat4		modelViewMat_;
+	BOOL		updatedUniforms_:1;
 }
 
 /** wheter or not the grid is active */

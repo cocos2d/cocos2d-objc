@@ -148,7 +148,7 @@ enum {
 	GLProgram	*shaderProgram_;
 
 	// Is running
-	BOOL isRunning_;
+	BOOL isRunning_:1;
 
 	// To reduce memory, place BOOLs that are not properties here:
 	BOOL isTransformDirty_:1;
