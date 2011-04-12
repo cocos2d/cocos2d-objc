@@ -20,6 +20,4 @@
 }
 
 +(id)scene;
--(void)doPageFlip;
-
 @end

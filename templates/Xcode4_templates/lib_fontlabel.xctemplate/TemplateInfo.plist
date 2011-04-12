@@ -1,13 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!-- File autogenrated by cocos2d/tools/template_generator.py DO NOT EDIT IT MANUALLY -->
 <plist version="1.0">
 <dict>
+	<key>Description</key>
+	<string>This template provides an starting point for cocos2d for iOS.</string>
+	<key>Identifier</key>
+	<string>com.cocos2d.fontlabellib</string>
+	<key>Kind</key>
+	<string>Xcode.Xcode3.ProjectTemplateUnitKind</string>
+
 	<key>Definitions</key>
 	<dict>
 		<key>libs/FontLabel/FontLabel.h</key>
 		<dict>
 			<key>Group</key>
-			<string>FontLabel</string>
+			<array>
+				<string>libs</string>
+				<string>FontLabel</string>
+			</array>
 			<key>Path</key>
 			<string>libs/FontLabel/FontLabel.h</string>
 			<key>TargetIndices</key>
@@ -16,14 +27,20 @@
 		<key>libs/FontLabel/FontLabel.m</key>
 		<dict>
 			<key>Group</key>
-			<string>FontLabel</string>
+			<array>
+				<string>libs</string>
+				<string>FontLabel</string>
+			</array>
 			<key>Path</key>
 			<string>libs/FontLabel/FontLabel.m</string>
 		</dict>
 		<key>libs/FontLabel/FontLabelStringDrawing.h</key>
 		<dict>
 			<key>Group</key>
-			<string>FontLabel</string>
+			<array>
+				<string>libs</string>
+				<string>FontLabel</string>
+			</array>
 			<key>Path</key>
 			<string>libs/FontLabel/FontLabelStringDrawing.h</string>
 			<key>TargetIndices</key>
@@ -32,14 +49,20 @@
 		<key>libs/FontLabel/FontLabelStringDrawing.m</key>
 		<dict>
 			<key>Group</key>
-			<string>FontLabel</string>
+			<array>
+				<string>libs</string>
+				<string>FontLabel</string>
+			</array>
 			<key>Path</key>
 			<string>libs/FontLabel/FontLabelStringDrawing.m</string>
 		</dict>
 		<key>libs/FontLabel/FontManager.h</key>
 		<dict>
 			<key>Group</key>
-			<string>FontLabel</string>
+			<array>
+				<string>libs</string>
+				<string>FontLabel</string>
+			</array>
 			<key>Path</key>
 			<string>libs/FontLabel/FontManager.h</string>
 			<key>TargetIndices</key>
@@ -48,14 +71,20 @@
 		<key>libs/FontLabel/FontManager.m</key>
 		<dict>
 			<key>Group</key>
-			<string>FontLabel</string>
+			<array>
+				<string>libs</string>
+				<string>FontLabel</string>
+			</array>
 			<key>Path</key>
 			<string>libs/FontLabel/FontManager.m</string>
 		</dict>
 		<key>libs/FontLabel/ZAttributedString.h</key>
 		<dict>
 			<key>Group</key>
-			<string>FontLabel</string>
+			<array>
+				<string>libs</string>
+				<string>FontLabel</string>
+			</array>
 			<key>Path</key>
 			<string>libs/FontLabel/ZAttributedString.h</string>
 			<key>TargetIndices</key>
@@ -64,14 +93,20 @@
 		<key>libs/FontLabel/ZAttributedString.m</key>
 		<dict>
 			<key>Group</key>
-			<string>FontLabel</string>
+			<array>
+				<string>libs</string>
+				<string>FontLabel</string>
+			</array>
 			<key>Path</key>
 			<string>libs/FontLabel/ZAttributedString.m</string>
 		</dict>
 		<key>libs/FontLabel/ZAttributedStringPrivate.h</key>
 		<dict>
 			<key>Group</key>
-			<string>FontLabel</string>
+			<array>
+				<string>libs</string>
+				<string>FontLabel</string>
+			</array>
 			<key>Path</key>
 			<string>libs/FontLabel/ZAttributedStringPrivate.h</string>
 			<key>TargetIndices</key>
@@ -80,7 +115,10 @@
 		<key>libs/FontLabel/ZFont.h</key>
 		<dict>
 			<key>Group</key>
-			<string>FontLabel</string>
+			<array>
+				<string>libs</string>
+				<string>FontLabel</string>
+			</array>
 			<key>Path</key>
 			<string>libs/FontLabel/ZFont.h</string>
 			<key>TargetIndices</key>
@@ -89,24 +127,25 @@
 		<key>libs/FontLabel/ZFont.m</key>
 		<dict>
 			<key>Group</key>
-			<string>FontLabel</string>
+			<array>
+				<string>libs</string>
+				<string>FontLabel</string>
+			</array>
 			<key>Path</key>
 			<string>libs/FontLabel/ZFont.m</string>
 		</dict>
 		<key>libs/LICENSE_FontLabel.txt</key>
 		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+			</array>
 			<key>Path</key>
 			<string>libs/LICENSE_FontLabel.txt</string>
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
 	</dict>
-	<key>Description</key>
-	<string>This template provides an starting point for cocos2d for iOS.</string>
-	<key>Identifier</key>
-	<string>com.cocos2d.fontlabellib</string>
-	<key>Kind</key>
-	<string>Xcode.Xcode3.ProjectTemplateUnitKind</string>
 	<key>Nodes</key>
 	<array>
 		<string>libs/FontLabel/FontLabel.h</string>

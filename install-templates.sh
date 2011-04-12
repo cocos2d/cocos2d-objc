@@ -60,7 +60,7 @@ check_dst_dir(){
 	if [[ -d $DST_DIR ]];  then
 		if [[ $force ]]; then
 			echo "removing old libraries: ${DST_DIR}"
-			rm -rf $DST_DIR
+			rm -rf "$DST_DIR"
 		else
 			echo "templates already installed. To force a re-install use the '-f' parameter"
 			exit 1
@@ -106,6 +106,11 @@ copy_cocosdenshion_files(){
 	echo ...copying CocosDenshion files
 	copy_files CocosDenshion/CocosDenshion "$LIBS_DIR"
     copy_files LICENSE_CocosDenshion.txt "$LIBS_DIR"
+}
+
+copy_cocosdenshionextras_files(){
+	echo ...copying CocosDenshionExtras files
+	copy_files CocosDenshion/CocosDenshionExtras "$LIBS_DIR"
 }
 
 copy_fontlabel_files(){
@@ -256,6 +261,10 @@ copy_xcode4_project_templates(){
     mkdir -p "$LIBS_DIR"
     copy_cocosdenshion_files
 
+	LIBS_DIR="$DST_DIR""lib_cocosdenshionextras.xctemplate/libs/"
+    mkdir -p "$LIBS_DIR"
+    copy_cocosdenshionextras_files
+
 	LIBS_DIR="$DST_DIR""lib_fontlabel.xctemplate/libs/"
     mkdir -p "$LIBS_DIR"
     copy_fontlabel_files
@@ -287,6 +296,19 @@ copy_xcode4_project_templates(){
 	copy_files external/Box2d/Box2D "$LIBS_DIR"
     copy_files LICENSE_Box2D.txt "$LIBS_DIR"
 
+	echo done!
+
+
+    # Move File Templates to correct position
+	DST_DIR="$HOME/Library/Developer/Xcode/Templates/File Templates/cocos2d/"
+	OLD_DIR="$HOME/Library/Developer/Xcode/Templates/cocos2d/"
+	
+	print_template_banner "Installing CCNode file templates..."
+
+    check_dst_dir
+	
+	mv -f "$OLD_DIR""/CCNode class.xctemplate" "$DST_DIR"
+	
 	echo done!
 }
 
