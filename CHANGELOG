@@ -3,8 +3,16 @@ version 2.0-alpha XX-Apr-2011
 . [NEW] CProgressTimer: 
             -Convenience class constructor now passes in CCSprite (this gives developers easier access to timer with CCSpriteFrames, CCSprites, etc)
             - Reduced the progress timer types to just radial and bar - added in reverse, midpoint, barChangeRate to be have more flexible options to modify the progress.
+. [NEW] Math: Using kazmath for matrix and projection operations
+. [NEW] Math: Using NEON Matrix Multiplication from Oolong project
 . [FIX] All: Removed deprecated methods and classes that were scheduled for removal post 1.0
 . [FIX] CCProgressTimer: reverse renamed to reverseDirection in order to prevent possible collision with action#reverse
+. [FIX] Xcode: cocosLive: Removed. Use OpenFeint or GameCenter instead
+. [FIX] Xcode: FontLabel: Removed since in iOS 4 you can load custom TTF
+. [FIX] Xcode: TouchJSON: Removed. No longer needed since cocosLive was removed
+. [FIX] Xcode: Tremor / vorbis: Removed. Experimental sound engine is no longer supported
+. [FIX] Xcode: iOS 4 is minimun required to run
+
 
 version 1.0-rc2 - XX-Apr-2011
 . [NEW] Tests: Added test case for bug 1159
