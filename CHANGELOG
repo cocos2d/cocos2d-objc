@@ -1,6 +1,7 @@
 version 1.0-rc2 - XX-Apr-2011
 . [NEW] Tests: Added test case for bug 1159
 . [FIX] Scheduler: Fixed possible crash when unscheduling a sibling
+. [FIX] Templates: Use NS_BLOCK_ASSERTIONS and NDEBUG in Release Mode to remove asserts
 . [FIX] Templates: Xcode 3 templates fixed. Removed unused files in cocos2d lib. Added missing files from TouchJSON
 . [FIX] Templates: ARMv6 devices uses "none" autorotation to improve speed
 . [FIX] Templates: Added Xcode 4 "File" templates both for iOS and Mac OS X
