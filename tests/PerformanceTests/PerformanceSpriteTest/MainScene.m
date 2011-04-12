@@ -7,8 +7,8 @@
 #import "CocosNodePerformance.h"
 
 enum {
-	kMaxNodes = 5000,
-	kNodesIncrease = 50,
+	kMaxNodes = 10000,
+	kNodesIncrease = 100,
 };
 
 enum {
