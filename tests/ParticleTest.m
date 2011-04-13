@@ -48,6 +48,7 @@ static NSString *transitions[] = {
 		@"ParticleDesigner9",
 		@"ParticleDesigner10",
 		@"ParticleDesigner11",
+		@"ParticleDesigner12",
 
 		@"RadiusMode1",
 		@"RadiusMode2",
@@ -861,7 +862,7 @@ Class restartAction()
 	
 	// custom spinning
 	self.emitter.startSpin = 0;
-	self.emitter.startSpin = 360;
+	self.emitter.startSpinVar = 360;
 	self.emitter.endSpin = 720;
 	self.emitter.endSpinVar = 360;	
 }
@@ -1083,10 +1084,32 @@ Class restartAction()
 }
 @end
 
-
-
 #pragma mark -
 
+@implementation ParticleDesigner12
+-(void) onEnter
+{
+	[super onEnter];
+	
+	[self setColor:ccBLACK];
+	[self removeChild:background cleanup:YES];
+	background = nil;
+	
+	self.emitter = [CCParticleSystemQuad particleWithFile:@"Particles/Phoenix.plist"];
+	[self addChild: emitter z:10];
+}
+
+-(NSString *) title
+{
+	return @"PD: Phoenix";
+}
+-(NSString*) subtitle
+{
+	return @"Testing radial and duration";
+}
+@end
+
+#pragma mark -
 
 @implementation RadiusMode1
 -(void) onEnter

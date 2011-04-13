@@ -16,7 +16,9 @@ version 2.0-alpha XX-Apr-2011
 
 
 version 1.0-rc2 - XX-Apr-2011
+. [NEW] Director: Use small dt when the game is being debugged.
 . [NEW] Tests: Added test case for bug 1159
+. [FIX] Particles: TTL is always >= 0.
 . [FIX] Scheduler: Fixed possible crash when unscheduling a sibling
 . [FIX] Templates: Use NS_BLOCK_ASSERTIONS and NDEBUG in Release Mode to remove asserts
 . [FIX] Templates: Xcode 3 templates fixed. Removed unused files in cocos2d lib. Added missing files from TouchJSON
