@@ -136,7 +136,6 @@ default gl blend src function. Compatible with premultiplied alpha images.
 	- The EAGLView view will have multiple touches disabled.
 	- It will create a UIWindow and it will assign it the 'window' variable. 'window' must be declared before calling this marcro.
 	- It will parent the EAGLView to the created window
-	- If the firmware >= 3.1 it will create a Display Link Director. Else it will create an NSTimer director.
 	- It will try to run at 60 FPS.
 	- The FPS won't be displayed.
 	- The orientation will be portrait.
@@ -154,8 +153,6 @@ default gl blend src function. Compatible with premultiplied alpha images.
 #define CC_DIRECTOR_INIT()																		\
 do	{																							\
 	window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];					\
-	if( ! [CCDirector setDirectorType:kCCDirectorTypeDisplayLink] )								\
-		[CCDirector setDirectorType:kCCDirectorTypeNSTimer];									\
 	CCDirector *__director = [CCDirector sharedDirector];										\
 	[__director setDeviceOrientation:kCCDeviceOrientationPortrait];								\
 	[__director setDisplayFPS:NO];																\

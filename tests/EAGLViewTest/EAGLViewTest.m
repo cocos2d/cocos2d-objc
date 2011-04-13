@@ -59,9 +59,6 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {	
-	if( ! [CCDirector setDirectorType:kCCDirectorTypeDisplayLink] )
-		[CCDirector setDirectorType:kCCDirectorTypeThreadMainLoop];
-
 	CCDirector *director = [CCDirector sharedDirector];
 	[director setDisplayFPS:YES];
 	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
