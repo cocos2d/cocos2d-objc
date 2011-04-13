@@ -19,41 +19,42 @@ enum {
 static int sceneIdx=-1;
 static NSString *transitions[] = {
 	
-		@"DemoFlower",
-		@"DemoGalaxy",
-		@"DemoFirework",
-		@"DemoSpiral",
-		@"DemoSun",
-		@"DemoMeteor",
-		@"DemoFire",
-		@"DemoSmoke",
-		@"DemoExplosion",
-		@"DemoSnow",
-		@"DemoRain",
-		@"DemoBigFlower",
-		@"DemoRotFlower",
-		@"DemoModernArt",
-		@"DemoRing",
+	@"DemoFlower",
+	@"DemoGalaxy",
+	@"DemoFirework",
+	@"DemoSpiral",
+	@"DemoSun",
+	@"DemoMeteor",
+	@"DemoFire",
+	@"DemoSmoke",
+	@"DemoExplosion",
+	@"DemoSnow",
+	@"DemoRain",
+	@"DemoBigFlower",
+	@"DemoRotFlower",
+	@"DemoModernArt",
+	@"DemoRing",
 
-		@"ParallaxParticle",
+	@"ParallaxParticle",
 
-		@"ParticleDesigner1",
-		@"ParticleDesigner2",
-		@"ParticleDesigner3",
-		@"ParticleDesigner4",
-		@"ParticleDesigner5",
-		@"ParticleDesigner6",
-		@"ParticleDesigner7",
-		@"ParticleDesigner8",
-		@"ParticleDesigner9",
-		@"ParticleDesigner10",
-		@"ParticleDesigner11",
+	@"ParticleDesigner1",
+	@"ParticleDesigner2",
+	@"ParticleDesigner3",
+	@"ParticleDesigner4",
+	@"ParticleDesigner5",
+	@"ParticleDesigner6",
+	@"ParticleDesigner7",
+	@"ParticleDesigner8",
+	@"ParticleDesigner9",
+	@"ParticleDesigner10",
+	@"ParticleDesigner11",
+	@"ParticleDesigner12",
 
-		@"RadiusMode1",
-		@"RadiusMode2",
-		@"Issue704",
-		@"Issue872",
-		@"Issue870",
+	@"RadiusMode1",
+	@"RadiusMode2",
+	@"Issue704",
+	@"Issue872",
+	@"Issue870",
 };
 
 Class nextAction()
@@ -835,8 +836,15 @@ Class restartAction()
 	[self removeChild:background cleanup:YES];
 	background = nil;
 
+	
 	self.emitter = [CCParticleSystemQuad particleWithFile:@"Particles/SpookyPeas.plist"];
 	[self addChild: emitter z:10];
+	
+	// custom spinning
+	self.emitter.startSpin = 0;
+	self.emitter.startSpinVar = 360;
+	self.emitter.endSpin = 720;
+	self.emitter.endSpinVar = 360;
 }
 
 -(NSString *) title
@@ -857,13 +865,8 @@ Class restartAction()
 	background = nil;
 
 	self.emitter = [CCParticleSystemQuad particleWithFile:@"Particles/SpinningPeas.plist"];
+
 	[self addChild: emitter z:10];
-	
-	// custom spinning
-	self.emitter.startSpin = 0;
-	self.emitter.startSpin = 360;
-	self.emitter.endSpin = 720;
-	self.emitter.endSpinVar = 360;	
 }
 
 -(NSString *) title
@@ -1083,10 +1086,32 @@ Class restartAction()
 }
 @end
 
-
-
 #pragma mark -
 
+@implementation ParticleDesigner12
+-(void) onEnter
+{
+	[super onEnter];
+	
+	[self setColor:ccBLACK];
+	[self removeChild:background cleanup:YES];
+	background = nil;
+	
+	self.emitter = [CCParticleSystemQuad particleWithFile:@"Particles/Phoenix.plist"];
+	[self addChild: emitter z:10];
+}
+
+-(NSString *) title
+{
+	return @"PD: Phoenix";
+}
+-(NSString*) subtitle
+{
+	return @"Testing radial and duration";
+}
+@end
+
+#pragma mark -
 
 @implementation RadiusMode1
 -(void) onEnter
