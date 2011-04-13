@@ -48,6 +48,7 @@ static NSString *transitions[] = {
 		@"ParticleDesigner9",
 		@"ParticleDesigner10",
 		@"ParticleDesigner11",
+		@"ParticleDesigner12",
 
 		@"RadiusMode1",
 		@"RadiusMode2",
@@ -1083,10 +1084,32 @@ Class restartAction()
 }
 @end
 
-
-
 #pragma mark -
 
+@implementation ParticleDesigner12
+-(void) onEnter
+{
+	[super onEnter];
+	
+	[self setColor:ccBLACK];
+	[self removeChild:background cleanup:YES];
+	background = nil;
+	
+	self.emitter = [CCParticleSystemQuad particleWithFile:@"Particles/Phoenix.plist"];
+	[self addChild: emitter z:10];
+}
+
+-(NSString *) title
+{
+	return @"PD: Phoenix";
+}
+-(NSString*) subtitle
+{
+	return @"Testing radial and duration";
+}
+@end
+
+#pragma mark -
 
 @implementation RadiusMode1
 -(void) onEnter
