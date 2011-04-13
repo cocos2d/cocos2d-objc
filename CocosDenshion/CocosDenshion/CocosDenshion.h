@@ -207,7 +207,7 @@ typedef struct _sourceInfo {
 	sourceInfo		*_sources;
 	sourceGroup	    *_sourceGroups;
 	ALCcontext		*context;
-	int				_sourceGroupTotal;
+	NSUInteger		_sourceGroupTotal;
 	UInt32			_audioSessionCategory;
 	BOOL			_handleAudioSession;
 	ALfloat			_preMuteGain;
@@ -234,7 +234,7 @@ typedef struct _sourceInfo {
 /** Total number of sources available */
 @property (readonly) int sourceTotal;
 /** Total number of source groups that have been defined */
-@property (readonly) int sourceGroupTotal;
+@property (readonly) NSUInteger sourceGroupTotal;
 
 /** Sets the sample rate for the audio mixer. For best performance this should match the sample rate of your audio content */
 +(void) setMixerSampleRate:(Float32) sampleRate;
@@ -256,7 +256,7 @@ typedef struct _sourceInfo {
 /** Stops all playing sounds */
 -(void) stopAllSounds;
 -(void) defineSourceGroups:(NSArray*) sourceGroupDefinitions;
--(void) defineSourceGroups:(int[]) sourceGroupDefinitions total:(int) total;
+-(void) defineSourceGroups:(int[]) sourceGroupDefinitions total:(NSUInteger) total;
 -(void) setSourceGroupNonInterruptible:(int) sourceGroupId isNonInterruptible:(BOOL) isNonInterruptible;
 -(void) setSourceGroupEnabled:(int) sourceGroupId enabled:(BOOL) enabled;
 -(BOOL) sourceGroupEnabled:(int) sourceGroupId;

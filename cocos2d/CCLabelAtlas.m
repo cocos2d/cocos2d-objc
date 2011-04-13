@@ -128,15 +128,16 @@
 
 - (void) setString:(NSString*) newString
 {
-	if( newString.length > textureAtlas_.totalQuads )
-		[textureAtlas_ resizeCapacity: newString.length];
+	NSUInteger len = [newString length];
+	if( len > textureAtlas_.capacity )
+		[textureAtlas_ resizeCapacity:len];
 
 	[string_ release];
 	string_ = [newString copy];
 	[self updateAtlasValues];
 
 	CGSize s;
-	s.width = [string_ length] * itemWidth_;
+	s.width = len * itemWidth_;
 	s.height = itemHeight_;
 	[self setContentSizeInPixels:s];
 }

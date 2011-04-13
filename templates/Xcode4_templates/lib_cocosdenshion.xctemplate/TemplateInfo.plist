@@ -1,13 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!-- File autogenrated by cocos2d/tools/template_generator.py DO NOT EDIT IT MANUALLY -->
 <plist version="1.0">
 <dict>
+	<key>Description</key>
+	<string>This template provides an starting point for cocos2d for iOS.</string>
+	<key>Identifier</key>
+	<string>com.cocos2d.cocosdenshionlib</string>
+	<key>Kind</key>
+	<string>Xcode.Xcode3.ProjectTemplateUnitKind</string>
+
 	<key>Definitions</key>
 	<dict>
 		<key>libs/CocosDenshion/CDAudioManager.h</key>
 		<dict>
 			<key>Group</key>
-			<string>CocosDenshion</string>
+			<array>
+				<string>libs</string>
+				<string>CocosDenshion</string>
+			</array>
 			<key>Path</key>
 			<string>libs/CocosDenshion/CDAudioManager.h</string>
 			<key>TargetIndices</key>
@@ -16,14 +27,20 @@
 		<key>libs/CocosDenshion/CDAudioManager.m</key>
 		<dict>
 			<key>Group</key>
-			<string>CocosDenshion</string>
+			<array>
+				<string>libs</string>
+				<string>CocosDenshion</string>
+			</array>
 			<key>Path</key>
 			<string>libs/CocosDenshion/CDAudioManager.m</string>
 		</dict>
 		<key>libs/CocosDenshion/CDConfig.h</key>
 		<dict>
 			<key>Group</key>
-			<string>CocosDenshion</string>
+			<array>
+				<string>libs</string>
+				<string>CocosDenshion</string>
+			</array>
 			<key>Path</key>
 			<string>libs/CocosDenshion/CDConfig.h</string>
 			<key>TargetIndices</key>
@@ -32,7 +49,10 @@
 		<key>libs/CocosDenshion/CDOpenALSupport.h</key>
 		<dict>
 			<key>Group</key>
-			<string>CocosDenshion</string>
+			<array>
+				<string>libs</string>
+				<string>CocosDenshion</string>
+			</array>
 			<key>Path</key>
 			<string>libs/CocosDenshion/CDOpenALSupport.h</string>
 			<key>TargetIndices</key>
@@ -41,14 +61,20 @@
 		<key>libs/CocosDenshion/CDOpenALSupport.m</key>
 		<dict>
 			<key>Group</key>
-			<string>CocosDenshion</string>
+			<array>
+				<string>libs</string>
+				<string>CocosDenshion</string>
+			</array>
 			<key>Path</key>
 			<string>libs/CocosDenshion/CDOpenALSupport.m</string>
 		</dict>
 		<key>libs/CocosDenshion/CocosDenshion.h</key>
 		<dict>
 			<key>Group</key>
-			<string>CocosDenshion</string>
+			<array>
+				<string>libs</string>
+				<string>CocosDenshion</string>
+			</array>
 			<key>Path</key>
 			<string>libs/CocosDenshion/CocosDenshion.h</string>
 			<key>TargetIndices</key>
@@ -57,14 +83,20 @@
 		<key>libs/CocosDenshion/CocosDenshion.m</key>
 		<dict>
 			<key>Group</key>
-			<string>CocosDenshion</string>
+			<array>
+				<string>libs</string>
+				<string>CocosDenshion</string>
+			</array>
 			<key>Path</key>
 			<string>libs/CocosDenshion/CocosDenshion.m</string>
 		</dict>
 		<key>libs/CocosDenshion/SimpleAudioEngine.h</key>
 		<dict>
 			<key>Group</key>
-			<string>CocosDenshion</string>
+			<array>
+				<string>libs</string>
+				<string>CocosDenshion</string>
+			</array>
 			<key>Path</key>
 			<string>libs/CocosDenshion/SimpleAudioEngine.h</string>
 			<key>TargetIndices</key>
@@ -73,24 +105,25 @@
 		<key>libs/CocosDenshion/SimpleAudioEngine.m</key>
 		<dict>
 			<key>Group</key>
-			<string>CocosDenshion</string>
+			<array>
+				<string>libs</string>
+				<string>CocosDenshion</string>
+			</array>
 			<key>Path</key>
 			<string>libs/CocosDenshion/SimpleAudioEngine.m</string>
 		</dict>
 		<key>libs/LICENSE_CocosDenshion.txt</key>
 		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+			</array>
 			<key>Path</key>
 			<string>libs/LICENSE_CocosDenshion.txt</string>
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
 	</dict>
-	<key>Description</key>
-	<string>This template provides an starting point for cocos2d for iOS.</string>
-	<key>Identifier</key>
-	<string>com.cocos2d.cocosdenshionlib</string>
-	<key>Kind</key>
-	<string>Xcode.Xcode3.ProjectTemplateUnitKind</string>
 	<key>Nodes</key>
 	<array>
 		<string>libs/CocosDenshion/CDAudioManager.h</string>

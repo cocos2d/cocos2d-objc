@@ -1,13 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!-- File autogenrated by cocos2d/tools/template_generator.py DO NOT EDIT IT MANUALLY -->
 <plist version="1.0">
 <dict>
+	<key>Description</key>
+	<string>This template provides an starting point for cocos2d for iOS.</string>
+	<key>Identifier</key>
+	<string>com.cocos2d.cocoslivelib</string>
+	<key>Kind</key>
+	<string>Xcode.Xcode3.ProjectTemplateUnitKind</string>
+
 	<key>Definitions</key>
 	<dict>
 		<key>libs/cocoslive/CLScoreServerPost.h</key>
 		<dict>
 			<key>Group</key>
-			<string>cocoslive</string>
+			<array>
+				<string>libs</string>
+				<string>cocoslive</string>
+			</array>
 			<key>Path</key>
 			<string>libs/cocoslive/CLScoreServerPost.h</string>
 			<key>TargetIndices</key>
@@ -16,14 +27,20 @@
 		<key>libs/cocoslive/CLScoreServerPost.m</key>
 		<dict>
 			<key>Group</key>
-			<string>cocoslive</string>
+			<array>
+				<string>libs</string>
+				<string>cocoslive</string>
+			</array>
 			<key>Path</key>
 			<string>libs/cocoslive/CLScoreServerPost.m</string>
 		</dict>
 		<key>libs/cocoslive/CLScoreServerRequest.h</key>
 		<dict>
 			<key>Group</key>
-			<string>cocoslive</string>
+			<array>
+				<string>libs</string>
+				<string>cocoslive</string>
+			</array>
 			<key>Path</key>
 			<string>libs/cocoslive/CLScoreServerRequest.h</string>
 			<key>TargetIndices</key>
@@ -32,14 +49,20 @@
 		<key>libs/cocoslive/CLScoreServerRequest.m</key>
 		<dict>
 			<key>Group</key>
-			<string>cocoslive</string>
+			<array>
+				<string>libs</string>
+				<string>cocoslive</string>
+			</array>
 			<key>Path</key>
 			<string>libs/cocoslive/CLScoreServerRequest.m</string>
 		</dict>
 		<key>libs/cocoslive/cocoslive.h</key>
 		<dict>
 			<key>Group</key>
-			<string>cocoslive</string>
+			<array>
+				<string>libs</string>
+				<string>cocoslive</string>
+			</array>
 			<key>Path</key>
 			<string>libs/cocoslive/cocoslive.h</string>
 			<key>TargetIndices</key>
@@ -48,12 +71,19 @@
 		<key>libs/cocoslive/cocoslive.m</key>
 		<dict>
 			<key>Group</key>
-			<string>cocoslive</string>
+			<array>
+				<string>libs</string>
+				<string>cocoslive</string>
+			</array>
 			<key>Path</key>
 			<string>libs/cocoslive/cocoslive.m</string>
 		</dict>
 		<key>libs/LICENSE_TouchJSON.txt</key>
 		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+			</array>
 			<key>Path</key>
 			<string>libs/LICENSE_TouchJSON.txt</string>
 			<key>TargetIndices</key>
@@ -62,7 +92,10 @@
 		<key>libs/TouchJSON/CDataScanner.h</key>
 		<dict>
 			<key>Group</key>
-			<string>TouchJSON</string>
+			<array>
+				<string>libs</string>
+				<string>TouchJSON</string>
+			</array>
 			<key>Path</key>
 			<string>libs/TouchJSON/CDataScanner.h</string>
 			<key>TargetIndices</key>
@@ -71,14 +104,21 @@
 		<key>libs/TouchJSON/CDataScanner.m</key>
 		<dict>
 			<key>Group</key>
-			<string>TouchJSON</string>
+			<array>
+				<string>libs</string>
+				<string>TouchJSON</string>
+			</array>
 			<key>Path</key>
 			<string>libs/TouchJSON/CDataScanner.m</string>
 		</dict>
 		<key>libs/TouchJSON/Extensions/CDataScanner_Extensions.h</key>
 		<dict>
 			<key>Group</key>
-			<string>TouchJSON</string>
+			<array>
+				<string>libs</string>
+				<string>TouchJSON</string>
+				<string>Extensions</string>
+			</array>
 			<key>Path</key>
 			<string>libs/TouchJSON/Extensions/CDataScanner_Extensions.h</string>
 			<key>TargetIndices</key>
@@ -87,14 +127,22 @@
 		<key>libs/TouchJSON/Extensions/CDataScanner_Extensions.m</key>
 		<dict>
 			<key>Group</key>
-			<string>TouchJSON</string>
+			<array>
+				<string>libs</string>
+				<string>TouchJSON</string>
+				<string>Extensions</string>
+			</array>
 			<key>Path</key>
 			<string>libs/TouchJSON/Extensions/CDataScanner_Extensions.m</string>
 		</dict>
 		<key>libs/TouchJSON/Extensions/NSDictionary_JSONExtensions.h</key>
 		<dict>
 			<key>Group</key>
-			<string>TouchJSON</string>
+			<array>
+				<string>libs</string>
+				<string>TouchJSON</string>
+				<string>Extensions</string>
+			</array>
 			<key>Path</key>
 			<string>libs/TouchJSON/Extensions/NSDictionary_JSONExtensions.h</string>
 			<key>TargetIndices</key>
@@ -103,14 +151,22 @@
 		<key>libs/TouchJSON/Extensions/NSDictionary_JSONExtensions.m</key>
 		<dict>
 			<key>Group</key>
-			<string>TouchJSON</string>
+			<array>
+				<string>libs</string>
+				<string>TouchJSON</string>
+				<string>Extensions</string>
+			</array>
 			<key>Path</key>
 			<string>libs/TouchJSON/Extensions/NSDictionary_JSONExtensions.m</string>
 		</dict>
 		<key>libs/TouchJSON/JSON/CJSONDeserializer.h</key>
 		<dict>
 			<key>Group</key>
-			<string>TouchJSON</string>
+			<array>
+				<string>libs</string>
+				<string>TouchJSON</string>
+				<string>JSON</string>
+			</array>
 			<key>Path</key>
 			<string>libs/TouchJSON/JSON/CJSONDeserializer.h</string>
 			<key>TargetIndices</key>
@@ -119,14 +175,22 @@
 		<key>libs/TouchJSON/JSON/CJSONDeserializer.m</key>
 		<dict>
 			<key>Group</key>
-			<string>TouchJSON</string>
+			<array>
+				<string>libs</string>
+				<string>TouchJSON</string>
+				<string>JSON</string>
+			</array>
 			<key>Path</key>
 			<string>libs/TouchJSON/JSON/CJSONDeserializer.m</string>
 		</dict>
 		<key>libs/TouchJSON/JSON/CJSONScanner.h</key>
 		<dict>
 			<key>Group</key>
-			<string>TouchJSON</string>
+			<array>
+				<string>libs</string>
+				<string>TouchJSON</string>
+				<string>JSON</string>
+			</array>
 			<key>Path</key>
 			<string>libs/TouchJSON/JSON/CJSONScanner.h</string>
 			<key>TargetIndices</key>
@@ -135,14 +199,22 @@
 		<key>libs/TouchJSON/JSON/CJSONScanner.m</key>
 		<dict>
 			<key>Group</key>
-			<string>TouchJSON</string>
+			<array>
+				<string>libs</string>
+				<string>TouchJSON</string>
+				<string>JSON</string>
+			</array>
 			<key>Path</key>
 			<string>libs/TouchJSON/JSON/CJSONScanner.m</string>
 		</dict>
 		<key>libs/TouchJSON/JSON/CJSONSerializer.h</key>
 		<dict>
 			<key>Group</key>
-			<string>TouchJSON</string>
+			<array>
+				<string>libs</string>
+				<string>TouchJSON</string>
+				<string>JSON</string>
+			</array>
 			<key>Path</key>
 			<string>libs/TouchJSON/JSON/CJSONSerializer.h</string>
 			<key>TargetIndices</key>
@@ -151,26 +223,28 @@
 		<key>libs/TouchJSON/JSON/CJSONSerializer.m</key>
 		<dict>
 			<key>Group</key>
-			<string>TouchJSON</string>
+			<array>
+				<string>libs</string>
+				<string>TouchJSON</string>
+				<string>JSON</string>
+			</array>
 			<key>Path</key>
 			<string>libs/TouchJSON/JSON/CJSONSerializer.m</string>
 		</dict>
 		<key>libs/TouchJSON/JSON/JSONRepresentation.h</key>
 		<dict>
 			<key>Group</key>
-			<string>TouchJSON</string>
+			<array>
+				<string>libs</string>
+				<string>TouchJSON</string>
+				<string>JSON</string>
+			</array>
 			<key>Path</key>
 			<string>libs/TouchJSON/JSON/JSONRepresentation.h</string>
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
 	</dict>
-	<key>Description</key>
-	<string>This template provides an starting point for cocos2d for iOS.</string>
-	<key>Identifier</key>
-	<string>com.cocos2d.cocoslivelib</string>
-	<key>Kind</key>
-	<string>Xcode.Xcode3.ProjectTemplateUnitKind</string>
 	<key>Nodes</key>
 	<array>
 		<string>libs/cocoslive/CLScoreServerPost.h</string>

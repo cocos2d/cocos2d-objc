@@ -108,6 +108,11 @@ copy_cocosdenshion_files(){
     copy_files LICENSE_CocosDenshion.txt "$LIBS_DIR"
 }
 
+copy_cocosdenshionextras_files(){
+	echo ...copying CocosDenshionExtras files
+	copy_files CocosDenshion/CocosDenshionExtras "$LIBS_DIR"
+}
+
 copy_fontlabel_files(){
 	echo ...copying FontLabel files
 	copy_files external/FontLabel "$LIBS_DIR"
@@ -255,6 +260,10 @@ copy_xcode4_project_templates(){
 	LIBS_DIR="$DST_DIR""lib_cocosdenshion.xctemplate/libs/"
     mkdir -p "$LIBS_DIR"
     copy_cocosdenshion_files
+
+	LIBS_DIR="$DST_DIR""lib_cocosdenshionextras.xctemplate/libs/"
+    mkdir -p "$LIBS_DIR"
+    copy_cocosdenshionextras_files
 
 	LIBS_DIR="$DST_DIR""lib_fontlabel.xctemplate/libs/"
     mkdir -p "$LIBS_DIR"
