@@ -163,7 +163,7 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 {
 	CCLOGINFO(@"cocos2d: deallocing %@", self);
 	if(name_)
-		glDeleteTextures(1, &name_);
+		ccglDeleteTexture( name_);
 	
 	[super dealloc];
 }
@@ -692,7 +692,7 @@ static BOOL PVRHaveAlphaPremultiplied_ = NO;
 			 (texParams->wrapS == GL_CLAMP_TO_EDGE && texParams->wrapT == GL_CLAMP_TO_EDGE),
 			 @"GL_CLAMP_TO_EDGE should be used in NPOT textures");
 
-	ccglBindTexture2D( name_ );
+	ccglBindTexture2D( self.name );
 
 	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, texParams->minFilter );
 	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, texParams->magFilter );

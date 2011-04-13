@@ -201,11 +201,9 @@ enum {
 	// Uniforms
 	//
 	
-	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformPMatrix], 1, GL_FALSE, (GLfloat*)&ccProjectionMatrix);
+	ccglUniformProjectionMatrix( shaderProgram_ );
 	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformMVMatrix], 1, GL_FALSE, transformMV_.mat);
-	
 	glUniform1f( uniformTime, time_ );
-
 	glUniform2fv( uniformResolution, 1, (GLfloat*)&resolution_ );
 	
 	glDisableVertexAttribArray(kCCAttribColor);
@@ -427,32 +425,23 @@ enum {
 	// Needed states: GL_TEXTURE0, k,CCAttribVertex, kCCAttribColor, kCCAttribTexCoords
 	// Unneeded states: -
 	
-	CHECK_GL_ERROR_DEBUG();
 
 	ccglBlendFunc( blendFunc_.src, blendFunc_.dst );
-
-	CHECK_GL_ERROR_DEBUG();
 	
 	ccglUseProgram( shaderProgram_->program_ );
-	
-	CHECK_GL_ERROR_DEBUG();
-	
+
 	//
 	// Uniforms
 	//
 	
-	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformPMatrix], 1, GL_FALSE, (GLfloat*)&ccProjectionMatrix);
+	ccglUniformProjectionMatrix( shaderProgram_ );
 	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformMVMatrix], 1, GL_FALSE, transformMV_.mat);	
 	glUniform1i ( shaderProgram_->uniforms_[kCCUniformSampler], 0 );
-	CHECK_GL_ERROR_DEBUG();
-
-	
 	glUniform2f( blurLocation, blur_.x, blur_.y );
 	glUniform4f( subLocation, sub_[0], sub_[1], sub_[2], sub_[3] );
 	
 	CHECK_GL_ERROR_DEBUG();
 
-	
 	ccglBindTexture2D( [texture_ name]);	
 	
 	//

@@ -27,9 +27,10 @@
 #import "CCRenderTexture.h"
 #import "CCDirector.h"
 #import "ccMacros.h"
+#import "GLProgram.h"
+#import "ccGLState.h"
 #import "Support/ccUtils.h"
 #import "Support/CCFileUtils.h"
-#import "GLProgram.h"
 
 @implementation CCRenderTexture
 
@@ -117,6 +118,7 @@
 	
 	glViewport(0, 0, winSize.width, winSize.height);	
 	kmMat4OrthographicProjection(&ccProjectionMatrix, 0, winSize.width, 0, winSize.height, -1024, 1024);
+	ccSetProjectionMatrixDirty();
 	
 	glGetIntegerv(CC_GL_FRAMEBUFFER_BINDING, &oldFBO_);
 	ccglBindFramebuffer(CC_GL_FRAMEBUFFER, fbo_);
@@ -156,6 +158,7 @@
 	glViewport(0, 0, size.width, size.height);
 	
 	ccProjectionMatrix = projectionMatrixBackup_;
+	ccSetProjectionMatrixDirty();
 }
 
 -(void)clear:(float)r g:(float)g b:(float)b a:(float)a

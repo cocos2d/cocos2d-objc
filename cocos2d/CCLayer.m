@@ -373,7 +373,7 @@
 		ccglBlendFunc( blendFunc_.src, blendFunc_.dst );
 	
 	ccglUseProgram( shaderProgram_->program_ );
-	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformPMatrix], 1, GL_FALSE, (GLfloat*)&ccProjectionMatrix);
+	ccglUniformProjectionMatrix( shaderProgram_ );
 	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformMVMatrix], 1, GL_FALSE, transformMV_.mat);
 
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);	

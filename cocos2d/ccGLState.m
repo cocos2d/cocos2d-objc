@@ -22,16 +22,17 @@
  * THE SOFTWARE.
  */
 
-#include "ccGLState.h"
+#import "ccGLState.h"
+#import "GLProgram.h"
+#import "CCDirector.h"
 
-GLuint	_ccCurrentShaderProgram = 0;
-GLuint	_ccCurrentTextureID = 0;
-int		_ccShaderMatrixDirty = 0;
-GLenum	_ccBlendingSource = 0;
-GLenum	_ccBlendingDest = 0;
+GLuint	_ccCurrentShaderProgram = -1;
+GLuint	_ccCurrentTextureID = -1;
+GLenum	_ccBlendingSource = -1;
+GLenum	_ccBlendingDest = -1;
+unsigned long long	_ccProjectionMatrixDirty = -1; // 64 bits / 3 = ~21 differnt shader programs supported
 
-
-void ccglUseProgram( GLuint program )
+inline void ccglUseProgram( GLuint program )
 {
 	if( program != _ccCurrentShaderProgram ) {
 		_ccCurrentShaderProgram = program;
@@ -39,16 +40,32 @@ void ccglUseProgram( GLuint program )
 	}
 }
 
-void ccShaderSetProjectionUniform( GLuint program )
+inline void ccglUniformProjectionMatrix( GLProgram *shaderProgram )
 {
+	GLuint bitNumber = shaderProgram->program_;
+	NSCAssert( shaderProgram->program_ < sizeof(_ccProjectionMatrixDirty)*8, @"Ouch. Too many shader programs. Disable this optimization");
+
+	if( _ccProjectionMatrixDirty & (1 << bitNumber) ) {
+		glUniformMatrix4fv( shaderProgram->uniforms_[kCCUniformPMatrix], 1, GL_FALSE, (GLfloat*)&ccProjectionMatrix);
+		
+		_ccProjectionMatrixDirty &= ~(1 << bitNumber);
+	}
 }
 
-void ccShaderSetProjectionMatrix( kmMat4 *matrix )
+inline void ccSetProjectionMatrix( kmMat4 *matrix )
 {
-	
+	// set all "bits" to dirty
+	_ccProjectionMatrixDirty = -1;
+
+	ccProjectionMatrix = *matrix;
 }
 
-void ccglBindTexture2D( GLuint textureID )
+inline void ccSetProjectionMatrixDirty( void )
+{
+	_ccProjectionMatrixDirty = -1;
+}
+
+inline void ccglBindTexture2D( GLuint textureID )
 {
 	if( textureID != _ccCurrentTextureID ) {
 		_ccCurrentTextureID = textureID;
@@ -56,7 +73,15 @@ void ccglBindTexture2D( GLuint textureID )
 	}
 }
 
-void ccglBlendFunc(GLenum sfactor, GLenum dfactor)
+void ccglDeleteTexture( GLuint textureID )
+{
+	if( _ccCurrentTextureID == textureID )
+		_ccCurrentTextureID = -1;
+	
+	glDeleteTextures(1, &textureID);
+}
+
+inline void ccglBlendFunc(GLenum sfactor, GLenum dfactor)
 {
 	if( sfactor != _ccBlendingSource || dfactor != _ccBlendingDest ) {
 		_ccBlendingSource = sfactor;

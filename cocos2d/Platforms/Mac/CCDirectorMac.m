@@ -35,6 +35,7 @@
 #import "MacGLView.h"
 
 #import "../../GLProgram.h"
+#import "../../ccGLState.h"
 #import "../../CCNode.h"
 #import "../../CCScheduler.h"
 #import "../../ccMacros.h"
@@ -207,7 +208,8 @@
 	switch (projection) {
 		case kCCDirectorProjection2D:
 		{
-			kmMat4OrthographicProjection(&ccProjectionMatrix, 0, winSize.width, 0, winSize.height, -1024, 1024);			
+			kmMat4OrthographicProjection(&ccProjectionMatrix, 0, winSize.width, 0, winSize.height, -1024, 1024);
+			ccSetProjectionMatrixDirty();
 			break;
 		}
 			
@@ -222,6 +224,7 @@
 			kmMat4LookAt(&matrixB, &eye, &center, &up);
 			
 			kmMat4Multiply(&ccProjectionMatrix, &matrixA, &matrixB);
+			ccSetProjectionMatrixDirty();
 			break;
 		}
 			
