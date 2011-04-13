@@ -30,11 +30,6 @@
 	// Init the window
 	window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 	
-	// Try to use CADisplayLink director
-	// if it fails (SDK < 3.1) use the default director
-	if( ! [CCDirector setDirectorType:CCDirectorTypeDisplayLink] )
-		[CCDirector setDirectorType:CCDirectorTypeDefault];
-	
 	// Set to 2D Projection
 	CCDirector *director = [CCDirector sharedDirector];
 	[director setProjection:kCCDirectorProjection2D];

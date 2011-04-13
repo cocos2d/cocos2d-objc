@@ -482,10 +482,6 @@ CDSoundSource *toneSource;
 	// Init the window
 	window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 	
-	// must be called before any othe call to the director
-	if( ! [CCDirector setDirectorType:kCCDirectorTypeDisplayLink] )
-		[CCDirector setDirectorType:kCCDirectorTypeMainLoop];
-	
 	// get instance of the shared director
 	CCDirector *director = [CCDirector sharedDirector];
 	

@@ -217,9 +217,6 @@ enum {
 
 -(void) applicationDidFinishLaunching:(UIApplication*)application
 {	
-	if( ! [CCDirector setDirectorType:kCCDirectorTypeDisplayLink] )
-		[CCDirector setDirectorType:kCCDirectorTypeThreadMainLoop];
-
 	CCDirector *director = [CCDirector sharedDirector];
 	[director setDisplayFPS:YES];
 

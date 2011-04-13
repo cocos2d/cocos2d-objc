@@ -54,7 +54,7 @@
 
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 #import "Platforms/iOS/CCDirectorIOS.h"
-#define CC_DIRECTOR_DEFAULT CCDirectorTimer
+#define CC_DIRECTOR_DEFAULT CCDirectorDisplayLink
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 #import "Platforms/Mac/CCDirectorMac.h"
 #define CC_DIRECTOR_DEFAULT CCDirectorDisplayLink
