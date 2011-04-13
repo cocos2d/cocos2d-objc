@@ -862,7 +862,7 @@ Class restartAction()
 	
 	// custom spinning
 	self.emitter.startSpin = 0;
-	self.emitter.startSpin = 360;
+	self.emitter.startSpinVar = 360;
 	self.emitter.endSpin = 720;
 	self.emitter.endSpinVar = 360;	
 }
