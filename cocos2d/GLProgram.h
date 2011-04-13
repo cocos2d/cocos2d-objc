@@ -81,6 +81,15 @@ enum {
 - (void)addAttribute:(NSString *)attributeName index:(GLuint)index;
 - (BOOL)link;
 - (void)use;
+/* It will create 3 uniforms:
+	- kCCUniformPMatrix
+	- kCCUniformMVMatrix
+	- kCCUniformSampler
+ 
+ And it will bind "kCCUniformSampler" to 0
+
+ @since v2.0.0
+ */
 - (void) updateUniforms;
 
 - (NSString *)vertexShaderLog;

@@ -105,7 +105,6 @@
 		self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTextureColor];
 		shaderProgramAlternative_ = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTextureColor];
 		[shaderProgramAlternative_ retain];
-
 	}
 	return self;
 }
@@ -274,7 +273,6 @@
 		
 		ccglUseProgram( program->program_ );		
 		ccglUniformProjectionMatrix( program );
-		glUniform1i( shaderProgram_->uniforms_[kCCUniformSampler], 0 );
 
 		if( ! curTime_ ) {
 			ccColor4F color = { color_.r/255.0f, color_.g/255.0f, color_.b/255.0f, color_.a/255.0f };
