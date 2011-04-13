@@ -1856,7 +1856,7 @@
 		E037DA921281EFE2003D39D7 /* edge.png in Resources */ = {isa = PBXBuildFile; fileRef = E037DA8C1281EFE2003D39D7 /* edge.png */; };
 		E037DA931281EFE2003D39D7 /* fill.png in Resources */ = {isa = PBXBuildFile; fileRef = E037DA8D1281EFE2003D39D7 /* fill.png */; };
 		E037DA941281EFE2003D39D7 /* QuestionContainerSprite.m in Sources */ = {isa = PBXBuildFile; fileRef = E037DA8F1281EFE2003D39D7 /* QuestionContainerSprite.m */; };
-		E03A4F291354E2F100D4B515 /* ccGLState.c in Sources */ = {isa = PBXBuildFile; fileRef = E03A4F271354E2F000D4B515 /* ccGLState.c */; };
+		E03A4F291354E2F100D4B515 /* ccGLState.m in Sources */ = {isa = PBXBuildFile; fileRef = E03A4F271354E2F000D4B515 /* ccGLState.m */; };
 		E03A4F2A1354E2F100D4B515 /* ccGLState.h in Headers */ = {isa = PBXBuildFile; fileRef = E03A4F281354E2F000D4B515 /* ccGLState.h */; };
 		E03A4F371355041F00D4B515 /* b1.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659D0E72DB470085673F /* b1.png */; };
 		E03A4F381355041F00D4B515 /* b2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659E0E72DB470085673F /* b2.png */; };
@@ -3220,6 +3220,20 @@
 			remoteGlobalIDString = 5018F24C0DFDEAC400C013A5;
 			remoteInfo = cocos2d;
 		};
+		E03A50EB135525C200D4B515 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E03A4F331355041F00D4B515;
+			remoteInfo = ShaderTest;
+		};
+		E03A50ED135525C200D4B515 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E0EA5673134B9CA800F212C8;
+			remoteInfo = Bug1159;
+		};
 		E0C5586411FE48E600B9E4CB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
@@ -4111,7 +4125,7 @@
 		E037DA8D1281EFE2003D39D7 /* fill.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fill.png; sourceTree = "<group>"; };
 		E037DA8E1281EFE2003D39D7 /* QuestionContainerSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuestionContainerSprite.h; sourceTree = "<group>"; };
 		E037DA8F1281EFE2003D39D7 /* QuestionContainerSprite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuestionContainerSprite.m; sourceTree = "<group>"; };
-		E03A4F271354E2F000D4B515 /* ccGLState.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ccGLState.c; sourceTree = "<group>"; };
+		E03A4F271354E2F000D4B515 /* ccGLState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ccGLState.m; sourceTree = "<group>"; };
 		E03A4F281354E2F000D4B515 /* ccGLState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccGLState.h; sourceTree = "<group>"; };
 		E03A4F691355041F00D4B515 /* ShaderTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShaderTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E03A4F6B1355047600D4B515 /* ShaderTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ShaderTest.m; path = tests/ShaderTest.m; sourceTree = "<group>"; };
@@ -6665,8 +6679,8 @@
 				E0BC7D9A1342CE7B001B4DCC /* CCShaderCache.m */,
 				E0BC7D9B1342CE7B001B4DCC /* GLProgram.h */,
 				E0BC7D9C1342CE7B001B4DCC /* GLProgram.m */,
-				E03A4F271354E2F000D4B515 /* ccGLState.c */,
 				E03A4F281354E2F000D4B515 /* ccGLState.h */,
+				E03A4F271354E2F000D4B515 /* ccGLState.m */,
 			);
 			name = Shaders;
 			sourceTree = "<group>";
@@ -7638,6 +7652,8 @@
 			buildRules = (
 			);
 			dependencies = (
+				E03A50EC135525C200D4B515 /* PBXTargetDependency */,
+				E03A50EE135525C200D4B515 /* PBXTargetDependency */,
 				5098070E1175042A00EA7266 /* PBXTargetDependency */,
 				509807101175042A00EA7266 /* PBXTargetDependency */,
 				509807141175042A00EA7266 /* PBXTargetDependency */,
@@ -10314,7 +10330,7 @@
 				E0BC7DA41342CECE001B4DCC /* kazmath.c in Sources */,
 				E0BC7DA91342CF27001B4DCC /* ES2Renderer.m in Sources */,
 				E0CC11881353E8A100080D9D /* neon_matrix_impl.c in Sources */,
-				E03A4F291354E2F100D4B515 /* ccGLState.c in Sources */,
+				E03A4F291354E2F100D4B515 /* ccGLState.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11437,6 +11453,16 @@
 			isa = PBXTargetDependency;
 			target = 5018F24C0DFDEAC400C013A5 /* cocos2d */;
 			targetProxy = E03A4F351355041F00D4B515 /* PBXContainerItemProxy */;
+		};
+		E03A50EC135525C200D4B515 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E03A4F331355041F00D4B515 /* ShaderTest */;
+			targetProxy = E03A50EB135525C200D4B515 /* PBXContainerItemProxy */;
+		};
+		E03A50EE135525C200D4B515 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E0EA5673134B9CA800F212C8 /* Bug1159 */;
+			targetProxy = E03A50ED135525C200D4B515 /* PBXContainerItemProxy */;
 		};
 		E0C5586311FE48E600B9E4CB /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -13915,7 +13941,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_UNIVERSAL_IPHONE_OS)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COMPRESS_PNG_FILES = YES;
 				EXCLUDED_RECURSIVE_SEARCH_PATH_SUBDIRECTORIES = ".git *.nib *.lproj *.framework *.gch *.xcode* (*) CVS .svn";
@@ -13956,7 +13982,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_UNIVERSAL_IPHONE_OS)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COMPRESS_PNG_FILES = YES;
 				EXCLUDED_RECURSIVE_SEARCH_PATH_SUBDIRECTORIES = ".git *.nib *.lproj *.framework *.gch *.xcode* (*) CVS .svn";

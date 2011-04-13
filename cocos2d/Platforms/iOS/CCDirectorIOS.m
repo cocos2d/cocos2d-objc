@@ -40,6 +40,7 @@
 #import "../../ccMacros.h"
 #import "../../CCScene.h"
 #import "../../GLProgram.h"
+#import "../../ccGLState.h"
 
 // support imports
 #import "glu.h"
@@ -219,6 +220,7 @@ CGFloat	__ccContentScaleFactor = 1;
 	projection_ = projection;
 	
 	ccProjectionMatrix = [self applyOrientationToMatrix:&portraitProjectionMatrix_];
+	ccSetProjectionMatrixDirty();
 }
 
 -(kmMat4) applyOrientationToMatrix:(kmMat4*)inMatrix
@@ -462,6 +464,7 @@ CGFloat	__ccContentScaleFactor = 1;
 		}
 	}
 	ccProjectionMatrix = [self applyOrientationToMatrix:&portraitProjectionMatrix_];
+	ccSetProjectionMatrixDirty();
 }
 
 -(void) end

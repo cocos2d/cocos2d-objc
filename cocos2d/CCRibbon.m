@@ -273,8 +273,8 @@
 		GLProgram *program = curTime_ ? shaderProgram_ : shaderProgramAlternative_;
 		
 		ccglUseProgram( program->program_ );		
-		glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformPMatrix], 1, GL_FALSE, (GLfloat*)&ccProjectionMatrix);
-		glUniform1i ( shaderProgram_->uniforms_[kCCUniformSampler], 0 );
+		ccglUniformProjectionMatrix( program );
+		glUniform1i( shaderProgram_->uniforms_[kCCUniformSampler], 0 );
 
 		if( ! curTime_ ) {
 			ccColor4F color = { color_.r/255.0f, color_.g/255.0f, color_.b/255.0f, color_.a/255.0f };

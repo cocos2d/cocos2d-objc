@@ -335,10 +335,11 @@ enum {
 
 /** Override this method to draw your own node.
  The following GL states will be enabled by default:
-	- glEnableClientState(GL_VERTEX_ARRAY);
-	- glEnableClientState(GL_COLOR_ARRAY);
-	- glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-	- glEnable(GL_TEXTURE_2D);
+	- glActiveTexture(GL_TEXTURE0);
+	- glEnableVertexAttribArray(kCCAttribPosition);
+	- glEnableVertexAttribArray(kCCAttribColor);
+	- glEnableVertexAttribArray(kCCAttribTexCoords);
+
  
    AND YOU SHOULD NOT DISABLE THEM AFTER DRAWING YOUR NODE
  

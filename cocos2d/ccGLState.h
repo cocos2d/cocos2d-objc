@@ -22,10 +22,7 @@
  * THE SOFTWARE.
  */
 
-#ifndef __CC_SHADER_STATE_H
-#define __CC_SHADER_STATE_H
-
-#include <TargetConditionals.h>
+#import <TargetConditionals.h>
 
 #if (TARGET_OS_IPHONE == 1)
 #import <OpenGLES/ES2/gl.h>
@@ -34,7 +31,9 @@
 #import <OpenGL/gl.h>
 #endif // 
 
-#include "Support/kazmath.h"
+#import "Support/kazmath.h"
+
+@class GLProgram;
 
 /** @file
 */
@@ -42,26 +41,35 @@
 /** Uses the GL program in case program is different than the current one
  @since v2.0.0
  */
-inline void ccglUseProgram( GLuint program );
+void ccglUseProgram( GLuint program );
 
 /** sets the GL program in case program is different than the current one
  @since v2.0.0
  */
-inline void ccShaderSetProjectionUniform( GLuint program );
+void ccglUniformProjectionMatrix( GLProgram *program );
 
 /** sets the projection matrix
 @since v2.0.0
 */
-inline void ccShaderSetProjectionMatrix( kmMat4 *matrix );
+void ccSetProjectionMatrix( kmMat4 *matrix );
+
+/** sets the projection matrix as dirty
+ @since v2.0.0
+ */
+void ccSetProjectionMatrixDirty( void );
 
 /** Binds a texture in case it is not already bound
  @since v2.0.0
  */
-inline void ccglBindTexture2D( GLuint textureID );
+void ccglBindTexture2D( GLuint textureID );
+
+/** deletes a texture ID a resets the texture ID cache in case it is being used
+ @since v2.0.0
+ */
+void ccglDeleteTexture( GLuint textureID );
+
 
 /** Uses a blending function in case it not already used
  @since v2.0.0
  */
-inline void ccglBlendFunc(GLenum sfactor, GLenum dfactor);
-
-#endif // __CC_SHADER_STATE_H
+void ccglBlendFunc(GLenum sfactor, GLenum dfactor);

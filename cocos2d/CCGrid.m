@@ -86,7 +86,6 @@
 		[grabber_ grab:texture_];
 		
 		self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTexture];
-		updatedUniforms_ = NO;
 
 		[self calculateVertexPoints];
 	}
@@ -186,6 +185,7 @@
 	
 	glViewport(0, 0, winSize.width, winSize.height);	
 	kmMat4OrthographicProjection(&ccProjectionMatrix, 0, winSize.width, 0, winSize.height, -1024, 1024);
+	ccSetProjectionMatrixDirty();
 }
 
 -(void)set3DProjection
@@ -222,9 +222,7 @@
 
 	[self set3DProjection];
 	
-//	CGAffineToGL( &target->transformMV_, (GLfloat*)&modelViewMat_);
-//	modelViewMat_.mat[14] = target.vertexZ;
-	
+//	modelViewMat_ = target->transformMV_;
 	kmMat4Identity( &modelViewMat_ );
 	
 	if( target.camera.dirty ) {
@@ -247,6 +245,7 @@
 	
 	// restore projection
 	ccProjectionMatrix = projectionBackup_;
+	ccSetProjectionMatrixDirty();
 }
 
 -(void)blit
@@ -289,16 +288,10 @@
 	// Needed states: GL_TEXTURE0, kCCAttribPosition, kCCAttribTexCoords
 	// Unneeded states: kCCAttribColor
 	glDisableVertexAttribArray( kCCAttribColor );
-	
 
 	ccglUseProgram( shaderProgram_->program_ );
-
-	if( ! updatedUniforms_ ) {
-		glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformPMatrix], 1, GL_FALSE, (GLfloat*)&ccProjectionMatrix);
-		glUniform1i ( shaderProgram_->uniforms_[kCCUniformSampler], 0 );
-		updatedUniforms_ = YES;
-	}
-	
+	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformPMatrix], 1, GL_FALSE, projection3D_.mat);
+	glUniform1i ( shaderProgram_->uniforms_[kCCUniformSampler], 0 );
 	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformMVMatrix], 1, GL_FALSE, modelViewMat_.mat);
 	
 	//
@@ -311,7 +304,7 @@
 	// texCoods
 	glVertexAttribPointer(kCCAttribTexCoords, 2, GL_FLOAT, GL_FALSE, 0, texCoordinates);
 
-	glDrawElements(GL_TRIANGLES, (GLsizei)n*6, GL_UNSIGNED_SHORT, indices);	
+	glDrawElements(GL_TRIANGLES, (GLsizei) n*6, GL_UNSIGNED_SHORT, indices);	
 	
 	// Restore
 	glEnableVertexAttribArray( kCCAttribColor );
@@ -449,13 +442,8 @@
 	glDisableVertexAttribArray( kCCAttribColor );
 
 	ccglUseProgram( shaderProgram_->program_ );
-	
-	if( ! updatedUniforms_ ) {
-		glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformPMatrix], 1, GL_FALSE, (GLfloat*)&ccProjectionMatrix);
-		glUniform1i ( shaderProgram_->uniforms_[kCCUniformSampler], 0 );
-		updatedUniforms_ = YES;
-	}
-	
+	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformPMatrix], 1, GL_FALSE, projection3D_.mat);
+	glUniform1i ( shaderProgram_->uniforms_[kCCUniformSampler], 0 );
 	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformMVMatrix], 1, GL_FALSE, modelViewMat_.mat);
 
 	//
@@ -468,7 +456,6 @@
 	// texCoods
 	glVertexAttribPointer(kCCAttribTexCoords, 2, GL_FLOAT, GL_FALSE, 0, texCoordinates);
 
-	
 	glDrawElements(GL_TRIANGLES, (GLsizei) n*6, GL_UNSIGNED_SHORT, indices);
 
 	// Restore
