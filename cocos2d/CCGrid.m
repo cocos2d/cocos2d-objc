@@ -291,7 +291,6 @@
 
 	ccglUseProgram( shaderProgram_->program_ );
 	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformPMatrix], 1, GL_FALSE, projection3D_.mat);
-	glUniform1i ( shaderProgram_->uniforms_[kCCUniformSampler], 0 );
 	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformMVMatrix], 1, GL_FALSE, modelViewMat_.mat);
 	
 	//
@@ -443,7 +442,6 @@
 
 	ccglUseProgram( shaderProgram_->program_ );
 	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformPMatrix], 1, GL_FALSE, projection3D_.mat);
-	glUniform1i ( shaderProgram_->uniforms_[kCCUniformSampler], 0 );
 	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformMVMatrix], 1, GL_FALSE, modelViewMat_.mat);
 
 	//

@@ -83,7 +83,6 @@
 #endif // CC_USES_VBO
 		
 		self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTextureColor];
-		
 	}
 		
 	return self;
@@ -308,7 +307,6 @@
 	
 	ccglUseProgram( shaderProgram_->program_ );	
 	ccglUniformProjectionMatrix( shaderProgram_ );
-	glUniform1i ( shaderProgram_->uniforms_[kCCUniformSampler], 0 );
 	
 	NSAssert( particleIdx == particleCount, @"Abnormal error in particle quad");
 	glDrawElements(GL_TRIANGLES, (GLsizei) particleIdx*6, GL_UNSIGNED_SHORT, indices_);

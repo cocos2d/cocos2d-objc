@@ -411,8 +411,7 @@ enum {
 		
 		CHECK_GL_ERROR_DEBUG();
 
-		self.shaderProgram = shader;
-		
+		self.shaderProgram = shader;		
 		[shader release];
 	}
 	
@@ -436,7 +435,6 @@ enum {
 	
 	ccglUniformProjectionMatrix( shaderProgram_ );
 	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformMVMatrix], 1, GL_FALSE, transformMV_.mat);	
-	glUniform1i ( shaderProgram_->uniforms_[kCCUniformSampler], 0 );
 	glUniform2f( blurLocation, blur_.x, blur_.y );
 	glUniform4f( subLocation, sub_[0], sub_[1], sub_[2], sub_[3] );
 	

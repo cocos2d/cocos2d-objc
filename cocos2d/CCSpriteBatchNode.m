@@ -268,7 +268,6 @@ static 	SEL selUpdate = NULL;
 	
 	ccglUseProgram( shaderProgram_->program_ );	
 	ccglUniformProjectionMatrix( shaderProgram_ );
-	glUniform1i ( shaderProgram_->uniforms_[kCCUniformSampler], 0 );
 	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformMVMatrix], 1, GL_FALSE, transformMV_.mat);
 
 	
