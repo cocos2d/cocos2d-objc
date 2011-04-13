@@ -99,11 +99,10 @@
 	[super dealloc];
 }
 
-// rect is in Points coordinates.
+// pointRect is in Points coordinates.
 -(void) initTexCoordsWithRect:(CGRect)pointRect
 {
-	// convert to Tex coords
-	
+	// convert to pixels coords
 	CGRect rect = CGRectMake(
 							 pointRect.origin.x * CC_CONTENT_SCALE_FACTOR(),
 							 pointRect.origin.y * CC_CONTENT_SCALE_FACTOR(),
@@ -155,9 +154,8 @@
 
 -(void) setTexture:(CCTexture2D *)texture
 {
-	[self setTexture:texture withRect:CGRectMake(0,0, 
-												 [texture pixelsWide] / CC_CONTENT_SCALE_FACTOR(), 
-												 [texture pixelsHigh] / CC_CONTENT_SCALE_FACTOR() )];
+	CGSize s = [texture contentSize];
+	[self setTexture:texture withRect:CGRectMake(0,0, s.width, s.height)];
 }
 
 -(void) setDisplayFrame:(CCSpriteFrame *)spriteFrame

@@ -157,6 +157,12 @@
 		posVar.y = [[dictionary valueForKey:@"sourcePositionVariancey"] floatValue];
 				
 		
+		// Spinning
+		startSpin = [[dictionary valueForKey:@"rotationStart"] floatValue];
+		startSpinVar = [[dictionary valueForKey:@"rotationStartVariance"] floatValue];
+		endSpin = [[dictionary valueForKey:@"rotationEnd"] floatValue];
+		endSpinVar = [[dictionary valueForKey:@"rotationEndVariance"] floatValue];
+		
 		emitterMode_ = [[dictionary valueForKey:@"emitterType"] intValue];
 
 		// Mode A: Gravity + tangential accel + radial accel
@@ -214,11 +220,15 @@
 		// Try to get the texture from the cache
 		NSString *textureName = [dictionary valueForKey:@"textureFileName"];
 
-		self.texture = [[CCTextureCache sharedTextureCache] addImage:textureName];
+		CCTexture2D *tex = [[CCTextureCache sharedTextureCache] textureForKey:textureName];
 
-		NSString *textureData = [dictionary valueForKey:@"textureImageData"];
+		if( tex )
+			self.texture = tex;
 
-		if ( ! texture_ && textureData) {
+		else {
+
+			NSString *textureData = [dictionary valueForKey:@"textureImageData"];
+			NSAssert( textureData, @"CCParticleSystem: Couldn't load texture");
 			
 			// if it fails, try to get it from the base64-gzipped data			
 			unsigned char *buffer = NULL;
