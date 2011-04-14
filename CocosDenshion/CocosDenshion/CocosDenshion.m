@@ -849,7 +849,6 @@ static BOOL _mixerRateSet = NO;
 #if TARGET_IPHONE_SIMULATOR	
     gain = (gain < 0.0f) ? 0.0f : ((gain > 2.0f) ? 2.0f : gain);
 #endif
-    
 	
 	
 	int sourceIndex = [self _getSourceIndexForSourceGroup:sourceGroupId];//This method ensures sourceIndex is valid
