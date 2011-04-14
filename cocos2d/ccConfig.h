@@ -181,7 +181,7 @@
  */ 
 #define CC_RETINA_DISPLAY_FILENAME_SUFFIX @"-hd"
 
-/** @def CC_USE_LA88_LABELS_INSTEAD_OF_A8
+/** @def CC_USE_LA88_LABELS
  If enabled, it will use LA88 (Luminance Alpha 16-bit textures) for CCLabelTTF objects.
  If it is disabled, it will use A8 (Alpha 8-bit textures).
  LA88 textures are 6% faster than A8 textures, but they will consume 2x memory.
@@ -190,7 +190,7 @@
   
  @since v0.99.5
  */
-#define CC_USE_LA88_LABELS_INSTEAD_OF_A8 1
+#define CC_USE_LA88_LABELS 1
 
 /** @def CC_SPRITE_DEBUG_DRAW
  If enabled, all subclasses of CCSprite will draw a bounding box

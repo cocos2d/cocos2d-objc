@@ -79,6 +79,11 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #import "Support/ccUtils.h"
 #import "CCTexturePVR.h"
 
+#if CC_USE_LA88_LABELS
+#define LABEL_PIXEL_FORMAT kCCTexture2DPixelFormat_LA88
+#else
+#define LABEL_PIXEL_FORMAT kCCTexture2DPixelFormat_A8
+#endif
 
 //CLASS IMPLEMENTATIONS:
 
@@ -365,7 +370,7 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 	CGContextRef			context;
 	CGColorSpaceRef			colorSpace;
 
-#if CC_USE_LA88_LABELS_INSTEAD_OF_A8
+#if CC_USE_LA88_LABELS
 	data = calloc(POTHigh, POTWide * 2);
 #else
 	data = calloc(POTHigh, POTWide);
@@ -393,18 +398,14 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 
 	UIGraphicsPopContext();
 	
-#if CC_USE_LA88_LABELS_INSTEAD_OF_A8
+#if CC_USE_LA88_LABELS
 	NSUInteger textureSize = POTWide*POTHigh;
 	unsigned short *la88_data = (unsigned short*)data;
 	for(int i = textureSize-1; i>=0; i--) //Convert A8 to LA88
 		la88_data[i] = (data[i] << 8) | 0xff;
+#endif
 	
-	self = [self initWithData:data pixelFormat:kCCTexture2DPixelFormat_LA88 pixelsWide:POTWide pixelsHigh:POTHigh contentSize:dimensions];
-
-#else // ! CC_USE_LA88_LABELS_INSTEAD_OF_A8
-	self = [self initWithData:data pixelFormat:kCCTexture2DPixelFormat_A8 pixelsWide:POTWide pixelsHigh:POTHigh contentSize:dimensions];
-
-#endif // ! CC_USE_LA88_LABELS_INSTEAD_OF_A8
+	self = [self initWithData:data pixelFormat:LABEL_PIXEL_FORMAT pixelsWide:POTWide pixelsHigh:POTHigh contentSize:dimensions];
 
 	CGContextRelease(context);
 	[self releaseData:data];
@@ -450,12 +451,19 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 		data = (unsigned char*) [bitmap bitmapData];  //Use the same buffer to improve the performance.
 		
 		NSUInteger textureSize = POTWide*POTHigh;
-		for(int i = 0; i<textureSize; i++) //Convert RGBA8888 to A8
-			data[i] = data[i*4+3];
+#if CC_USE_LA88_LABELS
+		unsigned short *dst = (unsigned short*)data;
+		for(int i = 0; i<textureSize; i++)
+			dst[i] = (data[i*4+3] << 8) | 0xff;		//Convert RGBA8888 to LA88
+#else
+		unsigned char *dst = (unsigned char*)data;
+		for(int i = 0; i<textureSize; i++)
+			dst[i] = data[i*4+3];					//Convert RGBA8888 to A8
+#endif // ! CC_USE_LA88_LABELS
+
+		data = [self keepData:dst length:textureSize];
 		
-		data = [self keepData:data length:textureSize];
-		self = [self initWithData:data pixelFormat:kCCTexture2DPixelFormat_A8 pixelsWide:POTWide pixelsHigh:POTHigh contentSize:dimensions];
-		
+		self = [self initWithData:data pixelFormat:LABEL_PIXEL_FORMAT pixelsWide:POTWide pixelsHigh:POTHigh contentSize:dimensions];
 		[bitmap release];
 		[image release]; 
 			
