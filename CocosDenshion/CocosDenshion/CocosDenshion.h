@@ -101,7 +101,7 @@ Requirements:
 #define CD_SAMPLE_RATE_MID  22050
 #define CD_SAMPLE_RATE_LOW  16000
 #define CD_SAMPLE_RATE_BASIC 8000
-#define CD_SAMPLE_RATE_DEFAULT 44100
+#define CD_SAMPLE_RATE_DEFAULT CD_SAMPLE_RATE_HIGH
 
 extern NSString * const kCDN_BadAlContext;
 extern NSString * const kCDN_AsynchLoadComplete;
@@ -288,10 +288,12 @@ typedef struct _sourceInfo {
  */
 @interface CDSoundSource : NSObject <CDAudioTransportProtocol, CDAudioInterruptProtocol> {
 	ALenum lastError;
+	CDSoundEngine* _engine;
+
 @public
 	ALuint _sourceId;
 	ALuint _sourceIndex;
-	CDSoundEngine* _engine;
+    ALuint _sourceGroupId;
 	int _soundId;
 	float _preMuteGain;
 	BOOL enabled_;
@@ -329,9 +331,7 @@ typedef struct _sourceInfo {
 
 #pragma mark CDAsynchBufferLoader
 
-/** CDAsynchBufferLoader
- TODO
- */
+/** CDAsynchBufferLoader */
 @interface CDAsynchBufferLoader : NSOperation {
 	NSArray *_loadRequests;
 	CDSoundEngine *_soundEngine;
@@ -392,8 +392,7 @@ typedef enum {
 	float startValue;
 	float endValue;
 	id target;
-	BOOL stopTargetWhenComplete;
-	
+	BOOL stopTargetWhenComplete;	
 }
 @property (readwrite, nonatomic) BOOL stopTargetWhenComplete;
 @property (readwrite, nonatomic) float startValue;
@@ -434,7 +433,3 @@ typedef enum {
 /** Fader for CDSoundEngine objects */
 @interface CDSoundEngineFader : CDPropertyModifier{}
 @end
-
-
-
-
