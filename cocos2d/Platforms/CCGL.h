@@ -55,6 +55,9 @@
 #define ccglDeleteFramebuffers		glDeleteFramebuffersOES
 #define ccglCheckFramebufferStatus	glCheckFramebufferStatusOES
 #define ccglTranslate				glTranslatef
+#define ccglDeleteVertexArrays		glDeleteVertexArraysOES
+#define ccglGenVertexArrays			glGenVertexArraysOES
+#define ccglBindVertexArray			glBindVertexArrayOES
 
 #define CC_GL_FRAMEBUFFER			GL_FRAMEBUFFER_OES
 #define CC_GL_FRAMEBUFFER_BINDING	GL_FRAMEBUFFER_BINDING_OES
@@ -73,6 +76,9 @@
 #define ccglDeleteFramebuffers		glDeleteFramebuffers
 #define ccglCheckFramebufferStatus	glCheckFramebufferStatus
 #define ccglTranslate				glTranslated
+#define ccglDeleteVertexArrays		glDeleteVertexArraysAPPLE
+#define ccglGenVertexArrays			glGenVertexArraysAPPLE
+#define ccglBindVertexArray			glBindVertexArrayAPPLE
 
 #define CC_GL_FRAMEBUFFER			GL_FRAMEBUFFER
 #define CC_GL_FRAMEBUFFER_BINDING	GL_FRAMEBUFFER_BINDING

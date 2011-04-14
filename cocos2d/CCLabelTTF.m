@@ -36,7 +36,7 @@
 #import "Platforms/iOS/CCDirectorIOS.h"
 #endif
 
-#if CC_USE_LA88_LABELS_INSTEAD_OF_A8
+#if CC_USE_LA88_LABELS
 #define SHADER_PROGRAM kCCShader_PositionTextureColor
 #else
 #define SHADER_PROGRAM kCCShader_PositionTextureA8Color
