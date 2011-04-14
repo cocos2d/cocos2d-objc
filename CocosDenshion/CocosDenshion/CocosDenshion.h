@@ -207,8 +207,8 @@ typedef struct _sourceInfo {
  @since v0.8
  */
 @class CDSoundSource;
-@interface CDSoundEngine : NSObject <CDAudioInterruptProtocol> {
-	
+@interface CDSoundEngine : NSObject <CDAudioInterruptProtocol>
+{	
 	bufferInfo		*_buffers;
 	sourceInfo		*_sources;
 	sourceGroup	    *_sourceGroups;
@@ -229,7 +229,6 @@ typedef struct _sourceInfo {
 	//For managing dynamic allocation of sources and buffers
 	int sourceTotal_;
 	int bufferTotal;
-	 
 }
 
 @property (readwrite, nonatomic) ALfloat masterGain;
@@ -292,7 +291,8 @@ typedef struct _sourceInfo {
  
  @since v1.0
  */
-@interface CDSoundSource : NSObject <CDAudioTransportProtocol, CDAudioInterruptProtocol> {
+@interface CDSoundSource : NSObject <CDAudioTransportProtocol, CDAudioInterruptProtocol>
+{
 	ALenum lastError;
 	CDSoundEngine* _engine;
 
@@ -317,7 +317,7 @@ typedef struct _sourceInfo {
 /** Stores the last error code that occurred. Check against AL_NO_ERROR */
 @property (readonly) ALenum lastError;
 /** Do not init yourself, get an instance from the sourceForSound factory method on CDSoundEngine */
--(id)init:(ALuint) theSourceId sourceIndex:(int) index soundEngine:(CDSoundEngine*) engine;
+-(id)init:(ALuint) theSourceId sourceIndex:(int) index sourceGroupId:(int) sourceGroupId soundEngine:(CDSoundEngine*) engine;
 
 @end
 
@@ -419,23 +419,23 @@ typedef enum {
 #pragma mark CDSoundSourceFader
 
 /** Fader for CDSoundSource objects */
-@interface CDSoundSourceFader : CDPropertyModifier{}
+@interface CDSoundSourceFader : CDPropertyModifier {}
 @end
 
 #pragma mark CDSoundSourcePanner
 
 /** Panner for CDSoundSource objects */
-@interface CDSoundSourcePanner : CDPropertyModifier{}
+@interface CDSoundSourcePanner : CDPropertyModifier {}
 @end
 
 #pragma mark CDSoundSourcePitchBender
 
 /** Pitch bender for CDSoundSource objects */
-@interface CDSoundSourcePitchBender : CDPropertyModifier{}
+@interface CDSoundSourcePitchBender : CDPropertyModifier {}
 @end
 
 #pragma mark CDSoundEngineFader
 
 /** Fader for CDSoundEngine objects */
-@interface CDSoundEngineFader : CDPropertyModifier{}
+@interface CDSoundEngineFader : CDPropertyModifier {}
 @end

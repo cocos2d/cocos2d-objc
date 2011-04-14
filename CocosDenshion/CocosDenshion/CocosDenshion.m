@@ -923,7 +923,7 @@ static BOOL _mixerRateSet = NO;
         return nil; // No available source within that source group
     
 
-    CDSoundSource *result = [[CDSoundSource alloc] init:_sources[sourceIndex].sourceId sourceIndex:sourceIndex soundEngine:self];
+    CDSoundSource *result = [[CDSoundSource alloc] init:_sources[sourceIndex].sourceId sourceIndex:sourceIndex sourceGroupId:sourceGroupId soundEngine:self];
     [self _lockSource:sourceIndex lock:YES];
     
     // Try to attach to the buffer
@@ -1067,11 +1067,12 @@ static BOOL _mixerRateSet = NO;
 #define CDSOUNDSOURCE_UPDATE_LAST_ERROR (lastError = alGetError())
 #define CDSOUNDSOURCE_ERROR_HANDLER ( CDSOUNDSOURCE_UPDATE_LAST_ERROR == AL_NO_ERROR)
 
--(id)init:(ALuint) theSourceId sourceIndex:(int) index soundEngine:(CDSoundEngine*) engine
+-(id)init:(ALuint) theSourceId sourceIndex:(int) index sourceGroupId:(int) sourceGroupId soundEngine:(CDSoundEngine*) engine
 {
 	if ((self = [super init]))
     {
 		_sourceId = theSourceId;
+        _sourceGroupId = sourceGroupId;
 		_engine = engine;
 		_sourceIndex = index;
 		enabled_ = YES;
@@ -1175,6 +1176,7 @@ static BOOL _mixerRateSet = NO;
 -(BOOL) play
 {
 	if (!enabled_) return NO;
+    if ([_engine sourceGroupEnabled:_sourceGroupId]) return NO;
     
     alSourcePlay(_sourceId);
     CDSOUNDSOURCE_UPDATE_LAST_ERROR;
