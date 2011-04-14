@@ -36,6 +36,12 @@
 #import "Platforms/iOS/CCDirectorIOS.h"
 #endif
 
+#if CC_USE_LA88_LABELS_INSTEAD_OF_A8
+#define SHADER_PROGRAM kCCShader_PositionTextureColor
+#else
+#define SHADER_PROGRAM kCCShader_PositionTextureA8Color
+#endif
+
 @implementation CCLabelTTF
 
 - (id) init
@@ -61,8 +67,8 @@
 	if( (self=[super init]) ) {
 
 		// shader program
-		self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTextureA8Color];
-
+		self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:SHADER_PROGRAM];
+		
 		dimensions_ = CGSizeMake( dimensions.width * CC_CONTENT_SCALE_FACTOR(), dimensions.height * CC_CONTENT_SCALE_FACTOR() );
 		alignment_ = alignment;
 		fontName_ = [name retain];
@@ -78,8 +84,8 @@
 	if( (self=[super init]) ) {
 		
 		// shader program
-		self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTextureA8Color];
-
+		self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:SHADER_PROGRAM];
+		
 		dimensions_ = CGSizeZero;
 		fontName_ = [name retain];
 		fontSize_ = size * CC_CONTENT_SCALE_FACTOR();
