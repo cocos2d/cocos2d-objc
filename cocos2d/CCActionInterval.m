@@ -30,8 +30,11 @@
 #import "CCSpriteFrame.h"
 #import "CCAnimation.h"
 #import "CCNode.h"
+#import "Support/CCArray.h"
 #import "Support/CGPointExtension.h"
 
+//only for logging
+#import "ccMacros.h"
 //
 // IntervalAction
 //
@@ -65,6 +68,8 @@
 			duration_ = FLT_EPSILON;
 		elapsed_ = 0;
 		firstTick_ = YES;
+		paused_ = NO;
+		running_ = NO;
 	}
 	return self;
 }
@@ -77,18 +82,79 @@
 
 - (BOOL) isDone
 {
-	return (elapsed_ >= duration_);
+	if (elapsed_ >= duration_) CCLOG(@"WTF %f %f run %i",elapsed_, duration_,running_);
+	return (elapsed_ >= duration_ || !running_);
+}
+
+- (BOOL) isPaused
+{
+	return paused_;	
+}
+
+- (void) pause
+{//can only pause a running action
+	if (running_) paused_ = YES;	
+}
+
+- (void) resume
+{//can only resume a running action
+	if (running_) paused_ = NO;
+}
+
+- (BOOL) isRunning
+{
+	return running_;
+}
+
+- (void) finish
+{
+	[self update:1];
+	[self stop];
+}
+
+- (void) stop
+{
+	running_ = NO;
+	paused_ = NO; 
+	[super stop];
+}
+
+
+- (void) reset
+{
+	[self resetWithDuration:duration_ target:target_];	
+}
+
+- (void) resetWithDuration:(ccTime) duration
+{
+	[self resetWithDuration:duration target:target_];	
+}
+
+- (void) resetWithDuration: (ccTime) duration target:(id) target
+{
+	if (elapsed_ < duration_) 
+	{//if action is still running also reset elapsed and firstTick, with a completed action this is done when it is added to the actionManager using runAction:
+		[self startWithTarget:target_];
+	}
+	
+	paused_ = NO;
+	running_ = NO;
+	duration_ = duration; 
 }
 
 -(void) step: (ccTime) dt
 {
-	if( firstTick_ ) {
-		firstTick_ = NO;
-		elapsed_ = 0;
-	} else
-		elapsed_ += dt;
-
-	[self update: MIN(1, elapsed_/duration_)];
+	//check for paused here and not in CCActionManager, since this is more efficient and not all actions can be paused
+	if (!paused_)
+	{	
+		if( firstTick_ ) {
+			firstTick_ = NO;
+			elapsed_ = 0;
+		} else 
+			elapsed_ += dt;
+		
+		[self update: MIN(1, elapsed_/duration_)];
+	}
 }
 
 -(void) startWithTarget:(id)aTarget
@@ -96,6 +162,7 @@
 	[super startWithTarget:aTarget];
 	elapsed_ = 0.0f;
 	firstTick_ = YES;
+	running_ = YES;
 }
 
 - (CCActionInterval*) reverse
@@ -130,12 +197,17 @@
 	return prev;
 }
 
-+(id) actionsWithArray: (NSArray*) actions
++(id) actionsWithArray: (CCArray*) actions
 {
+	CCFiniteTimeAction *now;
 	CCFiniteTimeAction *prev = [actions objectAtIndex:0];
+	int i=0;
 	
-	for (int i = 1; i < [actions count]; i++)
-		prev = [self actionOne:prev two:[actions objectAtIndex:i]];
+	CCARRAY_FOREACH(actions,now)
+	{
+		if (i > 0) prev = [self actionOne: prev two: now];
+		i++;
+	}
 	
 	return prev;
 }
@@ -150,15 +222,15 @@
 	NSAssert( one!=nil && two!=nil, @"Sequence: arguments must be non-nil");
 	NSAssert( one!=actions_[0] && one!=actions_[1], @"Sequence: re-init using the same parameters is not supported");
 	NSAssert( two!=actions_[1] && two!=actions_[0], @"Sequence: re-init using the same parameters is not supported");
-		
+	
 	ccTime d = [one duration] + [two duration];
 	
 	if( (self=[super initWithDuration: d]) ) {
-
+		
 		// XXX: Supports re-init without leaking. Fails if one==one_ || two==two_
 		[actions_[0] release];
 		[actions_[1] release];
-
+		
 		actions_[0] = [one retain];
 		actions_[1] = [two retain];
 	}
@@ -217,7 +289,7 @@
 		[actions_[0] update:1.0f];
 		[actions_[0] stop];
 	}
-
+	
 	if (last_ != found ) {
 		if( last_ != -1 ) {
 			[actions_[last_] update: 1.0f];
@@ -227,13 +299,200 @@
 	}
 	[actions_[found] update: new_t];
 	last_ = found;
+	
 }
+
 
 - (CCActionInterval *) reverse
 {
 	return [[self class] actionOne: [actions_[1] reverse] two: [actions_[0] reverse ] ];
 }
 @end
+
+@implementation CCSequenceNew
++(id) actions: (CCFiniteTimeAction*) action1, ...
+{
+	
+	va_list params;
+	va_start(params,action1);
+	
+	CCFiniteTimeAction *now;
+	
+	CCArray* actions = [[CCArray alloc] initWithCapacity:4];
+	[actions addObject:action1];
+	
+	while( action1 ) {
+		now = va_arg(params,CCFiniteTimeAction*);
+		if ( now )
+			[actions addObject:now];
+		else
+			break;
+	}
+	va_end(params);
+	
+	CCLOG(@"actions with %i items",[actions count]);
+	
+	self = [[[self alloc] initWithCCArray:actions] autorelease];
+	
+	[actions release];
+	
+	return self;
+}
+
++(id) actionsWithArray: (CCArray*) actions
+{
+	self = [[[self alloc] initWithCCArray:actions] autorelease];
+	return self;
+}
+
+- (id) initWithCCArray:(CCArray*) array
+{
+	NSAssert( array != nil && [array count] > 0, @"Sequence: arguments must be non-nil");
+	ccTime d = 0;
+	
+	CCFiniteTimeAction* item;
+	CCARRAY_FOREACH(array,item)
+	{
+		d+=item.duration; 
+	}	
+	
+	if ((self=[super initWithDuration:d]))
+	{
+		actions_ = [array retain];
+		//[actions_ reduceMemoryFootprint];
+	}
+	return self;
+}
+
+
+-(id) copyWithZone: (NSZone*) zone
+{
+	CCAction *copy = [[[self class] allocWithZone:zone] initWithCCArray:[[actions_ copy] autorelease]];
+	return copy;
+}
+
+-(void) dealloc
+{
+	[actions_ release];
+	[super dealloc];
+}
+
+-(void) startWithTarget:(id)aTarget
+{
+	[super startWithTarget:aTarget];	
+	split_ = [(CCFiniteTimeAction*) [actions_ objectAtIndex:0] duration] / duration_;
+	
+	currentElement_ = 0;
+	//start first action
+	[[actions_ objectAtIndex:currentElement_] startWithTarget:aTarget];
+
+}
+
+-(void) stop
+{
+	CCFiniteTimeAction* item;	
+	CCARRAY_FOREACH(actions_, item)
+	{
+		[item stop];	
+	}
+	[super stop];
+}
+
+-(void) update: (ccTime) t
+{
+	ccTime new_t = 0.0f;
+	CCFiniteTimeAction* current = [actions_ objectAtIndex:currentElement_];
+	
+	if (t >= split_) 
+	{
+		//this one is finished 
+		CCLOG(@"current %i finished",currentElement_);
+		[current update:1.0f];
+		[current stop];
+		
+
+		if (t != 1)
+		{
+			//explicitely test for t != 1 since split_ can have rounding errors
+			//going to new item, also check if no items have been skipped
+			while (t >= split_)
+			{//always true at least once 
+				
+				currentElement_ += 1;
+				current=[actions_ objectAtIndex:currentElement_];
+				[current startWithTarget:target_];
+				split_ += [current duration]/duration_;
+				
+				if (t >= split_)
+				{//end time of action is smaller than t, action needs to be completed immediately 
+					
+					[current update:1.0f];
+					[current stop];
+					CCLOG(@"skipped element %i completed split_ %f",currentElement_,split_);
+				}
+				
+			}
+		}
+		else
+		{//check if all actions have been completed
+			if (currentElement_ < [actions_ count] -1)
+			{
+				uint nActions=[actions_ count] -1;
+				for (int i = currentElement_ + 1; i <= nActions; i++)
+				{
+					current=[actions_ objectAtIndex:i];
+					[current startWithTarget:target_];
+					[current update:1.0f];
+					[current stop];
+				}
+			}
+		}
+	}
+		
+	if (t!=1) 
+	{
+		if (currentElement_ == 0) new_t = t;
+		else 
+		{//substract start time of current action from t, get corresponding duration (in sec), convert to relative time of current action 
+			new_t = ((t - (split_-[current duration]/duration_)) * duration_) / [current duration];	
+		}		
+		[current update: new_t];		
+	}
+}
+
+- (void) reset
+{
+	duration_=0.f;
+	
+	CCFiniteTimeAction* item;
+	CCARRAY_FOREACH(actions_,item)
+	{
+		duration_+=item.duration; 
+	}	
+	
+	//startWithTarget resets elapsed_
+}
+
+- (void) resetWithArray:(CCArray*) array
+{
+	NSAssert(!running_,@"sequence is still running, can't change actions in a running sequence");
+	
+	//first retain array in case the array is the same array as actions_
+	[array retain];
+	[actions_ release]; 
+	actions_ = array;
+	[actions_ reduceMemoryFootprint];
+	[self reset]; 
+}
+
+- (CCActionInterval *) reverse
+{
+	[actions_ reverseObjects];
+	return [[self class] actionsWithArray:actions_];
+}
+@end
+
+
 
 //
 // Repeat
@@ -251,11 +510,11 @@
 -(id) initWithAction:(CCFiniteTimeAction*)action times:(NSUInteger)times
 {
 	ccTime d = [action duration] * times;
-
+	
 	if( (self=[super initWithDuration: d ]) ) {
 		times_ = times;
 		self.innerAction = action;
-
+		
 		total_ = 0;
 	}
 	return self;
@@ -307,7 +566,7 @@
 			// to prevent jerk (issue #390)
 			[innerAction_ update: t-total_];
 		}
-
+		
 	} else {
 		
 		float r = fmodf(t, 1.0f);
@@ -379,19 +638,19 @@
 	NSAssert( one!=nil && two!=nil, @"Spawn: arguments must be non-nil");
 	NSAssert( one!=one_ && one!=two_, @"Spawn: reinit using same parameters is not supported");
 	NSAssert( two!=two_ && two!=one_, @"Spawn: reinit using same parameters is not supported");
-
+	
 	ccTime d1 = [one duration];
 	ccTime d2 = [two duration];	
 	
 	[super initWithDuration: MAX(d1,d2)];
-
+	
 	// XXX: Supports re-init without leaking. Fails if one==one_ || two==two_
 	[one_ release];
 	[two_ release];
-
+	
 	one_ = one;
 	two_ = two;
-
+	
 	if( d1 > d2 )
 		two_ = [CCSequence actionOne:two two:[CCDelayTime actionWithDuration: (d1-d2)] ];
 	else if( d1 < d2)
@@ -650,10 +909,10 @@
 -(void) update: (ccTime) t
 {
 	// Sin jump. Less realistic
-//	ccTime y = height * fabsf( sinf(t * (CGFloat)M_PI * jumps ) );
-//	y += delta.y * t;
-//	ccTime x = delta.x * t;
-//	[target setPosition: ccp( startPosition.x + x, startPosition.y + y )];	
+	//	ccTime y = height * fabsf( sinf(t * (CGFloat)M_PI * jumps ) );
+	//	y += delta.y * t;
+	//	ccTime x = delta.x * t;
+	//	[target setPosition: ccp( startPosition.x + x, startPosition.y + y )];	
 	
 	// parabolic jump (since v0.8.2)
 	ccTime frac = fmodf( t * jumps, 1.0f );
@@ -749,7 +1008,7 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 - (CCActionInterval*) reverse
 {
 	ccBezierConfig r;
-
+	
 	r.endPosition	 = ccpNeg(config.endPosition);
 	r.controlPoint_1 = ccpAdd(config.controlPoint_2, ccpNeg(config.endPosition));
 	r.controlPoint_2 = ccpAdd(config.controlPoint_1, ccpNeg(config.endPosition));
@@ -1085,7 +1344,7 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 {
 	NSAssert(action != nil, @"CCReverseTime: action should not be nil");
 	NSAssert(action != other_, @"CCReverseTime: re-init doesn't support using the same arguments");
-
+	
 	if( (self=[super initWithDuration: [action duration]]) ) {
 		// Don't leak if action is reused
 		[other_ release];
@@ -1163,9 +1422,9 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 -(id) initWithAnimation: (CCAnimation*)anim restoreOriginalFrame:(BOOL) b
 {
 	NSAssert( anim!=nil, @"Animate: argument Animation must be non-nil");
-
+	
 	if( (self=[super initWithDuration: [[anim frames] count] * [anim delay]]) ) {
-
+		
 		restoreOriginalFrame = b;
 		self.animation = anim;
 		origFrame = nil;
@@ -1203,9 +1462,9 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 {
 	[super startWithTarget:aTarget];
 	CCSprite *sprite = target_;
-
+	
 	[origFrame release];
-
+	
 	if( restoreOriginalFrame )
 		origFrame = [[sprite displayedFrame] retain];
 }
@@ -1226,7 +1485,7 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 	NSUInteger numberOfFrames = [frames count];
 	
 	NSUInteger idx = t * numberOfFrames;
-
+	
 	if( idx >= numberOfFrames )
 		idx = numberOfFrames -1;
 	

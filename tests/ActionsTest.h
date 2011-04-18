@@ -148,4 +148,16 @@
 {}
 @end
 
+@interface ActionSequencePauseAndContinue : ActionDemo
+{
+	id sequence_;
+	int timer_;
+}
+@end
 
+@interface ActionSequenceReset : ActionDemo
+{
+	id sequence_;
+	int timer_;
+}
+@end

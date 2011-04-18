@@ -31,25 +31,27 @@
 #include <sys/time.h>
 
 /** An interval action is an action that takes place within a certain period of time.
-It has an start time, and a finish time. The finish time is the parameter
-duration plus the start time.
-
-These CCActionInterval actions have some interesting properties, like:
+ It has an start time, and a finish time. The finish time is the parameter
+ duration plus the start time.
+ 
+ These CCActionInterval actions have some interesting properties, like:
  - They can run normally (default)
  - They can run reversed with the reverse method
  - They can run with the time altered with the Accelerate, AccelDeccel and Speed actions.
-
-For example, you can simulate a Ping Pong effect running the action normally and
-then running it again in Reverse mode.
-
-Example:
  
-	CCAction * pingPongAction = [CCSequence actions: action, [action reverse], nil];
-*/
+ For example, you can simulate a Ping Pong effect running the action normally and
+ then running it again in Reverse mode.
+ 
+ Example:
+ 
+ CCAction * pingPongAction = [CCSequence actions: action, [action reverse], nil];
+ */
 @interface CCActionInterval: CCFiniteTimeAction <NSCopying>
 {
 	ccTime	elapsed_;
 	BOOL	firstTick_;
+	BOOL    paused_;
+	BOOL	running_;
 }
 
 /** how many seconds had elapsed since the actions started to run. */
@@ -61,8 +63,18 @@ Example:
 -(id) initWithDuration: (ccTime) d;
 /** returns YES if the action has finished */
 -(BOOL) isDone;
+/** returns YES if the action is paused */
+- (BOOL) isPaused;
+/** returns YES if the action is running */
+- (BOOL) isRunning;
 /** returns a reversed action */
 - (CCActionInterval*) reverse;
+- (void) pause; 
+- (void) resume;
+//- (void) reset;
+- (void) resetWithDuration:(ccTime) duration;
+- (void) resetWithDuration: (ccTime) duration target:(id) target;
+
 @end
 
 /** Runs actions sequentially, one after another
@@ -76,11 +88,28 @@ Example:
 /** helper contructor to create an array of sequenceable actions */
 +(id) actions: (CCFiniteTimeAction*) action1, ... NS_REQUIRES_NIL_TERMINATION;
 /** helper contructor to create an array of sequenceable actions given an array */
-+(id) actionsWithArray: (NSArray*) actions;
++(id) actionsWithArray: (CCArray*) actions;
 /** creates the action */
 +(id) actionOne:(CCFiniteTimeAction*)actionOne two:(CCFiniteTimeAction*)actionTwo;
 /** initializes the action */
 -(id) initOne:(CCFiniteTimeAction*)actionOne two:(CCFiniteTimeAction*)actionTwo;
+@end
+
+/** Runs actions sequentially, one after another
+ */
+@interface CCSequenceNew : CCActionInterval <NSCopying>
+{
+	CCArray *actions_;
+	ccTime split_;
+	uint currentElement_;
+}
+/** helper contructor to create an array of sequenceable actions */
++(id) actions: (CCFiniteTimeAction*) action1, ... NS_REQUIRES_NIL_TERMINATION;
+/** helper contructor to create an array of sequenceable actions given an array */
++(id) actionsWithArray: (CCArray*) actions;
+-(id) initWithCCArray:(CCArray*) actions;
+- (void) reset;
+- (void) resetWithArray:(CCArray*) array;
 @end
 
 
@@ -123,7 +152,7 @@ Example:
 /**  Rotates a CCNode object to a certain angle by modifying it's
  rotation attribute.
  The direction will be decided by the shortest angle.
-*/ 
+ */ 
 @interface CCRotateTo : CCActionInterval <NSCopying>
 {
 	float dstAngle;
@@ -137,7 +166,7 @@ Example:
 @end
 
 /** Rotates a CCNode object clockwise a number of degrees by modiying it's rotation attribute.
-*/
+ */
 @interface CCRotateBy : CCActionInterval <NSCopying>
 {
 	float angle;
@@ -150,7 +179,7 @@ Example:
 @end
 
 /** Moves a CCNode object to the position x,y. x and y are absolute coordinates by modifying it's position attribute.
-*/
+ */
 @interface CCMoveTo : CCActionInterval <NSCopying>
 {
 	CGPoint endPosition;
@@ -166,7 +195,7 @@ Example:
 /**  Moves a CCNode object x,y pixels by modifying it's position attribute.
  x and y are relative to the position of the object.
  Duration is is seconds.
-*/ 
+ */ 
 @interface CCMoveBy : CCMoveTo <NSCopying>
 {
 }
@@ -177,8 +206,8 @@ Example:
 @end
 
 /** Moves a CCNode object simulating a parabolic jump movement by modifying it's position attribute.
-*/
- @interface CCJumpBy : CCActionInterval <NSCopying>
+ */
+@interface CCJumpBy : CCActionInterval <NSCopying>
 {
 	CGPoint startPosition;
 	CGPoint delta;
@@ -192,8 +221,8 @@ Example:
 @end
 
 /** Moves a CCNode object to a parabolic position simulating a jump movement by modifying it's position attribute.
-*/ 
- @interface CCJumpTo : CCJumpBy <NSCopying>
+ */ 
+@interface CCJumpTo : CCJumpBy <NSCopying>
 {
 }
 @end
@@ -257,14 +286,14 @@ typedef struct _ccBezierConfig {
 @end
 
 /** Scales a CCNode object a zoom factor by modifying it's scale attribute.
-*/
+ */
 @interface CCScaleBy : CCScaleTo <NSCopying>
 {
 }
 @end
 
 /** Blinks a CCNode object by modifying it's visible attribute
-*/
+ */
 @interface CCBlink : CCActionInterval <NSCopying>
 {
 	NSUInteger times_;
@@ -285,7 +314,7 @@ typedef struct _ccBezierConfig {
 
 /** Fades Out an object that implements the CCRGBAProtocol protocol. It modifies the opacity from 255 to 0.
  The "reverse" of this action is FadeIn
-*/
+ */
 @interface CCFadeOut : CCActionInterval <NSCopying>
 {
 }
@@ -308,7 +337,7 @@ typedef struct _ccBezierConfig {
 /** Tints a CCNode that implements the CCNodeRGB protocol from current tint to a custom one.
  @warning This action doesn't support "reverse"
  @since v0.7.2
-*/
+ */
 @interface CCTintTo : CCActionInterval <NSCopying>
 {
 	ccColor3B to;
@@ -335,7 +364,7 @@ typedef struct _ccBezierConfig {
 @end
 
 /** Delays the action a certain amount of seconds
-*/
+ */
 @interface CCDelayTime : CCActionInterval <NSCopying>
 {
 }
@@ -347,7 +376,7 @@ typedef struct _ccBezierConfig {
  sequenceable. Use it as the default "reversed" method
  of your own actions, but using it outside the "reversed"
  scope is not recommended.
-*/
+ */
 @interface CCReverseTime : CCActionInterval <NSCopying>
 {
 	CCFiniteTimeAction * other_;
