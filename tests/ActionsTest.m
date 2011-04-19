@@ -1042,7 +1042,8 @@ Class restartAction()
 {
 	if (sequence_ && [sequence_ isPaused]) 
 	{	
-		timer_+=1; 	
+		timer_+=1;
+		
 		if (timer_ == 120) 
 		{	
 			[sequence_ resume];
@@ -1138,7 +1139,7 @@ Class restartAction()
 		
 		[sequence_ resetWithArray:array]; 
 		[array release];
-		CCLOG(@"run action again");
+		CCLOG(@"run sequence again with new actions");
 		[grossini runAction:sequence_];
 		 
 	}

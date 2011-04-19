@@ -33,7 +33,6 @@
 #import "Support/CCArray.h"
 #import "Support/CGPointExtension.h"
 
-//only for logging
 #import "ccMacros.h"
 //
 // IntervalAction
@@ -82,7 +81,6 @@
 
 - (BOOL) isDone
 {
-	if (elapsed_ >= duration_) CCLOG(@"WTF %f %f run %i",elapsed_, duration_,running_);
 	return (elapsed_ >= duration_ || !running_);
 }
 
@@ -330,8 +328,6 @@
 	}
 	va_end(params);
 	
-	CCLOG(@"actions with %i items",[actions count]);
-	
 	self = [[[self alloc] initWithCCArray:actions] autorelease];
 	
 	[actions release];
@@ -359,7 +355,7 @@
 	if ((self=[super initWithDuration:d]))
 	{
 		actions_ = [array retain];
-		//[actions_ reduceMemoryFootprint];
+		[actions_ reduceMemoryFootprint];
 	}
 	return self;
 }
@@ -406,10 +402,8 @@
 	if (t >= split_) 
 	{
 		//this one is finished 
-		CCLOG(@"current %i finished",currentElement_);
 		[current update:1.0f];
 		[current stop];
-		
 
 		if (t != 1)
 		{
@@ -428,16 +422,14 @@
 					
 					[current update:1.0f];
 					[current stop];
-					CCLOG(@"skipped element %i completed split_ %f",currentElement_,split_);
 				}
-				
 			}
 		}
 		else
 		{//check if all actions have been completed
-			if (currentElement_ < [actions_ count] -1)
+			uint nActions=[actions_ count] -1;
+			if (currentElement_ < nActions)
 			{
-				uint nActions=[actions_ count] -1;
 				for (int i = currentElement_ + 1; i <= nActions; i++)
 				{
 					current=[actions_ objectAtIndex:i];
@@ -451,38 +443,34 @@
 		
 	if (t!=1) 
 	{
-		if (currentElement_ == 0) new_t = t;
-		else 
-		{//substract start time of current action from t, get corresponding duration (in sec), convert to relative time of current action 
-			new_t = ((t - (split_-[current duration]/duration_)) * duration_) / [current duration];	
-		}		
+		//substract start time of current action from t, get corresponding duration (in sec), convert to relative time of current action 
+		new_t = ((t - (split_-[current duration]/duration_)) * duration_) / [current duration];	
+		
 		[current update: new_t];		
 	}
 }
 
 - (void) reset
 {
-	duration_=0.f;
-	
-	CCFiniteTimeAction* item;
-	CCARRAY_FOREACH(actions_,item)
-	{
-		duration_+=item.duration; 
-	}	
-	
+	NSAssert(!running_,@"sequence is still running, can't change actions in a running sequence");
 	//startWithTarget resets elapsed_
 }
 
 - (void) resetWithArray:(CCArray*) array
 {
-	NSAssert(!running_,@"sequence is still running, can't change actions in a running sequence");
-	
+	[self reset];
 	//first retain array in case the array is the same array as actions_
 	[array retain];
 	[actions_ release]; 
 	actions_ = array;
 	[actions_ reduceMemoryFootprint];
-	[self reset]; 
+	
+	duration_=0.f;
+	CCFiniteTimeAction* item;
+	CCARRAY_FOREACH(actions_,item)
+	{
+		duration_+=item.duration; 
+	}	
 }
 
 - (CCActionInterval *) reverse
