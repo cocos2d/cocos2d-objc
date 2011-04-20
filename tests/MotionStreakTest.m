@@ -143,7 +143,7 @@ Class restartAction()
 	[target setPosition:ccp(100,0)];
 
 	// create the streak object and add it to the scene
-	streak = [CCMotionStreak streakWithFade:2 minSeg:3 image:@"streak.png" width:32 length:32 color:ccc4(0,255,0,255)];
+	streak = [CCMotionStreak streakWithFade:2 minSeg:3 width:32 color:ccGREEN image:@"streak.png"];
 	[self addChild:streak];
 	// schedule an update on each frame so we can syncronize the streak with the target
 	[self schedule:@selector(onUpdate:)];
@@ -154,14 +154,24 @@ Class restartAction()
 	id motion = [CCMoveBy actionWithDuration:2 position:ccp(100,0)];
 	[root runAction:[CCRepeatForever actionWithAction:[CCSequence actions:motion, [motion reverse], nil]]];
 	[root runAction:action1];
+    
+    
+    CCActionInterval *colorAction = [CCRepeatForever actionWithAction:[CCSequence actions:
+                                                                  [CCTintTo actionWithDuration:0.2f red:255 green:0 blue:0],
+                                                                  [CCTintTo actionWithDuration:0.2f red:0 green:255 blue:0],
+                                                                  [CCTintTo actionWithDuration:0.2f red:0 green:0 blue:255],
+                                                                  [CCTintTo actionWithDuration:0.2f red:0 green:255 blue:255],
+                                                                  [CCTintTo actionWithDuration:0.2f red:255 green:255 blue:0],
+                                                                  [CCTintTo actionWithDuration:0.2f red:255 green:0 blue:255],
+                                                                  [CCTintTo actionWithDuration:0.2f red:255 green:255 blue:255],nil
+                                                                  ]
+                                ];
+    [streak runAction:colorAction];
 }
 
 -(void)onUpdate:(ccTime)delta
 {
-//  CGPoint p = [target absolutePosition];
-//  float r = [root rotation];
 	[streak setPosition:[target convertToWorldSpace:CGPointZero]];
-
 }
 @end
 
@@ -186,7 +196,7 @@ Class restartAction()
 	CGSize s = [[CCDirector sharedDirector] winSize];
 		
 	// create the streak object and add it to the scene
-	streak = [CCMotionStreak streakWithFade:3 minSeg:3 image:@"streak.png" width:64 length:32 color:ccc4(255,255,255,255)];
+	streak = [CCMotionStreak streakWithFade:3 minSeg:3 width:64 color:ccWHITE image:@"streak.png"];
 	[self addChild:streak];
 	
 	streak.position = ccp(s.width/2, s.height/2);

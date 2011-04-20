@@ -196,6 +196,16 @@ ccpLengthSQ(const CGPoint v)
 	return ccpDot(v, v);
 }
 
+/** Calculates the square distance between two points (not calling sqrt() )
+ @return CGFloat
+ @since v1.1
+*/
+static inline CGFloat
+ccpDistanceSQ(const CGPoint p1, const CGPoint p2)
+{
+    return ccpLengthSQ(ccpSub(p1, p2));
+}    
+
 /** Calculates distance between point an origin
  @return CGFloat
  @since v0.7.2

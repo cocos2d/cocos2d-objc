@@ -1,8 +1,8 @@
 /*
  * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
- * Copyright (c) 2008, 2009 Jason Booth
- * 
+ * Copyright (c) 2011 ForzeField Studios S.L. http://forzefield.com
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
@@ -21,84 +21,245 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- *
- *********************************************************
- *
- * Motion Streak manages a Ribbon based on it's motion in absolute space.
- * You construct it with a fadeTime, minimum segment size, texture path, texture
- * length and color. The fadeTime controls how long it takes each vertex in
- * the streak to fade out, the minimum segment size it how many pixels the
- * streak will move before adding a new ribbon segement, and the texture
- * length is the how many pixels the texture is stretched across. The texture
- * is vertically aligned along the streak segemnts. 
  */
 
 #import "CCMotionStreak.h"
+#import "CCVertexes.h"
+#import "CCTextureCache.h"
 #import "Support/CGPointExtension.h"
+#import "ccMacros.h"
+
 
 @implementation CCMotionStreak
+@synthesize texture = texture_;
+@synthesize blendFunc = blendFunc_;
+@synthesize mode = mode_;
 
-@synthesize ribbon = ribbon_;
-
-+(id)streakWithFade:(float)fade minSeg:(float)seg image:(NSString*)path width:(float)width length:(float)length color:(ccColor4B)color
++ (id) streakWithFade:(float)fade minSeg:(float)minSeg width:(float)stroke color:(ccColor3B)color image:(NSString*)path
 {
-	return [[[self alloc] initWithFade:(float)fade minSeg:seg image:path width:width length:length color:color] autorelease];
+    return [[[self alloc] initWithFade:fade minSeg:minSeg width:stroke color:color image:path] autorelease];
 }
 
--(id)initWithFade:(float)fade minSeg:(float)seg image:(NSString*)path width:(float)width length:(float)length color:(ccColor4B)color
++ (id) streakWithFade:(float)fade minSeg:(float)minSeg width:(float)stroke color:(ccColor3B)color texture:(CCTexture2D*)texture
 {
-	if( (self=[super init])) {
-		segThreshold_ = seg;
-		width_ = width;
-		lastLocation_ = CGPointZero;
-		ribbon_ = [CCRibbon ribbonWithWidth:width_ image:path length:length color:color fade:fade];
-		[self addChild:ribbon_];
-
-		// update ribbon position. Use schedule:interval and not scheduleUpdated. issue #1075
-		[self schedule:@selector(update:) interval:0];
-	}
-	return self;
+    return [[[self alloc] initWithFade:fade minSeg:minSeg width:stroke color:color texture:texture] autorelease];
 }
 
--(void)update:(ccTime)delta
+- (id) initWithFade:(float)fade minSeg:(float)minSeg width:(float)stroke color:(ccColor3B)color image:(NSString*)path
 {
-	CGPoint location = [self convertToWorldSpace:CGPointZero];
-	[ribbon_ setPosition:ccp(-1*location.x, -1*location.y)];
-	float len = ccpLength(ccpSub(lastLocation_, location));
-	if (len > segThreshold_)
-	{
-		[ribbon_ addPointAt:location width:width_];
-		lastLocation_ = location;
-	}
-	[ribbon_ update:delta];
+    NSAssert(path != nil, @"Invalid filename");
+    
+    CCTexture2D *texture = [[CCTextureCache sharedTextureCache] addImage:path];
+    return [self initWithFade:fade minSeg:minSeg width:stroke color:color texture:texture];
 }
 
-
--(void)dealloc
+- (id) initWithFade:(float)fade minSeg:(float)minSeg width:(float)stroke color:(ccColor3B)color texture:(CCTexture2D*)texture
 {
-	[super dealloc];
+    self = [super init];
+    if (self)
+    {        
+        [super setPosition:CGPointZero];
+        [self setAnchorPoint:CGPointZero];
+        [self setIsRelativeAnchorPoint:NO];
+        
+        positionR_ = CGPointZero;
+        mode_ = kCCMotionStreak_Fast_Mode;
+        minSeg_ = (minSeg == -1.0f) ? stroke/5.0f : minSeg;
+        minSeg_ *= minSeg_;
+        
+        stroke_ = stroke;
+        fadeDelta_ = 1.0f/fade;
+        
+        maxPoints_ = (int)(fade*60.0f)+2;
+        nuPoints_ = 0;
+        pointState_ = malloc(sizeof(float) * maxPoints_);
+        pointVertexes_ = malloc(sizeof(CGPoint) * maxPoints_);
+        
+        vertices_ = malloc(sizeof(ccVertex2F) * maxPoints_ * 2);
+        texCoords_ = malloc(sizeof(ccTex2F) * maxPoints_ * 2);
+        colorPointer_ =  malloc(sizeof(GLubyte) * maxPoints_ * 2 * 4);
+        
+        // Set blend mode
+        blendFunc_.src = GL_SRC_ALPHA;
+		blendFunc_.dst = GL_ONE_MINUS_SRC_ALPHA;
+        
+        [self setTexture:texture];
+        [self setColor:color];
+        [self scheduleUpdate];
+    }
+    return self;
 }
 
-#pragma mark MotionStreak - CocosNodeTexture protocol
+#pragma mark -
 
--(void) setTexture:(CCTexture2D*) texture
+- (void) setPosition:(CGPoint)position
 {
-	[ribbon_ setTexture: texture];
+    positionR_ = position;
 }
 
--(CCTexture2D*) texture
+- (void) tintWithColor:(ccColor3B)colors
 {
-	return [ribbon_ texture];
+    [self setColor:colors];
+    
+    // Fast assignation
+    for(int i = 0; i<nuPoints_*2; i++)
+        *((ccColor3B*) (colorPointer_+i*4)) = colors;
 }
 
--(ccBlendFunc) blendFunc
+- (void) setColor:(ccColor3B)colors
 {
-	return [ribbon_ blendFunc];
+    color_ = colors;
 }
 
--(void) setBlendFunc:(ccBlendFunc)blendFunc
+- (ccColor3B) color
 {
-	[ribbon_ setBlendFunc:blendFunc];
+    return color_;
+}
+
+- (void) setOpacity:(GLubyte)opacity
+{
+    NSAssert(NO, @"Set opacity no supported");
+}
+
+- (GLubyte) opacity
+{
+    NSAssert(NO, @"Opacity no supported");
+    return 0;
+}
+
+#pragma mark -
+
+- (void) update:(ccTime)delta
+{
+    delta *= fadeDelta_;
+    
+    NSUInteger newIdx, newIdx2, i, i2;
+    NSUInteger mov = 0;
+    
+    // Update current points
+    for(i = 0; i<nuPoints_; i++)
+    {
+        pointState_[i]-=delta;
+        
+        if(pointState_[i] <= 0)
+            mov++;
+        else
+        {
+            newIdx = i-mov;
+            
+            if(mov>0)
+            {
+                // Move data
+                pointState_[newIdx] = pointState_[i];
+                
+                // Move point
+                pointVertexes_[newIdx] = pointVertexes_[i];
+                
+                // Move vertices
+                i2 = i*2;
+                newIdx2 = newIdx*2;
+                vertices_[newIdx2] = vertices_[i2];
+                vertices_[newIdx2+1] = vertices_[i2+1];
+                
+                // Move color
+                i2 *= 4;
+                newIdx2 *= 4;
+                colorPointer_[newIdx2+0] = colorPointer_[i2+0];
+                colorPointer_[newIdx2+1] = colorPointer_[i2+1];
+                colorPointer_[newIdx2+2] = colorPointer_[i2+2];
+                colorPointer_[newIdx2+4] = colorPointer_[i2+4];
+                colorPointer_[newIdx2+5] = colorPointer_[i2+5];
+                colorPointer_[newIdx2+6] = colorPointer_[i2+6];
+            }else
+                newIdx2 = newIdx*8;
+            
+            const GLubyte op = pointState_[newIdx] * 255.0f;
+            colorPointer_[newIdx2+3] = op;
+            colorPointer_[newIdx2+7] = op;
+        }
+    }
+    nuPoints_-=mov;
+    
+    // Append new point
+    BOOL appendNewPoint = YES;
+    if(nuPoints_ >= maxPoints_)
+        appendNewPoint = NO;
+    
+    else if(nuPoints_>0)
+    {
+        BOOL a1 = ccpDistanceSQ(pointVertexes_[nuPoints_-1], positionR_) < minSeg_;
+        BOOL a2 = (nuPoints_ == 1) ? NO : (ccpDistanceSQ(pointVertexes_[nuPoints_-2], positionR_) < (minSeg_ * 2.0f));
+        if(a1 || a2)
+            appendNewPoint = NO;
+    }
+    
+    if(appendNewPoint)
+    {
+        pointVertexes_[nuPoints_] = positionR_;
+        pointState_[nuPoints_] = 1.0f;
+        
+        // Color asignation
+        const unsigned int offset = nuPoints_*8;
+        *((ccColor3B*)(colorPointer_ + offset)) = color_;
+        *((ccColor3B*)(colorPointer_ + offset+4)) = color_;
+        
+        // Opacity
+        colorPointer_[offset+3] = 255;
+        colorPointer_[offset+7] = 255;
+        
+        // Generate polygon
+        if(nuPoints_ > 0 && mode_ == kCCMotionStreak_Fast_Mode)
+        {
+            if(nuPoints_ > 1)
+                ccVertexesLineToPolygon(pointVertexes_, stroke_, vertices_, texCoords_, nuPoints_, 1);
+            else
+                ccVertexesLineToPolygon(pointVertexes_, stroke_, vertices_, texCoords_, 0, 2);
+        }
+        
+        nuPoints_ ++;
+    }
+    
+    if(mode_ == kCCMotionStreak_Slow_Mode)
+        ccVertexesLineToPolygon(pointVertexes_, stroke_, vertices_, texCoords_, 0, nuPoints_);
+}
+
+- (void) reset
+{
+    nuPoints_ = 0;
+}
+
+- (void) draw
+{
+    if(nuPoints_ <= 1)
+        return;
+    
+    glBindTexture(GL_TEXTURE_2D, [texture_ name]);
+    
+	glTexCoordPointer(2, GL_FLOAT, 0, texCoords_);
+	glVertexPointer(2, GL_FLOAT, 0, vertices_);
+    glColorPointer(4, GL_UNSIGNED_BYTE, 0, colorPointer_);
+    
+    BOOL newBlend = blendFunc_.src != CC_BLEND_SRC || blendFunc_.dst != CC_BLEND_DST;
+    if( newBlend )
+        glBlendFunc( blendFunc_.src, blendFunc_.dst );
+    
+    glDrawArrays(GL_TRIANGLE_STRIP, 0, nuPoints_*2);
+    
+    if( newBlend )
+        glBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);    
+}
+
+- (void)dealloc
+{
+    [texture_ release];
+    
+    free(pointState_);
+    free(pointVertexes_);
+    free(vertices_);
+    free(colorPointer_);
+    free(texCoords_);
+    
+    [super dealloc];
 }
 
 @end
