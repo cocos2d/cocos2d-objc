@@ -139,8 +139,7 @@ static BOOL _mixerRateSet = NO;
 	alGetError(); // Clear error code
     
     BOOL hasFailed = NO;
-	while (!hasFailed && sourceTotal_ < CD_SOURCE_LIMIT)
-    {
+	while (!hasFailed && sourceTotal_ < CD_SOURCE_LIMIT) {
 		alGenSources(1, &(_sources[sourceTotal_].sourceId));
 		if (alGetError() == AL_NO_ERROR) {
 			// Now try attaching source to null buffer
@@ -165,8 +164,7 @@ static BOOL _mixerRateSet = NO;
 	if (!_buffers) return;
     
     alGetError(); // Clear error code
-    for (int i = startIndex; i <= endIndex; i++)
-    {
+    for (int i = startIndex; i <= endIndex; i++) {
         alGenBuffers(1, &_buffers[i].bufferId);
         _buffers[i].bufferData = NULL;
         
@@ -198,7 +196,7 @@ static BOOL _mixerRateSet = NO;
 	// Pass NULL to specify the system's default output device
 	newDevice = alcOpenDevice(NULL);
 	if (newDevice != NULL)
-	{
+    {
 		// Create a new OpenAL Context
 		// The new context will render to the OpenAL Device just created 
 		context = alcCreateContext(newDevice, 0);
@@ -233,8 +231,7 @@ static BOOL _mixerRateSet = NO;
 	
 	// Delete the Sources
 	CDLOGINFO(@"Denshion::CDSoundEngine - deleting sources.");
-	for (int i = 0; i < sourceTotal_; i++)
-    {
+	for (int i = 0; i < sourceTotal_; i++) {
 		alSourcei(_sources[i].sourceId, AL_BUFFER, 0);//Detach from current buffer
 	    alDeleteSources(1, &(_sources[i].sourceId));
 		if((lastErrorCode_ = alGetError()) != AL_NO_ERROR)
@@ -243,8 +240,7 @@ static BOOL _mixerRateSet = NO;
 
 	// Delete the Buffers
 	CDLOGINFO(@"Denshion::CDSoundEngine - deleting buffers.");
-	for (int i = 0; i < bufferTotal; i++)
-    {
+	for (int i = 0; i < bufferTotal; i++) {
 		alDeleteBuffers(1, &_buffers[i].bufferId);
 #ifdef CD_USE_STATIC_BUFFERS
 		if (_buffers[i].bufferData)
@@ -280,8 +276,7 @@ static BOOL _mixerRateSet = NO;
 {
 	CDLOGINFO(@"Denshion::CDSoundEngine freeing source groups");
 	if(!_sourceGroups) return;
-    for (int i = 0; i < _sourceGroupTotal; i++)
-    {
+    for (int i = 0; i < _sourceGroupTotal; i++) {
         if (_sourceGroups[i].sourceStatuses)
         {
             free(_sourceGroups[i].sourceStatuses);
@@ -313,16 +308,14 @@ static BOOL _mixerRateSet = NO;
 	
 	_sourceGroupTotal = total;
 	int sourceCount = 0;
-	for (int i = 0; i < _sourceGroupTotal; i++)
-    {
+	for (int i = 0; i < _sourceGroupTotal; i++) {
 		_sourceGroups[i].startIndex = 0;
 		_sourceGroups[i].currentIndex = _sourceGroups[i].startIndex;
 		_sourceGroups[i].enabled = false;
 		_sourceGroups[i].nonInterruptible = false;
 		_sourceGroups[i].totalSources = definitions[i];
 		_sourceGroups[i].sourceStatuses = malloc(sizeof(_sourceGroups[i].sourceStatuses[0]) * _sourceGroups[i].totalSources);
-		if (_sourceGroups[i].sourceStatuses)
-        {
+		if (_sourceGroups[i].sourceStatuses) {
 			for (int j = 0; j < _sourceGroups[i].totalSources; j++)
 				// First bit is used to indicate whether source is locked, index is shifted back 1 bit
 				_sourceGroups[i].sourceStatuses[j] = (sourceCount + j) << 1;
@@ -344,8 +337,7 @@ static BOOL _mixerRateSet = NO;
 	NSUInteger totalDefs = [sourceGroupDefinitions count];
 	int* defs = (int *)malloc( sizeof(int) * totalDefs);
 	int currentIndex = 0;
-	for (id currentDef in sourceGroupDefinitions)
-    {
+	for (id currentDef in sourceGroupDefinitions) {
 		if ([currentDef isKindOfClass:[NSNumber class]]) {
 			defs[currentIndex] = (int)[(NSNumber*)currentDef integerValue];
 			CDLOGINFO(@"Denshion::CDSoundEngine - found definition %i.", defs[currentIndex]);
@@ -408,8 +400,7 @@ static BOOL _mixerRateSet = NO;
 	}	
 	
 	//Before a buffer can be deleted any sources that are attached to it must be stopped
-	for (int i = 0; i < sourceTotal_; i++)
-    {
+	for (int i = 0; i < sourceTotal_; i++) {
 		// Note: tried getting the AL_BUFFER attribute of the source instead but doesn't
 		// appear to work on a device - just returned zero.
 		if (_buffers[soundId].bufferId == _sources[i].attachedBufferId)
@@ -423,8 +414,7 @@ static BOOL _mixerRateSet = NO;
 			ALint state;
 			alGetSourcei(_sources[i].sourceId, AL_SOURCE_STATE, &state);
 			
-			if (state == AL_PLAYING)
-            {
+			if (state == AL_PLAYING) {
 				CDLOG(@"Denshion::CDSoundEngine - waiting for source to complete playing before removing buffer data"); 
 				alSourcei(_sources[i].sourceId, AL_LOOPING, FALSE); // Turn off looping otherwise loops will never end
 				while (state == AL_PLAYING) {
@@ -487,7 +477,7 @@ static BOOL _mixerRateSet = NO;
  * file sizes.
  * @param An array of CDBufferLoadRequest objects
  */
-- (void) loadBuffersAsynchronously:(NSArray *) loadRequests
+-(void) loadBuffersAsynchronously:(NSArray *) loadRequests
 {
 	@synchronized(self)
     {
@@ -640,10 +630,18 @@ static BOOL _mixerRateSet = NO;
     float factor = 0.0f;
     switch (_buffers[soundId].format)
     {
-        case AL_FORMAT_MONO8:       factor = 1.0f; break;
-        case AL_FORMAT_MONO16:      factor = 0.5f; break;
-        case AL_FORMAT_STEREO8:     factor = 0.5f; break;
-        case AL_FORMAT_STEREO16:    factor = 0.25f; break;
+        case AL_FORMAT_MONO8:
+            factor = 1.0f;
+            break;
+        case AL_FORMAT_MONO16:
+            factor = 0.5f;
+            break;
+        case AL_FORMAT_STEREO8:
+            factor = 0.5f;
+            break;
+        case AL_FORMAT_STEREO16:
+            factor = 0.25f;
+            break;
     }	
     return (float)_buffers[soundId].sizeInBytes/(float)_buffers[soundId].frequencyInHertz * factor;
 }	
@@ -666,8 +664,7 @@ static BOOL _mixerRateSet = NO;
 
 - (ALfloat) masterGain
 {
-	if (!mute_)
-    {
+	if (!mute_) {
         ALfloat gain;
 		alGetListenerf(AL_GAIN, &gain);
 		return gain;
@@ -729,14 +726,12 @@ static BOOL _mixerRateSet = NO;
 -(void) _lockSource:(int)sourceIndex lock:(BOOL)lock
 {
 	BOOL found = NO;
-	for (int i = 0; i < _sourceGroupTotal && !found; i++)
-    {
+	for (int i = 0; i < _sourceGroupTotal && !found; i++) {
 		if (_sourceGroups[i].sourceStatuses)
         {
-			for (int j = 0; j < _sourceGroups[i].totalSources; j++)
-            {
+			for (int j = 0; j < _sourceGroups[i].totalSources; j++) {
 				// First bit is used to indicate whether source is locked, index is shifted back 1 bit
-				if((_sourceGroups[i].sourceStatuses[j] >> 1)==sourceIndex)
+				if((_sourceGroups[i].sourceStatuses[j] >> 1) == sourceIndex)
                 {
 					if (lock)
 						_sourceGroups[i].sourceStatuses[j] |= 1; // Set first bit to lock this source
@@ -765,8 +760,7 @@ static BOOL _mixerRateSet = NO;
 	thisSourceGroup->currentIndex = thisSourceGroup->startIndex;
     
     BOOL complete = NO;
-	while (!complete)
-    {
+	while (!complete) {
 		// Iterate over sources looking for one that is not locked, first bit indicates if source is locked
 		if ((thisSourceGroup->sourceStatuses[thisSourceGroup->currentIndex] & 1) == 0)
         {
@@ -959,8 +953,7 @@ static BOOL _mixerRateSet = NO;
 		return;
     
 	int sourceCount = _sourceGroups[sourceGroupId].totalSources;
-	for (int i = 0; i < sourceCount; i++)
-    {
+	for (int i = 0; i < sourceCount; i++) {
 		int sourceIndex = _sourceGroups[sourceGroupId].sourceStatuses[i] >> 1;
 		alSourceStop(_sources[sourceIndex].sourceId);
 	}
@@ -1045,8 +1038,7 @@ static BOOL _mixerRateSet = NO;
 {
 #ifdef CD_DEBUG	
 	CDLOGINFO(@"-------------- source Group Info --------------");
-	for (int i = 0; i < _sourceGroupTotal; i++)
-    {
+	for (int i = 0; i < _sourceGroupTotal; i++) {
 		CDLOGINFO(@"Group: %i start:%i total:%i", i, _sourceGroups[i].startIndex, _sourceGroups[i].totalSources);
 		CDLOGINFO(@"----- mute:%i nonInterruptible:%i", _sourceGroups[i].enabled, _sourceGroups[i].nonInterruptible);
 		CDLOGINFO(@"----- Source statuses ----");
@@ -1149,8 +1141,7 @@ static BOOL _mixerRateSet = NO;
 
 - (float) gain
 {
-	if (!mute_)
-    {
+	if (!mute_) {
 		ALfloat val;
 		alGetSourcef(_sourceId, AL_GAIN, &val);
 		CDSOUNDSOURCE_UPDATE_LAST_ERROR;
@@ -1175,13 +1166,14 @@ static BOOL _mixerRateSet = NO;
 
 -(BOOL) play
 {
-	if (!enabled_) return NO;
-    if ([_engine sourceGroupEnabled:_sourceGroupId]) return NO;
+	if (!enabled_)
+        return NO;
+    if ([_engine sourceGroupEnabled:_sourceGroupId])
+        return NO;
     
     alSourcePlay(_sourceId);
     CDSOUNDSOURCE_UPDATE_LAST_ERROR;
-    if (lastError != AL_NO_ERROR)
-    {
+    if (lastError != AL_NO_ERROR) {
         if (alcGetCurrentContext() == NULL) {
             CDLOGINFO(@"Denshion::CDSoundSource - posting bad OpenAL context message");
             [[NSNotificationCenter defaultCenter] postNotificationName:kCDN_BadAlContext object:nil];
@@ -1356,8 +1348,7 @@ static BOOL _mixerRateSet = NO;
     {
 		float increment = 1.0f / [_loadRequests count];
 		// Iterate over load request and load
-		for (CDBufferLoadRequest *loadRequest in _loadRequests)
-        {
+		for (CDBufferLoadRequest *loadRequest in _loadRequests) {
 			[_soundEngine loadBuffer:loadRequest.soundId filePath:loadRequest.filePath];
 			_soundEngine.asynchLoadProgress += increment;
 		}	
