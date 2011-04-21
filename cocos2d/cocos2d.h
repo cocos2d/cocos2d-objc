@@ -76,6 +76,7 @@
 #import "CCParticleSystem.h"
 #import "CCParticleSystemPoint.h"
 #import "CCParticleSystemQuad.h"
+#import "CCParticleSystemAnimation.h"
 #import "CCParticleExamples.h"
 
 #import "CCTexture2D.h"
