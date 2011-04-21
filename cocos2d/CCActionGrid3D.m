@@ -286,10 +286,7 @@
 -(void) setPosition:(CGPoint)pos
 {
 	if( ! CGPointEqualToPoint(pos, position_) ) {
-		position_ = pos;
-		positionInPixels_.x = pos.x * CC_CONTENT_SCALE_FACTOR();
-		positionInPixels_.y = pos.y * CC_CONTENT_SCALE_FACTOR();
-		
+		position_ = pos;		
 		dirty_ = YES;
 	}
 }
@@ -376,8 +373,6 @@
 -(void) setPosition:(CGPoint)pos
 {
 	position_ = pos;
-	positionInPixels_.x = pos.x * CC_CONTENT_SCALE_FACTOR();
-	positionInPixels_.y = pos.y * CC_CONTENT_SCALE_FACTOR();
 }
 
 -(id) copyWithZone: (NSZone*) zone
@@ -603,8 +598,6 @@
 -(void) setPosition:(CGPoint)pos
 {
 	position_ = pos;
-	positionInPixels_.x = pos.x * CC_CONTENT_SCALE_FACTOR();
-	positionInPixels_.y = pos.y * CC_CONTENT_SCALE_FACTOR();
 }
 
 -(CGPoint) position

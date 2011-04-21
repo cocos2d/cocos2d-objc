@@ -113,7 +113,7 @@ typedef enum {
 	BOOL	usesBatchNode_:1;
 	
 	// Offset Position (used by Zwoptex)
-	CGPoint	offsetPositionInPixels_;
+	CGPoint	offsetPosition_;
 	CGPoint unflippedOffsetPositionFromCenter_;
 
 	// vertex coords, texture coords and color info
@@ -179,7 +179,7 @@ typedef enum {
 /** offset position in pixels of the sprite in points. Calculated automatically by editors like Zwoptex.
  @since v0.99.0
  */
-@property (nonatomic,readonly) CGPoint	offsetPositionInPixels;
+@property (nonatomic,readonly) CGPoint	offsetPosition;
 /** conforms to CCTextureProtocol protocol */
 @property (nonatomic,readwrite) ccBlendFunc blendFunc;
 

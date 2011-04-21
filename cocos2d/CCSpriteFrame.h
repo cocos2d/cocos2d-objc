@@ -42,6 +42,7 @@
 	CGRect			rect_;
 	CGRect			rectInPixels_;
 	BOOL			rotated_;
+    CGPoint			offset_;
 	CGPoint			offsetInPixels_;
 	CGSize			originalSizeInPixels_;
 	CCTexture2D		*texture_;
@@ -54,6 +55,9 @@
 
 /** whether or not the rect of the frame is rotated ( x = x+width, y = y+height, width = height, height = width ) */
 @property (nonatomic,readwrite) BOOL rotated;
+
+/** offset of the frame in points */
+@property (nonatomic,readwrite) CGPoint offset;
 
 /** offset of the frame in pixels */
 @property (nonatomic,readwrite) CGPoint offsetInPixels;

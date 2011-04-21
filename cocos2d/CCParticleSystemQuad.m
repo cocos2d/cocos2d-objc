@@ -102,7 +102,8 @@
 // pointRect is in Points coordinates.
 -(void) initTexCoordsWithRect:(CGRect)pointRect
 {
-	// convert to pixels coords
+    // convert to Tex coords
+	
 	CGRect rect = CGRectMake(
 							 pointRect.origin.x * CC_CONTENT_SCALE_FACTOR(),
 							 pointRect.origin.y * CC_CONTENT_SCALE_FACTOR(),
@@ -127,7 +128,7 @@
 	// Important. Texture in cocos2d are inverted, so the Y component should be inverted
 	CC_SWAP( top, bottom);
 	
-	for(NSUInteger i=0; i<totalParticles; i++) {
+	for(NSUInteger i = 0; i < totalParticles; i++) {
 		// bottom-left vertex:
 		quads_[i].bl.texCoords.u = left;
 		quads_[i].bl.texCoords.v = bottom;
@@ -170,7 +171,7 @@
 
 -(void) initIndices
 {
-	for( NSUInteger i=0;i< totalParticles;i++) {
+	for( NSUInteger i = 0; i < totalParticles; i++) {
 		const NSUInteger i6 = i*6;
 		const NSUInteger i4 = i*4;
 		indices_[i6+0] = (GLushort) i4+0;
@@ -316,5 +317,3 @@
 }
 
 @end
-
-

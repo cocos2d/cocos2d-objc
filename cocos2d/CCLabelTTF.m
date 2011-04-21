@@ -69,10 +69,10 @@
 		// shader program
 		self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:SHADER_PROGRAM];
 		
-		dimensions_ = CGSizeMake( dimensions.width * CC_CONTENT_SCALE_FACTOR(), dimensions.height * CC_CONTENT_SCALE_FACTOR() );
+		dimensions_ = CGSizeMake( dimensions.width, dimensions.height );
 		alignment_ = alignment;
 		fontName_ = [name retain];
-		fontSize_ = size * CC_CONTENT_SCALE_FACTOR();
+		fontSize_ = size;
 		
 		[self setString:str];
 	}
@@ -88,7 +88,7 @@
 		
 		dimensions_ = CGSizeZero;
 		fontName_ = [name retain];
-		fontSize_ = size * CC_CONTENT_SCALE_FACTOR();
+		fontSize_ = size;
 		
 		[self setString:str];
 	}
@@ -104,13 +104,13 @@
 	if( CGSizeEqualToSize( dimensions_, CGSizeZero ) )
 		tex = [[CCTexture2D alloc] initWithString:str
 										 fontName:fontName_
-										 fontSize:fontSize_];
+										 fontSize:fontSize_  * CC_CONTENT_SCALE_FACTOR()];
 	else
 		tex = [[CCTexture2D alloc] initWithString:str
-									   dimensions:dimensions_
+									   dimensions:CC_SIZE_POINTS_TO_PIXELS(dimensions_)
 										alignment:alignment_
 										 fontName:fontName_
-										 fontSize:fontSize_];
+										 fontSize:fontSize_  * CC_CONTENT_SCALE_FACTOR()];
 
 	[self setTexture:tex];
 	[tex release];

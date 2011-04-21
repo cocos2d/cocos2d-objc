@@ -324,10 +324,10 @@
 // override contentSize
 -(void) setContentSize: (CGSize) size
 {
-	squareVertices_[1].x = size.width * CC_CONTENT_SCALE_FACTOR();
-	squareVertices_[2].y = size.height * CC_CONTENT_SCALE_FACTOR();
-	squareVertices_[3].x = size.width * CC_CONTENT_SCALE_FACTOR();
-	squareVertices_[3].y = size.height * CC_CONTENT_SCALE_FACTOR();
+	squareVertices_[1].x = size.width;
+	squareVertices_[2].y = size.height;
+	squareVertices_[3].x = size.width;
+	squareVertices_[3].y = size.height;
 	
 	[super setContentSize:size];
 }

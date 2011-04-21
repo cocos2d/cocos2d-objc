@@ -78,23 +78,27 @@
 	CCTexture2D *texture = [textureAtlas_ texture];
 	float textureWide = [texture pixelsWide];
 	float textureHigh = [texture pixelsHigh];
+    float itemWidthInPixels = itemWidth_ * CC_CONTENT_SCALE_FACTOR();
+    float itemHeightInPixels = itemHeight_ * CC_CONTENT_SCALE_FACTOR();
 
-	for( NSUInteger i=0; i<n; i++) {
+
+	for( NSUInteger i = 0; i < n; i++)
+    {
 		unsigned char a = s[i] - mapStartChar;
 		float row = (a % itemsPerRow_);
 		float col = (a / itemsPerRow_);
 		
 #if CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
 		// Issue #938. Don't use texStepX & texStepY
-		float left		= (2*row*itemWidth_+1)/(2*textureWide);
-		float right		= left+(itemWidth_*2-2)/(2*textureWide);
-		float top		= (2*col*itemHeight_+1)/(2*textureHigh);
-		float bottom	= top+(itemHeight_*2-2)/(2*textureHigh);
+		float left		= (2*row*itemWidthInPixels+1)/(2*textureWide);
+		float right		= left+(itemWidthInPixels*2-2)/(2*textureWide);
+		float top		= (2*col*itemHeightInPixels+1)/(2*textureHigh);
+		float bottom	= top+(itemHeightInPixels*2-2)/(2*textureHigh);
 #else
-		float left		= row*itemWidth_/textureWide;
-		float right		= left+itemWidth_/textureWide;
-		float top		= col*itemHeight_/textureHigh;
-		float bottom	= top+itemHeight_/textureHigh;
+		float left		= row*itemWidthInPixels/textureWide;
+		float right		= left+itemWidthInPixels/textureWide;
+		float top		= col*itemHeightInPixels/textureHigh;
+		float bottom	= top+itemHeightInPixels/textureHigh;
 #endif // ! CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
 		
 		quad.tl.texCoords.u = left;
@@ -140,10 +144,8 @@
 	string_ = [newString copy];
 	[self updateAtlasValues];
 
-	CGSize s;
-	s.width = len * itemWidth_;
-	s.height = itemHeight_;
-	[self setContentSizeInPixels:s];
+	CGSize s = CGSizeMake(len * itemWidth_, itemHeight_);
+	[self setContentSize:s];
 }
 
 -(NSString*) string

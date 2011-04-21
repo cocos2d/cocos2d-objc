@@ -53,8 +53,8 @@
 {
 	if( (self=[super init]) ) {
 	
-		itemWidth_ = w * CC_CONTENT_SCALE_FACTOR();
-		itemHeight_ = h * CC_CONTENT_SCALE_FACTOR();
+		itemWidth_ = w;
+		itemHeight_ = h;
 
 		opacity_ = 255;
 		color_ = colorUnmodified_ = ccWHITE;
@@ -95,7 +95,7 @@
 
 -(void) calculateMaxItems
 {
-	CGSize s = [[textureAtlas_ texture] contentSizeInPixels];
+	CGSize s = [[textureAtlas_ texture] contentSize];
 	itemsPerColumn_ = s.height / itemHeight_;
 	itemsPerRow_ = s.width / itemWidth_;
 }

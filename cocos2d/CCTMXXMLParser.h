@@ -66,7 +66,7 @@ enum {
 @interface CCTMXLayerInfo : NSObject
 {
 	NSString			*name_;
-	CGSize				layerSize_;
+	ccGridSize			layerSize_;
 	unsigned int		*tiles_;
 	BOOL				visible_;
 	unsigned char		opacity_;
@@ -78,7 +78,7 @@ enum {
 }
 
 @property (nonatomic,readwrite,retain)	NSString *name;
-@property (nonatomic,readwrite)			CGSize layerSize;
+@property (nonatomic,readwrite)			ccGridSize layerSize;
 @property (nonatomic,readwrite)			unsigned int *tiles;
 @property (nonatomic,readwrite)			BOOL visible;
 @property (nonatomic,readwrite)			unsigned char opacity;

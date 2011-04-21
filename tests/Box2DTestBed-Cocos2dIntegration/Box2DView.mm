@@ -187,8 +187,6 @@ enum {
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 	
 	glPushMatrix();
-	float scale = CC_CONTENT_SCALE_FACTOR();
-	glScalef( scale, scale, 1 );
 	
 	test->m_world->DrawDebugData();
 	
