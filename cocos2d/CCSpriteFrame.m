@@ -29,8 +29,10 @@
 #import "ccMacros.h"
 
 @implementation CCSpriteFrame
-@synthesize rotated = rotated_, offsetInPixels = offsetInPixels_, texture = texture_;
-@synthesize originalSizeInPixels=originalSizeInPixels_;
+@synthesize offsetInPixels = offsetInPixels_, offset = offset_;
+@synthesize originalSizeInPixels = originalSizeInPixels_;
+@synthesize texture = texture_;
+@synthesize rotated = rotated_;
 
 +(id) frameWithTexture:(CCTexture2D*)texture rect:(CGRect)rect
 {
@@ -50,13 +52,15 @@
 
 -(id) initWithTexture:(CCTexture2D*)texture rectInPixels:(CGRect)rect rotated:(BOOL)rotated offset:(CGPoint)offset originalSize:(CGSize)originalSize
 {
-	if( (self=[super init]) ) {
+	if( (self=[super init]) )
+    {
 		self.texture = texture;
 		rectInPixels_ = rect;
 		rect_ = CC_RECT_PIXELS_TO_POINTS( rect );
-		rotated_ = rotated;
 		offsetInPixels_ = offset;
+        offset_ = CC_POINT_PIXELS_TO_POINTS( offsetInPixels_ );
 		originalSizeInPixels_ = originalSize;
+        rotated_ = rotated;
 	}
 	return self;	
 }
@@ -103,6 +107,19 @@
 -(void) setRectInPixels:(CGRect)rectInPixels
 {
 	rectInPixels_ = rectInPixels;
-	rect_ = CC_RECT_PIXELS_TO_POINTS(rectInPixels);
+	rect_ = CC_RECT_PIXELS_TO_POINTS( rectInPixels_ );
 }
+
+-(void) setOffset:(CGPoint)offsets
+{
+    offset_ = offsets;
+    offsetInPixels_ = CC_POINT_POINTS_TO_PIXELS( offset_ );
+}
+
+-(void) setOffsetInPixels:(CGPoint)offsetInPixels
+{
+    offsetInPixels_ = offsetInPixels;
+    offset_ = CC_POINT_PIXELS_TO_POINTS( offsetInPixels_ );
+}
+
 @end

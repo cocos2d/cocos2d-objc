@@ -140,6 +140,7 @@
 #define kQuadSize sizeof(quads_[0].bl)
 	
 #if CC_USES_VBO
+    
 	glGenBuffers(2, &buffersVBO_[0]);
 
 	glBindBuffer(GL_ARRAY_BUFFER, buffersVBO_[0]);
@@ -189,7 +190,8 @@
 
 -(void) initIndices
 {
-	for( NSUInteger i=0;i< capacity_;i++) {
+	for( NSUInteger i = 0; i < capacity_;i++)
+    {
 #if CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP
 		indices_[i*6+0] = i*4+0;
 		indices_[i*6+1] = i*4+0;

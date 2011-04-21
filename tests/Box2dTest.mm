@@ -125,10 +125,7 @@ enum {
 
 	// Draws the Box2d Data in RetinaDisplay
 	glPushMatrix();
-	
-	float scale = CC_CONTENT_SCALE_FACTOR();
-	glScalef( scale, scale, 1 );
-	
+    
 	world->DrawDebugData();
 
 	glPopMatrix();

@@ -39,8 +39,8 @@ eachShape(void *ptr, void* unused)
 
 	CCSpriteBatchNode *batch = (CCSpriteBatchNode*) [self getChildByTag:kTagBatchNode];
 	
-	posx = (CCRANDOM_0_1() * 200);
-	posy = (CCRANDOM_0_1() * 200);
+	posx = CCRANDOM_0_1() * 200.0f;
+	posy = CCRANDOM_0_1() * 200.0f;
 	
 	posx = (posx % 4) * 85;
 	posy = (posy % 3) * 121;

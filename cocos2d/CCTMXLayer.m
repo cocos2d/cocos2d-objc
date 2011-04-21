@@ -148,8 +148,8 @@
 -(id) initWithTilesetInfo:(CCTMXTilesetInfo*)tilesetInfo layerInfo:(CCTMXLayerInfo*)layerInfo mapInfo:(CCTMXMapInfo*)mapInfo
 {	
 	// XXX: is 35% a good estimate ?
-	CGSize size = layerInfo.layerSize;
-	float totalNumberOfTiles = size.width * size.height;
+	ccGridSize size = layerInfo.layerSize;
+	float totalNumberOfTiles = size.x * size.y;
 	float capacity = totalNumberOfTiles * 0.35f + 1; // 35 percent is occupied ?
 	
 	CCTexture2D *tex = nil;
@@ -160,7 +160,7 @@
 
 		// layerInfo
 		self.layerName = layerInfo.name;
-		layerSize_ = layerInfo.layerSize;
+		layerSize_ = size;
 		tiles_ = layerInfo.tiles;
 		minGID_ = layerInfo.minGID;
 		maxGID_ = layerInfo.maxGID;
@@ -176,11 +176,11 @@
 		
 		// offset (after layer orientation is set);
 		CGPoint offset = [self calculateLayerOffset:layerInfo.offset];
-		[self setPositionInPixels:offset];
+		[self setPosition:CC_POINT_PIXELS_TO_POINTS(offset)];
 		
 		atlasIndexArray_ = ccCArrayNew(totalNumberOfTiles);
 		
-		[self setContentSizeInPixels: CGSizeMake( layerSize_.width * mapTileSize_.width, layerSize_.height * mapTileSize_.height )];
+		[self setContentSize:CC_SIZE_PIXELS_TO_POINTS(CGSizeMake( layerSize_.x * mapTileSize_.width, layerSize_.y * mapTileSize_.height ))];
 		
 		useAutomaticVertexZ_= NO;
 		vertexZvalue_ = 0;
@@ -242,10 +242,10 @@
 	// Parse cocos2d properties
 	[self parseInternalProperties];
 	
-	for( NSUInteger y=0; y < layerSize_.height; y++ ) {
-		for( NSUInteger x=0; x < layerSize_.width; x++ ) {
+	for( NSUInteger y = 0; y < layerSize_.y; y++ ) {
+		for( NSUInteger x = 0; x < layerSize_.x; x++ ) {
 			
-			NSUInteger pos = x + layerSize_.width * y;
+			NSUInteger pos = x + layerSize_.x * y;
 			uint32_t gid = tiles_[ pos ];
 			
 			// gid are stored in little endian.
@@ -295,7 +295,7 @@
 
 -(CCSprite*) tileAt:(CGPoint)pos
 {
-	NSAssert( pos.x < layerSize_.width && pos.y < layerSize_.height && pos.x >=0 && pos.y >=0, @"TMXLayer: invalid position");
+	NSAssert( pos.x < layerSize_.x && pos.y < layerSize_.y && pos.x >=0 && pos.y >=0, @"TMXLayer: invalid position");
 	NSAssert( tiles_ && atlasIndexArray_, @"TMXLayer: the tiles map has been released");
 	
 	CCSprite *tile = nil;
@@ -303,14 +303,16 @@
 	
 	// if GID == 0, then no tile is present
 	if( gid ) {
-		int z = pos.x + pos.y * layerSize_.width;
+		int z = pos.x + pos.y * layerSize_.x;
 		tile = (CCSprite*) [self getChildByTag:z];
 		
 		// tile not created yet. create it
 		if( ! tile ) {
 			CGRect rect = [tileset_ rectForGID:gid];			
 			tile = [[CCSprite alloc] initWithBatchNode:self rectInPixels:rect];
-			[tile setPositionInPixels: [self positionAt:pos]];
+			
+            CGPoint p = [self positionAt:pos];
+            [tile setPosition:CC_POINT_PIXELS_TO_POINTS(p)];
 			[tile setVertexZ: [self vertexZForPos:pos]];
 			tile.anchorPoint = CGPointZero;
 			[tile setOpacity:opacity_];
@@ -325,10 +327,10 @@
 
 -(uint32_t) tileGIDAt:(CGPoint)pos
 {
-	NSAssert( pos.x < layerSize_.width && pos.y < layerSize_.height && pos.x >=0 && pos.y >=0, @"TMXLayer: invalid position");
+	NSAssert( pos.x < layerSize_.x && pos.y < layerSize_.y && pos.x >=0 && pos.y >=0, @"TMXLayer: invalid position");
 	NSAssert( tiles_ && atlasIndexArray_, @"TMXLayer: the tiles map has been released");
 	
-	NSInteger idx = pos.x + pos.y * layerSize_.width;
+	NSInteger idx = pos.x + pos.y * layerSize_.x;
 	return tiles_[ idx ];
 }
 
@@ -338,17 +340,18 @@
 {
 	CGRect rect = [tileset_ rectForGID:gid];
 	
-	NSInteger z = pos.x + pos.y * layerSize_.width;
+	NSInteger z = pos.x + pos.y * layerSize_.x;
 	
 	if( ! reusedTile_ )
 		reusedTile_ = [[CCSprite alloc] initWithBatchNode:self rectInPixels:rect];
 	else
 		[reusedTile_ initWithBatchNode:self rectInPixels:rect];
 	
-	[reusedTile_ setPositionInPixels: [self positionAt:pos]];
+    CGPoint p = [self positionAt:pos];
+    [reusedTile_ setPosition:CC_POINT_PIXELS_TO_POINTS(p)];
 	[reusedTile_ setVertexZ: [self vertexZForPos:pos]];
-	reusedTile_.anchorPoint = CGPointZero;
-	[reusedTile_ setOpacity:opacity_];
+    [reusedTile_ setAnchorPoint:CGPointZero];
+    [reusedTile_ setOpacity:opacity_];
 	
 	// get atlas index
 	NSUInteger indexForZ = [self atlasIndexForNewZ:z];
@@ -376,16 +379,17 @@
 {
 	CGRect rect = [tileset_ rectForGID:gid];
 	
-	int z = pos.x + pos.y * layerSize_.width;
+	int z = pos.x + pos.y * layerSize_.x;
 	
 	if( ! reusedTile_ )
 		reusedTile_ = [[CCSprite alloc] initWithBatchNode:self rectInPixels:rect];
 	else
 		[reusedTile_ initWithBatchNode:self rectInPixels:rect];
 	
-	[reusedTile_ setPositionInPixels: [self positionAt:pos]];
+    CGPoint p = [self positionAt:pos];
+    [reusedTile_ setPosition:CC_POINT_PIXELS_TO_POINTS(p)];
 	[reusedTile_ setVertexZ: [self vertexZForPos:pos]];
-	reusedTile_.anchorPoint = CGPointZero;
+    [reusedTile_ setAnchorPoint:CGPointZero];
 	[reusedTile_ setOpacity:opacity_];
 	
 	// get atlas index
@@ -406,16 +410,17 @@
 {
 	CGRect rect = [tileset_ rectForGID:gid];
 	
-	NSInteger z = pos.x + pos.y * layerSize_.width;
+	NSInteger z = pos.x + pos.y * layerSize_.x;
 	
 	if( ! reusedTile_ )
 		reusedTile_ = [[CCSprite alloc] initWithBatchNode:self rectInPixels:rect];
 	else
 		[reusedTile_ initWithBatchNode:self rectInPixels:rect];
 	
-	[reusedTile_ setPositionInPixels: [self positionAt:pos]];
+    CGPoint p = [self positionAt:pos];
+    [reusedTile_ setPosition:CC_POINT_PIXELS_TO_POINTS(p)];
 	[reusedTile_ setVertexZ: [self vertexZForPos:pos]];
-	reusedTile_.anchorPoint = CGPointZero;
+    [reusedTile_ setAnchorPoint:CGPointZero];
 	[reusedTile_ setOpacity:opacity_];
 	
 	// optimization:
@@ -468,7 +473,7 @@ int compareInts (const void * a, const void * b)
 
 -(void) setTileGID:(uint32_t)gid at:(CGPoint)pos
 {
-	NSAssert( pos.x < layerSize_.width && pos.y < layerSize_.height && pos.x >=0 && pos.y >=0, @"TMXLayer: invalid position");
+	NSAssert( pos.x < layerSize_.x && pos.y < layerSize_.y && pos.x >=0 && pos.y >=0, @"TMXLayer: invalid position");
 	NSAssert( tiles_ && atlasIndexArray_, @"TMXLayer: the tiles map has been released");
 	NSAssert( gid == 0 || gid >= tileset_.firstGid, @"TMXLayer: invalid gid" );
 
@@ -487,7 +492,7 @@ int compareInts (const void * a, const void * b)
 		// modifying an existing tile with a non-empty tile
 		else {
 
-			NSUInteger z = pos.x + pos.y * layerSize_.width;
+			NSUInteger z = pos.x + pos.y * layerSize_.x;
 			id sprite = [self getChildByTag:z];
 			if( sprite ) {
 				CGRect rect = [tileset_ rectForGID:gid];
@@ -521,14 +526,14 @@ int compareInts (const void * a, const void * b)
 
 -(void) removeTileAt:(CGPoint)pos
 {
-	NSAssert( pos.x < layerSize_.width && pos.y < layerSize_.height && pos.x >=0 && pos.y >=0, @"TMXLayer: invalid position");
+	NSAssert( pos.x < layerSize_.x && pos.y < layerSize_.y && pos.x >=0 && pos.y >=0, @"TMXLayer: invalid position");
 	NSAssert( tiles_ && atlasIndexArray_, @"TMXLayer: the tiles map has been released");
 
 	uint32_t gid = [self tileGIDAt:pos];
 	
 	if( gid ) {
 		
-		NSUInteger z = pos.x + pos.y * layerSize_.width;
+		NSUInteger z = pos.x + pos.y * layerSize_.x;
 		NSUInteger atlasIndex = [self atlasIndexForExistantZ:z];
 		
 		// remove tile from GID map
@@ -596,7 +601,7 @@ int compareInts (const void * a, const void * b)
 {
 	CGPoint xy = {
 		pos.x * mapTileSize_.width,
-		(layerSize_.height - pos.y - 1) * mapTileSize_.height,
+		(layerSize_.y - pos.y - 1) * mapTileSize_.height,
 	};
 	return xy;
 }
@@ -604,8 +609,8 @@ int compareInts (const void * a, const void * b)
 -(CGPoint) positionForIsoAt:(CGPoint)pos
 {
 	CGPoint xy = {
-		mapTileSize_.width /2 * ( layerSize_.width + pos.x - pos.y - 1),
-		mapTileSize_.height /2 * (( layerSize_.height * 2 - pos.x - pos.y) - 2),
+		mapTileSize_.width /2 * ( layerSize_.x + pos.x - pos.y - 1),
+		mapTileSize_.height /2 * (( layerSize_.y * 2 - pos.x - pos.y) - 2),
 	};
 	return xy;
 }
@@ -618,7 +623,7 @@ int compareInts (const void * a, const void * b)
 	
 	CGPoint xy = {
 		pos.x * mapTileSize_.width*3/4,
-		(layerSize_.height - pos.y - 1) * mapTileSize_.height + diffY
+		(layerSize_.y - pos.y - 1) * mapTileSize_.height + diffY
 	};
 	return xy;
 }
@@ -630,11 +635,11 @@ int compareInts (const void * a, const void * b)
 	if( useAutomaticVertexZ_ ) {
 		switch( layerOrientation_ ) {
 			case CCTMXOrientationIso:
-				maxVal = layerSize_.width + layerSize_.height;
+				maxVal = layerSize_.x + layerSize_.y;
 				ret = -(maxVal - (pos.x + pos.y));
 				break;
 			case CCTMXOrientationOrtho:
-				ret = -(layerSize_.height-pos.y);
+				ret = -(layerSize_.y-pos.y);
 				break;
 			case CCTMXOrientationHex:
 				NSAssert(NO,@"TMX Hexa zOrder not supported");

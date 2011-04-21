@@ -240,9 +240,9 @@
 		CCTMXLayerInfo *layer = [CCTMXLayerInfo new];
 		layer.name = [attributeDict valueForKey:@"name"];
 		
-		CGSize s;
-		s.width = [[attributeDict valueForKey:@"width"] intValue];
-		s.height = [[attributeDict valueForKey:@"height"] intValue];
+		ccGridSize s;
+		s.x = [[attributeDict valueForKey:@"width"] intValue];
+		s.y = [[attributeDict valueForKey:@"height"] intValue];
 		layer.layerSize = s;
 		
 		layer.visible = ![[attributeDict valueForKey:@"visible"] isEqualToString:@"0"];

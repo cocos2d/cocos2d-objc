@@ -530,7 +530,7 @@ typedef struct _KerningHashElement
 	totalHeight = configuration_->commonHeight_ * quantityOfLines;
 	nextFontPositionY = -(configuration_->commonHeight_ - configuration_->commonHeight_*quantityOfLines);
 	
-	for(NSUInteger i=0; i<stringLen; i++) {
+	for(NSUInteger i = 0; i<stringLen; i++) {
 		unichar c = [string_ characterAtIndex:i];
 		NSAssert( c < kCCBMFontMaxChars, @"BitmapFontAtlas: character outside bounds");
 		
@@ -564,8 +564,8 @@ typedef struct _KerningHashElement
 		}
 		
 		float yOffset = configuration_->commonHeight_ - fontDef.yOffset;
-		fontChar.positionInPixels = ccp( (float)nextFontPositionX + fontDef.xOffset + fontDef.rect.size.width*0.5f + kerningAmount,
-								(float)nextFontPositionY + yOffset - rect.size.height*0.5f );
+        CGPoint fontPos = ccp( (float)nextFontPositionX + fontDef.xOffset + fontDef.rect.size.width*0.5f + kerningAmount, (float)nextFontPositionY + yOffset - rect.size.height*0.5f );
+        fontChar.position = CC_POINT_PIXELS_TO_POINTS(fontPos);
 
 		// update kerning
 		nextFontPositionX += configuration_->BMFontArray_[c].xAdvance + kerningAmount;
@@ -588,7 +588,7 @@ typedef struct _KerningHashElement
 	tmpSize.width = longestLine;
 	tmpSize.height = totalHeight;
 
-	[self setContentSizeInPixels:tmpSize];
+	[self setContentSize:CC_SIZE_PIXELS_TO_POINTS(tmpSize)];
 }
 
 #pragma mark BitmapFontAtlas - CCLabelProtocol protocol

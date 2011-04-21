@@ -58,8 +58,8 @@
 	{
 		NSAssert(format != kCCTexture2DPixelFormat_A8,@"only RGB and RGBA formats are valid for a render texture");
 		
-		w *= CC_CONTENT_SCALE_FACTOR();
-		h *= CC_CONTENT_SCALE_FACTOR();
+		//w *= CC_CONTENT_SCALE_FACTOR();
+		//h *= CC_CONTENT_SCALE_FACTOR();
 
 		glGetIntegerv(CC_GL_FRAMEBUFFER_BINDING, &oldFBO_);
 		

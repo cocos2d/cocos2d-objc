@@ -92,7 +92,7 @@ static char * glExtensions;
 		NSString *OSVer = [self getMacVersion];
 #endif
 		NSArray *arr = [OSVer componentsSeparatedByString:@"."];		
-		int idx=0x01000000;
+		int idx = 0x01000000;
 		for( NSString *str in arr ) {
 			int value = [str intValue];
 			OSVersion_ += value * idx;

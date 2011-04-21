@@ -124,14 +124,14 @@
 {
 	CFByteOrder o = CFByteOrderGetCurrent();
 	
-	CGSize size = layerInfo.layerSize;
+	ccGridSize size = layerInfo.layerSize;
 
 	id iter = [mapInfo.tilesets reverseObjectEnumerator];
 	for( CCTMXTilesetInfo* tileset in iter) {
-		for( unsigned int y = 0; y < size.height; y++ ) {
-			for( unsigned int x = 0; x < size.width; x++ ) {
+		for( unsigned int y = 0; y < size.y; y++ ) {
+			for( unsigned int x = 0; x < size.x; x++ ) {
 				
-				unsigned int pos = x + size.width * y;
+				unsigned int pos = x + size.x * y;
 				unsigned int gid = layerInfo.tiles[ pos ];
 				
 				// gid are stored in little endian.

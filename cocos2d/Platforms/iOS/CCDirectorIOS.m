@@ -153,7 +153,11 @@ CGFloat	__ccContentScaleFactor = 1;
 {
 	CGSize winSize = winSizeInPixels_;
 	
-	glViewport(0, 0, winSize.width, winSize.height);
+    if( CC_CONTENT_SCALE_FACTOR() != 1)
+        glViewport(0, -winSize.height * CC_CONTENT_SCALE_FACTOR()/2.0f, winSize.width * CC_CONTENT_SCALE_FACTOR(), winSize.height * CC_CONTENT_SCALE_FACTOR());
+    else
+        glViewport(0, 0, winSize.width, winSize.height);
+
 	
 
 	switch (projection) {
@@ -170,7 +174,7 @@ CGFloat	__ccContentScaleFactor = 1;
 			
 			kmVec3 eye = kmVec3Make(winSize.width/2, winSize.height/2, [self getZEye] );
 			kmVec3 center = kmVec3Make( winSize.width/2, winSize.height/2, 0 );
-			kmVec3 up = kmVec3Make(0,1,0);
+			kmVec3 up = kmVec3Make(0, 1, 0);
 			kmMat4LookAt(&matrixB, &eye, &center, &up);
 			
 			kmMat4Multiply(&portraitProjectionMatrix_, &matrixA, &matrixB);
@@ -387,22 +391,10 @@ CGFloat	__ccContentScaleFactor = 1;
 {
 	CGSize s = winSizeInPoints_;
 	
-	if( deviceOrientation_ == CCDeviceOrientationLandscapeLeft || deviceOrientation_ == CCDeviceOrientationLandscapeRight ) {
-		// swap x,y in landscape mode
-		CGSize tmp = s;
-		s.width = tmp.height;
-		s.height = tmp.width;
-	}
-	return s;
-}
+    // swap x,y in landscape mode
+	if( deviceOrientation_ == CCDeviceOrientationLandscapeLeft || deviceOrientation_ == CCDeviceOrientationLandscapeRight )
+        CC_SWAP(s.width, s.height);
 
--(CGSize) winSizeInPixels
-{
-	CGSize s = [self winSize];
-	
-	s.width *= CC_CONTENT_SCALE_FACTOR();
-	s.height *= CC_CONTENT_SCALE_FACTOR();
-	
 	return s;
 }
 

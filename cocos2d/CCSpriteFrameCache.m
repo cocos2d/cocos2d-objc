@@ -133,8 +133,8 @@ static CCSpriteFrameCache *sharedSpriteFrameCache_=nil;
 			// abs ow/oh
 			ow = abs(ow);
 			oh = abs(oh);
+            
 			// create frame
-			
 			spriteFrame = [[CCSpriteFrame alloc] initWithTexture:texture
 													rectInPixels:CGRectMake(x, y, w, h)
 														 rotated:NO
