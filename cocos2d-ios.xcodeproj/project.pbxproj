@@ -2498,6 +2498,10 @@
 		E0FDACE7123DAC8300F25BB4 /* larabie-16-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E0FDACE5123DAC8300F25BB4 /* larabie-16-hd.png */; };
 		E0FDACE8123DAC8300F25BB4 /* larabie-16.png in Resources */ = {isa = PBXBuildFile; fileRef = E0FDACE6123DAC8300F25BB4 /* larabie-16.png */; };
 		E0FDACEE123DAD0000F25BB4 /* tuffy_bold_italic-charmap-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E0FDACED123DAD0000F25BB4 /* tuffy_bold_italic-charmap-hd.png */; };
+		E781D8DE1360A71400DE1B53 /* CCParticleSystemAnimation.h in Headers */ = {isa = PBXBuildFile; fileRef = E781D8DC1360A71400DE1B53 /* CCParticleSystemAnimation.h */; };
+		E781D8DF1360A71400DE1B53 /* CCParticleSystemAnimation.h in Headers */ = {isa = PBXBuildFile; fileRef = E781D8DC1360A71400DE1B53 /* CCParticleSystemAnimation.h */; };
+		E781D8E01360A71400DE1B53 /* CCParticleSystemAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = E781D8DD1360A71400DE1B53 /* CCParticleSystemAnimation.m */; };
+		E781D8E11360A71400DE1B53 /* CCParticleSystemAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = E781D8DD1360A71400DE1B53 /* CCParticleSystemAnimation.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -4413,6 +4417,8 @@
 		E0FDACE5123DAC8300F25BB4 /* larabie-16-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "larabie-16-hd.png"; sourceTree = "<group>"; };
 		E0FDACE6123DAC8300F25BB4 /* larabie-16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "larabie-16.png"; sourceTree = "<group>"; };
 		E0FDACED123DAD0000F25BB4 /* tuffy_bold_italic-charmap-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tuffy_bold_italic-charmap-hd.png"; sourceTree = "<group>"; };
+		E781D8DC1360A71400DE1B53 /* CCParticleSystemAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCParticleSystemAnimation.h; sourceTree = "<group>"; };
+		E781D8DD1360A71400DE1B53 /* CCParticleSystemAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCParticleSystemAnimation.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -6453,6 +6459,8 @@
 		50A24E890F378119007CAEB0 /* Particle Nodes */ = {
 			isa = PBXGroup;
 			children = (
+				E781D8DC1360A71400DE1B53 /* CCParticleSystemAnimation.h */,
+				E781D8DD1360A71400DE1B53 /* CCParticleSystemAnimation.m */,
 				5038B6B00E196CD8009A621E /* CCParticleSystem.h */,
 				5038B6B10E196CD8009A621E /* CCParticleSystem.m */,
 				5016F52D0FA0D16B000E9BB2 /* CCParticleSystemPoint.h */,
@@ -7216,6 +7224,7 @@
 				E0E974A91237E4EA00E3E64B /* MacGLView.h in Headers */,
 				E02BB6D6126CA93A006E46A2 /* CCAnimationCache.h in Headers */,
 				E02BB704126CADEA006E46A2 /* CCAnimation.h in Headers */,
+				E781D8DE1360A71400DE1B53 /* CCParticleSystemAnimation.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7223,6 +7232,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E781D8DF1360A71400DE1B53 /* CCParticleSystemAnimation.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10787,6 +10797,7 @@
 				E0E974AA1237E4EA00E3E64B /* MacGLView.m in Sources */,
 				E02BB6D7126CA93A006E46A2 /* CCAnimationCache.m in Sources */,
 				E02BB705126CADEA006E46A2 /* CCAnimation.m in Sources */,
+				E781D8E01360A71400DE1B53 /* CCParticleSystemAnimation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10822,6 +10833,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E781D8E11360A71400DE1B53 /* CCParticleSystemAnimation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
