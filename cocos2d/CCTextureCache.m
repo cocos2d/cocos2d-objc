@@ -308,7 +308,6 @@ static CCTextureCache *sharedTextureCache;
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 		else {
 			NSString *fullpath = [CCFileUtils fullPathFromRelativePath: path ];
-			BOOL isRetina = [CCFileUtils isRetina: path];
 
 			NSData *data = [[NSData alloc] initWithContentsOfFile:fullpath];
 			NSBitmapImageRep *image = [[NSBitmapImageRep alloc] initWithData:data];
