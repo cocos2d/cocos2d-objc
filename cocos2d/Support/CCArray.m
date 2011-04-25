@@ -218,6 +218,26 @@
 	ccArraySwapObjectsAtIndexes(data, index1, index2);
 }
 
+- (void) reverseObjects
+{
+	if (data->num > 1)
+	{
+		//floor it since in case of a oneven number the number of swaps stays the same
+		int count = (int) floorf(data->num/2.f); 
+		uint maxIndex = data->num - 1;
+		
+		for (int i = 0; i < count ; i++)
+		{
+			ccArraySwapObjectsAtIndexes(data, i, maxIndex);
+			maxIndex--;
+		}
+	}
+}
+
+- (void) reduceMemoryFootprint
+{
+	ccArrayShrink(data);
+}
 
 #pragma mark Sending Messages to Elements
 
