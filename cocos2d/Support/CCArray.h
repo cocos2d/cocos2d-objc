@@ -94,7 +94,8 @@ for(id *arr = __array__->data->arr, *end = __array__->data->arr + __array__->dat
 
 - (void) exchangeObject:(id)object1 withObject:(id)object2;
 - (void) exchangeObjectAtIndex:(NSUInteger)index1 withObjectAtIndex:(NSUInteger)index2;
-
+- (void) reverseObjects;
+- (void) reduceMemoryFootprint;
 
 // Sending Messages to Elements
 
