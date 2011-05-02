@@ -182,6 +182,10 @@ Extensions to make it easy to create a CCTexture2D object from a string of text.
 Note that the generated textures are of type A8 - use the blending mode (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA).
 */
 @interface CCTexture2D (Text)
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+/** Initializes a texture from a string with dimensions, alignment, line break mode, font name and font size */
+- (id) initWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(CCTextAlignment)alignment lineBreakMode:(UILineBreakMode)lineBreakMode fontName:(NSString*)name fontSize:(CGFloat)size;
+#endif
 /** Initializes a texture from a string with dimensions, alignment, font name and font size */
 - (id) initWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(CCTextAlignment)alignment fontName:(NSString*)name fontSize:(CGFloat)size;
 /** Initializes a texture from a string with font name and font size */

@@ -365,7 +365,7 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 
-- (id) initWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(CCTextAlignment)alignment font:(id)uifont
+- (id) initWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(CCTextAlignment)alignment lineBreakMode:(UILineBreakMode)lineBreakMode font:(id)uifont
 {
 	NSAssert( uifont, @"Invalid font");
 	
@@ -402,11 +402,11 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 
 	// normal fonts
 	if( [uifont isKindOfClass:[UIFont class] ] )
-		[string drawInRect:CGRectMake(0, 0, dimensions.width, dimensions.height) withFont:uifont lineBreakMode:UILineBreakModeWordWrap alignment:alignment];
+		[string drawInRect:CGRectMake(0, 0, dimensions.width, dimensions.height) withFont:uifont lineBreakMode:lineBreakMode alignment:alignment];
 	
 #if CC_FONT_LABEL_SUPPORT
 	else // ZFont class 
-		[string drawInRect:CGRectMake(0, 0, dimensions.width, dimensions.height) withZFont:uifont lineBreakMode:UILineBreakModeWordWrap alignment:alignment];
+		[string drawInRect:CGRectMake(0, 0, dimensions.width, dimensions.height) withZFont:uifont lineBreakMode:lineBreakMode alignment:alignment];
 #endif
 	
 	UIGraphicsPopContext();
@@ -421,6 +421,8 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 			
 	return self;
 }
+
+
 				 
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 
@@ -502,7 +504,7 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 		return nil;
 	}
 	
-	return [self initWithString:string dimensions:dim alignment:CCTextAlignmentCenter font:font];
+	return [self initWithString:string dimensions:dim alignment:CCTextAlignmentCenter lineBreakMode:UILineBreakModeWordWrap font:font];
 	
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 	{
@@ -543,7 +545,7 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 		return nil;
 	}
 	
-	return [self initWithString:string dimensions:dimensions alignment:alignment font:uifont];
+	return [self initWithString:string dimensions:dimensions alignment:alignment lineBreakMode:UILineBreakModeWordWrap font:uifont];
 	
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 	
@@ -563,6 +565,28 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 		
 #endif // Mac
 }
+
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+- (id) initWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(CCTextAlignment)alignment lineBreakMode:(UILineBreakMode)lineBreakMode fontName:(NSString*)name fontSize:(CGFloat)size
+{
+
+	id						uifont = nil;
+	
+	uifont = [UIFont fontWithName:name size:size];
+	
+#if CC_FONT_LABEL_SUPPORT
+	if( ! uifont )
+		uifont = [[FontManager sharedManager] zFontWithName:name pointSize:size];
+#endif // CC_FONT_LABEL_SUPPORT
+	if( ! uifont ) {
+		CCLOG(@"cocos2d: Texture2d: Invalid Font: %@. Verify the .ttf name", name);
+		[self release];
+		return nil;
+	}
+	
+	return [self initWithString:string dimensions:dimensions alignment:alignment lineBreakMode:lineBreakMode font:uifont];
+}
+#endif
 @end
 
 #pragma mark -
