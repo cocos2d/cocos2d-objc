@@ -84,6 +84,8 @@ typedef enum {
 	kCCTexture2DPixelFormat_RGB565,
 	//! 8-bit textures used as masks
 	kCCTexture2DPixelFormat_A8,
+	//! 16-bit textures used as masks
+	kCCTexture2DPixelFormat_LA88,
 	//! 16-bit textures: RGBA4444
 	kCCTexture2DPixelFormat_RGBA4444,
 	//! 16-bit textures: RGB5A1
