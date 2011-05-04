@@ -239,16 +239,16 @@ typedef struct _PVRTexHeader
 					heightBlocks = 2;
 
 				dataSize = widthBlocks * heightBlocks * ((blockSize  * bpp) / 8);
-				float packetLenght = (dataLength-dataOffset);
-				packetLenght = packetLenght > dataSize ? dataSize : packetLenght;
+				float packetLength = (dataLength-dataOffset);
+				packetLength = packetLength > dataSize ? dataSize : packetLength;
 				
 				mipmaps_[numberOfMipmaps_].address = bytes+dataOffset;
-				mipmaps_[numberOfMipmaps_].len = packetLenght;
+				mipmaps_[numberOfMipmaps_].len = packetLength;
 				numberOfMipmaps_++;
 				
 				NSAssert( numberOfMipmaps_ < CC_PVRMIPMAP_MAX, @"TexturePVR: Maximum number of mimpaps reached. Increate the CC_PVRMIPMAP_MAX value");
 				
-				dataOffset += packetLenght;
+				dataOffset += packetLength;
 				
 				width = MAX(width >> 1, 1);
 				height = MAX(height >> 1, 1);
