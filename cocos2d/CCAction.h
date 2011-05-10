@@ -101,6 +101,11 @@ enum {
 //! duration in seconds of the action
 @property (nonatomic,readwrite) ccTime duration;
 
+/** Callback to give the action the opportunity of changing its duration based
+ * on the target it is about to act upon.
+ */
+- (void) updateDuration:(id)aTarget;
+
 /** returns a reversed action */
 - (CCFiniteTimeAction*) reverse;
 @end

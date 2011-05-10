@@ -108,6 +108,11 @@
 @implementation CCFiniteTimeAction
 @synthesize duration = duration_;
 
+- (void) updateDuration:(id)aTarget
+{
+	// By default do nothing
+}
+
 - (CCFiniteTimeAction*) reverse
 {
 	CCLOG(@"cocos2d: FiniteTimeAction#reverse: Implement me");
