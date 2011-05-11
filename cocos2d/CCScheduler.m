@@ -592,19 +592,25 @@ static CCScheduler *sharedScheduler;
 	tListEntry *entry, *tmp;
     if(minPriority < 0) {
         DL_FOREACH_SAFE( updates0, entry, tmp ) {
-            entry->paused = YES;
-            [idsWithSelectors addObject:entry->target];
+            if(entry->priority >= minPriority) {
+                entry->paused = YES;
+                [idsWithSelectors addObject:entry->target];
+            }
         }
     }
     if(minPriority <= 0) {
         DL_FOREACH_SAFE( updatesNeg, entry, tmp ) {
-            entry->paused = YES;
-            [idsWithSelectors addObject:entry->target];
+            if(entry->priority >= minPriority) {
+                entry->paused = YES;
+                [idsWithSelectors addObject:entry->target];
+            }
         }
     }
 	DL_FOREACH_SAFE( updatesPos, entry, tmp ) {
-		entry->paused = YES;
-		[idsWithSelectors addObject:entry->target];
+        if(entry->priority >= minPriority) {
+            entry->paused = YES;
+            [idsWithSelectors addObject:entry->target];
+        }
 	}
 	
 	return idsWithSelectors;
