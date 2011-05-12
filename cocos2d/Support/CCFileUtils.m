@@ -81,6 +81,15 @@ NSString *ccRemoveHDSuffixFromFile( NSString *path )
 			NSString *pathWithoutLastname = [path stringByDeletingLastPathComponent];
 			return [pathWithoutLastname stringByAppendingPathComponent:newLastname];
 		}		
+		if( [name rangeOfString:CC_RETINA_DISPLAY_FILENAME_SUFFIX2].location != NSNotFound ) {
+			
+			CCLOG(@"cocos2d: Filename(%@) contains %@ suffix. Removing it. See cocos2d issue #1040", path, CC_RETINA_DISPLAY_FILENAME_SUFFIX2);
+            
+			NSString *newLastname = [name stringByReplacingOccurrencesOfString:CC_RETINA_DISPLAY_FILENAME_SUFFIX2 withString:@""];
+			
+			NSString *pathWithoutLastname = [path stringByDeletingLastPathComponent];
+			return [pathWithoutLastname stringByAppendingPathComponent:newLastname];
+		}		
 	}
 
 #endif // CC_IS_RETINA_DISPLAY_SUPPORTED
@@ -110,8 +119,13 @@ NSString *ccRemoveHDSuffixFromFile( NSString *path )
 		
 		// check if path already has the suffix.
 		if( [name rangeOfString:CC_RETINA_DISPLAY_FILENAME_SUFFIX].location != NSNotFound ) {
-		
+            
 			CCLOG(@"cocos2d: WARNING Filename(%@) already has the suffix %@. Using it.", name, CC_RETINA_DISPLAY_FILENAME_SUFFIX);			
+			return path;
+		}
+		if( [name rangeOfString:CC_RETINA_DISPLAY_FILENAME_SUFFIX2].location != NSNotFound ) {
+            
+			CCLOG(@"cocos2d: WARNING Filename(%@) already has the suffix %@. Using it.", name, CC_RETINA_DISPLAY_FILENAME_SUFFIX2);			
 			return path;
 		}
 
@@ -133,7 +147,13 @@ NSString *ccRemoveHDSuffixFromFile( NSString *path )
 		if( [__localFileManager fileExistsAtPath:retinaName] )
 			return retinaName;
 
-		CCLOG(@"cocos2d: CCFileUtils: Warning HD file not found: %@", [retinaName lastPathComponent] );
+		retinaName = [pathWithoutExtension stringByAppendingString:CC_RETINA_DISPLAY_FILENAME_SUFFIX2];
+		retinaName = [retinaName stringByAppendingPathExtension:extension];
+        
+		if( [__localFileManager fileExistsAtPath:retinaName] )
+			return retinaName;
+        
+		CCLOG(@"cocos2d: CCFileUtils: Warning HD / 2x file not found: %@", [retinaName lastPathComponent] );
 	}
 	
 #endif // CC_IS_RETINA_DISPLAY_SUPPORTED

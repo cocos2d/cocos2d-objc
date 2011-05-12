@@ -244,6 +244,9 @@
 #ifndef CC_RETINA_DISPLAY_FILENAME_SUFFIX
 #define CC_RETINA_DISPLAY_FILENAME_SUFFIX @"-hd"
 #endif
+#ifndef CC_RETINA_DISPLAY_FILENAME_SUFFIX2
+#define CC_RETINA_DISPLAY_FILENAME_SUFFIX2 @"@2x"
+#endif
 
 /** @def CC_USE_LA88_LABELS_ON_NEON_ARCH
  If enabled, it will use LA88 (16-bit textures) on Neon devices for CCLabelTTF objects.
