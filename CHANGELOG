@@ -1,3 +1,6 @@
+version 1.0 - XX-Jun-2011
+. [FIX] Templates: Supports spaces in project name (issue #1158)
+
 version 1.0-rc2 - 03-May-2011
 . [NEW] CCArray: Added reduceMemoryFootprint and reverseObject (issue #1167)
 . [NEW] Director: Use small dt when the game is being debugged.
