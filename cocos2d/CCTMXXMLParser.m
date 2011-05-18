@@ -398,7 +398,13 @@
 		
 		if( layerAttribs & (TMXLayerAttribGzip | TMXLayerAttribZlib) ) {
 			unsigned char *deflated;
-			ccInflateMemory(buffer, len, &deflated);
+			CGSize s = [layer layerSize];
+			int sizeHint = s.width * s.height * sizeof(uint32_t);
+			
+			int inflatedLen = ccInflateMemoryWithHint(buffer, len, &deflated, sizeHint);
+			NSAssert( inflatedLen == sizeHint, @"CCTMXXMLParser: Hint failed!");
+			inflatedLen = 0; // To make Release build happy
+
 			free( buffer );
 			
 			if( ! deflated ) {

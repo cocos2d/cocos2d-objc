@@ -87,7 +87,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 
 // For Labels use 32-bit textures on iPhone 3GS / iPads since A8 textures are very slow
-#if defined(__ARM_NEON__) && CC_USE_RGBA32_LABELS_ON_NEON_ARCH
+#if (defined(__ARM_NEON__) || TARGET_IPHONE_SIMULATOR) && CC_USE_LA88_LABELS_ON_NEON_ARCH
 #define USE_TEXT_WITH_A8_TEXTURES 0
 
 #else
@@ -132,6 +132,9 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 				break;
 			case kCCTexture2DPixelFormat_RGB565:
 				glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, (GLsizei) width, (GLsizei) height, 0, GL_RGB, GL_UNSIGNED_SHORT_5_6_5, data);
+				break;
+			case kCCTexture2DPixelFormat_LA88:
+				glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE_ALPHA, (GLsizei) width, (GLsizei) height, 0, GL_LUMINANCE_ALPHA, GL_UNSIGNED_BYTE, data);
 				break;
 			case kCCTexture2DPixelFormat_A8:
 				glTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA, (GLsizei) width, (GLsizei) height, 0, GL_ALPHA, GL_UNSIGNED_BYTE, data);
@@ -375,17 +378,15 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 	
 	CGContextRef			context;
 	CGColorSpaceRef			colorSpace;
-	
+
 #if USE_TEXT_WITH_A8_TEXTURES
-	colorSpace = CGColorSpaceCreateDeviceGray();
 	data = calloc(POTHigh, POTWide);
-	context = CGBitmapContextCreate(data, POTWide, POTHigh, 8, POTWide, colorSpace, kCGImageAlphaNone);
 #else
-	colorSpace = CGColorSpaceCreateDeviceRGB();
-	data = calloc(POTHigh, POTWide * 4);
-	context = CGBitmapContextCreate(data, POTWide, POTHigh, 8, 4 * POTWide, colorSpace, kCGImageAlphaPremultipliedLast | kCGBitmapByteOrder32Big);				
+	data = calloc(POTHigh, POTWide * 2);
 #endif
 
+	colorSpace = CGColorSpaceCreateDeviceGray();
+	context = CGBitmapContextCreate(data, POTWide, POTHigh, 8, POTWide, colorSpace, kCGImageAlphaNone);
 	CGColorSpaceRelease(colorSpace);
 	
 	if( ! context ) {
@@ -413,9 +414,16 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 	
 #if USE_TEXT_WITH_A8_TEXTURES
 	self = [self initWithData:data pixelFormat:kCCTexture2DPixelFormat_A8 pixelsWide:POTWide pixelsHigh:POTHigh contentSize:dimensions];
-#else
-	self = [self initWithData:data pixelFormat:kCCTexture2DPixelFormat_RGBA8888 pixelsWide:POTWide pixelsHigh:POTHigh contentSize:dimensions];
-#endif
+
+#else // ! USE_TEXT_WITH_A8_TEXTURES
+	NSUInteger textureSize = POTWide*POTHigh;
+	unsigned short *la88_data = (unsigned short*)data;
+	for(int i = textureSize-1; i>=0; i--) //Convert A8 to LA88
+		la88_data[i] = (data[i] << 8) | 0xff;
+	
+	self = [self initWithData:data pixelFormat:kCCTexture2DPixelFormat_LA88 pixelsWide:POTWide pixelsHigh:POTHigh contentSize:dimensions];
+#endif // ! USE_TEXT_WITH_A8_TEXTURES
+
 	CGContextRelease(context);
 	[self releaseData:data];
 			

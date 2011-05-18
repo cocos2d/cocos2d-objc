@@ -1,7 +1,13 @@
-version 1.0-rc2 - XX-Apr-2011
+version 1.0 - XX-Jun-2011
+. [FIX] Templates: Supports spaces in project name (issue #1158)
+. [FIX] TMX Maps: Consume less memory (only what is needed), faster loading times (issue #1175)
+
+version 1.0-rc2 - 03-May-2011
+. [NEW] CCArray: Added reduceMemoryFootprint and reverseObject (issue #1167)
 . [NEW] Director: Use small dt when the game is being debugged.
-. [NEW] Tests: Added test case for bug 1159
+. [NEW] Label: TTF supports new LA88 texture format instead of RGBA8888. A8 is still the default one.
 . [NEW] Particles: Added support for ParticleDesigner 1.3.60 (spinning support)
+. [NEW] Tests: Added test case for bug 1159
 . [FIX] Particles: TTL is always >= 0.
 . [FIX] Particles: texture coordinates are being used correctly when texture is NPOT.
 . [FIX] Scheduler: Fixed possible crash when unscheduling a sibling

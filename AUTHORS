@@ -294,7 +294,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		MenuToggleItem doesn't scale up if pressed several times. patch.
 	* marcofucci:
 		CCArray.fastRemoveObjectAtIndex patch.
-	* Marco Tillemans (araker):
+	* Marco Tillemans (AKA araker: http://www.welcometothefabrik.com/)
 		RenderTexture renders images with correct blend function. patch.
 		RenderTexture: performance fixes. Improved logic.
 		Added reorder node performance test
@@ -303,6 +303,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		CCArray: check for bounds in insertObjectAtIndex. patch.
 		TextureAtlas: added the possibility to draw the Quads in parts
 		TextureAtlas: Render "static" VBO batches between 6~10% faster. patch.
+		CCArray / ccArray: Added reverseObjects and reduceMemoryFootprint methods.
 	* marcu.catalin:
 		Menu items are not consumed is items are not visible
 	* Mark Cooke:
