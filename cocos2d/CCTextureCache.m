@@ -317,7 +317,7 @@ static CCTextureCache *sharedTextureCache;
 			else
 				CCLOG(@"cocos2d: Couldn't add image:%@ in CCTextureCache", path);
 			
-			[tex release];			
+			[tex autorelease];			
 		}
 #endif // __MAC_OS_X_VERSION_MAX_ALLOWED
 
