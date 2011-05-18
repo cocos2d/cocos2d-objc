@@ -224,7 +224,7 @@
 	{
 		//floor it since in case of a oneven number the number of swaps stays the same
 		int count = (int) floorf(data->num/2.f); 
-		uint maxIndex = data->num - 1;
+		NSUInteger maxIndex = data->num - 1;
 		
 		for (int i = 0; i < count ; i++)
 		{

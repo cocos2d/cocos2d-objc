@@ -376,8 +376,6 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Author of Gradient layer  
     * podhraski.tomislav:
         Mac Director compiles when slow FPS are selected. patch.
-	* psi.pk.ru:
-		EventDispatcher: flagsChanged is triggered correctly. patch
 	* psionic81:
 		ActionManager doesn't purge running actions patch
 	* rac5372:
@@ -441,6 +439,9 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		patches for Transitions
 	* Stanislav Skuratov (trump-card):
 		Author of ParticleView, the particle editor
+	* Stepan Generalov (iPsi) (http://www.itraceur.ru/)
+		EventDispatcher: flagsChanged is triggered correctly. patch
+		Test case for issue 1071
 	* Steve Oldmeadow (http://www.smoco.com/):
 		Author and maintainer of CocosDenshion Sound Engine:
 			It includes patching, maintaing, porting it to Mac,
