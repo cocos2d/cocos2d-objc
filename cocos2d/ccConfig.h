@@ -207,18 +207,18 @@
  */ 
 #define CC_RETINA_DISPLAY_FILENAME_SUFFIX @"-hd"
 
-/** @def CC_USE_RGBA32_LABELS_ON_NEON_ARCH
- If enabled, it will use RGBA8888 (32-bit textures) on Neon devices for CCLabelTTF objects.
+/** @def CC_USE_LA88_LABELS_ON_NEON_ARCH
+ If enabled, it will use LA88 (16-bit textures) on Neon devices for CCLabelTTF objects.
  If it is disabled, or if it is used on another architecture it will use A8 (8-bit textures).
- On Neon devices, RGBA8888 textures are 6% faster than A8 textures, but then will consule 4x memory.
+ On Neon devices, LA88 textures are 6% faster than A8 textures, but then will consule 2x memory.
  
  This feature is disabled by default.
  
  Platforms: Only used on ARM Neon architectures like iPhone 3GS or newer and iPad.
- 
+
  @since v0.99.5
  */
-#define CC_USE_RGBA32_LABELS_ON_NEON_ARCH 0
+#define CC_USE_LA88_LABELS_ON_NEON_ARCH 0
 
 /** @def CC_SPRITE_DEBUG_DRAW
  If enabled, all subclasses of CCSprite will draw a bounding box
