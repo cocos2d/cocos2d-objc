@@ -220,7 +220,7 @@
 		// Try to get the texture from the cache
 		NSString *textureName = [dictionary valueForKey:@"textureFileName"];
 
-		CCTexture2D *tex = [[CCTextureCache sharedTextureCache] textureForKey:textureName];
+		CCTexture2D *tex = [[CCTextureCache sharedTextureCache] addImage:textureName];
 
 		if( tex )
 			self.texture = tex;
