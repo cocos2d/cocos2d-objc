@@ -210,7 +210,7 @@
 /** @def CC_USE_LA88_LABELS_ON_NEON_ARCH
  If enabled, it will use LA88 (16-bit textures) on Neon devices for CCLabelTTF objects.
  If it is disabled, or if it is used on another architecture it will use A8 (8-bit textures).
- On Neon devices, LA88 textures are 6% faster than A8 textures, but then will consule 2x memory.
+ On Neon devices, LA88 textures are 6% faster than A8 textures, but then will consume 2x memory.
  
  This feature is disabled by default.
  

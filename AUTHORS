@@ -367,6 +367,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		CCSprite: correctly overrides setIsRelativeAnchorPoint
 		libpng doesn't compile pngtest.c. patch.
 		Templates: HelloWorld -> HelloWorldLayer and other improvements. patch.
+		TextureCache: Added dumpCachedTextureInfo method. Shows used RAM by cached textures
 	* pfg2009:
 		RenderTexture doesn't enable default GL states. patch.
 	* Piero Tofy (http://indieappsalliance.org):
