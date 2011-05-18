@@ -97,6 +97,7 @@ enum {
 	
 	// cocos2d integration
 	BOOL retainName_;
+	CCTexture2DPixelFormat format_;
 }
 
 /** initializes a CCTexturePVR with a path */
@@ -119,6 +120,7 @@ enum {
 
 // cocos2d integration
 @property (nonatomic,readwrite) BOOL retainName;
+@property (nonatomic,readonly) CCTexture2DPixelFormat format;
 
 @end
 
