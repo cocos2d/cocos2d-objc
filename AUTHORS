@@ -134,6 +134,8 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		EAGLView supports resizing. patch.
 	* Gildas (http://www.bigpapoo.com)
 		Fixed memory leak when loading ParticleDesigner particles.
+	* glimajr:
+		TextureCache: Prevents crash when adding a texture in multithreaded environments
 	* Graham Perks:
 		Atlas works with GL_CULL_FACE
 		FastDirector doesn't leak autorelease pool patch
