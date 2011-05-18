@@ -280,7 +280,7 @@ static CCTextureCache *sharedTextureCache;
 			else
 				CCLOG(@"cocos2d: Couldn't add image:%@ in CCTextureCache", path);
 			
-			[tex release];
+			[tex autorelease];
 		}
 		
 		else {
@@ -297,7 +297,7 @@ static CCTextureCache *sharedTextureCache;
 			else
 				CCLOG(@"cocos2d: Couldn't add image:%@ in CCTextureCache", path);
 			
-			[tex release];			
+			[tex autorelease];			
 		}
 
 		// Only in Mac
