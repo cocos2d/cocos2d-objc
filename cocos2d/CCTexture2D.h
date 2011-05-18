@@ -84,12 +84,18 @@ typedef enum {
 	kCCTexture2DPixelFormat_RGB565,
 	//! 8-bit textures used as masks
 	kCCTexture2DPixelFormat_A8,
+	//! 8-bit intensity texture
+	kCCTexture2DPixelFormat_I8,
 	//! 16-bit textures used as masks
-	kCCTexture2DPixelFormat_LA88,
+	kCCTexture2DPixelFormat_AI88,
 	//! 16-bit textures: RGBA4444
 	kCCTexture2DPixelFormat_RGBA4444,
 	//! 16-bit textures: RGB5A1
 	kCCTexture2DPixelFormat_RGB5A1,	
+	//! 4-bit PVRTC-compressed texture: PVRTC4
+	kCCTexture2DPixelFormat_PVRTC4,
+	//! 2-bit PVRTC-compressed texture: PVRTC2
+	kCCTexture2DPixelFormat_PVRTC2,
 
 	//! Default texture format: RGBA8888
 	kCCTexture2DPixelFormat_Default = kCCTexture2DPixelFormat_RGBA8888,
@@ -201,7 +207,7 @@ Note that the generated textures are of type A8 - use the blending mode (GL_SRC_
  * IMPORTANT: This method is only defined on iOS. It is not supported on the Mac version.
  */
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
--(id) initWithPVRTCData: (const void*)data level:(int)level bpp:(int)bpp hasAlpha:(BOOL)hasAlpha length:(int)length;
+-(id) initWithPVRTCData: (const void*)data level:(int)level bpp:(int)bpp hasAlpha:(BOOL)hasAlpha length:(int)length pixelFormat:(CCTexture2DPixelFormat)pixelFormat;
 #endif // __IPHONE_OS_VERSION_MAX_ALLOWED
 /** Initializes a texture from a PVR file.
  
@@ -302,6 +308,11 @@ typedef struct _ccTexParams {
  @since v0.8
  */
 +(CCTexture2DPixelFormat) defaultAlphaPixelFormat;
+
+/** returns the bits-per-pixel of the in-memory OpenGL texture
+ @since v1.0
+ */
++(int) bitsPerPixelForFormat:(CCTexture2DPixelFormat)format;
 @end
 
 

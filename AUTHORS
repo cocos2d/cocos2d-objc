@@ -134,6 +134,8 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		EAGLView supports resizing. patch.
 	* Gildas (http://www.bigpapoo.com)
 		Fixed memory leak when loading ParticleDesigner particles.
+	* glimajr:
+		TextureCache: Prevents crash when adding a texture in multithreaded environments
 	* Graham Perks:
 		Atlas works with GL_CULL_FACE
 		FastDirector doesn't leak autorelease pool patch
@@ -365,6 +367,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		CCSprite: correctly overrides setIsRelativeAnchorPoint
 		libpng doesn't compile pngtest.c. patch.
 		Templates: HelloWorld -> HelloWorldLayer and other improvements. patch.
+		TextureCache: Added dumpCachedTextureInfo method. Shows used RAM by cached textures
 	* pfg2009:
 		RenderTexture doesn't enable default GL states. patch.
 	* Piero Tofy (http://indieappsalliance.org):
