@@ -61,3 +61,10 @@
 @interface ConvertToNode : TestDemo
 {}
 @end
+
+@interface PointAtTest : TestDemo
+{
+    CCSprite *pointer;
+    CCSprite *target;
+}
+@end
