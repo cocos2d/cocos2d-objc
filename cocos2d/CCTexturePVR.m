@@ -93,7 +93,7 @@ enum
 	kPVRTextureFlagTypeA_8,
 };
 
-static const uint32_t tableFormats[][6] = {
+static const uint32_t tableFormats[][7] = {
 	
 	// - PVR texture format
 	// - OpenGL internal format
@@ -101,18 +101,19 @@ static const uint32_t tableFormats[][6] = {
 	// - OpenGL type
 	// - bpp
 	// - compressed
-	{ kPVRTextureFlagTypeRGBA_4444, GL_RGBA,	GL_RGBA, GL_UNSIGNED_SHORT_4_4_4_4,	16, NO	},
-	{ kPVRTextureFlagTypeRGBA_5551, GL_RGBA,	GL_RGBA, GL_UNSIGNED_SHORT_5_5_5_1,	16, NO	},
-	{ kPVRTextureFlagTypeRGBA_8888, GL_RGBA,	GL_RGBA, GL_UNSIGNED_BYTE,			32, NO	},
-	{ kPVRTextureFlagTypeRGB_565,	GL_RGB,		GL_RGB,	 GL_UNSIGNED_SHORT_5_6_5,	16, NO	},
-	{ kPVRTextureFlagTypeI_8,		GL_LUMINANCE,	GL_LUMINANCE,	GL_UNSIGNED_BYTE,			8,	NO	},
-	{ kPVRTextureFlagTypeAI_88,		GL_LUMINANCE_ALPHA,	GL_LUMINANCE_ALPHA, GL_UNSIGNED_BYTE,	16,	NO	},
+	// - Cocos2d texture format constant
+	{ kPVRTextureFlagTypeRGBA_4444, GL_RGBA,	GL_RGBA, GL_UNSIGNED_SHORT_4_4_4_4,				16, NO, kCCTexture2DPixelFormat_RGBA4444	},
+	{ kPVRTextureFlagTypeRGBA_5551, GL_RGBA,	GL_RGBA, GL_UNSIGNED_SHORT_5_5_5_1,				16, NO, kCCTexture2DPixelFormat_RGB5A1		},
+	{ kPVRTextureFlagTypeRGBA_8888, GL_RGBA,	GL_RGBA, GL_UNSIGNED_BYTE,						32, NO, kCCTexture2DPixelFormat_RGBA8888	},
+	{ kPVRTextureFlagTypeRGB_565,	GL_RGB,		GL_RGB,	 GL_UNSIGNED_SHORT_5_6_5,				16, NO, kCCTexture2DPixelFormat_RGB565		},
+	{ kPVRTextureFlagTypeA_8,		GL_ALPHA,	GL_ALPHA,	GL_UNSIGNED_BYTE,					8,	NO, kCCTexture2DPixelFormat_A8			},
+	{ kPVRTextureFlagTypeI_8,		GL_LUMINANCE,	GL_LUMINANCE,	GL_UNSIGNED_BYTE,			8,	NO, kCCTexture2DPixelFormat_I8			},
+	{ kPVRTextureFlagTypeAI_88,		GL_LUMINANCE_ALPHA,	GL_LUMINANCE_ALPHA, GL_UNSIGNED_BYTE,	16,	NO, kCCTexture2DPixelFormat_AI88		},
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
-	{ kPVRTextureFlagTypePVRTC_2,	GL_COMPRESSED_RGBA_PVRTC_2BPPV1_IMG, -1, -1,	2,	YES },
-	{ kPVRTextureFlagTypePVRTC_4,	GL_COMPRESSED_RGBA_PVRTC_4BPPV1_IMG, -1, -1,	4,	YES	},
+	{ kPVRTextureFlagTypePVRTC_2,	GL_COMPRESSED_RGBA_PVRTC_2BPPV1_IMG, -1, -1,				2,	YES, kCCTexture2DPixelFormat_PVRTC2		},
+	{ kPVRTextureFlagTypePVRTC_4,	GL_COMPRESSED_RGBA_PVRTC_4BPPV1_IMG, -1, -1,				4,	YES, kCCTexture2DPixelFormat_PVRTC4		},
 #endif // iphone only
-	{ kPVRTextureFlagTypeBGRA_8888, GL_RGBA,	GL_BGRA, GL_UNSIGNED_BYTE,			32,	NO	},
-	{ kPVRTextureFlagTypeA_8,		GL_ALPHA,	GL_ALPHA,	GL_UNSIGNED_BYTE,		8,	NO	},
+	{ kPVRTextureFlagTypeBGRA_8888, GL_RGBA,	GL_BGRA, GL_UNSIGNED_BYTE,						32,	NO, kCCTexture2DPixelFormat_RGBA8888	},
 };
 #define MAX_TABLE_ELEMENTS (sizeof(tableFormats) / sizeof(tableFormats[0]))
 
@@ -123,6 +124,7 @@ enum {
 	kCCInternalOpenGLType,
 	kCCInternalBPP,
 	kCCInternalCompressedImage,
+	kCCInternalCCTexture2DPixelFormat,
 };
 
 typedef struct _PVRTexHeader
@@ -152,6 +154,7 @@ typedef struct _PVRTexHeader
 
 // cocos2d integration
 @synthesize retainName = retainName_;
+@synthesize format = format_;
 
 
 - (BOOL)unpackPVRData:(unsigned char*)data PVRLen:(NSUInteger)len
@@ -203,6 +206,8 @@ typedef struct _PVRTexHeader
 			
 			dataLength = CFSwapInt32LittleToHost(header->dataLength);
 			bytes = ((uint8_t *)data) + sizeof(PVRTexHeader);
+			format_ = tableFormats[tableFormatIndex_][kCCInternalCCTexture2DPixelFormat];
+			bpp = tableFormats[tableFormatIndex_][kCCInternalBPP];
 			
 			// Calculate the data size for each texture level and respect the minimum number of blocks
 			while (dataOffset < dataLength)
@@ -212,13 +217,11 @@ typedef struct _PVRTexHeader
 						blockSize = 8 * 4; // Pixel by pixel block size for 2bpp
 						widthBlocks = width / 8;
 						heightBlocks = height / 4;
-						bpp = 2;
 						break;
 					case kPVRTextureFlagTypePVRTC_4:
 						blockSize = 4 * 4; // Pixel by pixel block size for 4bpp
 						widthBlocks = width / 4;
 						heightBlocks = height / 4;
-						bpp = 4;
 						break;
 					case kPVRTextureFlagTypeBGRA_8888:
 						if( ! [[CCConfiguration sharedConfiguration] supportsBGRA8888] ) {
@@ -229,7 +232,6 @@ typedef struct _PVRTexHeader
 						blockSize = 1;
 						widthBlocks = width;
 						heightBlocks = height;
-						bpp = tableFormats[ tableFormatIndex_][ kCCInternalBPP];
 						break;
 				}
 				

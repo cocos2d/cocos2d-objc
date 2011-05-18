@@ -80,7 +80,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #import "CCTexturePVR.h"
 
 #if CC_USE_LA88_LABELS
-#define LABEL_PIXEL_FORMAT kCCTexture2DPixelFormat_LA88
+#define LABEL_PIXEL_FORMAT kCCTexture2DPixelFormat_AI88
 #else
 #define LABEL_PIXEL_FORMAT kCCTexture2DPixelFormat_A8
 #endif
@@ -124,7 +124,7 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 			case kCCTexture2DPixelFormat_RGB565:
 				glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, (GLsizei) width, (GLsizei) height, 0, GL_RGB, GL_UNSIGNED_SHORT_5_6_5, data);
 				break;
-			case kCCTexture2DPixelFormat_LA88:
+			case kCCTexture2DPixelFormat_AI88:
 				glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE_ALPHA, (GLsizei) width, (GLsizei) height, 0, GL_LUMINANCE_ALPHA, GL_UNSIGNED_BYTE, data);
 				break;
 			case kCCTexture2DPixelFormat_A8:
@@ -402,7 +402,7 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 #if CC_USE_LA88_LABELS
 	NSUInteger textureSize = POTWide*POTHigh;
 	unsigned short *la88_data = (unsigned short*)data;
-	for(int i = textureSize-1; i>=0; i--) //Convert A8 to LA88
+	for(int i = textureSize-1; i>=0; i--) //Convert A8 to AI88
 		la88_data[i] = (data[i] << 8) | 0xff;
 
 #endif
@@ -562,7 +562,7 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 static BOOL PVRHaveAlphaPremultiplied_ = NO;
 
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
--(id) initWithPVRTCData: (const void*)data level:(int)level bpp:(int)bpp hasAlpha:(BOOL)hasAlpha length:(int)length
+-(id) initWithPVRTCData: (const void*)data level:(int)level bpp:(int)bpp hasAlpha:(BOOL)hasAlpha length:(int)length pixelFormat:(CCTexture2DPixelFormat)pixelFormat
 {
 	//	GLint					saveName;
 	
@@ -596,6 +596,7 @@ static BOOL PVRHaveAlphaPremultiplied_ = NO;
 		maxS_ = 1.0f;
 		maxT_ = 1.0f;
 		hasPremultipliedAlpha_ = PVRHaveAlphaPremultiplied_;
+		format_ = pixelFormat;
 	}					
 	return self;
 }
@@ -615,6 +616,7 @@ static BOOL PVRHaveAlphaPremultiplied_ = NO;
 			height_ = pvr.height;
 			size_ = CGSizeMake(width_, height_);
 			hasPremultipliedAlpha_ = PVRHaveAlphaPremultiplied_;
+			format_ = pvr.format;
 			
 			[pvr release];
 			
@@ -739,6 +741,43 @@ static BOOL PVRHaveAlphaPremultiplied_ = NO;
 +(CCTexture2DPixelFormat) defaultAlphaPixelFormat
 {
 	return defaultAlphaPixelFormat_;
+}
+
++(int) bitsPerPixelForFormat:(CCTexture2DPixelFormat)format
+{
+	switch (format) {
+		case kCCTexture2DPixelFormat_RGBA8888:
+			return 32;
+			break;
+		case kCCTexture2DPixelFormat_RGB565:
+			return 16;
+			break;
+		case kCCTexture2DPixelFormat_A8:
+			return 8;
+			break;
+		case kCCTexture2DPixelFormat_RGBA4444:
+			return 16;
+			break;
+		case kCCTexture2DPixelFormat_RGB5A1:
+			return 16;
+			break;
+		case kCCTexture2DPixelFormat_PVRTC4:
+			return 4;
+			break;
+		case kCCTexture2DPixelFormat_PVRTC2:
+			return 2;
+			break;
+		case kCCTexture2DPixelFormat_I8:
+			return 8;
+			break;
+		case kCCTexture2DPixelFormat_AI88:
+			return 16;
+			break;
+		default:
+			NSAssert(format == kCCTexture2DPixelFormat_Automatic , @"bitsPerPixelForFormat: %d, unrecognised pixel format", format);
+			CCLOG(@"bitsPerPixelForFormat: %d, cannot give useful result", format);
+			return 0;
+	}
 }
 @end
 

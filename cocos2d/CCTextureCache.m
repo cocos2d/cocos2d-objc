@@ -280,7 +280,8 @@ static CCTextureCache *sharedTextureCache;
 			else
 				CCLOG(@"cocos2d: Couldn't add image:%@ in CCTextureCache", path);
 			
-			[tex release];
+			// autorelease prevents possible crash in multithreaded environments
+			[tex autorelease];
 		}
 		
 		else {
@@ -297,7 +298,8 @@ static CCTextureCache *sharedTextureCache;
 			else
 				CCLOG(@"cocos2d: Couldn't add image:%@ in CCTextureCache", path);
 			
-			[tex release];			
+			// autorelease prevents possible crash in multithreaded environments
+			[tex autorelease];			
 		}
 
 		// Only in Mac
@@ -317,7 +319,8 @@ static CCTextureCache *sharedTextureCache;
 			else
 				CCLOG(@"cocos2d: Couldn't add image:%@ in CCTextureCache", path);
 			
-			[tex release];			
+			// autorelease prevents possible crash in multithreaded environments
+			[tex autorelease];			
 		}
 #endif // __MAC_OS_X_VERSION_MAX_ALLOWED
 
@@ -426,7 +429,7 @@ static CCTextureCache *sharedTextureCache;
 	NSString *fullpath = [CCFileUtils fullPathFromRelativePath:path];
 	
 	NSData *nsdata = [[NSData alloc] initWithContentsOfFile:fullpath];
-	tex = [[CCTexture2D alloc] initWithPVRTCData:[nsdata bytes] level:0 bpp:bpp hasAlpha:alpha length:w];
+	tex = [[CCTexture2D alloc] initWithPVRTCData:[nsdata bytes] level:0 bpp:bpp hasAlpha:alpha length:w pixelFormat:bpp==2?kCCTexture2DPixelFormat_PVRTC2:kCCTexture2DPixelFormat_PVRTC4];
 	if( tex )
 		[textures_ setObject: tex forKey:path];
 	else
@@ -461,6 +464,26 @@ static CCTextureCache *sharedTextureCache;
 		CCLOG(@"cocos2d: Couldn't add PVRImage:%@ in CCTextureCache",path);	
 	
 	return [tex autorelease];
+}
+
+@end
+
+
+@implementation CCTextureCache (Debug)
+
+-(void) dumpCachedTextureInfo {
+	int count = 0;
+	int totalBytes = 0;
+	for (NSString* texKey in textures_) {
+		CCTexture2D* tex = [textures_ objectForKey:texKey];
+		int bpp = [CCTexture2D bitsPerPixelForFormat:tex.pixelFormat];
+		// Each texture takes up width * height * bytesPerPixel bytes.
+		int bytes = tex.pixelsWide * tex.pixelsWide * bpp / 8;
+		totalBytes += bytes;
+		count++;
+		CCLOG( @"%@ (%u) %u x %u @ %d bpp => %u bytes (%u MB)", texKey, tex.name, tex.pixelsWide, tex.pixelsHigh, bpp, bytes, bytes / (1024*1024));
+	}
+	CCLOG( @"CCTextureCache dumpDebugInfo: %d textures, for %u bytes (%u MB)", count, totalBytes, totalBytes / (1024*1024));
 }
 
 @end
