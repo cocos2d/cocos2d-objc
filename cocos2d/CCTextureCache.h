@@ -137,3 +137,12 @@
 @end
 
 
+@interface CCTextureCache (Debug)
+/** Output to CCLOG the current contents of this CCTextureCache
+ * This will attempt to calculate the size of each texture, and the total texture memory in use
+ *
+ * @since v1.0
+ */
+-(void) dumpCachedTextureInfo;
+
+@end
