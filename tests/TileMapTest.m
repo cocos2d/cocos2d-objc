@@ -444,16 +444,16 @@ Class restartAction()
 		[map setAnchorPoint:ccp(0, 0)];
 
 		CCTMXLayer *layer = [map layerNamed:@"Layer 0"];
-		ccGridSize s = [layer layerSize];
+		CGSize s = [layer layerSize];
 	
 		CCSprite *sprite;
 		sprite = [layer tileAt:ccp(0,0)];
 		[sprite setScale:2];
-		sprite = [layer tileAt:ccp(s.x-1, 0)];
+		sprite = [layer tileAt:ccp(s.width-1, 0)];
 		[sprite setScale:2];
-		sprite = [layer tileAt:ccp(0, s.y-1)];
+		sprite = [layer tileAt:ccp(0, s.height-1)];
 		[sprite setScale:2];
-		sprite = [layer tileAt:ccp(s.x-1, s.y-1)];
+		sprite = [layer tileAt:ccp(s.width-1, s.height-1)];
 		[sprite setScale:2];
 		
 		[self schedule:@selector(removeSprite:) interval:2];
@@ -467,9 +467,9 @@ Class restartAction()
 
 	CCTMXTiledMap *map = (CCTMXTiledMap*) [self getChildByTag:kTagTileMap];
 	CCTMXLayer *layer = [map layerNamed:@"Layer 0"];
-	ccGridSize s = [layer layerSize];
+	CGSize s = [layer layerSize];
 
-	CCSprite *sprite = [layer tileAt:ccp(s.x-1,0)];
+	CCSprite *sprite = [layer tileAt:ccp(s.width-1,0)];
 	[layer removeChild:sprite cleanup:YES];
 }
 
@@ -707,8 +707,8 @@ Class restartAction()
 	NSLog(@"++++atlas quantity: %u", (unsigned int) [[layer textureAtlas] totalQuads]);
 	NSLog(@"++++children: %u", (unsigned int) [[layer children] count]);
 
-	ccGridSize s = [layer layerSize];
-	for( int y=0; y< s.y; y++ ) {
+	CGSize s = [layer layerSize];
+	for( int y=0; y< s.height; y++ ) {
 		[layer setTileGID:gid2 at:ccp(3,y)];
 	}
 	gid2 = (gid2 + 1) % 80;
@@ -720,9 +720,9 @@ Class restartAction()
 	id map = [self getChildByTag:kTagTileMap];
 	CCTMXLayer *layer = (CCTMXLayer*) [map getChildByTag:0];
 	
-	ccGridSize s = [layer layerSize];
-	for( int x=0; x<s.x;x++) {
-		int y = s.y-1;
+	CGSize s = [layer layerSize];
+	for( int x=0; x<s.width;x++) {
+		int y = s.height-1;
 		unsigned int tmpgid = [layer tileGIDAt:ccp(x,y)];
 		[layer setTileGID:tmpgid+1 at:ccp(x,y)];
 	}
@@ -734,8 +734,8 @@ Class restartAction()
 
 	id map = [self getChildByTag:kTagTileMap];
 	CCTMXLayer *layer = (CCTMXLayer*) [map getChildByTag:0];
-	ccGridSize s = [layer layerSize];
-	for( int y=0; y< s.y; y++ ) {
+	CGSize s = [layer layerSize];
+	for( int y=0; y< s.height; y++ ) {
 		[layer removeTileAt:ccp(5,y)];
 	}
 		
@@ -997,9 +997,9 @@ Class restartAction()
 		CCTMXLayer *layer;
 		layer = [map layerNamed:@"Layer 0"];
 
-		ccGridSize ls = [layer layerSize];
-		for (NSUInteger y = 0; y < ls.y; y++) {
-			for (NSUInteger x = 0; x < ls.x; x++) {
+		CGSize ls = [layer layerSize];
+		for (NSUInteger y = 0; y < ls.height; y++) {
+			for (NSUInteger x = 0; x < ls.width; x++) {
 				[layer setTileGID:1  at:ccp( x, y )];
 			}
 		}		

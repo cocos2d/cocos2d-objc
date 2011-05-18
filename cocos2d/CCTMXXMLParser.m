@@ -240,9 +240,9 @@
 		CCTMXLayerInfo *layer = [CCTMXLayerInfo new];
 		layer.name = [attributeDict valueForKey:@"name"];
 		
-		ccGridSize s;
-		s.x = [[attributeDict valueForKey:@"width"] intValue];
-		s.y = [[attributeDict valueForKey:@"height"] intValue];
+		CGSize s;
+		s.width = [[attributeDict valueForKey:@"width"] intValue];
+		s.height = [[attributeDict valueForKey:@"height"] intValue];
 		layer.layerSize = s;
 		
 		layer.visible = ![[attributeDict valueForKey:@"visible"] isEqualToString:@"0"];
@@ -398,7 +398,13 @@
 		
 		if( layerAttribs & (TMXLayerAttribGzip | TMXLayerAttribZlib) ) {
 			unsigned char *deflated;
-			ccInflateMemory(buffer, len, &deflated);
+			CGSize s = [layer layerSize];
+			int sizeHint = s.width * s.height * sizeof(uint32_t);
+			
+			int inflatedLen = ccInflateMemoryWithHint(buffer, len, &deflated, sizeHint);
+			NSAssert( inflatedLen == sizeHint, @"CCTMXXMLParser: Hint failed!");
+			inflatedLen = 0; // To make Release build happy
+
 			free( buffer );
 			
 			if( ! deflated ) {

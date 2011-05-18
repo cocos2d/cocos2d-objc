@@ -65,7 +65,7 @@
 {
 	CCTMXTilesetInfo	*tileset_;
 	NSString			*layerName_;
-	ccGridSize			layerSize_;
+	CGSize				layerSize_;
 	CGSize				mapTileSize_;
 	uint32_t			*tiles_;			// GID are 32 bit
 	NSUInteger			layerOrientation_;
@@ -88,7 +88,7 @@
 /** name of the layer */
 @property (nonatomic,readwrite,retain) NSString *layerName;
 /** size of the layer in tiles */
-@property (nonatomic,readwrite) ccGridSize layerSize;
+@property (nonatomic,readwrite) CGSize layerSize;
 /** size of the map's tile (could be differnt from the tile's size) */
 @property (nonatomic,readwrite) CGSize mapTileSize;
 /** pointer to the map of tiles */

@@ -398,13 +398,15 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 
 	UIGraphicsPopContext();
 	
+
 #if CC_USE_LA88_LABELS
 	NSUInteger textureSize = POTWide*POTHigh;
 	unsigned short *la88_data = (unsigned short*)data;
 	for(int i = textureSize-1; i>=0; i--) //Convert A8 to LA88
 		la88_data[i] = (data[i] << 8) | 0xff;
+
 #endif
-	
+
 	self = [self initWithData:data pixelFormat:LABEL_PIXEL_FORMAT pixelsWide:POTWide pixelsHigh:POTHigh contentSize:dimensions];
 
 	CGContextRelease(context);

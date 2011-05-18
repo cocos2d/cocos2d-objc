@@ -146,7 +146,7 @@
 				<key>ALWAYS_SEARCH_USER_PATHS</key>
 				<string>YES</string>
 				<key>USER_HEADER_SEARCH_PATHS</key>
-				<string>___PACKAGENAME___/libs</string>
+				<string>"___PACKAGENAME___/libs"</string>
 			</dict>
 		</dict>
 	</array>
