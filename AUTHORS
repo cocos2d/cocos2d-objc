@@ -294,7 +294,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		MenuToggleItem doesn't scale up if pressed several times. patch.
 	* marcofucci:
 		CCArray.fastRemoveObjectAtIndex patch.
-	* Marco Tillemans (araker):
+	* Marco Tillemans (AKA araker: http://www.welcometothefabrik.com/)
 		RenderTexture renders images with correct blend function. patch.
 		RenderTexture: performance fixes. Improved logic.
 		Added reorder node performance test
