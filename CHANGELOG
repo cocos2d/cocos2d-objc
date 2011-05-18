@@ -1,5 +1,6 @@
 version 1.0 - XX-Jun-2011
 . [FIX] Templates: Supports spaces in project name (issue #1158)
+. [FIX] TextureCache: Textures are autoreleased to prevent a crash in multi-threading environments
 . [FIX] TMX Maps: Consume less memory (only what is needed), faster loading times (issue #1175)
 
 version 1.0-rc2 - 03-May-2011
