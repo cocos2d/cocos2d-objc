@@ -18,6 +18,8 @@ static NSString *transitions[] = {
 	@"ActionMove",
 	@"ActionRotate",
 	@"ActionScale",
+	@"ActionSkew",
+	@"ActionSkewRotateScale",
 	@"ActionJump",
 	@"ActionBezier",
 	@"ActionBlink",
@@ -310,6 +312,81 @@ Class restartAction()
 }
 
 @end
+
+@implementation ActionSkew
+-(void) onEnter
+{
+	[super onEnter];
+	
+	[self centerSprites:3];
+	
+	id actionTo = [CCSkewTo actionWithDuration:2 skewX:37.2f skewY:-37.2f];
+	id actionToBack = [CCSkewTo actionWithDuration:2 skewX:0 skewY:0];
+	id actionBy = [CCSkewBy actionWithDuration:2 skewX:0.0f skewY:-90.0f];
+	id actionBy2 = [CCSkewBy actionWithDuration:2 skewX:45.0f skewY:45.0f];
+	id actionByBack = [actionBy reverse];
+			
+	[tamara runAction:[CCSequence actions:actionTo, actionToBack, nil]];
+	[grossini runAction: [CCSequence actions:actionBy, actionByBack, nil]];
+	
+	[kathia runAction: [CCSequence actions:actionBy2, [actionBy2 reverse], nil]];	
+}
+-(NSString *) title
+{
+	return @"SkewTo / SkewBy";
+}
+
+@end
+
+@implementation ActionSkewRotateScale
+-(void) onEnter
+{
+	[super onEnter];
+	
+	[tamara removeFromParentAndCleanup:YES];
+	[grossini removeFromParentAndCleanup:YES];
+	[kathia removeFromParentAndCleanup:YES];
+	
+	CGSize boxSize = CGSizeMake(100.0f, 100.0f);
+	
+	CCColorLayer *box = [CCColorLayer layerWithColor:ccc4(255,255,0,255)];
+	box.anchorPoint = ccp(0,0);
+	box.position = ccp(190,110);
+	box.contentSize = boxSize;
+	
+	static CGFloat markerside = 10.0f;
+	CCColorLayer *uL = [CCColorLayer layerWithColor:ccc4(255,0,0,255)];
+	[box addChild:uL];
+	uL.contentSize = CGSizeMake(markerside, markerside);
+	uL.position = ccp(0.f, boxSize.height-markerside);
+	uL.anchorPoint = ccp(0,0);
+	
+	CCColorLayer *uR = [CCColorLayer layerWithColor:ccc4(0,0,255,255)];
+	[box addChild:uR];
+	uR.contentSize = CGSizeMake(markerside, markerside);
+	uR.position = ccp(boxSize.width-markerside, boxSize.height-markerside);
+	uR.anchorPoint = ccp(0,0);	
+	[self addChild:box];
+	
+	id actionTo = [CCSkewTo actionWithDuration:2 skewX:0.f skewY:2.f];
+	id rotateTo = [CCRotateTo actionWithDuration:2 angle:61.0f];
+	id actionScaleTo = [CCScaleTo actionWithDuration:2 scaleX:-0.44f scaleY:0.47f];
+	
+	id actionScaleToBack = [CCScaleTo actionWithDuration:2 scaleX:1.0f scaleY:1.0f];
+	id rotateToBack = [CCRotateTo actionWithDuration:2 angle:0];
+	id actionToBack = [CCSkewTo actionWithDuration:2 skewX:0 skewY:0];
+	
+	[box runAction:[CCSequence actions:actionTo, actionToBack, nil]];
+	[box runAction:[CCSequence actions:rotateTo, rotateToBack, nil]];
+	[box runAction:[CCSequence actions:actionScaleTo, actionScaleToBack, nil]];
+}
+-(NSString *) title
+{
+	return @"Skew + Rotate + Scale";
+}
+
+@end
+
 
 @implementation ActionJump
 -(void) onEnter
