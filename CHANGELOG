@@ -1,4 +1,5 @@
 version 1.0 - XX-Jun-2011
+. [FIX] cocosLive: Fixed memory leaks in NSURLConnection
 . [NEW] TextureCache: Added dumpCachedTextureInfo method. Shows the RAM used by the cached textures (issue #1154)
 . [FIX] Templates: Supports spaces in project name (issue #1158)
 . [FIX] TextureCache: Textures are autoreleased to prevent a crash in multi-threading environments
