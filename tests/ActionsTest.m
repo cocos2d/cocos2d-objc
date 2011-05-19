@@ -43,6 +43,8 @@ static NSString *transitions[] = {
 	@"ActionOrbit",
 	@"ActionFollow",
 	@"ActionProperty",
+	@"ActionSequencePauseAndContinue",
+	@"ActionSequenceReset"
 };
 
 Class nextAction()
@@ -71,10 +73,6 @@ Class restartAction()
 	Class c = NSClassFromString(r);
 	return c;
 }
-
-
-
-
 
 @implementation ActionDemo
 -(id) init
@@ -1099,7 +1097,150 @@ Class restartAction()
 
 @end
 
+@implementation ActionSequencePauseAndContinue
+-(void) onEnter
+{
+	[super onEnter];
+	
+	[self centerSprites:1];
+	
+	id actionTo = [CCScaleTo actionWithDuration: 2 scale:0.5f];
+	id actionCallPause = [CCCallFunc actionWithTarget:self selector:@selector(callbackPause)];
+	id actionScaleTo = [CCScaleTo actionWithDuration:2 scale:1.f]; 
+	
+	timer_=0;
+	sequence_ = [[CCSequenceNew actions:actionTo, actionCallPause, actionScaleTo, nil] retain];
+	[grossini runAction: sequence_];
+	
+	[self schedule:@selector(update:) interval:0];
+}
 
+- (void) update:(ccTime) dt
+{
+	if (sequence_ && [sequence_ isPaused]) 
+	{	
+		timer_+=1;
+		
+		if (timer_ == 120) 
+		{	
+			[sequence_ resume];
+			CCLOG(@"action resumes");
+		}
+	}
+	
+}
+
+- (void) callbackPause
+{
+	CCLOG(@"action pauses");
+	[sequence_ pause];
+}
+
+-(NSString *) title
+{
+	return @"Pause/Resume action";
+}
+
+-(NSString*) subtitle
+{
+	return @"see log for information";
+}
+
+- (void) dealloc
+{
+	[self unschedule:@selector(update:)];
+	[sequence_ release];
+	[super dealloc];
+}
+
+@end
+
+@implementation ActionSequenceReset
+-(void) onEnter
+{
+	[super onEnter];
+	
+	[self centerSprites:1];
+	
+	id actionTo = [CCScaleTo actionWithDuration: 2 scale:0.5f];
+	id actionMoveTo = [CCMoveTo actionWithDuration:2 position:ccp(30,30)]; 
+	
+	timer_=0;
+	sequence_ = [[CCSequenceNew actions:actionTo, actionMoveTo, nil] retain];
+	[grossini runAction: sequence_];
+	
+	[self schedule:@selector(update:) interval:0];
+	
+	
+}
+
+- (void) update:(ccTime) dt
+{
+	if (timer_ == 30) 
+	{//don't finish action, leave in current state	
+		[sequence_ stop];
+		CCLOG(@"stop");
+		[sequence_ reset];
+		CCLOG(@"reset");
+	}
+	else if (timer_ == 90) 
+	{ //start and finish action immidiately
+		CCLOG(@"run action again");
+		[grossini runAction:sequence_];
+		CCLOG(@"finish");
+		[sequence_ finish];
+		CCLOG(@"reset");
+		[sequence_ reset]; 
+	}
+	else if (timer_ == 120) 
+	{
+		[grossini setScale:1.f]; 
+		[grossini setPosition:ccp(240,160)];
+		[grossini runAction:sequence_];
+		CCLOG(@"run action again, scale and position are manually set to previous values");
+	}	
+	else if (timer_ == 520)
+	{//action should be finished
+		[sequence_ reset];
+		CCLOG(@"reset a finished action, should not give a assert");	
+	}
+	else if (timer_ == 550) 
+	{
+		CCLOG(@"reset with new action array"); 
+		id action1 = [CCMoveTo actionWithDuration:2 position:ccp(450,30)]; 
+		id action2 = [CCScaleTo actionWithDuration:2 scale:2.f];
+		
+		CCArray *array = [[CCArray alloc] initWithCapacity:2]; 
+		[array addObject:action1];
+		[array addObject:action2]; 
+		
+		[sequence_ resetWithArray:array]; 
+		[array release];
+		CCLOG(@"run sequence again with new actions");
+		[grossini runAction:sequence_];
+		 
+	}
+	timer_++;
+}
+
+
+-(NSString *) title
+{
+	return @"Reset action";
+}
+
+-(NSString*) subtitle
+{
+	return @"See log for information";
+}
+
+- (void) dealloc
+{
+	[self unschedule:@selector(update:)];
+	[sequence_ release];
+	[super dealloc];
+}
+@end
 
 // CLASS IMPLEMENTATIONS
 
