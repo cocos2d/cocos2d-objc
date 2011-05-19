@@ -48,6 +48,10 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Added support for GL sharegroup in EAGLView
 	* Brad Parks:
 		Web: Added google search on forum.
+	* Brian Chapados (http://chapados.org/)
+		Author of SkewTo, SkewBy actions
+		Added Skew support to CCNode and CCSprite
+		Added Skew tests cases to ActionsTest.
 	* Brian Hammond:
 		patches for Demos
 	* Bryan/Acceleroto (http://www.acceleroto.com):
