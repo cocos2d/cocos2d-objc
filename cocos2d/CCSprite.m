@@ -926,8 +926,12 @@ struct transformValues_ {
 }
 
 -(CCSpriteFrame*) displayedFrame
-{
-	return [CCSpriteFrame frameWithTexture:self.texture rect:rect_];
+{	
+	return [CCSpriteFrame frameWithTexture:texture_
+							  rectInPixels:rectInPixels_
+								   rotated:rectRotated_
+									offset:unflippedOffsetPositionFromCenter_
+							  originalSize:contentSizeInPixels_];
 }
 
 -(void) addAnimation: (CCAnimation*) anim
