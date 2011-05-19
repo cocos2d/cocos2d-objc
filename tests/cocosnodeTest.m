@@ -38,6 +38,7 @@ static NSString *transitions[] = {
 	@"CameraZoomTest",	
 	@"CameraCenterTest",
 	@"ConvertToNode",
+    @"PointAtTest",
 };
 
 Class nextAction()
@@ -894,6 +895,43 @@ Class restartAction()
 }
 @end
 
+#pragma mark -
+#pragma mark PointAtTest
+
+@implementation PointAtTest
+-(void)updateTarget {
+    [target stopAllActions];
+    [target runAction:[CCSequence actions:[CCMoveTo actionWithDuration:1 position:ccp(rand() % 480,rand() % 320)],
+                       [CCCallFunc actionWithTarget:self selector:@selector(updateTarget)],nil]];
+}
+
+-(id) init
+{
+	if( ( self=[super init]) ) {		
+        pointer = [CCSprite spriteWithFile:@"f1.png"];
+        pointer.position = ccp(160,160);
+        [self addChild:pointer];
+        
+        target = [CCSprite spriteWithFile:@"r1.png"];
+        [self addChild:target];
+        
+        [self updateTarget];
+        
+        [self scheduleUpdate];
+	}
+	
+	return self;
+}
+
+-(void)update:(ccTime)dt {
+    [pointer pointAtPosition:target.position];
+}
+
+-(NSString *) title
+{
+	return @"pointAtPosition test";
+}
+@end
 
 
 #pragma mark -

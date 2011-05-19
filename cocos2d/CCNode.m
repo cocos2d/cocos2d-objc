@@ -879,5 +879,8 @@
 
 #endif // __IPHONE_OS_VERSION_MAX_ALLOWED
 
-
+-(void)pointAtPosition:(CGPoint)pos {
+    CGPoint diff = ccpSub(pos, self.position);
+	self.rotation = -CC_RADIANS_TO_DEGREES(atan2(diff.y,diff.x));
+}
 @end

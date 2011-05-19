@@ -507,4 +507,8 @@ enum {
  */
 - (CGPoint)convertTouchToNodeSpaceAR:(UITouch *)touch;
 #endif // __IPHONE_OS_VERSION_MAX_ALLOWED
+
+// orients a node such that the positive x axis is pointing at the position argument
+-(void)pointAtPosition:(CGPoint)pos;
+
 @end
