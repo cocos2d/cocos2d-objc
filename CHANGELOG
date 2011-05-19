@@ -5,6 +5,7 @@ version 1.0 - XX-Jun-2011
 . [FIX] TextureCache: Textures are autoreleased to prevent a crash in multi-threading environments
 . [FIX] TMX Maps: Consume less memory (only what is needed), faster loading times (issue #1175)
 . [FIX-MAC] Tests: Added test case for issue #1071
+. [FIX-MAC] Director: Doesn't crash when entering fullscreen if window is not Key (issue #1185)
 
 version 1.0-rc2 - 03-May-2011
 . [NEW] CCArray: Added reduceMemoryFootprint and reverseObject (issue #1167)
