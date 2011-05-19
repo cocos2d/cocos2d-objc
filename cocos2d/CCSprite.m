@@ -50,6 +50,7 @@ struct transformValues_ {
 	CGPoint pos;		// position x and y
 	CGPoint	scale;		// scale x and y
 	float	rotation;
+	CGPoint skew;		// skew x and y
 	CGPoint ap;			// anchor point in pixels
 	BOOL	visible;
 };
@@ -473,8 +474,24 @@ struct transformValues_ {
 		float c = cosf(radians);
 		float s = sinf(radians);
 		
-		matrix = CGAffineTransformMake( c * scaleX_,  s * scaleX_,
-									   -s * scaleY_, c * scaleY_,
+        float matrixB = s * scaleX_;
+        if ( skewY_ != 0 )
+        {
+            // only apply skew if it is non-zero, to avoid
+            // cancelling the rotation component
+            matrixB *= tanf(CC_DEGREES_TO_RADIANS(skewY_));
+        }
+        
+        float matrixC = -s * scaleY_;
+        if ( skewX_ != 0 )
+        {
+            // only apply skew if it is non-zero to avoid
+            // cancelling the rotation component
+            matrixC *= tanf(CC_DEGREES_TO_RADIANS(skewX_));
+        }
+        
+		matrix = CGAffineTransformMake( c * scaleX_,  matrixB,
+									   matrixC, c * scaleY_,
 									   positionInPixels_.x, positionInPixels_.y);
 		matrix = CGAffineTransformTranslate(matrix, -anchorPointInPixels_.x, -anchorPointInPixels_.y);		
 
@@ -503,11 +520,16 @@ struct transformValues_ {
 			}
 			CGAffineTransform newMatrix = CGAffineTransformIdentity;
 			
-			// 2nd: Translate, Rotate, Scale
+			// 2nd: Translate, Skew, Rotate, Scale
 			if( prevHonor & CC_HONOR_PARENT_TRANSFORM_TRANSLATE )
 				newMatrix = CGAffineTransformTranslate(newMatrix, tv.pos.x, tv.pos.y);
 			if( prevHonor & CC_HONOR_PARENT_TRANSFORM_ROTATE )
 				newMatrix = CGAffineTransformRotate(newMatrix, -CC_DEGREES_TO_RADIANS(tv.rotation));
+			if ( prevHonor & CC_HONOR_PARENT_TRANSFORM_SKEW ) {
+				CGAffineTransform skew = CGAffineTransformMake(1.0f, tanf(CC_DEGREES_TO_RADIANS(tv.skew.y)), tanf(CC_DEGREES_TO_RADIANS(tv.skew.x)), 1.0f, 0.0f, 0.0f);
+				// apply the skew to the transform
+				newMatrix = CGAffineTransformConcat(skew, newMatrix);
+			}
 			if( prevHonor & CC_HONOR_PARENT_TRANSFORM_SCALE ) {
 				newMatrix = CGAffineTransformScale(newMatrix, tv.scale.x, tv.scale.y);
 			}
@@ -570,6 +592,8 @@ struct transformValues_ {
 	tv->scale.x		= scaleX_;
 	tv->scale.y		= scaleY_;
 	tv->rotation	= rotation_;
+	tv->skew.x		= skewX_;
+	tv->skew.y		= skewY_;
 	tv->ap			= anchorPointInPixels_;
 	tv->visible		= visible_;
 }
@@ -725,6 +749,18 @@ struct transformValues_ {
 -(void)setRotation:(float)rot
 {
 	[super setRotation:rot];
+	SET_DIRTY_RECURSIVELY();
+}
+
+-(void)setSkewX:(float)sx
+{
+	[super setSkewX:sx];
+	SET_DIRTY_RECURSIVELY();
+}
+
+-(void)setSkewY:(float)sy
+{
+	[super setSkewY:sy];
 	SET_DIRTY_RECURSIVELY();
 }
 

@@ -176,6 +176,30 @@ Example:
 -(id) initWithDuration: (ccTime)duration position:(CGPoint)deltaPosition;
 @end
 
+/** Skews a CCNode object to given angles by modifying it's skewX and skewY attributes */
+@interface CCSkewTo : CCActionInterval <NSCopying>
+{
+	float skewX;
+	float skewY;
+	float startSkewX;
+	float startSkewY;
+	float endSkewX;
+	float endSkewY;
+	float deltaX;
+	float deltaY;
+}
+/** creates the action */
++(id) actionWithDuration:(ccTime)t skewX:(float)sx skewY:(float)sy;
+/** initializes the action */
+-(id) initWithDuration:(ccTime)t skewX:(float)sx skewY:(float)sy;
+@end
+
+/** Skews a CCNode object by skewX and skewY degrees */
+@interface CCSkewBy : CCSkewTo <NSCopying>
+{
+}
+@end
+
 /** Moves a CCNode object simulating a parabolic jump movement by modifying it's position attribute.
 */
  @interface CCJumpBy : CCActionInterval <NSCopying>
