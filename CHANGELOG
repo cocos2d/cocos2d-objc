@@ -1,6 +1,7 @@
 version 1.0 - XX-Jun-2011
 . [NEW] TextureCache: Added dumpCachedTextureInfo method. Shows the RAM used by the cached textures (issue #1154)
 . [FIX] cocosLive: Fixed memory leaks in NSURLConnection
+. [FIX] Sprites: DisplayedFrame returns the correct frame (issue #1182)
 . [FIX] Templates: Supports spaces in project name (issue #1158)
 . [FIX] TextureCache: Textures are autoreleased to prevent a crash in multi-threading environments
 . [FIX] TMX Maps: Consume less memory (only what is needed), faster loading times (issue #1175)
