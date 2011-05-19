@@ -104,7 +104,7 @@
 	
 	// create the connection with the request
 	// and start loading the data
-	self.connection=[[NSURLConnection alloc] initWithRequest:request delegate:self];
+	self.connection=[NSURLConnection connectionWithRequest:request delegate:self];
 	if (! connection_)
 		return NO;
 		
@@ -166,7 +166,7 @@
 	
 	// create the connection with the request
 	// and start loading the data
-	self.connection=[[NSURLConnection alloc] initWithRequest:request delegate:self];
+	self.connection=[NSURLConnection connectionWithRequest:request delegate:self];
 	if (! connection_)
 		return NO;
 
