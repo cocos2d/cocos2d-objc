@@ -43,7 +43,13 @@
 #define CCTextAlignmentLeft			UITextAlignmentLeft
 #define CCTextAlignmentRight		UITextAlignmentRight
 #define CCLineBreakMode				UILineBreakMode
-#define CCLineBreakModeWordWrap		UILineBreakModeWordWrap
+#define CCLineBreakModeWordWrap		UILineBreakModeWordWrap	
+#define CCLineBreakModeCharacterWrap	UILineBreakModeCharacterWrap
+#define CCLineBreakModeClip			UILineBreakModeClip
+#define CCLineBreakModeHeadTruncation	UILineBreakModeHeadTruncation
+#define CCLineBreakModeTailTruncation	UILineBreakModeTailTruncation
+#define CCLineBreakModeMiddleTruncation	UILineBreakModeMiddleTruncation
+
 
 
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
@@ -60,6 +66,10 @@
 #define CCTextAlignmentRight		NSRightTextAlignment
 #define CCLineBreakMode				NSLineBreakMode
 #define CCLineBreakModeWordWrap		NSLineBreakByWordWrapping
+#define CCLineBreakModeClip			-1
+#define CCLineBreakModeHeadTruncation	-1
+#define CCLineBreakModeTailTruncation	-1
+#define CCLineBreakModeMiddleTruncation	-1
 
 
 #endif
