@@ -1,7 +1,8 @@
 version 1.0 - XX-Jun-2011
-. [NEW] TextureCache: Added dumpCachedTextureInfo method. Shows the RAM used by the cached textures (issue #1154)
 . [NEW] Actions: Added SkewTo and SkewBy actions
+. [NEW] LabelTTF: Added support for LineBreakMode. Mac only supports Word-Break.
 . [NEW] Node / Sprite: Added support for SkewX and SkewY properties
+. [NEW] TextureCache: Added dumpCachedTextureInfo method. Shows the RAM used by the cached textures (issue #1154)
 . [FIX] cocosLive: Fixed memory leaks in NSURLConnection
 . [FIX] Sprites: DisplayedFrame returns the correct frame (issue #1182)
 . [FIX] Templates: Supports spaces in project name (issue #1158)

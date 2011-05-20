@@ -52,6 +52,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Author of SkewTo, SkewBy actions
 		Added Skew support to CCNode and CCSprite
 		Added Skew tests cases to ActionsTest.
+		Added support for LineBreakMode in CCLabelTTF and CCTexture2D
 	* Brian Hammond:
 		patches for Demos
 	* Bryan/Acceleroto (http://www.acceleroto.com):
