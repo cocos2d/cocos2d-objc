@@ -368,7 +368,7 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 
-- (id) initWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(CCTextAlignment)alignment lineBreakMode:(UILineBreakMode)lineBreakMode font:(id)uifont
+- (id) initWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(CCTextAlignment)alignment lineBreakMode:(CCLineBreakMode)lineBreakMode font:(id)uifont
 {
 	NSAssert( uifont, @"Invalid font");
 	
@@ -538,46 +538,12 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 
 - (id) initWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(CCTextAlignment)alignment fontName:(NSString*)name fontSize:(CGFloat)size
 {
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
-	id						uifont = nil;
-
-	uifont = [UIFont fontWithName:name size:size];
-
-#if CC_FONT_LABEL_SUPPORT
-	if( ! uifont )
-		uifont = [[FontManager sharedManager] zFontWithName:name pointSize:size];
-#endif // CC_FONT_LABEL_SUPPORT
-	if( ! uifont ) {
-		CCLOG(@"cocos2d: Texture2d: Invalid Font: %@. Verify the .ttf name", name);
-		[self release];
-		return nil;
-	}
-	
-	return [self initWithString:string dimensions:dimensions alignment:alignment lineBreakMode:UILineBreakModeWordWrap font:uifont];
-	
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
-	
-	//String with attributes
-	NSAttributedString *stringWithAttributes =
-	[[[NSAttributedString alloc] initWithString:string
-									 attributes:[NSDictionary dictionaryWithObject:[[NSFontManager sharedFontManager]
-																					fontWithFamily:name
-																					traits:NSUnboldFontMask | NSUnitalicFontMask
-																					weight:0
-																					size:size]
-																			forKey:NSFontAttributeName]
-	  ]
-	 autorelease];
-	
-	return [self initWithString:string dimensions:dimensions alignment:alignment attributedString:stringWithAttributes];
-		
-#endif // Mac
+	return [self initWithString:string dimensions:dimensions alignment:alignment lineBreakMode:CCLineBreakModeWordWrap fontName:name fontSize:size];
 }
 
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
-- (id) initWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(CCTextAlignment)alignment lineBreakMode:(UILineBreakMode)lineBreakMode fontName:(NSString*)name fontSize:(CGFloat)size
+- (id) initWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(CCTextAlignment)alignment lineBreakMode:(CCLineBreakMode)lineBreakMode fontName:(NSString*)name fontSize:(CGFloat)size
 {
-
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 	id						uifont = nil;
 	
 	uifont = [UIFont fontWithName:name size:size];
@@ -593,8 +559,27 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 	}
 	
 	return [self initWithString:string dimensions:dimensions alignment:alignment lineBreakMode:lineBreakMode font:uifont];
+	
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+	
+	NSAssert( lineBreakMode == CCLineBreakModeWordWrap, @"CCTexture2D: unsupported line break mode for Mac OS X");
+
+	//String with attributes
+	NSAttributedString *stringWithAttributes =
+	[[[NSAttributedString alloc] initWithString:string
+									 attributes:[NSDictionary dictionaryWithObject:[[NSFontManager sharedFontManager]
+																					fontWithFamily:name
+																					traits:NSUnboldFontMask | NSUnitalicFontMask
+																					weight:0
+																					size:size]
+																			forKey:NSFontAttributeName]
+	  ]
+	 autorelease];
+	
+	return [self initWithString:string dimensions:dimensions alignment:alignment attributedString:stringWithAttributes];
+	
+#endif // Mac
 }
-#endif
 @end
 
 #pragma mark -
