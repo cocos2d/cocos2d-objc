@@ -476,7 +476,7 @@ static CCTextureCache *sharedTextureCache;
 	int totalBytes = 0;
 	for (NSString* texKey in textures_) {
 		CCTexture2D* tex = [textures_ objectForKey:texKey];
-		NSUInteger bpp = [CCTexture2D bitsPerPixelForFormat:tex.pixelFormat];
+		NSUInteger bpp = [tex bitsPerPixelForFormat];
 		// Each texture takes up width * height * bytesPerPixel bytes.
 		NSUInteger bytes = tex.pixelsWide * tex.pixelsWide * bpp / 8;
 		totalBytes += bytes;
