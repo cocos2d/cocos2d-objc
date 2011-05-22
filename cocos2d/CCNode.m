@@ -638,8 +638,10 @@
 	
 	// skew
 	if ( (skewX_ != 0.0f) || (skewY_ != 0.0f) ) {
-		GLfloat m[6] = { 1.0f, tanf(CC_DEGREES_TO_RADIANS(skewY_), tanf(CC_DEGREES_TO_RADIANS(skewX_), 1.0f, 0.0f, 0.0f };
-		glMultMatrixf(m);
+		CGAffineTransform skewMatrix = CGAffineTransformMake( 1.0f, tanf(CC_DEGREES_TO_RADIANS(skewY_)), tanf(CC_DEGREES_TO_RADIANS(skewX_)), 1.0f, 0.0f, 0.0f );
+		GLfloat	glMatrix[16];
+		CGAffineToGL(&skewMatrix, glMatrix);															 
+		glMultMatrixf(glMatrix);
 	}
 	
 	// scale
