@@ -473,26 +473,16 @@ struct transformValues_ {
 		float radians = -CC_DEGREES_TO_RADIANS(rotation_);
 		float c = cosf(radians);
 		float s = sinf(radians);
-		
-        float matrixB = s * scaleX_;
-        if ( skewY_ != 0 )
-        {
-            // only apply skew if it is non-zero, to avoid
-            // cancelling the rotation component
-            matrixB *= tanf(CC_DEGREES_TO_RADIANS(skewY_));
-        }
-        
-        float matrixC = -s * scaleY_;
-        if ( skewX_ != 0 )
-        {
-            // only apply skew if it is non-zero to avoid
-            // cancelling the rotation component
-            matrixC *= tanf(CC_DEGREES_TO_RADIANS(skewX_));
-        }
-        
-		matrix = CGAffineTransformMake( c * scaleX_,  matrixB,
-									   matrixC, c * scaleY_,
+
+		matrix = CGAffineTransformMake( c * scaleX_,  s * scaleX_,
+									   -s * scaleY_, c * scaleY_,
 									   positionInPixels_.x, positionInPixels_.y);
+		if( skewX_ || skewY_ ) {
+			CGAffineTransform skewMatrix = CGAffineTransformMake(1.0f, tanf(CC_DEGREES_TO_RADIANS(skewY_)),
+																 tanf(CC_DEGREES_TO_RADIANS(skewX_)), 1.0f,
+																 0.0f, 0.0f);
+			matrix = CGAffineTransformConcat(skewMatrix, matrix);
+		}
 		matrix = CGAffineTransformTranslate(matrix, -anchorPointInPixels_.x, -anchorPointInPixels_.y);		
 
 		
