@@ -133,8 +133,8 @@
         [fullScreenWindow_ setContentView:openGLView_];
         
         // Show the fullscreen window
-        [fullScreenWindow_ makeMainWindow];
         [fullScreenWindow_ makeKeyAndOrderFront:self];
+		[fullScreenWindow_ makeMainWindow];
         
     } else {
         
@@ -152,8 +152,8 @@
         [openGLView_ setFrame:originalWinRect_];
         
         // Show the window
-        [windowGLView_ makeMainWindow];
         [windowGLView_ makeKeyAndOrderFront:self];
+		[windowGLView_ makeMainWindow];
     }
     isFullScreen_ = fullscreen;
     

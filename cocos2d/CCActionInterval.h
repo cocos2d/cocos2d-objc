@@ -126,9 +126,9 @@ Example:
 */ 
 @interface CCRotateTo : CCActionInterval <NSCopying>
 {
-	float dstAngle;
-	float startAngle;
-	float diffAngle;
+	float dstAngle_;
+	float startAngle_;
+	float diffAngle_;
 }
 /** creates the action */
 +(id) actionWithDuration:(ccTime)duration angle:(float)angle;
@@ -140,8 +140,8 @@ Example:
 */
 @interface CCRotateBy : CCActionInterval <NSCopying>
 {
-	float angle;
-	float startAngle;
+	float angle_;
+	float startAngle_;
 }
 /** creates the action */
 +(id) actionWithDuration:(ccTime)duration angle:(float)deltaAngle;
@@ -153,9 +153,9 @@ Example:
 */
 @interface CCMoveTo : CCActionInterval <NSCopying>
 {
-	CGPoint endPosition;
-	CGPoint startPosition;
-	CGPoint delta;
+	CGPoint endPosition_;
+	CGPoint startPosition_;
+	CGPoint delta_;
 }
 /** creates the action */
 +(id) actionWithDuration:(ccTime)duration position:(CGPoint)position;
@@ -176,19 +176,47 @@ Example:
 -(id) initWithDuration: (ccTime)duration position:(CGPoint)deltaPosition;
 @end
 
+/** Skews a CCNode object to given angles by modifying it's skewX and skewY attributes
+ @since v1.0
+ */
+@interface CCSkewTo : CCActionInterval <NSCopying>
+{
+	float skewX_;
+	float skewY_;
+	float startSkewX_;
+	float startSkewY_;
+	float endSkewX_;
+	float endSkewY_;
+	float deltaX_;
+	float deltaY_;
+}
+/** creates the action */
++(id) actionWithDuration:(ccTime)t skewX:(float)sx skewY:(float)sy;
+/** initializes the action */
+-(id) initWithDuration:(ccTime)t skewX:(float)sx skewY:(float)sy;
+@end
+
+/** Skews a CCNode object by skewX and skewY degrees
+ @since v1.0
+ */
+@interface CCSkewBy : CCSkewTo <NSCopying>
+{
+}
+@end
+
 /** Moves a CCNode object simulating a parabolic jump movement by modifying it's position attribute.
 */
  @interface CCJumpBy : CCActionInterval <NSCopying>
 {
-	CGPoint startPosition;
-	CGPoint delta;
-	ccTime height;
-	int jumps;
+	CGPoint startPosition_;
+	CGPoint delta_;
+	ccTime height_;
+	NSUInteger jumps_;
 }
 /** creates the action */
-+(id) actionWithDuration: (ccTime)duration position:(CGPoint)position height:(ccTime)height jumps:(int)jumps;
++(id) actionWithDuration: (ccTime)duration position:(CGPoint)position height:(ccTime)height jumps:(NSUInteger)jumps;
 /** initializes the action */
--(id) initWithDuration: (ccTime)duration position:(CGPoint)position height:(ccTime)height jumps:(int)jumps;
+-(id) initWithDuration: (ccTime)duration position:(CGPoint)position height:(ccTime)height jumps:(NSUInteger)jumps;
 @end
 
 /** Moves a CCNode object to a parabolic position simulating a jump movement by modifying it's position attribute.
@@ -213,8 +241,8 @@ typedef struct _ccBezierConfig {
  */
 @interface CCBezierBy : CCActionInterval <NSCopying>
 {
-	ccBezierConfig config;
-	CGPoint startPosition;
+	ccBezierConfig config_;
+	CGPoint startPosition_;
 }
 
 /** creates the action with a duration and a bezier configuration */
@@ -237,14 +265,14 @@ typedef struct _ccBezierConfig {
  */
 @interface CCScaleTo : CCActionInterval <NSCopying>
 {
-	float scaleX;
-	float scaleY;
-	float startScaleX;
-	float startScaleY;
-	float endScaleX;
-	float endScaleY;
-	float deltaX;
-	float deltaY;
+	float scaleX_;
+	float scaleY_;
+	float startScaleX_;
+	float startScaleY_;
+	float endScaleX_;
+	float endScaleY_;
+	float deltaX_;
+	float deltaY_;
 }
 /** creates the action with the same scale factor for X and Y */
 +(id) actionWithDuration: (ccTime)duration scale:(float) s;
@@ -296,8 +324,8 @@ typedef struct _ccBezierConfig {
  */
 @interface CCFadeTo : CCActionInterval <NSCopying>
 {
-	GLubyte toOpacity;
-	GLubyte fromOpacity;
+	GLubyte toOpacity_;
+	GLubyte fromOpacity_;
 }
 /** creates an action with duration and opactiy */
 +(id) actionWithDuration:(ccTime)duration opacity:(GLubyte)opactiy;
@@ -311,8 +339,8 @@ typedef struct _ccBezierConfig {
 */
 @interface CCTintTo : CCActionInterval <NSCopying>
 {
-	ccColor3B to;
-	ccColor3B from;
+	ccColor3B to_;
+	ccColor3B from_;
 }
 /** creates an action with duration and color */
 +(id) actionWithDuration:(ccTime)duration red:(GLubyte)red green:(GLubyte)green blue:(GLubyte)blue;
@@ -325,8 +353,8 @@ typedef struct _ccBezierConfig {
  */
 @interface CCTintBy : CCActionInterval <NSCopying>
 {
-	GLshort deltaR, deltaG, deltaB;
-	GLshort fromR, fromG, fromB;
+	GLshort deltaR_, deltaG_, deltaB_;
+	GLshort fromR_, fromG_, fromB_;
 }
 /** creates an action with duration and color */
 +(id) actionWithDuration:(ccTime)duration red:(GLshort)deltaRed green:(GLshort)deltaGreen blue:(GLshort)deltaBlue;
@@ -365,8 +393,8 @@ typedef struct _ccBezierConfig {
 @interface CCAnimate : CCActionInterval <NSCopying>
 {
 	CCAnimation *animation_;
-	id origFrame;
-	BOOL restoreOriginalFrame;
+	id origFrame_;
+	BOOL restoreOriginalFrame_;
 }
 /** animation used for the animage */
 @property (readwrite,nonatomic,retain) CCAnimation * animation;

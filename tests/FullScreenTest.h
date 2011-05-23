@@ -44,4 +44,10 @@
 
 
 
+@interface FullScreenIssue1071Test : FullScreenDemo
+{
+	//weak ref
+	CCMenuItemFont *issueTestItem_;
+}
 
+@end

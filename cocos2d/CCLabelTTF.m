@@ -51,6 +51,11 @@
 	return nil;
 }
 
++ (id) labelWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(CCTextAlignment)alignment lineBreakMode:(CCLineBreakMode)lineBreakMode fontName:(NSString*)name fontSize:(CGFloat)size;
+{
+	return [[[self alloc] initWithString: string dimensions:dimensions alignment:alignment lineBreakMode:lineBreakMode fontName:name fontSize:size]autorelease];
+}
+
 + (id) labelWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(CCTextAlignment)alignment fontName:(NSString*)name fontSize:(CGFloat)size
 {
 	return [[[self alloc] initWithString: string dimensions:dimensions alignment:alignment fontName:name fontSize:size]autorelease];
@@ -62,7 +67,7 @@
 }
 
 
-- (id) initWithString:(NSString*)str dimensions:(CGSize)dimensions alignment:(CCTextAlignment)alignment fontName:(NSString*)name fontSize:(CGFloat)size
+- (id) initWithString:(NSString*)str dimensions:(CGSize)dimensions alignment:(CCTextAlignment)alignment lineBreakMode:(CCLineBreakMode)lineBreakMode fontName:(NSString*)name fontSize:(CGFloat)size
 {
 	if( (self=[super init]) ) {
 
@@ -73,10 +78,16 @@
 		alignment_ = alignment;
 		fontName_ = [name retain];
 		fontSize_ = size;
+		lineBreakMode_ = lineBreakMode;
 		
 		[self setString:str];
 	}
 	return self;
+}
+
+- (id) initWithString:(NSString*)str dimensions:(CGSize)dimensions alignment:(CCTextAlignment)alignment fontName:(NSString*)name fontSize:(CGFloat)size
+{
+	return [self initWithString:str dimensions:dimensions alignment:alignment lineBreakMode:CCLineBreakModeWordWrap fontName:name fontSize:size];
 }
 
 - (id) initWithString:(NSString*)str fontName:(NSString*)name fontSize:(CGFloat)size
@@ -109,6 +120,7 @@
 		tex = [[CCTexture2D alloc] initWithString:str
 									   dimensions:CC_SIZE_POINTS_TO_PIXELS(dimensions_)
 										alignment:alignment_
+									lineBreakMode:lineBreakMode_
 										 fontName:fontName_
 										 fontSize:fontSize_  * CC_CONTENT_SCALE_FACTOR()];
 

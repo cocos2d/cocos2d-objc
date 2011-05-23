@@ -113,7 +113,13 @@
 }
 @end
 
+
 @interface LabelTTFA8Test : AtlasDemo
+{
+}
+@end
+
+@interface LabelTTFLineBreak : AtlasDemo
 {
 }
 @end

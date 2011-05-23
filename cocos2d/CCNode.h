@@ -109,6 +109,9 @@ enum {
 	
 	// position of the node
 	CGPoint position_;
+
+	// skew angles
+	float skewX_, skewY_;
 	
 	// anchor point in points
 	CGPoint anchorPointInPoints_;	
@@ -175,6 +178,20 @@ enum {
  @since v0.8
  */
 @property (nonatomic,readwrite) float vertexZ;
+
+/** The X skew angle of the node in degrees.
+ This angle describes the shear distortion in the X direction.
+ Thus, it is the angle between the Y axis and the left edge of the shape
+ The default skewX angle is 0. Positive values distort the node in a CW direction.
+ */
+@property(nonatomic,readwrite,assign) float skewX;
+
+/** The Y skew angle of the node in degrees.
+ This angle describes the shear distortion in the Y direction.
+ Thus, it is the angle between the X axis and the bottom edge of the shape
+ The default skewY angle is 0. Positive values distort the node in a CCW direction.
+ */
+@property(nonatomic,readwrite,assign) float skewY;
 /** The rotation (angle) of the node in degrees. 0 is the default rotation angle. Positive values rotate node CW. */
 @property(nonatomic,readwrite,assign) float rotation;
 /** The scale factor of the node. 1.0 is the default scale factor. It modifies the X and Y scale at the same time. */

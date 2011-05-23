@@ -100,7 +100,7 @@ static inline void ccArrayEnsureExtraCapacity(ccArray *arr, NSUInteger extra)
 /** shrinks the array so the memory footprint corresponds with the number of items */
 static inline void ccArrayShrink(ccArray *arr)
 {
-    uint newSize;
+    NSUInteger newSize;
 	
 	//only resize when necessary
 	if (arr->max > arr->num && !(arr->num==0 && arr->max==1))

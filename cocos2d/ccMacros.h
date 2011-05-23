@@ -269,5 +269,10 @@ CGSizeMake( (__points__).width * CC_CONTENT_SCALE_FACTOR(), (__points__).height 
 #define CC_CONTENT_SCALE_FACTOR() 1
 #define CC_RECT_PIXELS_TO_POINTS(__pixels__) __pixels__
 #define CC_RECT_POINTS_TO_PIXELS(__points__) __points__
+#define CC_SIZE_PIXELS_TO_POINTS(__pixels__) __pixels__
+#define CC_SIZE_POINTS_TO_PIXELS(__points__) __points__
+#define CC_POINT_PIXELS_TO_POINTS(__pixels__) __pixels__
+#define CC_POINT_POINTS_TO_PIXELS(__points__) __points__
+
 
 #endif // CC_IS_RETINA_DISPLAY_SUPPORTED

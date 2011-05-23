@@ -11,6 +11,7 @@
 #import "LabelTest.h"
 static int sceneIdx=-1;
 static NSString *transitions[] = {
+	
 	@"LabelAtlasTest",
 	@"LabelAtlasColorTest",
 	@"Atlas3",
@@ -27,6 +28,7 @@ static NSString *transitions[] = {
 	@"LabelTTFTest",
 	@"LabelTTFMultiline",
 	@"LabelTTFA8Test",
+	@"LabelTTFLineBreak",
 	
 	// Not a label test. Should be moved to Atlas test
 	@"Atlas1",
@@ -1063,6 +1065,72 @@ Class restartAction()
 @end
 
 
+
+#pragma mark -
+#pragma mark LabelTTFLineBreak
+
+@implementation LabelTTFLineBreak
+-(id) init
+{
+	if( (self=[super init]) ) {
+
+		CGSize s = [[CCDirector sharedDirector] winSize];
+
+		CCLabelTTF *wordwrap = [CCLabelTTF labelWithString:@"Testing line wordwrap mode mode mode mode"
+												dimensions:CGSizeMake(s.width/4,40)
+												 alignment:CCTextAlignmentCenter
+											 lineBreakMode:CCLineBreakModeWordWrap
+												  fontName:@"Marker Felt"
+												  fontSize:16];
+		wordwrap.position = ccp(s.width/2,80);
+		
+		[self addChild:wordwrap];
+
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+		
+		CCLabelTTF *charwrap = [CCLabelTTF labelWithString:@"Testing line character wrap mode mode mode mode"
+											  dimensions:CGSizeMake(s.width/4,40)
+											   alignment:CCTextAlignmentCenter
+										   lineBreakMode:CCLineBreakModeCharacterWrap
+												fontName:@"Marker Felt"
+												fontSize:16];
+		charwrap.position = ccp(s.width/2,140);
+		
+		[self addChild:charwrap];
+
+
+		CCLabelTTF *clip = [CCLabelTTF labelWithString:@"Testing line clip clip clip mode mode mode mode"
+												dimensions:CGSizeMake(s.width/4,40)
+												 alignment:CCTextAlignmentCenter
+											 lineBreakMode:CCLineBreakModeClip
+												  fontName:@"Marker Felt"
+												  fontSize:16];
+		clip.position = ccp(s.width/2,200);
+		
+		[self addChild:clip];
+
+
+#endif // __IPHONE_OS_VERSION_MAX_ALLOWED
+	}
+	
+	return self;
+}
+
+-(NSString*) title
+{
+	return @"CCLabelTTF Line Break Mode";
+}
+
+-(NSString *) subtitle
+{
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+	return @"Testing different line break modes";
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+	return @"On Mac OS X only Word Wrap mode is supported";
+#endif
+}
+
+@end
 
 
 #pragma mark -
