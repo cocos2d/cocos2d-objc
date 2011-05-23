@@ -7,6 +7,8 @@
 		<string>com.cocos2d.bundlebase</string>
 		<string>com.cocos2d.macbase</string>
 		<string>com.cocos2d.cocos2dlib</string>
+		<string>com.cocos2d.cocosdenshionlib</string>
+		<string>com.cocos2d.cocosdenshionextraslib</string>
 	</array>
 	<key>Concrete</key>
 	<true/>

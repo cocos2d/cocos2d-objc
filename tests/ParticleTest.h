@@ -149,6 +149,10 @@
 {}
 @end
 
+@interface ParticleDesigner12 : ParticleDemo
+{}
+@end
+
 @interface RadiusMode1 : ParticleDemo
 {}
 @end

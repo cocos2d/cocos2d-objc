@@ -95,6 +95,8 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		CCLabelTTF with alignment works OK on Mac. patch.
 	* Derek van Vliet (http://http://getsetgames.com/)
 		Added fix to make JPEG images work correctly in iOS4
+	* Dmitriy Vakhania
+		Added Xcode4 File templates
 	* Dominique Bongard:
 		patches for CocosDenshion
 		Scheduler fires Timer the 1st time with dt=0
@@ -137,6 +139,8 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		FastDirector doesn't leak autorelease pool patch
 	* Greg Lington (https://github.com/greglington)
 		Added support for Touches in Mac. patch.
+	* Greg Woods:
+		Added Test case for bug 1159
 	* haikusw:
 		Action blink doesn't set frame as invisible when the action finishes. patch.
 	* hamm.hans:
@@ -298,6 +302,8 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		RenderTexture: getUIImageFromBuffer supports RetinaDisplay. patch.
 		CCArray: check for bounds in insertObjectAtIndex. patch.
 		TextureAtlas: added the possibility to draw the Quads in parts
+		TextureAtlas: Render "static" VBO batches between 6~10% faster. patch.
+		CCArray / ccArray: Added reverseObjects and reduceMemoryFootprint methods.
 	* marcu.catalin:
 		Menu items are not consumed is items are not visible
 	* Mark Cooke:
@@ -455,8 +461,9 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Fixed artifacts in PageTurnTransition
 	* TheArsenik:
 		added BezierTo action
-	* thoechsm:
+	* Thomas Hoechsmann (Zombie) (http://www.gamedrs.com)
 		update the VBO buffer with only the needed particles
+		Fixed possible crash in Scheduler when unscheduling a sibling
 	* Thomas Visser:
 		MenuItem#rect works with anchorPoint
 	* UD7 Studios (http://ud7.com)

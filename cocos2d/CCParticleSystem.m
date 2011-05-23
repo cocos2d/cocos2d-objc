@@ -157,6 +157,12 @@
 		posVar.y = [[dictionary valueForKey:@"sourcePositionVariancey"] floatValue];
 				
 		
+		// Spinning
+		startSpin = [[dictionary valueForKey:@"rotationStart"] floatValue];
+		startSpinVar = [[dictionary valueForKey:@"rotationStartVariance"] floatValue];
+		endSpin = [[dictionary valueForKey:@"rotationEnd"] floatValue];
+		endSpinVar = [[dictionary valueForKey:@"rotationEndVariance"] floatValue];
+		
 		emitterMode_ = [[dictionary valueForKey:@"emitterType"] intValue];
 
 		// Mode A: Gravity + tangential accel + radial accel
@@ -214,11 +220,15 @@
 		// Try to get the texture from the cache
 		NSString *textureName = [dictionary valueForKey:@"textureFileName"];
 
-		self.texture = [[CCTextureCache sharedTextureCache] addImage:textureName];
+		CCTexture2D *tex = [[CCTextureCache sharedTextureCache] addImage:textureName];
 
-		NSString *textureData = [dictionary valueForKey:@"textureImageData"];
+		if( tex )
+			self.texture = tex;
 
-		if ( ! texture_ && textureData) {
+		else {
+
+			NSString *textureData = [dictionary valueForKey:@"textureImageData"];
+			NSAssert( textureData, @"CCParticleSystem: Couldn't load texture");
 			
 			// if it fails, try to get it from the base64-gzipped data			
 			unsigned char *buffer = NULL;
@@ -332,7 +342,8 @@
 
 	// timeToLive
 	// no negative life. prevent division by 0
-	particle->timeToLive = MAX(0, life + lifeVar * CCRANDOM_MINUS1_1() );
+	particle->timeToLive = life + lifeVar * CCRANDOM_MINUS1_1();
+	particle->timeToLive = MAX(0, particle->timeToLive);
 
 	// position
 	particle->pos.x = sourcePosition.x + posVar.x * CCRANDOM_MINUS1_1();
@@ -342,16 +353,16 @@
 	
 	// Color
 	ccColor4F start;
-	start.r = MIN(1, MAX(0, startColor.r + startColorVar.r * CCRANDOM_MINUS1_1() ) );
-	start.g = MIN(1, MAX(0, startColor.g + startColorVar.g * CCRANDOM_MINUS1_1() ) );
-	start.b = MIN(1, MAX(0, startColor.b + startColorVar.b * CCRANDOM_MINUS1_1() ) );
-	start.a = MIN(1, MAX(0, startColor.a + startColorVar.a * CCRANDOM_MINUS1_1() ) );
+	start.r = clampf( startColor.r + startColorVar.r * CCRANDOM_MINUS1_1(), 0, 1);
+	start.g = clampf( startColor.g + startColorVar.g * CCRANDOM_MINUS1_1(), 0, 1);
+	start.b = clampf( startColor.b + startColorVar.b * CCRANDOM_MINUS1_1(), 0, 1);
+	start.a = clampf( startColor.a + startColorVar.a * CCRANDOM_MINUS1_1(), 0, 1);
 	
 	ccColor4F end;
-	end.r = MIN(1, MAX(0, endColor.r + endColorVar.r * CCRANDOM_MINUS1_1() ) );
-	end.g = MIN(1, MAX(0, endColor.g + endColorVar.g * CCRANDOM_MINUS1_1() ) );
-	end.b = MIN(1, MAX(0, endColor.b + endColorVar.b * CCRANDOM_MINUS1_1() ) );
-	end.a = MIN(1, MAX(0, endColor.a + endColorVar.a * CCRANDOM_MINUS1_1() ) );
+	end.r = clampf( endColor.r + endColorVar.r * CCRANDOM_MINUS1_1(), 0, 1);
+	end.g = clampf( endColor.g + endColorVar.g * CCRANDOM_MINUS1_1(), 0, 1);
+	end.b = clampf( endColor.b + endColorVar.b * CCRANDOM_MINUS1_1(), 0, 1);
+	end.a = clampf( endColor.a + endColorVar.a * CCRANDOM_MINUS1_1(), 0, 1);
 	
 	particle->color = start;
 	particle->deltaColor.r = (end.r - start.r) / particle->timeToLive;
@@ -360,7 +371,8 @@
 	particle->deltaColor.a = (end.a - start.a) / particle->timeToLive;
 	
 	// size
-	float startS = MAX(0, startSize + startSizeVar * CCRANDOM_MINUS1_1() ); // no negative size
+	float startS = startSize + startSizeVar * CCRANDOM_MINUS1_1();
+	startS = MAX(0, startS); // No negative value
 	startS *= CC_CONTENT_SCALE_FACTOR();
 	
 	particle->size = startS;
@@ -368,7 +380,7 @@
 		particle->deltaSize = 0;
 	else {
 		float endS = endSize + endSizeVar * CCRANDOM_MINUS1_1();
-		endS = MAX(0, endS);
+		endS = MAX(0, endS);	// No negative values
 		endS *= CC_CONTENT_SCALE_FACTOR();
 		particle->deltaSize = (endS - startS) / particle->timeToLive;
 	}

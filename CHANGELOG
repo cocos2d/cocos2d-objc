@@ -1,3 +1,22 @@
+version 1.0-rc2 - 03-May-2011
+. [NEW] CCArray: Added reduceMemoryFootprint and reverseObject (issue #1167)
+. [NEW] Director: Use small dt when the game is being debugged.
+. [NEW] Label: TTF supports new LA88 texture format instead of RGBA8888. A8 is still the default one.
+. [NEW] Particles: Added support for ParticleDesigner 1.3.60 (spinning support)
+. [NEW] Tests: Added test case for bug 1159
+. [FIX] Particles: TTL is always >= 0.
+. [FIX] Particles: texture coordinates are being used correctly when texture is NPOT.
+. [FIX] Scheduler: Fixed possible crash when unscheduling a sibling
+. [FIX] Templates: Use NS_BLOCK_ASSERTIONS and NDEBUG in Release Mode to remove asserts
+. [FIX] Templates: Xcode 3 templates fixed. Removed unused files in cocos2d lib. Added missing files from TouchJSON
+. [FIX] Templates: ARMv6 devices uses "none" autorotation to improve speed
+. [FIX] Templates: Added Xcode 4 "File" templates both for iOS and Mac OS X
+. [FIX] Templates: Uses CFBundleIconFiles in Info.plist instead of "Icon Files" (issue #1151)
+. [FIX] Templates: Xcode 4 templates generates "sub groups"
+. [FIX] Templates: Xcode 4 Mac templates include CocosDenshion
+. [FIX] TextureAtlas: Render "static" VBO batches between 6~10 % faster (issue #1150)
+. [FIX-MAC] Templates: Generates by default an RGBA8 color buffer instead of an RGBA16
+
 version 1.0-rc - 29-Mar-2011
 . [NEW] Actions: Added the possibility to create a CCSpawn and CCSequence with an NSArray
 . [NEW] CCArray: Added exchangeObject & exchangeObjectAtIndex (issue #1085)
