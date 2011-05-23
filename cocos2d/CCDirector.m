@@ -72,6 +72,8 @@ extern NSString * cocos2dVersion(void);
 -(void) showFPS;
 // calculates delta time since last time it was called
 -(void) calculateDeltaTime;
+// gets pre frame delta time since last time calculateDeltaTime was called
+-(ccTime) getDeltaTimePre;
 @end
 
 @implementation CCDirector
@@ -220,6 +222,27 @@ static CCDirector *_sharedDirector = nil;
 	
 	lastUpdate_ = now;	
 }
+
+-(ccTime) getDeltaTimePre
+{
+	struct timeval now;
+    ccTime dtPre;
+	
+	if( gettimeofday( &now, NULL) != 0 ) {
+		CCLOG(@"cocos2d: error in gettimeofday");
+		dt = 0;
+		return 0;
+	}
+	
+	// new delta time
+	if( nextDeltaTimeZero_ ) {
+		return 0;
+	} else {
+		dtPre = (now.tv_sec - lastUpdate_.tv_sec) + (now.tv_usec - lastUpdate_.tv_usec) / 1000000.0f;
+		return MAX(0,dtPre);
+	}
+}
+
 
 #pragma mark Director - Memory Helper
 

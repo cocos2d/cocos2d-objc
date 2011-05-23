@@ -92,7 +92,19 @@ typedef enum {
 	 * - The interval update can be 1/60, 1/30, 1/15
 	 */	
 	kCCDirectorTypeDisplayLink,
-	
+
+    /** Will use a Director that synchronizes timers with the refresh rate of the display,
+     *  and behaves correctly with UIKit objects (UIScrollView mainly).
+     *  It's exactly like kCCDirectorTypeDisplayLink with just two differences:
+	 * -  Using 'NSRunLoopCommonModes' when attaching DisplayLink to CurrentLoop  to prevent animation freezing
+     *    when holding a still touch on the scrollview.
+     * -  Throttling framerate in mainLoop  to 90fps (needed when UIScrollView takes control in
+     *    scrolling or zooming (UITrackingRunLoopMode) or when [setContentOffset:offset animated:YES] is called;
+     *    otherwise OpenGL over-rendering breaks UIScrollView behaviour).
+	 */	
+	kCCDirectorTypeDisplayLinkUIKit,
+
+    
 	/** Default director is the NSTimer directory */
 	kCCDirectorTypeDefault = kCCDirectorTypeNSTimer,
 	
@@ -101,6 +113,7 @@ typedef enum {
 	CCDirectorTypeMainLoop = kCCDirectorTypeMainLoop,
 	CCDirectorTypeThreadMainLoop = kCCDirectorTypeThreadMainLoop,
 	CCDirectorTypeDisplayLink = kCCDirectorTypeDisplayLink,
+    CCDirectorTypeDisplayLinkUIKit = kCCDirectorTypeDisplayLinkUIKit,
 	CCDirectorTypeDefault = kCCDirectorTypeDefault,
 	
 	
@@ -231,6 +244,24 @@ typedef enum {
 }
 -(void) mainLoop:(id)sender;
 @end
+
+/** DisplayLinkDirectorUIKit is a Director that synchronizes timers with the refresh rate of the display
+ *  and works correctly with UIKit objects (like UIScrollView).
+ *
+ *  It's exactly like kCCDirectorTypeDisplayLink with just two differences:
+ * -  Using 'NSRunLoopCommonModes' when attaching DisplayLink to CurrentLoop  to prevent animation freezing
+ *    when holding a still touch on the scrollview.
+ * -  Throttling framerate in mainLoop  to 90fps (needed when UIScrollView takes control in
+ *    scrolling or zooming (UITrackingRunLoopMode) or when [setContentOffset:offset animated:YES] is called;
+ *    otherwise OpenGL over-rendering breaks UIScrollView behaviour).
+ *
+ * @since v1.0.0
+ */
+@interface CCDirectorDisplayLinkUIKit : CCDirectorDisplayLink
+{
+}
+@end
+
 
 /** TimerDirector is a Director that calls the main loop from an NSTimer object
  *

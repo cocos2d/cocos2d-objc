@@ -64,6 +64,7 @@ CGFloat	__ccContentScaleFactor = 1;
 -(void) setNextScene;
 -(void) showFPS;
 -(void) calculateDeltaTime;
+-(ccTime) getDeltaTimePre;
 @end
 
 @implementation CCDirector (iOSExtensionClassMethods)
@@ -88,6 +89,9 @@ CGFloat	__ccContentScaleFactor = 1;
 			break;
 		case CCDirectorTypeDisplayLink:
 			[CCDirectorDisplayLink sharedDirector];
+			break;
+		case CCDirectorTypeDisplayLinkUIKit:
+			[CCDirectorDisplayLinkUIKit sharedDirector];
 			break;
 		case CCDirectorTypeMainLoop:
 			[CCDirectorFast sharedDirector];
@@ -480,7 +484,7 @@ CGFloat	__ccContentScaleFactor = 1;
 	//  uncomment this line to prevent 'freezing'.
 	//	It doesn't work on with the Fast Director
 	//
-	[[NSRunLoop currentRunLoop] addTimer:animationTimer forMode:NSRunLoopCommonModes];
+    [[NSRunLoop currentRunLoop] addTimer:animationTimer forMode:NSRunLoopCommonModes];
 }
 
 -(void) mainLoop
@@ -694,17 +698,18 @@ CGFloat	__ccContentScaleFactor = 1;
 	// approximate frame rate
 	// assumes device refreshes at 60 fps
 	int frameInterval = (int) floor(animationInterval_ * 60.0f);
-	
+
 	CCLOG(@"cocos2d: Frame interval: %d", frameInterval);
 
 	displayLink = [NSClassFromString(@"CADisplayLink") displayLinkWithTarget:self selector:@selector(mainLoop:)];
 	[displayLink setFrameInterval:frameInterval];
+
 	[displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
 }
 
 -(void) mainLoop:(id)sender
 {
-	[self drawScene];	
+    [self drawScene];
 }
 
 - (void) stopAnimation
@@ -718,6 +723,38 @@ CGFloat	__ccContentScaleFactor = 1;
 	[displayLink release];
 	[super dealloc];
 }
+@end
+
+#pragma mark -
+#pragma mark DirectorDisplayLinkUIKit
+
+@implementation CCDirectorDisplayLinkUIKit
+
+- (void) startAnimation
+{
+	if ( gettimeofday( &lastUpdate_, NULL) != 0 ) {
+		CCLOG(@"cocos2d: DisplayLinkDirector: Error on gettimeofday");
+	}
+	
+	// approximate frame rate
+	// assumes device refreshes at 60 fps
+	int frameInterval = (int) floor(animationInterval_ * 60.0f);
+	
+	CCLOG(@"cocos2d: Frame interval: %d", frameInterval);
+    
+	displayLink = [NSClassFromString(@"CADisplayLink") displayLinkWithTarget:self selector:@selector(mainLoop:)];
+	[displayLink setFrameInterval:frameInterval];
+    
+    [displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];
+}
+
+-(void) mainLoop:(id)sender
+{
+    if ([self getDeltaTimePre]>1.0/90) {
+        [self drawScene];
+    }
+}
+
 @end
 
 #endif // __IPHONE_OS_VERSION_MAX_ALLOWED
