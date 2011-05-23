@@ -263,6 +263,34 @@
 @end
 
 #pragma mark -
+#pragma mark LayerRGBA
+
+@implementation CCLayerRGBA
+
+@synthesize opacity = opacity_, color = color_;
+
+/** Override synthesized setOpacity to recurse items */
+- (void) setOpacity:(GLubyte)newOpacity
+{
+	opacity_ = newOpacity;
+	
+	id<CCRGBAProtocol> item;
+	CCARRAY_FOREACH(children_, item)
+    [item setOpacity:opacity_];
+}
+
+-(void) setColor:(ccColor3B)color
+{
+	color_ = color;
+	
+	id<CCRGBAProtocol> item;
+	CCARRAY_FOREACH(children_, item)
+    [item setColor:color_];
+}
+
+@end
+
+#pragma mark -
 #pragma mark LayerColor
 
 @interface CCLayerColor (Private)

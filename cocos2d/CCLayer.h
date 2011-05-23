@@ -142,11 +142,33 @@
 @end
 
 #pragma mark -
+#pragma mark CCLayerRGBA
+
+/** CCLayerRGBA is a subclass of CCLayer that implements the CCRGBAProtocol protocol using a solid color as the background.
+ 
+ All features from CCLayer are valid, plus the following new features that propagate into children that conform to the CCRGBAProtocol:
+ - opacity
+ - RGB colors
+ */
+@interface CCLayerRGBA : CCLayer <CCRGBAProtocol>
+{
+	GLubyte		opacity_;
+	ccColor3B	color_;	
+}
+
+/** Opacity: conforms to CCRGBAProtocol protocol */
+@property (nonatomic,readwrite) GLubyte opacity;
+/** Opacity: conforms to CCRGBAProtocol protocol */
+@property (nonatomic,readwrite) ccColor3B color;
+
+@end
+
+#pragma mark -
 #pragma mark CCLayerColor
 
-/** CCLayerColor is a subclass of CCLayer that implements the CCRGBAProtocol protocol.
+/** CCLayerColor is a subclass of CCLayer that implements the CCRGBAProtocol protocol using a solid color as the background.
  
- All features from CCLayer are valid, plus the following new features:
+ All features from CCLayer are valid, plus the following new features which affect only to the layer background:
  - opacity
  - RGB colors
  */
@@ -180,9 +202,9 @@
 -(void) changeWidth:(GLfloat)w height:(GLfloat)h;
 
 /** Opacity: conforms to CCRGBAProtocol protocol */
-@property (nonatomic,readonly) GLubyte opacity;
+@property (nonatomic,readwrite) GLubyte opacity;
 /** Opacity: conforms to CCRGBAProtocol protocol */
-@property (nonatomic,readonly) ccColor3B color;
+@property (nonatomic,readwrite) ccColor3B color;
 /** BlendFunction. Conforms to CCBlendProtocol protocol */
 @property (nonatomic,readwrite) ccBlendFunc blendFunc;
 @end
