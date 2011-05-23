@@ -79,6 +79,7 @@
 @synthesize anchorPoint = anchorPoint_, anchorPointInPoints = anchorPointInPoints_;
 @synthesize contentSize = contentSize_;
 @synthesize isRelativeAnchorPoint = isRelativeAnchorPoint_;
+@synthesize skewX = skewX_, skewY = skewY_;
 
 #pragma mark CCNode - Init & cleanup
 
@@ -93,6 +94,7 @@
 		
 		isRunning_ = NO;
 		
+		skewX_ = skewY_ = 0.0f;
 		rotation_ = 0.0f;
 		scaleX_ = scaleY_ = 1.0f;
         position_ = CGPointZero;
@@ -189,6 +191,18 @@
 -(void) setScaleY: (float)newScaleY
 {
 	scaleY_ = newScaleY;
+	isTransformDirty_ = isInverseDirty_ = isTransformMVDirty_ = YES;
+}
+
+-(void) setSkewX:(float)newSkewX
+{
+	skewX_ = newSkewX;
+	isTransformDirty_ = isInverseDirty_ = isTransformMVDirty_ = YES;
+}
+
+-(void) setSkewY:(float)newSkewY
+{
+	skewY_ = newSkewY;
 	isTransformDirty_ = isInverseDirty_ = isTransformMVDirty_ = YES;
 }
 
@@ -508,6 +522,7 @@
 			kmMat4Multiply(&transformMV_, &parent_->transformMV_, &transformMV_ );
 	}
 	
+
 	// XXX: Expensive calls. Camera should be integrated into the cached affine matrix
 	if ( camera_ && !(grid_ && grid_.active) )
 	{
@@ -655,6 +670,13 @@
 		
 		if( rotation_ != 0 )
 			transform_ = CGAffineTransformRotate(transform_, -CC_DEGREES_TO_RADIANS(rotation_));
+		
+		if( skewX_ != 0 || skewY_ != 0 ) {
+			// create a skewed coordinate system
+			CGAffineTransform skew = CGAffineTransformMake(1.0f, tanf(CC_DEGREES_TO_RADIANS(skewY_)), tanf(CC_DEGREES_TO_RADIANS(skewX_)), 1.0f, 0.0f, 0.0f);
+			// apply the skew to the transform
+			transform_ = CGAffineTransformConcat(skew, transform_);
+		}
 		
 		if( ! (scaleX_ == 1 && scaleY_ == 1) ) 
 			transform_ = CGAffineTransformScale(transform_, scaleX_, scaleY_);
