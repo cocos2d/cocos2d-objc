@@ -40,6 +40,7 @@
 -(void) restartCallback:(id) sender;
 @end
 
+
 @interface ActionManual : ActionDemo
 {}
 @end
@@ -53,6 +54,14 @@
 @end
 
 @interface ActionScale : ActionDemo
+{}
+@end
+
+@interface ActionSkew : ActionDemo
+{}
+@end
+
+@interface ActionSkewRotateScale : ActionDemo
 {}
 @end
 
