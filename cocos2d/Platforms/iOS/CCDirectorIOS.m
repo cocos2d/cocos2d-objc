@@ -480,8 +480,7 @@ CGFloat	__ccContentScaleFactor = 1;
 	//  uncomment this line to prevent 'freezing'.
 	//	It doesn't work on with the Fast Director
 	//
-	//	[[NSRunLoop currentRunLoop] addTimer:animationTimer
-	//								 forMode:NSRunLoopCommonModes];
+	[[NSRunLoop currentRunLoop] addTimer:animationTimer forMode:NSRunLoopCommonModes];
 }
 
 -(void) mainLoop
