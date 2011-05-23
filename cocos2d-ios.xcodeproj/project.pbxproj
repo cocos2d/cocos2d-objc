@@ -15067,10 +15067,7 @@
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
 					"-ObjC",
-					"-framework",
-					Foundation,
-					"-framework",
-					UIKit,
+					"-all_load",
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = Bug1159;
@@ -15091,10 +15088,7 @@
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
 					"-ObjC",
-					"-framework",
-					Foundation,
-					"-framework",
-					UIKit,
+					"-all_load",
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = Bug1159;

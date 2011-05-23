@@ -1,8 +1,16 @@
 version 1.0 - XX-Jun-2011
+. [NEW] Actions: Added SkewTo and SkewBy actions
+. [NEW] LabelTTF: Added support for LineBreakMode. Mac only supports Word-Break.
+. [NEW] Node / Sprite: Added support for SkewX and SkewY properties
+. [NEW] Tests: Added skewX, skewY tests for sprites and actions. Added linebreak tests for LabelTTF.
 . [NEW] TextureCache: Added dumpCachedTextureInfo method. Shows the RAM used by the cached textures (issue #1154)
+. [FIX] cocosLive: Fixed memory leaks in NSURLConnection
+. [FIX] Sprites: DisplayedFrame returns the correct frame (issue #1182)
 . [FIX] Templates: Supports spaces in project name (issue #1158)
 . [FIX] TextureCache: Textures are autoreleased to prevent a crash in multi-threading environments
 . [FIX] TMX Maps: Consume less memory (only what is needed), faster loading times (issue #1175)
+. [FIX-MAC] Tests: Added test case for issue #1071
+. [FIX-MAC] Director: Doesn't crash when entering fullscreen if window is not Key (issue #1185)
 
 version 1.0-rc2 - 03-May-2011
 . [NEW] CCArray: Added reduceMemoryFootprint and reverseObject (issue #1167)
