@@ -119,6 +119,31 @@ const char kProgressTextureCoords = 0x1e;
 		type_ = newType;
 	}
 }
+
+#pragma mark CCRGBAProtocol implementation
+
+-(void)setColor:(ccColor3B)color
+{
+	[sprite_ setColor:color];
+	[self updateColor];
+}
+
+-(ccColor3B)color
+{
+	return sprite_.color;
+}
+
+-(GLubyte)opacity
+{
+	return sprite_.opacity;
+}
+
+-(void)setOpacity:(GLubyte)opacity
+{
+	[sprite_ setOpacity:opacity];
+	[self updateColor];
+}
+
 @end
 
 @implementation CCProgressTimer(Internal)
@@ -150,9 +175,9 @@ const char kProgressTextureCoords = 0x1e;
 	
 	ccColor4B color = { c3b.r, c3b.g, c3b.b, op };
 	if([sprite_.texture hasPremultipliedAlpha]){
-		color.r *= op/255;
-		color.g *= op/255;
-		color.b *= op/255;
+		color.r *= op/255.f;
+		color.g *= op/255.f;
+		color.b *= op/255.f;
 	}
 	
 	if(vertexData_){
