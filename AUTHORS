@@ -414,6 +414,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		XCode only displays the libz dependency just once
 		added userData property in CocosNode
 		migrated all cocos2d code and all test to using the CC namespace
+		ccArray: added assert in realloc
 	* sakamoto.kazuki:
 		2d projection works OK with HighRes. patch.
 		Performance improvement in CCNode#insertChild. patch.

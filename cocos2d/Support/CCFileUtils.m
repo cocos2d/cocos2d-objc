@@ -35,8 +35,8 @@ static NSFileManager *__localFileManager=nil;
 // 
 NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out) 
 { 
-	assert( out );
-	assert( &*out );
+	NSCAssert( out, @"ccLoadFileIntoMemory: invalid 'out' parameter");
+	NSCAssert( &*out, @"ccLoadFileIntoMemory: invalid 'out' parameter");
 
 	size_t size = 0;
 	FILE *f = fopen(filename, "rb");
