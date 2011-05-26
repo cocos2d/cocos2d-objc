@@ -129,8 +129,8 @@ int ccInflateGZipFile(const char *path, unsigned char **out)
 	int len;
 	unsigned int offset = 0;
 	
-	assert( out );
-	assert( &*out );
+	NSCAssert( out, @"ccInflateGZipFile: invalid 'out' parameter");
+	NSCAssert( &*out, @"ccInflateGZipFile: invalid 'out' parameter");
 
 	gzFile inFile = gzopen(path, "rb");
 	if( inFile == NULL ) {
@@ -187,8 +187,8 @@ int ccInflateGZipFile(const char *path, unsigned char **out)
 
 int ccInflateCCZFile(const char *path, unsigned char **out)
 {
-	assert( out );
-	assert( &*out );
+	NSCAssert( out, @"ccInflateCCZFile: invalid 'out' parameter");
+	NSCAssert( &*out, @"ccInflateCCZFile: invalid 'out' parameter");
 
 	// load file into memory
 	unsigned char *compressed = NULL;
