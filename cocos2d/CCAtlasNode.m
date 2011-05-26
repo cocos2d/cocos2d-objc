@@ -44,6 +44,16 @@
 @synthesize blendFunc = blendFunc_;
 
 #pragma mark CCAtlasNode - Creation & Init
+- (id) init
+{
+    if( (self=[super init]) ) {
+		self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTextureColor];		
+		blendFunc_.src = CC_BLEND_SRC;
+		blendFunc_.dst = CC_BLEND_DST;
+    }
+    return self;
+}
+
 +(id) atlasWithTileFile:(NSString*)tile tileWidth:(NSUInteger)w tileHeight:(NSUInteger)h itemsToRender: (NSUInteger) c
 {
 	return [[[self alloc] initWithTileFile:tile tileWidth:w tileHeight:h itemsToRender:c] autorelease];

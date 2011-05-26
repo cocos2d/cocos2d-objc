@@ -79,7 +79,7 @@ static CCTextureCache *sharedTextureCache;
 + (CCTextureCache *)sharedTextureCache
 {
 	if (!sharedTextureCache)
-		sharedTextureCache = [[CCTextureCache alloc] init];
+		sharedTextureCache = [[self alloc] init];
 		
 	return sharedTextureCache;
 }

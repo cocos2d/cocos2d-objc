@@ -1,6 +1,7 @@
 
 version 2.0-alpha XX-Apr-2011
 . [NEW] Added support for OpenGL ES 2.0. OpenGL ES 1.1 is no longer supported
+. [NEW] AtlasNode: added init method
 . [NEW] CProgressTimer: 
             -Convenience class constructor now passes in CCSprite (this gives developers easier access to timer with CCSpriteFrames, CCSprites, etc)
             - Reduced the progress timer types to just radial and bar - added in reverse, midpoint, barChangeRate to be have more flexible options to modify the progress.
@@ -10,6 +11,7 @@ version 2.0-alpha XX-Apr-2011
 . [NEW] ccGLState: added helper functions that keeps the GL state in order to prevent setters/getters
 . [FIX] All: Removed deprecated methods and classes that were scheduled for removal post 1.0
 . [FIX] CCProgressTimer: reverse renamed to reverseDirection in order to prevent possible collision with action#reverse
+. [FIX] TextureCache: Uses "self" instead of "CCTextureCache" in shared instance
 . [FIX] Xcode: cocosLive: Removed. Use OpenFeint or GameCenter instead
 . [FIX] Xcode: FontLabel: Removed since in iOS 4 you can load custom TTF
 . [FIX] Xcode: TouchJSON: Removed. No longer needed since cocosLive was removed
