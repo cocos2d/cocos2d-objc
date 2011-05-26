@@ -87,7 +87,10 @@ static inline void ccArrayFree(ccArray *arr)
 static inline void ccArrayDoubleCapacity(ccArray *arr)
 {
 	arr->max *= 2;
-	arr->arr = (id*) realloc( arr->arr, arr->max * sizeof(id) );
+    id *newArr = (id *)realloc( arr->arr, arr->max * sizeof(id) );
+    // will fail when there's not enough memory
+    assert(newArr != NULL);
+	arr->arr = newArr;
 }
 
 /** Increases array capacity such that max >= num + extra. */
