@@ -86,11 +86,6 @@ Class restartAction()
 	return self;
 }
 
--(void) dealloc
-{
-	[super dealloc];
-}
-
 -(void) restartCallback: (id) sender
 {
 	CCScene *s = [CCScene node];
@@ -231,7 +226,8 @@ enum {
 		CGSize s = [[CCDirector sharedDirector] winSize];
 		
 		[mandel setPosition:ccp(s.width/2, s.height/2)];
-		[self addChild:mandel];	
+		[self addChild:mandel];
+		[mandel release];
 	}
 	
 	return self;	
@@ -260,7 +256,8 @@ enum {
 //		CGSize s = [[CCDirector sharedDirector] winSize];
 //		[mandel setPosition:ccp(s.width/2, s.height/2)];
 		
-		[self addChild:mandel];	
+		[self addChild:mandel];
+		[mandel release];
 	}
 	
 	return self;	
@@ -289,7 +286,8 @@ enum {
 		
 //		CGSize s = [[CCDirector sharedDirector] winSize];
 //		[node setPosition:ccp(s.width/2, s.height/2)];
-		[self addChild:node];	
+		[self addChild:node];
+		[node release];
 	}
 	
 	return self;	
@@ -302,7 +300,7 @@ enum {
 
 -(NSString *) subtitle
 {
-	return @"Tunnel";
+	return @"Heart";
 }
 @end
 
@@ -318,7 +316,8 @@ enum {
 //		CGSize s = [[CCDirector sharedDirector] winSize];
 //		[node setPosition:ccp(s.width/2, s.height/2)];
 
-		[self addChild:node];	
+		[self addChild:node];
+		[node release];
 	}
 	
 	return self;	
@@ -347,7 +346,8 @@ enum {
 		CGSize s = [[CCDirector sharedDirector] winSize];
 		[node setPosition:ccp(s.width/2, s.height/2)];
 		
-		[self addChild:node];	
+		[self addChild:node];
+		[node release];
 	}
 	
 	return self;	
@@ -411,7 +411,7 @@ enum {
 		
 		CHECK_GL_ERROR_DEBUG();
 
-		self.shaderProgram = shader;		
+		self.shaderProgram = shader;
 		[shader release];
 	}
 	

@@ -28,9 +28,16 @@
 
 GLuint	_ccCurrentShaderProgram = -1;
 GLuint	_ccCurrentTextureID = -1;
+GLuint	_ccCurrentProjectionMatrix = -1;
 GLenum	_ccBlendingSource = -1;
 GLenum	_ccBlendingDest = -1;
-unsigned long long	_ccProjectionMatrixDirty = -1; // 64 bits / 3 = ~21 differnt shader programs supported
+
+inline void ccglDeleteProgram( GLuint program )
+{
+	if( program == _ccCurrentShaderProgram )
+		_ccCurrentShaderProgram = -1;
+	glDeleteProgram( program );
+}
 
 inline void ccglUseProgram( GLuint program )
 {
@@ -42,27 +49,24 @@ inline void ccglUseProgram( GLuint program )
 
 inline void ccglUniformProjectionMatrix( GLProgram *shaderProgram )
 {
-	GLuint bitNumber = shaderProgram->program_;
-	NSCAssert( shaderProgram->program_ < sizeof(_ccProjectionMatrixDirty)*8, @"Ouch. Too many shader programs. Disable this optimization");
-
-	if( _ccProjectionMatrixDirty & (1 << bitNumber) ) {
+	if( shaderProgram->program_ != _ccCurrentProjectionMatrix ) {
 		glUniformMatrix4fv( shaderProgram->uniforms_[kCCUniformPMatrix], 1, GL_FALSE, (GLfloat*)&ccProjectionMatrix);
 		
-		_ccProjectionMatrixDirty &= ~(1 << bitNumber);
+		_ccCurrentProjectionMatrix = shaderProgram->program_;
 	}
 }
 
 inline void ccSetProjectionMatrix( kmMat4 *matrix )
 {
-	// set all "bits" to dirty
-	_ccProjectionMatrixDirty = -1;
+	// invalidate current projectio matrix
+	_ccCurrentProjectionMatrix = -1;
 
 	ccProjectionMatrix = *matrix;
 }
 
 inline void ccSetProjectionMatrixDirty( void )
 {
-	_ccProjectionMatrixDirty = -1;
+	_ccCurrentProjectionMatrix = -1;
 }
 
 inline void ccglBindTexture2D( GLuint textureID )

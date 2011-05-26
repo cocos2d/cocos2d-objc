@@ -24,7 +24,9 @@
 
 #import "GLProgram.h"
 #import "ccGLState.h"
+#import "ccMacros.h"
 #import "Support/CCFileUtils.h"
+#import "Support/OpenGL_Internal.h"
 
 #pragma mark Function Pointer Definitions
 typedef void (*GLInfoFunction)(GLuint program, 
@@ -88,6 +90,12 @@ typedef void (*GLLogFunction) (GLuint program,
     
     return self;
 }
+
+- (NSString*) description
+{
+	return [NSString stringWithFormat:@"<%@ = %08X | Program = %i, VertexShader = %i, FragmentShader = %i>", [self class], self, program_, vertShader_, fragShader_];
+}
+
 
 - (BOOL)compileShader:(GLuint *)shader 
                  type:(GLenum)type 
@@ -153,13 +161,23 @@ typedef void (*GLLogFunction) (GLuint program,
     glValidateProgram(program_);
     
     glGetProgramiv(program_, GL_LINK_STATUS, &status);
-    if (status == GL_FALSE)
+    if (status == GL_FALSE) {
+		CCLOG(@"cocos2d: GLProgram: error linking program: %i", program_);
+		if( vertShader_ )
+			glDeleteShader( vertShader_ );
+		if( fragShader_ )
+			glDeleteShader( fragShader_ );
+		ccglDeleteProgram( program_ );
+		vertShader_ = fragShader_ = program_ = 0;
         return NO;
+	}
     
     if (vertShader_)
         glDeleteShader(vertShader_);
     if (fragShader_)
         glDeleteShader(fragShader_);
+	
+	vertShader_ = fragShader_ = 0;
 		
     return YES;
 }
@@ -216,14 +234,14 @@ typedef void (*GLLogFunction) (GLuint program,
 
 - (void)dealloc
 {
-    if (vertShader_)
-        glDeleteShader(vertShader_);
-        
-    if (fragShader_)
-        glDeleteShader(fragShader_);
-    
+	CCLOGINFO( @"cocos2d: deallocing %@", self);
+
+	// there is no need to delete the shaders. They should have been already deleted.
+	NSAssert( vertShader_ == 0, @"Vertex Shaders should have been already deleted");
+	NSAssert( fragShader_ == 0, @"Vertex Shaders should have been already deleted");
+	
     if (program_)
-        glDeleteProgram(program_);
+        ccglDeleteProgram(program_);
        
     [super dealloc];
 }
