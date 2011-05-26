@@ -12969,6 +12969,7 @@
 				INFOPLIST_FILE = "tests/EAGLViewTest/EAGLViewTest-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
+					"-ObjC",
 					"-framework",
 					Foundation,
 					"-framework",
@@ -12992,6 +12993,7 @@
 				INFOPLIST_FILE = "tests/EAGLViewTest/EAGLViewTest-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
+					"-ObjC",
 					"-framework",
 					Foundation,
 					"-framework",
