@@ -159,8 +159,6 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Texture2D allocs the right memory (patch)
 	* Ishaq Malik:
 		patches for CocosNode
-	* Joao Caxaria:
-		author of SimpleAudioEngine
 	* Jacob Eiting:
 		patches for Primitives
 	* Jason Booth (slipster216) (http://www.stuffedturkeyapps.com/):
@@ -183,6 +181,10 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		BitmapFontAtlas supports sub-directories patch
 	* Jason Felice (http://http://bluefroggaming.com/)
 		convertToUI works OK in RetinaDisplay. patch.
+	* jkrippy:
+		patch for menu align. takes scale into account
+	* Joao Caxaria:
+		author of SimpleAudioEngine
 	* Joe Vennix:
 		patches for CocosNode
 	* Jon Kean (http://twitter.com/awesomestsoft):
@@ -198,8 +200,6 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Web: Author and maintainer of the games tab in the cocos2d site
 	* Josh Heidebrecht (http://www.somacreates.com):
 		Added SKIP_INSTALL=yes into Xcode4 project for the static libraries
-	* jkrippy:
-		patch for menu align. takes scale into account
 	* johnnyflash71:
 		TMX suports 1 tileset per layer patch
 		mkatlas.pl supports spaces in the name
@@ -213,6 +213,9 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Director#convertToUI works as expected. patch.
 	* jtbowden
 		RotateTo uses min distance patch
+    * Justin Graham (http://www.zynga.com)
+        AtlasNode: added init method
+        TextureCache: it is easier to subclass
 	* Karthik Chokkaram (http://bluefroggaming.com/)
 		Added helper method to create CCSpawn and CCSequence with an NSArray
 	* kasatani:
