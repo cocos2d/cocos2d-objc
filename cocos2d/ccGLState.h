@@ -43,6 +43,11 @@
  */
 void ccglUseProgram( GLuint program );
 
+/** Deletes the GL program. If it is the one that is being used, it invalidates it.
+ @since v2.0.0
+ */
+void ccglDeleteProgram( GLuint program );
+
 /** sets the GL program in case program is different than the current one
  @since v2.0.0
  */
