@@ -2,6 +2,7 @@
  * http://www.cocos2d-iphone.org
  *
  * Copyright (c) 2007 Scott Lembcke
+ *
  * Copyright (c) 2010 Lam Pham
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
