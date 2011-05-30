@@ -26,6 +26,7 @@
 
 
 #import "CCNode.h"
+#import "Support/kazmath.h"
 
 /** 
     A CCCamera is used in every CCNode.
@@ -64,6 +65,8 @@
     float upY_;
     float upZ_;
 	
+	kmMat4 lookupMatrix;
+	
 	BOOL dirty_;
 }
 
@@ -76,7 +79,7 @@
 /** sets the camera in the defaul position */
 -(void) restore;
 /** Sets the camera using gluLookAt using its eye, center and up_vector */
--(void) locate;
+-(kmMat4*) locate;
 /** sets the eye values in points */
 -(void) setEyeX: (float)x eyeY:(float)y eyeZ:(float)z;
 /** sets the center values in points */
