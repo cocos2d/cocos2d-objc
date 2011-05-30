@@ -195,15 +195,15 @@
 	
 	glViewport(0, 0, winSize.width, winSize.height);
 
-	kmMat4 matrixA, matrixB;
-	kmMat4PerspectiveProjection( &matrixA, 60, (GLfloat)winSize.width/winSize.height, 0.5f, 1500.0f);
+	kmMat4 matrixPerspective, matrixLookup;
+	kmMat4PerspectiveProjection( &matrixPerspective, 60, (GLfloat)winSize.width/winSize.height, 0.5f, 1500.0f);
 	
 	kmVec3 eye = kmVec3Make(winSize.width/2, winSize.height/2, [director getZEye] );
 	kmVec3 center = kmVec3Make( winSize.width/2, winSize.height/2, 0 );
 	kmVec3 up = kmVec3Make(0,1,0);
-	kmMat4LookAt(&matrixB, &eye, &center, &up);
+	kmMat4LookAt(&matrixLookup, &eye, &center, &up);
 	
-	kmMat4Multiply(&projection3D_, &matrixA, &matrixB);
+	kmMat4Multiply(&projection3D_, &matrixPerspective, &matrixLookup);
 
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 	projection3D_ = [(CCDirectorIOS*)director applyOrientationToMatrix:&projection3D_];
@@ -244,8 +244,7 @@
 	[self blit];
 	
 	// restore projection
-	ccProjectionMatrix = projectionBackup_;
-	ccSetProjectionMatrixDirty();
+	ccSetProjectionMatrix( &projectionBackup_ );
 }
 
 -(void)blit
