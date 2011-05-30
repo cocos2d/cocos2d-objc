@@ -28,6 +28,7 @@
 #import "CCCamera.h"
 #import "ccMacros.h"
 #import "CCDrawingPrimitives.h"
+#import "Support/kazmath.h"
 
 @implementation CCCamera
 
@@ -63,17 +64,23 @@
 	upX_ = 0.0f;
 	upY_ = 1.0f;
 	upZ_ = 0.0f;
+
+	kmMat4Identity( &lookupMatrix);
 	
 	dirty_ = NO;
 }
 
--(void) locate
+-(kmMat4*) locate
 {
-	if( dirty_ )
-		gluLookAt( eyeX_, eyeY_, eyeZ_,
-				centerX_, centerY_, centerZ_,
-				upX_, upY_, upZ_
-				);
+	if( dirty_ ) {
+		
+		kmVec3 eye = kmVec3Make( eyeX_, eyeY_, eyeZ_);
+		kmVec3 center = kmVec3Make( centerX_, centerY_, centerZ_);
+		kmVec3 up = kmVec3Make(upX_, upY_, upZ_);
+		kmMat4LookAt( &lookupMatrix, &eye, &center, &up);
+	}
+	
+	return &lookupMatrix;
 }
 
 +(float) getZEye

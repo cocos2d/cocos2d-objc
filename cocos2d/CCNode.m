@@ -505,7 +505,7 @@
 	if( parent_ && parent_->isTransformMVDirty_ )
 		isTransformMVDirty_ = YES;
 	
-	if( isTransformMVDirty_ ) {
+	if( !camera_ && isTransformMVDirty_ ) {
 
 		// Convert 3x3 into 4x4 matrix
 		CGAffineTransform tmpAffine = [self nodeToParentTransform];
@@ -514,13 +514,8 @@
 		// Update Z vertex manually
 		transformMV_.mat[14] = vertexZ_;
 		
-		// root node
-		if(  ! parent_ ) {
-//			transformMV_ = CGAffineTransformIdentity;
-		}
-		
 		// leaf node
-		else 
+		if( parent_ )
 			kmMat4Multiply(&transformMV_, &parent_->transformMV_, &transformMV_ );
 	}
 	
@@ -528,15 +523,18 @@
 	// XXX: Expensive calls. Camera should be integrated into the cached affine matrix
 	if ( camera_ && !(grid_ && grid_.active) )
 	{
-//		BOOL translate = (anchorPointInPixels_.x != 0.0f || anchorPointInPixels_.y != 0.0f);
+//		BOOL translate = (anchorPointInPoints_.x != 0.0f || anchorPointInPoints_.y != 0.0f);
 //		
 //		if( translate )
-//			ccglTranslate(RENDER_IN_SUBPIXEL(anchorPointInPixels_.x), RENDER_IN_SUBPIXEL(anchorPointInPixels_.y), 0);
+//			kmMat4Translation(&transformMV_, RENDER_IN_SUBPIXEL(anchorPointInPoints_.x), RENDER_IN_SUBPIXEL(anchorPointInPoints_.y), 0 );
 //		
-//		[camera_ locate];
+//		kmMat4Multiply( &transformMV_, &transformMV_, [camera_ locate] );
 //		
 //		if( translate )
-//			ccglTranslate(RENDER_IN_SUBPIXEL(-anchorPointInPixels_.x), RENDER_IN_SUBPIXEL(-anchorPointInPixels_.y), 0);
+//			kmMat4Translation(&transformMV_, RENDER_IN_SUBPIXEL(-anchorPointInPoints_.x), RENDER_IN_SUBPIXEL(-anchorPointInPoints_.y), 0 );
+//		
+//		if ( parent_ )
+//			kmMat4Multiply(&transformMV_, &parent_->transformMV_, &transformMV_ );
 	}
 	
 }
