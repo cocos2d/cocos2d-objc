@@ -84,13 +84,15 @@ enum {
  Order in transformations with grid disabled
  -# The node will be translated (position)
  -# The node will be rotated (rotation)
- -# The node will be scaled (scale)
+ -# The node will be skewed (skewX, skewY)
+ -# The node will be scaled (scale, scaleX, scaleY)
  -# The node will be moved according to the camera values (camera)
  
  Order in transformations with grid enabled
  -# The node will be translated (position)
  -# The node will be rotated (rotation)
- -# The node will be scaled (scale)
+ -# The node will be skewed (skewX, skewY)
+ -# The node will be scaled (scale, scaleX, scaleY)
  -# The grid will capture the screen
  -# The node will be moved according to the camera values (camera)
  -# The grid will render the captured screen
