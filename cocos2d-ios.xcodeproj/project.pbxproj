@@ -3286,6 +3286,27 @@
 			remoteGlobalIDString = 5018F24C0DFDEAC400C013A5;
 			remoteInfo = cocos2d;
 		};
+		A031C74413958A1C0072E9F9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E0A8C29B133C335500297B76;
+			remoteInfo = DirectorTest;
+		};
+		A031C74613958A1C0072E9F9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E0BD924C134B744600E71F1D;
+			remoteInfo = Bug1159;
+		};
+		A031C74813958A1C0072E9F9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A031C595139543A70072E9F9;
+			remoteInfo = Bug1174;
+		};
 		DA5F0EC30FFE96D400C7C82E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
@@ -8121,6 +8142,9 @@
 			buildRules = (
 			);
 			dependencies = (
+				A031C74513958A1C0072E9F9 /* PBXTargetDependency */,
+				A031C74713958A1C0072E9F9 /* PBXTargetDependency */,
+				A031C74913958A1C0072E9F9 /* PBXTargetDependency */,
 				5098070E1175042A00EA7266 /* PBXTargetDependency */,
 				509807101175042A00EA7266 /* PBXTargetDependency */,
 				509807141175042A00EA7266 /* PBXTargetDependency */,
@@ -12114,6 +12138,21 @@
 			isa = PBXTargetDependency;
 			target = 5018F24C0DFDEAC400C013A5 /* cocos2d */;
 			targetProxy = A031C597139543A70072E9F9 /* PBXContainerItemProxy */;
+		};
+		A031C74513958A1C0072E9F9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E0A8C29B133C335500297B76 /* DirectorTest */;
+			targetProxy = A031C74413958A1C0072E9F9 /* PBXContainerItemProxy */;
+		};
+		A031C74713958A1C0072E9F9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E0BD924C134B744600E71F1D /* Bug1159 */;
+			targetProxy = A031C74613958A1C0072E9F9 /* PBXContainerItemProxy */;
+		};
+		A031C74913958A1C0072E9F9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A031C595139543A70072E9F9 /* Bug1174 */;
+			targetProxy = A031C74813958A1C0072E9F9 /* PBXContainerItemProxy */;
 		};
 		DA5F0EC20FFE96D400C7C82E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
