@@ -50,6 +50,19 @@ if [[ ! $user_dir  && "$(id -u)" != "0" ]]; then
 exit 1
 fi
 
+# Make sure root and user_dir is not executed at the same time
+if [[ $user_dir && "$(id -u)" == "0" ]]; then
+	echo ""
+	echo "Error: Do not run this script as root with the '-u' option." 1>&2
+	echo ""
+	echo "Either use the '-u' option or run it as root, but not both options at the same time." 1>&2
+	echo ""
+	echo "RECOMMENDED WAY:" 1>&2
+	echo " $0 -u -f" 1>&2
+	echo ""
+exit 1
+fi
+
 
 copy_files(){
     SRC_DIR="${SCRIPT_DIR}/${1}"

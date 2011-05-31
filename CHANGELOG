@@ -19,7 +19,7 @@ version 2.0-alpha XX-Apr-2011
 . [FIX] Xcode: iOS 4 is minimun required to run
 
 
-version 1.0 - XX-Jun-2011
+version 1.0-rc3 - 31-May-2011
 . [NEW] Actions: Added SkewTo and SkewBy actions
 . [NEW] LabelTTF: Added support for LineBreakMode. Mac only supports Word-Break.
 . [NEW] Node / Sprite: Added support for SkewX and SkewY properties
