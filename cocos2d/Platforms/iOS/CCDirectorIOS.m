@@ -152,29 +152,27 @@ CGFloat	__ccContentScaleFactor = 1;
 
 -(void) setProjection:(ccDirectorProjection)projection
 {
-	CGSize winSize = winSizeInPixels_;
+	CGSize sizeInPixels = [self displaySizeInPixels];
+	CGSize sizeInPoints = CC_SIZE_PIXELS_TO_POINTS(sizeInPixels);
 	
-    if( CC_CONTENT_SCALE_FACTOR() != 1)
-        glViewport(0, -winSize.height * CC_CONTENT_SCALE_FACTOR()/2.0f, winSize.width * CC_CONTENT_SCALE_FACTOR(), winSize.height * CC_CONTENT_SCALE_FACTOR());
-    else
-        glViewport(0, 0, winSize.width, winSize.height);
-
+	glViewport(0, 0, sizeInPixels.width, sizeInPixels.height);
 	
-
 	switch (projection) {
 		case kCCDirectorProjection2D:
-		{
-			kmMat4OrthographicProjection(&portraitProjectionMatrix_, 0, winSize.width, 0, winSize.height, -1024, 1024);			
+			kmMat4OrthographicProjection(&portraitProjectionMatrix_, 0, sizeInPoints.width, 0, sizeInPoints.height, -1024, 1024);			
 			break;
-		}
+
+			break;
 			
 		case kCCDirectorProjection3D:
 		{
 			kmMat4 matrixPerspective, matrixLookup;
-			kmMat4PerspectiveProjection( &matrixPerspective, 60, (GLfloat)winSize.width/winSize.height, 0.5f, 1500.0f);
+			kmMat4PerspectiveProjection( &matrixPerspective, 60, (GLfloat)sizeInPixels.width/sizeInPixels.height, 0.5f, 1500.0f);
 			
-			kmVec3 eye = kmVec3Make(winSize.width/2, winSize.height/2, [self getZEye] );
-			kmVec3 center = kmVec3Make( winSize.width/2, winSize.height/2, 0 );
+			float eyeZ = sizeInPoints.height * [self getZEye] / sizeInPixels.height;
+
+			kmVec3 eye = kmVec3Make(sizeInPoints.width/2, sizeInPoints.height/2, eyeZ );
+			kmVec3 center = kmVec3Make( sizeInPoints.width/2, sizeInPoints.height/2, 0 );
 			kmVec3 up = kmVec3Make(0, 1, 0);
 			kmMat4LookAt(&matrixLookup, &eye, &center, &up);
 			
@@ -196,6 +194,7 @@ CGFloat	__ccContentScaleFactor = 1;
 	
 	ccProjectionMatrix = [self applyOrientationToMatrix:&portraitProjectionMatrix_];
 	ccSetProjectionMatrixDirty();
+
 }
 
 -(kmMat4) applyOrientationToMatrix:(kmMat4*)inMatrix
