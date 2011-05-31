@@ -398,6 +398,16 @@ CGFloat	__ccContentScaleFactor = 1;
 	return s;
 }
 
+-(CGSize) winSizeInPixels
+{
+	CGSize s = [self winSize];
+
+	s.width *= CC_CONTENT_SCALE_FACTOR();
+	s.height *= CC_CONTENT_SCALE_FACTOR();
+
+	return s;
+}
+
 -(ccDeviceOrientation) deviceOrientation
 {
 	return deviceOrientation_;
