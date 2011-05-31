@@ -482,14 +482,16 @@ static CCTextureCache *sharedTextureCache;
 		NSUInteger bytes = tex.pixelsWide * tex.pixelsWide * bpp / 8;
 		totalBytes += bytes;
 		count++;
-		CCLOG( @"%@ (%u) %u x %u @ %d bpp => %u KB", texKey,
+		CCLOG( @"cocos2d: \"%@\" rc=%u id=%u %u x %u @ %d bpp => %u KB",
+			  texKey,
+			  [tex retainCount],
 			  (unsigned int)tex.name,
 			  (unsigned int)tex.pixelsWide,
 			  (unsigned int)tex.pixelsHigh,
 			  (unsigned int)bpp,
 			  (unsigned int)bytes / 1024 );
 	}
-	CCLOG( @"CCTextureCache dumpDebugInfo: %d textures, for %u KB (%.2f MB)", count, totalBytes / 1024, totalBytes / (1024.0f*1024.0f));
+	CCLOG( @"cocos2d: CCTextureCache dumpDebugInfo: %d textures, for %u KB (%.2f MB)", count, totalBytes / 1024, totalBytes / (1024.0f*1024.0f));
 }
 
 @end
