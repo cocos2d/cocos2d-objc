@@ -67,6 +67,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #import "Support/ccUtils.h"
 #import "Support/CCFileUtils.h"
 #import "Support/ZipUtils.h"
+#import "Support/OpenGL_Internal.h"
 
 #pragma mark -
 #pragma mark CCTexturePVR
@@ -283,8 +284,10 @@ typedef struct _PVRTexHeader
 		glBindTexture(GL_TEXTURE_2D, name_);
 	}
 
+	CHECK_GL_ERROR(); // clean possible GL error
+
 	// Generate textures with mipmaps
-	for (unsigned int i=0; i < numberOfMipmaps_; i++)
+	for (GLint i=0; i < numberOfMipmaps_; i++)
 	{
 		GLenum internalFormat = tableFormats[tableFormatIndex_][kCCInternalOpenGLInternalFormat];
 		GLenum format = tableFormats[tableFormatIndex_][kCCInternalOpenGLFormat];
@@ -310,7 +313,7 @@ typedef struct _PVRTexHeader
 		err = glGetError();
 		if (err != GL_NO_ERROR)
 		{
-			CCLOG(@"cocos2d: TexturePVR: Error uploading compressed texture level: %u . glError: 0x%04X", (unsigned int)i, err);
+			CCLOG(@"cocos2d: TexturePVR: Error uploading compressed texture level: %u . glError: 0x%04X", i, err);
 			return FALSE;
 		}
 		
