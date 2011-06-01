@@ -29,6 +29,7 @@ version 1.0-rc3 - 31-May-2011
 . [FIX] Sprites: DisplayedFrame returns the correct frame (issue #1182)
 . [FIX] Templates: Supports spaces in project name (issue #1158)
 . [FIX] TextureCache: Textures are autoreleased to prevent a crash in multi-threading environments
+. [FIX] TexturePVR: clean glError() before creating textures
 . [FIX] TMX Maps: Consume less memory (only what is needed), faster loading times (issue #1175)
 . [FIX-MAC] Tests: Added test case for issue #1071
 . [FIX-MAC] Director: Doesn't crash when entering fullscreen if window is not Key (issue #1185)
