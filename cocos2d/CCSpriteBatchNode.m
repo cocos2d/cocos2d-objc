@@ -442,9 +442,9 @@ static SEL selSortMethod =NULL;
 	// this is likely computationally expensive
 	NSUInteger quantity = (textureAtlas_.capacity + 1) * 4 / 3;
 	
-	CCLOG(@"cocos2d: CCSpriteBatchNode: resizing TextureAtlas capacity from [%u] to [%u].",
-		  (unsigned int)textureAtlas_.capacity,
-		  (unsigned int)quantity);
+	CCLOG(@"cocos2d: CCSpriteBatchNode: resizing TextureAtlas capacity from [%lu] to [%lu].",
+		  (long)textureAtlas_.capacity,
+		  (long)quantity);
 	
 	
 	if( ! [textureAtlas_ resizeCapacity:quantity] ) {
