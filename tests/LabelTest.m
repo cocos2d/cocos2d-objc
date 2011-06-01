@@ -12,8 +12,6 @@
 static int sceneIdx=-1;
 static NSString *transitions[] = {
 	
-	@"LabelTTFLineBreak",
-
 	@"LabelAtlasTest",
 	@"LabelAtlasColorTest",
 	@"Atlas3",
