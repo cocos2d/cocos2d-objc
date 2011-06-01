@@ -240,9 +240,9 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 		
 	NSUInteger maxTextureSize = [conf maxTextureSize];
 	if( POTHigh > maxTextureSize || POTWide > maxTextureSize ) {
-		CCLOG(@"cocos2d: WARNING: Image (%d x %d) is bigger than the supported %d x %d",
-			  (unsigned int)POTWide, (unsigned int)POTHigh,
-			  (unsigned int)maxTextureSize, (unsigned int)maxTextureSize);
+		CCLOG(@"cocos2d: WARNING: Image (%lu x %lu) is bigger than the supported %ld x %ld",
+			  (long)POTWide, (long)POTHigh,
+			  (long)maxTextureSize, (long)maxTextureSize);
 		[self release];
 		return nil;
 	}
@@ -804,8 +804,8 @@ static BOOL PVRHaveAlphaPremultiplied_ = NO;
 			break;
 		default:
 			ret = -1;
-			NSAssert1(NO , @"bitsPerPixelForFormat: %d, unrecognised pixel format", (int)format_);
-			CCLOG(@"bitsPerPixelForFormat: %d, cannot give useful result", (int)format_);
+			NSAssert1(NO , @"bitsPerPixelForFormat: %ld, unrecognised pixel format", (long)format_);
+			CCLOG(@"bitsPerPixelForFormat: %ld, cannot give useful result", (long)format_);
 			break;
 	}
 	return ret;
