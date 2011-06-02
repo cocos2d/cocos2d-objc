@@ -1,3 +1,7 @@
+version 1.0.0 -
+. [FIX] Tests: Fixed memory leak in ParticleTest
+. [FIX] Tests: Fixed memory leak in cocosLiveTest
+
 version 1.0-rc3 - 31-May-2011
 . [NEW] Actions: Added SkewTo and SkewBy actions
 . [NEW] LabelTTF: Added support for LineBreakMode. Mac only supports Word-Break.
