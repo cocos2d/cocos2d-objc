@@ -455,7 +455,7 @@ Class restartAction()
 -(void) onEnter
 {
 	[super onEnter];
-	self.emitter = [[CCParticleSystemQuad alloc] initWithTotalParticles:300];
+	emitter_ = [[CCParticleSystemQuad alloc] initWithTotalParticles:300];
 	[background addChild:emitter_ z:10];
 
 	emitter_.texture = [[CCTextureCache sharedTextureCache] addImage: @"stars2-grayscale.png"];
@@ -686,7 +686,7 @@ Class restartAction()
 -(void) onEnter
 {
 	[super onEnter];
-	self.emitter = [[CCParticleSystemPoint alloc] initWithTotalParticles:1000];
+	emitter_ = [[CCParticleSystemPoint alloc] initWithTotalParticles:1000];
 	[background addChild:emitter_ z:10];
 	
 	CGSize s = [[CCDirector sharedDirector] winSize];
@@ -766,7 +766,7 @@ Class restartAction()
 -(void) onEnter
 {
 	[super onEnter];
-	self.emitter = [[CCParticleFlower alloc] initWithTotalParticles:500];
+	emitter_ = [[CCParticleFlower alloc] initWithTotalParticles:500];
 	[background addChild:emitter_ z:10];
 
 	emitter_.texture = [[CCTextureCache sharedTextureCache] addImage: @"stars-grayscale.png"];
@@ -794,7 +794,7 @@ Class restartAction()
 	[[background parent] removeChild:background cleanup:YES];
 	background = nil;
 
-	CCParallaxNode *p = [[CCParallaxNode alloc] init];
+	CCParallaxNode *p = [CCParallaxNode node];
 	[self addChild:p z:5];
 
 	CCSprite *p1 = [CCSprite spriteWithFile:@"background3.png"];
@@ -806,7 +806,7 @@ Class restartAction()
 	[p addChild:p2 z:2 parallaxRatio:ccp(1.5f,1) positionOffset:ccp(0,50)];
 
 	
-	self.emitter = [[CCParticleFlower alloc] initWithTotalParticles:500];
+	emitter_ = [[CCParticleFlower alloc] initWithTotalParticles:500];
 	[p1 addChild:emitter_ z:10];
 	[emitter_ setPosition:ccp(250,200)];
 	
@@ -1208,7 +1208,7 @@ Class restartAction()
 	[self removeChild:background cleanup:YES];
 	background = nil;
 	
-	self.emitter = [[CCParticleSystemQuad alloc] initWithTotalParticles:200];
+	emitter_ = [[CCParticleSystemQuad alloc] initWithTotalParticles:200];
 	[self addChild:emitter_ z:10];
 	
 	emitter_.texture = [[CCTextureCache sharedTextureCache] addImage: @"stars-grayscale.png"];
@@ -1293,7 +1293,7 @@ Class restartAction()
 	[self removeChild:background cleanup:YES];
 	background = nil;
 	
-	self.emitter = [[CCParticleSystemQuad alloc] initWithTotalParticles:100];
+	emitter_ = [[CCParticleSystemQuad alloc] initWithTotalParticles:100];
 	[self addChild:emitter_ z:10];
 	emitter_.duration = kCCParticleDurationInfinity;
 	
