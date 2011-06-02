@@ -313,7 +313,7 @@
 
 //	[[UIApplication sharedApplication] setStatusBarOrientation: UIInterfaceOrientationLandscapeLeft animated:NO];
 
-	self.globalScores = [[NSMutableArray alloc] initWithCapacity:50];
+	globalScores = [[NSMutableArray alloc] initWithCapacity:50];
 	category = kCategoryEasy;
 	world = kAll;
 	
