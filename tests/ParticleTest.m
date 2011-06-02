@@ -1124,7 +1124,7 @@ Class restartAction()
 	[self removeChild:background cleanup:YES];
 	background = nil;
 	
-	self.emitter = [[CCParticleSystemQuad alloc] initWithTotalParticles:200];
+	emitter_ = [[CCParticleSystemQuad alloc] initWithTotalParticles:200];
 	[self addChild:emitter_ z:10];
 
 	emitter_.texture = [[CCTextureCache sharedTextureCache] addImage: @"stars-grayscale.png"];
