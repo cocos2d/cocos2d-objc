@@ -35,3 +35,8 @@
 {}
 @end
 
+@interface SpriteProgressBarTintAndFade : SpriteDemo
+{}
+@end
+
+
