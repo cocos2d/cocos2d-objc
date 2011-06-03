@@ -53,8 +53,8 @@ typedef enum {
 	CGPoint				barChangeRate_;
 	BOOL				reverseDirection_;
 }
-@property ccColor3B color;
-@property GLubyte opacity;
+@property (nonatomic) ccColor3B color;
+@property (nonatomic) GLubyte opacity;
 /**	Change the percentage to change progress. */
 @property (nonatomic, readwrite) CCProgressTimerType type;
 @property (nonatomic, readwrite) BOOL reverseDirection;

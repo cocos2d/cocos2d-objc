@@ -14,6 +14,7 @@ static NSString *transitions[] = {
 	@"SpriteProgressToHorizontal",
 	@"SpriteProgressToVertical",
 	@"SpriteProgressBarVarious",
+	@"SpriteProgressBarTintAndFade",
 	
 };
 
@@ -279,6 +280,66 @@ Class restartAction()
 }
 @end
 
+@implementation SpriteProgressBarTintAndFade
+-(void) onEnter
+{
+	[super onEnter];
+	
+	CGSize s = [[CCDirector sharedDirector] winSize];
+	
+	CCProgressTo *to = [CCProgressTo actionWithDuration:6 percent:100];
+    CCAction *tint = [CCSequence actions:[CCTintTo actionWithDuration:1 red:255 green:0 blue:0], 
+                      [CCTintTo actionWithDuration:1 red:0 green:255 blue:0],
+                      [CCTintTo actionWithDuration:1 red:0 green:0 blue:255], nil];
+    CCAction *fade = [CCSequence actions:[CCFadeTo actionWithDuration:1.f opacity:0],
+                      [CCFadeTo actionWithDuration:1.f opacity:255], nil];
+	
+	CCProgressTimer *left = [CCProgressTimer progressWithSprite:[CCSprite spriteWithFile:@"grossinis_sister1.png"]];
+	left.type = kCCProgressTimerTypeBar;
+	
+	//	Setup for a bar starting from the bottom since the midpoint is 0 for the y
+	left.midpoint = ccp(.5f, .5f);
+	//	Setup for a vertical bar since the bar change rate is 0 for x meaning no horizontal change
+	left.barChangeRate = ccp(1,0);
+	[self addChild:left];
+	[left setPosition:ccp(100, s.height/2)];
+	[left runAction:[CCRepeatForever actionWithAction:[[to copy]autorelease]]];
+	[left runAction:[CCRepeatForever actionWithAction:[[tint copy]autorelease]]];
+    
+    [left addChild:[CCLabelTTF labelWithString:@"Tint" fontName:@"Marker Felt" fontSize:20.f]];
+	
+	CCProgressTimer *middle = [CCProgressTimer progressWithSprite:[CCSprite spriteWithFile:@"grossinis_sister2.png"]];
+	middle.type = kCCProgressTimerTypeBar;
+	//	Setup for a bar starting from the bottom since the midpoint is 0 for the y
+	middle.midpoint = ccp(.5f, .5f);
+	//	Setup for a vertical bar since the bar change rate is 0 for x meaning no horizontal change
+	middle.barChangeRate = ccp(1, 1);
+	[self addChild:middle];
+	[middle setPosition:ccp(s.width/2, s.height/2)];
+	[middle runAction:[CCRepeatForever actionWithAction:[[to copy]autorelease]]];
+	[middle runAction:[CCRepeatForever actionWithAction:[[fade copy]autorelease]]];
+    
+    [middle addChild:[CCLabelTTF labelWithString:@"Fade" fontName:@"Marker Felt" fontSize:20.f]];
+	CCProgressTimer *right = [CCProgressTimer progressWithSprite:[CCSprite spriteWithFile:@"grossinis_sister2.png"]];
+	right.type = kCCProgressTimerTypeBar;
+	//	Setup for a bar starting from the bottom since the midpoint is 0 for the y
+	right.midpoint = ccp(.5f, .5f);
+	//	Setup for a vertical bar since the bar change rate is 0 for x meaning no horizontal change
+	right.barChangeRate = ccp(0, 1);
+	[self addChild:right];
+	[right setPosition:ccp(s.width-100, s.height/2)];
+	[right runAction:[CCRepeatForever actionWithAction:[[to copy]autorelease]]];
+	[right runAction:[CCRepeatForever actionWithAction:[[tint copy]autorelease]]];
+	[right runAction:[CCRepeatForever actionWithAction:[[fade copy]autorelease]]];
+    
+    [right addChild:[CCLabelTTF labelWithString:@"Tint and Fade" fontName:@"Marker Felt" fontSize:20.f]];
+}
+
+-(NSString *) title
+{
+	return @"ProgressTo Bar Mid";
+}
+@end
 
 #pragma mark -
 #pragma mark AppController
