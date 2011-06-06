@@ -240,6 +240,8 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Author of sample "CocosDenshion - Fancy Rat Metering Demo"
 		Added BarMid to CCProgressTo
 		CCProgressTimer: Improved API 
+		CCProgressTimer: Works with Tint and opacity
+		Added Tint + opacity test cases for CCProgressTimer
 	* Leonardo Kasperavičius (http://www.instantgames.com.br/):
 		original author of QuadParticleSystem class
 		Author of the original Bezier action
