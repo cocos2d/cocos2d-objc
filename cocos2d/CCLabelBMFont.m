@@ -441,7 +441,12 @@ typedef struct _KerningHashElement
 
 +(id) labelWithString:(NSString *)string fntFile:(NSString *)fntFile
 {
-	return [[[self alloc] initWithString:string fntFile:fntFile] autorelease];
+	return [[[self alloc] initWithString:string width:-1 alignment:CCTextAlignmentLeft fntFile:fntFile] autorelease];
+}
+
++(id) labelWithString:(NSString *)string width:(int)width alignment:(CCTextAlignment)alignment fntFile:(NSString *)fntFile
+{
+	return [[[self alloc] initWithString:string width:(int)width alignment:alignment fntFile:fntFile] autorelease];
 }
 
 // XXX - deprecated - Will be removed in 1.0.1
@@ -450,9 +455,11 @@ typedef struct _KerningHashElement
 	return [self labelWithString:string fntFile:fntFile];
 }
 
--(id) initWithString:(NSString*)theString fntFile:(NSString*)fntFile
+-(id) initWithString:(NSString*)theString width:(int)width alignment:(CCTextAlignment)alignment fntFile:(NSString*)fntFile
 {	
-	
+	lineWidth_ = width;
+    alignment_ = alignment;
+    
 	[configuration_ release]; // allow re-init
 
 	configuration_ = FNTConfigLoadFile(fntFile);
@@ -515,22 +522,91 @@ typedef struct _KerningHashElement
 	NSUInteger totalHeight = 0;
 	
 	NSUInteger quantityOfLines = 1;
+    int lengthOfLines[kCCBMFontMaxLines];
+    int currentLineLength = 0;
+    int currentLine = 0;
+
+    ccBMFontDef fontDef;
+    
+    int xOffset = 0;    
+
+	// quantity of lines NEEDS to be calculated before parsing the lines,
+	// since the Y position needs to be calcualted before hand.
+    // 
+    // Calculate dimensions of the string, add line breaks if line width
+    // is given.
+	for(NSUInteger i=0; i < [string_ length];i++) {
+		unichar c = [string_ characterAtIndex:i];
+		if( c=='\n') {
+            nextFontPositionX = 0;
+            prev = -1;
+            lengthOfLines[quantityOfLines-1] = currentLineLength;
+            if (longestLine < currentLineLength) longestLine = currentLineLength;
+			quantityOfLines++;
+        } else {
+            nextFontPositionX += configuration_->BMFontArray_[c].xAdvance + [self kerningAmountForFirst:prev second:c];            
+            prev = c;
+            if (lineWidth_ > 0 && nextFontPositionX >= lineWidth_)
+            {
+                NSUInteger j = i-1;
+                int tempLineLength = currentLineLength;
+                while (j > 0) {
+                    c = [string_ characterAtIndex:j];
+                    currentLineLength -= configuration_->BMFontArray_[c].xAdvance + [self kerningAmountForFirst:c second:prev];
+                    if (c == '\n') break;
+                    // Different kind of hyphens, including soft hyphen that can be used
+                    // to split the words.
+                    if (c == ' ' || c == '-' || c == 0x00AD || c == 0x2010 || c == 0x2011 || c == 0x2043)
+                    {
+                        [string_ replaceCharactersInRange:NSMakeRange(j,1) withString:@"\n"];
+                        i = j;
+                        break;
+                    }
+                    prev = c;
+                    j--;
+                }
+                // When word cannot be split because it's longer than the line width
+                // then it needs to be cut at the last character that fits the line.
+                if (j == 0 || c == '\n') {
+                    [string_ insertString:@"\n" atIndex:i];
+                    currentLineLength = tempLineLength;
+                }
+                // Exact copy of the code above if (c=='\n') ... should be made smarter.
+                nextFontPositionX = 0;
+                prev = -1;
+                lengthOfLines[quantityOfLines-1] = currentLineLength;
+                if (longestLine < currentLineLength) longestLine = currentLineLength;
+                quantityOfLines++;
+            } else {
+                currentLineLength = nextFontPositionX;
+            }
+        }
+	}
+
+    // Exact copy of the code above if (c=='\n') ... should be made smarter.
+    nextFontPositionX = 0;
+    prev = -1;
+    lengthOfLines[quantityOfLines-1] = currentLineLength;
+    if (longestLine < currentLineLength) longestLine = currentLineLength;
 
 	NSUInteger stringLen = [string_ length];
 	if( ! stringLen )
-		return;
-
-	// quantity of lines NEEDS to be calculated before parsing the lines,
-	// since the Y position needs to be calcualted before hand
-	for(NSUInteger i=0; i < stringLen-1;i++) {
-		unichar c = [string_ characterAtIndex:i];
-		if( c=='\n')
-			quantityOfLines++;
-	}
-	
+		return;    
+    
 	totalHeight = configuration_->commonHeight_ * quantityOfLines;
 	nextFontPositionY = -(configuration_->commonHeight_ - configuration_->commonHeight_*quantityOfLines);
 	
+    // First line xOffset
+    if (alignment_ != CCTextAlignmentLeft) {
+        if (alignment_ == CCTextAlignmentCenter) {
+            xOffset = (longestLine - lengthOfLines[currentLine])/2;
+        } else if (alignment_ == CCTextAlignmentRight) {
+            xOffset = longestLine - lengthOfLines[currentLine];
+        } else {
+            NSAssert(NO, @"BitmapFontAtlas: Not supported alignment");
+        }
+    }
+    
 	for(NSUInteger i=0; i<stringLen; i++) {
 		unichar c = [string_ characterAtIndex:i];
 		NSAssert( c < kCCBMFontMaxChars, @"BitmapFontAtlas: character outside bounds");
@@ -538,12 +614,26 @@ typedef struct _KerningHashElement
 		if (c == '\n') {
 			nextFontPositionX = 0;
 			nextFontPositionY -= configuration_->commonHeight_;
+            prev = -1;
+            currentLine++;
+
+            // Copy of the code above, should be made smarter
+            if (alignment_ != CCTextAlignmentLeft) {
+                if (alignment_ == CCTextAlignmentCenter) {
+                    xOffset = (longestLine - lengthOfLines[currentLine])/2;
+                } else if (alignment_ == CCTextAlignmentRight) {
+                    xOffset = longestLine - lengthOfLines[currentLine];
+                } else {
+                    NSAssert(NO, @"BitmapFontAtlas: Not supported alignment");
+                }
+            }
+
 			continue;
 		}
 
 		kerningAmount = [self kerningAmountForFirst:prev second:c];
 		
-		ccBMFontDef fontDef = configuration_->BMFontArray_[c];
+		fontDef = configuration_->BMFontArray_[c];
 		
 		CGRect rect = fontDef.rect;
 		
@@ -565,7 +655,8 @@ typedef struct _KerningHashElement
 		}
 		
 		float yOffset = configuration_->commonHeight_ - fontDef.yOffset;
-		fontChar.positionInPixels = ccp( (float)nextFontPositionX + fontDef.xOffset + fontDef.rect.size.width*0.5f + kerningAmount,
+        
+		fontChar.positionInPixels = ccp( (float)nextFontPositionX + fontDef.xOffset + fontDef.rect.size.width*0.5f + kerningAmount + xOffset,
 								(float)nextFontPositionY + yOffset - rect.size.height*0.5f );
 
 		// update kerning
@@ -582,8 +673,8 @@ typedef struct _KerningHashElement
 		if( opacity_ != 255 )
 			[fontChar setOpacity: opacity_];
 
-		if (longestLine < nextFontPositionX)
-			longestLine = nextFontPositionX;
+//		if (longestLine < nextFontPositionX)
+//			longestLine = nextFontPositionX;
 	}
 
 	tmpSize.width = longestLine;
@@ -596,7 +687,7 @@ typedef struct _KerningHashElement
 - (void) setString:(NSString*) newString
 {	
 	[string_ release];
-	string_ = [newString copy];
+	string_ = [newString mutableCopy];
 
 	CCNode *child;
 	CCARRAY_FOREACH(children_, child)

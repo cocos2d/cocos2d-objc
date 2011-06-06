@@ -13,6 +13,7 @@ static int sceneIdx=-1;
 static NSString *transitions[] = {
 	
 	@"LabelAtlasTest",
+	@"BitmapFontMultiLine",    
 	@"LabelAtlasColorTest",
 	@"Atlas3",
 	@"Atlas4",
@@ -20,7 +21,6 @@ static NSString *transitions[] = {
 	@"Atlas6",
 	@"AtlasBitmapColor",
 	@"AtlasFastBitmap",
-	@"BitmapFontMultiLine",
 	@"LabelsEmpty",
 	@"LabelBMFontHD",
 	@"LabelAtlasHD",
@@ -40,6 +40,8 @@ enum {
 	kTagBitmapAtlas1 = 1,
 	kTagBitmapAtlas2 = 2,
 	kTagBitmapAtlas3 = 3,
+    kTagBitmapAtlas4 = 4,
+    kTagBitmapAtlas5 = 5,
 };
 
 enum {
@@ -731,7 +733,10 @@ Class restartAction()
 		
 		
 		// Center
-		CCLabelBMFont *label2 = [CCLabelBMFont labelWithString:@"Multi line\nCenter" fntFile:@"bitmapFontTest3.fnt"];
+		CCLabelBMFont *label2 = [CCLabelBMFont labelWithString:@"Multi line autowrap center align lorem ipsum foobar withonelongwordthatcannotbewrapped"
+                                                         width:250
+                                                     alignment:CCTextAlignmentCenter
+                                                       fntFile:@"bitmapFontTest3.fnt"];
 		label2.anchorPoint = ccp(0.5f, 0.5f);
 		[self addChild:label2 z:0 tag:kTagBitmapAtlas2];
 
@@ -746,12 +751,33 @@ Class restartAction()
 
 		s = [label3 contentSize];
 		NSLog(@"content size: %.2fx%.2f", s.width, s.height);
+        
+        CCLabelBMFont *label4 = [CCLabelBMFont labelWithString:@"Multi line autowrap left align lorem ipsum foobar with\u00adone\u00adlong\u00adword\u00adthat\u00adhas\u00adsoft\u00adhyphen"
+                                                         width:250
+                                                     alignment:CCTextAlignmentLeft
+                                                       fntFile:@"bitmapFontTest3.fnt"];
+		label4.anchorPoint = ccp(0,1);
+		[self addChild:label4 z:0 tag:kTagBitmapAtlas4];
+        
+		s = [label4 contentSize];
+		NSLog(@"content size: %.2fx%.2f", s.width, s.height);        
 
-		
+        CCLabelBMFont *label5 = [CCLabelBMFont labelWithString:@"Multi line autowrap right align with-one-long-word-with-dashes"
+                                                         width:250
+                                                     alignment:CCTextAlignmentRight
+                                                       fntFile:@"bitmapFontTest3.fnt"];
+		label5.anchorPoint = ccp(1,0);
+		[self addChild:label5 z:0 tag:kTagBitmapAtlas5];
+        
+		s = [label5 contentSize];
+		NSLog(@"content size: %.2fx%.2f", s.width, s.height); 		
+        
 		s = [[CCDirector sharedDirector] winSize];	
 		label1.position = ccp( 0,0);
 		label2.position = ccp( s.width/2, s.height/2);
 		label3.position = ccp( s.width, s.height);
+        label4.position = ccp( 0, s.height);
+		label5.position = ccp( s.width, 0);        
 	}
 	
 	return self;

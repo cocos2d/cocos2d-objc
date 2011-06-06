@@ -69,10 +69,8 @@ typedef struct _BMFontPadding {
 	int bottom;
 } ccBMFontPadding;
 
-enum {
-	// how many characters are supported
-	kCCBMFontMaxChars = 2048, //256,
-};
+#define kCCBMFontMaxChars 65536
+#define kCCBMFontMaxLines 256
 
 /** CCBMFontConfiguration has parsed configuration of the the .fnt file
  @since v0.8
@@ -136,7 +134,7 @@ enum {
 @interface CCLabelBMFont : CCSpriteBatchNode <CCLabelProtocol, CCRGBAProtocol>
 {
 	// string to render
-	NSString		*string_;
+	NSMutableString     *string_;
 	
 	CCBMFontConfiguration	*configuration_;
 
@@ -144,6 +142,9 @@ enum {
 	GLubyte		opacity_;
 	ccColor3B	color_;
 	BOOL opacityModifyRGB_;
+    
+    int lineWidth_;
+    CCTextAlignment alignment_;
 }
 
 /** Purges the cached data.
@@ -160,6 +161,8 @@ enum {
 
 /** creates a BMFont label with an initial string and the FNT file */
 +(id) labelWithString:(NSString*)string fntFile:(NSString*)fntFile;
++(id) labelWithString:(NSString*)string width:(int)width alignment:(CCTextAlignment)alignment fntFile:(NSString*)fntFile;
+
 
 /** creates a BMFont label with an initial string and the FNT file
  @deprecated Will be removed in 1.0.1. Use "labelWithString" instead.
@@ -167,7 +170,7 @@ enum {
 +(id) bitmapFontAtlasWithString:(NSString*)string fntFile:(NSString*)fntFile DEPRECATED_ATTRIBUTE;
 
 /** init a BMFont label with an initial string and the FNT file */
--(id) initWithString:(NSString*)string fntFile:(NSString*)fntFile;
+-(id) initWithString:(NSString*)string width:(int)width alignment:(CCTextAlignment)alignment fntFile:(NSString*)fntFile;
 
 /** updates the font chars based on the string to render */
 -(void) createFontChars;
