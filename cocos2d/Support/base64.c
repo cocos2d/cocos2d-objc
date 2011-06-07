@@ -7,6 +7,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "base64.h"
+
+// making llvm 3.0 happy
+int _base64Decode( unsigned char *input, unsigned int input_len, unsigned char *output, unsigned int *output_len );
+
 unsigned char alphabet[64] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
 int _base64Decode( unsigned char *input, unsigned int input_len, unsigned char *output, unsigned int *output_len )
