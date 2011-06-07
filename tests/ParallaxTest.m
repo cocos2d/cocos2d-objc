@@ -21,6 +21,10 @@ static NSString *transitions[] = {
 			@"Parallax2",
 };
 
+Class nextAction(void);
+Class backAction(void);
+Class restartAction(void);
+
 Class nextAction()
 {
 	

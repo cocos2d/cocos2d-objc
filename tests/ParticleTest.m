@@ -57,6 +57,10 @@ static NSString *transitions[] = {
 	@"Issue870",
 };
 
+Class nextAction(void);
+Class backAction(void);
+Class restartAction(void);
+
 Class nextAction()
 {
 	

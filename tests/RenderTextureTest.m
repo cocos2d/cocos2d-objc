@@ -15,6 +15,10 @@ static NSString *tests[] = {
 	@"RenderTextureZbuffer",
 };
 
+Class nextAction(void);
+Class backAction(void);
+Class restartAction(void);
+
 Class nextAction()
 {
 	

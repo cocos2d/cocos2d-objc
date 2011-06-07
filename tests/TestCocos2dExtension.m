@@ -9,12 +9,16 @@
 // local import
 #import "TestCocos2dExtension.h"
 
+Class nextAction(void);
+Class backAction(void);
+Class restartAction(void);
+
 static int sceneIdx=-1;
 static NSString *transitions[] = {
 	@"Test1",
 };
 
-Class nextAction()
+Class nextAction(void)
 {
 	
 	sceneIdx++;
@@ -24,7 +28,7 @@ Class nextAction()
 	return c;
 }
 
-Class backAction()
+Class backAction(void)
 {
 	sceneIdx--;
 	int total = ( sizeof(transitions) / sizeof(transitions[0]) );
@@ -36,7 +40,7 @@ Class backAction()
 	return c;
 }
 
-Class restartAction()
+Class restartAction(void)
 {
 	NSString *r = transitions[sceneIdx];
 	Class c = NSClassFromString(r);
