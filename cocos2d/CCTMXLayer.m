@@ -437,8 +437,6 @@
 
 #pragma mark CCTMXLayer - atlasIndex and Z
 
-int compareInts (const void * a, const void * b); // Makes llvm 3.0 happy
-
 int compareInts (const void * a, const void * b)
 {
 	return ( *(int*)a - *(int*)b );

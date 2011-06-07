@@ -11,12 +11,6 @@
 
 #import "TGAlib.h"
 
-
-// Making llvm 3.0 happy
-void tgaLoadRLEImageData(FILE *file, tImageTGA *info);
-void tgaFlipImage( tImageTGA *info );
-
-
 // load the image header fields. We only keep those that matter!
 void tgaLoadHeader(FILE *file, tImageTGA *info) {
 	unsigned char cGarbage;

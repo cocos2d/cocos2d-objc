@@ -8,7 +8,7 @@
 	UIWindow *window;
 }
 
-@property (nonatomic, readonly) UIWindow *window;
+@property (nonatomic, retain) UIWindow *window;
 
 @end
 
