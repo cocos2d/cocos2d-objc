@@ -27,6 +27,8 @@
 #define kBuffSize (4096)
 #define kSoundReferenceDistance 20.0f
 
+void* MyGetOpenALAudioData(CFURLRef inFileURL, ALsizei *outDataSize, ALenum *outDataFormat, ALsizei *outSampleRate);
+
 void* MyGetOpenALAudioData(CFURLRef inFileURL, ALsizei *outDataSize, ALenum *outDataFormat, ALsizei *outSampleRate)
 {
 	OSStatus						err = noErr;	

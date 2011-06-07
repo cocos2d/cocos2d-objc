@@ -52,6 +52,8 @@
 #import <OpenAL/alc.h>
 #import <AudioToolbox/AudioToolbox.h>
 
+void TeardownOpenAL(void);
+
 void TeardownOpenAL()
 {
     ALCcontext	*context = NULL;

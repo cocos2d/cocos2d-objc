@@ -29,6 +29,8 @@
 #import "ccMacros.h"
 
 // free function used to sort
+NSInteger alphabeticSort(id string1, id string2, void *reverse);
+
 NSInteger alphabeticSort(id string1, id string2, void *reverse)
 {
     if ((NSInteger *)reverse == NO)
