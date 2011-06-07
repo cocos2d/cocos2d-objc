@@ -124,23 +124,17 @@ Class restartAction()
 
 @interface CCNode ()
 {
-	int	newIvar_;
+	// It is not possible to add new ivars to existing classes.
+//    int newIvar;
 }
--(void) testExtensionMethod;
+-(void)testExtensionMethod;
 @end
 
-@implementation CCNode (ExtensionTest)
--(void) testExtensionMethod
+@implementation CCNode (Extension)
+-(void)testExtensionMethod
 {
-	NSLog(@"called %@.", NSStringFromSelector(_cmd) );
-}
--(void) setNewIvar:(int)i
-{
-	newIvar_ = i;
-}
--(int) newIvar
-{
-	return newIvar_;
+//	newIvar++;
+    NSLog(@"got, not called %@! Selectors are essentially messages, not methods; thus they can be sent/received, never called!", NSStringFromSelector(_cmd));
 }
 @end
 
@@ -158,9 +152,9 @@ Class restartAction()
 		[self addChild:sprite];
 		
 		[sprite testExtensionMethod];
-		[sprite setNewIvar:10];
-		
-		NSLog(@"Sprite newIvar: %d", [sprite newIvar]);
+//		[sprite setExtIvar:10];
+//		
+//		NSLog(@"Sprite newIvar: %d", [sprite extIvar]);
 	}
 	
 	return self;
