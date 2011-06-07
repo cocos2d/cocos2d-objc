@@ -60,6 +60,10 @@ static NSString *transitions[] = {
 
 #pragma mark Callbacks
 
+Class nextAction(void);
+Class backAction(void);
+Class restartAction(void);
+
 Class nextAction()
 {
 

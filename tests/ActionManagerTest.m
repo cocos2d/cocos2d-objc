@@ -18,6 +18,10 @@ enum {
 	kTagSequence,
 };
 
+Class nextAction(void);
+Class backAction(void);
+Class restartAction(void);
+
 static int sceneIdx=-1;
 static NSString *transitions[] = {
 			@"CrashTest",
