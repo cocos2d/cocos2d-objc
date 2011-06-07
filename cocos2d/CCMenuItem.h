@@ -41,7 +41,7 @@
  */
 @interface CCMenuItem : CCNode
 {
-	NSInvocation *invocation;
+	NSInvocation *invocation_;
 #if NS_BLOCKS_AVAILABLE
 	// used for menu items using a block
 	void (^block_)(id sender);
