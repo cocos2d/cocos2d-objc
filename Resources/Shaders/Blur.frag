@@ -10,7 +10,7 @@ varying vec2 v_texCoord;
 uniform sampler2D u_texture;
 
 uniform vec2 blurSize;
-uniform vec4 subtract;
+uniform vec4 substract;
 
 void main() {
 	vec4 sum = vec4(0.0);
@@ -24,6 +24,6 @@ void main() {
 	sum += texture2D(u_texture, v_texCoord + 3.0 * blurSize) * 0.09;
 	sum += texture2D(u_texture, v_texCoord + 4.0 * blurSize) * 0.05;
 
-	gl_FragColor = (sum - subtract) * v_fragmentColor;
+	gl_FragColor = (sum - substract) * v_fragmentColor;
 }
 
