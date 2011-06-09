@@ -180,6 +180,10 @@ static NSString *transitions[] = {
 	@"CCTransitionSlideInB",
 };
 
+Class nextTransition(void);
+Class backTransition(void);
+Class restartTransition(void);
+
 Class nextTransition()
 {	
 	// HACK: else NSClassFromString will fail
@@ -470,7 +474,7 @@ Class restartTransition()
 	// On the other hand "Flip" transitions doesn't work with DepthBuffer > 0
 	EAGLView *glView = [EAGLView viewWithFrame:[window bounds]
 								   pixelFormat:kEAGLColorFormatRGBA8
-								   depthFormat:0 // GL_DEPTH_COMPONENT24_OES
+								   depthFormat:0 //GL_DEPTH_COMPONENT24_OES
 						];
 	[glView setMultipleTouchEnabled:YES];
 	

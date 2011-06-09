@@ -44,7 +44,7 @@ enum {
 	
 	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MyIdentifier];
 	if (cell == nil) {
-		cell = [[[UITableViewCell alloc] initWithFrame:CGRectZero reuseIdentifier:MyIdentifier] autorelease];
+		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:MyIdentifier] autorelease];
 		
 		// Position
 		idx = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 24, kCellHeight-2)];

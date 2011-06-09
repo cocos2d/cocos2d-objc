@@ -2,6 +2,7 @@
  * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
  * Copyright (c) 2008-2010 Ricardo Quesada
+ * Copyright (c) 2011 Zynga Inc.
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -207,18 +208,18 @@
  */ 
 #define CC_RETINA_DISPLAY_FILENAME_SUFFIX @"-hd"
 
-/** @def CC_USE_RGBA32_LABELS_ON_NEON_ARCH
- If enabled, it will use RGBA8888 (32-bit textures) on Neon devices for CCLabelTTF objects.
+/** @def CC_USE_LA88_LABELS_ON_NEON_ARCH
+ If enabled, it will use LA88 (16-bit textures) on Neon devices for CCLabelTTF objects.
  If it is disabled, or if it is used on another architecture it will use A8 (8-bit textures).
- On Neon devices, RGBA8888 textures are 6% faster than A8 textures, but then will consule 4x memory.
+ On Neon devices, LA88 textures are 6% faster than A8 textures, but then will consume 2x memory.
  
  This feature is disabled by default.
  
  Platforms: Only used on ARM Neon architectures like iPhone 3GS or newer and iPad.
- 
+
  @since v0.99.5
  */
-#define CC_USE_RGBA32_LABELS_ON_NEON_ARCH 0
+#define CC_USE_LA88_LABELS_ON_NEON_ARCH 0
 
 /** @def CC_SPRITE_DEBUG_DRAW
  If enabled, all subclasses of CCSprite will draw a bounding box
@@ -229,23 +230,23 @@
 #define CC_SPRITE_DEBUG_DRAW 0
 
 /** @def CC_SPRITEBATCHNODE_DEBUG_DRAW
- If enabled, all subclasses of CCSprite that are rendered using an CCSpriteSheet draw a bounding box.
+ If enabled, all subclasses of CCSprite that are rendered using an CCSpriteBatchNode draw a bounding box.
  Useful for debugging purposes only. It is recommened to leave it disabled.
  
  To enable set it to a value different than 0. Disabled by default.
  */
 #define CC_SPRITEBATCHNODE_DEBUG_DRAW 0
 
-/** @def CC_BITMAPFONTATLAS_DEBUG_DRAW
- If enabled, all subclasses of BitmapFontAtlas will draw a bounding box
+/** @def CC_LABELBMFONT_DEBUG_DRAW
+ If enabled, all subclasses of CCLabelBMFont will draw a bounding box
  Useful for debugging purposes only. It is recommened to leave it disabled.
  
  To enable set it to a value different than 0. Disabled by default.
  */
-#define CC_BITMAPFONTATLAS_DEBUG_DRAW 0
+#define CC_LABELBMFONT_DEBUG_DRAW 0
 
-/** @def CC_LABELATLAS_DEBUG_DRAW
- If enabled, all subclasses of LabeltAtlas will draw a bounding box
+/** @def CC_LABELBMFONT_DEBUG_DRAW
+ If enabled, all subclasses of CCLabeltAtlas will draw a bounding box
  Useful for debugging purposes only. It is recommened to leave it disabled.
  
  To enable set it to a value different than 0. Disabled by default.
@@ -260,16 +261,6 @@
  To enable set it to a value different than 0. Disabled by default.
  */
 #define CC_ENABLE_PROFILERS 0
-
-/** @def CC_COMPATIBILITY_WITH_0_8
- Enable it if you want to support v0.8 compatbility.
- Basically, classes without namespaces will work.
- It is recommended to disable compatibility once you have migrated your game to v0.9 to avoid class name polution
- 
- To enable set it to a value different than 0. Disabled by default.
- */
-#define CC_COMPATIBILITY_WITH_0_8 0
-
 
 //
 // DON'T edit this macro.

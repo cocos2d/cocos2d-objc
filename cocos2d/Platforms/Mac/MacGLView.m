@@ -2,6 +2,7 @@
  * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
  * Copyright (c) 2010 Ricardo Quesada
+ * Copyright (c) 2011 Zynga Inc.
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -71,7 +72,7 @@
 	if (!pixelFormat)
 		NSLog(@"No OpenGL pixel format");
 	
-	if (self = [super initWithFrame:frameRect pixelFormat:[pixelFormat autorelease]]) {
+	if( (self = [super initWithFrame:frameRect pixelFormat:[pixelFormat autorelease]]) ) {
 		
 		if( context )
 			[self setOpenGLContext:context];

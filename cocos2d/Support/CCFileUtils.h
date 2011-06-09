@@ -2,6 +2,7 @@
  * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
  * Copyright (c) 2008-2010 Ricardo Quesada
+ * Copyright (c) 2011 Zynga Inc.
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -49,7 +50,7 @@
  @returns the size of the allocated buffer
  @since v0.99.5
  */
-int ccLoadFileIntoMemory(const char *filename, unsigned char **out);
+NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out);
 
 
 /** removes the HD suffix from a path

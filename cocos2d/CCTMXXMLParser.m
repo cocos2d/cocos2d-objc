@@ -2,6 +2,7 @@
  * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
  * Copyright (c) 2009-2010 Ricardo Quesada
+ * Copyright (c) 2011 Zynga Inc.
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -296,11 +297,14 @@
 			
 			if( [compression isEqualToString:@"gzip"] )
 				layerAttribs |= TMXLayerAttribGzip;
-			
-			NSAssert( !compression || [compression isEqualToString:@"gzip"], @"TMX: unsupported compression method" );
+
+			else if( [compression isEqualToString:@"zlib"] )
+				layerAttribs |= TMXLayerAttribZlib;
+
+			NSAssert( !compression || [compression isEqualToString:@"gzip"] || [compression isEqualToString:@"zlib"], @"TMX: unsupported compression method" );
 		}
 		
-		NSAssert( layerAttribs != TMXLayerAttribNone, @"TMX tile map: Only base64 and/or gzip maps are supported" );
+		NSAssert( layerAttribs != TMXLayerAttribNone, @"TMX tile map: Only base64 and/or gzip/zlib maps are supported" );
 		
 	} else if([elementName isEqualToString:@"object"]) {
 	
@@ -387,15 +391,22 @@
 		CCTMXLayerInfo *layer = [layers_ lastObject];
 		
 		unsigned char *buffer;
-		len = base64Decode((unsigned char*)[currentString UTF8String], [currentString length], &buffer);
+		len = base64Decode((unsigned char*)[currentString UTF8String], (unsigned int) [currentString length], &buffer);
 		if( ! buffer ) {
 			CCLOG(@"cocos2d: TiledMap: decode data error");
 			return;
 		}
 		
-		if( layerAttribs & TMXLayerAttribGzip ) {
+		if( layerAttribs & (TMXLayerAttribGzip | TMXLayerAttribZlib) ) {
 			unsigned char *deflated;
-			ccInflateMemory(buffer, len, &deflated);
+			CGSize s = [layer layerSize];
+			int sizeHint = s.width * s.height * sizeof(uint32_t);
+
+			int inflatedLen = ccInflateMemoryWithHint(buffer, len, &deflated, sizeHint);
+			NSAssert( inflatedLen == sizeHint, @"CCTMXXMLParser: Hint failed!");
+			
+			inflatedLen = (int)&inflatedLen; // XXX: to avoid warings in compiler
+
 			free( buffer );
 			
 			if( ! deflated ) {

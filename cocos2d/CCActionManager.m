@@ -1,8 +1,10 @@
 /*
  * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
- * Copyright (c) 2008-2010 Ricardo Quesada
  * Copyright (c) 2009 Valentin Milea
+ *
+ * Copyright (c) 2008-2010 Ricardo Quesada
+ * Copyright (c) 2011 Zynga Inc.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -132,12 +134,6 @@ static CCActionManager *sharedManager_ = nil;
 
 #pragma mark ActionManager - Pause / Resume
 
-// XXX DEPRECATED. REMOVE IN 1.0
--(void) pauseAllActionsForTarget:(id)target
-{
-	[self pauseTarget:target];
-}
-
 -(void) pauseTarget:(id)target
 {
 	tHashElement *element = NULL;
@@ -146,12 +142,6 @@ static CCActionManager *sharedManager_ = nil;
 		element->paused = YES;
 //	else
 //		CCLOG(@"cocos2d: pauseAllActions: Target not found");
-}
-
-// XXX DEPRECATED. REMOVE IN 1.0
--(void) resumeAllActionsForTarget:(id)target
-{
-	[self resumeTarget:target];
 }
 
 -(void) resumeTarget:(id)target
@@ -243,7 +233,7 @@ static CCActionManager *sharedManager_ = nil;
 //	}
 }
 
--(void) removeActionByTag:(int) aTag target:(id)target
+-(void) removeActionByTag:(NSInteger)aTag target:(id)target
 {
 	NSAssert( aTag != kCCActionTagInvalid, @"Invalid tag");
 	NSAssert( target != nil, @"Target should be ! nil");
@@ -268,7 +258,7 @@ static CCActionManager *sharedManager_ = nil;
 
 #pragma mark ActionManager - get
 
--(CCAction*) getActionByTag:(int)aTag target:(id)target
+-(CCAction*) getActionByTag:(NSInteger)aTag target:(id)target
 {
 	NSAssert( aTag != kCCActionTagInvalid, @"Invalid tag");
 
@@ -293,7 +283,7 @@ static CCActionManager *sharedManager_ = nil;
 	return nil;
 }
 
--(int) numberOfRunningActionsInTarget:(id) target
+-(NSUInteger) numberOfRunningActionsInTarget:(id) target
 {
 	tHashElement *element = NULL;
 	HASH_FIND_INT(targets, &target, element);

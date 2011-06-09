@@ -211,7 +211,7 @@ static CCTouchDispatcher *sharedDispatcher = nil;
 //
 // dispatch events
 //
--(void) touches:(NSSet*)touches withEvent:(UIEvent*)event withTouchType:(unsigned int)idx;
+-(void) touches:(NSSet*)touches withEvent:(UIEvent*)event withTouchType:(unsigned int)idx
 {
 	NSAssert(idx < 4, @"Invalid idx value");
 

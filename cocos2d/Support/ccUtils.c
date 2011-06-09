@@ -8,7 +8,7 @@
  */
 #include "ccUtils.h"
 
-unsigned int ccNextPOT(unsigned int x)
+unsigned long ccNextPOT(unsigned long x)
 {
     x = x - 1;
     x = x | (x >> 1);

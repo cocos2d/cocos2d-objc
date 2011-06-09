@@ -2,7 +2,8 @@
 // RenderTexture Demo
 // a cocos2d example
 //
-// Example by Jason Booth (slipster216)
+// Test #1 by Jason Booth (slipster216)
+// Test #3 by David Deaco (ddeaco)
 
 // cocos import
 #import "RenderTextureTest.h"
@@ -11,7 +12,12 @@ static int sceneIdx=-1;
 static NSString *tests[] = {	
 	@"RenderTextureSave",
 	@"RenderTextureIssue937",
+	@"RenderTextureZbuffer",
 };
+
+Class nextAction(void);
+Class backAction(void);
+Class restartAction(void);
 
 Class nextAction()
 {
@@ -138,7 +144,7 @@ Class restartAction()
 		
 		// note that the render texture is a CCNode, and contains a sprite of its texture for convience,
 		// so we can just parent it to the scene like any other CCNode
-		[self addChild:target z:1];
+		[self addChild:target z:-1];
 		
 		// create a brush image to draw into the texture with
 		brush = [[CCSprite spriteWithFile:@"fire.png"] retain];
@@ -152,9 +158,11 @@ Class restartAction()
 		
 		// Save Image menu
 		[CCMenuItemFont setFontSize:16];
-		CCMenuItem *item = [CCMenuItemFont itemFromString:@"Save Image" target:self selector:@selector(saveImage:)];
-		CCMenu *menu = [CCMenu menuWithItems:item, nil];
+		CCMenuItem *item1 = [CCMenuItemFont itemFromString:@"Save Image" target:self selector:@selector(saveImage:)];
+		CCMenuItem *item2 = [CCMenuItemFont itemFromString:@"Clear" target:self selector:@selector(clearImage:)];
+		CCMenu *menu = [CCMenu menuWithItems:item1, item2, nil];
 		[self addChild:menu];
+		[menu alignItemsVertically];
 		[menu setPosition:ccp(s.width-80, s.height-30)];
 	}
 	return self;
@@ -168,6 +176,11 @@ Class restartAction()
 -(NSString*) subtitle
 {
 	return @"Press 'Save Image' to create an snapshot of the render texture";
+}
+
+-(void) clearImage:(id)sender
+{
+	[target clear:CCRANDOM_0_1() g:CCRANDOM_0_1() b:CCRANDOM_0_1() a:CCRANDOM_0_1()];
 }
 
 -(void) saveImage:(id)sender
@@ -222,12 +235,13 @@ Class restartAction()
 			[brush setRotation:rand()%360];
 			float r = ((float)(rand()%50)/50.f) + 0.25f;
 			[brush setScale:r];
+			[brush setColor:ccc3(CCRANDOM_0_1()*127+128, 255, 255) ];
 			// Call visit to draw the brush, don't call draw..
 			[brush visit];
 		}
 	}
 	// finish drawing and return context back to the screen
-	[target end];
+	[target end];	
 }
 
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
@@ -263,6 +277,7 @@ Class restartAction()
 			[brush setRotation:rand()%360];
 			float r = ((float)(rand()%50)/50.f) + 0.25f;
 			[brush setScale:r];
+
 			// Call visit to draw the brush, don't call draw..
 			[brush visit];
 		}
@@ -276,7 +291,6 @@ Class restartAction()
 	return YES;
 	
 }
-
 #endif // __MAC_OS_X_VERSION_MAX_ALLOWED
 @end
 
@@ -304,9 +318,11 @@ Class restartAction()
 		CCLayerColor *background = [CCLayerColor layerWithColor:ccc4(200,200,200,255)];
 		[self addChild:background];
 		
+		// A1
 		CCSprite *spr_premulti = [CCSprite spriteWithFile:@"fire.png"];
 		[spr_premulti setPosition:ccp(16,48)];
 
+		// B1
 		CCSprite *spr_nonpremulti = [CCSprite spriteWithFile:@"fire_rgba8888.pvr"];
 		[spr_nonpremulti setPosition:ccp(16,16)];
 
@@ -318,7 +334,11 @@ Class restartAction()
 //		[[rend sprite] setBlendFunc:(ccBlendFunc) {GL_ONE, GL_ONE_MINUS_SRC_ALPHA}];
 
 		[rend begin];
+		
+		// A2
 		[spr_premulti visit];
+		
+		// B2
 		[spr_nonpremulti visit];
 		[rend end]; 
 		
@@ -347,8 +367,151 @@ Class restartAction()
 {
 	return @"All images should be equal...";
 }
-
 @end
+
+#pragma mark -
+#pragma mark RenderTextureZbuffer
+
+@implementation RenderTextureZbuffer
+
+-(id) init
+{
+	if( (self=[super init] )) {
+		self.isTouchEnabled = YES;
+		CGSize size = [[CCDirector sharedDirector] winSize];
+		CCLabelTTF *label = [CCLabelTTF labelWithString:@"vertexZ = 50" fontName:@"Marker Felt" fontSize:64];
+		label.position =  ccp( size.width /2 , size.height*0.25 );
+		[self addChild: label];
+		
+		CCLabelTTF *label2 = [CCLabelTTF labelWithString:@"vertexZ = 0" fontName:@"Marker Felt" fontSize:64];
+		label2.position =  ccp( size.width /2 , size.height*0.5 );
+		[self addChild: label2];
+		
+		CCLabelTTF *label3 = [CCLabelTTF labelWithString:@"vertexZ = -50" fontName:@"Marker Felt" fontSize:64];
+		label3.position =  ccp( size.width /2 , size.height*0.75 );
+		[self addChild: label3];
+		
+		label.vertexZ = 50;
+		label2.vertexZ = 0;
+		label3.vertexZ = -50;
+		
+		
+		[[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"bugs/circle.plist"];
+		mgr = [CCSpriteBatchNode batchNodeWithFile:@"bugs/circle.png" capacity:9];
+		[self addChild:mgr];
+		sp1 = [CCSprite spriteWithSpriteFrameName:@"circle.png"];
+		sp2 = [CCSprite spriteWithSpriteFrameName:@"circle.png"];
+		sp3 = [CCSprite spriteWithSpriteFrameName:@"circle.png"];
+		sp4 = [CCSprite spriteWithSpriteFrameName:@"circle.png"];
+		sp5 = [CCSprite spriteWithSpriteFrameName:@"circle.png"];
+		sp6 = [CCSprite spriteWithSpriteFrameName:@"circle.png"];
+		sp7 = [CCSprite spriteWithSpriteFrameName:@"circle.png"];
+		sp8 = [CCSprite spriteWithSpriteFrameName:@"circle.png"];
+		sp9 = [CCSprite spriteWithSpriteFrameName:@"circle.png"];
+		
+		[mgr addChild:sp1 z:9];
+		[mgr addChild:sp2 z:8];
+		[mgr addChild:sp3 z:7];
+		[mgr addChild:sp4 z:6];
+		[mgr addChild:sp5 z:5];
+		[mgr addChild:sp6 z:4];
+		[mgr addChild:sp7 z:3];
+		[mgr addChild:sp8 z:2];
+		[mgr addChild:sp9 z:1];
+		
+		sp1.vertexZ = 400;
+		sp2.vertexZ = 300;
+		sp3.vertexZ = 200;
+		sp4.vertexZ = 100;
+		sp5.vertexZ = 0;
+		sp6.vertexZ = -100;
+		sp7.vertexZ = -200;
+		sp8.vertexZ = -300;
+		sp9.vertexZ = -400;
+		
+		sp9.scale = 2;
+		sp9.color = ccYELLOW;
+	}
+	return self;
+}
+-(NSString*) title
+{
+	return @"Testing Z Buffer in Render Texture";
+}
+
+-(NSString*) subtitle
+{
+	return @"Touch screen. It should be green";
+}
+- (void)ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+	for( UITouch *touch in touches ) {
+		CGPoint location = [touch locationInView: [touch view]];
+		
+		location = [[CCDirector sharedDirector] convertToGL: location];
+		sp1.position = location;
+		sp2.position = location;
+		sp3.position = location;
+		sp4.position = location;
+		sp5.position = location;
+		sp6.position = location;
+		sp7.position = location;
+		sp8.position = location;
+		sp9.position = location;
+	}
+}
+- (void)ccTouchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
+{
+	for( UITouch *touch in touches ) {
+		CGPoint location = [touch locationInView: [touch view]];
+		
+		location = [[CCDirector sharedDirector] convertToGL: location];
+		sp1.position = location;
+		sp2.position = location;
+		sp3.position = location;
+		sp4.position = location;
+		sp5.position = location;
+		sp6.position = location;
+		sp7.position = location;
+		sp8.position = location;
+		sp9.position = location;
+	}
+}
+- (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+{
+	[self renderScreenShot];
+}
+
+-(void)renderScreenShot
+{
+	//NSLog(@"RENDER ");
+	
+	CCRenderTexture *texture = [CCRenderTexture renderTextureWithWidth:512 height:512];
+	texture.anchorPoint = ccp(0,0);
+	[texture begin];
+	
+	[self visit];
+	
+	[texture end];
+	
+	CCSprite *sprite = [CCSprite spriteWithTexture:[[texture sprite] texture]];
+	
+	sprite.position = ccp(256,256);
+	sprite.opacity = 182;
+	sprite.flipY = 1;
+	[self addChild:sprite z:999999];
+	sprite.color = ccGREEN;
+	
+	[sprite runAction:[CCSequence actions:[CCFadeTo actionWithDuration:2 opacity:0],
+					   [CCHide action],
+					   nil
+					   ]
+	 ];
+	
+}
+@end
+
+
 
 #pragma mark -
 #pragma mark AppDelegate (iOS)
@@ -381,7 +544,7 @@ Class restartAction()
 	// Create an EAGLView with a RGB8 color buffer, and a depth buffer of 24-bits
 	EAGLView *glView = [EAGLView viewWithFrame:[window bounds]
 								   pixelFormat:kEAGLColorFormatRGB565
-								   depthFormat:GL_DEPTH_COMPONENT24_OES];
+								   depthFormat:0];
 	
 	// attach the openglView to the director
 	[director setOpenGLView:glView];

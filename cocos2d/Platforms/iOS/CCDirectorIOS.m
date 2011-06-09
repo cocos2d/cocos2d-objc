@@ -2,6 +2,7 @@
  * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
  * Copyright (c) 2010 Ricardo Quesada
+ * Copyright (c) 2011 Zynga Inc.
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -110,26 +111,16 @@ CGFloat	__ccContentScaleFactor = 1;
 #pragma mark CCDirectorIOS
 
 @interface CCDirectorIOS ()
--(BOOL)isOpenGLAttached;
--(BOOL)initOpenGLViewWithView:(UIView *)view withFrame:(CGRect)rect;
-
 -(void) updateContentScaleFactor;
 
 @end
 
 @implementation CCDirectorIOS
 
-@synthesize pixelFormat=pixelFormat_;
-
 - (id) init
 {  
 	if( (self=[super init]) ) {
 				
-		
-		// default values
-		pixelFormat_ = kCCPixelFormatDefault;		// DEPRECATED. Will be removed in 1.0
-		depthBufferFormat_ = 0;						// DEPRECATED. Will be removed in 1.0
-		
 		// portrait mode default
 		deviceOrientation_ = CCDeviceOrientationPortrait;
 		
@@ -210,17 +201,22 @@ CGFloat	__ccContentScaleFactor = 1;
 			break;
 			
 		case kCCDirectorProjection3D:
+		{
+			float zeye = [self getZEye];
+
 			glViewport(0, 0, size.width, size.height);
 			glMatrixMode(GL_PROJECTION);
 			glLoadIdentity();
-			gluPerspective(60, (GLfloat)size.width/size.height, 0.5f, 1500.0f);
-			
+//			gluPerspective(60, (GLfloat)size.width/size.height, zeye-size.height/2, zeye+size.height/2 );
+			gluPerspective(60, (GLfloat)size.width/size.height, 0.5f, 1500);
+
 			glMatrixMode(GL_MODELVIEW);	
 			glLoadIdentity();
-			gluLookAt( size.width/2, size.height/2, [self getZEye],
+			gluLookAt( size.width/2, size.height/2, zeye,
 					  size.width/2, size.height/2, 0,
-					  0.0f, 1.0f, 0.0f);			
+					  0.0f, 1.0f, 0.0f);
 			break;
+		}
 			
 		case kCCDirectorProjectionCustom:
 			if( projectionDelegate_ )
@@ -235,165 +231,7 @@ CGFloat	__ccContentScaleFactor = 1;
 	projection_ = projection;
 }
 
-#pragma mark Director Scene iPhone Specific
-
--(void) setPixelFormat: (tPixelFormat) format
-{	
-	NSAssert( ! [self isOpenGLAttached], @"Can't change the pixel format after the director was initialized" );	
-	pixelFormat_ = format;
-}
-
--(void) setDepthBufferFormat: (tDepthBufferFormat) format
-{
-	NSAssert( ! [self isOpenGLAttached], @"Can't change the depth buffer format after the director was initialized");
-	depthBufferFormat_ = format;
-}
-
 #pragma mark Director Integration with a UIKit view
-
-// is the view currently attached
--(BOOL)isOpenGLAttached
-{
-	return ([openGLView_ superview]!=nil);
-}
-
-// XXX: deprecated
--(BOOL)detach
-{
-	NSAssert([self isOpenGLAttached], @"FATAL: Director: Can't detach the OpenGL View, because it is not attached. Attach it first.");
-	
-	// remove from the superview
-	[openGLView_ removeFromSuperview];
-	
-	NSAssert(![self isOpenGLAttached], @"FATAL: Director: Can't detach the OpenGL View, it is still attached to the superview.");
-	
-	
-	return YES;
-}
-
-// XXX: Deprecated method
--(BOOL)attachInWindow:(UIWindow *)window
-{
-	if([self initOpenGLViewWithView:window withFrame:[window bounds]])
-	{
-		return YES;
-	}
-	
-	return NO;
-}
-
-// XXX: Deprecated method
--(BOOL)attachInView:(UIView *)view
-{
-	if([self initOpenGLViewWithView:view withFrame:[view bounds]])
-	{
-		return YES;
-	}
-	
-	return NO;
-}
-
-// XXX: Deprecated method
--(BOOL)attachInView:(UIView *)view withFrame:(CGRect)frame
-{
-	if([self initOpenGLViewWithView:view withFrame:frame])
-	{
-		return YES;
-	}
-	
-	return NO;
-}
-
-// XXX: Deprecated method
--(BOOL)initOpenGLViewWithView:(UIView *)view withFrame:(CGRect)rect
-{
-	NSAssert( ! [self isOpenGLAttached], @"FATAL: Can't re-attach the OpenGL View, because it is already attached. Detach it first");
-	
-	// check if the view is not initialized
-	if(!openGLView_)
-	{
-		// define the pixel format
-		NSString	*pFormat = nil;
-	    GLuint		depthFormat = 0;
-		
-		if(pixelFormat_==kCCPixelFormatRGBA8888)
-			pFormat = kEAGLColorFormatRGBA8;
-		else if(pixelFormat_== kCCPixelFormatRGB565)
-			pFormat = kEAGLColorFormatRGB565;
-		else {
-			CCLOG(@"cocos2d: Director: Unknown pixel format.");
-		}
-		
-		if(depthBufferFormat_ == kCCDepthBuffer16)
-			depthFormat = GL_DEPTH_COMPONENT16_OES;
-		else if(depthBufferFormat_ == kCCDepthBuffer24)
-			depthFormat = GL_DEPTH_COMPONENT24_OES;
-		else if(depthBufferFormat_ == kCCDepthBufferNone)
-			depthFormat = 0;
-		else {
-			CCLOG(@"cocos2d: Director: Unknown buffer depth.");
-		}
-		
-		// alloc and init the opengl view
-		openGLView_ = [[EAGLView alloc] initWithFrame:rect
-										  pixelFormat:pFormat
-										  depthFormat:depthFormat
-								   preserveBackbuffer:NO 
-										   sharegroup:nil
-										multiSampling:NO
-									  numberOfSamples:0];
-		
-		// check if the view was alloced and initialized
-		NSAssert( openGLView_, @"FATAL: Could not alloc and init the OpenGL view. ");
-		
-		// opaque by default (faster)
-		openGLView_.opaque = YES;		
-	}
-	else
-	{
-		// set the (new) frame of the glview
-		[openGLView_ setFrame:rect];
-	}
-	
-	winSizeInPoints_ = rect.size;
-	winSizeInPixels_ = CGSizeMake(winSizeInPoints_.width * __ccContentScaleFactor, winSizeInPoints_.height * __ccContentScaleFactor);
-	
-	
-	// set the touch delegate of the glview to self
-	[openGLView_ setTouchDelegate: [CCTouchDispatcher sharedDispatcher]];
-	
-	
-	// check if the superview has touchs enabled and enable it in our view
-	if([view isUserInteractionEnabled])
-	{
-		[openGLView_ setUserInteractionEnabled:YES];
-		[[CCTouchDispatcher sharedDispatcher] setDispatchEvents: YES];
-	}
-	else
-	{
-		[openGLView_ setUserInteractionEnabled:NO];
-		[[CCTouchDispatcher sharedDispatcher] setDispatchEvents: NO];
-	}
-	
-	// check if multi touches are enabled and set them
-	if([view isMultipleTouchEnabled])
-	{
-		[openGLView_ setMultipleTouchEnabled:YES];
-	}
-	else
-	{
-		[openGLView_ setMultipleTouchEnabled:NO];
-	}
-	
-	// add the glview to his (new) superview
-	[view addSubview:openGLView_];
-	
-	
-	NSAssert( [self isOpenGLAttached], @"FATAL: Director: Could not attach OpenGL view");
-	
-	[self setGLDefaultValues];
-	return YES;
-}
 
 -(void) setOpenGLView:(EAGLView *)view
 {
@@ -506,9 +344,6 @@ CGFloat	__ccContentScaleFactor = 1;
 			ret.y = newX;
 			break;
 	}
-	
-//	if( __ccContentScaleFactor != 1 && isContentScaleSupported_ )
-//		ret = ccpMult(ret, __ccContentScaleFactor);
 	return ret;
 }
 
@@ -533,8 +368,6 @@ CGFloat	__ccContentScaleFactor = 1;
 			uiPoint = ccp(winSize.width-glPoint.y, winSize.height-glPoint.x);
 			break;
 	}
-	
-	uiPoint = ccpMult(uiPoint, 1/__ccContentScaleFactor);
 	return uiPoint;
 }
 
@@ -576,7 +409,7 @@ CGFloat	__ccContentScaleFactor = 1;
 				[[UIApplication sharedApplication] setStatusBarOrientation: UIInterfaceOrientationPortrait animated:NO];
 				break;
 			case CCDeviceOrientationPortraitUpsideDown:
-				[[UIApplication sharedApplication] setStatusBarOrientation: UIDeviceOrientationPortraitUpsideDown animated:NO];
+				[[UIApplication sharedApplication] setStatusBarOrientation: UIInterfaceOrientationPortraitUpsideDown animated:NO];
 				break;
 			case CCDeviceOrientationLandscapeLeft:
 				[[UIApplication sharedApplication] setStatusBarOrientation: UIInterfaceOrientationLandscapeRight animated:NO];

@@ -2,6 +2,7 @@
  * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
  * Copyright (c) 2010 Ricardo Quesada
+ * Copyright (c) 2011 Zynga Inc.
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -42,6 +43,14 @@
 #define CCTextAlignmentCenter		UITextAlignmentCenter
 #define CCTextAlignmentLeft			UITextAlignmentLeft
 #define CCTextAlignmentRight		UITextAlignmentRight
+#define CCLineBreakMode				UILineBreakMode
+#define CCLineBreakModeWordWrap		UILineBreakModeWordWrap	
+#define CCLineBreakModeCharacterWrap	UILineBreakModeCharacterWrap
+#define CCLineBreakModeClip			UILineBreakModeClip
+#define CCLineBreakModeHeadTruncation	UILineBreakModeHeadTruncation
+#define CCLineBreakModeTailTruncation	UILineBreakModeTailTruncation
+#define CCLineBreakModeMiddleTruncation	UILineBreakModeMiddleTruncation
+
 
 
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
@@ -56,6 +65,13 @@
 #define CCTextAlignmentCenter		NSCenterTextAlignment
 #define CCTextAlignmentLeft			NSLeftTextAlignment
 #define CCTextAlignmentRight		NSRightTextAlignment
+#define CCLineBreakMode				NSLineBreakMode
+#define CCLineBreakModeWordWrap		NSLineBreakByWordWrapping
+#define CCLineBreakModeClip			-1
+#define CCLineBreakModeHeadTruncation	-1
+#define CCLineBreakModeTailTruncation	-1
+#define CCLineBreakModeMiddleTruncation	-1
+
 
 #endif
 

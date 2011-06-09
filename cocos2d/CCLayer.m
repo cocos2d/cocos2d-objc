@@ -2,6 +2,7 @@
  * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
  * Copyright (c) 2008-2010 Ricardo Quesada
+ * Copyright (c) 2011 Zynga Inc.
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -55,8 +56,9 @@
 		[self setContentSize:s];
 		self.isRelativeAnchorPoint = NO;
 
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 		isTouchEnabled_ = NO;
+
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 		isAccelerometerEnabled_ = NO;
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 		isMouseEnabled_ = NO;
@@ -113,7 +115,7 @@
 
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 
-#pragma mark CCLayer - Mouse & Keyboard events
+#pragma mark CCLayer - Mouse, Keyboard & Touch events
 
 -(NSInteger) mouseDelegatePriority
 {
@@ -163,6 +165,29 @@
 	}
 }
 
+-(NSInteger) touchDelegatePriority
+{
+	return 0;
+}
+
+-(BOOL) isTouchEnabled
+{
+	return isTouchEnabled_;
+}
+
+-(void) setIsTouchEnabled:(BOOL)enabled
+{
+	if( isTouchEnabled_ != enabled ) {
+		isTouchEnabled_ = enabled;
+		if( isRunning_ ) {
+			if( enabled )
+				[[CCEventDispatcher sharedDispatcher] addTouchDelegate:self priority:[self touchDelegatePriority]];
+			else
+				[[CCEventDispatcher sharedDispatcher] removeTouchDelegate:self];
+		}
+	}
+}
+
 
 #endif // Mac
 
@@ -182,6 +207,10 @@
 	
 	if( isKeyboardEnabled_)
 		[[CCEventDispatcher sharedDispatcher] addKeyboardDelegate:self priority:[self keyboardDelegatePriority]];
+
+	if( isTouchEnabled_)
+		[[CCEventDispatcher sharedDispatcher] addTouchDelegate:self priority:[self touchDelegatePriority]];
+
 #endif
 	
 	// then iterate over all the children
@@ -216,6 +245,10 @@
 	
 	if( isKeyboardEnabled_ )
 		[[CCEventDispatcher sharedDispatcher] removeKeyboardDelegate:self];
+
+	if( isTouchEnabled_ )
+		[[CCEventDispatcher sharedDispatcher] removeTouchDelegate:self];
+
 #endif
 	
 	[super onExit];
@@ -266,8 +299,10 @@
 		color_.b = color.b;
 		opacity_ = color.a;
 		
-		for (NSUInteger i = 0; i<sizeof(squareVertices) / sizeof( squareVertices[0]); i++ )
-			squareVertices[i] = 0.0f;
+		for (NSUInteger i = 0; i<sizeof(squareVertices_) / sizeof( squareVertices_[0]); i++ ) {
+			squareVertices_[i].x = 0.0f;
+			squareVertices_[i].y = 0.0f;
+		}
 				
 		[self updateColor];
 		[self setContentSize:CGSizeMake(w, h) ];
@@ -284,10 +319,10 @@
 // override contentSize
 -(void) setContentSize: (CGSize) size
 {
-	squareVertices[2] = size.width * CC_CONTENT_SCALE_FACTOR();
-	squareVertices[5] = size.height * CC_CONTENT_SCALE_FACTOR();
-	squareVertices[6] = size.width * CC_CONTENT_SCALE_FACTOR();
-	squareVertices[7] = size.height * CC_CONTENT_SCALE_FACTOR();
+	squareVertices_[1].x = size.width * CC_CONTENT_SCALE_FACTOR();
+	squareVertices_[2].y = size.height * CC_CONTENT_SCALE_FACTOR();
+	squareVertices_[3].x = size.width * CC_CONTENT_SCALE_FACTOR();
+	squareVertices_[3].y = size.height * CC_CONTENT_SCALE_FACTOR();
 	
 	[super setContentSize:size];
 }
@@ -311,10 +346,10 @@
 {
 	for( NSUInteger i = 0; i < 4; i++ )
 	{
-		squareColors[i*4]	= color_.r;
-		squareColors[i*4+1] = color_.g;
-		squareColors[i*4+2] = color_.b;
-		squareColors[i*4+3] = opacity_;
+		squareColors_[i].r = color_.r;
+		squareColors_[i].g = color_.g;
+		squareColors_[i].b = color_.b;
+		squareColors_[i].a = opacity_;
 	}
 }
 
@@ -326,8 +361,8 @@
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 	glDisable(GL_TEXTURE_2D);
 
-	glVertexPointer(2, GL_FLOAT, 0, squareVertices);
-	glColorPointer(4, GL_UNSIGNED_BYTE, 0, squareColors);
+	glVertexPointer(2, GL_FLOAT, 0, squareVertices_);
+	glColorPointer(4, GL_UNSIGNED_BYTE, 0, squareColors_);
 	
 	
 	BOOL newBlend = blendFunc_.src != CC_BLEND_SRC || blendFunc_.dst != CC_BLEND_DST;
@@ -403,22 +438,30 @@
 	endOpacity_		= end.a;
 	startOpacity_	= start.a;
 	vector_ = v;
-
+	
 	start.a	= 255;
-    return [self initWithColor:start];
+	compressedInterpolation_ = YES;
+
+	return [super initWithColor:start];
 }
 
 - (void) updateColor
 {
     [super updateColor];
 
-	float h = sqrtf(vector_.x*vector_.x + vector_.y*vector_.y);
+	float h = ccpLength(vector_);
     if (h == 0)
 		return;
 
-    double c = sqrt(2);
+	double c = sqrt(2);
     CGPoint u = ccp(vector_.x / h, vector_.y / h);
 
+	// Compressed Interpolation mode
+	if( compressedInterpolation_ ) {
+		float h2 = 1 / ( fabsf(u.x) + fabsf(u.y) );
+		u = ccpMult(u, h2 * (float)c);
+	}
+	
 	float opacityf = (float)opacity_/255.0f;
 	
     ccColor4B S = {
@@ -435,26 +478,27 @@
 		endOpacity_*opacityf
 	};
 
+
     // (-1, -1)
-	squareColors[0]  = E.r + (S.r - E.r) * ((c + u.x + u.y) / (2.0f * c));
-	squareColors[1]  = E.g + (S.g - E.g) * ((c + u.x + u.y) / (2.0f * c));
-	squareColors[2]  = E.b + (S.b - E.b) * ((c + u.x + u.y) / (2.0f * c));
-	squareColors[3]  = E.a + (S.a - E.a) * ((c + u.x + u.y) / (2.0f * c));
+	squareColors_[0].r = E.r + (S.r - E.r) * ((c + u.x + u.y) / (2.0f * c));
+	squareColors_[0].g = E.g + (S.g - E.g) * ((c + u.x + u.y) / (2.0f * c));
+	squareColors_[0].b = E.b + (S.b - E.b) * ((c + u.x + u.y) / (2.0f * c));
+	squareColors_[0].a = E.a + (S.a - E.a) * ((c + u.x + u.y) / (2.0f * c));
     // (1, -1)
-	squareColors[4]  = E.r + (S.r - E.r) * ((c - u.x + u.y) / (2.0f * c));
-	squareColors[5]  = E.g + (S.g - E.g) * ((c - u.x + u.y) / (2.0f * c));
-	squareColors[6]  = E.b + (S.b - E.b) * ((c - u.x + u.y) / (2.0f * c));
-	squareColors[7]  = E.a + (S.a - E.a) * ((c - u.x + u.y) / (2.0f * c));
+	squareColors_[1].r = E.r + (S.r - E.r) * ((c - u.x + u.y) / (2.0f * c));
+	squareColors_[1].g = E.g + (S.g - E.g) * ((c - u.x + u.y) / (2.0f * c));
+	squareColors_[1].b = E.b + (S.b - E.b) * ((c - u.x + u.y) / (2.0f * c));
+	squareColors_[1].a = E.a + (S.a - E.a) * ((c - u.x + u.y) / (2.0f * c));
 	// (-1, 1)
-	squareColors[8]  = E.r + (S.r - E.r) * ((c + u.x - u.y) / (2.0f * c));
-	squareColors[9]  = E.g + (S.g - E.g) * ((c + u.x - u.y) / (2.0f * c));
-	squareColors[10] = E.b + (S.b - E.b) * ((c + u.x - u.y) / (2.0f * c));
-	squareColors[11] = E.a + (S.a - E.a) * ((c + u.x - u.y) / (2.0f * c));
+	squareColors_[2].r = E.r + (S.r - E.r) * ((c + u.x - u.y) / (2.0f * c));
+	squareColors_[2].g = E.g + (S.g - E.g) * ((c + u.x - u.y) / (2.0f * c));
+	squareColors_[2].b = E.b + (S.b - E.b) * ((c + u.x - u.y) / (2.0f * c));
+	squareColors_[2].a = E.a + (S.a - E.a) * ((c + u.x - u.y) / (2.0f * c));
 	// (1, 1)
-	squareColors[12] = E.r + (S.r - E.r) * ((c - u.x - u.y) / (2.0f * c));
-	squareColors[13] = E.g + (S.g - E.g) * ((c - u.x - u.y) / (2.0f * c));
-	squareColors[14] = E.b + (S.b - E.b) * ((c - u.x - u.y) / (2.0f * c));
-	squareColors[15] = E.a + (S.a - E.a) * ((c - u.x - u.y) / (2.0f * c));
+	squareColors_[3].r = E.r + (S.r - E.r) * ((c - u.x - u.y) / (2.0f * c));
+	squareColors_[3].g = E.g + (S.g - E.g) * ((c - u.x - u.y) / (2.0f * c));
+	squareColors_[3].b = E.b + (S.b - E.b) * ((c - u.x - u.y) / (2.0f * c));
+	squareColors_[3].a = E.a + (S.a - E.a) * ((c - u.x - u.y) / (2.0f * c));
 }
 
 -(ccColor3B) startColor
@@ -491,12 +535,22 @@
     [self updateColor];
 }
 
+-(BOOL) compressedInterpolation
+{
+	return compressedInterpolation_;
+}
+
+-(void) setCompressedInterpolation:(BOOL)compress
+{
+	compressedInterpolation_ = compress;
+	[self updateColor];
+}
 @end
 
 #pragma mark -
 #pragma mark MultiplexLayer
 
-@implementation CCMultiplexLayer
+@implementation CCLayerMultiplex
 +(id) layerWithLayers: (CCLayer*) layer, ... 
 {
 	va_list args;
@@ -512,18 +566,18 @@
 {
 	if( (self=[super init]) ) {
 	
-		layers = [[NSMutableArray arrayWithCapacity:5] retain];
+		layers_ = [[NSMutableArray arrayWithCapacity:5] retain];
 		
-		[layers addObject: layer];
+		[layers_ addObject: layer];
 		
 		CCLayer *l = va_arg(params,CCLayer*);
 		while( l ) {
-			[layers addObject: l];
+			[layers_ addObject: l];
 			l = va_arg(params,CCLayer*);
 		}
 		
-		enabledLayer = 0;
-		[self addChild: [layers objectAtIndex: enabledLayer]];	
+		enabledLayer_ = 0;
+		[self addChild: [layers_ objectAtIndex: enabledLayer_]];
 	}
 	
 	return self;
@@ -531,32 +585,35 @@
 
 -(void) dealloc
 {
-	[layers release];
+	[layers_ release];
 	[super dealloc];
 }
 
 -(void) switchTo: (unsigned int) n
 {
-	NSAssert( n < [layers count], @"Invalid index in MultiplexLayer switchTo message" );
+	NSAssert( n < [layers_ count], @"Invalid index in MultiplexLayer switchTo message" );
 		
-	[self removeChild: [layers objectAtIndex:enabledLayer] cleanup:YES];
+	[self removeChild: [layers_ objectAtIndex:enabledLayer_] cleanup:YES];
 	
-	enabledLayer = n;
+	enabledLayer_ = n;
 	
-	[self addChild: [layers objectAtIndex:n]];		
+	[self addChild: [layers_ objectAtIndex:n]];		
 }
 
 -(void) switchToAndReleaseMe: (unsigned int) n
 {
-	NSAssert( n < [layers count], @"Invalid index in MultiplexLayer switchTo message" );
+	NSAssert( n < [layers_ count], @"Invalid index in MultiplexLayer switchTo message" );
 	
-	[self removeChild: [layers objectAtIndex:enabledLayer] cleanup:YES];
+	[self removeChild: [layers_ objectAtIndex:enabledLayer_] cleanup:YES];
 	
-	[layers replaceObjectAtIndex:enabledLayer withObject:[NSNull null]];
+	[layers_ replaceObjectAtIndex:enabledLayer_ withObject:[NSNull null]];
 	
-	enabledLayer = n;
+	enabledLayer_ = n;
 	
-	[self addChild: [layers objectAtIndex:n]];		
+	[self addChild: [layers_ objectAtIndex:n]];		
 }
+@end
 
+// XXX Deprecated
+@implementation CCMultiplexLayer
 @end

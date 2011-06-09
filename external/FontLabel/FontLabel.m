@@ -168,12 +168,21 @@
 	
 	if (numberOfLines == 1) {
 		// if numberOfLines == 1 we need to use the version that converts spaces
-		CGSize size = [self.text sizeWithZFont:self.zFont];
+		CGSize size;
+		if (self.zAttributedText == nil) {
+			size = [self.text sizeWithZFont:self.zFont];
+		} else {
+			size = [self.zAttributedText size];
+		}
 		bounds.size.width = MIN(bounds.size.width, size.width);
 		bounds.size.height = MIN(bounds.size.height, size.height);
 	} else {
 		if (numberOfLines > 0) bounds.size.height = MIN(bounds.size.height, self.zFont.leading * numberOfLines);
-		bounds.size = [self.text sizeWithZFont:self.zFont constrainedToSize:bounds.size lineBreakMode:self.lineBreakMode];
+		if (self.zAttributedText == nil) {
+			bounds.size = [self.text sizeWithZFont:self.zFont constrainedToSize:bounds.size lineBreakMode:self.lineBreakMode];
+		} else {
+			bounds.size = [self.zAttributedText sizeConstrainedToSize:bounds.size lineBreakMode:self.lineBreakMode];
+		}
 	}
 	return bounds;
 }

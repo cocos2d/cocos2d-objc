@@ -2,6 +2,7 @@
  * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
  * Copyright (c) 2008-2010 Ricardo Quesada
+ * Copyright (c) 2011 Zynga Inc.
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -139,7 +140,10 @@ typedef struct _KerningHashElement
 - (void)parseConfigFile:(NSString*)fntFile
 {	
 	NSString *fullpath = [CCFileUtils fullPathFromRelativePath:fntFile];
-	NSString *contents = [NSString stringWithContentsOfFile:fullpath encoding:NSUTF8StringEncoding error:nil];
+	NSError *error;
+	NSString *contents = [NSString stringWithContentsOfFile:fullpath encoding:NSUTF8StringEncoding error:&error];
+
+	NSAssert1( contents, @"cocos2d: Error parsing FNTfile: %@", error);
 	
 	
 	// Move all lines in the string, which are denoted by \n, into an array
@@ -500,17 +504,17 @@ typedef struct _KerningHashElement
 
 -(void) createFontChars
 {
-	int nextFontPositionX = 0;
-	int nextFontPositionY = 0;
+	NSInteger nextFontPositionX = 0;
+	NSInteger nextFontPositionY = 0;
 	unichar prev = -1;
-	int kerningAmount = 0;
+	NSInteger kerningAmount = 0;
 	
 	CGSize tmpSize = CGSizeZero;
 
-	int longestLine = 0;
-	int totalHeight = 0;
+	NSInteger longestLine = 0;
+	NSUInteger totalHeight = 0;
 	
-	int quantityOfLines = 1;
+	NSUInteger quantityOfLines = 1;
 
 	NSUInteger stringLen = [string_ length];
 	if( ! stringLen )
@@ -654,7 +658,7 @@ typedef struct _KerningHashElement
 }
 
 #pragma mark BitmapFontAtlas - Debug draw
-#if CC_BITMAPFONTATLAS_DEBUG_DRAW
+#if CC_LABELBMFONT_DEBUG_DRAW
 -(void) draw
 {
 	[super draw];
@@ -665,5 +669,5 @@ typedef struct _KerningHashElement
 	};
 	ccDrawPoly(vertices, 4, YES);
 }
-#endif // CC_BITMAPFONTATLAS_DEBUG_DRAW
+#endif // CC_LABELBMFONT_DEBUG_DRAW
 @end

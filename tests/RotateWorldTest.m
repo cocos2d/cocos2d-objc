@@ -10,22 +10,23 @@
 @implementation TextLayer
 -(id) init
 {
-	if( ! [super init] )
-		return nil;
-	float x,y;
-	
-	CGSize size = [[CCDirector sharedDirector] winSize];
-	x = size.width;
-	y = size.height;
+	if( (self=[super init] ) ) {
 
-	NSArray *array = [UIFont familyNames];
-	for( NSString *s in array )
-		NSLog( @"%@",s );
-	CCLabelTTF *label = [CCLabelTTF labelWithString:@"cocos2d" fontName:@"Marker Felt" fontSize:64];
+		float x,y;
+		
+		CGSize size = [[CCDirector sharedDirector] winSize];
+		x = size.width;
+		y = size.height;
 
-	[label setPosition: ccp(x/2,y/2)];
-	
-	[self addChild: label];
+		NSArray *array = [UIFont familyNames];
+		for( NSString *s in array )
+			NSLog( @"%@",s );
+		CCLabelTTF *label = [CCLabelTTF labelWithString:@"cocos2d" fontName:@"Marker Felt" fontSize:64];
+
+		[label setPosition: ccp(x/2,y/2)];
+		
+		[self addChild: label];
+	}
 	return self;
 }
 
@@ -39,46 +40,45 @@
 @implementation SpriteLayer
 -(id) init
 {
-	if( ! [super init] )
-		return nil;
-	float x,y;
-	
-	CGSize size = [[CCDirector sharedDirector] winSize];
-	x = size.width;
-	y = size.height;
-	
-	CCSprite *sprite = [CCSprite spriteWithFile: @"grossini.png"];
-	CCSprite *spriteSister1 = [CCSprite spriteWithFile: @"grossinis_sister1.png"];
-	CCSprite *spriteSister2 = [CCSprite spriteWithFile: @"grossinis_sister2.png"];
-	
-	[sprite setScale: 1.5f];
-	[spriteSister1 setScale: 1.5f];
-	[spriteSister2 setScale: 1.5f];
-	
-	[sprite setPosition: ccp(x/2,y/2)];
-	[spriteSister1 setPosition: ccp(40,y/2)];
-	[spriteSister2 setPosition: ccp(x-40,y/2)];
+	if( (self=[super init] ) ) {
+		float x,y;
+		
+		CGSize size = [[CCDirector sharedDirector] winSize];
+		x = size.width;
+		y = size.height;
+		
+		CCSprite *sprite = [CCSprite spriteWithFile: @"grossini.png"];
+		CCSprite *spriteSister1 = [CCSprite spriteWithFile: @"grossinis_sister1.png"];
+		CCSprite *spriteSister2 = [CCSprite spriteWithFile: @"grossinis_sister2.png"];
+		
+		[sprite setScale: 1.5f];
+		[spriteSister1 setScale: 1.5f];
+		[spriteSister2 setScale: 1.5f];
+		
+		[sprite setPosition: ccp(x/2,y/2)];
+		[spriteSister1 setPosition: ccp(40,y/2)];
+		[spriteSister2 setPosition: ccp(x-40,y/2)];
 
-	CCAction *rot = [CCRotateBy actionWithDuration:16 angle:-3600];
-	
-	[self addChild: sprite];
-	[self addChild: spriteSister1];
-	[self addChild: spriteSister2];
-	
-	[sprite runAction: rot];
+		CCAction *rot = [CCRotateBy actionWithDuration:16 angle:-3600];
+		
+		[self addChild: sprite];
+		[self addChild: spriteSister1];
+		[self addChild: spriteSister2];
+		
+		[sprite runAction: rot];
 
-	CCActionInterval *jump1 = [CCJumpBy actionWithDuration:4 position:ccp(-400,0) height:100 jumps:4];
-	CCActionInterval *jump2 = [jump1 reverse];
-	
-	CCActionInterval *rot1 = [CCRotateBy actionWithDuration:4 angle:360*2];
-	CCActionInterval *rot2 = [rot1 reverse];
-	
-	[spriteSister1 runAction: [CCRepeat actionWithAction: [CCSequence actions:jump2, jump1, nil] times:5 ] ];
-	[spriteSister2 runAction: [CCRepeat actionWithAction: [CCSequence actions:[[jump1 copy] autorelease], [[jump2 copy] autorelease], nil] times:5 ] ];
-	
-	[spriteSister1 runAction: [CCRepeat actionWithAction: [CCSequence actions: rot1, rot2, nil] times:5 ] ];
-	[spriteSister2 runAction: [CCRepeat actionWithAction: [CCSequence actions: [[rot2 copy] autorelease], [[rot1 copy] autorelease], nil] times:5 ] ];
-	
+		CCActionInterval *jump1 = [CCJumpBy actionWithDuration:4 position:ccp(-400,0) height:100 jumps:4];
+		CCActionInterval *jump2 = [jump1 reverse];
+		
+		CCActionInterval *rot1 = [CCRotateBy actionWithDuration:4 angle:360*2];
+		CCActionInterval *rot2 = [rot1 reverse];
+		
+		[spriteSister1 runAction: [CCRepeat actionWithAction: [CCSequence actions:jump2, jump1, nil] times:5 ] ];
+		[spriteSister2 runAction: [CCRepeat actionWithAction: [CCSequence actions:[[jump1 copy] autorelease], [[jump2 copy] autorelease], nil] times:5 ] ];
+		
+		[spriteSister1 runAction: [CCRepeat actionWithAction: [CCSequence actions: rot1, rot2, nil] times:5 ] ];
+		[spriteSister2 runAction: [CCRepeat actionWithAction: [CCSequence actions: [[rot2 copy] autorelease], [[rot1 copy] autorelease], nil] times:5 ] ];
+	}
 	
 	return self;
 }
@@ -92,44 +92,44 @@
 @implementation MainLayer
 -(id) init
 {
-	if( ! [super init] )
-		return nil;
-	float x,y;
-	
-	CGSize size = [[CCDirector sharedDirector] winSize];
-	x = size.width;
-	y = size.height;
-	
-	CCNode* blue =  [CCColorLayer layerWithColor:ccc4(0,0,255,255)];
-	CCNode* red =   [CCColorLayer layerWithColor:ccc4(255,0,0,255)];
-	CCNode* green = [CCColorLayer layerWithColor:ccc4(0,255,0,255)];
-	CCNode* white = [CCColorLayer layerWithColor:ccc4(255,255,255,255)];
+	if( (self=[super init] ) ) {
+		float x,y;
+		
+		CGSize size = [[CCDirector sharedDirector] winSize];
+		x = size.width;
+		y = size.height;
+		
+		CCNode* blue =  [CCLayerColor layerWithColor:ccc4(0,0,255,255)];
+		CCNode* red =   [CCLayerColor layerWithColor:ccc4(255,0,0,255)];
+		CCNode* green = [CCLayerColor layerWithColor:ccc4(0,255,0,255)];
+		CCNode* white = [CCLayerColor layerWithColor:ccc4(255,255,255,255)];
 
-	[blue setScale: 0.5f];
-	[blue setPosition: ccp(-x/4,-y/4)];
-	[blue addChild: [SpriteLayer node]];
-	
-	[red setScale: 0.5f];
-	[red setPosition: ccp(x/4,-y/4)];
+		[blue setScale: 0.5f];
+		[blue setPosition: ccp(-x/4,-y/4)];
+		[blue addChild: [SpriteLayer node]];
+		
+		[red setScale: 0.5f];
+		[red setPosition: ccp(x/4,-y/4)];
 
-	[green setScale: 0.5f];
-	[green setPosition: ccp(-x/4,y/4)];
-	[green addChild: [TextLayer node]];
+		[green setScale: 0.5f];
+		[green setPosition: ccp(-x/4,y/4)];
+		[green addChild: [TextLayer node]];
 
-	[white setScale: 0.5f];
-	[white setPosition: ccp(x/4,y/4)];
+		[white setScale: 0.5f];
+		[white setPosition: ccp(x/4,y/4)];
 
-	[self addChild: blue z:-1];
-	[self addChild: white];
-	[self addChild: green];
-	[self addChild: red];
+		[self addChild: blue z:-1];
+		[self addChild: white];
+		[self addChild: green];
+		[self addChild: red];
 
-	CCAction * rot = [CCRotateBy actionWithDuration:8 angle:720];
-	
-	[blue runAction: rot];
-	[red runAction: [[rot copy] autorelease]];
-	[green runAction: [[rot copy] autorelease]];
-	[white runAction: [[rot copy] autorelease]];
+		CCAction * rot = [CCRotateBy actionWithDuration:8 angle:720];
+		
+		[blue runAction: rot];
+		[red runAction: [[rot copy] autorelease]];
+		[green runAction: [[rot copy] autorelease]];
+		[white runAction: [[rot copy] autorelease]];
+	}
 	
 	return self;
 }

@@ -2,6 +2,7 @@
  * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
  * Copyright (c) 2010 Ricardo Quesada
+ * Copyright (c) 2011 Zynga Inc.
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -52,13 +53,14 @@ enum  {
 	BOOL			isFullScreen_;
 	int				resizeMode_;
 	CGPoint			winOffset_;
-	CGSize			originalWinSize_;
+    CGSize			originalWinSize_;
 	
-	MacGLView		*fullScreenGLView_;
 	NSWindow		*fullScreenWindow_;
-	
+    
 	// cache
-	MacGLView		*windowGLView_;
+	NSWindow		*windowGLView_;
+    NSView          *superViewGLView_;
+    NSRect          originalWinRect_; // Original size and position
 }
 
 // whether or not the view is in fullscreen mode

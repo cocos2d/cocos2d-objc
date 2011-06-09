@@ -2,6 +2,7 @@
  * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
  * Copyright (c) 2008-2010 Ricardo Quesada
+ * Copyright (c) 2011 Zynga Inc.
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -122,7 +123,7 @@ enum {
 /*
  * override add:
  */
--(void) addChild:(CCMenuItem*)child z:(int)z tag:(int) aTag
+-(void) addChild:(CCMenuItem*)child z:(NSInteger)z tag:(NSInteger) aTag
 {
 	NSAssert( [child isKindOfClass:[CCMenuItem class]], @"Menu only supports MenuItem objects as children");
 	[super addChild:child z:z tag:aTag];
@@ -221,7 +222,7 @@ enum {
 
 -(NSInteger) mouseDelegatePriority
 {
-	return NSIntegerMin+1;
+	return kCCMenuMousePriority+1;
 }
 
 -(CCMenuItem *) itemForMouseEvent: (NSEvent *) event
@@ -246,16 +247,19 @@ enum {
 }
 
 -(BOOL) ccMouseUp:(NSEvent *)event
-{	
-	if( selectedItem_ ) {
-		[selectedItem_ unselected];
-		[selectedItem_ activate];
-		
-		state_ = kCCMenuStateWaiting;
+{
+	if( ! visible_ )
+		return NO;
 
+	if(state_ == kCCMenuStateTrackingTouch) {
+		if( selectedItem_ ) {
+			[selectedItem_ unselected];
+			[selectedItem_ activate];
+		}
+		state_ = kCCMenuStateWaiting;
+		
 		return YES;
 	}
-	
 	return NO;
 }
 
@@ -277,17 +281,20 @@ enum {
 
 -(BOOL) ccMouseDragged:(NSEvent *)event
 {
-	CCMenuItem *currentItem = [self itemForMouseEvent:event];
-	
-	if (currentItem != selectedItem_) {
-		[selectedItem_ unselected];
-		selectedItem_ = currentItem;
-		[selectedItem_ selected];
-	}
-	
-	// swallows event ?
-	if( currentItem && state_ == kCCMenuStateTrackingTouch )
+	if( ! visible_ )
+		return NO;
+
+	if(state_ == kCCMenuStateTrackingTouch) {
+		CCMenuItem *currentItem = [self itemForMouseEvent:event];
+		
+		if (currentItem != selectedItem_) {
+			[selectedItem_ unselected];
+			selectedItem_ = currentItem;
+			[selectedItem_ selected];
+		}
+		
 		return YES;
+	}
 	return NO;
 }
 

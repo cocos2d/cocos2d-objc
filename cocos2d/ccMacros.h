@@ -2,6 +2,7 @@
  * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
  * Copyright (c) 2008-2010 Ricardo Quesada
+ * Copyright (c) 2011 Zynga Inc.
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -127,8 +128,8 @@ default gl blend src function. Compatible with premultiplied alpha images.
  */
 #define CC_DISABLE_DEFAULT_GL_STATES() {			\
 	glDisable(GL_TEXTURE_2D);						\
-	glDisableClientState(GL_COLOR_ARRAY);			\
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);	\
+	glDisableClientState(GL_COLOR_ARRAY);			\
 	glDisableClientState(GL_VERTEX_ARRAY);			\
 }
 
