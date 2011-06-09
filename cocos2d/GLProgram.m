@@ -219,10 +219,11 @@ typedef void (*GLLogFunction) (GLuint program,
 
 - (NSString *)fragmentShaderLog
 {
-    return [self logForOpenGLObject:fragShader_
-                       infoCallback:(GLInfoFunction)&glGetProgramiv 
-                            logFunc:(GLLogFunction)&glGetProgramInfoLog];
+	return [self logForOpenGLObject:fragShader_
+					   infoCallback:(GLInfoFunction)&glGetShaderiv 
+							logFunc:(GLLogFunction)&glGetShaderInfoLog];
 }
+
 - (NSString *)programLog
 {
     return [self logForOpenGLObject:program_
