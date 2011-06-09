@@ -218,6 +218,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
     * Justin Graham (http://www.zynga.com)
         AtlasNode: added init method
         TextureCache: it is easier to subclass
+		GLProgram: fixes in fragmentShaderLog
 	* Karthik Chokkaram (http://bluefroggaming.com/)
 		Added helper method to create CCSpawn and CCSequence with an NSArray
 	* kasatani:

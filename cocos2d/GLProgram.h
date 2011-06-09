@@ -45,7 +45,7 @@ enum {
 	kCCUniformMVMatrix,
 	kCCUniformSampler,
 
-	kCCUniform_MAX,
+	kCCUniform_MAX = 10,
 };
 
 #define kCCShader_PositionTextureColor		@"ShaderPositionTextureColor"
