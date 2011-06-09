@@ -86,6 +86,8 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		patch for TMX per-tile properties
 	* Daniele Benegiamo:
 		Prevent possible memory corruption with particles when autoRemove is On. patch.
+	* David Deaco (http://iceflame.com/)
+		Author of RenderTexture Test #3
 	* David Hakim (http://kretures.com)
 		Event Dispatcher in Mac is synced. patch.
 		Dispatcher in Mac supports NSTimer events. patch.

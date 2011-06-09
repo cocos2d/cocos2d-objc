@@ -19,6 +19,11 @@ version 2.0-alpha XX-Apr-2011
 . [FIX] Xcode: Tremor / vorbis: Removed. Experimental sound engine is no longer supported
 . [FIX] Xcode: iOS 4 is minimun required to run
 
+version 1.0.0 -
+. [FIX] cocosLive: fixed memory leak in ScoreServerPost
+. [FIX] Tests: Fixed memory leak in ParticleTest
+. [FIX] Tests: Fixed memory leak in cocosLiveTest
+. [FIX] Xcode: cocos2d compiles OK with Xcode 4.2 + llvm 3.0
 
 version 1.0-rc3 - 31-May-2011
 . [NEW] Actions: Added SkewTo and SkewBy actions

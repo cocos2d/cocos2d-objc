@@ -1,6 +1,5 @@
 //
-// Sprite Demo
-// a cocos2d example
+// Example that shows how to extend cocos2d
 // http://www.cocos2d-iphone.org
 //
 
@@ -8,21 +7,20 @@
 #import "cocos2d.h"
 
 // local import
-#import "DirectorTest.h"
-
-static int sceneIdx=-1;
-static NSString *transitions[] = {	
-
-	@"Director1",
-
-};
+#import "TestCocos2dExtension.h"
 
 Class nextAction(void);
 Class backAction(void);
 Class restartAction(void);
 
-Class nextAction()
-{	
+static int sceneIdx=-1;
+static NSString *transitions[] = {
+	@"Test1",
+};
+
+Class nextAction(void)
+{
+	
 	sceneIdx++;
 	sceneIdx = sceneIdx % ( sizeof(transitions) / sizeof(transitions[0]) );
 	NSString *r = transitions[sceneIdx];
@@ -30,7 +28,7 @@ Class nextAction()
 	return c;
 }
 
-Class backAction()
+Class backAction(void)
 {
 	sceneIdx--;
 	int total = ( sizeof(transitions) / sizeof(transitions[0]) );
@@ -42,7 +40,7 @@ Class backAction()
 	return c;
 }
 
-Class restartAction()
+Class restartAction(void)
 {
 	NSString *r = transitions[sceneIdx];
 	Class c = NSClassFromString(r);
@@ -50,20 +48,20 @@ Class restartAction()
 }
 
 #pragma mark -
-#pragma mark DirectorTest
+#pragma mark ExtensionTest
 
-@implementation DirectorTest
+@implementation ExtensionTest
 -(id) init
 {
 	if( (self = [super init]) ) {
-
-
+		
+		
 		CGSize s = [[CCDirector sharedDirector] winSize];
-			
+		
 		CCLabelTTF *label = [CCLabelTTF labelWithString:[self title] fontName:@"Arial" fontSize:26];
 		[self addChild: label z:1];
 		[label setPosition: ccp(s.width/2, s.height-50)];
-
+		
 		NSString *subtitle = [self subtitle];
 		if( subtitle ) {
 			CCLabelTTF *l = [CCLabelTTF labelWithString:subtitle fontName:@"Thonburi" fontSize:16];
@@ -81,7 +79,7 @@ Class restartAction()
 		item1.position = ccp( s.width/2 - 100,30);
 		item2.position = ccp( s.width/2, 30);
 		item3.position = ccp( s.width/2 + 100,30);
-		[self addChild: menu z:1];	
+		[self addChild: menu z:1];
 	}
 	return self;
 }
@@ -123,116 +121,79 @@ Class restartAction()
 }
 @end
 
+
+
 #pragma mark -
-#pragma mark Director1
+#pragma mark Test1
 
+@interface CCNode ()
+{
+	// It is not possible to add new ivars to existing classes.
+//    int newIvar;
+}
+-(void)testExtensionMethod;
+@end
 
-@implementation Director1
+@implementation CCNode (Extension)
+-(void)testExtensionMethod
+{
+//	newIvar++;
+    NSLog(@"got, not called %@! Selectors are essentially messages, not methods; thus they can be sent/received, never called!", NSStringFromSelector(_cmd));
+}
+@end
+
+@implementation Test1
 
 -(id) init
 {
 	if( (self=[super init]) ) {
-		
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
-		self.isTouchEnabled = YES;
-		
-		CGSize s = [[CCDirector sharedDirector] winSize];
 
-		CCMenuItem *item = [CCMenuItemFont itemFromString:@"Rotate Device" target:self selector:@selector(rotateDevice:)];
-		CCMenu *menu = [CCMenu menuWithItems:item, nil];
-		[menu setPosition:ccp( s.width/2, s.height/2) ];
-		[self addChild:menu];
+		CGSize s = [[CCDirector sharedDirector] winSize];
+		CCSprite *sprite = [CCSprite spriteWithFile:@"grossini.png"];
 		
+		[sprite setPosition:ccp(s.width/2, s.height/2)];
 		
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
-		self.isMouseEnabled = YES;
-#endif	
+		[self addChild:sprite];
 		
-		
-	}	
+		[sprite testExtensionMethod];
+//		[sprite setExtIvar:10];
+//		
+//		NSLog(@"Sprite newIvar: %d", [sprite extIvar]);
+	}
+	
 	return self;
 }
 
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
--(void) newOrientation
+- (void)dealloc
 {
-	ccDeviceOrientation orientation = [[CCDirector sharedDirector] deviceOrientation];
-	switch (orientation) {
-		case CCDeviceOrientationLandscapeLeft:
-			orientation = CCDeviceOrientationPortrait;
-			break;
-		case CCDeviceOrientationPortrait:
-			orientation = CCDeviceOrientationLandscapeRight;
-			break;						
-		case CCDeviceOrientationLandscapeRight:
-			orientation = CCDeviceOrientationPortraitUpsideDown;
-			break;
-		case CCDeviceOrientationPortraitUpsideDown:
-			orientation = CCDeviceOrientationLandscapeLeft;
-			break;
-	}
-	[[CCDirector sharedDirector] setDeviceOrientation:orientation];
+    
+    [super dealloc];
 }
--(void) rotateDevice:(id)sender
-{
-	[self newOrientation];
-	CCScene *s = [CCScene node];
-	[s addChild: [restartAction() node]];	
-	
-	[[CCDirector sharedDirector] replaceScene: s];
-}
-#endif // __IPHONE_OS_VERSION_MAX_ALLOWED
-
-
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
-- (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
-{
-	for( UITouch *touch in touches ) {
-		CGPoint a = [touch locationInView: [touch view]];
-		
-		CCDirector *director = [CCDirector sharedDirector];
-		CGPoint b = [director convertToUI: [director convertToGL: a]];
-		
-		NSLog(@"(%d,%d) == (%d,%d)", (int) a.x, (int)a.y, (int)b.x, (int)b.y );
-		
-	}
-}
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
--(BOOL) ccMouseUp:(NSEvent *)event
-{
-	NSLog(@"NOT IMPLEMENTED");
-	return YES;
-}
-#endif
 
 -(NSString *) title
 {
-	return @"Testing conversion";
+	return @"Extension Test";
 }
 
 -(NSString*) subtitle
 {
-	return @"Tap screen and see the debug console";
+	return @"Test methods and ivars";
 }
 @end
-
 
 #pragma mark -
 #pragma mark AppDelegate
 
 // CLASS IMPLEMENTATIONS
-
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 @implementation AppController
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
 	// Init the window
 	window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-
+	
 	// must be called before any othe call to the director
 	[CCDirector setDirectorType:kCCDirectorTypeDisplayLink];
-//	[CCDirector setDirectorType:kCCDirectorTypeThreadMainLoop];
 	
 	// before creating any layer, set the landscape mode
 	CCDirector *director = [CCDirector sharedDirector];
@@ -246,26 +207,17 @@ Class restartAction()
 	// Display FPS: yes
 	[director setDisplayFPS:YES];
 	
-	// Enable Retina display
-	[director enableRetinaDisplay:YES];
-
 	// Create an EAGLView with a RGB8 color buffer, and a depth buffer of 24-bits
 	EAGLView *glView = [EAGLView viewWithFrame:[window bounds]
 								   pixelFormat:kEAGLColorFormatRGBA8
-								   depthFormat:GL_DEPTH_COMPONENT24_OES
-							preserveBackbuffer:NO
-									sharegroup:nil
-								 multiSampling:NO
-							   numberOfSamples:0];
-
+								   depthFormat:GL_DEPTH_COMPONENT24_OES];
+	
 	// attach the openglView to the director
 	[director setOpenGLView:glView];
-
-	// 2D projection
-//	[director setProjection:kCCDirectorProjection2D];
 	
-
-
+	// 2D projection
+	//	[director setProjection:kCCDirectorProjection2D];
+	
 	// Enables High Res mode (Retina Display) on iPhone 4 and maintains low res on all other devices
 	if( ! [director enableRetinaDisplay:YES] )
 		CCLOG(@"Retina Display Not supported");
@@ -280,9 +232,6 @@ Class restartAction()
 	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
 	// You can change anytime.
 	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA8888];	
-	
-	// Assume that PVR images have premultiplied alpha
-	[CCTexture2D PVRImagesHavePremultipliedAlpha:YES];
 	
 	// create the main scene
 	CCScene *scene = [CCScene node];
@@ -342,49 +291,3 @@ Class restartAction()
 	[super dealloc];
 }
 @end
-
-#pragma mark -
-#pragma mark AppController - Mac
-
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
-
-@implementation cocos2dmacAppDelegate
-
-@synthesize window=window_, glView=glView_;
-
-- (void)applicationDidFinishLaunching:(NSNotification *)aNotification
-{
-	CCDirectorMac *director = (CCDirectorMac*) [CCDirector sharedDirector];
-	
-	[director setDisplayFPS:YES];
-	
-	[director setOpenGLView:glView_];
-
-	//	[director setProjection:kCCDirectorProjection2D];
-	
-	// Enable "moving" mouse event. Default no.
-	[window_ setAcceptsMouseMovedEvents:NO];
-	
-	// EXPERIMENTAL stuff.
-	// 'Effects' don't work correctly when autoscale is turned on.
-	[director setResizeMode:kCCDirectorResize_AutoScale];	
-	
-	CCScene *scene = [CCScene node];
-	[scene addChild: [nextAction() node]];
-	
-	[director runWithScene:scene];
-}
-
-- (BOOL) applicationShouldTerminateAfterLastWindowClosed: (NSApplication *) theApplication
-{
-	return YES;
-}
-
-- (IBAction)toggleFullScreen: (id)sender
-{
-	CCDirectorMac *director = (CCDirectorMac*) [CCDirector sharedDirector];
-	[director setFullScreen: ! [director isFullScreen] ];
-}
-
-@end
-#endif

@@ -1,0 +1,85 @@
+diff --git a/external/Chipmunk/Demo/MagnetsElectric.c b/external/Chipmunk/Demo/MagnetsElectric.c
+index e5ccb26..5a5297c 100644
+--- a/external/Chipmunk/Demo/MagnetsElectric.c
++++ b/external/Chipmunk/Demo/MagnetsElectric.c
+@@ -24,6 +24,7 @@
+ // Prototypes
+ struct DataforForce;
+ typedef void (*SingForceFunc)(struct DataforForce* data);
++void make_mix(cpVect p, cpFloat ang, cpFloat mag,cpFloat chg);
+ 
+ // Structures
+ // Singularities
+diff --git a/external/Chipmunk/include/chipmunk/constraints/util.h b/external/Chipmunk/include/chipmunk/constraints/util.h
+index e8c0e0b..a1ce500 100644
+--- a/external/Chipmunk/include/chipmunk/constraints/util.h
++++ b/external/Chipmunk/include/chipmunk/constraints/util.h
+@@ -19,7 +19,9 @@
+  * SOFTWARE.
+  */
+ 
+-#define CP_DefineClassGetter(t) const cpConstraintClass * t##GetClass(){return (cpConstraintClass *)&klass;}
++#define CP_DefineClassGetter(t)													\
++const cpConstraintClass * t##GetClass(void);									\
++const cpConstraintClass * t##GetClass(){return (cpConstraintClass *)&klass;}
+ 
+ void cpConstraintInit(cpConstraint *constraint, const cpConstraintClass *klass, cpBody *a, cpBody *b);
+ 
+diff --git a/external/Chipmunk/src/constraints/cpDampedRotarySpring.c b/external/Chipmunk/src/constraints/cpDampedRotarySpring.c
+index 499103d..48597de 100644
+--- a/external/Chipmunk/src/constraints/cpDampedRotarySpring.c
++++ b/external/Chipmunk/src/constraints/cpDampedRotarySpring.c
+@@ -72,6 +72,7 @@ getImpulse(cpConstraint *constraint)
+ 	return 0.0f;
+ }
+ 
++const cpConstraintClass * cpDampedRotarySpringGetClass();
+ static const cpConstraintClass klass = {
+ 	(cpConstraintPreStepFunction)preStep,
+ 	(cpConstraintApplyImpulseFunction)applyImpulse,
+diff --git a/external/Chipmunk/src/cpArbiter.c b/external/Chipmunk/src/cpArbiter.c
+index 9e023a7..c2b9ccb 100644
+--- a/external/Chipmunk/src/cpArbiter.c
++++ b/external/Chipmunk/src/cpArbiter.c
+@@ -24,6 +24,13 @@
+ #include "chipmunk_private.h"
+ #include "constraints/util.h"
+ 
++cpFloat cpContactsEstimateCrushingImpulse(cpContact *contacts, int numContacts);
++cpArbiter* cpArbiterAlloc(void);
++cpArbiter* cpArbiterNew(cpShape *a, cpShape *b);
++void cpArbiterDestroy(cpArbiter *arb);
++void cpArbiterFree(cpArbiter *arb);
++
++
+ cpFloat cp_bias_coef = 0.1f;
+ cpFloat cp_collision_slop = 0.1f;
+ 
+diff --git a/external/Chipmunk/src/cpBody.c b/external/Chipmunk/src/cpBody.c
+index a242181..0b40c5c 100644
+--- a/external/Chipmunk/src/cpBody.c
++++ b/external/Chipmunk/src/cpBody.c
+@@ -25,6 +25,9 @@
+ 
+ #include "chipmunk_private.h"
+ 
++// function declaration
++cpBody *cpBodyNewStatic(void);
++
+ // initialized in cpInitChipmunk()
+ cpBody cpStaticBodySingleton;
+ 
+diff --git a/external/Chipmunk/src/cpSpaceComponent.c b/external/Chipmunk/src/cpSpaceComponent.c
+index e99d6d7..cee3e76 100644
+--- a/external/Chipmunk/src/cpSpaceComponent.c
++++ b/external/Chipmunk/src/cpSpaceComponent.c
+@@ -23,6 +23,9 @@
+ 
+ #include "chipmunk_private.h"
+ 
++// function declaration
++void cpSpaceProcessComponents(cpSpace *space, cpFloat dt);
++
+ #pragma mark Sleeping Functions
+ 
+ // Chipmunk uses a data structure called a disjoint set forest.

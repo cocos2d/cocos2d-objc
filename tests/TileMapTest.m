@@ -48,6 +48,11 @@ enum {
 	kTagTileMap = 1,
 };
 
+Class nextAction(void);
+Class backAction(void);
+Class restartAction(void);
+
+
 Class nextAction()
 {
 	
