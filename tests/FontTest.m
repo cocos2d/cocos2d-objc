@@ -33,6 +33,12 @@ static NSString *fontList[] =
 	@"Scissor Cuts",
 };
 
+
+NSString* nextAction(void);
+NSString* backAction(void);
+NSString* restartAction(void);
+
+
 NSString* nextAction()
 {	
 	fontIdx++;

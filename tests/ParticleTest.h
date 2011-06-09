@@ -30,7 +30,7 @@
 
 @interface ParticleDemo : CCLayerColor
 {
-	CCParticleSystem	*emitter;
+	CCParticleSystem	*emitter_;
 	CCSprite			*background;
 }
 

@@ -8,6 +8,8 @@
 #pragma mark -
 #pragma mark MemBug
 
+int check_for_error( CGPoint p1, CGPoint p2, CGPoint p3, CGPoint p4, float s, float t );
+
 int check_for_error( CGPoint p1, CGPoint p2, CGPoint p3, CGPoint p4, float s, float t )
 {
 	//	the hit point is		p3 + t * (p4 - p3);

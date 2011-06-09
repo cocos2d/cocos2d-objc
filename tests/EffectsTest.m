@@ -315,6 +315,10 @@ static NSString *effectsList[] =
 	@"PageTurn3D",
 };
 
+Class nextAction(void);
+Class backAction(void);
+Class restartAction(void);
+
 Class nextAction()
 {	
 	actionIdx++;

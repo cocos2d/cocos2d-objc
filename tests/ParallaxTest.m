@@ -21,6 +21,10 @@ static NSString *transitions[] = {
 			@"Parallax2",
 };
 
+Class nextAction(void);
+Class backAction(void);
+Class restartAction(void);
+
 Class nextAction()
 {
 	
@@ -54,26 +58,26 @@ Class restartAction()
 @implementation ParallaxDemo
 -(id) init
 {
-	[super init];
+	if( (self=[super init]) ) {
 
-
-	CGSize s = [[CCDirector sharedDirector] winSize];
+		CGSize s = [[CCDirector sharedDirector] winSize];
+			
+		CCLabelTTF *label = [CCLabelTTF labelWithString:[self title] fontName:@"Arial" fontSize:32];
+		[self addChild: label z:1];
+		[label setPosition: ccp(s.width/2, s.height-50)];
 		
-	CCLabelTTF *label = [CCLabelTTF labelWithString:[self title] fontName:@"Arial" fontSize:32];
-	[self addChild: label z:1];
-	[label setPosition: ccp(s.width/2, s.height-50)];
-	
-	CCMenuItemImage *item1 = [CCMenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
-	CCMenuItemImage *item2 = [CCMenuItemImage itemFromNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
-	CCMenuItemImage *item3 = [CCMenuItemImage itemFromNormalImage:@"f1.png" selectedImage:@"f2.png" target:self selector:@selector(nextCallback:)];
-	
-	CCMenu *menu = [CCMenu menuWithItems:item1, item2, item3, nil];
-	
-	menu.position = CGPointZero;
-	item1.position = ccp( s.width/2 - 100,30);
-	item2.position = ccp( s.width/2, 30);
-	item3.position = ccp( s.width/2 + 100,30);
-	[self addChild: menu z:1];	
+		CCMenuItemImage *item1 = [CCMenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
+		CCMenuItemImage *item2 = [CCMenuItemImage itemFromNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
+		CCMenuItemImage *item3 = [CCMenuItemImage itemFromNormalImage:@"f1.png" selectedImage:@"f2.png" target:self selector:@selector(nextCallback:)];
+		
+		CCMenu *menu = [CCMenu menuWithItems:item1, item2, item3, nil];
+		
+		menu.position = CGPointZero;
+		item1.position = ccp( s.width/2 - 100,30);
+		item2.position = ccp( s.width/2, 30);
+		item3.position = ccp( s.width/2 + 100,30);
+		[self addChild: menu z:1];
+	}
 
 	return self;
 }
@@ -115,67 +119,67 @@ Class restartAction()
 @implementation Parallax1
 -(id) init
 {
-	if( ![super init] )
-		return nil;
+	if( (self=[super init] ) ) {
 
-	// Top Layer, a simple image
-	CCSprite *cocosImage = [CCSprite spriteWithFile:@"powered.png"];
-	// scale the image (optional)
-	cocosImage.scale = 2.5f;
-	// change the transform anchor point to 0,0 (optional)
-	cocosImage.anchorPoint = ccp(0,0);
-	
+		// Top Layer, a simple image
+		CCSprite *cocosImage = [CCSprite spriteWithFile:@"powered.png"];
+		// scale the image (optional)
+		cocosImage.scale = 2.5f;
+		// change the transform anchor point to 0,0 (optional)
+		cocosImage.anchorPoint = ccp(0,0);
+		
 
-	// Middle layer: a Tile map atlas
-	CCTileMapAtlas *tilemap = [CCTileMapAtlas tileMapAtlasWithTileFile:@"TileMaps/tiles.png" mapFile:@"TileMaps/levelmap.tga" tileWidth:16 tileHeight:16];
-	[tilemap releaseMap];
-	
-	// change the transform anchor to 0,0 (optional)
-	tilemap.anchorPoint = ccp(0, 0);
+		// Middle layer: a Tile map atlas
+		CCTileMapAtlas *tilemap = [CCTileMapAtlas tileMapAtlasWithTileFile:@"TileMaps/tiles.png" mapFile:@"TileMaps/levelmap.tga" tileWidth:16 tileHeight:16];
+		[tilemap releaseMap];
+		
+		// change the transform anchor to 0,0 (optional)
+		tilemap.anchorPoint = ccp(0, 0);
 
-	// Anti Aliased images
-	[tilemap.texture setAntiAliasTexParameters];
-	
+		// Anti Aliased images
+		[tilemap.texture setAntiAliasTexParameters];
+		
 
-	// background layer: another image
-	CCSprite *background = [CCSprite spriteWithFile:@"background.png"];
-	// scale the image (optional)
-	background.scale = 1.5f;
-	// change the transform anchor point (optional)
-	background.anchorPoint = ccp(0,0);
+		// background layer: another image
+		CCSprite *background = [CCSprite spriteWithFile:@"background.png"];
+		// scale the image (optional)
+		background.scale = 1.5f;
+		// change the transform anchor point (optional)
+		background.anchorPoint = ccp(0,0);
 
-	
-	// create a void node, a parent node
-	CCParallaxNode *voidNode = [CCParallaxNode node];
-	
-	// NOW add the 3 layers to the 'void' node
+		
+		// create a void node, a parent node
+		CCParallaxNode *voidNode = [CCParallaxNode node];
+		
+		// NOW add the 3 layers to the 'void' node
 
-	// background image is moved at a ratio of 0.4x, 0.5y
-	[voidNode addChild:background z:-1 parallaxRatio:ccp(0.4f,0.5f) positionOffset:CGPointZero];
-	
-	// tiles are moved at a ratio of 2.2x, 1.0y
-	[voidNode addChild:tilemap z:1 parallaxRatio:ccp(2.2f,1.0f) positionOffset:ccp(0,-200)];
-	
-	// top image is moved at a ratio of 3.0x, 2.5y
-	[voidNode addChild:cocosImage z:2 parallaxRatio:ccp(3.0f,2.5f) positionOffset:ccp(200,800)];
-	
-	
-	// now create some actions that will move the 'void' node
-	// and the children of the 'void' node will move at different
-	// speed, thus, simulation the 3D environment
-	id goUp = [CCMoveBy actionWithDuration:4 position:ccp(0,-500)];
-	id goDown = [goUp reverse];
-	id go = [CCMoveBy actionWithDuration:8 position:ccp(-1000,0)];
-	id goBack = [go reverse];
-	id seq = [CCSequence actions:
-			  goUp,
-			  go,
-			  goDown,
-			  goBack,
-			  nil];	
-	[voidNode runAction: [CCRepeatForever actionWithAction:seq ] ];
-	
-	[self addChild:voidNode];
+		// background image is moved at a ratio of 0.4x, 0.5y
+		[voidNode addChild:background z:-1 parallaxRatio:ccp(0.4f,0.5f) positionOffset:CGPointZero];
+		
+		// tiles are moved at a ratio of 2.2x, 1.0y
+		[voidNode addChild:tilemap z:1 parallaxRatio:ccp(2.2f,1.0f) positionOffset:ccp(0,-200)];
+		
+		// top image is moved at a ratio of 3.0x, 2.5y
+		[voidNode addChild:cocosImage z:2 parallaxRatio:ccp(3.0f,2.5f) positionOffset:ccp(200,800)];
+		
+		
+		// now create some actions that will move the 'void' node
+		// and the children of the 'void' node will move at different
+		// speed, thus, simulation the 3D environment
+		id goUp = [CCMoveBy actionWithDuration:4 position:ccp(0,-500)];
+		id goDown = [goUp reverse];
+		id go = [CCMoveBy actionWithDuration:8 position:ccp(-1000,0)];
+		id goBack = [go reverse];
+		id seq = [CCSequence actions:
+				  goUp,
+				  go,
+				  goDown,
+				  goBack,
+				  nil];	
+		[voidNode runAction: [CCRepeatForever actionWithAction:seq ] ];
+		
+		[self addChild:voidNode];
+	}
 	
 	return self;
 	
