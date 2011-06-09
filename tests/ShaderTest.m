@@ -387,32 +387,31 @@ enum {
 		blur_ = ccp(1/s.width, 1/s.height);
 		sub_[0] = sub_[1] = sub_[2] = sub_[3] = 0;
 		
-		GLProgram *shader = [[GLProgram alloc] initWithVertexShaderFilename:@"Shaders/PositionTextureColor.vert"
+		self.shaderProgram = [[GLProgram alloc] initWithVertexShaderFilename:@"Shaders/PositionTextureColor.vert"
 													 fragmentShaderFilename:@"Shaders/Blur.frag"];
+		
+		[self.shaderProgram release];
 
 		CHECK_GL_ERROR_DEBUG();
 
-		[shader addAttribute:@"aVertex" index:kCCAttribPosition];
-		[shader addAttribute:@"aColor" index:kCCAttribColor];
-		[shader addAttribute:@"aTexCoord" index:kCCAttribTexCoords];
+		[shaderProgram_ addAttribute:kCCAttributeNamePosition index:kCCAttribPosition];
+		[shaderProgram_ addAttribute:kCCAttributeNameColor index:kCCAttribColor];
+		[shaderProgram_ addAttribute:kCCAttributeNameTexCoord index:kCCAttribTexCoords];
 		
 		CHECK_GL_ERROR_DEBUG();
 		
-		[shader link];
+		[shaderProgram_ link];
 
 		CHECK_GL_ERROR_DEBUG();
 		
-		[shader updateUniforms];
+		[shaderProgram_ updateUniforms];
 
 		CHECK_GL_ERROR_DEBUG();
 
-		blurLocation = glGetUniformLocation( shader->program_, "blurSize");
-		subLocation = glGetUniformLocation( shader->program_, "subtract");
+		subLocation = glGetUniformLocation( shaderProgram_->program_, "substract");
+		blurLocation = glGetUniformLocation( shaderProgram_->program_, "blurSize");
 		
 		CHECK_GL_ERROR_DEBUG();
-
-		self.shaderProgram = shader;
-		[shader release];
 	}
 	
 	return self;
@@ -424,23 +423,15 @@ enum {
 	// Needed states: GL_TEXTURE0, k,CCAttribVertex, kCCAttribColor, kCCAttribTexCoords
 	// Unneeded states: -
 	
-
-	ccglBlendFunc( blendFunc_.src, blendFunc_.dst );
+	ccglBlendFunc( blendFunc_.src, blendFunc_.dst );	
 	
 	ccglUseProgram( shaderProgram_->program_ );
-
-	//
-	// Uniforms
-	//
-	
 	ccglUniformProjectionMatrix( shaderProgram_ );
-	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformMVMatrix], 1, GL_FALSE, transformMV_.mat);	
+	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformMVMatrix], 1, GL_FALSE, transformMV_.mat);
 	glUniform2f( blurLocation, blur_.x, blur_.y );
 	glUniform4f( subLocation, sub_[0], sub_[1], sub_[2], sub_[3] );
 	
-	CHECK_GL_ERROR_DEBUG();
-
-	ccglBindTexture2D( [texture_ name]);	
+	ccglBindTexture2D( [texture_ name] );
 	
 	//
 	// Attributes
@@ -461,11 +452,7 @@ enum {
 	glVertexAttribPointer(kCCAttribColor, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (void*)(offset + diff));
 	
 	
-	CHECK_GL_ERROR_DEBUG();
-
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-
-	CHECK_GL_ERROR_DEBUG();
 }
 @end
 

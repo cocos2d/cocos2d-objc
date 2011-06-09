@@ -141,12 +141,15 @@ typedef void (*GLLogFunction) (GLuint program,
 
 -(void) updateUniforms
 {
+	// Since sample most probably won't change, set it to 0 now.
+	
 	// update uniforms
 	uniforms_[kCCUniformPMatrix] = glGetUniformLocation(program_, kCCUniformPMatrix_s);
+
 	uniforms_[kCCUniformMVMatrix] = glGetUniformLocation(program_, kCCUniformMVMatrix_s);
+
 	uniforms_[kCCUniformSampler] = glGetUniformLocation(program_, kCCUniformSampler_s);
 	
-	// Since sample most probably won't change, set it to 0 now.
 	ccglUseProgram( program_ );
 	glUniform1i( uniforms_[kCCUniformSampler], 0 );
 }	
