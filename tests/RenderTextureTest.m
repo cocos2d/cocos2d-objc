@@ -381,15 +381,15 @@ Class restartAction()
 		self.isTouchEnabled = YES;
 		CGSize size = [[CCDirector sharedDirector] winSize];
 		CCLabelTTF *label = [CCLabelTTF labelWithString:@"vertexZ = 50" fontName:@"Marker Felt" fontSize:64];
-		label.position =  ccp( size.width /2 , size.height*0.25 );
+		label.position =  ccp( size.width /2 , size.height*0.25f );
 		[self addChild: label];
 		
 		CCLabelTTF *label2 = [CCLabelTTF labelWithString:@"vertexZ = 0" fontName:@"Marker Felt" fontSize:64];
-		label2.position =  ccp( size.width /2 , size.height*0.5 );
+		label2.position =  ccp( size.width /2 , size.height*0.5f );
 		[self addChild: label2];
 		
 		CCLabelTTF *label3 = [CCLabelTTF labelWithString:@"vertexZ = -50" fontName:@"Marker Felt" fontSize:64];
-		label3.position =  ccp( size.width /2 , size.height*0.75 );
+		label3.position =  ccp( size.width /2 , size.height*0.75f );
 		[self addChild: label3];
 		
 		label.vertexZ = 50;
