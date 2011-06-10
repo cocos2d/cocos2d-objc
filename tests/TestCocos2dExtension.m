@@ -126,11 +126,8 @@ Class restartAction(void)
 #pragma mark -
 #pragma mark Test1
 
+// It is not possible to add new ivars to existing classes.
 @interface CCNode ()
-{
-	// It is not possible to add new ivars to existing classes.
-//    int newIvar;
-}
 -(void)testExtensionMethod;
 @end
 
