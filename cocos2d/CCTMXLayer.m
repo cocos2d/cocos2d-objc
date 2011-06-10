@@ -39,6 +39,11 @@
 #pragma mark -
 #pragma mark CCSpriteBatchNode Extension
 
+@interface CCSpriteBatchNode (TMXTiledMapExtensions)
+-(id) addSpriteWithoutQuad:(CCSprite*)child z:(NSUInteger)z tag:(NSInteger)aTag;
+-(void) addQuadFromSprite:(CCSprite*)sprite quadIndex:(NSUInteger)index;
+@end
+
 /* IMPORTANT XXX IMPORTNAT:
  * These 2 methods can't be part of CCTMXLayer since they call [super add...], and CCSpriteSheet#add SHALL not be called
  */
