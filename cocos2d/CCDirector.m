@@ -81,6 +81,7 @@ extern NSString * cocos2dVersion(void);
 @synthesize animationInterval = animationInterval_;
 @synthesize runningScene = runningScene_;
 @synthesize displayFPS = displayFPS_;
+@synthesize FPSCustomPosition = FPSCustomPosition_;
 @synthesize nextDeltaTimeZero = nextDeltaTimeZero_;
 @synthesize isPaused = isPaused_;
 @synthesize sendCleanupToScene = sendCleanupToScene_;
@@ -139,6 +140,7 @@ static CCDirector *_sharedDirector = nil;
 
 		// FPS
 		displayFPS_ = NO;
+        FPSCustomPosition_ = ccp(3,3);
 		frames_ = 0;
 		
 		// paused ?
@@ -535,6 +537,9 @@ static CCDirector *_sharedDirector = nil;
 		[str release];
 	}
 
+    // Translate FPS position
+	glTranslatef(FPSCustomPosition_.x,FPSCustomPosition_.y,0);
+
 	[FPSLabel_ draw];
 }
 #else
@@ -562,7 +567,7 @@ static CCDirector *_sharedDirector = nil;
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	
 	glColor4ub(224,224,244,200);
-	[texture drawAtPoint: ccp(5,2)];
+	[texture drawAtPoint: ccp(FPSCustomPosition_.x,FPSCustomPosition_.y)];
 	[texture release];
 	
 	glBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);
@@ -571,6 +576,26 @@ static CCDirector *_sharedDirector = nil;
 	glEnableClientState(GL_COLOR_ARRAY);
 }
 #endif
+
+-(void)setFPSPosition:(ccFPSPosition)FPSPosition {
+    CGSize winSize = [[CCDirector sharedDirector] winSize];
+    switch (FPSPosition) {
+        case kCCFPSPositionUpperLeft:
+            FPSCustomPosition_ = CGPointMake(3, winSize.height - 28);
+            break;
+        case kCCFPSPositionUpperRight:
+            FPSCustomPosition_ = CGPointMake(winSize.width - 70, winSize.height - 28);
+            break;
+        case kCCFPSPositionLowerLeft:
+            FPSCustomPosition_ = CGPointMake(3,3);
+            break;
+        case kCCFPSPositionLowerRight:
+            FPSCustomPosition_ = CGPointMake(winSize.width - 70, 3);
+            break;
+        case kCCFPSPositionCustom:
+            break;
+    }
+}
 
 - (void) showProfilers {
 #if CC_ENABLE_PROFILERS

@@ -53,6 +53,18 @@ typedef enum {
 
 } ccDirectorProjection;
 
+/** @typedef kCCFPSCorner
+ FPS label predefined positions
+ */
+typedef enum {
+	kCCFPSPositionUpperLeft=0,
+	kCCFPSPositionUpperRight,
+	kCCFPSPositionLowerLeft,
+    kCCFPSPositionLowerRight,
+    kCCFPSPositionCustom,
+    kCCFPSCornerDefault = kCCFPSPositionLowerRight
+} ccFPSPosition;
+
 
 @class CCLabelAtlas;
 @class CCScene;
@@ -86,6 +98,7 @@ and when to execute the Scenes.
 	
 	/* display FPS ? */
 	BOOL displayFPS_;
+	CGPoint FPSCustomPosition_;
 
 	NSUInteger frames_;
 	ccTime accumDt_;
@@ -153,6 +166,8 @@ and when to execute the Scenes.
 @property (nonatomic,readwrite, assign) NSTimeInterval animationInterval;
 /** Whether or not to display the FPS on the bottom-left corner */
 @property (nonatomic,readwrite, assign) BOOL displayFPS;
+//** To position the FPS label if no corner is set */
+@property (nonatomic,readwrite, assign) CGPoint FPSCustomPosition;
 /** The OpenGLView, where everything is rendered */
 @property (nonatomic,readwrite,retain) CC_GLVIEW *openGLView;
 /** whether or not the next delta time will be zero */
@@ -186,7 +201,15 @@ and when to execute the Scenes.
 /** returns a shared instance of the director */
 +(CCDirector *)sharedDirector;
 
+// FPS Label
 
+/** Set the FPSPosition in any of the predefined locations:
+ kCCFPSPositionUpperLeft,
+ kCCFPSPositionUpperRight,
+ kCCFPSPositionLowerLeft or
+ kCCFPSPositionLowerRight
+ */
+-(void)setFPSPosition:(ccFPSPosition)FPSPosition;
 
 // Window size
 
