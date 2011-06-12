@@ -33,6 +33,8 @@
 #import "ccMacros.h"
 #import "Support/CGPointExtension.h"
 
+#import "CCMenu.h"
+
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 #import "Platforms/iOS/CCTouchDispatcher.h"
 #import "Platforms/iOS/CCDirectorIOS.h"
@@ -91,6 +93,13 @@
 			else
 				[[UIAccelerometer sharedAccelerometer] setDelegate:nil];
 		}
+        // Propagate to children that support this kind of event (CCLayer and CCMenu mainly)
+        for (id child in [self children]) {
+            if ([child respondsToSelector:@selector(setIsAccelerometerEnabled:)]) {
+                [child setIsAccelerometerEnabled:enabled];
+            }
+        }
+
 	}
 }
 
@@ -109,6 +118,12 @@
 			else
 				[[CCTouchDispatcher sharedDispatcher] removeDelegate:self];
 		}
+        // Propagate isTouchEnabled to children that support touches (CCLayer and CCMenu mainly)
+        for (id child in [self children]) {
+            if ([child respondsToSelector:@selector(setIsTouchEnabled:)]) {
+                [child setIsTouchEnabled:enabled];
+            }
+        }
 	}
 }
 
@@ -137,6 +152,12 @@
 			else
 				[[CCEventDispatcher sharedDispatcher] removeMouseDelegate:self];
 		}
+        // Propagate to children that support this kind of event (CCLayer and CCMenu mainly)
+        for (id child in [self children]) {
+            if ([child respondsToSelector:@selector(setIsMouseEnabled:)]) {
+                [child setIsMouseEnabled:enabled];
+            }
+        }
 	}
 }
 
@@ -161,6 +182,12 @@
 			else
 				[[CCEventDispatcher sharedDispatcher] removeKeyboardDelegate:self];
 		}
+        // Propagate to children that support this kind of event (CCLayer and CCMenu mainly)
+        for (id child in [self children]) {
+            if ([child respondsToSelector:@selector(setIsKeyboardEnabled:)]) {
+                [child setIsKeyboardEnabled:enabled];
+            }
+        }
 	}
 }
 
@@ -184,9 +211,14 @@
 			else
 				[[CCEventDispatcher sharedDispatcher] removeTouchDelegate:self];
 		}
+        // Propagate isTouchEnabled to children that support touches (CCLayer and CCMenu mainly)
+        for (id child in [self children]) {
+            if ([child respondsToSelector:@selector(setIsTouchEnabled:)]) {
+                [child setIsTouchEnabled:enabled];
+            }
+        }
 	}
 }
-
 
 #endif // Mac
 
