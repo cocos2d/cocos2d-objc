@@ -380,6 +380,12 @@
 	[self addChild:child z:z tag:child.tag];
 }
 
+-(void) addChild: (CCNode*) child tag:(NSInteger)tag
+{
+	NSAssert( child != nil, @"Argument must be non-nil");
+	[self addChild:child z:child.zOrder tag:tag];
+}
+
 -(void) addChild: (CCNode*) child
 {
 	NSAssert( child != nil, @"Argument must be non-nil");
