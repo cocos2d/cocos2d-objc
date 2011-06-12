@@ -30,8 +30,6 @@
 #import "../ccMacros.h"
 #import "../ccConfig.h"
 
-static NSFileManager *__localFileManager=nil;
-
 // 
 NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out) 
 { 
@@ -91,12 +89,6 @@ NSString *ccRemoveHDSuffixFromFile( NSString *path )
 
 @implementation CCFileUtils
 
-+(void) initialize
-{
-	if( self == [CCFileUtils class] )
-		__localFileManager = [[NSFileManager alloc] init];
-}
-
 +(NSString*) getDoubleResolutionImage:(NSString*)path
 {
 #if CC_IS_RETINA_DISPLAY_SUPPORTED
@@ -129,8 +121,11 @@ NSString *ccRemoveHDSuffixFromFile( NSString *path )
 		NSString *retinaName = [pathWithoutExtension stringByAppendingString:CC_RETINA_DISPLAY_FILENAME_SUFFIX];
 		retinaName = [retinaName stringByAppendingPathExtension:extension];
 
-		if( [__localFileManager fileExistsAtPath:retinaName] )
+        
+        NSFileManager *localFileManager = [[NSFileManager init] alloc];
+		if( [localFileManager fileExistsAtPath:retinaName] )
 			return retinaName;
+        [localFileManager release];
 
 		CCLOG(@"cocos2d: CCFileUtils: Warning HD file not found: %@", [retinaName lastPathComponent] );
 	}
