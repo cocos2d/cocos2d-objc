@@ -196,11 +196,15 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 #pragma mark CCTexture2D - Image
 
 @implementation CCTexture2D (Image)
+
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
-- (id) initWithImage:(UIImage *)uiImage
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
-- (id) initWithImage:(CGImageRef)CGImage
+- (id) initWithImage:(UIImage*)image
+{
+    return [self initWithCGImage:image.CGImage];
+}
 #endif
+
+- (id) initWithCGImage:(CGImageRef)CGImage
 {
 	NSUInteger				POTWide, POTHigh;
 	CGContextRef			context = nil;
@@ -214,12 +218,8 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 	CGSize					imageSize;
 	CCTexture2DPixelFormat	pixelFormat;
 	
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
-	CGImageRef	CGImage = uiImage.CGImage;
-#endif
-	
 	if(CGImage == NULL) {
-		CCLOG(@"cocos2d: CCTexture2D. Can't create Texture. UIImage is nil");
+		CCLOG(@"cocos2d: CCTexture2D. Can't create Texture. CGImageRef is nil");
 		[self release];
 		return nil;
 	}
@@ -684,11 +684,13 @@ static BOOL PVRHaveAlphaPremultiplied_ = NO;
 								width + point.x,	point.y,	0.0f,
 								point.x,			height  + point.y,	0.0f,
 								width + point.x,	height  + point.y,	0.0f };
-	
+
+	glDisableClientState(GL_COLOR_ARRAY);
 	glBindTexture(GL_TEXTURE_2D, name_);
 	glVertexPointer(3, GL_FLOAT, 0, vertices);
 	glTexCoordPointer(2, GL_FLOAT, 0, coordinates);
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+	glEnableClientState(GL_COLOR_ARRAY);
 }
 
 
@@ -702,11 +704,13 @@ static BOOL PVRHaveAlphaPremultiplied_ = NO;
 							rect.origin.x + rect.size.width,		rect.origin.y,							/*0.0f,*/
 							rect.origin.x,							rect.origin.y + rect.size.height,		/*0.0f,*/
 							rect.origin.x + rect.size.width,		rect.origin.y + rect.size.height,		/*0.0f*/ };
-	
+    
+	glDisableClientState(GL_COLOR_ARRAY);	
 	glBindTexture(GL_TEXTURE_2D, name_);
 	glVertexPointer(2, GL_FLOAT, 0, vertices);
 	glTexCoordPointer(2, GL_FLOAT, 0, coordinates);
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+	glEnableClientState(GL_COLOR_ARRAY);    
 }
 
 @end

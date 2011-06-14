@@ -45,6 +45,8 @@ static NSString *transitions[] = {
 	@"TextureJPEG",
 	@"TextureTIFF",
 	@"TextureGIF",
+    @"TextureDrawAtPoint",
+    @"TextureDrawInRect",    
 	@"TextureCGImage",
 	@"TexturePixelFormat",
 	@"TextureBlend",
@@ -271,6 +273,77 @@ Class restartAction()
 -(NSString *) title
 {
 	return @"GIF Test";
+}
+@end
+
+@implementation TextureDrawAtPoint
+-(void) onEnter
+{
+	[super onEnter];
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+	UIImage *image = [[UIImage alloc] initWithContentsOfFile:[CCFileUtils fullPathFromRelativePath: @"test_image.png" ]];
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+	NSString *fullpath = [CCFileUtils fullPathFromRelativePath:@"test_image.png"];
+	NSData *data = [NSData dataWithContentsOfFile:fullpath];
+	NSBitmapImageRep *image = [[NSBitmapImageRep alloc] initWithData:data];
+#endif
+	CGImageRef imageref = [image CGImage];
+    
+	tex = [[CCTexture2D alloc] initWithCGImage:imageref];
+	[image release];    
+}
+
+-(void) draw
+{
+	CGSize s = [[CCDirector sharedDirector] winSize];
+    [tex drawAtPoint:CGPointMake(s.width/2 - tex.contentSizeInPixels.width/2, s.height/2 - tex.contentSizeInPixels.height/2)];
+}
+
+-(void) onExit
+{
+    [super onExit];
+	[[CCTextureCache sharedTextureCache] dumpCachedTextureInfo];    
+}
+
+-(NSString *) title
+{
+	return @"Texture drawAtPoint Test";
+}
+@end
+
+@implementation TextureDrawInRect
+-(void) onEnter
+{
+	[super onEnter];
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+	UIImage *image = [[UIImage alloc] initWithContentsOfFile:[CCFileUtils fullPathFromRelativePath: @"test_image.png" ]];
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+	NSString *fullpath = [CCFileUtils fullPathFromRelativePath:@"test_image.png"];
+	NSData *data = [NSData dataWithContentsOfFile:fullpath];
+	NSBitmapImageRep *image = [[NSBitmapImageRep alloc] initWithData:data];
+#endif
+	CGImageRef imageref = [image CGImage];
+    
+	tex = [[CCTexture2D alloc] initWithCGImage:imageref];
+	[image release];    
+}
+
+-(void) draw
+{
+	CGSize s = [[CCDirector sharedDirector] winSize];
+    CGFloat side = MIN(s.width, s.height);
+    [tex drawInRect:CGRectMake((s.width - side)/2, (s.height - side)/2, side, side)];
+}
+
+-(void) onExit
+{
+    [super onExit];
+	[[CCTextureCache sharedTextureCache] dumpCachedTextureInfo];    
+}
+
+-(NSString *) title
+{
+	return @"Texture drawInRect Test";
 }
 @end
 
