@@ -39,6 +39,9 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		CCCallFunc supports class methods (patch)
 	* asad.rehman:
 		Menu doesn't receive touches when it is invisible (patch)
+	* Atte Kotiranta (https://github.com/akotiranta)
+		Implemented setPriority in TouchDispatcher.
+		Added setPriority test in MenuTest
 	* Aymeric Bard:
 		Repeat action works OK
 	* Barney Mattox:

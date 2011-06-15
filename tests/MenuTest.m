@@ -137,6 +137,8 @@ enum {
 {
     [[CCTouchDispatcher sharedDispatcher] setPriority:kCCMenuTouchPriority+1 forDelegate:self];
     [self unscheduleAllSelectors];
+	NSLog(@"TOUCHES ALLOWED AGAIN");
+
 }
 #endif
 
@@ -145,6 +147,7 @@ enum {
     // hijack all touch events for 5 seconds
     [[CCTouchDispatcher sharedDispatcher] setPriority:kCCMenuTouchPriority-1 forDelegate:self];
     [self schedule:@selector(allowTouches) interval:5.0f];
+	NSLog(@"TOUCHES DISABLED FOR 5 SECONDS");
 #endif
 }
 
