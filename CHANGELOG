@@ -4,6 +4,7 @@ version 1.0.0 -
 . [FIX] cocosLive: fixed memory leak in ScoreServerPost
 . [FIX] Tests: Fixed memory leak in ParticleTest
 . [FIX] Tests: Fixed memory leak in cocosLiveTest
+. [FIX] TouchDispatcher: added setPriority (issue #757)
 . [FIX] Xcode: cocos2d compiles OK with Xcode 4.2 + llvm 3.0
 
 version 1.0-rc3 - 31-May-2011
