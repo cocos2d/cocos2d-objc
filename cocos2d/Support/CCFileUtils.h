@@ -42,6 +42,14 @@
  
  */
 +(NSString*) fullPathFromRelativePath:(NSString*) relPath;
+
+/** Sets the bundle that is used to load resources from the filesystem.
+ 
+ The default bundle is [NSBundle mainBundle]. This can be overriden to specify a custom bundle to load from.
+ 
+ */
++ (void)setBundle:(NSBundle*)bundle;
+
 @end
 
 /** loads a file into memory.
