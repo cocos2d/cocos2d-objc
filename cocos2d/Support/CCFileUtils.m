@@ -32,6 +32,7 @@
 #import "../ccConfig.h"
 
 static NSFileManager *__localFileManager=nil;
+static NSBundle *__bundle=nil;
 
 // 
 NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out) 
@@ -94,8 +95,14 @@ NSString *ccRemoveHDSuffixFromFile( NSString *path )
 
 +(void) initialize
 {
-	if( self == [CCFileUtils class] )
+	if( self == [CCFileUtils class] ) {
 		__localFileManager = [[NSFileManager alloc] init];
+    __bundle = [NSBundle mainBundle];
+  }
+}
+
++ (void)setBundle:(NSBundle*)bundle {
+  __bundle = bundle;
 }
 
 +(NSString*) getDoubleResolutionImage:(NSString*)path
@@ -153,9 +160,9 @@ NSString *ccRemoveHDSuffixFromFile( NSString *path )
 		NSString *file = [relPath lastPathComponent];
 		NSString *imageDirectory = [relPath stringByDeletingLastPathComponent];
 		
-		fullpath = [[NSBundle mainBundle] pathForResource:file
-												   ofType:nil
-											  inDirectory:imageDirectory];
+		fullpath = [__bundle pathForResource:file
+                                  ofType:nil
+                             inDirectory:imageDirectory];
 	}
 	
 	if (fullpath == nil)
