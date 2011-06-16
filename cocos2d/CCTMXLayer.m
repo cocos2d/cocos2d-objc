@@ -51,7 +51,7 @@
 
 /* Adds a quad into the texture atlas but it won't be added into the children array.
  This method should be called only when you are dealing with very big AtlasSrite and when most of the CCSprite won't be updated.
- For example: a tile map (CCTMXMap) or a label with lots of characgers (BitmapFontAtlas)
+ For example: a tile map (CCTMXMap) or a label with lots of characgers (CCLabelBMFont)
  */
 -(void) addQuadFromSprite:(CCSprite*)sprite quadIndex:(NSUInteger)index
 {
