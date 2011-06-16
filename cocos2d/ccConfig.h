@@ -147,7 +147,7 @@
  Using the translate/rotate/scale requires 5 GL calls.
  But computing the Affine matrix is relative expensive.
  But according to performance tests, Affine matrix performs better.
- This parameter doesn't affect SpriteSheet nodes.
+ This parameter doesn't affect CCSpriteBatchNode nodes.
  
  To enable set it to a value different than 0. Enabled by default.
 
