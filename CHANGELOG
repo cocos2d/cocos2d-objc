@@ -20,9 +20,12 @@ version 2.0-alpha XX-Apr-2011
 . [FIX] Xcode: iOS 4 is minimun required to run
 
 version 1.0.0 -
+. [FIX] ccpLineIntersect works as expected. Improved performance (issue #1174, #1193)
+. [FIX] ccpSegmentIntersect & ccpPointIntersect: Added helper functions for ccpLineIntersect (issue #1193)
 . [FIX] cocosLive: fixed memory leak in ScoreServerPost
 . [FIX] Tests: Fixed memory leak in ParticleTest
 . [FIX] Tests: Fixed memory leak in cocosLiveTest
+. [FIX] TouchDispatcher: added setPriority (issue #757)
 . [FIX] Xcode: cocos2d compiles OK with Xcode 4.2 + llvm 3.0
 
 version 1.0-rc3 - 31-May-2011
