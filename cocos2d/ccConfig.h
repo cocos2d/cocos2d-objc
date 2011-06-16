@@ -42,7 +42,7 @@
  The "correct" way to prevent artifacts is by using the spritesheet-artifact-fixer.py or a similar tool.
  
  Affected nodes:
-	- CCSprite / CCSpriteBatchNode and subclasses: CCBitmapFontAtlas, CCTMXTiledMap
+	- CCSprite / CCSpriteBatchNode and subclasses: CCLabelBMFont, CCTMXTiledMap
 	- CCLabelAtlas
 	- CCQuadParticleSystem
 	- CCTileMap

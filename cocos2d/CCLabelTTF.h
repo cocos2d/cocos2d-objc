@@ -34,7 +34,7 @@
  *
  * All features from CCTextureNode are valid in CCLabel
  *
- * CCLabel objects are slow. Consider using CCLabelAtlas or CCBitmapFontAtlas instead.
+ * CCLabel objects are slow. Consider using CCLabelAtlas or CCLabelBMFont instead.
  */
 
 @interface CCLabelTTF : CCSprite <CCLabelProtocol>
