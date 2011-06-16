@@ -117,6 +117,7 @@ struct ccTouchHandlerHelperData {
  the higher the priority */
 -(void) setPriority:(int) priority forDelegate:(id) delegate;
 
+NSComparisonResult sortByPriority(id first, id second, void *context);
 @end
 
 #endif // __IPHONE_OS_VERSION_MAX_ALLOWED
