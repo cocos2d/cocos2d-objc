@@ -101,8 +101,13 @@ NSString *ccRemoveHDSuffixFromFile( NSString *path )
   }
 }
 
+- (void)dealloc {
+  [__bundle release];
+  [super dealloc];
+}
+
 + (void)setBundle:(NSBundle*)bundle {
-  __bundle = bundle;
+  __bundle = [bundle retain];
 }
 
 +(NSString*) getDoubleResolutionImage:(NSString*)path
