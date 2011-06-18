@@ -97,7 +97,7 @@ NSString *ccRemoveHDSuffixFromFile( NSString *path )
 {
 	if( self == [CCFileUtils class] ) {
 		__localFileManager = [[NSFileManager alloc] init];
-    __bundle = [NSBundle mainBundle];
+    __bundle = [[NSBundle mainBundle] retain];
   }
 }
 
@@ -107,6 +107,9 @@ NSString *ccRemoveHDSuffixFromFile( NSString *path )
 }
 
 + (void)setBundle:(NSBundle*)bundle {
+  if (__bundle) {
+    [__bundle release];
+  }
   __bundle = [bundle retain];
 }
 
