@@ -94,6 +94,7 @@
 {
 	//Background music is mapped to the left "channel"
 	CDLongAudioSource *player = [[CDAudioManager sharedManager] audioSourceForChannel:kASC_Left];
+        [[CCActionManager sharedManager] removeAllActionsFromTarget:player];
 	CDLongAudioSourceFader* fader = [[CDLongAudioSourceFader alloc] init:player interpolationType:curve startVal:player.volume endVal:endVol];
 	[fader setStopTargetWhenComplete:stop];
 	//Create a property modifier action to wrap the fader 
