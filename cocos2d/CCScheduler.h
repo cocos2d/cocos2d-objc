@@ -191,4 +191,9 @@ struct _hashUpdateEntry;
  */
 -(void) resumeTarget:(id)target;
 
+/** Returns whether or not the target is paused
+ @since v1.0.0
+ */
+-(BOOL) isTargetPaused:(id)target;
+
 @end
