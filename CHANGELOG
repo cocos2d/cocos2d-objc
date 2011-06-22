@@ -1,4 +1,5 @@
 version 1.0.0 -
+. [NEW] Scheduler: Added isTargetPaused method
 . [FIX] ccpLineIntersect works as expected. Improved performance (issue #1174, #1193)
 . [FIX] ccpSegmentIntersect & ccpPointIntersect: Added helper functions for ccpLineIntersect (issue #1193)
 . [FIX] cocosLive: fixed memory leak in ScoreServerPost

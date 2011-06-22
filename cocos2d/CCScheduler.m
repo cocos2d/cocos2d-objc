@@ -543,6 +543,21 @@ static CCScheduler *sharedScheduler;
 	
 }
 
+-(BOOL) isTargetPaused:(id)target
+{
+	NSAssert( target != nil, @"target must be non nil" );
+	
+	// Custom selectors
+	tHashSelectorEntry *element = NULL;
+	HASH_FIND_INT(hashForSelectors, &target, element);
+	if( element )
+    {
+		return element->paused;
+    }
+    return NO;  // should never get here
+	
+}
+
 #pragma mark CCScheduler - Main Loop
 
 -(void) tick: (ccTime) dt
