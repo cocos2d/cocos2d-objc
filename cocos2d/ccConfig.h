@@ -182,6 +182,11 @@
  
  To enable set it to a value different than 0. Disabled by default.
 
+ This value governs only the PNG, GIF, BMP, images.
+ This value DOES NOT govern the PVR (PVR.GZ, PVR.CCZ) files. If NPOT PVR is loaded, then it will create an NPOT texture ignoring this value.
+ 
+ @deprecated This value will be removed in 1.1 and NPOT textures will be loaded by default if the device supports it.
+
  @since v0.99.2
  */
 #define CC_TEXTURE_NPOT_SUPPORT 0

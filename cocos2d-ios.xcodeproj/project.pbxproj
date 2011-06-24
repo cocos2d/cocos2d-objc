@@ -1567,6 +1567,7 @@
 		8EDF3FC10F6BE18B00F54643 /* r2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659A0E72DB0E0085673F /* r2.png */; };
 		8EDF3FDD0F6BE3FC00F54643 /* listener-marker.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EDF3FD90F6BE3F400F54643 /* listener-marker.png */; };
 		8EDF3FDE0F6BE3FC00F54643 /* source-marker.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EDF3FDA0F6BE3F400F54643 /* source-marker.png */; };
+		A0064C2C13B432B100C1C744 /* grossini_pvr_rgba8888.pvr in Resources */ = {isa = PBXBuildFile; fileRef = A0064C2A13B432B100C1C744 /* grossini_pvr_rgba8888.pvr */; };
 		A0240EFA139E3AE50075D13F /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB240E10EE4A00AE9530 /* Default.png */; };
 		A0240EFB139E3AE50075D13F /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB250E10EE4A00AE9530 /* Icon.png */; };
 		A0240EFC139E3AE50075D13F /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = 505464301062886600AB7C52 /* fps_images.png */; };
@@ -4324,6 +4325,7 @@
 		8EDF3ED80F6BDA0000F54643 /* SoundEngineTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SoundEngineTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8EDF3FD90F6BE3F400F54643 /* listener-marker.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "listener-marker.png"; path = "experimental/sound-engine/sound-engine-sample/listener-marker.png"; sourceTree = SOURCE_ROOT; };
 		8EDF3FDA0F6BE3F400F54643 /* source-marker.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "source-marker.png"; path = "experimental/sound-engine/sound-engine-sample/source-marker.png"; sourceTree = SOURCE_ROOT; };
+		A0064C2A13B432B100C1C744 /* grossini_pvr_rgba8888.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = grossini_pvr_rgba8888.pvr; sourceTree = "<group>"; };
 		A0240F18139E3AE50075D13F /* TestCocos2dExtension.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestCocos2dExtension.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0240F1A139E3B5E0075D13F /* TestCocos2dExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestCocos2dExtension.h; path = tests/TestCocos2dExtension.h; sourceTree = SOURCE_ROOT; };
 		A0240F1B139E3B5E0075D13F /* TestCocos2dExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TestCocos2dExtension.m; path = tests/TestCocos2dExtension.m; sourceTree = SOURCE_ROOT; };
@@ -6450,6 +6452,7 @@
 		508A333A0FBADD6A00D574A2 /* grossini images */ = {
 			isa = PBXGroup;
 			children = (
+				A0064C2A13B432B100C1C744 /* grossini_pvr_rgba8888.pvr */,
 				E062F9BA124801A300DE3932 /* grossini-hd.png */,
 				E062F9BB124801A300DE3932 /* grossinis_sister1-hd.png */,
 				E062F9BC124801A300DE3932 /* grossinis_sister2-hd.png */,
@@ -9671,6 +9674,7 @@
 				E0BBADE91282E838007DB81E /* test_image_rgba4444.pvr.ccz in Resources */,
 				E0BBADEA1282E838007DB81E /* test_image_rgba4444.pvr.gz in Resources */,
 				E098B2DD133E471D00FD53A3 /* test_image-bad_encoding.pvr in Resources */,
+				A0064C2C13B432B100C1C744 /* grossini_pvr_rgba8888.pvr in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

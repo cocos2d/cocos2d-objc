@@ -7,6 +7,7 @@ version 1.0.0 -
 . [FIX] Director: Added asserts to prevent calling startAnimation twice.
 . [FIX] Tests: Fixed memory leak in ParticleTest
 . [FIX] Tests: Fixed memory leak in cocosLiveTest
+. [FIX] Textures: PVR supports NPOT textures
 . [FIX] TouchDispatcher: added setPriority (issue #757)
 . [FIX] Xcode: cocos2d compiles OK with Xcode 4.2 + llvm 3.0
 
