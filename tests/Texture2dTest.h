@@ -126,7 +126,11 @@
 {}
 @end
 
-@interface TexturePVRNPOT : TextureDemo
+@interface TexturePVRNPOT4444 : TextureDemo
+{}
+@end
+
+@interface TexturePVRNPOT8888 : TextureDemo
 {}
 @end
 
