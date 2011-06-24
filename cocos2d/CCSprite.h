@@ -35,10 +35,7 @@
 
 #pragma mark CCSprite
 
-enum {
-	/// CCSprite invalid index on the CCSpriteBatchode
-	CCSpriteIndexNotInitialized = 0xffffffff,
-};
+const uint32_t	CCSpriteIndexNotInitialized = 0xffffffff; 	/// CCSprite invalid index on the CCSpriteBatchode
 
 /**
  Whether or not an CCSprite will rotate, scale or translate with it's parent.

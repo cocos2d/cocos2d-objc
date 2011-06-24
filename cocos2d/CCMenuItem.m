@@ -35,14 +35,9 @@ static int _fontSize = kItemSize;
 static NSString *_fontName = @"Marker Felt";
 static BOOL _fontNameRelease = NO;
 
-enum {
-	kCurrentItem = 0xc0c05001,
-};
 
-enum {
-	kZoomActionTag = 0xc0c05002,
-};
-
+const uint32_t	kCurrentItem = 0xc0c05001;
+const uint32_t	kZoomActionTag = 0xc0c05002;
 
 
 #pragma mark -
