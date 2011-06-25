@@ -404,6 +404,10 @@ static CCDirector *_sharedDirector = nil;
 
 -(void) end
 {
+    // Stop animation before releasing runningScene,
+    // or else CCScheduler tick might try to use unallocated data
+    [self stopAnimation];
+    
 	[runningScene_ onExit];
 	[runningScene_ cleanup];
 	[runningScene_ release];
@@ -415,12 +419,13 @@ static CCDirector *_sharedDirector = nil;
 	// runWithScene might be executed after 'end'.
 	[scenesStack_ removeAllObjects];
 	
-	[self stopAnimation];
-	
-#if CC_DIRECTOR_FAST_FPS
-	[FPSLabel_ release];
-	FPSLabel_ = nil;
-#endif	
+    // Do not release FPS label (so popping last scene doesn't remove it)
+    // It's already released in CCDirector's dealloc, so by all means
+    // the release is not needed here
+//#if CC_DIRECTOR_FAST_FPS
+//	[FPSLabel_ release];
+//	FPSLabel_ = nil;
+//#endif	
 
 	[projectionDelegate_ release];
 	projectionDelegate_ = nil;
@@ -431,7 +436,7 @@ static CCDirector *_sharedDirector = nil;
 	// Purge all managers
 	[CCAnimationCache purgeSharedAnimationCache];
 	[CCSpriteFrameCache purgeSharedSpriteFrameCache];
-	[CCScheduler purgeSharedScheduler];
+	//[CCScheduler purgeSharedScheduler];
 	[CCActionManager purgeSharedManager];
 	[CCTextureCache purgeSharedTextureCache];
 	
@@ -442,8 +447,14 @@ static CCDirector *_sharedDirector = nil;
 	// it shouldn't remove it from the window too.
 //	[openGLView_ removeFromSuperview];
 
-	[openGLView_ release];
-	openGLView_ = nil;	
+    // Do not release openGLView_ here because CCDirector doesn't autoset
+    // openGLView when it is nil (you should manually set/release it).
+    // This makes possble using CCDirector's popScene to remove
+    // the currently running scene and clean all the caches before pushing a new scene,
+    // which in turn allows conservative memory usage
+    // (old scene assets can be completely deallocated before allocating a new scene)
+//	[openGLView_ release];
+//	openGLView_ = nil;	
 }
 
 -(void) setNextScene

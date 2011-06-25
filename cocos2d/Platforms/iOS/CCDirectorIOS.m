@@ -132,6 +132,7 @@ CGFloat	__ccContentScaleFactor = 1;
 		
 		// running thread is main thread on iOS
 		runningThread_ = [NSThread currentThread];
+        isRunning_ = NO;
 	}
 	
 	return self;
@@ -467,6 +468,12 @@ CGFloat	__ccContentScaleFactor = 1;
 	[super end];
 }
 
+- (void)startAnimation {
+    isRunning_=YES;
+}
+- (void)stopAnimation {
+    isRunning_=NO;
+}
 @end
 
 
@@ -477,6 +484,8 @@ CGFloat	__ccContentScaleFactor = 1;
 - (void)startAnimation
 {
 	NSAssert( animationTimer == nil, @"animationTimer must be nil. Calling startAnimation twice?");
+
+    [super startAnimation]; 
 	
 	if( gettimeofday( &lastUpdate_, NULL) != 0 ) {
 		CCLOG(@"cocos2d: Director: Error in gettimeofday");
@@ -494,11 +503,15 @@ CGFloat	__ccContentScaleFactor = 1;
 
 -(void) mainLoop
 {
-	[self drawScene];
+    if (isRunning_) {
+        [self drawScene];
+    }
 }
 
 - (void)stopAnimation
 {
+    [super stopAnimation];
+    
 	[animationTimer invalidate];
 	animationTimer = nil;
 }
@@ -535,7 +548,6 @@ CGFloat	__ccContentScaleFactor = 1;
 #else
 		CCLOG(@"cocos2d: Fast Events disabled");
 #endif		
-		isRunning = NO;
 		
 		// XXX:
 		// XXX: Don't create any autorelease object before calling "fast director"
@@ -549,19 +561,18 @@ CGFloat	__ccContentScaleFactor = 1;
 
 - (void) startAnimation
 {
+    [super startAnimation];
+
 	// XXX:
 	// XXX: release autorelease objects created
 	// XXX: between "use fast director" and "runWithScene"
 	// XXX:
 	[autoreleasePool release];
 	autoreleasePool = nil;
-
+    
 	if ( gettimeofday( &lastUpdate_, NULL) != 0 ) {
 		CCLOG(@"cocos2d: Director: Error in gettimeofday");
 	}
-	
-
-	isRunning = YES;
 
 	SEL selector = @selector(mainLoop);
 	NSMethodSignature* sig = [[[CCDirector sharedDirector] class]
@@ -583,7 +594,7 @@ CGFloat	__ccContentScaleFactor = 1;
 
 -(void) mainLoop
 {
-	while (isRunning) {
+	while (isRunning_) {
 	
 		NSAutoreleasePool *loopPool = [NSAutoreleasePool new];
 
@@ -608,10 +619,6 @@ CGFloat	__ccContentScaleFactor = 1;
 		[loopPool release];
 	}	
 }
-- (void) stopAnimation
-{
-	isRunning = NO;
-}
 
 - (void)setAnimationInterval:(NSTimeInterval)interval
 {
@@ -626,21 +633,18 @@ CGFloat	__ccContentScaleFactor = 1;
 
 - (id) init
 {
-	if(( self = [super init] )) {		
-		isRunning = NO;		
+	if(( self = [super init] )) {
 	}
-	
 	return self;
 }
 
 - (void) startAnimation
 {
+    [super startAnimation];
 	
 	if ( gettimeofday( &lastUpdate_, NULL) != 0 ) {
 		CCLOG(@"cocos2d: ThreadedFastDirector: Error on gettimeofday");
 	}
-
-	isRunning = YES;
 
 	NSThread *thread = [[NSThread alloc] initWithTarget:self selector:@selector(mainLoop) object:nil];
 	[thread start];
@@ -650,7 +654,7 @@ CGFloat	__ccContentScaleFactor = 1;
 -(void) mainLoop
 {
 	while( ![[NSThread currentThread] isCancelled] ) {
-		if( isRunning )
+		if( isRunning_ )
 			[self performSelectorOnMainThread:@selector(drawScene) withObject:nil waitUntilDone:YES];
 				
 		if (isPaused_) {
@@ -659,10 +663,6 @@ CGFloat	__ccContentScaleFactor = 1;
 //			usleep(2000);
 		}
 	}	
-}
-- (void) stopAnimation
-{
-	isRunning = NO;
 }
 
 - (void)setAnimationInterval:(NSTimeInterval)interval
@@ -696,6 +696,8 @@ CGFloat	__ccContentScaleFactor = 1;
 
 - (void) startAnimation
 {
+    [super startAnimation];
+
 	if ( gettimeofday( &lastUpdate_, NULL) != 0 ) {
 		CCLOG(@"cocos2d: DisplayLinkDirector: Error on gettimeofday");
 	}
@@ -714,11 +716,15 @@ CGFloat	__ccContentScaleFactor = 1;
 
 -(void) mainLoop:(id)sender
 {
-    [self drawScene];
+    if (isRunning_) {
+        [self drawScene];
+    }
 }
 
 - (void) stopAnimation
 {
+    [super stopAnimation];
+    
 	[displayLink invalidate];
 	displayLink = nil;
 }
@@ -737,6 +743,8 @@ CGFloat	__ccContentScaleFactor = 1;
 
 - (void) startAnimation
 {
+    [super startAnimation];
+    
 	if ( gettimeofday( &lastUpdate_, NULL) != 0 ) {
 		CCLOG(@"cocos2d: DisplayLinkDirector: Error on gettimeofday");
 	}
@@ -755,7 +763,7 @@ CGFloat	__ccContentScaleFactor = 1;
 
 -(void) mainLoop:(id)sender
 {
-    if ([self getDeltaTimePre]>1.0/90) {
+    if (isRunning_ && [self getDeltaTimePre]>1.0/90) {
         [self drawScene];
     }
 }

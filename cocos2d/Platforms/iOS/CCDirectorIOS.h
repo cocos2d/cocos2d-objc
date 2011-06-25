@@ -191,7 +191,8 @@ typedef enum {
 	
 	/* contentScaleFactor could be simulated */
 	BOOL	isContentScaleSupported_;
-	
+    
+    BOOL isRunning_;
 }
 @end
 
@@ -204,8 +205,6 @@ typedef enum {
  */
 @interface CCDirectorFast : CCDirectorIOS
 {
-	BOOL isRunning;
-	
 	NSAutoreleasePool	*autoreleasePool;
 }
 -(void) mainLoop;
@@ -222,7 +221,6 @@ typedef enum {
  */
 @interface CCDirectorFastThreaded : CCDirectorIOS
 {
-	BOOL isRunning;	
 }
 -(void) mainLoop;
 @end
