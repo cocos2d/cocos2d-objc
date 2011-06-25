@@ -49,7 +49,7 @@ static CCSpriteFrameCache *sharedSpriteFrameCache_=nil;
 {
 	if (!sharedSpriteFrameCache_)
 		sharedSpriteFrameCache_ = [[CCSpriteFrameCache alloc] init];
-		
+    
 	return sharedSpriteFrameCache_;
 }
 
@@ -91,7 +91,7 @@ static CCSpriteFrameCache *sharedSpriteFrameCache_=nil;
 
 #pragma mark CCSpriteFrameCache - loading sprite frames
 
--(void) addSpriteFramesWithDictionary:(NSDictionary*)dictionary texture:(CCTexture2D*)texture
+-(NSArray *) addSpriteFramesWithDictionary:(NSDictionary*)dictionary texture:(CCTexture2D*)texture
 {
 	/*
 	 Supported Zwoptex Formats:
@@ -99,10 +99,10 @@ static CCSpriteFrameCache *sharedSpriteFrameCache_=nil;
 	 ZWTCoordinatesFormatOptionXML1_0 = 1, // Desktop Version 0.0 - 0.4b
 	 ZWTCoordinatesFormatOptionXML1_1 = 2, // Desktop Version 1.0.0 - 1.0.1
 	 ZWTCoordinatesFormatOptionXML1_2 = 3, // Desktop Version 1.0.2+
-	*/
+     */
 	NSDictionary *metadataDict = [dictionary objectForKey:@"metadata"];
 	NSDictionary *framesDict = [dictionary objectForKey:@"frames"];
-
+    
 	int format = 0;
 	
 	// get the format
@@ -113,6 +113,7 @@ static CCSpriteFrameCache *sharedSpriteFrameCache_=nil;
 	NSAssert( format >= 0 && format <= 3, @"cocos2d: WARNING: format is not supported for CCSpriteFrameCache addSpriteFramesWithDictionary:texture:");
 	
 	
+    NSMutableArray *spriteFrameArray = [NSMutableArray array];
 	// add real frames
 	for(NSString *frameDictKey in framesDict) {
 		NSDictionary *frameDict = [framesDict objectForKey:frameDictKey];
@@ -181,33 +182,37 @@ static CCSpriteFrameCache *sharedSpriteFrameCache_=nil;
 														  offset:spriteOffset 
 													originalSize:spriteSourceSize];
 		}
-
+        
 		// add sprite frame
 		[spriteFrames_ setObject:spriteFrame forKey:frameDictKey];
+        [spriteFrameArray addObject:spriteFrame];
 		[spriteFrame release];
 	}
+    return spriteFrameArray;
 }
 
--(void) addSpriteFramesWithFile:(NSString*)plist texture:(CCTexture2D*)texture
+-(NSArray *) addSpriteFramesWithFile:(NSString*)plist texture:(CCTexture2D*)texture
 {
 	NSString *path = [CCFileUtils fullPathFromRelativePath:plist];
 	NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:path];
-
+    
 	return [self addSpriteFramesWithDictionary:dict texture:texture];
 }
 
--(void) addSpriteFramesWithFile:(NSString*)plist textureFile:(NSString*)textureFileName
+-(NSArray *) addSpriteFramesWithFile:(NSString*)plist textureFile:(NSString*)textureFileName
 {
 	NSAssert( textureFileName, @"Invalid texture file name");
 	CCTexture2D *texture = [[CCTextureCache sharedTextureCache] addImage:textureFileName];
 	
-	if( texture )
-		[self addSpriteFramesWithFile:plist texture:texture];
-	else
+	if( texture ) {
+		return [self addSpriteFramesWithFile:plist texture:texture];
+	} else {
 		CCLOG(@"cocos2d: CCSpriteFrameCache: couldn't load texture file. File not found: %@", textureFileName);
+        return nil;
+    }
 }
 
--(void) addSpriteFramesWithFile:(NSString*)plist
+-(NSArray *) addSpriteFramesWithFile:(NSString*)plist
 {
     NSString *path = [CCFileUtils fullPathFromRelativePath:plist];
     NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:path];
@@ -229,16 +234,17 @@ static CCSpriteFrameCache *sharedSpriteFrameCache_=nil;
         texturePath = [plist stringByDeletingPathExtension];
         texturePath = [texturePath stringByAppendingPathExtension:@"png"];
 		
-		CCLOG(@"cocos2d: CCSpriteFrameCache: Trying to use file '%@' as texture", texturePath); 
+		//CCLOG(@"cocos2d: CCSpriteFrameCache: Trying to use file '%@' as texture", texturePath); 
     }
 	
     CCTexture2D *texture = [[CCTextureCache sharedTextureCache] addImage:texturePath];
 	
-	if( texture )
-		[self addSpriteFramesWithDictionary:dict texture:texture];
-	
-	else
+	if( texture ) {
+		return [self addSpriteFramesWithDictionary:dict texture:texture];
+    } else {
 		CCLOG(@"cocos2d: CCSpriteFrameCache: Couldn't load texture");
+        return nil;
+    }
 }
 
 -(void) addSpriteFrame:(CCSpriteFrame*)frame name:(NSString*)frameName
@@ -278,7 +284,7 @@ static CCSpriteFrameCache *sharedSpriteFrameCache_=nil;
 	if( key ) {
 		[spriteFrames_ removeObjectForKey:key];
 		[spriteFramesAliases_ removeObjectForKey:name];
-
+        
 	} else
 		[spriteFrames_ removeObjectForKey:name];
 }
