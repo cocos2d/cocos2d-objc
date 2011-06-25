@@ -121,6 +121,14 @@ static CDBufferManager *bufferManager = nil;
 	return [am willPlayBackgroundMusic];
 }
 
+-(NSTimeInterval) backgroundMusicCurrentTime {
+    return am.backgroundMusicCurrentTime;  
+}
+
+-(void) setBackgroundMusicCurrentTime:(NSTimeInterval)time {
+    am.backgroundMusicCurrentTime=time;
+}
+
 #pragma mark SimpleAudioEngine - sound effects
 
 -(ALuint) playEffect:(NSString*) filePath
