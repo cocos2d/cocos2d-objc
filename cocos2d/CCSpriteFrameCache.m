@@ -196,7 +196,7 @@ static CCSpriteFrameCache *sharedSpriteFrameCache_=nil;
 	NSString *path = [CCFileUtils fullPathFromRelativePath:plist];
 	NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:path];
 
-	return [self addSpriteFramesWithDictionary:dict texture:texture];
+	[self addSpriteFramesWithDictionary:dict texture:texture];
 }
 
 -(void) addSpriteFramesWithFile:(NSString*)plist textureFile:(NSString*)textureFileName

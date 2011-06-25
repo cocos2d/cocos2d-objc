@@ -285,7 +285,7 @@ and when to execute the Scenes.
 // Memory Helper
 
 /** Removes all the cocos2d data that was cached automatically.
- It will purge the CCTextureCache, CCBitmapFont cache.
+ It will purge the CCTextureCache, CCLabelBMFont cache.
  IMPORTANT: The CCSpriteFrameCache won't be purged. If you want to purge it, you have to purge it manually.
  @since v0.99.3
  */

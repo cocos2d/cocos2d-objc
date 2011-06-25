@@ -313,13 +313,13 @@ static inline void ccCArrayFree(ccCArray *arr)
 /** Doubles C array capacity */
 static inline void ccCArrayDoubleCapacity(ccCArray *arr)
 {
-	return ccArrayDoubleCapacity(arr);
+	ccArrayDoubleCapacity(arr);
 }
 
 /** Increases array capacity such that max >= num + extra. */
 static inline void ccCArrayEnsureExtraCapacity(ccCArray *arr, NSUInteger extra)
 {
-	return ccArrayEnsureExtraCapacity(arr,extra);
+	ccArrayEnsureExtraCapacity(arr,extra);
 }
 
 /** Returns index of first occurence of value, NSNotFound if value not found. */

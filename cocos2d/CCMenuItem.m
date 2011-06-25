@@ -35,14 +35,9 @@ static int _fontSize = kItemSize;
 static NSString *_fontName = @"Marker Felt";
 static BOOL _fontNameRelease = NO;
 
-enum {
-	kCurrentItem = 0xc0c05001,
-};
 
-enum {
-	kZoomActionTag = 0xc0c05002,
-};
-
+const uint32_t	kCurrentItem = 0xc0c05001;
+const uint32_t	kZoomActionTag = 0xc0c05002;
 
 
 #pragma mark -
@@ -73,16 +68,16 @@ enum {
 		if( rec && cb ) {
 			sig = [rec methodSignatureForSelector:cb];
 			
-			invocation = nil;
-			invocation = [NSInvocation invocationWithMethodSignature:sig];
-			[invocation setTarget:rec];
-			[invocation setSelector:cb];
+			invocation_ = nil;
+			invocation_ = [NSInvocation invocationWithMethodSignature:sig];
+			[invocation_ setTarget:rec];
+			[invocation_ setSelector:cb];
 #if NS_BLOCKS_AVAILABLE
 			if ([sig numberOfArguments] == 3) 
 #endif
-			[invocation setArgument:&self atIndex:2];
+			[invocation_ setArgument:&self atIndex:2];
 			
-			[invocation retain];
+			[invocation_ retain];
 		}
 		
 		isEnabled_ = YES;
@@ -107,7 +102,7 @@ enum {
 
 -(void) dealloc
 {
-	[invocation release];
+	[invocation_ release];
 
 #if NS_BLOCKS_AVAILABLE
 	[block_ release];
@@ -129,7 +124,7 @@ enum {
 -(void) activate
 {
 	if(isEnabled_)
-        [invocation invoke];
+        [invocation_ invoke];
 }
 
 -(void) setIsEnabled: (BOOL)enabled

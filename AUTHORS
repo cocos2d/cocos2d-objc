@@ -39,6 +39,9 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		CCCallFunc supports class methods (patch)
 	* asad.rehman:
 		Menu doesn't receive touches when it is invisible (patch)
+	* Atte Kotiranta (https://github.com/akotiranta)
+		Implemented setPriority in TouchDispatcher.
+		Added setPriority test in MenuTest
 	* Aymeric Bard:
 		Repeat action works OK
 	* Barney Mattox:
@@ -86,6 +89,8 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		patch for TMX per-tile properties
 	* Daniele Benegiamo:
 		Prevent possible memory corruption with particles when autoRemove is On. patch.
+	* David Deaco (http://iceflame.com/)
+		Author of RenderTexture Test #3
 	* David Hakim (http://kretures.com)
 		Event Dispatcher in Mac is synced. patch.
 		Dispatcher in Mac supports NSTimer events. patch.
@@ -131,6 +136,8 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	* Florin Dumitrescu (http://www.crystal-works.net/):
 		added "update score" in cocosLive
 		author of the sound engine: PASoundListener, PASoundMgr, PASoundSource
+	* fnkelton:
+		Performance improvements in ccpLineIntersect. Added ccpSegmentIntersect and ccpPointIntersect
 	* Fradj Johann:
 		patches for CocosNode
 		patches for Layer

@@ -1,3 +1,16 @@
+version 1.0.0 -
+. [NEW] ccpSegmentIntersect & ccpPointIntersect: Added helper functions for ccpLineIntersect (issue #1193)
+. [NEW] Scheduler: Added isTargetPaused method
+. [NEW] Textures: PVR supports NPOT textures
+. [FIX] CCArray: ForEach prepends "__" to inner variables to prevent conflict
+. [FIX] ccpLineIntersect works as expected. Improved performance (issue #1174, #1193)
+. [FIX] cocosLive: fixed memory leak in ScoreServerPost
+. [FIX] Director: Added asserts to prevent calling startAnimation twice.
+. [FIX] Tests: Fixed memory leak in ParticleTest
+. [FIX] Tests: Fixed memory leak in cocosLiveTest
+. [FIX] TouchDispatcher: added setPriority (issue #757)
+. [FIX] Xcode: cocos2d compiles OK with Xcode 4.2 + llvm 3.0
+
 version 1.0-rc3 - 31-May-2011
 . [NEW] Actions: Added SkewTo and SkewBy actions
 . [NEW] LabelTTF: Added support for LineBreakMode. Mac only supports Word-Break.
