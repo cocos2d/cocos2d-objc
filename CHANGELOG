@@ -20,9 +20,13 @@ version 2.0-alpha XX-Apr-2011
 . [FIX] Xcode: iOS 4 is minimun required to run
 
 version 1.0.0 -
+. [NEW] ccpSegmentIntersect & ccpPointIntersect: Added helper functions for ccpLineIntersect (issue #1193)
+. [NEW] Scheduler: Added isTargetPaused method
+. [NEW] Textures: PVR supports NPOT textures
+. [FIX] CCArray: ForEach prepends "__" to inner variables to prevent conflict
 . [FIX] ccpLineIntersect works as expected. Improved performance (issue #1174, #1193)
-. [FIX] ccpSegmentIntersect & ccpPointIntersect: Added helper functions for ccpLineIntersect (issue #1193)
 . [FIX] cocosLive: fixed memory leak in ScoreServerPost
+. [FIX] Director: Added asserts to prevent calling startAnimation twice.
 . [FIX] Tests: Fixed memory leak in ParticleTest
 . [FIX] Tests: Fixed memory leak in cocosLiveTest
 . [FIX] TouchDispatcher: added setPriority (issue #757)

@@ -45,18 +45,18 @@
 @end
 
 /* IMPORTANT XXX IMPORTNAT:
- * These 2 methods can't be part of CCTMXLayer since they call [super add...], and CCSpriteSheet#add SHALL not be called
+ * These 2 methods can't be part of CCTMXLayer since they call [super add...], and CCSpriteBatchNode#add SHALL not be called
  */
 @implementation CCSpriteBatchNode (TMXTiledMapExtension)
 
 /* Adds a quad into the texture atlas but it won't be added into the children array.
  This method should be called only when you are dealing with very big AtlasSrite and when most of the CCSprite won't be updated.
- For example: a tile map (CCTMXMap) or a label with lots of characgers (BitmapFontAtlas)
+ For example: a tile map (CCTMXMap) or a label with lots of characgers (CCLabelBMFont)
  */
 -(void) addQuadFromSprite:(CCSprite*)sprite quadIndex:(NSUInteger)index
 {
 	NSAssert( sprite != nil, @"Argument must be non-nil");
-	NSAssert( [sprite isKindOfClass:[CCSprite class]], @"CCSpriteSheet only supports CCSprites as children");
+	NSAssert( [sprite isKindOfClass:[CCSprite class]], @"CCSpriteBatchNode only supports CCSprites as children");
 	
 	
 	while(index >= textureAtlas_.capacity || textureAtlas_.capacity == textureAtlas_.totalQuads )
@@ -84,7 +84,7 @@
 -(id) addSpriteWithoutQuad:(CCSprite*)child z:(NSUInteger)z tag:(NSInteger)aTag
 {
 	NSAssert( child != nil, @"Argument must be non-nil");
-	NSAssert( [child isKindOfClass:[CCSprite class]], @"CCSpriteSheet only supports CCSprites as children");
+	NSAssert( [child isKindOfClass:[CCSprite class]], @"CCSpriteBatchNode only supports CCSprites as children");
 	
 	// quad index is Z
 	[child setAtlasIndex:z];

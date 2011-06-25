@@ -120,7 +120,7 @@
 -(void)setVertex:(ccGridSize)pos vertex:(ccVertex3F)vertex
 {
 	CCGrid3D *g = (CCGrid3D *)[target_ grid];
-	return [g setVertex:pos vertex:vertex];
+	[g setVertex:pos vertex:vertex];
 }
 @end
 
