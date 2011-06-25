@@ -374,6 +374,9 @@ const uint32_t	kZoomActionTag = 0xc0c05002;
 {
 	NSAssert( [value length] != 0, @"Value length must be greater than 0");
 	
+    [self setFontName:_fontName];
+    [self setFontSize:_fontSize];
+    
 	CCLabelTTF *label = [CCLabelTTF labelWithString:value fontName:_fontName fontSize:_fontSize];
 
 	if((self=[super initWithLabel:label target:rec selector:cb]) ) {
@@ -381,6 +384,32 @@ const uint32_t	kZoomActionTag = 0xc0c05002;
 	}
 	
 	return self;
+}
+
+-(void) recreateLabel {
+    CCLabelTTF *label = [CCLabelTTF labelWithString:[label_ string] fontName:fontName_ fontSize:fontSize_];
+    self.label = label;
+}
+
+-(void) setFontSize: (int) s {
+    fontSize_ = s;
+    [self recreateLabel];
+}
+
+-(int) fontSize {
+    return fontSize_;
+}
+
+-(void) setFontName: (NSString*) n {
+    if (fontName_) {
+        [fontName_ release];
+    }
+    fontName_ = [n copy];
+    [self recreateLabel];
+}
+
+-(NSString*) fontName {
+    return fontName_;
 }
 
 #if NS_BLOCKS_AVAILABLE
