@@ -127,7 +127,12 @@ and when to execute the Scenes.
 	NSMutableArray *scenesStack_;
 	
 	/* last time the main loop was updated */
-	struct timeval lastUpdate_;
+    //	struct timeval lastUpdate_;
+    // alternative for using CFAbsoluteTimeGetCurrent
+    // CFAbsoluteTime 	  _lastTime;
+    // CFTimeInterval is a double
+    CFTimeInterval 		  _lastTime;
+    
 	/* delta time since last tick to main loop */
 	ccTime dt;
 	/* whether or not the next delta time will be zero */

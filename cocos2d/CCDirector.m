@@ -205,20 +205,24 @@ static CCDirector *_sharedDirector = nil;
 
 -(void) calculateDeltaTime
 {
-	struct timeval now;
-	
-	if( gettimeofday( &now, NULL) != 0 ) {
-		CCLOG(@"cocos2d: error in gettimeofday");
-		dt = 0;
-		return;
-	}
-	
+//	struct timeval now;
+//	
+//	if( gettimeofday( &now, NULL) != 0 ) {
+//		CCLOG(@"cocos2d: error in gettimeofday");
+//		dt = 0;
+//		return;
+//	}
+    
+// CFAbsoluteTime newTime = CFAbsoluteTimeGetCurrent();
+    CFTimeInterval newTime = CACurrentMediaTime();
+
 	// new delta time
 	if( nextDeltaTimeZero_ ) {
 		dt = 0;
 		nextDeltaTimeZero_ = NO;
 	} else {
-		dt = (now.tv_sec - lastUpdate_.tv_sec) + (now.tv_usec - lastUpdate_.tv_usec) / 1000000.0f;
+//		dt = (now.tv_sec - lastUpdate_.tv_sec) + (now.tv_usec - lastUpdate_.tv_usec) / 1000000.0f;
+        dt = newTime - _lastTime;
 		dt = MAX(0,dt);
 	}
 
@@ -228,26 +232,19 @@ static CCDirector *_sharedDirector = nil;
 		dt = 1/60.0f;
 #endif
 	
-	lastUpdate_ = now;	
+//	lastUpdate_ = now;	
+    _lastTime = newTime;
 }
 
--(ccTime) getDeltaTimePre
-{
-	struct timeval now;
-    ccTime dtPre;
-	
-	if( gettimeofday( &now, NULL) != 0 ) {
-		CCLOG(@"cocos2d: error in gettimeofday");
-		dt = 0;
-		return 0;
-	}
-	
+-(ccTime) getDeltaTimePre {
+    CFTimeInterval newTime = CACurrentMediaTime();
+    
 	// new delta time
 	if( nextDeltaTimeZero_ ) {
-		return 0;
+		nextDeltaTimeZero_ = NO;
+        return 0;
 	} else {
-		dtPre = (now.tv_sec - lastUpdate_.tv_sec) + (now.tv_usec - lastUpdate_.tv_usec) / 1000000.0f;
-		return MAX(0,dtPre);
+        return MAX(0, newTime - _lastTime);
 	}
 }
 
@@ -503,9 +500,10 @@ static CCDirector *_sharedDirector = nil;
 	
 	[self setAnimationInterval: oldAnimationInterval_];
 
-	if( gettimeofday( &lastUpdate_, NULL) != 0 ) {
-		CCLOG(@"cocos2d: Director: Error in gettimeofday");
-	}
+//	if( gettimeofday( &lastUpdate_, NULL) != 0 ) {
+//		CCLOG(@"cocos2d: Director: Error in gettimeofday");
+//	}
+    _lastTime = CACurrentMediaTime();
 	
 	isPaused_ = NO;
 	dt = 0;

@@ -487,10 +487,11 @@ CGFloat	__ccContentScaleFactor = 1;
 
     [super startAnimation]; 
 	
-	if( gettimeofday( &lastUpdate_, NULL) != 0 ) {
-		CCLOG(@"cocos2d: Director: Error in gettimeofday");
-	}
-	
+//	if( gettimeofday( &lastUpdate_, NULL) != 0 ) {
+//		CCLOG(@"cocos2d: Director: Error in gettimeofday");
+//	}
+    _lastTime = CACurrentMediaTime();
+
 	animationTimer = [NSTimer scheduledTimerWithTimeInterval:animationInterval_ target:self selector:@selector(mainLoop) userInfo:nil repeats:YES];
 	
 	//
@@ -570,9 +571,10 @@ CGFloat	__ccContentScaleFactor = 1;
 	[autoreleasePool release];
 	autoreleasePool = nil;
     
-	if ( gettimeofday( &lastUpdate_, NULL) != 0 ) {
-		CCLOG(@"cocos2d: Director: Error in gettimeofday");
-	}
+//	if ( gettimeofday( &lastUpdate_, NULL) != 0 ) {
+//		CCLOG(@"cocos2d: Director: Error in gettimeofday");
+//	}
+    _lastTime = CACurrentMediaTime();
 
 	SEL selector = @selector(mainLoop);
 	NSMethodSignature* sig = [[[CCDirector sharedDirector] class]
@@ -642,9 +644,10 @@ CGFloat	__ccContentScaleFactor = 1;
 {
     [super startAnimation];
 	
-	if ( gettimeofday( &lastUpdate_, NULL) != 0 ) {
-		CCLOG(@"cocos2d: ThreadedFastDirector: Error on gettimeofday");
-	}
+//	if ( gettimeofday( &lastUpdate_, NULL) != 0 ) {
+//		CCLOG(@"cocos2d: ThreadedFastDirector: Error on gettimeofday");
+//	}
+    _lastTime = CACurrentMediaTime();
 
 	NSThread *thread = [[NSThread alloc] initWithTarget:self selector:@selector(mainLoop) object:nil];
 	[thread start];
@@ -698,9 +701,10 @@ CGFloat	__ccContentScaleFactor = 1;
 {
     [super startAnimation];
 
-	if ( gettimeofday( &lastUpdate_, NULL) != 0 ) {
-		CCLOG(@"cocos2d: DisplayLinkDirector: Error on gettimeofday");
-	}
+//	if ( gettimeofday( &lastUpdate_, NULL) != 0 ) {
+//		CCLOG(@"cocos2d: DisplayLinkDirector: Error on gettimeofday");
+//	}
+    _lastTime = CACurrentMediaTime();
 	
 	// approximate frame rate
 	// assumes device refreshes at 60 fps
@@ -745,9 +749,10 @@ CGFloat	__ccContentScaleFactor = 1;
 {
     [super startAnimation];
     
-	if ( gettimeofday( &lastUpdate_, NULL) != 0 ) {
-		CCLOG(@"cocos2d: DisplayLinkDirector: Error on gettimeofday");
-	}
+//	if ( gettimeofday( &lastUpdate_, NULL) != 0 ) {
+//		CCLOG(@"cocos2d: DisplayLinkDirector: Error on gettimeofday");
+//	}
+    _lastTime = CACurrentMediaTime();
 	
 	// approximate frame rate
 	// assumes device refreshes at 60 fps
