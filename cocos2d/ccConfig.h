@@ -42,7 +42,7 @@
  The "correct" way to prevent artifacts is by using the spritesheet-artifact-fixer.py or a similar tool.
  
  Affected nodes:
-	- CCSprite / CCSpriteBatchNode and subclasses: CCBitmapFontAtlas, CCTMXTiledMap
+	- CCSprite / CCSpriteBatchNode and subclasses: CCLabelBMFont, CCTMXTiledMap
 	- CCLabelAtlas
 	- CCQuadParticleSystem
 	- CCTileMap
@@ -147,7 +147,7 @@
  Using the translate/rotate/scale requires 5 GL calls.
  But computing the Affine matrix is relative expensive.
  But according to performance tests, Affine matrix performs better.
- This parameter doesn't affect SpriteSheet nodes.
+ This parameter doesn't affect CCSpriteBatchNode nodes.
  
  To enable set it to a value different than 0. Enabled by default.
 
@@ -181,6 +181,11 @@
 	- They only accept GL_CLAMP_TO_EDGE in GL_TEXTURE_WRAP_{S,T}
  
  To enable set it to a value different than 0. Disabled by default.
+
+ This value governs only the PNG, GIF, BMP, images.
+ This value DOES NOT govern the PVR (PVR.GZ, PVR.CCZ) files. If NPOT PVR is loaded, then it will create an NPOT texture ignoring this value.
+ 
+ @deprecated This value will be removed in 1.1 and NPOT textures will be loaded by default if the device supports it.
 
  @since v0.99.2
  */

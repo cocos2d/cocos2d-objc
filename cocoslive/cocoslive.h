@@ -40,4 +40,4 @@
 
 
 // free functions
-NSString * cocos2dVersion(void);
+NSString * cocosLiveVersion(void);
