@@ -89,24 +89,25 @@ NSString *ccRemoveHDSuffixFromFile( NSString *path )
 
 @implementation CCFileUtils
 
-+(NSString*) getDoubleResolutionImage:(NSString*)path
-{
-#if CC_IS_RETINA_DISPLAY_SUPPORTED
++(NSString*) getDoubleResolutionImage:(NSString*)path {
+    
+    static NSFileManager *localFileManager = nil;
+    
+#if CC_IS_IPAD_UNIVERSAL_SUPPORTED
 
-	if( CC_CONTENT_SCALE_FACTOR() == 2 )
-	{
-		
-		NSString *pathWithoutExtension = [path stringByDeletingPathExtension];
+    if( UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad ) {
+        NSString *pathWithoutExtension = [path stringByDeletingPathExtension];
 		NSString *name = [pathWithoutExtension lastPathComponent];
 		
 		// check if path already has the suffix.
-		if( [name rangeOfString:CC_RETINA_DISPLAY_FILENAME_SUFFIX].location != NSNotFound ) {
-		
-			CCLOG(@"cocos2d: WARNING Filename(%@) already has the suffix %@. Using it.", name, CC_RETINA_DISPLAY_FILENAME_SUFFIX);			
+		if( [name rangeOfString:CC_IPAD_UNIVERSAL_FILENAME_SUFFIX].location != NSNotFound ) {
+			CCLOG(@"cocos2d: IPAD MODE WARNING Filename(%@) already has the suffix %@. Using it.", name, CC_IPAD_UNIVERSAL_FILENAME_SUFFIX);			
 			return path;
-		}
-
-		
+		} else if ([name rangeOfString:CC_RETINA_DISPLAY_FILENAME_SUFFIX].location != NSNotFound ) {
+			CCLOG(@"cocos2d: IPAD MODE WARNING Filename(%@) already has the suffix %@. Using it.", name, CC_RETINA_DISPLAY_FILENAME_SUFFIX);			
+			return path;            
+        }
+        
 		NSString *extension = [path pathExtension];
 		
 		if( [extension isEqualToString:@"ccz"] || [extension isEqualToString:@"gz"] )
@@ -118,16 +119,63 @@ NSString *ccRemoveHDSuffixFromFile( NSString *path )
 		}
 		
 		
+		NSString *highresName = [pathWithoutExtension stringByAppendingString:CC_IPAD_UNIVERSAL_FILENAME_SUFFIX];
+		highresName = [highresName stringByAppendingPathExtension:extension];
+        
+        if (!localFileManager) { localFileManager=[[NSFileManager alloc] init]; }
+		if( [localFileManager fileExistsAtPath:highresName] ) {
+            //CCLOG(@"cocos2d: CCFileUtils: Ipad mode, using IP file: %@", [highresName lastPathComponent] );
+			return highresName;
+        }
+
+        highresName = [pathWithoutExtension stringByAppendingString:CC_RETINA_DISPLAY_FILENAME_SUFFIX];
+		highresName = [highresName stringByAppendingPathExtension:extension];
+        
+        if (!localFileManager) { localFileManager=[[NSFileManager alloc] init]; }
+		if( [localFileManager fileExistsAtPath:highresName] ) {
+            //CCLOG(@"cocos2d: CCFileUtils: Ipad mode, using HD file: %@", [highresName lastPathComponent] );
+			return highresName;
+        }
+        CCLOG(@"cocos2d: CCFileUtils: IPAD MODE WARNING, IP and HD files not found, using regular file: %@", [path lastPathComponent] );
+    }
+
+#endif // CC_IS_IPAD_UNIVERSAL_SUPPORTED
+
+#if CC_IS_RETINA_DISPLAY_SUPPORTED
+
+	if( CC_CONTENT_SCALE_FACTOR() == 2 )
+	{
+		
+		NSString *pathWithoutExtension = [path stringByDeletingPathExtension];
+		NSString *name = [pathWithoutExtension lastPathComponent];
+		
+		// check if path already has the suffix.
+		if( [name rangeOfString:CC_RETINA_DISPLAY_FILENAME_SUFFIX].location != NSNotFound ) {
+		
+			CCLOG(@"cocos2d: RETINA MODE WARNING Filename(%@) already has the suffix %@. Using it.", name, CC_RETINA_DISPLAY_FILENAME_SUFFIX);			
+			return path;
+		}
+
+		
+		NSString *extension = [path pathExtension];
+		
+		if( [extension isEqualToString:@"ccz"] || [extension isEqualToString:@"gz"] ) {
+			// All ccz / gz files should be in the format filename.xxx.ccz
+			// so we need to pull off the .xxx part of the extension as well
+			extension = [NSString stringWithFormat:@"%@.%@", [pathWithoutExtension pathExtension], extension];
+			pathWithoutExtension = [pathWithoutExtension stringByDeletingPathExtension];
+		}
+		
 		NSString *retinaName = [pathWithoutExtension stringByAppendingString:CC_RETINA_DISPLAY_FILENAME_SUFFIX];
 		retinaName = [retinaName stringByAppendingPathExtension:extension];
-
         
-        NSFileManager *localFileManager = [[NSFileManager init] alloc];
-		if( [localFileManager fileExistsAtPath:retinaName] )
+        if (!localFileManager) { localFileManager=[[NSFileManager alloc] init]; }
+		if( [localFileManager fileExistsAtPath:retinaName] ) {
+            //CCLOG(@"cocos2d: CCFileUtils: Retina mode, using HD file: %@", [retinaName lastPathComponent] );
 			return retinaName;
-        [localFileManager release];
+        }
 
-		CCLOG(@"cocos2d: CCFileUtils: Warning HD file not found: %@", [retinaName lastPathComponent] );
+		CCLOG(@"cocos2d: CCFileUtils: RETINA MODE WARNING, HD file not found, using regular file instead: %@", [path lastPathComponent] );
 	}
 	
 #endif // CC_IS_RETINA_DISPLAY_SUPPORTED

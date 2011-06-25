@@ -187,7 +187,7 @@
 
 /** @def CC_RETINA_DISPLAY_SUPPORT
  If enabled, cocos2d supports retina display. 
- For performance reasons, it's recommended disable it in games without retina display support, like iPad only games.
+ For performance reasons, it's recommended to disable it in games without retina display support, like iPad only games. It makes cocos2d to try loading assets with the "-hd" suffix. If not found, loads the regular asset.
  
  To enable set it to 1. Use 0 to disable it. Enabled by default.
  
@@ -197,7 +197,7 @@
 
 /** @def CC_RETINA_DISPLAY_FILENAME_SUFFIX
  It's the suffix that will be appended to the files in order to load "retina display" images.
-
+ 
  On an iPhone4 with Retina Display support enabled, the file @"sprite-hd.png" will be loaded instead of @"sprite.png".
  If the file doesn't exist it will use the non-retina display image.
  
@@ -206,6 +206,28 @@
  @since v0.99.5
  */ 
 #define CC_RETINA_DISPLAY_FILENAME_SUFFIX @"-hd"
+
+/** @def CC_IPAD_SUPPORT
+ If enabled, cocos2d supports ipad custom assets. 
+ For performance reasons, it's recommended to disable it in games which are not universal. It makes cocos2d to try loading assets with the "-ip" suffix, then assets with the "-hd" suffix, then the regular asset
+ 
+ To enable set it to 1. Use 0 to disable it. Enabled by default.
+ 
+ @since v1.0.1-rsanchez
+ */
+#define CC_IPAD_UNIVERSAL_SUPPORT 1
+
+/** @def CC_IPAD_UNIVERSAL_FILENAME_SUFFIX
+ It's the suffix that will be appended to the files in order to load ipad images in universal mode.
+
+ On an iPad, with CC_IPAD_UNIVERSAL_SUPPORT support enabled, the file @"sprite-ip.png" will be loaded instead of @"sprite.png".
+ If the file doesn't exist it will use the retina image, and if not found either the non-retina display image.
+ 
+ Platforms: Only used on universal games that are expected to run on a iPad.
+ 
+ @since v1.0.1-rsanchez
+ */ 
+#define CC_IPAD_UNIVERSAL_FILENAME_SUFFIX @"-ip"
 
 /** @def CC_USE_LA88_LABELS_ON_NEON_ARCH
  If enabled, it will use LA88 (16-bit textures) on Neon devices for CCLabelTTF objects.
@@ -278,4 +300,6 @@
 
 #endif
 
+// TODO: Decide what to do regarding iPad support on the Mac
+#define CC_IS_IPAD_UNIVERSAL_SUPPORTED CC_IPAD_UNIVERSAL_SUPPORT
 
