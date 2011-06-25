@@ -1338,8 +1338,7 @@ static BOOL _mixerRateSet = NO;
 -(id) init:(int) theSoundId filePath:(const NSString *) theFilePath {
 	if ((self = [super init])) {
 		soundId = theSoundId;
-		filePath = [theFilePath copy];//TODO: is retain necessary or does copy set retain count
-		[filePath retain];
+		filePath = [theFilePath copy];
 	} 
 	return self;
 }
