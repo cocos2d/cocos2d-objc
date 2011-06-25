@@ -578,19 +578,19 @@ static CCDirector *_sharedDirector = nil;
 #endif
 
 -(void)setFPSPosition:(ccFPSPosition)FPSPosition {
-    CGSize winSize = [[CCDirector sharedDirector] winSize];
+    CGSize winSizeInPixels = [[CCDirector sharedDirector] winSizeInPixels];
     switch (FPSPosition) {
         case kCCFPSPositionUpperLeft:
-            FPSCustomPosition_ = CGPointMake(3, winSize.height - 28);
+            FPSCustomPosition_ = CGPointMake(3, winSizeInPixels.height - 28);
             break;
         case kCCFPSPositionUpperRight:
-            FPSCustomPosition_ = CGPointMake(winSize.width - 70, winSize.height - 28);
+            FPSCustomPosition_ = CGPointMake(winSizeInPixels.width - 70, winSizeInPixels.height - 28);
             break;
         case kCCFPSPositionLowerLeft:
             FPSCustomPosition_ = CGPointMake(3,3);
             break;
         case kCCFPSPositionLowerRight:
-            FPSCustomPosition_ = CGPointMake(winSize.width - 70, 3);
+            FPSCustomPosition_ = CGPointMake(winSizeInPixels.width - 70, 3);
             break;
         case kCCFPSPositionCustom:
             break;
