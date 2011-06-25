@@ -231,6 +231,8 @@
  Useful for debugging purposes only. It is recommened to leave it disabled.
  
  To enable set it to a value different than 0. Disabled by default.
+ 1 -- draw bounding box
+ 2 -- draw texture box
  */
 #define CC_SPRITE_DEBUG_DRAW 0
 
