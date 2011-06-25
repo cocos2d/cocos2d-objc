@@ -15053,10 +15053,6 @@
 				OTHER_LDFLAGS = (
 					"-all_load",
 					"-ObjC",
-					"-framework",
-					Foundation,
-					"-framework",
-					UIKit,
 				);
 				PRODUCT_NAME = FontTest;
 			};
@@ -15076,10 +15072,6 @@
 				OTHER_LDFLAGS = (
 					"-all_load",
 					"-ObjC",
-					"-framework",
-					Foundation,
-					"-framework",
-					UIKit,
 				);
 				PRODUCT_NAME = FontTest;
 				ZERO_LINK = NO;
