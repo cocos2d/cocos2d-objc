@@ -73,7 +73,9 @@
 	// Warning: But it CCGrabber won't work with 2 effects at the same time
 //	glClearColor(0.0f,0.0f,0.0f,1.0f);	// #631
 	
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	
+    // Don't clear DEPTH BUFFER if we are not using 3D
+	// glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT );
 	
 //	glColorMask(TRUE, TRUE, TRUE, FALSE);	// #631
 

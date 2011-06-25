@@ -416,7 +416,9 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 		[[CCScheduler sharedScheduler] tick: dt];	
 	}
 	
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    // Don't clear DEPTH BUFFER if we are not using 3D
+	// glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT );
 	
 	/* to avoid flickr, nextScene MUST be here: after tick and before draw.
 	 XXX: Which bug is this one. It seems that it can't be reproduced with v0.9 */
