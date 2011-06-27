@@ -28,7 +28,8 @@
 #import "CCCamera.h"
 #import "ccMacros.h"
 #import "CCDrawingPrimitives.h"
-#import "Support/kazmath.h"
+#import "kazmath/mat4.h"
+#import "kazmath/vec3.h"
 
 @implementation CCCamera
 
@@ -73,10 +74,11 @@
 -(kmMat4*) locate
 {
 	if( dirty_ ) {
-		
-		kmVec3 eye = kmVec3Make( eyeX_, eyeY_, eyeZ_);
-		kmVec3 center = kmVec3Make( centerX_, centerY_, centerZ_);
-		kmVec3 up = kmVec3Make(upX_, upY_, upZ_);
+
+		kmVec3 eye, center, up;
+		kmVec3Fill( &eye, eyeX_, eyeY_, eyeZ_);
+		kmVec3Fill( &center, centerX_, centerY_, centerZ_);
+		kmVec3Fill( &up, upX_, upY_, upZ_);
 		kmMat4LookAt( &lookupMatrix, &eye, &center, &up);
 	}
 	
