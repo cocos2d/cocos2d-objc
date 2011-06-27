@@ -27,7 +27,7 @@
 #import "CCNode.h"
 #import "CCSprite.h"
 #import "Support/OpenGL_Internal.h"
-#import "Support/kazmath.h"
+#import "kazmath/mat4.h"
 
 #import <Availability.h>
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED

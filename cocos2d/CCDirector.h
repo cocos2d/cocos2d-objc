@@ -29,7 +29,7 @@
 
 #import "CCProtocols.h"
 #import "Platforms/CCGL.h"
-#import "Support/kazmath.h"
+#import "kazmath/mat4.h"
 
 /** @typedef ccDirectorProjection
  Possible OpenGL projections used by director

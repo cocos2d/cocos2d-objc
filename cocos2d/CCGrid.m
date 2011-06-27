@@ -41,6 +41,8 @@
 #import "Support/TransformUtils.h"
 #import "Support/OpenGL_Internal.h"
 
+#import "kazmath/vec3.h"
+
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 #import "Platforms/iOS/CCDirectorIOS.h"
 #endif // __IPHONE_OS_VERSION_MAX_ALLOWED
@@ -198,9 +200,10 @@
 	kmMat4 matrixPerspective, matrixLookup;
 	kmMat4PerspectiveProjection( &matrixPerspective, 60, (GLfloat)winSize.width/winSize.height, 0.5f, 1500.0f);
 	
-	kmVec3 eye = kmVec3Make(winSize.width/2, winSize.height/2, [director getZEye] );
-	kmVec3 center = kmVec3Make( winSize.width/2, winSize.height/2, 0 );
-	kmVec3 up = kmVec3Make(0,1,0);
+	kmVec3 eye, center, up;
+	kmVec3Fill( &eye, winSize.width/2, winSize.height/2, [director getZEye] );
+	kmVec3Fill( &center, winSize.width/2, winSize.height/2, 0 );
+	kmVec3Fill( &up,0,1,0);
 	kmMat4LookAt(&matrixLookup, &eye, &center, &up);
 	
 	kmMat4Multiply(&projection3D_, &matrixPerspective, &matrixLookup);

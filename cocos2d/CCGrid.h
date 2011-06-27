@@ -29,7 +29,7 @@
 #import "CCNode.h"
 #import "CCCamera.h"
 #import "ccTypes.h"
-#import "Support/kazmath.h"
+#import "kazmath/mat4.h"
 
 @class CCTexture2D;
 @class CCGrabber;

@@ -48,6 +48,7 @@
 #import "../../Support/OpenGL_Internal.h"
 #import "../../Support/CGPointExtension.h"
 #import "../../Support/TransformUtils.h"
+#import "kazmath/vec3.h"
 
 #import "CCLayer.h"
 
@@ -171,9 +172,10 @@ CGFloat	__ccContentScaleFactor = 1;
 			
 			float eyeZ = sizeInPoints.height * [self getZEye] / sizeInPixels.height;
 
-			kmVec3 eye = kmVec3Make(sizeInPoints.width/2, sizeInPoints.height/2, eyeZ );
-			kmVec3 center = kmVec3Make( sizeInPoints.width/2, sizeInPoints.height/2, 0 );
-			kmVec3 up = kmVec3Make(0, 1, 0);
+			kmVec3 eye, center, up;
+			kmVec3Fill( &eye, sizeInPoints.width/2, sizeInPoints.height/2, eyeZ );
+			kmVec3Fill( &center, sizeInPoints.width/2, sizeInPoints.height/2, 0 );
+			kmVec3Fill( &up, 0, 1, 0);
 			kmMat4LookAt(&matrixLookup, &eye, &center, &up);
 			
 			kmMat4Multiply(&portraitProjectionMatrix_, &matrixPerspective, &matrixLookup);

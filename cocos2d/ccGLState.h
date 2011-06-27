@@ -32,7 +32,7 @@
 #import <OpenGL/gl.h>
 #endif // 
 
-#import "Support/kazmath.h"
+#import "kazmath/mat4.h"
 
 @class GLProgram;
 

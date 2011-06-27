@@ -34,7 +34,7 @@
 #import "CCProtocols.h"
 #import "ccConfig.h"
 #import "Support/CCArray.h"
-#import "Support/kazmath.h"
+#import "kazmath/mat4.h"
 
 enum {
 	kCCNodeTagInvalid = -1,

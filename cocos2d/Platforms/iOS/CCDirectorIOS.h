@@ -30,7 +30,7 @@
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 
 #import "../../CCDirector.h"
-#import "../../Support/kazmath.h"
+#import "kazmath/mat4.h"
 
 /** @typedef ccDeviceOrientation
  Possible device orientations

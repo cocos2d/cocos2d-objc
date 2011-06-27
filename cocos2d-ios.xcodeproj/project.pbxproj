@@ -1448,6 +1448,44 @@
 		50FD7B450FFAA8C6004073B5 /* atlastest.png in Resources */ = {isa = PBXBuildFile; fileRef = 506882680E957C4A00F943E5 /* atlastest.png */; };
 		6F305B5F0FB9D2790052E700 /* TransformUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 6F305B5D0FB9D2790052E700 /* TransformUtils.h */; };
 		6F305B600FB9D2790052E700 /* TransformUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F305B5E0FB9D2790052E700 /* TransformUtils.m */; };
+		A015BFCD13B826D800C73E76 /* aabb.h in Headers */ = {isa = PBXBuildFile; fileRef = A015BFAE13B826D800C73E76 /* aabb.h */; };
+		A015BFCE13B826D800C73E76 /* mat4stack.h in Headers */ = {isa = PBXBuildFile; fileRef = A015BFB013B826D800C73E76 /* mat4stack.h */; };
+		A015BFCF13B826D800C73E76 /* matrix.h in Headers */ = {isa = PBXBuildFile; fileRef = A015BFB113B826D800C73E76 /* matrix.h */; };
+		A015BFD013B826D800C73E76 /* kazmath.h in Headers */ = {isa = PBXBuildFile; fileRef = A015BFB213B826D800C73E76 /* kazmath.h */; };
+		A015BFD113B826D800C73E76 /* mat3.h in Headers */ = {isa = PBXBuildFile; fileRef = A015BFB313B826D800C73E76 /* mat3.h */; };
+		A015BFD213B826D800C73E76 /* mat4.h in Headers */ = {isa = PBXBuildFile; fileRef = A015BFB413B826D800C73E76 /* mat4.h */; };
+		A015BFD313B826D800C73E76 /* plane.h in Headers */ = {isa = PBXBuildFile; fileRef = A015BFB513B826D800C73E76 /* plane.h */; };
+		A015BFD413B826D800C73E76 /* quaternion.h in Headers */ = {isa = PBXBuildFile; fileRef = A015BFB613B826D800C73E76 /* quaternion.h */; };
+		A015BFD513B826D800C73E76 /* ray2.h in Headers */ = {isa = PBXBuildFile; fileRef = A015BFB713B826D800C73E76 /* ray2.h */; };
+		A015BFD613B826D800C73E76 /* utility.h in Headers */ = {isa = PBXBuildFile; fileRef = A015BFB813B826D800C73E76 /* utility.h */; };
+		A015BFD713B826D800C73E76 /* vec2.h in Headers */ = {isa = PBXBuildFile; fileRef = A015BFB913B826D800C73E76 /* vec2.h */; };
+		A015BFD813B826D800C73E76 /* vec3.h in Headers */ = {isa = PBXBuildFile; fileRef = A015BFBA13B826D800C73E76 /* vec3.h */; };
+		A015BFD913B826D800C73E76 /* vec4.h in Headers */ = {isa = PBXBuildFile; fileRef = A015BFBB13B826D800C73E76 /* vec4.h */; };
+		A015BFDA13B826D800C73E76 /* aabb.c in Sources */ = {isa = PBXBuildFile; fileRef = A015BFBD13B826D800C73E76 /* aabb.c */; };
+		A015BFDB13B826D800C73E76 /* aabb.c in Sources */ = {isa = PBXBuildFile; fileRef = A015BFBD13B826D800C73E76 /* aabb.c */; };
+		A015BFDE13B826D800C73E76 /* mat4stack.c in Sources */ = {isa = PBXBuildFile; fileRef = A015BFC113B826D800C73E76 /* mat4stack.c */; };
+		A015BFDF13B826D800C73E76 /* mat4stack.c in Sources */ = {isa = PBXBuildFile; fileRef = A015BFC113B826D800C73E76 /* mat4stack.c */; };
+		A015BFE013B826D800C73E76 /* matrix.c in Sources */ = {isa = PBXBuildFile; fileRef = A015BFC213B826D800C73E76 /* matrix.c */; };
+		A015BFE113B826D800C73E76 /* matrix.c in Sources */ = {isa = PBXBuildFile; fileRef = A015BFC213B826D800C73E76 /* matrix.c */; };
+		A015BFE213B826D800C73E76 /* mat3.c in Sources */ = {isa = PBXBuildFile; fileRef = A015BFC413B826D800C73E76 /* mat3.c */; };
+		A015BFE313B826D800C73E76 /* mat3.c in Sources */ = {isa = PBXBuildFile; fileRef = A015BFC413B826D800C73E76 /* mat3.c */; };
+		A015BFE413B826D800C73E76 /* mat4.c in Sources */ = {isa = PBXBuildFile; fileRef = A015BFC513B826D800C73E76 /* mat4.c */; };
+		A015BFE513B826D800C73E76 /* mat4.c in Sources */ = {isa = PBXBuildFile; fileRef = A015BFC513B826D800C73E76 /* mat4.c */; };
+		A015BFE613B826D800C73E76 /* plane.c in Sources */ = {isa = PBXBuildFile; fileRef = A015BFC613B826D800C73E76 /* plane.c */; };
+		A015BFE713B826D800C73E76 /* plane.c in Sources */ = {isa = PBXBuildFile; fileRef = A015BFC613B826D800C73E76 /* plane.c */; };
+		A015BFE813B826D800C73E76 /* quaternion.c in Sources */ = {isa = PBXBuildFile; fileRef = A015BFC713B826D800C73E76 /* quaternion.c */; };
+		A015BFE913B826D800C73E76 /* quaternion.c in Sources */ = {isa = PBXBuildFile; fileRef = A015BFC713B826D800C73E76 /* quaternion.c */; };
+		A015BFEA13B826D800C73E76 /* ray2.c in Sources */ = {isa = PBXBuildFile; fileRef = A015BFC813B826D800C73E76 /* ray2.c */; };
+		A015BFEB13B826D800C73E76 /* ray2.c in Sources */ = {isa = PBXBuildFile; fileRef = A015BFC813B826D800C73E76 /* ray2.c */; };
+		A015BFEC13B826D800C73E76 /* utility.c in Sources */ = {isa = PBXBuildFile; fileRef = A015BFC913B826D800C73E76 /* utility.c */; };
+		A015BFED13B826D800C73E76 /* utility.c in Sources */ = {isa = PBXBuildFile; fileRef = A015BFC913B826D800C73E76 /* utility.c */; };
+		A015BFEE13B826D800C73E76 /* vec2.c in Sources */ = {isa = PBXBuildFile; fileRef = A015BFCA13B826D800C73E76 /* vec2.c */; };
+		A015BFEF13B826D800C73E76 /* vec2.c in Sources */ = {isa = PBXBuildFile; fileRef = A015BFCA13B826D800C73E76 /* vec2.c */; };
+		A015BFF013B826D800C73E76 /* vec3.c in Sources */ = {isa = PBXBuildFile; fileRef = A015BFCB13B826D800C73E76 /* vec3.c */; };
+		A015BFF113B826D800C73E76 /* vec3.c in Sources */ = {isa = PBXBuildFile; fileRef = A015BFCB13B826D800C73E76 /* vec3.c */; };
+		A015BFF213B826D800C73E76 /* vec4.c in Sources */ = {isa = PBXBuildFile; fileRef = A015BFCC13B826D800C73E76 /* vec4.c */; };
+		A015BFF313B826D800C73E76 /* vec4.c in Sources */ = {isa = PBXBuildFile; fileRef = A015BFCC13B826D800C73E76 /* vec4.c */; };
+		A015BFF913B829E100C73E76 /* libkazmath.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A04A1FEB13B826B300ABAFB7 /* libkazmath.a */; };
 		AAEA834B0FD5704400F08728 /* blocks.png in Resources */ = {isa = PBXBuildFile; fileRef = AAEA834A0FD5704400F08728 /* blocks.png */; };
 		DA5F0EC50FFE96D400C7C82E /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB240E10EE4A00AE9530 /* Default.png */; };
 		DA5F0EC60FFE96D400C7C82E /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB250E10EE4A00AE9530 /* Icon.png */; };
@@ -2345,8 +2383,6 @@
 		E0BC7D9E1342CE7B001B4DCC /* CCShaderCache.m in Sources */ = {isa = PBXBuildFile; fileRef = E0BC7D9A1342CE7B001B4DCC /* CCShaderCache.m */; };
 		E0BC7D9F1342CE7B001B4DCC /* GLProgram.h in Headers */ = {isa = PBXBuildFile; fileRef = E0BC7D9B1342CE7B001B4DCC /* GLProgram.h */; };
 		E0BC7DA01342CE7B001B4DCC /* GLProgram.m in Sources */ = {isa = PBXBuildFile; fileRef = E0BC7D9C1342CE7B001B4DCC /* GLProgram.m */; };
-		E0BC7DA41342CECE001B4DCC /* kazmath.c in Sources */ = {isa = PBXBuildFile; fileRef = E0BC7DA21342CECE001B4DCC /* kazmath.c */; };
-		E0BC7DA51342CECE001B4DCC /* kazmath.h in Headers */ = {isa = PBXBuildFile; fileRef = E0BC7DA31342CECE001B4DCC /* kazmath.h */; };
 		E0BC7DA81342CF27001B4DCC /* ES2Renderer.h in Headers */ = {isa = PBXBuildFile; fileRef = E0BC7DA61342CF27001B4DCC /* ES2Renderer.h */; };
 		E0BC7DA91342CF27001B4DCC /* ES2Renderer.m in Sources */ = {isa = PBXBuildFile; fileRef = E0BC7DA71342CF27001B4DCC /* ES2Renderer.m */; };
 		E0C3655B11F0AE9B001C08F9 /* CCSpriteBatchNode.h in Headers */ = {isa = PBXBuildFile; fileRef = E0C3655911F0AE9B001C08F9 /* CCSpriteBatchNode.h */; };
@@ -3170,6 +3206,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 5018F24C0DFDEAC400C013A5;
 			remoteInfo = cocos2d;
+		};
+		A015BFF713B829D700C73E76 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A04A1FEA13B826B300ABAFB7;
+			remoteInfo = kazmath;
 		};
 		DA5F0EC30FFE96D400C7C82E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -4094,6 +4137,32 @@
 		8EDF3E900F6BD8CD00F54643 /* waterfall.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = waterfall.wav; sourceTree = "<group>"; };
 		8EDF3FD90F6BE3F400F54643 /* listener-marker.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "listener-marker.png"; path = "experimental/sound-engine/sound-engine-sample/listener-marker.png"; sourceTree = SOURCE_ROOT; };
 		8EDF3FDA0F6BE3F400F54643 /* source-marker.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "source-marker.png"; path = "experimental/sound-engine/sound-engine-sample/source-marker.png"; sourceTree = SOURCE_ROOT; };
+		A015BFAE13B826D800C73E76 /* aabb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aabb.h; sourceTree = "<group>"; };
+		A015BFB013B826D800C73E76 /* mat4stack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mat4stack.h; sourceTree = "<group>"; };
+		A015BFB113B826D800C73E76 /* matrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = matrix.h; sourceTree = "<group>"; };
+		A015BFB213B826D800C73E76 /* kazmath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = kazmath.h; sourceTree = "<group>"; };
+		A015BFB313B826D800C73E76 /* mat3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mat3.h; sourceTree = "<group>"; };
+		A015BFB413B826D800C73E76 /* mat4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mat4.h; sourceTree = "<group>"; };
+		A015BFB513B826D800C73E76 /* plane.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = plane.h; sourceTree = "<group>"; };
+		A015BFB613B826D800C73E76 /* quaternion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = quaternion.h; sourceTree = "<group>"; };
+		A015BFB713B826D800C73E76 /* ray2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ray2.h; sourceTree = "<group>"; };
+		A015BFB813B826D800C73E76 /* utility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = utility.h; sourceTree = "<group>"; };
+		A015BFB913B826D800C73E76 /* vec2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vec2.h; sourceTree = "<group>"; };
+		A015BFBA13B826D800C73E76 /* vec3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vec3.h; sourceTree = "<group>"; };
+		A015BFBB13B826D800C73E76 /* vec4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vec4.h; sourceTree = "<group>"; };
+		A015BFBD13B826D800C73E76 /* aabb.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = aabb.c; sourceTree = "<group>"; };
+		A015BFC113B826D800C73E76 /* mat4stack.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mat4stack.c; sourceTree = "<group>"; };
+		A015BFC213B826D800C73E76 /* matrix.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = matrix.c; sourceTree = "<group>"; };
+		A015BFC413B826D800C73E76 /* mat3.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mat3.c; sourceTree = "<group>"; };
+		A015BFC513B826D800C73E76 /* mat4.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mat4.c; sourceTree = "<group>"; };
+		A015BFC613B826D800C73E76 /* plane.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = plane.c; sourceTree = "<group>"; };
+		A015BFC713B826D800C73E76 /* quaternion.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = quaternion.c; sourceTree = "<group>"; };
+		A015BFC813B826D800C73E76 /* ray2.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ray2.c; sourceTree = "<group>"; };
+		A015BFC913B826D800C73E76 /* utility.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = utility.c; sourceTree = "<group>"; };
+		A015BFCA13B826D800C73E76 /* vec2.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vec2.c; sourceTree = "<group>"; };
+		A015BFCB13B826D800C73E76 /* vec3.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vec3.c; sourceTree = "<group>"; };
+		A015BFCC13B826D800C73E76 /* vec4.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vec4.c; sourceTree = "<group>"; };
+		A04A1FEB13B826B300ABAFB7 /* libkazmath.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libkazmath.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		AAEA834A0FD5704400F08728 /* blocks.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blocks.png; sourceTree = "<group>"; };
 		DA90D87B1059A54D0039F26A /* FontTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FontTest.h; path = tests/FontTest.h; sourceTree = "<group>"; };
 		DA90D87C1059A54D0039F26A /* FontTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FontTest.m; path = tests/FontTest.m; sourceTree = "<group>"; };
@@ -4185,8 +4254,6 @@
 		E0BC7D9A1342CE7B001B4DCC /* CCShaderCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCShaderCache.m; sourceTree = "<group>"; };
 		E0BC7D9B1342CE7B001B4DCC /* GLProgram.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLProgram.h; sourceTree = "<group>"; };
 		E0BC7D9C1342CE7B001B4DCC /* GLProgram.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLProgram.m; sourceTree = "<group>"; };
-		E0BC7DA21342CECE001B4DCC /* kazmath.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = kazmath.c; sourceTree = "<group>"; };
-		E0BC7DA31342CECE001B4DCC /* kazmath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = kazmath.h; sourceTree = "<group>"; };
 		E0BC7DA61342CF27001B4DCC /* ES2Renderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ES2Renderer.h; sourceTree = "<group>"; };
 		E0BC7DA71342CF27001B4DCC /* ES2Renderer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ES2Renderer.m; sourceTree = "<group>"; };
 		E0C3655911F0AE9B001C08F9 /* CCSpriteBatchNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSpriteBatchNode.h; sourceTree = "<group>"; };
@@ -4362,6 +4429,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A015BFF913B829E100C73E76 /* libkazmath.a in Frameworks */,
 				5018F2E20DFDEBBA00C013A5 /* Foundation.framework in Frameworks */,
 				5018F2E30DFDEBBA00C013A5 /* UIKit.framework in Frameworks */,
 				5018F2E40DFDEBBA00C013A5 /* CoreGraphics.framework in Frameworks */,
@@ -4977,6 +5045,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		A04A1FE913B826B300ABAFB7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		DA5F0EDA0FFE96D400C7C82E /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -5161,6 +5236,7 @@
 				E037DA4C1281C7F0003D39D7 /* Bug458.app */,
 				E0EA56A5134B9CA800F212C8 /* Bug1159.app */,
 				E03A4F691355041F00D4B515 /* ShaderTest.app */,
+				A04A1FEB13B826B300ABAFB7 /* libkazmath.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -5290,6 +5366,7 @@
 		501756090F335CE900624901 /* external */ = {
 			isa = PBXGroup;
 			children = (
+				A015BFAB13B826D800C73E76 /* kazmath */,
 				50E5F309110690D300E3FCF5 /* Chipmunk */,
 				506EDF01102FBC0C00A389B3 /* Box2d */,
 				5031650810277785003ACFE7 /* libpng */,
@@ -6632,6 +6709,87 @@
 			path = "experimental/sound-engine/sound-engine-sample/sfx";
 			sourceTree = "<group>";
 		};
+		A015BFAB13B826D800C73E76 /* kazmath */ = {
+			isa = PBXGroup;
+			children = (
+				A015BFAC13B826D800C73E76 /* include */,
+				A015BFBC13B826D800C73E76 /* src */,
+			);
+			name = kazmath;
+			path = external/kazmath;
+			sourceTree = "<group>";
+		};
+		A015BFAC13B826D800C73E76 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				A015BFAD13B826D800C73E76 /* kazmath */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		A015BFAD13B826D800C73E76 /* kazmath */ = {
+			isa = PBXGroup;
+			children = (
+				A015BFAE13B826D800C73E76 /* aabb.h */,
+				A015BFAF13B826D800C73E76 /* GL */,
+				A015BFB213B826D800C73E76 /* kazmath.h */,
+				A015BFB313B826D800C73E76 /* mat3.h */,
+				A015BFB413B826D800C73E76 /* mat4.h */,
+				A015BFB513B826D800C73E76 /* plane.h */,
+				A015BFB613B826D800C73E76 /* quaternion.h */,
+				A015BFB713B826D800C73E76 /* ray2.h */,
+				A015BFB813B826D800C73E76 /* utility.h */,
+				A015BFB913B826D800C73E76 /* vec2.h */,
+				A015BFBA13B826D800C73E76 /* vec3.h */,
+				A015BFBB13B826D800C73E76 /* vec4.h */,
+			);
+			path = kazmath;
+			sourceTree = "<group>";
+		};
+		A015BFAF13B826D800C73E76 /* GL */ = {
+			isa = PBXGroup;
+			children = (
+				A015BFB013B826D800C73E76 /* mat4stack.h */,
+				A015BFB113B826D800C73E76 /* matrix.h */,
+			);
+			path = GL;
+			sourceTree = "<group>";
+		};
+		A015BFBC13B826D800C73E76 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				A015BFBD13B826D800C73E76 /* aabb.c */,
+				A015BFC013B826D800C73E76 /* GL */,
+				A015BFC313B826D800C73E76 /* gl_utils */,
+				A015BFC413B826D800C73E76 /* mat3.c */,
+				A015BFC513B826D800C73E76 /* mat4.c */,
+				A015BFC613B826D800C73E76 /* plane.c */,
+				A015BFC713B826D800C73E76 /* quaternion.c */,
+				A015BFC813B826D800C73E76 /* ray2.c */,
+				A015BFC913B826D800C73E76 /* utility.c */,
+				A015BFCA13B826D800C73E76 /* vec2.c */,
+				A015BFCB13B826D800C73E76 /* vec3.c */,
+				A015BFCC13B826D800C73E76 /* vec4.c */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
+		A015BFC013B826D800C73E76 /* GL */ = {
+			isa = PBXGroup;
+			children = (
+				A015BFC113B826D800C73E76 /* mat4stack.c */,
+				A015BFC213B826D800C73E76 /* matrix.c */,
+			);
+			path = GL;
+			sourceTree = "<group>";
+		};
+		A015BFC313B826D800C73E76 /* gl_utils */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = gl_utils;
+			sourceTree = "<group>";
+		};
 		E037DA881281EFE2003D39D7 /* Bug-458 */ = {
 			isa = PBXGroup;
 			children = (
@@ -6735,8 +6893,6 @@
 			children = (
 				503798C40F912C2000986724 /* CGPointExtension.h */,
 				503798C50F912C2000986724 /* CGPointExtension.m */,
-				E0BC7DA21342CECE001B4DCC /* kazmath.c */,
-				E0BC7DA31342CECE001B4DCC /* kazmath.h */,
 				E0CC11841353E75100080D9D /* neon_matrix_impl.c */,
 				E0CC11831353E75100080D9D /* neon_matrix_impl.h */,
 			);
@@ -6880,7 +7036,6 @@
 				E02BB704126CADEA006E46A2 /* CCAnimation.h in Headers */,
 				E0BC7D9D1342CE7B001B4DCC /* CCShaderCache.h in Headers */,
 				E0BC7D9F1342CE7B001B4DCC /* GLProgram.h in Headers */,
-				E0BC7DA51342CECE001B4DCC /* kazmath.h in Headers */,
 				E0BC7DA81342CF27001B4DCC /* ES2Renderer.h in Headers */,
 				E0CC11871353E8A100080D9D /* neon_matrix_impl.h in Headers */,
 				E03A4F2A1354E2F100D4B515 /* ccGLState.h in Headers */,
@@ -6998,6 +7153,26 @@
 				505224DF11B3D3A80061670F /* CDOpenALSupport.h in Headers */,
 				505224E111B3D3A80061670F /* CocosDenshion.h in Headers */,
 				505224E311B3D3A80061670F /* SimpleAudioEngine.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A04A1FE713B826B300ABAFB7 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A015BFCD13B826D800C73E76 /* aabb.h in Headers */,
+				A015BFCE13B826D800C73E76 /* mat4stack.h in Headers */,
+				A015BFCF13B826D800C73E76 /* matrix.h in Headers */,
+				A015BFD013B826D800C73E76 /* kazmath.h in Headers */,
+				A015BFD113B826D800C73E76 /* mat3.h in Headers */,
+				A015BFD213B826D800C73E76 /* mat4.h in Headers */,
+				A015BFD313B826D800C73E76 /* plane.h in Headers */,
+				A015BFD413B826D800C73E76 /* quaternion.h in Headers */,
+				A015BFD513B826D800C73E76 /* ray2.h in Headers */,
+				A015BFD613B826D800C73E76 /* utility.h in Headers */,
+				A015BFD713B826D800C73E76 /* vec2.h in Headers */,
+				A015BFD813B826D800C73E76 /* vec3.h in Headers */,
+				A015BFD913B826D800C73E76 /* vec4.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7124,6 +7299,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				A015BFF813B829D700C73E76 /* PBXTargetDependency */,
 			);
 			name = cocos2d;
 			productName = cocos2d;
@@ -7999,6 +8175,23 @@
 			productReference = 50E77D1211D4C926009CA2C2 /* HiResTest.app */;
 			productType = "com.apple.product-type.application";
 		};
+		A04A1FEA13B826B300ABAFB7 /* kazmath */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A04A1FF213B826B800ABAFB7 /* Build configuration list for PBXNativeTarget "kazmath" */;
+			buildPhases = (
+				A04A1FE713B826B300ABAFB7 /* Headers */,
+				A04A1FE813B826B300ABAFB7 /* Sources */,
+				A04A1FE913B826B300ABAFB7 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = kazmath;
+			productName = kazmat;
+			productReference = A04A1FEB13B826B300ABAFB7 /* libkazmath.a */;
+			productType = "com.apple.product-type.library.static";
+		};
 		DA5F0EC10FFE96D400C7C82E /* Bug422 */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = DA5F0EE10FFE96D400C7C82E /* Build configuration list for PBXNativeTarget "Bug422" */;
@@ -8154,6 +8347,7 @@
 				5018F24C0DFDEAC400C013A5 /* cocos2d */,
 				502C65ED0DFEF3DD00E4107D /* cocos2d-documentation */,
 				50CB2FC91004C8B100B7A750 /* CocosDenshion */,
+				A04A1FEA13B826B300ABAFB7 /* kazmath */,
 				503164CC10277665003ACFE7 /* libpng */,
 				504CC30C1035BDE90096894C /* ActionManagerTest */,
 				50C93A930E0BF6E000517B01 /* ActionsTest */,
@@ -10327,7 +10521,6 @@
 				E02BB705126CADEA006E46A2 /* CCAnimation.m in Sources */,
 				E0BC7D9E1342CE7B001B4DCC /* CCShaderCache.m in Sources */,
 				E0BC7DA01342CE7B001B4DCC /* GLProgram.m in Sources */,
-				E0BC7DA41342CECE001B4DCC /* kazmath.c in Sources */,
 				E0BC7DA91342CF27001B4DCC /* ES2Renderer.m in Sources */,
 				E0CC11881353E8A100080D9D /* neon_matrix_impl.c in Sources */,
 				E03A4F291354E2F100D4B515 /* ccGLState.m in Sources */,
@@ -10556,6 +10749,18 @@
 			files = (
 				505B62CB0F2E6A0F001B4104 /* main.m in Sources */,
 				505B62E00F2E6A66001B4104 /* Texture2dTest.m in Sources */,
+				A015BFDA13B826D800C73E76 /* aabb.c in Sources */,
+				A015BFDE13B826D800C73E76 /* mat4stack.c in Sources */,
+				A015BFE013B826D800C73E76 /* matrix.c in Sources */,
+				A015BFE213B826D800C73E76 /* mat3.c in Sources */,
+				A015BFE413B826D800C73E76 /* mat4.c in Sources */,
+				A015BFE613B826D800C73E76 /* plane.c in Sources */,
+				A015BFE813B826D800C73E76 /* quaternion.c in Sources */,
+				A015BFEA13B826D800C73E76 /* ray2.c in Sources */,
+				A015BFEC13B826D800C73E76 /* utility.c in Sources */,
+				A015BFEE13B826D800C73E76 /* vec2.c in Sources */,
+				A015BFF013B826D800C73E76 /* vec3.c in Sources */,
+				A015BFF213B826D800C73E76 /* vec4.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10839,6 +11044,25 @@
 			files = (
 				50E77D0511D4C925009CA2C2 /* main.m in Sources */,
 				507C0D8711D4CCC40075E747 /* HiResTest.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A04A1FE813B826B300ABAFB7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A015BFDB13B826D800C73E76 /* aabb.c in Sources */,
+				A015BFDF13B826D800C73E76 /* mat4stack.c in Sources */,
+				A015BFE113B826D800C73E76 /* matrix.c in Sources */,
+				A015BFE313B826D800C73E76 /* mat3.c in Sources */,
+				A015BFE513B826D800C73E76 /* mat4.c in Sources */,
+				A015BFE713B826D800C73E76 /* plane.c in Sources */,
+				A015BFE913B826D800C73E76 /* quaternion.c in Sources */,
+				A015BFEB13B826D800C73E76 /* ray2.c in Sources */,
+				A015BFED13B826D800C73E76 /* utility.c in Sources */,
+				A015BFEF13B826D800C73E76 /* vec2.c in Sources */,
+				A015BFF113B826D800C73E76 /* vec3.c in Sources */,
+				A015BFF313B826D800C73E76 /* vec4.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11418,6 +11642,11 @@
 			isa = PBXTargetDependency;
 			target = 5018F24C0DFDEAC400C013A5 /* cocos2d */;
 			targetProxy = 50E77CF011D4C925009CA2C2 /* PBXContainerItemProxy */;
+		};
+		A015BFF813B829D700C73E76 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A04A1FEA13B826B300ABAFB7 /* kazmath */;
+			targetProxy = A015BFF713B829D700C73E76 /* PBXContainerItemProxy */;
 		};
 		DA5F0EC20FFE96D400C7C82E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -13937,6 +14166,33 @@
 			};
 			name = Release;
 		};
+		A04A1FEC13B826B400ABAFB7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				PREBINDING = NO;
+				PRODUCT_NAME = kazmath;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		A04A1FED13B826B400ABAFB7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				PREBINDING = NO;
+				PRODUCT_NAME = kazmath;
+				SDKROOT = iphoneos;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
 		C01FCF4F08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -13964,7 +14220,8 @@
 				GCC_WARN_EFFECTIVE_CPLUSPLUS_VIOLATIONS = YES;
 				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				HEADER_SEARCH_PATHS = external/kazmath/include;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = (
@@ -14005,7 +14262,8 @@
 				GCC_WARN_EFFECTIVE_CPLUSPLUS_VIOLATIONS = YES;
 				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				HEADER_SEARCH_PATHS = external/kazmath/include;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = (
 					"-all_load",
@@ -14822,6 +15080,15 @@
 			buildConfigurations = (
 				50E77D1011D4C925009CA2C2 /* Debug */,
 				50E77D1111D4C925009CA2C2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A04A1FF213B826B800ABAFB7 /* Build configuration list for PBXNativeTarget "kazmath" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A04A1FEC13B826B400ABAFB7 /* Debug */,
+				A04A1FED13B826B400ABAFB7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
