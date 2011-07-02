@@ -42,15 +42,16 @@
 #import "../../CCScene.h"
 #import "../../GLProgram.h"
 #import "../../ccGLState.h"
+#import "../../CCLayer.h"
 
 // support imports
 #import "glu.h"
 #import "../../Support/OpenGL_Internal.h"
 #import "../../Support/CGPointExtension.h"
 #import "../../Support/TransformUtils.h"
-#import "kazmath/vec3.h"
 
-#import "CCLayer.h"
+#import "kazmath/kazmath.h"
+#import "kazmath/GL/matrix.h"
 
 #if CC_ENABLE_PROFILERS
 #import "../../Support/CCProfiling.h"
@@ -132,6 +133,10 @@ CGFloat	__ccContentScaleFactor = 1;
 	if( nextScene_ )
 		[self setNextScene];
 
+	kmGLPushMatrix();
+	
+	[self applyOrientation];
+
 	// By default enable VertexArray, ColorArray, TextureCoordArray and Texture2D
 	CC_ENABLE_DEFAULT_GL_STATES();
 
@@ -148,6 +153,8 @@ CGFloat	__ccContentScaleFactor = 1;
 	[self showProfilers];
 #endif
 	
+	kmGLPopMatrix();
+
 	[openGLView_ swapBuffers];
 }
 
@@ -160,25 +167,37 @@ CGFloat	__ccContentScaleFactor = 1;
 	
 	switch (projection) {
 		case kCCDirectorProjection2D:
-			kmMat4OrthographicProjection(&portraitProjectionMatrix_, 0, sizeInPoints.width, 0, sizeInPoints.height, -1024, 1024);			
+			kmGLMatrixMode(KM_GL_PROJECTION);
+			kmGLLoadIdentity();
+
+			kmMat4 orthoMatrix;
+			kmMat4OrthographicProjection(&orthoMatrix, 0, sizeInPoints.width, 0, sizeInPoints.height, -1024, 1024);			
+
+			kmGLMatrixMode(KM_GL_MODELVIEW);
+			kmGLLoadIdentity();
 			break;
 
-			break;
-			
 		case kCCDirectorProjection3D:
 		{
-			kmMat4 matrixPerspective, matrixLookup;
-			kmMat4PerspectiveProjection( &matrixPerspective, 60, (GLfloat)sizeInPixels.width/sizeInPixels.height, 0.5f, 1500.0f);
-			
 			float eyeZ = sizeInPoints.height * [self getZEye] / sizeInPixels.height;
 
+			kmMat4 matrixPerspective, matrixLookup;
+			kmMat4PerspectiveProjection( &matrixPerspective, 60, (GLfloat)sizeInPixels.width/sizeInPixels.height, 0.5f, 1500.0f);
+
+			kmGLMatrixMode(KM_GL_PROJECTION);
+			kmGLLoadIdentity();
+			
+			kmMat4PerspectiveProjection( &matrixPerspective, 60, (GLfloat)sizeInPixels.width/sizeInPixels.height, 0.5f, 1500.0f);
+			kmGLMultMatrix(&matrixPerspective);
+			
+			kmGLMatrixMode(KM_GL_MODELVIEW);	
+			kmGLLoadIdentity();
 			kmVec3 eye, center, up;
 			kmVec3Fill( &eye, sizeInPoints.width/2, sizeInPoints.height/2, eyeZ );
 			kmVec3Fill( &center, sizeInPoints.width/2, sizeInPoints.height/2, 0 );
 			kmVec3Fill( &up, 0, 1, 0);
 			kmMat4LookAt(&matrixLookup, &eye, &center, &up);
-			
-			kmMat4Multiply(&portraitProjectionMatrix_, &matrixPerspective, &matrixLookup);
+			kmGLMultMatrix(&matrixLookup);
 			break;
 		}
 			
@@ -186,7 +205,7 @@ CGFloat	__ccContentScaleFactor = 1;
 			if( projectionDelegate_ )
 				[projectionDelegate_ updateProjection];
 			break;
-			
+
 		default:
 			CCLOG(@"cocos2d: Director: unrecognized projecgtion");
 			break;
@@ -194,59 +213,89 @@ CGFloat	__ccContentScaleFactor = 1;
 	
 	projection_ = projection;
 	
-	ccProjectionMatrix = [self applyOrientationToMatrix:&portraitProjectionMatrix_];
 	ccSetProjectionMatrixDirty();
-
 }
 
--(kmMat4) applyOrientationToMatrix:(kmMat4*)inMatrix
-{
+//-(kmMat4) applyOrientationToMatrix:(kmMat4*)inMatrix
+//{
+//	CGSize s = winSizeInPixels_;
+//	float w = s.width / 2;
+//	float h = s.height / 2;
+//	
+//	kmMat4 matA, matB, matC;
+//	kmMat4 ret;
+//	
+//	switch ( deviceOrientation_ ) {
+//		case kCCDeviceOrientationPortrait:
+//			ret = portraitProjectionMatrix_;
+//			break;
+//
+//		case kCCDeviceOrientationPortraitUpsideDown:
+//			// upside down
+//			kmMat4Translation(&matA, w, h, 0);
+//			kmMat4RotationZ(&matB, CC_DEGREES_TO_RADIANS(180) );
+//			kmMat4Translation(&matC, -w, -h, 0);
+//			
+//			kmMat4Multiply(&ret, inMatrix, &matA);
+//			kmMat4Multiply(&ret, &ret, &matB);
+//			kmMat4Multiply(&ret, &ret, &matC);			
+//			break;
+//
+//		case kCCDeviceOrientationLandscapeRight:
+//			kmMat4Translation(&matA, w, h, 0);
+//			kmMat4RotationZ(&matB, CC_DEGREES_TO_RADIANS(90) );
+//			kmMat4Translation(&matC, -h, -w, 0);
+//			
+//			kmMat4Multiply(&ret, inMatrix, &matA);
+//			kmMat4Multiply(&ret, &ret, &matB);
+//			kmMat4Multiply(&ret, &ret, &matC);
+//			break;
+//
+//		case kCCDeviceOrientationLandscapeLeft:
+//			kmMat4Translation(&matA, w, h, 0);
+//			kmMat4RotationZ(&matB, CC_DEGREES_TO_RADIANS(-90) );
+//			kmMat4Translation(&matC, -h, -w, 0);
+//			
+//			kmMat4Multiply(&ret, inMatrix, &matA);
+//			kmMat4Multiply(&ret, &ret, &matB);
+//			kmMat4Multiply(&ret, &ret, &matC);
+//			break;
+//	}
+//	
+//	return ret;
+//}
+
+-(void) applyOrientation
+{	
 	CGSize s = winSizeInPixels_;
 	float w = s.width / 2;
 	float h = s.height / 2;
 	
-	kmMat4 matA, matB, matC;
-	kmMat4 ret;
-	
+	// XXX it's using hardcoded values.
+	// What if the the screen size changes in the future?
 	switch ( deviceOrientation_ ) {
-		case kCCDeviceOrientationPortrait:
-			ret = portraitProjectionMatrix_;
+		case CCDeviceOrientationPortrait:
+			// nothing
 			break;
-
-		case kCCDeviceOrientationPortraitUpsideDown:
+		case CCDeviceOrientationPortraitUpsideDown:
 			// upside down
-			kmMat4Translation(&matA, w, h, 0);
-			kmMat4RotationZ(&matB, CC_DEGREES_TO_RADIANS(180) );
-			kmMat4Translation(&matC, -w, -h, 0);
-			
-			kmMat4Multiply(&ret, inMatrix, &matA);
-			kmMat4Multiply(&ret, &ret, &matB);
-			kmMat4Multiply(&ret, &ret, &matC);			
+			kmGLTranslatef(w,h,0);
+			kmGLRotatef(180,0,0,1);
+			kmGLTranslatef(-w,-h,0);
 			break;
-
-		case kCCDeviceOrientationLandscapeRight:
-			kmMat4Translation(&matA, w, h, 0);
-			kmMat4RotationZ(&matB, CC_DEGREES_TO_RADIANS(90) );
-			kmMat4Translation(&matC, -h, -w, 0);
-			
-			kmMat4Multiply(&ret, inMatrix, &matA);
-			kmMat4Multiply(&ret, &ret, &matB);
-			kmMat4Multiply(&ret, &ret, &matC);
+		case CCDeviceOrientationLandscapeRight:
+			kmGLTranslatef(w,h,0);
+			kmGLRotatef(90,0,0,1);
+			kmGLTranslatef(-h,-w,0);
 			break;
-
-		case kCCDeviceOrientationLandscapeLeft:
-			kmMat4Translation(&matA, w, h, 0);
-			kmMat4RotationZ(&matB, CC_DEGREES_TO_RADIANS(-90) );
-			kmMat4Translation(&matC, -h, -w, 0);
-			
-			kmMat4Multiply(&ret, inMatrix, &matA);
-			kmMat4Multiply(&ret, &ret, &matB);
-			kmMat4Multiply(&ret, &ret, &matC);
+		case CCDeviceOrientationLandscapeLeft:
+			kmGLTranslatef(w,h,0);
+			kmGLRotatef(-90,0,0,1);
+			kmGLTranslatef(-h,-w,0);
 			break;
-	}
-	
-	return ret;
+	}	
 }
+
 
 #pragma mark Director Integration with a UIKit view
 
@@ -437,8 +486,6 @@ CGFloat	__ccContentScaleFactor = 1;
 				break;
 		}
 	}
-	ccProjectionMatrix = [self applyOrientationToMatrix:&portraitProjectionMatrix_];
-	ccSetProjectionMatrixDirty();
 }
 
 -(void) end

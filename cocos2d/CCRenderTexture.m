@@ -32,6 +32,9 @@
 #import "Support/ccUtils.h"
 #import "Support/CCFileUtils.h"
 
+// extern
+#import "kazmath/GL/matrix.h"
+
 @implementation CCRenderTexture
 
 @synthesize sprite=sprite_;
@@ -111,14 +114,15 @@
 
 -(void)begin
 {	
-	projectionMatrixBackup_ = ccProjectionMatrix;	
-	
+	kmGLPushMatrix();
 	CCDirector *director = [CCDirector sharedDirector];
 	CGSize	winSize = [director winSizeInPixels];
 	
-	glViewport(0, 0, winSize.width, winSize.height);	
-	kmMat4OrthographicProjection(&ccProjectionMatrix, 0, winSize.width, 0, winSize.height, -1024, 1024);
-	ccSetProjectionMatrixDirty();
+	glViewport(0, 0, winSize.width, winSize.height);
+	
+	kmMat4 projectionMatrix;
+	kmMat4OrthographicProjection(&projectionMatrix, 0, winSize.width, 0, winSize.height, -1024, 1024);
+	kmGLMultMatrix(&projectionMatrix);
 	
 	glGetIntegerv(CC_GL_FRAMEBUFFER_BINDING, &oldFBO_);
 	ccglBindFramebuffer(CC_GL_FRAMEBUFFER, fbo_);
@@ -156,9 +160,8 @@
 	
 	CGSize size = [[CCDirector sharedDirector] displaySizeInPixels];
 	glViewport(0, 0, size.width, size.height);
-	
-	ccProjectionMatrix = projectionMatrixBackup_;
-	ccSetProjectionMatrixDirty();
+
+	kmGLPopMatrix();
 }
 
 -(void)clear:(float)r g:(float)g b:(float)b a:(float)a

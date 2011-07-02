@@ -54,11 +54,6 @@ void ccglDeleteProgram( GLuint program );
  */
 void ccglUniformProjectionMatrix( GLProgram *program );
 
-/** sets the projection matrix
-@since v2.0.0
-*/
-void ccSetProjectionMatrix( kmMat4 *matrix );
-
 /** sets the projection matrix as dirty
  @since v2.0.0
  */

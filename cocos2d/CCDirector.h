@@ -304,4 +304,3 @@ and when to execute the Scenes.
 
 @end
 
-extern kmMat4 ccProjectionMatrix;

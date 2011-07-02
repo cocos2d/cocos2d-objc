@@ -56,8 +56,8 @@ typedef enum {
  */
 @interface CCDirector (iOSExtension)
 
-// rotates the matrix if needed
--(kmMat4) applyOrientationToMatrix:(kmMat4*)matrix;
+// rotates the MV matrix in case it is needed
+-(void) applyOrientation;
 
 /** Sets the device orientation.
  If the orientation is going to be controlled by an UIViewController, then the orientation should be Portrait
