@@ -46,6 +46,9 @@
 #import "Support/CGPointExtension.h"
 #import "Support/TransformUtils.h"
 
+// extern
+#import "kazmath/GL/matrix.h"
+
 @implementation CCParticleSystemQuad
 
 
@@ -308,7 +311,11 @@
 	
 	ccglUseProgram( shaderProgram_->program_ );	
 	ccglUniformProjectionMatrix( shaderProgram_ );
-	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformMVMatrix], 1, GL_FALSE, transformMV_.mat);
+
+	kmMat4 matrixMV;
+	kmGLGetMatrix(KM_GL_MODELVIEW, &matrixMV);
+
+	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformMVMatrix], 1, GL_FALSE, matrixMV.mat);
 	
 	NSAssert( particleIdx == particleCount, @"Abnormal error in particle quad");
 	glDrawElements(GL_TRIANGLES, (GLsizei) particleIdx*6, GL_UNSIGNED_SHORT, indices_);

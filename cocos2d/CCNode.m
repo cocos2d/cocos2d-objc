@@ -39,6 +39,9 @@
 #import "ccMacros.h"
 #import "GLProgram.h"
 
+// externals
+#import "kazmath/GL/matrix.h"
+
 #import <Availability.h>
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 #import "Platforms/iOS/CCDirectorIOS.h"
@@ -502,11 +505,8 @@
 
 -(void) transform
 {
-	if( parent_ && parent_->isTransformMVDirty_ )
-		isTransformMVDirty_ = YES;
-	
-	if( !camera_ && isTransformMVDirty_ ) {
-
+	if( isTransformMVDirty_ ) {
+		
 		// Convert 3x3 into 4x4 matrix
 		CGAffineTransform tmpAffine = [self nodeToParentTransform];
 		CGAffineToGL(&tmpAffine, transformMV_.mat);
@@ -514,29 +514,25 @@
 		// Update Z vertex manually
 		transformMV_.mat[14] = vertexZ_;
 		
-		// leaf node
-		if( parent_ )
-			kmMat4Multiply(&transformMV_, &parent_->transformMV_, &transformMV_ );
+		isTransformMVDirty_ = NO;
 	}
 	
+	kmGLMultMatrix( &transformMV_ );
 
+	
 	// XXX: Expensive calls. Camera should be integrated into the cached affine matrix
 	if ( camera_ && !(grid_ && grid_.active) )
-	{
-//		BOOL translate = (anchorPointInPoints_.x != 0.0f || anchorPointInPoints_.y != 0.0f);
-//		
-//		if( translate )
-//			kmMat4Translation(&transformMV_, RENDER_IN_SUBPIXEL(anchorPointInPoints_.x), RENDER_IN_SUBPIXEL(anchorPointInPoints_.y), 0 );
-//		
-//		kmMat4Multiply( &transformMV_, &transformMV_, [camera_ locate] );
-//		
-//		if( translate )
-//			kmMat4Translation(&transformMV_, RENDER_IN_SUBPIXEL(-anchorPointInPoints_.x), RENDER_IN_SUBPIXEL(-anchorPointInPoints_.y), 0 );
-//		
-//		if ( parent_ )
-//			kmMat4Multiply(&transformMV_, &parent_->transformMV_, &transformMV_ );
+	{		
+		BOOL translate = (anchorPointInPoints_.x != 0.0f || anchorPointInPoints_.y != 0.0f);
+		
+		if( translate )
+			kmGLTranslatef(RENDER_IN_SUBPIXEL(anchorPointInPoints_.x), RENDER_IN_SUBPIXEL(anchorPointInPoints_.y), 0 );
+		
+		[camera_ locate];
+		
+		if( translate )
+			kmGLTranslatef(RENDER_IN_SUBPIXEL(-anchorPointInPoints_.x), RENDER_IN_SUBPIXEL(-anchorPointInPoints_.y), 0 );
 	}
-	
 }
 
 #pragma mark CCNode SceneManagement

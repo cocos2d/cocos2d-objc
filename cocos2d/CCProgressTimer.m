@@ -35,6 +35,9 @@
 #import "Support/TransformUtils.h"
 #import "CCDrawingPrimitives.h"
 
+// extern
+#import "kazmath/GL/matrix.h"
+
 #define kProgressTextureCoordsCount 4
 //  kProgressTextureCoords holds points {0,1} {0,0} {1,0} {1,1} we can represent it as bits
 const char kCCProgressTextureCoords = 0x4b;
@@ -485,7 +488,10 @@ const char kCCProgressTextureCoords = 0x4b;
 	
 	ccglUseProgram( shaderProgram_->program_ );	
 	ccglUniformProjectionMatrix( shaderProgram_ );
-	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformMVMatrix], 1, GL_FALSE, transformMV_.mat);
+	
+	kmMat4 matrixMV;
+	kmGLGetMatrix(KM_GL_MODELVIEW, &matrixMV);
+	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformMVMatrix], 1, GL_FALSE, matrixMV.mat);
 
 	ccglBindTexture2D( sprite_.texture.name );
 	

@@ -27,6 +27,9 @@
 #import "GLProgram.h"
 #import "CCDirector.h"
 
+// extern
+#import "kazmath/GL/matrix.h"
+
 GLuint	_ccCurrentShaderProgram = -1;
 GLuint	_ccCurrentTextureID = -1;
 GLuint	_ccCurrentProjectionMatrix = -1;
@@ -51,18 +54,12 @@ inline void ccglUseProgram( GLuint program )
 inline void ccglUniformProjectionMatrix( GLProgram *shaderProgram )
 {
 	if( shaderProgram->program_ != _ccCurrentProjectionMatrix ) {
-		glUniformMatrix4fv( shaderProgram->uniforms_[kCCUniformPMatrix], 1, GL_FALSE, (GLfloat*)&ccProjectionMatrix);
+		kmMat4 projectionMatrix;
+		kmGLGetMatrix(KM_GL_PROJECTION, &projectionMatrix );
+		glUniformMatrix4fv( shaderProgram->uniforms_[kCCUniformPMatrix], 1, GL_FALSE, projectionMatrix.mat);
 		
 		_ccCurrentProjectionMatrix = shaderProgram->program_;
 	}
-}
-
-inline void ccSetProjectionMatrix( kmMat4 *matrix )
-{
-	// invalidate current projectio matrix
-	_ccCurrentProjectionMatrix = -1;
-
-	ccProjectionMatrix = *matrix;
 }
 
 inline void ccSetProjectionMatrixDirty( void )

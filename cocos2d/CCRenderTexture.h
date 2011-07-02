@@ -60,7 +60,6 @@ enum
 	CCSprite*			sprite_;
 	
 	GLenum				pixelFormat_;
-	kmMat4				projectionMatrixBackup_;
 }
 
 /** The CCSprite being used.

@@ -32,6 +32,9 @@
 #import "CCDirector.h"
 #import "Support/TransformUtils.h"
 
+// external
+#import "kazmath/GL/matrix.h"
+
 
 @interface CCAtlasNode ()
 -(void) calculateMaxItems;
@@ -127,7 +130,10 @@
 	
 	ccglUseProgram( shaderProgram_->program_ );
 	ccglUniformProjectionMatrix( shaderProgram_ );
-	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformMVMatrix], 1, GL_FALSE, transformMV_.mat);
+	
+	kmMat4 matrixMV;
+	kmGLGetMatrix(KM_GL_MODELVIEW, &matrixMV);
+	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformMVMatrix], 1, GL_FALSE, matrixMV.mat);
 	
 	[textureAtlas_ drawQuads];		
 }

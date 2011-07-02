@@ -67,8 +67,6 @@
 
 extern NSString * cocos2dVersion(void);
 
-kmMat4 ccProjectionMatrix;
-
 @interface CCDirector (Private)
 -(void) setNextScene;
 // shows the FPS in the screen

@@ -42,6 +42,9 @@
 #import "Support/CGPointExtension.h"
 #import "Support/TransformUtils.h"
 
+// external
+#import "kazmath/GL/matrix.h"
+
 #pragma mark -
 #pragma mark CCSprite
 
@@ -587,11 +590,14 @@ struct transformValues_ {
 	// Needed states: GL_TEXTURE0, k,CCAttribVertex, kCCAttribColor, kCCAttribTexCoords
 	// Unneeded states: -
 	
-	ccglBlendFunc( blendFunc_.src, blendFunc_.dst );	
+	ccglBlendFunc( blendFunc_.src, blendFunc_.dst );
 
 	ccglUseProgram( shaderProgram_->program_ );
 	ccglUniformProjectionMatrix( shaderProgram_ );
-	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformMVMatrix], 1, GL_FALSE, transformMV_.mat);
+	
+	kmMat4 matMV;
+	kmGLGetMatrix(KM_GL_MODELVIEW, &matMV);
+	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformMVMatrix], 1, GL_FALSE, matMV.mat);
 	
 	ccglBindTexture2D( [texture_ name] );
 		

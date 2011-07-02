@@ -41,7 +41,8 @@
 #import "Support/TransformUtils.h"
 #import "Support/OpenGL_Internal.h"
 
-#import "kazmath/vec3.h"
+#import "kazmath/kazmath.h"
+#import "kazmath/GL/matrix.h"
 
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 #import "Platforms/iOS/CCDirectorIOS.h"
@@ -178,39 +179,85 @@
 	}
 }
 
+// This routine can be merged with Director
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+-(void)applyLandscape
+{
+	CCDirector *director = [CCDirector sharedDirector];
+	
+	CGSize winSize = [director displaySizeInPixels];
+	float w = winSize.width / 2;
+	float h = winSize.height / 2;
+	
+	ccDeviceOrientation orientation  = [director deviceOrientation];
+	
+	switch (orientation) {
+		case CCDeviceOrientationLandscapeLeft:
+			kmGLTranslatef(w,h,0);
+			kmGLRotatef(-90,0,0,1);
+			kmGLTranslatef(-h,-w,0);
+			break;
+		case CCDeviceOrientationLandscapeRight:
+			kmGLTranslatef(w,h,0);
+			kmGLRotatef(90,0,0,1);
+			kmGLTranslatef(-h,-w,0);
+			break;
+		case CCDeviceOrientationPortraitUpsideDown:
+			kmGLTranslatef(w,h,0);
+			kmGLRotatef(180,0,0,1);
+			kmGLTranslatef(-w,-h,0);
+			break;
+		default:
+			break;
+	}
+}
+#endif
+
 -(void)set2DProjection
 {	
-	projectionBackup_ = ccProjectionMatrix;	
-
-	CCDirector *director = [CCDirector sharedDirector];
-	CGSize	winSize = [director winSizeInPixels];
+	CGSize	winSize = [[CCDirector sharedDirector] winSizeInPixels];
 	
-	glViewport(0, 0, winSize.width, winSize.height);	
-	kmMat4OrthographicProjection(&ccProjectionMatrix, 0, winSize.width, 0, winSize.height, -1024, 1024);
+	kmGLLoadIdentity();
+	glViewport(0, 0, winSize.width, winSize.height);
+	kmGLMatrixMode(KM_GL_PROJECTION);
+	kmGLLoadIdentity();
+
+	kmMat4 orthoMatrix;
+	kmMat4OrthographicProjection(&orthoMatrix, 0, winSize.width, 0, winSize.height, -1024, 1024);
+	kmGLMultMatrix( &orthoMatrix );
+
+	kmGLMatrixMode(KM_GL_MODELVIEW);
+	
 	ccSetProjectionMatrixDirty();
 }
 
 -(void)set3DProjection
 {	
 	CCDirector *director = [CCDirector sharedDirector];
+	
 	CGSize	winSize = [director displaySizeInPixels];
 	
 	glViewport(0, 0, winSize.width, winSize.height);
-
-	kmMat4 matrixPerspective, matrixLookup;
-	kmMat4PerspectiveProjection( &matrixPerspective, 60, (GLfloat)winSize.width/winSize.height, 0.5f, 1500.0f);
 	
+	kmGLMatrixMode(KM_GL_PROJECTION);
+	kmGLLoadIdentity();
+	
+	kmMat4 matrixPerspective, matrixLookup;
+	
+	kmMat4PerspectiveProjection( &matrixPerspective, 60, (GLfloat)winSize.width/winSize.height, 0.5f, 1500.0f );
+	kmGLMultMatrix( &matrixPerspective );
+	
+	kmGLMatrixMode(KM_GL_MODELVIEW);	
+	kmGLLoadIdentity();
 	kmVec3 eye, center, up;
 	kmVec3Fill( &eye, winSize.width/2, winSize.height/2, [director getZEye] );
 	kmVec3Fill( &center, winSize.width/2, winSize.height/2, 0 );
 	kmVec3Fill( &up,0,1,0);
 	kmMat4LookAt(&matrixLookup, &eye, &center, &up);
 	
-	kmMat4Multiply(&projection3D_, &matrixPerspective, &matrixLookup);
-
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
-	projection3D_ = [(CCDirectorIOS*)director applyOrientationToMatrix:&projection3D_];
-#endif // __IPHONE_OS_VERSION_MAX_ALLOWED
+	kmGLMultMatrix( &matrixLookup );
+	
+	ccSetProjectionMatrixDirty();
 }
 
 -(void)beforeDraw
@@ -219,36 +266,33 @@
 	[grabber_ beforeRender:texture_];
 }
 
+
 -(void)afterDraw:(CCNode *)target
 {
 	[grabber_ afterRender:texture_];
-
-	[self set3DProjection];
 	
-//	modelViewMat_ = target->transformMV_;
-	kmMat4Identity( &modelViewMat_ );
+	[self set3DProjection];
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+	[self applyLandscape];
+#endif
 	
 	if( target.camera.dirty ) {
-
-#if 0
-		CGPoint offset = [target anchorPointInPixels];
-
+		
+		CGPoint offset = [target anchorPointInPoints];
+		
 		//
 		// XXX: Camera should be applied in the AnchorPoint
 		//
-		ccglTranslate(offset.x, offset.y, 0);
+		kmGLTranslatef(offset.x, offset.y, 0);
 		[target.camera locate];
-		ccglTranslate(-offset.x, -offset.y, 0);
-#endif
+		kmGLTranslatef(-offset.x, -offset.y, 0);
 	}
 	
 	ccglBindTexture2D(texture_.name);
-
-	[self blit];
 	
-	// restore projection
-	ccSetProjectionMatrix( &projectionBackup_ );
+	[self blit];
 }
+
 
 -(void)blit
 {
@@ -293,7 +337,10 @@
 
 	ccglUseProgram( shaderProgram_->program_ );
 	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformPMatrix], 1, GL_FALSE, projection3D_.mat);
-	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformMVMatrix], 1, GL_FALSE, modelViewMat_.mat);
+	
+	kmMat4 matrixMV;
+	kmGLGetMatrix(KM_GL_MODELVIEW, &matrixMV);
+	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformMVMatrix], 1, GL_FALSE, matrixMV.mat);
 	
 	//
 	// Attributes
@@ -444,7 +491,10 @@
 
 	ccglUseProgram( shaderProgram_->program_ );
 	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformPMatrix], 1, GL_FALSE, projection3D_.mat);
-	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformMVMatrix], 1, GL_FALSE, modelViewMat_.mat);
+	
+	kmMat4 matrixMV;
+	kmGLGetMatrix(KM_GL_MODELVIEW, &matrixMV);
+	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformMVMatrix], 1, GL_FALSE, matrixMV.mat);
 
 	//
 	// Attributes
