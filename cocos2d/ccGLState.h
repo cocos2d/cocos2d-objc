@@ -32,8 +32,6 @@
 #import <OpenGL/gl.h>
 #endif // 
 
-#import "kazmath/mat4.h"
-
 @class GLProgram;
 
 /** @file
