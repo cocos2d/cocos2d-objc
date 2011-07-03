@@ -190,13 +190,13 @@ enum {
 	float w = SIZE_X, h = SIZE_Y;
 	GLfloat vertices[12] = {0,0, w,0, w,h, 0,0, 0,h, w,h};
 
-	ccglUseProgram( shaderProgram_->program_ );
+	ccGLUseProgram( shaderProgram_->program_ );
 
 	//
 	// Uniforms
 	//
 	
-	ccglUniformProjectionMatrix( shaderProgram_ );
+	ccGLUniformProjectionMatrix( shaderProgram_ );
 	kmMat4 matrixMV;
 	kmGLGetMatrix(KM_GL_MODELVIEW, &matrixMV);
 	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformMVMatrix], 1, GL_FALSE, matrixMV.mat);
@@ -425,10 +425,10 @@ enum {
 	// Needed states: GL_TEXTURE0, k,CCAttribVertex, kCCAttribColor, kCCAttribTexCoords
 	// Unneeded states: -
 	
-	ccglBlendFunc( blendFunc_.src, blendFunc_.dst );	
+	ccGLBlendFunc( blendFunc_.src, blendFunc_.dst );	
 	
-	ccglUseProgram( shaderProgram_->program_ );
-	ccglUniformProjectionMatrix( shaderProgram_ );
+	ccGLUseProgram( shaderProgram_->program_ );
+	ccGLUniformProjectionMatrix( shaderProgram_ );
 	
 	kmMat4 matrixMV;
 	kmGLGetMatrix(KM_GL_MODELVIEW, &matrixMV);
@@ -436,7 +436,7 @@ enum {
 	glUniform2f( blurLocation, blur_.x, blur_.y );
 	glUniform4f( subLocation, sub_[0], sub_[1], sub_[2], sub_[3] );
 	
-	ccglBindTexture2D( [texture_ name] );
+	ccGLBindTexture2D( [texture_ name] );
 	
 	//
 	// Attributes

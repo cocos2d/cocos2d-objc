@@ -126,14 +126,11 @@
 	// Needed states: GL_TEXTURE0, k,CCAttribVertex, kCCAttribColor, kCCAttribTexCoords
 	// Unneeded states: -
 	
-	ccglBlendFunc( blendFunc_.src, blendFunc_.dst );
+	ccGLBlendFunc( blendFunc_.src, blendFunc_.dst );
 	
-	ccglUseProgram( shaderProgram_->program_ );
-	ccglUniformProjectionMatrix( shaderProgram_ );
-	
-	kmMat4 matrixMV;
-	kmGLGetMatrix(KM_GL_MODELVIEW, &matrixMV);
-	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformMVMatrix], 1, GL_FALSE, matrixMV.mat);
+	ccGLUseProgram( shaderProgram_->program_ );
+	ccGLUniformProjectionMatrix( shaderProgram_ );
+	ccGLUniformModelViewMatrix( shaderProgram_ );	
 	
 	[textureAtlas_ drawQuads];		
 }

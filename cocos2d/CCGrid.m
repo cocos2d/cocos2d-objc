@@ -288,7 +288,7 @@
 		kmGLTranslatef(-offset.x, -offset.y, 0);
 	}
 	
-	ccglBindTexture2D(texture_.name);
+	ccGLBindTexture2D(texture_.name);
 	
 	[self blit];
 }
@@ -335,8 +335,8 @@
 	// Unneeded states: kCCAttribColor
 	glDisableVertexAttribArray( kCCAttribColor );
 
-	ccglUseProgram( shaderProgram_->program_ );
-	ccglUniformProjectionMatrix( shaderProgram_ );
+	ccGLUseProgram( shaderProgram_->program_ );
+	ccGLUniformProjectionMatrix( shaderProgram_ );
 	
 	kmMat4 matrixMV;
 	kmGLGetMatrix(KM_GL_MODELVIEW, &matrixMV);
@@ -489,8 +489,8 @@
 	// Unneeded states: kCCAttribColor
 	glDisableVertexAttribArray( kCCAttribColor );
 
-	ccglUseProgram( shaderProgram_->program_ );
-	ccglUniformProjectionMatrix( shaderProgram_ );
+	ccGLUseProgram( shaderProgram_->program_ );
+	ccGLUniformProjectionMatrix( shaderProgram_ );
 	
 	kmMat4 matrixMV;
 	kmGLGetMatrix(KM_GL_MODELVIEW, &matrixMV);

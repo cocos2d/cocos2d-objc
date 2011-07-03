@@ -273,7 +273,7 @@
 	// Needed states: GL_TEXTURE0, k,CCAttribVertex, kCCAttribColor, kCCAttribTexCoords
 	// Unneeded states: -
 	
-	ccglBindTexture2D( [texture_ name] );
+	ccGLBindTexture2D( [texture_ name] );
 
 #define kQuadSize sizeof(quads_[0].bl)
 
@@ -307,15 +307,11 @@
 
 #endif // ! CC_USES_VBO
 	
-	ccglBlendFunc( blendFunc_.src, blendFunc_.dst );
+	ccGLBlendFunc( blendFunc_.src, blendFunc_.dst );
 	
-	ccglUseProgram( shaderProgram_->program_ );	
-	ccglUniformProjectionMatrix( shaderProgram_ );
-
-	kmMat4 matrixMV;
-	kmGLGetMatrix(KM_GL_MODELVIEW, &matrixMV);
-
-	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformMVMatrix], 1, GL_FALSE, matrixMV.mat);
+	ccGLUseProgram( shaderProgram_->program_ );	
+	ccGLUniformProjectionMatrix( shaderProgram_ );
+	ccGLUniformModelViewMatrix( shaderProgram_ );
 	
 	NSAssert( particleIdx == particleCount, @"Abnormal error in particle quad");
 	glDrawElements(GL_TRIANGLES, (GLsizei) particleIdx*6, GL_UNSIGNED_SHORT, indices_);

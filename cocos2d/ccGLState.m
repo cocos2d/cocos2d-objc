@@ -36,14 +36,14 @@ GLuint	_ccCurrentProjectionMatrix = -1;
 GLenum	_ccBlendingSource = -1;
 GLenum	_ccBlendingDest = -1;
 
-inline void ccglDeleteProgram( GLuint program )
+inline void ccGLDeleteProgram( GLuint program )
 {
 	if( program == _ccCurrentShaderProgram )
 		_ccCurrentShaderProgram = -1;
 	glDeleteProgram( program );
 }
 
-inline void ccglUseProgram( GLuint program )
+inline void ccGLUseProgram( GLuint program )
 {
 	if( program != _ccCurrentShaderProgram ) {
 		_ccCurrentShaderProgram = program;
@@ -51,7 +51,7 @@ inline void ccglUseProgram( GLuint program )
 	}
 }
 
-inline void ccglUniformProjectionMatrix( GLProgram *shaderProgram )
+inline void ccGLUniformProjectionMatrix( GLProgram *shaderProgram )
 {
 	if( shaderProgram->program_ != _ccCurrentProjectionMatrix ) {
 		kmMat4 projectionMatrix;
@@ -62,12 +62,19 @@ inline void ccglUniformProjectionMatrix( GLProgram *shaderProgram )
 	}
 }
 
+inline void ccGLUniformModelViewMatrix( GLProgram *shaderProgram )
+{
+	kmMat4 matrixMV;
+	kmGLGetMatrix(KM_GL_MODELVIEW, &matrixMV );
+	glUniformMatrix4fv( shaderProgram->uniforms_[kCCUniformMVMatrix], 1, GL_FALSE, matrixMV.mat);
+}
+
 inline void ccSetProjectionMatrixDirty( void )
 {
 	_ccCurrentProjectionMatrix = -1;
 }
 
-inline void ccglBindTexture2D( GLuint textureID )
+inline void ccGLBindTexture2D( GLuint textureID )
 {
 	if( textureID != _ccCurrentTextureID ) {
 		_ccCurrentTextureID = textureID;
@@ -75,7 +82,7 @@ inline void ccglBindTexture2D( GLuint textureID )
 	}
 }
 
-void ccglDeleteTexture( GLuint textureID )
+void ccGLDeleteTexture( GLuint textureID )
 {
 	if( _ccCurrentTextureID == textureID )
 		_ccCurrentTextureID = -1;
@@ -83,7 +90,7 @@ void ccglDeleteTexture( GLuint textureID )
 	glDeleteTextures(1, &textureID);
 }
 
-inline void ccglBlendFunc(GLenum sfactor, GLenum dfactor)
+inline void ccGLBlendFunc(GLenum sfactor, GLenum dfactor)
 {
 	if( sfactor != _ccBlendingSource || dfactor != _ccBlendingDest ) {
 		_ccBlendingSource = sfactor;

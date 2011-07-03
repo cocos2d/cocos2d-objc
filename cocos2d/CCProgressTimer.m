@@ -480,20 +480,17 @@ const char kCCProgressTextureCoords = 0x4b;
 	if( ! vertexData_ || ! sprite_)
 		return;
 	
-	ccglBlendFunc( sprite_.blendFunc.src, sprite_.blendFunc.dst );
+	ccGLBlendFunc( sprite_.blendFunc.src, sprite_.blendFunc.dst );
 
     // Default Attribs & States: GL_TEXTURE0, k,CCAttribVertex, kCCAttribColor, kCCAttribTexCoords
 	// Needed states: GL_TEXTURE0, k,CCAttribVertex, kCCAttribColor, kCCAttribTexCoords
 	// Unneeded states: -
 	
-	ccglUseProgram( shaderProgram_->program_ );	
-	ccglUniformProjectionMatrix( shaderProgram_ );
-	
-	kmMat4 matrixMV;
-	kmGLGetMatrix(KM_GL_MODELVIEW, &matrixMV);
-	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformMVMatrix], 1, GL_FALSE, matrixMV.mat);
+	ccGLUseProgram( shaderProgram_->program_ );	
+	ccGLUniformProjectionMatrix( shaderProgram_ );
+	ccGLUniformModelViewMatrix( shaderProgram_ );
 
-	ccglBindTexture2D( sprite_.texture.name );
+	ccGLBindTexture2D( sprite_.texture.name );
 	
     glVertexAttribPointer( kCCAttribPosition, 2, GL_FLOAT, GL_FALSE, sizeof(vertexData_[0]) , &vertexData_[0].vertices);
     glVertexAttribPointer( kCCAttribTexCoords, 2, GL_FLOAT, GL_FALSE, sizeof(vertexData_[0]), &vertexData_[0].texCoords);

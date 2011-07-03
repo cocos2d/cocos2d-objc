@@ -126,7 +126,7 @@
 #if CC_USES_VBO
 	glDeleteBuffers(2, buffersVBO_);
 #endif // CC_USES_VBO
-	ccglDeleteVertexArrays(1, &VAOname_);
+	ccGLDeleteVertexArrays(1, &VAOname_);
 
 	[texture_ release];
 
@@ -135,8 +135,8 @@
 
 -(void) initVAO
 {
-	ccglGenVertexArrays(1, &VAOname_);
-	ccglBindVertexArray(VAOname_);
+	ccGLGenVertexArrays(1, &VAOname_);
+	ccGLBindVertexArray(VAOname_);
 
 #define kQuadSize sizeof(quads_[0].bl)
 	
@@ -184,7 +184,7 @@
 	
 	CHECK_GL_ERROR_DEBUG();
 	
-	ccglBindVertexArray(0);
+	ccGLBindVertexArray(0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
@@ -375,11 +375,11 @@
 	// Needed states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
 	// Unneeded states: -
 
-	ccglBindVertexArray( VAOname_ );
+	ccGLBindVertexArray( VAOname_ );
 
 	CHECK_GL_ERROR_DEBUG();
 
-	ccglBindTexture2D( [texture_ name] );
+	ccGLBindTexture2D( [texture_ name] );
 	
 	CHECK_GL_ERROR_DEBUG();
 
@@ -413,7 +413,7 @@
 	
 #endif // CC_USES_VBO	
 	
-	ccglBindVertexArray(0);
+	ccGLBindVertexArray(0);
 	CHECK_GL_ERROR_DEBUG();
 
 }

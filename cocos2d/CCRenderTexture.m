@@ -78,14 +78,14 @@
 		free( data );
     
 		// generate FBO
-		ccglGenFramebuffers(1, &fbo_);
-		ccglBindFramebuffer(CC_GL_FRAMEBUFFER, fbo_);
+		ccGLGenFramebuffers(1, &fbo_);
+		ccGLBindFramebuffer(CC_GL_FRAMEBUFFER, fbo_);
     
 		// associate texture with FBO
-		ccglFramebufferTexture2D(CC_GL_FRAMEBUFFER, CC_GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texture_.name, 0);
+		ccGLFramebufferTexture2D(CC_GL_FRAMEBUFFER, CC_GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texture_.name, 0);
     
 		// check if it worked (probably worth doing :) )
-		GLuint status = ccglCheckFramebufferStatus(CC_GL_FRAMEBUFFER);
+		GLuint status = ccGLCheckFramebufferStatus(CC_GL_FRAMEBUFFER);
 		if (status != CC_GL_FRAMEBUFFER_COMPLETE)
 		{
 			[NSException raise:@"Render Texture" format:@"Could not attach texture to framebuffer"];
@@ -101,14 +101,14 @@
 		// issue #937
 		[sprite_ setBlendFunc:(ccBlendFunc){GL_ONE, GL_ONE_MINUS_SRC_ALPHA}];
 
-		ccglBindFramebuffer(CC_GL_FRAMEBUFFER, oldFBO_);
+		ccGLBindFramebuffer(CC_GL_FRAMEBUFFER, oldFBO_);
 	}
 	return self;
 }
 
 -(void)dealloc
 {
-	ccglDeleteFramebuffers(1, &fbo_);
+	ccGLDeleteFramebuffers(1, &fbo_);
 	[super dealloc];
 }
 
@@ -135,7 +135,7 @@
 
 	
 	glGetIntegerv(CC_GL_FRAMEBUFFER_BINDING, &oldFBO_);
-	ccglBindFramebuffer(CC_GL_FRAMEBUFFER, fbo_);
+	ccGLBindFramebuffer(CC_GL_FRAMEBUFFER, fbo_);
 
 	// Issue #1145
 	// There is no need to enable the default GL states here
@@ -166,7 +166,7 @@
 
 -(void)end
 {
-	ccglBindFramebuffer(CC_GL_FRAMEBUFFER, oldFBO_);
+	ccGLBindFramebuffer(CC_GL_FRAMEBUFFER, oldFBO_);
 
 	kmGLPopMatrix();
 

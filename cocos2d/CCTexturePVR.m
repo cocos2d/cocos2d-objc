@@ -295,11 +295,11 @@ typedef struct _PVRTexHeader
 	if (numberOfMipmaps_ > 0)
 	{
 		if (name_ != 0)
-			ccglDeleteTexture(name_);
+			ccGLDeleteTexture(name_);
 		
 		glPixelStorei(GL_UNPACK_ALIGNMENT,1);
 		glGenTextures(1, &name_);
-		ccglBindTexture2D( name_ );
+		ccGLBindTexture2D( name_ );
 
 	}
 
@@ -421,7 +421,7 @@ typedef struct _PVRTexHeader
 	CCLOGINFO( @"cocos2d: deallocing %@", self);
 	
 	if (name_ != 0 && ! retainName_ )
-		ccglDeleteTexture(name_);
+		ccGLDeleteTexture(name_);
 	
 	[super dealloc];
 }

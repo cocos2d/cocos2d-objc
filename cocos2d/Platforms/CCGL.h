@@ -47,18 +47,18 @@
 // iOS
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 #define CC_GLVIEW					EAGLView
-#define ccglOrtho					glOrthof
-#define	ccglClearDepth				glClearDepthf
-#define ccglGenerateMipmap			glGenerateMipmapOES
-#define ccglGenFramebuffers			glGenFramebuffersOES
-#define ccglBindFramebuffer			glBindFramebufferOES
-#define ccglFramebufferTexture2D	glFramebufferTexture2DOES
-#define ccglDeleteFramebuffers		glDeleteFramebuffersOES
-#define ccglCheckFramebufferStatus	glCheckFramebufferStatusOES
-#define ccglTranslate				glTranslatef
-#define ccglDeleteVertexArrays		glDeleteVertexArraysOES
-#define ccglGenVertexArrays			glGenVertexArraysOES
-#define ccglBindVertexArray			glBindVertexArrayOES
+#define ccGLOrtho					glOrthof
+#define	ccGLClearDepth				glClearDepthf
+#define ccGLGenerateMipmap			glGenerateMipmapOES
+#define ccGLGenFramebuffers			glGenFramebuffersOES
+#define ccGLBindFramebuffer			glBindFramebufferOES
+#define ccGLFramebufferTexture2D	glFramebufferTexture2DOES
+#define ccGLDeleteFramebuffers		glDeleteFramebuffersOES
+#define ccGLCheckFramebufferStatus	glCheckFramebufferStatusOES
+#define ccGLTranslate				glTranslatef
+#define ccGLDeleteVertexArrays		glDeleteVertexArraysOES
+#define ccGLGenVertexArrays			glGenVertexArraysOES
+#define ccGLBindVertexArray			glBindVertexArrayOES
 
 #define CC_GL_FRAMEBUFFER			GL_FRAMEBUFFER_OES
 #define CC_GL_FRAMEBUFFER_BINDING	GL_FRAMEBUFFER_BINDING_OES
@@ -68,18 +68,18 @@
 // Mac
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 #define CC_GLVIEW					MacGLView
-#define ccglOrtho					glOrtho
-#define	ccglClearDepth				glClearDepth
-#define ccglGenerateMipmap			glGenerateMipmap
-#define ccglGenFramebuffers			glGenFramebuffers
-#define ccglBindFramebuffer			glBindFramebuffer
-#define ccglFramebufferTexture2D	glFramebufferTexture2D
-#define ccglDeleteFramebuffers		glDeleteFramebuffers
-#define ccglCheckFramebufferStatus	glCheckFramebufferStatus
-#define ccglTranslate				glTranslated
-#define ccglDeleteVertexArrays		glDeleteVertexArraysAPPLE
-#define ccglGenVertexArrays			glGenVertexArraysAPPLE
-#define ccglBindVertexArray			glBindVertexArrayAPPLE
+#define ccGLOrtho					glOrtho
+#define	ccGLClearDepth				glClearDepth
+#define ccGLGenerateMipmap			glGenerateMipmap
+#define ccGLGenFramebuffers			glGenFramebuffers
+#define ccGLBindFramebuffer			glBindFramebuffer
+#define ccGLFramebufferTexture2D	glFramebufferTexture2D
+#define ccGLDeleteFramebuffers		glDeleteFramebuffers
+#define ccGLCheckFramebufferStatus	glCheckFramebufferStatus
+#define ccGLTranslate				glTranslated
+#define ccGLDeleteVertexArrays		glDeleteVertexArraysAPPLE
+#define ccGLGenVertexArrays			glGenVertexArraysAPPLE
+#define ccGLBindVertexArray			glBindVertexArrayAPPLE
 
 #define CC_GL_FRAMEBUFFER			GL_FRAMEBUFFER
 #define CC_GL_FRAMEBUFFER_BINDING	GL_FRAMEBUFFER_BINDING

@@ -150,7 +150,7 @@ typedef void (*GLLogFunction) (GLuint program,
 
 	uniforms_[kCCUniformSampler] = glGetUniformLocation(program_, kCCUniformSampler_s);
 	
-	ccglUseProgram( program_ );
+	ccGLUseProgram( program_ );
 	glUniform1i( uniforms_[kCCUniformSampler], 0 );
 }	
 
@@ -170,7 +170,7 @@ typedef void (*GLLogFunction) (GLuint program,
 			glDeleteShader( vertShader_ );
 		if( fragShader_ )
 			glDeleteShader( fragShader_ );
-		ccglDeleteProgram( program_ );
+		ccGLDeleteProgram( program_ );
 		vertShader_ = fragShader_ = program_ = 0;
         return NO;
 	}
@@ -187,7 +187,7 @@ typedef void (*GLLogFunction) (GLuint program,
 
 - (void)use
 {
-    ccglUseProgram(program_);
+    ccGLUseProgram(program_);
 }
 
 #pragma mark -
@@ -245,7 +245,7 @@ typedef void (*GLLogFunction) (GLuint program,
 	NSAssert( fragShader_ == 0, @"Vertex Shaders should have been already deleted");
 	
     if (program_)
-        ccglDeleteProgram(program_);
+        ccGLDeleteProgram(program_);
        
     [super dealloc];
 }

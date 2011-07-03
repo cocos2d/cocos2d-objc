@@ -257,7 +257,7 @@ static CCDirector *_sharedDirector = nil;
 {
 	if (on) {
 		glEnable(GL_BLEND);
-		ccglBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);
+		ccGLBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);
 		
 	} else
 		glDisable(GL_BLEND);
@@ -268,7 +268,7 @@ static CCDirector *_sharedDirector = nil;
 - (void) setDepthTest: (BOOL) on
 {
 	if (on) {
-		ccglClearDepth(1.0f);
+		ccGLClearDepth(1.0f);
 
 		glEnable(GL_DEPTH_TEST);
 		glDepthFunc(GL_LEQUAL);
@@ -543,13 +543,13 @@ static CCDirector *_sharedDirector = nil;
 	// Unneeded states: GL_COLOR_ARRAY
 	glDisableClientState(GL_COLOR_ARRAY);
 	
-	ccglBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	ccGLBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	
 	glColor4ub(224,224,244,200);
 	[texture drawAtPoint: ccp(5,2)];
 	[texture release];
 	
-	ccglBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);
+	ccGLBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);
 	
 	// restore default GL state
 	glEnableClientState(GL_COLOR_ARRAY);
