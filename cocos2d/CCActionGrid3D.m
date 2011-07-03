@@ -307,7 +307,7 @@
 			for( j = 0; j < gridSize_.y+1; j++ )
 			{
 				ccVertex3F	v = [self originalVertex:ccg(i,j)];
-				CGPoint vect = ccpSub(positionInPixels_, ccp(v.x,v.y));
+				CGPoint vect = ccpSub(position_, ccp(v.x,v.y));
 				CGFloat r = ccpLength(vect);
 				
 				if ( r < radius_ )
@@ -391,7 +391,7 @@
 		for( j = 0; j < (gridSize_.y+1); j++ )
 		{
 			ccVertex3F	v = [self originalVertex:ccg(i,j)];
-			CGPoint vect = ccpSub(positionInPixels_, ccp(v.x,v.y));
+			CGPoint vect = ccpSub(position_, ccp(v.x,v.y));
 			CGFloat r = ccpLength(vect);
 			
 			if ( r < radius_ )
@@ -608,7 +608,7 @@
 -(void)update:(ccTime)time
 {
 	int i, j;
-	CGPoint	c = positionInPixels_;
+	CGPoint	c = position_;
 	
 	for( i = 0; i < (gridSize_.x+1); i++ )
 	{
