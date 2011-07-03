@@ -42,17 +42,22 @@
 /** Uses the GL program in case program is different than the current one
  @since v2.0.0
  */
-void ccglUseProgram( GLuint program );
+void ccGLUseProgram( GLuint program );
 
 /** Deletes the GL program. If it is the one that is being used, it invalidates it.
  @since v2.0.0
  */
-void ccglDeleteProgram( GLuint program );
+void ccGLDeleteProgram( GLuint program );
 
-/** sets the GL program in case program is different than the current one
+/** sets the Projection Matrix in the GL program, in case it is necessary
  @since v2.0.0
  */
-void ccglUniformProjectionMatrix( GLProgram *program );
+void ccGLUniformProjectionMatrix( GLProgram *program );
+
+/** sets the ModelView Matrix in the GL program, in case it is necessary
+ @since v2.0.0
+ */
+void ccGLUniformModelViewMatrix( GLProgram *shaderProgram );
 
 /** sets the projection matrix as dirty
  @since v2.0.0
@@ -62,15 +67,15 @@ void ccSetProjectionMatrixDirty( void );
 /** Binds a texture in case it is not already bound
  @since v2.0.0
  */
-void ccglBindTexture2D( GLuint textureID );
+void ccGLBindTexture2D( GLuint textureID );
 
 /** deletes a texture ID a resets the texture ID cache in case it is being used
  @since v2.0.0
  */
-void ccglDeleteTexture( GLuint textureID );
+void ccGLDeleteTexture( GLuint textureID );
 
 
 /** Uses a blending function in case it not already used
  @since v2.0.0
  */
-void ccglBlendFunc(GLenum sfactor, GLenum dfactor);
+void ccGLBlendFunc(GLenum sfactor, GLenum dfactor);

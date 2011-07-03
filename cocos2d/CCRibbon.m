@@ -268,8 +268,8 @@
 		//
 		GLProgram *program = curTime_ ? shaderProgram_ : shaderProgramAlternative_;
 		
-		ccglUseProgram( program->program_ );		
-		ccglUniformProjectionMatrix( program );
+		ccGLUseProgram( program->program_ );		
+		ccGLUniformProjectionMatrix( program );
 
 		if( ! curTime_ ) {
 			ccColor4F color = { color_.r/255.0f, color_.g/255.0f, color_.b/255.0f, color_.a/255.0f };
@@ -277,9 +277,9 @@
 			glVertexAttrib4fv(kCCAttribColor, (GLfloat*)&color);
 		}
 		
-		ccglBindTexture2D( [texture_ name] );
+		ccGLBindTexture2D( [texture_ name] );
 
-		ccglBlendFunc( blendFunc_.src, blendFunc_.dst );
+		ccGLBlendFunc( blendFunc_.src, blendFunc_.dst );
 
 		for (CCRibbonSegment* seg in segments_) {
 			[seg draw:curTime_ fadeTime:fadeTime_ color:color_];

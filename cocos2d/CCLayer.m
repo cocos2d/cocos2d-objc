@@ -372,12 +372,12 @@
 	
 	
 	if( opacity_ != 255 )
-		ccglBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		ccGLBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	else
-		ccglBlendFunc( blendFunc_.src, blendFunc_.dst );
+		ccGLBlendFunc( blendFunc_.src, blendFunc_.dst );
 	
-	ccglUseProgram( shaderProgram_->program_ );
-	ccglUniformProjectionMatrix( shaderProgram_ );
+	ccGLUseProgram( shaderProgram_->program_ );
+	ccGLUniformProjectionMatrix( shaderProgram_ );
 	
 	kmMat4 matrixMV;
 	kmGLGetMatrix(KM_GL_MODELVIEW, &matrixMV);

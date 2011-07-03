@@ -590,16 +590,13 @@ struct transformValues_ {
 	// Needed states: GL_TEXTURE0, k,CCAttribVertex, kCCAttribColor, kCCAttribTexCoords
 	// Unneeded states: -
 	
-	ccglBlendFunc( blendFunc_.src, blendFunc_.dst );
+	ccGLBlendFunc( blendFunc_.src, blendFunc_.dst );
 
-	ccglUseProgram( shaderProgram_->program_ );
-	ccglUniformProjectionMatrix( shaderProgram_ );
+	ccGLUseProgram( shaderProgram_->program_ );
+	ccGLUniformProjectionMatrix( shaderProgram_ );
+	ccGLUniformModelViewMatrix( shaderProgram_ );
 	
-	kmMat4 matMV;
-	kmGLGetMatrix(KM_GL_MODELVIEW, &matMV);
-	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformMVMatrix], 1, GL_FALSE, matMV.mat);
-	
-	ccglBindTexture2D( [texture_ name] );
+	ccGLBindTexture2D( [texture_ name] );
 		
 	//
 	// Attributes
