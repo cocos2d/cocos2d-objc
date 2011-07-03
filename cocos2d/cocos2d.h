@@ -156,6 +156,13 @@
 #import "Support/CCProfiling.h"
 #endif // CC_ENABLE_PROFILERS
 
+//
+// external
+//
+#import "kazmath/kazmath.h"
+#import "kazmath/GL/matrix.h"
+
+
 
 // free functions
 NSString * cocos2dVersion(void);

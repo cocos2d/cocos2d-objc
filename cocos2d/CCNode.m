@@ -465,6 +465,8 @@
 	if (!visible_)
 		return;
 
+	kmGLPushMatrix();
+
 	if ( grid_ && grid_.active)
 		[grid_ beforeDraw];
 	
@@ -498,10 +500,18 @@
 	if ( grid_ && grid_.active)
 		[grid_ afterDraw:self];
 	
-	isTransformMVDirty_ = NO;
+	kmGLPopMatrix();
 }
 
 #pragma mark CCNode - Transformations
+
+-(void) transformAncestors
+{
+	if( parent_ ) {
+		[parent_ transformAncestors];
+		[parent_ transform];
+	}
+}
 
 -(void) transform
 {

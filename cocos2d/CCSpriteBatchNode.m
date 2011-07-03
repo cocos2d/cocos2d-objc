@@ -40,6 +40,9 @@
 #import "Support/CGPointExtension.h"
 #import "Support/TransformUtils.h"
 
+// external
+#import "kazmath/GL/matrix.h"
+
 const NSUInteger defaultCapacity = 29;
 
 #pragma mark -
@@ -145,7 +148,7 @@ static 	SEL selUpdate = NULL;
 	NSAssert(parent_ != nil, @"CCSpriteBatchNode should NOT be root node");
 
 	// CAREFUL:
-	// This visit is almost identical to CCNode#visit
+	// This visit is almost identical to CocosNode#visit
 	// with the exception that it doesn't call visit on it's children
 	//
 	// The alternative is to have a void CCSprite#visit, but
@@ -153,18 +156,23 @@ static 	SEL selUpdate = NULL;
 	//
 	if (!visible_)
 		return;
-
-	// Convert 3x3 into 4x4 matrix
-	CGAffineTransform tmpAffine = [self nodeToParentTransform];
-	CGAffineToGL(&tmpAffine, transformMV_.mat);
 	
-	// Update Z vertex manually
-	transformMV_.mat[14] = vertexZ_;
-
-	kmMat4Multiply(&transformMV_, &parent_->transformMV_, &transformMV_);
+	kmGLPushMatrix();
 	
-	// self draw
-	[self draw];		
+	if ( grid_ && grid_.active) {
+		[grid_ beforeDraw];
+		[self transformAncestors];
+	}
+	
+	[self transform];
+	
+	[self draw];
+	
+	if ( grid_ && grid_.active)
+		[grid_ afterDraw:self];
+	
+
+	kmGLPopMatrix();
 }
 
 // override addChild:
@@ -270,7 +278,10 @@ static 	SEL selUpdate = NULL;
 	
 	ccglUseProgram( shaderProgram_->program_ );	
 	ccglUniformProjectionMatrix( shaderProgram_ );
-	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformMVMatrix], 1, GL_FALSE, transformMV_.mat);
+	
+	kmMat4 matrixMV;
+	kmGLGetMatrix(KM_GL_MODELVIEW, &matrixMV);
+	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformMVMatrix], 1, GL_FALSE, matrixMV.mat);
 
 	
 	[textureAtlas_ drawQuads];
