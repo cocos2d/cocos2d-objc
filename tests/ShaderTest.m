@@ -197,9 +197,8 @@ enum {
 	//
 	
 	ccGLUniformProjectionMatrix( shaderProgram_ );
-	kmMat4 matrixMV;
-	kmGLGetMatrix(KM_GL_MODELVIEW, &matrixMV);
-	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformMVMatrix], 1, GL_FALSE, matrixMV.mat);
+	ccGLUniformModelViewMatrix( shaderProgram_ );
+
 	glUniform1f( uniformTime, time_ );
 	glUniform2fv( uniformResolution, 1, (GLfloat*)&resolution_ );
 	
@@ -429,10 +428,8 @@ enum {
 	
 	ccGLUseProgram( shaderProgram_->program_ );
 	ccGLUniformProjectionMatrix( shaderProgram_ );
-	
-	kmMat4 matrixMV;
-	kmGLGetMatrix(KM_GL_MODELVIEW, &matrixMV);
-	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformMVMatrix], 1, GL_FALSE, matrixMV.mat);
+	ccGLUniformModelViewMatrix( shaderProgram_ );
+
 	glUniform2f( blurLocation, blur_.x, blur_.y );
 	glUniform4f( subLocation, sub_[0], sub_[1], sub_[2], sub_[3] );
 	

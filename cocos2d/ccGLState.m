@@ -29,6 +29,7 @@
 
 // extern
 #import "kazmath/GL/matrix.h"
+#import "kazmath/kazmath.h"
 
 GLuint	_ccCurrentShaderProgram = -1;
 GLuint	_ccCurrentTextureID = -1;
