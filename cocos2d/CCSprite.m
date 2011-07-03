@@ -628,13 +628,25 @@ struct transformValues_ {
 		glBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);
 	
 #if CC_SPRITE_DEBUG_DRAW
-	CGSize s = [self contentSize];
-	CGPoint vertices[4]={
-		ccp(0,0),ccp(s.width,0),
-		ccp(s.width,s.height),ccp(0,s.height),
-	};
-	ccDrawPoly(vertices, 4, YES);
-#endif // CC_TEXTURENODE_DEBUG_DRAW
+    if (CC_SPRITE_DEBUG_DRAW == 1) {
+        // draw bounding box
+        CGSize s = self.contentSize;
+        CGPoint vertices[4] = {
+            ccp(0,0), ccp(s.width,0),
+            ccp(s.width,s.height), ccp(0,s.height)
+        };
+        ccDrawPoly(vertices, 4, YES);
+    } else {
+        // draw texture box
+        CGSize s = self.textureRect.size;
+        CGPoint offset = self.offsetPositionInPixels;
+        CGPoint vertices[4] = {
+            ccp(offset.x,offset.y), ccp(offset.x+s.width,offset.y),
+            ccp(offset.x+s.width,offset.y+s.height), ccp(offset.x,offset.y+s.height)
+        };
+        ccDrawPoly(vertices, 4, YES);
+    }
+#endif // CC_SPRITE_DEBUG_DRAW
 	
 }
 
