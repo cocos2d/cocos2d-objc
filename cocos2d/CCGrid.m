@@ -336,7 +336,7 @@
 	glDisableVertexAttribArray( kCCAttribColor );
 
 	ccglUseProgram( shaderProgram_->program_ );
-	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformPMatrix], 1, GL_FALSE, projection3D_.mat);
+	ccglUniformProjectionMatrix( shaderProgram_ );
 	
 	kmMat4 matrixMV;
 	kmGLGetMatrix(KM_GL_MODELVIEW, &matrixMV);
@@ -490,7 +490,7 @@
 	glDisableVertexAttribArray( kCCAttribColor );
 
 	ccglUseProgram( shaderProgram_->program_ );
-	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformPMatrix], 1, GL_FALSE, projection3D_.mat);
+	ccglUniformProjectionMatrix( shaderProgram_ );
 	
 	kmMat4 matrixMV;
 	kmGLGetMatrix(KM_GL_MODELVIEW, &matrixMV);

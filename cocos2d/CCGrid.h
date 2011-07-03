@@ -48,9 +48,6 @@
 	BOOL		isTextureFlipped_;
 	
 	GLProgram	*shaderProgram_;
-	kmMat4		projectionBackup_;
-	kmMat4		projection3D_;
-	kmMat4		modelViewMat_;
 }
 
 /** wheter or not the grid is active */
