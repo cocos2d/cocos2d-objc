@@ -23,6 +23,7 @@ version 2.0-alpha XX-Apr-2011
 version 1.0.0 -
 . [NEW] ccpSegmentIntersect & ccpPointIntersect: Added helper functions for ccpLineIntersect (issue #1193)
 . [NEW] Scheduler: Added isTargetPaused method
+. [NEW] Sprite: Debugging draw for texture (issue #879)
 . [NEW] Textures: PVR supports NPOT textures
 . [FIX] CCArray: ForEach prepends "__" to inner variables to prevent conflict
 . [FIX] ccpLineIntersect works as expected. Improved performance (issue #1174, #1193)
