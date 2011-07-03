@@ -230,7 +230,8 @@
  If enabled, all subclasses of CCSprite will draw a bounding box
  Useful for debugging purposes only. It is recommened to leave it disabled.
  
- To enable set it to a value different than 0. Disabled by default.
+ To enable set it to a value different than 0. Disabled by default:
+ 0 -- disabled
  1 -- draw bounding box
  2 -- draw texture box
  */
