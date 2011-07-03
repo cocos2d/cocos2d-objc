@@ -389,7 +389,7 @@
 #pragma mark Protocols
 // Color Protocol
 
--(void) setColor:(ccColor3B)color
+-(void) setColor:(ccColor3UB)color
 {
 	color_ = color;
 	[self updateColor];
@@ -499,17 +499,17 @@
 	squareColors_[3].a = E.a + (S.a - E.a) * ((c - u.x - u.y) / (2.0f * c));
 }
 
--(ccColor3B) startColor
+-(ccColor3UB) startColor
 {
 	return color_;
 }
 
--(void) setStartColor:(ccColor3B)colors
+-(void) setStartColor:(ccColor3UB)colors
 {
 	[self setColor:colors];
 }
 
--(void) setEndColor:(ccColor3B)colors
+-(void) setEndColor:(ccColor3UB)colors
 {
     endColor_ = colors;
     [self updateColor];

@@ -50,7 +50,6 @@ enum {
 
 #define kCCShader_PositionTextureColor		@"ShaderPositionTextureColor"
 #define kCCShader_PositionColor				@"ShaderPositionColor"
-#define kCCShader_Position1Color			@"ShaderPosition1Color"
 #define kCCShader_PositionTexture			@"ShaderPositionTexture"
 #define kCCShader_PositionTextureA8Color	@"ShaderPositionTextureA8Color"
 

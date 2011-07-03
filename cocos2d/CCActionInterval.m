@@ -1138,7 +1138,7 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 	[super startWithTarget:aTarget];
 	
 	id<CCRGBAProtocol> tn = (id<CCRGBAProtocol>) target_;
-	ccColor3B color = [tn color];
+	ccColor3UB color = [tn color];
 	fromR_ = color.r;
 	fromG_ = color.g;
 	fromB_ = color.b;

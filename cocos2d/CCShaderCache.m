@@ -126,20 +126,6 @@ static CCShaderCache *_sharedShaderCache;
 	[programs_ setObject:p forKey:kCCShader_PositionTextureA8Color];
 	[p release];	
 
-	//
-	// Position and 1 color passed as a uniform (to similate glColor4ub )
-	//
-	p = [[GLProgram alloc] initWithVertexShaderFilename:@"Shaders/Position1Color.vert"
-								 fragmentShaderFilename:@"Shaders/Position1Color.frag"];
-	
-	[p addAttribute:kCCAttributeNamePosition index:kCCAttribPosition];
-	
-	[p link];
-	[p updateUniforms];
-	
-	[programs_ setObject:p forKey:kCCShader_Position1Color];
-	[p release];	
-
 	CHECK_GL_ERROR_DEBUG();
 }
 

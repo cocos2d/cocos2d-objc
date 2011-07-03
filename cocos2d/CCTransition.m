@@ -766,12 +766,12 @@ const uint32_t kSceneFade = 0xFADEFADE;
 // Fade Transition
 //
 @implementation CCTransitionFade
-+(id) transitionWithDuration:(ccTime)d scene:(CCScene*)s withColor:(ccColor3B)color
++(id) transitionWithDuration:(ccTime)d scene:(CCScene*)s withColor:(ccColor3UB)color
 {
 	return [[[self alloc] initWithDuration:d scene:s withColor:color] autorelease];
 }
 
--(id) initWithDuration:(ccTime)d scene:(CCScene*)s withColor:(ccColor3B)aColor
+-(id) initWithDuration:(ccTime)d scene:(CCScene*)s withColor:(ccColor3UB)aColor
 {
 	if( (self=[super initWithDuration:d scene:s]) ) {
 		color.r = aColor.r;

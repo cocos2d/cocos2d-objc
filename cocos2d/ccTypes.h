@@ -41,39 +41,39 @@
 /** RGB color composed of bytes 3 bytes
 @since v0.8
  */
-typedef struct _ccColor3B
+typedef struct _ccColor3UB
 {
 	GLubyte	r;
 	GLubyte	g;
 	GLubyte b;
-} ccColor3B;
+} ccColor3UB;
 
-//! helper macro that creates an ccColor3B type
-static inline ccColor3B
+//! helper macro that creates an ccColor3UB type
+static inline ccColor3UB
 ccc3(const GLubyte r, const GLubyte g, const GLubyte b)
 {
-	ccColor3B c = {r, g, b};
+	ccColor3UB c = {r, g, b};
 	return c;
 }
-//ccColor3B predefined colors
+//ccColor3UB predefined colors
 //! White color (255,255,255)
-static const ccColor3B ccWHITE = {255,255,255};
+static const ccColor3UB ccWHITE = {255,255,255};
 //! Yellow color (255,255,0)
-static const ccColor3B ccYELLOW = {255,255,0};
+static const ccColor3UB ccYELLOW = {255,255,0};
 //! Blue color (0,0,255)
-static const ccColor3B ccBLUE = {0,0,255};
+static const ccColor3UB ccBLUE = {0,0,255};
 //! Green Color (0,255,0)
-static const ccColor3B ccGREEN = {0,255,0};
+static const ccColor3UB ccGREEN = {0,255,0};
 //! Red Color (255,0,0,)
-static const ccColor3B ccRED = {255,0,0};
+static const ccColor3UB ccRED = {255,0,0};
 //! Magenta Color (255,0,255)
-static const ccColor3B ccMAGENTA = {255,0,255};
+static const ccColor3UB ccMAGENTA = {255,0,255};
 //! Black Color (0,0,0)
-static const ccColor3B ccBLACK = {0,0,0};
+static const ccColor3UB ccBLACK = {0,0,0};
 //! Orange Color (255,127,0)
-static const ccColor3B ccORANGE = {255,127,0};
+static const ccColor3UB ccORANGE = {255,127,0};
 //! Gray Color (166,166,166)
-static const ccColor3B ccGRAY = {166,166,166};
+static const ccColor3UB ccGRAY = {166,166,166};
 
 /** RGBA color composed of 4 bytes
 @since v0.8
@@ -104,10 +104,10 @@ typedef struct _ccColor4F {
 	GLfloat a;
 } ccColor4F;
 
-/** Returns a ccColor4F from a ccColor3B. Alpha will be 1.
+/** Returns a ccColor4F from a ccColor3UB. Alpha will be 1.
  @since v0.99.1
  */
-static inline ccColor4F ccc4FFromccc3B(ccColor3B c)
+static inline ccColor4F ccc4FFromccc3B(ccColor3UB c)
 {
 	return (ccColor4F){c.r/255.f, c.g/255.f, c.b/255.f, 1.f};
 }

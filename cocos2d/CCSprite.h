@@ -121,8 +121,8 @@ typedef enum {
 	
 	// opacity and RGB protocol
 	GLubyte		opacity_;
-	ccColor3B	color_;
-	ccColor3B	colorUnmodified_;
+	ccColor3UB	color_;
+	ccColor3UB	colorUnmodified_;
 	BOOL		opacityModifyRGB_:1;
 	
 	// image is flipped
@@ -163,7 +163,7 @@ typedef enum {
 /** opacity: conforms to CCRGBAProtocol protocol */
 @property (nonatomic,readwrite) GLubyte opacity;
 /** RGB colors: conforms to CCRGBAProtocol protocol */
-@property (nonatomic,readwrite) ccColor3B color;
+@property (nonatomic,readwrite) ccColor3UB color;
 /** whether or not the Sprite is rendered using a CCSpriteBatchNode */
 @property (nonatomic,readwrite) BOOL usesBatchNode;
 /** weak reference of the CCTextureAtlas used when the sprite is rendered using a CCSpriteBatchNode */

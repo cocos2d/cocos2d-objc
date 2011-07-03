@@ -143,12 +143,12 @@ const char kCCProgressTextureCoords = 0x4b;
 		}
 	}
 }
--(void)setColor:(ccColor3B)c
+-(void)setColor:(ccColor3UB)c
 {
 	sprite_.color = c;
 	[self updateColor];
 }
--(ccColor3B)color
+-(ccColor3UB)color
 {
 	return sprite_.color;
 }
