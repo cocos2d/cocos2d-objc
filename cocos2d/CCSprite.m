@@ -627,25 +627,23 @@ struct transformValues_ {
 	if( newBlend )
 		glBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);
 	
-#if CC_SPRITE_DEBUG_DRAW
-    if (CC_SPRITE_DEBUG_DRAW == 1) {
-        // draw bounding box
-        CGSize s = self.contentSize;
-        CGPoint vertices[4] = {
-            ccp(0,0), ccp(s.width,0),
-            ccp(s.width,s.height), ccp(0,s.height)
-        };
-        ccDrawPoly(vertices, 4, YES);
-    } else {
-        // draw texture box
-        CGSize s = self.textureRect.size;
-        CGPoint offset = self.offsetPositionInPixels;
-        CGPoint vertices[4] = {
-            ccp(offset.x,offset.y), ccp(offset.x+s.width,offset.y),
-            ccp(offset.x+s.width,offset.y+s.height), ccp(offset.x,offset.y+s.height)
-        };
-        ccDrawPoly(vertices, 4, YES);
-    }
+#if CC_SPRITE_DEBUG_DRAW == 1
+	// draw bounding box
+	CGSize s = self.contentSize;
+	CGPoint vertices[4] = {
+		ccp(0,0), ccp(s.width,0),
+		ccp(s.width,s.height), ccp(0,s.height)
+	};
+	ccDrawPoly(vertices, 4, YES);
+#elif CC_SPRITE_DEBUG_DRAW == 2
+	// draw texture box
+	CGSize s = self.textureRect.size;
+	CGPoint offsetPix = self.offsetPositionInPixels;
+	CGPoint vertices[4] = {
+		ccp(offsetPix.x,offsetPix.y), ccp(offsetPix.x+s.width,offsetPix.y),
+		ccp(offsetPix.x+s.width,offsetPix.y+s.height), ccp(offsetPix.x,offsetPix.y+s.height)
+	};
+	ccDrawPoly(vertices, 4, YES);
 #endif // CC_SPRITE_DEBUG_DRAW
 	
 }
