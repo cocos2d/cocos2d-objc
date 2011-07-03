@@ -40,12 +40,12 @@
 
 @synthesize ribbon = ribbon_;
 
-+(id)streakWithFade:(float)fade minSeg:(float)seg image:(NSString*)path width:(float)width length:(float)length color:(ccColor4B)color
++(id)streakWithFade:(float)fade minSeg:(float)seg image:(NSString*)path width:(float)width length:(float)length color:(ccColor4UB)color
 {
 	return [[[self alloc] initWithFade:(float)fade minSeg:seg image:path width:width length:length color:color] autorelease];
 }
 
--(id)initWithFade:(float)fade minSeg:(float)seg image:(NSString*)path width:(float)width length:(float)length color:(ccColor4B)color
+-(id)initWithFade:(float)fade minSeg:(float)seg image:(NSString*)path width:(float)width length:(float)length color:(ccColor4UB)color
 {
 	if( (self=[super init])) {
 		segThreshold_ = seg;

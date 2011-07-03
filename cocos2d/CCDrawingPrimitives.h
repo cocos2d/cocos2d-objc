@@ -30,6 +30,8 @@
 #import <Availability.h>
 #import <Foundation/Foundation.h>
 
+#import "ccTypes.h"
+
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 #import <CoreGraphics/CGGeometry.h>	// for CGPoint
 #endif
@@ -57,7 +59,7 @@ extern "C" {
 	
 
 /** draws a point given x and y coordinate measured in points. */
-void ccDrawPoint( CGPoint point );
+void ccDrawPoint( CGPoint point, ccColor4UB );
 
 /** draws an array of points.
  @since v0.7.2

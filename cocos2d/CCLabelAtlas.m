@@ -126,7 +126,7 @@
 		quad.tr.vertices.y = (int)(itemHeight_);
 		quad.tr.vertices.z = 0.0f;
 		
-		ccColor4B c = { color_.r, color_.g, color_.b, opacity_ };
+		ccColor4UB c = { color_.r, color_.g, color_.b, opacity_ };
 		quad.tl.colors = c;
 		quad.tr.colors = c;
 		quad.bl.colors = c;
@@ -161,7 +161,7 @@
 // XXX: overriding draw from AtlasNode
 - (void) draw
 {	
-	// Default Attribs & States: GL_TEXTURE0, k,CCAttribVertex, kCCAttribColor, kCCAttribTexCoords
+	// Default Attribs & States: GL_TEXTURE0, kCCAttribVertex, kCCAttribColor, kCCAttribTexCoords
 	// Needed states: GL_TEXTURE0, k,CCAttribVertex, kCCAttribColor, kCCAttribTexCoords
 	// Unneeded states: -
 	

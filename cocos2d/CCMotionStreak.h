@@ -56,10 +56,10 @@
 @property (nonatomic,readonly) CCRibbon *ribbon;
 
 /** creates the a MotionStreak. The image will be loaded using the TextureMgr. */
-+(id)streakWithFade:(float)fade minSeg:(float)seg image:(NSString*)path width:(float)width length:(float)length color:(ccColor4B)color;
++(id)streakWithFade:(float)fade minSeg:(float)seg image:(NSString*)path width:(float)width length:(float)length color:(ccColor4UB)color;
 
 /** initializes a MotionStreak. The file will be loaded using the TextureMgr. */
--(id)initWithFade:(float)fade minSeg:(float)seg image:(NSString*)path width:(float)width length:(float)length color:(ccColor4B)color;
+-(id)initWithFade:(float)fade minSeg:(float)seg image:(NSString*)path width:(float)width length:(float)length color:(ccColor4UB)color;
 
 /** polling function */
 -(void)update:(ccTime)delta;
