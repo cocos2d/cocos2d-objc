@@ -114,15 +114,25 @@
 
 -(void)begin
 {	
+	// Save the current matrix
 	kmGLPushMatrix();
-	CCDirector *director = [CCDirector sharedDirector];
-	CGSize	winSize = [director winSizeInPixels];
+
+	CGSize texSize = [texture_ contentSizeInPixels];
 	
-	glViewport(0, 0, winSize.width, winSize.height);
 	
-	kmMat4 projectionMatrix;
-	kmMat4OrthographicProjection(&projectionMatrix, 0, winSize.width, 0, winSize.height, -1024, 1024);
-	kmGLMultMatrix(&projectionMatrix);
+	// Calculate the adjustment ratios based on the old and new projections
+	CGSize size = [[CCDirector sharedDirector] displaySizeInPixels];
+	float widthRatio = size.width / texSize.width;
+	float heightRatio = size.height / texSize.height;
+	
+	
+	// Adjust the orthographic propjection and viewport
+	kmMat4 orthoMatrix;
+	kmMat4OrthographicProjection(&orthoMatrix, (float)-1.0 / widthRatio,  (float)1.0 / widthRatio, (float)-1.0 / heightRatio, (float)1.0 / heightRatio, -1,1 );
+	kmGLMultMatrix(&orthoMatrix);
+	
+	glViewport(0, 0, texSize.width, texSize.height);
+
 	
 	glGetIntegerv(CC_GL_FRAMEBUFFER_BINDING, &oldFBO_);
 	ccglBindFramebuffer(CC_GL_FRAMEBUFFER, fbo_);
@@ -157,11 +167,11 @@
 -(void)end
 {
 	ccglBindFramebuffer(CC_GL_FRAMEBUFFER, oldFBO_);
-	
-	CGSize size = [[CCDirector sharedDirector] displaySizeInPixels];
-	glViewport(0, 0, size.width, size.height);
 
 	kmGLPopMatrix();
+
+	CGSize size = [[CCDirector sharedDirector] displaySizeInPixels];
+	glViewport(0, 0, size.width, size.height);
 }
 
 -(void)clear:(float)r g:(float)g b:(float)b a:(float)a
