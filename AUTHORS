@@ -438,6 +438,8 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Sprite#updateTransform can be overriden
 	* Serge Kolgan:
 		patches for CocosNode
+	* Sergey Tikhonov (AKA haqu) (http://haqu.net)
+		Sprite: Added texture debugging draw
 	* sflory:
 		new way to added CGImageRef to TextureMgr
 		added unicode support in BitmapFontAtlas
