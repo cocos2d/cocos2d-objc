@@ -59,7 +59,7 @@ extern "C" {
 	
 
 /** draws a point given x and y coordinate measured in points. */
-void ccDrawPoint( CGPoint point, ccColor4UB );
+void ccDrawPoint( CGPoint point );
 
 /** draws an array of points.
  @since v0.7.2
@@ -86,6 +86,11 @@ void ccDrawQuadBezier(CGPoint origin, CGPoint control, CGPoint destination, NSUI
  @since v0.8
  */
 void ccDrawCubicBezier(CGPoint origin, CGPoint control1, CGPoint control2, CGPoint destination, NSUInteger segments);
+
+/** drawing color 
+ @since v2.0
+ */
+void ccDrawColor4ub( GLubyte r, GLubyte g, GLubyte b, GLubyte a );
 
 #ifdef __cplusplus
 }

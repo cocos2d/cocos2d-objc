@@ -58,8 +58,8 @@
 
 	// texture RGBA. 
 	GLubyte		opacity_;
-	ccColor3B	color_;
-	ccColor3B	colorUnmodified_;
+	ccColor3UB	color_;
+	ccColor3UB	colorUnmodified_;
 	BOOL opacityModifyRGB_;
 }
 
@@ -72,7 +72,7 @@
 /** conforms to CCRGBAProtocol protocol */
 @property (nonatomic,readwrite) GLubyte opacity;
 /** conforms to CCRGBAProtocol protocol */
-@property (nonatomic,readwrite) ccColor3B color;
+@property (nonatomic,readwrite) ccColor3UB color;
 
 
 /** creates a CCAtlasNode  with an Atlas file the width and height of each item measured in points and the quantity of items to render*/

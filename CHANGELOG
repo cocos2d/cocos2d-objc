@@ -13,6 +13,7 @@ version 2.0-alpha XX-Apr-2011
 . [FIX] All: Removed deprecated methods and classes that were scheduled for removal post 1.0
 . [FIX] CCProgressTimer: reverse renamed to reverseDirection in order to prevent possible collision with action#reverse
 . [FIX] TextureCache: Uses "self" instead of "CCTextureCache" in shared instance
+. [FIX] Types: ccColor4B replaced with ccColor4UB
 . [FIX] Xcode: cocosLive: Removed. Use OpenFeint or GameCenter instead
 . [FIX] Xcode: FontLabel: Removed since in iOS 4 you can load custom TTF
 . [FIX] Xcode: TouchJSON: Removed. No longer needed since cocosLive was removed

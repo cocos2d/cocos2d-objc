@@ -52,7 +52,7 @@ enum {
 	tCCMenuState state_;
 	CCMenuItem	*selectedItem_;
 	GLubyte		opacity_;
-	ccColor3B	color_;
+	ccColor3UB	color_;
 }
 
 /** creates a CCMenu with it's items */
@@ -88,6 +88,6 @@ enum {
 /** conforms to CCRGBAProtocol protocol */
 @property (nonatomic,readonly) GLubyte opacity;
 /** conforms to CCRGBAProtocol protocol */
-@property (nonatomic,readonly) ccColor3B color;
+@property (nonatomic,readonly) ccColor3UB color;
 
 @end

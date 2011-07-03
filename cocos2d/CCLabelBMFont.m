@@ -619,7 +619,7 @@ typedef struct _KerningHashElement
 
 #pragma mark LabelBMFont - CCRGBAProtocol protocol
 
--(void) setColor:(ccColor3B)color
+-(void) setColor:(ccColor3UB)color
 {
 	color_ = color;
 	

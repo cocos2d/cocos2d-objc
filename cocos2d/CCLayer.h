@@ -154,7 +154,7 @@
 @interface CCLayerColor : CCLayer <CCRGBAProtocol, CCBlendProtocol>
 {
 	GLubyte		opacity_;
-	ccColor3B	color_;	
+	ccColor3UB	color_;	
 	ccVertex2F	squareVertices_[4];
 	ccColor4F	squareColors_[4];
 	
@@ -183,7 +183,7 @@
 /** Opacity: conforms to CCRGBAProtocol protocol */
 @property (nonatomic,readonly) GLubyte opacity;
 /** Opacity: conforms to CCRGBAProtocol protocol */
-@property (nonatomic,readonly) ccColor3B color;
+@property (nonatomic,readonly) ccColor3UB color;
 /** BlendFunction. Conforms to CCBlendProtocol protocol */
 @property (nonatomic,readwrite) ccBlendFunc blendFunc;
 @end
@@ -213,7 +213,7 @@ the background.
  */
 @interface CCLayerGradient : CCLayerColor
 {
-	ccColor3B endColor_;
+	ccColor3UB endColor_;
 	GLubyte startOpacity_;
 	GLubyte endOpacity_;
 	CGPoint vector_;
@@ -231,9 +231,9 @@ the background.
 - (id) initWithColor: (ccColor4UB) start fadingTo: (ccColor4UB) end alongVector: (CGPoint) v;
 
 /** The starting color. */
-@property (nonatomic, readwrite) ccColor3B startColor;
+@property (nonatomic, readwrite) ccColor3UB startColor;
 /** The ending color. */
-@property (nonatomic, readwrite) ccColor3B endColor;
+@property (nonatomic, readwrite) ccColor3UB endColor;
 /** The starting opacity. */
 @property (nonatomic, readwrite) GLubyte startOpacity;
 /** The ending color. */

@@ -35,11 +35,11 @@
 /** sets Color
  @since v0.8
  */
--(void) setColor:(ccColor3B)color;
+-(void) setColor:(ccColor3UB)color;
 /** returns the color
  @since v0.8
  */
--(ccColor3B) color;
+-(ccColor3UB) color;
 
 /// returns the opacity
 -(GLubyte) opacity;

@@ -229,9 +229,9 @@ typedef enum {
 /** creates the transition with a duration and with an RGB color
  * Example: [FadeTransition transitionWithDuration:2 scene:s withColor:ccc3(255,0,0)]; // red color
  */
-+(id) transitionWithDuration:(ccTime)duration scene:(CCScene*)scene withColor:(ccColor3B)color;
++(id) transitionWithDuration:(ccTime)duration scene:(CCScene*)scene withColor:(ccColor3UB)color;
 /** initializes the transition with a duration and with an RGB color */
--(id) initWithDuration:(ccTime)duration scene:(CCScene*)scene withColor:(ccColor3B)color;
+-(id) initWithDuration:(ccTime)duration scene:(CCScene*)scene withColor:(ccColor3UB)color;
 @end
 
 

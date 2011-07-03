@@ -512,7 +512,7 @@ enum {
 		[item setOpacity:opacity_];
 }
 
--(void) setColor:(ccColor3B)color
+-(void) setColor:(ccColor3UB)color
 {
 	color_ = color;
 	
