@@ -832,7 +832,7 @@ const uint32_t kSceneFade = 0xFADEFADE;
 	
 	// create a transparent color layer
 	// in which we are going to add our rendertextures
-	ccColor4B  color = {0,0,0,0};
+	ccColor4UB  color = {0,0,0,0};
 	CGSize size = [[CCDirector sharedDirector] winSize];
 	CCLayerColor * layer = [CCLayerColor layerWithColor:color];
 	

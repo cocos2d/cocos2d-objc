@@ -284,17 +284,17 @@
 @synthesize blendFunc = blendFunc_;
 
 
-+ (id) layerWithColor:(ccColor4B)color width:(GLfloat)w  height:(GLfloat) h
++ (id) layerWithColor:(ccColor4UB)color width:(GLfloat)w  height:(GLfloat) h
 {
 	return [[[self alloc] initWithColor:color width:w height:h] autorelease];
 }
 
-+ (id) layerWithColor:(ccColor4B)color
++ (id) layerWithColor:(ccColor4UB)color
 {
 	return [[(CCLayerColor*)[self alloc] initWithColor:color] autorelease];
 }
 
-- (id) initWithColor:(ccColor4B)color width:(GLfloat)w  height:(GLfloat) h
+- (id) initWithColor:(ccColor4UB)color width:(GLfloat)w  height:(GLfloat) h
 {
 	if( (self=[super init]) ) {
 		
@@ -319,7 +319,7 @@
 	return self;
 }
 
-- (id) initWithColor:(ccColor4B)color
+- (id) initWithColor:(ccColor4UB)color
 {
 	CGSize s = [[CCDirector sharedDirector] winSize];
 	return [self initWithColor:color width:s.width height:s.height];
@@ -412,22 +412,22 @@
 @synthesize endColor = endColor_, endOpacity = endOpacity_;
 @synthesize vector = vector_;
 
-+ (id) layerWithColor: (ccColor4B) start fadingTo: (ccColor4B) end
++ (id) layerWithColor: (ccColor4UB) start fadingTo: (ccColor4UB) end
 {
     return [[[self alloc] initWithColor:start fadingTo:end] autorelease];
 }
 
-+ (id) layerWithColor: (ccColor4B) start fadingTo: (ccColor4B) end alongVector: (CGPoint) v
++ (id) layerWithColor: (ccColor4UB) start fadingTo: (ccColor4UB) end alongVector: (CGPoint) v
 {
     return [[[self alloc] initWithColor:start fadingTo:end alongVector:v] autorelease];
 }
 
-- (id) initWithColor: (ccColor4B) start fadingTo: (ccColor4B) end
+- (id) initWithColor: (ccColor4UB) start fadingTo: (ccColor4UB) end
 {
     return [self initWithColor:start fadingTo:end alongVector:ccp(0, -1)];
 }
 
-- (id) initWithColor: (ccColor4B) start fadingTo: (ccColor4B) end alongVector: (CGPoint) v
+- (id) initWithColor: (ccColor4UB) start fadingTo: (ccColor4UB) end alongVector: (CGPoint) v
 {
 	endColor_.r = end.r;
 	endColor_.g = end.g;

@@ -28,64 +28,112 @@
 #import <string.h>
 
 #import "CCDrawingPrimitives.h"
-#import "ccTypes.h"
 #import "ccMacros.h"
 #import "Platforms/CCGL.h"
+#import "ccGLState.h"
+#import "CCShaderCache.h"
+#import "GLProgram.h"
+#import "Support/OpenGL_Internal.h"
 
-void ccDrawPoint( CGPoint point )
+
+static BOOL initialized = NO;
+static GLProgram *shader_ = nil;
+static void lazy_init( void )
 {
-    return;
+	if( ! initialized ) {
+		
+		shader_ = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_Position1Color];
+		
+		initialized = YES;
+	}
+	
+}
+
+void ccDrawPoint( CGPoint point, ccColor4UB color )
+{
+	lazy_init();
 
 	ccVertex2F p = (ccVertex2F) {point.x, point.y};
 	
-	// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
-	// Needed states: GL_VERTEX_ARRAY, 
-	// Unneeded states: GL_TEXTURE_2D, GL_TEXTURE_COORD_ARRAY, GL_COLOR_ARRAY	
-	glDisable(GL_TEXTURE_2D);
-	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-	glDisableClientState(GL_COLOR_ARRAY);
+	// Default Attribs & States: GL_TEXTURE0, kCCAttribPosition, kCCAttribColor, kCCAttribTexCoords
+	// Needed states: GL_TEXTURE0, k,kCCAttribPosition, kCCAttribColor, kCCAttribTexCoords
+	// Unneeded states: GL_TEXTURE0, kCCAttribColor, kCCAttribTexCoords
 	
-	glVertexPointer(2, GL_FLOAT, 0, &p);	
+	glDisableVertexAttribArray(kCCAttribTexCoords);
+	glDisableVertexAttribArray(kCCAttribColor);
+
+	CHECK_GL_ERROR_DEBUG();
+
+	ccGLUseProgram( shader_->program_ );
+	ccGLUniformProjectionMatrix( shader_ );
+	ccGLUniformModelViewMatrix( shader_ );
+	
+	glUniform();
+
+	CHECK_GL_ERROR_DEBUG();
+
+	glVertexAttribPointer(kCCAttribPosition, 2, GL_FLOAT, GL_FALSE, 0, &p);
+
 	glDrawArrays(GL_POINTS, 0, 1);
+	
+	CHECK_GL_ERROR_DEBUG();
 
 	// restore default state
-	glEnableClientState(GL_COLOR_ARRAY);
-	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-	glEnable(GL_TEXTURE_2D);	
+	glEnableVertexAttribArray(kCCAttribTexCoords);
+	glEnableVertexAttribArray(kCCAttribColor);
+	
+	CHECK_GL_ERROR_DEBUG();
 }
 
 void ccDrawPoints( const CGPoint *points, NSUInteger numberOfPoints )
 {
-    return;
+	// Default Attribs & States: GL_TEXTURE0, kCCAttribPosition, kCCAttribColor, kCCAttribTexCoords
+	// Needed states: GL_TEXTURE0, k,kCCAttribPosition, kCCAttribColor, kCCAttribTexCoords
+	// Unneeded states: GL_TEXTURE0, kCCAttribColor, kCCAttribTexCoords
 
-	// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
-	// Needed states: GL_VERTEX_ARRAY, 
-	// Unneeded states: GL_TEXTURE_2D, GL_TEXTURE_COORD_ARRAY, GL_COLOR_ARRAY	
-	glDisable(GL_TEXTURE_2D);
-	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-	glDisableClientState(GL_COLOR_ARRAY);
+	CHECK_GL_ERROR_DEBUG();
+
+	GLProgram *shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionColor];
+
+	CHECK_GL_ERROR_DEBUG();
+
+	glDisableVertexAttribArray(kCCAttribTexCoords);
+	glDisableVertexAttribArray(kCCAttribColor);
+
+	CHECK_GL_ERROR_DEBUG();
+
+	ccGLUseProgram( shaderProgram->program_ );
+	ccGLUniformProjectionMatrix( shaderProgram );
+	ccGLUniformModelViewMatrix( shaderProgram );
+
+	CHECK_GL_ERROR_DEBUG();
 
 	ccVertex2F newPoints[numberOfPoints];
-
+	
 	// iPhone and 32-bit machines optimization
 	if( sizeof(CGPoint) == sizeof(ccVertex2F) )
-        glVertexPointer(2, GL_FLOAT, 0, points);
-		
+		glVertexAttribPointer(kCCAttribPosition, 2, GL_FLOAT, GL_FALSE, 0, points);
+	
 	else
     {
 		// Mac on 64-bit
 		for( NSUInteger i=0; i<numberOfPoints;i++)
 			newPoints[i] = (ccVertex2F) { points[i].x, points[i].y };
-			
-		glVertexPointer(2, GL_FLOAT, 0, newPoints);
+		
+		glVertexAttribPointer(kCCAttribPosition, 2, GL_FLOAT, GL_FALSE, 0, newPoints);
 	}
-    
+
+	CHECK_GL_ERROR_DEBUG();
+
     glDrawArrays(GL_POINTS, 0, (GLsizei) numberOfPoints);
-	
+
+	CHECK_GL_ERROR_DEBUG();
+
 	// restore default state
-	glEnableClientState(GL_COLOR_ARRAY);
-	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-	glEnable(GL_TEXTURE_2D);	
+	glEnableVertexAttribArray(kCCAttribTexCoords);
+	glEnableVertexAttribArray(kCCAttribColor);
+	
+	CHECK_GL_ERROR_DEBUG();
 }
 
 

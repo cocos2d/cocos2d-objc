@@ -194,7 +194,7 @@
 	// colors
 	ccV2F_C4B_T2F_Quad *quad = &(quads_[particleIdx]);
 	
-	ccColor4B color = { p->color.r*255, p->color.g*255, p->color.b*255, p->color.a*255};
+	ccColor4UB color = { p->color.r*255, p->color.g*255, p->color.b*255, p->color.a*255};
 	quad->bl.colors = color;
 	quad->br.colors = color;
 	quad->tl.colors = color;

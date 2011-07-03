@@ -195,7 +195,7 @@ const char kCCProgressTextureCoords = 0x4b;
 		return;
 	}
 	if(vertexData_){
-		ccColor4B sc = sprite_.quad.tl.colors;
+		ccColor4UB sc = sprite_.quad.tl.colors;
 		for (int i=0; i < vertexDataCount_; ++i) {
 			vertexData_[i].colors = sc;
 		}

@@ -80,7 +80,7 @@ Class restartAction()
 		[self addChild: menu z:1];
 		
 		
-		CCLayerColor *background = [CCLayerColor layerWithColor:(ccColor4B){255,0,0,255}];
+		CCLayerColor *background = [CCLayerColor layerWithColor:(ccColor4UB){255,0,0,255}];
 		[self addChild:background z:-10];
 	}
 	

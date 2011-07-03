@@ -224,7 +224,7 @@ typedef enum {
  */
 @interface CCTransitionFade : CCTransitionScene
 {
-	ccColor4B	color;
+	ccColor4UB	color;
 }
 /** creates the transition with a duration and with an RGB color
  * Example: [FadeTransition transitionWithDuration:2 scene:s withColor:ccc3(255,0,0)]; // red color

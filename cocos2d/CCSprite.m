@@ -167,7 +167,7 @@ struct transformValues_ {
 		hasChildren_ = NO;
 		
 		// Atlas: Color
-		ccColor4B tmpColor = {255,255,255,255};
+		ccColor4UB tmpColor = {255,255,255,255};
 		quad_.bl.colors = tmpColor;
 		quad_.br.colors = tmpColor;
 		quad_.tl.colors = tmpColor;
@@ -807,7 +807,7 @@ struct transformValues_ {
 #pragma mark CCSprite - RGBA protocol
 -(void) updateColor
 {
-	ccColor4B color4 = {color_.r, color_.g, color_.b, opacity_};
+	ccColor4UB color4 = {color_.r, color_.g, color_.b, opacity_};
 	
 	quad_.bl.colors = color4;
 	quad_.br.colors = color4;
