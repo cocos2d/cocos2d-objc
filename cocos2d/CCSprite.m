@@ -617,7 +617,17 @@ struct transformValues_ {
 	glVertexAttribPointer(kCCAttribColor, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (void*)(offset + diff));
 	
 
-	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);	
+	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+	
+#if CC_SPRITE_DEBUG_DRAW
+	CGSize s = [self contentSize];
+	CGPoint vertices[4]={
+		ccp(0,0),ccp(s.width,0),
+		ccp(s.width,s.height),ccp(0,s.height),
+	};
+	ccDrawPoly(vertices, 4, YES);
+#endif // CC_SPRITE_DEBUG_DRAW
+
 }
 
 #pragma mark CCSprite - CCNode overrides
