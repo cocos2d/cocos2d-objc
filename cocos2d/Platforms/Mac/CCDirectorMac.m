@@ -30,22 +30,18 @@
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 
 #import <sys/time.h>
- 
+
 #import "CCDirectorMac.h"
 #import "CCEventDispatcher.h"
 #import "MacGLView.h"
 
-#import "../../GLProgram.h"
-#import "../../ccGLState.h"
 #import "../../CCNode.h"
 #import "../../CCScheduler.h"
 #import "../../ccMacros.h"
-
-#import "../../Support/OpenGL_Internal.h"
-#import "../../Support/CGPointExtension.h"
-#import "../../Support/TransformUtils.h"
+#import "../../GLProgram.h"
 
 // external
+#import "kazmath/kazmath.h"
 #import "kazmath/GL/matrix.h"
 
 #pragma mark -
@@ -112,7 +108,7 @@
     
     if( fullscreen ) {
         originalWinRect_ = [openGLView_ frame];
-
+		
         // Cache normal window and superview of openGLView
         if(!windowGLView_)
             windowGLView_ = [[openGLView_ window] retain];
@@ -120,7 +116,7 @@
         [superViewGLView_ release];
         superViewGLView_ = [[openGLView_ superview] retain];
         
-                              
+		
         // Get screen size
         NSRect displayRect = [[NSScreen mainScreen] frame];
         
@@ -194,9 +190,9 @@
 -(void) setResizeMode:(int)mode
 {
 	if( mode != resizeMode_ ) {
-
+		
 		resizeMode_ = mode;
-
+		
         [self setProjection:projection_];
         [openGLView_ setNeedsDisplay: YES];
 	}
@@ -230,22 +226,22 @@
 		offset = winOffset_;
 		
 	}
-
+	
 	switch (projection) {
 		case kCCDirectorProjection2D:
 			
 			glViewport(offset.x, offset.y, widthAspect, heightAspect);
 			kmGLMatrixMode(KM_GL_PROJECTION);
 			kmGLLoadIdentity();
-
+			
 			kmMat4 orthoMatrix;
 			kmMat4OrthographicProjection(&orthoMatrix, 0, size.width, 0, size.height, -1024, 1024);			
 			kmGLMultMatrix( &orthoMatrix );
-
+			
 			kmGLMatrixMode(KM_GL_MODELVIEW);
 			kmGLLoadIdentity();
 			break;			
-
+			
 			
 		case kCCDirectorProjection3D:
 		{
@@ -257,14 +253,14 @@
 			kmMat4 matrixPerspective, matrixLookup;
 			kmMat4PerspectiveProjection( &matrixPerspective, 60, (GLfloat)widthAspect/heightAspect, 0.1f, 1500.0f);
 			kmGLMultMatrix(&matrixPerspective);
-
+			
 			
 			kmGLMatrixMode(KM_GL_MODELVIEW);	
 			kmGLLoadIdentity();
 			kmVec3 eye, center, up;
 			
 			float eyeZ = size.height * [self getZEye] / winSizeInPixels_.height;
-
+			
 			kmVec3Fill( &eye, size.width/2, size.height/2, eyeZ );
 			kmVec3Fill( &center, size.width/2, size.height/2, 0 );
 			kmVec3Fill( &up, 0, 1, 0);
@@ -285,6 +281,7 @@
 	
 	projection_ = projection;
 }
+
 
 // If scaling is supported, then it should always return the original size
 // otherwise it should return the "real" size.
@@ -309,7 +306,7 @@
 		ret = coords;
 	
 	else {
-	
+		
 		float x_diff = originalWinSize_.width / (winSizeInPixels_.width - winOffset_.x * 2);
 		float y_diff = originalWinSize_.height / (winSizeInPixels_.height - winOffset_.y * 2);
 		
@@ -337,14 +334,14 @@
 		runningThread_ = [NSThread currentThread];
 	
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-
+	
 	[self drawScene];
 	[[CCEventDispatcher sharedDispatcher] dispatchQueuedEvents];
 	
 	[[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:nil];
 	
 	[pool release];
-
+	
 #else
 	[self performSelector:@selector(drawScene) onThread:runningThread_ withObject:nil waitUntilDone:YES];
 #endif
@@ -418,11 +415,11 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 		NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 		
 		[[NSRunLoop currentRunLoop] run];
-
+		
 		[pool release];
 	}
 }
-		
+
 //
 // Draw the Scene
 //
@@ -449,7 +446,7 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 	if( nextScene_ )
 		[self setNextScene];
 	
-	glPushMatrix();
+	kmGLPushMatrix();
 	
 	
 	// By default enable VertexArray, ColorArray, TextureCoordArray and Texture2D
@@ -460,7 +457,7 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 	
 	/* draw the notification node */
 	[notificationNode_ visit];
-
+	
 	if( displayFPS_ )
 		[self showFPS];
 	
@@ -470,8 +467,8 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 	
 	CC_DISABLE_DEFAULT_GL_STATES();
 	
-	glPopMatrix();
-			
+	kmGLPopMatrix();
+	
 	[[openGLView_ openGLContext] flushBuffer];	
 	CGLUnlockContext([[openGLView_ openGLContext] CGLContextObj]);
 }
@@ -482,7 +479,7 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 	if( view != openGLView_ ) {
 		
 		[super setOpenGLView:view];
-				
+		
 		CCEventDispatcher *eventDispatcher = [CCEventDispatcher sharedDispatcher];
 		[openGLView_ setEventDelegate: eventDispatcher];
 		[eventDispatcher setDispatchEvents: YES];
@@ -491,7 +488,7 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 		[view setAcceptsTouchEvents:NO];
 //		[view setAcceptsTouchEvents:YES];
 		
-
+		
 		// Synchronize buffer swaps with vertical refresh rate
 		[[view openGLContext] makeCurrentContext];
 		GLint swapInt = 1;
