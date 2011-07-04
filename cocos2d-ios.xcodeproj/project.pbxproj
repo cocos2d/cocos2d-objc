@@ -1416,29 +1416,17 @@
 		A015BFD713B826D800C73E76 /* vec2.h in Headers */ = {isa = PBXBuildFile; fileRef = A015BFB913B826D800C73E76 /* vec2.h */; };
 		A015BFD813B826D800C73E76 /* vec3.h in Headers */ = {isa = PBXBuildFile; fileRef = A015BFBA13B826D800C73E76 /* vec3.h */; };
 		A015BFD913B826D800C73E76 /* vec4.h in Headers */ = {isa = PBXBuildFile; fileRef = A015BFBB13B826D800C73E76 /* vec4.h */; };
-		A015BFDA13B826D800C73E76 /* aabb.c in Sources */ = {isa = PBXBuildFile; fileRef = A015BFBD13B826D800C73E76 /* aabb.c */; };
 		A015BFDB13B826D800C73E76 /* aabb.c in Sources */ = {isa = PBXBuildFile; fileRef = A015BFBD13B826D800C73E76 /* aabb.c */; };
-		A015BFDE13B826D800C73E76 /* mat4stack.c in Sources */ = {isa = PBXBuildFile; fileRef = A015BFC113B826D800C73E76 /* mat4stack.c */; };
 		A015BFDF13B826D800C73E76 /* mat4stack.c in Sources */ = {isa = PBXBuildFile; fileRef = A015BFC113B826D800C73E76 /* mat4stack.c */; };
-		A015BFE013B826D800C73E76 /* matrix.c in Sources */ = {isa = PBXBuildFile; fileRef = A015BFC213B826D800C73E76 /* matrix.c */; };
 		A015BFE113B826D800C73E76 /* matrix.c in Sources */ = {isa = PBXBuildFile; fileRef = A015BFC213B826D800C73E76 /* matrix.c */; };
-		A015BFE213B826D800C73E76 /* mat3.c in Sources */ = {isa = PBXBuildFile; fileRef = A015BFC413B826D800C73E76 /* mat3.c */; };
 		A015BFE313B826D800C73E76 /* mat3.c in Sources */ = {isa = PBXBuildFile; fileRef = A015BFC413B826D800C73E76 /* mat3.c */; };
-		A015BFE413B826D800C73E76 /* mat4.c in Sources */ = {isa = PBXBuildFile; fileRef = A015BFC513B826D800C73E76 /* mat4.c */; };
 		A015BFE513B826D800C73E76 /* mat4.c in Sources */ = {isa = PBXBuildFile; fileRef = A015BFC513B826D800C73E76 /* mat4.c */; };
-		A015BFE613B826D800C73E76 /* plane.c in Sources */ = {isa = PBXBuildFile; fileRef = A015BFC613B826D800C73E76 /* plane.c */; };
 		A015BFE713B826D800C73E76 /* plane.c in Sources */ = {isa = PBXBuildFile; fileRef = A015BFC613B826D800C73E76 /* plane.c */; };
-		A015BFE813B826D800C73E76 /* quaternion.c in Sources */ = {isa = PBXBuildFile; fileRef = A015BFC713B826D800C73E76 /* quaternion.c */; };
 		A015BFE913B826D800C73E76 /* quaternion.c in Sources */ = {isa = PBXBuildFile; fileRef = A015BFC713B826D800C73E76 /* quaternion.c */; };
-		A015BFEA13B826D800C73E76 /* ray2.c in Sources */ = {isa = PBXBuildFile; fileRef = A015BFC813B826D800C73E76 /* ray2.c */; };
 		A015BFEB13B826D800C73E76 /* ray2.c in Sources */ = {isa = PBXBuildFile; fileRef = A015BFC813B826D800C73E76 /* ray2.c */; };
-		A015BFEC13B826D800C73E76 /* utility.c in Sources */ = {isa = PBXBuildFile; fileRef = A015BFC913B826D800C73E76 /* utility.c */; };
 		A015BFED13B826D800C73E76 /* utility.c in Sources */ = {isa = PBXBuildFile; fileRef = A015BFC913B826D800C73E76 /* utility.c */; };
-		A015BFEE13B826D800C73E76 /* vec2.c in Sources */ = {isa = PBXBuildFile; fileRef = A015BFCA13B826D800C73E76 /* vec2.c */; };
 		A015BFEF13B826D800C73E76 /* vec2.c in Sources */ = {isa = PBXBuildFile; fileRef = A015BFCA13B826D800C73E76 /* vec2.c */; };
-		A015BFF013B826D800C73E76 /* vec3.c in Sources */ = {isa = PBXBuildFile; fileRef = A015BFCB13B826D800C73E76 /* vec3.c */; };
 		A015BFF113B826D800C73E76 /* vec3.c in Sources */ = {isa = PBXBuildFile; fileRef = A015BFCB13B826D800C73E76 /* vec3.c */; };
-		A015BFF213B826D800C73E76 /* vec4.c in Sources */ = {isa = PBXBuildFile; fileRef = A015BFCC13B826D800C73E76 /* vec4.c */; };
 		A015BFF313B826D800C73E76 /* vec4.c in Sources */ = {isa = PBXBuildFile; fileRef = A015BFCC13B826D800C73E76 /* vec4.c */; };
 		A015BFF913B829E100C73E76 /* libkazmath.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A04A1FEB13B826B300ABAFB7 /* libkazmath.a */; };
 		A0600BB713C1FBE100BB6F49 /* Info-FontTest.plist in Resources */ = {isa = PBXBuildFile; fileRef = A0600BB613C1FBE100BB6F49 /* Info-FontTest.plist */; };
@@ -10571,18 +10559,6 @@
 			files = (
 				505B62CB0F2E6A0F001B4104 /* main.m in Sources */,
 				505B62E00F2E6A66001B4104 /* Texture2dTest.m in Sources */,
-				A015BFDA13B826D800C73E76 /* aabb.c in Sources */,
-				A015BFDE13B826D800C73E76 /* mat4stack.c in Sources */,
-				A015BFE013B826D800C73E76 /* matrix.c in Sources */,
-				A015BFE213B826D800C73E76 /* mat3.c in Sources */,
-				A015BFE413B826D800C73E76 /* mat4.c in Sources */,
-				A015BFE613B826D800C73E76 /* plane.c in Sources */,
-				A015BFE813B826D800C73E76 /* quaternion.c in Sources */,
-				A015BFEA13B826D800C73E76 /* ray2.c in Sources */,
-				A015BFEC13B826D800C73E76 /* utility.c in Sources */,
-				A015BFEE13B826D800C73E76 /* vec2.c in Sources */,
-				A015BFF013B826D800C73E76 /* vec3.c in Sources */,
-				A015BFF213B826D800C73E76 /* vec4.c in Sources */,
 				A0600C7F13C227A300BB6F49 /* RootViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
