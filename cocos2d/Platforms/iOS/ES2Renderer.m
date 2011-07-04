@@ -151,6 +151,8 @@
 
 - (void)dealloc
 {
+	CCLOGINFO(@"cocos2d: deallocing %@", self);
+
     // Tear down GL
     if (defaultFramebuffer_) {
         glDeleteFramebuffers(1, &defaultFramebuffer_);
