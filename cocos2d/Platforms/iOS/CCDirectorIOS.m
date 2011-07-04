@@ -100,8 +100,6 @@ CGFloat	__ccContentScaleFactor = 1;
 		__ccContentScaleFactor = 1;
 		isContentScaleSupported_ = NO;
 		
-		kmMat4Identity( &portraitProjectionMatrix_ );
-		
 		// running thread is main thread on iOS
 		runningThread_ = [NSThread currentThread];
 	}
@@ -161,10 +159,30 @@ CGFloat	__ccContentScaleFactor = 1;
 -(void) setProjection:(ccDirectorProjection)projection
 {
 	CGSize size = winSizeInPixels_;
-    
-    if( CC_CONTENT_SCALE_FACTOR() != 1)
-        glViewport(0, -size.height * CC_CONTENT_SCALE_FACTOR() / 2.0f, size.width * CC_CONTENT_SCALE_FACTOR(), size.height * CC_CONTENT_SCALE_FACTOR());
-    else
+
+    if( CC_CONTENT_SCALE_FACTOR() != 1) {
+		float originX = 0;
+		float originY = 0;
+		switch ( deviceOrientation_ ) {
+			case CCDeviceOrientationPortrait:
+			case CCDeviceOrientationPortraitUpsideDown:
+				originX = -size.width;
+				originY = -size.height;
+				break;
+			case CCDeviceOrientationLandscapeRight:
+				originX = -size.width;
+				originY = -size.height;
+				break;
+			case CCDeviceOrientationLandscapeLeft:
+				originX = 0;
+				originY = -size.height * CC_CONTENT_SCALE_FACTOR() / 2.0f;
+				break;
+
+		}
+        glViewport(originX, originY, size.width * CC_CONTENT_SCALE_FACTOR(), size.height * CC_CONTENT_SCALE_FACTOR());
+		
+
+	} else
         glViewport(0, 0, size.width, size.height);
 
 	switch (projection) {
@@ -218,66 +236,18 @@ CGFloat	__ccContentScaleFactor = 1;
 	ccSetProjectionMatrixDirty();
 }
 
-//-(kmMat4) applyOrientationToMatrix:(kmMat4*)inMatrix
-//{
-//	CGSize s = winSizeInPixels_;
-//	float w = s.width / 2;
-//	float h = s.height / 2;
-//	
-//	kmMat4 matA, matB, matC;
-//	kmMat4 ret;
-//	
-//	switch ( deviceOrientation_ ) {
-//		case kCCDeviceOrientationPortrait:
-//			ret = portraitProjectionMatrix_;
-//			break;
-//
-//		case kCCDeviceOrientationPortraitUpsideDown:
-//			// upside down
-//			kmMat4Translation(&matA, w, h, 0);
-//			kmMat4RotationZ(&matB, CC_DEGREES_TO_RADIANS(180) );
-//			kmMat4Translation(&matC, -w, -h, 0);
-//			
-//			kmMat4Multiply(&ret, inMatrix, &matA);
-//			kmMat4Multiply(&ret, &ret, &matB);
-//			kmMat4Multiply(&ret, &ret, &matC);			
-//			break;
-//
-//		case kCCDeviceOrientationLandscapeRight:
-//			kmMat4Translation(&matA, w, h, 0);
-//			kmMat4RotationZ(&matB, CC_DEGREES_TO_RADIANS(90) );
-//			kmMat4Translation(&matC, -h, -w, 0);
-//			
-//			kmMat4Multiply(&ret, inMatrix, &matA);
-//			kmMat4Multiply(&ret, &ret, &matB);
-//			kmMat4Multiply(&ret, &ret, &matC);
-//			break;
-//
-//		case kCCDeviceOrientationLandscapeLeft:
-//			kmMat4Translation(&matA, w, h, 0);
-//			kmMat4RotationZ(&matB, CC_DEGREES_TO_RADIANS(-90) );
-//			kmMat4Translation(&matC, -h, -w, 0);
-//			
-//			kmMat4Multiply(&ret, inMatrix, &matA);
-//			kmMat4Multiply(&ret, &ret, &matB);
-//			kmMat4Multiply(&ret, &ret, &matC);
-//			break;
-//	}
-//	
-//	return ret;
-//}
-
 -(void) applyOrientation
 {	
 	CGSize s = winSizeInPixels_;
-	float w = s.width / 2;
-	float h = s.height / 2;
+	float w = s.width/2;
+	float h = s.height/2;
 	
 	// XXX it's using hardcoded values.
 	// What if the the screen size changes in the future?
 	switch ( deviceOrientation_ ) {
 		case CCDeviceOrientationPortrait:
 			// nothing
+//			kmGLTranslatef(w,h,0);
 			break;
 		case CCDeviceOrientationPortraitUpsideDown:
 			// upside down
@@ -286,18 +256,17 @@ CGFloat	__ccContentScaleFactor = 1;
 			kmGLTranslatef(-w,-h,0);
 			break;
 		case CCDeviceOrientationLandscapeRight:
-			kmGLTranslatef(w,h,0);
+			kmGLTranslatef( w, h, 0);
 			kmGLRotatef(90,0,0,1);
-			kmGLTranslatef(-h,-w,0);
+			kmGLTranslatef( -h, -w, 0);
 			break;
 		case CCDeviceOrientationLandscapeLeft:
-			kmGLTranslatef(w,h,0);
+			kmGLTranslatef( w, h, 0);
 			kmGLRotatef(-90,0,0,1);
-			kmGLTranslatef(-h,-w,0);
+			kmGLTranslatef( -h, -w, 0);
 			break;
 	}	
 }
-
 
 #pragma mark Director Integration with a UIKit view
 

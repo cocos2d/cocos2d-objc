@@ -209,6 +209,8 @@ Class restartAction()
 #endif
 		
 		CGSize s = [[CCDirector sharedDirector] winSize];
+		
+		NSLog(@" ----> sprite 1: %f,%f", s.width, s.height );
 		[self addNewSpriteWithCoords:ccp(s.width/2, s.height/2)];				
 	}	
 	return self;
@@ -4012,7 +4014,10 @@ Class restartAction()
 	CCDirector *director = [CCDirector sharedDirector];
 	
 	// landscape orientation
-	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
+//	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
+//	[director setDeviceOrientation:kCCDeviceOrientationLandscapeRight];
+	[director setDeviceOrientation:kCCDeviceOrientationPortrait];
+//	[director setDeviceOrientation:kCCDeviceOrientationPortraitUpsideDown];
 	
 	// set FPS at 60
 	[director setAnimationInterval:1.0/60];
@@ -4033,7 +4038,8 @@ Class restartAction()
 	[director setOpenGLView:glView];
 
 	// 2D projection
-//	[director setProjection:kCCDirectorProjection2D];
+	[director setProjection:kCCDirectorProjection2D];
+//	[director setProjection:kCCDirectorProjection3D];
 
 	// Enables High Res mode (Retina Display) on iPhone 4 and maintains low res on all other devices
 	if( ! [director enableRetinaDisplay:YES] )
