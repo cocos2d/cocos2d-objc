@@ -44,13 +44,7 @@
  The benefits of using CCSprite objects as tiles are:
  - tiles (CCSprite) can be rotated/scaled/moved with a nice API
  
- If the layer contains a property named "cc_vertexz" with an integer (in can be positive or negative),
- then all the tiles belonging to the layer will use that value as their OpenGL vertex Z for depth.
-
- On the other hand, if the "cc_vertexz" property has the "automatic" value, then the tiles will use an automatic vertex Z value.
- Also before drawing the tiles, GL_ALPHA_TEST will be enabled, and disabled after drawing them. The used alpha func will be:
-
-    glAlphaFunc( GL_GREATER, value )
+ cocos2d v2.0 doesn't support the cc_vertexz value. Whenever a the cc_vertexz property is found, it will raise an exception.
  
  "value" by default is 0, but you can change it from Tiled by adding the "cc_alpha_func" property to the layer.
  The value 0 should work for most cases, but if you have tiles that are semi-transparent, then you might want to use a differnt
@@ -76,11 +70,6 @@
 	
 	NSUInteger			minGID_;
 	NSUInteger			maxGID_;
-	
-	// Only used when vertexZ is used
-	NSInteger			vertexZvalue_;
-	BOOL				useAutomaticVertexZ_;
-	float				alphaFuncValue_;
 	
 	// used for optimization
 	CCSprite		*reusedTile_;
