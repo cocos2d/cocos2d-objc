@@ -155,11 +155,12 @@ CGFloat	__ccContentScaleFactor = 1;
 {
 	CGSize size = winSizeInPixels_;
 
-    if( CC_CONTENT_SCALE_FACTOR() != 1) {
-        glViewport(-size.width, -size.height, size.width * CC_CONTENT_SCALE_FACTOR(), size.height * CC_CONTENT_SCALE_FACTOR());
-		
-	} else
+    if( CC_CONTENT_SCALE_FACTOR() != 1)
+		glViewport(0, 0, size.width * CC_CONTENT_SCALE_FACTOR(), size.height * CC_CONTENT_SCALE_FACTOR() );
+
+	else
         glViewport(0, 0, size.width, size.height);
+
 
 	switch (projection) {
 		case kCCDirectorProjection2D:
