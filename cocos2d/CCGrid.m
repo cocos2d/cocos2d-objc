@@ -81,7 +81,7 @@
 		self.texture = texture;
 		isTextureFlipped_ = flipped;
 		
-		CGSize texSize = [texture_ contentSizeInPixels];
+		CGSize texSize = [texture_ contentSize];
 		step_.x = texSize.width / gridSize_.x;
 		step_.y = texSize.height / gridSize_.y;
 		
@@ -100,6 +100,7 @@
 	CCDirector *director = [CCDirector sharedDirector];
 	CGSize s = [director winSizeInPixels];
 	
+
 	unsigned long POTWide = ccNextPOT(s.width);
 	unsigned long POTHigh = ccNextPOT(s.height);
 	
@@ -112,7 +113,9 @@
 	CCTexture2DPixelFormat format = kCCTexture2DPixelFormat_RGBA8888;
 #endif
 	
-	void *data = calloc((int)(POTWide * POTHigh * 4), 1);
+	int bpp = ( format == kCCTexture2DPixelFormat_RGB565 ? 2 : 4 );
+	
+	void *data = calloc((int)(POTWide * POTHigh * bpp), 1);
 	if( ! data ) {
 		CCLOG(@"cocos2d: CCGrid: not enough memory");
 		[self release];
@@ -184,12 +187,12 @@
 	CGSize	winSize = [[CCDirector sharedDirector] winSizeInPixels];
 	
 	kmGLLoadIdentity();
-	glViewport(0, 0, winSize.width, winSize.height);
+	glViewport(0, 0, winSize.width * CC_CONTENT_SCALE_FACTOR(), winSize.height * CC_CONTENT_SCALE_FACTOR() );
 	kmGLMatrixMode(KM_GL_PROJECTION);
 	kmGLLoadIdentity();
 
 	kmMat4 orthoMatrix;
-	kmMat4OrthographicProjection(&orthoMatrix, 0, winSize.width, 0, winSize.height, -1024, 1024);
+	kmMat4OrthographicProjection(&orthoMatrix, 0, winSize.width * CC_CONTENT_SCALE_FACTOR(), 0, winSize.height * CC_CONTENT_SCALE_FACTOR(), -1024, 1024);
 	kmGLMultMatrix( &orthoMatrix );
 
 	kmGLMatrixMode(KM_GL_MODELVIEW);
@@ -203,7 +206,7 @@
 	
 	CGSize	winSize = [director winSizeInPixels];
 	
-	glViewport(0, 0, winSize.width, winSize.height);
+	glViewport(0, 0, winSize.width * CC_CONTENT_SCALE_FACTOR(), winSize.height * CC_CONTENT_SCALE_FACTOR() );
 	
 	kmGLMatrixMode(KM_GL_PROJECTION);
 	kmGLLoadIdentity();
@@ -293,17 +296,14 @@
 {
 	NSInteger n = gridSize_.x * gridSize_.y;
 
-	// Default Attribs & States: GL_TEXTURE0, k,CCAttribVertex, kCCAttribColor, kCCAttribTexCoords
+	// Default Attribs & States: GL_TEXTURE0, k,kCCAttribPosition, kCCAttribColor, kCCAttribTexCoords
 	// Needed states: GL_TEXTURE0, kCCAttribPosition, kCCAttribTexCoords
 	// Unneeded states: kCCAttribColor
 	glDisableVertexAttribArray( kCCAttribColor );
 
 	ccGLUseProgram( shaderProgram_->program_ );
 	ccGLUniformProjectionMatrix( shaderProgram_ );
-	
-	kmMat4 matrixMV;
-	kmGLGetMatrix(KM_GL_MODELVIEW, &matrixMV);
-	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformMVMatrix], 1, GL_FALSE, matrixMV.mat);
+	ccGLUniformModelViewMatrix( shaderProgram_ );
 	
 	//
 	// Attributes
@@ -447,18 +447,15 @@
 {
 	NSInteger n = gridSize_.x * gridSize_.y;
 	
-	// Default Attribs & States: GL_TEXTURE0, k,CCAttribVertex, kCCAttribColor, kCCAttribTexCoords
+	// Default Attribs & States: GL_TEXTURE0, k,kCCAttribPosition, kCCAttribColor, kCCAttribTexCoords
 	// Needed states: GL_TEXTURE0, kCCAttribPosition, kCCAttribTexCoords
 	// Unneeded states: kCCAttribColor
 	glDisableVertexAttribArray( kCCAttribColor );
 
 	ccGLUseProgram( shaderProgram_->program_ );
 	ccGLUniformProjectionMatrix( shaderProgram_ );
+	ccGLUniformModelViewMatrix( shaderProgram_ );
 	
-	kmMat4 matrixMV;
-	kmGLGetMatrix(KM_GL_MODELVIEW, &matrixMV);
-	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformMVMatrix], 1, GL_FALSE, matrixMV.mat);
-
 	//
 	// Attributes
 	//

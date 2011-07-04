@@ -378,11 +378,8 @@
 	
 	ccGLUseProgram( shaderProgram_->program_ );
 	ccGLUniformProjectionMatrix( shaderProgram_ );
+	ccGLUniformModelViewMatrix( shaderProgram_ );
 	
-	kmMat4 matrixMV;
-	kmGLGetMatrix(KM_GL_MODELVIEW, &matrixMV);
-	glUniformMatrix4fv( shaderProgram_->uniforms_[kCCUniformMVMatrix], 1, GL_FALSE, matrixMV.mat);
-
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);	
 }
 
