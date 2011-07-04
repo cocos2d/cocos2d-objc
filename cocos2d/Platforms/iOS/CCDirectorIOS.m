@@ -116,7 +116,7 @@ CGFloat	__ccContentScaleFactor = 1;
 {    
 	/* calculate "global" dt */
 	[self calculateDeltaTime];	
-	
+
 	/* tick before glClear: issue #533 */
 	if( ! isPaused_ )
 		[[CCScheduler sharedScheduler] tick: dt];	
@@ -129,7 +129,7 @@ CGFloat	__ccContentScaleFactor = 1;
 		[self setNextScene];
 
 	kmGLPushMatrix();
-	
+
 	// By default enable VertexArray, ColorArray, TextureCoordArray and Texture2D
 	CC_ENABLE_DEFAULT_GL_STATES();
 

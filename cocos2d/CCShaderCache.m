@@ -41,6 +41,13 @@ static CCShaderCache *_sharedShaderCache;
 	return _sharedShaderCache;
 }
 
++(void)purgeSharedShaderCache
+{
+	[_sharedShaderCache release];
+	_sharedShaderCache = nil;	
+}
+
+
 +(id)alloc
 {
 	NSAssert(_sharedShaderCache == nil, @"Attempted to allocate a second instance of a singleton.");

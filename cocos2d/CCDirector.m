@@ -45,6 +45,7 @@
 #import "CCLabelBMFont.h"
 #import "CCLayer.h"
 #import "ccGLState.h"
+#import "CCShaderCache.h"
 
 // support imports
 #import "Platforms/CCGL.h"
@@ -406,13 +407,13 @@ static CCDirector *_sharedDirector = nil;
 	// Purge bitmap cache
 	[CCLabelBMFont purgeCachedData];
 
-	// Purge all managers
+	// Purge all managers / caches
 	[CCAnimationCache purgeSharedAnimationCache];
 	[CCSpriteFrameCache purgeSharedSpriteFrameCache];
 	[CCScheduler purgeSharedScheduler];
 	[CCActionManager purgeSharedManager];
 	[CCTextureCache purgeSharedTextureCache];
-	
+	[CCShaderCache purgeSharedShaderCache];
 	
 	// OpenGL view
 	
@@ -421,7 +422,9 @@ static CCDirector *_sharedDirector = nil;
 //	[openGLView_ removeFromSuperview];
 
 	[openGLView_ release];
-	openGLView_ = nil;	
+	openGLView_ = nil;
+	
+	CHECK_GL_ERROR();
 }
 
 -(void) setNextScene

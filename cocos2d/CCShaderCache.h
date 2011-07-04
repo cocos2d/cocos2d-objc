@@ -30,16 +30,34 @@
 
 @class GLProgram;
 
+/** CCShaderCache
+ XXX complete documentation
+ */
 @interface CCShaderCache : NSObject {
 	
 	NSMutableDictionary	*programs_;
 	
 }
 
+/** returns the shared instance
+ @since v2.0
+ */
 + (CCShaderCache *)sharedShaderCache;
 
+/** purges the cache. It releases the retained instance.
+ @since v2.0
+ */
++(void)purgeSharedShaderCache;
+
+
+/** loads the default shaders
+ @since v2.0
+ */
 -(void) loadDefaultShaders;
 
+/** returns a GL program for a given key
+ @since v2.0
+ */
 -(GLProgram *) programForKey:(NSString*)key;
 
 @end
