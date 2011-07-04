@@ -146,8 +146,6 @@
 static int sceneIdx=0;
 static NSString *transitions[] = {
 	
-	@"CCTransitionSplitRows",
-
 	@"CCTransitionJumpZoom",
 	@"CCTransitionCrossFade",
 	@"CCTransitionRadialCCW",

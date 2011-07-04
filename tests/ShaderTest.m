@@ -10,6 +10,10 @@
 // local import
 #import "ShaderTest.h"
 
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#import "RootViewController.h"
+#endif
+
 static int sceneIdx=-1;
 static NSString *transitions[] = {
 	@"ShaderMandelbrot",
@@ -505,10 +509,9 @@ enum {
 	//
 	// 1. Initializes an EAGLView with 0-bit depth format, and RGB565 render buffer
 	// 2. EAGLView multiple touches: disabled
-	// 3. creates a UIWindow, and assign it to the "window" var (it must already be declared)
-	// 4. Parents EAGLView to the newly created window
-	// 5. Creates Display Link Director
-	// 5a. If it fails, it will use an NSTimer director
+	// 3. creates a UIWindow, and assign it to the "window_" var (it must already be declared)
+	// 4. creates a UIViewController, and assign it to the "viewController_" var (it must already be declared)
+	// 5. Parents EAGLView to the newly created ViewController. Parents ViewController with UIWindow
 	// 6. It will try to run at 60 FPS
 	// 7. Display FPS: NO
 	// 8. Device orientation: Portrait
@@ -519,15 +522,12 @@ enum {
 	// Obtain the shared director in order to...
 	CCDirector *director = [CCDirector sharedDirector];
 	
-	// Sets landscape mode
-//	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
-	
 	// Turn on display FPS
 	[director setDisplayFPS:YES];
 	
 	// Enables High Res mode (Retina Display) on iPhone 4 and maintains low res on all other devices
-//	if( ! [director enableRetinaDisplay:YES] )
-//		CCLOG(@"Retina Display Not supported");
+	if( ! [director enableRetinaDisplay:YES] )
+		CCLOG(@"Retina Display Not supported");
 	
 	CCScene *scene = [CCScene node];
 	[scene addChild: [nextAction() node]];
@@ -577,7 +577,8 @@ enum {
 
 - (void) dealloc
 {
-	[window release];
+	[viewController_ release];
+	[window_ release];
 	[super dealloc];
 }
 @end

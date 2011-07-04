@@ -83,27 +83,6 @@ Class restartAction()
 	[super dealloc];
 }
 
--(void) newOrientation
-{
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
-	ccDeviceOrientation orientation = [[CCDirector sharedDirector] deviceOrientation];
-	switch (orientation) {
-		case CCDeviceOrientationLandscapeLeft:
-			orientation = CCDeviceOrientationPortrait;
-			break;
-		case CCDeviceOrientationPortrait:
-			orientation = CCDeviceOrientationLandscapeRight;
-			break;						
-		case CCDeviceOrientationLandscapeRight:
-			orientation = CCDeviceOrientationPortraitUpsideDown;
-			break;
-		case CCDeviceOrientationPortraitUpsideDown:
-			orientation = CCDeviceOrientationLandscapeLeft;
-			break;
-	}
-	[[CCDirector sharedDirector] setDeviceOrientation:orientation];
-#endif // iPhone
-}
 -(void) restartCallback: (id) sender
 {
 	[self newOrientation];
