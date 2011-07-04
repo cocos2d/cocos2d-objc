@@ -179,40 +179,6 @@
 	}
 }
 
-// This routine can be merged with Director
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
--(void)applyLandscape
-{
-	CCDirector *director = [CCDirector sharedDirector];
-	
-	CGSize winSize = [director displaySizeInPixels];
-	float w = winSize.width / 2;
-	float h = winSize.height / 2;
-	
-	ccDeviceOrientation orientation  = [director deviceOrientation];
-	
-	switch (orientation) {
-		case CCDeviceOrientationLandscapeLeft:
-			kmGLTranslatef(w,h,0);
-			kmGLRotatef(-90,0,0,1);
-			kmGLTranslatef(-h,-w,0);
-			break;
-		case CCDeviceOrientationLandscapeRight:
-			kmGLTranslatef(w,h,0);
-			kmGLRotatef(90,0,0,1);
-			kmGLTranslatef(-h,-w,0);
-			break;
-		case CCDeviceOrientationPortraitUpsideDown:
-			kmGLTranslatef(w,h,0);
-			kmGLRotatef(180,0,0,1);
-			kmGLTranslatef(-w,-h,0);
-			break;
-		default:
-			break;
-	}
-}
-#endif
-
 -(void)set2DProjection
 {	
 	CGSize	winSize = [[CCDirector sharedDirector] winSizeInPixels];
@@ -235,7 +201,7 @@
 {	
 	CCDirector *director = [CCDirector sharedDirector];
 	
-	CGSize	winSize = [director displaySizeInPixels];
+	CGSize	winSize = [director winSizeInPixels];
 	
 	glViewport(0, 0, winSize.width, winSize.height);
 	
@@ -272,9 +238,6 @@
 	[grabber_ afterRender:texture_];
 	
 	[self set3DProjection];
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
-	[self applyLandscape];
-#endif
 	
 	if( target.camera.dirty ) {
 		

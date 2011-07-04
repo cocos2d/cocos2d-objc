@@ -135,11 +135,12 @@ default gl blend src function. Compatible with premultiplied alpha images.
 /** @def CC_DIRECTOR_INIT
 	- Initializes an EAGLView with 0-bit depth format, and RGB565 render buffer.
 	- The EAGLView view will have multiple touches disabled.
-	- It will create a UIWindow and it will assign it the 'window' variable. 'window' must be declared before calling this marcro.
-	- It will parent the EAGLView to the created window
+	- It will create a UIWindow and it will assign it the 'window_' ivar. 'window_' must be declared before calling this marcro.
+	- It will create a RootViewController and it will assign it the 'viewController_' ivar. 'viewController_' must be declared before using this macro. The file "RootViewController.h" should be imported
+	- It will connect the EAGLView to the UIViewController view.
+	- It will connect the UIViewController view to the UIWindow.
 	- It will try to run at 60 FPS.
 	- The FPS won't be displayed.
-	- The orientation will be portrait.
 	- It will connect the director with the EAGLView.
 
  IMPORTANT: If you want to use another type of render buffer (eg: RGBA8)
@@ -153,12 +154,11 @@ default gl blend src function. Compatible with premultiplied alpha images.
 
 #define CC_DIRECTOR_INIT()																		\
 do	{																							\
-	window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];					\
+	window_ = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];					\
 	CCDirector *__director = [CCDirector sharedDirector];										\
-	[__director setDeviceOrientation:kCCDeviceOrientationPortrait];								\
 	[__director setDisplayFPS:NO];																\
 	[__director setAnimationInterval:1.0/60];													\
-	EAGLView *__glView = [EAGLView viewWithFrame:[window bounds]								\
+	EAGLView *__glView = [EAGLView viewWithFrame:[window_ bounds]								\
 									pixelFormat:kEAGLColorFormatRGB565							\
 									depthFormat:0 /* GL_DEPTH_COMPONENT24_OES */				\
 							 preserveBackbuffer:NO												\
@@ -167,8 +167,11 @@ do	{																							\
 								numberOfSamples:0												\
 													];											\
 	[__director setOpenGLView:__glView];														\
-	[window addSubview:__glView];																\
-	[window makeKeyAndVisible];																	\
+	viewController_ = [[RootViewController alloc] initWithNibName:nil bundle:nil];				\
+	viewController_.wantsFullScreenLayout = YES;												\
+	[viewController_ setView:__glView];															\
+	[window_ addSubview:viewController_.view];													\
+	[window_ makeKeyAndVisible];																\
 } while(0)
 
 

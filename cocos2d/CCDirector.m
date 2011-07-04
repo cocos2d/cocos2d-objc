@@ -327,11 +327,6 @@ static CCDirector *_sharedDirector = nil;
 	return winSizeInPixels_;
 }
 
--(CGSize)displaySizeInPixels
-{
-	return winSizeInPixels_;
-}
-
 -(void) reshapeProjection:(CGSize)newWindowSize
 {
 	winSizeInPixels_ = winSizeInPoints_ = newWindowSize;

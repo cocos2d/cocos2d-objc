@@ -32,40 +32,9 @@
 #import "../../CCDirector.h"
 #import "kazmath/mat4.h"
 
-/** @typedef ccDeviceOrientation
- Possible device orientations
- */
-typedef enum {
-	/// Device oriented vertically, home button on the bottom
-	kCCDeviceOrientationPortrait = UIDeviceOrientationPortrait,	
-	/// Device oriented vertically, home button on the top
-    kCCDeviceOrientationPortraitUpsideDown = UIDeviceOrientationPortraitUpsideDown,
-	/// Device oriented horizontally, home button on the right
-    kCCDeviceOrientationLandscapeLeft = UIDeviceOrientationLandscapeLeft,
-	/// Device oriented horizontally, home button on the left
-    kCCDeviceOrientationLandscapeRight = UIDeviceOrientationLandscapeRight,
-	
-	// Backward compatibility stuff
-	CCDeviceOrientationPortrait = kCCDeviceOrientationPortrait,
-	CCDeviceOrientationPortraitUpsideDown = kCCDeviceOrientationPortraitUpsideDown,
-	CCDeviceOrientationLandscapeLeft = kCCDeviceOrientationLandscapeLeft,
-	CCDeviceOrientationLandscapeRight = kCCDeviceOrientationLandscapeRight,
-} ccDeviceOrientation;
-
 /** CCDirector extensions for iPhone
  */
 @interface CCDirector (iOSExtension)
-
-// rotates the MV matrix in case it is needed
--(void) applyOrientation;
-
-/** Sets the device orientation.
- If the orientation is going to be controlled by an UIViewController, then the orientation should be Portrait
- */
--(void) setDeviceOrientation:(ccDeviceOrientation)orientation;
-
-/** returns the device orientation */
--(ccDeviceOrientation) deviceOrientation;
 
 /** The size in pixels of the surface. It could be different than the screen size.
  High-res devices might have a higher surface size than the screen size.
@@ -99,9 +68,6 @@ typedef enum {
  */
 @interface CCDirectorIOS : CCDirector
 {
-	/* orientation */
-	ccDeviceOrientation	deviceOrientation_;
-	
 	/* contentScaleFactor could be simulated */
 	BOOL	isContentScaleSupported_;	
 }

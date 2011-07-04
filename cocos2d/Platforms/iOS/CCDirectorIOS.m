@@ -94,9 +94,6 @@ CGFloat	__ccContentScaleFactor = 1;
 {  
 	if( (self=[super init]) ) {
 				
-		// portrait mode default
-		deviceOrientation_ = CCDeviceOrientationPortrait;
-		
 		__ccContentScaleFactor = 1;
 		isContentScaleSupported_ = NO;
 		
@@ -133,8 +130,6 @@ CGFloat	__ccContentScaleFactor = 1;
 
 	kmGLPushMatrix();
 	
-	[self applyOrientation];
-
 	// By default enable VertexArray, ColorArray, TextureCoordArray and Texture2D
 	CC_ENABLE_DEFAULT_GL_STATES();
 
@@ -161,27 +156,8 @@ CGFloat	__ccContentScaleFactor = 1;
 	CGSize size = winSizeInPixels_;
 
     if( CC_CONTENT_SCALE_FACTOR() != 1) {
-		float originX = 0;
-		float originY = 0;
-		switch ( deviceOrientation_ ) {
-			case CCDeviceOrientationPortrait:
-			case CCDeviceOrientationPortraitUpsideDown:
-				originX = -size.width;
-				originY = -size.height;
-				break;
-			case CCDeviceOrientationLandscapeRight:
-				originX = -size.width;
-				originY = -size.height;
-				break;
-			case CCDeviceOrientationLandscapeLeft:
-				originX = 0;
-				originY = -size.height * CC_CONTENT_SCALE_FACTOR() / 2.0f;
-				break;
-
-		}
-        glViewport(originX, originY, size.width * CC_CONTENT_SCALE_FACTOR(), size.height * CC_CONTENT_SCALE_FACTOR());
+        glViewport(-size.width, -size.height, size.width * CC_CONTENT_SCALE_FACTOR(), size.height * CC_CONTENT_SCALE_FACTOR());
 		
-
 	} else
         glViewport(0, 0, size.width, size.height);
 
@@ -234,38 +210,6 @@ CGFloat	__ccContentScaleFactor = 1;
 	projection_ = projection;
 	
 	ccSetProjectionMatrixDirty();
-}
-
--(void) applyOrientation
-{	
-	CGSize s = winSizeInPixels_;
-	float w = s.width/2;
-	float h = s.height/2;
-	
-	// XXX it's using hardcoded values.
-	// What if the the screen size changes in the future?
-	switch ( deviceOrientation_ ) {
-		case CCDeviceOrientationPortrait:
-			// nothing
-//			kmGLTranslatef(w,h,0);
-			break;
-		case CCDeviceOrientationPortraitUpsideDown:
-			// upside down
-			kmGLTranslatef(w,h,0);
-			kmGLRotatef(180,0,0,1);
-			kmGLTranslatef(-w,-h,0);
-			break;
-		case CCDeviceOrientationLandscapeRight:
-			kmGLTranslatef( w, h, 0);
-			kmGLRotatef(90,0,0,1);
-			kmGLTranslatef( -h, -w, 0);
-			break;
-		case CCDeviceOrientationLandscapeLeft:
-			kmGLTranslatef( w, h, 0);
-			kmGLRotatef(-90,0,0,1);
-			kmGLTranslatef( -h, -w, 0);
-			break;
-	}	
 }
 
 #pragma mark Director Integration with a UIKit view
@@ -362,102 +306,18 @@ CGFloat	__ccContentScaleFactor = 1;
 {
 	CGSize s = winSizeInPoints_;
 	float newY = s.height - uiPoint.y;
-	float newX = s.width - uiPoint.x;
 	
-	CGPoint ret = CGPointZero;
-	switch ( deviceOrientation_) {
-		case CCDeviceOrientationPortrait:
-			ret = ccp( uiPoint.x, newY );
-			break;
-		case CCDeviceOrientationPortraitUpsideDown:
-			ret = ccp(newX, uiPoint.y);
-			break;
-		case CCDeviceOrientationLandscapeLeft:
-			ret.x = uiPoint.y;
-			ret.y = uiPoint.x;
-			break;
-		case CCDeviceOrientationLandscapeRight:
-			ret.x = newY;
-			ret.y = newX;
-			break;
-	}
-	return ret;
+	return ccp( uiPoint.x, newY );
 }
 
 -(CGPoint)convertToUI:(CGPoint)glPoint
 {
 	CGSize winSize = winSizeInPoints_;
-	int oppositeX = winSize.width - glPoint.x;
 	int oppositeY = winSize.height - glPoint.y;
-	CGPoint uiPoint = CGPointZero;
-	switch ( deviceOrientation_) {
-		case CCDeviceOrientationPortrait:
-			uiPoint = ccp(glPoint.x, oppositeY);
-			break;
-		case CCDeviceOrientationPortraitUpsideDown:
-			uiPoint = ccp(oppositeX, glPoint.y);
-			break;
-		case CCDeviceOrientationLandscapeLeft:
-			uiPoint = ccp(glPoint.y, glPoint.x);
-			break;
-		case CCDeviceOrientationLandscapeRight:
-			// Can't use oppositeX/Y because x/y are flipped
-			uiPoint = ccp(winSize.width-glPoint.y, winSize.height-glPoint.x);
-			break;
-	}
-	return uiPoint;
-}
-
-// get the current size of the glview
--(CGSize) winSize
-{
-	CGSize s = winSizeInPoints_;
 	
-    // swap x,y in landscape mode
-	if( deviceOrientation_ == CCDeviceOrientationLandscapeLeft || deviceOrientation_ == CCDeviceOrientationLandscapeRight )
-        CC_SWAP(s.width, s.height);
-
-	return s;
+	return ccp(glPoint.x, oppositeY);
 }
 
--(CGSize) winSizeInPixels
-{
-	CGSize s = [self winSize];
-
-	s.width *= CC_CONTENT_SCALE_FACTOR();
-	s.height *= CC_CONTENT_SCALE_FACTOR();
-
-	return s;
-}
-
--(ccDeviceOrientation) deviceOrientation
-{
-	return deviceOrientation_;
-}
-
-- (void) setDeviceOrientation:(ccDeviceOrientation) orientation
-{
-	if( deviceOrientation_ != orientation ) {
-		deviceOrientation_ = orientation;
-		switch( deviceOrientation_) {
-			case CCDeviceOrientationPortrait:
-				[[UIApplication sharedApplication] setStatusBarOrientation: UIInterfaceOrientationPortrait animated:NO];
-				break;
-			case CCDeviceOrientationPortraitUpsideDown:
-				[[UIApplication sharedApplication] setStatusBarOrientation: UIInterfaceOrientationPortraitUpsideDown animated:NO];
-				break;
-			case CCDeviceOrientationLandscapeLeft:
-				[[UIApplication sharedApplication] setStatusBarOrientation: UIInterfaceOrientationLandscapeRight animated:NO];
-				break;
-			case CCDeviceOrientationLandscapeRight:
-				[[UIApplication sharedApplication] setStatusBarOrientation: UIInterfaceOrientationLandscapeLeft animated:NO];
-				break;
-			default:
-				NSLog(@"Director: Unknown device orientation");
-				break;
-		}
-	}
-}
 
 -(void) end
 {

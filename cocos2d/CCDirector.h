@@ -66,7 +66,6 @@ and when to execute the Scenes.
   - setting the OpenGL pixel format (default on is RGB565)
   - setting the OpenGL buffer depth (default one is 0-bit)
   - setting the projection (default one is 3D)
-  - setting the orientation (default one is Protrait)
  
  Since the CCDirector is a singleton, the standard way to use it is by calling:
   - [[CCDirector sharedDirector] methodName];
@@ -191,20 +190,14 @@ and when to execute the Scenes.
 
 // Window size
 
-/** returns the size of the OpenGL view in points.
- It takes into account any possible rotation (device orientation) of the window
- */
+/** returns the size of the OpenGL view in points */
 - (CGSize) winSize;
 
 /** returns the size of the OpenGL view in pixels.
- It takes into account any possible rotation (device orientation) of the window.
  On Mac winSize and winSizeInPixels return the same value.
  */
 - (CGSize) winSizeInPixels;
-/** returns the display size of the OpenGL view in pixels.
- It doesn't take into account any possible rotation of the window.
- */
--(CGSize) displaySizeInPixels;
+
 /** changes the projection size */
 -(void) reshapeProjection:(CGSize)newWindowSize;
 
