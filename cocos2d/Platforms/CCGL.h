@@ -47,7 +47,6 @@
 // iOS
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 #define CC_GLVIEW					EAGLView
-#define ccGLOrtho					glOrthof
 #define	ccGLClearDepth				glClearDepthf
 #define ccGLGenerateMipmap			glGenerateMipmapOES
 #define ccGLGenFramebuffers			glGenFramebuffersOES
@@ -55,7 +54,6 @@
 #define ccGLFramebufferTexture2D	glFramebufferTexture2DOES
 #define ccGLDeleteFramebuffers		glDeleteFramebuffersOES
 #define ccGLCheckFramebufferStatus	glCheckFramebufferStatusOES
-#define ccGLTranslate				glTranslatef
 #define ccGLDeleteVertexArrays		glDeleteVertexArraysOES
 #define ccGLGenVertexArrays			glGenVertexArraysOES
 #define ccGLBindVertexArray			glBindVertexArrayOES
@@ -68,7 +66,6 @@
 // Mac
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 #define CC_GLVIEW					MacGLView
-#define ccGLOrtho					glOrtho
 #define	ccGLClearDepth				glClearDepth
 #define ccGLGenerateMipmap			glGenerateMipmap
 #define ccGLGenFramebuffers			glGenFramebuffers
@@ -76,7 +73,6 @@
 #define ccGLFramebufferTexture2D	glFramebufferTexture2D
 #define ccGLDeleteFramebuffers		glDeleteFramebuffers
 #define ccGLCheckFramebufferStatus	glCheckFramebufferStatus
-#define ccGLTranslate				glTranslated
 #define ccGLDeleteVertexArrays		glDeleteVertexArraysAPPLE
 #define ccGLGenVertexArrays			glGenVertexArraysAPPLE
 #define ccGLBindVertexArray			glBindVertexArrayAPPLE

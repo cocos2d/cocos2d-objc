@@ -39,6 +39,7 @@
 #import "../../CCScheduler.h"
 #import "../../ccMacros.h"
 #import "../../GLProgram.h"
+#import "../../ccGLState.h"
 
 // external
 #import "kazmath/kazmath.h"
@@ -280,6 +281,8 @@
 	}
 	
 	projection_ = projection;
+	
+	ccSetProjectionMatrixDirty();
 }
 
 
