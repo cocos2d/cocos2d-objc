@@ -3,9 +3,10 @@
 @class CCSprite;
 
 //CLASS INTERFACE
-@interface AppController : NSObject <UIAccelerometerDelegate, UIAlertViewDelegate, UITextFieldDelegate>
+@interface AppController : NSObject <UIApplicationDelegate>
 {
-	UIWindow	*window;
+	UIWindow	*window_;
+	UIViewController	*viewController_;
 }
 @end
 

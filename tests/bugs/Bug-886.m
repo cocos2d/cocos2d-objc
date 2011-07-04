@@ -5,6 +5,8 @@
 
 #import "Bug-886.h"
 
+#import "RootViewController.h"
+
 #pragma mark -
 
 @implementation Layer1
@@ -54,10 +56,7 @@
 	
 	// Obtain the shared director in order to...
 	CCDirector *director = [CCDirector sharedDirector];
-	
-	// Sets landscape mode
-	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
-	
+
 	// Turn on display FPS
 	[director setDisplayFPS:YES];
 	
@@ -94,7 +93,8 @@
 
 - (void) dealloc
 {
-	[window dealloc];
+	[viewController_ release];
+	[window_ dealloc];
 	[super dealloc];
 }
 

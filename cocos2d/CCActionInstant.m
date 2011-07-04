@@ -387,8 +387,6 @@
 #pragma mark -
 #pragma mark Blocks
 
-#if NS_BLOCKS_AVAILABLE
-
 #pragma mark CCCallBlock
 
 @implementation CCCallBlock
@@ -473,5 +471,3 @@
 
 @end
 
-
-#endif // NS_BLOCKS_AVAILABLE

@@ -55,7 +55,8 @@ extern char messageString[1024];
 
 @interface AppController : NSObject <UIAccelerometerDelegate, UIAlertViewDelegate, UITextFieldDelegate>
 {
-	UIWindow	*window;
+	UIWindow	*window_;
+	UIViewController *viewController_;
 }
 @end
 

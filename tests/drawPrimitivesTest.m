@@ -7,6 +7,10 @@
 // cocos import
 #import "cocos2d.h"
 
+#if __IPHONE_OS_VERSION_MAX_ALLOWED
+#import "RootViewController.h"
+#endif
+
 // local import
 #import "drawPrimitivesTest.h"
 
@@ -85,7 +89,6 @@ Class restartAction()
 
 -(void) restartCallback: (id) sender
 {
-	[self newOrientation];
 	CCScene *s = [CCScene node];
 	[s addChild: [restartAction() node]];	
 
@@ -94,8 +97,6 @@ Class restartAction()
 
 -(void) nextCallback: (id) sender
 {
-	[self newOrientation];
-
 	CCScene *s = [CCScene node];
 	[s addChild: [nextAction() node]];
 	[[CCDirector sharedDirector] replaceScene: s];
@@ -103,8 +104,6 @@ Class restartAction()
 
 -(void) backCallback: (id) sender
 {
-	[self newOrientation];
-
 	CCScene *s = [CCScene node];
 	[s addChild: [backAction() node]];
 	[[CCDirector sharedDirector] replaceScene: s];
@@ -266,10 +265,7 @@ Class restartAction()
 	
 	// Obtain the shared director in order to...
 	CCDirector *director = [CCDirector sharedDirector];
-	
-	// Sets landscape mode
-	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
-	
+
 	// Turn on display FPS
 	[director setDisplayFPS:YES];
 	
@@ -331,7 +327,8 @@ Class restartAction()
 
 - (void) dealloc
 {
-	[window release];
+	[viewController_ release];
+	[window_ release];
 	[super dealloc];
 }
 @end

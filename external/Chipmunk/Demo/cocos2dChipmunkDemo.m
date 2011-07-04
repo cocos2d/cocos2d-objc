@@ -43,6 +43,8 @@
 #include "drawSpace.h"
 #include "cocos2dChipmunkDemo.h"
 
+#import "RootViewController.h"
+
 #define SLEEP_TICKS 16
 
 //extern chipmunkDemo Test;
@@ -475,19 +477,22 @@ void time_trial(int index, int count)
 	glClearColor(1,1,1,1);
 	float factor = 1.0f;
 	
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	glOrthof(-320/factor, 320/factor, -480/factor, 480/factor, -1.0f, 1.0f);
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
+	kmGLMatrixMode(KM_GL_PROJECTION);
+	kmGLLoadIdentity();
+	kmMat4 ortho;
+	kmMat4OrthographicProjection(&ortho,-320/factor, 320/factor, -480/factor, 480/factor, -1.0f, 1.0f);
+	kmGLMultMatrix(&ortho);
+
+	kmGLMatrixMode(KM_GL_MODELVIEW);
+	kmGLLoadIdentity();
 	
-	glPointSize(3.0f);
-    glEnable(GL_LINE_SMOOTH);
-	glEnable(GL_POINT_SMOOTH);
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    glHint(GL_LINE_SMOOTH_HINT, GL_DONT_CARE);
-    glHint(GL_POINT_SMOOTH_HINT, GL_DONT_CARE);
+//	glPointSize(3.0f);
+//    glEnable(GL_LINE_SMOOTH);
+//	glEnable(GL_POINT_SMOOTH);
+//    glEnable(GL_BLEND);
+//    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+//    glHint(GL_LINE_SMOOTH_HINT, GL_DONT_CARE);
+//    glHint(GL_POINT_SMOOTH_HINT, GL_DONT_CARE);
     glLineWidth(1.5f);
 }
 
@@ -568,7 +573,8 @@ void time_trial(int index, int count)
 
 - (void) dealloc
 {
-	[window release];
+	[viewController_ release];
+	[window_ release];
 	[super dealloc];
 }
 

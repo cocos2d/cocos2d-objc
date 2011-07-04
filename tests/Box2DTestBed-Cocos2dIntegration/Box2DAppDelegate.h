@@ -15,10 +15,9 @@
 @class Box2DView;
 
 @interface Box2DAppDelegate : NSObject <UIApplicationDelegate> {
-    UIWindow *window;
+	UIWindow	*window_;
+	UIViewController *viewController_;
 }
-
-@property (nonatomic, retain) UIWindow *window;
 
 @end
 

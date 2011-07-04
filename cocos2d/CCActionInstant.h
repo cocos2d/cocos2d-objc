@@ -156,8 +156,6 @@ typedef void (*CC_CALLBACK_ND)(id, SEL, id, void *);
 
 #pragma mark Blocks Support
 
-#if NS_BLOCKS_AVAILABLE
-
 /** Executes a callback using a block.
  */
 @interface CCCallBlock : CCActionInstant<NSCopying>
@@ -201,5 +199,3 @@ typedef void (*CC_CALLBACK_ND)(id, SEL, id, void *);
 /** executes the callback */
 -(void) execute;
 @end
-
-#endif

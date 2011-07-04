@@ -6,6 +6,7 @@
 
 
 #import "IntervalTest.h"
+#import "RootViewController.h"
 
 
 @implementation Layer1
@@ -151,10 +152,7 @@
 	
 	// run at 30 FPS
 	[director setAnimationInterval:1/30.0f];
-	
-	// Sets landscape mode
-	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
-	
+
 	// Enables High Res mode (Retina Display) on iPhone 4 and maintains low res on all other devices
 	if( ! [director enableRetinaDisplay:YES] )
 		CCLOG(@"Retina Display Not supported");
@@ -212,7 +210,8 @@
 
 - (void) dealloc
 {
-	[window release];
+	[viewController_ release];
+	[window_ release];
 	[super dealloc];
 }
 

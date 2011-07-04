@@ -4,6 +4,9 @@
 #import "PongScene.h"
 #import "cocos2d.h"
 
+#import "RootViewController.h"
+
+
 @implementation AppController
 
 - (void)applicationDidFinishLaunching:(UIApplication *)application
@@ -43,6 +46,9 @@
 
 -(void)dealloc
 {
+	[window_ release];
+	[viewController_ release];
+
 	[super dealloc];
 }
 

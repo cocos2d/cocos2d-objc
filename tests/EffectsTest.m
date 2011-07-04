@@ -11,6 +11,7 @@
 
 // local import
 #import "EffectsTest.h"
+#import "RootViewController.h"
 
 enum {
 	kTagTextLayer = 1,
@@ -449,7 +450,7 @@ Class restartAction()
 - (void) applicationDidFinishLaunching:(UIApplication*)application
 {
 	// Init the window
-	window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+	window_ = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 		
 	// get instance of the shared director
 	CCDirector *director = [CCDirector sharedDirector];
@@ -464,7 +465,7 @@ Class restartAction()
 	[director setAnimationInterval:1.0/60];
 	
 	// create an OpenGL view
-	EAGLView *glView = [EAGLView viewWithFrame:[window bounds]
+	EAGLView *glView = [EAGLView viewWithFrame:[window_ bounds]
 								   pixelFormat:kEAGLColorFormatRGBA8
 								   depthFormat:0	// GL_DEPTH_COMPONENT24_OES
 						];
@@ -477,11 +478,14 @@ Class restartAction()
 	if( ! [director enableRetinaDisplay:YES] )
 		CCLOG(@"Retina Display Not supported");
 	
+	viewController_ = [[RootViewController alloc] initWithNibName:nil bundle:nil];
+	[viewController_ setView:glView];
+	
 	// glview is a child of the main window
-	[window addSubview:glView];
+	[window_ addSubview:viewController_.view];
 	
 	// Make the window visible
-	[window makeKeyAndVisible];
+	[window_ makeKeyAndVisible];
 	
 	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
 	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
@@ -496,7 +500,9 @@ Class restartAction()
 
 - (void) dealloc
 {
-	[window dealloc];
+	[viewController_ release];
+	[window_ dealloc];
+
 	[super dealloc];
 }
 

@@ -16,6 +16,8 @@
 #import "Box2DView.h"
 #import "cocos2d.h"
 
+#import "RootViewController.h"
+
 @implementation Box2DAppDelegate
 
 @synthesize window;
@@ -40,10 +42,7 @@
 	
 	// Obtain the shared director in order to...
 	CCDirector *director = [CCDirector sharedDirector];
-	
-	// Sets landscape mode
-	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
-	
+
 	// Turn on display FPS
 	[director setDisplayFPS:YES];	
 	
@@ -76,7 +75,8 @@
 }
 
 - (void)dealloc {
-	[window release];
+	[viewController_ release];
+	[window_ release];
 	[super dealloc];
 }
 

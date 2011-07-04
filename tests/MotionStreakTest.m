@@ -7,6 +7,7 @@
 // cocos import
 #import "cocos2d.h"
 #import "MotionStreakTest.h"
+#import "RootViewController.h"
 
 enum {
 	kTagLabel = 1,
@@ -227,7 +228,7 @@ Class restartAction()
 	CCDirector *director = [CCDirector sharedDirector];
 	
 	// Sets landscape mode
-	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
+//	[viewController_ setDeviceOrientation:UIDeviceOrientationLandscapeLeft];
 	
 	// Turn on display FPS
 	[director setDisplayFPS:YES];
@@ -284,7 +285,8 @@ Class restartAction()
 
 - (void) dealloc
 {
-	[window release];
+	[viewController_ release];
+	[window_ release];
 	[super dealloc];
 }
 @end

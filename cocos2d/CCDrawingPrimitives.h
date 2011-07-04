@@ -87,10 +87,15 @@ void ccDrawQuadBezier(CGPoint origin, CGPoint control, CGPoint destination, NSUI
  */
 void ccDrawCubicBezier(CGPoint origin, CGPoint control1, CGPoint control2, CGPoint destination, NSUInteger segments);
 
-/** drawing color 
+/** set the drawing color with 4 unsigned bytes
  @since v2.0
  */
 void ccDrawColor4ub( GLubyte r, GLubyte g, GLubyte b, GLubyte a );
+
+/** set the drawing color with 4 floats
+ @since v2.0
+ */
+void ccDrawColor4f( GLubyte r, GLubyte g, GLubyte b, GLubyte a );
 
 #ifdef __cplusplus
 }

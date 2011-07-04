@@ -7,6 +7,11 @@
 // local import
 #import "RotateWorldTest.h"
 
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#import "RootViewController.h"
+#endif
+
+
 @implementation TextLayer
 -(id) init
 {
@@ -165,10 +170,7 @@
 	
 	// Obtain the shared director in order to...
 	CCDirector *director = [CCDirector sharedDirector];
-	
-	// Sets landscape mode
-	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
-	
+		
 	// Turn on display FPS
 	[director setDisplayFPS:YES];
 	
@@ -235,7 +237,8 @@
 
 - (void) dealloc
 {
-	[window release];
+	[viewController_ release];
+	[window_ release];
 	[super dealloc];
 }
 

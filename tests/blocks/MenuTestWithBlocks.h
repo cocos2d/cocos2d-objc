@@ -3,9 +3,10 @@
 @class CCMenu;
 
 //CLASS INTERFACE
-@interface AppController : NSObject <UIAccelerometerDelegate, UIAlertViewDelegate, UITextFieldDelegate, UIApplicationDelegate>
+@interface AppController : NSObject <UIApplicationDelegate>
 {
-	UIWindow *window;
+	UIWindow	*window_;
+	UIViewController *viewController_;
 }
 @end
 

@@ -334,9 +334,6 @@
 		5030931310447A69005F7AFC /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 503092B210447296005F7AFC /* libz.dylib */; };
 		5030931710447A97005F7AFC /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 503092B210447296005F7AFC /* libz.dylib */; };
 		5030931910447AB4005F7AFC /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 503092B210447296005F7AFC /* libz.dylib */; };
-		5030931A10447ACE005F7AFC /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 503092B210447296005F7AFC /* libz.dylib */; };
-		5030931B10447AE5005F7AFC /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 503092B210447296005F7AFC /* libz.dylib */; };
-		5030931C10447AFD005F7AFC /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 503092B210447296005F7AFC /* libz.dylib */; };
 		5030931D10447B16005F7AFC /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 503092B210447296005F7AFC /* libz.dylib */; };
 		503162E6102726E8003ACFE7 /* background3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 503162E5102726E8003ACFE7 /* background3.jpg */; };
 		5031631C10272B4A003ACFE7 /* grossinis_sister1-testalpha.png in Resources */ = {isa = PBXBuildFile; fileRef = 5031631A10272B4A003ACFE7 /* grossinis_sister1-testalpha.png */; };
@@ -617,9 +614,6 @@
 		505464501062886600AB7C52 /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = 505464301062886600AB7C52 /* fps_images.png */; };
 		505464511062886600AB7C52 /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = 505464301062886600AB7C52 /* fps_images.png */; };
 		505464521062886600AB7C52 /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = 505464301062886600AB7C52 /* fps_images.png */; };
-		505464531062886600AB7C52 /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = 505464301062886600AB7C52 /* fps_images.png */; };
-		505464541062886600AB7C52 /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = 505464301062886600AB7C52 /* fps_images.png */; };
-		505464551062886600AB7C52 /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = 505464301062886600AB7C52 /* fps_images.png */; };
 		505464561062886600AB7C52 /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = 505464301062886600AB7C52 /* fps_images.png */; };
 		5057B1C80F6E85790019C38F /* grossini_dance_atlas.png in Resources */ = {isa = PBXBuildFile; fileRef = 509A7A970F61A2400032F449 /* grossini_dance_atlas.png */; };
 		505B62AF0F2E6A0F001B4104 /* r1.png in Resources */ = {isa = PBXBuildFile; fileRef = 500165990E72DB0E0085673F /* r1.png */; };
@@ -1170,32 +1164,6 @@
 		50CBA4AA11CBD7FB007B009D /* bugs in Resources */ = {isa = PBXBuildFile; fileRef = 50CBA4A711CBD7FB007B009D /* bugs */; };
 		50CFAC391023660000175934 /* CCTMXXMLParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 50CFAC371023660000175934 /* CCTMXXMLParser.h */; };
 		50CFAC3A1023660000175934 /* CCTMXXMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 50CFAC381023660000175934 /* CCTMXXMLParser.m */; };
-		50D0E04C0FF9232E00098927 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB240E10EE4A00AE9530 /* Default.png */; };
-		50D0E04D0FF9232E00098927 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB250E10EE4A00AE9530 /* Icon.png */; };
-		50D0E04E0FF9232E00098927 /* grossini.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB280E10EE4A00AE9530 /* grossini.png */; };
-		50D0E04F0FF9232E00098927 /* grossinis_sister1.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB290E10EE4A00AE9530 /* grossinis_sister1.png */; };
-		50D0E0500FF9232E00098927 /* grossinis_sister2.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB2A0E10EE4A00AE9530 /* grossinis_sister2.png */; };
-		50D0E0520FF9232E00098927 /* fire.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 502AACF20F79715D001E3F87 /* fire.pvr */; };
-		50D0E0560FF9232E00098927 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
-		50D0E0570FF9232E00098927 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
-		50D0E0580FF9232E00098927 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D3623EB0D0F72F000981E51 /* CoreGraphics.framework */; };
-		50D0E0590FF9232E00098927 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B920D5A79C200DBA0E3 /* OpenGLES.framework */; };
-		50D0E05A0FF9232E00098927 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */; };
-		50D0E05B0FF9232E00098927 /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */; };
-		50D0E06E0FF923B400098927 /* HelloActions.m in Sources */ = {isa = PBXBuildFile; fileRef = 50D0E06D0FF923B400098927 /* HelloActions.m */; };
-		50D0E0CB0FF930BA00098927 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB240E10EE4A00AE9530 /* Default.png */; };
-		50D0E0CC0FF930BA00098927 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB250E10EE4A00AE9530 /* Icon.png */; };
-		50D0E0CD0FF930BA00098927 /* grossini.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB280E10EE4A00AE9530 /* grossini.png */; };
-		50D0E0CE0FF930BA00098927 /* grossinis_sister1.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB290E10EE4A00AE9530 /* grossinis_sister1.png */; };
-		50D0E0CF0FF930BA00098927 /* grossinis_sister2.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB2A0E10EE4A00AE9530 /* grossinis_sister2.png */; };
-		50D0E0D10FF930BA00098927 /* fire.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 502AACF20F79715D001E3F87 /* fire.pvr */; };
-		50D0E0D50FF930BA00098927 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
-		50D0E0D60FF930BA00098927 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
-		50D0E0D70FF930BA00098927 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D3623EB0D0F72F000981E51 /* CoreGraphics.framework */; };
-		50D0E0D80FF930BA00098927 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B920D5A79C200DBA0E3 /* OpenGLES.framework */; };
-		50D0E0D90FF930BA00098927 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */; };
-		50D0E0DA0FF930BA00098927 /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */; };
-		50D0E0F10FF9316900098927 /* HelloEvents.m in Sources */ = {isa = PBXBuildFile; fileRef = 50D0E0F00FF9316900098927 /* HelloEvents.m */; };
 		50D1E6A111BE89E60030A027 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D3623EB0D0F72F000981E51 /* CoreGraphics.framework */; };
 		50D1E6A211BE89E60030A027 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		50D1E6A311BE89E60030A027 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B920D5A79C200DBA0E3 /* OpenGLES.framework */; };
@@ -1260,19 +1228,6 @@
 		50DB1BC60E1C1E5900A89DFF /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */; };
 		50DB1BD10E1C1EF000A89DFF /* ParticleTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 50DB1BCF0E1C1EF000A89DFF /* ParticleTest.m */; };
 		50DF7F98104498FF0089218C /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 503092B210447296005F7AFC /* libz.dylib */; };
-		50DFC28B0FF627B6007E7827 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB240E10EE4A00AE9530 /* Default.png */; };
-		50DFC28C0FF627B6007E7827 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB250E10EE4A00AE9530 /* Icon.png */; };
-		50DFC28D0FF627B6007E7827 /* grossini.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB280E10EE4A00AE9530 /* grossini.png */; };
-		50DFC28E0FF627B6007E7827 /* grossinis_sister1.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB290E10EE4A00AE9530 /* grossinis_sister1.png */; };
-		50DFC28F0FF627B6007E7827 /* grossinis_sister2.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB2A0E10EE4A00AE9530 /* grossinis_sister2.png */; };
-		50DFC2910FF627B6007E7827 /* fire.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 502AACF20F79715D001E3F87 /* fire.pvr */; };
-		50DFC2960FF627B6007E7827 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
-		50DFC2970FF627B6007E7827 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
-		50DFC2980FF627B6007E7827 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D3623EB0D0F72F000981E51 /* CoreGraphics.framework */; };
-		50DFC2990FF627B6007E7827 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B920D5A79C200DBA0E3 /* OpenGLES.framework */; };
-		50DFC29A0FF627B6007E7827 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */; };
-		50DFC29B0FF627B6007E7827 /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */; };
-		50DFC2CB0FF62843007E7827 /* HelloWorld.m in Sources */ = {isa = PBXBuildFile; fileRef = 50DFC2CA0FF62843007E7827 /* HelloWorld.m */; };
 		50E1357510ADEB1B00C9E7FA /* CCTexture2D.h in Headers */ = {isa = PBXBuildFile; fileRef = 50E1357110ADEB1B00C9E7FA /* CCTexture2D.h */; };
 		50E1357610ADEB1B00C9E7FA /* CCTexture2D.m in Sources */ = {isa = PBXBuildFile; fileRef = 50E1357210ADEB1B00C9E7FA /* CCTexture2D.m */; };
 		50E135D110ADED1A00C9E7FA /* sprite-0-0.png in Resources */ = {isa = PBXBuildFile; fileRef = 50E2A52610A4AA1700D894CE /* sprite-0-0.png */; };
@@ -1527,9 +1482,6 @@
 		A0600C1713C2076300BB6F49 /* fps_images-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E087B34E12785BB60076F6FF /* fps_images-hd.png */; };
 		A0600C1813C2076300BB6F49 /* fps_images-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E087B34E12785BB60076F6FF /* fps_images-hd.png */; };
 		A0600C1913C2076500BB6F49 /* fps_images-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E087B34E12785BB60076F6FF /* fps_images-hd.png */; };
-		A0600C1A13C2076600BB6F49 /* fps_images-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E087B34E12785BB60076F6FF /* fps_images-hd.png */; };
-		A0600C1B13C2076600BB6F49 /* fps_images-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E087B34E12785BB60076F6FF /* fps_images-hd.png */; };
-		A0600C1C13C2076800BB6F49 /* fps_images-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E087B34E12785BB60076F6FF /* fps_images-hd.png */; };
 		A0600C1D13C2076800BB6F49 /* fps_images-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E087B34E12785BB60076F6FF /* fps_images-hd.png */; };
 		A0600C1E13C2076900BB6F49 /* fps_images-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E087B34E12785BB60076F6FF /* fps_images-hd.png */; };
 		A0600C1F13C2076A00BB6F49 /* fps_images-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E087B34E12785BB60076F6FF /* fps_images-hd.png */; };
@@ -1541,16 +1493,12 @@
 		A0600C2713C21D0200BB6F49 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0600C2613C21D0200BB6F49 /* RootViewController.m */; };
 		A0600C7013C2279000BB6F49 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0600C2613C21D0200BB6F49 /* RootViewController.m */; };
 		A0600C7113C2279600BB6F49 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0600C2613C21D0200BB6F49 /* RootViewController.m */; };
-		A0600C7213C2279700BB6F49 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0600C2613C21D0200BB6F49 /* RootViewController.m */; };
 		A0600C7313C2279800BB6F49 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0600C2613C21D0200BB6F49 /* RootViewController.m */; };
 		A0600C7413C2279800BB6F49 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0600C2613C21D0200BB6F49 /* RootViewController.m */; };
 		A0600C7513C2279900BB6F49 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0600C2613C21D0200BB6F49 /* RootViewController.m */; };
 		A0600C7613C2279A00BB6F49 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0600C2613C21D0200BB6F49 /* RootViewController.m */; };
 		A0600C7713C2279B00BB6F49 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0600C2613C21D0200BB6F49 /* RootViewController.m */; };
 		A0600C7813C2279C00BB6F49 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0600C2613C21D0200BB6F49 /* RootViewController.m */; };
-		A0600C7913C2279E00BB6F49 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0600C2613C21D0200BB6F49 /* RootViewController.m */; };
-		A0600C7A13C2279F00BB6F49 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0600C2613C21D0200BB6F49 /* RootViewController.m */; };
-		A0600C7B13C2279F00BB6F49 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0600C2613C21D0200BB6F49 /* RootViewController.m */; };
 		A0600C7C13C227A000BB6F49 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0600C2613C21D0200BB6F49 /* RootViewController.m */; };
 		A0600C7D13C227A200BB6F49 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0600C2613C21D0200BB6F49 /* RootViewController.m */; };
 		A0600C7E13C227A300BB6F49 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0600C2613C21D0200BB6F49 /* RootViewController.m */; };
@@ -1590,6 +1538,8 @@
 		A0600CA013C227C600BB6F49 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0600C2613C21D0200BB6F49 /* RootViewController.m */; };
 		A0600CA113C227C700BB6F49 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0600C2613C21D0200BB6F49 /* RootViewController.m */; };
 		A0600CA213C227C800BB6F49 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0600C2613C21D0200BB6F49 /* RootViewController.m */; };
+		A0600CE313C2756E00BB6F49 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
+		A0600CE413C2757D00BB6F49 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		AAEA834B0FD5704400F08728 /* blocks.png in Resources */ = {isa = PBXBuildFile; fileRef = AAEA834A0FD5704400F08728 /* blocks.png */; };
 		DA5F0EC50FFE96D400C7C82E /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB240E10EE4A00AE9530 /* Default.png */; };
 		DA5F0EC60FFE96D400C7C82E /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB250E10EE4A00AE9530 /* Icon.png */; };
@@ -1716,24 +1666,6 @@
 		E02BB5CE126CA73F006E46A2 /* Icon-Small.png in Resources */ = {isa = PBXBuildFile; fileRef = E02BB580126CA73F006E46A2 /* Icon-Small.png */; };
 		E02BB5CF126CA73F006E46A2 /* Icon-Small-50.png in Resources */ = {isa = PBXBuildFile; fileRef = E02BB581126CA73F006E46A2 /* Icon-Small-50.png */; };
 		E02BB5D0126CA73F006E46A2 /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = E02BB582126CA73F006E46A2 /* Icon-72.png */; };
-		E02BB5D1126CA73F006E46A2 /* iTunesArtwork in Resources */ = {isa = PBXBuildFile; fileRef = E02BB57D126CA73F006E46A2 /* iTunesArtwork */; };
-		E02BB5D2126CA73F006E46A2 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E02BB57E126CA73F006E46A2 /* Icon@2x.png */; };
-		E02BB5D3126CA73F006E46A2 /* Icon-Small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E02BB57F126CA73F006E46A2 /* Icon-Small@2x.png */; };
-		E02BB5D4126CA73F006E46A2 /* Icon-Small.png in Resources */ = {isa = PBXBuildFile; fileRef = E02BB580126CA73F006E46A2 /* Icon-Small.png */; };
-		E02BB5D5126CA73F006E46A2 /* Icon-Small-50.png in Resources */ = {isa = PBXBuildFile; fileRef = E02BB581126CA73F006E46A2 /* Icon-Small-50.png */; };
-		E02BB5D6126CA73F006E46A2 /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = E02BB582126CA73F006E46A2 /* Icon-72.png */; };
-		E02BB5D7126CA73F006E46A2 /* iTunesArtwork in Resources */ = {isa = PBXBuildFile; fileRef = E02BB57D126CA73F006E46A2 /* iTunesArtwork */; };
-		E02BB5D8126CA73F006E46A2 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E02BB57E126CA73F006E46A2 /* Icon@2x.png */; };
-		E02BB5D9126CA73F006E46A2 /* Icon-Small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E02BB57F126CA73F006E46A2 /* Icon-Small@2x.png */; };
-		E02BB5DA126CA73F006E46A2 /* Icon-Small.png in Resources */ = {isa = PBXBuildFile; fileRef = E02BB580126CA73F006E46A2 /* Icon-Small.png */; };
-		E02BB5DB126CA73F006E46A2 /* Icon-Small-50.png in Resources */ = {isa = PBXBuildFile; fileRef = E02BB581126CA73F006E46A2 /* Icon-Small-50.png */; };
-		E02BB5DC126CA73F006E46A2 /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = E02BB582126CA73F006E46A2 /* Icon-72.png */; };
-		E02BB5DD126CA73F006E46A2 /* iTunesArtwork in Resources */ = {isa = PBXBuildFile; fileRef = E02BB57D126CA73F006E46A2 /* iTunesArtwork */; };
-		E02BB5DE126CA73F006E46A2 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E02BB57E126CA73F006E46A2 /* Icon@2x.png */; };
-		E02BB5DF126CA73F006E46A2 /* Icon-Small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E02BB57F126CA73F006E46A2 /* Icon-Small@2x.png */; };
-		E02BB5E0126CA73F006E46A2 /* Icon-Small.png in Resources */ = {isa = PBXBuildFile; fileRef = E02BB580126CA73F006E46A2 /* Icon-Small.png */; };
-		E02BB5E1126CA73F006E46A2 /* Icon-Small-50.png in Resources */ = {isa = PBXBuildFile; fileRef = E02BB581126CA73F006E46A2 /* Icon-Small-50.png */; };
-		E02BB5E2126CA73F006E46A2 /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = E02BB582126CA73F006E46A2 /* Icon-72.png */; };
 		E02BB5E3126CA73F006E46A2 /* iTunesArtwork in Resources */ = {isa = PBXBuildFile; fileRef = E02BB57D126CA73F006E46A2 /* iTunesArtwork */; };
 		E02BB5E4126CA73F006E46A2 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E02BB57E126CA73F006E46A2 /* Icon@2x.png */; };
 		E02BB5E5126CA73F006E46A2 /* Icon-Small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E02BB57F126CA73F006E46A2 /* Icon-Small@2x.png */; };
@@ -2084,18 +2016,6 @@
 		E04C634112382F6100A4B3E6 /* f2-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E04C632112382F6100A4B3E6 /* f2-hd.png */; };
 		E04C634212382F6100A4B3E6 /* r1-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E04C632212382F6100A4B3E6 /* r1-hd.png */; };
 		E04C634312382F6100A4B3E6 /* r2-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E04C632312382F6100A4B3E6 /* r2-hd.png */; };
-		E04C634412382F6100A4B3E6 /* f1-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E04C632012382F6100A4B3E6 /* f1-hd.png */; };
-		E04C634512382F6100A4B3E6 /* f2-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E04C632112382F6100A4B3E6 /* f2-hd.png */; };
-		E04C634612382F6100A4B3E6 /* r1-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E04C632212382F6100A4B3E6 /* r1-hd.png */; };
-		E04C634712382F6100A4B3E6 /* r2-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E04C632312382F6100A4B3E6 /* r2-hd.png */; };
-		E04C634812382F6100A4B3E6 /* f1-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E04C632012382F6100A4B3E6 /* f1-hd.png */; };
-		E04C634912382F6100A4B3E6 /* f2-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E04C632112382F6100A4B3E6 /* f2-hd.png */; };
-		E04C634A12382F6100A4B3E6 /* r1-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E04C632212382F6100A4B3E6 /* r1-hd.png */; };
-		E04C634B12382F6100A4B3E6 /* r2-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E04C632312382F6100A4B3E6 /* r2-hd.png */; };
-		E04C634C12382F6100A4B3E6 /* f1-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E04C632012382F6100A4B3E6 /* f1-hd.png */; };
-		E04C634D12382F6100A4B3E6 /* f2-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E04C632112382F6100A4B3E6 /* f2-hd.png */; };
-		E04C634E12382F6100A4B3E6 /* r1-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E04C632212382F6100A4B3E6 /* r1-hd.png */; };
-		E04C634F12382F6100A4B3E6 /* r2-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E04C632312382F6100A4B3E6 /* r2-hd.png */; };
 		E04C635012382F6100A4B3E6 /* f1-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E04C632012382F6100A4B3E6 /* f1-hd.png */; };
 		E04C635112382F6100A4B3E6 /* f2-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E04C632112382F6100A4B3E6 /* f2-hd.png */; };
 		E04C635212382F6100A4B3E6 /* r1-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E04C632212382F6100A4B3E6 /* r1-hd.png */; };
@@ -2260,12 +2180,6 @@
 		E04C641312382F9400A4B3E6 /* b2-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E04C640512382F9300A4B3E6 /* b2-hd.png */; };
 		E04C641412382F9400A4B3E6 /* b1-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E04C640412382F9300A4B3E6 /* b1-hd.png */; };
 		E04C641512382F9400A4B3E6 /* b2-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E04C640512382F9300A4B3E6 /* b2-hd.png */; };
-		E04C641612382F9400A4B3E6 /* b1-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E04C640412382F9300A4B3E6 /* b1-hd.png */; };
-		E04C641712382F9400A4B3E6 /* b2-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E04C640512382F9300A4B3E6 /* b2-hd.png */; };
-		E04C641812382F9400A4B3E6 /* b1-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E04C640412382F9300A4B3E6 /* b1-hd.png */; };
-		E04C641912382F9400A4B3E6 /* b2-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E04C640512382F9300A4B3E6 /* b2-hd.png */; };
-		E04C641A12382F9400A4B3E6 /* b1-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E04C640412382F9300A4B3E6 /* b1-hd.png */; };
-		E04C641B12382F9400A4B3E6 /* b2-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E04C640512382F9300A4B3E6 /* b2-hd.png */; };
 		E04C641C12382F9400A4B3E6 /* b1-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E04C640412382F9300A4B3E6 /* b1-hd.png */; };
 		E04C641D12382F9400A4B3E6 /* b2-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E04C640512382F9300A4B3E6 /* b2-hd.png */; };
 		E04C641E12382F9400A4B3E6 /* b1-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E04C640412382F9300A4B3E6 /* b1-hd.png */; };
@@ -2380,15 +2294,6 @@
 		E062F9DB124801A300DE3932 /* grossini-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E062F9BA124801A300DE3932 /* grossini-hd.png */; };
 		E062F9DC124801A300DE3932 /* grossinis_sister1-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E062F9BB124801A300DE3932 /* grossinis_sister1-hd.png */; };
 		E062F9DD124801A300DE3932 /* grossinis_sister2-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E062F9BC124801A300DE3932 /* grossinis_sister2-hd.png */; };
-		E062F9DE124801A300DE3932 /* grossini-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E062F9BA124801A300DE3932 /* grossini-hd.png */; };
-		E062F9DF124801A300DE3932 /* grossinis_sister1-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E062F9BB124801A300DE3932 /* grossinis_sister1-hd.png */; };
-		E062F9E0124801A300DE3932 /* grossinis_sister2-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E062F9BC124801A300DE3932 /* grossinis_sister2-hd.png */; };
-		E062F9E1124801A300DE3932 /* grossini-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E062F9BA124801A300DE3932 /* grossini-hd.png */; };
-		E062F9E2124801A300DE3932 /* grossinis_sister1-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E062F9BB124801A300DE3932 /* grossinis_sister1-hd.png */; };
-		E062F9E3124801A300DE3932 /* grossinis_sister2-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E062F9BC124801A300DE3932 /* grossinis_sister2-hd.png */; };
-		E062F9E4124801A300DE3932 /* grossini-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E062F9BA124801A300DE3932 /* grossini-hd.png */; };
-		E062F9E5124801A300DE3932 /* grossinis_sister1-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E062F9BB124801A300DE3932 /* grossinis_sister1-hd.png */; };
-		E062F9E6124801A300DE3932 /* grossinis_sister2-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E062F9BC124801A300DE3932 /* grossinis_sister2-hd.png */; };
 		E062F9E7124801A300DE3932 /* grossini-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E062F9BA124801A300DE3932 /* grossini-hd.png */; };
 		E062F9E8124801A300DE3932 /* grossinis_sister1-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E062F9BB124801A300DE3932 /* grossinis_sister1-hd.png */; };
 		E062F9E9124801A300DE3932 /* grossinis_sister2-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E062F9BC124801A300DE3932 /* grossinis_sister2-hd.png */; };
@@ -2442,9 +2347,6 @@
 		E0708A901342D16700D32F2C /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0708A681342D16700D32F2C /* Shaders */; };
 		E0708A911342D16700D32F2C /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0708A681342D16700D32F2C /* Shaders */; };
 		E0708A921342D16700D32F2C /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0708A681342D16700D32F2C /* Shaders */; };
-		E0708A931342D16700D32F2C /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0708A681342D16700D32F2C /* Shaders */; };
-		E0708A941342D16700D32F2C /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0708A681342D16700D32F2C /* Shaders */; };
-		E0708A951342D16700D32F2C /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0708A681342D16700D32F2C /* Shaders */; };
 		E0708A961342D16700D32F2C /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0708A681342D16700D32F2C /* Shaders */; };
 		E0708A971342D16700D32F2C /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0708A681342D16700D32F2C /* Shaders */; };
 		E0708A981342D16700D32F2C /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0708A681342D16700D32F2C /* Shaders */; };
@@ -3122,27 +3024,6 @@
 			remoteGlobalIDString = 50C938C60E0A9DBB00517B01;
 			remoteInfo = TransitionsTest;
 		};
-		5098075B1175042A00EA7266 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 50DFC2870FF627B6007E7827;
-			remoteInfo = HelloWorldSample;
-		};
-		5098075D1175042A00EA7266 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 50D0E0480FF9232E00098927;
-			remoteInfo = HelloActionsSample;
-		};
-		5098075F1175042A00EA7266 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 50D0E0C70FF930BA00098927;
-			remoteInfo = HelloEventsSample;
-		};
 		509807611175042A00EA7266 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
@@ -3269,20 +3150,6 @@
 			remoteGlobalIDString = 5018F24C0DFDEAC400C013A5;
 			remoteInfo = cocos2d;
 		};
-		50D0E04A0FF9232E00098927 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 5018F24C0DFDEAC400C013A5;
-			remoteInfo = cocos2d;
-		};
-		50D0E0C90FF930BA00098927 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 5018F24C0DFDEAC400C013A5;
-			remoteInfo = cocos2d;
-		};
 		50D56FA80F3FABEC007CD6B9 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
@@ -3291,13 +3158,6 @@
 			remoteInfo = cocos2d;
 		};
 		50DB1BB30E1C1E5900A89DFF /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 5018F24C0DFDEAC400C013A5;
-			remoteInfo = cocos2d;
-		};
-		50DFC2890FF627B6007E7827 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
 			proxyType = 1;
@@ -4040,12 +3900,6 @@
 		50CBA4A711CBD7FB007B009D /* bugs */ = {isa = PBXFileReference; lastKnownFileType = folder; name = bugs; path = Resources/Images/bugs; sourceTree = "<group>"; };
 		50CFAC371023660000175934 /* CCTMXXMLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTMXXMLParser.h; sourceTree = "<group>"; };
 		50CFAC381023660000175934 /* CCTMXXMLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCTMXXMLParser.m; sourceTree = "<group>"; };
-		50D0E05F0FF9232E00098927 /* HelloActionsSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HelloActionsSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		50D0E06C0FF923B400098927 /* HelloActions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HelloActions.h; path = tests/samples/HelloActions.h; sourceTree = "<group>"; };
-		50D0E06D0FF923B400098927 /* HelloActions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HelloActions.m; path = tests/samples/HelloActions.m; sourceTree = "<group>"; };
-		50D0E0DE0FF930BA00098927 /* HelloEventsSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HelloEventsSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		50D0E0EF0FF9316900098927 /* HelloEvents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HelloEvents.h; path = tests/samples/HelloEvents.h; sourceTree = "<group>"; };
-		50D0E0F00FF9316900098927 /* HelloEvents.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HelloEvents.m; path = tests/samples/HelloEvents.m; sourceTree = "<group>"; };
 		50D2AC9110E90DFA0068ECEB /* CCTMXLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTMXLayer.h; sourceTree = "<group>"; };
 		50D2AC9210E90DFA0068ECEB /* CCTMXLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCTMXLayer.m; sourceTree = "<group>"; };
 		50D2AC9310E90DFA0068ECEB /* CCTMXObjectGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTMXObjectGroup.h; sourceTree = "<group>"; };
@@ -4061,9 +3915,6 @@
 		50DB1BCA0E1C1E5900A89DFF /* ParticleTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ParticleTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		50DB1BCE0E1C1EF000A89DFF /* ParticleTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ParticleTest.h; path = tests/ParticleTest.h; sourceTree = "<group>"; };
 		50DB1BCF0E1C1EF000A89DFF /* ParticleTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ParticleTest.m; path = tests/ParticleTest.m; sourceTree = "<group>"; };
-		50DFC29F0FF627B6007E7827 /* HelloWorldSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HelloWorldSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		50DFC2C90FF62843007E7827 /* HelloWorld.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HelloWorld.h; path = tests/samples/HelloWorld.h; sourceTree = "<group>"; };
-		50DFC2CA0FF62843007E7827 /* HelloWorld.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HelloWorld.m; path = tests/samples/HelloWorld.m; sourceTree = "<group>"; };
 		50E1357110ADEB1B00C9E7FA /* CCTexture2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTexture2D.h; sourceTree = "<group>"; };
 		50E1357210ADEB1B00C9E7FA /* CCTexture2D.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCTexture2D.m; sourceTree = "<group>"; };
 		50E2A14E10A45E7F00D894CE /* CCSpriteFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSpriteFrame.h; sourceTree = "<group>"; };
@@ -4670,6 +4521,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0600CE413C2757D00BB6F49 /* UIKit.framework in Frameworks */,
+				A0600CE313C2756E00BB6F49 /* Foundation.framework in Frameworks */,
 				504828920F45AF3600A30CEF /* libcocos2d.a in Frameworks */,
 				50E386DD10445EDA00150883 /* OpenGLES.framework in Frameworks */,
 				50E386DE10445EF500150883 /* CoreGraphics.framework in Frameworks */,
@@ -5068,34 +4921,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		50D0E0550FF9232E00098927 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				50D0E0560FF9232E00098927 /* Foundation.framework in Frameworks */,
-				50D0E0570FF9232E00098927 /* UIKit.framework in Frameworks */,
-				50D0E0580FF9232E00098927 /* CoreGraphics.framework in Frameworks */,
-				50D0E0590FF9232E00098927 /* OpenGLES.framework in Frameworks */,
-				50D0E05A0FF9232E00098927 /* QuartzCore.framework in Frameworks */,
-				50D0E05B0FF9232E00098927 /* libcocos2d.a in Frameworks */,
-				5030931B10447AE5005F7AFC /* libz.dylib in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		50D0E0D40FF930BA00098927 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				50D0E0D50FF930BA00098927 /* Foundation.framework in Frameworks */,
-				50D0E0D60FF930BA00098927 /* UIKit.framework in Frameworks */,
-				50D0E0D70FF930BA00098927 /* CoreGraphics.framework in Frameworks */,
-				50D0E0D80FF930BA00098927 /* OpenGLES.framework in Frameworks */,
-				50D0E0D90FF930BA00098927 /* QuartzCore.framework in Frameworks */,
-				50D0E0DA0FF930BA00098927 /* libcocos2d.a in Frameworks */,
-				5030931C10447AFD005F7AFC /* libz.dylib in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		50D56FC80F3FABEC007CD6B9 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -5121,20 +4946,6 @@
 				50DB1BC50E1C1E5900A89DFF /* QuartzCore.framework in Frameworks */,
 				50DB1BC60E1C1E5900A89DFF /* libcocos2d.a in Frameworks */,
 				50309307104479A8005F7AFC /* libz.dylib in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		50DFC2950FF627B6007E7827 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				50DFC2960FF627B6007E7827 /* Foundation.framework in Frameworks */,
-				50DFC2970FF627B6007E7827 /* UIKit.framework in Frameworks */,
-				50DFC2980FF627B6007E7827 /* CoreGraphics.framework in Frameworks */,
-				50DFC2990FF627B6007E7827 /* OpenGLES.framework in Frameworks */,
-				50DFC29A0FF627B6007E7827 /* QuartzCore.framework in Frameworks */,
-				50DFC29B0FF627B6007E7827 /* libcocos2d.a in Frameworks */,
-				5030931A10447ACE005F7AFC /* libz.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5311,9 +5122,6 @@
 				504225700FC0B39C00B992F7 /* libbox2d.a */,
 				5042262E0FC0B5D500B992F7 /* Box2dAccelTouchTest.app */,
 				5012DD3B0FE2994300D6DDD1 /* TouchesTest.app */,
-				50DFC29F0FF627B6007E7827 /* HelloWorldSample.app */,
-				50D0E05F0FF9232E00098927 /* HelloActionsSample.app */,
-				50D0E0DE0FF930BA00098927 /* HelloEventsSample.app */,
 				50CB2FCA1004C8B100B7A750 /* libCocosDenshion.a */,
 				50CB34DD100765EF00B7A750 /* Bug422.app */,
 				504799B1100F6A4200D1C71A /* LayerTest.app */,
@@ -6389,7 +6197,6 @@
 				50E2A41010A4A58700D894CE /* PerformanceParticleTest */,
 				50E2A40610A4A56900D894CE /* PerformanceSpriteTest */,
 				5040190010FE80650017842A /* PerformanceTouchesTest */,
-				50DFC2CC0FF62852007E7827 /* Samples */,
 				5012DD3E0FE299EA00D6DDD1 /* TouchesTest */,
 				A0600C2513C21D0200BB6F49 /* RootViewController.h */,
 				A0600C2613C21D0200BB6F49 /* RootViewController.m */,
@@ -6534,19 +6341,6 @@
 				508EAC2F1193F8B0007F058D /* utlist.h */,
 			);
 			name = "Data Structures";
-			sourceTree = "<group>";
-		};
-		50DFC2CC0FF62852007E7827 /* Samples */ = {
-			isa = PBXGroup;
-			children = (
-				50D0E0EF0FF9316900098927 /* HelloEvents.h */,
-				50D0E0F00FF9316900098927 /* HelloEvents.m */,
-				50D0E06C0FF923B400098927 /* HelloActions.h */,
-				50D0E06D0FF923B400098927 /* HelloActions.m */,
-				50DFC2C90FF62843007E7827 /* HelloWorld.h */,
-				50DFC2CA0FF62843007E7827 /* HelloWorld.m */,
-			);
-			name = Samples;
 			sourceTree = "<group>";
 		};
 		50E1355310ADEA9400C9E7FA /* Textures */ = {
@@ -7966,9 +7760,6 @@
 				509807561175042A00EA7266 /* PBXTargetDependency */,
 				509807581175042A00EA7266 /* PBXTargetDependency */,
 				5098075A1175042A00EA7266 /* PBXTargetDependency */,
-				5098075C1175042A00EA7266 /* PBXTargetDependency */,
-				5098075E1175042A00EA7266 /* PBXTargetDependency */,
-				509807601175042A00EA7266 /* PBXTargetDependency */,
 				509807621175042A00EA7266 /* PBXTargetDependency */,
 				509807641175042A00EA7266 /* PBXTargetDependency */,
 				507D3382117F366A00B6684B /* PBXTargetDependency */,
@@ -8177,42 +7968,6 @@
 			productReference = 50CBA48711CBD6FB007B009D /* Bug886.app */;
 			productType = "com.apple.product-type.application";
 		};
-		50D0E0480FF9232E00098927 /* HelloActionsSample */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 50D0E05C0FF9232E00098927 /* Build configuration list for PBXNativeTarget "HelloActionsSample" */;
-			buildPhases = (
-				50D0E04B0FF9232E00098927 /* Resources */,
-				50D0E0530FF9232E00098927 /* Sources */,
-				50D0E0550FF9232E00098927 /* Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				50D0E0490FF9232E00098927 /* PBXTargetDependency */,
-			);
-			name = HelloActionsSample;
-			productName = "demo-rotate-world";
-			productReference = 50D0E05F0FF9232E00098927 /* HelloActionsSample.app */;
-			productType = "com.apple.product-type.application";
-		};
-		50D0E0C70FF930BA00098927 /* HelloEventsSample */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 50D0E0DB0FF930BA00098927 /* Build configuration list for PBXNativeTarget "HelloEventsSample" */;
-			buildPhases = (
-				50D0E0CA0FF930BA00098927 /* Resources */,
-				50D0E0D20FF930BA00098927 /* Sources */,
-				50D0E0D40FF930BA00098927 /* Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				50D0E0C80FF930BA00098927 /* PBXTargetDependency */,
-			);
-			name = HelloEventsSample;
-			productName = "demo-rotate-world";
-			productReference = 50D0E0DE0FF930BA00098927 /* HelloEventsSample.app */;
-			productType = "com.apple.product-type.application";
-		};
 		50D56FA60F3FABEC007CD6B9 /* EffectsAdvancedTest */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 50D56FCF0F3FABEC007CD6B9 /* Build configuration list for PBXNativeTarget "EffectsAdvancedTest" */;
@@ -8247,24 +8002,6 @@
 			name = ParticleTest;
 			productName = ParticleTest;
 			productReference = 50DB1BCA0E1C1E5900A89DFF /* ParticleTest.app */;
-			productType = "com.apple.product-type.application";
-		};
-		50DFC2870FF627B6007E7827 /* HelloWorldSample */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 50DFC29C0FF627B6007E7827 /* Build configuration list for PBXNativeTarget "HelloWorldSample" */;
-			buildPhases = (
-				50DFC28A0FF627B6007E7827 /* Resources */,
-				50DFC2920FF627B6007E7827 /* Sources */,
-				50DFC2950FF627B6007E7827 /* Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				50DFC2880FF627B6007E7827 /* PBXTargetDependency */,
-			);
-			name = HelloWorldSample;
-			productName = "demo-rotate-world";
-			productReference = 50DFC29F0FF627B6007E7827 /* HelloWorldSample.app */;
 			productType = "com.apple.product-type.application";
 		};
 		50E77CEE11D4C925009CA2C2 /* HiResTest */ = {
@@ -8500,9 +8237,6 @@
 				5012DD180FE2994300D6DDD1 /* TouchesTest */,
 				50C938C60E0A9DBB00517B01 /* TransitionsTest */,
 				E0C5586211FE48E600B9E4CB /* ZwoptexTest */,
-				50DFC2870FF627B6007E7827 /* HelloWorldSample */,
-				50D0E0480FF9232E00098927 /* HelloActionsSample */,
-				50D0E0C70FF930BA00098927 /* HelloEventsSample */,
 				507FF8CE116D16F600B6FAB2 /* Bug350 */,
 				DA5F0EC10FFE96D400C7C82E /* Bug422 */,
 				E037DA1B1281C7F0003D39D7 /* Bug458 */,
@@ -10033,68 +9767,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		50D0E04B0FF9232E00098927 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				50D0E04C0FF9232E00098927 /* Default.png in Resources */,
-				50D0E04D0FF9232E00098927 /* Icon.png in Resources */,
-				50D0E04E0FF9232E00098927 /* grossini.png in Resources */,
-				50D0E04F0FF9232E00098927 /* grossinis_sister1.png in Resources */,
-				50D0E0500FF9232E00098927 /* grossinis_sister2.png in Resources */,
-				50D0E0520FF9232E00098927 /* fire.pvr in Resources */,
-				505464541062886600AB7C52 /* fps_images.png in Resources */,
-				E04C634812382F6100A4B3E6 /* f1-hd.png in Resources */,
-				E04C634912382F6100A4B3E6 /* f2-hd.png in Resources */,
-				E04C634A12382F6100A4B3E6 /* r1-hd.png in Resources */,
-				E04C634B12382F6100A4B3E6 /* r2-hd.png in Resources */,
-				E04C641812382F9400A4B3E6 /* b1-hd.png in Resources */,
-				E04C641912382F9400A4B3E6 /* b2-hd.png in Resources */,
-				E062F9E1124801A300DE3932 /* grossini-hd.png in Resources */,
-				E062F9E2124801A300DE3932 /* grossinis_sister1-hd.png in Resources */,
-				E062F9E3124801A300DE3932 /* grossinis_sister2-hd.png in Resources */,
-				E02BB5D7126CA73F006E46A2 /* iTunesArtwork in Resources */,
-				E02BB5D8126CA73F006E46A2 /* Icon@2x.png in Resources */,
-				E02BB5D9126CA73F006E46A2 /* Icon-Small@2x.png in Resources */,
-				E02BB5DA126CA73F006E46A2 /* Icon-Small.png in Resources */,
-				E02BB5DB126CA73F006E46A2 /* Icon-Small-50.png in Resources */,
-				E02BB5DC126CA73F006E46A2 /* Icon-72.png in Resources */,
-				E0708A941342D16700D32F2C /* Shaders in Resources */,
-				A0600C1B13C2076600BB6F49 /* fps_images-hd.png in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		50D0E0CA0FF930BA00098927 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				50D0E0CB0FF930BA00098927 /* Default.png in Resources */,
-				50D0E0CC0FF930BA00098927 /* Icon.png in Resources */,
-				50D0E0CD0FF930BA00098927 /* grossini.png in Resources */,
-				50D0E0CE0FF930BA00098927 /* grossinis_sister1.png in Resources */,
-				50D0E0CF0FF930BA00098927 /* grossinis_sister2.png in Resources */,
-				50D0E0D10FF930BA00098927 /* fire.pvr in Resources */,
-				505464551062886600AB7C52 /* fps_images.png in Resources */,
-				E04C634412382F6100A4B3E6 /* f1-hd.png in Resources */,
-				E04C634512382F6100A4B3E6 /* f2-hd.png in Resources */,
-				E04C634612382F6100A4B3E6 /* r1-hd.png in Resources */,
-				E04C634712382F6100A4B3E6 /* r2-hd.png in Resources */,
-				E04C641612382F9400A4B3E6 /* b1-hd.png in Resources */,
-				E04C641712382F9400A4B3E6 /* b2-hd.png in Resources */,
-				E062F9E4124801A300DE3932 /* grossini-hd.png in Resources */,
-				E062F9E5124801A300DE3932 /* grossinis_sister1-hd.png in Resources */,
-				E062F9E6124801A300DE3932 /* grossinis_sister2-hd.png in Resources */,
-				E02BB5D1126CA73F006E46A2 /* iTunesArtwork in Resources */,
-				E02BB5D2126CA73F006E46A2 /* Icon@2x.png in Resources */,
-				E02BB5D3126CA73F006E46A2 /* Icon-Small@2x.png in Resources */,
-				E02BB5D4126CA73F006E46A2 /* Icon-Small.png in Resources */,
-				E02BB5D5126CA73F006E46A2 /* Icon-Small-50.png in Resources */,
-				E02BB5D6126CA73F006E46A2 /* Icon-72.png in Resources */,
-				E0708A951342D16700D32F2C /* Shaders in Resources */,
-				A0600C1C13C2076800BB6F49 /* fps_images-hd.png in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		50D56FA90F3FABEC007CD6B9 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -10181,37 +9853,6 @@
 				E087B34F12785BB60076F6FF /* fps_images-hd.png in Resources */,
 				E0D2C5D412AF1067008D5DBB /* particles-hd.png in Resources */,
 				E0708A861342D16700D32F2C /* Shaders in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		50DFC28A0FF627B6007E7827 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				50DFC28B0FF627B6007E7827 /* Default.png in Resources */,
-				50DFC28C0FF627B6007E7827 /* Icon.png in Resources */,
-				50DFC28D0FF627B6007E7827 /* grossini.png in Resources */,
-				50DFC28E0FF627B6007E7827 /* grossinis_sister1.png in Resources */,
-				50DFC28F0FF627B6007E7827 /* grossinis_sister2.png in Resources */,
-				50DFC2910FF627B6007E7827 /* fire.pvr in Resources */,
-				505464531062886600AB7C52 /* fps_images.png in Resources */,
-				E04C634C12382F6100A4B3E6 /* f1-hd.png in Resources */,
-				E04C634D12382F6100A4B3E6 /* f2-hd.png in Resources */,
-				E04C634E12382F6100A4B3E6 /* r1-hd.png in Resources */,
-				E04C634F12382F6100A4B3E6 /* r2-hd.png in Resources */,
-				E04C641A12382F9400A4B3E6 /* b1-hd.png in Resources */,
-				E04C641B12382F9400A4B3E6 /* b2-hd.png in Resources */,
-				E062F9DE124801A300DE3932 /* grossini-hd.png in Resources */,
-				E062F9DF124801A300DE3932 /* grossinis_sister1-hd.png in Resources */,
-				E062F9E0124801A300DE3932 /* grossinis_sister2-hd.png in Resources */,
-				E02BB5DD126CA73F006E46A2 /* iTunesArtwork in Resources */,
-				E02BB5DE126CA73F006E46A2 /* Icon@2x.png in Resources */,
-				E02BB5DF126CA73F006E46A2 /* Icon-Small@2x.png in Resources */,
-				E02BB5E0126CA73F006E46A2 /* Icon-Small.png in Resources */,
-				E02BB5E1126CA73F006E46A2 /* Icon-Small-50.png in Resources */,
-				E02BB5E2126CA73F006E46A2 /* Icon-72.png in Resources */,
-				E0708A931342D16700D32F2C /* Shaders in Resources */,
-				A0600C1A13C2076600BB6F49 /* fps_images-hd.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10722,7 +10363,6 @@
 				502BF59F11E39EFB0030C477 /* bugViewController.m in Sources */,
 				502BF5A011E39EFB0030C477 /* EAGLViewBugAppDelegate.m in Sources */,
 				502BF5A111E39EFB0030C477 /* HelloWorldScene.m in Sources */,
-				A0600C7213C2279700BB6F49 /* RootViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11197,24 +10837,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		50D0E0530FF9232E00098927 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				50D0E06E0FF923B400098927 /* HelloActions.m in Sources */,
-				A0600C7A13C2279F00BB6F49 /* RootViewController.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		50D0E0D20FF930BA00098927 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				50D0E0F10FF9316900098927 /* HelloEvents.m in Sources */,
-				A0600C7913C2279E00BB6F49 /* RootViewController.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		50D56FC50F3FABEC007CD6B9 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -11232,15 +10854,6 @@
 				50DB1BBE0E1C1E5900A89DFF /* main.m in Sources */,
 				50DB1BD10E1C1EF000A89DFF /* ParticleTest.m in Sources */,
 				A0600C8613C227AA00BB6F49 /* RootViewController.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		50DFC2920FF627B6007E7827 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				50DFC2CB0FF62843007E7827 /* HelloWorld.m in Sources */,
-				A0600C7B13C2279F00BB6F49 /* RootViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11722,21 +11335,6 @@
 			target = 50C938C60E0A9DBB00517B01 /* TransitionsTest */;
 			targetProxy = 509807591175042A00EA7266 /* PBXContainerItemProxy */;
 		};
-		5098075C1175042A00EA7266 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 50DFC2870FF627B6007E7827 /* HelloWorldSample */;
-			targetProxy = 5098075B1175042A00EA7266 /* PBXContainerItemProxy */;
-		};
-		5098075E1175042A00EA7266 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 50D0E0480FF9232E00098927 /* HelloActionsSample */;
-			targetProxy = 5098075D1175042A00EA7266 /* PBXContainerItemProxy */;
-		};
-		509807601175042A00EA7266 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 50D0E0C70FF930BA00098927 /* HelloEventsSample */;
-			targetProxy = 5098075F1175042A00EA7266 /* PBXContainerItemProxy */;
-		};
 		509807621175042A00EA7266 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = DA5F0EC10FFE96D400C7C82E /* Bug422 */;
@@ -11827,16 +11425,6 @@
 			target = 5018F24C0DFDEAC400C013A5 /* cocos2d */;
 			targetProxy = 50CBA46711CBD6FB007B009D /* PBXContainerItemProxy */;
 		};
-		50D0E0490FF9232E00098927 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 5018F24C0DFDEAC400C013A5 /* cocos2d */;
-			targetProxy = 50D0E04A0FF9232E00098927 /* PBXContainerItemProxy */;
-		};
-		50D0E0C80FF930BA00098927 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 5018F24C0DFDEAC400C013A5 /* cocos2d */;
-			targetProxy = 50D0E0C90FF930BA00098927 /* PBXContainerItemProxy */;
-		};
 		50D56FA70F3FABEC007CD6B9 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 5018F24C0DFDEAC400C013A5 /* cocos2d */;
@@ -11846,11 +11434,6 @@
 			isa = PBXTargetDependency;
 			target = 5018F24C0DFDEAC400C013A5 /* cocos2d */;
 			targetProxy = 50DB1BB30E1C1E5900A89DFF /* PBXContainerItemProxy */;
-		};
-		50DFC2880FF627B6007E7827 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 5018F24C0DFDEAC400C013A5 /* cocos2d */;
-			targetProxy = 50DFC2890FF627B6007E7827 /* PBXContainerItemProxy */;
 		};
 		50E77CEF11D4C925009CA2C2 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -11972,14 +11555,6 @@
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				INFOPLIST_FILE = Resources/InfoWithStatusBar.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-framework",
-					Foundation,
-					"-framework",
-					UIKit,
-					"-all_load",
-				);
 				PREBINDING = NO;
 				PRODUCT_NAME = MenuTestWithBlocks;
 			};
@@ -11997,14 +11572,6 @@
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				INFOPLIST_FILE = Resources/InfoWithStatusBar.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-framework",
-					Foundation,
-					"-framework",
-					UIKit,
-					"-all_load",
-				);
 				PREBINDING = NO;
 				PRODUCT_NAME = MenuTestWithBlocks;
 				ZERO_LINK = NO;
@@ -12023,13 +11590,6 @@
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-framework",
-					Foundation,
-					"-framework",
-					UIKit,
-				);
 				PREBINDING = NO;
 				PRODUCT_NAME = ActionsWithBlocksSample;
 			};
@@ -12047,13 +11607,6 @@
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-framework",
-					Foundation,
-					"-framework",
-					UIKit,
-				);
 				PREBINDING = NO;
 				PRODUCT_NAME = ActionsWithBlocksSample;
 				ZERO_LINK = NO;
@@ -12123,13 +11676,6 @@
 				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-framework",
-					Foundation,
-					"-framework",
-					UIKit,
-				);
 				PREBINDING = NO;
 				PRODUCT_NAME = Box2dTestBed;
 				USER_HEADER_SEARCH_PATHS = "external/Box2d/Testbed/Tests/ external/Box2d";
@@ -12152,13 +11698,6 @@
 				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-framework",
-					Foundation,
-					"-framework",
-					UIKit,
-				);
 				PREBINDING = NO;
 				PRODUCT_NAME = Box2dTestBed;
 				USER_HEADER_SEARCH_PATHS = "external/Box2d/Testbed/Tests/ external/Box2d";
@@ -12178,13 +11717,6 @@
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-framework",
-					Foundation,
-					"-framework",
-					UIKit,
-				);
 				PREBINDING = NO;
 				PRODUCT_NAME = TouchesTest;
 			};
@@ -12202,13 +11734,6 @@
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-framework",
-					Foundation,
-					"-framework",
-					UIKit,
-				);
 				PREBINDING = NO;
 				PRODUCT_NAME = TouchesTest;
 				ZERO_LINK = NO;
@@ -12313,13 +11838,6 @@
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-framework",
-					Foundation,
-					"-framework",
-					UIKit,
-				);
 				PREBINDING = NO;
 				PRODUCT_NAME = drawPrimitivesTest;
 			};
@@ -12337,13 +11855,6 @@
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-framework",
-					Foundation,
-					"-framework",
-					UIKit,
-				);
 				PREBINDING = NO;
 				PRODUCT_NAME = drawPrimitivesTest;
 				ZERO_LINK = NO;
@@ -12362,13 +11873,6 @@
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-framework",
-					Foundation,
-					"-framework",
-					UIKit,
-				);
 				PREBINDING = NO;
 				PRODUCT_NAME = SpriteTest;
 			};
@@ -12386,13 +11890,6 @@
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-framework",
-					Foundation,
-					"-framework",
-					UIKit,
-				);
 				PREBINDING = NO;
 				PRODUCT_NAME = SpriteTest;
 				ZERO_LINK = NO;
@@ -12411,13 +11908,6 @@
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-framework",
-					Foundation,
-					"-framework",
-					UIKit,
-				);
 				PREBINDING = NO;
 				PRODUCT_NAME = Bug914;
 			};
@@ -12435,13 +11925,6 @@
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-framework",
-					Foundation,
-					"-framework",
-					UIKit,
-				);
 				PREBINDING = NO;
 				PRODUCT_NAME = Bug914;
 				ZERO_LINK = NO;
@@ -12561,13 +12044,6 @@
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-framework",
-					Foundation,
-					"-framework",
-					UIKit,
-				);
 				PREBINDING = NO;
 				PRODUCT_NAME = TileMapTest;
 			};
@@ -12585,13 +12061,6 @@
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-framework",
-					Foundation,
-					"-framework",
-					UIKit,
-				);
 				PREBINDING = NO;
 				PRODUCT_NAME = TileMapTest;
 				ZERO_LINK = NO;
@@ -12646,13 +12115,6 @@
 				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-framework",
-					Foundation,
-					"-framework",
-					UIKit,
-				);
 				PREBINDING = NO;
 				PRODUCT_NAME = Box2dAccelTouchTest;
 				USER_HEADER_SEARCH_PATHS = external/Box2d/;
@@ -12673,13 +12135,6 @@
 				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-framework",
-					Foundation,
-					"-framework",
-					UIKit,
-				);
 				PREBINDING = NO;
 				PRODUCT_NAME = Box2dAccelTouchTest;
 				USER_HEADER_SEARCH_PATHS = external/Box2d/;
@@ -12748,13 +12203,6 @@
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				INFOPLIST_FILE = "tests/attachDemo/AttachDemo-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-framework",
-					Foundation,
-					"-framework",
-					UIKit,
-				);
 				PREBINDING = NO;
 				PRODUCT_NAME = AttachTest;
 			};
@@ -12772,13 +12220,6 @@
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				INFOPLIST_FILE = "tests/attachDemo/AttachDemo-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-framework",
-					Foundation,
-					"-framework",
-					UIKit,
-				);
 				PREBINDING = NO;
 				PRODUCT_NAME = AttachTest;
 				ZERO_LINK = NO;
@@ -12797,13 +12238,6 @@
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-framework",
-					Foundation,
-					"-framework",
-					UIKit,
-				);
 				PREBINDING = NO;
 				PRODUCT_NAME = ActionManagerTest;
 			};
@@ -12821,13 +12255,6 @@
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-framework",
-					Foundation,
-					"-framework",
-					UIKit,
-				);
 				PREBINDING = NO;
 				PRODUCT_NAME = ActionManagerTest;
 				ZERO_LINK = NO;
@@ -12846,12 +12273,6 @@
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				INFOPLIST_FILE = "tests/EAGLViewTest/EAGLViewTest-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = (
-					"-framework",
-					Foundation,
-					"-framework",
-					UIKit,
-				);
 				PREBINDING = NO;
 				PRODUCT_NAME = EAGLViewTest;
 			};
@@ -12869,12 +12290,6 @@
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				INFOPLIST_FILE = "tests/EAGLViewTest/EAGLViewTest-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = (
-					"-framework",
-					Foundation,
-					"-framework",
-					UIKit,
-				);
 				PREBINDING = NO;
 				PRODUCT_NAME = EAGLViewTest;
 				ZERO_LINK = NO;
@@ -12893,12 +12308,6 @@
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				INFOPLIST_FILE = CocosDenshion/TestsAndDemos/TomTheTurret/Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = (
-					"-framework",
-					Foundation,
-					"-framework",
-					UIKit,
-				);
 				PREBINDING = NO;
 				PRODUCT_NAME = "CocosDenshion - Tom The Turret";
 			};
@@ -12916,12 +12325,6 @@
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				INFOPLIST_FILE = CocosDenshion/TestsAndDemos/TomTheTurret/Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = (
-					"-framework",
-					Foundation,
-					"-framework",
-					UIKit,
-				);
 				PREBINDING = NO;
 				PRODUCT_NAME = "CocosDenshion - Tom The Turret";
 				ZERO_LINK = NO;
@@ -12940,12 +12343,6 @@
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				INFOPLIST_FILE = CocosDenshion/TestsAndDemos/DrumPad/Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = (
-					"-framework",
-					Foundation,
-					"-framework",
-					UIKit,
-				);
 				PREBINDING = NO;
 				PRODUCT_NAME = "CocosDenshion - Drum Pad";
 			};
@@ -12963,12 +12360,6 @@
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				INFOPLIST_FILE = CocosDenshion/TestsAndDemos/DrumPad/Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = (
-					"-framework",
-					Foundation,
-					"-framework",
-					UIKit,
-				);
 				PREBINDING = NO;
 				PRODUCT_NAME = "CocosDenshion - Drum Pad";
 				ZERO_LINK = NO;
@@ -12987,12 +12378,6 @@
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				INFOPLIST_FILE = CocosDenshion/TestsAndDemos/FadeToGrey/Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = (
-					"-framework",
-					Foundation,
-					"-framework",
-					UIKit,
-				);
 				PREBINDING = NO;
 				PRODUCT_NAME = "CocosDenshion - Fade To Grey";
 			};
@@ -13010,12 +12395,6 @@
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				INFOPLIST_FILE = CocosDenshion/TestsAndDemos/FadeToGrey/Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = (
-					"-framework",
-					Foundation,
-					"-framework",
-					UIKit,
-				);
 				PREBINDING = NO;
 				PRODUCT_NAME = "CocosDenshion - Fade To Grey";
 				ZERO_LINK = NO;
@@ -13034,12 +12413,6 @@
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				INFOPLIST_FILE = CocosDenshion/TestsAndDemos/FancyRatMeteringDemo/Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = (
-					"-framework",
-					Foundation,
-					"-framework",
-					UIKit,
-				);
 				PREBINDING = NO;
 				PRODUCT_NAME = "CocosDenshion - FancyRat Metering Demo";
 			};
@@ -13057,12 +12430,6 @@
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				INFOPLIST_FILE = CocosDenshion/TestsAndDemos/FancyRatMeteringDemo/Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = (
-					"-framework",
-					Foundation,
-					"-framework",
-					UIKit,
-				);
 				PREBINDING = NO;
 				PRODUCT_NAME = "CocosDenshion - FancyRat Metering Demo";
 				ZERO_LINK = NO;
@@ -13081,7 +12448,6 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = "-ObjC";
 				PREBINDING = NO;
 				PRODUCT_NAME = Texture2dTest;
 			};
@@ -13099,7 +12465,6 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = "-ObjC";
 				PREBINDING = NO;
 				PRODUCT_NAME = Texture2dTest;
 				ZERO_LINK = NO;
@@ -13118,13 +12483,6 @@
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-framework",
-					Foundation,
-					"-framework",
-					UIKit,
-				);
 				PREBINDING = NO;
 				PRODUCT_NAME = EaseActionsTest;
 			};
@@ -13142,13 +12500,6 @@
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-framework",
-					Foundation,
-					"-framework",
-					UIKit,
-				);
 				PREBINDING = NO;
 				PRODUCT_NAME = EaseActionsTest;
 				ZERO_LINK = NO;
@@ -13167,13 +12518,6 @@
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-framework",
-					Foundation,
-					"-framework",
-					UIKit,
-				);
 				PREBINDING = NO;
 				PRODUCT_NAME = cocosnodeTest;
 			};
@@ -13191,13 +12535,6 @@
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-framework",
-					Foundation,
-					"-framework",
-					UIKit,
-				);
 				PREBINDING = NO;
 				PRODUCT_NAME = cocosnodeTest;
 				ZERO_LINK = NO;
@@ -13216,10 +12553,6 @@
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-all_load",
-				);
 				PREBINDING = NO;
 				PRODUCT_NAME = LabelTest;
 			};
@@ -13237,10 +12570,6 @@
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-all_load",
-				);
 				PREBINDING = NO;
 				PRODUCT_NAME = LabelTest;
 				ZERO_LINK = NO;
@@ -13259,13 +12588,6 @@
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-framework",
-					Foundation,
-					"-framework",
-					UIKit,
-				);
 				PREBINDING = NO;
 				PRODUCT_NAME = ClickAndMoveTest;
 			};
@@ -13283,13 +12605,6 @@
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-framework",
-					Foundation,
-					"-framework",
-					UIKit,
-				);
 				PREBINDING = NO;
 				PRODUCT_NAME = ClickAndMoveTest;
 				ZERO_LINK = NO;
@@ -13357,13 +12672,6 @@
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-framework",
-					Foundation,
-					"-framework",
-					UIKit,
-				);
 				PREBINDING = NO;
 				PRODUCT_NAME = SceneTest;
 			};
@@ -13381,13 +12689,6 @@
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-framework",
-					Foundation,
-					"-framework",
-					UIKit,
-				);
 				PREBINDING = NO;
 				PRODUCT_NAME = SceneTest;
 				ZERO_LINK = NO;
@@ -13406,13 +12707,6 @@
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-framework",
-					Foundation,
-					"-framework",
-					UIKit,
-				);
 				PREBINDING = NO;
 				PRODUCT_NAME = IntervalTest;
 			};
@@ -13430,13 +12724,6 @@
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-framework",
-					Foundation,
-					"-framework",
-					UIKit,
-				);
 				PREBINDING = NO;
 				PRODUCT_NAME = IntervalTest;
 				ZERO_LINK = NO;
@@ -13455,13 +12742,6 @@
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-framework",
-					Foundation,
-					"-framework",
-					UIKit,
-				);
 				PREBINDING = NO;
 				PRODUCT_NAME = Bug899;
 			};
@@ -13479,13 +12759,6 @@
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-framework",
-					Foundation,
-					"-framework",
-					UIKit,
-				);
 				PREBINDING = NO;
 				PRODUCT_NAME = Bug899;
 				ZERO_LINK = NO;
@@ -13504,13 +12777,6 @@
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-framework",
-					Foundation,
-					"-framework",
-					UIKit,
-				);
 				PREBINDING = NO;
 				PRODUCT_NAME = Bug350;
 			};
@@ -13528,13 +12794,6 @@
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-framework",
-					Foundation,
-					"-framework",
-					UIKit,
-				);
 				PREBINDING = NO;
 				PRODUCT_NAME = Bug350;
 				ZERO_LINK = NO;
@@ -13553,13 +12812,6 @@
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-framework",
-					Foundation,
-					"-framework",
-					UIKit,
-				);
 				PREBINDING = NO;
 				PRODUCT_NAME = SchedulerTest;
 			};
@@ -13577,13 +12829,6 @@
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-framework",
-					Foundation,
-					"-framework",
-					UIKit,
-				);
 				PREBINDING = NO;
 				PRODUCT_NAME = SchedulerTest;
 				ZERO_LINK = NO;
@@ -13627,13 +12872,6 @@
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-framework",
-					Foundation,
-					"-framework",
-					UIKit,
-				);
 				PREBINDING = NO;
 				PRODUCT_NAME = EffectsTest;
 			};
@@ -13651,13 +12889,6 @@
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-framework",
-					Foundation,
-					"-framework",
-					UIKit,
-				);
 				PREBINDING = NO;
 				PRODUCT_NAME = EffectsTest;
 				ZERO_LINK = NO;
@@ -13765,13 +12996,6 @@
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-framework",
-					Foundation,
-					"-framework",
-					UIKit,
-				);
 				PREBINDING = NO;
 				PRODUCT_NAME = ChipmunkAccelTouchTest;
 			};
@@ -13789,13 +13013,6 @@
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-framework",
-					Foundation,
-					"-framework",
-					UIKit,
-				);
 				PREBINDING = NO;
 				PRODUCT_NAME = ChipmunkAccelTouchTest;
 				ZERO_LINK = NO;
@@ -13814,13 +13031,6 @@
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				INFOPLIST_FILE = "Resources/ChipmunkDemo-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-framework",
-					Foundation,
-					"-framework",
-					UIKit,
-				);
 				PREBINDING = NO;
 				PRODUCT_NAME = ChipmunkTest;
 			};
@@ -13838,13 +13048,6 @@
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				INFOPLIST_FILE = "Resources/ChipmunkDemo-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-framework",
-					Foundation,
-					"-framework",
-					UIKit,
-				);
 				PREBINDING = NO;
 				PRODUCT_NAME = ChipmunkTest;
 				ZERO_LINK = NO;
@@ -13912,13 +13115,6 @@
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-framework",
-					Foundation,
-					"-framework",
-					UIKit,
-				);
 				PREBINDING = NO;
 				PRODUCT_NAME = TransitionsTest;
 			};
@@ -13936,13 +13132,6 @@
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-framework",
-					Foundation,
-					"-framework",
-					UIKit,
-				);
 				PREBINDING = NO;
 				PRODUCT_NAME = TransitionsTest;
 				ZERO_LINK = NO;
@@ -13961,13 +13150,6 @@
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-framework",
-					Foundation,
-					"-framework",
-					UIKit,
-				);
 				PREBINDING = NO;
 				PRODUCT_NAME = ActionsTest;
 			};
@@ -13985,13 +13167,6 @@
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-framework",
-					Foundation,
-					"-framework",
-					UIKit,
-				);
 				PREBINDING = NO;
 				PRODUCT_NAME = ActionsTest;
 				ZERO_LINK = NO;
@@ -14035,13 +13210,6 @@
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-framework",
-					Foundation,
-					"-framework",
-					UIKit,
-				);
 				PREBINDING = NO;
 				PRODUCT_NAME = Bug886;
 			};
@@ -14059,113 +13227,8 @@
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-framework",
-					Foundation,
-					"-framework",
-					UIKit,
-				);
 				PREBINDING = NO;
 				PRODUCT_NAME = Bug886;
-				ZERO_LINK = NO;
-			};
-			name = Release;
-		};
-		50D0E05D0FF9232E00098927 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				COPY_PHASE_STRIP = NO;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
-				INFOPLIST_FILE = Resources/Info.plist;
-				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-framework",
-					Foundation,
-					"-framework",
-					UIKit,
-				);
-				PREBINDING = NO;
-				PRODUCT_NAME = HelloActionsSample;
-			};
-			name = Debug;
-		};
-		50D0E05E0FF9232E00098927 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
-				INFOPLIST_FILE = Resources/Info.plist;
-				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-framework",
-					Foundation,
-					"-framework",
-					UIKit,
-				);
-				PREBINDING = NO;
-				PRODUCT_NAME = HelloActionsSample;
-				ZERO_LINK = NO;
-			};
-			name = Release;
-		};
-		50D0E0DC0FF930BA00098927 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				COPY_PHASE_STRIP = NO;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
-				INFOPLIST_FILE = Resources/Info.plist;
-				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-framework",
-					Foundation,
-					"-framework",
-					UIKit,
-				);
-				PREBINDING = NO;
-				PRODUCT_NAME = HelloEventsSample;
-			};
-			name = Debug;
-		};
-		50D0E0DD0FF930BA00098927 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
-				INFOPLIST_FILE = Resources/Info.plist;
-				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-framework",
-					Foundation,
-					"-framework",
-					UIKit,
-				);
-				PREBINDING = NO;
-				PRODUCT_NAME = HelloEventsSample;
 				ZERO_LINK = NO;
 			};
 			name = Release;
@@ -14182,13 +13245,6 @@
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-framework",
-					Foundation,
-					"-framework",
-					UIKit,
-				);
 				PREBINDING = NO;
 				PRODUCT_NAME = EffectsAdvancedTest;
 			};
@@ -14206,13 +13262,6 @@
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-framework",
-					Foundation,
-					"-framework",
-					UIKit,
-				);
 				PREBINDING = NO;
 				PRODUCT_NAME = EffectsAdvancedTest;
 				ZERO_LINK = NO;
@@ -14268,55 +13317,6 @@
 			};
 			name = Release;
 		};
-		50DFC29D0FF627B6007E7827 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				COPY_PHASE_STRIP = NO;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
-				INFOPLIST_FILE = Resources/Info.plist;
-				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-framework",
-					Foundation,
-					"-framework",
-					UIKit,
-				);
-				PREBINDING = NO;
-				PRODUCT_NAME = HelloWorldSample;
-			};
-			name = Debug;
-		};
-		50DFC29E0FF627B6007E7827 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
-				INFOPLIST_FILE = Resources/Info.plist;
-				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-framework",
-					Foundation,
-					"-framework",
-					UIKit,
-				);
-				PREBINDING = NO;
-				PRODUCT_NAME = HelloWorldSample;
-				ZERO_LINK = NO;
-			};
-			name = Release;
-		};
 		50E77D1011D4C925009CA2C2 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -14329,13 +13329,6 @@
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-framework",
-					Foundation,
-					"-framework",
-					UIKit,
-				);
 				PREBINDING = NO;
 				PRODUCT_NAME = HiResTest;
 			};
@@ -14353,13 +13346,6 @@
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-framework",
-					Foundation,
-					"-framework",
-					UIKit,
-				);
 				PREBINDING = NO;
 				PRODUCT_NAME = HiResTest;
 				ZERO_LINK = NO;
@@ -14488,13 +13474,6 @@
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-framework",
-					Foundation,
-					"-framework",
-					UIKit,
-				);
 				PREBINDING = NO;
 				PRODUCT_NAME = Bug422;
 			};
@@ -14512,13 +13491,6 @@
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-framework",
-					Foundation,
-					"-framework",
-					UIKit,
-				);
 				PREBINDING = NO;
 				PRODUCT_NAME = Bug422;
 				ZERO_LINK = NO;
@@ -14537,10 +13509,6 @@
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				INFOPLIST_FILE = "Resources/Info-FontTest.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = (
-					"-all_load",
-					"-ObjC",
-				);
 				PREBINDING = NO;
 				PRODUCT_NAME = FontTest;
 			};
@@ -14558,10 +13526,6 @@
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				INFOPLIST_FILE = "Resources/Info-FontTest.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = (
-					"-all_load",
-					"-ObjC",
-				);
 				PREBINDING = NO;
 				PRODUCT_NAME = FontTest;
 				ZERO_LINK = NO;
@@ -14580,13 +13544,6 @@
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-framework",
-					Foundation,
-					"-framework",
-					UIKit,
-				);
 				PREBINDING = NO;
 				PRODUCT_NAME = Bug624;
 			};
@@ -14604,13 +13561,6 @@
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-framework",
-					Foundation,
-					"-framework",
-					UIKit,
-				);
 				PREBINDING = NO;
 				PRODUCT_NAME = Bug624;
 				ZERO_LINK = NO;
@@ -14629,13 +13579,6 @@
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-framework",
-					Foundation,
-					"-framework",
-					UIKit,
-				);
 				PREBINDING = NO;
 				PRODUCT_NAME = Bug458;
 			};
@@ -14653,13 +13596,6 @@
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-framework",
-					Foundation,
-					"-framework",
-					UIKit,
-				);
 				PREBINDING = NO;
 				PRODUCT_NAME = Bug458;
 				ZERO_LINK = NO;
@@ -14678,13 +13614,6 @@
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-framework",
-					Foundation,
-					"-framework",
-					UIKit,
-				);
 				PREBINDING = NO;
 				PRODUCT_NAME = ShaderTest;
 			};
@@ -14702,13 +13631,6 @@
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-framework",
-					Foundation,
-					"-framework",
-					UIKit,
-				);
 				PREBINDING = NO;
 				PRODUCT_NAME = ShaderTest;
 				ZERO_LINK = NO;
@@ -14727,13 +13649,6 @@
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-framework",
-					Foundation,
-					"-framework",
-					UIKit,
-				);
 				PREBINDING = NO;
 				PRODUCT_NAME = ZwoptexTest;
 			};
@@ -14751,13 +13666,6 @@
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-framework",
-					Foundation,
-					"-framework",
-					UIKit,
-				);
 				PREBINDING = NO;
 				PRODUCT_NAME = ZwoptexTest;
 				ZERO_LINK = NO;
@@ -14776,13 +13684,6 @@
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-framework",
-					Foundation,
-					"-framework",
-					UIKit,
-				);
 				PREBINDING = NO;
 				PRODUCT_NAME = Bug1159;
 			};
@@ -14800,13 +13701,6 @@
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-framework",
-					Foundation,
-					"-framework",
-					UIKit,
-				);
 				PREBINDING = NO;
 				PRODUCT_NAME = Bug1159;
 				ZERO_LINK = NO;
@@ -15230,24 +14124,6 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		50D0E05C0FF9232E00098927 /* Build configuration list for PBXNativeTarget "HelloActionsSample" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				50D0E05D0FF9232E00098927 /* Debug */,
-				50D0E05E0FF9232E00098927 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		50D0E0DB0FF930BA00098927 /* Build configuration list for PBXNativeTarget "HelloEventsSample" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				50D0E0DC0FF930BA00098927 /* Debug */,
-				50D0E0DD0FF930BA00098927 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		50D56FCF0F3FABEC007CD6B9 /* Build configuration list for PBXNativeTarget "EffectsAdvancedTest" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -15262,15 +14138,6 @@
 			buildConfigurations = (
 				50DB1BC80E1C1E5900A89DFF /* Debug */,
 				50DB1BC90E1C1E5900A89DFF /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		50DFC29C0FF627B6007E7827 /* Build configuration list for PBXNativeTarget "HelloWorldSample" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				50DFC29D0FF627B6007E7827 /* Debug */,
-				50DFC29E0FF627B6007E7827 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

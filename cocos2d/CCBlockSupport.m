@@ -26,8 +26,6 @@
 
 #import "CCBlockSupport.h"
 
-#if NS_BLOCKS_AVAILABLE
-
 @implementation NSObject(CCBlocksAdditions)
 
 - (void)ccCallbackBlock {
@@ -43,4 +41,3 @@
 
 @end
 
-#endif

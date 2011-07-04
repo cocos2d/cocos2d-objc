@@ -3,7 +3,7 @@
 #import "cocos2d.h"
 
 // Application Delegate class
-@interface AppController : NSObject <UIAccelerometerDelegate, UIAlertViewDelegate, UITextFieldDelegate, UIApplicationDelegate>
+@interface AppController : NSObject <UIApplicationDelegate>
 {
 	// main UIWindow
 	// The OpenGL view will be a attached to this UIWindow

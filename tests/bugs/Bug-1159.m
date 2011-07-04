@@ -9,6 +9,8 @@
 
 #import "Bug-1159.h"
 
+#import "RootViewController.h"
+
 @implementation Bug1159
 
 +(id)scene
@@ -69,29 +71,30 @@
 - (void) applicationDidFinishLaunching:(UIApplication*)application
 {
 	// Init the window
-	window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+	window_ = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 	
 	// Set to 2D Projection
 	CCDirector *director = [CCDirector sharedDirector];
 	
-	// before creating any layer, set the landscape mode
-	[director setDeviceOrientation:CCDeviceOrientationLandscapeLeft];
 	[director setAnimationInterval:1.0/60];
 	
 	
 	// Create an EAGLView with a RGB8 color buffer, and a depth buffer of 24-bits
-    EAGLView *glView = [EAGLView viewWithFrame:[window bounds]
+    EAGLView *glView = [EAGLView viewWithFrame:[window_ bounds]
 								   pixelFormat:kEAGLColorFormatRGBA8
 								   depthFormat:GL_DEPTH_COMPONENT24_OES];
 	
 	// attach the openglView to the director
 	[director setOpenGLView:glView];
 	
+	viewController_ = [[RootViewController alloc] initWithNibName:nil bundle:nil];
+	[viewController_ setView:glView];
+
 	// make the OpenGLView a child of the main window
-	[window addSubview:glView];
+	[window_ addSubview:viewController_.view];
 	
 	// make main window visible
-	[window makeKeyAndVisible];	
+	[window_ makeKeyAndVisible];	
 	
 	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
 	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
@@ -126,7 +129,8 @@
 
 - (void) dealloc
 {
-	[window dealloc];
+	[viewController_ release];
+	[window_ dealloc];
 	[super dealloc];
 }
 

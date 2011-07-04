@@ -10,6 +10,8 @@
 // local import
 #import "FontTest.h"
 
+#import "RootViewController.h"
+
 #pragma mark Demo - Font
 
 enum {
@@ -155,10 +157,7 @@ NSString* restartAction()
 	
 	// Obtain the shared director in order to...
 	CCDirector *director = [CCDirector sharedDirector];
-	
-	// Sets landscape mode
-	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
-	
+		
 	// Turn on display FPS
 	[director setDisplayFPS:YES];
 	
@@ -179,7 +178,9 @@ NSString* restartAction()
 
 - (void) dealloc
 {
-	[window dealloc];
+	[viewController_ release];
+	[window_ release];
+
 	[super dealloc];
 }
 
