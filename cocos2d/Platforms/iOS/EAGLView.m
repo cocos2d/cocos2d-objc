@@ -233,8 +233,6 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	//	-> context_ MUST be the OpenGL context
 	//	-> renderbuffer_ must be the the RENDER BUFFER
 
-#ifdef __IPHONE_4_0
-	
 	if (multiSampling_)
 	{
 		/* Resolve from msaaFramebuffer to resolveFramebuffer */
@@ -269,8 +267,6 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 			glDiscardFramebufferEXT(GL_FRAMEBUFFER_OES, 1, attachments);
 		}
 	}
-	
-#endif // __IPHONE_4_0
 	
 	if(![context_ presentRenderbuffer:GL_RENDERBUFFER_OES])
 		CCLOG(@"cocos2d: Failed to swap renderbuffer in %s\n", __FUNCTION__);
