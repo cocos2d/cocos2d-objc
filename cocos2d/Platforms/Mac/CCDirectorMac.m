@@ -45,6 +45,9 @@
 #import "../../Support/CGPointExtension.h"
 #import "../../Support/TransformUtils.h"
 
+// external
+#import "kazmath/GL/matrix.h"
+
 #pragma mark -
 #pragma mark Director Mac extensions
 
@@ -201,31 +204,44 @@
 
 -(void) setProjection:(ccDirectorProjection)projection
 {
-	CGSize winSize = winSizeInPixels_;
+	CGSize size = winSizeInPixels_;
 	
-	glViewport(0, 0, winSize.width, winSize.height);
-	
+	glViewport(0, 0, size.width, size.height);
 	
 	switch (projection) {
 		case kCCDirectorProjection2D:
-		{
-			kmMat4OrthographicProjection(&ccProjectionMatrix, 0, winSize.width, 0, winSize.height, -1024, 1024);
-			ccSetProjectionMatrixDirty();
+			kmGLMatrixMode(KM_GL_PROJECTION);
+			kmGLLoadIdentity();
+			
+			kmMat4 orthoMatrix;
+			kmMat4OrthographicProjection(&orthoMatrix, 0, size.width, 0, size.height, -1024, 1024);			
+			kmGLMultMatrix( &orthoMatrix );
+			
+			kmGLMatrixMode(KM_GL_MODELVIEW);
+			kmGLLoadIdentity();
 			break;
-		}
 			
 		case kCCDirectorProjection3D:
 		{
-			kmMat4 matrixA, matrixB;
-			kmMat4PerspectiveProjection( &matrixA, 60, (GLfloat)winSize.width/winSize.height, 0.5f, 1500.0f);
+			float eyeZ = size.height * [self getZEye] / size.height;
 			
-			kmVec3 eye = kmVec3Make(winSize.width/2, winSize.height/2, [self getZEye] );
-			kmVec3 center = kmVec3Make( winSize.width/2, winSize.height/2, 0 );
-			kmVec3 up = kmVec3Make(0,1,0);
-			kmMat4LookAt(&matrixB, &eye, &center, &up);
+			kmMat4 matrixPerspective, matrixLookup;
+			kmMat4PerspectiveProjection( &matrixPerspective, 60, (GLfloat)size.width/size.height, 0.5f, 1500.0f);
 			
-			kmMat4Multiply(&ccProjectionMatrix, &matrixA, &matrixB);
-			ccSetProjectionMatrixDirty();
+			kmGLMatrixMode(KM_GL_PROJECTION);
+			kmGLLoadIdentity();
+			
+			kmMat4PerspectiveProjection( &matrixPerspective, 60, (GLfloat)size.width/size.height, 0.5f, 1500.0f);
+			kmGLMultMatrix(&matrixPerspective);
+			
+			kmGLMatrixMode(KM_GL_MODELVIEW);	
+			kmGLLoadIdentity();
+			kmVec3 eye, center, up;
+			kmVec3Fill( &eye, size.width/2, size.height/2, eyeZ );
+			kmVec3Fill( &center, size.width/2, size.height/2, 0 );
+			kmVec3Fill( &up, 0, 1, 0);
+			kmMat4LookAt(&matrixLookup, &eye, &center, &up);
+			kmGLMultMatrix(&matrixLookup);
 			break;
 		}
 			

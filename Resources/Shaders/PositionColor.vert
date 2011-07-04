@@ -1,10 +1,10 @@
 // http://www.cocos2d-iphone.org
 
 attribute vec4 a_position;
+attribute vec4 a_color;
 
 uniform		mat4 u_MVMatrix;
 uniform		mat4 u_PMatrix;
-uniform		vec4 u_color;
 
 varying vec4 v_fragmentColor;
 

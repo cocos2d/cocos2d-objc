@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 45;
+	objectVersion = 46;
 	objects = {
 
 /* Begin PBXAggregateTarget section */
@@ -34,6 +34,34 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		A006444F13C147BB001D7D78 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0D5D6E7134403D200A7B1B9 /* Shaders */; };
+		A006445213C147FA001D7D78 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0D5D6E7134403D200A7B1B9 /* Shaders */; };
+		A064312713C1418200CC5554 /* libkazmath.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A06430E713C1414300CC5554 /* libkazmath.a */; };
+		A0B532B913C141FF0072EDA4 /* aabb.h in Headers */ = {isa = PBXBuildFile; fileRef = A0B5329A13C141FF0072EDA4 /* aabb.h */; };
+		A0B532BA13C141FF0072EDA4 /* mat4stack.h in Headers */ = {isa = PBXBuildFile; fileRef = A0B5329C13C141FF0072EDA4 /* mat4stack.h */; };
+		A0B532BB13C141FF0072EDA4 /* matrix.h in Headers */ = {isa = PBXBuildFile; fileRef = A0B5329D13C141FF0072EDA4 /* matrix.h */; };
+		A0B532BC13C141FF0072EDA4 /* kazmath.h in Headers */ = {isa = PBXBuildFile; fileRef = A0B5329E13C141FF0072EDA4 /* kazmath.h */; };
+		A0B532BD13C141FF0072EDA4 /* mat3.h in Headers */ = {isa = PBXBuildFile; fileRef = A0B5329F13C141FF0072EDA4 /* mat3.h */; };
+		A0B532BE13C141FF0072EDA4 /* mat4.h in Headers */ = {isa = PBXBuildFile; fileRef = A0B532A013C141FF0072EDA4 /* mat4.h */; };
+		A0B532BF13C141FF0072EDA4 /* plane.h in Headers */ = {isa = PBXBuildFile; fileRef = A0B532A113C141FF0072EDA4 /* plane.h */; };
+		A0B532C013C141FF0072EDA4 /* quaternion.h in Headers */ = {isa = PBXBuildFile; fileRef = A0B532A213C141FF0072EDA4 /* quaternion.h */; };
+		A0B532C113C141FF0072EDA4 /* ray2.h in Headers */ = {isa = PBXBuildFile; fileRef = A0B532A313C141FF0072EDA4 /* ray2.h */; };
+		A0B532C213C141FF0072EDA4 /* utility.h in Headers */ = {isa = PBXBuildFile; fileRef = A0B532A413C141FF0072EDA4 /* utility.h */; };
+		A0B532C313C141FF0072EDA4 /* vec2.h in Headers */ = {isa = PBXBuildFile; fileRef = A0B532A513C141FF0072EDA4 /* vec2.h */; };
+		A0B532C413C141FF0072EDA4 /* vec3.h in Headers */ = {isa = PBXBuildFile; fileRef = A0B532A613C141FF0072EDA4 /* vec3.h */; };
+		A0B532C513C141FF0072EDA4 /* vec4.h in Headers */ = {isa = PBXBuildFile; fileRef = A0B532A713C141FF0072EDA4 /* vec4.h */; };
+		A0B532C613C141FF0072EDA4 /* aabb.c in Sources */ = {isa = PBXBuildFile; fileRef = A0B532A913C141FF0072EDA4 /* aabb.c */; };
+		A0B532C713C141FF0072EDA4 /* mat4stack.c in Sources */ = {isa = PBXBuildFile; fileRef = A0B532AD13C141FF0072EDA4 /* mat4stack.c */; };
+		A0B532C813C141FF0072EDA4 /* matrix.c in Sources */ = {isa = PBXBuildFile; fileRef = A0B532AE13C141FF0072EDA4 /* matrix.c */; };
+		A0B532C913C141FF0072EDA4 /* mat3.c in Sources */ = {isa = PBXBuildFile; fileRef = A0B532B013C141FF0072EDA4 /* mat3.c */; };
+		A0B532CA13C141FF0072EDA4 /* mat4.c in Sources */ = {isa = PBXBuildFile; fileRef = A0B532B113C141FF0072EDA4 /* mat4.c */; };
+		A0B532CB13C141FF0072EDA4 /* plane.c in Sources */ = {isa = PBXBuildFile; fileRef = A0B532B213C141FF0072EDA4 /* plane.c */; };
+		A0B532CC13C141FF0072EDA4 /* quaternion.c in Sources */ = {isa = PBXBuildFile; fileRef = A0B532B313C141FF0072EDA4 /* quaternion.c */; };
+		A0B532CD13C141FF0072EDA4 /* ray2.c in Sources */ = {isa = PBXBuildFile; fileRef = A0B532B413C141FF0072EDA4 /* ray2.c */; };
+		A0B532CE13C141FF0072EDA4 /* utility.c in Sources */ = {isa = PBXBuildFile; fileRef = A0B532B513C141FF0072EDA4 /* utility.c */; };
+		A0B532CF13C141FF0072EDA4 /* vec2.c in Sources */ = {isa = PBXBuildFile; fileRef = A0B532B613C141FF0072EDA4 /* vec2.c */; };
+		A0B532D013C141FF0072EDA4 /* vec3.c in Sources */ = {isa = PBXBuildFile; fileRef = A0B532B713C141FF0072EDA4 /* vec3.c */; };
+		A0B532D113C141FF0072EDA4 /* vec4.c in Sources */ = {isa = PBXBuildFile; fileRef = A0B532B813C141FF0072EDA4 /* vec4.c */; };
 		E01E6A3E121EDCD3001A484F /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E01E6A3D121EDCD3001A484F /* ApplicationServices.framework */; };
 		E01E6B36121EDCED001A484F /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E036A79E121B5C870037C5C6 /* QuartzCore.framework */; };
 		E01E6B49121EDCF4001A484F /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E036A79C121B5C720037C5C6 /* OpenGL.framework */; };
@@ -3048,9 +3076,6 @@
 		E0D2D560128CB06A00F78C63 /* piece.png in Resources */ = {isa = PBXBuildFile; fileRef = E0D2D55F128CB06A00F78C63 /* piece.png */; };
 		E0D44F3A1291BFFB0094708A /* test_image_rgba4444.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E0D44F381291BFFB0094708A /* test_image_rgba4444.pvr.ccz */; };
 		E0D44F3B1291BFFB0094708A /* test_image_rgba4444.pvr.gz in Resources */ = {isa = PBXBuildFile; fileRef = E0D44F391291BFFB0094708A /* test_image_rgba4444.pvr.gz */; };
-		E0D5D6E5134402B600A7B1B9 /* kazmath.c in Sources */ = {isa = PBXBuildFile; fileRef = E0D5D6E31344028500A7B1B9 /* kazmath.c */; };
-		E0D5D6E6134402B600A7B1B9 /* kazmath.h in Headers */ = {isa = PBXBuildFile; fileRef = E0D5D6E41344028500A7B1B9 /* kazmath.h */; };
-		E0D5D6E8134403D200A7B1B9 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0D5D6E7134403D200A7B1B9 /* Shaders */; };
 		E0D5D6E9134403D200A7B1B9 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0D5D6E7134403D200A7B1B9 /* Shaders */; };
 		E0D5D6EA134403D200A7B1B9 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0D5D6E7134403D200A7B1B9 /* Shaders */; };
 		E0D5D6EB134403D200A7B1B9 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0D5D6E7134403D200A7B1B9 /* Shaders */; };
@@ -3064,7 +3089,6 @@
 		E0D5D6F3134403D200A7B1B9 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0D5D6E7134403D200A7B1B9 /* Shaders */; };
 		E0D5D6F4134403D200A7B1B9 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0D5D6E7134403D200A7B1B9 /* Shaders */; };
 		E0D5D6F5134403D200A7B1B9 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0D5D6E7134403D200A7B1B9 /* Shaders */; };
-		E0D5D6F6134403D200A7B1B9 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0D5D6E7134403D200A7B1B9 /* Shaders */; };
 		E0D5D7151344056600A7B1B9 /* CCDirectorIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = E0D5D6FC1344056600A7B1B9 /* CCDirectorIOS.h */; };
 		E0D5D7161344056600A7B1B9 /* CCDirectorIOS.m in Sources */ = {isa = PBXBuildFile; fileRef = E0D5D6FD1344056600A7B1B9 /* CCDirectorIOS.m */; };
 		E0D5D7171344056600A7B1B9 /* CCTouchDelegateProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = E0D5D6FE1344056600A7B1B9 /* CCTouchDelegateProtocol.h */; };
@@ -3285,6 +3309,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		A064312813C1418600CC5554 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A06430E613C1414300CC5554;
+			remoteInfo = kazmath;
+		};
 		E026443312A59DA7009D04FE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
@@ -3565,6 +3596,32 @@
 		13E42FB307B3F0F600E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		A06430E713C1414300CC5554 /* libkazmath.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libkazmath.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		A0B5329A13C141FF0072EDA4 /* aabb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aabb.h; sourceTree = "<group>"; };
+		A0B5329C13C141FF0072EDA4 /* mat4stack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mat4stack.h; sourceTree = "<group>"; };
+		A0B5329D13C141FF0072EDA4 /* matrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = matrix.h; sourceTree = "<group>"; };
+		A0B5329E13C141FF0072EDA4 /* kazmath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = kazmath.h; sourceTree = "<group>"; };
+		A0B5329F13C141FF0072EDA4 /* mat3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mat3.h; sourceTree = "<group>"; };
+		A0B532A013C141FF0072EDA4 /* mat4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mat4.h; sourceTree = "<group>"; };
+		A0B532A113C141FF0072EDA4 /* plane.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = plane.h; sourceTree = "<group>"; };
+		A0B532A213C141FF0072EDA4 /* quaternion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = quaternion.h; sourceTree = "<group>"; };
+		A0B532A313C141FF0072EDA4 /* ray2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ray2.h; sourceTree = "<group>"; };
+		A0B532A413C141FF0072EDA4 /* utility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = utility.h; sourceTree = "<group>"; };
+		A0B532A513C141FF0072EDA4 /* vec2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vec2.h; sourceTree = "<group>"; };
+		A0B532A613C141FF0072EDA4 /* vec3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vec3.h; sourceTree = "<group>"; };
+		A0B532A713C141FF0072EDA4 /* vec4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vec4.h; sourceTree = "<group>"; };
+		A0B532A913C141FF0072EDA4 /* aabb.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = aabb.c; sourceTree = "<group>"; };
+		A0B532AD13C141FF0072EDA4 /* mat4stack.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mat4stack.c; sourceTree = "<group>"; };
+		A0B532AE13C141FF0072EDA4 /* matrix.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = matrix.c; sourceTree = "<group>"; };
+		A0B532B013C141FF0072EDA4 /* mat3.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mat3.c; sourceTree = "<group>"; };
+		A0B532B113C141FF0072EDA4 /* mat4.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mat4.c; sourceTree = "<group>"; };
+		A0B532B213C141FF0072EDA4 /* plane.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = plane.c; sourceTree = "<group>"; };
+		A0B532B313C141FF0072EDA4 /* quaternion.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = quaternion.c; sourceTree = "<group>"; };
+		A0B532B413C141FF0072EDA4 /* ray2.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ray2.c; sourceTree = "<group>"; };
+		A0B532B513C141FF0072EDA4 /* utility.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = utility.c; sourceTree = "<group>"; };
+		A0B532B613C141FF0072EDA4 /* vec2.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vec2.c; sourceTree = "<group>"; };
+		A0B532B713C141FF0072EDA4 /* vec3.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vec3.c; sourceTree = "<group>"; };
+		A0B532B813C141FF0072EDA4 /* vec4.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vec4.c; sourceTree = "<group>"; };
 		E01E663D121CA00A001A484F /* libcocos2d.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libcocos2d.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		E01E6A3D121EDCD3001A484F /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = System/Library/Frameworks/ApplicationServices.framework; sourceTree = SDKROOT; };
 		E026451912A59DA7009D04FE /* ParticleTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ParticleTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -4028,8 +4085,6 @@
 		E0D5D6DE1343FAEF00A7B1B9 /* LICENSE_cocos2d.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE_cocos2d.txt; sourceTree = "<group>"; };
 		E0D5D6DF1343FAEF00A7B1B9 /* LICENSE_cocosdenshion.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE_cocosdenshion.txt; sourceTree = "<group>"; };
 		E0D5D6E11343FAEF00A7B1B9 /* LICENSE_libpng.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE_libpng.txt; sourceTree = "<group>"; };
-		E0D5D6E31344028500A7B1B9 /* kazmath.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = kazmath.c; sourceTree = "<group>"; };
-		E0D5D6E41344028500A7B1B9 /* kazmath.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = kazmath.h; sourceTree = "<group>"; };
 		E0D5D6E7134403D200A7B1B9 /* Shaders */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Shaders; path = Resources/Shaders; sourceTree = "<group>"; };
 		E0D5D6FC1344056600A7B1B9 /* CCDirectorIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCDirectorIOS.h; sourceTree = "<group>"; };
 		E0D5D6FD1344056600A7B1B9 /* CCDirectorIOS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCDirectorIOS.m; sourceTree = "<group>"; };
@@ -4052,6 +4107,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		A06430E513C1414300CC5554 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E01E663B121CA00A001A484F /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -4059,6 +4121,7 @@
 				E01E6A3E121EDCD3001A484F /* ApplicationServices.framework in Frameworks */,
 				E01E6B36121EDCED001A484F /* QuartzCore.framework in Frameworks */,
 				E01E6B49121EDCF4001A484F /* OpenGL.framework in Frameworks */,
+				A064312713C1418200CC5554 /* libkazmath.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4314,6 +4377,7 @@
 				E0DA434212A03A3C00210ACE /* FullScreenTest.app */,
 				E026451912A59DA7009D04FE /* ParticleTest.app */,
 				E0D2CEE212B93736008D5DBB /* EventsTest.app */,
+				A06430E713C1414300CC5554 /* libkazmath.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -4371,6 +4435,87 @@
 				E0F9256D1224207200EF2362 /* libz.dylib */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A0B5329713C141FF0072EDA4 /* kazmath */ = {
+			isa = PBXGroup;
+			children = (
+				A0B5329813C141FF0072EDA4 /* include */,
+				A0B532A813C141FF0072EDA4 /* src */,
+			);
+			name = kazmath;
+			path = external/kazmath;
+			sourceTree = "<group>";
+		};
+		A0B5329813C141FF0072EDA4 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				A0B5329913C141FF0072EDA4 /* kazmath */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		A0B5329913C141FF0072EDA4 /* kazmath */ = {
+			isa = PBXGroup;
+			children = (
+				A0B5329A13C141FF0072EDA4 /* aabb.h */,
+				A0B5329B13C141FF0072EDA4 /* GL */,
+				A0B5329E13C141FF0072EDA4 /* kazmath.h */,
+				A0B5329F13C141FF0072EDA4 /* mat3.h */,
+				A0B532A013C141FF0072EDA4 /* mat4.h */,
+				A0B532A113C141FF0072EDA4 /* plane.h */,
+				A0B532A213C141FF0072EDA4 /* quaternion.h */,
+				A0B532A313C141FF0072EDA4 /* ray2.h */,
+				A0B532A413C141FF0072EDA4 /* utility.h */,
+				A0B532A513C141FF0072EDA4 /* vec2.h */,
+				A0B532A613C141FF0072EDA4 /* vec3.h */,
+				A0B532A713C141FF0072EDA4 /* vec4.h */,
+			);
+			path = kazmath;
+			sourceTree = "<group>";
+		};
+		A0B5329B13C141FF0072EDA4 /* GL */ = {
+			isa = PBXGroup;
+			children = (
+				A0B5329C13C141FF0072EDA4 /* mat4stack.h */,
+				A0B5329D13C141FF0072EDA4 /* matrix.h */,
+			);
+			path = GL;
+			sourceTree = "<group>";
+		};
+		A0B532A813C141FF0072EDA4 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				A0B532A913C141FF0072EDA4 /* aabb.c */,
+				A0B532AC13C141FF0072EDA4 /* GL */,
+				A0B532AF13C141FF0072EDA4 /* gl_utils */,
+				A0B532B013C141FF0072EDA4 /* mat3.c */,
+				A0B532B113C141FF0072EDA4 /* mat4.c */,
+				A0B532B213C141FF0072EDA4 /* plane.c */,
+				A0B532B313C141FF0072EDA4 /* quaternion.c */,
+				A0B532B413C141FF0072EDA4 /* ray2.c */,
+				A0B532B513C141FF0072EDA4 /* utility.c */,
+				A0B532B613C141FF0072EDA4 /* vec2.c */,
+				A0B532B713C141FF0072EDA4 /* vec3.c */,
+				A0B532B813C141FF0072EDA4 /* vec4.c */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
+		A0B532AC13C141FF0072EDA4 /* GL */ = {
+			isa = PBXGroup;
+			children = (
+				A0B532AD13C141FF0072EDA4 /* mat4stack.c */,
+				A0B532AE13C141FF0072EDA4 /* matrix.c */,
+			);
+			path = GL;
+			sourceTree = "<group>";
+		};
+		A0B532AF13C141FF0072EDA4 /* gl_utils */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = gl_utils;
 			sourceTree = "<group>";
 		};
 		E0506A8413169AE100EAE33F /* Shaders */ = {
@@ -4504,8 +4649,6 @@
 				E076E6C31225EC7400DE0DA2 /* ccUtils.h */,
 				E076E6C41225EC7400DE0DA2 /* CGPointExtension.h */,
 				E076E6C51225EC7400DE0DA2 /* CGPointExtension.m */,
-				E0D5D6E31344028500A7B1B9 /* kazmath.c */,
-				E0D5D6E41344028500A7B1B9 /* kazmath.h */,
 				E076E6C61225EC7400DE0DA2 /* OpenGL_Internal.h */,
 				E076E6C71225EC7400DE0DA2 /* TGAlib.h */,
 				E076E6C81225EC7400DE0DA2 /* TGAlib.m */,
@@ -4985,6 +5128,7 @@
 		E076EF801225FF3E00DE0DA2 /* external */ = {
 			isa = PBXGroup;
 			children = (
+				A0B5329713C141FF0072EDA4 /* kazmath */,
 				E076EF2D1225FEF600DE0DA2 /* libpng */,
 			);
 			name = external;
@@ -5014,6 +5158,26 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
+		A06430E313C1414300CC5554 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A0B532B913C141FF0072EDA4 /* aabb.h in Headers */,
+				A0B532BA13C141FF0072EDA4 /* mat4stack.h in Headers */,
+				A0B532BB13C141FF0072EDA4 /* matrix.h in Headers */,
+				A0B532BC13C141FF0072EDA4 /* kazmath.h in Headers */,
+				A0B532BD13C141FF0072EDA4 /* mat3.h in Headers */,
+				A0B532BE13C141FF0072EDA4 /* mat4.h in Headers */,
+				A0B532BF13C141FF0072EDA4 /* plane.h in Headers */,
+				A0B532C013C141FF0072EDA4 /* quaternion.h in Headers */,
+				A0B532C113C141FF0072EDA4 /* ray2.h in Headers */,
+				A0B532C213C141FF0072EDA4 /* utility.h in Headers */,
+				A0B532C313C141FF0072EDA4 /* vec2.h in Headers */,
+				A0B532C413C141FF0072EDA4 /* vec3.h in Headers */,
+				A0B532C513C141FF0072EDA4 /* vec4.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E01E6639121CA00A001A484F /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -5098,7 +5262,6 @@
 				E02BBC80126CD870006E46A2 /* CCAnimationCache.h in Headers */,
 				E026452912A59F1E009D04FE /* CCParticleSystemPoint.h in Headers */,
 				E08AA19B12C262B3000341BD /* MacWindow.h in Headers */,
-				E0D5D6E6134402B600A7B1B9 /* kazmath.h in Headers */,
 				E0D5D7151344056600A7B1B9 /* CCDirectorIOS.h in Headers */,
 				E0D5D7171344056600A7B1B9 /* CCTouchDelegateProtocol.h in Headers */,
 				E0D5D7181344056600A7B1B9 /* CCTouchDispatcher.h in Headers */,
@@ -5125,6 +5288,23 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		A06430E613C1414300CC5554 /* kazmath */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A064312613C1416D00CC5554 /* Build configuration list for PBXNativeTarget "kazmath" */;
+			buildPhases = (
+				A06430E313C1414300CC5554 /* Headers */,
+				A06430E413C1414300CC5554 /* Sources */,
+				A06430E513C1414300CC5554 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = kazmath;
+			productName = kazmath;
+			productReference = A06430E713C1414300CC5554 /* libkazmath.a */;
+			productType = "com.apple.product-type.library.static";
+		};
 		E01E663C121CA00A001A484F /* cocos2d */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = E01E6791121CA045001A484F /* Build configuration list for PBXNativeTarget "cocos2d" */;
@@ -5136,6 +5316,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				A064312913C1418600CC5554 /* PBXTargetDependency */,
 			);
 			name = cocos2d;
 			productName = cocos2d;
@@ -5459,8 +5640,11 @@
 /* Begin PBXProject section */
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0420;
+			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "cocos2d-mac" */;
-			compatibilityVersion = "Xcode 3.1";
+			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 1;
 			knownRegions = (
@@ -5476,6 +5660,7 @@
 				E076EB631225F7AB00DE0DA2 /* build all tests */,
 				E01E663C121CA00A001A484F /* cocos2d */,
 				E076EDB81225FEAA00DE0DA2 /* libpng */,
+				A06430E613C1414300CC5554 /* kazmath */,
 				E0AC05C31228021600EFA814 /* ActionTest */,
 				E0B92F251226C0DD003FF67E /* ActionEaseTest */,
 				E0AC06B7122803BC00EFA814 /* DrawingPrimitivesTest */,
@@ -6296,7 +6481,7 @@
 				E076EAE71225EE2B00DE0DA2 /* zwoptex in Resources */,
 				E02A8539129F11BF00341C97 /* icon.icns in Resources */,
 				E08AA22F12C27E2F000341BD /* MainMenu-NoWindow.xib in Resources */,
-				E0D5D6F6134403D200A7B1B9 /* Shaders in Resources */,
+				A006444F13C147BB001D7D78 /* Shaders in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7103,7 +7288,7 @@
 				E0AC06961228021600EFA814 /* zwoptex in Resources */,
 				E0AC06971228021600EFA814 /* MainMenu.xib in Resources */,
 				E02A8543129F11BF00341C97 /* icon.icns in Resources */,
-				E0D5D6E8134403D200A7B1B9 /* Shaders in Resources */,
+				A006445213C147FA001D7D78 /* Shaders in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8532,6 +8717,25 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		A06430E413C1414300CC5554 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A0B532C613C141FF0072EDA4 /* aabb.c in Sources */,
+				A0B532C713C141FF0072EDA4 /* mat4stack.c in Sources */,
+				A0B532C813C141FF0072EDA4 /* matrix.c in Sources */,
+				A0B532C913C141FF0072EDA4 /* mat3.c in Sources */,
+				A0B532CA13C141FF0072EDA4 /* mat4.c in Sources */,
+				A0B532CB13C141FF0072EDA4 /* plane.c in Sources */,
+				A0B532CC13C141FF0072EDA4 /* quaternion.c in Sources */,
+				A0B532CD13C141FF0072EDA4 /* ray2.c in Sources */,
+				A0B532CE13C141FF0072EDA4 /* utility.c in Sources */,
+				A0B532CF13C141FF0072EDA4 /* vec2.c in Sources */,
+				A0B532D013C141FF0072EDA4 /* vec3.c in Sources */,
+				A0B532D113C141FF0072EDA4 /* vec4.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E01E663A121CA00A001A484F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -8606,7 +8810,6 @@
 				E02BBC7F126CD870006E46A2 /* CCAnimationCache.m in Sources */,
 				E026452A12A59F1E009D04FE /* CCParticleSystemPoint.m in Sources */,
 				E08AA19C12C262B3000341BD /* MacWindow.m in Sources */,
-				E0D5D6E5134402B600A7B1B9 /* kazmath.c in Sources */,
 				E0D5D7161344056600A7B1B9 /* CCDirectorIOS.m in Sources */,
 				E0D5D7191344056600A7B1B9 /* CCTouchDispatcher.m in Sources */,
 				E0D5D71B1344056600A7B1B9 /* CCTouchHandler.m in Sources */,
@@ -8781,6 +8984,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		A064312913C1418600CC5554 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A06430E613C1414300CC5554 /* kazmath */;
+			targetProxy = A064312813C1418600CC5554 /* PBXContainerItemProxy */;
+		};
 		E026443212A59DA7009D04FE /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = E050531F122D5AE6005B74CB /* RenderTextureTest */;
@@ -8998,6 +9206,28 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		A06430E813C1414300CC5554 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				PRODUCT_NAME = kazmath;
+			};
+			name = Debug;
+		};
+		A06430E913C1414300CC5554 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				PRODUCT_NAME = kazmath;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
 		C01FCF4F08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -9014,9 +9244,9 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_SHADOW = NO;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = external/kazmath/include;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				ONLY_ACTIVE_ARCH = YES;
-				PREBINDING = NO;
 				SDKROOT = macosx;
 			};
 			name = Debug;
@@ -9032,8 +9262,8 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_SHADOW = NO;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = external/kazmath/include;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
-				PREBINDING = NO;
 				SDKROOT = macosx;
 			};
 			name = Release;
@@ -9045,7 +9275,6 @@
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				PREBINDING = NO;
 				PRODUCT_NAME = cocos2d;
 			};
 			name = Debug;
@@ -9056,8 +9285,6 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
-				PREBINDING = NO;
 				PRODUCT_NAME = cocos2d;
 				ZERO_LINK = NO;
 			};
@@ -9069,17 +9296,12 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Resources-Mac/cocos2d_mac_Prefix.pch";
 				INFOPLIST_FILE = "Resources-Mac/cocos2d_mac-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/build/Debug\"",
-				);
 				PRODUCT_NAME = ParticleTest;
 			};
 			name = Debug;
@@ -9094,10 +9316,6 @@
 				GCC_PREFIX_HEADER = "Resources-Mac/cocos2d_mac_Prefix.pch";
 				INFOPLIST_FILE = "Resources-Mac/cocos2d_mac-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\\\"$(SRCROOT)/build/Debug\\\"",
-				);
 				PRODUCT_NAME = ParticleTest;
 			};
 			name = Release;
@@ -9108,14 +9326,12 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Resources-Mac/cocos2d_mac_Prefix.pch";
 				INFOPLIST_FILE = "Resources-Mac/cocos2d_mac-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = RenderTextureTest;
 			};
 			name = Debug;
@@ -9130,7 +9346,6 @@
 				GCC_PREFIX_HEADER = "Resources-Mac/cocos2d_mac_Prefix.pch";
 				INFOPLIST_FILE = "Resources-Mac/cocos2d_mac-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = RenderTextureTest;
 			};
 			name = Release;
@@ -9141,17 +9356,12 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Resources-Mac/cocos2d_mac_Prefix.pch";
 				INFOPLIST_FILE = "Resources-Mac/cocos2d_mac-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/build/Debug\"",
-				);
 				PRODUCT_NAME = MenuTest;
 			};
 			name = Debug;
@@ -9166,10 +9376,6 @@
 				GCC_PREFIX_HEADER = "Resources-Mac/cocos2d_mac_Prefix.pch";
 				INFOPLIST_FILE = "Resources-Mac/cocos2d_mac-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/build/Debug\"",
-				);
 				PRODUCT_NAME = MenuTest;
 			};
 			name = Release;
@@ -9180,17 +9386,12 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Resources-Mac/cocos2d_mac_Prefix.pch";
 				INFOPLIST_FILE = "Resources-Mac/cocos2d_mac-no-window-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/build/Debug\"",
-				);
 				PRODUCT_NAME = TransitionTest;
 			};
 			name = Debug;
@@ -9205,10 +9406,6 @@
 				GCC_PREFIX_HEADER = "Resources-Mac/cocos2d_mac_Prefix.pch";
 				INFOPLIST_FILE = "Resources-Mac/cocos2d_mac-no-window-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/build/Debug\"",
-				);
 				PRODUCT_NAME = TransitionTest;
 			};
 			name = Release;
@@ -9228,7 +9425,6 @@
 			buildSettings = {
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				PRODUCT_NAME = "build-all";
 				ZERO_LINK = NO;
 			};
@@ -9240,17 +9436,12 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Resources-Mac/cocos2d_mac_Prefix.pch";
 				INFOPLIST_FILE = "Resources-Mac/cocos2d_mac-no-window-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/build/Debug\"",
-				);
 				PRODUCT_NAME = TiledMapTest;
 			};
 			name = Debug;
@@ -9265,10 +9456,6 @@
 				GCC_PREFIX_HEADER = "Resources-Mac/cocos2d_mac_Prefix.pch";
 				INFOPLIST_FILE = "Resources-Mac/cocos2d_mac-no-window-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/build/Debug\"",
-				);
 				PRODUCT_NAME = TiledMapTest;
 			};
 			name = Release;
@@ -9279,17 +9466,12 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Resources-Mac/cocos2d_mac_Prefix.pch";
 				INFOPLIST_FILE = "Resources-Mac/cocos2d_mac-no-window-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/build/Debug\"",
-				);
 				PRODUCT_NAME = TextureTest;
 			};
 			name = Debug;
@@ -9304,10 +9486,6 @@
 				GCC_PREFIX_HEADER = "Resources-Mac/cocos2d_mac_Prefix.pch";
 				INFOPLIST_FILE = "Resources-Mac/cocos2d_mac-no-window-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/build/Debug\"",
-				);
 				PRODUCT_NAME = TextureTest;
 			};
 			name = Release;
@@ -9318,11 +9496,9 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INSTALL_PATH = /usr/local/lib;
-				PREBINDING = NO;
 				PRODUCT_NAME = libpng;
 			};
 			name = Debug;
@@ -9333,10 +9509,8 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
 				INSTALL_PATH = /usr/local/lib;
-				PREBINDING = NO;
 				PRODUCT_NAME = libpng;
 				ZERO_LINK = NO;
 			};
@@ -9348,17 +9522,12 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Resources-Mac/cocos2d_mac_Prefix.pch";
 				INFOPLIST_FILE = "Resources-Mac/cocos2d_mac-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/build/Debug\"",
-				);
 				PRODUCT_NAME = SpriteTest;
 			};
 			name = Debug;
@@ -9373,10 +9542,6 @@
 				GCC_PREFIX_HEADER = "Resources-Mac/cocos2d_mac_Prefix.pch";
 				INFOPLIST_FILE = "Resources-Mac/cocos2d_mac-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/build/Debug\"",
-				);
 				PRODUCT_NAME = SpriteTest;
 			};
 			name = Release;
@@ -9387,14 +9552,12 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Resources-Mac/cocos2d_mac_Prefix.pch";
 				INFOPLIST_FILE = "Resources-Mac/cocos2d_mac-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = ActionTest;
 			};
 			name = Debug;
@@ -9409,7 +9572,6 @@
 				GCC_PREFIX_HEADER = "Resources-Mac/cocos2d_mac_Prefix.pch";
 				INFOPLIST_FILE = "Resources-Mac/cocos2d_mac-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = ActionTest;
 			};
 			name = Release;
@@ -9420,14 +9582,12 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Resources-Mac/cocos2d_mac_Prefix.pch";
 				INFOPLIST_FILE = "Resources-Mac/cocos2d_mac-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = DrawingPrimitivesTest;
 			};
 			name = Debug;
@@ -9442,7 +9602,6 @@
 				GCC_PREFIX_HEADER = "Resources-Mac/cocos2d_mac_Prefix.pch";
 				INFOPLIST_FILE = "Resources-Mac/cocos2d_mac-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = DrawingPrimitivesTest;
 			};
 			name = Release;
@@ -9453,14 +9612,12 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Resources-Mac/cocos2d_mac_Prefix.pch";
 				INFOPLIST_FILE = "Resources-Mac/cocos2d_mac-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = LabelTest;
 			};
 			name = Debug;
@@ -9475,7 +9632,6 @@
 				GCC_PREFIX_HEADER = "Resources-Mac/cocos2d_mac_Prefix.pch";
 				INFOPLIST_FILE = "Resources-Mac/cocos2d_mac-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = LabelTest;
 			};
 			name = Release;
@@ -9486,17 +9642,12 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Resources-Mac/cocos2d_mac_Prefix.pch";
 				INFOPLIST_FILE = "Resources-Mac/cocos2d_mac-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/build/Debug\"",
-				);
 				PRODUCT_NAME = ParallaxTest;
 			};
 			name = Debug;
@@ -9511,10 +9662,6 @@
 				GCC_PREFIX_HEADER = "Resources-Mac/cocos2d_mac_Prefix.pch";
 				INFOPLIST_FILE = "Resources-Mac/cocos2d_mac-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/build/Debug\"",
-				);
 				PRODUCT_NAME = ParallaxTest;
 			};
 			name = Release;
@@ -9525,17 +9672,12 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Resources-Mac/cocos2d_mac_Prefix.pch";
 				INFOPLIST_FILE = "Resources-Mac/cocos2d_mac-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/build/Debug\"",
-				);
 				PRODUCT_NAME = EffectsAdvacedTest;
 			};
 			name = Debug;
@@ -9550,10 +9692,6 @@
 				GCC_PREFIX_HEADER = "Resources-Mac/cocos2d_mac_Prefix.pch";
 				INFOPLIST_FILE = "Resources-Mac/cocos2d_mac-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/build/Debug\"",
-				);
 				PRODUCT_NAME = EffectsAdvacedTest;
 			};
 			name = Release;
@@ -9564,17 +9702,12 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Resources-Mac/cocos2d_mac_Prefix.pch";
 				INFOPLIST_FILE = "Resources-Mac/cocos2d_mac-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/build/Debug\"",
-				);
 				PRODUCT_NAME = ActionEaseTest;
 			};
 			name = Debug;
@@ -9589,10 +9722,6 @@
 				GCC_PREFIX_HEADER = "Resources-Mac/cocos2d_mac_Prefix.pch";
 				INFOPLIST_FILE = "Resources-Mac/cocos2d_mac-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/build/Debug\"",
-				);
 				PRODUCT_NAME = ActionEaseTest;
 			};
 			name = Release;
@@ -9603,14 +9732,12 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Resources-Mac/cocos2d_mac_Prefix.pch";
 				INFOPLIST_FILE = "Resources-Mac/cocos2d_mac-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = EventsTest;
 			};
 			name = Debug;
@@ -9625,7 +9752,6 @@
 				GCC_PREFIX_HEADER = "Resources-Mac/cocos2d_mac_Prefix.pch";
 				INFOPLIST_FILE = "Resources-Mac/cocos2d_mac-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = EventsTest;
 			};
 			name = Release;
@@ -9636,17 +9762,12 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Resources-Mac/cocos2d_mac_Prefix.pch";
 				INFOPLIST_FILE = "Resources-Mac/cocos2d_mac-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/build/Debug\"",
-				);
 				PRODUCT_NAME = FullScreenTest;
 			};
 			name = Debug;
@@ -9661,10 +9782,6 @@
 				GCC_PREFIX_HEADER = "Resources-Mac/cocos2d_mac_Prefix.pch";
 				INFOPLIST_FILE = "Resources-Mac/cocos2d_mac-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/build/Debug\"",
-				);
 				PRODUCT_NAME = FullScreenTest;
 			};
 			name = Release;
@@ -9672,6 +9789,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		A064312613C1416D00CC5554 /* Build configuration list for PBXNativeTarget "kazmath" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A06430E813C1414300CC5554 /* Debug */,
+				A06430E913C1414300CC5554 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "cocos2d-mac" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
