@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 45;
+	objectVersion = 46;
 	objects = {
 
 /* Begin PBXAggregateTarget section */
@@ -6140,8 +6140,11 @@
 /* Begin PBXProject section */
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0420;
+			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "cocos2d-mac" */;
-			compatibilityVersion = "Xcode 3.1";
+			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 1;
 			knownRegions = (
@@ -9796,7 +9799,6 @@
 				HEADER_SEARCH_PATHS = external/Box2d;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				ONLY_ACTIVE_ARCH = YES;
-				PREBINDING = NO;
 				SDKROOT = macosx;
 				USER_HEADER_SEARCH_PATHS = external/Chipmunk/include/chipmunk;
 				VALID_ARCHS = "i386 x86_64";
@@ -9816,7 +9818,6 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = external/Box2d;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
-				PREBINDING = NO;
 				SDKROOT = macosx;
 				USER_HEADER_SEARCH_PATHS = external/Chipmunk/include/chipmunk;
 				VALID_ARCHS = "i386 x86_64";
@@ -9830,7 +9831,6 @@
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				PREBINDING = NO;
 				PRODUCT_NAME = cocos2d;
 			};
 			name = Debug;
@@ -9841,8 +9841,6 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
-				PREBINDING = NO;
 				PRODUCT_NAME = cocos2d;
 				ZERO_LINK = NO;
 			};
@@ -9854,14 +9852,12 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Resources-Mac/cocos2d_mac_Prefix.pch";
 				INFOPLIST_FILE = "Resources-Mac/cocos2d_mac-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = ParticleTest;
 			};
 			name = Debug;
@@ -9876,7 +9872,6 @@
 				GCC_PREFIX_HEADER = "Resources-Mac/cocos2d_mac_Prefix.pch";
 				INFOPLIST_FILE = "Resources-Mac/cocos2d_mac-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = ParticleTest;
 			};
 			name = Release;
@@ -9887,14 +9882,12 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Resources-Mac/cocos2d_mac_Prefix.pch";
 				INFOPLIST_FILE = "Resources-Mac/cocos2d_mac-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = RenderTextureTest;
 			};
 			name = Debug;
@@ -9909,7 +9902,6 @@
 				GCC_PREFIX_HEADER = "Resources-Mac/cocos2d_mac_Prefix.pch";
 				INFOPLIST_FILE = "Resources-Mac/cocos2d_mac-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = RenderTextureTest;
 			};
 			name = Release;
@@ -9921,7 +9913,6 @@
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				PREBINDING = NO;
 				PRODUCT_NAME = CocosDenshion;
 				SDKROOT = macosx;
 				VALID_ARCHS = "i386 x86_64";
@@ -9934,8 +9925,6 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
-				PREBINDING = NO;
 				PRODUCT_NAME = CocosDenshion;
 				SDKROOT = macosx;
 				VALID_ARCHS = "i386 x86_64";
@@ -9950,7 +9939,6 @@
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				PREBINDING = NO;
 				PRODUCT_NAME = Chipmunk;
 				SDKROOT = macosx;
 			};
@@ -9962,8 +9950,6 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
-				PREBINDING = NO;
 				PRODUCT_NAME = Chipmunk;
 				SDKROOT = macosx;
 				ZERO_LINK = NO;
@@ -9977,7 +9963,6 @@
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				PREBINDING = NO;
 				PRODUCT_NAME = Box2D;
 				SDKROOT = macosx;
 			};
@@ -9989,8 +9974,6 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
-				PREBINDING = NO;
 				PRODUCT_NAME = Box2D;
 				SDKROOT = macosx;
 				ZERO_LINK = NO;
@@ -10003,14 +9986,12 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Resources-Mac/cocos2d_mac_Prefix.pch";
 				INFOPLIST_FILE = "Resources-Mac/cocos2d_mac-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = MenuTest;
 			};
 			name = Debug;
@@ -10025,7 +10006,6 @@
 				GCC_PREFIX_HEADER = "Resources-Mac/cocos2d_mac_Prefix.pch";
 				INFOPLIST_FILE = "Resources-Mac/cocos2d_mac-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = MenuTest;
 			};
 			name = Release;
@@ -10036,14 +10016,12 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Resources-Mac/cocos2d_mac_Prefix.pch";
 				INFOPLIST_FILE = "Resources-Mac/cocos2d_mac-no-window-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = TransitionTest;
 			};
 			name = Debug;
@@ -10058,7 +10036,6 @@
 				GCC_PREFIX_HEADER = "Resources-Mac/cocos2d_mac_Prefix.pch";
 				INFOPLIST_FILE = "Resources-Mac/cocos2d_mac-no-window-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = TransitionTest;
 			};
 			name = Release;
@@ -10078,7 +10055,6 @@
 			buildSettings = {
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				PRODUCT_NAME = "build-all";
 				ZERO_LINK = NO;
 			};
@@ -10090,14 +10066,12 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Resources-Mac/cocos2d_mac_Prefix.pch";
 				INFOPLIST_FILE = "Resources-Mac/cocos2d_mac-no-window-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = TiledMapTest;
 			};
 			name = Debug;
@@ -10112,7 +10086,6 @@
 				GCC_PREFIX_HEADER = "Resources-Mac/cocos2d_mac_Prefix.pch";
 				INFOPLIST_FILE = "Resources-Mac/cocos2d_mac-no-window-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = TiledMapTest;
 			};
 			name = Release;
@@ -10123,14 +10096,12 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Resources-Mac/cocos2d_mac_Prefix.pch";
 				INFOPLIST_FILE = "Resources-Mac/cocos2d_mac-no-window-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = TextureTest;
 			};
 			name = Debug;
@@ -10145,7 +10116,6 @@
 				GCC_PREFIX_HEADER = "Resources-Mac/cocos2d_mac_Prefix.pch";
 				INFOPLIST_FILE = "Resources-Mac/cocos2d_mac-no-window-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = TextureTest;
 			};
 			name = Release;
@@ -10156,11 +10126,9 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INSTALL_PATH = /usr/local/lib;
-				PREBINDING = NO;
 				PRODUCT_NAME = libpng;
 			};
 			name = Debug;
@@ -10171,10 +10139,8 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
 				INSTALL_PATH = /usr/local/lib;
-				PREBINDING = NO;
 				PRODUCT_NAME = libpng;
 				ZERO_LINK = NO;
 			};
@@ -10186,14 +10152,12 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Resources-Mac/cocos2d_mac_Prefix.pch";
 				INFOPLIST_FILE = "Resources-Mac/cocos2d_mac-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = SpriteTest;
 			};
 			name = Debug;
@@ -10208,7 +10172,6 @@
 				GCC_PREFIX_HEADER = "Resources-Mac/cocos2d_mac_Prefix.pch";
 				INFOPLIST_FILE = "Resources-Mac/cocos2d_mac-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = SpriteTest;
 			};
 			name = Release;
@@ -10219,14 +10182,12 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Resources-Mac/cocos2d_mac_Prefix.pch";
 				INFOPLIST_FILE = "Resources-Mac/cocos2d_mac-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = ActionTest;
 			};
 			name = Debug;
@@ -10241,7 +10202,6 @@
 				GCC_PREFIX_HEADER = "Resources-Mac/cocos2d_mac_Prefix.pch";
 				INFOPLIST_FILE = "Resources-Mac/cocos2d_mac-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = ActionTest;
 			};
 			name = Release;
@@ -10252,14 +10212,12 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Resources-Mac/cocos2d_mac_Prefix.pch";
 				INFOPLIST_FILE = "Resources-Mac/cocos2d_mac-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = DrawingPrimitivesTest;
 			};
 			name = Debug;
@@ -10274,7 +10232,6 @@
 				GCC_PREFIX_HEADER = "Resources-Mac/cocos2d_mac_Prefix.pch";
 				INFOPLIST_FILE = "Resources-Mac/cocos2d_mac-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = DrawingPrimitivesTest;
 			};
 			name = Release;
@@ -10285,14 +10242,12 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Resources-Mac/cocos2d_mac_Prefix.pch";
 				INFOPLIST_FILE = "Resources-Mac/cocos2d_mac-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = LabelTest;
 			};
 			name = Debug;
@@ -10307,7 +10262,6 @@
 				GCC_PREFIX_HEADER = "Resources-Mac/cocos2d_mac_Prefix.pch";
 				INFOPLIST_FILE = "Resources-Mac/cocos2d_mac-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = LabelTest;
 			};
 			name = Release;
@@ -10318,14 +10272,12 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Resources-Mac/cocos2d_mac_Prefix.pch";
 				INFOPLIST_FILE = "Resources-Mac/cocos2d_mac-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = ParallaxTest;
 			};
 			name = Debug;
@@ -10340,7 +10292,6 @@
 				GCC_PREFIX_HEADER = "Resources-Mac/cocos2d_mac_Prefix.pch";
 				INFOPLIST_FILE = "Resources-Mac/cocos2d_mac-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = ParallaxTest;
 			};
 			name = Release;
@@ -10351,14 +10302,12 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Resources-Mac/cocos2d_mac_Prefix.pch";
 				INFOPLIST_FILE = "Resources-Mac/cocos2d_mac-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = EffectsAdvacedTest;
 			};
 			name = Debug;
@@ -10373,7 +10322,6 @@
 				GCC_PREFIX_HEADER = "Resources-Mac/cocos2d_mac_Prefix.pch";
 				INFOPLIST_FILE = "Resources-Mac/cocos2d_mac-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = EffectsAdvacedTest;
 			};
 			name = Release;
@@ -10384,14 +10332,12 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Resources-Mac/cocos2d_mac_Prefix.pch";
 				INFOPLIST_FILE = "Resources-Mac/cocos2d_mac-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = ActionEaseTest;
 			};
 			name = Debug;
@@ -10406,7 +10352,6 @@
 				GCC_PREFIX_HEADER = "Resources-Mac/cocos2d_mac_Prefix.pch";
 				INFOPLIST_FILE = "Resources-Mac/cocos2d_mac-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = ActionEaseTest;
 			};
 			name = Release;
@@ -10417,14 +10362,12 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Resources-Mac/cocos2d_mac_Prefix.pch";
 				INFOPLIST_FILE = "Resources-Mac/cocos2d_mac-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = EventsTest;
 			};
 			name = Debug;
@@ -10439,7 +10382,6 @@
 				GCC_PREFIX_HEADER = "Resources-Mac/cocos2d_mac_Prefix.pch";
 				INFOPLIST_FILE = "Resources-Mac/cocos2d_mac-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = EventsTest;
 			};
 			name = Release;
@@ -10450,14 +10392,12 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Resources-Mac/cocos2d_mac_Prefix.pch";
 				INFOPLIST_FILE = "Resources-Mac/cocos2d_mac-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = FullScreenTest;
 			};
 			name = Debug;
@@ -10472,7 +10412,6 @@
 				GCC_PREFIX_HEADER = "Resources-Mac/cocos2d_mac_Prefix.pch";
 				INFOPLIST_FILE = "Resources-Mac/cocos2d_mac-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = FullScreenTest;
 			};
 			name = Release;

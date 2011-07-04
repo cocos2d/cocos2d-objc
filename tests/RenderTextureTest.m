@@ -443,6 +443,9 @@ Class restartAction()
 {
 	return @"Touch screen. It should be green";
 }
+
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+
 - (void)ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
 	for( UITouch *touch in touches ) {
@@ -481,6 +484,7 @@ Class restartAction()
 {
 	[self renderScreenShot];
 }
+#endif // __IPHONE_OS_VERSION_MAX_ALLOWED
 
 -(void)renderScreenShot
 {
