@@ -5,7 +5,8 @@
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 @interface AppController : NSObject <UIApplicationDelegate>
 {
-	UIWindow *window;
+	UIWindow *window_;
+	UIViewController *viewController_;
 }
 
 @property (nonatomic, retain) UIWindow *window;

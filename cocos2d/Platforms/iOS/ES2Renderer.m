@@ -31,9 +31,10 @@
 #import <Availability.h>
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 
+#import "ES2Renderer.h"
 
 #import "../../Support/OpenGL_Internal.h"
-#import "ES2Renderer.h"
+#import "../../ccMacros.h"
 
 @implementation ES2Renderer
 
@@ -58,12 +59,18 @@
 
         // Create default framebuffer object. The backing will be allocated for the current layer in -resizeFromLayer
         glGenFramebuffers(1, &defaultFramebuffer_);
+		NSAssert( defaultFramebuffer_, @"Can't create default frame buffer");
+
         glGenRenderbuffers(1, &colorRenderbuffer_);
+		NSAssert( colorRenderbuffer_, @"Can't create default render buffer");
+
         glBindFramebuffer(GL_FRAMEBUFFER, defaultFramebuffer_);
         glBindRenderbuffer(GL_RENDERBUFFER, colorRenderbuffer_);
         glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_RENDERBUFFER, colorRenderbuffer_);
 		
 		depthFormat_ = depthFormat;
+		pixelFormat_ = pixelFormat;
+		
 		
 		CHECK_GL_ERROR_DEBUG();
     }
@@ -73,18 +80,17 @@
 
 - (BOOL)resizeFromLayer:(CAEAGLLayer *)layer
 {
-    // Allocate color buffer backing based on the current layer size
-    glBindRenderbuffer(GL_RENDERBUFFER, colorRenderbuffer_);
+	// Allocate color buffer backing based on the current layer size
+	glBindRenderbuffer(GL_RENDERBUFFER, colorRenderbuffer_);
 
-    [context_ renderbufferStorage:GL_RENDERBUFFER fromDrawable:layer];
-    glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_WIDTH, &backingWidth_);
-    glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_HEIGHT, &backingHeight_);
+	if( ! [context_ renderbufferStorage:GL_RENDERBUFFER fromDrawable:layer] )
+		CCLOG(@"failed to call context");
+	
+	glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_WIDTH, &backingWidth_);
+	glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_HEIGHT, &backingHeight_);
+	
+	CCLOG(@"cocos2d: surface size: %dx%d", (int)backingWidth_, (int)backingHeight_);
 
-    if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
-    {
-        NSLog(@"Failed to make complete framebuffer object %x", glCheckFramebufferStatus(GL_FRAMEBUFFER));
-        return NO;
-    }
 
 	if (depthFormat_) 
 	{
@@ -100,10 +106,17 @@
 		// bind color buffer
 		glBindRenderbuffer(GL_RENDERBUFFER, colorRenderbuffer_);
 	}
+	
+	
+	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+	{
+		NSLog(@"Failed to make complete framebuffer object %x", glCheckFramebufferStatus(GL_FRAMEBUFFER));
+		return NO;
+	}
 
 	CHECK_GL_ERROR_DEBUG();
 
-    return YES;
+	return YES;
 }
 
 -(CGSize) backingSize

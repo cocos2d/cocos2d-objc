@@ -46,12 +46,17 @@
 	
 	// EAGLView will be rotated by the UIViewController
 	//
-	// Sample: Autorotate only in landscpe mode
-	//
 	// return YES for the supported orientations
 	
-//	return ( UIInterfaceOrientationIsLandscape( interfaceOrientation ) );
 	
+	// For landscape only, uncomment the following line
+//	return ( UIInterfaceOrientationIsLandscape( interfaceOrientation ) );
+
+
+	// For portrait only, uncomment the following line
+//	return ( ! UIInterfaceOrientationIsLandscape( interfaceOrientation ) );
+
+	// To support all oritentatiosn return YES
 	return YES;
 }
 
@@ -61,9 +66,9 @@
 -(void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
 	//
-	// Assuming that the main window has the size of the screen
-	// BUG: This won't work if the EAGLView is not fullscreen
-	///
+	// XXX: Is this code needed ????
+	//
+#if 0
 	CGRect screenRect = [[UIScreen mainScreen] bounds];
 	CGRect rect = CGRectZero;
 
@@ -86,6 +91,7 @@
 	}
 
 	glView.frame = rect;
+#endif
 }
 
 - (void)didReceiveMemoryWarning {
