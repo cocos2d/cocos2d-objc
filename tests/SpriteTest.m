@@ -4132,14 +4132,14 @@ Class restartAction()
 	// Assume that PVR images have premultiplied alpha
 	[CCTexture2D PVRImagesHavePremultipliedAlpha:YES];
 
-	//	[director setProjection:kCCDirectorProjection2D];
+//	[director setProjection:kCCDirectorProjection2D];
 	
 	// Enable "moving" mouse event. Default no.
 	[window_ setAcceptsMouseMovedEvents:NO];
 	
 	// EXPERIMENTAL stuff.
 	// 'Effects' don't work correctly when autoscale is turned on.
-	[director setResizeMode:kCCDirectorResize_AutoScale];	
+	[director setResizeMode:kCCDirectorResize_AutoScale];
 	
 	CCScene *scene = [CCScene node];
 	[scene addChild: [nextAction() node]];
