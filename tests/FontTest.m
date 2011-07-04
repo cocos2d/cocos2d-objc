@@ -29,7 +29,7 @@ static NSString *fontList[] =
 	@"Abberancy",
 	@"Abduction",
 	@"Paint Boy",
-	@"Schwarzwald Regular",
+	@"Schwarzwald",
 	@"Scissor Cuts",
 };
 
