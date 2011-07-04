@@ -173,7 +173,7 @@ CGFloat	__ccContentScaleFactor = 1;
 			kmGLLoadIdentity();
 
 			kmMat4 orthoMatrix;
-			kmMat4OrthographicProjection(&orthoMatrix, 0, size.height, -1024 * CC_CONTENT_SCALE_FACTOR(), 1024 * CC_CONTENT_SCALE_FACTOR(), -1024, 1024);
+			kmMat4OrthographicProjection(&orthoMatrix, 0, size.width, 0, size.height, -1024 * CC_CONTENT_SCALE_FACTOR(), 1024 * CC_CONTENT_SCALE_FACTOR() );
 			kmGLMultMatrix( &orthoMatrix );
 
 			kmGLMatrixMode(KM_GL_MODELVIEW);
