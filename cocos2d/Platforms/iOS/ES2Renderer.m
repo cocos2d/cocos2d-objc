@@ -114,7 +114,7 @@
 		return NO;
 	}
 
-	CHECK_GL_ERROR_DEBUG();
+	CHECK_GL_ERROR();
 
 	return YES;
 }

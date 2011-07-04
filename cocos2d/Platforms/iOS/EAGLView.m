@@ -220,8 +220,11 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	CCDirector *director = [CCDirector sharedDirector];
 	[director reshapeProjection:size_];
 
+	CHECK_GL_ERROR_DEBUG();
+
 	// Avoid flicker. Issue #350
-	[director performSelectorOnMainThread:@selector(drawScene) withObject:nil waitUntilDone:YES];
+	NSThread *thread = [director runningThread];
+	[director performSelector:@selector(drawScene) onThread:thread withObject:nil waitUntilDone:YES];
 	
 	CHECK_GL_ERROR_DEBUG();
 }
