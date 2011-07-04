@@ -9,6 +9,7 @@
 
 // local import
 #import "cocosnodeTest.h"
+#import "RootViewController.h"
 
 
 enum {
@@ -924,10 +925,7 @@ Class restartAction()
 	
 	// Obtain the shared director in order to...
 	CCDirector *director = [CCDirector sharedDirector];
-	
-	// Sets landscape mode
-	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
-	
+
 	// Turn on display FPS
 	[director setDisplayFPS:YES];
 	
@@ -993,7 +991,8 @@ Class restartAction()
 
 - (void) dealloc
 {
-	[window release];
+	[viewController_ release];
+	[window_ release];
 	[super dealloc];
 }
 @end

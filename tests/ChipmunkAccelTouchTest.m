@@ -6,6 +6,7 @@
 
 #import "ChipmunkAccelTouchTest.h"
 
+#import "RootViewController.h"
 enum {
 	kTagBatchNode = 1,
 };
@@ -227,7 +228,9 @@ eachShape(void *ptr, void* unused)
 
 - (void) dealloc
 {
-	[window release];
+	[window_ release];
+	[viewController_ release];
+
 	[super dealloc];
 }
 

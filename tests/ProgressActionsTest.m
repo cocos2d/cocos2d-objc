@@ -7,6 +7,7 @@
 #import "cocos2d.h"
 #import "ProgressActionsTest.h"
 
+#import "RootViewController.h"
 
 static int sceneIdx=-1;
 static NSString *transitions[] = {
@@ -370,10 +371,7 @@ Class restartAction()
 	
 	// Obtain the shared director in order to...
 	CCDirector *director = [CCDirector sharedDirector];
-	
-	// Sets landscape mode
-	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
-	
+
 	// Enables High Res mode (Retina Display) on iPhone 4 and maintains low res on all other devices
 	if( ! [director enableRetinaDisplay:YES] )
 		CCLOG(@"Retina Display Not supported");
@@ -434,7 +432,8 @@ Class restartAction()
 
 - (void) dealloc
 {
-	[window release];
+	[viewController_ release];
+	[window_ release];
 	[super dealloc];
 }
 

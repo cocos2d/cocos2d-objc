@@ -43,7 +43,7 @@ GLESDebugDraw::GLESDebugDraw( float32 ratio )
 
 void GLESDebugDraw::DrawPolygon(const b2Vec2* old_vertices, int32 vertexCount, const b2Color& color)
 {
-	ccVertex2F vertices[vertexCount];
+	CGPoint vertices[vertexCount];
 	
 	for( int i=0;i<vertexCount;i++) {
 		b2Vec2 tmp = old_vertices[i];
@@ -52,14 +52,13 @@ void GLESDebugDraw::DrawPolygon(const b2Vec2* old_vertices, int32 vertexCount, c
 		vertices[i].y = tmp.y;
 	}
 
-	glColor4f(color.r, color.g, color.b,1);
-	glVertexPointer(2, GL_FLOAT, 0, vertices);
-	glDrawArrays(GL_LINE_LOOP, 0, vertexCount);	
+	ccDrawColor4ub(color.r, color.g, color.b,1);
+	ccDrawPoly(vertices, vertexCount, YES);
 }
 
 void GLESDebugDraw::DrawSolidPolygon(const b2Vec2* old_vertices, int32 vertexCount, const b2Color& color)
 {
-	ccVertex2F vertices[vertexCount];
+	CGPoint vertices[vertexCount];
 	
 	for( int i=0;i<vertexCount;i++) {
 		b2Vec2 tmp = old_vertices[i];
@@ -69,74 +68,42 @@ void GLESDebugDraw::DrawSolidPolygon(const b2Vec2* old_vertices, int32 vertexCou
 		vertices[i].y = tmp.y;
 	}
 	
-	glVertexPointer(2, GL_FLOAT, 0, vertices);
 	
-	glColor4f(color.r*0.5f, color.g*0.5f, color.b*0.5f,0.5f);
-	glDrawArrays(GL_TRIANGLE_FAN, 0, vertexCount);
+	ccDrawColor4f(color.r*0.5f, color.g*0.5f, color.b*0.5f,0.5f);
+//	glDrawArrays(GL_TRIANGLE_FAN, 0, vertexCount);	
 	
-	glColor4f(color.r, color.g, color.b,1);
-	glDrawArrays(GL_LINE_LOOP, 0, vertexCount);
+	ccDrawColor4f(color.r, color.g, color.b,1);
+	ccDrawPoly( vertices, vertexCount, YES);
 }
 
 void GLESDebugDraw::DrawCircle(const b2Vec2& center, float32 radius, const b2Color& color)
 {
-		
+
 	const float32 k_segments = 16.0f;
-	int vertexCount=16;
-	const float32 k_increment = 2.0f * b2_pi / k_segments;
-	float32 theta = 0.0f;
 	
-	GLfloat				glVertices[vertexCount*2];
-	for (int32 i = 0; i < k_segments; ++i)
-	{
-		b2Vec2 v = center + radius * b2Vec2(cosf(theta), sinf(theta));
-		glVertices[i*2]=v.x * mRatio;
-		glVertices[i*2+1]=v.y * mRatio;
-		theta += k_increment;
-	}
-	
-	glColor4f(color.r, color.g, color.b,1);
-	glVertexPointer(2, GL_FLOAT, 0, glVertices);
-	
-	glDrawArrays(GL_LINE_LOOP, 0, vertexCount);
+	ccDrawColor4f(color.r, color.g, color.b,1);
+	ccDrawCircle( ccp(center.x,center.y), radius, 0, k_segments, YES);
 }
 
 void GLESDebugDraw::DrawSolidCircle(const b2Vec2& center, float32 radius, const b2Vec2& axis, const b2Color& color)
 {
 		
 	const float32 k_segments = 16.0f;
-	int vertexCount=16;
-	const float32 k_increment = 2.0f * b2_pi / k_segments;
-	float32 theta = 0.0f;
-	
-	GLfloat				glVertices[vertexCount*2];
-	for (int32 i = 0; i < k_segments; ++i)
-	{
-		b2Vec2 v = center + radius * b2Vec2(cosf(theta), sinf(theta));
-		glVertices[i*2]=v.x * mRatio;
-		glVertices[i*2+1]=v.y * mRatio;
-		theta += k_increment;
-	}
-	
-	glColor4f(color.r *0.5f, color.g*0.5f, color.b*0.5f,0.5f);
-	glVertexPointer(2, GL_FLOAT, 0, glVertices);
-	glDrawArrays(GL_TRIANGLE_FAN, 0, vertexCount);
-	glColor4f(color.r, color.g, color.b,1);
-	glDrawArrays(GL_LINE_LOOP, 0, vertexCount);
-	
+
+	ccDrawColor4f(color.r, color.g, color.b,1);
+	ccDrawCircle( ccp(center.x,center.y), radius, 0, k_segments, YES);
+
 	// Draw the axis line
 	DrawSegment(center,center+radius*axis,color);
 }
 
 void GLESDebugDraw::DrawSegment(const b2Vec2& p1, const b2Vec2& p2, const b2Color& color)
 {
-	glColor4f(color.r, color.g, color.b,1);
-	GLfloat				glVertices[] = {
-		p1.x * mRatio, p1.y * mRatio,
-		p2.x * mRatio, p2.y * mRatio
-	};
-	glVertexPointer(2, GL_FLOAT, 0, glVertices);
-	glDrawArrays(GL_LINES, 0, 2);
+	CGPoint pp1 = ccp( p1.x * mRatio, p1.y * mRatio );
+	CGPoint pp2 = ccp( p2.x * mRatio, p2.y * mRatio );
+
+	ccDrawColor4f(color.r, color.g, color.b,1);
+	ccDrawLine( pp1, pp2);
 }
 
 void GLESDebugDraw::DrawTransform(const b2Transform& xf)
@@ -153,14 +120,12 @@ void GLESDebugDraw::DrawTransform(const b2Transform& xf)
 
 void GLESDebugDraw::DrawPoint(const b2Vec2& p, float32 size, const b2Color& color)
 {
-	glColor4f(color.r, color.g, color.b,1);
-	glPointSize(size);
-	GLfloat				glVertices[] = {
-		p.x * mRatio, p.y * mRatio
-	};
-	glVertexPointer(2, GL_FLOAT, 0, glVertices);
-	glDrawArrays(GL_POINTS, 0, 1);
-	glPointSize(1.0f);
+	ccDrawColor4f(color.r, color.g, color.b,1);
+	
+//	glPointSize(size);
+	CGPoint	point = ccp( p.x * mRatio, p.y * mRatio );
+
+	ccDrawPoint( point );
 }
 
 void GLESDebugDraw::DrawString(int x, int y, const char *string, ...)

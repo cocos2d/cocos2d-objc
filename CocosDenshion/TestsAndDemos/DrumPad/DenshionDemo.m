@@ -24,6 +24,7 @@
 #import "ccMacros.h"
 //#import "CDXFaderAction.h"
 #import "CCActionManager.h"
+#import "RootViewController.h"
 
 ///////////////////////////////////////////////////////
 //Sound ids, these equate to buffer identifiers
@@ -481,14 +482,11 @@ CDSoundSource *toneSource;
 - (void) applicationDidFinishLaunching:(UIApplication*)application
 {
 	// Init the window
-	window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+	window_ = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 	
 	// get instance of the shared director
 	CCDirector *director = [CCDirector sharedDirector];
-	
-	// before creating any layer, set the landscape mode
-	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
-	
+
 	// display FPS (useful when debugging)
 	[director setDisplayFPS:YES];
 	
@@ -496,17 +494,19 @@ CDSoundSource *toneSource;
 	[director setAnimationInterval:1.0/60];
 	
 	// create an OpenGL view
-	EAGLView *glView = [EAGLView viewWithFrame:[window bounds]];
+	EAGLView *glView = [EAGLView viewWithFrame:[window_ bounds]];
 	[glView setMultipleTouchEnabled:YES];
 	
 	// connect it to the director
 	[director setOpenGLView:glView];
 	
-	// glview is a child of the main window
-	[window addSubview:glView];
+	viewController_ = [[RootViewController alloc] init];
+	[viewController_ setView:glView];
+
+	[window_ addSubview:viewController_.view];
 	
 	// Make the window visible
-	[window makeKeyAndVisible];
+	[window_ makeKeyAndVisible];
 	
 	//Set up audio engine
 	[self setUpAudioManager:nil];
@@ -542,7 +542,9 @@ CDSoundSource *toneSource;
 
 - (void) dealloc
 {
-	[window dealloc];
+	[viewController_ release];
+	[window_ dealloc];
+
 	[super dealloc];
 }
 

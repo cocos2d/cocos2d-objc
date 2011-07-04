@@ -5,6 +5,7 @@
 
 #import "Bug-458.h"
 #import "QuestionContainerSprite.h"
+#import "RootViewController.h"
 
 #pragma mark -
 #pragma mark MemBug
@@ -71,10 +72,7 @@
 	
 	// Obtain the shared director in order to...
 	CCDirector *director = [CCDirector sharedDirector];
-	
-	// Sets landscape mode
-	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
-	
+
 	// Turn on display FPS
 	[director setDisplayFPS:YES];
 	
@@ -115,7 +113,8 @@
 
 - (void) dealloc
 {
-	[window dealloc];
+	[viewController_ release];
+	[window_ dealloc];
 	[super dealloc];
 }
 

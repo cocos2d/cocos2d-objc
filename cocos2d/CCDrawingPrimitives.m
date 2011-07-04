@@ -343,6 +343,11 @@ void ccDrawCubicBezier(CGPoint origin, CGPoint control1, CGPoint control2, CGPoi
 	CHECK_GL_ERROR_DEBUG();	
 }
 
+void ccDrawColor4f( GLubyte r, GLubyte g, GLubyte b, GLubyte a )
+{
+	color_ = (ccColor4F) {r, g, b, a};
+}
+
 void ccDrawColor4ub( GLubyte r, GLubyte g, GLubyte b, GLubyte a )
 {
 	color_ =  (ccColor4F) {r/255.0f, g/255.0f, b/255.0f, a/255.0f};

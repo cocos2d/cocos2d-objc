@@ -30,22 +30,9 @@
  cocos2d blocks support
  */
 
-// To comply with Apple Objective C runtime (this is defined in NSObjCRuntime.h)
-#if !defined(NS_BLOCKS_AVAILABLE)
-	#if __BLOCKS__
-		#define NS_BLOCKS_AVAILABLE 1
-	#else
-		#define NS_BLOCKS_AVAILABLE 0
-	#endif
-#endif
-
-#if NS_BLOCKS_AVAILABLE
-
 @interface NSObject(CCBlocksAdditions)
 
 - (void)ccCallbackBlock;
 - (void)ccCallbackBlockWithSender:(id)sender;
 
 @end
-
-#endif // NS_BLOCKS_AVAILABLE

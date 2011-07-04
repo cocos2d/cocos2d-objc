@@ -7,6 +7,10 @@
 
 #import "MenuTest.h"
 
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#import "RootViewController.h"
+#endif
+
 enum {
 	kTagMenu = 1,
 	kTagMenu0 = 0,
@@ -484,10 +488,7 @@ enum {
 
 	// get instance of the shared director
 	CCDirector *director = [CCDirector sharedDirector];
-	
-	// before creating any layer, set the landscape mode
-	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
-		
+
 	// Enables High Res mode (Retina Display) on iPhone 4 and maintains low res on all other devices
 	if( ! [director enableRetinaDisplay:YES] )
 		CCLOG(@"Retina Display Not supported");
@@ -551,7 +552,9 @@ enum {
 
 - (void) dealloc
 {
-	[window dealloc];
+	[viewController_ release];
+	[window_ release];
+	
 	[super dealloc];
 }
 @end

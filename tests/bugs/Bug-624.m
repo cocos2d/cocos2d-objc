@@ -5,6 +5,8 @@
 
 #import "Bug-624.h"
 
+#import "RootViewController.h"
+
 #pragma mark -
 #pragma mark MemBug
 
@@ -138,7 +140,8 @@
 
 - (void) dealloc
 {
-	[window dealloc];
+	[viewController_ release];
+	[window_ dealloc];
 	[super dealloc];
 }
 

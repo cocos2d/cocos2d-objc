@@ -61,7 +61,6 @@
 {	
 	CCDirector *director = [CCDirector sharedDirector];
 	[director setDisplayFPS:YES];
-	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
 
 	[director setOpenGLView:glView_];
 

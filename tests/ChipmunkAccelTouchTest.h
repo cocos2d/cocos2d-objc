@@ -6,9 +6,10 @@
 #import "chipmunk.h"
 
 //CLASS INTERFACE
-@interface AppController : NSObject <UIAlertViewDelegate, UITextFieldDelegate, UIApplicationDelegate>
+@interface AppController : NSObject <UIApplicationDelegate>
 {
-	UIWindow	*window;
+	UIWindow	*window_;
+	UIViewController *viewController_;
 }
 @end
 

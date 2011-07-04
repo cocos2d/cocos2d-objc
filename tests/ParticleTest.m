@@ -8,6 +8,10 @@
 #import "ParticleTest.h"
 
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#import "RootViewController.h"
+#endif
+
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 #define PARTICLE_FIRE_NAME @"fire.pvr"
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 #define PARTICLE_FIRE_NAME @"fire.png"
@@ -1475,9 +1479,7 @@ Class restartAction()
 	
 	// Turn on display FPS
 	[director setDisplayFPS:YES];
-	
-//	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
-	
+		
 	// Enables High Res mode (Retina Display) on iPhone 4 and maintains low res on all other devices
 	if( ! [director enableRetinaDisplay:YES] )
 		CCLOG(@"Retina Display Not supported");
@@ -1495,7 +1497,8 @@ Class restartAction()
 
 - (void) dealloc
 {
-	[window release];
+	[viewController_ release];
+	[window_ release];
 	[super dealloc];
 }
 

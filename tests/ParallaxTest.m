@@ -10,6 +10,10 @@
 // local import
 #import "ParallaxTest.h"
 
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#import "RootViewController.h"
+#endif
+
 enum {
 	kTagNode,
 	kTagGrossini,
@@ -331,10 +335,7 @@ Class restartAction()
 	
 	// Obtain the shared director in order to...
 	CCDirector *director = [CCDirector sharedDirector];
-	
-	// Sets landscape mode
-	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
-	
+
 	// Turn on display FPS
 	[director setDisplayFPS:YES];
 	
@@ -390,7 +391,9 @@ Class restartAction()
 
 - (void) dealloc
 {
-	[window release];
+	[viewController_ release];
+	[window_ release];
+	
 	[super dealloc];
 }
 @end
@@ -437,3 +440,4 @@ Class restartAction()
 
 @end
 #endif
+			

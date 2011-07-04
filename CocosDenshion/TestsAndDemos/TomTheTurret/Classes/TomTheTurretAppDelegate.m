@@ -35,10 +35,7 @@
 	
 	// get instance of the shared director
 	CCDirector *director = [CCDirector sharedDirector];
-	
-	// before creating any layer, set the landscape mode
-	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
-	
+
 	// display FPS (useful when debugging)
 	[director setDisplayFPS:YES];
 	
@@ -68,7 +65,7 @@
     // main content
     // See http://www.cocos2d-iphone.org/forum/topic/363 for more details
     EAGLContext *k_context = [[[EAGLContext alloc]
-                               initWithAPI:kEAGLRenderingAPIOpenGLES1
+                               initWithAPI:kEAGLRenderingAPIOpenGLES2
                                sharegroup:[[[[CCDirector sharedDirector] openGLView] context] sharegroup]] autorelease];    
     [EAGLContext setCurrentContext:k_context];
     

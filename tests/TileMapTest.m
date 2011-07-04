@@ -10,6 +10,10 @@
 // local import
 #import "TileMapTest.h"
 
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#import "RootViewController.h"
+#endif
+
 static int sceneIdx=-1;
 static NSString *transitions[] = {	
 
@@ -1294,14 +1298,11 @@ Class restartAction()
 - (void) applicationDidFinishLaunching:(UIApplication*)application
 {
 	// Init the window
-	window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+	window_ = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 
 	// get instance of the shared director
 	CCDirector *director = [CCDirector sharedDirector];
-	
-	// before creating any layer, set the landscape mode
-	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
-	
+
 	// display FPS (useful when debugging)
 	[director setDisplayFPS:YES];
 	
@@ -1310,23 +1311,27 @@ Class restartAction()
 	
 	// create an OpenGL view a depth buffer of 16-bits (needed for z ordering)
 	//   and an RGB8 color buffer
-	EAGLView *glView = [EAGLView viewWithFrame:[window bounds]
+	EAGLView *glView = [EAGLView viewWithFrame:[window_ bounds]
 								   pixelFormat:kEAGLColorFormatRGBA8
 								   depthFormat:GL_DEPTH_COMPONENT16_OES];
 	[glView setMultipleTouchEnabled:YES];
-	
+
 	// connect it to the director
 	[director setOpenGLView:glView];
-	
+
 	// Enables High Res mode (Retina Display) on iPhone 4 and maintains low res on all other devices
 	if( ! [director enableRetinaDisplay:YES] )
 		CCLOG(@"Retina Display Not supported");
-	
+
+	viewController_ = [[RootViewController alloc] initWithNibName:nil bundle:nil];
+
+	[viewController_ setView:glView];
+
 	// glview is a child of the main window
-	[window addSubview:glView];
+	[window_ addSubview:viewController_.view];
 	
 	// Make the window visible
-	[window makeKeyAndVisible];
+	[window_ makeKeyAndVisible];
 	
 	CCScene *scene = [CCScene node];
 	[scene addChild: [nextAction() node]];
@@ -1386,7 +1391,8 @@ Class restartAction()
 
 - (void) dealloc
 {
-	[window release];
+	[viewController_ release];
+	[window_ release];
 	[super dealloc];
 }
 @end

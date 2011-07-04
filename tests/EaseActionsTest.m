@@ -6,7 +6,7 @@
 // local import
 #import "cocos2d.h"
 #import "EaseActionsTest.h"
-
+#import "RootViewController.h"
 
 static int sceneIdx=-1;
 static NSString *transitions[] = {
@@ -625,7 +625,7 @@ Class restartAction()
 {
     if (sliderCtl == nil) 
     {
-        CGRect frame = CGRectMake(174.0f, 12.0f, 120.0f, 7.0f);
+        CGRect frame = CGRectMake(12.0f, 12.0f, 120.0f, 7.0f);
         sliderCtl = [[UISlider alloc] initWithFrame:frame];
         [sliderCtl addTarget:self action:@selector(sliderAction:) forControlEvents:UIControlEventValueChanged];
         
@@ -698,8 +698,14 @@ Class restartAction()
 	[self addChild:emitter];
 	
 	sliderCtl = [self sliderCtl];
+
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
-	[[[[CCDirector sharedDirector] openGLView] window] addSubview: sliderCtl];
+	
+	AppController *app = [[UIApplication sharedApplication] delegate];
+	UIViewController *ctl = [app viewController];
+	
+	[ctl.view addSubview: sliderCtl];
+
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 	MacGLView *view = [[CCDirector sharedDirector] openGLView];
 
@@ -754,6 +760,9 @@ Class restartAction()
 
 @implementation AppController
 
+@synthesize window=window_;
+@synthesize viewController=viewController_;
+
 - (void) applicationDidFinishLaunching:(UIApplication*)application
 {
 	// CC_DIRECTOR_INIT()
@@ -773,10 +782,7 @@ Class restartAction()
 	
 	// Obtain the shared director in order to...
 	CCDirector *director = [CCDirector sharedDirector];
-	
-	// Sets landscape mode
-	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
-	
+
 	// Turn on display FPS
 	[director setDisplayFPS:YES];
 	
@@ -838,7 +844,8 @@ Class restartAction()
 
 - (void) dealloc
 {
-	[window release];
+	[viewController_ release];
+	[window_ release];
 	[super dealloc];
 }
 
