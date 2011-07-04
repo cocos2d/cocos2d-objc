@@ -103,9 +103,7 @@ typedef enum {
 	ccDeviceOrientation	deviceOrientation_;
 	
 	/* contentScaleFactor could be simulated */
-	BOOL	isContentScaleSupported_;
-	
-	kmMat4	portraitProjectionMatrix_;
+	BOOL	isContentScaleSupported_;	
 }
 @end
 
