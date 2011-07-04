@@ -270,6 +270,7 @@
 		
 		ccGLUseProgram( program->program_ );		
 		ccGLUniformProjectionMatrix( program );
+		ccGLUniformModelViewMatrix( program );
 
 		if( ! curTime_ ) {
 			ccColor4F color = { color_.r/255.0f, color_.g/255.0f, color_.b/255.0f, color_.a/255.0f };
