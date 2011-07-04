@@ -417,26 +417,6 @@ Class restartAction()
 		s2.grid = nil;
 }
 
--(void) newOrientation
-{
-	ccDeviceOrientation orientation = [[CCDirector sharedDirector] deviceOrientation];
-	switch (orientation) {
-		case CCDeviceOrientationLandscapeLeft:
-			orientation = CCDeviceOrientationPortrait;
-			break;
-		case CCDeviceOrientationPortrait:
-			orientation = CCDeviceOrientationLandscapeRight;
-			break;						
-		case CCDeviceOrientationLandscapeRight:
-			orientation = CCDeviceOrientationPortraitUpsideDown;
-			break;
-		case CCDeviceOrientationPortraitUpsideDown:
-			orientation = CCDeviceOrientationLandscapeLeft;
-			break;
-	}
-	[[CCDirector sharedDirector] setDeviceOrientation:orientation];
-}
-
 -(void) newScene
 {
 	CCScene *s = [CCScene node];
@@ -444,23 +424,21 @@ Class restartAction()
 	[s addChild:child];
 	[[CCDirector sharedDirector] replaceScene:s];
 }
+
 -(void) nextCallback:(id) sender
 {
-//	[self newOrientation];
 	nextAction();
 	[self newScene];
 }	
 
 -(void) backCallback:(id) sender
 {
-//	[self newOrientation];
 	backAction();
 	[self newScene];
 }	
 
 -(void) restartCallback:(id) sender
 {
-	[self newOrientation];
 	[self newScene];
 }	
 @end

@@ -61,8 +61,8 @@
 	{
 		NSAssert(format != kCCTexture2DPixelFormat_A8,@"only RGB and RGBA formats are valid for a render texture");
 		
-		//w *= CC_CONTENT_SCALE_FACTOR();
-		//h *= CC_CONTENT_SCALE_FACTOR();
+		w *= CC_CONTENT_SCALE_FACTOR();
+		h *= CC_CONTENT_SCALE_FACTOR();
 
 		glGetIntegerv(CC_GL_FRAMEBUFFER_BINDING, &oldFBO_);
 		
@@ -116,7 +116,7 @@
 {	
 	// Save the current matrix
 	kmGLPushMatrix();
-
+	
 	CGSize texSize = [texture_ contentSizeInPixels];
 	
 	
@@ -128,15 +128,16 @@
 	
 	// Adjust the orthographic propjection and viewport
 	kmMat4 orthoMatrix;
-	kmMat4OrthographicProjection(&orthoMatrix, (float)-1.0 / widthRatio,  (float)1.0 / widthRatio, (float)-1.0 / heightRatio, (float)1.0 / heightRatio, -1,1 );
+	kmMat4OrthographicProjection(&orthoMatrix, (float)-1.0 / widthRatio,  (float)1.0 / widthRatio,
+								 (float)-1.0 / heightRatio, (float)1.0 / heightRatio, -1,1 );
 	kmGLMultMatrix(&orthoMatrix);
 	
-	glViewport(0, 0, texSize.width, texSize.height);
-
+	glViewport(0, 0, texSize.width * CC_CONTENT_SCALE_FACTOR(), texSize.height * CC_CONTENT_SCALE_FACTOR() );
+	
 	
 	glGetIntegerv(CC_GL_FRAMEBUFFER_BINDING, &oldFBO_);
 	ccGLBindFramebuffer(CC_GL_FRAMEBUFFER, fbo_);
-
+	
 	// Issue #1145
 	// There is no need to enable the default GL states here
 	// but since CCRenderTexture is mostly used outside the "render" loop
@@ -148,6 +149,36 @@
 	// and enable the gl states manually, in case you need them.
 	CC_ENABLE_DEFAULT_GL_STATES();
 }
+
+-(void)begin2
+{	
+	kmGLPushMatrix();
+
+//	CCDirector *director = [CCDirector sharedDirector];
+//	CGSize size = [director winSizeInPixels];
+//	
+//	glViewport(0, 0, size.width * CC_CONTENT_SCALE_FACTOR(), size.height * CC_CONTENT_SCALE_FACTOR() );
+//	
+//	kmMat4 orthoMatrix;
+//	kmMat4OrthographicProjection(&orthoMatrix, 0, size.width, 0, size.height, -1024 * CC_CONTENT_SCALE_FACTOR(), 1024 * CC_CONTENT_SCALE_FACTOR() );
+//
+//	kmGLMultMatrix(&orthoMatrix);
+	
+	glGetIntegerv(CC_GL_FRAMEBUFFER_BINDING, &oldFBO_);
+	ccGLBindFramebuffer(CC_GL_FRAMEBUFFER, fbo_);
+	
+	// Issue #1145
+	// There is no need to enable the default GL states here
+	// but since CCRenderTexture is mostly used outside the "render" loop
+	// these states needs to be enabled.
+	// Since this bug was discovered in API-freeze (very close of 1.0 release)
+	// This bug won't be fixed to prevent incompatibilities with code.
+	// 
+	// If you understand the above mentioned message, then you can comment the following line
+	// and enable the gl states manually, in case you need them.
+	CC_ENABLE_DEFAULT_GL_STATES();
+}
+
 
 -(void)beginWithClear:(float)r g:(float)g b:(float)b a:(float)a
 {
@@ -171,7 +202,7 @@
 	kmGLPopMatrix();
 
 	CGSize size = [[CCDirector sharedDirector] winSizeInPixels];
-	glViewport(0, 0, size.width, size.height);
+	glViewport(0, 0, size.width * CC_CONTENT_SCALE_FACTOR(), size.height * CC_CONTENT_SCALE_FACTOR() );
 }
 
 -(void)clear:(float)r g:(float)g b:(float)b a:(float)a
