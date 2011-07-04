@@ -7,11 +7,10 @@
 {
 	// main UIWindow
 	// The OpenGL view will be a attached to this UIWindow
-    UIWindow *window;
+    UIWindow *window_;
+	UIViewController *viewController_;
 }
 
-// Make the main UIWindow a property
-@property (nonatomic, retain) UIWindow *window;
 @end
 
 // HelloActions Layer

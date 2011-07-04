@@ -449,12 +449,12 @@ Class restartTransition()
 
 @implementation AppController
 
-@synthesize window;
+@synthesize window=window_;
 
 - (void) applicationDidFinishLaunching:(UIApplication*)application
 {
 	// Init the window
-	window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+	window_ = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 
 	// get instance of the shared director
 	CCDirector *director = [CCDirector sharedDirector];
@@ -469,7 +469,7 @@ Class restartTransition()
 	// PageTurnTransition needs a depth buffer of 16 or 24 bits
 	// These means that openGL z-order will be taken into account
 	// On the other hand "Flip" transitions doesn't work with DepthBuffer > 0
-	EAGLView *glView = [EAGLView viewWithFrame:[window bounds]
+	EAGLView *glView = [EAGLView viewWithFrame:[window_ bounds]
 								   pixelFormat:kEAGLColorFormatRGBA8
 								   depthFormat:0 //GL_DEPTH_COMPONENT24_OES
 						];
@@ -490,10 +490,10 @@ Class restartTransition()
 	[viewController_ setView:glView];
 	
 	// make the OpenGLView a child of the main window
-	[window addSubview:viewController_.view];
+	[window_ addSubview:viewController_.view];
 	
 	// Make the window visible
-	[window makeKeyAndVisible];
+	[window_ makeKeyAndVisible];
 	
 		
 	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
@@ -550,7 +550,7 @@ Class restartTransition()
 
 - (void) dealloc
 {
-	[window dealloc];
+	[window_ dealloc];
 	[super dealloc];
 }
 

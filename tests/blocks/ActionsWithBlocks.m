@@ -7,6 +7,9 @@
 // Import the interfaces
 #import "ActionsWithBlocks.h"
 
+
+#import "RootViewController.h"
+
 // HelloWorld implementation
 @implementation ActionsWithBlocks
 
@@ -117,21 +120,16 @@
 //
 @implementation AppController
 
-// window is a property. @synthesize will create the accesors methods
-@synthesize window;
 
 // Application entry point
 - (void) applicationDidFinishLaunching:(UIApplication*)application
 {
 	// Init the window
-	window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+	window_ = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 
 	// get instance of the shared director
 	CCDirector *director = [CCDirector sharedDirector];
-	
-	// before creating any layer, set the landscape mode
-	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
-	
+
 	// display FPS (useful when debugging)
 	[director setDisplayFPS:YES];
 	
@@ -139,7 +137,7 @@
 	[director setAnimationInterval:1.0/60];
 	
 	// create an OpenGL view
-	EAGLView *glView = [EAGLView viewWithFrame:[window bounds]];
+	EAGLView *glView = [EAGLView viewWithFrame:[window_ bounds]];
 	
 	// enable multiple touches
 	[glView setMultipleTouchEnabled:YES];
@@ -147,11 +145,18 @@
 	// connect it to the director
 	[director setOpenGLView:glView];
 	
-	// glview is a child of the main window
-	[window addSubview:glView];
+	// Init the View Controller
+	viewController_ = [[RootViewController alloc] initWithNibName:nil bundle:nil];
+	viewController_.wantsFullScreenLayout = YES;
+	
+	// make the OpenGLView a child of the view controller
+	[viewController_ setView:glView];
+	
+	// make the OpenGLView a child of the main window
+	[window_ addSubview:viewController_.view];
 	
 	// Make the window visible
-	[window makeKeyAndVisible];
+	[window_ makeKeyAndVisible];
 
 	// Create and initialize parent and empty Scene
 	CCScene *scene = [CCScene node];
@@ -167,7 +172,7 @@
 
 - (void) dealloc
 {
-	[window release];
+	[window_ release];
 	[super dealloc];
 }
 

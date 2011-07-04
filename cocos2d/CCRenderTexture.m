@@ -121,7 +121,7 @@
 	
 	
 	// Calculate the adjustment ratios based on the old and new projections
-	CGSize size = [[CCDirector sharedDirector] displaySizeInPixels];
+	CGSize size = [[CCDirector sharedDirector] winSizeInPixels];
 	float widthRatio = size.width / texSize.width;
 	float heightRatio = size.height / texSize.height;
 	
@@ -170,7 +170,7 @@
 
 	kmGLPopMatrix();
 
-	CGSize size = [[CCDirector sharedDirector] displaySizeInPixels];
+	CGSize size = [[CCDirector sharedDirector] winSizeInPixels];
 	glViewport(0, 0, size.width, size.height);
 }
 

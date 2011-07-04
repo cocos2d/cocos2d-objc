@@ -8,6 +8,7 @@ version 2.0-alpha XX-Jul-2011
             - Reduced the progress timer types to just radial and bar - added in reverse, midpoint, barChangeRate to be have more flexible options to modify the progress.
 			- Supports Tint + Color
 . [NEW] Director: Removed Fast, FastThreaded and NSTimer director. The only one available is DisplayLink.
+. [NEW] Director: Orientations are no longer supported. Only Portrait mode is supported. Use a ViewController to rotate the EAGL view.
 . [NEW] Macros: ccgl* replaced with ccGL*
 . [NEW] Math: Using kazmath for matrix and projection operations, and matrix GL stack
 . [NEW] Math: Using NEON Matrix Multiplication from Oolong project

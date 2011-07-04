@@ -87,11 +87,7 @@ enum {
 		// XXX: so the bar calculation should be done there
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 		CGRect r = [[UIApplication sharedApplication] statusBarFrame];
-		ccDeviceOrientation orientation = [[CCDirector sharedDirector] deviceOrientation];
-		if( orientation == CCDeviceOrientationLandscapeLeft || orientation == CCDeviceOrientationLandscapeRight )
-			s.height -= r.size.width;
-		else
-			s.height -= r.size.height;
+		s.height -= r.size.height;
 #endif
 		self.position = ccp(s.width/2, s.height/2);
 

@@ -8,6 +8,8 @@
 #import "cocos2d.h"
 #import "ActionsTest.h"
 
+#import "RootViewController.h"
+
 enum {
 	kTagAnimationDance = 1,
 };
@@ -1132,10 +1134,7 @@ Class restartAction()
 	
 	// Obtain the shared director in order to...
 	CCDirector *director = [CCDirector sharedDirector];
-	
-	// Sets landscape mode
-	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
-	
+
 	// Turn on display FPS
 	[director setDisplayFPS:YES];
 	
@@ -1193,7 +1192,7 @@ Class restartAction()
 
 - (void) dealloc
 {
-	[window release];
+	[window_ release];
 	[super dealloc];
 }
 

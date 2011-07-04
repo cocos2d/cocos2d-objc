@@ -10,6 +10,10 @@
 // local import
 #import "ActionManagerTest.h"
 
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#import "RootViewController.h"
+#endif
+
 enum {
 	kTagNode,
 	kTagGrossini,
@@ -356,33 +360,45 @@ Class restartAction()
 
 - (void) applicationDidFinishLaunching:(UIApplication*)application
 {
-	// CC_DIRECTOR_INIT()
-	//
-	// 1. Initializes an EAGLView with 0-bit depth format, and RGB565 render buffer
-	// 2. EAGLView multiple touches: disabled
-	// 3. creates a UIWindow, and assign it to the "window" var (it must already be declared)
-	// 4. Parents EAGLView to the newly created window
-	// 5. Creates Display Link Director
-	// 5a. If it fails, it will use an NSTimer director
-	// 6. It will try to run at 60 FPS
-	// 7. Display FPS: NO
-	// 8. Device orientation: Portrait
-	// 9. Connects the director to the EAGLView
-	//
-	CC_DIRECTOR_INIT();
+	// Init the window
+	window_ = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 	
-	// Obtain the shared director in order to...
+	// before creating any layer, set the landscape mode
 	CCDirector *director = [CCDirector sharedDirector];
 	
-	// Sets landscape mode
-	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
+	// set FPS at 60
+	[director setAnimationInterval:1.0/60];
 	
-	// Turn on display FPS
+	// Display FPS: yes
 	[director setDisplayFPS:YES];
+	
+	// Create an EAGLView with a RGB8 color buffer, and a depth buffer of 24-bits
+	EAGLView *glView = [EAGLView viewWithFrame:[window_ bounds]
+								   pixelFormat:kEAGLColorFormatRGB565
+								   depthFormat:0];
+	
+	// attach the openglView to the director
+	[director setOpenGLView:glView];
+	
+	// 2D projection
+	[director setProjection:kCCDirectorProjection2D];
 	
 	// Enables High Res mode (Retina Display) on iPhone 4 and maintains low res on all other devices
 	if( ! [director enableRetinaDisplay:YES] )
 		CCLOG(@"Retina Display Not supported");
+	
+	// Init the View Controller
+	viewController_ = [[RootViewController alloc] initWithNibName:nil bundle:nil];
+	viewController_.wantsFullScreenLayout = YES;
+	
+	// make the OpenGLView a child of the view controller
+	[viewController_ setView:glView];
+	
+	// make the OpenGLView a child of the main window
+	[window_ addSubview:viewController_.view];
+	
+	// make main window visible
+	[window_ makeKeyAndVisible];	
 	
 	CCScene *scene = [CCScene node];
 	[scene addChild: [nextAction() node]];
@@ -434,7 +450,7 @@ Class restartAction()
 
 - (void) dealloc
 {
-	[window release];
+	[window_ release];
 	[super dealloc];
 }
 @end
