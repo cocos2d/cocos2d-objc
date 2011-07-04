@@ -206,37 +206,65 @@
 {
 	CGSize size = winSizeInPixels_;
 	
-	glViewport(0, 0, size.width, size.height);
+	CGPoint offset = CGPointZero;
+	float widthAspect = size.width;
+	float heightAspect = size.height;
 	
+	
+	if( resizeMode_ == kCCDirectorResize_AutoScale && ! CGSizeEqualToSize(originalWinSize_, CGSizeZero ) ) {
+		
+		size = originalWinSize_;
+		
+		float aspect = originalWinSize_.width / originalWinSize_.height;
+		widthAspect = winSizeInPixels_.width;
+		heightAspect = winSizeInPixels_.width / aspect;
+		
+		if( heightAspect > winSizeInPixels_.height ) {
+			widthAspect = winSizeInPixels_.height * aspect;
+			heightAspect = winSizeInPixels_.height;			
+		}
+		
+		winOffset_.x = (winSizeInPixels_.width - widthAspect) / 2;
+		winOffset_.y =  (winSizeInPixels_.height - heightAspect) / 2;
+		
+		offset = winOffset_;
+		
+	}
+
 	switch (projection) {
 		case kCCDirectorProjection2D:
+			
+			glViewport(offset.x, offset.y, widthAspect, heightAspect);
 			kmGLMatrixMode(KM_GL_PROJECTION);
 			kmGLLoadIdentity();
-			
+
 			kmMat4 orthoMatrix;
 			kmMat4OrthographicProjection(&orthoMatrix, 0, size.width, 0, size.height, -1024, 1024);			
 			kmGLMultMatrix( &orthoMatrix );
-			
+
 			kmGLMatrixMode(KM_GL_MODELVIEW);
 			kmGLLoadIdentity();
-			break;
+			break;			
+
 			
 		case kCCDirectorProjection3D:
 		{
-			float eyeZ = size.height * [self getZEye] / size.height;
 			
-			kmMat4 matrixPerspective, matrixLookup;
-			kmMat4PerspectiveProjection( &matrixPerspective, 60, (GLfloat)size.width/size.height, 0.5f, 1500.0f);
-			
+			glViewport(offset.x, offset.y, widthAspect, heightAspect);
 			kmGLMatrixMode(KM_GL_PROJECTION);
 			kmGLLoadIdentity();
 			
-			kmMat4PerspectiveProjection( &matrixPerspective, 60, (GLfloat)size.width/size.height, 0.5f, 1500.0f);
+			kmMat4 matrixPerspective, matrixLookup;
+			kmMat4PerspectiveProjection( &matrixPerspective, 60, (GLfloat)widthAspect/heightAspect, 0.1f, 1500.0f);
 			kmGLMultMatrix(&matrixPerspective);
+
 			
 			kmGLMatrixMode(KM_GL_MODELVIEW);	
 			kmGLLoadIdentity();
 			kmVec3 eye, center, up;
+			
+			float eyeZ = size.height * [self getZEye] / winSizeInPixels_.height;
+
 			kmVec3Fill( &eye, size.width/2, size.height/2, eyeZ );
 			kmVec3Fill( &center, size.width/2, size.height/2, 0 );
 			kmVec3Fill( &up, 0, 1, 0);
