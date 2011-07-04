@@ -160,18 +160,20 @@ CGFloat	__ccContentScaleFactor = 1;
 
 -(void) setProjection:(ccDirectorProjection)projection
 {
-	CGSize sizeInPixels = [self displaySizeInPixels];
-	CGSize sizeInPoints = CC_SIZE_PIXELS_TO_POINTS(sizeInPixels);
-	
-	glViewport(0, 0, sizeInPixels.width, sizeInPixels.height);
-	
+	CGSize size = winSizeInPixels_;
+    
+    if( CC_CONTENT_SCALE_FACTOR() != 1)
+        glViewport(0, -size.height * CC_CONTENT_SCALE_FACTOR() / 2.0f, size.width * CC_CONTENT_SCALE_FACTOR(), size.height * CC_CONTENT_SCALE_FACTOR());
+    else
+        glViewport(0, 0, size.width, size.height);
+
 	switch (projection) {
 		case kCCDirectorProjection2D:
 			kmGLMatrixMode(KM_GL_PROJECTION);
 			kmGLLoadIdentity();
 
 			kmMat4 orthoMatrix;
-			kmMat4OrthographicProjection(&orthoMatrix, 0, sizeInPoints.width, 0, sizeInPoints.height, -1024, 1024);			
+			kmMat4OrthographicProjection(&orthoMatrix, 0, size.height, -1024 * CC_CONTENT_SCALE_FACTOR(), 1024 * CC_CONTENT_SCALE_FACTOR(), -1024, 1024);
 			kmGLMultMatrix( &orthoMatrix );
 
 			kmGLMatrixMode(KM_GL_MODELVIEW);
@@ -180,22 +182,21 @@ CGFloat	__ccContentScaleFactor = 1;
 
 		case kCCDirectorProjection3D:
 		{
-			float eyeZ = sizeInPoints.height * [self getZEye] / sizeInPixels.height;
+			float zeye = [self getZEye];
 
 			kmMat4 matrixPerspective, matrixLookup;
-			kmMat4PerspectiveProjection( &matrixPerspective, 60, (GLfloat)sizeInPixels.width/sizeInPixels.height, 0.5f, 1500.0f);
 
 			kmGLMatrixMode(KM_GL_PROJECTION);
 			kmGLLoadIdentity();
 			
-			kmMat4PerspectiveProjection( &matrixPerspective, 60, (GLfloat)sizeInPixels.width/sizeInPixels.height, 0.5f, 1500.0f);
+			kmMat4PerspectiveProjection( &matrixPerspective, 60, (GLfloat)size.width/size.height, 0.5f, 1500.0f);
 			kmGLMultMatrix(&matrixPerspective);
 			
 			kmGLMatrixMode(KM_GL_MODELVIEW);	
 			kmGLLoadIdentity();
 			kmVec3 eye, center, up;
-			kmVec3Fill( &eye, sizeInPoints.width/2, sizeInPoints.height/2, eyeZ );
-			kmVec3Fill( &center, sizeInPoints.width/2, sizeInPoints.height/2, 0 );
+			kmVec3Fill( &eye, size.width/2, size.height/2, zeye );
+			kmVec3Fill( &center, size.width/2, size.height/2, 0 );
 			kmVec3Fill( &up, 0, 1, 0);
 			kmMat4LookAt(&matrixLookup, &eye, &center, &up);
 			kmGLMultMatrix(&matrixLookup);
