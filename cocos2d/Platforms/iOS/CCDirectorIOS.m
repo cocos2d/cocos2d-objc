@@ -247,7 +247,7 @@ CGFloat	__ccContentScaleFactor = 1;
 	switch ( deviceOrientation_ ) {
 		case CCDeviceOrientationPortrait:
 			// nothing
-			kmGLTranslatef(w,h,0);
+//			kmGLTranslatef(w,h,0);
 			break;
 		case CCDeviceOrientationPortraitUpsideDown:
 			// upside down

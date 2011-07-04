@@ -9,7 +9,10 @@
 
 // local import
 #import "SpriteTest.h"
+
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 #import "RootViewController.h"
+#endif
 
 static int sceneIdx=-1;
 static NSString *transitions[] = {	
@@ -4115,6 +4118,7 @@ Class restartAction()
 
 - (void) dealloc
 {
+	[viewController_ release];
 	[window release];
 	[super dealloc];
 }

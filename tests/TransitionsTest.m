@@ -8,6 +8,10 @@
 #import "cocos2d.h"
 #import "TransitionsTest.h"
 
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#import "RootViewController.h"
+#endif
+
 #define TRANSITION_DURATION (1.2f)
 
 @interface FadeWhiteTransition : CCTransitionFade
@@ -455,9 +459,6 @@ Class restartTransition()
 	// get instance of the shared director
 	CCDirector *director = [CCDirector sharedDirector];
 	
-	// before creating any layer, set the landscape mode
-	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
-	
 	// display FPS (useful when debugging)
 	[director setDisplayFPS:YES];
 	
@@ -481,8 +482,15 @@ Class restartTransition()
 	if( ! [director enableRetinaDisplay:YES] )
 		CCLOG(@"Retina Display Not supported");
 	
-	// glview is a child of the main window
-	[window addSubview:glView];
+	// Init the View Controller
+	viewController_ = [[RootViewController alloc] initWithNibName:nil bundle:nil];
+	viewController_.wantsFullScreenLayout = YES;
+	
+	// make the OpenGLView a child of the view controller
+	[viewController_ setView:glView];
+	
+	// make the OpenGLView a child of the main window
+	[window addSubview:viewController_.view];
 	
 	// Make the window visible
 	[window makeKeyAndVisible];

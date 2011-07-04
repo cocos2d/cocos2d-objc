@@ -1539,6 +1539,57 @@
 		A0600C2313C2076E00BB6F49 /* fps_images-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E087B34E12785BB60076F6FF /* fps_images-hd.png */; };
 		A0600C2413C2076E00BB6F49 /* fps_images-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E087B34E12785BB60076F6FF /* fps_images-hd.png */; };
 		A0600C2713C21D0200BB6F49 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0600C2613C21D0200BB6F49 /* RootViewController.m */; };
+		A0600C7013C2279000BB6F49 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0600C2613C21D0200BB6F49 /* RootViewController.m */; };
+		A0600C7113C2279600BB6F49 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0600C2613C21D0200BB6F49 /* RootViewController.m */; };
+		A0600C7213C2279700BB6F49 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0600C2613C21D0200BB6F49 /* RootViewController.m */; };
+		A0600C7313C2279800BB6F49 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0600C2613C21D0200BB6F49 /* RootViewController.m */; };
+		A0600C7413C2279800BB6F49 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0600C2613C21D0200BB6F49 /* RootViewController.m */; };
+		A0600C7513C2279900BB6F49 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0600C2613C21D0200BB6F49 /* RootViewController.m */; };
+		A0600C7613C2279A00BB6F49 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0600C2613C21D0200BB6F49 /* RootViewController.m */; };
+		A0600C7713C2279B00BB6F49 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0600C2613C21D0200BB6F49 /* RootViewController.m */; };
+		A0600C7813C2279C00BB6F49 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0600C2613C21D0200BB6F49 /* RootViewController.m */; };
+		A0600C7913C2279E00BB6F49 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0600C2613C21D0200BB6F49 /* RootViewController.m */; };
+		A0600C7A13C2279F00BB6F49 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0600C2613C21D0200BB6F49 /* RootViewController.m */; };
+		A0600C7B13C2279F00BB6F49 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0600C2613C21D0200BB6F49 /* RootViewController.m */; };
+		A0600C7C13C227A000BB6F49 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0600C2613C21D0200BB6F49 /* RootViewController.m */; };
+		A0600C7D13C227A200BB6F49 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0600C2613C21D0200BB6F49 /* RootViewController.m */; };
+		A0600C7E13C227A300BB6F49 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0600C2613C21D0200BB6F49 /* RootViewController.m */; };
+		A0600C7F13C227A300BB6F49 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0600C2613C21D0200BB6F49 /* RootViewController.m */; };
+		A0600C8013C227A500BB6F49 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0600C2613C21D0200BB6F49 /* RootViewController.m */; };
+		A0600C8113C227A600BB6F49 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0600C2613C21D0200BB6F49 /* RootViewController.m */; };
+		A0600C8213C227A600BB6F49 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0600C2613C21D0200BB6F49 /* RootViewController.m */; };
+		A0600C8313C227A700BB6F49 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0600C2613C21D0200BB6F49 /* RootViewController.m */; };
+		A0600C8413C227A800BB6F49 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0600C2613C21D0200BB6F49 /* RootViewController.m */; };
+		A0600C8513C227A900BB6F49 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0600C2613C21D0200BB6F49 /* RootViewController.m */; };
+		A0600C8613C227AA00BB6F49 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0600C2613C21D0200BB6F49 /* RootViewController.m */; };
+		A0600C8713C227AA00BB6F49 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0600C2613C21D0200BB6F49 /* RootViewController.m */; };
+		A0600C8813C227AB00BB6F49 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0600C2613C21D0200BB6F49 /* RootViewController.m */; };
+		A0600C8913C227B000BB6F49 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0600C2613C21D0200BB6F49 /* RootViewController.m */; };
+		A0600C8A13C227B000BB6F49 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0600C2613C21D0200BB6F49 /* RootViewController.m */; };
+		A0600C8B13C227B100BB6F49 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0600C2613C21D0200BB6F49 /* RootViewController.m */; };
+		A0600C8C13C227B200BB6F49 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0600C2613C21D0200BB6F49 /* RootViewController.m */; };
+		A0600C8D13C227B300BB6F49 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0600C2613C21D0200BB6F49 /* RootViewController.m */; };
+		A0600C8E13C227B400BB6F49 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0600C2613C21D0200BB6F49 /* RootViewController.m */; };
+		A0600C8F13C227B400BB6F49 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0600C2613C21D0200BB6F49 /* RootViewController.m */; };
+		A0600C9013C227B500BB6F49 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0600C2613C21D0200BB6F49 /* RootViewController.m */; };
+		A0600C9113C227B600BB6F49 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0600C2613C21D0200BB6F49 /* RootViewController.m */; };
+		A0600C9213C227B700BB6F49 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0600C2613C21D0200BB6F49 /* RootViewController.m */; };
+		A0600C9313C227B700BB6F49 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0600C2613C21D0200BB6F49 /* RootViewController.m */; };
+		A0600C9413C227BB00BB6F49 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0600C2613C21D0200BB6F49 /* RootViewController.m */; };
+		A0600C9513C227BB00BB6F49 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0600C2613C21D0200BB6F49 /* RootViewController.m */; };
+		A0600C9613C227BC00BB6F49 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0600C2613C21D0200BB6F49 /* RootViewController.m */; };
+		A0600C9713C227BD00BB6F49 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0600C2613C21D0200BB6F49 /* RootViewController.m */; };
+		A0600C9813C227BE00BB6F49 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0600C2613C21D0200BB6F49 /* RootViewController.m */; };
+		A0600C9913C227BF00BB6F49 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0600C2613C21D0200BB6F49 /* RootViewController.m */; };
+		A0600C9A13C227C000BB6F49 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0600C2613C21D0200BB6F49 /* RootViewController.m */; };
+		A0600C9B13C227C200BB6F49 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0600C2613C21D0200BB6F49 /* RootViewController.m */; };
+		A0600C9C13C227C200BB6F49 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0600C2613C21D0200BB6F49 /* RootViewController.m */; };
+		A0600C9D13C227C300BB6F49 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0600C2613C21D0200BB6F49 /* RootViewController.m */; };
+		A0600C9E13C227C400BB6F49 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0600C2613C21D0200BB6F49 /* RootViewController.m */; };
+		A0600C9F13C227C500BB6F49 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0600C2613C21D0200BB6F49 /* RootViewController.m */; };
+		A0600CA013C227C600BB6F49 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0600C2613C21D0200BB6F49 /* RootViewController.m */; };
+		A0600CA113C227C700BB6F49 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0600C2613C21D0200BB6F49 /* RootViewController.m */; };
+		A0600CA213C227C800BB6F49 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0600C2613C21D0200BB6F49 /* RootViewController.m */; };
 		AAEA834B0FD5704400F08728 /* blocks.png in Resources */ = {isa = PBXBuildFile; fileRef = AAEA834A0FD5704400F08728 /* blocks.png */; };
 		DA5F0EC50FFE96D400C7C82E /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB240E10EE4A00AE9530 /* Default.png */; };
 		DA5F0EC60FFE96D400C7C82E /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB250E10EE4A00AE9530 /* Icon.png */; };
@@ -10498,6 +10549,7 @@
 			files = (
 				05AAF3D810EE85B300CACA2B /* main.m in Sources */,
 				05AAF3E910EE85D200CACA2B /* MenuTestWithBlocks.m in Sources */,
+				A0600C8913C227B000BB6F49 /* RootViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10506,6 +10558,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				05CA7B0C10ED67CE00F12774 /* ActionsWithBlocks.m in Sources */,
+				A0600CA013C227C600BB6F49 /* RootViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10515,6 +10568,7 @@
 			files = (
 				495E74F8104B756D0012BB52 /* RenderTextureTest.m in Sources */,
 				495E74F5104B75390012BB52 /* main.m in Sources */,
+				A0600C8413C227A800BB6F49 /* RootViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10528,6 +10582,7 @@
 				50011200103B878B0059EC2E /* iPhoneTest.mm in Sources */,
 				50011201103B878B0059EC2E /* iPhoneTestEntries.mm in Sources */,
 				50011202103B878B0059EC2E /* main.m in Sources */,
+				A0600C9D13C227C300BB6F49 /* RootViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10540,6 +10595,7 @@
 				5012DD480FE299EA00D6DDD1 /* Paddle.m in Sources */,
 				5012DD490FE299EA00D6DDD1 /* PongScene.m in Sources */,
 				5012DD4A0FE299EA00D6DDD1 /* TouchesDemoAppDelegate.m in Sources */,
+				A0600C7D13C227A200BB6F49 /* RootViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10549,6 +10605,7 @@
 			files = (
 				501504E011330E1700A9CA65 /* main.m in Sources */,
 				5015050111330EA700A9CA65 /* ProgressActionsTest.m in Sources */,
+				A0600C8513C227A900BB6F49 /* RootViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10644,6 +10701,7 @@
 			files = (
 				501945680F964C620059CE7C /* main.m in Sources */,
 				501945810F964CFD0059CE7C /* drawPrimitivesTest.m in Sources */,
+				A0600C9413C227BB00BB6F49 /* RootViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10664,6 +10722,7 @@
 				502BF59F11E39EFB0030C477 /* bugViewController.m in Sources */,
 				502BF5A011E39EFB0030C477 /* EAGLViewBugAppDelegate.m in Sources */,
 				502BF5A111E39EFB0030C477 /* HelloWorldScene.m in Sources */,
+				A0600C7213C2279700BB6F49 /* RootViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10680,6 +10739,7 @@
 			files = (
 				502C664F0DFEFD6800E4107D /* RotateWorldTest.m in Sources */,
 				50B2CB200E10EE0800AE9530 /* main.m in Sources */,
+				A0600C8313C227A700BB6F49 /* RootViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10713,6 +10773,7 @@
 			files = (
 				503F5CB3101FE930002A37E5 /* main.m in Sources */,
 				503F5CD1101FE9A9002A37E5 /* TileMapTest.m in Sources */,
+				A0600C7E13C227A300BB6F49 /* RootViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10765,6 +10826,7 @@
 				504226310FC0B64700B992F7 /* main.m in Sources */,
 				504227140FC0B96E00B992F7 /* Box2dTest.mm in Sources */,
 				50F48A531045943000755CFB /* GLES-Render.mm in Sources */,
+				A0600C9E13C227C400BB6F49 /* RootViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10774,6 +10836,7 @@
 			files = (
 				504799A6100F6A4200D1C71A /* main.m in Sources */,
 				504799C3100F6AB100D1C71A /* LayerTest.m in Sources */,
+				A0600C8B13C227B100BB6F49 /* RootViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10783,6 +10846,7 @@
 			files = (
 				504828E80F45B42000A30CEF /* main.m in Sources */,
 				504828CA0F45B15700A30CEF /* attachDemo.m in Sources */,
+				A0600C9F13C227C500BB6F49 /* RootViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10792,6 +10856,7 @@
 			files = (
 				504CC3221035BDE90096894C /* main.m in Sources */,
 				504CC3461035BECA0096894C /* ActionManagerTest.m in Sources */,
+				A0600CA213C227C800BB6F49 /* RootViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10801,6 +10866,7 @@
 			files = (
 				504E18EB11C4C91200E19835 /* EAGLViewTest.m in Sources */,
 				504E190211C4CB7D00E19835 /* main.m in Sources */,
+				A0600C9313C227B700BB6F49 /* RootViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10819,6 +10885,7 @@
 				5052281411B3D7540061670F /* main.m in Sources */,
 				5052281511B3D7540061670F /* Monster.m in Sources */,
 				50522A0E11B3E1E20061670F /* CDXPropertyModifierAction.m in Sources */,
+				A0600C9913C227BF00BB6F49 /* RootViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10828,6 +10895,7 @@
 			files = (
 				505228E611B3DC410061670F /* DenshionDemo.m in Sources */,
 				505228EB11B3DC410061670F /* main.m in Sources */,
+				A0600C9813C227BE00BB6F49 /* RootViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10840,6 +10908,7 @@
 				505229DF11B3E0BC0061670F /* TheAudioCode.m in Sources */,
 				505229E011B3E0BC0061670F /* main.m in Sources */,
 				50522A0D11B3E1E20061670F /* CDXPropertyModifierAction.m in Sources */,
+				A0600C9713C227BD00BB6F49 /* RootViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10852,6 +10921,7 @@
 				5052298A11B3DDBE0061670F /* FancyRatMeteringDemoAppDelegate.m in Sources */,
 				5052298B11B3DDBE0061670F /* HelloWorldScene.m in Sources */,
 				5052298C11B3DDBE0061670F /* main.m in Sources */,
+				A0600C9613C227BC00BB6F49 /* RootViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10873,6 +10943,7 @@
 				A015BFEE13B826D800C73E76 /* vec2.c in Sources */,
 				A015BFF013B826D800C73E76 /* vec3.c in Sources */,
 				A015BFF213B826D800C73E76 /* vec4.c in Sources */,
+				A0600C7F13C227A300BB6F49 /* RootViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10882,6 +10953,7 @@
 			files = (
 				505B63980F2F4210001B4104 /* main.m in Sources */,
 				505B63A80F2F4295001B4104 /* EaseActionsTest.m in Sources */,
+				A0600C9213C227B700BB6F49 /* RootViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10891,6 +10963,7 @@
 			files = (
 				506143FD0E589A2E003CCDB7 /* main.m in Sources */,
 				5061440D0E589A7B003CCDB7 /* cocosnodeTest.m in Sources */,
+				A0600C9513C227BB00BB6F49 /* RootViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10900,6 +10973,7 @@
 			files = (
 				506882140E95763E00F943E5 /* LabelTest.m in Sources */,
 				506882050E95761200F943E5 /* main.m in Sources */,
+				A0600C8C13C227B200BB6F49 /* RootViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10909,6 +10983,7 @@
 			files = (
 				506C77E70E01524200B48100 /* ClickAndMoveTest.m in Sources */,
 				50B2CB1F0E10EE0800AE9530 /* main.m in Sources */,
+				A0600C9A13C227C000BB6F49 /* RootViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10918,6 +10993,7 @@
 			files = (
 				506C7A0E0E01C78700B48100 /* MenuTest.m in Sources */,
 				50B2CB1E0E10EE0800AE9530 /* main.m in Sources */,
+				A0600C8A13C227B000BB6F49 /* RootViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10927,6 +11003,7 @@
 			files = (
 				506C80130E041CDB00B48100 /* SceneTest.m in Sources */,
 				50B2CB1D0E10EE0800AE9530 /* main.m in Sources */,
+				A0600C8213C227A600BB6F49 /* RootViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10936,6 +11013,7 @@
 			files = (
 				5078B5240E3E43540004233A /* main.m in Sources */,
 				5078B5340E3E437F0004233A /* IntervalTest.m in Sources */,
+				A0600C8E13C227B400BB6F49 /* RootViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10945,6 +11023,7 @@
 			files = (
 				507C0EFE11D609290075E747 /* main.m in Sources */,
 				507C0F1311D60A740075E747 /* Bug-899.m in Sources */,
+				A0600C7313C2279800BB6F49 /* RootViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10954,6 +11033,7 @@
 			files = (
 				507FF8E5116D16F600B6FAB2 /* main.m in Sources */,
 				50B94B71116D186100425C03 /* Bug-350.m in Sources */,
+				A0600C7813C2279C00BB6F49 /* RootViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10963,6 +11043,7 @@
 			files = (
 				508CA7CE1193270F003AC397 /* main.m in Sources */,
 				508CA7E611932966003AC397 /* SchedulerTest.m in Sources */,
+				A0600C8113C227A600BB6F49 /* RootViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10979,6 +11060,7 @@
 			files = (
 				50A24E380F377FA1007CAEB0 /* main.m in Sources */,
 				50A24E710F377FE8007CAEB0 /* EffectsTest.m in Sources */,
+				A0600C9113C227B600BB6F49 /* RootViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10988,6 +11070,7 @@
 			files = (
 				50A783B80F3AFCE500104C45 /* main.m in Sources */,
 				50316ADE1029A365003ACFE7 /* MotionStreakTest.m in Sources */,
+				A0600C8813C227AB00BB6F49 /* RootViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11030,6 +11113,7 @@
 			files = (
 				50B2CE580E12A0B400AE9530 /* main.m in Sources */,
 				50B2C5ED0E100F8800AE9530 /* ChipmunkAccelTouchTest.m in Sources */,
+				A0600C9C13C227C200BB6F49 /* RootViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11058,6 +11142,7 @@
 				506D874A10D1AAF3008964A3 /* Tumble.c in Sources */,
 				506D874B10D1AAF3008964A3 /* UnsafeOps.c in Sources */,
 				E0C786AD1211A40400E309E2 /* Tank.c in Sources */,
+				A0600C9B13C227C200BB6F49 /* RootViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11067,6 +11152,7 @@
 			files = (
 				50C195550EE4B57E00829067 /* main.m in Sources */,
 				50C195650EE4B5B700829067 /* ParallaxTest.m in Sources */,
+				A0600C8713C227AA00BB6F49 /* RootViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11076,6 +11162,7 @@
 			files = (
 				50C938E50E0A9E1100517B01 /* TransitionsTest.m in Sources */,
 				50B2CB1B0E10EE0800AE9530 /* main.m in Sources */,
+				A0600C7013C2279000BB6F49 /* RootViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11085,6 +11172,7 @@
 			files = (
 				50C93AC50E0BF8FC00517B01 /* ActionsTest.m in Sources */,
 				50B2CB1A0E10EE0800AE9530 /* main.m in Sources */,
+				A0600CA113C227C700BB6F49 /* RootViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11105,6 +11193,7 @@
 			files = (
 				50CBA47A11CBD6FB007B009D /* main.m in Sources */,
 				50CBA4A111CBD770007B009D /* Bug-886.m in Sources */,
+				A0600C7413C2279800BB6F49 /* RootViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11113,6 +11202,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				50D0E06E0FF923B400098927 /* HelloActions.m in Sources */,
+				A0600C7A13C2279F00BB6F49 /* RootViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11121,6 +11211,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				50D0E0F10FF9316900098927 /* HelloEvents.m in Sources */,
+				A0600C7913C2279E00BB6F49 /* RootViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11130,6 +11221,7 @@
 			files = (
 				50D56FC60F3FABEC007CD6B9 /* main.m in Sources */,
 				50D5700F0F3FAD3C007CD6B9 /* EffectsAdvancedTest.m in Sources */,
+				A0600C9013C227B500BB6F49 /* RootViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11139,6 +11231,7 @@
 			files = (
 				50DB1BBE0E1C1E5900A89DFF /* main.m in Sources */,
 				50DB1BD10E1C1EF000A89DFF /* ParticleTest.m in Sources */,
+				A0600C8613C227AA00BB6F49 /* RootViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11147,6 +11240,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				50DFC2CB0FF62843007E7827 /* HelloWorld.m in Sources */,
+				A0600C7B13C2279F00BB6F49 /* RootViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11156,6 +11250,7 @@
 			files = (
 				50E77D0511D4C925009CA2C2 /* main.m in Sources */,
 				507C0D8711D4CCC40075E747 /* HiResTest.m in Sources */,
+				A0600C8D13C227B300BB6F49 /* RootViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11184,6 +11279,7 @@
 			files = (
 				DA5F0ED90FFE96D400C7C82E /* main.m in Sources */,
 				5069C794100B84BC00489758 /* Bug-422.m in Sources */,
+				A0600C7713C2279B00BB6F49 /* RootViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11193,6 +11289,7 @@
 			files = (
 				DAABAA8D1059A42E00794EB3 /* main.m in Sources */,
 				DA90D87D1059A54D0039F26A /* FontTest.m in Sources */,
+				A0600C8F13C227B400BB6F49 /* RootViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11202,6 +11299,7 @@
 			files = (
 				E02BC2D61270E538006E46A2 /* main.m in Sources */,
 				E02BC2EA1270E704006E46A2 /* Bug-624.m in Sources */,
+				A0600C7513C2279900BB6F49 /* RootViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11212,6 +11310,7 @@
 				E037DA3F1281C7F0003D39D7 /* main.m in Sources */,
 				E037DA901281EFE2003D39D7 /* Bug-458.m in Sources */,
 				E037DA941281EFE2003D39D7 /* QuestionContainerSprite.m in Sources */,
+				A0600C7613C2279A00BB6F49 /* RootViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11221,6 +11320,7 @@
 			files = (
 				E03A4F5C1355041F00D4B515 /* main.m in Sources */,
 				E03A4F6D1355047600D4B515 /* ShaderTest.m in Sources */,
+				A0600C8013C227A500BB6F49 /* RootViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11230,6 +11330,7 @@
 			files = (
 				E0C5587911FE48E600B9E4CB /* main.m in Sources */,
 				E0C5588B11FE493B00B9E4CB /* ZwoptexTest.m in Sources */,
+				A0600C7C13C227A000BB6F49 /* RootViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11239,6 +11340,7 @@
 			files = (
 				E0EA5698134B9CA800F212C8 /* main.m in Sources */,
 				E0EA56A9134B9D1000F212C8 /* Bug-1159.m in Sources */,
+				A0600C7113C2279600BB6F49 /* RootViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
