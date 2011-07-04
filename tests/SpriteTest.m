@@ -9,6 +9,7 @@
 
 // local import
 #import "SpriteTest.h"
+#import "RootViewController.h"
 
 static int sceneIdx=-1;
 static NSString *transitions[] = {	
@@ -4013,12 +4014,6 @@ Class restartAction()
 	// before creating any layer, set the landscape mode
 	CCDirector *director = [CCDirector sharedDirector];
 	
-	// landscape orientation
-//	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
-//	[director setDeviceOrientation:kCCDeviceOrientationLandscapeRight];
-	[director setDeviceOrientation:kCCDeviceOrientationPortrait];
-//	[director setDeviceOrientation:kCCDeviceOrientationPortraitUpsideDown];
-	
 	// set FPS at 60
 	[director setAnimationInterval:1.0/60];
 	
@@ -4044,9 +4039,16 @@ Class restartAction()
 	// Enables High Res mode (Retina Display) on iPhone 4 and maintains low res on all other devices
 	if( ! [director enableRetinaDisplay:YES] )
 		CCLOG(@"Retina Display Not supported");
+
+	// Init the View Controller
+	viewController_ = [[RootViewController alloc] initWithNibName:nil bundle:nil];
+	viewController_.wantsFullScreenLayout = YES;
 	
+	// make the OpenGLView a child of the view controller
+	[viewController_ setView:glView];
+
 	// make the OpenGLView a child of the main window
-	[window addSubview:glView];
+	[window addSubview:viewController_.view];
 	
 	// make main window visible
 	[window makeKeyAndVisible];	
