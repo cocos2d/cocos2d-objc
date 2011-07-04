@@ -25,6 +25,7 @@
 
 #import "CCShaderCache.h"
 #import "GLProgram.h"
+#import "ccMacros.h"
 #import "Support/OpenGL_Internal.h"
 
 static CCShaderCache *_sharedShaderCache;
@@ -52,6 +53,14 @@ static CCShaderCache *_sharedShaderCache;
 {
 	NSAssert(_sharedShaderCache == nil, @"Attempted to allocate a second instance of a singleton.");
 	return [super alloc];
+}
+
+- (void)dealloc
+{
+	CCLOGINFO(@"cocos2d deallocing %@", self);
+	
+	[programs_ release];
+    [super dealloc];
 }
 
 +(void)purgeSharedTextureCache
@@ -83,10 +92,10 @@ static CCShaderCache *_sharedShaderCache;
 	
 	[p link];
 	[p updateUniforms];
-	
+		
 	[programs_ setObject:p forKey:kCCShader_PositionTextureColor];
 	[p release];
-
+	
 	//
 	// Position Color shader
 	//
@@ -101,7 +110,7 @@ static CCShaderCache *_sharedShaderCache;
 	
 	[programs_ setObject:p forKey:kCCShader_PositionColor];
 	[p release];
-
+	
 	//
 	// Position Texture shader
 	//
