@@ -32,6 +32,10 @@
 #import <OpenGL/gl.h>
 #endif // 
 
+#ifdef __cplusplus
+extern "C" {
+#endif	
+
 @class GLProgram;
 
 /** @file
@@ -77,3 +81,7 @@ void ccGLDeleteTexture( GLuint textureID );
  @since v2.0.0
  */
 void ccGLBlendFunc(GLenum sfactor, GLenum dfactor);
+
+#ifdef __cplusplus
+}
+#endif	
