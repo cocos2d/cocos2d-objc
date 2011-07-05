@@ -206,8 +206,7 @@ enum {
 @property(nonatomic,readwrite,assign) float scaleY;
 /** Position (x,y) of the node in points. (0,0) is the left-bottom corner. */
 @property(nonatomic,readwrite,assign) CGPoint position;
-/** A CCCamera object that lets you move the node using a gluLookAt
-*/
+/** A CCCamera object that lets you move the node using a gluLookAt */
 @property(nonatomic,readonly) CCCamera* camera;
 /** Array of children */
 @property(nonatomic,readonly) CCArray *children;

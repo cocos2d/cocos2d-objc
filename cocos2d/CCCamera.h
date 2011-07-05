@@ -66,6 +66,8 @@
     float upZ_;
 	
 	BOOL dirty_;
+	
+	kmMat4	lookupMatrix_;
 }
 
 /** whether of not the camera is dirty */

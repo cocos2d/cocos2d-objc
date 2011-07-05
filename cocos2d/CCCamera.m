@@ -28,7 +28,6 @@
 #import "CCCamera.h"
 #import "ccMacros.h"
 #import "CCDrawingPrimitives.h"
-#import "kazmath/kazmath.h"
 #import "kazmath/GL/matrix.h"
 
 @implementation CCCamera
@@ -65,29 +64,37 @@
 	upX_ = 0.0f;
 	upY_ = 1.0f;
 	upZ_ = 0.0f;
-
+	
+	kmMat4Identity( &lookupMatrix_ );
+	
 	dirty_ = NO;
 }
 
 -(void) locate
 {
 	if( dirty_ ) {
-
-		kmMat4 lookupMatrix;
 		
 		kmVec3 eye, center, up;
-		kmVec3Fill( &eye, eyeX_, eyeY_, eyeZ_);
-		kmVec3Fill( &center, centerX_, centerY_, centerZ_);
-		kmVec3Fill( &up, upX_, upY_, upZ_);
-		kmMat4LookAt( &lookupMatrix, &eye, &center, &up);
 		
-		kmGLMultMatrix( &lookupMatrix );
+		kmVec3Fill( &eye, eyeX_, eyeY_ , eyeZ_ );
+		kmVec3Fill( &center, centerX_, centerY_, centerZ_ );
+		
+		kmVec3Fill( &up, upX_, upY_, upZ_);
+		kmMat4LookAt( &lookupMatrix_, &eye, &center, &up);
+		
+		dirty_ = NO;
+		
 	}
+	
+	kmGLMultMatrix( &lookupMatrix_ );
+
 }
 
 +(float) getZEye
 {
 	return FLT_EPSILON;
+	//	CGSize s = [[CCDirector sharedDirector] displaySize];
+	//	return ( s.height / 1.1566f );
 }
 
 -(void) setEyeX: (float)x eyeY:(float)y eyeZ:(float)z
@@ -95,6 +102,7 @@
 	eyeX_ = x;
 	eyeY_ = y;
 	eyeZ_ = z;
+
 	dirty_ = YES;	
 }
 
@@ -103,6 +111,7 @@
 	centerX_ = x;
 	centerY_ = y;
 	centerZ_ = z;
+	
 	dirty_ = YES;
 }
 
@@ -111,6 +120,7 @@
 	upX_ = x;
 	upY_ = y;
 	upZ_ = z;
+
 	dirty_ = YES;
 }
 

@@ -65,14 +65,14 @@
 -(id) initWithDuration:(float)t radius:(float)r deltaRadius:(float) dr angleZ:(float)z deltaAngleZ:(float)dz angleX:(float)x deltaAngleX:(float)dx
 {
 	if((self=[super initWithDuration:t]) ) {
-	
+		
 		radius_ = r;
 		deltaRadius_ = dr;
 		angleZ_ = z;
 		deltaAngleZ_ = dz;
 		angleX_ = x;
 		deltaAngleX_ = dx;
-
+		
 		radDeltaZ_ = (CGFloat)CC_DEGREES_TO_RADIANS(dz);
 		radDeltaX_ = (CGFloat)CC_DEGREES_TO_RADIANS(dx);
 	}
@@ -97,7 +97,7 @@
 	if( isnan( angleX_ ) )
 		angleX_ = (CGFloat)CC_RADIANS_TO_DEGREES(azimuth);
 #endif
-
+	
 	radZ_ = (CGFloat)CC_DEGREES_TO_RADIANS(angleZ_);
 	radX_ = (CGFloat)CC_DEGREES_TO_RADIANS(angleX_);
 }
@@ -107,11 +107,11 @@
 	float r = (radius_ + deltaRadius_ * dt) *[CCCamera getZEye];
 	float za = radZ_ + radDeltaZ_ * dt;
 	float xa = radX_ + radDeltaX_ * dt;
-
+	
 	float i = sinf(za) * cosf(xa) * r + centerXOrig_;
 	float j = sinf(za) * sinf(xa) * r + centerYOrig_;
 	float k = cosf(za) * r + centerZOrig_;
-
+	
 	[[target_ camera] setEyeX:i eyeY:j eyeZ:k];	
 }
 
@@ -135,13 +135,13 @@
 		s = FLT_EPSILON;
 	if(r==0.0f)
 		r = FLT_EPSILON;
-
+	
 	*zenith = acosf( z/r);
 	if( x < 0 )
 		*azimuth = (float)M_PI - asinf(y/s);
 	else
 		*azimuth = asinf(y/s);
-					
+	
 	*newRadius = r / [CCCamera getZEye];					
 }
 @end
