@@ -6,6 +6,10 @@
 #ifndef __CC_UTILS_H
 #define __CC_UTILS_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif	
+
 /** @file ccUtils.h
  Misc free functions
  */
@@ -23,7 +27,10 @@
  
  @since v0.99.5
  */
-
 unsigned long ccNextPOT( unsigned long value );
+
+#ifdef __cplusplus
+}
+#endif	
 
 #endif // ! __CC_UTILS_H
