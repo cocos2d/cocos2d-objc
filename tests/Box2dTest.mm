@@ -116,25 +116,26 @@ enum {
 
 -(void) draw
 {
-	// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
-	// Needed states:  GL_VERTEX_ARRAY, 
-	// Unneeded states: GL_TEXTURE_2D, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
-	glDisable(GL_TEXTURE_2D);
-	glDisableClientState(GL_COLOR_ARRAY);
-	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-
-
-	// Draws the Box2d Data in RetinaDisplay
-	glPushMatrix();
-    
-	world->DrawDebugData();
-
-	glPopMatrix();
+	[super draw];
+	
+	// Default Attribs & States: GL_TEXTURE0, kCCAttribPosition, kCCAttribColor, kCCAttribTexCoords
+	// Needed states: GL_TEXTURE0, k,kCCAttribPosition, kCCAttribColor, kCCAttribTexCoords
+	// Unneeded states: GL_TEXTURE0, kCCAttribColor, kCCAttribTexCoords
+	
+	glDisableVertexAttribArray(kCCAttribTexCoords);
+	glDisableVertexAttribArray(kCCAttribColor);
+	
+	kmGLPushMatrix();
+	
+	world->DrawDebugData();	
 	
 	// restore default GL states
-	glEnable(GL_TEXTURE_2D);
-	glEnableClientState(GL_COLOR_ARRAY);
-	glEnableClientState(GL_TEXTURE_COORD_ARRAY);	
+	glEnableVertexAttribArray(kCCAttribColor);
+	glEnableVertexAttribArray(kCCAttribTexCoords);
+	
+	kmGLPopMatrix();
+	
+	CHECK_GL_ERROR_DEBUG();
 }
 
 -(void) addNewSpriteWithCoords:(CGPoint)p
