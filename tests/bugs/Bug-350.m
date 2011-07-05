@@ -4,13 +4,7 @@
 //
 
 #import "Bug-350.h"
-
-- (void) dealloc
-{
-	[viewController_ release];
-	[window_ dealloc];
-	[super dealloc];
-}
+#import "RootViewController.h"
 
 
 #pragma mark -

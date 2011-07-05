@@ -437,7 +437,7 @@ enum {
 	glUniform2f( blurLocation, blur_.x, blur_.y );
 	glUniform4f( subLocation, sub_[0], sub_[1], sub_[2], sub_[3] );
 	
-	ccGLBindTexture2D( [texture_ name] );
+	glBindTexture( GL_TEXTURE_2D,  [texture_ name] );
 	
 	//
 	// Attributes

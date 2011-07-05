@@ -6,6 +6,7 @@
 
 
 #import "MenuTestWithBlocks.h"
+#import "RootViewController.h"
 
 enum {
 	kTagMenu = 1,
@@ -394,14 +395,11 @@ enum {
 - (void) applicationDidFinishLaunching:(UIApplication*)application
 {
 	// Init the window
-	window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+	window_ = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 	
 	// get instance of the shared director
 	CCDirector *director = [CCDirector sharedDirector];
-	
-	// before creating any layer, set the landscape mode
-	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
-	
+
 	// display FPS (useful when debugging)
 	[director setDisplayFPS:YES];
 	
@@ -409,7 +407,7 @@ enum {
 	[director setAnimationInterval:1.0/60];
 	
 	// create an OpenGL view
-	EAGLView *glView = [EAGLView viewWithFrame:[window bounds]];
+	EAGLView *glView = [EAGLView viewWithFrame:[window_ bounds]];
 	
 	// enable multiple touches
 //	[glView setMultipleTouchEnabled:YES];
@@ -417,11 +415,14 @@ enum {
 	// connect it to the director
 	[director setOpenGLView:glView];
 	
+	viewController_ = [[RootViewController alloc] init];
+	[viewController_ setView: glView];
+	
 	// glview is a child of the main window
-	[window addSubview:glView];
+	[window_ addSubview:viewController_.view];
 	
 	// Make the window visible
-	[window makeKeyAndVisible];
+	[window_ makeKeyAndVisible];
 
 	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
 	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
@@ -476,7 +477,8 @@ enum {
 
 - (void) dealloc
 {
-	[window dealloc];
+	[viewController_ release];
+	[window_ dealloc];
 	[super dealloc];
 }
 
