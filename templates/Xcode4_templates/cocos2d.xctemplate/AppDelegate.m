@@ -9,22 +9,21 @@
 #import "cocos2d.h"
 
 #import "AppDelegate.h"
-#import "GameConfig.h"
 #import "HelloWorldLayer.h"
 #import "RootViewController.h"
 
 @implementation AppDelegate
 
-@synthesize window;
+@synthesize window=window_;
+@synthesize viewController=viewController_;
 
 - (void) removeStartupFlicker
 {
 	//
 	// THIS CODE REMOVES THE STARTUP FLICKER
 	//
-	// Uncomment the following code if you Application only supports landscape mode
+	// Uncomment the following code if your Application only supports landscape mode
 	//
-#if GAME_AUTOROTATION == kGameAutorotationUIViewController
 
 //	CC_ENABLE_DEFAULT_GL_STATES();
 //	CCDirector *director = [CCDirector sharedDirector];
@@ -35,25 +34,19 @@
 //	[sprite visit];
 //	[[director openGLView] swapBuffers];
 //	CC_ENABLE_DEFAULT_GL_STATES();
-	
-#endif // GAME_AUTOROTATION == kGameAutorotationUIViewController	
 }
+
 - (void) applicationDidFinishLaunching:(UIApplication*)application
 {
 	// Init the window
-	window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-	
-	// Try to use CADisplayLink director
-	// if it fails (SDK < 3.1) use the default director
-	if( ! [CCDirector setDirectorType:kCCDirectorTypeDisplayLink] )
-		[CCDirector setDirectorType:kCCDirectorTypeDefault];
+	window_ = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 	
 	
 	CCDirector *director = [CCDirector sharedDirector];
 	
 	// Init the View Controller
-	viewController = [[RootViewController alloc] initWithNibName:nil bundle:nil];
-	viewController.wantsFullScreenLayout = YES;
+	viewController_ = [[RootViewController alloc] initWithNibName:nil bundle:nil];
+	viewController_.wantsFullScreenLayout = YES;
 	
 	//
 	// Create the EAGLView manually
@@ -61,7 +54,7 @@
 	//	2. depth format of 0 bit. Use 16 or 24 bit for 3d effects, like CCPageTurnTransition
 	//
 	//
-	EAGLView *glView = [EAGLView viewWithFrame:[window bounds]
+	EAGLView *glView = [EAGLView viewWithFrame:[window_ bounds]
 								   pixelFormat:kEAGLColorFormatRGB565	// kEAGLColorFormatRGBA8
 								   depthFormat:0						// GL_DEPTH_COMPONENT16_OES
 						];
@@ -70,41 +63,28 @@
 	[director setOpenGLView:glView];
 	
 //	// Enables High Res mode (Retina Display) on iPhone 4 and maintains low res on all other devices
-//	if( ! [director enableRetinaDisplay:YES] )
-//		CCLOG(@"Retina Display Not supported");
-	
-	//
-	// VERY IMPORTANT:
-	// If the rotation is going to be controlled by a UIViewController
-	// then the device orientation should be "Portrait".
-	//
-	// IMPORTANT:
-	// By default, this template only supports Landscape orientations.
-	// Edit the RootViewController.m file to edit the supported orientations.
-	//
-#if GAME_AUTOROTATION == kGameAutorotationUIViewController
-	[director setDeviceOrientation:kCCDeviceOrientationPortrait];
-#else
-	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
-#endif
-	
+	if( ! [director enableRetinaDisplay:YES] )
+		CCLOG(@"Retina Display Not supported");
+		
 	[director setAnimationInterval:1.0/60];
 	[director setDisplayFPS:YES];
 	
 	
 	// make the OpenGLView a child of the view controller
-	[viewController setView:glView];
+	[viewController_ setView:glView];
 	
 	// make the View Controller a child of the main window
-	[window addSubview: viewController.view];
+	[window_ addSubview: viewController_.view];
 	
-	[window makeKeyAndVisible];
+	[window_ makeKeyAndVisible];
 	
 	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
 	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
 	// You can change anytime.
-	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA8888];
-
+	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA4444];
+	
+	// PVR Textures have alpha premultiplied
+	[CCTexture2D PVRImagesHavePremultipliedAlpha:YES];
 	
 	// Removes the startup flicker
 	[self removeStartupFlicker];
@@ -139,9 +119,9 @@
 	
 	[[director openGLView] removeFromSuperview];
 	
-	[viewController release];
+	[viewController_ release];
 	
-	[window release];
+	[window_ release];
 	
 	[director end];	
 }
@@ -152,7 +132,9 @@
 
 - (void)dealloc {
 	[[CCDirector sharedDirector] end];
-	[window release];
+
+	[window_ release];
+	[viewController_ release];
 	[super dealloc];
 }
 
