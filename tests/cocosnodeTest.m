@@ -25,7 +25,9 @@ Class restartAction(void);
 
 static int sceneIdx=-1;
 static NSString *transitions[] = {
-	
+
+	@"CameraZoomTest",	
+
 	@"CameraOrbitTest",
 	@"CameraZoomTest",	
 	@"CameraCenterTest",
@@ -675,7 +677,8 @@ Class restartAction()
 		[self addChild:sprite z:0];		
 		[sprite setPosition:ccp(s.width/4*1, s.height/2)];
 		cam = [sprite camera];
-		[cam setEyeX:0 eyeY:0 eyeZ:415];
+		[cam setEyeX:0 eyeY:0 eyeZ:415/2];
+		[cam setCenterX:0 centerY:0 centerZ:0];
 		
 		// CENTER
 		sprite = [CCSprite spriteWithFile:@"grossini.png"];
@@ -693,6 +696,8 @@ Class restartAction()
 //		[cam setCenterX:0 centerY:0 centerZ:0];
 	
 
+		z_=0;
+		
 		[self scheduleUpdate];
 	}
 	
@@ -701,20 +706,18 @@ Class restartAction()
 
 -(void) update:(ccTime)dt
 {
-	static float z = 0;
-
 	CCNode *sprite;
 	CCCamera *cam;
 	
-	z += dt * 100;
+	z_ += dt * 100;
 	
 	sprite = [self getChildByTag:20];
 	cam = [sprite camera];
-	[cam setEyeX:0 eyeY:0 eyeZ:z];
+	[cam setEyeX:0 eyeY:0 eyeZ:z_];
 	
 	sprite = [self getChildByTag:40];
 	cam = [sprite camera];
-	[cam setEyeX:0 eyeY:0 eyeZ:z];	
+	[cam setEyeX:0 eyeY:0 eyeZ:-z_];	
 }
 
 -(NSString *) title
