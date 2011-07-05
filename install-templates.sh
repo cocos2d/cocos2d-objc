@@ -2,7 +2,7 @@
 
 echo 'cocos2d-iphone template installer'
 
-COCOS2D_VER='cocos2d 1.0.0'
+COCOS2D_VER='cocos2d 2.0.0'
 BASE_TEMPLATE_DIR="/Library/Application Support/Developer/Shared/Xcode"
 BASE_TEMPLATE_USER_DIR="$HOME/Library/Application Support/Developer/Shared/Xcode"
 SCRIPT_DIR=$(dirname $0)
@@ -38,24 +38,12 @@ while getopts "fhu" OPTION; do
 	esac
 done
 
-# Make sure only root can run our script
-if [[ ! $user_dir  && "$(id -u)" != "0" ]]; then
+# Make sure root is not executed
+if [[ "$(id -u)" == "0" ]]; then
 	echo ""
-	echo "Error: This script must be run as root in order to copy templates to ${BASE_TEMPLATE_DIR}" 1>&2
+	echo "Error: Do not run this script as root." 1>&2
 	echo ""
-	echo "Try running it with 'sudo', or with '-u' to install it only you:" 1>&2
-	echo "   sudo $0" 1>&2
-	echo "or:" 1>&2
-	echo "   $0 -u" 1>&2   
-exit 1
-fi
-
-# Make sure root and user_dir is not executed at the same time
-if [[ $user_dir && "$(id -u)" == "0" ]]; then
-	echo ""
-	echo "Error: Do not run this script as root with the '-u' option." 1>&2
-	echo ""
-	echo "Either use the '-u' option or run it as root, but not both options at the same time." 1>&2
+	echo "'root' is no longer supported" 1>&2
 	echo ""
 	echo "RECOMMENDED WAY:" 1>&2
 	echo " $0 -u -f" 1>&2
@@ -103,7 +91,7 @@ copy_cocosdenshionextras_files(){
 
 copy_kazmath_files(){
 	echo ...copying Kazmath files
-	copy_files libs/kazmath"$LIBS_DIR"
+	copy_files external/kazmath "$LIBS_DIR"
     copy_files LICENSE_Kazmath.txt "$LIBS_DIR"
 }
 
