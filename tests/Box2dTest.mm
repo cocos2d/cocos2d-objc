@@ -7,6 +7,7 @@
 //
 
 #import "Box2dTest.h"
+#import "RootViewController.h"
 
 @implementation Box2DTestLayer
 
@@ -255,10 +256,7 @@ enum {
 	
 	// Obtain the shared director in order to...
 	CCDirector *director = [CCDirector sharedDirector];
-	
-	// Sets landscape mode
-	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
-	
+
 	// Turn on display FPS
 	[director setDisplayFPS:YES];
 	
@@ -285,7 +283,8 @@ enum {
 
 - (void) dealloc
 {
-	[window release];
+	[viewController_ release];
+	[window_ release];
 	[super dealloc];
 }
 
