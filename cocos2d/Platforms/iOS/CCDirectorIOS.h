@@ -53,7 +53,7 @@
  This is the recommened way to enable Retina Display.
  @since v0.99.5
  */
--(BOOL) enableRetinaDisplay:(BOOL)yes;
+-(BOOL) enableRetinaDisplay:(BOOL)enableRetina;
 
 
 /** returns the content scale factor */

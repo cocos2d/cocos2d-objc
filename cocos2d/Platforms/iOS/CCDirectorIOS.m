@@ -284,6 +284,9 @@ CGFloat	__ccContentScaleFactor = 1;
 	float newScale = enabled ? 2 : 1;
 	[self setContentScaleFactor:newScale];
 	
+	// Load Hi-Res FPS label
+	[self createFPSLabel];
+	
 	return YES;
 }
 
