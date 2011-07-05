@@ -156,7 +156,7 @@ if __name__ == "__main__":
         help()
 
     directory = None
-    group = None
+    group = 0
     identifier = None
     argv = sys.argv[1:]
     try:                                
@@ -174,5 +174,5 @@ if __name__ == "__main__":
     if directory == None:
         help()
 
-    gen = Xcode4Template( directory=directory, group=group, identifier=identifier )
+    gen = Xcode4Template( directory=directory, group=int(group), identifier=identifier )
     gen.generate()

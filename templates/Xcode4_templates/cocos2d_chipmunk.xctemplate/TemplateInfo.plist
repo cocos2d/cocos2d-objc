@@ -8,8 +8,7 @@
 		<string>com.cocos2d.iosbase</string>
 		<string>com.cocos2d.cocos2dlib</string>
 		<string>com.cocos2d.cocosdenshionlib</string>
-		<string>com.cocos2d.cocoslivelib</string>
-		<string>com.cocos2d.fontlabellib</string>
+		<string>com.cocos2d.kazmathlib</string>
 		<string>com.cocos2d.chipmunklib</string>
 	</array>
 	<key>Concrete</key>
@@ -132,7 +131,10 @@
 				<key>ALWAYS_SEARCH_USER_PATHS</key>
 				<string>YES</string>
 				<key>USER_HEADER_SEARCH_PATHS</key>
+                <array>
 				<string>"___PACKAGENAME___/libs/Chipmunk/include/chipmunk"</string>
+				<string>"___PACKAGENAME___/libs/kazmath/include/kazmath"</string>
+                </array>
 			</dict>
 		</dict>
 	</array>
