@@ -188,11 +188,7 @@ enum {
 	
 	kmGLPushMatrix();
 
-//	float scale = CC_CONTENT_SCALE_FACTOR();
-//	glScalef( scale, scale, 1 );
-	
-	test->m_world->DrawDebugData();
-	
+	test->m_world->DrawDebugData();	
 	
 	// restore default GL states
 	glEnableVertexAttribArray(kCCAttribColor);
