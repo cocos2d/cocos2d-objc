@@ -14,7 +14,6 @@
 #import "cocos2d.h"
 
 #import "RootViewController.h"
-#import "GameConfig.h"
 
 @implementation RootViewController
 
@@ -44,69 +43,30 @@
 
 // Override to allow orientations other than the default portrait orientation.
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-	
+		
 	//
-	// There are 2 ways to support auto-rotation:
-	//  - The OpenGL / cocos2d way
-	//     - Faster, but doesn't rotate the UIKit objects
-	//  - The ViewController way
-	//    - A bit slower, but the UiKit objects are placed in the right place
-	//
-	
-#if GAME_AUTOROTATION==kGameAutorotationNone
-	//
-	// EAGLView won't be autorotated.
-	// Since this method should return YES in at least 1 orientation, 
-	// we return YES only in the Portrait orientation
-	//
-	return ( interfaceOrientation == UIInterfaceOrientationPortrait );
-	
-#elif GAME_AUTOROTATION==kGameAutorotationCCDirector
-	//
-	// EAGLView will be rotated by cocos2d
-	//
-	// Sample: Autorotate only in landscape mode
-	//
-	if( interfaceOrientation == UIInterfaceOrientationLandscapeLeft ) {
-		[[CCDirector sharedDirector] setDeviceOrientation: kCCDeviceOrientationLandscapeRight];
-	} else if( interfaceOrientation == UIInterfaceOrientationLandscapeRight) {
-		[[CCDirector sharedDirector] setDeviceOrientation: kCCDeviceOrientationLandscapeLeft];
-	}
-	
-	// Since this method should return YES in at least 1 orientation, 
-	// we return YES only in the Portrait orientation
-	return ( interfaceOrientation == UIInterfaceOrientationPortrait );
-	
-#elif GAME_AUTOROTATION == kGameAutorotationUIViewController
-	//
-	// EAGLView will be rotated by the UIViewController
-	//
-	// Sample: Autorotate only in landscpe mode
 	//
 	// return YES for the supported orientations
-	
-	return ( UIInterfaceOrientationIsLandscape( interfaceOrientation ) );
-	
-#else
-#error Unknown value in GAME_AUTOROTATION
-	
-#endif // GAME_AUTOROTATION
-	
-	
-	// Shold not happen
-	return NO;
+
+	// Only landscape ?
+//	return ( UIInterfaceOrientationIsLandscape( interfaceOrientation ) );
+
+	// Only portrait ?
+//	return ( ! UIInterfaceOrientationIsLandscape( interfaceOrientation ) );
+
+	// All orientations ?
+	return YES;
 }
 
-//
-// This callback only will be called when GAME_AUTOROTATION == kGameAutorotationUIViewController
-//
-#if GAME_AUTOROTATION == kGameAutorotationUIViewController
+
 -(void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
+
 	//
-	// Assuming that the main window has the size of the screen
-	// BUG: This won't work if the EAGLView is not fullscreen
-	///
+	// XXX: Is this code needed ???
+	//
+	
+#if 0
 	CGRect screenRect = [[UIScreen mainScreen] bounds];
 	CGRect rect = CGRectZero;
 
@@ -126,8 +86,8 @@
 		rect.size.height *= contentScaleFactor;
 	}
 	glView.frame = rect;
+#endif
 }
-#endif // GAME_AUTOROTATION == kGameAutorotationUIViewController
 
 
 - (void)didReceiveMemoryWarning {

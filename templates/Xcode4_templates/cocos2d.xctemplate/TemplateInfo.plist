@@ -30,13 +30,6 @@
 			<key>Path</key>
 			<string>main.m</string>
 		</dict>	
-		<key>GameConfig.h</key>
-		<dict>
-			<key>Path</key>
-			<string>GameConfig.h</string>
-			<key>TargetIndices</key>
-			<array/>
-		</dict>
 		<key>HelloWorldLayer.h</key>
 		<dict>
 			<key>Path</key>
@@ -88,10 +81,7 @@
 				<key>ALWAYS_SEARCH_USER_PATHS</key>
 				<string>YES</string>
 				<key>USER_HEADER_SEARCH_PATHS</key>
-                <array>
-				<string>"___PACKAGENAME___/libs"</string>
 				<string>"___PACKAGENAME___/libs/kazmath/include"</string>
-                </array>
 			</dict>
 		</dict>
 	</array>
@@ -105,7 +95,6 @@
 		<string>RootViewController.m</string>
 		<string>HelloWorldLayer.h</string>
 		<string>HelloWorldLayer.m</string>
-		<string>GameConfig.h</string>
 	</array>
 	<key>Options</key>
 	<array>
