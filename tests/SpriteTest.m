@@ -212,9 +212,7 @@ Class restartAction()
 		self.isMouseEnabled = YES;
 #endif
 		
-		CGSize s = [[CCDirector sharedDirector] winSize];
-		
-		NSLog(@" ----> sprite 1: %f,%f", s.width, s.height );
+		CGSize s = [[CCDirector sharedDirector] winSize];		
 		[self addNewSpriteWithCoords:ccp(s.width/2, s.height/2)];				
 	}	
 	return self;
