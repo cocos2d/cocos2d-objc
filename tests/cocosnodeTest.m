@@ -749,7 +749,7 @@ Class restartAction()
 		CCOrbitCamera *orbit;
 		
 		// LEFT-TOP
-		sprite = [CCSprite node];
+		sprite = [CCSprite spriteWithFile:@"white-512x512.png"];
 		[self addChild:sprite z:0];	
 		[sprite setPosition:ccp(s.width/5*1, s.height/5*1)];
 		[sprite setColor:ccRED];
@@ -761,7 +761,7 @@ Class restartAction()
 		
 		
 		// LEFT-BOTTOM
-		sprite = [CCSprite node];
+		sprite = [CCSprite spriteWithFile:@"white-512x512.png"];
 		[self addChild:sprite z:0 tag:40];
 		[sprite setPosition:ccp(s.width/5*1, s.height/5*4)];
 		[sprite setColor:ccBLUE];
@@ -772,7 +772,7 @@ Class restartAction()
 
 
 		// RIGHT-TOP
-		sprite = [CCSprite node];
+		sprite = [CCSprite spriteWithFile:@"white-512x512.png"];
 		[self addChild:sprite z:0];	
 		[sprite setPosition:ccp(s.width/5*4, s.height/5*1)];
 		[sprite setColor:ccYELLOW];
@@ -783,7 +783,7 @@ Class restartAction()
 
 		
 		// RIGHT-BOTTOM
-		sprite = [CCSprite node];
+		sprite = [CCSprite spriteWithFile:@"white-512x512.png"];
 		[self addChild:sprite z:0 tag:40];
 		[sprite setPosition:ccp(s.width/5*4, s.height/5*4)];
 		[sprite setColor:ccGREEN];
@@ -793,7 +793,7 @@ Class restartAction()
 //		[sprite setAnchorPoint: ccp(1,0)];
 
 		// CENTER
-		sprite = [CCSprite node];
+		sprite = [CCSprite spriteWithFile:@"white-512x512.png"];
 		[self addChild:sprite z:0 tag:40];
 		[sprite setPosition:ccp(s.width/2, s.height/2)];
 		[sprite setColor:ccWHITE];
