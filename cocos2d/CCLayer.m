@@ -299,8 +299,8 @@
 	if( (self=[super init]) ) {
 		
 		// default blend function
-		blendFunc_ = (ccBlendFunc) { CC_BLEND_SRC, CC_BLEND_DST };
-
+		blendFunc_ = (ccBlendFunc) { GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA };
+		
 		color_.r = color.r;
 		color_.g = color.g;
 		color_.b = color.b;
@@ -369,12 +369,8 @@
 	//
 	glVertexAttribPointer(kCCAttribPosition, 2, GL_FLOAT, GL_FALSE, 0, squareVertices_);
 	glVertexAttribPointer(kCCAttribColor, 4, GL_FLOAT, GL_FALSE, 0, squareColors_);
-	
-	
-	if( opacity_ != 255 )
-		ccGLBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	else
-		ccGLBlendFunc( blendFunc_.src, blendFunc_.dst );
+
+	ccGLBlendFunc( blendFunc_.src, blendFunc_.dst );
 	
 	ccGLUseProgram( shaderProgram_->program_ );
 	ccGLUniformProjectionMatrix( shaderProgram_ );
