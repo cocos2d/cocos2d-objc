@@ -278,7 +278,7 @@
 			glVertexAttrib4fv(kCCAttribColor, (GLfloat*)&color);
 		}
 		
-		ccGLBindTexture2D( [texture_ name] );
+		glBindTexture( GL_TEXTURE_2D, [texture_ name] );
 
 		ccGLBlendFunc( blendFunc_.src, blendFunc_.dst );
 

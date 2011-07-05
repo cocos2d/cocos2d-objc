@@ -273,7 +273,7 @@
 	// Needed states: GL_TEXTURE0, k,CCAttribVertex, kCCAttribColor, kCCAttribTexCoords
 	// Unneeded states: -
 	
-	ccGLBindTexture2D( [texture_ name] );
+	glBindTexture( GL_TEXTURE_2D, [texture_ name] );
 
 #define kQuadSize sizeof(quads_[0].bl)
 

@@ -32,24 +32,33 @@
 #import <OpenGL/gl.h>
 #endif // 
 
+@class GLProgram;
+
 #ifdef __cplusplus
 extern "C" {
 #endif	
 
-@class GLProgram;
-
-/** @file
+/** @file A set of OpenGL helpers functions 
 */
 
-/** Uses the GL program in case program is different than the current one
+/** Uses the GL program in case program is different than the current one.
+ If CC_ENABLE_GL_STATE_CACHE is disable, it will the glUseProgram() directly.
  @since v2.0.0
  */
 void ccGLUseProgram( GLuint program );
 
 /** Deletes the GL program. If it is the one that is being used, it invalidates it.
+ If CC_ENABLE_GL_STATE_CACHE is disable, it will the glDeleteProgram() directly.
  @since v2.0.0
  */
 void ccGLDeleteProgram( GLuint program );
+
+/** Uses a blending function in case it not already used.
+ If CC_ENABLE_GL_STATE_CACHE is disable, it will the glBlendFunc() directly.
+ @since v2.0.0
+ */
+void ccGLBlendFunc(GLenum sfactor, GLenum dfactor);
+	
 
 /** sets the Projection Matrix in the GL program, in case it is necessary
  @since v2.0.0
@@ -65,22 +74,6 @@ void ccGLUniformModelViewMatrix( GLProgram *shaderProgram );
  @since v2.0.0
  */
 void ccSetProjectionMatrixDirty( void );
-
-/** Binds a texture in case it is not already bound
- @since v2.0.0
- */
-void ccGLBindTexture2D( GLuint textureID );
-
-/** deletes a texture ID a resets the texture ID cache in case it is being used
- @since v2.0.0
- */
-void ccGLDeleteTexture( GLuint textureID );
-
-
-/** Uses a blending function in case it not already used
- @since v2.0.0
- */
-void ccGLBlendFunc(GLenum sfactor, GLenum dfactor);
 
 #ifdef __cplusplus
 }

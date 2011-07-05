@@ -379,7 +379,7 @@
 
 	CHECK_GL_ERROR_DEBUG();
 
-	ccGLBindTexture2D( [texture_ name] );
+	glBindTexture( GL_TEXTURE_2D, [texture_ name] );
 	
 	CHECK_GL_ERROR_DEBUG();
 
