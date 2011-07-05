@@ -9,6 +9,7 @@
 
 // local import
 #import "HiResTest.h"
+#import "RootViewController.h"
 
 static int sceneIdx=-1;
 static NSString *transitions[] = {	
@@ -225,14 +226,11 @@ Class restartAction()
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
 	// Init the window
-	window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+	window_ = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 
 	// before creating any layer, set the landscape mode
 	CCDirector *director = [CCDirector sharedDirector];
-	
-	// landscape orientation
-	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
-	
+		
 	// set FPS at 60
 	[director setAnimationInterval:1.0/60];
 	
@@ -240,7 +238,7 @@ Class restartAction()
 	[director setDisplayFPS:YES];
 
 	// Create an EAGLView with a RGB8 color buffer, and a depth buffer of 24-bits
-	EAGLView *glView = [EAGLView viewWithFrame:[window bounds]
+	EAGLView *glView = [EAGLView viewWithFrame:[window_ bounds]
 								   pixelFormat:kEAGLColorFormatRGBA8
 								   depthFormat:GL_DEPTH_COMPONENT24_OES];
 	
@@ -251,11 +249,13 @@ Class restartAction()
 	if( ! [director enableRetinaDisplay:YES] )
 		CCLOG(@"This test only works on iPhone4");
 	
-	// make the OpenGLView a child of the main window
-	[window addSubview:glView];
+	viewController_ = [[RootViewController alloc] init];
+	[viewController_ setView:glView];
+	
+	[window_ addSubview:viewController_.view];
 	
 	// make main window visible
-	[window makeKeyAndVisible];	
+	[window_ makeKeyAndVisible];	
 	
 	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
 	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
@@ -316,7 +316,8 @@ Class restartAction()
 
 - (void) dealloc
 {
-	[window release];
+	[viewController_ release];
+	[window_ release];
 	[super dealloc];
 }
 @end
