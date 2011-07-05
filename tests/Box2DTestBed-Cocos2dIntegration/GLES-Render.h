@@ -35,6 +35,7 @@
 #endif
 
 #include "Box2D.h"
+#import "cocos2d.h"
 
 struct b2AABB;
 
@@ -43,6 +44,10 @@ struct b2AABB;
 class GLESDebugDraw : public b2DebugDraw
 {
 	float32 mRatio;
+	GLProgram *mShaderProgram;
+	GLint		mColorLocation;
+	
+	void initShader( void );
 public:
 	GLESDebugDraw();
 
@@ -64,7 +69,7 @@ public:
 
     void DrawString(int x, int y, const char* string, ...); 
 
-    void DrawAABB(b2AABB* aabb, const b2Color& color);
+    void DrawAABB(b2AABB* aabb, const b2Color& color);	
 };
 
 
