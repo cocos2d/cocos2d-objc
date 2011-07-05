@@ -12,6 +12,7 @@ version 2.0-alpha XX-Jul-2011
 . [NEW] Macros: ccgl* replaced with ccGL*
 . [NEW] Math: Using kazmath for matrix and projection operations, and matrix GL stack
 . [NEW] Math: Using NEON Matrix Multiplication from Oolong project
+. [NEW] Templates: Removed Xcode3 templates. Updated Xcode4 templates.
 . [NEW] Tests: FontTest uses  "bundle" fonts instead of FontLabel
 . [NEW] Tests: All tests use RootViewController
 . [NEW] Tests: Removed HelloWorld* tests

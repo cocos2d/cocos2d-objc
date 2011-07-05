@@ -90,7 +90,7 @@
 				<key>USER_HEADER_SEARCH_PATHS</key>
                 <array>
 				<string>"___PACKAGENAME___/libs/Chipmunk/include/chipmunk"</string>
-				<string>"___PACKAGENAME___/libs/kazmath/include/kazmath"</string>
+				<string>"___PACKAGENAME___/libs/kazmath/include"</string>
                 </array>
 			</dict>
 		</dict>
