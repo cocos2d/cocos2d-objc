@@ -9,6 +9,7 @@
 
 // local import
 #import "LayerTest.h"
+#import "RootViewController.h"
 
 enum {
 	kTagLayer = 1,
@@ -388,8 +389,13 @@ Class restartAction()
 	if( ! [director enableRetinaDisplay:YES] )
 		CCLOG(@"Retina Display Not supported");
 	
-	// make the OpenGLView a child of the main window
-	[window_ addSubview:glView];
+	// Init the View Controller
+	viewController_ = [[RootViewController alloc] initWithNibName:nil bundle:nil];
+	viewController_.wantsFullScreenLayout = YES;
+	
+	[viewController_ setView:glView];
+
+	[window_ addSubview:viewController_.view];
 	
 	// make main window visible
 	[window_ makeKeyAndVisible];	
