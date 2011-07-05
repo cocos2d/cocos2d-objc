@@ -163,7 +163,7 @@ CGFloat	__ccContentScaleFactor = 1;
 			kmGLLoadIdentity();
 
 			kmMat4 orthoMatrix;
-			kmMat4OrthographicProjection(&orthoMatrix, 0, size.width, 0, size.height, -1024 * CC_CONTENT_SCALE_FACTOR(), 1024 * CC_CONTENT_SCALE_FACTOR() );
+			kmMat4OrthographicProjection(&orthoMatrix, 0, size.width, 0, size.height, -1024, 1024 );
 			kmGLMultMatrix( &orthoMatrix );
 
 			kmGLMatrixMode(KM_GL_MODELVIEW);
@@ -179,7 +179,7 @@ CGFloat	__ccContentScaleFactor = 1;
 			kmGLMatrixMode(KM_GL_PROJECTION);
 			kmGLLoadIdentity();
 			
-			kmMat4PerspectiveProjection( &matrixPerspective, 60, (GLfloat)size.width/size.height, 0.5f, 1500.0f);
+			kmMat4PerspectiveProjection( &matrixPerspective, 60, (GLfloat)size.width/size.height, 0.1f, 1500.0f );
 			kmGLMultMatrix(&matrixPerspective);
 			
 			kmGLMatrixMode(KM_GL_MODELVIEW);	
