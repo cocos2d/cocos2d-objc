@@ -26,33 +26,61 @@
 #import "ccGLState.h"
 #import "GLProgram.h"
 #import "CCDirector.h"
+#import "ccConfig.h"
 
 // extern
 #import "kazmath/GL/matrix.h"
 #import "kazmath/kazmath.h"
 
-GLuint	_ccCurrentShaderProgram = -1;
-GLuint	_ccCurrentTextureID = -1;
-GLuint	_ccCurrentProjectionMatrix = -1;
-GLenum	_ccBlendingSource = -1;
-GLenum	_ccBlendingDest = -1;
+static GLuint	_ccCurrentProjectionMatrix = -1;
 
-inline void ccGLDeleteProgram( GLuint program )
+#if CC_ENABLE_GL_STATE_CACHE
+static GLuint	_ccCurrentShaderProgram = -1;
+static GLenum	_ccBlendingSource = -1;
+static GLenum	_ccBlendingDest = -1;
+#endif // CC_ENABLE_GL_STATE_CACHE
+
+#pragma mark - GL State Cache functions
+
+void ccGLDeleteProgram( GLuint program )
 {
+#if CC_ENABLE_GL_STATE_CACHE
 	if( program == _ccCurrentShaderProgram )
 		_ccCurrentShaderProgram = -1;
+#endif // CC_ENABLE_GL_STATE_CACHE
+
 	glDeleteProgram( program );
 }
 
-inline void ccGLUseProgram( GLuint program )
+void ccGLUseProgram( GLuint program )
 {
+#if CC_ENABLE_GL_STATE_CACHE
 	if( program != _ccCurrentShaderProgram ) {
 		_ccCurrentShaderProgram = program;
 		glUseProgram(program);
 	}
+#else
+	glUseProgram(program);	
+#endif // CC_ENABLE_GL_STATE_CACHE
 }
 
-inline void ccGLUniformProjectionMatrix( GLProgram *shaderProgram )
+
+void ccGLBlendFunc(GLenum sfactor, GLenum dfactor)
+{
+#if CC_ENABLE_GL_STATE_CACHE
+	if( sfactor != _ccBlendingSource || dfactor != _ccBlendingDest ) {
+		_ccBlendingSource = sfactor;
+		_ccBlendingDest = dfactor;
+		glBlendFunc( sfactor, dfactor );
+	}
+#else
+	glBlendFunc( sfactor, dfactor );
+#endif // CC_ENABLE_GL_STATE_CACHE
+}
+
+#pragma mark - GL Uniforms functions
+
+void ccGLUniformProjectionMatrix( GLProgram *shaderProgram )
 {
 	if( shaderProgram->program_ != _ccCurrentProjectionMatrix ) {
 		kmMat4 projectionMatrix;
@@ -63,39 +91,15 @@ inline void ccGLUniformProjectionMatrix( GLProgram *shaderProgram )
 	}
 }
 
-inline void ccGLUniformModelViewMatrix( GLProgram *shaderProgram )
+void ccGLUniformModelViewMatrix( GLProgram *shaderProgram )
 {
 	kmMat4 matrixMV;
 	kmGLGetMatrix(KM_GL_MODELVIEW, &matrixMV );
 	glUniformMatrix4fv( shaderProgram->uniforms_[kCCUniformMVMatrix], 1, GL_FALSE, matrixMV.mat);
 }
 
-inline void ccSetProjectionMatrixDirty( void )
+void ccSetProjectionMatrixDirty( void )
 {
+
 	_ccCurrentProjectionMatrix = -1;
-}
-
-inline void ccGLBindTexture2D( GLuint textureID )
-{
-	if( textureID != _ccCurrentTextureID ) {
-		_ccCurrentTextureID = textureID;
-		glBindTexture(GL_TEXTURE_2D, textureID );
-	}
-}
-
-void ccGLDeleteTexture( GLuint textureID )
-{
-	if( _ccCurrentTextureID == textureID )
-		_ccCurrentTextureID = -1;
-	
-	glDeleteTextures(1, &textureID);
-}
-
-inline void ccGLBlendFunc(GLenum sfactor, GLenum dfactor)
-{
-	if( sfactor != _ccBlendingSource || dfactor != _ccBlendingDest ) {
-		_ccBlendingSource = sfactor;
-		_ccBlendingDest = dfactor;
-		glBlendFunc( sfactor, dfactor );
-	}
 }

@@ -105,7 +105,7 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 	if((self = [super init])) {
 		glPixelStorei(GL_UNPACK_ALIGNMENT,1);
 		glGenTextures(1, &name_);
-		ccGLBindTexture2D( name_ );
+		glBindTexture( GL_TEXTURE_2D, name_ );
 
 		[self setAntiAliasTexParameters];
 		
@@ -164,7 +164,7 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 {
 	CCLOGINFO(@"cocos2d: deallocing %@", self);
 	if(name_)
-		ccGLDeleteTexture( name_);
+		glDeleteTextures( 1, &name_);
 	
 	[super dealloc];
 }
@@ -583,7 +583,7 @@ static BOOL PVRHaveAlphaPremultiplied_ = NO;
 	
 	if((self = [super init])) {
 		glGenTextures(1, &name_);
-		ccGLBindTexture2D( name_ );
+		glBindTexture( GL_TEXTURE_2D, name_ );
 		
 		[self setAntiAliasTexParameters];
 		
@@ -665,7 +665,7 @@ static BOOL PVRHaveAlphaPremultiplied_ = NO;
 								point.x,			height  + point.y,	0.0f,
 								width + point.x,	height  + point.y,	0.0f };
 	
-	ccGLBindTexture2D( name_ );
+	glBindTexture( GL_TEXTURE_2D, name_ );
 
 	glVertexPointer(3, GL_FLOAT, 0, vertices);
 	glTexCoordPointer(2, GL_FLOAT, 0, coordinates);
@@ -684,7 +684,7 @@ static BOOL PVRHaveAlphaPremultiplied_ = NO;
 							rect.origin.x,							rect.origin.y + rect.size.height,		/*0.0f,*/
 							rect.origin.x + rect.size.width,		rect.origin.y + rect.size.height,		/*0.0f*/ };
 	
-	ccGLBindTexture2D( name_ );
+	glBindTexture( GL_TEXTURE_2D, name_ );
 	glVertexPointer(2, GL_FLOAT, 0, vertices);
 	glTexCoordPointer(2, GL_FLOAT, 0, coordinates);
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
@@ -704,7 +704,7 @@ static BOOL PVRHaveAlphaPremultiplied_ = NO;
 -(void) generateMipmap
 {
 	NSAssert( width_ == ccNextPOT(width_) && height_ == ccNextPOT(height_), @"Mimpap texture only works in POT textures");
-	ccGLBindTexture2D( name_ );
+	glBindTexture( GL_TEXTURE_2D, name_ );
 	ccGLGenerateMipmap(GL_TEXTURE_2D);
 }
 
@@ -714,7 +714,7 @@ static BOOL PVRHaveAlphaPremultiplied_ = NO;
 			 (texParams->wrapS == GL_CLAMP_TO_EDGE && texParams->wrapT == GL_CLAMP_TO_EDGE),
 			 @"GL_CLAMP_TO_EDGE should be used in NPOT textures");
 
-	ccGLBindTexture2D( name_ );
+	glBindTexture( GL_TEXTURE_2D, name_ );
 	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, texParams->minFilter );
 	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, texParams->magFilter );
 	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, texParams->wrapS );
