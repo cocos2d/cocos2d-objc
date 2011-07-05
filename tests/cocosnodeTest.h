@@ -52,7 +52,9 @@
 @end
 
 @interface CameraZoomTest : TestDemo
-{}
+{
+	float z_;
+}
 @end
 
 @interface CameraCenterTest : TestDemo
