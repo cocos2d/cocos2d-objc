@@ -182,15 +182,6 @@ static CCDirector *_sharedDirector = nil;
 	
 	// set other opengl default values
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-	
-#if CC_DIRECTOR_FAST_FPS
-    if (!FPSLabel_) {
-		CCTexture2DPixelFormat currentFormat = [CCTexture2D defaultAlphaPixelFormat];
-		[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA4444];
-		FPSLabel_ = [[CCLabelAtlas labelWithString:@"00.0" charMapFile:@"fps_images.png" itemWidth:16 itemHeight:24 startCharMap:'.'] retain];
-		[CCTexture2D setDefaultAlphaPixelFormat:currentFormat];		
-	}
-#endif	// CC_DIRECTOR_FAST_FPS
 }
 
 //
@@ -299,6 +290,7 @@ static CCDirector *_sharedDirector = nil;
 		winSizeInPixels_ = winSizeInPoints_ = CCNSSizeToCGSize( [view bounds].size );
 
 		[self setGLDefaultValues];
+		[self createFPSLabel];
 	}
 	
 	CHECK_GL_ERROR_DEBUG();
@@ -562,6 +554,26 @@ static CCDirector *_sharedDirector = nil;
 		[[CCProfiler sharedProfiler] displayTimers];
 	}
 #endif // CC_ENABLE_PROFILERS
+}
+
+#pragma mark Director - Helper
+-(void) createFPSLabel
+{
+#if CC_DIRECTOR_FAST_FPS
+
+	if( FPSLabel_ ) {
+		CCTexture2D *texture = [FPSLabel_ texture];
+
+		[FPSLabel_ release];
+		[[CCTextureCache sharedTextureCache ] removeTexture:texture];
+		FPSLabel_ = nil;
+	}
+
+	CCTexture2DPixelFormat currentFormat = [CCTexture2D defaultAlphaPixelFormat];
+	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA4444];
+	FPSLabel_ = [[CCLabelAtlas alloc]  initWithString:@"00.0" charMapFile:@"fps_images.png" itemWidth:16 itemHeight:24 startCharMap:'.'];
+	[CCTexture2D setDefaultAlphaPixelFormat:currentFormat];		
+#endif	// CC_DIRECTOR_FAST_FPS	
 }
 
 @end

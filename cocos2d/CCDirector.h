@@ -286,7 +286,6 @@ and when to execute the Scenes.
 
 /** sets the OpenGL default values */
 -(void) setGLDefaultValues;
-
 /** enables/disables OpenGL alpha blending */
 - (void) setAlphaBlending: (BOOL) on;
 /** enables/disables OpenGL depth test */
@@ -294,6 +293,10 @@ and when to execute the Scenes.
 
 // Profiler
 -(void) showProfilers;
+
+// helper
+/** creates the FPS label */
+-(void) createFPSLabel;
 
 @end
 
