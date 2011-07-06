@@ -218,13 +218,11 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 	
 	CCConfiguration *conf = [CCConfiguration sharedConfiguration];
 
-#if CC_TEXTURE_NPOT_SUPPORT
 	if( [conf supportsNPOT] ) {
 		POTWide = CGImageGetWidth(CGImage);
 		POTHigh = CGImageGetHeight(CGImage);
 
 	} else 
-#endif
 	{
 		POTWide = ccNextPOT(CGImageGetWidth(CGImage));
 		POTHigh = ccNextPOT(CGImageGetHeight(CGImage));

@@ -163,24 +163,6 @@
  */
 #define CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP 0
 
-
-/** @def CC_TEXTURE_NPOT_SUPPORT
- If enabled, NPOT textures will be used where available. Only 3rd gen (and newer) devices support NPOT textures.
- NPOT textures have the following limitations:
-	- They can't have mipmaps
-	- They only accept GL_CLAMP_TO_EDGE in GL_TEXTURE_WRAP_{S,T}
- 
- To enable set it to a value different than 0. Disabled by default.
-
- This value governs only the PNG, GIF, BMP, images.
- This value DOES NOT govern the PVR (PVR.GZ, PVR.CCZ) files. If NPOT PVR is loaded, then it will create an NPOT texture ignoring this value.
- 
- @deprecated This value will be removed in 1.1 and NPOT textures will be loaded by default if the device supports it.
-
- @since v0.99.2
- */
-#define CC_TEXTURE_NPOT_SUPPORT 0
-
 /** @def CC_RETINA_DISPLAY_SUPPORT
  If enabled, cocos2d supports retina display. 
  For performance reasons, it's recommended disable it in games without retina display support, like iPad only games.
