@@ -109,8 +109,6 @@ static char * glExtensions;
 		
 		glGetIntegerv(GL_MAX_TEXTURE_SIZE, &maxTextureSize_);
 
-//		glGetIntegerv(GL_MAX_MODELVIEW_STACK_DEPTH, &maxModelviewStackDepth_);
-
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 		if( OSVersion_ >= kCCiOSVersion_4_0 )
 			glGetIntegerv(GL_MAX_SAMPLES_APPLE, &maxSamplesAllowed_);
@@ -122,7 +120,7 @@ static char * glExtensions;
 		
 		supportsPVRTC_ = [self checkForGLExtension:@"GL_IMG_texture_compression_pvrtc"];
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
-		supportsNPOT_ = [self checkForGLExtension:@"GL_APPLE_texture_2D_limited_npot"];
+		supportsNPOT_ = YES;
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 		supportsNPOT_ = [self checkForGLExtension:@"GL_ARB_texture_non_power_of_two"];
 #endif
@@ -146,13 +144,6 @@ static char * glExtensions;
 		CCLOG(@"cocos2d: GL supports BGRA8888 textures: %s", (supportsBGRA8888_ ? "YES" : "NO") );
 		CCLOG(@"cocos2d: GL supports NPOT textures: %s", (supportsNPOT_ ? "YES" : "NO") );
 		CCLOG(@"cocos2d: GL supports discard_framebuffer: %s", (supportsDiscardFramebuffer_ ? "YES" : "NO") );
-		CCLOG(@"cocos2d: compiled with NPOT support: %s",
-#if CC_TEXTURE_NPOT_SUPPORT
-				"YES"
-#else
-				"NO"
-#endif
-			  );
 		CCLOG(@"cocos2d: compiled with VBO support in TextureAtlas : %s",
 #if CC_USES_VBO
 			  "YES"

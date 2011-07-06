@@ -73,10 +73,8 @@ enum {
 /** OpenGL Max Modelview Stack Depth. */
 @property (nonatomic, readonly) GLint maxModelviewStackDepth;
 
-/** Whether or not the GPU supports NPOT (Non Power Of Two) textures.
- NPOT textures have the following limitations:
- - They can't have mipmaps
- - They only accept GL_CLAMP_TO_EDGE in GL_TEXTURE_WRAP_{S,T}
+/** Whether or not the GPU supports NPOT (Non Power Of Two) textures. 
+ OpenGL ES 2.0 already supports NPOT (iOS).
  
  @since v0.99.2
  */
