@@ -16,8 +16,9 @@ version 2.0-alpha XX-Jul-2011
 . [NEW] Tests: FontTest uses  "bundle" fonts instead of FontLabel
 . [NEW] Tests: All tests use RootViewController
 . [NEW] Tests: Removed HelloWorld* tests
+. [NEW] Texture: Uses NPOT textures (gles20 already supports them)
 . [NEW] Tiled: cc_vertexz property is no longer supported. Will raise exception if found.
-. [NEW] Types: ccColor?B replaced with ccColor?UB
+. [NEW] Types: ccColor*B replaced with ccColor*UB
 . [FIX] All: Removed deprecated methods and classes that were scheduled for removal post 1.0
 . [FIX] CCProgressTimer: reverse renamed to reverseDirection in order to prevent possible collision with action#reverse
 . [FIX] TextureCache: Uses "self" instead of "CCTextureCache" in shared instance
