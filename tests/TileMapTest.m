@@ -17,8 +17,6 @@
 static int sceneIdx=-1;
 static NSString *transitions[] = {	
 
-    @"TMXGIDObjectsTest",
-    
 	@"TMXIsoZorder",
 	@"TMXOrthoZorder",
 	@"TMXOrthoTest",
@@ -1051,7 +1049,7 @@ Class restartAction()
 		[tamara setAnchorPoint:ccp(0.5f,0)];
 
 		
-		id move = [CCMoveBy actionWithDuration:10 position:ccpMult(ccp(300,250), 1/CC_CONTENT_SCALE_FACTOR() )];
+		id move = [CCMoveBy actionWithDuration:10 position:ccp(300,250)];
 		id back = [move reverse];
 		id seq = [CCSequence actions:move, back, nil];
 		[tamara runAction: [CCRepeatForever actionWithAction:seq]];
@@ -1117,7 +1115,7 @@ Class restartAction()
 		[tamara setAnchorPoint:ccp(0.5f,0)];
 
 		
-		id move = [CCMoveBy actionWithDuration:10 position:ccpMult(ccp(400,450), 1/CC_CONTENT_SCALE_FACTOR() )];
+		id move = [CCMoveBy actionWithDuration:10 position:ccp(400,450)];
 		id back = [move reverse];
 		id seq = [CCSequence actions:move, back, nil];
 		[tamara runAction: [CCRepeatForever actionWithAction:seq]];
