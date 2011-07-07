@@ -67,7 +67,7 @@
         
         // Add "new game" sprite...
         static int NEWGAME_BOTTOM_MARGIN = 30;
-        self.spriteNewGame = [CCSprite spriteWithSpriteFrameName:@"Turret_spriteNewGame.png"];
+        self.spriteNewGame = [CCSprite spriteWithSpriteFrameName:@"Turret_newgame.png"];
         _spriteNewGame.position = ccp(winSize.width / 2, _tapToCont.contentSize.height/2 + NEWGAME_BOTTOM_MARGIN);
         _spriteNewGame.visible = NO;
         [_batchNode addChild:_spriteNewGame];
