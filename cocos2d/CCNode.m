@@ -251,6 +251,7 @@
 -(void) setVertexZ:(float)vertexZ
 {
 	vertexZ_ = vertexZ;
+	isTransformMVDirty_ = YES;
 }
 
 -(float) scale
@@ -278,9 +279,9 @@
 	if( ! camera_ ) {
 		camera_ = [[CCCamera alloc] init];
 		
-// by default, center camera at the Sprite's anchor point
-//		[camera_ setCenterX:anchorPointInPixels_.x centerY:anchorPointInPixels_.y centerZ:0];
-//		[camera_ setEyeX:anchorPointInPixels_.x eyeY:anchorPointInPixels_.y eyeZ:1];
+		// by default, center camera at the Sprite's anchor point
+//		[camera_ setCenterX:anchorPointInPoints_.x centerY:anchorPointInPoints_.y centerZ:0];
+//		[camera_ setEyeX:anchorPointInPoints_.x eyeY:anchorPointInPoints_.y eyeZ:1];
 
 //		[camera_ setCenterX:0 centerY:0 centerZ:0];
 //		[camera_ setEyeX:0 eyeY:0 eyeZ:1];
@@ -532,7 +533,7 @@
 	
 	// XXX: Expensive calls. Camera should be integrated into the cached affine matrix
 	if ( camera_ && !(grid_ && grid_.active) )
-	{		
+	{	
 		BOOL translate = (anchorPointInPoints_.x != 0.0f || anchorPointInPoints_.y != 0.0f);
 		
 		if( translate )
