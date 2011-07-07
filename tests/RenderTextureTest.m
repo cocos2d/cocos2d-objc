@@ -553,7 +553,7 @@ Class restartAction()
 	[director setOpenGLView:glView];
 	
 	// 2D projection
-	[director setProjection:kCCDirectorProjection2D];
+//	[director setProjection:kCCDirectorProjection2D];
 	
 	// Enables High Res mode (Retina Display) on iPhone 4 and maintains low res on all other devices
 	if( ! [director enableRetinaDisplay:YES] )

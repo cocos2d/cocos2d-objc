@@ -121,7 +121,8 @@
 	
 	
 	// Calculate the adjustment ratios based on the old and new projections
-	CGSize size = [[CCDirector sharedDirector] winSizeInPixels];
+	CCDirector *director = [CCDirector sharedDirector];
+	CGSize size = [director winSizeInPixels];
 	float widthRatio = size.width / texSize.width;
 	float heightRatio = size.height / texSize.height;
 	
@@ -133,6 +134,10 @@
 	kmGLMultMatrix(&orthoMatrix);
 	
 	glViewport(0, 0, texSize.width * CC_CONTENT_SCALE_FACTOR(), texSize.height * CC_CONTENT_SCALE_FACTOR() );
+	
+	// special viewport for 3d projection + retina display
+	if ( director.projection == kCCDirectorProjection3D && CC_CONTENT_SCALE_FACTOR() != 1 )
+		glViewport(-texSize.width/2, -texSize.height/2, texSize.width * CC_CONTENT_SCALE_FACTOR(), texSize.height * CC_CONTENT_SCALE_FACTOR() );
 	
 	
 	glGetIntegerv(CC_GL_FRAMEBUFFER_BINDING, &oldFBO_);
@@ -201,8 +206,16 @@
 
 	kmGLPopMatrix();
 
-	CGSize size = [[CCDirector sharedDirector] winSizeInPixels];
+	CCDirector *director = [CCDirector sharedDirector];
+
+	CGSize size = [director winSizeInPixels];
+
+	// restore viewport
 	glViewport(0, 0, size.width * CC_CONTENT_SCALE_FACTOR(), size.height * CC_CONTENT_SCALE_FACTOR() );
+
+	// special viewport for 3d projection + retina display
+	if ( director.projection == kCCDirectorProjection3D && CC_CONTENT_SCALE_FACTOR() != 1 )
+		glViewport(-size.width/2, -size.height/2, size.width * CC_CONTENT_SCALE_FACTOR(), size.height * CC_CONTENT_SCALE_FACTOR() );
 }
 
 -(void)clear:(float)r g:(float)g b:(float)b a:(float)a

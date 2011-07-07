@@ -205,22 +205,26 @@
 	CCDirector *director = [CCDirector sharedDirector];
 	
 	CGSize	winSize = [director winSizeInPixels];
+	CGSize	winSizePoints = [director winSize];
 	
-	glViewport(0, 0, winSize.width * CC_CONTENT_SCALE_FACTOR(), winSize.height * CC_CONTENT_SCALE_FACTOR() );
+	if( CC_CONTENT_SCALE_FACTOR() != 1 )
+		glViewport(-winSize.width/2, -winSize.height/2, winSize.width * CC_CONTENT_SCALE_FACTOR(), winSize.height * CC_CONTENT_SCALE_FACTOR() );
+	else
+		glViewport(0, 0, winSize.width, winSize.height );
 	
 	kmGLMatrixMode(KM_GL_PROJECTION);
 	kmGLLoadIdentity();
 	
 	kmMat4 matrixPerspective, matrixLookup;
 	
-	kmMat4PerspectiveProjection( &matrixPerspective, 60, (GLfloat)winSize.width/winSize.height, 0.5f, 1500.0f );
+	kmMat4PerspectiveProjection( &matrixPerspective, 60, (GLfloat)winSizePoints.width/winSizePoints.height, 0.5f, 1500.0f );
 	kmGLMultMatrix( &matrixPerspective );
 	
 	kmGLMatrixMode(KM_GL_MODELVIEW);	
 	kmGLLoadIdentity();
 	kmVec3 eye, center, up;
-	kmVec3Fill( &eye, winSize.width/2, winSize.height/2, [director getZEye] );
-	kmVec3Fill( &center, winSize.width/2, winSize.height/2, 0 );
+	kmVec3Fill( &eye, winSizePoints.width/2, winSizePoints.height/2, [director getZEye] );
+	kmVec3Fill( &center, winSizePoints.width/2, winSizePoints.height/2, 0 );
 	kmVec3Fill( &up,0,1,0);
 	kmMat4LookAt(&matrixLookup, &eye, &center, &up);
 	

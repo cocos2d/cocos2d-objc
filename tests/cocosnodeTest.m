@@ -26,12 +26,6 @@ Class restartAction(void);
 static int sceneIdx=-1;
 static NSString *transitions[] = {
 
-	@"CameraZoomTest",	
-
-	@"CameraOrbitTest",
-	@"CameraZoomTest",	
-	@"CameraCenterTest",
-	
 	@"Test2",
 	@"Test4",
 	@"Test5",
