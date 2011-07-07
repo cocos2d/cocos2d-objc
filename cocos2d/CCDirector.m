@@ -87,6 +87,7 @@ extern NSString * cocos2dVersion(void);
 @synthesize runningThread = runningThread_;
 @synthesize notificationNode = notificationNode_;
 @synthesize projectionDelegate = projectionDelegate_;
+@synthesize frames = frames_;
 //
 // singleton stuff
 //

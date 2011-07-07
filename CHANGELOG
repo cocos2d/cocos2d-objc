@@ -30,6 +30,7 @@ version 2.0-alpha XX-Jul-2011
 
 version 1.0.0 -
 . [NEW] ccpSegmentIntersect & ccpPointIntersect: Added helper functions for ccpLineIntersect (issue #1193)
+. [NEW] Director: frames is a readonly property
 . [NEW] Scheduler: Added isTargetPaused method
 . [NEW] Sprite: Debugging draw for texture (issue #879)
 . [NEW] Textures: PVR supports NPOT textures
