@@ -187,6 +187,8 @@
  */
 @interface CCMenuItemFont : CCMenuItemLabel
 {
+    int fontSize_;
+    NSString *fontName_;
 }
 /** set font size */
 +(void) setFontSize: (int) s;
@@ -208,6 +210,18 @@
 
 /** initializes a menu item from a string with a target/selector */
 -(id) initFromString: (NSString*) value target:(id) r selector:(SEL) s;
+
+/** set font size */
+-(void) setFontSize: (int) s;
+
+/** get font size */
+-(int) fontSize;
+
+/** set the font name */
+-(void) setFontName: (NSString*) n;
+
+/** get the font name */
+-(NSString*) fontName;
 
 #if NS_BLOCKS_AVAILABLE
 /** creates a menu item from a string with the specified block.
