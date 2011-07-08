@@ -148,8 +148,8 @@ static CCTextureCache *sharedTextureCache;
 							   initWithAPI:kEAGLRenderingAPIOpenGLES2
 							   sharegroup:[[[[CCDirector sharedDirector] openGLView] context] sharegroup]];
 		
-		if( ! auxGLcontext )
-			CCLOG(@"cocos2d: TextureCache: Could not create EAGL context");
+
+		NSAssert( auxGLcontext, @"TextureCache: Could not create EAGL context");
 	}
 	
 	if( [EAGLContext setCurrentContext:auxGLcontext] ) {
@@ -157,12 +157,15 @@ static CCTextureCache *sharedTextureCache;
 		// load / create the texture
 		CCTexture2D *tex = [self addImage:async.data];
 
+		glFlush();
+
 		// The callback will be executed on the main thread
-		[async.target performSelectorOnMainThread:async.selector withObject:tex waitUntilDone:NO];		
+		id action = [CCCallFuncO actionWithTarget:async.target selector:async.selector object:tex];
+		[[CCActionManager sharedManager] addAction:action target:async.target paused:NO];
 		
 		[EAGLContext setCurrentContext:nil];
 	} else {
-		CCLOG(@"cocos2d: TetureCache: EAGLContext error");
+		CCLOG(@"cocos2d: ERROR: TetureCache: Could not set EAGLContext");
 	}
 	[contextLock_ unlock];
 	
@@ -188,6 +191,8 @@ static CCTextureCache *sharedTextureCache;
 		
 	// load / create the texture
 	CCTexture2D *tex = [self addImage:async.data];
+	
+	glFlush();
 	
 #if CC_DIRECTOR_MAC_USE_DISPLAY_LINK_THREAD
 	id action = [CCCallFuncO actionWithTarget:async.target selector:async.selector object:tex];
@@ -232,6 +237,7 @@ static CCTextureCache *sharedTextureCache;
 	asyncObject.target = target;
 	asyncObject.data = path;
 	
+	// XXX: This should be done in a worker, instead of creating a new thread per request.
 	[NSThread detachNewThreadSelector:@selector(addImageWithAsyncObject:) toTarget:self withObject:asyncObject];
 	[asyncObject release];
 }
