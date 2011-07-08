@@ -1,15 +1,16 @@
-// Shader from here: http://www.iquilezles.org/
+// Shader from http://www.iquilezles.org/apps/shadertoy/
 
 #ifdef GL_ES
 precision highp float;
 #endif
 
+uniform vec2 center;
 uniform vec2 resolution;
 uniform float time;
 
 void main(void)
 {
-    vec2 p = -1.0 + 2.0 * gl_FragCoord.xy / resolution.xy;
+    vec2 p = 2.0 * (gl_FragCoord.xy - center.xy) / resolution.xy;
     vec2 cc = vec2( cos(.25*time), sin(.25*time*1.423) );
 
     float dmin = 1000.0;
