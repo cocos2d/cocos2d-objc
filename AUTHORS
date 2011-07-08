@@ -1,5 +1,37 @@
-cocos2d for iPhone authors
---------------------------
+
+Special thanks to: Lucio Torre, Alejandro Cura, Daniel Moisset & Rayentray Tappa.
+
+cocos2d for iPhone wouldn't be possible without the help of the community who is
+constantly adding new features, sending patches, opening issues:
+http://www.cocos2d-iphone.org/forum
+
+cocos2d logos by Michael Heald (http://www.fullyillustrated.com)
+
+
+cocos2d for iPhone 2.0 authors
+------------------------------
+
+Lead Developer:
+	Ricardo Quesada (http://www.zynga.com)
+
+
+People/companies who were/are contributing code to cocos2d for iPhone (alphabetically ordered):
+
+* Lam Pham (http://www.fancyratstudios.com/)
+	CCProgressTimer: Improved API 
+	CCProgressTimer: Works with Tint and opacity
+	Added Tint + opacity test cases for CCProgressTimer
+
+* manucorporat (manu.valladolid) (http://forzefield.com/):
+	Added new Retina Display code.
+
+* Sergey Tikhonov (AKA haqu) (http://haqu.net)
+	Tests: Improved Shader test
+
+
+
+cocos2d for iPhone 1.0 authors
+------------------------------
 
 Lead Developer:
 	Ricardo Quesada (http://www.zynga.com)
@@ -8,13 +40,6 @@ Developers:
 	Valentin Milea
 	Steve Oldmeadow (http://www.smoco.com/)
 
-cocos2d logos by Michael Heald (http://www.fullyillustrated.com)
-
-Special thanks to: Lucio Torre, Alejandro Cura, Daniel Moisset & Rayentray Tappa.
-
-cocos2d for iPhone wouldn't be possible without the help of the community who is
-constantly adding new features, sending patches, opening issues:
-	   http://www.cocos2d-iphone.org/forum
 
 People/companies who were/are contributing code to cocos2d for iPhone (alphabetically ordered):
 

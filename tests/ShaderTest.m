@@ -631,8 +631,6 @@ enum {
 	
 	[director setOpenGLView:glView_];
 
-//	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
-
 //	[director setProjection:kCCDirectorProjection2D];
 	
 	// Enable "moving" mouse event. Default no.
