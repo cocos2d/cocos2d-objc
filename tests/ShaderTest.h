@@ -32,6 +32,11 @@
 
 @end
 
+@interface ShaderMonjori : ShaderTest
+{
+}
+@end
+
 @interface ShaderMandelbrot : ShaderTest
 {
 }
