@@ -16,6 +16,7 @@
 
 static int sceneIdx=-1;
 static NSString *transitions[] = {
+	@"ShaderMonjori",
 	@"ShaderMandelbrot",
 	@"ShaderJulia",
 	@"ShaderHeart",
@@ -130,11 +131,12 @@ Class restartAction()
 {
 	ccVertex2F	resolution_;
 	float		time_;
-	GLuint		uniformResolution, uniformTime;
+	GLuint		uniformCenter, uniformResolution, uniformTime;
 }
 
--(void) loadShaderVertex:(NSString*)vert fragment:(NSString*)frag;
++(id) shaderNodeWithVertex:(NSString*)vert fragment:(NSString*)frag;
 -(id) initWithVertex:(NSString*)vert fragment:(NSString*)frag;
+-(void) loadShaderVertex:(NSString*)vert fragment:(NSString*)frag;
 @end
 
 @implementation ShaderNode
@@ -143,14 +145,18 @@ enum {
 	SIZE_Y = 256,
 };
 
++(id) shaderNodeWithVertex:(NSString*)vert fragment:(NSString*)frag {
+	return [[[self alloc] initWithVertex:vert fragment:frag] autorelease];
+}
+
 -(id) initWithVertex:(NSString*)vert fragment:(NSString*)frag
 {
 	if( (self=[super init] ) ) {
 		
 		[self loadShaderVertex:vert fragment:frag];
-		
+
 		time_ = 0;
-		resolution_ = (ccVertex2F) { SIZE_X/2, SIZE_Y/2 };
+		resolution_ = (ccVertex2F) { SIZE_X, SIZE_Y };
 		
 		[self scheduleUpdate];
 		
@@ -171,11 +177,10 @@ enum {
 	[shader link];
 	
 	[shader updateUniforms];
-	
-	uniformTime = glGetUniformLocation( shader->program_, "time");
-	
+
+	uniformCenter = glGetUniformLocation( shader->program_, "center");
 	uniformResolution = glGetUniformLocation( shader->program_, "resolution");
-	
+	uniformTime = glGetUniformLocation( shader->program_, "time");
 	
 	self.shaderProgram = shader;
 	
@@ -203,8 +208,9 @@ enum {
 	ccGLUniformProjectionMatrix( shaderProgram_ );
 	ccGLUniformModelViewMatrix( shaderProgram_ );
 
-	glUniform1f( uniformTime, time_ );
+	glUniform2fv( uniformCenter, 1, (GLfloat*)&position_ );
 	glUniform2fv( uniformResolution, 1, (GLfloat*)&resolution_ );
+	glUniform1f( uniformTime, time_ );
 	
 	glDisableVertexAttribArray(kCCAttribColor);
 	glDisableVertexAttribArray(kCCAttribTexCoords);
@@ -218,6 +224,36 @@ enum {
 }
 @end
 
+#pragma mark -
+#pragma mark ShaderMonjori
+
+@implementation ShaderMonjori
+
+-(id) init
+{
+	if( (self=[super init]) ) {
+		ShaderNode *sn = [ShaderNode shaderNodeWithVertex:@"Shaders/Monjori.vert" fragment:@"Shaders/Monjori.frag"];
+		
+		CGSize s = [[CCDirector sharedDirector] winSize];
+		[sn setPosition:ccp(s.width/2, s.height/2)];
+		
+		[self addChild:sn];
+	}
+	
+	return self;	
+}
+
+-(NSString *) title
+{
+	return @"Shader: Frag shader";
+}
+
+-(NSString *) subtitle
+{
+	return @"Monjori plane deformations";
+}
+
+@end
 
 #pragma mark -
 #pragma mark ShaderMandelbrot
@@ -226,13 +262,12 @@ enum {
 -(id) init
 {
 	if( (self=[super init] ) ) {
-		ShaderNode *mandel = [[ShaderNode alloc] initWithVertex:@"Shaders/Mandelbrot.vert" fragment:@"Shaders/Mandelbrot.frag"];
+		ShaderNode *sn = [ShaderNode shaderNodeWithVertex:@"Shaders/Mandelbrot.vert" fragment:@"Shaders/Mandelbrot.frag"];
 		
 		CGSize s = [[CCDirector sharedDirector] winSize];
+		[sn setPosition:ccp(s.width/2, s.height/2)];
 		
-		[mandel setPosition:ccp(s.width/2, s.height/2)];
-		[self addChild:mandel];
-		[mandel release];
+		[self addChild:sn];
 	}
 	
 	return self;	
@@ -256,13 +291,12 @@ enum {
 -(id) init
 {
 	if( (self=[super init] ) ) {
-		ShaderNode *mandel = [[ShaderNode alloc] initWithVertex:@"Shaders/Julia.vert" fragment:@"Shaders/Julia.frag"];
+		ShaderNode *sn = [ShaderNode shaderNodeWithVertex:@"Shaders/Julia.vert" fragment:@"Shaders/Julia.frag"];
 		
-//		CGSize s = [[CCDirector sharedDirector] winSize];
-//		[mandel setPosition:ccp(s.width/2, s.height/2)];
+		CGSize s = [[CCDirector sharedDirector] winSize];
+		[sn setPosition:ccp(s.width/2, s.height/2)];
 		
-		[self addChild:mandel];
-		[mandel release];
+		[self addChild:sn];
 	}
 	
 	return self;	
@@ -287,12 +321,13 @@ enum {
 -(id) init
 {
 	if( (self=[super init] ) ) {
-		ShaderNode *node = [[ShaderNode alloc] initWithVertex:@"Shaders/Heart.vert" fragment:@"Shaders/Heart.frag"];
 		
-//		CGSize s = [[CCDirector sharedDirector] winSize];
-//		[node setPosition:ccp(s.width/2, s.height/2)];
-		[self addChild:node];
-		[node release];
+		ShaderNode *sn = [ShaderNode shaderNodeWithVertex:@"Shaders/Heart.vert" fragment:@"Shaders/Heart.frag"];
+		
+		CGSize s = [[CCDirector sharedDirector] winSize];
+		[sn setPosition:ccp(s.width/2, s.height/2)];
+
+		[self addChild:sn];
 	}
 	
 	return self;	
@@ -316,13 +351,13 @@ enum {
 -(id) init
 {
 	if( (self=[super init] ) ) {
-		ShaderNode *node = [[ShaderNode alloc] initWithVertex:@"Shaders/Flower.vert" fragment:@"Shaders/Flower.frag"];
 		
-//		CGSize s = [[CCDirector sharedDirector] winSize];
-//		[node setPosition:ccp(s.width/2, s.height/2)];
+		ShaderNode *sn = [ShaderNode shaderNodeWithVertex:@"Shaders/Flower.vert" fragment:@"Shaders/Flower.frag"];
+		
+		CGSize s = [[CCDirector sharedDirector] winSize];
+		[sn setPosition:ccp(s.width/2, s.height/2)];
 
-		[self addChild:node];
-		[node release];
+		[self addChild:sn];
 	}
 	
 	return self;	
@@ -346,13 +381,12 @@ enum {
 -(id) init
 {
 	if( (self=[super init] ) ) {
-		ShaderNode *node = [[ShaderNode alloc] initWithVertex:@"Shaders/Plasma.vert" fragment:@"Shaders/Plasma.frag"];
+		ShaderNode *sn = [ShaderNode shaderNodeWithVertex:@"Shaders/Plasma.vert" fragment:@"Shaders/Plasma.frag"];
 		
 		CGSize s = [[CCDirector sharedDirector] winSize];
-		[node setPosition:ccp(s.width/2, s.height/2)];
+		[sn setPosition:ccp(s.width/2, s.height/2)];
 		
-		[self addChild:node];
-		[node release];
+		[self addChild:sn];
 	}
 	
 	return self;	
