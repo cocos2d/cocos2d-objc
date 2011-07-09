@@ -8,7 +8,9 @@
 #import "cocos2d.h"
 #import "ActionsTest.h"
 
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 #import "RootViewController.h"
+#endif
 
 enum {
 	kTagAnimationDance = 1,

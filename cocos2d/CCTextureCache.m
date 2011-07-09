@@ -52,22 +52,29 @@ static NSOpenGLContext *auxGLcontext = nil;
 	SEL			selector_;
 	id			target_;
 	id			data_;
+	
+@public
+	void (^block_)(CCTexture2D *tex);
 }
 @property	(readwrite,assign)	SEL			selector;
 @property	(readwrite,retain)	id			target;
 @property	(readwrite,retain)	id			data;
+
 @end
 
 @implementation CCAsyncObject
 @synthesize selector = selector_;
 @synthesize target = target_;
 @synthesize data = data_;
+
 - (void) dealloc
 {
 	CCLOGINFO(@"cocos2d: deallocing %@", self);
 	[target_ release];
 	[data_ release];
-	[super dealloc];
+	[block_ release];
+
+	 [super dealloc];
 }
 @end
 
@@ -160,7 +167,14 @@ static CCTextureCache *sharedTextureCache;
 		glFlush();
 
 		// The callback will be executed on the main thread
-		id action = [CCCallFuncO actionWithTarget:async.target selector:async.selector object:tex];
+		id action;
+		if( async.target )
+			action = [CCCallFuncO actionWithTarget:async.target selector:async.selector object:tex];
+		else if( async->block_ ) {
+			action = [CCCallBlockO actionWithBlock:async->block_ object:tex];
+			async.target = self;
+		}
+	
 		[[CCActionManager sharedManager] addAction:action target:async.target paused:NO];
 		
 		[EAGLContext setCurrentContext:nil];
@@ -194,17 +208,16 @@ static CCTextureCache *sharedTextureCache;
 	
 	glFlush();
 	
-#if CC_DIRECTOR_MAC_USE_DISPLAY_LINK_THREAD
-	id action = [CCCallFuncO actionWithTarget:async.target selector:async.selector object:tex];
-	[[CCActionManager sharedManager] addAction:action target:async.target paused:NO];
-#else
 	// The callback will be executed on the main thread
-	[async.target performSelector:async.selector
-						 onThread:[[CCDirector sharedDirector] runningThread]
-					   withObject:tex
-					waitUntilDone:NO];
-#endif
+	id action;
+	if( async.target )
+		action = [CCCallFuncO actionWithTarget:async.target selector:async.selector object:tex];
+	else if( async->block_ ) {
+		action = [CCCallBlockO actionWithBlock:async->block_ object:tex];
+		async.target = self;
+	}
 	
+	[[CCActionManager sharedManager] addAction:action target:async.target paused:NO];	
 	
 	[NSOpenGLContext clearCurrentContext];
 
@@ -218,6 +231,8 @@ static CCTextureCache *sharedTextureCache;
 -(void) addImageAsync: (NSString*)path target:(id)target selector:(SEL)selector
 {
 	NSAssert(path != nil, @"TextureCache: fileimage MUST not be nill");
+	NSAssert(target != nil, @"TextureCache: target can't be nil");
+	NSAssert(selector != NULL, @"TextureCache: selector can't be NULL");
 
 	// optimization
 	
@@ -240,6 +255,33 @@ static CCTextureCache *sharedTextureCache;
 	// XXX: This should be done in a worker, instead of creating a new thread per request.
 	[NSThread detachNewThreadSelector:@selector(addImageWithAsyncObject:) toTarget:self withObject:asyncObject];
 	[asyncObject release];
+}
+
+-(void) addImageAsync:(NSString*)path withBlock:(void(^)(CCTexture2D* tex))block
+{
+	NSAssert(path != nil, @"TextureCache: fileimage MUST not be nill");
+	
+	// optimization
+	
+	CCTexture2D * tex;
+	
+	path = ccRemoveHDSuffixFromFile(path);
+	
+	if( (tex=[textures_ objectForKey: path] ) ) {
+		block(tex);
+		return;
+	}
+	
+	// schedule the load
+	
+	CCAsyncObject *asyncObject = [[CCAsyncObject alloc] init];
+	asyncObject->block_ = [block copy];
+	asyncObject.data = path;
+
+	
+	// XXX: This should be done in a worker, instead of creating a new thread per request.
+	[NSThread detachNewThreadSelector:@selector(addImageWithAsyncObject:) toTarget:self withObject:asyncObject];
+	[asyncObject release];	
 }
 
 -(CCTexture2D*) addImage: (NSString*) path
@@ -274,6 +316,8 @@ static CCTextureCache *sharedTextureCache;
 				 ) {
 			// convert jpg to png before loading the texture
 			
+			CCLOG(@"cocos2d: WARNING: Loading JPEG image. For faster loading times, convert it to PVR or PNG");
+			
 			NSString *fullpath = [CCFileUtils fullPathFromRelativePath: path ];
 						
 			UIImage *jpg = [[UIImage alloc] initWithContentsOfFile:fullpath];
@@ -290,7 +334,7 @@ static CCTextureCache *sharedTextureCache;
 			// autorelease prevents possible crash in multithreaded environments
 			[tex autorelease];
 		}
-		
+
 		else {
 			
 			// prevents overloading the autorelease pool

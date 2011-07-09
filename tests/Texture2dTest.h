@@ -161,6 +161,12 @@
 }
 @end
 
+@interface TextureAsyncBlock : TextureDemo
+{
+	int imageOffset;
+}
+@end
+
 @interface TextureLibPNG : TextureDemo
 {}
 -(void) transformSprite:(CCSprite*)sprite;
