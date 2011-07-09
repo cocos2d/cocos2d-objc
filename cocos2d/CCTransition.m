@@ -93,6 +93,8 @@ const uint32_t kSceneFade = 0xFADEFADE;
 
 -(void) draw
 {
+    [super draw];
+
 	if( inSceneOnTop_ ) {
 		[outScene_ visit];
 		[inScene_ visit];
