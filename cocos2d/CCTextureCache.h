@@ -62,14 +62,24 @@
  */
 -(CCTexture2D*) addImage: (NSString*) fileimage;
 
-/** Returns a Texture2D object given a file image
- * If the file image was not previously loaded, it will create a new CCTexture2D object and it will return it.
+/** Asynchronously, load a texture2d from a file.
+ * If the file image was previously loaded, it will use it.
  * Otherwise it will load a texture in a new thread, and when the image is loaded, the callback will be called with the Texture2D as a parameter.
- * The callback will be called from the main thread, so it is safe to create any cocos2d object from the callback.
+ * The callback will be called in the cocos2d thread, so it is safe to create any cocos2d object from the callback.
  * Supported image extensions: .png, .bmp, .tiff, .jpeg, .pvr, .gif
  * @since v0.8
  */
 -(void) addImageAsync:(NSString*) filename target:(id)target selector:(SEL)selector;
+
+/** Asynchronously, load a texture2d from a file.
+ * If the file image was previously loaded, it will use it.
+ * Otherwise it will load a texture in a new thread, and when the image is loaded, the block will be called.
+ * The callback will be called in the cocos2d thread, so it is safe to create any cocos2d object from the callback.
+ * Supported image extensions: .png, .bmp, .tiff, .jpeg, .pvr, .gif
+ * @since v2.0
+ */
+-(void) addImageAsync:(NSString*) filename withBlock:(void(^)(CCTexture2D *tex))block;
+
 
 /** Returns a Texture2D object given an CGImageRef image
  * If the image was not previously loaded, it will create a new CCTexture2D object and it will return it.

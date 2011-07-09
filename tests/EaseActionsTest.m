@@ -6,7 +6,10 @@
 // local import
 #import "cocos2d.h"
 #import "EaseActionsTest.h"
+
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 #import "RootViewController.h"
+#endif
 
 static int sceneIdx=-1;
 static NSString *transitions[] = {

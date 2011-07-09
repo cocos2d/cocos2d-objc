@@ -54,6 +54,7 @@ static NSString *transitions[] = {
 	@"TexturePixelFormat",
 	@"TextureBlend",
 	@"TextureAsync",
+	@"TextureAsyncBlock",
 	@"TextureLibPNGTest1",
 	@"TextureLibPNGTest2",
 	@"TextureLibPNGTest3",
@@ -1248,6 +1249,89 @@ Class restartAction()
 	return @"Textures should load while an animation is being run";
 }
 @end
+
+
+#pragma mark -
+#pragma mark TextureAsyncBlock
+
+@implementation TextureAsyncBlock
+-(id) init
+{
+	if( (self=[super init]) ) {
+		
+		imageOffset = 0;
+		
+		CGSize size =[[CCDirector sharedDirector] winSize];
+		
+		CCLabelTTF *label = [CCLabelTTF labelWithString:@"Loading..." fontName:@"Marker Felt" fontSize:32];
+		label.position = ccp( size.width/2, size.height/2);
+		[self addChild:label z:10];
+		
+		id scale = [CCScaleBy actionWithDuration:0.3f scale:2];
+		id scale_back = [scale reverse];
+		id seq = [CCSequence actions: scale, scale_back, nil];
+		[label runAction: [CCRepeatForever actionWithAction:seq]];
+		
+		[self schedule:@selector(loadImages:) interval:1.0f];
+		
+	}
+	return self;
+}
+
+- (void) dealloc
+{
+	[[CCTextureCache sharedTextureCache] removeAllTextures];
+	[super dealloc];
+}
+
+
+-(void) loadImages:(ccTime) dt
+{
+	[self unschedule:_cmd];
+
+	void(^block)(CCTexture2D *block) = ^(CCTexture2D* tex){
+		
+		CCSprite *sprite = [CCSprite spriteWithTexture:tex];
+		sprite.anchorPoint = ccp(0,0);
+		[self addChild:sprite z:-1];
+		
+		CGSize size =[[CCDirector sharedDirector] winSize];
+		
+		int i = imageOffset * 32;
+		sprite.position = ccp( i % (int)size.width, (i / (int)size.width) * 32 );
+		
+		imageOffset++;
+		
+		NSLog(@"Image loaded: %@", tex);
+		
+	};
+
+	for( int i=0;i < 8;i++) {
+		for( int j=0;j < 8; j++) {
+			NSString *sprite = [NSString stringWithFormat:@"sprite-%d-%d.png", i, j];
+			[[CCTextureCache sharedTextureCache] addImageAsync:sprite withBlock:block];
+		}
+	}	
+	
+	[[CCTextureCache sharedTextureCache] addImageAsync:@"background1.jpg" withBlock:block];
+	[[CCTextureCache sharedTextureCache] addImageAsync:@"background2.jpg" withBlock:block];
+	[[CCTextureCache sharedTextureCache] addImageAsync:@"background.png" withBlock:block];
+	[[CCTextureCache sharedTextureCache] addImageAsync:@"atlastest.png" withBlock:block];
+	[[CCTextureCache sharedTextureCache] addImageAsync:@"grossini_dance_atlas.png" withBlock:block];
+}
+
+-(NSString *) title
+{
+	return @"Texture Async Load with Blocks";
+}
+
+-(NSString *) subtitle
+{
+	return @"Textures should load while an animation is being run";
+}
+@end
+
+
 
 #pragma mark -
 #pragma mark TextureGlClamp

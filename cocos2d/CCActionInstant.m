@@ -471,3 +471,51 @@
 
 @end
 
+#pragma mark CCCallBlockO
+
+@implementation CCCallBlockO
+
+@synthesize object=object_;
+
++(id) actionWithBlock:(void(^)(id object))block object:(id)object
+{
+	return [[[self alloc] initWithBlock:block object:object] autorelease];
+}
+
+-(id) initWithBlock:(void(^)(id object))block object:(id)object
+{
+	if ((self = [super init])) {
+		block_ = [block copy];
+		object_ = [object retain];
+	}
+	
+	return self;
+}
+
+-(id) copyWithZone: (NSZone*) zone
+{
+	CCActionInstant *copy = [[[self class] allocWithZone: zone] initWithBlock:block_];
+	return copy;
+}
+
+-(void) startWithTarget:(id)aTarget
+{
+	[super startWithTarget:aTarget];
+	[self execute];
+}
+
+-(void) execute
+{
+	block_(object_);
+}
+
+-(void) dealloc
+{
+	[object_ release];
+	[block_ release];
+	
+	[super dealloc];
+}
+
+@end
+

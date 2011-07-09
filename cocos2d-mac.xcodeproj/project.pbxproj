@@ -13,6 +13,7 @@
 			buildPhases = (
 			);
 			dependencies = (
+				A02C33B513C908E80081CFF7 /* PBXTargetDependency */,
 				E076EB671225F7B100DE0DA2 /* PBXTargetDependency */,
 				E076EB691225F7B100DE0DA2 /* PBXTargetDependency */,
 				E0B92DDE1226A255003FF67E /* PBXTargetDependency */,
@@ -3309,19 +3310,19 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		A02C33B413C908E80081CFF7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E0D2CDF912B93736008D5DBB;
+			remoteInfo = EventsTest;
+		};
 		A064312813C1418600CC5554 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = A06430E613C1414300CC5554;
 			remoteInfo = kazmath;
-		};
-		E026443312A59DA7009D04FE /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = E050531F122D5AE6005B74CB;
-			remoteInfo = RenderTextureTest;
 		};
 		E026443512A59DA7009D04FE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -3435,13 +3436,6 @@
 			remoteGlobalIDString = E01E663C121CA00A001A484F;
 			remoteInfo = cocos2d;
 		};
-		E0AC079C122803CD00EFA814 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = E0AC06B7122803BC00EFA814;
-			remoteInfo = DrawingPrimitivesTest;
-		};
 		E0AC082812280A9A00EFA814 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
@@ -3483,13 +3477,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = E076EDB81225FEAA00DE0DA2;
 			remoteInfo = libpng;
-		};
-		E0B92DD01226A0D3003FF67E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = E076E4F01225E97900DE0DA2;
-			remoteInfo = TransitionTest;
 		};
 		E0B92DDD1226A255003FF67E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -3560,20 +3547,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = E01E663C121CA00A001A484F;
 			remoteInfo = cocos2d;
-		};
-		E0D2CEE512B93744008D5DBB /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = E0D2CDF912B93736008D5DBB;
-			remoteInfo = EventsTest;
-		};
-		E0D44F531291C0790094708A /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = E050531F122D5AE6005B74CB;
-			remoteInfo = RenderTextureTest;
 		};
 		E0DA425D12A03A3C00210ACE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -5334,7 +5307,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				E026443212A59DA7009D04FE /* PBXTargetDependency */,
 				E026443412A59DA7009D04FE /* PBXTargetDependency */,
 			);
 			name = ParticleTest;
@@ -5373,7 +5345,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				E0B92DD11226A0D3003FF67E /* PBXTargetDependency */,
 				E076E3781225C4BE00DE0DA2 /* PBXTargetDependency */,
 			);
 			name = MenuTest;
@@ -5546,7 +5517,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				E0D44F541291C0790094708A /* PBXTargetDependency */,
 				E0B92CE91226A0C9003FF67E /* PBXTargetDependency */,
 				E0B92CEB1226A0C9003FF67E /* PBXTargetDependency */,
 			);
@@ -5567,7 +5537,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				E0D2CEE612B93744008D5DBB /* PBXTargetDependency */,
 				E0B92E121226A621003FF67E /* PBXTargetDependency */,
 				E0B92E141226A621003FF67E /* PBXTargetDependency */,
 			);
@@ -5588,7 +5557,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				E0AC079D122803CD00EFA814 /* PBXTargetDependency */,
 				E0B92F261226C0DD003FF67E /* PBXTargetDependency */,
 			);
 			name = ActionEaseTest;
@@ -8984,15 +8952,15 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		A02C33B513C908E80081CFF7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E0D2CDF912B93736008D5DBB /* EventsTest */;
+			targetProxy = A02C33B413C908E80081CFF7 /* PBXContainerItemProxy */;
+		};
 		A064312913C1418600CC5554 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = A06430E613C1414300CC5554 /* kazmath */;
 			targetProxy = A064312813C1418600CC5554 /* PBXContainerItemProxy */;
-		};
-		E026443212A59DA7009D04FE /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = E050531F122D5AE6005B74CB /* RenderTextureTest */;
-			targetProxy = E026443312A59DA7009D04FE /* PBXContainerItemProxy */;
 		};
 		E026443412A59DA7009D04FE /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -9074,11 +9042,6 @@
 			target = E01E663C121CA00A001A484F /* cocos2d */;
 			targetProxy = E0AC06B9122803BC00EFA814 /* PBXContainerItemProxy */;
 		};
-		E0AC079D122803CD00EFA814 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = E0AC06B7122803BC00EFA814 /* DrawingPrimitivesTest */;
-			targetProxy = E0AC079C122803CD00EFA814 /* PBXContainerItemProxy */;
-		};
 		E0AC082912280A9A00EFA814 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = E0AC05C31228021600EFA814 /* ActionTest */;
@@ -9108,11 +9071,6 @@
 			isa = PBXTargetDependency;
 			target = E076EDB81225FEAA00DE0DA2 /* libpng */;
 			targetProxy = E0B92CEC1226A0C9003FF67E /* PBXContainerItemProxy */;
-		};
-		E0B92DD11226A0D3003FF67E /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = E076E4F01225E97900DE0DA2 /* TransitionTest */;
-			targetProxy = E0B92DD01226A0D3003FF67E /* PBXContainerItemProxy */;
 		};
 		E0B92DDE1226A255003FF67E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -9163,16 +9121,6 @@
 			isa = PBXTargetDependency;
 			target = E01E663C121CA00A001A484F /* cocos2d */;
 			targetProxy = E0D2CDFB12B93736008D5DBB /* PBXContainerItemProxy */;
-		};
-		E0D2CEE612B93744008D5DBB /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = E0D2CDF912B93736008D5DBB /* EventsTest */;
-			targetProxy = E0D2CEE512B93744008D5DBB /* PBXContainerItemProxy */;
-		};
-		E0D44F541291C0790094708A /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = E050531F122D5AE6005B74CB /* RenderTextureTest */;
-			targetProxy = E0D44F531291C0790094708A /* PBXContainerItemProxy */;
 		};
 		E0DA425C12A03A3C00210ACE /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
