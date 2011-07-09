@@ -401,7 +401,7 @@ enum {
 		[item setPosition:ccp(x - winSize.width / 2,
 							  y - itemSize.height / 2)];
             
-		x += w + 10;
+		x += w;
 		++columnsOccupied;
 		
 		if(columnsOccupied >= rowColumns) {
