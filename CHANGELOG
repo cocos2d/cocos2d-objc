@@ -12,6 +12,7 @@ version 1.0.0 -
 . [FIX] Tests: Fixed memory leak in cocosLiveTest
 . [FIX] TouchDispatcher: added setPriority (issue #757)
 . [FIX] Xcode: cocos2d compiles OK with Xcode 4.2 + llvm 3.0
+. [3RD] Chipmunk: updated to v5.3.5
 
 version 1.0-rc3 - 31-May-2011
 . [NEW] Actions: Added SkewTo and SkewBy actions
