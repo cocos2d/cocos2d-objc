@@ -358,8 +358,6 @@ CGFloat	__ccContentScaleFactor = 1;
 		CCLOG(@"cocos2d: DisplayLinkDirector: Error on gettimeofday");
 	}
 	
-	nextDeltaTimeZero_ = YES;
-	
 	// approximate frame rate
 	// assumes device refreshes at 60 fps
 	int frameInterval = (int) floor(animationInterval_ * 60.0f);
@@ -368,9 +366,7 @@ CGFloat	__ccContentScaleFactor = 1;
 
 	displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(mainLoop:)];
 	[displayLink setFrameInterval:frameInterval];
-	[displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];
-	
-	[self mainLoop:self];
+	[displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];	
 }
 
 -(void) mainLoop:(id)sender
