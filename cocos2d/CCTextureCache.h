@@ -41,8 +41,6 @@
 @interface CCTextureCache : NSObject
 {
 	NSMutableDictionary *textures_;
-	NSLock				*dictLock_;
-	NSLock				*contextLock_;
 }
 
 /** Retruns ths shared instance of the cache */
