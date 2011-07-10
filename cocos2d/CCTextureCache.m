@@ -46,7 +46,7 @@ static EAGLContext *_auxGLcontext = nil;
 static NSOpenGLContext *_auxGLcontext = nil;
 #endif
 
-static dispatch_queue_t _concurrentQueue;
+static dispatch_queue_t _loadingQueue;
 
 @implementation CCTextureCache
 
@@ -79,7 +79,8 @@ static CCTextureCache *sharedTextureCache;
 		textures_ = [[NSMutableDictionary dictionaryWithCapacity: 10] retain];
 		
 		// init "global" stuff
-		_concurrentQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+//		_loadingQueue = dispatch_queue_create("org.cocos2d.textureloading", DISPATCH_QUEUE_SERIAL);
+		_loadingQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
 
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 			_auxGLcontext = [[EAGLContext alloc]
@@ -124,6 +125,7 @@ static CCTextureCache *sharedTextureCache;
 	[_auxGLcontext release];
 	_auxGLcontext = nil;
 	sharedTextureCache = nil;
+	dispatch_release(_loadingQueue);
 	[super dealloc];
 }
 
@@ -147,7 +149,7 @@ static CCTextureCache *sharedTextureCache;
 	}
 
 	// dispatch it concurrently
-	dispatch_async(_concurrentQueue, ^{
+	dispatch_async(_loadingQueue, ^{
 		
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 		if( [EAGLContext setCurrentContext:_auxGLcontext] ) {
@@ -158,8 +160,9 @@ static CCTextureCache *sharedTextureCache;
 			glFlush();
 			
 			// callback should be executed in cocos2d thread
-			id action = [CCCallFuncO actionWithTarget:target selector:selector object:tex];			
-			[[CCActionManager sharedManager] addAction:action target:target paused:NO];
+			dispatch_async(dispatch_get_main_queue(), ^{
+				[target performSelector:selector withObject:tex];
+			});
 			
 			[EAGLContext setCurrentContext:nil];
 		} else {
@@ -176,8 +179,9 @@ static CCTextureCache *sharedTextureCache;
 		glFlush();
 		
 		// callback should be executed in cocos2d thread
-		id action = [CCCallFuncO actionWithTarget:target selector:selector object:tex];			
-		[[CCActionManager sharedManager] addAction:action target:target paused:NO];
+		dispatch_async(dispatch_get_main_queue(), ^{
+			[target performSelector:selector withObject:tex];
+		});
 		
 		[NSOpenGLContext clearCurrentContext];
 				
@@ -186,7 +190,7 @@ static CCTextureCache *sharedTextureCache;
 	});	
 }
 
--(void) addImageAsync:(NSString*)path withBlock:(void(^)(CCTexture2D* tex))block
+-(void) addImageAsync:(NSString*)path withBlock:(void(^)(CCTexture2D *tex))block
 {
 	NSAssert(path != nil, @"TextureCache: fileimage MUST not be nill");
 	
@@ -202,7 +206,7 @@ static CCTextureCache *sharedTextureCache;
 	}
 	
 	// dispatch it concurrently
-	dispatch_async( _concurrentQueue, ^{
+	dispatch_async( _loadingQueue, ^{
 		
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 		if( [EAGLContext setCurrentContext:_auxGLcontext] ) {
@@ -213,8 +217,9 @@ static CCTextureCache *sharedTextureCache;
 			glFlush();
 			
 			// callback should be executed in cocos2d thread
-			id action = [CCCallBlockO actionWithBlock:block object:tex];
-			[[CCActionManager sharedManager] addAction:action target:self paused:NO];
+			dispatch_async(dispatch_get_main_queue(), ^{
+				block(tex);
+			});
 			
 			[EAGLContext setCurrentContext:nil];
 		} else {
@@ -231,8 +236,9 @@ static CCTextureCache *sharedTextureCache;
 		glFlush();
 		
 		// callback should be executed in cocos2d thread
-		id action = [CCCallBlockO actionWithBlock:block object:tex];
-		[[CCActionManager sharedManager] addAction:action target:self paused:NO];
+		dispatch_async(dispatch_get_main_queue(), ^{
+			block(tex);
+		});
 		
 		[NSOpenGLContext clearCurrentContext];
 		
