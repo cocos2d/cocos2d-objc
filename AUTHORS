@@ -17,6 +17,9 @@ Lead Developer:
 
 People/companies who were/are contributing code to cocos2d for iPhone (alphabetically ordered):
 
+* CJ Hanson (myBuddyCJ) (http://www.hansoninteractive.com/):
+	TextureCache: Use blocks instead of CCCall actions to dispatch code
+
 * Lam Pham (http://www.fancyratstudios.com/)
 	CCProgressTimer: Improved API 
 	CCProgressTimer: Works with Tint and opacity
