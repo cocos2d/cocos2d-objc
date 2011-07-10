@@ -126,6 +126,7 @@ static CCTextureCache *sharedTextureCache;
 	_auxGLcontext = nil;
 	sharedTextureCache = nil;
 	dispatch_release(_loadingQueue);
+
 	[super dealloc];
 }
 
@@ -148,7 +149,7 @@ static CCTextureCache *sharedTextureCache;
 		return;
 	}
 
-	// dispatch it concurrently
+	// dispatch it on the queue
 	dispatch_async(_loadingQueue, ^{
 		
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED

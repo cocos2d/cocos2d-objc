@@ -45,7 +45,7 @@
  
  @since v2.0.0
  */
-#define CC_ENABLE_GL_STATE_CACHE 1
+#define CC_ENABLE_GL_STATE_CACHE 0
 
 /** @def CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
  If enabled, the texture coordinates will be calculated by using this formula:
