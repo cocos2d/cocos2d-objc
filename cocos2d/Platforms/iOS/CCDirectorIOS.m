@@ -45,7 +45,6 @@
 #import "../../CCLayer.h"
 
 // support imports
-#import "glu.h"
 #import "../../Support/OpenGL_Internal.h"
 #import "../../Support/CGPointExtension.h"
 #import "../../Support/TransformUtils.h"

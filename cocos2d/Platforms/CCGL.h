@@ -33,7 +33,6 @@
 #import <OpenGLES/ES2/gl.h>
 #import <OpenGLES/ES2/glext.h>
 #import <OpenGLES/EAGL.h>
-#import "iOS/glu.h"
 #import "iOS/EAGLView.h"
 
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)

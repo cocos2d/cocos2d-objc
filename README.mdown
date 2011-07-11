@@ -92,7 +92,7 @@ How to start a new game
 
 Run the 'install-templates.sh' script:
     $ cd cocos2d-iphone
-    $ ./install-templates.sh -u -f
+    $ ./install-templates.sh -f
 And then open XCode -> New Project -> User Templates -> cocos2d
 
 
