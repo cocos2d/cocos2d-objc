@@ -53,9 +53,7 @@
 	if ((self=[super initWithTileFile:charmapfile tileWidth:w tileHeight:h itemsToRender:[theString length] ]) ) {
 
 		mapStartChar = c;		
-		[self setString: theString];
-		
-		self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTextureColor];
+		[self setString: theString];		
 	}
 
 	return self;

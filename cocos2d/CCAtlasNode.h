@@ -64,6 +64,9 @@
 	ccColor3UB	color_;
 	ccColor3UB	colorUnmodified_;
 	BOOL opacityModifyRGB_;
+	
+	// color uniform
+	GLuint	uniformColor_;
 }
 
 /** conforms to CCTextureProtocol protocol */

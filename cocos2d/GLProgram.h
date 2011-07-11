@@ -51,6 +51,7 @@ enum {
 #define kCCShader_PositionTextureColor		@"ShaderPositionTextureColor"
 #define kCCShader_PositionColor				@"ShaderPositionColor"
 #define kCCShader_PositionTexture			@"ShaderPositionTexture"
+#define kCCShader_PositionTexture_uColor	@"ShaderPositionTexture_uColor"
 #define kCCShader_PositionTextureA8Color	@"ShaderPositionTextureA8Color"
 
 // uniform names
