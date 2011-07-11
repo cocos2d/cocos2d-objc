@@ -51,11 +51,7 @@
 #pragma mark CCAtlasNode - Creation & Init
 - (id) init
 {
-    if( (self=[super init]) ) {
-		self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTextureColor];		
-		blendFunc_.src = CC_BLEND_SRC;
-		blendFunc_.dst = CC_BLEND_DST;
-    }
+	NSAssert( NO, @"Not supported - Use initWtihTileFile instead");
     return self;
 }
 
@@ -96,7 +92,9 @@
 		
 		self.quadsToDraw = c;
 		
-		self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTextureColor];
+		// shader stuff
+		self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTexture_uColor];
+		uniformColor_ = glGetUniformLocation( shaderProgram_->program_, "u_color");
 	}
 	return self;
 }
@@ -128,15 +126,24 @@
 	[super draw];
 
 	// Default Attribs & States: GL_TEXTURE0, k,CCAttribVertex, kCCAttribColor, kCCAttribTexCoords
-	// Needed states: GL_TEXTURE0, k,CCAttribVertex, kCCAttribColor, kCCAttribTexCoords
-	// Unneeded states: -	
+	// Needed states: GL_TEXTURE0, kCCAttribVertex, kCCAttribTexCoords
+	// Unneeded states: kCCAttribColor
+	
+	glDisableVertexAttribArray(kCCAttribColor);
+
 	ccGLBlendFunc( blendFunc_.src, blendFunc_.dst );
 	
 	ccGLUseProgram( shaderProgram_->program_ );
 	ccGLUniformProjectionMatrix( shaderProgram_ );
 	ccGLUniformModelViewMatrix( shaderProgram_ );	
 	
+	glUniform4f( uniformColor_, color_.r / 255.0f, color_.g / 255.0f, color_.b / 255.0f, opacity_ / 255.0f );
+	
 	[textureAtlas_ drawNumberOfQuads:quadsToDraw_ fromIndex:0];
+	
+	
+	// Restore state
+	glEnableVertexAttribArray(kCCAttribColor);
 }
 
 #pragma mark CCAtlasNode - RGBA protocol
