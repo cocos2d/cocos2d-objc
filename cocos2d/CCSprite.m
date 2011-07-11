@@ -595,7 +595,7 @@ struct transformValues_ {
 
 -(void) draw
 {
-    [super draw];
+	[super draw];
 
 	NSAssert(!usesBatchNode_, @"If CCSprite is being rendered by CCSpriteBatchNode, CCSprite#draw SHOULD NOT be called");
 

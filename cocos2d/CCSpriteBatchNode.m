@@ -258,7 +258,7 @@ static 	SEL selUpdate = NULL;
 #pragma mark CCSpriteBatchNode - draw
 -(void) draw
 {
-    [super draw];
+	[super draw];
 
 	// Optimization: Fast Dispatch	
 	if( textureAtlas_.totalQuads == 0 )
