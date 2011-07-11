@@ -355,6 +355,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		TextureAtlas: added the possibility to draw the Quads in parts
 		TextureAtlas: Render "static" VBO batches between 6~10% faster. patch.
 		CCArray / ccArray: Added reverseObjects and reduceMemoryFootprint methods.
+		EAGLView: call ESRender#resizeLayer only if the new size is different
 	* marcu.catalin:
 		Menu items are not consumed is items are not visible
 	* Mark Cooke:
@@ -382,6 +383,8 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Added a way to remove from the SpriteFrameCache frames given a dictionary, file or texture
 	* Michael Thornton:
 		TMXTileMap supports any kind of child. patch.
+	* Michael Witt:
+		Fixed leak in EAGLView multisampling code
 	* mike AT finklyinteractive:
 		fixed leak in ActionManager
 	* Mitch:
@@ -469,6 +472,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		patches for CocosNode
 	* Sergey Tikhonov (AKA haqu) (http://haqu.net)
 		Sprite: Added texture debugging draw
+		Menu: MenuItemFont can change the font name and family once it is instanced
 	* sflory:
 		new way to added CGImageRef to TextureMgr
 		added unicode support in BitmapFontAtlas

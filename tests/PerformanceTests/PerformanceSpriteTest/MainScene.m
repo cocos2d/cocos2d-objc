@@ -8,7 +8,7 @@
 
 enum {
 	kMaxNodes = 10000,
-	kNodesIncrease = 100,
+	kNodesIncrease = 50,
 };
 
 enum {

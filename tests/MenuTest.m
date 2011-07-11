@@ -49,7 +49,10 @@ enum {
 		
 
 		// Font Item
-		CCMenuItem *item4 = [CCMenuItemFont itemFromString: @"I toggle enable items" target: self selector:@selector(menuCallbackEnable:)];
+		CCMenuItemFont *item4 = [CCMenuItemFont itemFromString: @"I toggle enable items" target: self selector:@selector(menuCallbackEnable:)];
+		
+		[item4 setFontSize:20];
+		[item4 setFontName:@"Marker Felt"];
 		
 		// Label Item (CCLabelBMFont)
 		CCLabelBMFont *label = [CCLabelBMFont labelWithString:@"configuration" fntFile:@"bitmapFontTest3.fnt"];

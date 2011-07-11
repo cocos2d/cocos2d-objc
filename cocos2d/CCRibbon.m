@@ -261,6 +261,8 @@
 
 -(void) draw
 {
+	[super draw];
+
 	if ([segments_ count] > 0)
 	{
 		//

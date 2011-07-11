@@ -122,10 +122,11 @@
 #pragma mark CCAtlasNode - draw
 - (void) draw
 {
+	[super draw];
+
 	// Default Attribs & States: GL_TEXTURE0, k,CCAttribVertex, kCCAttribColor, kCCAttribTexCoords
 	// Needed states: GL_TEXTURE0, k,CCAttribVertex, kCCAttribColor, kCCAttribTexCoords
-	// Unneeded states: -
-	
+	// Unneeded states: -	
 	ccGLBlendFunc( blendFunc_.src, blendFunc_.dst );
 	
 	ccGLUseProgram( shaderProgram_->program_ );
