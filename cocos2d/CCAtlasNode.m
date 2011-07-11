@@ -46,6 +46,7 @@
 
 @synthesize textureAtlas = textureAtlas_;
 @synthesize blendFunc = blendFunc_;
+@synthesize quadsToDraw = quadsToDraw_;
 
 #pragma mark CCAtlasNode - Creation & Init
 - (id) init
@@ -93,7 +94,9 @@
 		
 		[self calculateMaxItems];
 		
-		self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTextureColor];		
+		self.quadsToDraw = c;
+		
+		self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTextureColor];
 	}
 	return self;
 }
@@ -133,7 +136,7 @@
 	ccGLUniformProjectionMatrix( shaderProgram_ );
 	ccGLUniformModelViewMatrix( shaderProgram_ );	
 	
-	[textureAtlas_ drawQuads];		
+	[textureAtlas_ drawNumberOfQuads:quadsToDraw_ fromIndex:0];
 }
 
 #pragma mark CCAtlasNode - RGBA protocol
@@ -168,7 +171,7 @@
 	
 	// special opacity for premultiplied textures
 	if( opacityModifyRGB_ )
-		[self setColor: colorUnmodified_];	
+		[self setColor: colorUnmodified_];
 }
 
 -(void) setOpacityModifyRGB:(BOOL)modify
