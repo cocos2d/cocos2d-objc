@@ -163,8 +163,13 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 - (void) dealloc
 {
 	CCLOGINFO(@"cocos2d: deallocing %@", self);
-	if(name_)
-		glDeleteTextures( 1, &name_);
+	if(name_){
+		GLuint tName = name_;
+		//It is very likely dealloc will get called from the texture cache's dictionary thread but this must be run from the main thread.
+		dispatch_async(dispatch_get_main_queue(), ^(void){
+				glDeleteTextures( 1, &tName);
+		});
+	}
 	
 	[super dealloc];
 }
