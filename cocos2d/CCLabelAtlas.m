@@ -141,6 +141,8 @@
 	s.width = len * itemWidth_;
 	s.height = itemHeight_;
 	[self setContentSizeInPixels:s];
+	
+	self.quadsToDraw = len;
 }
 
 -(NSString*) string
@@ -148,46 +150,21 @@
 	return string_;
 }
 
-#pragma mark CCLabelAtlas - draw
+#pragma mark CCLabelAtlas - DebugDraw
 
-// XXX: overriding draw from AtlasNode
+#if CC_LABELATLAS_DEBUG_DRAW
 - (void) draw
 {
 	[super draw];
 
-	// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
-	// Needed states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_TEXTURE_COORD_ARRAY
-	// Unneeded states: GL_COLOR_ARRAY
-	glDisableClientState(GL_COLOR_ARRAY);
-
-	glColor4ub( color_.r, color_.g, color_.b, opacity_);
-	
-	BOOL newBlend = blendFunc_.src != CC_BLEND_SRC || blendFunc_.dst != CC_BLEND_DST;
-	if( newBlend )
-		glBlendFunc( blendFunc_.src, blendFunc_.dst );
-	
-	[textureAtlas_ drawNumberOfQuads:string_.length fromIndex:0];
-	
-	if( newBlend )
-		glBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);
-	
-	// is this chepear than saving/restoring color state ?
-	// XXX: There is no need to restore the color to (255,255,255,255). Objects should use the color
-	// XXX: that they need
-//	glColor4ub( 255, 255, 255, 255);
-
-	// Restore Default GL state. Enable GL_COLOR_ARRAY
-	glEnableClientState(GL_COLOR_ARRAY);
-	
-	
-#if CC_LABELATLAS_DEBUG_DRAW
 	CGSize s = [self contentSize];
 	CGPoint vertices[4]={
 		ccp(0,0),ccp(s.width,0),
 		ccp(s.width,s.height),ccp(0,s.height),
 	};
 	ccDrawPoly(vertices, 4, YES);
-#endif // CC_LABELATLAS_DEBUG_DRAW
 
 }
+#endif // CC_LABELATLAS_DEBUG_DRAW
+
 @end

@@ -38,6 +38,7 @@
 
 @synthesize textureAtlas = textureAtlas_;
 @synthesize blendFunc = blendFunc_;
+@synthesize quadsToDraw = quadsToDraw_;
 
 #pragma mark CCAtlasNode - Creation & Init
 +(id) atlasWithTileFile:(NSString*)tile tileWidth:(NSUInteger)w tileHeight:(NSUInteger)h itemsToRender: (NSUInteger) c
@@ -74,6 +75,8 @@
 		[self updateOpacityModifyRGB];
 		
 		[self calculateMaxItems];
+		
+		self.quadsToDraw = c;
 		
 	}
 	return self;
@@ -116,7 +119,7 @@
 	if( newBlend )
 		glBlendFunc( blendFunc_.src, blendFunc_.dst );
 		
-	[textureAtlas_ drawQuads];
+	[textureAtlas_ drawNumberOfQuads:quadsToDraw_ fromIndex:0];
 		
 	if( newBlend )
 		glBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);
