@@ -345,6 +345,8 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Added a way to remove from the SpriteFrameCache frames given a dictionary, file or texture
 	* Michael Thornton:
 		TMXTileMap supports any kind of child. patch.
+	* Michael Witt:
+		Fixed leak in EAGLView multisampling code
 	* mike AT finklyinteractive:
 		fixed leak in ActionManager
 	* Mitch:
