@@ -203,16 +203,18 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 - (void) layoutSubviews
 {
-    [renderer_ resizeFromLayer:(CAEAGLLayer*)self.layer];
 	size_ = [renderer_ backingSize];
-
-	// Issue #914 #924
-	CCDirector *director = [CCDirector sharedDirector];
-	[director reshapeProjection:size_];
-
-	// Avoid flicker. Issue #350
-	[director performSelectorOnMainThread:@selector(drawScene) withObject:nil waitUntilDone:YES];
-}
+	if( ! CGSizeEqualToSize(self.layer.frame.size, size_ ) )
+	{
+		[renderer_ resizeFromLayer:(CAEAGLLayer*)self.layer];
+		// Issue #914 #924
+		CCDirector *director = [CCDirector sharedDirector];
+		[director reshapeProjection:size_];
+		
+		// Avoid flicker. Issue #350
+		[director performSelectorOnMainThread:@selector(drawScene) withObject:nil waitUntilDone:YES];
+	}
+}	
 
 - (void) swapBuffers
 {
