@@ -55,6 +55,9 @@
 	// height of each char
 	NSUInteger		itemHeight_;
 
+	// quads to draw
+	NSUInteger		quadsToDraw_;
+
 	// blend function
 	ccBlendFunc		blendFunc_;
 
@@ -79,6 +82,8 @@
 /** how many quads to draw */
 @property (readwrite) NSUInteger quadsToDraw;
 
+/** how many quads to draw */
+@property (readwrite) NSUInteger quadsToDraw;
 
 /** creates a CCAtlasNode  with an Atlas file the width and height of each item measured in points and the quantity of items to render*/
 +(id) atlasWithTileFile:(NSString*)tile tileWidth:(NSUInteger)w tileHeight:(NSUInteger)h itemsToRender: (NSUInteger) c;

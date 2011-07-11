@@ -96,7 +96,10 @@
 		
 		self.quadsToDraw = c;
 		
+<<<<<<< HEAD
 		self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTextureColor];
+=======
+>>>>>>> develop
 	}
 	return self;
 }
