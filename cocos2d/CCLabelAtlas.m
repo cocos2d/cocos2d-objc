@@ -149,6 +149,8 @@
 
 	CGSize s = CGSizeMake(len * itemWidth_, itemHeight_);
 	[self setContentSize:s];
+	
+	self.quadsToDraw = len;
 }
 
 -(NSString*) string
@@ -156,33 +158,20 @@
 	return string_;
 }
 
-#pragma mark CCLabelAtlas - draw
+#pragma mark CCLabelAtlas - DebugDraw
 
-// XXX: overriding draw from AtlasNode
+#if CC_LABELATLAS_DEBUG_DRAW
 - (void) draw
 {	
 	[super draw];
 
-	// Default Attribs & States: GL_TEXTURE0, kCCAttribVertex, kCCAttribColor, kCCAttribTexCoords
-	// Needed states: GL_TEXTURE0, k,CCAttribVertex, kCCAttribColor, kCCAttribTexCoords
-	// Unneeded states: -
-
-	ccGLBlendFunc( blendFunc_.src, blendFunc_.dst );
-
-	ccGLUseProgram( shaderProgram_->program_ );
-	ccGLUniformProjectionMatrix( shaderProgram_ );
-	ccGLUniformModelViewMatrix( shaderProgram_ );
-	
-	[textureAtlas_ drawNumberOfQuads:string_.length fromIndex:0];
-	
-#if CC_LABELATLAS_DEBUG_DRAW
 	CGSize s = [self contentSize];
 	CGPoint vertices[4]={
 		ccp(0,0),ccp(s.width,0),
 		ccp(s.width,s.height),ccp(0,s.height),
 	};
 	ccDrawPoly(vertices, 4, YES);
+}
 #endif // CC_LABELATLAS_DEBUG_DRAW
 
-}
 @end

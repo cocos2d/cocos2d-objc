@@ -47,6 +47,8 @@
 	NSUInteger		itemsPerRow_;
 	// chars per column
 	NSUInteger		itemsPerColumn_;
+	
+	NSUInteger		quadsToDraw_;
 		
 	// width of each char
 	NSUInteger		itemWidth_;
@@ -73,6 +75,9 @@
 @property (nonatomic,readwrite) GLubyte opacity;
 /** conforms to CCRGBAProtocol protocol */
 @property (nonatomic,readwrite) ccColor3UB color;
+
+/** how many quads to draw */
+@property (readwrite) NSUInteger quadsToDraw;
 
 
 /** creates a CCAtlasNode  with an Atlas file the width and height of each item measured in points and the quantity of items to render*/
