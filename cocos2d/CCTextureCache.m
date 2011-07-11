@@ -79,8 +79,8 @@ static CCTextureCache *sharedTextureCache;
 		textures_ = [[NSMutableDictionary dictionaryWithCapacity: 10] retain];
 		
 		// init "global" stuff
-//		_loadingQueue = dispatch_queue_create("org.cocos2d.textureloading", DISPATCH_QUEUE_SERIAL);
-		_loadingQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+		_loadingQueue = dispatch_queue_create("org.cocos2d.textureloading", DISPATCH_QUEUE_SERIAL);
+//		_loadingQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
 
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 			_auxGLcontext = [[EAGLContext alloc]
