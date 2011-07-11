@@ -1,6 +1,7 @@
 version 1.0.0 -
 . [NEW] ccpSegmentIntersect & ccpPointIntersect: Added helper functions for ccpLineIntersect (issue #1193)
 . [NEW] Director: frames is a readonly property
+. [NEW] Menu: MenuItemFont can change size and font from instance (issue #1192)
 . [NEW] Scheduler: Added isTargetPaused method
 . [NEW] Sprite: Debugging draw for texture (issue #879)
 . [NEW] Textures: PVR supports NPOT textures

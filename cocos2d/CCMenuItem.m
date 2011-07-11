@@ -386,21 +386,25 @@ const uint32_t	kZoomActionTag = 0xc0c05002;
 	return self;
 }
 
--(void) recreateLabel {
+-(void) recreateLabel
+{
 	CCLabelTTF *label = [CCLabelTTF labelWithString:[label_ string] fontName:fontName_ fontSize:fontSize_];
 	self.label = label;
 }
 
--(void) setFontSize: (int) s {
+-(void) setFontSize: (int) s
+{
 	fontSize_ = s;
 	[self recreateLabel];
 }
 
--(int) fontSize {
+-(int) fontSize
+{
 	return fontSize_;
 }
 
--(void) setFontName: (NSString*) n {
+-(void) setFontName: (NSString*) n
+{
 	if (fontName_) {
 		[fontName_ release];
 	}
@@ -408,16 +412,19 @@ const uint32_t	kZoomActionTag = 0xc0c05002;
 	[self recreateLabel];
 }
 
--(NSString*) fontName {
+-(NSString*) fontName
+{
 	return fontName_;
 }
 
 #if NS_BLOCKS_AVAILABLE
-+(id) itemFromString: (NSString*) value block:(void(^)(id sender))block {
++(id) itemFromString: (NSString*) value block:(void(^)(id sender))block
+{
 	return [[[self alloc] initFromString:value block:block] autorelease];
 }
 
--(id) initFromString: (NSString*) value block:(void(^)(id sender))block {
+-(id) initFromString: (NSString*) value block:(void(^)(id sender))block
+{
 	block_ = [block copy];
 	return [self initFromString:value target:block_ selector:@selector(ccCallbackBlockWithSender:)];
 }
