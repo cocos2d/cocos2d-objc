@@ -97,7 +97,7 @@
 
 -(void) draw
 {
-    [super draw];
+	[super draw];
 
     if (particleIdx==0)
         return;

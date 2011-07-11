@@ -484,11 +484,7 @@
 		if ([[_attributes objectAtIndex:firstAfter] index] > NSMaxRange(range)) {
 			// the first after is too far after, insert another run!
 			ZAttributeRun *newRun = [[ZAttributeRun alloc] initWithIndex:NSMaxRange(range)
-<<<<<<< HEAD
-															  attributes:(NSDictionary*)[[_attributes objectAtIndex:firstAfter-1] attributes]];
-=======
 															  attributes:[(ZAttributeRun *)[_attributes objectAtIndex:firstAfter-1] attributes]];
->>>>>>> stable
 			[_attributes insertObject:newRun atIndex:firstAfter];
 			[newRun release];
 		}
