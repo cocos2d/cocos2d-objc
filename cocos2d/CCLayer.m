@@ -364,6 +364,8 @@
 
 - (void) draw
 {
+	[super draw];
+
 	//
 	// Attributes
 	//

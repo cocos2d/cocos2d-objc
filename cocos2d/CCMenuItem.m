@@ -359,7 +359,10 @@ const uint32_t	kZoomActionTag = 0xc0c05002;
 -(id) initFromString: (NSString*) value target:(id) rec selector:(SEL) cb
 {
 	NSAssert( [value length] != 0, @"Value length must be greater than 0");
-	
+
+	[self setFontName:_fontName];
+	[self setFontSize:_fontSize];
+
 	CCLabelTTF *label = [CCLabelTTF labelWithString:value fontName:_fontName fontSize:_fontSize];
 
 	if((self=[super initWithLabel:label target:rec selector:cb]) ) {
@@ -369,11 +372,44 @@ const uint32_t	kZoomActionTag = 0xc0c05002;
 	return self;
 }
 
-+(id) itemFromString: (NSString*) value block:(void(^)(id sender))block {
++(id) itemFromString: (NSString*) value block:(void(^)(id sender))block
+{
 	return [[[self alloc] initFromString:value block:block] autorelease];
 }
 
--(id) initFromString: (NSString*) value block:(void(^)(id sender))block {
+-(void) recreateLabel
+{
+	CCLabelTTF *label = [CCLabelTTF labelWithString:[label_ string] fontName:fontName_ fontSize:fontSize_];
+	self.label = label;
+}
+
+-(void) setFontSize: (int) s
+{
+	fontSize_ = s;
+	[self recreateLabel];
+}
+
+-(int) fontSize
+{
+	return fontSize_;
+}
+
+-(void) setFontName: (NSString*) n
+{
+	if (fontName_) {
+		[fontName_ release];
+	}
+	fontName_ = [n copy];
+	[self recreateLabel];
+}
+
+-(NSString*) fontName
+{
+	return fontName_;
+}
+
+-(id) initFromString: (NSString*) value block:(void(^)(id sender))block
+{
 	block_ = [block copy];
 	return [self initFromString:value target:block_ selector:@selector(ccCallbackBlockWithSender:)];
 }

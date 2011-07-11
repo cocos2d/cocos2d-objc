@@ -179,17 +179,19 @@
  */
 @interface CCMenuItemFont : CCMenuItemLabel
 {
+	int fontSize_;
+	NSString *fontName_;
 }
-/** set font size */
+/** set default font size */
 +(void) setFontSize: (int) s;
 
-/** get font size */
+/** get default font size */
 +(int) fontSize;
 
-/** set the font name */
+/** set default font name */
 +(void) setFontName: (NSString*) n;
 
-/** get the font name */
+/** get default font name */
 +(NSString*) fontName;
 
 /** creates a menu item from a string without target/selector. To be used with CCMenuItemToggle */
@@ -200,6 +202,18 @@
 
 /** initializes a menu item from a string with a target/selector */
 -(id) initFromString: (NSString*) value target:(id) r selector:(SEL) s;
+
+/** set font size */
+-(void) setFontSize: (int) s;
+
+/** get font size */
+-(int) fontSize;
+
+/** set the font name */
+-(void) setFontName: (NSString*) n;
+
+/** get the font name */
+-(NSString*) fontName;
 
 /** creates a menu item from a string with the specified block.
  The block will be "copied".

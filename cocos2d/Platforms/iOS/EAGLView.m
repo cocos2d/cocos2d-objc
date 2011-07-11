@@ -212,21 +212,16 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 - (void) layoutSubviews
 {
-
-    [renderer_ resizeFromLayer:(CAEAGLLayer*)self.layer];
+	[renderer_ resizeFromLayer:(CAEAGLLayer*)self.layer];
 	size_ = [renderer_ backingSize];
 
 	// Issue #914 #924
 	CCDirector *director = [CCDirector sharedDirector];
 	[director reshapeProjection:size_];
 
-	CHECK_GL_ERROR_DEBUG();
-
 	// Avoid flicker. Issue #350
 	NSThread *thread = [director runningThread];
-	[director performSelector:@selector(drawScene) onThread:thread withObject:nil waitUntilDone:YES];
-	
-	CHECK_GL_ERROR_DEBUG();
+	[director performSelector:@selector(drawScene) onThread:thread withObject:nil waitUntilDone:YES];		
 }
 
 - (void) swapBuffers

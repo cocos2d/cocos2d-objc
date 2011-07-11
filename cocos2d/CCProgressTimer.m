@@ -477,6 +477,8 @@ const char kCCProgressTextureCoords = 0x4b;
 
 -(void)draw
 {
+	[super draw];
+
 	if( ! vertexData_ || ! sprite_)
 		return;
 	

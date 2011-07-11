@@ -31,9 +31,11 @@ version 2.0-alpha XX-Jul-2011
 . [FIX] Xcode: Tremor / vorbis: Removed. Experimental sound engine is no longer supported
 . [FIX] Xcode: iOS 4 is minimun required to run
 
-version 1.0.0 -
+version 1.0.0 - 13-July-2011
 . [NEW] ccpSegmentIntersect & ccpPointIntersect: Added helper functions for ccpLineIntersect (issue #1193)
+. [NEW] ccConfig: Added possibility to define the configuration as preprocessor macros
 . [NEW] Director: frames is a readonly property
+. [NEW] Menu: MenuItemFont can change size and font from instance (issue #1192)
 . [NEW] Scheduler: Added isTargetPaused method
 . [NEW] Sprite: Debugging draw for texture (issue #879)
 . [NEW] Textures: PVR supports NPOT textures
@@ -41,6 +43,10 @@ version 1.0.0 -
 . [FIX] ccpLineIntersect works as expected. Improved performance (issue #1174, #1193)
 . [FIX] cocosLive: fixed memory leak in ScoreServerPost
 . [FIX] Director: Added asserts to prevent calling startAnimation twice.
+. [FIX] EAGLView: Fixed leak when using multisampling and resizing the layer (issue #1198)
+. [FIX] EAGLView: resizeLayer is called only when the new size is different than the old one (issue #1153)
+. [FIX] Menu: Column aligment is centered. Removed the +10 pixels padding.
+. [FIX] Node: Node#Draw calls super#draw
 . [FIX] Tests: Fixed memory leak in ParticleTest
 . [FIX] Tests: Fixed memory leak in cocosLiveTest
 . [FIX] TouchDispatcher: added setPriority (issue #757)
