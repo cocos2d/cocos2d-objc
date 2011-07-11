@@ -10,6 +10,15 @@
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleIconFile</key>
 	<string></string>
+	<key>CFBundleIconFiles</key>
+	<array>
+		<string>Icon.png</string>
+		<string>Icon@2x.png</string>
+		<string>Icon-72.png</string>
+		<string>Icon-Small-50.png</string>
+		<string>Icon-Small.png</string>
+		<string>Icon-Small@2x.png</string>
+	</array>
 	<key>CFBundleIdentifier</key>
 	<string>com.yourcompany.${PRODUCT_NAME:rfc1034identifier}</string>
 	<key>CFBundleInfoDictionaryVersion</key>
@@ -17,30 +26,22 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleVersion</key>
-	<string>2.0</string>
+	<string>1.0</string>
 	<key>LSRequiresIPhoneOS</key>
-	<true/>
-	<key>UIStatusBarHidden</key>
 	<true/>
 	<key>UIRequiredDeviceCapabilities</key>
 	<dict>
-		<key>telephony</key>
+		<key>accelerometer</key>
+		<true/>
+		<key>armv6</key>
 		<false/>
-		<key>sms</key>
-		<false/>
-		<key>still-camera</key>
+		<key>armv7</key>
 		<false/>
 		<key>auto-focus-camera</key>
 		<false/>
-		<key>video-camera</key>
-		<false/>
-		<key>wifi</key>
-		<false/>
-		<key>accelerometer</key>
-		<true/>
-		<key>location-services</key>
-		<false/>
 		<key>gps</key>
+		<false/>
+		<key>location-services</key>
 		<false/>
 		<key>magnetometer</key>
 		<false/>
@@ -50,12 +51,20 @@
 		<true/>
 		<key>opengles-2</key>
 		<false/>
-		<key>armv6</key>
-		<false/>
-		<key>armv7</key>
-		<false/>
 		<key>peer-peer</key>
 		<false/>
+		<key>sms</key>
+		<false/>
+		<key>still-camera</key>
+		<false/>
+		<key>telephony</key>
+		<false/>
+		<key>video-camera</key>
+		<false/>
+		<key>wifi</key>
+		<false/>
 	</dict>
+	<key>UIStatusBarHidden</key>
+	<true/>
 </dict>
 </plist>

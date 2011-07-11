@@ -2,6 +2,7 @@
  * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
  * Copyright (c) 2008-2010 Ricardo Quesada
+ * Copyright (c) 2011 Zynga Inc.
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,6 +25,9 @@
  */
 
 #import <Foundation/Foundation.h>
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#import <CoreGraphics/CoreGraphics.h>
+#endif // IPHONE
 
 @class CCSpriteFrame;
 @class CCTexture2D;

@@ -56,19 +56,20 @@
 
 -(void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
-	CGRect rect;
-	if(toInterfaceOrientation == UIInterfaceOrientationPortrait || toInterfaceOrientation == UIInterfaceOrientationPortraitUpsideDown) {
+	CGRect rect = CGRectMake(0,0,0,0);
+	if (UIInterfaceOrientationIsPortrait(toInterfaceOrientation) ) {
 		if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
 			rect = CGRectMake(0, 0, 768, 1024);
 		else
 			rect = CGRectMake(0, 0, 320, 480 );
 
-	} else if(toInterfaceOrientation == UIInterfaceOrientationLandscapeLeft || toInterfaceOrientation == UIInterfaceOrientationLandscapeRight) {
+	} else if( UIInterfaceOrientationIsLandscape(toInterfaceOrientation) ) {
 		if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
 			rect = CGRectMake(0, 0, 1024, 768);
 		else
 			rect = CGRectMake(0, 0, 480, 320 );
-	}
+	} else
+		NSAssert(NO, @"Invalid orientation");
 
 	glView.frame = rect;
 

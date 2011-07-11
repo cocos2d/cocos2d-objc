@@ -174,6 +174,32 @@
 {}
 @end
 
+@interface SpriteOffsetAnchorSkew : SpriteDemo
+{}
+@end
+
+@interface SpriteBatchNodeOffsetAnchorSkew : SpriteDemo
+{}
+@end
+
+@interface SpriteOffsetAnchorSkewScale : SpriteDemo
+{}
+@end
+
+@interface SpriteBatchNodeOffsetAnchorSkewScale : SpriteDemo
+{}
+@end
+
+
+@interface SpriteOffsetAnchorFlip : SpriteDemo
+{}
+@end
+
+@interface SpriteBatchNodeOffsetAnchorFlip : SpriteDemo
+{}
+@end
+
+
 @interface SpriteHybrid : SpriteDemo
 {
 	BOOL	usingSpriteBatchNode;

@@ -30,7 +30,7 @@
 
 @interface ParticleDemo : CCLayerColor
 {
-	CCParticleSystem	*emitter;
+	CCParticleSystem	*emitter_;
 	CCSprite			*background;
 }
 
@@ -146,6 +146,10 @@
 @end
 
 @interface ParticleDesigner11 : ParticleDemo
+{}
+@end
+
+@interface ParticleDesigner12 : ParticleDemo
 {}
 @end
 

@@ -2,6 +2,7 @@
  * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
  * Copyright (c) 2008-2010 Ricardo Quesada
+ * Copyright (c) 2011 Zynga Inc.
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -49,7 +50,7 @@ extern "C" {
   - ccDrawCubicBezier
 
  You can change the color, width and other property by calling the
-   glColor4ub(), glLineWitdh(), glPointSize().
+   glColor4ub(), glLineWidth(), glPointSize().
  
  @warning These functions draws the Line, Point, Polygon, immediately. They aren't batched. If you are going to make a game that depends on these primitives, I suggest creating a batch.
  */

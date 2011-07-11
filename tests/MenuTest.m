@@ -23,7 +23,10 @@ enum {
 	
 		[CCMenuItemFont setFontSize:30];
 		[CCMenuItemFont setFontName: @"Courier New"];
-
+        
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+        self.isTouchEnabled = YES;
+#endif
 		// Font Item
 		
 		CCSprite *spriteNormal = [CCSprite spriteWithFile:@"menuitemsprite.png" rect:CGRectMake(0,23*2,115,23)];
@@ -44,7 +47,7 @@ enum {
 		// Font Item
 		CCMenuItem *item4 = [CCMenuItemFont itemFromString: @"I toggle enable items" target: self selector:@selector(menuCallbackEnable:)];
 		
-		// Label Item (BitmapFontAtlas)
+		// Label Item (CCLabelBMFont)
 		CCLabelBMFont *label = [CCLabelBMFont labelWithString:@"configuration" fntFile:@"bitmapFontTest3.fnt"];
 		CCMenuItemLabel *item5 = [CCMenuItemLabel itemWithLabel:label target:self selector:@selector(menuCallbackConfig:)];
 		
@@ -89,6 +92,30 @@ enum {
 	return self;
 }
 
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+-(void) registerWithTouchDispatcher
+{
+	[[CCTouchDispatcher sharedDispatcher] addTargetedDelegate:self priority:kCCMenuTouchPriority+1 swallowsTouches:YES];
+}
+
+-(BOOL) ccTouchBegan:(UITouch *)touch withEvent:(UIEvent *)event
+{
+	return YES;
+}
+
+-(void) ccTouchEnded:(UITouch *)touch withEvent:(UIEvent *)event
+{
+}
+
+-(void) ccTouchCancelled:(UITouch *)touch withEvent:(UIEvent *)event
+{
+}
+
+-(void) ccTouchMoved:(UITouch *)touch withEvent:(UIEvent *)event
+{
+}
+
+#endif
 -(void) dealloc
 {
 	[disabledItem release];
@@ -97,15 +124,31 @@ enum {
 
 -(void) menuCallback: (id) sender
 {
-	[(CCMultiplexLayer*)parent_ switchTo:1];
+	[(CCLayerMultiplex*)parent_ switchTo:1];
 }
 
 -(void) menuCallbackConfig:(id) sender
 {
-	[(CCMultiplexLayer*)parent_ switchTo:3];
+	[(CCLayerMultiplex*)parent_ switchTo:3];
 }
 
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+-(void) allowTouches
+{
+    [[CCTouchDispatcher sharedDispatcher] setPriority:kCCMenuTouchPriority+1 forDelegate:self];
+    [self unscheduleAllSelectors];
+	NSLog(@"TOUCHES ALLOWED AGAIN");
+
+}
+#endif
+
 -(void) menuCallbackDisabled:(id) sender {
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+    // hijack all touch events for 5 seconds
+    [[CCTouchDispatcher sharedDispatcher] setPriority:kCCMenuTouchPriority-1 forDelegate:self];
+    [self schedule:@selector(allowTouches) interval:5.0f];
+	NSLog(@"TOUCHES DISABLED FOR 5 SECONDS");
+#endif
 }
 
 -(void) menuCallbackEnable:(id) sender {
@@ -114,7 +157,7 @@ enum {
 
 -(void) menuCallback2: (id) sender
 {
-	[(CCMultiplexLayer*)parent_ switchTo:2];
+	[(CCLayerMultiplex*)parent_ switchTo:2];
 }
 
 -(void) onQuit: (id) sender
@@ -212,7 +255,7 @@ enum {
 
 -(void) menuCallbackBack: (id) sender
 {
-	[(CCMultiplexLayer*)parent_ switchTo:0];
+	[(CCLayerMultiplex*)parent_ switchTo:0];
 }
 
 -(void) menuCallbackOpacity: (id) sender
@@ -293,7 +336,7 @@ enum {
 
 -(void) menuCallback: (id) sender
 {
-	[(CCMultiplexLayer*)parent_ switchTo:0];
+	[(CCLayerMultiplex*)parent_ switchTo:0];
 }
 
 -(void) menuCallback2: (id) sender
@@ -402,12 +445,12 @@ enum {
 
 -(void) menuCallback: (id) sender
 {
-	NSLog(@"selected item: %@ index:%lu", [sender selectedItem], [sender selectedIndex] );
+	NSLog(@"selected item: %@ index:%u", [sender selectedItem], (unsigned int) [sender selectedIndex] );
 }
 
 -(void) backCallback: (id) sender
 {
-	[(CCMultiplexLayer*)parent_ switchTo:0];
+	[(CCLayerMultiplex*)parent_ switchTo:0];
 }
 
 @end
@@ -459,7 +502,7 @@ enum {
 
 	CCScene *scene = [CCScene node];
 
-	CCMultiplexLayer *layer = [CCMultiplexLayer layerWithLayers: [Layer1 node], [Layer2 node], [Layer3 node], [Layer4 node], nil];
+	CCLayerMultiplex *layer = [CCLayerMultiplex layerWithLayers: [Layer1 node], [Layer2 node], [Layer3 node], [Layer4 node], nil];
 	[scene addChild: layer z:0];
 
 	[director runWithScene: scene];
@@ -541,7 +584,7 @@ enum {
 	
 	CCScene *scene = [CCScene node];
 	
-	CCMultiplexLayer *layer = [CCMultiplexLayer layerWithLayers: [Layer1 node], [Layer2 node], [Layer3 node], [Layer4 node], nil];
+	CCLayerMultiplex *layer = [CCLayerMultiplex layerWithLayers: [Layer1 node], [Layer2 node], [Layer3 node], [Layer4 node], nil];
 	[scene addChild: layer z:0];
 	
 	[director runWithScene:scene];

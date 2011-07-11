@@ -2,6 +2,7 @@
  * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
  * Copyright (c) 2008-2010 Ricardo Quesada
+ * Copyright (c) 2011 Zynga Inc.
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -420,7 +421,7 @@ typedef void (*CC_UPDATE_PARTICLE_IMP)(id, SEL, tCCParticle*, CGPoint);
 -(id) initWithDictionary:(NSDictionary*)dictionary;
 
 //! Initializes a system with a fixed number of particles
--(id) initWithTotalParticles:(int) numberOfParticles;
+-(id) initWithTotalParticles:(NSUInteger) numberOfParticles;
 //! Add a particle to the emitter
 -(BOOL) addParticle;
 //! Initializes a particle

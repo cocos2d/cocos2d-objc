@@ -2,6 +2,7 @@
  * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
  * Copyright (c) 2009-2010 Ricardo Quesada
+ * Copyright (c) 2011 Zynga Inc.
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -32,7 +33,6 @@
 #import "CCTMXLayer.h"
 #import "CCTMXObjectGroup.h"
 #import "CCSprite.h"
-#import "CCSpriteSheet.h"
 #import "CCTextureCache.h"
 #import "Support/CGPointExtension.h"
 
@@ -123,7 +123,6 @@
 
 -(CCTMXTilesetInfo*) tilesetForLayer:(CCTMXLayerInfo*)layerInfo map:(CCTMXMapInfo*)mapInfo
 {
-	CCTMXTilesetInfo *tileset = nil;
 	CFByteOrder o = CFByteOrderGetCurrent();
 	
 	CGSize size = layerInfo.layerSize;
@@ -155,7 +154,7 @@
 	
 	// If all the tiles are 0, return empty tileset
 	CCLOG(@"cocos2d: Warning: TMX Layer '%@' has no tiles", layerInfo.name);
-	return tileset;
+	return nil;
 }
 
 

@@ -2,6 +2,7 @@
  * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
  * Copyright (c) 2009-2010 Ricardo Quesada
+ * Copyright (c) 2011 Zynga Inc.
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -44,6 +45,6 @@
  It returns self, so you can chain several addChilds.
  @since v0.8
  */
--(void) addChild: (CCNode*)node z:(int)z parallaxRatio:(CGPoint)c positionOffset:(CGPoint)positionOffset;
+-(void) addChild: (CCNode*)node z:(NSInteger)z parallaxRatio:(CGPoint)c positionOffset:(CGPoint)positionOffset;
 
 @end

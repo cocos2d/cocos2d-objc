@@ -2,6 +2,7 @@
  * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
  * Copyright (c) 2008-2010 Ricardo Quesada
+ * Copyright (c) 2011 Zynga Inc.
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -33,8 +34,11 @@ typedef enum  {
 } tCCMenuState;
 
 enum {
-	//* priority used by the menu
+	//* priority used by the menu for the touches
 	kCCMenuTouchPriority = -128,
+
+	//* priority used by the menu for the mouse
+	kCCMenuMousePriority = -128,
 };
 
 /** A CCMenu

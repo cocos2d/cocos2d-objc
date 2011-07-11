@@ -2,6 +2,7 @@
  * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
  * Copyright (c) 2008-2010 Ricardo Quesada
+ * Copyright (c) 2011 Zynga Inc.
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -110,6 +111,8 @@ struct _hashUpdateEntry;
 	// Optimization
 	TICK_IMP			impMethod;
 	SEL					updateSelector;
+    
+    BOOL updateHashLocked; // If true unschedule will not remove anything from a hash. Elements will only be marked for deletion.
 }
 
 /** Modifies the time of all scheduled callbacks.
@@ -148,7 +151,7 @@ struct _hashUpdateEntry;
  The lower the priority, the earlier it is called.
  @since v0.99.3
  */
--(void) scheduleUpdateForTarget:(id)target priority:(int)priority paused:(BOOL)paused;
+-(void) scheduleUpdateForTarget:(id)target priority:(NSInteger)priority paused:(BOOL)paused;
 
 /** Unshedules a selector for a given target.
  If you want to unschedule the "update", use unscheudleUpdateForTarget.
@@ -188,25 +191,9 @@ struct _hashUpdateEntry;
  */
 -(void) resumeTarget:(id)target;
 
-
-/** schedules a Timer.
- It will be fired in every frame.
- 
- @deprecated Use scheduleSelector:forTarget:interval:paused instead. Will be removed in 1.0
+/** Returns whether or not the target is paused
+ @since v1.0.0
  */
--(void) scheduleTimer: (CCTimer*) timer DEPRECATED_ATTRIBUTE;
+-(BOOL) isTargetPaused:(id)target;
 
-/** unschedules an already scheduled Timer
- 
- @deprecated Use unscheduleSelector:forTarget. Will be removed in v1.0
- */
--(void) unscheduleTimer: (CCTimer*) timer DEPRECATED_ATTRIBUTE;
-
-/** unschedule all timers.
- You should NEVER call this method, unless you know what you are doing.
- 
- @deprecated Use scheduleAllSelectors instead. Will be removed in 1.0
- @since v0.8
- */
--(void) unscheduleAllTimers DEPRECATED_ATTRIBUTE;
 @end

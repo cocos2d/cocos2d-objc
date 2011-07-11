@@ -2,6 +2,7 @@
  * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
  * Copyright (c) 2009-2010 Ricardo Quesada
+ * Copyright (c) 2011 Zynga Inc.
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -80,12 +81,12 @@
 	[super dealloc];
 }
 
--(void) addChild:(CCNode*)child z:(int)z tag:(int)tag
+-(void) addChild:(CCNode*)child z:(NSInteger)z tag:(NSInteger)tag
 {
 	NSAssert(NO,@"ParallaxNode: use addChild:z:parallaxRatio:positionOffset instead");
 }
 
--(void) addChild: (CCNode*) child z:(int)z parallaxRatio:(CGPoint)ratio positionOffset:(CGPoint)offset
+-(void) addChild: (CCNode*) child z:(NSInteger)z parallaxRatio:(CGPoint)ratio positionOffset:(CGPoint)offset
 {
 	NSAssert( child != nil, @"Argument must be non-nil");
 	CGPointObject *obj = [CGPointObject pointWithCGPoint:ratio offset:offset];

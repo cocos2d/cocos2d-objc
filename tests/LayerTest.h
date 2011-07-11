@@ -11,6 +11,7 @@
 {
 }
 -(NSString*) title;
+-(NSString*) subtitle;
 @end
 
 @interface LayerTest1 : LayerTest

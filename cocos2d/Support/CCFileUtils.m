@@ -2,6 +2,7 @@
  * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
  * Copyright (c) 2008-2010 Ricardo Quesada
+ * Copyright (c) 2011 Zynga Inc.
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -33,12 +34,12 @@
 static NSFileManager *__localFileManager=nil;
 
 // 
-int ccLoadFileIntoMemory(const char *filename, unsigned char **out) 
+NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out) 
 { 
-	assert( out );
-	assert( &*out );
+	NSCAssert( out, @"ccLoadFileIntoMemory: invalid 'out' parameter");
+	NSCAssert( &*out, @"ccLoadFileIntoMemory: invalid 'out' parameter");
 
-	int size = 0;
+	size_t size = 0;
 	FILE *f = fopen(filename, "rb");
 	if( !f ) { 
 		*out = NULL;
@@ -50,7 +51,7 @@ int ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 	fseek(f, 0, SEEK_SET);
 	
 	*out = malloc(size);
-	int read = fread(*out, 1, size, f);
+	size_t read = fread(*out, 1, size, f);
 	if( read != size ) { 
 		free(*out);
 		*out = NULL;

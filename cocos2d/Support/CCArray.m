@@ -1,7 +1,7 @@
 /*
  * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
- * Copyright (c) 2010 Abstraction Works. http://www.abstractionworks.com
+ * Copyright (c) 2010 ForzeField Studios S.L. http://forzefield.com
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -81,19 +81,14 @@
 	return self;
 }
 
-
-
 - (id) initWithCoder:(NSCoder*)coder
 {
 	self = [self initWithNSArray:[coder decodeObjectForKey:@"nsarray"]];
 	return self;
 }
-- (void)encodeWithCoder:(NSCoder *)coder
-{
-	[coder encodeObject:[self getNSArray] forKey:@"nsarray"];
-}
 
 
+#pragma mark Querying an Array
 
 - (NSUInteger) count
 {
@@ -112,11 +107,14 @@
 
 - (id) objectAtIndex:(NSUInteger)index
 {
-	if( index >= data->num )
-		[NSException raise:NSRangeException
-					format: @"index out of range in objectAtIndex(%d)", data->num ];
+	NSAssert2( index < data->num, @"index out of range in objectAtIndex(%d), index %i", data->num, index );
 	
 	return data->arr[index];
+}
+
+- (BOOL) containsObject:(id)object
+{
+	return ccArrayContainsObject(data, object);
 }
 
 - (id) lastObject
@@ -132,10 +130,11 @@
 	return data->arr[(int)(data->num*CCRANDOM_0_1())];
 }
 
-- (BOOL) containsObject:(id)object
+- (NSArray*) getNSArray
 {
-	return ccArrayContainsObject(data, object);
+	return [NSArray arrayWithObjects:data->arr count:data->num];
 }
+
 
 #pragma mark Adding Objects
 
@@ -161,16 +160,8 @@
 	ccArrayInsertObjectAtIndex(data, object, index);
 }
 
+
 #pragma mark Removing Objects
-
-
-- (void) removeLastObject
-{
-	if( data->num == 0 )
-		[NSException raise:NSRangeException
-					format: @"no objects added"];
-	ccArrayRemoveObjectAtIndex(data, data->num-1);
-}
 
 - (void) removeObject:(id)object
 {
@@ -182,14 +173,9 @@
 	ccArrayRemoveObjectAtIndex(data, index);
 }
 
-- (void) removeObjectsInArray:(CCArray*)otherArray
+- (void) fastRemoveObject:(id)object
 {
-	ccArrayRemoveArray(data, otherArray->data);
-}
-
-- (void) removeAllObjects
-{
-	ccArrayRemoveAllObjects(data);
+	ccArrayFastRemoveObject(data, object);
 }
 
 - (void) fastRemoveObjectAtIndex:(NSUInteger)index
@@ -197,10 +183,63 @@
 	ccArrayFastRemoveObjectAtIndex(data, index);
 }
 
-- (void) fastRemoveObject:(id)object
+- (void) removeObjectsInArray:(CCArray*)otherArray
 {
-	ccArrayFastRemoveObject(data, object);
+	ccArrayRemoveArray(data, otherArray->data);
 }
+
+- (void) removeLastObject
+{
+	NSAssert( data->num > 0, @"no objects added" );
+    
+	ccArrayRemoveObjectAtIndex(data, data->num-1);
+}
+
+- (void) removeAllObjects
+{
+	ccArrayRemoveAllObjects(data);
+}
+
+
+#pragma mark Rearranging Content
+
+- (void) exchangeObject:(id)object1 withObject:(id)object2
+{
+    NSUInteger index1 = ccArrayGetIndexOfObject(data, object1);
+    if(index1 == NSNotFound) return;
+    NSUInteger index2 = ccArrayGetIndexOfObject(data, object2);
+    if(index2 == NSNotFound) return;
+    
+    ccArraySwapObjectsAtIndexes(data, index1, index2);
+}
+
+- (void) exchangeObjectAtIndex:(NSUInteger)index1 withObjectAtIndex:(NSUInteger)index2
+{
+	ccArraySwapObjectsAtIndexes(data, index1, index2);
+}
+
+- (void) reverseObjects
+{
+	if (data->num > 1)
+	{
+		//floor it since in case of a oneven number the number of swaps stays the same
+		int count = (int) floorf(data->num/2.f); 
+		NSUInteger maxIndex = data->num - 1;
+		
+		for (int i = 0; i < count ; i++)
+		{
+			ccArraySwapObjectsAtIndexes(data, i, maxIndex);
+			maxIndex--;
+		}
+	}
+}
+
+- (void) reduceMemoryFootprint
+{
+	ccArrayShrink(data);
+}
+
+#pragma mark Sending Messages to Elements
 
 - (void) makeObjectsPerformSelector:(SEL)aSelector
 {
@@ -212,10 +251,8 @@
 	ccArrayMakeObjectsPerformSelectorWithObject(data, aSelector, object);
 }
 
-- (NSArray*) getNSArray
-{
-	return [NSArray arrayWithObjects:data->arr count:data->num];
-}
+
+#pragma mark CCArray - NSFastEnumeration protocol
 
 - (NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)state objects:(id *)stackbuf count:(NSUInteger)len
 {
@@ -227,11 +264,6 @@
 	return data->num;
 }
 
-- (void) dealloc
-{
-	ccArrayFree(data);
-	[super dealloc];
-}
 
 #pragma mark CCArray - NSCopying protocol
 
@@ -240,6 +272,19 @@
 	NSArray *nsArray = [self getNSArray];
 	CCArray *newArray = [[[self class] allocWithZone:zone] initWithNSArray:nsArray];
 	return newArray;
+}
+
+- (void) encodeWithCoder:(NSCoder *)coder
+{
+	[coder encodeObject:[self getNSArray] forKey:@"nsarray"];
+}
+
+#pragma mark
+
+- (void) dealloc
+{
+	ccArrayFree(data);
+	[super dealloc];
 }
 
 @end

@@ -103,3 +103,18 @@
 }
 @end
 
+@interface LabelTTFTest : AtlasDemo
+{
+}
+@end
+
+@interface LabelTTFMultiline : AtlasDemo
+{
+}
+@end
+
+@interface LabelTTFLineBreak : AtlasDemo
+{
+}
+@end
+

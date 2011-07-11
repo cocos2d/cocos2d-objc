@@ -2,6 +2,7 @@
  * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
  * Copyright (c) 2008-2010 Ricardo Quesada
+ * Copyright (c) 2011 Zynga Inc.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -96,6 +97,10 @@
 	id targetCallback_;
 	SEL selector_;
 }
+
+/** Target that will be called */
+@property (nonatomic, readwrite, retain) id targetCallback;
+
 /** creates the action with the callback */
 +(id) actionWithTarget: (id) t selector:(SEL) s;
 /** initializes the action with the callback */
@@ -139,6 +144,9 @@ typedef void (*CC_CALLBACK_ND)(id, SEL, id, void *);
 {
 	id	object_;
 }
+/** object to be passed as argument */
+@property (nonatomic, readwrite, retain) id object;
+
 /** creates the action with the callback and the object to pass as an argument */
 +(id) actionWithTarget: (id) t selector:(SEL) s object:(id)object;
 /** initializes the action with the callback and the object to pass as an argument */

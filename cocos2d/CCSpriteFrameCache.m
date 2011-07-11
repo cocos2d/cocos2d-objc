@@ -1,9 +1,12 @@
 /*
  * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
- * Copyright (c) 2008-2010 Ricardo Quesada
  * Copyright (c) 2009 Jason Booth
+ *
  * Copyright (c) 2009 Robert J Payne
+ *
+ * Copyright (c) 2008-2010 Ricardo Quesada
+ * Copyright (c) 2011 Zynga Inc.
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -193,7 +196,7 @@ static CCSpriteFrameCache *sharedSpriteFrameCache_=nil;
 	NSString *path = [CCFileUtils fullPathFromRelativePath:plist];
 	NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:path];
 
-	return [self addSpriteFramesWithDictionary:dict texture:texture];
+	[self addSpriteFramesWithDictionary:dict texture:texture];
 }
 
 -(void) addSpriteFramesWithFile:(NSString*)plist textureFile:(NSString*)textureFileName

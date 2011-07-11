@@ -2,6 +2,7 @@
  * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
  * Copyright (c) 2008-2010 Ricardo Quesada
+ * Copyright (c) 2011 Zynga Inc.
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -36,7 +37,7 @@
  - CCLabelAtlas "characters" have a fixed height and width
  - CCLabelAtlas "characters" can be anything you want since they are taken from an image file
  
- A more flexible class is CCBitmapFontAtlas. It supports variable width characters and it also has a nice editor.
+ A more flexible class is CCLabelBMFont. It supports variable width characters and it also has a nice editor.
  */
 @interface CCLabelAtlas : CCAtlasNode  <CCLabelProtocol>
 {		

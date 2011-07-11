@@ -2,6 +2,7 @@
  * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
  * Copyright (c) 2008-2010 Ricardo Quesada
+ * Copyright (c) 2011 Zynga Inc.
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -70,7 +71,7 @@
 
 -(void) updateAtlasValues
 {
-	int n = [string_ length];
+	NSInteger n = [string_ length];
 	
 	ccV3F_C4B_T2F_Quad quad;
 
@@ -128,15 +129,16 @@
 
 - (void) setString:(NSString*) newString
 {
-	if( newString.length > textureAtlas_.totalQuads )
-		[textureAtlas_ resizeCapacity: newString.length];
+	NSUInteger len = [newString length];
+	if( len > textureAtlas_.capacity )
+		[textureAtlas_ resizeCapacity:len];
 
 	[string_ release];
 	string_ = [newString copy];
 	[self updateAtlasValues];
 
 	CGSize s;
-	s.width = [string_ length] * itemWidth_;
+	s.width = len * itemWidth_;
 	s.height = itemHeight_;
 	[self setContentSizeInPixels:s];
 }
@@ -162,7 +164,7 @@
 	if( newBlend )
 		glBlendFunc( blendFunc_.src, blendFunc_.dst );
 	
-	[textureAtlas_ drawNumberOfQuads: string_.length];
+	[textureAtlas_ drawNumberOfQuads:string_.length fromIndex:0];
 	
 	if( newBlend )
 		glBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);

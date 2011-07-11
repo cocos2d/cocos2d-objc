@@ -12,13 +12,18 @@ enum {
 	kTagAnimationDance = 1,
 };
 
+Class nextAction(void);
+Class backAction(void);
+Class restartAction(void);
+
 static int sceneIdx=-1;
 static NSString *transitions[] = {
-	
 	@"ActionManual",
 	@"ActionMove",
 	@"ActionRotate",
 	@"ActionScale",
+	@"ActionSkew",
+	@"ActionSkewRotateScale",
 	@"ActionJump",
 	@"ActionBezier",
 	@"ActionBlink",
@@ -312,6 +317,81 @@ Class restartAction()
 
 @end
 
+@implementation ActionSkew
+-(void) onEnter
+{
+	[super onEnter];
+	
+	[self centerSprites:3];
+	
+	id actionTo = [CCSkewTo actionWithDuration:2 skewX:37.2f skewY:-37.2f];
+	id actionToBack = [CCSkewTo actionWithDuration:2 skewX:0 skewY:0];
+	id actionBy = [CCSkewBy actionWithDuration:2 skewX:0.0f skewY:-90.0f];
+	id actionBy2 = [CCSkewBy actionWithDuration:2 skewX:45.0f skewY:45.0f];
+	id actionByBack = [actionBy reverse];
+			
+	[tamara runAction:[CCSequence actions:actionTo, actionToBack, nil]];
+	[grossini runAction: [CCSequence actions:actionBy, actionByBack, nil]];
+	
+	[kathia runAction: [CCSequence actions:actionBy2, [actionBy2 reverse], nil]];	
+}
+-(NSString *) title
+{
+	return @"SkewTo / SkewBy";
+}
+
+@end
+
+@implementation ActionSkewRotateScale
+-(void) onEnter
+{
+	[super onEnter];
+	
+	[tamara removeFromParentAndCleanup:YES];
+	[grossini removeFromParentAndCleanup:YES];
+	[kathia removeFromParentAndCleanup:YES];
+	
+	CGSize boxSize = CGSizeMake(100.0f, 100.0f);
+	
+	CCLayerColor *box = [CCLayerColor layerWithColor:ccc4(255,255,0,255)];
+	box.anchorPoint = ccp(0,0);
+	box.position = ccp(190,110);
+	box.contentSize = boxSize;
+	
+	static CGFloat markerside = 10.0f;
+	CCLayerColor *uL = [CCLayerColor layerWithColor:ccc4(255,0,0,255)];
+	[box addChild:uL];
+	uL.contentSize = CGSizeMake(markerside, markerside);
+	uL.position = ccp(0.f, boxSize.height-markerside);
+	uL.anchorPoint = ccp(0,0);
+	
+	CCLayerColor *uR = [CCLayerColor layerWithColor:ccc4(0,0,255,255)];
+	[box addChild:uR];
+	uR.contentSize = CGSizeMake(markerside, markerside);
+	uR.position = ccp(boxSize.width-markerside, boxSize.height-markerside);
+	uR.anchorPoint = ccp(0,0);	
+	[self addChild:box];
+	
+	id actionTo = [CCSkewTo actionWithDuration:2 skewX:0.f skewY:2.f];
+	id rotateTo = [CCRotateTo actionWithDuration:2 angle:61.0f];
+	id actionScaleTo = [CCScaleTo actionWithDuration:2 scaleX:-0.44f scaleY:0.47f];
+	
+	id actionScaleToBack = [CCScaleTo actionWithDuration:2 scaleX:1.0f scaleY:1.0f];
+	id rotateToBack = [CCRotateTo actionWithDuration:2 angle:0];
+	id actionToBack = [CCSkewTo actionWithDuration:2 skewX:0 skewY:0];
+	
+	[box runAction:[CCSequence actions:actionTo, actionToBack, nil]];
+	[box runAction:[CCSequence actions:rotateTo, rotateToBack, nil]];
+	[box runAction:[CCSequence actions:actionScaleTo, actionScaleToBack, nil]];
+}
+-(NSString *) title
+{
+	return @"Skew + Rotate + Scale";
+}
+
+@end
+
+
 @implementation ActionJump
 -(void) onEnter
 {
@@ -386,13 +466,15 @@ Class restartAction()
 {
 	[super onEnter];
 	
-	[self centerSprites:2];
+	[self centerSprites:3];
 	
-	id action1 = [CCBlink actionWithDuration:2 blinks:10];
-	id action2 = [CCBlink actionWithDuration:2 blinks:5];
+	id action1 = [CCBlink actionWithDuration:3 blinks:10];
+	id action2 = [CCBlink actionWithDuration:3 blinks:5];
+	id action3 = [CCBlink actionWithDuration:0.5f blinks:5];
 	
 	[tamara runAction: action1];
 	[kathia runAction:action2];
+	[grossini runAction:action3];
 }
 -(NSString *) title
 {
@@ -820,7 +902,7 @@ Class restartAction()
 }
 -(void) callback3:(id)sender data:(void*)data
 {
-	NSLog(@"callback 3 called from:%@ with data:%lx",sender,(NSUInteger)data);
+	NSLog(@"callback 3 called from:%@ with data:%x",sender,(unsigned int)data);
 	CGSize s = [[CCDirector sharedDirector] winSize];
 	CCLabelTTF *label = [CCLabelTTF labelWithString:@"callback 3 called" fontName:@"Marker Felt" fontSize:16];
 	[label setPosition:ccp( s.width/4*3,s.height/2)];

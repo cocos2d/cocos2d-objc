@@ -2,6 +2,7 @@
  * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
  * Copyright (c) 2009-2010 Ricardo Quesada
+ * Copyright (c) 2011 Zynga Inc.
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -43,6 +44,7 @@ enum {
 	TMXLayerAttribNone = 1 << 0,
 	TMXLayerAttribBase64 = 1 << 1,
 	TMXLayerAttribGzip = 1 << 2,
+	TMXLayerAttribZlib = 1 << 3,
 };
 
 enum {

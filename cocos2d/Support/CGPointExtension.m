@@ -2,6 +2,7 @@
  * http://www.cocos2d-iphone.org
  *
  * Copyright (c) 2007 Scott Lembcke
+ *
  * Copyright (c) 2010 Lam Pham
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -84,7 +85,8 @@ CGPoint ccpFromSize(CGSize s)
 	return ccp(s.width, s.height);
 }
 
-CGPoint ccpCompOp(CGPoint p, float (*opFunc)(float)){
+CGPoint ccpCompOp(CGPoint p, float (*opFunc)(float))
+{
 	return ccp(opFunc(p.x), opFunc(p.y));
 }
 
@@ -103,59 +105,87 @@ CGPoint ccpCompMult(CGPoint a, CGPoint b)
 
 float ccpAngleSigned(CGPoint a, CGPoint b)
 {
-	CGPoint a2 = ccpNormalize(a);	CGPoint b2 = ccpNormalize(b);
+	CGPoint a2 = ccpNormalize(a);
+	CGPoint b2 = ccpNormalize(b);
 	float angle = atan2f(a2.x * b2.y - a2.y * b2.x, ccpDot(a2, b2));
 	if( fabs(angle) < kCGPointEpsilon ) return 0.f;
 	return angle;
 }
 
-CGPoint ccpRotateByAngle(CGPoint v, CGPoint pivot, float angle) {
+CGPoint ccpRotateByAngle(CGPoint v, CGPoint pivot, float angle)
+{
 	CGPoint r = ccpSub(v, pivot);
-	float t = r.x;
 	float cosa = cosf(angle), sina = sinf(angle);
-	r.x = t*cosa - r.y*sina;
-	r.y = t*sina + r.y*cosa;
-	r = ccpAdd(r, pivot);
+	float t = r.x;
+	r.x = t*cosa - r.y*sina + pivot.x;
+	r.y = t*sina + r.y*cosa + pivot.y;
 	return r;
 }
 
-BOOL ccpLineIntersect(CGPoint p1, CGPoint p2, 
-					  CGPoint p3, CGPoint p4,
-					  float *s, float *t){
-	CGPoint p13, p43, p21;
-	float d1343, d4321, d1321, d4343, d2121;
-	float numer, denom;
-	
-	p13 = ccpSub(p1, p3);
-	
-	p43 = ccpSub(p4, p3);
-	
-	//Roughly equal to zero but with an epsilon deviation for float 
-	//correction
-	if (ccpFuzzyEqual(p43, CGPointZero, kCGPointEpsilon))
-		return false;
-	
-	p21 = ccpSub(p2, p1);
-	
-	//Roughly equal to zero
-	if (ccpFuzzyEqual(p21,CGPointZero, kCGPointEpsilon))
-		return false;
-	
-	d1343 = ccpDot(p13, p43);
-	d4321 = ccpDot(p43, p21);
-	d1321 = ccpDot(p13, p21);
-	d4343 = ccpDot(p43, p43);
-	d2121 = ccpDot(p21, p21);
-	
-	denom = d2121 * d4343 - d4321 * d4321;
-	if (fabs(denom) < kCGPointEpsilon)
-		return false;
-	numer = d1343 * d4321 - d1321 * d4343;
-	
-	*s = numer / denom;
-	*t = (d1343 + d4321 *(*s)) / d4343;
-	
-	return true;
+
+BOOL ccpSegmentIntersect(CGPoint A, CGPoint B, CGPoint C, CGPoint D)
+{
+	float S, T;
+
+	if( ccpLineIntersect(A, B, C, D, &S, &T )
+	   && (S >= 0.0f && S <= 1.0f && T >= 0.0f && T <= 1.0f) )
+		return YES;
+
+	return NO;
+}
+
+CGPoint ccpIntersectPoint(CGPoint A, CGPoint B, CGPoint C, CGPoint D)
+{
+	float S, T;
+
+	if( ccpLineIntersect(A, B, C, D, &S, &T) ) {
+		// Point of intersection
+		CGPoint P;
+		P.x = A.x + S * (B.x - A.x);
+		P.y = A.y + S * (B.y - A.y);
+		return P;
+	}
+
+	return CGPointZero;
+}
+
+BOOL ccpLineIntersect(CGPoint A, CGPoint B,
+					  CGPoint C, CGPoint D,
+					  float *S, float *T)
+{    
+	// FAIL: Line undefined
+	if ( (A.x==B.x && A.y==B.y) || (C.x==D.x && C.y==D.y) ) return NO;
+
+	const float BAx = B.x - A.x;
+	const float BAy = B.y - A.y;
+	const float DCx = D.x - C.x;
+	const float DCy = D.y - C.y;
+	const float ACx = A.x - C.x;
+	const float ACy = A.y - C.y;
+
+	const float denom = DCy*BAx - DCx*BAy;
+
+	*S = DCx*ACy - DCy*ACx;
+	*T = BAx*ACy - BAy*ACx;
+
+	if (denom == 0) {
+		if (*S == 0 || *T == 0) { 
+			// Lines incident
+			return YES;   
+		}
+		// Lines parallel and not incident
+		return NO;
+	}
+
+	*S = *S / denom;
+	*T = *T / denom;
+
+	// Point of intersection
+	// CGPoint P;
+	// P.x = A.x + *S * (B.x - A.x);
+	// P.y = A.y + *S * (B.y - A.y);
+
+	return YES;
 }
 
 float ccpAngle(CGPoint a, CGPoint b)
@@ -164,4 +194,3 @@ float ccpAngle(CGPoint a, CGPoint b)
 	if( fabs(angle) < kCGPointEpsilon ) return 0.f;
 	return angle;
 }
-

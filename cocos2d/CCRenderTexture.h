@@ -59,8 +59,6 @@ enum
 	CCSprite*			sprite_;
 	
 	GLenum				pixelFormat_;
-	GLfloat				clearColor_[4];
-
 }
 
 /** The CCSprite being used.
@@ -100,6 +98,8 @@ enum
 -(BOOL)saveBuffer:(NSString*)name format:(int)format;
 /* get buffer as UIImage, can only save a render buffer which has a RGBA8888 pixel format */
 -(NSData*)getUIImageAsDataFromBuffer:(int) format;
+/* get buffer as UIImage */
+-(UIImage *)getUIImageFromBuffer;
 
 #endif // __IPHONE_OS_VERSION_MAX_ALLOWED
 

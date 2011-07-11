@@ -2,6 +2,7 @@
  * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
  * Copyright (c) 2008-2010 Ricardo Quesada
+ * Copyright (c) 2011 Zynga Inc.
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,6 +29,8 @@
 #import "ccMacros.h"
 
 // free function used to sort
+NSInteger alphabeticSort(id string1, id string2, void *reverse);
+
 NSInteger alphabeticSort(id string1, id string2, void *reverse)
 {
     if ((NSInteger *)reverse == NO)
@@ -135,7 +138,7 @@ NSInteger alphabeticSort(id string1, id string2, void *reverse)
 	
 	// create the connection with the request
 	// and start loading the data
-	self.connection=[[NSURLConnection alloc] initWithRequest:post delegate:self];
+	self.connection=[NSURLConnection connectionWithRequest:post delegate:self];
 	
 	if ( ! connection_)
 		return NO;

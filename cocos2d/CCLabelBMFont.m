@@ -2,6 +2,7 @@
  * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
  * Copyright (c) 2008-2010 Ricardo Quesada
+ * Copyright (c) 2011 Zynga Inc.
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,10 +27,11 @@
  *   by Michael Daley
  *
  *
- * Use any of these editors to generate bitmap font atlas:
- *   http://www.n4te.com/hiero/hiero.jnlp
- *   http://slick.cokeandcode.com/demos/hiero.jnlp
- *   http://www.angelcode.com/products/bmfont/
+ * Use any of these editors to generate BMFonts:
+ *   http://glyphdesigner.71squared.com/ (Commercial, Mac OS X)
+ *   http://www.n4te.com/hiero/hiero.jnlp (Free, Java)
+ *   http://slick.cokeandcode.com/demos/hiero.jnlp (Free, Java)
+ *   http://www.angelcode.com/products/bmfont/ (Free, Windows only)
  */
 
 #import "ccConfig.h"
@@ -139,7 +141,10 @@ typedef struct _KerningHashElement
 - (void)parseConfigFile:(NSString*)fntFile
 {	
 	NSString *fullpath = [CCFileUtils fullPathFromRelativePath:fntFile];
-	NSString *contents = [NSString stringWithContentsOfFile:fullpath encoding:NSUTF8StringEncoding error:nil];
+	NSError *error;
+	NSString *contents = [NSString stringWithContentsOfFile:fullpath encoding:NSUTF8StringEncoding error:&error];
+
+	NSAssert1( contents, @"cocos2d: Error parsing FNTfile: %@", error);
 	
 	
 	// Move all lines in the string, which are denoted by \n, into an array
@@ -203,13 +208,13 @@ typedef struct _KerningHashElement
 	
 	// page ID. Sanity check
 	propertyValue = [nse nextObject];
-	NSAssert( [propertyValue intValue] == 0, @"XXX: BitmapFontAtlas only supports 1 page");
+	NSAssert( [propertyValue intValue] == 0, @"XXX: LabelBMFont only supports 1 page");
 	
 	// file 
 	propertyValue = [nse nextObject];
 	NSArray *array = [propertyValue componentsSeparatedByString:@"\""];
 	propertyValue = [array objectAtIndex:1];
-	NSAssert(propertyValue,@"BitmapFontAtlas file could not be found");
+	NSAssert(propertyValue,@"LabelBMFont file could not be found");
 	
 	// Supports subdirectories
 	NSString *dir = [fntFile stringByDeletingLastPathComponent];
@@ -427,13 +432,13 @@ typedef struct _KerningHashElement
 
 @synthesize opacity = opacity_, color = color_;
 
-#pragma mark BitmapFontAtlas - Purge Cache
+#pragma mark LabelBMFont - Purge Cache
 +(void) purgeCachedData
 {
 	FNTConfigRemoveCache();
 }
 
-#pragma mark BitmapFontAtlas - Creation & Init
+#pragma mark LabelBMFont - Creation & Init
 
 +(id) labelWithString:(NSString *)string fntFile:(NSString *)fntFile
 {
@@ -454,7 +459,7 @@ typedef struct _KerningHashElement
 	configuration_ = FNTConfigLoadFile(fntFile);
 	[configuration_ retain];
 
-	NSAssert( configuration_, @"Error creating config for BitmapFontAtlas");
+	NSAssert( configuration_, @"Error creating config for LabelBMFont");
 
 	
 	if ((self=[super initWithFile:configuration_->atlasName_ capacity:[theString length]])) {
@@ -481,7 +486,7 @@ typedef struct _KerningHashElement
 	[super dealloc];
 }
 
-#pragma mark BitmapFontAtlas - Atlas generation
+#pragma mark LabelBMFont - Atlas generation
 
 -(int) kerningAmountForFirst:(unichar)first second:(unichar)second
 {
@@ -500,17 +505,17 @@ typedef struct _KerningHashElement
 
 -(void) createFontChars
 {
-	int nextFontPositionX = 0;
-	int nextFontPositionY = 0;
+	NSInteger nextFontPositionX = 0;
+	NSInteger nextFontPositionY = 0;
 	unichar prev = -1;
-	int kerningAmount = 0;
+	NSInteger kerningAmount = 0;
 	
 	CGSize tmpSize = CGSizeZero;
 
-	int longestLine = 0;
-	int totalHeight = 0;
+	NSInteger longestLine = 0;
+	NSUInteger totalHeight = 0;
 	
-	int quantityOfLines = 1;
+	NSUInteger quantityOfLines = 1;
 
 	NSUInteger stringLen = [string_ length];
 	if( ! stringLen )
@@ -529,7 +534,7 @@ typedef struct _KerningHashElement
 	
 	for(NSUInteger i=0; i<stringLen; i++) {
 		unichar c = [string_ characterAtIndex:i];
-		NSAssert( c < kCCBMFontMaxChars, @"BitmapFontAtlas: character outside bounds");
+		NSAssert( c < kCCBMFontMaxChars, @"LabelBMFont: character outside bounds");
 		
 		if (c == '\n') {
 			nextFontPositionX = 0;
@@ -588,7 +593,7 @@ typedef struct _KerningHashElement
 	[self setContentSizeInPixels:tmpSize];
 }
 
-#pragma mark BitmapFontAtlas - CCLabelProtocol protocol
+#pragma mark LabelBMFont - CCLabelProtocol protocol
 - (void) setString:(NSString*) newString
 {	
 	[string_ release];
@@ -611,7 +616,7 @@ typedef struct _KerningHashElement
 	[self setString:[NSString stringWithUTF8String:label]];
 }
 
-#pragma mark BitmapFontAtlas - CCRGBAProtocol protocol
+#pragma mark LabelBMFont - CCRGBAProtocol protocol
 
 -(void) setColor:(ccColor3B)color
 {
@@ -644,7 +649,7 @@ typedef struct _KerningHashElement
 	return opacityModifyRGB_;
 }
 
-#pragma mark BitmapFontAtlas - AnchorPoint
+#pragma mark LabelBMFont - AnchorPoint
 -(void) setAnchorPoint:(CGPoint)point
 {
 	if( ! CGPointEqualToPoint(point, anchorPoint_) ) {
@@ -653,8 +658,8 @@ typedef struct _KerningHashElement
 	}
 }
 
-#pragma mark BitmapFontAtlas - Debug draw
-#if CC_BITMAPFONTATLAS_DEBUG_DRAW
+#pragma mark LabelBMFont - Debug draw
+#if CC_LABELBMFONT_DEBUG_DRAW
 -(void) draw
 {
 	[super draw];
@@ -665,5 +670,5 @@ typedef struct _KerningHashElement
 	};
 	ccDrawPoly(vertices, 4, YES);
 }
-#endif // CC_BITMAPFONTATLAS_DEBUG_DRAW
+#endif // CC_LABELBMFONT_DEBUG_DRAW
 @end

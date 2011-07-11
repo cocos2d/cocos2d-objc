@@ -2,6 +2,7 @@
  * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
  * Copyright (c) 2008-2010 Ricardo Quesada
+ * Copyright (c) 2011 Zynga Inc.
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,12 +25,12 @@
  * Portions of this code are based and inspired on:
  *   http://www.71squared.co.uk/2009/04/iphone-game-programming-tutorial-4-bitmap-font-class
  *   by Michael Daley
- 
- * Use any of these editors to generate bitmap font atlas:
- *   http://www.n4te.com/hiero/hiero.jnlp
- *   http://slick.cokeandcode.com/demos/hiero.jnlp
- *   http://www.angelcode.com/products/bmfont/
- *
+ * 
+ * Use any of these editors to generate BMFonts:
+ *   http://glyphdesigner.71squared.com/ (Commercial, Mac OS X)
+ *   http://www.n4te.com/hiero/hiero.jnlp (Free, Java)
+ *   http://slick.cokeandcode.com/demos/hiero.jnlp (Free, Java)
+ *   http://www.angelcode.com/products/bmfont/ (Free, Windows only)
  */
 
 #import "CCSpriteBatchNode.h"
