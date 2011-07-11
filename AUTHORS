@@ -19,7 +19,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 
 * CJ Hanson (myBuddyCJ) (http://www.hansoninteractive.com/):
 	TextureCache: Use blocks instead of CCCall actions to dispatch code
-	TextureCache: Uses a serial queue to protect access to the texture. No need to use @syncronize on CCTexture2D
+	TextureCache: Uses a serial queue to protect access to the texture dictionary. No need to use @syncronize on CCTexture2D
 
 * Lam Pham (http://www.fancyratstudios.com/)
 	CCProgressTimer: Improved API 

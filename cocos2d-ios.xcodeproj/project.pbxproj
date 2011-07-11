@@ -2476,8 +2476,6 @@
 		E0EAD108121F4B4600B0C81C /* EAGLView.h in Headers */ = {isa = PBXBuildFile; fileRef = E0EAD0F3121F4B4600B0C81C /* EAGLView.h */; };
 		E0EAD109121F4B4600B0C81C /* EAGLView.m in Sources */ = {isa = PBXBuildFile; fileRef = E0EAD0F4121F4B4600B0C81C /* EAGLView.m */; };
 		E0EAD10C121F4B4600B0C81C /* ESRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = E0EAD0F7121F4B4600B0C81C /* ESRenderer.h */; };
-		E0EAD10D121F4B4600B0C81C /* glu.c in Sources */ = {isa = PBXBuildFile; fileRef = E0EAD0F8121F4B4600B0C81C /* glu.c */; };
-		E0EAD10E121F4B4600B0C81C /* glu.h in Headers */ = {isa = PBXBuildFile; fileRef = E0EAD0F9121F4B4600B0C81C /* glu.h */; };
 		E0EAD19D121F4D7300B0C81C /* CCGL.h in Headers */ = {isa = PBXBuildFile; fileRef = E0EAD19C121F4D7300B0C81C /* CCGL.h */; };
 		E0EAD1F1121F522A00B0C81C /* CCConfiguration.h in Headers */ = {isa = PBXBuildFile; fileRef = E0EAD1F0121F522A00B0C81C /* CCConfiguration.h */; };
 		E0F924711224140400EF2362 /* CCTexturePVR.h in Headers */ = {isa = PBXBuildFile; fileRef = E0F9246F1224140400EF2362 /* CCTexturePVR.h */; };
@@ -4275,8 +4273,6 @@
 		E0EAD0F3121F4B4600B0C81C /* EAGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EAGLView.h; sourceTree = "<group>"; };
 		E0EAD0F4121F4B4600B0C81C /* EAGLView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EAGLView.m; sourceTree = "<group>"; };
 		E0EAD0F7121F4B4600B0C81C /* ESRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESRenderer.h; sourceTree = "<group>"; };
-		E0EAD0F8121F4B4600B0C81C /* glu.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = glu.c; sourceTree = "<group>"; };
-		E0EAD0F9121F4B4600B0C81C /* glu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = glu.h; sourceTree = "<group>"; };
 		E0EAD19C121F4D7300B0C81C /* CCGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCGL.h; sourceTree = "<group>"; };
 		E0EAD1F0121F522A00B0C81C /* CCConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCConfiguration.h; sourceTree = "<group>"; };
 		E0F9246F1224140400EF2362 /* CCTexturePVR.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTexturePVR.h; sourceTree = "<group>"; };
@@ -6832,8 +6828,6 @@
 				E0BC7DA61342CF27001B4DCC /* ES2Renderer.h */,
 				E0BC7DA71342CF27001B4DCC /* ES2Renderer.m */,
 				E0EAD0F7121F4B4600B0C81C /* ESRenderer.h */,
-				E0EAD0F8121F4B4600B0C81C /* glu.c */,
-				E0EAD0F9121F4B4600B0C81C /* glu.h */,
 			);
 			path = iOS;
 			sourceTree = "<group>";
@@ -6918,7 +6912,6 @@
 				E0EAD106121F4B4600B0C81C /* CCTouchHandler.h in Headers */,
 				E0EAD108121F4B4600B0C81C /* EAGLView.h in Headers */,
 				E0EAD10C121F4B4600B0C81C /* ESRenderer.h in Headers */,
-				E0EAD10E121F4B4600B0C81C /* glu.h in Headers */,
 				E0EAD19D121F4D7300B0C81C /* CCGL.h in Headers */,
 				E0EAD1F1121F522A00B0C81C /* CCConfiguration.h in Headers */,
 				E0F924711224140400EF2362 /* CCTexturePVR.h in Headers */,
@@ -10316,7 +10309,6 @@
 				E0EAD105121F4B4600B0C81C /* CCTouchDispatcher.m in Sources */,
 				E0EAD107121F4B4600B0C81C /* CCTouchHandler.m in Sources */,
 				E0EAD109121F4B4600B0C81C /* EAGLView.m in Sources */,
-				E0EAD10D121F4B4600B0C81C /* glu.c in Sources */,
 				E0F924721224140400EF2362 /* CCTexturePVR.m in Sources */,
 				E0E974A61237E4EA00E3E64B /* CCDirectorMac.m in Sources */,
 				E0E974A81237E4EA00E3E64B /* CCEventDispatcher.m in Sources */,

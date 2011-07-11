@@ -3102,8 +3102,6 @@
 		E0D5D71E1344056600A7B1B9 /* ES2Renderer.h in Headers */ = {isa = PBXBuildFile; fileRef = E0D5D7051344056600A7B1B9 /* ES2Renderer.h */; };
 		E0D5D71F1344056600A7B1B9 /* ES2Renderer.m in Sources */ = {isa = PBXBuildFile; fileRef = E0D5D7061344056600A7B1B9 /* ES2Renderer.m */; };
 		E0D5D7201344056600A7B1B9 /* ESRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = E0D5D7071344056600A7B1B9 /* ESRenderer.h */; };
-		E0D5D7211344056600A7B1B9 /* glu.c in Sources */ = {isa = PBXBuildFile; fileRef = E0D5D7081344056600A7B1B9 /* glu.c */; };
-		E0D5D7221344056600A7B1B9 /* glu.h in Headers */ = {isa = PBXBuildFile; fileRef = E0D5D7091344056600A7B1B9 /* glu.h */; };
 		E0DA427212A03A3C00210ACE /* A Damn Mess.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E076E7A21225EDD000DE0DA2 /* A Damn Mess.ttf */; };
 		E0DA427312A03A3C00210ACE /* Abberancy.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E076E7A31225EDD000DE0DA2 /* Abberancy.ttf */; };
 		E0DA427412A03A3C00210ACE /* Abduction.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E076E7A41225EDD000DE0DA2 /* Abduction.ttf */; };
@@ -4071,8 +4069,6 @@
 		E0D5D7051344056600A7B1B9 /* ES2Renderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ES2Renderer.h; sourceTree = "<group>"; };
 		E0D5D7061344056600A7B1B9 /* ES2Renderer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ES2Renderer.m; sourceTree = "<group>"; };
 		E0D5D7071344056600A7B1B9 /* ESRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESRenderer.h; sourceTree = "<group>"; };
-		E0D5D7081344056600A7B1B9 /* glu.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = glu.c; sourceTree = "<group>"; };
-		E0D5D7091344056600A7B1B9 /* glu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = glu.h; sourceTree = "<group>"; };
 		E0DA434212A03A3C00210ACE /* FullScreenTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FullScreenTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E0DA434812A03AE100210ACE /* FullScreenTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FullScreenTest.m; path = tests/FullScreenTest.m; sourceTree = "<group>"; };
 		E0DA434A12A03B0C00210ACE /* FullScreenTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FullScreenTest.h; path = tests/FullScreenTest.h; sourceTree = "<group>"; };
@@ -5122,8 +5118,6 @@
 				E0D5D7051344056600A7B1B9 /* ES2Renderer.h */,
 				E0D5D7061344056600A7B1B9 /* ES2Renderer.m */,
 				E0D5D7071344056600A7B1B9 /* ESRenderer.h */,
-				E0D5D7081344056600A7B1B9 /* glu.c */,
-				E0D5D7091344056600A7B1B9 /* glu.h */,
 			);
 			path = iOS;
 			sourceTree = "<group>";
@@ -5242,7 +5236,6 @@
 				E0D5D71C1344056600A7B1B9 /* EAGLView.h in Headers */,
 				E0D5D71E1344056600A7B1B9 /* ES2Renderer.h in Headers */,
 				E0D5D7201344056600A7B1B9 /* ESRenderer.h in Headers */,
-				E0D5D7221344056600A7B1B9 /* glu.h in Headers */,
 				E04C311F1357138100F65F71 /* ccGLState.h in Headers */,
 				E04C31211357138100F65F71 /* CCShaderCache.h in Headers */,
 				E04C31231357138100F65F71 /* GLProgram.h in Headers */,
@@ -8783,7 +8776,6 @@
 				E0D5D71B1344056600A7B1B9 /* CCTouchHandler.m in Sources */,
 				E0D5D71D1344056600A7B1B9 /* EAGLView.m in Sources */,
 				E0D5D71F1344056600A7B1B9 /* ES2Renderer.m in Sources */,
-				E0D5D7211344056600A7B1B9 /* glu.c in Sources */,
 				E04C31201357138100F65F71 /* ccGLState.m in Sources */,
 				E04C31221357138100F65F71 /* CCShaderCache.m in Sources */,
 				E04C31241357138100F65F71 /* GLProgram.m in Sources */,
