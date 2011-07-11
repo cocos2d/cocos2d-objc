@@ -48,8 +48,6 @@
 	// chars per column
 	NSUInteger		itemsPerColumn_;
 	
-	NSUInteger		quadsToDraw_;
-		
 	// width of each char
 	NSUInteger		itemWidth_;
 	// height of each char
@@ -78,9 +76,6 @@
 @property (nonatomic,readwrite) GLubyte opacity;
 /** conforms to CCRGBAProtocol protocol */
 @property (nonatomic,readwrite) ccColor3UB color;
-
-/** how many quads to draw */
-@property (readwrite) NSUInteger quadsToDraw;
 
 /** how many quads to draw */
 @property (readwrite) NSUInteger quadsToDraw;
