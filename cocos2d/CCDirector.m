@@ -386,15 +386,20 @@ static CCDirector *_sharedDirector = nil;
 
 -(void) popScene
 {	
-	NSAssert( runningScene_ != nil, @"A running Scene is needed");
+    [self popSceneWithCleanup:YES];
+}
 
+-(void) popSceneWithCleanup:(BOOL)cleanup
+{	
+	NSAssert( runningScene_ != nil, @"A running Scene is needed");
+    
 	[scenesStack_ removeLastObject];
 	NSUInteger c = [scenesStack_ count];
 	
 	if( c == 0 )
 		[self end];
 	else {
-		sendCleanupToScene_ = YES;
+		sendCleanupToScene_ = cleanup;
 		nextScene_ = [scenesStack_ objectAtIndex:c-1];
 	}
 }
@@ -433,7 +438,7 @@ static CCDirector *_sharedDirector = nil;
 	// Purge all managers
 	[CCAnimationCache purgeSharedAnimationCache];
 	[CCSpriteFrameCache purgeSharedSpriteFrameCache];
-	//[CCScheduler purgeSharedScheduler];
+	[CCScheduler purgeSharedScheduler];
 	[CCActionManager purgeSharedManager];
 	[CCTextureCache purgeSharedTextureCache];
 	
@@ -441,17 +446,17 @@ static CCDirector *_sharedDirector = nil;
 	// OpenGL view
 	
 	// Since the director doesn't attach the openglview to the window
-	// it shouldn't remove it from the window too.
+	// it shouldn't remove it from the window.
 //	[openGLView_ removeFromSuperview];
 
     // Do not release openGLView_ here because CCDirector doesn't autoset
-    // openGLView when it is nil (you should manually set/release it).
+    // openGLView when it is NULL (you should manually set/release it).
     // This makes possble using CCDirector's popScene to remove
     // the currently running scene and clean all the caches before pushing a new scene,
     // which in turn allows conservative memory usage
     // (old scene assets can be completely deallocated before allocating a new scene)
 //	[openGLView_ release];
-//	openGLView_ = nil;	
+//	openGLView_ = NULL;	
 }
 
 -(void) setNextScene
