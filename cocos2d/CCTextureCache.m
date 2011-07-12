@@ -53,9 +53,9 @@ static NSOpenGLContext *auxGLcontext = nil;
 	id			target_;
 	id			data_;
 }
-@property	(readwrite,assign)	SEL			selector;
-@property	(readwrite,retain)	id			target;
-@property	(readwrite,retain)	id			data;
+@property	(atomic,readwrite,assign)	SEL			selector;
+@property	(atomic,readwrite,retain)	id			target;
+@property	(atomic,readwrite,retain)	id			data;
 @end
 
 @implementation CCAsyncObject

@@ -78,7 +78,7 @@
 @property (nonatomic,readwrite) ccColor3B color;
 
 /** how many quads to draw */
-@property (readwrite) NSUInteger quadsToDraw;
+@property (atomic,readwrite) NSUInteger quadsToDraw;
 
 /** creates a CCAtlasNode  with an Atlas file the width and height of each item measured in points and the quantity of items to render*/
 +(id) atlasWithTileFile:(NSString*)tile tileWidth:(NSUInteger)w tileHeight:(NSUInteger)h itemsToRender: (NSUInteger) c;
