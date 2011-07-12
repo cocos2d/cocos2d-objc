@@ -30,6 +30,8 @@
 
 #import "../../CCDirector.h"
 
+//#import <mach/mach_time.h>
+
 /** @typedef ccDeviceOrientation
  Possible device orientations
  */
@@ -259,6 +261,20 @@ typedef enum {
 {
 }
 @end
+
+//// High Resolution Timer needed by CCDirectorDisplayLinkUIKit
+//static mach_timebase_info_data_t sTimebaseInfo;
+//static uint64_t hiResTimerStart=0;
+//static inline void startHiResTimer() {
+//    hiResTimerStart = mach_absolute_time();
+//}
+//
+//static inline uint64_t elapsedHiResTimer() {
+//    if ( sTimebaseInfo.denom == 0 ) {
+//        (void) mach_timebase_info(&sTimebaseInfo);
+//    }
+//    return (mach_absolute_time() - hiResTimerStart) * sTimebaseInfo.numer/sTimebaseInfo.denom;    
+//}
 
 
 /** TimerDirector is a Director that calls the main loop from an NSTimer object
