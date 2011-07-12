@@ -298,6 +298,12 @@ enum {
  */
 -(void) removeFromParentAndCleanup:(BOOL)cleanup;
 
+/** Remove itself from its parent node,also remove all actions and callbacks.
+ If the node orphan, then nothing happens.
+ @since v1.0.0-rsanchez
+ */
+-(void) removeFromParent;
+
 /** Removes a child from the container. It will also cleanup all running actions depending on the cleanup parameter.
  @since v0.7.1
  */

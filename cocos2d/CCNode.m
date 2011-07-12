@@ -392,9 +392,12 @@
 	[self addChild:child z:child.zOrder tag:child.tag];
 }
 
--(void) removeFromParentAndCleanup:(BOOL)cleanup
-{
+-(void) removeFromParentAndCleanup:(BOOL)cleanup {
 	[parent_ removeChild:self cleanup:cleanup];
+}
+
+-(void) removeFromParent {
+	[parent_ removeChild:self cleanup:YES];
 }
 
 /* "remove" logic MUST only be on this method
