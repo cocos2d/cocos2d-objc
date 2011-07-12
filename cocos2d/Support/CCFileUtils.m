@@ -91,7 +91,11 @@ NSString *ccRemoveHDSuffixFromFile( NSString *path )
 
 +(NSString*) getDoubleResolutionImage:(NSString*)path {
     
+#if CC_IS_IPAD_UNIVERSAL_SUPPORTED
     static NSFileManager *localFileManager = nil;
+#elif CC_IS_RETINA_DISPLAY_SUPPORTED
+    static NSFileManager *localFileManager = nil;
+#endif
     
 #if CC_IS_IPAD_UNIVERSAL_SUPPORTED
 
