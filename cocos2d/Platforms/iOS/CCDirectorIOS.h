@@ -255,7 +255,7 @@ typedef enum {
  *    scrolling or zooming (UITrackingRunLoopMode) or when [setContentOffset:offset animated:YES] is called;
  *    otherwise OpenGL over-rendering breaks UIScrollView behaviour).
  *
- * @since v1.0.0
+ * @since v1.0.0-rsanchez
  */
 @interface CCDirectorDisplayLinkUIKit : CCDirectorDisplayLink
 {

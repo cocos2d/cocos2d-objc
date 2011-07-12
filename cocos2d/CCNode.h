@@ -274,7 +274,7 @@ enum {
 
 /** Adds a child to the container with a tag.
  If the child is added to a 'running' node, then 'onEnter' and 'onEnterTransitionDidFinish' will be called immediately.
- @since v1.0.0
+ @since v1.0.0-rsanchez
  */
 -(void) addChild: (CCNode*)node tag:(NSInteger)tag;
 

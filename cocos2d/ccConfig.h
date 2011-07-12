@@ -213,7 +213,7 @@
  
  To enable set it to 1. Use 0 to disable it. Enabled by default.
  
- @since v1.0.1-rsanchez
+ @since v1.0.0-rsanchez
  */
 #define CC_IPAD_UNIVERSAL_SUPPORT 1
 
@@ -225,7 +225,7 @@
  
  Platforms: Only used on universal games that are expected to run on a iPad.
  
- @since v1.0.1-rsanchez
+ @since v1.0.0-rsanchez
  */ 
 #define CC_IPAD_UNIVERSAL_FILENAME_SUFFIX @"-ip"
 
