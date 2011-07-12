@@ -390,3 +390,26 @@ typedef struct _ccBezierConfig {
  */
 -(id) initWithDuration:(ccTime)duration animation:(CCAnimation*)animation restoreOriginalFrame:(BOOL)b;
 @end
+
+/** Animates a sprite given the name of an Animation
+   and the starting frame number 
+ @since v1.0.0-rsanchez
+*/
+@interface CCAnimateAt : CCAnimate
+{
+    NSInteger startIndex_;
+}
+
++(id) actionWithRandomStartAnimation:(CCAnimation*)a;
+-(id) initWithRandomStartAnimation:(CCAnimation*)a;
++(id) actionWithAnimation:(CCAnimation*)a start:(NSInteger)start;
+-(id) initWithAnimation:(CCAnimation*)a start:(NSInteger)start;
+/** creates an action with a duration, animation and start.
+ The 'delay' parameter of the animation will be overrided by the duration parameter.
+ */
++(id) actionWithDuration:(ccTime)duration animation:(CCAnimation*)animation start:(NSInteger)start;
+/** initializes an action with a duration, animation and start.
+ The 'delay' parameter of the animation will be overrided by the duration parameter.
+ */
+-(id) initWithDuration:(ccTime)duration animation:(CCAnimation*)animation start:(NSInteger)start;;
+@end
