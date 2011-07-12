@@ -340,8 +340,9 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 	[runningThread_ start];	
 #endif
 	
-	gettimeofday( &lastUpdate_, NULL);
-	
+	// gettimeofday( &lastUpdate_, NULL);
+    _lastTime = CACurrentMediaTime();
+
 	// Create a display link capable of being used with all active displays
 	CVDisplayLinkCreateWithActiveCGDisplays(&displayLink);
 	
