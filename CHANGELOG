@@ -16,6 +16,7 @@ version 1.0.0 - 13-July-2011
 . [FIX] Node: Node#Draw calls super#draw
 . [FIX] Tests: Fixed memory leak in ParticleTest
 . [FIX] Tests: Fixed memory leak in cocosLiveTest
+. [FIX] Tiles: Worked around memory leak in NSXMLParser (issue #1197)
 . [FIX] TouchDispatcher: added setPriority (issue #757)
 . [FIX] Xcode: cocos2d compiles OK with Xcode 4.2 + llvm 3.0
 . [3RD] Chipmunk: updated to v5.3.5
