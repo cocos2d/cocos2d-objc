@@ -415,7 +415,10 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 	if( ! isPaused_ ) {
 		[[CCScheduler sharedScheduler] tick: dt];	
 	}
-	
+    if ([CCScheduler sharedScheduler].willPurgeSharedScheduler) {
+        [CCScheduler releaseSharedScheduler];
+    }
+
     // Don't clear DEPTH BUFFER if we are not using 3D
 	// glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glClear(GL_COLOR_BUFFER_BIT );
