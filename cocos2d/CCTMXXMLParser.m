@@ -164,8 +164,9 @@
 
 - (void) parseXMLFile:(NSString *)xmlFilename
 {
-	NSURL *url = [NSURL fileURLWithPath:[CCFileUtils fullPathFromRelativePath:xmlFilename] ];
-	NSXMLParser *parser = [[NSXMLParser alloc] initWithContentsOfURL:url];
+  NSURL *url = [NSURL fileURLWithPath:[CCFileUtils fullPathFromRelativePath:xmlFilename] ];
+  NSData *data = [NSData dataWithContentsOfURL:url];
+  NSXMLParser *parser = [[NSXMLParser alloc] initWithData:data];
 
 	// we'll do the parsing
 	[parser setDelegate:self];
