@@ -505,17 +505,16 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 	{
 
-		NSAttributedString *stringWithAttributes =
-		[[[NSAttributedString alloc] initWithString:string
-										 attributes:[NSDictionary dictionaryWithObject:[[NSFontManager sharedFontManager]
-																						fontWithFamily:name
-																						traits:NSUnboldFontMask | NSUnitalicFontMask
-																						weight:0
-																						size:size]
-																				forKey:NSFontAttributeName]
-		  ]
-		 autorelease];
-	
+		NSFont *font = [[NSFontManager sharedFontManager]
+									  fontWithFamily:name
+									  traits:NSUnboldFontMask | NSUnitalicFontMask
+									  weight:0
+									  size:size];
+
+		NSDictionary *dict = [NSDictionary dictionaryWithObject:font forKey:NSFontAttributeName];	
+
+		NSAttributedString *stringWithAttributes = [[[NSAttributedString alloc] initWithString:string attributes:dict] autorelease];
+
 		dim = NSSizeToCGSize( [stringWithAttributes size] );
 				
 		return [self initWithString:string dimensions:dim alignment:CCTextAlignmentCenter attributedString:stringWithAttributes];
@@ -755,9 +754,9 @@ static BOOL PVRHaveAlphaPremultiplied_ = NO;
 	return defaultAlphaPixelFormat_;
 }
 
--(NSInteger) bitsPerPixelForFormat
+-(NSUInteger) bitsPerPixelForFormat
 {
-	NSInteger ret=-1;
+	NSUInteger ret=0;
 
 	switch (format_) {
 		case kCCTexture2DPixelFormat_RGBA8888:

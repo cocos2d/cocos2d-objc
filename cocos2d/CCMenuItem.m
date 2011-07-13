@@ -30,8 +30,9 @@
 #import "CCActionInterval.h"
 #import "CCSprite.h"
 #import "Support/CGPointExtension.h"
+#import "CCBlockSupport.h"
 
-static int _fontSize = kItemSize;
+	static NSUInteger _fontSize = kCCItemSize;
 static NSString *_fontName = @"Marker Felt";
 static BOOL _fontNameRelease = NO;
 
@@ -322,12 +323,12 @@ const uint32_t	kZoomActionTag = 0xc0c05002;
 
 @implementation CCMenuItemFont
 
-+(void) setFontSize: (int) s
++(void) setFontSize: (NSUInteger) s
 {
 	_fontSize = s;
 }
 
-+(int) fontSize
++(NSUInteger) fontSize
 {
 	return _fontSize;
 }
@@ -359,11 +360,11 @@ const uint32_t	kZoomActionTag = 0xc0c05002;
 -(id) initFromString: (NSString*) value target:(id) rec selector:(SEL) cb
 {
 	NSAssert( [value length] != 0, @"Value length must be greater than 0");
-
-	[self setFontName:_fontName];
-	[self setFontSize:_fontSize];
-
-	CCLabelTTF *label = [CCLabelTTF labelWithString:value fontName:_fontName fontSize:_fontSize];
+	
+	fontName_ = [_fontName copy];
+	fontSize_ = _fontSize;
+	
+	CCLabelTTF *label = [CCLabelTTF labelWithString:value fontName:fontName_ fontSize:fontSize_];
 
 	if((self=[super initWithLabel:label target:rec selector:cb]) ) {
 		// do something ?
@@ -383,23 +384,23 @@ const uint32_t	kZoomActionTag = 0xc0c05002;
 	self.label = label;
 }
 
--(void) setFontSize: (int) s
+-(void) setFontSize: (NSUInteger) size
 {
-	fontSize_ = s;
+	fontSize_ = size;
 	[self recreateLabel];
 }
 
--(int) fontSize
+-(NSUInteger) fontSize
 {
 	return fontSize_;
 }
 
--(void) setFontName: (NSString*) n
+-(void) setFontName: (NSString*) fontName
 {
-	if (fontName_) {
+	if (fontName_)
 		[fontName_ release];
-	}
-	fontName_ = [n copy];
+
+	fontName_ = [fontName copy];
 	[self recreateLabel];
 }
 

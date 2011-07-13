@@ -319,7 +319,7 @@ typedef struct _ccTexParams {
 /** returns the bits-per-pixel of the in-memory OpenGL texture
  @since v1.0
  */
--(NSInteger) bitsPerPixelForFormat;
+-(NSUInteger) bitsPerPixelForFormat;
 @end
 
 
