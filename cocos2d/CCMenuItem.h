@@ -31,7 +31,7 @@
 
 @class CCSprite;
 
-#define kItemSize 32
+#define kCCItemSize 32
 
 #pragma mark -
 #pragma mark CCMenuItem
@@ -179,14 +179,14 @@
  */
 @interface CCMenuItemFont : CCMenuItemLabel
 {
-	int fontSize_;
+	NSUInteger fontSize_;
 	NSString *fontName_;
 }
 /** set default font size */
-+(void) setFontSize: (int) s;
++(void) setFontSize: (NSUInteger) s;
 
 /** get default font size */
-+(int) fontSize;
++(NSUInteger) fontSize;
 
 /** set default font name */
 +(void) setFontName: (NSString*) n;
@@ -204,10 +204,10 @@
 -(id) initFromString: (NSString*) value target:(id) r selector:(SEL) s;
 
 /** set font size */
--(void) setFontSize: (int) s;
+-(void) setFontSize: (NSUInteger) s;
 
 /** get font size */
--(int) fontSize;
+-(NSUInteger) fontSize;
 
 /** set the font name */
 -(void) setFontName: (NSString*) n;

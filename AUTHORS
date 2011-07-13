@@ -411,6 +411,8 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Author of bug #915 test case
 	* palter AT clozure.com
 		Texture fails gracefully if PVR image can't be loaded (patch)
+	* Pascal Bourque (http://www.polkapps.com/)
+		Worked around memory leak in NSXMLParser used by TMXMaps
 	* Patrick Wolowicz:
 		mkatlas: added artifact removal by copying borders to margins
 		FontLabel: supports parenthese and apostrophes when word wrapping.
