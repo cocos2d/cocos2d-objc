@@ -246,14 +246,13 @@ static CCActionManager *sharedManager_ = nil;
 		for( NSUInteger i = 0; i < limit; i++) {
 			CCAction *a = element->actions->arr[i];
 			
-			if( a.tag == aTag && [a originalTarget]==target)
-				return [self removeActionAtIndex:i hashElement:element];
+			if( a.tag == aTag && [a originalTarget]==target) {
+				[self removeActionAtIndex:i hashElement:element];
+				break;
+			}
 		}
-//		CCLOG(@"cocos2d: removeActionByTag: Action not found!");
+
 	}
-//	else {
-//		CCLOG(@"cocos2d: removeActionByTag: Target not found!");
-//	}
 }
 
 #pragma mark ActionManager - get

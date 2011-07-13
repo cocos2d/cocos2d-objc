@@ -2,7 +2,8 @@
 // RenderTexture Demo
 // a cocos2d example
 //
-// Example by Jason Booth (slipster216)
+// Test #1 by Jason Booth (slipster216)
+// Test #3 by David Deaco (ddeaco)
 
 // cocos import
 #import "RenderTextureTest.h"
@@ -11,7 +12,12 @@ static int sceneIdx=-1;
 static NSString *tests[] = {	
 	@"RenderTextureSave",
 	@"RenderTextureIssue937",
+	@"RenderTextureZbuffer",
 };
+
+Class nextAction(void);
+Class backAction(void);
+Class restartAction(void);
 
 Class nextAction()
 {
@@ -364,6 +370,154 @@ Class restartAction()
 @end
 
 #pragma mark -
+#pragma mark RenderTextureZbuffer
+
+@implementation RenderTextureZbuffer
+
+-(id) init
+{
+	if( (self=[super init] )) {
+		self.isTouchEnabled = YES;
+		CGSize size = [[CCDirector sharedDirector] winSize];
+		CCLabelTTF *label = [CCLabelTTF labelWithString:@"vertexZ = 50" fontName:@"Marker Felt" fontSize:64];
+		label.position =  ccp( size.width /2 , size.height*0.25f );
+		[self addChild: label];
+		
+		CCLabelTTF *label2 = [CCLabelTTF labelWithString:@"vertexZ = 0" fontName:@"Marker Felt" fontSize:64];
+		label2.position =  ccp( size.width /2 , size.height*0.5f );
+		[self addChild: label2];
+		
+		CCLabelTTF *label3 = [CCLabelTTF labelWithString:@"vertexZ = -50" fontName:@"Marker Felt" fontSize:64];
+		label3.position =  ccp( size.width /2 , size.height*0.75f );
+		[self addChild: label3];
+		
+		label.vertexZ = 50;
+		label2.vertexZ = 0;
+		label3.vertexZ = -50;
+		
+		
+		[[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"bugs/circle.plist"];
+		mgr = [CCSpriteBatchNode batchNodeWithFile:@"bugs/circle.png" capacity:9];
+		[self addChild:mgr];
+		sp1 = [CCSprite spriteWithSpriteFrameName:@"circle.png"];
+		sp2 = [CCSprite spriteWithSpriteFrameName:@"circle.png"];
+		sp3 = [CCSprite spriteWithSpriteFrameName:@"circle.png"];
+		sp4 = [CCSprite spriteWithSpriteFrameName:@"circle.png"];
+		sp5 = [CCSprite spriteWithSpriteFrameName:@"circle.png"];
+		sp6 = [CCSprite spriteWithSpriteFrameName:@"circle.png"];
+		sp7 = [CCSprite spriteWithSpriteFrameName:@"circle.png"];
+		sp8 = [CCSprite spriteWithSpriteFrameName:@"circle.png"];
+		sp9 = [CCSprite spriteWithSpriteFrameName:@"circle.png"];
+		
+		[mgr addChild:sp1 z:9];
+		[mgr addChild:sp2 z:8];
+		[mgr addChild:sp3 z:7];
+		[mgr addChild:sp4 z:6];
+		[mgr addChild:sp5 z:5];
+		[mgr addChild:sp6 z:4];
+		[mgr addChild:sp7 z:3];
+		[mgr addChild:sp8 z:2];
+		[mgr addChild:sp9 z:1];
+		
+		sp1.vertexZ = 400;
+		sp2.vertexZ = 300;
+		sp3.vertexZ = 200;
+		sp4.vertexZ = 100;
+		sp5.vertexZ = 0;
+		sp6.vertexZ = -100;
+		sp7.vertexZ = -200;
+		sp8.vertexZ = -300;
+		sp9.vertexZ = -400;
+		
+		sp9.scale = 2;
+		sp9.color = ccYELLOW;
+	}
+	return self;
+}
+-(NSString*) title
+{
+	return @"Testing Z Buffer in Render Texture";
+}
+
+-(NSString*) subtitle
+{
+	return @"Touch screen. It should be green";
+}
+
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+
+- (void)ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+	for( UITouch *touch in touches ) {
+		CGPoint location = [touch locationInView: [touch view]];
+		
+		location = [[CCDirector sharedDirector] convertToGL: location];
+		sp1.position = location;
+		sp2.position = location;
+		sp3.position = location;
+		sp4.position = location;
+		sp5.position = location;
+		sp6.position = location;
+		sp7.position = location;
+		sp8.position = location;
+		sp9.position = location;
+	}
+}
+- (void)ccTouchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
+{
+	for( UITouch *touch in touches ) {
+		CGPoint location = [touch locationInView: [touch view]];
+		
+		location = [[CCDirector sharedDirector] convertToGL: location];
+		sp1.position = location;
+		sp2.position = location;
+		sp3.position = location;
+		sp4.position = location;
+		sp5.position = location;
+		sp6.position = location;
+		sp7.position = location;
+		sp8.position = location;
+		sp9.position = location;
+	}
+}
+- (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+{
+	[self renderScreenShot];
+}
+#endif // __IPHONE_OS_VERSION_MAX_ALLOWED
+
+-(void)renderScreenShot
+{
+	//NSLog(@"RENDER ");
+	
+	CCRenderTexture *texture = [CCRenderTexture renderTextureWithWidth:512 height:512];
+	texture.anchorPoint = ccp(0,0);
+	[texture begin];
+	
+	[self visit];
+	
+	[texture end];
+	
+	CCSprite *sprite = [CCSprite spriteWithTexture:[[texture sprite] texture]];
+	
+	sprite.position = ccp(256,256);
+	sprite.opacity = 182;
+	sprite.flipY = 1;
+	[self addChild:sprite z:999999];
+	sprite.color = ccGREEN;
+	
+	[sprite runAction:[CCSequence actions:[CCFadeTo actionWithDuration:2 opacity:0],
+					   [CCHide action],
+					   nil
+					   ]
+	 ];
+	
+}
+@end
+
+
+
+#pragma mark -
 #pragma mark AppDelegate (iOS)
 
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
@@ -393,8 +547,8 @@ Class restartAction()
 	
 	// Create an EAGLView with a RGB8 color buffer, and a depth buffer of 24-bits
 	EAGLView *glView = [EAGLView viewWithFrame:[window bounds]
-								   pixelFormat:kEAGLColorFormatRGBA8
-								   depthFormat:GL_DEPTH_COMPONENT24_OES];
+								   pixelFormat:kEAGLColorFormatRGB565
+								   depthFormat:0];
 	
 	// attach the openglView to the director
 	[director setOpenGLView:glView];

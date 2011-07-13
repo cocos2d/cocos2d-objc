@@ -29,6 +29,9 @@
 }
 -(NSString*) title;
 -(NSString*) subtitle;
+-(void) restartCallback: (id) sender;
+-(void) nextCallback: (id) sender;
+-(void) backCallback: (id) sender;
 @end
 
 

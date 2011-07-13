@@ -72,6 +72,7 @@ getImpulse(cpConstraint *constraint)
 	return 0.0f;
 }
 
+const cpConstraintClass * cpDampedRotarySpringGetClass();
 static const cpConstraintClass klass = {
 	(cpConstraintPreStepFunction)preStep,
 	(cpConstraintApplyImpulseFunction)applyImpulse,
@@ -82,7 +83,7 @@ CP_DefineClassGetter(cpDampedRotarySpring)
 cpDampedRotarySpring *
 cpDampedRotarySpringAlloc(void)
 {
-	return (cpDampedRotarySpring *)cpmalloc(sizeof(cpDampedRotarySpring));
+	return (cpDampedRotarySpring *)cpcalloc(1, sizeof(cpDampedRotarySpring));
 }
 
 cpDampedRotarySpring *

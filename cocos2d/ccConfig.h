@@ -42,7 +42,7 @@
  The "correct" way to prevent artifacts is by using the spritesheet-artifact-fixer.py or a similar tool.
  
  Affected nodes:
-	- CCSprite / CCSpriteBatchNode and subclasses: CCBitmapFontAtlas, CCTMXTiledMap
+	- CCSprite / CCSpriteBatchNode and subclasses: CCLabelBMFont, CCTMXTiledMap
 	- CCLabelAtlas
 	- CCQuadParticleSystem
 	- CCTileMap
@@ -51,7 +51,9 @@
  
  @since v0.99.5
  */
+#ifndef CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
 #define CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL 0
+#endif
  
 
 /** @def CC_FONT_LABEL_SUPPORT
@@ -63,7 +65,13 @@
 
  Only valid for cocos2d-ios. Not supported on cocos2d-mac
  */
+#ifndef CC_FONT_LABEL_SUPPORT
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 #define CC_FONT_LABEL_SUPPORT	1
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+#define CC_FONT_LABEL_SUPPORT	0
+#endif
+#endif
 
 /** @def CC_DIRECTOR_FAST_FPS
  If enabled, then the FPS will be drawn using CCLabelAtlas (fast rendering).
@@ -72,7 +80,9 @@
  
  To enable set it to a value different than 0. Enabled by default.
  */
+#ifndef CC_DIRECTOR_FAST_FPS
 #define CC_DIRECTOR_FAST_FPS	1
+#endif
 
 /** @def CC_DIRECTOR_FPS_INTERVAL
  Senconds between FPS updates.
@@ -81,7 +91,9 @@
  
  Default value: 0.1f
  */
+#ifndef CC_DIRECTOR_FPS_INTERVAL
 #define CC_DIRECTOR_FPS_INTERVAL (0.1f)
+#endif
 
 /** @def CC_DIRECTOR_DISPATCH_FAST_EVENTS
  If enabled, and only when it is used with CCFastDirector, the main loop will wait 0.04 seconds to
@@ -93,7 +105,9 @@
  
  @warning This feature is experimental
  */
+#ifndef CC_DIRECTOR_DISPATCH_FAST_EVENTS
 #define CC_DIRECTOR_DISPATCH_FAST_EVENTS 0
+#endif
 
 /** @def CC_DIRECTOR_MAC_USE_DISPLAY_LINK_THREAD
  If enabled, cocos2d-mac will run on the Display Link thread. If disabled cocos2d-mac will run in its own thread.
@@ -106,7 +120,9 @@
  Only valid for cocos2d-mac. Not supported on cocos2d-ios.
 
  */
+#ifndef CC_DIRECTOR_MAC_USE_DISPLAY_LINK_THREAD
 #define CC_DIRECTOR_MAC_USE_DISPLAY_LINK_THREAD 1
+#endif
 
 /** @def CC_COCOSNODE_RENDER_SUBPIXEL
  If enabled, the CCNode objects (CCSprite, CCLabel,etc) will be able to render in subpixels.
@@ -114,7 +130,9 @@
  
  To enable set it to 1. Enabled by default.
  */
+#ifndef CC_COCOSNODE_RENDER_SUBPIXEL
 #define CC_COCOSNODE_RENDER_SUBPIXEL 1
+#endif
 
 /** @def CC_SPRITEBATCHNODE_RENDER_SUBPIXEL
  If enabled, the CCSprite objects rendered with CCSpriteBatchNode will be able to render in subpixels.
@@ -122,10 +140,10 @@
  
  To enable set it to 1. Enabled by default.
  */
+#ifndef CC_SPRITEBATCHNODE_RENDER_SUBPIXEL
 #define CC_SPRITEBATCHNODE_RENDER_SUBPIXEL	1
+#endif
 
-
-#if defined(__ARM_NEON__) || TARGET_IPHONE_SIMULATOR || defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 /** @def CC_USES_VBO
  If enabled, batch nodes (texture atlas and particle system) will use VBO instead of vertex list (VBO is recommended by Apple)
  
@@ -135,9 +153,12 @@
  
  @since v0.99.5
  */
+#ifndef CC_USES_VBO
+#if defined(__ARM_NEON__) || TARGET_IPHONE_SIMULATOR || defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 #define CC_USES_VBO 1
 #else
 #define CC_USES_VBO 0
+#endif
 #endif
 
 /** @def CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
@@ -147,12 +168,14 @@
  Using the translate/rotate/scale requires 5 GL calls.
  But computing the Affine matrix is relative expensive.
  But according to performance tests, Affine matrix performs better.
- This parameter doesn't affect SpriteSheet nodes.
+ This parameter doesn't affect CCSpriteBatchNode nodes.
  
  To enable set it to a value different than 0. Enabled by default.
 
  */
+#ifndef CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
 #define CC_NODE_TRANSFORM_USING_AFFINE_MATRIX 1
+#endif
 
 /** @def CC_OPTIMIZE_BLEND_FUNC_FOR_PREMULTIPLIED_ALPHA
  If most of your imamges have pre-multiplied alpha, set it to 1 (if you are going to use .PNG/.JPG file images).
@@ -162,7 +185,9 @@
 
  @since v0.99.5
  */
+#ifndef CC_OPTIMIZE_BLEND_FUNC_FOR_PREMULTIPLIED_ALPHA
 #define CC_OPTIMIZE_BLEND_FUNC_FOR_PREMULTIPLIED_ALPHA 1
+#endif
 
 /** @def CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP
  Use GL_TRIANGLE_STRIP instead of GL_TRIANGLES when rendering the texture atlas.
@@ -171,8 +196,9 @@
  To enable set it to a value different than 0. Disabled by default.
 
  */
+#ifndef CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP
 #define CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP 0
-
+#endif
 
 /** @def CC_TEXTURE_NPOT_SUPPORT
  If enabled, NPOT textures will be used where available. Only 3rd gen (and newer) devices support NPOT textures.
@@ -182,9 +208,16 @@
  
  To enable set it to a value different than 0. Disabled by default.
 
+ This value governs only the PNG, GIF, BMP, images.
+ This value DOES NOT govern the PVR (PVR.GZ, PVR.CCZ) files. If NPOT PVR is loaded, then it will create an NPOT texture ignoring this value.
+ 
+ @deprecated This value will be removed in 1.1 and NPOT textures will be loaded by default if the device supports it.
+
  @since v0.99.2
  */
+#ifndef CC_TEXTURE_NPOT_SUPPORT
 #define CC_TEXTURE_NPOT_SUPPORT 0
+#endif
 
 /** @def CC_RETINA_DISPLAY_SUPPORT
  If enabled, cocos2d supports retina display. 
@@ -194,7 +227,9 @@
  
  @since v0.99.5
  */
+#ifndef CC_RETINA_DISPLAY_SUPPORT
 #define CC_RETINA_DISPLAY_SUPPORT 1
+#endif
 
 /** @def CC_RETINA_DISPLAY_FILENAME_SUFFIX
  It's the suffix that will be appended to the files in order to load "retina display" images.
@@ -206,7 +241,9 @@
  
  @since v0.99.5
  */ 
+#ifndef CC_RETINA_DISPLAY_FILENAME_SUFFIX
 #define CC_RETINA_DISPLAY_FILENAME_SUFFIX @"-hd"
+#endif
 
 /** @def CC_USE_LA88_LABELS_ON_NEON_ARCH
  If enabled, it will use LA88 (16-bit textures) on Neon devices for CCLabelTTF objects.
@@ -219,15 +256,22 @@
 
  @since v0.99.5
  */
+#ifndef CC_USE_LA88_LABELS_ON_NEON_ARCH
 #define CC_USE_LA88_LABELS_ON_NEON_ARCH 0
+#endif
 
 /** @def CC_SPRITE_DEBUG_DRAW
  If enabled, all subclasses of CCSprite will draw a bounding box
  Useful for debugging purposes only. It is recommened to leave it disabled.
  
- To enable set it to a value different than 0. Disabled by default.
+ To enable set it to a value different than 0. Disabled by default:
+ 0 -- disabled
+ 1 -- draw bounding box
+ 2 -- draw texture box
  */
+#ifndef CC_SPRITE_DEBUG_DRAW
 #define CC_SPRITE_DEBUG_DRAW 0
+#endif
 
 /** @def CC_SPRITEBATCHNODE_DEBUG_DRAW
  If enabled, all subclasses of CCSprite that are rendered using an CCSpriteBatchNode draw a bounding box.
@@ -235,7 +279,9 @@
  
  To enable set it to a value different than 0. Disabled by default.
  */
+#ifndef CC_SPRITEBATCHNODE_DEBUG_DRAW
 #define CC_SPRITEBATCHNODE_DEBUG_DRAW 0
+#endif
 
 /** @def CC_LABELBMFONT_DEBUG_DRAW
  If enabled, all subclasses of CCLabelBMFont will draw a bounding box
@@ -243,7 +289,9 @@
  
  To enable set it to a value different than 0. Disabled by default.
  */
+#ifndef CC_LABELBMFONT_DEBUG_DRAW
 #define CC_LABELBMFONT_DEBUG_DRAW 0
+#endif
 
 /** @def CC_LABELBMFONT_DEBUG_DRAW
  If enabled, all subclasses of CCLabeltAtlas will draw a bounding box
@@ -251,7 +299,9 @@
  
  To enable set it to a value different than 0. Disabled by default.
  */
+#ifndef CC_LABELATLAS_DEBUG_DRAW
 #define CC_LABELATLAS_DEBUG_DRAW 0
+#endif
 
 /** @def CC_ENABLE_PROFILERS
  If enabled, will activate various profilers withing cocos2d. This statistical data will be output to the console
@@ -260,7 +310,9 @@
  
  To enable set it to a value different than 0. Disabled by default.
  */
+#ifndef CC_ENABLE_PROFILERS
 #define CC_ENABLE_PROFILERS 0
+#endif
 
 //
 // DON'T edit this macro.

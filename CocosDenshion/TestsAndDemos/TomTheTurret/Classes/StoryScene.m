@@ -32,7 +32,7 @@
 @synthesize label = _label;
 @synthesize curStoryIndex = _curStoryIndex;
 @synthesize tapToCont = _tapToCont;
-@synthesize newGame = _newGame;
+@synthesize spriteNewGame = _spriteNewGame;
 
 - (id) init {
     
@@ -67,10 +67,10 @@
         
         // Add "new game" sprite...
         static int NEWGAME_BOTTOM_MARGIN = 30;
-        self.newGame = [CCSprite spriteWithSpriteFrameName:@"Turret_newgame.png"];
-        _newGame.position = ccp(winSize.width / 2, _tapToCont.contentSize.height/2 + NEWGAME_BOTTOM_MARGIN);
-        _newGame.visible = NO;
-        [_batchNode addChild:_newGame];
+        self.spriteNewGame = [CCSprite spriteWithSpriteFrameName:@"Turret_newgame.png"];
+        _spriteNewGame.position = ccp(winSize.width / 2, _tapToCont.contentSize.height/2 + NEWGAME_BOTTOM_MARGIN);
+        _spriteNewGame.visible = NO;
+        [_batchNode addChild:_spriteNewGame];
                         
     }
     
@@ -85,10 +85,10 @@
     [_label setString:curStoryString];
     
     if (curLevel.isGameOver && _curStoryIndex == curLevel.storyStrings.count - 1) {
-        _newGame.visible = YES;
+        _spriteNewGame.visible = YES;
         _tapToCont.visible = NO;
     } else {
-        _newGame.visible = NO;
+        _spriteNewGame.visible = NO;
         _tapToCont.visible = YES;
     }
     

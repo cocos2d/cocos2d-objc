@@ -8,20 +8,6 @@
 	<string>${PRODUCT_NAME}</string>
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
-	<key>CFBundleIdentifier</key>
-	<string>com.sapusmedia.${PRODUCT_NAME:identifier}</string>
-	<key>CFBundleInfoDictionaryVersion</key>
-	<string>6.0</string>
-	<key>CFBundlePackageType</key>
-	<string>APPL</string>
-	<key>CFBundleVersion</key>
-	<string>1.4</string>
-	<key>LSRequiresIPhoneOS</key>
-	<true/>
-	<key>UIStatusBarHidden</key>
-	<false/>
-	<key>NSMainNibFile</key>
-	<string>cocoslive</string>
 	<key>CFBundleIconFiles</key>
 	<array>
 		<string>Icon.png</string>
@@ -31,5 +17,19 @@
 		<string>Icon-Small.png</string>
 		<string>Icon-Small@2x.png</string>
 	</array>
+	<key>CFBundleIdentifier</key>
+	<string>com.sapusmedia.${PRODUCT_NAME:identifier}</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleVersion</key>
+	<string>1.0</string>
+	<key>LSRequiresIPhoneOS</key>
+	<true/>
+	<key>NSMainNibFile</key>
+	<string>cocoslive</string>
+	<key>UIStatusBarHidden</key>
+	<false/>
 </dict>
 </plist>

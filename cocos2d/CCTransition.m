@@ -46,9 +46,8 @@
 #import "Platforms/Mac/CCEventDispatcher.h"
 #endif
 
-enum {
-	kSceneFade = 0xFADEFADE,
-};
+const uint32_t kSceneFade = 0xFADEFADE;
+
 
 @interface CCTransitionScene (Private)
 -(void) sceneOrder;
@@ -94,6 +93,8 @@ enum {
 
 -(void) draw
 {
+	[super draw];
+
 	if( inSceneOnTop_ ) {
 		[outScene_ visit];
 		[inScene_ visit];

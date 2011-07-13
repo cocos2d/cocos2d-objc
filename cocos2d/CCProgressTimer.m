@@ -459,6 +459,8 @@ const char kProgressTextureCoords = 0x1e;
 
 -(void)draw
 {
+	[super draw];
+
 	if(!vertexData_)return;
 	if(!sprite_)return;
 	ccBlendFunc blendFunc = sprite_.blendFunc;

@@ -18,13 +18,14 @@ enum {
 
 static int sceneIdx=-1;
 static NSString *transitions[] = {
-	
+
 	@"TextureAlias",
 	@"TextureMipMap",
 	@"TexturePVRMipMap",
 	@"TexturePVRMipMap2",
 	@"TexturePVRNonSquare",
-	@"TexturePVRNPOT",
+	@"TexturePVRNPOT4444",
+	@"TexturePVRNPOT8888",
 	@"TexturePVR2BPP",
 	@"TexturePVRRaw",
 	@"TexturePVR",
@@ -59,6 +60,10 @@ static NSString *transitions[] = {
 };
 
 #pragma mark Callbacks
+
+Class nextAction(void);
+Class backAction(void);
+Class restartAction(void);
 
 Class nextAction()
 {
@@ -900,9 +905,9 @@ Class restartAction()
 @end
 
 #pragma mark -
-#pragma mark TexturePVR NPOT
+#pragma mark TexturePVR NPOT4444
 
-@implementation TexturePVRNPOT
+@implementation TexturePVRNPOT4444
 -(void) onEnter
 {
 	[super onEnter];
@@ -918,12 +923,40 @@ Class restartAction()
 
 -(NSString *) title
 {
-	return @"PVR + NPOT texture";
+	return @"PVR RGBA4 + NPOT texture";
 }
 
 -(NSString*) subtitle
 {
-	return @"Loading a 81x121 texture. Not supported yet";
+	return @"Loading a 81x121 RGBA4444 texture.";
+}
+@end
+
+#pragma mark -
+#pragma mark TexturePVR NPOT8888
+
+@implementation TexturePVRNPOT8888
+-(void) onEnter
+{
+	[super onEnter];
+	CGSize s = [[CCDirector sharedDirector] winSize];
+	
+	CCSprite *img = [CCSprite spriteWithFile:@"grossini_pvr_rgba8888.pvr"];
+	if( img ) {
+		img.position = ccp( s.width/2.0f, s.height/2.0f);
+		[self addChild:img];
+	}
+	[[CCTextureCache sharedTextureCache] dumpCachedTextureInfo];
+}
+
+-(NSString *) title
+{
+	return @"PVR RGBA8 + NPOT texture";
+}
+
+-(NSString*) subtitle
+{
+	return @"Loading a 81x121 RGBA8888 texture.";
 }
 @end
 

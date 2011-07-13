@@ -303,7 +303,7 @@ enum {
 #pragma mark Menu - Alignment
 -(void) alignItemsVertically
 {
-	return [self alignItemsVerticallyWithPadding:kDefaultPadding];
+	[self alignItemsVerticallyWithPadding:kDefaultPadding];
 }
 -(void) alignItemsVerticallyWithPadding:(float)padding
 {
@@ -324,7 +324,7 @@ enum {
 
 -(void) alignItemsHorizontally
 {
-	return [self alignItemsHorizontallyWithPadding:kDefaultPadding];
+	[self alignItemsHorizontallyWithPadding:kDefaultPadding];
 }
 
 -(void) alignItemsHorizontallyWithPadding:(float)padding
@@ -401,7 +401,7 @@ enum {
 		[item setPosition:ccp(x - winSize.width / 2,
 							  y - itemSize.height / 2)];
             
-		x += w + 10;
+		x += w;
 		++columnsOccupied;
 		
 		if(columnsOccupied >= rowColumns) {
