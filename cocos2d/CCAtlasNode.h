@@ -66,7 +66,7 @@
 	BOOL opacityModifyRGB_;
 	
 	// color uniform
-	GLuint	uniformColor_;
+	GLint	uniformColor_;
 }
 
 /** conforms to CCTextureProtocol protocol */
@@ -81,7 +81,7 @@
 @property (nonatomic,readwrite) ccColor3UB color;
 
 /** how many quads to draw */
-@property (readwrite) NSUInteger quadsToDraw;
+@property (nonatomic,readwrite) NSUInteger quadsToDraw;
 
 /** creates a CCAtlasNode  with an Atlas file the width and height of each item measured in points and the quantity of items to render*/
 +(id) atlasWithTileFile:(NSString*)tile tileWidth:(NSUInteger)w tileHeight:(NSUInteger)h itemsToRender: (NSUInteger) c;

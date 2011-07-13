@@ -47,7 +47,7 @@
 #import "Platforms/Mac/CCEventDispatcher.h"
 #endif
 
-const uint32_t kSceneFade = 0xFADEFADE;
+const NSInteger kSceneFade = 0xFADEFADE;
 
 
 @interface CCTransitionScene (Private)
