@@ -166,6 +166,8 @@ and when to execute the Scenes.
  @since v0.8.2
  */
 @property (nonatomic,readwrite) ccDirectorProjection projection;
+/** How many frames were called since the director started */
+@property (readonly) NSUInteger	frames;
 
 /** Whether or not the replaced scene will receive the cleanup message.
  If the new scene is pushed, then the old scene won't receive the "cleanup" message.
