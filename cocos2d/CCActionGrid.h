@@ -95,9 +95,9 @@
 @property (nonatomic,readwrite) float rate;
 
 /** creates the action with an inner action that has the amplitude property, and a duration time */
-+(id)actionWithAction:(CCAction*)action duration:(ccTime)d;
++(id)actionWithAction:(CCActionInterval*)action duration:(ccTime)d;
 /** initializes the action with an inner action that has the amplitude property, and a duration time */
--(id)initWithAction:(CCAction*)action duration:(ccTime)d;
+-(id)initWithAction:(CCActionInterval*)action duration:(ccTime)d;
 
 @end
 
@@ -114,9 +114,9 @@
 @property (nonatomic,readwrite) float rate;
 
 /** creates the action with an inner action that has the amplitude property, and a duration time */
-+(id)actionWithAction:(CCAction*)action duration:(ccTime)d;
++(id)actionWithAction:(CCActionInterval*)action duration:(ccTime)d;
 /** initializes the action with an inner action that has the amplitude property, and a duration time */
--(id)initWithAction:(CCAction*)action duration:(ccTime)d;
+-(id)initWithAction:(CCActionInterval*)action duration:(ccTime)d;
 
 @end
 
@@ -133,9 +133,9 @@
 @property (nonatomic,readwrite) float rate;
 
 /** creates the action with an inner action that has the amplitude property, and a duration time */
-+(id)actionWithAction:(CCAction*)action duration:(ccTime)d;
++(id)actionWithAction:(CCActionInterval*)action duration:(ccTime)d;
 /** initializes the action with an inner action that has the amplitude property, and a duration time */
--(id)initWithAction:(CCAction*)action duration:(ccTime)d;
+-(id)initWithAction:(CCActionInterval*)action duration:(ccTime)d;
 
 @end
 

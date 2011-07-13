@@ -185,12 +185,12 @@
 
 @synthesize rate=rate_;
 
-+(id)actionWithAction:(CCAction*)action duration:(ccTime)d
++(id)actionWithAction:(CCActionInterval*)action duration:(ccTime)d
 {
 	return [[[self alloc] initWithAction:action duration:d ] autorelease];
 }
 
--(id)initWithAction:(CCAction *)action duration:(ccTime)d
+-(id)initWithAction:(CCActionInterval *)action duration:(ccTime)d
 {
 	if ( (self = [super initWithDuration:d]) )
 	{
@@ -243,12 +243,12 @@
 
 @synthesize rate=rate_;
 
-+(id)actionWithAction:(CCAction*)action duration:(ccTime)d
++(id)actionWithAction:(CCActionInterval*)action duration:(ccTime)d
 {
 	return [[[self alloc] initWithAction:action duration:d ] autorelease];
 }
 
--(id)initWithAction:(CCAction *)action duration:(ccTime)d
+-(id)initWithAction:(CCActionInterval *)action duration:(ccTime)d
 {
 	if ( (self = [super initWithDuration:d]) )
 	{
@@ -293,12 +293,12 @@
 
 @synthesize rate=rate_;
 
-+(id)actionWithAction:(CCAction*)action duration:(ccTime)d
++(id)actionWithAction:(CCActionInterval*)action duration:(ccTime)d
 {
 	return [[[self alloc] initWithAction:action duration:d ] autorelease];
 }
 
--(id)initWithAction:(CCAction *)action duration:(ccTime)d
+-(id)initWithAction:(CCActionInterval *)action duration:(ccTime)d
 {
 	if ( (self = [super initWithDuration:d]) )
 	{
