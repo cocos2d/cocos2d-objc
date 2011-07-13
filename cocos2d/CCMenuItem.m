@@ -30,6 +30,7 @@
 #import "CCActionInterval.h"
 #import "CCSprite.h"
 #import "Support/CGPointExtension.h"
+#import "CCBlockSupport.h"
 
 	static NSUInteger _fontSize = kCCItemSize;
 static NSString *_fontName = @"Marker Felt";

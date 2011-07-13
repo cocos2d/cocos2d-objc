@@ -770,9 +770,9 @@ static BOOL PVRHaveAlphaPremultiplied_ = NO;
 	return defaultAlphaPixelFormat_;
 }
 
--(NSInteger) bitsPerPixelForFormat
+-(NSUInteger) bitsPerPixelForFormat
 {
-	NSInteger ret=-1;
+	NSUInteger ret=0;
 
 	switch (format_) {
 		case kCCTexture2DPixelFormat_RGBA8888:

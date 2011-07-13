@@ -135,7 +135,7 @@
 {
 	CCFiniteTimeAction *prev = [actions objectAtIndex:0];
 	
-	for (int i = 1; i < [actions count]; i++)
+	for (NSUInteger i = 1; i < [actions count]; i++)
 		prev = [self actionOne:prev two:[actions objectAtIndex:i]];
 	
 	return prev;
@@ -364,7 +364,7 @@
 {
 	CCFiniteTimeAction *prev = [actions objectAtIndex:0];
 	
-	for (int i = 1; i < [actions count]; i++)
+	for (NSUInteger i = 1; i < [actions count]; i++)
 		prev = [self actionOne:prev two:[actions objectAtIndex:i]];
 	
 	return prev;
