@@ -15,6 +15,10 @@ static NSString *transitions[] = {
 			@"Test1",
 };
 
+Class nextAction(void);
+Class backAction(void);
+Class restartAction(void);
+
 Class nextAction()
 {
 	

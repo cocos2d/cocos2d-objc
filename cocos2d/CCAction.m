@@ -322,8 +322,6 @@
 
 -(void) step:(ccTime) dt
 {
-#define CLAMP(x,y,z) MIN(MAX(x,y),z)
-	
 	if(boundarySet)
 	{
 		// whole map fits inside a single screen, no need to modify the position - unless map boundaries are increased
@@ -331,7 +329,7 @@
 			return;
 		
 		CGPoint tempPos = ccpSub( halfScreenSize, followedNode_.position);
-		[target_ setPosition:ccp(CLAMP(tempPos.x,leftBoundary,rightBoundary), CLAMP(tempPos.y,bottomBoundary,topBoundary))];
+		[target_ setPosition:ccp(clampf(tempPos.x,leftBoundary,rightBoundary), clampf(tempPos.y,bottomBoundary,topBoundary))];
 	}
 	else
 		[target_ setPosition:ccpSub( halfScreenSize, followedNode_.position )];

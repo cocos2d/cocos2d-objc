@@ -135,7 +135,7 @@
 {
 	CCFiniteTimeAction *prev = [actions objectAtIndex:0];
 	
-	for (int i = 1; i < [actions count]; i++)
+	for (NSUInteger i = 1; i < [actions count]; i++)
 		prev = [self actionOne:prev two:[actions objectAtIndex:i]];
 	
 	return prev;
@@ -364,7 +364,7 @@
 {
 	CCFiniteTimeAction *prev = [actions objectAtIndex:0];
 	
-	for (int i = 1; i < [actions count]; i++)
+	for (NSUInteger i = 1; i < [actions count]; i++)
 		prev = [self actionOne:prev two:[actions objectAtIndex:i]];
 	
 	return prev;
@@ -384,22 +384,23 @@
 	ccTime d1 = [one duration];
 	ccTime d2 = [two duration];	
 	
-	[super initWithDuration: MAX(d1,d2)];
+	if( (self=[super initWithDuration: MAX(d1,d2)] ) ) {
 
-	// XXX: Supports re-init without leaking. Fails if one==one_ || two==two_
-	[one_ release];
-	[two_ release];
+		// XXX: Supports re-init without leaking. Fails if one==one_ || two==two_
+		[one_ release];
+		[two_ release];
 
-	one_ = one;
-	two_ = two;
+		one_ = one;
+		two_ = two;
 
-	if( d1 > d2 )
-		two_ = [CCSequence actionOne:two two:[CCDelayTime actionWithDuration: (d1-d2)] ];
-	else if( d1 < d2)
-		one_ = [CCSequence actionOne:one two: [CCDelayTime actionWithDuration: (d2-d1)] ];
-	
-	[one_ retain];
-	[two_ retain];
+		if( d1 > d2 )
+			two_ = [CCSequence actionOne:two two:[CCDelayTime actionWithDuration: (d1-d2)] ];
+		else if( d1 < d2)
+			one_ = [CCSequence actionOne:one two: [CCDelayTime actionWithDuration: (d2-d1)] ];
+		
+		[one_ retain];
+		[two_ retain];
+	}
 	return self;
 }
 

@@ -23,6 +23,9 @@
 
 #include "chipmunk_private.h"
 
+// function declaration
+void cpSpaceProcessComponents(cpSpace *space, cpFloat dt);
+
 #pragma mark Sleeping Functions
 
 // Chipmunk uses a data structure called a disjoint set forest.
@@ -94,7 +97,10 @@ componentActivate(cpBody *root)
 void
 cpBodyActivate(cpBody *body)
 {
-	componentActivate(componentNodeRoot(body));
+	if(!cpBodyIsRogue(body)){
+		body->node.idleTime = 0.0f;
+		componentActivate(componentNodeRoot(body));
+	}
 }
 
 static inline void

@@ -13,7 +13,7 @@
     CCSprite *_main_bkgrnd;
     CCLabelTTF *_label;
     CCSprite *_tapToCont;
-    CCSprite *_newGame;
+    CCSprite *_spriteNewGame;
     int _curStoryIndex;
 }
 
@@ -21,7 +21,7 @@
 @property (nonatomic, assign) CCSprite *main_bkgrnd;
 @property (nonatomic, assign) CCLabelTTF *label;
 @property (nonatomic, assign) CCSprite *tapToCont;
-@property (nonatomic, assign) CCSprite *newGame;
+@property (nonatomic, assign) CCSprite *spriteNewGame;
 @property (nonatomic, assign) int curStoryIndex;
 
 @end

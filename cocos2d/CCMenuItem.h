@@ -31,7 +31,7 @@
 
 @class CCSprite;
 
-#define kItemSize 32
+#define kCCItemSize 32
 
 #pragma mark -
 #pragma mark CCMenuItem
@@ -41,7 +41,7 @@
  */
 @interface CCMenuItem : CCNode
 {
-	NSInvocation *invocation;
+	NSInvocation *invocation_;
 #if NS_BLOCKS_AVAILABLE
 	// used for menu items using a block
 	void (^block_)(id sender);
@@ -187,17 +187,19 @@
  */
 @interface CCMenuItemFont : CCMenuItemLabel
 {
+	NSUInteger fontSize_;
+	NSString *fontName_;
 }
-/** set font size */
-+(void) setFontSize: (int) s;
+/** set default font size */
++(void) setFontSize: (NSUInteger) s;
 
-/** get font size */
-+(int) fontSize;
+/** get default font size */
++(NSUInteger) fontSize;
 
-/** set the font name */
+/** set default font name */
 +(void) setFontName: (NSString*) n;
 
-/** get the font name */
+/** get default font name */
 +(NSString*) fontName;
 
 /** creates a menu item from a string without target/selector. To be used with CCMenuItemToggle */
@@ -208,6 +210,18 @@
 
 /** initializes a menu item from a string with a target/selector */
 -(id) initFromString: (NSString*) value target:(id) r selector:(SEL) s;
+
+/** set font size */
+-(void) setFontSize: (NSUInteger) s;
+
+/** get font size */
+-(NSUInteger) fontSize;
+
+/** set the font name */
+-(void) setFontName: (NSString*) n;
+
+/** get the font name */
+-(NSString*) fontName;
 
 #if NS_BLOCKS_AVAILABLE
 /** creates a menu item from a string with the specified block.
