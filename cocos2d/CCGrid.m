@@ -115,7 +115,7 @@
 	
 	int bpp = ( format == kCCTexture2DPixelFormat_RGB565 ? 2 : 4 );
 	
-	void *data = calloc((int)(POTWide * POTHigh * bpp), 1);
+	void *data = calloc((size_t)(POTWide * POTHigh * bpp), 1);
 	if( ! data ) {
 		CCLOG(@"cocos2d: CCGrid: not enough memory");
 		[self release];

@@ -32,8 +32,8 @@
 /** FBO class that grabs the the contents of the screen */
 @interface CCGrabber : NSObject
 {
-	GLuint	fbo;
-	GLint	oldFBO;
+	GLuint	fbo_;
+	GLint	oldFBO_;
 }
 
 -(void)grab:(CCTexture2D*)texture;

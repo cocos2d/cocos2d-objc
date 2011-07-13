@@ -101,7 +101,7 @@
 
 -(id) initWithDictionary:(NSDictionary *)dictionary
 {
-	NSUInteger maxParticles = [[dictionary valueForKey:@"maxParticles"] intValue];
+	NSUInteger maxParticles = [[dictionary valueForKey:@"maxParticles"] integerValue];
 	// self, not super
 	if ((self=[self initWithTotalParticles:maxParticles] ) ) {
 		

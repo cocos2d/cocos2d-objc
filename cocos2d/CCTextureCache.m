@@ -163,17 +163,19 @@ static CCTextureCache *sharedTextureCache;
 	// dispatch it serially
 	dispatch_async(_loadingQueue, ^{
 		
+		CCTexture2D *texture;
+		
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 		if( [EAGLContext setCurrentContext:_auxGLcontext] ) {
 			
 			// load / create the texture
-			CCTexture2D *tex = [self addImage:path];
+			texture = [self addImage:path];
 			
 			glFlush();
 			
 			// callback should be executed in cocos2d thread
 			dispatch_async(dispatch_get_main_queue(), ^{
-				[target performSelector:selector withObject:tex];
+				[target performSelector:selector withObject:texture];
 			});
 			
 			[EAGLContext setCurrentContext:nil];
@@ -186,13 +188,13 @@ static CCTextureCache *sharedTextureCache;
 		[_auxGLcontext makeCurrentContext];
 		
 		// load / create the texture
-		CCTexture2D *tex = [self addImage:path];
+		texture = [self addImage:path];
 		
 		glFlush();
 		
 		// callback should be executed in cocos2d thread
 		dispatch_async(dispatch_get_main_queue(), ^{
-			[target performSelector:selector withObject:tex];
+			[target performSelector:selector withObject:texture];
 		});
 		
 		[NSOpenGLContext clearCurrentContext];
@@ -224,17 +226,19 @@ static CCTextureCache *sharedTextureCache;
 	// dispatch it serially
 	dispatch_async( _loadingQueue, ^{
 		
+		CCTexture2D *texture;
+
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 		if( [EAGLContext setCurrentContext:_auxGLcontext] ) {
 			
 			// load / create the texture
-			CCTexture2D *tex = [self addImage:path];
+			texture = [self addImage:path];
 			
 			glFlush();
 			
 			// callback should be executed in cocos2d thread
 			dispatch_async(dispatch_get_main_queue(), ^{
-				block(tex);
+				block(texture);
 			});
 			
 			[EAGLContext setCurrentContext:nil];
@@ -247,13 +251,13 @@ static CCTextureCache *sharedTextureCache;
 		[_auxGLcontext makeCurrentContext];
 		
 		// load / create the texture
-		CCTexture2D *tex = [self addImage:path];
+		texture = [self addImage:path];
 		
 		glFlush();
 		
 		// callback should be executed in cocos2d thread
 		dispatch_async(dispatch_get_main_queue(), ^{
-			block(tex);
+			block(texture);
 		});
 		
 		[NSOpenGLContext clearCurrentContext];

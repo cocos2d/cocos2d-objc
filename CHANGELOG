@@ -31,6 +31,9 @@ version 2.0-alpha XX-Jul-2011
 . [FIX] Xcode: Tremor / vorbis: Removed. Experimental sound engine is no longer supported
 . [FIX] Xcode: iOS 4 is minimun required to run
 
+version 1.1.0 - XX-Ago-2011
+. [FIX] All: Implicit atomic properties converted to nonatomic
+
 version 1.0.0 - 13-July-2011
 . [NEW] ccpSegmentIntersect & ccpPointIntersect: Added helper functions for ccpLineIntersect (issue #1193)
 . [NEW] ccConfig: Added possibility to define the configuration as preprocessor macros

@@ -32,13 +32,13 @@
 #import "Support/CGPointExtension.h"
 #import "CCBlockSupport.h"
 
-	static NSUInteger _fontSize = kCCItemSize;
+static NSUInteger _fontSize = kCCItemSize;
 static NSString *_fontName = @"Marker Felt";
 static BOOL _fontNameRelease = NO;
 
 
-const uint32_t	kCurrentItem = 0xc0c05001;
-const uint32_t	kZoomActionTag = 0xc0c05002;
+const NSInteger	kCurrentItem = 0xc0c05001;
+const NSInteger	kZoomActionTag = 0xc0c05002;
 
 
 #pragma mark -

@@ -210,7 +210,8 @@ typedef void (*CC_CALLBACK_ND)(id, SEL, id, void *);
 }
 
 /** object to be passed to the block */
-@property (retain) id object;
+@property (nonatomic,retain) id object;
+
 /** creates the action with the specified block, to be used as a callback.
  The block will be "copied".
  */
