@@ -347,7 +347,7 @@
 		{
 			// generate alpha/color for each point
 			glEnableClientState(GL_COLOR_ARRAY);
-			uint i = begin;
+			NSUInteger i = begin;
 			for (; i < end; ++i)
 			{
 				int idx = i*8;
