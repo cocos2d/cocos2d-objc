@@ -325,4 +325,5 @@ typedef enum {
  @since v0.99.5
  */
 -(void) setDisplayFrameWithAnimationName:(NSString*)animationName index:(int) frameIndex;
+
 @end

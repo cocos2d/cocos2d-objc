@@ -48,11 +48,6 @@
 	return [[[self alloc] initWithFrames:frames delay:delay] autorelease];
 }
 
-+(id) animationWithName:(NSString*)name
-{
-	return [[[self alloc] initWithName:name] autorelease];
-}
-
 -(id) init
 {
 	return [self initWithFrames:nil delay:0];
@@ -64,16 +59,6 @@
 }
 
 -(id) initWithFrames:(NSArray*)array delay:(float)delay
-{
-	if( (self=[super init]) ) {
-		
-		delay_ = delay;
-		self.frames = [NSMutableArray arrayWithArray:array];
-	}
-	return self;
-}
-
--(id) initWithName:(NSString*)name delay:(float)delay frames:(NSArray*)array
 {
 	if( (self=[super init]) ) {
 		

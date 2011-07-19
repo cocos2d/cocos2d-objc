@@ -147,6 +147,8 @@ CGFloat	__ccContentScaleFactor = 1;
 	
 	kmGLPopMatrix();
 
+	totalFrames_++;
+
 	[openGLView_ swapBuffers];
 }
 

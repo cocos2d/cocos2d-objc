@@ -225,7 +225,7 @@ int check_for_error( CGPoint p1, CGPoint p2, CGPoint p3, CGPoint p4, float s, fl
 
 - (void) dealloc
 {
-	[window dealloc];
+	[window release];
 	[super dealloc];
 }
 

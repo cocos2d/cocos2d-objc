@@ -472,8 +472,10 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 	
 	kmGLPopMatrix();
 	
+	totalFrames_++;
+
 	[[openGLView_ openGLContext] flushBuffer];	
-	CGLUnlockContext([[openGLView_ openGLContext] CGLContextObj]);
+	CGLUnlockContext([[openGLView_ openGLContext] CGLContextObj]);	
 }
 
 // set the event dispatcher
