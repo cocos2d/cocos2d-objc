@@ -548,7 +548,9 @@ Class restartTransition()
 
 - (void) dealloc
 {
-	[window_ dealloc];
+	[viewController_ release];
+	[window_ release];
+
 	[super dealloc];
 }
 

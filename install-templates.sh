@@ -2,7 +2,13 @@
 
 echo 'cocos2d-iphone template installer'
 
+<<<<<<< HEAD
 COCOS2D_VER='cocos2d 2.0.0'
+=======
+COCOS2D_VER='cocos2d 1.0.1'
+BASE_TEMPLATE_DIR="/Library/Application Support/Developer/Shared/Xcode"
+BASE_TEMPLATE_USER_DIR="$HOME/Library/Application Support/Developer/Shared/Xcode"
+>>>>>>> develop
 SCRIPT_DIR=$(dirname $0)
 
 force=

@@ -170,7 +170,6 @@ static 	SEL selUpdate = NULL;
 	
 	if ( grid_ && grid_.active)
 		[grid_ afterDraw:self];
-	
 
 	kmGLPopMatrix();
 }
@@ -301,7 +300,7 @@ static 	SEL selUpdate = NULL;
 	if( ! [textureAtlas_ resizeCapacity:quantity] ) {
 		// serious problems
 		CCLOG(@"cocos2d: WARNING: Not enough memory to resize the atlas");
-		NSAssert(NO,@"XXX: SpriteSheet#increaseAtlasCapacity SHALL handle this assert");
+		NSAssert(NO,@"XXX: CCSpriteBatchNode#increaseAtlasCapacity SHALL handle this assert");
 	}	
 }
 

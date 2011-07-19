@@ -916,6 +916,7 @@ struct transformValues_ {
 	
 	// update rect
 	rectRotated_ = frame.rotated;
+
 	[self setTextureRectInPixels:frame.rectInPixels rotated:rectRotated_ untrimmedSize:frame.originalSizeInPixels];
 }
 

@@ -142,11 +142,14 @@
 {
 	[string_ release];
 	[fontName_ release];
+
 	[super dealloc];
 }
 
 - (NSString*) description
 {
-	return [NSString stringWithFormat:@"<%@ = %08X | Label = %@, FontName = %@, FontSize = %.1f>", [self class], self, string_, fontName_, fontSize_];
+	// XXX: string_, fontName_ can't be displayed here, since they might be already released
+
+	return [NSString stringWithFormat:@"<%@ = %08X | FontSize = %.1f>", [self class], self, fontSize_];
 }
 @end
