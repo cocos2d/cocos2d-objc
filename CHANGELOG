@@ -1,5 +1,9 @@
-version 1.1.0 - XX-Ago-2011
+version 1.0.1 - XX-Ago-2011
 . [FIX] All: Implicit atomic properties converted to nonatomic
+. [FIX] All: Removed deprected code
+. [FIX] Director: frames -> totalFrames, and it works as expected. Value is not being reset.
+. [FIX] LabelTTF: don't crash when releasing it in debug mode
+. [FIX] Tests: [window release] instead of [window dealloc]
 . [FIX] Texture: TextureCache#dump reports the right info (issue #1205)
 
 version 1.0.0 - 13-July-2011
