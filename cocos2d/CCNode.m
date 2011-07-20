@@ -68,6 +68,7 @@
 @synthesize grid = grid_;
 @synthesize zOrder = zOrder_;
 @synthesize tag = tag_;
+@synthesize namedTag = namedTag_;
 @synthesize vertexZ = vertexZ_;
 @synthesize isRunning = isRunning_;
 @synthesize userData = userData_;
@@ -313,7 +314,7 @@
 
 - (NSString*) description
 {
-	return [NSString stringWithFormat:@"<%@ = %08X | Tag = %i>", [self class], self, tag_];
+	return [NSString stringWithFormat:@"<%@ = %08X | Tag = %i (%@)>", [self class], self, tag_, namedTag_];
 }
 
 - (void) dealloc
@@ -324,6 +325,8 @@
 	[camera_ release];
 	
 	[grid_ release];
+    
+    [namedTag_ release];
 	
 	// children
 	CCNode *child;
@@ -373,12 +376,25 @@
 	return nil;
 }
 
+-(CCNode*) getChildByNamedTag:(NSString *) aTag
+{
+	NSAssert( aTag != nil, @"Invalid tag");
+	
+	CCNode *node;
+	CCARRAY_FOREACH(children_, node){
+		if( [node.namedTag isEqualToString:aTag] )
+			return node;
+	}
+	// not found
+	return nil;
+}
+
 /* "add" logic MUST only be on this method
  * If a class want's to extend the 'addChild' behaviour it only needs
  * to override this method
  */
--(void) addChild: (CCNode*) child z:(NSInteger)z tag:(NSInteger) aTag
-{	
+-(void) addChild: (CCNode*) child z:(NSInteger)z
+{
 	NSAssert( child != nil, @"Argument must be non-nil");
 	NSAssert( child.parent == nil, @"child already added. It can't be added again");
 	
@@ -386,8 +402,6 @@
 		[self childrenAlloc];
 	
 	[self insertChild:child z:z];
-	
-	child.tag = aTag;
 	
 	[child setParent: self];
 	
@@ -397,16 +411,21 @@
 	}
 }
 
--(void) addChild: (CCNode*) child z:(NSInteger)z
-{
-	NSAssert( child != nil, @"Argument must be non-nil");
-	[self addChild:child z:z tag:child.tag];
+-(void) addChild: (CCNode*) child z:(NSInteger)z tag:(NSInteger) aTag
+{	
+	child.tag = aTag;
+    [self addChild:child z:z];
+}
+
+-(void) addChild: (CCNode*) child z:(NSInteger)z namedTag:(NSString*) aTag
+{	
+	child.namedTag = aTag;
+    [self addChild:child z:z];
 }
 
 -(void) addChild: (CCNode*) child
 {
-	NSAssert( child != nil, @"Argument must be non-nil");
-	[self addChild:child z:child.zOrder tag:child.tag];
+	[self addChild:child z:child.zOrder];
 }
 
 -(void) removeFromParentAndCleanup:(BOOL)cleanup
@@ -433,6 +452,18 @@
 	NSAssert( aTag != kCCNodeTagInvalid, @"Invalid tag");
 	
 	CCNode *child = [self getChildByTag:aTag];
+	
+	if (child == nil)
+		CCLOG(@"cocos2d: removeChildByTag: child not found!");
+	else
+		[self removeChild:child cleanup:cleanup];
+}
+
+-(void) removeChildByNamedTag:(NSString *)aTag cleanup:(BOOL)cleanup
+{
+	NSAssert( aTag != nil, @"Invalid tag");
+	
+	CCNode *child = [self getChildByNamedTag:aTag];
 	
 	if (child == nil)
 		CCLOG(@"cocos2d: removeChildByTag: child not found!");

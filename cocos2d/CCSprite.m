@@ -290,9 +290,9 @@ struct transformValues_ {
 
 - (NSString*) description
 {
-	return [NSString stringWithFormat:@"<%@ = %08X | Rect = (%.2f,%.2f,%.2f,%.2f) | tag = %i | atlasIndex = %i>", [self class], self,
+	return [NSString stringWithFormat:@"<%@ = %08X | Rect = (%.2f,%.2f,%.2f,%.2f) | tag = %i (%@) | atlasIndex = %i>", [self class], self,
 			rect_.origin.x, rect_.origin.y, rect_.size.width, rect_.size.height,
-			tag_,
+			tag_, namedTag_,
 			atlasIndex_
 	];
 }
@@ -652,11 +652,11 @@ struct transformValues_ {
 
 #pragma mark CCSprite - CCNode overrides
 
--(void) addChild:(CCSprite*)child z:(NSInteger)z tag:(NSInteger) aTag
+-(void) addChild:(CCSprite*)child z:(NSInteger)z
 {
 	NSAssert( child != nil, @"Argument must be non-nil");
 	
-	[super addChild:child z:z tag:aTag];
+	[super addChild:child z:z];
 	
 	if( usesBatchNode_ ) {
 		NSAssert( [child isKindOfClass:[CCSprite class]], @"CCSprite only supports CCSprites as children when using CCSpriteBatchNode");

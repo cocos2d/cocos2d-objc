@@ -148,5 +148,5 @@
 /** CCTMXLayer doesn't support adding a CCSprite manually.
  @warning addchild:z:tag: is not supported on CCTMXLayer. Instead of setTileGID:at:/tileAt:
  */
--(void) addChild: (CCNode*)node z:(NSInteger)z tag:(NSInteger)tag;
+-(void) addChild: (CCNode*)node z:(NSInteger)z;
 @end
