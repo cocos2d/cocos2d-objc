@@ -31,7 +31,8 @@
 @class GLProgram;
 
 /** CCShaderCache
- XXX complete documentation
+ Singleton that stores manages GL shaders
+ @since v2.0
  */
 @interface CCShaderCache : NSObject {
 	
@@ -39,25 +40,19 @@
 	
 }
 
-/** returns the shared instance
- @since v2.0
- */
+/** returns the shared instance */
 + (CCShaderCache *)sharedShaderCache;
 
-/** purges the cache. It releases the retained instance.
- @since v2.0
- */
+/** purges the cache. It releases the retained instance. */
 +(void)purgeSharedShaderCache;
 
-
-/** loads the default shaders
- @since v2.0
- */
+/** loads the default shaders */
 -(void) loadDefaultShaders;
 
-/** returns a GL program for a given key
- @since v2.0
- */
+/** returns a GL program for a given key */
 -(GLProgram *) programForKey:(NSString*)key;
+
+/** adds a GLProgram to the cache for a given name */
+- (void) addProgram:(GLProgram*)program forKey:(NSString*)key;
 
 @end

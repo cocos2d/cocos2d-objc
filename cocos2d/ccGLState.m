@@ -100,6 +100,5 @@ void ccGLUniformModelViewMatrix( GLProgram *shaderProgram )
 
 void ccSetProjectionMatrixDirty( void )
 {
-
 	_ccCurrentProjectionMatrix = -1;
 }
