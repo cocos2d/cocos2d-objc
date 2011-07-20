@@ -165,4 +165,9 @@ static CCShaderCache *_sharedShaderCache;
 	return [programs_ objectForKey:key];
 }
 
+- (void) addProgram:(GLProgram*)program forKey:(NSString*)key
+{
+    [programs_ setObject:program forKey:key];
+}
+
 @end
