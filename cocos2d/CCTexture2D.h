@@ -111,6 +111,13 @@ typedef enum {
 	
 } CCTexture2DPixelFormat;
 
+typedef enum
+{
+    CCVerticalAlignmentTop,
+    CCVerticalAlignmentCenter,
+    CCVerticalAlignmentBottom,
+} CCVerticalAlignment;
+
 //CLASS INTERFACES:
 
 /** CCTexture2D class.
@@ -196,7 +203,7 @@ Note that the generated textures are of type A8 - use the blending mode (GL_SRC_
 	- Mac: Only NSLineBreakByWordWrapping is supported.
  @since v1.0
  */
-- (id) initWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(CCTextAlignment)alignment lineBreakMode:(CCLineBreakMode)lineBreakMode fontName:(NSString*)name fontSize:(CGFloat)size;
+- (id) initWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(CCTextAlignment)alignment vertAlignment:(CCVerticalAlignment)vertAlignment lineBreakMode:(CCLineBreakMode)lineBreakMode fontName:(NSString*)name fontSize:(CGFloat)size;
 /** Initializes a texture from a string with dimensions, alignment, font name and font size */
 - (id) initWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(CCTextAlignment)alignment fontName:(NSString*)name fontSize:(CGFloat)size;
 /** Initializes a texture from a string with font name and font size */
