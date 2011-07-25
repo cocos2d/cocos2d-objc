@@ -29,6 +29,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 * Justin Graham (http://www.zynga.com)
 	GLProgram: fixes in fragmentShaderLog
 	CCShaderCache: Added addProgram:forKey: method
+	CCArray: Fixed copyWithZone
 
 * manucorporat (manu.valladolid) (http://forzefield.com/):
 	Added new Retina Display code.
