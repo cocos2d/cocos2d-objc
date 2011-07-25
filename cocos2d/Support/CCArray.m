@@ -269,8 +269,10 @@
 
 - (id)copyWithZone:(NSZone *)zone
 {
-	NSArray *nsArray = [self getNSArray];
+	NSMutableArray* nsArray =  [[NSMutableArray alloc] initWithObjects:data->arr count:data->num];
 	CCArray *newArray = [[[self class] allocWithZone:zone] initWithNSArray:nsArray];
+	[nsArray release];
+
 	return newArray;
 }
 
