@@ -64,3 +64,7 @@
 @interface ConvertToNode : TestDemo
 {}
 @end
+
+@interface CCArrayTest : TestDemo
+{}
+@end
