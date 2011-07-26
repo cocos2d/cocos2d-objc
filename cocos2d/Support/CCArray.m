@@ -269,11 +269,7 @@
 
 - (id)copyWithZone:(NSZone *)zone
 {
-	NSMutableArray* nsArray =  [[NSMutableArray alloc] initWithObjects:data->arr count:data->num];
-	CCArray *newArray = [[[self class] allocWithZone:zone] initWithNSArray:nsArray];
-	[nsArray release];
-
-	return newArray;
+	return [(CCArray*)[[self class] allocWithZone:zone] initWithArray:self];
 }
 
 - (void) encodeWithCoder:(NSCoder *)coder
@@ -285,8 +281,24 @@
 
 - (void) dealloc
 {
+	CCLOGINFO(@"cocos2d: deallocing %@", self);
+
 	ccArrayFree(data);
 	[super dealloc];
+}
+
+#pragma mark
+
+- (NSString*) description
+{
+	NSMutableString *ret = [NSMutableString stringWithFormat:@"<%@ = %08X> = ( ", [self class], self];
+
+	for( id obj in self)
+		[ret appendFormat:@"%@, ",obj];
+	
+	[ret appendString:@")"];
+	
+	return ret;
 }
 
 @end

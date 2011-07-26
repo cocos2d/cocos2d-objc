@@ -26,6 +26,8 @@ Class restartAction(void);
 static int sceneIdx=-1;
 static NSString *transitions[] = {
 
+	@"CCArrayTest",
+
 	@"Test2",
 	@"Test4",
 	@"Test5",
@@ -38,6 +40,7 @@ static NSString *transitions[] = {
 	@"CameraZoomTest",	
 	@"CameraCenterTest",
 	@"ConvertToNode",
+	@"CCArrayTest",
 };
 
 Class nextAction()
@@ -816,7 +819,6 @@ Class restartAction()
 @end
 
 
-
 #pragma mark -
 #pragma mark ConvertToNode
 
@@ -895,6 +897,57 @@ Class restartAction()
 }
 @end
 
+#pragma mark -
+#pragma mark CCArrayTest
+
+@implementation CCArrayTest
+
+-(id) init
+{
+	if( ( self=[super init]) ) {
+
+		NSLog(@"\nTest 1\n");
+		
+		NSArray *nsarray = [NSArray arrayWithObjects:@"one", @"two", @"three", nil];
+		CCArray *ccarray = [CCArray arrayWithNSArray:nsarray];
+		
+		NSLog(@"%@ == %@", nsarray, ccarray);
+		
+		
+		NSLog(@"\nTest 2\n");
+		
+		CCArray *copy_ccaray = [ccarray copy];
+		NSLog(@"copy: %@", copy_ccaray);
+
+		NSLog(@"\nTest 3\n");
+
+		[copy_ccaray addObjectsFromNSArray:nsarray];		
+		NSLog(@"copy 2: %@", copy_ccaray);
+		
+
+		NSLog(@"\nTest 4\n");
+		
+		for( int i=0; i<6;i++)
+			NSLog(@"random object: %@", [copy_ccaray randomObject] );
+
+		
+		[copy_ccaray release];
+
+		
+	}
+	return self;
+}
+
+-(NSString *) title
+{
+	return @"CCArray Test";
+}
+
+-(NSString*) subtitle
+{
+	return @"See console for possible errors";
+}
+@end
 
 
 #pragma mark -
