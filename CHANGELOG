@@ -1,4 +1,4 @@
-version 1.0.1 - XX-Ago-2011
+version 1.0.1 - 28-July-2011
 . [FIX] All: Implicit atomic properties converted to nonatomic
 . [FIX] All: Removed deprected code
 . [FXI] CCArray: copyWithZone fixed
