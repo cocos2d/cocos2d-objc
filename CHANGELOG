@@ -1,12 +1,13 @@
 version 1.0.1 - 28-July-2011
 . [FIX] All: Implicit atomic properties converted to nonatomic
 . [FIX] All: Removed deprected code
-. [FXI] CCArray: copyWithZone fixed
+. [FIX] CCArray: copyWithZone fixed
 . [FIX] Director: frames -> totalFrames, and it works as expected. Value is not being reset.
 . [FIX] Node: vertexZ returns points, not "pixels"
 . [FIX] LabelTTF: don't crash when calling description after dealloc
 . [FIX] Tests: [window release] instead of [window dealloc]
 . [FIX] Texture: TextureCache#dump reports the right info (issue #1205)
+. [FIX-MAC] CocosDenshion: Cleanup buffers to prevent noise
 
 version 1.0.0 - 13-July-2011
 . [NEW] ccpSegmentIntersect & ccpPointIntersect: Added helper functions for ccpLineIntersect (issue #1193)
