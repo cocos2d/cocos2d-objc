@@ -62,6 +62,7 @@ static NSOpenGLContext *auxGLcontext = nil;
 @synthesize selector = selector_;
 @synthesize target = target_;
 @synthesize data = data_;
+
 - (void) dealloc
 {
 	CCLOGINFO(@"cocos2d: deallocing %@", self);
@@ -272,7 +273,7 @@ static CCTextureCache *sharedTextureCache;
 						
 			UIImage *jpg = [[UIImage alloc] initWithContentsOfFile:fullpath];
 			UIImage *png = [[UIImage alloc] initWithData:UIImagePNGRepresentation(jpg)];
-			tex = [ [CCTexture2D alloc] initWithImage: png ];
+			tex = [ [CCTexture2D alloc] initWithCGImage: [png CGImage] ];
 			[png release];
 			[jpg release];
 			
@@ -284,37 +285,25 @@ static CCTextureCache *sharedTextureCache;
 			// autorelease prevents possible crash in multithreaded environments
 			[tex autorelease];
 		}
-		
+#endif		
 		else {
 			
 			// prevents overloading the autorelease pool
 			NSString *fullpath = [CCFileUtils fullPathFromRelativePath: path ];
-
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 			UIImage *image = [ [UIImage alloc] initWithContentsOfFile: fullpath ];
-			tex = [ [CCTexture2D alloc] initWithImage: image ];
-			[image release];
-			
-			if( tex )
-				[textures_ setObject: tex forKey:path];
-			else
-				CCLOG(@"cocos2d: Couldn't add image:%@ in CCTextureCache", path);
-			
-			// autorelease prevents possible crash in multithreaded environments
-			[tex autorelease];			
-		}
-
-		// Only in Mac
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
-		else {
-			NSString *fullpath = [CCFileUtils fullPathFromRelativePath: path ];
-
-			NSData *data = [[NSData alloc] initWithContentsOfFile:fullpath];
+ 			NSData *data = [[NSData alloc] initWithContentsOfFile:fullpath];
 			NSBitmapImageRep *image = [[NSBitmapImageRep alloc] initWithData:data];
-			tex = [ [CCTexture2D alloc] initWithImage:[image CGImage]];
-			
-			[data release];
-			[image release];
+#endif
+            
+			tex = [ [CCTexture2D alloc] initWithCGImage: [image CGImage] ];
 
+#ifdef __MAC_OS_X_VERSION_MAX_ALLOWED
+			[data release];          
+#endif
+			[image release];
+			
 			if( tex )
 				[textures_ setObject: tex forKey:path];
 			else
@@ -323,8 +312,6 @@ static CCTextureCache *sharedTextureCache;
 			// autorelease prevents possible crash in multithreaded environments
 			[tex autorelease];			
 		}
-#endif // __MAC_OS_X_VERSION_MAX_ALLOWED
-
 	}
 	
 	[dictLock_ unlock];
@@ -344,15 +331,7 @@ static CCTextureCache *sharedTextureCache;
 		return tex;
 	}
 	
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
-	// prevents overloading the autorelease pool
-	UIImage *image = [[UIImage alloc] initWithCGImage:imageref];
-	tex = [[CCTexture2D alloc] initWithImage: image];
-	[image release];
-
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
-	tex = [[CCTexture2D alloc] initWithImage: imageref];
-#endif
+	tex = [[CCTexture2D alloc] initWithCGImage: imageref];
 	
 	if(tex && key)
 		[textures_ setObject: tex forKey:key];

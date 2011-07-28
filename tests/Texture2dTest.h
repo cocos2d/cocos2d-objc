@@ -54,6 +54,18 @@
 {}
 @end
 
+@interface TextureDrawAtPoint : TextureDemo
+{
+    CCTexture2D *tex;
+}
+@end
+
+@interface TextureDrawInRect : TextureDemo
+{
+    CCTexture2D *tex;
+}
+@end
+
 @interface TextureMipMap : TextureDemo
 {}
 @end
