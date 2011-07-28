@@ -1620,6 +1620,7 @@
 		A031C5B3139543A70072E9F9 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 503092B210447296005F7AFC /* libz.dylib */; };
 		A031C5BB139544D30072E9F9 /* Bug-1174.m in Sources */ = {isa = PBXBuildFile; fileRef = A031C5BA139544D30072E9F9 /* Bug-1174.m */; };
 		A058509E1397D5CA00C105F5 /* bugs in Resources */ = {isa = PBXBuildFile; fileRef = 50CBA4A711CBD7FB007B009D /* bugs */; };
+		A3AC21BA13D8AF7D0070373C /* ccCArray.m in Sources */ = {isa = PBXBuildFile; fileRef = A3AC21B913D8AF7D0070373C /* ccCArray.m */; };
 		AAEA834B0FD5704400F08728 /* blocks.png in Resources */ = {isa = PBXBuildFile; fileRef = AAEA834A0FD5704400F08728 /* blocks.png */; };
 		DA5F0EC50FFE96D400C7C82E /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB240E10EE4A00AE9530 /* Default.png */; };
 		DA5F0EC60FFE96D400C7C82E /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB250E10EE4A00AE9530 /* Icon.png */; };
@@ -4332,6 +4333,7 @@
 		A031C5B7139543A70072E9F9 /* Bug1174.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bug1174.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A031C5B9139544D30072E9F9 /* Bug-1174.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Bug-1174.h"; sourceTree = "<group>"; };
 		A031C5BA139544D30072E9F9 /* Bug-1174.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Bug-1174.m"; sourceTree = "<group>"; };
+		A3AC21B913D8AF7D0070373C /* ccCArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ccCArray.m; sourceTree = "<group>"; };
 		AAEA834A0FD5704400F08728 /* blocks.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blocks.png; sourceTree = "<group>"; };
 		DA90D87B1059A54D0039F26A /* FontTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FontTest.h; path = tests/FontTest.h; sourceTree = "<group>"; };
 		DA90D87C1059A54D0039F26A /* FontTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FontTest.m; path = tests/FontTest.m; sourceTree = "<group>"; };
@@ -6819,6 +6821,7 @@
 			isa = PBXGroup;
 			children = (
 				5080435011BEE8D60039CA83 /* ccCArray.h */,
+				A3AC21B913D8AF7D0070373C /* ccCArray.m */,
 				508043DE11BEE9300039CA83 /* CCArray.h */,
 				5080435111BEE8D60039CA83 /* CCArray.m */,
 				50D898EF1192CB7500458C29 /* uthash.h */,
@@ -11056,6 +11059,7 @@
 				E0E974AA1237E4EA00E3E64B /* MacGLView.m in Sources */,
 				E02BB6D7126CA93A006E46A2 /* CCAnimationCache.m in Sources */,
 				E02BB705126CADEA006E46A2 /* CCAnimation.m in Sources */,
+				A3AC21BA13D8AF7D0070373C /* ccCArray.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
