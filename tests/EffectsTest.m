@@ -521,7 +521,7 @@ Class restartAction()
 
 - (void) dealloc
 {
-	[window dealloc];
+	[window release];
 	[super dealloc];
 }
 

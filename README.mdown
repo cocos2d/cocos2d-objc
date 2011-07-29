@@ -54,7 +54,7 @@ Mac OS X 10.6, Xcode 3.2.3 (or newer)
 Runtime Requirements
 --------------------
   * iOS 3.0 or newer for iOS games
-  * Snow Leopard (v10.6) or newer for Mac games
+  * Snow Leopard (v10.5) or newer for Mac games
 
 
 Files and Folders

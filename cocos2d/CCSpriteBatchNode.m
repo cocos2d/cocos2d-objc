@@ -73,18 +73,10 @@ static SEL selSortMethod =NULL;
 {
 	return [[[self alloc] initWithTexture:tex capacity:defaultCapacity] autorelease];
 }
-+(id)spriteSheetWithTexture:(CCTexture2D *)tex // XXX DEPRECATED
-{
-	return [self batchNodeWithTexture:tex];
-}
 
 +(id)batchNodeWithTexture:(CCTexture2D *)tex capacity:(NSUInteger)capacity
 {
 	return [[[self alloc] initWithTexture:tex capacity:capacity] autorelease];
-}
-+(id)spriteSheetWithTexture:(CCTexture2D *)tex capacity:(NSUInteger)capacity // XXX DEPRECATED
-{
-	return [self batchNodeWithTexture:tex capacity:capacity];
 }
 
 /*
@@ -94,20 +86,11 @@ static SEL selSortMethod =NULL;
 {
 	return [[[self alloc] initWithFile:fileImage capacity:capacity] autorelease];
 }
-+(id)spriteSheetWithFile:(NSString*)fileImage capacity:(NSUInteger)capacity // XXX DEPRECATED
-{
-	return [self batchNodeWithFile:fileImage capacity:capacity];
-}
 
 +(id)batchNodeWithFile:(NSString*) imageFile
 {
 	return [[[self alloc] initWithFile:imageFile capacity:defaultCapacity] autorelease];
 }
-+(id)spriteSheetWithFile:(NSString*) imageFile // XXX DEPRECATED
-{
-	return [self batchNodeWithFile:imageFile];
-}
-
 
 /*
  * init with CCTexture2D
@@ -190,21 +173,6 @@ static SEL selSortMethod =NULL;
 	glPopMatrix();
 }
 
-// XXX deprecated
--(CCSprite*) createSpriteWithRect:(CGRect)rect
-{
-	CCSprite *sprite = [CCSprite spriteWithTexture:textureAtlas_.texture rect:rect];
-	[sprite useBatchNode:self];
-	
-	return sprite;
-}
-
-// XXX deprecated
--(void) initSprite:(CCSprite*)sprite rect:(CGRect)rect
-{
-	[sprite initWithTexture:textureAtlas_.texture rect:rect];
-	[sprite useBatchNode:self];
-}
 
 // override addChild:
 -(void) addChild:(CCSprite*)child z:(NSInteger)z tag:(NSInteger) aTag
@@ -452,7 +420,7 @@ static SEL selSortMethod =NULL;
 	if( ! [textureAtlas_ resizeCapacity:quantity] ) {
 		// serious problems
 		CCLOG(@"cocos2d: WARNING: Not enough memory to resize the atlas");
-		NSAssert(NO,@"XXX: SpriteSheet#increaseAtlasCapacity SHALL handle this assert");
+		NSAssert(NO,@"XXX: CCSpriteBatchNode#increaseAtlasCapacity SHALL handle this assert");
 	}	
 }
 
