@@ -37,8 +37,9 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		patches for MenuItemToggle that supports selectedIndex
 	* arya.irani:
 		CCCallFunc supports class methods (patch)
-	* asad.rehman:
+	* Asad ur Rehman (https://github.com/AsadR)
 		Menu doesn't receive touches when it is invisible (patch)
+		Menu doens't receive touches when one if its acenstors is invisible
 	* Atte Kotiranta (https://github.com/akotiranta)
 		Implemented setPriority in TouchDispatcher.
 		Added setPriority test in MenuTest

@@ -3,6 +3,7 @@ version 1.0.1 - 28-July-2011
 . [FIX] All: Removed deprected code
 . [FIX] CCArray: copyWithZone fixed
 . [FIX] Director: frames -> totalFrames, and it works as expected. Value is not being reset.
+. [FIX] Menu: If any ancestor is invisible, then touches won't be accepted
 . [FIX] Node: vertexZ returns points, not "pixels"
 . [FIX] LabelTTF: don't crash when calling description after dealloc
 . [FIX] Tests: [window release] instead of [window dealloc]
