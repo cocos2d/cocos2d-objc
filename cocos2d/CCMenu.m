@@ -174,6 +174,10 @@ enum {
 	if( state_ != kCCMenuStateWaiting || !visible_ )
 		return NO;
 	
+	for( CCNode *c = self.parent; c != nil; c = c.parent )
+		if( c.visible == NO )
+			return NO;
+
 	selectedItem_ = [self itemForTouch:touch];
 	[selectedItem_ selected];
 	

@@ -53,9 +53,9 @@ static NSOpenGLContext *auxGLcontext = nil;
 	id			target_;
 	id			data_;
 }
-@property	(readwrite,assign)	SEL			selector;
-@property	(readwrite,retain)	id			target;
-@property	(readwrite,retain)	id			data;
+@property	(nonatomic,readwrite,assign)	SEL			selector;
+@property	(nonatomic,readwrite,retain)	id			target;
+@property	(nonatomic,readwrite,retain)	id			data;
 @end
 
 @implementation CCAsyncObject
@@ -480,7 +480,7 @@ static CCTextureCache *sharedTextureCache;
 		CCTexture2D* tex = [textures_ objectForKey:texKey];
 		NSUInteger bpp = [tex bitsPerPixelForFormat];
 		// Each texture takes up width * height * bytesPerPixel bytes.
-		NSUInteger bytes = tex.pixelsWide * tex.pixelsWide * bpp / 8;
+		NSUInteger bytes = tex.pixelsWide * tex.pixelsHigh * bpp / 8;
 		totalBytes += bytes;
 		count++;
 		CCLOG( @"cocos2d: \"%@\" rc=%lu id=%lu %lu x %lu @ %ld bpp => %lu KB",

@@ -37,8 +37,9 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		patches for MenuItemToggle that supports selectedIndex
 	* arya.irani:
 		CCCallFunc supports class methods (patch)
-	* asad.rehman:
+	* Asad ur Rehman (https://github.com/AsadR)
 		Menu doesn't receive touches when it is invisible (patch)
+		Menu doens't receive touches when one if its acenstors is invisible
 	* Atte Kotiranta (https://github.com/akotiranta)
 		Implemented setPriority in TouchDispatcher.
 		Added setPriority test in MenuTest
@@ -164,6 +165,8 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Fixed CLang compiling warnings
 	* InsertWittyName (http://www.didev-studios.com/):
 		Texture2D allocs the right memory (patch)
+	* iomac (https://github.com/iomac):
+		CocosDenshion: Cleanup buffers to prevent noise in Mac
 	* Ishaq Malik:
 		patches for CocosNode
 	* Joao Caxaria:
@@ -374,7 +377,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Author of bug #915 test case
 	* palter AT clozure.com
 		Texture fails gracefully if PVR image can't be loaded (patch)
-	* Pascal Bourque (http://www.polkapps.com/)
+	* Pascal Bourque (http://loopycube.com/)
 		Worked around memory leak in NSXMLParser used by TMXMaps
 	* Patrick Wolowicz:
 		mkatlas: added artifact removal by copying borders to margins
