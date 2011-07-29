@@ -89,6 +89,8 @@ and when to execute the Scenes.
 	BOOL displayFPS_;
 
 	NSUInteger frames_;
+	NSUInteger totalFrames_;
+
 	ccTime accumDt_;
 	ccTime frameRate_;
 #if	CC_DIRECTOR_FAST_FPS
@@ -165,7 +167,7 @@ and when to execute the Scenes.
  */
 @property (nonatomic,readwrite) ccDirectorProjection projection;
 /** How many frames were called since the director started */
-@property (readonly) NSUInteger	frames;
+@property (nonatomic,readonly) NSUInteger	totalFrames;
 
 /** Whether or not the replaced scene will receive the cleanup message.
  If the new scene is pushed, then the old scene won't receive the "cleanup" message.

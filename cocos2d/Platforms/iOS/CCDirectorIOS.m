@@ -183,7 +183,9 @@ CGFloat	__ccContentScaleFactor = 1;
 	
 	glPopMatrix();
 	
-	[openGLView_ swapBuffers];
+	totalFrames_++;
+
+	[openGLView_ swapBuffers];	
 }
 
 -(void) setProjection:(ccDirectorProjection)projection

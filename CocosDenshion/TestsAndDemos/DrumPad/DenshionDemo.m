@@ -546,7 +546,7 @@ CDSoundSource *toneSource;
 
 - (void) dealloc
 {
-	[window dealloc];
+	[window release];
 	[super dealloc];
 }
 

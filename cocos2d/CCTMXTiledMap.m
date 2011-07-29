@@ -184,12 +184,6 @@
 	return nil;
 }
 
-// XXX deprecated
--(CCTMXObjectGroup*) groupNamed:(NSString *)groupName 
-{
-	return [self objectGroupNamed:groupName];
-}
-
 -(id) propertyNamed:(NSString *)propertyName 
 {
 	return [properties_ valueForKey:propertyName];
