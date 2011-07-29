@@ -115,8 +115,8 @@
 	GLubyte	colors[kCCRibbon_Max*8];
 	float		creationTime[kCCRibbon_Max];
 	BOOL		finished;
-	uint		end;
-	uint		begin;
+	NSUInteger		end;
+	NSUInteger		begin;
 }
 -(id)init;
 -(void)reset;

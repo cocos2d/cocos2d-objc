@@ -356,7 +356,8 @@
 		// we have to generate alpha for the ribbon each frame.
 		if (curTime )
 		{
-			uint i = begin;
+			NSUInteger i = begin;
+
 			for (; i < end; ++i)
 			{
 				int idx = i*8;
