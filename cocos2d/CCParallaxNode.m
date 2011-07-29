@@ -81,7 +81,7 @@
 	[super dealloc];
 }
 
--(void) addChild:(CCNode*)child z:(NSInteger)z tag:(NSInteger)tag
+-(void) addChild:(CCNode*)child z:(NSInteger)z
 {
 	NSAssert(NO,@"ParallaxNode: use addChild:z:parallaxRatio:positionOffset instead");
 }
@@ -98,7 +98,7 @@
 	pos.y = pos.y * ratio.y + offset.y;
 	child.position = pos;
 	
-	[super addChild: child z:z tag:child.tag];
+	[super addChild: child z:z];
 }
 
 -(void) removeChild:(CCNode*)node cleanup:(BOOL)cleanup

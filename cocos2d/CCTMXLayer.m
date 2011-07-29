@@ -502,7 +502,7 @@ int compareInts (const void * a, const void * b)
 	}
 }
 
--(void) addChild: (CCNode*)node z:(NSInteger)z tag:(NSInteger)tag
+-(void) addChild: (CCNode*)node z:(NSInteger)z
 {
 	NSAssert(NO, @"addChild: is not supported on CCTMXLayer. Instead use setTileGID:at:/tileAt:");
 }

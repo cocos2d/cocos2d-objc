@@ -204,12 +204,15 @@ Class restartAction()
 		
 	CCSprite *sp1 = [CCSprite spriteWithFile:@"grossinis_sister1.png"];
 	CCSprite *sp2 = [CCSprite spriteWithFile:@"grossinis_sister2.png"];
+	CCSprite *sp3 = [CCSprite spriteWithFile:@"grossinis_sister1.png"];
 	
 	sp1.position = ccp(100,160);
-	sp2.position = ccp(380,160);
+	sp2.position = ccp(240,160);
+	sp3.position = ccp(380,160);
 	
 	[self addChild:sp1 z:0 tag:2];
 	[self addChild:sp2 z:0 tag:3];
+	[self addChild:sp3 z:0 namedTag:@"a tag"];
 	
 	[self schedule:@selector(delay2:) interval:2.0f];
 	[self schedule:@selector(delay4:) interval:4.0f];
@@ -228,6 +231,9 @@ Class restartAction()
 {
 	[self unschedule:_cmd];
 	[self removeChildByTag:3 cleanup:NO];
+    CCNode* child = [self getChildByNamedTag:@"a tag"];
+    NSAssert(child != nil, @"Child with tag not found");
+    [self removeChildByNamedTag:@"a tag" cleanup:NO];
 }
 
 

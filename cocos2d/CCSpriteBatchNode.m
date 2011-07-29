@@ -115,11 +115,6 @@ static 	SEL selUpdate = NULL;
 	return [self initWithTexture:tex capacity:capacity];
 }
 
-- (NSString*) description
-{
-	return [NSString stringWithFormat:@"<%@ = %08X | Tag = %i>", [self class], self, tag_ ];
-}
-
 -(void)dealloc
 {	
 	[textureAtlas_ release];
@@ -164,13 +159,13 @@ static 	SEL selUpdate = NULL;
 
 
 // override addChild:
--(void) addChild:(CCSprite*)child z:(NSInteger)z tag:(NSInteger) aTag
+-(void) addChild:(CCSprite*)child z:(NSInteger)z
 {
 	NSAssert( child != nil, @"Argument must be non-nil");
 	NSAssert( [child isKindOfClass:[CCSprite class]], @"CCSpriteBatchNode only supports CCSprites as children");
 	NSAssert( child.texture.name == textureAtlas_.texture.name, @"CCSprite is not using the same texture id");
 	
-	[super addChild:child z:z tag:aTag];
+	[super addChild:child z:z];
 	
 	NSUInteger index = [self atlasIndexForChild:child atZ:z];
 	[self insertChild:child inAtlasAtIndex:index];	

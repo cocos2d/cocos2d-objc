@@ -154,6 +154,8 @@ enum {
 	// a tag. any number you want to assign to the node
 	NSInteger tag_;
     
+    NSString *namedTag_;
+    
 	// user data field
 	void *userData_;
 
@@ -252,6 +254,8 @@ enum {
 @property(nonatomic,readwrite,assign) BOOL isRelativeAnchorPoint;
 /** A tag used to identify the node easily */
 @property(nonatomic,readwrite,assign) NSInteger tag;
+/** A tag used to identify the node easily */
+@property(nonatomic,readwrite,retain) NSString *namedTag;
 /** A custom user data pointer */
 @property(nonatomic,readwrite,assign) void *userData;
 
@@ -303,6 +307,12 @@ enum {
  */
 -(void) addChild: (CCNode*)node z:(NSInteger)z tag:(NSInteger)tag;
 
+/** Adds a child to the container with z order and tag.
+ If the child is added to a 'running' node, then 'onEnter' and 'onEnterTransitionDidFinish' will be called immediately.
+ @since v0.7.1
+ */
+-(void) addChild: (CCNode*)node z:(NSInteger)z namedTag:(NSString *)tag;
+
 // composition: REMOVE
 
 /** Remove itself from its parent node. If cleanup is YES, then also remove all actions and callbacks.
@@ -321,6 +331,11 @@ enum {
  */
 -(void) removeChildByTag:(NSInteger) tag cleanup:(BOOL)cleanup;
 
+/** Removes a child from the container by tag value. It will also cleanup all running actions depending on the cleanup parameter
+ @since v0.7.1
+ */
+-(void) removeChildByNamedTag:(NSString *) tag cleanup:(BOOL)cleanup;
+
 /** Removes all children from the container and do a cleanup all running actions depending on the cleanup parameter.
  @since v0.7.1
  */
@@ -332,6 +347,13 @@ enum {
  @since v0.7.1
  */
 -(CCNode*) getChildByTag:(NSInteger) tag;
+
+// composition: GET
+/** Gets a child from the container given its tag
+ @return returns a CCNode object
+ @since v0.7.1
+ */
+-(CCNode*) getChildByNamedTag:(NSString *) tag;
 
 /** Reorders a child according to a new z value.
  * The child MUST be already added.
