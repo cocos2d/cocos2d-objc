@@ -402,10 +402,6 @@
 }
 @end
 
-// XXX Deprecated
-@implementation CCColorLayer
-@end
-
 
 #pragma mark -
 #pragma mark LayerGradient
@@ -616,6 +612,3 @@
 }
 @end
 
-// XXX Deprecated
-@implementation CCMultiplexLayer
-@end

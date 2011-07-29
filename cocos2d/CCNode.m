@@ -231,6 +231,11 @@
 	vertexZ_ = vertexZ * CC_CONTENT_SCALE_FACTOR();
 }
 
+-(float) vertexZ
+{
+	return vertexZ_ / CC_CONTENT_SCALE_FACTOR();
+}
+
 -(float) scale
 {
 	NSAssert( scaleX_ == scaleY_, @"CCNode#scale. ScaleX != ScaleY. Don't know which one to return");

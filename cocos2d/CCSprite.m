@@ -145,9 +145,6 @@ struct transformValues_ {
 		
 		flipY_ = flipX_ = NO;
 		
-		// lazy alloc
-		animations_ = nil;
-		
 		// default transform anchor: center
 		anchorPoint_ =  ccp(0.5f, 0.5f);
 		
@@ -243,21 +240,6 @@ struct transformValues_ {
 	return [self initWithSpriteFrame:frame];
 }
 
-// XXX: deprecated
-- (id) initWithCGImage: (CGImageRef)image
-{
-	NSAssert(image!=nil, @"Invalid CGImageRef for sprite");
-
-	// XXX: possible bug. See issue #349. New API should be added
-	NSString *key = [NSString stringWithFormat:@"%08X",(unsigned long)image];
-	CCTexture2D *texture = [[CCTextureCache sharedTextureCache] addCGImage:image forKey:key];
-	
-	CGRect rect = CGRectZero;
-	rect.size = texture.contentSize;
-	
-	return [self initWithTexture:texture rect:rect];
-}
-
 - (id) initWithCGImage:(CGImageRef)image key:(NSString*)key
 {
 	NSAssert(image!=nil, @"Invalid CGImageRef for sprite");
@@ -300,7 +282,6 @@ struct transformValues_ {
 - (void) dealloc
 {
 	[texture_ release];
-	[animations_ release];
 	[super dealloc];
 }
 
@@ -327,11 +308,6 @@ struct transformValues_ {
 	usesBatchNode_ = YES;
 	textureAtlas_ = [batchNode textureAtlas]; // weak ref
 	batchNode_ = batchNode; // weak ref
-}
-
--(void) initAnimationDictionary
-{
-	animations_ = [[NSMutableDictionary alloc] initWithCapacity:2];
 }
 
 -(void)setTextureRect:(CGRect)rect
@@ -929,20 +905,6 @@ struct transformValues_ {
 	[self setTextureRectInPixels:frame.rectInPixels rotated:frame.rotated untrimmedSize:frame.originalSizeInPixels];
 }
 
-// XXX deprecated
--(void) setDisplayFrame: (NSString*) animationName index:(int) frameIndex
-{
-	if( ! animations_ )
-		[self initAnimationDictionary];
-	
-	CCAnimation *a = [animations_ objectForKey: animationName];
-	CCSpriteFrame *frame = [[a frames] objectAtIndex:frameIndex];
-	
-	NSAssert( frame, @"CCSprite#setDisplayFrame. Invalid frame");
-	
-	[self setDisplayFrame:frame];
-}
-
 -(void) setDisplayFrameWithAnimationName: (NSString*) animationName index:(int) frameIndex
 {
 	NSAssert( animationName, @"CCSprite#setDisplayFrameWithAnimationName. animationName must not be nil");
@@ -973,21 +935,6 @@ struct transformValues_ {
 								   rotated:rectRotated_
 									offset:unflippedOffsetPositionFromCenter_
 							  originalSize:contentSizeInPixels_];
-}
-
--(void) addAnimation: (CCAnimation*) anim
-{
-	// lazy alloc
-	if( ! animations_ )
-		[self initAnimationDictionary];
-	
-	[animations_ setObject:anim forKey:[anim name]];
-}
-
--(CCAnimation*)animationByName: (NSString*) animationName
-{
-	NSAssert( animationName != nil, @"animationName parameter must be non nil");
-    return [animations_ objectForKey:animationName];
 }
 
 #pragma mark CCSprite - CocosNodeTexture protocol
