@@ -187,6 +187,7 @@ struct transformValues_ {
 	return self;
 }
 
+// designated initializer
 -(id) initWithTexture:(CCTexture2D*)texture rect:(CGRect)rect
 {
 	NSAssert(texture!=nil, @"Invalid texture for sprite");
