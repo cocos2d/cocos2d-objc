@@ -148,7 +148,7 @@
 
 #pragma mark CCAtlasNode - RGBA protocol
 
-- (ccColor3UB) color
+- (ccColor3B) color
 {
 	if(opacityModifyRGB_)
 		return colorUnmodified_;
@@ -156,7 +156,7 @@
 	return color_;
 }
 
--(void) setColor:(ccColor3UB)color3
+-(void) setColor:(ccColor3B)color3
 {
 	color_ = colorUnmodified_ = color3;
 	
@@ -183,7 +183,7 @@
 
 -(void) setOpacityModifyRGB:(BOOL)modify
 {
-	ccColor3UB oldColor	= self.color;
+	ccColor3B oldColor	= self.color;
 	opacityModifyRGB_	= modify;
 	self.color			= oldColor;
 }

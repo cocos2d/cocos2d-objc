@@ -284,17 +284,17 @@
 @synthesize blendFunc = blendFunc_;
 
 
-+ (id) layerWithColor:(ccColor4UB)color width:(GLfloat)w  height:(GLfloat) h
++ (id) layerWithColor:(ccColor4B)color width:(GLfloat)w  height:(GLfloat) h
 {
 	return [[[self alloc] initWithColor:color width:w height:h] autorelease];
 }
 
-+ (id) layerWithColor:(ccColor4UB)color
++ (id) layerWithColor:(ccColor4B)color
 {
 	return [[(CCLayerColor*)[self alloc] initWithColor:color] autorelease];
 }
 
-- (id) initWithColor:(ccColor4UB)color width:(GLfloat)w  height:(GLfloat) h
+- (id) initWithColor:(ccColor4B)color width:(GLfloat)w  height:(GLfloat) h
 {
 	if( (self=[super init]) ) {
 		
@@ -319,7 +319,7 @@
 	return self;
 }
 
-- (id) initWithColor:(ccColor4UB)color
+- (id) initWithColor:(ccColor4B)color
 {
 	CGSize s = [[CCDirector sharedDirector] winSize];
 	return [self initWithColor:color width:s.width height:s.height];
@@ -384,7 +384,7 @@
 #pragma mark Protocols
 // Color Protocol
 
--(void) setColor:(ccColor3UB)color
+-(void) setColor:(ccColor3B)color
 {
 	color_ = color;
 	[self updateColor];
@@ -407,22 +407,22 @@
 @synthesize endColor = endColor_, endOpacity = endOpacity_;
 @synthesize vector = vector_;
 
-+ (id) layerWithColor: (ccColor4UB) start fadingTo: (ccColor4UB) end
++ (id) layerWithColor: (ccColor4B) start fadingTo: (ccColor4B) end
 {
     return [[[self alloc] initWithColor:start fadingTo:end] autorelease];
 }
 
-+ (id) layerWithColor: (ccColor4UB) start fadingTo: (ccColor4UB) end alongVector: (CGPoint) v
++ (id) layerWithColor: (ccColor4B) start fadingTo: (ccColor4B) end alongVector: (CGPoint) v
 {
     return [[[self alloc] initWithColor:start fadingTo:end alongVector:v] autorelease];
 }
 
-- (id) initWithColor: (ccColor4UB) start fadingTo: (ccColor4UB) end
+- (id) initWithColor: (ccColor4B) start fadingTo: (ccColor4B) end
 {
     return [self initWithColor:start fadingTo:end alongVector:ccp(0, -1)];
 }
 
-- (id) initWithColor: (ccColor4UB) start fadingTo: (ccColor4UB) end alongVector: (CGPoint) v
+- (id) initWithColor: (ccColor4B) start fadingTo: (ccColor4B) end alongVector: (CGPoint) v
 {
 	endColor_.r = end.r;
 	endColor_.g = end.g;
@@ -494,17 +494,17 @@
 	squareColors_[3].a = E.a + (S.a - E.a) * ((c - u.x - u.y) / (2.0f * c));
 }
 
--(ccColor3UB) startColor
+-(ccColor3B) startColor
 {
 	return color_;
 }
 
--(void) setStartColor:(ccColor3UB)colors
+-(void) setStartColor:(ccColor3B)colors
 {
 	[self setColor:colors];
 }
 
--(void) setEndColor:(ccColor3UB)colors
+-(void) setEndColor:(ccColor3B)colors
 {
     endColor_ = colors;
     [self updateColor];

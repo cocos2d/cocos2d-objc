@@ -340,8 +340,8 @@ typedef struct _ccBezierConfig {
 */
 @interface CCTintTo : CCActionInterval <NSCopying>
 {
-	ccColor3UB to_;
-	ccColor3UB from_;
+	ccColor3B to_;
+	ccColor3B from_;
 }
 /** creates an action with duration and color */
 +(id) actionWithDuration:(ccTime)duration red:(GLubyte)red green:(GLubyte)green blue:(GLubyte)blue;

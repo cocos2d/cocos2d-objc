@@ -768,12 +768,12 @@ const NSInteger kSceneFade = 0xFADEFADE;
 // Fade Transition
 //
 @implementation CCTransitionFade
-+(id) transitionWithDuration:(ccTime)d scene:(CCScene*)s withColor:(ccColor3UB)color
++(id) transitionWithDuration:(ccTime)d scene:(CCScene*)s withColor:(ccColor3B)color
 {
 	return [[[self alloc] initWithDuration:d scene:s withColor:color] autorelease];
 }
 
--(id) initWithDuration:(ccTime)d scene:(CCScene*)s withColor:(ccColor3UB)aColor
+-(id) initWithDuration:(ccTime)d scene:(CCScene*)s withColor:(ccColor3B)aColor
 {
 	if( (self=[super initWithDuration:d scene:s]) ) {
 		color.r = aColor.r;
@@ -834,7 +834,7 @@ const NSInteger kSceneFade = 0xFADEFADE;
 	
 	// create a transparent color layer
 	// in which we are going to add our rendertextures
-	ccColor4UB  color = {0,0,0,0};
+	ccColor4B  color = {0,0,0,0};
 	CGSize size = [[CCDirector sharedDirector] winSize];
 	CCLayerColor * layer = [CCLayerColor layerWithColor:color];
 	
