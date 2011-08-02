@@ -101,13 +101,13 @@
 @interface CCMenuItemLabel : CCMenuItem  <CCRGBAProtocol>
 {
 	CCNode<CCLabelProtocol, CCRGBAProtocol> *label_;
-	ccColor3UB	colorBackup;
-	ccColor3UB	disabledColor_;
+	ccColor3B	colorBackup;
+	ccColor3B	disabledColor_;
 	float		originalScale_;
 }
 
 /** the color that will be used to disable the item */
-@property (nonatomic,readwrite) ccColor3UB disabledColor;
+@property (nonatomic,readwrite) ccColor3B disabledColor;
 
 /** Label that is rendered. It can be any CCNode that implements the CCLabelProtocol */
 @property (nonatomic,readwrite,assign) CCNode<CCLabelProtocol, CCRGBAProtocol>* label;
@@ -325,13 +325,13 @@
 	NSUInteger selectedIndex_;
 	NSMutableArray* subItems_;
 	GLubyte		opacity_;
-	ccColor3UB	color_;
+	ccColor3B	color_;
 }
 
 /** conforms with CCRGBAProtocol protocol */
 @property (nonatomic,readonly) GLubyte opacity;
 /** conforms with CCRGBAProtocol protocol */
-@property (nonatomic,readonly) ccColor3UB color;
+@property (nonatomic,readonly) ccColor3B color;
 
 /** returns the selected item */
 @property (nonatomic,readwrite) NSUInteger selectedIndex;

@@ -154,7 +154,7 @@
 @interface CCLayerColor : CCLayer <CCRGBAProtocol, CCBlendProtocol>
 {
 	GLubyte		opacity_;
-	ccColor3UB	color_;	
+	ccColor3B	color_;	
 	ccVertex2F	squareVertices_[4];
 	ccColor4F	squareColors_[4];
 	
@@ -162,14 +162,14 @@
 }
 
 /** creates a CCLayer with color, width and height in Points*/
-+ (id) layerWithColor: (ccColor4UB)color width:(GLfloat)w height:(GLfloat)h;
++ (id) layerWithColor: (ccColor4B)color width:(GLfloat)w height:(GLfloat)h;
 /** creates a CCLayer with color. Width and height are the window size. */
-+ (id) layerWithColor: (ccColor4UB)color;
++ (id) layerWithColor: (ccColor4B)color;
 
 /** initializes a CCLayer with color, width and height in Points */
-- (id) initWithColor:(ccColor4UB)color width:(GLfloat)w height:(GLfloat)h;
+- (id) initWithColor:(ccColor4B)color width:(GLfloat)w height:(GLfloat)h;
 /** initializes a CCLayer with color. Width and height are the window size. */
-- (id) initWithColor:(ccColor4UB)color;
+- (id) initWithColor:(ccColor4B)color;
 
 /** change width in Points */
 -(void) changeWidth: (GLfloat)w;
@@ -183,7 +183,7 @@
 /** Opacity: conforms to CCRGBAProtocol protocol */
 @property (nonatomic,readonly) GLubyte opacity;
 /** Opacity: conforms to CCRGBAProtocol protocol */
-@property (nonatomic,readonly) ccColor3UB color;
+@property (nonatomic,readonly) ccColor3B color;
 /** BlendFunction. Conforms to CCBlendProtocol protocol */
 @property (nonatomic,readwrite) ccBlendFunc blendFunc;
 @end
@@ -213,7 +213,7 @@ the background.
  */
 @interface CCLayerGradient : CCLayerColor
 {
-	ccColor3UB endColor_;
+	ccColor3B endColor_;
 	GLubyte startOpacity_;
 	GLubyte endOpacity_;
 	CGPoint vector_;
@@ -221,19 +221,19 @@ the background.
 }
 
 /** Creates a full-screen CCLayer with a gradient between start and end. */
-+ (id) layerWithColor: (ccColor4UB) start fadingTo: (ccColor4UB) end;
++ (id) layerWithColor: (ccColor4B) start fadingTo: (ccColor4B) end;
 /** Creates a full-screen CCLayer with a gradient between start and end in the direction of v. */
-+ (id) layerWithColor: (ccColor4UB) start fadingTo: (ccColor4UB) end alongVector: (CGPoint) v;
++ (id) layerWithColor: (ccColor4B) start fadingTo: (ccColor4B) end alongVector: (CGPoint) v;
 
 /** Initializes the CCLayer with a gradient between start and end. */
-- (id) initWithColor: (ccColor4UB) start fadingTo: (ccColor4UB) end;
+- (id) initWithColor: (ccColor4B) start fadingTo: (ccColor4B) end;
 /** Initializes the CCLayer with a gradient between start and end in the direction of v. */
-- (id) initWithColor: (ccColor4UB) start fadingTo: (ccColor4UB) end alongVector: (CGPoint) v;
+- (id) initWithColor: (ccColor4B) start fadingTo: (ccColor4B) end alongVector: (CGPoint) v;
 
 /** The starting color. */
-@property (nonatomic, readwrite) ccColor3UB startColor;
+@property (nonatomic, readwrite) ccColor3B startColor;
 /** The ending color. */
-@property (nonatomic, readwrite) ccColor3UB endColor;
+@property (nonatomic, readwrite) ccColor3B endColor;
 /** The starting opacity. */
 @property (nonatomic, readwrite) GLubyte startOpacity;
 /** The ending color. */

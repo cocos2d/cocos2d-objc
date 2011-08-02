@@ -167,7 +167,7 @@ struct transformValues_ {
 		hasChildren_ = NO;
 		
 		// Atlas: Color
-		ccColor4UB tmpColor = {255,255,255,255};
+		ccColor4B tmpColor = {255,255,255,255};
 		quad_.bl.colors = tmpColor;
 		quad_.br.colors = tmpColor;
 		quad_.tl.colors = tmpColor;
@@ -187,7 +187,6 @@ struct transformValues_ {
 	return self;
 }
 
-// designated initializer
 -(id) initWithTexture:(CCTexture2D*)texture rect:(CGRect)rect
 {
 	NSAssert(texture!=nil, @"Invalid texture for sprite");
@@ -832,7 +831,7 @@ struct transformValues_ {
 #pragma mark CCSprite - RGBA protocol
 -(void) updateColor
 {
-	ccColor4UB color4 = {color_.r, color_.g, color_.b, opacity_};
+	ccColor4B color4 = {color_.r, color_.g, color_.b, opacity_};
 	
 	quad_.bl.colors = color4;
 	quad_.br.colors = color4;
@@ -868,7 +867,7 @@ struct transformValues_ {
 	[self updateColor];
 }
 
-- (ccColor3UB) color
+- (ccColor3B) color
 {
 	if(opacityModifyRGB_)
 		return colorUnmodified_;
@@ -876,7 +875,7 @@ struct transformValues_ {
 	return color_;
 }
 
--(void) setColor:(ccColor3UB)color3
+-(void) setColor:(ccColor3B)color3
 {
 	color_ = colorUnmodified_ = color3;
 	
@@ -891,7 +890,7 @@ struct transformValues_ {
 
 -(void) setOpacityModifyRGB:(BOOL)modify
 {
-	ccColor3UB oldColor	= self.color;
+	ccColor3B oldColor	= self.color;
 	opacityModifyRGB_	= modify;
 	self.color			= oldColor;
 }

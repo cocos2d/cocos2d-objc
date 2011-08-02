@@ -72,7 +72,7 @@
 	float			textureLength_;
 
 	// RGBA protocol
-	ccColor4UB color_;
+	ccColor4B color_;
 
 	// blend func
 	ccBlendFunc		blendFunc_;
@@ -91,12 +91,12 @@
 @property (nonatomic,readwrite,assign) ccBlendFunc blendFunc;
 
 /** color used by the Ribbon (RGBA) */
-@property (nonatomic,readwrite) ccColor4UB color;
+@property (nonatomic,readwrite) ccColor4B color;
 
 /** creates the ribbon */
-+(id)ribbonWithWidth:(float)w image:(NSString*)path length:(float)l color:(ccColor4UB)color fade:(float)fade;
++(id)ribbonWithWidth:(float)w image:(NSString*)path length:(float)l color:(ccColor4B)color fade:(float)fade;
 /** init the ribbon */
--(id)initWithWidth:(float)w image:(NSString*)path length:(float)l color:(ccColor4UB)color fade:(float)fade;
+-(id)initWithWidth:(float)w image:(NSString*)path length:(float)l color:(ccColor4B)color fade:(float)fade;
 /** add a point to the ribbon */
 -(void)addPointAt:(CGPoint)location width:(float)w;
 /** polling function */
@@ -120,5 +120,5 @@
 }
 -(id)init;
 -(void)reset;
--(void)draw:(float)curTime fadeTime:(float)fadeTime color:(ccColor4UB)color;
+-(void)draw:(float)curTime fadeTime:(float)fadeTime color:(ccColor4B)color;
 @end

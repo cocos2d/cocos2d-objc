@@ -263,11 +263,11 @@ const NSInteger	kZoomActionTag = 0xc0c05002;
 {
 	return [label_ opacity];
 }
--(void) setColor:(ccColor3UB)color
+-(void) setColor:(ccColor3B)color
 {
 	[label_ setColor:color];
 }
--(ccColor3UB) color
+-(ccColor3B) color
 {
 	return [label_ color];
 }
@@ -508,7 +508,7 @@ const NSInteger	kZoomActionTag = 0xc0c05002;
 	[disabledImage_ setOpacity:opacity];
 }
 
--(void) setColor:(ccColor3UB)color
+-(void) setColor:(ccColor3B)color
 {
 	[normalImage_ setColor:color];
 	[selectedImage_ setColor:color];
@@ -520,7 +520,7 @@ const NSInteger	kZoomActionTag = 0xc0c05002;
 	return [normalImage_ opacity];
 }
 
--(ccColor3UB) color
+-(ccColor3B) color
 {
 	return [normalImage_ color];
 }
@@ -758,7 +758,7 @@ const NSInteger	kZoomActionTag = 0xc0c05002;
 		[item setOpacity:opacity];
 }
 
-- (void) setColor:(ccColor3UB)color
+- (void) setColor:(ccColor3B)color
 {
 	color_ = color;
 	for(CCMenuItem<CCRGBAProtocol>* item in subItems_)

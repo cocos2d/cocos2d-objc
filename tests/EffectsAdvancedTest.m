@@ -335,14 +335,14 @@ Class restartAction()
 	[self removeChild:bg cleanup:YES];
 
 	// background
-	CCLayerColor *layer = [CCLayerColor layerWithColor:(ccColor4UB){255,0,0,255}];
+	CCLayerColor *layer = [CCLayerColor layerWithColor:(ccColor4B){255,0,0,255}];
 	[self addChild:layer z:-10];
 	CCSprite *sprite = [CCSprite spriteWithFile:@"grossini.png"];
 	[sprite setPosition:ccp(50,80)];
 	[layer addChild:sprite z:10];
 	
 	// foreground
-	CCLayerColor *layer2 = [CCLayerColor layerWithColor:(ccColor4UB){0, 255,0,255}];
+	CCLayerColor *layer2 = [CCLayerColor layerWithColor:(ccColor4B){0, 255,0,255}];
 	CCSprite *fog = [CCSprite spriteWithFile:@"Fog.png"];
 	[fog setBlendFunc:(ccBlendFunc){GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA}];
 	[layer2 addChild:fog z:1];

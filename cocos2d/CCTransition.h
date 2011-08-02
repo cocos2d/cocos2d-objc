@@ -224,14 +224,14 @@ typedef enum {
  */
 @interface CCTransitionFade : CCTransitionScene
 {
-	ccColor4UB	color;
+	ccColor4B	color;
 }
 /** creates the transition with a duration and with an RGB color
  * Example: [FadeTransition transitionWithDuration:2 scene:s withColor:ccc3(255,0,0)]; // red color
  */
-+(id) transitionWithDuration:(ccTime)duration scene:(CCScene*)scene withColor:(ccColor3UB)color;
++(id) transitionWithDuration:(ccTime)duration scene:(CCScene*)scene withColor:(ccColor3B)color;
 /** initializes the transition with a duration and with an RGB color */
--(id) initWithDuration:(ccTime)duration scene:(CCScene*)scene withColor:(ccColor3UB)color;
+-(id) initWithDuration:(ccTime)duration scene:(CCScene*)scene withColor:(ccColor3B)color;
 @end
 
 

@@ -143,12 +143,12 @@ const char kCCProgressTextureCoords = 0x4b;
 		}
 	}
 }
--(void)setColor:(ccColor3UB)c
+-(void)setColor:(ccColor3B)c
 {
 	sprite_.color = c;
 	[self updateColor];
 }
--(ccColor3UB)color
+-(ccColor3B)color
 {
 	return sprite_.color;
 }
@@ -195,7 +195,7 @@ const char kCCProgressTextureCoords = 0x4b;
 		return;
 	}
 	if(vertexData_){
-		ccColor4UB sc = sprite_.quad.tl.colors;
+		ccColor4B sc = sprite_.quad.tl.colors;
 		for (int i=0; i < vertexDataCount_; ++i) {
 			vertexData_[i].colors = sc;
 		}

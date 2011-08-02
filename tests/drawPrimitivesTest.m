@@ -159,7 +159,7 @@ Class restartAction()
 	// GL_SMOOTH_LINE_WIDTH_RANGE = (1,1) on iPhone
 //	glDisable(GL_LINE_SMOOTH);
 	glLineWidth( 5.0f );
-	ccDrawColor4ub(255,0,0,255);
+	ccDrawColor4B(255,0,0,255);
 	ccDrawLine( ccp(0, s.height), ccp(s.width, 0) );
 	
 	CHECK_GL_ERROR_DEBUG();
@@ -172,7 +172,7 @@ Class restartAction()
 	
 	// draw big point in the center
 //	glPointSize(64);
-	ccDrawColor4ub(0,0,255,128);
+	ccDrawColor4B(0,0,255,128);
 	ccDrawPoint( ccp(s.width / 2, s.height / 2) );
 	
 	CHECK_GL_ERROR_DEBUG();
@@ -180,27 +180,27 @@ Class restartAction()
 	// draw 4 small points
 	CGPoint points[] = { ccp(60,60), ccp(70,70), ccp(60,70), ccp(70,60) };
 //	glPointSize(4);
-	ccDrawColor4ub(0,255,255,255);
+	ccDrawColor4B(0,255,255,255);
 	ccDrawPoints( points, 4);
 	
 	CHECK_GL_ERROR_DEBUG();
 	
 	// draw a green circle with 10 segments
 	glLineWidth(16);
-	ccDrawColor4ub(0, 255, 0, 255);
+	ccDrawColor4B(0, 255, 0, 255);
 	ccDrawCircle( ccp(s.width/2,  s.height/2), 100, 0, 10, NO);
 
 	CHECK_GL_ERROR_DEBUG();
 
 	// draw a green circle with 50 segments with line to center
 	glLineWidth(2);
-	ccDrawColor4ub(0, 255, 255, 255);
+	ccDrawColor4B(0, 255, 255, 255);
 	ccDrawCircle( ccp(s.width/2, s.height/2), 50, CC_DEGREES_TO_RADIANS(90), 50, YES);	
 	
 	CHECK_GL_ERROR_DEBUG();
 
 	// open yellow poly
-	ccDrawColor4ub(255, 255, 0, 255);
+	ccDrawColor4B(255, 255, 0, 255);
 	glLineWidth(10);
 	CGPoint vertices[] = { ccp(0,0), ccp(50,50), ccp(100,50), ccp(100,100), ccp(50,100) };
 	ccDrawPoly( vertices, 5, NO);
@@ -208,7 +208,7 @@ Class restartAction()
 	CHECK_GL_ERROR_DEBUG();
 
 	// closed purble poly
-	ccDrawColor4ub(255, 0, 255, 255);
+	ccDrawColor4B(255, 0, 255, 255);
 	glLineWidth(2);
 	CGPoint vertices2[] = { ccp(30,130), ccp(30,230), ccp(50,200) };
 	ccDrawPoly( vertices2, 3, YES);
@@ -227,7 +227,7 @@ Class restartAction()
 	
 	// restore original values
 	glLineWidth(1);
-	ccDrawColor4ub(255,255,255,255);
+	ccDrawColor4B(255,255,255,255);
 //	glPointSize(1);
 	
 	CHECK_GL_ERROR_DEBUG();

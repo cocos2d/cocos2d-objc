@@ -58,13 +58,13 @@
 @synthesize color=color_;
 @synthesize textureLength = textureLength_;
 
-+(id)ribbonWithWidth:(float)w image:(NSString*)path length:(float)l color:(ccColor4UB)color fade:(float)fade
++(id)ribbonWithWidth:(float)w image:(NSString*)path length:(float)l color:(ccColor4B)color fade:(float)fade
 {
 	self = [[[self alloc] initWithWidth:w image:path length:l color:color fade:fade] autorelease];
 	return self;
 }
 
--(id)initWithWidth:(float)w image:(NSString*)path length:(float)l color:(ccColor4UB)color fade:(float)fade
+-(id)initWithWidth:(float)w image:(NSString*)path length:(float)l color:(ccColor4B)color fade:(float)fade
 {
 	self = [super init];
 	if (self)
@@ -344,7 +344,7 @@
 	finished = NO;
 }
 
--(void)draw:(float)curTime fadeTime:(float)fadeTime color:(ccColor4UB)color
+-(void)draw:(float)curTime fadeTime:(float)fadeTime color:(ccColor4B)color
 {
 	GLubyte r = color.r;
 	GLubyte g = color.g;

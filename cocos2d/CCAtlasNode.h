@@ -61,8 +61,8 @@
 
 	// texture RGBA. 
 	GLubyte		opacity_;
-	ccColor3UB	color_;
-	ccColor3UB	colorUnmodified_;
+	ccColor3B	color_;
+	ccColor3B	colorUnmodified_;
 	BOOL opacityModifyRGB_;
 	
 	// color uniform
@@ -78,7 +78,7 @@
 /** conforms to CCRGBAProtocol protocol */
 @property (nonatomic,readwrite) GLubyte opacity;
 /** conforms to CCRGBAProtocol protocol */
-@property (nonatomic,readwrite) ccColor3UB color;
+@property (nonatomic,readwrite) ccColor3B color;
 
 /** how many quads to draw */
 @property (nonatomic,readwrite) NSUInteger quadsToDraw;

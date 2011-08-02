@@ -348,7 +348,7 @@ void ccDrawColor4f( GLubyte r, GLubyte g, GLubyte b, GLubyte a )
 	color_ = (ccColor4F) {r, g, b, a};
 }
 
-void ccDrawColor4ub( GLubyte r, GLubyte g, GLubyte b, GLubyte a )
+void ccDrawColor4B( GLubyte r, GLubyte g, GLubyte b, GLubyte a )
 {
 	color_ =  (ccColor4F) {r/255.0f, g/255.0f, b/255.0f, a/255.0f};
 }
