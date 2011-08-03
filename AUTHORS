@@ -39,8 +39,22 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 
 
 
-cocos2d for iPhone 1.0 authors
-------------------------------
+cocos2d for iPhone authors for v1.1
+-----------------------------------
+
+Lead Developer:
+	Ricardo Quesada (http://www.zynga.com)
+
+
+Contributors (alphabetically ordered):
+
+* Stepan Generalov (iPsi) (http://www.itraceur.ru/)
+	FileUtils: Loads -hd resources even if the -sd resource is not present. patch
+
+
+
+cocos2d for iPhone authors for v1.0
+-----------------------------------
 
 Lead Developer:
 	Ricardo Quesada (http://www.zynga.com)
@@ -48,7 +62,6 @@ Lead Developer:
 Developers:
 	Valentin Milea
 	Steve Oldmeadow (http://www.smoco.com/)
-
 
 People/companies who were/are contributing code to cocos2d for iPhone (alphabetically ordered):
 
@@ -507,6 +520,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	* Stepan Generalov (iPsi) (http://www.itraceur.ru/)
 		EventDispatcher: flagsChanged is triggered correctly. patch
 		Test case for issue 1071
+		FileUtils: Loads -hd resources even if the -sd resource is not present. patch
 	* Steve Oldmeadow (http://www.smoco.com/):
 		Author and maintainer of CocosDenshion Sound Engine:
 			It includes patching, maintaing, porting it to Mac,

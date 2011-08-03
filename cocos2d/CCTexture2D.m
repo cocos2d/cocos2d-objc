@@ -65,6 +65,9 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
  * https://devforums.apple.com/message/37855#37855 by a1studmuffin
  */
 
+/*
+ * Added many additions for cocos2d
+ */
 
 #import <Availability.h>
 
@@ -144,7 +147,9 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 		maxT_ = size.height / (float)height;
 
 		hasPremultipliedAlpha_ = NO;
-	}					
+		
+		resolutionType_ = kCCResolutionUnknown;
+	}
 	return self;
 }
 

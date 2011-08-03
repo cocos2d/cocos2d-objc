@@ -200,4 +200,8 @@
 {}
 @end
 
+@interface FileUtilsTest : TextureDemo
+{}
+@end
+
 

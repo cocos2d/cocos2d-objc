@@ -30,6 +30,11 @@ version 2.0-alpha XX-Ago-2011
 . [FIX] Xcode: Tremor / vorbis: Removed. Experimental sound engine is no longer supported
 . [FIX] Xcode: iOS 4 is minimun required to run
 
+version 1.1 - XX-Ago-2011
+. [NEW] FileUtils: Added iPad / RetinaDisplay extension. To use it, call [CCFileUtils setiPadSuffix:@"-ipad"] or setRetinaDisplaySuffix
+. [NEW] FileUtils: Added xxxFileExistAtPath for iPad and RetinaDisplay resources
+. [FIX] FileUtils: Loads -hd resources even if the sd resource is not present (issue #1179)
+
 version 1.0.1 - 28-July-2011
 . [FIX] All: Implicit atomic properties converted to nonatomic
 . [FIX] All: Removed deprected code
