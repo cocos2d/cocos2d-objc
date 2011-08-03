@@ -35,7 +35,9 @@ static NSFileManager *__localFileManager=nil;
 
 static NSString *__suffixRetinaDisplay =@"-hd";
 static NSString *__suffixiPad =@"-ipad";
-static NSString *__suffixiPhone =@"";
+
+
+NSString *ccRemoveSuffixFromPath( NSString *suffix, NSString *path);
 
 // 
 NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out) 
@@ -67,29 +69,48 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 	return size;
 }
 
-NSString *ccRemoveHDSuffixFromFile( NSString *path )
+NSString *ccRemoveSuffixFromPath( NSString *suffix, NSString *path)
 {
-#if CC_IS_RETINA_DISPLAY_SUPPORTED
+	// quick return
+	if( ! suffix || [suffix length] == 0 )
+		return path;
 
-	if( CC_CONTENT_SCALE_FACTOR() == 2 ) {
-				
-		NSString *name = [path lastPathComponent];
+	NSString *name = [path lastPathComponent];
+	
+	// check if path already has the suffix.
+	if( [name rangeOfString:__suffixRetinaDisplay].location != NSNotFound ) {
 		
-		// check if path already has the suffix.
-		if( [name rangeOfString:CC_RETINA_DISPLAY_FILENAME_SUFFIX].location != NSNotFound ) {
-			
-			CCLOG(@"cocos2d: Filename(%@) contains %@ suffix. Removing it. See cocos2d issue #1040", path, CC_RETINA_DISPLAY_FILENAME_SUFFIX);
-
-			NSString *newLastname = [name stringByReplacingOccurrencesOfString:CC_RETINA_DISPLAY_FILENAME_SUFFIX withString:@""];
-			
-			NSString *pathWithoutLastname = [path stringByDeletingLastPathComponent];
-			return [pathWithoutLastname stringByAppendingPathComponent:newLastname];
-		}		
+		CCLOG(@"cocos2d: Filename(%@) contains %@ suffix. Removing it. See cocos2d issue #1040", path, suffix);
+		
+		NSString *newLastname = [name stringByReplacingOccurrencesOfString:suffix withString:@""];
+		
+		NSString *pathWithoutLastname = [path stringByDeletingLastPathComponent];
+		return [pathWithoutLastname stringByAppendingPathComponent:newLastname];
 	}
 
-#endif // CC_IS_RETINA_DISPLAY_SUPPORTED
-
 	return path;
+}
+
+NSString *ccRemoveDeviceSuffixFromFile( NSString *path )
+{
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+	
+	NSString *ret = nil;
+	if( CC_CONTENT_SCALE_FACTOR() == 2 )
+		ret = ccRemoveSuffixFromPath( __suffixRetinaDisplay, path );
+	
+	else if( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+		ret = ccRemoveSuffixFromPath( __suffixiPad, path );
+
+	else 
+		ret = path;
+
+	return ret;
+	
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+	// Do nothing on Mac
+	return path;
+#endif
 
 }
 
@@ -102,45 +123,41 @@ NSString *ccRemoveHDSuffixFromFile( NSString *path )
 		__localFileManager = [[NSFileManager alloc] init];
 }
 
-+(NSString*) getDoubleResolutionImage:(NSString*)path
++(NSString*) getPath:(NSString*)path forSuffix:(NSString*)suffix
 {
-#if CC_IS_RETINA_DISPLAY_SUPPORTED
+	// quick return
+	if( ! suffix || [suffix length] == 0 )
+		return path;
+	
+	NSString *pathWithoutExtension = [path stringByDeletingPathExtension];
+	NSString *name = [pathWithoutExtension lastPathComponent];
+	
+	// check if path already has the suffix.
+	if( [name rangeOfString:suffix].location != NSNotFound ) {
+	
+		CCLOG(@"cocos2d: WARNING Filename(%@) already has the suffix %@. Using it.", name, suffix);			
+		return path;
+	}
 
-	if( CC_CONTENT_SCALE_FACTOR() == 2 )
+	
+	NSString *extension = [path pathExtension];
+	
+	if( [extension isEqualToString:@"ccz"] || [extension isEqualToString:@"gz"] )
 	{
-		
-		NSString *pathWithoutExtension = [path stringByDeletingPathExtension];
-		NSString *name = [pathWithoutExtension lastPathComponent];
-		
-		// check if path already has the suffix.
-		if( [name rangeOfString:CC_RETINA_DISPLAY_FILENAME_SUFFIX].location != NSNotFound ) {
-		
-			CCLOG(@"cocos2d: WARNING Filename(%@) already has the suffix %@. Using it.", name, CC_RETINA_DISPLAY_FILENAME_SUFFIX);			
-			return path;
-		}
-
-		
-		NSString *extension = [path pathExtension];
-		
-		if( [extension isEqualToString:@"ccz"] || [extension isEqualToString:@"gz"] )
-		{
-			// All ccz / gz files should be in the format filename.xxx.ccz
-			// so we need to pull off the .xxx part of the extension as well
-			extension = [NSString stringWithFormat:@"%@.%@", [pathWithoutExtension pathExtension], extension];
-			pathWithoutExtension = [pathWithoutExtension stringByDeletingPathExtension];
-		}
-		
-		
-		NSString *retinaName = [pathWithoutExtension stringByAppendingString:CC_RETINA_DISPLAY_FILENAME_SUFFIX];
-		retinaName = [retinaName stringByAppendingPathExtension:extension];
-
-		if( [__localFileManager fileExistsAtPath:retinaName] )
-			return retinaName;
-
-		CCLOG(@"cocos2d: CCFileUtils: Warning HD file not found: %@", [retinaName lastPathComponent] );
+		// All ccz / gz files should be in the format filename.xxx.ccz
+		// so we need to pull off the .xxx part of the extension as well
+		extension = [NSString stringWithFormat:@"%@.%@", [pathWithoutExtension pathExtension], extension];
+		pathWithoutExtension = [pathWithoutExtension stringByDeletingPathExtension];
 	}
 	
-#endif // CC_IS_RETINA_DISPLAY_SUPPORTED
+	
+	NSString *newName = [pathWithoutExtension stringByAppendingString:suffix];
+	newName = [newName stringByAppendingPathExtension:extension];
+
+	if( [__localFileManager fileExistsAtPath:newName] )
+		return newName;
+
+	CCLOG(@"cocos2d: CCFileUtils: Warning file not found: %@", [newName lastPathComponent] );
 	
 	return path;
 }
@@ -153,14 +170,24 @@ NSString *ccRemoveHDSuffixFromFile( NSString *path )
 	
 	// only if it is not an absolute path
 	if( ! [relPath isAbsolutePath] )
-	{
 		fullpath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:relPath];
-	}
 	
 	if (fullpath == nil)
 		fullpath = relPath;
-	
-	fullpath = [self getDoubleResolutionImage:fullpath];
+
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+	// Retina Display ?
+	if( CC_CONTENT_SCALE_FACTOR() == 2 )
+		fullpath = [self getPath:fullpath forSuffix:__suffixRetinaDisplay];
+
+	// iPad ?
+	else if( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+		fullpath = [self getPath:fullpath forSuffix:__suffixiPad];
+
+	// It should be an iPhone in non Retina Display mode. So, do nothing
+	else
+		;
+#endif // __IPHONE_OS_VERSION_MAX_ALLOWED
 	
 	return fullpath;	
 }
