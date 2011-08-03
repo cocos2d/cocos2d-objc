@@ -33,6 +33,10 @@
 
 static NSFileManager *__localFileManager=nil;
 
+static NSString *__suffixRetinaDisplay =@"-hd";
+static NSString *__suffixiPad =@"-ipad";
+static NSString *__suffixiPhone =@"";
+
 // 
 NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out) 
 { 
