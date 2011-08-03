@@ -154,8 +154,7 @@ NSString *ccRemoveHDSuffixFromFile( NSString *path )
 	// only if it is not an absolute path
 	if( ! [relPath isAbsolutePath] )
 	{
-		NSString *file = [relPath lastPathComponent];
-		fullpath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:file];
+		fullpath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:relPath];
 	}
 	
 	if (fullpath == nil)
