@@ -68,6 +68,8 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 #import <Foundation/Foundation.h> //	for NSObject
 
+#import "ccTypes.h"
+
 #import "Platforms/CCGL.h" // OpenGL stuff
 #import "Platforms/CCNS.h" // Next-Step stuff
 
@@ -99,15 +101,6 @@ typedef enum {
 
 	//! Default texture format: RGBA8888
 	kCCTexture2DPixelFormat_Default = kCCTexture2DPixelFormat_RGBA8888,
-
-	// backward compatibility stuff
-	kTexture2DPixelFormat_Automatic = kCCTexture2DPixelFormat_Automatic,
-	kTexture2DPixelFormat_RGBA8888 = kCCTexture2DPixelFormat_RGBA8888,
-	kTexture2DPixelFormat_RGB565 = kCCTexture2DPixelFormat_RGB565,
-	kTexture2DPixelFormat_A8 = kCCTexture2DPixelFormat_A8,
-	kTexture2DPixelFormat_RGBA4444 = kCCTexture2DPixelFormat_RGBA4444,
-	kTexture2DPixelFormat_RGB5A1 = kCCTexture2DPixelFormat_RGB5A1,
-	kTexture2DPixelFormat_Default = kCCTexture2DPixelFormat_Default
 	
 } CCTexture2DPixelFormat;
 
@@ -129,6 +122,7 @@ typedef enum {
 	GLfloat						maxS_,
 								maxT_;
 	BOOL						hasPremultipliedAlpha_;
+	ccResolutionType			resolutionType_;
 }
 /** Intializes with a texture2d with data */
 - (id) initWithData:(const void*)data pixelFormat:(CCTexture2DPixelFormat)pixelFormat pixelsWide:(NSUInteger)width pixelsHigh:(NSUInteger)height contentSize:(CGSize)size;

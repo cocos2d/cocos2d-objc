@@ -281,6 +281,16 @@ typedef struct _ccBlendFunc
 	GLenum dst;
 } ccBlendFunc;
 
+//! ccResolutionType
+typedef enum
+{
+	kCCResolutionUnknown,
+	kCCResolutionStandard,
+	kCCResolutionRetinaDisplay,
+	kCCResolutioniPad,
+	
+} ccResolutionType;
+
 //! delta time type
 //! if you want more resolution redefine it as a double
 typedef float ccTime;
