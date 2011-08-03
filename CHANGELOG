@@ -1,4 +1,6 @@
 version 1.1 - XX-Ago-2011
+. [NEW] FileUtils: Added iPad / RetinaDisplay extension. To use it, call [CCFileUtils setiPadSuffix:@"-ipad"] or setRetinaDisplaySuffix
+. [NEW] FileUtils: Added xxxFileExistAtPath for iPad and RetinaDisplay resources
 . [FIX] FileUtils: Loads -hd resources even if the sd resource is not present (issue #1179)
 
 version 1.0.1 - 28-July-2011

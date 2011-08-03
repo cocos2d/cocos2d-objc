@@ -114,6 +114,9 @@ NSString *ccRemoveDeviceSuffixFromFile( NSString *path )
 
 }
 
+@interface CCFileUtils()
++(BOOL) fileExistsAtPath:(NSString*)string withSuffix:(NSString*)suffix;
+@end
 
 @implementation CCFileUtils
 
@@ -159,7 +162,7 @@ NSString *ccRemoveDeviceSuffixFromFile( NSString *path )
 
 	CCLOG(@"cocos2d: CCFileUtils: Warning file not found: %@", [newName lastPathComponent] );
 	
-	return path;
+	return nil;
 }
 
 +(NSString*) fullPathFromRelativePath:(NSString*) relPath
@@ -176,20 +179,73 @@ NSString *ccRemoveDeviceSuffixFromFile( NSString *path )
 		fullpath = relPath;
 
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+	
+	NSString *ret = nil;
+
 	// Retina Display ?
 	if( CC_CONTENT_SCALE_FACTOR() == 2 )
-		fullpath = [self getPath:fullpath forSuffix:__suffixRetinaDisplay];
+		ret = [self getPath:fullpath forSuffix:__suffixRetinaDisplay];
 
 	// iPad ?
 	else if( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-		fullpath = [self getPath:fullpath forSuffix:__suffixiPad];
+		ret = [self getPath:fullpath forSuffix:__suffixiPad];
 
 	// It should be an iPhone in non Retina Display mode. So, do nothing
 	else
 		;
-#endif // __IPHONE_OS_VERSION_MAX_ALLOWED
+	
+	if( ! ret )
+		ret = fullpath;
+	
+	return ret;
+	
+
+
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 	
 	return fullpath;	
+
+#endif // __MAC_OS_X_VERSION_MAX_ALLOWED
+
 }
+
++(void) setRetinaDisplaySuffix:(NSString*)suffix
+{
+	[__suffixRetinaDisplay release];
+	__suffixRetinaDisplay = [suffix copy];
+}
+
++(void) setiPadSuffix:(NSString*)suffix
+{
+	[__suffixiPad release];
+	__suffixiPad = [suffix copy];
+}
+
++(BOOL) fileExistsAtPath:(NSString*)relPath withSuffix:(NSString*)suffix
+{
+	NSString *fullpath = nil;
+
+	// only if it is not an absolute path
+	if( ! [relPath isAbsolutePath] )
+		fullpath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:relPath];
+	
+	if (fullpath == nil)
+		fullpath = relPath;
+
+	NSString *path = [self getPath:fullpath forSuffix:suffix];
+	
+	return ( path != nil );
+}
+
++(BOOL) iPadFileExistsAtPath:(NSString*)path
+{
+	return [self fileExistsAtPath:path withSuffix:__suffixiPad];
+}
+
++(BOOL) retinaDisplayFileExistsAtPath:(NSString*)path
+{
+	return [self fileExistsAtPath:path withSuffix:__suffixRetinaDisplay];
+}
+
 
 @end
