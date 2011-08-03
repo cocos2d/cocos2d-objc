@@ -269,10 +269,12 @@ static CCTextureCache *sharedTextureCache;
 			// convert jpg to png before loading the texture
 			
 			NSString *fullpath = [CCFileUtils fullPathFromRelativePath: path ];
+			BOOL isRetina = [CCFileUtils isRetina: path];
 						
 			UIImage *jpg = [[UIImage alloc] initWithContentsOfFile:fullpath];
 			UIImage *png = [[UIImage alloc] initWithData:UIImagePNGRepresentation(jpg)];
 			tex = [ [CCTexture2D alloc] initWithImage: png ];
+			tex.isRetina = isRetina;
 			[png release];
 			[jpg release];
 			
@@ -289,9 +291,11 @@ static CCTextureCache *sharedTextureCache;
 			
 			// prevents overloading the autorelease pool
 			NSString *fullpath = [CCFileUtils fullPathFromRelativePath: path ];
-
+			BOOL isRetina = [CCFileUtils isRetina: path];
+			
 			UIImage *image = [ [UIImage alloc] initWithContentsOfFile: fullpath ];
 			tex = [ [CCTexture2D alloc] initWithImage: image ];
+			tex.isRetina = isRetina;
 			[image release];
 			
 			if( tex )
@@ -428,6 +432,8 @@ static CCTextureCache *sharedTextureCache;
 	
 	// Split up directory and filename
 	NSString *fullpath = [CCFileUtils fullPathFromRelativePath:path];
+	BOOL isRetina = [CCFileUtils isRetina: path];
+	tex.isRetina = isRetina;
 	
 	NSData *nsdata = [[NSData alloc] initWithContentsOfFile:fullpath];
 	tex = [[CCTexture2D alloc] initWithPVRTCData:[nsdata bytes] level:0 bpp:bpp hasAlpha:alpha length:w pixelFormat:bpp==2?kCCTexture2DPixelFormat_PVRTC2:kCCTexture2DPixelFormat_PVRTC4];
@@ -457,6 +463,8 @@ static CCTextureCache *sharedTextureCache;
 	
 	// Split up directory and filename
 	NSString *fullpath = [CCFileUtils fullPathFromRelativePath:path];
+	BOOL isRetina = [CCFileUtils isRetina: path];
+	tex.isRetina = isRetina;
 	
 	tex = [[CCTexture2D alloc] initWithPVRFile: fullpath];
 	if( tex )
