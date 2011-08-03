@@ -218,7 +218,7 @@ static CCTextureCache *sharedTextureCache;
 	
 	CCTexture2D * tex;
 	
-	path = ccRemoveHDSuffixFromFile(path);
+	path = ccRemoveDeviceSuffixFromFile(path);
 	
 	if( (tex=[textures_ objectForKey: path] ) ) {
 		[target performSelector:selector withObject:tex];
@@ -247,7 +247,7 @@ static CCTextureCache *sharedTextureCache;
 	[dictLock_ lock];
 	
 	// remove possible -HD suffix to prevent caching the same image twice (issue #1040)
-	path = ccRemoveHDSuffixFromFile( path );
+	path = ccRemoveDeviceSuffixFromFile( path );
 
 	tex=[textures_ objectForKey: path];
 	
@@ -420,7 +420,7 @@ static CCTextureCache *sharedTextureCache;
 	CCTexture2D * tex;
 	
 	// remove possible -HD suffix to prevent caching the same image twice (issue #1040)
-	path = ccRemoveHDSuffixFromFile( path );
+	path = ccRemoveDeviceSuffixFromFile( path );
 
 	if( (tex=[textures_ objectForKey: path] ) ) {
 		return tex;
@@ -449,7 +449,7 @@ static CCTextureCache *sharedTextureCache;
 	CCTexture2D * tex;
 	
 	// remove possible -HD suffix to prevent caching the same image twice (issue #1040)
-	path = ccRemoveHDSuffixFromFile( path );
+	path = ccRemoveDeviceSuffixFromFile( path );
 
 	if( (tex=[textures_ objectForKey: path] ) ) {
 		return tex;

@@ -53,10 +53,13 @@
 NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out);
 
 
-/** removes the HD suffix from a path
+/** removes the Device suffix from a path
+  * On RetinaDisplay it will remove the -hd suffix
+  * On iPad it will remove the -ipad suffix
+  * On iPhone it will remove the (empty) suffx
  
  @returns NSString * without the HD suffix
  @since v0.99.5
  */
-NSString *ccRemoveHDSuffixFromFile( NSString *path );
+NSString *ccRemoveDeviceSuffixFromFile( NSString *path );
 
