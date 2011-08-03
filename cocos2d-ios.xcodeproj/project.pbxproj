@@ -1528,6 +1528,7 @@
 		A0600CA213C227C800BB6F49 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0600C2613C21D0200BB6F49 /* RootViewController.m */; };
 		A0600CE313C2756E00BB6F49 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		A0600CE413C2757D00BB6F49 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
+		A0B035FB13EA09270073E59A /* only_in_hd-hd.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = A0B035FA13EA09270073E59A /* only_in_hd-hd.pvr.ccz */; };
 		A0F37B3813C3719A00F724DF /* white-512x512.png in Resources */ = {isa = PBXBuildFile; fileRef = A0F37B3713C3719A00F724DF /* white-512x512.png */; };
 		A0F37B7913C3B39E00F724DF /* grossini_dance_atlas-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E062F9961247FC5400DE3932 /* grossini_dance_atlas-hd.png */; };
 		AAEA834B0FD5704400F08728 /* blocks.png in Resources */ = {isa = PBXBuildFile; fileRef = AAEA834A0FD5704400F08728 /* blocks.png */; };
@@ -4108,6 +4109,7 @@
 		A0600C2513C21D0200BB6F49 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RootViewController.h; path = tests/RootViewController.h; sourceTree = "<group>"; };
 		A0600C2613C21D0200BB6F49 /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RootViewController.m; path = tests/RootViewController.m; sourceTree = "<group>"; };
 		A060106813C2992800BB6F49 /* LICENSE_Kazmath.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE_Kazmath.txt; sourceTree = "<group>"; };
+		A0B035FA13EA09270073E59A /* only_in_hd-hd.pvr.ccz */ = {isa = PBXFileReference; lastKnownFileType = file; path = "only_in_hd-hd.pvr.ccz"; sourceTree = "<group>"; };
 		A0F37B3713C3719A00F724DF /* white-512x512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "white-512x512.png"; sourceTree = "<group>"; };
 		AAEA834A0FD5704400F08728 /* blocks.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blocks.png; sourceTree = "<group>"; };
 		DA90D87B1059A54D0039F26A /* FontTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FontTest.h; path = tests/FontTest.h; sourceTree = "<group>"; };
@@ -6269,6 +6271,7 @@
 				AAEA834A0FD5704400F08728 /* blocks.png */,
 				E0CC4F7C12677DB400691051 /* blocks-hd.png */,
 				506E1AD50FB34E8E00AAA494 /* test-rgba1.png */,
+				A0B035FA13EA09270073E59A /* only_in_hd-hd.pvr.ccz */,
 				50E676960F6587FD003DAA90 /* spritesheet1.pvr */,
 				50E675060F65628C003DAA90 /* spritesheet1.png */,
 				5031697F10289F68003ACFE7 /* pattern1.png */,
@@ -9050,6 +9053,7 @@
 				E0708A8E1342D16700D32F2C /* Shaders in Resources */,
 				A0600BB713C1FBE100BB6F49 /* Info-FontTest.plist in Resources */,
 				A0600C1513C2076200BB6F49 /* fps_images-hd.png in Resources */,
+				A0B035FB13EA09270073E59A /* only_in_hd-hd.pvr.ccz in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
