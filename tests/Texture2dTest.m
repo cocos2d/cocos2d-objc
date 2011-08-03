@@ -18,6 +18,8 @@ enum {
 
 static int sceneIdx=-1;
 static NSString *transitions[] = {
+	
+	@"FileUtilsTest",
 
 	@"TextureAlias",
 	@"TextureMipMap",
@@ -57,6 +59,7 @@ static NSString *transitions[] = {
 	@"TextureGlRepeat",
 	@"TextureSizeTest",
 	@"TextureCache1",
+	@"FileUtilsTest",
 };
 
 #pragma mark Callbacks
@@ -1687,6 +1690,52 @@ Class restartAction()
 	return @"4 images should appear: alias, antialias, alias, antilias";
 }
 @end
+
+#pragma mark - FileUtilsTest
+
+@implementation FileUtilsTest
+-(id) init
+{	
+	if ((self=[super init]) ) {
+		
+		// This test is only valid in Retinadisplay
+		
+		if( CC_CONTENT_SCALE_FACTOR() == 2 ) {
+			
+			CCSprite *sprite = [[CCSprite alloc] initWithFile:@"bugs/test_issue_1179.png"];
+			if( sprite )
+				NSLog(@"Test #1 issue 1179: OK");
+			else
+				NSLog(@"Test #1 issue 1179: FAILED");
+				
+			[sprite release];
+
+			sprite = [[CCSprite alloc] initWithFile:@"only_in_hd.pvr.ccz"];
+			if( sprite )
+				NSLog(@"Test #2 issue 1179: OK");
+			else
+				NSLog(@"Test #2 issue 1179: FAILED");
+			
+			[sprite release];
+
+		} else {
+			NSLog(@"Test issue #1179 failed. Needs to be tested with RetinaDispaly");
+		}
+		
+	}
+	return self;
+}
+
+-(NSString*) title
+{
+	return @"CCFileUtils: See console";
+}
+-(NSString *) subtitle
+{
+	return @"See the console";
+}
+@end
+
 
 
 #pragma mark -
