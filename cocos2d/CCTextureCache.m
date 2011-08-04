@@ -480,45 +480,6 @@ static CCTextureCache *sharedTextureCache;
 
 @implementation CCTextureCache (PVRSupport)
 
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
-// XXX deprecated
--(CCTexture2D*) addPVRTCImage:(NSString*)path bpp:(int)bpp hasAlpha:(BOOL)alpha width:(int)w
-{
-	NSAssert(path != nil, @"TextureCache: fileimage MUST not be nill");
-	NSAssert( bpp==2 || bpp==4, @"TextureCache: bpp must be either 2 or 4");
-	
-	__block CCTexture2D * tex;
-	
-	// remove possible -HD suffix to prevent caching the same image twice (issue #1040)
-	path = [CCFileUtils removeSuffixFromFile: path];
-	
-	dispatch_sync(_dictQueue, ^{
-		tex = [textures_ objectForKey:path];
-	});
-
-	if(tex) {
-		return tex;
-	}
-	
-	// Split up directory and filename
-	NSString *fullpath = [CCFileUtils fullPathFromRelativePath:path];
-	
-	NSData *nsdata = [[NSData alloc] initWithContentsOfFile:fullpath];
-	tex = [[CCTexture2D alloc] initWithPVRTCData:[nsdata bytes] level:0 bpp:bpp hasAlpha:alpha length:w pixelFormat:bpp==2?kCCTexture2DPixelFormat_PVRTC2:kCCTexture2DPixelFormat_PVRTC4];
-	if( tex ){
-		dispatch_sync(_dictQueue, ^{
-			[textures_ setObject: tex forKey:path];
-		});
-	}else{
-		CCLOG(@"cocos2d: Couldn't add PVRTCImage:%@ in CCTextureCache",path);
-	}
-	
-	[nsdata release];
-	
-	return [tex autorelease];
-}
-#endif // __IPHONE_OS_VERSION_MAX_ALLOWED
-
 -(CCTexture2D*) addPVRImage:(NSString*)path
 {
 	NSAssert(path != nil, @"TextureCache: fileimage MUST not be nill");

@@ -135,10 +135,6 @@
 {}
 @end
 
-@interface TexturePVRRaw : TextureDemo
-{}
-@end
-
 @interface TextureCGImage : TextureDemo
 {}
 @end

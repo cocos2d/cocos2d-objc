@@ -31,7 +31,6 @@ static NSString *transitions[] = {
 	@"TexturePVRNPOT4444",
 	@"TexturePVRNPOT8888",
 	@"TexturePVR2BPP",
-	@"TexturePVRRaw",
 	@"TexturePVR",
 	@"TexturePVR4BPP",
 	@"TexturePVRRGBA8888",
@@ -496,37 +495,6 @@ Class restartAction()
 }
 @end
 
-
-#pragma mark -
-#pragma mark TexturePVRRaw
-
-// To generate PVR images read this article:
-// http://developer.apple.com/iphone/library/qa/qa2008/qa1611.html
-@implementation TexturePVRRaw
--(void) onEnter
-{
-	[super onEnter];
-
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
-	CGSize s = [[CCDirector sharedDirector] winSize];
-	
-	CCTexture2D *tex = [[CCTextureCache sharedTextureCache] addPVRTCImage:@"test_image.pvrraw" bpp:4 hasAlpha:YES width:128];
-	CCSprite *img = [CCSprite spriteWithTexture:tex];
-	img.position = ccp( s.width/2.0f, s.height/2.0f);
-	[self addChild:img];
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
-	
-	NSLog(@"This test is not supported by Mac");
-#endif
-	[[CCTextureCache sharedTextureCache] dumpCachedTextureInfo];
-	
-}
-
--(NSString *) title
-{
-	return @"PVR TC 4bpp Test #1 (Raw)";
-}
-@end
 
 #pragma mark -
 #pragma mark TexturePVR
