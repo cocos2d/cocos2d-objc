@@ -489,6 +489,12 @@ Class restartTransition()
 	
 	// make the OpenGLView a child of the main window
 	[window_ addSubview:viewController_.view];
+
+	// When in iPad / RetinaDisplay mode, CCFileUtils will append the "-ipad" / "-hd" to all loaded files
+	// If the -ipad  / -hdfile is not found, it will load the non-suffixed version
+	[CCFileUtils setiPadSuffix:@"-ipad"];			// Default on iPad is "" (empty string)
+	[CCFileUtils setRetinaDisplaySuffix:@"-hd"];	// Default on RetinaDisplay is "-hd"
+
 	
 	// Make the window visible
 	[window_ makeKeyAndVisible];
