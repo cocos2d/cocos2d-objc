@@ -155,17 +155,21 @@ typedef enum {
 /** whether or not the texture has their Alpha premultiplied */
 @property(nonatomic,readonly) BOOL hasPremultipliedAlpha;
 
-/** returns the content size of the texture in points */
--(CGSize) contentSize;
-
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 /** Returns the resolution type of the texture.
  Is it a RetinaDisplay texture, an iPad texture or an standard texture ?
  Only valid on iOS. Not valid on OS X.
+ 
+ Should be a readonly property. It is readwrite as a hack.
+ 
  @since v1.1
  */
--(ccResolutionType) resolutionType;
+@property (nonatomic, readwrite) ccResolutionType resolutionType;
 #endif
+
+/** returns the content size of the texture in points */
+-(CGSize) contentSize;
+
 
 @end
 
@@ -221,6 +225,8 @@ Note that the generated textures are of type A8 - use the blending mode (GL_SRC_
 /** Initializes a texture from a PVR Texture Compressed (PVRTC) buffer
  *
  * IMPORTANT: This method is only defined on iOS. It is not supported on the Mac version.
+ * 
+ * @deprecated Use initWithPVRFile instead. Will be removed in 2.0
  */
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 -(id) initWithPVRTCData: (const void*)data level:(int)level bpp:(int)bpp hasAlpha:(BOOL)hasAlpha length:(int)length pixelFormat:(CCTexture2DPixelFormat)pixelFormat;
