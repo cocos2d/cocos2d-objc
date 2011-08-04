@@ -211,7 +211,9 @@ do {															\
 } while(0)
 
 
-#if CC_IS_RETINA_DISPLAY_SUPPORTED
+
+
+#if __IPHONE_OS_VERSION_MAX_ALLOWED
 
 /****************************/
 /** RETINA DISPLAY ENABLED **/
@@ -264,7 +266,7 @@ CGSizeMake( (__pixels__).width / CC_CONTENT_SCALE_FACTOR(), (__pixels__).height 
 CGSizeMake( (__points__).width * CC_CONTENT_SCALE_FACTOR(), (__points__).height * CC_CONTENT_SCALE_FACTOR())
 
 
-#else // retina disabled
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 
 /*****************************/
 /** RETINA DISPLAY DISABLED **/
@@ -279,4 +281,4 @@ CGSizeMake( (__points__).width * CC_CONTENT_SCALE_FACTOR(), (__points__).height 
 #define CC_POINT_POINTS_TO_PIXELS(__points__) __points__
 
 
-#endif // CC_IS_RETINA_DISPLAY_SUPPORTED
+#endif // __MAC_OS_X_VERSION_MAX_ALLOWED
