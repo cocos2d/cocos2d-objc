@@ -85,7 +85,6 @@
 		500043770F3CB58600A5FBF4 /* test_image.png in Resources */ = {isa = PBXBuildFile; fileRef = 500043730F3CB58600A5FBF4 /* test_image.png */; };
 		500043780F3CB58600A5FBF4 /* test_image.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 500043740F3CB58600A5FBF4 /* test_image.tiff */; };
 		500044040F3CC15D00A5FBF4 /* test_image.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 500044020F3CC15D00A5FBF4 /* test_image.pvr */; };
-		500044050F3CC15D00A5FBF4 /* test_image.pvrraw in Resources */ = {isa = PBXBuildFile; fileRef = 500044030F3CC15D00A5FBF4 /* test_image.pvrraw */; };
 		50010EC7103B3DB80059EC2E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		50010EC8103B3DB80059EC2E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		50010EC9103B3DB80059EC2E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D3623EB0D0F72F000981E51 /* CoreGraphics.framework */; };
@@ -3620,7 +3619,6 @@
 		500043730F3CB58600A5FBF4 /* test_image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = test_image.png; sourceTree = "<group>"; };
 		500043740F3CB58600A5FBF4 /* test_image.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = test_image.tiff; sourceTree = "<group>"; };
 		500044020F3CC15D00A5FBF4 /* test_image.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = test_image.pvr; sourceTree = "<group>"; };
-		500044030F3CC15D00A5FBF4 /* test_image.pvrraw */ = {isa = PBXFileReference; lastKnownFileType = file; path = test_image.pvrraw; sourceTree = "<group>"; };
 		50010ED2103B3DB80059EC2E /* Box2dTestBed.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Box2dTestBed.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		500111EC103B878B0059EC2E /* Box2DAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Box2DAppDelegate.h; sourceTree = "<group>"; };
 		500111ED103B878B0059EC2E /* Box2DAppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Box2DAppDelegate.mm; sourceTree = "<group>"; };
@@ -7007,7 +7005,6 @@
 			isa = PBXGroup;
 			children = (
 				500044020F3CC15D00A5FBF4 /* test_image.pvr */,
-				500044030F3CC15D00A5FBF4 /* test_image.pvrraw */,
 				E0A4A20A11F76CBC003B9D29 /* grossini_128x256_mipmap.pvr */,
 				E0A4A1DD11F764BD003B9D29 /* test_image_rgba4444_mipmap.pvr */,
 				E0A4A1CE11F7634C003B9D29 /* grossini_pvr_rgba4444.pvr */,
@@ -9422,7 +9419,6 @@
 				500043770F3CB58600A5FBF4 /* test_image.png in Resources */,
 				500043780F3CB58600A5FBF4 /* test_image.tiff in Resources */,
 				500044040F3CC15D00A5FBF4 /* test_image.pvr in Resources */,
-				500044050F3CC15D00A5FBF4 /* test_image.pvrraw in Resources */,
 				50B53B650F3F28DC00E81F83 /* test_image.gif in Resources */,
 				5037AF1E0F49B980004DCA1F /* logo-mipmap.pvr in Resources */,
 				5037AF1F0F49B980004DCA1F /* logo-nomipmap.pvr in Resources */,

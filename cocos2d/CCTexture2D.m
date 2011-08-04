@@ -208,14 +208,6 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 #pragma mark CCTexture2D - Image
 
 @implementation CCTexture2D (Image)
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
-// XXX deprecated. To be removed in 2.0
-- (id) initWithImage:(UIImage *)uiImage
-{
-	return [self initWithImage:uiImage resolutionType:kCCResolutionUnknown];
-}
-#endif
-
 
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 - (id) initWithImage:(UIImage *)uiImage resolutionType:(ccResolutionType)resolution
@@ -599,47 +591,6 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 
 // By default PVR images are treated as if they don't have the alpha channel premultiplied
 static BOOL PVRHaveAlphaPremultiplied_ = NO;
-
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
--(id) initWithPVRTCData: (const void*)data level:(int)level bpp:(int)bpp hasAlpha:(BOOL)hasAlpha length:(int)length pixelFormat:(CCTexture2DPixelFormat)pixelFormat
-{
-	//	GLint					saveName;
-	
-	if( ! [[CCConfiguration sharedConfiguration] supportsPVRTC] ) {
-		CCLOG(@"cocos2d: WARNING: PVRTC images is not supported");
-		[self release];
-		return nil;
-	}
-	
-	if((self = [super init])) {
-		glGenTextures(1, &name_);
-		glBindTexture( GL_TEXTURE_2D, name_ );
-		
-		[self setAntiAliasTexParameters];
-		
-		GLenum format;
-		GLsizei size = length * length * bpp / 8;
-		if(hasAlpha)
-			format = (bpp == 4) ? GL_COMPRESSED_RGBA_PVRTC_4BPPV1_IMG : GL_COMPRESSED_RGBA_PVRTC_2BPPV1_IMG;
-		else
-			format = (bpp == 4) ? GL_COMPRESSED_RGB_PVRTC_4BPPV1_IMG : GL_COMPRESSED_RGB_PVRTC_2BPPV1_IMG;
-		
-		if(size < 32)
-			size = 32;
-		
-		glCompressedTexImage2D(GL_TEXTURE_2D, level, format, length, length, 0, size, data);
-		
-		size_ = CGSizeMake(length, length);
-		width_ = length;
-		height_ = length;
-		maxS_ = 1.0f;
-		maxT_ = 1.0f;
-		hasPremultipliedAlpha_ = PVRHaveAlphaPremultiplied_;
-		format_ = pixelFormat;
-	}					
-	return self;
-}
-#endif // __IPHONE_OS_VERSION_MAX_ALLOWED
 
 -(id) initWithPVRFile: (NSString*) relPath
 {
