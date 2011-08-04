@@ -19,8 +19,6 @@ enum {
 static int sceneIdx=-1;
 static NSString *transitions[] = {
 	
-	@"FileUtilsTest",
-
 	@"TextureAlias",
 	@"TextureMipMap",
 	@"TexturePVRMipMap",
@@ -1722,7 +1720,8 @@ Class restartAction()
 			NSLog(@"Test issue #1179 failed. Needs to be tested with RetinaDispaly");
 		}
 
-			
+		
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 		// Testint CCFileUtils API
 		BOOL ret;
 		ret = [CCFileUtils retinaDisplayFileExistsAtPath:@"bugs/test_issue_1179.png"];
@@ -1737,7 +1736,7 @@ Class restartAction()
 			NSLog(@"Test #4: retinaDisplayFileExistsAtPath: OK");
 		else
 			NSLog(@"Test #4: retinaDisplayFileExistsAtPath: FAILED");
-
+#endif // __IPHONE_OS_VERSION_MAX_ALLOWED
 		
 	}
 	return self;
@@ -1803,17 +1802,10 @@ Class restartAction()
 	// You can change it at anytime.
 	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA8888];	
 	
-	// When in iPad mode, CCFileUtils will append the "-ipad" to all loaded files
-	// eg: "sprite.png" -> "sprite-ipad.png",  "spritesheet.pvr.ccz" -> "spritesheet-ipad.pvr.ccz"
-	// If the -ipad file is not found, it will load the non-suffixed version
-	// By default the iPad suffix is: ""
-	[CCFileUtils setiPadSuffix:@"-ipad"];
-
-	// When in RetinaDisplay mode, CCFileUtils will append the "-hd" to all loaded files
-	// eg: "sprite.png" -> "sprite-hd.png",  "spritesheet.pvr.ccz" -> "spritesheet-hd.pvr.ccz"
-	// If the -hd file is not found, it will load the non-suffixed version
-	// By default the RetinaDisplay suffix is: "-hd"
-	[CCFileUtils setRetinaDisplaySuffix:@"-hd"];
+	// When in iPad / RetinaDisplay mode, CCFileUtils will append the "-ipad" / "-hd" to all loaded files
+	// If the -ipad  / -hdfile is not found, it will load the non-suffixed version
+	[CCFileUtils setiPadSuffix:@"-ipad"];	// Default on iPad is "" (empty string)
+	[CCFileUtils setRetinaDisplaySuffix:@"-hd"];	// Default on RetinaDisplay is "-hd"
 	
 	CCScene *scene = [CCScene node];
 	[scene addChild: [nextAction() node]];
