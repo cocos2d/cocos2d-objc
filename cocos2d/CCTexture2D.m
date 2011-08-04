@@ -79,8 +79,10 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #import "ccConfig.h"
 #import "ccMacros.h"
 #import "CCConfiguration.h"
-#import "Support/ccUtils.h"
 #import "CCTexturePVR.h"
+#import "Support/ccUtils.h"
+#import "Support/CCFileUtils.h"
+
 
 #if CC_USE_LA88_LABELS
 #define LABEL_PIXEL_FORMAT kCCTexture2DPixelFormat_AI88
@@ -147,8 +149,10 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 		maxT_ = size.height / (float)height;
 
 		hasPremultipliedAlpha_ = NO;
-		
+
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 		resolutionType_ = kCCResolutionUnknown;
+#endif
 	}
 	return self;
 }
@@ -192,6 +196,14 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 	
 	return ret;
 }
+
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+-(ccResolutionType) resolutionType
+{
+	return resolutionType_;
+}
+#endif
+  
 @end
 
 #pragma mark -
@@ -199,7 +211,16 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 
 @implementation CCTexture2D (Image)
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+// XXX deprecated. To be removed in 2.0
 - (id) initWithImage:(UIImage *)uiImage
+{
+	return [self initWithImage:uiImage resolutionType:kCCResolutionUnknown];
+}
+#endif
+
+
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+- (id) initWithImage:(UIImage *)uiImage resolutionType:(ccResolutionType)resolution
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 - (id) initWithImage:(CGImageRef)CGImage
 #endif
@@ -356,6 +377,10 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 	
 	CGContextRelease(context);
 	[self releaseData:data];
+	
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+	resolutionType_ = resolution;
+#endif
 	
 	return self;
 }
@@ -618,10 +643,18 @@ static BOOL PVRHaveAlphaPremultiplied_ = NO;
 }
 #endif // __IPHONE_OS_VERSION_MAX_ALLOWED
 
--(id) initWithPVRFile: (NSString*) file
+-(id) initWithPVRFile: (NSString*) relPath
 {
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+	ccResolutionType resolution;
+	NSString *fullpath = [CCFileUtils fullPathFromRelativePath:relPath resolutionType:&resolution];
+	
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+	NSString *fullpath = [CCFileUtils fullPathFromRelativePath:relPath];
+#endif 
+	
 	if( (self = [super init]) ) {
-		CCTexturePVR *pvr = [[CCTexturePVR alloc] initWithContentsOfFile:file];
+		CCTexturePVR *pvr = [[CCTexturePVR alloc] initWithContentsOfFile:fullpath];
 		if( pvr ) {
 			pvr.retainName = YES;	// don't dealloc texture on release
 			
@@ -639,10 +672,13 @@ static BOOL PVRHaveAlphaPremultiplied_ = NO;
 			[self setAntiAliasTexParameters];
 		} else {
 			
-			CCLOG(@"cocos2d: Couldn't load PVR image: %@", file);
+			CCLOG(@"cocos2d: Couldn't load PVR image: %@", relPath);
 			[self release];
 			return nil;
 		}
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+		resolutionType_ = resolution;
+#endif
 	}
 	return self;
 }
