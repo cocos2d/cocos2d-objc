@@ -43,7 +43,18 @@
  */
 +(NSString*) fullPathFromRelativePath:(NSString*) relPath;
 
+
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+
+/** removes the suffix from a path
+ * On RetinaDisplay it will remove the -hd suffix
+ * On iPad it will remove the -ipad suffix
+ * On iPhone it will remove the (empty) suffix
+ Only valid on iOS. Not valid for OS X.
+ 
+ @since v0.99.5
+ */
++(NSString *)removeSuffixFromFile:(NSString*) path;
 
 /** Sets the RetinaDisplay suffix to load resources.
  By default it is "-hd".
@@ -84,15 +95,4 @@
  @since v0.99.5
  */
 NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out);
-
-
-/** removes the Device suffix from a path
-  * On RetinaDisplay it will remove the -hd suffix
-  * On iPad it will remove the -ipad suffix
-  * On iPhone it will remove the (empty) suffx
- 
- @returns NSString * without the HD suffix
- @since v0.99.5
- */
-NSString *ccRemoveDeviceSuffixFromFile( NSString *path );
 

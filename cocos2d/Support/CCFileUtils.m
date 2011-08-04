@@ -73,53 +73,10 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 	return size;
 }
 
-NSString *ccRemoveSuffixFromPath( NSString *suffix, NSString *path)
-{
-	// quick return
-	if( ! suffix || [suffix length] == 0 )
-		return path;
-
-	NSString *name = [path lastPathComponent];
-	
-	// check if path already has the suffix.
-	if( [name rangeOfString:suffix].location != NSNotFound ) {
-		
-		CCLOG(@"cocos2d: Filename(%@) contains %@ suffix. Removing it. See cocos2d issue #1040", path, suffix);
-		
-		NSString *newLastname = [name stringByReplacingOccurrencesOfString:suffix withString:@""];
-		
-		NSString *pathWithoutLastname = [path stringByDeletingLastPathComponent];
-		return [pathWithoutLastname stringByAppendingPathComponent:newLastname];
-	}
-
-	return path;
-}
-
-NSString *ccRemoveDeviceSuffixFromFile( NSString *path )
-{
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
-	
-	NSString *ret = nil;
-	if( CC_CONTENT_SCALE_FACTOR() == 2 )
-		ret = ccRemoveSuffixFromPath( __suffixRetinaDisplay, path );
-	
-	else if( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-		ret = ccRemoveSuffixFromPath( __suffixiPad, path );
-
-	else 
-		ret = path;
-
-	return ret;
-	
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
-	// Do nothing on Mac
-	return path;
-#endif
-
-}
 
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 @interface CCFileUtils()
++(NSString *) removeSuffix:(NSString*)suffix fromPath:(NSString*)path;
 +(BOOL) fileExistsAtPath:(NSString*)string withSuffix:(NSString*)suffix;
 @end
 #endif // __IPHONE_OS_VERSION_MAX_ALLOWED
@@ -204,8 +161,6 @@ NSString *ccRemoveDeviceSuffixFromFile( NSString *path )
 		ret = fullpath;
 	
 	return ret;
-	
-
 
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 	
@@ -215,9 +170,47 @@ NSString *ccRemoveDeviceSuffixFromFile( NSString *path )
 
 }
 
-#pragma mark CCFileUtils - Suffix
+#pragma mark CCFileUtils - Suffix (iOS only)
+
 
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+
++(NSString *) removeSuffix:(NSString*)suffix fromPath:(NSString*)path
+{
+	// quick return
+	if( ! suffix || [suffix length] == 0 )
+		return path;
+	
+	NSString *name = [path lastPathComponent];
+	
+	// check if path already has the suffix.
+	if( [name rangeOfString:suffix].location != NSNotFound ) {
+		
+		CCLOG(@"cocos2d: Filename(%@) contains %@ suffix. Removing it. See cocos2d issue #1040", path, suffix);
+		
+		NSString *newLastname = [name stringByReplacingOccurrencesOfString:suffix withString:@""];
+		
+		NSString *pathWithoutLastname = [path stringByDeletingLastPathComponent];
+		return [pathWithoutLastname stringByAppendingPathComponent:newLastname];
+	}
+	
+	return path;
+}
+
++(NSString*) removeSuffixFromFile:(NSString*) path
+{
+	NSString *ret = nil;
+	if( CC_CONTENT_SCALE_FACTOR() == 2 )
+		ret = [self removeSuffix:__suffixRetinaDisplay fromPath:path];
+	
+	else if( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+		ret = [self removeSuffix:__suffixiPad fromPath:path];
+	
+	else 
+		ret = path;
+	
+	return ret;
+}
 
 +(void) setRetinaDisplaySuffix:(NSString*)suffix
 {
