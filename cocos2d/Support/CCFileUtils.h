@@ -26,7 +26,7 @@
 
 
 #import <Foundation/Foundation.h>
-
+#import "../ccTypes.h"
 
 /** Helper class to handle file operations */
 @interface CCFileUtils : NSObject
@@ -35,16 +35,36 @@
 
 /** Returns the fullpath of an filename.
  
- If this method is when Retina Display is enabled, then the
- Retina Display suffix will be appended to the file (See ccConfig.h).
+ If in RetinaDisplay mode, and a RetinaDisplay file is found, it will return that path.
+ If in iPad mode, and an iPad file is found, it will return that path. 
  
- If the Retina Display image doesn't exist, then it will return the "non-Retina Display" image
+ Examples:
+
+  * In iPad mode: "image.png" -> "/full/path/image-ipad.png" (in case the -ipad file exists)
+  * In RetinaDisplay mode: "image.png" -> "/full/path/image-hd.png" (in case the -hd file exists)
  
  */
 +(NSString*) fullPathFromRelativePath:(NSString*) relPath;
 
 
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+
+/** Returns the fullpath of an filename including the resolution of the image.
+
+ If in RetinaDisplay mode, and a RetinaDisplay file is found, it will return that path.
+ If in iPad mode, and an iPad file is found, it will return that path. 
+ 
+ Examples:
+ 
+	* In iPad mode: "image.png" -> "/full/path/image-ipad.png" (in case the -ipad file exists)
+	* In RetinaDisplay mode: "image.png" -> "/full/path/image-hd.png" (in case the -hd file exists)
+
+ If an iPad file is found, it will set resolution type to kCCResolutioniPad
+ If a RetinaDisplay file is found, it will set resolution type to kCCResolutionRetinaDisplay
+ 
+ */
++(NSString*) fullPathFromRelativePath:(NSString*)relPath resolutionType:(ccResolutionType*)resolutionType;
+
 
 /** removes the suffix from a path
  * On RetinaDisplay it will remove the -hd suffix

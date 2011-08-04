@@ -123,7 +123,10 @@ typedef enum {
 								maxT_;
 	BOOL						hasPremultipliedAlpha_;
 	
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 	ccResolutionType			resolutionType_;
+#endif
+
 }
 /** Intializes with a texture2d with data */
 - (id) initWithData:(const void*)data pixelFormat:(CCTexture2DPixelFormat)pixelFormat pixelsWide:(NSUInteger)width pixelsHigh:(NSUInteger)height contentSize:(CGSize)size;
@@ -152,14 +155,18 @@ typedef enum {
 /** whether or not the texture has their Alpha premultiplied */
 @property(nonatomic,readonly) BOOL hasPremultipliedAlpha;
 
-/** resolution type. Is it a RetinaDisplay texture, an iPad texture ?.
+/** returns the content size of the texture in points */
+-(CGSize) contentSize;
+
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+/** Returns the resolution type of the texture.
+ Is it a RetinaDisplay texture, an iPad texture or an standard texture ?
  Only valid on iOS. Not valid on OS X.
  @since v1.1
  */
-@property(nonatomic, readwrite) ccResolutionType resolutionType;
+-(ccResolutionType) resolutionType;
+#endif
 
-/** returns the content size of the texture in points */
--(CGSize) contentSize;
 @end
 
 /**
@@ -180,7 +187,8 @@ Note that RGBA type textures will have their alpha premultiplied - use the blend
 @interface CCTexture2D (Image)
 /** Initializes a texture from a UIImage object */
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
-- (id) initWithImage:(UIImage *)uiImage;
+- (id) initWithImage:(UIImage *)uiImage resolutionType:(ccResolutionType)resolution;
+- (id) initWithImage:(UIImage *)uiImage DEPRECATED_ATTRIBUTE;
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 - (id) initWithImage:(CGImageRef)cgImage;
 #endif
