@@ -43,6 +43,8 @@
  */
 +(NSString*) fullPathFromRelativePath:(NSString*) relPath;
 
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+
 /** Sets the RetinaDisplay suffix to load resources.
  By default it is "-hd".
  Only valid on iOS. Not valid for OS X.
@@ -70,6 +72,8 @@
  @since v1.1
  */
 +(BOOL) retinaDisplayFileExistsAtPath:(NSString*)filename;
+
+#endif // __IPHONE_OS_VERSION_MAX_ALLOWED
 
 @end
 

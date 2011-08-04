@@ -33,8 +33,12 @@
 
 static NSFileManager *__localFileManager=nil;
 
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+
 static NSString *__suffixRetinaDisplay =@"-hd";
 static NSString *__suffixiPad =@"-ipad";
+
+#endif // __IPHONE_OS_VERSION_MAX_ALLOWED
 
 
 NSString *ccRemoveSuffixFromPath( NSString *suffix, NSString *path);
@@ -78,7 +82,7 @@ NSString *ccRemoveSuffixFromPath( NSString *suffix, NSString *path)
 	NSString *name = [path lastPathComponent];
 	
 	// check if path already has the suffix.
-	if( [name rangeOfString:__suffixRetinaDisplay].location != NSNotFound ) {
+	if( [name rangeOfString:suffix].location != NSNotFound ) {
 		
 		CCLOG(@"cocos2d: Filename(%@) contains %@ suffix. Removing it. See cocos2d issue #1040", path, suffix);
 		
@@ -114,9 +118,11 @@ NSString *ccRemoveDeviceSuffixFromFile( NSString *path )
 
 }
 
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 @interface CCFileUtils()
 +(BOOL) fileExistsAtPath:(NSString*)string withSuffix:(NSString*)suffix;
 @end
+#endif // __IPHONE_OS_VERSION_MAX_ALLOWED
 
 @implementation CCFileUtils
 
@@ -209,6 +215,10 @@ NSString *ccRemoveDeviceSuffixFromFile( NSString *path )
 
 }
 
+#pragma mark CCFileUtils - Suffix
+
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+
 +(void) setRetinaDisplaySuffix:(NSString*)suffix
 {
 	[__suffixRetinaDisplay release];
@@ -246,6 +256,8 @@ NSString *ccRemoveDeviceSuffixFromFile( NSString *path )
 {
 	return [self fileExistsAtPath:path withSuffix:__suffixRetinaDisplay];
 }
+
+#endif // __IPHONE_OS_VERSION_MAX_ALLOWED
 
 
 @end
