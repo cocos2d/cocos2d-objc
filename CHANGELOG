@@ -19,6 +19,7 @@ version 2.0-alpha XX-Ago-2011
 . [NEW] Tests: Removed HelloWorld* tests
 . [NEW] Tests: TextureTest has TextureCache#asyncWithBlock test
 . [NEW] Texture: Uses NPOT textures (gles20 already supports them)
+. [NEW] Texture: PVRTC-RAW format is no longer supported. Use the non-raw format instead.
 . [NEW] TextureCache: Added asyncWithBlock method
 . [NEW] Tiled: cc_vertexz property is no longer supported. Will raise exception if found.
 . [FIX] All: Removed deprecated methods and classes that were scheduled for removal post 1.0
