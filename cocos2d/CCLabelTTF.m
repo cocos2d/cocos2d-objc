@@ -125,6 +125,13 @@
 										 fontName:fontName_
 										 fontSize:fontSize_  * CC_CONTENT_SCALE_FACTOR()];
 
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+	if( CC_CONTENT_SCALE_FACTOR() == 2 )
+		[tex setResolutionType:kCCResolutionRetinaDisplay];
+	else
+		[tex setResolutionType:kCCResolutionStandard];
+#endif
+
 	[self setTexture:tex];
 	[tex release];
 
