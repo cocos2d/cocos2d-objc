@@ -122,6 +122,7 @@ typedef enum {
 	GLfloat						maxS_,
 								maxT_;
 	BOOL						hasPremultipliedAlpha_;
+	
 	ccResolutionType			resolutionType_;
 }
 /** Intializes with a texture2d with data */
@@ -150,6 +151,12 @@ typedef enum {
 @property(nonatomic,readwrite) GLfloat maxT;
 /** whether or not the texture has their Alpha premultiplied */
 @property(nonatomic,readonly) BOOL hasPremultipliedAlpha;
+
+/** resolution type. Is it a RetinaDisplay texture, an iPad texture ?.
+ Only valid on iOS. Not valid on OS X.
+ @since v1.1
+ */
+@property(nonatomic, readwrite) ccResolutionType resolutionType;
 
 /** returns the content size of the texture in points */
 -(CGSize) contentSize;
