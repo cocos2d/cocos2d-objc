@@ -30,6 +30,7 @@
 #import "../CCConfiguration.h"
 #import "../ccMacros.h"
 #import "../ccConfig.h"
+#import "../ccTypes.h"
 
 static NSFileManager *__localFileManager=nil;
 
@@ -128,10 +129,10 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 	return nil;
 }
 
-+(NSString*) fullPathFromRelativePath:(NSString*) relPath
++(NSString*) fullPathFromRelativePath:(NSString*)relPath resolutionType:(ccResolutionType*)resolutionType
 {
 	NSAssert(relPath != nil, @"CCFileUtils: Invalid path");
-
+	
 	NSString *fullpath = nil;
 	
 	// only if it is not an absolute path
@@ -140,34 +141,48 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 	
 	if (fullpath == nil)
 		fullpath = relPath;
-
+	
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 	
 	NSString *ret = nil;
-
+	
 	// Retina Display ?
-	if( CC_CONTENT_SCALE_FACTOR() == 2 )
+	if( CC_CONTENT_SCALE_FACTOR() == 2 ) {
 		ret = [self getPath:fullpath forSuffix:__suffixRetinaDisplay];
-
+		*resolutionType = kCCResolutionRetinaDisplay;
+	}
+	
 	// iPad ?
-	else if( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+	else if( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
 		ret = [self getPath:fullpath forSuffix:__suffixiPad];
-
+		*resolutionType = kCCResolutioniPad;
+	}
+	
 	// It should be an iPhone in non Retina Display mode. So, do nothing
 	else
-		;
+		*resolutionType = kCCResolutionStandard;
 	
-	if( ! ret )
+	if( ! ret ) {
+		*resolutionType = kCCResolutionStandard;
 		ret = fullpath;
+	}
 	
 	return ret;
-
+	
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 	
+	*resolutionType = kCCResolutionStandard;
+	
 	return fullpath;	
-
+	
 #endif // __MAC_OS_X_VERSION_MAX_ALLOWED
 
+}
+
++(NSString*) fullPathFromRelativePath:(NSString*) relPath
+{
+	ccResolutionType ignore;
+	return [self fullPathFromRelativePath:relPath resolutionType:&ignore];
 }
 
 #pragma mark CCFileUtils - Suffix (iOS only)
