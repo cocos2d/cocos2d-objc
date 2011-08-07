@@ -13,6 +13,7 @@ version 2.0-alpha XX-Ago-2011
 . [NEW] Math: Using kazmath for matrix and projection operations, and matrix GL stack
 . [NEW] Math: Using NEON Matrix Multiplication from Oolong project
 . [NEW] OpenGL ES: Added support for OpenGL ES 2.0. OpenGL ES 1.1 is no longer supported
+. [NEW] Sprite: initWithTexture:rect is the designated initializer
 . [NEW] Templates: Removed Xcode3 templates. Updated Xcode4 templates.
 . [NEW] Tests: All tests use RootViewController
 . [NEW] Tests: FontTest uses  "bundle" fonts instead of FontLabel
