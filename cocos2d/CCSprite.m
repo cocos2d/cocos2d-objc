@@ -131,7 +131,14 @@ struct transformValues_ {
 
 -(id) init
 {
-	if( (self=[super init]) ) {
+	return [self initWithTexture:nil rect:CGRectZero];
+}
+
+// designated initializer
+-(id) initWithTexture:(CCTexture2D*)texture rect:(CGRect)rect
+{
+	if( (self = [super init]) )
+	{
 		dirty_ = recursiveDirty_ = NO;
 		
 		// by default use "Self Render".
@@ -148,7 +155,7 @@ struct transformValues_ {
 		
 		// shader program
 		self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTextureColor];
-
+		
 		// update texture (calls updateBlendFunc)
 		[self setTexture:nil];
 		
@@ -159,7 +166,7 @@ struct transformValues_ {
 		
 		// default transform anchor: center
 		anchorPoint_ =  ccp(0.5f, 0.5f);
-		
+
 		// zwoptex default values
 		offsetPosition_ = CGPointZero;
 		
@@ -172,29 +179,12 @@ struct transformValues_ {
 		quad_.br.colors = tmpColor;
 		quad_.tl.colors = tmpColor;
 		quad_.tr.colors = tmpColor;	
-		
-		// Atlas: Vertex
-		
-		// updated in "useSelfRender"
-		
-		// Atlas: TexCoords
-		[self setTextureRectInPixels:CGRectZero rotated:NO untrimmedSize:CGSizeZero];
+
+		[self setTexture:texture];
+		[self setTextureRect:rect];
 		
 		// updateMethod selector
 		updateMethod = (__typeof__(updateMethod))[self methodForSelector:@selector(updateTransform)];
-	}
-	
-	return self;
-}
-
--(id) initWithTexture:(CCTexture2D*)texture rect:(CGRect)rect
-{
-	NSAssert(texture!=nil, @"Invalid texture for sprite");
-	// IMPORTANT: [self init] and not [super init];
-	if( (self = [self init]) )
-	{
-		[self setTexture:texture];
-		[self setTextureRect:rect];
 	}
 	return self;
 }

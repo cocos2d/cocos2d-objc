@@ -239,6 +239,7 @@ typedef enum {
 
 /** Initializes an sprite with a texture and a rect in points.
  The offset will be (0,0).
+ IMPORTANT: This is the designated initializer.
  */
 -(id) initWithTexture:(CCTexture2D*)texture rect:(CGRect)rect;
 
