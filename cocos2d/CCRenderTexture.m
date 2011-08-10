@@ -256,24 +256,25 @@
 	int bytesPerRow					= bytesPerPixel * tx;
 	NSInteger myDataLength			= bytesPerRow * ty;
 	
-	NSMutableData *buffer	= [[NSMutableData alloc] initWithCapacity:myDataLength];
-	NSMutableData *pixels	= [[NSMutableData alloc] initWithCapacity:myDataLength];
+	GLubyte *buffer	= calloc(myDataLength,1);
+	GLubyte *pixels	= calloc(myDataLength,1);
+
 	
 	if( ! (buffer && pixels) ) {
 		CCLOG(@"cocos2d: CCRenderTexture#getUIImageFromBuffer: not enough memory");
-		[buffer release];
-		[pixels release];
+		free(buffer);
+		free(pixels);
 		return nil;
 	}
 	
 	[self begin];
-	glReadPixels(0,0,tx,ty,GL_RGBA,GL_UNSIGNED_BYTE, [buffer mutableBytes]);
+	glReadPixels(0,0,tx,ty,GL_RGBA,GL_UNSIGNED_BYTE, buffer);
 	[self end];
 	
 	// make data provider with data.
 	
 	CGBitmapInfo bitmapInfo	= kCGImageAlphaPremultipliedLast | kCGBitmapByteOrderDefault;
-	CGDataProviderRef provider = CGDataProviderCreateWithData(NULL, [buffer mutableBytes], myDataLength, NULL);
+	CGDataProviderRef provider = CGDataProviderCreateWithData(NULL, buffer, myDataLength, NULL);
 	CGColorSpaceRef colorSpaceRef = CGColorSpaceCreateDeviceRGB();
 	CGImageRef iref	= CGImageCreate(tx, ty,
 									bitsPerComponent, bitsPerPixel, bytesPerRow,
@@ -281,7 +282,7 @@
 									NULL, false,
 									kCGRenderingIntentDefault);
 	
-	CGContextRef context = CGBitmapContextCreate([pixels mutableBytes], tx,
+	CGContextRef context = CGBitmapContextCreate(pixels, tx,
 												 ty, CGImageGetBitsPerComponent(iref),
 												 CGImageGetBytesPerRow(iref), CGImageGetColorSpace(iref),
 												 bitmapInfo);
@@ -289,7 +290,7 @@
 	CGContextScaleCTM(context, 1.0f, -1.0f);
 	CGContextDrawImage(context, CGRectMake(0.0f, 0.0f, tx, ty), iref);
 	CGImageRef outputRef = CGBitmapContextCreateImage(context);
-	UIImage* image	= [[UIImage alloc] initWithCGImage:outputRef];
+	UIImage* image	= [[UIImage alloc] initWithCGImage:outputRef scale:CC_CONTENT_SCALE_FACTOR() orientation:UIImageOrientationUp];
 	
 	CGImageRelease(iref);
 	CGContextRelease(context);
@@ -297,8 +298,8 @@
 	CGDataProviderRelease(provider);
 	CGImageRelease(outputRef);
 	
-	[pixels release];
-	[buffer release];
+	free(pixels);
+	free(buffer);
 	
 	return [image autorelease];
 }
