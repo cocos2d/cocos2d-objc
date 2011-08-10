@@ -24,7 +24,8 @@ version 2.0-alpha XX-Ago-2011
 . [NEW] TextureCache: Added asyncWithBlock method
 . [NEW] Tiled: cc_vertexz property is no longer supported. Will raise exception if found.
 . [FIX] All: Removed deprecated methods and classes that were scheduled for removal post 1.0
-. [FIX] CCProgressTimer: reverse renamed to reverseDirection in order to prevent possible collision with action#reverse
+. [FIX] ProgressTimer: reverse renamed to reverseDirection in order to prevent possible collision with action#reverse
+. [FIX] RenderTexture: getUIImageFromBuffer doesn't return artifacs
 . [FIX] TextureCache: Uses "self" instead of "CCTextureCache" in shared instance
 . [FIX] Xcode: cocosLive: Removed. Use OpenFeint or GameCenter instead
 . [FIX] Xcode: FontLabel: Removed since in iOS 4 you can load custom TTF
