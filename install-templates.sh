@@ -93,6 +93,11 @@ copy_kazmath_files(){
     copy_files LICENSE_Kazmath.txt "$LIBS_DIR"
 }
 
+copy_shaders_files(){
+	echo ...copying cocos2d Shaders files
+	copy_files Resources/Shaders "$LIBS_DIR"
+}
+
 print_template_banner(){
 	echo ''
 	echo ''
@@ -114,6 +119,11 @@ copy_xcode4_project_templates(){
 	LIBS_DIR="$DST_DIR""lib_cocos2d.xctemplate/libs/"
     mkdir -p "$LIBS_DIR"
     copy_cocos2d_files
+
+	LIBS_DIR="$DST_DIR""lib_cocos2d_shaders.xctemplate/"
+    mkdir -p "$LIBS_DIR"
+    copy_shaders_files
+
 
 	LIBS_DIR="$DST_DIR""lib_cocosdenshion.xctemplate/libs/"
     mkdir -p "$LIBS_DIR"

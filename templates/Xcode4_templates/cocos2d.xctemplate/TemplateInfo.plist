@@ -14,16 +14,6 @@
 	<true/>
 	<key>Definitions</key>
 	<dict>
-		<key>Shaders/Shader.frag</key>
-		<dict>
-			<key>Path</key>
-			<string>Shaders/Shader.frag</string>
-		</dict>
-		<key>Shaders/Shader.vert</key>
-		<dict>
-			<key>Path</key>
-			<string>Shaders/Shader.vert</string>
-		</dict>
 		<key>Prefix.pch</key>
 		<dict>
 			<key>Group</key>
@@ -97,8 +87,6 @@
 	</array>
 	<key>Nodes</key>
 	<array>
-		<string>Shaders/Shader.frag</string>
-		<string>Shaders/Shader.vert</string>
 		<string>Prefix.pch</string>
 		<string>main.m</string>
 		<string>AppDelegate.h</string>
