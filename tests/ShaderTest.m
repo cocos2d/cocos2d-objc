@@ -232,7 +232,7 @@ enum {
 -(id) init
 {
 	if( (self=[super init]) ) {
-		ShaderNode *sn = [ShaderNode shaderNodeWithVertex:@"Shaders/Monjori.vert" fragment:@"Shaders/Monjori.frag"];
+		ShaderNode *sn = [ShaderNode shaderNodeWithVertex:@"Shaders/Monjori.vsh" fragment:@"Shaders/Monjori.fsh"];
 		
 		CGSize s = [[CCDirector sharedDirector] winSize];
 		[sn setPosition:ccp(s.width/2, s.height/2)];
@@ -262,7 +262,7 @@ enum {
 -(id) init
 {
 	if( (self=[super init] ) ) {
-		ShaderNode *sn = [ShaderNode shaderNodeWithVertex:@"Shaders/Mandelbrot.vert" fragment:@"Shaders/Mandelbrot.frag"];
+		ShaderNode *sn = [ShaderNode shaderNodeWithVertex:@"Shaders/Mandelbrot.vsh" fragment:@"Shaders/Mandelbrot.fsh"];
 		
 		CGSize s = [[CCDirector sharedDirector] winSize];
 		[sn setPosition:ccp(s.width/2, s.height/2)];
@@ -291,7 +291,7 @@ enum {
 -(id) init
 {
 	if( (self=[super init] ) ) {
-		ShaderNode *sn = [ShaderNode shaderNodeWithVertex:@"Shaders/Julia.vert" fragment:@"Shaders/Julia.frag"];
+		ShaderNode *sn = [ShaderNode shaderNodeWithVertex:@"Shaders/Julia.vsh" fragment:@"Shaders/Julia.fsh"];
 		
 		CGSize s = [[CCDirector sharedDirector] winSize];
 		[sn setPosition:ccp(s.width/2, s.height/2)];
@@ -322,7 +322,7 @@ enum {
 {
 	if( (self=[super init] ) ) {
 		
-		ShaderNode *sn = [ShaderNode shaderNodeWithVertex:@"Shaders/Heart.vert" fragment:@"Shaders/Heart.frag"];
+		ShaderNode *sn = [ShaderNode shaderNodeWithVertex:@"Shaders/Heart.vsh" fragment:@"Shaders/Heart.fsh"];
 		
 		CGSize s = [[CCDirector sharedDirector] winSize];
 		[sn setPosition:ccp(s.width/2, s.height/2)];
@@ -352,7 +352,7 @@ enum {
 {
 	if( (self=[super init] ) ) {
 		
-		ShaderNode *sn = [ShaderNode shaderNodeWithVertex:@"Shaders/Flower.vert" fragment:@"Shaders/Flower.frag"];
+		ShaderNode *sn = [ShaderNode shaderNodeWithVertex:@"Shaders/Flower.vsh" fragment:@"Shaders/Flower.fsh"];
 		
 		CGSize s = [[CCDirector sharedDirector] winSize];
 		[sn setPosition:ccp(s.width/2, s.height/2)];
@@ -381,7 +381,7 @@ enum {
 -(id) init
 {
 	if( (self=[super init] ) ) {
-		ShaderNode *sn = [ShaderNode shaderNodeWithVertex:@"Shaders/Plasma.vert" fragment:@"Shaders/Plasma.frag"];
+		ShaderNode *sn = [ShaderNode shaderNodeWithVertex:@"Shaders/Plasma.vsh" fragment:@"Shaders/Plasma.fsh"];
 		
 		CGSize s = [[CCDirector sharedDirector] winSize];
 		[sn setPosition:ccp(s.width/2, s.height/2)];
@@ -426,8 +426,8 @@ enum {
 		blur_ = ccp(1/s.width, 1/s.height);
 		sub_[0] = sub_[1] = sub_[2] = sub_[3] = 0;
 		
-		self.shaderProgram = [[GLProgram alloc] initWithVertexShaderFilename:@"Shaders/PositionTextureColor.vert"
-													 fragmentShaderFilename:@"Shaders/Blur.frag"];
+		self.shaderProgram = [[GLProgram alloc] initWithVertexShaderFilename:@"Shaders/PositionTextureColor.vsh"
+													 fragmentShaderFilename:@"Shaders/Blur.fsh"];
 		
 		[self.shaderProgram release];
 
