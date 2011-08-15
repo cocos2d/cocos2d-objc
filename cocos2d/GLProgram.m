@@ -56,28 +56,27 @@ typedef void (*GLLogFunction) (GLuint program,
 {
     if ((self = [super init]) )
     {
-        NSString *vertShaderPathname, *fragShaderPathname;
         program_ = glCreateProgram();
         
 		vertShader_ = fragShader_ = 0;
 
 		if( vShaderFilename ) {
-			vertShaderPathname = [CCFileUtils fullPathFromRelativePath:vShaderFilename]; 
+			NSString *fullname = [CCFileUtils fullPathFromRelativePath:vShaderFilename]; 
 
 			if (![self compileShader:&vertShader_
 								type:GL_VERTEX_SHADER 
-								file:vertShaderPathname])
-				CCLOG(@"cocos2d: ERROR: Failed to compile vertex shader: %@", [vShaderFilename lastPathComponent]);
+								file:fullname])
+				CCLOG(@"cocos2d: ERROR: Failed to compile vertex shader: %@", vShaderFilename);
 		}
         
         // Create and compile fragment shader
 		if( fShaderFilename ) {
-			fragShaderPathname = [CCFileUtils fullPathFromRelativePath:fShaderFilename];
+			NSString *fullname = [CCFileUtils fullPathFromRelativePath:fShaderFilename];
 
 			if (![self compileShader:&fragShader_
 								type:GL_FRAGMENT_SHADER 
-								file:fragShaderPathname])
-				CCLOG(@"cocos2d: ERROR: Failed to compile fragment shader: %@", [fShaderFilename lastPathComponent]);
+								file:fullname])
+				CCLOG(@"cocos2d: ERROR: Failed to compile fragment shader: %@", fShaderFilename);
 		}
         
 		if( vertShader_ )
