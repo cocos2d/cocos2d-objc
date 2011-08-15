@@ -144,11 +144,11 @@ class Xcode4Template(object):
 def help():
     print "%s v1.0 - An utility to generate Xcode 4 templates" % sys.argv[0]
     print "Usage:"
-    print "\t-d directory (directory to parse)"
     print "\t-g directory_used_as_starting_group (if 1, then 'libs/cocos2d/Support/' -> ['cocos2d','Support'] ignoring 'libs')"
     print "\t-i identifier (Xcode4 template identifier)"
+    print "\tdirectory_to_parse"
     print "\nExample:"
-    print "\t%s -d cocos2d -g 0 -i cocos2dlib" % sys.argv[0]
+    print "\t%s -g 0 -i cocos2dlib cocos2d" % sys.argv[0]
     sys.exit(-1)
 
 if __name__ == "__main__":
@@ -160,16 +160,16 @@ if __name__ == "__main__":
     identifier = None
     argv = sys.argv[1:]
     try:                                
-        opts, args = getopt.getopt(argv, "d:g:i:", ["directory=","group=","identifier="])
+        opts, args = getopt.getopt(argv, "g:i:", ["group=","identifier="])
         for opt, arg in opts:
-            if opt in ("-d","--directory"):
-                directory = arg
             if opt in ("-g","--group"):
                 group = arg
             if opt in ("-i","--identifier"):
                 identifier = arg
     except getopt.GetoptError,e:
         print e
+
+    directory = args[0]
 
     if directory == None:
         help()
