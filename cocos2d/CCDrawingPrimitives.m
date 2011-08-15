@@ -48,8 +48,8 @@ static void lazy_init( void )
 		//
 		// Position and 1 color passed as a uniform (to similate glColor4ub )
 		//
-		shader_ = [[GLProgram alloc] initWithVertexShaderFilename:@"Shaders/Position_uColor.vert"
-									 fragmentShaderFilename:@"Shaders/Position_uColor.frag"];
+		shader_ = [[GLProgram alloc] initWithVertexShaderFilename:@"Shaders/Position_uColor.vsh"
+									 fragmentShaderFilename:@"Shaders/Position_uColor.fsh"];
 		
 
 		[shader_ addAttribute:@"aVertex" index:kCCAttribPosition];
