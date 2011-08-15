@@ -67,7 +67,7 @@ typedef void (*GLLogFunction) (GLuint program,
 			if (![self compileShader:&vertShader_
 								type:GL_VERTEX_SHADER 
 								file:vertShaderPathname])
-				NSLog(@"Failed to compile vertex shader");
+				CCLOG(@"cocos2d: ERROR: Failed to compile vertex shader: %@", [vShaderFilename lastPathComponent]);
 		}
         
         // Create and compile fragment shader
@@ -77,7 +77,7 @@ typedef void (*GLLogFunction) (GLuint program,
 			if (![self compileShader:&fragShader_
 								type:GL_FRAGMENT_SHADER 
 								file:fragShaderPathname])
-				NSLog(@"Failed to compile fragment shader");
+				CCLOG(@"cocos2d: ERROR: Failed to compile fragment shader: %@", [fShaderFilename lastPathComponent]);
 		}
         
 		if( vertShader_ )
@@ -109,10 +109,7 @@ typedef void (*GLLogFunction) (GLuint program,
                                            encoding:NSUTF8StringEncoding 
                                               error:nil] UTF8String];
     if (!source)
-    {
-        NSLog(@"Failed to load shader");
         return NO;
-    }
     
     *shader = glCreateShader(type);
     glShaderSource(*shader, 1, &source, NULL);
@@ -122,9 +119,9 @@ typedef void (*GLLogFunction) (GLuint program,
 	
 	if( ! status ) {
 		if( type == GL_VERTEX_SHADER )
-			NSLog(@"%@: %@", file, [self vertexShaderLog] );
+			CCLOG(@"cocos2d: %@: %@", file, [self vertexShaderLog] );
 		else
-			NSLog(@"%@: %@", file, [self fragmentShaderLog] );
+			CCLOG(@"cocos2d: %@: %@", file, [self fragmentShaderLog] );
 
 	}
     return status == GL_TRUE;
@@ -165,7 +162,7 @@ typedef void (*GLLogFunction) (GLuint program,
     
     glGetProgramiv(program_, GL_LINK_STATUS, &status);
     if (status == GL_FALSE) {
-		CCLOG(@"cocos2d: GLProgram: error linking program: %i", program_);
+		CCLOG(@"cocos2d: ERROR: Failed to link program: %i", program_);
 		if( vertShader_ )
 			glDeleteShader( vertShader_ );
 		if( fragShader_ )
