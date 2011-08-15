@@ -14,6 +14,16 @@
 	<true/>
 	<key>Definitions</key>
 	<dict>
+		<key>Shaders/Shader.frag</key>
+		<dict>
+			<key>Path</key>
+			<string>Shaders/Shader.frag</string>
+		</dict>
+		<key>Shaders/Shader.vert</key>
+		<dict>
+			<key>Path</key>
+			<string>Shaders/Shader.vert</string>
+		</dict>
 		<key>Prefix.pch</key>
 		<dict>
 			<key>Group</key>
@@ -66,14 +76,9 @@
 			<key>Path</key>
 			<string>AppDelegate.m</string>
 		</dict>
-		<key>Alberto</key>
-		<dict>
-			<key>Path</key>
-			<string>Shaders</string>
-		</dict>
 	</dict>
 	<key>Description</key>
-	<string>This template provides a starting point for an application that uses cocos2d for iOS. It includes CocosDenshion, FontLabel and cocosLive.</string>
+	<string>This template provides a starting point for an application that uses cocos2d for iOS. It also includes CocosDenshion.</string>
 	<key>Identifier</key>
 	<string>com.cocos2d.cocos2dOnlyIOSTemplate</string>
 	<key>Kind</key>
@@ -92,6 +97,8 @@
 	</array>
 	<key>Nodes</key>
 	<array>
+		<string>Shaders/Shader.frag</string>
+		<string>Shaders/Shader.vert</string>
 		<string>Prefix.pch</string>
 		<string>main.m</string>
 		<string>AppDelegate.h</string>
@@ -100,7 +107,6 @@
 		<string>RootViewController.m</string>
 		<string>HelloWorldLayer.h</string>
 		<string>HelloWorldLayer.m</string>
-		<string>Alberto</string>
 	</array>
 	<key>Options</key>
 	<array>

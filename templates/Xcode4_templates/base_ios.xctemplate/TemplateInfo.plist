@@ -18,20 +18,10 @@
 		<dict>
 			<key>ARCHS</key>
 			<string>$(ARCHS_STANDARD_32_BIT)</string>
-			<key>GCC_VERSION</key>
-			<string>com.apple.compilers.llvmgcc42</string>
 			<key>IPHONEOS_DEPLOYMENT_TARGET</key>
 			<string>latest_iphoneos</string>
 			<key>CODE_SIGN_IDENTITY[sdk=iphoneos*]</key>
 			<string>iPhone Developer</string>
-		</dict>
-		<key>Configurations</key>
-		<dict>
-			<key>Release</key>
-			<dict>
-				<key>OTHER_CFLAGS</key>
-				<string>-DNS_BLOCK_ASSERTIONS=1</string>
-			</dict>
 		</dict>
 	</dict>
 	<key>Targets</key>

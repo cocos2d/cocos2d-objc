@@ -18,8 +18,6 @@
 		<dict>
 			<key>ARCHS</key>
 			<string>$(ARCHS_STANDARD_32_64_BIT)</string>
-			<key>GCC_VERSION</key>
-			<string>com.apple.compilers.llvm.clang.1_0</string>
 			<key>MACOSX_DEPLOYMENT_TARGET</key>
 			<string>latest_macosx</string>
 			<key>GCC_WARN_64_TO_32_BIT_CONVERSION</key>
@@ -31,11 +29,6 @@
 			<dict>
 				<key>ONLY_ACTIVE_ARCH</key>
 				<string>YES</string>
-			</dict>
-			<key>Release</key>
-			<dict>
-				<key>OTHER_CFLAGS</key>
-				<string>-DNS_BLOCK_ASSERTIONS=1</string>
 			</dict>
 		</dict>
     </dict>
