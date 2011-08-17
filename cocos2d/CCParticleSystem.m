@@ -95,10 +95,10 @@
 	NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:path];
 	
 	NSAssert( dict != nil, @"Particles: file not found");
-	return [self initWithDictionary:dict];
+	return [self initWithDictionary:dict andPath:[path stringByDeletingLastPathComponent]];
 }
 
--(id) initWithDictionary:(NSDictionary *)dictionary
+-(id) initWithDictionary:(NSDictionary *)dictionary andPath:(NSString *)path
 {
 	NSUInteger maxParticles = [[dictionary valueForKey:@"maxParticles"] intValue];
 	// self, not super
@@ -218,7 +218,7 @@
 
 		// texture		
 		// Try to get the texture from the cache
-		NSString *textureName = [dictionary valueForKey:@"textureFileName"];
+		NSString *textureName = [path stringByAppendingPathComponent:[dictionary valueForKey:@"textureFileName"]];
 
 		CCTexture2D *tex = [[CCTextureCache sharedTextureCache] addImage:textureName];
 

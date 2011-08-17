@@ -417,7 +417,7 @@ typedef void (*CC_UPDATE_PARTICLE_IMP)(id, SEL, tCCParticle*, CGPoint);
 /** initializes a CCQuadParticleSystem from a NSDictionary.
  @since v0.99.3
  */
--(id) initWithDictionary:(NSDictionary*)dictionary;
+-(id) initWithDictionary:(NSDictionary*)dictionary andPath:(NSString*)path;
 
 //! Initializes a system with a fixed number of particles
 -(id) initWithTotalParticles:(NSUInteger) numberOfParticles;
