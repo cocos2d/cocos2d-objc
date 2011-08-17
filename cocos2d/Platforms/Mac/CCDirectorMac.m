@@ -42,7 +42,9 @@
 #pragma mark Director Mac extensions
 
 
-@interface CCDirector ()
+@interface CCDirector (private)
+-(void) removeLastSceneWithCachePurge:(BOOL)cachePurge;
+-(void) manageNextScene;
 -(void) setNextScene;
 -(void) showFPS;
 -(void) calculateDeltaTime;
@@ -416,9 +418,6 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 	if( ! isPaused_ ) {
 		[[CCScheduler sharedScheduler] tick: dt];	
 	}
-    if ([CCScheduler sharedScheduler].willPurgeSharedScheduler) {
-        [CCScheduler releaseSharedScheduler];
-    }
 
     // Don't clear DEPTH BUFFER if we are not using 3D
 	// glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -426,9 +425,11 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 	
 	/* to avoid flickr, nextScene MUST be here: after tick and before draw.
 	 XXX: Which bug is this one. It seems that it can't be reproduced with v0.9 */
-	if( nextScene_ )
-		[self setNextScene];
-	
+	//if( nextScene_ )
+	//	[self setNextScene];
+    // 1.0.0-rsanchez: New scene system for handling scene substitutions
+    [self manageNextScene];
+    
 	glPushMatrix();
 	
 	

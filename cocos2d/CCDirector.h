@@ -65,6 +65,17 @@ typedef enum {
     kCCFPSCornerDefault = kCCFPSPositionLowerRight
 } ccFPSPosition;
 
+/** @typedef ccNextDirectorOperation
+ Next director operation
+ */
+typedef enum {
+    kCCDirectorNextOperationNone,
+	kCCDirectorNextOperationChangeScene,
+	kCCDirectorNextOperationChangeSceneClass,
+	kCCDirectorNextOperationRemoveLastScene,
+    kCCDirectorNextOperationRemoveLastSceneAndChangeScene,
+    kCCDirectorNextOperationRemoveLastSceneAndChangeSceneClass
+} ccDirectorNextOperation;
 
 @class CCLabelAtlas;
 @class CCScene;
@@ -119,7 +130,9 @@ and when to execute the Scenes.
 	/* will be the next 'runningScene' in the next frame
 	 nextScene is a weak reference. */
 	CCScene *nextScene_;
-	
+    Class<CCSceneAutoreleased> nextSceneClass_;
+	ccDirectorNextOperation directorNextOperation_;
+    
 	/* If YES, then "old" scene will receive the cleanup message */
 	BOOL	sendCleanupToScene_;
 
@@ -252,15 +265,18 @@ and when to execute the Scenes.
 /**Enters the Director's main loop with the given Scene. 
  * Call it to run only your FIRST scene.
  * Don't call it if there is already a running scene.
+ *
+ * Deprecated since 1.0.0-rsanchez
  */
 - (void) runWithScene:(CCScene*) scene;
 
 /**Suspends the execution of the running scene, pushing it on the stack of suspended scenes.
  * The new scene will be executed.
  * Try to avoid big stacks of pushed scenes to reduce memory allocation. 
- * ONLY call it if there is a running scene.
+ * Since 1.0.0-rsanchez you can call it even if there are no running scenes
  */
 - (void) pushScene:(CCScene*) scene;
+- (void) pushSceneClass: (Class) sceneClass;
 
 /**Pops out a scene from the queue.
  * This scene will replace the running one.
@@ -268,6 +284,10 @@ and when to execute the Scenes.
  * ONLY call it if there is a running scene.
  */
 - (void) popScene;
+/** Pops a scene without performing cleanup (useful for persistent retained scenes)
+ * 
+ * @since 1.0.0-rsanchez
+ */
 - (void) popSceneWithCleanup:(BOOL)cleanup;
 
 /** Replaces the running scene with a new one. The running scene is terminated.

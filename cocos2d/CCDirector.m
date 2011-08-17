@@ -126,7 +126,8 @@ static CCDirector *_sharedDirector = nil;
 		// scenes
 		runningScene_ = nil;
 		nextScene_ = nil;
-		
+		directorNextOperation_=kCCDirectorNextOperationNone;
+        
 		notificationNode_ = nil;
 		
 		oldAnimationInterval_ = animationInterval_ = 1.0 / kDefaultFPS;
@@ -150,6 +151,8 @@ static CCDirector *_sharedDirector = nil;
 		runningThread_ = nil;
 		
 		winSizeInPixels_ = winSizeInPoints_ = CGSizeZero;
+        
+        openGLView_ = nil;
 	}
 
 	return self;
@@ -158,6 +161,8 @@ static CCDirector *_sharedDirector = nil;
 - (void) dealloc
 {
 	CCLOGINFO(@"cocos2d: deallocing %@", self);
+
+    [openGLView_ release];
 
 #if CC_DIRECTOR_FAST_FPS
 	[FPSLabel_ release];
@@ -354,11 +359,14 @@ static CCDirector *_sharedDirector = nil;
 
 #pragma mark Director Scene Management
 
+// Deprecated method since 1.0.0-rsanchez
+// startAnimation must be manually called 
 - (void)runWithScene:(CCScene*) scene
 {
-	NSAssert( scene != nil, @"Argument must be non-nil");
-	NSAssert( runningScene_ == nil, @"You can't run an scene if another Scene is running. Use replaceScene or pushScene instead");
-	
+    CCLOG(@"cocos2d 1.0.0-rsanchez: runWithScene is no longer recommended, use pushScene: or pushSceneClass:");
+	NSAssert( scene != NULL, @"Argument must be non-nil");
+	NSAssert( runningScene_ == NULL, @"You can't run an scene if another Scene is running. Use replaceScene or pushScene instead");
+	    
 	[self pushScene:scene];
 	[self startAnimation];	
 }
@@ -371,18 +379,45 @@ static CCDirector *_sharedDirector = nil;
 	
 	sendCleanupToScene_ = YES;
 	[scenesStack_ replaceObjectAtIndex:index-1 withObject:scene];
+    
+    // Set next operation
 	nextScene_ = scene;	// nextScene_ is a weak ref
+    directorNextOperation_ = kCCDirectorNextOperationChangeScene;
 }
 
 - (void) pushScene: (CCScene*) scene
 {
 	NSAssert( scene != nil, @"Argument must be non-nil");
 
+    
 	sendCleanupToScene_ = NO;
 
 	[scenesStack_ addObject: scene];
 	nextScene_ = scene;	// nextScene_ is a weak ref
+    
+    // Set next operation
+    if (directorNextOperation_==kCCDirectorNextOperationRemoveLastScene) {
+        directorNextOperation_=kCCDirectorNextOperationRemoveLastSceneAndChangeScene;
+    } else {
+        directorNextOperation_ = kCCDirectorNextOperationChangeScene;
+    }
 }
+
+- (void) pushSceneClass: (Class) sceneClass
+{
+	NSAssert( sceneClass != nil, @"Argument must be non-nil");
+    
+    
+    nextSceneClass_ = sceneClass;	// nextSceneClass_ is a weak class ref
+    
+    // Set next operation
+    if (directorNextOperation_==kCCDirectorNextOperationRemoveLastScene) {
+        directorNextOperation_ = kCCDirectorNextOperationRemoveLastSceneAndChangeSceneClass;
+    } else {
+        directorNextOperation_ = kCCDirectorNextOperationChangeSceneClass;
+    }
+}
+
 
 -(void) popScene
 {	
@@ -396,18 +431,43 @@ static CCDirector *_sharedDirector = nil;
 	[scenesStack_ removeLastObject];
 	NSUInteger c = [scenesStack_ count];
 	
-	if( c == 0 )
-		[self end];
-	else {
+	if( c == 0 ) {
+        directorNextOperation_ = kCCDirectorNextOperationRemoveLastScene;
+        // Do not call [self end] here in order to keep director alive
+        // when popping last scene (so you can optionally purge director data)
+        //[self end];
+	} else {
 		sendCleanupToScene_ = cleanup;
 		nextScene_ = [scenesStack_ objectAtIndex:c-1];
+        directorNextOperation_ = kCCDirectorNextOperationChangeScene;
 	}
+}
+
+// New private method for scene replacement handling (1.0.0-rsanchez) 
+-(void) removeLastSceneWithCachePurge:(BOOL)cachePurge {
+    [runningScene_ onExit];
+	[runningScene_ cleanup];
+	[runningScene_ release];
+    
+	runningScene_ = nil;
+
+    if (cachePurge) {
+        // Purge bitmap cache
+        [CCLabelBMFont purgeCachedData];
+        
+        // Purge all managers
+        [CCAnimationCache purgeSharedAnimationCache];
+        [CCSpriteFrameCache purgeSharedSpriteFrameCache];
+        [CCScheduler purgeSharedScheduler];
+        [CCActionManager purgeSharedManager];
+        [CCTextureCache purgeSharedTextureCache];
+    }
 }
 
 -(void) end
 {
     // Stop animation before releasing runningScene,
-    // or else CCScheduler tick might try to use unallocated data
+    // or else CCScheduler tick might try to use unallocated targets
     [self stopAnimation];
     
 	[runningScene_ onExit];
@@ -421,16 +481,15 @@ static CCDirector *_sharedDirector = nil;
 	// runWithScene might be executed after 'end'.
 	[scenesStack_ removeAllObjects];
 	
-    // Do not release FPS label (so popping last scene doesn't remove it)
-    // It's already released in CCDirector's dealloc, so by all means
-    // the release is not needed here
+    // Do not release FPS label here, done on dealloc method
 //#if CC_DIRECTOR_FAST_FPS
 //	[FPSLabel_ release];
 //	FPSLabel_ = nil;
 //#endif	
 
-	[projectionDelegate_ release];
-	projectionDelegate_ = nil;
+    // Do not release the projectionDelegate here, do it on dealloc method
+	// [projectionDelegate_ release];
+	// projectionDelegate_ = nil;
 	
 	// Purge bitmap cache
 	[CCLabelBMFont purgeCachedData];
@@ -445,18 +504,62 @@ static CCDirector *_sharedDirector = nil;
 	
 	// OpenGL view
 	
-	// Since the director doesn't attach the openglview to the window
+	// Since the director doesn't automatically attach the openglview to the window
 	// it shouldn't remove it from the window.
-//	[openGLView_ removeFromSuperview];
+    // [openGLView_ removeFromSuperview];
 
-    // Do not release openGLView_ here because CCDirector doesn't autoset
-    // openGLView when it is NULL (you should manually set/release it).
-    // This makes possble using CCDirector's popScene to remove
-    // the currently running scene and clean all the caches before pushing a new scene,
-    // which in turn allows conservative memory usage
-    // (old scene assets can be completely deallocated before allocating a new scene)
-//	[openGLView_ release];
-//	openGLView_ = NULL;	
+    // Do not release openGLView_ here do it in dealloc instead
+    //	[openGLView_ release];
+    //	openGLView_ = NULL;	
+}
+
+// 1.0.0-rsanchez: New scene system for handling scene substitutions
+// 
+// it allows to:
+//  - allocate the new scene after the old scene has been completely deallocated (via the new pushSceneClass:),
+//    you must pass [yourScene class] as the argument. The class must conform to the CCSceneAutoreleased protocol,
+//     and it must have an argument-less +(id)scene method which allocates and returns the autorelease scene
+//  
+// the old pushScene and popScene work as usual, but the process has been improved a bit:
+// - popping the last scene no longer calls [director end]. Instead, just the caches are purged.
+// - popping the last scene won't purge the caches if you are pushing a scene that has been alread initialized
+//   (because puring the caches would destroy data owned by the new scene) 
+// - pushScene: now acts as runWithScene:, which is now deprecated) (the only difference is that you must 
+//   manually call [director startAnimation] at the end of applicationDidFinishLaunching:)
+// - CCDirector end and dealloc methods have been sanitized a little bit to make it more Cocoa like
+-(void) manageNextScene
+{
+    if( directorNextOperation_!=kCCDirectorNextOperationNone) {
+        // Controls popScene and pushScene
+        if (directorNextOperation_==kCCDirectorNextOperationChangeScene) {
+            [self setNextScene];
+            directorNextOperation_=kCCDirectorNextOperationNone;
+        } else if (directorNextOperation_==kCCDirectorNextOperationRemoveLastScene) {
+            [self removeLastSceneWithCachePurge:YES];
+            directorNextOperation_=kCCDirectorNextOperationNone;
+        } else if (directorNextOperation_==kCCDirectorNextOperationRemoveLastSceneAndChangeScene) {
+            // Do not purge here becase the new scene already
+            // has been initialized and probably has items in the caches
+            [self removeLastSceneWithCachePurge:NO];
+            [self setNextScene];
+            directorNextOperation_=kCCDirectorNextOperationNone;
+            // Controls new pushSceneClass
+        } else if (directorNextOperation_==kCCDirectorNextOperationChangeSceneClass) {
+            [self pushScene:[nextSceneClass_ scene]]; 
+            nextSceneClass_=NULL;
+            [self setNextScene];
+            directorNextOperation_=kCCDirectorNextOperationNone;
+        } else if (directorNextOperation_==kCCDirectorNextOperationRemoveLastSceneAndChangeSceneClass) {
+            // You can safely purge here becase the new scene will
+            // be initialized after cache purging
+            [self removeLastSceneWithCachePurge:YES];
+            [self pushScene:[nextSceneClass_ scene]]; 
+            nextSceneClass_=NULL;
+            [self setNextScene];
+            directorNextOperation_=kCCDirectorNextOperationNone;
+        }
+    }
+
 }
 
 -(void) setNextScene

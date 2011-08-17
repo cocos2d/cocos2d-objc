@@ -117,8 +117,18 @@
 #pragma mark CCProjectionProtocol
 /** OpenGL projection protocol */
 @protocol CCProjectionProtocol <NSObject>
-/** Called by CCDirector when the porjection is updated, and "custom" projection is used
+/** Called by CCDirector when the projection is updated, and "custom" projection is used
  @since v0.99.5
  */
 -(void) updateProjection;
+@end
+
+#pragma mark -
+#pragma mark CCSceneAutoreleasedProtocol
+/** OpenGL projection protocol */
+@protocol CCSceneAutoreleased
+/** Called by CCDirector for allocating and initializing new scenes added via the pushSceneClass method
+ @since v1.0.0-rsanchez
+ */
++(id) scene;
 @end
