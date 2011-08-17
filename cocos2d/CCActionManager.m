@@ -71,6 +71,10 @@ static CCActionManager *sharedManager_ = nil;
 	if ((self=[super init]) ) {
 		[[CCScheduler sharedScheduler] scheduleUpdateForTarget:self priority:0 paused:NO];
 		targets = NULL;
+        currentTarget = NULL;
+        currentTargetSalvaged = NO;
+        
+        CCLOG(@"Initialized: %@",self);
 	}
 	
 	return self;
@@ -78,7 +82,7 @@ static CCActionManager *sharedManager_ = nil;
 
 - (void) dealloc
 {
-	CCLOGINFO( @"cocos2d: deallocing %@", self);
+	CCLOG( @"cocos2d: deallocing %@", self);
 	
 	[self removeAllActions];
 
