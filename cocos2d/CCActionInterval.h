@@ -176,6 +176,36 @@ Example:
 -(id) initWithDuration: (ccTime)duration position:(CGPoint)deltaPosition;
 @end
 
+/**  Moves a CCNode object x,y pixels by modifying it's position attribute.
+ x and y are relative to the position of the object.
+    Can be concurrently called.
+    @since 1.0.0-rsanchez
+ */ 
+@interface CCMoveByEx : CCActionInterval <NSCopying>
+{
+    CGPoint delta;
+    ccTime previousTick;
+}
+/** creates the action */
++(id) actionWithDuration: (ccTime)duration position:(CGPoint)deltaPosition;
+/** initializes the action */
+-(id) initWithDuration: (ccTime)duration position:(CGPoint)deltaPosition;
+@end
+
+/** Moves a CCNode object to the position x,y. x and y are absolute coordinates by modifying it's position attribute.
+    Can be concurrently called.
+    @since 1.0.0-rsanchez
+ */
+@interface CCMoveToEx : CCMoveByEx
+{
+	CGPoint endPosition;
+}
+/** creates the action */
++(id) actionWithDuration:(ccTime)duration position:(CGPoint)position;
+/** initializes the action */
+-(id) initWithDuration:(ccTime)duration position:(CGPoint)position;
+@end
+
 /** Moves a CCNode object simulating a parabolic jump movement by modifying it's position attribute.
 */
  @interface CCJumpBy : CCActionInterval <NSCopying>
