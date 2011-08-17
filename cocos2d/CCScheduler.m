@@ -158,7 +158,6 @@ typedef struct _hashSelectorEntry
 static CCScheduler *sharedScheduler;
 
 @synthesize timeScale = timeScale_;
-@synthesize willPurgeSharedScheduler = willPurgeSharedScheduler_;
 
 + (CCScheduler *)sharedScheduler
 {
@@ -175,10 +174,6 @@ static CCScheduler *sharedScheduler;
 }
 
 +(void)purgeSharedScheduler {
-    sharedScheduler.willPurgeSharedScheduler=YES;
-}
-
-+(void)releaseSharedScheduler {
 	[sharedScheduler release];
 	sharedScheduler = NULL;
 }
@@ -203,8 +198,6 @@ static CCScheduler *sharedScheduler;
 		currentTargetSalvaged = NO;
 		hashForSelectors = NULL;
         updateHashLocked = NO;
-        
-        willPurgeSharedScheduler_ = NO;
 	}
 
     CCLOG(@"Initalized sharedScheduler %@", self);

@@ -112,14 +112,7 @@ struct _hashUpdateEntry;
 	SEL					updateSelector;
     
     BOOL updateHashLocked; // If true unschedule will not remove anything from a hash. Elements will only be marked for deletion.
-    
-    BOOL willPurgeSharedScheduler_; // If true the scheduler will be purged after the current tick finishes running
 }
-
-/** Purges the shared scheduler after the current tick finishes running
- @since v1.0.0-rsanchez
- **/
-@property (nonatomic,readwrite) BOOL	willPurgeSharedScheduler;
 
 /** Modifies the time of all scheduled callbacks.
  You can use this property to create a 'slow motion' or 'fast fordward' effect.
@@ -133,15 +126,10 @@ struct _hashUpdateEntry;
 /** returns a shared instance of the Scheduler */
 +(CCScheduler *)sharedScheduler;
 
-/** Purges the shared scheduler after the current tick finishes running
- @since v1.0.0-rsanchez
- **/
-+(void)purgeSharedScheduler;
-
-/** instantly purges the shared scheduler. It releases the retained instance.
- @since v1.0.0-rsanchez
+/** purges the shared scheduler. It releases the retained instance.
+ @since v0.99.0
  */
-+(void)releaseSharedScheduler;
++(void)purgeSharedScheduler;
 
 /** 'tick' the scheduler.
  You should NEVER call this method, unless you know what you are doing.
