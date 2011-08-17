@@ -616,6 +616,7 @@ struct transformValues_ {
 		ccp(0,0),ccp(s.width,0),
 		ccp(s.width,s.height),ccp(0,s.height),
 	};
+    glColor4ub(0, 255, 0, 255);
 	ccDrawPoly(vertices, 4, YES);
 #endif // CC_TEXTURENODE_DEBUG_DRAW
 	
