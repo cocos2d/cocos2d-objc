@@ -105,6 +105,18 @@ typedef enum {
 	
 } CCTexture2DPixelFormat;
 
+
+/** @typedef CCTexture2DPixelFormat
+ Possible texture pixel formats
+ */
+typedef enum {
+    
+	kCCTextVerticalAlignmentTop,
+    kCCTextVerticalAlignmentCenter,
+    kCCTextVerticalAlignmentBottom,
+    kCCTextVerticalAlignmentDefault=kCCTextVerticalAlignmentTop
+} CCTextVerticalAlignment;
+
 //CLASS INTERFACES:
 
 /** CCTexture2D class.
@@ -123,6 +135,7 @@ typedef enum {
 	GLfloat						maxS_,
 								maxT_;
 	BOOL						hasPremultipliedAlpha_;
+    CGSize                      stringSize_;
 }
 /** Intializes with a texture2d with data */
 - (id) initWithData:(const void*)data pixelFormat:(CCTexture2DPixelFormat)pixelFormat pixelsWide:(NSUInteger)width pixelsHigh:(NSUInteger)height contentSize:(CGSize)size;
@@ -150,6 +163,9 @@ typedef enum {
 @property(nonatomic,readwrite) GLfloat maxT;
 /** whether or not the texture has their Alpha premultiplied */
 @property(nonatomic,readonly) BOOL hasPremultipliedAlpha;
+/** returns the real text size */
+/** @since 1.0.0-rsanchez */
+@property(nonatomic,readonly) CGSize stringSize;
 
 /** returns the content size of the texture in points */
 -(CGSize) contentSize;
@@ -186,6 +202,7 @@ Note that the generated textures are of type A8 - use the blending mode (GL_SRC_
 @interface CCTexture2D (Text)
 /** Initializes a texture from a string with dimensions, alignment, font name and font size */
 - (id) initWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(CCTextAlignment)alignment fontName:(NSString*)name fontSize:(CGFloat)size;
+- (id) initWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(CCTextAlignment)alignment fontName:(NSString*)name fontSize:(CGFloat)size verticalAlignment:(CCTextVerticalAlignment)verticalAlignment;
 /** Initializes a texture from a string with font name and font size */
 - (id) initWithString:(NSString*)string fontName:(NSString*)name fontSize:(CGFloat)size;
 @end

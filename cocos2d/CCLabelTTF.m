@@ -43,18 +43,23 @@
 	return nil;
 }
 
++ (id) labelWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(CCTextAlignment)alignment fontName:(NSString*)name fontSize:(CGFloat)size verticalAlignment:(CCTextVerticalAlignment)verticalAlignment
+{
+	return [[[self alloc] initWithString: string dimensions:dimensions alignment:alignment fontName:name fontSize:size verticalAlignment:verticalAlignment] autorelease];
+}
+
 + (id) labelWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(CCTextAlignment)alignment fontName:(NSString*)name fontSize:(CGFloat)size
 {
-	return [[[self alloc] initWithString: string dimensions:dimensions alignment:alignment fontName:name fontSize:size]autorelease];
+	return [[[self alloc] initWithString: string dimensions:dimensions alignment:alignment fontName:name fontSize:size] autorelease];
 }
 
 + (id) labelWithString:(NSString*)string fontName:(NSString*)name fontSize:(CGFloat)size
 {
-	return [[[self alloc] initWithString: string fontName:name fontSize:size]autorelease];
+	return [[[self alloc] initWithString: string fontName:name fontSize:size] autorelease];
 }
 
 
-- (id) initWithString:(NSString*)str dimensions:(CGSize)dimensions alignment:(CCTextAlignment)alignment fontName:(NSString*)name fontSize:(CGFloat)size
+- (id) initWithString:(NSString*)str dimensions:(CGSize)dimensions alignment:(CCTextAlignment)alignment fontName:(NSString*)name fontSize:(CGFloat)size verticalAlignment:(CCTextVerticalAlignment)verticalAlignment
 {
 	if( (self=[super init]) ) {
 
@@ -62,23 +67,21 @@
 		alignment_ = alignment;
 		fontName_ = [name retain];
 		fontSize_ = size * CC_CONTENT_SCALE_FACTOR();
-		
+		verticalAlignment_=verticalAlignment;
+        
 		[self setString:str];
 	}
 	return self;
 }
 
+- (id) initWithString:(NSString*)str dimensions:(CGSize)dimensions alignment:(CCTextAlignment)alignment fontName:(NSString*)name fontSize:(CGFloat)size 
+{
+    return [self initWithString:str dimensions:dimensions alignment:alignment fontName:name fontSize:size verticalAlignment:kCCTextVerticalAlignmentTop];
+}
+
 - (id) initWithString:(NSString*)str fontName:(NSString*)name fontSize:(CGFloat)size
 {
-	if( (self=[super init]) ) {
-		
-		dimensions_ = CGSizeZero;
-		fontName_ = [name retain];
-		fontSize_ = size * CC_CONTENT_SCALE_FACTOR();
-		
-		[self setString:str];
-	}
-	return self;
+	return [self initWithString:str dimensions:CGSizeMake(0,0) alignment:UITextAlignmentLeft fontName:name fontSize:size verticalAlignment:kCCTextVerticalAlignmentTop];
 }
 
 - (void) setString:(NSString*)str
@@ -96,7 +99,8 @@
 									   dimensions:dimensions_
 										alignment:alignment_
 										 fontName:fontName_
-										 fontSize:fontSize_];
+										 fontSize:fontSize_
+                                verticalAlignment:verticalAlignment_];
 
 	[self setTexture:tex];
 	[tex release];

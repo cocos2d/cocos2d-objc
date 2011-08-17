@@ -40,6 +40,7 @@
 {
 	CGSize dimensions_;
 	CCTextAlignment alignment_;
+    CCTextVerticalAlignment verticalAlignment_;
 	NSString * fontName_;
 	CGFloat fontSize_;
 	NSString	*string_;
@@ -47,9 +48,12 @@
 
 /** creates a CCLabel from a fontname, alignment, dimension in points and font size in points*/
 + (id) labelWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(CCTextAlignment)alignment fontName:(NSString*)name fontSize:(CGFloat)size;
++ (id) labelWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(CCTextAlignment)alignment fontName:(NSString*)name fontSize:(CGFloat)size verticalAlignment:(CCTextVerticalAlignment)verticalAlignment;
 /** creates a CCLabel from a fontname and font size in points*/
 + (id) labelWithString:(NSString*)string fontName:(NSString*)name fontSize:(CGFloat)size;
 /** initializes the CCLabel with a font name, alignment, dimension in points and font size in points */
+- (id) initWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(CCTextAlignment)alignment fontName:(NSString*)name fontSize:(CGFloat)size
+    verticalAlignment:(CCTextVerticalAlignment)verticalAlignment;
 - (id) initWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(CCTextAlignment)alignment fontName:(NSString*)name fontSize:(CGFloat)size;
 /** initializes the CCLabel with a font name and font size in points */
 - (id) initWithString:(NSString*)string  fontName:(NSString*)name fontSize:(CGFloat)size;
