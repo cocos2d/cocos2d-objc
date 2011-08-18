@@ -469,7 +469,7 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 	unsigned char*			data;
 	
 	NSSize realDimensions = [stringWithAttributes size];
-    stringSize_=realDimensions;
+    stringSize_=CCNSSizeToCGSize(realDimensions);
     
 	//Alignment
 	int xPadding = 0, yPadding= 0 ;

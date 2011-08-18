@@ -81,7 +81,7 @@
 
 - (id) initWithString:(NSString*)str fontName:(NSString*)name fontSize:(CGFloat)size
 {
-	return [self initWithString:str dimensions:CGSizeMake(0,0) alignment:UITextAlignmentLeft fontName:name fontSize:size verticalAlignment:kCCTextVerticalAlignmentTop];
+	return [self initWithString:str dimensions:CGSizeMake(0,0) alignment:CCTextAlignmentLeft fontName:name fontSize:size verticalAlignment:kCCTextVerticalAlignmentTop];
 }
 
 - (void) setString:(NSString*)str
