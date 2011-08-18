@@ -194,7 +194,6 @@ typedef enum {
 	
 	/* contentScaleFactor could be simulated */
 	BOOL	isContentScaleSupported_;
-    BOOL    isRunning_;
 }
 @end
 

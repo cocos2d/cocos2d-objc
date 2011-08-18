@@ -73,6 +73,8 @@ typedef enum {
     kCCDirectorNextOperationNone,
 	kCCDirectorNextOperationChangeScene,
 	kCCDirectorNextOperationChangeSceneClass,
+	kCCDirectorNextOperationChangeSceneAndStart,
+	kCCDirectorNextOperationChangeSceneClassAndStart,
 	kCCDirectorNextOperationRemoveLastScene,
     kCCDirectorNextOperationRemoveLastSceneAndChangeScene,
     kCCDirectorNextOperationRemoveLastSceneAndChangeSceneClass
@@ -123,6 +125,7 @@ and when to execute the Scenes.
 	
 	/* is the running scene paused */
 	BOOL isPaused_;
+	BOOL isRunning_;
     
 	/* The running scene */
 	CCScene *runningScene_;

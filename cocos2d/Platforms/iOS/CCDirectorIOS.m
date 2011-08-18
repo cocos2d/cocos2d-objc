@@ -135,8 +135,6 @@ CGFloat	__ccContentScaleFactor = 1;
 		
 		// running thread is main thread on iOS
 		runningThread_ = [NSThread currentThread];
-        
-        isRunning_ = NO;
 	}
 	
 	return self;
@@ -161,7 +159,7 @@ CGFloat	__ccContentScaleFactor = 1;
 	}
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    // Dubious optimizator, it makes cocos2d SpriteTest to break, need to investigate
+    // Dubious optimization, it makes cocos2d SpriteTest to break, need to investigate
     // Don't clear DEPTH BUFFER if we are not using 3D
     //glClear(GL_COLOR_BUFFER_BIT );
 	
@@ -264,16 +262,6 @@ CGFloat	__ccContentScaleFactor = 1;
 		[openGLView_ setTouchDelegate: touchDispatcher];
 		[touchDispatcher setDispatchEvents: YES];
 	}
-}
-
-- (void)startAnimation
-{
-    isRunning_=YES;
-}
-
-- (void)stopAnimation
-{
-    isRunning_=NO;
 }
 
 #pragma mark Director - Retina Display

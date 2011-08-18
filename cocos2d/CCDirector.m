@@ -148,6 +148,7 @@ static CCDirector *_sharedDirector = nil;
 		
 		// paused ?
 		isPaused_ = NO;
+        isRunning_ = NO;
 		
 		// running thread
 		runningThread_ = nil;
@@ -370,7 +371,6 @@ static CCDirector *_sharedDirector = nil;
 	NSAssert( runningScene_ == nil, @"You can't run an scene if another Scene is running. Use replaceScene or pushScene instead");
 	    
 	[self pushScene:scene];
-	[self startAnimation];	
 }
 
 -(void) replaceScene: (CCScene*) scene
@@ -401,7 +401,11 @@ static CCDirector *_sharedDirector = nil;
     if (directorNextOperation_==kCCDirectorNextOperationRemoveLastScene) {
         directorNextOperation_=kCCDirectorNextOperationRemoveLastSceneAndChangeScene;
     } else {
-        directorNextOperation_ = kCCDirectorNextOperationChangeScene;
+        if (!isRunning_) {
+            directorNextOperation_ = kCCDirectorNextOperationChangeSceneAndStart;
+        } else {
+            directorNextOperation_ = kCCDirectorNextOperationChangeScene;
+        }
     }
 }
 
@@ -416,7 +420,11 @@ static CCDirector *_sharedDirector = nil;
     if (directorNextOperation_==kCCDirectorNextOperationRemoveLastScene) {
         directorNextOperation_ = kCCDirectorNextOperationRemoveLastSceneAndChangeSceneClass;
     } else {
-        directorNextOperation_ = kCCDirectorNextOperationChangeSceneClass;
+        if (!isRunning_) {
+            directorNextOperation_ = kCCDirectorNextOperationChangeSceneClassAndStart;
+        } else {
+            directorNextOperation_ = kCCDirectorNextOperationChangeSceneClass;
+        }
     }
 }
 
@@ -526,14 +534,18 @@ static CCDirector *_sharedDirector = nil;
 // - popping the last scene no longer calls [director end]. Instead, just the caches are purged.
 // - popping the last scene won't purge the caches if you are pushing a scene that has been alread initialized
 //   (because puring the caches would destroy data owned by the new scene) 
-// - pushScene: now acts as runWithScene:, which is now deprecated) (the only difference is that you must 
-//   manually call [director startAnimation] at the end of applicationDidFinishLaunching:)
+// - pushScene: now acts as runWithScene:, which is now deprecated) (
+//   ([director startAnimation] is automatically called on the first pushScene)
 // - CCDirector end and dealloc methods have been sanitized a little bit to make it more Cocoa like
 -(void) manageNextScene
 {
     if( directorNextOperation_!=kCCDirectorNextOperationNone) {
         // Controls popScene and pushScene
-        if (directorNextOperation_==kCCDirectorNextOperationChangeScene) {
+        if (directorNextOperation_==kCCDirectorNextOperationChangeSceneAndStart) {
+            [self setNextScene];
+            [self startAnimation];
+            directorNextOperation_=kCCDirectorNextOperationNone;
+        } else if (directorNextOperation_==kCCDirectorNextOperationChangeScene) {
             [self setNextScene];
             directorNextOperation_=kCCDirectorNextOperationNone;
         } else if (directorNextOperation_==kCCDirectorNextOperationRemoveLastScene) {
@@ -545,7 +557,13 @@ static CCDirector *_sharedDirector = nil;
             [self removeLastSceneWithCachePurge:NO];
             [self setNextScene];
             directorNextOperation_=kCCDirectorNextOperationNone;
-            // Controls new pushSceneClass
+        // new pushSceneClass method
+        } else if (directorNextOperation_==kCCDirectorNextOperationChangeSceneClassAndStart) {
+            [self pushScene:[nextSceneClass_ scene]]; 
+            nextSceneClass_=NULL;
+            [self setNextScene];
+            [self startAnimation];
+            directorNextOperation_=kCCDirectorNextOperationNone;
         } else if (directorNextOperation_==kCCDirectorNextOperationChangeSceneClass) {
             [self pushScene:[nextSceneClass_ scene]]; 
             nextSceneClass_=NULL;
@@ -561,7 +579,6 @@ static CCDirector *_sharedDirector = nil;
             directorNextOperation_=kCCDirectorNextOperationNone;
         }
     }
-
 }
 
 -(void) setNextScene
@@ -621,10 +638,13 @@ static CCDirector *_sharedDirector = nil;
 
 - (void)startAnimation
 {
+//    NSAssert( isRunning_ == NO, @"isRunning must be NO. Calling startAnimation twice?");
+    isRunning_=YES;
 }
 
 - (void)stopAnimation
 {
+    isRunning_=NO;
 }
 
 - (void)setAnimationInterval:(NSTimeInterval)interval
