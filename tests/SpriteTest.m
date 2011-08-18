@@ -12,7 +12,7 @@
 
 static int sceneIdx=-1;
 static NSString *transitions[] = {	
-
+	
 	@"Sprite1",
 	@"SpriteBatchNode1",
 	@"SpriteFrameTest",
@@ -61,6 +61,7 @@ static NSString *transitions[] = {
 	@"SpriteNilTexture",
 	@"SpriteSubclass",
 	@"AnimationCache",
+	@"AnimationCacheFile",
 };
 
 enum {
@@ -3983,6 +3984,71 @@ Class restartAction()
 -(NSString *) title
 {
 	return @"AnimationCache";
+}
+
+-(NSString*) subtitle
+{
+	return @"Sprite should be animated";
+}
+
+@end
+
+#pragma mark -
+#pragma mark AnimationCacheFile
+
+@implementation AnimationCacheFile
+
+
+-(id) init
+{
+	if( (self=[super init]) ) {
+		
+		[[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"animations/grossini.plist"];
+		[[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"animations/grossini_gray.plist"];
+		[[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"animations/grossini_blue.plist"];		
+
+
+		// Purge previously loaded animation
+		[CCAnimationCache purgeSharedAnimationCache];
+		
+		CCAnimationCache *animCache = [CCAnimationCache sharedAnimationCache];
+
+		// Add an animation to the Cache
+		[animCache addAnimationsWithFile:@"animations/animations.plist"];
+		
+		
+		CCAnimation *normal = [animCache animationByName:@"dance_1"];
+		CCAnimation *dance_grey = [animCache animationByName:@"dance_2"];
+		CCAnimation *dance_blue = [animCache animationByName:@"dance_3"];
+		
+		CCAnimate *animN = [CCAnimate actionWithAnimation:normal];
+		CCAnimate *animG = [CCAnimate actionWithAnimation:dance_grey];
+		CCAnimate *animB = [CCAnimate actionWithAnimation:dance_blue];
+		
+		CCSequence *seq = [CCSequence actions:animN, animG, animB, nil];
+		
+		// create an sprite without texture
+		CCSprite *grossini = [CCSprite node];
+		
+		CGSize winSize = [[CCDirector sharedDirector] winSize];
+		
+		grossini.position = ccp(winSize.width/2, winSize.height/2);
+		
+		[self addChild:grossini];
+		
+		
+		// run the animation
+		[grossini runAction:seq];
+		
+	}
+	
+	return self;
+	
+}
+
+-(NSString *) title
+{
+	return @"AnimationCache - Load file";
 }
 
 -(NSString*) subtitle
