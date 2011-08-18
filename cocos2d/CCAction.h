@@ -33,6 +33,7 @@
 enum {
 	//! Default tag
 	kCCActionTagInvalid = -1,
+    kCCActionTagIgnoreSpeed = -2,
 };
 
 /** Base class for CCAction objects.

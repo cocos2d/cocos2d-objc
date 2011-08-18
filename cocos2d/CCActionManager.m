@@ -31,10 +31,18 @@
 #import "CCScheduler.h"
 #import "ccMacros.h"
 
+@interface NSObject (CCActionManager)
+
+- (float)speed;
+- (id)parent;
+
+@end
+
 @interface CCActionManager (Private)
 -(void) removeActionAtIndex:(NSUInteger)index hashElement:(tHashElement*)element;
 -(void) deleteHashElement:(tHashElement*)element;
 -(void) actionAllocWithHashElement:(tHashElement*)element;
+-(float) speedForTarget:(id)target;
 @end
 
 
@@ -283,7 +291,11 @@
 				currentTarget->currentAction = currentTarget->actions->arr[currentTarget->actionIndex];
 				currentTarget->currentActionSalvaged = NO;
 
-				[currentTarget->currentAction step: dt];
+                float speed = 1.0f;
+                if (currentTarget->currentAction.tag != kCCActionTagIgnoreSpeed)
+                    speed = [self speedForTarget:currentTarget->target];
+                
+				[currentTarget->currentAction step: dt * speed];
 
 				if( currentTarget->currentActionSalvaged ) {
 					// The currentAction told the node to remove it. To prevent the action from
@@ -316,4 +328,16 @@
 	// issue #635
 	currentTarget = nil;
 }
+
+- (float)speedForTarget:(id)target {
+    
+    float speed = 1.0f;
+    if ([target respondsToSelector:@selector(speed)])
+        speed *= [target speed];
+    if ([target respondsToSelector:@selector(parent)])
+        speed *= [self speedForTarget:[target parent]];
+    
+    return speed;
+}
+
 @end
