@@ -92,9 +92,7 @@ and when to execute the Scenes.
 
 	ccTime accumDt_;
 	ccTime frameRate_;
-#if	CC_DIRECTOR_FAST_FPS
 	CCLabelAtlas *FPSLabel_;
-#endif
 	
 	/* is the running scene paused */
 	BOOL isPaused_;

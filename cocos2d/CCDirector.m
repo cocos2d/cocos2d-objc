@@ -158,9 +158,7 @@ static CCDirector *_sharedDirector = nil;
 {
 	CCLOGINFO(@"cocos2d: deallocing %@", self);
 
-#if CC_DIRECTOR_FAST_FPS
 	[FPSLabel_ release];
-#endif
 	[runningScene_ release];
 	[notificationNode_ release];
 	[scenesStack_ release];
@@ -389,10 +387,8 @@ static CCDirector *_sharedDirector = nil;
 	
 	[self stopAnimation];
 	
-#if CC_DIRECTOR_FAST_FPS
 	[FPSLabel_ release];
 	FPSLabel_ = nil;
-#endif	
 
 	[projectionDelegate_ release];
 	projectionDelegate_ = nil;
@@ -489,7 +485,6 @@ static CCDirector *_sharedDirector = nil;
 	CCLOG(@"cocos2d: Director#setAnimationInterval. Override me");
 }
 
-#if CC_DIRECTOR_FAST_FPS
 
 // display the FPS using a LabelAtlas
 // updates the FPS every frame
@@ -512,40 +507,6 @@ static CCDirector *_sharedDirector = nil;
 	}
 	[FPSLabel_ visit];
 }
-#else
-// display the FPS using a manually generated Texture (very slow)
-// updates the FPS 3 times per second aprox.
--(void) showFPS
-{
-	frames_++;
-	accumDt_ += dt;
-	
-	if ( accumDt_ > CC_DIRECTOR_FPS_INTERVAL)  {
-		frameRate_ = frames_/accumDt_;
-		frames_ = 0;
-		accumDt_ = 0;
-	}
-	
-	NSString *str = [NSString stringWithFormat:@"%.2f",frameRate_];
-	CCTexture2D *texture = [[CCTexture2D alloc] initWithString:str dimensions:CGSizeMake(100,30) alignment:CCTextAlignmentLeft fontName:@"Arial" fontSize:24];
-
-	// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
-	// Needed states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_TEXTURE_COORD_ARRAY
-	// Unneeded states: GL_COLOR_ARRAY
-	glDisableClientState(GL_COLOR_ARRAY);
-	
-	ccGLBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	
-	glColor4ub(224,224,244,200);
-	[texture drawAtPoint: ccp(5,2)];
-	[texture release];
-	
-	ccGLBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);
-	
-	// restore default GL state
-	glEnableClientState(GL_COLOR_ARRAY);
-}
-#endif
 
 - (void) showProfilers {
 #if CC_ENABLE_PROFILERS
@@ -558,10 +519,9 @@ static CCDirector *_sharedDirector = nil;
 }
 
 #pragma mark Director - Helper
+
 -(void) createFPSLabel
 {
-#if CC_DIRECTOR_FAST_FPS
-
 	if( FPSLabel_ ) {
 		CCTexture2D *texture = [FPSLabel_ texture];
 
@@ -573,8 +533,9 @@ static CCDirector *_sharedDirector = nil;
 	CCTexture2DPixelFormat currentFormat = [CCTexture2D defaultAlphaPixelFormat];
 	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA4444];
 	FPSLabel_ = [[CCLabelAtlas alloc]  initWithString:@"00.0" charMapFile:@"fps_images.png" itemWidth:16 itemHeight:24 startCharMap:'.'];
-	[CCTexture2D setDefaultAlphaPixelFormat:currentFormat];		
-#endif	// CC_DIRECTOR_FAST_FPS	
+	[CCTexture2D setDefaultAlphaPixelFormat:currentFormat];
+	
+	[FPSLabel_ setPosition: CC_DIRECTOR_FPS_POSITION];
 }
 
 @end

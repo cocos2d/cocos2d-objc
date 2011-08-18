@@ -73,17 +73,6 @@
 #define CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL 0
 #endif
  
-/** @def CC_DIRECTOR_FAST_FPS
- If enabled, then the FPS will be drawn using CCLabelAtlas (fast rendering).
- You will need to add the fps_images.png to your project.
- If disabled, the FPS will be rendered using CCLabel (slow rendering)
- 
- To enable set it to a value different than 0. Enabled by default.
- */
-#ifndef CC_DIRECTOR_FAST_FPS
-#define CC_DIRECTOR_FAST_FPS	1
-#endif
-
 /** @def CC_DIRECTOR_FPS_INTERVAL
  Senconds between FPS updates.
  0.5 seconds, means that the FPS number will be updated every 0.5 seconds.
@@ -95,18 +84,13 @@
 #define CC_DIRECTOR_FPS_INTERVAL (0.1f)
 #endif
 
-/** @def CC_DIRECTOR_DISPATCH_FAST_EVENTS
- If enabled, and only when it is used with CCFastDirector, the main loop will wait 0.04 seconds to
- dispatch all the events, even if there are not events to dispatch.
- If your game uses lot's of events (eg: touches) it might be a good idea to enable this feature.
- Otherwise, it is safe to leave it disabled.
+/** @def CC_DIRECTOR_FPS_POSITION
+ Position of the FPS
  
- To enable set it to 1. Disabled by default.
- 
- @warning This feature is experimental
+ Default: 0,0 (bottom-left corner)
  */
-#ifndef CC_DIRECTOR_DISPATCH_FAST_EVENTS
-#define CC_DIRECTOR_DISPATCH_FAST_EVENTS 0
+#ifndef CC_DIRECTOR_FPS_POSITION
+#define CC_DIRECTOR_FPS_POSITION ccp(0,0)
 #endif
 
 /** @def CC_DIRECTOR_MAC_USE_DISPLAY_LINK_THREAD
