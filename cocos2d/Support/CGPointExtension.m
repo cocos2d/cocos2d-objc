@@ -2,6 +2,7 @@
  * http://www.cocos2d-iphone.org
  *
  * Copyright (c) 2007 Scott Lembcke
+ *
  * Copyright (c) 2010 Lam Pham
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -113,63 +114,78 @@ float ccpAngleSigned(CGPoint a, CGPoint b)
 
 CGPoint ccpRotateByAngle(CGPoint v, CGPoint pivot, float angle)
 {
-    CGPoint r = ccpSub(v, pivot);
+	CGPoint r = ccpSub(v, pivot);
 	float cosa = cosf(angle), sina = sinf(angle);
 	float t = r.x;
-    r.x = t*cosa - r.y*sina + pivot.x;
+	r.x = t*cosa - r.y*sina + pivot.x;
 	r.y = t*sina + r.y*cosa + pivot.y;
 	return r;
+}
+
+
+BOOL ccpSegmentIntersect(CGPoint A, CGPoint B, CGPoint C, CGPoint D)
+{
+	float S, T;
+
+	if( ccpLineIntersect(A, B, C, D, &S, &T )
+	   && (S >= 0.0f && S <= 1.0f && T >= 0.0f && T <= 1.0f) )
+		return YES;
+
+	return NO;
+}
+
+CGPoint ccpIntersectPoint(CGPoint A, CGPoint B, CGPoint C, CGPoint D)
+{
+	float S, T;
+
+	if( ccpLineIntersect(A, B, C, D, &S, &T) ) {
+		// Point of intersection
+		CGPoint P;
+		P.x = A.x + S * (B.x - A.x);
+		P.y = A.y + S * (B.y - A.y);
+		return P;
+	}
+
+	return CGPointZero;
 }
 
 BOOL ccpLineIntersect(CGPoint A, CGPoint B,
 					  CGPoint C, CGPoint D,
 					  float *S, float *T)
 {    
-    // FAIL: Line undefined
-    if ( (A.x==B.x && A.y==B.y) || (C.x==D.x && C.y==D.y) ) return NO;
-    
-    //  Translate system to make A the origin
-    B.x-=A.x; B.y-=A.y;
-    C.x-=A.x; C.y-=A.y;
-    D.x-=A.x; D.y-=A.y;
-    
-    // Cache
-    CGPoint C2 = C, D2 = D;
-    
-    // Length of segment AB
-    float distAB = sqrtf(B.x*B.x+B.y*B.y);
-    
-    // Rotate the system so that point B is on the positive X axis.
-    float theCos = B.x/distAB;
-    float theSin = B.y/distAB;
-    float newX = C.x*theCos+C.y*theSin;
-    C.y  = C.y*theCos-C.x*theSin; C.x = newX;
-    newX = D.x*theCos+D.y*theSin;
-    D.y  = D.y*theCos-D.x*theSin; D.x = newX;
-    
-    // FAIL: Lines are parallel.
-    if (C.y == D.y) return NO;
-    
-    // Discover position of the intersection in the line AB
-    float ABpos = D.x+(C.x-D.x)*D.y/(D.y-C.y);
-    
-    // Vector CD
-    C.x = D2.x-C2.x;
-    C.y = D2.y-C2.y;
-    
-    // Vector between intersection and point C
-    A.x = ABpos*theCos-C2.x;
-    A.y = ABpos*theSin-C2.y;
-    
-    newX = sqrtf((A.x*A.x+A.y*A.y)/(C.x*C.x+C.y*C.y));
-    if(((A.y<0) != (C.y<0)) || ((A.x<0) != (C.x<0)))
-        newX *= -1.0f;
-    
-    *S = ABpos/distAB;
-    *T = newX;
-    
-    // Success.
-    return YES;
+	// FAIL: Line undefined
+	if ( (A.x==B.x && A.y==B.y) || (C.x==D.x && C.y==D.y) ) return NO;
+
+	const float BAx = B.x - A.x;
+	const float BAy = B.y - A.y;
+	const float DCx = D.x - C.x;
+	const float DCy = D.y - C.y;
+	const float ACx = A.x - C.x;
+	const float ACy = A.y - C.y;
+
+	const float denom = DCy*BAx - DCx*BAy;
+
+	*S = DCx*ACy - DCy*ACx;
+	*T = BAx*ACy - BAy*ACx;
+
+	if (denom == 0) {
+		if (*S == 0 || *T == 0) { 
+			// Lines incident
+			return YES;   
+		}
+		// Lines parallel and not incident
+		return NO;
+	}
+
+	*S = *S / denom;
+	*T = *T / denom;
+
+	// Point of intersection
+	// CGPoint P;
+	// P.x = A.x + *S * (B.x - A.x);
+	// P.y = A.y + *S * (B.y - A.y);
+
+	return YES;
 }
 
 float ccpAngle(CGPoint a, CGPoint b)

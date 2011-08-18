@@ -2,6 +2,7 @@
  * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
  * Copyright (c) 2009-2010 Ricardo Quesada
+ * Copyright (c) 2011 Zynga Inc.
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -181,12 +182,6 @@
 	
 	// objectGroup not found
 	return nil;
-}
-
-// XXX deprecated
--(CCTMXObjectGroup*) groupNamed:(NSString *)groupName 
-{
-	return [self objectGroupNamed:groupName];
 }
 
 -(id) propertyNamed:(NSString *)propertyName 

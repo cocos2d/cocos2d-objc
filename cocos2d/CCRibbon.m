@@ -251,6 +251,8 @@
 
 -(void) draw
 {
+	[super draw];
+
 	if ([segments_ count] > 0)
 	{
 		// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
@@ -345,7 +347,7 @@
 		{
 			// generate alpha/color for each point
 			glEnableClientState(GL_COLOR_ARRAY);
-			uint i = begin;
+			NSUInteger i = begin;
 			for (; i < end; ++i)
 			{
 				int idx = i*8;

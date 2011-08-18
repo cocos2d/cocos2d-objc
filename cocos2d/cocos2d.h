@@ -2,6 +2,7 @@
  * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
  * Copyright (c) 2008-2010 Ricardo Quesada
+ * Copyright (c) 2011 Zynga Inc.
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -38,8 +39,8 @@
  */
 
 // 0x00 HI ME LO
-// 00   01 00 00
-#define COCOS2D_VERSION 0x00010000
+// 00   01 00 01
+#define COCOS2D_VERSION 0x00010001
 
 #import <Availability.h>
 

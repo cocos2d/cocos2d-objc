@@ -2,6 +2,7 @@
  * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
  * Copyright (c) 2010 Ricardo Quesada
+ * Copyright (c) 2011 Zynga Inc.
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -134,6 +135,7 @@ CGFloat	__ccContentScaleFactor = 1;
 		
 		// running thread is main thread on iOS
 		runningThread_ = [NSThread currentThread];
+        
         isRunning_ = NO;
 	}
 	
@@ -158,9 +160,10 @@ CGFloat	__ccContentScaleFactor = 1;
 		[[CCScheduler sharedScheduler] tick: dt];	
 	}
 
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    // Dubious optimizator, it makes cocos2d SpriteTest to break, need to investigate
     // Don't clear DEPTH BUFFER if we are not using 3D
-	// glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    glClear(GL_COLOR_BUFFER_BIT );
+    //glClear(GL_COLOR_BUFFER_BIT );
 	
 	/* to avoid flickr, nextScene MUST be here: after tick and before draw.
 	 XXX: Which bug is this one. It seems that it can't be reproduced with v0.9 */
@@ -193,7 +196,9 @@ CGFloat	__ccContentScaleFactor = 1;
 	
 	glPopMatrix();
 	
-	[openGLView_ swapBuffers];
+	totalFrames_++;
+
+	[openGLView_ swapBuffers];	
 }
 
 -(void) setProjection:(ccDirectorProjection)projection
@@ -259,6 +264,16 @@ CGFloat	__ccContentScaleFactor = 1;
 		[openGLView_ setTouchDelegate: touchDispatcher];
 		[touchDispatcher setDispatchEvents: YES];
 	}
+}
+
+- (void)startAnimation
+{
+    isRunning_=YES;
+}
+
+- (void)stopAnimation
+{
+    isRunning_=NO;
 }
 
 #pragma mark Director - Retina Display
@@ -474,12 +489,6 @@ CGFloat	__ccContentScaleFactor = 1;
 	[super end];
 }
 
-- (void)startAnimation {
-    isRunning_=YES;
-}
-- (void)stopAnimation {
-    isRunning_=NO;
-}
 @end
 
 
@@ -505,7 +514,8 @@ CGFloat	__ccContentScaleFactor = 1;
 	//  uncomment this line to prevent 'freezing'.
 	//	It doesn't work on with the Fast Director
 	//
-    [[NSRunLoop currentRunLoop] addTimer:animationTimer forMode:NSRunLoopCommonModes];
+	//	[[NSRunLoop currentRunLoop] addTimer:animationTimer
+	//								 forMode:NSRunLoopCommonModes];
 }
 
 -(void) mainLoop

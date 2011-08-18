@@ -222,6 +222,10 @@ static NSString *actionList[] =
 	@"Issue631",
 };
 
+Class nextAction(void);
+Class backAction(void);
+Class restartAction(void);
+
 Class nextAction()
 {	
 	actionIdx++;
@@ -406,7 +410,7 @@ Class restartAction()
 
 - (void) dealloc
 {
-	[window dealloc];
+	[window release];
 	[super dealloc];
 }
 

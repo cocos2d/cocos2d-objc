@@ -2,7 +2,7 @@ cocos2d for iPhone authors
 --------------------------
 
 Lead Developer:
-	Ricardo Quesada (http://www.sapusmedia.com)
+	Ricardo Quesada (http://www.zynga.com)
 
 Developers:
 	Valentin Milea
@@ -37,8 +37,12 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		patches for MenuItemToggle that supports selectedIndex
 	* arya.irani:
 		CCCallFunc supports class methods (patch)
-	* asad.rehman:
+	* Asad ur Rehman (https://github.com/AsadR)
 		Menu doesn't receive touches when it is invisible (patch)
+		Menu doens't receive touches when one if its acenstors is invisible
+	* Atte Kotiranta (https://github.com/akotiranta)
+		Implemented setPriority in TouchDispatcher.
+		Added setPriority test in MenuTest
 	* Aymeric Bard:
 		Repeat action works OK
 	* Barney Mattox:
@@ -48,6 +52,11 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Added support for GL sharegroup in EAGLView
 	* Brad Parks:
 		Web: Added google search on forum.
+	* Brian Chapados (http://chapados.org/)
+		Author of SkewTo, SkewBy actions
+		Added Skew support to CCNode and CCSprite
+		Added Skew tests cases to ActionsTest.
+		Added support for LineBreakMode in CCLabelTTF and CCTexture2D
 	* Brian Hammond:
 		patches for Demos
 	* Bryan/Acceleroto (http://www.acceleroto.com):
@@ -81,6 +90,8 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		patch for TMX per-tile properties
 	* Daniele Benegiamo:
 		Prevent possible memory corruption with particles when autoRemove is On. patch.
+	* David Deaco (http://iceflame.com/)
+		Author of RenderTexture Test #3
 	* David Hakim (http://kretures.com)
 		Event Dispatcher in Mac is synced. patch.
 		Dispatcher in Mac supports NSTimer events. patch.
@@ -126,6 +137,8 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	* Florin Dumitrescu (http://www.crystal-works.net/):
 		added "update score" in cocosLive
 		author of the sound engine: PASoundListener, PASoundMgr, PASoundSource
+	* fnkelton:
+		Performance improvements in ccpLineIntersect. Added ccpSegmentIntersect and ccpPointIntersect
 	* Fradj Johann:
 		patches for CocosNode
 		patches for Layer
@@ -134,6 +147,8 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		EAGLView supports resizing. patch.
 	* Gildas (http://www.bigpapoo.com)
 		Fixed memory leak when loading ParticleDesigner particles.
+	* glimajr:
+		TextureCache: Prevents crash when adding a texture in multithreaded environments
 	* Graham Perks:
 		Atlas works with GL_CULL_FACE
 		FastDirector doesn't leak autorelease pool patch
@@ -150,6 +165,8 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Fixed CLang compiling warnings
 	* InsertWittyName (http://www.didev-studios.com/):
 		Texture2D allocs the right memory (patch)
+	* iomac (https://github.com/iomac):
+		CocosDenshion: Cleanup buffers to prevent noise in Mac
 	* Ishaq Malik:
 		patches for CocosNode
 	* Joao Caxaria:
@@ -294,7 +311,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		MenuToggleItem doesn't scale up if pressed several times. patch.
 	* marcofucci:
 		CCArray.fastRemoveObjectAtIndex patch.
-	* Marco Tillemans (araker):
+	* Marco Tillemans (AKA araker: http://www.welcometothefabrik.com/)
 		RenderTexture renders images with correct blend function. patch.
 		RenderTexture: performance fixes. Improved logic.
 		Added reorder node performance test
@@ -304,6 +321,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		TextureAtlas: added the possibility to draw the Quads in parts
 		TextureAtlas: Render "static" VBO batches between 6~10% faster. patch.
 		CCArray / ccArray: Added reverseObjects and reduceMemoryFootprint methods.
+		EAGLView: call ESRender#resizeLayer only if the new size is different
 	* marcu.catalin:
 		Menu items are not consumed is items are not visible
 	* Mark Cooke:
@@ -331,6 +349,8 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Added a way to remove from the SpriteFrameCache frames given a dictionary, file or texture
 	* Michael Thornton:
 		TMXTileMap supports any kind of child. patch.
+	* Michael Witt:
+		Fixed leak in EAGLView multisampling code
 	* mike AT finklyinteractive:
 		fixed leak in ActionManager
 	* Mitch:
@@ -357,6 +377,8 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Author of bug #915 test case
 	* palter AT clozure.com
 		Texture fails gracefully if PVR image can't be loaded (patch)
+	* Pascal Bourque (http://loopycube.com/)
+		Worked around memory leak in NSXMLParser used by TMXMaps
 	* Patrick Wolowicz:
 		mkatlas: added artifact removal by copying borders to margins
 		FontLabel: supports parenthese and apostrophes when word wrapping.
@@ -365,6 +387,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		CCSprite: correctly overrides setIsRelativeAnchorPoint
 		libpng doesn't compile pngtest.c. patch.
 		Templates: HelloWorld -> HelloWorldLayer and other improvements. patch.
+		TextureCache: Added dumpCachedTextureInfo method. Shows used RAM by cached textures
 	* pfg2009:
 		RenderTexture doesn't enable default GL states. patch.
 	* Piero Tofy (http://indieappsalliance.org):
@@ -373,8 +396,6 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Author of Gradient layer  
     * podhraski.tomislav:
         Mac Director compiles when slow FPS are selected. patch.
-	* psi.pk.ru:
-		EventDispatcher: flagsChanged is triggered correctly. patch
 	* psionic81:
 		ActionManager doesn't purge running actions patch
 	* rac5372:
@@ -403,6 +424,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		XCode only displays the libz dependency just once
 		added userData property in CocosNode
 		migrated all cocos2d code and all test to using the CC namespace
+		ccArray: added assert in realloc
 	* sakamoto.kazuki:
 		2d projection works OK with HighRes. patch.
 		Performance improvement in CCNode#insertChild. patch.
@@ -416,6 +438,9 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Sprite#updateTransform can be overriden
 	* Serge Kolgan:
 		patches for CocosNode
+	* Sergey Tikhonov (AKA haqu) (http://haqu.net)
+		Sprite: Added texture debugging draw
+		Menu: MenuItemFont can change the font name and family once it is instanced
 	* sflory:
 		new way to added CGImageRef to TextureMgr
 		added unicode support in BitmapFontAtlas
@@ -438,6 +463,9 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		patches for Transitions
 	* Stanislav Skuratov (trump-card):
 		Author of ParticleView, the particle editor
+	* Stepan Generalov (iPsi) (http://www.itraceur.ru/)
+		EventDispatcher: flagsChanged is triggered correctly. patch
+		Test case for issue 1071
 	* Steve Oldmeadow (http://www.smoco.com/):
 		Author and maintainer of CocosDenshion Sound Engine:
 			It includes patching, maintaing, porting it to Mac,

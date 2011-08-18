@@ -2,6 +2,7 @@
  * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
  * Copyright (c) 2008-2011 Ricardo Quesada
+ * Copyright (c) 2011 Zynga Inc.
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,19 +30,15 @@
 #import "CCActionInterval.h"
 #import "CCSprite.h"
 #import "Support/CGPointExtension.h"
+#import "CCBlockSupport.h"
 
-static int _fontSize = kItemSize;
+	static NSUInteger _fontSize = kCCItemSize;
 static NSString *_fontName = @"Marker Felt";
 static BOOL _fontNameRelease = NO;
 
-enum {
-	kCurrentItem = 0xc0c05001,
-};
 
-enum {
-	kZoomActionTag = 0xc0c05002,
-};
-
+const uint32_t	kCurrentItem = 0xc0c05001;
+const uint32_t	kZoomActionTag = 0xc0c05002;
 
 
 #pragma mark -
@@ -72,16 +69,16 @@ enum {
 		if( rec && cb ) {
 			sig = [rec methodSignatureForSelector:cb];
 			
-			invocation = nil;
-			invocation = [NSInvocation invocationWithMethodSignature:sig];
-			[invocation setTarget:rec];
-			[invocation setSelector:cb];
+			invocation_ = nil;
+			invocation_ = [NSInvocation invocationWithMethodSignature:sig];
+			[invocation_ setTarget:rec];
+			[invocation_ setSelector:cb];
 #if NS_BLOCKS_AVAILABLE
 			if ([sig numberOfArguments] == 3) 
 #endif
-			[invocation setArgument:&self atIndex:2];
+			[invocation_ setArgument:&self atIndex:2];
 			
-			[invocation retain];
+			[invocation_ retain];
 		}
 		
 		isEnabled_ = YES;
@@ -106,7 +103,7 @@ enum {
 
 -(void) dealloc
 {
-	[invocation release];
+	[invocation_ release];
 
 #if NS_BLOCKS_AVAILABLE
 	[block_ release];
@@ -128,7 +125,7 @@ enum {
 -(void) activate
 {
 	if(isEnabled_)
-        [invocation invoke];
+        [invocation_ invoke];
 }
 
 -(void) setIsEnabled: (BOOL)enabled
@@ -340,12 +337,12 @@ enum {
 
 @implementation CCMenuItemFont
 
-+(void) setFontSize: (int) s
++(void) setFontSize: (NSUInteger) s
 {
 	_fontSize = s;
 }
 
-+(int) fontSize
++(NSUInteger) fontSize
 {
 	return _fontSize;
 }
@@ -378,7 +375,10 @@ enum {
 {
 	NSAssert( [value length] != 0, @"Value length must be greater than 0");
 	
-	CCLabelTTF *label = [CCLabelTTF labelWithString:value fontName:_fontName fontSize:_fontSize];
+	fontName_ = [_fontName copy];
+	fontSize_ = _fontSize;
+	
+	CCLabelTTF *label = [CCLabelTTF labelWithString:value fontName:fontName_ fontSize:fontSize_];
 
 	if((self=[super initWithLabel:label target:rec selector:cb]) ) {
 		// do something ?
@@ -387,12 +387,45 @@ enum {
 	return self;
 }
 
+-(void) recreateLabel
+{
+	CCLabelTTF *label = [CCLabelTTF labelWithString:[label_ string] fontName:fontName_ fontSize:fontSize_];
+	self.label = label;
+}
+
+-(void) setFontSize: (NSUInteger) size
+{
+	fontSize_ = size;
+	[self recreateLabel];
+}
+
+-(NSUInteger) fontSize
+{
+	return fontSize_;
+}
+
+-(void) setFontName: (NSString*) fontName
+{
+	if (fontName_)
+		[fontName_ release];
+
+	fontName_ = [fontName copy];
+	[self recreateLabel];
+}
+
+-(NSString*) fontName
+{
+	return fontName_;
+}
+
 #if NS_BLOCKS_AVAILABLE
-+(id) itemFromString: (NSString*) value block:(void(^)(id sender))block {
++(id) itemFromString: (NSString*) value block:(void(^)(id sender))block
+{
 	return [[[self alloc] initFromString:value block:block] autorelease];
 }
 
--(id) initFromString: (NSString*) value block:(void(^)(id sender))block {
+-(id) initFromString: (NSString*) value block:(void(^)(id sender))block
+{
 	block_ = [block copy];
 	return [self initFromString:value target:block_ selector:@selector(ccCallbackBlockWithSender:)];
 }

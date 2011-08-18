@@ -2,6 +2,7 @@
  * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
  * Copyright (c) 2008-2010 Ricardo Quesada
+ * Copyright (c) 2011 Zynga Inc.
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -68,25 +69,6 @@
  */
 +(id) animationWithFrames:(NSArray*)frames delay:(float)delay;
 
-/** Creates a CCAnimation with a name
- @since v0.99.3
- @deprecated Will be removed in 1.0.1. Use "animation" instead.
- */
-+(id) animationWithName:(NSString*)name DEPRECATED_ATTRIBUTE;
-
-/** Creates a CCAnimation with a name and frames
- @since v0.99.3
- @deprecated Will be removed in 1.0.1. Use "animationWithFrames" instead.
- */
-+(id) animationWithName:(NSString*)name frames:(NSArray*)frames DEPRECATED_ATTRIBUTE;
-
-/** Creates a CCAnimation with a name and delay between frames. */
-+(id) animationWithName:(NSString*)name delay:(float)delay DEPRECATED_ATTRIBUTE;
-
-/** Creates a CCAnimation with a name, delay and an array of CCSpriteFrames. */
-+(id) animationWithName:(NSString*)name delay:(float)delay frames:(NSArray*)frames DEPRECATED_ATTRIBUTE;
-
-
 /** Initializes a CCAnimation with frames.
  @since v0.99.5
 */
@@ -96,28 +78,6 @@
  @since v0.99.5
  */
 -(id) initWithFrames:(NSArray *)frames delay:(float)delay;
-
-/** Initializes a CCAnimation with a name
- @since v0.99.3
- @deprecated Will be removed in 1.0.1. Use "init" instead.
- */
--(id) initWithName:(NSString*)name DEPRECATED_ATTRIBUTE;
-
-/** Initializes a CCAnimation with a name and frames
- @since v0.99.3
- @deprecated Will be removed in 1.0.1. Use "initWithFrames" instead.
- */
--(id) initWithName:(NSString*)name frames:(NSArray*)frames DEPRECATED_ATTRIBUTE;
-
-/** Initializes a CCAnimation with a name and delay between frames.
- @deprecated Will be removed in 1.0.1. Use "initWithFrames:nil delay:delay" instead.
-*/
--(id) initWithName:(NSString*)name delay:(float)delay DEPRECATED_ATTRIBUTE;
-
-/** Initializes a CCAnimation with a name, delay and an array of CCSpriteFrames.
- @deprecated Will be removed in 1.0.1. Use "initWithFrames:frames delay:delay" instead.
-*/
--(id) initWithName:(NSString*)name delay:(float)delay frames:(NSArray*)frames DEPRECATED_ATTRIBUTE;
 
 /** Adds a frame to a CCAnimation. */
 -(void) addFrame:(CCSpriteFrame*)frame;

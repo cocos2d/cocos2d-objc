@@ -11,6 +11,7 @@
 #import "LabelTest.h"
 static int sceneIdx=-1;
 static NSString *transitions[] = {
+	
 	@"LabelAtlasTest",
 	@"LabelAtlasColorTest",
 	@"Atlas3",
@@ -26,6 +27,7 @@ static NSString *transitions[] = {
 	@"LabelGlyphDesigner",
 	@"LabelTTFTest",
 	@"LabelTTFMultiline",
+	@"LabelTTFLineBreak",
 	
 	// Not a label test. Should be moved to Atlas test
 	@"Atlas1",
@@ -50,6 +52,9 @@ enum {
 	kTagSprite7,
 	kTagSprite8,
 };
+Class nextAction(void);
+Class backAction(void);
+Class restartAction(void);
 
 Class nextAction()
 {
@@ -159,45 +164,45 @@ Class restartAction()
 
 -(id) init
 {
-	if( ![super init] )
-		return nil;
+	if( (self=[super init] ) ) {
 	
-	textureAtlas = [[CCTextureAtlas textureAtlasWithFile: @"atlastest.png" capacity:3] retain];
-	
-	CGSize s = [[CCDirector sharedDirector] winSize];
-
-	//
-	// Notice: u,v tex coordinates are inverted
-	//
-	ccV3F_C4B_T2F_Quad quads[] = {
-		{
-			{{0,0,0},{0,0,255,255},{0.0f,1.0f},},				// bottom left
-			{{s.width,0,0},{0,0,255,0},{1.0f,1.0f},},			// bottom right
-			{{0,s.height,0},{0,0,255,0},{0.0f,0.0f},},			// top left
-			{{s.width,s.height,0},{0,0,255,255},{1.0f,0.0f},},	// top right
-		},		
-		{
-			{{40,40,0},{255,255,255,255},{0.0f,0.2f},},			// bottom left
-			{{120,80,0},{255,0,0,255},{0.5f,0.2f},},			// bottom right
-			{{40,160,0},{255,255,255,255},{0.0f,0.0f},},		// top left
-			{{160,160,0},{0,255,0,255},{0.5f,0.0f},},			// top right
-		},
-
-		{
-			{{s.width/2,40,0},{255,0,0,255},{0.0f,1.0f},},		// bottom left
-			{{s.width,40,0},{0,255,0,255},{1.0f,1.0f},},		// bottom right
-			{{s.width/2-50,200,0},{0,0,255,255},{0.0f,0.0f},},		// top left
-			{{s.width,100,0},{255,255,0,255},{1.0f,0.0f},},		// top right
-		},
+		textureAtlas = [[CCTextureAtlas textureAtlasWithFile: @"atlastest.png" capacity:3] retain];
 		
-	};
-	
-	
-	for( int i=0;i<3;i++) {
-		[textureAtlas updateQuad:&quads[i] atIndex:i];
+		CGSize s = [[CCDirector sharedDirector] winSize];
+
+		//
+		// Notice: u,v tex coordinates are inverted
+		//
+		ccV3F_C4B_T2F_Quad quads[] = {
+			{
+				{{0,0,0},{0,0,255,255},{0.0f,1.0f},},				// bottom left
+				{{s.width,0,0},{0,0,255,0},{1.0f,1.0f},},			// bottom right
+				{{0,s.height,0},{0,0,255,0},{0.0f,0.0f},},			// top left
+				{{s.width,s.height,0},{0,0,255,255},{1.0f,0.0f},},	// top right
+			},		
+			{
+				{{40,40,0},{255,255,255,255},{0.0f,0.2f},},			// bottom left
+				{{120,80,0},{255,0,0,255},{0.5f,0.2f},},			// bottom right
+				{{40,160,0},{255,255,255,255},{0.0f,0.0f},},		// top left
+				{{160,160,0},{0,255,0,255},{0.5f,0.0f},},			// top right
+			},
+
+			{
+				{{s.width/2,40,0},{255,0,0,255},{0.0f,1.0f},},		// bottom left
+				{{s.width,40,0},{0,255,0,255},{1.0f,1.0f},},		// bottom right
+				{{s.width/2-50,200,0},{0,0,255,255},{0.0f,0.0f},},		// top left
+				{{s.width,100,0},{255,255,0,255},{1.0f,0.0f},},		// top right
+			},
+			
+		};
+		
+		
+		for( int i=0;i<3;i++) {
+			[textureAtlas updateQuad:&quads[i] atIndex:i];
+		}
+			
+	//	[textureAtlas removeQuadAtIndex:0];
 	}
-		
-//	[textureAtlas removeQuadAtIndex:0];
 
 	return self;
 }
@@ -343,10 +348,11 @@ Class restartAction()
 #pragma mark Example Atlas3
 
 /*
- * Use any of these editors to generate BMFont labels:
- *   http://www.n4te.com/hiero/hiero.jnlp
- *   http://slick.cokeandcode.com/demos/hiero.jnlp
- *   http://www.angelcode.com/products/bmfont/
+ * Use any of these editors to generate BMFonts:
+ *   http://glyphdesigner.71squared.com/ (Commercial, Mac OS X)
+ *   http://www.n4te.com/hiero/hiero.jnlp (Free, Java)
+ *   http://slick.cokeandcode.com/demos/hiero.jnlp (Free, Java)
+ *   http://www.angelcode.com/products/bmfont/ (Free, Windows only)
  */
 @implementation Atlas3
 -(id) init
@@ -426,10 +432,11 @@ Class restartAction()
 #pragma mark Example Atlas4
 
 /*
- * Use any of these editors to generate BMFont labels:
- *   http://www.n4te.com/hiero/hiero.jnlp
- *   http://slick.cokeandcode.com/demos/hiero.jnlp
- *   http://www.angelcode.com/products/bmfont/
+ * Use any of these editors to generate BMFonts:
+ *   http://glyphdesigner.71squared.com/ (Commercial, Mac OS X)
+ *   http://www.n4te.com/hiero/hiero.jnlp (Free, Java)
+ *   http://slick.cokeandcode.com/demos/hiero.jnlp (Free, Java)
+ *   http://www.angelcode.com/products/bmfont/ (Free, Windows only)
  */
 
 @implementation Atlas4
@@ -520,10 +527,11 @@ Class restartAction()
 #pragma mark Example Atlas5
 
 /*
- * Use any of these editors to generate BMFont labels:
- *   http://www.n4te.com/hiero/hiero.jnlp
- *   http://slick.cokeandcode.com/demos/hiero.jnlp
- *   http://www.angelcode.com/products/bmfont/
+ * Use any of these editors to generate BMFonts:
+ *   http://glyphdesigner.71squared.com/ (Commercial, Mac OS X)
+ *   http://www.n4te.com/hiero/hiero.jnlp (Free, Java)
+ *   http://slick.cokeandcode.com/demos/hiero.jnlp (Free, Java)
+ *   http://www.angelcode.com/products/bmfont/ (Free, Windows only)
  */
 
 @implementation Atlas5
@@ -559,10 +567,11 @@ Class restartAction()
 #pragma mark Example Atlas6
 
 /*
- * Use any of these editors to generate BMFont label:
- *   http://www.n4te.com/hiero/hiero.jnlp
- *   http://slick.cokeandcode.com/demos/hiero.jnlp
- *   http://www.angelcode.com/products/bmfont/
+ * Use any of these editors to generate BMFonts:
+ *   http://glyphdesigner.71squared.com/ (Commercial, Mac OS X)
+ *   http://www.n4te.com/hiero/hiero.jnlp (Free, Java)
+ *   http://slick.cokeandcode.com/demos/hiero.jnlp (Free, Java)
+ *   http://www.angelcode.com/products/bmfont/ (Free, Windows only)
  */
 
 @implementation Atlas6
@@ -609,10 +618,11 @@ Class restartAction()
 #pragma mark Example AtlasBitmapColor
 
 /*
- * Use any of these editors to generate BMFont label:
- *   http://www.n4te.com/hiero/hiero.jnlp
- *   http://slick.cokeandcode.com/demos/hiero.jnlp
- *   http://www.angelcode.com/products/bmfont/
+ * Use any of these editors to generate BMFonts:
+ *   http://glyphdesigner.71squared.com/ (Commercial, Mac OS X)
+ *   http://www.n4te.com/hiero/hiero.jnlp (Free, Java)
+ *   http://slick.cokeandcode.com/demos/hiero.jnlp (Free, Java)
+ *   http://www.angelcode.com/products/bmfont/ (Free, Windows only)
  */
 
 @implementation AtlasBitmapColor
@@ -663,10 +673,11 @@ Class restartAction()
 #pragma mark Example AtlasFastBitmap
 
 /*
- * Use any of these editors to generate BMFont label:
- *   http://www.n4te.com/hiero/hiero.jnlp
- *   http://slick.cokeandcode.com/demos/hiero.jnlp
- *   http://www.angelcode.com/products/bmfont/
+ * Use any of these editors to generate BMFonts:
+ *   http://glyphdesigner.71squared.com/ (Commercial, Mac OS X)
+ *   http://www.n4te.com/hiero/hiero.jnlp (Free, Java)
+ *   http://slick.cokeandcode.com/demos/hiero.jnlp (Free, Java)
+ *   http://www.angelcode.com/products/bmfont/ (Free, Windows only)
  */
 
 @implementation AtlasFastBitmap
@@ -706,10 +717,11 @@ Class restartAction()
 #pragma mark BitmapFontMultiLine
 
 /*
- * Use any of these editors to generate BMFont label:
- *   http://www.n4te.com/hiero/hiero.jnlp
- *   http://slick.cokeandcode.com/demos/hiero.jnlp
- *   http://www.angelcode.com/products/bmfont/
+ * Use any of these editors to generate BMFonts:
+ *   http://glyphdesigner.71squared.com/ (Commercial, Mac OS X)
+ *   http://www.n4te.com/hiero/hiero.jnlp (Free, Java)
+ *   http://slick.cokeandcode.com/demos/hiero.jnlp (Free, Java)
+ *   http://www.angelcode.com/products/bmfont/ (Free, Windows only)
  */
 
 @implementation BitmapFontMultiLine
@@ -835,7 +847,7 @@ Class restartAction()
 
 -(NSString *) subtitle
 {
-	return @"3 empty labels: LabelAtlas, Label and BitmapFontAtlas";
+	return @"3 empty labels: LabelAtlas, LabelTTF and LabelBMFont";
 }
 
 @end
@@ -1020,6 +1032,72 @@ Class restartAction()
 
 @end
 
+
+#pragma mark -
+#pragma mark LabelTTFLineBreak
+
+@implementation LabelTTFLineBreak
+-(id) init
+{
+	if( (self=[super init]) ) {
+
+		CGSize s = [[CCDirector sharedDirector] winSize];
+
+		CCLabelTTF *wordwrap = [CCLabelTTF labelWithString:@"Testing line wordwrap mode mode mode mode"
+												dimensions:CGSizeMake(s.width/4,40)
+												 alignment:CCTextAlignmentCenter
+											 lineBreakMode:CCLineBreakModeWordWrap
+												  fontName:@"Marker Felt"
+												  fontSize:16];
+		wordwrap.position = ccp(s.width/2,80);
+		
+		[self addChild:wordwrap];
+
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+		
+		CCLabelTTF *charwrap = [CCLabelTTF labelWithString:@"Testing line character wrap mode mode mode mode"
+											  dimensions:CGSizeMake(s.width/4,40)
+											   alignment:CCTextAlignmentCenter
+										   lineBreakMode:CCLineBreakModeCharacterWrap
+												fontName:@"Marker Felt"
+												fontSize:16];
+		charwrap.position = ccp(s.width/2,140);
+		
+		[self addChild:charwrap];
+
+
+		CCLabelTTF *clip = [CCLabelTTF labelWithString:@"Testing line clip clip clip mode mode mode mode"
+												dimensions:CGSizeMake(s.width/4,40)
+												 alignment:CCTextAlignmentCenter
+											 lineBreakMode:CCLineBreakModeClip
+												  fontName:@"Marker Felt"
+												  fontSize:16];
+		clip.position = ccp(s.width/2,200);
+		
+		[self addChild:clip];
+
+
+#endif // __IPHONE_OS_VERSION_MAX_ALLOWED
+	}
+	
+	return self;
+}
+
+-(NSString*) title
+{
+	return @"CCLabelTTF Line Break Mode";
+}
+
+-(NSString *) subtitle
+{
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+	return @"Testing different line break modes";
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+	return @"On Mac OS X only Word Wrap mode is supported";
+#endif
+}
+
+@end
 
 
 #pragma mark -

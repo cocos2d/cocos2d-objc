@@ -152,9 +152,10 @@
 
 	glClearColor(r, g, b, a);
     
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    // Dubious optimizator, it makes cocos2d SpriteTest to break, need to investigate
     // Don't clear DEPTH BUFFER if we are not using 3D
-	// glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    glClear(GL_COLOR_BUFFER_BIT );
+    //glClear(GL_COLOR_BUFFER_BIT );
 
 	// restore clear color
 	glClearColor(clearColor[0], clearColor[1], clearColor[2], clearColor[3]);

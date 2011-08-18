@@ -173,8 +173,7 @@ void gluLookAt(GLfloat eyex, GLfloat eyey, GLfloat eyez, GLfloat centerx, GLfloa
     
     glMultMatrixf( m );
     glTranslatef(-eyex, -eyey, -eyez);
-    
-} 
+}
 
 void aglFrustumf(GLfloat left, GLfloat right, GLfloat bottom, GLfloat top, GLfloat nearval, GLfloat farval) {
     GLfloat m[16];

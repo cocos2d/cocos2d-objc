@@ -1,8 +1,10 @@
 /*
  * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
- * Copyright (c) 2008-2010 Ricardo Quesada
  * Copyright (c) 2009 Valentin Milea
+ *
+ * Copyright (c) 2008-2010 Ricardo Quesada
+ * Copyright (c) 2011 Zynga Inc.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -248,14 +250,13 @@ static CCActionManager *sharedManager_ = nil;
 		for( NSUInteger i = 0; i < limit; i++) {
 			CCAction *a = element->actions->arr[i];
 			
-			if( a.tag == aTag && [a originalTarget]==target)
-				return [self removeActionAtIndex:i hashElement:element];
+			if( a.tag == aTag && [a originalTarget]==target) {
+				[self removeActionAtIndex:i hashElement:element];
+				break;
+			}
 		}
-//		CCLOG(@"cocos2d: removeActionByTag: Action not found!");
+
 	}
-//	else {
-//		CCLOG(@"cocos2d: removeActionByTag: Target not found!");
-//	}
 }
 
 #pragma mark ActionManager - get

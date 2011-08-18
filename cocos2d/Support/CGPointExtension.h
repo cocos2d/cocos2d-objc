@@ -2,6 +2,7 @@
  * http://www.cocos2d-iphone.org
  *
  * Copyright (c) 2007 Scott Lembcke
+ *
  * Copyright (c) 2010 Lam Pham
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -315,6 +316,18 @@ CGPoint ccpRotateByAngle(CGPoint v, CGPoint pivot, float angle);
 BOOL ccpLineIntersect(CGPoint p1, CGPoint p2, 
 					  CGPoint p3, CGPoint p4,
 					  float *s, float *t);
+
+/*
+ ccpSegmentIntersect returns YES if Segment A-B intersects with segment C-D
+ @since v1.0.0
+ */
+BOOL ccpSegmentIntersect(CGPoint A, CGPoint B, CGPoint C, CGPoint D);
+
+/*
+ ccpIntersectPoint returns the intersection point of line A-B, C-D
+ @since v1.0.0
+ */
+CGPoint ccpIntersectPoint(CGPoint A, CGPoint B, CGPoint C, CGPoint D);
 
 #ifdef __cplusplus
 }

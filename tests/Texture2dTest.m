@@ -18,13 +18,14 @@ enum {
 
 static int sceneIdx=-1;
 static NSString *transitions[] = {
-	
+
 	@"TextureAlias",
 	@"TextureMipMap",
 	@"TexturePVRMipMap",
 	@"TexturePVRMipMap2",
 	@"TexturePVRNonSquare",
-	@"TexturePVRNPOT",
+	@"TexturePVRNPOT4444",
+	@"TexturePVRNPOT8888",
 	@"TexturePVR2BPP",
 	@"TexturePVRRaw",
 	@"TexturePVR",
@@ -59,6 +60,10 @@ static NSString *transitions[] = {
 };
 
 #pragma mark Callbacks
+
+Class nextAction(void);
+Class backAction(void);
+Class restartAction(void);
 
 Class nextAction()
 {
@@ -95,6 +100,7 @@ Class restartAction()
 {
 	if( (self = [super init]) ) {
 
+		[[CCTextureCache sharedTextureCache] dumpCachedTextureInfo];
 		CGSize s = [[CCDirector sharedDirector] winSize];	
 		CCLabelTTF *label = [CCLabelTTF labelWithString:[self title] fontName:@"Arial" fontSize:26];
 		[self addChild:label z:1 tag:kTagLabel];
@@ -117,7 +123,8 @@ Class restartAction()
 		item2.position = ccp( s.width/2, 30);
 		item3.position = ccp( s.width/2 + 100,30);
 		[self addChild: menu z:1];	
-		
+		[[CCTextureCache sharedTextureCache] dumpCachedTextureInfo];
+
 	}
 	return self;
 }
@@ -126,6 +133,7 @@ Class restartAction()
 {
 	[super dealloc];
 	[[CCTextureCache sharedTextureCache] removeUnusedTextures];
+	[[CCTextureCache sharedTextureCache] dumpCachedTextureInfo];
 }
 
 -(void) restartCallback: (id) sender
@@ -173,6 +181,7 @@ Class restartAction()
 	CCSprite *img = [CCSprite spriteWithFile:@"test_image.png"];
 	img.position = ccp( s.width/2.0f, s.height/2.0f);
 	[self addChild:img];
+	[[CCTextureCache sharedTextureCache] dumpCachedTextureInfo];
 	
 }
 
@@ -194,6 +203,7 @@ Class restartAction()
 	CCSprite *img = [CCSprite spriteWithFile:@"test_image.jpeg"];
 	img.position = ccp( s.width/2.0f, s.height/2.0f);
 	[self addChild:img];
+	[[CCTextureCache sharedTextureCache] dumpCachedTextureInfo];
 	
 }
 
@@ -215,6 +225,7 @@ Class restartAction()
 	CCSprite *img = [CCSprite spriteWithFile:@"test_image.bmp"];
 	img.position = ccp( s.width/2.0f, s.height/2.0f);
 	[self addChild:img];
+	[[CCTextureCache sharedTextureCache] dumpCachedTextureInfo];
 	
 }
 
@@ -236,6 +247,7 @@ Class restartAction()
 	CCSprite *img = [CCSprite spriteWithFile:@"test_image.tiff"];
 	img.position = ccp( s.width/2.0f, s.height/2.0f);
 	[self addChild:img];
+	[[CCTextureCache sharedTextureCache] dumpCachedTextureInfo];
 	
 }
 
@@ -257,6 +269,7 @@ Class restartAction()
 	CCSprite *img = [CCSprite spriteWithFile:@"test_image.gif"];
 	img.position = ccp( s.width/2.0f, s.height/2.0f);
 	[self addChild:img];
+	[[CCTextureCache sharedTextureCache] dumpCachedTextureInfo];
 	
 }
 
@@ -299,6 +312,7 @@ Class restartAction()
 	NSAssert( img.texture.name == sprite.texture.name, @"Error: CCTextureCache is not reusing the texture");
 
 	[image release];
+	[[CCTextureCache sharedTextureCache] dumpCachedTextureInfo];
 }
 
 -(NSString *) title
@@ -342,6 +356,7 @@ Class restartAction()
 	
 	[img0 runAction: [CCRepeatForever actionWithAction: [CCSequence actions: scale1, sc_back, nil]]];
 	[img1 runAction: [CCRepeatForever actionWithAction: [CCSequence actions: scale2, sc_back2, nil]]];	
+	[[CCTextureCache sharedTextureCache] dumpCachedTextureInfo];
 }
 
 -(NSString *) title
@@ -390,6 +405,7 @@ Class restartAction()
 		[imgMipMap runAction: [CCRepeatForever actionWithAction: [CCSequence actions: scale1, sc_back, nil]]];
 		[img runAction: [CCRepeatForever actionWithAction: [CCSequence actions: scale2, sc_back2, nil]]];
 	}
+	[[CCTextureCache sharedTextureCache] dumpCachedTextureInfo];
 }
 
 -(NSString *) title
@@ -431,6 +447,7 @@ Class restartAction()
 	
 	[imgMipMap runAction: [CCRepeatForever actionWithAction: [CCSequence actions: scale1, sc_back, nil]]];
 	[img runAction: [CCRepeatForever actionWithAction: [CCSequence actions: scale2, sc_back2, nil]]];
+	[[CCTextureCache sharedTextureCache] dumpCachedTextureInfo];
 }
 
 -(NSString *) title
@@ -461,6 +478,7 @@ Class restartAction()
 		img.position = ccp( s.width/2.0f, s.height/2.0f);
 		[self addChild:img];
 	}
+	[[CCTextureCache sharedTextureCache] dumpCachedTextureInfo];
 }
 
 -(NSString *) title
@@ -491,6 +509,7 @@ Class restartAction()
 	
 	NSLog(@"This test is not supported by Mac");
 #endif
+	[[CCTextureCache sharedTextureCache] dumpCachedTextureInfo];
 	
 }
 
@@ -519,6 +538,7 @@ Class restartAction()
 	} else {
 		NSLog(@"This test is not supported in cocos2d-mac");
 	}
+	[[CCTextureCache sharedTextureCache] dumpCachedTextureInfo];
 	
 }
 
@@ -548,6 +568,7 @@ Class restartAction()
 	} else {
 		NSLog(@"This test is not supported in cocos2d-mac");
 	}
+	[[CCTextureCache sharedTextureCache] dumpCachedTextureInfo];
 
 }
 
@@ -573,7 +594,8 @@ Class restartAction()
 	CCSprite *img = [CCSprite spriteWithFile:@"test_image_rgba8888.pvr"];
 	img.position = ccp( s.width/2.0f, s.height/2.0f);
 	[self addChild:img];
-	
+	[[CCTextureCache sharedTextureCache] dumpCachedTextureInfo];
+
 }
 
 -(NSString *) title
@@ -601,6 +623,7 @@ Class restartAction()
 	} else {
 		NSLog(@"BGRA8888 images are not supported");
 	}
+	[[CCTextureCache sharedTextureCache] dumpCachedTextureInfo];
 }
 
 -(NSString *) title
@@ -625,6 +648,7 @@ Class restartAction()
 	CCSprite *img = [CCSprite spriteWithFile:@"test_image_rgba5551.pvr"];
 	img.position = ccp( s.width/2.0f, s.height/2.0f);
 	[self addChild:img];
+	[[CCTextureCache sharedTextureCache] dumpCachedTextureInfo];
 	
 }
 
@@ -649,7 +673,8 @@ Class restartAction()
 	CCSprite *img = [CCSprite spriteWithFile:@"test_image_rgba4444.pvr"];
 	img.position = ccp( s.width/2.0f, s.height/2.0f);
 	[self addChild:img];
-	
+	[[CCTextureCache sharedTextureCache] dumpCachedTextureInfo];
+
 }
 
 -(NSString *) title
@@ -673,7 +698,8 @@ Class restartAction()
 	CCSprite *img = [CCSprite spriteWithFile:@"test_image_rgba4444.pvr.gz"];
 	img.position = ccp( s.width/2.0f, s.height/2.0f);
 	[self addChild:img];
-	
+	[[CCTextureCache sharedTextureCache] dumpCachedTextureInfo];
+
 }
 
 -(NSString *) title
@@ -703,6 +729,7 @@ Class restartAction()
 	CCSprite *img = [CCSprite spriteWithFile:@"test_image_rgba4444.pvr.ccz"];
 	img.position = ccp( s.width/2.0f, s.height/2.0f);
 	[self addChild:img];	
+	[[CCTextureCache sharedTextureCache] dumpCachedTextureInfo];
 }
 
 -(NSString *) title
@@ -733,6 +760,7 @@ Class restartAction()
 	CCSprite *img = [CCSprite spriteWithFile:@"test_image_rgb565.pvr"];
 	img.position = ccp( s.width/2.0f, s.height/2.0f);
 	[self addChild:img];
+	[[CCTextureCache sharedTextureCache] dumpCachedTextureInfo];
 	
 }
 
@@ -757,7 +785,8 @@ Class restartAction()
 	CCSprite *img = [CCSprite spriteWithFile:@"test_image_a8.pvr"];
 	img.position = ccp( s.width/2.0f, s.height/2.0f);
 	[self addChild:img];
-	
+	[[CCTextureCache sharedTextureCache] dumpCachedTextureInfo];
+
 }
 
 -(NSString *) title
@@ -781,7 +810,8 @@ Class restartAction()
 	CCSprite *img = [CCSprite spriteWithFile:@"test_image_i8.pvr"];
 	img.position = ccp( s.width/2.0f, s.height/2.0f);
 	[self addChild:img];
-	
+	[[CCTextureCache sharedTextureCache] dumpCachedTextureInfo];
+
 }
 
 -(NSString *) title
@@ -805,7 +835,8 @@ Class restartAction()
 	CCSprite *img = [CCSprite spriteWithFile:@"test_image_ai88.pvr"];
 	img.position = ccp( s.width/2.0f, s.height/2.0f);
 	[self addChild:img];
-	
+	[[CCTextureCache sharedTextureCache] dumpCachedTextureInfo];
+
 }
 
 -(NSString *) title
@@ -857,7 +888,8 @@ Class restartAction()
 	CCSprite *img = [CCSprite spriteWithFile:@"grossini_128x256_mipmap.pvr"];
 	img.position = ccp( s.width/2.0f, s.height/2.0f);
 	[self addChild:img];
-	
+	[[CCTextureCache sharedTextureCache] dumpCachedTextureInfo];
+
 }
 
 -(NSString *) title
@@ -873,9 +905,9 @@ Class restartAction()
 @end
 
 #pragma mark -
-#pragma mark TexturePVR NPOT
+#pragma mark TexturePVR NPOT4444
 
-@implementation TexturePVRNPOT
+@implementation TexturePVRNPOT4444
 -(void) onEnter
 {
 	[super onEnter];
@@ -886,16 +918,45 @@ Class restartAction()
 		img.position = ccp( s.width/2.0f, s.height/2.0f);
 		[self addChild:img];
 	}
+	[[CCTextureCache sharedTextureCache] dumpCachedTextureInfo];
 }
 
 -(NSString *) title
 {
-	return @"PVR + NPOT texture";
+	return @"PVR RGBA4 + NPOT texture";
 }
 
 -(NSString*) subtitle
 {
-	return @"Loading a 81x121 texture. Not supported yet";
+	return @"Loading a 81x121 RGBA4444 texture.";
+}
+@end
+
+#pragma mark -
+#pragma mark TexturePVR NPOT8888
+
+@implementation TexturePVRNPOT8888
+-(void) onEnter
+{
+	[super onEnter];
+	CGSize s = [[CCDirector sharedDirector] winSize];
+	
+	CCSprite *img = [CCSprite spriteWithFile:@"grossini_pvr_rgba8888.pvr"];
+	if( img ) {
+		img.position = ccp( s.width/2.0f, s.height/2.0f);
+		[self addChild:img];
+	}
+	[[CCTextureCache sharedTextureCache] dumpCachedTextureInfo];
+}
+
+-(NSString *) title
+{
+	return @"PVR RGBA8 + NPOT texture";
+}
+
+-(NSString*) subtitle
+{
+	return @"Loading a 81x121 RGBA8888 texture.";
 }
 @end
 
@@ -940,6 +1001,7 @@ Class restartAction()
 	
 	[sprite2 runAction:scaleforever];
 	[sprite runAction: [[scaleforever copy] autorelease]];
+	[[CCTextureCache sharedTextureCache] dumpCachedTextureInfo];
 }
 
 -(NSString *) title
@@ -1035,6 +1097,7 @@ Class restartAction()
 
 	// restore default
 	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_Default];
+	[[CCTextureCache sharedTextureCache] dumpCachedTextureInfo];
 }
 
 -(NSString *) title

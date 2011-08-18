@@ -2,6 +2,7 @@
  * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
  * Copyright (c) 2010 Ricardo Quesada
+ * Copyright (c) 2011 Zynga Inc.
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -125,6 +126,12 @@
 
 	if (multiSampling_)
 	{
+		
+		if ( msaaColorbuffer_) {
+			glDeleteRenderbuffersOES(1, &msaaColorbuffer_);
+			msaaColorbuffer_ = 0;
+		}
+
 		/* Create the offscreen MSAA color buffer.
 		 After rendering, the contents of this will be blitted into ColorRenderbuffer */
 		

@@ -2,6 +2,7 @@
  * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
  * Copyright (c) 2008-2010 Ricardo Quesada
+ * Copyright (c) 2011 Zynga Inc.
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -543,6 +544,21 @@ static CCScheduler *sharedScheduler;
 		NSAssert( elementUpdate->entry != NULL, @"pauseTarget: unknown error");
 		elementUpdate->entry->paused = YES;
 	}
+	
+}
+
+-(BOOL) isTargetPaused:(id)target
+{
+	NSAssert( target != nil, @"target must be non nil" );
+	
+	// Custom selectors
+	tHashSelectorEntry *element = NULL;
+	HASH_FIND_INT(hashForSelectors, &target, element);
+	if( element )
+    {
+		return element->paused;
+    }
+    return NO;  // should never get here
 	
 }
 

@@ -24,6 +24,10 @@ static NSString *transitions[] = {
 	@"RescheduleSelector",
 };
 
+Class nextTest(void);
+Class prevTest(void);
+Class restartTest(void);
+
 Class nextTest()
 {
 

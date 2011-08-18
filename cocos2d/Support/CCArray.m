@@ -1,7 +1,7 @@
 /*
  * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
- * Copyright (c) 2010 ForzeFied Studios S.L. http://forzefield.com
+ * Copyright (c) 2010 ForzeField Studios S.L. http://forzefield.com
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -269,9 +269,7 @@
 
 - (id)copyWithZone:(NSZone *)zone
 {
-	NSArray *nsArray = [self getNSArray];
-	CCArray *newArray = [[[self class] allocWithZone:zone] initWithNSArray:nsArray];
-	return newArray;
+	return [(CCArray*)[[self class] allocWithZone:zone] initWithArray:self];
 }
 
 - (void) encodeWithCoder:(NSCoder *)coder
@@ -283,8 +281,24 @@
 
 - (void) dealloc
 {
+	CCLOGINFO(@"cocos2d: deallocing %@", self);
+
 	ccArrayFree(data);
 	[super dealloc];
+}
+
+#pragma mark
+
+- (NSString*) description
+{
+	NSMutableString *ret = [NSMutableString stringWithFormat:@"<%@ = %08X> = ( ", [self class], self];
+
+	for( id obj in self)
+		[ret appendFormat:@"%@, ",obj];
+	
+	[ret appendString:@")"];
+	
+	return ret;
 }
 
 @end

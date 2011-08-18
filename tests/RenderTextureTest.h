@@ -47,4 +47,21 @@
 {}
 @end
 
+@interface RenderTextureZbuffer : RenderTextureTest
+{
+	CCSprite *sp1;
+	CCSprite *sp2;
+	CCSprite *sp3;
+	CCSprite *sp4;
+	CCSprite *sp5;
+	CCSprite *sp6;
+	CCSprite *sp7;
+	CCSprite *sp8;
+	CCSprite *sp9;
+	
+	CCSpriteBatchNode *mgr;
+}
+-(void)renderScreenShot;
+@end
+
 

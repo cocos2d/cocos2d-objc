@@ -2,6 +2,7 @@
  * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
  * Copyright (c) 2008-2010 Ricardo Quesada
+ * Copyright (c) 2011 Zynga Inc.
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -34,10 +35,7 @@
 
 #pragma mark CCSprite
 
-enum {
-	/// CCSprite invalid index on the CCSpriteBatchode
-	CCSpriteIndexNotInitialized = 0xffffffff,
-};
+#define CCSpriteIndexNotInitialized 0xffffffff 	/// CCSprite invalid index on the CCSpriteBatchode
 
 /**
  Whether or not an CCSprite will rotate, scale or translate with it's parent.
@@ -52,9 +50,11 @@ typedef enum {
 	CC_HONOR_PARENT_TRANSFORM_ROTATE	=  1 << 1,
 	//! Scale with it's parent
 	CC_HONOR_PARENT_TRANSFORM_SCALE		=  1 << 2,
+	//! Skew with it's parent
+	CC_HONOR_PARENT_TRANSFORM_SKEW		=  1 << 3,
 
 	//! All possible transformation enabled. Default value.
-	CC_HONOR_PARENT_TRANSFORM_ALL		=  CC_HONOR_PARENT_TRANSFORM_TRANSLATE | CC_HONOR_PARENT_TRANSFORM_ROTATE | CC_HONOR_PARENT_TRANSFORM_SCALE,
+	CC_HONOR_PARENT_TRANSFORM_ALL		=  CC_HONOR_PARENT_TRANSFORM_TRANSLATE | CC_HONOR_PARENT_TRANSFORM_ROTATE | CC_HONOR_PARENT_TRANSFORM_SCALE | CC_HONOR_PARENT_TRANSFORM_SKEW,
 
 } ccHonorParentTransform;
 
@@ -128,11 +128,7 @@ typedef enum {
 	// image is flipped
 	BOOL	flipX_;
 	BOOL	flipY_;
-	
-	
-	// Animations that belong to the sprite
-	NSMutableDictionary *animations_;
-
+		
 @public
 	// used internally.
 	void (*updateMethod)(id, SEL);
@@ -325,27 +321,10 @@ typedef enum {
 
 #pragma mark CCSprite - Animation
 
-/** changes the display frame based on an animation and an index.
- @deprecated Will be removed in 1.0.1. Use setDisplayFrameWithAnimationName:index instead
- */
--(void) setDisplayFrame: (NSString*) animationName index:(int) frameIndex DEPRECATED_ATTRIBUTE;
-
 /** changes the display frame with animation name and index.
  The animation name will be get from the CCAnimationCache
  @since v0.99.5
  */
 -(void) setDisplayFrameWithAnimationName:(NSString*)animationName index:(int) frameIndex;
-
-/** returns an Animation given it's name.
- 
- @deprecated Use CCAnimationCache instead. Will be removed in 1.0.1
- */
--(CCAnimation*)animationByName: (NSString*) animationName DEPRECATED_ATTRIBUTE;
-
-/** adds an Animation to the Sprite.
- 
- @deprecated Use CCAnimationCache instead. Will be removed in 1.0.1
- */
--(void) addAnimation: (CCAnimation*) animation DEPRECATED_ATTRIBUTE;
 
 @end

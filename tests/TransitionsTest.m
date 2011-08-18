@@ -180,6 +180,10 @@ static NSString *transitions[] = {
 	@"CCTransitionSlideInB",
 };
 
+Class nextTransition(void);
+Class backTransition(void);
+Class restartTransition(void);
+
 Class nextTransition()
 {	
 	// HACK: else NSClassFromString will fail
@@ -542,7 +546,7 @@ Class restartTransition()
 
 - (void) dealloc
 {
-	[window dealloc];
+	[window release];
 	[super dealloc];
 }
 

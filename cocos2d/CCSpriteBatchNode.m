@@ -1,8 +1,10 @@
 /*
  * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
- * Copyright (c) 2009-2010 Ricardo Quesada
  * Copyright (C) 2009 Matt Oswald
+ *
+ * Copyright (c) 2009-2010 Ricardo Quesada
+ * Copyright (c) 2011 Zynga Inc.
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -64,18 +66,10 @@ static 	SEL selUpdate = NULL;
 {
 	return [[[self alloc] initWithTexture:tex capacity:defaultCapacity] autorelease];
 }
-+(id)spriteSheetWithTexture:(CCTexture2D *)tex // XXX DEPRECATED
-{
-	return [self batchNodeWithTexture:tex];
-}
 
 +(id)batchNodeWithTexture:(CCTexture2D *)tex capacity:(NSUInteger)capacity
 {
 	return [[[self alloc] initWithTexture:tex capacity:capacity] autorelease];
-}
-+(id)spriteSheetWithTexture:(CCTexture2D *)tex capacity:(NSUInteger)capacity // XXX DEPRECATED
-{
-	return [self batchNodeWithTexture:tex capacity:capacity];
 }
 
 /*
@@ -85,20 +79,11 @@ static 	SEL selUpdate = NULL;
 {
 	return [[[self alloc] initWithFile:fileImage capacity:capacity] autorelease];
 }
-+(id)spriteSheetWithFile:(NSString*)fileImage capacity:(NSUInteger)capacity // XXX DEPRECATED
-{
-	return [self batchNodeWithFile:fileImage capacity:capacity];
-}
 
 +(id)batchNodeWithFile:(NSString*) imageFile
 {
 	return [[[self alloc] initWithFile:imageFile capacity:defaultCapacity] autorelease];
 }
-+(id)spriteSheetWithFile:(NSString*) imageFile // XXX DEPRECATED
-{
-	return [self batchNodeWithFile:imageFile];
-}
-
 
 /*
  * init with CCTexture2D
@@ -177,21 +162,6 @@ static 	SEL selUpdate = NULL;
 	glPopMatrix();
 }
 
-// XXX deprecated
--(CCSprite*) createSpriteWithRect:(CGRect)rect
-{
-	CCSprite *sprite = [CCSprite spriteWithTexture:textureAtlas_.texture rect:rect];
-	[sprite useBatchNode:self];
-	
-	return sprite;
-}
-
-// XXX deprecated
--(void) initSprite:(CCSprite*)sprite rect:(CGRect)rect
-{
-	[sprite initWithTexture:textureAtlas_.texture rect:rect];
-	[sprite useBatchNode:self];
-}
 
 // override addChild:
 -(void) addChild:(CCSprite*)child z:(NSInteger)z tag:(NSInteger) aTag
@@ -256,6 +226,8 @@ static 	SEL selUpdate = NULL;
 #pragma mark CCSpriteBatchNode - draw
 -(void) draw
 {
+	[super draw];
+
 	// Optimization: Fast Dispatch	
 	if( textureAtlas_.totalQuads == 0 )
 		return;	
@@ -309,15 +281,15 @@ static 	SEL selUpdate = NULL;
 	// this is likely computationally expensive
 	NSUInteger quantity = (textureAtlas_.capacity + 1) * 4 / 3;
 	
-	CCLOG(@"cocos2d: CCSpriteBatchNode: resizing TextureAtlas capacity from [%u] to [%u].",
-		  (unsigned int)textureAtlas_.capacity,
-		  (unsigned int)quantity);
+	CCLOG(@"cocos2d: CCSpriteBatchNode: resizing TextureAtlas capacity from [%lu] to [%lu].",
+		  (long)textureAtlas_.capacity,
+		  (long)quantity);
 	
 	
 	if( ! [textureAtlas_ resizeCapacity:quantity] ) {
 		// serious problems
 		CCLOG(@"cocos2d: WARNING: Not enough memory to resize the atlas");
-		NSAssert(NO,@"XXX: SpriteSheet#increaseAtlasCapacity SHALL handle this assert");
+		NSAssert(NO,@"XXX: CCSpriteBatchNode#increaseAtlasCapacity SHALL handle this assert");
 	}	
 }
 

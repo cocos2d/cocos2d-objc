@@ -2,6 +2,7 @@
  * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
  * Copyright (c) 2008-2010 Ricardo Quesada
+ * Copyright (c) 2011 Zynga Inc.
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -173,6 +174,10 @@ enum {
 	if( state_ != kCCMenuStateWaiting || !visible_ )
 		return NO;
 	
+	for( CCNode *c = self.parent; c != nil; c = c.parent )
+		if( c.visible == NO )
+			return NO;
+
 	selectedItem_ = [self itemForTouch:touch];
 	[selectedItem_ selected];
 	
@@ -302,7 +307,7 @@ enum {
 #pragma mark Menu - Alignment
 -(void) alignItemsVertically
 {
-	return [self alignItemsVerticallyWithPadding:kDefaultPadding];
+	[self alignItemsVerticallyWithPadding:kDefaultPadding];
 }
 -(void) alignItemsVerticallyWithPadding:(float)padding
 {
@@ -323,7 +328,7 @@ enum {
 
 -(void) alignItemsHorizontally
 {
-	return [self alignItemsHorizontallyWithPadding:kDefaultPadding];
+	[self alignItemsHorizontallyWithPadding:kDefaultPadding];
 }
 
 -(void) alignItemsHorizontallyWithPadding:(float)padding
@@ -400,7 +405,7 @@ enum {
 		[item setPosition:ccp(x - winSize.width / 2,
 							  y - itemSize.height / 2)];
             
-		x += w + 10;
+		x += w;
 		++columnsOccupied;
 		
 		if(columnsOccupied >= rowColumns) {

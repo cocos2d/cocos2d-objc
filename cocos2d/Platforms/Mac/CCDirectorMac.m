@@ -2,6 +2,7 @@
  * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
  * Copyright (c) 2010 Ricardo Quesada
+ * Copyright (c) 2011 Zynga Inc.
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -129,8 +130,8 @@
         [fullScreenWindow_ setContentView:openGLView_];
         
         // Show the fullscreen window
-        [fullScreenWindow_ makeMainWindow];
         [fullScreenWindow_ makeKeyAndOrderFront:self];
+		[fullScreenWindow_ makeMainWindow];
         
     } else {
         
@@ -148,8 +149,8 @@
         [openGLView_ setFrame:originalWinRect_];
         
         // Show the window
-        [windowGLView_ makeMainWindow];
         [windowGLView_ makeKeyAndOrderFront:self];
+		[windowGLView_ makeMainWindow];
     }
     isFullScreen_ = fullscreen;
     
@@ -419,10 +420,11 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 		[[CCScheduler sharedScheduler] tick: dt];	
 	}
 
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    // Dubious optimizator, it makes cocos2d SpriteTest to break, need to investigate
     // Don't clear DEPTH BUFFER if we are not using 3D
-	// glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    glClear(GL_COLOR_BUFFER_BIT );
-	
+    //glClear(GL_COLOR_BUFFER_BIT );
+
 	/* to avoid flickr, nextScene MUST be here: after tick and before draw.
 	 XXX: Which bug is this one. It seems that it can't be reproduced with v0.9 */
 	//if( nextScene_ )
@@ -452,9 +454,11 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 	CC_DISABLE_DEFAULT_GL_STATES();
 	
 	glPopMatrix();
-			
+		
+	totalFrames_++;
+
 	[[openGLView_ openGLContext] flushBuffer];	
-	CGLUnlockContext([[openGLView_ openGLContext] CGLContextObj]);
+	CGLUnlockContext([[openGLView_ openGLContext] CGLContextObj]);	
 }
 
 // set the event dispatcher

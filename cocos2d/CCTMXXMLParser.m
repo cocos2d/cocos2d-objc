@@ -2,6 +2,7 @@
  * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
  * Copyright (c) 2009-2010 Ricardo Quesada
+ * Copyright (c) 2011 Zynga Inc.
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -163,8 +164,9 @@
 
 - (void) parseXMLFile:(NSString *)xmlFilename
 {
-	NSURL *url = [NSURL fileURLWithPath:[CCFileUtils fullPathFromRelativePath:xmlFilename] ];
-	NSXMLParser *parser = [[NSXMLParser alloc] initWithContentsOfURL:url];
+  NSURL *url = [NSURL fileURLWithPath:[CCFileUtils fullPathFromRelativePath:xmlFilename] ];
+  NSData *data = [NSData dataWithContentsOfURL:url];
+  NSXMLParser *parser = [[NSXMLParser alloc] initWithData:data];
 
 	// we'll do the parsing
 	[parser setDelegate:self];
@@ -398,7 +400,14 @@
 		
 		if( layerAttribs & (TMXLayerAttribGzip | TMXLayerAttribZlib) ) {
 			unsigned char *deflated;
-			ccInflateMemory(buffer, len, &deflated);
+			CGSize s = [layer layerSize];
+			int sizeHint = s.width * s.height * sizeof(uint32_t);
+
+			int inflatedLen = ccInflateMemoryWithHint(buffer, len, &deflated, sizeHint);
+			NSAssert( inflatedLen == sizeHint, @"CCTMXXMLParser: Hint failed!");
+			
+			inflatedLen = (int)&inflatedLen; // XXX: to avoid warings in compiler
+
 			free( buffer );
 			
 			if( ! deflated ) {

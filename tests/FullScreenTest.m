@@ -15,6 +15,7 @@ static NSString *transitions[] = {
 	
 	@"FullScreenScale",
 	@"FullScreenNoScale",
+	@"FullScreenIssue1071Test",
 
 };
 
@@ -315,6 +316,78 @@ Class restartAction()
 {
 	return @"Screen should not be scaled";
 }
+
+@end
+
+#pragma mark -
+#pragma mark Issue1071
+
+@implementation FullScreenIssue1071Test
+
+-(id) init
+{
+	if( (self=[super init]) ) {
+		
+		CCDirectorMac *director = (CCDirectorMac*) [CCDirector sharedDirector];
+		[director setResizeMode:kCCDirectorResize_NoScale];
+		
+		self.isMouseEnabled = YES;
+		
+		CGSize s = [director winSize];
+		
+		CCMenuItemFont *item = [CCMenuItemFont itemFromString:@"Toggle Fullscreen" target: self selector:@selector(toggleFullScreen:)];
+		issueTestItem_ = [CCMenuItemFont itemFromString:@"Load something async in Fullscreen" target: self selector:@selector(loadSomethingAsyncInFullscreen:)];
+		[issueTestItem_ setIsEnabled:[director isFullScreen]];
+		
+		CCMenu *menu = [CCMenu menuWithItems:item, issueTestItem_, nil];
+		[menu alignItemsVertically];
+		[self addChild:menu];
+		
+		[menu setPosition:ccp(s.width/2, s.height/2)];
+	}	
+	return self;
+}
+
+-(void) toggleFullScreen:(id)sender
+{
+	CCDirectorMac *mac = (CCDirectorMac*) [CCDirector sharedDirector];
+	
+	[mac setFullScreen: ! [mac isFullScreen]];
+	
+	
+	[issueTestItem_ setIsEnabled:[mac isFullScreen]];
+};
+
+- (void) loadSomethingAsyncInFullscreen: (id) sender
+{
+	CCDirectorMac *mac = (CCDirectorMac*) [CCDirector sharedDirector];
+	if ([mac isFullScreen])
+	{
+		[[CCTextureCache sharedTextureCache] addImageAsync:@"blocks.png" 
+													target:self 
+												  selector:@selector(loadedNewTexture:)];
+	}	
+}
+
+- (void) loadedNewTexture: (CCTexture2D *) aTex
+{
+	CCSprite *sprite = [CCSprite spriteWithTexture: aTex];
+	
+	CGSize s = [[CCDirector sharedDirector] winSize];
+	[sprite setPosition:ccp(s.width/2, 3.0f * s.height / 4.0f)];
+	[self addChild:sprite];
+}
+
+-(NSString *) title
+{
+	return @"FullScreen Issue #1071 test";
+}
+
+-(NSString *) subtitle
+{
+	return @"There should be no white squares in any modes.";
+}
+
 
 @end
 

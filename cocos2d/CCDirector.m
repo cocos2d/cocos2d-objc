@@ -2,6 +2,7 @@
  * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
  * Copyright (c) 2008-2010 Ricardo Quesada
+ * Copyright (c) 2011 Zynga Inc.
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -88,6 +89,7 @@ extern NSString * cocos2dVersion(void);
 @synthesize runningThread = runningThread_;
 @synthesize notificationNode = notificationNode_;
 @synthesize projectionDelegate = projectionDelegate_;
+@synthesize totalFrames = totalFrames_;
 //
 // singleton stuff
 //
@@ -142,7 +144,7 @@ static CCDirector *_sharedDirector = nil;
 		// FPS
 		displayFPS_ = NO;
         FPSCustomPosition_ = ccp(3,3);
-		frames_ = 0;
+		totalFrames_ = frames_ = 0;
 		
 		// paused ?
 		isPaused_ = NO;
@@ -152,7 +154,7 @@ static CCDirector *_sharedDirector = nil;
 		
 		winSizeInPixels_ = winSizeInPoints_ = CGSizeZero;
         
-        openGLView_ = nil;
+        //openGLView_ = nil;
 	}
 
 	return self;
@@ -364,11 +366,11 @@ static CCDirector *_sharedDirector = nil;
 - (void)runWithScene:(CCScene*) scene
 {
     CCLOG(@"cocos2d 1.0.0-rsanchez: runWithScene is no longer recommended, use pushScene: or pushSceneClass:");
-	NSAssert( scene != NULL, @"Argument must be non-nil");
-	NSAssert( runningScene_ == NULL, @"You can't run an scene if another Scene is running. Use replaceScene or pushScene instead");
+	NSAssert( scene != nil, @"Argument must be non-nil");
+	NSAssert( runningScene_ == nil, @"You can't run an scene if another Scene is running. Use replaceScene or pushScene instead");
 	    
 	[self pushScene:scene];
-	[self startAnimation];	
+//	[self startAnimation];	
 }
 
 -(void) replaceScene: (CCScene*) scene
@@ -619,12 +621,10 @@ static CCDirector *_sharedDirector = nil;
 
 - (void)startAnimation
 {
-	CCLOG(@"cocos2d: Director#startAnimation. Override me");
 }
 
 - (void)stopAnimation
 {
-	CCLOG(@"cocos2d: Director#stopAnimation. Override me");
 }
 
 - (void)setAnimationInterval:(NSTimeInterval)interval

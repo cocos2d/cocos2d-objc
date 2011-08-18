@@ -2,7 +2,7 @@
 
 echo 'cocos2d-iphone template installer'
 
-COCOS2D_VER='cocos2d 1.0.0'
+COCOS2D_VER='cocos2d 1.0.1'
 BASE_TEMPLATE_DIR="/Library/Application Support/Developer/Shared/Xcode"
 BASE_TEMPLATE_USER_DIR="$HOME/Library/Application Support/Developer/Shared/Xcode"
 SCRIPT_DIR=$(dirname $0)
@@ -47,6 +47,19 @@ if [[ ! $user_dir  && "$(id -u)" != "0" ]]; then
 	echo "   sudo $0" 1>&2
 	echo "or:" 1>&2
 	echo "   $0 -u" 1>&2   
+exit 1
+fi
+
+# Make sure root and user_dir is not executed at the same time
+if [[ $user_dir && "$(id -u)" == "0" ]]; then
+	echo ""
+	echo "Error: Do not run this script as root with the '-u' option." 1>&2
+	echo ""
+	echo "Either use the '-u' option or run it as root, but not both options at the same time." 1>&2
+	echo ""
+	echo "RECOMMENDED WAY:" 1>&2
+	echo " $0 -u -f" 1>&2
+	echo ""
 exit 1
 fi
 

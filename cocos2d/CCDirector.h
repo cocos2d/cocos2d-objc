@@ -2,6 +2,7 @@
  * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
  * Copyright (c) 2008-2010 Ricardo Quesada
+ * Copyright (c) 2011 Zynga Inc.
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -112,6 +113,8 @@ and when to execute the Scenes.
 	CGPoint FPSCustomPosition_;
 
 	NSUInteger frames_;
+	NSUInteger totalFrames_;
+
 	ccTime accumDt_;
 	ccTime frameRate_;
 #if	CC_DIRECTOR_FAST_FPS
@@ -120,7 +123,7 @@ and when to execute the Scenes.
 	
 	/* is the running scene paused */
 	BOOL isPaused_;
-	
+    
 	/* The running scene */
 	CCScene *runningScene_;
 	
@@ -196,6 +199,8 @@ and when to execute the Scenes.
  @since v0.8.2
  */
 @property (nonatomic,readwrite) ccDirectorProjection projection;
+/** How many frames were called since the director started */
+@property (nonatomic,readonly) NSUInteger	totalFrames;
 
 /** Whether or not the replaced scene will receive the cleanup message.
  If the new scene is pushed, then the old scene won't receive the "cleanup" message.
@@ -331,7 +336,7 @@ and when to execute the Scenes.
 // Memory Helper
 
 /** Removes all the cocos2d data that was cached automatically.
- It will purge the CCTextureCache, CCBitmapFont cache.
+ It will purge the CCTextureCache, CCLabelBMFont cache.
  IMPORTANT: The CCSpriteFrameCache won't be purged. If you want to purge it, you have to purge it manually.
  @since v0.99.3
  */

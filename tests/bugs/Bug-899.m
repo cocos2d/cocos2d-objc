@@ -16,7 +16,7 @@
 		
 		CCSprite *bg = [CCSprite spriteWithFile:@"bugs/RetinaDisplay.jpg"];
 		[self addChild:bg z:0];
-		bg.anchorPoint = CGPointZero;
+		bg.anchorPoint = CGPointZero;		
 	}
 	return self;
 }
@@ -101,7 +101,7 @@
 
 - (void) dealloc
 {
-	[window dealloc];
+	[window release];
 	[super dealloc];
 }
 

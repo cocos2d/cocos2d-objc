@@ -2,6 +2,7 @@
  * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
  * Copyright (c) 2008-2010 Ricardo Quesada
+ * Copyright (c) 2011 Zynga Inc.
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,12 +25,12 @@
  * Portions of this code are based and inspired on:
  *   http://www.71squared.co.uk/2009/04/iphone-game-programming-tutorial-4-bitmap-font-class
  *   by Michael Daley
- 
- * Use any of these editors to generate bitmap font atlas:
- *   http://www.n4te.com/hiero/hiero.jnlp
- *   http://slick.cokeandcode.com/demos/hiero.jnlp
- *   http://www.angelcode.com/products/bmfont/
- *
+ * 
+ * Use any of these editors to generate BMFonts:
+ *   http://glyphdesigner.71squared.com/ (Commercial, Mac OS X)
+ *   http://www.n4te.com/hiero/hiero.jnlp (Free, Java)
+ *   http://slick.cokeandcode.com/demos/hiero.jnlp (Free, Java)
+ *   http://www.angelcode.com/products/bmfont/ (Free, Windows only)
  */
 
 #import "CCSpriteBatchNode.h"
@@ -160,11 +161,6 @@ enum {
 /** creates a BMFont label with an initial string and the FNT file */
 +(id) labelWithString:(NSString*)string fntFile:(NSString*)fntFile;
 
-/** creates a BMFont label with an initial string and the FNT file
- @deprecated Will be removed in 1.0.1. Use "labelWithString" instead.
- */
-+(id) bitmapFontAtlasWithString:(NSString*)string fntFile:(NSString*)fntFile DEPRECATED_ATTRIBUTE;
-
 /** init a BMFont label with an initial string and the FNT file */
 -(id) initWithString:(NSString*)string fntFile:(NSString*)fntFile;
 
@@ -179,11 +175,4 @@ CCBMFontConfiguration * FNTConfigLoadFile( NSString *file );
  */
 void FNTConfigRemoveCache( void );
 
-
-
-/** CCBitmapFontAtlas
- @deprecated Use CCLabelBMFont instead. Will be removed 1.0.1
- */
-DEPRECATED_ATTRIBUTE @interface CCBitmapFontAtlas : CCLabelBMFont
-@end
 

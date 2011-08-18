@@ -2,6 +2,7 @@
  * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
  * Copyright (c) 2008-2010 Ricardo Quesada
+ * Copyright (c) 2011 Zynga Inc.
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -209,14 +210,6 @@
 @property (nonatomic,readwrite) ccBlendFunc blendFunc;
 @end
 
-/** CCColorLayer
- It is the same as CCLayerColor.
- 
- @deprecated Use CCLayerColor instead. This class will be removed in v1.0.1
- */
-DEPRECATED_ATTRIBUTE @interface CCColorLayer : CCLayerColor
-@end
-
 #pragma mark -
 #pragma mark CCLayerGradient
 
@@ -302,13 +295,5 @@ the background.
  The current (old) layer will be removed from it's parent with 'cleanup:YES'.
  */
 -(void) switchToAndReleaseMe: (unsigned int) n;
-@end
-
-/** CCMultiplexLayer
- It is the same as CCLayerMultiplex.
- 
- @deprecated Use CCLayerMultiplex instead. This class will be removed in v1.0.1
- */
-DEPRECATED_ATTRIBUTE  @interface CCMultiplexLayer : CCLayerMultiplex
 @end
 

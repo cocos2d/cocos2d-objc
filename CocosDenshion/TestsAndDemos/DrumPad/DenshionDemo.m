@@ -74,60 +74,61 @@ CDSoundSource *toneSource;
 @implementation DenshionLayer
 -(id) init
 {
-	[super init];
+	if( (self=[super init]) ) {
 	
-	[CCTexture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA8888];
-	CCSprite* bg = [CCSprite spriteWithFile:@"bg.png"];
-	[bg setPosition:CGPointMake(480/2, 320/2)]; 
-	[self addChild:bg ];
-	
-	slider = [CCSprite spriteWithFile:@"slider.png"];
-	[slider setPosition:CGPointMake(SLIDER_POS_X, ((SLIDER_POS_MAX - SLIDER_POS_MIN)/2) + SLIDER_POS_MIN)]; 
-	[slider setRotation:180.0f];
-	[slider retain];
-	[self addChild:slider];
-	
-	//This is related to setting up the flashes that appear when a pad is hit
-	int flashLocations[9][2] = {{PFC_X - PFO_X,PFC_Y - PFO_Y},{PFC_X,PFC_Y - PFO_Y},{PFC_X + PFO_X,PFC_Y - PFO_Y},
-								{PFC_X - PFO_X,PFC_Y},{PFC_X,PFC_Y},{PFC_X + PFO_X,PFC_Y},
-								{PFC_X - PFO_X,PFC_Y + PFO_Y},{PFC_X,PFC_Y + PFO_Y},{PFC_X + PFO_X,PFC_Y + PFO_Y}};
+		[CCTexture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA8888];
+		CCSprite* bg = [CCSprite spriteWithFile:@"bg.png"];
+		[bg setPosition:CGPointMake(480/2, 320/2)]; 
+		[self addChild:bg ];
+		
+		slider = [CCSprite spriteWithFile:@"slider.png"];
+		[slider setPosition:CGPointMake(SLIDER_POS_X, ((SLIDER_POS_MAX - SLIDER_POS_MIN)/2) + SLIDER_POS_MIN)]; 
+		[slider setRotation:180.0f];
+		[slider retain];
+		[self addChild:slider];
+		
+		//This is related to setting up the flashes that appear when a pad is hit
+		int flashLocations[9][2] = {{PFC_X - PFO_X,PFC_Y - PFO_Y},{PFC_X,PFC_Y - PFO_Y},{PFC_X + PFO_X,PFC_Y - PFO_Y},
+									{PFC_X - PFO_X,PFC_Y},{PFC_X,PFC_Y},{PFC_X + PFO_X,PFC_Y},
+									{PFC_X - PFO_X,PFC_Y + PFO_Y},{PFC_X,PFC_Y + PFO_Y},{PFC_X + PFO_X,PFC_Y + PFO_Y}};
 
+			
+		padFlashes = [[NSMutableArray alloc] init];
+		for (int i=0; i < 9; i++) {
+			CCSprite *flash = [CCSprite spriteWithFile:@"flash.png"];
+			[flash retain];
+			[flash setPosition:CGPointMake(flashLocations[i][0],flashLocations[i][1])];
+			flash.opacity = 128;
+			flash.visible = FALSE;
+			[padFlashes addObject:flash];
+			[self addChild:flash];
+		}
 		
-	padFlashes = [[NSMutableArray alloc] init];
-	for (int i=0; i < 9; i++) {
-		CCSprite *flash = [CCSprite spriteWithFile:@"flash.png"];
-		[flash retain];
-		[flash setPosition:CGPointMake(flashLocations[i][0],flashLocations[i][1])];
-		flash.opacity = 128;
-		flash.visible = FALSE;
-		[padFlashes addObject:flash];
-		[self addChild:flash];
+		for (int i=0; i < FLASH_FADE_TOTAL; i++) {
+			flashIndex[i] = FLASH_FADE_TOTAL;//Use total as a sentinel value
+		}	
+		
+		am = nil;
+		soundEngine = nil;
+			
+		if ([CDAudioManager sharedManagerState] != kAMStateInitialised) {
+			//The audio manager is not initialised yet so kick off the sound loading as an NSOperation that will wait for
+			//the audio manager
+			NSInvocationOperation* bufferLoadOp = [[[NSInvocationOperation alloc] initWithTarget:self selector:@selector(loadSoundBuffers:) object:nil] autorelease];
+			NSOperationQueue *opQ = [[[NSOperationQueue alloc] init] autorelease]; 
+			[opQ addOperation:bufferLoadOp];
+			_appState = kAppStateAudioManagerInitialising;
+		} else {
+			[self loadSoundBuffers:nil];
+			_appState = kAppStateSoundBuffersLoading;
+		}	
+		
+		self.isTouchEnabled = YES;
+		toneLoopPlaying = NO;
+		toneSource = [[CDSoundSource alloc] init];
+		[toneSource retain];
+		[self schedule: @selector(tick:)];
 	}
-	
-	for (int i=0; i < FLASH_FADE_TOTAL; i++) {
-		flashIndex[i] = FLASH_FADE_TOTAL;//Use total as a sentinel value
-	}	
-	
-	am = nil;
-	soundEngine = nil;
-		
-	if ([CDAudioManager sharedManagerState] != kAMStateInitialised) {
-		//The audio manager is not initialised yet so kick off the sound loading as an NSOperation that will wait for
-		//the audio manager
-		NSInvocationOperation* bufferLoadOp = [[[NSInvocationOperation alloc] initWithTarget:self selector:@selector(loadSoundBuffers:) object:nil] autorelease];
-		NSOperationQueue *opQ = [[[NSOperationQueue alloc] init] autorelease]; 
-		[opQ addOperation:bufferLoadOp];
-		_appState = kAppStateAudioManagerInitialising;
-	} else {
-		[self loadSoundBuffers:nil];
-		_appState = kAppStateSoundBuffersLoading;
-	}	
-	
-	self.isTouchEnabled = YES;
-	toneLoopPlaying = NO;
-	toneSource = [[CDSoundSource alloc] init];
-	[toneSource retain];
-	[self schedule: @selector(tick:)];
 	return self;
 }
 
@@ -545,7 +546,7 @@ CDSoundSource *toneSource;
 
 - (void) dealloc
 {
-	[window dealloc];
+	[window release];
 	[super dealloc];
 }
 

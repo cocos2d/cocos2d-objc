@@ -33,6 +33,12 @@ static NSString *fontList[] =
 	@"Scissor Cuts",
 };
 
+
+NSString* nextAction(void);
+NSString* backAction(void);
+NSString* restartAction(void);
+
+
 NSString* nextAction()
 {	
 	fontIdx++;
@@ -173,7 +179,7 @@ NSString* restartAction()
 
 - (void) dealloc
 {
-	[window dealloc];
+	[window release];
 	[super dealloc];
 }
 
