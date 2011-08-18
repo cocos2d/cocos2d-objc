@@ -9,6 +9,8 @@ version 2.0-alpha XX-Ago-2011
 			- Supports Tint + Color
 . [NEW] Director: Removed Fast, FastThreaded and NSTimer director. The only one available is DisplayLink.
 . [NEW] Director: Orientations are no longer supported. Only Portrait mode is supported. Use a ViewController to rotate the EAGL view.
+. [NEW] Director: The FPS position can be configured via ccConfig.h file
+. [NEW] Director: Fast FPS is the only supported way to display FPS. Removed the CCLabelTTF way of doing it
 . [NEW] Macros: ccgl* replaced with ccGL*
 . [NEW] Math: Using kazmath for matrix and projection operations, and matrix GL stack
 . [NEW] Math: Using NEON Matrix Multiplication from Oolong project
