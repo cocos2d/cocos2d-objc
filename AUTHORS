@@ -51,6 +51,8 @@ Contributors (alphabetically ordered):
 * Stepan Generalov (iPsi) (http://www.itraceur.ru/)
 	FileUtils: Loads -hd resources even if the -sd resource is not present. patch
 
+* John Wordsworth ( http://www.johnwordsworth.com/ )
+	CCAnimationCache: Added animation data format. Can be loaded into the animation cache
 
 
 cocos2d for iPhone authors for v1.0
