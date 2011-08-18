@@ -370,7 +370,7 @@ static CCDirector *_sharedDirector = nil;
 	NSAssert( runningScene_ == nil, @"You can't run an scene if another Scene is running. Use replaceScene or pushScene instead");
 	    
 	[self pushScene:scene];
-//	[self startAnimation];	
+	[self startAnimation];	
 }
 
 -(void) replaceScene: (CCScene*) scene

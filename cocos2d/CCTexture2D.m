@@ -559,7 +559,7 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 
 		dim = NSSizeToCGSize( [stringWithAttributes size] );
 				
-		return [self initWithString:string dimensions:dim alignment:CCTextAlignmentCenter attributedString:stringWithAttributes];
+		return [self initWithString:string dimensions:dim alignment:CCTextAlignmentCenter verticalAlignment:kCCTextVerticalAlignmentTop attributedString:stringWithAttributes];
 	}
 #endif // __MAC_OS_X_VERSION_MAX_ALLOWED
     
@@ -605,7 +605,7 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 	  ]
 	 autorelease];
 	
-	return [self initWithString:string dimensions:dimensions alignment:alignment verticalAlignment:verticalAlignment lineBreakMode:lineBrakMode attributedString:stringWithAttributes];
+	return [self initWithString:string dimensions:dimensions alignment:alignment verticalAlignment:verticalAlignment attributedString:stringWithAttributes];
 	
 #endif // Mac
 }

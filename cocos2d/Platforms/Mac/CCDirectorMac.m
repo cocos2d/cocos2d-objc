@@ -338,6 +338,8 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 
 - (void) startAnimation
 {
+    [super startAnimation];
+    
 #if ! CC_DIRECTOR_MAC_USE_DISPLAY_LINK_THREAD
 	runningThread_ = [[NSThread alloc] initWithTarget:self selector:@selector(mainLoop) object:nil];
 	[runningThread_ start];	
@@ -363,6 +365,8 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 
 - (void) stopAnimation
 {
+    [super stopAnimation];
+    
 	if( displayLink ) {
 		CVDisplayLinkStop(displayLink);
 		CVDisplayLinkRelease(displayLink);
