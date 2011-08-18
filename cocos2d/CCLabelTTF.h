@@ -41,10 +41,14 @@
 	CGSize dimensions_;
 	CCTextAlignment alignment_;
     CCTextVerticalAlignment verticalAlignment_;
-	NSString * fontName_;
+	NSString *fontName_;
 	CGFloat fontSize_;
 	NSString	*string_;
 }
+
+@property (nonatomic, copy) NSString *fontName;
+@property (nonatomic, assign) CGFloat fontSize;
+@property (nonatomic, copy) NSString *string;
 
 /** creates a CCLabel from a fontname, alignment, dimension in points and font size in points*/
 + (id) labelWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(CCTextAlignment)alignment fontName:(NSString*)name fontSize:(CGFloat)size;

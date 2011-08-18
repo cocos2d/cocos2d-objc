@@ -36,6 +36,8 @@
 
 @implementation CCLabelTTF
 
+@synthesize fontName=fontName_, fontSize=fontSize_, string=string_;
+
 - (id) init
 {
 	NSAssert(NO, @"CCLabelTTF: Init not supported. Use initWithString");
@@ -108,11 +110,6 @@
 	CGRect rect = CGRectZero;
 	rect.size = [texture_ contentSize];
 	[self setTextureRect: rect];
-}
-
--(NSString*) string
-{
-	return string_;
 }
 
 - (void) dealloc
