@@ -209,7 +209,7 @@ static CCTextureCache *sharedTextureCache;
 
 -(void) addImageAsync:(NSString*)path withBlock:(void(^)(CCTexture2D *tex))block
 {
-	NSAssert(path != nil, @"TextureCache: fileimage MUST not be nill");
+	NSAssert(path != nil, @"TextureCache: fileimage MUST not be nil");
 	
 	// optimization
 	
