@@ -193,8 +193,6 @@ typedef enum {
 @interface CCDirectorFast : CCDirectorIOS
 {
 	BOOL isRunning;
-	
-	NSAutoreleasePool	*autoreleasePool;
 }
 -(void) mainLoop;
 @end
