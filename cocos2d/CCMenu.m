@@ -68,6 +68,24 @@ enum {
 
 -(id) initWithItems: (CCMenuItem*) item vaList: (va_list) args
 {
+    if( (self=[self initWithArray:nil]) ) {
+        
+        int z=0;
+        if (item) {
+            [self addChild: item z:z];
+            CCMenuItem *i = va_arg(args, CCMenuItem*);
+            while(i) {
+                z++;
+                [self addChild: i z:z];
+                i = va_arg(args, CCMenuItem*);
+            }
+        }
+    }
+    return self;
+}
+
+-(id) initWithArray:(NSArray*)items 
+{
 	if( (self=[super init]) ) {
 
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
@@ -95,17 +113,16 @@ enum {
 #endif
 		self.position = ccp(s.width/2, s.height/2);
 
-		int z=0;
-		
-		if (item) {
-			[self addChild: item z:z];
-			CCMenuItem *i = va_arg(args, CCMenuItem*);
-			while(i) {
-				z++;
-				[self addChild: i z:z];
-				i = va_arg(args, CCMenuItem*);
-			}
-		}
+        if (items){
+            
+            int z=0;
+            for (CCMenuItem *i in items)
+            {
+                [self addChild: i z:z];
+                z++;
+            }
+        }
+
 	//	[self alignItemsVertically];
 		
 		selectedItem_ = nil;

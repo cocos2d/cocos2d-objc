@@ -61,6 +61,9 @@ enum {
 /** initializes a CCMenu with it's items */
 - (id) initWithItems: (CCMenuItem*) item vaList: (va_list) args;
 
+/** initializes a CCMenu with an array */
+- (id) initWithArray:(NSArray*)items;
+
 /** align items vertically */
 -(void) alignItemsVertically;
 /** align items vertically with padding
