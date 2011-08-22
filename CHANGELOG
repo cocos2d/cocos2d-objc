@@ -16,6 +16,7 @@ version 2.0-alpha XX-Ago-2011
 . [NEW] Math: Using NEON Matrix Multiplication from Oolong project
 . [NEW] OpenGL ES: Added support for OpenGL ES 2.0. OpenGL ES 1.1 is no longer supported
 . [NEW] Sprite: initWithTexture:rect is the designated initializer
+. [NEW] SpriteFrameCache: addSpriteFramesWithFile:textureFile renamed to addSpriteFramesWithFile:textureFilename to be consistent with the new API
 . [NEW] Templates: Removed Xcode3 templates. Updated Xcode4 templates.
 . [NEW] Tests: All tests use RootViewController
 . [NEW] Tests: FontTest uses  "bundle" fonts instead of FontLabel
@@ -29,6 +30,7 @@ version 2.0-alpha XX-Ago-2011
 . [FIX] ProgressTimer: reverse renamed to reverseDirection in order to prevent possible collision with action#reverse
 . [FIX] RenderTexture: getUIImageFromBuffer doesn't return artifacs
 . [FIX] TextureCache: Uses "self" instead of "CCTextureCache" in shared instance
+. [FIX] SpriteFrameCache: it doesn't retain the textures when they are loaded from a dictionary file (issue #1227)
 . [FIX] Xcode: cocosLive: Removed. Use OpenFeint or GameCenter instead
 . [FIX] Xcode: FontLabel: Removed since in iOS 4 you can load custom TTF
 . [FIX] Xcode: TouchJSON: Removed. No longer needed since cocosLive was removed

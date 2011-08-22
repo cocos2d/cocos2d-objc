@@ -47,6 +47,7 @@
 	CGPoint			offsetInPixels_;
 	CGSize			originalSizeInPixels_;
 	CCTexture2D		*texture_;
+	NSString		*textureFilename_;
 }
 /** rect of the frame in points. If it is updated, then rectInPixels will be updated too. */
 @property (nonatomic,readwrite) CGRect rect;
@@ -69,10 +70,18 @@
 /** texture of the frame */
 @property (nonatomic, retain, readwrite) CCTexture2D *texture;
 
+/** texture file name of the frame */
+@property (nonatomic, retain, readwrite) NSString *textureFilename;
+
 /** Create a CCSpriteFrame with a texture, rect in points.
  It is assumed that the frame was not trimmed.
  */
 +(id) frameWithTexture:(CCTexture2D*)texture rect:(CGRect)rect;
+
+/** Create a CCSpriteFrame with a texture filename, rect in points.
+ It is assumed that the frame was not trimmed.
+ */
++(id) frameWithTextureFilename:(NSString*)filename rect:(CGRect)rect;
 
 /** Create a CCSpriteFrame with a texture, rect, rotated, offset and originalSize in pixels.
  The originalSize is the size in points of the frame before being trimmed.
@@ -80,15 +89,34 @@
 +(id) frameWithTexture:(CCTexture2D*)texture rectInPixels:(CGRect)rect rotated:(BOOL)rotated offset:(CGPoint)offset originalSize:(CGSize)originalSize;
 
 
+/** Create a CCSpriteFrame with a texture filename, rect, rotated, offset and originalSize in pixels.
+ The originalSize is the size in points of the frame before being trimmed.
+ */
++(id) frameWithTextureFilename:(NSString*)filename rectInPixels:(CGRect)rect rotated:(BOOL)rotated offset:(CGPoint)offset originalSize:(CGSize)originalSize;
+
+
 /** Initializes a CCSpriteFrame with a texture, rect in points;
  It is assumed that the frame was not trimmed.
  */
 -(id) initWithTexture:(CCTexture2D*)texture rect:(CGRect)rect;
 
+/** Initializes a CCSpriteFrame with a texture filename, rect in points;
+ It is assumed that the frame was not trimmed.
+ */
+-(id) initWithTextureFilename:(NSString*)filename rect:(CGRect)rect;
+
+
 /** Initializes a CCSpriteFrame with a texture, rect, rotated, offset and originalSize in pixels.
  The originalSize is the size in points of the frame before being trimmed.
  */
 -(id) initWithTexture:(CCTexture2D*)texture rectInPixels:(CGRect)rect rotated:(BOOL)rotated offset:(CGPoint)offset originalSize:(CGSize)originalSize;
+
+/** Initializes a CCSpriteFrame with a texture, rect, rotated, offset and originalSize in pixels.
+ The originalSize is the size in points of the frame before being trimmed.
+ 
+ @since v1.1
+ */
+-(id) initWithTextureFilename:(NSString*)filename rectInPixels:(CGRect)rect rotated:(BOOL)rotated offset:(CGPoint)offset originalSize:(CGSize)originalSize;
 
 @end
 

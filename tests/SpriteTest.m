@@ -821,7 +821,7 @@ Class restartAction()
 		
 		CGSize s = [[CCDirector sharedDirector] winSize];		
 		
-		[[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"animations/ghosts.plist" textureFile:@"animations/ghosts.png"];
+		[[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"animations/ghosts.plist" textureFilename:@"animations/ghosts.png"];
 		
 		CCNode *aParent;
 		CCSprite *l1, *l2a, *l2b, *l3a1, *l3a2, *l3b1, *l3b2;
@@ -1633,8 +1633,8 @@ Class restartAction()
 		
 		CCSpriteFrameCache *cache = [CCSpriteFrameCache sharedSpriteFrameCache];
 		[cache addSpriteFramesWithFile:@"animations/grossini.plist"];
-		[cache addSpriteFramesWithFile:@"animations/grossini_gray.plist" textureFile:@"animations/grossini_gray.png"];
-		[cache addSpriteFramesWithFile:@"animations/grossini_blue.plist" textureFile:@"animations/grossini_blue.png"];
+		[cache addSpriteFramesWithFile:@"animations/grossini_gray.plist" textureFilename:@"animations/grossini_gray.png"];
+		[cache addSpriteFramesWithFile:@"animations/grossini_blue.plist" textureFilename:@"animations/grossini_blue.png"];
 
 		//
 		// Animation using Sprite batch
@@ -1789,7 +1789,7 @@ Class restartAction()
 		// CCSpriteFrames each contain a texture id and a rect (frame).
 		
 		CCSpriteFrameCache *cache = [CCSpriteFrameCache sharedSpriteFrameCache];
-		[cache addSpriteFramesWithFile:@"animations/grossini-aliases.plist" textureFile:@"animations/grossini-aliases.png"];
+		[cache addSpriteFramesWithFile:@"animations/grossini-aliases.plist" textureFilename:@"animations/grossini-aliases.png"];
 		
 		//
 		// Animation using Sprite batch
@@ -1860,7 +1860,7 @@ Class restartAction()
 		for(int i=0;i<3;i++) {
 			CCSpriteFrameCache *cache = [CCSpriteFrameCache sharedSpriteFrameCache];
 			[cache addSpriteFramesWithFile:@"animations/grossini.plist"];
-			[cache addSpriteFramesWithFile:@"animations/grossini_gray.plist" textureFile:@"animations/grossini_gray.png"];
+			[cache addSpriteFramesWithFile:@"animations/grossini_gray.plist" textureFilename:@"animations/grossini_gray.png"];
 			
 			//
 			// Animation using Sprite batch
@@ -1933,7 +1933,7 @@ Class restartAction()
 		for(int i=0;i<3;i++) {
 			CCSpriteFrameCache *cache = [CCSpriteFrameCache sharedSpriteFrameCache];
 			[cache addSpriteFramesWithFile:@"animations/grossini.plist"];
-			[cache addSpriteFramesWithFile:@"animations/grossini_gray.plist" textureFile:@"animations/grossini_gray.png"];
+			[cache addSpriteFramesWithFile:@"animations/grossini_gray.plist" textureFilename:@"animations/grossini_gray.png"];
 			
 			//
 			// Animation using Sprite batch
@@ -2008,7 +2008,7 @@ Class restartAction()
 		for(int i=0;i<3;i++) {
 			CCSpriteFrameCache *cache = [CCSpriteFrameCache sharedSpriteFrameCache];
 			[cache addSpriteFramesWithFile:@"animations/grossini.plist"];
-			[cache addSpriteFramesWithFile:@"animations/grossini_gray.plist" textureFile:@"animations/grossini_gray.png"];
+			[cache addSpriteFramesWithFile:@"animations/grossini_gray.plist" textureFilename:@"animations/grossini_gray.png"];
 			
 			//
 			// Animation using Sprite batch
@@ -2084,7 +2084,7 @@ Class restartAction()
 		for(int i=0;i<3;i++) {
 			CCSpriteFrameCache *cache = [CCSpriteFrameCache sharedSpriteFrameCache];
 			[cache addSpriteFramesWithFile:@"animations/grossini.plist"];
-			[cache addSpriteFramesWithFile:@"animations/grossini_gray.plist" textureFile:@"animations/grossini_gray.png"];
+			[cache addSpriteFramesWithFile:@"animations/grossini_gray.plist" textureFilename:@"animations/grossini_gray.png"];
 			
 			//
 			// Animation using Sprite batch
@@ -2163,7 +2163,7 @@ Class restartAction()
 		for(int i=0;i<3;i++) {
 			CCSpriteFrameCache *cache = [CCSpriteFrameCache sharedSpriteFrameCache];
 			[cache addSpriteFramesWithFile:@"animations/grossini.plist"];
-			[cache addSpriteFramesWithFile:@"animations/grossini_gray.plist" textureFile:@"animations/grossini_gray.png"];
+			[cache addSpriteFramesWithFile:@"animations/grossini_gray.plist" textureFilename:@"animations/grossini_gray.png"];
 			
 			//
 			// Animation using Sprite batch
@@ -2242,7 +2242,7 @@ Class restartAction()
 		for(int i=0;i<3;i++) {
 			CCSpriteFrameCache *cache = [CCSpriteFrameCache sharedSpriteFrameCache];
 			[cache addSpriteFramesWithFile:@"animations/grossini.plist"];
-			[cache addSpriteFramesWithFile:@"animations/grossini_gray.plist" textureFile:@"animations/grossini_gray.png"];
+			[cache addSpriteFramesWithFile:@"animations/grossini_gray.plist" textureFilename:@"animations/grossini_gray.png"];
 			
 			//
 			// Animation using Sprite batch
@@ -2324,7 +2324,7 @@ Class restartAction()
 		for(int i=0;i<3;i++) {
 			CCSpriteFrameCache *cache = [CCSpriteFrameCache sharedSpriteFrameCache];
 			[cache addSpriteFramesWithFile:@"animations/grossini.plist"];
-			[cache addSpriteFramesWithFile:@"animations/grossini_gray.plist" textureFile:@"animations/grossini_gray.png"];
+			[cache addSpriteFramesWithFile:@"animations/grossini_gray.plist" textureFilename:@"animations/grossini_gray.png"];
 			
 			//
 			// Animation using Sprite batch
@@ -2411,7 +2411,7 @@ Class restartAction()
 		for(int i=0;i<3;i++) {
 			CCSpriteFrameCache *cache = [CCSpriteFrameCache sharedSpriteFrameCache];
 			[cache addSpriteFramesWithFile:@"animations/grossini.plist"];
-			[cache addSpriteFramesWithFile:@"animations/grossini_gray.plist" textureFile:@"animations/grossini_gray.png"];
+			[cache addSpriteFramesWithFile:@"animations/grossini_gray.plist" textureFilename:@"animations/grossini_gray.png"];
 			
 			//
 			// Animation using Sprite batch
@@ -2500,7 +2500,7 @@ Class restartAction()
 		for(int i=0;i<3;i++) {
 			CCSpriteFrameCache *cache = [CCSpriteFrameCache sharedSpriteFrameCache];
 			[cache addSpriteFramesWithFile:@"animations/grossini.plist"];
-			[cache addSpriteFramesWithFile:@"animations/grossini_gray.plist" textureFile:@"animations/grossini_gray.png"];
+			[cache addSpriteFramesWithFile:@"animations/grossini_gray.plist" textureFilename:@"animations/grossini_gray.png"];
 			
 			//
 			// Animation using Sprite batch
@@ -2583,7 +2583,7 @@ Class restartAction()
 		for(int i=0;i<3;i++) {
 			CCSpriteFrameCache *cache = [CCSpriteFrameCache sharedSpriteFrameCache];
 			[cache addSpriteFramesWithFile:@"animations/grossini.plist"];
-			[cache addSpriteFramesWithFile:@"animations/grossini_gray.plist" textureFile:@"animations/grossini_gray.png"];
+			[cache addSpriteFramesWithFile:@"animations/grossini_gray.plist" textureFilename:@"animations/grossini_gray.png"];
 			
 			//
 			// Animation using Sprite batch
@@ -3903,9 +3903,10 @@ Class restartAction()
 {
 	if( (self=[super init]) ) {
 				
-		[[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"animations/grossini.plist"];
-		[[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"animations/grossini_gray.plist"];
-		[[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"animations/grossini_blue.plist"];		
+		CCSpriteFrameCache *frameCache = [CCSpriteFrameCache sharedSpriteFrameCache];
+		[frameCache addSpriteFramesWithFile:@"animations/grossini.plist"];
+		[frameCache addSpriteFramesWithFile:@"animations/grossini_gray.plist"];
+		[frameCache addSpriteFramesWithFile:@"animations/grossini_blue.plist"];		
 
 		//
 		// create animation "dance"
@@ -3913,7 +3914,7 @@ Class restartAction()
 		NSMutableArray *animFrames = [NSMutableArray array];
 		for(int i = 1; i < 15; i++) {
 			
-			CCSpriteFrame *frame = [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:[NSString stringWithFormat:@"grossini_dance_%02d.png",i]];
+			CCSpriteFrame *frame = [frameCache spriteFrameByName:[NSString stringWithFormat:@"grossini_dance_%02d.png",i]];
 			[animFrames addObject:frame];
 		}
 		
@@ -3930,7 +3931,7 @@ Class restartAction()
 		
 		for(int i = 1; i < 15; i++) {
 			
-			CCSpriteFrame *frame = [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:[NSString stringWithFormat:@"grossini_dance_gray_%02d.png",i]];
+			CCSpriteFrame *frame = [frameCache spriteFrameByName:[NSString stringWithFormat:@"grossini_dance_gray_%02d.png",i]];
 			[animFrames addObject:frame];
 		}
 		
@@ -3946,7 +3947,7 @@ Class restartAction()
 		
 		for(int i = 1; i < 4; i++) {
 			
-			CCSpriteFrame *frame = [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:[NSString stringWithFormat:@"grossini_blue_%02d.png",i]];
+			CCSpriteFrame *frame = [frameCache spriteFrameByName:[NSString stringWithFormat:@"grossini_blue_%02d.png",i]];
 			[animFrames addObject:frame];
 		}
 		
@@ -3970,6 +3971,8 @@ Class restartAction()
 		
 		// create an sprite without texture
 		CCSprite *grossini = [CCSprite node];
+		CCSpriteFrame *frame = [frameCache spriteFrameByName:@"grossini_dance_01.png"];
+		[grossini setDisplayFrame:frame];
 		
 		CGSize winSize = [[CCDirector sharedDirector] winSize];
 		
@@ -4009,9 +4012,10 @@ Class restartAction()
 {
 	if( (self=[super init]) ) {
 		
-		[[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"animations/grossini.plist"];
-		[[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"animations/grossini_gray.plist"];
-		[[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"animations/grossini_blue.plist"];		
+		CCSpriteFrameCache *frameCache = [CCSpriteFrameCache sharedSpriteFrameCache];
+		[frameCache addSpriteFramesWithFile:@"animations/grossini.plist"];
+		[frameCache addSpriteFramesWithFile:@"animations/grossini_gray.plist"];
+		[frameCache addSpriteFramesWithFile:@"animations/grossini_blue.plist"];		
 
 
 		// Purge previously loaded animation
@@ -4035,6 +4039,9 @@ Class restartAction()
 		
 		// create an sprite without texture
 		CCSprite *grossini = [CCSprite node];
+		
+		CCSpriteFrame *frame = [frameCache spriteFrameByName:@"grossini_dance_01.png"];
+		[grossini setDisplayFrame:frame];
 		
 		CGSize winSize = [[CCDirector sharedDirector] winSize];
 		
