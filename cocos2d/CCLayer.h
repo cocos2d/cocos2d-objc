@@ -85,6 +85,7 @@
  */
 @property(nonatomic,assign) BOOL isAccelerometerEnabled;
 
+@end
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 
 
@@ -137,10 +138,12 @@
  */
 -(NSInteger) touchDelegatePriority;
 
+
+@end
+
 #endif // mac
 
 
-@end
 
 #pragma mark -
 #pragma mark CCLayerColor
