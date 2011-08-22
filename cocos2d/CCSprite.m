@@ -156,9 +156,6 @@ struct transformValues_ {
 		// shader program
 		self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTextureColor];
 		
-		// update texture (calls updateBlendFunc)
-		[self setTexture:nil];
-		
 		// clean the Quad
 		bzero(&quad_, sizeof(quad_));
 		

@@ -116,6 +116,8 @@ static CCAnimationCache *sharedAnimationCache_=nil;
 	
 	NSArray* animationNames = [animations allKeys];
 	
+	CCSpriteFrameCache *frameCache = [CCSpriteFrameCache sharedSpriteFrameCache];
+
 	for( NSString *name in animationNames ) {
 		NSDictionary* animationDict = [animations objectForKey:name];
 		NSArray *frameNames = [animationDict objectForKey:@"frames"];
@@ -130,12 +132,12 @@ static CCAnimationCache *sharedAnimationCache_=nil;
 		NSMutableArray *frames = [NSMutableArray arrayWithCapacity:[frameNames count]];
 		
 		for( NSString *frameName in frameNames ) { 
-			CCSpriteFrame *frame = [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:frameName];
-			CCLOG(@"cocos2d: CCAnimationCache: Animation '%@' refers to frame '%@' which is not currently in the CCSpriteFrameCache. This frame will not be added to the animation.", name, frameName);
-			
-			if ( frame != nil ) {
+			CCSpriteFrame *frame = [frameCache spriteFrameByName:frameName];
+
+			if ( frame )
 				[frames addObject:frame];
-			}
+			else
+				CCLOG(@"cocos2d: CCAnimationCache: Animation '%@' refers to frame '%@' which is not currently in the CCSpriteFrameCache. This frame will not be added to the animation.", name, frameName);
 		}
 		
 		if ( [frames count] == 0 ) {
@@ -145,11 +147,10 @@ static CCAnimationCache *sharedAnimationCache_=nil;
 			CCLOG(@"cocos2d: CCAnimationCache: An animation in your dictionary refers to a frame which is not in the CCSpriteFrameCache. Some or all of the frames for the animation '%@' may be missing.", name);
 		}
 		
-		if ( delay != nil ) {
+		if ( delay != nil )
 			animation = [CCAnimation animationWithFrames:frames delay:[delay floatValue]];
-		} else {
+		else
 			animation = [CCAnimation animationWithFrames:frames];
-		}
 		
 		[[CCAnimationCache sharedAnimationCache] addAnimation:animation name:name];
 	}
