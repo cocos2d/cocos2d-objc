@@ -26,6 +26,7 @@
 
 // cocos2d imports
 #import "CCScheduler.h"
+#import "CCActionManager.h"
 #import "ccMacros.h"
 #import "CCDirector.h"
 #import "Support/uthash.h"
@@ -604,21 +605,21 @@ typedef struct _hashSelectorEntry
 	// updates with priority < 0
 	DL_FOREACH_SAFE( updatesNeg, entry, tmp ) {
 		if( ! entry->paused && !entry->markedForDeletion )
-			entry->impMethod( entry->target, updateSelector, dt );
+			entry->impMethod( entry->target, updateSelector, dt * [CCActionManager timeScaleForTarget:entry->target] );
 	}
 
 	// updates with priority == 0
 	DL_FOREACH_SAFE( updates0, entry, tmp ) {
 		if( ! entry->paused && !entry->markedForDeletion )
         {
-			entry->impMethod( entry->target, updateSelector, dt );
+			entry->impMethod( entry->target, updateSelector, dt * [CCActionManager timeScaleForTarget:entry->target] );
         }
 	}
 
 	// updates with priority > 0
 	DL_FOREACH_SAFE( updatesPos, entry, tmp ) {
 		if( ! entry->paused  && !entry->markedForDeletion )
-			entry->impMethod( entry->target, updateSelector, dt );
+			entry->impMethod( entry->target, updateSelector, dt * [CCActionManager timeScaleForTarget:entry->target] );
 	}
 
 	// Iterate all over the  custome selectors

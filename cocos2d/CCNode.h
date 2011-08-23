@@ -35,6 +35,7 @@
 
 enum {
 	kCCNodeTagInvalid = -1,
+    kCCNodeTagIgnoreTimeScale = -2,
 };
 
 @class CCCamera;
