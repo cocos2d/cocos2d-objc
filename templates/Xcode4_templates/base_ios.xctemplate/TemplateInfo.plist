@@ -19,7 +19,7 @@
 			<key>ARCHS</key>
 			<string>$(ARCHS_STANDARD_32_BIT)</string>
 			<key>IPHONEOS_DEPLOYMENT_TARGET</key>
-			<string>latest_iphoneos</string>
+			<string>4.0</string>
 			<key>CODE_SIGN_IDENTITY[sdk=iphoneos*]</key>
 			<string>iPhone Developer</string>
 		</dict>
@@ -70,6 +70,13 @@
     <string>Resources</string>
     <key>Path</key>
     <string>Resources/fps_images.png</string>
+  </dict>
+  <key>Resources/fps_images-hd.png</key>
+  <dict>
+    <key>Group</key>
+    <string>Resources</string>
+    <key>Path</key>
+    <string>Resources/fps_images-hd.png</string>
   </dict>
   <key>Resources/Icon-72.png</key>
   <dict>
@@ -134,6 +141,7 @@
 <array>
   <string>Resources/Default.png</string>
   <string>Resources/fps_images.png</string>
+  <string>Resources/fps_images-hd.png</string>
   <string>Resources/Icon-72.png</string>
   <string>Resources/Icon-Small-50.png</string>
   <string>Resources/Icon-Small.png</string>
