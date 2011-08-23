@@ -73,18 +73,6 @@
 	<string>com.cocos2d.cocos2dOnlyIOSTemplate</string>
 	<key>Kind</key>
 	<string>Xcode.Xcode3.ProjectTemplateUnitKind</string>
-	<key>Targets</key>
-	<array>
-		<dict>
-			<key>SharedSettings</key>
-			<dict>
-				<key>ALWAYS_SEARCH_USER_PATHS</key>
-				<string>YES</string>
-				<key>USER_HEADER_SEARCH_PATHS</key>
-				<string>"___PACKAGENAME___/libs/kazmath/include"</string>
-			</dict>
-		</dict>
-	</array>
 	<key>Nodes</key>
 	<array>
 		<string>Prefix.pch</string>

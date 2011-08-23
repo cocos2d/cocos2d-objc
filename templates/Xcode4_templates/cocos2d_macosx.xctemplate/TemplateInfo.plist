@@ -71,20 +71,5 @@
 	<string>com.cocos2d.cocos2dOnlyMacTemplate</string>
 	<key>Kind</key>
 	<string>Xcode.Xcode3.ProjectTemplateUnitKind</string>
-	<key>Targets</key>
-	<array>
-		<dict>
-			<key>SharedSettings</key>
-			<dict>
-				<key>ALWAYS_SEARCH_USER_PATHS</key>
-				<string>YES</string>
-				<key>USER_HEADER_SEARCH_PATHS</key>
-                <array>
-				<string>"___PACKAGENAME___/libs"</string>
-				<string>"___PACKAGENAME___/libs/kazmath/include"</string>
-                </array>
-			</dict>
-		</dict>
-	</array>
 </dict>
 </plist>
