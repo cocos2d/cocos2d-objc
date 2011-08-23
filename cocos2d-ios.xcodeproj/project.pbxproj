@@ -1822,6 +1822,609 @@
 		A0B0389613EA1FE30073E59A /* r2-ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = A0B0377213EA1FDB0073E59A /* r2-ipad.png */; };
 		A0B0389713EA1FE30073E59A /* r2-ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = A0B0377213EA1FDB0073E59A /* r2-ipad.png */; };
 		A0B0389813EA1FE30073E59A /* r2-ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = A0B0377213EA1FDB0073E59A /* r2-ipad.png */; };
+		A0EC4A311403236C00EC482A /* Position_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A161403236C00EC482A /* Position_uColor.fsh */; };
+		A0EC4A321403236C00EC482A /* Position_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A171403236C00EC482A /* Position_uColor.vsh */; };
+		A0EC4A331403236C00EC482A /* PositionColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A181403236C00EC482A /* PositionColor.fsh */; };
+		A0EC4A341403236C00EC482A /* PositionColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A191403236C00EC482A /* PositionColor.vsh */; };
+		A0EC4A351403236C00EC482A /* PositionTexture.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1A1403236C00EC482A /* PositionTexture.fsh */; };
+		A0EC4A361403236C00EC482A /* PositionTexture.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1B1403236C00EC482A /* PositionTexture.vsh */; };
+		A0EC4A371403236C00EC482A /* PositionTexture_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1C1403236C00EC482A /* PositionTexture_uColor.fsh */; };
+		A0EC4A381403236C00EC482A /* PositionTexture_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1D1403236C00EC482A /* PositionTexture_uColor.vsh */; };
+		A0EC4A391403236C00EC482A /* PositionTextureA8Color.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1E1403236C00EC482A /* PositionTextureA8Color.fsh */; };
+		A0EC4A3A1403236C00EC482A /* PositionTextureA8Color.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1F1403236C00EC482A /* PositionTextureA8Color.vsh */; };
+		A0EC4A3B1403236C00EC482A /* PositionTextureColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A201403236C00EC482A /* PositionTextureColor.fsh */; };
+		A0EC4A3C1403236C00EC482A /* PositionTextureColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A211403236C00EC482A /* PositionTextureColor.vsh */; };
+		A0EC4A3F1403238300EC482A /* Position_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A161403236C00EC482A /* Position_uColor.fsh */; };
+		A0EC4A401403238300EC482A /* Position_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A171403236C00EC482A /* Position_uColor.vsh */; };
+		A0EC4A411403238300EC482A /* PositionColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A181403236C00EC482A /* PositionColor.fsh */; };
+		A0EC4A421403238300EC482A /* PositionColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A191403236C00EC482A /* PositionColor.vsh */; };
+		A0EC4A431403238400EC482A /* PositionTexture.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1A1403236C00EC482A /* PositionTexture.fsh */; };
+		A0EC4A441403238400EC482A /* PositionTexture.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1B1403236C00EC482A /* PositionTexture.vsh */; };
+		A0EC4A451403238400EC482A /* PositionTexture_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1C1403236C00EC482A /* PositionTexture_uColor.fsh */; };
+		A0EC4A461403238400EC482A /* PositionTexture_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1D1403236C00EC482A /* PositionTexture_uColor.vsh */; };
+		A0EC4A471403238400EC482A /* PositionTextureA8Color.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1E1403236C00EC482A /* PositionTextureA8Color.fsh */; };
+		A0EC4A481403238400EC482A /* PositionTextureA8Color.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1F1403236C00EC482A /* PositionTextureA8Color.vsh */; };
+		A0EC4A491403238400EC482A /* PositionTextureColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A201403236C00EC482A /* PositionTextureColor.fsh */; };
+		A0EC4A4A1403238400EC482A /* PositionTextureColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A211403236C00EC482A /* PositionTextureColor.vsh */; };
+		A0EC4A4B1403238400EC482A /* Position_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A161403236C00EC482A /* Position_uColor.fsh */; };
+		A0EC4A4C1403238400EC482A /* Position_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A171403236C00EC482A /* Position_uColor.vsh */; };
+		A0EC4A4D1403238400EC482A /* PositionColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A181403236C00EC482A /* PositionColor.fsh */; };
+		A0EC4A4E1403238400EC482A /* PositionColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A191403236C00EC482A /* PositionColor.vsh */; };
+		A0EC4A4F1403238400EC482A /* PositionTexture.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1A1403236C00EC482A /* PositionTexture.fsh */; };
+		A0EC4A501403238400EC482A /* PositionTexture.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1B1403236C00EC482A /* PositionTexture.vsh */; };
+		A0EC4A511403238400EC482A /* PositionTexture_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1C1403236C00EC482A /* PositionTexture_uColor.fsh */; };
+		A0EC4A521403238400EC482A /* PositionTexture_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1D1403236C00EC482A /* PositionTexture_uColor.vsh */; };
+		A0EC4A531403238400EC482A /* PositionTextureA8Color.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1E1403236C00EC482A /* PositionTextureA8Color.fsh */; };
+		A0EC4A541403238400EC482A /* PositionTextureA8Color.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1F1403236C00EC482A /* PositionTextureA8Color.vsh */; };
+		A0EC4A551403238400EC482A /* PositionTextureColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A201403236C00EC482A /* PositionTextureColor.fsh */; };
+		A0EC4A561403238400EC482A /* PositionTextureColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A211403236C00EC482A /* PositionTextureColor.vsh */; };
+		A0EC4A571403238500EC482A /* Position_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A161403236C00EC482A /* Position_uColor.fsh */; };
+		A0EC4A581403238500EC482A /* Position_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A171403236C00EC482A /* Position_uColor.vsh */; };
+		A0EC4A591403238500EC482A /* PositionColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A181403236C00EC482A /* PositionColor.fsh */; };
+		A0EC4A5A1403238500EC482A /* PositionColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A191403236C00EC482A /* PositionColor.vsh */; };
+		A0EC4A5B1403238500EC482A /* PositionTexture.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1A1403236C00EC482A /* PositionTexture.fsh */; };
+		A0EC4A5C1403238500EC482A /* PositionTexture.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1B1403236C00EC482A /* PositionTexture.vsh */; };
+		A0EC4A5D1403238500EC482A /* PositionTexture_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1C1403236C00EC482A /* PositionTexture_uColor.fsh */; };
+		A0EC4A5E1403238500EC482A /* PositionTexture_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1D1403236C00EC482A /* PositionTexture_uColor.vsh */; };
+		A0EC4A5F1403238500EC482A /* PositionTextureA8Color.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1E1403236C00EC482A /* PositionTextureA8Color.fsh */; };
+		A0EC4A601403238500EC482A /* PositionTextureA8Color.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1F1403236C00EC482A /* PositionTextureA8Color.vsh */; };
+		A0EC4A611403238500EC482A /* PositionTextureColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A201403236C00EC482A /* PositionTextureColor.fsh */; };
+		A0EC4A621403238500EC482A /* PositionTextureColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A211403236C00EC482A /* PositionTextureColor.vsh */; };
+		A0EC4A631403238500EC482A /* Position_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A161403236C00EC482A /* Position_uColor.fsh */; };
+		A0EC4A641403238500EC482A /* Position_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A171403236C00EC482A /* Position_uColor.vsh */; };
+		A0EC4A651403238500EC482A /* PositionColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A181403236C00EC482A /* PositionColor.fsh */; };
+		A0EC4A661403238500EC482A /* PositionColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A191403236C00EC482A /* PositionColor.vsh */; };
+		A0EC4A671403238500EC482A /* PositionTexture.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1A1403236C00EC482A /* PositionTexture.fsh */; };
+		A0EC4A681403238500EC482A /* PositionTexture.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1B1403236C00EC482A /* PositionTexture.vsh */; };
+		A0EC4A691403238500EC482A /* PositionTexture_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1C1403236C00EC482A /* PositionTexture_uColor.fsh */; };
+		A0EC4A6A1403238500EC482A /* PositionTexture_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1D1403236C00EC482A /* PositionTexture_uColor.vsh */; };
+		A0EC4A6B1403238500EC482A /* PositionTextureA8Color.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1E1403236C00EC482A /* PositionTextureA8Color.fsh */; };
+		A0EC4A6C1403238500EC482A /* PositionTextureA8Color.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1F1403236C00EC482A /* PositionTextureA8Color.vsh */; };
+		A0EC4A6D1403238500EC482A /* PositionTextureColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A201403236C00EC482A /* PositionTextureColor.fsh */; };
+		A0EC4A6E1403238600EC482A /* PositionTextureColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A211403236C00EC482A /* PositionTextureColor.vsh */; };
+		A0EC4A6F1403238600EC482A /* Position_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A161403236C00EC482A /* Position_uColor.fsh */; };
+		A0EC4A701403238600EC482A /* Position_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A171403236C00EC482A /* Position_uColor.vsh */; };
+		A0EC4A711403238600EC482A /* PositionColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A181403236C00EC482A /* PositionColor.fsh */; };
+		A0EC4A721403238600EC482A /* PositionColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A191403236C00EC482A /* PositionColor.vsh */; };
+		A0EC4A731403238600EC482A /* PositionTexture.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1A1403236C00EC482A /* PositionTexture.fsh */; };
+		A0EC4A741403238600EC482A /* PositionTexture.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1B1403236C00EC482A /* PositionTexture.vsh */; };
+		A0EC4A751403238600EC482A /* PositionTexture_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1C1403236C00EC482A /* PositionTexture_uColor.fsh */; };
+		A0EC4A761403238600EC482A /* PositionTexture_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1D1403236C00EC482A /* PositionTexture_uColor.vsh */; };
+		A0EC4A771403238600EC482A /* PositionTextureA8Color.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1E1403236C00EC482A /* PositionTextureA8Color.fsh */; };
+		A0EC4A781403238600EC482A /* PositionTextureA8Color.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1F1403236C00EC482A /* PositionTextureA8Color.vsh */; };
+		A0EC4A791403238600EC482A /* PositionTextureColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A201403236C00EC482A /* PositionTextureColor.fsh */; };
+		A0EC4A7A1403238600EC482A /* PositionTextureColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A211403236C00EC482A /* PositionTextureColor.vsh */; };
+		A0EC4A7B1403238700EC482A /* Position_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A161403236C00EC482A /* Position_uColor.fsh */; };
+		A0EC4A7C1403238700EC482A /* Position_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A171403236C00EC482A /* Position_uColor.vsh */; };
+		A0EC4A7D1403238700EC482A /* PositionColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A181403236C00EC482A /* PositionColor.fsh */; };
+		A0EC4A7E1403238700EC482A /* PositionColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A191403236C00EC482A /* PositionColor.vsh */; };
+		A0EC4A7F1403238700EC482A /* PositionTexture.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1A1403236C00EC482A /* PositionTexture.fsh */; };
+		A0EC4A801403238700EC482A /* PositionTexture.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1B1403236C00EC482A /* PositionTexture.vsh */; };
+		A0EC4A811403238700EC482A /* PositionTexture_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1C1403236C00EC482A /* PositionTexture_uColor.fsh */; };
+		A0EC4A821403238700EC482A /* PositionTexture_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1D1403236C00EC482A /* PositionTexture_uColor.vsh */; };
+		A0EC4A831403238700EC482A /* PositionTextureA8Color.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1E1403236C00EC482A /* PositionTextureA8Color.fsh */; };
+		A0EC4A841403238700EC482A /* PositionTextureA8Color.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1F1403236C00EC482A /* PositionTextureA8Color.vsh */; };
+		A0EC4A851403238700EC482A /* PositionTextureColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A201403236C00EC482A /* PositionTextureColor.fsh */; };
+		A0EC4A861403238700EC482A /* PositionTextureColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A211403236C00EC482A /* PositionTextureColor.vsh */; };
+		A0EC4A871403238800EC482A /* Position_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A161403236C00EC482A /* Position_uColor.fsh */; };
+		A0EC4A881403238800EC482A /* Position_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A171403236C00EC482A /* Position_uColor.vsh */; };
+		A0EC4A891403238800EC482A /* PositionColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A181403236C00EC482A /* PositionColor.fsh */; };
+		A0EC4A8A1403238800EC482A /* PositionColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A191403236C00EC482A /* PositionColor.vsh */; };
+		A0EC4A8B1403238800EC482A /* PositionTexture.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1A1403236C00EC482A /* PositionTexture.fsh */; };
+		A0EC4A8C1403238800EC482A /* PositionTexture.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1B1403236C00EC482A /* PositionTexture.vsh */; };
+		A0EC4A8D1403238800EC482A /* PositionTexture_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1C1403236C00EC482A /* PositionTexture_uColor.fsh */; };
+		A0EC4A8E1403238800EC482A /* PositionTexture_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1D1403236C00EC482A /* PositionTexture_uColor.vsh */; };
+		A0EC4A8F1403238800EC482A /* PositionTextureA8Color.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1E1403236C00EC482A /* PositionTextureA8Color.fsh */; };
+		A0EC4A901403238800EC482A /* PositionTextureA8Color.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1F1403236C00EC482A /* PositionTextureA8Color.vsh */; };
+		A0EC4A911403238800EC482A /* PositionTextureColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A201403236C00EC482A /* PositionTextureColor.fsh */; };
+		A0EC4A921403238800EC482A /* PositionTextureColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A211403236C00EC482A /* PositionTextureColor.vsh */; };
+		A0EC4A931403238800EC482A /* Position_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A161403236C00EC482A /* Position_uColor.fsh */; };
+		A0EC4A941403238800EC482A /* Position_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A171403236C00EC482A /* Position_uColor.vsh */; };
+		A0EC4A951403238800EC482A /* PositionColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A181403236C00EC482A /* PositionColor.fsh */; };
+		A0EC4A961403238800EC482A /* PositionColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A191403236C00EC482A /* PositionColor.vsh */; };
+		A0EC4A971403238800EC482A /* PositionTexture.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1A1403236C00EC482A /* PositionTexture.fsh */; };
+		A0EC4A981403238800EC482A /* PositionTexture.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1B1403236C00EC482A /* PositionTexture.vsh */; };
+		A0EC4A991403238800EC482A /* PositionTexture_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1C1403236C00EC482A /* PositionTexture_uColor.fsh */; };
+		A0EC4A9A1403238800EC482A /* PositionTexture_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1D1403236C00EC482A /* PositionTexture_uColor.vsh */; };
+		A0EC4A9B1403238800EC482A /* PositionTextureA8Color.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1E1403236C00EC482A /* PositionTextureA8Color.fsh */; };
+		A0EC4A9C1403238800EC482A /* PositionTextureA8Color.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1F1403236C00EC482A /* PositionTextureA8Color.vsh */; };
+		A0EC4A9D1403238800EC482A /* PositionTextureColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A201403236C00EC482A /* PositionTextureColor.fsh */; };
+		A0EC4A9E1403238800EC482A /* PositionTextureColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A211403236C00EC482A /* PositionTextureColor.vsh */; };
+		A0EC4A9F1403238900EC482A /* Position_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A161403236C00EC482A /* Position_uColor.fsh */; };
+		A0EC4AA01403238900EC482A /* Position_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A171403236C00EC482A /* Position_uColor.vsh */; };
+		A0EC4AA11403238900EC482A /* PositionColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A181403236C00EC482A /* PositionColor.fsh */; };
+		A0EC4AA21403238900EC482A /* PositionColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A191403236C00EC482A /* PositionColor.vsh */; };
+		A0EC4AA31403238900EC482A /* PositionTexture.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1A1403236C00EC482A /* PositionTexture.fsh */; };
+		A0EC4AA41403238900EC482A /* PositionTexture.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1B1403236C00EC482A /* PositionTexture.vsh */; };
+		A0EC4AA51403238900EC482A /* PositionTexture_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1C1403236C00EC482A /* PositionTexture_uColor.fsh */; };
+		A0EC4AA61403238900EC482A /* PositionTexture_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1D1403236C00EC482A /* PositionTexture_uColor.vsh */; };
+		A0EC4AA71403238900EC482A /* PositionTextureA8Color.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1E1403236C00EC482A /* PositionTextureA8Color.fsh */; };
+		A0EC4AA81403238900EC482A /* PositionTextureA8Color.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1F1403236C00EC482A /* PositionTextureA8Color.vsh */; };
+		A0EC4AA91403238900EC482A /* PositionTextureColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A201403236C00EC482A /* PositionTextureColor.fsh */; };
+		A0EC4AAA1403238900EC482A /* PositionTextureColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A211403236C00EC482A /* PositionTextureColor.vsh */; };
+		A0EC4AAB1403238A00EC482A /* Position_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A161403236C00EC482A /* Position_uColor.fsh */; };
+		A0EC4AAC1403238A00EC482A /* Position_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A171403236C00EC482A /* Position_uColor.vsh */; };
+		A0EC4AAD1403238A00EC482A /* PositionColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A181403236C00EC482A /* PositionColor.fsh */; };
+		A0EC4AAE1403238A00EC482A /* PositionColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A191403236C00EC482A /* PositionColor.vsh */; };
+		A0EC4AAF1403238A00EC482A /* PositionTexture.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1A1403236C00EC482A /* PositionTexture.fsh */; };
+		A0EC4AB01403238A00EC482A /* PositionTexture.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1B1403236C00EC482A /* PositionTexture.vsh */; };
+		A0EC4AB11403238A00EC482A /* PositionTexture_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1C1403236C00EC482A /* PositionTexture_uColor.fsh */; };
+		A0EC4AB21403238A00EC482A /* PositionTexture_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1D1403236C00EC482A /* PositionTexture_uColor.vsh */; };
+		A0EC4AB31403238A00EC482A /* PositionTextureA8Color.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1E1403236C00EC482A /* PositionTextureA8Color.fsh */; };
+		A0EC4AB41403238A00EC482A /* PositionTextureA8Color.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1F1403236C00EC482A /* PositionTextureA8Color.vsh */; };
+		A0EC4AB51403238A00EC482A /* PositionTextureColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A201403236C00EC482A /* PositionTextureColor.fsh */; };
+		A0EC4AB61403238A00EC482A /* PositionTextureColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A211403236C00EC482A /* PositionTextureColor.vsh */; };
+		A0EC4AB71403238B00EC482A /* Position_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A161403236C00EC482A /* Position_uColor.fsh */; };
+		A0EC4AB81403238B00EC482A /* Position_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A171403236C00EC482A /* Position_uColor.vsh */; };
+		A0EC4AB91403238B00EC482A /* PositionColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A181403236C00EC482A /* PositionColor.fsh */; };
+		A0EC4ABA1403238B00EC482A /* PositionColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A191403236C00EC482A /* PositionColor.vsh */; };
+		A0EC4ABB1403238B00EC482A /* PositionTexture.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1A1403236C00EC482A /* PositionTexture.fsh */; };
+		A0EC4ABC1403238B00EC482A /* PositionTexture.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1B1403236C00EC482A /* PositionTexture.vsh */; };
+		A0EC4ABD1403238B00EC482A /* PositionTexture_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1C1403236C00EC482A /* PositionTexture_uColor.fsh */; };
+		A0EC4ABE1403238B00EC482A /* PositionTexture_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1D1403236C00EC482A /* PositionTexture_uColor.vsh */; };
+		A0EC4ABF1403238B00EC482A /* PositionTextureA8Color.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1E1403236C00EC482A /* PositionTextureA8Color.fsh */; };
+		A0EC4AC01403238B00EC482A /* PositionTextureA8Color.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1F1403236C00EC482A /* PositionTextureA8Color.vsh */; };
+		A0EC4AC11403238B00EC482A /* PositionTextureColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A201403236C00EC482A /* PositionTextureColor.fsh */; };
+		A0EC4AC21403238B00EC482A /* PositionTextureColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A211403236C00EC482A /* PositionTextureColor.vsh */; };
+		A0EC4AC31403238B00EC482A /* Position_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A161403236C00EC482A /* Position_uColor.fsh */; };
+		A0EC4AC41403238B00EC482A /* Position_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A171403236C00EC482A /* Position_uColor.vsh */; };
+		A0EC4AC51403238B00EC482A /* PositionColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A181403236C00EC482A /* PositionColor.fsh */; };
+		A0EC4AC61403238B00EC482A /* PositionColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A191403236C00EC482A /* PositionColor.vsh */; };
+		A0EC4AC71403238B00EC482A /* PositionTexture.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1A1403236C00EC482A /* PositionTexture.fsh */; };
+		A0EC4AC81403238B00EC482A /* PositionTexture.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1B1403236C00EC482A /* PositionTexture.vsh */; };
+		A0EC4AC91403238B00EC482A /* PositionTexture_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1C1403236C00EC482A /* PositionTexture_uColor.fsh */; };
+		A0EC4ACA1403238B00EC482A /* PositionTexture_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1D1403236C00EC482A /* PositionTexture_uColor.vsh */; };
+		A0EC4ACB1403238B00EC482A /* PositionTextureA8Color.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1E1403236C00EC482A /* PositionTextureA8Color.fsh */; };
+		A0EC4ACC1403238B00EC482A /* PositionTextureA8Color.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1F1403236C00EC482A /* PositionTextureA8Color.vsh */; };
+		A0EC4ACD1403238B00EC482A /* PositionTextureColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A201403236C00EC482A /* PositionTextureColor.fsh */; };
+		A0EC4ACE1403238B00EC482A /* PositionTextureColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A211403236C00EC482A /* PositionTextureColor.vsh */; };
+		A0EC4ACF1403238C00EC482A /* Position_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A161403236C00EC482A /* Position_uColor.fsh */; };
+		A0EC4AD01403238C00EC482A /* Position_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A171403236C00EC482A /* Position_uColor.vsh */; };
+		A0EC4AD11403238C00EC482A /* PositionColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A181403236C00EC482A /* PositionColor.fsh */; };
+		A0EC4AD21403238C00EC482A /* PositionColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A191403236C00EC482A /* PositionColor.vsh */; };
+		A0EC4AD31403238C00EC482A /* PositionTexture.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1A1403236C00EC482A /* PositionTexture.fsh */; };
+		A0EC4AD41403238C00EC482A /* PositionTexture.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1B1403236C00EC482A /* PositionTexture.vsh */; };
+		A0EC4AD51403238C00EC482A /* PositionTexture_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1C1403236C00EC482A /* PositionTexture_uColor.fsh */; };
+		A0EC4AD61403238C00EC482A /* PositionTexture_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1D1403236C00EC482A /* PositionTexture_uColor.vsh */; };
+		A0EC4AD71403238C00EC482A /* PositionTextureA8Color.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1E1403236C00EC482A /* PositionTextureA8Color.fsh */; };
+		A0EC4AD81403238C00EC482A /* PositionTextureA8Color.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1F1403236C00EC482A /* PositionTextureA8Color.vsh */; };
+		A0EC4AD91403238C00EC482A /* PositionTextureColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A201403236C00EC482A /* PositionTextureColor.fsh */; };
+		A0EC4ADA1403238C00EC482A /* PositionTextureColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A211403236C00EC482A /* PositionTextureColor.vsh */; };
+		A0EC4ADB1403238D00EC482A /* Position_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A161403236C00EC482A /* Position_uColor.fsh */; };
+		A0EC4ADC1403238D00EC482A /* Position_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A171403236C00EC482A /* Position_uColor.vsh */; };
+		A0EC4ADD1403238D00EC482A /* PositionColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A181403236C00EC482A /* PositionColor.fsh */; };
+		A0EC4ADE1403238D00EC482A /* PositionColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A191403236C00EC482A /* PositionColor.vsh */; };
+		A0EC4ADF1403238D00EC482A /* PositionTexture.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1A1403236C00EC482A /* PositionTexture.fsh */; };
+		A0EC4AE01403238D00EC482A /* PositionTexture.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1B1403236C00EC482A /* PositionTexture.vsh */; };
+		A0EC4AE11403238D00EC482A /* PositionTexture_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1C1403236C00EC482A /* PositionTexture_uColor.fsh */; };
+		A0EC4AE21403238D00EC482A /* PositionTexture_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1D1403236C00EC482A /* PositionTexture_uColor.vsh */; };
+		A0EC4AE31403238D00EC482A /* PositionTextureA8Color.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1E1403236C00EC482A /* PositionTextureA8Color.fsh */; };
+		A0EC4AE41403238D00EC482A /* PositionTextureA8Color.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1F1403236C00EC482A /* PositionTextureA8Color.vsh */; };
+		A0EC4AE51403238D00EC482A /* PositionTextureColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A201403236C00EC482A /* PositionTextureColor.fsh */; };
+		A0EC4AE61403238D00EC482A /* PositionTextureColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A211403236C00EC482A /* PositionTextureColor.vsh */; };
+		A0EC4AE71403239100EC482A /* Position_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A161403236C00EC482A /* Position_uColor.fsh */; };
+		A0EC4AE81403239100EC482A /* Position_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A171403236C00EC482A /* Position_uColor.vsh */; };
+		A0EC4AE91403239100EC482A /* PositionColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A181403236C00EC482A /* PositionColor.fsh */; };
+		A0EC4AEA1403239100EC482A /* PositionColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A191403236C00EC482A /* PositionColor.vsh */; };
+		A0EC4AEB1403239100EC482A /* PositionTexture.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1A1403236C00EC482A /* PositionTexture.fsh */; };
+		A0EC4AEC1403239100EC482A /* PositionTexture.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1B1403236C00EC482A /* PositionTexture.vsh */; };
+		A0EC4AED1403239100EC482A /* PositionTexture_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1C1403236C00EC482A /* PositionTexture_uColor.fsh */; };
+		A0EC4AEE1403239100EC482A /* PositionTexture_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1D1403236C00EC482A /* PositionTexture_uColor.vsh */; };
+		A0EC4AEF1403239100EC482A /* PositionTextureA8Color.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1E1403236C00EC482A /* PositionTextureA8Color.fsh */; };
+		A0EC4AF01403239100EC482A /* PositionTextureA8Color.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1F1403236C00EC482A /* PositionTextureA8Color.vsh */; };
+		A0EC4AF11403239100EC482A /* PositionTextureColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A201403236C00EC482A /* PositionTextureColor.fsh */; };
+		A0EC4AF21403239100EC482A /* PositionTextureColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A211403236C00EC482A /* PositionTextureColor.vsh */; };
+		A0EC4AF31403239200EC482A /* Position_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A161403236C00EC482A /* Position_uColor.fsh */; };
+		A0EC4AF41403239200EC482A /* Position_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A171403236C00EC482A /* Position_uColor.vsh */; };
+		A0EC4AF51403239200EC482A /* PositionColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A181403236C00EC482A /* PositionColor.fsh */; };
+		A0EC4AF61403239200EC482A /* PositionColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A191403236C00EC482A /* PositionColor.vsh */; };
+		A0EC4AF71403239200EC482A /* PositionTexture.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1A1403236C00EC482A /* PositionTexture.fsh */; };
+		A0EC4AF81403239200EC482A /* PositionTexture.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1B1403236C00EC482A /* PositionTexture.vsh */; };
+		A0EC4AF91403239200EC482A /* PositionTexture_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1C1403236C00EC482A /* PositionTexture_uColor.fsh */; };
+		A0EC4AFA1403239200EC482A /* PositionTexture_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1D1403236C00EC482A /* PositionTexture_uColor.vsh */; };
+		A0EC4AFB1403239200EC482A /* PositionTextureA8Color.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1E1403236C00EC482A /* PositionTextureA8Color.fsh */; };
+		A0EC4AFC1403239200EC482A /* PositionTextureA8Color.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1F1403236C00EC482A /* PositionTextureA8Color.vsh */; };
+		A0EC4AFD1403239200EC482A /* PositionTextureColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A201403236C00EC482A /* PositionTextureColor.fsh */; };
+		A0EC4AFE1403239200EC482A /* PositionTextureColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A211403236C00EC482A /* PositionTextureColor.vsh */; };
+		A0EC4AFF1403239200EC482A /* Position_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A161403236C00EC482A /* Position_uColor.fsh */; };
+		A0EC4B001403239200EC482A /* Position_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A171403236C00EC482A /* Position_uColor.vsh */; };
+		A0EC4B011403239200EC482A /* PositionColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A181403236C00EC482A /* PositionColor.fsh */; };
+		A0EC4B021403239200EC482A /* PositionColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A191403236C00EC482A /* PositionColor.vsh */; };
+		A0EC4B031403239200EC482A /* PositionTexture.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1A1403236C00EC482A /* PositionTexture.fsh */; };
+		A0EC4B041403239200EC482A /* PositionTexture.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1B1403236C00EC482A /* PositionTexture.vsh */; };
+		A0EC4B051403239200EC482A /* PositionTexture_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1C1403236C00EC482A /* PositionTexture_uColor.fsh */; };
+		A0EC4B061403239200EC482A /* PositionTexture_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1D1403236C00EC482A /* PositionTexture_uColor.vsh */; };
+		A0EC4B071403239200EC482A /* PositionTextureA8Color.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1E1403236C00EC482A /* PositionTextureA8Color.fsh */; };
+		A0EC4B081403239200EC482A /* PositionTextureA8Color.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1F1403236C00EC482A /* PositionTextureA8Color.vsh */; };
+		A0EC4B091403239200EC482A /* PositionTextureColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A201403236C00EC482A /* PositionTextureColor.fsh */; };
+		A0EC4B0A1403239200EC482A /* PositionTextureColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A211403236C00EC482A /* PositionTextureColor.vsh */; };
+		A0EC4B0B1403239300EC482A /* Position_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A161403236C00EC482A /* Position_uColor.fsh */; };
+		A0EC4B0C1403239300EC482A /* Position_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A171403236C00EC482A /* Position_uColor.vsh */; };
+		A0EC4B0D1403239300EC482A /* PositionColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A181403236C00EC482A /* PositionColor.fsh */; };
+		A0EC4B0E1403239300EC482A /* PositionColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A191403236C00EC482A /* PositionColor.vsh */; };
+		A0EC4B0F1403239300EC482A /* PositionTexture.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1A1403236C00EC482A /* PositionTexture.fsh */; };
+		A0EC4B101403239300EC482A /* PositionTexture.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1B1403236C00EC482A /* PositionTexture.vsh */; };
+		A0EC4B111403239300EC482A /* PositionTexture_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1C1403236C00EC482A /* PositionTexture_uColor.fsh */; };
+		A0EC4B121403239300EC482A /* PositionTexture_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1D1403236C00EC482A /* PositionTexture_uColor.vsh */; };
+		A0EC4B131403239300EC482A /* PositionTextureA8Color.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1E1403236C00EC482A /* PositionTextureA8Color.fsh */; };
+		A0EC4B141403239300EC482A /* PositionTextureA8Color.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1F1403236C00EC482A /* PositionTextureA8Color.vsh */; };
+		A0EC4B151403239300EC482A /* PositionTextureColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A201403236C00EC482A /* PositionTextureColor.fsh */; };
+		A0EC4B161403239300EC482A /* PositionTextureColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A211403236C00EC482A /* PositionTextureColor.vsh */; };
+		A0EC4B171403239400EC482A /* Position_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A161403236C00EC482A /* Position_uColor.fsh */; };
+		A0EC4B181403239400EC482A /* Position_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A171403236C00EC482A /* Position_uColor.vsh */; };
+		A0EC4B191403239400EC482A /* PositionColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A181403236C00EC482A /* PositionColor.fsh */; };
+		A0EC4B1A1403239400EC482A /* PositionColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A191403236C00EC482A /* PositionColor.vsh */; };
+		A0EC4B1B1403239400EC482A /* PositionTexture.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1A1403236C00EC482A /* PositionTexture.fsh */; };
+		A0EC4B1C1403239400EC482A /* PositionTexture.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1B1403236C00EC482A /* PositionTexture.vsh */; };
+		A0EC4B1D1403239400EC482A /* PositionTexture_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1C1403236C00EC482A /* PositionTexture_uColor.fsh */; };
+		A0EC4B1E1403239400EC482A /* PositionTexture_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1D1403236C00EC482A /* PositionTexture_uColor.vsh */; };
+		A0EC4B1F1403239400EC482A /* PositionTextureA8Color.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1E1403236C00EC482A /* PositionTextureA8Color.fsh */; };
+		A0EC4B201403239400EC482A /* PositionTextureA8Color.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1F1403236C00EC482A /* PositionTextureA8Color.vsh */; };
+		A0EC4B211403239400EC482A /* PositionTextureColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A201403236C00EC482A /* PositionTextureColor.fsh */; };
+		A0EC4B221403239400EC482A /* PositionTextureColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A211403236C00EC482A /* PositionTextureColor.vsh */; };
+		A0EC4B231403239400EC482A /* Position_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A161403236C00EC482A /* Position_uColor.fsh */; };
+		A0EC4B241403239400EC482A /* Position_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A171403236C00EC482A /* Position_uColor.vsh */; };
+		A0EC4B251403239400EC482A /* PositionColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A181403236C00EC482A /* PositionColor.fsh */; };
+		A0EC4B261403239400EC482A /* PositionColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A191403236C00EC482A /* PositionColor.vsh */; };
+		A0EC4B271403239400EC482A /* PositionTexture.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1A1403236C00EC482A /* PositionTexture.fsh */; };
+		A0EC4B281403239400EC482A /* PositionTexture.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1B1403236C00EC482A /* PositionTexture.vsh */; };
+		A0EC4B291403239400EC482A /* PositionTexture_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1C1403236C00EC482A /* PositionTexture_uColor.fsh */; };
+		A0EC4B2A1403239400EC482A /* PositionTexture_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1D1403236C00EC482A /* PositionTexture_uColor.vsh */; };
+		A0EC4B2B1403239400EC482A /* PositionTextureA8Color.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1E1403236C00EC482A /* PositionTextureA8Color.fsh */; };
+		A0EC4B2C1403239400EC482A /* PositionTextureA8Color.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1F1403236C00EC482A /* PositionTextureA8Color.vsh */; };
+		A0EC4B2D1403239400EC482A /* PositionTextureColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A201403236C00EC482A /* PositionTextureColor.fsh */; };
+		A0EC4B2E1403239400EC482A /* PositionTextureColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A211403236C00EC482A /* PositionTextureColor.vsh */; };
+		A0EC4B2F1403239500EC482A /* Position_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A161403236C00EC482A /* Position_uColor.fsh */; };
+		A0EC4B301403239500EC482A /* Position_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A171403236C00EC482A /* Position_uColor.vsh */; };
+		A0EC4B311403239500EC482A /* PositionColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A181403236C00EC482A /* PositionColor.fsh */; };
+		A0EC4B321403239500EC482A /* PositionColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A191403236C00EC482A /* PositionColor.vsh */; };
+		A0EC4B331403239500EC482A /* PositionTexture.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1A1403236C00EC482A /* PositionTexture.fsh */; };
+		A0EC4B341403239500EC482A /* PositionTexture.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1B1403236C00EC482A /* PositionTexture.vsh */; };
+		A0EC4B351403239500EC482A /* PositionTexture_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1C1403236C00EC482A /* PositionTexture_uColor.fsh */; };
+		A0EC4B361403239500EC482A /* PositionTexture_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1D1403236C00EC482A /* PositionTexture_uColor.vsh */; };
+		A0EC4B371403239500EC482A /* PositionTextureA8Color.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1E1403236C00EC482A /* PositionTextureA8Color.fsh */; };
+		A0EC4B381403239500EC482A /* PositionTextureA8Color.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1F1403236C00EC482A /* PositionTextureA8Color.vsh */; };
+		A0EC4B391403239500EC482A /* PositionTextureColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A201403236C00EC482A /* PositionTextureColor.fsh */; };
+		A0EC4B3A1403239500EC482A /* PositionTextureColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A211403236C00EC482A /* PositionTextureColor.vsh */; };
+		A0EC4B3B1403239600EC482A /* Position_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A161403236C00EC482A /* Position_uColor.fsh */; };
+		A0EC4B3C1403239600EC482A /* Position_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A171403236C00EC482A /* Position_uColor.vsh */; };
+		A0EC4B3D1403239600EC482A /* PositionColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A181403236C00EC482A /* PositionColor.fsh */; };
+		A0EC4B3E1403239600EC482A /* PositionColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A191403236C00EC482A /* PositionColor.vsh */; };
+		A0EC4B3F1403239600EC482A /* PositionTexture.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1A1403236C00EC482A /* PositionTexture.fsh */; };
+		A0EC4B401403239600EC482A /* PositionTexture.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1B1403236C00EC482A /* PositionTexture.vsh */; };
+		A0EC4B411403239600EC482A /* PositionTexture_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1C1403236C00EC482A /* PositionTexture_uColor.fsh */; };
+		A0EC4B421403239600EC482A /* PositionTexture_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1D1403236C00EC482A /* PositionTexture_uColor.vsh */; };
+		A0EC4B431403239600EC482A /* PositionTextureA8Color.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1E1403236C00EC482A /* PositionTextureA8Color.fsh */; };
+		A0EC4B441403239600EC482A /* PositionTextureA8Color.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1F1403236C00EC482A /* PositionTextureA8Color.vsh */; };
+		A0EC4B451403239600EC482A /* PositionTextureColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A201403236C00EC482A /* PositionTextureColor.fsh */; };
+		A0EC4B461403239600EC482A /* PositionTextureColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A211403236C00EC482A /* PositionTextureColor.vsh */; };
+		A0EC4B471403239700EC482A /* Position_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A161403236C00EC482A /* Position_uColor.fsh */; };
+		A0EC4B481403239700EC482A /* Position_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A171403236C00EC482A /* Position_uColor.vsh */; };
+		A0EC4B491403239700EC482A /* PositionColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A181403236C00EC482A /* PositionColor.fsh */; };
+		A0EC4B4A1403239700EC482A /* PositionColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A191403236C00EC482A /* PositionColor.vsh */; };
+		A0EC4B4B1403239700EC482A /* PositionTexture.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1A1403236C00EC482A /* PositionTexture.fsh */; };
+		A0EC4B4C1403239700EC482A /* PositionTexture.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1B1403236C00EC482A /* PositionTexture.vsh */; };
+		A0EC4B4D1403239700EC482A /* PositionTexture_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1C1403236C00EC482A /* PositionTexture_uColor.fsh */; };
+		A0EC4B4E1403239700EC482A /* PositionTexture_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1D1403236C00EC482A /* PositionTexture_uColor.vsh */; };
+		A0EC4B4F1403239700EC482A /* PositionTextureA8Color.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1E1403236C00EC482A /* PositionTextureA8Color.fsh */; };
+		A0EC4B501403239700EC482A /* PositionTextureA8Color.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1F1403236C00EC482A /* PositionTextureA8Color.vsh */; };
+		A0EC4B511403239700EC482A /* PositionTextureColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A201403236C00EC482A /* PositionTextureColor.fsh */; };
+		A0EC4B521403239700EC482A /* PositionTextureColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A211403236C00EC482A /* PositionTextureColor.vsh */; };
+		A0EC4B531403239900EC482A /* Position_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A161403236C00EC482A /* Position_uColor.fsh */; };
+		A0EC4B541403239900EC482A /* Position_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A171403236C00EC482A /* Position_uColor.vsh */; };
+		A0EC4B551403239900EC482A /* PositionColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A181403236C00EC482A /* PositionColor.fsh */; };
+		A0EC4B561403239900EC482A /* PositionColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A191403236C00EC482A /* PositionColor.vsh */; };
+		A0EC4B571403239900EC482A /* PositionTexture.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1A1403236C00EC482A /* PositionTexture.fsh */; };
+		A0EC4B581403239900EC482A /* PositionTexture.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1B1403236C00EC482A /* PositionTexture.vsh */; };
+		A0EC4B591403239900EC482A /* PositionTexture_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1C1403236C00EC482A /* PositionTexture_uColor.fsh */; };
+		A0EC4B5A1403239900EC482A /* PositionTexture_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1D1403236C00EC482A /* PositionTexture_uColor.vsh */; };
+		A0EC4B5B1403239900EC482A /* PositionTextureA8Color.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1E1403236C00EC482A /* PositionTextureA8Color.fsh */; };
+		A0EC4B5C1403239900EC482A /* PositionTextureA8Color.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1F1403236C00EC482A /* PositionTextureA8Color.vsh */; };
+		A0EC4B5D1403239900EC482A /* PositionTextureColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A201403236C00EC482A /* PositionTextureColor.fsh */; };
+		A0EC4B5E1403239900EC482A /* PositionTextureColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A211403236C00EC482A /* PositionTextureColor.vsh */; };
+		A0EC4B5F1403239A00EC482A /* Position_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A161403236C00EC482A /* Position_uColor.fsh */; };
+		A0EC4B601403239A00EC482A /* Position_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A171403236C00EC482A /* Position_uColor.vsh */; };
+		A0EC4B611403239A00EC482A /* PositionColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A181403236C00EC482A /* PositionColor.fsh */; };
+		A0EC4B621403239A00EC482A /* PositionColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A191403236C00EC482A /* PositionColor.vsh */; };
+		A0EC4B631403239A00EC482A /* PositionTexture.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1A1403236C00EC482A /* PositionTexture.fsh */; };
+		A0EC4B641403239A00EC482A /* PositionTexture.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1B1403236C00EC482A /* PositionTexture.vsh */; };
+		A0EC4B651403239A00EC482A /* PositionTexture_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1C1403236C00EC482A /* PositionTexture_uColor.fsh */; };
+		A0EC4B661403239A00EC482A /* PositionTexture_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1D1403236C00EC482A /* PositionTexture_uColor.vsh */; };
+		A0EC4B671403239A00EC482A /* PositionTextureA8Color.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1E1403236C00EC482A /* PositionTextureA8Color.fsh */; };
+		A0EC4B681403239A00EC482A /* PositionTextureA8Color.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1F1403236C00EC482A /* PositionTextureA8Color.vsh */; };
+		A0EC4B691403239A00EC482A /* PositionTextureColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A201403236C00EC482A /* PositionTextureColor.fsh */; };
+		A0EC4B6A1403239A00EC482A /* PositionTextureColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A211403236C00EC482A /* PositionTextureColor.vsh */; };
+		A0EC4B6B1403239B00EC482A /* Position_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A161403236C00EC482A /* Position_uColor.fsh */; };
+		A0EC4B6C1403239B00EC482A /* Position_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A171403236C00EC482A /* Position_uColor.vsh */; };
+		A0EC4B6D1403239B00EC482A /* PositionColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A181403236C00EC482A /* PositionColor.fsh */; };
+		A0EC4B6E1403239B00EC482A /* PositionColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A191403236C00EC482A /* PositionColor.vsh */; };
+		A0EC4B6F1403239B00EC482A /* PositionTexture.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1A1403236C00EC482A /* PositionTexture.fsh */; };
+		A0EC4B701403239B00EC482A /* PositionTexture.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1B1403236C00EC482A /* PositionTexture.vsh */; };
+		A0EC4B711403239B00EC482A /* PositionTexture_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1C1403236C00EC482A /* PositionTexture_uColor.fsh */; };
+		A0EC4B721403239B00EC482A /* PositionTexture_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1D1403236C00EC482A /* PositionTexture_uColor.vsh */; };
+		A0EC4B731403239B00EC482A /* PositionTextureA8Color.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1E1403236C00EC482A /* PositionTextureA8Color.fsh */; };
+		A0EC4B741403239B00EC482A /* PositionTextureA8Color.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1F1403236C00EC482A /* PositionTextureA8Color.vsh */; };
+		A0EC4B751403239B00EC482A /* PositionTextureColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A201403236C00EC482A /* PositionTextureColor.fsh */; };
+		A0EC4B761403239B00EC482A /* PositionTextureColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A211403236C00EC482A /* PositionTextureColor.vsh */; };
+		A0EC4B771403239B00EC482A /* Position_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A161403236C00EC482A /* Position_uColor.fsh */; };
+		A0EC4B781403239C00EC482A /* Position_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A171403236C00EC482A /* Position_uColor.vsh */; };
+		A0EC4B791403239C00EC482A /* PositionColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A181403236C00EC482A /* PositionColor.fsh */; };
+		A0EC4B7A1403239C00EC482A /* PositionColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A191403236C00EC482A /* PositionColor.vsh */; };
+		A0EC4B7B1403239C00EC482A /* PositionTexture.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1A1403236C00EC482A /* PositionTexture.fsh */; };
+		A0EC4B7C1403239C00EC482A /* PositionTexture.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1B1403236C00EC482A /* PositionTexture.vsh */; };
+		A0EC4B7D1403239C00EC482A /* PositionTexture_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1C1403236C00EC482A /* PositionTexture_uColor.fsh */; };
+		A0EC4B7E1403239C00EC482A /* PositionTexture_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1D1403236C00EC482A /* PositionTexture_uColor.vsh */; };
+		A0EC4B7F1403239C00EC482A /* PositionTextureA8Color.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1E1403236C00EC482A /* PositionTextureA8Color.fsh */; };
+		A0EC4B801403239C00EC482A /* PositionTextureA8Color.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1F1403236C00EC482A /* PositionTextureA8Color.vsh */; };
+		A0EC4B811403239C00EC482A /* PositionTextureColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A201403236C00EC482A /* PositionTextureColor.fsh */; };
+		A0EC4B821403239C00EC482A /* PositionTextureColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A211403236C00EC482A /* PositionTextureColor.vsh */; };
+		A0EC4B831403239C00EC482A /* Position_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A161403236C00EC482A /* Position_uColor.fsh */; };
+		A0EC4B841403239C00EC482A /* Position_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A171403236C00EC482A /* Position_uColor.vsh */; };
+		A0EC4B851403239C00EC482A /* PositionColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A181403236C00EC482A /* PositionColor.fsh */; };
+		A0EC4B861403239C00EC482A /* PositionColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A191403236C00EC482A /* PositionColor.vsh */; };
+		A0EC4B871403239C00EC482A /* PositionTexture.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1A1403236C00EC482A /* PositionTexture.fsh */; };
+		A0EC4B881403239C00EC482A /* PositionTexture.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1B1403236C00EC482A /* PositionTexture.vsh */; };
+		A0EC4B891403239C00EC482A /* PositionTexture_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1C1403236C00EC482A /* PositionTexture_uColor.fsh */; };
+		A0EC4B8A1403239C00EC482A /* PositionTexture_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1D1403236C00EC482A /* PositionTexture_uColor.vsh */; };
+		A0EC4B8B1403239C00EC482A /* PositionTextureA8Color.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1E1403236C00EC482A /* PositionTextureA8Color.fsh */; };
+		A0EC4B8C1403239C00EC482A /* PositionTextureA8Color.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1F1403236C00EC482A /* PositionTextureA8Color.vsh */; };
+		A0EC4B8D1403239C00EC482A /* PositionTextureColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A201403236C00EC482A /* PositionTextureColor.fsh */; };
+		A0EC4B8E1403239C00EC482A /* PositionTextureColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A211403236C00EC482A /* PositionTextureColor.vsh */; };
+		A0EC4B8F1403239D00EC482A /* Position_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A161403236C00EC482A /* Position_uColor.fsh */; };
+		A0EC4B901403239D00EC482A /* Position_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A171403236C00EC482A /* Position_uColor.vsh */; };
+		A0EC4B911403239D00EC482A /* PositionColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A181403236C00EC482A /* PositionColor.fsh */; };
+		A0EC4B921403239D00EC482A /* PositionColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A191403236C00EC482A /* PositionColor.vsh */; };
+		A0EC4B931403239D00EC482A /* PositionTexture.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1A1403236C00EC482A /* PositionTexture.fsh */; };
+		A0EC4B941403239D00EC482A /* PositionTexture.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1B1403236C00EC482A /* PositionTexture.vsh */; };
+		A0EC4B951403239D00EC482A /* PositionTexture_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1C1403236C00EC482A /* PositionTexture_uColor.fsh */; };
+		A0EC4B961403239D00EC482A /* PositionTexture_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1D1403236C00EC482A /* PositionTexture_uColor.vsh */; };
+		A0EC4B971403239D00EC482A /* PositionTextureA8Color.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1E1403236C00EC482A /* PositionTextureA8Color.fsh */; };
+		A0EC4B981403239D00EC482A /* PositionTextureA8Color.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1F1403236C00EC482A /* PositionTextureA8Color.vsh */; };
+		A0EC4B991403239D00EC482A /* PositionTextureColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A201403236C00EC482A /* PositionTextureColor.fsh */; };
+		A0EC4B9A1403239D00EC482A /* PositionTextureColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A211403236C00EC482A /* PositionTextureColor.vsh */; };
+		A0EC4B9B1403239E00EC482A /* Position_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A161403236C00EC482A /* Position_uColor.fsh */; };
+		A0EC4B9C1403239E00EC482A /* Position_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A171403236C00EC482A /* Position_uColor.vsh */; };
+		A0EC4B9D1403239E00EC482A /* PositionColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A181403236C00EC482A /* PositionColor.fsh */; };
+		A0EC4B9E1403239E00EC482A /* PositionColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A191403236C00EC482A /* PositionColor.vsh */; };
+		A0EC4B9F1403239E00EC482A /* PositionTexture.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1A1403236C00EC482A /* PositionTexture.fsh */; };
+		A0EC4BA01403239E00EC482A /* PositionTexture.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1B1403236C00EC482A /* PositionTexture.vsh */; };
+		A0EC4BA11403239E00EC482A /* PositionTexture_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1C1403236C00EC482A /* PositionTexture_uColor.fsh */; };
+		A0EC4BA21403239E00EC482A /* PositionTexture_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1D1403236C00EC482A /* PositionTexture_uColor.vsh */; };
+		A0EC4BA31403239E00EC482A /* PositionTextureA8Color.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1E1403236C00EC482A /* PositionTextureA8Color.fsh */; };
+		A0EC4BA41403239E00EC482A /* PositionTextureA8Color.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1F1403236C00EC482A /* PositionTextureA8Color.vsh */; };
+		A0EC4BA51403239E00EC482A /* PositionTextureColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A201403236C00EC482A /* PositionTextureColor.fsh */; };
+		A0EC4BA61403239E00EC482A /* PositionTextureColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A211403236C00EC482A /* PositionTextureColor.vsh */; };
+		A0EC4BA71403239F00EC482A /* Position_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A161403236C00EC482A /* Position_uColor.fsh */; };
+		A0EC4BA81403239F00EC482A /* Position_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A171403236C00EC482A /* Position_uColor.vsh */; };
+		A0EC4BA91403239F00EC482A /* PositionColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A181403236C00EC482A /* PositionColor.fsh */; };
+		A0EC4BAA1403239F00EC482A /* PositionColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A191403236C00EC482A /* PositionColor.vsh */; };
+		A0EC4BAB1403239F00EC482A /* PositionTexture.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1A1403236C00EC482A /* PositionTexture.fsh */; };
+		A0EC4BAC1403239F00EC482A /* PositionTexture.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1B1403236C00EC482A /* PositionTexture.vsh */; };
+		A0EC4BAD1403239F00EC482A /* PositionTexture_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1C1403236C00EC482A /* PositionTexture_uColor.fsh */; };
+		A0EC4BAE1403239F00EC482A /* PositionTexture_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1D1403236C00EC482A /* PositionTexture_uColor.vsh */; };
+		A0EC4BAF1403239F00EC482A /* PositionTextureA8Color.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1E1403236C00EC482A /* PositionTextureA8Color.fsh */; };
+		A0EC4BB01403239F00EC482A /* PositionTextureA8Color.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1F1403236C00EC482A /* PositionTextureA8Color.vsh */; };
+		A0EC4BB11403239F00EC482A /* PositionTextureColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A201403236C00EC482A /* PositionTextureColor.fsh */; };
+		A0EC4BB21403239F00EC482A /* PositionTextureColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A211403236C00EC482A /* PositionTextureColor.vsh */; };
+		A0EC4BB3140323A100EC482A /* Position_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A161403236C00EC482A /* Position_uColor.fsh */; };
+		A0EC4BB4140323A100EC482A /* Position_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A171403236C00EC482A /* Position_uColor.vsh */; };
+		A0EC4BB5140323A100EC482A /* PositionColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A181403236C00EC482A /* PositionColor.fsh */; };
+		A0EC4BB6140323A100EC482A /* PositionColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A191403236C00EC482A /* PositionColor.vsh */; };
+		A0EC4BB7140323A100EC482A /* PositionTexture.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1A1403236C00EC482A /* PositionTexture.fsh */; };
+		A0EC4BB8140323A100EC482A /* PositionTexture.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1B1403236C00EC482A /* PositionTexture.vsh */; };
+		A0EC4BB9140323A100EC482A /* PositionTexture_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1C1403236C00EC482A /* PositionTexture_uColor.fsh */; };
+		A0EC4BBA140323A100EC482A /* PositionTexture_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1D1403236C00EC482A /* PositionTexture_uColor.vsh */; };
+		A0EC4BBB140323A100EC482A /* PositionTextureA8Color.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1E1403236C00EC482A /* PositionTextureA8Color.fsh */; };
+		A0EC4BBC140323A100EC482A /* PositionTextureA8Color.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1F1403236C00EC482A /* PositionTextureA8Color.vsh */; };
+		A0EC4BBD140323A100EC482A /* PositionTextureColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A201403236C00EC482A /* PositionTextureColor.fsh */; };
+		A0EC4BBE140323A100EC482A /* PositionTextureColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A211403236C00EC482A /* PositionTextureColor.vsh */; };
+		A0EC4BBF140323A200EC482A /* Position_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A161403236C00EC482A /* Position_uColor.fsh */; };
+		A0EC4BC0140323A200EC482A /* Position_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A171403236C00EC482A /* Position_uColor.vsh */; };
+		A0EC4BC1140323A200EC482A /* PositionColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A181403236C00EC482A /* PositionColor.fsh */; };
+		A0EC4BC2140323A200EC482A /* PositionColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A191403236C00EC482A /* PositionColor.vsh */; };
+		A0EC4BC3140323A200EC482A /* PositionTexture.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1A1403236C00EC482A /* PositionTexture.fsh */; };
+		A0EC4BC4140323A200EC482A /* PositionTexture.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1B1403236C00EC482A /* PositionTexture.vsh */; };
+		A0EC4BC5140323A200EC482A /* PositionTexture_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1C1403236C00EC482A /* PositionTexture_uColor.fsh */; };
+		A0EC4BC6140323A200EC482A /* PositionTexture_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1D1403236C00EC482A /* PositionTexture_uColor.vsh */; };
+		A0EC4BC7140323A200EC482A /* PositionTextureA8Color.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1E1403236C00EC482A /* PositionTextureA8Color.fsh */; };
+		A0EC4BC8140323A200EC482A /* PositionTextureA8Color.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1F1403236C00EC482A /* PositionTextureA8Color.vsh */; };
+		A0EC4BC9140323A200EC482A /* PositionTextureColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A201403236C00EC482A /* PositionTextureColor.fsh */; };
+		A0EC4BCA140323A200EC482A /* PositionTextureColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A211403236C00EC482A /* PositionTextureColor.vsh */; };
+		A0EC4BCB140323A300EC482A /* Position_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A161403236C00EC482A /* Position_uColor.fsh */; };
+		A0EC4BCC140323A300EC482A /* Position_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A171403236C00EC482A /* Position_uColor.vsh */; };
+		A0EC4BCD140323A300EC482A /* PositionColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A181403236C00EC482A /* PositionColor.fsh */; };
+		A0EC4BCE140323A300EC482A /* PositionColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A191403236C00EC482A /* PositionColor.vsh */; };
+		A0EC4BCF140323A300EC482A /* PositionTexture.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1A1403236C00EC482A /* PositionTexture.fsh */; };
+		A0EC4BD0140323A300EC482A /* PositionTexture.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1B1403236C00EC482A /* PositionTexture.vsh */; };
+		A0EC4BD1140323A300EC482A /* PositionTexture_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1C1403236C00EC482A /* PositionTexture_uColor.fsh */; };
+		A0EC4BD2140323A300EC482A /* PositionTexture_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1D1403236C00EC482A /* PositionTexture_uColor.vsh */; };
+		A0EC4BD3140323A300EC482A /* PositionTextureA8Color.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1E1403236C00EC482A /* PositionTextureA8Color.fsh */; };
+		A0EC4BD4140323A300EC482A /* PositionTextureA8Color.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1F1403236C00EC482A /* PositionTextureA8Color.vsh */; };
+		A0EC4BD5140323A300EC482A /* PositionTextureColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A201403236C00EC482A /* PositionTextureColor.fsh */; };
+		A0EC4BD6140323A300EC482A /* PositionTextureColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A211403236C00EC482A /* PositionTextureColor.vsh */; };
+		A0EC4BD7140323A400EC482A /* Position_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A161403236C00EC482A /* Position_uColor.fsh */; };
+		A0EC4BD8140323A400EC482A /* Position_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A171403236C00EC482A /* Position_uColor.vsh */; };
+		A0EC4BD9140323A400EC482A /* PositionColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A181403236C00EC482A /* PositionColor.fsh */; };
+		A0EC4BDA140323A400EC482A /* PositionColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A191403236C00EC482A /* PositionColor.vsh */; };
+		A0EC4BDB140323A400EC482A /* PositionTexture.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1A1403236C00EC482A /* PositionTexture.fsh */; };
+		A0EC4BDC140323A400EC482A /* PositionTexture.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1B1403236C00EC482A /* PositionTexture.vsh */; };
+		A0EC4BDD140323A400EC482A /* PositionTexture_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1C1403236C00EC482A /* PositionTexture_uColor.fsh */; };
+		A0EC4BDE140323A400EC482A /* PositionTexture_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1D1403236C00EC482A /* PositionTexture_uColor.vsh */; };
+		A0EC4BDF140323A400EC482A /* PositionTextureA8Color.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1E1403236C00EC482A /* PositionTextureA8Color.fsh */; };
+		A0EC4BE0140323A400EC482A /* PositionTextureA8Color.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1F1403236C00EC482A /* PositionTextureA8Color.vsh */; };
+		A0EC4BE1140323A400EC482A /* PositionTextureColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A201403236C00EC482A /* PositionTextureColor.fsh */; };
+		A0EC4BE2140323A400EC482A /* PositionTextureColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A211403236C00EC482A /* PositionTextureColor.vsh */; };
+		A0EC4BE3140323A400EC482A /* Position_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A161403236C00EC482A /* Position_uColor.fsh */; };
+		A0EC4BE4140323A400EC482A /* Position_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A171403236C00EC482A /* Position_uColor.vsh */; };
+		A0EC4BE5140323A400EC482A /* PositionColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A181403236C00EC482A /* PositionColor.fsh */; };
+		A0EC4BE6140323A400EC482A /* PositionColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A191403236C00EC482A /* PositionColor.vsh */; };
+		A0EC4BE7140323A400EC482A /* PositionTexture.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1A1403236C00EC482A /* PositionTexture.fsh */; };
+		A0EC4BE8140323A400EC482A /* PositionTexture.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1B1403236C00EC482A /* PositionTexture.vsh */; };
+		A0EC4BE9140323A400EC482A /* PositionTexture_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1C1403236C00EC482A /* PositionTexture_uColor.fsh */; };
+		A0EC4BEA140323A400EC482A /* PositionTexture_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1D1403236C00EC482A /* PositionTexture_uColor.vsh */; };
+		A0EC4BEB140323A400EC482A /* PositionTextureA8Color.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1E1403236C00EC482A /* PositionTextureA8Color.fsh */; };
+		A0EC4BEC140323A400EC482A /* PositionTextureA8Color.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1F1403236C00EC482A /* PositionTextureA8Color.vsh */; };
+		A0EC4BED140323A400EC482A /* PositionTextureColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A201403236C00EC482A /* PositionTextureColor.fsh */; };
+		A0EC4BEE140323A400EC482A /* PositionTextureColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A211403236C00EC482A /* PositionTextureColor.vsh */; };
+		A0EC4BEF140323A500EC482A /* Position_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A161403236C00EC482A /* Position_uColor.fsh */; };
+		A0EC4BF0140323A500EC482A /* Position_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A171403236C00EC482A /* Position_uColor.vsh */; };
+		A0EC4BF1140323A500EC482A /* PositionColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A181403236C00EC482A /* PositionColor.fsh */; };
+		A0EC4BF2140323A500EC482A /* PositionColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A191403236C00EC482A /* PositionColor.vsh */; };
+		A0EC4BF3140323A500EC482A /* PositionTexture.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1A1403236C00EC482A /* PositionTexture.fsh */; };
+		A0EC4BF4140323A500EC482A /* PositionTexture.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1B1403236C00EC482A /* PositionTexture.vsh */; };
+		A0EC4BF5140323A500EC482A /* PositionTexture_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1C1403236C00EC482A /* PositionTexture_uColor.fsh */; };
+		A0EC4BF6140323A500EC482A /* PositionTexture_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1D1403236C00EC482A /* PositionTexture_uColor.vsh */; };
+		A0EC4BF7140323A500EC482A /* PositionTextureA8Color.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1E1403236C00EC482A /* PositionTextureA8Color.fsh */; };
+		A0EC4BF8140323A500EC482A /* PositionTextureA8Color.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1F1403236C00EC482A /* PositionTextureA8Color.vsh */; };
+		A0EC4BF9140323A500EC482A /* PositionTextureColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A201403236C00EC482A /* PositionTextureColor.fsh */; };
+		A0EC4BFA140323A500EC482A /* PositionTextureColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A211403236C00EC482A /* PositionTextureColor.vsh */; };
+		A0EC4BFB140323A600EC482A /* Position_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A161403236C00EC482A /* Position_uColor.fsh */; };
+		A0EC4BFC140323A600EC482A /* Position_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A171403236C00EC482A /* Position_uColor.vsh */; };
+		A0EC4BFD140323A600EC482A /* PositionColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A181403236C00EC482A /* PositionColor.fsh */; };
+		A0EC4BFE140323A600EC482A /* PositionColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A191403236C00EC482A /* PositionColor.vsh */; };
+		A0EC4BFF140323A600EC482A /* PositionTexture.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1A1403236C00EC482A /* PositionTexture.fsh */; };
+		A0EC4C00140323A600EC482A /* PositionTexture.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1B1403236C00EC482A /* PositionTexture.vsh */; };
+		A0EC4C01140323A600EC482A /* PositionTexture_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1C1403236C00EC482A /* PositionTexture_uColor.fsh */; };
+		A0EC4C02140323A600EC482A /* PositionTexture_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1D1403236C00EC482A /* PositionTexture_uColor.vsh */; };
+		A0EC4C03140323A600EC482A /* PositionTextureA8Color.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1E1403236C00EC482A /* PositionTextureA8Color.fsh */; };
+		A0EC4C04140323A600EC482A /* PositionTextureA8Color.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1F1403236C00EC482A /* PositionTextureA8Color.vsh */; };
+		A0EC4C05140323A600EC482A /* PositionTextureColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A201403236C00EC482A /* PositionTextureColor.fsh */; };
+		A0EC4C06140323A600EC482A /* PositionTextureColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A211403236C00EC482A /* PositionTextureColor.vsh */; };
+		A0EC4C07140323A700EC482A /* Position_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A161403236C00EC482A /* Position_uColor.fsh */; };
+		A0EC4C08140323A700EC482A /* Position_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A171403236C00EC482A /* Position_uColor.vsh */; };
+		A0EC4C09140323A700EC482A /* PositionColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A181403236C00EC482A /* PositionColor.fsh */; };
+		A0EC4C0A140323A700EC482A /* PositionColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A191403236C00EC482A /* PositionColor.vsh */; };
+		A0EC4C0B140323A700EC482A /* PositionTexture.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1A1403236C00EC482A /* PositionTexture.fsh */; };
+		A0EC4C0C140323A700EC482A /* PositionTexture.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1B1403236C00EC482A /* PositionTexture.vsh */; };
+		A0EC4C0D140323A700EC482A /* PositionTexture_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1C1403236C00EC482A /* PositionTexture_uColor.fsh */; };
+		A0EC4C0E140323A700EC482A /* PositionTexture_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1D1403236C00EC482A /* PositionTexture_uColor.vsh */; };
+		A0EC4C0F140323A700EC482A /* PositionTextureA8Color.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1E1403236C00EC482A /* PositionTextureA8Color.fsh */; };
+		A0EC4C10140323A700EC482A /* PositionTextureA8Color.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1F1403236C00EC482A /* PositionTextureA8Color.vsh */; };
+		A0EC4C11140323A700EC482A /* PositionTextureColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A201403236C00EC482A /* PositionTextureColor.fsh */; };
+		A0EC4C12140323A700EC482A /* PositionTextureColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A211403236C00EC482A /* PositionTextureColor.vsh */; };
+		A0EC4C13140323A800EC482A /* Position_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A161403236C00EC482A /* Position_uColor.fsh */; };
+		A0EC4C14140323A800EC482A /* Position_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A171403236C00EC482A /* Position_uColor.vsh */; };
+		A0EC4C15140323A800EC482A /* PositionColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A181403236C00EC482A /* PositionColor.fsh */; };
+		A0EC4C16140323A800EC482A /* PositionColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A191403236C00EC482A /* PositionColor.vsh */; };
+		A0EC4C17140323A800EC482A /* PositionTexture.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1A1403236C00EC482A /* PositionTexture.fsh */; };
+		A0EC4C18140323A800EC482A /* PositionTexture.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1B1403236C00EC482A /* PositionTexture.vsh */; };
+		A0EC4C19140323A800EC482A /* PositionTexture_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1C1403236C00EC482A /* PositionTexture_uColor.fsh */; };
+		A0EC4C1A140323A800EC482A /* PositionTexture_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1D1403236C00EC482A /* PositionTexture_uColor.vsh */; };
+		A0EC4C1B140323A800EC482A /* PositionTextureA8Color.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1E1403236C00EC482A /* PositionTextureA8Color.fsh */; };
+		A0EC4C1C140323A800EC482A /* PositionTextureA8Color.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1F1403236C00EC482A /* PositionTextureA8Color.vsh */; };
+		A0EC4C1D140323A800EC482A /* PositionTextureColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A201403236C00EC482A /* PositionTextureColor.fsh */; };
+		A0EC4C1E140323A800EC482A /* PositionTextureColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A211403236C00EC482A /* PositionTextureColor.vsh */; };
+		A0EC4C1F140323AB00EC482A /* Position_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A161403236C00EC482A /* Position_uColor.fsh */; };
+		A0EC4C20140323AB00EC482A /* Position_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A171403236C00EC482A /* Position_uColor.vsh */; };
+		A0EC4C21140323AB00EC482A /* PositionColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A181403236C00EC482A /* PositionColor.fsh */; };
+		A0EC4C22140323AB00EC482A /* PositionColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A191403236C00EC482A /* PositionColor.vsh */; };
+		A0EC4C23140323AB00EC482A /* PositionTexture.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1A1403236C00EC482A /* PositionTexture.fsh */; };
+		A0EC4C24140323AB00EC482A /* PositionTexture.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1B1403236C00EC482A /* PositionTexture.vsh */; };
+		A0EC4C25140323AB00EC482A /* PositionTexture_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1C1403236C00EC482A /* PositionTexture_uColor.fsh */; };
+		A0EC4C26140323AB00EC482A /* PositionTexture_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1D1403236C00EC482A /* PositionTexture_uColor.vsh */; };
+		A0EC4C27140323AB00EC482A /* PositionTextureA8Color.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1E1403236C00EC482A /* PositionTextureA8Color.fsh */; };
+		A0EC4C28140323AB00EC482A /* PositionTextureA8Color.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1F1403236C00EC482A /* PositionTextureA8Color.vsh */; };
+		A0EC4C29140323AB00EC482A /* PositionTextureColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A201403236C00EC482A /* PositionTextureColor.fsh */; };
+		A0EC4C2A140323AB00EC482A /* PositionTextureColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A211403236C00EC482A /* PositionTextureColor.vsh */; };
+		A0EC4C2B140323AB00EC482A /* Position_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A161403236C00EC482A /* Position_uColor.fsh */; };
+		A0EC4C2C140323AB00EC482A /* Position_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A171403236C00EC482A /* Position_uColor.vsh */; };
+		A0EC4C2D140323AB00EC482A /* PositionColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A181403236C00EC482A /* PositionColor.fsh */; };
+		A0EC4C2E140323AB00EC482A /* PositionColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A191403236C00EC482A /* PositionColor.vsh */; };
+		A0EC4C2F140323AB00EC482A /* PositionTexture.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1A1403236C00EC482A /* PositionTexture.fsh */; };
+		A0EC4C30140323AB00EC482A /* PositionTexture.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1B1403236C00EC482A /* PositionTexture.vsh */; };
+		A0EC4C31140323AB00EC482A /* PositionTexture_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1C1403236C00EC482A /* PositionTexture_uColor.fsh */; };
+		A0EC4C32140323AB00EC482A /* PositionTexture_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1D1403236C00EC482A /* PositionTexture_uColor.vsh */; };
+		A0EC4C33140323AB00EC482A /* PositionTextureA8Color.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1E1403236C00EC482A /* PositionTextureA8Color.fsh */; };
+		A0EC4C34140323AB00EC482A /* PositionTextureA8Color.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1F1403236C00EC482A /* PositionTextureA8Color.vsh */; };
+		A0EC4C35140323AB00EC482A /* PositionTextureColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A201403236C00EC482A /* PositionTextureColor.fsh */; };
+		A0EC4C36140323AB00EC482A /* PositionTextureColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A211403236C00EC482A /* PositionTextureColor.vsh */; };
+		A0EC4C37140323AC00EC482A /* Position_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A161403236C00EC482A /* Position_uColor.fsh */; };
+		A0EC4C38140323AC00EC482A /* Position_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A171403236C00EC482A /* Position_uColor.vsh */; };
+		A0EC4C39140323AC00EC482A /* PositionColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A181403236C00EC482A /* PositionColor.fsh */; };
+		A0EC4C3A140323AC00EC482A /* PositionColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A191403236C00EC482A /* PositionColor.vsh */; };
+		A0EC4C3B140323AC00EC482A /* PositionTexture.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1A1403236C00EC482A /* PositionTexture.fsh */; };
+		A0EC4C3C140323AC00EC482A /* PositionTexture.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1B1403236C00EC482A /* PositionTexture.vsh */; };
+		A0EC4C3D140323AC00EC482A /* PositionTexture_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1C1403236C00EC482A /* PositionTexture_uColor.fsh */; };
+		A0EC4C3E140323AC00EC482A /* PositionTexture_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1D1403236C00EC482A /* PositionTexture_uColor.vsh */; };
+		A0EC4C3F140323AC00EC482A /* PositionTextureA8Color.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1E1403236C00EC482A /* PositionTextureA8Color.fsh */; };
+		A0EC4C40140323AC00EC482A /* PositionTextureA8Color.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1F1403236C00EC482A /* PositionTextureA8Color.vsh */; };
+		A0EC4C41140323AC00EC482A /* PositionTextureColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A201403236C00EC482A /* PositionTextureColor.fsh */; };
+		A0EC4C42140323AC00EC482A /* PositionTextureColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A211403236C00EC482A /* PositionTextureColor.vsh */; };
+		A0EC4C43140323AD00EC482A /* Position_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A161403236C00EC482A /* Position_uColor.fsh */; };
+		A0EC4C44140323AD00EC482A /* Position_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A171403236C00EC482A /* Position_uColor.vsh */; };
+		A0EC4C45140323AD00EC482A /* PositionColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A181403236C00EC482A /* PositionColor.fsh */; };
+		A0EC4C46140323AD00EC482A /* PositionColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A191403236C00EC482A /* PositionColor.vsh */; };
+		A0EC4C47140323AD00EC482A /* PositionTexture.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1A1403236C00EC482A /* PositionTexture.fsh */; };
+		A0EC4C48140323AD00EC482A /* PositionTexture.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1B1403236C00EC482A /* PositionTexture.vsh */; };
+		A0EC4C49140323AD00EC482A /* PositionTexture_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1C1403236C00EC482A /* PositionTexture_uColor.fsh */; };
+		A0EC4C4A140323AD00EC482A /* PositionTexture_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1D1403236C00EC482A /* PositionTexture_uColor.vsh */; };
+		A0EC4C4B140323AD00EC482A /* PositionTextureA8Color.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1E1403236C00EC482A /* PositionTextureA8Color.fsh */; };
+		A0EC4C4C140323AD00EC482A /* PositionTextureA8Color.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1F1403236C00EC482A /* PositionTextureA8Color.vsh */; };
+		A0EC4C4D140323AD00EC482A /* PositionTextureColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A201403236C00EC482A /* PositionTextureColor.fsh */; };
+		A0EC4C4E140323AD00EC482A /* PositionTextureColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A211403236C00EC482A /* PositionTextureColor.vsh */; };
+		A0EC4C4F140323AE00EC482A /* Position_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A161403236C00EC482A /* Position_uColor.fsh */; };
+		A0EC4C50140323AE00EC482A /* Position_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A171403236C00EC482A /* Position_uColor.vsh */; };
+		A0EC4C51140323AE00EC482A /* PositionColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A181403236C00EC482A /* PositionColor.fsh */; };
+		A0EC4C52140323AE00EC482A /* PositionColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A191403236C00EC482A /* PositionColor.vsh */; };
+		A0EC4C53140323AE00EC482A /* PositionTexture.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1A1403236C00EC482A /* PositionTexture.fsh */; };
+		A0EC4C54140323AE00EC482A /* PositionTexture.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1B1403236C00EC482A /* PositionTexture.vsh */; };
+		A0EC4C55140323AE00EC482A /* PositionTexture_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1C1403236C00EC482A /* PositionTexture_uColor.fsh */; };
+		A0EC4C56140323AE00EC482A /* PositionTexture_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1D1403236C00EC482A /* PositionTexture_uColor.vsh */; };
+		A0EC4C57140323AE00EC482A /* PositionTextureA8Color.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1E1403236C00EC482A /* PositionTextureA8Color.fsh */; };
+		A0EC4C58140323AE00EC482A /* PositionTextureA8Color.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1F1403236C00EC482A /* PositionTextureA8Color.vsh */; };
+		A0EC4C59140323AE00EC482A /* PositionTextureColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A201403236C00EC482A /* PositionTextureColor.fsh */; };
+		A0EC4C5A140323AE00EC482A /* PositionTextureColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A211403236C00EC482A /* PositionTextureColor.vsh */; };
+		A0EC4C5B140323AE00EC482A /* Position_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A161403236C00EC482A /* Position_uColor.fsh */; };
+		A0EC4C5C140323AE00EC482A /* Position_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A171403236C00EC482A /* Position_uColor.vsh */; };
+		A0EC4C5D140323AE00EC482A /* PositionColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A181403236C00EC482A /* PositionColor.fsh */; };
+		A0EC4C5E140323AE00EC482A /* PositionColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A191403236C00EC482A /* PositionColor.vsh */; };
+		A0EC4C5F140323AE00EC482A /* PositionTexture.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1A1403236C00EC482A /* PositionTexture.fsh */; };
+		A0EC4C60140323AE00EC482A /* PositionTexture.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1B1403236C00EC482A /* PositionTexture.vsh */; };
+		A0EC4C61140323AE00EC482A /* PositionTexture_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1C1403236C00EC482A /* PositionTexture_uColor.fsh */; };
+		A0EC4C62140323AE00EC482A /* PositionTexture_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1D1403236C00EC482A /* PositionTexture_uColor.vsh */; };
+		A0EC4C63140323AE00EC482A /* PositionTextureA8Color.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1E1403236C00EC482A /* PositionTextureA8Color.fsh */; };
+		A0EC4C64140323AE00EC482A /* PositionTextureA8Color.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1F1403236C00EC482A /* PositionTextureA8Color.vsh */; };
+		A0EC4C65140323AE00EC482A /* PositionTextureColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A201403236C00EC482A /* PositionTextureColor.fsh */; };
+		A0EC4C66140323AE00EC482A /* PositionTextureColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A211403236C00EC482A /* PositionTextureColor.vsh */; };
+		A0EC4C67140323AF00EC482A /* Position_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A161403236C00EC482A /* Position_uColor.fsh */; };
+		A0EC4C68140323AF00EC482A /* Position_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A171403236C00EC482A /* Position_uColor.vsh */; };
+		A0EC4C69140323AF00EC482A /* PositionColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A181403236C00EC482A /* PositionColor.fsh */; };
+		A0EC4C6A140323AF00EC482A /* PositionColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A191403236C00EC482A /* PositionColor.vsh */; };
+		A0EC4C6B140323AF00EC482A /* PositionTexture.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1A1403236C00EC482A /* PositionTexture.fsh */; };
+		A0EC4C6C140323AF00EC482A /* PositionTexture.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1B1403236C00EC482A /* PositionTexture.vsh */; };
+		A0EC4C6D140323AF00EC482A /* PositionTexture_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1C1403236C00EC482A /* PositionTexture_uColor.fsh */; };
+		A0EC4C6E140323AF00EC482A /* PositionTexture_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1D1403236C00EC482A /* PositionTexture_uColor.vsh */; };
+		A0EC4C6F140323AF00EC482A /* PositionTextureA8Color.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1E1403236C00EC482A /* PositionTextureA8Color.fsh */; };
+		A0EC4C70140323AF00EC482A /* PositionTextureA8Color.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1F1403236C00EC482A /* PositionTextureA8Color.vsh */; };
+		A0EC4C71140323AF00EC482A /* PositionTextureColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A201403236C00EC482A /* PositionTextureColor.fsh */; };
+		A0EC4C72140323AF00EC482A /* PositionTextureColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A211403236C00EC482A /* PositionTextureColor.vsh */; };
+		A0EC4C73140323B000EC482A /* Position_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A161403236C00EC482A /* Position_uColor.fsh */; };
+		A0EC4C74140323B000EC482A /* Position_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A171403236C00EC482A /* Position_uColor.vsh */; };
+		A0EC4C75140323B000EC482A /* PositionColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A181403236C00EC482A /* PositionColor.fsh */; };
+		A0EC4C76140323B000EC482A /* PositionColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A191403236C00EC482A /* PositionColor.vsh */; };
+		A0EC4C77140323B000EC482A /* PositionTexture.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1A1403236C00EC482A /* PositionTexture.fsh */; };
+		A0EC4C78140323B000EC482A /* PositionTexture.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1B1403236C00EC482A /* PositionTexture.vsh */; };
+		A0EC4C79140323B000EC482A /* PositionTexture_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1C1403236C00EC482A /* PositionTexture_uColor.fsh */; };
+		A0EC4C7A140323B000EC482A /* PositionTexture_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1D1403236C00EC482A /* PositionTexture_uColor.vsh */; };
+		A0EC4C7B140323B000EC482A /* PositionTextureA8Color.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1E1403236C00EC482A /* PositionTextureA8Color.fsh */; };
+		A0EC4C7C140323B000EC482A /* PositionTextureA8Color.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A1F1403236C00EC482A /* PositionTextureA8Color.vsh */; };
+		A0EC4C7D140323B000EC482A /* PositionTextureColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A201403236C00EC482A /* PositionTextureColor.fsh */; };
+		A0EC4C7E140323B000EC482A /* PositionTextureColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A211403236C00EC482A /* PositionTextureColor.vsh */; };
+		A0EC4C7F140323C500EC482A /* Blur.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A091403236C00EC482A /* Blur.fsh */; };
+		A0EC4C80140323C500EC482A /* Flower.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A0A1403236C00EC482A /* Flower.fsh */; };
+		A0EC4C81140323C500EC482A /* Flower.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A0B1403236C00EC482A /* Flower.vsh */; };
+		A0EC4C82140323C500EC482A /* Heart.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A0C1403236C00EC482A /* Heart.fsh */; };
+		A0EC4C83140323C500EC482A /* Heart.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A0D1403236C00EC482A /* Heart.vsh */; };
+		A0EC4C84140323C500EC482A /* Julia.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A0E1403236C00EC482A /* Julia.fsh */; };
+		A0EC4C85140323C500EC482A /* Julia.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A0F1403236C00EC482A /* Julia.vsh */; };
+		A0EC4C86140323C500EC482A /* Mandelbrot.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A101403236C00EC482A /* Mandelbrot.fsh */; };
+		A0EC4C87140323C500EC482A /* Mandelbrot.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A111403236C00EC482A /* Mandelbrot.vsh */; };
+		A0EC4C88140323C500EC482A /* Monjori.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A121403236C00EC482A /* Monjori.fsh */; };
+		A0EC4C89140323C500EC482A /* Monjori.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A131403236C00EC482A /* Monjori.vsh */; };
+		A0EC4C8A140323C500EC482A /* Plasma.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A141403236C00EC482A /* Plasma.fsh */; };
+		A0EC4C8B140323C500EC482A /* Plasma.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A151403236C00EC482A /* Plasma.vsh */; };
+		A0EC4C8C140323C500EC482A /* Twist.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A221403236C00EC482A /* Twist.fsh */; };
+		A0EC4C8D140323C500EC482A /* Twist.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A231403236C00EC482A /* Twist.vsh */; };
 		A0F37B3813C3719A00F724DF /* white-512x512.png in Resources */ = {isa = PBXBuildFile; fileRef = A0F37B3713C3719A00F724DF /* white-512x512.png */; };
 		A0F37B7913C3B39E00F724DF /* grossini_dance_atlas-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E062F9961247FC5400DE3932 /* grossini_dance_atlas-hd.png */; };
 		AAEA834B0FD5704400F08728 /* blocks.png in Resources */ = {isa = PBXBuildFile; fileRef = AAEA834A0FD5704400F08728 /* blocks.png */; };
@@ -2251,7 +2854,6 @@
 		E03A4F571355041F00D4B515 /* Icon-Small-50.png in Resources */ = {isa = PBXBuildFile; fileRef = E02BB581126CA73F006E46A2 /* Icon-Small-50.png */; };
 		E03A4F581355041F00D4B515 /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = E02BB582126CA73F006E46A2 /* Icon-72.png */; };
 		E03A4F591355041F00D4B515 /* piece.png in Resources */ = {isa = PBXBuildFile; fileRef = E0D2D4F2128CA9E300F78C63 /* piece.png */; };
-		E03A4F5A1355041F00D4B515 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0708A681342D16700D32F2C /* Shaders */; };
 		E03A4F5C1355041F00D4B515 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B2CB170E10EE0800AE9530 /* main.m */; };
 		E03A4F5F1355041F00D4B515 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		E03A4F601355041F00D4B515 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
@@ -2591,53 +3193,6 @@
 		E0704C2C123821EE009C628B /* background2-hd.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E0704C2A123821EE009C628B /* background2-hd.jpg */; };
 		E0704C2D123821EE009C628B /* background1-hd.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E0704C29123821EE009C628B /* background1-hd.jpg */; };
 		E0704C2E123821EE009C628B /* background2-hd.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E0704C2A123821EE009C628B /* background2-hd.jpg */; };
-		E0708A691342D16700D32F2C /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0708A681342D16700D32F2C /* Shaders */; };
-		E0708A6A1342D16700D32F2C /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0708A681342D16700D32F2C /* Shaders */; };
-		E0708A6B1342D16700D32F2C /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0708A681342D16700D32F2C /* Shaders */; };
-		E0708A6C1342D16700D32F2C /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0708A681342D16700D32F2C /* Shaders */; };
-		E0708A6D1342D16700D32F2C /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0708A681342D16700D32F2C /* Shaders */; };
-		E0708A6E1342D16700D32F2C /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0708A681342D16700D32F2C /* Shaders */; };
-		E0708A6F1342D16700D32F2C /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0708A681342D16700D32F2C /* Shaders */; };
-		E0708A701342D16700D32F2C /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0708A681342D16700D32F2C /* Shaders */; };
-		E0708A711342D16700D32F2C /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0708A681342D16700D32F2C /* Shaders */; };
-		E0708A721342D16700D32F2C /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0708A681342D16700D32F2C /* Shaders */; };
-		E0708A731342D16700D32F2C /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0708A681342D16700D32F2C /* Shaders */; };
-		E0708A741342D16700D32F2C /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0708A681342D16700D32F2C /* Shaders */; };
-		E0708A751342D16700D32F2C /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0708A681342D16700D32F2C /* Shaders */; };
-		E0708A771342D16700D32F2C /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0708A681342D16700D32F2C /* Shaders */; };
-		E0708A781342D16700D32F2C /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0708A681342D16700D32F2C /* Shaders */; };
-		E0708A791342D16700D32F2C /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0708A681342D16700D32F2C /* Shaders */; };
-		E0708A7A1342D16700D32F2C /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0708A681342D16700D32F2C /* Shaders */; };
-		E0708A7B1342D16700D32F2C /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0708A681342D16700D32F2C /* Shaders */; };
-		E0708A7C1342D16700D32F2C /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0708A681342D16700D32F2C /* Shaders */; };
-		E0708A7D1342D16700D32F2C /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0708A681342D16700D32F2C /* Shaders */; };
-		E0708A7E1342D16700D32F2C /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0708A681342D16700D32F2C /* Shaders */; };
-		E0708A7F1342D16700D32F2C /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0708A681342D16700D32F2C /* Shaders */; };
-		E0708A801342D16700D32F2C /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0708A681342D16700D32F2C /* Shaders */; };
-		E0708A811342D16700D32F2C /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0708A681342D16700D32F2C /* Shaders */; };
-		E0708A821342D16700D32F2C /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0708A681342D16700D32F2C /* Shaders */; };
-		E0708A831342D16700D32F2C /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0708A681342D16700D32F2C /* Shaders */; };
-		E0708A841342D16700D32F2C /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0708A681342D16700D32F2C /* Shaders */; };
-		E0708A851342D16700D32F2C /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0708A681342D16700D32F2C /* Shaders */; };
-		E0708A861342D16700D32F2C /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0708A681342D16700D32F2C /* Shaders */; };
-		E0708A881342D16700D32F2C /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0708A681342D16700D32F2C /* Shaders */; };
-		E0708A891342D16700D32F2C /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0708A681342D16700D32F2C /* Shaders */; };
-		E0708A8A1342D16700D32F2C /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0708A681342D16700D32F2C /* Shaders */; };
-		E0708A8B1342D16700D32F2C /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0708A681342D16700D32F2C /* Shaders */; };
-		E0708A8C1342D16700D32F2C /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0708A681342D16700D32F2C /* Shaders */; };
-		E0708A8D1342D16700D32F2C /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0708A681342D16700D32F2C /* Shaders */; };
-		E0708A8E1342D16700D32F2C /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0708A681342D16700D32F2C /* Shaders */; };
-		E0708A8F1342D16700D32F2C /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0708A681342D16700D32F2C /* Shaders */; };
-		E0708A901342D16700D32F2C /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0708A681342D16700D32F2C /* Shaders */; };
-		E0708A911342D16700D32F2C /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0708A681342D16700D32F2C /* Shaders */; };
-		E0708A921342D16700D32F2C /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0708A681342D16700D32F2C /* Shaders */; };
-		E0708A961342D16700D32F2C /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0708A681342D16700D32F2C /* Shaders */; };
-		E0708A971342D16700D32F2C /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0708A681342D16700D32F2C /* Shaders */; };
-		E0708A981342D16700D32F2C /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0708A681342D16700D32F2C /* Shaders */; };
-		E0708A991342D16700D32F2C /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0708A681342D16700D32F2C /* Shaders */; };
-		E0708A9A1342D16700D32F2C /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0708A681342D16700D32F2C /* Shaders */; };
-		E0708A9B1342D16700D32F2C /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0708A681342D16700D32F2C /* Shaders */; };
-		E0708A9C1342D16700D32F2C /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0708A681342D16700D32F2C /* Shaders */; };
 		E080DE8F1239689400A647EC /* konqa32-hd.fnt in Resources */ = {isa = PBXBuildFile; fileRef = E080DE8B1239689400A647EC /* konqa32-hd.fnt */; };
 		E080DE901239689400A647EC /* konqa32-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E080DE8C1239689400A647EC /* konqa32-hd.png */; };
 		E080DE911239689400A647EC /* konqa32.fnt in Resources */ = {isa = PBXBuildFile; fileRef = E080DE8D1239689400A647EC /* konqa32.fnt */; };
@@ -2750,7 +3305,6 @@
 		E0EA5693134B9CA800F212C8 /* Icon-Small.png in Resources */ = {isa = PBXBuildFile; fileRef = E02BB580126CA73F006E46A2 /* Icon-Small.png */; };
 		E0EA5694134B9CA800F212C8 /* Icon-Small-50.png in Resources */ = {isa = PBXBuildFile; fileRef = E02BB581126CA73F006E46A2 /* Icon-Small-50.png */; };
 		E0EA5695134B9CA800F212C8 /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = E02BB582126CA73F006E46A2 /* Icon-72.png */; };
-		E0EA5696134B9CA800F212C8 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = E0708A681342D16700D32F2C /* Shaders */; };
 		E0EA5698134B9CA800F212C8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B2CB170E10EE0800AE9530 /* main.m */; };
 		E0EA569B134B9CA800F212C8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		E0EA569C134B9CA800F212C8 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
@@ -4408,6 +4962,33 @@
 		A0B0377013EA1FDB0073E59A /* f2-ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "f2-ipad.png"; sourceTree = "<group>"; };
 		A0B0377113EA1FDB0073E59A /* r1-ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "r1-ipad.png"; sourceTree = "<group>"; };
 		A0B0377213EA1FDB0073E59A /* r2-ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "r2-ipad.png"; sourceTree = "<group>"; };
+		A0EC4A091403236C00EC482A /* Blur.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Blur.fsh; sourceTree = "<group>"; };
+		A0EC4A0A1403236C00EC482A /* Flower.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Flower.fsh; sourceTree = "<group>"; };
+		A0EC4A0B1403236C00EC482A /* Flower.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Flower.vsh; sourceTree = "<group>"; };
+		A0EC4A0C1403236C00EC482A /* Heart.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Heart.fsh; sourceTree = "<group>"; };
+		A0EC4A0D1403236C00EC482A /* Heart.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Heart.vsh; sourceTree = "<group>"; };
+		A0EC4A0E1403236C00EC482A /* Julia.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Julia.fsh; sourceTree = "<group>"; };
+		A0EC4A0F1403236C00EC482A /* Julia.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Julia.vsh; sourceTree = "<group>"; };
+		A0EC4A101403236C00EC482A /* Mandelbrot.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Mandelbrot.fsh; sourceTree = "<group>"; };
+		A0EC4A111403236C00EC482A /* Mandelbrot.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Mandelbrot.vsh; sourceTree = "<group>"; };
+		A0EC4A121403236C00EC482A /* Monjori.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Monjori.fsh; sourceTree = "<group>"; };
+		A0EC4A131403236C00EC482A /* Monjori.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Monjori.vsh; sourceTree = "<group>"; };
+		A0EC4A141403236C00EC482A /* Plasma.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Plasma.fsh; sourceTree = "<group>"; };
+		A0EC4A151403236C00EC482A /* Plasma.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Plasma.vsh; sourceTree = "<group>"; };
+		A0EC4A161403236C00EC482A /* Position_uColor.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Position_uColor.fsh; sourceTree = "<group>"; };
+		A0EC4A171403236C00EC482A /* Position_uColor.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Position_uColor.vsh; sourceTree = "<group>"; };
+		A0EC4A181403236C00EC482A /* PositionColor.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = PositionColor.fsh; sourceTree = "<group>"; };
+		A0EC4A191403236C00EC482A /* PositionColor.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = PositionColor.vsh; sourceTree = "<group>"; };
+		A0EC4A1A1403236C00EC482A /* PositionTexture.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = PositionTexture.fsh; sourceTree = "<group>"; };
+		A0EC4A1B1403236C00EC482A /* PositionTexture.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = PositionTexture.vsh; sourceTree = "<group>"; };
+		A0EC4A1C1403236C00EC482A /* PositionTexture_uColor.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = PositionTexture_uColor.fsh; sourceTree = "<group>"; };
+		A0EC4A1D1403236C00EC482A /* PositionTexture_uColor.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = PositionTexture_uColor.vsh; sourceTree = "<group>"; };
+		A0EC4A1E1403236C00EC482A /* PositionTextureA8Color.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = PositionTextureA8Color.fsh; sourceTree = "<group>"; };
+		A0EC4A1F1403236C00EC482A /* PositionTextureA8Color.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = PositionTextureA8Color.vsh; sourceTree = "<group>"; };
+		A0EC4A201403236C00EC482A /* PositionTextureColor.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = PositionTextureColor.fsh; sourceTree = "<group>"; };
+		A0EC4A211403236C00EC482A /* PositionTextureColor.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = PositionTextureColor.vsh; sourceTree = "<group>"; };
+		A0EC4A221403236C00EC482A /* Twist.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Twist.fsh; sourceTree = "<group>"; };
+		A0EC4A231403236C00EC482A /* Twist.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Twist.vsh; sourceTree = "<group>"; };
 		A0F37B3713C3719A00F724DF /* white-512x512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "white-512x512.png"; sourceTree = "<group>"; };
 		AAEA834A0FD5704400F08728 /* blocks.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blocks.png; sourceTree = "<group>"; };
 		DA90D87B1059A54D0039F26A /* FontTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FontTest.h; path = tests/FontTest.h; sourceTree = "<group>"; };
@@ -4458,7 +5039,6 @@
 		E062F9BC124801A300DE3932 /* grossinis_sister2-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "grossinis_sister2-hd.png"; sourceTree = "<group>"; };
 		E0704C29123821EE009C628B /* background1-hd.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "background1-hd.jpg"; sourceTree = "<group>"; };
 		E0704C2A123821EE009C628B /* background2-hd.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "background2-hd.jpg"; sourceTree = "<group>"; };
-		E0708A681342D16700D32F2C /* Shaders */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Shaders; path = Resources/Shaders; sourceTree = "<group>"; };
 		E080DE8B1239689400A647EC /* konqa32-hd.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "konqa32-hd.fnt"; sourceTree = "<group>"; };
 		E080DE8C1239689400A647EC /* konqa32-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "konqa32-hd.png"; sourceTree = "<group>"; };
 		E080DE8D1239689400A647EC /* konqa32.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = konqa32.fnt; sourceTree = "<group>"; };
@@ -5473,12 +6053,12 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				E0708A681342D16700D32F2C /* Shaders */,
 				E0C5588E11FE4CF100B9E4CB /* zwoptex */,
 				50CBA4A711CBD7FB007B009D /* bugs */,
 				50B77511119AF58100F567F4 /* Particles */,
 				50CA8BF810B6AE340072E0D3 /* TileMaps */,
 				502C8C9810A701D300D137BA /* animations */,
+				A0EC4A081403236C00EC482A /* Shaders */,
 				50F489BB10458B6300755CFB /* cocos2d-artwork */,
 				505460E91061413300AB7C52 /* Fonts */,
 				50B2CB260E10EE4A00AE9530 /* Images */,
@@ -6985,6 +7565,41 @@
 			children = (
 			);
 			path = gl_utils;
+			sourceTree = "<group>";
+		};
+		A0EC4A081403236C00EC482A /* Shaders */ = {
+			isa = PBXGroup;
+			children = (
+				A0EC4A091403236C00EC482A /* Blur.fsh */,
+				A0EC4A0A1403236C00EC482A /* Flower.fsh */,
+				A0EC4A0B1403236C00EC482A /* Flower.vsh */,
+				A0EC4A0C1403236C00EC482A /* Heart.fsh */,
+				A0EC4A0D1403236C00EC482A /* Heart.vsh */,
+				A0EC4A0E1403236C00EC482A /* Julia.fsh */,
+				A0EC4A0F1403236C00EC482A /* Julia.vsh */,
+				A0EC4A101403236C00EC482A /* Mandelbrot.fsh */,
+				A0EC4A111403236C00EC482A /* Mandelbrot.vsh */,
+				A0EC4A121403236C00EC482A /* Monjori.fsh */,
+				A0EC4A131403236C00EC482A /* Monjori.vsh */,
+				A0EC4A141403236C00EC482A /* Plasma.fsh */,
+				A0EC4A151403236C00EC482A /* Plasma.vsh */,
+				A0EC4A161403236C00EC482A /* Position_uColor.fsh */,
+				A0EC4A171403236C00EC482A /* Position_uColor.vsh */,
+				A0EC4A181403236C00EC482A /* PositionColor.fsh */,
+				A0EC4A191403236C00EC482A /* PositionColor.vsh */,
+				A0EC4A1A1403236C00EC482A /* PositionTexture.fsh */,
+				A0EC4A1B1403236C00EC482A /* PositionTexture.vsh */,
+				A0EC4A1C1403236C00EC482A /* PositionTexture_uColor.fsh */,
+				A0EC4A1D1403236C00EC482A /* PositionTexture_uColor.vsh */,
+				A0EC4A1E1403236C00EC482A /* PositionTextureA8Color.fsh */,
+				A0EC4A1F1403236C00EC482A /* PositionTextureA8Color.vsh */,
+				A0EC4A201403236C00EC482A /* PositionTextureColor.fsh */,
+				A0EC4A211403236C00EC482A /* PositionTextureColor.vsh */,
+				A0EC4A221403236C00EC482A /* Twist.fsh */,
+				A0EC4A231403236C00EC482A /* Twist.vsh */,
+			);
+			name = Shaders;
+			path = Resources/Shaders;
 			sourceTree = "<group>";
 		};
 		E037DA881281EFE2003D39D7 /* Bug-458 */ = {
@@ -8585,7 +9200,6 @@
 				E02BB658126CA73F006E46A2 /* Icon-Small.png in Resources */,
 				E02BB659126CA73F006E46A2 /* Icon-Small-50.png in Resources */,
 				E02BB65A126CA73F006E46A2 /* Icon-72.png in Resources */,
-				E0708A831342D16700D32F2C /* Shaders in Resources */,
 				A0600C0913C2075500BB6F49 /* fps_images-hd.png in Resources */,
 				A0B0378C13EA1FDC0073E59A /* b1-ipad.png in Resources */,
 				A0B037BD13EA1FDE0073E59A /* b2-ipad.png in Resources */,
@@ -8593,6 +9207,18 @@
 				A0B0381F13EA1FE00073E59A /* f2-ipad.png in Resources */,
 				A0B0385013EA1FE10073E59A /* r1-ipad.png in Resources */,
 				A0B0388113EA1FE20073E59A /* r2-ipad.png in Resources */,
+				A0EC4B6B1403239B00EC482A /* Position_uColor.fsh in Resources */,
+				A0EC4B6C1403239B00EC482A /* Position_uColor.vsh in Resources */,
+				A0EC4B6D1403239B00EC482A /* PositionColor.fsh in Resources */,
+				A0EC4B6E1403239B00EC482A /* PositionColor.vsh in Resources */,
+				A0EC4B6F1403239B00EC482A /* PositionTexture.fsh in Resources */,
+				A0EC4B701403239B00EC482A /* PositionTexture.vsh in Resources */,
+				A0EC4B711403239B00EC482A /* PositionTexture_uColor.fsh in Resources */,
+				A0EC4B721403239B00EC482A /* PositionTexture_uColor.vsh in Resources */,
+				A0EC4B731403239B00EC482A /* PositionTextureA8Color.fsh in Resources */,
+				A0EC4B741403239B00EC482A /* PositionTextureA8Color.vsh in Resources */,
+				A0EC4B751403239B00EC482A /* PositionTextureColor.fsh in Resources */,
+				A0EC4B761403239B00EC482A /* PositionTextureColor.vsh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8600,6 +9226,18 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0EC4A571403238500EC482A /* Position_uColor.fsh in Resources */,
+				A0EC4A581403238500EC482A /* Position_uColor.vsh in Resources */,
+				A0EC4A591403238500EC482A /* PositionColor.fsh in Resources */,
+				A0EC4A5A1403238500EC482A /* PositionColor.vsh in Resources */,
+				A0EC4A5B1403238500EC482A /* PositionTexture.fsh in Resources */,
+				A0EC4A5C1403238500EC482A /* PositionTexture.vsh in Resources */,
+				A0EC4A5D1403238500EC482A /* PositionTexture_uColor.fsh in Resources */,
+				A0EC4A5E1403238500EC482A /* PositionTexture_uColor.vsh in Resources */,
+				A0EC4A5F1403238500EC482A /* PositionTextureA8Color.fsh in Resources */,
+				A0EC4A601403238500EC482A /* PositionTextureA8Color.vsh in Resources */,
+				A0EC4A611403238500EC482A /* PositionTextureColor.fsh in Resources */,
+				A0EC4A621403238500EC482A /* PositionTextureColor.vsh in Resources */,
 				05CA7AF010ED674700F12774 /* Default.png in Resources */,
 				05CA7AF110ED674700F12774 /* Icon.png in Resources */,
 				05CA7AF210ED674700F12774 /* grossini.png in Resources */,
@@ -8619,7 +9257,6 @@
 				E02BB598126CA73F006E46A2 /* Icon-Small.png in Resources */,
 				E02BB599126CA73F006E46A2 /* Icon-Small-50.png in Resources */,
 				E02BB59A126CA73F006E46A2 /* Icon-72.png in Resources */,
-				E0708A6B1342D16700D32F2C /* Shaders in Resources */,
 				A0600BF413C2074100BB6F49 /* fps_images-hd.png in Resources */,
 				A0B0377513EA1FDB0073E59A /* b1-ipad.png in Resources */,
 				A0B037A613EA1FDD0073E59A /* b2-ipad.png in Resources */,
@@ -8658,7 +9295,6 @@
 				E02BB61C126CA73F006E46A2 /* Icon-Small.png in Resources */,
 				E02BB61D126CA73F006E46A2 /* Icon-Small-50.png in Resources */,
 				E02BB61E126CA73F006E46A2 /* Icon-72.png in Resources */,
-				E0708A891342D16700D32F2C /* Shaders in Resources */,
 				A0600C0F13C2075B00BB6F49 /* fps_images-hd.png in Resources */,
 				A0B0379113EA1FDC0073E59A /* b1-ipad.png in Resources */,
 				A0B037C213EA1FDE0073E59A /* b2-ipad.png in Resources */,
@@ -8666,6 +9302,18 @@
 				A0B0382413EA1FE00073E59A /* f2-ipad.png in Resources */,
 				A0B0385513EA1FE10073E59A /* r1-ipad.png in Resources */,
 				A0B0388613EA1FE20073E59A /* r2-ipad.png in Resources */,
+				A0EC4BA71403239F00EC482A /* Position_uColor.fsh in Resources */,
+				A0EC4BA81403239F00EC482A /* Position_uColor.vsh in Resources */,
+				A0EC4BA91403239F00EC482A /* PositionColor.fsh in Resources */,
+				A0EC4BAA1403239F00EC482A /* PositionColor.vsh in Resources */,
+				A0EC4BAB1403239F00EC482A /* PositionTexture.fsh in Resources */,
+				A0EC4BAC1403239F00EC482A /* PositionTexture.vsh in Resources */,
+				A0EC4BAD1403239F00EC482A /* PositionTexture_uColor.fsh in Resources */,
+				A0EC4BAE1403239F00EC482A /* PositionTexture_uColor.vsh in Resources */,
+				A0EC4BAF1403239F00EC482A /* PositionTextureA8Color.fsh in Resources */,
+				A0EC4BB01403239F00EC482A /* PositionTextureA8Color.vsh in Resources */,
+				A0EC4BB11403239F00EC482A /* PositionTextureColor.fsh in Resources */,
+				A0EC4BB21403239F00EC482A /* PositionTextureColor.vsh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8693,7 +9341,6 @@
 				E02BB5A4126CA73F006E46A2 /* Icon-Small.png in Resources */,
 				E02BB5A5126CA73F006E46A2 /* Icon-Small-50.png in Resources */,
 				E02BB5A6126CA73F006E46A2 /* Icon-72.png in Resources */,
-				E0708A6E1342D16700D32F2C /* Shaders in Resources */,
 				A0600BF713C2074400BB6F49 /* fps_images-hd.png in Resources */,
 				A0B0377813EA1FDB0073E59A /* b1-ipad.png in Resources */,
 				A0B037A913EA1FDD0073E59A /* b2-ipad.png in Resources */,
@@ -8701,6 +9348,18 @@
 				A0B0380B13EA1FE00073E59A /* f2-ipad.png in Resources */,
 				A0B0383C13EA1FE10073E59A /* r1-ipad.png in Resources */,
 				A0B0386D13EA1FE20073E59A /* r2-ipad.png in Resources */,
+				A0EC4A7B1403238700EC482A /* Position_uColor.fsh in Resources */,
+				A0EC4A7C1403238700EC482A /* Position_uColor.vsh in Resources */,
+				A0EC4A7D1403238700EC482A /* PositionColor.fsh in Resources */,
+				A0EC4A7E1403238700EC482A /* PositionColor.vsh in Resources */,
+				A0EC4A7F1403238700EC482A /* PositionTexture.fsh in Resources */,
+				A0EC4A801403238700EC482A /* PositionTexture.vsh in Resources */,
+				A0EC4A811403238700EC482A /* PositionTexture_uColor.fsh in Resources */,
+				A0EC4A821403238700EC482A /* PositionTexture_uColor.vsh in Resources */,
+				A0EC4A831403238700EC482A /* PositionTextureA8Color.fsh in Resources */,
+				A0EC4A841403238700EC482A /* PositionTextureA8Color.vsh in Resources */,
+				A0EC4A851403238700EC482A /* PositionTextureColor.fsh in Resources */,
+				A0EC4A861403238700EC482A /* PositionTextureColor.vsh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8742,7 +9401,6 @@
 				E02BB5F2126CA73F006E46A2 /* Icon-Small.png in Resources */,
 				E02BB5F3126CA73F006E46A2 /* Icon-Small-50.png in Resources */,
 				E02BB5F4126CA73F006E46A2 /* Icon-72.png in Resources */,
-				E0708A901342D16700D32F2C /* Shaders in Resources */,
 				A0600C1713C2076300BB6F49 /* fps_images-hd.png in Resources */,
 				A0B0379913EA1FDD0073E59A /* b1-ipad.png in Resources */,
 				A0B037CA13EA1FDE0073E59A /* b2-ipad.png in Resources */,
@@ -8750,6 +9408,18 @@
 				A0B0382C13EA1FE00073E59A /* f2-ipad.png in Resources */,
 				A0B0385D13EA1FE10073E59A /* r1-ipad.png in Resources */,
 				A0B0388E13EA1FE30073E59A /* r2-ipad.png in Resources */,
+				A0EC4BFB140323A600EC482A /* Position_uColor.fsh in Resources */,
+				A0EC4BFC140323A600EC482A /* Position_uColor.vsh in Resources */,
+				A0EC4BFD140323A600EC482A /* PositionColor.fsh in Resources */,
+				A0EC4BFE140323A600EC482A /* PositionColor.vsh in Resources */,
+				A0EC4BFF140323A600EC482A /* PositionTexture.fsh in Resources */,
+				A0EC4C00140323A600EC482A /* PositionTexture.vsh in Resources */,
+				A0EC4C01140323A600EC482A /* PositionTexture_uColor.fsh in Resources */,
+				A0EC4C02140323A600EC482A /* PositionTexture_uColor.vsh in Resources */,
+				A0EC4C03140323A600EC482A /* PositionTextureA8Color.fsh in Resources */,
+				A0EC4C04140323A600EC482A /* PositionTextureA8Color.vsh in Resources */,
+				A0EC4C05140323A600EC482A /* PositionTextureColor.fsh in Resources */,
+				A0EC4C06140323A600EC482A /* PositionTextureColor.vsh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8784,7 +9454,6 @@
 				E02BB622126CA73F006E46A2 /* Icon-Small.png in Resources */,
 				E02BB623126CA73F006E46A2 /* Icon-Small-50.png in Resources */,
 				E02BB624126CA73F006E46A2 /* Icon-72.png in Resources */,
-				E0708A881342D16700D32F2C /* Shaders in Resources */,
 				A0600C0E13C2075A00BB6F49 /* fps_images-hd.png in Resources */,
 				A0B0379013EA1FDC0073E59A /* b1-ipad.png in Resources */,
 				A0B037C113EA1FDE0073E59A /* b2-ipad.png in Resources */,
@@ -8792,6 +9461,18 @@
 				A0B0382313EA1FE00073E59A /* f2-ipad.png in Resources */,
 				A0B0385413EA1FE10073E59A /* r1-ipad.png in Resources */,
 				A0B0388513EA1FE20073E59A /* r2-ipad.png in Resources */,
+				A0EC4B9B1403239E00EC482A /* Position_uColor.fsh in Resources */,
+				A0EC4B9C1403239E00EC482A /* Position_uColor.vsh in Resources */,
+				A0EC4B9D1403239E00EC482A /* PositionColor.fsh in Resources */,
+				A0EC4B9E1403239E00EC482A /* PositionColor.vsh in Resources */,
+				A0EC4B9F1403239E00EC482A /* PositionTexture.fsh in Resources */,
+				A0EC4BA01403239E00EC482A /* PositionTexture.vsh in Resources */,
+				A0EC4BA11403239E00EC482A /* PositionTexture_uColor.fsh in Resources */,
+				A0EC4BA21403239E00EC482A /* PositionTexture_uColor.vsh in Resources */,
+				A0EC4BA31403239E00EC482A /* PositionTextureA8Color.fsh in Resources */,
+				A0EC4BA41403239E00EC482A /* PositionTextureA8Color.vsh in Resources */,
+				A0EC4BA51403239E00EC482A /* PositionTextureColor.fsh in Resources */,
+				A0EC4BA61403239E00EC482A /* PositionTextureColor.vsh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8825,7 +9506,6 @@
 				E02BB69A126CA73F006E46A2 /* Icon-Small.png in Resources */,
 				E02BB69B126CA73F006E46A2 /* Icon-Small-50.png in Resources */,
 				E02BB69C126CA73F006E46A2 /* Icon-72.png in Resources */,
-				E0708A781342D16700D32F2C /* Shaders in Resources */,
 				A0600C0013C2074C00BB6F49 /* fps_images-hd.png in Resources */,
 				A0B0378113EA1FDC0073E59A /* b1-ipad.png in Resources */,
 				A0B037B213EA1FDD0073E59A /* b2-ipad.png in Resources */,
@@ -8833,6 +9513,18 @@
 				A0B0381413EA1FE00073E59A /* f2-ipad.png in Resources */,
 				A0B0384513EA1FE10073E59A /* r1-ipad.png in Resources */,
 				A0B0387613EA1FE20073E59A /* r2-ipad.png in Resources */,
+				A0EC4AE71403239100EC482A /* Position_uColor.fsh in Resources */,
+				A0EC4AE81403239100EC482A /* Position_uColor.vsh in Resources */,
+				A0EC4AE91403239100EC482A /* PositionColor.fsh in Resources */,
+				A0EC4AEA1403239100EC482A /* PositionColor.vsh in Resources */,
+				A0EC4AEB1403239100EC482A /* PositionTexture.fsh in Resources */,
+				A0EC4AEC1403239100EC482A /* PositionTexture.vsh in Resources */,
+				A0EC4AED1403239100EC482A /* PositionTexture_uColor.fsh in Resources */,
+				A0EC4AEE1403239100EC482A /* PositionTexture_uColor.vsh in Resources */,
+				A0EC4AEF1403239100EC482A /* PositionTextureA8Color.fsh in Resources */,
+				A0EC4AF01403239100EC482A /* PositionTextureA8Color.vsh in Resources */,
+				A0EC4AF11403239100EC482A /* PositionTextureColor.fsh in Resources */,
+				A0EC4AF21403239100EC482A /* PositionTextureColor.vsh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8875,7 +9567,6 @@
 				E02BB605126CA73F006E46A2 /* Icon-Small-50.png in Resources */,
 				E02BB606126CA73F006E46A2 /* Icon-72.png in Resources */,
 				E0D2D4F3128CA9E300F78C63 /* piece.png in Resources */,
-				E0708A8D1342D16700D32F2C /* Shaders in Resources */,
 				A0600C1413C2075F00BB6F49 /* fps_images-hd.png in Resources */,
 				A0B0379613EA1FDD0073E59A /* b1-ipad.png in Resources */,
 				A0B037C713EA1FDE0073E59A /* b2-ipad.png in Resources */,
@@ -8883,6 +9574,18 @@
 				A0B0382913EA1FE00073E59A /* f2-ipad.png in Resources */,
 				A0B0385A13EA1FE10073E59A /* r1-ipad.png in Resources */,
 				A0B0388B13EA1FE30073E59A /* r2-ipad.png in Resources */,
+				A0EC4BE3140323A400EC482A /* Position_uColor.fsh in Resources */,
+				A0EC4BE4140323A400EC482A /* Position_uColor.vsh in Resources */,
+				A0EC4BE5140323A400EC482A /* PositionColor.fsh in Resources */,
+				A0EC4BE6140323A400EC482A /* PositionColor.vsh in Resources */,
+				A0EC4BE7140323A400EC482A /* PositionTexture.fsh in Resources */,
+				A0EC4BE8140323A400EC482A /* PositionTexture.vsh in Resources */,
+				A0EC4BE9140323A400EC482A /* PositionTexture_uColor.fsh in Resources */,
+				A0EC4BEA140323A400EC482A /* PositionTexture_uColor.vsh in Resources */,
+				A0EC4BEB140323A400EC482A /* PositionTextureA8Color.fsh in Resources */,
+				A0EC4BEC140323A400EC482A /* PositionTextureA8Color.vsh in Resources */,
+				A0EC4BED140323A400EC482A /* PositionTextureColor.fsh in Resources */,
+				A0EC4BEE140323A400EC482A /* PositionTextureColor.vsh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8905,7 +9608,6 @@
 				E02BB5B6126CA73F006E46A2 /* Icon-Small.png in Resources */,
 				E02BB5B7126CA73F006E46A2 /* Icon-Small-50.png in Resources */,
 				E02BB5B8126CA73F006E46A2 /* Icon-72.png in Resources */,
-				E0708A9C1342D16700D32F2C /* Shaders in Resources */,
 				A0600C2313C2076E00BB6F49 /* fps_images-hd.png in Resources */,
 				A0B037A213EA1FDD0073E59A /* b1-ipad.png in Resources */,
 				A0B037D313EA1FDE0073E59A /* b2-ipad.png in Resources */,
@@ -8913,6 +9615,18 @@
 				A0B0383513EA1FE10073E59A /* f2-ipad.png in Resources */,
 				A0B0386613EA1FE10073E59A /* r1-ipad.png in Resources */,
 				A0B0389713EA1FE30073E59A /* r2-ipad.png in Resources */,
+				A0EC4C67140323AF00EC482A /* Position_uColor.fsh in Resources */,
+				A0EC4C68140323AF00EC482A /* Position_uColor.vsh in Resources */,
+				A0EC4C69140323AF00EC482A /* PositionColor.fsh in Resources */,
+				A0EC4C6A140323AF00EC482A /* PositionColor.vsh in Resources */,
+				A0EC4C6B140323AF00EC482A /* PositionTexture.fsh in Resources */,
+				A0EC4C6C140323AF00EC482A /* PositionTexture.vsh in Resources */,
+				A0EC4C6D140323AF00EC482A /* PositionTexture_uColor.fsh in Resources */,
+				A0EC4C6E140323AF00EC482A /* PositionTexture_uColor.vsh in Resources */,
+				A0EC4C6F140323AF00EC482A /* PositionTextureA8Color.fsh in Resources */,
+				A0EC4C70140323AF00EC482A /* PositionTextureA8Color.vsh in Resources */,
+				A0EC4C71140323AF00EC482A /* PositionTextureColor.fsh in Resources */,
+				A0EC4C72140323AF00EC482A /* PositionTextureColor.vsh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8942,7 +9656,6 @@
 				E02BB616126CA73F006E46A2 /* Icon-Small.png in Resources */,
 				E02BB617126CA73F006E46A2 /* Icon-Small-50.png in Resources */,
 				E02BB618126CA73F006E46A2 /* Icon-72.png in Resources */,
-				E0708A8A1342D16700D32F2C /* Shaders in Resources */,
 				A0600C1013C2075B00BB6F49 /* fps_images-hd.png in Resources */,
 				A0B0379213EA1FDC0073E59A /* b1-ipad.png in Resources */,
 				A0B037C313EA1FDE0073E59A /* b2-ipad.png in Resources */,
@@ -8950,6 +9663,18 @@
 				A0B0382513EA1FE00073E59A /* f2-ipad.png in Resources */,
 				A0B0385613EA1FE10073E59A /* r1-ipad.png in Resources */,
 				A0B0388713EA1FE20073E59A /* r2-ipad.png in Resources */,
+				A0EC4BB3140323A100EC482A /* Position_uColor.fsh in Resources */,
+				A0EC4BB4140323A100EC482A /* Position_uColor.vsh in Resources */,
+				A0EC4BB5140323A100EC482A /* PositionColor.fsh in Resources */,
+				A0EC4BB6140323A100EC482A /* PositionColor.vsh in Resources */,
+				A0EC4BB7140323A100EC482A /* PositionTexture.fsh in Resources */,
+				A0EC4BB8140323A100EC482A /* PositionTexture.vsh in Resources */,
+				A0EC4BB9140323A100EC482A /* PositionTexture_uColor.fsh in Resources */,
+				A0EC4BBA140323A100EC482A /* PositionTexture_uColor.vsh in Resources */,
+				A0EC4BBB140323A100EC482A /* PositionTextureA8Color.fsh in Resources */,
+				A0EC4BBC140323A100EC482A /* PositionTextureA8Color.vsh in Resources */,
+				A0EC4BBD140323A100EC482A /* PositionTextureColor.fsh in Resources */,
+				A0EC4BBE140323A100EC482A /* PositionTextureColor.vsh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8986,7 +9711,6 @@
 				E02BB5F8126CA73F006E46A2 /* Icon-Small.png in Resources */,
 				E02BB5F9126CA73F006E46A2 /* Icon-Small-50.png in Resources */,
 				E02BB5FA126CA73F006E46A2 /* Icon-72.png in Resources */,
-				E0708A8F1342D16700D32F2C /* Shaders in Resources */,
 				A0600C1613C2076200BB6F49 /* fps_images-hd.png in Resources */,
 				A0B0379813EA1FDD0073E59A /* b1-ipad.png in Resources */,
 				A0B037C913EA1FDE0073E59A /* b2-ipad.png in Resources */,
@@ -8994,6 +9718,18 @@
 				A0B0382B13EA1FE00073E59A /* f2-ipad.png in Resources */,
 				A0B0385C13EA1FE10073E59A /* r1-ipad.png in Resources */,
 				A0B0388D13EA1FE30073E59A /* r2-ipad.png in Resources */,
+				A0EC4BEF140323A500EC482A /* Position_uColor.fsh in Resources */,
+				A0EC4BF0140323A500EC482A /* Position_uColor.vsh in Resources */,
+				A0EC4BF1140323A500EC482A /* PositionColor.fsh in Resources */,
+				A0EC4BF2140323A500EC482A /* PositionColor.vsh in Resources */,
+				A0EC4BF3140323A500EC482A /* PositionTexture.fsh in Resources */,
+				A0EC4BF4140323A500EC482A /* PositionTexture.vsh in Resources */,
+				A0EC4BF5140323A500EC482A /* PositionTexture_uColor.fsh in Resources */,
+				A0EC4BF6140323A500EC482A /* PositionTexture_uColor.vsh in Resources */,
+				A0EC4BF7140323A500EC482A /* PositionTextureA8Color.fsh in Resources */,
+				A0EC4BF8140323A500EC482A /* PositionTextureA8Color.vsh in Resources */,
+				A0EC4BF9140323A500EC482A /* PositionTextureColor.fsh in Resources */,
+				A0EC4BFA140323A500EC482A /* PositionTextureColor.vsh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9017,7 +9753,6 @@
 				E02BB586126CA73F006E46A2 /* Icon-Small.png in Resources */,
 				E02BB587126CA73F006E46A2 /* Icon-Small-50.png in Resources */,
 				E02BB588126CA73F006E46A2 /* Icon-72.png in Resources */,
-				E0708A6D1342D16700D32F2C /* Shaders in Resources */,
 				A0600BF613C2074300BB6F49 /* fps_images-hd.png in Resources */,
 				A0B0377713EA1FDB0073E59A /* b1-ipad.png in Resources */,
 				A0B037A813EA1FDD0073E59A /* b2-ipad.png in Resources */,
@@ -9025,6 +9760,18 @@
 				A0B0380A13EA1FE00073E59A /* f2-ipad.png in Resources */,
 				A0B0383B13EA1FE10073E59A /* r1-ipad.png in Resources */,
 				A0B0386C13EA1FE20073E59A /* r2-ipad.png in Resources */,
+				A0EC4A6F1403238600EC482A /* Position_uColor.fsh in Resources */,
+				A0EC4A701403238600EC482A /* Position_uColor.vsh in Resources */,
+				A0EC4A711403238600EC482A /* PositionColor.fsh in Resources */,
+				A0EC4A721403238600EC482A /* PositionColor.vsh in Resources */,
+				A0EC4A731403238600EC482A /* PositionTexture.fsh in Resources */,
+				A0EC4A741403238600EC482A /* PositionTexture.vsh in Resources */,
+				A0EC4A751403238600EC482A /* PositionTexture_uColor.fsh in Resources */,
+				A0EC4A761403238600EC482A /* PositionTexture_uColor.vsh in Resources */,
+				A0EC4A771403238600EC482A /* PositionTextureA8Color.fsh in Resources */,
+				A0EC4A781403238600EC482A /* PositionTextureA8Color.vsh in Resources */,
+				A0EC4A791403238600EC482A /* PositionTextureColor.fsh in Resources */,
+				A0EC4A7A1403238600EC482A /* PositionTextureColor.vsh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9060,7 +9807,6 @@
 				E02BB664126CA73F006E46A2 /* Icon-Small.png in Resources */,
 				E02BB665126CA73F006E46A2 /* Icon-Small-50.png in Resources */,
 				E02BB666126CA73F006E46A2 /* Icon-72.png in Resources */,
-				E0708A811342D16700D32F2C /* Shaders in Resources */,
 				A0600C0B13C2075600BB6F49 /* fps_images-hd.png in Resources */,
 				A0B0378A13EA1FDC0073E59A /* b1-ipad.png in Resources */,
 				A0B037BB13EA1FDD0073E59A /* b2-ipad.png in Resources */,
@@ -9068,6 +9814,18 @@
 				A0B0381D13EA1FE00073E59A /* f2-ipad.png in Resources */,
 				A0B0384E13EA1FE10073E59A /* r1-ipad.png in Resources */,
 				A0B0387F13EA1FE20073E59A /* r2-ipad.png in Resources */,
+				A0EC4B531403239900EC482A /* Position_uColor.fsh in Resources */,
+				A0EC4B541403239900EC482A /* Position_uColor.vsh in Resources */,
+				A0EC4B551403239900EC482A /* PositionColor.fsh in Resources */,
+				A0EC4B561403239900EC482A /* PositionColor.vsh in Resources */,
+				A0EC4B571403239900EC482A /* PositionTexture.fsh in Resources */,
+				A0EC4B581403239900EC482A /* PositionTexture.vsh in Resources */,
+				A0EC4B591403239900EC482A /* PositionTexture_uColor.fsh in Resources */,
+				A0EC4B5A1403239900EC482A /* PositionTexture_uColor.vsh in Resources */,
+				A0EC4B5B1403239900EC482A /* PositionTextureA8Color.fsh in Resources */,
+				A0EC4B5C1403239900EC482A /* PositionTextureA8Color.vsh in Resources */,
+				A0EC4B5D1403239900EC482A /* PositionTextureColor.fsh in Resources */,
+				A0EC4B5E1403239900EC482A /* PositionTextureColor.vsh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9090,7 +9848,6 @@
 				E02BB59E126CA73F006E46A2 /* Icon-Small.png in Resources */,
 				E02BB59F126CA73F006E46A2 /* Icon-Small-50.png in Resources */,
 				E02BB5A0126CA73F006E46A2 /* Icon-72.png in Resources */,
-				E0708A6C1342D16700D32F2C /* Shaders in Resources */,
 				A0600BF513C2074200BB6F49 /* fps_images-hd.png in Resources */,
 				A0B0377613EA1FDB0073E59A /* b1-ipad.png in Resources */,
 				A0B037A713EA1FDD0073E59A /* b2-ipad.png in Resources */,
@@ -9098,6 +9855,18 @@
 				A0B0380913EA1FE00073E59A /* f2-ipad.png in Resources */,
 				A0B0383A13EA1FE10073E59A /* r1-ipad.png in Resources */,
 				A0B0386B13EA1FE20073E59A /* r2-ipad.png in Resources */,
+				A0EC4A631403238500EC482A /* Position_uColor.fsh in Resources */,
+				A0EC4A641403238500EC482A /* Position_uColor.vsh in Resources */,
+				A0EC4A651403238500EC482A /* PositionColor.fsh in Resources */,
+				A0EC4A661403238500EC482A /* PositionColor.vsh in Resources */,
+				A0EC4A671403238500EC482A /* PositionTexture.fsh in Resources */,
+				A0EC4A681403238500EC482A /* PositionTexture.vsh in Resources */,
+				A0EC4A691403238500EC482A /* PositionTexture_uColor.fsh in Resources */,
+				A0EC4A6A1403238500EC482A /* PositionTexture_uColor.vsh in Resources */,
+				A0EC4A6B1403238500EC482A /* PositionTextureA8Color.fsh in Resources */,
+				A0EC4A6C1403238500EC482A /* PositionTextureA8Color.vsh in Resources */,
+				A0EC4A6D1403238500EC482A /* PositionTextureColor.fsh in Resources */,
+				A0EC4A6E1403238600EC482A /* PositionTextureColor.vsh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9105,6 +9874,18 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0EC4A3F1403238300EC482A /* Position_uColor.fsh in Resources */,
+				A0EC4A401403238300EC482A /* Position_uColor.vsh in Resources */,
+				A0EC4A411403238300EC482A /* PositionColor.fsh in Resources */,
+				A0EC4A421403238300EC482A /* PositionColor.vsh in Resources */,
+				A0EC4A431403238400EC482A /* PositionTexture.fsh in Resources */,
+				A0EC4A441403238400EC482A /* PositionTexture.vsh in Resources */,
+				A0EC4A451403238400EC482A /* PositionTexture_uColor.fsh in Resources */,
+				A0EC4A461403238400EC482A /* PositionTexture_uColor.vsh in Resources */,
+				A0EC4A471403238400EC482A /* PositionTextureA8Color.fsh in Resources */,
+				A0EC4A481403238400EC482A /* PositionTextureA8Color.vsh in Resources */,
+				A0EC4A491403238400EC482A /* PositionTextureColor.fsh in Resources */,
+				A0EC4A4A1403238400EC482A /* PositionTextureColor.vsh in Resources */,
 				504CC3101035BDE90096894C /* b1.png in Resources */,
 				504CC3111035BDE90096894C /* b2.png in Resources */,
 				504CC3121035BDE90096894C /* f1.png in Resources */,
@@ -9135,7 +9916,6 @@
 				E02BB58C126CA73F006E46A2 /* Icon-Small.png in Resources */,
 				E02BB58D126CA73F006E46A2 /* Icon-Small-50.png in Resources */,
 				E02BB58E126CA73F006E46A2 /* Icon-72.png in Resources */,
-				E0708A691342D16700D32F2C /* Shaders in Resources */,
 				A0600BF213C2074000BB6F49 /* fps_images-hd.png in Resources */,
 				A0B0377313EA1FDB0073E59A /* b1-ipad.png in Resources */,
 				A0B037A413EA1FDD0073E59A /* b2-ipad.png in Resources */,
@@ -9165,7 +9945,6 @@
 				E02BB694126CA73F006E46A2 /* Icon-Small.png in Resources */,
 				E02BB695126CA73F006E46A2 /* Icon-Small-50.png in Resources */,
 				E02BB696126CA73F006E46A2 /* Icon-72.png in Resources */,
-				E0708A791342D16700D32F2C /* Shaders in Resources */,
 				A0600C0113C2074C00BB6F49 /* fps_images-hd.png in Resources */,
 				A0B0378213EA1FDC0073E59A /* b1-ipad.png in Resources */,
 				A0B037B313EA1FDD0073E59A /* b2-ipad.png in Resources */,
@@ -9173,6 +9952,18 @@
 				A0B0381513EA1FE00073E59A /* f2-ipad.png in Resources */,
 				A0B0384613EA1FE10073E59A /* r1-ipad.png in Resources */,
 				A0B0387713EA1FE20073E59A /* r2-ipad.png in Resources */,
+				A0EC4AF31403239200EC482A /* Position_uColor.fsh in Resources */,
+				A0EC4AF41403239200EC482A /* Position_uColor.vsh in Resources */,
+				A0EC4AF51403239200EC482A /* PositionColor.fsh in Resources */,
+				A0EC4AF61403239200EC482A /* PositionColor.vsh in Resources */,
+				A0EC4AF71403239200EC482A /* PositionTexture.fsh in Resources */,
+				A0EC4AF81403239200EC482A /* PositionTexture.vsh in Resources */,
+				A0EC4AF91403239200EC482A /* PositionTexture_uColor.fsh in Resources */,
+				A0EC4AFA1403239200EC482A /* PositionTexture_uColor.vsh in Resources */,
+				A0EC4AFB1403239200EC482A /* PositionTextureA8Color.fsh in Resources */,
+				A0EC4AFC1403239200EC482A /* PositionTextureA8Color.vsh in Resources */,
+				A0EC4AFD1403239200EC482A /* PositionTextureColor.fsh in Resources */,
+				A0EC4AFE1403239200EC482A /* PositionTextureColor.vsh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9202,7 +9993,6 @@
 				E02BB6A6126CA73F006E46A2 /* Icon-Small.png in Resources */,
 				E02BB6A7126CA73F006E46A2 /* Icon-Small-50.png in Resources */,
 				E02BB6A8126CA73F006E46A2 /* Icon-72.png in Resources */,
-				E0708A721342D16700D32F2C /* Shaders in Resources */,
 				A0600BFB13C2074700BB6F49 /* fps_images-hd.png in Resources */,
 				A0B0377C13EA1FDC0073E59A /* b1-ipad.png in Resources */,
 				A0B037AD13EA1FDD0073E59A /* b2-ipad.png in Resources */,
@@ -9210,6 +10000,18 @@
 				A0B0380F13EA1FE00073E59A /* f2-ipad.png in Resources */,
 				A0B0384013EA1FE10073E59A /* r1-ipad.png in Resources */,
 				A0B0387113EA1FE20073E59A /* r2-ipad.png in Resources */,
+				A0EC4AAB1403238A00EC482A /* Position_uColor.fsh in Resources */,
+				A0EC4AAC1403238A00EC482A /* Position_uColor.vsh in Resources */,
+				A0EC4AAD1403238A00EC482A /* PositionColor.fsh in Resources */,
+				A0EC4AAE1403238A00EC482A /* PositionColor.vsh in Resources */,
+				A0EC4AAF1403238A00EC482A /* PositionTexture.fsh in Resources */,
+				A0EC4AB01403238A00EC482A /* PositionTexture.vsh in Resources */,
+				A0EC4AB11403238A00EC482A /* PositionTexture_uColor.fsh in Resources */,
+				A0EC4AB21403238A00EC482A /* PositionTexture_uColor.vsh in Resources */,
+				A0EC4AB31403238A00EC482A /* PositionTextureA8Color.fsh in Resources */,
+				A0EC4AB41403238A00EC482A /* PositionTextureA8Color.vsh in Resources */,
+				A0EC4AB51403238A00EC482A /* PositionTextureColor.fsh in Resources */,
+				A0EC4AB61403238A00EC482A /* PositionTextureColor.vsh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9252,7 +10054,6 @@
 				E02BB6AC126CA73F006E46A2 /* Icon-Small.png in Resources */,
 				E02BB6AD126CA73F006E46A2 /* Icon-Small-50.png in Resources */,
 				E02BB6AE126CA73F006E46A2 /* Icon-72.png in Resources */,
-				E0708A731342D16700D32F2C /* Shaders in Resources */,
 				A0600BFC13C2074700BB6F49 /* fps_images-hd.png in Resources */,
 				A0B0377D13EA1FDC0073E59A /* b1-ipad.png in Resources */,
 				A0B037AE13EA1FDD0073E59A /* b2-ipad.png in Resources */,
@@ -9260,6 +10061,18 @@
 				A0B0381013EA1FE00073E59A /* f2-ipad.png in Resources */,
 				A0B0384113EA1FE10073E59A /* r1-ipad.png in Resources */,
 				A0B0387213EA1FE20073E59A /* r2-ipad.png in Resources */,
+				A0EC4AB71403238B00EC482A /* Position_uColor.fsh in Resources */,
+				A0EC4AB81403238B00EC482A /* Position_uColor.vsh in Resources */,
+				A0EC4AB91403238B00EC482A /* PositionColor.fsh in Resources */,
+				A0EC4ABA1403238B00EC482A /* PositionColor.vsh in Resources */,
+				A0EC4ABB1403238B00EC482A /* PositionTexture.fsh in Resources */,
+				A0EC4ABC1403238B00EC482A /* PositionTexture.vsh in Resources */,
+				A0EC4ABD1403238B00EC482A /* PositionTexture_uColor.fsh in Resources */,
+				A0EC4ABE1403238B00EC482A /* PositionTexture_uColor.vsh in Resources */,
+				A0EC4ABF1403238B00EC482A /* PositionTextureA8Color.fsh in Resources */,
+				A0EC4AC01403238B00EC482A /* PositionTextureA8Color.vsh in Resources */,
+				A0EC4AC11403238B00EC482A /* PositionTextureColor.fsh in Resources */,
+				A0EC4AC21403238B00EC482A /* PositionTextureColor.vsh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9287,7 +10100,6 @@
 				E02BB6B2126CA73F006E46A2 /* Icon-Small.png in Resources */,
 				E02BB6B3126CA73F006E46A2 /* Icon-Small-50.png in Resources */,
 				E02BB6B4126CA73F006E46A2 /* Icon-72.png in Resources */,
-				E0708A741342D16700D32F2C /* Shaders in Resources */,
 				A0600BFD13C2074800BB6F49 /* fps_images-hd.png in Resources */,
 				A0B0377E13EA1FDC0073E59A /* b1-ipad.png in Resources */,
 				A0B037AF13EA1FDD0073E59A /* b2-ipad.png in Resources */,
@@ -9295,6 +10107,18 @@
 				A0B0381113EA1FE00073E59A /* f2-ipad.png in Resources */,
 				A0B0384213EA1FE10073E59A /* r1-ipad.png in Resources */,
 				A0B0387313EA1FE20073E59A /* r2-ipad.png in Resources */,
+				A0EC4AC31403238B00EC482A /* Position_uColor.fsh in Resources */,
+				A0EC4AC41403238B00EC482A /* Position_uColor.vsh in Resources */,
+				A0EC4AC51403238B00EC482A /* PositionColor.fsh in Resources */,
+				A0EC4AC61403238B00EC482A /* PositionColor.vsh in Resources */,
+				A0EC4AC71403238B00EC482A /* PositionTexture.fsh in Resources */,
+				A0EC4AC81403238B00EC482A /* PositionTexture.vsh in Resources */,
+				A0EC4AC91403238B00EC482A /* PositionTexture_uColor.fsh in Resources */,
+				A0EC4ACA1403238B00EC482A /* PositionTexture_uColor.vsh in Resources */,
+				A0EC4ACB1403238B00EC482A /* PositionTextureA8Color.fsh in Resources */,
+				A0EC4ACC1403238B00EC482A /* PositionTextureA8Color.vsh in Resources */,
+				A0EC4ACD1403238B00EC482A /* PositionTextureColor.fsh in Resources */,
+				A0EC4ACE1403238B00EC482A /* PositionTextureColor.vsh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9319,7 +10143,6 @@
 				E02BB6B8126CA73F006E46A2 /* Icon-Small.png in Resources */,
 				E02BB6B9126CA73F006E46A2 /* Icon-Small-50.png in Resources */,
 				E02BB6BA126CA73F006E46A2 /* Icon-72.png in Resources */,
-				E0708A751342D16700D32F2C /* Shaders in Resources */,
 				A0600BFE13C2074A00BB6F49 /* fps_images-hd.png in Resources */,
 				A0B0377F13EA1FDC0073E59A /* b1-ipad.png in Resources */,
 				A0B037B013EA1FDD0073E59A /* b2-ipad.png in Resources */,
@@ -9327,6 +10150,18 @@
 				A0B0381213EA1FE00073E59A /* f2-ipad.png in Resources */,
 				A0B0384313EA1FE10073E59A /* r1-ipad.png in Resources */,
 				A0B0387413EA1FE20073E59A /* r2-ipad.png in Resources */,
+				A0EC4ACF1403238C00EC482A /* Position_uColor.fsh in Resources */,
+				A0EC4AD01403238C00EC482A /* Position_uColor.vsh in Resources */,
+				A0EC4AD11403238C00EC482A /* PositionColor.fsh in Resources */,
+				A0EC4AD21403238C00EC482A /* PositionColor.vsh in Resources */,
+				A0EC4AD31403238C00EC482A /* PositionTexture.fsh in Resources */,
+				A0EC4AD41403238C00EC482A /* PositionTexture.vsh in Resources */,
+				A0EC4AD51403238C00EC482A /* PositionTexture_uColor.fsh in Resources */,
+				A0EC4AD61403238C00EC482A /* PositionTexture_uColor.vsh in Resources */,
+				A0EC4AD71403238C00EC482A /* PositionTextureA8Color.fsh in Resources */,
+				A0EC4AD81403238C00EC482A /* PositionTextureA8Color.vsh in Resources */,
+				A0EC4AD91403238C00EC482A /* PositionTextureColor.fsh in Resources */,
+				A0EC4ADA1403238C00EC482A /* PositionTextureColor.vsh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9472,7 +10307,6 @@
 				E02BB600126CA73F006E46A2 /* Icon-72.png in Resources */,
 				E0BBADE91282E838007DB81E /* test_image_rgba4444.pvr.ccz in Resources */,
 				E0BBADEA1282E838007DB81E /* test_image_rgba4444.pvr.gz in Resources */,
-				E0708A8E1342D16700D32F2C /* Shaders in Resources */,
 				A0600BB713C1FBE100BB6F49 /* Info-FontTest.plist in Resources */,
 				A0600C1513C2076200BB6F49 /* fps_images-hd.png in Resources */,
 				A0B035FB13EA09270073E59A /* only_in_hd-hd.pvr.ccz in Resources */,
@@ -9482,6 +10316,18 @@
 				A0B0382A13EA1FE00073E59A /* f2-ipad.png in Resources */,
 				A0B0385B13EA1FE10073E59A /* r1-ipad.png in Resources */,
 				A0B0388C13EA1FE30073E59A /* r2-ipad.png in Resources */,
+				A0EC4A311403236C00EC482A /* Position_uColor.fsh in Resources */,
+				A0EC4A321403236C00EC482A /* Position_uColor.vsh in Resources */,
+				A0EC4A331403236C00EC482A /* PositionColor.fsh in Resources */,
+				A0EC4A341403236C00EC482A /* PositionColor.vsh in Resources */,
+				A0EC4A351403236C00EC482A /* PositionTexture.fsh in Resources */,
+				A0EC4A361403236C00EC482A /* PositionTexture.vsh in Resources */,
+				A0EC4A371403236C00EC482A /* PositionTexture_uColor.fsh in Resources */,
+				A0EC4A381403236C00EC482A /* PositionTexture_uColor.vsh in Resources */,
+				A0EC4A391403236C00EC482A /* PositionTextureA8Color.fsh in Resources */,
+				A0EC4A3A1403236C00EC482A /* PositionTextureA8Color.vsh in Resources */,
+				A0EC4A3B1403236C00EC482A /* PositionTextureColor.fsh in Resources */,
+				A0EC4A3C1403236C00EC482A /* PositionTextureColor.vsh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9518,7 +10364,6 @@
 				E02BB68E126CA73F006E46A2 /* Icon-Small.png in Resources */,
 				E02BB68F126CA73F006E46A2 /* Icon-Small-50.png in Resources */,
 				E02BB690126CA73F006E46A2 /* Icon-72.png in Resources */,
-				E0708A7A1342D16700D32F2C /* Shaders in Resources */,
 				A0600C0213C2074D00BB6F49 /* fps_images-hd.png in Resources */,
 				A0B0378313EA1FDC0073E59A /* b1-ipad.png in Resources */,
 				A0B037B413EA1FDD0073E59A /* b2-ipad.png in Resources */,
@@ -9526,6 +10371,18 @@
 				A0B0381613EA1FE00073E59A /* f2-ipad.png in Resources */,
 				A0B0384713EA1FE10073E59A /* r1-ipad.png in Resources */,
 				A0B0387813EA1FE20073E59A /* r2-ipad.png in Resources */,
+				A0EC4AFF1403239200EC482A /* Position_uColor.fsh in Resources */,
+				A0EC4B001403239200EC482A /* Position_uColor.vsh in Resources */,
+				A0EC4B011403239200EC482A /* PositionColor.fsh in Resources */,
+				A0EC4B021403239200EC482A /* PositionColor.vsh in Resources */,
+				A0EC4B031403239200EC482A /* PositionTexture.fsh in Resources */,
+				A0EC4B041403239200EC482A /* PositionTexture.vsh in Resources */,
+				A0EC4B051403239200EC482A /* PositionTexture_uColor.fsh in Resources */,
+				A0EC4B061403239200EC482A /* PositionTexture_uColor.vsh in Resources */,
+				A0EC4B071403239200EC482A /* PositionTextureA8Color.fsh in Resources */,
+				A0EC4B081403239200EC482A /* PositionTextureA8Color.vsh in Resources */,
+				A0EC4B091403239200EC482A /* PositionTextureColor.fsh in Resources */,
+				A0EC4B0A1403239200EC482A /* PositionTextureColor.vsh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9567,7 +10424,6 @@
 				E02BB6C4126CA73F006E46A2 /* Icon-Small.png in Resources */,
 				E02BB6C5126CA73F006E46A2 /* Icon-Small-50.png in Resources */,
 				E02BB6C6126CA73F006E46A2 /* Icon-72.png in Resources */,
-				E0708A771342D16700D32F2C /* Shaders in Resources */,
 				A0600BFF13C2074B00BB6F49 /* fps_images-hd.png in Resources */,
 				A0F37B3813C3719A00F724DF /* white-512x512.png in Resources */,
 				A0B0378013EA1FDC0073E59A /* b1-ipad.png in Resources */,
@@ -9576,6 +10432,18 @@
 				A0B0381313EA1FE00073E59A /* f2-ipad.png in Resources */,
 				A0B0384413EA1FE10073E59A /* r1-ipad.png in Resources */,
 				A0B0387513EA1FE20073E59A /* r2-ipad.png in Resources */,
+				A0EC4ADB1403238D00EC482A /* Position_uColor.fsh in Resources */,
+				A0EC4ADC1403238D00EC482A /* Position_uColor.vsh in Resources */,
+				A0EC4ADD1403238D00EC482A /* PositionColor.fsh in Resources */,
+				A0EC4ADE1403238D00EC482A /* PositionColor.vsh in Resources */,
+				A0EC4ADF1403238D00EC482A /* PositionTexture.fsh in Resources */,
+				A0EC4AE01403238D00EC482A /* PositionTexture.vsh in Resources */,
+				A0EC4AE11403238D00EC482A /* PositionTexture_uColor.fsh in Resources */,
+				A0EC4AE21403238D00EC482A /* PositionTexture_uColor.vsh in Resources */,
+				A0EC4AE31403238D00EC482A /* PositionTextureA8Color.fsh in Resources */,
+				A0EC4AE41403238D00EC482A /* PositionTextureA8Color.vsh in Resources */,
+				A0EC4AE51403238D00EC482A /* PositionTextureColor.fsh in Resources */,
+				A0EC4AE61403238D00EC482A /* PositionTextureColor.vsh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9632,7 +10500,6 @@
 				E02BB66C126CA73F006E46A2 /* Icon-72.png in Resources */,
 				E082C9141292DAD50056AC41 /* futura-48.fnt in Resources */,
 				E082C9151292DAD50056AC41 /* futura-48.png in Resources */,
-				E0708A801342D16700D32F2C /* Shaders in Resources */,
 				A0600C0C13C2075700BB6F49 /* fps_images-hd.png in Resources */,
 				A0B0378913EA1FDC0073E59A /* b1-ipad.png in Resources */,
 				A0B037BA13EA1FDD0073E59A /* b2-ipad.png in Resources */,
@@ -9640,6 +10507,18 @@
 				A0B0381C13EA1FE00073E59A /* f2-ipad.png in Resources */,
 				A0B0384D13EA1FE10073E59A /* r1-ipad.png in Resources */,
 				A0B0387E13EA1FE20073E59A /* r2-ipad.png in Resources */,
+				A0EC4B471403239700EC482A /* Position_uColor.fsh in Resources */,
+				A0EC4B481403239700EC482A /* Position_uColor.vsh in Resources */,
+				A0EC4B491403239700EC482A /* PositionColor.fsh in Resources */,
+				A0EC4B4A1403239700EC482A /* PositionColor.vsh in Resources */,
+				A0EC4B4B1403239700EC482A /* PositionTexture.fsh in Resources */,
+				A0EC4B4C1403239700EC482A /* PositionTexture.vsh in Resources */,
+				A0EC4B4D1403239700EC482A /* PositionTexture_uColor.fsh in Resources */,
+				A0EC4B4E1403239700EC482A /* PositionTexture_uColor.vsh in Resources */,
+				A0EC4B4F1403239700EC482A /* PositionTextureA8Color.fsh in Resources */,
+				A0EC4B501403239700EC482A /* PositionTextureA8Color.vsh in Resources */,
+				A0EC4B511403239700EC482A /* PositionTextureColor.fsh in Resources */,
+				A0EC4B521403239700EC482A /* PositionTextureColor.vsh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9666,7 +10545,6 @@
 				E02BB6A0126CA73F006E46A2 /* Icon-Small.png in Resources */,
 				E02BB6A1126CA73F006E46A2 /* Icon-Small-50.png in Resources */,
 				E02BB6A2126CA73F006E46A2 /* Icon-72.png in Resources */,
-				E0708A711342D16700D32F2C /* Shaders in Resources */,
 				A0600BFA13C2074600BB6F49 /* fps_images-hd.png in Resources */,
 				A0B0377B13EA1FDC0073E59A /* b1-ipad.png in Resources */,
 				A0B037AC13EA1FDD0073E59A /* b2-ipad.png in Resources */,
@@ -9674,6 +10552,18 @@
 				A0B0380E13EA1FE00073E59A /* f2-ipad.png in Resources */,
 				A0B0383F13EA1FE10073E59A /* r1-ipad.png in Resources */,
 				A0B0387013EA1FE20073E59A /* r2-ipad.png in Resources */,
+				A0EC4A9F1403238900EC482A /* Position_uColor.fsh in Resources */,
+				A0EC4AA01403238900EC482A /* Position_uColor.vsh in Resources */,
+				A0EC4AA11403238900EC482A /* PositionColor.fsh in Resources */,
+				A0EC4AA21403238900EC482A /* PositionColor.vsh in Resources */,
+				A0EC4AA31403238900EC482A /* PositionTexture.fsh in Resources */,
+				A0EC4AA41403238900EC482A /* PositionTexture.vsh in Resources */,
+				A0EC4AA51403238900EC482A /* PositionTexture_uColor.fsh in Resources */,
+				A0EC4AA61403238900EC482A /* PositionTexture_uColor.vsh in Resources */,
+				A0EC4AA71403238900EC482A /* PositionTextureA8Color.fsh in Resources */,
+				A0EC4AA81403238900EC482A /* PositionTextureA8Color.vsh in Resources */,
+				A0EC4AA91403238900EC482A /* PositionTextureColor.fsh in Resources */,
+				A0EC4AAA1403238900EC482A /* PositionTextureColor.vsh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9720,7 +10610,6 @@
 				E02BB65E126CA73F006E46A2 /* Icon-Small.png in Resources */,
 				E02BB65F126CA73F006E46A2 /* Icon-Small-50.png in Resources */,
 				E02BB660126CA73F006E46A2 /* Icon-72.png in Resources */,
-				E0708A821342D16700D32F2C /* Shaders in Resources */,
 				A0600C0A13C2075500BB6F49 /* fps_images-hd.png in Resources */,
 				A0B0378B13EA1FDC0073E59A /* b1-ipad.png in Resources */,
 				A0B037BC13EA1FDD0073E59A /* b2-ipad.png in Resources */,
@@ -9728,6 +10617,18 @@
 				A0B0381E13EA1FE00073E59A /* f2-ipad.png in Resources */,
 				A0B0384F13EA1FE10073E59A /* r1-ipad.png in Resources */,
 				A0B0388013EA1FE20073E59A /* r2-ipad.png in Resources */,
+				A0EC4B5F1403239A00EC482A /* Position_uColor.fsh in Resources */,
+				A0EC4B601403239A00EC482A /* Position_uColor.vsh in Resources */,
+				A0EC4B611403239A00EC482A /* PositionColor.fsh in Resources */,
+				A0EC4B621403239A00EC482A /* PositionColor.vsh in Resources */,
+				A0EC4B631403239A00EC482A /* PositionTexture.fsh in Resources */,
+				A0EC4B641403239A00EC482A /* PositionTexture.vsh in Resources */,
+				A0EC4B651403239A00EC482A /* PositionTexture_uColor.fsh in Resources */,
+				A0EC4B661403239A00EC482A /* PositionTexture_uColor.vsh in Resources */,
+				A0EC4B671403239A00EC482A /* PositionTextureA8Color.fsh in Resources */,
+				A0EC4B681403239A00EC482A /* PositionTextureA8Color.vsh in Resources */,
+				A0EC4B691403239A00EC482A /* PositionTextureColor.fsh in Resources */,
+				A0EC4B6A1403239A00EC482A /* PositionTextureColor.vsh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9758,7 +10659,6 @@
 				E02BB610126CA73F006E46A2 /* Icon-Small.png in Resources */,
 				E02BB611126CA73F006E46A2 /* Icon-Small-50.png in Resources */,
 				E02BB612126CA73F006E46A2 /* Icon-72.png in Resources */,
-				E0708A8B1342D16700D32F2C /* Shaders in Resources */,
 				A0600C1113C2075C00BB6F49 /* fps_images-hd.png in Resources */,
 				A0B0379313EA1FDC0073E59A /* b1-ipad.png in Resources */,
 				A0B037C413EA1FDE0073E59A /* b2-ipad.png in Resources */,
@@ -9766,6 +10666,18 @@
 				A0B0382613EA1FE00073E59A /* f2-ipad.png in Resources */,
 				A0B0385713EA1FE10073E59A /* r1-ipad.png in Resources */,
 				A0B0388813EA1FE20073E59A /* r2-ipad.png in Resources */,
+				A0EC4BBF140323A200EC482A /* Position_uColor.fsh in Resources */,
+				A0EC4BC0140323A200EC482A /* Position_uColor.vsh in Resources */,
+				A0EC4BC1140323A200EC482A /* PositionColor.fsh in Resources */,
+				A0EC4BC2140323A200EC482A /* PositionColor.vsh in Resources */,
+				A0EC4BC3140323A200EC482A /* PositionTexture.fsh in Resources */,
+				A0EC4BC4140323A200EC482A /* PositionTexture.vsh in Resources */,
+				A0EC4BC5140323A200EC482A /* PositionTexture_uColor.fsh in Resources */,
+				A0EC4BC6140323A200EC482A /* PositionTexture_uColor.vsh in Resources */,
+				A0EC4BC7140323A200EC482A /* PositionTextureA8Color.fsh in Resources */,
+				A0EC4BC8140323A200EC482A /* PositionTextureA8Color.vsh in Resources */,
+				A0EC4BC9140323A200EC482A /* PositionTextureColor.fsh in Resources */,
+				A0EC4BCA140323A200EC482A /* PositionTextureColor.vsh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9798,7 +10710,6 @@
 				E02BB676126CA73F006E46A2 /* Icon-Small.png in Resources */,
 				E02BB677126CA73F006E46A2 /* Icon-Small-50.png in Resources */,
 				E02BB678126CA73F006E46A2 /* Icon-72.png in Resources */,
-				E0708A7E1342D16700D32F2C /* Shaders in Resources */,
 				A0600C0613C2074F00BB6F49 /* fps_images-hd.png in Resources */,
 				A0B0378713EA1FDC0073E59A /* b1-ipad.png in Resources */,
 				A0B037B813EA1FDD0073E59A /* b2-ipad.png in Resources */,
@@ -9806,6 +10717,18 @@
 				A0B0381A13EA1FE00073E59A /* f2-ipad.png in Resources */,
 				A0B0384B13EA1FE10073E59A /* r1-ipad.png in Resources */,
 				A0B0387C13EA1FE20073E59A /* r2-ipad.png in Resources */,
+				A0EC4B2F1403239500EC482A /* Position_uColor.fsh in Resources */,
+				A0EC4B301403239500EC482A /* Position_uColor.vsh in Resources */,
+				A0EC4B311403239500EC482A /* PositionColor.fsh in Resources */,
+				A0EC4B321403239500EC482A /* PositionColor.vsh in Resources */,
+				A0EC4B331403239500EC482A /* PositionTexture.fsh in Resources */,
+				A0EC4B341403239500EC482A /* PositionTexture.vsh in Resources */,
+				A0EC4B351403239500EC482A /* PositionTexture_uColor.fsh in Resources */,
+				A0EC4B361403239500EC482A /* PositionTexture_uColor.vsh in Resources */,
+				A0EC4B371403239500EC482A /* PositionTextureA8Color.fsh in Resources */,
+				A0EC4B381403239500EC482A /* PositionTextureA8Color.vsh in Resources */,
+				A0EC4B391403239500EC482A /* PositionTextureColor.fsh in Resources */,
+				A0EC4B3A1403239500EC482A /* PositionTextureColor.vsh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9842,7 +10765,6 @@
 				E02BB5BC126CA73F006E46A2 /* Icon-Small.png in Resources */,
 				E02BB5BD126CA73F006E46A2 /* Icon-Small-50.png in Resources */,
 				E02BB5BE126CA73F006E46A2 /* Icon-72.png in Resources */,
-				E0708A9B1342D16700D32F2C /* Shaders in Resources */,
 				A0600C2213C2076D00BB6F49 /* fps_images-hd.png in Resources */,
 				A0B037A113EA1FDD0073E59A /* b1-ipad.png in Resources */,
 				A0B037D213EA1FDE0073E59A /* b2-ipad.png in Resources */,
@@ -9850,6 +10772,18 @@
 				A0B0383413EA1FE10073E59A /* f2-ipad.png in Resources */,
 				A0B0386513EA1FE10073E59A /* r1-ipad.png in Resources */,
 				A0B0389613EA1FE30073E59A /* r2-ipad.png in Resources */,
+				A0EC4C5B140323AE00EC482A /* Position_uColor.fsh in Resources */,
+				A0EC4C5C140323AE00EC482A /* Position_uColor.vsh in Resources */,
+				A0EC4C5D140323AE00EC482A /* PositionColor.fsh in Resources */,
+				A0EC4C5E140323AE00EC482A /* PositionColor.vsh in Resources */,
+				A0EC4C5F140323AE00EC482A /* PositionTexture.fsh in Resources */,
+				A0EC4C60140323AE00EC482A /* PositionTexture.vsh in Resources */,
+				A0EC4C61140323AE00EC482A /* PositionTexture_uColor.fsh in Resources */,
+				A0EC4C62140323AE00EC482A /* PositionTexture_uColor.vsh in Resources */,
+				A0EC4C63140323AE00EC482A /* PositionTextureA8Color.fsh in Resources */,
+				A0EC4C64140323AE00EC482A /* PositionTextureA8Color.vsh in Resources */,
+				A0EC4C65140323AE00EC482A /* PositionTextureColor.fsh in Resources */,
+				A0EC4C66140323AE00EC482A /* PositionTextureColor.vsh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9885,7 +10819,6 @@
 				E02BB5CE126CA73F006E46A2 /* Icon-Small.png in Resources */,
 				E02BB5CF126CA73F006E46A2 /* Icon-Small-50.png in Resources */,
 				E02BB5D0126CA73F006E46A2 /* Icon-72.png in Resources */,
-				E0708A961342D16700D32F2C /* Shaders in Resources */,
 				A0600C1D13C2076800BB6F49 /* fps_images-hd.png in Resources */,
 				A0B0379C13EA1FDD0073E59A /* b1-ipad.png in Resources */,
 				A0B037CD13EA1FDE0073E59A /* b2-ipad.png in Resources */,
@@ -9893,6 +10826,18 @@
 				A0B0382F13EA1FE00073E59A /* f2-ipad.png in Resources */,
 				A0B0386013EA1FE10073E59A /* r1-ipad.png in Resources */,
 				A0B0389113EA1FE30073E59A /* r2-ipad.png in Resources */,
+				A0EC4C1F140323AB00EC482A /* Position_uColor.fsh in Resources */,
+				A0EC4C20140323AB00EC482A /* Position_uColor.vsh in Resources */,
+				A0EC4C21140323AB00EC482A /* PositionColor.fsh in Resources */,
+				A0EC4C22140323AB00EC482A /* PositionColor.vsh in Resources */,
+				A0EC4C23140323AB00EC482A /* PositionTexture.fsh in Resources */,
+				A0EC4C24140323AB00EC482A /* PositionTexture.vsh in Resources */,
+				A0EC4C25140323AB00EC482A /* PositionTexture_uColor.fsh in Resources */,
+				A0EC4C26140323AB00EC482A /* PositionTexture_uColor.vsh in Resources */,
+				A0EC4C27140323AB00EC482A /* PositionTextureA8Color.fsh in Resources */,
+				A0EC4C28140323AB00EC482A /* PositionTextureA8Color.vsh in Resources */,
+				A0EC4C29140323AB00EC482A /* PositionTextureColor.fsh in Resources */,
+				A0EC4C2A140323AB00EC482A /* PositionTextureColor.vsh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9939,7 +10884,6 @@
 				E02BB60A126CA73F006E46A2 /* Icon-Small.png in Resources */,
 				E02BB60B126CA73F006E46A2 /* Icon-Small-50.png in Resources */,
 				E02BB60C126CA73F006E46A2 /* Icon-72.png in Resources */,
-				E0708A8C1342D16700D32F2C /* Shaders in Resources */,
 				A0600C1213C2075D00BB6F49 /* fps_images-hd.png in Resources */,
 				A0B0379413EA1FDC0073E59A /* b1-ipad.png in Resources */,
 				A0B037C513EA1FDE0073E59A /* b2-ipad.png in Resources */,
@@ -9947,6 +10891,18 @@
 				A0B0382713EA1FE00073E59A /* f2-ipad.png in Resources */,
 				A0B0385813EA1FE10073E59A /* r1-ipad.png in Resources */,
 				A0B0388913EA1FE30073E59A /* r2-ipad.png in Resources */,
+				A0EC4BCB140323A300EC482A /* Position_uColor.fsh in Resources */,
+				A0EC4BCC140323A300EC482A /* Position_uColor.vsh in Resources */,
+				A0EC4BCD140323A300EC482A /* PositionColor.fsh in Resources */,
+				A0EC4BCE140323A300EC482A /* PositionColor.vsh in Resources */,
+				A0EC4BCF140323A300EC482A /* PositionTexture.fsh in Resources */,
+				A0EC4BD0140323A300EC482A /* PositionTexture.vsh in Resources */,
+				A0EC4BD1140323A300EC482A /* PositionTexture_uColor.fsh in Resources */,
+				A0EC4BD2140323A300EC482A /* PositionTexture_uColor.vsh in Resources */,
+				A0EC4BD3140323A300EC482A /* PositionTextureA8Color.fsh in Resources */,
+				A0EC4BD4140323A300EC482A /* PositionTextureA8Color.vsh in Resources */,
+				A0EC4BD5140323A300EC482A /* PositionTextureColor.fsh in Resources */,
+				A0EC4BD6140323A300EC482A /* PositionTextureColor.vsh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9986,7 +10942,6 @@
 				E02BB688126CA73F006E46A2 /* Icon-Small.png in Resources */,
 				E02BB689126CA73F006E46A2 /* Icon-Small-50.png in Resources */,
 				E02BB68A126CA73F006E46A2 /* Icon-72.png in Resources */,
-				E0708A7B1342D16700D32F2C /* Shaders in Resources */,
 				A0600C0313C2074E00BB6F49 /* fps_images-hd.png in Resources */,
 				A0B0378413EA1FDC0073E59A /* b1-ipad.png in Resources */,
 				A0B037B513EA1FDD0073E59A /* b2-ipad.png in Resources */,
@@ -9994,6 +10949,18 @@
 				A0B0381713EA1FE00073E59A /* f2-ipad.png in Resources */,
 				A0B0384813EA1FE10073E59A /* r1-ipad.png in Resources */,
 				A0B0387913EA1FE20073E59A /* r2-ipad.png in Resources */,
+				A0EC4B0B1403239300EC482A /* Position_uColor.fsh in Resources */,
+				A0EC4B0C1403239300EC482A /* Position_uColor.vsh in Resources */,
+				A0EC4B0D1403239300EC482A /* PositionColor.fsh in Resources */,
+				A0EC4B0E1403239300EC482A /* PositionColor.vsh in Resources */,
+				A0EC4B0F1403239300EC482A /* PositionTexture.fsh in Resources */,
+				A0EC4B101403239300EC482A /* PositionTexture.vsh in Resources */,
+				A0EC4B111403239300EC482A /* PositionTexture_uColor.fsh in Resources */,
+				A0EC4B121403239300EC482A /* PositionTexture_uColor.vsh in Resources */,
+				A0EC4B131403239300EC482A /* PositionTextureA8Color.fsh in Resources */,
+				A0EC4B141403239300EC482A /* PositionTextureA8Color.vsh in Resources */,
+				A0EC4B151403239300EC482A /* PositionTextureColor.fsh in Resources */,
+				A0EC4B161403239300EC482A /* PositionTextureColor.vsh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10026,7 +10993,6 @@
 				E02BB652126CA73F006E46A2 /* Icon-Small.png in Resources */,
 				E02BB653126CA73F006E46A2 /* Icon-Small-50.png in Resources */,
 				E02BB654126CA73F006E46A2 /* Icon-72.png in Resources */,
-				E0708A841342D16700D32F2C /* Shaders in Resources */,
 				A0600C0813C2075400BB6F49 /* fps_images-hd.png in Resources */,
 				A0B0378D13EA1FDC0073E59A /* b1-ipad.png in Resources */,
 				A0B037BE13EA1FDE0073E59A /* b2-ipad.png in Resources */,
@@ -10034,6 +11000,18 @@
 				A0B0382013EA1FE00073E59A /* f2-ipad.png in Resources */,
 				A0B0385113EA1FE10073E59A /* r1-ipad.png in Resources */,
 				A0B0388213EA1FE20073E59A /* r2-ipad.png in Resources */,
+				A0EC4B771403239B00EC482A /* Position_uColor.fsh in Resources */,
+				A0EC4B781403239C00EC482A /* Position_uColor.vsh in Resources */,
+				A0EC4B791403239C00EC482A /* PositionColor.fsh in Resources */,
+				A0EC4B7A1403239C00EC482A /* PositionColor.vsh in Resources */,
+				A0EC4B7B1403239C00EC482A /* PositionTexture.fsh in Resources */,
+				A0EC4B7C1403239C00EC482A /* PositionTexture.vsh in Resources */,
+				A0EC4B7D1403239C00EC482A /* PositionTexture_uColor.fsh in Resources */,
+				A0EC4B7E1403239C00EC482A /* PositionTexture_uColor.vsh in Resources */,
+				A0EC4B7F1403239C00EC482A /* PositionTextureA8Color.fsh in Resources */,
+				A0EC4B801403239C00EC482A /* PositionTextureA8Color.vsh in Resources */,
+				A0EC4B811403239C00EC482A /* PositionTextureColor.fsh in Resources */,
+				A0EC4B821403239C00EC482A /* PositionTextureColor.vsh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10059,7 +11037,6 @@
 				E02BB5AA126CA73F006E46A2 /* Icon-Small.png in Resources */,
 				E02BB5AB126CA73F006E46A2 /* Icon-Small-50.png in Resources */,
 				E02BB5AC126CA73F006E46A2 /* Icon-72.png in Resources */,
-				E0708A6F1342D16700D32F2C /* Shaders in Resources */,
 				A0600BF813C2074500BB6F49 /* fps_images-hd.png in Resources */,
 				A0F37B7913C3B39E00F724DF /* grossini_dance_atlas-hd.png in Resources */,
 				A0B0377913EA1FDB0073E59A /* b1-ipad.png in Resources */,
@@ -10068,6 +11045,18 @@
 				A0B0380C13EA1FE00073E59A /* f2-ipad.png in Resources */,
 				A0B0383D13EA1FE10073E59A /* r1-ipad.png in Resources */,
 				A0B0386E13EA1FE20073E59A /* r2-ipad.png in Resources */,
+				A0EC4A871403238800EC482A /* Position_uColor.fsh in Resources */,
+				A0EC4A881403238800EC482A /* Position_uColor.vsh in Resources */,
+				A0EC4A891403238800EC482A /* PositionColor.fsh in Resources */,
+				A0EC4A8A1403238800EC482A /* PositionColor.vsh in Resources */,
+				A0EC4A8B1403238800EC482A /* PositionTexture.fsh in Resources */,
+				A0EC4A8C1403238800EC482A /* PositionTexture.vsh in Resources */,
+				A0EC4A8D1403238800EC482A /* PositionTexture_uColor.fsh in Resources */,
+				A0EC4A8E1403238800EC482A /* PositionTexture_uColor.vsh in Resources */,
+				A0EC4A8F1403238800EC482A /* PositionTextureA8Color.fsh in Resources */,
+				A0EC4A901403238800EC482A /* PositionTextureA8Color.vsh in Resources */,
+				A0EC4A911403238800EC482A /* PositionTextureColor.fsh in Resources */,
+				A0EC4A921403238800EC482A /* PositionTextureColor.vsh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10089,7 +11078,6 @@
 				E02BB5B0126CA73F006E46A2 /* Icon-Small.png in Resources */,
 				E02BB5B1126CA73F006E46A2 /* Icon-Small-50.png in Resources */,
 				E02BB5B2126CA73F006E46A2 /* Icon-72.png in Resources */,
-				E0708A701342D16700D32F2C /* Shaders in Resources */,
 				A0600BF913C2074500BB6F49 /* fps_images-hd.png in Resources */,
 				A0B0377A13EA1FDC0073E59A /* b1-ipad.png in Resources */,
 				A0B037AB13EA1FDD0073E59A /* b2-ipad.png in Resources */,
@@ -10097,6 +11085,18 @@
 				A0B0380D13EA1FE00073E59A /* f2-ipad.png in Resources */,
 				A0B0383E13EA1FE10073E59A /* r1-ipad.png in Resources */,
 				A0B0386F13EA1FE20073E59A /* r2-ipad.png in Resources */,
+				A0EC4A931403238800EC482A /* Position_uColor.fsh in Resources */,
+				A0EC4A941403238800EC482A /* Position_uColor.vsh in Resources */,
+				A0EC4A951403238800EC482A /* PositionColor.fsh in Resources */,
+				A0EC4A961403238800EC482A /* PositionColor.vsh in Resources */,
+				A0EC4A971403238800EC482A /* PositionTexture.fsh in Resources */,
+				A0EC4A981403238800EC482A /* PositionTexture.vsh in Resources */,
+				A0EC4A991403238800EC482A /* PositionTexture_uColor.fsh in Resources */,
+				A0EC4A9A1403238800EC482A /* PositionTexture_uColor.vsh in Resources */,
+				A0EC4A9B1403238800EC482A /* PositionTextureA8Color.fsh in Resources */,
+				A0EC4A9C1403238800EC482A /* PositionTextureA8Color.vsh in Resources */,
+				A0EC4A9D1403238800EC482A /* PositionTextureColor.fsh in Resources */,
+				A0EC4A9E1403238800EC482A /* PositionTextureColor.vsh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10132,7 +11132,6 @@
 				E02BB64C126CA73F006E46A2 /* Icon-Small.png in Resources */,
 				E02BB64D126CA73F006E46A2 /* Icon-Small-50.png in Resources */,
 				E02BB64E126CA73F006E46A2 /* Icon-72.png in Resources */,
-				E0708A851342D16700D32F2C /* Shaders in Resources */,
 				A0600C0713C2075300BB6F49 /* fps_images-hd.png in Resources */,
 				A0B0378E13EA1FDC0073E59A /* b1-ipad.png in Resources */,
 				A0B037BF13EA1FDE0073E59A /* b2-ipad.png in Resources */,
@@ -10140,6 +11139,18 @@
 				A0B0382113EA1FE00073E59A /* f2-ipad.png in Resources */,
 				A0B0385213EA1FE10073E59A /* r1-ipad.png in Resources */,
 				A0B0388313EA1FE20073E59A /* r2-ipad.png in Resources */,
+				A0EC4B831403239C00EC482A /* Position_uColor.fsh in Resources */,
+				A0EC4B841403239C00EC482A /* Position_uColor.vsh in Resources */,
+				A0EC4B851403239C00EC482A /* PositionColor.fsh in Resources */,
+				A0EC4B861403239C00EC482A /* PositionColor.vsh in Resources */,
+				A0EC4B871403239C00EC482A /* PositionTexture.fsh in Resources */,
+				A0EC4B881403239C00EC482A /* PositionTexture.vsh in Resources */,
+				A0EC4B891403239C00EC482A /* PositionTexture_uColor.fsh in Resources */,
+				A0EC4B8A1403239C00EC482A /* PositionTexture_uColor.vsh in Resources */,
+				A0EC4B8B1403239C00EC482A /* PositionTextureA8Color.fsh in Resources */,
+				A0EC4B8C1403239C00EC482A /* PositionTextureA8Color.vsh in Resources */,
+				A0EC4B8D1403239C00EC482A /* PositionTextureColor.fsh in Resources */,
+				A0EC4B8E1403239C00EC482A /* PositionTextureColor.vsh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10183,7 +11194,6 @@
 				E02BB5EC126CA73F006E46A2 /* Icon-Small.png in Resources */,
 				E02BB5ED126CA73F006E46A2 /* Icon-Small-50.png in Resources */,
 				E02BB5EE126CA73F006E46A2 /* Icon-72.png in Resources */,
-				E0708A911342D16700D32F2C /* Shaders in Resources */,
 				A0600C1813C2076300BB6F49 /* fps_images-hd.png in Resources */,
 				A0B0379A13EA1FDD0073E59A /* b1-ipad.png in Resources */,
 				A0B037CB13EA1FDE0073E59A /* b2-ipad.png in Resources */,
@@ -10191,6 +11201,18 @@
 				A0B0382D13EA1FE00073E59A /* f2-ipad.png in Resources */,
 				A0B0385E13EA1FE10073E59A /* r1-ipad.png in Resources */,
 				A0B0388F13EA1FE30073E59A /* r2-ipad.png in Resources */,
+				A0EC4C07140323A700EC482A /* Position_uColor.fsh in Resources */,
+				A0EC4C08140323A700EC482A /* Position_uColor.vsh in Resources */,
+				A0EC4C09140323A700EC482A /* PositionColor.fsh in Resources */,
+				A0EC4C0A140323A700EC482A /* PositionColor.vsh in Resources */,
+				A0EC4C0B140323A700EC482A /* PositionTexture.fsh in Resources */,
+				A0EC4C0C140323A700EC482A /* PositionTexture.vsh in Resources */,
+				A0EC4C0D140323A700EC482A /* PositionTexture_uColor.fsh in Resources */,
+				A0EC4C0E140323A700EC482A /* PositionTexture_uColor.vsh in Resources */,
+				A0EC4C0F140323A700EC482A /* PositionTextureA8Color.fsh in Resources */,
+				A0EC4C10140323A700EC482A /* PositionTextureA8Color.vsh in Resources */,
+				A0EC4C11140323A700EC482A /* PositionTextureColor.fsh in Resources */,
+				A0EC4C12140323A700EC482A /* PositionTextureColor.vsh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10198,6 +11220,18 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0EC4A4B1403238400EC482A /* Position_uColor.fsh in Resources */,
+				A0EC4A4C1403238400EC482A /* Position_uColor.vsh in Resources */,
+				A0EC4A4D1403238400EC482A /* PositionColor.fsh in Resources */,
+				A0EC4A4E1403238400EC482A /* PositionColor.vsh in Resources */,
+				A0EC4A4F1403238400EC482A /* PositionTexture.fsh in Resources */,
+				A0EC4A501403238400EC482A /* PositionTexture.vsh in Resources */,
+				A0EC4A511403238400EC482A /* PositionTexture_uColor.fsh in Resources */,
+				A0EC4A521403238400EC482A /* PositionTexture_uColor.vsh in Resources */,
+				A0EC4A531403238400EC482A /* PositionTextureA8Color.fsh in Resources */,
+				A0EC4A541403238400EC482A /* PositionTextureA8Color.vsh in Resources */,
+				A0EC4A551403238400EC482A /* PositionTextureColor.fsh in Resources */,
+				A0EC4A561403238400EC482A /* PositionTextureColor.vsh in Resources */,
 				500165A90E72DB7D0085673F /* r1.png in Resources */,
 				500165AA0E72DB7D0085673F /* r2.png in Resources */,
 				50B2CB3C0E10EE4A00AE9530 /* Default.png in Resources */,
@@ -10240,7 +11274,6 @@
 				E02BB592126CA73F006E46A2 /* Icon-Small.png in Resources */,
 				E02BB593126CA73F006E46A2 /* Icon-Small-50.png in Resources */,
 				E02BB594126CA73F006E46A2 /* Icon-72.png in Resources */,
-				E0708A6A1342D16700D32F2C /* Shaders in Resources */,
 				A0600BF313C2074000BB6F49 /* fps_images-hd.png in Resources */,
 				A0B0377413EA1FDB0073E59A /* b1-ipad.png in Resources */,
 				A0B037A513EA1FDD0073E59A /* b2-ipad.png in Resources */,
@@ -10284,7 +11317,6 @@
 				E02BB5C2126CA73F006E46A2 /* Icon-Small.png in Resources */,
 				E02BB5C3126CA73F006E46A2 /* Icon-Small-50.png in Resources */,
 				E02BB5C4126CA73F006E46A2 /* Icon-72.png in Resources */,
-				E0708A9A1342D16700D32F2C /* Shaders in Resources */,
 				A0600C2113C2076C00BB6F49 /* fps_images-hd.png in Resources */,
 				A0B037A013EA1FDD0073E59A /* b1-ipad.png in Resources */,
 				A0B037D113EA1FDE0073E59A /* b2-ipad.png in Resources */,
@@ -10292,6 +11324,18 @@
 				A0B0383313EA1FE00073E59A /* f2-ipad.png in Resources */,
 				A0B0386413EA1FE10073E59A /* r1-ipad.png in Resources */,
 				A0B0389513EA1FE30073E59A /* r2-ipad.png in Resources */,
+				A0EC4C4F140323AE00EC482A /* Position_uColor.fsh in Resources */,
+				A0EC4C50140323AE00EC482A /* Position_uColor.vsh in Resources */,
+				A0EC4C51140323AE00EC482A /* PositionColor.fsh in Resources */,
+				A0EC4C52140323AE00EC482A /* PositionColor.vsh in Resources */,
+				A0EC4C53140323AE00EC482A /* PositionTexture.fsh in Resources */,
+				A0EC4C54140323AE00EC482A /* PositionTexture.vsh in Resources */,
+				A0EC4C55140323AE00EC482A /* PositionTexture_uColor.fsh in Resources */,
+				A0EC4C56140323AE00EC482A /* PositionTexture_uColor.vsh in Resources */,
+				A0EC4C57140323AE00EC482A /* PositionTextureA8Color.fsh in Resources */,
+				A0EC4C58140323AE00EC482A /* PositionTextureA8Color.vsh in Resources */,
+				A0EC4C59140323AE00EC482A /* PositionTextureColor.fsh in Resources */,
+				A0EC4C5A140323AE00EC482A /* PositionTextureColor.vsh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10331,7 +11375,6 @@
 				E02BB682126CA73F006E46A2 /* Icon-Small.png in Resources */,
 				E02BB683126CA73F006E46A2 /* Icon-Small-50.png in Resources */,
 				E02BB684126CA73F006E46A2 /* Icon-72.png in Resources */,
-				E0708A7C1342D16700D32F2C /* Shaders in Resources */,
 				A0600C0413C2074E00BB6F49 /* fps_images-hd.png in Resources */,
 				A0B0378513EA1FDC0073E59A /* b1-ipad.png in Resources */,
 				A0B037B613EA1FDD0073E59A /* b2-ipad.png in Resources */,
@@ -10339,6 +11382,18 @@
 				A0B0381813EA1FE00073E59A /* f2-ipad.png in Resources */,
 				A0B0384913EA1FE10073E59A /* r1-ipad.png in Resources */,
 				A0B0387A13EA1FE20073E59A /* r2-ipad.png in Resources */,
+				A0EC4B171403239400EC482A /* Position_uColor.fsh in Resources */,
+				A0EC4B181403239400EC482A /* Position_uColor.vsh in Resources */,
+				A0EC4B191403239400EC482A /* PositionColor.fsh in Resources */,
+				A0EC4B1A1403239400EC482A /* PositionColor.vsh in Resources */,
+				A0EC4B1B1403239400EC482A /* PositionTexture.fsh in Resources */,
+				A0EC4B1C1403239400EC482A /* PositionTexture.vsh in Resources */,
+				A0EC4B1D1403239400EC482A /* PositionTexture_uColor.fsh in Resources */,
+				A0EC4B1E1403239400EC482A /* PositionTexture_uColor.vsh in Resources */,
+				A0EC4B1F1403239400EC482A /* PositionTextureA8Color.fsh in Resources */,
+				A0EC4B201403239400EC482A /* PositionTextureA8Color.vsh in Resources */,
+				A0EC4B211403239400EC482A /* PositionTextureColor.fsh in Resources */,
+				A0EC4B221403239400EC482A /* PositionTextureColor.vsh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10386,13 +11441,24 @@
 				E02BB648126CA73F006E46A2 /* Icon-72.png in Resources */,
 				E087B34F12785BB60076F6FF /* fps_images-hd.png in Resources */,
 				E0D2C5D412AF1067008D5DBB /* particles-hd.png in Resources */,
-				E0708A861342D16700D32F2C /* Shaders in Resources */,
 				A0B0378F13EA1FDC0073E59A /* b1-ipad.png in Resources */,
 				A0B037C013EA1FDE0073E59A /* b2-ipad.png in Resources */,
 				A0B037F113EA1FDF0073E59A /* f1-ipad.png in Resources */,
 				A0B0382213EA1FE00073E59A /* f2-ipad.png in Resources */,
 				A0B0385313EA1FE10073E59A /* r1-ipad.png in Resources */,
 				A0B0388413EA1FE20073E59A /* r2-ipad.png in Resources */,
+				A0EC4B8F1403239D00EC482A /* Position_uColor.fsh in Resources */,
+				A0EC4B901403239D00EC482A /* Position_uColor.vsh in Resources */,
+				A0EC4B911403239D00EC482A /* PositionColor.fsh in Resources */,
+				A0EC4B921403239D00EC482A /* PositionColor.vsh in Resources */,
+				A0EC4B931403239D00EC482A /* PositionTexture.fsh in Resources */,
+				A0EC4B941403239D00EC482A /* PositionTexture.vsh in Resources */,
+				A0EC4B951403239D00EC482A /* PositionTexture_uColor.fsh in Resources */,
+				A0EC4B961403239D00EC482A /* PositionTexture_uColor.vsh in Resources */,
+				A0EC4B971403239D00EC482A /* PositionTextureA8Color.fsh in Resources */,
+				A0EC4B981403239D00EC482A /* PositionTextureA8Color.vsh in Resources */,
+				A0EC4B991403239D00EC482A /* PositionTextureColor.fsh in Resources */,
+				A0EC4B9A1403239D00EC482A /* PositionTextureColor.vsh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10436,7 +11502,6 @@
 				E02BB672126CA73F006E46A2 /* Icon-72.png in Resources */,
 				E037D9E81281BBE8003D39D7 /* background1-hd.jpg in Resources */,
 				E037D9E91281BBE8003D39D7 /* background1.jpg in Resources */,
-				E0708A7F1342D16700D32F2C /* Shaders in Resources */,
 				A0600C0D13C2075900BB6F49 /* fps_images-hd.png in Resources */,
 				A0B0378813EA1FDC0073E59A /* b1-ipad.png in Resources */,
 				A0B037B913EA1FDD0073E59A /* b2-ipad.png in Resources */,
@@ -10444,6 +11509,18 @@
 				A0B0381B13EA1FE00073E59A /* f2-ipad.png in Resources */,
 				A0B0384C13EA1FE10073E59A /* r1-ipad.png in Resources */,
 				A0B0387D13EA1FE20073E59A /* r2-ipad.png in Resources */,
+				A0EC4B3B1403239600EC482A /* Position_uColor.fsh in Resources */,
+				A0EC4B3C1403239600EC482A /* Position_uColor.vsh in Resources */,
+				A0EC4B3D1403239600EC482A /* PositionColor.fsh in Resources */,
+				A0EC4B3E1403239600EC482A /* PositionColor.vsh in Resources */,
+				A0EC4B3F1403239600EC482A /* PositionTexture.fsh in Resources */,
+				A0EC4B401403239600EC482A /* PositionTexture.vsh in Resources */,
+				A0EC4B411403239600EC482A /* PositionTexture_uColor.fsh in Resources */,
+				A0EC4B421403239600EC482A /* PositionTexture_uColor.vsh in Resources */,
+				A0EC4B431403239600EC482A /* PositionTextureA8Color.fsh in Resources */,
+				A0EC4B441403239600EC482A /* PositionTextureA8Color.vsh in Resources */,
+				A0EC4B451403239600EC482A /* PositionTextureColor.fsh in Resources */,
+				A0EC4B461403239600EC482A /* PositionTextureColor.vsh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10479,7 +11556,6 @@
 				E02BB5C8126CA73F006E46A2 /* Icon-Small.png in Resources */,
 				E02BB5C9126CA73F006E46A2 /* Icon-Small-50.png in Resources */,
 				E02BB5CA126CA73F006E46A2 /* Icon-72.png in Resources */,
-				E0708A971342D16700D32F2C /* Shaders in Resources */,
 				A0600C1E13C2076900BB6F49 /* fps_images-hd.png in Resources */,
 				A0B0379D13EA1FDD0073E59A /* b1-ipad.png in Resources */,
 				A0B037CE13EA1FDE0073E59A /* b2-ipad.png in Resources */,
@@ -10487,6 +11563,18 @@
 				A0B0383013EA1FE00073E59A /* f2-ipad.png in Resources */,
 				A0B0386113EA1FE10073E59A /* r1-ipad.png in Resources */,
 				A0B0389213EA1FE30073E59A /* r2-ipad.png in Resources */,
+				A0EC4C2B140323AB00EC482A /* Position_uColor.fsh in Resources */,
+				A0EC4C2C140323AB00EC482A /* Position_uColor.vsh in Resources */,
+				A0EC4C2D140323AB00EC482A /* PositionColor.fsh in Resources */,
+				A0EC4C2E140323AB00EC482A /* PositionColor.vsh in Resources */,
+				A0EC4C2F140323AB00EC482A /* PositionTexture.fsh in Resources */,
+				A0EC4C30140323AB00EC482A /* PositionTexture.vsh in Resources */,
+				A0EC4C31140323AB00EC482A /* PositionTexture_uColor.fsh in Resources */,
+				A0EC4C32140323AB00EC482A /* PositionTexture_uColor.vsh in Resources */,
+				A0EC4C33140323AB00EC482A /* PositionTextureA8Color.fsh in Resources */,
+				A0EC4C34140323AB00EC482A /* PositionTextureA8Color.vsh in Resources */,
+				A0EC4C35140323AB00EC482A /* PositionTextureColor.fsh in Resources */,
+				A0EC4C36140323AB00EC482A /* PositionTextureColor.vsh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10523,7 +11611,6 @@
 				E02BB67C126CA73F006E46A2 /* Icon-Small.png in Resources */,
 				E02BB67D126CA73F006E46A2 /* Icon-Small-50.png in Resources */,
 				E02BB67E126CA73F006E46A2 /* Icon-72.png in Resources */,
-				E0708A7D1342D16700D32F2C /* Shaders in Resources */,
 				A0600C0513C2074F00BB6F49 /* fps_images-hd.png in Resources */,
 				A0B0378613EA1FDC0073E59A /* b1-ipad.png in Resources */,
 				A0B037B713EA1FDD0073E59A /* b2-ipad.png in Resources */,
@@ -10531,6 +11618,18 @@
 				A0B0381913EA1FE00073E59A /* f2-ipad.png in Resources */,
 				A0B0384A13EA1FE10073E59A /* r1-ipad.png in Resources */,
 				A0B0387B13EA1FE20073E59A /* r2-ipad.png in Resources */,
+				A0EC4B231403239400EC482A /* Position_uColor.fsh in Resources */,
+				A0EC4B241403239400EC482A /* Position_uColor.vsh in Resources */,
+				A0EC4B251403239400EC482A /* PositionColor.fsh in Resources */,
+				A0EC4B261403239400EC482A /* PositionColor.vsh in Resources */,
+				A0EC4B271403239400EC482A /* PositionTexture.fsh in Resources */,
+				A0EC4B281403239400EC482A /* PositionTexture.vsh in Resources */,
+				A0EC4B291403239400EC482A /* PositionTexture_uColor.fsh in Resources */,
+				A0EC4B2A1403239400EC482A /* PositionTexture_uColor.vsh in Resources */,
+				A0EC4B2B1403239400EC482A /* PositionTextureA8Color.fsh in Resources */,
+				A0EC4B2C1403239400EC482A /* PositionTextureA8Color.vsh in Resources */,
+				A0EC4B2D1403239400EC482A /* PositionTextureColor.fsh in Resources */,
+				A0EC4B2E1403239400EC482A /* PositionTextureColor.vsh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10553,7 +11652,6 @@
 				E02BC2BB1270E489006E46A2 /* Icon-Small.png in Resources */,
 				E02BC2BC1270E489006E46A2 /* Icon-Small-50.png in Resources */,
 				E02BC2BD1270E489006E46A2 /* Icon-72.png in Resources */,
-				E0708A991342D16700D32F2C /* Shaders in Resources */,
 				A0600C2013C2076B00BB6F49 /* fps_images-hd.png in Resources */,
 				A0B0379F13EA1FDD0073E59A /* b1-ipad.png in Resources */,
 				A0B037D013EA1FDE0073E59A /* b2-ipad.png in Resources */,
@@ -10561,6 +11659,18 @@
 				A0B0383213EA1FE00073E59A /* f2-ipad.png in Resources */,
 				A0B0386313EA1FE10073E59A /* r1-ipad.png in Resources */,
 				A0B0389413EA1FE30073E59A /* r2-ipad.png in Resources */,
+				A0EC4C43140323AD00EC482A /* Position_uColor.fsh in Resources */,
+				A0EC4C44140323AD00EC482A /* Position_uColor.vsh in Resources */,
+				A0EC4C45140323AD00EC482A /* PositionColor.fsh in Resources */,
+				A0EC4C46140323AD00EC482A /* PositionColor.vsh in Resources */,
+				A0EC4C47140323AD00EC482A /* PositionTexture.fsh in Resources */,
+				A0EC4C48140323AD00EC482A /* PositionTexture.vsh in Resources */,
+				A0EC4C49140323AD00EC482A /* PositionTexture_uColor.fsh in Resources */,
+				A0EC4C4A140323AD00EC482A /* PositionTexture_uColor.vsh in Resources */,
+				A0EC4C4B140323AD00EC482A /* PositionTextureA8Color.fsh in Resources */,
+				A0EC4C4C140323AD00EC482A /* PositionTextureA8Color.vsh in Resources */,
+				A0EC4C4D140323AD00EC482A /* PositionTextureColor.fsh in Resources */,
+				A0EC4C4E140323AD00EC482A /* PositionTextureColor.vsh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10600,7 +11710,6 @@
 				E037DA911281EFE2003D39D7 /* corner.png in Resources */,
 				E037DA921281EFE2003D39D7 /* edge.png in Resources */,
 				E037DA931281EFE2003D39D7 /* fill.png in Resources */,
-				E0708A981342D16700D32F2C /* Shaders in Resources */,
 				A0600C1F13C2076A00BB6F49 /* fps_images-hd.png in Resources */,
 				A0B0379E13EA1FDD0073E59A /* b1-ipad.png in Resources */,
 				A0B037CF13EA1FDE0073E59A /* b2-ipad.png in Resources */,
@@ -10608,6 +11717,18 @@
 				A0B0383113EA1FE00073E59A /* f2-ipad.png in Resources */,
 				A0B0386213EA1FE10073E59A /* r1-ipad.png in Resources */,
 				A0B0389313EA1FE30073E59A /* r2-ipad.png in Resources */,
+				A0EC4C37140323AC00EC482A /* Position_uColor.fsh in Resources */,
+				A0EC4C38140323AC00EC482A /* Position_uColor.vsh in Resources */,
+				A0EC4C39140323AC00EC482A /* PositionColor.fsh in Resources */,
+				A0EC4C3A140323AC00EC482A /* PositionColor.vsh in Resources */,
+				A0EC4C3B140323AC00EC482A /* PositionTexture.fsh in Resources */,
+				A0EC4C3C140323AC00EC482A /* PositionTexture.vsh in Resources */,
+				A0EC4C3D140323AC00EC482A /* PositionTexture_uColor.fsh in Resources */,
+				A0EC4C3E140323AC00EC482A /* PositionTexture_uColor.vsh in Resources */,
+				A0EC4C3F140323AC00EC482A /* PositionTextureA8Color.fsh in Resources */,
+				A0EC4C40140323AC00EC482A /* PositionTextureA8Color.vsh in Resources */,
+				A0EC4C41140323AC00EC482A /* PositionTextureColor.fsh in Resources */,
+				A0EC4C42140323AC00EC482A /* PositionTextureColor.vsh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10650,7 +11771,6 @@
 				E03A4F571355041F00D4B515 /* Icon-Small-50.png in Resources */,
 				E03A4F581355041F00D4B515 /* Icon-72.png in Resources */,
 				E03A4F591355041F00D4B515 /* piece.png in Resources */,
-				E03A4F5A1355041F00D4B515 /* Shaders in Resources */,
 				A0600C1313C2075E00BB6F49 /* fps_images-hd.png in Resources */,
 				A0B0379513EA1FDC0073E59A /* b1-ipad.png in Resources */,
 				A0B037C613EA1FDE0073E59A /* b2-ipad.png in Resources */,
@@ -10658,6 +11778,33 @@
 				A0B0382813EA1FE00073E59A /* f2-ipad.png in Resources */,
 				A0B0385913EA1FE10073E59A /* r1-ipad.png in Resources */,
 				A0B0388A13EA1FE30073E59A /* r2-ipad.png in Resources */,
+				A0EC4BD7140323A400EC482A /* Position_uColor.fsh in Resources */,
+				A0EC4BD8140323A400EC482A /* Position_uColor.vsh in Resources */,
+				A0EC4BD9140323A400EC482A /* PositionColor.fsh in Resources */,
+				A0EC4BDA140323A400EC482A /* PositionColor.vsh in Resources */,
+				A0EC4BDB140323A400EC482A /* PositionTexture.fsh in Resources */,
+				A0EC4BDC140323A400EC482A /* PositionTexture.vsh in Resources */,
+				A0EC4BDD140323A400EC482A /* PositionTexture_uColor.fsh in Resources */,
+				A0EC4BDE140323A400EC482A /* PositionTexture_uColor.vsh in Resources */,
+				A0EC4BDF140323A400EC482A /* PositionTextureA8Color.fsh in Resources */,
+				A0EC4BE0140323A400EC482A /* PositionTextureA8Color.vsh in Resources */,
+				A0EC4BE1140323A400EC482A /* PositionTextureColor.fsh in Resources */,
+				A0EC4BE2140323A400EC482A /* PositionTextureColor.vsh in Resources */,
+				A0EC4C7F140323C500EC482A /* Blur.fsh in Resources */,
+				A0EC4C80140323C500EC482A /* Flower.fsh in Resources */,
+				A0EC4C81140323C500EC482A /* Flower.vsh in Resources */,
+				A0EC4C82140323C500EC482A /* Heart.fsh in Resources */,
+				A0EC4C83140323C500EC482A /* Heart.vsh in Resources */,
+				A0EC4C84140323C500EC482A /* Julia.fsh in Resources */,
+				A0EC4C85140323C500EC482A /* Julia.vsh in Resources */,
+				A0EC4C86140323C500EC482A /* Mandelbrot.fsh in Resources */,
+				A0EC4C87140323C500EC482A /* Mandelbrot.vsh in Resources */,
+				A0EC4C88140323C500EC482A /* Monjori.fsh in Resources */,
+				A0EC4C89140323C500EC482A /* Monjori.vsh in Resources */,
+				A0EC4C8A140323C500EC482A /* Plasma.fsh in Resources */,
+				A0EC4C8B140323C500EC482A /* Plasma.vsh in Resources */,
+				A0EC4C8C140323C500EC482A /* Twist.fsh in Resources */,
+				A0EC4C8D140323C500EC482A /* Twist.vsh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10697,7 +11844,6 @@
 				E02BB5E6126CA73F006E46A2 /* Icon-Small.png in Resources */,
 				E02BB5E7126CA73F006E46A2 /* Icon-Small-50.png in Resources */,
 				E02BB5E8126CA73F006E46A2 /* Icon-72.png in Resources */,
-				E0708A921342D16700D32F2C /* Shaders in Resources */,
 				A0600C1913C2076500BB6F49 /* fps_images-hd.png in Resources */,
 				A0B0379B13EA1FDD0073E59A /* b1-ipad.png in Resources */,
 				A0B037CC13EA1FDE0073E59A /* b2-ipad.png in Resources */,
@@ -10705,6 +11851,18 @@
 				A0B0382E13EA1FE00073E59A /* f2-ipad.png in Resources */,
 				A0B0385F13EA1FE10073E59A /* r1-ipad.png in Resources */,
 				A0B0389013EA1FE30073E59A /* r2-ipad.png in Resources */,
+				A0EC4C13140323A800EC482A /* Position_uColor.fsh in Resources */,
+				A0EC4C14140323A800EC482A /* Position_uColor.vsh in Resources */,
+				A0EC4C15140323A800EC482A /* PositionColor.fsh in Resources */,
+				A0EC4C16140323A800EC482A /* PositionColor.vsh in Resources */,
+				A0EC4C17140323A800EC482A /* PositionTexture.fsh in Resources */,
+				A0EC4C18140323A800EC482A /* PositionTexture.vsh in Resources */,
+				A0EC4C19140323A800EC482A /* PositionTexture_uColor.fsh in Resources */,
+				A0EC4C1A140323A800EC482A /* PositionTexture_uColor.vsh in Resources */,
+				A0EC4C1B140323A800EC482A /* PositionTextureA8Color.fsh in Resources */,
+				A0EC4C1C140323A800EC482A /* PositionTextureA8Color.vsh in Resources */,
+				A0EC4C1D140323A800EC482A /* PositionTextureColor.fsh in Resources */,
+				A0EC4C1E140323A800EC482A /* PositionTextureColor.vsh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10741,7 +11899,6 @@
 				E0EA5693134B9CA800F212C8 /* Icon-Small.png in Resources */,
 				E0EA5694134B9CA800F212C8 /* Icon-Small-50.png in Resources */,
 				E0EA5695134B9CA800F212C8 /* Icon-72.png in Resources */,
-				E0EA5696134B9CA800F212C8 /* Shaders in Resources */,
 				A0600C2413C2076E00BB6F49 /* fps_images-hd.png in Resources */,
 				A0B037A313EA1FDD0073E59A /* b1-ipad.png in Resources */,
 				A0B037D413EA1FDE0073E59A /* b2-ipad.png in Resources */,
@@ -10749,6 +11906,18 @@
 				A0B0383613EA1FE10073E59A /* f2-ipad.png in Resources */,
 				A0B0386713EA1FE10073E59A /* r1-ipad.png in Resources */,
 				A0B0389813EA1FE30073E59A /* r2-ipad.png in Resources */,
+				A0EC4C73140323B000EC482A /* Position_uColor.fsh in Resources */,
+				A0EC4C74140323B000EC482A /* Position_uColor.vsh in Resources */,
+				A0EC4C75140323B000EC482A /* PositionColor.fsh in Resources */,
+				A0EC4C76140323B000EC482A /* PositionColor.vsh in Resources */,
+				A0EC4C77140323B000EC482A /* PositionTexture.fsh in Resources */,
+				A0EC4C78140323B000EC482A /* PositionTexture.vsh in Resources */,
+				A0EC4C79140323B000EC482A /* PositionTexture_uColor.fsh in Resources */,
+				A0EC4C7A140323B000EC482A /* PositionTexture_uColor.vsh in Resources */,
+				A0EC4C7B140323B000EC482A /* PositionTextureA8Color.fsh in Resources */,
+				A0EC4C7C140323B000EC482A /* PositionTextureA8Color.vsh in Resources */,
+				A0EC4C7D140323B000EC482A /* PositionTextureColor.fsh in Resources */,
+				A0EC4C7E140323B000EC482A /* PositionTextureColor.vsh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

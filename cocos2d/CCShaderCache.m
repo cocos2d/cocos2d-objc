@@ -83,8 +83,8 @@ static CCShaderCache *_sharedShaderCache;
 -(void) loadDefaultShaders
 {
 	// Position Texture Color shader
-	GLProgram *p = [[GLProgram alloc] initWithVertexShaderFilename:@"Shaders/PositionTextureColor.vsh"
-											fragmentShaderFilename:@"Shaders/PositionTextureColor.fsh"];
+	GLProgram *p = [[GLProgram alloc] initWithVertexShaderFilename:@"PositionTextureColor.vsh"
+											fragmentShaderFilename:@"PositionTextureColor.fsh"];
 	
 	[p addAttribute:kCCAttributeNamePosition index:kCCAttribPosition];
 	[p addAttribute:kCCAttributeNameColor index:kCCAttribColor];
@@ -99,8 +99,8 @@ static CCShaderCache *_sharedShaderCache;
 	//
 	// Position, Color shader
 	//
-	p = [[GLProgram alloc] initWithVertexShaderFilename:@"Shaders/PositionColor.vsh"
-								 fragmentShaderFilename:@"Shaders/PositionColor.fsh"];
+	p = [[GLProgram alloc] initWithVertexShaderFilename:@"PositionColor.vsh"
+								 fragmentShaderFilename:@"PositionColor.fsh"];
 	
 	[p addAttribute:kCCAttributeNamePosition index:kCCAttribPosition];
 	[p addAttribute:kCCAttributeNameColor index:kCCAttribColor];
@@ -114,8 +114,8 @@ static CCShaderCache *_sharedShaderCache;
 	//
 	// Position Texture shader
 	//
-	p = [[GLProgram alloc] initWithVertexShaderFilename:@"Shaders/PositionTexture.vsh"
-								 fragmentShaderFilename:@"Shaders/PositionTexture.fsh"];
+	p = [[GLProgram alloc] initWithVertexShaderFilename:@"PositionTexture.vsh"
+								 fragmentShaderFilename:@"PositionTexture.fsh"];
 	
 	[p addAttribute:kCCAttributeNamePosition index:kCCAttribPosition];
 	[p addAttribute:kCCAttributeNameTexCoord index:kCCAttribTexCoords];
@@ -129,8 +129,8 @@ static CCShaderCache *_sharedShaderCache;
 	//
 	// Position, Texture attribs, 1 Color as uniform shader
 	//
-	p = [[GLProgram alloc] initWithVertexShaderFilename:@"Shaders/PositionTexture_uColor.vsh"
-								 fragmentShaderFilename:@"Shaders/PositionTexture_uColor.fsh"];
+	p = [[GLProgram alloc] initWithVertexShaderFilename:@"PositionTexture_uColor.vsh"
+								 fragmentShaderFilename:@"PositionTexture_uColor.fsh"];
 	
 	[p addAttribute:kCCAttributeNamePosition index:kCCAttribPosition];
 	[p addAttribute:kCCAttributeNameTexCoord index:kCCAttribTexCoords];
@@ -144,8 +144,8 @@ static CCShaderCache *_sharedShaderCache;
 	//
 	// Position Texture A8 Color shader
 	//
-	p = [[GLProgram alloc] initWithVertexShaderFilename:@"Shaders/PositionTextureA8Color.vsh"
-								 fragmentShaderFilename:@"Shaders/PositionTextureA8Color.fsh"];
+	p = [[GLProgram alloc] initWithVertexShaderFilename:@"PositionTextureA8Color.vsh"
+								 fragmentShaderFilename:@"PositionTextureA8Color.fsh"];
 	
 	[p addAttribute:kCCAttributeNamePosition index:kCCAttribPosition];
 	[p addAttribute:kCCAttributeNameColor index:kCCAttribColor];
