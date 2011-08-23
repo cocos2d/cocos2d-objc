@@ -71,7 +71,7 @@
 @property (nonatomic, retain, readwrite) CCTexture2D *texture;
 
 /** texture file name of the frame */
-@property (nonatomic, retain, readwrite) NSString *textureFilename;
+@property (nonatomic, retain, readonly) NSString *textureFilename;
 
 /** Create a CCSpriteFrame with a texture, rect in points.
  It is assumed that the frame was not trimmed.
