@@ -46,8 +46,8 @@ GLESDebugDraw::GLESDebugDraw( float32 ratio )
 
 void GLESDebugDraw::initShader( void )
 {
-	mShaderProgram = [[GLProgram alloc] initWithVertexShaderFilename:@"Shaders/Position1Color.vsh"
-											  fragmentShaderFilename:@"Shaders/Position1Color.fsh"];
+	mShaderProgram = [[GLProgram alloc] initWithVertexShaderFilename:@"Position1Color.vsh"
+											  fragmentShaderFilename:@"Position1Color.fsh"];
 	
 	[mShaderProgram addAttribute:@"aVertex" index:kCCAttribPosition];
 	
