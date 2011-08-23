@@ -31,6 +31,30 @@ _template_open_body = """<?xml version="1.0" encoding="UTF-8"?>
 
 _template_close_body = "</dict>\n</plist>"
 
+_template_header_path= """<key>Targets</key>
+	<array>
+		<dict>
+			<key>SharedSettings</key>
+			<dict>
+				<key>HEADER_SEARCH_PATHS</key>
+				<string>%s</string>
+			</dict>
+		</dict>
+	</array>"""
+
+_template_user_header_path= """<key>Targets</key>
+	<array>
+		<dict>
+			<key>SharedSettings</key>
+			<dict>
+				<key>ALWAYS_SEARCH_USER_PATHS</key>
+				<string>YES</string>
+				<key>USER_HEADER_SEARCH_PATHS</key>
+				<string>%s</string>
+			</dict>
+		</dict>
+	</array>"""
+
 # python
 import sys
 import os
@@ -38,7 +62,7 @@ import getopt
 import glob
 
 class Xcode4Template(object):
-    def __init__( self, directory, group=0, identifier="XXX" ):
+    def __init__( self, directory, group=0, identifier="XXX", header_path=None, user_header_path=None ):
         self.directory = directory
         self.files_to_include = []
         self.wildcard = '*'
@@ -46,6 +70,8 @@ class Xcode4Template(object):
         self.group_start_index = group  # eg: if 1 then libs/cocos2d/support -> ["cocos2d", "support"] ignoring "libs"
         self.output = []
         self.identifier = identifier
+        self.header_path = header_path
+        self.user_header_path = user_header_path
 
     def scandirs(self, path):
         for currentFile in glob.glob( os.path.join(path, self.wildcard) ):
@@ -125,6 +151,16 @@ class Xcode4Template(object):
         self.output.append( output_open )
         self.output.append( "\n".join( output_body ) )
         self.output.append( output_close )
+
+    #
+    # Generates the include directory
+    #
+    def generate_header_path( self ):
+        if self.header_path:
+            self.output.append( _template_header_path % self.header_path )
+
+        if self.user_header_path:
+            self.output.append( _template_user_header_path % self.user_header_path )
       
     #
     # Generates the plist. Send it to to stdout
@@ -133,6 +169,7 @@ class Xcode4Template(object):
         self.output.append( _template_open_body % self.identifier )
         self.generate_definitions()
         self.generate_nodes()
+        self.generate_header_path()
         self.output.append( _template_close_body )
 
         print "\n".join( self.output )
@@ -144,11 +181,13 @@ class Xcode4Template(object):
 def help():
     print "%s v1.0 - An utility to generate Xcode 4 templates" % sys.argv[0]
     print "Usage:"
-    print "\t-g directory_used_as_starting_group (if 1, then 'libs/cocos2d/Support/' -> ['cocos2d','Support'] ignoring 'libs')"
-    print "\t-i identifier (Xcode4 template identifier)"
-    print "\tdirectory_to_parse"
+    print "-g --group\t\tdirectory_used_as_starting_group (if 1, then 'libs/cocos2d/Support/' -> ['cocos2d','Support'] ignoring 'libs')"
+    print "-i --identifier\t\tidentifier (Xcode4 template identifier)"
+    print "--header-path\t\theader search path"
+    print "--user-header-path\tuser header search path"
+    print "directory_to_parse"
     print "\nExample:"
-    print "\t%s -g 0 -i cocos2dlib cocos2d" % sys.argv[0]
+    print "\t%s -g 0 -i cocos2dlib --header-path ___PACKAGENAME___/libs/kazmath/include cocos2d" % sys.argv[0]
     sys.exit(-1)
 
 if __name__ == "__main__":
@@ -158,14 +197,24 @@ if __name__ == "__main__":
     directory = None
     group = 0
     identifier = None
+    header_path= None
+    user_header_path= None
     argv = sys.argv[1:]
     try:                                
-        opts, args = getopt.getopt(argv, "g:i:", ["group=","identifier="])
+        opts, args = getopt.getopt(argv, "g:i:", ["group=","identifier=","header-path=", "user-header-path="])
+
+        if len(args) == 0:
+            help()
+
         for opt, arg in opts:
             if opt in ("-g","--group"):
                 group = arg
             if opt in ("-i","--identifier"):
                 identifier = arg
+            if opt in  ["--header-path"]:
+                header_path= arg
+            if opt in  ["--user-header-path"]:
+                user_header_path= arg
     except getopt.GetoptError,e:
         print e
 
@@ -174,5 +223,5 @@ if __name__ == "__main__":
     if directory == None:
         help()
 
-    gen = Xcode4Template( directory=directory, group=int(group), identifier=identifier )
+    gen = Xcode4Template( directory=directory, group=int(group), identifier=identifier, header_path=header_path)
     gen.generate()

@@ -397,5 +397,15 @@
 		<string>libs/kazmath/src/vec4.c</string>
 		<string>libs/LICENSE_Kazmath.txt</string>
 	</array>
+<key>Targets</key>
+	<array>
+		<dict>
+			<key>SharedSettings</key>
+			<dict>
+				<key>HEADER_SEARCH_PATHS</key>
+				<string>___PACKAGENAME___/libs/kazmath/include</string>
+			</dict>
+		</dict>
+	</array>
 </dict>
 </plist>
