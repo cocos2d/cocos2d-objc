@@ -80,6 +80,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #import "ccMacros.h"
 #import "CCConfiguration.h"
 #import "CCTexturePVR.h"
+#import "GLProgram.h"
 #import "Support/ccUtils.h"
 #import "Support/CCFileUtils.h"
 
@@ -659,8 +660,9 @@ static BOOL PVRHaveAlphaPremultiplied_ = NO;
 	
 	glBindTexture( GL_TEXTURE_2D, name_ );
 
-	glVertexPointer(3, GL_FLOAT, 0, vertices);
-	glTexCoordPointer(2, GL_FLOAT, 0, coordinates);
+	glVertexAttribPointer(kCCAttribPosition, 3, GL_FLOAT, GL_FALSE, 0, vertices);
+	glVertexAttribPointer(kCCAttribTexCoords, 2, GL_FLOAT, GL_FALSE, 0, coordinates);
+
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 }
 
@@ -677,8 +679,8 @@ static BOOL PVRHaveAlphaPremultiplied_ = NO;
 							rect.origin.x + rect.size.width,		rect.origin.y + rect.size.height,		/*0.0f*/ };
 	
 	glBindTexture( GL_TEXTURE_2D, name_ );
-	glVertexPointer(2, GL_FLOAT, 0, vertices);
-	glTexCoordPointer(2, GL_FLOAT, 0, coordinates);
+	glVertexAttribPointer(kCCAttribPosition, 2, GL_FLOAT, GL_FALSE, 0, vertices);
+	glVertexAttribPointer(kCCAttribTexCoords, 2, GL_FLOAT, GL_FALSE, 0, coordinates);
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 }
 
