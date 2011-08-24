@@ -19,6 +19,9 @@
  * SOFTWARE.
  */
 
+/// @defgroup misc Misc
+/// @{
+
 #ifndef CHIPMUNK_HEADER
 #define CHIPMUNK_HEADER
 
@@ -27,7 +30,7 @@ extern "C" {
 #endif
 
 #ifndef CP_ALLOW_PRIVATE_ACCESS
-	#define CP_ALLOW_PRIVATE_ACCESS 1
+	#define CP_ALLOW_PRIVATE_ACCESS 0
 #endif
 
 #if CP_ALLOW_PRIVATE_ACCESS == 1
@@ -36,98 +39,111 @@ extern "C" {
 	#define CP_PRIVATE(symbol) symbol##_private
 #endif
 
-void cpMessage(const char *message, const char *condition, const char *file, int line, int isError);
+void cpMessage(const char *condition, const char *file, int line, int isError, const char *message, ...);
 #ifdef NDEBUG
-	#define	cpAssertWarn(condition, message)
+	#define	cpAssertWarn(condition, ...)
 #else
-	#define cpAssertWarn(condition, message) if(!(condition)) cpMessage(message, #condition, __FILE__, __LINE__, 0)
+	#define cpAssertWarn(condition, ...) //if(!(condition)) cpMessage(#condition, __FILE__, __LINE__, 0, __VA_ARGS__)
 #endif
 
+// Hard assertions are important and cheap to execute. They are not disabled by compiling as debug.
+#define cpAssertHard(condition, ...) if(!(condition)) cpMessage(#condition, __FILE__, __LINE__, 1, __VA_ARGS__)
+
 #ifdef NDEBUG
-	#define	cpAssert(condition, message)
+	#define	cpAssertSoft(condition, ...)
 #else
-	#define cpAssert(condition, message) if(!(condition)) cpMessage(message, #condition, __FILE__, __LINE__, 1)
+	#define cpAssertSoft(condition, ...) //cpAssertHard(condition, __VA_ARGS__)
 #endif
+
 
 #include "chipmunk_types.h"
 	
-// Maximum allocated size for various Chipmunk buffers
-#define CP_BUFFER_BYTES (32*1024)
+// Allocated size for various Chipmunk buffers
+#ifndef CP_BUFFER_BYTES
+	#define CP_BUFFER_BYTES (32*1024)
+#endif
 
-#define cpmalloc malloc
-#define cpcalloc calloc
-#define cprealloc realloc
-#define cpfree free
+// Chipmunk memory function aliases.
+#ifndef cpcalloc
+	#define cpcalloc calloc
+#endif
+
+#ifndef cprealloc
+	#define cprealloc realloc
+#endif
+
+#ifndef cpfree
+	#define cpfree free
+#endif
+
+typedef struct cpArray cpArray;
+typedef struct cpHashSet cpHashSet;
+
+typedef struct cpBody cpBody;
+typedef struct cpShape cpShape;
+typedef struct cpConstraint cpConstraint;
+
+typedef struct cpCollisionHandler cpCollisionHandler;
+typedef struct cpArbiter cpArbiter;
+
+typedef struct cpSpace cpSpace;
 
 #include "cpVect.h"
 #include "cpBB.h"
-#include "cpArray.h"
-#include "cpHashSet.h"
-#include "cpSpaceHash.h"
+#include "cpSpatialIndex.h"
 
 #include "cpBody.h"
 #include "cpShape.h"
 #include "cpPolyShape.h"
 
-#include "cpArbiter.h"
-#include "cpCollision.h"
-	
+#include "cpArbiter.h"	
 #include "constraints/cpConstraint.h"
 
 #include "cpSpace.h"
 
-#define CP_HASH_COEF (3344921057ul)
-#define CP_HASH_PAIR(A, B) ((cpHashValue)(A)*CP_HASH_COEF ^ (cpHashValue)(B)*CP_HASH_COEF)
+#define CP_VERSION_MAJOR 6
+#define CP_VERSION_MINOR 0
+#define CP_VERSION_RELEASE 1
 
+/// Version string.
 extern const char *cpVersionString;
+
+/// @deprecated
 void cpInitChipmunk(void);
 
-/**
-	Calculate the moment of inertia for a circle.
-	r1 and r2 are the inner and outer diameters. A solid circle has an inner diameter of 0.
-*/
+/// Calculate the moment of inertia for a circle.
+/// @c r1 and @c r2 are the inner and outer diameters. A solid circle has an inner diameter of 0.
 cpFloat cpMomentForCircle(cpFloat m, cpFloat r1, cpFloat r2, cpVect offset);
 
-/**
-	Calculate area of a hollow circle.
-*/
+/// Calculate area of a hollow circle.
+/// @c r1 and @c r2 are the inner and outer diameters. A solid circle has an inner diameter of 0.
 cpFloat cpAreaForCircle(cpFloat r1, cpFloat r2);
 
-/**
-	Calculate the moment of inertia for a line segment.
-	Beveling radius is not supported.
-*/
+/// Calculate the moment of inertia for a line segment.
+/// Beveling radius is not supported.
 cpFloat cpMomentForSegment(cpFloat m, cpVect a, cpVect b);
 
-/**
-	Calculate the area of a fattened (capsule shaped) line segment.
-*/
+/// Calculate the area of a fattened (capsule shaped) line segment.
 cpFloat cpAreaForSegment(cpVect a, cpVect b, cpFloat r);
 
-/**
-	Calculate the moment of inertia for a solid polygon shape assuming it's center of gravity is at it's centroid. The offset is added to each vertex.
-*/
+/// Calculate the moment of inertia for a solid polygon shape assuming it's center of gravity is at it's centroid. The offset is added to each vertex.
 cpFloat cpMomentForPoly(cpFloat m, int numVerts, const cpVect *verts, cpVect offset);
 
-/**
-	Calculate the signed area of a polygon.
-*/
+/// Calculate the signed area of a polygon. A Clockwise winding gives positive area.
+/// This is probably backwards from what you expect, but matches Chipmunk's the winding for poly shapes.
 cpFloat cpAreaForPoly(const int numVerts, const cpVect *verts);
 
-/**
-	Calculate the natural centroid of a polygon.
-*/
+/// Calculate the natural centroid of a polygon.
 cpVect cpCentroidForPoly(const int numVerts, const cpVect *verts);
 
-/**
-	Center the polygon on the origin. (Subtracts the centroid of the polygon from each vertex)
-*/
+/// Center the polygon on the origin. (Subtracts the centroid of the polygon from each vertex)
 void cpRecenterPoly(const int numVerts, cpVect *verts);
 
-/**
-	Calculate the moment of inertia for a solid box.
-*/
+/// Calculate the moment of inertia for a solid box.
 cpFloat cpMomentForBox(cpFloat m, cpFloat width, cpFloat height);
+
+/// Calculate the moment of inertia for a solid box.
+cpFloat cpMomentForBox2(cpFloat m, cpBB box);
 
 #ifdef __cplusplus
 }
@@ -139,5 +155,5 @@ static inline cpBool operator ==(const cpVect v1, const cpVect v2){return cpveql
 static inline cpVect operator -(const cpVect v){return cpvneg(v);}
 
 #endif
-
 #endif
+//@}

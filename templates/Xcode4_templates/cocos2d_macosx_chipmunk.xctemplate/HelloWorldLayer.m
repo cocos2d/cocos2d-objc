@@ -15,16 +15,15 @@ enum {
 };
 
 static void
-eachShape(void *ptr, void* unused)
+eachShape(cpShape *shape, void* unused)
 {
-	cpShape *shape = (cpShape*) ptr;
 	CCSprite *sprite = shape->data;
 	if( sprite ) {
 		cpBody *body = shape->body;
 		
-		// TIP: cocos2d and chipmunk uses the same struct to store it's position
-		// chipmunk uses: cpVect, and cocos2d uses CGPoint but in reality the are the same
-		// since v0.7.1 you can mix them if you want.		
+		// TIP: cocos2d and chipmunk uses the same struct to store its position
+		// chipmunk uses: cpVect, and cocos2d uses CGPoint but they are the same.
+		
 		[sprite setPosition: body->p];
 		
 		[sprite setRotation: (float) CC_RADIANS_TO_DEGREES( -body->a )];
@@ -103,11 +102,8 @@ eachShape(void *ptr, void* unused)
 		
 		cpBody *staticBody = cpBodyNew(INFINITY, INFINITY);
 		space = cpSpaceNew();
-		cpSpaceResizeStaticHash(space, 400.0f, 40);
-		cpSpaceResizeActiveHash(space, 100, 600);
 		
 		space->gravity = ccp(0, -100);
-		space->elasticIterations = space->iterations;
 		
 		cpShape *shape;
 		
@@ -160,8 +156,7 @@ eachShape(void *ptr, void* unused)
 	for(int i=0; i<steps; i++){
 		cpSpaceStep(space, dt);
 	}
-	cpSpaceHashEach(space->activeShapes, &eachShape, nil);
-	cpSpaceHashEach(space->staticShapes, &eachShape, nil);
+	cpSpaceEachShape(space, &eachShape, nil);
 }
 
 

@@ -20,14 +20,16 @@
  */
 
 #include <stdlib.h>
+#include <math.h>
 
 #include "chipmunk_private.h"
 #include "constraints/util.h"
 
 static void
-preStep(cpSlideJoint *joint, cpFloat dt, cpFloat dt_inv)
+preStep(cpSlideJoint *joint, cpFloat dt)
 {
-	CONSTRAINT_BEGIN(joint, a, b);
+	cpBody *a = joint->constraint.a;
+	cpBody *b = joint->constraint.b;
 	
 	joint->r1 = cpvrotate(joint->anchr1, a->rot);
 	joint->r2 = cpvrotate(joint->anchr2, b->rot);
@@ -48,19 +50,23 @@ preStep(cpSlideJoint *joint, cpFloat dt, cpFloat dt_inv)
 	
 	// calculate bias velocity
 	cpFloat maxBias = joint->constraint.maxBias;
-	joint->bias = cpfclamp(-joint->constraint.biasCoef*dt_inv*(pdist), -maxBias, maxBias);
+	joint->bias = cpfclamp(-bias_coef(joint->constraint.errorBias, dt)*pdist/dt, -maxBias, maxBias);
 	
 	// compute max impulse
 	joint->jnMax = J_MAX(joint, dt);
+	
+	// if bias is 0, then the joint is not at a limit. Reset cached impulse.
+	if(!joint->bias) joint->jnAcc = 0.0f;
+}
 
-	// apply accumulated impulse
-	if(!joint->bias) //{
-		// if bias is 0, then the joint is not at a limit.
-		joint->jnAcc = 0.0f;
-//	} else {
-		cpVect j = cpvmult(joint->n, joint->jnAcc);
-		apply_impulses(a, b, joint->r1, joint->r2, j);
-//	}
+static void
+applyCachedImpulse(cpSlideJoint *joint, cpFloat dt_coef)
+{
+	cpBody *a = joint->constraint.a;
+	cpBody *b = joint->constraint.b;
+	
+	cpVect j = cpvmult(joint->n, joint->jnAcc*dt_coef);
+	apply_impulses(a, b, joint->r1, joint->r2, j);
 }
 
 static void
@@ -68,7 +74,8 @@ applyImpulse(cpSlideJoint *joint)
 {
 	if(!joint->bias) return;  // early exit
 
-	CONSTRAINT_BEGIN(joint, a, b);
+	cpBody *a = joint->constraint.a;
+	cpBody *b = joint->constraint.b;
 	
 	cpVect n = joint->n;
 	cpVect r1 = joint->r1;
@@ -95,9 +102,10 @@ getImpulse(cpConstraint *joint)
 }
 
 static const cpConstraintClass klass = {
-	(cpConstraintPreStepFunction)preStep,
-	(cpConstraintApplyImpulseFunction)applyImpulse,
-	(cpConstraintGetImpulseFunction)getImpulse,
+	(cpConstraintPreStepImpl)preStep,
+	(cpConstraintApplyCachedImpulseImpl)applyCachedImpulse,
+	(cpConstraintApplyImpulseImpl)applyImpulse,
+	(cpConstraintGetImpulseImpl)getImpulse,
 };
 CP_DefineClassGetter(cpSlideJoint)
 
