@@ -24,9 +24,13 @@
 
 #import "ccTypes.h"
 
-void ccVertexesLineToPolygon(CGPoint *points, float stroke, ccVertex2F *vertices, ccTex2F *texCoords, NSUInteger offset, NSUInteger nuPoints);
+/** @file CCVertex */
 
-BOOL ccVertexesLineIntersect(float Ax, float Ay,
+/** converts a line to a polygon */
+void ccVertexLineToPolygon(CGPoint *points, float stroke, ccVertex2F *vertices, ccTex2F *texCoords, NSUInteger offset, NSUInteger nuPoints);
+
+/** returns wheter or not the line intersects */
+BOOL ccVertexLineIntersect(float Ax, float Ay,
                              float Bx, float By,
                              float Cx, float Cy,
                              float Dx, float Dy, float *T);
