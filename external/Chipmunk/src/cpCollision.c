@@ -55,7 +55,7 @@ circle2circleQuery(const cpVect p1, const cpVect p2, const cpFloat r1, const cpF
 static int
 circle2circle(const cpShape *shape1, const cpShape *shape2, cpContact *arr)
 {
-	cpCircleShape *circ1 = (cpCircleShape *)shape1;
+	cpCircleShape *circ1 = (cpCircleShape *)shape1; //TODO
 	cpCircleShape *circ2 = (cpCircleShape *)shape2;
 	
 	return circle2circleQuery(circ1->tc, circ2->tc, circ1->r, circ2->r, arr);
@@ -279,10 +279,11 @@ seg2poly(const cpShape *shape1, const cpShape *shape2, cpContact *arr)
 		cpContactInit(nextContactPoint(arr, &num), va, poly_n, poly_min, CP_HASH_PAIR(seg->shape.hashid, 0));
 	if(cpPolyShapeContainsVert(poly, vb))
 		cpContactInit(nextContactPoint(arr, &num), vb, poly_n, poly_min, CP_HASH_PAIR(seg->shape.hashid, 1));
-
+	
 	// Floating point precision problems here.
 	// This will have to do for now.
-	poly_min -= cp_collision_slop;
+//	poly_min -= cp_collision_slop; // TODO is this needed anymore?
+	
 	if(minNorm >= poly_min || minNeg >= poly_min) {
 		if(minNorm > minNeg)
 			findPointsBehindSeg(arr, &num, seg, poly, minNorm, 1.0f);
@@ -356,55 +357,55 @@ circle2poly(const cpShape *shape1, const cpShape *shape2, cpContact *con)
 	}
 }
 
-//static const collisionFunc builtinCollisionFuncs[9] = {
-//	circle2circle,
-//	NULL,
-//	NULL,
-//	circle2segment,
-//	NULL,
-//	NULL,
-//	circle2poly,
-//	seg2poly,
-//	poly2poly,
-//};
-//static const collisionFunc *colfuncs = builtinCollisionFuncs;
+static const collisionFunc builtinCollisionFuncs[9] = {
+	circle2circle,
+	NULL,
+	NULL,
+	circle2segment,
+	NULL,
+	NULL,
+	circle2poly,
+	seg2poly,
+	poly2poly,
+};
+static const collisionFunc *colfuncs = builtinCollisionFuncs;
 
-static collisionFunc *colfuncs = NULL;
-
-static void
-addColFunc(const cpShapeType a, const cpShapeType b, const collisionFunc func)
-{
-	colfuncs[a + b*CP_NUM_SHAPES] = func;
-}
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-	void cpInitCollisionFuncs(void);
-	
-	// Initializes the array of collision functions.
-	// Called by cpInitChipmunk().
-	void
-	cpInitCollisionFuncs(void)
-	{
-		if(!colfuncs)
-			colfuncs = (collisionFunc *)cpcalloc(CP_NUM_SHAPES*CP_NUM_SHAPES, sizeof(collisionFunc));
-		
-		addColFunc(CP_CIRCLE_SHAPE,  CP_CIRCLE_SHAPE,  circle2circle);
-		addColFunc(CP_CIRCLE_SHAPE,  CP_SEGMENT_SHAPE, circle2segment);
-		addColFunc(CP_SEGMENT_SHAPE, CP_POLY_SHAPE,    seg2poly);
-		addColFunc(CP_CIRCLE_SHAPE,  CP_POLY_SHAPE,    circle2poly);
-		addColFunc(CP_POLY_SHAPE,    CP_POLY_SHAPE,    poly2poly);
-	}	
-#ifdef __cplusplus
-}
-#endif
+//static collisionFunc *colfuncs = NULL;
+//
+//static void
+//addColFunc(const cpShapeType a, const cpShapeType b, const collisionFunc func)
+//{
+//	colfuncs[a + b*CP_NUM_SHAPES] = func;
+//}
+//
+//#ifdef __cplusplus
+//extern "C" {
+//#endif
+//	void cpInitCollisionFuncs(void);
+//	
+//	// Initializes the array of collision functions.
+//	// Called by cpInitChipmunk().
+//	void
+//	cpInitCollisionFuncs(void)
+//	{
+//		if(!colfuncs)
+//			colfuncs = (collisionFunc *)cpcalloc(CP_NUM_SHAPES*CP_NUM_SHAPES, sizeof(collisionFunc));
+//		
+//		addColFunc(CP_CIRCLE_SHAPE,  CP_CIRCLE_SHAPE,  circle2circle);
+//		addColFunc(CP_CIRCLE_SHAPE,  CP_SEGMENT_SHAPE, circle2segment);
+//		addColFunc(CP_SEGMENT_SHAPE, CP_POLY_SHAPE,    seg2poly);
+//		addColFunc(CP_CIRCLE_SHAPE,  CP_POLY_SHAPE,    circle2poly);
+//		addColFunc(CP_POLY_SHAPE,    CP_POLY_SHAPE,    poly2poly);
+//	}	
+//#ifdef __cplusplus
+//}
+//#endif
 
 int
 cpCollideShapes(const cpShape *a, const cpShape *b, cpContact *arr)
 {
 	// Their shape types must be in order.
-	cpAssert(a->klass->type <= b->klass->type, "Collision shapes passed to cpCollideShapes() are not sorted.");
+	cpAssertSoft(a->klass->type <= b->klass->type, "Collision shapes passed to cpCollideShapes() are not sorted.");
 	
 	collisionFunc cfunc = colfuncs[a->klass->type + b->klass->type*CP_NUM_SHAPES];
 	return (cfunc) ? cfunc(a, b, arr) : 0;

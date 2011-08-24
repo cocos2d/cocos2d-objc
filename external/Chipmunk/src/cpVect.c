@@ -22,12 +22,12 @@
 #include <stdio.h>
 #include <math.h>
 
-#include "chipmunk.h"
+#include "chipmunk_private.h"
 
 cpFloat
 cpvlength(const cpVect v)
 {
-	return cpfsqrt( cpvdot(v, v) );
+	return cpfsqrt(cpvdot(v, v));
 }
 
 inline cpVect
