@@ -77,6 +77,16 @@ Class restartAction()
 		item3.position = ccp( s.width/2 + 100,30);
 		[self addChild: menu z:1];
 		
+		
+		CCMenuItemToggle *itemMode = [CCMenuItemToggle itemWithTarget:self
+														  selector:@selector(modeCallback:)
+															 items: [CCMenuItemFont itemFromString: @"Fast"], [CCMenuItemFont itemFromString: @"Slow"], nil];
+		
+		CCMenu *menuMode = [CCMenu menuWithItems:itemMode, nil];
+		[self addChild:menuMode];
+		
+		[menuMode setPosition:ccp(30,65)];
+		
 	}
 	return self;
 }
@@ -87,6 +97,11 @@ Class restartAction()
 	[[CCTextureCache sharedTextureCache] removeUnusedTextures];
 }
 
+-(void) modeCallback: (id) sender
+{
+	BOOL fastMode = [streak_ isFastMode];
+	[streak_ setFastMode: ! fastMode];
+}
 -(void) restartCallback: (id) sender
 {
 	CCScene *s = [CCScene node];
@@ -143,8 +158,9 @@ Class restartAction()
 	[target setPosition:ccp(100,0)];
 
 	// create the streak object and add it to the scene
-	streak = [CCMotionStreak streakWithFade:2 minSeg:3 width:32 color:ccGREEN image:@"streak.png"];
+	streak = [CCMotionStreak streakWithFade:2 minSeg:3 width:32 color:ccGREEN textureFilename:@"streak.png"];
 	[self addChild:streak];
+	
 	// schedule an update on each frame so we can syncronize the streak with the target
 	[self schedule:@selector(onUpdate:)];
   
@@ -167,6 +183,10 @@ Class restartAction()
                                                                   ]
                                 ];
     [streak runAction:colorAction];
+	
+	
+	// weak ref
+	streak_ = streak;
 }
 
 -(void)onUpdate:(ccTime)delta
@@ -196,10 +216,14 @@ Class restartAction()
 	CGSize s = [[CCDirector sharedDirector] winSize];
 		
 	// create the streak object and add it to the scene
-	streak = [CCMotionStreak streakWithFade:3 minSeg:3 width:64 color:ccWHITE image:@"streak.png"];
+	streak = [CCMotionStreak streakWithFade:3 minSeg:3 width:64 color:ccWHITE textureFilename:@"streak.png"];
 	[self addChild:streak];
 	
 	streak.position = ccp(s.width/2, s.height/2);
+	
+	
+	// weak ref
+	streak_ = streak;
 }
 
 -(void)ccTouchesMoved:(NSSet *)touches withEvent:(UIEvent *)event

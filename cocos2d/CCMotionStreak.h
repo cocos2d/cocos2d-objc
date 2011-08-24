@@ -29,12 +29,9 @@
 #import "ccTypes.h"
 #import "CCNode.h"
 
-enum
-{
-    kCCMotionStreak_Fast_Mode,
-    kCCMotionStreak_Slow_Mode,
-};
-
+/** MotionStreak.
+ Creates a trailing path.
+ */
 @interface CCMotionStreak : CCNode <CCTextureProtocol, CCRGBAProtocol>
 {
     CCTexture2D *texture_;
@@ -57,27 +54,31 @@ enum
     unsigned char *colorPointer_;
     ccTex2F *texCoords_;
     
-    char mode_;
+    BOOL	fastMode_;
 }
+/** blending function */
 @property (nonatomic, readwrite, assign) ccBlendFunc blendFunc;
-@property (nonatomic, readwrite, assign) char mode;
+
+/** When fast mode is enbled, new points are added faster but with lower precision */
+@property (nonatomic, readwrite, assign, getter = isFastMode) BOOL fastMode;
+
+/** texture used for the motion streak */
 @property (nonatomic, retain) CCTexture2D *texture;
 
-+ (id) streakWithFade:(float)fade minSeg:(float)minSeg width:(float)stroke color:(ccColor3B)color image:(NSString*)path;
+/** creates and initializes a motion streak with fade in seconds, minimum segments, stroke's width, color, texture filename */
++ (id) streakWithFade:(float)fade minSeg:(float)minSeg width:(float)stroke color:(ccColor3B)color textureFilename:(NSString*)path;
+/** creates and initializes a motion streak with fade in seconds, minimum segments, stroke's width, color, texture */
 + (id) streakWithFade:(float)fade minSeg:(float)minSeg width:(float)stroke color:(ccColor3B)color texture:(CCTexture2D*)texture;
 
-- (id) initWithFade:(float)fade minSeg:(float)minSeg width:(float)stroke color:(ccColor3B)color image:(NSString*)path;
+/** initializes a motion streak with fade in seconds, minimum segments, stroke's width, color and texture filename */
+- (id) initWithFade:(float)fade minSeg:(float)minSeg width:(float)stroke color:(ccColor3B)color textureFilename:(NSString*)path;
+/** initializes a motion streak with fade in seconds, minimum segments, stroke's width, color and texture  */
 - (id) initWithFade:(float)fade minSeg:(float)minSeg width:(float)stroke color:(ccColor3B)color texture:(CCTexture2D*)texture;
 
+/** color used for the tint */
 - (void) tintWithColor:(ccColor3B)colors;
 
-- (void) update:(ccTime)delta;
-
-// Remove all living segments of the ribbon
+/** Remove all living segments of the ribbon */
 - (void) reset;
-
-// Deprecated
-//+ (id)streakWithFade:(float)fade minSeg:(float)seg image:(NSString*)path width:(float)width length:(float)length color:(ccColor4B)color;
-//- (id)initWithFade:(float)fade minSeg:(float)seg image:(NSString*)path width:(float)width length:(float)length color:(ccColor4B)color;
 
 @end

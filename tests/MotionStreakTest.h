@@ -13,7 +13,9 @@
 @end
 
 @interface MotionStreakTest : CCLayer
-{}
+{
+	CCMotionStreak *streak_;
+}
 
 -(NSString*) title;
 

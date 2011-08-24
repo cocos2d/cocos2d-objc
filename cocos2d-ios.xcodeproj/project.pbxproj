@@ -1819,6 +1819,9 @@
 		A0BE5C6414048DFD00DAA336 /* cpVect.c in Sources */ = {isa = PBXBuildFile; fileRef = A0BE5C0C14048DFD00DAA336 /* cpVect.c */; };
 		A0BE5C6514048DFD00DAA336 /* cpVect.c in Sources */ = {isa = PBXBuildFile; fileRef = A0BE5C0C14048DFD00DAA336 /* cpVect.c */; };
 		A0BE5C6614048DFD00DAA336 /* prime.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BE5C0D14048DFD00DAA336 /* prime.h */; };
+		A0BE62D8140535B700DAA336 /* CCVertex.m in Sources */ = {isa = PBXBuildFile; fileRef = A0BE62D7140535B700DAA336 /* CCVertex.m */; };
+		A0BE62D9140535F000DAA336 /* CCVertex.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BE62D6140535B700DAA336 /* CCVertex.h */; };
+		A0BE62DA140535F000DAA336 /* CCVertex.m in Sources */ = {isa = PBXBuildFile; fileRef = A0BE62D7140535B700DAA336 /* CCVertex.m */; };
 		A0EC4A311403236C00EC482A /* Position_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A161403236C00EC482A /* Position_uColor.fsh */; };
 		A0EC4A321403236C00EC482A /* Position_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A171403236C00EC482A /* Position_uColor.vsh */; };
 		A0EC4A331403236C00EC482A /* PositionColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A181403236C00EC482A /* PositionColor.fsh */; };
@@ -4893,6 +4896,8 @@
 		A0BE5C0B14048DFD00DAA336 /* cpSweep1D.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cpSweep1D.c; sourceTree = "<group>"; };
 		A0BE5C0C14048DFD00DAA336 /* cpVect.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cpVect.c; sourceTree = "<group>"; };
 		A0BE5C0D14048DFD00DAA336 /* prime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = prime.h; sourceTree = "<group>"; };
+		A0BE62D6140535B700DAA336 /* CCVertex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCVertex.h; sourceTree = "<group>"; };
+		A0BE62D7140535B700DAA336 /* CCVertex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCVertex.m; sourceTree = "<group>"; };
 		A0EC4A091403236C00EC482A /* Blur.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Blur.fsh; sourceTree = "<group>"; };
 		A0EC4A0A1403236C00EC482A /* Flower.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Flower.fsh; sourceTree = "<group>"; };
 		A0EC4A0B1403236C00EC482A /* Flower.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Flower.vsh; sourceTree = "<group>"; };
@@ -7584,6 +7589,8 @@
 		E0CC11891353ED6100080D9D /* Math */ = {
 			isa = PBXGroup;
 			children = (
+				A0BE62D6140535B700DAA336 /* CCVertex.h */,
+				A0BE62D7140535B700DAA336 /* CCVertex.m */,
 				503798C40F912C2000986724 /* CGPointExtension.h */,
 				503798C50F912C2000986724 /* CGPointExtension.m */,
 				E0CC11841353E75100080D9D /* neon_matrix_impl.c */,
@@ -7728,6 +7735,7 @@
 				E0BC7DA81342CF27001B4DCC /* ES2Renderer.h in Headers */,
 				E0CC11871353E8A100080D9D /* neon_matrix_impl.h in Headers */,
 				E03A4F2A1354E2F100D4B515 /* ccGLState.h in Headers */,
+				A0BE62D9140535F000DAA336 /* CCVertex.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11910,6 +11918,7 @@
 				E0BC7DA91342CF27001B4DCC /* ES2Renderer.m in Sources */,
 				E0CC11881353E8A100080D9D /* neon_matrix_impl.c in Sources */,
 				E03A4F291354E2F100D4B515 /* ccGLState.m in Sources */,
+				A0BE62DA140535F000DAA336 /* CCVertex.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -12178,6 +12187,7 @@
 				A0BE5C6114048DFD00DAA336 /* cpSpatialIndex.c in Sources */,
 				A0BE5C6314048DFD00DAA336 /* cpSweep1D.c in Sources */,
 				A0BE5C6514048DFD00DAA336 /* cpVect.c in Sources */,
+				A0BE62D8140535B700DAA336 /* CCVertex.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

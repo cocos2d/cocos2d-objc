@@ -24,20 +24,24 @@
  */
 
 #import "CCMotionStreak.h"
-#import "CCVertexes.h"
 #import "CCTextureCache.h"
-#import "Support/CGPointExtension.h"
+#import "ccGLState.h"
+#import "GLProgram.h"
+#import "CCShaderCache.h"
 #import "ccMacros.h"
+
+#import "Support/CCVertex.h"
+#import "Support/CGPointExtension.h"
 
 
 @implementation CCMotionStreak
 @synthesize texture = texture_;
 @synthesize blendFunc = blendFunc_;
-@synthesize mode = mode_;
+@synthesize fastMode = fastMode_;
 
-+ (id) streakWithFade:(float)fade minSeg:(float)minSeg width:(float)stroke color:(ccColor3B)color image:(NSString*)path
++ (id) streakWithFade:(float)fade minSeg:(float)minSeg width:(float)stroke color:(ccColor3B)color textureFilename:(NSString*)path
 {
-    return [[[self alloc] initWithFade:fade minSeg:minSeg width:stroke color:color image:path] autorelease];
+    return [[[self alloc] initWithFade:fade minSeg:minSeg width:stroke color:color textureFilename:path] autorelease];
 }
 
 + (id) streakWithFade:(float)fade minSeg:(float)minSeg width:(float)stroke color:(ccColor3B)color texture:(CCTexture2D*)texture
@@ -45,7 +49,7 @@
     return [[[self alloc] initWithFade:fade minSeg:minSeg width:stroke color:color texture:texture] autorelease];
 }
 
-- (id) initWithFade:(float)fade minSeg:(float)minSeg width:(float)stroke color:(ccColor3B)color image:(NSString*)path
+- (id) initWithFade:(float)fade minSeg:(float)minSeg width:(float)stroke color:(ccColor3B)color textureFilename:(NSString*)path
 {
     NSAssert(path != nil, @"Invalid filename");
     
@@ -63,7 +67,7 @@
         [self setIsRelativeAnchorPoint:NO];
         
         positionR_ = CGPointZero;
-        mode_ = kCCMotionStreak_Fast_Mode;
+        fastMode_ = YES;
         minSeg_ = (minSeg == -1.0f) ? stroke/5.0f : minSeg;
         minSeg_ *= minSeg_;
         
@@ -82,6 +86,9 @@
         // Set blend mode
         blendFunc_.src = GL_SRC_ALPHA;
 		blendFunc_.dst = GL_ONE_MINUS_SRC_ALPHA;
+		
+		// shader program
+		self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTextureColor];
         
         [self setTexture:texture];
         [self setColor:color];
@@ -208,19 +215,19 @@
         colorPointer_[offset+7] = 255;
         
         // Generate polygon
-        if(nuPoints_ > 0 && mode_ == kCCMotionStreak_Fast_Mode)
+        if(nuPoints_ > 0 && fastMode_ )
         {
             if(nuPoints_ > 1)
-                ccVertexesLineToPolygon(pointVertexes_, stroke_, vertices_, texCoords_, nuPoints_, 1);
+                ccVertexLineToPolygon(pointVertexes_, stroke_, vertices_, texCoords_, nuPoints_, 1);
             else
-                ccVertexesLineToPolygon(pointVertexes_, stroke_, vertices_, texCoords_, 0, 2);
+                ccVertexLineToPolygon(pointVertexes_, stroke_, vertices_, texCoords_, 0, 2);
         }
         
         nuPoints_ ++;
     }
     
-    if(mode_ == kCCMotionStreak_Slow_Mode)
-        ccVertexesLineToPolygon(pointVertexes_, stroke_, vertices_, texCoords_, 0, nuPoints_);
+    if( ! fastMode_ )
+        ccVertexLineToPolygon(pointVertexes_, stroke_, vertices_, texCoords_, 0, nuPoints_);
 }
 
 - (void) reset
@@ -232,21 +239,24 @@
 {
     if(nuPoints_ <= 1)
         return;
-    
-    glBindTexture(GL_TEXTURE_2D, [texture_ name]);
-    
-	glTexCoordPointer(2, GL_FLOAT, 0, texCoords_);
-	glVertexPointer(2, GL_FLOAT, 0, vertices_);
-    glColorPointer(4, GL_UNSIGNED_BYTE, 0, colorPointer_);
-    
-    BOOL newBlend = blendFunc_.src != CC_BLEND_SRC || blendFunc_.dst != CC_BLEND_DST;
-    if( newBlend )
-        glBlendFunc( blendFunc_.src, blendFunc_.dst );
-    
-    glDrawArrays(GL_TRIANGLE_STRIP, 0, nuPoints_*2);
-    
-    if( newBlend )
-        glBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);    
+	
+	// Default Attribs & States: GL_TEXTURE0, k,CCAttribVertex, kCCAttribColor, kCCAttribTexCoords
+	// Needed states: GL_TEXTURE0, k,CCAttribVertex, kCCAttribColor, kCCAttribTexCoords
+	// Unneeded states: -
+	
+	ccGLBlendFunc( blendFunc_.src, blendFunc_.dst );
+	
+	ccGLUseProgram( shaderProgram_->program_ );
+	ccGLUniformProjectionMatrix( shaderProgram_ );
+	ccGLUniformModelViewMatrix( shaderProgram_ );
+	
+	glBindTexture( GL_TEXTURE_2D, [texture_ name] );
+
+	glVertexAttribPointer(kCCAttribPosition, 2, GL_FLOAT, GL_FALSE, 0, vertices_);	
+	glVertexAttribPointer(kCCAttribTexCoords, 2, GL_FLOAT, GL_FALSE, 0, texCoords_);
+	glVertexAttribPointer(kCCAttribColor, 4, GL_UNSIGNED_BYTE, GL_TRUE, 0, colorPointer_);
+
+    glDrawArrays(GL_TRIANGLE_STRIP, 0, nuPoints_*2);    
 }
 
 - (void)dealloc
