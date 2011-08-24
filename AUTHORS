@@ -33,7 +33,8 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	CCArray: Fixed copyWithZone
 
 * manucorporat (manu.valladolid) (http://forzefield.com/):
-	Added new Retina Display code.
+	Author of new Retina Display code
+	Author of new MotionStreak code
 
 * Sergey Tikhonov (AKA haqu) (http://haqu.net)
 	Tests: Improved Shader test
