@@ -26,8 +26,7 @@ _template_open_body = """<?xml version="1.0" encoding="UTF-8"?>
 	<key>Identifier</key>
 	<string>com.cocos2d.%s</string>
 	<key>Kind</key>
-	<string>Xcode.Xcode3.ProjectTemplateUnitKind</string>
-"""
+	<string>Xcode.Xcode3.ProjectTemplateUnitKind</string>"""
 
 _template_close_body = "</dict>\n</plist>"
 
@@ -55,6 +54,11 @@ _template_user_header_path= """<key>Targets</key>
 		</dict>
 	</array>"""
 
+_template_ancestor = """    <key>Ancestors</key>
+	<array>
+		<string>%s</string>
+	</array>"""
+
 # python
 import sys
 import os
@@ -62,7 +66,7 @@ import getopt
 import glob
 
 class Xcode4Template(object):
-    def __init__( self, directory, group=0, identifier="XXX", header_path=None, user_header_path=None ):
+    def __init__( self, directory, group=0, identifier="XXX", header_path=None, user_header_path=None, ancestor=None ):
         self.directory = directory
         self.files_to_include = []
         self.wildcard = '*'
@@ -72,6 +76,7 @@ class Xcode4Template(object):
         self.identifier = identifier
         self.header_path = header_path
         self.user_header_path = user_header_path
+        self.ancestor = ancestor
 
     def scandirs(self, path):
         for currentFile in glob.glob( os.path.join(path, self.wildcard) ):
@@ -152,6 +157,14 @@ class Xcode4Template(object):
         self.output.append( "\n".join( output_body ) )
         self.output.append( output_close )
 
+
+    #
+    # Generate ancestors
+    #
+    def generate_ancestor( self ):
+        if self.ancestor:
+            self.output.append( _template_ancestor % self.ancestor )
+
     #
     # Generates the include directory
     #
@@ -167,6 +180,7 @@ class Xcode4Template(object):
     #
     def generate_xml( self ):
         self.output.append( _template_open_body % self.identifier )
+        self.generate_ancestor()
         self.generate_definitions()
         self.generate_nodes()
         self.generate_header_path()
@@ -183,11 +197,13 @@ def help():
     print "Usage:"
     print "-g --group\t\tdirectory_used_as_starting_group (if 1, then 'libs/cocos2d/Support/' -> ['cocos2d','Support'] ignoring 'libs')"
     print "-i --identifier\t\tidentifier (Xcode4 template identifier)"
+    print "-a --ancestor\t\tancestor identifier. Default: none"
     print "--header-path\t\theader search path"
     print "--user-header-path\tuser header search path"
     print "directory_to_parse"
     print "\nExample:"
-    print "\t%s -g 0 -i cocos2dlib --header-path ___PACKAGENAME___/libs/kazmath/include cocos2d" % sys.argv[0]
+    print "\t%s -i kazmathlib --header-path ___PACKAGENAME___/libs/kazmath/include libs" % sys.argv[0]
+    print "\t%s -i cocos2dlib --ancestor com.cocos2d.cocos2dshaders libs" % sys.argv[0]
     sys.exit(-1)
 
 if __name__ == "__main__":
@@ -199,9 +215,10 @@ if __name__ == "__main__":
     identifier = None
     header_path= None
     user_header_path= None
+    ancestor = None
     argv = sys.argv[1:]
     try:                                
-        opts, args = getopt.getopt(argv, "g:i:", ["group=","identifier=","header-path=", "user-header-path="])
+        opts, args = getopt.getopt(argv, "a:g:i:", ["ancestor=","group=","identifier=","header-path=", "user-header-path="])
 
         if len(args) == 0:
             help()
@@ -215,6 +232,8 @@ if __name__ == "__main__":
                 header_path= arg
             if opt in  ["--user-header-path"]:
                 user_header_path= arg
+            if opt in  ("-a", "--user-header-path"):
+                ancestor = arg
     except getopt.GetoptError,e:
         print e
 
@@ -223,5 +242,5 @@ if __name__ == "__main__":
     if directory == None:
         help()
 
-    gen = Xcode4Template( directory=directory, group=int(group), identifier=identifier, header_path=header_path)
+    gen = Xcode4Template( directory=directory, group=int(group), identifier=identifier, header_path=header_path, ancestor=ancestor)
     gen.generate()
