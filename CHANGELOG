@@ -22,6 +22,7 @@ version 2.0-alpha XX-Ago-2011
 . [NEW] Tests: FontTest uses  "bundle" fonts instead of FontLabel
 . [NEW] Tests: Removed HelloWorld* tests
 . [NEW] Tests: TextureTest has TextureCache#asyncWithBlock test
+. [NEW] Tests: Removed Chipmunk iOS TestBed since it was outdated
 . [NEW] Texture: Uses NPOT textures (gles20 already supports them)
 . [NEW] Texture: PVRTC-RAW format is no longer supported. Use the non-raw format instead.
 . [NEW] TextureCache: Added asyncWithBlock method
