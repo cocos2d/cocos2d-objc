@@ -219,32 +219,6 @@
 #define CC_TEXTURE_NPOT_SUPPORT 0
 #endif
 
-/** @def CC_RETINA_DISPLAY_SUPPORT
- If enabled, cocos2d supports retina display. 
- For performance reasons, it's recommended disable it in games without retina display support, like iPad only games.
- 
- To enable set it to 1. Use 0 to disable it. Enabled by default.
- 
- @since v0.99.5
- */
-#ifndef CC_RETINA_DISPLAY_SUPPORT
-#define CC_RETINA_DISPLAY_SUPPORT 1
-#endif
-
-/** @def CC_RETINA_DISPLAY_FILENAME_SUFFIX
- It's the suffix that will be appended to the files in order to load "retina display" images.
-
- On an iPhone4 with Retina Display support enabled, the file @"sprite-hd.png" will be loaded instead of @"sprite.png".
- If the file doesn't exist it will use the non-retina display image.
- 
- Platforms: Only used on Retina Display devices like iPhone 4.
- 
- @since v0.99.5
- */ 
-#ifndef CC_RETINA_DISPLAY_FILENAME_SUFFIX
-#define CC_RETINA_DISPLAY_FILENAME_SUFFIX @"-hd"
-#endif
-
 /** @def CC_USE_LA88_LABELS_ON_NEON_ARCH
  If enabled, it will use LA88 (16-bit textures) on Neon devices for CCLabelTTF objects.
  If it is disabled, or if it is used on another architecture it will use A8 (8-bit textures).
@@ -313,22 +287,3 @@
 #ifndef CC_ENABLE_PROFILERS
 #define CC_ENABLE_PROFILERS 0
 #endif
-
-//
-// DON'T edit this macro.
-//
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
-
-#if CC_RETINA_DISPLAY_SUPPORT
-#define CC_IS_RETINA_DISPLAY_SUPPORTED 1
-#else
-#define CC_IS_RETINA_DISPLAY_SUPPORTED 0
-#endif
-
-#elif __MAC_OS_X_VERSION_MAX_ALLOWED
-
-#define CC_IS_RETINA_DISPLAY_SUPPORTED 0
-
-#endif
-
-

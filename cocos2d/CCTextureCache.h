@@ -123,6 +123,8 @@
  * hasAlpha: whether or not the image contains alpha channel
  *
  * IMPORTANT: This method is only defined on iOS. It is not supported on the Mac version.
+ *
+ * @deprecated Will be removed in 2.0. Use addPVRImage instead.
  */
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 -(CCTexture2D*) addPVRTCImage:(NSString*)fileimage bpp:(int)bpp hasAlpha:(BOOL)alpha width:(int)w;

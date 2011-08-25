@@ -26,7 +26,7 @@
 
 
 #import <Foundation/Foundation.h>
-
+#import "../ccTypes.h"
 
 /** Helper class to handle file operations */
 @interface CCFileUtils : NSObject
@@ -35,13 +35,77 @@
 
 /** Returns the fullpath of an filename.
  
- If this method is when Retina Display is enabled, then the
- Retina Display suffix will be appended to the file (See ccConfig.h).
+ If in RetinaDisplay mode, and a RetinaDisplay file is found, it will return that path.
+ If in iPad mode, and an iPad file is found, it will return that path. 
  
- If the Retina Display image doesn't exist, then it will return the "non-Retina Display" image
+ Examples:
+
+  * In iPad mode: "image.png" -> "/full/path/image-ipad.png" (in case the -ipad file exists)
+  * In RetinaDisplay mode: "image.png" -> "/full/path/image-hd.png" (in case the -hd file exists)
  
  */
 +(NSString*) fullPathFromRelativePath:(NSString*) relPath;
+
+
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+
+/** Returns the fullpath of an filename including the resolution of the image.
+
+ If in RetinaDisplay mode, and a RetinaDisplay file is found, it will return that path.
+ If in iPad mode, and an iPad file is found, it will return that path. 
+ 
+ Examples:
+ 
+	* In iPad mode: "image.png" -> "/full/path/image-ipad.png" (in case the -ipad file exists)
+	* In RetinaDisplay mode: "image.png" -> "/full/path/image-hd.png" (in case the -hd file exists)
+
+ If an iPad file is found, it will set resolution type to kCCResolutioniPad
+ If a RetinaDisplay file is found, it will set resolution type to kCCResolutionRetinaDisplay
+ 
+ */
++(NSString*) fullPathFromRelativePath:(NSString*)relPath resolutionType:(ccResolutionType*)resolutionType;
+
+
+/** removes the suffix from a path
+ * On RetinaDisplay it will remove the -hd suffix
+ * On iPad it will remove the -ipad suffix
+ * On iPhone it will remove the (empty) suffix
+ Only valid on iOS. Not valid for OS X.
+ 
+ @since v0.99.5
+ */
++(NSString *)removeSuffixFromFile:(NSString*) path;
+
+/** Sets the RetinaDisplay suffix to load resources.
+ By default it is "-hd".
+ Only valid on iOS. Not valid for OS X.
+ 
+ @since v1.1
+ */
++(void) setRetinaDisplaySuffix:(NSString*)suffix;
+
+/** Sets the iPad suffix to load resources.
+ By default it is "".
+ Only valid on iOS. Not valid for OS X.
+ 
+ @since v1.1
+ */
++(void) setiPadSuffix:(NSString*)suffix;
+
+/** Returns whether or not a given filename exists with the iPad suffix.
+ Only available on iOS. Not supported on OS X.
+ @since v1.1
+ */
++(BOOL) iPadFileExistsAtPath:(NSString*)filename;
+
+/** Returns whether or not a given path exists with the RetinaDisplay suffix.
+ Only available on iOS. Not supported on OS X.
+ @since v1.1
+ */
++(BOOL) retinaDisplayFileExistsAtPath:(NSString*)filename;
+
+#endif // __IPHONE_OS_VERSION_MAX_ALLOWED
+
 @end
 
 /** loads a file into memory.
@@ -51,12 +115,4 @@
  @since v0.99.5
  */
 NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out);
-
-
-/** removes the HD suffix from a path
- 
- @returns NSString * without the HD suffix
- @since v0.99.5
- */
-NSString *ccRemoveHDSuffixFromFile( NSString *path );
 
