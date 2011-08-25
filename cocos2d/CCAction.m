@@ -332,9 +332,7 @@
 		[target_ setPosition:ccp(clampf(tempPos.x,leftBoundary,rightBoundary), clampf(tempPos.y,bottomBoundary,topBoundary))];
 	}
 	else
-		[target_ setPosition:ccpSub( halfScreenSize, followedNode_.position )];
-	
-#undef CLAMP
+		[target_ setPosition:ccpSub( halfScreenSize, followedNode_.position )];	
 }
 
 
