@@ -311,16 +311,22 @@ struct transformValues_ {
 
 -(void) setTextureRect:(CGRect)rect
 {
-	CGRect rectInPixels = CC_RECT_POINTS_TO_PIXELS( rect );
-	[self setTextureRectInPixels:rectInPixels rotated:NO untrimmedSize:rectInPixels.size];
+	[self setTextureRect:rect rotated:NO untrimmedSize:rect.size];
 }
 
 -(void) setTextureRectInPixels:(CGRect)rectInPixels rotated:(BOOL)rotated untrimmedSize:(CGSize)untrimmedSizeInPixels
 {
-	rect_ = CC_RECT_PIXELS_TO_POINTS( rectInPixels );
-    rectInPixels_ = rectInPixels;
+	ccResolutionType rt = self.texture.resolutionType;
+	CGRect rect = CC_RECT_TEXTURE_PIXELS_TO_POINTS( rt, rectInPixels );
+	CGSize untrimmedSize = CC_SIZE_TEXTURE_PIXELS_TO_POINTS( rt, untrimmedSizeInPixels );
+	[self setTextureRect:rect rotated:rotated untrimmedSize:untrimmedSize];
+}
+
+-(void) setTextureRect:(CGRect)rect rotated:(BOOL)rotated untrimmedSize:(CGSize)untrimmedSize
+{
+	rect_ = rect;
+	rectInPixels_ = CC_RECT_POINTS_TO_TEXTURE_PIXELS( self.texture.resolutionType, rect );
 	rectRotated_ = rotated;
-    CGSize untrimmedSize = CC_SIZE_PIXELS_TO_POINTS(untrimmedSizeInPixels);
 
     [self setContentSize:untrimmedSize];
 	[self updateTextureCoords:rectInPixels_];
@@ -904,7 +910,7 @@ struct transformValues_ {
 	// update rect
 	rectRotated_ = frame.rotated;
 
-	[self setTextureRectInPixels:frame.rectInPixels rotated:rectRotated_ untrimmedSize:frame.originalSizeInPixels];
+	[self setTextureRect:frame.rect rotated:rectRotated_ untrimmedSize:frame.originalSize];
 }
 
 -(void) setDisplayFrameWithAnimationName: (NSString*) animationName index:(int) frameIndex
