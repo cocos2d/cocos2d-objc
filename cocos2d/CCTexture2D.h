@@ -104,7 +104,8 @@ typedef enum {
 	
 } CCTexture2DPixelFormat;
 
-//CLASS INTERFACES:
+
+@class GLProgram;
 
 /** CCTexture2D class.
  * This class allows to easily create OpenGL 2D textures from images, text or raw data.
@@ -126,6 +127,9 @@ typedef enum {
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 	ccResolutionType			resolutionType_;
 #endif
+	
+	// needed for drawAtRect, drawInPoint
+	GLProgram					*shaderProgram_;
 
 }
 /** Intializes with a texture2d with data */
@@ -154,6 +158,9 @@ typedef enum {
 @property(nonatomic,readwrite) GLfloat maxT;
 /** whether or not the texture has their Alpha premultiplied */
 @property(nonatomic,readonly) BOOL hasPremultipliedAlpha;
+
+/** shader program used by drawAtPoint and drawInRect */
+@property(nonatomic,readwrite,retain) GLProgram *shaderProgram;
 
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 /** Returns the resolution type of the texture.
