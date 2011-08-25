@@ -136,8 +136,18 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 	NSString *fullpath = nil;
 	
 	// only if it is not an absolute path
-	if( ! [relPath isAbsolutePath] )
-		fullpath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:relPath];
+	if( ! [relPath isAbsolutePath] ) {
+
+		// pathForResource also searches in .lproj directories. issue #1230
+		NSString *file = [relPath lastPathComponent];
+		NSString *imageDirectory = [relPath stringByDeletingLastPathComponent];
+		
+		fullpath = [[NSBundle mainBundle] pathForResource:file
+												   ofType:nil
+											  inDirectory:imageDirectory];
+
+		
+	}
 	
 	if (fullpath == nil)
 		fullpath = relPath;
@@ -201,7 +211,7 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 	// check if path already has the suffix.
 	if( [name rangeOfString:suffix].location != NSNotFound ) {
 		
-		CCLOG(@"cocos2d: Filename(%@) contains %@ suffix. Removing it. See cocos2d issue #1040", path, suffix);
+		CCLOGINFO(@"cocos2d: Filename(%@) contains %@ suffix. Removing it. See cocos2d issue #1040", path, suffix);
 		
 		NSString *newLastname = [name stringByReplacingOccurrencesOfString:suffix withString:@""];
 		
@@ -244,8 +254,16 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 	NSString *fullpath = nil;
 
 	// only if it is not an absolute path
-	if( ! [relPath isAbsolutePath] )
-		fullpath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:relPath];
+	if( ! [relPath isAbsolutePath] ) {
+		// pathForResource also searches in .lproj directories. issue #1230
+		NSString *file = [relPath lastPathComponent];
+		NSString *imageDirectory = [relPath stringByDeletingLastPathComponent];
+		
+		fullpath = [[NSBundle mainBundle] pathForResource:file
+												   ofType:nil
+											  inDirectory:imageDirectory];
+		
+	}
 	
 	if (fullpath == nil)
 		fullpath = relPath;
