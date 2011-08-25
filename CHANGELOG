@@ -4,6 +4,7 @@ version 1.1 - XX-Ago-2011
 . [NEW] FileUtils: Added xxxFileExistAtPath for iPad and RetinaDisplay resources
 . [NEW] ccConfig: Removed CC_RETINA_DISPLAY_FILENAME_SUFFIX. Use CCFileUtils API instead
 . [NEW] ccConfig: Removed CC_RETINA_DISPLAY_SUPPORT. It is always enabled.
+. [FIX] Actions: removed #undef CLAMP (issue #1210)
 . [FIX] FileUtils: Loads -hd resources even if the sd resource is not present (issue #1179)
 . [FIX] FileUtils: renamed ccRemoveSuffixFromFile to +[CCFileUtils removeSuffixFromFile:];
 . [FIX] FileUtils: localized resources can be loaded using fullPathFromRelativePath (issue #1230)
