@@ -1126,7 +1126,12 @@ Class restartAction()
 	// set FPS at 60
 	[director setAnimationInterval:1.0/60];
 	
-	// Display FPS: yes
+	// When in iPad / RetinaDisplay mode, CCFileUtils will append the "-ipad" / "-hd" to all loaded files
+	// If the -ipad  / -hdfile is not found, it will load the non-suffixed version
+	[CCFileUtils setiPadSuffix:@"-ipad"];			// Default on iPad is "" (empty string)
+	[CCFileUtils setRetinaDisplaySuffix:@"-hd"];	// Default on RetinaDisplay is "-hd"
+	
+	// Turn on display FPS
 	[director setDisplayFPS:YES];
 	
 	// Create an EAGLView with a RGB8 color buffer, and a depth buffer of 0 without multisampling

@@ -287,4 +287,8 @@
 {}
 @end
 
+@interface AnimationCacheFile : SpriteDemo
+{}
+@end
+
 

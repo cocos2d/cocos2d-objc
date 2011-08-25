@@ -18,7 +18,7 @@ enum {
 
 static int sceneIdx=-1;
 static NSString *transitions[] = {
-
+	
 	@"TextureAlias",
 	@"TextureMipMap",
 	@"TexturePVRMipMap",
@@ -57,6 +57,7 @@ static NSString *transitions[] = {
 	@"TextureGlRepeat",
 	@"TextureSizeTest",
 	@"TextureCache1",
+	@"FileUtilsTest",
 };
 
 #pragma mark Callbacks
@@ -1688,6 +1689,70 @@ Class restartAction()
 }
 @end
 
+#pragma mark - FileUtilsTest
+
+@implementation FileUtilsTest
+-(id) init
+{	
+	if ((self=[super init]) ) {
+		
+		// This test is only valid in Retinadisplay
+		
+		if( CC_CONTENT_SCALE_FACTOR() == 2 ) {
+			
+			CCSprite *sprite = [[CCSprite alloc] initWithFile:@"bugs/test_issue_1179.png"];
+			if( sprite )
+				NSLog(@"Test #1 issue 1179: OK");
+			else
+				NSLog(@"Test #1 issue 1179: FAILED");
+				
+			[sprite release];
+
+			sprite = [[CCSprite alloc] initWithFile:@"only_in_hd.pvr.ccz"];
+			if( sprite )
+				NSLog(@"Test #2 issue 1179: OK");
+			else
+				NSLog(@"Test #2 issue 1179: FAILED");
+			
+			[sprite release];
+
+		} else {
+			NSLog(@"Test issue #1179 failed. Needs to be tested with RetinaDispaly");
+		}
+
+		
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+		// Testint CCFileUtils API
+		BOOL ret;
+		ret = [CCFileUtils retinaDisplayFileExistsAtPath:@"bugs/test_issue_1179.png"];
+		if( ret )
+			NSLog(@"Test #3: retinaDisplayFileExistsAtPath: OK");
+		else
+			NSLog(@"Test #3: retinaDisplayFileExistsAtPath: FAILED");
+
+
+		ret = [CCFileUtils retinaDisplayFileExistsAtPath:@"grossini-does_no_exist.png"];
+		if( !ret )
+			NSLog(@"Test #4: retinaDisplayFileExistsAtPath: OK");
+		else
+			NSLog(@"Test #4: retinaDisplayFileExistsAtPath: FAILED");
+#endif // __IPHONE_OS_VERSION_MAX_ALLOWED
+		
+	}
+	return self;
+}
+
+-(NSString*) title
+{
+	return @"CCFileUtils: See console";
+}
+-(NSString *) subtitle
+{
+	return @"See the console";
+}
+@end
+
+
 
 #pragma mark -
 #pragma mark AppController - Main
@@ -1736,6 +1801,11 @@ Class restartAction()
 	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
 	// You can change it at anytime.
 	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA8888];	
+	
+	// When in iPad / RetinaDisplay mode, CCFileUtils will append the "-ipad" / "-hd" to all loaded files
+	// If the -ipad  / -hdfile is not found, it will load the non-suffixed version
+	[CCFileUtils setiPadSuffix:@"-ipad"];	// Default on iPad is "" (empty string)
+	[CCFileUtils setRetinaDisplaySuffix:@"-hd"];	// Default on RetinaDisplay is "-hd"
 	
 	CCScene *scene = [CCScene node];
 	[scene addChild: [nextAction() node]];
