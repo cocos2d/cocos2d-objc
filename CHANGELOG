@@ -48,6 +48,7 @@ version 1.1 - XX-Ago-2011
 . [NEW] ccConfig: Removed CC_RETINA_DISPLAY_SUPPORT. It is always enabled.
 . [FIX] FileUtils: Loads -hd resources even if the sd resource is not present (issue #1179)
 . [FIX] FileUtils: renamed ccRemoveSuffixFromFile to +[CCFileUtils removeSuffixFromFile:];
+. [FIX] FileUtils: localized resources can be loaded using fullPathFromRelativePath (issue #1230)
 
 version 1.0.1 - 28-July-2011
 . [FIX] All: Implicit atomic properties converted to nonatomic
