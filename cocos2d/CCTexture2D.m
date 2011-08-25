@@ -74,13 +74,15 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #import "Platforms/CCGL.h"
 #import "Platforms/CCNS.h"
 
-#import "ccGLState.h"
 #import "CCTexture2D.h"
 #import "ccConfig.h"
 #import "ccMacros.h"
 #import "CCConfiguration.h"
 #import "CCTexturePVR.h"
 #import "GLProgram.h"
+#import "ccGLState.h"
+#import "CCShaderCache.h"
+
 #import "Support/ccUtils.h"
 #import "Support/CCFileUtils.h"
 
@@ -105,6 +107,7 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 
 @synthesize contentSizeInPixels = size_, pixelFormat = format_, pixelsWide = width_, pixelsHigh = height_, name = name_, maxS = maxS_, maxT = maxT_;
 @synthesize hasPremultipliedAlpha = hasPremultipliedAlpha_;
+@synthesize shaderProgram = shaderProgram_;
 
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 @synthesize resolutionType = resolutionType_;
@@ -159,6 +162,7 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 		resolutionType_ = kCCResolutionUnknown;
 #endif
+		self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTexture];
 	}
 	return self;
 }
@@ -178,8 +182,13 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 - (void) dealloc
 {
 	CCLOGINFO(@"cocos2d: deallocing %@", self);
-	if(name_){
+
+	[shaderProgram_ release];
+
+	if( name_ ) {
+
 		GLuint tName = name_;
+
 		//It is very likely dealloc will get called from the texture cache's dictionary thread but this must be run from the main thread.
 		dispatch_async(dispatch_get_main_queue(), ^(void){
 				glDeleteTextures( 1, &tName);
@@ -653,17 +662,30 @@ static BOOL PVRHaveAlphaPremultiplied_ = NO;
 	GLfloat		width = (GLfloat)width_ * maxS_,
 				height = (GLfloat)height_ * maxT_;
 
-	GLfloat		vertices[] = {	point.x,			point.y,	0.0f,
-								width + point.x,	point.y,	0.0f,
-								point.x,			height  + point.y,	0.0f,
-								width + point.x,	height  + point.y,	0.0f };
+	GLfloat		vertices[] = {	point.x,			point.y,
+								width + point.x,	point.y,
+								point.x,			height  + point.y,
+		width + point.x,	height  + point.y };
 	
+	ccGLUseProgram( shaderProgram_->program_ );
+	ccGLUniformProjectionMatrix( shaderProgram_ );
+	ccGLUniformModelViewMatrix( shaderProgram_ );
+
 	glBindTexture( GL_TEXTURE_2D, name_ );
 
-	glVertexAttribPointer(kCCAttribPosition, 3, GL_FLOAT, GL_FALSE, 0, vertices);
+	// Default Attribs & States: GL_TEXTURE0, kCCAttribPosition, kCCAttribColor, kCCAttribTexCoords
+	// Needed states: GL_TEXTURE0, kCCAttribPosition, kCCAttribTexCoords
+	// Unneeded states: kCCAttribColor
+	glDisableVertexAttribArray(kCCAttribColor);
+
+	glVertexAttribPointer(kCCAttribPosition, 2, GL_FLOAT, GL_FALSE, 0, vertices);
 	glVertexAttribPointer(kCCAttribTexCoords, 2, GL_FLOAT, GL_FALSE, 0, coordinates);
 
+
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+
+	// Restore GL state
+	glEnableVertexAttribArray(kCCAttribColor);
 }
 
 
@@ -673,15 +695,31 @@ static BOOL PVRHaveAlphaPremultiplied_ = NO;
 								maxS_,	maxT_,
 								0.0f,	0.0f,
 								maxS_,	0.0f  };
-	GLfloat	vertices[] = {	rect.origin.x,							rect.origin.y,							/*0.0f,*/
-							rect.origin.x + rect.size.width,		rect.origin.y,							/*0.0f,*/
-							rect.origin.x,							rect.origin.y + rect.size.height,		/*0.0f,*/
-							rect.origin.x + rect.size.width,		rect.origin.y + rect.size.height,		/*0.0f*/ };
+	GLfloat	vertices[] = {	rect.origin.x,						rect.origin.y,
+							rect.origin.x + rect.size.width,	rect.origin.y,
+							rect.origin.x,						rect.origin.y + rect.size.height,
+		rect.origin.x + rect.size.width,						rect.origin.y + rect.size.height };
 	
+
+	ccGLUseProgram( shaderProgram_->program_ );
+	ccGLUniformProjectionMatrix( shaderProgram_ );
+	ccGLUniformModelViewMatrix( shaderProgram_ );
+
 	glBindTexture( GL_TEXTURE_2D, name_ );
+	
+	// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
+	// Needed states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_TEXTURE_COORD_ARRAY
+	// Unneeded states: GL_COLOR_ARRAY
+	glDisableVertexAttribArray(kCCAttribColor);
+
 	glVertexAttribPointer(kCCAttribPosition, 2, GL_FLOAT, GL_FALSE, 0, vertices);
 	glVertexAttribPointer(kCCAttribTexCoords, 2, GL_FLOAT, GL_FALSE, 0, coordinates);
+	
+	
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+	
+	// restore state
+	glEnableVertexAttribArray(kCCAttribColor);
 }
 
 @end
