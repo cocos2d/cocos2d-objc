@@ -17,6 +17,9 @@ Lead Developer:
 
 Contributors (alphabetically ordered):
 
+* Marco Tillemans (AKA araker: http://www.welcometothefabrik.com/)
+	Texture2D: drawInRect / drawAtPoint disables color state
+
 * Stepan Generalov (iPsi) (http://www.itraceur.ru/)
 	FileUtils: Loads -hd resources even if the -sd resource is not present. patch
 

@@ -18,7 +18,10 @@ enum {
 
 static int sceneIdx=-1;
 static NSString *transitions[] = {
-	
+
+	@"TextureDrawAtPoint",
+	@"TextureDrawInRect",
+
 	@"TextureAlias",
 	@"TextureMipMap",
 	@"TexturePVRMipMap",
@@ -57,6 +60,9 @@ static NSString *transitions[] = {
 	@"TextureGlRepeat",
 	@"TextureSizeTest",
 	@"TextureCache1",
+	@"TextureDrawAtPoint",
+	@"TextureDrawInRect",
+
 	@"FileUtilsTest",
 };
 
@@ -1688,6 +1694,97 @@ Class restartAction()
 	return @"4 images should appear: alias, antialias, alias, antilias";
 }
 @end
+
+#pragma mark -
+#pragma mark TextureDrawAtPoint
+
+@implementation TextureDrawAtPoint
+-(id) init
+{	
+	if ((self=[super init]) ) {
+		
+		tex1_ = [[CCTextureCache sharedTextureCache] addImage:@"grossinis_sister1.png"];
+		tex2_ = [[CCTextureCache sharedTextureCache] addImage:@"grossinis_sister2.png"];
+		
+		[tex1_ retain];
+		[tex2_ retain];
+		
+	}
+	return self;
+}
+-(void) dealloc
+{
+	[tex1_ release];
+	[tex2_ release];
+}
+-(void) draw
+{
+	[super draw];
+	
+	CGSize s = [[CCDirector sharedDirector] winSize];
+	
+	[tex1_ drawAtPoint:ccp(s.width/2-50, s.height/2 - 50)];
+	[tex2_ drawAtPoint:ccp(s.width/2+50, s.height/2 - 50)];
+
+}
+
+-(NSString*) title
+{
+	return @"CCTexture2D: drawAtPoint";
+}
+-(NSString *) subtitle
+{
+	return @"draws 2 textures using drawAtPoint";
+}
+@end
+
+#pragma mark -
+#pragma mark TextureDrawInRect
+
+
+@implementation TextureDrawInRect
+-(id) init
+{	
+	if ((self=[super init]) ) {
+		
+		tex1_ = [[CCTextureCache sharedTextureCache] addImage:@"grossinis_sister1.png"];
+		tex2_ = [[CCTextureCache sharedTextureCache] addImage:@"grossinis_sister2.png"];
+		
+		[tex1_ retain];
+		[tex2_ retain];
+		
+	}
+	return self;
+}
+-(void) dealloc
+{
+	[tex1_ release];
+	[tex2_ release];
+}
+-(void) draw
+{
+	[super draw];
+	
+	CGSize s = [[CCDirector sharedDirector] winSize];
+	
+	CGRect rect1 = CGRectMake( s.width/2 - 80, 20, tex1_.contentSize.width * 0.5f, tex1_.contentSize.height *2 );
+	CGRect rect2 = CGRectMake( s.width/2 + 80, s.height/2, tex1_.contentSize.width * 2, tex1_.contentSize.height * 0.5f );
+	
+	[tex1_ drawInRect:rect1];
+	[tex2_ drawInRect:rect2];
+	
+}
+
+-(NSString*) title
+{
+	return @"CCTexture2D: drawInRect";
+}
+-(NSString *) subtitle
+{
+	return @"draws 2 textures using drawInRect";
+}
+@end
+
 
 #pragma mark - FileUtilsTest
 
