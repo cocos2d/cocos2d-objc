@@ -287,6 +287,12 @@
 	return [[(CCLayerColor*)[self alloc] initWithColor:color] autorelease];
 }
 
+-(id) init
+{
+	return [self initWithColor:ccc4(0,0,0,0) width:0 height:0];
+}
+
+// Designated initializer
 - (id) initWithColor:(ccColor4B)color width:(GLfloat)w  height:(GLfloat) h
 {
 	if( (self=[super init]) ) {
