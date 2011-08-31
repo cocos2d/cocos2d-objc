@@ -125,7 +125,7 @@
 /** removes a tile at given tile coordinate */
 -(void) removeTileAt:(CGPoint)tileCoordinate;
 
-/** returns the position in pixels of a given tile coordinate */
+/** returns the position in points of a given tile coordinate */
 -(CGPoint) positionAt:(CGPoint)tileCoordinate;
 
 /** return the value for the specific property name */
