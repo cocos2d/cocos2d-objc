@@ -139,6 +139,10 @@
 {}
 @end
 
+@interface TMXOrthoFlipTest : TileDemo
+{}
+@end
+
 @interface TMXBug987 : TileDemo
 {}
 @end

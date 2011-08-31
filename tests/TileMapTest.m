@@ -37,6 +37,7 @@ static NSString *transitions[] = {
 	@"TMXResizeTest",
 	@"TMXIsoMoveLayer",
 	@"TMXOrthoMoveLayer",
+	@"TMXOrthoFlipTest",
 	@"TMXBug987",
 	@"TMXBug787",
 
@@ -1362,6 +1363,36 @@ Class restartAction()
 	return @"Trees should be horizontally aligned";
 }
 @end
+
+#pragma mark -
+#pragma mark TMXOrthoFlipTest
+
+@implementation TMXOrthoFlipTest
+-(id) init
+{
+	if( (self=[super init]) ) {		
+		CCTMXTiledMap *map = [CCTMXTiledMap tiledMapWithTMXFile:@"TileMaps/ortho-rotation-test.tmx"];
+		[self addChild:map z:0 tag:kTagTileMap];
+		
+		CGSize s = map.contentSize;
+		NSLog(@"ContentSize: %f, %f", s.width,s.height);
+		
+		for( CCSpriteBatchNode* child in [map children] ) {
+			[[child texture] setAntiAliasTexParameters];
+		}
+		
+		id action = [CCScaleBy actionWithDuration:2 scale:0.5f];
+		[map runAction:action];
+	}	
+	return self;
+}
+
+-(NSString *) title
+{
+	return @"TMX tile flip test";
+}
+@end
+
 
 #pragma mark -
 #pragma mark TMXBug987
