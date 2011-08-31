@@ -97,6 +97,7 @@
 	CGRect rect;
 	rect.size = tileSize_;
 	
+	gid &= kFlippedMask;
 	gid = gid - firstGid_;
 	
 	int max_x = (imageSize_.width - margin_*2 + spacing_) / (tileSize_.width + spacing_);
