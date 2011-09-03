@@ -148,16 +148,16 @@
 	glBufferData(GL_ARRAY_BUFFER, sizeof(quads_[0]) * capacity_, quads_, GL_DYNAMIC_DRAW);
 
 	// vertices
-	glEnableVertexAttribArray(kCCAttribPosition);
-	glVertexAttribPointer(kCCAttribPosition, 3, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof( ccV3F_C4B_T2F, vertices));
+	glEnableVertexAttribArray(kCCVertexAttrib_Position);
+	glVertexAttribPointer(kCCVertexAttrib_Position, 3, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof( ccV3F_C4B_T2F, vertices));
 	
 	// colors
-	glEnableVertexAttribArray(kCCAttribColor);
-	glVertexAttribPointer(kCCAttribColor, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (GLvoid*) offsetof( ccV3F_C4B_T2F, colors));
+	glEnableVertexAttribArray(kCCVertexAttrib_Color);
+	glVertexAttribPointer(kCCVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (GLvoid*) offsetof( ccV3F_C4B_T2F, colors));
 	
 	// tex coords
-	glEnableVertexAttribArray(kCCAttribTexCoords);
-	glVertexAttribPointer(kCCAttribTexCoords, 2, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof( ccV3F_C4B_T2F, texCoords));
+	glEnableVertexAttribArray(kCCVertexAttrib_TexCoords);
+	glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof( ccV3F_C4B_T2F, texCoords));
 	
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffersVBO_[1]);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices_[0]) * capacity_ * 6, indices_, GL_STATIC_DRAW);
@@ -167,18 +167,18 @@
 	NSUInteger offset = (NSUInteger)quads_;
 	// vertex
 	NSInteger diff = offsetof( ccV3F_C4B_T2F, vertices);
-	glEnableVertexAttribArray(kCCAttribPosition);
-	glVertexAttribPointer(kCCAttribPosition, 3, GL_FLOAT, GL_FALSE, kQuadSize, (void*) (offset + diff));
+	glEnableVertexAttribArray(kCCVertexAttrib_Position);
+	glVertexAttribPointer(kCCVertexAttrib_Position, 3, GL_FLOAT, GL_FALSE, kQuadSize, (void*) (offset + diff));
 	
 	// color
 	diff = offsetof( ccV3F_C4B_T2F, colors);
-	glEnableVertexAttribArray(kCCAttribColor);
-	glVertexAttribPointer(kCCAttribColor, 4, GL_UNSIGNED_BYTE, GL_FALSE, kQuadSize, (void*)(offset + diff));
+	glEnableVertexAttribArray(kCCVertexAttrib_Color);
+	glVertexAttribPointer(kCCVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_FALSE, kQuadSize, (void*)(offset + diff));
 	
 	// texCoods
 	diff = offsetof( ccV3F_C4B_T2F, texCoords);
-	glEnableVertexAttribArray(kCCAttribTexCoords);
-	glVertexAttribPointer(kCCAttribTexCoords, 2, GL_FLOAT, GL_FALSE, kQuadSize, (void*)(offset + diff));
+	glEnableVertexAttribArray(kCCVertexAttrib_TexCoords);
+	glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, kQuadSize, (void*)(offset + diff));
 
 #endif // ! CC_USES_VBO
 	
@@ -371,17 +371,10 @@
 
 -(void) drawNumberOfQuads: (NSUInteger) n fromIndex: (NSUInteger) start
 {
-	// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
-	// Needed states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
-	// Unneeded states: -
+	ccGLEnableVertexAttribs(kCCVertexAttribFlag_PosColorTex );	
 
 	ccGLBindVertexArray( VAOname_ );
-
-	CHECK_GL_ERROR_DEBUG();
-
-	glBindTexture( GL_TEXTURE_2D, [texture_ name] );
-	
-	CHECK_GL_ERROR_DEBUG();
+	glBindTexture( GL_TEXTURE_2D, [texture_ name] );	
 
 #define kQuadSize sizeof(quads_[0].bl)
 #if CC_USES_VBO
@@ -414,7 +407,7 @@
 #endif // CC_USES_VBO	
 	
 	ccGLBindVertexArray(0);
+	
 	CHECK_GL_ERROR_DEBUG();
-
 }
 @end

@@ -33,11 +33,11 @@
 #endif // __MAC_OS_X_VERSION_MAX_ALLOWED
 
 enum {
-	kCCAttribPosition,
-	kCCAttribColor,
-	kCCAttribTexCoords,
+	kCCVertexAttrib_Position,
+	kCCVertexAttrib_Color,
+	kCCVertexAttrib_TexCoords,
 	
-	kCCAttrib_MAX,
+	kCCVertexAttrib__MAX,
 };
 
 enum {

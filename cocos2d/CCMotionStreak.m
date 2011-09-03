@@ -206,7 +206,7 @@
         pointState_[nuPoints_] = 1.0f;
         
         // Color asignation
-        const unsigned int offset = nuPoints_*8;
+        const NSUInteger offset = nuPoints_*8;
         *((ccColor3B*)(colorPointer_ + offset)) = color_;
         *((ccColor3B*)(colorPointer_ + offset+4)) = color_;
         
@@ -240,23 +240,19 @@
     if(nuPoints_ <= 1)
         return;
 	
-	// Default Attribs & States: GL_TEXTURE0, k,CCAttribVertex, kCCAttribColor, kCCAttribTexCoords
-	// Needed states: GL_TEXTURE0, k,CCAttribVertex, kCCAttribColor, kCCAttribTexCoords
-	// Unneeded states: -
-	
+	ccGLEnableVertexAttribs(kCCVertexAttribFlag_PosColorTex );	
 	ccGLBlendFunc( blendFunc_.src, blendFunc_.dst );
-	
 	ccGLUseProgram( shaderProgram_->program_ );
 	ccGLUniformProjectionMatrix( shaderProgram_ );
 	ccGLUniformModelViewMatrix( shaderProgram_ );
 	
 	glBindTexture( GL_TEXTURE_2D, [texture_ name] );
 
-	glVertexAttribPointer(kCCAttribPosition, 2, GL_FLOAT, GL_FALSE, 0, vertices_);	
-	glVertexAttribPointer(kCCAttribTexCoords, 2, GL_FLOAT, GL_FALSE, 0, texCoords_);
-	glVertexAttribPointer(kCCAttribColor, 4, GL_UNSIGNED_BYTE, GL_TRUE, 0, colorPointer_);
+	glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, vertices_);	
+	glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, 0, texCoords_);
+	glVertexAttribPointer(kCCVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, 0, colorPointer_);
 
-    glDrawArrays(GL_TRIANGLE_STRIP, 0, nuPoints_*2);    
+    glDrawArrays(GL_TRIANGLE_STRIP, 0, (GLsizei)nuPoints_*2);    
 }
 
 - (void)dealloc

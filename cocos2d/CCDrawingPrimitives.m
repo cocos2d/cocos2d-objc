@@ -52,7 +52,7 @@ static void lazy_init( void )
 									 fragmentShaderFilename:@"Position_uColor.fsh"];
 		
 
-		[shader_ addAttribute:@"aVertex" index:kCCAttribPosition];
+		[shader_ addAttribute:@"aVertex" index:kCCVertexAttrib_Position];
 		
 		[shader_ link];
 		
@@ -71,41 +71,23 @@ void ccDrawPoint( CGPoint point )
 
 	ccVertex2F p = (ccVertex2F) {point.x, point.y};
 	
-	// Default Attribs & States: GL_TEXTURE0, kCCAttribPosition, kCCAttribColor, kCCAttribTexCoords
-	// Needed states: GL_TEXTURE0, k,kCCAttribPosition, kCCAttribColor, kCCAttribTexCoords
-	// Unneeded states: GL_TEXTURE0, kCCAttribColor, kCCAttribTexCoords
-	
-	glDisableVertexAttribArray(kCCAttribTexCoords);
-	glDisableVertexAttribArray(kCCAttribColor);
-
+	ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position );
 	ccGLUseProgram( shader_->program_ );
 	ccGLUniformProjectionMatrix( shader_ );
 	ccGLUniformModelViewMatrix( shader_ );
 	
 	glUniform4f( colorLocation_, color_.r, color_.g, color_.b, color_.a );
 
-	glVertexAttribPointer(kCCAttribPosition, 2, GL_FLOAT, GL_FALSE, 0, &p);
+	glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, &p);
 
-	glDrawArrays(GL_POINTS, 0, 1);
-	
-	// restore default state
-	glEnableVertexAttribArray(kCCAttribTexCoords);
-	glEnableVertexAttribArray(kCCAttribColor);
-	
-	CHECK_GL_ERROR_DEBUG();
+	glDrawArrays(GL_POINTS, 0, 1);	
 }
 
 void ccDrawPoints( const CGPoint *points, NSUInteger numberOfPoints )
 {
 	lazy_init();
 
-	// Default Attribs & States: GL_TEXTURE0, kCCAttribPosition, kCCAttribColor, kCCAttribTexCoords
-	// Needed states: GL_TEXTURE0, k,kCCAttribPosition, kCCAttribColor, kCCAttribTexCoords
-	// Unneeded states: GL_TEXTURE0, kCCAttribColor, kCCAttribTexCoords
-
-	glDisableVertexAttribArray(kCCAttribTexCoords);
-	glDisableVertexAttribArray(kCCAttribColor);
-
+	ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position );
 	ccGLUseProgram( shader_->program_ );
 	ccGLUniformProjectionMatrix( shader_ );
 	ccGLUniformModelViewMatrix( shader_ );
@@ -114,7 +96,7 @@ void ccDrawPoints( const CGPoint *points, NSUInteger numberOfPoints )
 
 	// iPhone and 32-bit machines optimization
 	if( sizeof(CGPoint) == sizeof(ccVertex2F) )
-		glVertexAttribPointer(kCCAttribPosition, 2, GL_FLOAT, GL_FALSE, 0, points);
+		glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, points);
 	
 	else
     {
@@ -124,16 +106,10 @@ void ccDrawPoints( const CGPoint *points, NSUInteger numberOfPoints )
 		for( NSUInteger i=0; i<numberOfPoints;i++)
 			newPoints[i] = (ccVertex2F) { points[i].x, points[i].y };
 		
-		glVertexAttribPointer(kCCAttribPosition, 2, GL_FLOAT, GL_FALSE, 0, newPoints);
+		glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, newPoints);
 	}
 
     glDrawArrays(GL_POINTS, 0, (GLsizei) numberOfPoints);
-
-	// restore default state
-	glEnableVertexAttribArray(kCCAttribTexCoords);
-	glEnableVertexAttribArray(kCCAttribColor);
-	
-	CHECK_GL_ERROR_DEBUG();
 }
 
 
@@ -147,41 +123,23 @@ void ccDrawLine( CGPoint origin, CGPoint destination )
 	};
 	
 
-	// Default Attribs & States: GL_TEXTURE0, kCCAttribPosition, kCCAttribColor, kCCAttribTexCoords
-	// Needed states: GL_TEXTURE0, k,kCCAttribPosition, kCCAttribColor, kCCAttribTexCoords
-	// Unneeded states: GL_TEXTURE0, kCCAttribColor, kCCAttribTexCoords
-	
-	glDisableVertexAttribArray(kCCAttribTexCoords);
-	glDisableVertexAttribArray(kCCAttribColor);
-	
+	ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position );
 	ccGLUseProgram( shader_->program_ );
 	ccGLUniformProjectionMatrix( shader_ );
 	ccGLUniformModelViewMatrix( shader_ );
 	
 	glUniform4f( colorLocation_, color_.r, color_.g, color_.b, color_.a );
 	
-	glVertexAttribPointer(kCCAttribPosition, 2, GL_FLOAT, GL_FALSE, 0, vertices);	
+	glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, vertices);	
 	glDrawArrays(GL_LINES, 0, 2);
-
-	// restore default state
-	glEnableVertexAttribArray(kCCAttribTexCoords);
-	glEnableVertexAttribArray(kCCAttribColor);
-	
-	CHECK_GL_ERROR_DEBUG();
 }
 
 
 void ccDrawPoly( const CGPoint *poli, NSUInteger numberOfPoints, BOOL closePolygon )
 {
 	lazy_init();
-	
-	// Default Attribs & States: GL_TEXTURE0, kCCAttribPosition, kCCAttribColor, kCCAttribTexCoords
-	// Needed states: GL_TEXTURE0, k,kCCAttribPosition, kCCAttribColor, kCCAttribTexCoords
-	// Unneeded states: GL_TEXTURE0, kCCAttribColor, kCCAttribTexCoords
 
-	glDisableVertexAttribArray(kCCAttribTexCoords);
-	glDisableVertexAttribArray(kCCAttribColor);
-	
+	ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position );
 	ccGLUseProgram( shader_->program_ );
 	ccGLUniformProjectionMatrix( shader_ );
 	ccGLUniformModelViewMatrix( shader_ );
@@ -190,7 +148,7 @@ void ccDrawPoly( const CGPoint *poli, NSUInteger numberOfPoints, BOOL closePolyg
 
 	// iPhone and 32-bit machines optimization
 	if( sizeof(CGPoint) == sizeof(ccVertex2F) )
-		glVertexAttribPointer(kCCAttribPosition, 2, GL_FLOAT, GL_FALSE, 0, poli);
+		glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, poli);
 	
 	else
     {
@@ -200,20 +158,13 @@ void ccDrawPoly( const CGPoint *poli, NSUInteger numberOfPoints, BOOL closePolyg
 		for( NSUInteger i=0; i<numberOfPoints;i++)
 			newPoli[i] = (ccVertex2F) { poli[i].x, poli[i].y };
 		
-		glVertexAttribPointer(kCCAttribPosition, 2, GL_FLOAT, GL_FALSE, 0, newPoli);
+		glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, newPoli);
 	}
 		
 	if( closePolygon )
 		glDrawArrays(GL_LINE_LOOP, 0, (GLsizei) numberOfPoints);
 	else
 		glDrawArrays(GL_LINE_STRIP, 0, (GLsizei) numberOfPoints);
-	
-	
-	// restore default state
-	glEnableVertexAttribArray(kCCAttribTexCoords);
-	glEnableVertexAttribArray(kCCAttribColor);
-	
-	CHECK_GL_ERROR_DEBUG();
 }
 
 void ccDrawCircle( CGPoint center, float r, float a, NSUInteger segs, BOOL drawLineToCenter)
@@ -241,29 +192,17 @@ void ccDrawCircle( CGPoint center, float r, float a, NSUInteger segs, BOOL drawL
 	vertices[(segs+1)*2] = center.x;
 	vertices[(segs+1)*2+1] = center.y;
 
-	// Default Attribs & States: GL_TEXTURE0, kCCAttribPosition, kCCAttribColor, kCCAttribTexCoords
-	// Needed states: GL_TEXTURE0, k,kCCAttribPosition, kCCAttribColor, kCCAttribTexCoords
-	// Unneeded states: GL_TEXTURE0, kCCAttribColor, kCCAttribTexCoords
-	
-	glDisableVertexAttribArray(kCCAttribTexCoords);
-	glDisableVertexAttribArray(kCCAttribColor);
-	
+	ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position );
 	ccGLUseProgram( shader_->program_ );
 	ccGLUniformProjectionMatrix( shader_ );
 	ccGLUniformModelViewMatrix( shader_ );
 	
 	glUniform4f( colorLocation_, color_.r, color_.g, color_.b, color_.a );
 	
-	glVertexAttribPointer(kCCAttribPosition, 2, GL_FLOAT, GL_FALSE, 0, vertices);	
+	glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, vertices);	
 	glDrawArrays(GL_LINE_STRIP, 0, (GLsizei) segs+additionalSegment);	
 	
-	free( vertices );
-	
-	// restore default state
-	glEnableVertexAttribArray(kCCAttribTexCoords);
-	glEnableVertexAttribArray(kCCAttribColor);
-	
-	CHECK_GL_ERROR_DEBUG();
+	free( vertices );	
 }
 
 void ccDrawQuadBezier(CGPoint origin, CGPoint control, CGPoint destination, NSUInteger segments)
@@ -281,27 +220,15 @@ void ccDrawQuadBezier(CGPoint origin, CGPoint control, CGPoint destination, NSUI
 	}
 	vertices[segments] = (ccVertex2F) {destination.x, destination.y};
 
-	// Default Attribs & States: GL_TEXTURE0, kCCAttribPosition, kCCAttribColor, kCCAttribTexCoords
-	// Needed states: GL_TEXTURE0, k,kCCAttribPosition, kCCAttribColor, kCCAttribTexCoords
-	// Unneeded states: GL_TEXTURE0, kCCAttribColor, kCCAttribTexCoords
-	
-	glDisableVertexAttribArray(kCCAttribTexCoords);
-	glDisableVertexAttribArray(kCCAttribColor);
-	
+	ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position );
 	ccGLUseProgram( shader_->program_ );
 	ccGLUniformProjectionMatrix( shader_ );
 	ccGLUniformModelViewMatrix( shader_ );
 	
 	glUniform4f( colorLocation_, color_.r, color_.g, color_.b, color_.a );
 	
-	glVertexAttribPointer(kCCAttribPosition, 2, GL_FLOAT, GL_FALSE, 0, vertices);	
+	glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, vertices);	
 	glDrawArrays(GL_LINE_STRIP, 0, (GLsizei) segments + 1);
-
-	// restore default state
-	glEnableVertexAttribArray(kCCAttribTexCoords);
-	glEnableVertexAttribArray(kCCAttribColor);
-	
-	CHECK_GL_ERROR_DEBUG();	
 }
 
 void ccDrawCubicBezier(CGPoint origin, CGPoint control1, CGPoint control2, CGPoint destination, NSUInteger segments)
@@ -320,27 +247,15 @@ void ccDrawCubicBezier(CGPoint origin, CGPoint control1, CGPoint control2, CGPoi
 	vertices[segments] = (ccVertex2F) {destination.x, destination.y};
 
 	
-	// Default Attribs & States: GL_TEXTURE0, kCCAttribPosition, kCCAttribColor, kCCAttribTexCoords
-	// Needed states: GL_TEXTURE0, k,kCCAttribPosition, kCCAttribColor, kCCAttribTexCoords
-	// Unneeded states: GL_TEXTURE0, kCCAttribColor, kCCAttribTexCoords
-	
-	glDisableVertexAttribArray(kCCAttribTexCoords);
-	glDisableVertexAttribArray(kCCAttribColor);
-	
+	ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position );
 	ccGLUseProgram( shader_->program_ );
 	ccGLUniformProjectionMatrix( shader_ );
 	ccGLUniformModelViewMatrix( shader_ );
 	
 	glUniform4f( colorLocation_, color_.r, color_.g, color_.b, color_.a );
 	
-	glVertexAttribPointer(kCCAttribPosition, 2, GL_FLOAT, GL_FALSE, 0, vertices);	
-	glDrawArrays(GL_LINE_STRIP, 0, (GLsizei) segments + 1);
-	
-	// restore default state
-	glEnableVertexAttribArray(kCCAttribTexCoords);
-	glEnableVertexAttribArray(kCCAttribColor);
-	
-	CHECK_GL_ERROR_DEBUG();	
+	glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, vertices);	
+	glDrawArrays(GL_LINE_STRIP, 0, (GLsizei) segments + 1);	
 }
 
 void ccDrawColor4f( GLubyte r, GLubyte g, GLubyte b, GLubyte a )

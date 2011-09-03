@@ -141,18 +141,7 @@
 	
 	
 	glGetIntegerv(CC_GL_FRAMEBUFFER_BINDING, &oldFBO_);
-	ccGLBindFramebuffer(CC_GL_FRAMEBUFFER, fbo_);
-	
-	// Issue #1145
-	// There is no need to enable the default GL states here
-	// but since CCRenderTexture is mostly used outside the "render" loop
-	// these states needs to be enabled.
-	// Since this bug was discovered in API-freeze (very close of 1.0 release)
-	// This bug won't be fixed to prevent incompatibilities with code.
-	// 
-	// If you understand the above mentioned message, then you can comment the following line
-	// and enable the gl states manually, in case you need them.
-	CC_ENABLE_DEFAULT_GL_STATES();
+	ccGLBindFramebuffer(CC_GL_FRAMEBUFFER, fbo_);	
 }
 
 -(void)begin2
@@ -170,18 +159,7 @@
 //	kmGLMultMatrix(&orthoMatrix);
 	
 	glGetIntegerv(CC_GL_FRAMEBUFFER_BINDING, &oldFBO_);
-	ccGLBindFramebuffer(CC_GL_FRAMEBUFFER, fbo_);
-	
-	// Issue #1145
-	// There is no need to enable the default GL states here
-	// but since CCRenderTexture is mostly used outside the "render" loop
-	// these states needs to be enabled.
-	// Since this bug was discovered in API-freeze (very close of 1.0 release)
-	// This bug won't be fixed to prevent incompatibilities with code.
-	// 
-	// If you understand the above mentioned message, then you can comment the following line
-	// and enable the gl states manually, in case you need them.
-	CC_ENABLE_DEFAULT_GL_STATES();
+	ccGLBindFramebuffer(CC_GL_FRAMEBUFFER, fbo_);	
 }
 
 

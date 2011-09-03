@@ -271,9 +271,7 @@ static 	SEL selUpdate = NULL;
 		}
 	}
 	
-	// Default Attribs & States: GL_TEXTURE0, k,CCAttribVertex, kCCAttribColor, kCCAttribTexCoords
-	// Needed states: GL_TEXTURE0, k,CCAttribVertex, kCCAttribColor, kCCAttribTexCoords
-	// Unneeded states: -
+	ccGLEnableVertexAttribs( kCCVertexAttribFlag_PosColorTex );
 
 	ccGLBlendFunc( blendFunc_.src, blendFunc_.dst );
 	
