@@ -33,6 +33,9 @@
 #import "kazmath/kazmath.h"
 
 static GLuint	_ccCurrentProjectionMatrix = -1;
+static BOOL		_vertexAttribPosition = NO;
+static BOOL		_vertexAttribColor = NO;
+static BOOL		_vertexAttribTexCoords = NO;
 
 #if CC_ENABLE_GL_STATE_CACHE
 static GLuint	_ccCurrentShaderProgram = -1;
@@ -76,6 +79,48 @@ void ccGLBlendFunc(GLenum sfactor, GLenum dfactor)
 #else
 	glBlendFunc( sfactor, dfactor );
 #endif // CC_ENABLE_GL_STATE_CACHE
+}
+
+#pragma mark - GL Vertex Attrib functions
+void ccGLEnableVertexAttribs( unsigned int flags )
+{
+	
+
+	/* Position */
+	BOOL enablePosition = flags & kCCVertexAttribFlag_Position;
+
+	if( enablePosition != _vertexAttribPosition ) {
+		if( enablePosition )
+			glEnableVertexAttribArray( kCCVertexAttrib_Position );
+		else
+			glDisableVertexAttribArray( kCCVertexAttrib_Position );
+
+		_vertexAttribPosition = enablePosition;
+	}
+
+	/* Color */
+	BOOL enableColor = flags & kCCVertexAttribFlag_Color;
+	
+	if( enableColor != _vertexAttribColor ) {
+		if( enableColor )
+			glEnableVertexAttribArray( kCCVertexAttrib_Color );
+		else
+			glDisableVertexAttribArray( kCCVertexAttrib_Color );
+		
+		_vertexAttribColor = enableColor;
+	}
+
+	/* Tex Coords */
+	BOOL enableTexCoords = flags & kCCVertexAttribFlag_TexCoords;
+
+	if( enableTexCoords != _vertexAttribTexCoords ) {
+		if( enableTexCoords ) 
+			glEnableVertexAttribArray( kCCVertexAttrib_TexCoords );
+		else
+			glDisableVertexAttribArray( kCCVertexAttrib_TexCoords );
+		
+		_vertexAttribTexCoords = enableTexCoords;
+	}
 }
 
 #pragma mark - GL Uniforms functions

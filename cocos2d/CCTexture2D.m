@@ -667,25 +667,19 @@ static BOOL PVRHaveAlphaPremultiplied_ = NO;
 								point.x,			height  + point.y,
 		width + point.x,	height  + point.y };
 	
+	ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position | kCCVertexAttribFlag_TexCoords );
 	ccGLUseProgram( shaderProgram_->program_ );
 	ccGLUniformProjectionMatrix( shaderProgram_ );
 	ccGLUniformModelViewMatrix( shaderProgram_ );
 
 	glBindTexture( GL_TEXTURE_2D, name_ );
 
-	// Default Attribs & States: GL_TEXTURE0, kCCAttribPosition, kCCAttribColor, kCCAttribTexCoords
-	// Needed states: GL_TEXTURE0, kCCAttribPosition, kCCAttribTexCoords
-	// Unneeded states: kCCAttribColor
-	glDisableVertexAttribArray(kCCAttribColor);
 
-	glVertexAttribPointer(kCCAttribPosition, 2, GL_FLOAT, GL_FALSE, 0, vertices);
-	glVertexAttribPointer(kCCAttribTexCoords, 2, GL_FLOAT, GL_FALSE, 0, coordinates);
+	glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, vertices);
+	glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, 0, coordinates);
 
 
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-
-	// Restore GL state
-	glEnableVertexAttribArray(kCCAttribColor);
 }
 
 
@@ -701,25 +695,18 @@ static BOOL PVRHaveAlphaPremultiplied_ = NO;
 		rect.origin.x + rect.size.width,						rect.origin.y + rect.size.height };
 	
 
+	ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position | kCCVertexAttribFlag_TexCoords );
 	ccGLUseProgram( shaderProgram_->program_ );
 	ccGLUniformProjectionMatrix( shaderProgram_ );
 	ccGLUniformModelViewMatrix( shaderProgram_ );
 
 	glBindTexture( GL_TEXTURE_2D, name_ );
 	
-	// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
-	// Needed states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_TEXTURE_COORD_ARRAY
-	// Unneeded states: GL_COLOR_ARRAY
-	glDisableVertexAttribArray(kCCAttribColor);
-
-	glVertexAttribPointer(kCCAttribPosition, 2, GL_FLOAT, GL_FALSE, 0, vertices);
-	glVertexAttribPointer(kCCAttribTexCoords, 2, GL_FLOAT, GL_FALSE, 0, coordinates);
+	glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, vertices);
+	glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, 0, coordinates);
 	
 	
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-	
-	// restore state
-	glEnableVertexAttribArray(kCCAttribColor);
 }
 
 @end

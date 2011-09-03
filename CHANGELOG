@@ -2,7 +2,7 @@
 version 2.0-alpha XX-Ago-2011
 . [NEW] Action: Added new CallBlockO action
 . [NEW] AtlasNode: added init method
-. [NEW] ccGLState: added helper functions that keeps the GL state in order to prevent setters/getters
+. [NEW] ccGLState: added helper functions that keeps the GL state
 . [NEW] CProgressTimer: 
             - Convenience class constructor now passes in CCSprite (this gives developers easier access to timer with CCSpriteFrames, CCSprites, etc)
             - Reduced the progress timer types to just radial and bar - added in reverse, midpoint, barChangeRate to be have more flexible options to modify the progress.
@@ -12,6 +12,7 @@ version 2.0-alpha XX-Ago-2011
 . [NEW] Director: The FPS position can be configured via ccConfig.h file
 . [NEW] Director: Fast FPS is the only supported way to display FPS. Removed the CCLabelTTF way of doing it
 . [NEW] Macros: ccgl* replaced with ccGL*
+. [NEW] Macros: CC_ENABLE/DISABLE_DEFAULT_STATE: Removed. No longer needed.
 . [NEW] Math: Using kazmath for matrix and projection operations, and matrix GL stack
 . [NEW] Math: Using NEON Matrix Multiplication from Oolong project
 . [NEW] MotionStreak: Using new motion streak code. 10x faster than the old one.

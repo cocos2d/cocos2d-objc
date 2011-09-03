@@ -118,24 +118,13 @@ enum {
 {
 	[super draw];
 	
-	// Default Attribs & States: GL_TEXTURE0, kCCAttribPosition, kCCAttribColor, kCCAttribTexCoords
-	// Needed states: GL_TEXTURE0, k,kCCAttribPosition, kCCAttribColor, kCCAttribTexCoords
-	// Unneeded states: GL_TEXTURE0, kCCAttribColor, kCCAttribTexCoords
-	
-	glDisableVertexAttribArray(kCCAttribTexCoords);
-	glDisableVertexAttribArray(kCCAttribColor);
+	ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position );
 	
 	kmGLPushMatrix();
 	
 	world->DrawDebugData();	
 	
-	// restore default GL states
-	glEnableVertexAttribArray(kCCAttribColor);
-	glEnableVertexAttribArray(kCCAttribTexCoords);
-	
 	kmGLPopMatrix();
-	
-	CHECK_GL_ERROR_DEBUG();
 }
 
 -(void) addNewSpriteWithCoords:(CGPoint)p

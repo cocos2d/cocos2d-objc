@@ -105,33 +105,6 @@ default gl blend src function. Compatible with premultiplied alpha images.
 #define CC_BLEND_DST GL_ONE_MINUS_SRC_ALPHA
 #endif // ! CC_OPTIMIZE_BLEND_FUNC_FOR_PREMULTIPLIED_ALPHA
 
-/** @def CC_ENABLE_DEFAULT_GL_STATES
- GL states that are enabled:
-	- GL_TEXTURE_2D
-	- GL_VERTEX_ARRAY
-	- GL_TEXTURE_COORD_ARRAY
-	- GL_COLOR_ARRAY
- */
-#define CC_ENABLE_DEFAULT_GL_STATES() {				\
-	glActiveTexture(GL_TEXTURE0);					\
-	glEnableVertexAttribArray(kCCAttribPosition);	\
-	glEnableVertexAttribArray(kCCAttribColor);		\
-	glEnableVertexAttribArray(kCCAttribTexCoords);	\
-}
-
-/** @def CC_DISABLE_DEFAULT_GL_STATES 
- Disable default GL states:
-	- GL_TEXTURE_2D
-	- GL_VERTEX_ARRAY
-	- GL_TEXTURE_COORD_ARRAY
-	- GL_COLOR_ARRAY
- */
-#define CC_DISABLE_DEFAULT_GL_STATES() {			\
-	glDisableVertexAttribArray(kCCAttribTexCoords);	\
-	glDisableVertexAttribArray(kCCAttribColor);		\
-	glDisableVertexAttribArray(kCCAttribPosition);	\
-}
-
 /** @def CC_DIRECTOR_INIT
 	- Initializes an EAGLView with 0-bit depth format, and RGB565 render buffer.
 	- The EAGLView view will have multiple touches disabled.

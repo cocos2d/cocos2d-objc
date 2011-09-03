@@ -577,9 +577,7 @@ struct transformValues_ {
 	
 	NSAssert(!usesBatchNode_, @"If CCSprite is being rendered by CCSpriteBatchNode, CCSprite#draw SHOULD NOT be called");
 
-	// Default Attribs & States: GL_TEXTURE0, k,CCAttribVertex, kCCAttribColor, kCCAttribTexCoords
-	// Needed states: GL_TEXTURE0, k,CCAttribVertex, kCCAttribColor, kCCAttribTexCoords
-	// Unneeded states: -
+	ccGLEnableVertexAttribs( kCCVertexAttribFlag_PosColorTex );
 	
 	ccGLBlendFunc( blendFunc_.src, blendFunc_.dst );
 
@@ -597,15 +595,15 @@ struct transformValues_ {
 	
 	// vertex
 	NSInteger diff = offsetof( ccV3F_C4B_T2F, vertices);
-	glVertexAttribPointer(kCCAttribPosition, 3, GL_FLOAT, GL_FALSE, kQuadSize, (void*) (offset + diff));
+	glVertexAttribPointer(kCCVertexAttrib_Position, 3, GL_FLOAT, GL_FALSE, kQuadSize, (void*) (offset + diff));
 	
 	// texCoods
 	diff = offsetof( ccV3F_C4B_T2F, texCoords);
-	glVertexAttribPointer(kCCAttribTexCoords, 2, GL_FLOAT, GL_FALSE, kQuadSize, (void*)(offset + diff));
+	glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, kQuadSize, (void*)(offset + diff));
 
 	// color
 	diff = offsetof( ccV3F_C4B_T2F, colors);
-	glVertexAttribPointer(kCCAttribColor, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (void*)(offset + diff));
+	glVertexAttribPointer(kCCVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (void*)(offset + diff));
 	
 
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);

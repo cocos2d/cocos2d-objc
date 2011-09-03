@@ -375,8 +375,8 @@
 	//
 	// Attributes
 	//
-	glVertexAttribPointer(kCCAttribPosition, 2, GL_FLOAT, GL_FALSE, 0, squareVertices_);
-	glVertexAttribPointer(kCCAttribColor, 4, GL_FLOAT, GL_FALSE, 0, squareColors_);
+	glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, squareVertices_);
+	glVertexAttribPointer(kCCVertexAttrib_Color, 4, GL_FLOAT, GL_FALSE, 0, squareColors_);
 
 	ccGLBlendFunc( blendFunc_.src, blendFunc_.dst );
 	

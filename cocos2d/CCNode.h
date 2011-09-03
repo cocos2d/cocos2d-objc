@@ -344,16 +344,8 @@ enum {
 // draw
 
 /** Override this method to draw your own node.
- The following GL states will be enabled by default:
-	- glActiveTexture(GL_TEXTURE0);
-	- glEnableVertexAttribArray(kCCAttribPosition);
-	- glEnableVertexAttribArray(kCCAttribColor);
-	- glEnableVertexAttribArray(kCCAttribTexCoords);
-
- 
-   AND YOU SHOULD NOT DISABLE THEM AFTER DRAWING YOUR NODE
- 
- But if you enable any other GL state, you should disable it after drawing your node.
+ You should use cocos2d's GL API to enable/disable the GL state / shaders.
+ For further info, please see ccGLstate.h 
  */
 -(void) draw;
 

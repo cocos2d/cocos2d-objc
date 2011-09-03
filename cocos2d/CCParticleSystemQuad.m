@@ -271,9 +271,7 @@
 {	
 	[super draw];
 
-	// Default Attribs & States: GL_TEXTURE0, k,CCAttribVertex, kCCAttribColor, kCCAttribTexCoords
-	// Needed states: GL_TEXTURE0, k,CCAttribVertex, kCCAttribColor, kCCAttribTexCoords
-	// Unneeded states: -
+	ccGLEnableVertexAttribs( kCCVertexAttribFlag_PosColorTex );
 	
 	glBindTexture( GL_TEXTURE_2D, [texture_ name] );
 
@@ -283,13 +281,13 @@
 	glBindBuffer(GL_ARRAY_BUFFER, quadsID_);
 	
 	// vertices
-	glVertexAttribPointer(kCCAttribPosition, 2, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof( ccV2F_C4B_T2F, vertices));
+	glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof( ccV2F_C4B_T2F, vertices));
 	
 	// colors
-	glVertexAttribPointer(kCCAttribColor, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (GLvoid*) offsetof( ccV2F_C4B_T2F, colors));
+	glVertexAttribPointer(kCCVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (GLvoid*) offsetof( ccV2F_C4B_T2F, colors));
 	
 	// tex coords
-	glVertexAttribPointer(kCCAttribTexCoords, 2, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof( ccV2F_C4B_T2F, texCoords));
+	glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof( ccV2F_C4B_T2F, texCoords));
 		
 #else // vertex array list
 
@@ -297,15 +295,15 @@
 	
 	// vertex
 	NSInteger diff = offsetof( ccV2F_C4B_T2F, vertices);
-	glVertexAttribPointer(kCCAttribPosition, 2, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) (offset + diff));
+	glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) (offset + diff));
 	
 	// color
 	diff = offsetof( ccV2F_C4B_T2F, colors);
-	glVertexAttribPointer(kCCAttribColor, 4, GL_UNSIGNED_BYTE, GL_FALSE, kQuadSize, (GLvoid*)(offset + diff));
+	glVertexAttribPointer(kCCVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_FALSE, kQuadSize, (GLvoid*)(offset + diff));
 	
 	// texCoods
 	diff = offsetof( ccV2F_C4B_T2F, texCoords);
-	glVertexAttribPointer(kCCAttribTexCoords, 2, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*)(offset + diff));	
+	glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*)(offset + diff));	
 
 #endif // ! CC_USES_VBO
 	

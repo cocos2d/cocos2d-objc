@@ -300,11 +300,7 @@
 {
 	NSInteger n = gridSize_.x * gridSize_.y;
 
-	// Default Attribs & States: GL_TEXTURE0, k,kCCAttribPosition, kCCAttribColor, kCCAttribTexCoords
-	// Needed states: GL_TEXTURE0, kCCAttribPosition, kCCAttribTexCoords
-	// Unneeded states: kCCAttribColor
-	glDisableVertexAttribArray( kCCAttribColor );
-
+	ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position | kCCVertexAttribFlag_TexCoords );
 	ccGLUseProgram( shaderProgram_->program_ );
 	ccGLUniformProjectionMatrix( shaderProgram_ );
 	ccGLUniformModelViewMatrix( shaderProgram_ );
@@ -313,16 +309,13 @@
 	// Attributes
 	//
 
-	// vertex
-	glVertexAttribPointer(kCCAttribPosition, 3, GL_FLOAT, GL_FALSE, 0, vertices);
+	// position
+	glVertexAttribPointer(kCCVertexAttrib_Position, 3, GL_FLOAT, GL_FALSE, 0, vertices);
 	
 	// texCoods
-	glVertexAttribPointer(kCCAttribTexCoords, 2, GL_FLOAT, GL_FALSE, 0, texCoordinates);
+	glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, 0, texCoordinates);
 
 	glDrawElements(GL_TRIANGLES, (GLsizei) n*6, GL_UNSIGNED_SHORT, indices);	
-	
-	// Restore
-	glEnableVertexAttribArray( kCCAttribColor );
 }
 
 -(void)calculateVertexPoints
@@ -450,12 +443,8 @@
 -(void)blit
 {
 	NSInteger n = gridSize_.x * gridSize_.y;
-	
-	// Default Attribs & States: GL_TEXTURE0, k,kCCAttribPosition, kCCAttribColor, kCCAttribTexCoords
-	// Needed states: GL_TEXTURE0, kCCAttribPosition, kCCAttribTexCoords
-	// Unneeded states: kCCAttribColor
-	glDisableVertexAttribArray( kCCAttribColor );
 
+	ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position | kCCVertexAttribFlag_TexCoords );
 	ccGLUseProgram( shaderProgram_->program_ );
 	ccGLUniformProjectionMatrix( shaderProgram_ );
 	ccGLUniformModelViewMatrix( shaderProgram_ );
@@ -464,16 +453,13 @@
 	// Attributes
 	//
 	
-	// vertex
-	glVertexAttribPointer(kCCAttribPosition, 3, GL_FLOAT, GL_FALSE, 0, vertices);
+	// position
+	glVertexAttribPointer(kCCVertexAttrib_Position, 3, GL_FLOAT, GL_FALSE, 0, vertices);
 
 	// texCoods
-	glVertexAttribPointer(kCCAttribTexCoords, 2, GL_FLOAT, GL_FALSE, 0, texCoordinates);
+	glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, 0, texCoordinates);
 
 	glDrawElements(GL_TRIANGLES, (GLsizei) n*6, GL_UNSIGNED_SHORT, indices);
-
-	// Restore
-	glEnableVertexAttribArray( kCCAttribColor );
 }
 
 -(void)calculateVertexPoints

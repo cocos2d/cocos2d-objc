@@ -484,9 +484,7 @@ const char kCCProgressTextureCoords = 0x4b;
 	
 	ccGLBlendFunc( sprite_.blendFunc.src, sprite_.blendFunc.dst );
 
-    // Default Attribs & States: GL_TEXTURE0, k,CCAttribVertex, kCCAttribColor, kCCAttribTexCoords
-	// Needed states: GL_TEXTURE0, k,CCAttribVertex, kCCAttribColor, kCCAttribTexCoords
-	// Unneeded states: -
+	ccGLEnableVertexAttribs(kCCVertexAttribFlag_PosColorTex );	
 	
 	ccGLUseProgram( shaderProgram_->program_ );	
 	ccGLUniformProjectionMatrix( shaderProgram_ );
@@ -494,9 +492,9 @@ const char kCCProgressTextureCoords = 0x4b;
 
 	glBindTexture( GL_TEXTURE_2D, sprite_.texture.name );
 	
-    glVertexAttribPointer( kCCAttribPosition, 2, GL_FLOAT, GL_FALSE, sizeof(vertexData_[0]) , &vertexData_[0].vertices);
-    glVertexAttribPointer( kCCAttribTexCoords, 2, GL_FLOAT, GL_FALSE, sizeof(vertexData_[0]), &vertexData_[0].texCoords);
-    glVertexAttribPointer( kCCAttribColor, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(vertexData_[0]), &vertexData_[0].colors);
+    glVertexAttribPointer( kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, sizeof(vertexData_[0]) , &vertexData_[0].vertices);
+    glVertexAttribPointer( kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, sizeof(vertexData_[0]), &vertexData_[0].texCoords);
+    glVertexAttribPointer( kCCVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(vertexData_[0]), &vertexData_[0].colors);
     
 	if(type_ == kCCProgressTimerTypeRadial){
 		glDrawArrays(GL_TRIANGLE_FAN, 0, vertexDataCount_);
