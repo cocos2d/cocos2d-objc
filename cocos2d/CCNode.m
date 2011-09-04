@@ -47,7 +47,7 @@
 #if CC_COCOSNODE_RENDER_SUBPIXEL
 #define RENDER_IN_SUBPIXEL
 #else
-#define RENDER_IN_SUBPIXEL (NSInteger)
+#define RENDER_IN_SUBPIXEL(__A__) ( round(__A__))
 #endif
 
 @interface CCNode ()
@@ -134,8 +134,8 @@
 	if( CC_CONTENT_SCALE_FACTOR() == 1 )
 		positionInPixels_ = position_;
 	else
-		positionInPixels_ = ccpMult( newPosition,  CC_CONTENT_SCALE_FACTOR() );
-	
+		positionInPixels_ = ccpMult( position_,  CC_CONTENT_SCALE_FACTOR() );
+
 	isTransformDirty_ = isInverseDirty_ = YES;
 #if CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
 	isTransformGLDirty_ = YES;
@@ -804,7 +804,7 @@
 			transform_ = CGAffineTransformTranslate(transform_, anchorPointInPixels_.x, anchorPointInPixels_.y);
 
 		if( ! CGPointEqualToPoint(positionInPixels_, CGPointZero) )
-			transform_ = CGAffineTransformTranslate(transform_, positionInPixels_.x, positionInPixels_.y);
+			transform_ = CGAffineTransformTranslate(transform_, RENDER_IN_SUBPIXEL(positionInPixels_.x), RENDER_IN_SUBPIXEL(positionInPixels_.y));
 		
 		if( rotation_ != 0 )
 			transform_ = CGAffineTransformRotate(transform_, -CC_DEGREES_TO_RADIANS(rotation_));
@@ -820,7 +820,7 @@
 			transform_ = CGAffineTransformScale(transform_, scaleX_, scaleY_);
 		
 		if( ! CGPointEqualToPoint(anchorPointInPixels_, CGPointZero) )
-			transform_ = CGAffineTransformTranslate(transform_, -anchorPointInPixels_.x, -anchorPointInPixels_.y);
+			transform_ = CGAffineTransformTranslate(transform_, RENDER_IN_SUBPIXEL(-anchorPointInPixels_.x), RENDER_IN_SUBPIXEL(-anchorPointInPixels_.y));
 				
 		isTransformDirty_ = NO;
 	}
