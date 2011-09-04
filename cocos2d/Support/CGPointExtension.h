@@ -106,6 +106,14 @@ ccpMult(const CGPoint v, const CGFloat s)
 	return ccp(v.x*s, v.y*s);
 }
 
+/** Returns rounded CGPoint.
+ @return CGPoint
+ @since v1.0.1-rsanchez
+*/
+static inline CGPoint ccpRound(const CGPoint p) {
+    return ccp(round(p.x),round(p.y));
+}
+    
 /** Calculates midpoint between two points.
  @return CGPoint
  @since v0.7.2
