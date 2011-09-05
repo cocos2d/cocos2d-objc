@@ -37,6 +37,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "kazmath/quaternion.h"
 #include "kazmath/plane.h"
 
+#include "kazmath/neon_matrix_impl.h"
+
 /**
  * Fills a kmMat4 structure with the values from a 16
  * element array of floats
@@ -213,6 +215,14 @@ kmMat4* const kmMat4Transpose(kmMat4* pOut, const kmMat4* pIn)
  */
 kmMat4* const kmMat4Multiply(kmMat4* pOut, const kmMat4* pM1, const kmMat4* pM2)
 {
+#if defined(__ARM_NEON__)
+
+	float mat[16];
+
+	// Invert column-order with row-order
+	NEON_Matrix4Mul( &pM2->mat[0], &pM1->mat[0], &mat[0] );
+
+#else
 	float mat[16];
 
 	const float *m1 = pM1->mat, *m2 = pM2->mat;
@@ -237,6 +247,7 @@ kmMat4* const kmMat4Multiply(kmMat4* pOut, const kmMat4* pM1, const kmMat4* pM2)
 	mat[14] = m1[2] * m2[12] + m1[6] * m2[13] + m1[10] * m2[14] + m1[14] * m2[15];
 	mat[15] = m1[3] * m2[12] + m1[7] * m2[13] + m1[11] * m2[14] + m1[15] * m2[15];
 
+#endif
 
 	memcpy(pOut->mat, mat, sizeof(float)*16);
 

@@ -21,7 +21,7 @@
  3. This notice may not be removed or altered from any source distribution.
 */
 
-#include "neon_matrix_impl.h"
+#include "kazmath/neon_matrix_impl.h"
 
 #if defined(__ARM_NEON__)
 
