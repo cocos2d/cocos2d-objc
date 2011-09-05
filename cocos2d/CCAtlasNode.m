@@ -130,8 +130,7 @@
 	ccGLBlendFunc( blendFunc_.src, blendFunc_.dst );
 	
 	ccGLUseProgram( shaderProgram_->program_ );
-	ccGLUniformProjectionMatrix( shaderProgram_ );
-	ccGLUniformModelViewMatrix( shaderProgram_ );	
+	ccGLUniformModelViewProjectionMatrix( shaderProgram_ );	
 	
 	glUniform4f( uniformColor_, color_.r / 255.0f, color_.g / 255.0f, color_.b / 255.0f, opacity_ / 255.0f );
 	

@@ -37,12 +37,11 @@ enum {
 	kCCVertexAttrib_Color,
 	kCCVertexAttrib_TexCoords,
 	
-	kCCVertexAttrib__MAX,
+	kCCVertexAttrib_MAX,
 };
 
 enum {
-	kCCUniformPMatrix,
-	kCCUniformMVMatrix,
+	kCCUniformMVPMatrix,
 	kCCUniformSampler,
 
 	kCCUniform_MAX,
@@ -55,8 +54,7 @@ enum {
 #define kCCShader_PositionTextureA8Color	@"ShaderPositionTextureA8Color"
 
 // uniform names
-#define kCCUniformMVMatrix_s			"u_MVMatrix"
-#define kCCUniformPMatrix_s				"u_PMatrix"
+#define kCCUniformMVPMatrix_s			"u_MVPMatrix"
 #define kCCUniformSampler_s				"u_texture"
 
 // Attribute names

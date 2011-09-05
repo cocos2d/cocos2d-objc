@@ -487,8 +487,7 @@ const char kCCProgressTextureCoords = 0x4b;
 	ccGLEnableVertexAttribs(kCCVertexAttribFlag_PosColorTex );	
 	
 	ccGLUseProgram( shaderProgram_->program_ );	
-	ccGLUniformProjectionMatrix( shaderProgram_ );
-	ccGLUniformModelViewMatrix( shaderProgram_ );
+	ccGLUniformModelViewProjectionMatrix( shaderProgram_ );
 
 	glBindTexture( GL_TEXTURE_2D, sprite_.texture.name );
 	
