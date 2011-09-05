@@ -80,7 +80,7 @@ typedef enum {
  *
  * The default anchorPoint in CCSprite is (0.5, 0.5).
  */
-@interface CCSprite : CCNode <CCRGBAProtocol, CCTextureProtocol>
+@interface CCSprite : CCNodeRGBA <CCTextureProtocol>
 {
 	
 	//
@@ -120,8 +120,6 @@ typedef enum {
 	ccV3F_C4B_T2F_Quad quad_;
 	
 	// opacity and RGB protocol
-	GLubyte		opacity_;
-	ccColor3B	color_;
 	ccColor3B	colorUnmodified_;
 	BOOL		opacityModifyRGB_;
 	
@@ -160,10 +158,6 @@ typedef enum {
 	sprite.scaleY *= -1;
  */
 @property (nonatomic,readwrite) BOOL flipY;
-/** opacity: conforms to CCRGBAProtocol protocol */
-@property (nonatomic,readwrite) GLubyte opacity;
-/** RGB colors: conforms to CCRGBAProtocol protocol */
-@property (nonatomic,readwrite) ccColor3B color;
 /** whether or not the Sprite is rendered using a CCSpriteBatchNode */
 @property (nonatomic,readwrite) BOOL usesBatchNode;
 /** weak reference of the CCTextureAtlas used when the sprite is rendered using a CCSpriteBatchNode */

@@ -300,25 +300,51 @@
 
 @implementation CCLayerRGBA
 
-@synthesize opacity = opacity_, color = color_;
+@synthesize color = color_;
 
-/** Override synthesized setOpacity to recurse items */
-- (void) setOpacity:(GLubyte)newOpacity
+-(id) init
 {
-	opacity_ = newOpacity;
-	
-	id<CCRGBAProtocol> item;
-	CCARRAY_FOREACH(children_, item)
-    [item setOpacity:opacity_];
+	if ( (self=[super init]) ) {
+        displayedOpacity_ = realOpacity_ = 255; 
+        color_ = ccWHITE;
+    }
+    return self;
 }
 
--(void) setColor:(ccColor3B)color
+// override to update opacity based on parent's
+- (void) onEnter {
+    [super onEnter];
+    self.opacity = realOpacity_;
+}
+
+-(GLubyte) opacity
 {
-	color_ = color;
+	return realOpacity_;
+}
+
+-(GLubyte) displayedOpacity
+{
+	return displayedOpacity_;
+}
+
+/** Override synthesized setOpacity to recurse items */
+- (void) setOpacity:(GLubyte)opacity
+{
+	displayedOpacity_ = realOpacity_ = opacity;
+
+#if CC_PROPAGATE_OPACITY
+    if ([self.parent conformsToProtocol:@protocol(CCRGBAProtocol)]) {
+        displayedOpacity_ = realOpacity_ * ((id<CCRGBAProtocol>)self.parent).displayedOpacity/255.0;
+    }
 	
 	id<CCRGBAProtocol> item;
-	CCARRAY_FOREACH(children_, item)
-    [item setColor:color_];
+	CCARRAY_FOREACH(children_, item) {
+        if ([item conformsToProtocol:@protocol(CCRGBAProtocol)]) {
+            item.opacity = item.opacity;
+        }
+    }
+#endif
+
 }
 
 @end
@@ -332,10 +358,15 @@
 
 @implementation CCLayerColor
 
-// Opacity and RGB color protocol
-@synthesize opacity = opacity_, color = color_;
 @synthesize blendFunc = blendFunc_;
 
+-(id) init
+{
+	if ( (self=[super init]) ) {
+        blendFunc_ = (ccBlendFunc) { CC_BLEND_SRC, CC_BLEND_DST };
+    }
+    return self;
+}
 
 + (id) layerWithColor:(ccColor4B)color width:(GLfloat)w  height:(GLfloat) h
 {
@@ -357,7 +388,7 @@
 		color_.r = color.r;
 		color_.g = color.g;
 		color_.b = color.b;
-		opacity_ = color.a;
+        displayedOpacity_ = realOpacity_ = color.a;
 		
 		for (NSUInteger i = 0; i<sizeof(squareVertices_) / sizeof( squareVertices_[0]); i++ ) {
 			squareVertices_[i].x = 0.0f;
@@ -409,7 +440,7 @@
 		squareColors_[i].r = color_.r;
 		squareColors_[i].g = color_.g;
 		squareColors_[i].b = color_.b;
-		squareColors_[i].a = opacity_;
+		squareColors_[i].a = displayedOpacity_;
 	}
 }
 
@@ -431,7 +462,7 @@
 	if( newBlend )
 		glBlendFunc( blendFunc_.src, blendFunc_.dst );
 	
-	else if( opacity_ != 255 ) {
+	else if( displayedOpacity_ != 255 ) {
 		newBlend = YES;
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	}
@@ -455,11 +486,12 @@
 	[self updateColor];
 }
 
--(void) setOpacity: (GLubyte) o
+-(void) setOpacity: (GLubyte) opacity
 {
-	opacity_ = o;
-	[self updateColor];
+    [super setOpacity:opacity];
+    [self updateColor];
 }
+
 @end
 
 
@@ -520,7 +552,7 @@
 		u = ccpMult(u, h2 * (float)c);
 	}
 	
-	float opacityf = (float)opacity_/255.0f;
+	float opacityf = (float)displayedOpacity_/255.0f;
 	
     ccColor4B S = {
 		color_.r,

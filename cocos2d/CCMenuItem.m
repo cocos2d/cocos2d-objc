@@ -269,12 +269,10 @@ const uint32_t	kZoomActionTag = 0xc0c05002;
 
 - (void) setOpacity: (GLubyte)opacity
 {
-    [label_ setOpacity:opacity];
+    [super setOpacity:opacity];
+    [label_ setOpacity:[label_ opacity]];
 }
--(GLubyte) opacity
-{
-	return [label_ opacity];
-}
+
 -(void) setColor:(ccColor3B)color
 {
 	[label_ setColor:color];
@@ -458,7 +456,7 @@ const uint32_t	kZoomActionTag = 0xc0c05002;
 		self.normalImage = normalSprite;
 		self.selectedImage = selectedSprite;
 		self.disabledImage = disabledSprite;
-		
+        
 		[self setContentSize: [normalImage_ contentSize]];
 	}
 	return self;	
@@ -522,9 +520,10 @@ const uint32_t	kZoomActionTag = 0xc0c05002;
 #pragma mark CCMenuItemImage - CCRGBAProtocol protocol
 - (void) setOpacity: (GLubyte)opacity
 {
-	[normalImage_ setOpacity:opacity];
-	[selectedImage_ setOpacity:opacity];
-	[disabledImage_ setOpacity:opacity];
+    [super setOpacity:opacity];
+    [normalImage_ setOpacity:[normalImage_ opacity]];
+	[selectedImage_ setOpacity:[selectedImage_ opacity]];
+	[disabledImage_ setOpacity:[disabledImage_ opacity]];
 }
 
 -(void) setColor:(ccColor3B)color
@@ -534,10 +533,7 @@ const uint32_t	kZoomActionTag = 0xc0c05002;
 	[disabledImage_ setColor:color];	
 }
 
--(GLubyte) opacity
-{
-	return [normalImage_ opacity];
-}
+
 
 -(ccColor3B) color
 {
@@ -660,7 +656,6 @@ const uint32_t	kZoomActionTag = 0xc0c05002;
 @implementation CCMenuItemToggle
 
 @synthesize subItems = subItems_;
-@synthesize opacity = opacity_, color = color_;
 
 +(id) itemWithTarget: (id)t selector: (SEL)sel items: (CCMenuItem*) item, ...
 {
@@ -780,9 +775,9 @@ const uint32_t	kZoomActionTag = 0xc0c05002;
 
 - (void) setOpacity: (GLubyte)opacity
 {
-	opacity_ = opacity;
+    [super setOpacity:opacity];
 	for(CCMenuItem<CCRGBAProtocol>* item in subItems_)
-		[item setOpacity:opacity];
+		[item setOpacity:item.opacity];
 }
 
 - (void) setColor:(ccColor3B)color

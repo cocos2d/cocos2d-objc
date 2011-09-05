@@ -39,7 +39,7 @@
  *
  *  Subclass CCMenuItem (or any subclass) to create your custom CCMenuItem objects.
  */
-@interface CCMenuItem : CCNode
+@interface CCMenuItem : CCNodeRGBA
 {
 	NSInvocation *invocation_;
 #if NS_BLOCKS_AVAILABLE
@@ -102,7 +102,7 @@
    - CCLabelAtlas
    - CCLabelTTF
  */
-@interface CCMenuItemLabel : CCMenuItem  <CCRGBAProtocol>
+@interface CCMenuItemLabel : CCMenuItem
 {
 	CCNode<CCLabelProtocol, CCRGBAProtocol> *label_;
 	ccColor3B	colorBackup;
@@ -247,7 +247,7 @@
  
  @since v0.8.0
  */
-@interface CCMenuItemSprite : CCMenuItem <CCRGBAProtocol>
+@interface CCMenuItemSprite : CCMenuItem
 {
 	CCNode<CCRGBAProtocol,CCTextureProtocol> *normalImage_, *selectedImage_, *disabledImage_;
 }
@@ -333,18 +333,11 @@
  A simple container class that "toggles" it's inner items
  The inner itmes can be any MenuItem
  */
-@interface CCMenuItemToggle : CCMenuItem <CCRGBAProtocol>
+@interface CCMenuItemToggle : CCMenuItem
 {
 	NSUInteger selectedIndex_;
 	NSMutableArray* subItems_;
-	GLubyte		opacity_;
-	ccColor3B	color_;
 }
-
-/** conforms with CCRGBAProtocol protocol */
-@property (nonatomic,readonly) GLubyte opacity;
-/** conforms with CCRGBAProtocol protocol */
-@property (nonatomic,readonly) ccColor3B color;
 
 /** returns the selected item */
 @property (nonatomic,readwrite) NSUInteger selectedIndex;

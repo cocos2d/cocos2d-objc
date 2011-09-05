@@ -430,7 +430,7 @@ typedef struct _KerningHashElement
 
 @implementation CCLabelBMFont
 
-@synthesize opacity = opacity_, color = color_;
+@synthesize color = color_;
 
 #pragma mark LabelBMFont - Purge Cache
 +(void) purgeCachedData
@@ -458,7 +458,7 @@ typedef struct _KerningHashElement
 	
 	if ((self=[super initWithFile:configuration_->atlasName_ capacity:[theString length]])) {
 
-		opacity_ = 255;
+		displayedOpacity_, realOpacity_ = 255;
 		color_ = ccWHITE;
 
 		contentSize_ = CGSizeZero;
@@ -478,6 +478,10 @@ typedef struct _KerningHashElement
 	[string_ release];
 	[configuration_ release];
 	[super dealloc];
+}
+
+-(void) onEnter {
+    self.opacity = realOpacity_;
 }
 
 #pragma mark LabelBMFont - Atlas generation
@@ -574,9 +578,15 @@ typedef struct _KerningHashElement
 
 		// only apply opacity if it is different than 255 )
 		// to prevent modifying the color too (issue #610)
-		if( opacity_ != 255 )
-			[fontChar setOpacity: opacity_];
 
+		if( displayedOpacity_ != 255 ) {
+#if CC_PROPAGATE_OPACITY
+			[fontChar setOpacity: fontChar.opacity];
+#else
+            [fontChar setOpacity: displayedOpacity_];
+#endif
+        }
+        
 		if (longestLine < nextFontPositionX)
 			longestLine = nextFontPositionX;
 	}
@@ -621,14 +631,40 @@ typedef struct _KerningHashElement
 		[child setColor:color_];
 }
 
--(void) setOpacity:(GLubyte)opacity
+-(GLubyte) opacity
 {
-	opacity_ = opacity;
-
-	id<CCRGBAProtocol> child;
-	CCARRAY_FOREACH(children_, child)
-		[child setOpacity:opacity_];
+	return realOpacity_;
 }
+
+-(GLubyte) displayedOpacity
+{
+	return displayedOpacity_;
+}
+
+/** Override synthesized setOpacity to recurse items */
+- (void) setOpacity:(GLubyte)opacity
+{
+	displayedOpacity_ = realOpacity_ = opacity;
+#if CC_PROPAGATE_OPACITY
+    if ([self.parent conformsToProtocol:@protocol(CCRGBAProtocol)]) {
+        displayedOpacity_ = realOpacity_ * ((id<CCRGBAProtocol>)self.parent).displayedOpacity/255.0;
+    }
+	
+	id<CCRGBAProtocol> item;
+	CCARRAY_FOREACH(children_, item) {
+        if ([item conformsToProtocol:@protocol(CCRGBAProtocol)]) {
+            item.opacity = item.opacity;
+        }
+    }
+#else  
+    id<CCRGBAProtocol> item;
+	CCARRAY_FOREACH(children_, item) {
+        item.opacity = displayedOpacity_;
+    }
+#endif
+
+}
+
 -(void) setOpacityModifyRGB:(BOOL)modify
 {
 	opacityModifyRGB_ = modify;

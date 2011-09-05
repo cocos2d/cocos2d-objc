@@ -1082,7 +1082,7 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 @implementation CCFadeIn
 -(void) update: (ccTime) t
 {
-	[(id<CCRGBAProtocol>) target_ setOpacity: 255 *t];
+	((id<CCRGBAProtocol>) target_).opacity = 255 * t;
 }
 
 -(CCActionInterval*) reverse
@@ -1099,7 +1099,7 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 @implementation CCFadeOut
 -(void) update: (ccTime) t
 {
-	[(id<CCRGBAProtocol>) target_ setOpacity: 255 *(1-t)];
+	((id<CCRGBAProtocol>) target_).opacity = 255 * (1-t);
 }
 
 -(CCActionInterval*) reverse
@@ -1141,7 +1141,7 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 
 -(void) update: (ccTime) t
 {
-	[(id<CCRGBAProtocol>)target_ setOpacity:fromOpacity_ + ( toOpacity_ - fromOpacity_ ) * t];
+	((id<CCRGBAProtocol>)target_).opacity = fromOpacity_ + ( toOpacity_ - fromOpacity_ ) * t;
 }
 @end
 

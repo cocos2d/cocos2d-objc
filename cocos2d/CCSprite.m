@@ -130,9 +130,8 @@ struct transformValues_ {
 		// if the sprite is added to a batchnode, then it will automatically switch to "batchnode Render"
 		[self useSelfRender];
 		
-		opacityModifyRGB_			= YES;
-		opacity_					= 255;
-		color_ = colorUnmodified_	= ccWHITE;
+		opacityModifyRGB_ = YES;
+        colorUnmodified_ = color_;
 		
 		blendFunc_.src = CC_BLEND_SRC;
 		blendFunc_.dst = CC_BLEND_DST;
@@ -818,7 +817,7 @@ struct transformValues_ {
 #pragma mark CCSprite - RGBA protocol
 -(void) updateColor
 {
-	ccColor4B color4 = {color_.r, color_.g, color_.b, opacity_ };
+	ccColor4B color4 = {color_.r, color_.g, color_.b, displayedOpacity_ };
 	
 	quad_.bl.colors = color4;
 	quad_.br.colors = color4;
@@ -838,16 +837,10 @@ struct transformValues_ {
 	// do nothing
 }
 
--(GLubyte) opacity
+-(void) setOpacity:(GLubyte) opacity
 {
-	return opacity_;
-}
-
--(void) setOpacity:(GLubyte) anOpacity
-{
-	opacity_			= anOpacity;
-
-	// special opacity for premultiplied textures
+	[super setOpacity:opacity];
+    // special opacity for premultiplied textures
 	if( opacityModifyRGB_ )
 		[self setColor: colorUnmodified_];
 	
@@ -867,9 +860,9 @@ struct transformValues_ {
 	color_ = colorUnmodified_ = color3;
 	
 	if( opacityModifyRGB_ ){
-		color_.r = color3.r * opacity_/255;
-		color_.g = color3.g * opacity_/255;
-		color_.b = color3.b * opacity_/255;
+		color_.r = color3.r * displayedOpacity_/255;
+		color_.g = color3.g * displayedOpacity_/255;
+		color_.b = color3.b * displayedOpacity_/255;
 	}
 	
 	[self updateColor];

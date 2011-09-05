@@ -131,7 +131,7 @@
  To enable set it to 1. Enabled by default.
  */
 #ifndef CC_COCOSNODE_RENDER_SUBPIXEL
-#define CC_COCOSNODE_RENDER_SUBPIXEL 1
+#define CC_COCOSNODE_RENDER_SUBPIXEL 0
 #endif
 
 /** @def CC_SPRITEBATCHNODE_RENDER_SUBPIXEL
@@ -141,7 +141,7 @@
  To enable set it to 1. Enabled by default.
  */
 #ifndef CC_SPRITEBATCHNODE_RENDER_SUBPIXEL
-#define CC_SPRITEBATCHNODE_RENDER_SUBPIXEL	1
+#define CC_SPRITEBATCHNODE_RENDER_SUBPIXEL	0
 #endif
 
 /** @def CC_USES_VBO
@@ -254,6 +254,20 @@
  @since v1.0.0-rsanchez
  */
 #define CC_IPAD_UNIVERSAL_SUPPORT 1
+
+/** @def CC_PROPAGATE_OPACITY
+ If enabled, cocos2d uses transitive opacity.
+ All classes calculate their cumulative opacity from self opacity and parent's opacity.
+ For example, if you setup a CCLayerRGB with an opacity of 127 (50%) and add a children CCSprite with an opacity of 127,
+ it draws like having an opacity of 63 (25%).
+ 
+ For performance reasons, it's recommended to disable it if you don't need the feature.
+ 
+ To enable set it to 1. Use 0 to disable it. Enabled by default.
+ 
+ @since v1.0.1-rsanchez
+ */
+#define CC_PROPAGATE_OPACITY 1
 
 /** @def CC_IPAD_UNIVERSAL_FILENAME_SUFFIX
  It's the suffix that will be appended to the files in order to load ipad images in universal mode.

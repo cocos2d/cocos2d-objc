@@ -150,10 +150,11 @@
  All features from CCLayer are valid, plus the following new features that propagate into children that conform to the CCRGBAProtocol:
  - opacity
  - RGB colors
+@Since 1.0.1-rsanchez
  */
 @interface CCLayerRGBA : CCLayer <CCRGBAProtocol>
 {
-	GLubyte		opacity_;
+	GLubyte		displayedOpacity_, realOpacity_;
 	ccColor3B	color_;	
 }
 
@@ -173,10 +174,8 @@
  - opacity
  - RGB colors
  */
-@interface CCLayerColor : CCLayer <CCRGBAProtocol, CCBlendProtocol>
+@interface CCLayerColor : CCLayerRGBA <CCBlendProtocol>
 {
-	GLubyte		opacity_;
-	ccColor3B	color_;	
 	ccVertex2F	squareVertices_[4];
 	ccColor4B	squareColors_[4];
 	
@@ -202,10 +201,6 @@
  */
 -(void) changeWidth:(GLfloat)w height:(GLfloat)h;
 
-/** Opacity: conforms to CCRGBAProtocol protocol */
-@property (nonatomic,readwrite) GLubyte opacity;
-/** Opacity: conforms to CCRGBAProtocol protocol */
-@property (nonatomic,readwrite) ccColor3B color;
 /** BlendFunction. Conforms to CCBlendProtocol protocol */
 @property (nonatomic,readwrite) ccBlendFunc blendFunc;
 @end

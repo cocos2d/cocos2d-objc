@@ -41,13 +41,12 @@
  */
 -(ccColor3B) color;
 
-/// returns the opacity
--(GLubyte) opacity;
-/** sets the opacity.
+/** sets and returns the opacity.
  @warning If the the texture has premultiplied alpha then, the R, G and B channels will be modifed.
  Values goes from 0 to 255, where 255 means fully opaque.
  */
--(void) setOpacity: (GLubyte) opacity;
+@property (nonatomic, readwrite) GLubyte opacity;
+@property (nonatomic, readonly) GLubyte displayedOpacity;
 @optional
 /** sets the premultipliedAlphaOpacity property.
  If set to NO then opacity will be applied as: glColor(R,G,B,opacity);

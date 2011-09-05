@@ -931,5 +931,59 @@
 
 #endif // __IPHONE_OS_VERSION_MAX_ALLOWED
 
+@end
+
+
+#pragma mark -
+#pragma mark NodeRGBA
+
+@implementation CCNodeRGBA
+
+@synthesize color = color_;
+
+-(id) init
+{
+	if ((self=[super init]) ) {
+        displayedOpacity_ = realOpacity_ = 255;
+        color_ =  ccWHITE;
+    }
+    return self;
+}
+
+-(void) onEnter {
+    [super onEnter];
+    self.opacity = realOpacity_;
+}
+
+-(GLubyte) opacity
+{
+	return realOpacity_;
+}
+
+-(GLubyte) displayedOpacity
+{
+	return displayedOpacity_;
+}
+
+// Update displayedOpacity_ based on parent's displayedOpacity_
+// and recurse child items
+- (void) setOpacity:(GLubyte)opacity
+{
+	displayedOpacity_ = realOpacity_ = opacity;
+    
+#if CC_PROPAGATE_OPACITY
+    if ([self.parent conformsToProtocol:@protocol(CCRGBAProtocol)]) {
+        displayedOpacity_ = realOpacity_ * ((id<CCRGBAProtocol>)self.parent).displayedOpacity/255.0;
+    }
+	
+	id<CCRGBAProtocol> item;
+	CCARRAY_FOREACH(children_, item) {
+        if ([item conformsToProtocol:@protocol(CCRGBAProtocol)]) {
+            item.opacity=item.opacity;
+        }
+    }
+#endif
+    
+}
 
 @end
