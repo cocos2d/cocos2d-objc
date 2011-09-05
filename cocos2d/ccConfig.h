@@ -45,7 +45,7 @@
  
  @since v2.0.0
  */
-#ifndef CC_ENABLE_GL_STATE_CACHE 
+#ifndef CC_ENABLE_GL_STATE_CACHE
 #define CC_ENABLE_GL_STATE_CACHE 0
 #endif
 

@@ -6,7 +6,8 @@
 
 @interface AppController
 : NSObject <UIApplicationDelegate> {
-    UIWindow *window;
+    UIWindow *window_;
+	UIViewController *viewController_;
 }
 
 @end
