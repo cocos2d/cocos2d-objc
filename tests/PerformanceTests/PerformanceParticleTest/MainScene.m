@@ -213,6 +213,7 @@ Class restartAction()
 			[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_A8];
 			particleSystem = [[CCParticleSystemPoint alloc] initWithTotalParticles:quantityParticles];
 			particleSystem.texture = [[CCTextureCache sharedTextureCache] addImage:@"fire.png"];
+			particleSystem.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTextureA8Color];
 			break;						
 		case 4:
 			particleSystem = [[CCParticleSystemPoint alloc] initWithTotalParticles:quantityParticles];
@@ -232,6 +233,7 @@ Class restartAction()
 			[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_A8];
 			particleSystem = [[CCParticleSystemQuad alloc] initWithTotalParticles:quantityParticles];
 			particleSystem.texture = [[CCTextureCache sharedTextureCache] addImage:@"fire.png"];
+			particleSystem.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTextureA8Color];
 			break;						
 		case 8:
 			particleSystem = [[CCParticleSystemQuad alloc] initWithTotalParticles:quantityParticles];

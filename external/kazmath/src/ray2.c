@@ -180,4 +180,5 @@ kmBool kmRay2IntersectTriangle(const kmRay2* ray, const kmVec2* p1, const kmVec2
 
 kmBool kmRay2IntersectCircle(const kmRay2* ray, const kmVec2 centre, const kmScalar radius, kmVec2* intersection) {
     assert(0 && "Not implemented");
+	return 0;
 }

@@ -6,51 +6,78 @@
 #import "AppController.h"
 #import "cocos2d.h"
 #import "MainScene.h"
+#import "RootViewController.h"
 
 @implementation AppController
 
-- (void)applicationDidFinishLaunching:(UIApplication *)application
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
 	// Init the window
-	window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-	
-	// get instance of the shared director
-	CCDirector *director = [CCDirector sharedDirector];
+	window_ = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 	
 	// before creating any layer, set the landscape mode
-//	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
+	CCDirector *director = [CCDirector sharedDirector];
 	
-	// display FPS (useful when debugging)
-	[director setDisplayFPS:YES];
-	
-	// frames per second
+	// set FPS at 60
 	[director setAnimationInterval:1.0/60];
 	
-	// create an OpenGL view
-	EAGLView *glView = [EAGLView viewWithFrame:[window bounds]];
+	// Display FPS: yes
+	[director setDisplayFPS:YES];
 	
-	// connect it to the director
+	// Create an EAGLView with a RGB8 color buffer, and a depth buffer of 24-bits
+	EAGLView *glView = [EAGLView viewWithFrame:[window_ bounds]];
+	
+	// attach the openglView to the director
 	[director setOpenGLView:glView];
 	
-	// glview is a child of the main window
-	[window addSubview:glView];
-	
-	// Make the window visible
-	[window makeKeyAndVisible];
+	// 2D projection
+	[director setProjection:kCCDirectorProjection2D];
+	//	[director setProjection:kCCDirectorProjection3D];
 	
 	// Enables High Res mode (Retina Display) on iPhone 4 and maintains low res on all other devices
 	if( ! [director enableRetinaDisplay:YES] )
 		CCLOG(@"Retina Display Not supported");
 	
+	// Init the View Controller
+	viewController_ = [[RootViewController alloc] initWithNibName:nil bundle:nil];
+	viewController_.wantsFullScreenLayout = YES;
 	
+	// make the OpenGLView a child of the view controller
+	[viewController_ setView:glView];
+	
+	// make the OpenGLView a child of the main window
+	[window_ addSubview:viewController_.view];
+	
+	// make main window visible
+	[window_ makeKeyAndVisible];	
+	
+	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
+	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
+	// You can change anytime.
+	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA8888];
+	
+	// When in iPad / RetinaDisplay mode, CCFileUtils will append the "-ipad" / "-hd" to all loaded files
+	// If the -ipad  / -hdfile is not found, it will load the non-suffixed version
+	[CCFileUtils setiPadSuffix:@"-ipad"];			// Default on iPad is "" (empty string)
+	[CCFileUtils setRetinaDisplaySuffix:@"-hd"];	// Default on RetinaDisplay is "-hd"
+	
+	// Assume that PVR images have premultiplied alpha
+	[CCTexture2D PVRImagesHavePremultipliedAlpha:NO];
+	
+	// create the main scene
 	CCScene *scene = [CCScene node];
 	[scene addChild: [nextAction() testWithSubTest:1 particles:kNodesIncrease]];
 	
 	[director runWithScene:scene];
+	
+	
+	return YES;
 }
 
 - (void)dealloc {
-	[window release];
+	[window_ release];
+	[viewController_ release];
+
 	[super dealloc];
 }
 
