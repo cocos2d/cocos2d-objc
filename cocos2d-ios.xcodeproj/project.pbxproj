@@ -1442,6 +1442,9 @@
 		A0600CA213C227C800BB6F49 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0600C2613C21D0200BB6F49 /* RootViewController.m */; };
 		A0600CE313C2756E00BB6F49 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		A0600CE413C2757D00BB6F49 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
+		A08C378F14144FC6004538FD /* neon_matrix_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = A08C378E14144FBB004538FD /* neon_matrix_impl.h */; };
+		A08C379114144FDE004538FD /* neon_matrix_impl.c in Sources */ = {isa = PBXBuildFile; fileRef = A08C379014144FDE004538FD /* neon_matrix_impl.c */; };
+		A08C379214144FDE004538FD /* neon_matrix_impl.c in Sources */ = {isa = PBXBuildFile; fileRef = A08C379014144FDE004538FD /* neon_matrix_impl.c */; };
 		A0B035FB13EA09270073E59A /* only_in_hd-hd.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = A0B035FA13EA09270073E59A /* only_in_hd-hd.pvr.ccz */; };
 		A0B0377313EA1FDB0073E59A /* b1-ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = A0B0376D13EA1FDB0073E59A /* b1-ipad.png */; };
 		A0B0377413EA1FDB0073E59A /* b1-ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = A0B0376D13EA1FDB0073E59A /* b1-ipad.png */; };
@@ -3207,8 +3210,6 @@
 		E0C5588211FE48E600B9E4CB /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 503092B210447296005F7AFC /* libz.dylib */; };
 		E0C5588B11FE493B00B9E4CB /* ZwoptexTest.m in Sources */ = {isa = PBXBuildFile; fileRef = E0C5588A11FE493B00B9E4CB /* ZwoptexTest.m */; };
 		E0C5589511FE4CF100B9E4CB /* zwoptex in Resources */ = {isa = PBXBuildFile; fileRef = E0C5588E11FE4CF100B9E4CB /* zwoptex */; };
-		E0CC11871353E8A100080D9D /* neon_matrix_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = E0CC11831353E75100080D9D /* neon_matrix_impl.h */; };
-		E0CC11881353E8A100080D9D /* neon_matrix_impl.c in Sources */ = {isa = PBXBuildFile; fileRef = E0CC11841353E75100080D9D /* neon_matrix_impl.c */; };
 		E0CC4F7D12677DB400691051 /* blocks-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E0CC4F7C12677DB400691051 /* blocks-hd.png */; };
 		E0D2C5D412AF1067008D5DBB /* particles-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E0D2C5D312AF1067008D5DBB /* particles-hd.png */; };
 		E0D2D4F3128CA9E300F78C63 /* piece.png in Resources */ = {isa = PBXBuildFile; fileRef = E0D2D4F2128CA9E300F78C63 /* piece.png */; };
@@ -4800,6 +4801,8 @@
 		A0600C2513C21D0200BB6F49 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RootViewController.h; path = tests/RootViewController.h; sourceTree = "<group>"; };
 		A0600C2613C21D0200BB6F49 /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RootViewController.m; path = tests/RootViewController.m; sourceTree = "<group>"; };
 		A060106813C2992800BB6F49 /* LICENSE_Kazmath.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE_Kazmath.txt; sourceTree = "<group>"; };
+		A08C378E14144FBB004538FD /* neon_matrix_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = neon_matrix_impl.h; sourceTree = "<group>"; };
+		A08C379014144FDE004538FD /* neon_matrix_impl.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = neon_matrix_impl.c; sourceTree = "<group>"; };
 		A0B035FA13EA09270073E59A /* only_in_hd-hd.pvr.ccz */ = {isa = PBXFileReference; lastKnownFileType = file; path = "only_in_hd-hd.pvr.ccz"; sourceTree = "<group>"; };
 		A0B0376D13EA1FDB0073E59A /* b1-ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "b1-ipad.png"; sourceTree = "<group>"; };
 		A0B0376E13EA1FDB0073E59A /* b2-ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "b2-ipad.png"; sourceTree = "<group>"; };
@@ -5031,8 +5034,6 @@
 		E0C783B21210A39200E309E2 /* VaryingRestitution.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VaryingRestitution.h; sourceTree = "<group>"; };
 		E0C783B31210A39200E309E2 /* VerticalStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VerticalStack.h; sourceTree = "<group>"; };
 		E0C783B41210A39200E309E2 /* Web.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Web.h; sourceTree = "<group>"; };
-		E0CC11831353E75100080D9D /* neon_matrix_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = neon_matrix_impl.h; sourceTree = "<group>"; };
-		E0CC11841353E75100080D9D /* neon_matrix_impl.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = neon_matrix_impl.c; sourceTree = "<group>"; };
 		E0CC4F7C12677DB400691051 /* blocks-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "blocks-hd.png"; sourceTree = "<group>"; };
 		E0D2C5D312AF1067008D5DBB /* particles-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "particles-hd.png"; sourceTree = "<group>"; };
 		E0D2D4F2128CA9E300F78C63 /* piece.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = piece.png; sourceTree = "<group>"; };
@@ -7265,6 +7266,7 @@
 		A015BFAD13B826D800C73E76 /* kazmath */ = {
 			isa = PBXGroup;
 			children = (
+				A08C378E14144FBB004538FD /* neon_matrix_impl.h */,
 				A015BFAE13B826D800C73E76 /* aabb.h */,
 				A015BFAF13B826D800C73E76 /* GL */,
 				A015BFB213B826D800C73E76 /* kazmath.h */,
@@ -7293,6 +7295,7 @@
 		A015BFBC13B826D800C73E76 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				A08C379014144FDE004538FD /* neon_matrix_impl.c */,
 				A015BFBD13B826D800C73E76 /* aabb.c */,
 				A015BFC013B826D800C73E76 /* GL */,
 				A015BFC313B826D800C73E76 /* gl_utils */,
@@ -7563,8 +7566,6 @@
 				A0BE62D7140535B700DAA336 /* CCVertex.m */,
 				503798C40F912C2000986724 /* CGPointExtension.h */,
 				503798C50F912C2000986724 /* CGPointExtension.m */,
-				E0CC11841353E75100080D9D /* neon_matrix_impl.c */,
-				E0CC11831353E75100080D9D /* neon_matrix_impl.h */,
 			);
 			name = Math;
 			sourceTree = "<group>";
@@ -7703,7 +7704,6 @@
 				E0BC7D9D1342CE7B001B4DCC /* CCShaderCache.h in Headers */,
 				E0BC7D9F1342CE7B001B4DCC /* GLProgram.h in Headers */,
 				E0BC7DA81342CF27001B4DCC /* ES2Renderer.h in Headers */,
-				E0CC11871353E8A100080D9D /* neon_matrix_impl.h in Headers */,
 				E03A4F2A1354E2F100D4B515 /* ccGLState.h in Headers */,
 				A0BE62D9140535F000DAA336 /* CCVertex.h in Headers */,
 			);
@@ -7842,6 +7842,7 @@
 				A015BFD713B826D800C73E76 /* vec2.h in Headers */,
 				A015BFD813B826D800C73E76 /* vec3.h in Headers */,
 				A015BFD913B826D800C73E76 /* vec4.h in Headers */,
+				A08C378F14144FC6004538FD /* neon_matrix_impl.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11886,7 +11887,6 @@
 				E0BC7D9E1342CE7B001B4DCC /* CCShaderCache.m in Sources */,
 				E0BC7DA01342CE7B001B4DCC /* GLProgram.m in Sources */,
 				E0BC7DA91342CF27001B4DCC /* ES2Renderer.m in Sources */,
-				E0CC11881353E8A100080D9D /* neon_matrix_impl.c in Sources */,
 				E03A4F291354E2F100D4B515 /* ccGLState.m in Sources */,
 				A0BE62DA140535F000DAA336 /* CCVertex.m in Sources */,
 			);
@@ -12128,6 +12128,7 @@
 				505B62CB0F2E6A0F001B4104 /* main.m in Sources */,
 				505B62E00F2E6A66001B4104 /* Texture2dTest.m in Sources */,
 				A0600C7F13C227A300BB6F49 /* RootViewController.m in Sources */,
+				A08C379214144FDE004538FD /* neon_matrix_impl.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -12401,6 +12402,7 @@
 				A015BFEF13B826D800C73E76 /* vec2.c in Sources */,
 				A015BFF113B826D800C73E76 /* vec3.c in Sources */,
 				A015BFF313B826D800C73E76 /* vec4.c in Sources */,
+				A08C379114144FDE004538FD /* neon_matrix_impl.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
