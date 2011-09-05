@@ -669,8 +669,7 @@ static BOOL PVRHaveAlphaPremultiplied_ = NO;
 	
 	ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position | kCCVertexAttribFlag_TexCoords );
 	ccGLUseProgram( shaderProgram_->program_ );
-	ccGLUniformProjectionMatrix( shaderProgram_ );
-	ccGLUniformModelViewMatrix( shaderProgram_ );
+	ccGLUniformModelViewProjectionMatrix( shaderProgram_ );
 
 	glBindTexture( GL_TEXTURE_2D, name_ );
 
@@ -697,8 +696,7 @@ static BOOL PVRHaveAlphaPremultiplied_ = NO;
 
 	ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position | kCCVertexAttribFlag_TexCoords );
 	ccGLUseProgram( shaderProgram_->program_ );
-	ccGLUniformProjectionMatrix( shaderProgram_ );
-	ccGLUniformModelViewMatrix( shaderProgram_ );
+	ccGLUniformModelViewProjectionMatrix( shaderProgram_ );
 
 	glBindTexture( GL_TEXTURE_2D, name_ );
 	

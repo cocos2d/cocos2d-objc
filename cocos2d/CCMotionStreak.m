@@ -243,8 +243,7 @@
 	ccGLEnableVertexAttribs(kCCVertexAttribFlag_PosColorTex );	
 	ccGLBlendFunc( blendFunc_.src, blendFunc_.dst );
 	ccGLUseProgram( shaderProgram_->program_ );
-	ccGLUniformProjectionMatrix( shaderProgram_ );
-	ccGLUniformModelViewMatrix( shaderProgram_ );
+	ccGLUniformModelViewProjectionMatrix( shaderProgram_ );
 	
 	glBindTexture( GL_TEXTURE_2D, [texture_ name] );
 

@@ -302,8 +302,7 @@
 
 	ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position | kCCVertexAttribFlag_TexCoords );
 	ccGLUseProgram( shaderProgram_->program_ );
-	ccGLUniformProjectionMatrix( shaderProgram_ );
-	ccGLUniformModelViewMatrix( shaderProgram_ );
+	ccGLUniformModelViewProjectionMatrix( shaderProgram_ );
 	
 	//
 	// Attributes
@@ -446,8 +445,7 @@
 
 	ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position | kCCVertexAttribFlag_TexCoords );
 	ccGLUseProgram( shaderProgram_->program_ );
-	ccGLUniformProjectionMatrix( shaderProgram_ );
-	ccGLUniformModelViewMatrix( shaderProgram_ );
+	ccGLUniformModelViewProjectionMatrix( shaderProgram_ );
 	
 	//
 	// Attributes

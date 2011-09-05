@@ -70,17 +70,11 @@ void ccGLDeleteProgram( GLuint program );
  @since v2.0.0
  */
 void ccGLBlendFunc(GLenum sfactor, GLenum dfactor);
-	
 
-/** sets the Projection Matrix in the GL program, in case it is necessary
+/** sets the ModelViewProjection Matrix in the GL program
  @since v2.0.0
  */
-void ccGLUniformProjectionMatrix( GLProgram *program );
-
-/** sets the ModelView Matrix in the GL program, in case it is necessary
- @since v2.0.0
- */
-void ccGLUniformModelViewMatrix( GLProgram *shaderProgram );
+void ccGLUniformModelViewProjectionMatrix( GLProgram *shaderProgram );
 
 /** sets the projection matrix as dirty
  @since v2.0.0

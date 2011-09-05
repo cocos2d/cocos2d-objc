@@ -125,22 +125,18 @@ void ccGLEnableVertexAttribs( unsigned int flags )
 
 #pragma mark - GL Uniforms functions
 
-void ccGLUniformProjectionMatrix( GLProgram *shaderProgram )
+void ccGLUniformModelViewProjectionMatrix( GLProgram *shaderProgram )
 {
-	if( shaderProgram->program_ != _ccCurrentProjectionMatrix ) {
-		kmMat4 projectionMatrix;
-		kmGLGetMatrix(KM_GL_PROJECTION, &projectionMatrix );
-		glUniformMatrix4fv( shaderProgram->uniforms_[kCCUniformPMatrix], 1, GL_FALSE, projectionMatrix.mat);
-		
-		_ccCurrentProjectionMatrix = shaderProgram->program_;
-	}
-}
-
-void ccGLUniformModelViewMatrix( GLProgram *shaderProgram )
-{
+	kmMat4 matrixP;
 	kmMat4 matrixMV;
+	kmMat4 matrixMVP;
+
+	kmGLGetMatrix(KM_GL_PROJECTION, &matrixP );
 	kmGLGetMatrix(KM_GL_MODELVIEW, &matrixMV );
-	glUniformMatrix4fv( shaderProgram->uniforms_[kCCUniformMVMatrix], 1, GL_FALSE, matrixMV.mat);
+	
+	kmMat4Multiply(&matrixMVP, &matrixP, &matrixMV);
+	
+	glUniformMatrix4fv( shaderProgram->uniforms_[kCCUniformMVPMatrix], 1, GL_FALSE, matrixMVP.mat);
 }
 
 void ccSetProjectionMatrixDirty( void )

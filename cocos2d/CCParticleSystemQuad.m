@@ -310,8 +310,7 @@
 	ccGLBlendFunc( blendFunc_.src, blendFunc_.dst );
 	
 	ccGLUseProgram( shaderProgram_->program_ );	
-	ccGLUniformProjectionMatrix( shaderProgram_ );
-	ccGLUniformModelViewMatrix( shaderProgram_ );
+	ccGLUniformModelViewProjectionMatrix( shaderProgram_ );
 	
 	NSAssert( particleIdx == particleCount, @"Abnormal error in particle quad");
 	glDrawElements(GL_TRIANGLES, (GLsizei) particleIdx*6, GL_UNSIGNED_SHORT, indices_);

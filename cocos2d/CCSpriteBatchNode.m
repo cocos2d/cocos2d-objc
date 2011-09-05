@@ -276,8 +276,7 @@ static 	SEL selUpdate = NULL;
 	ccGLBlendFunc( blendFunc_.src, blendFunc_.dst );
 	
 	ccGLUseProgram( shaderProgram_->program_ );	
-	ccGLUniformProjectionMatrix( shaderProgram_ );	
-	ccGLUniformModelViewMatrix( shaderProgram_ );
+	ccGLUniformModelViewProjectionMatrix( shaderProgram_ );
 	
 	[textureAtlas_ drawQuads];
 }
