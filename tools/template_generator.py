@@ -232,7 +232,7 @@ if __name__ == "__main__":
                 header_path= arg
             if opt in  ["--user-header-path"]:
                 user_header_path= arg
-            if opt in  ("-a", "--user-header-path"):
+            if opt in  ("-a", "--ancestor"):
                 ancestor = arg
     except getopt.GetoptError,e:
         print e

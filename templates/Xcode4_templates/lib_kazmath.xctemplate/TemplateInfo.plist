@@ -9,7 +9,6 @@
 	<string>com.cocos2d.kazmathlib</string>
 	<key>Kind</key>
 	<string>Xcode.Xcode3.ProjectTemplateUnitKind</string>
-
 	<key>Definitions</key>
 	<dict>
 		<key>libs/kazmath/include/kazmath/aabb.h</key>
@@ -95,6 +94,20 @@
 			</array>
 			<key>Path</key>
 			<string>libs/kazmath/include/kazmath/mat4.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/kazmath/include/kazmath/neon_matrix_impl.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>kazmath</string>
+				<string>include</string>
+				<string>kazmath</string>
+			</array>
+			<key>Path</key>
+			<string>libs/kazmath/include/kazmath/neon_matrix_impl.h</string>
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
@@ -277,6 +290,17 @@
 			<key>Path</key>
 			<string>libs/kazmath/src/mat4.c</string>
 		</dict>
+		<key>libs/kazmath/src/neon_matrix_impl.c</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>kazmath</string>
+				<string>src</string>
+			</array>
+			<key>Path</key>
+			<string>libs/kazmath/src/neon_matrix_impl.c</string>
+		</dict>
 		<key>libs/kazmath/src/plane.c</key>
 		<dict>
 			<key>Group</key>
@@ -374,6 +398,7 @@
 		<string>libs/kazmath/include/kazmath/kazmath.h</string>
 		<string>libs/kazmath/include/kazmath/mat3.h</string>
 		<string>libs/kazmath/include/kazmath/mat4.h</string>
+		<string>libs/kazmath/include/kazmath/neon_matrix_impl.h</string>
 		<string>libs/kazmath/include/kazmath/plane.h</string>
 		<string>libs/kazmath/include/kazmath/quaternion.h</string>
 		<string>libs/kazmath/include/kazmath/ray2.h</string>
@@ -388,6 +413,7 @@
 		<string>libs/kazmath/src/GL/matrix.c</string>
 		<string>libs/kazmath/src/mat3.c</string>
 		<string>libs/kazmath/src/mat4.c</string>
+		<string>libs/kazmath/src/neon_matrix_impl.c</string>
 		<string>libs/kazmath/src/plane.c</string>
 		<string>libs/kazmath/src/quaternion.c</string>
 		<string>libs/kazmath/src/ray2.c</string>
