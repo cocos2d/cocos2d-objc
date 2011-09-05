@@ -13,8 +13,6 @@ version 2.0-alpha XX-Ago-2011
 . [NEW] Director: Fast FPS is the only supported way to display FPS. Removed the CCLabelTTF way of doing it
 . [NEW] Macros: ccgl* replaced with ccGL*
 . [NEW] Macros: CC_ENABLE/DISABLE_DEFAULT_STATE: Removed. No longer needed.
-. [NEW] Math: Using kazmath for matrix and projection operations, and matrix GL stack
-. [NEW] Math: Using NEON Matrix Multiplication from Oolong project
 . [NEW] MotionStreak: Using new motion streak code. 10x faster than the old one.
 . [NEW] OpenGL ES: Added support for OpenGL ES 2.0. OpenGL ES 1.1 is no longer supported
 . [NEW] Sprite: initWithTexture:rect is the designated initializer
@@ -40,6 +38,9 @@ version 2.0-alpha XX-Ago-2011
 . [FIX] Xcode: Tremor / vorbis: Removed. Experimental sound engine is no longer supported
 . [FIX] Xcode: iOS 4 is minimun required to run
 . [3RD] Chipmunk: Using Chipmunk v6.0.1
+. [3RD] [NEW] Kazmath: Added kazmath library for matrix and projection operations, and matrix GL stack
+. [3RD] Kazmath: Added NEON Matrix Multiplication from Oolong project
+
 
 version 1.1 - XX-Ago-2011
 . [NEW] Animation: Added file format. AnimationCache can load animations from file (issue #1209)
