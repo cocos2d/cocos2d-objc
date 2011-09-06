@@ -255,3 +255,35 @@ CGSizeMake( (__points__).width * CC_CONTENT_SCALE_FACTOR(), (__points__).height 
 
 
 #endif // __MAC_OS_X_VERSION_MAX_ALLOWED
+
+
+/**********************/
+/** Profiling Macros **/
+/**********************/
+#if CC_ENABLE_PROFILERS
+
+#define CC_PROFILER_DISPLAY_TIMERS() [[CCProfiler sharedProfiler] displayTimers]
+#define CC_PROFILER_PURGE_ALL() [[CCProfiler sharedProfiler] releaseAllTimers]
+
+#define CC_PROFILER_START(__name__) CCProfilingBeginTimingBlock(__name__)
+#define CC_PROFILER_STOP(__name__) CCProfilingEndTimingBlock(__name__)
+#define CC_PROFILER_RESET(__name__) CCProfilingResetTimingBlock(__name__)
+
+#define CC_PROFILER_START_CATEGORY(__cat__, __name__) do{ if(__cat__) CCProfilingBeginTimingBlock(__name__); } while(0)
+#define CC_PROFILER_STOP_CATEGORY(__cat__, __name__) do{ if(__cat__) CCProfilingEndTimingBlock(__name__); } while(0)
+#define CC_PROFILER_RESET_CATEGORY(__cat__, __name__) do{ if(__cat__) CCProfilingResetTimingBlock(__name__); } while(0)
+
+#else
+
+#define CC_PROFILER_DISPLAY_TIMERS() do {} while (0)
+#define CC_PROFILER_PURGE_ALL() do {} while (0)
+
+#define CC_PROFILER_START(__name__)  do {} while (0)
+#define CC_PROFILER_STOP(__name__) do {} while (0)
+#define CC_PROFILER_RESET(__name__) do {} while (0)
+
+#define CC_PROFILER_START_CATEGORY(__cat__, __name__) do {} while(0)
+#define CC_PROFILER_STOP_CATEGORY(__cat__, __name__) do {} while(0)
+#define CC_PROFILER_RESET_CATEGORY(__cat__, __name__) do {} while(0)
+
+#endif

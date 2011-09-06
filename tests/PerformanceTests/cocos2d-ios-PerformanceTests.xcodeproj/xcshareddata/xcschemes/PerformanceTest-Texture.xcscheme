@@ -14,7 +14,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "E0B0E62C11F8C3BB00414246"
-               BuildableName = "TexturePerformance.app"
+               BuildableName = "PerformanceTest-Texture.app"
                BlueprintName = "PerformanceTest-Texture"
                ReferencedContainer = "container:cocos2d-ios-PerformanceTests.xcodeproj">
             </BuildableReference>
@@ -32,7 +32,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "E0B0E62C11F8C3BB00414246"
-            BuildableName = "TexturePerformance.app"
+            BuildableName = "PerformanceTest-Texture.app"
             BlueprintName = "PerformanceTest-Texture"
             ReferencedContainer = "container:cocos2d-ios-PerformanceTests.xcodeproj">
          </BuildableReference>
@@ -45,12 +45,13 @@
       useCustomWorkingDirectory = "NO"
       buildConfiguration = "Debug"
       debugDocumentVersioning = "YES"
+      enablesOpenGLESFrameCapture = "YES"
       allowLocationSimulation = "YES">
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "E0B0E62C11F8C3BB00414246"
-            BuildableName = "TexturePerformance.app"
+            BuildableName = "PerformanceTest-Texture.app"
             BlueprintName = "PerformanceTest-Texture"
             ReferencedContainer = "container:cocos2d-ios-PerformanceTests.xcodeproj">
          </BuildableReference>
@@ -68,7 +69,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "E0B0E62C11F8C3BB00414246"
-            BuildableName = "TexturePerformance.app"
+            BuildableName = "PerformanceTest-Texture.app"
             BlueprintName = "PerformanceTest-Texture"
             ReferencedContainer = "container:cocos2d-ios-PerformanceTests.xcodeproj">
          </BuildableReference>

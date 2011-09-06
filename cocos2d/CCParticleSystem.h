@@ -291,12 +291,7 @@ typedef void (*CC_UPDATE_PARTICLE_IMP)(id, SEL, tCCParticle*, CGPoint);
 	
 	// Optimization
 	CC_UPDATE_PARTICLE_IMP	updateParticleImp;
-	SEL						updateParticleSel;
-	
-// profiling
-#if CC_ENABLE_PROFILERS
-	CCProfilingTimer* _profilingTimer;
-#endif
+	SEL						updateParticleSel;	
 }
 
 /** Is the emitter active */

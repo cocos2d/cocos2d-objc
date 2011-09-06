@@ -47,12 +47,10 @@
 
 // cocos2d
 #import "ccConfig.h"
-#if CC_ENABLE_PROFILERS
-#import "Support/CCProfiling.h"
-#endif
 #import "CCParticleSystem.h"
 #import "CCTextureCache.h"
 #import "ccMacros.h"
+#import "Support/CCProfiling.h"
 
 // support
 #import "Support/OpenGL_Internal.h"
@@ -295,11 +293,6 @@
 		
 		autoRemoveOnFinish_ = NO;
 
-		// profiling
-#if CC_ENABLE_PROFILERS
-		_profilingTimer = [[CCProfiler timerWithName:@"particle system" andInstance:self] retain];
-#endif
-		
 		// Optimization: compile udpateParticle method
 		updateParticleSel = @selector(updateQuadWithParticle:newPosition:);
 		updateParticleImp = (CC_UPDATE_PARTICLE_IMP) [self methodForSelector:updateParticleSel];
@@ -317,10 +310,6 @@
 	free( particles );
 
 	[texture_ release];
-	// profiling
-#if CC_ENABLE_PROFILERS
-	[CCProfiler releaseTimer:_profilingTimer];
-#endif
 	
 	[super dealloc];
 }
@@ -458,6 +447,8 @@
 #pragma mark ParticleSystem - MainLoop
 -(void) update: (ccTime) dt
 {
+	CC_PROFILER_START_CATEGORY(kCCProfilerCategoryParticles , @"CCParticleSystem - update");
+
 	if( active && emissionRate ) {
 		float rate = 1.0f / emissionRate;
 		emitCounter += dt;
@@ -472,12 +463,7 @@
 	}
 	
 	particleIdx = 0;
-	
-	
-#if CC_ENABLE_PROFILERS
-	CCProfilingBeginTimingBlock(_profilingTimer);
-#endif
-	
+		
 	
 	CGPoint currentPosition = CGPointZero;
 	if( positionType_ == kCCPositionTypeFree )
@@ -577,13 +563,12 @@
 		}
 	}
 	
-#if CC_ENABLE_PROFILERS
-	CCProfilingEndTimingBlock(_profilingTimer);
-#endif
-	
+
 #ifdef CC_USES_VBO
 	[self postStep];
 #endif
+	
+	CC_PROFILER_STOP_CATEGORY(kCCProfilerCategoryParticles , @"CCParticleSystem - update");
 }
 
 -(void) updateQuadWithParticle:(tCCParticle*)particle newPosition:(CGPoint)pos;

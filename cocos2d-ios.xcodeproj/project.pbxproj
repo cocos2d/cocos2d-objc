@@ -6089,6 +6089,7 @@
 				501CCFB70E99659400B86F68 /* ImageSupport */,
 				E0CC11891353ED6100080D9D /* Math */,
 				501CCFB60E99658900B86F68 /* OpenGLSupport */,
+				A0F6EABE14169976008F01A1 /* Profiling */,
 				E0C54DC811F9CF2700B9E4CB /* ccUtils.c */,
 				E0C54DC911F9CF2700B9E4CB /* ccUtils.h */,
 				50C508C40F7C194400799124 /* CCFileUtils.h */,
@@ -6097,8 +6098,6 @@
 				50F29F5510204FD60046CA73 /* base64.c */,
 				50F2A103102094550046CA73 /* ZipUtils.h */,
 				50F2A102102094550046CA73 /* ZipUtils.m */,
-				0529445911098D6F00E500F3 /* CCProfiling.h */,
-				0529445A11098D6F00E500F3 /* CCProfiling.m */,
 			);
 			path = Support;
 			sourceTree = "<group>";
@@ -7460,6 +7459,15 @@
 			);
 			name = Shaders;
 			path = Resources/Shaders;
+			sourceTree = "<group>";
+		};
+		A0F6EABE14169976008F01A1 /* Profiling */ = {
+			isa = PBXGroup;
+			children = (
+				0529445911098D6F00E500F3 /* CCProfiling.h */,
+				0529445A11098D6F00E500F3 /* CCProfiling.m */,
+			);
+			name = Profiling;
 			sourceTree = "<group>";
 		};
 		E037DA881281EFE2003D39D7 /* Bug-458 */ = {

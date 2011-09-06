@@ -7,8 +7,6 @@
 
 Class nextAction();
 
-@class CCProfilingTimer;
-
 enum {
 	kMaxNodes = 15000,
 	kNodesIncrease = 500,
@@ -37,7 +35,6 @@ enum {
 @interface IterateSpriteSheet : MainScene
 {
 	CCSpriteBatchNode	*batchNode;
-	CCProfilingTimer* _profilingTimer;
 }
 -(NSString*) profilerName;
 @end
@@ -53,7 +50,6 @@ enum {
 @interface AddRemoveSpriteSheet : MainScene
 {
 	CCSpriteBatchNode	*batchNode;
-	CCProfilingTimer* _profilingTimer;
 }
 -(NSString*) profilerName;
 @end

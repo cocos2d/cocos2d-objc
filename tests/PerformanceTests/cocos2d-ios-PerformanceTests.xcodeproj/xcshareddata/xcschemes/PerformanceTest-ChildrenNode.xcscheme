@@ -14,7 +14,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "5006BA3511BBF4DB00E488BD"
-               BuildableName = "ChildrenNodePerformance.app"
+               BuildableName = "PerformanceTest-ChildrenNode.app"
                BlueprintName = "PerformanceTest-ChildrenNode"
                ReferencedContainer = "container:cocos2d-ios-PerformanceTests.xcodeproj">
             </BuildableReference>
@@ -32,7 +32,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "5006BA3511BBF4DB00E488BD"
-            BuildableName = "ChildrenNodePerformance.app"
+            BuildableName = "PerformanceTest-ChildrenNode.app"
             BlueprintName = "PerformanceTest-ChildrenNode"
             ReferencedContainer = "container:cocos2d-ios-PerformanceTests.xcodeproj">
          </BuildableReference>
@@ -45,12 +45,13 @@
       useCustomWorkingDirectory = "NO"
       buildConfiguration = "Debug"
       debugDocumentVersioning = "YES"
+      enablesOpenGLESFrameCapture = "YES"
       allowLocationSimulation = "YES">
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "5006BA3511BBF4DB00E488BD"
-            BuildableName = "ChildrenNodePerformance.app"
+            BuildableName = "PerformanceTest-ChildrenNode.app"
             BlueprintName = "PerformanceTest-ChildrenNode"
             ReferencedContainer = "container:cocos2d-ios-PerformanceTests.xcodeproj">
          </BuildableReference>
@@ -68,7 +69,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "5006BA3511BBF4DB00E488BD"
-            BuildableName = "ChildrenNodePerformance.app"
+            BuildableName = "PerformanceTest-ChildrenNode.app"
             BlueprintName = "PerformanceTest-ChildrenNode"
             ReferencedContainer = "container:cocos2d-ios-PerformanceTests.xcodeproj">
          </BuildableReference>

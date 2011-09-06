@@ -15,6 +15,7 @@ version 2.0-alpha XX-Ago-2011
 . [NEW] Macros: CC_ENABLE/DISABLE_DEFAULT_STATE: Removed. No longer needed.
 . [NEW] MotionStreak: Using new motion streak code. 10x faster than the old one.
 . [NEW] OpenGL ES: Added support for OpenGL ES 2.0. OpenGL ES 1.1 is no longer supported
+. [NEW] Profiler: API heavily updated to make it easier to integrate into any kind of component
 . [NEW] Sprite: initWithTexture:rect is the designated initializer
 . [NEW] SpriteFrameCache: addSpriteFramesWithFile:textureFile renamed to addSpriteFramesWithFile:textureFilename to be consistent with the new API
 . [NEW] Templates: Removed Xcode3 templates. Updated Xcode4 templates.

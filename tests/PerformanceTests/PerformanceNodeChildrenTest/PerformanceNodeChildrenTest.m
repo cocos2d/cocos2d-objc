@@ -138,6 +138,8 @@ Class restartAction()
 
 -(void) dealloc
 {
+	CC_PROFILER_PURGE_ALL();
+
 	[super dealloc];
 }
 
@@ -217,8 +219,6 @@ Class restartAction()
 
 	if( ( self=[super initWithQuantityOfNodes:nodes]) ) {
 	
-		_profilingTimer = [[CCProfiler timerWithName:[self profilerName] andInstance:self] retain];
-
 		[self addChild:batchNode];		
 		[self scheduleUpdate];
 	}
@@ -228,7 +228,6 @@ Class restartAction()
 
 - (void) dealloc
 {
-	[CCProfiler releaseTimer:_profilingTimer];
 	[super dealloc];
 }
 
@@ -271,7 +270,8 @@ Class restartAction()
 
 -(void) update:(ccTime)dt
 {
-	CCProfilingBeginTimingBlock(_profilingTimer);
+	CC_PROFILER_START( [self profilerName] );
+
 	
 	// iterate using fast enumeration protocol
 	for( CCSprite* sprite in [batchNode children] )
@@ -279,7 +279,7 @@ Class restartAction()
 		[sprite setVisible:NO];
 	}
 	
-	CCProfilingEndTimingBlock(_profilingTimer);
+	CC_PROFILER_STOP( [self profilerName] );
 }
 
 -(NSString*) title
@@ -303,7 +303,7 @@ Class restartAction()
 {
 	ccArray *array = batchNode.children->data;
 
-	CCProfilingBeginTimingBlock(_profilingTimer);
+	CC_PROFILER_START( [self profilerName] );
 	
 	// iterate using fast enumeration protocol
 	for( int i=0; i < array->num; i++)
@@ -312,7 +312,7 @@ Class restartAction()
 		[sprite setVisible:NO];
 	}
 	
-	CCProfilingEndTimingBlock(_profilingTimer);
+	CC_PROFILER_STOP( [self profilerName] );
 }
 
 -(NSString*) title
@@ -342,8 +342,6 @@ Class restartAction()
 	
 	if( ( self=[super initWithQuantityOfNodes:nodes]) ) {
 		
-		_profilingTimer = [[CCProfiler timerWithName:[self profilerName] andInstance:self] retain];
-		
 		[self addChild:batchNode];		
 		[self scheduleUpdate];
 	}
@@ -353,7 +351,6 @@ Class restartAction()
 
 - (void) dealloc
 {
-	[CCProfiler releaseTimer:_profilingTimer];
 	[super dealloc];
 }
 
@@ -415,13 +412,14 @@ Class restartAction()
 		}
 		
 		// add them with random Z (very important!)
-		CCProfilingBeginTimingBlock(_profilingTimer);
+		CC_PROFILER_START( [self profilerName] );
+
 		for( int i=0; i < totalToAdd;i++ )
 		{
 			[batchNode addChild:sprites[i] z:zs[i] tag:kTagBase+i];
 		}
 //		[batchNode sortAllChildren];
-		CCProfilingEndTimingBlock(_profilingTimer);
+		CC_PROFILER_STOP( [self profilerName] );
 		
 		// remove them
 		for( int i=0;i <  totalToAdd;i++)
@@ -469,12 +467,13 @@ Class restartAction()
 		}
 		
 		// remove them
-		CCProfilingBeginTimingBlock(_profilingTimer);
+		CC_PROFILER_START( [self profilerName] );
+
 		for( int i=0;i <  totalToAdd;i++)
 		{
 			[batchNode removeChildByTag:kTagBase+i cleanup:YES];
 		}
-		CCProfilingEndTimingBlock(_profilingTimer);
+		CC_PROFILER_STOP( [self profilerName] );
 	}
 }
 
@@ -518,14 +517,14 @@ Class restartAction()
 //		[batchNode sortAllChildren];
 	
 		// reorder them
-		CCProfilingBeginTimingBlock(_profilingTimer);
+		CC_PROFILER_START( [self profilerName] );
 		for( int i=0;i <  totalToAdd;i++)
 		{
 			[batchNode reorderChild:[[batchNode children] objectAtIndex:i] z:CCRANDOM_MINUS1_1() * 50];
 		}
 //		[batchNode sortAllChildren];
-		CCProfilingEndTimingBlock(_profilingTimer);
-		
+		CC_PROFILER_STOP( [self profilerName] );
+
 		// remove them
 		for( int i=0;i <  totalToAdd;i++)
 		{

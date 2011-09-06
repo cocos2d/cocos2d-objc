@@ -136,10 +136,6 @@ CGFloat	__ccContentScaleFactor = 1;
 	if( displayFPS_ )
 		[self showFPS];
 
-#if CC_ENABLE_PROFILERS
-	[self showProfilers];
-#endif
-	
 	kmGLPopMatrix();
 
 	totalFrames_++;

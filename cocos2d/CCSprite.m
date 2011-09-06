@@ -41,6 +41,7 @@
 #import "CCDirector.h"
 #import "Support/CGPointExtension.h"
 #import "Support/TransformUtils.h"
+#import "Support/CCProfiling.h"
 
 // external
 #import "kazmath/GL/matrix.h"
@@ -573,6 +574,8 @@ struct transformValues_ {
 
 -(void) draw
 {
+	CC_PROFILER_START_CATEGORY(kCCProfilerCategorySprite, @"CCSprite - draw");
+
 	[super draw];
 	
 	NSAssert(!usesBatchNode_, @"If CCSprite is being rendered by CCSpriteBatchNode, CCSprite#draw SHOULD NOT be called");
@@ -626,6 +629,9 @@ struct transformValues_ {
 	};
 	ccDrawPoly(vertices, 4, YES);
 #endif // CC_SPRITE_DEBUG_DRAW
+	
+
+	CC_PROFILER_STOP_CATEGORY(kCCProfilerCategorySprite, @"CCSprite - draw");
 }
 
 #pragma mark CCSprite - CCNode overrides
