@@ -150,10 +150,11 @@ typedef void (*GLLogFunction) (GLuint program,
 #pragma mark -
 
 - (BOOL)link
-{
-    GLint status;
-    
+{    
     glLinkProgram(program_);
+
+#if DEBUG
+	GLint status;
     glValidateProgram(program_);
     
     glGetProgramiv(program_, GL_LINK_STATUS, &status);
@@ -167,6 +168,7 @@ typedef void (*GLLogFunction) (GLuint program,
 		vertShader_ = fragShader_ = program_ = 0;
         return NO;
 	}
+#endif
     
     if (vertShader_)
         glDeleteShader(vertShader_);
