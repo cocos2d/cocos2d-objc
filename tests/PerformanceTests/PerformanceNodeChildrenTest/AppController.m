@@ -16,10 +16,7 @@
 	
 	// get instance of the shared director
 	CCDirector *director = [CCDirector sharedDirector];
-	
-	// before creating any layer, set the landscape mode
-	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
-	
+
 	// display FPS (useful when debugging)
 	[director setDisplayFPS:YES];
 	
@@ -45,7 +42,13 @@
 	CCScene *scene = [CCScene node];
 	[scene addChild: [nextAction() testWithQuantityOfNodes:kNodesIncrease]];
 	
+	[[CCScheduler sharedScheduler] scheduleSelector:@selector(dumpProfilerInfo:) forTarget:self interval:2 paused:NO];
 	[director runWithScene:scene];
+}
+
+-(void) dumpProfilerInfo:(ccTime)dt
+{
+	CC_PROFILER_DISPLAY_TIMERS();
 }
 
 - (void)dealloc {

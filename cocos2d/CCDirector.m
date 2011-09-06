@@ -508,16 +508,6 @@ static CCDirector *_sharedDirector = nil;
 	[FPSLabel_ visit];
 }
 
-- (void) showProfilers {
-#if CC_ENABLE_PROFILERS
-	accumDtForProfiler_ += dt;
-	if (accumDtForProfiler_ > 1.0f) {
-		accumDtForProfiler_ = 0;
-		[[CCProfiler sharedProfiler] displayTimers];
-	}
-#endif // CC_ENABLE_PROFILERS
-}
-
 #pragma mark Director - Helper
 
 -(void) createFPSLabel

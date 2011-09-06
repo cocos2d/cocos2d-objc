@@ -293,9 +293,6 @@ and when to execute the Scenes.
 /** enables/disables OpenGL depth test */
 - (void) setDepthTest: (BOOL) on;
 
-// Profiler
--(void) showProfilers;
-
 // helper
 /** creates the FPS label */
 -(void) createFPSLabel;

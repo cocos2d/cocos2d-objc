@@ -14,7 +14,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "5030942C10447C09005F7AFC"
-               BuildableName = "SpritePerformance.app"
+               BuildableName = "PerformanceTest-Sprite.app"
                BlueprintName = "PerformanceTest-Sprite"
                ReferencedContainer = "container:cocos2d-ios-PerformanceTests.xcodeproj">
             </BuildableReference>
@@ -32,7 +32,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "5030942C10447C09005F7AFC"
-            BuildableName = "SpritePerformance.app"
+            BuildableName = "PerformanceTest-Sprite.app"
             BlueprintName = "PerformanceTest-Sprite"
             ReferencedContainer = "container:cocos2d-ios-PerformanceTests.xcodeproj">
          </BuildableReference>
@@ -45,12 +45,13 @@
       useCustomWorkingDirectory = "NO"
       buildConfiguration = "Debug"
       debugDocumentVersioning = "YES"
+      enablesOpenGLESFrameCapture = "YES"
       allowLocationSimulation = "YES">
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "5030942C10447C09005F7AFC"
-            BuildableName = "SpritePerformance.app"
+            BuildableName = "PerformanceTest-Sprite.app"
             BlueprintName = "PerformanceTest-Sprite"
             ReferencedContainer = "container:cocos2d-ios-PerformanceTests.xcodeproj">
          </BuildableReference>
@@ -68,7 +69,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "5030942C10447C09005F7AFC"
-            BuildableName = "SpritePerformance.app"
+            BuildableName = "PerformanceTest-Sprite.app"
             BlueprintName = "PerformanceTest-Sprite"
             ReferencedContainer = "container:cocos2d-ios-PerformanceTests.xcodeproj">
          </BuildableReference>

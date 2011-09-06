@@ -151,10 +151,7 @@
 #import "Support/CCArray.h"
 #import "Support/ccUtils.h"
 #import "Support/TransformUtils.h"
-
-#if CC_ENABLE_PROFILERS
 #import "Support/CCProfiling.h"
-#endif // CC_ENABLE_PROFILERS
 
 //
 // external

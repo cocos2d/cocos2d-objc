@@ -226,9 +226,9 @@
 #endif
 
 /** @def CC_ENABLE_PROFILERS
- If enabled, will activate various profilers withing cocos2d. This statistical data will be output to the console
- once per second showing average time (in milliseconds) required to execute the specific routine(s).
- Useful for debugging purposes only. It is recommened to leave it disabled.
+ If enabled, will activate various profilers withing cocos2d. This statistical data will be saved in the CCProfiler singleton.
+ In order to display saved data, you have to call the CC_PROFILER_DISPLAY_TIMERS() macro.
+ Useful for profiling purposes only. If unsure, leave it disabled.
  
  To enable set it to a value different than 0. Disabled by default.
  */

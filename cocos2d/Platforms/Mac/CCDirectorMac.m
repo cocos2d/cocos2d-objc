@@ -461,10 +461,6 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 	if( displayFPS_ )
 		[self showFPS];
 	
-#if CC_ENABLE_PROFILERS
-	[self showProfilers];
-#endif
-	
 	kmGLPopMatrix();
 	
 	totalFrames_++;

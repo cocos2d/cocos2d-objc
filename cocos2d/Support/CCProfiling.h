@@ -29,25 +29,59 @@
 
 @class CCProfilingTimer;
 
+/** CCProfiler
+ cocos2d builtin profiler.
+ 
+ To use it, enable set the CC_ENABLE_PROFILERS=1 in the ccConfig.h file
+ */
 @interface CCProfiler : NSObject {
-	NSMutableArray* activeTimers;
+@public
+	NSMutableDictionary* activeTimers;
 }
 
+/** shared instance */
 + (CCProfiler*)sharedProfiler;
-+ (CCProfilingTimer*)timerWithName:(NSString*)timerName andInstance:(id)instance;
-+ (void)releaseTimer:(CCProfilingTimer*)timer;
+
+/** Creates and adds a new timer */
+- (CCProfilingTimer*) createAndAddTimerWithName:(NSString*)timerName;
+
+/** releases a timer */
+- (void) releaseTimer:(CCProfilingTimer*)timer;
+
+/** releases all timers */
+- (void) releaseAllTimers;
+
+/** display the timers */
 - (void)displayTimers;
 
 @end
 
-
+/** CCProfilingTimer
+Profiling timers used by CCProfiler
+ */
 @interface CCProfilingTimer : NSObject {
-	NSString* name;
-	struct timeval startTime;
-	double averageTime;
+
+@public
+	NSString		*name;
+	struct timeval	startTime;
+	double			averageTime;
+	double			totalTime;
+	NSUInteger		numberOfCalls;
 }
 
+/** resets the timer properties */
+-(void) reset;
 @end
 
-extern void CCProfilingBeginTimingBlock(CCProfilingTimer* timer);
-extern void CCProfilingEndTimingBlock(CCProfilingTimer* timer);
+extern void CCProfilingBeginTimingBlock(NSString *timerName);
+extern void CCProfilingEndTimingBlock(NSString *timerName);
+extern void CCProfilingResetTimingBlock(NSString *timerName);
+
+/*
+ * cocos2d profiling categories
+ * used to enable / disable profilers with granularity
+ */
+
+extern BOOL kCCProfilerCategorySprite;
+extern BOOL kCCProfilerCategoryBatchSprite;
+extern BOOL kCCProfilerCategoryParticles;
