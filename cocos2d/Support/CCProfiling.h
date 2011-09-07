@@ -65,6 +65,8 @@ Profiling timers used by CCProfiler
 	NSString		*name;
 	struct timeval	startTime;
 	double			averageTime;
+	double			minTime;
+	double			maxTime;
 	double			totalTime;
 	NSUInteger		numberOfCalls;
 }

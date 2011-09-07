@@ -110,6 +110,8 @@ static CCProfiler* g_sharedProfiler;
 		numberOfCalls = 0;
 		averageTime = 0;
 		totalTime = 0;
+		minTime = 10000;
+		maxTime = 0;
 		gettimeofday(&startTime, NULL);
 	}
 	
@@ -125,7 +127,7 @@ static CCProfiler* g_sharedProfiler;
 
 - (NSString*)description
 {
-	return [NSString stringWithFormat:@"%@ : avg time %fms, total time %fms, calls: %d", name, averageTime, totalTime, numberOfCalls];
+	return [NSString stringWithFormat:@"%@ ::\tavg: %fms,\tmin: %fms,\tmax: %fms,\ttotal: %.2fs,\tnr calls: %d", name, averageTime, minTime, maxTime, totalTime / 1000.0, numberOfCalls];
 }
 
 -(void) reset
@@ -133,6 +135,8 @@ static CCProfiler* g_sharedProfiler;
 	numberOfCalls = 0;
 	averageTime = 0;
 	totalTime = 0;
+	minTime = 10000;
+	maxTime = 0;
 	gettimeofday(&startTime, NULL);
 }
 
@@ -166,6 +170,9 @@ void CCProfilingEndTimingBlock(NSString *timerName)
 	// milliseconds
 	timer->averageTime = (timer->averageTime + duration) / 2.0f;
 	timer->totalTime += duration;
+	timer->maxTime = MAX( timer->maxTime, duration);
+	timer->minTime = MIN( timer->minTime, duration);
+
 }
 
 void CCProfilingResetTimingBlock(NSString *timerName)
