@@ -270,7 +270,7 @@ Class restartAction()
 
 -(void) update:(ccTime)dt
 {
-	CC_PROFILER_START( [self profilerName] );
+	CC_PROFILER_START_INSTANCE(self, [self profilerName] );
 
 	
 	// iterate using fast enumeration protocol
@@ -278,8 +278,8 @@ Class restartAction()
 	{
 		[sprite setVisible:NO];
 	}
-	
-	CC_PROFILER_STOP( [self profilerName] );
+
+	CC_PROFILER_STOP_INSTANCE(self, [self profilerName] );
 }
 
 -(NSString*) title
