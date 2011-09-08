@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE map SYSTEM "http://mapeditor.org/dtd/1.0/map.dtd">
+<map version="1.0" orientation="orthogonal" width="12" height="12" tilewidth="101" tileheight="81">
+ <tileset firstgid="1" source="orthogonal-test1.tsx"/>
+ <layer name="Backgr" width="12" height="12">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAA1NhYGBQGcWjmEwMAOTHmZJAAgAA
+  </data>
+ </layer>
+ <layer name="Layer 0" width="12" height="12">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAA63PQQrAIAwEwIDUg6AHi2e/4tP2aXlaV5LSXtqCNDAQCVmiiMhuQEpDfq5kQJoW8wN3g+9W9vWWEw1I43r+BM+fcM42A9JpJf+tsgFp9vsb383n3eBh/bOKAWm58rV5z+zRF/91AHeSesdAAgAA
+  </data>
+ </layer>
+</map>
