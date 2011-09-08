@@ -258,7 +258,7 @@
 		kmGLTranslatef(-offset.x, -offset.y, 0);
 	}
 	
-	glBindTexture( GL_TEXTURE_2D, texture_.name);
+	ccGLBindTexture2D( texture_.name);
 	
 	[self blit];
 }

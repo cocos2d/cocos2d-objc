@@ -374,7 +374,7 @@
 	ccGLEnableVertexAttribs(kCCVertexAttribFlag_PosColorTex );	
 
 	ccGLBindVertexArray( VAOname_ );
-	glBindTexture( GL_TEXTURE_2D, [texture_ name] );	
+	ccGLBindTexture2D( [texture_ name] );	
 
 #define kQuadSize sizeof(quads_[0].bl)
 #if CC_USES_VBO

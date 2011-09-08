@@ -54,19 +54,19 @@ extern "C" {
 */
 
 /** Uses the GL program in case program is different than the current one.
- If CC_ENABLE_GL_STATE_CACHE is disable, it will the glUseProgram() directly.
+ If CC_ENABLE_GL_STATE_CACHE is disabled, it will the glUseProgram() directly.
  @since v2.0.0
  */
 void ccGLUseProgram( GLuint program );
 
 /** Deletes the GL program. If it is the one that is being used, it invalidates it.
- If CC_ENABLE_GL_STATE_CACHE is disable, it will the glDeleteProgram() directly.
+ If CC_ENABLE_GL_STATE_CACHE is disabled, it will the glDeleteProgram() directly.
  @since v2.0.0
  */
 void ccGLDeleteProgram( GLuint program );
 
 /** Uses a blending function in case it not already used.
- If CC_ENABLE_GL_STATE_CACHE is disable, it will the glBlendFunc() directly.
+ If CC_ENABLE_GL_STATE_CACHE is disabled, it will the glBlendFunc() directly.
  @since v2.0.0
  */
 void ccGLBlendFunc(GLenum sfactor, GLenum dfactor);
@@ -93,6 +93,19 @@ void ccSetProjectionMatrixDirty( void );
  @since v2.0.0
  */
 void ccGLEnableVertexAttribs( unsigned int flags );
+	
+/** If the texture is not already bound, it binds it.
+ If CC_ENABLE_GL_STATE_CACHE is disabled, it will call glBindTexture() directly.
+ @since v2.0.0
+ */
+void ccGLBindTexture2D(GLuint textureId);
+
+/** It will delete a given texture. If the texture was bound, it will invalidate the cached.
+ If CC_ENABLE_GL_STATE_CACHE is disabled, it will call glDeleteTextures() directly.
+ @since v2.0.0
+ */
+void ccGLDeleteTexture(GLuint textureId);
+
 
 #ifdef __cplusplus
 }
