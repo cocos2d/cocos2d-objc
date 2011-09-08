@@ -719,15 +719,24 @@ static BOOL PVRHaveAlphaPremultiplied_ = NO;
 	GLfloat		width = (GLfloat)width_ * maxS_,
 				height = (GLfloat)height_ * maxT_;
 
-	GLfloat		vertices[] = {	point.x,			point.y,	0.0f,
-								width + point.x,	point.y,	0.0f,
-								point.x,			height  + point.y,	0.0f,
-								width + point.x,	height  + point.y,	0.0f };
+	GLfloat		vertices[] = {	point.x,			point.y,
+								width + point.x,	point.y,
+								point.x,			height  + point.y,
+		width + point.x,	height  + point.y };
 	
 	glBindTexture(GL_TEXTURE_2D, name_);
-	glVertexPointer(3, GL_FLOAT, 0, vertices);
+
+	// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
+	// Needed states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_TEXTURE_COORD_ARRAY
+	// Unneeded states: GL_COLOR_ARRAY
+	glDisableClientState(GL_COLOR_ARRAY);
+
+	glVertexPointer(2, GL_FLOAT, 0, vertices);
 	glTexCoordPointer(2, GL_FLOAT, 0, coordinates);
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+
+	// Restore GL state
+	glEnableClientState(GL_COLOR_ARRAY);
 }
 
 
@@ -737,15 +746,24 @@ static BOOL PVRHaveAlphaPremultiplied_ = NO;
 								maxS_,	maxT_,
 								0.0f,	0.0f,
 								maxS_,	0.0f  };
-	GLfloat	vertices[] = {	rect.origin.x,							rect.origin.y,							/*0.0f,*/
-							rect.origin.x + rect.size.width,		rect.origin.y,							/*0.0f,*/
-							rect.origin.x,							rect.origin.y + rect.size.height,		/*0.0f,*/
-							rect.origin.x + rect.size.width,		rect.origin.y + rect.size.height,		/*0.0f*/ };
+	GLfloat	vertices[] = {	rect.origin.x,						rect.origin.y,
+							rect.origin.x + rect.size.width,	rect.origin.y,
+							rect.origin.x,						rect.origin.y + rect.size.height,
+		rect.origin.x + rect.size.width,						rect.origin.y + rect.size.height };
 	
 	glBindTexture(GL_TEXTURE_2D, name_);
+	
+	// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
+	// Needed states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_TEXTURE_COORD_ARRAY
+	// Unneeded states: GL_COLOR_ARRAY
+	glDisableClientState(GL_COLOR_ARRAY);
+	
 	glVertexPointer(2, GL_FLOAT, 0, vertices);
 	glTexCoordPointer(2, GL_FLOAT, 0, coordinates);
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+	
+	// restore state
+	glEnableClientState(GL_COLOR_ARRAY);
 }
 
 @end

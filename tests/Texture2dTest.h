@@ -197,4 +197,16 @@
 {}
 @end
 
+@interface TextureDrawAtPoint : TextureDemo
+{
+	CCTexture2D *tex1_, *tex2_;
+}
+@end
+
+@interface TextureDrawInRect : TextureDemo
+{
+	CCTexture2D *tex1_, *tex2_;
+}
+@end
+
 

@@ -4,9 +4,15 @@ version 1.1 - XX-Ago-2011
 . [NEW] FileUtils: Added xxxFileExistAtPath for iPad and RetinaDisplay resources
 . [NEW] ccConfig: Removed CC_RETINA_DISPLAY_FILENAME_SUFFIX. Use CCFileUtils API instead
 . [NEW] ccConfig: Removed CC_RETINA_DISPLAY_SUPPORT. It is always enabled.
+. [NEW] TileMap: TMX map supports flipped tiles (issue #1233)
+. [FIX] Actions: removed #undef CLAMP (issue #1210)
 . [FIX] FileUtils: Loads -hd resources even if the sd resource is not present (issue #1179)
 . [FIX] FileUtils: renamed ccRemoveSuffixFromFile to +[CCFileUtils removeSuffixFromFile:];
 . [FIX] FileUtils: localized resources can be loaded using fullPathFromRelativePath (issue #1230)
+. [FIX] LayerColor: init calls initWithColor:width:height (issue #1226)
+. [FIX] Texture2D: drawAtPoint uses the correct vertices
+. [FIX] Texture2D: drawAtPoint, drawInRect disables color state (issue #1222)
+. [FIX-MAC] Director: Only call set setAcceptsTouchEvents: when OS X >= 10.6 (issue #1225)
 
 version 1.0.1 - 28-July-2011
 . [FIX] All: Implicit atomic properties converted to nonatomic

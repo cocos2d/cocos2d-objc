@@ -166,7 +166,9 @@
 /** creates a CCLayer with color. Width and height are the window size. */
 + (id) layerWithColor: (ccColor4B)color;
 
-/** initializes a CCLayer with color, width and height in Points */
+/** initializes a CCLayer with color, width and height in Points. 
+ This is the designated initializer.
+ */
 - (id) initWithColor:(ccColor4B)color width:(GLfloat)w height:(GLfloat)h;
 /** initializes a CCLayer with color. Width and height are the window size. */
 - (id) initWithColor:(ccColor4B)color;
