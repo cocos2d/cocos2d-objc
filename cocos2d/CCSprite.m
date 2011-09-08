@@ -587,7 +587,7 @@ struct transformValues_ {
 	ccGLUseProgram( shaderProgram_->program_ );
 	ccGLUniformModelViewProjectionMatrix( shaderProgram_ );
 	
-	glBindTexture( GL_TEXTURE_2D, [texture_ name] );
+	ccGLBindTexture2D( [texture_ name] );
 		
 	//
 	// Attributes

@@ -39,6 +39,7 @@ static BOOL		_vertexAttribTexCoords = NO;
 
 #if CC_ENABLE_GL_STATE_CACHE
 static GLuint	_ccCurrentShaderProgram = -1;
+static GLuint	_ccCurrentBoundTexture = -1;
 static GLenum	_ccBlendingSource = -1;
 static GLenum	_ccBlendingDest = -1;
 #endif // CC_ENABLE_GL_STATE_CACHE
@@ -81,7 +82,30 @@ void ccGLBlendFunc(GLenum sfactor, GLenum dfactor)
 #endif // CC_ENABLE_GL_STATE_CACHE
 }
 
+void ccGLBindTexture2D( GLuint textureId )
+{
+#if CC_ENABLE_GL_STATE_CACHE
+	if( _ccCurrentBoundTexture != textureId ) {
+		_ccCurrentBoundTexture = textureId;
+		glBindTexture(GL_TEXTURE_2D, textureId );
+	}
+#else
+	glBindTexture(GL_TEXTURE_2D, textureId );
+#endif
+}
+
+
+void ccGLDeleteTexture( GLuint textureId )
+{
+#if CC_ENABLE_GL_STATE_CACHE
+	if( textureId == _ccCurrentBoundTexture )
+	   _ccCurrentBoundTexture = -1;
+#endif
+	glDeleteTextures(1, &textureId );
+}
+
 #pragma mark - GL Vertex Attrib functions
+
 void ccGLEnableVertexAttribs( unsigned int flags )
 {
 	

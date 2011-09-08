@@ -205,8 +205,7 @@ enum {
 	// Uniforms
 	//
 	
-	ccGLUniformProjectionMatrix( shaderProgram_ );
-	ccGLUniformModelViewMatrix( shaderProgram_ );
+	ccGLUniformModelViewProjectionMatrix( shaderProgram_ );
 
 	glUniform2fv( uniformCenter, 1, (GLfloat*)&position_ );
 	glUniform2fv( uniformResolution, 1, (GLfloat*)&resolution_ );
@@ -458,13 +457,12 @@ enum {
 	ccGLBlendFunc( blendFunc_.src, blendFunc_.dst );	
 	
 	ccGLUseProgram( shaderProgram_->program_ );
-	ccGLUniformProjectionMatrix( shaderProgram_ );
-	ccGLUniformModelViewMatrix( shaderProgram_ );
+	ccGLUniformModelViewProjectionMatrix( shaderProgram_ );
 
 	glUniform2f( blurLocation, blur_.x, blur_.y );
 	glUniform4f( subLocation, sub_[0], sub_[1], sub_[2], sub_[3] );
 	
-	glBindTexture( GL_TEXTURE_2D,  [texture_ name] );
+	ccGLBindTexture2D(  [texture_ name] );
 	
 	//
 	// Attributes
