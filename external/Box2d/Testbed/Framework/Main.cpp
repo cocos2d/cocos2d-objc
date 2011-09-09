@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2006-2007 Erin Catto http://www.gphysics.com
+* Copyright (c) 2006-2007 Erin Catto http://www.box2d.org
 *
 * This software is provided 'as-is', without any express or implied
 * warranty.  In no event will the authors be held liable for any damages
@@ -18,9 +18,10 @@
 
 #include "Render.h"
 #include "Test.h"
-#include "glui/GL/glui.h"
+#include "glui/glui.h"
 
 #include <cstdio>
+using namespace std;
 
 namespace
 {
@@ -37,7 +38,6 @@ namespace
 	float settingsHz = 60.0;
 	GLUI *glui;
 	float32 viewZoom = 1.0f;
-	b2Vec2 viewCenter(0.0f, 20.0f);
 	int tx, ty, tw, th;
 	bool rMouseDown;
 	b2Vec2 lastp;
@@ -58,8 +58,8 @@ void Resize(int32 w, int32 h)
 	b2Vec2 extents(ratio * 25.0f, 25.0f);
 	extents *= viewZoom;
 
-	b2Vec2 lower = viewCenter - extents;
-	b2Vec2 upper = viewCenter + extents;
+	b2Vec2 lower = settings.viewCenter - extents;
+	b2Vec2 upper = settings.viewCenter + extents;
 
 	// L/R/B/T
 	gluOrtho2D(lower.x, upper.x, lower.y, upper.y);
@@ -74,8 +74,8 @@ b2Vec2 ConvertScreenToWorld(int32 x, int32 y)
 	b2Vec2 extents(ratio * 25.0f, 25.0f);
 	extents *= viewZoom;
 
-	b2Vec2 lower = viewCenter - extents;
-	b2Vec2 upper = viewCenter + extents;
+	b2Vec2 lower = settings.viewCenter - extents;
+	b2Vec2 upper = settings.viewCenter + extents;
 
 	b2Vec2 p;
 	p.x = (1.0f - u) * lower.x + u * upper.x;
@@ -99,8 +99,13 @@ void SimulationLoop()
 	glLoadIdentity();
 
 	test->SetTextLine(30);
+	b2Vec2 oldCenter = settings.viewCenter;
 	settings.hz = settingsHz;
 	test->Step(&settings);
+	if (oldCenter.x != settings.viewCenter.x || oldCenter.y != settings.viewCenter.y)
+	{
+		Resize(width, height);
+	}
 
 	test->DrawTitle(5, 15, entry->name);
 
@@ -113,7 +118,7 @@ void SimulationLoop()
 		entry = g_testEntries + testIndex;
 		test = entry->createFcn();
 		viewZoom = 1.0f;
-		viewCenter.Set(0.0f, 20.0f);
+		settings.viewCenter.Set(0.0f, 20.0f);
 		Resize(width, height);
 	}
 }
@@ -126,6 +131,10 @@ void Keyboard(unsigned char key, int x, int y)
 	switch (key)
 	{
 	case 27:
+		// TODO: freeglut is not compiling on OSX.
+#ifndef __APPLE__
+		glutLeaveMainLoop();
+#endif
 		exit(0);
 		break;
 
@@ -144,7 +153,6 @@ void Keyboard(unsigned char key, int x, int y)
 		// Press 'r' to reset.
 	case 'r':
 		delete test;
-		b2Assert(b2_byteCount == 0);
 		test = entry->createFcn();
 		break;
 
@@ -198,34 +206,45 @@ void KeyboardSpecial(int key, int x, int y)
 	case GLUT_ACTIVE_SHIFT:
 		// Press left to pan left.
 	case GLUT_KEY_LEFT:
-		viewCenter.x -= 0.5f;
+		settings.viewCenter.x -= 0.5f;
 		Resize(width, height);
 		break;
 
 		// Press right to pan right.
 	case GLUT_KEY_RIGHT:
-		viewCenter.x += 0.5f;
+		settings.viewCenter.x += 0.5f;
 		Resize(width, height);
 		break;
 
 		// Press down to pan down.
 	case GLUT_KEY_DOWN:
-		viewCenter.y -= 0.5f;
+		settings.viewCenter.y -= 0.5f;
 		Resize(width, height);
 		break;
 
 		// Press up to pan up.
 	case GLUT_KEY_UP:
-		viewCenter.y += 0.5f;
+		settings.viewCenter.y += 0.5f;
 		Resize(width, height);
 		break;
 
 		// Press home to reset the view.
 	case GLUT_KEY_HOME:
 		viewZoom = 1.0f;
-		viewCenter.Set(0.0f, 20.0f);
+		settings.viewCenter.Set(0.0f, 20.0f);
 		Resize(width, height);
 		break;
+	}
+}
+
+void KeyboardUp(unsigned char key, int x, int y)
+{
+	B2_NOT_USED(x);
+	B2_NOT_USED(y);
+
+	if (test)
+	{
+		test->KeyboardUp(key);
 	}
 }
 
@@ -277,8 +296,8 @@ void MouseMotion(int32 x, int32 y)
 	if (rMouseDown)
 	{
 		b2Vec2 diff = p - lastp;
-		viewCenter.x -= diff.x;
-		viewCenter.y -= diff.y;
+		settings.viewCenter.x -= diff.x;
+		settings.viewCenter.y -= diff.y;
 		Resize(width, height);
 		lastp = ConvertScreenToWorld(x, y);
 	}
@@ -311,6 +330,15 @@ void Restart(int)
 void Pause(int)
 {
 	settings.pause = !settings.pause;
+}
+
+void Exit(int code)
+{
+	// TODO: freeglut is not building on OSX
+#ifndef __APPLE__
+	glutLeaveMainLoop();
+#endif
+	exit(code);
 }
 
 void SingleStep(int)
@@ -351,6 +379,8 @@ int main(int argc, char** argv)
 #endif
 	glutMotionFunc(MouseMotion);
 
+	glutKeyboardUpFunc(KeyboardUp);
+
 	glui = GLUI_Master.create_glui_subwindow( mainWindow, 
 		GLUI_SUBWINDOW_RIGHT );
 
@@ -375,6 +405,7 @@ int main(int argc, char** argv)
 
 	glui->add_checkbox("Warm Starting", &settings.enableWarmStarting);
 	glui->add_checkbox("Time of Impact", &settings.enableContinuous);
+	glui->add_checkbox("Sub-Stepping", &settings.enableSubStepping);
 
 	//glui->add_separator();
 
@@ -389,6 +420,7 @@ int main(int argc, char** argv)
 	glui->add_checkbox_to_panel(drawPanel, "Friction Forces", &settings.drawFrictionForces);
 	glui->add_checkbox_to_panel(drawPanel, "Center of Masses", &settings.drawCOMs);
 	glui->add_checkbox_to_panel(drawPanel, "Statistics", &settings.drawStats);
+	glui->add_checkbox_to_panel(drawPanel, "Profile", &settings.drawProfile);
 
 	int32 testCount = 0;
 	TestEntry* e = g_testEntries;
@@ -403,7 +435,7 @@ int main(int argc, char** argv)
 	glui->add_button("Single Step", 0, SingleStep);
 	glui->add_button("Restart", 0, Restart);
 
-	glui->add_button("Quit", 0,(GLUI_Update_CB)exit);
+	glui->add_button("Quit", 0,(GLUI_Update_CB)Exit);
 	glui->set_main_gfx_window( mainWindow );
 
 	// Use a timer to control the frame rate.
