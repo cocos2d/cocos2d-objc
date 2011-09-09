@@ -24,11 +24,14 @@
 #include "iPhoneTest.h"
 //#include "GLES-Render.h"
 
+#include "AddPair.h"
 #include "ApplyForce.h"
 #include "BodyTypes.h"
 #include "Breakable.h"
 #include "Bridge.h"
+#include "BulletTest.h"
 #include "Cantilever.h"
+#include "Car.h"
 #include "ContinuousTest.h"
 #include "Chain.h"
 #include "CharacterCollision.h"
@@ -40,9 +43,10 @@
 #include "Dominos.h"
 #include "DynamicTreeTest.h"
 #include "EdgeShapes.h"
+#include "EdgeTest.h"
 #include "Gears.h"
-#include "LineJoint.h"
 #include "OneSidedPlatform.h"
+#include "Pinball.h"
 #include "PolyCollision.h"
 #include "PolyShapes.h"
 #include "Prismatic.h"
@@ -50,11 +54,14 @@
 #include "Pyramid.h"
 #include "RayCast.h"
 #include "Revolute.h"
+//#include "Rope.h"
+#include "RopeJoint.h"
 #include "SensorTest.h"
 #include "ShapeEditing.h"
 #include "SliderCrank.h"
 #include "SphereStack.h"
 #include "TheoJansen.h"
+#include "Tiles.h"
 #include "TimeOfImpact.h"
 #include "VaryingFriction.h"
 #include "VaryingRestitution.h"
@@ -63,24 +70,38 @@
 
 TestEntry g_testEntries[] =
 {
+	{"Gears", Gears::Create},
 	{"Character Collision", CharacterCollision::Create},
+	{"Edge Test", EdgeTest::Create},
+	{"Body Types", BodyTypes::Create},
+	{"Shape Editing", ShapeEditing::Create},
+	{"Tiles", Tiles::Create},
+	{"Car", Car::Create},
+	{"Apply Force", ApplyForce::Create},
 	{"Prismatic", Prismatic::Create},
-	{"Edge Shapes", EdgeShapes::Create},
+	{"Vertical Stack", VerticalStack::Create},
+	{"SphereStack", SphereStack::Create},
+	{"Revolute", Revolute::Create},
+	{"Pulleys", Pulleys::Create},
+	{"Polygon Shapes", PolyShapes::Create},
+	//{"Rope", Rope::Create},
+	{"Web", Web::Create},
+	{"RopeJoint", RopeJoint::Create},
+	{"One-Sided Platform", OneSidedPlatform::Create},
+	{"Pinball", Pinball::Create},
+	{"Bullet Test", BulletTest::Create},
 	{"Continuous Test", ContinuousTest::Create},
 	{"Time of Impact", TimeOfImpact::Create},
-	{"Vertical Stack", VerticalStack::Create},
-	{"PolyCollision", PolyCollision::Create},
-	{"Apply Force", ApplyForce::Create},
-	{"Cantilever", Cantilever::Create},
-	{"Body Types", BodyTypes::Create},
-	{"SphereStack", SphereStack::Create},
+	{"Ray-Cast", RayCast::Create},
 	{"Confined", Confined::Create},
+	{"Pyramid", Pyramid::Create},
+	{"Varying Restitution", VaryingRestitution::Create},
+	{"Theo Jansen's Walker", TheoJansen::Create},
+	{"Edge Shapes", EdgeShapes::Create},
+	{"PolyCollision", PolyCollision::Create},
+	{"Cantilever", Cantilever::Create},
 	{"Bridge", Bridge::Create},
 	{"Breakable", Breakable::Create},
-	{"Varying Restitution", VaryingRestitution::Create},
-	{"Ray-Cast", RayCast::Create},
-	{"Pyramid", Pyramid::Create},
-	{"One-Sided Platform", OneSidedPlatform::Create},
 	{"Chain", Chain::Create},
 	{"Collision Filtering", CollisionFiltering::Create},
 	{"Collision Processing", CollisionProcessing::Create},
@@ -88,17 +109,11 @@ TestEntry g_testEntries[] =
 	{"Distance Test", DistanceTest::Create},
 	{"Dominos", Dominos::Create},
 	{"Dynamic Tree", DynamicTreeTest::Create},
-	{"Gears", Gears::Create},
-	{"Line Joint", LineJoint::Create},
-	{"Pulleys", Pulleys::Create},
-	{"Revolute", Revolute::Create},
 	{"Sensor Test", SensorTest::Create},
-	{"Shape Editing", ShapeEditing::Create},
 	{"Slider Crank", SliderCrank::Create},
-	{"Theo Jansen's Walker", TheoJansen::Create},
 	{"Varying Friction", VaryingFriction::Create},
-	{"Web", Web::Create},
-	//{NULL, NULL}
+	{"Add Pair Stress Test", AddPair::Create},
+//	{NULL, NULL}
 };
 
 int g_totalEntries = sizeof(g_testEntries) / sizeof(g_testEntries[0]);

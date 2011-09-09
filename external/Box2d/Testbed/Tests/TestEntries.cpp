@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2006-2009 Erin Catto http://www.gphysics.com
+* Copyright (c) 2006-2009 Erin Catto http://www.box2d.org
 *
 * This software is provided 'as-is', without any express or implied
 * warranty.  In no event will the authors be held liable for any damages
@@ -20,12 +20,16 @@
 #include "../Framework/Render.h"
 #include "../../freeglut/GL/glut.h"
 #include <cstring>
+using namespace std;
 
+#include "AddPair.h"
 #include "ApplyForce.h"
 #include "BodyTypes.h"
 #include "Breakable.h"
 #include "Bridge.h"
+#include "BulletTest.h"
 #include "Cantilever.h"
+#include "Car.h"
 #include "ContinuousTest.h"
 #include "Chain.h"
 #include "CharacterCollision.h"
@@ -37,9 +41,10 @@
 #include "Dominos.h"
 #include "DynamicTreeTest.h"
 #include "EdgeShapes.h"
+#include "EdgeTest.h"
 #include "Gears.h"
-#include "LineJoint.h"
 #include "OneSidedPlatform.h"
+#include "Pinball.h"
 #include "PolyCollision.h"
 #include "PolyShapes.h"
 #include "Prismatic.h"
@@ -47,11 +52,14 @@
 #include "Pyramid.h"
 #include "RayCast.h"
 #include "Revolute.h"
+//#include "Rope.h"
+#include "RopeJoint.h"
 #include "SensorTest.h"
 #include "ShapeEditing.h"
 #include "SliderCrank.h"
 #include "SphereStack.h"
 #include "TheoJansen.h"
+#include "Tiles.h"
 #include "TimeOfImpact.h"
 #include "VaryingFriction.h"
 #include "VaryingRestitution.h"
@@ -60,24 +68,36 @@
 
 TestEntry g_testEntries[] =
 {
+	{"Gears", Gears::Create},
+	{"Character Collision", CharacterCollision::Create},
+	{"Edge Test", EdgeTest::Create},
+	{"Body Types", BodyTypes::Create},
+	{"Shape Editing", ShapeEditing::Create},
+	{"Tiles", Tiles::Create},
+	{"Car", Car::Create},
+	{"Apply Force", ApplyForce::Create},
+	{"Prismatic", Prismatic::Create},
+	{"Vertical Stack", VerticalStack::Create},
+	{"SphereStack", SphereStack::Create},
+	{"Revolute", Revolute::Create},
+	{"Pulleys", Pulleys::Create},
+	{"Polygon Shapes", PolyShapes::Create},
+	//{"Rope", Rope::Create},
+	{"Web", Web::Create},
+	{"RopeJoint", RopeJoint::Create},
+	{"One-Sided Platform", OneSidedPlatform::Create},
+	{"Pinball", Pinball::Create},
+	{"Bullet Test", BulletTest::Create},
+	{"Continuous Test", ContinuousTest::Create},
 	{"Time of Impact", TimeOfImpact::Create},
 	{"Ray-Cast", RayCast::Create},
-	{"One-Sided Platform", OneSidedPlatform::Create},
 	{"Confined", Confined::Create},
-	{"Vertical Stack", VerticalStack::Create},
 	{"Pyramid", Pyramid::Create},
 	{"Varying Restitution", VaryingRestitution::Create},
 	{"Theo Jansen's Walker", TheoJansen::Create},
-	{"Body Types", BodyTypes::Create},
-	{"Character Collision", CharacterCollision::Create},
-	{"Prismatic", Prismatic::Create},
 	{"Edge Shapes", EdgeShapes::Create},
-	{"Continuous Test", ContinuousTest::Create},
 	{"PolyCollision", PolyCollision::Create},
-	{"Polygon Shapes", PolyShapes::Create},
-	{"Apply Force", ApplyForce::Create},
 	{"Cantilever", Cantilever::Create},
-	{"SphereStack", SphereStack::Create},
 	{"Bridge", Bridge::Create},
 	{"Breakable", Breakable::Create},
 	{"Chain", Chain::Create},
@@ -87,14 +107,9 @@ TestEntry g_testEntries[] =
 	{"Distance Test", DistanceTest::Create},
 	{"Dominos", Dominos::Create},
 	{"Dynamic Tree", DynamicTreeTest::Create},
-	{"Gears", Gears::Create},
-	{"Line Joint", LineJoint::Create},
-	{"Pulleys", Pulleys::Create},
-	{"Revolute", Revolute::Create},
 	{"Sensor Test", SensorTest::Create},
-	{"Shape Editing", ShapeEditing::Create},
 	{"Slider Crank", SliderCrank::Create},
 	{"Varying Friction", VaryingFriction::Create},
-	{"Web", Web::Create},
+	{"Add Pair Stress Test", AddPair::Create},
 	{NULL, NULL}
 };

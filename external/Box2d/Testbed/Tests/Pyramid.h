@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2006-2009 Erin Catto http://www.gphysics.com
+* Copyright (c) 2006-2009 Erin Catto http://www.box2d.org
 *
 * This software is provided 'as-is', without any express or implied
 * warranty.  In no event will the authors be held liable for any damages
@@ -24,7 +24,7 @@ class Pyramid : public Test
 public:
 	enum
 	{
-		e_count = 20,
+		e_count = 20
 	};
 
 	Pyramid()
@@ -33,8 +33,8 @@ public:
 			b2BodyDef bd;
 			b2Body* ground = m_world->CreateBody(&bd);
 
-			b2PolygonShape shape;
-			shape.SetAsEdge(b2Vec2(-40.0f, 0.0f), b2Vec2(40.0f, 0.0f));
+			b2EdgeShape shape;
+			shape.Set(b2Vec2(-40.0f, 0.0f), b2Vec2(40.0f, 0.0f));
 			ground->CreateFixture(&shape, 0.0f);
 		}
 
@@ -68,17 +68,17 @@ public:
 		}
 	}
 
-	//void Step(Settings* settings)
-	//{
-	//	// We need higher accuracy for the pyramid.
-	//	int32 velocityIterations = settings->velocityIterations;
-	//	int32 positionIterations = settings->positionIterations;
-	//	settings->velocityIterations = b2Max(8, velocityIterations);
-	//	settings->positionIterations = b2Max(1, positionIterations);
-	//	Test::Step(settings);
-	//	settings->velocityIterations = velocityIterations;
-	//	settings->positionIterations = positionIterations;
-	//}
+	void Step(Settings* settings)
+	{
+		Test::Step(settings);
+
+		//b2DynamicTree* tree = &m_world->m_contactManager.m_broadPhase.m_tree;
+
+		//if (m_stepCount == 400)
+		//{
+		//	tree->RebuildBottomUp();
+		//}
+	}
 
 	static Test* Create()
 	{

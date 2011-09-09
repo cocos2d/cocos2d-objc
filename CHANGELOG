@@ -38,6 +38,7 @@ version 2.0-alpha XX-Ago-2011
 . [FIX] Xcode: TouchJSON: Removed. No longer needed since cocosLive was removed
 . [FIX] Xcode: Tremor / vorbis: Removed. Experimental sound engine is no longer supported
 . [FIX] Xcode: iOS 4 is minimun required to run
+. [3RD] Box2d: Using Box2D 2.2.0
 . [3RD] Chipmunk: Using Chipmunk v6.0.1
 . [3RD] [NEW] Kazmath: Added kazmath library for matrix and projection operations, and matrix GL stack
 . [3RD] Kazmath: Added NEON Matrix Multiplication from Oolong project
