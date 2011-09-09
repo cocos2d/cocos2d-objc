@@ -458,7 +458,7 @@ typedef struct _KerningHashElement
 	
 	if ((self=[super initWithFile:configuration_->atlasName_ capacity:[theString length]])) {
 
-		displayedOpacity_, realOpacity_ = 255;
+		displayedOpacity_ = realOpacity_ = 255;
 		color_ = ccWHITE;
 
 		contentSize_ = CGSizeZero;
