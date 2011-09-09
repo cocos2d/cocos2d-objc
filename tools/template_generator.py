@@ -70,7 +70,7 @@ class Xcode4Template(object):
         self.directory = directory
         self.files_to_include = []
         self.wildcard = '*'
-        self.ignore_extensions = ['h','txt','html','patch']
+        self.ignore_extensions = ['h','txt','html','patch','cmake']
         self.group_start_index = group  # eg: if 1 then libs/cocos2d/support -> ["cocos2d", "support"] ignoring "libs"
         self.output = []
         self.identifier = identifier
