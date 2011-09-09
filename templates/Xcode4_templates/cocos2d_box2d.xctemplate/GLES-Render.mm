@@ -46,10 +46,10 @@ GLESDebugDraw::GLESDebugDraw( float32 ratio )
 
 void GLESDebugDraw::initShader( void )
 {
-	mShaderProgram = [[GLProgram alloc] initWithVertexShaderFilename:@"Position1Color.vsh"
-											  fragmentShaderFilename:@"Position1Color.fsh"];
+	mShaderProgram = [[GLProgram alloc] initWithVertexShaderFilename:@"Position_uColor.vsh"
+											  fragmentShaderFilename:@"Position_uColor.fsh"];
 	
-	[mShaderProgram addAttribute:@"aVertex" index:kCCAttribPosition];
+	[mShaderProgram addAttribute:@"aVertex" index:kCCVertexAttrib_Position];
 	
 	[mShaderProgram link];
 	
@@ -61,8 +61,7 @@ void GLESDebugDraw::initShader( void )
 void GLESDebugDraw::DrawPolygon(const b2Vec2* old_vertices, int32 vertexCount, const b2Color& color)
 {
 	ccGLUseProgram( mShaderProgram->program_ );
-	ccGLUniformProjectionMatrix( mShaderProgram );
-	ccGLUniformModelViewMatrix( mShaderProgram );
+	ccGLUniformModelViewProjectionMatrix( mShaderProgram );
 
 	ccVertex2F vertices[vertexCount];
 	
@@ -75,7 +74,7 @@ void GLESDebugDraw::DrawPolygon(const b2Vec2* old_vertices, int32 vertexCount, c
 	
 	glUniform4f( mColorLocation, color.r, color.g, color.b, 1);
 
-	glVertexAttribPointer(kCCAttribPosition, 2, GL_FLOAT, GL_FALSE, 0, vertices);
+	glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, vertices);
 	glDrawArrays(GL_LINE_LOOP, 0, vertexCount);	
 	
 	CHECK_GL_ERROR_DEBUG();
@@ -84,8 +83,7 @@ void GLESDebugDraw::DrawPolygon(const b2Vec2* old_vertices, int32 vertexCount, c
 void GLESDebugDraw::DrawSolidPolygon(const b2Vec2* old_vertices, int32 vertexCount, const b2Color& color)
 {
 	ccGLUseProgram( mShaderProgram->program_ );
-	ccGLUniformProjectionMatrix( mShaderProgram );
-	ccGLUniformModelViewMatrix( mShaderProgram );
+	ccGLUniformModelViewProjectionMatrix( mShaderProgram );
 
 	ccVertex2F vertices[vertexCount];
 	
@@ -98,7 +96,7 @@ void GLESDebugDraw::DrawSolidPolygon(const b2Vec2* old_vertices, int32 vertexCou
 	}
 	
 	glUniform4f( mColorLocation, color.r*0.5f, color.g*0.5f, color.b*0.5f,0.5f);
-	glVertexAttribPointer(kCCAttribPosition, 2, GL_FLOAT, GL_FALSE, 0, vertices);
+	glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, vertices);
 
 	glDrawArrays(GL_TRIANGLE_FAN, 0, vertexCount);
 	
@@ -111,8 +109,8 @@ void GLESDebugDraw::DrawSolidPolygon(const b2Vec2* old_vertices, int32 vertexCou
 void GLESDebugDraw::DrawCircle(const b2Vec2& center, float32 radius, const b2Color& color)
 {
 	ccGLUseProgram( mShaderProgram->program_ );
-	ccGLUniformProjectionMatrix( mShaderProgram );
-	ccGLUniformModelViewMatrix( mShaderProgram );
+	ccGLUniformModelViewProjectionMatrix( mShaderProgram );
+
 	
 	const float32 k_segments = 16.0f;
 	int vertexCount=16;
@@ -129,7 +127,7 @@ void GLESDebugDraw::DrawCircle(const b2Vec2& center, float32 radius, const b2Col
 	}
 	
 	glUniform4f( mColorLocation, color.r, color.g, color.b,1);
-	glVertexAttribPointer(kCCAttribPosition, 2, GL_FLOAT, GL_FALSE, 0, glVertices);
+	glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, glVertices);
 	
 	glDrawArrays(GL_LINE_LOOP, 0, vertexCount);
 	
@@ -139,8 +137,7 @@ void GLESDebugDraw::DrawCircle(const b2Vec2& center, float32 radius, const b2Col
 void GLESDebugDraw::DrawSolidCircle(const b2Vec2& center, float32 radius, const b2Vec2& axis, const b2Color& color)
 {
 	ccGLUseProgram( mShaderProgram->program_ );
-	ccGLUniformProjectionMatrix( mShaderProgram );
-	ccGLUniformModelViewMatrix( mShaderProgram );
+	ccGLUniformModelViewProjectionMatrix( mShaderProgram );
 
 	const float32 k_segments = 16.0f;
 	int vertexCount=16;
@@ -158,7 +155,7 @@ void GLESDebugDraw::DrawSolidCircle(const b2Vec2& center, float32 radius, const 
 	
 
 	glUniform4f( mColorLocation, color.r *0.5f, color.g*0.5f, color.b*0.5f,0.5f );
-	glVertexAttribPointer(kCCAttribPosition, 2, GL_FLOAT, GL_FALSE, 0, glVertices);
+	glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, glVertices);
 	glDrawArrays(GL_TRIANGLE_FAN, 0, vertexCount);
 
 
@@ -174,8 +171,7 @@ void GLESDebugDraw::DrawSolidCircle(const b2Vec2& center, float32 radius, const 
 void GLESDebugDraw::DrawSegment(const b2Vec2& p1, const b2Vec2& p2, const b2Color& color)
 {
 	ccGLUseProgram( mShaderProgram->program_ );
-	ccGLUniformProjectionMatrix( mShaderProgram );
-	ccGLUniformModelViewMatrix( mShaderProgram );
+	ccGLUniformModelViewProjectionMatrix( mShaderProgram );
 
 	glUniform4f( mColorLocation, color.r, color.g, color.b,1);
 
@@ -184,7 +180,7 @@ void GLESDebugDraw::DrawSegment(const b2Vec2& p1, const b2Vec2& p2, const b2Colo
 		p2.x * mRatio, p2.y * mRatio
 	};
 
-	glVertexAttribPointer(kCCAttribPosition, 2, GL_FLOAT, GL_FALSE, 0, glVertices);
+	glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, glVertices);
 
 	glDrawArrays(GL_LINES, 0, 2);
 	
@@ -193,21 +189,19 @@ void GLESDebugDraw::DrawSegment(const b2Vec2& p1, const b2Vec2& p2, const b2Colo
 
 void GLESDebugDraw::DrawTransform(const b2Transform& xf)
 {
-	b2Vec2 p1 = xf.position, p2;
+	b2Vec2 p1 = xf.p, p2;
 	const float32 k_axisScale = 0.4f;
-	
-	p2 = p1 + k_axisScale * xf.R.col1;
-	DrawSegment(p1,p2,b2Color(1,0,0));
-	
-	p2 = p1 + k_axisScale * xf.R.col2;
+	p2 = p1 + k_axisScale * xf.q.GetXAxis();
+	DrawSegment(p1, p2, b2Color(1,0,0));
+
+	p2 = p1 + k_axisScale * xf.q.GetYAxis();
 	DrawSegment(p1,p2,b2Color(0,1,0));
 }
 
 void GLESDebugDraw::DrawPoint(const b2Vec2& p, float32 size, const b2Color& color)
 {
 	ccGLUseProgram( mShaderProgram->program_ );
-	ccGLUniformProjectionMatrix( mShaderProgram );
-	ccGLUniformModelViewMatrix( mShaderProgram );
+	ccGLUniformModelViewProjectionMatrix( mShaderProgram );
 
 	glUniform4f( mColorLocation, color.r, color.g, color.b,1);
 
@@ -217,7 +211,7 @@ void GLESDebugDraw::DrawPoint(const b2Vec2& p, float32 size, const b2Color& colo
 		p.x * mRatio, p.y * mRatio
 	};
 
-	glVertexAttribPointer(kCCAttribPosition, 2, GL_FLOAT, GL_FALSE, 0, glVertices);
+	glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, glVertices);
 
 	glDrawArrays(GL_POINTS, 0, 1);
 //	glPointSize(1.0f);
@@ -235,8 +229,7 @@ void GLESDebugDraw::DrawString(int x, int y, const char *string, ...)
 void GLESDebugDraw::DrawAABB(b2AABB* aabb, const b2Color& c)
 {
 	ccGLUseProgram( mShaderProgram->program_ );
-	ccGLUniformProjectionMatrix( mShaderProgram );
-	ccGLUniformModelViewMatrix( mShaderProgram );
+	ccGLUniformModelViewProjectionMatrix( mShaderProgram );
 	
 	glUniform4f( mColorLocation, c.r, c.g, c.b,1);
 
@@ -247,7 +240,7 @@ void GLESDebugDraw::DrawAABB(b2AABB* aabb, const b2Color& c)
 		aabb->lowerBound.x * mRatio, aabb->upperBound.y * mRatio
 	};
 	
-	glVertexAttribPointer(kCCAttribPosition, 2, GL_FLOAT, GL_FALSE, 0, glVertices);
+	glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, glVertices);
 	glDrawArrays(GL_LINE_LOOP, 0, 8);
 	
 	CHECK_GL_ERROR_DEBUG();
