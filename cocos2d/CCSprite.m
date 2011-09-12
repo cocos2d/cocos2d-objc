@@ -939,7 +939,7 @@ struct transformValues_ {
 							  rectInPixels:rectInPixels_
 								   rotated:rectRotated_
 									offset:unflippedOffsetPositionFromCenter_
-							  originalSize:contentSize_];
+							  originalSize:CC_SIZE_POINTS_TO_PIXELS(contentSize_)];
 }
 
 #pragma mark CCSprite - CocosNodeTexture protocol
