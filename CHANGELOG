@@ -33,6 +33,7 @@ version 2.0-alpha XX-Ago-2011
 . [FIX] ProgressTimer: reverse renamed to reverseDirection in order to prevent possible collision with action#reverse
 . [FIX] RenderTexture: getUIImageFromBuffer doesn't return artifacs
 . [FIX] TextureCache: Uses "self" instead of "CCTextureCache" in shared instance
+. [FIX] Sprite: displayedFrame correctly returns originalSize
 . [FIX] SpriteFrameCache: it doesn't retain the textures when they are loaded from a dictionary file (issue #1227)
 . [FIX] Xcode: cocosLive: Removed. Use OpenFeint or GameCenter instead
 . [FIX] Xcode: FontLabel: Removed since in iOS 4 you can load custom TTF
