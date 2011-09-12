@@ -51,6 +51,7 @@ Contributors (alphabetically ordered):
 
 * Marco Tillemans (AKA araker: http://www.welcometothefabrik.com/)
 	Texture2D: drawInRect / drawAtPoint disables color state
+	SpriteBatchNode: fixed bug in removeAllChildrenWithCleanup
 
 * slycrel (http://geopherlite.blogspot.com/)
 	Added support for flipped tiles in TMX maps. Also added test case

@@ -231,10 +231,11 @@ static 	SEL selUpdate = NULL;
 -(void)removeAllChildrenWithCleanup:(BOOL)doCleanup
 {
 	// Invalidate atlas index. issue #569
-	[children_ makeObjectsPerformSelector:@selector(useSelfRender)];
-	
+	// useSelfRender should be performed on all descendants. issue #1216
+	[descendants_ makeObjectsPerformSelector:@selector(useSelfRender)];
+        
 	[super removeAllChildrenWithCleanup:doCleanup];
-	
+
 	[descendants_ removeAllObjects];
 	[textureAtlas_ removeAllQuads];
 }
