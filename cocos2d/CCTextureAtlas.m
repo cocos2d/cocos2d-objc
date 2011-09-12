@@ -123,9 +123,7 @@
 	free(quads_);
 	free(indices_);
 
-#if CC_USES_VBO
 	glDeleteBuffers(2, buffersVBO_);
-#endif // CC_USES_VBO
 	ccGLDeleteVertexArrays(1, &VAOname_);
 
 	[texture_ release];
@@ -140,8 +138,6 @@
 
 #define kQuadSize sizeof(quads_[0].bl)
 	
-#if CC_USES_VBO
-    
 	glGenBuffers(2, &buffersVBO_[0]);
 
 	glBindBuffer(GL_ARRAY_BUFFER, buffersVBO_[0]);
@@ -161,32 +157,12 @@
 	
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffersVBO_[1]);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices_[0]) * capacity_ * 6, indices_, GL_STATIC_DRAW);
-
-#else // ! CC_USES_VBO
-
-	NSUInteger offset = (NSUInteger)quads_;
-	// vertex
-	NSInteger diff = offsetof( ccV3F_C4B_T2F, vertices);
-	glEnableVertexAttribArray(kCCVertexAttrib_Position);
-	glVertexAttribPointer(kCCVertexAttrib_Position, 3, GL_FLOAT, GL_FALSE, kQuadSize, (void*) (offset + diff));
-	
-	// color
-	diff = offsetof( ccV3F_C4B_T2F, colors);
-	glEnableVertexAttribArray(kCCVertexAttrib_Color);
-	glVertexAttribPointer(kCCVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_FALSE, kQuadSize, (void*)(offset + diff));
-	
-	// texCoods
-	diff = offsetof( ccV3F_C4B_T2F, texCoords);
-	glEnableVertexAttribArray(kCCVertexAttrib_TexCoords);
-	glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, kQuadSize, (void*)(offset + diff));
-
-#endif // ! CC_USES_VBO
-	
-	CHECK_GL_ERROR_DEBUG();
 	
 	ccGLBindVertexArray(0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	
+	CHECK_GL_ERROR_DEBUG();
 }
 
 -(void) initIndices
@@ -236,9 +212,7 @@
 
 	quads_[n] = *quad;	
 
-#if CC_USES_VBO
 	dirty_ = YES;
-#endif
 }
 
 -(void) insertQuad:(ccV3F_C4B_T2F_Quad*)quad atIndex:(NSUInteger)index
@@ -258,9 +232,7 @@
 
 	quads_[index] = *quad;
 
-#if CC_USES_VBO
 	dirty_ = YES;
-#endif
 }
 
 
@@ -285,9 +257,7 @@
 	memmove( &quads_[dst],&quads_[src], sizeof(quads_[0]) * howMany );
 	quads_[newIndex] = quadsBackup;
 
-#if CC_USES_VBO
 	dirty_ = YES;
-#endif
 }
 
 -(void) removeQuadAtIndex:(NSUInteger) index
@@ -304,9 +274,7 @@
 
 	totalQuads_--;
 
-#if CC_USES_VBO
 	dirty_ = YES;
-#endif
 }
 
 -(void) removeAllQuads
@@ -351,9 +319,8 @@
 
 	[self mapBuffers];
 
-#if CC_USES_VBO
 	dirty_ = YES;
-#endif	
+
 	return YES;
 }
 
@@ -377,7 +344,6 @@
 	ccGLBindTexture2D( [texture_ name] );	
 
 #define kQuadSize sizeof(quads_[0].bl)
-#if CC_USES_VBO
 
 	// XXX: update is done in draw... perhaps it should be done in a timer
 	if (dirty_) {
@@ -387,24 +353,12 @@
 		dirty_ = NO;
 	}
 
-	CHECK_GL_ERROR_DEBUG();
-
 #if CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP
 	glDrawElements(GL_TRIANGLE_STRIP, (GLsizei) n*6, GL_UNSIGNED_SHORT, (GLvoid*) (start*6*sizeof(indices_[0])) );
 #else
 	glDrawElements(GL_TRIANGLES, (GLsizei) n*6, GL_UNSIGNED_SHORT, (GLvoid*) (start*6*sizeof(indices_[0])) );
 #endif // CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP
 
-
-#else // ! CC_USES_VBO
-	
-#if CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP
-	glDrawElements(GL_TRIANGLE_STRIP, n*6, GL_UNSIGNED_SHORT, indices_ + start * 6 );
-#else
-	glDrawElements(GL_TRIANGLES, n*6, GL_UNSIGNED_SHORT, indices_ + start * 6 );
-#endif
-	
-#endif // CC_USES_VBO	
 	
 	ccGLBindVertexArray(0);
 	

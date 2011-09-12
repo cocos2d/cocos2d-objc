@@ -144,13 +144,6 @@ static char * glExtensions;
 		CCLOG(@"cocos2d: GL supports BGRA8888 textures: %s", (supportsBGRA8888_ ? "YES" : "NO") );
 		CCLOG(@"cocos2d: GL supports NPOT textures: %s", (supportsNPOT_ ? "YES" : "NO") );
 		CCLOG(@"cocos2d: GL supports discard_framebuffer: %s", (supportsDiscardFramebuffer_ ? "YES" : "NO") );
-		CCLOG(@"cocos2d: compiled with VBO support in TextureAtlas : %s",
-#if CC_USES_VBO
-			  "YES"
-#else
-			  "NO"
-#endif
-			  );
 
 		
 		CCLOG(@"cocos2d: compiled with Profiling Support: %s",

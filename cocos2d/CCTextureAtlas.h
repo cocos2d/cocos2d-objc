@@ -48,10 +48,8 @@
 	GLushort			*indices_;
 	CCTexture2D			*texture_;
 	GLuint				VAOname_;
-#if CC_USES_VBO
 	GLuint				buffersVBO_[2]; //0: vertex  1: indices
 	BOOL				dirty_; //indicates whether or not the array buffer of the VBO needs to be updated
-#endif // CC_USES_VBO
 }
 
 /** quantity of quads that are going to be drawn */
