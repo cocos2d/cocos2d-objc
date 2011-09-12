@@ -44,13 +44,13 @@
  @since v0.99.0
  */
 typedef enum {
-	//! Translate with it's parent
+	//! Translate with its parent
 	CC_HONOR_PARENT_TRANSFORM_TRANSLATE =  1 << 0,
-	//! Rotate with it's parent
+	//! Rotate with its parent
 	CC_HONOR_PARENT_TRANSFORM_ROTATE	=  1 << 1,
-	//! Scale with it's parent
+	//! Scale with its parent
 	CC_HONOR_PARENT_TRANSFORM_SCALE		=  1 << 2,
-	//! Skew with it's parent
+	//! Skew with its parent
 	CC_HONOR_PARENT_TRANSFORM_SKEW		=  1 << 3,
 
 	//! All possible transformation enabled. Default value.
