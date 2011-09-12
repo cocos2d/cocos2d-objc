@@ -2,6 +2,7 @@
 version 2.0-alpha XX-Ago-2011
 . [NEW] Action: Added new CallBlockO action
 . [NEW] AtlasNode: added init method
+. [NEW] ccConfig: removed CC_USES_VBO since VBO is always used
 . [NEW] ccGLState: added helper functions that keeps the GL state
 . [NEW] CProgressTimer: 
             - Convenience class constructor now passes in CCSprite (this gives developers easier access to timer with CCSpriteFrames, CCSprites, etc)

@@ -77,7 +77,6 @@
 		[self initTexCoordsWithRect:CGRectMake(0, 0, [texture_ pixelsWide], [texture_ pixelsHigh])];
 		[self initIndices];
 
-#if CC_USES_VBO
 		// create the VBO buffer
 		glGenBuffers(1, &quadsID_);
 		
@@ -85,7 +84,6 @@
 		glBindBuffer(GL_ARRAY_BUFFER, quadsID_);
 		glBufferData(GL_ARRAY_BUFFER, sizeof(quads_[0])*totalParticles, quads_,GL_DYNAMIC_DRAW);	
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
-#endif // CC_USES_VBO
 		
 		self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTextureColor];
 	}
@@ -97,9 +95,7 @@
 {
 	free(quads_);
 	free(indices_);
-#if CC_USES_VBO
 	glDeleteBuffers(1, &quadsID_);
-#endif
 	
 	[super dealloc];
 }
@@ -259,11 +255,9 @@
 
 -(void) postStep
 {
-#if CC_USES_VBO
 	glBindBuffer(GL_ARRAY_BUFFER, quadsID_);
 	glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(quads_[0])*particleCount, quads_);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
-#endif
 }
 
 // overriding draw method
@@ -277,7 +271,6 @@
 
 #define kQuadSize sizeof(quads_[0].bl)
 
-#if CC_USES_VBO
 	glBindBuffer(GL_ARRAY_BUFFER, quadsID_);
 	
 	// vertices
@@ -288,36 +281,16 @@
 	
 	// tex coords
 	glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof( ccV2F_C4B_T2F, texCoords));
-		
-#else // vertex array list
 
-	NSUInteger offset = (NSUInteger) quads_;
-	
-	// vertex
-	NSInteger diff = offsetof( ccV2F_C4B_T2F, vertices);
-	glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) (offset + diff));
-	
-	// color
-	diff = offsetof( ccV2F_C4B_T2F, colors);
-	glVertexAttribPointer(kCCVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_FALSE, kQuadSize, (GLvoid*)(offset + diff));
-	
-	// texCoods
-	diff = offsetof( ccV2F_C4B_T2F, texCoords);
-	glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*)(offset + diff));	
 
-#endif // ! CC_USES_VBO
-	
-	ccGLBlendFunc( blendFunc_.src, blendFunc_.dst );
-	
+	ccGLBlendFunc( blendFunc_.src, blendFunc_.dst );	
 	ccGLUseProgram( shaderProgram_->program_ );	
 	ccGLUniformModelViewProjectionMatrix( shaderProgram_ );
 	
 	NSAssert( particleIdx == particleCount, @"Abnormal error in particle quad");
 	glDrawElements(GL_TRIANGLES, (GLsizei) particleIdx*6, GL_UNSIGNED_SHORT, indices_);
 
-#if CC_USES_VBO
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
-#endif	
 }
 
 @end

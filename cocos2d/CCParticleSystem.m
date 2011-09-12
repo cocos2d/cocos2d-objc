@@ -562,11 +562,8 @@
 			}
 		}
 	}
-	
 
-#ifdef CC_USES_VBO
 	[self postStep];
-#endif
 	
 	CC_PROFILER_STOP_CATEGORY(kCCProfilerCategoryParticles , @"CCParticleSystem - update");
 }

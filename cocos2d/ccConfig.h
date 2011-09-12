@@ -128,23 +128,6 @@
 #define CC_SPRITEBATCHNODE_RENDER_SUBPIXEL	1
 #endif
 
-/** @def CC_USES_VBO
- If enabled, batch nodes (texture atlas and particle system) will use VBO instead of vertex list (VBO is recommended by Apple)
- 
- To enable set it to 1.
- Enabled by default on iPhone with ARMv7 processors, iPhone Simulator and Mac
- Disabled by default on iPhone with ARMv6 processors.
- 
- @since v0.99.5
- */
-#ifndef CC_USES_VBO
-#if defined(__ARM_NEON__) || TARGET_IPHONE_SIMULATOR || defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
-#define CC_USES_VBO 1
-#else
-#define CC_USES_VBO 0
-#endif
-#endif
-
 /** @def CC_OPTIMIZE_BLEND_FUNC_FOR_PREMULTIPLIED_ALPHA
  If most of your imamges have pre-multiplied alpha, set it to 1 (if you are going to use .PNG/.JPG file images).
  Only set to 0 if ALL your images by-pass Apple UIImage loading system (eg: if you use libpng or PVR images)
