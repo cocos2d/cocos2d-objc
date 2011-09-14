@@ -6,6 +6,7 @@ version 1.1 - XX-Ago-2011
 . [NEW] FileUtils: Added xxxFileExistAtPath for iPad and RetinaDisplay resources
 . [NEW] Node: improved speed when reordering nodes
 . [NEW] Sprite: improved speed when reordering sprites
+. [NEW] Textures: Added support for RGB888 textures (issue #958)
 . [NEW] TileMap: TMX map supports flipped tiles (issue #1233)
 . [FIX] Actions: removed #undef CLAMP (issue #1210)
 . [FIX] FileUtils: Loads -hd resources even if the sd resource is not present (issue #1179)
