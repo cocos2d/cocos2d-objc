@@ -1940,6 +1940,7 @@
 		A0B0374313EA10220073E59A /* r2-ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = A0B0360713EA101C0073E59A /* r2-ipad.png */; };
 		A0B0374413EA10220073E59A /* r2-ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = A0B0360713EA101C0073E59A /* r2-ipad.png */; };
 		A0B0374513EA10220073E59A /* r2-ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = A0B0360713EA101C0073E59A /* r2-ipad.png */; };
+		A0E55CBC1420E3D3003F1E5A /* test_image_rgb888.pvr in Resources */ = {isa = PBXBuildFile; fileRef = A0E55CBB1420E3D3003F1E5A /* test_image_rgb888.pvr */; };
 		AAEA834B0FD5704400F08728 /* blocks.png in Resources */ = {isa = PBXBuildFile; fileRef = AAEA834A0FD5704400F08728 /* blocks.png */; };
 		DA5F0EC50FFE96D400C7C82E /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB240E10EE4A00AE9530 /* Default.png */; };
 		DA5F0EC60FFE96D400C7C82E /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB250E10EE4A00AE9530 /* Icon.png */; };
@@ -4659,6 +4660,7 @@
 		A0B0360513EA101C0073E59A /* f2-ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "f2-ipad.png"; sourceTree = "<group>"; };
 		A0B0360613EA101C0073E59A /* r1-ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "r1-ipad.png"; sourceTree = "<group>"; };
 		A0B0360713EA101C0073E59A /* r2-ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "r2-ipad.png"; sourceTree = "<group>"; };
+		A0E55CBB1420E3D3003F1E5A /* test_image_rgb888.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = test_image_rgb888.pvr; sourceTree = "<group>"; };
 		AAEA834A0FD5704400F08728 /* blocks.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blocks.png; sourceTree = "<group>"; };
 		DA90D87B1059A54D0039F26A /* FontTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FontTest.h; path = tests/FontTest.h; sourceTree = "<group>"; };
 		DA90D87C1059A54D0039F26A /* FontTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FontTest.m; path = tests/FontTest.m; sourceTree = "<group>"; };
@@ -7484,6 +7486,7 @@
 		E0A4A24A11F899BB003B9D29 /* PVR test */ = {
 			isa = PBXGroup;
 			children = (
+				A0E55CBB1420E3D3003F1E5A /* test_image_rgb888.pvr */,
 				A0B035F013E99D110073E59A /* only_in_hd-hd.pvr.ccz */,
 				E098B2DC133E471D00FD53A3 /* test_image-bad_encoding.pvr */,
 				500044020F3CC15D00A5FBF4 /* test_image.pvr */,
@@ -10137,6 +10140,7 @@
 				A0B036CE13EA101F0073E59A /* f2-ipad.png in Resources */,
 				A0B0370313EA10200073E59A /* r1-ipad.png in Resources */,
 				A0B0373813EA10210073E59A /* r2-ipad.png in Resources */,
+				A0E55CBC1420E3D3003F1E5A /* test_image_rgb888.pvr in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
