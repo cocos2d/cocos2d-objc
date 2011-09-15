@@ -293,7 +293,10 @@ typedef enum {
 /** updates the texture rect of the CCSprite in points.
  */
 -(void) setTextureRect:(CGRect) rect;
-/** updates the texture rect, rectRotated and untrimmed size of the CCSprite in pixels
+/** updates the texture rect, rectRotated and untrimmed size of the CCSprite in points
+ */
+-(void) setTextureRect:(CGRect)rect rotated:(BOOL)rotated untrimmedSize:(CGSize)size;
+/** updates the texture rect, rectRotated and untrimmed size of the CCSprite in texture pixels
  */
 -(void) setTextureRectInPixels:(CGRect)rect rotated:(BOOL)rotated untrimmedSize:(CGSize)size;
 

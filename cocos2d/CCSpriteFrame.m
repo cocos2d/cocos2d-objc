@@ -27,11 +27,18 @@
 
 #import "CCTextureCache.h"
 #import "CCSpriteFrame.h"
+#import "CCFileUtils.h"
 #import "ccMacros.h"
+
+@interface CCSpriteFrame () {
+	ccResolutionType resolutionType_;
+}
+@property (nonatomic,readonly) ccResolutionType resolutionType;
+@end
 
 @implementation CCSpriteFrame
 @synthesize offsetInPixels = offsetInPixels_, offset = offset_;
-@synthesize originalSizeInPixels = originalSizeInPixels_;
+@synthesize originalSizeInPixels = originalSizeInPixels_, originalSize = originalSize_;
 @synthesize textureFilename = textureFilename_;
 @synthesize rotated = rotated_;
 
@@ -72,11 +79,13 @@
 	if( (self=[super init]) )
     {
 		self.texture = texture;
+		ccResolutionType rt = texture.resolutionType;
 		rectInPixels_ = rect;
-		rect_ = CC_RECT_PIXELS_TO_POINTS( rect );
+		rect_ = CC_RECT_TEXTURE_PIXELS_TO_POINTS( rt, rect );
 		offsetInPixels_ = offset;
-        offset_ = CC_POINT_PIXELS_TO_POINTS( offsetInPixels_ );
+        offset_ = CC_POINT_TEXTURE_PIXELS_TO_POINTS( rt, offsetInPixels_ );
 		originalSizeInPixels_ = originalSize;
+        originalSize_ = CC_SIZE_TEXTURE_PIXELS_TO_POINTS( rt, originalSize );
         rotated_ = rotated;
 	}
 	return self;	
@@ -88,11 +97,13 @@
     {
 		texture_ = nil;
 		textureFilename_ = [filename copy];
+		[CCFileUtils fullPathFromRelativePath:textureFilename_ resolutionType:&resolutionType_];
 		rectInPixels_ = rect;
-		rect_ = CC_RECT_PIXELS_TO_POINTS( rect );
+		rect_ = CC_RECT_TEXTURE_PIXELS_TO_POINTS( resolutionType_, rect );
 		offsetInPixels_ = offset;
-        offset_ = CC_POINT_PIXELS_TO_POINTS( offsetInPixels_ );
+        offset_ = CC_POINT_TEXTURE_PIXELS_TO_POINTS( resolutionType_, offsetInPixels_ );
 		originalSizeInPixels_ = originalSize;
+        originalSize_ = CC_SIZE_TEXTURE_PIXELS_TO_POINTS( resolutionType_, originalSize );
         rotated_ = rotated;
 	}
 	return self;	
@@ -134,28 +145,33 @@
 	return rectInPixels_;
 }
 
+-(ccResolutionType) resolutionType
+{
+	return (texture_ ? texture_.resolutionType : resolutionType_);
+}
+
 -(void) setRect:(CGRect)rect
 {
 	rect_ = rect;
-	rectInPixels_ = CC_RECT_POINTS_TO_PIXELS( rect_ );
+	rectInPixels_ = CC_RECT_POINTS_TO_TEXTURE_PIXELS( self.resolutionType, rect_ );
 }
 
 -(void) setRectInPixels:(CGRect)rectInPixels
 {
 	rectInPixels_ = rectInPixels;
-	rect_ = CC_RECT_PIXELS_TO_POINTS( rectInPixels_ );
+	rect_ = CC_RECT_TEXTURE_PIXELS_TO_POINTS( self.resolutionType, rectInPixels_ );
 }
 
 -(void) setOffset:(CGPoint)offsets
 {
     offset_ = offsets;
-    offsetInPixels_ = CC_POINT_POINTS_TO_PIXELS( offset_ );
+    offsetInPixels_ = CC_POINT_POINTS_TO_TEXTURE_PIXELS( self.resolutionType, offset_ );
 }
 
 -(void) setOffsetInPixels:(CGPoint)offsetInPixels
 {
     offsetInPixels_ = offsetInPixels;
-    offset_ = CC_POINT_PIXELS_TO_POINTS( offsetInPixels_ );
+    offset_ = CC_POINT_TEXTURE_PIXELS_TO_POINTS( self.resolutionType, offsetInPixels_ );
 }
 
 -(void) setTexture:(CCTexture2D *)texture

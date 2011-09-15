@@ -238,6 +238,27 @@ CGSizeMake( (__size_in_pixels__).width / CC_CONTENT_SCALE_FACTOR(), (__size_in_p
 #define CC_SIZE_POINTS_TO_PIXELS(__size_in_points__)																		\
 CGSizeMake( (__size_in_points__).width * CC_CONTENT_SCALE_FACTOR(), (__size_in_points__).height * CC_CONTENT_SCALE_FACTOR())
 
+#define CC_IS_RESOLUTION_TYPE_MISMATCHED(__res__) \
+((__res__) == kCCResolutionStandard && CC_CONTENT_SCALE_FACTOR() == 2)
+
+#define CC_RECT_TEXTURE_PIXELS_TO_POINTS(__res__,__pixels__) \
+(CC_IS_RESOLUTION_TYPE_MISMATCHED(__res__) ? (__pixels__) : CC_RECT_PIXELS_TO_POINTS(__pixels__))
+
+#define CC_RECT_POINTS_TO_TEXTURE_PIXELS(__res__,__points__) \
+(CC_IS_RESOLUTION_TYPE_MISMATCHED(__res__) ? (__points__) : CC_RECT_POINTS_TO_PIXELS(__points__))
+
+#define CC_POINT_TEXTURE_PIXELS_TO_POINTS(__res__,__pixels__) \
+(CC_IS_RESOLUTION_TYPE_MISMATCHED(__res__) ? (__pixels__) : CC_POINT_PIXELS_TO_POINTS(__pixels__))
+
+#define CC_POINT_POINTS_TO_TEXTURE_PIXELS(__res__,__points__) \
+(CC_IS_RESOLUTION_TYPE_MISMATCHED(__res__) ? (__points__) : CC_POINT_POINTS_TO_PIXELS(__points__))
+
+#define CC_SIZE_TEXTURE_PIXELS_TO_POINTS(__res__,__pixels__) \
+(CC_IS_RESOLUTION_TYPE_MISMATCHED(__res__) ? (__pixels__) : CC_SIZE_PIXELS_TO_POINTS(__pixels__))
+
+#define CC_SIZE_POINTS_TO_TEXTURE_PIXELS(__res__,__points__) \
+(CC_IS_RESOLUTION_TYPE_MISMATCHED(__res__) ? (__points__) : CC_SIZE_POINTS_TO_PIXELS(__points__))
+
 
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 

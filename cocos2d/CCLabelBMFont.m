@@ -567,8 +567,8 @@ typedef struct _KerningHashElement
 		}
 		
 		float yOffset = configuration_->commonHeight_ - fontDef.yOffset;
-        CGPoint fontPos = ccp( (float)nextFontPositionX + fontDef.xOffset + fontDef.rect.size.width*0.5f + kerningAmount, (float)nextFontPositionY + yOffset - rect.size.height*0.5f );
-        fontChar.position = CC_POINT_PIXELS_TO_POINTS(fontPos);
+		CGPoint fontPos = ccp( (float)nextFontPositionX + fontDef.xOffset + fontDef.rect.size.width*0.5f + kerningAmount, (float)nextFontPositionY + yOffset - rect.size.height*0.5f );
+		fontChar.position = CC_POINT_TEXTURE_PIXELS_TO_POINTS(self.texture.resolutionType, fontPos);
 
 		// update kerning
 		nextFontPositionX += configuration_->BMFontArray_[c].xAdvance + kerningAmount;
@@ -591,7 +591,7 @@ typedef struct _KerningHashElement
 	tmpSize.width = longestLine;
 	tmpSize.height = totalHeight;
 
-	[self setContentSize:CC_SIZE_PIXELS_TO_POINTS(tmpSize)];
+	[self setContentSize:CC_SIZE_TEXTURE_PIXELS_TO_POINTS(self.texture.resolutionType, tmpSize)];
 }
 
 #pragma mark LabelBMFont - CCLabelProtocol protocol

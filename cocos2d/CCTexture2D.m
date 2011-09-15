@@ -205,10 +205,7 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 
 -(CGSize) contentSize
 {
-	CGSize ret;
-	ret.width = size_.width / CC_CONTENT_SCALE_FACTOR();
-	ret.height = size_.height / CC_CONTENT_SCALE_FACTOR();
-	
+	CGSize ret = CC_SIZE_TEXTURE_PIXELS_TO_POINTS(self.resolutionType, size_);
 	return ret;
 }
   

@@ -52,7 +52,7 @@
 /** rect of the frame in points. If it is updated, then rectInPixels will be updated too. */
 @property (nonatomic,readwrite) CGRect rect;
 
-/** rect of the frame in pixels. If it is updated, then rect (points) will be udpated too. */
+/** rect of the frame in texture pixels. If it is updated, then rect (points) will be updated too. */
 @property (nonatomic,readwrite) CGRect rectInPixels;
 
 /** whether or not the rect of the frame is rotated ( x = x+width, y = y+height, width = height, height = width ) */
@@ -61,10 +61,13 @@
 /** offset of the frame in points */
 @property (nonatomic,readwrite) CGPoint offset;
 
-/** offset of the frame in pixels */
+/** offset of the frame in texture pixels */
 @property (nonatomic,readwrite) CGPoint offsetInPixels;
 
-/** original size of the trimmed image in pixels */
+/** original size of the trimmed image in points */
+@property (nonatomic,readwrite) CGSize originalSize;
+
+/** original size of the trimmed image in texture pixels */
 @property (nonatomic,readwrite) CGSize originalSizeInPixels;
 
 /** texture of the frame */
