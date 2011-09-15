@@ -7,6 +7,7 @@
 
 #import "AppController.h"
 #import "PerformanceTextureTest.h"
+#import "RootViewController.h"
 
 @implementation AppController
 
@@ -18,10 +19,7 @@
 	
 	// get instance of the shared director
 	CCDirector *director = [CCDirector sharedDirector];
-	
-	// before creating any layer, set the landscape mode
-	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
-	
+		
 	// display FPS (useful when debugging)
 	[director setDisplayFPS:YES];
 
@@ -30,7 +28,7 @@
 }
 
 - (void)dealloc {
-	[window release];
+	[window_ release];
 	[super dealloc];
 }
 
