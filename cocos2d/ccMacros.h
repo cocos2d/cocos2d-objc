@@ -97,13 +97,8 @@ simple macro that swaps 2 variables
 /** @def CC_BLEND_SRC
 default gl blend src function. Compatible with premultiplied alpha images.
 */
-#if CC_OPTIMIZE_BLEND_FUNC_FOR_PREMULTIPLIED_ALPHA
 #define CC_BLEND_SRC GL_ONE
 #define CC_BLEND_DST GL_ONE_MINUS_SRC_ALPHA
-#else
-#define CC_BLEND_SRC GL_SRC_ALPHA
-#define CC_BLEND_DST GL_ONE_MINUS_SRC_ALPHA
-#endif // ! CC_OPTIMIZE_BLEND_FUNC_FOR_PREMULTIPLIED_ALPHA
 
 /** @def CC_DIRECTOR_INIT
 	- Initializes an EAGLView with 0-bit depth format, and RGB565 render buffer.

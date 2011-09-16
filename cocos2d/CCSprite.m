@@ -55,21 +55,9 @@
 #define RENDER_IN_SUBPIXEL(__A__) ( (int)(__A__))
 #endif
 
-// XXX: Optmization
-struct transformValues_ {
-	CGPoint pos;		// position x and y
-	CGPoint	scale;		// scale x and y
-	float	rotation;
-	CGPoint skew;		// skew x and y
-	CGPoint ap;			// anchor point in pixels
-	BOOL	visible;
-};
-
-@interface CCSprite (Private)
+@interface CCSprite ()
 -(void)updateTextureCoords:(CGRect)rect;
 -(void)updateBlendFunc;
--(void) initAnimationDictionary;
--(void) getTransformValues:(struct transformValues_*)tv;	// optimization
 @end
 
 @implementation CCSprite
@@ -83,7 +71,6 @@ struct transformValues_ {
 @synthesize usesBatchNode = usesBatchNode_;
 @synthesize textureAtlas = textureAtlas_;
 @synthesize batchNode = batchNode_;
-@synthesize honorParentTransform = honorParentTransform_;
 @synthesize offsetPosition = offsetPosition_;
 
 
@@ -168,7 +155,6 @@ struct transformValues_ {
 		// zwoptex default values
 		offsetPosition_ = CGPointZero;
 		
-		honorParentTransform_ = CC_HONOR_PARENT_TRANSFORM_ALL;
 		hasChildren_ = NO;
 		
 		// Atlas: Color
@@ -306,6 +292,7 @@ struct transformValues_ {
 -(void) useBatchNode:(CCSpriteBatchNode*)batchNode
 {
 	usesBatchNode_ = YES;
+	transformToBatch_ = CGAffineTransformIdentity;
 	textureAtlas_ = [batchNode textureAtlas]; // weak ref
 	batchNode_ = batchNode; // weak ref
 }
@@ -433,141 +420,83 @@ struct transformValues_ {
 {
 	NSAssert( usesBatchNode_, @"updateTransform is only valid when CCSprite is being renderd using an CCSpriteBatchNode");
 
-	// optimization. Quick return if not dirty
-	if( ! dirty_ )
-		return;
+	// recaculate matrix only if it is dirty
+	if( dirty_ ) {
 	
-	CGAffineTransform matrix;
+		// If it is not visible, or one of its ancestors is not visible, then do nothing:
+		if( !visible_ || ( parent_ && parent_ != batchNode_ && ((CCSprite*)parent_)->shouldBeHidden_) ) {
+			quad_.br.vertices = quad_.tl.vertices = quad_.tr.vertices = quad_.bl.vertices = (ccVertex3F){0,0,0};
+			shouldBeHidden_ = YES;
+		}
 	
-	// Optimization: if it is not visible, then do nothing
-	if( ! visible_ ) {
-		quad_.br.vertices = quad_.tl.vertices = quad_.tr.vertices = quad_.bl.vertices = (ccVertex3F){0,0,0};
+		else {
+
+			shouldBeHidden_ = NO;
+			
+			if( ! parent_ || parent_ == batchNode_ )
+				transformToBatch_ = [self nodeToParentTransform];
+
+			else {
+				NSAssert( [parent_ isKindOfClass:[CCSprite class]], @"Logic error in CCSprite. Parent must be a CCSprite");
+
+				transformToBatch_ = CGAffineTransformConcat( [self nodeToParentTransform] , ((CCSprite*)parent_)->transformToBatch_ );
+			}
+	
+			//
+			// calculate the Quad based on the Affine Matrix
+			//	
+
+			CGSize size = rect_.size;
+
+			float x1 = offsetPosition_.x;
+			float y1 = offsetPosition_.y;
+			
+			float x2 = x1 + size.width;
+			float y2 = y1 + size.height;
+			float x = transformToBatch_.tx;
+			float y = transformToBatch_.ty;
+			
+			float cr = transformToBatch_.a;
+			float sr = transformToBatch_.b;
+			float cr2 = transformToBatch_.d;
+			float sr2 = -transformToBatch_.c;
+			float ax = x1 * cr - y1 * sr2 + x;
+			float ay = x1 * sr + y1 * cr2 + y;
+			
+			float bx = x2 * cr - y1 * sr2 + x;
+			float by = x2 * sr + y1 * cr2 + y;
+			
+			float cx = x2 * cr - y2 * sr2 + x;
+			float cy = x2 * sr + y2 * cr2 + y;
+			
+			float dx = x1 * cr - y2 * sr2 + x;
+			float dy = x1 * sr + y2 * cr2 + y;
+			
+			quad_.bl.vertices = (ccVertex3F) { RENDER_IN_SUBPIXEL(ax), RENDER_IN_SUBPIXEL(ay), vertexZ_ };
+			quad_.br.vertices = (ccVertex3F) { RENDER_IN_SUBPIXEL(bx), RENDER_IN_SUBPIXEL(by), vertexZ_ };
+			quad_.tl.vertices = (ccVertex3F) { RENDER_IN_SUBPIXEL(dx), RENDER_IN_SUBPIXEL(dy), vertexZ_ };
+			quad_.tr.vertices = (ccVertex3F) { RENDER_IN_SUBPIXEL(cx), RENDER_IN_SUBPIXEL(cy), vertexZ_ };
+		}
+		
 		[textureAtlas_ updateQuad:&quad_ atIndex:atlasIndex_];
 		dirty_ = recursiveDirty_ = NO;
-		return ;
 	}
 	
+	// recursively iterate over children
+	if( hasChildren_ )
+		[children_ makeObjectsPerformSelector:@selector(updateTransform)];
 
-	// Optimization: If parent is batchnode, or parent is nil
-	// build Affine transform manually
-	if( ! parent_ || parent_ == batchNode_ ) {
-		
-		float radians = -CC_DEGREES_TO_RADIANS(rotation_);
-		float c = cosf(radians);
-		float s = sinf(radians);
+#if CC_SPRITE_DEBUG_DRAW
+	// draw bounding box
+	CGPoint vertices[4] = {
+		ccp( quad_.bl.vertices.x, quad_.bl.vertices.y ),
+		ccp( quad_.br.vertices.x, quad_.br.vertices.y ),
+		ccp( quad_.tr.vertices.x, quad_.tr.vertices.y ),
+		ccp( quad_.tl.vertices.x, quad_.tl.vertices.y ),
+	};
+	ccDrawPoly(vertices, 4, YES);
+#endif // CC_SPRITE_DEBUG_DRAW
 
-		matrix = CGAffineTransformMake( c * scaleX_,  s * scaleX_,
-									   -s * scaleY_, c * scaleY_,
-									   position_.x, position_.y);
-
-		if( skewX_ || skewY_ ) {
-			CGAffineTransform skewMatrix = CGAffineTransformMake(1.0f, tanf(CC_DEGREES_TO_RADIANS(skewY_)),
-																 tanf(CC_DEGREES_TO_RADIANS(skewX_)), 1.0f,
-																 0.0f, 0.0f );
-			matrix = CGAffineTransformConcat(skewMatrix, matrix);
-		}
-
-		matrix = CGAffineTransformTranslate(matrix, -anchorPointInPoints_.x, -anchorPointInPoints_.y);
-		
-	}  else { 	// parent_ != batchNode_ 
-
-		// else do affine transformation according to the HonorParentTransform
-
-		matrix = CGAffineTransformIdentity;
-		ccHonorParentTransform prevHonor = CC_HONOR_PARENT_TRANSFORM_ALL;
-		
-		for (CCNode *p = self ; p && p != batchNode_ ; p = p.parent) {
-			
-			// Might happen. Issue #1053
-			NSAssert( [p isKindOfClass:[CCSprite class]], @"CCSprite should be a CCSprite subclass. Probably you initialized an sprite with a batchnode, but you didn't add it to the batch node." );
-
-			struct transformValues_ tv;
-			[(CCSprite*)p getTransformValues: &tv];
-			
-			// If any of the parents are not visible, then don't draw this node
-			if( ! tv.visible ) {
-				quad_.br.vertices = quad_.tl.vertices = quad_.tr.vertices = quad_.bl.vertices = (ccVertex3F){0,0,0};
-				[textureAtlas_ updateQuad:&quad_ atIndex:atlasIndex_];
-				dirty_ = recursiveDirty_ = NO;
-				return;
-			}
-			CGAffineTransform newMatrix = CGAffineTransformIdentity;
-			
-			// 2nd: Translate, Rotate, Skew, Scale
-			if( prevHonor & CC_HONOR_PARENT_TRANSFORM_TRANSLATE )
-				newMatrix = CGAffineTransformTranslate(newMatrix, tv.pos.x, tv.pos.y);
-			if( prevHonor & CC_HONOR_PARENT_TRANSFORM_ROTATE )
-				newMatrix = CGAffineTransformRotate(newMatrix, -CC_DEGREES_TO_RADIANS(tv.rotation));
-			if ( prevHonor & CC_HONOR_PARENT_TRANSFORM_SKEW ) {
-				CGAffineTransform skew = CGAffineTransformMake(1.0f, tanf(CC_DEGREES_TO_RADIANS(tv.skew.y)), tanf(CC_DEGREES_TO_RADIANS(tv.skew.x)), 1.0f, 0.0f, 0.0f);
-				// apply the skew to the transform
-				newMatrix = CGAffineTransformConcat(skew, newMatrix);
-			}
-			if( prevHonor & CC_HONOR_PARENT_TRANSFORM_SCALE )
-				newMatrix = CGAffineTransformScale(newMatrix, tv.scale.x, tv.scale.y);
-			
-			// 3rd: Translate anchor point
-			newMatrix = CGAffineTransformTranslate(newMatrix, -tv.ap.x, -tv.ap.y);
-
-			// 4th: Matrix multiplication
-			matrix = CGAffineTransformConcat( matrix, newMatrix);
-			
-			prevHonor = [(CCSprite*)p honorParentTransform];
-		}		
-	}
-	
-	
-	//
-	// calculate the Quad based on the Affine Matrix
-	//	
-
-	CGSize size = rect_.size;
-
-	float x1 = offsetPosition_.x;
-	float y1 = offsetPosition_.y;
-	
-	float x2 = x1 + size.width;
-	float y2 = y1 + size.height;
-	float x = matrix.tx;
-	float y = matrix.ty;
-	
-	float cr = matrix.a;
-	float sr = matrix.b;
-	float cr2 = matrix.d;
-	float sr2 = -matrix.c;
-	float ax = x1 * cr - y1 * sr2 + x;
-	float ay = x1 * sr + y1 * cr2 + y;
-	
-	float bx = x2 * cr - y1 * sr2 + x;
-	float by = x2 * sr + y1 * cr2 + y;
-	
-	float cx = x2 * cr - y2 * sr2 + x;
-	float cy = x2 * sr + y2 * cr2 + y;
-	
-	float dx = x1 * cr - y2 * sr2 + x;
-	float dy = x1 * sr + y2 * cr2 + y;
-	
-	quad_.bl.vertices = (ccVertex3F) { RENDER_IN_SUBPIXEL(ax), RENDER_IN_SUBPIXEL(ay), vertexZ_ };
-	quad_.br.vertices = (ccVertex3F) { RENDER_IN_SUBPIXEL(bx), RENDER_IN_SUBPIXEL(by), vertexZ_ };
-	quad_.tl.vertices = (ccVertex3F) { RENDER_IN_SUBPIXEL(dx), RENDER_IN_SUBPIXEL(dy), vertexZ_ };
-	quad_.tr.vertices = (ccVertex3F) { RENDER_IN_SUBPIXEL(cx), RENDER_IN_SUBPIXEL(cy), vertexZ_ };
-		
-	[textureAtlas_ updateQuad:&quad_ atIndex:atlasIndex_];
-	dirty_ = recursiveDirty_ = NO;
-}
-
-// XXX: Optimization: instead of calling 5 times the parent sprite to obtain: position, scale.x, scale.y, anchorpoint and rotation,
-// this fuction return the 5 values in 1 single call
--(void) getTransformValues:(struct transformValues_*) tv
-{
-	tv->pos			= position_;
-	tv->scale.x		= scaleX_;
-	tv->scale.y		= scaleY_;
-	tv->rotation	= rotation_;
-	tv->skew.x		= skewX_;
-	tv->skew.y		= skewY_;
-	tv->ap			= anchorPointInPoints_;
-	tv->visible		= visible_;
 }
 
 #pragma mark CCSprite - draw
