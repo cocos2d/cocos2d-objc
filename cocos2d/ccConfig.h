@@ -108,14 +108,14 @@
 #define CC_DIRECTOR_MAC_USE_DISPLAY_LINK_THREAD 1
 #endif
 
-/** @def CC_COCOSNODE_RENDER_SUBPIXEL
+/** @def CC_NODE_RENDER_SUBPIXEL
  If enabled, the CCNode objects (CCSprite, CCLabel,etc) will be able to render in subpixels.
  If disabled, integer pixels will be used.
  
  To enable set it to 1. Enabled by default.
  */
-#ifndef CC_COCOSNODE_RENDER_SUBPIXEL
-#define CC_COCOSNODE_RENDER_SUBPIXEL 1
+#ifndef CC_NODE_RENDER_SUBPIXEL
+#define CC_NODE_RENDER_SUBPIXEL 1
 #endif
 
 /** @def CC_SPRITEBATCHNODE_RENDER_SUBPIXEL
