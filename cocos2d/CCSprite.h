@@ -37,26 +37,6 @@
 
 #define CCSpriteIndexNotInitialized 0xffffffff 	/// CCSprite invalid index on the CCSpriteBatchode
 
-/**
- Whether or not an CCSprite will rotate, scale or translate with it's parent.
- Useful in health bars, when you want that the health bar translates with it's parent but you don't
- want it to rotate with its parent.
- @since v0.99.0
- */
-typedef enum {
-	//! Translate with its parent
-	CC_HONOR_PARENT_TRANSFORM_TRANSLATE =  1 << 0,
-	//! Rotate with its parent
-	CC_HONOR_PARENT_TRANSFORM_ROTATE	=  1 << 1,
-	//! Scale with its parent
-	CC_HONOR_PARENT_TRANSFORM_SCALE		=  1 << 2,
-	//! Skew with its parent
-	CC_HONOR_PARENT_TRANSFORM_SKEW		=  1 << 3,
-
-	//! All possible transformation enabled. Default value.
-	CC_HONOR_PARENT_TRANSFORM_ALL		=  CC_HONOR_PARENT_TRANSFORM_TRANSLATE | CC_HONOR_PARENT_TRANSFORM_ROTATE | CC_HONOR_PARENT_TRANSFORM_SCALE | CC_HONOR_PARENT_TRANSFORM_SKEW,
-
-} ccHonorParentTransform;
 
 /** CCSprite is a 2d image ( http://en.wikipedia.org/wiki/Sprite_(computer_graphics) )
  *
@@ -89,10 +69,11 @@ typedef enum {
 	CCTextureAtlas			*textureAtlas_;			// Sprite Sheet texture atlas (weak reference)
 	NSUInteger				atlasIndex_;			// Absolute (real) Index on the batch node
 	CCSpriteBatchNode		*batchNode_;			// Used batch node (weak reference)
-	ccHonorParentTransform	honorParentTransform_;	// whether or not to transform according to its parent transformations
 	BOOL					dirty_:1;				// Sprite needs to be updated
 	BOOL					recursiveDirty_:1;		// Subchildren needs to be updated
 	BOOL					hasChildren_:1;			// optimization to check if it contain children
+	BOOL					shouldBeHidden_:1;		// should not be drawn because one of the ancestors is not visible
+	CGAffineTransform		transformToBatch_;		//
 	
 	//
 	// Data used when the sprite is self-rendered
@@ -132,6 +113,7 @@ typedef enum {
 @public
 	// used internally.
 	void (*updateMethod)(id, SEL);
+
 }
 
 /** whether or not the Sprite needs to be updated in the Atlas */
@@ -170,12 +152,6 @@ typedef enum {
 @property (nonatomic,readwrite,assign) CCTextureAtlas *textureAtlas;
 /** weak reference to the CCSpriteBatchNode that renders the CCSprite */
 @property (nonatomic,readwrite,assign) CCSpriteBatchNode *batchNode;
-/** whether or not to transform according to its parent transfomrations.
- Useful for health bars. eg: Don't rotate the health bar, even if the parent rotates.
- IMPORTANT: Only valid if it is rendered using an CCSpriteBatchNode.
- @since v0.99.0
- */
-@property (nonatomic,readwrite) ccHonorParentTransform honorParentTransform;
 /** offset position in pixels of the sprite in points. Calculated automatically by editors like Zwoptex.
  @since v0.99.0
  */

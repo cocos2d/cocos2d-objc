@@ -19,6 +19,8 @@ static NSString *transitions[] = {
 //	@"SpriteZVertex",
 //	@"SpriteBatchNodeZVertex",
 
+	@"SpriteChildrenVisibilityIssue665",
+
 	@"Sprite1",
 	@"SpriteBatchNode1",
 	@"SpriteFrameTest",
@@ -55,7 +57,6 @@ static NSString *transitions[] = {
 	@"SpriteBatchNodeNewTexture",
 	@"SpriteHybrid",
 	@"SpriteBatchNodeChildren",
-	@"SpriteBatchNodeChildren2",
 	@"SpriteBatchNodeChildrenZ",
 	@"SpriteChildrenVisibility",
 	@"SpriteChildrenVisibilityIssue665",
@@ -2885,101 +2886,6 @@ Class restartAction()
 }
 @end
 
-#pragma mark -
-#pragma mark SpriteBatchNode Children2
-
-@implementation SpriteBatchNodeChildren2
-
--(id) init
-{
-	if( (self=[super init]) ) {
-		
-		CGSize s = [[CCDirector sharedDirector] winSize];
-		
-		// parents
-		CCSpriteBatchNode *batch = [CCSpriteBatchNode batchNodeWithFile:@"animations/grossini.pvr.gz" capacity:50];
-		[batch.texture generateMipmap];
-		
-		[self addChild:batch z:0 tag:kTagSpriteBatchNode];
-		
-		[[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"animations/grossini.plist"];
-		
-		
-		CCSprite *sprite11 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_01.png"];
-		[sprite11 setPosition:ccp( s.width/3, s.height/2)];
-
-		CCSprite *sprite12 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_02.png"];
-		[sprite12 setPosition:ccp(20,30)];
-		sprite12.scale = 0.2f;
-
-		CCSprite *sprite13 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_03.png"];
-		[sprite13 setPosition:ccp(-20,30)];
-		sprite13.scale = 0.2f;
-		
-		[batch addChild:sprite11];
-		[sprite11 addChild:sprite12 z:-2];
-		[sprite11 addChild:sprite13 z:2];
-
-		// don't rotate with it's parent
-		sprite12.honorParentTransform &= ~CC_HONOR_PARENT_TRANSFORM_ROTATE;
-
-		// don't scale and rotate with it's parent
-		sprite13.honorParentTransform &= ~(CC_HONOR_PARENT_TRANSFORM_SCALE | CC_HONOR_PARENT_TRANSFORM_ROTATE);
-		
-		id action = [CCMoveBy actionWithDuration:2 position:ccp(200,0)];
-		id action_back = [action reverse];
-		id action_rot = [CCRotateBy actionWithDuration:2 angle:360];
-		id action_s = [CCScaleBy actionWithDuration:2 scale:2];
-		id action_s_back = [action_s reverse];
-
-		[sprite11 runAction: [CCRepeatForever actionWithAction:action_rot]];
-		[sprite11 runAction: [CCRepeatForever actionWithAction:[CCSequence actions:action, action_back, nil]]];
-		[sprite11 runAction: [CCRepeatForever actionWithAction:[CCSequence actions:action_s, action_s_back, nil]]];
-		
-		//
-		// another set of parent / children
-		//
-		
-		CCSprite *sprite21 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_01.png"];
-		[sprite21 setPosition:ccp( 2*s.width/3, s.height/2-50)];
-		
-		CCSprite *sprite22 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_02.png"];
-		[sprite22 setPosition:ccp(20,30)];
-		sprite22.scale = 0.8f;
-		
-		CCSprite *sprite23 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_03.png"];
-		[sprite23 setPosition:ccp(-20,30)];
-		sprite23.scale = 0.8f;
-		
-		[batch addChild:sprite21];
-		[sprite21 addChild:sprite22 z:-2];
-		[sprite21 addChild:sprite23 z:2];
-		
-		// don't rotate with it's parent
-		sprite22.honorParentTransform &= ~CC_HONOR_PARENT_TRANSFORM_TRANSLATE;
-		
-		// don't scale and rotate with it's parent
-		sprite23.honorParentTransform &= ~CC_HONOR_PARENT_TRANSFORM_SCALE;
-		
-		[sprite21 runAction:[CCRepeatForever actionWithAction:[CCRotateBy actionWithDuration:1 angle:360]]];
-		[sprite21 runAction:[CCRepeatForever actionWithAction:[CCSequence actions:[CCScaleTo actionWithDuration:0.5f scale:5.0f],[CCScaleTo	actionWithDuration:0.5f scale:1],nil]]];
-		
-	}	
-	return self;
-}
-
-- (void) dealloc
-{
-	[[CCSpriteFrameCache sharedSpriteFrameCache] removeUnusedSpriteFrames];
-	[super dealloc];
-}
-
--(NSString *) title
-{
-	return @"SpriteBatchNode HonorTransform";
-}
-@end
-
 
 #pragma mark -
 #pragma mark SpriteBatchNode ChildrenZ
@@ -3209,7 +3115,7 @@ Class restartAction()
 		[aParent addChild:sprite1];
 		[sprite1 addChild:sprite2 z:-2];
 		[sprite1 addChild:sprite3 z:2];
-				
+
 		//
 		// Sprite
 		//

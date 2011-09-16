@@ -211,10 +211,6 @@
 {}
 @end
 
-@interface SpriteBatchNodeChildren2 : SpriteDemo
-{}
-@end
-
 @interface SpriteBatchNodeChildrenZ : SpriteDemo
 {}
 @end

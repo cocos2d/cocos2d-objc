@@ -252,30 +252,16 @@ static 	SEL selUpdate = NULL;
 		return;	
 	
 	CCSprite *child;
-	ccArray *array = descendants_->data;
+	ccArray *array = children_->data;
 	
 	NSUInteger i = array->num;
 	id *arr = array->arr;
 
 	if( i > 0 ) {
-		
 		while (i-- > 0) {
-			child = *arr++;
-			
+			child = *arr++;			
 			// fast dispatch
-			child->updateMethod(child, selUpdate);
-			
-#if CC_SPRITEBATCHNODE_DEBUG_DRAW
-			//Issue #528
-			CGRect rect = [child boundingBox];
-			CGPoint vertices[4]={
-				ccp(rect.origin.x,rect.origin.y),
-				ccp(rect.origin.x+rect.size.width,rect.origin.y),
-				ccp(rect.origin.x+rect.size.width,rect.origin.y+rect.size.height),
-				ccp(rect.origin.x,rect.origin.y+rect.size.height),
-			};
-			ccDrawPoly(vertices, 4, YES);
-#endif // CC_SPRITEBATCHNODE_DEBUG_DRAW
+			child->updateMethod(child, selUpdate);			
 		}
 	}
 	
