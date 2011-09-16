@@ -189,7 +189,7 @@
 	opacityModifyRGB_ = [textureAtlas_.texture hasPremultipliedAlpha];
 }
 
-#pragma mark CCAtlasNode - CocosNodeTexture protocol
+#pragma mark CCAtlasNode - CCNodeTexture protocol
 
 -(void) updateBlendFunc
 {

@@ -30,7 +30,7 @@
  * A transition which peels back the bottom right hand corner of a scene
  * to transition to the scene beneath it simulating a page turn
  *
- * This uses a 3DAction so it's strongly recommended that depth buffering
+ * This uses a 3DAction so it is strongly recommended that depth buffering
  * is turned on in CCDirector using:
  *
  * 	[[CCDirector sharedDirector] setDepthBufferFormat:kCCDepthBuffer16]; 

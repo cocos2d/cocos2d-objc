@@ -76,7 +76,7 @@ enum {
 //! called after the action has finished. It will set the 'target' to nil.
 //! IMPORTANT: You should never call "[action stop]" manually. Instead, use: "[target stopAction:action];"
 -(void) stop;
-//! called every frame with it's delta time. DON'T override unless you know what you are doing.
+//! called every frame with its delta time. DON'T override unless you know what you are doing.
 -(void) step: (ccTime) dt;
 //! called once per frame. time a value between 0 and 1
 //! For example: 

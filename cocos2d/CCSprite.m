@@ -877,7 +877,7 @@
 {
 	NSAssert( ! usesBatchNode_, @"CCSprite: updateBlendFunc doesn't work when the sprite is rendered using a CCSpriteBatchNode");
 
-	// it's possible to have an untextured sprite
+	// it is possible to have an untextured sprite
 	if( !texture_ || ! [texture_ hasPremultipliedAlpha] ) {
 		blendFunc_.src = GL_SRC_ALPHA;
 		blendFunc_.dst = GL_ONE_MINUS_SRC_ALPHA;

@@ -29,7 +29,7 @@ enum {
 		CCSprite *spriteSelected = [CCSprite spriteWithFile:@"menuitemsprite.png" rect:CGRectMake(0,23*1,115,23)];
 		CCSprite *spriteDisabled = [CCSprite spriteWithFile:@"menuitemsprite.png" rect:CGRectMake(0,23*0,115,23)];
 		
-		// Demonstrates reusing a block for multiple menu items, when it's using the CCLayerMultiplex to switch views.
+		// Demonstrates reusing a block for multiple menu items, when it is using the CCLayerMultiplex to switch views.
 		__block Layer1* _self = self;
 		void (^reusableBlock)(id) = ^(id sender) {
 			[(CCLayerMultiplex*)_self->parent_ switchTo:[sender tag]];
