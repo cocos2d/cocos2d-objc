@@ -462,7 +462,7 @@
 
 -(void) visit
 {
-	// quick return if not visible
+	// quick return if not visible. children won't be drawn.
 	if (!visible_)
 		return;
 
@@ -667,30 +667,37 @@
 {
 	if ( isTransformDirty_ ) {
 		
-		transform_ = CGAffineTransformIdentity;
 		
-		if ( !isRelativeAnchorPoint_ && !CGPointEqualToPoint(anchorPointInPoints_, CGPointZero) )
-			transform_ = CGAffineTransformTranslate(transform_, anchorPointInPoints_.x, anchorPointInPoints_.y);
+		float x = position_.x;
+		float y = position_.y;
 		
-		if( ! CGPointEqualToPoint(position_, CGPointZero) )
-			transform_ = CGAffineTransformTranslate(transform_, position_.x, position_.y);
-		
-		if( rotation_ != 0 )
-			transform_ = CGAffineTransformRotate(transform_, -CC_DEGREES_TO_RADIANS(rotation_));
-		
-		if( skewX_ != 0 || skewY_ != 0 ) {
-			// create a skewed coordinate system
-			CGAffineTransform skew = CGAffineTransformMake(1.0f, tanf(CC_DEGREES_TO_RADIANS(skewY_)), tanf(CC_DEGREES_TO_RADIANS(skewX_)), 1.0f, 0.0f, 0.0f);
-			// apply the skew to the transform
-			transform_ = CGAffineTransformConcat(skew, transform_);
+		if ( !isRelativeAnchorPoint_ ) {
+			x += anchorPointInPoints_.x;
+			y += anchorPointInPoints_.y;
 		}
 		
-		if( ! (scaleX_ == 1 && scaleY_ == 1) ) 
-			transform_ = CGAffineTransformScale(transform_, scaleX_, scaleY_);
+		// Make matrix
+		float s,c=1;
+		if( rotation_  != 0 ) {
+			float radians = -CC_DEGREES_TO_RADIANS(rotation_);
+			c = cosf(radians);
+			s = sinf(radians);
+		}
+
+		transform_ = CGAffineTransformMake( c * scaleX_,  s * scaleX_,
+										   -s * scaleY_, c * scaleY_,
+										   x, y );
+
+		if( skewX_ || skewY_ ) {
+			CGAffineTransform skewMatrix = CGAffineTransformMake(1.0f, tanf(CC_DEGREES_TO_RADIANS(skewY_)),
+																 tanf(CC_DEGREES_TO_RADIANS(skewX_)), 1.0f,
+																 0.0f, 0.0f );
+			transform_ = CGAffineTransformConcat(skewMatrix, transform_);
+		}
 		
 		if( ! CGPointEqualToPoint(anchorPointInPoints_, CGPointZero) )
 			transform_ = CGAffineTransformTranslate(transform_, -anchorPointInPoints_.x, -anchorPointInPoints_.y);
-		
+
 		isTransformDirty_ = NO;
 	}
 	
