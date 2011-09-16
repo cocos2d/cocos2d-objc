@@ -667,7 +667,6 @@
 {
 	if ( isTransformDirty_ ) {
 		
-		
 		float x = position_.x;
 		float y = position_.y;
 		
@@ -677,13 +676,11 @@
 		}
 		
 		// Make matrix
-		float s,c=1;
-		if( rotation_  != 0 ) {
-			float radians = -CC_DEGREES_TO_RADIANS(rotation_);
-			c = cosf(radians);
-			s = sinf(radians);
-		}
+		float radians = -CC_DEGREES_TO_RADIANS(rotation_);
+		float c = cosf(radians);
+		float s = sinf(radians);
 
+		// Scale, Rot, Translate Matrix
 		transform_ = CGAffineTransformMake( c * scaleX_,  s * scaleX_,
 										   -s * scaleY_, c * scaleY_,
 										   x, y );
