@@ -90,7 +90,7 @@
 	CGRect	rectInPixels_;
 	BOOL	rectRotated_:1;
 
-	// whether or not it's parent is a CCSpriteBatchNode
+	// whether or not its parent is a CCSpriteBatchNode
 	BOOL	usesBatchNode_:1;
 	
 	// Offset Position (used by Zwoptex)

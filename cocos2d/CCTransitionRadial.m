@@ -74,7 +74,7 @@ enum {
 	
 	//	We need the texture in RenderTexture.
 	CCProgressTimer *outNode = [CCProgressTimer progressWithSprite:outTexture.sprite];
-	// but it's flipped upside down so we flip the sprite
+	// but it is flipped upside down so we flip the sprite
 	outNode.sprite.flipY = YES;
 	outNode.type = kCCProgressTimerTypeRadial;
 	//	Return the radial type that we want to use

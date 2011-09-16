@@ -38,7 +38,7 @@
  them. You get exactly one UITouch per call.
  2. You can *claim* a UITouch by returning YES in ccTouchBegan. Updates of claimed
  touches are sent only to the delegate(s) that claimed them. So if you get a move/
- ended/cancelled update you're sure it's your touch. This frees you from doing a
+ ended/cancelled update you're sure it is your touch. This frees you from doing a
  lot of checks when doing multi-touch.
  
  (The name TargetedTouchDelegate relates to updates "targeting" their specific

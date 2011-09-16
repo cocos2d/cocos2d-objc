@@ -5,6 +5,7 @@ version 2.0-alpha XX-Ago-2011
 . [NEW] ccConfig: removed CC_USES_VBO since VBO is always used
 . [NEW] ccConfig: removed CC_OPTIMIZE_BLEND_FUNC_FOR_PREMULTIPLIED_ALPHA since the ccBlendFunctions keeps state
 . [NEW] ccConfig: removed CC_SPRITEBATCHNODE_DEBUG_DRAW. CC_SPRITE_DEBUG_DRAW can be used both for batches and non batches.
+. [NEW] ccConfig: renamed CC_COCOSNODE_RENDER_SUBPIXEL to CC_NODE_RENDER_SUBPIXEL
 . [NEW] ccGLState: added helper functions that keeps the GL state
 . [NEW] CProgressTimer: 
             - Convenience class constructor now passes in CCSprite (this gives developers easier access to timer with CCSpriteFrames, CCSprites, etc)
@@ -21,6 +22,7 @@ version 2.0-alpha XX-Ago-2011
 . [NEW] Profiler: API heavily updated to make it easier to integrate into any kind of component
 . [NEW] Sprite: initWithTexture:rect is the designated initializer
 . [NEW] SpriteBatchNode / Sprite / Node: Simplied rendering. Easiert to integrate with physics engines. Just subclass nodeToParentTransform().
+. [NEW] SpriteBatchNode: Removed support for HONOR_TRANSFORM.
 . [NEW] SpriteFrameCache: addSpriteFramesWithFile:textureFile renamed to addSpriteFramesWithFile:textureFilename to be consistent with the new API
 . [NEW] Templates: Removed Xcode3 templates. Updated Xcode4 templates.
 . [NEW] Tests: All tests use RootViewController

@@ -121,11 +121,11 @@ Class restartAction()
 @implementation Test1
 //
 // TIP:
-// Every CocosNode has a "draw" method.
+// Every CCNode has a "draw" method.
 // In the "draw" method you put all the code that actually draws your node.
-// And Test1 is a subclass of TestDemo, which is a subclass of Layer, which is a subclass of CocosNode.
+// And Test1 is a subclass of TestDemo, which is a subclass of Layer, which is a subclass of CCNode.
 //
-// As you can see the drawing primitives aren't CocosNode objects. They are just helper
+// As you can see the drawing primitives aren't CCNode objects. They are just helper
 // functions that let's you draw basic things like: points, line, polygons and circles.
 //
 //

@@ -137,7 +137,7 @@ Example:
 -(id) initWithDuration:(ccTime)duration angle:(float)angle;
 @end
 
-/** Rotates a CCNode object clockwise a number of degrees by modiying it's rotation attribute.
+/** Rotates a CCNode object clockwise a number of degrees by modiying its rotation attribute.
 */
 @interface CCRotateBy : CCActionInterval <NSCopying>
 {
@@ -150,7 +150,7 @@ Example:
 -(id) initWithDuration:(ccTime)duration angle:(float)deltaAngle;
 @end
 
-/** Moves a CCNode object to the position x,y. x and y are absolute coordinates by modifying it's position attribute.
+/** Moves a CCNode object to the position x,y. x and y are absolute coordinates by modifying its position attribute.
 */
 @interface CCMoveTo : CCActionInterval <NSCopying>
 {
@@ -164,7 +164,7 @@ Example:
 -(id) initWithDuration:(ccTime)duration position:(CGPoint)position;
 @end
 
-/**  Moves a CCNode object x,y pixels by modifying it's position attribute.
+/**  Moves a CCNode object x,y pixels by modifying its position attribute.
  x and y are relative to the position of the object.
  Duration is is seconds.
 */ 
@@ -177,7 +177,7 @@ Example:
 -(id) initWithDuration: (ccTime)duration position:(CGPoint)deltaPosition;
 @end
 
-/** Skews a CCNode object to given angles by modifying it's skewX and skewY attributes
+/** Skews a CCNode object to given angles by modifying its skewX and skewY attributes
  @since v1.0
  */
 @interface CCSkewTo : CCActionInterval <NSCopying>
@@ -205,7 +205,7 @@ Example:
 }
 @end
 
-/** Moves a CCNode object simulating a parabolic jump movement by modifying it's position attribute.
+/** Moves a CCNode object simulating a parabolic jump movement by modifying its position attribute.
 */
  @interface CCJumpBy : CCActionInterval <NSCopying>
 {
@@ -220,7 +220,7 @@ Example:
 -(id) initWithDuration: (ccTime)duration position:(CGPoint)position height:(ccTime)height jumps:(NSUInteger)jumps;
 @end
 
-/** Moves a CCNode object to a parabolic position simulating a jump movement by modifying it's position attribute.
+/** Moves a CCNode object to a parabolic position simulating a jump movement by modifying its position attribute.
 */ 
  @interface CCJumpTo : CCJumpBy <NSCopying>
 {
@@ -261,7 +261,7 @@ typedef struct _ccBezierConfig {
 }
 @end
 
-/** Scales a CCNode object to a zoom factor by modifying it's scale attribute.
+/** Scales a CCNode object to a zoom factor by modifying its scale attribute.
  @warning This action doesn't support "reverse"
  */
 @interface CCScaleTo : CCActionInterval <NSCopying>
@@ -285,14 +285,14 @@ typedef struct _ccBezierConfig {
 -(id) initWithDuration: (ccTime)duration scaleX:(float) sx scaleY:(float)sy;
 @end
 
-/** Scales a CCNode object a zoom factor by modifying it's scale attribute.
+/** Scales a CCNode object a zoom factor by modifying its scale attribute.
 */
 @interface CCScaleBy : CCScaleTo <NSCopying>
 {
 }
 @end
 
-/** Blinks a CCNode object by modifying it's visible attribute
+/** Blinks a CCNode object by modifying its visible attribute
 */
 @interface CCBlink : CCActionInterval <NSCopying>
 {

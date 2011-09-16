@@ -182,8 +182,8 @@ Class restartAction()
 	
 	// To reuse a grid the grid size and the grid type must be the same.
 	// in this case:
-	//     Lens3D is Grid3D and it's size is (15,10)
-	//     Waves3D is Grid3D and it's size is (15,10)
+	//     Lens3D is Grid3D and its size is (15,10)
+	//     Waves3D is Grid3D and its size is (15,10)
 	
 	CGSize size = [[CCDirector sharedDirector] winSize];
 	id lens = [CCLens3D actionWithPosition:ccp(size.width/2,size.height/2) radius:240 grid:ccg(15,10) duration:0.0f];
@@ -215,9 +215,9 @@ Class restartAction()
 	
 	// To reuse a grid the grid size and the grid type must be the same.
 	// in this case:
-	//     ShakyTiles is TiledGrid3D and it's size is (15,10)
-	//     Shuffletiles is TiledGrid3D and it's size is (15,10)
-	//	   TurnOfftiles is TiledGrid3D and it's size is (15,10)
+	//     ShakyTiles is TiledGrid3D and its size is (15,10)
+	//     Shuffletiles is TiledGrid3D and its size is (15,10)
+	//	   TurnOfftiles is TiledGrid3D and its size is (15,10)
 	id shaky = [CCShakyTiles3D actionWithRange:4 shakeZ:NO grid:ccg(15,10) duration:5];
 	id shuffle = [CCShuffleTiles actionWithSeed:0 grid:ccg(15,10) duration:3];
 	id turnoff = [CCTurnOffTiles actionWithSeed:0 grid:ccg(15,10) duration:3];

@@ -317,7 +317,7 @@
 #pragma mark CCMenuItemToggle
 
 /** A CCMenuItemToggle
- A simple container class that "toggles" it's inner items
+ A simple container class that "toggles" its inner items
  The inner itmes can be any MenuItem
  */
 @interface CCMenuItemToggle : CCMenuItem <CCRGBAProtocol>

@@ -41,7 +41,7 @@
 		[self addChild: label];
 		
 		// objective-c can be an static or dynamic language.
-		// "id" is a reserved word that means "this is an object, but I don't care it's type"
+		// "id" is a reserved word that means "this is an object, but I don't care its type"
 		// scales the label 2.5x in 3 seconds.
 		id action = [CCScaleBy actionWithDuration:3.0f scale:2.5f];
 		

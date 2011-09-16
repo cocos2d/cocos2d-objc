@@ -171,7 +171,7 @@ enum {
 
 }
 
-/** The z order of the node relative to it's "brothers": children of the same parent */
+/** The z order of the node relative to its "siblings": children of the same parent */
 @property(nonatomic,readonly) NSInteger zOrder;
 /** The real openGL Z vertex.
  Differences between openGL Z vertex and cocos2d Z order:
@@ -239,7 +239,7 @@ enum {
 @property(nonatomic,readonly) BOOL isRunning;
 /** A weak reference to the parent */
 @property(nonatomic,readwrite,assign) CCNode* parent;
-/** If YES the transformtions will be relative to it's anchor point.
+/** If YES the transformtions will be relative to its anchor point.
  * Sprites, Labels and any other sizeble object use it have it enabled by default.
  * Scenes, Layers and other "whole screen" object don't use it, have it disabled by default.
  */
@@ -357,9 +357,8 @@ enum {
 /** performs OpenGL view-matrix transformation based on position, scale, rotation and other attributes. */
 -(void) transform;
 
-/** performs OpenGL view-matrix transformation of it's ancestors.
- Generally the ancestors are already transformed, but in certain cases (eg: attaching a FBO)
- it's necessary to transform the ancestors again.
+/** performs OpenGL view-matrix transformation of its ancestors.
+ Generally the ancestors are already transformed, but in certain cases (eg: attaching a FBO) it is necessary to transform the ancestors again.
  @since v0.7.2
  */
 -(void) transformAncestors;

@@ -55,10 +55,10 @@ enum {
 	ccColor3B	color_;
 }
 
-/** creates a CCMenu with it's items */
+/** creates a CCMenu with its items */
 + (id) menuWithItems: (CCMenuItem*) item, ... NS_REQUIRES_NIL_TERMINATION;
 
-/** initializes a CCMenu with it's items */
+/** initializes a CCMenu with its items */
 - (id) initWithItems: (CCMenuItem*) item vaList: (va_list) args;
 
 /** align items vertically */

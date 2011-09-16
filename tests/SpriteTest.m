@@ -942,7 +942,7 @@ Class restartAction()
 		// If you are going to use it is better to use a 3D projection
 		//
 		// WARNING:
-		// The developer is resposible for ordering it's sprites according to it's Z if the sprite has
+		// The developer is resposible for ordering its sprites according to its Z if the sprite has
 		// transparent parts.
 		//
 		
@@ -1015,7 +1015,7 @@ Class restartAction()
 		// If you are going to use it is better to use a 3D projection
 		//
 		// WARNING:
-		// The developer is resposible for ordering it's sprites according to it's Z if the sprite has
+		// The developer is resposible for ordering its sprites according to its Z if the sprite has
 		// transparent parts.
 		//
 		

@@ -143,7 +143,7 @@ static 	SEL selUpdate = NULL;
 #pragma mark CCSpriteBatchNode - composition
 
 // override visit.
-// Don't call visit on it's children
+// Don't call visit on its children
 -(void) visit
 {
 	CC_PROFILER_START_CATEGORY(kCCProfilerCategoryBatchSprite, @"CCSpriteBatchNode - visit");
@@ -152,7 +152,7 @@ static 	SEL selUpdate = NULL;
 
 	// CAREFUL:
 	// This visit is almost identical to CocosNode#visit
-	// with the exception that it doesn't call visit on it's children
+	// with the exception that it doesn't call visit on its children
 	//
 	// The alternative is to have a void CCSprite#visit, but
 	// although this is less mantainable, is faster

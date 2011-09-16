@@ -608,7 +608,7 @@ static CCScheduler *sharedScheduler;
 				if( elt->currentTimerSalvaged ) {
 					// The currentTimer told the remove itself. To prevent the timer from
 					// accidentally deallocating itself before finishing its step, we retained
-					// it. Now that step is done, it's safe to release it.
+					// it. Now that step is done, it is safe to release it.
 					[elt->currentTimer release];
 				}
 				

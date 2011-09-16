@@ -69,7 +69,7 @@
 
 /** whether or not it will receive Touch events.
  You can enable / disable touch events with this property.
- Only the touches of this node will be affected. This "method" is not propagated to it's children.
+ Only the touches of this node will be affected. This "method" is not propagated to its children.
  
  Valid on iOS and Mac OS X v10.6 and later.
 
@@ -252,7 +252,7 @@ the background.
 #pragma mark -
 #pragma mark CCLayerMultiplex
 
-/** CCLayerMultiplex is a CCLayer with the ability to multiplex it's children.
+/** CCLayerMultiplex is a CCLayer with the ability to multiplex its children.
  Features:
    - It supports one or more children
    - Only one children will be active a time
@@ -268,11 +268,11 @@ the background.
 /** initializes a MultiplexLayer with one or more layers using a variable argument list. */
 -(id) initWithLayers: (CCLayer*) layer vaList:(va_list) params;
 /** switches to a certain layer indexed by n. 
- The current (old) layer will be removed from it's parent with 'cleanup:YES'.
+ The current (old) layer will be removed from its parent with 'cleanup:YES'.
  */
 -(void) switchTo: (unsigned int) n;
 /** release the current layer and switches to another layer indexed by n.
- The current (old) layer will be removed from it's parent with 'cleanup:YES'.
+ The current (old) layer will be removed from its parent with 'cleanup:YES'.
  */
 -(void) switchToAndReleaseMe: (unsigned int) n;
 @end
