@@ -425,7 +425,7 @@
 }
 
 -(void) removeFromParent {
-	[parent_ removeChild:self cleanup:YES];
+	[self removeFromParentAndCleanup:YES];
 }
 
 /* "remove" logic MUST only be on this method
