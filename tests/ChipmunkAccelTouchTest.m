@@ -43,7 +43,7 @@ void removeShape( cpBody *body, cpShape *shape, void *data )
 		y += anchorPointInPoints_.y;
 	}
 		
-		// Make matrix
+	// Make matrix
 	CGFloat c = body_->rot.x;
 	CGFloat s = body_->rot.y;
 	
@@ -52,7 +52,7 @@ void removeShape( cpBody *body, cpShape *shape, void *data )
 		y += s*-anchorPointInPoints_.x + c*-anchorPointInPoints_.y;
 	}
 	
-	// Rot, Translate, anchor Matrix
+	// Translate, Rot, anchor Matrix
 	transform_ = CGAffineTransformMake( c,  s,
 									   -s,	c,
 									   x,	y );
