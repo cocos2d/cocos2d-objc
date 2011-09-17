@@ -720,16 +720,19 @@
 	[[CCActionManager sharedManager] removeAction:action];
 }
 
--(void) stopActionByTag:(NSInteger)aTag
+-(void) stopAllActionsByTag:(NSInteger)tag
 {
-	NSAssert( aTag != kCCActionTagInvalid, @"Invalid tag");
-	[[CCActionManager sharedManager] removeActionByTag:aTag target:self];
+    [[CCActionManager sharedManager] removeAllActionsByTag:tag target:self];
 }
 
--(CCAction*) getActionByTag:(NSInteger) aTag
+-(void) stopActionByTag:(NSInteger)tag
 {
-	NSAssert( aTag != kCCActionTagInvalid, @"Invalid tag");
-	return [[CCActionManager sharedManager] getActionByTag:aTag target:self];
+	[[CCActionManager sharedManager] removeActionByTag:tag target:self];
+}
+
+-(CCAction*) getActionByTag:(NSInteger) tag
+{
+	return [[CCActionManager sharedManager] getActionByTag:tag target:self];
 }
 
 -(NSUInteger) numberOfRunningActions

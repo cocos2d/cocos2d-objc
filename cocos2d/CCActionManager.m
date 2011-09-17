@@ -237,7 +237,14 @@ static CCActionManager *sharedManager_ = nil;
 //	}
 }
 
--(void) removeActionByTag:(NSInteger)aTag target:(id)target
+-(void) removeAllActionsByTag:(NSInteger)aTag target:(id)target
+{
+	NSAssert( aTag != kCCActionTagInvalid, @"Invalid tag");
+	NSAssert( target != nil, @"Target should be ! nil");
+    while ([self removeActionByTag:aTag target:target]) {}
+}
+
+-(BOOL) removeActionByTag:(NSInteger)aTag target:(id)target
 {
 	NSAssert( aTag != kCCActionTagInvalid, @"Invalid tag");
 	NSAssert( target != nil, @"Target should be ! nil");
@@ -252,11 +259,11 @@ static CCActionManager *sharedManager_ = nil;
 			
 			if( a.tag == aTag && [a originalTarget]==target) {
 				[self removeActionAtIndex:i hashElement:element];
-				break;
+                return YES;
 			}
 		}
-
 	}
+    return NO;
 }
 
 #pragma mark ActionManager - get

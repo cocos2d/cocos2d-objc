@@ -409,12 +409,16 @@ enum {
  @since v0.7.1
  @return An Action pointer
  */
--(CCAction*) runAction: (CCAction*) action;
+-(CCAction*) runAction: (CCAction*)action;
 /** Removes all actions from the running action list */
 -(void) stopAllActions;
 /** Removes an action from the running action list */
--(void) stopAction: (CCAction*) action;
-/** Removes an action from the running action list given its tag
+-(void) stopAction: (CCAction*)action;
+/** Removes all actions from the running action list given its tag
+ @since v1.0.1-rsanchez
+ */
+-(void) stopAllActionsByTag:(NSInteger)tag;
+/** Removes first action from the running action list that has the tag
  @since v0.7.1
 */
 -(void) stopActionByTag:(NSInteger) tag;
