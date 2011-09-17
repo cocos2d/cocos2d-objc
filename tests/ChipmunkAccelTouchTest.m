@@ -35,8 +35,8 @@ void removeShape( cpBody *body, cpShape *shape, void *data )
 // returns the transform matrix according the Chipmunk Body values
 -(CGAffineTransform) nodeToParentTransform
 {	
-	float x = body_->p.x;
-	float y = body_->p.y;
+	CGFloat x = body_->p.x;
+	CGFloat y = body_->p.y;
 	
 	if ( !isRelativeAnchorPoint_ ) {
 		x += anchorPointInPoints_.x;
@@ -44,17 +44,18 @@ void removeShape( cpBody *body, cpShape *shape, void *data )
 	}
 		
 		// Make matrix
-	float radians = body_->a;
-	float c = cosf(radians);
-	float s = sinf(radians);
+	CGFloat c = body_->rot.x;
+	CGFloat s = body_->rot.y;
 	
-	// Rot, Translate Matrix
+	if( ! CGPointEqualToPoint(anchorPointInPoints_, CGPointZero) ){
+		x += c*-anchorPointInPoints_.x + -s*-anchorPointInPoints_.y;
+		y += s*-anchorPointInPoints_.x + c*-anchorPointInPoints_.y;
+	}
+	
+	// Rot, Translate, anchor Matrix
 	transform_ = CGAffineTransformMake( c,  s,
 									   -s,	c,
 									   x,	y );
-
-	if( ! CGPointEqualToPoint(anchorPointInPoints_, CGPointZero) )
-		transform_ = CGAffineTransformTranslate(transform_, -anchorPointInPoints_.x, -anchorPointInPoints_.y);
 
 	return transform_;
 }
@@ -178,8 +179,9 @@ void removeShape( cpBody *body, cpShape *shape, void *data )
 
 -(void) update:(ccTime) delta
 {
+	// Should use a fixed size step based on the animation interval.
 	int steps = 2;
-	CGFloat dt = delta/(CGFloat)steps;
+	CGFloat dt = [[CCDirector sharedDirector] animationInterval]/(CGFloat)steps;
 	
 	for(int i=0; i<steps; i++){
 		cpSpaceStep(space_, dt);
@@ -231,7 +233,7 @@ void removeShape( cpBody *body, cpShape *shape, void *data )
 	};
 	
 	cpBody *body = cpBodyNew(1.0f, cpMomentForPoly(1.0f, num, verts, CGPointZero));
-	
+
 	body->p = pos;
 	cpSpaceAddBody(space_, body);
 	
