@@ -413,6 +413,9 @@ static CCDirector *_sharedDirector = nil;
 	[openGLView_ release];
 	openGLView_ = nil;
 	
+	// Invalidate GL state cache
+	ccGLInvalidateStateCache();
+	
 	CHECK_GL_ERROR();
 }
 

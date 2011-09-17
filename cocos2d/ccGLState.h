@@ -53,6 +53,12 @@ extern "C" {
 /** @file A set of OpenGL helpers functions 
 */
 
+/** Invalidates the GL state cache.
+ If CC_ENABLE_GL_STATE_CACHE it will reset the GL state cache.
+ @since v2.0.0
+ */
+void ccGLInvalidateStateCache( void );
+
 /** Uses the GL program in case program is different than the current one.
  If CC_ENABLE_GL_STATE_CACHE is disabled, it will the glUseProgram() directly.
  @since v2.0.0
