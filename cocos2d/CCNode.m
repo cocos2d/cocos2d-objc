@@ -660,7 +660,8 @@
 - (CGAffineTransform)nodeToParentTransform
 {
 	if ( isTransformDirty_ ) {
-		
+
+		// Translate values
 		float x = position_.x;
 		float y = position_.y;
 		
@@ -668,17 +669,21 @@
 			x += anchorPointInPoints_.x;
 			y += anchorPointInPoints_.y;
 		}
-		
-		// Make matrix
-		float radians = -CC_DEGREES_TO_RADIANS(rotation_);
-		float c = cosf(radians);
-		float s = sinf(radians);
 
-		// Scale, Rot, Translate Matrix
+		// Rotation values
+		float c = 1, s = 0;
+		if( rotation_ ) {
+			float radians = -CC_DEGREES_TO_RADIANS(rotation_);
+			c = cosf(radians);
+			s = sinf(radians);
+		}
+		
+		// correct order: translate, rotate, scale
 		transform_ = CGAffineTransformMake( c * scaleX_,  s * scaleX_,
 										   -s * scaleY_, c * scaleY_,
 										   x, y );
 
+		// XXX: skew after scale ?? a mathematician should verify this
 		if( skewX_ || skewY_ ) {
 			CGAffineTransform skewMatrix = CGAffineTransformMake(1.0f, tanf(CC_DEGREES_TO_RADIANS(skewY_)),
 																 tanf(CC_DEGREES_TO_RADIANS(skewX_)), 1.0f,
@@ -686,6 +691,7 @@
 			transform_ = CGAffineTransformConcat(skewMatrix, transform_);
 		}
 		
+		// adjust anchor point
 		if( ! CGPointEqualToPoint(anchorPointInPoints_, CGPointZero) )
 			transform_ = CGAffineTransformTranslate(transform_, -anchorPointInPoints_.x, -anchorPointInPoints_.y);
 

@@ -104,11 +104,6 @@
 	// image is flipped
 	BOOL	flipX_:1;
 	BOOL	flipY_:1;
-
-@public
-	// used internally.
-	void (*updateMethod)(id, SEL);
-
 }
 
 /** whether or not the Sprite needs to be updated in the Atlas */
