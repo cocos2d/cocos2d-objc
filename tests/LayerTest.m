@@ -281,7 +281,7 @@ Class restartAction()
 {
 	CCLayerColor *layer = (CCLayerColor*) [self getChildByTag:kTagLayer];
 	if( layer.blendFunc.dst == GL_ZERO )
-		[layer setBlendFunc: (ccBlendFunc) { CC_BLEND_SRC, CC_BLEND_DST } ];
+		[layer setBlendFunc: (ccBlendFunc) { GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA } ];
 	else
 		[layer setBlendFunc:(ccBlendFunc){GL_ONE_MINUS_DST_COLOR, GL_ZERO}];
 
