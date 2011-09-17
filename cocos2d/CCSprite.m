@@ -165,10 +165,7 @@
 		
 		// by default use "Self Render".
 		// if the sprite is added to a batchnode, then it will automatically switch to "batchnode Render"
-		[self setBatchNode:nil];
-		
-		// updateMethod selector
-		updateMethod = (__typeof__(updateMethod))[self methodForSelector:@selector(updateTransform)];
+		[self setBatchNode:nil];		
 	}
 	return self;
 }

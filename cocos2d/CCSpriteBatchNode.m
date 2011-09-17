@@ -49,8 +49,6 @@ const NSUInteger defaultCapacity = 29;
 #pragma mark -
 #pragma mark CCSpriteBatchNode
 
-static 	SEL selUpdate = NULL;
-
 @interface CCSpriteBatchNode (private)
 -(void) updateBlendFunc;
 @end
@@ -62,12 +60,6 @@ static 	SEL selUpdate = NULL;
 @synthesize descendants = descendants_;
 
 
-+(void) initialize
-{
-	if ( self == [CCSpriteBatchNode class] ) {
-		selUpdate = @selector(updateTransform);
-	}
-}
 /*
  * creation with CCTexture2D
  */
@@ -250,20 +242,8 @@ static 	SEL selUpdate = NULL;
 	// Optimization: Fast Dispatch	
 	if( textureAtlas_.totalQuads == 0 )
 		return;	
-	
-	CCSprite *child;
-	ccArray *array = children_->data;
-	
-	NSUInteger i = array->num;
-	id *arr = array->arr;
 
-	if( i > 0 ) {
-		while (i-- > 0) {
-			child = *arr++;			
-			// fast dispatch
-			child->updateMethod(child, selUpdate);			
-		}
-	}
+	[children_ makeObjectsPerformSelector:@selector(updateTransform)];
 	
 	ccGLEnableVertexAttribs( kCCVertexAttribFlag_PosColorTex );
 
