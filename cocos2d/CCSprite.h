@@ -86,13 +86,8 @@
 	//
 
 	// texture
-	CGRect	rect_;
-	CGRect	rectInPixels_;
 	BOOL	rectRotated_:1;
 
-	// whether or not its parent is a CCSpriteBatchNode
-	BOOL	usesBatchNode_:1;
-	
 	// Offset Position (used by Zwoptex)
 	CGPoint	offsetPosition_;
 	CGPoint unflippedOffsetPositionFromCenter_;
@@ -122,7 +117,7 @@
 @property (nonatomic,readonly) ccV3F_C4B_T2F_Quad quad;
 /** The index used on the TextureAtlas. Don't modify this value unless you know what you are doing */
 @property (nonatomic,readwrite) NSUInteger atlasIndex;
-/** returns the rect of the CCSprite in points */
+/** returns the texture rect of the CCSprite in points */
 @property (nonatomic,readonly) CGRect textureRect;
 /** returns whether or not the texture rectangle is rotated */
 @property (nonatomic,readonly) BOOL textureRectRotated;
@@ -146,13 +141,11 @@
 @property (nonatomic,readwrite) GLubyte opacity;
 /** RGB colors: conforms to CCRGBAProtocol protocol */
 @property (nonatomic,readwrite) ccColor3B color;
-/** whether or not the Sprite is rendered using a CCSpriteBatchNode */
-@property (nonatomic,readwrite) BOOL usesBatchNode;
 /** weak reference of the CCTextureAtlas used when the sprite is rendered using a CCSpriteBatchNode */
 @property (nonatomic,readwrite,assign) CCTextureAtlas *textureAtlas;
 /** weak reference to the CCSpriteBatchNode that renders the CCSprite */
 @property (nonatomic,readwrite,assign) CCSpriteBatchNode *batchNode;
-/** offset position in pixels of the sprite in points. Calculated automatically by editors like Zwoptex.
+/** offset position in points of the sprite in points. Calculated automatically by editors like Zwoptex.
  @since v0.99.0
  */
 @property (nonatomic,readonly) CGPoint	offsetPosition;
@@ -253,12 +246,6 @@
  */
 -(id) initWithBatchNode:(CCSpriteBatchNode*)batchNode rect:(CGRect)rect;
 
-/** Initializes an sprite with an CCSpriteBatchNode and a rect in pixels
- @since v0.99.5
- */
--(id) initWithBatchNode:(CCSpriteBatchNode*)batchNode rectInPixels:(CGRect)rect;
-
-
 
 #pragma mark CCSprite - BatchNode methods
 
@@ -269,19 +256,15 @@
 /** updates the texture rect of the CCSprite in points.
  */
 -(void) setTextureRect:(CGRect) rect;
-/** updates the texture rect, rectRotated and untrimmed size of the CCSprite in pixels
+/** updates the texture rect, rectRotated and untrimmed size of the CCSprite in points
  */
--(void) setTextureRectInPixels:(CGRect)rect rotated:(BOOL)rotated untrimmedSize:(CGSize)size;
+-(void) setTextureRect:(CGRect)rect rotated:(BOOL)rotated untrimmedSize:(CGSize)size;
 
-/** tell the sprite to use self-render.
+/** set the sprite batch node.
+ If the batchNode is nil, then it won't use a batch for rendering.
  @since v0.99.0
  */
--(void) useSelfRender;
-
-/** tell the sprite to use sprite batch node
- @since v0.99.0
- */
--(void) useBatchNode:(CCSpriteBatchNode*)batchNode;
+-(void) setBatchNode:(CCSpriteBatchNode*)batchNode;
 
 
 #pragma mark CCSprite - Frames

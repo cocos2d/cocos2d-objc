@@ -31,7 +31,7 @@
 
 @implementation CCSpriteFrame
 @synthesize offsetInPixels = offsetInPixels_, offset = offset_;
-@synthesize originalSizeInPixels = originalSizeInPixels_;
+@synthesize originalSize = originalSize_, originalSizeInPixels = originalSizeInPixels_;
 @synthesize textureFilename = textureFilename_;
 @synthesize rotated = rotated_;
 
@@ -77,6 +77,7 @@
 		offsetInPixels_ = offset;
         offset_ = CC_POINT_PIXELS_TO_POINTS( offsetInPixels_ );
 		originalSizeInPixels_ = originalSize;
+		originalSize_ = CC_SIZE_PIXELS_TO_POINTS( originalSizeInPixels_ );
         rotated_ = rotated;
 	}
 	return self;	
@@ -93,6 +94,7 @@
 		offsetInPixels_ = offset;
         offset_ = CC_POINT_PIXELS_TO_POINTS( offsetInPixels_ );
 		originalSizeInPixels_ = originalSize;
+		originalSize_ = CC_SIZE_PIXELS_TO_POINTS( originalSizeInPixels_ );
         rotated_ = rotated;
 	}
 	return self;	

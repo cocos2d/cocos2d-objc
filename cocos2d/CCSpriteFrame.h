@@ -45,6 +45,7 @@
 	BOOL			rotated_;
     CGPoint			offset_;
 	CGPoint			offsetInPixels_;
+	CGSize			originalSize_;
 	CGSize			originalSizeInPixels_;
 	CCTexture2D		*texture_;
 	NSString		*textureFilename_;
@@ -63,6 +64,9 @@
 
 /** offset of the frame in pixels */
 @property (nonatomic,readwrite) CGPoint offsetInPixels;
+
+/** original size of the trimmed image in points */
+@property (nonatomic,readwrite) CGSize originalSize;
 
 /** original size of the trimmed image in pixels */
 @property (nonatomic,readwrite) CGSize originalSizeInPixels;

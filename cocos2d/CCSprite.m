@@ -57,6 +57,7 @@
 
 @interface CCSprite ()
 -(void)updateTextureCoords:(CGRect)rect;
+-(void)updateVertexRect:(CGRect)rect;
 -(void)updateBlendFunc;
 @end
 
@@ -68,9 +69,7 @@
 @synthesize textureRect = rect_;
 @synthesize textureRectRotated = rectRotated_;
 @synthesize blendFunc = blendFunc_;
-@synthesize usesBatchNode = usesBatchNode_;
 @synthesize textureAtlas = textureAtlas_;
-@synthesize batchNode = batchNode_;
 @synthesize offsetPosition = offsetPosition_;
 
 
@@ -127,11 +126,10 @@
 {
 	if( (self = [super init]) )
 	{
+		// shader program
+		self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTextureColor];
+
 		dirty_ = recursiveDirty_ = NO;
-		
-		// by default use "Self Render".
-		// if the sprite is added to a batchnode, then it will automatically switch to "batchnode Render"
-		[self useSelfRender];
 		
 		opacityModifyRGB_			= YES;
 		opacity_					= 255;
@@ -139,13 +137,6 @@
 		
 		blendFunc_.src = CC_BLEND_SRC;
 		blendFunc_.dst = CC_BLEND_DST;
-		
-		
-		// shader program
-		self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTextureColor];
-		
-		// clean the Quad
-		bzero(&quad_, sizeof(quad_));
 		
 		flipY_ = flipX_ = NO;
 		
@@ -156,7 +147,11 @@
 		offsetPosition_ = CGPointZero;
 		
 		hasChildren_ = NO;
-		
+		batchNode_ = nil;
+
+		// clean the Quad
+		bzero(&quad_, sizeof(quad_));
+
 		// Atlas: Color
 		ccColor4B tmpColor = {255,255,255,255};
 		quad_.bl.colors = tmpColor;
@@ -164,8 +159,13 @@
 		quad_.tl.colors = tmpColor;
 		quad_.tr.colors = tmpColor;	
 
+
 		[self setTexture:texture];
-		[self setTextureRect:rect];
+		[self setTextureRect:rect rotated:NO untrimmedSize:rect.size];
+		
+		// by default use "Self Render".
+		// if the sprite is added to a batchnode, then it will automatically switch to "batchnode Render"
+		[self setBatchNode:nil];
 		
 		// updateMethod selector
 		updateMethod = (__typeof__(updateMethod))[self methodForSelector:@selector(updateTransform)];
@@ -242,16 +242,7 @@
 -(id) initWithBatchNode:(CCSpriteBatchNode*)batchNode rect:(CGRect)rect
 {
 	id ret = [self initWithTexture:batchNode.texture rect:rect];
-	[self useBatchNode:batchNode];
-	
-	return ret;
-}
-
--(id) initWithBatchNode:(CCSpriteBatchNode*)batchNode rectInPixels:(CGRect)rect
-{
-	id ret = [self initWithTexture:batchNode.texture];
-	[self setTextureRectInPixels:rect rotated:NO untrimmedSize:rect.size];
-	[self useBatchNode:batchNode];
+	[self setBatchNode:batchNode];
 	
 	return ret;
 }
@@ -271,47 +262,46 @@
 	[super dealloc];
 }
 
--(void) useSelfRender
+-(CCSpriteBatchNode*) batchNode
 {
-	atlasIndex_ = CCSpriteIndexNotInitialized;
-	usesBatchNode_ = NO;
-	textureAtlas_ = nil;
-	batchNode_ = nil;
-	dirty_ = recursiveDirty_ = NO;
-	
-	float x1 = offsetPosition_.x;
-	float y1 = offsetPosition_.y;
-	float x2 = x1 + rect_.size.width;
-	float y2 = y1 + rect_.size.height;
-	quad_.bl.vertices = (ccVertex3F) { x1, y1, 0 };
-	quad_.br.vertices = (ccVertex3F) { x2, y1, 0 };
-	quad_.tl.vertices = (ccVertex3F) { x1, y2, 0 };
-	quad_.tr.vertices = (ccVertex3F) { x2, y2, 0 };		
+	return batchNode_;
 }
 
--(void) useBatchNode:(CCSpriteBatchNode*)batchNode
+-(void) setBatchNode:(CCSpriteBatchNode *)batchNode
 {
-	usesBatchNode_ = YES;
-	transformToBatch_ = CGAffineTransformIdentity;
-	textureAtlas_ = [batchNode textureAtlas]; // weak ref
-	batchNode_ = batchNode; // weak ref
+	batchNode_ = batchNode; // weak reference
+
+	if( ! batchNode ) {
+		atlasIndex_ = CCSpriteIndexNotInitialized;
+		textureAtlas_ = nil;
+		dirty_ = recursiveDirty_ = NO;
+		
+		float x1 = offsetPosition_.x;
+		float y1 = offsetPosition_.y;
+		float x2 = x1 + rect_.size.width;
+		float y2 = y1 + rect_.size.height;
+		quad_.bl.vertices = (ccVertex3F) { x1, y1, 0 };
+		quad_.br.vertices = (ccVertex3F) { x2, y1, 0 };
+		quad_.tl.vertices = (ccVertex3F) { x1, y2, 0 };
+		quad_.tr.vertices = (ccVertex3F) { x2, y2, 0 };		
+	} else {
+		transformToBatch_ = CGAffineTransformIdentity;
+		textureAtlas_ = [batchNode textureAtlas]; // weak ref
+	}
 }
 
 -(void) setTextureRect:(CGRect)rect
 {
-	CGRect rectInPixels = CC_RECT_POINTS_TO_PIXELS( rect );
-	[self setTextureRectInPixels:rectInPixels rotated:NO untrimmedSize:rectInPixels.size];
+	[self setTextureRect:rect rotated:NO untrimmedSize:rect.size];
 }
 
--(void) setTextureRectInPixels:(CGRect)rectInPixels rotated:(BOOL)rotated untrimmedSize:(CGSize)untrimmedSizeInPixels
+-(void) setTextureRect:(CGRect)rect rotated:(BOOL)rotated untrimmedSize:(CGSize)untrimmedSize
 {
-	rect_ = CC_RECT_PIXELS_TO_POINTS( rectInPixels );
-    rectInPixels_ = rectInPixels;
 	rectRotated_ = rotated;
-    CGSize untrimmedSize = CC_SIZE_PIXELS_TO_POINTS(untrimmedSizeInPixels);
 
-    [self setContentSize:untrimmedSize];
-	[self updateTextureCoords:rectInPixels_];
+	[self setContentSize:untrimmedSize];
+	[self updateTextureCoords:rect];
+	[self updateVertexRect:rect];
 
 	CGPoint relativeOffset = unflippedOffsetPositionFromCenter_;
 	
@@ -325,13 +315,13 @@
 	offsetPosition_.x = relativeOffset.x + (contentSize_.width - rect_.size.width) / 2;
 	offsetPosition_.y = relativeOffset.y + (contentSize_.height - rect_.size.height) / 2;
 	
-	
+
 	// rendering using batch node
-	if( usesBatchNode_ ) {
+	if( batchNode_ ) {
 		// update dirty_, don't update recursiveDirty_
 		dirty_ = YES;
 	}
-
+	
 	// self rendering
 	else
 	{
@@ -346,12 +336,20 @@
 		quad_.br.vertices = (ccVertex3F) { x2, y1, 0 };
 		quad_.tl.vertices = (ccVertex3F) { x1, y2, 0 };
 		quad_.tr.vertices = (ccVertex3F) { x2, y2, 0 };	
-	}			
+	}
+}
+
+// override this method to generate "double scale" sprites
+-(void) updateVertexRect:(CGRect)rect
+{
+	rect_ = rect;
 }
 
 -(void)updateTextureCoords:(CGRect)rect
 {
-	CCTexture2D *tex	= (usesBatchNode_) ? [textureAtlas_ texture] : texture_;
+	rect = CC_RECT_POINTS_TO_PIXELS(rect);
+
+	CCTexture2D *tex	= (batchNode_) ? [textureAtlas_ texture] : texture_;
 	if(!tex)
 		return;
 	
@@ -418,7 +416,7 @@
 
 -(void)updateTransform
 {
-	NSAssert( usesBatchNode_, @"updateTransform is only valid when CCSprite is being renderd using an CCSpriteBatchNode");
+	NSAssert( batchNode_, @"updateTransform is only valid when CCSprite is being renderd using an CCSpriteBatchNode");
 
 	// recaculate matrix only if it is dirty
 	if( self.dirty ) {
@@ -507,7 +505,7 @@
 
 	[super draw];
 	
-	NSAssert(!usesBatchNode_, @"If CCSprite is being rendered by CCSpriteBatchNode, CCSprite#draw SHOULD NOT be called");
+	NSAssert(!batchNode_, @"If CCSprite is being rendered by CCSpriteBatchNode, CCSprite#draw SHOULD NOT be called");
 
 	ccGLEnableVertexAttribs( kCCVertexAttribFlag_PosColorTex );
 	
@@ -571,7 +569,7 @@
 	
 	[super addChild:child z:z tag:aTag];
 	
-	if( usesBatchNode_ ) {
+	if( batchNode_ ) {
 		NSAssert( [child isKindOfClass:[CCSprite class]], @"CCSprite only supports CCSprites as children when using CCSpriteBatchNode");
 		NSAssert( child.texture.name == textureAtlas_.texture.name, @"CCSprite is not using the same texture id");
 		
@@ -590,7 +588,7 @@
 	if( z == child.zOrder )
 		return;
 
-	if( usesBatchNode_ ) {
+	if( batchNode_ ) {
 		// XXX: Instead of removing/adding, it is more efficient to reorder manually
 		[child retain];
 		[self removeChild:child cleanup:NO];
@@ -604,7 +602,7 @@
 
 -(void)removeChild: (CCSprite *)sprite cleanup:(BOOL)doCleanup
 {
-	if( usesBatchNode_ )
+	if( batchNode_ )
 		[batchNode_ removeSpriteFromAtlas:sprite];
 
 	[super removeChild:sprite cleanup:doCleanup];
@@ -614,7 +612,7 @@
 
 -(void)removeAllChildrenWithCleanup:(BOOL)doCleanup
 {
-	if( usesBatchNode_ ) {
+	if( batchNode_ ) {
 		CCSprite *child;
 		CCARRAY_FOREACH(children_, child)
 			[batchNode_ removeSpriteFromAtlas:child];
@@ -645,7 +643,7 @@
 
 // XXX HACK: optimization
 #define SET_DIRTY_RECURSIVELY() {									\
-					if( usesBatchNode_ && ! recursiveDirty_ ) {	\
+					if( batchNode_ && ! recursiveDirty_ ) {	\
 						dirty_ = recursiveDirty_ = YES;				\
 						if( hasChildren_)							\
 							[self setDirtyRecursively:YES];			\
@@ -708,7 +706,7 @@
 
 -(void)setIsRelativeAnchorPoint:(BOOL)relative
 {
-	NSAssert( ! usesBatchNode_, @"relativeTransformAnchor is invalid in CCSprite");
+	NSAssert( ! batchNode_, @"relativeTransformAnchor is invalid in CCSprite");
 	[super setIsRelativeAnchorPoint:relative];
 }
 
@@ -722,8 +720,7 @@
 {
 	if( flipX_ != b ) {
 		flipX_ = b;
-        CGSize untrimmedSizeInPixels = CGSizeMake(contentSize_.width * CC_CONTENT_SCALE_FACTOR(), contentSize_.height * CC_CONTENT_SCALE_FACTOR());
-		[self setTextureRectInPixels:rectInPixels_ rotated:rectRotated_ untrimmedSize:untrimmedSizeInPixels];
+		[self setTextureRect:rect_ rotated:rectRotated_ untrimmedSize:contentSize_];
 	}
 }
 -(BOOL) flipX
@@ -735,8 +732,7 @@
 {
 	if( flipY_ != b ) {
 		flipY_ = b;
-        CGSize untrimmedSizeInPixels = CGSizeMake(contentSize_.width * CC_CONTENT_SCALE_FACTOR(), contentSize_.height * CC_CONTENT_SCALE_FACTOR());
-		[self setTextureRectInPixels:rectInPixels_ rotated:rectRotated_ untrimmedSize:untrimmedSizeInPixels];
+		[self setTextureRect:rect_ rotated:rectRotated_ untrimmedSize:contentSize_];
 	}	
 }
 -(BOOL) flipY
@@ -757,8 +753,8 @@
 	quad_.tl.colors = color4;
 	quad_.tr.colors = color4;
 	
-	// renders using Sprite Manager
-	if( usesBatchNode_ ) {
+	// renders using batch node
+	if( batchNode_ ) {
 		if( atlasIndex_ != CCSpriteIndexNotInitialized)
 			[textureAtlas_ updateQuad:&quad_ atIndex:atlasIndex_];
 		else
@@ -836,7 +832,7 @@
 	// update rect
 	rectRotated_ = frame.rotated;
 
-	[self setTextureRectInPixels:frame.rectInPixels rotated:rectRotated_ untrimmedSize:frame.originalSizeInPixels];
+	[self setTextureRect:frame.rect rotated:rectRotated_ untrimmedSize:frame.originalSize];
 }
 
 -(void) setDisplayFrameWithAnimationName: (NSString*) animationName index:(int) frameIndex
@@ -865,7 +861,7 @@
 -(CCSpriteFrame*) displayedFrame
 {	
 	return [CCSpriteFrame frameWithTexture:texture_
-							  rectInPixels:rectInPixels_
+							  rectInPixels:CC_RECT_POINTS_TO_PIXELS(rect_)
 								   rotated:rectRotated_
 									offset:unflippedOffsetPositionFromCenter_
 							  originalSize:CC_SIZE_POINTS_TO_PIXELS(contentSize_)];
@@ -875,7 +871,7 @@
 
 -(void) updateBlendFunc
 {
-	NSAssert( ! usesBatchNode_, @"CCSprite: updateBlendFunc doesn't work when the sprite is rendered using a CCSpriteBatchNode");
+	NSAssert( ! batchNode_, @"CCSprite: updateBlendFunc doesn't work when the sprite is rendered using a CCSpriteBatchNode");
 
 	// it is possible to have an untextured sprite
 	if( !texture_ || ! [texture_ hasPremultipliedAlpha] ) {
@@ -891,7 +887,7 @@
 
 -(void) setTexture:(CCTexture2D*)texture
 {
-	NSAssert( ! usesBatchNode_, @"CCSprite: setTexture doesn't work when the sprite is rendered using a CCSpriteBatchNode");
+	NSAssert( ! batchNode_, @"CCSprite: setTexture doesn't work when the sprite is rendered using a CCSpriteBatchNode");
 	
 	// accept texture==nil as argument
 	NSAssert( !texture || [texture isKindOfClass:[CCTexture2D class]], @"setTexture expects a CCTexture2D. Invalid argument");
