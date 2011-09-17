@@ -164,10 +164,10 @@ void removeShape( cpBody *body, cpShape *shape, void *data )
 		cpShapeFree( walls_[i] );
 	}
 
+	cpSpaceFree( space_ );
+
 	[super dealloc];
 
-	// deferred space cleanup since PhysicsSprite will need it
-	cpSpaceFree( space_ );
 }
 
 -(void) onEnter
