@@ -266,31 +266,28 @@
 
 -(void) setBatchNode:(CCSpriteBatchNode *)batchNode
 {
-	if( batchNode_ != batchNode ) {
+	batchNode_ = batchNode; // weak reference
 
-		batchNode_ = batchNode; // weak reference
+	// self render
+	if( ! batchNode ) {
+		atlasIndex_ = CCSpriteIndexNotInitialized;
+		textureAtlas_ = nil;
+		dirty_ = recursiveDirty_ = NO;
+		
+		float x1 = offsetPosition_.x;
+		float y1 = offsetPosition_.y;
+		float x2 = x1 + rect_.size.width;
+		float y2 = y1 + rect_.size.height;
+		quad_.bl.vertices = (ccVertex3F) { x1, y1, 0 };
+		quad_.br.vertices = (ccVertex3F) { x2, y1, 0 };
+		quad_.tl.vertices = (ccVertex3F) { x1, y2, 0 };
+		quad_.tr.vertices = (ccVertex3F) { x2, y2, 0 };	
 
-		// self render
-		if( ! batchNode ) {
-			atlasIndex_ = CCSpriteIndexNotInitialized;
-			textureAtlas_ = nil;
-			dirty_ = recursiveDirty_ = NO;
-			
-			float x1 = offsetPosition_.x;
-			float y1 = offsetPosition_.y;
-			float x2 = x1 + rect_.size.width;
-			float y2 = y1 + rect_.size.height;
-			quad_.bl.vertices = (ccVertex3F) { x1, y1, 0 };
-			quad_.br.vertices = (ccVertex3F) { x2, y1, 0 };
-			quad_.tl.vertices = (ccVertex3F) { x1, y2, 0 };
-			quad_.tr.vertices = (ccVertex3F) { x2, y2, 0 };	
-
-		} else {
-			
-			// using batch
-			transformToBatch_ = CGAffineTransformIdentity;
-			textureAtlas_ = [batchNode textureAtlas]; // weak ref
-		}
+	} else {
+		
+		// using batch
+		transformToBatch_ = CGAffineTransformIdentity;
+		textureAtlas_ = [batchNode textureAtlas]; // weak ref
 	}
 }
 
