@@ -85,23 +85,26 @@ static CCTextureCache *sharedTextureCache;
 		_dictQueue = dispatch_queue_create("org.cocos2d.texturecachedict", NULL);
 
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
-			_auxGLcontext = [[EAGLContext alloc]
-							 initWithAPI:kEAGLRenderingAPIOpenGLES2
-							 sharegroup:[[[[CCDirector sharedDirector] openGLView] context] sharegroup]];
+		CC_GLVIEW *view = [[CCDirector sharedDirector] openGLView];
+		NSAssert(view, @"Do not initialize the TextureCache before the Director");
+		_auxGLcontext = [[EAGLContext alloc]
+						 initWithAPI:kEAGLRenderingAPIOpenGLES2
+						 sharegroup:[[view context] sharegroup]];
 		
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 		
-			MacGLView *view = [[CCDirector sharedDirector] openGLView];
-			
-			NSOpenGLPixelFormat *pf = [view pixelFormat];
-			NSOpenGLContext *share = [view openGLContext];
-			
-			_auxGLcontext = [[NSOpenGLContext alloc] initWithFormat:pf shareContext:share];
+		MacGLView *view = [[CCDirector sharedDirector] openGLView];
+		NSAssert(view, @"Do not initialize the TextureCache before the Director");
+
+		
+		NSOpenGLPixelFormat *pf = [view pixelFormat];
+		NSOpenGLContext *share = [view openGLContext];
+		
+		_auxGLcontext = [[NSOpenGLContext alloc] initWithFormat:pf shareContext:share];
 
 #endif // __MAC_OS_X_VERSION_MAX_ALLOWED
 
-			NSAssert( _auxGLcontext, @"TextureCache: Could not create EAGL context");
-		
+		NSAssert( _auxGLcontext, @"TextureCache: Could not create EAGL context");		
 
 	}
 
