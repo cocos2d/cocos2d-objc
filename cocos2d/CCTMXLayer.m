@@ -294,8 +294,9 @@ int compareInts (const void * a, const void * b);
 		
 		// tile not created yet. create it
 		if( ! tile ) {
-			CGRect rect = [tileset_ rectForGID:gid];			
-			tile = [[CCSprite alloc] initWithBatchNode:self rect:CC_RECT_PIXELS_TO_POINTS(rect)];
+			CGRect rect = [tileset_ rectForGID:gid];
+			rect = CC_RECT_PIXELS_TO_POINTS(rect);
+			tile = [[CCSprite alloc] initWithBatchNode:self rect:rect];
 			
             CGPoint p = [self positionAt:pos];
             [tile setPosition:p];
