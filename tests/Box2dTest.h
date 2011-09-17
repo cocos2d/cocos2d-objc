@@ -15,9 +15,19 @@
 }
 @end
 
-@interface Box2DTestLayer : CCLayer {
-	b2World* world;
-	GLESDebugDraw *m_debugDraw;
+@interface MainLayer : CCLayer {
+	
+	CCTexture2D *spriteTexture_;	// weak ref
+	b2World* world;					// strong ref
+	GLESDebugDraw *m_debugDraw;		// strong ref
 }
--(void) addNewSpriteWithCoords:(CGPoint)p;
+@end
+
+@interface PhysicsSprite : CCSprite
+{
+	b2Body *body_;	// strong ref
+}
+
+-(void) setPhysicsBody:(b2Body*)body;
+
 @end

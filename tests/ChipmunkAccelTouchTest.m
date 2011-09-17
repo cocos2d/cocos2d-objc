@@ -110,8 +110,7 @@ void removeShape( cpBody *body, cpShape *shape, void *data )
 #else
 		// doesn't use batch node. Slower
 		spriteTexture_ = [[CCTextureCache sharedTextureCache] addImage:@"grossini_dance_atlas.png"];
-		CCNode *parent = [CCNode node];
-		
+		CCNode *parent = [CCNode node];		
 #endif
 		[self addChild:parent z:0 tag:kTagParentNode];
 		
