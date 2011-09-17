@@ -33,9 +33,15 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	CCArray: Fixed copyWithZone
 
 * manucorporat (manu.valladolid) (http://forzefield.com/):
-	Author of new Retina Display code
-	Author of new MotionStreak code
+	Author of new Retina Display code:
+		Intead of recalculating the position of the nodes, the ViewPort is increased.
+		Code is much simpler to read and maintain
+	Author of new MotionStreak code:
+		Much faster rendering. No need to use Ribbon
 
+* Scott Lembcke (AKA slembcke) (http://chipmunk-physics.net/)
+	Mentor & contributor of new Physics + cocos2d integration via nodeToParentTransform
+	
 * Sergey Tikhonov (AKA haqu) (http://haqu.net)
 	Tests: Improved Shader test
 
