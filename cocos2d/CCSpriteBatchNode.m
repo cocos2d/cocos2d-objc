@@ -232,7 +232,7 @@ static 	SEL selUpdate = NULL;
 {
 	// Invalidate atlas index. issue #569
 	// useSelfRender should be performed on all descendants. issue #1216
-	[descendants_ makeObjectsPerformSelector:@selector(useSelfRender)];
+	[descendants_ makeObjectsPerformSelector:@selector(setBatchNode:) withObject:nil];
         
 	[super removeAllChildrenWithCleanup:doCleanup];
 
@@ -393,7 +393,7 @@ static 	SEL selUpdate = NULL;
 // add child helper
 -(void) insertChild:(CCSprite*)sprite inAtlasAtIndex:(NSUInteger)index
 {
-	[sprite useBatchNode:self];
+	[sprite setBatchNode:self];
 	[sprite setAtlasIndex:index];
 	[sprite setDirty: YES];
 	
@@ -429,7 +429,7 @@ static 	SEL selUpdate = NULL;
 	[textureAtlas_ removeQuadAtIndex:sprite.atlasIndex];
 	
 	// Cleanup sprite. It might be reused (issue #569)
-	[sprite useSelfRender];
+	[sprite setBatchNode:nil];
 	
 	ccArray *descendantsData = descendants_->data;
 	NSUInteger index = ccArrayGetIndexOfObject(descendantsData, sprite);

@@ -2225,7 +2225,7 @@ Class restartAction()
 
 -(NSString *) title
 {
-	return @"Sprite offset + anchor + scale";
+	return @"Sprite offset + anchor + skew";
 }
 @end
 

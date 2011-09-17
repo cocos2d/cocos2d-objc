@@ -21,6 +21,8 @@ version 2.0-alpha XX-Ago-2011
 . [NEW] OpenGL ES: Added support for OpenGL ES 2.0. OpenGL ES 1.1 is no longer supported
 . [NEW] Profiler: API heavily updated to make it easier to integrate into any kind of component
 . [NEW] Sprite: initWithTexture:rect is the designated initializer
+. [NEW] Sprite: removed pixels API.
+. [NEW] Sprite: useSelfRender / useBatchNode replaced with setBatchNode
 . [NEW] SpriteBatchNode / Sprite / Node: Simplied rendering. Easiert to integrate with physics engines. Just subclass nodeToParentTransform().
 . [NEW] SpriteBatchNode: Removed support for HONOR_TRANSFORM.
 . [NEW] SpriteFrameCache: addSpriteFramesWithFile:textureFile renamed to addSpriteFramesWithFile:textureFilename to be consistent with the new API

@@ -67,7 +67,7 @@
 	// update the quad directly. Don't add the sprite to the scene graph
 	//
 
-	[sprite useBatchNode:self];
+	[sprite setBatchNode:self];
 	[sprite setAtlasIndex:index];
 
 	ccV3F_C4B_T2F_Quad quad = [sprite quad];
@@ -295,7 +295,7 @@ int compareInts (const void * a, const void * b);
 		// tile not created yet. create it
 		if( ! tile ) {
 			CGRect rect = [tileset_ rectForGID:gid];			
-			tile = [[CCSprite alloc] initWithBatchNode:self rectInPixels:rect];
+			tile = [[CCSprite alloc] initWithBatchNode:self rect:CC_RECT_PIXELS_TO_POINTS(rect)];
 			
             CGPoint p = [self positionAt:pos];
             [tile setPosition:p];
@@ -338,13 +338,14 @@ int compareInts (const void * a, const void * b);
 -(CCSprite*) insertTileForGID:(uint32_t)gid at:(CGPoint)pos
 {
 	CGRect rect = [tileset_ rectForGID:gid];
+	rect = CC_RECT_PIXELS_TO_POINTS(rect);
 	
 	NSInteger z = pos.x + pos.y * layerSize_.width;
 	
 	if( ! reusedTile_ )
-		reusedTile_ = [[CCSprite alloc] initWithBatchNode:self rectInPixels:rect];
+		reusedTile_ = [[CCSprite alloc] initWithBatchNode:self rect:rect];
 	else
-		[reusedTile_ initWithBatchNode:self rectInPixels:rect];
+		[reusedTile_ initWithBatchNode:self rect:rect];
 	
 	[self setupReusedTile:pos withGID:gid];
 	
@@ -373,13 +374,14 @@ int compareInts (const void * a, const void * b);
 -(CCSprite*) updateTileForGID:(uint32_t)gid at:(CGPoint)pos
 {
 	CGRect rect = [tileset_ rectForGID:gid];
+	rect = CC_RECT_PIXELS_TO_POINTS(rect);
 	
 	int z = pos.x + pos.y * layerSize_.width;
 	
 	if( ! reusedTile_ )
-		reusedTile_ = [[CCSprite alloc] initWithBatchNode:self rectInPixels:rect];
+		reusedTile_ = [[CCSprite alloc] initWithBatchNode:self rect:rect];
 	else
-		[reusedTile_ initWithBatchNode:self rectInPixels:rect];
+		[reusedTile_ initWithBatchNode:self rect:rect];
 	
 	[self setupReusedTile:pos withGID:gid];
 	
@@ -400,13 +402,14 @@ int compareInts (const void * a, const void * b);
 -(CCSprite*) appendTileForGID:(uint32_t)gid at:(CGPoint)pos
 {
 	CGRect rect = [tileset_ rectForGID:gid];
+	rect = CC_RECT_PIXELS_TO_POINTS(rect);
 	
 	NSInteger z = pos.x + pos.y * layerSize_.width;
 	
 	if( ! reusedTile_ )
-		reusedTile_ = [[CCSprite alloc] initWithBatchNode:self rectInPixels:rect];
+		reusedTile_ = [[CCSprite alloc] initWithBatchNode:self rect:rect];
 	else
-		[reusedTile_ initWithBatchNode:self rectInPixels:rect];
+		[reusedTile_ initWithBatchNode:self rect:rect];
 	
 	[self setupReusedTile:pos withGID:gid];
 	
@@ -483,7 +486,9 @@ int compareInts (const void * a, const void * b)
 			id sprite = [self getChildByTag:z];
 			if( sprite ) {
 				CGRect rect = [tileset_ rectForGID:gid];
-				[sprite setTextureRectInPixels:rect rotated:NO untrimmedSize:rect.size];
+				rect = CC_RECT_PIXELS_TO_POINTS(rect);
+
+				[sprite setTextureRect:rect rotated:NO untrimmedSize:rect.size];
 				tiles_[z] = gid;
 			} else
 				[self updateTileForGID:gid at:pos];

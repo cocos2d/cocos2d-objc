@@ -548,18 +548,19 @@ typedef struct _KerningHashElement
 		ccBMFontDef fontDef = configuration_->BMFontArray_[c];
 		
 		CGRect rect = fontDef.rect;
+		rect = CC_RECT_PIXELS_TO_POINTS(rect);
 		
 		CCSprite *fontChar;
 		
 		fontChar = (CCSprite*) [self getChildByTag:i];
 		if( ! fontChar ) {
-			fontChar = [[CCSprite alloc] initWithBatchNode:self rectInPixels:rect];
+			fontChar = [[CCSprite alloc] initWithBatchNode:self rect:rect];
 			[self addChild:fontChar z:0 tag:i];
 			[fontChar release];
 		}
 		else {
 			// reusing fonts
-			[fontChar setTextureRectInPixels:rect rotated:NO untrimmedSize:rect.size];
+			[fontChar setTextureRect:rect rotated:NO untrimmedSize:rect.size];
 			
 			// restore to default in case they were modified
 			fontChar.visible = YES;
