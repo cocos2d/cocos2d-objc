@@ -31,7 +31,6 @@
 -(NSString*) subtitle;
 @end
 
-
 @interface Sprite1 : SpriteDemo
 {}
 -(void) addNewSpriteWithCoords:(CGPoint)p;
@@ -257,5 +256,10 @@
 @interface AnimationCache : SpriteDemo
 {}
 @end
+
+@interface SpriteTestDelayAnimation : SpriteDemo
+{}
+@end
+
 
 
