@@ -26,6 +26,7 @@ version 2.0-alpha XX-Ago-2011
 . [NEW] SpriteFrameCache: addSpriteFramesWithFile:textureFile renamed to addSpriteFramesWithFile:textureFilename to be consistent with the new API
 . [NEW] Templates: Removed Xcode3 templates. Updated Xcode4 templates.
 . [NEW] Tests: All tests use RootViewController
+. [NEW] Tests: Chipmunk + cocos2d test: Added PhysicsSprite and other Chipmunk's best practices
 . [NEW] Tests: FontTest uses  "bundle" fonts instead of FontLabel
 . [NEW] Tests: Removed HelloWorld* tests
 . [NEW] Tests: TextureTest has TextureCache#asyncWithBlock test

@@ -163,12 +163,7 @@ enum {
 	// If YES the transformtions will be relative to (-transform.x, -transform.y).
 	// Sprites, Labels and any other "small" object uses it.
 	// Scenes, Layers and other "whole screen" object don't use it.
-	BOOL isRelativeAnchorPoint_:1;	
-
-@public
-	kmMat4	transformMV_;
-	BOOL	isTransformMVDirty_:1;
-
+	BOOL isRelativeAnchorPoint_:1;
 }
 
 /** The z order of the node relative to its "siblings": children of the same parent */

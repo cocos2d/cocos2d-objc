@@ -1814,6 +1814,18 @@
 		A0BE5C6614048DFD00DAA336 /* prime.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BE5C0D14048DFD00DAA336 /* prime.h */; };
 		A0BE62D9140535F000DAA336 /* CCVertex.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BE62D6140535B700DAA336 /* CCVertex.h */; };
 		A0BE62DA140535F000DAA336 /* CCVertex.m in Sources */ = {isa = PBXBuildFile; fileRef = A0BE62D7140535B700DAA336 /* CCVertex.m */; };
+		A0E55EE614241719003F1E5A /* b1.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659D0E72DB470085673F /* b1.png */; };
+		A0E55EE714241719003F1E5A /* b2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659E0E72DB470085673F /* b2.png */; };
+		A0E55EE814241719003F1E5A /* f1.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659F0E72DB470085673F /* f1.png */; };
+		A0E55EE914241719003F1E5A /* f2.png in Resources */ = {isa = PBXBuildFile; fileRef = 500165A00E72DB470085673F /* f2.png */; };
+		A0E55EEA14241719003F1E5A /* r1.png in Resources */ = {isa = PBXBuildFile; fileRef = 500165990E72DB0E0085673F /* r1.png */; };
+		A0E55EEB14241719003F1E5A /* r2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659A0E72DB0E0085673F /* r2.png */; };
+		A0E55EEC1424171E003F1E5A /* b1.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659D0E72DB470085673F /* b1.png */; };
+		A0E55EED1424171E003F1E5A /* b2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659E0E72DB470085673F /* b2.png */; };
+		A0E55EEE1424171E003F1E5A /* f1.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659F0E72DB470085673F /* f1.png */; };
+		A0E55EEF1424171E003F1E5A /* f2.png in Resources */ = {isa = PBXBuildFile; fileRef = 500165A00E72DB470085673F /* f2.png */; };
+		A0E55EF01424171E003F1E5A /* r1.png in Resources */ = {isa = PBXBuildFile; fileRef = 500165990E72DB0E0085673F /* r1.png */; };
+		A0E55EF11424171E003F1E5A /* r2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659A0E72DB0E0085673F /* r2.png */; };
 		A0EC4A311403236C00EC482A /* Position_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A161403236C00EC482A /* Position_uColor.fsh */; };
 		A0EC4A321403236C00EC482A /* Position_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A171403236C00EC482A /* Position_uColor.vsh */; };
 		A0EC4A331403236C00EC482A /* PositionColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A181403236C00EC482A /* PositionColor.fsh */; };
@@ -9718,6 +9730,12 @@
 				A0EC4A781403238600EC482A /* PositionTextureA8Color.vsh in Resources */,
 				A0EC4A791403238600EC482A /* PositionTextureColor.fsh in Resources */,
 				A0EC4A7A1403238600EC482A /* PositionTextureColor.vsh in Resources */,
+				A0E55EEC1424171E003F1E5A /* b1.png in Resources */,
+				A0E55EED1424171E003F1E5A /* b2.png in Resources */,
+				A0E55EEE1424171E003F1E5A /* f1.png in Resources */,
+				A0E55EEF1424171E003F1E5A /* f2.png in Resources */,
+				A0E55EF01424171E003F1E5A /* r1.png in Resources */,
+				A0E55EF11424171E003F1E5A /* r2.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11003,6 +11021,12 @@
 				A0EC4A901403238800EC482A /* PositionTextureA8Color.vsh in Resources */,
 				A0EC4A911403238800EC482A /* PositionTextureColor.fsh in Resources */,
 				A0EC4A921403238800EC482A /* PositionTextureColor.vsh in Resources */,
+				A0E55EE614241719003F1E5A /* b1.png in Resources */,
+				A0E55EE714241719003F1E5A /* b2.png in Resources */,
+				A0E55EE814241719003F1E5A /* f1.png in Resources */,
+				A0E55EE914241719003F1E5A /* f2.png in Resources */,
+				A0E55EEA14241719003F1E5A /* r1.png in Resources */,
+				A0E55EEB14241719003F1E5A /* r2.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

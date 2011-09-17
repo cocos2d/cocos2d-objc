@@ -1,5 +1,5 @@
 //
-// Accelerometer + physics + touches example
+// Accelerometer + Chipmunk physics + multi touches example
 // a cocos2d example
 // http://www.cocos2d-iphone.org
 //
@@ -8,112 +8,166 @@
 
 #import "RootViewController.h"
 enum {
-	kTagBatchNode = 1,
+	kTagParentNode = 1,
 };
 
-static void
-eachShape(cpShape *shape, void* unused)
+// callback to remove Shapes from the Space
+void removeShape( cpBody *body, cpShape *shape, void *data )
 {
-	CCSprite *sprite = shape->data;
-	if( sprite ) {
-		cpBody *body = shape->body;
-		
-		// TIP: cocos2d and chipmunk uses the same struct to store its position
-		// chipmunk uses: cpVect, and cocos2d uses CGPoint but they are the same.
-		
-		[sprite setPosition: body->p];
-		
-		[sprite setRotation: (float) CC_RADIANS_TO_DEGREES( -body->a )];
+	cpShapeFree( shape );
+}
+
+#pragma mark - PhysicsSprite
+@implementation PhysicsSprite
+
+-(void) setPhysicsBody:(cpBody *)body
+{
+	body_ = body;
+}
+
+// return YES if the physics values (angles, position ) changed
+// If you return NO, then nodeToParentTransform won't be called.
+-(BOOL) dirty
+{
+	return YES;
+}
+
+// returns the transform matrix according the Chipmunk Body values
+-(CGAffineTransform) nodeToParentTransform
+{	
+	float x = body_->p.x;
+	float y = body_->p.y;
+	
+	if ( !isRelativeAnchorPoint_ ) {
+		x += anchorPointInPoints_.x;
+		y += anchorPointInPoints_.y;
 	}
+		
+		// Make matrix
+	float radians = body_->a;
+	float c = cosf(radians);
+	float s = sinf(radians);
+	
+	// Rot, Translate Matrix
+	transform_ = CGAffineTransformMake( c,  s,
+									   -s,	c,
+									   x,	y );
+
+	if( ! CGPointEqualToPoint(anchorPointInPoints_, CGPointZero) )
+		transform_ = CGAffineTransformTranslate(transform_, -anchorPointInPoints_.x, -anchorPointInPoints_.y);
+
+	return transform_;
 }
 
-@implementation Layer1
--(void) addNewSpriteX: (float)x y:(float)y
+-(void) dealloc
 {
-	int posx, posy;
+	cpBodyEachShape(body_, removeShape, NULL);
+	cpBodyFree( body_ );
 
-	CCSpriteBatchNode *batch = (CCSpriteBatchNode*) [self getChildByTag:kTagBatchNode];
-	
-	posx = CCRANDOM_0_1() * 200.0f;
-	posy = CCRANDOM_0_1() * 200.0f;
-	
-	posx = (posx % 4) * 85;
-	posy = (posy % 3) * 121;
-	
-	CCSprite *sprite = [CCSprite spriteWithBatchNode:batch rect:CGRectMake(posx, posy, 85, 121)];
-	[batch addChild: sprite];
-	
-	sprite.position = ccp(x,y);
-	
-	int num = 4;
-	CGPoint verts[] = {
-		ccp(-24,-54),
-		ccp(-24, 54),
-		ccp( 24, 54),
-		ccp( 24,-54),
-	};
-	
-	cpBody *body = cpBodyNew(1.0f, cpMomentForPoly(1.0f, num, verts, CGPointZero));
-	
-	// TIP:
-	// since v0.7.1 you can assign CGPoint to chipmunk instead of cpVect.
-	// cpVect == CGPoint
-	body->p = ccp(x, y);
-	cpSpaceAddBody(space, body);
-	
-	cpShape* shape = cpPolyShapeNew(body, num, verts, CGPointZero);
-	shape->e = 0.5f; shape->u = 0.5f;
-	shape->data = sprite;
-	cpSpaceAddShape(space, shape);
-	
+	[super dealloc];
 }
+
+@end
+
+#pragma mark - MainLayer
+
+@interface MainLayer ()
+-(void) addNewSpriteAtPosition:(CGPoint)pos;
+-(void) createResetButton;
+-(void) initPhysics;
+@end
+
+
+@implementation MainLayer
 
 -(id) init
 {
 	if( (self=[super init])) {
-	
+
+		// enable events
 		self.isTouchEnabled = YES;
 		self.isAccelerometerEnabled = YES;
-		
-		CGSize wins = [[CCDirector sharedDirector] winSize];
-		cpInitChipmunk();
-		
-		cpBody *staticBody = cpBodyNew(INFINITY, INFINITY);
-		space = cpSpaceNew();
 
-		space->gravity = ccp(0, 0);
-	
-		cpShape *shape;
-		
-		// bottom
-		shape = cpSegmentShapeNew(staticBody, ccp(0,0), ccp(wins.width,0), 0.0f);
-		shape->e = 1.0f; shape->u = 1.0f;
-		cpSpaceAddStaticShape(space, shape);
+		CGSize s = [[CCDirector sharedDirector] winSize];
 
-		// top
-		shape = cpSegmentShapeNew(staticBody, ccp(0,wins.height), ccp(wins.width,wins.height), 0.0f);
-		shape->e = 1.0f; shape->u = 1.0f;
-		cpSpaceAddStaticShape(space, shape);
+		// title
+		CCLabelTTF *label = [CCLabelTTF labelWithString:@"Multi touch the screen" fontName:@"Marker Felt" fontSize:36];
+		label.position = ccp( s.width / 2, s.height - 30);
+		[self addChild:label z:-1];
 
-		// left
-		shape = cpSegmentShapeNew(staticBody, ccp(0,0), ccp(0,wins.height), 0.0f);
-		shape->e = 1.0f; shape->u = 1.0f;
-		cpSpaceAddStaticShape(space, shape);
+		// reset button
+		[self createResetButton];
 
-		// right
-		shape = cpSegmentShapeNew(staticBody, ccp(wins.width,0), ccp(wins.width,wins.height), 0.0f);
-		shape->e = 1.0f; shape->u = 1.0f;
-		cpSpaceAddStaticShape(space, shape);
 		
-		CCSpriteBatchNode *batch = [CCSpriteBatchNode batchNodeWithFile:@"grossini_dance_atlas.png" capacity:100];
-		[self addChild:batch z:0 tag:kTagBatchNode];
+		// init physics
+		[self initPhysics];
+
+
+#if 1
+		// Use batch node. Faster
+		CCSpriteBatchNode *parent = [CCSpriteBatchNode batchNodeWithFile:@"grossini_dance_atlas.png" capacity:100];
+		spriteTexture_ = [parent texture];
+#else
+		// doesn't use batch node. Slower
+		spriteTexture_ = [[CCTextureCache sharedTextureCache] addImage:@"grossini_dance_atlas.png"];
+		CCNode *parent = [CCNode node];
 		
-		[self addNewSpriteX: 200 y:200];
+#endif
+		[self addChild:parent z:0 tag:kTagParentNode];
+		
+		[self addNewSpriteAtPosition:ccp(200,200)];
 
 		[self scheduleUpdate];
 	}
 
 	return self;
+}
+
+-(void) initPhysics
+{
+	CGSize s = [[CCDirector sharedDirector] winSize];
+	
+	// init chipmunk
+	cpInitChipmunk();
+	
+	space_ = cpSpaceNew();
+	
+	space_->gravity = ccp(0, -100);
+	
+	//
+	// rogue shapes
+	// We have to free them manually
+	//
+	// bottom
+	walls_[0] = cpSegmentShapeNew( space_->staticBody, ccp(0,0), ccp(s.width,0), 0.0f);
+
+	// top
+	walls_[1] = cpSegmentShapeNew( space_->staticBody, ccp(0,s.height), ccp(s.width,s.height), 0.0f);
+
+	// left
+	walls_[2] = cpSegmentShapeNew( space_->staticBody, ccp(0,0), ccp(0,s.height), 0.0f);
+
+	// right
+	walls_[3] = cpSegmentShapeNew( space_->staticBody, ccp(s.width,0), ccp(s.width,s.height), 0.0f);
+
+	for( int i=0;i<4;i++) {
+		walls_[i]->e = 1.0f;
+		walls_[i]->u = 1.0f;
+		cpSpaceAddStaticShape(space_, walls_[i] );
+	}	
+}
+
+- (void)dealloc
+{
+	// manually Free rogue shapes
+	for( int i=0;i<4;i++) {
+		cpShapeFree( walls_[i] );
+	}
+
+	[super dealloc];
+
+	// deferred space cleanup since PhysicsSprite will need it
+	cpSpaceFree( space_ );
 }
 
 -(void) onEnter
@@ -129,11 +183,65 @@ eachShape(cpShape *shape, void* unused)
 	CGFloat dt = delta/(CGFloat)steps;
 	
 	for(int i=0; i<steps; i++){
-		cpSpaceStep(space, dt);
+		cpSpaceStep(space_, dt);
 	}
-	cpSpaceEachShape(space, &eachShape, nil);
 }
 
+-(void) createResetButton
+{
+	CCMenuItemImage *reset = [CCMenuItemImage itemFromNormalImage:@"r1.png" selectedImage:@"r2.png" block:^(id sender) {
+		CCScene *s = [CCScene node];
+		id child = [[[MainLayer class] alloc] init];
+		[s addChild:child];
+		[child release];
+		[[CCDirector sharedDirector] replaceScene: s];
+	}];
+	
+	CCMenu *menu = [CCMenu menuWithItems:reset, nil];
+	
+	CGSize s = [[CCDirector sharedDirector] winSize];
+	
+	menu.position = ccp(s.width/2, 30);
+	[self addChild: menu z:-1];	
+
+}
+
+-(void) addNewSpriteAtPosition:(CGPoint)pos
+{
+	int posx, posy;
+	
+	CCNode *parent = [self getChildByTag:kTagParentNode];
+	
+	posx = CCRANDOM_0_1() * 200.0f;
+	posy = CCRANDOM_0_1() * 200.0f;
+	
+	posx = (posx % 4) * 85;
+	posy = (posy % 3) * 121;
+	
+	PhysicsSprite *sprite = [PhysicsSprite spriteWithTexture:spriteTexture_ rect:CGRectMake(posx, posy, 85, 121)];
+	[parent addChild: sprite];
+	
+	sprite.position = pos;
+	
+	int num = 4;
+	CGPoint verts[] = {
+		ccp(-24,-54),
+		ccp(-24, 54),
+		ccp( 24, 54),
+		ccp( 24,-54),
+	};
+	
+	cpBody *body = cpBodyNew(1.0f, cpMomentForPoly(1.0f, num, verts, CGPointZero));
+	
+	body->p = pos;
+	cpSpaceAddBody(space_, body);
+	
+	cpShape* shape = cpPolyShapeNew(body, num, verts, CGPointZero);
+	shape->e = 0.5f; shape->u = 0.5f;
+	cpSpaceAddShape(space_, shape);
+	
+	[sprite setPhysicsBody:body];
+}
 
 - (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
@@ -142,7 +250,7 @@ eachShape(cpShape *shape, void* unused)
 				
 		location = [[CCDirector sharedDirector] convertToGL: location];
 		
-		[self addNewSpriteX: location.x y:location.y];
+		[self addNewSpriteAtPosition: location];
 	}
 }
 
@@ -160,7 +268,7 @@ eachShape(cpShape *shape, void* unused)
 
 	CGPoint v = ccp( accelX, accelY);
 
-	space->gravity = ccpMult(v, 200);
+	space_->gravity = ccpMult(v, 200);
 }
 @end
 
@@ -204,6 +312,9 @@ eachShape(cpShape *shape, void* unused)
 	// You can change anytime.
 	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA8888];
 	
+	// Assume that PVR images have the alpha channel premultiplied
+	[CCTexture2D PVRImagesHavePremultipliedAlpha:YES];
+	
 	// When in iPad / RetinaDisplay mode, CCFileUtils will append the "-ipad" / "-hd" to all loaded files
 	// If the -ipad  / -hdfile is not found, it will load the non-suffixed version
 	[CCFileUtils setiPadSuffix:@"-ipad"];			// Default on iPad is "" (empty string)
@@ -211,14 +322,8 @@ eachShape(cpShape *shape, void* unused)
 	
 	// add layer
 	CCScene *scene = [CCScene node];
-	[scene addChild: [Layer1 node] z:0];
+	[scene addChild: [MainLayer node] ];
 	
-	// add the label
-	CGSize s = [[CCDirector sharedDirector] winSize];
-	CCLabelTTF *label = [CCLabelTTF labelWithString:@"Multi touch the screen" fontName:@"Marker Felt" fontSize:36];
-	label.position = ccp( s.width / 2, s.height - 30);
-	[scene addChild:label z:-1];
-
 	[director runWithScene:scene];
 }
 

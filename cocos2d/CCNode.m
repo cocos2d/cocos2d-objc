@@ -110,7 +110,7 @@
 		// "whole screen" objects. like Scenes and Layers, should set isRelativeAnchorPoint to NO
 		isRelativeAnchorPoint_ = YES; 
 		
-		isTransformDirty_ = isInverseDirty_ = isTransformMVDirty_ = YES;
+		isTransformDirty_ = isInverseDirty_ = YES;
 		
 		vertexZ_ = 0;
 		
@@ -133,8 +133,6 @@
 
 		//initialize parent to nil
 		parent_ = nil;
-		
-		kmMat4Identity( &transformMV_ );
 		
 		shaderProgram_ = nil;
 	}
@@ -184,43 +182,43 @@
 -(void) setRotation: (float)newRotation
 {
 	rotation_ = newRotation;
-	isTransformDirty_ = isInverseDirty_ = isTransformMVDirty_ = YES;
+	isTransformDirty_ = isInverseDirty_ = YES;
 }
 
 -(void) setScaleX: (float)newScaleX
 {
 	scaleX_ = newScaleX;
-	isTransformDirty_ = isInverseDirty_ = isTransformMVDirty_ = YES;
+	isTransformDirty_ = isInverseDirty_ = YES;
 }
 
 -(void) setScaleY: (float)newScaleY
 {
 	scaleY_ = newScaleY;
-	isTransformDirty_ = isInverseDirty_ = isTransformMVDirty_ = YES;
+	isTransformDirty_ = isInverseDirty_ = YES;
 }
 
 -(void) setSkewX:(float)newSkewX
 {
 	skewX_ = newSkewX;
-	isTransformDirty_ = isInverseDirty_ = isTransformMVDirty_ = YES;
+	isTransformDirty_ = isInverseDirty_ = YES;
 }
 
 -(void) setSkewY:(float)newSkewY
 {
 	skewY_ = newSkewY;
-	isTransformDirty_ = isInverseDirty_ = isTransformMVDirty_ = YES;
+	isTransformDirty_ = isInverseDirty_ = YES;
 }
 
 -(void) setPosition: (CGPoint)newPosition
 {
 	position_ = newPosition;
-	isTransformDirty_ = isInverseDirty_ = isTransformMVDirty_ = YES;
+	isTransformDirty_ = isInverseDirty_ = YES;
 }
 
 -(void) setIsRelativeAnchorPoint: (BOOL)newValue
 {
 	isRelativeAnchorPoint_ = newValue;
-	isTransformDirty_ = isInverseDirty_ = isTransformMVDirty_ = YES;
+	isTransformDirty_ = isInverseDirty_ = YES;
 }
 
 -(void) setAnchorPoint:(CGPoint)point
@@ -228,7 +226,7 @@
 	if( ! CGPointEqualToPoint(point, anchorPoint_) ) {
 		anchorPoint_ = point;
 		anchorPointInPoints_ = ccp( contentSize_.width * anchorPoint_.x, contentSize_.height * anchorPoint_.y );
-		isTransformDirty_ = isInverseDirty_ = isTransformMVDirty_ = YES;
+		isTransformDirty_ = isInverseDirty_ = YES;
 	}
 }
 
@@ -238,7 +236,7 @@
 		contentSize_ = size;
         
 		anchorPointInPoints_ = ccp( contentSize_.width * anchorPoint_.x, contentSize_.height * anchorPoint_.y );
-		isTransformDirty_ = isInverseDirty_ = isTransformMVDirty_ = YES;
+		isTransformDirty_ = isInverseDirty_ = YES;
 	}
 }
 
@@ -251,7 +249,6 @@
 -(void) setVertexZ:(float)vertexZ
 {
 	vertexZ_ = vertexZ;
-	isTransformMVDirty_ = YES;
 }
 
 -(float) scale
@@ -263,7 +260,7 @@
 -(void) setScale:(float) s
 {
 	scaleX_ = scaleY_ = s;
-	isTransformDirty_ = isInverseDirty_ = isTransformMVDirty_ = YES;
+	isTransformDirty_ = isInverseDirty_ = YES;
 }
 
 #pragma mark CCNode Composition
@@ -516,21 +513,18 @@
 
 -(void) transform
 {
-	if( isTransformMVDirty_ ) {
-		
-		// Convert 3x3 into 4x4 matrix
-		CGAffineTransform tmpAffine = [self nodeToParentTransform];
-		CGAffineToGL(&tmpAffine, transformMV_.mat);
-		
-		// Update Z vertex manually
-		transformMV_.mat[14] = vertexZ_;
-		
-		isTransformMVDirty_ = NO;
-	}
+	kmMat4 transfrom4x4;
 	
-	kmGLMultMatrix( &transformMV_ );
+	// Convert 3x3 into 4x4 matrix
+	CGAffineTransform tmpAffine = [self nodeToParentTransform];
+	CGAffineToGL(&tmpAffine, transfrom4x4.mat);
+		
+	// Update Z vertex manually
+	transfrom4x4.mat[14] = vertexZ_;
 
-	
+	kmGLMultMatrix( &transfrom4x4 );
+
+
 	// XXX: Expensive calls. Camera should be integrated into the cached affine matrix
 	if ( camera_ && !(grid_ && grid_.active) )
 	{	
