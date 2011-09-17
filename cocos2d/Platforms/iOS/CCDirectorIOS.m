@@ -93,9 +93,6 @@ CGFloat	__ccContentScaleFactor = 1;
 		case CCDirectorTypeDisplayLink:
 			[CCDirectorDisplayLink sharedDirector];
 			break;
-		case CCDirectorTypeDisplayLinkUIKit:
-			[CCDirectorDisplayLinkUIKit sharedDirector];
-			break;
 		case CCDirectorTypeMainLoop:
 			[CCDirectorFast sharedDirector];
 			break;
@@ -742,69 +739,6 @@ CGFloat	__ccContentScaleFactor = 1;
 	[displayLink release];
 	[super dealloc];
 }
-@end
-
-#pragma mark -
-#pragma mark DirectorDisplayLinkUIKit
-
-@implementation CCDirectorDisplayLinkUIKit
-
-- (void) startAnimation
-{
-    [super startAnimation];
-    
-//	if ( gettimeofday( &lastUpdate_, NULL) != 0 ) {
-//		CCLOG(@"cocos2d: DisplayLinkDirector: Error on gettimeofday");
-//	}
-    _lastTime = CACurrentMediaTime();
-	
-	// approximate frame rate
-	// assumes device refreshes at 60 fps
-	int frameInterval = (int) floor(animationInterval_ * 60.0f);
-	
-	CCLOG(@"cocos2d: Frame interval: %d", frameInterval);
-    
-	displayLink = [NSClassFromString(@"CADisplayLink") displayLinkWithTarget:self selector:@selector(mainLoop:)];
-	[displayLink setFrameInterval:frameInterval];
-    
-    [displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];
-}
-
--(void) mainLoop:(id)sender {    
-//    // The following code ensures that drawScene is only called before vsync,
-//    // if last drawScene was called more tan one vsync cycle ago return and
-//    // wait for CADisplayLink fire just before the vsync.
-//    // See http://www.ananseproductions.com/game-loops-on-ios/ for more info
-//
-// #define kNanosecondsToSeconds (1/1000000000.0)
-//
-//    static CFTimeInterval bank = 0;
-//    // Get previous frame time
-//    double frameTime = ((CADisplayLink*)sender).duration * ((CADisplayLink*)sender).frameInterval;
-//    bank -= frameTime;
-//    if( bank > 0 ) {
-//        //CCLOG(@"return");
-//        return;
-//    }
-//    bank = 0;
-//    startHiResTimer();
-//    [self drawScene];
-//    // Update bank with elapsed drawing time
-//    bank = elapsedHiResTimer()*kNanosecondsToSeconds;
-//    
-//    //CCLOG(@"bank %f, frametime %f", bank, ((CADisplayLink*)sender).timestamp-preDrawTimestamp, frameTime);
-//
-//    // If bank is higher than the previous frame time, calc the module of bank by frameTime
-//    if( bank > frameTime )
-//    {
-//        bank = frameTime + fmod( bank, frameTime );
-//    }
-
-    if (isRunning_ && [self getDeltaTimePre]>(1.0/90)) {
-        [self drawScene];
-    }
-}
-
 @end
 
 #endif // __IPHONE_OS_VERSION_MAX_ALLOWED
