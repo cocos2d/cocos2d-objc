@@ -13,10 +13,22 @@
 }
 @end
 
-@interface Layer1 : CCLayer
+@interface MainLayer : CCLayer
 {
-	cpSpace *space;
+	CCTexture2D *spriteTexture_; // weak ref
+	
+	cpSpace *space_; // strong ref
+	
+	cpShape *walls_[4];
 }
--(void) addNewSpriteX:(float)x y:(float)y;
 @end
 	
+
+@interface PhysicsSprite : CCSprite
+{
+	cpBody *body_;	// strong ref
+}
+
+-(void) setPhysicsBody:(cpBody*)body;
+
+@end

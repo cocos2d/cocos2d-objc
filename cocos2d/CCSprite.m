@@ -421,7 +421,7 @@
 	NSAssert( usesBatchNode_, @"updateTransform is only valid when CCSprite is being renderd using an CCSpriteBatchNode");
 
 	// recaculate matrix only if it is dirty
-	if( dirty_ ) {
+	if( self.dirty ) {
 	
 		// If it is not visible, or one of its ancestors is not visible, then do nothing:
 		if( !visible_ || ( parent_ && parent_ != batchNode_ && ((CCSprite*)parent_)->shouldBeHidden_) ) {
