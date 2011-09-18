@@ -342,8 +342,6 @@
 {
 	ccGLBindTexture2D( [texture_ name] );
 
-#define kQuadSize sizeof(quads_[0].bl)
-
 	// XXX: update is done in draw... perhaps it should be done in a timer
 	if (dirty_) {
 		glBindBuffer(GL_ARRAY_BUFFER, buffersVBO_[0]);
