@@ -31,13 +31,6 @@
 			<key>Path</key>
 			<string>main.m</string>
 		</dict>	
-		<key>GameConfig.h</key>
-		<dict>
-			<key>Path</key>
-			<string>GameConfig.h</string>
-			<key>TargetIndices</key>
-			<array/>
-		</dict>
 		<key>HelloWorldLayer.h</key>
 		<dict>
 			<key>Path</key>
@@ -112,7 +105,6 @@
 		<string>HelloWorldLayer.mm</string>
 		<string>GLES-Render.h</string>
 		<string>GLES-Render.mm</string>
-		<string>GameConfig.h</string>
 		<string>Resources/blocks.png</string>
 	</array>
 	<key>Options</key>
