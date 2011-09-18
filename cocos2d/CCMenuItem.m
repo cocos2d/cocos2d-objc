@@ -69,7 +69,6 @@ const NSInteger	kZoomActionTag = 0xc0c05002;
 		if( rec && cb ) {
 			sig = [rec methodSignatureForSelector:cb];
 			
-			invocation_ = nil;
 			invocation_ = [NSInvocation invocationWithMethodSignature:sig];
 			[invocation_ setTarget:rec];
 			[invocation_ setSelector:cb];
