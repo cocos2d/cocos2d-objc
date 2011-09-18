@@ -46,16 +46,16 @@
 // iOS
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 #define CC_GLVIEW					EAGLView
-#define	ccGLClearDepth				glClearDepthf
-#define ccGLGenerateMipmap			glGenerateMipmapOES
-#define ccGLGenFramebuffers			glGenFramebuffersOES
-#define ccGLBindFramebuffer			glBindFramebufferOES
-#define ccGLFramebufferTexture2D	glFramebufferTexture2DOES
-#define ccGLDeleteFramebuffers		glDeleteFramebuffersOES
-#define ccGLCheckFramebufferStatus	glCheckFramebufferStatusOES
-#define ccGLDeleteVertexArrays		glDeleteVertexArraysOES
-#define ccGLGenVertexArrays			glGenVertexArraysOES
-#define ccGLBindVertexArray			glBindVertexArrayOES
+#define	glClearDepth				glClearDepthf
+#define glGenerateMipmap			glGenerateMipmapOES
+#define glGenFramebuffers			glGenFramebuffersOES
+#define glBindFramebuffer			glBindFramebufferOES
+#define glFramebufferTexture2D		glFramebufferTexture2DOES
+#define glDeleteFramebuffers		glDeleteFramebuffersOES
+#define glCheckFramebufferStatus	glCheckFramebufferStatusOES
+#define glDeleteVertexArrays		glDeleteVertexArraysOES
+#define glGenVertexArrays			glGenVertexArraysOES
+#define glBindVertexArray			glBindVertexArrayOES
 
 #define CC_GL_FRAMEBUFFER			GL_FRAMEBUFFER_OES
 #define CC_GL_FRAMEBUFFER_BINDING	GL_FRAMEBUFFER_BINDING_OES
@@ -65,16 +65,9 @@
 // Mac
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 #define CC_GLVIEW					MacGLView
-#define	ccGLClearDepth				glClearDepth
-#define ccGLGenerateMipmap			glGenerateMipmap
-#define ccGLGenFramebuffers			glGenFramebuffers
-#define ccGLBindFramebuffer			glBindFramebuffer
-#define ccGLFramebufferTexture2D	glFramebufferTexture2D
-#define ccGLDeleteFramebuffers		glDeleteFramebuffers
-#define ccGLCheckFramebufferStatus	glCheckFramebufferStatus
-#define ccGLDeleteVertexArrays		glDeleteVertexArraysAPPLE
-#define ccGLGenVertexArrays			glGenVertexArraysAPPLE
-#define ccGLBindVertexArray			glBindVertexArrayAPPLE
+#define glDeleteVertexArrays		glDeleteVertexArraysAPPLE
+#define glGenVertexArrays			glGenVertexArraysAPPLE
+#define glBindVertexArray			glBindVertexArrayAPPLE
 
 #define CC_GL_FRAMEBUFFER			GL_FRAMEBUFFER
 #define CC_GL_FRAMEBUFFER_BINDING	GL_FRAMEBUFFER_BINDING
