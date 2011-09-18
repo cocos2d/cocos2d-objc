@@ -683,11 +683,9 @@
 		
 		// optimization:
 		// inline anchor point calculation if skew is not needed
-		if( ! needsSkewMatrix ) {
-			if( ! CGPointEqualToPoint(anchorPointInPoints_, CGPointZero) ){
-				x += c * -anchorPointInPoints_.x * scaleX_ + -s * -anchorPointInPoints_.y * scaleY_;
-				y += s * -anchorPointInPoints_.x * scaleX_ +  c * -anchorPointInPoints_.y * scaleY_;
-			}
+		if( !needsSkewMatrix && !CGPointEqualToPoint(anchorPointInPoints_, CGPointZero) ) {
+			x += c * -anchorPointInPoints_.x * scaleX_ + -s * -anchorPointInPoints_.y * scaleY_;
+			y += s * -anchorPointInPoints_.x * scaleX_ +  c * -anchorPointInPoints_.y * scaleY_;
 		}
 
 		
@@ -696,7 +694,7 @@
 										   -s * scaleY_, c * scaleY_,
 										   x, y );
 
-		// XXX: Could the Skew be inlined too ?
+		// XXX: Try to inline skew
 		// If skew is needed, apply skew and then anchor point
 		if( needsSkewMatrix ) {
 			CGAffineTransform skewMatrix = CGAffineTransformMake(1.0f, tanf(CC_DEGREES_TO_RADIANS(skewY_)),
