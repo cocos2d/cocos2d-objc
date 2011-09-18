@@ -124,7 +124,7 @@
 	free(indices_);
 
 	glDeleteBuffers(2, buffersVBO_);
-	ccGLDeleteVertexArrays(1, &VAOname_);
+	glDeleteVertexArrays(1, &VAOname_);
 
 	[texture_ release];
 
@@ -133,8 +133,8 @@
 
 -(void) initVAO
 {
-	ccGLGenVertexArrays(1, &VAOname_);
-	ccGLBindVertexArray(VAOname_);
+	glGenVertexArrays(1, &VAOname_);
+	glBindVertexArray(VAOname_);
 
 #define kQuadSize sizeof(quads_[0].bl)
 	
@@ -157,8 +157,8 @@
 	
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffersVBO_[1]);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices_[0]) * capacity_ * 6, indices_, GL_STATIC_DRAW);
-	
-	ccGLBindVertexArray(0);
+
+	glBindVertexArray(0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	
@@ -200,6 +200,8 @@
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffersVBO_[1]);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices_[0]) * capacity_ * 6, indices_, GL_STATIC_DRAW);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+	
+	CHECK_GL_ERROR_DEBUG();
 }
 
 #pragma mark TextureAtlas - Update, Insert, Move & Remove
@@ -338,20 +340,22 @@
 
 -(void) drawNumberOfQuads: (NSUInteger) n fromIndex: (NSUInteger) start
 {
-	ccGLEnableVertexAttribs(kCCVertexAttribFlag_PosColorTex );	
-
-	ccGLBindVertexArray( VAOname_ );
-	ccGLBindTexture2D( [texture_ name] );	
+	ccGLBindTexture2D( [texture_ name] );
 
 #define kQuadSize sizeof(quads_[0].bl)
 
 	// XXX: update is done in draw... perhaps it should be done in a timer
 	if (dirty_) {
 		glBindBuffer(GL_ARRAY_BUFFER, buffersVBO_[0]);
+
 		glBufferSubData(GL_ARRAY_BUFFER, sizeof(quads_[0])*start, sizeof(quads_[0]) * n , &quads_[start] );
+
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
+
 		dirty_ = NO;
 	}
+	
+	glBindVertexArray( VAOname_ );
 
 #if CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP
 	glDrawElements(GL_TRIANGLE_STRIP, (GLsizei) n*6, GL_UNSIGNED_SHORT, (GLvoid*) (start*6*sizeof(indices_[0])) );
@@ -360,7 +364,7 @@
 #endif // CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP
 
 	
-	ccGLBindVertexArray(0);
+	glBindVertexArray(0);
 	
 	CHECK_GL_ERROR_DEBUG();
 }
