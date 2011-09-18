@@ -49,8 +49,11 @@
 // extern
 #import "kazmath/GL/matrix.h"
 
-@implementation CCParticleSystemQuad
+@interface CCParticleSystemQuad ()
+-(void) initVAO;
+@end
 
+@implementation CCParticleSystemQuad
 
 // overriding the init method
 -(id) initWithTotalParticles:(NSUInteger) numberOfParticles
@@ -76,14 +79,7 @@
 		// initialize only once the texCoords and the indices
 		[self initTexCoordsWithRect:CGRectMake(0, 0, [texture_ pixelsWide], [texture_ pixelsHigh])];
 		[self initIndices];
-
-		// create the VBO buffer
-		glGenBuffers(1, &quadsID_);
-		
-		// initial binding
-		glBindBuffer(GL_ARRAY_BUFFER, quadsID_);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(quads_[0])*totalParticles, quads_,GL_DYNAMIC_DRAW);	
-		glBindBuffer(GL_ARRAY_BUFFER, 0);
+		[self initVAO];
 		
 		self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTextureColor];
 	}
@@ -91,11 +87,47 @@
 	return self;
 }
 
+-(void) initVAO
+{
+	glGenVertexArrays(1, &VAOname_);
+	glBindVertexArray(VAOname_);
+	
+#define kQuadSize sizeof(quads_[0].bl)
+	
+	glGenBuffers(2, &buffersVBO_[0]);
+	
+	glBindBuffer(GL_ARRAY_BUFFER, buffersVBO_[0]);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(quads_[0]) * totalParticles, quads_, GL_DYNAMIC_DRAW);
+	
+	// vertices
+	glEnableVertexAttribArray(kCCVertexAttrib_Position);
+	glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof( ccV2F_C4B_T2F, vertices));
+	
+	// colors
+	glEnableVertexAttribArray(kCCVertexAttrib_Color);
+	glVertexAttribPointer(kCCVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (GLvoid*) offsetof( ccV2F_C4B_T2F, colors));
+	
+	// tex coords
+	glEnableVertexAttribArray(kCCVertexAttrib_TexCoords);
+	glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof( ccV2F_C4B_T2F, texCoords));
+	
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffersVBO_[1]);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices_[0]) * totalParticles * 6, indices_, GL_STATIC_DRAW);
+	
+	glBindVertexArray(0);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	
+	CHECK_GL_ERROR_DEBUG();
+}
+
 -(void) dealloc
 {
 	free(quads_);
 	free(indices_);
-	glDeleteBuffers(1, &quadsID_);
+	
+	glDeleteBuffers(2, &buffersVBO_[0]);
+	glDeleteVertexArrays(1, &VAOname_);
 	
 	[super dealloc];
 }
@@ -255,42 +287,32 @@
 
 -(void) postStep
 {
-	glBindBuffer(GL_ARRAY_BUFFER, quadsID_);
+	glBindBuffer(GL_ARRAY_BUFFER, buffersVBO_[0] );
 	glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(quads_[0])*particleCount, quads_);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	
+	CHECK_GL_ERROR_DEBUG();
 }
 
 // overriding draw method
 -(void) draw
 {	
 	[super draw];
-
-	ccGLEnableVertexAttribs( kCCVertexAttribFlag_PosColorTex );
 	
 	ccGLBindTexture2D( [texture_ name] );
-
-#define kQuadSize sizeof(quads_[0].bl)
-
-	glBindBuffer(GL_ARRAY_BUFFER, quadsID_);
-	
-	// vertices
-	glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof( ccV2F_C4B_T2F, vertices));
-	
-	// colors
-	glVertexAttribPointer(kCCVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (GLvoid*) offsetof( ccV2F_C4B_T2F, colors));
-	
-	// tex coords
-	glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof( ccV2F_C4B_T2F, texCoords));
-
-
 	ccGLBlendFunc( blendFunc_.src, blendFunc_.dst );	
 	ccGLUseProgram( shaderProgram_->program_ );	
 	ccGLUniformModelViewProjectionMatrix( shaderProgram_ );
 	
 	NSAssert( particleIdx == particleCount, @"Abnormal error in particle quad");
-	glDrawElements(GL_TRIANGLES, (GLsizei) particleIdx*6, GL_UNSIGNED_SHORT, indices_);
+	
+	glBindVertexArray( VAOname_ );
 
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glDrawElements(GL_TRIANGLES, (GLsizei) particleIdx*6, GL_UNSIGNED_SHORT, 0);
+
+	glBindVertexArray( 0 );
+	
+	CHECK_GL_ERROR_DEBUG();
 }
 
 @end
