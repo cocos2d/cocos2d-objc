@@ -1,5 +1,5 @@
 
-version 2.0-alpha XX-Ago-2011
+version 2.0-alpha 18-Sept-2011
 . [NEW] Action: Added new CallBlockO action
 . [NEW] AtlasNode: added init method
 . [NEW] ccConfig: removed CC_USES_VBO since VBO is always used
@@ -28,6 +28,7 @@ version 2.0-alpha XX-Ago-2011
 . [NEW] SpriteBatchNode: Removed support for HONOR_TRANSFORM.
 . [NEW] SpriteFrameCache: addSpriteFramesWithFile:textureFile renamed to addSpriteFramesWithFile:textureFilename to be consistent with the new API
 . [NEW] Templates: Removed Xcode3 templates. Updated Xcode4 templates.
+. [NEW] Templates: Box2d & Chipmunk templates use new way to sync cocos2d and physics engine by using PhysicsSprite
 . [NEW] Tests: All tests use RootViewController
 . [NEW] Tests: Box2d + cocos2d test: Added PhysicsSprite and other Box2d best practices
 . [NEW] Tests: Chipmunk + cocos2d test: Added PhysicsSprite and other Chipmunk's best practices

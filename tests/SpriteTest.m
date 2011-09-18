@@ -3810,8 +3810,10 @@ Class restartAction()
 -(id) initWithTexture:(CCTexture2D*)texture rect:(CGRect)rect
 {
 	if( (self=[super initWithTexture:texture rect:rect]) ) {
-		isHD_ = ( [texture resolutionType] == kCCResolutionRetinaDisplay );
 		
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+		isHD_ = ( [texture resolutionType] == kCCResolutionRetinaDisplay );
+#endif
 	}
 	
 	return self;

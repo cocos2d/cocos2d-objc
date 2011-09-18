@@ -63,6 +63,7 @@
 		A0B532D113C141FF0072EDA4 /* vec4.c in Sources */ = {isa = PBXBuildFile; fileRef = A0B532B813C141FF0072EDA4 /* vec4.c */; };
 		A0BE62FC140552BD00DAA336 /* CCVertex.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BE62FA140552BD00DAA336 /* CCVertex.h */; };
 		A0BE62FD140552BD00DAA336 /* CCVertex.m in Sources */ = {isa = PBXBuildFile; fileRef = A0BE62FB140552BD00DAA336 /* CCVertex.m */; };
+		A0E95100142698D2009F9607 /* grossini_pvr_rgba8888.pvr in Resources */ = {isa = PBXBuildFile; fileRef = A0E950FF142698D2009F9607 /* grossini_pvr_rgba8888.pvr */; };
 		A0EC4D801403278300EC482A /* Position_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4CAF1403278200EC482A /* Position_uColor.fsh */; };
 		A0EC4D811403278300EC482A /* Position_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4CAF1403278200EC482A /* Position_uColor.fsh */; };
 		A0EC4D821403278300EC482A /* Position_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4CAF1403278200EC482A /* Position_uColor.fsh */; };
@@ -3746,6 +3747,7 @@
 		A0BE62FA140552BD00DAA336 /* CCVertex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCVertex.h; sourceTree = "<group>"; };
 		A0BE62FB140552BD00DAA336 /* CCVertex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCVertex.m; sourceTree = "<group>"; };
 		A0E55417141EAEEE003F1E5A /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
+		A0E950FF142698D2009F9607 /* grossini_pvr_rgba8888.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = grossini_pvr_rgba8888.pvr; sourceTree = "<group>"; };
 		A0EC4CA21403278200EC482A /* Blur.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Blur.fsh; sourceTree = "<group>"; };
 		A0EC4CA31403278200EC482A /* Flower.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Flower.fsh; sourceTree = "<group>"; };
 		A0EC4CA41403278200EC482A /* Flower.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Flower.vsh; sourceTree = "<group>"; };
@@ -5130,6 +5132,7 @@
 				E076E7E71225EDD000DE0DA2 /* grossini_dance_atlas.pvr */,
 				E076E7E81225EDD000DE0DA2 /* grossini_dance_atlas_nomipmap.png */,
 				E076E7E91225EDD000DE0DA2 /* grossini_pvr_rgba4444.pvr */,
+				A0E950FF142698D2009F9607 /* grossini_pvr_rgba8888.pvr */,
 				E076E7EA1225EDD000DE0DA2 /* grossinis_sister1-testalpha.bmp */,
 				E076E7EB1225EDD000DE0DA2 /* grossinis_sister1-testalpha.png */,
 				E076E7EC1225EDD000DE0DA2 /* grossinis_sister1-testalpha.ppng */,
@@ -7116,6 +7119,7 @@
 				E0D44F3B1291BFFB0094708A /* test_image_rgba4444.pvr.gz in Resources */,
 				E02A8538129F11BF00341C97 /* icon.icns in Resources */,
 				E08AA22D12C27DEA000341BD /* MainMenu-NoWindow.xib in Resources */,
+				A0E95100142698D2009F9607 /* grossini_pvr_rgba8888.pvr in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
