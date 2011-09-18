@@ -16,10 +16,6 @@
 
 static int sceneIdx=-1;
 static NSString *transitions[] = {	
-//	@"SpriteZVertex",
-//	@"SpriteBatchNodeZVertex",
-
-	@"SpriteChildrenVisibilityIssue665",
 
 	@"Sprite1",
 	@"SpriteBatchNode1",
@@ -67,6 +63,8 @@ static NSString *transitions[] = {
 	@"SpriteBatchNodeChildrenChildren",
 	@"SpriteNilTexture",
 	@"SpriteSubclass",
+	@"SpriteDoubleResolution",
+
 	@"AnimationCache",
 	@"AnimationCacheFile",
 };
@@ -3798,6 +3796,122 @@ Class restartAction()
 	return @"Testing initWithTexture:rect method";
 }
 @end
+
+#pragma mark -
+#pragma mark SpriteSubclass
+
+@interface DoubleSprite : CCSprite
+{
+	BOOL isHD_;
+}
+@end
+
+@implementation DoubleSprite
+-(id) initWithTexture:(CCTexture2D*)texture rect:(CGRect)rect
+{
+	if( (self=[super initWithTexture:texture rect:rect]) ) {
+		isHD_ = ( [texture resolutionType] == kCCResolutionRetinaDisplay );
+		
+	}
+	
+	return self;
+}
+
+// Called everytime the vertex needs to be updated.
+-(void) setContentSize:(CGSize)size
+{
+	// If Retina Display and Texture is in HD then scale the vertex rect
+	if( CC_CONTENT_SCALE_FACTOR() == 2 && ! isHD_ ) {
+		size.width *= 2;
+		size.height *= 2;
+	}
+	
+	[super setContentSize:size];
+}
+
+// rect used only for the vertex. Called everytime the vertex needs to be updated.
+-(void) setVertexRect:(CGRect)rect
+{
+	// If Retina Display and Texture is in HD then scale the vertex rect
+	if( CC_CONTENT_SCALE_FACTOR() == 2 && ! isHD_ ) {
+		rect.size.width *= 2;
+		rect.size.height *= 2;
+	}
+	
+	[super setVertexRect:rect];
+}
+@end
+
+@implementation SpriteDoubleResolution
+
+-(id) init
+{
+	if( (self=[super init]) ) {
+		
+		CGSize s = [[CCDirector sharedDirector] winSize];
+	
+		//
+		// LEFT: SD sprite
+		//
+		// there is no HD resolution file of grossini_dance_08.
+		DoubleSprite *spriteSD = [DoubleSprite spriteWithFile:@"grossini_dance_08.png"];
+		[self addChild:spriteSD];
+		[spriteSD setPosition:ccp(s.width/4*1,s.height/2)];
+
+		CCSprite *child1_left = [DoubleSprite spriteWithFile:@"grossini_dance_08.png"];
+		[spriteSD addChild:child1_left];
+		[child1_left setPosition:ccp(-30,0)];
+
+		CCSprite *child1_right = [CCSprite spriteWithFile:@"grossini.png"];
+		[spriteSD addChild:child1_right];
+		[child1_left setPosition:ccp( spriteSD.contentSize.height, 0)];
+
+		
+		
+		//
+		// RIGHT: HD sprite
+		//
+		// there is an HD version of grossini.png
+		CCSprite *spriteHD = [CCSprite spriteWithFile:@"grossini.png"];
+		[self addChild:spriteHD];
+		[spriteHD setPosition:ccp(s.width/4*3,s.height/2)];
+		
+		CCSprite *child2_left = [DoubleSprite spriteWithFile:@"grossini_dance_08.png"];
+		[spriteHD addChild:child2_left];
+		[child2_left setPosition:ccp(-30,0)];
+		
+		CCSprite *child2_right = [CCSprite spriteWithFile:@"grossini.png"];
+		[spriteHD addChild:child2_right];
+		[child2_left setPosition:ccp( spriteHD.contentSize.height, 0)];
+		
+		
+		
+		// Actions
+		id scale = [CCScaleBy actionWithDuration:2 scale:0.5];
+		id scale_back = [scale reverse];
+		id seq = [CCSequence actions:scale, scale_back, nil];
+		
+		id seq_copy = [[seq copy] autorelease];
+		
+		[spriteSD runAction:seq];
+		[spriteHD runAction:seq_copy];
+
+		
+	}	
+	return self;
+}
+
+-(NSString *) title
+{
+	return @"Sprite Double resolution";
+}
+
+-(NSString*) subtitle
+{
+	return @"Retina Display. SD (left) should be equal to HD (right)";
+}
+@end
+
 
 #pragma mark -
 #pragma mark AnimationCache

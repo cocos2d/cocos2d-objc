@@ -56,8 +56,7 @@
 #endif
 
 @interface CCSprite ()
--(void)updateTextureCoords:(CGRect)rect;
--(void)updateVertexRect:(CGRect)rect;
+-(void)setTextureCoords:(CGRect)rect;
 -(void)updateBlendFunc;
 @end
 
@@ -301,8 +300,8 @@
 	rectRotated_ = rotated;
 
 	[self setContentSize:untrimmedSize];
-	[self updateTextureCoords:rect];
-	[self updateVertexRect:rect];
+	[self setVertexRect:rect];
+	[self setTextureCoords:rect];
 
 	CGPoint relativeOffset = unflippedOffsetPositionFromCenter_;
 	
@@ -341,12 +340,12 @@
 }
 
 // override this method to generate "double scale" sprites
--(void) updateVertexRect:(CGRect)rect
+-(void) setVertexRect:(CGRect)rect
 {
 	rect_ = rect;
 }
 
--(void)updateTextureCoords:(CGRect)rect
+-(void) setTextureCoords:(CGRect)rect
 {
 	rect = CC_RECT_POINTS_TO_PIXELS(rect);
 

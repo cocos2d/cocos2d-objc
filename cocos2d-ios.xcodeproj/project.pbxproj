@@ -1814,6 +1814,20 @@
 		A0BE5C6614048DFD00DAA336 /* prime.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BE5C0D14048DFD00DAA336 /* prime.h */; };
 		A0BE62D9140535F000DAA336 /* CCVertex.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BE62D6140535B700DAA336 /* CCVertex.h */; };
 		A0BE62DA140535F000DAA336 /* CCVertex.m in Sources */ = {isa = PBXBuildFile; fileRef = A0BE62D7140535B700DAA336 /* CCVertex.m */; };
+		A0DABD5A1426679E00F3FEBE /* grossini_dance_01.png in Resources */ = {isa = PBXBuildFile; fileRef = 508A331E0FBADD5F00D574A2 /* grossini_dance_01.png */; };
+		A0DABD5B1426679E00F3FEBE /* grossini_dance_02.png in Resources */ = {isa = PBXBuildFile; fileRef = 508A331F0FBADD5F00D574A2 /* grossini_dance_02.png */; };
+		A0DABD5C1426679E00F3FEBE /* grossini_dance_03.png in Resources */ = {isa = PBXBuildFile; fileRef = 508A33200FBADD5F00D574A2 /* grossini_dance_03.png */; };
+		A0DABD5D1426679E00F3FEBE /* grossini_dance_04.png in Resources */ = {isa = PBXBuildFile; fileRef = 508A33210FBADD5F00D574A2 /* grossini_dance_04.png */; };
+		A0DABD5E1426679E00F3FEBE /* grossini_dance_05.png in Resources */ = {isa = PBXBuildFile; fileRef = 508A33220FBADD5F00D574A2 /* grossini_dance_05.png */; };
+		A0DABD5F1426679E00F3FEBE /* grossini_dance_06.png in Resources */ = {isa = PBXBuildFile; fileRef = 508A33230FBADD5F00D574A2 /* grossini_dance_06.png */; };
+		A0DABD601426679E00F3FEBE /* grossini_dance_07.png in Resources */ = {isa = PBXBuildFile; fileRef = 508A33240FBADD5F00D574A2 /* grossini_dance_07.png */; };
+		A0DABD611426679E00F3FEBE /* grossini_dance_08.png in Resources */ = {isa = PBXBuildFile; fileRef = 508A33250FBADD5F00D574A2 /* grossini_dance_08.png */; };
+		A0DABD621426679E00F3FEBE /* grossini_dance_09.png in Resources */ = {isa = PBXBuildFile; fileRef = 508A33260FBADD5F00D574A2 /* grossini_dance_09.png */; };
+		A0DABD631426679E00F3FEBE /* grossini_dance_10.png in Resources */ = {isa = PBXBuildFile; fileRef = 508A33270FBADD5F00D574A2 /* grossini_dance_10.png */; };
+		A0DABD641426679E00F3FEBE /* grossini_dance_11.png in Resources */ = {isa = PBXBuildFile; fileRef = 508A33280FBADD5F00D574A2 /* grossini_dance_11.png */; };
+		A0DABD651426679E00F3FEBE /* grossini_dance_12.png in Resources */ = {isa = PBXBuildFile; fileRef = 508A33290FBADD5F00D574A2 /* grossini_dance_12.png */; };
+		A0DABD661426679E00F3FEBE /* grossini_dance_13.png in Resources */ = {isa = PBXBuildFile; fileRef = 508A332A0FBADD5F00D574A2 /* grossini_dance_13.png */; };
+		A0DABD671426679E00F3FEBE /* grossini_dance_14.png in Resources */ = {isa = PBXBuildFile; fileRef = 508A332B0FBADD5F00D574A2 /* grossini_dance_14.png */; };
 		A0E55EE614241719003F1E5A /* b1.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659D0E72DB470085673F /* b1.png */; };
 		A0E55EE714241719003F1E5A /* b2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659E0E72DB470085673F /* b2.png */; };
 		A0E55EE814241719003F1E5A /* f1.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659F0E72DB470085673F /* f1.png */; };
@@ -9544,6 +9558,20 @@
 				A0EC4BEC140323A400EC482A /* PositionTextureA8Color.vsh in Resources */,
 				A0EC4BED140323A400EC482A /* PositionTextureColor.fsh in Resources */,
 				A0EC4BEE140323A400EC482A /* PositionTextureColor.vsh in Resources */,
+				A0DABD5A1426679E00F3FEBE /* grossini_dance_01.png in Resources */,
+				A0DABD5B1426679E00F3FEBE /* grossini_dance_02.png in Resources */,
+				A0DABD5C1426679E00F3FEBE /* grossini_dance_03.png in Resources */,
+				A0DABD5D1426679E00F3FEBE /* grossini_dance_04.png in Resources */,
+				A0DABD5E1426679E00F3FEBE /* grossini_dance_05.png in Resources */,
+				A0DABD5F1426679E00F3FEBE /* grossini_dance_06.png in Resources */,
+				A0DABD601426679E00F3FEBE /* grossini_dance_07.png in Resources */,
+				A0DABD611426679E00F3FEBE /* grossini_dance_08.png in Resources */,
+				A0DABD621426679E00F3FEBE /* grossini_dance_09.png in Resources */,
+				A0DABD631426679E00F3FEBE /* grossini_dance_10.png in Resources */,
+				A0DABD641426679E00F3FEBE /* grossini_dance_11.png in Resources */,
+				A0DABD651426679E00F3FEBE /* grossini_dance_12.png in Resources */,
+				A0DABD661426679E00F3FEBE /* grossini_dance_13.png in Resources */,
+				A0DABD671426679E00F3FEBE /* grossini_dance_14.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
