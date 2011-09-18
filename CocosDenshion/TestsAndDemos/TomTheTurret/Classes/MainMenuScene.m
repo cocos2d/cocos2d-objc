@@ -34,7 +34,7 @@
     if ((self = [super init])) {
         
         // Add a sprite sheet based on the loaded texture and add it to the scene
-        self.batchNode = [CCSpriteBatchNode batchNodeWithTexture:[[CCTextureCache sharedTextureCache] addImage:@"sprites.png"]];
+        self.batchNode = [CCSpriteBatchNode batchNodeWithFile:@"sprites.png"];
         [self addChild:_batchNode];
         
         // Add main background to scene

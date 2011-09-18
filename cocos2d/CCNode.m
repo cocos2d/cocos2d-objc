@@ -678,22 +678,36 @@
 			s = sinf(radians);
 		}
 		
-		// correct order: translate, rotate, scale
+		BOOL needsSkewMatrix = ( skewX_ || skewY_ );
+
+		
+		// optimization:
+		// inline anchor point calculation if skew is not needed
+		if( ! needsSkewMatrix ) {
+			if( ! CGPointEqualToPoint(anchorPointInPoints_, CGPointZero) ){
+				x += c * -anchorPointInPoints_.x * scaleX_ + -s * -anchorPointInPoints_.y * scaleY_;
+				y += s * -anchorPointInPoints_.x * scaleX_ +  c * -anchorPointInPoints_.y * scaleY_;
+			}
+		}
+
+		
+		// Build Transform Matrix
 		transform_ = CGAffineTransformMake( c * scaleX_,  s * scaleX_,
 										   -s * scaleY_, c * scaleY_,
 										   x, y );
 
-		// XXX: skew after scale ?? a mathematician should verify this
-		if( skewX_ || skewY_ ) {
+		// XXX: Could the Skew be inlined too ?
+		// If skew is needed, apply skew and then anchor point
+		if( needsSkewMatrix ) {
 			CGAffineTransform skewMatrix = CGAffineTransformMake(1.0f, tanf(CC_DEGREES_TO_RADIANS(skewY_)),
 																 tanf(CC_DEGREES_TO_RADIANS(skewX_)), 1.0f,
 																 0.0f, 0.0f );
 			transform_ = CGAffineTransformConcat(skewMatrix, transform_);
-		}
 		
-		// adjust anchor point
-		if( ! CGPointEqualToPoint(anchorPointInPoints_, CGPointZero) )
-			transform_ = CGAffineTransformTranslate(transform_, -anchorPointInPoints_.x, -anchorPointInPoints_.y);
+			// adjust anchor point
+			if( ! CGPointEqualToPoint(anchorPointInPoints_, CGPointZero) )
+				transform_ = CGAffineTransformTranslate(transform_, -anchorPointInPoints_.x, -anchorPointInPoints_.y);
+		}
 
 		isTransformDirty_ = NO;
 	}
