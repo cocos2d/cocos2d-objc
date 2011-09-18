@@ -45,10 +45,14 @@
 
 	// Turn on display FPS
 	[director setDisplayFPS:YES];	
+
+	// 2D projection
+	[director setProjection:kCCDirectorProjection2D];
+//	[director setProjection:kCCDirectorProjection3D];
 	
 	// Enables High Res mode (Retina Display) on iPhone 4 and maintains low res on all other devices
-	if ([UIScreen instancesRespondToSelector:@selector(scale)])
-		[director setContentScaleFactor:[[UIScreen mainScreen] scale]];
+	if( ! [director enableRetinaDisplay:NO] )
+		CCLOG(@"Retina Display Not supported");
 	
 	CCScene *scene = [CCScene node];
 	[scene addChild: [MenuLayer menuWithEntryID:0]];
