@@ -245,8 +245,6 @@ const NSUInteger defaultCapacity = 29;
 
 	[children_ makeObjectsPerformSelector:@selector(updateTransform)];
 	
-	ccGLEnableVertexAttribs( kCCVertexAttribFlag_PosColorTex );
-
 	ccGLBlendFunc( blendFunc_.src, blendFunc_.dst );
 	
 	ccGLUseProgram( shaderProgram_->program_ );	
