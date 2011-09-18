@@ -62,13 +62,17 @@
 	// attach the openglView to the director
 	[director setOpenGLView:glView];
 	
-//	// Enables High Res mode (Retina Display) on iPhone 4 and maintains low res on all other devices
-	if( ! [director enableRetinaDisplay:YES] )
-		CCLOG(@"Retina Display Not supported");
+	// Enables High Res mode (Retina Display) on iPhone 4 and maintains low res on all other devices
+//	if( ! [director enableRetinaDisplay:YES] )
+//		CCLOG(@"Retina Display Not supported");
 		
 	[director setAnimationInterval:1.0/60];
 	[director setDisplayFPS:YES];
 	
+	
+	// enable multi touches
+	[glView setMultipleTouchEnabled:YES];
+
 	
 	// make the OpenGLView a child of the view controller
 	[viewController_ setView:glView];
@@ -89,8 +93,12 @@
 	// Removes the startup flicker
 	[self removeStartupFlicker];
 	
+	// create scene
+	CCScene *scene = [CCScene node];
+	[scene addChild:[HelloWorldLayer node]];
+
 	// Run the intro Scene
-	[[CCDirector sharedDirector] runWithScene: [HelloWorldLayer scene]];
+	[[CCDirector sharedDirector] runWithScene:scene];
 }
 
 

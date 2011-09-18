@@ -6,9 +6,11 @@
 //  Copyright ___ORGANIZATIONNAME___ ___YEAR___. All rights reserved.
 //
 
+
 //
-// RootViewController + iAd
-// If you want to support iAd, use this class as the controller of your iAd
+// RootViewController
+//
+// Use this class to control rotation and integtration with iAd and any other View Controller
 //
 
 #import "cocos2d.h"

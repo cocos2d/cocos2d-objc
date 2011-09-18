@@ -31,13 +31,6 @@
 			<key>Path</key>
 			<string>main.m</string>
 		</dict>	
-		<key>GameConfig.h</key>
-		<dict>
-			<key>Path</key>
-			<string>GameConfig.h</string>
-			<key>TargetIndices</key>
-			<array/>
-		</dict>
 		<key>HelloWorldLayer.h</key>
 		<dict>
 			<key>Path</key>
@@ -98,7 +91,6 @@
 		<string>RootViewController.m</string>
 		<string>HelloWorldLayer.h</string>
 		<string>HelloWorldLayer.m</string>
-		<string>GameConfig.h</string>
 		<string>Resources/grossini_dance_atlas.png</string>
 	</array>
 	<key>Options</key>

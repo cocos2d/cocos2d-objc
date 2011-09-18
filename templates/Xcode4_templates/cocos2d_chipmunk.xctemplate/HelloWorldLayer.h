@@ -7,21 +7,29 @@
 //
 
 
+
 // When you import this file, you import all the cocos2d classes
 #import "cocos2d.h"
 
 // Importing Chipmunk headers
 #import "chipmunk.h"
 
-// HelloWorldLayer
 @interface HelloWorldLayer : CCLayer
 {
-	cpSpace *space;
+	CCTexture2D *spriteTexture_; // weak ref
+	
+	cpSpace *space_; // strong ref
+	
+	cpShape *walls_[4];
+}
+@end
+
+
+@interface PhysicsSprite : CCSprite
+{
+	cpBody *body_;	// strong ref
 }
 
-// returns a CCScene that contains the HelloWorldLayer as the only child
-+(CCScene *) scene;
--(void) step: (ccTime) dt;
--(void) addNewSpriteX:(float)x y:(float)y;
+-(void) setPhysicsBody:(cpBody*)body;
 
 @end
