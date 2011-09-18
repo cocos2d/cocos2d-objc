@@ -56,7 +56,7 @@ SimpleAudioEngine *soundEngine;
         self.projectiles = [[[NSMutableArray alloc] init] autorelease];
         
         // Add a sprite sheet based on the loaded texture and add it to the scene
-        self.batchNode = [CCSpriteBatchNode batchNodeWithTexture:[[CCTextureCache sharedTextureCache] addImage:@"sprites.png"]];
+        self.batchNode = [CCSpriteBatchNode batchNodeWithFile:@"sprites.png"];
         [self addChild:_batchNode z:-1];
         
         // Add main background to scene
@@ -373,10 +373,7 @@ SimpleAudioEngine *soundEngine;
         int amtRed = ((1.0f-percentage)*maxColor)+colorBuffer;
         int amtGreen = (percentage*maxColor)+colorBuffer;
         
-        glEnable(GL_LINE_SMOOTH);
-                
-        glLineWidth(lineHeight);        
-        glColor4ub(amtRed,amtGreen,0,255);
+		ccDrawColor4B(amtRed, amtGreen, 0, 255);
         ccDrawLine(ccp(actualX, startY), ccp(actualX, actualY));
     }
     
