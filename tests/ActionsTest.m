@@ -304,12 +304,11 @@ Class restartAction()
 	[self centerSprites:3];
 	
 	id actionTo = [CCScaleTo actionWithDuration: 2 scale:0.5f];
-	id actionBy = [CCScaleBy actionWithDuration:2  scale: 2];
-	id actionBy2 = [CCScaleBy actionWithDuration:2 scaleX:0.25f scaleY:4.5f];
-	id actionByBack = [actionBy reverse];
+	id actionBy = [CCScaleBy actionWithDuration:2  scaleX:1 scaleY:10];
+	id actionBy2 = [CCScaleBy actionWithDuration:2 scaleX:5 scaleY:1];
 
-	[tamara runAction: actionTo];
-	[grossini runAction: [CCSequence actions:actionBy, actionByBack, nil]];
+	[grossini runAction: actionTo];
+	[tamara runAction: [CCSequence actions:actionBy, [actionBy reverse], nil]];
 	
 	[kathia runAction: [CCSequence actions:actionBy2, [actionBy2 reverse], nil]];
 	

@@ -251,6 +251,11 @@
 {}
 @end
 
+@interface SpriteDoubleResolution : SpriteDemo
+{}
+@end
+
+
 @interface AnimationCache : SpriteDemo
 {}
 @end

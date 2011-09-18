@@ -248,18 +248,29 @@
  */
 -(void)updateTransform;
 
-/** updates the texture rect of the CCSprite in points.
- */
--(void) setTextureRect:(CGRect) rect;
-/** updates the texture rect, rectRotated and untrimmed size of the CCSprite in points
- */
--(void) setTextureRect:(CGRect)rect rotated:(BOOL)rotated untrimmedSize:(CGSize)size;
-
 /** set the sprite batch node.
  If the batchNode is nil, then it won't use a batch for rendering.
  @since v0.99.0
  */
 -(void) setBatchNode:(CCSpriteBatchNode*)batchNode;
+
+#pragma mark CCSprite - Texture methods
+
+/** set the texture rect of the CCSprite in points. 
+ It will call setTextureRect:rotated:untrimmedSize with rotated = NO, and utrimmedSize = rect.size.
+ */
+-(void) setTextureRect:(CGRect) rect;
+
+/** set the texture rect, rectRotated and untrimmed size of the CCSprite in points.
+ It will update the texture coordinates and the vertex rectangle.
+ */
+-(void) setTextureRect:(CGRect)rect rotated:(BOOL)rotated untrimmedSize:(CGSize)size;
+
+/** set the vertex rect.
+ It will be called internally by setTextureRect. Useful if you want to create 2x images from SD images in Retina Display.
+ Do not call it manually. Use setTextureRect instead.
+ */
+-(void)setVertexRect:(CGRect)rect;
 
 
 #pragma mark CCSprite - Frames
