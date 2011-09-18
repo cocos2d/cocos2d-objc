@@ -372,6 +372,8 @@
 {
 	[super draw];
 
+	ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position | kCCVertexAttribFlag_Color );
+
 	//
 	// Attributes
 	//
