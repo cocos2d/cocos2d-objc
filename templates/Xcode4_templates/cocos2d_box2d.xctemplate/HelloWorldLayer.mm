@@ -90,9 +90,13 @@ enum {
 	if( (self=[super init])) {
 		
 		// enable events
+		
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 		self.isTouchEnabled = YES;
 		self.isAccelerometerEnabled = YES;
-		
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+		self.isMouseEnabled = YES;
+#endif
 		CGSize s = [CCDirector sharedDirector].winSize;
 		
 		// init physics
@@ -142,9 +146,8 @@ enum {
 {
 	CCMenuItemLabel *reset = [CCMenuItemFont itemFromString:@"Reset" block:^(id sender){
 		CCScene *s = [CCScene node];
-		id child = [[[HelloWorldLayer class] alloc] init];
+		id child = [HelloWorldLayer node];
 		[s addChild:child];
-		[child release];
 		[[CCDirector sharedDirector] replaceScene: s];
 	}];
 	
@@ -177,10 +180,10 @@ enum {
 	
 	uint32 flags = 0;
 	flags += b2Draw::e_shapeBit;
-//		flags += b2Draw::e_jointBit;
-//		flags += b2Draw::e_aabbBit;
-//		flags += b2Draw::e_pairBit;
-//		flags += b2Draw::e_centerOfMassBit;
+	//		flags += b2Draw::e_jointBit;
+	//		flags += b2Draw::e_aabbBit;
+	//		flags += b2Draw::e_pairBit;
+	//		flags += b2Draw::e_centerOfMassBit;
 	m_debugDraw->SetFlags(flags);		
 	
 	
@@ -267,8 +270,6 @@ enum {
 	[sprite setPhysicsBody:body];
 }
 
-
-
 -(void) update: (ccTime) dt
 {
 	//It is recommended that a fixed time step is used with Box2D for stability
@@ -284,6 +285,8 @@ enum {
 	world->Step(dt, velocityIterations, positionIterations);	
 }
 
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+
 - (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
 	//Add a new body/atlas sprite at the touched location
@@ -296,23 +299,15 @@ enum {
 	}
 }
 
-- (void)accelerometer:(UIAccelerometer*)accelerometer didAccelerate:(UIAcceleration*)acceleration
-{	
-	static float prevX=0, prevY=0;
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+
+- (BOOL) ccMouseDown:(NSEvent *)event
+{
+	CGPoint location = [(CCDirectorMac*)[CCDirector sharedDirector] convertEventToGL:event];
+	[self addNewSpriteAtPosition: location];
 	
-	//#define kFilterFactor 0.05f
-#define kFilterFactor 1.0f	// don't use filter. the code is here just as an example
-	
-	float accelX = (float) acceleration.x * kFilterFactor + (1- kFilterFactor)*prevX;
-	float accelY = (float) acceleration.y * kFilterFactor + (1- kFilterFactor)*prevY;
-	
-	prevX = accelX;
-	prevY = accelY;
-	
-	// accelerometer values are in "Portrait" mode. Change them to Landscape left
-	// multiply the gravity by 10
-	b2Vec2 gravity( -accelY * 10, accelX * 10);
-	
-	world->SetGravity( gravity );
+	return YES;
 }
+#endif
+
 @end

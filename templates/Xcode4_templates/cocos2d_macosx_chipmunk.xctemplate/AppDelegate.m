@@ -28,8 +28,10 @@
 	// Enable "moving" mouse event. Default no.
 	[window_ setAcceptsMouseMovedEvents:NO];
 	
+	CCScene *scene = [CCScene node];
+	[scene addChild:[HelloWorldLayer node]];
 	
-	[director runWithScene:[HelloWorldLayer scene]];
+	[director runWithScene:scene];
 }
 
 - (BOOL) applicationShouldTerminateAfterLastWindowClosed: (NSApplication *) theApplication
