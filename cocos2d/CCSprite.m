@@ -42,6 +42,7 @@
 #import "Support/CGPointExtension.h"
 #import "Support/TransformUtils.h"
 #import "Support/CCProfiling.h"
+#import "Support/OpenGL_Internal.h"
 
 // external
 #import "kazmath/GL/matrix.h"
@@ -537,6 +538,8 @@
 
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 	
+	CHECK_GL_ERROR_DEBUG();
+
 	
 #if CC_SPRITE_DEBUG_DRAW == 1
 	// draw bounding box
