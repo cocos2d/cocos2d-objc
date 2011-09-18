@@ -28,6 +28,7 @@ enum {
 	body_ = body;
 }
 
+// this method will only get called if the sprite is batched.
 // return YES if the physics values (angles, position ) changed
 // If you return NO, then nodeToParentTransform won't be called.
 -(BOOL) dirty
@@ -53,13 +54,15 @@ enum {
 	float c = cosf(radians);
 	float s = sinf(radians);
 	
+	if( ! CGPointEqualToPoint(anchorPointInPoints_, CGPointZero) ){
+		x += c*-anchorPointInPoints_.x + -s*-anchorPointInPoints_.y;
+		y += s*-anchorPointInPoints_.x + c*-anchorPointInPoints_.y;
+	}
+
 	// Rot, Translate Matrix
 	transform_ = CGAffineTransformMake( c,  s,
 									   -s,	c,
-									   x,	y );
-	
-	if( ! CGPointEqualToPoint(anchorPointInPoints_, CGPointZero) )
-		transform_ = CGAffineTransformTranslate(transform_, -anchorPointInPoints_.x, -anchorPointInPoints_.y);
+									   x,	y );	
 	
 	return transform_;
 }
@@ -159,15 +162,13 @@ enum {
 	
 	CGSize s = [[CCDirector sharedDirector] winSize];
 
-	// Define the gravity vector.
 	b2Vec2 gravity;
 	gravity.Set(0.0f, -10.0f);
-	
+	world = new b2World(gravity);
+
+
 	// Do we want to let bodies sleep?
-	bool doSleep = true;
-	
-	// Construct a world object, which will hold and simulate the rigid bodies.
-	world = new b2World(gravity, doSleep);
+	world->SetAllowSleeping(true);
 	
 	world->SetContinuousPhysics(true);
 	
@@ -348,9 +349,13 @@ enum {
 	EAGLView *view = [director openGLView];
 	[view setMultipleTouchEnabled:YES];
 	
+	// 2D projection
+	[director setProjection:kCCDirectorProjection2D];
+//	[director setProjection:kCCDirectorProjection3D];
+	
 	// Enables High Res mode (Retina Display) on iPhone 4 and maintains low res on all other devices
-	if ([UIScreen instancesRespondToSelector:@selector(scale)])
-		[director setContentScaleFactor:[[UIScreen mainScreen] scale]];
+	if( ! [director enableRetinaDisplay:NO] )
+		CCLOG(@"Retina Display Not supported");
 	
 	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
 	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
