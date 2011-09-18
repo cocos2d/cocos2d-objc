@@ -150,8 +150,8 @@ do	{																							\
 #define CC_DIRECTOR_INIT(__WINSIZE__)															\
 do	{																							\
 	NSRect frameRect = NSMakeRect(0, 0, (__WINSIZE__).width, (__WINSIZE__).height);				\
-	self.window = [[MacWindow alloc] initWithFrame:frameRect fullscreen:NO];					\
-	self.glView = [[MacGLView alloc] initWithFrame:frameRect shareContext:nil];					\
+	window_ = [[MacWindow alloc] initWithFrame:frameRect fullscreen:NO];						\
+	glView_ = [[MacGLView alloc] initWithFrame:frameRect shareContext:nil];						\
 	[self.window setContentView:self.glView];													\
 	CCDirector *__director = [CCDirector sharedDirector];										\
 	[__director setDisplayFPS:NO];																\
