@@ -4095,7 +4095,7 @@ Class restartAction()
 
 
 #pragma mark -
-#pragma mark AppDelegate
+#pragma mark AppDelegate - iOS
 
 // CLASS IMPLEMENTATIONS
 

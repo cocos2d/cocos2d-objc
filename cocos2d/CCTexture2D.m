@@ -722,7 +722,7 @@ static BOOL PVRHaveAlphaPremultiplied_ = NO;
 {
 	NSAssert( width_ == ccNextPOT(width_) && height_ == ccNextPOT(height_), @"Mimpap texture only works in POT textures");
 	ccGLBindTexture2D( name_ );
-	ccGLGenerateMipmap(GL_TEXTURE_2D);
+	glGenerateMipmap(GL_TEXTURE_2D);
 }
 
 -(void) setTexParameters: (ccTexParams*) texParams
