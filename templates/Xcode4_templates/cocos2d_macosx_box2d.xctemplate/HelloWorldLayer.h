@@ -1,9 +1,9 @@
 //
 //  HelloWorldLayer.h
-//  t6mb
+//  ___PROJECTNAME___
 //
-//  Created by Ricardo Quesada on 3/24/11.
-//  Copyright __MyCompanyName__ 2011. All rights reserved.
+//  Created by ___FULLUSERNAME___ on ___DATE___.
+//  Copyright ___ORGANIZATIONNAME___ ___YEAR___. All rights reserved.
 //
 
 
@@ -15,13 +15,16 @@
 // HelloWorldLayer
 @interface HelloWorldLayer : CCLayer
 {
-	b2World* world;
-	GLESDebugDraw *m_debugDraw;
+	CCTexture2D *spriteTexture_;	// weak ref
+	b2World* world;					// strong ref
+	GLESDebugDraw *m_debugDraw;		// strong ref
 }
+@end
 
-// returns a CCScene that contains the HelloWorldLayer as the only child
-+(CCScene *) scene;
-// adds a new sprite at a given coordinate
--(void) addNewSpriteWithCoords:(CGPoint)p;
 
+@interface PhysicsSprite : CCSprite
+{
+	b2Body *body_;	// strong ref
+}
+-(void) setPhysicsBody:(b2Body*)body;
 @end

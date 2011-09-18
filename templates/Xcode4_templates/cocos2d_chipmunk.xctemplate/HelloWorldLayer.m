@@ -91,8 +91,12 @@ void removeShape( cpBody *body, cpShape *shape, void *data )
 	if( (self=[super init])) {
 		
 		// enable events
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 		self.isTouchEnabled = YES;
 		self.isAccelerometerEnabled = YES;
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+		self.isMouseEnabled = YES;
+#endif
 		
 		CGSize s = [[CCDirector sharedDirector] winSize];
 		
@@ -175,13 +179,6 @@ void removeShape( cpBody *body, cpShape *shape, void *data )
 	
 }
 
--(void) onEnter
-{
-	[super onEnter];
-	
-	[[UIAccelerometer sharedAccelerometer] setUpdateInterval:(1.0 / 60)];
-}
-
 -(void) update:(ccTime) delta
 {
 	// Should use a fixed size step based on the animation interval.
@@ -197,9 +194,8 @@ void removeShape( cpBody *body, cpShape *shape, void *data )
 {
 	CCMenuItemLabel *reset = [CCMenuItemFont itemFromString:@"Reset" block:^(id sender){
 		CCScene *s = [CCScene node];
-		id child = [[HelloWorldLayer alloc] init];
+		id child = [HelloWorldLayer node];
 		[s addChild:child];
-		[child release];
 		[[CCDirector sharedDirector] replaceScene: s];
 	}];
 	
@@ -249,6 +245,8 @@ void removeShape( cpBody *body, cpShape *shape, void *data )
 	[sprite setPhysicsBody:body];
 }
 
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+
 - (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
 	for( UITouch *touch in touches ) {
@@ -276,4 +274,16 @@ void removeShape( cpBody *body, cpShape *shape, void *data )
 	
 	space_->gravity = ccpMult(v, 200);
 }
+
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+
+-(BOOL) ccMouseDown:(NSEvent *)event
+{
+	CGPoint location = [(CCDirectorMac*)[CCDirector sharedDirector] convertEventToGL:event];
+	[self addNewSpriteAtPosition:location];
+	
+	return YES;
+}
+
+#endif
 @end

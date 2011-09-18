@@ -1,10 +1,11 @@
 //
-//  AppDelegate.m
+//  AppDelegate.mm
 //  ___PROJECTNAME___
 //
 //  Created by ___FULLUSERNAME___ on ___DATE___.
 //  Copyright ___ORGANIZATIONNAME___ ___YEAR___. All rights reserved.
 //
+
 
 #import "AppDelegate.h"
 #import "HelloWorldLayer.h"
@@ -28,8 +29,10 @@
 	// Enable "moving" mouse event. Default no.
 	[window_ setAcceptsMouseMovedEvents:NO];
 	
+	CCScene *scene = [CCScene node];
+	[scene addChild:[HelloWorldLayer node]];
 	
-	[director runWithScene:[HelloWorldLayer scene]];
+	[director runWithScene:scene];
 }
 
 - (BOOL) applicationShouldTerminateAfterLastWindowClosed: (NSApplication *) theApplication

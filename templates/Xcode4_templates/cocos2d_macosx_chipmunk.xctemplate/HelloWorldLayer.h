@@ -1,10 +1,11 @@
 //
 //  HelloWorldLayer.h
-//  t5mc
+//  ___PROJECTNAME___
 //
-//  Created by Ricardo Quesada on 3/24/11.
-//  Copyright __MyCompanyName__ 2011. All rights reserved.
+//  Created by ___FULLUSERNAME___ on ___DATE___.
+//  Copyright ___ORGANIZATIONNAME___ ___YEAR___. All rights reserved.
 //
+
 
 
 // When you import this file, you import all the cocos2d classes
@@ -13,15 +14,22 @@
 // Importing Chipmunk headers
 #import "chipmunk.h"
 
-// HelloWorldLayer
 @interface HelloWorldLayer : CCLayer
 {
-	cpSpace *space;
+	CCTexture2D *spriteTexture_; // weak ref
+	
+	cpSpace *space_; // strong ref
+	
+	cpShape *walls_[4];
+}
+@end
+
+
+@interface PhysicsSprite : CCSprite
+{
+	cpBody *body_;	// strong ref
 }
 
-// returns a CCScene that contains the HelloWorldLayer as the only child
-+(CCScene *) scene;
--(void) step: (ccTime) dt;
--(void) addNewSpriteX:(float)x y:(float)y;
+-(void) setPhysicsBody:(cpBody*)body;
 
 @end

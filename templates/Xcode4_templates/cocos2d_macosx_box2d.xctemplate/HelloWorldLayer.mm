@@ -1,11 +1,10 @@
 //
 //  HelloWorldLayer.mm
-//  t6mb
+//  ___PROJECTNAME___
 //
-//  Created by Ricardo Quesada on 3/24/11.
-//  Copyright __MyCompanyName__ 2011. All rights reserved.
+//  Created by ___FULLUSERNAME___ on ___DATE___.
+//  Copyright ___ORGANIZATIONNAME___ ___YEAR___. All rights reserved.
 //
-
 
 // Import the interfaces
 #import "HelloWorldLayer.h"
@@ -16,119 +15,215 @@
 //to define the ratio so that your most common object type is 1x1 metre.
 #define PTM_RATIO 32
 
-// enums that will be used as tags
 enum {
-	kTagTileMap = 1,
-	kTagBatchNode = 1,
-	kTagAnimation1 = 1,
+	kTagParentNode = 1,
 };
 
 
-// HelloWorldLayer implementation
-@implementation HelloWorldLayer
+#pragma mark - PhysicsSprite
+@implementation PhysicsSprite
 
-+(CCScene *) scene
+-(void) setPhysicsBody:(b2Body *)body
 {
-	// 'scene' is an autorelease object.
-	CCScene *scene = [CCScene node];
-	
-	// 'layer' is an autorelease object.
-	HelloWorldLayer *layer = [HelloWorldLayer node];
-	
-	// add layer as a child to scene
-	[scene addChild: layer];
-	
-	// return the scene
-	return scene;
+	body_ = body;
 }
 
-// on "init" you need to initialize your instance
+// this method will only get called if the sprite is batched.
+// return YES if the physics values (angles, position ) changed
+// If you return NO, then nodeToParentTransform won't be called.
+-(BOOL) dirty
+{
+	return YES;
+}
+
+// returns the transform matrix according the Chipmunk Body values
+-(CGAffineTransform) nodeToParentTransform
+{	
+	b2Vec2 pos  = body_->GetPosition();
+	
+	float x = pos.x * PTM_RATIO;
+	float y = pos.y * PTM_RATIO;
+	
+	if ( !isRelativeAnchorPoint_ ) {
+		x += anchorPointInPoints_.x;
+		y += anchorPointInPoints_.y;
+	}
+	
+	// Make matrix
+	float radians = body_->GetAngle();
+	float c = cosf(radians);
+	float s = sinf(radians);
+	
+	if( ! CGPointEqualToPoint(anchorPointInPoints_, CGPointZero) ){
+		x += c*-anchorPointInPoints_.x + -s*-anchorPointInPoints_.y;
+		y += s*-anchorPointInPoints_.x + c*-anchorPointInPoints_.y;
+	}
+	
+	// Rot, Translate Matrix
+	transform_ = CGAffineTransformMake( c,  s,
+									   -s,	c,
+									   x,	y );	
+	
+	return transform_;
+}
+
+-(void) dealloc
+{
+	// 
+	[super dealloc];
+}
+
+@end
+
+#pragma mark - HelloWorldLayer
+
+@interface HelloWorldLayer()
+-(void) initPhysics;
+-(void) addNewSpriteAtPosition:(CGPoint)p;
+-(void) createResetButton;
+@end
+
+@implementation HelloWorldLayer
+
 -(id) init
 {
-	// always call "super" init
-	// Apple recommends to re-assign "self" with the "super" return value
 	if( (self=[super init])) {
 		
-		// enable touches
+		// enable events
+		
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+		self.isTouchEnabled = YES;
+		self.isAccelerometerEnabled = YES;
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 		self.isMouseEnabled = YES;
-				
-		CGSize screenSize = [CCDirector sharedDirector].winSize;
-		CCLOG(@"Screen width %0.2f screen height %0.2f",screenSize.width,screenSize.height);
+#endif
+		CGSize s = [CCDirector sharedDirector].winSize;
 		
-		// Define the gravity vector.
-		b2Vec2 gravity;
-		gravity.Set(0.0f, -10.0f);
+		// init physics
+		[self initPhysics];
 		
-		// Do we want to let bodies sleep?
-		// This will speed up the physics simulation
-		bool doSleep = true;
-		
-		// Construct a world object, which will hold and simulate the rigid bodies.
-		world = new b2World(gravity, doSleep);
-		
-		world->SetContinuousPhysics(true);
-		
-		// Debug Draw functions
-		m_debugDraw = new GLESDebugDraw( PTM_RATIO );
-		world->SetDebugDraw(m_debugDraw);
-		
-		uint32 flags = 0;
-		flags += b2Draw::e_shapeBit;
-//		flags += b2Draw::e_jointBit;
-//		flags += b2Draw::e_aabbBit;
-//		flags += b2Draw::e_pairBit;
-//		flags += b2Draw::e_centerOfMassBit;
-		m_debugDraw->SetFlags(flags);		
-		
-		
-		// Define the ground body.
-		b2BodyDef groundBodyDef;
-		groundBodyDef.position.Set(0, 0); // bottom-left corner
-		
-		// Call the body factory which allocates memory for the ground body
-		// from a pool and creates the ground box shape (also from a pool).
-		// The body is also added to the world.
-		b2Body* groundBody = world->CreateBody(&groundBodyDef);
-		
-		// Define the ground box shape.
-		b2EdgeShape groundBox;		
-		
-		// bottom
-		groundBox.Set(b2Vec2(0,0), b2Vec2(screenSize.width/PTM_RATIO,0));
-		groundBody->CreateFixture(&groundBox,0);
-		
-		// top
-		groundBox.Set(b2Vec2(0,screenSize.height/PTM_RATIO), b2Vec2(screenSize.width/PTM_RATIO,screenSize.height/PTM_RATIO));
-		groundBody->CreateFixture(&groundBox,0);
-		
-		// left
-		groundBox.Set(b2Vec2(0,screenSize.height/PTM_RATIO), b2Vec2(0,0));
-		groundBody->CreateFixture(&groundBox,0);
-		
-		// right
-		groundBox.Set(b2Vec2(screenSize.width/PTM_RATIO,screenSize.height/PTM_RATIO), b2Vec2(screenSize.width/PTM_RATIO,0));
-		groundBody->CreateFixture(&groundBox,0);
-		
+		// create reset button
+		[self createResetButton];
 		
 		//Set up sprite
 		
-		CCSpriteBatchNode *batch = [CCSpriteBatchNode batchNodeWithFile:@"blocks.png" capacity:150];
-		[self addChild:batch z:0 tag:kTagBatchNode];
+#if 1
+		// Use batch node. Faster
+		CCSpriteBatchNode *parent = [CCSpriteBatchNode batchNodeWithFile:@"blocks.png" capacity:100];
+		spriteTexture_ = [parent texture];
+#else
+		// doesn't use batch node. Slower
+		spriteTexture_ = [[CCTextureCache sharedTextureCache] addImage:@"blocks.png"];
+		CCNode *parent = [CCNode node];
+#endif
+		[self addChild:parent z:0 tag:kTagParentNode];
 		
-		[self addNewSpriteWithCoords:ccp(screenSize.width/2, screenSize.height/2)];
+		
+		[self addNewSpriteAtPosition:ccp(s.width/2, s.height/2)];
 		
 		CCLabelTTF *label = [CCLabelTTF labelWithString:@"Tap screen" fontName:@"Marker Felt" fontSize:32];
 		[self addChild:label z:0];
 		[label setColor:ccc3(0,0,255)];
-		label.position = ccp( screenSize.width/2, screenSize.height-50);
+		label.position = ccp( s.width/2, s.height-50);
 		
-		[self schedule: @selector(tick:)];
+		[self scheduleUpdate];
 	}
 	return self;
 }
 
+-(void) dealloc
+{
+	delete world;
+	world = NULL;
+	
+	delete m_debugDraw;
+	m_debugDraw = NULL;
+	
+	[super dealloc];
+}	
+
+-(void) createResetButton
+{
+	CCMenuItemLabel *reset = [CCMenuItemFont itemFromString:@"Reset" block:^(id sender){
+		CCScene *s = [CCScene node];
+		id child = [HelloWorldLayer node];
+		[s addChild:child];
+		[[CCDirector sharedDirector] replaceScene: s];
+	}];
+	
+	CCMenu *menu = [CCMenu menuWithItems:reset, nil];
+	
+	CGSize s = [[CCDirector sharedDirector] winSize];
+	
+	menu.position = ccp(s.width/2, 30);
+	[self addChild: menu z:-1];	
+	
+}
+
+-(void) initPhysics
+{
+	
+	CGSize s = [[CCDirector sharedDirector] winSize];
+	
+	b2Vec2 gravity;
+	gravity.Set(0.0f, -10.0f);
+	world = new b2World(gravity);
+	
+	
+	// Do we want to let bodies sleep?
+	world->SetAllowSleeping(true);
+	
+	world->SetContinuousPhysics(true);
+	
+	m_debugDraw = new GLESDebugDraw( PTM_RATIO );
+	world->SetDebugDraw(m_debugDraw);
+	
+	uint32 flags = 0;
+	flags += b2Draw::e_shapeBit;
+	//		flags += b2Draw::e_jointBit;
+	//		flags += b2Draw::e_aabbBit;
+	//		flags += b2Draw::e_pairBit;
+	//		flags += b2Draw::e_centerOfMassBit;
+	m_debugDraw->SetFlags(flags);		
+	
+	
+	// Define the ground body.
+	b2BodyDef groundBodyDef;
+	groundBodyDef.position.Set(0, 0); // bottom-left corner
+	
+	// Call the body factory which allocates memory for the ground body
+	// from a pool and creates the ground box shape (also from a pool).
+	// The body is also added to the world.
+	b2Body* groundBody = world->CreateBody(&groundBodyDef);
+	
+	// Define the ground box shape.
+	b2EdgeShape groundBox;		
+	
+	// bottom
+	
+	groundBox.Set(b2Vec2(0,0), b2Vec2(s.width/PTM_RATIO,0));
+	groundBody->CreateFixture(&groundBox,0);
+	
+	// top
+	groundBox.Set(b2Vec2(0,s.height/PTM_RATIO), b2Vec2(s.width/PTM_RATIO,s.height/PTM_RATIO));
+	groundBody->CreateFixture(&groundBox,0);
+	
+	// left
+	groundBox.Set(b2Vec2(0,s.height/PTM_RATIO), b2Vec2(0,0));
+	groundBody->CreateFixture(&groundBox,0);
+	
+	// right
+	groundBox.Set(b2Vec2(s.width/PTM_RATIO,s.height/PTM_RATIO), b2Vec2(s.width/PTM_RATIO,0));
+	groundBody->CreateFixture(&groundBox,0);
+}
+
 -(void) draw
 {
+	//
+	// IMPORTANT:
+	// This is only for debug purposes
+	// It is recommend to disable it
+	//
 	[super draw];
 	
 	ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position );
@@ -138,21 +233,19 @@ enum {
 	world->DrawDebugData();	
 	
 	kmGLPopMatrix();
-	
-	CHECK_GL_ERROR_DEBUG();
 }
 
--(void) addNewSpriteWithCoords:(CGPoint)p
+-(void) addNewSpriteAtPosition:(CGPoint)p
 {
 	CCLOG(@"Add sprite %0.2f x %02.f",p.x,p.y);
-	CCSpriteBatchNode *batch = (CCSpriteBatchNode*) [self getChildByTag:kTagBatchNode];
+	CCNode *parent = [self getChildByTag:kTagParentNode];
 	
 	//We have a 64x64 sprite sheet with 4 different 32x32 images.  The following code is
 	//just randomly picking one of the images
 	int idx = (CCRANDOM_0_1() > .5 ? 0:1);
 	int idy = (CCRANDOM_0_1() > .5 ? 0:1);
-	CCSprite *sprite = [CCSprite spriteWithBatchNode:batch rect:CGRectMake(32 * idx,32 * idy,32,32)];
-	[batch addChild:sprite];
+	PhysicsSprite *sprite = [PhysicsSprite spriteWithTexture:spriteTexture_ rect:CGRectMake(32 * idx,32 * idy,32,32)];						
+	[parent addChild:sprite];
 	
 	sprite.position = ccp( p.x, p.y);
 	
@@ -160,9 +253,7 @@ enum {
 	//Set up a 1m squared box in the physics world
 	b2BodyDef bodyDef;
 	bodyDef.type = b2_dynamicBody;
-
 	bodyDef.position.Set(p.x/PTM_RATIO, p.y/PTM_RATIO);
-	bodyDef.userData = sprite;
 	b2Body *body = world->CreateBody(&bodyDef);
 	
 	// Define another box shape for our dynamic body.
@@ -175,11 +266,11 @@ enum {
 	fixtureDef.density = 1.0f;
 	fixtureDef.friction = 0.3f;
 	body->CreateFixture(&fixtureDef);
+	
+	[sprite setPhysicsBody:body];
 }
 
-
-
--(void) tick: (ccTime) dt
+-(void) update: (ccTime) dt
 {
 	//It is recommended that a fixed time step is used with Box2D for stability
 	//of the simulation, however, we are using a variable time step here.
@@ -191,39 +282,32 @@ enum {
 	
 	// Instruct the world to perform a single step of simulation. It is
 	// generally best to keep the time step and iterations fixed.
-	world->Step(dt, velocityIterations, positionIterations);
+	world->Step(dt, velocityIterations, positionIterations);	
+}
 
-	
-	//Iterate over the bodies in the physics world
-	for (b2Body* b = world->GetBodyList(); b; b = b->GetNext())
-	{
-		if (b->GetUserData() != NULL) {
-			//Synchronize the AtlasSprites position and rotation with the corresponding body
-			CCSprite *myActor = (CCSprite*)b->GetUserData();
-			myActor.position = CGPointMake( b->GetPosition().x * PTM_RATIO, b->GetPosition().y * PTM_RATIO);
-			myActor.rotation = -1 * CC_RADIANS_TO_DEGREES(b->GetAngle());
-		}	
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+
+- (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+{
+	//Add a new body/atlas sprite at the touched location
+	for( UITouch *touch in touches ) {
+		CGPoint location = [touch locationInView: [touch view]];
+		
+		location = [[CCDirector sharedDirector] convertToGL: location];
+		
+		[self addNewSpriteAtPosition: location];
 	}
 }
+
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 
 - (BOOL) ccMouseDown:(NSEvent *)event
 {
 	CGPoint location = [(CCDirectorMac*)[CCDirector sharedDirector] convertEventToGL:event];
-	[self addNewSpriteWithCoords: location];
+	[self addNewSpriteAtPosition: location];
 	
 	return YES;
 }
+#endif
 
-// on "dealloc" you need to release all your retained objects
-- (void) dealloc
-{
-	// in case you have something to dealloc, do it in this method
-	delete world;
-	world = NULL;
-	
-	delete m_debugDraw;
-
-	// don't forget to call "super dealloc"
-	[super dealloc];
-}
 @end
