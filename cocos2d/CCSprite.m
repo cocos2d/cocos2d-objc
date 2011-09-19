@@ -508,8 +508,6 @@
 	
 	NSAssert(!batchNode_, @"If CCSprite is being rendered by CCSpriteBatchNode, CCSprite#draw SHOULD NOT be called");
 
-	ccGLEnableVertexAttribs( kCCVertexAttribFlag_PosColorTex );
-	
 	ccGLBlendFunc( blendFunc_.src, blendFunc_.dst );
 
 	ccGLUseProgram( shaderProgram_->program_ );
@@ -520,6 +518,9 @@
 	//
 	// Attributes
 	//
+	
+	ccGLEnableVertexAttribs( kCCVertexAttribFlag_PosColorTex );
+	
 #define kQuadSize sizeof(quad_.bl)
 	long offset = (long)&quad_;
 	
