@@ -19,13 +19,15 @@ version 2.0-alpha 18-Sept-2011
 . [NEW] Macros: CC_ENABLE/DISABLE_DEFAULT_STATE: Removed. No longer needed.
 . [NEW] MotionStreak: Using new motion streak code. 10x faster than the old one.
 . [NEW] OpenGL ES: Added support for OpenGL ES 2.0. OpenGL ES 1.1 is no longer supported
+. [NEW] ParticleQuad: Uses VAO for rendering. Indices are part the VBO.
+. [NEW] ParticlePoint: removed code. It is a subclass of ParticleQuad for compatibility.
 . [NEW] Profiler: API heavily updated to make it easier to integrate into any kind of component
 . [NEW] Sprite: initWithTexture:rect is the designated initializer
 . [NEW] Sprite: removed pixels API.
 . [NEW] Sprite: useSelfRender / useBatchNode replaced with setBatchNode
 . [NEW] Sprite: Improved API in order to make it easier to create DoubleResolution sprites
 . [NEW] SpriteBatchNode / Sprite / Node: Simplied rendering. Easiert to integrate with physics engines. Just subclass nodeToParentTransform().
-. [NEW] SpriteBatchNode: Removed support for HONOR_TRANSFORM.
+. [NEW] SpriteBatchNode: Removed support for HONOR_PARENT_TRANSFORM.
 . [NEW] SpriteFrameCache: addSpriteFramesWithFile:textureFile renamed to addSpriteFramesWithFile:textureFilename to be consistent with the new API
 . [NEW] Templates: Removed Xcode3 templates. Updated Xcode4 templates.
 . [NEW] Templates: Box2d & Chipmunk templates use new way to sync cocos2d and physics engine by using PhysicsSprite
@@ -38,6 +40,7 @@ version 2.0-alpha 18-Sept-2011
 . [NEW] Tests: Removed Chipmunk iOS TestBed since it was outdated
 . [NEW] Texture: Uses NPOT textures (gles20 already supports them)
 . [NEW] Texture: PVRTC-RAW format is no longer supported. Use the non-raw format instead.
+. [NEW] TextureAtlas: Uses VAO for rendering
 . [NEW] TextureCache: Added asyncWithBlock method
 . [NEW] Tiled: cc_vertexz property is no longer supported. Will raise exception if found.
 . [FIX] All: Removed deprecated methods and classes that were scheduled for removal post 1.0
@@ -54,8 +57,8 @@ version 2.0-alpha 18-Sept-2011
 . [FIX] Xcode: iOS 4 is minimun required to run
 . [3RD] Box2d: Using Box2D 2.2.1
 . [3RD] Chipmunk: Using Chipmunk v6.0.1
-. [3RD] [NEW] Kazmath: Added kazmath library for matrix and projection operations, and matrix GL stack
-. [3RD] Kazmath: Added NEON Matrix Multiplication from Oolong project
+. [3RD] Kazmath: New external library. kazmath library for matrix and projection operations, and matrix GL stack
+. [3RD] Kazmath: Added ARM NEON Matrix Multiplication from Oolong project
 
 
 version 1.1 - XX-Ago-2011
