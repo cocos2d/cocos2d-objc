@@ -468,6 +468,12 @@ enum {
  If the selector is already scheduled, then the interval parameter will be updated without scheduling it again.
  */
 -(void) schedule: (SEL) s interval:(ccTime)seconds;
+/**
+ repeat will execute the action repeat + 1 times, for a continues action use kCCRepeatForever
+ delay is the amount of time the action will wait before execution
+ */
+-(void) schedule:(SEL)selector interval:(ccTime)interval repeat: (uint) repeat delay:(ccTime) delay;
+
 /** unschedules a custom selector.*/
 -(void) unschedule: (SEL) s;
 
