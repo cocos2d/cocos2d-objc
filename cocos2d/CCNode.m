@@ -783,6 +783,11 @@
 	[[CCScheduler sharedScheduler] scheduleSelector:selector forTarget:self interval:interval paused:!isRunning_ repeat:repeat delay:delay];
 }
 
+- (void) scheduleOnce:(SEL) selector delay:(ccTime) delay
+{
+	[self schedule:selector interval:0.f repeat:0 delay:delay];	
+}
+
 -(void) unschedule:(SEL)selector
 {
 	// explicit nil handling
