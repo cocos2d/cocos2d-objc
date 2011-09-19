@@ -474,6 +474,11 @@ enum {
  */
 -(void) schedule:(SEL)selector interval:(ccTime)interval repeat: (uint) repeat delay:(ccTime) delay;
 
+/**
+ Schedules a selector that runs only once, with a delay of 0 or larger 
+*/
+- (void) scheduleOnce:(SEL) selector delay:(ccTime) delay;
+
 /** unschedules a custom selector.*/
 -(void) unschedule: (SEL) s;
 
