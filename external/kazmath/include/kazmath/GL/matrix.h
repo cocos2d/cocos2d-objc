@@ -39,6 +39,7 @@ typedef unsigned int kmGLEnum;
 extern "C" {
 #endif
 
+void kmGLFreeAll(void);
 void kmGLPushMatrix(void);
 void kmGLPopMatrix(void);
 void kmGLMatrixMode(kmGLEnum mode);
