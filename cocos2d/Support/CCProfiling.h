@@ -46,7 +46,7 @@
 - (CCProfilingTimer*) createAndAddTimerWithName:(NSString*)timerName;
 
 /** releases a timer */
-- (void) releaseTimer:(CCProfilingTimer*)timer;
+- (void)releaseTimer:(NSString*)timerName;
 
 /** releases all timers */
 - (void) releaseAllTimers;
