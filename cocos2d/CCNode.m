@@ -767,15 +767,20 @@
 
 -(void) schedule:(SEL)selector
 {
-	[self schedule:selector interval:0];
+	[self schedule:selector interval:0 repeat:kCCRepeatForever delay:0];
 }
 
 -(void) schedule:(SEL)selector interval:(ccTime)interval
 {
+	[self schedule:selector interval:interval repeat:kCCRepeatForever delay:0];
+}
+
+-(void) schedule:(SEL)selector interval:(ccTime)interval repeat: (uint) repeat delay:(ccTime) delay
+{
 	NSAssert( selector != nil, @"Argument must be non-nil");
 	NSAssert( interval >=0, @"Arguemnt must be positive");
 	
-	[[CCScheduler sharedScheduler] scheduleSelector:selector forTarget:self interval:interval paused:!isRunning_];
+	[[CCScheduler sharedScheduler] scheduleSelector:selector forTarget:self interval:interval paused:!isRunning_ repeat:repeat delay:delay];
 }
 
 -(void) unschedule:(SEL)selector
