@@ -22,6 +22,8 @@ Contributors (alphabetically ordered):
 	Texture2D: drawInRect / drawAtPoint disables color state
 	SpriteBatchNode: fixed bug in removeAllChildrenWithCleanup
 	Author of the new reorder Sprite/Node algorithm
+	Schedule: added support for delay and repeat
+	ESRenderer: don't recreate the renderer when it is not needed
 
 * Ricardo Ruiz:
 	Added support for RGB888 textures
