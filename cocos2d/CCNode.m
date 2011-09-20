@@ -770,9 +770,19 @@
 	[self schedule:selector interval:0 repeat:kCCRepeatForever delay:0];
 }
 
+-(void) schedule:(SEL)selector userData:(id)data
+{
+	[self schedule:selector interval:0 repeat:kCCRepeatForever delay:0 userData:data];
+}
+
 -(void) schedule:(SEL)selector interval:(ccTime)interval
 {
 	[self schedule:selector interval:interval repeat:kCCRepeatForever delay:0];
+}
+
+-(void) schedule:(SEL)selector interval:(ccTime)interval userData:(id)data
+{
+	[self schedule:selector interval:interval repeat:kCCRepeatForever delay:0 userData:(id)data];
 }
 
 -(void) schedule:(SEL)selector interval:(ccTime)interval repeat: (uint) repeat delay:(ccTime) delay
@@ -781,6 +791,14 @@
 	NSAssert( interval >=0, @"Arguemnt must be positive");
 	
 	[[CCScheduler sharedScheduler] scheduleSelector:selector forTarget:self interval:interval paused:!isRunning_ repeat:repeat delay:delay];
+}
+
+-(void) schedule:(SEL)selector interval:(ccTime)interval repeat: (uint) repeat delay:(ccTime) delay userData:(id)data
+{
+	NSAssert( selector != nil, @"Argument must be non-nil");
+	NSAssert( interval >=0, @"Arguemnt must be positive");
+	
+	[[CCScheduler sharedScheduler] scheduleSelector:selector forTarget:self interval:interval paused:!isRunning_ repeat:repeat delay:delay userData:data];
 }
 
 - (void) scheduleOnce:(SEL) selector delay:(ccTime) delay
@@ -796,6 +814,16 @@
 	
 	[[CCScheduler sharedScheduler] unscheduleSelector:selector forTarget:self];
 }
+
+-(void) unschedule:(SEL)selector userData:(id)data
+{
+	// explicit nil handling
+	if (selector == nil)
+		return;
+	
+	[[CCScheduler sharedScheduler] unscheduleSelector:selector forTarget:self userData:data];
+}
+
 
 -(void) unscheduleAllSelectors
 {

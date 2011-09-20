@@ -87,33 +87,38 @@ typedef struct _hashSelectorEntry
 	return nil;
 }
 
-+(id) timerWithTarget:(id)t selector:(SEL)s
++(id) timerWithTarget:(id)t selector:(SEL)s userData:(id)data
 {
-	return [[[self alloc] initWithTarget:t selector:s interval:0 repeat:kCCRepeatForever delay:0] autorelease];
+	return [[[self alloc] initWithTarget:t selector:s interval:0 repeat:kCCRepeatForever delay:0 userData:data] autorelease];
 }
 
-+(id) timerWithTarget:(id)t selector:(SEL)s interval:(ccTime) i
++(id) timerWithTarget:(id)t selector:(SEL)s interval:(ccTime) i userData:(id)data
 {
-	return [[[self alloc] initWithTarget:t selector:s interval:i repeat:kCCRepeatForever delay:0] autorelease];
+	return [[[self alloc] initWithTarget:t selector:s interval:i repeat:kCCRepeatForever delay:0 userData:data] autorelease];
 }
 
--(id) initWithTarget:(id)t selector:(SEL)s
+-(id) initWithTarget:(id)t selector:(SEL)s userData:(id)data
 {
-	return [self initWithTarget:t selector:s interval:0 repeat:kCCRepeatForever delay: 0];
+	return [self initWithTarget:t selector:s interval:0 repeat:kCCRepeatForever delay: 0 userData:data];
 }
 
--(id) initWithTarget:(id)t selector:(SEL)s interval:(ccTime) seconds repeat:(uint) r delay:(ccTime) d 
+-(id) initWithTarget:(id)t selector:(SEL)s interval:(ccTime) seconds repeat:(uint) r delay:(ccTime) d userData:(id)data
 {
 	if( (self=[super init]) ) {
-#if COCOS2D_DEBUG
+		
 		NSMethodSignature *sig = [t methodSignatureForSelector:s];
-		NSAssert(sig !=0 , @"Signature not found for selector - does it have the following form? -(void) name: (ccTime) dt");
+		argCount = sig.numberOfArguments;		
+		
+#if COCOS2D_DEBUG
+		NSAssert(sig !=0 , @"Signature not found for selector - does it have the following forms? -(void) name: (ccTime) dt or -(void) name: (ccTime) dt (id) object");
+		NSAssert(argCount <= 4 , @"Signature not found for selector - does it have the following forms? -(void) name: (ccTime) dt or -(void) name: (ccTime) dt (id) object");
 #endif
 		
 		// target is not retained. It is retained in the hash structure
 		target = t;
 		selector = s;
-		impMethod = (TICK_IMP) [t methodForSelector:s];
+		userData = [data retain];
+		impMethod = [t methodForSelector:s];
 		elapsed = -1;
 		interval = seconds;
 		repeat = r;
@@ -134,7 +139,16 @@ typedef struct _hashSelectorEntry
 -(void) dealloc
 {
 	CCLOGINFO(@"cocos2d: deallocing %@", self);
+	[userData release];
 	[super dealloc];
+}
+
+-(void)dispatch
+{
+	if( argCount == 3 )
+		((TICK_IMP)impMethod)(target, selector, elapsed);
+	else
+		((TICK_IMP_PARAM)impMethod)(target, selector, elapsed, userData);
 }
 
 -(void) update: (ccTime) dt
@@ -150,7 +164,7 @@ typedef struct _hashSelectorEntry
 		{//standard timer usage
 			elapsed += dt;
 			if( elapsed >= interval ) {
-				impMethod(target, selector, elapsed);
+				[self dispatch];
 				elapsed = 0;
 				
 			}
@@ -162,7 +176,7 @@ typedef struct _hashSelectorEntry
 			{
 				if( elapsed >= delay )
 				{
-					impMethod(target, selector, elapsed);
+					[self dispatch];
 					elapsed = elapsed - delay;
 					nTimesExecuted+=1;
 					useDelay = NO;
@@ -172,7 +186,7 @@ typedef struct _hashSelectorEntry
 			{
 				if (elapsed >= interval) 
 				{
-					impMethod(target, selector, elapsed);
+					[self dispatch];
 					elapsed = 0;
 					nTimesExecuted += 1; 
 					
@@ -181,7 +195,7 @@ typedef struct _hashSelectorEntry
 			
 			if (nTimesExecuted > repeat) 
 			{//unschedule timer
-				[[CCScheduler sharedScheduler] unscheduleSelector:selector forTarget:target];
+				[[CCScheduler sharedScheduler] unscheduleSelector:selector forTarget:target userData:userData];
 			}
 		}
 	}
@@ -273,6 +287,11 @@ static CCScheduler *sharedScheduler;
 
 -(void) scheduleSelector:(SEL)selector forTarget:(id)target interval:(ccTime)interval paused:(BOOL)paused repeat:(uint) repeat delay:(ccTime) delay
 {
+	[self scheduleSelector:selector forTarget:target interval:interval paused:paused repeat:repeat delay:delay userData:nil];
+}
+
+-(void) scheduleSelector:(SEL)selector forTarget:(id)target interval:(ccTime)interval paused:(BOOL)paused repeat:(uint) repeat delay:(ccTime) delay userData:(id)data
+{
 	NSAssert( selector != nil, @"Argument selector must be non-nil");
 	NSAssert( target != nil, @"Argument target must be non-nil");	
 	
@@ -297,7 +316,8 @@ static CCScheduler *sharedScheduler;
 	{
 		for( unsigned int i=0; i< element->timers->num; i++ ) {
 			CCTimer *timer = element->timers->arr[i];
-			if( selector == timer->selector ) {
+			BOOL userDataIsNil = (data == nil) && (timer->userData == nil);
+			if( selector == timer->selector && ((userDataIsNil) || ([timer->userData isEqual:data])) ) {
 				CCLOG(@"CCScheduler#scheduleSelector. Selector already scheduled. Updating interval from: %.2f to %.2f", timer->interval, interval);
 				timer->interval = interval;
 				return;
@@ -306,12 +326,17 @@ static CCScheduler *sharedScheduler;
 		ccArrayEnsureExtraCapacity(element->timers, 1);
 	}
 	
-	CCTimer *timer = [[CCTimer alloc] initWithTarget:target selector:selector interval:interval repeat:repeat delay:delay];
+	CCTimer *timer = [[CCTimer alloc] initWithTarget:target selector:selector interval:interval repeat:repeat delay:delay userData:data];
 	ccArrayAppendObject(element->timers, timer);
 	[timer release];
 }
 
 -(void) unscheduleSelector:(SEL)selector forTarget:(id)target
+{
+	[self unscheduleSelector:selector forTarget:target userData:nil];
+}
+
+-(void) unscheduleSelector:(SEL)selector forTarget:(id)target userData:(id)data
 {
 	// explicity handle nil arguments when removing an object
 	if( target==nil && selector==NULL)
@@ -327,10 +352,9 @@ static CCScheduler *sharedScheduler;
 		
 		for( unsigned int i=0; i< element->timers->num; i++ ) {
 			CCTimer *timer = element->timers->arr[i];
+			BOOL userDataIsNil = (data == nil) && (timer->userData == nil);
 			
-			
-			if( selector == timer->selector ) {
-				
+			if( selector == timer->selector && ((userDataIsNil) || ([timer->userData isEqual:data])) ) {				
 				if( timer == element->currentTimer && !element->currentTimerSalvaged ) {
 					[element->currentTimer retain];
 					element->currentTimerSalvaged = YES;
