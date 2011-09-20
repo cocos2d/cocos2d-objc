@@ -65,6 +65,8 @@
             [self release];
             return nil;
         }
+		
+		backingWidth_ = backingHeight_ = 0; 
 
         // Create default framebuffer object. The backing will be allocated for the current layer in -resizeFromLayer
         glGenFramebuffersOES(1, &defaultFramebuffer_);
@@ -114,6 +116,9 @@
 
     glBindRenderbufferOES(GL_RENDERBUFFER_OES, colorRenderbuffer_);
 
+	int oldWidth = backingWidth_; 
+	int oldHeight = backingHeight_; 
+	
 	if (![context_ renderbufferStorage:GL_RENDERBUFFER_OES fromDrawable:layer])
 	{
 		CCLOG(@"failed to call context");	
@@ -121,60 +126,63 @@
 
     glGetRenderbufferParameterivOES(GL_RENDERBUFFER_OES, GL_RENDERBUFFER_WIDTH_OES, &backingWidth_);
     glGetRenderbufferParameterivOES(GL_RENDERBUFFER_OES, GL_RENDERBUFFER_HEIGHT_OES, &backingHeight_);
-
-	CCLOG(@"cocos2d: surface size: %dx%d", (int)backingWidth_, (int)backingHeight_);
-
-	if (multiSampling_)
+	
+	if (oldWidth != backingWidth_ || oldHeight != backingHeight_)
 	{
-		
-		if ( msaaColorbuffer_) {
-			glDeleteRenderbuffersOES(1, &msaaColorbuffer_);
-			msaaColorbuffer_ = 0;
+
+		CCLOG(@"cocos2d: surface size: %dx%d", (int)backingWidth_, (int)backingHeight_);
+
+		if (multiSampling_)
+		{
+			
+			if ( msaaColorbuffer_) {
+				glDeleteRenderbuffersOES(1, &msaaColorbuffer_);
+				msaaColorbuffer_ = 0;
+			}
+
+			/* Create the offscreen MSAA color buffer.
+			 After rendering, the contents of this will be blitted into ColorRenderbuffer */
+			
+			//msaaFrameBuffer needs to be binded
+			glBindFramebufferOES(GL_FRAMEBUFFER_OES, msaaFramebuffer_);
+			glGenRenderbuffersOES(1, &msaaColorbuffer_);
+			glBindRenderbufferOES(GL_RENDERBUFFER_OES, msaaColorbuffer_);
+			glRenderbufferStorageMultisampleAPPLE(GL_RENDERBUFFER_OES, samplesToUse_,pixelFormat_ , backingWidth_, backingHeight_);
+			glFramebufferRenderbufferOES(GL_FRAMEBUFFER_OES, GL_COLOR_ATTACHMENT0_OES, GL_RENDERBUFFER_OES, msaaColorbuffer_);
+
+			if (glCheckFramebufferStatusOES(GL_FRAMEBUFFER_OES) != GL_FRAMEBUFFER_COMPLETE_OES)
+			{
+				CCLOG(@"Failed to make complete framebuffer object %x", glCheckFramebufferStatusOES(GL_FRAMEBUFFER_OES));
+				return NO;
+			}
 		}
-
-		/* Create the offscreen MSAA color buffer.
-		 After rendering, the contents of this will be blitted into ColorRenderbuffer */
 		
-		//msaaFrameBuffer needs to be binded
-		glBindFramebufferOES(GL_FRAMEBUFFER_OES, msaaFramebuffer_);
-		glGenRenderbuffersOES(1, &msaaColorbuffer_);
-		glBindRenderbufferOES(GL_RENDERBUFFER_OES, msaaColorbuffer_);
-		glRenderbufferStorageMultisampleAPPLE(GL_RENDERBUFFER_OES, samplesToUse_,pixelFormat_ , backingWidth_, backingHeight_);
-		glFramebufferRenderbufferOES(GL_FRAMEBUFFER_OES, GL_COLOR_ATTACHMENT0_OES, GL_RENDERBUFFER_OES, msaaColorbuffer_);
-
+		if (depthFormat_) 
+		{
+			if( ! depthBuffer_ )
+				glGenRenderbuffersOES(1, &depthBuffer_);
+			
+			glBindRenderbufferOES(GL_RENDERBUFFER_OES, depthBuffer_);
+			if( multiSampling_ )
+				glRenderbufferStorageMultisampleAPPLE(GL_RENDERBUFFER_OES, samplesToUse_, depthFormat_,backingWidth_, backingHeight_);
+			else
+				glRenderbufferStorageOES(GL_RENDERBUFFER_OES, depthFormat_, backingWidth_, backingHeight_);
+			glFramebufferRenderbufferOES(GL_FRAMEBUFFER_OES, GL_DEPTH_ATTACHMENT_OES, GL_RENDERBUFFER_OES, depthBuffer_);
+			
+			// bind color buffer
+			glBindRenderbufferOES(GL_RENDERBUFFER_OES, colorRenderbuffer_);
+		}
+		
+		glBindFramebufferOES(GL_FRAMEBUFFER_OES, defaultFramebuffer_);
+		
 		if (glCheckFramebufferStatusOES(GL_FRAMEBUFFER_OES) != GL_FRAMEBUFFER_COMPLETE_OES)
 		{
 			CCLOG(@"Failed to make complete framebuffer object %x", glCheckFramebufferStatusOES(GL_FRAMEBUFFER_OES));
 			return NO;
 		}
-	}
-	
-	if (depthFormat_) 
-	{
-		if( ! depthBuffer_ )
-			glGenRenderbuffersOES(1, &depthBuffer_);
-		
-		glBindRenderbufferOES(GL_RENDERBUFFER_OES, depthBuffer_);
-		if( multiSampling_ )
-			glRenderbufferStorageMultisampleAPPLE(GL_RENDERBUFFER_OES, samplesToUse_, depthFormat_,backingWidth_, backingHeight_);
-		else
-			glRenderbufferStorageOES(GL_RENDERBUFFER_OES, depthFormat_, backingWidth_, backingHeight_);
-		glFramebufferRenderbufferOES(GL_FRAMEBUFFER_OES, GL_DEPTH_ATTACHMENT_OES, GL_RENDERBUFFER_OES, depthBuffer_);
-		
-		// bind color buffer
-		glBindRenderbufferOES(GL_RENDERBUFFER_OES, colorRenderbuffer_);
-	}
-	
-	glBindFramebufferOES(GL_FRAMEBUFFER_OES, defaultFramebuffer_);
-	
-	if (glCheckFramebufferStatusOES(GL_FRAMEBUFFER_OES) != GL_FRAMEBUFFER_COMPLETE_OES)
-	{
-		CCLOG(@"Failed to make complete framebuffer object %x", glCheckFramebufferStatusOES(GL_FRAMEBUFFER_OES));
-		return NO;
-	}
 
-	CHECK_GL_ERROR();
-
+		CHECK_GL_ERROR();
+	}	
     return YES;
 }
 
