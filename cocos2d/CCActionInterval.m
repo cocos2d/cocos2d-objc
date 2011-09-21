@@ -89,7 +89,7 @@
 	} else
 		elapsed_ += dt;
 
-	[self update: MIN(1, elapsed_/duration_)];
+	[self update: MIN(1, elapsed_/MAX(duration_,0.000001f))];
 }
 
 -(void) startWithTarget:(id)aTarget
@@ -183,7 +183,7 @@
 -(void) startWithTarget:(id)aTarget
 {
 	[super startWithTarget:aTarget];	
-	split_ = [actions_[0] duration] / duration_;
+	split_ = [actions_[0] duration] / MAX(duration_, 0.000001f);
 	last_ = -1;
 }
 
