@@ -158,10 +158,11 @@
 {
 	[innerAction_ step: dt];
 	if( [innerAction_ isDone] ) {
-		ccTime diff = dt + innerAction_.duration - innerAction_.elapsed;
+		ccTime diff = innerAction_.elapsed - innerAction_.duration;
 		[innerAction_ startWithTarget:target_];
 		
 		// to prevent jerk. issue #390
+		[innerAction_ step: 0.0f];
 		[innerAction_ step: diff];
 	}
 }
