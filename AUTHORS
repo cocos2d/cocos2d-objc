@@ -24,6 +24,9 @@ Contributors (alphabetically ordered):
 	Author of the new reorder Sprite/Node algorithm
 	Schedule: added support for delay and repeat
 	ESRenderer: don't recreate the renderer when it is not needed
+	Actions: Instant actions can be sequenceables
+	Actions: durtion is not divided by zero
+	Actions: Repeat & RepeatForever work as expectd
 
 * Ricardo Ruiz:
 	Added support for RGB888 textures
