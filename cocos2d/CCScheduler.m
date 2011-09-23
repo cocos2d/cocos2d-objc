@@ -201,14 +201,16 @@ static CCScheduler *sharedScheduler;
         updateHashLocked = NO;
 	}
 
-    CCLOG(@"Initalized sharedScheduler %@", self);
+//    CCLOG(@"cocos2d: initializing CCScheduler");
+//    CCLOG(@"Initalized sharedScheduler %@", self);
 
 	return self;
 }
 
 - (void) dealloc
 {
-	CCLOG(@"cocos2d: deallocing %@", self);
+//    CCLOG(@"cocos2d: deallocing CCScheduler");
+//	CCLOG(@"cocos2d: deallocing %@", self);
 
 	[self unscheduleAllSelectors];
 

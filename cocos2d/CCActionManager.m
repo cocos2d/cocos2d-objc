@@ -75,8 +75,9 @@ static CCActionManager *sharedManager_ = nil;
 		targets = NULL;
         currentTarget = NULL;
         currentTargetSalvaged = NO;
-        
-        CCLOG(@"Initialized: %@",self);
+
+//        CCLOG(@"cocos2d: initialized CCActionManager");
+//        CCLOG(@"Initialized: %@",self);
 	}
 	
 	return self;
@@ -84,7 +85,8 @@ static CCActionManager *sharedManager_ = nil;
 
 - (void) dealloc
 {
-	CCLOG( @"cocos2d: deallocing %@", self);
+//    CCLOG( @"cocos2d: deallocing CCActionManager");
+//	CCLOG( @"cocos2d: deallocing %@", self);
 	
 	[self removeAllActions];
 
