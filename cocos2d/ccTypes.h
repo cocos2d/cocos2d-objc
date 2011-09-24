@@ -52,8 +52,7 @@ typedef struct _ccColor3B
 static inline ccColor3B
 ccc3(const GLubyte r, const GLubyte g, const GLubyte b)
 {
-	ccColor3B c = {r, g, b};
-	return c;
+	return (ccColor3B){r, g, b};
 }
 //ccColor3B predefined colors
 //! White color (255,255,255)
@@ -89,8 +88,7 @@ typedef struct _ccColor4B
 static inline ccColor4B
 ccc4(const GLubyte r, const GLubyte g, const GLubyte b, const GLubyte o)
 {
-	ccColor4B c = {r, g, b, o};
-	return c;
+	return (ccColor4B){r, g, b, o};
 }
 
 
@@ -103,6 +101,15 @@ typedef struct _ccColor4F {
 	GLfloat b;
 	GLfloat a;
 } ccColor4F;
+
+
+/** Create a ccColor4F.
+ @since v1.0.1-rsanchez
+ */
+static inline ccColor4F ccc4F(const CGFloat r, const CGFloat g, const CGFloat b, const CGFloat o)
+{
+	return (ccColor4F){r, g, b, o};
+}
 
 /** Returns a ccColor4F from a ccColor3B. Alpha will be 1.
  @since v0.99.1
