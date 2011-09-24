@@ -1399,10 +1399,7 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 	NSArray *frames = [animation_ frames];
 	NSUInteger numberOfFrames = [frames count];
 	
-	NSUInteger idx = t * numberOfFrames;
-
-	if( idx >= numberOfFrames )
-		idx = numberOfFrames -1;
+	NSUInteger idx = round(t * (numberOfFrames-1));
 	
 	CCSprite *sprite = target_;
 	if (! [sprite isFrameDisplayed: [frames objectAtIndex: idx]] )
@@ -1456,7 +1453,6 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 	return self;
 }
 
-
 -(id) copyWithZone: (NSZone*) zone
 {
 	return [[[self class] allocWithZone: zone] initWithDuration:duration_ animation:animation_ start:startIndex_];
@@ -1493,11 +1489,8 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 	NSArray *frames = [animation_ frames];
 	NSUInteger numberOfFrames = [frames count];
 	
-	NSUInteger idx = t * numberOfFrames;
-    
-	if( idx >= numberOfFrames )
-		idx = numberOfFrames -1;
-	
+    NSUInteger idx = round(t * (numberOfFrames-1));
+
     idx = (idx + startIndex_) % numberOfFrames;
 
 	CCSprite *sprite = target_;
