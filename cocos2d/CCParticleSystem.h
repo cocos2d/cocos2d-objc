@@ -428,6 +428,9 @@ typedef void (*CC_UPDATE_PARTICLE_IMP)(id, SEL, tCCParticle*, CGPoint);
 -(void) initParticle: (tCCParticle*) particle;
 //! stop emitting particles. Running particles will continue to run until they die
 -(void) stopSystem;
+//! restart emitting particles
+// @since 1.0.1-rsanchez
+-(void) startSystem;
 //! Kill all living particles.
 -(void) resetSystem;
 //! whether or not the system is full

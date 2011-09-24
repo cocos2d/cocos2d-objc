@@ -216,6 +216,7 @@
 		
 		// emission Rate
 		emissionRate = totalParticles/life;
+        emitCounter = 0;
 
 		// texture		
 		// Try to get the texture from the cache
@@ -304,6 +305,9 @@
 		updateParticleSel = @selector(updateQuadWithParticle:newPosition:);
 		updateParticleImp = (CC_UPDATE_PARTICLE_IMP) [self methodForSelector:updateParticleSel];
 
+        emissionRate = 0;
+        emitCounter = 0;
+        
 		// udpate after action in run!
 		[self scheduleUpdateWithPriority:1];
 		
@@ -449,6 +453,13 @@
 {
 	active = NO;
 	elapsed = duration;
+	emitCounter = 0;
+}
+
+-(void) startSystem
+{
+	active = YES;
+	elapsed = 0;
 	emitCounter = 0;
 }
 
