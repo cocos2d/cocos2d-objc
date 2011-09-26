@@ -143,7 +143,7 @@ typedef struct _hashSelectorEntry
 	[super dealloc];
 }
 
--(void)dispatch
+-(void)invokeSelector
 {
 	if( argCount == 3 )
 		((TICK_IMP)impMethod)(target, selector, elapsed);
@@ -164,7 +164,7 @@ typedef struct _hashSelectorEntry
 		{//standard timer usage
 			elapsed += dt;
 			if( elapsed >= interval ) {
-				[self dispatch];
+				[self invokeSelector];
 				elapsed = 0;
 				
 			}
@@ -176,7 +176,7 @@ typedef struct _hashSelectorEntry
 			{
 				if( elapsed >= delay )
 				{
-					[self dispatch];
+					[self invokeSelector];
 					elapsed = elapsed - delay;
 					nTimesExecuted+=1;
 					useDelay = NO;
@@ -186,7 +186,7 @@ typedef struct _hashSelectorEntry
 			{
 				if (elapsed >= interval) 
 				{
-					[self dispatch];
+					[self invokeSelector];
 					elapsed = 0;
 					nTimesExecuted += 1; 
 					

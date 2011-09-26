@@ -57,19 +57,19 @@ typedef void (*TICK_IMP_PARAM)(id, SEL, ccTime, id);
 /** interval in seconds */
 @property (nonatomic,readwrite,assign) ccTime interval;
 
-/** Allocates a timer with a target and a selector.
+/** Allocates a timer with a target, a selector, and a userdata (can be nil)
 */
 +(id) timerWithTarget:(id) t selector:(SEL)s userData:(id)data;
 
-/** Allocates a timer with a target, a selector and an interval in seconds.
+/** Allocates a timer with a target, a selector, an interval in seconds, and a userdata (can be nil)
 */
 +(id) timerWithTarget:(id) t selector:(SEL)s interval:(ccTime)seconds userData:(id)data;
 
-/** Initializes a timer with a target and a selector.
+/** Initializes a timer with a target, selector, and a userdata (can be nil)
 */
 -(id) initWithTarget:(id) t selector:(SEL)s userData:(id)data;
 
-/** Initializes a timer with a target, a selector, an interval in seconds, repeat in number of times to repeat, delay in seconds
+/** Initializes a timer with a target, a selector, an interval in seconds, repeat in number of times to repeat, delay in seconds, and a userdata param (can be nil)
 */
 -(id) initWithTarget:(id)t selector:(SEL)s interval:(ccTime) seconds repeat:(uint) r delay:(ccTime) d userData:(id)data;
 
@@ -152,7 +152,7 @@ struct _hashUpdateEntry;
  repeat let the action be repeated repeat + 1 times, use kCCRepeatForever to let the action run continiously 
  delay is the amount of time the action will wait before it'll start
  
- @since v0.99.3, repeat and delay added in v1.1
+ @since v0.99.3, repeat, delay, userdata added in v1.1
  */
 -(void) scheduleSelector:(SEL)selector forTarget:(id)target interval:(ccTime)interval paused:(BOOL)paused repeat: (uint) repeat delay: (ccTime) delay;
 -(void) scheduleSelector:(SEL)selector forTarget:(id)target interval:(ccTime)interval paused:(BOOL)paused repeat: (uint) repeat delay: (ccTime) delay userData:(id)data;
