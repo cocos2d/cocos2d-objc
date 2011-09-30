@@ -47,9 +47,6 @@ static EAGLContext *_auxGLcontext = nil;
 static NSOpenGLContext *_auxGLcontext = nil;
 #endif
 
-static dispatch_queue_t _loadingQueue;
-static dispatch_queue_t _dictQueue;
-
 @implementation CCTextureCache
 
 #pragma mark TextureCache - Alloc, Init & Dealloc
