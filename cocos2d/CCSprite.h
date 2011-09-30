@@ -84,6 +84,9 @@
 	//
 	// Shared data
 	//
+	
+	// sprite rectangle
+	CGRect	rect_;
 
 	// texture
 	BOOL	rectRotated_:1;
