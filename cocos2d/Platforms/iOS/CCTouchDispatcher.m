@@ -196,6 +196,15 @@ static CCTouchDispatcher *sharedDispatcher = nil;
             return handler;
         }
 	}
+    
+    if (toAdd) {
+		for( CCTouchHandler *handler in handlersToAdd ) {
+            if (handler.delegate == delegate) {
+                return handler;
+            }
+        }        
+    }
+    
     return nil;
 }
 
