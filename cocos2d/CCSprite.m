@@ -614,10 +614,11 @@ static SEL selSortMethod = NULL;
 	
 #if CC_SPRITE_DEBUG_DRAW == 1
 	// draw bounding box
-	CGSize s = self.contentSize;
-	CGPoint vertices[4] = {
-		ccp(0,0), ccp(s.width,0),
-		ccp(s.width,s.height), ccp(0,s.height)
+	CGPoint vertices[4]={
+		ccp(quad_.tl.vertices.x,quad_.tl.vertices.y),
+		ccp(quad_.bl.vertices.x,quad_.bl.vertices.y),
+		ccp(quad_.br.vertices.x,quad_.br.vertices.y),
+		ccp(quad_.tr.vertices.x,quad_.tr.vertices.y),
 	};
 	ccDrawPoly(vertices, 4, YES);
 #elif CC_SPRITE_DEBUG_DRAW == 2
