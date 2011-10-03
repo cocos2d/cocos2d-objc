@@ -379,13 +379,14 @@ static SEL selSortMethod =NULL;
 			child->updateMethod(child, selUpdate);
 			
 #if CC_SPRITEBATCHNODE_DEBUG_DRAW
-			//Issue #528
-			CGRect rect = [child boundingBox];
+			//Issue #528, 1069
+			ccV3F_C4B_T2F_Quad *quads = [textureAtlas_ quads];
+			ccV3F_C4B_T2F_Quad *quad= &(quads[child.atlasIndex]);
 			CGPoint vertices[4]={
-				ccp(rect.origin.x,rect.origin.y),
-				ccp(rect.origin.x+rect.size.width,rect.origin.y),
-				ccp(rect.origin.x+rect.size.width,rect.origin.y+rect.size.height),
-				ccp(rect.origin.x,rect.origin.y+rect.size.height),
+				ccp(quad->tl.vertices.x,quad->tl.vertices.y),
+				ccp(quad->bl.vertices.x,quad->bl.vertices.y),
+				ccp(quad->br.vertices.x,quad->br.vertices.y),
+				ccp(quad->tr.vertices.x,quad->tr.vertices.y),
 			};
 			ccDrawPoly(vertices, 4, YES);
 #endif // CC_SPRITEBATCHNODE_DEBUG_DRAW
