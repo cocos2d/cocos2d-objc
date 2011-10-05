@@ -460,7 +460,8 @@ typedef struct _ccBezierConfig {
 }
 
 +(id) actionWithRandomStartAnimation:(CCAnimation*)a;
--(id) initWithRandomStartAnimation:(CCAnimation*)a;
++(id) actionWithRandomStartAnimation:(CCAnimation*)a factor:(float)factor;
+-(id) initWithRandomStartAnimation:(CCAnimation*)a factor:(float)factor;
 +(id) actionWithAnimation:(CCAnimation*)a start:(NSInteger)start;
 -(id) initWithAnimation:(CCAnimation*)a start:(NSInteger)start;
 /** creates an action with a duration, animation and start.

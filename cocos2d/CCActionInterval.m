@@ -1425,7 +1425,11 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 @implementation CCAnimateAt
 
 +(id) actionWithRandomStartAnimation:(CCAnimation*)anim {
-	return [[[self alloc] initWithRandomStartAnimation:anim] autorelease];
+	return [[[self alloc] initWithRandomStartAnimation:anim factor:1.0] autorelease];
+}
+
++(id) actionWithRandomStartAnimation:(CCAnimation*)anim factor:(float)factor {
+	return [[[self alloc] initWithRandomStartAnimation:anim factor:factor] autorelease];
 }
 
 +(id) actionWithAnimation:(CCAnimation*)anim start:(NSInteger)start {
@@ -1436,8 +1440,10 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 	return [[[self alloc] initWithDuration:duration animation:anim start:start] autorelease];
 }
 
--(id) initWithRandomStartAnimation:(CCAnimation*)anim {
-	return [self initWithDuration:[[anim frames] count]*[anim delay] animation:anim start:random()%[[anim frames] count]];
+-(id) initWithRandomStartAnimation:(CCAnimation*)anim factor:(float)factor {
+	return [self initWithDuration:[[anim frames] count]*[anim delay]
+                        animation:anim
+                            start:random()%(int)round([[anim frames] count]*factor)];
 }
 
 -(id) initWithAnimation:(CCAnimation*)anim start:(NSInteger)start {
@@ -1449,6 +1455,7 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 	
 	if( (self=[super initWithAnimation:anim] ) ) {		
         startIndex_=start;
+        //NSLog(@"  startIndex: %d", startIndex_);
 	}
 	return self;
 }
