@@ -60,6 +60,8 @@
 		05CA7AFE10ED674700F12774 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */; };
 		05CA7B0010ED674700F12774 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 503092B210447296005F7AFC /* libz.dylib */; };
 		05CA7B0C10ED67CE00F12774 /* ActionsWithBlocks.m in Sources */ = {isa = PBXBuildFile; fileRef = 05CA7B0B10ED67CE00F12774 /* ActionsWithBlocks.m */; };
+		0F6E6EC3144CED9D00ADF89C /* PositionTextureColorAlphaTest.fsh in Sources */ = {isa = PBXBuildFile; fileRef = 0F6E6EC2144CED9D00ADF89C /* PositionTextureColorAlphaTest.fsh */; };
+		0F6E6EC5144CEDCA00ADF89C /* PositionTextureColorAlphaTest.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 0F6E6EC2144CED9D00ADF89C /* PositionTextureColorAlphaTest.fsh */; };
 		3BB5C8E911410A4000DD65EF /* blocks.png in Resources */ = {isa = PBXBuildFile; fileRef = AAEA834A0FD5704400F08728 /* blocks.png */; };
 		3BB5C8EF11410A5300DD65EF /* blocks.png in Resources */ = {isa = PBXBuildFile; fileRef = AAEA834A0FD5704400F08728 /* blocks.png */; };
 		495E73FD104B75090012BB52 /* r1.png in Resources */ = {isa = PBXBuildFile; fileRef = 500165990E72DB0E0085673F /* r1.png */; };
@@ -4127,6 +4129,7 @@
 		05CA7B0410ED674700F12774 /* ActionsWithBlocksSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ActionsWithBlocksSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		05CA7B0A10ED67CE00F12774 /* ActionsWithBlocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActionsWithBlocks.h; sourceTree = "<group>"; };
 		05CA7B0B10ED67CE00F12774 /* ActionsWithBlocks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActionsWithBlocks.m; sourceTree = "<group>"; };
+		0F6E6EC2144CED9D00ADF89C /* PositionTextureColorAlphaTest.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = PositionTextureColorAlphaTest.fsh; sourceTree = "<group>"; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D3623EB0D0F72F000981E51 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -7584,6 +7587,7 @@
 		A0EC4A081403236C00EC482A /* Shaders */ = {
 			isa = PBXGroup;
 			children = (
+				0F6E6EC2144CED9D00ADF89C /* PositionTextureColorAlphaTest.fsh */,
 				A0EC4A091403236C00EC482A /* Blur.fsh */,
 				A0EC4A0A1403236C00EC482A /* Flower.fsh */,
 				A0EC4A0B1403236C00EC482A /* Flower.vsh */,
@@ -9500,6 +9504,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0F6E6EC5144CEDCA00ADF89C /* PositionTextureColorAlphaTest.fsh in Resources */,
 				501C7C710F91EFFF0024A296 /* b1.png in Resources */,
 				501C7C720F91EFFF0024A296 /* b2.png in Resources */,
 				501C7C730F91EFFF0024A296 /* f1.png in Resources */,
@@ -12399,6 +12404,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0F6E6EC3144CED9D00ADF89C /* PositionTextureColorAlphaTest.fsh in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
