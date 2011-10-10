@@ -78,6 +78,7 @@
 #import "CCParticleSystemPoint.h"
 #import "CCParticleSystemQuad.h"
 #import "CCParticleExamples.h"
+#import "CCParticleBatchNode.h"
 
 #import "CCTexture2D.h"
 #import "CCTexturePVR.h"
