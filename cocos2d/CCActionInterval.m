@@ -1441,12 +1441,16 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 }
 
 -(id) initWithRandomStartAnimation:(CCAnimation*)anim factor:(float)factor {
+    NSAssert( anim!=nil, @"Animate: argument Animation must be non-nil");
+
 	return [self initWithDuration:[[anim frames] count]*[anim delay]
                         animation:anim
                             start:random()%(int)round([[anim frames] count]*factor)];
 }
 
 -(id) initWithAnimation:(CCAnimation*)anim start:(NSInteger)start {
+    NSAssert( anim!=nil, @"Animate: argument Animation must be non-nil");
+
 	return [self initWithDuration:[[anim frames] count]*[anim delay] animation:anim start:start];
 }
 
