@@ -185,6 +185,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 		return NO;
 	
 	context_ = [renderer_ context];
+	[context_ renderbufferStorage:GL_RENDERBUFFER_OES fromDrawable:eaglLayer];
 
 	discardFramebufferSupported_ = [[CCConfiguration sharedConfiguration] supportsDiscardFramebuffer];
 	
@@ -202,9 +203,10 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 - (void) layoutSubviews
 {
-	[renderer_ resizeFromLayer:(CAEAGLLayer*)self.layer];
 	size_ = [renderer_ backingSize];
-	
+
+	[renderer_ resizeFromLayer:(CAEAGLLayer*)self.layer];
+
 	// Issue #914 #924
 	CCDirector *director = [CCDirector sharedDirector];
 	[director reshapeProjection:size_];
@@ -266,7 +268,6 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	CHECK_GL_ERROR();
 #endif
 	
-	if (![renderer_ defaultFrameBuffer]) [renderer_ createFrameBuffer:(CAEAGLLayer*) self.layer]; 
 	// We can safely re-bind the framebuffer here, since this will be the
 	// 1st instruction of the new main loop
 	if( multiSampling_ )
