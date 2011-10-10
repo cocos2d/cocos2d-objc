@@ -5,6 +5,7 @@ version 1.1 - XX-Ago-2011
 . [NEW] FileUtils: Added iPad / RetinaDisplay extension. To use it, call [CCFileUtils setiPadSuffix:@"-ipad"] or setRetinaDisplaySuffix (issue #1211)
 . [NEW] FileUtils: Added xxxFileExistAtPath for iPad and RetinaDisplay resources
 . [NEW] Node: improved speed when reordering nodes
+. [NEW] Particles: Added ParticleBatchNode (issue #955)
 . [NEW] Sprite: improved speed when reordering sprites
 . [NEW] Scheduler: Added support for delay and repeat (issue #630)
 . [NEW] Textures: Added support for RGB888 textures (issue #958)
@@ -14,10 +15,12 @@ version 1.1 - XX-Ago-2011
 . [FIX] Actions: duration is not divided by zero (issue #615)
 . [FIX] Actions: Instant actions can be sequenceables (issue #1166)
 . [FIX] ESRenderer: Don't recreate if it is not needed (issue #1153)
+. [FIX] ESrenderer: Destroy / recreate layout only when needed (issue #1254)
 . [FIX] FileUtils: Loads -hd resources even if the sd resource is not present (issue #1179)
 . [FIX] FileUtils: renamed ccRemoveSuffixFromFile to +[CCFileUtils removeSuffixFromFile:];
 . [FIX] FileUtils: localized resources can be loaded using fullPathFromRelativePath (issue #1230)
 . [FIX] LayerColor: init calls initWithColor:width:height (issue #1226)
+. [FIX] Sprite: Debug draw fixed (issue #1069)
 . [FIX] SpriteBatchNode: removeAllChildrenWithCleanup works correctly (issue #1216)
 . [FIX] Texture2D: drawAtPoint uses the correct vertices
 . [FIX] Texture2D: drawAtPoint, drawInRect disables color state (issue #1222)

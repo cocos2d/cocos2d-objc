@@ -27,6 +27,9 @@ Contributors (alphabetically ordered):
 	Actions: Instant actions can be sequenceables
 	Actions: durtion is not divided by zero
 	Actions: Repeat & RepeatForever work as expectd
+	Author of ParticleBatchNode node
+	Improved ESRenderer layoutSubview
+	Improved Debug Drawing for Sprite batched node	
 
 * Ricardo Ruiz:
 	Added support for RGB888 textures

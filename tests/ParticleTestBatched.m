@@ -7,7 +7,6 @@
 
 // local import
 #import "ParticleTestBatched.h"
-#import "CCParticleBatchNode.h" 
 
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 #define PARTICLE_FIRE_NAME @"fire.pvr"
