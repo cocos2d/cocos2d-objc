@@ -199,14 +199,14 @@
 		{	
 			//issue #1254 possible freeze of EAGLView, always destroy and recreate buffers when needed
 			[self destroyFrameBuffer];
-			
+			//[self createFrameBuffer:layer];
 			
 			CCLOG(@"cocos2d: surface size: %dx%d, resizing buffers", (int)backingWidth_, (int)backingHeight_);
 		}
 	}
 	else 
 	{//first time 
-		[self createFrameBuffer:layer];
+		//[self createFrameBuffer:layer];
 		CCLOG(@"cocos2d: surface size: %dx%d", (int)backingWidth_, (int)backingHeight_);
 	}
 	

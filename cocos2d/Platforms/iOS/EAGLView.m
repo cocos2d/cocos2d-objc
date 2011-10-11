@@ -203,14 +203,14 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 - (void) layoutSubviews
 {
 	[renderer_ resizeFromLayer:(CAEAGLLayer*)self.layer];
-	size_ = [renderer_ backingSize];
+	/*size_ = [renderer_ backingSize];
 	
 	// Issue #914 #924
 	CCDirector *director = [CCDirector sharedDirector];
 	[director reshapeProjection:size_];
-	
+	*/
 	// Avoid flicker. Issue #350
-	[director performSelectorOnMainThread:@selector(drawScene) withObject:nil waitUntilDone:YES];
+	//[director performSelectorOnMainThread:@selector(drawScene) withObject:nil waitUntilDone:YES];
 }	
 
 - (void) swapBuffers
@@ -258,6 +258,17 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	}
 	
 #endif // __IPHONE_4_0
+	if (![renderer_ colorRenderBuffer])
+	{
+		[renderer_ createFrameBuffer:(CAEAGLLayer*) self.layer]; 
+		
+		size_ = [renderer_ backingSize];
+		
+		// Issue #914 #924
+		CCDirector *director = [CCDirector sharedDirector];
+		[director reshapeProjection:size_];
+		[[CCDirector sharedDirector] performSelectorOnMainThread:@selector(drawScene) withObject:nil waitUntilDone:YES];
+	}
 	
 	if(![context_ presentRenderbuffer:GL_RENDERBUFFER_OES])
 		CCLOG(@"cocos2d: Failed to swap renderbuffer in %s\n", __FUNCTION__);
@@ -266,7 +277,6 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	CHECK_GL_ERROR();
 #endif
 	
-	if (![renderer_ defaultFrameBuffer]) [renderer_ createFrameBuffer:(CAEAGLLayer*) self.layer]; 
 	// We can safely re-bind the framebuffer here, since this will be the
 	// 1st instruction of the new main loop
 	if( multiSampling_ )
