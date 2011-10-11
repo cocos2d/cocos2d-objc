@@ -128,6 +128,7 @@
 	@since 1.1
  */
 - (void) removeQuadsAtIndex:(NSUInteger) index amount:(uint) amount;
+
 /** removes all Quads.
  The TextureAtlas capacity remains untouched. No memory is freed.
  The total number of quads to be drawn will be 0
@@ -163,8 +164,6 @@
  @since 1.1
 */
 - (void) fillWithEmptyQuadsFromIndex:(uint) index amount:(uint) amount;
-
-- (void) printAllQuads;
 
 /** draws n quads
  * n can't be greater than the capacity of the Atlas
