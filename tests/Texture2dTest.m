@@ -19,6 +19,9 @@ enum {
 static int sceneIdx=-1;
 static NSString *transitions[] = {
 
+	@"TexturePVRRGB565",
+	@"TexturePVRRGB888",
+
 	@"TextureAlias",
 	@"TextureMipMap",
 	@"TexturePVRMipMap",
@@ -37,6 +40,7 @@ static NSString *transitions[] = {
 	@"TexturePVRRGBA4444CCZ",
 	@"TexturePVRRGBA5551",
 	@"TexturePVRRGB565",
+	@"TexturePVRRGB888",
 	@"TexturePVRA8",
 	@"TexturePVRI8",
 	@"TexturePVRAI88",
@@ -57,6 +61,10 @@ static NSString *transitions[] = {
 	@"TextureGlRepeat",
 	@"TextureSizeTest",
 	@"TextureCache1",
+	@"TextureDrawAtPoint",
+	@"TextureDrawInRect",
+
+	@"FileUtilsTest",
 };
 
 #pragma mark Callbacks
@@ -767,6 +775,31 @@ Class restartAction()
 -(NSString *) title
 {
 	return @"PVR + RGB 565 Test";
+}
+@end
+
+#pragma mark -
+#pragma mark TexturePVR RGB888
+
+// Image generated using PVRTexTool:
+// http://www.imgtec.com/powervr/insider/powervr-pvrtextool.asp
+
+@implementation TexturePVRRGB888
+-(void) onEnter
+{
+	[super onEnter];
+	CGSize s = [[CCDirector sharedDirector] winSize];
+	
+	CCSprite *img = [CCSprite spriteWithFile:@"test_image_rgb888.pvr"];
+	img.position = ccp( s.width/2.0f, s.height/2.0f);
+	[self addChild:img];
+	[[CCTextureCache sharedTextureCache] dumpCachedTextureInfo];
+	
+}
+
+-(NSString *) title
+{
+	return @"PVR + RGB 888 Test";
 }
 @end
 
@@ -1688,6 +1721,161 @@ Class restartAction()
 }
 @end
 
+#pragma mark -
+#pragma mark TextureDrawAtPoint
+
+@implementation TextureDrawAtPoint
+-(id) init
+{	
+	if ((self=[super init]) ) {
+		
+		tex1_ = [[CCTextureCache sharedTextureCache] addImage:@"grossinis_sister1.png"];
+		tex2_ = [[CCTextureCache sharedTextureCache] addImage:@"grossinis_sister2.png"];
+		
+		[tex1_ retain];
+		[tex2_ retain];
+		
+	}
+	return self;
+}
+-(void) dealloc
+{
+	[tex1_ release];
+	[tex2_ release];
+}
+-(void) draw
+{
+	[super draw];
+	
+	CGSize s = [[CCDirector sharedDirector] winSize];
+	
+	[tex1_ drawAtPoint:ccp(s.width/2-50, s.height/2 - 50)];
+	[tex2_ drawAtPoint:ccp(s.width/2+50, s.height/2 - 50)];
+
+}
+
+-(NSString*) title
+{
+	return @"CCTexture2D: drawAtPoint";
+}
+-(NSString *) subtitle
+{
+	return @"draws 2 textures using drawAtPoint";
+}
+@end
+
+#pragma mark -
+#pragma mark TextureDrawInRect
+
+
+@implementation TextureDrawInRect
+-(id) init
+{	
+	if ((self=[super init]) ) {
+		
+		tex1_ = [[CCTextureCache sharedTextureCache] addImage:@"grossinis_sister1.png"];
+		tex2_ = [[CCTextureCache sharedTextureCache] addImage:@"grossinis_sister2.png"];
+		
+		[tex1_ retain];
+		[tex2_ retain];
+		
+	}
+	return self;
+}
+-(void) dealloc
+{
+	[tex1_ release];
+	[tex2_ release];
+}
+-(void) draw
+{
+	[super draw];
+	
+	CGSize s = [[CCDirector sharedDirector] winSize];
+	
+	CGRect rect1 = CGRectMake( s.width/2 - 80, 20, tex1_.contentSize.width * 0.5f, tex1_.contentSize.height *2 );
+	CGRect rect2 = CGRectMake( s.width/2 + 80, s.height/2, tex1_.contentSize.width * 2, tex1_.contentSize.height * 0.5f );
+	
+	[tex1_ drawInRect:rect1];
+	[tex2_ drawInRect:rect2];
+	
+}
+
+-(NSString*) title
+{
+	return @"CCTexture2D: drawInRect";
+}
+-(NSString *) subtitle
+{
+	return @"draws 2 textures using drawInRect";
+}
+@end
+
+
+#pragma mark - FileUtilsTest
+
+@implementation FileUtilsTest
+-(id) init
+{	
+	if ((self=[super init]) ) {
+		
+		// This test is only valid in Retinadisplay
+		
+		if( CC_CONTENT_SCALE_FACTOR() == 2 ) {
+			
+			CCSprite *sprite = [[CCSprite alloc] initWithFile:@"bugs/test_issue_1179.png"];
+			if( sprite )
+				NSLog(@"Test #1 issue 1179: OK");
+			else
+				NSLog(@"Test #1 issue 1179: FAILED");
+				
+			[sprite release];
+
+			sprite = [[CCSprite alloc] initWithFile:@"only_in_hd.pvr.ccz"];
+			if( sprite )
+				NSLog(@"Test #2 issue 1179: OK");
+			else
+				NSLog(@"Test #2 issue 1179: FAILED");
+			
+			[sprite release];
+
+		} else {
+			NSLog(@"Test issue #1179 failed. Needs to be tested with RetinaDispaly");
+		}
+
+		
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+		// Testint CCFileUtils API
+		BOOL ret;
+		ret = [CCFileUtils retinaDisplayFileExistsAtPath:@"bugs/test_issue_1179.png"];
+		if( ret )
+			NSLog(@"Test #3: retinaDisplayFileExistsAtPath: OK");
+		else
+			NSLog(@"Test #3: retinaDisplayFileExistsAtPath: FAILED");
+
+
+		ret = [CCFileUtils retinaDisplayFileExistsAtPath:@"grossini-does_no_exist.png"];
+		if( !ret )
+			NSLog(@"Test #4: retinaDisplayFileExistsAtPath: OK");
+		else
+			NSLog(@"Test #4: retinaDisplayFileExistsAtPath: FAILED");
+#endif // __IPHONE_OS_VERSION_MAX_ALLOWED
+		
+	}
+	return self;
+}
+
+-(NSString*) title
+{
+	return @"CCFileUtils: See console";
+}
+-(NSString *) subtitle
+{
+	return @"See the console";
+}
+@end
+
+
 
 #pragma mark -
 #pragma mark AppController - Main
@@ -1736,6 +1924,11 @@ Class restartAction()
 	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
 	// You can change it at anytime.
 	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA8888];	
+	
+	// When in iPad / RetinaDisplay mode, CCFileUtils will append the "-ipad" / "-hd" to all loaded files
+	// If the -ipad  / -hdfile is not found, it will load the non-suffixed version
+	[CCFileUtils setiPadSuffix:@"-ipad"];	// Default on iPad is "" (empty string)
+	[CCFileUtils setRetinaDisplaySuffix:@"-hd"];	// Default on RetinaDisplay is "-hd"
 	
 	CCScene *scene = [CCScene node];
 	[scene addChild: [nextAction() node]];

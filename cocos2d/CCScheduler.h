@@ -40,12 +40,16 @@ typedef void (*TICK_IMP)(id, SEL, ccTime);
 	TICK_IMP impMethod;
 	
 	ccTime elapsed;
+	BOOL runForever;
+	BOOL useDelay;
+	uint nTimesExecuted; 
+	uint repeat; //0 = once, 1 is 2 x executed
+	ccTime delay; 
 
 @public					// optimization
 	ccTime interval;
 	SEL selector;
 }
-
 /** interval in seconds */
 @property (nonatomic,readwrite,assign) ccTime interval;
 
@@ -61,9 +65,9 @@ typedef void (*TICK_IMP)(id, SEL, ccTime);
 */
  -(id) initWithTarget:(id) t selector:(SEL)s;
 
-/** Initializes a timer with a target, a selector and an interval in seconds.
+/** Initializes a timer with a target, a selector, an interval in seconds, repeat in number of times to repeat, delay in seconds
 */
--(id) initWithTarget:(id) t selector:(SEL)s interval:(ccTime)seconds;
+-(id) initWithTarget:(id)t selector:(SEL)s interval:(ccTime) seconds repeat:(uint) r delay:(ccTime) d;
 
 
 /** triggers the timer */
@@ -141,9 +145,14 @@ struct _hashUpdateEntry;
  If paused is YES, then it won't be called until it is resumed.
  If 'interval' is 0, it will be called every frame, but if so, it recommened to use 'scheduleUpdateForTarget:' instead.
  If the selector is already scheduled, then only the interval parameter will be updated without re-scheduling it again.
-
- @since v0.99.3
+ repeat let the action be repeated repeat + 1 times, use kCCRepeatForever to let the action run continiously 
+ delay is the amount of time the action will wait before it'll start
+ 
+ @since v0.99.3, repeat and delay added in v1.1
  */
+-(void) scheduleSelector:(SEL)selector forTarget:(id)target interval:(ccTime)interval paused:(BOOL)paused repeat: (uint) repeat delay: (ccTime) delay;
+
+/** calls scheduleSelector with kCCRepeatForever and a 0 delay */
 -(void) scheduleSelector:(SEL)selector forTarget:(id)target interval:(ccTime)interval paused:(BOOL)paused;
 
 /** Schedules the 'update' selector for a given target with a given priority.

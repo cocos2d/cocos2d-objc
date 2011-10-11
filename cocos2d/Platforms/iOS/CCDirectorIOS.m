@@ -147,6 +147,8 @@ CGFloat	__ccContentScaleFactor = 1;
 	/* calculate "global" dt */
 	[self calculateDeltaTime];
 	
+	[self resetMutatedChildren];
+	
 	/* tick before glClear: issue #533 */
 	if( ! isPaused_ ) {
 		[[CCScheduler sharedScheduler] tick: dt];	
@@ -285,7 +287,10 @@ CGFloat	__ccContentScaleFactor = 1;
 		isContentScaleSupported_ = YES;
 	}
 	else
-		CCLOG(@"cocos2d: 'setContentScaleFactor:' is not supported on this device");
+	{
+		CCLOG(@"cocos2d: WARNING: calling setContentScaleFactor on iOS < 4. Using fallback mechanism");		
+		isContentScaleSupported_ = NO;
+	}
 }
 
 -(BOOL) enableRetinaDisplay:(BOOL)enabled

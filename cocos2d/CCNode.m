@@ -71,6 +71,7 @@
 @synthesize vertexZ = vertexZ_;
 @synthesize isRunning = isRunning_;
 @synthesize userData = userData_;
+@synthesize mutatedIndex = mutatedIndex_;
 
 #pragma mark CCNode - Transform related properties
 
@@ -279,7 +280,7 @@
 #if CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
 		isTransformGLDirty_ = YES;
 #endif
-		
+		isReorderChildDirty_ = NO;	
 		vertexZ_ = 0;
 		
 		grid_ = nil;
@@ -301,6 +302,8 @@
 
 		//initialize parent to nil
 		parent_ = nil;
+		
+		mutatedIndex_=0;
 	}
 	
 	return self;
@@ -395,6 +398,9 @@
 	child.tag = aTag;
 	
 	[child setParent: self];
+	
+	//CCDirector.sharedDirector->getMutatedIndex
+	[child setMutatedIndex:[[CCDirector sharedDirector] getMutatedIndex]];
 	
 	if( isRunning_ ) {
 		[child onEnter];
@@ -495,24 +501,9 @@
 // helper used by reorderChild & add
 -(void) insertChild:(CCNode*)child z:(NSInteger)z
 {
-	NSUInteger index=0;
-	CCNode *a = [children_ lastObject];
+	isReorderChildDirty_=YES;	
 	
-	// quick comparison to improve performance
-	if (!a || a.zOrder <= z)
-		[children_ addObject:child];
-	
-	else
-	{
-		CCARRAY_FOREACH(children_, a) {
-			if ( a.zOrder > z ) {
-				[children_ insertObject:child atIndex:index];
-				break;
-			}
-			index++;
-		}
-	}
-	
+	ccArrayAppendObjectWithResize(children_->data, child);
 	[child _setZOrder:z];
 }
 
@@ -520,12 +511,38 @@
 {
 	NSAssert( child != nil, @"Child must be non-nil");
 	
-	[child retain];
-	[children_ removeObject:child];
-	
-	[self insertChild:child z:z];
-	
-	[child release];
+	isReorderChildDirty_=YES;
+	[child setMutatedIndex:[[CCDirector sharedDirector] getMutatedIndex]];
+	[child _setZOrder:z];
+}
+
+- (void) sortAllChildren
+{
+	if (isReorderChildDirty_) 
+	{	
+		int i,j,length=children_->data->num;
+		id* x=children_->data->arr;
+		id tempItem;
+		
+		//insertion sort
+		for(i=1; i<length; i++)
+		{
+			tempItem = x[i];
+			j = i-1;
+			
+			//continue moving element downwards while zOrder is smaller or when zOrder is the same but mutatedIndex is smaller
+			while(j>=0 && ( ((CCNode*) tempItem).zOrder<((CCNode*)x[j]).zOrder || ( ((CCNode*) tempItem).zOrder== ((CCNode*)x[j]).zOrder &&  ((CCNode*) tempItem).mutatedIndex < ((CCNode*)x[j]).mutatedIndex ) ) ) 
+			{
+				x[j+1] = x[j];
+				j = j-1;
+			}
+			x[j+1] = tempItem;
+		}
+		
+		//don't need to check children recursively, that's done in visit of each child
+		
+		isReorderChildDirty_=NO;
+	}
 }
 
 #pragma mark CCNode Draw
@@ -553,6 +570,7 @@
 	[self transform];
 	
 	if(children_) {
+		[self sortAllChildren];
 		ccArray *arrayData = children_->data;
 		NSUInteger i = 0;
 		
@@ -576,6 +594,8 @@
 
 	} else
 		[self draw];
+	
+	mutatedIndex_=0;
 	
 	if ( grid_ && grid_.active)
 		[grid_ afterDraw:self];
@@ -747,15 +767,25 @@
 
 -(void) schedule:(SEL)selector
 {
-	[self schedule:selector interval:0];
+	[self schedule:selector interval:0 repeat:kCCRepeatForever delay:0];
 }
 
 -(void) schedule:(SEL)selector interval:(ccTime)interval
 {
+	[self schedule:selector interval:interval repeat:kCCRepeatForever delay:0];
+}
+
+-(void) schedule:(SEL)selector interval:(ccTime)interval repeat: (uint) repeat delay:(ccTime) delay
+{
 	NSAssert( selector != nil, @"Argument must be non-nil");
 	NSAssert( interval >=0, @"Arguemnt must be positive");
 	
-	[[CCScheduler sharedScheduler] scheduleSelector:selector forTarget:self interval:interval paused:!isRunning_];
+	[[CCScheduler sharedScheduler] scheduleSelector:selector forTarget:self interval:interval paused:!isRunning_ repeat:repeat delay:delay];
+}
+
+- (void) scheduleOnce:(SEL) selector delay:(ccTime) delay
+{
+	[self schedule:selector interval:0.f repeat:0 delay:delay];	
 }
 
 -(void) unschedule:(SEL)selector

@@ -39,8 +39,8 @@
  */
 
 // 0x00 HI ME LO
-// 00   01 00 01
-#define COCOS2D_VERSION 0x00010001
+// 00   01 01 00
+#define COCOS2D_VERSION 0x00010100
 
 #import <Availability.h>
 
@@ -78,6 +78,7 @@
 #import "CCParticleSystemPoint.h"
 #import "CCParticleSystemQuad.h"
 #import "CCParticleExamples.h"
+#import "CCParticleBatchNode.h"
 
 #import "CCTexture2D.h"
 #import "CCTexturePVR.h"

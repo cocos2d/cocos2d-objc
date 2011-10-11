@@ -98,6 +98,10 @@
 {}
 @end
 
+@interface TexturePVRRGB888 : TextureDemo
+{}
+@end
+
 @interface TexturePVRA8 : TextureDemo
 {}
 @end
@@ -191,6 +195,22 @@
 
 @interface TextureCache1 : TextureDemo
 {}
+@end
+
+@interface FileUtilsTest : TextureDemo
+{}
+@end
+
+@interface TextureDrawAtPoint : TextureDemo
+{
+	CCTexture2D *tex1_, *tex2_;
+}
+@end
+
+@interface TextureDrawInRect : TextureDemo
+{
+	CCTexture2D *tex1_, *tex2_;
+}
 @end
 
 

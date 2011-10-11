@@ -68,6 +68,8 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 #import <Foundation/Foundation.h> //	for NSObject
 
+#import "ccTypes.h"
+
 #import "Platforms/CCGL.h" // OpenGL stuff
 #import "Platforms/CCNS.h" // Next-Step stuff
 
@@ -82,6 +84,8 @@ typedef enum {
 	kCCTexture2DPixelFormat_RGBA8888,
 	//! 16-bit texture without Alpha channel
 	kCCTexture2DPixelFormat_RGB565,
+	//! 24-bit texture without Alpha channel
+	kCCTexture2DPixelFormat_RGB888,
 	//! 8-bit textures used as masks
 	kCCTexture2DPixelFormat_A8,
 	//! 8-bit intensity texture
@@ -99,15 +103,6 @@ typedef enum {
 
 	//! Default texture format: RGBA8888
 	kCCTexture2DPixelFormat_Default = kCCTexture2DPixelFormat_RGBA8888,
-
-	// backward compatibility stuff
-	kTexture2DPixelFormat_Automatic = kCCTexture2DPixelFormat_Automatic,
-	kTexture2DPixelFormat_RGBA8888 = kCCTexture2DPixelFormat_RGBA8888,
-	kTexture2DPixelFormat_RGB565 = kCCTexture2DPixelFormat_RGB565,
-	kTexture2DPixelFormat_A8 = kCCTexture2DPixelFormat_A8,
-	kTexture2DPixelFormat_RGBA4444 = kCCTexture2DPixelFormat_RGBA4444,
-	kTexture2DPixelFormat_RGB5A1 = kCCTexture2DPixelFormat_RGB5A1,
-	kTexture2DPixelFormat_Default = kCCTexture2DPixelFormat_Default
 	
 } CCTexture2DPixelFormat;
 
@@ -129,6 +124,11 @@ typedef enum {
 	GLfloat						maxS_,
 								maxT_;
 	BOOL						hasPremultipliedAlpha_;
+	
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+	ccResolutionType			resolutionType_;
+#endif
+
 }
 /** Intializes with a texture2d with data */
 - (id) initWithData:(const void*)data pixelFormat:(CCTexture2DPixelFormat)pixelFormat pixelsWide:(NSUInteger)width pixelsHigh:(NSUInteger)height contentSize:(CGSize)size;
@@ -157,8 +157,22 @@ typedef enum {
 /** whether or not the texture has their Alpha premultiplied */
 @property(nonatomic,readonly) BOOL hasPremultipliedAlpha;
 
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+/** Returns the resolution type of the texture.
+ Is it a RetinaDisplay texture, an iPad texture or an standard texture ?
+ Only valid on iOS. Not valid on OS X.
+ 
+ Should be a readonly property. It is readwrite as a hack.
+ 
+ @since v1.1
+ */
+@property (nonatomic, readwrite) ccResolutionType resolutionType;
+#endif
+
 /** returns the content size of the texture in points */
 -(CGSize) contentSize;
+
+
 @end
 
 /**
@@ -179,7 +193,8 @@ Note that RGBA type textures will have their alpha premultiplied - use the blend
 @interface CCTexture2D (Image)
 /** Initializes a texture from a UIImage object */
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
-- (id) initWithImage:(UIImage *)uiImage;
+- (id) initWithImage:(UIImage *)uiImage resolutionType:(ccResolutionType)resolution;
+- (id) initWithImage:(UIImage *)uiImage DEPRECATED_ATTRIBUTE;
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 - (id) initWithImage:(CGImageRef)cgImage;
 #endif
@@ -212,6 +227,8 @@ Note that the generated textures are of type A8 - use the blending mode (GL_SRC_
 /** Initializes a texture from a PVR Texture Compressed (PVRTC) buffer
  *
  * IMPORTANT: This method is only defined on iOS. It is not supported on the Mac version.
+ * 
+ * @deprecated Use initWithPVRFile instead. Will be removed in 2.0
  */
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 -(id) initWithPVRTCData: (const void*)data level:(int)level bpp:(int)bpp hasAlpha:(BOOL)hasAlpha length:(int)length pixelFormat:(CCTexture2DPixelFormat)pixelFormat;
