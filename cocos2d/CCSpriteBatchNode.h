@@ -58,6 +58,11 @@
 
 	// all descendants: chlidren, gran children, etc...
 	CCArray	*descendants_;
+	
+	@private
+	
+	void (*updateAtlasIndexMethod_)(id, SEL,CCSprite*,int*);
+	
 }
 
 /** returns the TextureAtlas that is used */
@@ -114,9 +119,12 @@
 -(void)removeChild: (CCSprite *)sprite cleanup:(BOOL)doCleanup;
 
 -(void) insertChild:(CCSprite*)child inAtlasAtIndex:(NSUInteger)index;
+-(void) appendChild:(CCSprite*)sprite;
 -(void) removeSpriteFromAtlas:(CCSprite*)sprite;
 
 -(NSUInteger) rebuildIndexInOrder:(CCSprite*)parent atlasIndex:(NSUInteger)index;
 -(NSUInteger) atlasIndexForChild:(CCSprite*)sprite atZ:(NSInteger)z;
+/* Sprites use this to start sortChildren, don't call this manually */
+- (void) reorderBatch;
 
 @end

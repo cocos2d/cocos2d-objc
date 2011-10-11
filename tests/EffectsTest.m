@@ -362,12 +362,7 @@ Class restartAction()
 		[node runAction:[effectClass actionWithDuration:3]];
 		[self addChild: node z:0 tag:kTagBackground];
 		
-		CCSprite *bg;
-		if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-			bg = [CCSprite spriteWithFile:@"background3-ipad.png"];
-		} else {
-			bg = [CCSprite spriteWithFile:@"background3.png"];
-		}		
+		CCSprite *bg = [CCSprite spriteWithFile:@"background3.png"];
 		[node addChild: bg z:0];
 //		bg.anchorPoint = CGPointZero;
 		bg.position = ccp(size.width/2, size.height/2);
@@ -511,7 +506,12 @@ Class restartAction()
 	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
 	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
 	// You can change anytime.
-	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA8888];	
+	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA8888];
+	
+	// When in iPad / RetinaDisplay mode, CCFileUtils will append the "-ipad" / "-hd" to all loaded files
+	// If the -ipad  / -hdfile is not found, it will load the non-suffixed version
+	[CCFileUtils setiPadSuffix:@"-ipad"];			// Default on iPad is "" (empty string)
+	[CCFileUtils setRetinaDisplaySuffix:@"-hd"];	// Default on RetinaDisplay is "-hd"
 	
 	CCScene *scene = [CCScene node];
 	[scene addChild: [TextLayer node] z:0 tag:kTagTextLayer];

@@ -65,6 +65,9 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
  * https://devforums.apple.com/message/37855#37855 by a1studmuffin
  */
 
+/*
+ * Added many additions for cocos2d
+ */
 
 #import <Availability.h>
 
@@ -76,8 +79,10 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #import "ccConfig.h"
 #import "ccMacros.h"
 #import "CCConfiguration.h"
-#import "Support/ccUtils.h"
 #import "CCTexturePVR.h"
+#import "Support/ccUtils.h"
+#import "Support/CCFileUtils.h"
+
 
 #if defined(__IPHONE_OS_VERSION_MAX_ALLOWED) && CC_FONT_LABEL_SUPPORT
 // FontLabel support
@@ -108,6 +113,11 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 
 @synthesize contentSizeInPixels = size_, pixelFormat = format_, pixelsWide = width_, pixelsHigh = height_, name = name_, maxS = maxS_, maxT = maxT_;
 @synthesize hasPremultipliedAlpha = hasPremultipliedAlpha_;
+
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+@synthesize resolutionType = resolutionType_;
+#endif
+
 
 - (id) initWithData:(const void*)data pixelFormat:(CCTexture2DPixelFormat)pixelFormat pixelsWide:(NSUInteger)width pixelsHigh:(NSUInteger)height contentSize:(CGSize)size
 {
@@ -153,7 +163,11 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 		maxT_ = size.height / (float)height;
 
 		hasPremultipliedAlpha_ = NO;
-	}					
+
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+		resolutionType_ = kCCResolutionUnknown;
+#endif
+	}
 	return self;
 }
 
@@ -191,6 +205,7 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 	
 	return ret;
 }
+  
 @end
 
 #pragma mark -
@@ -198,7 +213,16 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 
 @implementation CCTexture2D (Image)
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+// XXX deprecated. To be removed in 2.0
 - (id) initWithImage:(UIImage *)uiImage
+{
+	return [self initWithImage:uiImage resolutionType:kCCResolutionUnknown];
+}
+#endif
+
+
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+- (id) initWithImage:(UIImage *)uiImage resolutionType:(ccResolutionType)resolution
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 - (id) initWithImage:(CGImageRef)CGImage
 #endif
@@ -357,6 +381,10 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 	
 	CGContextRelease(context);
 	[self releaseData:data];
+	
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+	resolutionType_ = resolution;
+#endif
 	
 	return self;
 }
@@ -631,10 +659,18 @@ static BOOL PVRHaveAlphaPremultiplied_ = NO;
 }
 #endif // __IPHONE_OS_VERSION_MAX_ALLOWED
 
--(id) initWithPVRFile: (NSString*) file
+-(id) initWithPVRFile: (NSString*) relPath
 {
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+	ccResolutionType resolution;
+	NSString *fullpath = [CCFileUtils fullPathFromRelativePath:relPath resolutionType:&resolution];
+	
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+	NSString *fullpath = [CCFileUtils fullPathFromRelativePath:relPath];
+#endif 
+	
 	if( (self = [super init]) ) {
-		CCTexturePVR *pvr = [[CCTexturePVR alloc] initWithContentsOfFile:file];
+		CCTexturePVR *pvr = [[CCTexturePVR alloc] initWithContentsOfFile:fullpath];
 		if( pvr ) {
 			pvr.retainName = YES;	// don't dealloc texture on release
 			
@@ -652,10 +688,13 @@ static BOOL PVRHaveAlphaPremultiplied_ = NO;
 			[self setAntiAliasTexParameters];
 		} else {
 			
-			CCLOG(@"cocos2d: Couldn't load PVR image: %@", file);
+			CCLOG(@"cocos2d: Couldn't load PVR image: %@", relPath);
 			[self release];
 			return nil;
 		}
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+		resolutionType_ = resolution;
+#endif
 	}
 	return self;
 }
@@ -680,15 +719,24 @@ static BOOL PVRHaveAlphaPremultiplied_ = NO;
 	GLfloat		width = (GLfloat)width_ * maxS_,
 				height = (GLfloat)height_ * maxT_;
 
-	GLfloat		vertices[] = {	point.x,			point.y,	0.0f,
-								width + point.x,	point.y,	0.0f,
-								point.x,			height  + point.y,	0.0f,
-								width + point.x,	height  + point.y,	0.0f };
+	GLfloat		vertices[] = {	point.x,			point.y,
+								width + point.x,	point.y,
+								point.x,			height  + point.y,
+		width + point.x,	height  + point.y };
 	
 	glBindTexture(GL_TEXTURE_2D, name_);
-	glVertexPointer(3, GL_FLOAT, 0, vertices);
+
+	// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
+	// Needed states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_TEXTURE_COORD_ARRAY
+	// Unneeded states: GL_COLOR_ARRAY
+	glDisableClientState(GL_COLOR_ARRAY);
+
+	glVertexPointer(2, GL_FLOAT, 0, vertices);
 	glTexCoordPointer(2, GL_FLOAT, 0, coordinates);
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+
+	// Restore GL state
+	glEnableClientState(GL_COLOR_ARRAY);
 }
 
 
@@ -698,15 +746,24 @@ static BOOL PVRHaveAlphaPremultiplied_ = NO;
 								maxS_,	maxT_,
 								0.0f,	0.0f,
 								maxS_,	0.0f  };
-	GLfloat	vertices[] = {	rect.origin.x,							rect.origin.y,							/*0.0f,*/
-							rect.origin.x + rect.size.width,		rect.origin.y,							/*0.0f,*/
-							rect.origin.x,							rect.origin.y + rect.size.height,		/*0.0f,*/
-							rect.origin.x + rect.size.width,		rect.origin.y + rect.size.height,		/*0.0f*/ };
+	GLfloat	vertices[] = {	rect.origin.x,						rect.origin.y,
+							rect.origin.x + rect.size.width,	rect.origin.y,
+							rect.origin.x,						rect.origin.y + rect.size.height,
+		rect.origin.x + rect.size.width,						rect.origin.y + rect.size.height };
 	
 	glBindTexture(GL_TEXTURE_2D, name_);
+	
+	// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
+	// Needed states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_TEXTURE_COORD_ARRAY
+	// Unneeded states: GL_COLOR_ARRAY
+	glDisableClientState(GL_COLOR_ARRAY);
+	
 	glVertexPointer(2, GL_FLOAT, 0, vertices);
 	glTexCoordPointer(2, GL_FLOAT, 0, coordinates);
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+	
+	// restore state
+	glEnableClientState(GL_COLOR_ARRAY);
 }
 
 @end
@@ -780,6 +837,9 @@ static BOOL PVRHaveAlphaPremultiplied_ = NO;
 			break;
 		case kCCTexture2DPixelFormat_RGB565:
 			ret = 16;
+			break;
+		case kCCTexture2DPixelFormat_RGB888:
+			ret = 24;
 			break;
 		case kCCTexture2DPixelFormat_A8:
 			ret = 8;

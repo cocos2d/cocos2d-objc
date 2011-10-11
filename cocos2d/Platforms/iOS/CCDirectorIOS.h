@@ -139,8 +139,7 @@ typedef enum {
  This is the recommened way to enable Retina Display.
  @since v0.99.5
  */
--(BOOL) enableRetinaDisplay:(BOOL)yes;
-
+-(BOOL) enableRetinaDisplay:(BOOL)enable;
 
 /** returns the content scale factor */
 -(CGFloat) contentScaleFactor;

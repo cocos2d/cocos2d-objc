@@ -35,6 +35,7 @@
 #import "Support/CCFileUtils.h"
 #import "CCDirector.h"
 #import "ccConfig.h"
+#import "ccTypes.h"
 
 // needed for CCCallFuncO in Mac-display_link version
 #import "CCActionManager.h"
@@ -218,7 +219,9 @@ static CCTextureCache *sharedTextureCache;
 	
 	CCTexture2D * tex;
 	
-	path = ccRemoveHDSuffixFromFile(path);
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+	path = [CCFileUtils removeSuffixFromFile:path];
+#endif
 	
 	if( (tex=[textures_ objectForKey: path] ) ) {
 		[target performSelector:selector withObject:tex];
@@ -247,7 +250,9 @@ static CCTextureCache *sharedTextureCache;
 	[dictLock_ lock];
 	
 	// remove possible -HD suffix to prevent caching the same image twice (issue #1040)
-	path = ccRemoveHDSuffixFromFile( path );
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+	path = [CCFileUtils removeSuffixFromFile: path];
+#endif
 
 	tex=[textures_ objectForKey: path];
 	
@@ -268,11 +273,12 @@ static CCTextureCache *sharedTextureCache;
 				 ) {
 			// convert jpg to png before loading the texture
 			
-			NSString *fullpath = [CCFileUtils fullPathFromRelativePath: path ];
+			ccResolutionType resolution;
+			NSString *fullpath = [CCFileUtils fullPathFromRelativePath: path resolutionType:&resolution];
 						
 			UIImage *jpg = [[UIImage alloc] initWithContentsOfFile:fullpath];
 			UIImage *png = [[UIImage alloc] initWithData:UIImagePNGRepresentation(jpg)];
-			tex = [ [CCTexture2D alloc] initWithImage: png ];
+			tex = [ [CCTexture2D alloc] initWithImage:png resolutionType:resolution];
 			[png release];
 			[jpg release];
 			
@@ -287,11 +293,11 @@ static CCTextureCache *sharedTextureCache;
 		
 		else {
 			
-			// prevents overloading the autorelease pool
-			NSString *fullpath = [CCFileUtils fullPathFromRelativePath: path ];
+			ccResolutionType resolution;
+			NSString *fullpath = [CCFileUtils fullPathFromRelativePath:path resolutionType:&resolution];
 
 			UIImage *image = [ [UIImage alloc] initWithContentsOfFile: fullpath ];
-			tex = [ [CCTexture2D alloc] initWithImage: image ];
+			tex = [ [CCTexture2D alloc] initWithImage:image resolutionType:resolution];
 			[image release];
 			
 			if( tex )
@@ -347,7 +353,7 @@ static CCTextureCache *sharedTextureCache;
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 	// prevents overloading the autorelease pool
 	UIImage *image = [[UIImage alloc] initWithCGImage:imageref];
-	tex = [[CCTexture2D alloc] initWithImage: image];
+	tex = [[CCTexture2D alloc] initWithImage:image resolutionType:kCCResolutionUnknown];
 	[image release];
 
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
@@ -412,6 +418,7 @@ static CCTextureCache *sharedTextureCache;
 @implementation CCTextureCache (PVRSupport)
 
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+// XXX deprecated
 -(CCTexture2D*) addPVRTCImage:(NSString*)path bpp:(int)bpp hasAlpha:(BOOL)alpha width:(int)w
 {
 	NSAssert(path != nil, @"TextureCache: fileimage MUST not be nill");
@@ -420,7 +427,7 @@ static CCTextureCache *sharedTextureCache;
 	CCTexture2D * tex;
 	
 	// remove possible -HD suffix to prevent caching the same image twice (issue #1040)
-	path = ccRemoveHDSuffixFromFile( path );
+	path = [CCFileUtils removeSuffixFromFile: path];
 
 	if( (tex=[textures_ objectForKey: path] ) ) {
 		return tex;
@@ -449,16 +456,15 @@ static CCTextureCache *sharedTextureCache;
 	CCTexture2D * tex;
 	
 	// remove possible -HD suffix to prevent caching the same image twice (issue #1040)
-	path = ccRemoveHDSuffixFromFile( path );
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+	path = [CCFileUtils removeSuffixFromFile: path];
+#endif
 
 	if( (tex=[textures_ objectForKey: path] ) ) {
 		return tex;
 	}
 	
-	// Split up directory and filename
-	NSString *fullpath = [CCFileUtils fullPathFromRelativePath:path];
-	
-	tex = [[CCTexture2D alloc] initWithPVRFile: fullpath];
+	tex = [[CCTexture2D alloc] initWithPVRFile: path];
 	if( tex )
 		[textures_ setObject: tex forKey:path];
 	else

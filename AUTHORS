@@ -1,5 +1,51 @@
-cocos2d for iPhone authors
---------------------------
+Special thanks to: Lucio Torre, Alejandro Cura, Daniel Moisset & Rayentray Tappa.
+
+cocos2d for iPhone wouldn't be possible without the help of the community who is
+constantly adding new features, sending patches, opening issues:
+http://www.cocos2d-iphone.org/forum
+
+cocos2d logos by Michael Heald (http://www.fullyillustrated.com)
+
+
+
+cocos2d for iPhone authors for v1.1
+-----------------------------------
+
+Lead Developers:
+	Ricardo Quesada (http://www.zynga.com)
+	Marco Tillemans (http://www.welcometothefabrik.com/)
+
+
+Contributors (alphabetically ordered):
+
+* Marco Tillemans (AKA araker: http://www.welcometothefabrik.com/)
+	Texture2D: drawInRect / drawAtPoint disables color state
+	SpriteBatchNode: fixed bug in removeAllChildrenWithCleanup
+	Author of the new reorder Sprite/Node algorithm
+	Schedule: added support for delay and repeat
+	ESRenderer: don't recreate the renderer when it is not needed
+	Actions: Instant actions can be sequenceables
+	Actions: durtion is not divided by zero
+	Actions: Repeat & RepeatForever work as expectd
+	Author of ParticleBatchNode node
+	Improved ESRenderer layoutSubview
+	Improved Debug Drawing for Sprite batched node	
+
+* Ricardo Ruiz:
+	Added support for RGB888 textures
+
+* slycrel (http://geopherlite.blogspot.com/)
+	Added support for flipped tiles in TMX maps. Also added test case
+
+* Stepan Generalov (iPsi) (http://www.itraceur.ru/)
+	FileUtils: Loads -hd resources even if the -sd resource is not present. patch
+
+* John Wordsworth ( http://www.johnwordsworth.com/ )
+	CCAnimationCache: Added animation data format. Can be loaded into the animation cache
+
+
+cocos2d for iPhone authors for v1.0
+-----------------------------------
 
 Lead Developer:
 	Ricardo Quesada (http://www.zynga.com)
@@ -7,14 +53,6 @@ Lead Developer:
 Developers:
 	Valentin Milea
 	Steve Oldmeadow (http://www.smoco.com/)
-
-cocos2d logos by Michael Heald (http://www.fullyillustrated.com)
-
-Special thanks to: Lucio Torre, Alejandro Cura, Daniel Moisset & Rayentray Tappa.
-
-cocos2d for iPhone wouldn't be possible without the help of the community who is
-constantly adding new features, sending patches, opening issues:
-	   http://www.cocos2d-iphone.org/forum
 
 People/companies who were/are contributing code to cocos2d for iPhone (alphabetically ordered):
 
@@ -466,6 +504,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	* Stepan Generalov (iPsi) (http://www.itraceur.ru/)
 		EventDispatcher: flagsChanged is triggered correctly. patch
 		Test case for issue 1071
+		FileUtils: Loads -hd resources even if the -sd resource is not present. patch
 	* Steve Oldmeadow (http://www.smoco.com/):
 		Author and maintainer of CocosDenshion Sound Engine:
 			It includes patching, maintaing, porting it to Mac,
