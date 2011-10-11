@@ -152,6 +152,9 @@ struct _hashUpdateEntry;
  */
 -(void) scheduleSelector:(SEL)selector forTarget:(id)target interval:(ccTime)interval paused:(BOOL)paused repeat: (uint) repeat delay: (ccTime) delay;
 
+/** calls scheduleSelector with kCCRepeatForever and a 0 delay */
+-(void) scheduleSelector:(SEL)selector forTarget:(id)target interval:(ccTime)interval paused:(BOOL)paused;
+
 /** Schedules the 'update' selector for a given target with a given priority.
  The 'update' selector will be called every frame.
  The lower the priority, the earlier it is called.

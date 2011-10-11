@@ -1528,6 +1528,12 @@
 		50FD7B3C0FFAA8AC004073B5 /* grossini_dance_atlas.png in Resources */ = {isa = PBXBuildFile; fileRef = 509A7A970F61A2400032F449 /* grossini_dance_atlas.png */; };
 		50FD7B3F0FFAA8BC004073B5 /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = 50C1959C0EE4B90800829067 /* background.png */; };
 		50FD7B450FFAA8C6004073B5 /* atlastest.png in Resources */ = {isa = PBXBuildFile; fileRef = 506882680E957C4A00F943E5 /* atlastest.png */; };
+		6513D8901444B78F00917359 /* b1.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659D0E72DB470085673F /* b1.png */; };
+		6513D8911444B78F00917359 /* b2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659E0E72DB470085673F /* b2.png */; };
+		6513D8921444B78F00917359 /* f1.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659F0E72DB470085673F /* f1.png */; };
+		6513D8931444B78F00917359 /* f2.png in Resources */ = {isa = PBXBuildFile; fileRef = 500165A00E72DB470085673F /* f2.png */; };
+		6513D8941444B78F00917359 /* r1.png in Resources */ = {isa = PBXBuildFile; fileRef = 500165990E72DB0E0085673F /* r1.png */; };
+		6513D8951444B78F00917359 /* r2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659A0E72DB0E0085673F /* r2.png */; };
 		6F305B5F0FB9D2790052E700 /* TransformUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 6F305B5D0FB9D2790052E700 /* TransformUtils.h */; };
 		6F305B600FB9D2790052E700 /* TransformUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F305B5E0FB9D2790052E700 /* TransformUtils.m */; };
 		8E3FC8920F7B8BE900B3E5DE /* trance-loop.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 8E3FC8910F7B8BE900B3E5DE /* trance-loop.ogg */; };
@@ -11338,6 +11344,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6513D8901444B78F00917359 /* b1.png in Resources */,
+				6513D8911444B78F00917359 /* b2.png in Resources */,
+				6513D8921444B78F00917359 /* f1.png in Resources */,
+				6513D8931444B78F00917359 /* f2.png in Resources */,
+				6513D8941444B78F00917359 /* r1.png in Resources */,
+				6513D8951444B78F00917359 /* r2.png in Resources */,
 				A0240EFA139E3AE50075D13F /* Default.png in Resources */,
 				A0240EFB139E3AE50075D13F /* Icon.png in Resources */,
 				A0240EFC139E3AE50075D13F /* fps_images.png in Resources */,
