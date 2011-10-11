@@ -271,6 +271,11 @@ static CCScheduler *sharedScheduler;
 	free(element);
 }
 
+-(void) scheduleSelector:(SEL)selector forTarget:(id)target interval:(ccTime)interval paused:(BOOL)paused
+{
+	[self scheduleSelector:selector forTarget:target interval:interval paused:paused repeat:kCCRepeatForever delay:0.0f];
+}
+
 -(void) scheduleSelector:(SEL)selector forTarget:(id)target interval:(ccTime)interval paused:(BOOL)paused repeat:(uint) repeat delay:(ccTime) delay
 {
 	NSAssert( selector != nil, @"Argument selector must be non-nil");
