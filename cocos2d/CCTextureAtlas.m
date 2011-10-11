@@ -412,17 +412,6 @@
 	memmove(quads_ + newIndex,quads_ + index, (totalQuads_ - index) * sizeof(quads_[0]));
 }
 
-- (void) printAllQuads
-{
-	CCLOG(@"total %i cap %i",totalQuads_,capacity_);
-	for (int i = 0; i < capacity_; i++)
-	{
-		ccV3F_C4B_T2F_Quad* quad = &(quads_[i]);
-		CCLOG(@"%i bl %f %f tr %f %f tex bl %f %f tr %f %f",i,quad->bl.vertices.x,quad->bl.vertices.y,quad->tr.vertices.x,quad->tr.vertices.y,quad->bl.texCoords.u,quad->bl.texCoords.v,
-			  quad->tr.texCoords.u,quad->tr.texCoords.v);
-	}
-}
-
 #pragma mark TextureAtlas - Drawing
 
 -(void) drawQuads
