@@ -1,12 +1,12 @@
-version 1.1 - XX-Oct-2011
+version 1.1 - 11-Oct-2011
 . [NEW] Animation: Added file format. AnimationCache can load animations from file
 . [NEW] ccConfig: Removed CC_RETINA_DISPLAY_FILENAME_SUFFIX. Use CCFileUtils API instead
 . [NEW] ccConfig: Removed CC_RETINA_DISPLAY_SUPPORT. It is always enabled.
 . [NEW] FileUtils: Added iPad / RetinaDisplay extension. To use it, call [CCFileUtils setiPadSuffix:@"-ipad"] or setRetinaDisplaySuffix (issue #1211)
 . [NEW] FileUtils: Added xxxFileExistAtPath for iPad and RetinaDisplay resources
-. [NEW] Node: improved speed when reordering nodes
+. [NEW] Node: improved speed when reordering and adding nodes (integration of reorderSprite branch)
 . [NEW] Particles: Added ParticleBatchNode (issue #955)
-. [NEW] Sprite: improved speed when reordering sprites
+. [NEW] Sprite: improved speed when reordering and adding sprites (integration of reorderSprite branch)
 . [NEW] Scheduler: Added support for delay and repeat (issue #630)
 . [NEW] Textures: Added support for RGB888 textures (issue #958)
 . [NEW] TileMap: TMX map supports flipped tiles (issue #1233)
