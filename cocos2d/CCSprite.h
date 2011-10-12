@@ -201,11 +201,17 @@
  */
 -(id) initWithTexture:(CCTexture2D*)texture;
 
-/** Initializes an sprite with a texture and a rect in points.
+/** Initializes an sprite with a texture and a rect in points (unrotated)
+ The offset will be (0,0).
+ */
+-(id) initWithTexture:(CCTexture2D*)texture rect:(CGRect)rect;
+
+/** Initializes an sprite with a texture and a rect in points, optionally rotated.
  The offset will be (0,0).
  IMPORTANT: This is the designated initializer.
  */
--(id) initWithTexture:(CCTexture2D*)texture rect:(CGRect)rect;
+- (id)initWithTexture:(CCTexture2D *)texture rect:(CGRect)rect rotated:(BOOL)rotated;
+ 
 
 /** Initializes an sprite with an sprite frame.
  */
