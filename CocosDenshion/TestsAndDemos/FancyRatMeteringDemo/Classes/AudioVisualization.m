@@ -61,7 +61,7 @@ static AudioVisualization *sharedAV = nil;
 -(void)setMeteringInterval:(float) seconds
 {
 	[[CCScheduler sharedScheduler] unscheduleSelector:@selector(tick:) forTarget:self];
-	[[CCScheduler sharedScheduler] scheduleSelector:@selector(tick:) forTarget:self interval:seconds paused:NO repeat:kCCRepeatForever delay:0.0f];];
+	[[CCScheduler sharedScheduler] scheduleSelector:@selector(tick:) forTarget:self interval:seconds paused:NO repeat:kCCRepeatForever delay:0.0f];
 }
 
 -(void)tick:(ccTime) dt
