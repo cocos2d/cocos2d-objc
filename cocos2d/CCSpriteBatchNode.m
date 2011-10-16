@@ -350,9 +350,9 @@ static SEL selSortMethod =NULL;
 	quads[newIndex]=tempItemQuad;
 }
 
-- (void) reorderBatch
+- (void) reorderBatch:(BOOL) reorder
 {
-	isReorderChildDirty_=YES;	
+	isReorderChildDirty_=reorder;	
 }
 
 #pragma mark CCSpriteBatchNode - draw
