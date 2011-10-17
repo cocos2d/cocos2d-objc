@@ -243,7 +243,12 @@
 
 -(id) initWithBatchNode:(CCSpriteBatchNode*)batchNode rect:(CGRect)rect
 {
-	id ret = [self initWithTexture:batchNode.texture rect:rect];
+	return [self initWithBatchNode:batchNode rect:rect rotated:NO];
+}
+
+-(id) initWithBatchNode:(CCSpriteBatchNode*)batchNode rect:(CGRect)rect rotated:(BOOL)rotated
+{
+	id ret = [self initWithTexture:batchNode.texture rect:rect rotated:rotated];
 	[self setBatchNode:batchNode];
 	
 	return ret;

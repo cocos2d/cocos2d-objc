@@ -250,6 +250,9 @@
  */
 -(id) initWithBatchNode:(CCSpriteBatchNode*)batchNode rect:(CGRect)rect;
 
+/** Initializes an sprite with an CCSpriteBatchNode and a rect in points, optionally rotated.
+ */
+-(id) initWithBatchNode:(CCSpriteBatchNode*)batchNode rect:(CGRect)rect rotated:(BOOL)rotated;
 
 #pragma mark CCSprite - BatchNode methods
 
