@@ -47,15 +47,17 @@ enum {
 	kCCUniform_MAX,
 };
 
-#define kCCShader_PositionTextureColor		@"ShaderPositionTextureColor"
-#define kCCShader_PositionColor				@"ShaderPositionColor"
-#define kCCShader_PositionTexture			@"ShaderPositionTexture"
-#define kCCShader_PositionTexture_uColor	@"ShaderPositionTexture_uColor"
-#define kCCShader_PositionTextureA8Color	@"ShaderPositionTextureA8Color"
+#define kCCShader_PositionTextureColor			@"ShaderPositionTextureColor"
+#define kCCShader_PositionTextureColorAlphaTest	@"ShaderPositionTextureColorAlphaTest"
+#define kCCShader_PositionColor					@"ShaderPositionColor"
+#define kCCShader_PositionTexture				@"ShaderPositionTexture"
+#define kCCShader_PositionTexture_uColor		@"ShaderPositionTexture_uColor"
+#define kCCShader_PositionTextureA8Color		@"ShaderPositionTextureA8Color"
 
 // uniform names
 #define kCCUniformMVPMatrix_s			"u_MVPMatrix"
 #define kCCUniformSampler_s				"u_texture"
+#define kCCUniformAlphaTestValue		"u_alpha_value"
 
 // Attribute names
 #define	kCCAttributeNameColor			@"a_color"

@@ -15,8 +15,7 @@
 #endif
 
 static int sceneIdx=-1;
-static NSString *transitions[] = {	
-
+static NSString *transitions[] = {
 	@"Sprite1",
 	@"SpriteBatchNode1",
 	@"SpriteFrameTest",
@@ -917,16 +916,11 @@ Class restartAction()
 -(void) onEnter
 {
 	[super onEnter];
-	
-	// TIP: don't forget to enable Alpha test
-//	glEnable(GL_ALPHA_TEST);
-//	glAlphaFunc(GL_GREATER, 0.0f);
 	[[CCDirector sharedDirector] setProjection:kCCDirectorProjection3D];
 }
 
 -(void) onExit
 {
-//	glDisable(GL_ALPHA_TEST);
 	[[CCDirector sharedDirector] setProjection:kCCDirectorProjection2D];
 	[super onExit];
 }
@@ -943,6 +937,16 @@ Class restartAction()
 		// The developer is resposible for ordering its sprites according to its Z if the sprite has
 		// transparent parts.
 		//
+		
+		//
+		// Configure shader to mimic glAlphaTest
+		//
+		GLProgram *alphaTestShader = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTextureColorAlphaTest];
+		GLint alphaValueLocation = glGetUniformLocation(alphaTestShader->program_, kCCUniformAlphaTestValue);
+		
+		// set alpha test value
+		// NOTE: alpha test shader is hard-coded to use the equivalent of a glAlphaFunc(GL_GREATER) comparison
+		glUniform1f(alphaValueLocation, 0.0f);
 		
 		dir = 1;
 		time = 0;
@@ -962,17 +966,18 @@ Class restartAction()
 			CCSprite *sprite = [CCSprite spriteWithFile:@"grossini_dance_atlas.png" rect:CGRectMake(85*0, 121*1, 85, 121)];
 			sprite.position = ccp((i+1)*step, s.height/2);
 			sprite.vertexZ = 10 + i*40;
+			sprite.shaderProgram = alphaTestShader;
 			[node addChild:sprite z:0];
-			
 		}
 		
 		for(int i=5;i<11;i++) {
 			CCSprite *sprite = [CCSprite spriteWithFile:@"grossini_dance_atlas.png" rect:CGRectMake(85*1, 121*0, 85, 121)];
 			sprite.position = ccp( (i+1)*step, s.height/2);
 			sprite.vertexZ = 10 + (10-i)*40;
+			sprite.shaderProgram = alphaTestShader;
 			[node addChild:sprite z:0];
 		}
-
+		
 		[node runAction:[CCOrbitCamera actionWithDuration:10 radius: 1 deltaRadius:0 angleZ:0 deltaAngleZ:360 angleX:0 deltaAngleX:0]];
 	}	
 	return self;
@@ -989,17 +994,11 @@ Class restartAction()
 -(void) onEnter
 {
 	[super onEnter];
-
-	// TIP: don't forget to enable Alpha test
-//	glEnable(GL_ALPHA_TEST);
-//	glAlphaFunc(GL_GREATER, 0.0f);
-	
 	[[CCDirector sharedDirector] setProjection:kCCDirectorProjection3D];
 }
 
 -(void) onExit
 {
-//	glDisable(GL_ALPHA_TEST);
 	[[CCDirector sharedDirector] setProjection:kCCDirectorProjection2D];
 	[super onExit];
 }
@@ -1017,6 +1016,15 @@ Class restartAction()
 		// transparent parts.
 		//
 		
+		//
+		// Configure shader to mimic glAlphaTest
+		//
+		GLProgram *alphaTestShader = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTextureColorAlphaTest];
+		GLint alphaValueLocation = glGetUniformLocation(alphaTestShader->program_, kCCUniformAlphaTestValue);
+		
+		// set alpha test value
+		// NOTE: alpha test shader is hard-coded to use the equivalent of a glAlphaFunc(GL_GREATER) comparison
+		glUniform1f(alphaValueLocation, 0.0f);
 		
 		CGSize s = [[CCDirector sharedDirector] winSize];
 		float step = s.width/12;
@@ -1028,6 +1036,7 @@ Class restartAction()
 		[batch setContentSize:CGSizeMake(s.width,s.height)];
 		[batch setAnchorPoint:ccp(0.5f, 0.5f)];
 		[batch setPosition:ccp(s.width/2, s.height/2)];
+		batch.shaderProgram = alphaTestShader;
 		
 
 		[self addChild:batch z:0 tag:kTagSpriteBatchNode];		
