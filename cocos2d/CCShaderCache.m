@@ -96,6 +96,20 @@ static CCShaderCache *_sharedShaderCache;
 	[programs_ setObject:p forKey:kCCShader_PositionTextureColor];
 	[p release];
 	
+	// Position Texture Color alpha test
+	p = [[GLProgram alloc] initWithVertexShaderFilename:@"PositionTextureColor.vsh"
+								 fragmentShaderFilename:@"PositionTextureColorAlphaTest.fsh"];
+	
+	[p addAttribute:kCCAttributeNamePosition index:kCCVertexAttrib_Position];
+	[p addAttribute:kCCAttributeNameColor index:kCCVertexAttrib_Color];
+	[p addAttribute:kCCAttributeNameTexCoord index:kCCVertexAttrib_TexCoords];
+	
+	[p link];
+	[p updateUniforms];
+	
+	[programs_ setObject:p forKey:kCCShader_PositionTextureColorAlphaTest];
+	[p release];
+	
 	//
 	// Position, Color shader
 	//
