@@ -100,8 +100,13 @@ enum {
 	CCTexture2DPixelFormat format_;
 }
 
-/** initializes a CCTexturePVR with a path */
+/** initializes a CCTexturePVR with a file at path */
 - (id)initWithContentsOfFile:(NSString *)path;
+/** initializes a CCTexturePVR with a file at 'path', and specified file format.
+   The format string is used to override the file extension of the input file parameter.
+   If format is specified, then the file is treated as if it has the specified format.
+ */
+- (id)initWithContentsOfFile:(NSString *)path fileFormat:(NSString *)format;
 /** initializes a CCTexturePVR with an URL */
 - (id)initWithContentsOfURL:(NSURL *)url;
 /** creates and initializes a CCTexturePVR with a path */

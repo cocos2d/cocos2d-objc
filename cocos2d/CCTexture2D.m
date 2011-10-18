@@ -602,7 +602,12 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 // By default PVR images are treated as if they don't have the alpha channel premultiplied
 static BOOL PVRHaveAlphaPremultiplied_ = NO;
 
--(id) initWithPVRFile: (NSString*) relPath
+-(id) initWithPVRFile:(NSString*)relPath
+{
+	return [self initWithPVRFile:relPath fileFormat:nil];
+}
+
+-(id) initWithPVRFile:(NSString*)relPath fileFormat:(NSString *)fileFormat
 {
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 	ccResolutionType resolution;
@@ -613,7 +618,7 @@ static BOOL PVRHaveAlphaPremultiplied_ = NO;
 #endif 
 	
 	if( (self = [super init]) ) {
-		CCTexturePVR *pvr = [[CCTexturePVR alloc] initWithContentsOfFile:fullpath];
+		CCTexturePVR *pvr = [[CCTexturePVR alloc] initWithContentsOfFile:fullpath fileFormat:fileFormat];
 		if( pvr ) {
 			pvr.retainName = YES;	// don't dealloc texture on release
 			

@@ -250,6 +250,12 @@ Note that the generated textures are of type A8 - use the blending mode (GL_SRC_
  */
 -(id) initWithPVRFile: (NSString*) file;
 
+/** Initializes a texture from a PVR file
+ * The format string is used to override the file extension of the input file parameter.
+ * If format is specified, then the file is treated as if it has the specified format.
+ */
+-(id) initWithPVRFile:(NSString*)file fileFormat:(NSString *)format;
+
 /** treats (or not) PVR files as if they have alpha premultiplied.
  Since it is impossible to know at runtime if the PVR images have the alpha channel premultiplied, it is
  possible load them as if they have (or not) the alpha channel premultiplied.

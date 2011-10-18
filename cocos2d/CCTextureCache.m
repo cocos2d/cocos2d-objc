@@ -478,14 +478,38 @@ static CCTextureCache *sharedTextureCache;
 	return tex;
 }
 
+#pragma mark TextureCache - Set
+- (void)setTexture:(CCTexture2D *)texture forKey:(NSString *)key
+{
+	dispatch_sync(_dictQueue, ^{
+		[textures_ setObject:texture forKey:key];
+	});
+}
+
 @end
 
 
 @implementation CCTextureCache (PVRSupport)
 
 -(CCTexture2D*) addPVRImage:(NSString*)path
+{	
+	return [self addPVRImage:path forKey:path];
+}
+
+- (CCTexture2D*)addPVRImage:(NSString*)path forKey:(NSString *)key
+{
+	return [self addPVRImage:path forKey:key class:[CCTexture2D class]];
+}
+
+- (CCTexture2D*)addPVRImage:(NSString*)path forKey:(NSString *)key class:(Class)textureClass
+{
+	return [self addPVRImage:path forKey:key fileFormat:nil class:textureClass];
+}
+
+- (CCTexture2D*)addPVRImage:(NSString*)path forKey:(NSString *)key fileFormat:(NSString *)format class:(Class)textureClass
 {
 	NSAssert(path != nil, @"TextureCache: fileimage MUST not be nill");
+	NSAssert(key != nil, @"TextureCache: texture key MUST not be nil");
 	
 	__block CCTexture2D * tex;
 	
@@ -497,15 +521,15 @@ static CCTextureCache *sharedTextureCache;
 	dispatch_sync(_dictQueue, ^{
 		tex = [textures_ objectForKey:path];
 	});
-
+	
 	if(tex) {
 		return tex;
 	}
 	
-	tex = [[CCTexture2D alloc] initWithPVRFile: path];
+    tex = [[textureClass alloc] initWithPVRFile:path fileFormat:format];
 	if( tex ){
 		dispatch_sync(_dictQueue, ^{
-			[textures_ setObject: tex forKey:path];
+			[textures_ setObject:tex forKey:key];
 		});
 	}else{
 		CCLOG(@"cocos2d: Couldn't add PVRImage:%@ in CCTextureCache",path);

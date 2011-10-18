@@ -93,6 +93,10 @@
  */
 -(CCTexture2D *) textureForKey:(NSString *)key;
 
+/** Cache the specified texture using the given 'key' 
+ */
+- (void)setTexture:(CCTexture2D *)texture forKey:(NSString *)key;
+
 /** Purges the dictionary of loaded textures.
  * Call this method if you receive the "Memory Warning"
  * In the short term: it will free some resources preventing your app from being killed
@@ -128,6 +132,29 @@
  *
  */
 -(CCTexture2D*) addPVRImage:(NSString*) filename;
+
+/** Return a Texture2D object for a given PVR filename, cached using the specified key.
+ * If the file image was not previously loaded, it will create a new CCTexture2D
+ *  object and it will return it. Otherwise it will return a reference of a previosly loaded image
+ */
+-(CCTexture2D*)addPVRImage:(NSString*)path forKey:(NSString *)key;
+
+/** Return a Texture2D instance of the specified class, a given PVR filename and cache key.
+ * The textureClass controls that type of class for texture instance, allowing the method to return custom
+ * CCTexture2D subclasses.
+ * If the file image was not previously loaded, it will create a new CCTexture2D
+ *  object and it will return it. Otherwise it will return a reference of a previosly loaded image
+ */
+-(CCTexture2D*)addPVRImage:(NSString*)path forKey:(NSString *)key class:(Class)textureClass;
+
+/** Return a Texture2D instance of the specified class, a given PVR filename, file format, and cache key.
+ * The format string is treated as a file extension, and causes the file to be treated as if it has that extension.
+ * The textureClass controls that type of class for texture instance, allowing the method to return custom
+ * CCTexture2D subclasses.
+ * If the file image was not previously loaded, it will create a new CCTexture2D
+ *  object and it will return it. Otherwise it will return a reference of a previosly loaded image
+ */
+-(CCTexture2D*)addPVRImage:(NSString*)path forKey:(NSString *)key fileFormat:(NSString *)format class:(Class)textureClass;
 
 @end
 
