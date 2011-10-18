@@ -41,6 +41,9 @@
 @interface CCTextureCache : NSObject
 {
 	NSMutableDictionary *textures_;
+	
+	dispatch_queue_t _loadingQueue;
+	dispatch_queue_t _dictQueue;
 }
 
 /** Retruns ths shared instance of the cache */

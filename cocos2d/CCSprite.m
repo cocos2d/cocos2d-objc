@@ -122,7 +122,7 @@
 }
 
 // designated initializer
--(id) initWithTexture:(CCTexture2D*)texture rect:(CGRect)rect
+-(id) initWithTexture:(CCTexture2D*)texture rect:(CGRect)rect rotated:(BOOL)rotated
 {
 	if( (self = [super init]) )
 	{
@@ -161,13 +161,18 @@
 
 
 		[self setTexture:texture];
-		[self setTextureRect:rect rotated:NO untrimmedSize:rect.size];
+		[self setTextureRect:rect rotated:rotated untrimmedSize:rect.size];
 		
 		// by default use "Self Render".
 		// if the sprite is added to a batchnode, then it will automatically switch to "batchnode Render"
 		[self setBatchNode:nil];		
 	}
 	return self;
+}
+
+-(id) initWithTexture:(CCTexture2D*)texture rect:(CGRect)rect
+{
+	return [self initWithTexture:texture rect:rect rotated:NO];
 }
 
 -(id) initWithTexture:(CCTexture2D*)texture
@@ -238,7 +243,12 @@
 
 -(id) initWithBatchNode:(CCSpriteBatchNode*)batchNode rect:(CGRect)rect
 {
-	id ret = [self initWithTexture:batchNode.texture rect:rect];
+	return [self initWithBatchNode:batchNode rect:rect rotated:NO];
+}
+
+-(id) initWithBatchNode:(CCSpriteBatchNode*)batchNode rect:(CGRect)rect rotated:(BOOL)rotated
+{
+	id ret = [self initWithTexture:batchNode.texture rect:rect rotated:rotated];
 	[self setBatchNode:batchNode];
 	
 	return ret;

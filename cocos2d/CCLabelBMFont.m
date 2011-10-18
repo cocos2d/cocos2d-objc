@@ -94,7 +94,7 @@ typedef struct _KerningHashElement
 -(void) purgeKerningDictionary;
 @end
 
-#pragma -
+#pragma mark -
 #pragma mark CCBMFontConfiguration
 
 @implementation CCBMFontConfiguration
@@ -432,7 +432,7 @@ typedef struct _KerningHashElement
 
 @end
 
-#pragma -
+#pragma mark -
 #pragma mark CCLabelBMFont
 
 @implementation CCLabelBMFont
