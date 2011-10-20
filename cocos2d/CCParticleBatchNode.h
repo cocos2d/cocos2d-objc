@@ -61,8 +61,6 @@
 	CCTextureAtlas	*textureAtlas_;
 	ccBlendFunc		blendFunc_;
 	
-	BOOL useQuad_; //YES childs are quad particle systems, NO childs are point particle systems
-	
 	BOOL reorderDirty_; //YES if one of the childs is reordered
 }
 
@@ -77,7 +75,7 @@
 /** initializes the particle system with CCTexture2D, 
     a capacity of particles, which particle system to use and a choice between normal or additive blending
 */
-+(id)particleBatchNodeWithTexture:(CCTexture2D *)tex capacity:(NSUInteger) capacity useQuad:(BOOL) useQuad additiveBlending:(BOOL) additive;
++(id)particleBatchNodeWithTexture:(CCTexture2D *)tex capacity:(NSUInteger) capacity additiveBlending:(BOOL) additive;
 
 /** initializes the particle system with the name of a file on disk (for a list of supported formats look at the CCTexture2D class), 
  a default capacity of 500 particles, quad particle system and normal blending
@@ -87,7 +85,7 @@
 /** initializes the particle system with the name of a file on disk (for a list of supported formats look at the CCTexture2D class), 
  a capacity of particles, which particle system to use and a choice between normal or additive blending
  */
-+(id)particleBatchNodeWithFile:(NSString*)fileImage capacity:(NSUInteger)capacity useQuad:(BOOL) useQuad additiveBlending:(BOOL) additive;
++(id)particleBatchNodeWithFile:(NSString*)fileImage capacity:(NSUInteger)capacity additiveBlending:(BOOL) additive;
 
 /** extracts texture data from a plist and puts the texture in the texture cache. Use it before loading the batch node */
 +(BOOL) extractTextureFromPlist:(NSString*) plistFile;
@@ -95,12 +93,12 @@
 /** initializes the particle system with CCTexture2D, 
  a capacity of particles, which particle system to use and a choice between normal or additive blending
  */
--(id)initWithTexture:(CCTexture2D *)tex capacity:(NSUInteger)capacity useQuad:(BOOL) useQuad additiveBlending:(BOOL) additive;
+-(id)initWithTexture:(CCTexture2D *)tex capacity:(NSUInteger)capacity additiveBlending:(BOOL) additive;
 
 /** initializes the particle system with the name of a file on disk (for a list of supported formats look at the CCTexture2D class), 
  a capacity of particles, which particle system to use and a choice between normal or additive blending
  */
--(id)initWithFile:(NSString *)fileImage capacity:(NSUInteger)capacity useQuad:(BOOL) useQuad additiveBlending:(BOOL) additive;
+-(id)initWithFile:(NSString *)fileImage capacity:(NSUInteger)capacity additiveBlending:(BOOL) additive;
 
 /** only CCParticleSystemQuad is supported for the moment */
 -(void) addChild:(CCParticleSystem*)child z:(NSInteger)z tag:(NSInteger) aTag;

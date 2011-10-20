@@ -54,13 +54,10 @@
 -(void) initVAO;
 @end
 
-@interface CCParticleSystemQuad (private)
--(id) initializeParticleSystemWithBatchNode:(CCParticleBatchNode*) batchNode rect:(CGRect) rect;
-@end
-
 @implementation CCParticleSystemQuad
 
 @synthesize quads=quads_;
+
 +(id) particleWithFile:(NSString*) plistFile batchNode:(CCParticleBatchNode*) batchNode rect:(CGRect) rect
 {
 	return [[[self alloc] initWithFile:plistFile batchNode:batchNode rect:rect] autorelease];
@@ -68,9 +65,14 @@
 
 -(id) initWithFile:(NSString *)plistFile  batchNode:(CCParticleBatchNode*) batchNode rect:(CGRect) rect
 {
-	batchNode_ = batchNode; 	
+	batchNode_ = batchNode;
 	textureRect_ = rect; 
 	return [super initWithFile:plistFile];
+}
+
+-(id) initWithTotalParticles:(NSUInteger) numberOfParticles
+{
+	return [self initWithTotalParticles:numberOfParticles batchNode:nil rect:CGRectZero];
 }
 
 // overriding the init method, this is the base initializer
@@ -80,74 +82,48 @@
 	textureRect_ = rect;
 	
 	//first super then self 
-	if( (self=[super initWithTotalParticles:numberOfParticles]) ) {
-		if ([self initializeParticleSystemWithBatchNode:batchNode rect:rect]==nil) return nil; 
-	}
-	
-	return self;
-}
-
--(id) initWithTotalParticles:(NSUInteger) numberOfParticles
-{
-	CCParticleBatchNode* batchNode = nil;
-	CGRect rect = CGRectMake(0.0f,0.0f,0.0f,0.0f); 
-	if (batchNode_) 
+	if( (self=[super initWithTotalParticles:numberOfParticles]) )
 	{
-		batchNode = batchNode_; 
-		rect = textureRect_; 
-	}	
-	return [self initWithTotalParticles:numberOfParticles batchNode:batchNode rect:rect];
-}
-
--(id) initializeParticleSystemWithBatchNode:(CCParticleBatchNode*) batchNode rect:(CGRect) rect
-{
-	if (rect.size.width == 0.f && rect.size.height == 0.f && batchNode != nil) 
-	{	
-		rect.size = CGSizeMake([batchNode.textureAtlas.texture pixelsWide], [batchNode.textureAtlas.texture pixelsHigh]);
-	}	
-	
-	// allocating data space
-	if (batchNode == nil) 
-	{	
-		
-		quads_ = calloc( sizeof(quads_[0]) * totalParticles, 1 );
-		indices_ = calloc( sizeof(indices_[0]) * totalParticles * 6, 1 );
-		
-		if( !quads_ || !indices_) {
-			NSLog(@"cocos2d: Particle system: not enough memory");
-			if( quads_ )
-				free( quads_ );
-			if(indices_)
-				free(indices_);
+		if( ! batchNode ) {
+			quads_ = calloc( sizeof(quads_[0]) * totalParticles, 1 );
+			indices_ = calloc( sizeof(indices_[0]) * totalParticles * 6, 1 );
 			
-			[self release];
-			return nil;
+			if( !quads_ || !indices_) {
+				NSLog(@"cocos2d: Particle system: not enough memory");
+				if( quads_ )
+					free( quads_ );
+				if(indices_)
+					free(indices_);
+				
+				[self release];
+				return nil;
+			}
+
+			// initialize only once the texCoords and the indices
+			[self initTexCoordsWithRect:CGRectMake(0, 0, [texture_ pixelsWide], [texture_ pixelsHigh])];
+			[self initIndices];
+			[self initVAO];
+			
+			self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTextureColor];
+
 		}
-		
-		// initialize only once the texCoords and the indices
-		[self initTexCoordsWithRect:rect];
-		[self initIndices];
-		[self initVAO];
-		
-		self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTextureColor];
-		
-		
-		useBatchNode_ = NO;
-	}
-	else {
-		quads_ = NULL;
-		indices_ = NULL;
-		
-		batchNode_ = batchNode;
-		
-		//can't use setTexture here since system isn't added to batchnode yet
-		texture_ = [batchNode.textureAtlas.texture retain];
-		textureRect_ = rect; 
+		else
+		{
+			quads_ = NULL;
+			indices_ = NULL;
 
-		useBatchNode_ = YES;
+			texture_ = [batchNode.textureAtlas.texture retain];
+			textureRect_ = rect; 
+
+			// batchNode
+			if (rect.size.width == 0.f && rect.size.height == 0.f )
+				rect.size = CGSizeMake([batchNode.textureAtlas.texture pixelsWide], [batchNode.textureAtlas.texture pixelsHigh]);
+	
+			[self setBatchNode: batchNode];
+		}
 	}
 
-	return [NSNumber numberWithInt:1];
+	return self;
 }
 
 -(void) initVAO
@@ -191,7 +167,7 @@
 	if( indices_)
 		free(indices_);
 
-	if( ! useBatchNode_ ) {
+	if( ! batchNode_ ) {
 		glDeleteBuffers(2, &buffersVBO_[0]);
 		glDeleteVertexArrays(1, &VAOname_);
 	}
@@ -235,7 +211,7 @@
 		
 		ccV3F_C4B_T2F_Quad *quadCollection; 
 		NSUInteger start, end; 
-		if (useBatchNode_)
+		if (batchNode_)
 		{
 			quadCollection = [[batchNode_ textureAtlas] quads]; 
 			start = atlasIndex_; 
@@ -265,6 +241,12 @@
 	}
 }
 
+-(void) setTexture:(CCTexture2D *)texture
+{
+	CGSize s = [texture contentSize];
+	[self setTexture:texture withRect:CGRectMake(0,0, s.width, s.height)];
+}
+
 -(void) setTexture:(CCTexture2D *)texture withRect:(CGRect)rect
 {
 	// Only update the texture if is different from the current one
@@ -272,12 +254,6 @@
 		[super setTexture:texture];
 	
 	[self initTexCoordsWithRect:rect];
-}
-
--(void) setTexture:(CCTexture2D *)texture
-{
-	CGSize s = [texture contentSize];
-	[self setTexture:texture withRect:CGRectMake(0,0, s.width, s.height)];
 }
 
 -(void) setDisplayFrame:(CCSpriteFrame *)spriteFrame
@@ -309,7 +285,7 @@
 	// colors
 	ccV3F_C4B_T2F_Quad *quad; 
 
-	if (useBatchNode_) 
+	if (batchNode_) 
 	{	
 		ccV3F_C4B_T2F_Quad *batchQuads = [[batchNode_ textureAtlas] quads]; 
 		quad = &(batchQuads[atlasIndex_+p->atlasIndex]); 
@@ -325,7 +301,7 @@
 	// vertices
 	GLfloat size_2 = p->size/2;
 	//don't transform particles if type is free
-	if (useBatchNode_ && transformSystemDirty_ && positionType_!=kCCPositionTypeFree)
+	if (batchNode_ && transformSystemDirty_ && positionType_!=kCCPositionTypeFree)
 	{
 		GLfloat x1 = -size_2*scaleX_;
 		GLfloat y1 = -size_2*scaleY_;
@@ -435,7 +411,7 @@
 // overriding draw method
 -(void) draw
 {	
-	NSAssert(!useBatchNode_,@"draw should not be called when added to a particleBatchNode"); 
+	NSAssert(!batchNode_,@"draw should not be called when added to a particleBatchNode"); 
 
 	[super draw];
 	
@@ -455,36 +431,33 @@
 	CHECK_GL_ERROR_DEBUG();
 }
 
--(void) useSelfRender
-{
-	if (useBatchNode_)
-	{
-		[self initializeParticleSystemWithBatchNode:nil rect:textureRect_];
-		useBatchNode_ = NO;
-	}
-}
-
 -(void) batchNodeInitialization
 {
 	[self initTexCoordsWithRect:textureRect_]; 	
 }
 
--(void) useBatchNode:(CCParticleBatchNode*) batchNode
+-(void) setBatchNode:(CCParticleBatchNode *)batchNode
 {
-	if (!useBatchNode_)
-	{	
-		[super useBatchNode:batchNode]; 
+	if( batchNode != batchNode_ ) {
+		[super setBatchNode:batchNode];
 		
-		if (quads_)
-			free(quads_);
-		quads_ = NULL;
-		
-		if (indices_)
-			free(indices_);
-		indices_ = NULL;
-
-		glDeleteBuffers(2, &buffersVBO_[0]);
-		glDeleteVertexArrays(1, &VAOname_);
+		if( ! batchNode )
+		{
+			// do something ??
+		}
+		else
+		{
+			if (quads_)
+				free(quads_);
+			quads_ = NULL;
+			
+			if (indices_)
+				free(indices_);
+			indices_ = NULL;
+			
+			glDeleteBuffers(2, &buffersVBO_[0]);
+			glDeleteVertexArrays(1, &VAOname_);
+		}
 	}
 }
 

@@ -294,11 +294,12 @@ typedef void (*CC_UPDATE_PARTICLE_IMP)(id, SEL, tCCParticle*, CGPoint);
 	CC_UPDATE_PARTICLE_IMP	updateParticleImp;
 	SEL						updateParticleSel;
 	
-	//for batching
+	//for batching. If nil, then it won't be batched
 	CCParticleBatchNode *batchNode_; 
-	BOOL useBatchNode_; 
+
 	//index of system in batch node array
 	uint atlasIndex_; 
+	
 	//YES if scaled or rotated
 	BOOL transformSystemDirty_;
 	
@@ -410,9 +411,10 @@ typedef void (*CC_UPDATE_PARTICLE_IMP)(id, SEL, tCCParticle*, CGPoint);
  */
 @property (nonatomic,readwrite) NSInteger emitterMode;
 
-@property (nonatomic,readwrite) uint atlasIndex;
+/** weak reference to the CCSpriteBatchNode that renders the CCSprite */
+@property (nonatomic,readwrite,assign) CCParticleBatchNode *batchNode;
 
-@property (nonatomic,readonly) BOOL useBatchNode; 
+@property (nonatomic,readwrite) uint atlasIndex;
 
 /** creates an initializes a CCParticleSystem from a plist file.
  This plist files can be creted manually or with Particle Designer:
@@ -455,11 +457,6 @@ typedef void (*CC_UPDATE_PARTICLE_IMP)(id, SEL, tCCParticle*, CGPoint);
 -(void) update: (ccTime) dt;
 
 -(void) updateWithNoTime;
-
-//switch to self rendering
--(void) useSelfRender;
-//switch to batch node rendering
--(void) useBatchNode:(CCParticleBatchNode*) batchNode;
 
 //used internally by CCParticleBathNode 
 -(void) batchNodeInitialization;
