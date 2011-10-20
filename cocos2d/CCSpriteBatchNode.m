@@ -381,7 +381,7 @@ const NSUInteger defaultCapacity = 29;
 #pragma mark CCSpriteBatchNode - private
 -(void) increaseAtlasCapacity
 {
-	// if we're going beyond the current TextureAtlas's capacity,
+	// if we're going beyond the current CCTextureAtlas's capacity,
 	// all the previously initialized sprites will need to redo their texture coords
 	// this is likely computationally expensive
 	NSUInteger quantity = (textureAtlas_.capacity + 1) * 4 / 3;

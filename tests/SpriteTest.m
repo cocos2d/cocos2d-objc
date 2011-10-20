@@ -16,6 +16,9 @@
 
 static int sceneIdx=-1;
 static NSString *transitions[] = {
+	
+	@"NodeSort",
+
 	@"Sprite1",
 	@"SpriteBatchNode1",
 	@"SpriteFrameTest",
@@ -758,15 +761,23 @@ Class restartAction()
 - (void) reorderSprite:(ccTime)dt
 {
 	[self unschedule:_cmd];
+
+	NSLog(@"Before reorder--");
+	CCSprite *child;
+	CCARRAY_FOREACH(node.children,child)
+		NSLog(@"tag %i z %i",(int)child.tag,(int)child.zOrder);
+
+	
 	//z-4
-	[node reorderChild:[[node children] objectAtIndex:0] z:32];
+	[node reorderChild:[[node children] objectAtIndex:0] z:-6];
 	//[node reorderChild:[[node children] objectAtIndex:2] z:-4];
 	//[node reorderChild:[[node children] objectAtIndex:1] z:-6];
 	
 	[node sortAllChildren];
 	
-	CCSprite *child;
-	CCARRAY_FOREACH(node.children,child) NSLog(@"tag %i z %i",(int)child.tag,(int)child.zOrder);
+	NSLog(@"After reorder--");
+	CCARRAY_FOREACH(node.children,child)
+		NSLog(@"tag %i z %i",(int)child.tag,(int)child.zOrder);
 	
 }
 
@@ -788,17 +799,18 @@ Class restartAction()
 		sprite2.position = CGPointMake(164,160);
 		[node addChild:sprite2 z:-6 tag:2];
 		
-		sprite3 = [CCSprite spriteWithFile:@"piece.png" rect:CGRectMake(128,0,64,64)];
-		sprite3.position = CGPointMake(228,160);
-		[node addChild:sprite3 z:-4 tag:3];
-		
 		sprite4 = [CCSprite spriteWithFile:@"piece.png" rect:CGRectMake(128,0,64,64)];
 		sprite4.position = CGPointMake(292,160);
 		[node addChild:sprite4 z:-3 tag:4];
 		
+		sprite3 = [CCSprite spriteWithFile:@"piece.png" rect:CGRectMake(128,0,64,64)];
+		sprite3.position = CGPointMake(228,160);
+		[node addChild:sprite3 z:-4 tag:3];
+
 		sprite5 = [CCSprite spriteWithFile:@"piece.png" rect:CGRectMake(128,0,64,64)];
 		sprite5.position = CGPointMake(356,160);
 		[node addChild:sprite5 z:-3 tag:5];
+		
 		
 		[self schedule:@selector(reorderSprite:) interval:1];
 	}
