@@ -290,7 +290,8 @@
 		ccV3F_C4B_T2F_Quad *batchQuads = [[batchNode_ textureAtlas] quads]; 
 		quad = &(batchQuads[atlasIndex_+p->atlasIndex]); 
 	}
-	else quad = &(quads_[particleIdx]);
+	else
+		quad = &(quads_[particleIdx]);
 	
 	ccColor4B color = { p->color.r*255, p->color.g*255, p->color.b*255, p->color.a*255};
 	quad->bl.colors = color;
