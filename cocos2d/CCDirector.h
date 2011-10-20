@@ -134,6 +134,8 @@ and when to execute the Scenes.
 
 	/* the cocos2d running thread */
 	NSThread	*runningThread_;
+	
+	int mutatedChildren_;
 
 	// profiler
 #if CC_ENABLE_PROFILERS
@@ -296,6 +298,10 @@ and when to execute the Scenes.
 // helper
 /** creates the FPS label */
 -(void) createFPSLabel;
+
+//used for sorting children array
+-(int) getMutatedIndex;
+-(void) resetMutatedChildren;
 
 @end
 

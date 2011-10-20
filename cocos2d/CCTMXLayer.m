@@ -102,6 +102,9 @@
 	
 	// IMPORTANT: Call super, and not self. Avoid adding it to the texture atlas array
 	[super addChild:child z:z tag:aTag];
+	
+	//#issue 1262 don't use lazy sorting, tiles are added as quads not as sprites, so sprites need to be added in order
+	[self reorderBatch:NO];
 	return self;	
 }
 @end

@@ -56,9 +56,11 @@
 #define RENDER_IN_SUBPIXEL(__A__) ( (int)(__A__))
 #endif
 
+
 @interface CCSprite ()
--(void)setTextureCoords:(CGRect)rect;
--(void)updateBlendFunc;
+-(void) setTextureCoords:(CGRect)rect;
+-(void) updateBlendFunc;
+-(void) setReorderChildDirtyRecursively;
 @end
 
 @implementation CCSprite
@@ -159,13 +161,14 @@
 		quad_.tl.colors = tmpColor;
 		quad_.tr.colors = tmpColor;	
 
-
 		[self setTexture:texture];
 		[self setTextureRect:rect rotated:rotated untrimmedSize:rect.size];
 		
+
 		// by default use "Self Render".
 		// if the sprite is added to a batchnode, then it will automatically switch to "batchnode Render"
 		[self setBatchNode:nil];		
+		
 	}
 	return self;
 }
@@ -554,10 +557,11 @@
 	
 #if CC_SPRITE_DEBUG_DRAW == 1
 	// draw bounding box
-	CGSize s = self.contentSize;
-	CGPoint vertices[4] = {
-		ccp(0,0), ccp(s.width,0),
-		ccp(s.width,s.height), ccp(0,s.height)
+	CGPoint vertices[4]={
+		ccp(quad_.tl.vertices.x,quad_.tl.vertices.y),
+		ccp(quad_.bl.vertices.x,quad_.bl.vertices.y),
+		ccp(quad_.br.vertices.x,quad_.br.vertices.y),
+		ccp(quad_.tr.vertices.x,quad_.tr.vertices.y),
 	};
 	ccDrawPoly(vertices, 4, YES);
 #elif CC_SPRITE_DEBUG_DRAW == 2
@@ -580,16 +584,19 @@
 -(void) addChild:(CCSprite*)child z:(NSInteger)z tag:(NSInteger) aTag
 {
 	NSAssert( child != nil, @"Argument must be non-nil");
-	
-	[super addChild:child z:z tag:aTag];
-	
+		
 	if( batchNode_ ) {
 		NSAssert( [child isKindOfClass:[CCSprite class]], @"CCSprite only supports CCSprites as children when using CCSpriteBatchNode");
 		NSAssert( child.texture.name == textureAtlas_.texture.name, @"CCSprite is not using the same texture id");
 		
-		NSUInteger index = [batchNode_ atlasIndexForChild:child atZ:z];
-		[batchNode_ insertChild:child inAtlasAtIndex:index];
+		//put it in descendants array of batch node
+		[batchNode_ appendChild:child];	
+		
+		if (!isReorderChildDirty_) [self setReorderChildDirtyRecursively];
 	}
+	
+	//CCNode already sets isReorderChildDirty_ so this needs to be after batchNode check
+	[super addChild:child z:z tag:aTag];
 	
 	hasChildren_ = YES;
 }
@@ -601,17 +608,17 @@
 
 	if( z == child.zOrder )
 		return;
-
-	if( batchNode_ ) {
-		// XXX: Instead of removing/adding, it is more efficient to reorder manually
-		[child retain];
-		[self removeChild:child cleanup:NO];
-		[self addChild:child z:z];
-		[child release];
+	
+	if( batchNode_ ) 
+	{	
+		if (!isReorderChildDirty_) 
+		{	
+			[self setReorderChildDirtyRecursively];
+			[batchNode_ reorderBatch:YES];
+		}	
 	}
-
-	else
-		[super reorderChild:child z:z];
+	
+	[super reorderChild:child z:z];
 }
 
 -(void)removeChild: (CCSprite *)sprite cleanup:(BOOL)doCleanup
@@ -637,12 +644,58 @@
 	hasChildren_ = NO;
 }
 
+- (void) sortAllChildren
+{
+	if (isReorderChildDirty_) 
+	{	
+		int i,j,length=children_->data->num;
+		id* x=children_->data->arr;
+		id tempItem;
+		
+		//insertion sort
+		for(i=1; i<length; i++)
+		{
+			tempItem = x[i];
+			j = i-1;
+			
+			//continue moving element downwards while zOrder is smaller or when zOrder is the same but mutatedIndex is smaller
+			while(j>=0 && ( ((CCNode*) tempItem).zOrder<((CCNode*)x[j]).zOrder || ( ((CCNode*) tempItem).zOrder== ((CCNode*)x[j]).zOrder &&  ((CCNode*) tempItem).mutatedIndex < ((CCNode*)x[j]).mutatedIndex ) ) ) 
+			{
+				x[j+1] = x[j];
+				j = j-1;
+			}
+			x[j+1] = tempItem;
+		}
+		
+		if (batchNode_)
+			[children_ makeObjectsPerformSelector:@selector(sortAllChildren)];
+		
+		isReorderChildDirty_=NO;
+	}
+}
+
+
+
 //
 // CCNode property overloads
 // used only when parent is CCSpriteBatchNode
 //
 #pragma mark CCSprite - property overloads
 
+-(void) setReorderChildDirtyRecursively
+{
+	//only set parents flag the first time
+	if (!isReorderChildDirty_)
+	{	
+		isReorderChildDirty_=YES;
+		CCNode* node=(CCNode*) parent_;
+		while (node!=batchNode_) 
+		{
+			[(CCSprite*) node setReorderChildDirtyRecursively];
+			node=node.parent;
+		}
+	}
+}	
 
 -(void) setDirtyRecursively:(BOOL)b
 {

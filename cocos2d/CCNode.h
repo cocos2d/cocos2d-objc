@@ -154,16 +154,22 @@ enum {
 
 	// Is running
 	BOOL isRunning_:1;
+	
+	//used to preserve sequence while sorting children with the same zOrder
+	int mutatedIndex_;
 
 	// To reduce memory, place BOOLs that are not properties here:
 	BOOL isTransformDirty_:1;
 	BOOL isInverseDirty_:1;
+
 	// is visible
 	BOOL visible_:1;
 	// If YES the transformtions will be relative to (-transform.x, -transform.y).
 	// Sprites, Labels and any other "small" object uses it.
 	// Scenes, Layers and other "whole screen" object don't use it.
 	BOOL isRelativeAnchorPoint_:1;
+
+	BOOL isReorderChildDirty_:1;
 }
 
 /** The z order of the node relative to its "siblings": children of the same parent */
@@ -248,6 +254,9 @@ enum {
  */
 @property(nonatomic,readwrite,retain) GLProgram *shaderProgram;
 
+/** used internally for zOrder sorting, don't change this manually */
+@property(nonatomic,readwrite) int mutatedIndex;
+
 // initializators
 /** allocates and initializes a node.
  The node will be created as "autorelease".
@@ -330,6 +339,10 @@ enum {
  * The child MUST be already added.
  */
 -(void) reorderChild:(CCNode*)child z:(NSInteger)zOrder;
+
+/** performance improvement, Sort the children array once before drawing, instead of every time when a child is added or reordered
+ don't call this manually unless a child added needs to be removed in the same frame */
+- (void) sortAllChildren;
 
 /** Stops all running actions and schedulers
  @since v0.8
@@ -434,6 +447,17 @@ enum {
  If the selector is already scheduled, then the interval parameter will be updated without scheduling it again.
  */
 -(void) schedule: (SEL) s interval:(ccTime)seconds;
+/**
+ repeat will execute the action repeat + 1 times, for a continues action use kCCRepeatForever
+ delay is the amount of time the action will wait before execution
+ */
+-(void) schedule:(SEL)selector interval:(ccTime)interval repeat: (uint) repeat delay:(ccTime) delay;
+
+/**
+ Schedules a selector that runs only once, with a delay of 0 or larger 
+*/
+- (void) scheduleOnce:(SEL) selector delay:(ccTime) delay;
+
 /** unschedules a custom selector.*/
 -(void) unschedule: (SEL) s;
 

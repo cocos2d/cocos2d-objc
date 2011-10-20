@@ -780,6 +780,9 @@ static BOOL PVRHaveAlphaPremultiplied_ = NO;
 		case kCCTexture2DPixelFormat_RGB565:
 			ret = 16;
 			break;
+		case kCCTexture2DPixelFormat_RGB888:
+			ret = 24;
+			break;
 		case kCCTexture2DPixelFormat_A8:
 			ret = 8;
 			break;

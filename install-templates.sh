@@ -5,6 +5,8 @@ echo 'cocos2d-iphone template installer'
 COCOS2D_VER='cocos2d 2.0.0'
 SCRIPT_DIR=$(dirname $0)
 
+COCOS2D_DST_DIR='cocos2d'
+
 force=
 user_dir=
 
@@ -109,7 +111,7 @@ print_template_banner(){
 
 # Xcode4 templates
 copy_xcode4_project_templates(){
-	TEMPLATE_DIR="$HOME/Library/Developer/Xcode/Templates/cocos2d/"
+	TEMPLATE_DIR="$HOME/Library/Developer/Xcode/Templates/$COCOS2D_DST_DIR/"
 
 	print_template_banner "Installing Xcode 4 cocos2d iOS template"
 
@@ -168,8 +170,8 @@ copy_xcode4_project_templates(){
 
 
     # Move File Templates to correct position
-	DST_DIR="$HOME/Library/Developer/Xcode/Templates/File Templates/cocos2d/"
-	OLD_DIR="$HOME/Library/Developer/Xcode/Templates/cocos2d/"
+	DST_DIR="$HOME/Library/Developer/Xcode/Templates/File Templates/$COCOS2D_DST_DIR/"
+	OLD_DIR="$HOME/Library/Developer/Xcode/Templates/$COCOS2D_DST_DIR/"
 	
 	print_template_banner "Installing Xcode 4 CCNode file templates..."
 
