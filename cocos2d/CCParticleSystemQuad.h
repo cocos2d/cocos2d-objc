@@ -44,29 +44,15 @@
   - On 3rd gen iPhone and iPads: It is MUCH faster than CCParticleSystemPoint
   - It consumes more RAM and more GPU memory than CCParticleSystemPoint
   - It supports subrects
-  - It supports batched rendering since 1.1
  @since v0.8
  */
 @interface CCParticleSystemQuad : CCParticleSystem
 {
-	ccV3F_C4B_T2F_Quad	*quads_;		// quads to be rendered
+	ccV2F_C4B_T2F_Quad	*quads_;		// quads to be rendered
 	GLushort			*indices_;		// indices
 	GLuint				VAOname_;
 	GLuint				buffersVBO_[2]; //0: vertex  1: indices
-	CGRect				textureRect_;
 }
-
-@property (nonatomic, readwrite) ccV3F_C4B_T2F_Quad* quads;
-
-/** create system with properties from plist, batchnode and rect on the sprite sheet 
-   use nil for batchNode to not use batch rendering 
-   if rect is (0.0f,0.0f,0.0f,0.0f) the whole texture width and height will be used
-*/ 
-+(id) particleWithFile:(NSString*) plistFile batchNode:(CCParticleBatchNode*) batchNode rect:(CGRect) rect;
-
--(id) initWithFile:(NSString *)plistFile batchNode:(CCParticleBatchNode*) batchNode rect:(CGRect) rect;
-
--(id) initWithTotalParticles:(NSUInteger)numberOfParticles batchNode:(CCParticleBatchNode*) batchNode rect:(CGRect) rect;
 
 /** initialices the indices for the vertices */
 -(void) initIndices;
@@ -76,10 +62,9 @@
 
 /** Sets a new CCSpriteFrame as particle.
  WARNING: this method is experimental. Use setTexture:withRect instead.
- uses the texture and the rect of the spriteframe to call setTexture:Rect:
  @since v0.99.4
  */
--(void) setDisplayFrame:(CCSpriteFrame*)spriteFrame;
+-(void)setDisplayFrame:(CCSpriteFrame*)spriteFrame;
 
 /** Sets a new texture with a rect. The rect is in Points.
  @since v0.99.4
@@ -87,3 +72,4 @@
 -(void) setTexture:(CCTexture2D *)texture withRect:(CGRect)rect;
 
 @end
+
