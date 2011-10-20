@@ -814,7 +814,6 @@
 {
 	return batchNode_;
 }
-
 -(void) setBatchNode:(CCParticleBatchNode*) batchNode
 {
 	batchNode_ = batchNode; 

@@ -31,10 +31,6 @@
 #import "ccConfig.h"
 
 @class CCParticleBatchNode;
-#if CC_ENABLE_PROFILERS
-@class CCProfilingTimer;
-
-#endif
 
 //* @enum
 enum {
@@ -298,15 +294,10 @@ typedef void (*CC_UPDATE_PARTICLE_IMP)(id, SEL, tCCParticle*, CGPoint);
 	CCParticleBatchNode *batchNode_; 
 
 	//index of system in batch node array
-	uint atlasIndex_; 
+	NSUInteger atlasIndex_; 
 	
 	//YES if scaled or rotated
-	BOOL transformSystemDirty_;
-	
-// profiling
-#if CC_ENABLE_PROFILERS
-	CCProfilingTimer* _profilingTimer;
-#endif
+	BOOL transformSystemDirty_;	
 }
 
 /** Is the emitter active */
