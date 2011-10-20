@@ -592,7 +592,8 @@
 		//put it in descendants array of batch node
 		[batchNode_ appendChild:child];	
 		
-		if (!isReorderChildDirty_) [self setReorderChildDirtyRecursively];
+		if (!isReorderChildDirty_)
+			[self setReorderChildDirtyRecursively];
 	}
 	
 	//CCNode already sets isReorderChildDirty_ so this needs to be after batchNode check
@@ -609,13 +610,10 @@
 	if( z == child.zOrder )
 		return;
 	
-	if( batchNode_ ) 
+	if( batchNode_ && ! isReorderChildDirty_) 
 	{	
-		if (!isReorderChildDirty_) 
-		{	
-			[self setReorderChildDirtyRecursively];
-			[batchNode_ reorderBatch:YES];
-		}	
+		[self setReorderChildDirtyRecursively];
+		[batchNode_ reorderBatch:YES];
 	}
 	
 	[super reorderChild:child z:z];
@@ -685,13 +683,13 @@
 -(void) setReorderChildDirtyRecursively
 {
 	//only set parents flag the first time
-	if (!isReorderChildDirty_)
+	if ( ! isReorderChildDirty_ )
 	{	
-		isReorderChildDirty_=YES;
-		CCNode* node=(CCNode*) parent_;
-		while (node!=batchNode_) 
+		isReorderChildDirty_ = YES;
+		CCNode* node = (CCNode*) parent_;
+		while (node != batchNode_) 
 		{
-			[(CCSprite*) node setReorderChildDirtyRecursively];
+			[(CCSprite*)node setReorderChildDirtyRecursively];
 			node=node.parent;
 		}
 	}

@@ -237,8 +237,8 @@ const NSUInteger defaultCapacity = 29;
 	if (isReorderChildDirty_) 
 	{	
 		NSInteger i,j,length=children_->data->num;
-		id* x=children_->data->arr;		
-		id tempItem;
+		CCNode ** x=children_->data->arr;		
+		CCNode *tempItem;
 		CCSprite *child;
 
 		//insertion sort
@@ -248,7 +248,7 @@ const NSUInteger defaultCapacity = 29;
 			j = i-1;
 			
 			//continue moving element downwards while zOrder is smaller or when zOrder is the same but mutatedIndex is smaller
-			while(j>=0 && ( ((CCNode*) tempItem).zOrder<((CCNode*)x[j]).zOrder || ( ((CCNode*) tempItem).zOrder == ((CCNode*)x[j]).zOrder &&  ((CCNode*) tempItem).mutatedIndex < ((CCNode*)x[j]).mutatedIndex ) ) ) 
+			while(j>=0 && ( tempItem.zOrder < x[j].zOrder || ( tempItem.zOrder == x[j].zOrder && tempItem.mutatedIndex < x[j].mutatedIndex ) ) )
 			{
 				x[j+1] = x[j];
 				j--;
@@ -263,15 +263,12 @@ const NSUInteger defaultCapacity = 29;
 			//first sort all children recursively based on zOrder
 			[children_ makeObjectsPerformSelector:@selector(sortAllChildren)];
 			
-			int *index=malloc(sizeof(int));
-			*index=0;
+			int index=0;
 			
 			//fast dispatch, give every child a new atlasIndex based on their relative zOrder (keep parent -> child relations intact)
 			// and at the same time reorder descedants and the quads to the right index
 			CCARRAY_FOREACH(children_, child)
-				[self updateAtlasIndex:child currentIndex:index];
-			
-			free(index);
+				[self updateAtlasIndex:child currentIndex:&index];			
 		}
 		
 		isReorderChildDirty_=NO;	
@@ -549,7 +546,8 @@ const NSUInteger defaultCapacity = 29;
 	
 	// add children recursively
 	CCSprite* child;
-	CCARRAY_FOREACH(sprite.children, child) [self appendChild:child];
+	CCARRAY_FOREACH(sprite.children, child)
+		[self appendChild:child];
 }
 
 
