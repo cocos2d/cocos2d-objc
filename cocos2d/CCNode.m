@@ -320,7 +320,6 @@
 	
 	[child setParent: self];
 	
-	//CCDirector.sharedDirector->getMutatedIndex
 	[child setMutatedIndex:[[CCDirector sharedDirector] getMutatedIndex]];
 	
 	if( isRunning_ ) {
@@ -432,8 +431,9 @@
 {
 	NSAssert( child != nil, @"Child must be non-nil");
 	
-	isReorderChildDirty_=YES;
-	[child setMutatedIndex:[[CCDirector sharedDirector] getMutatedIndex]];
+	isReorderChildDirty_ = YES;
+	
+	[child setMutatedIndex: [[CCDirector sharedDirector] getMutatedIndex] ];
 	[child _setZOrder:z];
 }
 
@@ -442,8 +442,8 @@
 	if (isReorderChildDirty_) 
 	{	
 		int i,j,length=children_->data->num;
-		id* x=children_->data->arr;
-		id tempItem;
+		CCNode ** x=children_->data->arr;
+		CCNode *tempItem;
 		
 		//insertion sort
 		for(i=1; i<length; i++)
@@ -452,7 +452,7 @@
 			j = i-1;
 			
 			//continue moving element downwards while zOrder is smaller or when zOrder is the same but mutatedIndex is smaller
-			while(j>=0 && ( ((CCNode*) tempItem).zOrder<((CCNode*)x[j]).zOrder || ( ((CCNode*) tempItem).zOrder== ((CCNode*)x[j]).zOrder &&  ((CCNode*) tempItem).mutatedIndex < ((CCNode*)x[j]).mutatedIndex ) ) ) 
+			while(j>=0 && ( tempItem.zOrder < x[j].zOrder || ( tempItem.zOrder== x[j].zOrder && tempItem.mutatedIndex < x[j].mutatedIndex ) ) ) 
 			{
 				x[j+1] = x[j];
 				j = j-1;
@@ -487,7 +487,9 @@
 	[self transform];
 	
 	if(children_) {
+		
 		[self sortAllChildren];
+		
 		ccArray *arrayData = children_->data;
 		NSUInteger i = 0;
 		
