@@ -40,6 +40,7 @@ static NSString *transitions[] = {
 	@"TexturePVRRGBA4444CCZ",
 	@"TexturePVRRGBA5551",
 	@"TexturePVRRGB565",
+	@"TexturePVRRGB888",
 	@"TexturePVRA8",
 	@"TexturePVRI8",
 	@"TexturePVRAI88",
@@ -747,6 +748,31 @@ Class restartAction()
 -(NSString *) title
 {
 	return @"PVR + RGB 565 Test";
+}
+@end
+
+#pragma mark -
+#pragma mark TexturePVR RGB888
+
+// Image generated using PVRTexTool:
+// http://www.imgtec.com/powervr/insider/powervr-pvrtextool.asp
+
+@implementation TexturePVRRGB888
+-(void) onEnter
+{
+	[super onEnter];
+	CGSize s = [[CCDirector sharedDirector] winSize];
+	
+	CCSprite *img = [CCSprite spriteWithFile:@"test_image_rgb888.pvr"];
+	img.position = ccp( s.width/2.0f, s.height/2.0f);
+	[self addChild:img];
+	[[CCTextureCache sharedTextureCache] dumpCachedTextureInfo];
+	
+}
+
+-(NSString *) title
+{
+	return @"PVR + RGB 888 Test";
 }
 @end
 

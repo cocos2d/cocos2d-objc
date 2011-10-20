@@ -743,6 +743,28 @@
 			<key>Path</key>
 			<string>libs/cocos2d/CCParallaxNode.m</string>
 		</dict>
+		<key>libs/cocos2d/CCParticleBatchNode.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2d</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2d/CCParticleBatchNode.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/cocos2d/CCParticleBatchNode.m</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2d</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2d/CCParticleBatchNode.m</string>
+		</dict>
 		<key>libs/cocos2d/CCParticleExamples.h</key>
 		<dict>
 			<key>Group</key>
@@ -2021,6 +2043,8 @@
 		<string>libs/cocos2d/CCNode.m</string>
 		<string>libs/cocos2d/CCParallaxNode.h</string>
 		<string>libs/cocos2d/CCParallaxNode.m</string>
+		<string>libs/cocos2d/CCParticleBatchNode.h</string>
+		<string>libs/cocos2d/CCParticleBatchNode.m</string>
 		<string>libs/cocos2d/CCParticleExamples.h</string>
 		<string>libs/cocos2d/CCParticleExamples.m</string>
 		<string>libs/cocos2d/CCParticleSystem.h</string>

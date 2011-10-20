@@ -33,6 +33,8 @@
 #import "GLProgram.h"
 #import "ccGLState.h"
 #import "Support/OpenGL_Internal.h"
+//#import "CGPointExtension.h"
+//#import "CCDrawingPrimitives.h"
 
 @interface CCTextureAtlas ()
 -(void) initIndices;
@@ -111,7 +113,7 @@
 	return self;
 }
 
-- (NSString*) description
+-(NSString*) description
 {
 	return [NSString stringWithFormat:@"<%@ = %08X | totalQuads =  %i>", [self class], self, totalQuads_];
 }
@@ -206,6 +208,13 @@
 
 #pragma mark TextureAtlas - Update, Insert, Move & Remove
 
+-(ccV3F_C4B_T2F_Quad *) quads
+{
+	//if someone accesses the quads directly, presume that changes will be made
+	dirty_ = YES;
+	return quads_;	
+}
+
 -(void) updateQuad:(ccV3F_C4B_T2F_Quad*)quad atIndex:(NSUInteger) n
 {
 	NSAssert(n < capacity_, @"updateQuadWithTexture: Invalid index");
@@ -220,23 +229,52 @@
 -(void) insertQuad:(ccV3F_C4B_T2F_Quad*)quad atIndex:(NSUInteger)index
 {
 	NSAssert(index < capacity_, @"insertQuadWithTexture: Invalid index");
-
+	
 	totalQuads_++;
 	NSAssert( totalQuads_ <= capacity_, @"invalid totalQuads");
-
+	
 	// issue #575. index can be > totalQuads
 	NSInteger remaining = (totalQuads_-1) - index;
-
+	
 	// last object doesn't need to be moved
 	if( remaining > 0)
 		// tex coordinates
 		memmove( &quads_[index+1],&quads_[index], sizeof(quads_[0]) * remaining );
-
+	
 	quads_[index] = *quad;
 
 	dirty_ = YES;
 }
 
+-(void) insertQuads:(ccV3F_C4B_T2F_Quad*)quads atIndex:(NSUInteger)index amount:(uint) amount
+{
+	NSAssert(index + amount <= capacity_, @"insertQuadWithTexture: Invalid index + amount");
+	
+	totalQuads_+= amount;
+	
+	NSAssert( totalQuads_ <= capacity_, @"invalid totalQuads");
+	
+	// issue #575. index can be > totalQuads
+	NSInteger remaining = (totalQuads_-1) - index - amount;
+	
+	// last object doesn't need to be moved
+	if( remaining > 0)
+		// tex coordinates
+		memmove( &quads_[index+amount],&quads_[index], sizeof(quads_[0]) * remaining );
+	
+	
+	
+	uint max = index + amount;
+	int j = 0;
+	for (int i = index; i < max ; i++)
+	{
+		quads_[index] = quads[j];
+		index++;
+		j++;
+	}
+	
+	dirty_ = YES;
+}
 
 -(void) insertQuadFromIndex:(NSUInteger)oldIndex atIndex:(NSUInteger)newIndex
 {
@@ -262,6 +300,35 @@
 	dirty_ = YES;
 }
 
+-(void) insertQuadsFromIndex:(NSUInteger)oldIndex amount:(NSUInteger) amount atIndex:(NSUInteger)newIndex
+{
+	NSAssert(newIndex + amount <= totalQuads_, @"insertQuadFromIndex:atIndex: Invalid index");
+	NSAssert(oldIndex < totalQuads_, @"insertQuadFromIndex:atIndex: Invalid index");
+	
+	if( oldIndex == newIndex )
+		return;
+	
+	//create buffer
+	size_t quadSize = sizeof(ccV3F_C4B_T2F_Quad);
+	ccV3F_C4B_T2F_Quad *tempQuads = malloc(quadSize*amount); 
+	memcpy(tempQuads,&quads_[oldIndex],quadSize*amount); 
+	
+	if (newIndex < oldIndex) 
+	{
+		//move quads from newIndex to newIndex + amount to make room for buffer 
+		memmove(&quads_[newIndex],&quads_[newIndex+amount],(oldIndex-newIndex)*quadSize);
+	}
+	else 
+	{//move quads above back
+		memmove(&quads_[oldIndex],&quads_[oldIndex+amount],(newIndex-oldIndex)*quadSize); 
+	}
+	memcpy(&quads_[newIndex],tempQuads,amount*quadSize);
+	
+	free(tempQuads);
+	
+	dirty_ = YES;
+}
+
 -(void) removeQuadAtIndex:(NSUInteger) index
 {
 	NSAssert(index < totalQuads_, @"removeQuadAtIndex: Invalid index");
@@ -271,10 +338,26 @@
 
 	// last object doesn't need to be moved
 	if( remaining )
-		// tex coordinates
 		memmove( &quads_[index],&quads_[index+1], sizeof(quads_[0]) * remaining );
 
 	totalQuads_--;
+
+	dirty_ = YES;
+}
+
+-(void) removeQuadsAtIndex:(NSUInteger) index amount:(uint) amount
+{
+	NSAssert(index + amount <= totalQuads_, @"removeQuadAtIndex: index + amount out of bounds");	
+
+	if (index + amount > totalQuads_) amount = totalQuads_ - index; 
+	
+	NSUInteger remaining = (totalQuads_) - (index + amount);
+
+	totalQuads_-= amount;
+	
+	// last object doesn't need to be moved
+	if ( remaining )
+		memmove( &quads_[index],&quads_[index+amount], sizeof(quads_[0]) * remaining );
 
 	dirty_ = YES;
 }
@@ -324,6 +407,31 @@
 	dirty_ = YES;
 
 	return YES;
+}
+
+#pragma mark TextureAtlas - CCParticleBatchNode Specific
+
+-(void) fillWithEmptyQuadsFromIndex:(uint) index amount:(uint) amount
+{
+	ccV3F_C4B_T2F_Quad *quad = calloc(1,sizeof(ccV3F_C4B_T2F_Quad)); 
+	
+	uint to = index + amount;
+	for (int i = index ; i < to ; i++)
+	{
+		quads_[i] = *quad; 	
+	}
+	
+}
+-(void) increaseTotalQuadsWith:(uint) amount
+{
+	totalQuads_ += amount; 	
+}
+
+-(void) moveQuadsFromIndex:(NSUInteger) index to:(NSUInteger) newIndex
+{
+	NSAssert(newIndex + (totalQuads_ - index) <= capacity_, @"moveQuadsFromIndex move is out of bounds");
+	
+	memmove(quads_ + newIndex,quads_ + index, (totalQuads_ - index) * sizeof(quads_[0]));
 }
 
 #pragma mark TextureAtlas - Drawing

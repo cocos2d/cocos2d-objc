@@ -106,7 +106,7 @@
 	
 	// image is flipped
 	BOOL	flipX_:1;
-	BOOL	flipY_:1;
+	BOOL	flipY_:1;		
 }
 
 /** whether or not the Sprite needs to be updated in the Atlas */

@@ -55,7 +55,6 @@
  */
 -(BOOL) enableRetinaDisplay:(BOOL)enableRetina;
 
-
 /** returns the content scale factor */
 -(CGFloat) contentScaleFactor;
 @end

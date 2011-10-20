@@ -1155,22 +1155,10 @@ Class restartAction()
 
 - (void) applicationDidFinishLaunching:(UIApplication*)application
 {
-	// CC_DIRECTOR_INIT()
-	//
-	// 1. Initializes an EAGLView with 0-bit depth format, and RGB565 render buffer
-	// 2. EAGLView multiple touches: disabled
-	// 3. creates a UIWindow, and assign it to the "window" var (it must already be declared)
-	// 4. Parents EAGLView to the newly created window
-	// 5. Creates Display Link Director
-	// 5a. If it fails, it will use an NSTimer director
-	// 6. It will try to run at 60 FPS
-	// 7. Display FPS: NO
-	// 8. Device orientation: Portrait
-	// 9. Connects the director to the EAGLView
-	//
-	CC_DIRECTOR_INIT();
+	// Init the window
+	window_ = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 	
-	// Obtain the shared director in order to...
+	// before creating any layer, set the landscape mode
 	CCDirector *director = [CCDirector sharedDirector];
 
 	// Enables High Res mode (Retina Display) on iPhone 4 and maintains low res on all other devices
@@ -1185,6 +1173,31 @@ Class restartAction()
 	// Turn on display FPS
 	[director setDisplayFPS:YES];
 	
+	// Create an EAGLView with a RGB8 color buffer, and a depth buffer of 0 without multisampling
+	EAGLView *glView = [EAGLView viewWithFrame:[window_ bounds]
+								   pixelFormat:kEAGLColorFormatRGBA8
+								   depthFormat:0];
+	
+	// attach the openglView to the director
+	[director setOpenGLView:glView];
+	
+	// 2D projection
+	[director setProjection:kCCDirectorProjection2D];
+	
+	// Enables High Res mode (Retina Display) on iPhone 4 and maintains low res on all other devices
+	[director enableRetinaDisplay:YES];
+	
+	// make the OpenGLView a child of the main window
+	[window_ addSubview:glView];
+	
+	// make main window visible
+	[window_ makeKeyAndVisible];	
+	
+	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
+	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
+	// You can change anytime.
+	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA8888];	
+		
 	CCScene *scene = [CCScene node];
 	[scene addChild: [nextAction() node]];
 

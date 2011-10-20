@@ -27,6 +27,7 @@
 
 
 #import "CCActionInterval.h"
+#import "CCActionInstant.h"
 #import "CCSprite.h"
 #import "CCSpriteFrame.h"
 #import "CCAnimation.h"
@@ -89,7 +90,7 @@
 	} else
 		elapsed_ += dt;
 
-	[self update: MIN(1, elapsed_/duration_)];
+	[self update: MIN(1, elapsed_/MAX(duration_,FLT_EPSILON))];
 }
 
 -(void) startWithTarget:(id)aTarget
@@ -183,7 +184,7 @@
 -(void) startWithTarget:(id)aTarget
 {
 	[super startWithTarget:aTarget];	
-	split_ = [actions_[0] duration] / duration_;
+	split_ = [actions_[0] duration] / MAX(duration_, FLT_EPSILON);
 	last_ = -1;
 }
 
@@ -252,11 +253,14 @@
 -(id) initWithAction:(CCFiniteTimeAction*)action times:(NSUInteger)times
 {
 	ccTime d = [action duration] * times;
-
+	
 	if( (self=[super initWithDuration: d ]) ) {
 		times_ = times;
 		self.innerAction = action;
-
+		isActionInstant_ = ([action isKindOfClass:[CCActionInstant class]]) ? YES : NO;
+		
+		//a instant action needs to be executed one time less in the update method since it uses startWithTarget to execute the action
+		if (isActionInstant_) times_ -=1;
 		total_ = 0;
 	}
 	return self;
@@ -277,6 +281,7 @@
 -(void) startWithTarget:(id)aTarget
 {
 	total_ = 0;
+	nextDt_ = [innerAction_ duration]/duration_;
 	[super startWithTarget:aTarget];
 	[innerAction_ startWithTarget:aTarget];
 }
@@ -292,34 +297,36 @@
 // container action like Repeat, Sequence, AccelDeccel, etc..
 -(void) update:(ccTime) dt
 {
-	ccTime t = dt * times_;
-	if( t > total_+1 ) {
-		[innerAction_ update:1.0f];
-		total_++;
-		[innerAction_ stop];
-		[innerAction_ startWithTarget:target_];
-		
-		// repeat is over ?
-		if( total_== times_ )
-			// so, set it in the original position
-			[innerAction_ update:0];
-		else {
-			// no ? start next repeat with the right update
-			// to prevent jerk (issue #390)
-			[innerAction_ update: t-total_];
+	if (dt >= nextDt_) 
+	{
+		while (dt > nextDt_ && total_ < times_) 
+		{
+			
+			[innerAction_ update:1.0f];
+			total_++;
+			
+			[innerAction_ stop];
+			[innerAction_ startWithTarget:target_]; 
+			nextDt_ += [innerAction_ duration]/duration_;
 		}
-
-	} else {
 		
-		float r = fmodf(t, 1.0f);
-		
-		// fix last repeat position
-		// else it could be 0.
-		if( dt== 1.0f) {
-			r = 1.0f;
-			total_++; // this is the added line
+		//don't set a instantaction back or update it, it has no use because it has no duration
+		if (!isActionInstant_)
+		{
+			if (total_ == times_)
+			{	
+				[innerAction_ update:0];
+				[innerAction_ stop];
+			}//issue #390 prevent jerk, use right update
+			else 
+			{	
+				[innerAction_ update:dt - (nextDt_ - innerAction_.duration/duration_)]; 
+			}
 		}
-		[innerAction_ update: MIN(r,1)];
+	}
+	else 
+	{
+		[innerAction_ update:fmodf(dt * times_,1.0f)];
 	}
 }
 
