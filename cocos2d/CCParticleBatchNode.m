@@ -38,12 +38,18 @@
 #import "CCParticleSystem.h"
 #import "CCParticleSystem.h"
 #import "CCParticleSystemPoint.h"
+#import "CCShaderCache.h"
+#import "GLProgram.h"
+#import "ccGLState.h"
 
 #import "Support/base64.h"
 #import "Support/ZipUtils.h"
 #import "Support/CCFileUtils.h"
 
-#define kDefaultCapacity 500
+#import "kazmath/GL/matrix.h"
+
+
+#define kCCParticleDefaultCapacity 500
 
 //need to set z-order manualy, because fast reordering of childs would be complexer / slower
 @implementation CCNode (extension)
@@ -106,8 +112,8 @@
 		[data release];
 		[image release];
 	}
-	if (tex) return YES; 
-	else return NO;
+		
+	return (tex != nil );
 }
 
 /*
@@ -115,45 +121,48 @@
  */
 +(id)particleBatchNodeWithTexture:(CCTexture2D *)tex
 {
-	return [[[self alloc] initWithTexture:tex capacity:kDefaultCapacity useQuad:YES additiveBlending:NO] autorelease];
+	return [[[self alloc] initWithTexture:tex capacity:kCCParticleDefaultCapacity additiveBlending:NO] autorelease];
 }
 
-+(id)particleBatchNodeWithTexture:(CCTexture2D *)tex capacity:(NSUInteger) capacity useQuad:(BOOL) useQuad additiveBlending:(BOOL) additive
++(id)particleBatchNodeWithTexture:(CCTexture2D *)tex capacity:(NSUInteger) capacity additiveBlending:(BOOL) additive
 {
-	return [[[self alloc] initWithTexture:tex capacity:capacity useQuad:YES additiveBlending:additive] autorelease];
+	return [[[self alloc] initWithTexture:tex capacity:capacity additiveBlending:additive] autorelease];
 }
 
 /*
  * creation with File Image
  */
-+(id)particleBatchNodeWithFile:(NSString*)fileImage capacity:(NSUInteger)capacity useQuad:(BOOL) useQuad additiveBlending:(BOOL) additive
++(id)particleBatchNodeWithFile:(NSString*)fileImage capacity:(NSUInteger)capacity additiveBlending:(BOOL) additive
 {
-	return [[[self alloc] initWithFile:fileImage capacity:capacity useQuad:useQuad additiveBlending:additive] autorelease];
+	return [[[self alloc] initWithFile:fileImage capacity:capacity additiveBlending:additive] autorelease];
 }
 
 +(id)particleBatchNodeWithFile:(NSString*) imageFile
 {
-	return [[[self alloc] initWithFile:imageFile capacity:kDefaultCapacity useQuad:YES additiveBlending:NO] autorelease];
+	return [[[self alloc] initWithFile:imageFile capacity:kCCParticleDefaultCapacity additiveBlending:NO] autorelease];
 }
 
 /*
  * init with CCTexture2D
  */
--(id)initWithTexture:(CCTexture2D *)tex capacity:(NSUInteger)capacity useQuad:(BOOL) useQuad additiveBlending:(BOOL) additive
+-(id)initWithTexture:(CCTexture2D *)tex capacity:(NSUInteger)capacity additiveBlending:(BOOL) additive
 {
 	if (self = [super init])
 	{
-		useQuad_ = useQuad; 
 		reorderDirty_ = NO;
 		
-		//TODO initialize point atlas here
-		if (useQuad_) textureAtlas_ = [[CCTextureAtlas alloc] initWithTexture:tex capacity:capacity];
-		
-		if (additive) [self additiveBlending];
-		else [self normalBlending];
-		
+		textureAtlas_ = [[CCTextureAtlas alloc] initWithTexture:tex capacity:capacity];
+
 		// no lazy alloc in this node
-		children_ = [[CCArray alloc] initWithCapacity:5];
+		children_ = [[CCArray alloc] initWithCapacity:capacity];
+
+		if (additive)
+			[self additiveBlending];
+		else
+			[self normalBlending];
+		
+		
+		self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTextureColor];
 	}
 
 	return self;
@@ -162,10 +171,10 @@
 /*
  * init with FileImage
  */
--(id)initWithFile:(NSString *)fileImage capacity:(NSUInteger)capacity useQuad:(BOOL) useQuad additiveBlending:(BOOL) additive
+-(id)initWithFile:(NSString *)fileImage capacity:(NSUInteger)capacity additiveBlending:(BOOL) additive
 {
 	CCTexture2D *tex = [[CCTextureCache sharedTextureCache] addImage:fileImage];
-	return [self initWithTexture:tex capacity:capacity useQuad:useQuad additiveBlending:additive];
+	return [self initWithTexture:tex capacity:capacity additiveBlending:additive];
 }
 
 -(NSString*) description
@@ -187,7 +196,7 @@
 {
 	
 	// CAREFUL:
-	// This visit is almost identical to CocosNode#visit
+	// This visit is almost identical to CCNode#visit
 	// with the exception that it doesn't call visit on it's children
 	//
 	// The alternative is to have a void CCSprite#visit, but
@@ -196,7 +205,7 @@
 	if (!visible_)
 		return;
 	
-	glPushMatrix();
+	kmGLPushMatrix();
 	
 	if ( grid_ && grid_.active) {
 		[grid_ beforeDraw];
@@ -209,6 +218,7 @@
 		[children_ makeObjectsPerformSelector:@selector(updateWithNoTime)];
 		reorderDirty_ = NO;	
 	}
+
 	[self transform];
 	
 	[self draw];
@@ -216,7 +226,7 @@
 	if ( grid_ && grid_.active)
 		[grid_ afterDraw:self];
 	
-	glPopMatrix();
+	kmGLPopMatrix();
 }
 
 // override addChild:
@@ -224,11 +234,7 @@
 {
 	NSAssert( child != nil, @"Argument must be non-nil");
 	NSAssert( [child isKindOfClass:[CCParticleSystem class]], @"CCParticleBatchNode only supports CCQuadParticleSystems as children");
-	
-	if (useQuad_) 
-	{	
-		NSAssert( child.texture.name == textureAtlas_.texture.name, @"CCParticleSystem is not using the same texture id");
-	}
+	NSAssert( child.texture.name == textureAtlas_.texture.name, @"CCParticleSystem is not using the same texture id");
 	
 	//no lazy sorting, so don't call super addChild, call helper instead
 	uint pos = [self addChildHelper:child z:z tag:aTag];
@@ -239,7 +245,7 @@
 	if (pos != 0) atlasIndex = [[children_ objectAtIndex:pos-1] atlasIndex]+[[children_ objectAtIndex:pos-1] totalParticles];
 	else atlasIndex = 0;
 	
-	[child useBatchNode:self];
+	[child setBatchNode:self];
 	
 	[self insertChild:child inAtlasAtIndex:atlasIndex];
 }
@@ -253,7 +259,8 @@
 	NSAssert( child != nil, @"Argument must be non-nil");
 	NSAssert( child.parent == nil, @"child already added. It can't be added again");
 	
-	if( ! children_ ) children_ = [[CCArray alloc] initWithCapacity:4];
+	if( ! children_ )
+		children_ = [[CCArray alloc] initWithCapacity:4];
 			
 	//don't use a lazy insert
 	uint pos = [self searchNewPositionInChildrenForZ:z];
@@ -281,7 +288,8 @@
 	if( z == child.zOrder )
 		return;
 	
-	if ([children_ count] == 1) [child setZOrder:z];
+	if ([children_ count] == 1)
+		[child setZOrder:z];
 	else
 	{	
 		reorderDirty_ = YES;
@@ -324,13 +332,15 @@
 	while (i < count) 
 	{
 		child = [children_ objectAtIndex:i];
-		if (child.zOrder > z) return MAX(0,(i-1));
+		if (child.zOrder > z)
+			return MAX(0,(i-1));
 		
 		i++;
 	}
 
-	if (z >= 0) return MAX(0,count);
-	else return 0;
+	if (z >= 0)
+		return MAX(0,count);
+	return 0;
 }
 
 // override removeChild:
@@ -365,23 +375,21 @@
 #pragma mark CCParticleBatchNode - draw
 -(void) draw
 {
-	//don't call super draw, it's empty
-	//[super draw];
+	CC_PROFILER_STOP(@"CCParticleBatchNode - draw");
+
+	[super draw];
 	
 	if( textureAtlas_.totalQuads == 0 )
 		return;	
 
-	// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
-	// Needed states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
-	// Unneeded states: -
+	ccGLBlendFunc( blendFunc_.src, blendFunc_.dst );
 	
-	BOOL newBlend = blendFunc_.src != CC_BLEND_SRC || blendFunc_.dst != CC_BLEND_DST;
-	if( newBlend )
-		glBlendFunc( blendFunc_.src, blendFunc_.dst );
+	ccGLUseProgram( shaderProgram_->program_ );	
+	ccGLUniformModelViewProjectionMatrix( shaderProgram_ );
 	
 	[textureAtlas_ drawQuads];
-	if( newBlend )
-		glBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);
+	
+	CC_PROFILER_STOP(@"CCParticleBatchNode - draw");
 }
 
 #pragma mark CCParticleBatchNode - private
@@ -426,16 +434,14 @@
 		[textureAtlas_ fillWithEmptyQuadsFromIndex:textureAtlas_.capacity - pSystem.totalParticles amount:pSystem.totalParticles];
 	}
 	
-	if (useQuad_) 
-	{	
-		//make room for quads, not necessary for last child		
-		if (pSystem.atlasIndex+pSystem.totalParticles != textureAtlas_.totalQuads) [textureAtlas_ moveQuadsFromIndex:index to:index+pSystem.totalParticles];
-		
-		//increase totalParticles here for new particles, update method of particlesystem will fill the quads
-		[textureAtlas_ increaseTotalQuadsWith:pSystem.totalParticles];
-		
-		[pSystem batchNodeInitialization];
-	}
+	//make room for quads, not necessary for last child		
+	if (pSystem.atlasIndex + pSystem.totalParticles != textureAtlas_.totalQuads)
+		[textureAtlas_ moveQuadsFromIndex:index to:index+pSystem.totalParticles];
+	
+	//increase totalParticles here for new particles, update method of particlesystem will fill the quads
+	[textureAtlas_ increaseTotalQuadsWith:pSystem.totalParticles];
+	
+	[pSystem batchNodeInitialization];
 	
 	[self updateAllAtlasIndexes];
 }
@@ -449,7 +455,8 @@
 	[textureAtlas_ fillWithEmptyQuadsFromIndex:textureAtlas_.totalQuads amount:pSystem.totalParticles];
 	
 	//with no cleanup the particle system could be reused for self rendering
-	if (!doCleanUp) [pSystem useSelfRender];
+	if (!doCleanUp)
+		[pSystem setBatchNode:nil];
 	
 	[self updateAllAtlasIndexes];
 }

@@ -78,8 +78,6 @@
 @synthesize autoRemoveOnFinish = autoRemoveOnFinish_;
 @synthesize emitterMode = emitterMode_;
 @synthesize atlasIndex = atlasIndex_;
-@synthesize useBatchNode = useBatchNode_;
-
 
 +(id) particleWithFile:(NSString*) plistFile
 {
@@ -558,10 +556,10 @@
 				
 				//translate newPos to correct position, since matrix transform isn't performed in batchnode
 				//don't update the particle with the new position information, it will interfere with the radius and tangential calculations
-				if (useBatchNode_)
+				if (batchNode_)
 				{
-						newPos.x+=position_.x; 
-						newPos.y+=position_.y;
+					newPos.x+=position_.x; 
+					newPos.y+=position_.y;
 				}
 				
 				p->z = vertexZ_;
@@ -578,7 +576,7 @@
 				if( particleIdx != particleCount-1 )
 					particles[particleIdx] = particles[particleCount-1];
 								
-				if (useBatchNode_) 
+				if (batchNode_) 
 				{
 					//disable the switched particle 
 					[batchNode_ disableParticle:(atlasIndex_+currentIndex)];
@@ -599,7 +597,7 @@
 		transformSystemDirty_ = NO;
 	}
 
-	if (!useBatchNode_)
+	if (!batchNode_)
 		[self postStep];
 
 	CC_PROFILER_STOP_CATEGORY(kCCProfilerCategoryParticles , @"CCParticleSystem - update");
@@ -812,20 +810,21 @@
 
 #pragma mark ParticleSystem - methods for batchNode rendering
 
--(void) useSelfRender
+-(CCParticleBatchNode*) batchNode
 {
-	useBatchNode_ = NO;
+	return batchNode_;
 }
 
--(void) useBatchNode:(CCParticleBatchNode*) batchNode
+-(void) setBatchNode:(CCParticleBatchNode*) batchNode
 {
 	batchNode_ = batchNode; 
-	useBatchNode_ = YES;
-	
-	//each particle needs a unique index
-	for (int i = 0; i < totalParticles; i++)
-	{
-		particles[i].atlasIndex=i;	
+
+	if( batchNode ) {
+		//each particle needs a unique index
+		for (int i = 0; i < totalParticles; i++)
+		{
+			particles[i].atlasIndex=i;	
+		}
 	}
 }
 
