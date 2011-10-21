@@ -165,7 +165,7 @@ static SEL selSortMethod =NULL;
 	[self transform];
 	[self draw];
 	
-	mutatedIndex_=0;
+	orderOfArrival_=0;
 	
 	if ( grid_ && grid_.active)
 		[grid_ afterDraw:self];
@@ -237,8 +237,8 @@ static SEL selSortMethod =NULL;
 	if (isReorderChildDirty_) 
 	{	
 		NSInteger i,j,length=children_->data->num;
-		id* x=children_->data->arr;		
-		id tempItem;
+		CCNode ** x=children_->data->arr;		
+		CCNode *tempItem;
 		CCSprite *child;
 
 		//insertion sort
@@ -247,8 +247,8 @@ static SEL selSortMethod =NULL;
 			tempItem = x[i];
 			j = i-1;
 			
-			//continue moving element downwards while zOrder is smaller or when zOrder is the same but mutatedIndex is smaller
-			while(j>=0 && ( ((CCNode*) tempItem).zOrder<((CCNode*)x[j]).zOrder || ( ((CCNode*) tempItem).zOrder == ((CCNode*)x[j]).zOrder &&  ((CCNode*) tempItem).mutatedIndex < ((CCNode*)x[j]).mutatedIndex ) ) ) 
+			//continue moving element downwards while zOrder is smaller or when zOrder is the same but orderOfArrival is smaller
+			while(j>=0 && ( tempItem.zOrder < x[j].zOrder || ( tempItem.zOrder == x[j].zOrder && tempItem.orderOfArrival < x[j].orderOfArrival ) ) ) 
 			{
 				x[j+1] = x[j];
 				j--;
@@ -283,7 +283,7 @@ static SEL selSortMethod =NULL;
 	{	
 		oldIndex=sprite.atlasIndex;
 		sprite.atlasIndex=*curIndex;
-		sprite.mutatedIndex=0;
+		sprite.orderOfArrival=0;
 		if (oldIndex!=*curIndex)
 			[self swap:oldIndex withNewIndex:*curIndex];
 		(*curIndex)++;
@@ -296,7 +296,7 @@ static SEL selSortMethod =NULL;
 		{//all children are in front of the parent
 			oldIndex=sprite.atlasIndex;
 			sprite.atlasIndex=*curIndex;
-			sprite.mutatedIndex=0;
+			sprite.orderOfArrival=0;
 			if (oldIndex!=*curIndex)
 				[self swap:oldIndex withNewIndex:*curIndex];
 			(*curIndex)++;
@@ -311,7 +311,7 @@ static SEL selSortMethod =NULL;
 			{
 				oldIndex=sprite.atlasIndex;
 				sprite.atlasIndex=*curIndex;
-				sprite.mutatedIndex=0;
+				sprite.orderOfArrival=0;
 				if (oldIndex!=*curIndex)
 					[self swap:oldIndex withNewIndex:*curIndex];
 				(*curIndex)++;
@@ -326,7 +326,7 @@ static SEL selSortMethod =NULL;
 		{//all children have a zOrder < 0)
 			oldIndex=sprite.atlasIndex;
 			sprite.atlasIndex=*curIndex;
-			sprite.mutatedIndex=0;
+			sprite.orderOfArrival=0;
 			if (oldIndex!=*curIndex)
 				[self swap:oldIndex withNewIndex:*curIndex];
 			(*curIndex)++;
