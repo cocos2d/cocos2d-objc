@@ -66,6 +66,8 @@
 
 @implementation CCNode
 
+static NSUInteger globalOrderOfArrival = 1;
+
 @synthesize children = children_;
 @synthesize visible = visible_;
 @synthesize parent = parent_;
@@ -76,7 +78,7 @@
 @synthesize isRunning = isRunning_;
 @synthesize userData = userData_;
 @synthesize	shaderProgram = shaderProgram_;
-@synthesize mutatedIndex = mutatedIndex_;
+@synthesize orderOfArrival = orderOfArrival_;
 
 #pragma mark CCNode - Transform related properties
 
@@ -136,7 +138,8 @@
 		parent_ = nil;
 		
 		shaderProgram_ = nil;
-		mutatedIndex_=0;
+		
+		orderOfArrival_ = 0;
 	}
 	
 	return self;
@@ -320,7 +323,7 @@
 	
 	[child setParent: self];
 	
-	[child setMutatedIndex:[[CCDirector sharedDirector] getMutatedIndex]];
+	[child setOrderOfArrival: globalOrderOfArrival++];
 	
 	if( isRunning_ ) {
 		[child onEnter];
@@ -433,7 +436,7 @@
 	
 	isReorderChildDirty_ = YES;
 	
-	[child setMutatedIndex: [[CCDirector sharedDirector] getMutatedIndex] ];
+	[child setOrderOfArrival: globalOrderOfArrival++];
 	[child _setZOrder:z];
 }
 
@@ -441,18 +444,18 @@
 {
 	if (isReorderChildDirty_) 
 	{	
-		int i,j,length=children_->data->num;
-		CCNode ** x=children_->data->arr;
+		NSInteger i,j,length = children_->data->num;
+		CCNode ** x = children_->data->arr;
 		CCNode *tempItem;
 		
-		//insertion sort
+		// insertion sort
 		for(i=1; i<length; i++)
 		{
 			tempItem = x[i];
 			j = i-1;
 			
 			//continue moving element downwards while zOrder is smaller or when zOrder is the same but mutatedIndex is smaller
-			while(j>=0 && ( tempItem.zOrder < x[j].zOrder || ( tempItem.zOrder== x[j].zOrder && tempItem.mutatedIndex < x[j].mutatedIndex ) ) ) 
+			while(j>=0 && ( tempItem.zOrder < x[j].zOrder || ( tempItem.zOrder== x[j].zOrder && tempItem.orderOfArrival < x[j].orderOfArrival ) ) ) 
 			{
 				x[j+1] = x[j];
 				j = j-1;
@@ -514,7 +517,8 @@
 	} else
 		[self draw];
 	
-	mutatedIndex_=0;
+	// reset for next frame
+	orderOfArrival_ = 0;
 	
 	if ( grid_ && grid_.active)
 		[grid_ afterDraw:self];

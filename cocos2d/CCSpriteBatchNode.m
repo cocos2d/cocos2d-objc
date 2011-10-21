@@ -50,8 +50,8 @@ const NSUInteger defaultCapacity = 29;
 #pragma mark CCSpriteBatchNode
 
 @interface CCSpriteBatchNode (private)
--(void) updateAtlasIndex:(CCSprite*) sprite currentIndex:(int*) curIndex;
--(void) swap:(int) oldIndex withNewIndex:(int) newIndex;
+-(void) updateAtlasIndex:(CCSprite*) sprite currentIndex:(NSInteger*) curIndex;
+-(void) swap:(NSInteger) oldIndex withNewIndex:(NSInteger) newIndex;
 -(void) updateBlendFunc;
 @end
 
@@ -144,7 +144,7 @@ const NSUInteger defaultCapacity = 29;
 	NSAssert(parent_ != nil, @"CCSpriteBatchNode should NOT be root node");
 
 	// CAREFUL:
-	// This visit is almost identical to CocosNode#visit
+	// This visit is almost identical to CCNode#visit
 	// with the exception that it doesn't call visit on its children
 	//
 	// The alternative is to have a void CCSprite#visit, but
@@ -164,12 +164,12 @@ const NSUInteger defaultCapacity = 29;
 	[self transform];
 	[self draw];
 	
-	mutatedIndex_=0;
-	
 	if ( grid_ && grid_.active)
 		[grid_ afterDraw:self];
 
 	kmGLPopMatrix();
+	
+	orderOfArrival_ = 0;
 	
 	CC_PROFILER_STOP_CATEGORY(kCCProfilerCategoryBatchSprite, @"CCSpriteBatchNode - visit");
 }
@@ -236,8 +236,8 @@ const NSUInteger defaultCapacity = 29;
 {
 	if (isReorderChildDirty_) 
 	{	
-		NSInteger i,j,length=children_->data->num;
-		CCNode ** x=children_->data->arr;		
+		NSInteger i,j,length = children_->data->num;
+		CCNode ** x = children_->data->arr;		
 		CCNode *tempItem;
 		CCSprite *child;
 
@@ -248,7 +248,7 @@ const NSUInteger defaultCapacity = 29;
 			j = i-1;
 			
 			//continue moving element downwards while zOrder is smaller or when zOrder is the same but mutatedIndex is smaller
-			while(j>=0 && ( tempItem.zOrder < x[j].zOrder || ( tempItem.zOrder == x[j].zOrder && tempItem.mutatedIndex < x[j].mutatedIndex ) ) )
+			while(j>=0 && ( tempItem.zOrder < x[j].zOrder || ( tempItem.zOrder == x[j].zOrder && tempItem.orderOfArrival < x[j].orderOfArrival ) ) )
 			{
 				x[j+1] = x[j];
 				j--;
@@ -256,26 +256,26 @@ const NSUInteger defaultCapacity = 29;
 			
 			x[j+1] = tempItem;
 		}
-		
+
 		//sorted now check all children 
 		if ([children_ count] > 0)
 		{
 			//first sort all children recursively based on zOrder
 			[children_ makeObjectsPerformSelector:@selector(sortAllChildren)];
 			
-			int index=0;
+			NSInteger index=0;
 			
 			//fast dispatch, give every child a new atlasIndex based on their relative zOrder (keep parent -> child relations intact)
 			// and at the same time reorder descedants and the quads to the right index
 			CCARRAY_FOREACH(children_, child)
-				[self updateAtlasIndex:child currentIndex:&index];			
+				[self updateAtlasIndex:child currentIndex:&index];
 		}
 		
 		isReorderChildDirty_=NO;	
 	}
 }
 
--(void) updateAtlasIndex:(CCSprite*) sprite currentIndex:(int*) curIndex
+-(void) updateAtlasIndex:(CCSprite*) sprite currentIndex:(NSInteger*) curIndex
 {
 	CCArray *array = [sprite children];
 	NSUInteger count = [array count];
@@ -283,10 +283,11 @@ const NSUInteger defaultCapacity = 29;
 	
 	if( count == 0 )
 	{	
-		oldIndex=sprite.atlasIndex;
-		sprite.atlasIndex=*curIndex;
-		sprite.mutatedIndex=0;
-		if (oldIndex!=*curIndex) [self swap:oldIndex withNewIndex:*curIndex];
+		oldIndex = sprite.atlasIndex;
+		sprite.atlasIndex = *curIndex;
+		sprite.orderOfArrival = 0;
+		if (oldIndex != *curIndex)
+			[self swap:oldIndex withNewIndex:*curIndex];
 		(*curIndex)++;
 	}
 	else
@@ -294,14 +295,16 @@ const NSUInteger defaultCapacity = 29;
 		BOOL needNewIndex=YES;
 		
 		if (((CCSprite*) (array->data->arr[0])).zOrder >= 0) 
-		{//all children are in front of the parent
-			oldIndex=sprite.atlasIndex;
-			sprite.atlasIndex=*curIndex;
-			sprite.mutatedIndex=0;
-			if (oldIndex!=*curIndex) [self swap:oldIndex withNewIndex:*curIndex];
+		{	
+			//all children are in front of the parent
+			oldIndex = sprite.atlasIndex;
+			sprite.atlasIndex = *curIndex;
+			sprite.orderOfArrival = 0;
+			if (oldIndex != *curIndex)
+				[self swap:oldIndex withNewIndex:*curIndex];
 			(*curIndex)++;
 			
-			needNewIndex=NO;
+			needNewIndex = NO;
 		}
 		
 		CCSprite* child;
@@ -309,12 +312,13 @@ const NSUInteger defaultCapacity = 29;
 		{
 			if (needNewIndex && child.zOrder >= 0) 
 			{
-				oldIndex=sprite.atlasIndex;
-				sprite.atlasIndex=*curIndex;
-				sprite.mutatedIndex=0;
-				if (oldIndex!=*curIndex) [self swap:oldIndex withNewIndex:*curIndex];
+				oldIndex = sprite.atlasIndex;
+				sprite.atlasIndex = *curIndex;
+				sprite.orderOfArrival = 0;
+				if (oldIndex != *curIndex)
+					[self swap:oldIndex withNewIndex:*curIndex];
 				(*curIndex)++;
-				needNewIndex=NO;
+				needNewIndex = NO;
 				
 			}
 
@@ -324,21 +328,22 @@ const NSUInteger defaultCapacity = 29;
 		if (needNewIndex) 
 		{
 			//all children have a zOrder < 0)
-			oldIndex=sprite.atlasIndex;
-			sprite.atlasIndex=*curIndex;
-			sprite.mutatedIndex=0;
-			if (oldIndex!=*curIndex) [self swap:oldIndex withNewIndex:*curIndex];
+			oldIndex = sprite.atlasIndex;
+			sprite.atlasIndex = *curIndex;
+			sprite.orderOfArrival = 0;
+			if (oldIndex != *curIndex)
+				[self swap:oldIndex withNewIndex:*curIndex];
 			(*curIndex)++;
 		}
 	}
 }
 
-- (void) swap:(int) oldIndex withNewIndex:(int) newIndex
+- (void) swap:(NSInteger) oldIndex withNewIndex:(NSInteger) newIndex
 {
-	id* x=descendants_->data->arr;
-	ccV3F_C4B_T2F_Quad* quads=textureAtlas_.quads;
+	id* x = descendants_->data->arr;
+	ccV3F_C4B_T2F_Quad* quads = textureAtlas_.quads;
 	
-	id tempItem=x[oldIndex];
+	id tempItem = x[oldIndex];
 	ccV3F_C4B_T2F_Quad tempItemQuad=quads[oldIndex];
 	
 	//update the index of other swapped item

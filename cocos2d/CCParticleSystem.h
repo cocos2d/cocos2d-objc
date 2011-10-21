@@ -99,7 +99,7 @@ typedef struct sCCParticle {
 
 	ccTime		timeToLive;
 	
-	uint		atlasIndex;
+	NSUInteger	atlasIndex;
 
 	union {
 		// Mode A: gravity, direction, radial accel, tangential accel
@@ -405,7 +405,7 @@ typedef void (*CC_UPDATE_PARTICLE_IMP)(id, SEL, tCCParticle*, CGPoint);
 /** weak reference to the CCSpriteBatchNode that renders the CCSprite */
 @property (nonatomic,readwrite,assign) CCParticleBatchNode *batchNode;
 
-@property (nonatomic,readwrite) uint atlasIndex;
+@property (nonatomic,readwrite) NSUInteger atlasIndex;
 
 /** creates an initializes a CCParticleSystem from a plist file.
  This plist files can be creted manually or with Particle Designer:

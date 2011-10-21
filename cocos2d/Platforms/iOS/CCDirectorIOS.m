@@ -116,8 +116,6 @@ CGFloat	__ccContentScaleFactor = 1;
 	/* calculate "global" dt */
 	[self calculateDeltaTime];
 	
-	[self resetMutatedChildren];
-	
 	/* tick before glClear: issue #533 */
 	if( ! isPaused_ )
 		[[CCScheduler sharedScheduler] tick: dt];	

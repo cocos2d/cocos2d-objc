@@ -571,7 +571,7 @@
 
 			} else {
 				// life < 0
-				uint currentIndex = p->atlasIndex;
+				NSInteger currentIndex = p->atlasIndex;
 				
 				if( particleIdx != particleCount-1 )
 					particles[particleIdx] = particles[particleCount-1];

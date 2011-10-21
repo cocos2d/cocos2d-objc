@@ -246,7 +246,7 @@
 	dirty_ = YES;
 }
 
--(void) insertQuads:(ccV3F_C4B_T2F_Quad*)quads atIndex:(NSUInteger)index amount:(uint) amount
+-(void) insertQuads:(ccV3F_C4B_T2F_Quad*)quads atIndex:(NSUInteger)index amount:(NSUInteger) amount
 {
 	NSAssert(index + amount <= capacity_, @"insertQuadWithTexture: Invalid index + amount");
 	
@@ -264,9 +264,9 @@
 	
 	
 	
-	uint max = index + amount;
-	int j = 0;
-	for (int i = index; i < max ; i++)
+	NSUInteger max = index + amount;
+	NSUInteger j = 0;
+	for (NSUInteger i = index; i < max ; i++)
 	{
 		quads_[index] = quads[j];
 		index++;
@@ -345,15 +345,16 @@
 	dirty_ = YES;
 }
 
--(void) removeQuadsAtIndex:(NSUInteger) index amount:(uint) amount
+-(void) removeQuadsAtIndex:(NSUInteger) index amount:(NSUInteger) amount
 {
 	NSAssert(index + amount <= totalQuads_, @"removeQuadAtIndex: index + amount out of bounds");	
 
-	if (index + amount > totalQuads_) amount = totalQuads_ - index; 
+	if (index + amount > totalQuads_)
+		amount = totalQuads_ - index; 
 	
 	NSUInteger remaining = (totalQuads_) - (index + amount);
 
-	totalQuads_-= amount;
+	totalQuads_ -= amount;
 	
 	// last object doesn't need to be moved
 	if ( remaining )
@@ -411,18 +412,18 @@
 
 #pragma mark TextureAtlas - CCParticleBatchNode Specific
 
--(void) fillWithEmptyQuadsFromIndex:(uint) index amount:(uint) amount
+-(void) fillWithEmptyQuadsFromIndex:(NSUInteger) index amount:(NSUInteger) amount
 {
 	ccV3F_C4B_T2F_Quad *quad = calloc(1,sizeof(ccV3F_C4B_T2F_Quad)); 
 	
-	uint to = index + amount;
-	for (int i = index ; i < to ; i++)
+	NSUInteger to = index + amount;
+	for (NSInteger i = index ; i < to ; i++)
 	{
 		quads_[i] = *quad; 	
 	}
 	
 }
--(void) increaseTotalQuadsWith:(uint) amount
+-(void) increaseTotalQuadsWith:(NSUInteger) amount
 {
 	totalQuads_ += amount; 	
 }
