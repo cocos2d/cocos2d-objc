@@ -105,7 +105,7 @@
  this method doesn't enlarge the array when amount + index > totalQuads
  @since v1.1
 */
--(void) insertQuads:(ccV3F_C4B_T2F_Quad*)quads atIndex:(NSUInteger)index amount:(uint) amount;
+-(void) insertQuads:(ccV3F_C4B_T2F_Quad*)quads atIndex:(NSUInteger)index amount:(NSUInteger) amount;
 
 /** Removes the quad that is located at a certain index and inserts it at a new index
  This operation is faster than removing and inserting in a quad in 2 different steps
@@ -127,7 +127,7 @@
 /** removes a amount of quads starting from index 
 	@since 1.1
  */
-- (void) removeQuadsAtIndex:(NSUInteger) index amount:(uint) amount;
+- (void) removeQuadsAtIndex:(NSUInteger) index amount:(NSUInteger) amount;
 
 /** removes all Quads.
  The TextureAtlas capacity remains untouched. No memory is freed.
@@ -148,7 +148,7 @@
  don't use this unless you know what you're doing
  @since 1.1
 */
-- (void) increaseTotalQuadsWith:(uint) amount;
+- (void) increaseTotalQuadsWith:(NSUInteger) amount;
 
 /** 
  Moves quads from index till totalQuads to the newIndex
@@ -163,7 +163,7 @@
  Used internally by CCParticleBatchNode
  @since 1.1
 */
-- (void) fillWithEmptyQuadsFromIndex:(uint) index amount:(uint) amount;
+- (void) fillWithEmptyQuadsFromIndex:(NSUInteger) index amount:(NSUInteger) amount;
 
 /** draws n quads
  * n can't be greater than the capacity of the Atlas

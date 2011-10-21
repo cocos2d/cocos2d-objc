@@ -61,7 +61,7 @@
 	
 	@private
 	
-	void (*updateAtlasIndexMethod_)(id, SEL,CCSprite*,int*);
+	void (*updateAtlasIndexMethod_)(id, SEL,CCSprite*,NSInteger*);
 	
 }
 

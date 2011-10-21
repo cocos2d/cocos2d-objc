@@ -610,7 +610,7 @@
 
 			} else {
 				// life < 0
-				uint currentIndex = p->atlasIndex;
+				NSUInteger currentIndex = p->atlasIndex;
 				
 				if( particleIdx != particleCount-1 )
 					particles[particleIdx] = particles[particleCount-1];
@@ -863,7 +863,7 @@
 	useBatchNode_ = YES;
 	
 	//each particle needs a unique index
-	for (int i = 0; i < totalParticles; i++)
+	for (NSUInteger i = 0; i < totalParticles; i++)
 	{
 		particles[i].atlasIndex=i;	
 	}
