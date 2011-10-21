@@ -36,6 +36,8 @@
 
 /* Begin PBXBuildFile section */
 		A064312713C1418200CC5554 /* libkazmath.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A06430E713C1414300CC5554 /* libkazmath.a */; };
+		A0AAB80B1451BD3600850F2C /* CCParticleBatchNode.h in Headers */ = {isa = PBXBuildFile; fileRef = A0AAB8091451BD3600850F2C /* CCParticleBatchNode.h */; };
+		A0AAB80C1451BD3600850F2C /* CCParticleBatchNode.m in Sources */ = {isa = PBXBuildFile; fileRef = A0AAB80A1451BD3600850F2C /* CCParticleBatchNode.m */; };
 		A0B532B913C141FF0072EDA4 /* aabb.h in Headers */ = {isa = PBXBuildFile; fileRef = A0B5329A13C141FF0072EDA4 /* aabb.h */; };
 		A0B532BA13C141FF0072EDA4 /* mat4stack.h in Headers */ = {isa = PBXBuildFile; fileRef = A0B5329C13C141FF0072EDA4 /* mat4stack.h */; };
 		A0B532BB13C141FF0072EDA4 /* matrix.h in Headers */ = {isa = PBXBuildFile; fileRef = A0B5329D13C141FF0072EDA4 /* matrix.h */; };
@@ -3719,6 +3721,8 @@
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		A06430E713C1414300CC5554 /* libkazmath.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libkazmath.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		A0AAB8091451BD3600850F2C /* CCParticleBatchNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCParticleBatchNode.h; sourceTree = "<group>"; };
+		A0AAB80A1451BD3600850F2C /* CCParticleBatchNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCParticleBatchNode.m; sourceTree = "<group>"; };
 		A0B5329A13C141FF0072EDA4 /* aabb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aabb.h; sourceTree = "<group>"; };
 		A0B5329C13C141FF0072EDA4 /* mat4stack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mat4stack.h; sourceTree = "<group>"; };
 		A0B5329D13C141FF0072EDA4 /* matrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = matrix.h; sourceTree = "<group>"; };
@@ -4903,6 +4907,8 @@
 		E076E7741225EC9D00DE0DA2 /* Particle Nodes */ = {
 			isa = PBXGroup;
 			children = (
+				A0AAB8091451BD3600850F2C /* CCParticleBatchNode.h */,
+				A0AAB80A1451BD3600850F2C /* CCParticleBatchNode.m */,
 				E076E6671225EC7400DE0DA2 /* CCParticleExamples.h */,
 				E076E6681225EC7400DE0DA2 /* CCParticleExamples.m */,
 				E076E6691225EC7400DE0DA2 /* CCParticleSystem.h */,
@@ -5451,6 +5457,7 @@
 				E04C31211357138100F65F71 /* CCShaderCache.h in Headers */,
 				E04C31231357138100F65F71 /* GLProgram.h in Headers */,
 				A0BE62FC140552BD00DAA336 /* CCVertex.h in Headers */,
+				A0AAB80B1451BD3600850F2C /* CCParticleBatchNode.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9142,6 +9149,7 @@
 				E04C31221357138100F65F71 /* CCShaderCache.m in Sources */,
 				E04C31241357138100F65F71 /* GLProgram.m in Sources */,
 				A0BE62FD140552BD00DAA336 /* CCVertex.m in Sources */,
+				A0AAB80C1451BD3600850F2C /* CCParticleBatchNode.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

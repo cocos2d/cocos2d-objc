@@ -17,8 +17,6 @@
 static int sceneIdx=-1;
 static NSString *transitions[] = {
 	
-	@"NodeSort",
-
 	@"Sprite1",
 	@"SpriteBatchNode1",
 	@"SpriteFrameTest",

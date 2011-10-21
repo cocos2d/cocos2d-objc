@@ -34,7 +34,7 @@
 
 //don't use lazy sorting for particle systems
 @interface CCNode (extension) 
--(void) setZOrder:(uint) z; 
+-(void) setZOrder:(NSUInteger) z; 
 @end
 
 /** CCParticleBatchNode is like a batch node: if it contains children, it will draw them in 1 single OpenGL call
@@ -110,7 +110,7 @@
 -(void) removeChildFromAtlas:(CCParticleSystem*) pSystem cleanup:(BOOL) doCleanUp;
 
 /** disables a particle by inserting a 0'd quad into the texture atlas */
--(void) disableParticle:(uint) particleIndex;
+-(void) disableParticle:(NSUInteger) particleIndex;
 
 /** switch between multiplied and premultiplied blending modes */ 
 -(void) switchBlendingBetweenMultipliedAndPreMultiplied;

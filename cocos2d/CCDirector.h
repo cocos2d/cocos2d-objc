@@ -298,10 +298,5 @@ and when to execute the Scenes.
 // helper
 /** creates the FPS label */
 -(void) createFPSLabel;
-
-//used for sorting children array
--(int) getMutatedIndex;
--(void) resetMutatedChildren;
-
 @end
 

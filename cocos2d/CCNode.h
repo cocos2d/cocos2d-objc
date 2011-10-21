@@ -155,8 +155,8 @@ enum {
 	// Is running
 	BOOL isRunning_:1;
 	
-	//used to preserve sequence while sorting children with the same zOrder
-	int mutatedIndex_;
+	// used to preserve sequence while sorting children with the same zOrder
+	NSUInteger orderOfArrival_;
 
 	// To reduce memory, place BOOLs that are not properties here:
 	BOOL isTransformDirty_:1;
@@ -255,7 +255,7 @@ enum {
 @property(nonatomic,readwrite,retain) GLProgram *shaderProgram;
 
 /** used internally for zOrder sorting, don't change this manually */
-@property(nonatomic,readwrite) int mutatedIndex;
+@property(nonatomic,readwrite) NSUInteger orderOfArrival;
 
 // initializators
 /** allocates and initializes a node.

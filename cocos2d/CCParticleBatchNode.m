@@ -53,7 +53,7 @@
 
 //need to set z-order manualy, because fast reordering of childs would be complexer / slower
 @implementation CCNode (extension)
--(void) setZOrder:(uint) z
+-(void) setZOrder:(NSUInteger) z
 {
 	zOrder_ = z; 	
 }
@@ -237,13 +237,15 @@
 	NSAssert( child.texture.name == textureAtlas_.texture.name, @"CCParticleSystem is not using the same texture id");
 	
 	//no lazy sorting, so don't call super addChild, call helper instead
-	uint pos = [self addChildHelper:child z:z tag:aTag];
+	NSUInteger pos = [self addChildHelper:child z:z tag:aTag];
 	
 	//get new atlasIndex
-	uint atlasIndex;
+	NSUInteger atlasIndex;
 	
-	if (pos != 0) atlasIndex = [[children_ objectAtIndex:pos-1] atlasIndex]+[[children_ objectAtIndex:pos-1] totalParticles];
-	else atlasIndex = 0;
+	if (pos != 0)
+		atlasIndex = [[children_ objectAtIndex:pos-1] atlasIndex] + [[children_ objectAtIndex:pos-1] totalParticles];
+	else
+		atlasIndex = 0;
 	
 	[child setBatchNode:self];
 	
@@ -254,7 +256,7 @@
 //XXX research whether lazy sorting + freeing current quads and calloc a new block with size of capacity would be faster
 //XXX or possibly using vertexZ for reordering, that would be fastest
 //this helper is almost equivalent to CCNode's addChild, but doesn't make use of the lazy sorting
--(uint) addChildHelper: (CCNode*) child z:(NSInteger)z tag:(NSInteger) aTag
+-(NSUInteger) addChildHelper: (CCNode*) child z:(NSInteger)z tag:(NSInteger) aTag
 {	
 	NSAssert( child != nil, @"Argument must be non-nil");
 	NSAssert( child.parent == nil, @"child already added. It can't be added again");
@@ -263,7 +265,7 @@
 		children_ = [[CCArray alloc] initWithCapacity:4];
 			
 	//don't use a lazy insert
-	uint pos = [self searchNewPositionInChildrenForZ:z];
+	NSUInteger pos = [self searchNewPositionInChildrenForZ:z];
 	
 	[children_ insertObject:child atIndex:pos];
 	
@@ -295,21 +297,24 @@
 		reorderDirty_ = YES;
 		[child retain]; 
 		
-		uint oldPos = [children_ indexOfObject:child]; 
+		NSUInteger oldPos = [children_ indexOfObject:child]; 
 
 		//only remove the child, not the scheduled update 
 		[children_ removeObject:child]; 
 		
-		uint pos = [self searchNewPositionInChildrenForZ:z]; 
+		NSUInteger pos = [self searchNewPositionInChildrenForZ:z]; 
 		
 		if (pos != oldPos)
 		{
-			uint newIndex;
-			if (pos == [children_ count]) newIndex = textureAtlas_.totalQuads;
-			else newIndex = [[children_ objectAtIndex:MIN([children_ count]-1,pos)] atlasIndex];
+			NSUInteger newIndex;
+			if (pos == [children_ count])
+				newIndex = textureAtlas_.totalQuads;
+			else
+				newIndex = [[children_ objectAtIndex:MIN([children_ count]-1,pos)] atlasIndex];
 			
 			//to correctly move the quads, the new index needs to be the left border of where the quads will be placed
-			if (z > child.zOrder) newIndex -= child.totalParticles;
+			if (z > child.zOrder)
+				newIndex -= child.totalParticles;
 			
 			 //move quads in textureAtlas
 			[self moveSystem:child toNewIndex:newIndex]; 
@@ -325,8 +330,8 @@
 					 
 -(NSUInteger) searchNewPositionInChildrenForZ: (NSInteger) z
 {
-	int i = 0;
-	uint count = [children_ count];
+	NSInteger i = 0;
+	NSUInteger count = [children_ count];
 	CCNode* child;
 	
 	while (i < count) 
@@ -413,7 +418,7 @@
 }
 
 //sets a 0'd quad into the quads array
--(void) disableParticle:(uint) particleIndex
+-(void) disableParticle:(NSUInteger)particleIndex
 {
 	ccV3F_C4B_T2F_Quad* quad = &((textureAtlas_.quads)[particleIndex]);
 	quad->br.vertices.x = quad->br.vertices.y = quad->tr.vertices.x = quad->tr.vertices.y = quad->tl.vertices.x = quad->tl.vertices.y = quad->bl.vertices.x = quad->bl.vertices.y = 0.0f;		

@@ -531,15 +531,5 @@ static CCDirector *_sharedDirector = nil;
 	[FPSLabel_ setPosition: CC_DIRECTOR_FPS_POSITION];
 }
 
--(int) getMutatedIndex
-{
-	return ++mutatedChildren_;	
-}
-
-- (void) resetMutatedChildren
-{
-	mutatedChildren_=0;	
-}
-
 @end
 
