@@ -46,8 +46,8 @@ static SEL selSortMethod =NULL;
 
 @interface CCSpriteBatchNode (private)
 -(void) updateBlendFunc;
--(void) updateAtlasIndex:(CCSprite*) sprite currentIndex:(int*) curIndex;
--(void) swap:(int) oldIndex withNewIndex:(int) newIndex;
+-(void) updateAtlasIndex:(CCSprite*) sprite currentIndex:(NSInteger*) curIndex;
+-(void) swap:(NSInteger) oldIndex withNewIndex:(NSInteger) newIndex;
 
 @end
 
@@ -263,20 +263,17 @@ static SEL selSortMethod =NULL;
 			//first sort all children recursively based on zOrder
 			CCARRAY_FOREACH(children_, child) child->sortMethod(child,selSortMethod);
 			
-			int *index=malloc(sizeof(int));
-			*index=0;
+			NSInteger index=0;
 			
 			//fast dispatch, give every child a new atlasIndex based on their relative zOrder (keep parent -> child relations intact) and at the same time reorder descedants and the quads to the right index
-			CCARRAY_FOREACH(children_, child) updateAtlasIndexMethod_(self,selUpdateAtlasIndex,child,index);
-			
-			free(index);
+			CCARRAY_FOREACH(children_, child) updateAtlasIndexMethod_(self,selUpdateAtlasIndex,child,&index);
 		}
 		
 		isReorderChildDirty_=NO;	
 	}
 }
 
--(void) updateAtlasIndex:(CCSprite*) sprite currentIndex:(int*) curIndex
+-(void) updateAtlasIndex:(CCSprite*) sprite currentIndex:(NSInteger*) curIndex
 {
 	CCArray *array = [sprite children];
 	NSUInteger count = [array count];
@@ -287,7 +284,8 @@ static SEL selSortMethod =NULL;
 		oldIndex=sprite.atlasIndex;
 		sprite.atlasIndex=*curIndex;
 		sprite.mutatedIndex=0;
-		if (oldIndex!=*curIndex) [self swap:oldIndex withNewIndex:*curIndex];
+		if (oldIndex!=*curIndex)
+			[self swap:oldIndex withNewIndex:*curIndex];
 		(*curIndex)++;
 	}
 	else
@@ -299,7 +297,8 @@ static SEL selSortMethod =NULL;
 			oldIndex=sprite.atlasIndex;
 			sprite.atlasIndex=*curIndex;
 			sprite.mutatedIndex=0;
-			if (oldIndex!=*curIndex) [self swap:oldIndex withNewIndex:*curIndex];
+			if (oldIndex!=*curIndex)
+				[self swap:oldIndex withNewIndex:*curIndex];
 			(*curIndex)++;
 			
 			needNewIndex=NO;
@@ -313,7 +312,8 @@ static SEL selSortMethod =NULL;
 				oldIndex=sprite.atlasIndex;
 				sprite.atlasIndex=*curIndex;
 				sprite.mutatedIndex=0;
-				if (oldIndex!=*curIndex) [self swap:oldIndex withNewIndex:*curIndex];
+				if (oldIndex!=*curIndex)
+					[self swap:oldIndex withNewIndex:*curIndex];
 				(*curIndex)++;
 				needNewIndex=NO;
 				
@@ -327,13 +327,14 @@ static SEL selSortMethod =NULL;
 			oldIndex=sprite.atlasIndex;
 			sprite.atlasIndex=*curIndex;
 			sprite.mutatedIndex=0;
-			if (oldIndex!=*curIndex) [self swap:oldIndex withNewIndex:*curIndex];
+			if (oldIndex!=*curIndex)
+				[self swap:oldIndex withNewIndex:*curIndex];
 			(*curIndex)++;
 		}
 	}
 }
 
-- (void) swap:(int) oldIndex withNewIndex:(int) newIndex
+- (void) swap:(NSInteger) oldIndex withNewIndex:(NSInteger) newIndex
 {
 	id* x=descendants_->data->arr;
 	ccV3F_C4B_T2F_Quad* quads=textureAtlas_.quads;
