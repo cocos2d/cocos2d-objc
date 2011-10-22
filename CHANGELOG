@@ -10,6 +10,7 @@ version 1.1 - 11-Oct-2011
 . [NEW] Scheduler: Added support for delay and repeat (issue #630)
 . [NEW] Textures: Added support for RGB888 textures (issue #958)
 . [NEW] TileMap: TMX map supports flipped tiles (issue #1233)
+. [FIX] TileMap: don't use new sorting for tilemap (issue #1262)
 . [FIX] Actions: removed #undef CLAMP (issue #1210)
 . [FIX] Actions: Repeat & RepeatForEver work as expected(issue #1247)
 . [FIX] Actions: duration is not divided by zero (issue #615)
