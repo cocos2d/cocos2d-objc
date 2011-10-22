@@ -213,7 +213,7 @@
 #endif
 }
 
--(void) insertQuads:(ccV3F_C4B_T2F_Quad*)quads atIndex:(NSUInteger)index amount:(uint) amount
+-(void) insertQuads:(ccV3F_C4B_T2F_Quad*)quads atIndex:(NSUInteger)index amount:(NSUInteger) amount
 {
 	NSAssert(index + amount <= capacity_, @"insertQuadWithTexture: Invalid index + amount");
 	
@@ -231,9 +231,9 @@
 	
 	
 	
-	uint max = index + amount;
-	int j = 0;
-	for (int i = index; i < max ; i++)
+	NSUInteger max = index + amount;
+	NSInteger j = 0;
+	for (NSInteger i = index; i < max ; i++)
 	{
 		quads_[index] = quads[j];
 		index++;
@@ -320,11 +320,12 @@
 #endif
 }
 
--(void) removeQuadsAtIndex:(NSUInteger) index amount:(uint) amount
+-(void) removeQuadsAtIndex:(NSUInteger) index amount:(NSUInteger) amount
 {
 	NSAssert(index + amount <= totalQuads_, @"removeQuadAtIndex: index + amount out of bounds");	
 
-	if (index + amount > totalQuads_) amount = totalQuads_ - index; 
+	if (index + amount > totalQuads_)
+		amount = totalQuads_ - index; 
 	
 	NSUInteger remaining = (totalQuads_) - (index + amount);
 
@@ -334,9 +335,9 @@
 	if ( remaining )
 		memmove( &quads_[index],&quads_[index+amount], sizeof(quads_[0]) * remaining );
 
-	#if CC_USES_VBO
-		dirty_ = YES;
-	#endif
+#if CC_USES_VBO
+	dirty_ = YES;
+#endif
 }
 
 -(void) removeAllQuads
@@ -389,18 +390,18 @@
 
 #pragma mark TextureAtlas - CCParticleBatchNode Specific
 
--(void) fillWithEmptyQuadsFromIndex:(uint) index amount:(uint) amount
+-(void) fillWithEmptyQuadsFromIndex:(NSUInteger) index amount:(NSUInteger) amount
 {
 	ccV3F_C4B_T2F_Quad *quad = calloc(1,sizeof(ccV3F_C4B_T2F_Quad)); 
 	
-	uint to = index + amount;
-	for (int i = index ; i < to ; i++)
+	NSUInteger to = index + amount;
+	for (NSInteger i = index ; i < to ; i++)
 	{
 		quads_[i] = *quad; 	
 	}
 	
 }
--(void) increaseTotalQuadsWith:(uint) amount
+-(void) increaseTotalQuadsWith:(NSUInteger) amount
 {
 	totalQuads_ += amount; 	
 }

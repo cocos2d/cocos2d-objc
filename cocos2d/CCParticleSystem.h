@@ -103,7 +103,7 @@ typedef struct sCCParticle {
 
 	ccTime		timeToLive;
 	
-	uint		atlasIndex;
+	NSUInteger	atlasIndex;
 
 	union {
 		// Mode A: gravity, direction, radial accel, tangential accel
@@ -298,7 +298,7 @@ typedef void (*CC_UPDATE_PARTICLE_IMP)(id, SEL, tCCParticle*, CGPoint);
 	CCParticleBatchNode *batchNode_; 
 	BOOL useBatchNode_; 
 	//index of system in batch node array
-	uint atlasIndex_; 
+	NSUInteger atlasIndex_; 
 	//YES if scaled or rotated
 	BOOL transformSystemDirty_;
 	
@@ -410,7 +410,7 @@ typedef void (*CC_UPDATE_PARTICLE_IMP)(id, SEL, tCCParticle*, CGPoint);
  */
 @property (nonatomic,readwrite) NSInteger emitterMode;
 
-@property (nonatomic,readwrite) uint atlasIndex;
+@property (nonatomic,readwrite) NSUInteger atlasIndex;
 
 @property (nonatomic,readonly) BOOL useBatchNode; 
 
