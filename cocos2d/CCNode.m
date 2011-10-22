@@ -50,6 +50,9 @@
 #define RENDER_IN_SUBPIXEL (NSInteger)
 #endif
 
+// XXX: Yes, nodes might have a sort problem once per year
+static NSUInteger globalOrderOfArrival = 0;
+
 @interface CCNode ()
 // lazy allocs
 -(void) childrenAlloc;
@@ -71,7 +74,7 @@
 @synthesize vertexZ = vertexZ_;
 @synthesize isRunning = isRunning_;
 @synthesize userData = userData_;
-@synthesize mutatedIndex = mutatedIndex_;
+@synthesize orderOfArrival = orderOfArrival;
 
 #pragma mark CCNode - Transform related properties
 
@@ -303,7 +306,7 @@
 		//initialize parent to nil
 		parent_ = nil;
 		
-		mutatedIndex_=0;
+		orderOfArrival_=0;
 	}
 	
 	return self;
@@ -399,8 +402,8 @@
 	
 	[child setParent: self];
 	
-	//CCDirector.sharedDirector->getMutatedIndex
-	[child setMutatedIndex:[[CCDirector sharedDirector] getMutatedIndex]];
+	//CCDirector.sharedDirector->getorderOfArrival
+	[child setOrderOfArrival: globalOrderOfArrival++];
 	
 	if( isRunning_ ) {
 		[child onEnter];
@@ -512,7 +515,7 @@
 	NSAssert( child != nil, @"Child must be non-nil");
 	
 	isReorderChildDirty_=YES;
-	[child setMutatedIndex:[[CCDirector sharedDirector] getMutatedIndex]];
+	[child setOrderOfArrival: globalOrderOfArrival++];
 	[child _setZOrder:z];
 }
 
@@ -520,9 +523,9 @@
 {
 	if (isReorderChildDirty_) 
 	{	
-		int i,j,length=children_->data->num;
-		id* x=children_->data->arr;
-		id tempItem;
+		NSInteger i,j,length=children_->data->num;
+		CCNode ** x=children_->data->arr;
+		CCNode *tempItem;
 		
 		//insertion sort
 		for(i=1; i<length; i++)
@@ -530,8 +533,8 @@
 			tempItem = x[i];
 			j = i-1;
 			
-			//continue moving element downwards while zOrder is smaller or when zOrder is the same but mutatedIndex is smaller
-			while(j>=0 && ( ((CCNode*) tempItem).zOrder<((CCNode*)x[j]).zOrder || ( ((CCNode*) tempItem).zOrder== ((CCNode*)x[j]).zOrder &&  ((CCNode*) tempItem).mutatedIndex < ((CCNode*)x[j]).mutatedIndex ) ) ) 
+			//continue moving element downwards while zOrder is smaller or when zOrder is the same but orderOfArrival is smaller
+			while(j>=0 && ( tempItem.zOrder< x[j].zOrder || ( tempItem.zOrder == x[j].zOrder && tempItem.orderOfArrival < x[j].orderOfArrival ) ) )
 			{
 				x[j+1] = x[j];
 				j = j-1;
@@ -595,7 +598,7 @@
 	} else
 		[self draw];
 	
-	mutatedIndex_=0;
+	orderOfArrival_=0;
 	
 	if ( grid_ && grid_.active)
 		[grid_ afterDraw:self];

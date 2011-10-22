@@ -190,7 +190,7 @@
 		CC_SWAP( top, bottom);
 		
 		ccV3F_C4B_T2F_Quad *quadCollection; 
-		uint start, end; 
+		NSUInteger start, end; 
 		if (useBatchNode_)
 		{
 			quadCollection = [[batchNode_ textureAtlas] quads]; 
@@ -204,7 +204,7 @@
 			end = totalParticles; 
 		}
 
-		for(int i=start; i<end; i++) {
+		for(NSInteger i=start; i<end; i++) {
 			// bottom-left vertex:
 			quadCollection[i].bl.texCoords.u = left;
 			quadCollection[i].bl.texCoords.v = bottom;
