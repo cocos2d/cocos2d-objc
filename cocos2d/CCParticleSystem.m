@@ -597,8 +597,8 @@
 				//don't update the particle with the new position information, it will interfere with the radius and tangential calculations
 				if (useBatchNode_)
 				{
-						newPos.x+=position_.x; 
-						newPos.y+=position_.y;
+						newPos.x += positionInPixels_.x; 
+						newPos.y += positionInPixels_.y;
 				}
 				
 				p->z = vertexZ_;
