@@ -3,9 +3,9 @@
 attribute vec4 a_position;
 attribute vec2 a_texCoord;
 
-uniform		mat4 u_MVPMatrix;
+uniform	mat4 u_MVPMatrix;
 
-varying vec2 v_texCoord;
+varying lowp vec2 v_texCoord;
 
 void main()
 {

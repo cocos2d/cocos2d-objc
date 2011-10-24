@@ -3,9 +3,9 @@
 attribute vec4 a_position;
 attribute vec4 a_color;
 
-uniform		mat4 u_MVPMatrix;
+uniform	mat4 u_MVPMatrix;
 
-varying vec4 v_fragmentColor;
+varying lowp vec4 v_fragmentColor;
 
 void main()
 {

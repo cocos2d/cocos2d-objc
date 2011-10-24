@@ -6,8 +6,8 @@ attribute vec4 a_color;
 
 uniform		mat4 u_MVPMatrix;
 
-varying vec4 v_fragmentColor;
-varying vec2 v_texCoord;
+varying lowp vec4 v_fragmentColor;
+varying lowp vec2 v_texCoord;
 
 void main()
 {

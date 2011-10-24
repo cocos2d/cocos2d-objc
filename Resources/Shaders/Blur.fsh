@@ -1,7 +1,7 @@
 // Shader taken from: http://webglsamples.googlecode.com/hg/electricflower/electricflower.html
 
 #ifdef GL_ES
-precision highp float;
+precision mediump float;
 #endif
 
 varying vec4 v_fragmentColor;
