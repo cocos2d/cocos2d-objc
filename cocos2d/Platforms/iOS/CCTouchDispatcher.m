@@ -297,16 +297,13 @@ NSComparisonResult sortByPriority(id first, id second, void *context)
 	// the add/removes/quit is done after the iterations
 	//
 	locked = NO;
-	if( toRemove ) {
-		toRemove = NO;
-		for( id delegate in handlersToRemove )
-			[self forceRemoveDelegate:delegate];
-		[handlersToRemove removeAllObjects];
-	}
+	
+	//issue 1084, 1139 first add then remove
 	if( toAdd ) {
 		toAdd = NO;
+		Class targetedClass = [CCTargetedTouchHandler class];
+		
 		for( CCTouchHandler *handler in handlersToAdd ) {
-			Class targetedClass = [CCTargetedTouchHandler class];
 			if( [handler isKindOfClass:targetedClass] )
 				[self forceAddHandler:handler array:targetedHandlers];
 			else
@@ -314,7 +311,14 @@ NSComparisonResult sortByPriority(id first, id second, void *context)
 		}
 		[handlersToAdd removeAllObjects];
 	}
-	if( toQuit ) {
+	
+	if( toRemove ) {
+		toRemove = NO;
+		for( id delegate in handlersToRemove )
+			[self forceRemoveDelegate:delegate];
+		[handlersToRemove removeAllObjects];
+	}
+		if( toQuit ) {
 		toQuit = NO;
 		[self forceRemoveAllDelegates];
 	}

@@ -1,5 +1,6 @@
 version 1.1-beta2 xx - 2011
-. [NEW] TileMap: supports in-memory TMX map creation (#issue 1239)
+. [NEW] TileMap: supports in-memory TMX map creation (issue #1239)
+. [FIX] TouchDispatcher: correctly handles addition and removal of handlers when being inside a touch handler (issue #1084, #1139)
 
 version 1.1-beta 11-Oct-2011
 . [NEW] Animation: Added file format. AnimationCache can load animations from file
