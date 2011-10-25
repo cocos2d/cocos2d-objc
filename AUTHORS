@@ -36,6 +36,7 @@ Contributors (alphabetically ordered):
 
 * slycrel (http://geopherlite.blogspot.com/)
 	Added support for flipped tiles in TMX maps. Also added test case
+	Added support for in-memory TMX map creation. Also added a test case
 
 * Stepan Generalov (iPsi) (http://www.itraceur.ru/)
 	FileUtils: Loads -hd resources even if the -sd resource is not present. patch
