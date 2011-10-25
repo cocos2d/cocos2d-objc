@@ -39,9 +39,9 @@ typedef enum {
 	kCCDeviceOrientationPortrait = UIDeviceOrientationPortrait,	
 	/// Device oriented vertically, home button on the top
     kCCDeviceOrientationPortraitUpsideDown = UIDeviceOrientationPortraitUpsideDown,
-	/// Device oriented horizontally, home button on the right
-    kCCDeviceOrientationLandscapeLeft = UIDeviceOrientationLandscapeLeft,
 	/// Device oriented horizontally, home button on the left
+    kCCDeviceOrientationLandscapeLeft = UIDeviceOrientationLandscapeLeft,
+	/// Device oriented horizontally, home button on the right
     kCCDeviceOrientationLandscapeRight = UIDeviceOrientationLandscapeRight,
 	
 	// Backward compatibility stuff
