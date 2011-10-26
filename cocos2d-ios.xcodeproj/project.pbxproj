@@ -1273,7 +1273,6 @@
 		A015BFF113B826D800C73E76 /* vec3.c in Sources */ = {isa = PBXBuildFile; fileRef = A015BFCB13B826D800C73E76 /* vec3.c */; };
 		A015BFF313B826D800C73E76 /* vec4.c in Sources */ = {isa = PBXBuildFile; fileRef = A015BFCC13B826D800C73E76 /* vec4.c */; };
 		A015BFF913B829E100C73E76 /* libkazmath.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A04A1FEB13B826B300ABAFB7 /* libkazmath.a */; };
-		A0600BB713C1FBE100BB6F49 /* Info-FontTest.plist in Resources */ = {isa = PBXBuildFile; fileRef = A0600BB613C1FBE100BB6F49 /* Info-FontTest.plist */; };
 		A0600BF213C2074000BB6F49 /* fps_images-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E087B34E12785BB60076F6FF /* fps_images-hd.png */; };
 		A0600BF313C2074000BB6F49 /* fps_images-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E087B34E12785BB60076F6FF /* fps_images-hd.png */; };
 		A0600BF413C2074100BB6F49 /* fps_images-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E087B34E12785BB60076F6FF /* fps_images-hd.png */; };
@@ -1373,6 +1372,54 @@
 		A08C378F14144FC6004538FD /* neon_matrix_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = A08C378E14144FBB004538FD /* neon_matrix_impl.h */; };
 		A08C379114144FDE004538FD /* neon_matrix_impl.c in Sources */ = {isa = PBXBuildFile; fileRef = A08C379014144FDE004538FD /* neon_matrix_impl.c */; };
 		A08C379214144FDE004538FD /* neon_matrix_impl.c in Sources */ = {isa = PBXBuildFile; fileRef = A08C379014144FDE004538FD /* neon_matrix_impl.c */; };
+		A0ADEF1E1457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0ADEF1D1457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh */; };
+		A0ADEF1F1457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0ADEF1D1457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh */; };
+		A0ADEF201457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0ADEF1D1457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh */; };
+		A0ADEF211457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0ADEF1D1457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh */; };
+		A0ADEF221457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0ADEF1D1457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh */; };
+		A0ADEF231457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0ADEF1D1457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh */; };
+		A0ADEF241457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0ADEF1D1457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh */; };
+		A0ADEF251457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0ADEF1D1457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh */; };
+		A0ADEF261457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0ADEF1D1457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh */; };
+		A0ADEF271457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0ADEF1D1457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh */; };
+		A0ADEF281457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0ADEF1D1457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh */; };
+		A0ADEF291457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0ADEF1D1457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh */; };
+		A0ADEF2A1457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0ADEF1D1457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh */; };
+		A0ADEF2B1457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0ADEF1D1457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh */; };
+		A0ADEF2C1457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0ADEF1D1457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh */; };
+		A0ADEF2D1457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0ADEF1D1457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh */; };
+		A0ADEF2E1457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0ADEF1D1457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh */; };
+		A0ADEF2F1457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0ADEF1D1457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh */; };
+		A0ADEF301457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0ADEF1D1457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh */; };
+		A0ADEF311457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0ADEF1D1457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh */; };
+		A0ADEF321457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0ADEF1D1457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh */; };
+		A0ADEF331457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0ADEF1D1457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh */; };
+		A0ADEF341457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0ADEF1D1457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh */; };
+		A0ADEF351457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0ADEF1D1457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh */; };
+		A0ADEF361457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0ADEF1D1457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh */; };
+		A0ADEF371457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0ADEF1D1457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh */; };
+		A0ADEF381457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0ADEF1D1457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh */; };
+		A0ADEF391457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0ADEF1D1457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh */; };
+		A0ADEF3A1457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0ADEF1D1457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh */; };
+		A0ADEF3B1457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0ADEF1D1457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh */; };
+		A0ADEF3C1457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0ADEF1D1457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh */; };
+		A0ADEF3D1457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0ADEF1D1457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh */; };
+		A0ADEF3E1457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0ADEF1D1457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh */; };
+		A0ADEF3F1457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0ADEF1D1457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh */; };
+		A0ADEF401457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0ADEF1D1457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh */; };
+		A0ADEF411457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0ADEF1D1457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh */; };
+		A0ADEF421457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0ADEF1D1457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh */; };
+		A0ADEF431457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0ADEF1D1457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh */; };
+		A0ADEF441457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0ADEF1D1457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh */; };
+		A0ADEF451457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0ADEF1D1457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh */; };
+		A0ADEF461457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0ADEF1D1457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh */; };
+		A0ADEF471457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0ADEF1D1457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh */; };
+		A0ADEF481457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0ADEF1D1457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh */; };
+		A0ADEF491457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0ADEF1D1457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh */; };
+		A0ADEF4A1457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0ADEF1D1457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh */; };
+		A0ADEF4B1457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0ADEF1D1457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh */; };
+		A0ADEF4C1457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0ADEF1D1457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh */; };
+		A0ADEF4D1457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0ADEF1D1457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh */; };
 		A0B035FB13EA09270073E59A /* only_in_hd-hd.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = A0B035FA13EA09270073E59A /* only_in_hd-hd.pvr.ccz */; };
 		A0B0377313EA1FDB0073E59A /* b1-ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = A0B0376D13EA1FDB0073E59A /* b1-ipad.png */; };
 		A0B0377413EA1FDB0073E59A /* b1-ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = A0B0376D13EA1FDB0073E59A /* b1-ipad.png */; };
@@ -4771,7 +4818,6 @@
 		A015BFCB13B826D800C73E76 /* vec3.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vec3.c; sourceTree = "<group>"; };
 		A015BFCC13B826D800C73E76 /* vec4.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vec4.c; sourceTree = "<group>"; };
 		A04A1FEB13B826B300ABAFB7 /* libkazmath.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libkazmath.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		A0600BB613C1FBE100BB6F49 /* Info-FontTest.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "Info-FontTest.plist"; path = "Resources/Info-FontTest.plist"; sourceTree = "<group>"; };
 		A0600C2513C21D0200BB6F49 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RootViewController.h; path = tests/RootViewController.h; sourceTree = "<group>"; };
 		A0600C2613C21D0200BB6F49 /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RootViewController.m; path = tests/RootViewController.m; sourceTree = "<group>"; };
 		A060106813C2992800BB6F49 /* LICENSE_Kazmath.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE_Kazmath.txt; sourceTree = "<group>"; };
@@ -4821,6 +4867,7 @@
 		A07EC9B2141A8D32008C1F12 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		A08C378E14144FBB004538FD /* neon_matrix_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = neon_matrix_impl.h; sourceTree = "<group>"; };
 		A08C379014144FDE004538FD /* neon_matrix_impl.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = neon_matrix_impl.c; sourceTree = "<group>"; };
+		A0ADEF1D1457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = PositionTextureColorAlphaTest.fsh; sourceTree = "<group>"; };
 		A0B035FA13EA09270073E59A /* only_in_hd-hd.pvr.ccz */ = {isa = PBXFileReference; lastKnownFileType = file; path = "only_in_hd-hd.pvr.ccz"; sourceTree = "<group>"; };
 		A0B0376D13EA1FDB0073E59A /* b1-ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "b1-ipad.png"; sourceTree = "<group>"; };
 		A0B0376E13EA1FDB0073E59A /* b2-ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "b2-ipad.png"; sourceTree = "<group>"; };
@@ -6026,7 +6073,6 @@
 				8EDF3E8D0F6BD8CD00F54643 /* sfx */,
 				50B2CB2B0E10EE4A00AE9530 /* Info.plist */,
 				5050C7560F927156004BE2D8 /* InfoWithStatusBar.plist */,
-				A0600BB613C1FBE100BB6F49 /* Info-FontTest.plist */,
 				E02BB57D126CA73F006E46A2 /* iTunesArtwork */,
 				50B2CB250E10EE4A00AE9530 /* Icon.png */,
 				E02BB57E126CA73F006E46A2 /* Icon@2x.png */,
@@ -7615,6 +7661,7 @@
 				A0EC4A1F1403236C00EC482A /* PositionTextureA8Color.vsh */,
 				A0EC4A201403236C00EC482A /* PositionTextureColor.fsh */,
 				A0EC4A211403236C00EC482A /* PositionTextureColor.vsh */,
+				A0ADEF1D1457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh */,
 				A0EC4A221403236C00EC482A /* Twist.fsh */,
 				A0EC4A231403236C00EC482A /* Twist.vsh */,
 			);
@@ -9136,6 +9183,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0ADEF361457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh in Resources */,
 				05AAF3BB10EE85B300CACA2B /* Default.png in Resources */,
 				05AAF3BC10EE85B300CACA2B /* Icon.png in Resources */,
 				05AAF3BD10EE85B300CACA2B /* grossini.png in Resources */,
@@ -9201,6 +9249,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0ADEF201457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh in Resources */,
 				A0EC4A571403238500EC482A /* Position_uColor.fsh in Resources */,
 				A0EC4A581403238500EC482A /* Position_uColor.vsh in Resources */,
 				A0EC4A591403238500EC482A /* PositionColor.fsh in Resources */,
@@ -9246,6 +9295,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0ADEF3B1457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh in Resources */,
 				495E73FD104B75090012BB52 /* r1.png in Resources */,
 				495E73FE104B75090012BB52 /* r2.png in Resources */,
 				495E73FF104B75090012BB52 /* Default.png in Resources */,
@@ -9296,6 +9346,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0ADEF231457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh in Resources */,
 				5001112F103B7AFB0059EC2E /* b1.png in Resources */,
 				50011130103B7AFB0059EC2E /* b2.png in Resources */,
 				50011131103B7AFB0059EC2E /* f1.png in Resources */,
@@ -9342,6 +9393,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0ADEF431457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh in Resources */,
 				5012DD1C0FE2994300D6DDD1 /* b1.png in Resources */,
 				5012DD1D0FE2994300D6DDD1 /* b2.png in Resources */,
 				5012DD1E0FE2994300D6DDD1 /* f1.png in Resources */,
@@ -9402,6 +9454,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0ADEF3A1457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh in Resources */,
 				3BB5C8EF11410A5300DD65EF /* blocks.png in Resources */,
 				501504D111330E1700A9CA65 /* r1.png in Resources */,
 				501504D211330E1700A9CA65 /* r2.png in Resources */,
@@ -9455,6 +9508,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0ADEF2B1457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh in Resources */,
 				501945590F964C620059CE7C /* b1.png in Resources */,
 				5019455A0F964C620059CE7C /* b2.png in Resources */,
 				5019455B0F964C620059CE7C /* f1.png in Resources */,
@@ -9507,6 +9561,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0ADEF401457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh in Resources */,
 				501C7C710F91EFFF0024A296 /* b1.png in Resources */,
 				501C7C720F91EFFF0024A296 /* b2.png in Resources */,
 				501C7C730F91EFFF0024A296 /* f1.png in Resources */,
@@ -9582,6 +9637,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0ADEF4C1457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh in Resources */,
 				502BF54A11E39CC30030C477 /* Default.png in Resources */,
 				502BF54B11E39CC30030C477 /* Icon.png in Resources */,
 				502BF57B11E39DA20030C477 /* fps_images.png in Resources */,
@@ -9623,6 +9679,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0ADEF3C1457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh in Resources */,
 				50B2CB7E0E10EE4A00AE9530 /* Default.png in Resources */,
 				50B2CB7F0E10EE4A00AE9530 /* Icon.png in Resources */,
 				50B2CB810E10EE4A00AE9530 /* grossini.png in Resources */,
@@ -9671,6 +9728,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0ADEF421457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh in Resources */,
 				503F5C9A101FE930002A37E5 /* b1.png in Resources */,
 				503F5C9B101FE930002A37E5 /* b2.png in Resources */,
 				503F5C9C101FE930002A37E5 /* f1.png in Resources */,
@@ -9726,6 +9784,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0ADEF221457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh in Resources */,
 				504226190FC0B5D500B992F7 /* fire.pvr in Resources */,
 				AAEA834B0FD5704400F08728 /* blocks.png in Resources */,
 				505464381062886600AB7C52 /* fps_images.png in Resources */,
@@ -9774,6 +9833,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0ADEF341457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh in Resources */,
 				504799ED100F6D5900D1C71A /* b1.png in Resources */,
 				504799EE100F6D5900D1C71A /* b2.png in Resources */,
 				504799EF100F6D5900D1C71A /* f1.png in Resources */,
@@ -9828,6 +9888,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0ADEF211457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh in Resources */,
 				504829620F45BBCF00A30CEF /* grossini.png in Resources */,
 				504828EE0F45B71A00A30CEF /* attachDemo.xib in Resources */,
 				505464371062886600AB7C52 /* fps_images.png in Resources */,
@@ -9869,6 +9930,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0ADEF1E1457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh in Resources */,
 				A0EC4A3F1403238300EC482A /* Position_uColor.fsh in Resources */,
 				A0EC4A401403238300EC482A /* Position_uColor.vsh in Resources */,
 				A0EC4A411403238300EC482A /* PositionColor.fsh in Resources */,
@@ -9925,6 +9987,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0ADEF2C1457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh in Resources */,
 				504E18EC11C4C91200E19835 /* MainWindow.xib in Resources */,
 				504E192411C4CE5B00E19835 /* fps_images.png in Resources */,
 				505DEE5311C4DCFC0045B393 /* MainWindow-ipad.xib in Resources */,
@@ -9966,6 +10029,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0ADEF261457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh in Resources */,
 				5052281611B3D7540061670F /* background.caf in Resources */,
 				5052281711B3D7540061670F /* Default.png in Resources */,
 				5052281811B3D7540061670F /* DefaultLandscape.png in Resources */,
@@ -10014,6 +10078,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0ADEF271457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh in Resources */,
 				505228E711B3DC410061670F /* bg.png in Resources */,
 				505228E811B3DC410061670F /* flash.png in Resources */,
 				505228E911B3DC410061670F /* Icon.png in Resources */,
@@ -10075,6 +10140,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0ADEF281457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh in Resources */,
 				505229E111B3E0BC0061670F /* Default.png in Resources */,
 				505229E311B3E0BC0061670F /* Icon.png in Resources */,
 				505229E511B3E0BC0061670F /* bgm.mp3 in Resources */,
@@ -10121,6 +10187,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0ADEF291457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh in Resources */,
 				5052298D11B3DDBE0061670F /* Cyber Advance!.mp3 in Resources */,
 				5052298E11B3DDBE0061670F /* Default.png in Resources */,
 				5052299011B3DDBE0061670F /* head.png in Resources */,
@@ -10164,6 +10231,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0ADEF411457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh in Resources */,
 				50E135D110ADED1A00C9E7FA /* sprite-0-0.png in Resources */,
 				50E135D210ADED1A00C9E7FA /* sprite-0-1.png in Resources */,
 				50E135D310ADED1A00C9E7FA /* sprite-0-2.png in Resources */,
@@ -10302,7 +10370,6 @@
 				E02BB600126CA73F006E46A2 /* Icon-72.png in Resources */,
 				E0BBADE91282E838007DB81E /* test_image_rgba4444.pvr.ccz in Resources */,
 				E0BBADEA1282E838007DB81E /* test_image_rgba4444.pvr.gz in Resources */,
-				A0600BB713C1FBE100BB6F49 /* Info-FontTest.plist in Resources */,
 				A0600C1513C2076200BB6F49 /* fps_images-hd.png in Resources */,
 				A0B035FB13EA09270073E59A /* only_in_hd-hd.pvr.ccz in Resources */,
 				A0B0379713EA1FDD0073E59A /* b1-ipad.png in Resources */,
@@ -10330,6 +10397,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0ADEF2D1457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh in Resources */,
 				505B637C0F2F4210001B4104 /* r1.png in Resources */,
 				505B637D0F2F4210001B4104 /* r2.png in Resources */,
 				505B637E0F2F4210001B4104 /* Default.png in Resources */,
@@ -10385,6 +10453,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0ADEF2A1457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh in Resources */,
 				500AA21F0E77926900872752 /* b1.png in Resources */,
 				500AA2200E77926900872752 /* b2.png in Resources */,
 				500AA2210E77926900872752 /* f1.png in Resources */,
@@ -10446,6 +10515,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0ADEF331457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh in Resources */,
 				506881F80E95761200F943E5 /* b1.png in Resources */,
 				506881F90E95761200F943E5 /* b2.png in Resources */,
 				506881FA0E95761200F943E5 /* f1.png in Resources */,
@@ -10521,6 +10591,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0ADEF251457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh in Resources */,
 				50B2CB730E10EE4A00AE9530 /* Default.png in Resources */,
 				50B2CB740E10EE4A00AE9530 /* Icon.png in Resources */,
 				50B2CB760E10EE4A00AE9530 /* grossini.png in Resources */,
@@ -10566,6 +10637,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0ADEF351457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh in Resources */,
 				50B2CB680E10EE4A00AE9530 /* Default.png in Resources */,
 				50B2CB690E10EE4A00AE9530 /* Icon.png in Resources */,
 				50B2CB6B0E10EE4A00AE9530 /* grossini.png in Resources */,
@@ -10631,6 +10703,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0ADEF3D1457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh in Resources */,
 				50B2CB5D0E10EE4A00AE9530 /* Default.png in Resources */,
 				50B2CB5E0E10EE4A00AE9530 /* Icon.png in Resources */,
 				50B2CB600E10EE4A00AE9530 /* grossini.png in Resources */,
@@ -10680,6 +10753,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0ADEF311457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh in Resources */,
 				5078B51B0E3E43540004233A /* Default.png in Resources */,
 				5078B51C0E3E43540004233A /* Icon.png in Resources */,
 				5078B51E0E3E43540004233A /* grossini.png in Resources */,
@@ -10731,6 +10805,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0ADEF4B1457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh in Resources */,
 				507C0EEC11D609290075E747 /* Default.png in Resources */,
 				507C0EED11D609290075E747 /* Icon.png in Resources */,
 				507C0EEE11D609290075E747 /* grossini.png in Resources */,
@@ -10786,6 +10861,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0ADEF461457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh in Resources */,
 				507FF8D4116D16F600B6FAB2 /* Default.png in Resources */,
 				507FF8D5116D16F600B6FAB2 /* Icon.png in Resources */,
 				507FF8D6116D16F600B6FAB2 /* grossini.png in Resources */,
@@ -10840,6 +10916,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0ADEF3E1457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh in Resources */,
 				508CA7B11193270F003AC397 /* r1.png in Resources */,
 				508CA7B21193270F003AC397 /* r2.png in Resources */,
 				508CA7B31193270F003AC397 /* Default.png in Resources */,
@@ -10905,6 +10982,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0ADEF2E1457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh in Resources */,
 				50A24EE70F378525007CAEB0 /* background.png in Resources */,
 				50A24E1D0F377FA1007CAEB0 /* r1.png in Resources */,
 				50A24E1E0F377FA1007CAEB0 /* r2.png in Resources */,
@@ -10963,6 +11041,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0ADEF371457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh in Resources */,
 				50A7839D0F3AFCE500104C45 /* r1.png in Resources */,
 				50A7839E0F3AFCE500104C45 /* r2.png in Resources */,
 				50A7839F0F3AFCE500104C45 /* Default.png in Resources */,
@@ -11014,6 +11093,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0ADEF241457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh in Resources */,
 				5057B1C80F6E85790019C38F /* grossini_dance_atlas.png in Resources */,
 				50B2CB940E10EE4A00AE9530 /* Default.png in Resources */,
 				50B2CB950E10EE4A00AE9530 /* Icon.png in Resources */,
@@ -11065,6 +11145,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0ADEF381457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh in Resources */,
 				50C195420EE4B57E00829067 /* b1.png in Resources */,
 				50C195430EE4B57E00829067 /* b2.png in Resources */,
 				50C195440EE4B57E00829067 /* f1.png in Resources */,
@@ -11119,6 +11200,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0ADEF441457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh in Resources */,
 				3BB5C8E911410A4000DD65EF /* blocks.png in Resources */,
 				500166030E72E1DB0085673F /* r1.png in Resources */,
 				500166040E72E1DB0085673F /* r2.png in Resources */,
@@ -11181,6 +11263,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0ADEF1F1457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh in Resources */,
 				A0EC4A4B1403238400EC482A /* Position_uColor.fsh in Resources */,
 				A0EC4A4C1403238400EC482A /* Position_uColor.vsh in Resources */,
 				A0EC4A4D1403238400EC482A /* PositionColor.fsh in Resources */,
@@ -11249,6 +11332,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0ADEF4A1457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh in Resources */,
 				50CBA46911CBD6FB007B009D /* Default.png in Resources */,
 				50CBA46A11CBD6FB007B009D /* Icon.png in Resources */,
 				50CBA46B11CBD6FB007B009D /* grossini.png in Resources */,
@@ -11304,6 +11388,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0ADEF2F1457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh in Resources */,
 				50D56FAA0F3FABEC007CD6B9 /* background.png in Resources */,
 				50D56FAB0F3FABEC007CD6B9 /* r1.png in Resources */,
 				50D56FAC0F3FABEC007CD6B9 /* r2.png in Resources */,
@@ -11362,6 +11447,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0ADEF391457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh in Resources */,
 				506046A20E75CEFB0044A29B /* b1.png in Resources */,
 				506046A30E75CEFB0044A29B /* b2.png in Resources */,
 				506046A40E75CEFB0044A29B /* f1.png in Resources */,
@@ -11427,6 +11513,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0ADEF321457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh in Resources */,
 				50E77CF211D4C925009CA2C2 /* b1.png in Resources */,
 				50E77CF311D4C925009CA2C2 /* b2.png in Resources */,
 				50E77CF411D4C925009CA2C2 /* f1.png in Resources */,
@@ -11489,6 +11576,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0ADEF471457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh in Resources */,
 				DA5F0EC50FFE96D400C7C82E /* Default.png in Resources */,
 				DA5F0EC60FFE96D400C7C82E /* Icon.png in Resources */,
 				DA5F0EC70FFE96D400C7C82E /* grossini.png in Resources */,
@@ -11543,6 +11631,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0ADEF301457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh in Resources */,
 				DA90D8A51059A5F90039F26A /* r1.png in Resources */,
 				DA90D8A61059A5F90039F26A /* r2.png in Resources */,
 				DA90D8A71059A5F90039F26A /* b1.png in Resources */,
@@ -11598,6 +11687,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0ADEF491457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh in Resources */,
 				E02BC2AF1270E489006E46A2 /* Default.png in Resources */,
 				E02BC2B01270E489006E46A2 /* Icon.png in Resources */,
 				E02BC2B11270E489006E46A2 /* fps_images.png in Resources */,
@@ -11639,6 +11729,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0ADEF481457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh in Resources */,
 				E037DA211281C7F0003D39D7 /* Default.png in Resources */,
 				E037DA221281C7F0003D39D7 /* Icon.png in Resources */,
 				E037DA231281C7F0003D39D7 /* grossini.png in Resources */,
@@ -11697,6 +11788,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0ADEF3F1457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh in Resources */,
 				E03A4F371355041F00D4B515 /* b1.png in Resources */,
 				E03A4F381355041F00D4B515 /* b2.png in Resources */,
 				E03A4F391355041F00D4B515 /* f1.png in Resources */,
@@ -11773,6 +11865,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0ADEF451457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh in Resources */,
 				E0C5586611FE48E600B9E4CB /* b1.png in Resources */,
 				E0C5586711FE48E600B9E4CB /* b2.png in Resources */,
 				E0C5586811FE48E600B9E4CB /* f1.png in Resources */,
@@ -11831,6 +11924,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0ADEF4D1457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh in Resources */,
 				E0EA5679134B9CA800F212C8 /* Default.png in Resources */,
 				E0EA567A134B9CA800F212C8 /* Icon.png in Resources */,
 				E0EA567B134B9CA800F212C8 /* grossini.png in Resources */,
