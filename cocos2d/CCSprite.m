@@ -526,7 +526,7 @@
 	ccGLUseProgram( shaderProgram_->program_ );
 	ccGLUniformModelViewProjectionMatrix( shaderProgram_ );
 	
-	ccGLBindTexture2D( [texture_ name] );
+	ccGLBindTexture2D( [texture_ name], GL_TEXTURE0 );
 		
 	//
 	// Attributes

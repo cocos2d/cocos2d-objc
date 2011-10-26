@@ -5,7 +5,7 @@ attribute vec2 a_texCoord;
 
 uniform	mat4 u_MVPMatrix;
 
-varying lowp vec2 v_texCoord;
+varying mediump vec2 v_texCoord;
 
 void main()
 {

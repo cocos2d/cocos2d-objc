@@ -489,7 +489,7 @@ const char kCCProgressTextureCoords = 0x4b;
 	ccGLUseProgram( shaderProgram_->program_ );	
 	ccGLUniformModelViewProjectionMatrix( shaderProgram_ );
 
-	ccGLBindTexture2D( sprite_.texture.name );
+	ccGLBindTexture2D( sprite_.texture.name, GL_TEXTURE0 );
 	
     glVertexAttribPointer( kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, sizeof(vertexData_[0]) , &vertexData_[0].vertices);
     glVertexAttribPointer( kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, sizeof(vertexData_[0]), &vertexData_[0].texCoords);
