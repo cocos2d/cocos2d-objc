@@ -41,10 +41,13 @@ enum {
 	kCCiOSVersion_4_0_1 = 0x04000100,
 	kCCiOSVersion_4_1   = 0x04010000,
 	kCCiOSVersion_4_2   = 0x04020000,
+	kCCiOSVersion_4_2_1 = 0x04020100,
 	kCCiOSVersion_4_3   = 0x04030000,
 	kCCiOSVersion_4_3_1 = 0x04030100,
 	kCCiOSVersion_4_3_2 = 0x04030200,
 	kCCiOSVersion_4_3_3 = 0x04030300,
+	kCCiOSVersion_4_3_4 = 0x04030400,
+	kCCiOSVersion_4_3_5 = 0x04030500,
 	kCCiOSVersion_5_0_0 = 0x05000000,
 
 	kCCMacVersion_10_5  = 0x0a050000,
@@ -66,6 +69,7 @@ enum {
 	BOOL			supportsDiscardFramebuffer_;
 	unsigned int	OSVersion_;
 	GLint			maxSamplesAllowed_;
+	GLint			maxTextureUnits_;
 }
 
 /** OpenGL Max texture size. */
@@ -73,6 +77,11 @@ enum {
 
 /** OpenGL Max Modelview Stack Depth. */
 @property (nonatomic, readonly) GLint maxModelviewStackDepth;
+
+/** returns the maximum texture units
+ @since v2.0.0
+ */
+@property (nonatomic, readonly) GLint maxTextureUnits;
 
 /** Whether or not the GPU supports NPOT (Non Power Of Two) textures. 
  OpenGL ES 2.0 already supports NPOT (iOS).
