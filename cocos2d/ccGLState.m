@@ -38,9 +38,10 @@ static BOOL		_vertexAttribColor = NO;
 static BOOL		_vertexAttribTexCoords = NO;
 
 #if CC_ENABLE_GL_STATE_CACHE
+#define kCCMaxActiveTexture 16
 static GLuint	_ccCurrentShaderProgram = -1;
-static GLuint	_ccCurrentBoundTexture = -1;
-static GLenum	_ccCurrentActiveTexture = -1;
+static GLuint	_ccCurrentBoundTexture[kCCMaxActiveTexture] =  {-1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1, };
+static GLenum	_ccCurrentActiveTexture = (GL_TEXTURE0 - GL_TEXTURE0);
 static GLenum	_ccBlendingSource = -1;
 static GLenum	_ccBlendingDest = -1;
 #endif // CC_ENABLE_GL_STATE_CACHE
@@ -53,8 +54,9 @@ void ccGLInvalidateStateCache( void )
 
 #if CC_ENABLE_GL_STATE_CACHE
 	_ccCurrentShaderProgram = -1;
-	_ccCurrentBoundTexture = -1;
-	_ccCurrentActiveTexture = -1;
+	for( NSInteger i=0; i < kCCMaxActiveTexture; i++ )
+		_ccCurrentBoundTexture[i] = -1;
+	_ccCurrentActiveTexture = (GL_TEXTURE0 - GL_TEXTURE0);
 	_ccBlendingSource = -1;
 	_ccBlendingDest = -1;
 	
@@ -97,11 +99,23 @@ void ccGLBlendFunc(GLenum sfactor, GLenum dfactor)
 #endif // CC_ENABLE_GL_STATE_CACHE
 }
 
+GLenum ccGLGetActiveTexture( void )
+{
+#if CC_ENABLE_GL_STATE_CACHE
+	return _ccCurrentActiveTexture + GL_TEXTURE0;
+#else
+	GLenum activeTexture;
+	glGetIntegerv(GL_ACTIVE_TEXTURE, &activeTexture);
+	return activeTexture;
+#endif
+}
+
 void ccGLActiveTexture( GLenum textureEnum )
 {
 #if CC_ENABLE_GL_STATE_CACHE
+	NSCAssert1( (textureEnum - GL_TEXTURE0) < kCCMaxActiveTexture, @"cocos2d ERROR: Increase kCCMaxActiveTexture to %d!", (textureEnum-GL_TEXTURE0) );
 	if( textureEnum != _ccCurrentActiveTexture ) {
-		_ccCurrentActiveTexture = textureEnum;
+		_ccCurrentActiveTexture = (textureEnum - GL_TEXTURE0);
 		glActiveTexture( textureEnum );		
 	} 	
 #else
@@ -112,9 +126,9 @@ void ccGLActiveTexture( GLenum textureEnum )
 void ccGLBindTexture2D( GLuint textureId )
 {
 #if CC_ENABLE_GL_STATE_CACHE
-	if( _ccCurrentBoundTexture != textureId )
+	if( _ccCurrentBoundTexture[ _ccCurrentActiveTexture ] != textureId )
 	{
-		_ccCurrentBoundTexture = textureId;
+		_ccCurrentBoundTexture[ _ccCurrentActiveTexture ] = textureId;
 		glBindTexture(GL_TEXTURE_2D, textureId );
 	}
 #else
@@ -126,8 +140,8 @@ void ccGLBindTexture2D( GLuint textureId )
 void ccGLDeleteTexture( GLuint textureId )
 {
 #if CC_ENABLE_GL_STATE_CACHE
-	if( textureId == _ccCurrentBoundTexture )
-	   _ccCurrentBoundTexture = -1;
+	if( textureId == _ccCurrentBoundTexture[ _ccCurrentActiveTexture ] )
+	   _ccCurrentBoundTexture[ _ccCurrentActiveTexture ] = -1;
 #endif
 	glDeleteTextures(1, &textureId );
 }
