@@ -1,4 +1,5 @@
 version 2.0-beta XX-Nov-2011
+. [NEW] Node / Sprite: faster reorder sprite (from v1.1 branch)
 . [NEW] Shader: Added AlphaTesting shader
 . [FIX] SpriteFrameCache: readded API to create spriteFrames from CCTexture2D
 

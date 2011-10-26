@@ -409,6 +409,8 @@ enum {
 	GLuint	blurLocation;
 	GLuint	subLocation;
 }
+
+-(void) setBlurSize:(CGFloat)f;
 @end
 
 @implementation SpriteBlur
@@ -485,6 +487,15 @@ enum {
 	
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 }
+
+-(void) setBlurSize:(CGFloat)f
+{
+	CGSize s = [texture_ contentSizeInPixels];
+
+	blur_ = ccp(1/s.width, 1/s.height);
+	blur_ = ccpMult(blur_,f);
+}
+
 @end
 
 
@@ -493,7 +504,7 @@ enum {
 {
 	if( (self=[super init] ) ) {
 
-		CCSprite *blurSprite = [SpriteBlur spriteWithFile:@"grossini.png"];
+		blurSprite = [SpriteBlur spriteWithFile:@"grossini.png"];
 		CCSprite *sprite = [CCSprite spriteWithFile:@"grossini.png"];
 		
 		
@@ -502,7 +513,38 @@ enum {
 		[sprite setPosition:ccp(2*s.width/3, s.height/2)];
 		
 		[self addChild:blurSprite];	
-		[self addChild:sprite];	
+		[self addChild:sprite];
+		
+		sliderCtl = [self sliderCtl];
+		
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+		
+		AppController *app = [[UIApplication sharedApplication] delegate];
+		UIViewController *ctl = [app viewController];
+		
+		[ctl.view addSubview: sliderCtl];
+		
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+		MacGLView *view = [[CCDirector sharedDirector] openGLView];
+		
+		if( ! overlayWindow ) {
+			overlayWindow  = [[NSWindow alloc] initWithContentRect:[[view window] frame]
+														 styleMask:NSBorderlessWindowMask
+														   backing:NSBackingStoreBuffered
+															 defer:NO];
+			
+			[overlayWindow setFrame:[[view window] frame] display:NO];
+			
+			[[overlayWindow contentView] addSubview:sliderCtl];
+			[overlayWindow setParentWindow:[view window]];
+			[overlayWindow setOpaque:NO];
+			[overlayWindow makeKeyAndOrderFront:nil];
+			[overlayWindow setBackgroundColor:[NSColor clearColor]];
+			[[overlayWindow contentView] display];
+		}
+		
+		[[view window] addChildWindow:overlayWindow ordered:NSWindowAbove];
+#endif
 	}
 	
 	return self;	
@@ -517,8 +559,54 @@ enum {
 {
 	return @"Blur";
 }
-@end
 
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+- (UISlider *)sliderCtl
+{
+    if (sliderCtl == nil) 
+    {
+        CGRect frame = CGRectMake(12.0f, 12.0f, 120.0f, 7.0f);
+        sliderCtl = [[UISlider alloc] initWithFrame:frame];
+        [sliderCtl addTarget:self action:@selector(sliderAction:) forControlEvents:UIControlEventValueChanged];
+        
+        // in case the parent view draws with a custom color or gradient, use a transparent color
+        sliderCtl.backgroundColor = [UIColor clearColor];
+        
+        sliderCtl.minimumValue = 0.0f;
+        sliderCtl.maximumValue = 3.0f;
+        sliderCtl.continuous = YES;
+        sliderCtl.value = 1.0f;		
+    }
+    return [sliderCtl autorelease];
+}
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+-(NSSlider*) sliderCtl
+{
+	if( sliderCtl == nil )
+	{
+		sliderCtl = [[NSSlider alloc] initWithFrame: NSMakeRect (0, 0, 200, 20)];
+		[sliderCtl setMinValue: 0];
+		[sliderCtl setMaxValue: 3];
+		[sliderCtl setFloatValue: 1];
+		[sliderCtl setAction: @selector (sliderAction:)];
+		[sliderCtl setTarget: self];
+		[sliderCtl setContinuous: YES];
+	}
+	
+	return sliderCtl;
+}
+#endif // Mac
+
+-(void) sliderAction:(id) sender
+{
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+	[blurSprite setBlurSize: sliderCtl.value];
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+	[blurSprite setBlurSize: [sliderCtl floatValue]];
+#endif
+}
+
+@end
 
 // CLASS IMPLEMENTATIONS
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
@@ -527,6 +615,8 @@ enum {
 #pragma mark AppController
 
 @implementation AppController
+
+@synthesize viewController = viewController_;
 
 - (void) applicationDidFinishLaunching:(UIApplication*)application
 {
@@ -609,27 +699,34 @@ enum {
 @end
 
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
-
 @implementation cocos2dmacAppDelegate
 
 @synthesize window=window_, glView=glView_;
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-	CCDirectorMac *director = (CCDirectorMac*) [CCDirector sharedDirector];
+	CGSize winSize = CGSizeMake(640,480);
 	
-	[director setDisplayFPS:YES];
-	
-	[director setOpenGLView:glView_];
-
-//	[director setProjection:kCCDirectorProjection2D];
+	//
+	// CC_DIRECTOR_INIT:
+	// 1. It will create an NSWindow with a given size
+	// 2. It will create a MacGLView and it will associate it with the NSWindow
+	// 3. It will register the MacGLView to the CCDirector
+	//
+	// If you want to create a fullscreen window, you should do it AFTER calling this macro
+	//	
+	CC_DIRECTOR_INIT(winSize);
 	
 	// Enable "moving" mouse event. Default no.
 	[window_ setAcceptsMouseMovedEvents:NO];
 	
 	// EXPERIMENTAL stuff.
 	// 'Effects' don't work correctly when autoscale is turned on.
+	CCDirectorMac *director = (CCDirectorMac*) [CCDirector sharedDirector];
 	[director setResizeMode:kCCDirectorResize_AutoScale];	
+	
+	// Turn on display FPS
+	[director setDisplayFPS:YES];
 	
 	CCScene *scene = [CCScene node];
 	[scene addChild: [nextAction() node]];

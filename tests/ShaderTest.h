@@ -7,6 +7,7 @@
 	UIWindow *window_;
 	UIViewController *viewController_;
 }
+@property (nonatomic, readwrite, retain) UIViewController *viewController;
 @end
 
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
@@ -63,7 +64,23 @@
 }
 @end
 
+@class SpriteBlur;
 @interface ShaderBlur : ShaderTest
 {
+	SpriteBlur *blurSprite;
+
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+	UISlider	*sliderCtl;
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+	NSSlider	*sliderCtl;
+	NSWindow	*overlayWindow;
+#endif
 }
+
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+- (UISlider *)sliderCtl;
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+-(NSSlider*) sliderCtl;
+#endif
+
 @end
