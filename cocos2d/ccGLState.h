@@ -105,6 +105,13 @@ void ccGLEnableVertexAttribs( unsigned int flags );
  @since v2.0.0
  */
 void ccGLActiveTexture(GLenum textureEnum );
+	
+/** Returns the active texture.
+ If CC_ENABLE_GL_STATE_CACHE is disabled, it will call glGetIntegerv(GL_ACTIVE_TEXTURE);
+ @since v2.0.0
+ */
+GLenum ccGLGetActiveTexture( void );
+
 
 /** If the texture is not already bound, it binds it.
  If CC_ENABLE_GL_STATE_CACHE is disabled, it will call glBindTexture() directly.
