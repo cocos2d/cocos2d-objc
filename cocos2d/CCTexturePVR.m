@@ -300,7 +300,7 @@ typedef struct _PVRTexHeader
 		
 		glPixelStorei(GL_UNPACK_ALIGNMENT,1);
 		glGenTextures(1, &name_);
-		ccGLBindTexture2D( name_ );
+		ccGLBindTexture2D( name_, GL_TEXTURE0 );
 
 	}
 

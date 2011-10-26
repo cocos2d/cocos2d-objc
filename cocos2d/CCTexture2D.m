@@ -119,7 +119,7 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 	if((self = [super init])) {
 		glPixelStorei(GL_UNPACK_ALIGNMENT,1);
 		glGenTextures(1, &name_);
-		ccGLBindTexture2D( name_ );
+		ccGLBindTexture2D( name_, GL_TEXTURE0 );
 
 		[self setAntiAliasTexParameters];
 		
@@ -671,7 +671,7 @@ static BOOL PVRHaveAlphaPremultiplied_ = NO;
 	ccGLUseProgram( shaderProgram_->program_ );
 	ccGLUniformModelViewProjectionMatrix( shaderProgram_ );
 
-	ccGLBindTexture2D( name_ );
+	ccGLBindTexture2D( name_, GL_TEXTURE0 );
 
 
 	glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, vertices);
@@ -698,7 +698,7 @@ static BOOL PVRHaveAlphaPremultiplied_ = NO;
 	ccGLUseProgram( shaderProgram_->program_ );
 	ccGLUniformModelViewProjectionMatrix( shaderProgram_ );
 
-	ccGLBindTexture2D( name_ );
+	ccGLBindTexture2D( name_, GL_TEXTURE0 );
 	
 	glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, vertices);
 	glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, 0, coordinates);
@@ -721,7 +721,7 @@ static BOOL PVRHaveAlphaPremultiplied_ = NO;
 -(void) generateMipmap
 {
 	NSAssert( width_ == ccNextPOT(width_) && height_ == ccNextPOT(height_), @"Mimpap texture only works in POT textures");
-	ccGLBindTexture2D( name_ );
+	ccGLBindTexture2D( name_, GL_TEXTURE0 );
 	glGenerateMipmap(GL_TEXTURE_2D);
 }
 
@@ -731,7 +731,7 @@ static BOOL PVRHaveAlphaPremultiplied_ = NO;
 			 (texParams->wrapS == GL_CLAMP_TO_EDGE && texParams->wrapT == GL_CLAMP_TO_EDGE),
 			 @"GL_CLAMP_TO_EDGE should be used in NPOT textures");
 
-	ccGLBindTexture2D( name_ );
+	ccGLBindTexture2D( name_, GL_TEXTURE0 );
 	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, texParams->minFilter );
 	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, texParams->magFilter );
 	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, texParams->wrapS );
