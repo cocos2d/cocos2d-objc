@@ -40,7 +40,7 @@
 #if defined(__has_feature) && __has_feature(objc_arc)
 #define CCARRAY_FOREACH(__array__, __object__)												\
 if (__array__ && __array__->data->num > 0)													\
-for(void *__arr__ = __array__->data->arr, *end = __array__->data->arr + __array__->data->num-1;	\
+for(__unsafe_unretained id *__arr__ = __array__->data->arr, *end = __array__->data->arr + __array__->data->num-1;	\
 	__arr__ <= end && ((__object__ = *__arr__) != nil || true);										\
 	__arr__++)
 #else
