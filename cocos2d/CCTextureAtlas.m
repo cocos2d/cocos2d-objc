@@ -449,7 +449,7 @@
 
 -(void) drawNumberOfQuads: (NSUInteger) n fromIndex: (NSUInteger) start
 {
-	ccGLBindTexture2D( [texture_ name], GL_TEXTURE0 );
+	ccGLBindTexture2D( [texture_ name] );
 
 	// XXX: update is done in draw... perhaps it should be done in a timer
 	if (dirty_) {

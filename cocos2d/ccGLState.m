@@ -57,6 +57,7 @@ void ccGLInvalidateStateCache( void )
 	_ccCurrentActiveTexture = -1;
 	_ccBlendingSource = -1;
 	_ccBlendingDest = -1;
+	
 #endif
 }
 
@@ -96,25 +97,27 @@ void ccGLBlendFunc(GLenum sfactor, GLenum dfactor)
 #endif // CC_ENABLE_GL_STATE_CACHE
 }
 
-void ccGLBindTexture2D( GLuint textureId, GLenum activeTexture )
+void ccGLActiveTexture( GLenum textureEnum )
 {
 #if CC_ENABLE_GL_STATE_CACHE
-	if( activeTexture != _ccCurrentActiveTexture ) {
-		_ccCurrentActiveTexture = activeTexture;
-		glActiveTexture( activeTexture );
+	if( textureEnum != _ccCurrentActiveTexture ) {
+		_ccCurrentActiveTexture = textureEnum;
+		glActiveTexture( textureEnum );		
+	} 	
+#else
+	glActiveTexture( textureEnum );
+#endif
+}
 
-		_ccCurrentBoundTexture = textureId;
-		glBindTexture(GL_TEXTURE_2D, textureId );
-	} 
-	
-	// same active texture
-	else if( _ccCurrentBoundTexture != textureId )
+void ccGLBindTexture2D( GLuint textureId )
+{
+#if CC_ENABLE_GL_STATE_CACHE
+	if( _ccCurrentBoundTexture != textureId )
 	{
 		_ccCurrentBoundTexture = textureId;
 		glBindTexture(GL_TEXTURE_2D, textureId );
 	}
 #else
-	glActiveTexture( activeTexture );
 	glBindTexture(GL_TEXTURE_2D, textureId );
 #endif
 }
