@@ -245,7 +245,7 @@
 	ccGLUseProgram( shaderProgram_->program_ );
 	ccGLUniformModelViewProjectionMatrix( shaderProgram_ );
 	
-	ccGLBindTexture2D( [texture_ name], GL_TEXTURE0 );
+	ccGLBindTexture2D( [texture_ name] );
 
 	glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, vertices_);	
 	glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, 0, texCoords_);

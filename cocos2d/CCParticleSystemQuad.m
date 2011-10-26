@@ -299,7 +299,7 @@
 {	
 	[super draw];
 	
-	ccGLBindTexture2D( [texture_ name], GL_TEXTURE0 );
+	ccGLBindTexture2D( [texture_ name] );
 	ccGLBlendFunc( blendFunc_.src, blendFunc_.dst );	
 	ccGLUseProgram( shaderProgram_->program_ );	
 	ccGLUniformModelViewProjectionMatrix( shaderProgram_ );
