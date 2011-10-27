@@ -312,8 +312,9 @@ enum {
 	float height = -padding;
 	
 	CCMenuItem *item;
-	CCARRAY_FOREACH(children_, item)
+	CCARRAY_FOREACH(children_, item) {
 	    height += item.contentSize.height * item.scaleY + padding;
+    }
 
 	float y = height / 2.0f;
 	

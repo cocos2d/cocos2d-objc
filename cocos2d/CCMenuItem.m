@@ -61,31 +61,32 @@ const uint32_t	kZoomActionTag = 0xc0c05002;
 
 -(id) initWithTarget:(id) rec selector:(SEL) cb
 {
-	if((self=[super init]) ) {
+	if (self=[super init]) {
 	
 		anchorPoint_ = ccp(0.5f, 0.5f);
-		NSMethodSignature * sig = nil;
 		
 		if( rec && cb ) {
-			sig = [rec methodSignatureForSelector:cb];
+			NSMethodSignature *sig = [rec methodSignatureForSelector:cb];
 			
 			invocation_ = nil;
 			invocation_ = [NSInvocation invocationWithMethodSignature:sig];
 			[invocation_ setTarget:rec];
 			[invocation_ setSelector:cb];
 #if NS_BLOCKS_AVAILABLE
-			if ([sig numberOfArguments] == 3) 
+			if ([sig numberOfArguments] == 3) {
+                [invocation_ setArgument:&self atIndex:2];
+            }
+#else 
+            [invocation_ setArgument:&self atIndex:2];
 #endif
-			[invocation_ setArgument:&self atIndex:2];
 			
-			[invocation_ retain];
+            [invocation_ retain];
 		}
 		
 		isEnabled_ = YES;
 		isSelected_ = NO;
 	}
-	
-	return self;
+    return self;
 }
 
 #if NS_BLOCKS_AVAILABLE

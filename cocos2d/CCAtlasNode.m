@@ -59,10 +59,10 @@
 		blendFunc_.src = CC_BLEND_SRC;
 		blendFunc_.dst = CC_BLEND_DST;
 		
-		// double retain to avoid the autorelease pool
-		// also, using: self.textureAtlas supports re-initialization without leaking
-		self.textureAtlas = [[CCTextureAtlas alloc] initWithFile:tile capacity:c];
-		[textureAtlas_ release];
+		// releasing textureAtlas_ before assignment
+        // supports re-initialization without leaking
+        [textureAtlas_ release];
+		textureAtlas_ = [[CCTextureAtlas alloc] initWithFile:tile capacity:c];
 		
 		if( ! textureAtlas_ ) {
 			CCLOG(@"cocos2d: Could not initialize CCAtlasNode. Invalid Texture");
