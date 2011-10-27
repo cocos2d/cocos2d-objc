@@ -681,9 +681,26 @@
 
 -(void) onEnter
 {
-	[children_ makeObjectsPerformSelector:@selector(onEnter)];	
-	[self resumeSchedulerAndActions];
-	
+    if (children_) {
+        CCArray *tempChildren = [[CCArray alloc] initWithArray:children_];
+        [tempChildren makeObjectsPerformSelector:@selector(onEnter)];	
+        
+        while ([children_ count]>[tempChildren count]) {
+            CCArray *innerTempChildren = [[CCArray alloc] initWithArray:children_];
+            CCNode *child;
+            CCARRAY_FOREACH(innerTempChildren, child) {
+                if (![tempChildren containsObject:child]) {
+                    [child onEnter];
+                }
+            }
+            [tempChildren release];
+            tempChildren = innerTempChildren; 
+        }
+        
+        [tempChildren release];
+    }
+    
+    [self resumeSchedulerAndActions];
 	isRunning_ = YES;
 }
 
