@@ -108,8 +108,8 @@
 	GLubyte	colors[50*8];
 	float		creationTime[50];
 	BOOL		finished;
-	uint		end;
-	uint		begin;
+	NSUInteger		end;
+	NSUInteger		begin;
 }
 -(id)init;
 -(void)reset;
