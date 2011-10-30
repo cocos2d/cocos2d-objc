@@ -13,9 +13,9 @@ user_dir=
 usage(){
 cat << EOF
 usage: $0 [options]
- 
+
 Install / update templates for ${COCOS2D_VER}
- 
+
 OPTIONS:
    -f	force overwrite if directories exist
    -h	this help
@@ -46,7 +46,7 @@ if [[ ! $user_dir  && "$(id -u)" != "0" ]]; then
 	echo "Try running it with 'sudo', or with '-u' to install it only you:" 1>&2
 	echo "   sudo $0" 1>&2
 	echo "or:" 1>&2
-	echo "   $0 -u" 1>&2   
+	echo "   $0 -u" 1>&2
 exit 1
 fi
 
@@ -79,7 +79,7 @@ check_dst_dir(){
 			exit 1
 		fi
 	fi
-	
+
 	echo ...creating destination directory: $DST_DIR
 	mkdir -p "$DST_DIR"
 }
@@ -234,7 +234,7 @@ copy_xcode3_file_templates(){
 	else
 		TEMPLATE_DIR="${BASE_TEMPLATE_DIR}/File Templates/${COCOS2D_VER}/"
 	fi
-	
+
 	echo ...copying file templates
 
 	DST_DIR="$TEMPLATE_DIR"
@@ -245,11 +245,11 @@ copy_xcode3_file_templates(){
 		echo ''
 		mkdir -p "$TEMPLATE_DIR"
 	fi
-	
+
 	print_template_banner "Installing Xcode 3 CCNode file templates..."
-	
+
 	copy_files "templates/Xcode3_templates/file-templates/CCNode class" "$DST_DIR"
-	
+
 	echo done!
 }
 
@@ -315,13 +315,13 @@ copy_xcode4_project_templates(){
     # Move File Templates to correct position
 	DST_DIR="$HOME/Library/Developer/Xcode/Templates/File Templates/cocos2d/"
 	OLD_DIR="$HOME/Library/Developer/Xcode/Templates/cocos2d/"
-	
+
 	print_template_banner "Installing Xcode 4 CCNode file templates..."
 
     check_dst_dir
-	
+
 	mv -f "$OLD_DIR""/CCNode class.xctemplate" "$DST_DIR"
-	
+
 	echo done!
 }
 

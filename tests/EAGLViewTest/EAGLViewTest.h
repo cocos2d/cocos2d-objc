@@ -9,7 +9,7 @@
 @interface EAGLViewTestDelegate : NSObject <UIApplicationDelegate>
 {
 	IBOutlet UIWindow				*window_;
-	IBOutlet EAGLView				*glView_;	
+	IBOutlet EAGLView				*glView_;
 }
 
 @property (nonatomic, retain) UIWindow *window;

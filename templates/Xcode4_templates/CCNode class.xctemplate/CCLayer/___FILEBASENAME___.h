@@ -10,7 +10,7 @@
 #import "cocos2d.h"
 
 @interface ___FILEBASENAMEASIDENTIFIER___ : ___VARIABLE_cocos2DSubclass___ {
-    
+
 }
 
 @end

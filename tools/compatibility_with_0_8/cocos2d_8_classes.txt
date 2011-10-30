@@ -125,7 +125,7 @@ ParticleExamples.h:@interface ParticleRain : PointParticleSystem
 ParticleSystem.h:@interface ParticleSystem : CocosNode <CocosNodeTexture>
 PointParticleSystem.h:@interface PointParticleSystem : ParticleSystem
 QuadParticleSystem.h:@interface QuadParticleSystem : ParticleSystem
-RenderTexture.h:@interface RenderTexture : CocosNode 
+RenderTexture.h:@interface RenderTexture : CocosNode
 Ribbon.h:@interface Ribbon : CocosNode <CocosNodeTexture>
 Ribbon.h:@interface RibbonSegment : NSObject
 Scene.h:@interface Scene : CocosNode {
@@ -164,10 +164,10 @@ Transition.h:@interface RotoZoomTransition : TransitionScene
 Transition.h:@interface JumpZoomTransition : TransitionScene
 Transition.h:@interface MoveInLTransition : TransitionScene <TransitionEaseScene>
 Transition.h:@interface MoveInRTransition : MoveInLTransition
-Transition.h:@interface MoveInTTransition : MoveInLTransition 
+Transition.h:@interface MoveInTTransition : MoveInLTransition
 Transition.h:@interface MoveInBTransition : MoveInLTransition
 Transition.h:@interface SlideInLTransition : TransitionScene <TransitionEaseScene>
-Transition.h:@interface SlideInRTransition : SlideInLTransition 
+Transition.h:@interface SlideInRTransition : SlideInLTransition
 Transition.h:@interface SlideInBTransition : SlideInLTransition
 Transition.h:@interface SlideInTTransition : SlideInLTransition
 Transition.h:@interface ShrinkGrowTransition : TransitionScene <TransitionEaseScene>

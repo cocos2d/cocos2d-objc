@@ -30,7 +30,7 @@
 typedef struct {
   vorbis_info_residue0 *info;
   int         map;
-  
+
   int         parts;
   int         stages;
   codebook   *fullbooks;
@@ -177,7 +177,7 @@ vorbis_look_residue *res0_look(vorbis_dsp_state *vd,vorbis_info_mode *vm,
 /* a truncated packet here just means 'stop working'; it's not an error */
 static int _01inverse(vorbis_block *vb,vorbis_look_residue *vl,
 		      ogg_int32_t **in,int ch,
-		      long (*decodepart)(codebook *, ogg_int32_t *, 
+		      long (*decodepart)(codebook *, ogg_int32_t *,
 					 oggpack_buffer *,int,int)){
 
   long i,j,k,l,s;
@@ -195,13 +195,13 @@ static int _01inverse(vorbis_block *vb,vorbis_look_residue *vl,
     int partvals=n/samples_per_partition;
     int partwords=(partvals+partitions_per_word-1)/partitions_per_word;
     int ***partword=(int ***)alloca(ch*sizeof(*partword));
-    
+
     for(j=0;j<ch;j++)
       partword[j]=(int **)_vorbis_block_alloc(vb,partwords*sizeof(*partword[j]));
-    
+
     for(s=0;s<look->stages;s++){
-      
-      /* each loop decodes on partition codeword containing 
+
+      /* each loop decodes on partition codeword containing
 	 partitions_pre_word partitions */
       for(i=0,l=0;i<partvals;l++){
 	if(s==0){
@@ -213,7 +213,7 @@ static int _01inverse(vorbis_block *vb,vorbis_look_residue *vl,
 	    if(partword[j][l]==NULL)goto errout;
 	  }
 	}
-	
+
 	/* now we decode residual values for the partitions */
 	for(k=0;k<partitions_per_word && i<partvals;k++,i++)
 	  for(j=0;j<ch;j++){
@@ -226,7 +226,7 @@ static int _01inverse(vorbis_block *vb,vorbis_look_residue *vl,
 	      }
 	    }
 	  }
-      } 
+      }
     }
   }
  errout:
@@ -273,20 +273,20 @@ int res2_inverse(vorbis_block *vb,vorbis_look_residue *vl,
   int n=end-info->begin;
 
   if(n>0){
-    
+
     int partvals=n/samples_per_partition;
     int partwords=(partvals+partitions_per_word-1)/partitions_per_word;
     int **partword=(int **)_vorbis_block_alloc(vb,partwords*sizeof(*partword));
     int beginoff=info->begin/ch;
-    
+
     for(i=0;i<ch;i++)if(nonzero[i])break;
     if(i==ch)return(0); /* no nonzero vectors */
-    
+
     samples_per_partition/=ch;
-    
+
     for(s=0;s<look->stages;s++){
       for(i=0,l=0;i<partvals;l++){
-	
+
 	if(s==0){
 	  /* fetch the partition word */
 	  int temp=vorbis_book_decode(look->phrasebook,&vb->opb);
@@ -299,7 +299,7 @@ int res2_inverse(vorbis_block *vb,vorbis_look_residue *vl,
 	for(k=0;k<partitions_per_word && i<partvals;k++,i++)
 	  if(info->secondstages[partword[l][k]]&(1<<s)){
 	    codebook *stagebook=look->partbooks[partword[l][k]][s];
-	    
+
 	    if(stagebook){
 	      if(vorbis_book_decodevv_add(stagebook,in,
 					  i*samples_per_partition+beginoff,ch,
@@ -308,7 +308,7 @@ int res2_inverse(vorbis_block *vb,vorbis_look_residue *vl,
 		goto eopbreak;
 	    }
 	  }
-      } 
+      }
     }
   }
  errout:

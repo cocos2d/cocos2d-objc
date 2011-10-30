@@ -62,7 +62,7 @@ public:
 
     void DrawPoint(const b2Vec2& p, float32 size, const b2Color& color);
 
-    void DrawString(int x, int y, const char* string, ...); 
+    void DrawString(int x, int y, const char* string, ...);
 
     void DrawAABB(b2AABB* aabb, const b2Color& color);
 };

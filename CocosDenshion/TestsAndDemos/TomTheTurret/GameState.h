@@ -13,15 +13,15 @@
 @interface GameState : NSObject {
     // Level pointer
     Level *_curLevel;
-    
+
     // Normal levels
     NSMutableArray *_levels;
     int _curLevelIndex;
-    
+
     // Special levels
     Level *_killEnding;
     Level *_suicideEnding;
-    Level *_loseEnding;    
+    Level *_loseEnding;
 }
 
 @property (nonatomic, retain) NSMutableArray *levels;

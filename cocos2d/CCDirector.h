@@ -3,17 +3,17 @@
  *
  * Copyright (c) 2008-2010 Ricardo Quesada
  * Copyright (c) 2011 Zynga Inc.
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -37,16 +37,16 @@
 typedef enum {
 	/// sets a 2D projection (orthogonal projection).
 	kCCDirectorProjection2D,
-	
+
 	/// sets a 3D projection with a fovy=60, znear=0.5f and zfar=1500.
 	kCCDirectorProjection3D,
-	
+
 	/// it calls "updateProjection" on the projection delegate.
 	kCCDirectorProjectionCustom,
-	
+
 	/// Detault projection is 3D projection
 	kCCDirectorProjectionDefault = kCCDirectorProjection3D,
-	
+
 	// backward compatibility stuff
 	CCDirectorProjection2D = kCCDirectorProjection2D,
 	CCDirectorProjection3D = kCCDirectorProjection3D,
@@ -60,17 +60,17 @@ typedef enum {
 
 /**Class that creates and handle the main Window and manages how
 and when to execute the Scenes.
- 
+
  The CCDirector is also resposible for:
   - initializing the OpenGL ES context
   - setting the OpenGL pixel format (default on is RGB565)
   - setting the OpenGL buffer depth (default one is 0-bit)
   - setting the projection (default one is 3D)
   - setting the orientation (default one is Protrait)
- 
+
  Since the CCDirector is a singleton, the standard way to use it is by calling:
   - [[CCDirector sharedDirector] methodName];
- 
+
  The CCDirector also sets the default OpenGL context:
   - GL_TEXTURE_2D is enabled
   - GL_VERTEX_ARRAY is enabled
@@ -83,8 +83,8 @@ and when to execute the Scenes.
 
 	// internal timer
 	NSTimeInterval animationInterval_;
-	NSTimeInterval oldAnimationInterval_;	
-	
+	NSTimeInterval oldAnimationInterval_;
+
 	/* display FPS ? */
 	BOOL displayFPS_;
 
@@ -96,48 +96,48 @@ and when to execute the Scenes.
 #if	CC_DIRECTOR_FAST_FPS
 	CCLabelAtlas *FPSLabel_;
 #endif
-	
+
 	/* is the running scene paused */
 	BOOL isPaused_;
-	
+
 	/* The running scene */
 	CCScene *runningScene_;
-	
+
 	/* This object will be visited after the scene. Useful to hook a notification node */
 	id notificationNode_;
-	
+
 	/* will be the next 'runningScene' in the next frame
 	 nextScene is a weak reference. */
 	CCScene *nextScene_;
-	
+
 	/* If YES, then "old" scene will receive the cleanup message */
 	BOOL	sendCleanupToScene_;
 
 	/* scheduled scenes */
 	NSMutableArray *scenesStack_;
-	
+
 	/* last time the main loop was updated */
 	struct timeval lastUpdate_;
 	/* delta time since last tick to main loop */
 	ccTime dt;
 	/* whether or not the next delta time will be zero */
 	BOOL nextDeltaTimeZero_;
-	
+
 	/* projection used */
 	ccDirectorProjection projection_;
-	
+
 	/* Projection protocol delegate */
 	id<CCProjectionProtocol>	projectionDelegate_;
 
 	/* window size in points */
 	CGSize	winSizeInPoints_;
-	
+
 	/* window size in pixels */
 	CGSize	winSizeInPixels_;
 
 	/* the cocos2d running thread */
 	NSThread	*runningThread_;
-	
+
 	// profiler
 #if CC_ENABLE_PROFILERS
 	ccTime accumDtForProfiler_;
@@ -226,7 +226,7 @@ and when to execute the Scenes.
 
 // Scene Management
 
-/**Enters the Director's main loop with the given Scene. 
+/**Enters the Director's main loop with the given Scene.
  * Call it to run only your FIRST scene.
  * Don't call it if there is already a running scene.
  */
@@ -234,7 +234,7 @@ and when to execute the Scenes.
 
 /**Suspends the execution of the running scene, pushing it on the stack of suspended scenes.
  * The new scene will be executed.
- * Try to avoid big stacks of pushed scenes to reduce memory allocation. 
+ * Try to avoid big stacks of pushed scenes to reduce memory allocation.
  * ONLY call it if there is a running scene.
  */
 - (void) pushScene:(CCScene*) scene;
@@ -291,7 +291,7 @@ and when to execute the Scenes.
  IMPORTANT: The CCSpriteFrameCache won't be purged. If you want to purge it, you have to purge it manually.
  @since v0.99.3
  */
--(void) purgeCachedData; 
+-(void) purgeCachedData;
 
 // OpenGL Helper
 

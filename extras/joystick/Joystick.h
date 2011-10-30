@@ -15,7 +15,7 @@
 
 // virtual joystick class
 //
-// Creates a virtual touch joystick within the bounds passed in. 
+// Creates a virtual touch joystick within the bounds passed in.
 // Default mode is that any press begin in the bounds area becomes
 // the center of the joystick. Call setCenter if you want a static
 // joystick center position instead. Querry getCurrentVelocity
@@ -29,7 +29,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface Joystick : NSObject 
+@interface Joystick : NSObject
 {
   bool staticCenter;
   CGPoint center;

@@ -12,7 +12,7 @@
 	#elif TARGET_OS_MAC
 		#import <ApplicationServices/ApplicationServices.h>
 	#endif
-	
+
 	#if defined(__LP64__) && __LP64__
 		#define CP_USE_DOUBLES 1
 	#else
@@ -61,11 +61,11 @@
 		static union MSVC_EVIL_FLOAT_HACK INFINITY_HACK = {{0x00, 0x00, 0x80, 0x7F}};
 		#define INFINITY (INFINITY_HACK.Value)
 	#endif
-	
+
 	#ifdef __GNUC__
 		#define INFINITY (__builtin_inf())
 	#endif
-	
+
 	#ifndef INFINITY
 		#define INFINITY (1e1000)
 	#endif

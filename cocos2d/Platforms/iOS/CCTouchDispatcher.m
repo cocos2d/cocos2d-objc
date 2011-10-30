@@ -9,10 +9,10 @@
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -59,14 +59,14 @@ static CCTouchDispatcher *sharedDispatcher = nil;
 -(id) init
 {
 	if((self = [super init])) {
-	
+
 		dispatchEvents = YES;
 		targetedHandlers = [[NSMutableArray alloc] initWithCapacity:8];
 		standardHandlers = [[NSMutableArray alloc] initWithCapacity:4];
-		
+
 		handlersToAdd = [[NSMutableArray alloc] initWithCapacity:8];
 		handlersToRemove = [[NSMutableArray alloc] initWithCapacity:8];
-		
+
 		toRemove = NO;
 		toAdd = NO;
 		toQuit = NO;
@@ -76,9 +76,9 @@ static CCTouchDispatcher *sharedDispatcher = nil;
 		handlerHelperData[kCCTouchMoved] = (struct ccTouchHandlerHelperData) {@selector(ccTouchesMoved:withEvent:),@selector(ccTouchMoved:withEvent:),kCCTouchSelectorMovedBit};
 		handlerHelperData[kCCTouchEnded] = (struct ccTouchHandlerHelperData) {@selector(ccTouchesEnded:withEvent:),@selector(ccTouchEnded:withEvent:),kCCTouchSelectorEndedBit};
 		handlerHelperData[kCCTouchCancelled] = (struct ccTouchHandlerHelperData) {@selector(ccTouchesCancelled:withEvent:),@selector(ccTouchCancelled:withEvent:),kCCTouchSelectorCancelledBit};
-		
+
 	}
-	
+
 	return self;
 }
 
@@ -100,14 +100,14 @@ static CCTouchDispatcher *sharedDispatcher = nil;
 -(void) forceAddHandler:(CCTouchHandler*)handler array:(NSMutableArray*)array
 {
 	NSUInteger i = 0;
-	
+
 	for( CCTouchHandler *h in array ) {
 		if( h.priority < handler.priority )
 			i++;
-		
+
 		NSAssert( h.delegate != handler.delegate, @"Delegate already added to touch dispatcher.");
 	}
-	[array insertObject:handler atIndex:i];		
+	[array insertObject:handler atIndex:i];
 }
 
 -(void) addStandardDelegate:(id<CCStandardTouchDelegate>) delegate priority:(int)priority
@@ -137,27 +137,27 @@ static CCTouchDispatcher *sharedDispatcher = nil;
 -(void) forceRemoveDelegate:(id)delegate
 {
 	// XXX: remove it from both handlers ???
-	
+
 	for( CCTouchHandler *handler in targetedHandlers ) {
 		if( handler.delegate == delegate ) {
 			[targetedHandlers removeObject:handler];
 			break;
 		}
 	}
-	
+
 	for( CCTouchHandler *handler in standardHandlers ) {
 		if( handler.delegate == delegate ) {
 			[standardHandlers removeObject:handler];
 			break;
 		}
-	}	
+	}
 }
 
 -(void) removeDelegate:(id) delegate
 {
 	if( delegate == nil )
 		return;
-	
+
 	if( ! locked ) {
 		[self forceRemoveDelegate:delegate];
 	} else {
@@ -190,7 +190,7 @@ static CCTouchDispatcher *sharedDispatcher = nil;
             return handler;
 		}
 	}
-	
+
 	for( CCTouchHandler *handler in standardHandlers ) {
 		if( handler.delegate == delegate ) {
             return handler;
@@ -205,7 +205,7 @@ NSComparisonResult sortByPriority(id first, id second, void *context)
         return NSOrderedAscending;
     else if (((CCTouchHandler*)first).priority > ((CCTouchHandler*)second).priority)
         return NSOrderedDescending;
-    else 
+    else
         return NSOrderedSame;
 }
 
@@ -217,14 +217,14 @@ NSComparisonResult sortByPriority(id first, id second, void *context)
 -(void) setPriority:(int) priority forDelegate:(id) delegate
 {
 	NSAssert(delegate != nil, @"Got nil touch delegate!");
-	
+
 	CCTouchHandler *handler = nil;
     handler = [self findHandler:delegate];
-    
-    NSAssert(handler != nil, @"Delegate not found!");    
-    
+
+    NSAssert(handler != nil, @"Delegate not found!");
+
     handler.priority = priority;
-    
+
     [self rearrangeHandlers:targetedHandlers];
     [self rearrangeHandlers:standardHandlers];
 }
@@ -238,12 +238,12 @@ NSComparisonResult sortByPriority(id first, id second, void *context)
 
 	id mutableTouches;
 	locked = YES;
-	
+
 	// optimization to prevent a mutable copy when it is not necessary
 	unsigned int targetedHandlersCount = [targetedHandlers count];
-	unsigned int standardHandlersCount = [standardHandlers count];	
+	unsigned int standardHandlersCount = [standardHandlers count];
 	BOOL needsMutableSet = (targetedHandlersCount && standardHandlersCount);
-	
+
 	mutableTouches = (needsMutableSet ? [touches mutableCopy] : touches);
 
 	struct ccTouchHandlerHelperData helper = handlerHelperData[idx];
@@ -253,24 +253,24 @@ NSComparisonResult sortByPriority(id first, id second, void *context)
 	if( targetedHandlersCount > 0 ) {
 		for( UITouch *touch in touches ) {
 			for(CCTargetedTouchHandler *handler in targetedHandlers) {
-				
+
 				BOOL claimed = NO;
 				if( idx == kCCTouchBegan ) {
 					claimed = [handler.delegate ccTouchBegan:touch withEvent:event];
 					if( claimed )
 						[handler.claimedTouches addObject:touch];
-				} 
-				
+				}
+
 				// else (moved, ended, cancelled)
 				else if( [handler.claimedTouches containsObject:touch] ) {
 					claimed = YES;
 					if( handler.enabledSelectors & helper.type )
 						[handler.delegate performSelector:helper.touchSel withObject:touch withObject:event];
-					
+
 					if( helper.type & (kCCTouchSelectorCancelledBit | kCCTouchSelectorEndedBit) )
 						[handler.claimedTouches removeObject:touch];
 				}
-					
+
 				if( claimed && handler.swallowsTouches ) {
 					if( needsMutableSet )
 						[mutableTouches removeObject:touch];
@@ -279,7 +279,7 @@ NSComparisonResult sortByPriority(id first, id second, void *context)
 			}
 		}
 	}
-	
+
 	//
 	// process standard handlers 2nd
 	//
@@ -291,18 +291,18 @@ NSComparisonResult sortByPriority(id first, id second, void *context)
 	}
 	if( needsMutableSet )
 		[mutableTouches release];
-	
+
 	//
 	// Optimization. To prevent a [handlers copy] which is expensive
 	// the add/removes/quit is done after the iterations
 	//
 	locked = NO;
-	
+
 	//issue 1084, 1139 first add then remove
 	if( toAdd ) {
 		toAdd = NO;
 		Class targetedClass = [CCTargetedTouchHandler class];
-		
+
 		for( CCTouchHandler *handler in handlersToAdd ) {
 			if( [handler isKindOfClass:targetedClass] )
 				[self forceAddHandler:handler array:targetedHandlers];
@@ -311,7 +311,7 @@ NSComparisonResult sortByPriority(id first, id second, void *context)
 		}
 		[handlersToAdd removeAllObjects];
 	}
-	
+
 	if( toRemove ) {
 		toRemove = NO;
 		for( id delegate in handlersToRemove )
@@ -331,7 +331,7 @@ NSComparisonResult sortByPriority(id first, id second, void *context)
 }
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
-	if( dispatchEvents ) 
+	if( dispatchEvents )
 		[self touches:touches withEvent:event withTouchType:kCCTouchMoved];
 }
 

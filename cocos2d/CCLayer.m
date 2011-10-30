@@ -3,17 +3,17 @@
  *
  * Copyright (c) 2008-2010 Ricardo Quesada
  * Copyright (c) 2011 Zynga Inc.
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -50,7 +50,7 @@
 -(id) init
 {
 	if( (self=[super init]) ) {
-	
+
 		CGSize s = [[CCDirector sharedDirector] winSize];
 		anchorPoint_ = ccp(0.5f, 0.5f);
 		[self setContentSize:s];
@@ -65,7 +65,7 @@
 		isKeyboardEnabled_ = NO;
 #endif
 	}
-	
+
 	return self;
 }
 
@@ -131,7 +131,7 @@
 {
 	if( isMouseEnabled_ != enabled ) {
 		isMouseEnabled_ = enabled;
-		
+
 		if( isRunning_ ) {
 			if( enabled )
 				[[CCEventDispatcher sharedDispatcher] addMouseDelegate:self priority:[self mouseDelegatePriority]];
@@ -155,7 +155,7 @@
 {
 	if( isKeyboardEnabled_ != enabled ) {
 		isKeyboardEnabled_ = enabled;
-		
+
 		if( isRunning_ ) {
 			if( enabled )
 				[[CCEventDispatcher sharedDispatcher] addKeyboardDelegate:self priority:[self keyboardDelegatePriority] ];
@@ -204,7 +204,7 @@
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 	if( isMouseEnabled_ )
 		[[CCEventDispatcher sharedDispatcher] addMouseDelegate:self priority:[self mouseDelegatePriority]];
-	
+
 	if( isKeyboardEnabled_)
 		[[CCEventDispatcher sharedDispatcher] addKeyboardDelegate:self priority:[self keyboardDelegatePriority]];
 
@@ -212,7 +212,7 @@
 		[[CCEventDispatcher sharedDispatcher] addTouchDelegate:self priority:[self touchDelegatePriority]];
 
 #endif
-	
+
 	// then iterate over all the children
 	[super onEnter];
 }
@@ -225,7 +225,7 @@
 	if( isAccelerometerEnabled_ )
 		[[UIAccelerometer sharedAccelerometer] setDelegate:self];
 #endif
-	
+
 	[super onEnterTransitionDidFinish];
 }
 
@@ -235,14 +235,14 @@
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 	if( isTouchEnabled_ )
 		[[CCTouchDispatcher sharedDispatcher] removeDelegate:self];
-	
+
 	if( isAccelerometerEnabled_ )
 		[[UIAccelerometer sharedAccelerometer] setDelegate:nil];
 
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 	if( isMouseEnabled_ )
 		[[CCEventDispatcher sharedDispatcher] removeMouseDelegate:self];
-	
+
 	if( isKeyboardEnabled_ )
 		[[CCEventDispatcher sharedDispatcher] removeKeyboardDelegate:self];
 
@@ -250,7 +250,7 @@
 		[[CCEventDispatcher sharedDispatcher] removeTouchDelegate:self];
 
 #endif
-	
+
 	[super onExit];
 }
 
@@ -296,7 +296,7 @@
 - (id) initWithColor:(ccColor4B)color width:(GLfloat)w  height:(GLfloat) h
 {
 	if( (self=[super init]) ) {
-		
+
 		// default blend function
 		blendFunc_ = (ccBlendFunc) { CC_BLEND_SRC, CC_BLEND_DST };
 
@@ -304,12 +304,12 @@
 		color_.g = color.g;
 		color_.b = color.b;
 		opacity_ = color.a;
-		
+
 		for (NSUInteger i = 0; i<sizeof(squareVertices_) / sizeof( squareVertices_[0]); i++ ) {
 			squareVertices_[i].x = 0.0f;
 			squareVertices_[i].y = 0.0f;
 		}
-				
+
 		[self updateColor];
 		[self setContentSize:CGSizeMake(w, h) ];
 	}
@@ -329,7 +329,7 @@
 	squareVertices_[2].y = size.height * CC_CONTENT_SCALE_FACTOR();
 	squareVertices_[3].x = size.width * CC_CONTENT_SCALE_FACTOR();
 	squareVertices_[3].y = size.height * CC_CONTENT_SCALE_FACTOR();
-	
+
 	[super setContentSize:size];
 }
 
@@ -360,7 +360,7 @@
 }
 
 - (void)draw
-{		
+{
 	[super draw];
 
 	// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
@@ -371,22 +371,22 @@
 
 	glVertexPointer(2, GL_FLOAT, 0, squareVertices_);
 	glColorPointer(4, GL_UNSIGNED_BYTE, 0, squareColors_);
-	
-	
+
+
 	BOOL newBlend = blendFunc_.src != CC_BLEND_SRC || blendFunc_.dst != CC_BLEND_DST;
 	if( newBlend )
 		glBlendFunc( blendFunc_.src, blendFunc_.dst );
-	
+
 	else if( opacity_ != 255 ) {
 		newBlend = YES;
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	}
-	
+
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-	
+
 	if( newBlend )
 		glBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);
-	
+
 	// restore default GL state
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 	glEnable(GL_TEXTURE_2D);
@@ -438,11 +438,11 @@
 	endColor_.r = end.r;
 	endColor_.g = end.g;
 	endColor_.b = end.b;
-	
+
 	endOpacity_		= end.a;
 	startOpacity_	= start.a;
 	vector_ = v;
-	
+
 	start.a	= 255;
 	compressedInterpolation_ = YES;
 
@@ -465,9 +465,9 @@
 		float h2 = 1 / ( fabsf(u.x) + fabsf(u.y) );
 		u = ccpMult(u, h2 * (float)c);
 	}
-	
+
 	float opacityf = (float)opacity_/255.0f;
-	
+
     ccColor4B S = {
 		color_.r,
 		color_.g,
@@ -555,13 +555,13 @@
 #pragma mark MultiplexLayer
 
 @implementation CCLayerMultiplex
-+(id) layerWithLayers: (CCLayer*) layer, ... 
++(id) layerWithLayers: (CCLayer*) layer, ...
 {
 	va_list args;
 	va_start(args,layer);
-	
+
 	id s = [[[self alloc] initWithLayers: layer vaList:args] autorelease];
-	
+
 	va_end(args);
 	return s;
 }
@@ -569,21 +569,21 @@
 -(id) initWithLayers: (CCLayer*) layer vaList:(va_list) params
 {
 	if( (self=[super init]) ) {
-	
+
 		layers_ = [[NSMutableArray arrayWithCapacity:5] retain];
-		
+
 		[layers_ addObject: layer];
-		
+
 		CCLayer *l = va_arg(params,CCLayer*);
 		while( l ) {
 			[layers_ addObject: l];
 			l = va_arg(params,CCLayer*);
 		}
-		
+
 		enabledLayer_ = 0;
 		[self addChild: [layers_ objectAtIndex: enabledLayer_]];
 	}
-	
+
 	return self;
 }
 
@@ -596,25 +596,25 @@
 -(void) switchTo: (unsigned int) n
 {
 	NSAssert( n < [layers_ count], @"Invalid index in MultiplexLayer switchTo message" );
-		
+
 	[self removeChild: [layers_ objectAtIndex:enabledLayer_] cleanup:YES];
-	
+
 	enabledLayer_ = n;
-	
-	[self addChild: [layers_ objectAtIndex:n]];		
+
+	[self addChild: [layers_ objectAtIndex:n]];
 }
 
 -(void) switchToAndReleaseMe: (unsigned int) n
 {
 	NSAssert( n < [layers_ count], @"Invalid index in MultiplexLayer switchTo message" );
-	
+
 	[self removeChild: [layers_ objectAtIndex:enabledLayer_] cleanup:YES];
-	
+
 	[layers_ replaceObjectAtIndex:enabledLayer_ withObject:[NSNull null]];
-	
+
 	enabledLayer_ = n;
-	
-	[self addChild: [layers_ objectAtIndex:n]];		
+
+	[self addChild: [layers_ objectAtIndex:n]];
 }
 @end
 

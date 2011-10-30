@@ -3,17 +3,17 @@
  *
  * Copyright (c) 2008-2010 Ricardo Quesada
  * Copyright (c) 2011 Zynga Inc.
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -57,7 +57,7 @@
 		posToAtlasIndex = [[NSMutableDictionary dictionaryWithCapacity:itemsToRender] retain];
 
 		[self updateAtlasValues];
-		
+
 		[self setContentSize: CGSizeMake(tgaInfo->width*itemWidth_, tgaInfo->height*itemHeight_)];
 	}
 
@@ -78,7 +78,7 @@
 {
 	if( tgaInfo )
 		tgaDestroy(tgaInfo);
-	
+
 	tgaInfo = nil;
 
 	[posToAtlasIndex release];
@@ -110,12 +110,12 @@
 //	NSBundle *mainBndl = [CCDirector sharedDirector].loadingBundle;
 //	NSString *resourcePath = [mainBndl resourcePath];
 //	NSString * path = [resourcePath stringByAppendingPathComponent:file];
-	
+
 	tgaInfo = tgaLoad( [path UTF8String] );
 #if 1
 	if( tgaInfo->status != TGA_OK )
 		[NSException raise:@"TileMapAtlasLoadTGA" format:@"TileMapAtas cannot load TGA file"];
-	
+
 #endif
 }
 
@@ -128,19 +128,19 @@
 	NSAssert( pos.x < tgaInfo->width, @"Invalid position.x");
 	NSAssert( pos.y < tgaInfo->height, @"Invalid position.x");
 	NSAssert( tile.r != 0, @"R component must be non 0");
-	
+
 	ccColor3B *ptr = (ccColor3B*) tgaInfo->imageData;
 	ccColor3B value = ptr[pos.x + pos.y * tgaInfo->width];
 	if( value.r == 0 )
 		CCLOG(@"cocos2d: Value.r must be non 0.");
 	else {
 		ptr[pos.x + pos.y * tgaInfo->width] = tile;
-		
+
 		// XXX: this method consumes a lot of memory
 		// XXX: a tree of something like that shall be impolemented
 		NSNumber *num = [posToAtlasIndex objectForKey: [NSString stringWithFormat:@"%d,%d", pos.x, pos.y]];
 		[self updateAtlasValueAt:pos withValue:tile withIndex: [num integerValue]];
-	}	
+	}
 }
 
 -(ccColor3B) tileAt:(ccGridSize) pos
@@ -148,11 +148,11 @@
 	NSAssert( tgaInfo != nil, @"tgaInfo must not be nil");
 	NSAssert( pos.x < tgaInfo->width, @"Invalid position.x");
 	NSAssert( pos.y < tgaInfo->height, @"Invalid position.y");
-	
+
 	ccColor3B *ptr = (ccColor3B*) tgaInfo->imageData;
 	ccColor3B value = ptr[pos.x + pos.y * tgaInfo->width];
-	
-	return value;	
+
+	return value;
 }
 
 -(void) updateAtlasValueAt:(ccGridSize)pos withValue:(ccColor3B)value withIndex:(NSUInteger)idx
@@ -163,7 +163,7 @@
 	NSInteger y = pos.y;
 	float row = (value.r % itemsPerRow_);
 	float col = (value.r / itemsPerRow_);
-	
+
 	float textureWide = [[textureAtlas_ texture] pixelsWide];
 	float textureHigh = [[textureAtlas_ texture] pixelsHigh];
 
@@ -178,7 +178,7 @@
 	float top		= (col*itemHeight_)/textureHigh;
 	float bottom	= top+itemHeight_/textureHigh;
 #endif
-	
+
 
 	quad.tl.texCoords.u = left;
 	quad.tl.texCoords.v = top;
@@ -201,7 +201,7 @@
 	quad.tr.vertices.x = (int)(x * itemWidth_ + itemWidth_);
 	quad.tr.vertices.y = (int)(y * itemHeight_ + itemHeight_);
 	quad.tr.vertices.z = 0.0f;
-	
+
 	[textureAtlas_ updateQuad:&quad atIndex:idx];
 }
 
@@ -209,7 +209,7 @@
 {
 	NSAssert( tgaInfo != nil, @"tgaInfo must be non-nil");
 
-	
+
 	int total = 0;
 
 	for(int x = 0;x < tgaInfo->width; x++ ) {
@@ -217,10 +217,10 @@
 			if( total < itemsToRender ) {
 				ccColor3B *ptr = (ccColor3B*) tgaInfo->imageData;
 				ccColor3B value = ptr[x + y * tgaInfo->width];
-				
+
 				if( value.r != 0 ) {
 					[self updateAtlasValueAt:ccg(x,y) withValue:value withIndex:total];
-					
+
 					NSString *key = [NSString stringWithFormat:@"%d,%d", x,y];
 					NSNumber *num = [NSNumber numberWithInt:total];
 					[posToAtlasIndex setObject:num forKey:key];

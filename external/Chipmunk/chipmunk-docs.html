@@ -510,7 +510,7 @@ cpShape *cpPolyShapeNew(cpBody *body, int numVerts, cpVect *verts, cpVect offset
 	<p class="expl"><code>body</code> is the body to attach the poly to, <code>verts</code> is an array of <code>cpVect</code>&#8217;s defining a convex hull with a counterclockwise winding, <code>offset</code> is the offset from the body&#8217;s center of gravity in body local coordinates.</p>
 
 
-<strong>Notes:</strong> 
+<strong>Notes:</strong>
 	<ul>
 	<li>You can attach multiple collision shapes to a rigid body. This should allow you to create almost any shape you could possibly need.</li>
 		<li>Shapes attached to the same rigid body will never generate collisions. You don&#8217;t have to worry about overlap when attaching multiple shapes to a rigid body.</li>

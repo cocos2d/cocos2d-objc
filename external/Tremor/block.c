@@ -45,28 +45,28 @@ static int ilog(unsigned int v){
 :.....'''         |_____--- '''......|       | \_______|
 :.................|__________________|_______|__|______|
                   |<------ Sl ------>|      > Sr <     |endW
-                  |beginSl           |endSl  |  |endSr   
+                  |beginSl           |endSl  |  |endSr
                   |beginW            |endlW  |beginSr
 
 
-                      |< lW >|       
+                      |< lW >|
                    <--------------- W ---------------->
                   |   |  ..  ______________            |
                   |   | '  `/        |     ---_        |
-                  |___.'___/`.       |         ---_____| 
+                  |___.'___/`.       |         ---_____|
                   |_______|__|_______|_________________|
                   |      >|Sl|<      |<------ Sr ----->|endW
                   |       |  |endSl  |beginSr          |endSr
-                  |beginW |  |endlW                     
+                  |beginW |  |endlW
                   mult[0] |beginSl                     mult[n]
 
  <-------------- lW ----------------->
-                          |<--W-->|                               
-:            ..............  ___  |   |                    
-:        .'''             |`/   \ |   |                       
-:.....'''                 |/`....\|...|                    
-:.........................|___|___|___|                  
-                          |Sl |Sr |endW    
+                          |<--W-->|
+:            ..............  ___  |   |
+:        .'''             |`/   \ |   |
+:.....'''                 |/`....\|...|
+:.........................|___|___|___|
+                          |Sl |Sr |endW
                           |   |   |endSr
                           |   |beginSr
                           |   |endSl
@@ -85,7 +85,7 @@ int vorbis_block_init(vorbis_dsp_state *v, vorbis_block *vb){
   vb->vd=v;
   vb->localalloc=0;
   vb->localstore=NULL;
-  
+
   return(0);
 }
 
@@ -202,7 +202,7 @@ int vorbis_synthesis_restart(vorbis_dsp_state *v){
 
   v->centerW=ci->blocksizes[1]/2;
   v->pcm_current=v->centerW;
-  
+
   v->pcm_returned=-1;
   v->granulepos=-1;
   v->sequence=-1;
@@ -242,10 +242,10 @@ void vorbis_dsp_clear(vorbis_dsp_state *v){
     }
 
     if(b){
-      if(b->mode)_ogg_free(b->mode);    
+      if(b->mode)_ogg_free(b->mode);
       _ogg_free(b);
     }
-    
+
     memset(v,0,sizeof(*v));
   }
 }
@@ -273,16 +273,16 @@ int vorbis_synthesis_blockin(vorbis_dsp_state *v,vorbis_block *vb){
   }
 
   v->sequence=vb->sequence;
-  
-  if(vb->pcm){  /* no pcm to process if vorbis_synthesis_trackonly 
+
+  if(vb->pcm){  /* no pcm to process if vorbis_synthesis_trackonly
                    was called on block */
     int n=ci->blocksizes[v->W]/2;
     int n0=ci->blocksizes[0]/2;
     int n1=ci->blocksizes[1]/2;
-    
+
     int thisCenter;
     int prevCenter;
-    
+
     if(v->centerW){
       thisCenter=n1;
       prevCenter=0;
@@ -290,13 +290,13 @@ int vorbis_synthesis_blockin(vorbis_dsp_state *v,vorbis_block *vb){
       thisCenter=0;
       prevCenter=n1;
     }
-    
+
     /* v->pcm is now used like a two-stage double buffer.  We don't want
        to have to constantly shift *or* adjust memory usage.  Don't
        accept a new block until the old is shifted out */
-    
+
     /* overlap/add PCM */
-    
+
     for(j=0;j<vi->channels;j++){
       /* the overlap/add section */
       if(v->lW){
@@ -330,7 +330,7 @@ int vorbis_synthesis_blockin(vorbis_dsp_state *v,vorbis_block *vb){
 	    pcm[i]+=p[i];
 	}
       }
-      
+
       /* the copy section */
       {
 	ogg_int32_t *pcm=v->pcm[j]+thisCenter;
@@ -339,12 +339,12 @@ int vorbis_synthesis_blockin(vorbis_dsp_state *v,vorbis_block *vb){
 	  pcm[i]=p[i];
       }
     }
-    
+
     if(v->centerW)
       v->centerW=0;
     else
       v->centerW=n1;
-    
+
     /* deal with initial packet state; we do this using the explicit
        pcm_returned==-1 flag otherwise we're sensitive to first block
        being short or long */
@@ -360,29 +360,29 @@ int vorbis_synthesis_blockin(vorbis_dsp_state *v,vorbis_block *vb){
     }
 
   }
-    
+
   /* track the frame number... This is for convenience, but also
      making sure our last packet doesn't end with added padding.  If
      the last packet is partial, the number of samples we'll have to
      return will be past the vb->granulepos.
-     
+
      This is not foolproof!  It will be confused if we begin
      decoding at the last page after a seek or hole.  In that case,
      we don't have a starting point to judge where the last frame
      is.  For this reason, vorbisfile will always try to make sure
      it reads the last two marked pages in proper sequence */
-  
+
   if(b->sample_count==-1){
     b->sample_count=0;
   }else{
     b->sample_count+=ci->blocksizes[v->lW]/4+ci->blocksizes[v->W]/4;
   }
-    
+
   if(v->granulepos==-1){
     if(vb->granulepos!=-1){ /* only set if we have a position to set to */
-      
+
       v->granulepos=vb->granulepos;
-      
+
       /* is this a short page? */
       if(b->sample_count>v->granulepos){
 	/* corner case; if this is both the first and last audio page,
@@ -393,7 +393,7 @@ int vorbis_synthesis_blockin(vorbis_dsp_state *v,vorbis_block *vb){
 	     have to in a short single-page stream) */
 	  /* granulepos could be -1 due to a seek, but that would result
 	     in a long coun`t, not short count */
-	  
+
 	  v->pcm_current-=(b->sample_count-v->granulepos);
 	}else{
 	  /* trim the beginning */
@@ -401,17 +401,17 @@ int vorbis_synthesis_blockin(vorbis_dsp_state *v,vorbis_block *vb){
 	  if(v->pcm_returned>v->pcm_current)
 	    v->pcm_returned=v->pcm_current;
 	}
-	
+
       }
-      
+
     }
   }else{
     v->granulepos+=ci->blocksizes[v->lW]/4+ci->blocksizes[v->W]/4;
     if(vb->granulepos!=-1 && v->granulepos!=vb->granulepos){
-      
+
       if(v->granulepos>vb->granulepos){
 	long extra=v->granulepos-vb->granulepos;
-	
+
 	if(extra)
 	  if(vb->eofflag){
 	    /* partial last frame.  Strip the extra samples off */
@@ -423,9 +423,9 @@ int vorbis_synthesis_blockin(vorbis_dsp_state *v,vorbis_block *vb){
       v->granulepos=vb->granulepos;
     }
   }
-  
+
   /* Update, cleanup */
-  
+
   if(vb->eofflag)v->eofflag=1;
   return(0);
 }

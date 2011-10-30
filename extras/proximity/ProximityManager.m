@@ -88,13 +88,13 @@
   uint off = gridSize * 1024;
   uint index = (int)((x + off) / gridSize) << 11 | (int)((y + off) / gridSize); // max of +/- 2^10 rows and columns
   uint cells = 1 + (range / gridSize);
-  
+
   // check cache
   NSString* tmp = [NSString stringWithFormat:@"%i_%i", index, cells];
   NSMutableArray* r = [cachedPositions objectForKey:tmp];
   if (r)
     return r;
-  
+
   // ok, no luck with the cache, do a search
   r = [[[NSMutableArray alloc] init] autorelease];
   for (int xi = (index-cells); xi <= (index+cells); ++xi)
@@ -102,7 +102,7 @@
     for (int yi = 0; yi <= (2 * cells); ++yi)
     {
       NSNumber* num = [NSNumber numberWithInt:((yi - cells)*2048)+xi];
-      if ([positions objectForKey:num]) 
+      if ([positions objectForKey:num])
       {
         [r addObjectsFromArray:[positions objectForKey:num]];
       }

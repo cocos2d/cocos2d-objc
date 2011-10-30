@@ -143,7 +143,7 @@
 {}
 @end
 
-@interface TMXOrthoFromXMLTest : TileDemo 
+@interface TMXOrthoFromXMLTest : TileDemo
 {}
 @end
 

@@ -26,7 +26,7 @@ static PASoundMgr *sharedSoundManager = nil;
 + (PASoundMgr *)sharedSoundManager {
 	@synchronized(self)	{
 		if (!sharedSoundManager){
-			sharedSoundManager = [[PASoundMgr alloc] init];            
+			sharedSoundManager = [[PASoundMgr alloc] init];
         }
 		return sharedSoundManager;
 	}
@@ -61,7 +61,7 @@ static PASoundMgr *sharedSoundManager = nil;
 				if (result) printf("Error setting audio session active! %d\n", (int)result);
 			}
 		}
-		
+
 		// Initialize our OpenAL environment
 		[self initOpenAL];
     }
@@ -71,20 +71,20 @@ static PASoundMgr *sharedSoundManager = nil;
 - (void)initOpenAL {
 	ALCcontext		*newContext = NULL;
 	ALCdevice		*newDevice = NULL;
-	
+
 	// Create a new OpenAL Device
 	// Pass NULL to specify the system’s default output device
 	newDevice = alcOpenDevice(NULL);
 	if (newDevice != NULL) {
 		// Create a new OpenAL Context
-		// The new context will render to the OpenAL Device just created 
+		// The new context will render to the OpenAL Device just created
 		newContext = alcCreateContext(newDevice, 0);
 		if (newContext != NULL) {
 			// Make the new context the Current OpenAL Context
 			alcMakeContextCurrent(newContext);
         }
 	}
-	
+
 	atexit(TeardownOpenAL);
 	alGetError();
     [self initListener];
@@ -144,7 +144,7 @@ static PASoundMgr *sharedSoundManager = nil;
 - (void)dealloc {
     [sounds release];
     [listener release];
-    
+
 	[super dealloc];
 }
 

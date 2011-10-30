@@ -15,7 +15,7 @@
 -(id)initWithRect:(CGRect)rect
 {
   self = [super init];
-	if( self ) 
+	if( self )
 	{
     bounds = CGRectMake(rect.origin.x, rect.origin.y, rect.size.width, rect.size.height);
     center = CGPointMake(0,0);

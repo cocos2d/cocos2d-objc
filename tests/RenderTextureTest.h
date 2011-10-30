@@ -35,7 +35,7 @@
 {
 	CCRenderTexture* target;
 	CCSprite* brush;
-	
+
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 	CGPoint		lastLocation;
@@ -58,7 +58,7 @@
 	CCSprite *sp7;
 	CCSprite *sp8;
 	CCSprite *sp9;
-	
+
 	CCSpriteBatchNode *mgr;
 }
 -(void)renderScreenShot;

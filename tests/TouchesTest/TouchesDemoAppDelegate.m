@@ -22,21 +22,21 @@
 	// 9. Connects the director to the EAGLView
 	//
 	CC_DIRECTOR_INIT();
-	
+
 	// Obtain the shared director in order to...
 	CCDirector *director = [CCDirector sharedDirector];
-	
+
 	// Turn on display FPS
 	[director setDisplayFPS:YES];
-	
+
 	// Set multiple touches on
 	EAGLView *glView = [director openGLView];
-	[glView setMultipleTouchEnabled:YES];	
-	
+	[glView setMultipleTouchEnabled:YES];
+
 	// Enables High Res mode (Retina Display) on iPhone 4 and maintains low res on all other devices
 	if( ! [director enableRetinaDisplay:YES] )
 		CCLOG(@"Retina Display Not supported");
-	
+
 //	[[CCTouchDispatcher sharedDispatcher] link];
 	[director runWithScene:[PongScene node]];
 }

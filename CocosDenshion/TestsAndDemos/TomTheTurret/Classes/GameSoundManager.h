@@ -1,8 +1,8 @@
-#import "SimpleAudioEngine.h" 
+#import "SimpleAudioEngine.h"
 
 typedef enum {
-	kGSUninitialised, 
-	kGSAudioManagerInitialising,  
+	kGSUninitialised,
+	kGSAudioManagerInitialising,
 	kGSAudioManagerInitialised,
 	kGSLoadingSounds,
 	kGSOkay,//only use when in this state

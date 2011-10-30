@@ -20,7 +20,7 @@ EXTRA_PROGRAMS = ivorbisfile_example
 CLEANFILES = $(EXTRA_PROGRAMS) $(lib_LTLIBRARIES)
 
 ivorbisfile_example_SOURCES = ivorbisfile_example.c
-ivorbisfile_example_LDFLAGS = -static 
+ivorbisfile_example_LDFLAGS = -static
 ivorbisfile_example_LDADD = libvorbisidec.la
 
 includedir = $(prefix)/include/tremor
@@ -32,7 +32,7 @@ example:
 	$(MAKE) ivorbisfile_example
 
 debug:
-	$(MAKE) all CFLAGS="@DEBUG@" 
+	$(MAKE) all CFLAGS="@DEBUG@"
 
 profile:
 	$(MAKE) all CFLAGS="@PROFILE@"

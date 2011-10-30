@@ -1,15 +1,15 @@
 /* Copyright (c) 2007 Scott Lembcke
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -18,7 +18,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
- 
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
@@ -80,7 +80,7 @@ update(int ticks)
 {
 	int steps = 1;
 	cpFloat dt = 1.0f/60.0f/(cpFloat)steps;
-	
+
 	for(int i=0; i<steps; i++){
 		cpSpaceStep(space, dt);
 	}
@@ -94,7 +94,7 @@ make_ball(cpFloat x, cpFloat y)
 
 	cpShape *shape = cpCircleShapeNew(body, 0.95f, cpvzero);
 	shape->e = 0.0f; shape->u = 0.0f;
-	
+
 	return shape;
 }
 
@@ -105,23 +105,23 @@ init(void)
 	cpSpaceResizeActiveHash(space, 2.0f, 10000);
 	cpSpaceResizeStaticHash(space, 2.0f, 10000);
 	space->iterations = 1;
-	
+
 	cpBody *body;
 	cpShape *shape;
-	
+
 	for(int y=0; y<image_height; y++){
 		for(int x=0; x<image_width; x++){
 			if(!get_pixel(x, y)) continue;
-			
+
 			cpFloat x_jitter = 0.05f*frand();
 			cpFloat y_jitter = 0.05f*frand();
-			
+
 			shape = make_ball(2*(x - image_width/2 + x_jitter), 2*(image_height/2 - y + y_jitter));
 			cpSpaceAddBody(space, shape->body);
 			cpSpaceAddShape(space, shape);
 		}
 	}
-	
+
 	body = cpSpaceAddBody(space, cpBodyNew(INFINITY, INFINITY));
 	body->p = cpv(-1000.0f, -10.0f);
 	body->v = cpv(400.0f, 0.0f);

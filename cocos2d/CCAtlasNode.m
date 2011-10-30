@@ -3,17 +3,17 @@
  *
  * Copyright (c) 2008-2010 Ricardo Quesada
  * Copyright (c) 2011 Zynga Inc.
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -49,35 +49,35 @@
 -(id) initWithTileFile:(NSString*)tile tileWidth:(NSUInteger)w tileHeight:(NSUInteger)h itemsToRender: (NSUInteger) c
 {
 	if( (self=[super init]) ) {
-	
+
 		itemWidth_ = w * CC_CONTENT_SCALE_FACTOR();
 		itemHeight_ = h * CC_CONTENT_SCALE_FACTOR();
 
 		opacity_ = 255;
 		color_ = colorUnmodified_ = ccWHITE;
 		opacityModifyRGB_ = YES;
-		
+
 		blendFunc_.src = CC_BLEND_SRC;
 		blendFunc_.dst = CC_BLEND_DST;
-		
+
 		// double retain to avoid the autorelease pool
 		// also, using: self.textureAtlas supports re-initialization without leaking
 		self.textureAtlas = [[CCTextureAtlas alloc] initWithFile:tile capacity:c];
 		[textureAtlas_ release];
-		
+
 		if( ! textureAtlas_ ) {
 			CCLOG(@"cocos2d: Could not initialize CCAtlasNode. Invalid Texture");
 			[self release];
 			return nil;
 		}
-		
+
 		[self updateBlendFunc];
 		[self updateOpacityModifyRGB];
-		
+
 		[self calculateMaxItems];
-		
+
 		self.quadsToDraw = c;
-		
+
 	}
 	return self;
 }
@@ -85,7 +85,7 @@
 -(void) dealloc
 {
 	[textureAtlas_ release];
-	
+
 	[super dealloc];
 }
 
@@ -118,12 +118,12 @@
 	BOOL newBlend = blendFunc_.src != CC_BLEND_SRC || blendFunc_.dst != CC_BLEND_DST;
 	if( newBlend )
 		glBlendFunc( blendFunc_.src, blendFunc_.dst );
-		
+
 	[textureAtlas_ drawNumberOfQuads:quadsToDraw_ fromIndex:0];
-		
+
 	if( newBlend )
 		glBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);
-	
+
 	// is this chepear than saving/restoring color state ?
 	// XXX: There is no need to restore the color to (255,255,255,255). Objects should use the color
 	// XXX: that they need
@@ -140,19 +140,19 @@
 {
 	if(opacityModifyRGB_)
 		return colorUnmodified_;
-	
+
 	return color_;
 }
 
 -(void) setColor:(ccColor3B)color3
 {
 	color_ = colorUnmodified_ = color3;
-	
+
 	if( opacityModifyRGB_ ){
 		color_.r = color3.r * opacity_/255;
 		color_.g = color3.g * opacity_/255;
 		color_.b = color3.b * opacity_/255;
-	}	
+	}
 }
 
 -(GLubyte) opacity
@@ -163,10 +163,10 @@
 -(void) setOpacity:(GLubyte) anOpacity
 {
 	opacity_			= anOpacity;
-	
+
 	// special opacity for premultiplied textures
 	if( opacityModifyRGB_ )
-		[self setColor: colorUnmodified_];	
+		[self setColor: colorUnmodified_];
 }
 
 -(void) setOpacityModifyRGB:(BOOL)modify

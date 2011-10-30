@@ -1,3 +1,3 @@
 #!/bin/bash
-gcc ccz.c -lz -o ccz 
+gcc ccz.c -lz -o ccz
 

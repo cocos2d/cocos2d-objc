@@ -26,10 +26,10 @@
     NSString *extension;
     BOOL looped;
     BOOL isPlaying;
-    
+
     ALuint source;
 	ALuint buffer;
-    
+
     float gain;
 }
 
