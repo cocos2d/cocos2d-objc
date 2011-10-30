@@ -44,7 +44,7 @@ Class prevTest()
 {
 	sceneIdx--;
 	if( sceneIdx < 0 )
-		sceneIdx = sizeof(transitions) / sizeof(transitions[0]) -1;	
+		sceneIdx = sizeof(transitions) / sizeof(transitions[0]) -1;
 	NSString *r = transitions[sceneIdx];
 	Class c = NSClassFromString(r);
 	return c;
@@ -63,26 +63,26 @@ Class restartTest()
 -(id) init
 {
 	if( (self=[super init])) {
-	
-		
+
+
 		CGSize s = [[CCDirector sharedDirector] winSize];
-				
+
 		CCLabelTTF *label = [CCLabelTTF labelWithString:[self title] fontName:@"Arial" fontSize:32];
 		[self addChild: label];
 		[label setPosition: ccp(s.width/2, s.height-50)];
-		
+
 		NSString *subtitle = [self subtitle];
 		if( subtitle ) {
 			CCLabelTTF *l = [CCLabelTTF labelWithString:subtitle fontName:@"Thonburi" fontSize:16];
 			[self addChild:l z:1];
 			[l setPosition:ccp(s.width/2, s.height-80)];
 		}
-		
+
 
 		CCMenuItemImage *item1 = [CCMenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
 		CCMenuItemImage *item2 = [CCMenuItemImage itemFromNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
 		CCMenuItemImage *item3 = [CCMenuItemImage itemFromNormalImage:@"f1.png" selectedImage:@"f2.png" target:self selector:@selector(nextCallback:)];
-		
+
 		CCMenu *menu = [CCMenu menuWithItems:item1, item2, item3, nil];
 		menu.position = CGPointZero;
 		item1.position = ccp( s.width/2 - 100,30);
@@ -138,12 +138,12 @@ Class restartTest()
 -(id) init
 {
 	if( (self=[super init]) ) {
-		
+
 		[self schedule:@selector(autoremove:) interval:0.5f];
 		[self schedule:@selector(tick:) interval:0.5f];
 		accum = 0;
 	}
-	
+
 	return self;
 }
 
@@ -155,7 +155,7 @@ Class restartTest()
 -(NSString *) subtitle
 {
 	return @"1 scheduler will be autoremoved in 3 seconds. See console";
-}								 
+}
 
 -(void) tick:(ccTime)dt
 {
@@ -165,7 +165,7 @@ Class restartTest()
 {
 	accum += dt;
 	NSLog(@"Time: %f", accum);
-	
+
 	if( accum > 3 ) {
 		[self unschedule:_cmd];
 		NSLog(@"scheduler removed");
@@ -183,7 +183,7 @@ Class restartTest()
 		[self schedule:@selector(tick2:) interval:1];
 		[self schedule:@selector(pause:) interval:3];
 	}
-	
+
 	return self;
 }
 
@@ -195,7 +195,7 @@ Class restartTest()
 -(NSString *) subtitle
 {
 	return @"Scheduler should be paused after 3 seconds. See console";
-}								 
+}
 
 -(void) tick1:(ccTime)dt
 {
@@ -218,14 +218,14 @@ Class restartTest()
 -(id) init
 {
 	if( (self=[super init]) ) {
-		
+
 		[self schedule:@selector(tick1:) interval:0.5f];
 		[self schedule:@selector(tick2:) interval:1];
 		[self schedule:@selector(tick3:) interval:1.5f];
 		[self schedule:@selector(tick4:) interval:1.5f];
 		[self schedule:@selector(unscheduleAll:) interval:4];
 	}
-	
+
 	return self;
 }
 
@@ -237,7 +237,7 @@ Class restartTest()
 -(NSString *) subtitle
 {
 	return @"All scheduled selectors will be unscheduled in 4 seconds. See console";
-}								 
+}
 
 -(void) tick1:(ccTime)dt
 {
@@ -270,14 +270,14 @@ Class restartTest()
 -(id) init
 {
 	if( (self=[super init]) ) {
-		
+
 		[self schedule:@selector(tick1:) interval:0.5f];
 		[self schedule:@selector(tick2:) interval:1];
 		[self schedule:@selector(tick3:) interval:1.5f];
 		[self schedule:@selector(tick4:) interval:1.5f];
 		[self schedule:@selector(unscheduleAll:) interval:4];
 	}
-	
+
 	return self;
 }
 
@@ -289,7 +289,7 @@ Class restartTest()
 -(NSString *) subtitle
 {
 	return @"Unschedules all selectors after 4s. Uses CCScheduler. See console";
-}								 
+}
 
 -(void) tick1:(ccTime)dt
 {
@@ -323,12 +323,12 @@ Class restartTest()
 -(id) init
 {
 	if( (self=[super init]) ) {
-		
+
 		[self schedule:@selector(tick1:) interval:0.5f];
 		[self schedule:@selector(tick2:) interval:1];
 		[self schedule:@selector(scheduleAndUnschedule:) interval:4];
 	}
-	
+
 	return self;
 }
 
@@ -340,7 +340,7 @@ Class restartTest()
 -(NSString *) subtitle
 {
 	return @"Will unschedule and schedule selectors in 4s. See console";
-}								 
+}
 
 -(void) tick1:(ccTime)dt
 {
@@ -385,13 +385,13 @@ Class restartTest()
 -(id) initWithString:(NSString*)string priority:(int)priority
 {
 	if( (self = [super init] ) ) {
-		
+
 		string_ = [string retain];
-		
+
 		[self scheduleUpdateWithPriority:priority];
-		
+
 	}
-	
+
 	return self;
 }
 
@@ -417,7 +417,7 @@ Class restartTest()
 		TestNode *d = [[TestNode alloc] initWithString:@"---" priority:50];
 		[self addChild:d];
 		[d release];
-		
+
 		TestNode *b = [[TestNode alloc] initWithString:@"3rd" priority:0];
 		[self addChild:b];
 		[b release];
@@ -437,11 +437,11 @@ Class restartTest()
 		TestNode *f = [[TestNode alloc] initWithString:@"2nd" priority:-5];
 		[self addChild:f];
 		[f release];
-		
-		
+
+
 		[self schedule:@selector(removeUpdates:) interval:4];
 	}
-	
+
 	return self;
 }
 
@@ -453,7 +453,7 @@ Class restartTest()
 -(NSString *) subtitle
 {
 	return @"3 scheduled updates. Priority should work. Stops in 4s. See console";
-}								 
+}
 
 -(void) removeUpdates:(ccTime)dt
 {
@@ -468,13 +468,13 @@ Class restartTest()
 -(id) init
 {
 	if( (self=[super init]) ) {
-	
+
 		[self scheduleUpdate];
 		[self schedule:@selector(tick:)];
 		[self schedule:@selector(stopSelectors:) interval:4];
-		
+
 	}
-	
+
 	return self;
 }
 
@@ -486,7 +486,7 @@ Class restartTest()
 -(NSString *) subtitle
 {
 	return @"Update + custom selector at the same time. Stops in 4s. See console";
-}								 
+}
 
 -(void) update:(ccTime)dt
 {
@@ -509,11 +509,11 @@ Class restartTest()
 -(id) init
 {
 	if( (self=[super init]) ) {
-		
+
 		[self schedule:@selector(schedUpdate:) interval:2];
-		
+
 	}
-	
+
 	return self;
 }
 
@@ -525,7 +525,7 @@ Class restartTest()
 -(NSString *) subtitle
 {
 	return @"Update schedules in 2 secs. Stops 2 sec later. See console";
-}								 
+}
 
 -(void) update:(ccTime)dt
 {
@@ -553,13 +553,13 @@ Class restartTest()
 -(id) init
 {
 	if( (self=[super init]) ) {
-		
+
 		interval = 1;
 		ticks = 0;
 		[self schedule:@selector(schedUpdate:) interval:interval];
-		
+
 	}
-	
+
 	return self;
 }
 
@@ -571,7 +571,7 @@ Class restartTest()
 -(NSString *) subtitle
 {
 	return @"Interval is 1 second, then 2, then 3...";
-}								 
+}
 
 
 -(void) schedUpdate:(ccTime)dt
@@ -583,7 +583,7 @@ Class restartTest()
 		[self schedule:_cmd interval:++interval];
 		ticks = 0;
 	}
-		
+
 }
 
 @end
@@ -592,11 +592,11 @@ Class restartTest()
 -(id) init
 {
 	if( (self=[super init]) ) {
-		
+
 		[self schedule:@selector(update:) interval:0 repeat:4 delay:3.f];
 		CCLOG(@"update is scheduled should begin after 3 seconds");
 	}
-	
+
 	return self;
 }
 
@@ -608,7 +608,7 @@ Class restartTest()
 -(NSString *) subtitle
 {
 	return @"After 5 x executed, method unscheduled. See console";
-}								 
+}
 
 -(void) update:(ccTime)dt
 {
@@ -637,35 +637,35 @@ Class restartTest()
 	// 9. Connects the director to the EAGLView
 	//
 	CC_DIRECTOR_INIT();
-	
+
 	// Obtain the shared director in order to...
 	CCDirector *director = [CCDirector sharedDirector];
-	
+
 	// Sets landscape mode
 	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
-	
+
 	// Enables High Res mode (Retina Display) on iPhone 4 and maintains low res on all other devices
 	if( ! [director enableRetinaDisplay:YES] )
 		CCLOG(@"Retina Display Not supported");
-	
+
 	// Turn on display FPS
 	[director setDisplayFPS:YES];
-	
+
 	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
 	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
 	// You can change anytime.
 	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA8888];
-	
+
 	// When in iPad / RetinaDisplay mode, CCFileUtils will append the "-ipad" / "-hd" to all loaded files
 	// If the -ipad  / -hdfile is not found, it will load the non-suffixed version
 	[CCFileUtils setiPadSuffix:@"-ipad"];			// Default on iPad is "" (empty string)
 	[CCFileUtils setRetinaDisplaySuffix:@"-hd"];	// Default on RetinaDisplay is "-hd"
-	
+
 	CCScene *scene = [CCScene node];
 	[scene addChild: [nextTest() node]];
-	
+
 	[director runWithScene: scene];
-		
+
 }
 
 // getting a call, pause the game
@@ -692,7 +692,7 @@ Class restartTest()
 
 // application will be killed
 - (void)applicationWillTerminate:(UIApplication *)application
-{	
+{
 	CC_DIRECTOR_END();
 }
 

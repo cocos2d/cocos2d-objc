@@ -12,7 +12,7 @@
 -(id) init
 {
 	if( (self=[super init])) {
-		
+
 		CGSize s = [[CCDirector sharedDirector] winSize];
 		// sun
 		CCParticleSystem* sun = [CCParticleSun node];
@@ -28,13 +28,13 @@
 		label2 = [CCLabelBMFont labelWithString:@"0" fntFile:@"bitmapFontTest4.fnt"];
 		label3 = [CCLabelBMFont labelWithString:@"0" fntFile:@"bitmapFontTest4.fnt"];
 		label4 = [CCLabelBMFont labelWithString:@"0" fntFile:@"bitmapFontTest4.fnt"];
-		
+
 		[self scheduleUpdate];
 		[self schedule: @selector(step1:)];
 		[self schedule: @selector(step2:) interval:0];
 		[self schedule: @selector(step3:) interval:1.0f];
 		[self schedule: @selector(step4:) interval: 2.0f];
-		
+
 		label0.position = ccp(s.width*1/6,s.height/2);
 		label1.position = ccp(s.width*2/6,s.height/2);
 		label2.position = ccp(s.width*3/6,s.height/2);
@@ -46,13 +46,13 @@
 		[self addChild:label2];
 		[self addChild:label3];
 		[self addChild:label4];
-		
+
 		// Sprite
 		CCSprite *sprite = [CCSprite spriteWithFile:@"grossini.png"];
 		sprite.position = ccp(40,50);
-		
+
 		id jump = [CCJumpBy actionWithDuration:3 position:ccp(s.width-80,0) height:50 jumps:4];
-		
+
 		[self addChild:sprite];
 		[sprite runAction: [CCRepeatForever actionWithAction:
 						[CCSequence actions: jump, [jump reverse], nil]
@@ -66,7 +66,7 @@
 
 		[self addChild: menu];
 	}
-		
+
 	return self;
 }
 
@@ -78,19 +78,19 @@
 -(void) pause: (id) sender
 {
 	[[CCDirector sharedDirector] pause];
-	
+
 	// Dialog
 	UIAlertView* dialog = [[UIAlertView alloc] init];
 	[dialog setDelegate:self];
 	[dialog setTitle:@"Game Paused"];
 	[dialog setMessage:@"Game paused"];
 	[dialog addButtonWithTitle:@"Resume"];
-	[dialog show];	
+	[dialog show];
 	[dialog release];
 }
 
 - (void) alertView:(UIAlertView *)alert clickedButtonAtIndex:(NSInteger)buttonIndex
-{	
+{
 	[[CCDirector sharedDirector] resume];
 }
 
@@ -145,28 +145,28 @@
 	// 9. Connects the director to the EAGLView
 	//
 	CC_DIRECTOR_INIT();
-	
+
 	// Obtain the shared director in order to...
 	CCDirector *director = [CCDirector sharedDirector];
-	
+
 	// run at 30 FPS
 	[director setAnimationInterval:1/30.0f];
-	
+
 	// Sets landscape mode
 	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
-	
+
 	// Enables High Res mode (Retina Display) on iPhone 4 and maintains low res on all other devices
 	if( ! [director enableRetinaDisplay:YES] )
 		CCLOG(@"Retina Display Not supported");
-	
+
 	// When in iPad / RetinaDisplay mode, CCFileUtils will append the "-ipad" / "-hd" to all loaded files
 	// If the -ipad  / -hdfile is not found, it will load the non-suffixed version
 	[CCFileUtils setiPadSuffix:@"-ipad"];			// Default on iPad is "" (empty string)
 	[CCFileUtils setRetinaDisplaySuffix:@"-hd"];	// Default on RetinaDisplay is "-hd"
-	
+
 	// Turn on display FPS
 	[director setDisplayFPS:YES];
-	
+
 	CCScene *scene = [CCScene node];
 
 	[scene addChild: [Layer1 node] z:0];
@@ -198,7 +198,7 @@
 
 // application will be killed
 - (void)applicationWillTerminate:(UIApplication *)application
-{	
+{
 	CC_DIRECTOR_END();
 }
 

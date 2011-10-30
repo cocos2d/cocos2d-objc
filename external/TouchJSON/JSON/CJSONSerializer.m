@@ -58,7 +58,7 @@ static NSData *kTrue = NULL;
     {
     return([[[self alloc] init] autorelease]);
     }
-    
+
 - (BOOL)isValidJSONObject:(id)inObject
     {
     if ([inObject isKindOfClass:[NSNull class]])
@@ -313,7 +313,7 @@ static NSData *kTrue = NULL;
     while ((theKey = [theEnumerator nextObject]) != NULL)
         {
         id theValue = [inDictionary objectForKey:theKey];
-        
+
         NSData *theKeyData = [self serializeString:theKey error:outError];
         if (theKeyData == NULL)
             {
@@ -324,12 +324,12 @@ static NSData *kTrue = NULL;
             {
             return(NULL);
             }
-        
-        
+
+
         [theData appendData:theKeyData];
         [theData appendBytes:":" length:1];
         [theData appendData:theValueData];
-        
+
         if (theKey != [theKeys lastObject])
             [theData appendData:[@"," dataUsingEncoding:NSASCIIStringEncoding]];
         }

@@ -11,7 +11,7 @@
 #import "HiResTest.h"
 
 static int sceneIdx=-1;
-static NSString *transitions[] = {	
+static NSString *transitions[] = {
 			@"Test1",
 			@"Test2",
 };
@@ -33,7 +33,7 @@ Class restartAction(void);
 
 Class nextAction()
 {
-	
+
 	sceneIdx++;
 	sceneIdx = sceneIdx % ( sizeof(transitions) / sizeof(transitions[0]) );
 	NSString *r = transitions[sceneIdx];
@@ -46,8 +46,8 @@ Class backAction()
 	sceneIdx--;
 	int total = ( sizeof(transitions) / sizeof(transitions[0]) );
 	if( sceneIdx < 0 )
-		sceneIdx += total;	
-	
+		sceneIdx += total;
+
 	NSString *r = transitions[sceneIdx];
 	Class c = NSClassFromString(r);
 	return c;
@@ -70,7 +70,7 @@ Class restartAction()
 
 
 		CGSize s = [[CCDirector sharedDirector] winSize];
-			
+
 		CCLabelTTF *label = [CCLabelTTF labelWithString:[self title] fontName:@"Arial" fontSize:32];
 		[self addChild: label z:1];
 		[label setPosition: ccp(s.width/2, s.height-50)];
@@ -81,19 +81,19 @@ Class restartAction()
 			[self addChild:l z:1];
 			[l setPosition:ccp(s.width/2, s.height-80)];
 		}
-		
-		
+
+
 		CCMenuItemImage *item1 = [CCMenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
 		CCMenuItemImage *item2 = [CCMenuItemImage itemFromNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
 		CCMenuItemImage *item3 = [CCMenuItemImage itemFromNormalImage:@"f1.png" selectedImage:@"f2.png" target:self selector:@selector(nextCallback:)];
-		
+
 		CCMenu *menu = [CCMenu menuWithItems:item1, item2, item3, nil];
-		
+
 		menu.position = CGPointZero;
 		item1.position = ccp( s.width/2 - 100,30);
 		item2.position = ccp( s.width/2, 30);
 		item3.position = ccp( s.width/2 + 100,30);
-		[self addChild: menu z:1];	
+		[self addChild: menu z:1];
 	}
 	return self;
 }
@@ -112,9 +112,9 @@ Class restartAction()
 
 -(void) nextCallback: (id) sender
 {
-	CCDirector *director = [CCDirector sharedDirector];	
+	CCDirector *director = [CCDirector sharedDirector];
 	[director enableRetinaDisplay: ! hiRes_ ];
-		
+
 	CCScene *s = [CCScene node];
 	[s addChild: [nextAction() node]];
 	[director replaceScene: s];
@@ -122,7 +122,7 @@ Class restartAction()
 
 -(void) backCallback: (id) sender
 {
-	CCDirector *director = [CCDirector sharedDirector];	
+	CCDirector *director = [CCDirector sharedDirector];
 	[director enableRetinaDisplay: ! hiRes_ ];
 
 	CCScene *s = [CCScene node];
@@ -150,19 +150,19 @@ Class restartAction()
 -(id) init
 {
 	if( (self=[super init]) ) {
-		
+
 		hiRes_ = YES;
 
 		CGSize size = [[CCDirector sharedDirector] winSize];
-				
+
 		CGSize sp = [[CCDirector sharedDirector] winSizeInPixels];
 		NSLog(@"screen size: %f x %f", sp.width, sp.height);
 
 		CCSprite *sprite = [CCSprite spriteWithFile:@"background1.jpg"];
 		[self addChild:sprite];
-		
+
 		[sprite setPosition:ccp(size.width/2, size.height/2)];
-	}	
+	}
 	return self;
 }
 
@@ -175,7 +175,7 @@ Class restartAction()
 {
 	return @"Screen size should be 960x640";
 }
-	
+
 @end
 
 #pragma mark -
@@ -187,19 +187,19 @@ Class restartAction()
 -(id) init
 {
 	if( (self=[super init]) ) {
-		
+
 		hiRes_ = NO;
 
 		CGSize size = [[CCDirector sharedDirector] winSize];
-		
+
 		CGSize sp = [[CCDirector sharedDirector] winSizeInPixels];
 		NSLog(@"screen size: %f x %f", sp.width, sp.height);
-		
+
 		CCSprite *sprite = [CCSprite spriteWithFile:@"background1.jpg"];
 		[self addChild:sprite];
-		
+
 		[sprite setPosition:ccp(size.width/2, size.height/2)];
-	}	
+	}
 	return self;
 }
 
@@ -229,16 +229,16 @@ Class restartAction()
 
 	// must be called before any othe call to the director
 	[CCDirector setDirectorType:kCCDirectorTypeDisplayLink];
-	
+
 	// before creating any layer, set the landscape mode
 	CCDirector *director = [CCDirector sharedDirector];
-	
+
 	// landscape orientation
 	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
-	
+
 	// set FPS at 60
 	[director setAnimationInterval:1.0/60];
-	
+
 	// Display FPS: yes
 	[director setDisplayFPS:YES];
 
@@ -246,38 +246,38 @@ Class restartAction()
 	EAGLView *glView = [EAGLView viewWithFrame:[window bounds]
 								   pixelFormat:kEAGLColorFormatRGBA8
 								   depthFormat:GL_DEPTH_COMPONENT24_OES];
-	
+
 	// attach the openglView to the director
 	[director setOpenGLView:glView];
-	
+
 	// Enables High Res mode (Retina Display) on iPhone 4 and maintains low res on all other devices
 	if( ! [director enableRetinaDisplay:YES] )
 		CCLOG(@"This test only works on iPhone4");
-	
+
 	// make the OpenGLView a child of the main window
 	[window addSubview:glView];
-	
+
 	// make main window visible
-	[window makeKeyAndVisible];	
-	
+	[window makeKeyAndVisible];
+
 	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
 	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
 	// You can change anytime.
-	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA8888];	
-	
+	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA8888];
+
 	// When in iPad / RetinaDisplay mode, CCFileUtils will append the "-ipad" / "-hd" to all loaded files
 	// If the -ipad  / -hdfile is not found, it will load the non-suffixed version
 	[CCFileUtils setiPadSuffix:@"-ipad"];			// Default on iPad is "" (empty string)
 	[CCFileUtils setRetinaDisplaySuffix:@"-hd"];	// Default on RetinaDisplay is "-hd"
-	
+
 	// create the main scene
 	CCScene *scene = [CCScene node];
 	[scene addChild: [nextAction() node]];
-	
-	
+
+
 	// and run it!
 	[director runWithScene: scene];
-	
+
 	return YES;
 }
 
@@ -304,7 +304,7 @@ Class restartAction()
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
-{	
+{
 	CCDirector *director = [CCDirector sharedDirector];
 	[[director openGLView] removeFromSuperview];
 	[director end];

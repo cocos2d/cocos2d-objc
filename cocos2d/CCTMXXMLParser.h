@@ -3,17 +3,17 @@
  *
  * Copyright (c) 2009-2010 Ricardo Quesada
  * Copyright (c) 2011 Zynga Inc.
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -35,7 +35,7 @@
  * since the user should not use them.
  *
  */
- 
+
 
 #import <Availability.h>
 #import <Foundation/Foundation.h>
@@ -66,7 +66,7 @@ enum {
  - Layer size
  - Layer opacity at creation time (it can be modified at runtime)
  - Whether the layer is visible (if it's not visible, then the CocosNode won't be created)
- 
+
  This information is obtained from the TMX file.
  */
 @interface CCTMXLayerInfo : NSObject
@@ -102,8 +102,8 @@ enum {
  - size of the tiles
  - Image used for the tiles
  - Image size
- 
- This information is obtained from the TMX file. 
+
+ This information is obtained from the TMX file.
  */
 @interface CCTMXTilesetInfo : NSObject
 {
@@ -112,10 +112,10 @@ enum {
 	CGSize			tileSize_;
 	unsigned int	spacing_;
 	unsigned int	margin_;
-	
+
 	// filename containing the tiles (should be spritesheet / texture atlas)
 	NSString	*sourceImage_;
-	
+
 	// size in pixels of the image
 	CGSize		imageSize_;
 }
@@ -134,14 +134,14 @@ enum {
  - Map orientation (hexagonal, isometric or orthogonal)
  - Tile size
  - Map size
- 
+
  And it also contains:
  - Layers (an array of TMXLayerInfo objects)
  - Tilesets (an array of TMXTilesetInfo objects)
  - ObjectGroups (an array of TMXObjectGroupInfo objects)
- 
+
  This information is obtained from the TMX file.
- 
+
  */
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 #if defined(__IPHONE_4_0)
@@ -153,38 +153,41 @@ enum {
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 @interface CCTMXMapInfo : NSObject <NSXMLParserDelegate>
 #endif
-{	
+{
 	NSMutableString	*currentString;
-    BOOL				storingCharacters;	
+    BOOL				storingCharacters;
 	int					layerAttribs;
 	int					parentElement;
 	unsigned int		parentGID_;
 
-	
+
 	// tmx filename
 	NSString *filename_;
 
+	// tmx resource path
+	NSString *resources_;
+
 	// map orientation
-	int	orientation_;	
-	
+	int	orientation_;
+
 	// map width & height
 	CGSize	mapSize_;
-	
+
 	// tiles width & height
 	CGSize	tileSize_;
-	
+
 	// Layers
 	NSMutableArray *layers_;
-	
+
 	// tilesets
 	NSMutableArray *tilesets_;
-		
+
 	// ObjectGroups
 	NSMutableArray *objectGroups_;
-	
+
 	// properties
 	NSMutableDictionary *properties_;
-	
+
 	// tile properties
 	NSMutableDictionary *tileProperties_;
 }
@@ -195,13 +198,22 @@ enum {
 @property (nonatomic,readwrite,retain) NSMutableArray *layers;
 @property (nonatomic,readwrite,retain) NSMutableArray *tilesets;
 @property (nonatomic,readwrite,retain) NSString *filename;
+@property (nonatomic,readwrite,retain) NSString *resources;
 @property (nonatomic,readwrite,retain) NSMutableArray *objectGroups;
 @property (nonatomic,readwrite,retain) NSMutableDictionary *properties;
 @property (nonatomic,readwrite,retain) NSMutableDictionary *tileProperties;
 
 /** creates a TMX Format with a tmx file */
 +(id) formatWithTMXFile:(NSString*)tmxFile;
-/** initializes a TMX format witha  tmx file */
+
+/** creates a TMX Format with an XML string and a TMX resource path */
++(id) formatWithXML:(NSString*)tmxString resourcePath:(NSString*)resourcePath;
+
+/** initializes a TMX format with a tmx file */
 -(id) initWithTMXFile:(NSString*)tmxFile;
+
+/** initializes a TMX format with an XML string and a TMX resource path */
+-(id) initWithXML:(NSString*)tmxString resourcePath:(NSString*)resourcePath;
+
 @end
 

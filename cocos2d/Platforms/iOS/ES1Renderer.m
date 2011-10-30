@@ -3,17 +3,17 @@
  *
  * Copyright (c) 2010 Ricardo Quesada
  * Copyright (c) 2011 Zynga Inc.
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -77,7 +77,7 @@
         glFramebufferRenderbufferOES(GL_FRAMEBUFFER_OES, GL_COLOR_ATTACHMENT0_OES, GL_RENDERBUFFER_OES, colorRenderbuffer_);
 
 		depthFormat_ = depthFormat;
-		
+
 		if( depthFormat_ ) {
 //			glGenRenderbuffersOES(1, &depthBuffer_);
 //			glBindRenderbufferOES(GL_RENDERBUFFER_OES, depthBuffer_);
@@ -87,19 +87,19 @@
 			// default buffer
 //			glBindRenderbufferOES(GL_RENDERBUFFER_OES, colorRenderbuffer_);
 		}
-		
+
 		pixelFormat_ = pixelFormat;
-		multiSampling_ = multiSampling;	
+		multiSampling_ = multiSampling;
 		if (multiSampling_)
 		{
 			GLint maxSamplesAllowed;
 			glGetIntegerv(GL_MAX_SAMPLES_APPLE, &maxSamplesAllowed);
 			samplesToUse_ = MIN(maxSamplesAllowed,requestedSamples);
-			
+
 			/* Create the MSAA framebuffer (offscreen) */
 			glGenFramebuffersOES(1, &msaaFramebuffer_);
 			glBindFramebufferOES(GL_FRAMEBUFFER_OES, msaaFramebuffer_);
-			
+
 		}
 
 		CHECK_GL_ERROR();
@@ -109,14 +109,14 @@
 }
 
 - (BOOL)resizeFromLayer:(CAEAGLLayer *)layer
-{	
+{
     // Allocate color buffer backing based on the current layer size
 
     glBindRenderbufferOES(GL_RENDERBUFFER_OES, colorRenderbuffer_);
 
 	if (![context_ renderbufferStorage:GL_RENDERBUFFER_OES fromDrawable:layer])
 	{
-		CCLOG(@"failed to call context");	
+		CCLOG(@"failed to call context");
 	}
 
     glGetRenderbufferParameterivOES(GL_RENDERBUFFER_OES, GL_RENDERBUFFER_WIDTH_OES, &backingWidth_);
@@ -126,7 +126,7 @@
 
 	if (multiSampling_)
 	{
-		
+
 		if ( msaaColorbuffer_) {
 			glDeleteRenderbuffersOES(1, &msaaColorbuffer_);
 			msaaColorbuffer_ = 0;
@@ -134,7 +134,7 @@
 
 		/* Create the offscreen MSAA color buffer.
 		 After rendering, the contents of this will be blitted into ColorRenderbuffer */
-		
+
 		//msaaFrameBuffer needs to be binded
 		glBindFramebufferOES(GL_FRAMEBUFFER_OES, msaaFramebuffer_);
 		glGenRenderbuffersOES(1, &msaaColorbuffer_);
@@ -148,25 +148,25 @@
 			return NO;
 		}
 	}
-	
-	if (depthFormat_) 
+
+	if (depthFormat_)
 	{
 		if( ! depthBuffer_ )
 			glGenRenderbuffersOES(1, &depthBuffer_);
-		
+
 		glBindRenderbufferOES(GL_RENDERBUFFER_OES, depthBuffer_);
 		if( multiSampling_ )
 			glRenderbufferStorageMultisampleAPPLE(GL_RENDERBUFFER_OES, samplesToUse_, depthFormat_,backingWidth_, backingHeight_);
 		else
 			glRenderbufferStorageOES(GL_RENDERBUFFER_OES, depthFormat_, backingWidth_, backingHeight_);
 		glFramebufferRenderbufferOES(GL_FRAMEBUFFER_OES, GL_DEPTH_ATTACHMENT_OES, GL_RENDERBUFFER_OES, depthBuffer_);
-		
+
 		// bind color buffer
 		glBindRenderbufferOES(GL_RENDERBUFFER_OES, colorRenderbuffer_);
 	}
-	
+
 	glBindFramebufferOES(GL_FRAMEBUFFER_OES, defaultFramebuffer_);
-	
+
 	if (glCheckFramebufferStatusOES(GL_FRAMEBUFFER_OES) != GL_FRAMEBUFFER_COMPLETE_OES)
 	{
 		CCLOG(@"Failed to make complete framebuffer object %x", glCheckFramebufferStatusOES(GL_FRAMEBUFFER_OES));
@@ -217,13 +217,13 @@
 		glDeleteRenderbuffersOES(1, &msaaColorbuffer_);
 		msaaColorbuffer_ = 0;
 	}
-	
+
 	if ( msaaFramebuffer_)
 	{
 		glDeleteRenderbuffersOES(1, &msaaFramebuffer_);
 		msaaFramebuffer_ = 0;
 	}
-	
+
     // Tear down context
     if ([EAGLContext currentContext] == context_)
         [EAGLContext setCurrentContext:nil];
@@ -246,12 +246,12 @@
 
 - (unsigned int) msaaFrameBuffer
 {
-	return msaaFramebuffer_;	
+	return msaaFramebuffer_;
 }
 
 - (unsigned int) msaaColorBuffer
 {
-	return msaaColorbuffer_;	
+	return msaaColorbuffer_;
 }
 
 @end

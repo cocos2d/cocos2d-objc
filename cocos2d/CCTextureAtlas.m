@@ -3,17 +3,17 @@
  *
  * Copyright (c) 2008-2010 Ricardo Quesada
  * Copyright (c) 2011 Zynga Inc.
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -79,7 +79,7 @@
 
 		capacity_ = n;
 		totalQuads_ = 0;
-		
+
 		// retained in property
 		self.texture = tex;
 
@@ -100,7 +100,7 @@
 
 #if CC_USES_VBO
 		// initial binding
-		glGenBuffers(2, &buffersVBO_[0]);	
+		glGenBuffers(2, &buffersVBO_[0]);
 		dirty_ = YES;
 #endif // CC_USES_VBO
 
@@ -138,7 +138,7 @@
 #if CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP
 		indices_[i*6+0] = i*4+0;
 		indices_[i*6+1] = i*4+0;
-		indices_[i*6+2] = i*4+2;		
+		indices_[i*6+2] = i*4+2;
 		indices_[i*6+3] = i*4+1;
 		indices_[i*6+4] = i*4+3;
 		indices_[i*6+5] = i*4+3;
@@ -150,11 +150,11 @@
 		// inverted index. issue #179
 		indices_[i*6+3] = i*4+3;
 		indices_[i*6+4] = i*4+2;
-		indices_[i*6+5] = i*4+1;		
+		indices_[i*6+5] = i*4+1;
 //		indices_[i*6+3] = i*4+2;
 //		indices_[i*6+4] = i*4+3;
-//		indices_[i*6+5] = i*4+1;	
-#endif	
+//		indices_[i*6+5] = i*4+1;
+#endif
 	}
 
 #if CC_USES_VBO
@@ -172,10 +172,10 @@
 -(ccV3F_C4B_T2F_Quad *) quads
 {
 	//if someone accesses the quads directly, presume that changes will be made
-#if CC_USES_VBO	
+#if CC_USES_VBO
 	dirty_ = YES;
-#endif	
-	return quads_;	
+#endif
+	return quads_;
 }
 
 -(void) updateQuad:(ccV3F_C4B_T2F_Quad*)quad atIndex:(NSUInteger) n
@@ -184,7 +184,7 @@
 
 	totalQuads_ =  MAX( n+1, totalQuads_);
 
-	quads_[n] = *quad;	
+	quads_[n] = *quad;
 
 #if CC_USES_VBO
 	dirty_ = YES;
@@ -194,20 +194,20 @@
 -(void) insertQuad:(ccV3F_C4B_T2F_Quad*)quad atIndex:(NSUInteger)index
 {
 	NSAssert(index < capacity_, @"insertQuadWithTexture: Invalid index");
-	
+
 	totalQuads_++;
 	NSAssert( totalQuads_ <= capacity_, @"invalid totalQuads");
-	
+
 	// issue #575. index can be > totalQuads
 	NSInteger remaining = (totalQuads_-1) - index;
-	
+
 	// last object doesn't need to be moved
 	if( remaining > 0)
 		// tex coordinates
 		memmove( &quads_[index+1],&quads_[index], sizeof(quads_[0]) * remaining );
-	
+
 	quads_[index] = *quad;
-	
+
 #if CC_USES_VBO
 	dirty_ = YES;
 #endif
@@ -216,21 +216,21 @@
 -(void) insertQuads:(ccV3F_C4B_T2F_Quad*)quads atIndex:(NSUInteger)index amount:(NSUInteger) amount
 {
 	NSAssert(index + amount <= capacity_, @"insertQuadWithTexture: Invalid index + amount");
-	
+
 	totalQuads_+= amount;
-	
+
 	NSAssert( totalQuads_ <= capacity_, @"invalid totalQuads");
-	
+
 	// issue #575. index can be > totalQuads
 	NSInteger remaining = (totalQuads_-1) - index - amount;
-	
+
 	// last object doesn't need to be moved
 	if( remaining > 0)
 		// tex coordinates
 		memmove( &quads_[index+amount],&quads_[index], sizeof(quads_[0]) * remaining );
-	
-	
-	
+
+
+
 	NSUInteger max = index + amount;
 	NSInteger j = 0;
 	for (NSInteger i = index; i < max ; i++)
@@ -239,7 +239,7 @@
 		index++;
 		j++;
 	}
-	
+
 #if CC_USES_VBO
 	dirty_ = YES;
 #endif
@@ -275,28 +275,28 @@
 {
 	NSAssert(newIndex + amount <= totalQuads_, @"insertQuadFromIndex:atIndex: Invalid index");
 	NSAssert(oldIndex < totalQuads_, @"insertQuadFromIndex:atIndex: Invalid index");
-	
+
 	if( oldIndex == newIndex )
 		return;
-	
+
 	//create buffer
 	size_t quadSize = sizeof(ccV3F_C4B_T2F_Quad);
-	ccV3F_C4B_T2F_Quad *tempQuads = malloc(quadSize*amount); 
-	memcpy(tempQuads,&quads_[oldIndex],quadSize*amount); 
-	
-	if (newIndex < oldIndex) 
+	ccV3F_C4B_T2F_Quad *tempQuads = malloc(quadSize*amount);
+	memcpy(tempQuads,&quads_[oldIndex],quadSize*amount);
+
+	if (newIndex < oldIndex)
 	{
-		//move quads from newIndex to newIndex + amount to make room for buffer 
+		//move quads from newIndex to newIndex + amount to make room for buffer
 		memmove(&quads_[newIndex],&quads_[newIndex+amount],(oldIndex-newIndex)*quadSize);
 	}
-	else 
+	else
 	{//move quads above back
-		memmove(&quads_[oldIndex],&quads_[oldIndex+amount],(newIndex-oldIndex)*quadSize); 
+		memmove(&quads_[oldIndex],&quads_[oldIndex+amount],(newIndex-oldIndex)*quadSize);
 	}
 	memcpy(&quads_[newIndex],tempQuads,amount*quadSize);
-	
+
 	free(tempQuads);
-	
+
 #if CC_USES_VBO
 	dirty_ = YES;
 #endif
@@ -322,15 +322,15 @@
 
 -(void) removeQuadsAtIndex:(NSUInteger) index amount:(NSUInteger) amount
 {
-	NSAssert(index + amount <= totalQuads_, @"removeQuadAtIndex: index + amount out of bounds");	
+	NSAssert(index + amount <= totalQuads_, @"removeQuadAtIndex: index + amount out of bounds");
 
 	if (index + amount > totalQuads_)
-		amount = totalQuads_ - index; 
-	
+		amount = totalQuads_ - index;
+
 	NSUInteger remaining = (totalQuads_) - (index + amount);
 
 	totalQuads_-= amount;
-	
+
 	// last object doesn't need to be moved
 	if ( remaining )
 		memmove( &quads_[index],&quads_[index+amount], sizeof(quads_[0]) * remaining );
@@ -380,11 +380,11 @@
 	quads_ = tmpQuads;
 	indices_ = tmpIndices;
 
-	[self initIndices];	
+	[self initIndices];
 
 #if CC_USES_VBO
 	dirty_ = YES;
-#endif	
+#endif
 	return YES;
 }
 
@@ -392,24 +392,24 @@
 
 -(void) fillWithEmptyQuadsFromIndex:(NSUInteger) index amount:(NSUInteger) amount
 {
-	ccV3F_C4B_T2F_Quad *quad = calloc(1,sizeof(ccV3F_C4B_T2F_Quad)); 
-	
+	ccV3F_C4B_T2F_Quad *quad = calloc(1,sizeof(ccV3F_C4B_T2F_Quad));
+
 	NSUInteger to = index + amount;
 	for (NSInteger i = index ; i < to ; i++)
 	{
-		quads_[i] = *quad; 	
+		quads_[i] = *quad;
 	}
-	
+
 }
 -(void) increaseTotalQuadsWith:(NSUInteger) amount
 {
-	totalQuads_ += amount; 	
+	totalQuads_ += amount;
 }
 
 -(void) moveQuadsFromIndex:(NSUInteger) index to:(NSUInteger) newIndex
 {
 	NSAssert(newIndex + (totalQuads_ - index) <= capacity_, @"moveQuadsFromIndex move is out of bounds");
-	
+
 	memmove(quads_ + newIndex,quads_ + index, (totalQuads_ - index) * sizeof(quads_[0]));
 }
 
@@ -421,7 +421,7 @@
 }
 
 -(void) drawNumberOfQuads: (NSUInteger) n
-{	
+{
 	[self drawNumberOfQuads:n fromIndex:0];
 }
 

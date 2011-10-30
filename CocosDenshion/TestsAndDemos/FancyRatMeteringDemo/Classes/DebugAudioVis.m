@@ -49,7 +49,7 @@
 		glLineWidth(10.f);
 		glColor4ub(255, 255, 255, 64);
 		ccDrawLine(ccp(20.f, 0.f), ccp(20.f, 460.f*avgPower_));
-		
+
 		glColor4ub(255, 255, 255, 255);
 		glPushMatrix();
 		glTranslatef(0.f, 460.f*peakPower_, 0.f);

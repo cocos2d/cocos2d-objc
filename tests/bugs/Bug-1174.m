@@ -14,23 +14,23 @@ int check_for_error( CGPoint p1, CGPoint p2, CGPoint p3, CGPoint p4, float s, fl
 {
 	//	the hit point is		p3 + t * (p4 - p3);
 	//	the hit point also is	p1 + s * (p2 - p1);
-	
+
 	CGPoint p4_p3 = ccpSub( p4, p3);
 	CGPoint p4_p3_t = ccpMult(p4_p3, t);
 	CGPoint hitPoint1 = ccpAdd( p3, p4_p3_t);
-	
+
 	CGPoint p2_p1 = ccpSub( p2, p1);
 	CGPoint p2_p1_s = ccpMult(p2_p1, s);
 	CGPoint hitPoint2 = ccpAdd( p1, p2_p1_s);
-	
-	
+
+
 	// Since float has rounding errors, only check if diff is < 0.05
 	if( (fabs( hitPoint1.x - hitPoint2.x) > 0.1f) || ( fabs(hitPoint1.y - hitPoint2.y) > 0.1f) ) {
 		NSLog(@"ERROR: (%f,%f) != (%f,%f)", hitPoint1.x, hitPoint1.y, hitPoint2.x, hitPoint2.y);
-		
+
 		return 1;
 	}
-	
+
 	return 0;
 }
 
@@ -39,22 +39,22 @@ int check_for_error( CGPoint p1, CGPoint p2, CGPoint p3, CGPoint p4, float s, fl
 -(id) init
 {
 	if((self=[super init])) {
-		
+
 		// seed
 		srand(0);
-		
+
 		CGPoint A,B,C,D,p1,p2,p3,p4;
 		float s,t;
-		
+
 		int err=0;
 		int ok=0;
-		
+
 		//
 		// Test 1.
 		//
 		NSLog(@"Test1 - Start");
 		for( int i=0; i < 10000; i++) {
-			
+
 			// A | b
 			// -----
 			// c | d
@@ -72,13 +72,13 @@ int check_for_error( CGPoint p1, CGPoint p2, CGPoint p3, CGPoint p4, float s, fl
 			// c | d
 			float bx = CCRANDOM_0_1() * 5000;
 			float by = CCRANDOM_0_1() * 5000;
-			
+
 			// a | b
 			// -----
 			// C | d
 			float cx = CCRANDOM_0_1() * -5000;
 			float cy = CCRANDOM_0_1() * -5000;
-			
+
 			A = ccp(ax,ay);
 			B = ccp(bx,by);
 			C = ccp(cx,cy);
@@ -91,13 +91,13 @@ int check_for_error( CGPoint p1, CGPoint p2, CGPoint p3, CGPoint p4, float s, fl
 			}
 		}
 		NSLog(@"Test1 - End. OK=%i, Err=%i", ok, err);
-		
-	
+
+
 		//
 		// Test 2.
 		//
 		NSLog(@"Test2 - Start");
-		
+
 		p1 = ccp(220,480);
 		p2 = ccp(304,325);
 		p3 = ccp(264,416);
@@ -109,33 +109,33 @@ int check_for_error( CGPoint p1, CGPoint p2, CGPoint p3, CGPoint p4, float s, fl
 
 		NSLog(@"Test2 - End");
 
-		
+
 		//
 		// Test 3
 		//
 		NSLog(@"Test3 - Start");
-		
+
 		ok=0;
 		err=0;
 		for( int i=0;i<10000;i++) {
-			
+
 			// A | b
 			// -----
 			// c | d
 			float ax = CCRANDOM_0_1() * -500;
 			float ay = CCRANDOM_0_1() * 500;
 			p1 = ccp(ax,ay);
-			
+
 			// a | b
 			// -----
 			// c | D
 			float dx = CCRANDOM_0_1() * 500;
 			float dy = CCRANDOM_0_1() * -500;
 			p2 = ccp(dx,dy);
-			
-			
+
+
 			//////
-			
+
 			float y = ay - ((ay - dy) /2.0f);
 
 			// a | b
@@ -143,7 +143,7 @@ int check_for_error( CGPoint p1, CGPoint p2, CGPoint p3, CGPoint p4, float s, fl
 			// C | d
 			float cx = CCRANDOM_0_1() * -500;
 			p3 = ccp(cx,y);
-			
+
 			// a | B
 			// -----
 			// c | d
@@ -159,11 +159,11 @@ int check_for_error( CGPoint p1, CGPoint p2, CGPoint p3, CGPoint p4, float s, fl
 					ok++;
 			}
 		}
-		
+
 		NSLog(@"Test3 - End. OK=%i, err=%i", ok, err);
 
 	}
-    
+
 	return self;
 }
 @end
@@ -187,16 +187,16 @@ int check_for_error( CGPoint p1, CGPoint p2, CGPoint p3, CGPoint p4, float s, fl
 	// 9. Connects the director to the EAGLView
 	//
 	CC_DIRECTOR_INIT();
-	
+
 	// Obtain the shared director in order to...
 	CCDirector *director = [CCDirector sharedDirector];
 
 	// Turn on display FPS
 	[director setDisplayFPS:YES];
-	
-	CCScene *scene = [CCScene node];	
+
+	CCScene *scene = [CCScene node];
 	[scene addChild:[Layer1 node] z:0];
-		
+
 	[director runWithScene: scene];
 }
 

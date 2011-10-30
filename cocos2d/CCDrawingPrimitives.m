@@ -3,17 +3,17 @@
  *
  * Copyright (c) 2008-2010 Ricardo Quesada
  * Copyright (c) 2011 Zynga Inc.
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -35,28 +35,28 @@
 void ccDrawPoint( CGPoint point )
 {
 	ccVertex2F p = (ccVertex2F) {point.x * CC_CONTENT_SCALE_FACTOR(), point.y * CC_CONTENT_SCALE_FACTOR() };
-	
+
 	// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
-	// Needed states: GL_VERTEX_ARRAY, 
-	// Unneeded states: GL_TEXTURE_2D, GL_TEXTURE_COORD_ARRAY, GL_COLOR_ARRAY	
+	// Needed states: GL_VERTEX_ARRAY,
+	// Unneeded states: GL_TEXTURE_2D, GL_TEXTURE_COORD_ARRAY, GL_COLOR_ARRAY
 	glDisable(GL_TEXTURE_2D);
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 	glDisableClientState(GL_COLOR_ARRAY);
-	
-	glVertexPointer(2, GL_FLOAT, 0, &p);	
+
+	glVertexPointer(2, GL_FLOAT, 0, &p);
 	glDrawArrays(GL_POINTS, 0, 1);
 
 	// restore default state
 	glEnableClientState(GL_COLOR_ARRAY);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-	glEnable(GL_TEXTURE_2D);	
+	glEnable(GL_TEXTURE_2D);
 }
 
 void ccDrawPoints( const CGPoint *points, NSUInteger numberOfPoints )
 {
 	// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
-	// Needed states: GL_VERTEX_ARRAY, 
-	// Unneeded states: GL_TEXTURE_2D, GL_TEXTURE_COORD_ARRAY, GL_COLOR_ARRAY	
+	// Needed states: GL_VERTEX_ARRAY,
+	// Unneeded states: GL_TEXTURE_2D, GL_TEXTURE_COORD_ARRAY, GL_COLOR_ARRAY
 	glDisable(GL_TEXTURE_2D);
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 	glDisableClientState(GL_COLOR_ARRAY);
@@ -75,25 +75,25 @@ void ccDrawPoints( const CGPoint *points, NSUInteger numberOfPoints )
 
 		} else
 			glVertexPointer(2, GL_FLOAT, 0, points);
-		
+
 		glDrawArrays(GL_POINTS, 0, (GLsizei) numberOfPoints);
-		
+
 	} else {
-		
+
 		// Mac on 64-bit
 		for( NSUInteger i=0; i<numberOfPoints;i++)
 			newPoints[i] = (ccVertex2F) { points[i].x, points[i].y };
-			
+
 		glVertexPointer(2, GL_FLOAT, 0, newPoints);
 		glDrawArrays(GL_POINTS, 0, (GLsizei) numberOfPoints);
 
 	}
 
-	
+
 	// restore default state
 	glEnableClientState(GL_COLOR_ARRAY);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-	glEnable(GL_TEXTURE_2D);	
+	glEnable(GL_TEXTURE_2D);
 }
 
 
@@ -105,19 +105,19 @@ void ccDrawLine( CGPoint origin, CGPoint destination )
 	};
 
 	// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
-	// Needed states: GL_VERTEX_ARRAY, 
-	// Unneeded states: GL_TEXTURE_2D, GL_TEXTURE_COORD_ARRAY, GL_COLOR_ARRAY	
+	// Needed states: GL_VERTEX_ARRAY,
+	// Unneeded states: GL_TEXTURE_2D, GL_TEXTURE_COORD_ARRAY, GL_COLOR_ARRAY
 	glDisable(GL_TEXTURE_2D);
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 	glDisableClientState(GL_COLOR_ARRAY);
-	
-	glVertexPointer(2, GL_FLOAT, 0, vertices);	
+
+	glVertexPointer(2, GL_FLOAT, 0, vertices);
 	glDrawArrays(GL_LINES, 0, 2);
-	
+
 	// restore default state
 	glEnableClientState(GL_COLOR_ARRAY);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-	glEnable(GL_TEXTURE_2D);		
+	glEnable(GL_TEXTURE_2D);
 }
 
 
@@ -126,13 +126,13 @@ void ccDrawPoly( const CGPoint *poli, NSUInteger numberOfPoints, BOOL closePolyg
 	ccVertex2F newPoint[numberOfPoints];
 
 	// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
-	// Needed states: GL_VERTEX_ARRAY, 
-	// Unneeded states: GL_TEXTURE_2D, GL_TEXTURE_COORD_ARRAY, GL_COLOR_ARRAY	
+	// Needed states: GL_VERTEX_ARRAY,
+	// Unneeded states: GL_TEXTURE_2D, GL_TEXTURE_COORD_ARRAY, GL_COLOR_ARRAY
 	glDisable(GL_TEXTURE_2D);
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 	glDisableClientState(GL_COLOR_ARRAY);
 
-	
+
 	// iPhone and 32-bit machines
 	if( sizeof(CGPoint) == sizeof(ccVertex2F) ) {
 
@@ -147,26 +147,26 @@ void ccDrawPoly( const CGPoint *poli, NSUInteger numberOfPoints, BOOL closePolyg
 		} else
 			glVertexPointer(2, GL_FLOAT, 0, poli);
 
-		
+
 	} else {
 		// 64-bit machines (Mac)
-		
+
 		for( NSUInteger i=0; i<numberOfPoints;i++)
 			newPoint[i] = (ccVertex2F) { poli[i].x, poli[i].y };
 
 		glVertexPointer(2, GL_FLOAT, 0, newPoint );
 
 	}
-		
+
 	if( closePolygon )
 		glDrawArrays(GL_LINE_LOOP, 0, (GLsizei) numberOfPoints);
 	else
 		glDrawArrays(GL_LINE_STRIP, 0, (GLsizei) numberOfPoints);
-	
+
 	// restore default state
 	glEnableClientState(GL_COLOR_ARRAY);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-	glEnable(GL_TEXTURE_2D);	
+	glEnable(GL_TEXTURE_2D);
 }
 
 void ccDrawCircle( CGPoint center, float r, float a, NSUInteger segs, BOOL drawLineToCenter)
@@ -176,7 +176,7 @@ void ccDrawCircle( CGPoint center, float r, float a, NSUInteger segs, BOOL drawL
 		additionalSegment++;
 
 	const float coef = 2.0f * (float)M_PI/segs;
-	
+
 	GLfloat *vertices = calloc( sizeof(GLfloat)*2*(segs+2), 1);
 	if( ! vertices )
 		return;
@@ -186,35 +186,35 @@ void ccDrawCircle( CGPoint center, float r, float a, NSUInteger segs, BOOL drawL
 		float rads = i*coef;
 		GLfloat j = r * cosf(rads + a) + center.x;
 		GLfloat k = r * sinf(rads + a) + center.y;
-		
+
 		vertices[i*2] = j * CC_CONTENT_SCALE_FACTOR();
 		vertices[i*2+1] =k * CC_CONTENT_SCALE_FACTOR();
 	}
 	vertices[(segs+1)*2] = center.x * CC_CONTENT_SCALE_FACTOR();
 	vertices[(segs+1)*2+1] = center.y * CC_CONTENT_SCALE_FACTOR();
-	
+
 	// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
-	// Needed states: GL_VERTEX_ARRAY, 
-	// Unneeded states: GL_TEXTURE_2D, GL_TEXTURE_COORD_ARRAY, GL_COLOR_ARRAY	
+	// Needed states: GL_VERTEX_ARRAY,
+	// Unneeded states: GL_TEXTURE_2D, GL_TEXTURE_COORD_ARRAY, GL_COLOR_ARRAY
 	glDisable(GL_TEXTURE_2D);
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 	glDisableClientState(GL_COLOR_ARRAY);
-	
-	glVertexPointer(2, GL_FLOAT, 0, vertices);	
+
+	glVertexPointer(2, GL_FLOAT, 0, vertices);
 	glDrawArrays(GL_LINE_STRIP, 0, (GLsizei) segs+additionalSegment);
-	
+
 	// restore default state
 	glEnableClientState(GL_COLOR_ARRAY);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-	glEnable(GL_TEXTURE_2D);	
-	
+	glEnable(GL_TEXTURE_2D);
+
 	free( vertices );
 }
 
 void ccDrawQuadBezier(CGPoint origin, CGPoint control, CGPoint destination, NSUInteger segments)
 {
 	ccVertex2F vertices[segments + 1];
-	
+
 	float t = 0.0f;
 	for(NSUInteger i = 0; i < segments; i++)
 	{
@@ -224,27 +224,27 @@ void ccDrawQuadBezier(CGPoint origin, CGPoint control, CGPoint destination, NSUI
 		t += 1.0f / segments;
 	}
 	vertices[segments] = (ccVertex2F) {destination.x * CC_CONTENT_SCALE_FACTOR(), destination.y * CC_CONTENT_SCALE_FACTOR() };
-	
+
 	// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
-	// Needed states: GL_VERTEX_ARRAY, 
-	// Unneeded states: GL_TEXTURE_2D, GL_TEXTURE_COORD_ARRAY, GL_COLOR_ARRAY	
+	// Needed states: GL_VERTEX_ARRAY,
+	// Unneeded states: GL_TEXTURE_2D, GL_TEXTURE_COORD_ARRAY, GL_COLOR_ARRAY
 	glDisable(GL_TEXTURE_2D);
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 	glDisableClientState(GL_COLOR_ARRAY);
-	
-	glVertexPointer(2, GL_FLOAT, 0, vertices);	
+
+	glVertexPointer(2, GL_FLOAT, 0, vertices);
 	glDrawArrays(GL_LINE_STRIP, 0, (GLsizei) segments + 1);
-	
+
 	// restore default state
 	glEnableClientState(GL_COLOR_ARRAY);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-	glEnable(GL_TEXTURE_2D);	
+	glEnable(GL_TEXTURE_2D);
 }
 
 void ccDrawCubicBezier(CGPoint origin, CGPoint control1, CGPoint control2, CGPoint destination, NSUInteger segments)
 {
 	ccVertex2F vertices[segments + 1];
-	
+
 	float t = 0;
 	for(NSUInteger i = 0; i < segments; i++)
 	{
@@ -254,19 +254,19 @@ void ccDrawCubicBezier(CGPoint origin, CGPoint control1, CGPoint control2, CGPoi
 		t += 1.0f / segments;
 	}
 	vertices[segments] = (ccVertex2F) {destination.x * CC_CONTENT_SCALE_FACTOR(), destination.y * CC_CONTENT_SCALE_FACTOR() };
-	
+
 	// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
-	// Needed states: GL_VERTEX_ARRAY, 
-	// Unneeded states: GL_TEXTURE_2D, GL_TEXTURE_COORD_ARRAY, GL_COLOR_ARRAY	
+	// Needed states: GL_VERTEX_ARRAY,
+	// Unneeded states: GL_TEXTURE_2D, GL_TEXTURE_COORD_ARRAY, GL_COLOR_ARRAY
 	glDisable(GL_TEXTURE_2D);
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 	glDisableClientState(GL_COLOR_ARRAY);
-	
-	glVertexPointer(2, GL_FLOAT, 0, vertices);	
+
+	glVertexPointer(2, GL_FLOAT, 0, vertices);
 	glDrawArrays(GL_LINE_STRIP, 0, (GLsizei) segments + 1);
-	
+
 	// restore default state
 	glEnableClientState(GL_COLOR_ARRAY);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-	glEnable(GL_TEXTURE_2D);	
+	glEnable(GL_TEXTURE_2D);
 }

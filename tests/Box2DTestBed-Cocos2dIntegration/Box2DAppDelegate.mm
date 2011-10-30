@@ -23,7 +23,7 @@
 - (void)applicationDidFinishLaunching:(UIApplication *)application
 {
     [application setStatusBarHidden:true];
-	
+
 	// CC_DIRECTOR_INIT()
 	//
 	// 1. Initializes an EAGLView with 0-bit depth format, and RGB565 render buffer
@@ -37,23 +37,23 @@
 	// 8. Connects the director to the EAGLView
 	//
 	CC_DIRECTOR_INIT();
-	
+
 	// Obtain the shared director in order to...
 	CCDirector *director = [CCDirector sharedDirector];
-	
+
 	// Sets landscape mode
 	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
-	
+
 	// Turn on display FPS
-	[director setDisplayFPS:YES];	
-	
+	[director setDisplayFPS:YES];
+
 	// Enables High Res mode (Retina Display) on iPhone 4 and maintains low res on all other devices
 	if ([UIScreen instancesRespondToSelector:@selector(scale)])
 		[director setContentScaleFactor:[[UIScreen mainScreen] scale]];
-	
+
 	CCScene *scene = [CCScene node];
 	[scene addChild: [MenuLayer menuWithEntryID:0]];
-	
+
 	[director runWithScene: scene];
 }
 

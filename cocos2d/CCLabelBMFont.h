@@ -3,17 +3,17 @@
  *
  * Copyright (c) 2008-2010 Ricardo Quesada
  * Copyright (c) 2011 Zynga Inc.
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -25,7 +25,7 @@
  * Portions of this code are based and inspired on:
  *   http://www.71squared.co.uk/2009/04/iphone-game-programming-tutorial-4-bitmap-font-class
  *   by Michael Daley
- * 
+ *
  * Use any of these editors to generate BMFonts:
  *   http://glyphdesigner.71squared.com/ (Commercial, Mac OS X)
  *   http://www.n4te.com/hiero/hiero.jnlp (Free, Java)
@@ -83,13 +83,13 @@ enum {
 @public
 	// The characters building up the font
 	ccBMFontDef	BMFontArray_[kCCBMFontMaxChars];
-	
+
 	// FNTConfig: Common Height
 	NSUInteger		commonHeight_;
-	
+
 	// Padding
 	ccBMFontPadding	padding_;
-	
+
 	// atlas name
 	NSString		*atlasName_;
 
@@ -105,7 +105,7 @@ enum {
 
 
 /** CCLabelBMFont is a subclass of CCSpriteBatchNode
-  
+
  Features:
  - Treats each character like a CCSprite. This means that each individual character can be:
    - rotated
@@ -116,20 +116,20 @@ enum {
  - It can be used as part of a menu item.
  - anchorPoint can be used to align the "label"
  - Supports AngelCode text format
- 
+
  Limitations:
   - All inner characters are using an anchorPoint of (0.5f, 0.5f) and it is not recommend to change it
     because it might affect the rendering
- 
+
  CCLabelBMFont implements the protocol CCLabelProtocol, like CCLabel and CCLabelAtlas.
  CCLabelBMFont has the flexibility of CCLabel, the speed of CCLabelAtlas and all the features of CCSprite.
  If in doubt, use CCLabelBMFont instead of CCLabelAtlas / CCLabel.
- 
+
  Supported editors:
   - http://www.n4te.com/hiero/hiero.jnlp
   - http://slick.cokeandcode.com/demos/hiero.jnlp
   - http://www.angelcode.com/products/bmfont/
- 
+
  @since v0.8
  */
 
@@ -137,7 +137,7 @@ enum {
 {
 	// string to render
 	NSString		*string_;
-	
+
 	CCBMFontConfiguration	*configuration_;
 
 	// texture RGBA

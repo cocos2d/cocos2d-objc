@@ -28,7 +28,7 @@ Class restartAction(void);
 
 Class nextAction()
 {
-	
+
 	sceneIdx++;
 	sceneIdx = sceneIdx % ( sizeof(transitions) / sizeof(transitions[0]) );
 	NSString *r = transitions[sceneIdx];
@@ -40,7 +40,7 @@ Class backAction()
 {
 	sceneIdx--;
 	if( sceneIdx < 0 )
-		sceneIdx = sizeof(transitions) / sizeof(transitions[0]) -1;	
+		sceneIdx = sizeof(transitions) / sizeof(transitions[0]) -1;
 	NSString *r = transitions[sceneIdx];
 	Class c = NSClassFromString(r);
 	return c;
@@ -59,23 +59,23 @@ Class restartAction()
 -(id) init
 {
 	if( (self = [super init]) ) {
-		
-		CGSize s = [[CCDirector sharedDirector] winSize];	
+
+		CGSize s = [[CCDirector sharedDirector] winSize];
 		CCLabelTTF *label = [CCLabelTTF labelWithString:[self title] fontName:@"Arial" fontSize:32];
 		[self addChild:label z:0 tag:kTagLabel];
 		[label setPosition: ccp(s.width/2, s.height-50)];
-		
+
 		CCMenuItemImage *item1 = [CCMenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
 		CCMenuItemImage *item2 = [CCMenuItemImage itemFromNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
 		CCMenuItemImage *item3 = [CCMenuItemImage itemFromNormalImage:@"f1.png" selectedImage:@"f2.png" target:self selector:@selector(nextCallback:)];
-		
+
 		CCMenu *menu = [CCMenu menuWithItems:item1, item2, item3, nil];
 		menu.position = CGPointZero;
 		item1.position = ccp( s.width/2 - 100,30);
 		item2.position = ccp( s.width/2, 30);
 		item3.position = ccp( s.width/2 + 100,30);
 		[self addChild: menu z:1];
-		
+
 	}
 	return self;
 }
@@ -130,12 +130,12 @@ Class restartAction()
 {
 	[super onEnter];
 	CGSize s = [[CCDirector sharedDirector] winSize];
-  
+
 	// the root object just rotates around
 	root = [CCSprite spriteWithFile:@"r1.png"];
 	[self addChild: root z:1];
 	[root setPosition: ccp(s.width/2, s.height/2)];
-  
+
 	// the target object is offset from root, and the streak is moved to follow it
 	target = [CCSprite spriteWithFile:@"r1.png"];
 	[root addChild:target];
@@ -146,7 +146,7 @@ Class restartAction()
 	[self addChild:streak];
 	// schedule an update on each frame so we can syncronize the streak with the target
 	[self schedule:@selector(onUpdate:)];
-  
+
 	id a1 = [CCRotateBy actionWithDuration:2 angle:360];
 
 	id action1 = [CCRepeatForever actionWithAction:a1];
@@ -179,24 +179,24 @@ Class restartAction()
 -(void) onEnter
 {
 	[super onEnter];
-	
+
 	self.isTouchEnabled = YES;
 
 	CGSize s = [[CCDirector sharedDirector] winSize];
-		
+
 	// create the streak object and add it to the scene
 	streak = [CCMotionStreak streakWithFade:3 minSeg:3 image:@"streak.png" width:64 length:32 color:ccc4(255,255,255,255)];
 	[self addChild:streak];
-	
+
 	streak.position = ccp(s.width/2, s.height/2);
 }
 
 -(void)ccTouchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
 	UITouch *touch = [touches anyObject];
-	CGPoint touchLocation = [touch locationInView: [touch view]];	
+	CGPoint touchLocation = [touch locationInView: [touch view]];
 	touchLocation = [[CCDirector sharedDirector] convertToGL: touchLocation];
-	
+
 	[streak setPosition:touchLocation];
 }
 @end
@@ -221,28 +221,28 @@ Class restartAction()
 	// 9. Connects the director to the EAGLView
 	//
 	CC_DIRECTOR_INIT();
-	
+
 	// Obtain the shared director in order to...
 	CCDirector *director = [CCDirector sharedDirector];
-	
+
 	// Sets landscape mode
 	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
-	
+
 	// Turn on display FPS
 	[director setDisplayFPS:YES];
-	
+
 	// Enables High Res mode (Retina Display) on iPhone 4 and maintains low res on all other devices
 	if( ! [director enableRetinaDisplay:YES] )
 		CCLOG(@"Retina Display Not supported");
-	
+
 	// When in iPad / RetinaDisplay mode, CCFileUtils will append the "-ipad" / "-hd" to all loaded files
 	// If the -ipad  / -hdfile is not found, it will load the non-suffixed version
 	[CCFileUtils setiPadSuffix:@"-ipad"];			// Default on iPad is "" (empty string)
 	[CCFileUtils setRetinaDisplaySuffix:@"-hd"];	// Default on RetinaDisplay is "-hd"
-	
+
 	CCScene *scene = [CCScene node];
 	[scene addChild: [nextAction() node]];
-	
+
 	[director runWithScene: scene];
 }
 
@@ -270,7 +270,7 @@ Class restartAction()
 
 // application will be killed
 - (void)applicationWillTerminate:(UIApplication *)application
-{	
+{
 	CC_DIRECTOR_END();
 }
 

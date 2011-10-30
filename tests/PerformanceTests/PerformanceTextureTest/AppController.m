@@ -13,15 +13,15 @@
 - (void)applicationDidFinishLaunching:(UIApplication *)application
 {
 	// Init the window
-	
+
 	CC_DIRECTOR_INIT();
-	
+
 	// get instance of the shared director
 	CCDirector *director = [CCDirector sharedDirector];
-	
+
 	// before creating any layer, set the landscape mode
 	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
-	
+
 	// display FPS (useful when debugging)
 	[director setDisplayFPS:YES];
 
@@ -57,7 +57,7 @@
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
-{	
+{
 	CC_DIRECTOR_END();
 }
 

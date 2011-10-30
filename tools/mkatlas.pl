@@ -11,7 +11,7 @@
 # 3. Download and install GD perlmodule (Can be done with CPAN, perl -MCPAN -e 'shell', get GD, make GD, install GD)
 
 # README
-# mkatlas.pl is a perl script for generating an atlas image from individual images and a C header file with image coordinates. 
+# mkatlas.pl is a perl script for generating an atlas image from individual images and a C header file with image coordinates.
 # mkAtlas.pl takes a *.atl file in the following format and turns it into a png/pvr atlas.
 # Format: each line is <imagename>[,+<scale factor img>][,-<scale factor code],[*<alternative variable name], square brackets are optional
 # Here is an example and some further explaination:
@@ -33,12 +33,12 @@
 # #define SCALE_FOREGROUND_HOUSEBAR_CONCEPT 1
 #
 # For each line in the *.atl file, a rectangle and a scale factor is defined in the header file
-# As default, the scale factor is 1 and can be ignored. Sometimes though you want to scale a sprite in your code. 
+# As default, the scale factor is 1 and can be ignored. Sometimes though you want to scale a sprite in your code.
 # In particular, to improve pvr sprites you could scale the image up when copying it to the atlas and scale a sprite that uses the
 # image down by the same proportion. This often gives better results than just using the pvr image 1:1.
 # ",+1.5" scales Housebar_barcolor_01.png by factor 1.5 when copying it to the atlas. Thus, the rectangle will be 1.5 times as big as the
-# original image. 
-# ",+2,-0.5" scales the original image by factor 2. It also generates a SCALE define set to 0.5. 
+# original image.
+# ",+2,-0.5" scales the original image by factor 2. It also generates a SCALE define set to 0.5.
 # ",*housebar_concept" sets the define name. Otherwise, its deduced from the filename.
 #
 # For generating the atlas, call mkatlas like:
@@ -73,9 +73,9 @@ $texturetool = "/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/texture
 sub insertImg()
 {
     my ($node, $img) = @_;
-    
+
 #    print "w: $node->{W}, h: $node->{H}\n";
-	
+
     # if we're not a leaf then
     if($node->{CHILDA} != 0 || $node->{CHILDB} != 0)
     {
@@ -91,11 +91,11 @@ sub insertImg()
     {
 	# (if there's already a texture here, return)
 	return 0 if($node->{IMG_REF} != 0);
-		    
-	# (if we're too small, return)
-	return 0 if($img->{W} > $node->{W} || $img->{H} > $node->{H});	    
 
-	# (if we're just right, accept)	
+	# (if we're too small, return)
+	return 0 if($img->{W} > $node->{W} || $img->{H} > $node->{H});
+
+	# (if we're just right, accept)
 	if($node->{W} == $img->{W} && $node->{H} == $img->{H})
 	{
 	    $node->{IMG_REF} = $img;
@@ -109,7 +109,7 @@ sub insertImg()
         # (decide which way to split)
         my $dw = $node->{W} - $img->{W};
         my $dh = $node->{H} - $img->{H};
-        
+
         if($dw > $dh)
 	{
 	    # split vertically
@@ -134,12 +134,12 @@ sub insertImg()
 	    $childb{LEFT} = $node->{LEFT};
 	    $childb{BOTTOM} = $node->{BOTTOM} + $img->{H};
 	    $childb{W} = $node->{W};
-	    $childb{H} = $node->{H} - $img->{H};	    
+	    $childb{H} = $node->{H} - $img->{H};
 	}
 
 	$node->{CHILDA} = \%childa;
 	$node->{CHILDB} = \%childb;
- 
+
 	# (insert into first child we created)
 	$newNode = &insertImg($node->{CHILDA}, $img);
 	return $newNode;
@@ -160,10 +160,10 @@ sub init()
     usage() if $opt{h} || !$opt{f};
     $opt{s} = 128 if(!defined($opt{s}));
     $opt{r} = "" if(!defined($opt{r}));
-	$opt{p} = 0 if(!defined($opt{p}));	
+	$opt{p} = 0 if(!defined($opt{p}));
 
 	die("Error: -p must be a multiple of 2") if($opt{p} % 2 == 1);
-	
+
     printf("Options: s=$opt{s}, r=$opt{r}, p=$opt{p}\n");
 }
 
@@ -172,7 +172,7 @@ sub main
     my $num_images = 0;
 
     # read config file
-    open(IN, '<', $opt{f}) || die ("Cannot open file: $opt{f}\n"); 
+    open(IN, '<', $opt{f}) || die ("Cannot open file: $opt{f}\n");
     foreach my $line (<IN>)
     {
 	# skip comment lines (//)
@@ -184,12 +184,12 @@ sub main
 	{
 		$scaleUp = 1;
 		$scaleDown = 1;
-		$altName = "";  
-		
+		$altName = "";
+
 	    # open image file and get stats
 		if($line =~ /^(.*?),(.*)$/)
 		{
-			$filename = "$opt{r}/$1";			
+			$filename = "$opt{r}/$1";
 			my $rest = $2;
 			$scaleUp = $1 if($rest =~ /\+(\d+\.?\d*)/);
 			$scaleDown = $1 if($rest =~ /-(\d+\.?\d*)/);
@@ -199,11 +199,11 @@ sub main
 		{
 			$filename = "$opt{r}/$line";
 		}
-		
+
 	    $gd_image = GD::Image->new($filename);
 	    die("Error: Cannot open image file $filename\n") if(!$gd_image);
 	    ($width,$height) = $gd_image->getBounds();
-	    
+
 	    my %image = (FILENAME => $filename,
 					 W => ($width*$scaleUp)+$opt{p},
 					 H => ($height*$scaleUp)+$opt{p},
@@ -212,11 +212,11 @@ sub main
 					 ALTNAME => $altName,
 					 W_ORG => $width,
 					 H_ORG => $height);
-		
+
 	    push(@images, \%image);
 	    chop($line);
 	    printf("$filename -> w: $width, h: $height\n");
-	    
+
 	}
     }
     close(IN);
@@ -258,10 +258,10 @@ sub main
     close OUT;
 
     close(H);
-	
+
 	# create pvr texture file
 	my $call = "$texturetool -o \"${file_prefix}Atlas.pvr\" -f PVR -e PVRTC -p \"${file_prefix}Atlas_pvrprev.png\" \"${file_prefix}Atlas.png\"";print "Calling $call\n";
-    system($call); 	
+    system($call);
 }
 
 sub generateAtlas
@@ -278,18 +278,18 @@ sub generateAtlas
 	$gd_image_src->saveAlpha(1);
 	$gd_image_src->alphaBlending(0);
 	$gd_image_src->trueColor(1);
-	my $margin = $opt{p}/2;	
+	my $margin = $opt{p}/2;
 	my $x_dest = $node->{LEFT};
 	my $y_dest = $node->{BOTTOM};
 	my $w_src = $node->{IMG_REF}->{W_ORG};
-	my $h_src = $node->{IMG_REF}->{H_ORG};	
+	my $h_src = $node->{IMG_REF}->{H_ORG};
 	my $scaleUp = $node->{IMG_REF}->{SCALEUP};
-	my $scaleDown = $node->{IMG_REF}->{SCALEDOWN}; 	
+	my $scaleDown = $node->{IMG_REF}->{SCALEDOWN};
 	my $w_dst = $w_src*$scaleUp;
 	my $h_dst = $h_src*$scaleUp;
-	my $altName = $node->{IMG_REF}->{ALTNAME};	
-		
-	#copy image to atlas	
+	my $altName = $node->{IMG_REF}->{ALTNAME};
+
+	#copy image to atlas
 	if($scaleUp == 1)
 	{
 		$atlasParam->{ATLAS_REF}->copy($gd_image_src, $x_dest+$margin, $y_dest+$margin, 0, 0, $w_src, $h_src);
@@ -299,13 +299,13 @@ sub generateAtlas
 		$atlasParam->{ATLAS_REF}->copyResized($gd_image_src, $x_dest+$margin, $y_dest+$margin, 0, 0, $w_dst, $h_dst, $w_src, $h_src);
 	}
 
-	# fix alpha bug 
+	# fix alpha bug
 	# For the first image, I duplicated the code so it reads & writes the first image again in the same spot.
-	# For whatever reason, it works.  Must be some weird bug in one of the libraries your using.		
-	if( $init == 0 )			
+	# For whatever reason, it works.  Must be some weird bug in one of the libraries your using.
+	if( $init == 0 )
 	{
 		$init = 1;
-		
+
 		my $gd_image_src = GD::Image->new($node->{IMG_REF}->{FILENAME});
 		$gd_image_src->saveAlpha(1);
 		$gd_image_src->alphaBlending(0);
@@ -318,9 +318,9 @@ sub generateAtlas
 		{
 			$atlasParam->{ATLAS_REF}->copyResized($gd_image_src, $x_dest+$margin, $y_dest+$margin, 0, 0, $w_dst, $h_dst, $w_src, $h_src);
 		}
-	}		
-		
-		
+	}
+
+
 	# fill surrounding margin with image
 	if($margin != 0)
 	{
@@ -336,7 +336,7 @@ sub generateAtlas
 			}
 
 	}
-			
+
     #generate header line
 	if($altName eq "")
 	{
@@ -350,7 +350,7 @@ sub generateAtlas
 	$coordsName = "COORDS_$atlasParam->{PREFIX}_$name";
 	$scaleName = "SCALE_$atlasParam->{PREFIX}_$name";
 	$x_coord = ${x_dest}+$margin;
-	$y_coord = ${y_dest}+$margin;	
+	$y_coord = ${y_dest}+$margin;
 	print {$atlasParam->{HEADER_FH}} "#define $coordsName CGRectMake($x_coord,$y_coord,$w_dst,$h_dst)\n";
 	print {$atlasParam->{HEADER_FH}} "#define $scaleName $scaleDown\n";
     }

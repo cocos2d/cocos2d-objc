@@ -1,4 +1,8 @@
-version 1.1 - 11-Oct-2011
+version 1.1-beta2 xx - 2011
+. [NEW] TileMap: supports in-memory TMX map creation (issue #1239)
+. [FIX] TouchDispatcher: correctly handles addition and removal of handlers when being inside a touch handler (issue #1084, #1139)
+
+version 1.1-beta 11-Oct-2011
 . [NEW] Animation: Added file format. AnimationCache can load animations from file
 . [NEW] ccConfig: Removed CC_RETINA_DISPLAY_FILENAME_SUFFIX. Use CCFileUtils API instead
 . [NEW] ccConfig: Removed CC_RETINA_DISPLAY_SUPPORT. It is always enabled.
@@ -187,7 +191,7 @@ version 0.99.5 - 16-Dec-2010
 . [3RD] Chipmunk: Updated to v5.3.4
 . [3RD] libpng: don't compile pngtest.c (issue #1058)
 
- 
+
 version 0.99.5-rc1 - 15-Nov-2010
 . [NEW] Director: setProjection calls "updateProjection" delegate if "custom" projection is used
 . [NEW] Label: The CCLabelProtocol implements the -(NSString*)string method.
@@ -275,7 +279,7 @@ version 0.99.5-beta3 23-Sep-2010
  . [FIX] Texture2d: If Text in context can't be created return nil (prevent possible crash)
  . [FIX] Texture2d: Optimized loading time of PVR images
  . [FIX] Transitions: PageTurn3D transition has fewer visible artifacts (issue #751)
- 
+
 version 0.99.5-beta2 31-Ago-2010
  . [NEW] Actions: files renamed: CCXXXAction.[hm] -> CCActionXXX.[hm]
  . [NEW] Actions: Using new naming convetion:
@@ -316,7 +320,7 @@ version 0.99.5-beta2 31-Ago-2010
  . [FIX] Tools: mkatlas supports artifact removal (issue #549)
  . [FIX] Tools: mkatlas supports spaces in the name (issue #618)
  . [3RD] Chipmunk: updated to Chipmunk v5.3 and Chipmunk Demos
- 
+
 version 0.99.5-beta 30-Jul-2010 - AKA 'CJ the artifact killer'
  . [NEW] BitmapFontAtlas: added support for multilines labels
  . [NEW] BitmapFontAtlas: added optional setCString method
@@ -345,7 +349,7 @@ version 0.99.5-beta 30-Jul-2010 - AKA 'CJ the artifact killer'
  . [FIX] Tests: CocosLive Demo: added requestRank tests
  . [FIX] TextureCache: JPEG workaround (issue #866) is only applied on iOS >= 4 (issue #932)
  . [3RD] libpng: updated to v1.2.44 (libpng is only used by a cocos2d test)
- 
+
 version 0.99.4 - 14-Jul-2010
  . [NEW] CocosDenshion: switching between background and foreground music (issue #928)
  . [FIX] CocosDenshion: fixed memory leak weak reallocing buffers (issue #919)
@@ -359,7 +363,7 @@ version 0.99.4 - 14-Jul-2010
  . [FIX] GLES-Render: solid objects' colors synced with box2d repository
  . [FIX] Scheduler: Doesn't reschedule already scheduled method. It only updates the interval.
  . [FIX] Templates & Tests: added App Delegate foreground & background callbacks
- 
+
  version 0.99.4-rc3 - 01-Jul-2010
  . [FIX] All: Import ccCArray instead of ccArray (compiles in case sentive file system)
  . [FIX] CCArray: fixed overflow (issue #901)
@@ -444,7 +448,7 @@ version 0.99.3-rc - 18-May-2010
  . [FIX] Scheduler: Improved performance (issue #492)
  . [FIX] Templates: Using uthash instead of ccHashSet (issue #860)
  . [FIX] Templates: templates can be installed in user directory (issue #856)
- 
+
 version 0.99.2 - 28-Apr-2010
  . [FIX] ActionManager: removeByTag doesn't crash if action is also running (issue #841)
  . [FIX] cocos2d/*.m: fixed several memory leaks in cases where initXXX failed (issue #XXX)
@@ -481,7 +485,7 @@ version 0.99.2-rc - 15-Apr-2010
  . [FIX] SpriteFrameCache: logs warning if frame is not found
  . [FIX] Xcode: uses optimized binary. ARMv7 binary has thumb-2 enabled (issue #XXX)
  . [3RD] Box2d: updated to SVN r91 (v2.1.1)
- 
+
 version 0.99.1 - 19-Mar-2010
  . [FIX] Menu: If menu is not visible it doesn't receive touches (issue #88)
  . [FIX] Menu: MenuItemLabel restores the scale property (issue #500)
@@ -547,7 +551,7 @@ version 0.99.0-final - 15-Feb-2010
  . Tests: SpriteTest uses GL_ALPHA_TEST is zVertex test (issue #XXX)
  . TMX: filling empty tiles doesn't crash (issue #740)
  . TMX: if compression is not "gzip", abort (tiled 0.4 feature) (issue #XXX)
- 
+
 version 0.99.0-rc - 31-Jan-2010
  . All: Default OpenGL state is: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY (issue #718)
  . Action: Improved CCSequence performance (issue #XXX)
@@ -581,7 +585,7 @@ version 0.99.0-rc - 31-Jan-2010
  . TMXMaps: groupNamed renamed to objectGroupNamed (issue #XXX)
  . TouchDispatcher: StandardTouchHandler returns void (not BOOL). They are executed after the TargetedHandlers (issue #710)
  . Xcode: doxygen scripts runs with spaces in subdirectories (issue #684)
- 
+
 version 0.9.0-beta2 - 11-Jan-2010
  . Actions: added 2 new instant actions: FlipX and FlipY (counter-rollback of part issue #620)
  . Actions: uses FLT_EPSILON constant (issue #701)
@@ -610,7 +614,7 @@ version 0.9.0-beta2 - 11-Jan-2010
  . TMXTiledMap: TMXLayer and TMXObjectGroup on it's own files (part of issue #636)
  . TMXTiledMap: doesn't generate descendants when not necessary (works as fast as in v0.8.2)
  . TMXTiledMap: removeChild works without corrupting the tilemap (issue #XXX)
- 
+
 version 0.9.0-beta - 14-Dic-2009
  . ActionManager: fixed leak (issue #635)
  . Actions: using [self class]. Easier to subclass (issue #655)
@@ -662,7 +666,7 @@ version 0.8.2 - 19-Oct-2009
  . CocosLive: doesn't use deprecated methods (issue #604)
  . MenuItem: added isSelected property (issue #601)
  . Tests: removed copyrighted fonts (part of issue #596)
- 
+
 version 0.8.2-rc1 - 14-Oct-2009
  . Actions: start/stop sets the target (issue #489 and issue #589)
  . Actions: Compound actions call "inner" stop (issue #489 and #issue #589)
@@ -677,7 +681,7 @@ version 0.8.2-rc1 - 14-Oct-2009
  . Tests: Added Particle + Parallax test (part of issue #241)
  . TileMap: TMXLayers work without tiles (issue #587)
  . TileMap: TMX maps HUGE performance boost (issue #574)
- 
+
 version 0.8.2-rc0 - 5-Oct-2009
  . Actions: Added EaseBack family actios (issue #568)
  . AtlasSprite: set atlasIndex to invalid on remove (issue #569)
@@ -692,7 +696,7 @@ version 0.8.2-rc0 - 5-Oct-2009
  . Templates: works with FontLabel (part of issue #534)
  . Templates: added cocos2d+chipmunk template (issue #XXX)
  . TextureAtlas: insertQuad fixed signed math (issue #575)
- 
+
 version 0.8.2-beta - 23-Sept-2009
  . All: ccConfig.h file added (issue #551)
  . Actions: added Ease Elastic actions (issue #530)
@@ -721,7 +725,7 @@ version 0.8.2-beta - 23-Sept-2009
  . TileMap: TMX raises expection if map is not encoded and/or gzipped (issue #559)
  . Transition: ease actions can be overriden (issue #548)
  . Transition: added PageTurnTransition (issue #522)
- 
+
 version 0.8.1 - 26-Ago-2009
  . ActionManager: doesn't delete running actions (issue #481)
  . Box2d: using google code r10 (pre v2.1.0) (issue #494)
@@ -746,7 +750,7 @@ version 0.8.1-rc - 19-Ago-2009
  . TileMap: TMX getter/setters works OK with async maps (issue #506)
  . TileMap: anchorPoint works OK (issue #508)
  . Xcode: COCOS2D_DEBUG used instead of DEBUG (issue #507)
- 
+
 version 0.8.1-beta - 10-Ago-2009
  . BitmapFontAtlas: .png image can be in subfolders (issue #464)
  . Box2d: possibility to call world.DrawDebugData() from draw (issue #493)
@@ -770,7 +774,7 @@ version 0.8 - 27-Jul-2009
  . BitmapFontAtlas: opacity and color work as expected (issue #463)
  . CocosNode: setRelativeAnchorPoint error (issue #461)
  . Director: convertCoordinate roundoff error (issue #453)
- 
+
 version 0.8-rc2 - 21-Jul-2009
  . Actions: Repeat repeats OK (issue #424)
  . Actions: Prevents division by 0 when duration==0 (issue #452)
@@ -792,7 +796,7 @@ version 0.8-rc2 - 21-Jul-2009
  . TextureMgr: new (and recommended) way to add CGImages (issue #349)
  . TouchDispatcher: retains/releases the delegates (issue #422)
  . Transitions: Fixed artifacts in Slide transitions (issue #442)
- 
+
 version 0.8-rc - 13-Jul-2009
  . ActionManager: actions logic were removed from CocosNode (issue #437)
  . Actions/Scheduler: the 1st time a Timer or Action is fired, is with dt=0 (issue #429)
@@ -909,7 +913,7 @@ version 0.7.2 - 23-Apr-2009
  . TileMapAtlas: supports fullpath (issue #220)
  . TileMapAtlas: don't render in subpixels (issue #135)
  . Xcode project: added class model (issue #312)
- 
+
 version 0.7.1 - 20-Mar-2009
  . Actions: added tags to actions (issue #222)
  . Actions: Spawns can be Speeded (issue #257)
@@ -980,7 +984,7 @@ version 0.7.0 - 19-Feb-2009
                 FadeTRTransition, FadeBLTransition, FadeUpTransition, FadeDownTransition (issue #187)
   . Xcode: treat warnings as errors (issue #201)
 
- 
+
 version 0.6.3 - 28-Jan-2009
  . Actions: ScaleTo & ScaleBy supports X and Y factors (issue #156)
  . Actions: Added collections of Ease Actions (issue #157)
@@ -1022,12 +1026,12 @@ version 0.6.2 - 24-Dec-2008
  . Sprite & Animation: can be created from Texture2D, updated SpriteDemo example (issue #113)
  . TextureMgr: Avois duplicate cache (issue #121)
  . Transitions: FadeTransition supports variable color. Updated TransitionsDemo (issue #129)
- 
+
 version 0.6.1 - 08-Dec-2008
  . Documentation: Generation of doc fixes (issue #105)
  . Primitives: drawLine prototype fixed (issue #103)
  . Xcode: all projects have "thumb compilation" turned off (issue #104)
- 
+
 version 0.6.0 - 05-Dec-2008
  . Actions: Sequences of Repeats fixes (issue #80)
  . Actions: Added RepeatForEver. Added example in SpritesDemo example (issue #93)
@@ -1052,7 +1056,7 @@ version 0.5.3 - 18-Nov-2008
  . CocosNode: removeAll fixes (issue #74)
  . CocosNode: stopAction fix (issue #82)
  . CocosNode: supports flipX and flipY (issue #53)
- . CocosNode: supports scaleX and scaleY (issue #54) 
+ . CocosNode: supports scaleX and scaleY (issue #54)
  . Layer: isTouchEnabled, isAccelerometerEnabled are properties (issue #70)
  . Menu: supports CocosNodeOpacity protocol (issue #76)
  . MultiplexLayer: added switchToAndReleaseMe (issue #71)
@@ -1087,7 +1091,7 @@ version 0.5.1 - 20-Oct-2008
  . LabelAtlas: works with NxM size images (issue #50)
  . MenuItem: supports enable/disable (issue #22)
  . Particle system: exports more variables (issue #48)
- 
+
 version 0.5.0 - 05-Oct-2008
  . Actions: copy protocol fixed on some actions (issue #27)
  . Chipmunk: using newest version from svn (issue #34)
@@ -1138,7 +1142,7 @@ version 0.4.1 - 08-Sept-2008
  . Transitions: Added new ZoomFlipXTransition transition.
  . Transitions: Added new ZoomFlipYTransition transition.
  . Transitions: Added new ZoomFlipAngularTransition transition.
- 
+
 version 0.4.0 - 30-Ago-2008
  . CocosNode: private methods are private
  . CocosNode: stop renamed to stopAllActions
@@ -1150,7 +1154,7 @@ version 0.4.0 - 30-Ago-2008
  . MenuItem: added MenuItemImage
  . MenuItem: uses target/selector, not receiver/selector
  . MenuItem: MenuItemFont restore scale to 1.0 after being invoked (by Codemattic)
- . MenuItem: can be positioned on runtime. 
+ . MenuItem: can be positioned on runtime.
  . TextureNode: renamed setR:g:b: to setRGB:::
 
 version 0.3.3 - 23-Ago-2008
@@ -1196,7 +1200,7 @@ version 0.3.1 - 30-Jul-2008
  . Types: created ccTime type (float or double) used to calculate delta time
  . Types: older types have the prefix "cc" (cocos)
 
- 
+
 version 0.3.0 - 27-Jul-2008
  . Actions: they are not cloned. If you want to reuse them, clone them manually using the method 'copy'
  . Actions: CallFunc, CallFuncN using performSelector instead of NSInvocator
@@ -1216,7 +1220,7 @@ version 0.3.0 - 27-Jul-2008
  . Texture Node: Added transform anchor support
  . Texture Node: Added color suppport
  . Texture Node: Added new cocos2d node. Base class of Sprite and Label
- 
+
 
 version 0.2.1 - 21-Jul-2008
  . Director: landscape can be RIGHT or LEFT (at compile time)

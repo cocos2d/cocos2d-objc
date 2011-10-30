@@ -27,25 +27,25 @@ enum {
 	return kCellHeight;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section 
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
 	AppController *appDelegate = [[UIApplication sharedApplication] delegate];
 	NSInteger i = [[appDelegate globalScores] count];
-	
+
 	return i;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	static NSString *MyIdentifier = @"HighScoreCell";
-	
+
 	UILabel *name, *score, *idx, *country;
 	UILabel *speed, *angle;
-	
+
 	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MyIdentifier];
 	if (cell == nil) {
 		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:MyIdentifier] autorelease];
-		
+
 		// Position
 		idx = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 24, kCellHeight-2)];
 		idx.tag = 3;
@@ -54,10 +54,10 @@ enum {
 		idx.adjustsFontSizeToFitWidth = YES;
 		idx.textAlignment = UITextAlignmentRight;
 		idx.textColor = [UIColor colorWithRed:0.0f green:0.0f blue:0.0f alpha:1.0f];
-		idx.autoresizingMask = UIViewAutoresizingFlexibleRightMargin; 
+		idx.autoresizingMask = UIViewAutoresizingFlexibleRightMargin;
 		[cell.contentView addSubview:idx];
 		[idx release];
-		
+
 		// Name
 		name = [[UILabel alloc] initWithFrame:CGRectMake(65.0f, 0.0f, 150, kCellHeight-2)];
 		name.tag = 1;
@@ -66,10 +66,10 @@ enum {
 		name.adjustsFontSizeToFitWidth = YES;
 		name.textAlignment = UITextAlignmentLeft;
 		name.textColor = [UIColor colorWithRed:0.0f green:0.0f blue:0.0f alpha:1.0f];
-		name.autoresizingMask = UIViewAutoresizingFlexibleRightMargin; 
+		name.autoresizingMask = UIViewAutoresizingFlexibleRightMargin;
 		[cell.contentView addSubview:name];
 		[name release];
-		
+
 		// Score
 		score = [[UILabel alloc] initWithFrame:CGRectMake(200, 0.0f, 70.0f, kCellHeight-2)];
 		score.tag = 2;
@@ -80,7 +80,7 @@ enum {
 		score.autoresizingMask = UIViewAutoresizingFlexibleRightMargin;
 		[cell.contentView addSubview:score];
 		[score release];
-		
+
 		// Speed
 		speed = [[UILabel alloc] initWithFrame:CGRectMake(65, 20.0f, 40.0f, kCellHeight-2)];
 		speed.tag = 5;
@@ -91,7 +91,7 @@ enum {
 		speed.autoresizingMask = UIViewAutoresizingFlexibleRightMargin;
 		[cell.contentView addSubview:speed];
 		[speed release];
-		
+
 		// Angle
 		angle = [[UILabel alloc] initWithFrame:CGRectMake(160, 20.0f, 35.0f, kCellHeight-2)];
 		angle.tag = 6;
@@ -102,7 +102,7 @@ enum {
 		angle.autoresizingMask = UIViewAutoresizingFlexibleRightMargin;
 		[cell.contentView addSubview:angle];
 		[angle release];
-		
+
 		// Flag
 		country = [[UILabel alloc] initWithFrame:CGRectMake(280, 20.0f, 16, kCellHeight-2)];
 		country.tag = 4;
@@ -113,7 +113,7 @@ enum {
 		country.autoresizingMask = UIViewAutoresizingFlexibleRightMargin;
 		[cell.contentView addSubview:country];
 		[country release];
-		
+
 	} else {
 		name = (UILabel *)[cell.contentView viewWithTag:1];
 		score = (UILabel *)[cell.contentView viewWithTag:2];
@@ -121,9 +121,9 @@ enum {
 		country = (UILabel*)[cell.contentView viewWithTag:4];
 		speed = (UILabel *)[cell.contentView viewWithTag:5];
 		angle = (UILabel *)[cell.contentView viewWithTag:6];
-		
+
 	}
-	
+
 	int i = indexPath.row;
 	AppController *appDelegate = [[UIApplication sharedApplication] delegate];
 
@@ -134,7 +134,7 @@ enum {
 	name.text = [s objectForKey:@"cc_playername"];
 	// this is an NSNumber... convert it to string
 	score.text = [[s objectForKey:@"cc_score"] stringValue];
-	
+
 	// sanity check in case usr_speed doesn't is invalid
 	id obSpeed = [s objectForKey:@"usr_speed"];
 	if( [obSpeed respondsToSelector:@selector(stringValue)] )
@@ -148,9 +148,9 @@ enum {
 		angle.text = [obAngle stringValue];
 	else
 		angle.text = obAngle;
-	
+
 	country.text = [s objectForKey:@"cc_country"];
-		
+
 
 	return cell;
 }

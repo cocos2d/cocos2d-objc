@@ -2,7 +2,7 @@
 #import "cocos2d.h"
 
 @class CCSprite;
-@class CCParticleBatchNode; 
+@class CCParticleBatchNode;
 
 //CLASS INTERFACE
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED

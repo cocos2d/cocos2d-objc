@@ -32,7 +32,7 @@
 #define _ogg_realloc realloc
 #define _ogg_free    free
 
-#ifdef _WIN32 
+#ifdef _WIN32
 
 #  ifndef __GNUC__
    /* MSVC/Borland */

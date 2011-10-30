@@ -1,15 +1,15 @@
 /* Copyright (c) 2007 Scott Lembcke
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -31,7 +31,7 @@
 
 /*
 	IMPORTANT - READ ME!
-	
+
 	This file sets up a simple interface that the individual demos can use to get
 	a Chipmunk space running and draw what's in it. In order to keep the Chipmunk
 	examples clean and simple, they contain no graphics code. All drawing is done
@@ -49,7 +49,7 @@ static void
 glColor_from_pointer(void *ptr)
 {
 	unsigned long val = (long)ptr;
-	
+
 	// hash the pointer up nicely
 	val = (val+0x7ed55d16) + (val<<12);
 	val = (val^0xc761c23c) ^ (val>>19);
@@ -57,24 +57,24 @@ glColor_from_pointer(void *ptr)
 	val = (val+0xd3a2646c) ^ (val<<9);
 	val = (val+0xfd7046c5) + (val<<3);
 	val = (val^0xb55a4f09) ^ (val>>16);
-	
+
 //	GLfloat v = (GLfloat)val/(GLfloat)ULONG_MAX;
 //	v = 0.95f - v*0.15f;
-//	
+//
 //	glColor3f(v, v, v);
 
 	GLubyte r = (val>>0) & 0xFF;
 	GLubyte g = (val>>8) & 0xFF;
 	GLubyte b = (val>>16) & 0xFF;
-	
+
 	GLubyte max = r>g ? (r>b ? r : b) : (g>b ? g : b);
-	
+
 	const int mult = 127;
 	const int add = 63;
 	r = (r*mult)/max + add;
 	g = (g*mult)/max + add;
 	b = (b*mult)/max + add;
-	
+
 	glColor4ub(r, g, b, 255);
 }
 
@@ -93,7 +93,7 @@ glColor_for_shape(cpShape *shape, cpSpace *space)
 			return;
 		}
 	}
-	
+
 	glColor_from_pointer(shape);
 }
 
@@ -131,34 +131,34 @@ static void
 drawCircleShape(cpBody *body, cpCircleShape *circle, cpSpace *space)
 {
 	glVertexPointer(2, GL_FLOAT, 0, circleVAR);
-	
+
 	// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
-	// Needed states:  GL_VERTEX_ARRAY, 
+	// Needed states:  GL_VERTEX_ARRAY,
 	// Unneeded states: GL_TEXTURE_2D, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
 	glDisable(GL_TEXTURE_2D);
 	glDisableClientState(GL_COLOR_ARRAY);
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-	
+
 
 	glPushMatrix(); {
 		cpVect center = circle->tc;
 		glTranslatef(center.x, center.y, 0.0f);
 		glRotatef(body->a*180.0f/(float)M_PI, 0.0f, 0.0f, 1.0f);
 		glScalef(circle->r, circle->r, 1.0f);
-		
+
 		if(!circle->shape.sensor){
 			glColor_for_shape((cpShape *)circle, space);
 			glDrawArrays(GL_TRIANGLE_FAN, 0, circleVAR_count - 1);
 		}
-		
+
 		glColor4f(LINE_COLOR);
 		glDrawArrays(GL_LINE_STRIP, 0, circleVAR_count);
 	} glPopMatrix();
-	
+
 	// restore default GL state
 	glEnable(GL_TEXTURE_2D);
 	glEnableClientState(GL_COLOR_ARRAY);
-	glEnableClientState(GL_TEXTURE_COORD_ARRAY);	
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 }
 
 static const GLfloat pillVAR[] = {
@@ -197,18 +197,18 @@ drawSegmentShape(cpBody *body, cpSegmentShape *seg, cpSpace *space)
 {
 	cpVect a = seg->ta;
 	cpVect b = seg->tb;
-	
+
 	if(seg->r){
 		glVertexPointer(3, GL_FLOAT, 0, pillVAR);
-		
+
 		// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
-		// Needed states:  GL_VERTEX_ARRAY, 
+		// Needed states:  GL_VERTEX_ARRAY,
 		// Unneeded states: GL_TEXTURE_2D, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
 		glDisable(GL_TEXTURE_2D);
 		glDisableClientState(GL_COLOR_ARRAY);
 		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-		
-		
+
+
 		glPushMatrix(); {
 			cpVect d = cpvsub(b, a);
 			cpVect r = cpvmult(d, seg->r/cpvlength(d));
@@ -220,21 +220,21 @@ drawSegmentShape(cpBody *body, cpSegmentShape *seg, cpSpace *space)
 				 a.x, a.y, 0.0f, 1.0f,
 			};
 			glMultMatrixf(matrix);
-			
+
 			if(!seg->shape.sensor){
 				glColor_for_shape((cpShape *)seg, space);
 				glDrawArrays(GL_TRIANGLE_FAN, 0, pillVAR_count);
 			}
-			
+
 			glColor4f(LINE_COLOR);
 			glDrawArrays(GL_LINE_LOOP, 0, pillVAR_count);
 		} glPopMatrix();
-		
+
 		// restore default GL state
 		glEnable(GL_TEXTURE_2D);
 		glEnableClientState(GL_COLOR_ARRAY);
-		glEnableClientState(GL_TEXTURE_COORD_ARRAY);	
-		
+		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+
 	} else {
 		glColor4f(LINE_COLOR);
 		ccDrawLine(a,b);
@@ -250,34 +250,34 @@ drawPolyShape(cpBody *body, cpPolyShape *poly, cpSpace *space)
 #else
 	glVertexPointer(2, GL_FLOAT, 0, poly->tVerts);
 #endif
-	
+
 	// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
-	// Needed states:  GL_VERTEX_ARRAY, 
+	// Needed states:  GL_VERTEX_ARRAY,
 	// Unneeded states: GL_TEXTURE_2D, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
 	glDisable(GL_TEXTURE_2D);
 	glDisableClientState(GL_COLOR_ARRAY);
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-	
-	
+
+
 	if(!poly->shape.sensor){
 		glColor_for_shape((cpShape *)poly, space);
 		glDrawArrays(GL_TRIANGLE_FAN, 0, count);
 	}
-	
+
 	glColor4f(LINE_COLOR);
 	glDrawArrays(GL_LINE_LOOP, 0, count);
-	
+
 	// restore default GL state
 	glEnable(GL_TEXTURE_2D);
 	glEnableClientState(GL_COLOR_ARRAY);
-	glEnableClientState(GL_TEXTURE_COORD_ARRAY);	
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 }
 
 static void
 drawObject(cpShape *shape, cpSpace *space)
 {
 	cpBody *body = shape->body;
-	
+
 	switch(shape->klass->type){
 		case CP_CIRCLE_SHAPE:
 			drawCircleShape(body, (cpCircleShape *)shape, space);
@@ -325,12 +325,12 @@ drawSpring(cpDampedSpring *spring, cpBody *body_a, cpBody *body_b)
 	cpVect delta = cpvsub(b, a);
 
 	// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
-	// Needed states:  GL_VERTEX_ARRAY, 
+	// Needed states:  GL_VERTEX_ARRAY,
 	// Unneeded states: GL_TEXTURE_2D, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
 	glDisable(GL_TEXTURE_2D);
 	glDisableClientState(GL_COLOR_ARRAY);
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-	
+
 	glVertexPointer(2, GL_FLOAT, 0, springVAR);
 	glPushMatrix(); {
 		GLfloat x = a.x;
@@ -345,16 +345,16 @@ drawSpring(cpDampedSpring *spring, cpBody *body_a, cpBody *body_b)
 				0.0f,   0.0f, 1.0f, 0.0f,
 					 x,      y, 0.0f, 1.0f,
 		};
-		
+
 		glMultMatrixf(matrix);
 		glDrawArrays(GL_LINE_STRIP, 0, springVAR_count);
 	} glPopMatrix();
-	
+
 	// restore default GL state
 	glEnable(GL_TEXTURE_2D);
 	glEnableClientState(GL_COLOR_ARRAY);
-	glEnableClientState(GL_TEXTURE_COORD_ARRAY);	
-	
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+
 }
 
 static void
@@ -366,7 +366,7 @@ drawConstraint(cpConstraint *constraint)
 	const cpConstraintClass *klass = constraint->klass;
 	if(klass == cpPinJointGetClass()){
 		cpPinJoint *joint = (cpPinJoint *)constraint;
-	
+
 		cpVect a = cpvadd(body_a->p, cpvrotate(joint->anchr1, body_a->rot));
 		cpVect b = cpvadd(body_b->p, cpvrotate(joint->anchr2, body_b->rot));
 
@@ -374,10 +374,10 @@ drawConstraint(cpConstraint *constraint)
 		ccDrawPoint(a);
 		ccDrawPoint(b);
 		ccDrawLine(a, b);
-		
+
 	} else if(klass == cpSlideJointGetClass()){
 		cpSlideJoint *joint = (cpSlideJoint *)constraint;
-	
+
 		cpVect a = cpvadd(body_a->p, cpvrotate(joint->anchr1, body_a->rot));
 		cpVect b = cpvadd(body_b->p, cpvrotate(joint->anchr2, body_b->rot));
 
@@ -388,7 +388,7 @@ drawConstraint(cpConstraint *constraint)
 
 	} else if(klass == cpPivotJointGetClass()){
 		cpPivotJoint *joint = (cpPivotJoint *)constraint;
-	
+
 		cpVect a = cpvadd(body_a->p, cpvrotate(joint->anchr1, body_a->rot));
 		cpVect b = cpvadd(body_b->p, cpvrotate(joint->anchr2, body_b->rot));
 
@@ -397,7 +397,7 @@ drawConstraint(cpConstraint *constraint)
 		ccDrawPoint(b);
 	} else if(klass == cpGrooveJointGetClass()){
 		cpGrooveJoint *joint = (cpGrooveJoint *)constraint;
-	
+
 		cpVect a = cpvadd(body_a->p, cpvrotate(joint->grv_a, body_a->rot));
 		cpVect b = cpvadd(body_a->p, cpvrotate(joint->grv_b, body_a->rot));
 		cpVect c = cpvadd(body_b->p, cpvrotate(joint->anchr2, body_b->rot));
@@ -422,7 +422,7 @@ drawBB(cpShape *shape, void *unused)
 		{shape->bb.r, shape->bb.b},
 	};
 	ccDrawPoly(vertices, 4, NO);
-	
+
 }
 
 // copied from cpSpaceHash.c
@@ -436,23 +436,23 @@ static void
 drawSpatialHash(cpSpaceHash *hash)
 {
 	cpBB bb = cpBBNew(-320, -240, 320, 240);
-	
+
 	cpFloat dim = hash->celldim;
 	int n = hash->numcells;
-	
+
 	int l = (int)floor(bb.l/dim);
 	int r = (int)floor(bb.r/dim);
 	int b = (int)floor(bb.b/dim);
 	int t = (int)floor(bb.t/dim);
-	
+
 	for(int i=l; i<=r; i++){
 		for(int j=b; j<=t; j++){
 			int cell_count = 0;
-			
+
 			int index = hash_func(i,j,n);
 			for(cpSpaceHashBin *bin = hash->table[index]; bin; bin = bin->next)
 				cell_count++;
-			
+
 			GLfloat v = 1.0f - (GLfloat)cell_count/10.0f;
 			glColor4f(v,v,v,1);
 //			glRectf(i*dim, j*dim, (i + 1)*dim, (j + 1)*dim);
@@ -470,13 +470,13 @@ drawSpace(cpSpace *space, drawSpaceOptions *options)
 		drawSpatialHash(space->staticShapes);
 		glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
 	}
-	
+
 	glLineWidth(options->lineThickness);
 	if(options->drawShapes){
 		cpSpaceHashEach(space->activeShapes, (cpSpaceHashIterator)drawObject, space);
 		cpSpaceHashEach(space->staticShapes, (cpSpaceHashIterator)drawObject, space);
 	}
-	
+
 	glLineWidth(1.0f);
 	if(options->drawBBs){
 		glColor4f(0.3f, 0.5f, 0.3f,1);
@@ -490,10 +490,10 @@ drawSpace(cpSpace *space, drawSpaceOptions *options)
 	for(int i=0, count = constraints->num; i<count; i++){
 		drawConstraint((cpConstraint *)constraints->arr[i]);
 	}
-	
+
 	if(options->bodyPointSize){
 		glPointSize(options->bodyPointSize);
-		
+
 		cpArray *bodies = space->bodies;
 
 		glColor4f(LINE_COLOR);
@@ -519,7 +519,7 @@ drawSpace(cpSpace *space, drawSpaceOptions *options)
 		cpArray *arbiters = space->arbiters;
 		for(int i=0; i<arbiters->num; i++){
 			cpArbiter *arb = (cpArbiter*)arbiters->arr[i];
-			
+
 			glColor4f(COLLISION_COLOR);
 			for(int i=0; i<arb->numContacts; i++){
 				cpVect v = arb->contacts[i].p;

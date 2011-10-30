@@ -1,15 +1,15 @@
 /* Copyright (c) 2007 Scott Lembcke
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -18,7 +18,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
- 
+
  struct cpArbiter;
  struct cpSpace;
  struct cpCollisionHandler;
@@ -34,7 +34,7 @@ typedef struct cpContact {
 	cpVect CP_PRIVATE(p), CP_PRIVATE(n);
 	// Penetration distance.
 	CP_PRIVATE(cpFloat dist);
-	
+
 	// Calculated by cpArbiterPreStep().
 	cpVect CP_PRIVATE(r1), CP_PRIVATE(r2);
 	cpFloat CP_PRIVATE(nMass), CP_PRIVATE(tMass), CP_PRIVATE(bounce);
@@ -42,7 +42,7 @@ typedef struct cpContact {
 	// Persistant contact information.
 	cpFloat CP_PRIVATE(jnAcc), CP_PRIVATE(jtAcc), CP_PRIVATE(jBias);
 	CP_PRIVATE(cpFloat bias);
-	
+
 	// Hash value used to (mostly) uniquely identify a contact.
 	CP_PRIVATE(cpHashValue hash);
 } cpContact;
@@ -69,25 +69,25 @@ typedef struct cpArbiter {
 	// Information on the contact points between the objects.
 	CP_PRIVATE(int numContacts);
 	CP_PRIVATE(cpContact *contacts);
-	
+
 	// The two shapes and bodies involved in the collision.
 	// These variables are NOT in the order defined by the collision handler.
 	// Using CP_ARBITER_GET_SHAPES and CP_ARBITER_GET_BODIES will save you from
 	// many headaches
 	cpShape CP_PRIVATE(*a), CP_PRIVATE(*b);
-	
+
 	// Calculated before calling the pre-solve collision handler
 	// Override them with custom values if you want specialized behavior
 	CP_PRIVATE(cpFloat e);
 	CP_PRIVATE(cpFloat u);
 	 // Used for surface_v calculations, implementation may change
 	CP_PRIVATE(cpVect surface_vr);
-	
+
 	// Time stamp of the arbiter. (from cpSpace)
 	CP_PRIVATE(cpTimestamp stamp);
-	
+
 	CP_PRIVATE(struct cpCollisionHandler *handler);
-	
+
 	// Are the shapes swapped in relation to the collision handler?
 	CP_PRIVATE(cpBool swappedColl);
 	CP_PRIVATE(cpArbiterState state);
@@ -164,7 +164,7 @@ cpArbiterGetDepth(const cpArbiter *arb, int i)
 
 typedef struct cpContactPointSet {
 	int count;
-	
+
 	struct {
 		cpVect point, normal;
 		cpFloat dist;
@@ -176,13 +176,13 @@ cpArbiterGetContactPointSet(const cpArbiter *arb)
 {
 	cpContactPointSet set;
 	set.count = cpArbiterGetCount(arb);
-	
+
 	int i;
 	for(i=0; i<set.count; i++){
 		set.points[i].point = arb->CP_PRIVATE(contacts)[i].CP_PRIVATE(p);
 		set.points[i].normal = arb->CP_PRIVATE(contacts)[i].CP_PRIVATE(n);
 		set.points[i].dist = arb->CP_PRIVATE(contacts)[i].CP_PRIVATE(dist);
 	}
-	
+
 	return set;
 }

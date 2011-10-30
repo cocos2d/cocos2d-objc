@@ -885,11 +885,11 @@ indexed with depth<8, other numerals represent the color type, "T" means
 the tRNS chunk is present, A means an alpha channel is present, and O
 means tRNS or alpha is present but all pixels in the image are opaque.
 
-  FROM  01  31   0  0T  0O   2  2T  2O   3  3T  3O  4A  4O  6A  6O 
+  FROM  01  31   0  0T  0O   2  2T  2O   3  3T  3O  4A  4O  6A  6O
    TO
-   01    -                   
+   01    -
    31        -
-    0    1       -           
+    0    1       -
    0T                -
    0O                    -
     2           GX           -

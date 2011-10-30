@@ -3,17 +3,17 @@
  *
  * Copyright (c) 2008-2010 Ricardo Quesada
  * Copyright (c) 2011 Zynga Inc.
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -36,14 +36,14 @@
  */
 typedef enum {
 	/// Device oriented vertically, home button on the bottom
-	kCCDeviceOrientationPortrait = UIDeviceOrientationPortrait,	
+	kCCDeviceOrientationPortrait = UIDeviceOrientationPortrait,
 	/// Device oriented vertically, home button on the top
     kCCDeviceOrientationPortraitUpsideDown = UIDeviceOrientationPortraitUpsideDown,
 	/// Device oriented horizontally, home button on the right
     kCCDeviceOrientationLandscapeLeft = UIDeviceOrientationLandscapeLeft,
 	/// Device oriented horizontally, home button on the left
     kCCDeviceOrientationLandscapeRight = UIDeviceOrientationLandscapeRight,
-	
+
 	// Backward compatibility stuff
 	CCDeviceOrientationPortrait = kCCDeviceOrientationPortrait,
 	CCDeviceOrientationPortraitUpsideDown = kCCDeviceOrientationPortraitUpsideDown,
@@ -64,7 +64,7 @@ typedef enum {
 	 * - The invertal update is customizable from 1 to 60
 	 */
 	kCCDirectorTypeNSTimer,
-	
+
 	/** will use a Director that triggers the main loop from a custom main loop.
 	 *
 	 * Features and Limitations:
@@ -73,7 +73,7 @@ typedef enum {
 	 * - The interval update can't be customizable
 	 */
 	kCCDirectorTypeMainLoop,
-	
+
 	/** Will use a Director that triggers the main loop from a thread, but the main loop will be executed on the main thread.
 	 *
 	 * Features and Limitations:
@@ -82,7 +82,7 @@ typedef enum {
 	 * - The interval update can't be customizable
 	 */
 	kCCDirectorTypeThreadMainLoop,
-	
+
 	/** Will use a Director that synchronizes timers with the refresh rate of the display.
 	 *
 	 * Features and Limitations:
@@ -91,20 +91,20 @@ typedef enum {
 	 * - Scheduled timers & drawing are synchronizes with the refresh rate of the display
 	 * - Integrates OK with UIKit objects
 	 * - The interval update can be 1/60, 1/30, 1/15
-	 */	
+	 */
 	kCCDirectorTypeDisplayLink,
-	
+
 	/** Default director is the NSTimer directory */
 	kCCDirectorTypeDefault = kCCDirectorTypeNSTimer,
-	
+
 	// backward compatibility stuff
 	CCDirectorTypeNSTimer = kCCDirectorTypeNSTimer,
 	CCDirectorTypeMainLoop = kCCDirectorTypeMainLoop,
 	CCDirectorTypeThreadMainLoop = kCCDirectorTypeThreadMainLoop,
 	CCDirectorTypeDisplayLink = kCCDirectorTypeDisplayLink,
 	CCDirectorTypeDefault = kCCDirectorTypeDefault,
-	
-	
+
+
 } ccDirectorType;
 
 /** CCDirector extensions for iPhone
@@ -135,7 +135,7 @@ typedef enum {
 /** Will enable Retina Display on devices that supports it.
  It will enable Retina Display on iPhone4 and iPod Touch 4.
  It will return YES, if it could enabled it, otherwise it will return NO.
- 
+
  This is the recommened way to enable Retina Display.
  @since v0.99.5
  */
@@ -152,14 +152,14 @@ typedef enum {
  - kCCDirectorTypeMainLoop
  - kCCDirectorTypeThreadMainLoop
  - kCCDirectorTypeDisplayLink
- 
+
  Each Director has it's own benefits, limitations.
  If you are using SDK 3.1 or newer it is recommed to use the DisplayLink director
- 
+
  This method should be called before any other call to the director.
- 
+
  It will return NO if the director type is kCCDirectorTypeDisplayLink and the running SDK is < 3.1. Otherwise it will return YES.
- 
+
  @since v0.8.2
  */
 +(BOOL) setDirectorType:(ccDirectorType) directorType;
@@ -175,10 +175,10 @@ typedef enum {
 {
 	/* orientation */
 	ccDeviceOrientation	deviceOrientation_;
-	
+
 	/* contentScaleFactor could be simulated */
 	BOOL	isContentScaleSupported_;
-	
+
 }
 @end
 
@@ -192,7 +192,7 @@ typedef enum {
 @interface CCDirectorFast : CCDirectorIOS
 {
 	BOOL isRunning;
-	
+
 	NSAutoreleasePool	*autoreleasePool;
 }
 -(void) mainLoop;
@@ -209,7 +209,7 @@ typedef enum {
  */
 @interface CCDirectorFastThreaded : CCDirectorIOS
 {
-	BOOL isRunning;	
+	BOOL isRunning;
 }
 -(void) mainLoop;
 @end

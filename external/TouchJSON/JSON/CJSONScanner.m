@@ -101,7 +101,7 @@ inline static int HexToInt(char inCharacter)
             else if (theChars[1] != 0)
                 theEncoding = NSUTF16BigEndianStringEncoding;
             }
-            
+
         NSString *theString = [[NSString alloc] initWithData:theData encoding:theEncoding];
         if (theString == NULL && self.allowedEncoding != 0)
             {
@@ -232,7 +232,7 @@ inline static int HexToInt(char inCharacter)
     while ([self currentCharacter] != '}')
         {
         [self skipWhitespace];
-        
+
         if ([self currentCharacter] == '}')
             break;
 
@@ -278,7 +278,7 @@ inline static int HexToInt(char inCharacter)
                 NSMutableDictionary *theUserInfo = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                     @"Could not scan dictionary. Failed to scan a value.", NSLocalizedDescriptionKey,
                     NULL];
-                    
+
                 [theUserInfo addEntriesFromDictionary:self.userInfoForScanLocation];
                 *outError = [NSError errorWithDomain:kJSONScannerErrorDomain code:kJSONScannerErrorCode_DictionaryValueScanFailed userInfo:theUserInfo];
                 }
@@ -396,7 +396,7 @@ inline static int HexToInt(char inCharacter)
             [theArray release];
             return(NO);
             }
-            
+
         if (theValue == NULL)
             {
             if (self.nullObject != NULL)
@@ -417,7 +417,7 @@ inline static int HexToInt(char inCharacter)
             {
             [theArray addObject:theValue];
             }
-        
+
         [self skipWhitespace];
         if ([self scanCharacter:','] == NO)
             {
@@ -436,7 +436,7 @@ inline static int HexToInt(char inCharacter)
                 [theArray release];
                 return(NO);
                 }
-            
+
             break;
             }
         [self skipWhitespace];
@@ -593,7 +593,7 @@ inline static int HexToInt(char inCharacter)
             return(NO);
             }
         }
-        
+
     if (outStringConstant != NULL)
         {
         if (self.options & kJSONScannerOptions_MutableLeaves)
@@ -667,7 +667,7 @@ inline static int HexToInt(char inCharacter)
         {
         *outValue = [[[NSString alloc] initWithBytes:current length:P - current encoding:NSUTF8StringEncoding] autorelease];
         }
-        
+
     current = P;
 
     return(YES);

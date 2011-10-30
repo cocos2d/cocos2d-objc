@@ -322,7 +322,7 @@ static BOOL mapGlyphsToAdvancesInFont(ZFont *font, size_t n, CGGlyph glyphs[], C
 	int advances[n];
 	if (CGFontGetGlyphAdvances(font.cgFont, glyphs, n, advances)) {
 		CGFloat ratio = font.ratio;
-		
+
 		for (size_t i = 0; i < n; i++) {
 			outAdvances[i] = advances[i]*ratio;
 		}
@@ -370,9 +370,9 @@ static CGSize drawOrSizeTextConstrainedToSize(BOOL performDraw, NSString *string
 	CGPoint drawPoint = CGPointZero;
 	CGSize retValue = CGSizeZero;
 	CGContextRef ctx = (performDraw ? UIGraphicsGetCurrentContext() : NULL);
-	
+
 	BOOL convertNewlines = (maxLines == 1);
-	
+
 	// Extract the characters from the string
 	// Convert newlines to spaces if necessary
 	unichar *characters = (unichar *)malloc(sizeof(unichar) * len);
@@ -408,7 +408,7 @@ static CGSize drawOrSizeTextConstrainedToSize(BOOL performDraw, NSString *string
 	} else {
 		[string getCharacters:characters range:NSMakeRange(0, len)];
 	}
-	
+
 	// Create storage for glyphs and advances
 	CGGlyph *glyphs;
 	CGFloat *advances;
@@ -425,39 +425,39 @@ static CGSize drawOrSizeTextConstrainedToSize(BOOL performDraw, NSString *string
 		glyphs = (CGGlyph *)malloc(sizeof(CGGlyph) * maxRunLength);
 		advances = (CGFloat *)malloc(sizeof(CGFloat) * maxRunLength);
 	}
-	
+
 	// Use this table to cache all fontTable objects
 	CFMutableDictionaryRef fontTableMap = CFDictionaryCreateMutable(NULL, 0, &kCFTypeDictionaryKeyCallBacks,
 																	 &kFontTableDictionaryValueCallBacks);
-	
+
 	// Fetch initial style values
 	NSUInteger currentRunIdx = 0;
 	ZAttributeRun *currentRun;
 	NSUInteger nextRunStart;
 	ZFont *currentFont;
 	fontTable *currentTable;
-	
+
 #define READ_RUN() readRunInformation(attributes, len, fontTableMap, \
 									  currentRunIdx, &currentRun, &nextRunStart, \
 									  &currentFont, &currentTable)
-	
+
 	READ_RUN();
-	
+
 	// fetch the glyphs for the first run
 	size_t glyphCount;
 	NSUInteger glyphIdx;
-	
+
 #define READ_GLYPHS() do { \
 		mapCharactersToGlyphsInFont(currentTable, &characters[currentRun.index], (nextRunStart - currentRun.index), glyphs, &glyphCount); \
 		mapGlyphsToAdvancesInFont(currentFont, (nextRunStart - currentRun.index), glyphs, advances); \
 		glyphIdx = 0; \
 	} while (0)
-	
+
 	READ_GLYPHS();
-	
+
 	NSMutableCharacterSet *alphaCharset = [NSMutableCharacterSet alphanumericCharacterSet];
 	[alphaCharset addCharactersInString:@"([{'\"\u2019\u02BC"];
-	
+
 	// scan left-to-right looking for newlines or until we hit the width constraint
 	// When we hit a wrapping point, calculate truncation as follows:
 	// If we have room to draw at least one more character on the next line, no truncation
@@ -487,7 +487,7 @@ static CGSize drawOrSizeTextConstrainedToSize(BOOL performDraw, NSString *string
 			CGSize lineSize;
 		} lastWrapCache = {0, 0, 0, CGSizeZero};
 		BOOL inAlpha = NO; // used for calculating wrap points
-		
+
 		BOOL finishLine = NO;
 		for (;idx <= len && !finishLine;) {
 			NSUInteger skipCount = 0;
@@ -633,7 +633,7 @@ static CGSize drawOrSizeTextConstrainedToSize(BOOL performDraw, NSString *string
 				}
 				retValue.width = MAX(retValue.width, lineSize.width);
 				retValue.height += lineSize.height;
-				
+
 				// draw
 				if (performDraw) {
 					switch (alignment) {
@@ -678,7 +678,7 @@ static CGSize drawOrSizeTextConstrainedToSize(BOOL performDraw, NSString *string
 						for (NSUInteger g = 0; g < numGlyphs; g++) {
 							fragmentWidth += advances[glyphIdx + g];
 						}
-						
+
 						if (!ignoreColor) {
 							UIColor *foregroundColor = getValueOrDefaultForRun(currentRun, ZForegroundColorAttributeName);
 							UIColor *backgroundColor = getValueOrDefaultForRun(currentRun, ZBackgroundColorAttributeName);
@@ -688,7 +688,7 @@ static CGSize drawOrSizeTextConstrainedToSize(BOOL performDraw, NSString *string
 							}
 							[foregroundColor setFill];
 						}
-						
+
 						CGContextShowGlyphsAtPoint(ctx, drawPoint.x, drawPoint.y + lineAscender, &glyphs[glyphIdx], numGlyphs);
 						NSNumber *underlineStyle = getValueOrDefaultForRun(currentRun, ZUnderlineStyleAttributeName);
 						if ([underlineStyle	integerValue] & ZUnderlineStyleMask) {
@@ -718,10 +718,10 @@ static CGSize drawOrSizeTextConstrainedToSize(BOOL performDraw, NSString *string
 	free(glyphs);
 	free(advances);
 	free(characters);
-	
+
 #undef READ_GLYPHS
 #undef READ_RUN
-	
+
 	return retValue;
 }
 
@@ -734,20 +734,20 @@ static NSArray *attributeRunForFont(ZFont *font) {
 static CGSize drawTextInRect(CGRect rect, NSString *text, NSArray *attributes, UILineBreakMode lineBreakMode,
 							 UITextAlignment alignment, NSUInteger numberOfLines, BOOL ignoreColor) {
 	CGContextRef ctx = UIGraphicsGetCurrentContext();
-	
+
 	CGContextSaveGState(ctx);
-	
+
 	// flip it upside-down because our 0,0 is upper-left, whereas ttfs are for screens where 0,0 is lower-left
 	CGAffineTransform textTransform = CGAffineTransformMake(1.0f, 0.0f, 0.0f, -1.0f, 0.0f, 0.0f);
 	CGContextSetTextMatrix(ctx, textTransform);
-	
+
 	CGContextTranslateCTM(ctx, rect.origin.x, rect.origin.y);
-	
+
 	CGContextSetTextDrawingMode(ctx, kCGTextFill);
 	CGSize size = drawOrSizeTextConstrainedToSize(YES, text, attributes, rect.size, numberOfLines, lineBreakMode, alignment, ignoreColor);
-	
+
 	CGContextRestoreGState(ctx);
-	
+
 	return size;
 }
 

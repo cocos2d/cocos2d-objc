@@ -1,9 +1,9 @@
 /*
 Copyright (c) 2010 Andreas Loew / code-and-web.de
 
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and 
-associated documentation files (the "Software"), to deal in the Software without restriction, including without 
-limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, 
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
+associated documentation files (the "Software"), to deal in the Software without restriction, including without
+limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software,
 and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
@@ -25,7 +25,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 struct CCZHeader {
     uint8_t			sig[4];				// signature. Should be 'CCZ!' 4 bytes
     uint16_t		compression_type;	// should 0 (See below for supported formats)
-    uint16_t		version;			// should be 2 
+    uint16_t		version;			// should be 2
     uint32_t		reserved;			// Reserverd for users.
     uint32_t		len;				// size of the uncompressed file
 };
@@ -38,7 +38,7 @@ enum {
 };
 
 
-int main (int argc, const char * argv[]) 
+int main (int argc, const char * argv[])
 {
     /* arg check */
     if(argc != 2)
@@ -47,7 +47,7 @@ int main (int argc, const char * argv[])
         printf("\nA new file called <infile>.ccz will be generated\n\n");
         exit(10);
     }
-    
+
     /* open file to read */
     FILE *in = fopen(argv[1], "rb");
     if(!in)
@@ -55,13 +55,13 @@ int main (int argc, const char * argv[])
         printf("Failed to open %s for reading\n", argv[1]);
         exit(10);
     }
-    
+
     /* determine length */
     fseek(in, 0, SEEK_END);
     long len = ftell(in);
     fseek(in, 0, SEEK_SET);
 
-    
+
     /* alloc memory for the input file */
     unsigned char *data = malloc(len);
 
@@ -75,15 +75,15 @@ int main (int argc, const char * argv[])
         printf("Out of memory\n");
         exit(10);
     }
-    
+
     /* read data */
     if(fread(data, 1, len, in) != len)
     {
-        printf("Failed to read data\n");        
+        printf("Failed to read data\n");
         exit(10);
     }
     fclose(in);
-        
+
 
     /* compress the data */
     if(compress2(compressed+sizeof(*header), &destLen, data, len, Z_DEFAULT_COMPRESSION) != Z_OK)
@@ -97,11 +97,11 @@ int main (int argc, const char * argv[])
     header->sig[1] = 'C';
     header->sig[2] = 'Z';
     header->sig[3] = '!';
-    
+
     header->len = OSSwapHostToBigInt32(len);
     header->version = OSSwapHostToBigInt16(2);
     header->compression_type = OSSwapHostToBigInt16(CCZ_COMPRESSION_ZLIB);
-    
+
     /* write data */
     char dstname[1024];
     snprintf(&dstname[0], sizeof(dstname)-1, "%s.ccz", argv[1]);

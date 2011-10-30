@@ -1,15 +1,15 @@
 /* Copyright (c) 2007 Scott Lembcke
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -31,7 +31,7 @@ cpHandleInit(cpHandle *hand, void *obj)
 	hand->obj = obj;
 	hand->retain = 0;
 	hand->stamp = 0;
-	
+
 	return hand;
 }
 
@@ -55,7 +55,7 @@ static void
 cpSpaceHashAllocTable(cpSpaceHash *hash, int numcells)
 {
 	cpfree(hash->table);
-	
+
 	hash->numcells = numcells;
 	hash->table = (cpSpaceHashBin **)cpcalloc(numcells, sizeof(cpSpaceHashBin *));
 }
@@ -71,16 +71,16 @@ handleSetTrans(void *obj, cpSpaceHash *hash)
 		// handle pool is exhausted, make more
 		int count = CP_BUFFER_BYTES/sizeof(cpHandle);
 		cpAssert(count, "Buffer size is too small.");
-		
+
 		cpHandle *buffer = (cpHandle *)cpcalloc(1, CP_BUFFER_BYTES);
 		cpArrayPush(hash->allocatedBuffers, buffer);
-		
+
 		for(int i=0; i<count; i++) cpArrayPush(hash->pooledHandles, buffer + i);
 	}
-	
+
 	cpHandle *hand = cpHandleInit((cpHandle *) cpArrayPop(hash->pooledHandles), obj);
 	cpHandleRetain(hand);
-	
+
 	return hand;
 }
 
@@ -90,15 +90,15 @@ cpSpaceHashInit(cpSpaceHash *hash, cpFloat celldim, int numcells, cpSpaceHashBBF
 	cpSpaceHashAllocTable(hash, next_prime(numcells));
 	hash->celldim = celldim;
 	hash->bbfunc = bbfunc;
-	
+
 	hash->handleSet = cpHashSetNew(0, (cpHashSetEqlFunc)handleSetEql, (cpHashSetTransFunc)handleSetTrans);
 	hash->pooledHandles = cpArrayNew(0);
-	
+
 	hash->pooledBins = NULL;
 	hash->allocatedBuffers = cpArrayNew(0);
-	
+
 	hash->stamp = 1;
-	
+
 	return hash;
 }
 
@@ -121,13 +121,13 @@ clearHashCell(cpSpaceHash *hash, int idx)
 	cpSpaceHashBin *bin = hash->table[idx];
 	while(bin){
 		cpSpaceHashBin *next = bin->next;
-		
+
 		cpHandleRelease(bin->handle, hash->pooledHandles);
 		recycleBin(hash, bin);
-		
+
 		bin = next;
 	}
-	
+
 	hash->table[idx] = NULL;
 }
 
@@ -146,12 +146,12 @@ cpSpaceHashDestroy(cpSpaceHash *hash)
 {
 	if(hash->table) clearHash(hash);
 	cpfree(hash->table);
-	
+
 	cpHashSetFree(hash->handleSet);
-	
+
 	if(hash->allocatedBuffers) cpArrayEach(hash->allocatedBuffers, freeWrap, NULL);
 	cpArrayFree(hash->allocatedBuffers);
-	
+
 	cpArrayFree(hash->pooledHandles);
 }
 
@@ -169,7 +169,7 @@ cpSpaceHashResize(cpSpaceHash *hash, cpFloat celldim, int numcells)
 {
 	// Clear the hash to release the old handle locks.
 	clearHash(hash);
-	
+
 	hash->celldim = celldim;
 	cpSpaceHashAllocTable(hash, next_prime(numcells));
 }
@@ -182,7 +182,7 @@ containsHandle(cpSpaceHashBin *bin, cpHandle *hand)
 		if(bin->handle == hand) return cpTrue;
 		bin = bin->next;
 	}
-	
+
 	return cpFalse;
 }
 
@@ -191,7 +191,7 @@ static inline cpSpaceHashBin *
 getEmptyBin(cpSpaceHash *hash)
 {
 	cpSpaceHashBin *bin = hash->pooledBins;
-	
+
 	if(bin){
 		hash->pooledBins = bin->next;
 		return bin;
@@ -199,10 +199,10 @@ getEmptyBin(cpSpaceHash *hash)
 		// Pool is exhausted, make more
 		int count = CP_BUFFER_BYTES/sizeof(cpSpaceHashBin);
 		cpAssert(count, "Buffer size is too small.");
-		
+
 		cpSpaceHashBin *buffer = (cpSpaceHashBin *)cpcalloc(1, CP_BUFFER_BYTES);
 		cpArrayPush(hash->allocatedBuffers, buffer);
-		
+
 		// push all but the first one, return the first instead
 		for(int i=1; i<count; i++) recycleBin(hash, buffer + i);
 		return buffer;
@@ -234,13 +234,13 @@ hashHandle(cpSpaceHash *hash, cpHandle *hand, cpBB bb)
 	int r = floor_int(bb.r/dim);
 	int b = floor_int(bb.b/dim);
 	int t = floor_int(bb.t/dim);
-	
+
 	int n = hash->numcells;
 	for(int i=l; i<=r; i++){
 		for(int j=b; j<=t; j++){
 			int idx = hash_func(i,j,n);
 			cpSpaceHashBin *bin = hash->table[idx];
-			
+
 			// Don't add an object twice to the same cell.
 			if(containsHandle(bin, hand)) continue;
 
@@ -265,11 +265,11 @@ void
 cpSpaceHashRehashObject(cpSpaceHash *hash, void *obj, cpHashValue hashid)
 {
 	cpHandle *hand = (cpHandle *)cpHashSetRemove(hash->handleSet, hashid, obj);
-	
+
 	if(hand){
 		hand->obj = NULL;
 		cpHandleRelease(hand, hash->pooledHandles);
-		
+
 		cpSpaceHashInsert(hash, obj, hashid, cpBBNew(0.0f, 0.0f, 0.0f, 0.0f));
 	}
 }
@@ -287,7 +287,7 @@ void
 cpSpaceHashRemove(cpSpaceHash *hash, void *obj, cpHashValue hashid)
 {
 	cpHandle *hand = (cpHandle *)cpHashSetRemove(hash->handleSet, hashid, obj);
-	
+
 	if(hand){
 		hand->obj = NULL;
 		cpHandleRelease(hand, hash->pooledHandles);
@@ -316,17 +316,17 @@ removeOrphanedHandles(cpSpaceHash *hash, cpSpaceHashBin **bin_ptr)
 	while(bin){
 		cpHandle *hand = bin->handle;
 		cpSpaceHashBin *next = bin->next;
-		
+
 		if(!hand->obj){
 			// orphaned handle, unlink and recycle the bin
 			(*bin_ptr) = bin->next;
 			recycleBin(hash, bin);
-			
+
 			cpHandleRelease(hand, hash->pooledHandles);
 		} else {
 			bin_ptr = &bin->next;
 		}
-		
+
 		bin = next;
 	}
 }
@@ -339,7 +339,7 @@ query(cpSpaceHash *hash, cpSpaceHashBin **bin_ptr, void *obj, cpSpaceHashQueryFu
 	for(cpSpaceHashBin *bin = *bin_ptr; bin; bin = bin->next){
 		cpHandle *hand = bin->handle;
 		void *other = hand->obj;
-		
+
 		if(hand->stamp == hash->stamp || obj == other){
 			continue;
 		} else if(other){
@@ -359,7 +359,7 @@ cpSpaceHashPointQuery(cpSpaceHash *hash, cpVect point, cpSpaceHashQueryFunc func
 {
 	cpFloat dim = hash->celldim;
 	int idx = hash_func(floor_int(point.x/dim), floor_int(point.y/dim), hash->numcells);  // Fix by ShiftZ
-	
+
 	query(hash, &hash->table[idx], &point, func, data);
 	hash->stamp++;
 }
@@ -373,17 +373,17 @@ cpSpaceHashQuery(cpSpaceHash *hash, void *obj, cpBB bb, cpSpaceHashQueryFunc fun
 	int r = floor_int(bb.r/dim);
 	int b = floor_int(bb.b/dim);
 	int t = floor_int(bb.t/dim);
-	
+
 	int n = hash->numcells;
 	cpSpaceHashBin **table = hash->table;
-	
+
 	// Iterate over the cells and query them.
 	for(int i=l; i<=r; i++){
 		for(int j=b; j<=t; j++){
 			query(hash, &table[hash_func(i,j,n)], obj, func, data);
 		}
 	}
-	
+
 	hash->stamp++;
 }
 
@@ -399,7 +399,7 @@ static void
 handleQueryRehashHelper(void *elt, void *data)
 {
 	cpHandle *hand = (cpHandle *)elt;
-	
+
 	// Unpack the user callback data.
 	queryRehashPair *pair = (queryRehashPair *)data;
 	cpSpaceHash *hash = pair->hash;
@@ -415,26 +415,26 @@ handleQueryRehashHelper(void *elt, void *data)
 	int r = floor_int(bb.r/dim);
 	int b = floor_int(bb.b/dim);
 	int t = floor_int(bb.t/dim);
-	
+
 	cpSpaceHashBin **table = hash->table;
 
 	for(int i=l; i<=r; i++){
 		for(int j=b; j<=t; j++){
 			int idx = hash_func(i,j,n);
 			cpSpaceHashBin *bin = table[idx];
-			
+
 			if(containsHandle(bin, hand)) continue;
-			
+
 			cpHandleRetain(hand); // this MUST be done first in case the object is removed in func()
 			query(hash, &bin, obj, func, pair->data);
-			
+
 			cpSpaceHashBin *newBin = getEmptyBin(hash);
 			newBin->handle = hand;
 			newBin->next = bin;
 			table[idx] = newBin;
 		}
 	}
-	
+
 	// Increment the stamp for each object hashed.
 	hash->stamp++;
 }
@@ -443,7 +443,7 @@ void
 cpSpaceHashQueryRehash(cpSpaceHash *hash, cpSpaceHashQueryFunc func, void *data)
 {
 	clearHash(hash);
-	
+
 	queryRehashPair pair = {hash, func, data};
 	cpHashSetEach(hash->handleSet, &handleQueryRehashHelper, &pair);
 }
@@ -452,12 +452,12 @@ static inline cpFloat
 segmentQuery(cpSpaceHash *hash, cpSpaceHashBin **bin_ptr, void *obj, cpSpaceHashSegmentQueryFunc func, void *data)
 {
 	cpFloat t = 1.0f;
-	 
+
 	restart:
 	for(cpSpaceHashBin *bin = *bin_ptr; bin; bin = bin->next){
 		cpHandle *hand = bin->handle;
 		void *other = hand->obj;
-		
+
 		// Skip over certain conditions
 		if(hand->stamp == hash->stamp){
 			continue;
@@ -471,7 +471,7 @@ segmentQuery(cpSpaceHash *hash, cpSpaceHashBin **bin_ptr, void *obj, cpSpaceHash
 			goto restart; // GCC not smart enough/able to tail call an inlined function.
 		}
 	}
-	
+
 	return t;
 }
 
@@ -480,7 +480,7 @@ void cpSpaceHashSegmentQuery(cpSpaceHash *hash, void *obj, cpVect a, cpVect b, c
 {
 	a = cpvmult(a, 1.0f/hash->celldim);
 	b = cpvmult(b, 1.0f/hash->celldim);
-	
+
 	int cell_x = floor_int(a.x), cell_y = floor_int(a.y);
 
 	cpFloat t = 0;
@@ -503,15 +503,15 @@ void cpSpaceHashSegmentQuery(cpSpaceHash *hash, void *obj, cpVect a, cpVect b, c
 		y_inc = -1;
 		temp_v = (a.y - cpffloor(a.y));
 	}
-	
+
 	// Division by zero is *very* slow on ARM
 	cpFloat dx = cpfabs(b.x - a.x), dy = cpfabs(b.y - a.y);
 	cpFloat dt_dx = (dx ? 1.0f/dx : INFINITY), dt_dy = (dy ? 1.0f/dy : INFINITY);
-	
+
 	// fix NANs in horizontal directions
 	cpFloat next_h = (temp_h ? temp_h*dt_dx : dt_dx);
 	cpFloat next_v = (temp_v ? temp_v*dt_dy : dt_dy);
-	
+
 	cpSpaceHashBin **table = hash->table;
 
 	int n = hash->numcells;
@@ -529,6 +529,6 @@ void cpSpaceHashSegmentQuery(cpSpaceHash *hash, void *obj, cpVect a, cpVect b, c
 			next_h += dt_dx;
 		}
 	}
-	
+
 	hash->stamp++;
 }

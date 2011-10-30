@@ -1,15 +1,15 @@
 /* Copyright (c) 2007 Scott Lembcke
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -24,7 +24,7 @@
  * the mechanism that Theo Jansen uses in his kinetic sculptures. Brilliant.
  * Read more here: http://en.wikipedia.org/wiki/Theo_Jansen
  */
- 
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
@@ -44,10 +44,10 @@ update(int ticks)
 	cpFloat rate = arrowDirection.x*10.0f*coef;
 	cpSimpleMotorSetRate(motor, rate);
 	motor->maxForce = (rate) ? 100000.0f : 0.0f;
-	
+
 	int steps = 3;
 	cpFloat dt = 1.0f/60.0f/(cpFloat)steps;
-	
+
 	for(int i=0; i<steps; i++){
 		cpSpaceStep(space, dt);
 	}
@@ -60,7 +60,7 @@ make_leg(cpFloat side, cpFloat offset, cpBody *chassis, cpBody *crank, cpVect an
 {
 	cpVect a, b;
 	cpShape *shape;
-	
+
 	cpFloat leg_mass = 1.0f;
 
 	// make leg
@@ -70,7 +70,7 @@ make_leg(cpFloat side, cpFloat offset, cpBody *chassis, cpBody *crank, cpVect an
 	cpSpaceAddBody(space, upper_leg);
 	cpSpaceAddShape(space, cpSegmentShapeNew(upper_leg, a, b, seg_radius));
 	cpSpaceAddConstraint(space, cpPivotJointNew2(chassis, upper_leg, cpv(offset, 0.0f), cpvzero));
-	
+
 	// lower leg
 	a = cpvzero, b = cpv(0.0f, -1.0f*side);
 	cpBody *lower_leg = cpBodyNew(leg_mass, cpMomentForSegment(leg_mass, a, b));
@@ -84,12 +84,12 @@ make_leg(cpFloat side, cpFloat offset, cpBody *chassis, cpBody *crank, cpVect an
 	shape->e = 0.0f; shape->u = 1.0f;
 	cpSpaceAddShape(space, shape);
 	cpSpaceAddConstraint(space, cpPinJointNew(chassis, lower_leg, cpv(offset, 0.0f), cpvzero));
-	
+
 	cpSpaceAddConstraint(space, cpGearJointNew(upper_leg, lower_leg, 0.0f, 1.0f));
-	
+
 	cpConstraint *constraint;
 	cpFloat diag = cpfsqrt(side*side + offset*offset);
-	
+
 	constraint = cpPinJointNew(crank, upper_leg, anchor, cpv(0.0f, side));
 	cpPinJointSetDist(constraint, diag);
 	cpSpaceAddConstraint(space, constraint);
@@ -102,17 +102,17 @@ static cpSpace *
 init(void)
 {
 	space = cpSpaceNew();
-	
+
 	cpResetShapeIdCounter();
-	
+
 	space = cpSpaceNew();
 	space->iterations = 20;
 	space->gravity = cpv(0,-500);
-	
+
 	cpBody *staticBody = &space->staticBody;
 	cpShape *shape;
 	cpVect a, b;
-	
+
 	// Create segments around the edge of the screen.
 	shape = cpSegmentShapeNew(staticBody, cpv(-320,-240), cpv(-320,240), 0.0f);
 	shape->e = 1.0f; shape->u = 1.0f;
@@ -128,7 +128,7 @@ init(void)
 	shape->e = 1.0f; shape->u = 1.0f;
 	shape->layers = NOT_GRABABLE_MASK;
 	cpSpaceAddShape(space, shape);
-	
+
 	cpFloat offset = 30.0f;
 
 	// make chassis
@@ -139,7 +139,7 @@ init(void)
 	shape = cpSegmentShapeNew(chassis, a, b, seg_radius);
 	shape->group = 1;
 	cpSpaceAddShape(space, shape);
-	
+
 	// make crank
 	cpFloat crank_mass = 1.0f;
 	cpFloat crank_radius = 13.0f;
@@ -149,15 +149,15 @@ init(void)
 	shape->group = 1;
 	cpSpaceAddShape(space, shape);
 	cpSpaceAddConstraint(space, cpPivotJointNew2(chassis, crank, cpvzero, cpvzero));
-	
+
 	cpFloat side = 30.0f;
-	
+
 	int num_legs = 2;
 	for(int i=0; i<num_legs; i++){
 		make_leg(side,  offset, chassis, crank, cpvmult(cpvforangle((cpFloat)(2*i+0)/num_legs*(cpFloat)M_PI), crank_radius));
 		make_leg(side, -offset, chassis, crank, cpvmult(cpvforangle((cpFloat)(2*i+1)/num_legs*(cpFloat)M_PI), crank_radius));
 	}
-	
+
 	motor = cpSimpleMotorNew(chassis, crank, 6.0f);
 	cpSpaceAddConstraint(space, motor);
 

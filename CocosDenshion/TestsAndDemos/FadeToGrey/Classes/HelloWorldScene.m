@@ -13,13 +13,13 @@
 {
 	// 'scene' is an autorelease object.
 	CCScene *scene = [CCScene node];
-	
+
 	// 'layer' is an autorelease object.
 	HelloWorld *layer = [HelloWorld node];
-	
+
 	// add layer as a child to scene
 	[scene addChild: layer];
-	
+
 	// return the scene
 	return scene;
 }
@@ -33,7 +33,7 @@
 	}
 	CDLOG(@">> Instantiating audio tests");
 	audioTests = [[TheAudioCode alloc] init];
-}	
+}
 
 -(void) menuHandler:(id) sender {
 	int tag = ((CCMenuItem*)sender).tag;
@@ -52,19 +52,19 @@
 			break;
 		case 5:
 			[audioTests testFive:nil];
-			break;	
+			break;
 		case 6:
 			[audioTests testSix:nil];
 			//[audioTests testSeven:nil];
 
-			break;	
+			break;
 		default:
 			break;
 	}
-}	
+}
 
 -(void) menuSetup {
-	
+
 	[CCMenuItemFont setFontName: @"Arial"];
 	[CCMenuItemFont setFontSize:32];
 	CCMenuItemFont *item1 = [CCMenuItemFont itemFromString: @"Harder" target:self selector:@selector(menuHandler:)];
@@ -80,16 +80,16 @@
 	CCMenuItemFont *item6 = [CCMenuItemFont itemFromString: @"Sound Effects" target:self selector:@selector(menuHandler:)];
 	item6.tag = 6;
 	CCMenuItemFont *item7 = [CCMenuItemFont itemFromString: @"Reset" target:self selector:@selector(reset:)];
-    
+
 	CCMenu *menu = [CCMenu menuWithItems:
 					item1, item2,
 					item3, item4,
 					item5, item6,
-					item7, nil]; 
+					item7, nil];
     [menu alignItemsVerticallyWithPadding:20];
 	[self addChild: menu];
-	
-}	
+
+}
 
 // on "init" you need to initialize your instance
 -(id) init
@@ -97,10 +97,10 @@
 	// always call "super" init
 	// Apple recommends to re-assign "self" with the "super" return value
 	if( (self=[super init] )) {
-		
+
 		[self reset:nil];
 		[self menuSetup];
-		
+
 	}
 	return self;
 }
@@ -109,7 +109,7 @@
 - (void) dealloc
 {
 	[audioTests release];
-	
+
 	// don't forget to call "super dealloc"
 	[super dealloc];
 }

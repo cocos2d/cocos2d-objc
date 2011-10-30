@@ -17,21 +17,21 @@
  to determine likely collisions between hundreds of objects. It's based on
  Grant Skinners AS3 class, which you can see a demo of and read more about
  the technique here:
- 
+
  http://www.gskinner.com/blog/archives/2008/01/proximitymanage.html
- 
+
  However, this version has a few extra features. First, you querry it
  baesd on range, not based on grid neighbors. This allows you to pass
  in a range value larger than a single cell and it will automatically
  traverse into neighboring cells. You can also use the exact range querry,
  which performs a distance check on objects once they are found to be
  within cell range.
- 
+
 */
 
 #import "CocosNode.h"
 
-@interface ProximityManager : NSObject 
+@interface ProximityManager : NSObject
 {
   uint gridSize;
   NSMutableArray* objects;

@@ -20,43 +20,43 @@
 {
 	// Init the window
 	window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-		
+
 	// Try to use CADisplayLink director
 	// if it fails (SDK < 3.1) use the default director
 	if( ! [CCDirector setDirectorType:kCCDirectorTypeDisplayLink] )
 		[CCDirector setDirectorType:kCCDirectorTypeDefault];
-	
-	
+
+
 	CCDirector *director = [CCDirector sharedDirector];
 
 	// Init the View Controller
 	viewController = [[bugViewController alloc] initWithNibName:nil bundle:nil];
 	viewController.wantsFullScreenLayout = YES;
-	
+
 	// Create the EAGLView manually
 	EAGLView *glView = [EAGLView viewWithFrame:[window bounds]
 								   pixelFormat:kEAGLColorFormatRGBA8
 								   depthFormat:GL_DEPTH_COMPONENT24_OES];
-	
+
 	[glView setMultipleTouchEnabled:YES];
 
 	// attach the openglView to the director
 	[director setOpenGLView:glView];
-	
+
 //	[director setContentScaleFactor:2];
-	
+
 	//
 	// VERY IMPORTANT:
 	// If the rotation is going to be controlled by a UIViewController
 	// then the device orientation should be "Portrait".
 	//
 	[director setDeviceOrientation:kCCDeviceOrientationPortrait];
-	
+
 	[director setAnimationInterval:1.0/60];
 	[director setDisplayFPS:YES];
-	
-	
-	
+
+
+
 	// make the OpenGLView a child of the view controller
 	[viewController setView:glView];
 
@@ -72,9 +72,9 @@
 
 	// Turn on display FPS
 	[director setDisplayFPS:YES];
-	
+
 	// Run the intro Scene
-	[[CCDirector sharedDirector] runWithScene: [HelloWorld scene]];	
+	[[CCDirector sharedDirector] runWithScene: [HelloWorld scene]];
 }
 
 
@@ -91,17 +91,17 @@
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
-	
+
 	CCDirector *director = [CCDirector sharedDirector];
-	
+
 	[[director openGLView] removeFromSuperview];
 
 	[viewController release];
 
 	[window release];
-	
+
 	[director end];
-	
+
 	// BUG: The view controller is not released... why ?
 	NSLog(@"viewController rc:%d", [viewController retainCount] );
 

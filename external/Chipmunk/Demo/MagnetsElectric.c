@@ -29,12 +29,12 @@ void make_mix(cpVect p, cpFloat ang, cpFloat mag,cpFloat chg);
 // Structures
 // Singularities
 typedef struct ActorSingularity{
-	// Number of singularities 
-	int Nsing; 
-	// Value of the singularities 
+	// Number of singularities
+	int Nsing;
+	// Value of the singularities
 	cpFloat value[SINGMAX];
-	// Type of the singularities 
-	char type[SINGMAX][100]; 
+	// Type of the singularities
+	char type[SINGMAX][100];
 	// Global position of the singularities
 	cpVect Gpos[SINGMAX];
 	// Local position of the singularities
@@ -74,8 +74,8 @@ typedef struct DataforForce{
 static cpSpace *space;
 
 
-// **** Forces ****** // 
-// Calculate the forces between two bodies. all this functions requieres 
+// **** Forces ****** //
+// Calculate the forces between two bodies. all this functions requieres
 // a pointer to an structure with the necessary fields.
 
 // forces between charges
@@ -88,21 +88,21 @@ CoulombForce(ForceData* data){
 static void
 MagDipoleForce(ForceData* data){
 	static cpFloat phi,alpha,beta,Fr,Fphi;
-	
+
 	// Angle of the relative position vector
 	phi=cpvtoangle(data->relp);
 	alpha=data->ang0;
-	beta=data->ang;		
+	beta=data->ang;
 
 	alpha =phi - alpha;
 	beta = phi - beta;
-	
-	
+
+
 	// Components in polar coordinates
 	Fr=(2.0e0f*cosf(alpha)*cosf(beta) - sinf(alpha)*sinf(beta));
 	Fphi=sinf(alpha+beta);
 //	printf("%g %g %g %g %g\n",phi,alpha,beta,Fphi);
-	
+
 	// Cartesian coordinates
 	data->F=cpv(Fr*cosf(phi)-Fphi*sinf(phi),Fr*sinf(phi)+Fphi*cosf(phi));
 	data->F=cpvmult(data->F,-3.e0f*(cpFloat)MAG_MKS/(data->r[1]*data->r[1]));
@@ -111,19 +111,19 @@ MagDipoleForce(ForceData* data){
 static void
 MagDipoleTorque(ForceData* data){
 	static cpFloat phi,alpha,beta;
-	
+
 	phi=cpvtoangle(data->relp);
 	alpha=data->ang0;
-	beta=data->ang;		
+	beta=data->ang;
 	alpha =phi - alpha;
 	beta = phi - beta;
 
-	// Torque. Though we could use a component of F to save some space, 
+	// Torque. Though we could use a component of F to save some space,
 	// we use another variables for the sake of clarity.
-	
+
 	data->T=((cpFloat)MAG_MKS/data->r[2])*(3.0e0f*cosf(alpha)*sinf(beta) + sinf(alpha-beta));
 }
-// ******* // 
+// ******* //
 
 // This function fills the data structure for the force functions
 // The structure Sing has the information about the singularity (charge or magnet)
@@ -132,18 +132,18 @@ FillForceData(Sing* source,int inds, Sing* obs,int indo, ForceData* data)
 {
 	// Global Position and orientation of the source singularity
 	 data->p0=source->Gpos[inds];
-	 data->ang0=source->Gangle[inds]; 
-	 
+	 data->ang0=source->Gangle[inds];
+
 	// Global Position and orientation of the observed singularity
 	 data->p=obs->Gpos[indo];
 	 data->ang=obs->Gangle[indo];
-	
+
 	// Derived magnitudes
 	 data->relp=cpvsub(data->p,data->p0); //Relative position
 	 data->r[0]=cpvlength(data->relp); // Distance
 	 data->r[1]=cpvlengthsq(data->relp); // Square Distance
 	 data->r[2]=data->r[0]*data->r[1]; // Cubic distance
-	 
+
      source->force_func[inds](data); // The value of the force
 	 data->F= cpvmult(data->F,source->value[inds]*obs->value[indo]);
 }
@@ -151,14 +151,14 @@ FillForceData(Sing* source,int inds, Sing* obs,int indo, ForceData* data)
 // Calculation of the interaction
 static void
 LRangeForceApply(cpBody *a, cpBody *b){
-	
+
 	Sing* aux = (Sing*)a->data;
 	Sing* aux2 = (Sing*)b->data;
 	cpVect delta;
 	// General data needed to calculate interaction
 	static ForceData fdata;
 	fdata.F=cpvzero;
-	
+
 	// Calculate the forces between the charges of different bodies
 	for (int i=0; i<aux->Nsing; i++)
 	{
@@ -168,17 +168,17 @@ LRangeForceApply(cpBody *a, cpBody *b){
 			{
 				//printf("%s %s\n",aux->type[i],aux2->type[j]);
 				FillForceData (aux2,j,aux,i,&fdata);
-				
+
 				//Force applied to body A
 				delta=cpvsub(aux->Gpos[i], a->p);
 				cpBodyApplyForce(a,fdata.F, delta);
-				
+
 	 			if(aux->torque_func[i] != NULL)
 				{
 					//Torque on A
 					aux->torque_func[i](&fdata);
 					a->t += aux->value[i]*aux2->value[j]*fdata.T;
-					
+
 				}
 			}
 		}
@@ -200,24 +200,24 @@ ChargedBodyUpdatePositionVerlet(cpBody *body, cpFloat dt)
 	// General data needed to calculate interaction
 	static ForceData fdata;
 	fdata.F=cpvzero;
-	
+
 	for(int i=0; i< bodies->num; i++)
 	{
 	  B=(cpBody*)bodies->arr[i];
 	  aux2=(Sing*)B->data;
-	  
+
 	  if(B != body)
 	  {
         // Calculate the forces between the singularities of different bodies
         LRangeForceApply(body, B);
 	  }
 	}
-	
+
 	cpVect dp = cpvmult(cpvadd(body->v, body->v_bias), dt);
 	dp = cpvadd(dp,cpvmult(cpvmult(body->f, body->m_inv), 0.5e0f*dt*dt));
 	body->p = cpvadd(body->p, dp);
 
-	cpBodySetAngle(body, body->a + (body->w + body->w_bias)*dt 
+	cpBodySetAngle(body, body->a + (body->w + body->w_bias)*dt
 				   + 0.5f*body->t*body->i_inv*dt*dt);
 
 	// Update position of the singularities
@@ -228,8 +228,8 @@ ChargedBodyUpdatePositionVerlet(cpBody *body, cpFloat dt)
 										  aux->position[i].y), body->rot));
 		aux->Gangle[i]= aux->angle[i] + body->a;
 	}
-	
-            
+
+
  	body->v_bias = cpvzero;
 	body->w_bias = 0.0f;
 }
@@ -240,10 +240,10 @@ ChargedBodyUpdateVelocityVerlet(cpBody *body, cpVect gravity, cpFloat damping, c
 {
 	body->v = cpvadd(body->v, cpvmult(cpvadd(gravity, cpvmult(body->f, body->m_inv)), 0.5e0f*dt));
 	body->w = body->w + body->t*body->i_inv*0.5e0f*dt;
-	
+
 	body->f = cpvzero;
 	body->t = 0.0e0f;
-	
+
 	// Long range interaction
     cpArray *bodies = space->bodies;
 	static cpBody* B;
@@ -251,11 +251,11 @@ ChargedBodyUpdateVelocityVerlet(cpBody *body, cpVect gravity, cpFloat damping, c
 	// General data needed to calculate interaction
 	static ForceData fdata;
 	fdata.F=cpvzero;
-	
+
 	for(int i=0; i< bodies->num; i++)
 	{
 	  B=(cpBody*)bodies->arr[i];
-	  
+
 	  if(B != body)
 	  {
         // Calculate the forces between the singularities of different bodies
@@ -266,21 +266,21 @@ ChargedBodyUpdateVelocityVerlet(cpBody *body, cpVect gravity, cpFloat damping, c
 	body->w = body->w*damping + body->t*body->i_inv*0.5e0f*dt;
 }
 
-static void 
+static void
 update(int ticks)
 {
 	int steps = 10;
 	cpFloat dt = 1.0f/60.0f/(cpFloat)steps;
-	
+
 	cpArray *bodies = space->bodies;
 
 	for(int i=0; i< bodies->num; i++)
 		  cpBodyResetForces((cpBody*)bodies->arr[i]);
-	
+
 	for(int i=0; i<steps; i++){
 		cpSpaceStep(space, dt);
 	}
-	
+
 }
 
 static void
@@ -301,28 +301,28 @@ make_mag(cpVect p, cpFloat ang, cpFloat mag)
 	body->v = cpvzero;
 	cpBodySetAngle(body, ang);
 	body->w = 0.0e0f;
-	
+
     // Load the singularities
     Sing *magnet=(Sing*)cpmalloc(sizeof(Sing));
-	magnet->Nsing=1; 
+	magnet->Nsing=1;
 	magnet->value[0]=mag;
-	sprintf(magnet->type[0],"magdipole"); 
+	sprintf(magnet->type[0],"magdipole");
 
 	// The position and angle could be different form the one of the body
 	magnet->position[0]=cpvzero;
 	magnet->Gpos[0]=cpvadd(p,magnet->position[0]);
 	magnet->angle[0]=0.0f;
 	magnet->Gangle[0]=ang;
-	
+
 	magnet->force_func[0]=MagDipoleForce;
 	magnet->torque_func[0]=MagDipoleTorque;
 
 	body->data=magnet;
-	
+
     body->position_func=ChargedBodyUpdatePositionVerlet;
     body->velocity_func=ChargedBodyUpdateVelocityVerlet;
 	cpSpaceAddBody(space, body);
-	
+
 	cpShape *shape = cpPolyShapeNew(body, nverts, verts, cpvzero);
 	shape->e = 0.0f; shape->u = 0.7f;
 	cpSpaceAddShape(space, shape);
@@ -344,32 +344,32 @@ make_charged(cpVect p, cpFloat chg)
 	body->v = cpvzero;
 	cpBodySetAngle(body, 0);
 	body->w = 0.0e0f;
-	
+
     // Load the singularities
     Sing *charge=(Sing*)cpmalloc(sizeof(Sing));;
-	charge->Nsing=1; 
+	charge->Nsing=1;
 	charge->value[0]=chg;
-	sprintf(charge->type[0],"electrical"); 
+	sprintf(charge->type[0],"electrical");
 
 	// The position and angle could be different form the one of the body
 	charge->position[0]=cpvzero;
 	charge->Gpos[0]=cpvadd(p,charge->position[0]);
 	charge->Gangle[0]=0;
-	
+
 	charge->force_func[0]=CoulombForce;
 	charge->torque_func[0]=NULL;
-	
+
 	body->data=charge;
-	
+
     body->position_func=ChargedBodyUpdatePositionVerlet;
     body->velocity_func=ChargedBodyUpdateVelocityVerlet;
 	cpSpaceAddBody(space, body);
-	
+
 	cpShape *shape = cpPolyShapeNew(body, nverts, verts, cpvzero);
 	shape->e = 0.0f; shape->u = 0.7f;
 	cpSpaceAddShape(space, shape);
 }
-void 
+void
 make_mix(cpVect p, cpFloat ang, cpFloat mag,cpFloat chg)
 {
 	int nverts=5;
@@ -377,7 +377,7 @@ make_mix(cpVect p, cpFloat ang, cpFloat mag,cpFloat chg)
 		cpv(-10,-10),
 		cpv(-10, 10),
 		cpv( 10, 10),
-		cpv( 20, 0),		
+		cpv( 20, 0),
 		cpv( 10,-10)
 	};
 
@@ -386,14 +386,14 @@ make_mix(cpVect p, cpFloat ang, cpFloat mag,cpFloat chg)
 	body->v = cpvzero;
 	cpBodySetAngle(body, ang);
 	body->w = 0.0e0f;
-	
+
     // Load the singularities
     Sing *mix=(Sing*)cpmalloc(sizeof(Sing));;
-	mix->Nsing=2; 
+	mix->Nsing=2;
 	mix->value[0]=mag;
 	mix->value[1]=chg;
 	sprintf(mix->type[0],"magdipole");
-	sprintf(mix->type[1],"electrical");  
+	sprintf(mix->type[1],"electrical");
 
 	// The position and angle could be different form the one of the body
 	mix->position[0]=cpvzero;
@@ -401,33 +401,33 @@ make_mix(cpVect p, cpFloat ang, cpFloat mag,cpFloat chg)
 	mix->position[1]=cpvzero;
 	mix->Gpos[1]=cpvadd(p,mix->position[1]);
 	mix->Gangle[0]=ang;
-	mix->Gangle[1]=ang;	
-	
+	mix->Gangle[1]=ang;
+
 	mix->force_func[0]=MagDipoleForce;
 	mix->force_func[1]=CoulombForce;
 	mix->torque_func[0]=MagDipoleTorque;
-	mix->torque_func[1]=NULL;	
-	
+	mix->torque_func[1]=NULL;
+
 	body->data=mix;
-	
+
     body->position_func=ChargedBodyUpdatePositionVerlet;
     body->velocity_func=ChargedBodyUpdateVelocityVerlet;
 	cpSpaceAddBody(space, body);
-	
+
 	cpShape *shape = cpPolyShapeNew(body, nverts, verts, cpvzero);
 	shape->e = 0.0f; shape->u = 0.7f;
 	cpSpaceAddShape(space, shape);
 }
 
 
-static cpSpace* 
+static cpSpace*
 init(void)
 {
 	cpResetShapeIdCounter();
 	space = cpSpaceNew();
 	space->iterations = 5;
 	space->gravity = cpvzero; //cpv(0,-100);
-	
+
 	cpSpaceResizeActiveHash(space, 30.0f, 2999);
 
 	// Screen border
@@ -450,12 +450,12 @@ init(void)
 	cpSpaceAddShape(space, shape);
 	// Add a collision pair function to filter collisions
 	cpSpaceAddCollisionPairFunc(space, 0, 1, NULL, NULL);
-*/		
-	
+*/
+
 	srand((unsigned int) time(NULL));
     cpVect p;
 	cpFloat ang;
-	
+
 	// Create magnets
 	for(int i=0; i<NMAG; i++)
 	{
@@ -464,7 +464,7 @@ init(void)
   	  ang=(2.0e0f*rand()/((cpFloat)RAND_MAX) - 1.0e0f)*3.1415f;
 	  make_mag(p, ang,1.0e7f);
 	}
-	
+
 	// Create charged objects
 	for(int i=0; i<NCHG; i++)
 	{
@@ -473,7 +473,7 @@ init(void)
   	  ang=(2.0e0f*rand()/((cpFloat)RAND_MAX) - 1.0e0f)*3.1415f;
 	  make_charged(p, (float)(1.0e-3) *powf(-1.0f,i%2));
 	}
-		
+
 	// Create charged magnets objects
 	for(int i=0; i<NMIX; i++)
 	{
@@ -482,7 +482,7 @@ init(void)
   	  ang=(2.0e0f*rand()/((cpFloat)RAND_MAX) - 1.0e0f)*3.1415f;
 	  make_mix(p, ang,1.0e7f*powf(-1.0f,i%2), (float)(1.0e-3) *powf(-1.0f,i%2));
 	}
-	
+
 	return space;
 }
 

@@ -97,7 +97,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
  */
 @interface EAGLView : UIView
 {
-    id<ESRenderer>			renderer_;	
+    id<ESRenderer>			renderer_;
 	EAGLContext				*context_; // weak ref
 
 	NSString				*pixelformat_;

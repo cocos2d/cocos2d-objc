@@ -23,16 +23,16 @@
 	// always call "super" init
 	// Apple recommends to re-assign "self" with the "super" return value
 	if( (self=[super init] )) {
-		
+
 		// create and initialize a Label
 		CCLabelTTF *label = [CCLabelTTF labelWithString:@"Hello World" fontName:@"Marker Felt" fontSize:64];
 
 		// ask director the the window size
 		CGSize size = [[CCDirector sharedDirector] winSize];
-	
+
 		// position the label on the center of the screen
 		label.position =  ccp( size.width /2 , size.height/2 );
-		
+
 		// add the label as a child to this Layer
 		[self addChild: label];
 	}
@@ -45,7 +45,7 @@
 	// in case you have something to dealloc, do it in this method
 	// in this particular example nothing needs to be released.
 	// cocos2d will automatically release all the children (Label)
-	
+
 	// don't forget to call "super dealloc"
 	[super dealloc];
 }
@@ -78,24 +78,24 @@
 	// 9. Connects the director to the EAGLView
 	//
 	CC_DIRECTOR_INIT();
-	
+
 	// Obtain the shared director in order to...
 	CCDirector *director = [CCDirector sharedDirector];
-	
+
 	// Sets landscape mode
 	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
-	
+
 	// Turn on display FPS
 	[director setDisplayFPS:YES];
-	
+
 	// Set multiple touches on
 	EAGLView *glView = [director openGLView];
-	[glView setMultipleTouchEnabled:YES];	
-	
+	[glView setMultipleTouchEnabled:YES];
+
 	// Enables High Res mode (Retina Display) on iPhone 4 and maintains low res on all other devices
 	if( ! [director enableRetinaDisplay:YES] )
 		CCLOG(@"Retina Display Not supported");
-	
+
 	// Create and initialize parent and empty Scene
 	CCScene *scene = [CCScene node];
 
@@ -137,7 +137,7 @@
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
-{	
+{
 	CC_DIRECTOR_END();
 }
 

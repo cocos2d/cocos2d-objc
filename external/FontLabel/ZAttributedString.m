@@ -431,7 +431,7 @@
 // splits the existing runs to provide one or more new runs for the given range
 - (NSRange)rangeOfAttributeRunsForRange:(NSRange)range {
 	NSParameterAssert(NSMaxRange(range) <= [_buffer length]);
-	
+
 	// find (or create) the first run
 	NSUInteger first = 0;
 	ZAttributeRun *lastRun = nil;
@@ -455,7 +455,7 @@
 		}
 		lastRun = run;
 	}
-	
+
 	if (((ZAttributeRun *)[_attributes lastObject]).index < NSMaxRange(range)) {
 		NSRange subrange = NSMakeRange(first, [_attributes count] - first);
 		if (NSMaxRange(range) < [_buffer length]) {

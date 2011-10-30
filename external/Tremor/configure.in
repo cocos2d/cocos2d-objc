@@ -22,9 +22,9 @@ AC_SUBST(V_LIB_CURRENT)
 AC_SUBST(V_LIB_REVISION)
 AC_SUBST(V_LIB_AGE)
 
-dnl --------------------------------------------------  
+dnl --------------------------------------------------
 dnl Check for programs
-dnl --------------------------------------------------  
+dnl --------------------------------------------------
 
 dnl save $CFLAGS since AC_PROG_CC likes to insert "-g -O2"
 dnl if $CFLAGS is blank
@@ -44,9 +44,9 @@ dnl Set some target options
 cflags_save="$CFLAGS"
 ldflags_save="$LDFLAGS"
 if test -z "$GCC"; then
-        case $host in 
+        case $host in
         arm-*-*)
-                DEBUG="-g -D_ARM_ASSEM_" 
+                DEBUG="-g -D_ARM_ASSEM_"
                 CFLAGS="-O -D_ARM_ASSEM_"
                 PROFILE="-p -g -O -D_ARM_ASSEM_" ;;
         *)
@@ -56,7 +56,7 @@ if test -z "$GCC"; then
         esac
 else
 
-        case $host in 
+        case $host in
         arm-*-*)
                 DEBUG="-g -Wall -D__NO_MATH_INLINES -fsigned-char -D_ARM_ASSEM_"
                 CFLAGS="-O2 -D_ARM_ASSEM_ -fsigned-char"
@@ -90,7 +90,7 @@ if test "x$lt_cv_prog_gnu_ld" = "xyes"; then
 fi
 
 dnl --------------------------------------------------
-dnl Options 
+dnl Options
 dnl --------------------------------------------------
 
 AC_ARG_ENABLE(

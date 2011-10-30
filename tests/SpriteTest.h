@@ -75,7 +75,7 @@
 	CCSpriteBatchNode *batchNode;
 	CCSprite *sprite1;
 	CCSprite *sprite2;
-	CCSprite *sprite3;	
+	CCSprite *sprite3;
 }
 @end
 
@@ -84,9 +84,9 @@
 	CCNode *node;
 	CCSprite *sprite1;
 	CCSprite *sprite2;
-	CCSprite *sprite3;	
-	CCSprite *sprite4;	
-	CCSprite *sprite5;		
+	CCSprite *sprite3;
+	CCSprite *sprite4;
+	CCSprite *sprite5;
 }
 @end
 
@@ -95,16 +95,16 @@
 	CCSpriteBatchNode *batchNode;
 	CCSprite *sprite1;
 	CCSprite *sprite2;
-	CCSprite *sprite3;	
-	CCSprite *sprite4;	
-	CCSprite *sprite5;		
+	CCSprite *sprite3;
+	CCSprite *sprite4;
+	CCSprite *sprite5;
 }
 @end
 
 @interface SpriteBatchNodeReorderOneChild : SpriteDemo
 {
 	CCSpriteBatchNode *batchNode_;
-	CCSprite *reorderSprite_;		
+	CCSprite *reorderSprite_;
 }
 @end
 

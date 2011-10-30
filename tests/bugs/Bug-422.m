@@ -13,16 +13,16 @@
 	if((self=[super init])) {
 		[self reset];
 	}
-    
+
 	return self;
 }
 
 
 -(void) reset {
-	
+
 	static int localtag = 0;
 	localtag++;
-	
+
 	// TO TRIGGER THE BUG:
 	// remove the itself from parent from an action
 	// The menu will be removed, but the instance will be alive
@@ -32,29 +32,29 @@
 	NSLog(@"Menu: %@", node);
 	[self removeChild:node cleanup:NO];
 //	[self removeChildByTag:localtag-1 cleanup:NO];
-	
+
 	CCMenuItem *item1 = [CCMenuItemFont itemFromString: @"One"
                                             target: self selector:@selector(menuCallback:)];
 	NSLog(@"MenuItemFont: %@", item1);
     CCMenuItem *item2 = [CCMenuItemFont itemFromString: @"Two"
                                             target: self selector:@selector(menuCallback:)];
-    
+
     CCMenu *menu = [CCMenu menuWithItems: item1, item2, nil];
 	[menu alignItemsVertically];
-	
+
 	float x = CCRANDOM_0_1() * 50;
 	float y = CCRANDOM_0_1() * 50;
 
 	menu.position = ccpAdd( menu.position, ccp(x,y));
-	
-	
-    [self addChild: menu z:0 tag:localtag];	
-	
+
+
+    [self addChild: menu z:0 tag:localtag];
+
     //[self check:self];
 }
 
 -(void) check:(CCNode *)t {
-	
+
 	CCArray *array = [t children];
     for (CCNode *node in array) {
         NSLog(@"0x%x, rc: %d", (unsigned int)node, [node retainCount]);
@@ -89,25 +89,25 @@
 	// 9. Connects the director to the EAGLView
 	//
 	CC_DIRECTOR_INIT();
-	
+
 	// Obtain the shared director in order to...
 	CCDirector *director = [CCDirector sharedDirector];
-	
+
 	// Sets landscape mode
 	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
-	
+
 	// Turn on display FPS
 	[director setDisplayFPS:YES];
-	
+
 	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
 	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
 	// You can change anytime.
-	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA8888];	
-	
+	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA8888];
+
 	CCScene *scene = [CCScene node];
-	
+
 	[scene addChild:[Layer1 node] z:0];
-	
+
 	[director runWithScene: scene];
 }
 
