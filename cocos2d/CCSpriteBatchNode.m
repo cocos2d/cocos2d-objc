@@ -365,19 +365,16 @@ const NSUInteger defaultCapacity = 29;
 {
 	CC_PROFILER_START(@"CCSpriteBatchNode - draw");
 
-	[super draw];
-
 	// Optimization: Fast Dispatch	
 	if( textureAtlas_.totalQuads == 0 )
 		return;	
 
+	[super draw];
+
 	[children_ makeObjectsPerformSelector:@selector(updateTransform)];
 	
 	ccGLBlendFunc( blendFunc_.src, blendFunc_.dst );
-	
-	ccGLUseProgram( shaderProgram_->program_ );	
-	ccGLUniformModelViewProjectionMatrix( shaderProgram_ );
-	
+		
 	[textureAtlas_ drawQuads];
 	
 	CC_PROFILER_STOP(@"CCSpriteBatchNode - draw");

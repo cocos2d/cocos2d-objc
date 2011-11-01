@@ -522,9 +522,6 @@
 	NSAssert(!batchNode_, @"If CCSprite is being rendered by CCSpriteBatchNode, CCSprite#draw SHOULD NOT be called");
 
 	ccGLBlendFunc( blendFunc_.src, blendFunc_.dst );
-
-	ccGLUseProgram( shaderProgram_->program_ );
-	ccGLUniformModelViewProjectionMatrix( shaderProgram_ );
 	
 	ccGLBindTexture2D( [texture_ name] );
 		
