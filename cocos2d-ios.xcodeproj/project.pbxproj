@@ -1877,6 +1877,12 @@
 		A0DABE251426715A00F3FEBE /* b2WheelJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = A0DABDC91426715A00F3FEBE /* b2WheelJoint.h */; };
 		A0DABE261426715A00F3FEBE /* b2Rope.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0DABDCB1426715A00F3FEBE /* b2Rope.cpp */; };
 		A0DABE271426715A00F3FEBE /* b2Rope.h in Headers */ = {isa = PBXBuildFile; fileRef = A0DABDCC1426715A00F3FEBE /* b2Rope.h */; };
+		A0E431F31460741E00424477 /* background1-hd.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E0704C29123821EE009C628B /* background1-hd.jpg */; };
+		A0E431F41460741E00424477 /* background2-hd.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E0704C2A123821EE009C628B /* background2-hd.jpg */; };
+		A0E431F51460741E00424477 /* background3-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E04C631512382E6B00A4B3E6 /* background3-hd.png */; };
+		A0E431F61460741E00424477 /* background1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 50A252290F38B8DC007CAEB0 /* background1.jpg */; };
+		A0E431F71460741E00424477 /* background2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 50A2522A0F38B8DC007CAEB0 /* background2.jpg */; };
+		A0E431F81460741E00424477 /* background3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 503162E5102726E8003ACFE7 /* background3.jpg */; };
 		A0E55EE614241719003F1E5A /* b1.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659D0E72DB470085673F /* b1.png */; };
 		A0E55EE714241719003F1E5A /* b2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659E0E72DB470085673F /* b2.png */; };
 		A0E55EE814241719003F1E5A /* f1.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659F0E72DB470085673F /* f1.png */; };
@@ -10508,6 +10514,12 @@
 				A0EC4AE41403238D00EC482A /* PositionTextureA8Color.vsh in Resources */,
 				A0EC4AE51403238D00EC482A /* PositionTextureColor.fsh in Resources */,
 				A0EC4AE61403238D00EC482A /* PositionTextureColor.vsh in Resources */,
+				A0E431F31460741E00424477 /* background1-hd.jpg in Resources */,
+				A0E431F41460741E00424477 /* background2-hd.jpg in Resources */,
+				A0E431F51460741E00424477 /* background3-hd.png in Resources */,
+				A0E431F61460741E00424477 /* background1.jpg in Resources */,
+				A0E431F71460741E00424477 /* background2.jpg in Resources */,
+				A0E431F81460741E00424477 /* background3.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

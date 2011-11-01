@@ -26,7 +26,8 @@ Class restartAction(void);
 static int sceneIdx=-1;
 static NSString *transitions[] = {
 
-	@"CCArrayTest",
+	@"NodeOpaqueTest",
+	@"NodeNonOpaqueTest",
 
 	@"Test2",
 	@"Test4",
@@ -41,6 +42,8 @@ static NSString *transitions[] = {
 	@"CameraCenterTest",
 	@"ConvertToNode",
 	@"CCArrayTest",
+	@"NodeOpaqueTest",
+	@"NodeNonOpaqueTest",
 };
 
 Class nextAction()
@@ -84,7 +87,7 @@ Class restartAction()
 		CGSize s = [[CCDirector sharedDirector] winSize];
 	
 		CCLabelTTF *label = [CCLabelTTF labelWithString:[self title] fontName:@"Arial" fontSize:32];
-		[self addChild: label];
+		[self addChild: label z:10];
 		[label setPosition: ccp(s.width/2, s.height-50)];
 		
 		NSString *subtitle = [self subtitle];
@@ -104,7 +107,7 @@ Class restartAction()
 		item1.position = ccp( s.width/2 - 100,30);
 		item2.position = ccp( s.width/2, 30);
 		item3.position = ccp( s.width/2 + 100,30);
-		[self addChild: menu z:-1];	
+		[self addChild: menu z:11];
 	}
 
 	return self;
@@ -946,6 +949,69 @@ Class restartAction()
 -(NSString*) subtitle
 {
 	return @"See console for possible errors";
+}
+@end
+
+
+#pragma mark -
+#pragma mark NodeOpaqueTest
+
+@implementation NodeOpaqueTest
+
+-(id) init
+{
+	if( ( self=[super init]) ) {
+		CCSprite *background = nil;
+		
+		for( int i=0; i<50; i++) {
+			background = [CCSprite spriteWithFile:@"background1.jpg"];
+			background.glServerState &= ~CC_GL_BLEND;
+			[background setAnchorPoint:CGPointZero];
+			[self addChild:background];
+		}
+	}
+	return self;
+}
+
+-(NSString *) title
+{
+	return @"Node Opaque Test";
+}
+
+-(NSString*) subtitle
+{
+	return @"Node rendered with GL_BLEND disabled";
+}
+@end
+
+#pragma mark -
+#pragma mark NodeNonOpaqueTest
+
+@implementation NodeNonOpaqueTest
+
+-(id) init
+{
+	if( ( self=[super init]) ) {
+		CCSprite *background = nil;
+		
+		for( int i=0; i<50; i++) {
+			background = [CCSprite spriteWithFile:@"background1.jpg"];
+			background.glServerState |= CC_GL_BLEND;
+			[background setAnchorPoint:CGPointZero];
+			[self addChild:background];
+		}
+	}
+	return self;
+}
+
+-(NSString *) title
+{
+	return @"Node Non Opaque Test";
+}
+
+-(NSString*) subtitle
+{
+	return @"Node rendered with GL_BLEND enabled";
 }
 @end
 
