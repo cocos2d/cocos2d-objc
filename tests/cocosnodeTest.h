@@ -68,3 +68,11 @@
 @interface CCArrayTest : TestDemo
 {}
 @end
+
+@interface NodeOpaqueTest : TestDemo
+{}
+@end
+
+@interface NodeNonOpaqueTest : TestDemo
+{}
+@end
