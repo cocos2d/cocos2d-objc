@@ -116,20 +116,24 @@ static NSUInteger globalOrderOfArrival = 0;
 
 -(void) setScaleX: (float)newScaleX
 {
+    CGFloat oldScaleX = scaleX_;
 	scaleX_ = newScaleX;
 	isTransformDirty_ = isInverseDirty_ = YES;
 #if CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
 	isTransformGLDirty_ = YES;
-#endif	
+#endif
+    [parent_ child:self changedScaleFromX:oldScaleX y:scaleY_];
 }
 
 -(void) setScaleY: (float)newScaleY
 {
+    CGFloat oldScaleY = scaleY_;
 	scaleY_ = newScaleY;
 	isTransformDirty_ = isInverseDirty_ = YES;
 #if CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
 	isTransformGLDirty_ = YES;
 #endif	
+    [parent_ child:self changedScaleFromX:scaleX_ y:oldScaleY];
 }
 
 -(void) setPosition: (CGPoint)newPosition
@@ -185,6 +189,7 @@ static NSUInteger globalOrderOfArrival = 0;
 -(void) setContentSize:(CGSize)size
 {
 	if( ! CGSizeEqualToSize(size, contentSize_) ) {
+        CGSize oldSize = contentSize_;
 		contentSize_ = size;
 		
 		if( CC_CONTENT_SCALE_FACTOR() == 1 )
@@ -197,6 +202,7 @@ static NSUInteger globalOrderOfArrival = 0;
 #if CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
 		isTransformGLDirty_ = YES;
 #endif		
+        [parent_ child:self resizedFrom:oldSize];
 	}
 }
 
@@ -248,11 +254,14 @@ static NSUInteger globalOrderOfArrival = 0;
 
 -(void) setScale:(float) s
 {
+    CGFloat oldScaleX = scaleX_;
+    CGFloat oldScaleY = scaleY_;
 	scaleX_ = scaleY_ = s;
 	isTransformDirty_ = isInverseDirty_ = YES;
 #if CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
 	isTransformGLDirty_ = YES;
 #endif	
+    [parent_ child:self changedScaleFromX:oldScaleX y:oldScaleY];
 }
 
 #pragma mark CCNode - Init & cleanup
@@ -955,5 +964,14 @@ static NSUInteger globalOrderOfArrival = 0;
 
 #endif // __IPHONE_OS_VERSION_MAX_ALLOWED
 
+- (void) child:(CCNode*) child resizedFrom:(CGSize) size
+{
+    
+}
+
+- (void) child:(CCNode*) child changedScaleFromX:(CGFloat) scaleX y:(CGFloat) y
+{
+    
+}
 
 @end
