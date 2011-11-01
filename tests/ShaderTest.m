@@ -195,18 +195,14 @@ enum {
 
 -(void) draw
 {
-
+	[super draw];
+	
 	float w = SIZE_X, h = SIZE_Y;
 	GLfloat vertices[12] = {0,0, w,0, w,h, 0,0, 0,h, w,h};
-
-	ccGLUseProgram( shaderProgram_->program_ );
 
 	//
 	// Uniforms
 	//
-	
-	ccGLUniformModelViewProjectionMatrix( shaderProgram_ );
-
 	glUniform2fv( uniformCenter, 1, (GLfloat*)&position_ );
 	glUniform2fv( uniformResolution, 1, (GLfloat*)&resolution_ );
 	glUniform1f( uniformTime, time_ );

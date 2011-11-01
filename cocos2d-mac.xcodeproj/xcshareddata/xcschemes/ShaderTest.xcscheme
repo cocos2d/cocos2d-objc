@@ -14,7 +14,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "A0ADEF6014584BD3009A71F1"
-               BuildableName = "TextureTest copy.app"
+               BuildableName = "ShaderTest.app"
                BlueprintName = "ShaderTest"
                ReferencedContainer = "container:cocos2d-mac.xcodeproj">
             </BuildableReference>
@@ -32,7 +32,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "A0ADEF6014584BD3009A71F1"
-            BuildableName = "TextureTest copy.app"
+            BuildableName = "ShaderTest.app"
             BlueprintName = "ShaderTest"
             ReferencedContainer = "container:cocos2d-mac.xcodeproj">
          </BuildableReference>
@@ -50,7 +50,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "A0ADEF6014584BD3009A71F1"
-            BuildableName = "TextureTest copy.app"
+            BuildableName = "ShaderTest.app"
             BlueprintName = "ShaderTest"
             ReferencedContainer = "container:cocos2d-mac.xcodeproj">
          </BuildableReference>
@@ -68,7 +68,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "A0ADEF6014584BD3009A71F1"
-            BuildableName = "TextureTest copy.app"
+            BuildableName = "ShaderTest.app"
             BlueprintName = "ShaderTest"
             ReferencedContainer = "container:cocos2d-mac.xcodeproj">
          </BuildableReference>

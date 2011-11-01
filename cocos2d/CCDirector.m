@@ -247,7 +247,7 @@ static CCDirector *_sharedDirector = nil;
 - (void) setAlphaBlending: (BOOL) on
 {
 	if (on) {
-		glEnable(GL_BLEND);
+		ccGLEnable(CC_GL_BLEND);
 		ccGLBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);
 		
 	} else

@@ -301,8 +301,6 @@
 	
 	ccGLBindTexture2D( [texture_ name] );
 	ccGLBlendFunc( blendFunc_.src, blendFunc_.dst );	
-	ccGLUseProgram( shaderProgram_->program_ );	
-	ccGLUniformModelViewProjectionMatrix( shaderProgram_ );
 	
 	NSAssert( particleIdx == particleCount, @"Abnormal error in particle quad");
 	

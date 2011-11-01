@@ -240,10 +240,10 @@
     if(nuPoints_ <= 1)
         return;
 	
+	[super draw];
+	
 	ccGLEnableVertexAttribs(kCCVertexAttribFlag_PosColorTex );	
 	ccGLBlendFunc( blendFunc_.src, blendFunc_.dst );
-	ccGLUseProgram( shaderProgram_->program_ );
-	ccGLUniformModelViewProjectionMatrix( shaderProgram_ );
 	
 	ccGLBindTexture2D( [texture_ name] );
 

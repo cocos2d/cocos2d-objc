@@ -382,9 +382,6 @@
 
 	ccGLBlendFunc( blendFunc_.src, blendFunc_.dst );
 	
-	ccGLUseProgram( shaderProgram_->program_ );
-	ccGLUniformModelViewProjectionMatrix( shaderProgram_ );
-	
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);	
 }
 

@@ -33,6 +33,7 @@
 #import "CCTexture2D.h"
 #import "CCProtocols.h"
 #import "ccConfig.h"
+#import "ccGLState.h"
 #import "Support/CCArray.h"
 #import "kazmath/kazmath.h"
 
@@ -151,6 +152,9 @@ enum {
 	
 	// Shader
 	GLProgram	*shaderProgram_;
+	
+	// Server side state
+	ccGLServerState glServerState_;
 
 	// Is running
 	BOOL isRunning_:1;
@@ -235,7 +239,6 @@ enum {
  */
 @property (nonatomic,readwrite) CGSize contentSize;
 
-
 /** whether or not the node is running */
 @property(nonatomic,readonly) BOOL isRunning;
 /** A weak reference to the parent */
@@ -256,6 +259,11 @@ enum {
 
 /** used internally for zOrder sorting, don't change this manually */
 @property(nonatomic,readwrite) NSUInteger orderOfArrival;
+
+/** GL server side state
+ @since v2.0
+*/
+@property (nonatomic, readwrite) ccGLServerState glServerState;
 
 // initializators
 /** allocates and initializes a node.

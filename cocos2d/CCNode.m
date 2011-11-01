@@ -79,6 +79,7 @@ static NSUInteger globalOrderOfArrival = 1;
 @synthesize userData = userData_;
 @synthesize	shaderProgram = shaderProgram_;
 @synthesize orderOfArrival = orderOfArrival_;
+@synthesize glServerState = glServerState_;
 
 #pragma mark CCNode - Transform related properties
 
@@ -140,6 +141,8 @@ static NSUInteger globalOrderOfArrival = 1;
 		shaderProgram_ = nil;
 		
 		orderOfArrival_ = 0;
+		
+		glServerState_ = CC_GL_BLEND;
 	}
 	
 	return self;
@@ -473,7 +476,11 @@ static NSUInteger globalOrderOfArrival = 1;
 
 -(void) draw
 {
-	// override me
+	if( shaderProgram_ ) {
+		ccGLEnable( glServerState_ );
+		ccGLUseProgram( shaderProgram_->program_ );
+		ccGLUniformModelViewProjectionMatrix( shaderProgram_ );
+	}
 }
 
 -(void) visit
