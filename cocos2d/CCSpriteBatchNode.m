@@ -247,7 +247,7 @@ const NSUInteger defaultCapacity = 29;
 			tempItem = x[i];
 			j = i-1;
 			
-			//continue moving element downwards while zOrder is smaller or when zOrder is the same but mutatedIndex is smaller
+			//continue moving element downwards while zOrder is smaller or when zOrder is the same but orderOfArrival is smaller
 			while(j>=0 && ( tempItem.zOrder < x[j].zOrder || ( tempItem.zOrder == x[j].zOrder && tempItem.orderOfArrival < x[j].orderOfArrival ) ) )
 			{
 				x[j+1] = x[j];
@@ -326,12 +326,11 @@ const NSUInteger defaultCapacity = 29;
 		}	
 		
 		if (needNewIndex) 
-		{
-			//all children have a zOrder < 0)
-			oldIndex = sprite.atlasIndex;
-			sprite.atlasIndex = *curIndex;
-			sprite.orderOfArrival = 0;
-			if (oldIndex != *curIndex)
+		{//all children have a zOrder < 0)
+			oldIndex=sprite.atlasIndex;
+			sprite.atlasIndex=*curIndex;
+			sprite.orderOfArrival=0;
+			if (oldIndex!=*curIndex)
 				[self swap:oldIndex withNewIndex:*curIndex];
 			(*curIndex)++;
 		}

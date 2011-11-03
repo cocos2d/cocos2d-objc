@@ -65,7 +65,11 @@ version 2.0-alpha 18-Sept-2011
 . [3RD] Kazmath: New external library. kazmath library for matrix and projection operations, and matrix GL stack
 . [3RD] Kazmath: Added ARM NEON Matrix Multiplication from Oolong project
 
-version 1.1-beta - 11-Oct-2011
+version 1.1-beta2 xx - 2011
+. [NEW] TileMap: supports in-memory TMX map creation (issue #1239)
+. [FIX] TouchDispatcher: correctly handles addition and removal of handlers when being inside a touch handler (issue #1084, #1139)
+
+version 1.1-beta 11-Oct-2011
 . [NEW] Animation: Added file format. AnimationCache can load animations from file
 . [NEW] ccConfig: Removed CC_RETINA_DISPLAY_FILENAME_SUFFIX. Use CCFileUtils API instead
 . [NEW] ccConfig: Removed CC_RETINA_DISPLAY_SUPPORT. It is always enabled.
@@ -77,6 +81,7 @@ version 1.1-beta - 11-Oct-2011
 . [NEW] Scheduler: Added support for delay and repeat (issue #630)
 . [NEW] Textures: Added support for RGB888 textures (issue #958)
 . [NEW] TileMap: TMX map supports flipped tiles (issue #1233)
+. [FIX] TileMap: don't use new sorting for tilemap (issue #1262)
 . [FIX] Actions: removed #undef CLAMP (issue #1210)
 . [FIX] Actions: Repeat & RepeatForEver work as expected(issue #1247)
 . [FIX] Actions: duration is not divided by zero (issue #615)

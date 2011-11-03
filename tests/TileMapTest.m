@@ -38,6 +38,7 @@ static NSString *transitions[] = {
 	@"TMXIsoMoveLayer",
 	@"TMXOrthoMoveLayer",
 	@"TMXOrthoFlipTest",
+	@"TMXOrthoFromXMLTest",
 	@"TMXBug987",
 	@"TMXBug787",
 
@@ -1248,6 +1249,42 @@ Class restartAction()
 -(NSString *) title
 {
 	return @"TMX tile flip test";
+}
+@end
+
+
+#pragma mark -
+#pragma mark TMXOrthoFromXMLTest
+
+@implementation TMXOrthoFromXMLTest
+-(id) init
+{
+	if( (self=[super init]) ) {
+		NSString* resources = @"TileMaps";		// partial paths are OK as resource paths.
+		NSString* file = [resources stringByAppendingPathComponent:@"orthogonal-test1.tmx"];
+		NSError* error = nil;
+		NSString* str = [NSString stringWithContentsOfFile:[CCFileUtils fullPathFromRelativePath:file] encoding:NSUTF8StringEncoding error:&error];
+		NSAssert3(!error, @"Unable to open file %@, %@ (%d)", file, [error localizedDescription], [error code]);
+
+		CCTMXTiledMap *map = [CCTMXTiledMap tiledMapWithXML:str resourcePath:resources];
+		[self addChild:map z:0 tag:kTagTileMap];
+		
+		CGSize s = map.contentSize;
+		NSLog(@"ContentSize: %f, %f", s.width,s.height);
+		
+		for( CCSpriteBatchNode* child in [map children] ) {
+			[[child texture] setAntiAliasTexParameters];
+		}
+		
+		id action = [CCScaleBy actionWithDuration:2 scale:0.5f];
+		[map runAction:action];
+	}	
+	return self;
+}
+
+-(NSString *) title
+{
+	return @"TMX created from XML test";
 }
 @end
 
