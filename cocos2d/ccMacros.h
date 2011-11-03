@@ -164,6 +164,17 @@ do	{																							\
 
 #endif
 
+/** @def CC_NODE_DRAW_SETUP
+ Helpful macro that setups the GL server state, the correct GL program and sets the Model View Projection matrix
+ @since v2.0
+ */
+#define CC_NODE_DRAW_SETUP()																	\
+do {																							\
+	ccGLEnable( glServerState_ );																\
+	ccGLUseProgram( shaderProgram_->program_ );													\
+	ccGLUniformModelViewProjectionMatrix( shaderProgram_ );										\
+} while(0)
+
  
  /** @def CC_DIRECTOR_END
   Stops and removes the director from memory.
@@ -292,3 +303,5 @@ CGSizeMake( (__size_in_points__).width * CC_CONTENT_SCALE_FACTOR(), (__size_in_p
 #define CC_PROFILER_RESET_INSTANCE(__id__, __name__) do {} while(0)
 
 #endif
+
+

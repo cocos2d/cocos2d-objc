@@ -476,11 +476,6 @@ static NSUInteger globalOrderOfArrival = 1;
 
 -(void) draw
 {
-	if( shaderProgram_ ) {
-		ccGLEnable( glServerState_ );
-		ccGLUseProgram( shaderProgram_->program_ );
-		ccGLUniformModelViewProjectionMatrix( shaderProgram_ );
-	}
 }
 
 -(void) visit

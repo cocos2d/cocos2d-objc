@@ -370,7 +370,7 @@
 
 - (void) draw
 {
-	[super draw];
+	CC_NODE_DRAW_SETUP();
 
 	ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position | kCCVertexAttribFlag_Color );
 

@@ -120,13 +120,10 @@
 #pragma mark CCAtlasNode - draw
 - (void) draw
 {
-	[super draw];
+	CC_NODE_DRAW_SETUP();
 
 	ccGLBlendFunc( blendFunc_.src, blendFunc_.dst );
-	
-	ccGLUseProgram( shaderProgram_->program_ );
-	ccGLUniformModelViewProjectionMatrix( shaderProgram_ );	
-	
+
 	glUniform4f( uniformColor_, color_.r / 255.0f, color_.g / 255.0f, color_.b / 255.0f, opacity_ / 255.0f );
 	
 	[textureAtlas_ drawNumberOfQuads:quadsToDraw_ fromIndex:0];	
