@@ -369,7 +369,7 @@ const NSUInteger defaultCapacity = 29;
 	if( textureAtlas_.totalQuads == 0 )
 		return;	
 
-	[super draw];
+	CC_NODE_DRAW_SETUP();
 
 	[children_ makeObjectsPerformSelector:@selector(updateTransform)];
 	

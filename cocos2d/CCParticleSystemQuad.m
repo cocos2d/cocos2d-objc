@@ -297,8 +297,8 @@
 // overriding draw method
 -(void) draw
 {	
-	[super draw];
-	
+	CC_NODE_DRAW_SETUP();
+
 	ccGLBindTexture2D( [texture_ name] );
 	ccGLBlendFunc( blendFunc_.src, blendFunc_.dst );	
 	

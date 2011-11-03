@@ -475,12 +475,12 @@ const char kCCProgressTextureCoords = 0x4b;
 	return CGPointZero;
 }
 
--(void)draw
+-(void) draw
 {
 	if( ! vertexData_ || ! sprite_)
 		return;
 
-	[super draw];	
+	CC_NODE_DRAW_SETUP();
 
 	ccGLBlendFunc( sprite_.blendFunc.src, sprite_.blendFunc.dst );
 

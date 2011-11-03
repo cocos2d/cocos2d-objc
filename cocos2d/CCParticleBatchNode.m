@@ -382,7 +382,7 @@
 {
 	CC_PROFILER_STOP(@"CCParticleBatchNode - draw");
 
-	[super draw];
+	CC_NODE_DRAW_SETUP();
 	
 	if( textureAtlas_.totalQuads == 0 )
 		return;	

@@ -517,10 +517,10 @@
 {
 	CC_PROFILER_START_CATEGORY(kCCProfilerCategorySprite, @"CCSprite - draw");
 
-	[super draw];
-	
 	NSAssert(!batchNode_, @"If CCSprite is being rendered by CCSpriteBatchNode, CCSprite#draw SHOULD NOT be called");
 
+	CC_NODE_DRAW_SETUP();
+	
 	ccGLBlendFunc( blendFunc_.src, blendFunc_.dst );
 	
 	ccGLBindTexture2D( [texture_ name] );
