@@ -54,6 +54,7 @@
 #define RENDER_IN_SUBPIXEL (NSInteger)
 #endif
 
+
 @interface CCNode ()
 // lazy allocs
 -(void) childrenAlloc;
@@ -66,6 +67,7 @@
 
 @implementation CCNode
 
+// XXX: Yes, nodes might have a sort problem once every 15 days if the game runs at 60 FPS and each frame sprites are reordered.
 static NSUInteger globalOrderOfArrival = 1;
 
 @synthesize children = children_;

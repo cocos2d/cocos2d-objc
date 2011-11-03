@@ -653,7 +653,7 @@
 			tempItem = x[i];
 			j = i-1;
 			
-			//continue moving element downwards while zOrder is smaller or when zOrder is the same but mutatedIndex is smaller
+			//continue moving element downwards while zOrder is smaller or when zOrder is the same but orderOfArrival is smaller
 			while(j>=0 && ( tempItem.zOrder < x[j].zOrder || ( tempItem.zOrder == x[j].zOrder && tempItem.orderOfArrival < x[j].orderOfArrival ) ) ) 
 			{
 				x[j+1] = x[j];
