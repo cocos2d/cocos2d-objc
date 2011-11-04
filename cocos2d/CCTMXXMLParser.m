@@ -204,6 +204,7 @@
 {
 	NSData* data = [xmlString dataUsingEncoding:NSUTF8StringEncoding];
 	NSError* err = [self parseXMLData:data];
+	(void)err;
 	NSAssert1( !err, @"Error parsing TMX data: %@.", [NSString stringWithCharacters:[data bytes] length:[data length]] );
 }
 
@@ -212,6 +213,7 @@
 	NSURL *url = [NSURL fileURLWithPath:[CCFileUtils fullPathFromRelativePath:xmlFilename] ];
 	NSData *data = [NSData dataWithContentsOfURL:url];
 	NSError* err = [self parseXMLData:data];
+	(void)err;
 	NSAssert3(!err, @"Error parsing TMX file: %@, %@ (%d).", xmlFilename, [err localizedDescription], [err code]);
 }
 
