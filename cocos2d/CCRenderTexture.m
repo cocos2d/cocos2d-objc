@@ -144,25 +144,6 @@
 	glBindFramebuffer(CC_GL_FRAMEBUFFER, fbo_);	
 }
 
--(void)begin2
-{	
-	kmGLPushMatrix();
-
-//	CCDirector *director = [CCDirector sharedDirector];
-//	CGSize size = [director winSizeInPixels];
-//	
-//	glViewport(0, 0, size.width * CC_CONTENT_SCALE_FACTOR(), size.height * CC_CONTENT_SCALE_FACTOR() );
-//	
-//	kmMat4 orthoMatrix;
-//	kmMat4OrthographicProjection(&orthoMatrix, 0, size.width, 0, size.height, -1024 * CC_CONTENT_SCALE_FACTOR(), 1024 * CC_CONTENT_SCALE_FACTOR() );
-//
-//	kmGLMultMatrix(&orthoMatrix);
-	
-	glGetIntegerv(CC_GL_FRAMEBUFFER_BINDING, &oldFBO_);
-	glBindFramebuffer(CC_GL_FRAMEBUFFER, fbo_);	
-}
-
-
 -(void)beginWithClear:(float)r g:(float)g b:(float)b a:(float)a
 {
 	[self begin];
