@@ -34,12 +34,18 @@
 typedef struct _hashElement
 {
 	struct ccArray	*actions;
-	id				target;
 	NSUInteger		actionIndex;
-	CCAction		*currentAction;
 	BOOL			currentActionSalvaged;
 	BOOL			paused;	
 	UT_hash_handle	hh;
+	
+#if __has_feature(objc_arc)
+	__unsafe_unretained id				target;
+	__unsafe_unretained CCAction		*currentAction;
+#else
+	id				target;
+	CCAction		*currentAction;
+#endif
 } tHashElement;
 
 

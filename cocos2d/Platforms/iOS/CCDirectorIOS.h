@@ -193,7 +193,7 @@ typedef enum {
 {
 	BOOL isRunning;
 	
-	NSAutoreleasePool	*autoreleasePool;
+	id autoreleasePool;
 }
 -(void) mainLoop;
 @end
