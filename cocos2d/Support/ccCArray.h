@@ -43,6 +43,8 @@
 #import <stdlib.h>
 #import <string.h>
 
+#import "../ccMacros.h"
+
 
 #pragma mark -
 #pragma mark ccArray for Objects
@@ -51,15 +53,10 @@
 #define CCARRAYDATA_FOREACH(__array__, __object__)															\
 __object__=__array__->arr[0]; for(NSUInteger i=0, num=__array__->num; i<num; i++, __object__=__array__->arr[i])	\
 
-
-#if __has_feature(objc_arc)
+#if defined(__has_feature) && __has_feature(objc_arc)
 	typedef __strong id CCARRAY_ID;
-	#define CCARRAY_RETAIN(value) value
-	#define CCARRAY_RELEASE(value) value = 0
 #else
 	typedef id CCARRAY_ID;
-	#define CCARRAY_RETAIN(value) [value retain]
-	#define CCARRAY_RELEASE(value) [value release]
 #endif
 
 typedef struct ccArray {
@@ -152,7 +149,7 @@ static inline BOOL ccArrayContainsObject(ccArray *arr, id object)
 /** Appends an object. Bahaviour undefined if array doesn't have enough capacity. */
 static inline void ccArrayAppendObject(ccArray *arr, id object)
 {
-	arr->arr[arr->num] = CCARRAY_RETAIN(object);
+	arr->arr[arr->num] = CC_ARC_RETAIN(object);
 	arr->num++;
 }
 
@@ -189,7 +186,7 @@ static inline void ccArrayInsertObjectAtIndex(ccArray *arr, id object, NSUIntege
 	if( remaining > 0)
 		memmove((void *)&arr->arr[index+1], (void *)&arr->arr[index], sizeof(id) * remaining );
 	
-	arr->arr[index] = CCARRAY_RETAIN(object);
+	arr->arr[index] = CC_ARC_RETAIN(object);
 	arr->num++;
 }
 
@@ -209,14 +206,14 @@ static inline void ccArraySwapObjectsAtIndexes(ccArray *arr, NSUInteger index1, 
 static inline void ccArrayRemoveAllObjects(ccArray *arr)
 {
 	while( arr->num > 0 )
-		CCARRAY_RELEASE(arr->arr[--arr->num]);
+		CC_ARC_RELEASE(arr->arr[--arr->num]);
 }
 
 /** Removes object at specified index and pushes back all subsequent objects.
  Behaviour undefined if index outside [0, num-1]. */
 static inline void ccArrayRemoveObjectAtIndex(ccArray *arr, NSUInteger index)
 {
-	CCARRAY_RELEASE(arr->arr[index]);
+	CC_ARC_RELEASE(arr->arr[index]);
 	arr->num--;
 	
 	NSUInteger remaining = arr->num - index;
@@ -229,7 +226,7 @@ static inline void ccArrayRemoveObjectAtIndex(ccArray *arr, NSUInteger index)
  Behaviour undefined if index outside [0, num-1]. */
 static inline void ccArrayFastRemoveObjectAtIndex(ccArray *arr, NSUInteger index)
 {
-	CCARRAY_RELEASE(arr->arr[index]);
+	CC_ARC_RELEASE(arr->arr[index]);
 	NSUInteger last = --arr->num;
 	arr->arr[index] = arr->arr[last];
 }
@@ -266,7 +263,7 @@ static inline void ccArrayFullRemoveArray(ccArray *arr, ccArray *minusArr)
 	
 	for( NSUInteger i = 0; i < arr->num; i++) {
 		if( ccArrayContainsObject(minusArr, arr->arr[i]) ) {
-			CCARRAY_RELEASE(arr->arr[i]);
+			CC_ARC_RELEASE(arr->arr[i]);
 			back++;
 		} else
 			arr->arr[i - back] = arr->arr[i];
