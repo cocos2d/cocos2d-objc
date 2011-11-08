@@ -28,6 +28,7 @@
 
 
 #import "CCAction.h"
+#import "ccMacros.h"
 #import "Support/ccCArray.h"
 #import "Support/uthash.h"
 
@@ -39,13 +40,8 @@ typedef struct _hashElement
 	BOOL			paused;	
 	UT_hash_handle	hh;
 	
-#if __has_feature(objc_arc)
-	__unsafe_unretained id				target;
-	__unsafe_unretained CCAction		*currentAction;
-#else
-	id				target;
-	CCAction		*currentAction;
-#endif
+	CC_ARC_UNSAFE_RETAINED	id				target;
+	CC_ARC_UNSAFE_RETAINED	CCAction		*currentAction;
 } tHashElement;
 
 
