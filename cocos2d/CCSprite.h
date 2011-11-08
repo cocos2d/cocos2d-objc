@@ -260,12 +260,6 @@
  */
 -(void)updateTransform;
 
-/** set the sprite batch node.
- If the batchNode is nil, then it won't use a batch for rendering.
- @since v0.99.0
- */
--(void) setBatchNode:(CCSpriteBatchNode*)batchNode;
-
 #pragma mark CCSprite - Texture methods
 
 /** set the texture rect of the CCSprite in points. 
