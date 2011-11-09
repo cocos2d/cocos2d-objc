@@ -70,17 +70,19 @@ extern NSString * cocos2dVersion(void);
 
 @interface CCDirector (Private)
 -(void) setNextScene;
-// shows the FPS in the screen
--(void) showFPS;
+// shows the statistics
+-(void) showStats;
 // calculates delta time since last time it was called
 -(void) calculateDeltaTime;
+// calculates the milliseconds per frame from the start of the frame
+-(void) calculateMPF;
 @end
 
 @implementation CCDirector
 
 @synthesize animationInterval = animationInterval_;
 @synthesize runningScene = runningScene_;
-@synthesize displayFPS = displayFPS_;
+@synthesize displayStats = displayStats_;
 @synthesize nextDeltaTimeZero = nextDeltaTimeZero_;
 @synthesize isPaused = isPaused_;
 @synthesize sendCleanupToScene = sendCleanupToScene_;
@@ -88,6 +90,8 @@ extern NSString * cocos2dVersion(void);
 @synthesize notificationNode = notificationNode_;
 @synthesize projectionDelegate = projectionDelegate_;
 @synthesize totalFrames = totalFrames_;
+@synthesize millisecondsPerFrame = millisecondsPerFrame_;
+
 //
 // singleton stuff
 //
@@ -139,7 +143,7 @@ static CCDirector *_sharedDirector = nil;
 		projectionDelegate_ = nil;
 
 		// FPS
-		displayFPS_ = NO;
+		displayStats_ = kCCDirectorStatsNone;
 		totalFrames_ = frames_ = 0;
 		
 		// paused ?
@@ -489,14 +493,19 @@ static CCDirector *_sharedDirector = nil;
 }
 
 
-// display the FPS using a LabelAtlas
-// updates the FPS every frame
--(void) showFPS
+// display statistics
+-(void) showStats
 {
 	frames_++;
 	accumDt_ += dt;
-	
-	if ( accumDt_ > CC_DIRECTOR_FPS_INTERVAL)  {
+
+	if( displayStats_ == kCCDirectorStatsMPF ) {
+		NSString *str = [[NSString alloc] initWithFormat:@"%.4f", millisecondsPerFrame_];
+		[FPSLabel_ setString:str];
+		[str release];
+	}
+	else if( displayStats_ == kCCDirectorStatsFPS && accumDt_ > CC_DIRECTOR_FPS_INTERVAL) 
+	{
 		frameRate_ = frames_/accumDt_;
 		frames_ = 0;
 		accumDt_ = 0;
@@ -509,6 +518,22 @@ static CCDirector *_sharedDirector = nil;
 		[str release];
 	}
 	[FPSLabel_ visit];
+}
+
+-(void) setDisplayFPS:(BOOL)display
+{
+	if( display )
+		self.displayStats = kCCDirectorStatsFPS;
+	else
+		self.displayStats = kCCDirectorStatsNone;
+}
+
+-(void) calculateMPF
+{
+	struct timeval now;
+	gettimeofday( &now, NULL);
+	
+	millisecondsPerFrame_ = (now.tv_sec - lastUpdate_.tv_sec) + (now.tv_usec - lastUpdate_.tv_usec) / 1000000.0f;
 }
 
 #pragma mark Director - Helper

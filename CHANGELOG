@@ -1,4 +1,5 @@
 version 2.0-beta XX-Nov-2011
+. [NEW] Director: Added API to display Milliseconds Per Frame
 . [NEW] Node / Sprite: faster reorder sprite (from v1.1 branch)
 . [NEW] Node: Added glServerState property. Ideal to enable/disabled blending for certain nodes.
 . [NEW] Shader: Added AlphaTesting shader

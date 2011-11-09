@@ -23,7 +23,7 @@
 	CCDirector *director = [CCDirector sharedDirector];
 
 	// display FPS (useful when debugging)
-	[director setDisplayFPS:YES];
+	[director setDisplayStats:kCCDirectorStatsFPS];
 	
 	// frames per second
 	[director setAnimationInterval:1.0/60];

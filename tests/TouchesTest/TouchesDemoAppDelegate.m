@@ -30,7 +30,7 @@
 	CCDirector *director = [CCDirector sharedDirector];
 	
 	// Turn on display FPS
-	[director setDisplayFPS:YES];
+	[director setDisplayStats:kCCDirectorStatsFPS];
 	
 	// Set multiple touches on
 	EAGLView *glView = [director openGLView];

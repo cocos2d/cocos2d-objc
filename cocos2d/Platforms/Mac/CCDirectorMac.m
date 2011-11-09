@@ -51,8 +51,9 @@
 
 @interface CCDirector ()
 -(void) setNextScene;
--(void) showFPS;
+-(void) showStats;
 -(void) calculateDeltaTime;
+-(void) calculateMPF;
 @end
 
 @implementation CCDirector (MacExtension)
@@ -428,14 +429,14 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 //
 - (void) drawScene
 {    
+	/* calculate "global" dt */
+	[self calculateDeltaTime];
+
 	// We draw on a secondary thread through the display link
 	// When resizing the view, -reshape is called automatically on the main thread
 	// Add a mutex around to avoid the threads accessing the context simultaneously	when resizing
 	CGLLockContext([[openGLView_ openGLContext] CGLContextObj]);
-	[[openGLView_ openGLContext] makeCurrentContext];
-	
-	/* calculate "global" dt */
-	[self calculateDeltaTime];
+	[[openGLView_ openGLContext] makeCurrentContext];	
 	
 	/* tick before glClear: issue #533 */
 	if( ! isPaused_ ) {
@@ -458,8 +459,8 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 	/* draw the notification node */
 	[notificationNode_ visit];
 	
-	if( displayFPS_ )
-		[self showFPS];
+	if( displayStats_ )
+		[self showStats];
 	
 	kmGLPopMatrix();
 	
@@ -467,6 +468,9 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 
 	[[openGLView_ openGLContext] flushBuffer];	
 	CGLUnlockContext([[openGLView_ openGLContext] CGLContextObj]);	
+	
+	if( displayStats_ == kCCDirectorStatsMPF )
+		[self calculateMPF];
 }
 
 // set the event dispatcher

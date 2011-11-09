@@ -1370,7 +1370,7 @@ Class restartAction()
 	CCDirector *director = [CCDirector sharedDirector];
 
 	// display FPS (useful when debugging)
-	[director setDisplayFPS:YES];
+	[director setDisplayStats:kCCDirectorStatsFPS];
 	
 	// frames per second
 	[director setAnimationInterval:1.0/60];
@@ -1504,7 +1504,7 @@ Class restartAction()
 	//
 	[director setProjection:kCCDirectorProjection2D];
     
-    [director setDisplayFPS:YES];
+    [director setDisplayStats:kCCDirectorStatsFPS];
 	
 	CCScene *scene = [CCScene node];
 	[scene addChild: [nextAction() node]];

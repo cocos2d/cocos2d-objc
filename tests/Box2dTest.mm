@@ -343,7 +343,7 @@ enum {
 	CCDirector *director = [CCDirector sharedDirector];
 
 	// Turn on display FPS
-	[director setDisplayFPS:YES];
+	[director setDisplayStats:kCCDirectorStatsFPS];
 	
 	// Turn on multiple touches
 	EAGLView *view = [director openGLView];

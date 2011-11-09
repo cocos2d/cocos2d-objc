@@ -376,7 +376,7 @@ Class restartAction()
 	CCDirector *director = [CCDirector sharedDirector];
 
 	// display FPS (useful when debugging)
-	[director setDisplayFPS:YES];
+	[director setDisplayStats:kCCDirectorStatsFPS];
 	
 	// frames per second
 	[director setAnimationInterval:1.0/60];
@@ -483,7 +483,7 @@ Class restartAction()
 {	
 	CCDirectorMac *director = (CCDirectorMac*) [CCDirector sharedDirector];
 	
-	[director setDisplayFPS:YES];
+	[director setDisplayStats:kCCDirectorStatsFPS];
 	
 	[director setOpenGLView:glView_];
 	
