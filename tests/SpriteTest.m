@@ -4368,7 +4368,7 @@ Class restartAction()
 	// set FPS at 60
 	[director setAnimationInterval:1.0/60];
 	
-	// Display FPS: yes
+	// Display Milliseconds Per Frame
 	[director setDisplayStats:kCCDirectorStatsMPF];
 
 	// Create an EAGLView with a RGB8 color buffer, and a depth buffer of 24-bits
