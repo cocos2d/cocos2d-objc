@@ -2,11 +2,6 @@
 // cocos2d node-children performance test
 //
 
-#import "cocos2d.h"
-
-#if ! CC_ENABLE_PROFILERS
-#error CC_ENABLE_PROFILERS must be enabled. Edit ccConfig.h
-#endif
 
 #import "PerformanceNodeChildrenTest.h"
 
@@ -579,15 +574,14 @@ Class restartAction()
 		[batchNode sortAllChildren];
 		
 		// reorder them
-		CCProfilingBeginTimingBlock(_profilingTimer);
+		CC_PROFILER_START([self profilerName]);
 		for( int i=0;i <  totalToAdd;i++)
 		{
 			CCSprite* temp =[[batchNode children] objectAtIndex:i];
 			[batchNode reorderChild:temp z:i+1];
 		}
 		[batchNode sortAllChildren];
-		CCProfilingEndTimingBlock(_profilingTimer);
-		
+		CC_PROFILER_STOP([self profilerName]);		
 		// remove them
 		for( int i=0;i <  totalToAdd;i++)
 		{
@@ -637,15 +631,15 @@ Class restartAction()
 
 		
 		// reorder them, worst case scenario
-		CCProfilingBeginTimingBlock(_profilingTimer);
+		CC_PROFILER_START([self profilerName]);
 		for( int i=0;i <  totalToAdd;i++)
 		{
 			CCSprite* temp =[[batchNode children] objectAtIndex:i];
 			[batchNode reorderChild:temp z:totalToAdd-i];
 		}
 		[batchNode sortAllChildren];
-		CCProfilingEndTimingBlock(_profilingTimer);
-		
+		CC_PROFILER_STOP([self profilerName]);
+	
 		// remove them
 		for( int i=0;i <  totalToAdd;i++)
 		{
@@ -686,13 +680,13 @@ Class restartAction()
 		}
 		
 		//best case scenario
-		CCProfilingBeginTimingBlock(_profilingTimer);
+		CC_PROFILER_START([self profilerName]);
 		for( int i=0; i < totalToAdd;i++ )
 		{
 			[batchNode addChild:sprites[i] z:i tag:kTagBase+i];
 		}
 		[batchNode sortAllChildren];
-		CCProfilingEndTimingBlock(_profilingTimer);
+		CC_PROFILER_STOP([self profilerName]);
 		
 		// remove them
 		for( int i=0;i <  totalToAdd;i++)
@@ -735,13 +729,13 @@ Class restartAction()
 		
 		
 		//worst case scenario
-		CCProfilingBeginTimingBlock(_profilingTimer);
+		CC_PROFILER_START([self profilerName]);
 		for( int i=0; i < totalToAdd;i++ )
 		{
 			[batchNode addChild:sprites[i] z:totalToAdd-i tag:kTagBase+i];
 		}
 		[batchNode sortAllChildren];
-		CCProfilingEndTimingBlock(_profilingTimer);		
+		CC_PROFILER_STOP([self profilerName]);
 		
 		// remove them
 		for( int i=0;i <  totalToAdd;i++)

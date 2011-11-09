@@ -1171,7 +1171,7 @@ Class restartAction()
 	[CCFileUtils setRetinaDisplaySuffix:@"-hd"];	// Default on RetinaDisplay is "-hd"
 	
 	// Turn on display FPS
-	[director setDisplayFPS:YES];
+	[director setDisplayStats:kCCDirectorStatsFPS];
 	
 	// Create an EAGLView with a RGB8 color buffer, and a depth buffer of 0 without multisampling
 	EAGLView *glView = [EAGLView viewWithFrame:[window_ bounds]
@@ -1267,7 +1267,7 @@ Class restartAction()
 {
 	CCDirectorMac *director = (CCDirectorMac*) [CCDirector sharedDirector];
 	
-	[director setDisplayFPS:YES];
+	[director setDisplayStats:kCCDirectorStatsFPS];
 	
 	[director setOpenGLView:glView_];
 	

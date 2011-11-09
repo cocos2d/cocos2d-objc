@@ -49,7 +49,7 @@
 	CCDirector *director = [CCDirector sharedDirector];
 
 	// Turn on display FPS
-	[director setDisplayFPS:YES];
+	[director setDisplayStats:kCCDirectorStatsFPS];
 	
 	CCScene *scene = [CCScene node];	
 	[scene addChild:[Layer1 node] z:0];

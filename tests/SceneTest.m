@@ -241,7 +241,7 @@
 		CCLOG(@"Retina Display Not supported");
 	
 	// Turn on display FPS
-	[director setDisplayFPS:YES];
+	[director setDisplayStats:kCCDirectorStatsFPS];
 	
 	
 	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images

@@ -44,7 +44,7 @@
 	CCDirector *director = [CCDirector sharedDirector];
 
 	// Turn on display FPS
-	[director setDisplayFPS:YES];	
+	[director setDisplayStats:kCCDirectorStatsFPS];	
 
 	// 2D projection
 	[director setProjection:kCCDirectorProjection2D];

@@ -1478,7 +1478,7 @@ Class restartAction()
 	CCDirector *director = [CCDirector sharedDirector];
 	
 	// Turn on display FPS
-	[director setDisplayFPS:YES];
+	[director setDisplayStats:kCCDirectorStatsFPS];
 		
 	// Enables High Res mode (Retina Display) on iPhone 4 and maintains low res on all other devices
 	if( ! [director enableRetinaDisplay:YES] )
@@ -1560,7 +1560,7 @@ Class restartAction()
 {
 	CCDirectorMac *director = (CCDirectorMac*) [CCDirector sharedDirector];
 	
-	[director setDisplayFPS:YES];
+	[director setDisplayStats:kCCDirectorStatsFPS];
 	
 	[director setOpenGLView:glView_];
 	

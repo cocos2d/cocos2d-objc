@@ -67,8 +67,9 @@ CGFloat	__ccContentScaleFactor = 1;
 
 @interface CCDirector ()
 -(void) setNextScene;
--(void) showFPS;
+-(void) showStats;
 -(void) calculateDeltaTime;
+-(void) calculateMPF;
 @end
 
 @implementation CCDirector (iOSExtensionClassMethods)
@@ -133,14 +134,17 @@ CGFloat	__ccContentScaleFactor = 1;
 
 	[notificationNode_ visit];
 
-	if( displayFPS_ )
-		[self showFPS];
+	if( displayStats_ )
+		[self showStats];
 
 	kmGLPopMatrix();
 
 	totalFrames_++;
 
 	[openGLView_ swapBuffers];
+	
+	if( displayStats_ == kCCDirectorStatsMPF )
+		[self calculateMPF];
 }
 
 -(void) setProjection:(ccDirectorProjection)projection

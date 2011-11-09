@@ -21,7 +21,7 @@
 	CCDirector *director = [CCDirector sharedDirector];
 		
 	// display FPS (useful when debugging)
-	[director setDisplayFPS:YES];
+	[director setDisplayStats:kCCDirectorStatsMPF];
 
 	CCScene *scene = [nextAction() node];
 	[director runWithScene:scene];

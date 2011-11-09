@@ -35,7 +35,7 @@
 		CCLOG(@"Retina Display Not supported");
 	
 	// display FPS (useful when debugging)
-	[director setDisplayFPS:YES];
+	[director setDisplayStats:kCCDirectorStatsFPS];
 	
 	// set multiple touches ON
 	EAGLView *glView = [director openGLView];

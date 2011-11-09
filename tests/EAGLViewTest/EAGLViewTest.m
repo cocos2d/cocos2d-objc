@@ -60,7 +60,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {	
 	CCDirector *director = [CCDirector sharedDirector];
-	[director setDisplayFPS:YES];
+	[director setDisplayStats:kCCDirectorStatsFPS];
 
 	[director setOpenGLView:glView_];
 

@@ -125,7 +125,7 @@ default gl blend src function. Compatible with premultiplied alpha images.
 do	{																							\
 	window_ = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];					\
 	CCDirector *__director = [CCDirector sharedDirector];										\
-	[__director setDisplayFPS:NO];																\
+	[__director setDisplayStats:kCCDirectorStatsNone];																\
 	[__director setAnimationInterval:1.0/60];													\
 	EAGLView *__glView = [EAGLView viewWithFrame:[window_ bounds]								\
 									pixelFormat:kEAGLColorFormatRGB565							\
@@ -155,7 +155,7 @@ do	{																							\
 	glView_ = [[MacGLView alloc] initWithFrame:frameRect shareContext:nil];						\
 	[self.window setContentView:self.glView];													\
 	CCDirector *__director = [CCDirector sharedDirector];										\
-	[__director setDisplayFPS:NO];																\
+	[__director setDisplayStats:kCCDirectorStatsNone];																\
 	[__director setOpenGLView:self.glView];														\
 	[(CCDirectorMac*)__director setOriginalWinSize:__WINSIZE__];								\
 	[self.window makeMainWindow];																\

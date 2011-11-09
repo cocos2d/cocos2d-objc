@@ -38,7 +38,7 @@
 	[director setOpenGLView:glView];
 
 	[director setAnimationInterval:1.0/60];
-	[director setDisplayFPS:YES];
+	[director setDisplayStats:kCCDirectorStatsFPS];
 	
 	
 	
@@ -56,7 +56,7 @@
 	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA8888];
 
 	// Turn on display FPS
-	[director setDisplayFPS:YES];
+	[director setDisplayStats:kCCDirectorStatsFPS];
 	
 	// Run the intro Scene
 	[[CCDirector sharedDirector] runWithScene: [HelloWorld scene]];	
