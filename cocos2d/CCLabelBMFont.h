@@ -137,6 +137,13 @@ enum {
 {
 	// string to render
 	NSString		*string_;
+    
+    // initial string without line breaks
+    NSString *initialString_;
+    // max width until a line break is added
+    float width_;
+    // alignment of all lines
+    UITextAlignment alignment_;
 	
 	CCBMFontConfiguration	*configuration_;
 
@@ -152,6 +159,10 @@ enum {
  */
 +(void) purgeCachedData;
 
+@property (nonatomic,copy,readonly) NSString *initialString;
+@property (nonatomic,assign,readonly) float width;
+@property (nonatomic,assign,readonly) UITextAlignment alignment;
+
 /** conforms to CCRGBAProtocol protocol */
 @property (nonatomic,readwrite) GLubyte opacity;
 /** conforms to CCRGBAProtocol protocol */
@@ -160,12 +171,19 @@ enum {
 
 /** creates a BMFont label with an initial string and the FNT file */
 +(id) labelWithString:(NSString*)string fntFile:(NSString*)fntFile;
+/** creates a BMFont label with an initial string, the FNT file, width, and alignment option */
++(id) labelWithString:(NSString*)string fntFile:(NSString*)fntFile width:(float)width alignment:(UITextAlignment)alignment;
 
 /** init a BMFont label with an initial string and the FNT file */
 -(id) initWithString:(NSString*)string fntFile:(NSString*)fntFile;
+/** init a BMFont label with an initial string and the FNT file, width, and alignment option*/
+-(id) initWithString:(NSString*)string fntFile:(NSString*)fntFile width:(float)width alignment:(UITextAlignment)alignment;
 
 /** updates the font chars based on the string to render */
 -(void) createFontChars;
+
+-(void) setWidth:(float)width;
+-(void) setAlignment:(UITextAlignment)alignment;
 @end
 
 /** Free function that parses a FNT file a place it on the cache
