@@ -450,17 +450,17 @@ typedef struct _KerningHashElement
 	return [[[self alloc] initWithString:string fntFile:fntFile] autorelease];
 }
 
-+(id) labelWithString:(NSString*)string fntFile:(NSString*)fntFile width:(float)width alignment:(UITextAlignment)alignment
++(id) labelWithString:(NSString*)string fntFile:(NSString*)fntFile width:(float)width alignment:(CCTextAlignment)alignment
 {
     return [[[self alloc] initWithString:string fntFile:fntFile width:width alignment:alignment] autorelease];
 }
 
 -(id) initWithString:(NSString*)theString fntFile:(NSString*)fntFile
 {
-    return [self initWithString:theString fntFile:fntFile width:-1 alignment:UITextAlignmentLeft];
+    return [self initWithString:theString fntFile:fntFile width:-1 alignment:CCTextAlignmentLeft];
 }
 
--(id) initWithString:(NSString*)theString fntFile:(NSString*)fntFile width:(float)width alignment:(UITextAlignment)alignment
+-(id) initWithString:(NSString*)theString fntFile:(NSString*)fntFile width:(float)width alignment:(CCTextAlignment)alignment
 {	
 	
 	[configuration_ release]; // allow re-init
@@ -591,7 +591,7 @@ typedef struct _KerningHashElement
     
     //Step 2: Make alignment
     
-    if (self.alignment != UITextAlignmentLeft) {
+    if (self.alignment != CCTextAlignmentLeft) {
         
         int i = 0;
         int lineNumber = 0;
@@ -612,10 +612,10 @@ typedef struct _KerningHashElement
             //Figure out how much to shift each character in this line horizontally
             float shift = 0;
             switch (self.alignment) {
-                case UITextAlignmentCenter:
+                case CCTextAlignmentCenter:
                     shift = self.contentSize.width/2 - lineWidth/2;
                     break;
-                case UITextAlignmentRight:
+                case CCTextAlignmentRight:
                     shift = self.contentSize.width - lineWidth;
                 default:
                     break;
@@ -833,7 +833,7 @@ typedef struct _KerningHashElement
     [self updateLabel];
 }
 
-- (void)setAlignment:(UITextAlignment)alignment {
+- (void)setAlignment:(CCTextAlignment)alignment {
     alignment_ = alignment;
     [self updateLabel];
 }
