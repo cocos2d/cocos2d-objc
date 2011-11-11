@@ -115,7 +115,7 @@ void ccGLActiveTexture( GLenum textureEnum )
 {
 #if CC_ENABLE_GL_STATE_CACHE
 	NSCAssert1( (textureEnum - GL_TEXTURE0) < kCCMaxActiveTexture, @"cocos2d ERROR: Increase kCCMaxActiveTexture to %d!", (textureEnum-GL_TEXTURE0) );
-	if( textureEnum != _ccCurrentActiveTexture ) {
+	if( (textureEnum - GL_TEXTURE0) != _ccCurrentActiveTexture ) {
 		_ccCurrentActiveTexture = (textureEnum - GL_TEXTURE0);
 		glActiveTexture( textureEnum );		
 	} 	
