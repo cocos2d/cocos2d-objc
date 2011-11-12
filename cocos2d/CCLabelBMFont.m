@@ -514,7 +514,8 @@ typedef struct _KerningHashElement
         //Step 1: Make multiline
         
         NSString *multilineString = @"", *lastWord = @"";
-        int line = 1, i = 0, stringLength = [self.string length];
+        int line = 1, i = 0;
+        NSUInteger stringLength = [self.string length];
         float startOfLine = -1, startOfWord = -1;
         int skip = 0;
         //Go through each character and insert line breaks as necessary
@@ -529,7 +530,7 @@ typedef struct _KerningHashElement
             if (i >= stringLength || i < 0)
                 break;
             
-            unichar character = [self.string characterAtIndex:i];;
+            unichar character = [self.string characterAtIndex:i];
             
             if (startOfWord == -1)
                 startOfWord = characterSprite.position.x - characterSprite.contentSize.width/2;
@@ -608,7 +609,7 @@ typedef struct _KerningHashElement
             int lineWidth = 0;
             
             //Find index of last character in this line
-            int index = i + [lineString length] - 1 + lineNumber;
+            NSInteger index = i + [lineString length] - 1 + lineNumber;
             if (index < 0)
                 continue;
             
