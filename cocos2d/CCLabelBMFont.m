@@ -516,13 +516,20 @@ typedef struct _KerningHashElement
         NSString *multilineString = @"", *lastWord = @"";
         int line = 1, i = 0, stringLength = [self.string length];
         float startOfLine = -1, startOfWord = -1;
+        int skip = 0;
         //Go through each character and insert line breaks as necessary
-        for (CCSprite *characterSprite in self.children) {
+        for (int j = 0; j < [children_ count]; j++) {
+            CCSprite *characterSprite;
+            
+            while(!(characterSprite = (CCSprite *)[self getChildByTag:j+skip]))
+                skip++;
+            
+            if (!characterSprite.visible) continue;
             
             if (i >= stringLength || i < 0)
                 break;
             
-            unichar character = [self.string characterAtIndex:i];
+            unichar character = [self.string characterAtIndex:i];;
             
             if (startOfWord == -1)
                 startOfWord = characterSprite.position.x - characterSprite.contentSize.width/2;
@@ -594,18 +601,19 @@ typedef struct _KerningHashElement
     if (self.alignment != CCTextAlignmentLeft) {
         
         int i = 0;
+        //Number of spaces skipped
         int lineNumber = 0;
         //Go through line by line
         for (NSString *lineString in [string_ componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]]) {
             int lineWidth = 0;
             
             //Find index of last character in this line
-            int index = i + [lineString length] - 1;
-            if (index < 0 || index >= [self.children count])
+            int index = i + [lineString length] - 1 + lineNumber;
+            if (index < 0)
                 continue;
             
             //Find position of last character on the line
-            CCSprite *lastChar = [self.children objectAtIndex:index];
+            CCSprite *lastChar = (CCSprite *)[self getChildByTag:index];
             
             lineWidth = lastChar.position.x + lastChar.contentSize.width/2;
             
@@ -625,10 +633,10 @@ typedef struct _KerningHashElement
                 int j = 0;
                 //For each character, shift it so that the line is center aligned
                 for (j = 0; j < [lineString length]; j++) {
-                    index = i + j;
-                    if (index < 0 || index >= [self.children count])
+                    index = i + j + lineNumber;
+                    if (index < 0)
                         continue;
-                    CCSprite *characterSprite = [self.children objectAtIndex:index];
+                    CCSprite *characterSprite = (CCSprite *)[self getChildByTag:index];
                     characterSprite.position = ccpAdd(characterSprite.position, ccp(shift, 0));
                 }
             }
@@ -761,13 +769,9 @@ typedef struct _KerningHashElement
         initialString_ = [newString copy];
     }
     
-    if (fromUpdate)
-        [self removeAllChildrenWithCleanup:YES];
-    else {
-        CCNode *child;
-        CCARRAY_FOREACH(children_, child)
-		child.visible = NO;
-    }
+    CCSprite *child;
+    CCARRAY_FOREACH(children_, child)
+    child.visible = NO;
     
 	[self createFontChars];
     
