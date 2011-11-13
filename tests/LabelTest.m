@@ -16,6 +16,8 @@
 static int sceneIdx=-1;
 static NSString *transitions[] = {
 	
+	@"BitmapFontMultiLineAlignment",
+
 	@"LabelAtlasTest",
 	@"LabelAtlasColorTest",
 	@"Atlas3",
@@ -25,6 +27,7 @@ static NSString *transitions[] = {
 	@"AtlasBitmapColor",
 	@"AtlasFastBitmap",
 	@"BitmapFontMultiLine",
+	@"BitmapFontMultiLineAlignment",
 	@"LabelsEmpty",
 	@"LabelBMFontHD",
 	@"LabelAtlasHD",
@@ -782,6 +785,221 @@ Class restartAction()
 
 @end
 
+#pragma mark -
+#pragma mark BitmapFontMultiLineAlignment
+
+/*
+ * Use any of these editors to generate BMFonts:
+ *   http://glyphdesigner.71squared.com/ (Commercial, Mac OS X)
+ *   http://www.n4te.com/hiero/hiero.jnlp (Free, Java)
+ *   http://slick.cokeandcode.com/demos/hiero.jnlp (Free, Java)
+ *   http://www.angelcode.com/products/bmfont/ (Free, Windows only)
+ */
+
+#define LongSentencesExample @"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+#define LineBreaksExample @"Lorem ipsum dolor\nsit amet\nconsectetur adipisicing elit\nblah\nblah"
+#define MixedExample @"ABC\nLorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt\nDEF"
+
+#define ArrowsMax 0.95
+#define ArrowsMin 0.7
+
+#define LeftAlign 0
+#define CenterAlign 1
+#define RightAlign 2
+
+#define LongSentences 0
+#define LineBreaks 1
+#define Mixed 2
+
+static float alignmentItemPadding = 50;
+static float menuItemPaddingCenter = 50;
+
+
+@implementation BitmapFontMultiLineAlignment
+
+@synthesize label = label_;
+@synthesize arrowsBar = arrowsBar_;
+@synthesize arrows = arrows_;
+
+// on "init" you need to initialize your instance
+-(id) init
+{
+	// always call "super" init
+	// Apple recommends to re-assign "self" with the "super" return value
+	if( (self=[super init])) {
+        self.isTouchEnabled = YES;
+        
+		// ask director the the window size
+		CGSize size = [[CCDirector sharedDirector] winSize];
+		
+		// create and initialize a Label
+		self.label = [CCLabelBMFont labelWithString:LongSentencesExample fntFile:@"markerFelt.fnt" width:size.width/1.5 alignment:UITextAlignmentCenter];
+        //self.label.debug = YES;
+        
+        self.arrowsBar = [CCSprite spriteWithFile:@"arrowsBar.png"];
+        self.arrows = [CCSprite spriteWithFile:@"arrows.png"];
+        
+        [CCMenuItemFont setFontSize:20];
+        CCMenuItemFont *longSentences = [CCMenuItemFont itemFromString:@"Long Flowing Sentences" target:self selector:@selector(stringChanged:)];
+        CCMenuItemFont *lineBreaks = [CCMenuItemFont itemFromString:@"Short Sentences With Intentional Line Breaks" target:self selector:@selector(stringChanged:)];
+        CCMenuItemFont *mixed = [CCMenuItemFont itemFromString:@"Long Sentences Mixed With Intentional Line Breaks" target:self selector:@selector(stringChanged:)];
+        CCMenu *stringMenu = [CCMenu menuWithItems:longSentences, lineBreaks, mixed, nil];
+        [stringMenu alignItemsVertically];
+        
+        [longSentences setColor:ccRED];
+        lastSentenceItem_ = longSentences;
+        longSentences.tag = LongSentences;
+        lineBreaks.tag = LineBreaks;
+        mixed.tag = Mixed;
+        
+        [CCMenuItemFont setFontSize:30];
+        
+        CCMenuItemFont *left = [CCMenuItemFont itemFromString:@"Left" target:self selector:@selector(alignmentChanged:)];
+        CCMenuItemFont *center = [CCMenuItemFont itemFromString:@"Center" target:self selector:@selector(alignmentChanged:)];
+        CCMenuItemFont *right = [CCMenuItemFont itemFromString:@"Right" target:self selector:@selector(alignmentChanged:)];
+        CCMenu *alignmentMenu = [CCMenu menuWithItems:left, center, right, nil];
+        [alignmentMenu alignItemsHorizontallyWithPadding:alignmentItemPadding];
+        
+        [center setColor:ccRED];
+        lastAlignmentItem_ = center;
+        left.tag = LeftAlign;
+        center.tag = CenterAlign;
+        right.tag = RightAlign;
+		
+		// position the label on the center of the screen
+		self.label.position =  ccp( size.width/2 , size.height/2 );
+        
+        self.arrowsBar.visible = NO;
+        
+        float arrowsWidth = (ArrowsMax - ArrowsMin) * size.width;
+        self.arrowsBar.scaleX = arrowsWidth / self.arrowsBar.contentSize.width;
+        self.arrowsBar.position = ccp(((ArrowsMax + ArrowsMin) / 2) * size.width, self.label.position.y);
+        
+        [self snapArrowsToEdge];
+        
+        stringMenu.position = ccp(size.width/2, size.height - menuItemPaddingCenter);
+        alignmentMenu.position = ccp(size.width/2, menuItemPaddingCenter);
+        
+		// add the label as a child to this Layer
+		[self addChild:self.label];
+        [self addChild:self.arrowsBar];
+        [self addChild:self.arrows];
+        [self addChild:stringMenu];
+        [self addChild:alignmentMenu];
+	}
+	return self;
+}
+
+// on "dealloc" you need to release all your retained objects
+- (void) dealloc
+{
+    self.label = nil;
+    self.arrows = nil;
+    self.arrowsBar = nil;
+    
+	[super dealloc];
+}
+
+#pragma mark Action Methods
+
+- (void)stringChanged:(id)sender {
+    CCMenuItemFont *item = sender;
+    [item setColor:ccRED];
+    [lastSentenceItem_ setColor:ccWHITE];
+    lastSentenceItem_ = item;
+    
+    switch (item.tag) {
+        case LongSentences:
+            [self.label setString:LongSentencesExample];
+            break;
+        case LineBreaks:
+            [self.label setString:LineBreaksExample];
+            break;
+        case Mixed:
+            [self.label setString:MixedExample];
+            break;
+            
+        default:
+            break;
+    }
+    
+    [self snapArrowsToEdge];
+}
+
+- (void)alignmentChanged:(id)sender {
+    CCMenuItemFont *item = sender;
+    [item setColor:ccRED];
+    [lastAlignmentItem_ setColor:ccWHITE];
+    lastAlignmentItem_ = item;
+    
+    switch (item.tag) {
+        case LeftAlign:
+            [self.label setAlignment:UITextAlignmentLeft];
+            break;
+        case CenterAlign:
+            [self.label setAlignment:UITextAlignmentCenter];
+            break;
+        case RightAlign:
+            [self.label setAlignment:UITextAlignmentRight];
+            break;
+            
+        default:
+            break;
+    }
+    
+    [self snapArrowsToEdge];
+}
+
+#pragma mark Touch Methods
+
+- (void)ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    UITouch *touch = [touches anyObject];
+    CGPoint location = [touch locationInView:[touch view]];
+    
+    if (CGRectContainsPoint([self.arrows boundingBox], location)) {
+        drag_ = YES;
+        self.arrowsBar.visible = YES;
+    }
+}
+
+- (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+    drag_ = NO;
+    [self snapArrowsToEdge];
+    
+    self.arrowsBar.visible = NO;
+}
+
+- (void)ccTouchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
+    if (!drag_) return;
+    
+    UITouch *touch = [touches anyObject];
+    CGPoint location = [touch locationInView:[touch view]];
+    
+    CGSize winSize = [CCDirector sharedDirector].winSize;
+    
+    self.arrows.position = ccp(MAX(MIN(location.x, ArrowsMax*winSize.width), ArrowsMin*winSize.width), self.arrows.position.y);
+    
+    float labelWidth = abs(self.arrows.position.x - self.label.position.x) * 2;
+    
+    [self.label setWidth:labelWidth];
+}
+
+- (void)snapArrowsToEdge {
+    self.arrows.position = ccp(self.label.position.x + self.label.contentSize.width/2, self.label.position.y);
+}
+
+-(NSString*) title
+{
+	return @"";
+}
+
+-(NSString *) subtitle
+{
+	return @"";
+}
+
+@end
+
 
 #pragma mark -
 #pragma mark LabelsEmpty
@@ -1009,7 +1227,7 @@ Class restartAction()
 		// CCLabelBMFont
 //		CCLabelTTF *center =  [[CCLabelTTF alloc] initWithString:@"Bla bla bla bla bla bla bla bla bla bla bla (bla)" dimensions:CGSizeMake(150,84) alignment:UITextAlignmentLeft fontName: @"MarkerFelt.ttc" fontSize: 14];
 
-		CCLabelTTF *center = [CCLabelTTF labelWithString:@"word wrap \"testing\" (bla0) bla1 'bla2' [bla3] (bla4) {bla5} {bla6} [bla7] (bla8) [bla9] 'bla0' \"bla1\"" dimensions:CGSizeMake(s.width/2,200) alignment:CCTextAlignmentCenter fontName:@"MarkerFelt.ttc" fontSize:32];
+		CCLabelTTF *center = [CCLabelTTF labelWithString:@"word wrap \"testing\" (bla0) bla1 'bla2' [bla3] (bla4) {bla5} {bla6} [bla7] (bla8) [bla9] 'bla0' \"bla1\"" dimensions:CGSizeMake(s.width/2,200) alignment:CCTextAlignmentCenter fontName:@"Paint Boy" fontSize:32];
 		center.position = ccp(s.width/2,150);
 		
 		[self addChild:center];
@@ -1153,42 +1371,49 @@ Class restartAction()
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 @implementation AppController
 
-- (void) applicationDidFinishLaunching:(UIApplication*)application
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
 	// Init the window
 	window_ = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 	
 	// before creating any layer, set the landscape mode
 	CCDirector *director = [CCDirector sharedDirector];
-
-	// Enables High Res mode (Retina Display) on iPhone 4 and maintains low res on all other devices
-	if( ! [director enableRetinaDisplay:YES] )
-		CCLOG(@"Retina Display Not supported");
 	
-	// When in iPad / RetinaDisplay mode, CCFileUtils will append the "-ipad" / "-hd" to all loaded files
-	// If the -ipad  / -hdfile is not found, it will load the non-suffixed version
-	[CCFileUtils setiPadSuffix:@"-ipad"];			// Default on iPad is "" (empty string)
-	[CCFileUtils setRetinaDisplaySuffix:@"-hd"];	// Default on RetinaDisplay is "-hd"
+	// set FPS at 60
+	[director setAnimationInterval:1.0/60];
 	
-	// Turn on display FPS
-	[director setDisplayStats:kCCDirectorStatsFPS];
+	// Display Milliseconds Per Frame
+	[director setDisplayStats:kCCDirectorStatsMPF];
 	
-	// Create an EAGLView with a RGB8 color buffer, and a depth buffer of 0 without multisampling
+	// Create an EAGLView with a RGB8 color buffer, and a depth buffer of 24-bits
 	EAGLView *glView = [EAGLView viewWithFrame:[window_ bounds]
 								   pixelFormat:kEAGLColorFormatRGBA8
-								   depthFormat:0];
+								   depthFormat:GL_DEPTH_COMPONENT24_OES
+							preserveBackbuffer:NO
+									sharegroup:nil
+								 multiSampling:NO
+							   numberOfSamples:0];
 	
 	// attach the openglView to the director
 	[director setOpenGLView:glView];
 	
 	// 2D projection
 	[director setProjection:kCCDirectorProjection2D];
+	//	[director setProjection:kCCDirectorProjection3D];
 	
 	// Enables High Res mode (Retina Display) on iPhone 4 and maintains low res on all other devices
-	[director enableRetinaDisplay:YES];
+	if( ! [director enableRetinaDisplay:YES] )
+		CCLOG(@"Retina Display Not supported");
+	
+	// Init the View Controller
+	viewController_ = [[RootViewController alloc] initWithNibName:nil bundle:nil];
+	viewController_.wantsFullScreenLayout = YES;
+	
+	// make the OpenGLView a child of the view controller
+	[viewController_ setView:glView];
 	
 	// make the OpenGLView a child of the main window
-	[window_ addSubview:glView];
+	[window_ addSubview:viewController_.view];
 	
 	// make main window visible
 	[window_ makeKeyAndVisible];	
@@ -1196,12 +1421,25 @@ Class restartAction()
 	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
 	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
 	// You can change anytime.
-	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA8888];	
-		
+	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA8888];
+	
+	// When in iPad / RetinaDisplay mode, CCFileUtils will append the "-ipad" / "-hd" to all loaded files
+	// If the -ipad  / -hdfile is not found, it will load the non-suffixed version
+	[CCFileUtils setiPadSuffix:@"-ipad"];			// Default on iPad is "" (empty string)
+	[CCFileUtils setRetinaDisplaySuffix:@"-hd"];	// Default on RetinaDisplay is "-hd"
+	
+	// Assume that PVR images have premultiplied alpha
+	[CCTexture2D PVRImagesHavePremultipliedAlpha:YES];
+	
+	// create the main scene
 	CCScene *scene = [CCScene node];
 	[scene addChild: [nextAction() node]];
-
+	
+	
+	// and run it!
 	[director runWithScene: scene];
+	
+	return YES;
 }
 
 // getting a call, pause the game

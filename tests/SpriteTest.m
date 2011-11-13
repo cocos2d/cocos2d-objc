@@ -4360,7 +4360,7 @@ Class restartAction()
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
 	// Init the window
-	window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+	window_ = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 
 	// before creating any layer, set the landscape mode
 	CCDirector *director = [CCDirector sharedDirector];
@@ -4372,7 +4372,7 @@ Class restartAction()
 	[director setDisplayStats:kCCDirectorStatsMPF];
 
 	// Create an EAGLView with a RGB8 color buffer, and a depth buffer of 24-bits
-	EAGLView *glView = [EAGLView viewWithFrame:[window bounds]
+	EAGLView *glView = [EAGLView viewWithFrame:[window_ bounds]
 								   pixelFormat:kEAGLColorFormatRGBA8
 								   depthFormat:GL_DEPTH_COMPONENT24_OES
 							preserveBackbuffer:NO
@@ -4399,10 +4399,10 @@ Class restartAction()
 	[viewController_ setView:glView];
 
 	// make the OpenGLView a child of the main window
-	[window addSubview:viewController_.view];
+	[window_ addSubview:viewController_.view];
 	
 	// make main window visible
-	[window makeKeyAndVisible];	
+	[window_ makeKeyAndVisible];	
 	
 	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
 	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
@@ -4472,7 +4472,7 @@ Class restartAction()
 - (void) dealloc
 {
 	[viewController_ release];
-	[window release];
+	[window_ release];
 	[super dealloc];
 }
 @end

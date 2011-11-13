@@ -1772,6 +1772,15 @@
 		A0BE62DA140535F000DAA336 /* CCVertex.m in Sources */ = {isa = PBXBuildFile; fileRef = A0BE62D7140535B700DAA336 /* CCVertex.m */; };
 		A0C20AC8144FDAF700D84B47 /* CCParticleBatchNode.h in Headers */ = {isa = PBXBuildFile; fileRef = A0C20AC6144FDAF700D84B47 /* CCParticleBatchNode.h */; };
 		A0C20AC9144FDAF700D84B47 /* CCParticleBatchNode.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C20AC7144FDAF700D84B47 /* CCParticleBatchNode.m */; };
+		A0D77A09146E2CA3000960C7 /* Paint Boy.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 505460ED1061413300AB7C52 /* Paint Boy.ttf */; };
+		A0D77A12146E3244000960C7 /* markerFelt-hd.fnt in Resources */ = {isa = PBXBuildFile; fileRef = A0D77A0E146E3244000960C7 /* markerFelt-hd.fnt */; };
+		A0D77A13146E3244000960C7 /* markerFelt-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = A0D77A0F146E3244000960C7 /* markerFelt-hd.png */; };
+		A0D77A14146E3244000960C7 /* markerFelt.fnt in Resources */ = {isa = PBXBuildFile; fileRef = A0D77A10146E3244000960C7 /* markerFelt.fnt */; };
+		A0D77A15146E3244000960C7 /* markerFelt.png in Resources */ = {isa = PBXBuildFile; fileRef = A0D77A11146E3244000960C7 /* markerFelt.png */; };
+		A0D77A1A146E3268000960C7 /* arrows-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = A0D77A16146E3268000960C7 /* arrows-hd.png */; };
+		A0D77A1B146E3268000960C7 /* arrows.png in Resources */ = {isa = PBXBuildFile; fileRef = A0D77A17146E3268000960C7 /* arrows.png */; };
+		A0D77A1C146E3268000960C7 /* arrowsBar-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = A0D77A18146E3268000960C7 /* arrowsBar-hd.png */; };
+		A0D77A1D146E3268000960C7 /* arrowsBar.png in Resources */ = {isa = PBXBuildFile; fileRef = A0D77A19146E3268000960C7 /* arrowsBar.png */; };
 		A0DABD5A1426679E00F3FEBE /* grossini_dance_01.png in Resources */ = {isa = PBXBuildFile; fileRef = 508A331E0FBADD5F00D574A2 /* grossini_dance_01.png */; };
 		A0DABD5B1426679E00F3FEBE /* grossini_dance_02.png in Resources */ = {isa = PBXBuildFile; fileRef = 508A331F0FBADD5F00D574A2 /* grossini_dance_02.png */; };
 		A0DABD5C1426679E00F3FEBE /* grossini_dance_03.png in Resources */ = {isa = PBXBuildFile; fileRef = 508A33200FBADD5F00D574A2 /* grossini_dance_03.png */; };
@@ -4944,6 +4953,14 @@
 		A0BE62D7140535B700DAA336 /* CCVertex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCVertex.m; sourceTree = "<group>"; };
 		A0C20AC6144FDAF700D84B47 /* CCParticleBatchNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCParticleBatchNode.h; sourceTree = "<group>"; };
 		A0C20AC7144FDAF700D84B47 /* CCParticleBatchNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCParticleBatchNode.m; sourceTree = "<group>"; };
+		A0D77A0E146E3244000960C7 /* markerFelt-hd.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "markerFelt-hd.fnt"; sourceTree = "<group>"; };
+		A0D77A0F146E3244000960C7 /* markerFelt-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "markerFelt-hd.png"; sourceTree = "<group>"; };
+		A0D77A10146E3244000960C7 /* markerFelt.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = markerFelt.fnt; sourceTree = "<group>"; };
+		A0D77A11146E3244000960C7 /* markerFelt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = markerFelt.png; sourceTree = "<group>"; };
+		A0D77A16146E3268000960C7 /* arrows-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrows-hd.png"; sourceTree = "<group>"; };
+		A0D77A17146E3268000960C7 /* arrows.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrows.png; sourceTree = "<group>"; };
+		A0D77A18146E3268000960C7 /* arrowsBar-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrowsBar-hd.png"; sourceTree = "<group>"; };
+		A0D77A19146E3268000960C7 /* arrowsBar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrowsBar.png; sourceTree = "<group>"; };
 		A0DABD691426715A00F3FEBE /* Box2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Box2D.h; sourceTree = "<group>"; };
 		A0DABD6D1426715A00F3FEBE /* b2BroadPhase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = b2BroadPhase.cpp; sourceTree = "<group>"; };
 		A0DABD6E1426715A00F3FEBE /* b2BroadPhase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = b2BroadPhase.h; sourceTree = "<group>"; };
@@ -6610,6 +6627,10 @@
 		505463B81062868100AB7C52 /* BMFont fonts */ = {
 			isa = PBXGroup;
 			children = (
+				A0D77A0E146E3244000960C7 /* markerFelt-hd.fnt */,
+				A0D77A0F146E3244000960C7 /* markerFelt-hd.png */,
+				A0D77A10146E3244000960C7 /* markerFelt.fnt */,
+				A0D77A11146E3244000960C7 /* markerFelt.png */,
 				E082C9121292DAD50056AC41 /* futura-48.fnt */,
 				E082C9131292DAD50056AC41 /* futura-48.png */,
 				E080DE8B1239689400A647EC /* konqa32-hd.fnt */,
@@ -7003,6 +7024,10 @@
 				508A333A0FBADD6A00D574A2 /* grossini images */,
 				508A333D0FBADE2D00D574A2 /* menu related images */,
 				508A333C0FBADDA700D574A2 /* particles images */,
+				A0D77A16146E3268000960C7 /* arrows-hd.png */,
+				A0D77A17146E3268000960C7 /* arrows.png */,
+				A0D77A18146E3268000960C7 /* arrowsBar-hd.png */,
+				A0D77A19146E3268000960C7 /* arrowsBar.png */,
 				E0B0E70C11F8CF9F00414246 /* texture512x512.png */,
 				E0B0E70D11F8CF9F00414246 /* texture1024x1024.png */,
 				E0B0E70E11F8CF9F00414246 /* texture2048x2048.png */,
@@ -10596,6 +10621,15 @@
 				A0EC4B501403239700EC482A /* PositionTextureA8Color.vsh in Resources */,
 				A0EC4B511403239700EC482A /* PositionTextureColor.fsh in Resources */,
 				A0EC4B521403239700EC482A /* PositionTextureColor.vsh in Resources */,
+				A0D77A09146E2CA3000960C7 /* Paint Boy.ttf in Resources */,
+				A0D77A12146E3244000960C7 /* markerFelt-hd.fnt in Resources */,
+				A0D77A13146E3244000960C7 /* markerFelt-hd.png in Resources */,
+				A0D77A14146E3244000960C7 /* markerFelt.fnt in Resources */,
+				A0D77A15146E3244000960C7 /* markerFelt.png in Resources */,
+				A0D77A1A146E3268000960C7 /* arrows-hd.png in Resources */,
+				A0D77A1B146E3268000960C7 /* arrows.png in Resources */,
+				A0D77A1C146E3268000960C7 /* arrowsBar-hd.png in Resources */,
+				A0D77A1D146E3268000960C7 /* arrowsBar.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
