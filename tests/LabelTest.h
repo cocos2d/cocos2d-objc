@@ -83,6 +83,22 @@
 {}
 @end
 
+@interface BitmapFontMultiLineAlignment : AtlasDemo
+{
+    CCLabelBMFont *label_;
+    CCSprite *arrowsBar_;
+    CCSprite *arrows_;
+    CCMenuItemFont *lastSentenceItem_, *lastAlignmentItem_;
+    
+    BOOL drag_;
+}
+@property (nonatomic,retain) CCLabelBMFont *label;
+@property (nonatomic,retain) CCSprite *arrowsBar;
+@property (nonatomic,retain) CCSprite *arrows;
+- (void)snapArrowsToEdge;
+@end
+
+
 @interface LabelsEmpty : AtlasDemo
 {
 	BOOL setEmpty;
