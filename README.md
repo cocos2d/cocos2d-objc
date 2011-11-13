@@ -48,7 +48,7 @@ This library does not work with the toolchain, but it should be easy to port it 
 Build Requirements
 ------------------
 
-Mac OS X 10.6, Xcode 3.2.3 (or newer)
+Mac OS X 10.6 (or newer), Xcode 4.2 (or newer)
 
 
 Runtime Requirements
