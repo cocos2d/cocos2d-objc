@@ -16,8 +16,6 @@
 static int sceneIdx=-1;
 static NSString *transitions[] = {
 	
-	@"BitmapFontMultiLineAlignment",
-
 	@"LabelAtlasTest",
 	@"LabelAtlasColorTest",
 	@"Atlas3",
@@ -827,13 +825,18 @@ static float menuItemPaddingCenter = 50;
 	// always call "super" init
 	// Apple recommends to re-assign "self" with the "super" return value
 	if( (self=[super init])) {
+		
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
         self.isTouchEnabled = YES;
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+		self.isMouseEnabled = YES;
+#endif
         
 		// ask director the the window size
 		CGSize size = [[CCDirector sharedDirector] winSize];
 		
 		// create and initialize a Label
-		self.label = [CCLabelBMFont labelWithString:LongSentencesExample fntFile:@"markerFelt.fnt" width:size.width/1.5 alignment:UITextAlignmentCenter];
+		self.label = [CCLabelBMFont labelWithString:LongSentencesExample fntFile:@"markerFelt.fnt" width:size.width/1.5 alignment:CCTextAlignmentCenter];
         //self.label.debug = YES;
         
         self.arrowsBar = [CCSprite spriteWithFile:@"arrowsBar.png"];
@@ -934,13 +937,13 @@ static float menuItemPaddingCenter = 50;
     
     switch (item.tag) {
         case LeftAlign:
-            [self.label setAlignment:UITextAlignmentLeft];
+            [self.label setAlignment:CCTextAlignmentLeft];
             break;
         case CenterAlign:
-            [self.label setAlignment:UITextAlignmentCenter];
+            [self.label setAlignment:CCTextAlignmentCenter];
             break;
         case RightAlign:
-            [self.label setAlignment:UITextAlignmentRight];
+            [self.label setAlignment:CCTextAlignmentRight];
             break;
             
         default:
@@ -952,6 +955,7 @@ static float menuItemPaddingCenter = 50;
 
 #pragma mark Touch Methods
 
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 - (void)ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     UITouch *touch = [touches anyObject];
     CGPoint location = [touch locationInView:[touch view]];
@@ -983,6 +987,53 @@ static float menuItemPaddingCenter = 50;
     
     [self.label setWidth:labelWidth];
 }
+
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+
+- (BOOL)ccMouseDown:(NSEvent*)event
+{
+	CGPoint location = [(CCDirectorMac*)[CCDirector sharedDirector] convertEventToGL:event];
+
+    if (CGRectContainsPoint([self.arrows boundingBox], location)) {
+        drag_ = YES;
+        self.arrowsBar.visible = YES;
+		
+		return YES;
+    }
+	return  NO;
+}
+
+- (BOOL)ccMouseUp:(NSEvent*)event
+{
+    drag_ = NO;
+    [self snapArrowsToEdge];
+    
+    self.arrowsBar.visible = NO;
+	
+	return NO;
+}
+
+- (BOOL)ccMouseDragged:(NSEvent*)event
+{
+    if ( drag_) {
+    
+		CGPoint location = [(CCDirectorMac*)[CCDirector sharedDirector] convertEventToGL:event];
+		
+		CGSize winSize = [CCDirector sharedDirector].winSize;
+		
+		self.arrows.position = ccp(MAX(MIN(location.x, ArrowsMax*winSize.width), ArrowsMin*winSize.width), self.arrows.position.y);
+		
+		float labelWidth = abs(self.arrows.position.x - self.label.position.x) * 2;
+		
+		[self.label setWidth:labelWidth];
+		
+		return YES;
+	}
+	
+	return NO;
+}
+
+#endif // __MAC_OS_X_VERSION_MAX_ALLOWED
 
 - (void)snapArrowsToEdge {
     self.arrows.position = ccp(self.label.position.x + self.label.contentSize.width/2, self.label.position.y);
