@@ -878,7 +878,7 @@ static float menuItemPaddingCenter = 50;
         [self snapArrowsToEdge];
         
         stringMenu.position = ccp(size.width/2, size.height - menuItemPaddingCenter);
-        alignmentMenu.position = ccp(size.width/2, menuItemPaddingCenter);
+        alignmentMenu.position = ccp(size.width/2, menuItemPaddingCenter+15);
         
 		// add the label as a child to this Layer
 		[self addChild:self.label];
