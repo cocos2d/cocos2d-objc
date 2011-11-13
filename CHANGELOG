@@ -2,6 +2,7 @@ version 2.0-beta XX-Nov-2011
 . [NEW] All: forward-ported changes from v1.1 branch like reorderSprite, TMX parse from memory, events fixes, and more.
 			 See v1.1 changes for further info.
 . [NEW] Director: Added API to display Milliseconds Per Frame
+. [NEW] LabelBMFont: Added support for alignment, also in multiline
 . [NEW] Node: Added glServerState property. Ideal to enable/disabled blending for certain nodes.
 . [NEW] Shader: Added AlphaTesting shader
 . [FIX] SpriteFrameCache: readded API to create spriteFrames from CCTexture2D

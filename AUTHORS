@@ -42,6 +42,10 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	Author of new MotionStreak code:
 		Much faster rendering. No need to use Ribbon
 
+* Mark Wei ( http://calttc.berkeley.edu/ ):
+	Added support for alignment in multiline in CCLabelBMFont objects
+	Author of alignment multiline test case
+
 * Scott Lembcke (AKA slembcke) (http://chipmunk-physics.net/)
 	Mentor & contributor of new Physics + cocos2d integration via nodeToParentTransform
 	
