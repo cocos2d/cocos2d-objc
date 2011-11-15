@@ -147,20 +147,12 @@ enum {
 }
 
 -(CCMenuItem *) itemForTouch: (UITouch *) touch
-{
-	CGPoint touchLocation = [touch locationInView: [[CCDirector sharedDirector] openGLView]];
-	touchLocation = [[CCDirector sharedDirector] convertToGL: touchLocation];
-	
+{	
 	CCMenuItem* item;
 	CCARRAY_FOREACH(children_, item){
 		// ignore invisible and disabled items: issue #779, #866
 		if ( [item visible] && [item isEnabled] ) {
-			
-			CGPoint local = [item convertToNodeSpace:touchLocation];
-			CGRect r = [item rect];
-			r.origin = CGPointZero;
-			
-			if( CGRectContainsPoint( r, local ) )
+			if( CGRectContainsPoint([item boundingBox], [self convertTouchToNodeSpace:touch] ) )
 				return item;
 		}
 	}
