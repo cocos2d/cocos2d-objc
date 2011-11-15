@@ -646,7 +646,7 @@
 -(void) startWithTarget:(CCNode *)aTarget
 {
 	[super startWithTarget:aTarget];
-	delta = ccpSub( endPosition, [(CCNode*)target_ position] );
+	positionDelta_ = ccpSub( endPosition, [(CCNode*)target_ position] );
 }
 
 @end
@@ -666,31 +666,31 @@
 -(id) initWithDuration: (ccTime) t position: (CGPoint) p
 {
 	if( (self=[super initWithDuration: t]) )
-		delta = p;
+		positionDelta_ = p;
 	return self;
 }
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	CCAction *copy = [[[self class] allocWithZone: zone] initWithDuration: [self duration] position: delta];
+	CCAction *copy = [[[self class] allocWithZone: zone] initWithDuration: [self duration] position: positionDelta_];
 	return copy;
 }
 
 -(void) startWithTarget:(CCNode *)aTarget
 {
-    previousTick = 0;
+    previousTick_ = 0;
 	[super startWithTarget:aTarget];
 }
 
 -(CCActionInterval*) reverse
 {
-	return [[self class] actionWithDuration:duration_ position:ccp( -delta.x, -delta.y)];
+	return [[self class] actionWithDuration:duration_ position:ccp( -positionDelta_.x, -positionDelta_.y)];
 }
 
 -(void) update: (ccTime) t
 {	
-	[target_ setPosition: ccpAdd(((CCNode*)target_).position, ccpMult(delta, t-previousTick) )];
-    previousTick=t;
+	[target_ setPosition: ccpAdd(((CCNode*)target_).position, ccpMult(positionDelta_, t-previousTick_) )];
+    previousTick_=t;
 }
 @end
 

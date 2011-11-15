@@ -184,8 +184,8 @@ Example:
  */ 
 @interface CCMoveByEx : CCActionInterval <NSCopying>
 {
-    CGPoint delta;
-    ccTime previousTick;
+    CGPoint positionDelta_;
+    ccTime previousTick_;
 }
 /** creates the action */
 +(id) actionWithDuration: (ccTime)duration position:(CGPoint)deltaPosition;

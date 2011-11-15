@@ -123,6 +123,36 @@
 @end
 
 //
+// CCSetValue
+//
+#pragma mark CCSetValue
+
+@implementation CCSetValue
++ (id)actionWithKey:(NSString *)key value:(float)value {
+    return [[[self alloc] initWithKey:key value:value] autorelease];
+}
+
+- (id)initWithKey:(NSString *)key value:(float)value {
+    
+	if ((self = [super init])) {
+        
+		key_	= [key copy];
+		value_		= value;        
+	}
+    
+	return self;
+}
+
+-(void) startWithTarget:(id)aTarget
+{
+	[super startWithTarget:aTarget];
+    [target_ setValue:[NSNumber numberWithFloat:value_] forKey:key_];
+}
+@end
+
+
+
+//
 // FlipX
 //
 #pragma mark CCFlipX
