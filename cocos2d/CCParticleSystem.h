@@ -71,7 +71,12 @@ typedef enum {
 	 Use case: Attach an emitter to an sprite, and you want that the emitter follows the sprite.
 	 */
 	kCCPositionTypeRelative,
-	
+
+    /** Living particles are attached to the world but will follow the emitter repositioning.
+	 Use case: Particles on a map.
+	 */
+	kCCPositionTypeRelativeToGrandparent,
+
 	/** Living particles are attached to the emitter and are translated along with it. */
 	kCCPositionTypeGrouped,
 }tCCPositionType;
@@ -179,7 +184,10 @@ typedef void (*CC_UPDATE_PARTICLE_IMP)(id, SEL, tCCParticle*, CGPoint);
 	CGPoint sourcePosition;
 	// Position variance
 	CGPoint posVar;
-	
+    
+    // emitter's parent position
+	CGPoint grandparentInitialPosition_;
+    
 	// The angle (direction) of the particles measured in degrees
 	float angle;
 	// Angle variance measured in degrees;

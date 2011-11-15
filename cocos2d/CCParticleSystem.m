@@ -329,6 +329,11 @@
 	[super dealloc];
 }
 
+-(void)onEnter {
+    [super onEnter];
+    grandparentInitialPosition_ = [self.parent.parent convertToWorldSpace:CGPointZero];
+}
+
 -(BOOL) addParticle
 {
 	if( [self isFull] )
@@ -397,14 +402,17 @@
 	particle->deltaRotation = (endA - startA) / particle->timeToLive;
 	
 	// position
-	if( positionType_ == kCCPositionTypeFree ) {
+	if (positionType_ == kCCPositionTypeFree) {
 		CGPoint p = [self convertToWorldSpace:CGPointZero];
 		particle->startPos = ccpMult( p, CC_CONTENT_SCALE_FACTOR() );
 	}
-	else if( positionType_ == kCCPositionTypeRelative ) {
+	else if (positionType_ == kCCPositionTypeRelative) {
 		particle->startPos = ccpMult( position_, CC_CONTENT_SCALE_FACTOR() );
 	}
-	
+	else if (positionType_ == kCCPositionTypeRelativeToGrandparent) {
+        CGPoint p = ccpSub([self convertToWorldSpace:CGPointZero], ccpSub(self.parent.parent.position, grandparentInitialPosition_));
+        particle->startPos = ccpMult( p, CC_CONTENT_SCALE_FACTOR() );
+    }
 	// direction
 	float a = CC_DEGREES_TO_RADIANS( angle + angleVar * CCRANDOM_MINUS1_1() );	
 	
@@ -513,6 +521,11 @@
 		currentPosition.x *= CC_CONTENT_SCALE_FACTOR();
 		currentPosition.y *= CC_CONTENT_SCALE_FACTOR();
 	}
+	else if( positionType_ == kCCPositionTypeRelativeToGrandparent) {
+        currentPosition = ccpSub([self convertToWorldSpace:CGPointZero], ccpSub(self.parent.parent.position, grandparentInitialPosition_));
+		currentPosition.x *= CC_CONTENT_SCALE_FACTOR();
+		currentPosition.y *= CC_CONTENT_SCALE_FACTOR();
+	}
 	
 	while( particleIdx < particleCount )
 	{
@@ -578,7 +591,7 @@
 			
 			CGPoint	newPos;
 			
-			if( positionType_ == kCCPositionTypeFree || positionType_ == kCCPositionTypeRelative ) {
+			if( positionType_ == kCCPositionTypeFree || positionType_ == kCCPositionTypeRelative || positionType_ == kCCPositionTypeRelativeToGrandparent) {
 				CGPoint diff = ccpSub( currentPosition, p->startPos );
 				newPos = ccpSub(p->pos, diff);
 				
