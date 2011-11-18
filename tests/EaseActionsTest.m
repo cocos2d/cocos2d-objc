@@ -668,7 +668,10 @@ Class restartAction()
 	[[CCScheduler sharedScheduler] setTimeScale: sliderCtl.value];
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 	
-	[[CCScheduler sharedScheduler] setTimeScale: [sliderCtl floatValue]];
+	float value = [sliderCtl floatValue];
+	if( value < 1 )
+		value = -value;
+	[[CCScheduler sharedScheduler] setTimeScale: value];
 #endif
 }
 

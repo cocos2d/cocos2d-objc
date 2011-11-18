@@ -85,7 +85,6 @@ enum {
  */
 typedef struct sCCParticle {
 	CGPoint		pos;
-	float		z;
 	CGPoint		startPos;
 
 	ccColor4F	color;
@@ -290,10 +289,10 @@ typedef void (*CC_UPDATE_PARTICLE_IMP)(id, SEL, tCCParticle*, CGPoint);
 	CC_UPDATE_PARTICLE_IMP	updateParticleImp;
 	SEL						updateParticleSel;
 	
-	//for batching. If nil, then it won't be batched
+	// for batching. If nil, then it won't be batched
 	CCParticleBatchNode *batchNode_; 
 
-	//index of system in batch node array
+	// index of system in batch node array
 	NSUInteger atlasIndex_; 
 	
 	//YES if scaled or rotated
@@ -421,17 +420,13 @@ typedef void (*CC_UPDATE_PARTICLE_IMP)(id, SEL, tCCParticle*, CGPoint);
  */
 -(id) initWithFile:(NSString*) plistFile;
 
-/** initializes a CCQuadParticleSystem from a NSDictionary.
+/** initializes a particle system from a NSDictionary.
  @since v0.99.3
  */
 -(id) initWithDictionary:(NSDictionary*)dictionary;
 
-//! Initializes a system with a fixed number of particles and whether a batchnode is used for rendering
+//! Initializes a system with a fixed number of particles
 -(id) initWithTotalParticles:(NSUInteger) numberOfParticles;
-//! Add a particle to the emitter
--(BOOL) addParticle;
-//! Initializes a particle
--(void) initParticle: (tCCParticle*) particle;
 //! stop emitting particles. Running particles will continue to run until they die
 -(void) stopSystem;
 //! Kill all living particles.
@@ -449,6 +444,4 @@ typedef void (*CC_UPDATE_PARTICLE_IMP)(id, SEL, tCCParticle*, CGPoint);
 
 -(void) updateWithNoTime;
 
-//used internally by CCParticleBathNode 
--(void) batchNodeInitialization;
 @end

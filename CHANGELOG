@@ -1,11 +1,15 @@
 version 2.0-beta XX-Nov-2011
-. [NEW] All: forward-ported changes from v1.1 branch like reorderSprite, TMX parse from memory, events fixes, and more.
-			 See v1.1 changes for further info.
+. [NEW] All: forward-ported changes from v1.1 branch like reorderSprite, TMX parse from memory, events fixes, Particle batches, ARC compatible and more.
+            See v1.1 changes for further info.
 . [NEW] Director: Added API to display Milliseconds Per Frame
 . [NEW] LabelBMFont: Added support for alignment, also in multiline
 . [NEW] Node: Added glServerState property. Ideal to enable/disabled blending for certain nodes.
 . [NEW] Shader: Added AlphaTesting shader
+. [FIX] Node#draw() Added helper macro to setup draw
+. [FIX] Node#draw() removed [super draw]. Draw() should be "atomic". It shall not depend on a possible state of super class.
+. [FIX] ccGLState: Added cache for texture unit and GL_BLEND
 . [FIX] SpriteFrameCache: readded API to create spriteFrames from CCTexture2D
+. [FIX] Paticles: Faster initialization: texCoords are generated only once.
 
 version 2.0-alpha 18-Sept-2011
 . [NEW] Action: Added new CallBlockO action

@@ -176,4 +176,11 @@
 }
 @end
 
+@interface ParticleBatch : ParticleDemo
+{
+	CCNode *parent1;
+	CCNode *parent2;
+}
+@end
+
 
