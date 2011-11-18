@@ -75,7 +75,6 @@
 #import "CCLabelAtlas.h"
 
 #import "CCParticleSystem.h"
-#import "CCParticleSystemPoint.h"
 #import "CCParticleSystemQuad.h"
 #import "CCParticleExamples.h"
 #import "CCParticleBatchNode.h"

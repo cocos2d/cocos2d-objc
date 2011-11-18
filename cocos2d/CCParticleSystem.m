@@ -321,19 +321,6 @@
 	[super dealloc];
 }
 
--(BOOL) addParticle
-{
-	if( [self isFull] )
-		return NO;
-	
-	tCCParticle * particle = &particles[ particleCount ];
-		
-	[self initParticle: particle];		
-	particleCount++;
-				
-	return YES;
-}
-
 -(void) initParticle: (tCCParticle*) particle
 {
 	//CGPoint currentPosition = position_;
@@ -426,9 +413,20 @@
 	
 		particle->mode.B.angle = a;
 		particle->mode.B.degreesPerSecond = CC_DEGREES_TO_RADIANS(mode.B.rotatePerSecond + mode.B.rotatePerSecondVar * CCRANDOM_MINUS1_1());
-	}	
+	}		
+}
+
+-(BOOL) addParticle
+{
+	if( [self isFull] )
+		return NO;
 	
-	particle->z=vertexZ_; 
+	tCCParticle * particle = &particles[ particleCount ];
+	
+	[self initParticle: particle];		
+	particleCount++;
+	
+	return YES;
 }
 
 -(void) stopSystem
@@ -554,15 +552,13 @@
 				} else
 					newPos = p->pos;
 				
-				//translate newPos to correct position, since matrix transform isn't performed in batchnode
-				//don't update the particle with the new position information, it will interfere with the radius and tangential calculations
+				// translate newPos to correct position, since matrix transform isn't performed in batchnode
+				// don't update the particle with the new position information, it will interfere with the radius and tangential calculations
 				if (batchNode_)
 				{
 					newPos.x+=position_.x; 
 					newPos.y+=position_.y;
 				}
-				
-				p->z = vertexZ_;
 				
 				updateParticleImp(self, updateParticleSel, p, newPos);
 				
@@ -814,22 +810,21 @@
 {
 	return batchNode_;
 }
+
 -(void) setBatchNode:(CCParticleBatchNode*) batchNode
 {
-	batchNode_ = batchNode; 
+	if( batchNode_ != batchNode ) {
+		
+		batchNode_ = batchNode; // weak reference
 
-	if( batchNode ) {
-		//each particle needs a unique index
-		for (int i = 0; i < totalParticles; i++)
-		{
-			particles[i].atlasIndex=i;	
+		if( batchNode ) {
+			//each particle needs a unique index
+			for (int i = 0; i < totalParticles; i++)
+			{
+				particles[i].atlasIndex=i;	
+			}
 		}
 	}
-}
-
--(void) batchNodeInitialization
-{
-	//override this
 }
 
 //don't use a transform matrix, this is faster

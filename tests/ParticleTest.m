@@ -23,6 +23,8 @@ enum {
 static int sceneIdx=-1;
 static NSString *transitions[] = {
 	
+	@"ParticleBatch",
+	
 	@"DemoFlower",
 	@"DemoGalaxy",
 	@"DemoFirework",
@@ -276,6 +278,49 @@ Class restartAction()
 @end
 
 #pragma mark -
+
+@implementation ParticleBatch
+-(void) onEnter
+{
+	[super onEnter];
+	
+	[self setColor:ccBLACK];
+	[self removeChild:background cleanup:YES];
+	background = nil;
+	
+	self.emitter = [CCParticleSystemQuad particleWithFile:@"Particles/LavaFlow.plist"];
+	CCParticleBatchNode *batch = [CCParticleBatchNode batchNodeWithTexture:[self.emitter texture]];
+	
+	[batch addChild:self.emitter];
+	
+	[self addChild:batch z:10];	
+	
+	[self schedule:@selector(switchRender:) interval:5];
+
+	CCNode *node = [CCNode node];
+	[self addChild:node];
+	
+	parent1 = batch;
+	parent2 = node;
+}
+
+-(void) switchRender:(ccTime)dt
+{
+	BOOL usingBatch = ( [self.emitter batchNode] != nil );
+	[self.emitter removeFromParentAndCleanup:NO];
+
+	CCNode *newParent = (usingBatch ? parent2  : parent1 );
+	[newParent addChild:self.emitter];
+	
+	NSLog(@"Particle: Using new parent: %@", newParent);
+}
+
+-(NSString *) title
+{
+	return @"Paticle Batch";
+}
+@end
+
 
 @implementation DemoFirework
 -(void) onEnter
@@ -694,7 +739,7 @@ Class restartAction()
 -(void) onEnter
 {
 	[super onEnter];
-	emitter_ = [[CCParticleSystemPoint alloc] initWithTotalParticles:1000];
+	emitter_ = [[CCParticleSystemQuad alloc] initWithTotalParticles:1000];
 	[background addChild:emitter_ z:10];
 	
 	CGSize s = [[CCDirector sharedDirector] winSize];

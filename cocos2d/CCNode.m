@@ -470,7 +470,7 @@ static NSUInteger globalOrderOfArrival = 1;
 		
 		//don't need to check children recursively, that's done in visit of each child
 		
-		isReorderChildDirty_=NO;
+		isReorderChildDirty_ = NO;
 	}
 }
 

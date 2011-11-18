@@ -69,45 +69,32 @@
 /** the blend function used for drawing the quads */
 @property (nonatomic, readwrite) ccBlendFunc blendFunc;
 
-/** initializes the particle system with CCTexture2D, a default capacity of 500, quad particle system and normal blending */
-+(id)particleBatchNodeWithTexture:(CCTexture2D *)tex;
+/** initializes the particle system with CCTexture2D, a default capacity of 500 */
++(id)batchNodeWithTexture:(CCTexture2D *)tex;
 
-/** initializes the particle system with CCTexture2D, 
-    a capacity of particles, which particle system to use and a choice between normal or additive blending
-*/
-+(id)particleBatchNodeWithTexture:(CCTexture2D *)tex capacity:(NSUInteger) capacity additiveBlending:(BOOL) additive;
+/** initializes the particle system with the name of a file on disk (for a list of supported formats look at the CCTexture2D class), a default capacity of 500 particles */
++(id)batchNodeWithFile:(NSString*) imageFile;
 
-/** initializes the particle system with the name of a file on disk (for a list of supported formats look at the CCTexture2D class), 
- a default capacity of 500 particles, quad particle system and normal blending
- */
-+(id)particleBatchNodeWithFile:(NSString*) imageFile;
+/** initializes the particle system with CCTexture2D, a capacity of particles, which particle system to use */
++(id)batchNodeWithTexture:(CCTexture2D *)tex capacity:(NSUInteger) capacity;
 
-/** initializes the particle system with the name of a file on disk (for a list of supported formats look at the CCTexture2D class), 
- a capacity of particles, which particle system to use and a choice between normal or additive blending
- */
-+(id)particleBatchNodeWithFile:(NSString*)fileImage capacity:(NSUInteger)capacity additiveBlending:(BOOL) additive;
+/** initializes the particle system with the name of a file on disk (for a list of supported formats look at the CCTexture2D class), a capacity of particles */
++(id)batchNodeWithFile:(NSString*)fileImage capacity:(NSUInteger)capacity;
 
-/** extracts texture data from a plist and puts the texture in the texture cache. Use it before loading the batch node */
-+(BOOL) extractTextureFromPlist:(NSString*) plistFile;
+/** initializes the particle system with CCTexture2D, a capacity of particles */
+-(id)initWithTexture:(CCTexture2D *)tex capacity:(NSUInteger)capacity;
 
-/** initializes the particle system with CCTexture2D, 
- a capacity of particles, which particle system to use and a choice between normal or additive blending
- */
--(id)initWithTexture:(CCTexture2D *)tex capacity:(NSUInteger)capacity additiveBlending:(BOOL) additive;
+/** initializes the particle system with the name of a file on disk (for a list of supported formats look at the CCTexture2D class), a capacity of particles */
+-(id)initWithFile:(NSString *)fileImage capacity:(NSUInteger)capacity;
 
-/** initializes the particle system with the name of a file on disk (for a list of supported formats look at the CCTexture2D class), 
- a capacity of particles, which particle system to use and a choice between normal or additive blending
- */
--(id)initWithFile:(NSString *)fileImage capacity:(NSUInteger)capacity additiveBlending:(BOOL) additive;
-
-/** only CCParticleSystemQuad is supported for the moment */
+/** Add a child into the CCParticleBatchNode */
 -(void) addChild:(CCParticleSystem*)child z:(NSInteger)z tag:(NSInteger) aTag;
 
-/** helper method for addChild, adds room to texture atlas for particles of child */ 
+/** Inserts a child into the CCParticleBatchNode */ 
 -(void) insertChild:(CCParticleSystem*) pSystem inAtlasAtIndex:(NSUInteger)index;
 
-/** helper method for removeChild, removes child's particles from texture atlas */ 
--(void) removeChildFromAtlas:(CCParticleSystem*) pSystem cleanup:(BOOL) doCleanUp;
+/** remove child from the CCParticleBatchNode */ 
+-(void) removeChild:(CCParticleSystem*) pSystem cleanup:(BOOL)doCleanUp;
 
 /** disables a particle by inserting a 0'd quad into the texture atlas */
 -(void) disableParticle:(NSUInteger) particleIndex;
@@ -115,14 +102,4 @@
 /** switch between multiplied and premultiplied blending modes */ 
 -(void) switchBlendingBetweenMultipliedAndPreMultiplied;
 
-/** set a additive blending mode */
--(void) additiveBlending;
-
-/** set a normal blending mode, taking premultiplied / non premultiplied into account */
--(void) normalBlending;
-
-/** conforming to CCTextureProtocol */
--(void) updateBlendFunc;
--(void) setTexture:(CCTexture2D*)texture;
--(CCTexture2D*) texture;
 @end
