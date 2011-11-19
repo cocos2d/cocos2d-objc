@@ -187,6 +187,12 @@
 	NSAssert( [child isKindOfClass:[CCParticleSystem class]], @"CCParticleBatchNode only supports CCQuadParticleSystems as children");
 	NSAssert( child.texture.name == textureAtlas_.texture.name, @"CCParticleSystem is not using the same texture id");
 	
+	// If this is the 1st children, then copy blending function
+	if( [children_ count] == 0 )
+		blendFunc_ = [child blendFunc];
+
+	NSAssert( blendFunc_.src  == child.blendFunc.src && blendFunc_.dst  == child.blendFunc.dst, @"Can't add a PaticleSystem that uses a differnt blending function");
+	
 	//no lazy sorting, so don't call super addChild, call helper instead
 	NSUInteger pos = [self addChildHelper:child z:z tag:aTag];
 	
@@ -420,39 +426,6 @@
 }	
 	
 #pragma mark CCParticleBatchNode - CocosNodeTexture protocol
-
--(void) additiveBlending
-{
-	blendFunc_.src = GL_SRC_ALPHA;
-	blendFunc_.dst = GL_ONE;		
-}
-
--(void) normalBlending
-{
-	if( ! [textureAtlas_.texture hasPremultipliedAlpha] ) {
-		blendFunc_.src = GL_SRC_ALPHA;
-		blendFunc_.dst = GL_ONE_MINUS_SRC_ALPHA;
-	}
-	else 
-	{
-		blendFunc_.src = GL_ONE;
-		blendFunc_.dst = GL_ONE_MINUS_SRC_ALPHA;	
-	}
-}
-
--(void) switchBlendingBetweenMultipliedAndPreMultiplied
-{
-	if (blendFunc_.src == GL_ONE) 
-	{
-		blendFunc_.src = GL_SRC_ALPHA;
-		blendFunc_.dst = GL_ONE_MINUS_SRC_ALPHA;
-	}
-	else 
-	{
-		blendFunc_.src = GL_ONE;
-		blendFunc_.dst = GL_ONE_MINUS_SRC_ALPHA;	
-	}
-}
 
 -(void) updateBlendFunc
 {

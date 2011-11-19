@@ -176,11 +176,15 @@
 }
 @end
 
-@interface ParticleBatch : ParticleDemo
+@interface ParticleBatchHybrid : ParticleDemo
 {
 	CCNode *parent1;
 	CCNode *parent2;
 }
+@end
+
+@interface ParticleBatchMultipleEmitters : ParticleDemo
+{}
 @end
 
 

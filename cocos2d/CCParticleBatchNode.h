@@ -98,8 +98,4 @@
 
 /** disables a particle by inserting a 0'd quad into the texture atlas */
 -(void) disableParticle:(NSUInteger) particleIndex;
-
-/** switch between multiplied and premultiplied blending modes */ 
--(void) switchBlendingBetweenMultipliedAndPreMultiplied;
-
 @end
