@@ -17,13 +17,14 @@
 #define PARTICLE_FIRE_NAME @"fire.png"
 #endif
 enum {
-	kTagLabelAtlas = 1,
+	kTagParticleCount = 1,
 };
 
 static int sceneIdx=-1;
 static NSString *transitions[] = {
 	
-	@"ParticleBatch",
+	@"ParticleBatchHybrid",
+	@"ParticleBatchMultipleEmitters",
 	
 	@"DemoFlower",
 	@"DemoGalaxy",
@@ -145,7 +146,7 @@ Class restartAction()
 		[self addChild: menu z:100];	
 		
 		CCLabelAtlas *labelAtlas = [CCLabelAtlas labelWithString:@"0000" charMapFile:@"fps_images.png" itemWidth:16 itemHeight:24 startCharMap:'.'];
-		[self addChild:labelAtlas z:100 tag:kTagLabelAtlas];
+		[self addChild:labelAtlas z:100 tag:kTagParticleCount];
 		labelAtlas.position = ccp(s.width-66,50);
 		
 		// moving background
@@ -220,7 +221,7 @@ Class restartAction()
 
 -(void) update:(ccTime) dt
 {
-	CCLabelAtlas *atlas = (CCLabelAtlas*) [self getChildByTag:kTagLabelAtlas];
+	CCLabelAtlas *atlas = (CCLabelAtlas*) [self getChildByTag:kTagParticleCount];
 
 	NSString *str = [NSString stringWithFormat:@"%4d", emitter_.particleCount];
 	[atlas setString:str];
@@ -279,7 +280,7 @@ Class restartAction()
 
 #pragma mark -
 
-@implementation ParticleBatch
+@implementation ParticleBatchHybrid
 -(void) onEnter
 {
 	[super onEnter];
@@ -295,7 +296,7 @@ Class restartAction()
 	
 	[self addChild:batch z:10];	
 	
-	[self schedule:@selector(switchRender:) interval:5];
+	[self schedule:@selector(switchRender:) interval:2];
 
 	CCNode *node = [CCNode node];
 	[self addChild:node];
@@ -319,6 +320,55 @@ Class restartAction()
 {
 	return @"Paticle Batch";
 }
+
+-(NSString *) subtitle
+{
+	return @"Hybrid: batched and non batched every 2 seconds";
+}
+
+@end
+
+@implementation ParticleBatchMultipleEmitters
+-(void) onEnter
+{
+	[super onEnter];
+	
+	[self setColor:ccBLACK];
+	[self removeChild:background cleanup:YES];
+	background = nil;
+	
+	CCParticleSystemQuad *emitter1 = [CCParticleSystemQuad particleWithFile:@"Particles/LavaFlow.plist"];
+	emitter1.startColor = (ccColor4F) {1,0,0,1};
+	CCParticleSystemQuad *emitter2 = [CCParticleSystemQuad particleWithFile:@"Particles/LavaFlow.plist"];
+	emitter2.startColor = (ccColor4F) {0,1,0,1};
+	CCParticleSystemQuad *emitter3 = [CCParticleSystemQuad particleWithFile:@"Particles/LavaFlow.plist"];
+	emitter3.startColor = (ccColor4F) {0,0,1,1};
+
+	CGSize s = [[CCDirector sharedDirector] winSize];
+	
+	emitter1.position = ccp( s.width/2, s.height/2);
+	emitter2.position = ccp( s.width/4, s.height/4);
+	emitter3.position = ccp( s.width/1.25f, s.height/1.25f);
+
+	CCParticleBatchNode *batch = [CCParticleBatchNode batchNodeWithTexture:[emitter1 texture]];
+	
+	[batch addChild:emitter1];
+	[batch addChild:emitter2];
+	[batch addChild:emitter3];
+	
+	[self addChild:batch z:10];
+}
+
+-(NSString *) title
+{
+	return @"Paticle Batch";
+}
+
+-(NSString *) subtitle
+{
+	return @"Multiple emitters. One Batch";
+}
+
 @end
 
 
