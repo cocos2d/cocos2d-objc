@@ -112,7 +112,7 @@ static CCActionManager *sharedManager_ = nil;
 -(void) removeActionAtIndex:(NSUInteger)index hashElement:(tHashElement*)element
 {	
 	id action = element->actions->arr[index];
-
+    [(CCAction *)action stop];
 	if( action == element->currentAction && !element->currentActionSalvaged ) {
 		[element->currentAction retain];
 		element->currentActionSalvaged = YES;

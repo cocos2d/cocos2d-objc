@@ -167,7 +167,10 @@
 	}
 }
 
-
+-(void)stop {
+    [target_ stopAction:innerAction_];
+    [super stop];
+}
 -(BOOL) isDone
 {
 	return NO;
@@ -222,7 +225,7 @@
 
 -(void) stop
 {
-	[innerAction_ stop];
+	[target_ stopAction:innerAction_];
 	[super stop];
 }
 
