@@ -61,9 +61,9 @@
 @interface CCParticleBatchNode (private)
 -(void) updateAllAtlasIndexes;
 -(void) increaseAtlasCapacityTo:(NSUInteger) quantity;
--(NSUInteger) searchNewPositionInChildrenForZ:(NSInteger) z;
+-(NSUInteger) searchNewPositionInChildrenForZ:(NSInteger)z;
+-(void) getCurrentIndex:(NSUInteger*)oldIndex newIndex:(NSUInteger*)newIndex forChild:(CCNode*)child z:(NSInteger)z;
 -(NSUInteger) addChildHelper: (CCNode*) child z:(NSInteger)z tag:(NSInteger) aTag;
--(void) moveSystem:(CCParticleSystem*) system toNewIndex:(NSUInteger) newIndex;
 @end
 
 @implementation CCParticleBatchNode
@@ -104,8 +104,6 @@
 {
 	if (self = [super init])
 	{
-		reorderDirty_ = NO;
-		
 		textureAtlas_ = [[CCTextureAtlas alloc] initWithTexture:tex capacity:capacity];
 
 		// no lazy alloc in this node
@@ -161,13 +159,6 @@
 	if ( grid_ && grid_.active) {
 		[grid_ beforeDraw];
 		[self transformAncestors];
-	}
-	
-	//update of particle system is called before reordering is done, data in texture atlas is not up to date yet, need to set quads again according to new atlasIndexes
-	if (reorderDirty_) 
-	{	
-		[children_ makeObjectsPerformSelector:@selector(updateWithNoTime)];
-		reorderDirty_ = NO;	
 	}
 
 	[self transform];
@@ -239,71 +230,108 @@
 	return pos;
 }
 
-// override reorderChild
+// Reorder will be done in this function, no "lazy" reorder to particles
 -(void) reorderChild:(CCParticleSystem*)child z:(NSInteger)z
 {
 	NSAssert( child != nil, @"Child must be non-nil");
-	NSAssert( [children_ containsObject:child], @"Child doesn't belong to Sprite" );
+	NSAssert( [children_ containsObject:child], @"Child doesn't belong to batch" );
 	
 	if( z == child.zOrder )
 		return;
 	
-	if ([children_ count] == 1)
-		[child setZOrder:z];
-	else
-	{	
-		reorderDirty_ = YES;
-		[child retain]; 
+	// no reordering if only 1 child
+	if( [children_ count] > 1)
+	{
+		NSUInteger newIndex, oldIndex;
 		
-		NSUInteger oldPos = [children_ indexOfObject:child]; 
+		[self getCurrentIndex:&oldIndex newIndex:&newIndex forChild:child z:z];
+		
+		if( oldIndex != newIndex ) {
+			
+			// reorder children_ array
+			[child retain];
+			[children_ removeObjectAtIndex:oldIndex];
+			[children_ insertObject:child atIndex:newIndex];
+			[child release];
+			
+			// save old altasIndex
+			NSUInteger oldAtlasIndex = child.atlasIndex;
+			
+			// update atlas index
+			[self updateAllAtlasIndexes];
 
-		//only remove the child, not the scheduled update 
-		[children_ removeObject:child]; 
-		
-		NSUInteger pos = [self searchNewPositionInChildrenForZ:z]; 
-		
-		if (pos != oldPos)
-		{
-			NSUInteger newIndex;
-			if (pos == [children_ count])
-				newIndex = textureAtlas_.totalQuads;
-			else
-				newIndex = [[children_ objectAtIndex:MIN([children_ count]-1,pos)] atlasIndex];
+			// Find new AtlasIndex
+			NSUInteger newAtlasIndex = 0;
+			for( NSUInteger i=0;i < [children_ count];i++) {
+				CCParticleSystem *node = [children_ objectAtIndex:i];
+				if( node == child ) {
+					newAtlasIndex = [child atlasIndex];
+					break;
+				}
+			}
 			
-			//to correctly move the quads, the new index needs to be the left border of where the quads will be placed
-			if (z > child.zOrder)
-				newIndex -= child.totalParticles;
+			// reorder textureAtlas quads
+			[textureAtlas_ moveQuadsFromIndex:oldAtlasIndex  amount:child.totalParticles atIndex:newAtlasIndex];
 			
-			 //move quads in textureAtlas
-			[self moveSystem:child toNewIndex:newIndex]; 
-		}
-		[children_ insertObject:child atIndex:pos];  
-		
-		[child release];
-		
-		//renew atlasIndexes of children
-		[self updateAllAtlasIndexes];
+			[child updateWithNoTime];
+		}	
 	}
+	
+	[child setZOrder:z];
 }
-					 
+			
+-(void) getCurrentIndex:(NSUInteger*)oldIndex newIndex:(NSUInteger*)newIndex forChild:(CCNode*)child z:(NSInteger)z
+{
+	BOOL foundCurrentIdx = NO;
+	BOOL foundNewIdx = NO;
+
+	NSInteger  minusOne = 0;
+	NSUInteger count = [children_ count];
+	
+	for( NSUInteger i=0; i < count; i++ ) {
+
+		CCNode *node = [children_ objectAtIndex:i];
+
+		// new index
+		if( node.zOrder > z &&  ! foundNewIdx ) {
+			*newIndex = i;
+			foundNewIdx = YES;
+			
+			if( foundCurrentIdx && foundNewIdx )
+				break;
+		}
+
+		// current index
+		if( child == node ) {
+			*oldIndex = i;
+			foundCurrentIdx = YES;
+
+			if( ! foundNewIdx )
+				minusOne = -1;
+			
+			if( foundCurrentIdx && foundNewIdx )
+				break;
+			
+		}
+
+	}
+	
+	if( ! foundNewIdx )
+		*newIndex = count;
+	
+	*newIndex += minusOne;	
+}
+
 -(NSUInteger) searchNewPositionInChildrenForZ: (NSInteger) z
 {
-	NSInteger i = 0;
 	NSUInteger count = [children_ count];
-	CCNode* child;
 	
-	while (i < count) 
-	{
-		child = [children_ objectAtIndex:i];
+	for( NSUInteger i=0; i < count; i++ ) {
+		CCNode *child = [children_ objectAtIndex:i];
 		if (child.zOrder > z)
-			return MAX(0,(i-1));
-		
-		i++;
+			return i;
 	}
-
-	if (z >= 0)
-		return MAX(0,count);
-	return 0;
+	return count;
 }
 
 // override removeChild:
@@ -375,11 +403,6 @@
 	}	
 }
 
--(void) moveSystem:(CCParticleSystem*) system toNewIndex:(NSUInteger) newIndex
-{
-	[textureAtlas_ insertQuadsFromIndex:system.atlasIndex amount:system.totalParticles atIndex:newIndex];
-}
-
 //sets a 0'd quad into the quads array
 -(void) disableParticle:(NSUInteger)particleIndex
 {
@@ -415,8 +438,8 @@
 //rebuild atlas indexes
 -(void) updateAllAtlasIndexes
 {
-	CCParticleSystem* child;
-	uint index = 0;
+	CCParticleSystem *child;
+	NSUInteger index = 0;
 
 	CCARRAY_FOREACH(children_,child)
 	{

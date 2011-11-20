@@ -112,11 +112,6 @@
 */
 -(void) insertQuadFromIndex:(NSUInteger)fromIndex atIndex:(NSUInteger)newIndex;
 
-/** Inserts a amount of quads from oldIndex at newIndex, while moving quads at newIndex - oldIndex back accordingly 
- @since v1.1
- */
--(void) insertQuadsFromIndex:(NSUInteger)oldIndex amount:(NSUInteger) amount atIndex:(NSUInteger)newIndex;
-
 /** removes a quad at a given index number.
  The capacity remains the same, but the total number of quads to be drawn is reduced in 1
  @since v0.7.2
@@ -148,6 +143,11 @@
  @since 1.1
 */
 - (void) increaseTotalQuadsWith:(NSUInteger) amount;
+
+/** Moves an amount of quads from oldIndex at newIndex
+ @since v1.1
+ */
+-(void) moveQuadsFromIndex:(NSUInteger)oldIndex amount:(NSUInteger) amount atIndex:(NSUInteger)newIndex;
 
 /** 
  Moves quads from index till totalQuads to the newIndex

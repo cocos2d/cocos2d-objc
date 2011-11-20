@@ -60,8 +60,6 @@
 
 	CCTextureAtlas	*textureAtlas_;
 	ccBlendFunc		blendFunc_;
-	
-	BOOL reorderDirty_; //YES if one of the childs is reordered
 }
 
 /** the texture atlas used for drawing the quads */

@@ -300,7 +300,7 @@
 	dirty_ = YES;
 }
 
--(void) insertQuadsFromIndex:(NSUInteger)oldIndex amount:(NSUInteger) amount atIndex:(NSUInteger)newIndex
+-(void) moveQuadsFromIndex:(NSUInteger)oldIndex amount:(NSUInteger) amount atIndex:(NSUInteger)newIndex
 {
 	NSAssert(newIndex + amount <= totalQuads_, @"insertQuadFromIndex:atIndex: Invalid index");
 	NSAssert(oldIndex < totalQuads_, @"insertQuadFromIndex:atIndex: Invalid index");
@@ -310,19 +310,20 @@
 	
 	//create buffer
 	size_t quadSize = sizeof(ccV3F_C4B_T2F_Quad);
-	ccV3F_C4B_T2F_Quad *tempQuads = malloc(quadSize*amount); 
-	memcpy(tempQuads,&quads_[oldIndex],quadSize*amount); 
+	ccV3F_C4B_T2F_Quad *tempQuads = malloc( quadSize * amount); 
+	memcpy( tempQuads, &quads_[oldIndex], quadSize * amount );
 	
 	if (newIndex < oldIndex) 
 	{
-		//move quads from newIndex to newIndex + amount to make room for buffer 
-		memmove(&quads_[newIndex],&quads_[newIndex+amount],(oldIndex-newIndex)*quadSize);
+		// move quads from newIndex to newIndex + amount to make room for buffer 
+		memmove( &quads_[newIndex], &quads_[newIndex+amount], (oldIndex-newIndex)*quadSize);
 	}
 	else 
-	{//move quads above back
-		memmove(&quads_[oldIndex],&quads_[oldIndex+amount],(newIndex-oldIndex)*quadSize); 
+	{
+		// move quads above back
+		memmove( &quads_[oldIndex], &quads_[oldIndex+amount], (newIndex-oldIndex)*quadSize); 
 	}
-	memcpy(&quads_[newIndex],tempQuads,amount*quadSize);
+	memcpy( &quads_[newIndex], tempQuads, amount*quadSize);
 	
 	free(tempQuads);
 	
@@ -334,7 +335,6 @@
 	NSAssert(index < totalQuads_, @"removeQuadAtIndex: Invalid index");
 
 	NSUInteger remaining = (totalQuads_-1) - index;
-
 
 	// last object doesn't need to be moved
 	if( remaining )
@@ -349,16 +349,12 @@
 {
 	NSAssert(index + amount <= totalQuads_, @"removeQuadAtIndex: index + amount out of bounds");	
 
-	if (index + amount > totalQuads_)
-		amount = totalQuads_ - index; 
-	
 	NSUInteger remaining = (totalQuads_) - (index + amount);
 
 	totalQuads_ -= amount;
 	
-	// last object doesn't need to be moved
 	if ( remaining )
-		memmove( &quads_[index],&quads_[index+amount], sizeof(quads_[0]) * remaining );
+		memmove( &quads_[index], &quads_[index+amount], sizeof(quads_[0]) * remaining );
 
 	dirty_ = YES;
 }
