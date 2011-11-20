@@ -187,4 +187,10 @@
 {}
 @end
 
+@interface ParticleReorder : ParticleDemo
+{
+	NSUInteger order;
+}
+@end
+
 

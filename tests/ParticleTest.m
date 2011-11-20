@@ -22,7 +22,8 @@ enum {
 
 static int sceneIdx=-1;
 static NSString *transitions[] = {
-	
+
+	@"ParticleReorder",
 	@"ParticleBatchHybrid",
 	@"ParticleBatchMultipleEmitters",
 	
@@ -97,6 +98,8 @@ Class restartAction()
 	return c;
 }
 
+#pragma mark - ParticleDemo
+
 @implementation ParticleDemo
 
 @synthesize emitter=emitter_;
@@ -158,8 +161,8 @@ Class restartAction()
 		id move_back = [move reverse];
 		id seq = [CCSequence actions: move, move_back, nil];
 		[background runAction:[CCRepeatForever actionWithAction:seq]];
-		
-		
+
+
 		[self scheduleUpdate];
 	}
 
@@ -278,7 +281,7 @@ Class restartAction()
 
 @end
 
-#pragma mark -
+#pragma mark - ParticleBatchHybrid
 
 @implementation ParticleBatchHybrid
 -(void) onEnter
@@ -328,6 +331,8 @@ Class restartAction()
 
 @end
 
+#pragma mark - ParticleBatchMultipleEmitters
+
 @implementation ParticleBatchMultipleEmitters
 -(void) onEnter
 {
@@ -345,16 +350,16 @@ Class restartAction()
 	emitter3.startColor = (ccColor4F) {0,0,1,1};
 
 	CGSize s = [[CCDirector sharedDirector] winSize];
-	
-	emitter1.position = ccp( s.width/2, s.height/2);
-	emitter2.position = ccp( s.width/4, s.height/4);
-	emitter3.position = ccp( s.width/1.25f, s.height/1.25f);
+
+	emitter1.position = ccp( s.width/1.25f, s.height/1.25f);
+	emitter2.position = ccp( s.width/2, s.height/2);
+	emitter3.position = ccp( s.width/4, s.height/4);
 
 	CCParticleBatchNode *batch = [CCParticleBatchNode batchNodeWithTexture:[emitter1 texture]];
 	
-	[batch addChild:emitter1];
-	[batch addChild:emitter2];
-	[batch addChild:emitter3];
+	[batch addChild:emitter1 z:0];
+	[batch addChild:emitter2 z:0];
+	[batch addChild:emitter3 z:0];
 	
 	[self addChild:batch z:10];
 }
@@ -371,6 +376,93 @@ Class restartAction()
 
 @end
 
+#pragma mark - ParticleReorder
+
+@implementation ParticleReorder
+-(void) onEnter
+{
+	[super onEnter];
+	
+	[self setColor:ccBLACK];
+	[self removeChild:background cleanup:YES];
+	background = nil;
+	
+	CCParticleSystem *ignore = [CCParticleSystemQuad particleWithFile:@"Particles/SmallSun.plist"];
+	CCNode *parent1 = [CCNode node];
+	CCNode *parent2 = [CCParticleBatchNode batchNodeWithTexture:[ignore texture]];
+	
+	for( NSUInteger i=0; i<2;i++) {
+		CCNode *parent = ( i==0 ? parent1 : parent2 );
+		
+		CCParticleSystemQuad *emitter1 = [CCParticleSystemQuad particleWithFile:@"Particles/SmallSun.plist"];
+		emitter1.startColor = (ccColor4F) {1,0,0,1};
+		emitter1.blendAdditive = NO;
+		CCParticleSystemQuad *emitter2 = [CCParticleSystemQuad particleWithFile:@"Particles/SmallSun.plist"];
+		emitter2.startColor = (ccColor4F) {0,1,0,1};
+		emitter2.blendAdditive = NO;
+		CCParticleSystemQuad *emitter3 = [CCParticleSystemQuad particleWithFile:@"Particles/SmallSun.plist"];
+		emitter3.startColor = (ccColor4F) {0,0,1,1};
+		emitter3.blendAdditive = NO;
+		
+		CGSize s = [[CCDirector sharedDirector] winSize];
+		
+		int neg = (i==0 ? 1 : -1 );
+	
+		emitter1.position = ccp( s.width/2-30,	s.height/2+60*neg);
+		emitter2.position = ccp( s.width/2,		s.height/2+60*neg);
+		emitter3.position = ccp( s.width/2+30,	s.height/2+60*neg);
+		
+		[parent addChild:emitter1 z:0 tag:1];
+		[parent addChild:emitter2 z:0 tag:2];
+		[parent addChild:emitter3 z:0 tag:3];
+		
+		[self addChild:parent z:10 tag:1000+i];
+	}
+	
+	[self schedule:@selector(reorderParticles:) interval:1];
+}
+
+-(NSString *) title
+{
+	return @"Reordering particles";
+}
+
+-(NSString *) subtitle
+{
+	return @"Reordering particles with and without batches batches";
+}
+
+-(void) reorderParticles:(ccTime)dt
+{
+	for( int i=0; i<2;i++) {
+		CCNode *parent = [self getChildByTag:1000+i];
+		
+		CCNode *child1 = [parent getChildByTag:1];
+		CCNode *child2 = [parent getChildByTag:2];
+		CCNode *child3 = [parent getChildByTag:3];
+		
+		if( order % 3 == 0 ) {
+			[parent reorderChild:child1 z:1];
+			[parent reorderChild:child2 z:2];
+			[parent reorderChild:child3 z:3];
+			
+		} else if (order % 3 == 1 ) {
+			[parent reorderChild:child1 z:3];
+			[parent reorderChild:child2 z:1];
+			[parent reorderChild:child3 z:2];
+			
+		} else if (order % 3 == 2 ) {
+			[parent reorderChild:child1 z:2];
+			[parent reorderChild:child2 z:3];
+			[parent reorderChild:child3 z:1];
+		}
+	}
+	
+	order++;
+}
+@end
+
+#pragma mark - DemoFirework
 
 @implementation DemoFirework
 -(void) onEnter
@@ -392,7 +484,7 @@ Class restartAction()
 }
 @end
 
-#pragma mark -
+#pragma mark - DemoFire
 
 @implementation DemoFire
 -(void) onEnter
@@ -413,7 +505,7 @@ Class restartAction()
 }
 @end
 
-#pragma mark -
+#pragma mark - DemoSun
 
 @implementation DemoSun
 -(void) onEnter
@@ -432,7 +524,7 @@ Class restartAction()
 }
 @end
 
-#pragma mark -
+#pragma mark - DemoGalaxy
 
 @implementation DemoGalaxy
 -(void) onEnter
@@ -451,7 +543,7 @@ Class restartAction()
 }
 @end
 
-#pragma mark -
+#pragma mark - DemoFlower
 
 @implementation DemoFlower
 -(void) onEnter
@@ -470,7 +562,7 @@ Class restartAction()
 }
 @end
 
-#pragma mark -
+#pragma mark - DemoBigFlower
 
 @implementation DemoBigFlower
 -(void) onEnter
@@ -552,7 +644,7 @@ Class restartAction()
 }
 @end
 
-#pragma mark -
+#pragma mark - DemoRotFlower
 
 @implementation DemoRotFlower
 -(void) onEnter
@@ -635,7 +727,7 @@ Class restartAction()
 }
 @end
 
-#pragma mark -
+#pragma mark - DemoMeteor
 
 @implementation DemoMeteor
 -(void) onEnter
@@ -1573,7 +1665,7 @@ Class restartAction()
 	CCDirector *director = [CCDirector sharedDirector];
 	
 	// Turn on display FPS
-	[director setDisplayStats:kCCDirectorStatsFPS];
+	[director setDisplayStats:kCCDirectorStatsMPF];
 		
 	// Enables High Res mode (Retina Display) on iPhone 4 and maintains low res on all other devices
 	if( ! [director enableRetinaDisplay:YES] )
@@ -1655,7 +1747,7 @@ Class restartAction()
 {
 	CCDirectorMac *director = (CCDirectorMac*) [CCDirector sharedDirector];
 	
-	[director setDisplayStats:kCCDirectorStatsFPS];
+	[director setDisplayStats:kCCDirectorStatsMPF];
 	
 	[director setOpenGLView:glView_];
 	
