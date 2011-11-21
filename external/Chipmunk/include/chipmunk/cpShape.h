@@ -191,6 +191,8 @@ typedef struct cpSegmentShape {
 	cpVect a, b, n;
 	cpVect ta, tb, tn;
 	cpFloat r;
+	
+	cpVect a_tangent, b_tangent;
 } cpSegmentShape;
 
 /// Allocate a segment shape.
@@ -199,6 +201,8 @@ cpSegmentShape* cpSegmentShapeAlloc(void);
 cpSegmentShape* cpSegmentShapeInit(cpSegmentShape *seg, cpBody *body, cpVect a, cpVect b, cpFloat radius);
 /// Allocate and initialize a segment shape.
 cpShape* cpSegmentShapeNew(cpBody *body, cpVect a, cpVect b, cpFloat radius);
+
+void cpSegmentShapeSetNeighbors(cpShape *shape, cpVect prev, cpVect next);
 
 CP_DeclareShapeGetter(cpSegmentShape, cpVect, A);
 CP_DeclareShapeGetter(cpSegmentShape, cpVect, B);

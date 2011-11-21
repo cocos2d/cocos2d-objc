@@ -137,6 +137,13 @@ CP_DefineSpaceStructProperty(cpDataPointer, data, UserData);
 CP_DefineSpaceStructGetter(cpBody *, staticBody, StaticBody);
 CP_DefineSpaceStructGetter(cpFloat, CP_PRIVATE(curr_dt), CurrentTimeStep);
 
+/// returns true from inside a callback and objects cannot be added/removed.
+static inline cpBool
+cpSpaceIsLocked(cpSpace *space)
+{
+	return space->CP_PRIVATE(locked);
+}
+
 /// Set a default collision handler for this space.
 /// The default collision handler is invoked for each colliding pair of shapes
 /// that isn't explicitly handled by a specific collision handler.

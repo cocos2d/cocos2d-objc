@@ -39,21 +39,21 @@ extern "C" {
 	#define CP_PRIVATE(symbol) symbol##_private
 #endif
 
-void cpMessage(const char *condition, const char *file, int line, int isError, const char *message, ...);
+void cpMessage(const char *condition, const char *file, int line, int isError, int isHardError, const char *message, ...);
 #ifdef NDEBUG
 	#define	cpAssertWarn(condition, ...)
 #else
-	#define cpAssertWarn(condition, ...) //if(!(condition)) cpMessage(#condition, __FILE__, __LINE__, 0, __VA_ARGS__)
+	#define cpAssertWarn(condition, ...) if(!(condition)) cpMessage(#condition, __FILE__, __LINE__, 0, 0, __VA_ARGS__)
 #endif
-
-// Hard assertions are important and cheap to execute. They are not disabled by compiling as debug.
-#define cpAssertHard(condition, ...) if(!(condition)) cpMessage(#condition, __FILE__, __LINE__, 1, __VA_ARGS__)
 
 #ifdef NDEBUG
 	#define	cpAssertSoft(condition, ...)
 #else
-	#define cpAssertSoft(condition, ...) //cpAssertHard(condition, __VA_ARGS__)
+	#define cpAssertSoft(condition, ...) if(!(condition)) cpMessage(#condition, __FILE__, __LINE__, 1, 0, __VA_ARGS__)
 #endif
+
+// Hard assertions are important and cheap to execute. They are not disabled by compiling as debug.
+#define cpAssertHard(condition, ...) if(!(condition)) cpMessage(#condition, __FILE__, __LINE__, 1, 1, __VA_ARGS__)
 
 
 #include "chipmunk_types.h"
@@ -103,7 +103,7 @@ typedef struct cpSpace cpSpace;
 
 #define CP_VERSION_MAJOR 6
 #define CP_VERSION_MINOR 0
-#define CP_VERSION_RELEASE 1
+#define CP_VERSION_RELEASE 2
 
 /// Version string.
 extern const char *cpVersionString;

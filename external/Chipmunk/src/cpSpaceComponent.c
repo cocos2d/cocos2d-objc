@@ -135,16 +135,6 @@ ComponentActivate(cpBody *root)
 	cpArrayDeleteObj(space->sleepingComponents, root);
 }
 
-static inline void
-ComponentAdd(cpBody *root, cpBody *body){
-	body->node.root = root;
-
-	if(body != root){
-		body->node.next = root->node.next;
-		root->node.next = body;
-	}
-}
-
 void
 cpBodyActivate(cpBody *body)
 {
@@ -166,32 +156,6 @@ cpBodyActivateStatic(cpBody *body, cpShape *filter)
 	}
 }
 
-static inline cpBool
-ComponentActive(cpBody *root, cpFloat threshold)
-{
-	CP_BODY_FOREACH_COMPONENT(root, body){
-		if(body->node.idleTime < threshold) return cpTrue;
-	}
-	
-	return cpFalse;
-}
-
-static inline void
-FloodFillComponent(cpBody *root, cpBody *body)
-{
-	if(!cpBodyIsStatic(body) && !cpBodyIsRogue(body)){
-		cpBody *other_root = ComponentRoot(body);
-		if(other_root == NULL){
-			ComponentAdd(root, body);
-			CP_BODY_FOREACH_ARBITER(body, arb) FloodFillComponent(root, (body == arb->body_a ? arb->body_b : arb->body_a));
-			CP_BODY_FOREACH_CONSTRAINT(body, constraint) FloodFillComponent(root, (body == constraint->a ? constraint->b : constraint->a));
-		} else {
-			cpAssertSoft(other_root == root, "Internal Error: Inconsistency dectected in the contact graph.");
-		}
-	}
-}
-
-
 static inline void
 cpBodyPushArbiter(cpBody *body, cpArbiter *arb)
 {
@@ -204,6 +168,43 @@ cpBodyPushArbiter(cpBody *body, cpArbiter *arb)
 	
 	if(next) cpArbiterThreadForBody(next, body)->prev = arb;
 	body->arbiterList = arb;
+}
+
+static inline void
+ComponentAdd(cpBody *root, cpBody *body){
+	body->node.root = root;
+
+	if(body != root){
+		body->node.next = root->node.next;
+		root->node.next = body;
+	}
+}
+
+static inline void
+FloodFillComponent(cpBody *root, cpBody *body)
+{
+	// Rogue bodies cannot be put to sleep and prevent bodies they are touching from sleepining anyway.
+	// Static bodies (which are a type of rogue body) are effectively sleeping all the time.
+	if(!cpBodyIsRogue(body)){
+		cpBody *other_root = ComponentRoot(body);
+		if(other_root == NULL){
+			ComponentAdd(root, body);
+			CP_BODY_FOREACH_ARBITER(body, arb) FloodFillComponent(root, (body == arb->body_a ? arb->body_b : arb->body_a));
+			CP_BODY_FOREACH_CONSTRAINT(body, constraint) FloodFillComponent(root, (body == constraint->a ? constraint->b : constraint->a));
+		} else {
+			cpAssertSoft(other_root == root, "Internal Error: Inconsistency dectected in the contact graph.");
+		}
+	}
+}
+
+static inline cpBool
+ComponentActive(cpBody *root, cpFloat threshold)
+{
+	CP_BODY_FOREACH_COMPONENT(root, body){
+		if(body->node.idleTime < threshold) return cpTrue;
+	}
+	
+	return cpFalse;
 }
 
 void
