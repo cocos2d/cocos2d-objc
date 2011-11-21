@@ -809,28 +809,6 @@
 			<key>Path</key>
 			<string>libs/cocos2d/CCParticleSystem.m</string>
 		</dict>
-		<key>libs/cocos2d/CCParticleSystemPoint.h</key>
-		<dict>
-			<key>Group</key>
-			<array>
-				<string>libs</string>
-				<string>cocos2d</string>
-			</array>
-			<key>Path</key>
-			<string>libs/cocos2d/CCParticleSystemPoint.h</string>
-			<key>TargetIndices</key>
-			<array/>
-		</dict>
-		<key>libs/cocos2d/CCParticleSystemPoint.m</key>
-		<dict>
-			<key>Group</key>
-			<array>
-				<string>libs</string>
-				<string>cocos2d</string>
-			</array>
-			<key>Path</key>
-			<string>libs/cocos2d/CCParticleSystemPoint.m</string>
-		</dict>
 		<key>libs/cocos2d/CCParticleSystemQuad.h</key>
 		<dict>
 			<key>Group</key>
@@ -2049,8 +2027,6 @@
 		<string>libs/cocos2d/CCParticleExamples.m</string>
 		<string>libs/cocos2d/CCParticleSystem.h</string>
 		<string>libs/cocos2d/CCParticleSystem.m</string>
-		<string>libs/cocos2d/CCParticleSystemPoint.h</string>
-		<string>libs/cocos2d/CCParticleSystemPoint.m</string>
 		<string>libs/cocos2d/CCParticleSystemQuad.h</string>
 		<string>libs/cocos2d/CCParticleSystemQuad.m</string>
 		<string>libs/cocos2d/CCProgressTimer.h</string>
