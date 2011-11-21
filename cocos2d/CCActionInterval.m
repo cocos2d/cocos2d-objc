@@ -190,9 +190,6 @@
 
 -(void) stop
 {
-	/*[actions_[0] stop];
-	[actions_[1] stop];
-     */
     [target_ stopAction:actions_[0]];
     [target_ stopAction:actions_[1]];
 	[super stop];
@@ -292,7 +289,6 @@
 -(void) stop
 {    
     [target_ stopAction:innerAction_];
-    //[innerAction_ stop];
 	[super stop];
 }
 
@@ -437,8 +433,6 @@
 
 -(void) stop
 {
-	//[one_ stop];
-	//[two_ stop];
     [target_ stopAction:one_];
     [target_ stopAction:two_];
 	[super stop];
@@ -1232,7 +1226,7 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 
 -(void) stop
 {
-	[other_ stop];
+	[target_ stopAction:other_];
 	[super stop];
 }
 

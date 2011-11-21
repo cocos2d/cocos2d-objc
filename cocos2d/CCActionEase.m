@@ -79,7 +79,7 @@
 
 -(void) stop
 {
-	[other stop];
+	[target_ stopAction:other];
 	[super stop];
 }
 

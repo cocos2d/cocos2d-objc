@@ -347,7 +347,6 @@
 
 -(void) stop
 {
-	target_ = nil;
 	[super stop];
 }
 
