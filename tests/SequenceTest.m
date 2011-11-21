@@ -195,16 +195,26 @@ Class restartAction()
 	for( int i=1;i<15;i++)
 		[animation addFrameWithFilename: [NSString stringWithFormat:@"grossini_dance_%02d.png", i]];
 	
-	id action = [CCAnimate actionWithDuration:3 animation:animation restoreOriginalFrame:NO];
-	id action_back = [action reverse];
+
 	
-    rotator = [CCRepeatForever 
-               actionWithAction:[CCRotateBy
-                                 actionWithDuration:1.0 angle:180]];
+ 
+    rotator = [CCRotateBy actionWithDuration:1.0 angle:180];
+    rotator = [CCEaseElastic actionWithAction:rotator];
+    rotator = [CCRepeatForever actionWithAction:rotator];
+    
+
+    id action = [CCAnimate actionWithDuration:3 
+                                    animation:animation
+                         restoreOriginalFrame:NO];
+    
+    action = [CCEaseExponentialInOut actionWithAction:action];
+
+	id action_back = [action reverse];
     
     animated = [CCRepeatForever
                 actionWithAction:
                 [CCSequence actions: action, action_back, nil]];
+
     
     stop_rotator = [CCSequence actions:
                     [CCDelayTime actionWithDuration:2.0],
