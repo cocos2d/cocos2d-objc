@@ -429,7 +429,7 @@
 			<key>SharedSettings</key>
 			<dict>
 				<key>HEADER_SEARCH_PATHS</key>
-				<string>___PACKAGENAME___/libs/kazmath/include</string>
+				<string>"___PACKAGENAME___/libs/kazmath/include"</string>
 			</dict>
 		</dict>
 	</array>
