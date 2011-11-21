@@ -4803,6 +4803,7 @@
 		8EDF3E8E0F6BD8CD00F54643 /* chicken.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = chicken.wav; sourceTree = "<group>"; };
 		8EDF3E8F0F6BD8CD00F54643 /* clank.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = clank.wav; sourceTree = "<group>"; };
 		8EDF3E900F6BD8CD00F54643 /* waterfall.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = waterfall.wav; sourceTree = "<group>"; };
+		A0030DCB147AFD0600625C7C /* README.textile */ = {isa = PBXFileReference; lastKnownFileType = text; name = README.textile; path = external/Chipmunk/README.textile; sourceTree = "<group>"; };
 		A015BFAE13B826D800C73E76 /* aabb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aabb.h; sourceTree = "<group>"; };
 		A015BFB013B826D800C73E76 /* mat4stack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mat4stack.h; sourceTree = "<group>"; };
 		A015BFB113B826D800C73E76 /* matrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = matrix.h; sourceTree = "<group>"; };
@@ -7206,6 +7207,7 @@
 		50E5F309110690D300E3FCF5 /* Chipmunk */ = {
 			isa = PBXGroup;
 			children = (
+				A0030DCB147AFD0600625C7C /* README.textile */,
 				A0BE5BCD14048DFD00DAA336 /* include */,
 				A0BE5BED14048DFD00DAA336 /* src */,
 			);

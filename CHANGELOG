@@ -17,6 +17,7 @@ version 2.0-beta XX-Nov-2011
 . [FIX] SpriteFrameCache: readded API to create spriteFrames from CCTexture2D
 . [FIX] Shaders: Using correct precision. Fixed performance issue with iOS 5
 . [FIX] Shaders: Improved internal API and constants names
+. [FIX] Templates: Works when the project name contains spaces
 . [3RD] Chipmunk: Using Chipmunk v6.0.2
 
 version 2.0-alpha 18-Sept-2011
