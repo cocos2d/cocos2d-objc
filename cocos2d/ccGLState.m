@@ -106,7 +106,7 @@ GLenum ccGLGetActiveTexture( void )
 	return _ccCurrentActiveTexture + GL_TEXTURE0;
 #else
 	GLenum activeTexture;
-	glGetIntegerv(GL_ACTIVE_TEXTURE, &activeTexture);
+	glGetIntegerv(GL_ACTIVE_TEXTURE, (GLint*)&activeTexture);
 	return activeTexture;
 #endif
 }
