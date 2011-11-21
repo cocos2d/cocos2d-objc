@@ -35,7 +35,7 @@
 //#endif
 
 void
-cpMessage(const char *condition, const char *file, int line, int isError, const char *message, ...)
+cpMessage(const char *condition, const char *file, int line, cpBool isError, cpBool isHardError, const char *message, ...)
 {
 	fprintf(stderr, (isError ? "Aborting due to Chipmunk error: " : "Chipmunk warning: "));
 	
@@ -48,7 +48,7 @@ cpMessage(const char *condition, const char *file, int line, int isError, const 
 	fprintf(stderr, "\tFailed condition: %s\n", condition);
 	fprintf(stderr, "\tSource:%s:%d\n", file, line);
 	
-	if(isError) abort();
+	if(isHardError) abort();
 }
 
 #define STR(s) #s

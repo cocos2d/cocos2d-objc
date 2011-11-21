@@ -327,6 +327,9 @@ cpSegmentShapeInit(cpSegmentShape *seg, cpBody *body, cpVect a, cpVect b, cpFloa
 	
 	seg->r = r;
 	
+	seg->a_tangent = cpvzero;
+	seg->b_tangent = cpvzero;
+	
 	cpShapeInit((cpShape *)seg, &cpSegmentShapeClass, body);
 	
 	return seg;
@@ -342,6 +345,16 @@ CP_DefineShapeGetter(cpSegmentShape, cpVect, a, A)
 CP_DefineShapeGetter(cpSegmentShape, cpVect, b, B)
 CP_DefineShapeGetter(cpSegmentShape, cpVect, n, Normal)
 CP_DefineShapeGetter(cpSegmentShape, cpFloat, r, Radius)
+
+void
+cpSegmentShapeSetNeighbors(cpShape *shape, cpVect prev, cpVect next)
+{
+	cpAssertHard(shape->klass == &cpSegmentShapeClass, "Shape is not a segment shape.");
+	cpSegmentShape *seg = (cpSegmentShape *)shape;
+	
+	seg->a_tangent = cpvsub(prev, seg->a);
+	seg->b_tangent = cpvsub(next, seg->b);
+}
 
 // Unsafe API (chipmunk_unsafe.h)
 

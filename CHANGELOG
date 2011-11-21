@@ -4,7 +4,7 @@ version 2.0-beta XX-Nov-2011
 		Particle batches: Particles support batch rendering
 		TMX parse from memory
 		events fixes
-		ARC compatible:
+		ARC compatible
 . [NEW] Director: Added API to display Milliseconds Per Frame
 . [NEW] LabelBMFont: Added support for alignment, also in multiline
 . [NEW] Node: Added glServerState property. Ideal to enable/disabled blending for certain nodes.
@@ -17,6 +17,7 @@ version 2.0-beta XX-Nov-2011
 . [FIX] SpriteFrameCache: readded API to create spriteFrames from CCTexture2D
 . [FIX] Shaders: Using correct precision. Fixed performance issue with iOS 5
 . [FIX] Shaders: Improved internal API and constants names
+. [3RD] Chipmunk: Using Chipmunk v6.0.2
 
 version 2.0-alpha 18-Sept-2011
 . [NEW] Action: Added new CallBlockO action

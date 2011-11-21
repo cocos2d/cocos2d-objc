@@ -1,3 +1,5 @@
+#include <stdint.h>
+
 #ifdef __APPLE__
    #import "TargetConditionals.h"
 #endif
@@ -132,7 +134,7 @@ static inline cpFloat cpflerpconst(cpFloat f1, cpFloat f2, cpFloat d)
 }
 
 /// Hash value type.
-typedef unsigned int cpHashValue;
+typedef uintptr_t cpHashValue;
 
 /// Chipmunk's boolean type.
 /// Oh C, how we love to define our own boolean types to get compiler compatibility
@@ -163,18 +165,18 @@ typedef unsigned int cpHashValue;
 	typedef CP_COLLISION_TYPE_TYPE cpCollisionType;
 #else
 /// Type used for cpSpace.collision_type.
-	typedef unsigned int cpCollisionType;
+	typedef uintptr_t cpCollisionType;
 #endif
 
 #ifdef CP_GROUP_TYPE
 	typedef CP_GROUP_TYPE cpGroup;
 #else
 /// Type used for cpShape.group.
-	typedef unsigned int cpGroup;
+	typedef uintptr_t cpGroup;
 #endif
 
 #ifdef CP_LAYERS_TYPE
-	typedef CP_GROUP_TYPE cpLayers;
+	typedef CP_LAYERS_TYPE cpLayers;
 #else
 /// Type used for cpShape.layers.
 	typedef unsigned int cpLayers;
