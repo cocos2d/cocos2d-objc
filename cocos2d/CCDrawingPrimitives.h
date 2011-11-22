@@ -96,6 +96,12 @@ void ccDrawColor4B( GLubyte r, GLubyte g, GLubyte b, GLubyte a );
  @since v2.0
  */
 void ccDrawColor4f( GLubyte r, GLubyte g, GLubyte b, GLubyte a );
+	
+/** set the point size in points. Default 1.
+ @since v2.0
+ */
+void ccPointSize( GLfloat pointSize );
+
 
 #ifdef __cplusplus
 }
