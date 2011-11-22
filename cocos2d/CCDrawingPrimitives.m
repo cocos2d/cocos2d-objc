@@ -40,6 +40,8 @@ static BOOL initialized = NO;
 static GLProgram *shader_ = nil;
 static int colorLocation_ = -1;
 static ccColor4F color_ = {1,1,1,1};
+static int pointSizeLocation_ = -1;
+static GLfloat pointSize_ = 1;
 
 static void lazy_init( void )
 {
@@ -59,6 +61,7 @@ static void lazy_init( void )
 		[shader_ updateUniforms];
 		
 		colorLocation_ = glGetUniformLocation( shader_->program_, "u_color");
+		pointSizeLocation_ = glGetUniformLocation( shader_->program_, "u_pointSize");
 				
 		initialized = YES;
 	}
@@ -76,6 +79,7 @@ void ccDrawPoint( CGPoint point )
 	ccGLUniformModelViewProjectionMatrix( shader_ );
 	
 	glUniform4f( colorLocation_, color_.r, color_.g, color_.b, color_.a );
+	glUniform1f( pointSizeLocation_, pointSize_ );
 
 	glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, &p);
 
@@ -91,6 +95,10 @@ void ccDrawPoints( const CGPoint *points, NSUInteger numberOfPoints )
 	ccGLUniformModelViewProjectionMatrix( shader_ );
 	
 	glUniform4f( colorLocation_, color_.r, color_.g, color_.b, color_.a );
+	glUniform1f( pointSizeLocation_, pointSize_ );
+
+	// XXX: Mac OpenGL error. arrays can't go out of scope before draw is executed
+	ccVertex2F newPoints[numberOfPoints];	
 
 	// iPhone and 32-bit machines optimization
 	if( sizeof(CGPoint) == sizeof(ccVertex2F) )
@@ -98,8 +106,6 @@ void ccDrawPoints( const CGPoint *points, NSUInteger numberOfPoints )
 	
 	else
     {
-		ccVertex2F newPoints[numberOfPoints];
-
 		// Mac on 64-bit
 		for( NSUInteger i=0; i<numberOfPoints;i++)
 			newPoints[i] = (ccVertex2F) { points[i].x, points[i].y };
@@ -142,14 +148,15 @@ void ccDrawPoly( const CGPoint *poli, NSUInteger numberOfPoints, BOOL closePolyg
 	
 	glUniform4f( colorLocation_, color_.r, color_.g, color_.b, color_.a );
 
+	// XXX: Mac OpenGL error. arrays can't go out of scope before draw is executed
+	ccVertex2F newPoli[numberOfPoints];	
+
 	// iPhone and 32-bit machines optimization
 	if( sizeof(CGPoint) == sizeof(ccVertex2F) )
 		glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, poli);
 	
 	else
     {
-		ccVertex2F newPoli[numberOfPoints];
-
 		// Mac on 64-bit
 		for( NSUInteger i=0; i<numberOfPoints;i++)
 			newPoli[i] = (ccVertex2F) { poli[i].x, poli[i].y };
@@ -256,6 +263,14 @@ void ccDrawColor4f( GLubyte r, GLubyte g, GLubyte b, GLubyte a )
 	color_ = (ccColor4F) {r, g, b, a};
 }
 
+void ccPointSize( GLfloat pointSize )
+{
+	pointSize_ = pointSize * CC_CONTENT_SCALE_FACTOR();
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+	glPointSize( pointSize );
+#endif
+}
 void ccDrawColor4B( GLubyte r, GLubyte g, GLubyte b, GLubyte a )
 {
 	color_ =  (ccColor4F) {r/255.0f, g/255.0f, b/255.0f, a/255.0f};

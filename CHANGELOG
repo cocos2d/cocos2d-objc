@@ -10,6 +10,7 @@ version 2.0-beta XX-Nov-2011
 . [NEW] Node: Added glServerState property. Ideal to enable/disabled blending for certain nodes.
 . [NEW] Particle: ParticlePoint removed
 . [NEW] Shader: Added AlphaTesting shader
+. [NEW] DrawingPrimitives: DrawPoint and PointSize fixed both on Mac and iOS. DrawPoly fixed on Mac
 . [FIX] Node#draw() Added helper macro to setup draw
 . [FIX] Node#draw() removed [super draw]. Draw() should be "atomic". It shall not depend on a possible state of super class.
 . [FIX] ccGLState: Added cache for texture unit and GL_BLEND

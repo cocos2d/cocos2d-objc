@@ -171,7 +171,7 @@ Class restartAction()
 	// Remember: OpenGL is a state-machine.
 	
 	// draw big point in the center
-//	glPointSize(64);
+	ccPointSize(64);
 	ccDrawColor4B(0,0,255,128);
 	ccDrawPoint( ccp(s.width / 2, s.height / 2) );
 	
@@ -179,7 +179,7 @@ Class restartAction()
 
 	// draw 4 small points
 	CGPoint points[] = { ccp(60,60), ccp(70,70), ccp(60,70), ccp(70,60) };
-//	glPointSize(4);
+	ccPointSize(4);
 	ccDrawColor4B(0,255,255,255);
 	ccDrawPoints( points, 4);
 	
@@ -228,7 +228,7 @@ Class restartAction()
 	// restore original values
 	glLineWidth(1);
 	ccDrawColor4B(255,255,255,255);
-//	glPointSize(1);
+	ccPointSize(1);
 	
 	CHECK_GL_ERROR_DEBUG();
 }
