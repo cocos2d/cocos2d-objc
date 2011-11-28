@@ -1,4 +1,4 @@
-version 2.0-beta XX-Nov-2011
+version 2.0-beta 27-Nov-2011
 . [NEW] All: forward-ported changes from v1.1 branch:
 		reorderSprite: faster reordering sprites/nodes
 		Particle batches: Particles support batch rendering
