@@ -33,6 +33,7 @@
 #import "CCAnimation.h"
 #import "CCNode.h"
 #import "Support/CGPointExtension.h"
+#import "CCActionManager.h"
 
 //
 // IntervalAction
@@ -190,8 +191,8 @@
 
 -(void) stop
 {
-    [target_ stopAction:actions_[0]];
-    [target_ stopAction:actions_[1]];
+    [[CCActionManager sharedManager] removeAction:actions_[0]];
+    [[CCActionManager sharedManager] removeAction:actions_[1]];
 	[super stop];
 }
 
@@ -288,7 +289,7 @@
 
 -(void) stop
 {    
-    [target_ stopAction:innerAction_];
+    [[CCActionManager sharedManager] removeAction:innerAction_];
 	[super stop];
 }
 
@@ -433,8 +434,8 @@
 
 -(void) stop
 {
-    [target_ stopAction:one_];
-    [target_ stopAction:two_];
+    [[CCActionManager sharedManager] removeAction:one_];        
+    [[CCActionManager sharedManager] removeAction:two_];        
 	[super stop];
 }
 
@@ -1226,7 +1227,7 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 
 -(void) stop
 {
-	[target_ stopAction:other_];
+    [[CCActionManager sharedManager] removeAction:other_];        
 	[super stop];
 }
 
