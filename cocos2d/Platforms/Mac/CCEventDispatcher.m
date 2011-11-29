@@ -196,6 +196,7 @@ static int		eventQueueCount;
 
 	DL_FOREACH_SAFE( *list, entry, tmp ) {
 		DL_DELETE( *list, entry );
+        [entry->delegate release];
 		free(entry);
 	}
 }
