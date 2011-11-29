@@ -159,15 +159,12 @@
 @implementation CCEaseInOut
 -(void) update: (ccTime) t
 {	
-    float u = 0.0f;
 	t *= 2;
 	if (t < 1) {
-        u = 0.5f * powf (t, rate);
-		[other update: u];
+		[other update: 0.5f * powf (t, rate)];
     }
 	else {
-        u = 1.0f - 0.5f * powf(2-t, rate);
-		[other update: u];
+		[other update: 1.0f - 0.5f * powf(2-t, rate)];
     }	
 }
 
