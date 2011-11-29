@@ -214,10 +214,10 @@ Class restartAction()
 	id move = [CCMoveBy actionWithDuration:3 position:ccp(s.width-130,0)];
 //	id move_back = [move reverse];
 	
-	id move_ease_inout1 = [CCEaseInOut actionWithAction:[[move copy] autorelease] rate:2.0f];
+	id move_ease_inout1 = [CCEaseInOut actionWithAction:[[move copy] autorelease] rate:1.1f];
 	id move_ease_inout_back1 = [move_ease_inout1 reverse];
 	
-	id move_ease_inout2 = [CCEaseInOut actionWithAction:[[move copy] autorelease] rate:3.0f];
+	id move_ease_inout2 = [CCEaseInOut actionWithAction:[[move copy] autorelease] rate:2.5f];
 	id move_ease_inout_back2 = [move_ease_inout2 reverse];
 
 	id move_ease_inout3 = [CCEaseInOut actionWithAction:[[move copy] autorelease] rate:4.0f];
