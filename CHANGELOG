@@ -1,3 +1,6 @@
+version 2.0-beta2 XX-Dec-2011
+. [FIX] EaseActions: EaseIn/EaseOut actions support float arguments
+
 version 2.0-beta 27-Nov-2011
 . [NEW] All: forward-ported changes from v1.1 branch:
 		reorderSprite: faster reordering sprites/nodes
