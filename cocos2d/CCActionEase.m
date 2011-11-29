@@ -159,15 +159,16 @@
 @implementation CCEaseInOut
 -(void) update: (ccTime) t
 {	
-	int sign =1;
-	int r = (int) rate;
-	if (r % 2 == 0)
-		sign = -1;
+    float u = 0.0f;
 	t *= 2;
-	if (t < 1) 
-		[other update: 0.5f * powf (t, rate)];
-	else
-		[other update: sign*0.5f * (powf (t-2, rate) + sign*2)];	
+	if (t < 1) {
+        u = 0.5f * powf (t, rate);
+		[other update: u];
+    }
+	else {
+        u = 1.0f - 0.5f * powf(2-t, rate);
+		[other update: u];
+    }	
 }
 
 // InOut and OutIn are symmetrical
