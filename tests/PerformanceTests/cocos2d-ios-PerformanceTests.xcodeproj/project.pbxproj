@@ -223,8 +223,6 @@
 		A037D160141510D80091B5C7 /* CCParticleExamples.m in Sources */ = {isa = PBXBuildFile; fileRef = A037D0B4141510D80091B5C7 /* CCParticleExamples.m */; };
 		A037D161141510D80091B5C7 /* CCParticleSystem.h in Headers */ = {isa = PBXBuildFile; fileRef = A037D0B5141510D80091B5C7 /* CCParticleSystem.h */; };
 		A037D162141510D80091B5C7 /* CCParticleSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = A037D0B6141510D80091B5C7 /* CCParticleSystem.m */; };
-		A037D163141510D80091B5C7 /* CCParticleSystemPoint.h in Headers */ = {isa = PBXBuildFile; fileRef = A037D0B7141510D80091B5C7 /* CCParticleSystemPoint.h */; };
-		A037D164141510D80091B5C7 /* CCParticleSystemPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = A037D0B8141510D80091B5C7 /* CCParticleSystemPoint.m */; };
 		A037D165141510D80091B5C7 /* CCParticleSystemQuad.h in Headers */ = {isa = PBXBuildFile; fileRef = A037D0B9141510D80091B5C7 /* CCParticleSystemQuad.h */; };
 		A037D166141510D80091B5C7 /* CCParticleSystemQuad.m in Sources */ = {isa = PBXBuildFile; fileRef = A037D0BA141510D80091B5C7 /* CCParticleSystemQuad.m */; };
 		A037D167141510D80091B5C7 /* CCProgressTimer.h in Headers */ = {isa = PBXBuildFile; fileRef = A037D0BB141510D80091B5C7 /* CCProgressTimer.h */; };
@@ -763,8 +761,6 @@
 		A037D0B4141510D80091B5C7 /* CCParticleExamples.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCParticleExamples.m; sourceTree = "<group>"; };
 		A037D0B5141510D80091B5C7 /* CCParticleSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCParticleSystem.h; sourceTree = "<group>"; };
 		A037D0B6141510D80091B5C7 /* CCParticleSystem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCParticleSystem.m; sourceTree = "<group>"; };
-		A037D0B7141510D80091B5C7 /* CCParticleSystemPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCParticleSystemPoint.h; sourceTree = "<group>"; };
-		A037D0B8141510D80091B5C7 /* CCParticleSystemPoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCParticleSystemPoint.m; sourceTree = "<group>"; };
 		A037D0B9141510D80091B5C7 /* CCParticleSystemQuad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCParticleSystemQuad.h; sourceTree = "<group>"; };
 		A037D0BA141510D80091B5C7 /* CCParticleSystemQuad.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCParticleSystemQuad.m; sourceTree = "<group>"; };
 		A037D0BB141510D80091B5C7 /* CCProgressTimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCProgressTimer.h; sourceTree = "<group>"; };
@@ -1338,8 +1334,6 @@
 				A037D0B4141510D80091B5C7 /* CCParticleExamples.m */,
 				A037D0B5141510D80091B5C7 /* CCParticleSystem.h */,
 				A037D0B6141510D80091B5C7 /* CCParticleSystem.m */,
-				A037D0B7141510D80091B5C7 /* CCParticleSystemPoint.h */,
-				A037D0B8141510D80091B5C7 /* CCParticleSystemPoint.m */,
 				A037D0B9141510D80091B5C7 /* CCParticleSystemQuad.h */,
 				A037D0BA141510D80091B5C7 /* CCParticleSystemQuad.m */,
 				A037D0BB141510D80091B5C7 /* CCProgressTimer.h */,
@@ -1647,7 +1641,6 @@
 				A037D15D141510D80091B5C7 /* CCParallaxNode.h in Headers */,
 				A037D15F141510D80091B5C7 /* CCParticleExamples.h in Headers */,
 				A037D161141510D80091B5C7 /* CCParticleSystem.h in Headers */,
-				A037D163141510D80091B5C7 /* CCParticleSystemPoint.h in Headers */,
 				A037D165141510D80091B5C7 /* CCParticleSystemQuad.h in Headers */,
 				A037D167141510D80091B5C7 /* CCProgressTimer.h in Headers */,
 				A037D169141510D80091B5C7 /* CCProtocols.h in Headers */,
@@ -2238,7 +2231,6 @@
 				A037D15E141510D80091B5C7 /* CCParallaxNode.m in Sources */,
 				A037D160141510D80091B5C7 /* CCParticleExamples.m in Sources */,
 				A037D162141510D80091B5C7 /* CCParticleSystem.m in Sources */,
-				A037D164141510D80091B5C7 /* CCParticleSystemPoint.m in Sources */,
 				A037D166141510D80091B5C7 /* CCParticleSystemQuad.m in Sources */,
 				A037D168141510D80091B5C7 /* CCProgressTimer.m in Sources */,
 				A037D16B141510D80091B5C7 /* CCRenderTexture.m in Sources */,
@@ -2558,7 +2550,6 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
-				OTHER_CFLAGS = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = ../../external/kazmath/include;
