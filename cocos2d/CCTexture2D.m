@@ -220,9 +220,9 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 @implementation CCTexture2D (Image)
 
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
-- (id) initWithImage:(UIImage *)uiImage resolutionType:(ccResolutionType)resolution
+- (id) initWithImage:(CGImageRef)cgImage resolutionType:(ccResolutionType)resolution
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
-- (id) initWithImage:(CGImageRef)CGImage
+- (id) initWithImage:(CGImageRef)cgImage
 #endif
 {
 	NSUInteger				POTWide, POTHigh;
@@ -236,13 +236,9 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 	CGImageAlphaInfo		info;
 	CGSize					imageSize;
 	CCTexture2DPixelFormat	pixelFormat;
-	
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
-	CGImageRef	CGImage = uiImage.CGImage;
-#endif
-	
-	if(CGImage == NULL) {
-		CCLOG(@"cocos2d: CCTexture2D. Can't create Texture. UIImage is nil");
+
+	if(cgImage == NULL) {
+		CCLOG(@"cocos2d: CCTexture2D. Can't create Texture. cgImage is nil");
 		[self release];
 		return nil;
 	}
@@ -250,13 +246,13 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 	CCConfiguration *conf = [CCConfiguration sharedConfiguration];
 
 	if( [conf supportsNPOT] ) {
-		POTWide = CGImageGetWidth(CGImage);
-		POTHigh = CGImageGetHeight(CGImage);
+		POTWide = CGImageGetWidth(cgImage);
+		POTHigh = CGImageGetHeight(cgImage);
 
 	} else 
 	{
-		POTWide = ccNextPOT(CGImageGetWidth(CGImage));
-		POTHigh = ccNextPOT(CGImageGetHeight(CGImage));
+		POTWide = ccNextPOT(CGImageGetWidth(cgImage));
+		POTHigh = ccNextPOT(CGImageGetHeight(cgImage));
 	}
 		
 	NSUInteger maxTextureSize = [conf maxTextureSize];
@@ -268,11 +264,11 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 		return nil;
 	}
 	
-	info = CGImageGetAlphaInfo(CGImage);
+	info = CGImageGetAlphaInfo(cgImage);
 	hasAlpha = ((info == kCGImageAlphaPremultipliedLast) || (info == kCGImageAlphaPremultipliedFirst) || (info == kCGImageAlphaLast) || (info == kCGImageAlphaFirst) ? YES : NO);
 	
-	size_t bpp = CGImageGetBitsPerComponent(CGImage);
-	colorSpace = CGImageGetColorSpace(CGImage);
+	size_t bpp = CGImageGetBitsPerComponent(cgImage);
+	colorSpace = CGImageGetColorSpace(cgImage);
 
 	if(colorSpace) {
 		if(hasAlpha || bpp >= 8)
@@ -287,7 +283,7 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 		pixelFormat = kCCTexture2DPixelFormat_A8;
 	}
 	
-	imageSize = CGSizeMake(CGImageGetWidth(CGImage), CGImageGetHeight(CGImage));
+	imageSize = CGSizeMake(CGImageGetWidth(cgImage), CGImageGetHeight(cgImage));
 
 	// Create the bitmap graphics context
 	
@@ -322,7 +318,7 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 	
 	CGContextClearRect(context, CGRectMake(0, 0, POTWide, POTHigh));
 	CGContextTranslateCTM(context, 0, POTHigh - imageSize.height);
-	CGContextDrawImage(context, CGRectMake(0, 0, CGImageGetWidth(CGImage), CGImageGetHeight(CGImage)), CGImage);
+	CGContextDrawImage(context, CGRectMake(0, 0, CGImageGetWidth(cgImage), CGImageGetHeight(cgImage)), cgImage);
 	
 	// Repack the pixel data into the right format
 	
