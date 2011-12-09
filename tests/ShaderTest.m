@@ -195,7 +195,7 @@ enum {
 
 -(void) draw
 {
-	[super draw];
+	CC_NODE_DRAW_SETUP();
 	
 	float w = SIZE_X, h = SIZE_Y;
 	GLfloat vertices[12] = {0,0, w,0, w,h, 0,0, 0,h, w,h};
