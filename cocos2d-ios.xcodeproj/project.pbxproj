@@ -1884,6 +1884,7 @@
 		A0DABE251426715A00F3FEBE /* b2WheelJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = A0DABDC91426715A00F3FEBE /* b2WheelJoint.h */; };
 		A0DABE261426715A00F3FEBE /* b2Rope.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0DABDCB1426715A00F3FEBE /* b2Rope.cpp */; };
 		A0DABE271426715A00F3FEBE /* b2Rope.h in Headers */ = {isa = PBXBuildFile; fileRef = A0DABDCC1426715A00F3FEBE /* b2Rope.h */; };
+		A0DC2F5E1491B36A005B814E /* test_image_rgb888.pvr in Resources */ = {isa = PBXBuildFile; fileRef = A0DC2F5D1491B36A005B814E /* test_image_rgb888.pvr */; };
 		A0E431F31460741E00424477 /* background1-hd.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E0704C29123821EE009C628B /* background1-hd.jpg */; };
 		A0E431F41460741E00424477 /* background2-hd.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E0704C2A123821EE009C628B /* background2-hd.jpg */; };
 		A0E431F51460741E00424477 /* background3-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E04C631512382E6B00A4B3E6 /* background3-hd.png */; };
@@ -5049,6 +5050,7 @@
 		A0DABDC91426715A00F3FEBE /* b2WheelJoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = b2WheelJoint.h; sourceTree = "<group>"; };
 		A0DABDCB1426715A00F3FEBE /* b2Rope.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = b2Rope.cpp; sourceTree = "<group>"; };
 		A0DABDCC1426715A00F3FEBE /* b2Rope.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = b2Rope.h; sourceTree = "<group>"; };
+		A0DC2F5D1491B36A005B814E /* test_image_rgb888.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = test_image_rgb888.pvr; sourceTree = "<group>"; };
 		A0EC4A091403236C00EC482A /* Blur.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Blur.fsh; sourceTree = "<group>"; };
 		A0EC4A0A1403236C00EC482A /* Flower.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Flower.fsh; sourceTree = "<group>"; };
 		A0EC4A0B1403236C00EC482A /* Flower.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Flower.vsh; sourceTree = "<group>"; };
@@ -7722,6 +7724,7 @@
 		E0A4A24A11F899BB003B9D29 /* PVR test */ = {
 			isa = PBXGroup;
 			children = (
+				A0DC2F5D1491B36A005B814E /* test_image_rgb888.pvr */,
 				500044020F3CC15D00A5FBF4 /* test_image.pvr */,
 				E0A4A20A11F76CBC003B9D29 /* grossini_128x256_mipmap.pvr */,
 				E0A4A1DD11F764BD003B9D29 /* test_image_rgba4444_mipmap.pvr */,
@@ -10416,6 +10419,7 @@
 				A0EC4A3A1403236C00EC482A /* PositionTextureA8Color.vsh in Resources */,
 				A0EC4A3B1403236C00EC482A /* PositionTextureColor.fsh in Resources */,
 				A0EC4A3C1403236C00EC482A /* PositionTextureColor.vsh in Resources */,
+				A0DC2F5E1491B36A005B814E /* test_image_rgb888.pvr in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

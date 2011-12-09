@@ -311,7 +311,7 @@ static CCTextureCache *sharedTextureCache;
 						
 			UIImage *jpg = [[UIImage alloc] initWithContentsOfFile:fullpath];
 			UIImage *png = [[UIImage alloc] initWithData:UIImagePNGRepresentation(jpg)];
-			tex = [ [CCTexture2D alloc] initWithImage:png resolutionType:resolution];
+			tex = [ [CCTexture2D alloc] initWithImage:png.CGImage resolutionType:resolution];
 			[png release];
 			[jpg release];
 			
@@ -333,7 +333,7 @@ static CCTextureCache *sharedTextureCache;
 			NSString *fullpath = [CCFileUtils fullPathFromRelativePath:path resolutionType:&resolution];
 
 			UIImage *image = [ [UIImage alloc] initWithContentsOfFile: fullpath ];
-			tex = [ [CCTexture2D alloc] initWithImage:image resolutionType:resolution];
+			tex = [ [CCTexture2D alloc] initWithImage:image.CGImage resolutionType:resolution];
 			[image release];
 			
 			if( tex ){
@@ -399,7 +399,7 @@ static CCTextureCache *sharedTextureCache;
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 	// prevents overloading the autorelease pool
 	UIImage *image = [[UIImage alloc] initWithCGImage:imageref];
-	tex = [[CCTexture2D alloc] initWithImage:image resolutionType:kCCResolutionUnknown];
+	tex = [[CCTexture2D alloc] initWithImage:image.CGImage resolutionType:kCCResolutionUnknown];
 	[image release];
 
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
