@@ -76,7 +76,7 @@ CDSoundSource *toneSource;
 {
 	if( (self=[super init]) ) {
 	
-		[CCTexture2D setDefaultAlphaPixelFormat:kTexture2DPixelFormat_RGBA8888];
+		[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA8888];
 		CCSprite* bg = [CCSprite spriteWithFile:@"bg.png"];
 		[bg setPosition:CGPointMake(480/2, 320/2)]; 
 		[self addChild:bg ];
@@ -546,7 +546,7 @@ CDSoundSource *toneSource;
 
 - (void) dealloc
 {
-	[window dealloc];
+	[window release];
 	[super dealloc];
 }
 

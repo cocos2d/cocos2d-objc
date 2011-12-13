@@ -186,8 +186,8 @@
 		}
 		
 		newSeg->creationTime[0] = seg->creationTime[seg->end - 1];
-		int v = (seg->end-1)*6;
-		int c = (seg->end-1)*4;	
+		NSUInteger v = (seg->end-1)*6;
+		NSUInteger c = (seg->end-1)*4;	
 		newSeg->verts[0] = seg->verts[v];
 		newSeg->verts[1] = seg->verts[v+1];
 		newSeg->verts[2] = seg->verts[v+2];
@@ -224,8 +224,8 @@
 		seg->end++;
 	}
 
-	int v = seg->end*6;
-	int c = seg->end*4;
+	NSUInteger v = seg->end*6;
+	NSUInteger c = seg->end*4;
 	// add new vertex
 	seg->creationTime[seg->end] = curTime_;
 	seg->verts[v] = p1.x;
@@ -251,6 +251,8 @@
 
 -(void) draw
 {
+	[super draw];
+
 	if ([segments_ count] > 0)
 	{
 		// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
@@ -345,10 +347,10 @@
 		{
 			// generate alpha/color for each point
 			glEnableClientState(GL_COLOR_ARRAY);
-			uint i = begin;
+			NSUInteger i = begin;
 			for (; i < end; ++i)
 			{
-				int idx = i*8;
+				NSUInteger idx = i*8;
 				colors[idx] = r;
 				colors[idx+1] = g;
 				colors[idx+2] = b;
@@ -372,7 +374,7 @@
 		}
 		glVertexPointer(3, GL_FLOAT, 0, &verts[begin*6]);
 		glTexCoordPointer(2, GL_FLOAT, 0, &coords[begin*4]);
-		glDrawArrays(GL_TRIANGLE_STRIP, 0, (end - begin) * 2);
+		glDrawArrays(GL_TRIANGLE_STRIP, 0, (GLsizei) (end - begin) * 2);
 	}
 	else
 		finished = YES;

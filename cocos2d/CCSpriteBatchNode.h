@@ -58,6 +58,11 @@
 
 	// all descendants: chlidren, gran children, etc...
 	CCArray	*descendants_;
+	
+	@private
+	
+	void (*updateAtlasIndexMethod_)(id, SEL,CCSprite*,NSInteger*);
+	
 }
 
 /** returns the TextureAtlas that is used */
@@ -73,27 +78,23 @@
  The capacity will be increased in 33% in runtime if it run out of space.
  */
 +(id)batchNodeWithTexture:(CCTexture2D *)tex;
-+(id)spriteSheetWithTexture:(CCTexture2D *)tex DEPRECATED_ATTRIBUTE;
 
 /** creates a CCSpriteBatchNode with a texture2d and capacity of children.
  The capacity will be increased in 33% in runtime if it run out of space.
  */
 +(id)batchNodeWithTexture:(CCTexture2D *)tex capacity:(NSUInteger)capacity;
-+(id)spriteSheetWithTexture:(CCTexture2D *)tex capacity:(NSUInteger)capacity DEPRECATED_ATTRIBUTE;
 
 /** creates a CCSpriteBatchNode with a file image (.png, .jpeg, .pvr, etc) with a default capacity of 29 children.
  The capacity will be increased in 33% in runtime if it run out of space.
  The file will be loaded using the TextureMgr.
  */
 +(id)batchNodeWithFile:(NSString*) fileImage;
-+(id)spriteSheetWithFile:(NSString*) fileImage DEPRECATED_ATTRIBUTE;
 
 /** creates a CCSpriteBatchNode with a file image (.png, .jpeg, .pvr, etc) and capacity of children.
  The capacity will be increased in 33% in runtime if it run out of space.
  The file will be loaded using the TextureMgr.
 */
 +(id)batchNodeWithFile:(NSString*)fileImage capacity:(NSUInteger)capacity;
-+(id)spriteSheetWithFile:(NSString*)fileImage capacity:(NSUInteger)capacity DEPRECATED_ATTRIBUTE;
 
 /** initializes a CCSpriteBatchNode with a texture2d and capacity of children.
  The capacity will be increased in 33% in runtime if it run out of space.
@@ -107,25 +108,6 @@
 
 -(void) increaseAtlasCapacity;
 
-/** creates an sprite with a rect in the CCSpriteBatchNode.
- It's the same as:
-   - create an standard CCSsprite
-   - set the usingSpriteSheet = YES
-   - set the textureAtlas to the same texture Atlas as the CCSpriteBatchNode
- @deprecated Use [CCSprite spriteWithBatchNode:rect:] instead;
- */
--(CCSprite*) createSpriteWithRect:(CGRect)rect DEPRECATED_ATTRIBUTE;
-
-/** initializes a previously created sprite with a rect. This sprite will have the same texture as the CCSpriteBatchNode.
- It's the same as:
- - initialize an standard CCSsprite
- - set the usingBatchNode = YES
- - set the textureAtlas to the same texture Atlas as the CCSpriteBatchNode
- @since v0.99.0
- @deprecated Use [CCSprite initWithBatchNode:rect:] instead;
-*/ 
--(void) initSprite:(CCSprite*)sprite rect:(CGRect)rect DEPRECATED_ATTRIBUTE;
-
 /** removes a child given a certain index. It will also cleanup the running actions depending on the cleanup parameter.
  @warning Removing a child from a CCSpriteBatchNode is very slow
  */
@@ -137,9 +119,12 @@
 -(void)removeChild: (CCSprite *)sprite cleanup:(BOOL)doCleanup;
 
 -(void) insertChild:(CCSprite*)child inAtlasAtIndex:(NSUInteger)index;
+-(void) appendChild:(CCSprite*)sprite;
 -(void) removeSpriteFromAtlas:(CCSprite*)sprite;
 
 -(NSUInteger) rebuildIndexInOrder:(CCSprite*)parent atlasIndex:(NSUInteger)index;
 -(NSUInteger) atlasIndexForChild:(CCSprite*)sprite atZ:(NSInteger)z;
+/* Sprites use this to start sortChildren, don't call this manually */
+- (void) reorderBatch:(BOOL) reorder;
 
 @end

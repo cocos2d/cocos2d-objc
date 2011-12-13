@@ -445,12 +445,6 @@ typedef struct _KerningHashElement
 	return [[[self alloc] initWithString:string fntFile:fntFile] autorelease];
 }
 
-// XXX - deprecated - Will be removed in 1.0.1
-+(id) bitmapFontAtlasWithString:(NSString*)string fntFile:(NSString*)fntFile
-{
-	return [self labelWithString:string fntFile:fntFile];
-}
-
 -(id) initWithString:(NSString*)theString fntFile:(NSString*)fntFile
 {	
 	
@@ -663,6 +657,7 @@ typedef struct _KerningHashElement
 -(void) draw
 {
 	[super draw];
+
 	CGSize s = [self contentSize];
 	CGPoint vertices[4]={
 		ccp(0,0),ccp(s.width,0),

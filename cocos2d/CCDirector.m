@@ -86,6 +86,7 @@ extern NSString * cocos2dVersion(void);
 @synthesize runningThread = runningThread_;
 @synthesize notificationNode = notificationNode_;
 @synthesize projectionDelegate = projectionDelegate_;
+@synthesize totalFrames = totalFrames_;
 //
 // singleton stuff
 //
@@ -138,7 +139,7 @@ static CCDirector *_sharedDirector = nil;
 
 		// FPS
 		displayFPS_ = NO;
-		frames_ = 0;
+		totalFrames_ = frames_ = 0;
 		
 		// paused ?
 		isPaused_ = NO;
@@ -549,6 +550,7 @@ static CCDirector *_sharedDirector = nil;
 	glEnableClientState(GL_COLOR_ARRAY);
 }
 #endif
+
 
 - (void) showProfilers {
 #if CC_ENABLE_PROFILERS

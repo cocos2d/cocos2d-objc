@@ -51,6 +51,8 @@ enum {
 		id sc_back = [sc reverse];
 		[grossini runAction: [CCRepeatForever actionWithAction:
 					   [CCSequence actions: sc, sc_back, nil]]];
+		
+		[self schedule:@selector(printFrames:) interval:2];
 	}
 	return self;
 }
@@ -58,6 +60,11 @@ enum {
 - (void) dealloc
 {
 	[super dealloc];
+}
+
+-(void) printFrames:(ccTime)dt
+{
+	NSLog(@"total frames:%d", [[CCDirector sharedDirector] totalFrames] );
 }
 
 - (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event

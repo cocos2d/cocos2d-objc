@@ -36,6 +36,7 @@
 #import "CCTextureCache.h"
 #import "Support/CGPointExtension.h"
 
+
 #pragma mark -
 #pragma mark CCSpriteBatchNode Extension
 
@@ -101,6 +102,9 @@
 	
 	// IMPORTANT: Call super, and not self. Avoid adding it to the texture atlas array
 	[super addChild:child z:z tag:aTag];
+	
+	//#issue 1262 don't use lazy sorting, tiles are added as quads not as sprites, so sprites need to be added in order
+	[self reorderBatch:NO];
 	return self;	
 }
 @end
@@ -332,10 +336,25 @@ int compareInts (const void * a, const void * b);
 	NSAssert( tiles_ && atlasIndexArray_, @"TMXLayer: the tiles map has been released");
 	
 	NSInteger idx = pos.x + pos.y * layerSize_.width;
-	return tiles_[ idx ];
+	
+	// Bits on the far end of the 32-bit global tile ID are used for tile flags
+	return (tiles_[ idx ] & kFlippedMask);
 }
 
 #pragma mark CCTMXLayer - adding helper methods
+
+- (void) setupReusedTile:(CGPoint)pos withGID:(uint32_t)gid
+{
+	[reusedTile_ setPositionInPixels: [self positionAt:pos]];
+	[reusedTile_ setVertexZ: [self vertexZForPos:pos]];
+	reusedTile_.anchorPoint = CGPointZero;
+	[reusedTile_ setOpacity:opacity_];
+	
+	if (gid & kFlippedHorizontallyFlag)
+		reusedTile_.flipX = YES;
+	if (gid & kFlippedVerticallyFlag)
+		reusedTile_.flipY = YES;
+}
 
 -(CCSprite*) insertTileForGID:(uint32_t)gid at:(CGPoint)pos
 {
@@ -348,10 +367,7 @@ int compareInts (const void * a, const void * b);
 	else
 		[reusedTile_ initWithBatchNode:self rectInPixels:rect];
 	
-	[reusedTile_ setPositionInPixels: [self positionAt:pos]];
-	[reusedTile_ setVertexZ: [self vertexZForPos:pos]];
-	reusedTile_.anchorPoint = CGPointZero;
-	[reusedTile_ setOpacity:opacity_];
+	[self setupReusedTile:pos withGID:gid];
 	
 	// get atlas index
 	NSUInteger indexForZ = [self atlasIndexForNewZ:z];
@@ -386,10 +402,7 @@ int compareInts (const void * a, const void * b);
 	else
 		[reusedTile_ initWithBatchNode:self rectInPixels:rect];
 	
-	[reusedTile_ setPositionInPixels: [self positionAt:pos]];
-	[reusedTile_ setVertexZ: [self vertexZForPos:pos]];
-	reusedTile_.anchorPoint = CGPointZero;
-	[reusedTile_ setOpacity:opacity_];
+	[self setupReusedTile:pos withGID:gid];
 	
 	// get atlas index
 	NSUInteger indexForZ = [self atlasIndexForExistantZ:z];
@@ -416,10 +429,7 @@ int compareInts (const void * a, const void * b);
 	else
 		[reusedTile_ initWithBatchNode:self rectInPixels:rect];
 	
-	[reusedTile_ setPositionInPixels: [self positionAt:pos]];
-	[reusedTile_ setVertexZ: [self vertexZForPos:pos]];
-	reusedTile_.anchorPoint = CGPointZero;
-	[reusedTile_ setOpacity:opacity_];
+	[self setupReusedTile:pos withGID:gid];
 	
 	// optimization:
 	// The difference between appendTileForGID and insertTileforGID is that append is faster, since

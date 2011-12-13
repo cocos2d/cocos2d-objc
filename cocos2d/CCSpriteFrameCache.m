@@ -119,7 +119,7 @@ static CCSpriteFrameCache *sharedSpriteFrameCache_=nil;
 	// add real frames
 	for(NSString *frameDictKey in framesDict) {
 		NSDictionary *frameDict = [framesDict objectForKey:frameDictKey];
-		CCSpriteFrame *spriteFrame;
+		CCSpriteFrame *spriteFrame=nil;
 		if(format == 0) {
 			float x = [[frameDict objectForKey:@"x"] floatValue];
 			float y = [[frameDict objectForKey:@"y"] floatValue];
@@ -337,11 +337,4 @@ static CCSpriteFrameCache *sharedSpriteFrameCache_=nil;
 	return frame;
 }
 
-#pragma mark CCSpriteFrameCache - sprite creation
-
--(CCSprite*) createSpriteWithFrameName:(NSString*)name
-{
-	CCSpriteFrame *frame = [spriteFrames_ objectForKey:name];
-	return [CCSprite spriteWithSpriteFrame:frame];
-}
 @end

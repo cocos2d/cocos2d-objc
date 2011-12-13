@@ -446,9 +446,11 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 	CC_DISABLE_DEFAULT_GL_STATES();
 	
 	glPopMatrix();
-			
+		
+	totalFrames_++;
+
 	[[openGLView_ openGLContext] flushBuffer];	
-	CGLUnlockContext([[openGLView_ openGLContext] CGLContextObj]);
+	CGLUnlockContext([[openGLView_ openGLContext] CGLContextObj]);	
 }
 
 // set the event dispatcher
@@ -462,9 +464,13 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 		[openGLView_ setEventDelegate: eventDispatcher];
 		[eventDispatcher setDispatchEvents: YES];
 		
+
 		// Enable Touches. Default no.
+		// Only available on OS X 10.6+
+#if MAC_OS_X_VERSION_MIN_REQUIRED > MAC_OS_X_VERSION_10_5
 		[view setAcceptsTouchEvents:NO];
 //		[view setAcceptsTouchEvents:YES];
+#endif
 		
 
 		// Synchronize buffer swaps with vertical refresh rate

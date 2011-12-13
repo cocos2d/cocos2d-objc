@@ -94,6 +94,7 @@ simple macro that swaps 2 variables
  */
 #define CC_RADIANS_TO_DEGREES(__ANGLE__) ((__ANGLE__) * 57.29577951f) // PI * 180
 
+#define kCCRepeatForever UINT_MAX -1
 /** @def CC_BLEND_SRC
 default gl blend src function. Compatible with premultiplied alpha images.
 */
@@ -212,7 +213,9 @@ do {															\
 } while(0)
 
 
-#if CC_IS_RETINA_DISPLAY_SUPPORTED
+
+
+#if __IPHONE_OS_VERSION_MAX_ALLOWED
 
 /****************************/
 /** RETINA DISPLAY ENABLED **/
@@ -240,7 +243,7 @@ do {															\
 	CGRectMake( (__points__).origin.x * CC_CONTENT_SCALE_FACTOR(), (__points__).origin.y * CC_CONTENT_SCALE_FACTOR(),	\
 			(__points__).size.width * CC_CONTENT_SCALE_FACTOR(), (__points__).size.height * CC_CONTENT_SCALE_FACTOR() )
 
-#else // retina disabled
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 
 /*****************************/
 /** RETINA DISPLAY DISABLED **/
@@ -250,4 +253,4 @@ do {															\
 #define CC_RECT_PIXELS_TO_POINTS(__pixels__) __pixels__
 #define CC_RECT_POINTS_TO_PIXELS(__points__) __points__
 
-#endif // CC_IS_RETINA_DISPLAY_SUPPORTED
+#endif // __MAC_OS_X_VERSION_MAX_ALLOWED

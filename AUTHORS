@@ -1,5 +1,51 @@
-cocos2d for iPhone authors
---------------------------
+Special thanks to: Lucio Torre, Alejandro Cura, Daniel Moisset & Rayentray Tappa.
+
+cocos2d for iPhone wouldn't be possible without the help of the community who is
+constantly adding new features, sending patches, opening issues:
+http://www.cocos2d-iphone.org/forum
+
+cocos2d logos by Michael Heald (http://www.fullyillustrated.com)
+
+
+
+cocos2d for iPhone authors for v1.1
+-----------------------------------
+
+Lead Developers:
+	Ricardo Quesada (http://www.zynga.com)
+	Marco Tillemans (http://www.welcometothefabrik.com/)
+
+
+Contributors (alphabetically ordered):
+
+* Marco Tillemans (AKA araker: http://www.welcometothefabrik.com/)
+	Texture2D: drawInRect / drawAtPoint disables color state
+	SpriteBatchNode: fixed bug in removeAllChildrenWithCleanup
+	Author of the new reorder Sprite/Node algorithm
+	Schedule: added support for delay and repeat
+	ESRenderer: don't recreate the renderer when it is not needed
+	Actions: Instant actions can be sequenceables
+	Actions: durtion is not divided by zero
+	Actions: Repeat & RepeatForever work as expectd
+	Author of ParticleBatchNode node
+	Improved ESRenderer layoutSubview
+	Improved Debug Drawing for Sprite batched node	
+
+* Ricardo Ruiz:
+	Added support for RGB888 textures
+
+* slycrel (http://geopherlite.blogspot.com/)
+	Added support for flipped tiles in TMX maps. Also added test case
+
+* Stepan Generalov (iPsi) (http://www.itraceur.ru/)
+	FileUtils: Loads -hd resources even if the -sd resource is not present. patch
+
+* John Wordsworth ( http://www.johnwordsworth.com/ )
+	CCAnimationCache: Added animation data format. Can be loaded into the animation cache
+
+
+cocos2d for iPhone authors for v1.0
+-----------------------------------
 
 Lead Developer:
 	Ricardo Quesada (http://www.zynga.com)
@@ -7,14 +53,6 @@ Lead Developer:
 Developers:
 	Valentin Milea
 	Steve Oldmeadow (http://www.smoco.com/)
-
-cocos2d logos by Michael Heald (http://www.fullyillustrated.com)
-
-Special thanks to: Lucio Torre, Alejandro Cura, Daniel Moisset & Rayentray Tappa.
-
-cocos2d for iPhone wouldn't be possible without the help of the community who is
-constantly adding new features, sending patches, opening issues:
-	   http://www.cocos2d-iphone.org/forum
 
 People/companies who were/are contributing code to cocos2d for iPhone (alphabetically ordered):
 
@@ -37,8 +75,9 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		patches for MenuItemToggle that supports selectedIndex
 	* arya.irani:
 		CCCallFunc supports class methods (patch)
-	* asad.rehman:
+	* Asad ur Rehman (https://github.com/AsadR)
 		Menu doesn't receive touches when it is invisible (patch)
+		Menu doens't receive touches when one if its acenstors is invisible
 	* Atte Kotiranta (https://github.com/akotiranta)
 		Implemented setPriority in TouchDispatcher.
 		Added setPriority test in MenuTest
@@ -164,6 +203,8 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Fixed CLang compiling warnings
 	* InsertWittyName (http://www.didev-studios.com/):
 		Texture2D allocs the right memory (patch)
+	* iomac (https://github.com/iomac):
+		CocosDenshion: Cleanup buffers to prevent noise in Mac
 	* Ishaq Malik:
 		patches for CocosNode
 	* Joao Caxaria:
@@ -318,6 +359,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		TextureAtlas: added the possibility to draw the Quads in parts
 		TextureAtlas: Render "static" VBO batches between 6~10% faster. patch.
 		CCArray / ccArray: Added reverseObjects and reduceMemoryFootprint methods.
+		EAGLView: call ESRender#resizeLayer only if the new size is different
 	* marcu.catalin:
 		Menu items are not consumed is items are not visible
 	* Mark Cooke:
@@ -345,6 +387,8 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Added a way to remove from the SpriteFrameCache frames given a dictionary, file or texture
 	* Michael Thornton:
 		TMXTileMap supports any kind of child. patch.
+	* Michael Witt:
+		Fixed leak in EAGLView multisampling code
 	* mike AT finklyinteractive:
 		fixed leak in ActionManager
 	* Mitch:
@@ -371,6 +415,8 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Author of bug #915 test case
 	* palter AT clozure.com
 		Texture fails gracefully if PVR image can't be loaded (patch)
+	* Pascal Bourque (http://loopycube.com/)
+		Worked around memory leak in NSXMLParser used by TMXMaps
 	* Patrick Wolowicz:
 		mkatlas: added artifact removal by copying borders to margins
 		FontLabel: supports parenthese and apostrophes when word wrapping.
@@ -430,6 +476,9 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Sprite#updateTransform can be overriden
 	* Serge Kolgan:
 		patches for CocosNode
+	* Sergey Tikhonov (AKA haqu) (http://haqu.net)
+		Sprite: Added texture debugging draw
+		Menu: MenuItemFont can change the font name and family once it is instanced
 	* sflory:
 		new way to added CGImageRef to TextureMgr
 		added unicode support in BitmapFontAtlas
@@ -455,6 +504,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	* Stepan Generalov (iPsi) (http://www.itraceur.ru/)
 		EventDispatcher: flagsChanged is triggered correctly. patch
 		Test case for issue 1071
+		FileUtils: Loads -hd resources even if the -sd resource is not present. patch
 	* Steve Oldmeadow (http://www.smoco.com/):
 		Author and maintainer of CocosDenshion Sound Engine:
 			It includes patching, maintaing, porting it to Mac,

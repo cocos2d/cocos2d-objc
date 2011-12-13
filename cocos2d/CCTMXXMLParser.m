@@ -97,6 +97,7 @@
 	CGRect rect;
 	rect.size = tileSize_;
 	
+	gid &= kFlippedMask;
 	gid = gid - firstGid_;
 	
 	int max_x = (imageSize_.width - margin_*2 + spacing_) / (tileSize_.width + spacing_);
@@ -164,8 +165,9 @@
 
 - (void) parseXMLFile:(NSString *)xmlFilename
 {
-	NSURL *url = [NSURL fileURLWithPath:[CCFileUtils fullPathFromRelativePath:xmlFilename] ];
-	NSXMLParser *parser = [[NSXMLParser alloc] initWithContentsOfURL:url];
+  NSURL *url = [NSURL fileURLWithPath:[CCFileUtils fullPathFromRelativePath:xmlFilename] ];
+  NSData *data = [NSData dataWithContentsOfURL:url];
+  NSXMLParser *parser = [[NSXMLParser alloc] initWithData:data];
 
 	// we'll do the parsing
 	[parser setDelegate:self];

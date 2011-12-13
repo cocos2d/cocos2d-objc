@@ -36,24 +36,17 @@
 @implementation CCLabelAtlas
 
 #pragma mark CCLabelAtlas - Creation & Init
-+(id) labelWithString:(NSString*)string charMapFile:(NSString*)charmapfile itemWidth:(int)w itemHeight:(int)h startCharMap:(char)c
++(id) labelWithString:(NSString*)string charMapFile:(NSString*)charmapfile itemWidth:(NSUInteger)w itemHeight:(NSUInteger)h startCharMap:(unsigned char)c
 {
 	return [[[self alloc] initWithString:string charMapFile:charmapfile itemWidth:w itemHeight:h startCharMap:c] autorelease];
 }
 
-// XXX DEPRECATED. Remove it in 1.0.1
-+(id) labelAtlasWithString:(NSString*) string charMapFile: (NSString*) charmapfile itemWidth:(int)w itemHeight:(int)h startCharMap:(char)c
-{
-	return [self labelWithString:string charMapFile:charmapfile itemWidth:w itemHeight:h startCharMap:c];
-}
-
-
--(id) initWithString:(NSString*) theString charMapFile: (NSString*) charmapfile itemWidth:(int)w itemHeight:(int)h startCharMap:(char)c
+-(id) initWithString:(NSString*) theString charMapFile: (NSString*) charmapfile itemWidth:(NSUInteger)w itemHeight:(NSUInteger)h startCharMap:(unsigned char)c
 {
 
 	if ((self=[super initWithTileFile:charmapfile tileWidth:w tileHeight:h itemsToRender:[theString length] ]) ) {
 
-		mapStartChar = c;		
+		mapStartChar_ = c;		
 		[self setString: theString];
 	}
 
@@ -71,18 +64,18 @@
 
 -(void) updateAtlasValues
 {
-	NSInteger n = [string_ length];
+	NSUInteger n = [string_ length];
 	
 	ccV3F_C4B_T2F_Quad quad;
 
-	const char *s = [string_ UTF8String];
+	const unsigned char *s = (unsigned char*) [string_ UTF8String];
 
 	CCTexture2D *texture = [textureAtlas_ texture];
 	float textureWide = [texture pixelsWide];
 	float textureHigh = [texture pixelsHigh];
 
 	for( NSUInteger i=0; i<n; i++) {
-		unsigned char a = s[i] - mapStartChar;
+		unsigned char a = s[i] - mapStartChar_;
 		float row = (a % itemsPerRow_);
 		float col = (a / itemsPerRow_);
 		
@@ -141,6 +134,8 @@
 	s.width = len * itemWidth_;
 	s.height = itemHeight_;
 	[self setContentSizeInPixels:s];
+	
+	self.quadsToDraw = len;
 }
 
 -(NSString*) string
@@ -148,44 +143,21 @@
 	return string_;
 }
 
-#pragma mark CCLabelAtlas - draw
+#pragma mark CCLabelAtlas - DebugDraw
 
-// XXX: overriding draw from AtlasNode
+#if CC_LABELATLAS_DEBUG_DRAW
 - (void) draw
 {
-	// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
-	// Needed states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_TEXTURE_COORD_ARRAY
-	// Unneeded states: GL_COLOR_ARRAY
-	glDisableClientState(GL_COLOR_ARRAY);
+	[super draw];
 
-	glColor4ub( color_.r, color_.g, color_.b, opacity_);
-	
-	BOOL newBlend = blendFunc_.src != CC_BLEND_SRC || blendFunc_.dst != CC_BLEND_DST;
-	if( newBlend )
-		glBlendFunc( blendFunc_.src, blendFunc_.dst );
-	
-	[textureAtlas_ drawNumberOfQuads:string_.length fromIndex:0];
-	
-	if( newBlend )
-		glBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);
-	
-	// is this chepear than saving/restoring color state ?
-	// XXX: There is no need to restore the color to (255,255,255,255). Objects should use the color
-	// XXX: that they need
-//	glColor4ub( 255, 255, 255, 255);
-
-	// Restore Default GL state. Enable GL_COLOR_ARRAY
-	glEnableClientState(GL_COLOR_ARRAY);
-	
-	
-#if CC_LABELATLAS_DEBUG_DRAW
 	CGSize s = [self contentSize];
 	CGPoint vertices[4]={
 		ccp(0,0),ccp(s.width,0),
 		ccp(s.width,s.height),ccp(0,s.height),
 	};
 	ccDrawPoly(vertices, 4, YES);
-#endif // CC_LABELATLAS_DEBUG_DRAW
 
 }
+#endif // CC_LABELATLAS_DEBUG_DRAW
+
 @end

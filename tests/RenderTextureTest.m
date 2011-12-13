@@ -443,6 +443,9 @@ Class restartAction()
 {
 	return @"Touch screen. It should be green";
 }
+
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+
 - (void)ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
 	for( UITouch *touch in touches ) {
@@ -481,6 +484,7 @@ Class restartAction()
 {
 	[self renderScreenShot];
 }
+#endif // __IPHONE_OS_VERSION_MAX_ALLOWED
 
 -(void)renderScreenShot
 {
@@ -565,7 +569,12 @@ Class restartAction()
 	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
 	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
 	// You can change anytime.
-	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA8888];		
+	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA8888];
+	
+	// When in iPad / RetinaDisplay mode, CCFileUtils will append the "-ipad" / "-hd" to all loaded files
+	// If the -ipad  / -hdfile is not found, it will load the non-suffixed version
+	[CCFileUtils setiPadSuffix:@"-ipad"];			// Default on iPad is "" (empty string)
+	[CCFileUtils setRetinaDisplaySuffix:@"-hd"];	// Default on RetinaDisplay is "-hd"
 	
 	CCScene *scene = [CCScene node];
 	[scene addChild: [nextAction() node]];

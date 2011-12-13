@@ -24,11 +24,9 @@ Class restartAction(void);
 
 static int sceneIdx=-1;
 static NSString *transitions[] = {
-	
-	@"CameraOrbitTest",
-	@"CameraZoomTest",	
-	@"CameraCenterTest",
-	
+
+	@"CCArrayTest",
+
 	@"Test2",
 	@"Test4",
 	@"Test5",
@@ -41,6 +39,7 @@ static NSString *transitions[] = {
 	@"CameraZoomTest",	
 	@"CameraCenterTest",
 	@"ConvertToNode",
+	@"CCArrayTest",
 };
 
 Class nextAction()
@@ -818,7 +817,6 @@ Class restartAction()
 @end
 
 
-
 #pragma mark -
 #pragma mark ConvertToNode
 
@@ -897,6 +895,57 @@ Class restartAction()
 }
 @end
 
+#pragma mark -
+#pragma mark CCArrayTest
+
+@implementation CCArrayTest
+
+-(id) init
+{
+	if( ( self=[super init]) ) {
+
+		NSLog(@"\nTest 1\n");
+		
+		NSArray *nsarray = [NSArray arrayWithObjects:@"one", @"two", @"three", nil];
+		CCArray *ccarray = [CCArray arrayWithNSArray:nsarray];
+		
+		NSLog(@"%@ == %@", nsarray, ccarray);
+		
+		
+		NSLog(@"\nTest 2\n");
+		
+		CCArray *copy_ccaray = [ccarray copy];
+		NSLog(@"copy: %@", copy_ccaray);
+
+		NSLog(@"\nTest 3\n");
+
+		[copy_ccaray addObjectsFromNSArray:nsarray];		
+		NSLog(@"copy 2: %@", copy_ccaray);
+		
+
+		NSLog(@"\nTest 4\n");
+		
+		for( int i=0; i<6;i++)
+			NSLog(@"random object: %@", [copy_ccaray randomObject] );
+
+		
+		[copy_ccaray release];
+
+		
+	}
+	return self;
+}
+
+-(NSString *) title
+{
+	return @"CCArray Test";
+}
+
+-(NSString*) subtitle
+{
+	return @"See console for possible errors";
+}
+@end
 
 
 #pragma mark -
@@ -942,7 +991,12 @@ Class restartAction()
 	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
 	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
 	// You can change anytime.
-	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA8888];	
+	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA8888];
+	
+	// When in iPad / RetinaDisplay mode, CCFileUtils will append the "-ipad" / "-hd" to all loaded files
+	// If the -ipad  / -hdfile is not found, it will load the non-suffixed version
+	[CCFileUtils setiPadSuffix:@"-ipad"];			// Default on iPad is "" (empty string)
+	[CCFileUtils setRetinaDisplaySuffix:@"-hd"];	// Default on RetinaDisplay is "-hd"
 	
 	CCScene *scene = [CCScene node];
 	[scene addChild: [nextAction() node]];

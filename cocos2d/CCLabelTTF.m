@@ -111,6 +111,13 @@
 										 fontName:fontName_
 										 fontSize:fontSize_];
 
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+	if( CC_CONTENT_SCALE_FACTOR() == 2 )
+		[tex setResolutionType:kCCResolutionRetinaDisplay];
+	else
+		[tex setResolutionType:kCCResolutionStandard];
+#endif
+
 	[self setTexture:tex];
 	[tex release];
 
@@ -128,11 +135,14 @@
 {
 	[string_ release];
 	[fontName_ release];
+
 	[super dealloc];
 }
 
 - (NSString*) description
 {
-	return [NSString stringWithFormat:@"<%@ = %08X | FontName = %@, FontSize = %.1f>", [self class], self, fontName_, fontSize_];
+	// XXX: string_, fontName_ can't be displayed here, since they might be already released
+
+	return [NSString stringWithFormat:@"<%@ = %08X | FontSize = %.1f>", [self class], self, fontSize_];
 }
 @end

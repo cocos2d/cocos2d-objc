@@ -1,15 +1,63 @@
-version 1.0.0 -
+version 1.1 - 11-Oct-2011
+. [NEW] Animation: Added file format. AnimationCache can load animations from file
+. [NEW] ccConfig: Removed CC_RETINA_DISPLAY_FILENAME_SUFFIX. Use CCFileUtils API instead
+. [NEW] ccConfig: Removed CC_RETINA_DISPLAY_SUPPORT. It is always enabled.
+. [NEW] FileUtils: Added iPad / RetinaDisplay extension. To use it, call [CCFileUtils setiPadSuffix:@"-ipad"] or setRetinaDisplaySuffix (issue #1211)
+. [NEW] FileUtils: Added xxxFileExistAtPath for iPad and RetinaDisplay resources
+. [NEW] Node: improved speed when reordering and adding nodes (integration of reorderSprite branch)
+. [NEW] Particles: Added ParticleBatchNode (issue #955)
+. [NEW] Sprite: improved speed when reordering and adding sprites (integration of reorderSprite branch)
+. [NEW] Scheduler: Added support for delay and repeat (issue #630)
+. [NEW] Textures: Added support for RGB888 textures (issue #958)
+. [NEW] TileMap: TMX map supports flipped tiles (issue #1233)
+. [FIX] TileMap: don't use new sorting for tilemap (issue #1262)
+. [FIX] Actions: removed #undef CLAMP (issue #1210)
+. [FIX] Actions: Repeat & RepeatForEver work as expected(issue #1247)
+. [FIX] Actions: duration is not divided by zero (issue #615)
+. [FIX] Actions: Instant actions can be sequenceables (issue #1166)
+. [FIX] FileUtils: Loads -hd resources even if the sd resource is not present (issue #1179)
+. [FIX] FileUtils: renamed ccRemoveSuffixFromFile to +[CCFileUtils removeSuffixFromFile:];
+. [FIX] FileUtils: localized resources can be loaded using fullPathFromRelativePath (issue #1230)
+. [FIX] LayerColor: init calls initWithColor:width:height (issue #1226)
+. [FIX] Sprite: Debug draw fixed (issue #1069)
+. [FIX] SpriteBatchNode: removeAllChildrenWithCleanup works correctly (issue #1216)
+. [FIX] Texture2D: drawAtPoint uses the correct vertices
+. [FIX] Texture2D: drawAtPoint, drawInRect disables color state (issue #1222)
+. [FIX-MAC] Director: Only call set setAcceptsTouchEvents: when OS X >= 10.6 (issue #1225)
+
+version 1.0.1 - 28-July-2011
+. [FIX] All: Implicit atomic properties converted to nonatomic
+. [FIX] All: Removed deprected code
+. [FIX] CCArray: copyWithZone fixed
+. [FIX] Director: frames -> totalFrames, and it works as expected. Value is not being reset.
+. [FIX] Menu: If any ancestor is invisible, then touches won't be accepted
+. [FIX] Node: vertexZ returns points, not "pixels"
+. [FIX] LabelTTF: don't crash when calling description after dealloc
+. [FIX] Tests: [window release] instead of [window dealloc]
+. [FIX] Texture: TextureCache#dump reports the right info (issue #1205)
+. [FIX-MAC] CocosDenshion: Cleanup buffers to prevent noise
+
+version 1.0.0 - 13-July-2011
+. [NEW] ccpSegmentIntersect & ccpPointIntersect: Added helper functions for ccpLineIntersect (issue #1193)
+. [NEW] ccConfig: Added possibility to define the configuration as preprocessor macros
+. [NEW] Director: frames is a readonly property
+. [NEW] Menu: MenuItemFont can change size and font from instance (issue #1192)
 . [NEW] Scheduler: Added isTargetPaused method
+. [NEW] Sprite: Debugging draw for texture (issue #879)
+. [NEW] Textures: PVR supports NPOT textures
 . [FIX] CCArray: ForEach prepends "__" to inner variables to prevent conflict
 . [FIX] ccpLineIntersect works as expected. Improved performance (issue #1174, #1193)
-. [FIX] ccpSegmentIntersect & ccpPointIntersect: Added helper functions for ccpLineIntersect (issue #1193)
 . [FIX] cocosLive: fixed memory leak in ScoreServerPost
 . [FIX] Director: Added asserts to prevent calling startAnimation twice.
+. [FIX] EAGLView: Fixed leak when using multisampling and resizing the layer (issue #1198)
+. [FIX] Menu: Column aligment is centered. Removed the +10 pixels padding.
+. [FIX] Node: Node#Draw calls super#draw
 . [FIX] Tests: Fixed memory leak in ParticleTest
 . [FIX] Tests: Fixed memory leak in cocosLiveTest
-. [FIX] Textures: PVR supports NPOT textures
+. [FIX] Tiles: Worked around memory leak in NSXMLParser (issue #1197)
 . [FIX] TouchDispatcher: added setPriority (issue #757)
 . [FIX] Xcode: cocos2d compiles OK with Xcode 4.2 + llvm 3.0
+. [3RD] Chipmunk: updated to v5.3.5
 
 version 1.0-rc3 - 31-May-2011
 . [NEW] Actions: Added SkewTo and SkewBy actions

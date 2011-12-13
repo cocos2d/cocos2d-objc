@@ -139,7 +139,7 @@ int ccInflateGZipFile(const char *path, unsigned char **out)
 	}
 	
 	/* 512k initial decompress buffer */
-	unsigned int bufferSize = 512 * 1024;
+	int bufferSize = 512 * 1024;
 	unsigned int totalBufferSize = bufferSize;
 	
 	*out = malloc( bufferSize );
@@ -195,6 +195,7 @@ int ccInflateCCZFile(const char *path, unsigned char **out)
 	NSInteger fileLen  = ccLoadFileIntoMemory( path, &compressed );
 	if( fileLen < 0 ) {
 		CCLOG(@"cocos2d: Error loading CCZ compressed file");
+		return -1;
 	}
 	
 	struct CCZHeader *header = (struct CCZHeader*) compressed;

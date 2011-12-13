@@ -183,7 +183,9 @@ CGFloat	__ccContentScaleFactor = 1;
 	
 	glPopMatrix();
 	
-	[openGLView_ swapBuffers];
+	totalFrames_++;
+
+	[openGLView_ swapBuffers];	
 }
 
 -(void) setProjection:(ccDirectorProjection)projection
@@ -283,7 +285,10 @@ CGFloat	__ccContentScaleFactor = 1;
 		isContentScaleSupported_ = YES;
 	}
 	else
-		CCLOG(@"cocos2d: 'setContentScaleFactor:' is not supported on this device");
+	{
+		CCLOG(@"cocos2d: WARNING: calling setContentScaleFactor on iOS < 4. Using fallback mechanism");		
+		isContentScaleSupported_ = NO;
+	}
 }
 
 -(BOOL) enableRetinaDisplay:(BOOL)enabled

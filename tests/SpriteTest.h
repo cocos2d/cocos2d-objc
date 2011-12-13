@@ -79,6 +79,35 @@
 }
 @end
 
+@interface NodeSort : SpriteDemo
+{
+	CCNode *node;
+	CCSprite *sprite1;
+	CCSprite *sprite2;
+	CCSprite *sprite3;	
+	CCSprite *sprite4;	
+	CCSprite *sprite5;		
+}
+@end
+
+@interface SpriteBatchNodeReorderSameIndex : SpriteDemo
+{
+	CCSpriteBatchNode *batchNode;
+	CCSprite *sprite1;
+	CCSprite *sprite2;
+	CCSprite *sprite3;	
+	CCSprite *sprite4;	
+	CCSprite *sprite5;		
+}
+@end
+
+@interface SpriteBatchNodeReorderOneChild : SpriteDemo
+{
+	CCSpriteBatchNode *batchNode_;
+	CCSprite *reorderSprite_;		
+}
+@end
+
 @interface SpriteBatchNodeReorderIssue767 : SpriteDemo
 {}
 @end
@@ -255,6 +284,10 @@
 @end
 
 @interface AnimationCache : SpriteDemo
+{}
+@end
+
+@interface AnimationCacheFile : SpriteDemo
 {}
 @end
 

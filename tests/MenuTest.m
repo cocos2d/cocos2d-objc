@@ -45,7 +45,10 @@ enum {
 		
 
 		// Font Item
-		CCMenuItem *item4 = [CCMenuItemFont itemFromString: @"I toggle enable items" target: self selector:@selector(menuCallbackEnable:)];
+		CCMenuItemFont *item4 = [CCMenuItemFont itemFromString: @"I toggle enable items" target: self selector:@selector(menuCallbackEnable:)];
+		
+		[item4 setFontSize:20];
+		[item4 setFontName:@"Marker Felt"];
 		
 		// Label Item (CCLabelBMFont)
 		CCLabelBMFont *label = [CCLabelBMFont labelWithString:@"configuration" fntFile:@"bitmapFontTest3.fnt"];
@@ -498,7 +501,12 @@ enum {
 	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
 	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
 	// You can change anytime.
-	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA8888];	
+	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA8888];
+	
+	// When in iPad / RetinaDisplay mode, CCFileUtils will append the "-ipad" / "-hd" to all loaded files
+	// If the -ipad  / -hdfile is not found, it will load the non-suffixed version
+	[CCFileUtils setiPadSuffix:@"-ipad"];			// Default on iPad is "" (empty string)
+	[CCFileUtils setRetinaDisplaySuffix:@"-hd"];	// Default on RetinaDisplay is "-hd"
 
 	CCScene *scene = [CCScene node];
 
@@ -551,7 +559,7 @@ enum {
 
 - (void) dealloc
 {
-	[window dealloc];
+	[window release];
 	[super dealloc];
 }
 @end
