@@ -496,13 +496,15 @@ enum {
 
 
 @implementation ShaderBlur
+
+@synthesize sliderCtl=sliderCtl_;
+
 -(id) init
 {
 	if( (self=[super init] ) ) {
 
 		blurSprite = [SpriteBlur spriteWithFile:@"grossini.png"];
 		CCSprite *sprite = [CCSprite spriteWithFile:@"grossini.png"];
-		
 		
 		CGSize s = [[CCDirector sharedDirector] winSize];
 		[blurSprite setPosition:ccp(s.width/3, s.height/2)];
@@ -511,14 +513,14 @@ enum {
 		[self addChild:blurSprite];	
 		[self addChild:sprite];
 		
-		sliderCtl = [self sliderCtl];
+		self.sliderCtl = [self createSliderCtl];
 		
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 		
 		AppController *app = [[UIApplication sharedApplication] delegate];
 		UIViewController *ctl = [app viewController];
 		
-		[ctl.view addSubview: sliderCtl];
+		[ctl.view addSubview: sliderCtl_];
 		
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 		MacGLView *view = [[CCDirector sharedDirector] openGLView];
@@ -531,7 +533,7 @@ enum {
 			
 			[overlayWindow setFrame:[[view window] frame] display:NO];
 			
-			[[overlayWindow contentView] addSubview:sliderCtl];
+			[[overlayWindow contentView] addSubview:sliderCtl_];
 			[overlayWindow setParentWindow:[view window]];
 			[overlayWindow setOpaque:NO];
 			[overlayWindow makeKeyAndOrderFront:nil];
@@ -540,10 +542,18 @@ enum {
 		}
 		
 		[[view window] addChildWindow:overlayWindow ordered:NSWindowAbove];
+		[overlayWindow release];
 #endif
 	}
 	
 	return self;	
+}
+
+-(void) dealloc
+{
+	[sliderCtl_ removeFromSuperview];
+	self.sliderCtl = nil;
+	[super dealloc];
 }
 
 -(NSString *) title
@@ -553,52 +563,47 @@ enum {
 
 -(NSString *) subtitle
 {
-	return @"Blur";
+	return @"Gaussian blur";
 }
 
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
-- (UISlider *)sliderCtl
+-(UISlider*) createSliderCtl
 {
-    if (sliderCtl == nil) 
-    {
-        CGRect frame = CGRectMake(12.0f, 12.0f, 120.0f, 7.0f);
-        sliderCtl = [[UISlider alloc] initWithFrame:frame];
-        [sliderCtl addTarget:self action:@selector(sliderAction:) forControlEvents:UIControlEventValueChanged];
-        
-        // in case the parent view draws with a custom color or gradient, use a transparent color
-        sliderCtl.backgroundColor = [UIColor clearColor];
-        
-        sliderCtl.minimumValue = 0.0f;
-        sliderCtl.maximumValue = 3.0f;
-        sliderCtl.continuous = YES;
-        sliderCtl.value = 1.0f;		
-    }
-    return [sliderCtl autorelease];
+	CGRect frame = CGRectMake(12.0f, 12.0f, 120.0f, 7.0f);
+	UISlider *slider = [[UISlider alloc] initWithFrame:frame];
+	[slider addTarget:self action:@selector(sliderAction:) forControlEvents:UIControlEventValueChanged];
+	
+	// in case the parent view draws with a custom color or gradient, use a transparent color
+	slider.backgroundColor = [UIColor clearColor];
+	
+	slider.minimumValue = 0.0f;
+	slider.maximumValue = 3.0f;
+	slider.continuous = YES;
+	slider.value = 1.0f;		
+
+	return [slider autorelease];
 }
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
--(NSSlider*) sliderCtl
+-(NSSlider*) createSliderCtl
 {
-	if( sliderCtl == nil )
-	{
-		sliderCtl = [[NSSlider alloc] initWithFrame: NSMakeRect (0, 0, 200, 20)];
-		[sliderCtl setMinValue: 0];
-		[sliderCtl setMaxValue: 3];
-		[sliderCtl setFloatValue: 1];
-		[sliderCtl setAction: @selector (sliderAction:)];
-		[sliderCtl setTarget: self];
-		[sliderCtl setContinuous: YES];
-	}
+	NSSlider *slider = [[NSSlider alloc] initWithFrame: NSMakeRect (0, 0, 200, 20)];
+	[slider setMinValue: 0];
+	[slider setMaxValue: 3];
+	[slider setFloatValue: 1];
+	[slider setAction: @selector (sliderAction:)];
+	[slider setTarget: self];
+	[slider setContinuous: YES];
 	
-	return sliderCtl;
+	return [slider autorelease];
 }
 #endif // Mac
 
 -(void) sliderAction:(id) sender
 {
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
-	[blurSprite setBlurSize: sliderCtl.value];
+	[blurSprite setBlurSize: sliderCtl_.value];
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
-	[blurSprite setBlurSize: [sliderCtl floatValue]];
+	[blurSprite setBlurSize: [sliderCtl_ floatValue]];
 #endif
 }
 
