@@ -244,6 +244,8 @@ static int spriteFrameIndex = 0;
 // CLASS IMPLEMENTATIONS
 @implementation AppController
 
+@synthesize window=window_, viewController=viewController_, navigationController=navigationController_;
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
 	// Init the window
@@ -307,25 +309,42 @@ static int spriteFrameIndex = 0;
 // getting a call, pause the game
 -(void) applicationWillResignActive:(UIApplication *)application
 {
-	[[CCDirector sharedDirector] pause];
+	AppController *app = [[UIApplication sharedApplication] delegate];
+	UINavigationController *nav = [app navigationController];
+	
+	if( [nav visibleViewController] == viewController_ )
+		[[CCDirector sharedDirector] pause];
 }
 
 // call got rejected
 -(void) applicationDidBecomeActive:(UIApplication *)application
 {
-	[[CCDirector sharedDirector] resume];
+	AppController *app = [[UIApplication sharedApplication] delegate];
+	UINavigationController *nav = [app navigationController];	
+	
+	if( [nav visibleViewController] == viewController_ )
+		[[CCDirector sharedDirector] resume];
 }
 
 -(void) applicationDidEnterBackground:(UIApplication*)application
 {
-	[[CCDirector sharedDirector] stopAnimation];
+	AppController *app = [[UIApplication sharedApplication] delegate];
+	UINavigationController *nav = [app navigationController];	
+	
+	if( [nav visibleViewController] == viewController_ )
+		[[CCDirector sharedDirector] stopAnimation];
 }
 
 -(void) applicationWillEnterForeground:(UIApplication*)application
 {
-	[[CCDirector sharedDirector] startAnimation];
+	AppController *app = [[UIApplication sharedApplication] delegate];
+	UINavigationController *nav = [app navigationController];	
+	
+	if( [nav visibleViewController] == viewController_ )
+		[[CCDirector sharedDirector] startAnimation];
 }
 
+// application will be killed
 - (void)applicationWillTerminate:(UIApplication *)application
 {	
 	CCDirector *director = [CCDirector sharedDirector];

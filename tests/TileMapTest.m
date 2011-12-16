@@ -1361,6 +1361,8 @@ Class restartAction()
 
 @implementation AppController
 
+@synthesize window=window_, viewController=viewController_, navigationController=navigationController_;
+
 - (void) applicationDidFinishLaunching:(UIApplication*)application
 {
 	// Init the window
@@ -1390,19 +1392,24 @@ Class restartAction()
 		CCLOG(@"Retina Display Not supported");
 
 	viewController_ = [[RootViewController alloc] initWithNibName:nil bundle:nil];
-
 	[viewController_ setView:glView];
+	
+	navigationController_ = [[UINavigationController alloc] initWithRootViewController:viewController_];
+	navigationController_.navigationBarHidden = YES;
+
+	// glview is a child of the main window
+	[window_ setRootViewController:navigationController_];
+	
+	[navigationController_ release];
+	[viewController_ release];
+	
+	// Make the window visible
+	[window_ makeKeyAndVisible];
 
 	// When in iPad / RetinaDisplay mode, CCFileUtils will append the "-ipad" / "-hd" to all loaded files
 	// If the -ipad  / -hdfile is not found, it will load the non-suffixed version
 	[CCFileUtils setiPadSuffix:@"-ipad"];			// Default on iPad is "" (empty string)
 	[CCFileUtils setRetinaDisplaySuffix:@"-hd"];	// Default on RetinaDisplay is "-hd"
-	
-	// glview is a child of the main window
-	[window_ addSubview:viewController_.view];
-	
-	// Make the window visible
-	[window_ makeKeyAndVisible];
 	
 	CCScene *scene = [CCScene node];
 	[scene addChild: [nextAction() node]];
@@ -1422,25 +1429,42 @@ Class restartAction()
 // getting a call, pause the game
 -(void) applicationWillResignActive:(UIApplication *)application
 {
-	[[CCDirector sharedDirector] pause];
+	AppController *app = [[UIApplication sharedApplication] delegate];
+	UINavigationController *nav = [app navigationController];
+	
+	if( [nav visibleViewController] == viewController_ )
+		[[CCDirector sharedDirector] pause];
 }
 
 // call got rejected
 -(void) applicationDidBecomeActive:(UIApplication *)application
 {
-	[[CCDirector sharedDirector] resume];
+	AppController *app = [[UIApplication sharedApplication] delegate];
+	UINavigationController *nav = [app navigationController];	
+	
+	if( [nav visibleViewController] == viewController_ )
+		[[CCDirector sharedDirector] resume];
 }
 
 -(void) applicationDidEnterBackground:(UIApplication*)application
 {
-	[[CCDirector sharedDirector] stopAnimation];
+	AppController *app = [[UIApplication sharedApplication] delegate];
+	UINavigationController *nav = [app navigationController];	
+	
+	if( [nav visibleViewController] == viewController_ )
+		[[CCDirector sharedDirector] stopAnimation];
 }
 
 -(void) applicationWillEnterForeground:(UIApplication*)application
 {
-	[[CCDirector sharedDirector] startAnimation];
+	AppController *app = [[UIApplication sharedApplication] delegate];
+	UINavigationController *nav = [app navigationController];	
+	
+	if( [nav visibleViewController] == viewController_ )
+		[[CCDirector sharedDirector] startAnimation];
 }
 
+// application will be killed
 - (void)applicationWillTerminate:(UIApplication *)application
 {	
 	CCDirector *director = [CCDirector sharedDirector];
@@ -1462,7 +1486,6 @@ Class restartAction()
 
 - (void) dealloc
 {
-	[viewController_ release];
 	[window_ release];
 	[super dealloc];
 }
