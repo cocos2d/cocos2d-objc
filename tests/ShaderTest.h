@@ -70,17 +70,22 @@
 	SpriteBlur *blurSprite;
 
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
-	UISlider	*sliderCtl;
+	UISlider	*sliderCtl_;
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
-	NSSlider	*sliderCtl;
+	NSSlider	*sliderCtl_;
 	NSWindow	*overlayWindow;
 #endif
 }
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+@property(nonatomic, retain) UISlider *sliderCtl;
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+@property(nonatomic, retain) NSSlider *sliderCtl;
+#endif
 
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
-- (UISlider *)sliderCtl;
+-(UISlider*) createSliderCtl;
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
--(NSSlider*) sliderCtl;
+-(NSSlider*) createSliderCtl;
 #endif
 
 @end
