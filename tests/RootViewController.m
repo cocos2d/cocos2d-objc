@@ -61,6 +61,34 @@
 	return YES;
 }
 
+-(void) viewWillAppear:(BOOL)animated
+{
+	[super viewWillAppear:animated];
+//	[[CCDirector sharedDirector] startAnimation];
+}
+
+-(void) viewDidAppear:(BOOL)animated
+{
+	[super viewDidAppear:animated];
+	[[CCDirector sharedDirector] startAnimation];
+}
+
+-(void) viewWillDisappear:(BOOL)animated
+{
+	NSLog(@"viewWillDisappear");
+//	[[CCDirector sharedDirector] stopAnimation];
+	
+	[super viewWillDisappear:animated];
+}
+
+-(void) viewDidDisappear:(BOOL)animated
+{
+	NSLog(@"viewDidDisappear");
+	[[CCDirector sharedDirector] stopAnimation];
+	
+	[super viewDidDisappear:animated];
+}
+
 //
 // Device will be rotated
 //
