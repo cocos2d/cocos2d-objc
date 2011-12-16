@@ -18,6 +18,9 @@ Lead Developers:
 
 Contributors (alphabetically ordered):
 
+* Christoph Winkler (http://raketenbasis.de)
+	Word Wrap works on LabelTTF on Mac
+	
 * Jerrod Putman (http://www.tinytimgames.com)
 	Original author of ARC compatibility code
 	
