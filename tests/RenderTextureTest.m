@@ -585,7 +585,7 @@ Class restartAction()
 	CCScene *scene = [CCScene node];
 	[scene addChild: [nextAction() node]];
 	
-	[director runWithScene: scene];
+	[director pushScene:scene];
 }
 
 // getting a call, pause the game
