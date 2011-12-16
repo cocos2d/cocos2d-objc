@@ -117,6 +117,8 @@ CGFloat	__ccContentScaleFactor = 1;
 	/* calculate "global" dt */
 	[self calculateDeltaTime];
 	
+	[EAGLContext setCurrentContext: [openGLView_ context]];
+	
 	/* tick before glClear: issue #533 */
 	if( ! isPaused_ )
 		[[CCScheduler sharedScheduler] tick: dt];	
@@ -145,6 +147,8 @@ CGFloat	__ccContentScaleFactor = 1;
 	
 	if( displayStats_ == kCCDirectorStatsMPF )
 		[self calculateMPF];
+	
+//	[EAGLContext setCurrentContext: nil];
 }
 
 -(void) setProjection:(ccDirectorProjection)projection
@@ -304,7 +308,7 @@ CGFloat	__ccContentScaleFactor = 1;
 	[self setProjection:projection_];
 }
 
-#pragma mark Director Scene Landscape
+#pragma mark Director Point Convertion
 
 -(CGPoint)convertToGL:(CGPoint)uiPoint
 {
@@ -321,7 +325,6 @@ CGFloat	__ccContentScaleFactor = 1;
 	
 	return ccp(glPoint.x, oppositeY);
 }
-
 
 -(void) end
 {
@@ -353,9 +356,7 @@ CGFloat	__ccContentScaleFactor = 1;
 {
 	NSAssert( displayLink == nil, @"displayLink must be nil. Calling startAnimation twice?");
 
-	if ( gettimeofday( &lastUpdate_, NULL) != 0 ) {
-		CCLOG(@"cocos2d: DisplayLinkDirector: Error on gettimeofday");
-	}
+	gettimeofday( &lastUpdate_, NULL);
 	
 	// approximate frame rate
 	// assumes device refreshes at 60 fps
@@ -365,7 +366,18 @@ CGFloat	__ccContentScaleFactor = 1;
 
 	displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(mainLoop:)];
 	[displayLink setFrameInterval:frameInterval];
+
+#if CC_DIRECTOR_IOS_USE_BACKGROUND_THREAD
+	//
+	runningThread_ = [[NSThread alloc] initWithTarget:self selector:@selector(threadMainLoop) object:nil];
+	[runningThread_ start];	
+	
+#else
+	// setup DisplayLink in main thread
 	[displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];	
+#endif
+	
+
 }
 
 -(void) mainLoop:(id)sender
@@ -375,9 +387,35 @@ CGFloat	__ccContentScaleFactor = 1;
 
 - (void) stopAnimation
 {
+#if CC_DIRECTOR_IOS_USE_BACKGROUND_THREAD
+	[runningThread_ cancel];
+	[runningThread_ release];
+	runningThread_ = nil;
+#endif
+
 	[displayLink invalidate];
 	displayLink = nil;
 }
+
+#pragma mark Director Thread
+
+//
+// Director has its own thread
+//
+-(void) threadMainLoop
+{
+
+	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+
+	[displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];	
+
+	// start the run loop
+	[[NSRunLoop currentRunLoop] run];	
+
+	[pool release];
+}
+
+
 
 -(void) dealloc
 {
