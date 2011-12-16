@@ -1,6 +1,8 @@
 version 2.0-beta2 XX-Dec-2011
+. [NEW] Template: RootViewController viewDidAppear / viewDidDissapear will run/pause the director
+. [NEW] Template: AppController rootViewController is a UINavigationController
 . [FIX] EaseActions: EaseIn/EaseOut actions support float arguments
-. [FIX] Test: ShaderTest works (issue #1283)
+. [FIX] Test: ShaderTest works (issue #1285)
 . [FIX] Texture2D: Uses CGImageRef instead of UIKit for iOS API
 
 version 2.0-beta 27-Nov-2011
