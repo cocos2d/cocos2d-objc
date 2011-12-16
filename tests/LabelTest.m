@@ -1363,9 +1363,13 @@ static float menuItemPaddingCenter = 50;
 											 lineBreakMode:CCLineBreakModeWordWrap
 												  fontName:@"Marker Felt"
 												  fontSize:16];
-		wordwrap.position = ccp(s.width/2,80);
+		wordwrap.position = ccp(s.width/2,60);
 		
 		[self addChild:wordwrap];
+		
+		CCLabelTTF *label = [CCLabelTTF labelWithString: @"A really long line of text that is longer than the width of the label" dimensions:CGSizeMake(280, 60) alignment:CCTextAlignmentCenter fontName: @"Impact" fontSize: 14];
+		label.position = ccp(s.width/2,90);
+		[self addChild:label];
 
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 		
