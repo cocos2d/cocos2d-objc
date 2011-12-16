@@ -569,7 +569,7 @@ enum {
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 -(UISlider*) createSliderCtl
 {
-	CGRect frame = CGRectMake(12.0f, 12.0f, 120.0f, 7.0f);
+	CGRect frame = CGRectMake(40.0f, 110.0f, 240.0f, 7.0f);
 	UISlider *slider = [[UISlider alloc] initWithFrame:frame];
 	[slider addTarget:self action:@selector(sliderAction:) forControlEvents:UIControlEventValueChanged];
 	
@@ -586,7 +586,7 @@ enum {
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 -(NSSlider*) createSliderCtl
 {
-	NSSlider *slider = [[NSSlider alloc] initWithFrame: NSMakeRect (0, 0, 200, 20)];
+	NSSlider *slider = [[NSSlider alloc] initWithFrame: NSMakeRect(200, 350, 240, 20)];
 	[slider setMinValue: 0];
 	[slider setMaxValue: 3];
 	[slider setFloatValue: 1];
