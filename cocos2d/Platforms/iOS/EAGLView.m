@@ -205,7 +205,6 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 {
 	CCLOGINFO(@"cocos2d: deallocing %@", self);
 
-
 	[renderer_ release];
 	[super dealloc];
 }
