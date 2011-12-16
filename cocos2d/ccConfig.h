@@ -93,6 +93,18 @@
 #define CC_DIRECTOR_FPS_POSITION ccp(0,0)
 #endif
 
+/** @def CC_DIRECTOR_IOS_USE_BACKGROUND_THREAD
+ If enabled, cocos2d-ios will run on a background thread. If disabled cocos2d-ios will run the main thread.
+ 
+ To enable set it to a 1, to disable it set to 0. Enabled by default.
+ 
+ Only valid for cocos2d-ios. Not supported on cocos2d-mac.
+ 
+ */
+#ifndef CC_DIRECTOR_IOS_USE_BACKGROUND_THREAD
+#define CC_DIRECTOR_IOS_USE_BACKGROUND_THREAD 0
+#endif
+
 /** @def CC_DIRECTOR_MAC_USE_DISPLAY_LINK_THREAD
  If enabled, cocos2d-mac will run on the Display Link thread. If disabled cocos2d-mac will run in its own thread.
  
