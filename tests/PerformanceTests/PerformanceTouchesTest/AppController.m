@@ -44,7 +44,7 @@
 	CCScene *scene = [CCScene node];
 	[scene addChild: [nextAction() node]];
 	
-	[director runWithScene:scene];
+	[director pushScene:scene];
 }
 
 - (void)dealloc {

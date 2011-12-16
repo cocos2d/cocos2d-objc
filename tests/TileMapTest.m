@@ -1416,7 +1416,7 @@ Class restartAction()
 	//
 	// Finally, run the scene
 	//
-	[director runWithScene: scene];
+	[director pushScene: scene];
 }
 
 // getting a call, pause the game

@@ -56,7 +56,7 @@
 	[window makeKeyAndVisible];
 
     self.loadingScene = [[[LoadingScene alloc] init] autorelease];		
-	[director runWithScene: _loadingScene];
+	[director pushScene: _loadingScene];
 }
 
 - (void)loadScenes {

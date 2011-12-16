@@ -1644,6 +1644,8 @@ Class restartAction()
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 @implementation AppController
 
+@synthesize window=window_, viewController=viewController_, navigationController=navigationController_;
+
 - (void) applicationDidFinishLaunching:(UIApplication*)application
 {
 	// CC_DIRECTOR_INIT()
@@ -1684,7 +1686,7 @@ Class restartAction()
 	CCScene *scene = [CCScene node];
 	[scene addChild: [nextAction() node]];
 	
-	[director runWithScene: scene];
+	[director pushScene: scene];
 }
 
 - (void) dealloc

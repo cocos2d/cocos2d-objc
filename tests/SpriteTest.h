@@ -2,11 +2,17 @@
 
 //CLASS INTERFACE
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+//CLASS INTERFACE
 @interface AppController : NSObject <UIApplicationDelegate>
 {
 	UIWindow *window_;
-	UIViewController *viewController_;
+	
+	UIViewController *viewController_;		// weak ref
+	UINavigationController *navigationController_;	// weak ref
 }
+@property (nonatomic, retain) UIWindow *window;
+@property (readonly) UIViewController *viewController;
+@property (readonly) UINavigationController *navigationController;
 @end
 
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)

@@ -4357,6 +4357,8 @@ Class restartAction()
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 @implementation AppController
 
+@synthesize window=window_, viewController=viewController_, navigationController=navigationController_;
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
 	// Init the window
@@ -4397,9 +4399,15 @@ Class restartAction()
 	
 	// make the OpenGLView a child of the view controller
 	[viewController_ setView:glView];
-
-	// make the OpenGLView a child of the main window
-	[window_ addSubview:viewController_.view];
+	
+	navigationController_ = [[UINavigationController alloc] initWithRootViewController:viewController_];
+	navigationController_.navigationBarHidden = YES;
+	
+	// set the Navigation Controller as the root view controller
+	[window_ setRootViewController:navigationController_];
+	
+	[viewController_ release];
+	[navigationController_ release];
 	
 	// make main window visible
 	[window_ makeKeyAndVisible];	
@@ -4431,23 +4439,39 @@ Class restartAction()
 // getting a call, pause the game
 -(void) applicationWillResignActive:(UIApplication *)application
 {
-	[[CCDirector sharedDirector] pause];
+	AppController *app = [[UIApplication sharedApplication] delegate];
+	UINavigationController *nav = [app navigationController];
+	
+	if( [nav visibleViewController] == viewController_ )
+		[[CCDirector sharedDirector] pause];
 }
 
 // call got rejected
 -(void) applicationDidBecomeActive:(UIApplication *)application
 {
-	[[CCDirector sharedDirector] resume];
+	AppController *app = [[UIApplication sharedApplication] delegate];
+	UINavigationController *nav = [app navigationController];	
+	
+	if( [nav visibleViewController] == viewController_ )
+		[[CCDirector sharedDirector] resume];
 }
 
 -(void) applicationDidEnterBackground:(UIApplication*)application
 {
-	[[CCDirector sharedDirector] stopAnimation];
+	AppController *app = [[UIApplication sharedApplication] delegate];
+	UINavigationController *nav = [app navigationController];	
+	
+	if( [nav visibleViewController] == viewController_ )
+		[[CCDirector sharedDirector] stopAnimation];
 }
 
 -(void) applicationWillEnterForeground:(UIApplication*)application
 {
-	[[CCDirector sharedDirector] startAnimation];
+	AppController *app = [[UIApplication sharedApplication] delegate];
+	UINavigationController *nav = [app navigationController];	
+	
+	if( [nav visibleViewController] == viewController_ )
+		[[CCDirector sharedDirector] startAnimation];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
@@ -4471,7 +4495,6 @@ Class restartAction()
 
 - (void) dealloc
 {
-	[viewController_ release];
 	[window_ release];
 	[super dealloc];
 }

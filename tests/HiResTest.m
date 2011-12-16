@@ -273,7 +273,7 @@ Class restartAction()
 	
 	
 	// and run it!
-	[director runWithScene: scene];
+	[director pushScene: scene];
 	
 	return YES;
 }

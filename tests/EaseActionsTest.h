@@ -7,11 +7,14 @@
 @interface AppController : NSObject <UIApplicationDelegate>
 {
 	UIWindow *window_;
-	UIViewController *viewController_;
+	
+	UIViewController *viewController_;				// weak ref
+	UINavigationController *navigationController_;	// weak ref
 }
 
 @property (nonatomic, retain) UIWindow *window;
-@property (nonatomic, retain) UIViewController *viewController;
+@property (readonly) UIViewController *viewController;
+@property (readonly) UINavigationController *navigationController;
 
 @end
 

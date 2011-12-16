@@ -20,7 +20,8 @@
 
 @implementation Box2DAppDelegate
 
-@synthesize window;
+@synthesize window=window_, viewController=viewController_, navigationController=navigationController_;
+
 
 - (void)applicationDidFinishLaunching:(UIApplication *)application
 {
@@ -57,7 +58,7 @@
 	CCScene *scene = [CCScene node];
 	[scene addChild: [MenuLayer menuWithEntryID:0]];
 	
-	[director runWithScene: scene];
+	[director pushScene: scene];
 }
 
 // getting a call, pause the game

@@ -278,6 +278,8 @@ void removeShape( cpBody *body, cpShape *shape, void *data )
 // CLASS IMPLEMENTATIONS
 @implementation AppController
 
+@synthesize window=window_, viewController=viewController_, navigationController=navigationController_;
+
 - (void) applicationDidFinishLaunching:(UIApplication*)application
 {
 	// CC_DIRECTOR_INIT()
@@ -327,7 +329,7 @@ void removeShape( cpBody *body, cpShape *shape, void *data )
 	CCScene *scene = [CCScene node];
 	[scene addChild: [MainLayer node] ];
 	
-	[director runWithScene:scene];
+	[director pushScene:scene];
 }
 
 - (void) dealloc

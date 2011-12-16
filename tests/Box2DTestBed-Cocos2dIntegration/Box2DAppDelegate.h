@@ -14,10 +14,16 @@
 
 @class Box2DView;
 
-@interface Box2DAppDelegate : NSObject <UIApplicationDelegate> {
-	UIWindow	*window_;
-	UIViewController *viewController_;
+@interface Box2DAppDelegate : NSObject <UIApplicationDelegate>
+{
+	UIWindow *window_;
+	
+	UIViewController *viewController_;				// weak ref
+	UINavigationController *navigationController_;	// weak ref
 }
 
-@end
+@property (nonatomic, retain) UIWindow *window;
+@property (readonly) UIViewController *viewController;
+@property (readonly) UINavigationController *navigationController;
 
+@end

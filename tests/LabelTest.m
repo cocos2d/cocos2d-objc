@@ -1488,7 +1488,7 @@ static float menuItemPaddingCenter = 50;
 	
 	
 	// and run it!
-	[director runWithScene: scene];
+	[director pushScene: scene];
 	
 	return YES;
 }
