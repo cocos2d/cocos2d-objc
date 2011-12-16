@@ -15,7 +15,7 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "506143F10E589A2E003CCDB7"
                BuildableName = "cocosnodeTest.app"
-               BlueprintName = "cocosnodeTest"
+               BlueprintName = "NodeTest"
                ReferencedContainer = "container:cocos2d-ios.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -33,7 +33,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "506143F10E589A2E003CCDB7"
             BuildableName = "cocosnodeTest.app"
-            BlueprintName = "cocosnodeTest"
+            BlueprintName = "NodeTest"
             ReferencedContainer = "container:cocos2d-ios.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -51,7 +51,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "506143F10E589A2E003CCDB7"
             BuildableName = "cocosnodeTest.app"
-            BlueprintName = "cocosnodeTest"
+            BlueprintName = "NodeTest"
             ReferencedContainer = "container:cocos2d-ios.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -69,7 +69,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "506143F10E589A2E003CCDB7"
             BuildableName = "cocosnodeTest.app"
-            BlueprintName = "cocosnodeTest"
+            BlueprintName = "NodeTest"
             ReferencedContainer = "container:cocos2d-ios.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
