@@ -9,6 +9,8 @@
 
 @implementation AppController
 
+@synthesize window=window_, viewController=viewController_, navigationController=navigationController_;
+
 - (void)applicationDidFinishLaunching:(UIApplication *)application
 {
 	// CC_DIRECTOR_INIT()
@@ -41,7 +43,7 @@
 		CCLOG(@"Retina Display Not supported");
 	
 //	[[CCTouchDispatcher sharedDispatcher] link];
-	[director runWithScene:[PongScene node]];
+	[director pushScene:[PongScene node]];
 }
 
 -(void)dealloc

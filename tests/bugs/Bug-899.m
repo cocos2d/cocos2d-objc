@@ -71,7 +71,7 @@
 	CCLayer *layer = [Layer1 node];
 	[scene addChild:layer];
 	
-	[director runWithScene:scene];
+	[director pushScene:scene];
 }
 
 // getting a call, pause the game

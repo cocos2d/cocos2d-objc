@@ -490,7 +490,7 @@ Class restartTransition()
 	CCScene *scene = [CCScene node];
 	[scene addChild: [TextLayer node]];
 	
-	[director runWithScene: scene];
+	[director pushScene: scene];
 }
 
 // getting a call, pause the game

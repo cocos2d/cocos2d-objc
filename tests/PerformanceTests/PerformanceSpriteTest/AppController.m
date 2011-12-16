@@ -68,7 +68,7 @@
 	CCScene *scene = [CCScene node];
 	[scene addChild: [nextAction() testWithSubTest:1 nodes:50]];
 	
-	[director runWithScene:scene];
+	[director pushScene:scene];
 		
 	return YES;
 }

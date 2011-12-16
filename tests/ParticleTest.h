@@ -7,11 +7,17 @@
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 @interface AppController : NSObject <UIApplicationDelegate>
 {
-	UIWindow	*window_;
-	UIViewController *viewController_;
+	UIWindow *window_;
+	
+	UIViewController *viewController_;				// weak ref
+	UINavigationController *navigationController_;	// weak ref
 }
-@end
 
+@property (nonatomic, retain) UIWindow *window;
+@property (readonly) UIViewController *viewController;
+@property (readonly) UINavigationController *navigationController;
+
+@end
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 @interface cocos2dmacAppDelegate : NSObject <NSApplicationDelegate>
 {

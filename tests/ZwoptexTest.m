@@ -299,7 +299,7 @@ static int spriteFrameIndex = 0;
 	
 	
 	// and run it!
-	[director runWithScene: scene];
+	[director pushScene: scene];
 	
 	return YES;
 }

@@ -28,6 +28,8 @@
 // CLASS IMPLEMENTATIONS
 @implementation AppController
 
+@synthesize window=window_, viewController=viewController_, navigationController=navigationController_;
+
 - (void) applicationDidFinishLaunching:(UIApplication*)application
 {
 	// CC_DIRECTOR_INIT()
@@ -61,7 +63,7 @@
 //	CC_DISABLE_DEFAULT_GL_STATES();
 //	[[[CCDirector sharedDirector] openGLView] swapBuffers];
 	
-	[director runWithScene: scene];
+	[director pushScene: scene];
 }
 
 // getting a call, pause the game

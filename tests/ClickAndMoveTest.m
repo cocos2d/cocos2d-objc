@@ -73,6 +73,8 @@ enum
 // CLASS IMPLEMENTATIONS
 @implementation AppController
 
+@synthesize window=window_, viewController=viewController_, navigationController=navigationController_;
+
 - (void) applicationDidFinishLaunching:(UIApplication*)application
 {
 	
@@ -125,7 +127,7 @@ enum
 	MainLayer * mainLayer =[MainLayer node];	
 	[scene addChild: mainLayer z:2];
 	
-	[director runWithScene: scene];
+	[director pushScene: scene];
 }
 
 // getting a call, pause the game

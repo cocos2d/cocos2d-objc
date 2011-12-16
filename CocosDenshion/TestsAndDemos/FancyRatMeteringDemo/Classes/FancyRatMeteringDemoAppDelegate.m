@@ -42,7 +42,7 @@
 	[window makeKeyAndVisible];
 	
 		
-	[director runWithScene: [HelloWorld scene]];
+	[director pushScene: [HelloWorld scene]];
 }
 
 

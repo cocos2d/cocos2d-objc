@@ -129,7 +129,7 @@ enum {
 		id node = [LayerExample node];
 		[scene addChild: node];
 		
-		[director runWithScene:scene];
+		[director pushScene:scene];
 		
 		state = kStateRun;
 	}

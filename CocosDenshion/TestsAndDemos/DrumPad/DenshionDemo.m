@@ -514,7 +514,7 @@ CDSoundSource *toneSource;
 	CCScene *scene = [CCScene node];
 	[scene addChild: [DenshionLayer node]];
 	
-	[director runWithScene: scene];
+	[director pushScene: scene];
 }
 
 // getting a call, pause the game

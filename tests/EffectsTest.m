@@ -495,7 +495,7 @@ Class restartAction()
 	CCScene *scene = [CCScene node];
 	[scene addChild: [TextLayer node] z:0 tag:kTagTextLayer];
 	
-	[director runWithScene: scene];	
+	[director pushScene: scene];	
 }
 
 - (void) dealloc

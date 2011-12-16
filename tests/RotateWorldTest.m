@@ -149,7 +149,7 @@
 // CLASS IMPLEMENTATIONS
 @implementation AppController
 
-@synthesize window;
+@synthesize window=window_, viewController=viewController_, navigationController=navigationController_;
 
 - (void) applicationDidFinishLaunching:(UIApplication*)application
 {
@@ -196,7 +196,7 @@
 	
 	[scene runAction: [CCRotateBy actionWithDuration: 4 angle:-360]];
 	
-	[director runWithScene: scene];
+	[director pushScene: scene];
 }
 
 // getting a call, pause the game

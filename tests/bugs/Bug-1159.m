@@ -101,7 +101,7 @@
 	// You can change anytime.
 	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA8888];
 	
-	[director runWithScene:[Bug1159 scene] ];
+	[director pushScene:[Bug1159 scene] ];
 }
 
 // getting a call, pause the game

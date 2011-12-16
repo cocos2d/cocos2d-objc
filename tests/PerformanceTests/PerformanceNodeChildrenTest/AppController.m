@@ -43,7 +43,7 @@
 	[scene addChild: [nextAction() testWithQuantityOfNodes:kNodesIncrease]];
 	
 	[[CCScheduler sharedScheduler] scheduleSelector:@selector(dumpProfilerInfo:) forTarget:self interval:2 paused:NO];
-	[director runWithScene:scene];
+	[director pushScene:scene];
 }
 
 -(void) dumpProfilerInfo:(ccTime)dt

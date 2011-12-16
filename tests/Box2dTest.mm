@@ -322,6 +322,8 @@ enum {
 // CLASS IMPLEMENTATIONS
 @implementation AppController
 
+@synthesize window=window_, viewController=viewController_, navigationController=navigationController_;
+
 - (void) applicationDidFinishLaunching:(UIApplication*)application
 {
 	// CC_DIRECTOR_INIT()
@@ -375,7 +377,7 @@ enum {
 	id box2dLayer = [MainLayer node];
 	[scene addChild:box2dLayer z:0];
 
-	[director runWithScene: scene];
+	[director pushScene: scene];
 }
 
 - (void) dealloc

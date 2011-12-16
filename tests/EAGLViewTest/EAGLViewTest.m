@@ -74,7 +74,7 @@
 	CCScene *scene = [CCScene node];
 	[scene addChild: [LayerExample node]];
 	
-	[director runWithScene:scene];
+	[director pushScene:scene];
 	
 	return YES;
 }

@@ -71,6 +71,7 @@ NSString* restartAction()
 		CCMenuItemImage *item1 = [CCMenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
 		CCMenuItemImage *item2 = [CCMenuItemImage itemFromNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
 		CCMenuItemImage *item3 = [CCMenuItemImage itemFromNormalImage:@"f1.png" selectedImage:@"f2.png" target:self selector:@selector(nextCallback:)];
+
 		CCMenu *menu = [CCMenu menuWithItems:item1, item2, item3, nil];
 		menu.position = CGPointZero;
 		item1.position = ccp(size.width/2-100,30);
@@ -138,6 +139,8 @@ NSString* restartAction()
 // CLASS IMPLEMENTATIONS
 @implementation AppController
 
+@synthesize window=window_, viewController=viewController_, navigationController=navigationController_;
+
 - (void) applicationDidFinishLaunching:(UIApplication*)application
 {
 	// CC_DIRECTOR_INIT()
@@ -178,7 +181,7 @@ NSString* restartAction()
 	CCScene *scene = [CCScene node];
 	[scene addChild: [FontTest node]];
 	
-	[director runWithScene: scene];
+	[director pushScene: scene];
 }
 
 - (void) dealloc

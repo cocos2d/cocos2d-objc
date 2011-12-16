@@ -48,7 +48,7 @@
 	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA8888];
 	
 	
-	[director runWithScene: [HelloWorld scene]];
+	[director pushScene: [HelloWorld scene]];
 }
 
 

@@ -472,6 +472,9 @@ enum {
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 
 @implementation AppController
+
+@synthesize window=window_, viewController=viewController_, navigationController=navigationController_;
+
 - (void) applicationDidFinishLaunching:(UIApplication*)application
 {
 	// CC_DIRECTOR_INIT()
@@ -514,7 +517,7 @@ enum {
 	CCLayerMultiplex *layer = [CCLayerMultiplex layerWithLayers: [Layer1 node], [Layer2 node], [Layer3 node], [Layer4 node], nil];
 	[scene addChild: layer z:0];
 
-	[director runWithScene: scene];
+	[director pushScene: scene];
 }
 
 // getting a call, pause the game

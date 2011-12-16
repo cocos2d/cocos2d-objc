@@ -106,6 +106,7 @@ default gl blend src function. Compatible with premultiplied alpha images.
 	- The EAGLView view will have multiple touches disabled.
 	- It will create a UIWindow and it will assign it the 'window_' ivar. 'window_' must be declared before calling this marcro.
 	- It will create a RootViewController and it will assign it the 'viewController_' ivar. 'viewController_' must be declared before using this macro. The file "RootViewController.h" should be imported
+	- It will create a UINavigationController and it will assign it the 'navigationController_' ivar. 'navigationController_' must be declared before using this macro.
 	- It will connect the EAGLView to the UIViewController view.
 	- It will connect the UIViewController view to the UIWindow.
 	- It will try to run at 60 FPS.
@@ -139,7 +140,11 @@ do	{																							\
 	viewController_ = [[RootViewController alloc] initWithNibName:nil bundle:nil];				\
 	viewController_.wantsFullScreenLayout = YES;												\
 	[viewController_ setView:__glView];															\
-	[window_ addSubview:viewController_.view];													\
+	navigationController_ = [[UINavigationController alloc] initWithRootViewController:viewController_];	\
+	navigationController_.navigationBarHidden = YES;											\
+	[window_ setRootViewController:navigationController_];										\
+	[navigationController_ release];															\
+	[viewController_ release];																	\
 	[window_ makeKeyAndVisible];																\
 } while(0)
 

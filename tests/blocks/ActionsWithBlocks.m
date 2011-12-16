@@ -167,7 +167,7 @@
 	[scene addChild:layer];
 	
 	// Run!
-	[director runWithScene: scene];
+	[director pushScene: scene];
 }
 
 - (void) dealloc
