@@ -31,9 +31,15 @@ typedef enum {
 
 @interface AppController : NSObject <UIApplicationDelegate>
 {
-	UIWindow *window_;
-	UIViewController *viewController_;
+	UIWindow *window_;	
+	UIViewController *viewController_;		// weak ref
+	UINavigationController *navigationController_;	// weak ref
 }
+
+@property (nonatomic, retain) UIWindow *window;
+@property (readonly) UIViewController *viewController;
+@property (readonly) UINavigationController *navigationController;
+
 -(void) setUpAudioManager:(NSObject*) data;
 @end
 

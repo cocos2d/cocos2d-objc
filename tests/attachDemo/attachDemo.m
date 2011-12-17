@@ -129,7 +129,7 @@ enum {
 		id node = [LayerExample node];
 		[scene addChild: node];
 		
-		[director pushScene:scene];
+		[director runWithScene:scene];
 		
 		state = kStateRun;
 	}
@@ -222,7 +222,7 @@ enum {
 #pragma mark -
 #pragma mark Application Delegate
 
--(void) applicationDidFinishLaunching:(UIApplication*)application
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {	
 	CCDirector *director = [CCDirector sharedDirector];
 	[director setDisplayStats:kCCDirectorStatsFPS];
@@ -236,6 +236,8 @@ enum {
 	state = kStateEnd;
 
 	[self runCocos2d];
+	
+	return YES;
 }
 
 // purge memroy

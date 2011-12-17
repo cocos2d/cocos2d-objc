@@ -13,7 +13,9 @@
 
 @implementation FadeToGreyAppDelegate
 
-- (void) applicationDidFinishLaunching:(UIApplication*)application
+@synthesize window=window_, viewController=viewController_, navigationController=navigationController_;
+
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
 	// Init the window
 	window_ = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
@@ -34,10 +36,21 @@
 	// connect it to the director
 	[director setOpenGLView:glView];
 	
-	viewController_ = [[RootViewController alloc] init];
+	// Init the View Controller
+	viewController_ = [[RootViewController alloc] initWithNibName:nil bundle:nil];
+	viewController_.wantsFullScreenLayout = YES;
+	
+	// make the OpenGLView a child of the view controller
 	[viewController_ setView:glView];
 	
-	[window_ addSubview:viewController_.view];
+	navigationController_ = [[UINavigationController alloc] initWithRootViewController:viewController_];
+	navigationController_.navigationBarHidden = YES;
+	
+	// set the Navigation Controller as the root view controller
+	[window_ setRootViewController:navigationController_];
+	
+	[viewController_ release];
+	[navigationController_ release];
 	
 	// Make the window visible
 	[window_ makeKeyAndVisible];
@@ -49,33 +62,58 @@
 	
 	
 	[director pushScene: [HelloWorld scene]];
+	
+	return YES;
 }
 
 
-- (void) applicationDidEnterBackground:(UIApplication *)application
+// getting a call, pause the game
+-(void) applicationWillResignActive:(UIApplication *)application
 {
-	[[CCDirector sharedDirector] stopAnimation];
-	[[CCDirector sharedDirector] pause];
-}
-- (void)applicationWillResignActive:(UIApplication *)application
-{
-	[[CCDirector sharedDirector] stopAnimation];
-	[[CCDirector sharedDirector] pause];
+	FadeToGreyAppDelegate *app = [[UIApplication sharedApplication] delegate];
+	UINavigationController *nav = [app navigationController];
+	
+	if( [nav visibleViewController] == viewController_ )
+		[[CCDirector sharedDirector] pause];
 }
 
-- (void)applicationDidBecomeActive:(UIApplication *)application
+// call got rejected
+-(void) applicationDidBecomeActive:(UIApplication *)application
 {
-	[[CCDirector sharedDirector] stopAnimation]; // call this to make sure you don't start a second display link!
-	[[CCDirector sharedDirector] resume];
-	[[CCDirector sharedDirector] startAnimation];
+	FadeToGreyAppDelegate *app = [[UIApplication sharedApplication] delegate];
+	UINavigationController *nav = [app navigationController];	
+	
+	if( [nav visibleViewController] == viewController_ )
+		[[CCDirector sharedDirector] resume];
+}
+
+-(void) applicationDidEnterBackground:(UIApplication*)application
+{
+	FadeToGreyAppDelegate *app = [[UIApplication sharedApplication] delegate];
+	UINavigationController *nav = [app navigationController];	
+	
+	if( [nav visibleViewController] == viewController_ )
+		[[CCDirector sharedDirector] stopAnimation];
+}
+
+-(void) applicationWillEnterForeground:(UIApplication*)application
+{
+	FadeToGreyAppDelegate *app = [[UIApplication sharedApplication] delegate];
+	UINavigationController *nav = [app navigationController];	
+	
+	if( [nav visibleViewController] == viewController_ )
+		[[CCDirector sharedDirector] startAnimation];
+}
+
+- (void)applicationWillTerminate:(UIApplication *)application
+{	
+	CCDirector *director = [CCDirector sharedDirector];
+	[[director openGLView] removeFromSuperview];
+	[director end];
 }
 
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {
 	[[CCTextureCache sharedTextureCache] removeUnusedTextures];
-}
-
-- (void)applicationWillTerminate:(UIApplication *)application {
-	[[CCDirector sharedDirector] end];
 }
 
 - (void)applicationSignificantTimeChange:(UIApplication *)application {

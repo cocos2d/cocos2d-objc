@@ -469,6 +469,8 @@ CDSoundSource *toneSource;
 // CLASS IMPLEMENTATIONS
 @implementation AppController
 
+@synthesize window=window_, viewController=viewController_, navigationController=navigationController_;
+
 -(void) setUpAudioManager:(NSObject*) data {
 	
 	//Set up mixer rate for sound engine before CDAudioManager is initialised
@@ -479,7 +481,7 @@ CDSoundSource *toneSource;
 }
 
 
-- (void) applicationDidFinishLaunching:(UIApplication*)application
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
 	// Init the window
 	window_ = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
@@ -503,7 +505,14 @@ CDSoundSource *toneSource;
 	viewController_ = [[RootViewController alloc] init];
 	[viewController_ setView:glView];
 
-	[window_ addSubview:viewController_.view];
+	navigationController_ = [[UINavigationController alloc] initWithRootViewController:viewController_];
+	navigationController_.navigationBarHidden = YES;
+	
+	// set the Navigation Controller as the root view controller
+	[window_ setRootViewController:navigationController_];
+	
+	[viewController_ release];
+	[navigationController_ release];
 	
 	// Make the window visible
 	[window_ makeKeyAndVisible];
@@ -515,6 +524,8 @@ CDSoundSource *toneSource;
 	[scene addChild: [DenshionLayer node]];
 	
 	[director pushScene: scene];
+	
+	return YES;
 }
 
 // getting a call, pause the game
@@ -542,7 +553,6 @@ CDSoundSource *toneSource;
 
 - (void) dealloc
 {
-	[viewController_ release];
 	[window_ release];
 
 	[super dealloc];

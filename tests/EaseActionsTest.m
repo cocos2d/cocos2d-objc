@@ -869,7 +869,6 @@ Class restartAction()
 
 - (void) dealloc
 {
-	[viewController_ release];
 	[window_ release];
 	[super dealloc];
 }

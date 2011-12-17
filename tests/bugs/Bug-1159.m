@@ -68,6 +68,8 @@
 // CLASS IMPLEMENTATIONS
 @implementation AppController
 
+@synthesize window=window_, viewController=viewController_, navigationController=navigationController_;
+
 - (void) applicationDidFinishLaunching:(UIApplication*)application
 {
 	// Init the window
@@ -90,8 +92,14 @@
 	viewController_ = [[RootViewController alloc] initWithNibName:nil bundle:nil];
 	[viewController_ setView:glView];
 
-	// make the OpenGLView a child of the main window
-	[window_ addSubview:viewController_.view];
+	navigationController_ = [[UINavigationController alloc] initWithRootViewController:viewController_];
+	navigationController_.navigationBarHidden = YES;
+	
+	// set the Navigation Controller as the root view controller
+	[window_ setRootViewController:navigationController_];
+	
+	[viewController_ release];
+	[navigationController_ release];
 	
 	// make main window visible
 	[window_ makeKeyAndVisible];	
@@ -129,7 +137,6 @@
 
 - (void) dealloc
 {
-	[viewController_ release];
 	[window_ release];
 
 	[super dealloc];

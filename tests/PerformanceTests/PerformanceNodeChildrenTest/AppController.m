@@ -33,8 +33,14 @@
 	if( ! [director enableRetinaDisplay:YES] )
 		CCLOG(@"Retina Display Not supported");
 	
-	// glview is a child of the main window
-	[window addSubview:glView];
+	navigationController_ = [[UINavigationController alloc] initWithRootViewController:viewController_];
+	navigationController_.navigationBarHidden = YES;
+	
+	// set the Navigation Controller as the root view controller
+	[window_ setRootViewController:navigationController_];
+	
+	[viewController_ release];
+	[navigationController_ release];
 	
 	// Make the window visible
 	[window makeKeyAndVisible];

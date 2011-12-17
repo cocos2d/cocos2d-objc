@@ -397,7 +397,14 @@ Class restartAction()
 	
 	[viewController_ setView:glView];
 
-	[window_ addSubview:viewController_.view];
+	navigationController_ = [[UINavigationController alloc] initWithRootViewController:viewController_];
+	navigationController_.navigationBarHidden = YES;
+	
+	// set the Navigation Controller as the root view controller
+	[window_ setRootViewController:navigationController_];
+	
+	[viewController_ release];
+	[navigationController_ release];
 	
 	// make main window visible
 	[window_ makeKeyAndVisible];	
@@ -475,7 +482,6 @@ Class restartAction()
 
 - (void) dealloc
 {
-	[viewController_ release];
 	[window_ release];
 	[super dealloc];
 }
