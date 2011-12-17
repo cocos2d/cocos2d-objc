@@ -10,10 +10,6 @@
 // local import
 #import "ActionManagerTest.h"
 
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
-#import "RootViewController.h"
-#endif
-
 enum {
 	kTagNode,
 	kTagGrossini,
@@ -362,51 +358,26 @@ Class restartAction()
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-	// Init the window
-	window_ = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-	
-	// before creating any layer, set the landscape mode
-	CCDirector *director = [CCDirector sharedDirector];
-	
-	// set FPS at 60
-	[director setAnimationInterval:1.0/60];
-	
-	// Display FPS: yes
-	[director setDisplayStats:kCCDirectorStatsFPS];
-	
-	// Create an EAGLView with a RGB8 color buffer, and a depth buffer of 24-bits
-	EAGLView *glView = [EAGLView viewWithFrame:[window_ bounds]
-								   pixelFormat:kEAGLColorFormatRGB565
-								   depthFormat:0];
-	
-	// attach the openglView to the director
-	[director setOpenGLView:glView];
+	// CC_DIRECTOR_INIT()
+	//
+	// 1. Initializes an EAGLView with 0-bit depth format, and RGB565 render buffer
+	// 2. EAGLView multiple touches: disabled
+	// 3. creates a UIWindow, and assign it to the "window" var (it must already be declared)
+	// 4. Parents EAGLView to the newly created window
+	// 5. Creates Display Link Director
+	// 6. It will try to run at 60 FPS
+	// 7. Display FPS: NO
+	// 8. Will create a CCDirector and will associate the view with the director
+	// 9. Will create a UINavigationControlView with the director.
+	CC_DIRECTOR_INIT();
+
 	
 	// 2D projection
-	[director setProjection:kCCDirectorProjection2D];
+	[director_ setProjection:kCCDirectorProjection2D];
 	
 	// Enables High Res mode (Retina Display) on iPhone 4 and maintains low res on all other devices
-	if( ! [director enableRetinaDisplay:YES] )
+	if( ! [director_ enableRetinaDisplay:YES] )
 		CCLOG(@"Retina Display Not supported");
-	
-	// Init the View Controller
-	viewController_ = [[RootViewController alloc] initWithNibName:nil bundle:nil];
-	viewController_.wantsFullScreenLayout = YES;
-	
-	// make the OpenGLView a child of the view controller
-	[viewController_ setView:glView];
-	
-	navigationController_ = [[UINavigationController alloc] initWithRootViewController:viewController_];
-	navigationController_.navigationBarHidden = YES;
-	
-	// set the Navigation Controller as the root view controller
-	[window_ setRootViewController:navigationController_];
-	
-	[viewController_ release];
-	[navigationController_ release];
-	
-	// make main window visible
-	[window_ makeKeyAndVisible];	
 	
 	// When in iPad / RetinaDisplay mode, CCFileUtils will append the "-ipad" / "-hd" to all loaded files
 	// If the -ipad  / -hdfile is not found, it will load the non-suffixed version
@@ -416,7 +387,7 @@ Class restartAction()
 	CCScene *scene = [CCScene node];
 	[scene addChild: [nextAction() node]];
 			 
-	[director pushScene: scene];
+	[director_ pushScene: scene];
 	
 	return YES;
 }

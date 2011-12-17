@@ -6,12 +6,14 @@
 {
 	UIWindow *window_;
 	
-	UIViewController *viewController_;				// weak ref
-	UINavigationController *navigationController_;	// weak ref
+	UINavigationController *rootViewController_;	// weak ref
+	CCDirector	*director_;							// weak ref
 }
+
 @property (nonatomic, retain) UIWindow *window;
-@property (readonly) UIViewController *viewController;
-@property (readonly) UINavigationController *navigationController;
+@property (readonly) UINavigationController *rootViewController;
+@property (readonly) CCDirector *director;
+
 @end
 
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
