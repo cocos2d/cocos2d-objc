@@ -90,15 +90,22 @@ CGFloat	__ccContentScaleFactor = 1;
 @end
 
 @implementation CCDirectorIOS
-- (id) init
+
+@synthesize touchDispatcher=touchDispatcher_;
+
+- (id) initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {  
-	if( (self=[super init]) ) {
+	if( (self=[super initWithNibName:nibNameOrNil bundle:nibBundleOrNil]) ) {
 				
 		__ccContentScaleFactor = 1;
 		isContentScaleSupported_ = NO;
 		
+		touchDispatcher_ = [[CCTouchDispatcher alloc] init];
+
 		// running thread is main thread on iOS
 		runningThread_ = [NSThread currentThread];
+		
+
 	}
 	
 	return self;
@@ -106,6 +113,8 @@ CGFloat	__ccContentScaleFactor = 1;
 
 - (void) dealloc
 {	
+	[touchDispatcher_ release];
+
 	[super dealloc];
 }
 
@@ -117,11 +126,13 @@ CGFloat	__ccContentScaleFactor = 1;
 	/* calculate "global" dt */
 	[self calculateDeltaTime];
 	
-	[EAGLContext setCurrentContext: [openGLView_ context]];
+	CC_GLVIEW *openGLview = (CC_GLVIEW*)[self view];
+	
+	[EAGLContext setCurrentContext: [openGLview context]];
 	
 	/* tick before glClear: issue #533 */
 	if( ! isPaused_ )
-		[[CCScheduler sharedScheduler] tick: dt];	
+		[scheduler_ tick: dt];	
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -143,12 +154,10 @@ CGFloat	__ccContentScaleFactor = 1;
 
 	totalFrames_++;
 
-	[openGLView_ swapBuffers];
+	[openGLview swapBuffers];
 	
 	if( displayStats_ == kCCDirectorStatsMPF )
 		[self calculateMPF];
-	
-//	[EAGLContext setCurrentContext: nil];
 }
 
 -(void) setProjection:(ccDirectorProjection)projection
@@ -214,26 +223,6 @@ CGFloat	__ccContentScaleFactor = 1;
 	ccSetProjectionMatrixDirty();
 }
 
-#pragma mark Director Integration with a UIKit view
-
--(void) setOpenGLView:(EAGLView *)view
-{
-	if( view != openGLView_ ) {
-
-		[super setOpenGLView:view];
-
-		// set size
-		winSizeInPixels_ = CGSizeMake(winSizeInPoints_.width * __ccContentScaleFactor, winSizeInPoints_.height *__ccContentScaleFactor);
-		
-		if( __ccContentScaleFactor != 1 )
-			[self updateContentScaleFactor];
-		
-		CCTouchDispatcher *touchDispatcher = [CCTouchDispatcher sharedDispatcher];
-		[openGLView_ setTouchDelegate: touchDispatcher];
-		[touchDispatcher setDispatchEvents: YES];
-	}
-}
-
 #pragma mark Director - Retina Display
 
 -(CGFloat) contentScaleFactor
@@ -248,7 +237,7 @@ CGFloat	__ccContentScaleFactor = 1;
 		__ccContentScaleFactor = scaleFactor;
 		winSizeInPixels_ = CGSizeMake( winSizeInPoints_.width * scaleFactor, winSizeInPoints_.height * scaleFactor );
 		
-		if( openGLView_ )
+		if( self.view )
 			[self updateContentScaleFactor];
 		
 		// update projection
@@ -258,18 +247,10 @@ CGFloat	__ccContentScaleFactor = 1;
 
 -(void) updateContentScaleFactor
 {
-	// Based on code snippet from: http://developer.apple.com/iphone/prerelease/library/snippets/sp2010/sp28.html
-	if ([openGLView_ respondsToSelector:@selector(setContentScaleFactor:)])
-	{			
-		[openGLView_ setContentScaleFactor: __ccContentScaleFactor];
-		
-		isContentScaleSupported_ = YES;
-	}
-	else
-	{
-		CCLOG(@"cocos2d: WARNING: calling setContentScaleFactor on iOS < 4. Using fallback mechanism");		
-		isContentScaleSupported_ = NO;
-	}
+	NSAssert( [self.view respondsToSelector:@selector(setContentScaleFactor:)], @"cocos2d v2.0+ runs on iOS 4 or later");
+	
+	[self.view setContentScaleFactor: __ccContentScaleFactor];
+	isContentScaleSupported_ = YES;
 }
 
 -(BOOL) enableRetinaDisplay:(BOOL)enabled
@@ -283,7 +264,7 @@ CGFloat	__ccContentScaleFactor = 1;
 		return YES;
 
 	// setContentScaleFactor is not supported
-	if (! [openGLView_ respondsToSelector:@selector(setContentScaleFactor:)])
+	if (! [self.view respondsToSelector:@selector(setContentScaleFactor:)])
 		return NO;
 
 	// SD device
@@ -302,7 +283,7 @@ CGFloat	__ccContentScaleFactor = 1;
 // overriden, don't call super
 -(void) reshapeProjection:(CGSize)size
 {
-	winSizeInPoints_ = [openGLView_ bounds].size;
+	winSizeInPoints_ = [self.view bounds].size;
 	winSizeInPixels_ = CGSizeMake(winSizeInPoints_.width * __ccContentScaleFactor, winSizeInPoints_.height *__ccContentScaleFactor);
 	
 	[self setProjection:projection_];
@@ -330,9 +311,89 @@ CGFloat	__ccContentScaleFactor = 1;
 {
 	// don't release the event handlers
 	// They are needed in case the director is run again
-	[[CCTouchDispatcher sharedDispatcher] removeAllDelegates];
+	[touchDispatcher_ removeAllDelegates];
 	
 	[super end];
+}
+
+#pragma Director - UIViewController delegate
+
+
+-(void) setView:(EAGLView *)view
+{
+	[super setView:view];
+	
+	// set size
+	winSizeInPixels_ = CGSizeMake(winSizeInPoints_.width * __ccContentScaleFactor, winSizeInPoints_.height *__ccContentScaleFactor);
+	
+	if( __ccContentScaleFactor != 1 )
+		[self updateContentScaleFactor];
+	
+	[view setTouchDelegate: touchDispatcher_];
+	[touchDispatcher_ setDispatchEvents: YES];
+}
+
+
+// Override to allow orientations other than the default portrait orientation.
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+	
+	// EAGLView will be rotated by the UIViewController
+	//
+	// return YES for the supported orientations
+	
+	
+	// For landscape only, uncomment the following line
+	//	return ( UIInterfaceOrientationIsLandscape( interfaceOrientation ) );
+	
+	
+	// For portrait only, uncomment the following line
+	//	return ( ! UIInterfaceOrientationIsLandscape( interfaceOrientation ) );
+	
+	// To support all oritentatiosn return YES
+	return YES;
+}
+
+-(void) viewWillAppear:(BOOL)animated
+{
+	[super viewWillAppear:animated];
+//	[self startAnimation];
+}
+
+-(void) viewDidAppear:(BOOL)animated
+{
+	[super viewDidAppear:animated];
+	[self startAnimation];
+}
+
+-(void) viewWillDisappear:(BOOL)animated
+{
+//	[self stopAnimation];
+	
+	[super viewWillDisappear:animated];
+}
+
+-(void) viewDidDisappear:(BOOL)animated
+{
+	[self stopAnimation];
+	
+	[super viewDidDisappear:animated];
+}
+
+
+- (void)didReceiveMemoryWarning
+{
+    // Releases the view if it doesn't have a superview.
+    [super didReceiveMemoryWarning];
+    
+    // Release any cached data, images, etc that aren't in use.
+	[super purgeCachedData];
+}
+
+- (void)viewDidUnload
+{
+    [super viewDidUnload];
+    // Release any retained subviews of the main view.
+    // e.g. self.myOutlet = nil;
 }
 
 @end
@@ -404,7 +465,6 @@ CGFloat	__ccContentScaleFactor = 1;
 //
 -(void) threadMainLoop
 {
-
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 
 	[displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];	
@@ -414,8 +474,6 @@ CGFloat	__ccContentScaleFactor = 1;
 
 	[pool release];
 }
-
-
 
 -(void) dealloc
 {

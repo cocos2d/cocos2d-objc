@@ -32,6 +32,8 @@
 #import "../../CCDirector.h"
 #import "kazmath/mat4.h"
 
+@class CCTouchDispatcher;
+
 /** CCDirector extensions for iPhone
  */
 @interface CCDirector (iOSExtension)
@@ -68,8 +70,15 @@
 @interface CCDirectorIOS : CCDirector
 {
 	/* contentScaleFactor could be simulated */
-	BOOL	isContentScaleSupported_;	
+	BOOL	isContentScaleSupported_;
+	
+	/* touch dispatcher */
+	CCTouchDispatcher	*touchDispatcher_;	
 }
+
+/** Touch Dispatcher */
+@property (nonatomic,readwrite,retain) CCTouchDispatcher * touchDispatcher;
+
 @end
 
 /** DisplayLinkDirector is a Director that synchronizes timers with the refresh rate of the display.

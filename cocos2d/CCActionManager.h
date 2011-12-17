@@ -32,6 +32,8 @@
 #import "Support/ccCArray.h"
 #import "Support/uthash.h"
 
+#define kCCActionManagerPriority 0
+
 typedef struct _hashElement
 {
 	struct ccArray	*actions;
@@ -62,13 +64,6 @@ typedef struct _hashElement
 	BOOL			currentTargetSalvaged;
 }
 
-/** returns a shared instance of the CCActionManager */
-+ (CCActionManager *)sharedManager;
-
-/** purges the shared action manager. It releases the retained instance.
- @since v0.99.0
- */
-+(void)purgeSharedManager;
 
 // actions
 

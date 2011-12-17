@@ -68,6 +68,8 @@ typedef enum {
 
 @class CCLabelAtlas;
 @class CCScene;
+@class CCScheduler;
+@class CCActionManager;
 
 /**Class that creates and handle the main Window and manages how
 and when to execute the Scenes.
@@ -87,10 +89,8 @@ and when to execute the Scenes.
   - GL_COLOR_ARRAY is enabled
   - GL_TEXTURE_COORD_ARRAY is enabled
 */
-@interface CCDirector : NSObject
+@interface CCDirector : UIViewController
 {
-	CC_GLVIEW	*openGLView_;
-
 	// internal timer
 	NSTimeInterval animationInterval_;
 	NSTimeInterval oldAnimationInterval_;	
@@ -145,7 +145,13 @@ and when to execute the Scenes.
 	CGSize	winSizeInPixels_;
 
 	/* the cocos2d running thread */
-	NSThread	*runningThread_;	
+	NSThread	*runningThread_;
+	
+	/* scheduler associated with this director */
+	CCScheduler *scheduler_;
+	
+	/* action manager associated with this director */
+	CCActionManager *actionManager_;
 }
 
 /** returns the cocos2d thread.
@@ -160,8 +166,6 @@ and when to execute the Scenes.
 @property (nonatomic,readwrite, assign) NSTimeInterval animationInterval;
 /** Whether or not to display director statistics */
 @property (nonatomic, readwrite, assign) ccDirectorStats displayStats;
-/** The OpenGLView, where everything is rendered */
-@property (nonatomic,readwrite,retain) CC_GLVIEW *openGLView;
 /** whether or not the next delta time will be zero */
 @property (nonatomic,readwrite,assign) BOOL nextDeltaTimeZero;
 /** Whether or not the Director is paused */
@@ -191,6 +195,16 @@ and when to execute the Scenes.
  @since v0.99.5
  */
 @property (nonatomic, readwrite, retain) id<CCProjectionProtocol> projectionDelegate;
+
+/** CCScheduler associated with this director
+ @since v2.0
+ */
+@property (nonatomic,readwrite,retain) CCScheduler *scheduler;
+
+/** CCActionManager associated with this director
+ @since v2.0
+ */
+@property (nonatomic,readwrite,retain) CCActionManager *actionManager;
 
 /** returns a shared instance of the director */
 +(CCDirector *)sharedDirector;

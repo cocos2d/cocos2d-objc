@@ -91,6 +91,8 @@ extern NSString * cocos2dVersion(void);
 @synthesize projectionDelegate = projectionDelegate_;
 @synthesize totalFrames = totalFrames_;
 @synthesize millisecondsPerFrame = millisecondsPerFrame_;
+@synthesize scheduler = scheduler_;
+@synthesize actionManager = actionManager_;
 
 //
 // singleton stuff
@@ -105,9 +107,9 @@ static CCDirector *_sharedDirector = nil;
 		// Default Director is TimerDirector
 		// 
 		if( [ [CCDirector class] isEqual:[self class]] )
-			_sharedDirector = [[CC_DIRECTOR_DEFAULT alloc] init];
+			_sharedDirector = [[CC_DIRECTOR_DEFAULT alloc] initWithNibName:nil bundle:nil];
 		else
-			_sharedDirector = [[self alloc] init];
+			_sharedDirector = [[self alloc] initWithNibName:nil bundle:nil];
 	}
 		
 	return _sharedDirector;
@@ -119,11 +121,11 @@ static CCDirector *_sharedDirector = nil;
 	return [super alloc];
 }
 
-- (id) init
+- (id) initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {  
 	CCLOG(@"cocos2d: %@", cocos2dVersion() );
 
-	if( (self=[super init]) ) {
+	if( (self=[super initWithNibName:nibNameOrNil bundle:nibBundleOrNil]) ) {
 
 		CCLOG(@"cocos2d: Using Director Type:%@", [self class]);
 		
@@ -152,6 +154,13 @@ static CCDirector *_sharedDirector = nil;
 		// running thread
 		runningThread_ = nil;
 		
+		// scheduler
+		scheduler_ = [[CCScheduler alloc] init];
+
+		// action manager
+		actionManager_ = [[CCActionManager alloc] init];
+		[scheduler_ scheduleUpdateForTarget:actionManager_ priority:kCCActionManagerPriority paused:NO];
+		
 		winSizeInPixels_ = winSizeInPoints_ = CGSizeZero;
 	}
 
@@ -166,6 +175,8 @@ static CCDirector *_sharedDirector = nil;
 	[runningScene_ release];
 	[notificationNode_ release];
 	[scenesStack_ release];
+	[scheduler_ release];
+	[actionManager_ release];
 	
 	[projectionDelegate_ release];
 	
@@ -177,7 +188,7 @@ static CCDirector *_sharedDirector = nil;
 -(void) setGLDefaultValues
 {
 	// This method SHOULD be called only after openGLView_ was initialized
-	NSAssert( openGLView_, @"openGLView_ must be initialized");
+	NSAssert( self.view, @"openGLView_ must be initialized");
 
 	[self setAlphaBlending: YES];
 	[self setDepthTest: YES];
@@ -276,25 +287,17 @@ static CCDirector *_sharedDirector = nil;
 
 #pragma mark Director Integration with a UIKit view
 
--(CC_GLVIEW*) openGLView
-{
-	return openGLView_;
-}
-
--(void) setOpenGLView:(CC_GLVIEW *)view
+-(void) setView:(CC_GLVIEW *)view
 {
 	NSAssert( view, @"OpenGLView must be non-nil");
 
-	if( view != openGLView_ ) {
-		[openGLView_ release];
-		openGLView_ = [view retain];
-		
-		// set size
-		winSizeInPixels_ = winSizeInPoints_ = CCNSSizeToCGSize( [view bounds].size );
+	[super setView:view];
+	
+	// set size
+	winSizeInPixels_ = winSizeInPoints_ = CCNSSizeToCGSize( [view bounds].size );
 
-		[self setGLDefaultValues];
-		[self createFPSLabel];
-	}
+	[self setGLDefaultValues];
+	[self createFPSLabel];
 	
 	CHECK_GL_ERROR_DEBUG();
 }
@@ -403,8 +406,6 @@ static CCDirector *_sharedDirector = nil;
 	// Purge all managers / caches
 	[CCAnimationCache purgeSharedAnimationCache];
 	[CCSpriteFrameCache purgeSharedSpriteFrameCache];
-	[CCScheduler purgeSharedScheduler];
-	[CCActionManager purgeSharedManager];
 	[CCTextureCache purgeSharedTextureCache];
 	[CCShaderCache purgeSharedShaderCache];
 	
@@ -414,8 +415,6 @@ static CCDirector *_sharedDirector = nil;
 	// it shouldn't remove it from the window too.
 //	[openGLView_ removeFromSuperview];
 
-	[openGLView_ release];
-	openGLView_ = nil;
 	
 	// Invalidate GL state cache
 	ccGLInvalidateStateCache();

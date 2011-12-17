@@ -91,9 +91,6 @@ struct ccTouchHandlerHelperData {
 	struct ccTouchHandlerHelperData handlerHelperData[kCCTouchMax];
 }
 
-/** singleton of the CCTouchDispatcher */
-+ (CCTouchDispatcher*)sharedDispatcher;
-
 /** Whether or not the events are going to be dispatched. Default: YES */
 @property (nonatomic,readwrite, assign) BOOL dispatchEvents;
 
