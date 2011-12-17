@@ -5,12 +5,15 @@
 // Application Delegate class
 @interface AppController : NSObject <UIApplicationDelegate>
 {
-	// main UIWindow
-	// The OpenGL view will be a attached to this UIWindow
-    UIWindow *window_;
-	UIViewController *viewController_;
+	UIWindow *window_;
+	
+	UIViewController *viewController_;		// weak ref
+	UINavigationController *navigationController_;	// weak ref
 }
 
+@property (nonatomic, retain) UIWindow *window;
+@property (readonly) UIViewController *viewController;
+@property (readonly) UINavigationController *navigationController;
 @end
 
 // HelloActions Layer

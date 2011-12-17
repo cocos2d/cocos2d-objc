@@ -16,6 +16,7 @@
 #import "GameState.h"
 #import "Level.h"
 #import "GameSoundManager.h"
+#import "RootViewController.h"
 
 @implementation TomTheTurretAppDelegate
 
@@ -23,7 +24,7 @@
 @synthesize mainMenuScene = _mainMenuScene;
 @synthesize storyScene = _storyScene;
 @synthesize actionScene = _actionScene;
-@synthesize window;
+@synthesize window=window_, viewController=viewController_, navigationController=navigationController_;
 
 - (void) applicationDidFinishLaunching:(UIApplication*)application
 {
@@ -31,7 +32,7 @@
 	[[GameSoundManager sharedManager] setup];
 	
 	// Init the window
-	window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+	window_ = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 	
 	// get instance of the shared director
 	CCDirector *director = [CCDirector sharedDirector];
@@ -43,17 +44,30 @@
 	[director setAnimationInterval:1.0/60];
 	
 	// create an OpenGL view
-	EAGLView *glView = [EAGLView viewWithFrame:[window bounds]];
+	EAGLView *glView = [EAGLView viewWithFrame:[window_ bounds]];
 	[glView setMultipleTouchEnabled:YES];
 	
 	// connect it to the director
 	[director setOpenGLView:glView];
 	
-	// glview is a child of the main window
-	[window addSubview:glView];
+	// Init the View Controller
+	viewController_ = [[RootViewController alloc] initWithNibName:nil bundle:nil];
+	viewController_.wantsFullScreenLayout = YES;
+	
+	// make the OpenGLView a child of the view controller
+	[viewController_ setView:glView];
+	
+	navigationController_ = [[UINavigationController alloc] initWithRootViewController:viewController_];
+	navigationController_.navigationBarHidden = YES;
+	
+	// set the Navigation Controller as the root view controller
+	[window_ setRootViewController:navigationController_];
+	
+	[viewController_ release];
+	[navigationController_ release];
 	
 	// Make the window visible
-	[window makeKeyAndVisible];
+	[window_ makeKeyAndVisible];
 
     self.loadingScene = [[[LoadingScene alloc] init] autorelease];		
 	[director pushScene: _loadingScene];
@@ -149,7 +163,7 @@
     self.storyScene = nil;
     self.actionScene = nil;
 	[[CCDirector sharedDirector] end];
-	[window release];
+	[window_ release];
 	[super dealloc];
 }
 

@@ -392,6 +392,8 @@ enum {
 // CLASS IMPLEMENTATIONS
 @implementation AppController
 
+@synthesize window=window_, viewController=viewController_, navigationController=navigationController_;
+
 - (void) applicationDidFinishLaunching:(UIApplication*)application
 {
 	// Init the window
@@ -418,8 +420,14 @@ enum {
 	viewController_ = [[RootViewController alloc] init];
 	[viewController_ setView: glView];
 	
-	// glview is a child of the main window
-	[window_ addSubview:viewController_.view];
+	navigationController_ = [[UINavigationController alloc] initWithRootViewController:viewController_];
+	navigationController_.navigationBarHidden = YES;
+	
+	// set the Navigation Controller as the root view controller
+	[window_ setRootViewController:navigationController_];
+	
+	[viewController_ release];
+	[navigationController_ release];
 	
 	// Make the window visible
 	[window_ makeKeyAndVisible];
@@ -477,7 +485,6 @@ enum {
 
 - (void) dealloc
 {
-	[viewController_ release];
 	[window_ release];
 
 	[super dealloc];

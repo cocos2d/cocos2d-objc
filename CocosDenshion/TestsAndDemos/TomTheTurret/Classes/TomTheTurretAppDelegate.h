@@ -26,14 +26,21 @@
 @class ActionScene;
 
 @interface TomTheTurretAppDelegate : NSObject <UIApplicationDelegate> {
-	UIWindow *window;
     LoadingScene *_loadingScene;
     MainMenuScene *_mainMenuScene;
     StoryScene *_storyScene;
     ActionScene *_actionScene;
+
+	UIWindow *window_;
+	UIViewController *viewController_;		// weak ref
+	UINavigationController *navigationController_;	// weak ref
+
 }
 
 @property (nonatomic, retain) UIWindow *window;
+@property (readonly) UIViewController *viewController;
+@property (readonly) UINavigationController *navigationController;
+
 @property (nonatomic, retain) LoadingScene *loadingScene;
 @property (nonatomic, retain) MainMenuScene *mainMenuScene;
 @property (nonatomic, retain) StoryScene *storyScene;
