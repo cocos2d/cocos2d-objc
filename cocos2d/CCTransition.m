@@ -78,7 +78,8 @@ const NSInteger kSceneFade = 0xFADEFADE;
 
 		// disable events while transitions
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
-		[[CCTouchDispatcher sharedDispatcher] setDispatchEvents: NO];
+		CCDirectorIOS *director = (CCDirectorIOS*)[CCDirector sharedDirector];
+		[[director touchDispatcher] setDispatchEvents: NO];
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 		[[CCEventDispatcher sharedDispatcher] setDispatchEvents: NO];
 #endif
@@ -136,7 +137,7 @@ const NSInteger kSceneFade = 0xFADEFADE;
 
 	// enable events while transitions
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
-	[[CCTouchDispatcher sharedDispatcher] setDispatchEvents: YES];
+	[[((CCDirectorIOS*)director) touchDispatcher] setDispatchEvents: YES];
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 	[[CCEventDispatcher sharedDispatcher] setDispatchEvents: YES];
 #endif

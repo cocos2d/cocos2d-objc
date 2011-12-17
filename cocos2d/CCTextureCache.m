@@ -82,7 +82,7 @@ static CCTextureCache *sharedTextureCache;
 		_dictQueue = dispatch_queue_create("org.cocos2d.texturecachedict", NULL);
 
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
-		CC_GLVIEW *view = [[CCDirector sharedDirector] openGLView];
+		CC_GLVIEW *view = (CC_GLVIEW*)[[CCDirector sharedDirector] view];
 		NSAssert(view, @"Do not initialize the TextureCache before the Director");
 		_auxGLcontext = [[EAGLContext alloc]
 						 initWithAPI:kEAGLRenderingAPIOpenGLES2

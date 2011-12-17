@@ -141,7 +141,8 @@ enum {
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 -(void) registerWithTouchDispatcher
 {
-	[[CCTouchDispatcher sharedDispatcher] addTargetedDelegate:self priority:kCCMenuTouchPriority swallowsTouches:YES];
+	CCDirectorIOS *director = (CCDirectorIOS*)[CCDirector sharedDirector];
+	[[director touchDispatcher] addTargetedDelegate:self priority:kCCMenuTouchPriority swallowsTouches:YES];
 }
 
 -(CCMenuItem *) itemForTouch: (UITouch *) touch
