@@ -125,9 +125,9 @@ default gl blend src function. Compatible with premultiplied alpha images.
 #define CC_DIRECTOR_INIT()																		\
 do	{																							\
 	window_ = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];					\
-	CCDirector *__director = [CCDirector sharedDirector];										\
-	[__director setDisplayStats:kCCDirectorStatsNone];																\
-	[__director setAnimationInterval:1.0/60];													\
+	director_ = [CCDirector sharedDirector];													\
+	[director_ setDisplayStats:kCCDirectorStatsNone];											\
+	[director_ setAnimationInterval:1.0/60];													\
 	EAGLView *__glView = [EAGLView viewWithFrame:[window_ bounds]								\
 									pixelFormat:kEAGLColorFormatRGB565							\
 									depthFormat:0 /* GL_DEPTH_COMPONENT24_OES */				\
@@ -136,15 +136,12 @@ do	{																							\
 								  multiSampling:NO												\
 								numberOfSamples:0												\
 													];											\
-	[__director setOpenGLView:__glView];														\
-	viewController_ = [[RootViewController alloc] initWithNibName:nil bundle:nil];				\
-	viewController_.wantsFullScreenLayout = YES;												\
-	[viewController_ setView:__glView];															\
-	navigationController_ = [[UINavigationController alloc] initWithRootViewController:viewController_];	\
-	navigationController_.navigationBarHidden = YES;											\
-	[window_ setRootViewController:navigationController_];										\
-	[navigationController_ release];															\
-	[viewController_ release];																	\
+	[director_ setView:__glView];																\
+	director_.wantsFullScreenLayout = YES;														\
+	rootViewController_ = [[UINavigationController alloc] initWithRootViewController:director_];\
+	rootViewController_.navigationBarHidden = YES;												\
+	[window_ setRootViewController:rootViewController_];										\
+	[rootViewController_ release];																\
 	[window_ makeKeyAndVisible];																\
 } while(0)
 
@@ -190,8 +187,6 @@ do {																							\
 #define CC_DIRECTOR_END()										\
 do {															\
 	CCDirector *__director = [CCDirector sharedDirector];		\
-	CC_GLVIEW *__view = [__director openGLView];				\
-	[__view removeFromSuperview];								\
 	[__director end];											\
 } while(0)
 

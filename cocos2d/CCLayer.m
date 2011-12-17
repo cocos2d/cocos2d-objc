@@ -81,7 +81,8 @@
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 -(void) registerWithTouchDispatcher
 {
-	[[CCTouchDispatcher sharedDispatcher] addStandardDelegate:self priority:0];
+	CCDirectorIOS *director = (CCDirectorIOS*)[CCDirector sharedDirector];
+	[[director touchDispatcher] addStandardDelegate:self priority:0];
 }
 
 -(BOOL) isAccelerometerEnabled
@@ -114,8 +115,10 @@
 		if( isRunning_ ) {
 			if( enabled )
 				[self registerWithTouchDispatcher];
-			else
-				[[CCTouchDispatcher sharedDispatcher] removeDelegate:self];
+			else {
+				CCDirectorIOS *director = (CCDirectorIOS*)[CCDirector sharedDirector];
+				[[director touchDispatcher] removeDelegate:self];
+			}
 		}
 	}
 }
@@ -240,8 +243,10 @@
 -(void) onExit
 {
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
-	if( isTouchEnabled_ )
-		[[CCTouchDispatcher sharedDispatcher] removeDelegate:self];
+	if( isTouchEnabled_ ) {
+		CCDirectorIOS *director = (CCDirectorIOS*) [CCDirector sharedDirector];
+		[[director touchDispatcher] removeDelegate:self];
+	}
 	
 	if( isAccelerometerEnabled_ )
 		[[UIAccelerometer sharedAccelerometer] setDelegate:nil];

@@ -39,7 +39,7 @@
 		anchorPoint_ = ccp(0.5f, 0.5f);
 		[self setContentSize:s];	
 	}
-	
+
 	return self;
 }
 @end

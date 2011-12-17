@@ -598,35 +598,35 @@ static NSUInteger globalOrderOfArrival = 1;
 {
 	NSAssert( action != nil, @"Argument must be non-nil");
 	
-	[[CCActionManager sharedManager] addAction:action target:self paused:!isRunning_];
+	[[[CCDirector sharedDirector] actionManager] addAction:action target:self paused:!isRunning_];
 	return action;
 }
 
 -(void) stopAllActions
 {
-	[[CCActionManager sharedManager] removeAllActionsFromTarget:self];
+	[[[CCDirector sharedDirector] actionManager] removeAllActionsFromTarget:self];
 }
 
 -(void) stopAction: (CCAction*) action
 {
-	[[CCActionManager sharedManager] removeAction:action];
+	[[[CCDirector sharedDirector] actionManager] removeAction:action];
 }
 
 -(void) stopActionByTag:(NSInteger)aTag
 {
 	NSAssert( aTag != kCCActionTagInvalid, @"Invalid tag");
-	[[CCActionManager sharedManager] removeActionByTag:aTag target:self];
+	[[[CCDirector sharedDirector] actionManager] removeActionByTag:aTag target:self];
 }
 
 -(CCAction*) getActionByTag:(NSInteger) aTag
 {
 	NSAssert( aTag != kCCActionTagInvalid, @"Invalid tag");
-	return [[CCActionManager sharedManager] getActionByTag:aTag target:self];
+	return 	[[[CCDirector sharedDirector] actionManager] getActionByTag:aTag target:self];
 }
 
 -(NSUInteger) numberOfRunningActions
 {
-	return [[CCActionManager sharedManager] numberOfRunningActionsInTarget:self];
+	return [[[CCDirector sharedDirector] actionManager] numberOfRunningActionsInTarget:self];
 }
 
 #pragma mark CCNode - Scheduler
@@ -638,12 +638,12 @@ static NSUInteger globalOrderOfArrival = 1;
 
 -(void) scheduleUpdateWithPriority:(NSInteger)priority
 {
-	[[CCScheduler sharedScheduler] scheduleUpdateForTarget:self priority:priority paused:!isRunning_];
+	[[[CCDirector sharedDirector] scheduler] scheduleUpdateForTarget:self priority:priority paused:!isRunning_];
 }
 
 -(void) unscheduleUpdate
 {
-	[[CCScheduler sharedScheduler] unscheduleUpdateForTarget:self];
+	[[[CCDirector sharedDirector] scheduler] unscheduleUpdateForTarget:self];
 }
 
 -(void) schedule:(SEL)selector
@@ -661,7 +661,7 @@ static NSUInteger globalOrderOfArrival = 1;
 	NSAssert( selector != nil, @"Argument must be non-nil");
 	NSAssert( interval >=0, @"Arguemnt must be positive");
 	
-	[[CCScheduler sharedScheduler] scheduleSelector:selector forTarget:self interval:interval paused:!isRunning_ repeat:repeat delay:delay];
+	[[[CCDirector sharedDirector] scheduler] scheduleSelector:selector forTarget:self interval:interval paused:!isRunning_ repeat:repeat delay:delay];
 }
 
 - (void) scheduleOnce:(SEL) selector delay:(ccTime) delay
@@ -675,23 +675,27 @@ static NSUInteger globalOrderOfArrival = 1;
 	if (selector == nil)
 		return;
 	
-	[[CCScheduler sharedScheduler] unscheduleSelector:selector forTarget:self];
+	[[[CCDirector sharedDirector] scheduler] unscheduleSelector:selector forTarget:self];
 }
 
 -(void) unscheduleAllSelectors
 {
-	[[CCScheduler sharedScheduler] unscheduleAllSelectorsForTarget:self];
+	[[[CCDirector sharedDirector] scheduler] unscheduleAllSelectorsForTarget:self];
 }
 - (void) resumeSchedulerAndActions
 {
-	[[CCScheduler sharedScheduler] resumeTarget:self];
-	[[CCActionManager sharedManager] resumeTarget:self];
+	CCDirector *director = [CCDirector sharedDirector];
+
+	[[director scheduler] resumeTarget:self];
+	[[director actionManager] resumeTarget:self];
 }
 
 - (void) pauseSchedulerAndActions
 {
-	[[CCScheduler sharedScheduler] pauseTarget:self];
-	[[CCActionManager sharedManager] pauseTarget:self];
+	CCDirector *director = [CCDirector sharedDirector];
+
+	[[director scheduler] pauseTarget:self];
+	[[director actionManager] pauseTarget:self];
 }
 
 #pragma mark CCNode Transform
