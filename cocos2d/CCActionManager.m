@@ -31,12 +31,6 @@
 #import "CCScheduler.h"
 #import "ccMacros.h"
 
-
-//
-// singleton stuff
-//
-static CCActionManager *sharedManager_ = nil;
-
 @interface CCActionManager (Private)
 -(void) removeActionAtIndex:(NSUInteger)index hashElement:(tHashElement*)element;
 -(void) deleteHashElement:(tHashElement*)element;
@@ -46,32 +40,9 @@ static CCActionManager *sharedManager_ = nil;
 
 @implementation CCActionManager
 
-#pragma mark ActionManager - init
-+ (CCActionManager *)sharedManager
-{
-	if (!sharedManager_)
-		sharedManager_ = [[self alloc] init];
-		
-	return sharedManager_;
-}
-
-+(id)alloc
-{
-	NSAssert(sharedManager_ == nil, @"Attempted to allocate a second instance of a singleton.");
-	return [super alloc];
-}
-
-+(void)purgeSharedManager
-{
-	[[CCScheduler sharedScheduler] unscheduleUpdateForTarget:self];
-	[sharedManager_ release];
-	sharedManager_ = nil;
-}
-
 -(id) init
 {
 	if ((self=[super init]) ) {
-		[[CCScheduler sharedScheduler] scheduleUpdateForTarget:self priority:0 paused:NO];
 		targets = NULL;
 	}
 	
@@ -83,8 +54,6 @@ static CCActionManager *sharedManager_ = nil;
 	CCLOGINFO( @"cocos2d: deallocing %@", self);
 	
 	[self removeAllActions];
-
-	sharedManager_ = nil;
 
 	[super dealloc];
 }

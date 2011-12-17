@@ -180,8 +180,8 @@ typedef struct _hashSelectorEntry
 			}
 			
 			if (nTimesExecuted > repeat) 
-			{//unschedule timer
-				[[CCScheduler sharedScheduler] unscheduleSelector:selector forTarget:target];
+			{	//unschedule timer
+				[[[CCDirector sharedDirector] scheduler] unscheduleSelector:selector forTarget:target];
 			}
 		}
 	}
@@ -200,29 +200,7 @@ typedef struct _hashSelectorEntry
 
 @implementation CCScheduler
 
-static CCScheduler *sharedScheduler;
-
 @synthesize timeScale = timeScale_;
-
-+ (CCScheduler *)sharedScheduler
-{
-	if (!sharedScheduler)
-		sharedScheduler = [[CCScheduler alloc] init];
-
-	return sharedScheduler;
-}
-
-+(id)alloc
-{
-	NSAssert(sharedScheduler == nil, @"Attempted to allocate a second instance of a singleton.");
-	return [super alloc];
-}
-
-+(void)purgeSharedScheduler
-{
-	[sharedScheduler release];
-	sharedScheduler = nil;
-}
 
 - (id) init
 {
@@ -254,8 +232,6 @@ static CCScheduler *sharedScheduler;
 	CCLOG(@"cocos2d: deallocing %@", self);
 
 	[self unscheduleAllSelectors];
-
-	sharedScheduler = nil;
 
 	[super dealloc];
 }
