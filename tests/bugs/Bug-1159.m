@@ -9,8 +9,6 @@
 
 #import "Bug-1159.h"
 
-#import "RootViewController.h"
-
 @implementation Bug1159
 
 +(id)scene

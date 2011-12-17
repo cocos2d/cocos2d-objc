@@ -8,10 +8,6 @@
 #import "cocos2d.h"
 #import "TransitionsTest.h"
 
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
-#import "RootViewController.h"
-#endif
-
 #define TRANSITION_DURATION (1.2f)
 
 @interface FadeWhiteTransition : CCTransitionFade
@@ -429,7 +425,7 @@ Class restartTransition()
 
 @implementation AppController
 
-@synthesize window=window_, viewController=viewController_, navigationController=navigationController_;
+@synthesize window=window_, rootViewController=rootViewController_, director=director_;
 
 - (void) applicationDidFinishLaunching:(UIApplication*)application
 {
@@ -437,13 +433,16 @@ Class restartTransition()
 	window_ = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 
 	// get instance of the shared director
-	CCDirector *director = [CCDirector sharedDirector];
+	director_ = [CCDirector sharedDirector];
 	
 	// display FPS (useful when debugging)
-	[director setDisplayStats:kCCDirectorStatsFPS];
+	[director_ setDisplayStats:kCCDirectorStatsFPS];
 	
 	// frames per second
-	[director setAnimationInterval:1.0/60];
+	[director_ setAnimationInterval:1.0/60];
+	
+	// fullscreen
+	director_.wantsFullScreenLayout = YES;
 	
 	// create an OpenGL view
 	// PageTurnTransition needs a depth buffer of 16 or 24 bits
@@ -456,27 +455,20 @@ Class restartTransition()
 	[glView setMultipleTouchEnabled:YES];
 	
 	// connect it to the director
-	[director setOpenGLView:glView];
+	[director_ setView:glView];
 	
 	// Enables High Res mode (Retina Display) on iPhone 4 and maintains low res on all other devices
-	if( ! [director enableRetinaDisplay:YES] )
+	if( ! [director_ enableRetinaDisplay:YES] )
 		CCLOG(@"Retina Display Not supported");
 	
-	// Init the View Controller
-	viewController_ = [[RootViewController alloc] initWithNibName:nil bundle:nil];
-	viewController_.wantsFullScreenLayout = YES;
 	
-	// make the OpenGLView a child of the view controller
-	[viewController_ setView:glView];
-	
-	navigationController_ = [[UINavigationController alloc] initWithRootViewController:viewController_];
-	navigationController_.navigationBarHidden = YES;
+	rootViewController_ = [[UINavigationController alloc] initWithRootViewController:director_];
+	rootViewController_.navigationBarHidden = YES;
 	
 	// set the Navigation Controller as the root view controller
-	[window_ setRootViewController:navigationController_];
+	[window_ setRootViewController:rootViewController_];
 	
-	[viewController_ release];
-	[navigationController_ release];
+	[rootViewController_ release];
 
 	// When in iPad / RetinaDisplay mode, CCFileUtils will append the "-ipad" / "-hd" to all loaded files
 	// If the -ipad  / -hdfile is not found, it will load the non-suffixed version
@@ -496,52 +488,38 @@ Class restartTransition()
 	CCScene *scene = [CCScene node];
 	[scene addChild: [TextLayer node]];
 	
-	[director pushScene: scene];
+	[director_ pushScene: scene];
 }
 
 // getting a call, pause the game
 -(void) applicationWillResignActive:(UIApplication *)application
 {
-	AppController *app = [[UIApplication sharedApplication] delegate];
-	UINavigationController *nav = [app navigationController];
-	
-	if( [nav visibleViewController] == viewController_ )
-		[[CCDirector sharedDirector] pause];
+	if( [rootViewController_ visibleViewController] == director_ )
+		[director_ pause];
 }
 
 // call got rejected
 -(void) applicationDidBecomeActive:(UIApplication *)application
 {
-	AppController *app = [[UIApplication sharedApplication] delegate];
-	UINavigationController *nav = [app navigationController];	
-	
-	if( [nav visibleViewController] == viewController_ )
-		[[CCDirector sharedDirector] resume];
+	if( [rootViewController_ visibleViewController] == director_ )
+		[director_ resume];
 }
 
 -(void) applicationDidEnterBackground:(UIApplication*)application
 {
-	AppController *app = [[UIApplication sharedApplication] delegate];
-	UINavigationController *nav = [app navigationController];	
-	
-	if( [nav visibleViewController] == viewController_ )
-		[[CCDirector sharedDirector] stopAnimation];
+	if( [rootViewController_ visibleViewController] == director_ )
+		[director_ stopAnimation];
 }
 
 -(void) applicationWillEnterForeground:(UIApplication*)application
 {
-	AppController *app = [[UIApplication sharedApplication] delegate];
-	UINavigationController *nav = [app navigationController];	
-	
-	if( [nav visibleViewController] == viewController_ )
-		[[CCDirector sharedDirector] startAnimation];
+	if( [rootViewController_ visibleViewController] == director_ )
+		[director_ startAnimation];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {	
-	CCDirector *director = [CCDirector sharedDirector];
-	[[director openGLView] removeFromSuperview];
-	[director end];
+	[director_ end];
 }
 
 // purge memory

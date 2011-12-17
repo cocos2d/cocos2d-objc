@@ -8,10 +8,6 @@
 #import "cocos2d.h"
 #import "ActionsTest.h"
 
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
-#import "RootViewController.h"
-#endif
-
 enum {
 	kTagAnimationDance = 1,
 };
@@ -1127,22 +1123,17 @@ Class restartAction()
 	// 3. creates a UIWindow, and assign it to the "window" var (it must already be declared)
 	// 4. Parents EAGLView to the newly created window
 	// 5. Creates Display Link Director
-	// 5a. If it fails, it will use an NSTimer director
 	// 6. It will try to run at 60 FPS
 	// 7. Display FPS: NO
-	// 8. Device orientation: Portrait
-	// 9. Connects the director to the EAGLView
-	//
+	// 8. Will create a CCDirector and will associate the view with the director
+	// 9. Will create a UINavigationControlView with the director.
 	CC_DIRECTOR_INIT();
 	
-	// Obtain the shared director in order to...
-	CCDirector *director = [CCDirector sharedDirector];
-
 	// Turn on display FPS
-	[director setDisplayStats:kCCDirectorStatsFPS];
+	[director_ setDisplayStats:kCCDirectorStatsFPS];
 	
 	// Enables High Res mode (Retina Display) on iPhone 4 and maintains low res on all other devices
-	if( ! [director enableRetinaDisplay:YES] )
+	if( ! [director_ enableRetinaDisplay:YES] )
 		CCLOG(@"Retina Display Not supported");
 	
 	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
@@ -1158,7 +1149,7 @@ Class restartAction()
 	CCScene *scene = [CCScene node];
 	[scene addChild: [nextAction() node]];
 	
-	[director pushScene: scene];
+	[director_ pushScene: scene];
 		
 }
 

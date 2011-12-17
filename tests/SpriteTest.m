@@ -10,10 +10,6 @@
 // local import
 #import "SpriteTest.h"
 
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
-#import "RootViewController.h"
-#endif
-
 static int sceneIdx=-1;
 static NSString *transitions[] = {
 	
@@ -4357,21 +4353,12 @@ Class restartAction()
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 @implementation AppController
 
-@synthesize window=window_, viewController=viewController_, navigationController=navigationController_;
-
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+	// Don't calls super
 	// Init the window
 	window_ = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 
-	// before creating any layer, set the landscape mode
-	CCDirector *director = [CCDirector sharedDirector];
-	
-	// set FPS at 60
-	[director setAnimationInterval:1.0/60];
-	
-	// Display Milliseconds Per Frame
-	[director setDisplayStats:kCCDirectorStatsMPF];
 
 	// Create an EAGLView with a RGB8 color buffer, and a depth buffer of 24-bits
 	EAGLView *glView = [EAGLView viewWithFrame:[window_ bounds]
@@ -4382,32 +4369,33 @@ Class restartAction()
 								 multiSampling:NO
 							   numberOfSamples:0];
 
+	director_ = [CCDirector sharedDirector];
+	
+	director_.wantsFullScreenLayout = YES;
+	// Display Milliseconds Per Frame
+	[director_ setDisplayStats:kCCDirectorStatsMPF];
+	
+	// set FPS at 60
+	[director_ setAnimationInterval:1.0/60];
+	
 	// attach the openglView to the director
-	[director setOpenGLView:glView];
+	[director_ setView:glView];
 
 	// 2D projection
-	[director setProjection:kCCDirectorProjection2D];
+	[director_ setProjection:kCCDirectorProjection2D];
 //	[director setProjection:kCCDirectorProjection3D];
 
 	// Enables High Res mode (Retina Display) on iPhone 4 and maintains low res on all other devices
-	if( ! [director enableRetinaDisplay:YES] )
+	if( ! [director_ enableRetinaDisplay:YES] )
 		CCLOG(@"Retina Display Not supported");
-
-	// Init the View Controller
-	viewController_ = [[RootViewController alloc] initWithNibName:nil bundle:nil];
-	viewController_.wantsFullScreenLayout = YES;
 	
-	// make the OpenGLView a child of the view controller
-	[viewController_ setView:glView];
-	
-	navigationController_ = [[UINavigationController alloc] initWithRootViewController:viewController_];
-	navigationController_.navigationBarHidden = YES;
+	rootViewController_ = [[UINavigationController alloc] initWithRootViewController:director_];
+	rootViewController_.navigationBarHidden = YES;
 	
 	// set the Navigation Controller as the root view controller
-	[window_ setRootViewController:navigationController_];
+	[window_ setRootViewController:rootViewController_];
 	
-	[viewController_ release];
-	[navigationController_ release];
+	[rootViewController_ release];
 	
 	// make main window visible
 	[window_ makeKeyAndVisible];	
@@ -4431,72 +4419,9 @@ Class restartAction()
 	
 	
 	// and run it!
-	[director pushScene: scene];
+	[director_ pushScene: scene];
 	
 	return YES;
-}
-
-// getting a call, pause the game
--(void) applicationWillResignActive:(UIApplication *)application
-{
-	AppController *app = [[UIApplication sharedApplication] delegate];
-	UINavigationController *nav = [app navigationController];
-	
-	if( [nav visibleViewController] == viewController_ )
-		[[CCDirector sharedDirector] pause];
-}
-
-// call got rejected
--(void) applicationDidBecomeActive:(UIApplication *)application
-{
-	AppController *app = [[UIApplication sharedApplication] delegate];
-	UINavigationController *nav = [app navigationController];	
-	
-	if( [nav visibleViewController] == viewController_ )
-		[[CCDirector sharedDirector] resume];
-}
-
--(void) applicationDidEnterBackground:(UIApplication*)application
-{
-	AppController *app = [[UIApplication sharedApplication] delegate];
-	UINavigationController *nav = [app navigationController];	
-	
-	if( [nav visibleViewController] == viewController_ )
-		[[CCDirector sharedDirector] stopAnimation];
-}
-
--(void) applicationWillEnterForeground:(UIApplication*)application
-{
-	AppController *app = [[UIApplication sharedApplication] delegate];
-	UINavigationController *nav = [app navigationController];	
-	
-	if( [nav visibleViewController] == viewController_ )
-		[[CCDirector sharedDirector] startAnimation];
-}
-
-- (void)applicationWillTerminate:(UIApplication *)application
-{	
-	CCDirector *director = [CCDirector sharedDirector];
-	[[director openGLView] removeFromSuperview];
-	[director end];
-}
-
-// purge memory
-- (void)applicationDidReceiveMemoryWarning:(UIApplication *)application
-{
-	[[CCDirector sharedDirector] purgeCachedData];
-}
-
-// next delta time will be zero
--(void) applicationSignificantTimeChange:(UIApplication *)application
-{
-	[[CCDirector sharedDirector] setNextDeltaTimeZero:YES];
-}
-
-- (void) dealloc
-{
-	[window_ release];
-	[super dealloc];
 }
 @end
 

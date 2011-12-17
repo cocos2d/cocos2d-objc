@@ -10,10 +10,6 @@
 // local import
 #import "ShaderTest.h"
 
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
-#import "RootViewController.h"
-#endif
-
 static int sceneIdx=-1;
 static NSString *transitions[] = {
 	@"ShaderMonjori",
@@ -518,7 +514,7 @@ enum {
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 		
 		AppController *app = [[UIApplication sharedApplication] delegate];
-		UIViewController *ctl = [app viewController];
+		UIViewController *ctl = [app rootViewController];
 		
 		[ctl.view addSubview: sliderCtl_];
 		
@@ -617,7 +613,7 @@ enum {
 
 @implementation AppController
 
-@synthesize window=window_, viewController=viewController_, navigationController=navigationController_;
+@synthesize window=window_, rootViewController=rootViewController_, director=director_;
 
 - (void) applicationDidFinishLaunching:(UIApplication*)application
 {
@@ -625,21 +621,17 @@ enum {
 	//
 	// 1. Initializes an EAGLView with 0-bit depth format, and RGB565 render buffer
 	// 2. EAGLView multiple touches: disabled
-	// 3. creates a UIWindow, and assign it to the "window_" var (it must already be declared)
-	// 4. creates a UIViewController, and assign it to the "viewController_" var (it must already be declared)
-	// 5. Parents EAGLView to the newly created ViewController. Parents ViewController with UIWindow
+	// 3. creates a UIWindow, and assign it to the "window" var (it must already be declared)
+	// 4. Parents EAGLView to the newly created window
+	// 5. Creates Display Link Director
 	// 6. It will try to run at 60 FPS
 	// 7. Display FPS: NO
-	// 8. Device orientation: Portrait
-	// 9. Connects the director to the EAGLView
-	//
+	// 8. Will create a CCDirector and will associate the view with the director
+	// 9. Will create a UINavigationControlView with the director.
 	CC_DIRECTOR_INIT();
 	
-	// Obtain the shared director in order to...
-	CCDirector *director = [CCDirector sharedDirector];
-	
 	// Turn on display FPS
-	[director setDisplayStats:kCCDirectorStatsFPS];
+	[director_ setDisplayStats:kCCDirectorStatsFPS];
 	
 	// Enables High Res mode (Retina Display) on iPhone 4 and maintains low res on all other devices
 //	if( ! [director enableRetinaDisplay:YES] )
@@ -648,45 +640,33 @@ enum {
 	CCScene *scene = [CCScene node];
 	[scene addChild: [nextAction() node]];
 			 
-	[director pushScene: scene];
+	[director_ pushScene: scene];
 }
 
 // getting a call, pause the game
 -(void) applicationWillResignActive:(UIApplication *)application
 {
-	AppController *app = [[UIApplication sharedApplication] delegate];
-	UINavigationController *nav = [app navigationController];
-	
-	if( [nav visibleViewController] == viewController_ )
-		[[CCDirector sharedDirector] pause];
+	if( [rootViewController_ visibleViewController] == director_ )
+		[director_ pause];
 }
 
 // call got rejected
 -(void) applicationDidBecomeActive:(UIApplication *)application
 {
-	AppController *app = [[UIApplication sharedApplication] delegate];
-	UINavigationController *nav = [app navigationController];	
-	
-	if( [nav visibleViewController] == viewController_ )
-		[[CCDirector sharedDirector] resume];
+	if( [rootViewController_ visibleViewController] == director_ )
+		[director_ resume];
 }
 
 -(void) applicationDidEnterBackground:(UIApplication*)application
 {
-	AppController *app = [[UIApplication sharedApplication] delegate];
-	UINavigationController *nav = [app navigationController];	
-	
-	if( [nav visibleViewController] == viewController_ )
-		[[CCDirector sharedDirector] stopAnimation];
+	if( [rootViewController_ visibleViewController] == director_ )
+		[director_ stopAnimation];
 }
 
 -(void) applicationWillEnterForeground:(UIApplication*)application
 {
-	AppController *app = [[UIApplication sharedApplication] delegate];
-	UINavigationController *nav = [app navigationController];	
-	
-	if( [nav visibleViewController] == viewController_ )
-		[[CCDirector sharedDirector] startAnimation];
+	if( [rootViewController_ visibleViewController] == director_ )
+		[director_ startAnimation];
 }
 
 // application will be killed

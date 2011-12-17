@@ -10,10 +10,6 @@
 // local import
 #import "ParallaxTest.h"
 
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
-#import "RootViewController.h"
-#endif
-
 enum {
 	kTagNode,
 	kTagGrossini,
@@ -259,7 +255,8 @@ Class restartAction()
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 -(void) registerWithTouchDispatcher
 {
-	[[CCTouchDispatcher sharedDispatcher] addTargetedDelegate:self priority:0 swallowsTouches:YES];
+	CCDirectorIOS *director = (CCDirectorIOS*)[CCDirector sharedDirector];
+	[[director touchDispatcher] addTargetedDelegate:self priority:0 swallowsTouches:YES];
 }
 
 -(BOOL) ccTouchBegan:(UITouch *)touch withEvent:(UIEvent *)event
@@ -316,7 +313,7 @@ Class restartAction()
 
 @implementation AppController
 
-@synthesize window=window_, viewController=viewController_, navigationController=navigationController_;
+@synthesize window=window_, rootViewController=rootViewController_, director=director_;
 
 - (void) applicationDidFinishLaunching:(UIApplication*)application
 {
@@ -327,22 +324,17 @@ Class restartAction()
 	// 3. creates a UIWindow, and assign it to the "window" var (it must already be declared)
 	// 4. Parents EAGLView to the newly created window
 	// 5. Creates Display Link Director
-	// 5a. If it fails, it will use an NSTimer director
 	// 6. It will try to run at 60 FPS
 	// 7. Display FPS: NO
-	// 8. Device orientation: Portrait
-	// 9. Connects the director to the EAGLView
-	//
+	// 8. Will create a CCDirector and will associate the view with the director
+	// 9. Will create a UINavigationControlView with the director.
 	CC_DIRECTOR_INIT();
 	
-	// Obtain the shared director in order to...
-	CCDirector *director = [CCDirector sharedDirector];
-
 	// Turn on display FPS
-	[director setDisplayStats:kCCDirectorStatsFPS];
+	[director_ setDisplayStats:kCCDirectorStatsFPS];
 	
 	// Enables High Res mode (Retina Display) on iPhone 4 and maintains low res on all other devices
-	if( ! [director enableRetinaDisplay:YES] )
+	if( ! [director_ enableRetinaDisplay:YES] )
 		CCLOG(@"Retina Display Not supported");
 	
 	// When in iPad / RetinaDisplay mode, CCFileUtils will append the "-ipad" / "-hd" to all loaded files
@@ -353,45 +345,33 @@ Class restartAction()
 	CCScene *scene = [CCScene node];
 	[scene addChild: [nextAction() node]];
 			 
-	[director pushScene: scene];
+	[director_ pushScene: scene];
 }
 
 // getting a call, pause the game
 -(void) applicationWillResignActive:(UIApplication *)application
 {
-	AppController *app = [[UIApplication sharedApplication] delegate];
-	UINavigationController *nav = [app navigationController];
-	
-	if( [nav visibleViewController] == viewController_ )
-		[[CCDirector sharedDirector] pause];
+	if( [rootViewController_ visibleViewController] == director_ )
+		[director_ pause];
 }
 
 // call got rejected
 -(void) applicationDidBecomeActive:(UIApplication *)application
 {
-	AppController *app = [[UIApplication sharedApplication] delegate];
-	UINavigationController *nav = [app navigationController];	
-	
-	if( [nav visibleViewController] == viewController_ )
-		[[CCDirector sharedDirector] resume];
+	if( [rootViewController_ visibleViewController] == director_ )
+		[director_ resume];
 }
 
 -(void) applicationDidEnterBackground:(UIApplication*)application
 {
-	AppController *app = [[UIApplication sharedApplication] delegate];
-	UINavigationController *nav = [app navigationController];	
-	
-	if( [nav visibleViewController] == viewController_ )
-		[[CCDirector sharedDirector] stopAnimation];
+	if( [rootViewController_ visibleViewController] == director_ )
+		[director_ stopAnimation];
 }
 
 -(void) applicationWillEnterForeground:(UIApplication*)application
 {
-	AppController *app = [[UIApplication sharedApplication] delegate];
-	UINavigationController *nav = [app navigationController];	
-	
-	if( [nav visibleViewController] == viewController_ )
-		[[CCDirector sharedDirector] startAnimation];
+	if( [rootViewController_ visibleViewController] == director_ )
+		[director_ startAnimation];
 }
 
 // application will be killed
@@ -414,7 +394,6 @@ Class restartAction()
 
 - (void) dealloc
 {
-	[viewController_ release];
 	[window_ release];
 	
 	[super dealloc];
