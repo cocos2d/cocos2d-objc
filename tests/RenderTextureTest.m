@@ -8,10 +8,6 @@
 // cocos import
 #import "RenderTextureTest.h"
 
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
-#import "RootViewController.h"
-#endif
-
 static int sceneIdx=-1;
 static NSString *tests[] = {	
 	@"RenderTextureSave",
@@ -530,56 +526,17 @@ Class restartAction()
 // CLASS IMPLEMENTATIONS
 @implementation AppController
 
-@synthesize window=window_, viewController=viewController_, navigationController=navigationController_;
-
-- (void) applicationDidFinishLaunching:(UIApplication*)application
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-	// Init the window
-	window_ = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-	
-	// before creating any layer, set the landscape mode
-	CCDirector *director = [CCDirector sharedDirector];
-	
-	// set FPS at 60
-	[director setAnimationInterval:1.0/60];
-	
-	// Display FPS: yes
-	[director setDisplayStats:kCCDirectorStatsFPS];
-	
-	// Create an EAGLView with a RGB8 color buffer, and a depth buffer of 24-bits
-	EAGLView *glView = [EAGLView viewWithFrame:[window_ bounds]
-								   pixelFormat:kEAGLColorFormatRGB565
-								   depthFormat:0];
-	
-	// attach the openglView to the director
-	[director setOpenGLView:glView];
+	[super application:application didFinishLaunchingWithOptions:launchOptions];
 	
 	// 2D projection
 //	[director setProjection:kCCDirectorProjection2D];
 	
 	// Enables High Res mode (Retina Display) on iPhone 4 and maintains low res on all other devices
-	if( ! [director enableRetinaDisplay:YES] )
+	if( ! [director_ enableRetinaDisplay:YES] )
 		CCLOG(@"Retina Display Not supported");
-	
-	// Init the View Controller
-	viewController_ = [[RootViewController alloc] initWithNibName:nil bundle:nil];
-	viewController_.wantsFullScreenLayout = YES;
-	
-	// make the OpenGLView a child of the view controller
-	[viewController_ setView:glView];
-	
-	navigationController_ = [[UINavigationController alloc] initWithRootViewController:viewController_];
-	navigationController_.navigationBarHidden = YES;
-	
-	// set the Navigation Controller as the root view controller
-	[window_ setRootViewController:navigationController_];
-	
-	[viewController_ release];
-	[navigationController_ release];
-	
-	// make main window visible
-	[window_ makeKeyAndVisible];	
-	
+		
 	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
 	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
 	// You can change anytime.
@@ -593,69 +550,9 @@ Class restartAction()
 	CCScene *scene = [CCScene node];
 	[scene addChild: [nextAction() node]];
 	
-	[director pushScene:scene];
-}
-
-// getting a call, pause the game
--(void) applicationWillResignActive:(UIApplication *)application
-{
-	AppController *app = [[UIApplication sharedApplication] delegate];
-	UINavigationController *nav = [app navigationController];
+	[director_ pushScene:scene];
 	
-	if( [nav visibleViewController] == viewController_ )
-		[[CCDirector sharedDirector] pause];
-}
-
-// call got rejected
--(void) applicationDidBecomeActive:(UIApplication *)application
-{
-	AppController *app = [[UIApplication sharedApplication] delegate];
-	UINavigationController *nav = [app navigationController];	
-	
-	if( [nav visibleViewController] == viewController_ )
-		[[CCDirector sharedDirector] resume];
-}
-
--(void) applicationDidEnterBackground:(UIApplication*)application
-{
-	AppController *app = [[UIApplication sharedApplication] delegate];
-	UINavigationController *nav = [app navigationController];	
-	
-	if( [nav visibleViewController] == viewController_ )
-		[[CCDirector sharedDirector] stopAnimation];
-}
-
--(void) applicationWillEnterForeground:(UIApplication*)application
-{
-	AppController *app = [[UIApplication sharedApplication] delegate];
-	UINavigationController *nav = [app navigationController];	
-	
-	if( [nav visibleViewController] == viewController_ )
-		[[CCDirector sharedDirector] startAnimation];
-}
-
-// application will be killed
-- (void)applicationWillTerminate:(UIApplication *)application
-{	
-	CC_DIRECTOR_END();
-}
-
-// purge memory
-- (void)applicationDidReceiveMemoryWarning:(UIApplication *)application
-{
-	[[CCDirector sharedDirector] purgeCachedData];
-}
-
-// next delta time will be zero
--(void) applicationSignificantTimeChange:(UIApplication *)application
-{
-	[[CCDirector sharedDirector] setNextDeltaTimeZero:YES];
-}
-
-- (void) dealloc
-{
-	[window_ release];
-	[super dealloc];
+	return YES;
 }
 @end
 

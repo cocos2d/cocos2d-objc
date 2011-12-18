@@ -7,7 +7,6 @@
 //
 
 #import "Box2dTest.h"
-#import "RootViewController.h"
 
 //Pixel to metres ratio. Box2D uses metres as the unit for measurement.
 //This ratio defines how many pixels correspond to 1 Box2D "metre"
@@ -322,41 +321,22 @@ enum {
 // CLASS IMPLEMENTATIONS
 @implementation AppController
 
-@synthesize window=window_, viewController=viewController_, navigationController=navigationController_;
-
-- (void) applicationDidFinishLaunching:(UIApplication*)application
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-	// CC_DIRECTOR_INIT()
-	//
-	// 1. Initializes an EAGLView with 0-bit depth format, and RGB565 render buffer
-	// 2. EAGLView multiple touches: disabled
-	// 3. creates a UIWindow, and assign it to the "window" var (it must already be declared)
-	// 4. Parents EAGLView to the newly created window
-	// 5. Creates Display Link Director
-	// 5a. If it fails, it will use an NSTimer director
-	// 6. It will try to run at 60 FPS
-	// 7. Display FPS: NO
-	// 8. Device orientation: Portrait
-	// 9. Connects the director to the EAGLView
-	//
-	CC_DIRECTOR_INIT();
-	
-	// Obtain the shared director in order to...
-	CCDirector *director = [CCDirector sharedDirector];
+	[super application:application didFinishLaunchingWithOptions:launchOptions];
 
 	// Turn on display FPS
-	[director setDisplayStats:kCCDirectorStatsFPS];
+	[director_ setDisplayStats:kCCDirectorStatsFPS];
 	
 	// Turn on multiple touches
-	EAGLView *view = [director openGLView];
-	[view setMultipleTouchEnabled:YES];
+	[director_.view setMultipleTouchEnabled:YES];
 	
 	// 2D projection
-	[director setProjection:kCCDirectorProjection2D];
-//	[director setProjection:kCCDirectorProjection3D];
+	[director_ setProjection:kCCDirectorProjection2D];
+//	[director_ setProjection:kCCDirectorProjection3D];
 	
 	// Enables High Res mode (Retina Display) on iPhone 4 and maintains low res on all other devices
-	if( ! [director enableRetinaDisplay:NO] )
+	if( ! [director_ enableRetinaDisplay:NO] )
 		CCLOG(@"Retina Display Not supported");
 	
 	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
@@ -377,70 +357,8 @@ enum {
 	id box2dLayer = [MainLayer node];
 	[scene addChild:box2dLayer z:0];
 
-	[director pushScene: scene];
-}
-
-- (void) dealloc
-{
-	[viewController_ release];
-	[window_ release];
-	[super dealloc];
-}
-
-// getting a call, pause the game
--(void) applicationWillResignActive:(UIApplication *)application
-{
-	AppController *app = [[UIApplication sharedApplication] delegate];
-	UINavigationController *nav = [app navigationController];
+	[director_ pushScene: scene];
 	
-	if( [nav visibleViewController] == viewController_ )
-		[[CCDirector sharedDirector] pause];
+	return YES;
 }
-
-// call got rejected
--(void) applicationDidBecomeActive:(UIApplication *)application
-{
-	AppController *app = [[UIApplication sharedApplication] delegate];
-	UINavigationController *nav = [app navigationController];	
-	
-	if( [nav visibleViewController] == viewController_ )
-		[[CCDirector sharedDirector] resume];
-}
-
--(void) applicationDidEnterBackground:(UIApplication*)application
-{
-	AppController *app = [[UIApplication sharedApplication] delegate];
-	UINavigationController *nav = [app navigationController];	
-	
-	if( [nav visibleViewController] == viewController_ )
-		[[CCDirector sharedDirector] stopAnimation];
-}
-
--(void) applicationWillEnterForeground:(UIApplication*)application
-{
-	AppController *app = [[UIApplication sharedApplication] delegate];
-	UINavigationController *nav = [app navigationController];	
-	
-	if( [nav visibleViewController] == viewController_ )
-		[[CCDirector sharedDirector] startAnimation];
-}
-
-// application will be killed
-- (void)applicationWillTerminate:(UIApplication *)application
-{	
-	CC_DIRECTOR_END();
-}
-
-// purge memroy
-- (void)applicationDidReceiveMemoryWarning:(UIApplication *)application
-{
-	[[CCDirector sharedDirector] purgeCachedData];
-}
-
-// next delta time will be zero
--(void) applicationSignificantTimeChange:(UIApplication *)application
-{
-	[[CCDirector sharedDirector] setNextDeltaTimeZero:YES];
-}
-
 @end

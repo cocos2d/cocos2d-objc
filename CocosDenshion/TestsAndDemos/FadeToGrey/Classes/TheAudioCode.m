@@ -18,7 +18,9 @@ BOOL fadingOut;
 		//Get a pointer to the sound engine 
 		sae = [SimpleAudioEngine sharedEngine];
 		[[CDAudioManager sharedManager] setResignBehavior:kAMRBStopPlay autoHandle:YES];
-		actionManager = [CCActionManager sharedManager];
+		
+		CCDirector *director = [CCDirector sharedDirector];
+		actionManager = [director actionManager];
 		
 		//Test preloading two of our files, this will have no performance effect. In reality you would
 		//probably do this during start up
@@ -117,7 +119,9 @@ BOOL fadingOut;
 -(void) testThree:(id) sender {
 	CDLOG(@">>Test three");
 	//Stop any actions currently running
-	[[CCActionManager sharedManager] removeAllActionsFromTarget:sound3];
+	CCDirector *director = [CCDirector sharedDirector];
+	
+	[[director actionManager] removeAllActionsFromTarget:sound3];
 	if (!fadingOut) {
 		//Fade it out
 		[CDXPropertyModifierAction fadeSoundEffect:1.0f finalVolume:0.0f curveType:kIT_Linear shouldStop:YES effect:sound3];

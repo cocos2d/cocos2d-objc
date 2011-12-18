@@ -16,7 +16,6 @@
 #import "GameState.h"
 #import "Level.h"
 #import "GameSoundManager.h"
-#import "RootViewController.h"
 
 @implementation TomTheTurretAppDelegate
 
@@ -24,53 +23,28 @@
 @synthesize mainMenuScene = _mainMenuScene;
 @synthesize storyScene = _storyScene;
 @synthesize actionScene = _actionScene;
-@synthesize window=window_, viewController=viewController_, navigationController=navigationController_;
 
-- (void) applicationDidFinishLaunching:(UIApplication*)application
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+	[super application:application didFinishLaunchingWithOptions:launchOptions];
+	
 	//Kick off sound initialisation, this will happen in a separate thread
 	[[GameSoundManager sharedManager] setup];
 	
-	// Init the window
-	window_ = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-	
-	// get instance of the shared director
-	CCDirector *director = [CCDirector sharedDirector];
 
 	// display FPS (useful when debugging)
-	[director setDisplayStats:kCCDirectorStatsFPS];
+	[director_ setDisplayStats:kCCDirectorStatsFPS];
 	
 	// frames per second
-	[director setAnimationInterval:1.0/60];
+	[director_ setAnimationInterval:1.0/60];
 	
-	// create an OpenGL view
-	EAGLView *glView = [EAGLView viewWithFrame:[window_ bounds]];
-	[glView setMultipleTouchEnabled:YES];
-	
-	// connect it to the director
-	[director setOpenGLView:glView];
-	
-	// Init the View Controller
-	viewController_ = [[RootViewController alloc] initWithNibName:nil bundle:nil];
-	viewController_.wantsFullScreenLayout = YES;
-	
-	// make the OpenGLView a child of the view controller
-	[viewController_ setView:glView];
-	
-	navigationController_ = [[UINavigationController alloc] initWithRootViewController:viewController_];
-	navigationController_.navigationBarHidden = YES;
-	
-	// set the Navigation Controller as the root view controller
-	[window_ setRootViewController:navigationController_];
-	
-	[viewController_ release];
-	[navigationController_ release];
-	
-	// Make the window visible
-	[window_ makeKeyAndVisible];
+	// multiple touches on
+	[director_.view setMultipleTouchEnabled:YES];
 
     self.loadingScene = [[[LoadingScene alloc] init] autorelease];		
-	[director pushScene: _loadingScene];
+	[director_ pushScene: _loadingScene];
+	
+	return YES;
 }
 
 - (void)loadScenes {
@@ -78,10 +52,13 @@
     // Create a shared opengl context so any textures we load can be shared with the
     // main content
     // See http://www.cocos2d-iphone.org/forum/topic/363 for more details
-    EAGLContext *k_context = [[[EAGLContext alloc]
-                               initWithAPI:kEAGLRenderingAPIOpenGLES2
-                               sharegroup:[[[[CCDirector sharedDirector] openGLView] context] sharegroup]] autorelease];    
+	
+	EAGLView *view = (EAGLView*) [[CCDirector sharedDirector] view];
+    EAGLContext *k_context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2
+													sharegroup: [view.context sharegroup]];
+							  
     [EAGLContext setCurrentContext:k_context];
+	[k_context release];
     
     self.mainMenuScene = [[[MainMenuScene alloc] init] autorelease];    
     self.storyScene = [[[StoryScene alloc] init] autorelease];
@@ -129,41 +106,12 @@
     [self launchCurLevel];
 }
 
-- (void)applicationWillResignActive:(UIApplication *)application {
-	[[CCDirector sharedDirector] pause];
-}
-
-- (void)applicationDidBecomeActive:(UIApplication *)application {
-	[[CCDirector sharedDirector] resume];
-}
-
-- (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {
-	[[CCDirector sharedDirector] purgeCachedData];
-}
-
--(void) applicationDidEnterBackground:(UIApplication*)application {
-	[[CCDirector sharedDirector] stopAnimation];
-}
-
--(void) applicationWillEnterForeground:(UIApplication*)application {
-	[[CCDirector sharedDirector] startAnimation];
-}
-
-- (void)applicationWillTerminate:(UIApplication *)application {
-	[[CCDirector sharedDirector] end];
-}
-
-- (void)applicationSignificantTimeChange:(UIApplication *)application {
-	[[CCDirector sharedDirector] setNextDeltaTimeZero:YES];
-}
-
 - (void)dealloc {
     self.loadingScene = nil;
     self.mainMenuScene = nil;
     self.storyScene = nil;
     self.actionScene = nil;
-	[[CCDirector sharedDirector] end];
-	[window_ release];
+	
 	[super dealloc];
 }
 

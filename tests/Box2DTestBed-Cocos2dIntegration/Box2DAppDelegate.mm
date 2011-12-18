@@ -16,73 +16,30 @@
 #import "Box2DView.h"
 #import "cocos2d.h"
 
-#import "RootViewController.h"
-
 @implementation Box2DAppDelegate
 
-@synthesize window=window_, viewController=viewController_, navigationController=navigationController_;
-
-
-- (void)applicationDidFinishLaunching:(UIApplication *)application
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+	[super application:application didFinishLaunchingWithOptions:launchOptions];
+
     [application setStatusBarHidden:true];
 	
-	// CC_DIRECTOR_INIT()
-	//
-	// 1. Initializes an EAGLView with 0-bit depth format, and RGB565 render buffer
-	// 2. EAGLView multiple touches: disabled
-	// 3. Parents EAGLView to the main window
-	// 4. Creates Display Link Director
-	// 4a. If it fails, it will use an NSTimer director
-	// 5. It will try to run at 60 FPS
-	// 6. Display FPS: NO
-	// 7. Device orientation: Portrait
-	// 8. Connects the director to the EAGLView
-	//
-	CC_DIRECTOR_INIT();
-	
-	// Obtain the shared director in order to...
-	CCDirector *director = [CCDirector sharedDirector];
-
 	// Turn on display FPS
-	[director setDisplayStats:kCCDirectorStatsFPS];	
+	[director_ setDisplayStats:kCCDirectorStatsFPS];	
 
 	// 2D projection
-	[director setProjection:kCCDirectorProjection2D];
-//	[director setProjection:kCCDirectorProjection3D];
+	[director_ setProjection:kCCDirectorProjection2D];
+//	[director_ setProjection:kCCDirectorProjection3D];
 	
 	// Enables High Res mode (Retina Display) on iPhone 4 and maintains low res on all other devices
-	if( ! [director enableRetinaDisplay:NO] )
+	if( ! [director_ enableRetinaDisplay:NO] )
 		CCLOG(@"Retina Display Not supported");
 	
 	CCScene *scene = [CCScene node];
 	[scene addChild: [MenuLayer menuWithEntryID:0]];
 	
-	[director pushScene: scene];
+	[director_ pushScene: scene];
+	
+	return YES;
 }
-
-// getting a call, pause the game
--(void) applicationWillResignActive:(UIApplication *)application
-{
-	[[CCDirector sharedDirector] pause];
-}
-
-// call got rejected
--(void) applicationDidBecomeActive:(UIApplication *)application
-{
-	[[CCDirector sharedDirector] resume];
-}
-
-// purge memory
-- (void)applicationDidReceiveMemoryWarning:(UIApplication *)application
-{
-	[[CCDirector sharedDirector] purgeCachedData];
-}
-
-- (void)dealloc {
-	[viewController_ release];
-	[window_ release];
-	[super dealloc];
-}
-
 @end

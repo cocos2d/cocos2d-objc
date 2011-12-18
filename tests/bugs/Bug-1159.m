@@ -66,38 +66,49 @@
 // CLASS IMPLEMENTATIONS
 @implementation AppController
 
-@synthesize window=window_, viewController=viewController_, navigationController=navigationController_;
-
-- (void) applicationDidFinishLaunching:(UIApplication*)application
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+	// Don't calls super
 	// Init the window
 	window_ = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 	
-	// Set to 2D Projection
-	CCDirector *director = [CCDirector sharedDirector];
-	
-	[director setAnimationInterval:1.0/60];
-	
 	
 	// Create an EAGLView with a RGB8 color buffer, and a depth buffer of 24-bits
-    EAGLView *glView = [EAGLView viewWithFrame:[window_ bounds]
+	EAGLView *glView = [EAGLView viewWithFrame:[window_ bounds]
 								   pixelFormat:kEAGLColorFormatRGBA8
-								   depthFormat:GL_DEPTH_COMPONENT24_OES];
+								   depthFormat:GL_DEPTH_COMPONENT24_OES
+							preserveBackbuffer:NO
+									sharegroup:nil
+								 multiSampling:NO
+							   numberOfSamples:0];
+	
+	director_ = [CCDirector sharedDirector];
+	
+	director_.wantsFullScreenLayout = YES;
+	// Display Milliseconds Per Frame
+	[director_ setDisplayStats:kCCDirectorStatsMPF];
+	
+	// set FPS at 60
+	[director_ setAnimationInterval:1.0/60];
 	
 	// attach the openglView to the director
-	[director setOpenGLView:glView];
+	[director_ setView:glView];
 	
-	viewController_ = [[RootViewController alloc] initWithNibName:nil bundle:nil];
-	[viewController_ setView:glView];
-
-	navigationController_ = [[UINavigationController alloc] initWithRootViewController:viewController_];
-	navigationController_.navigationBarHidden = YES;
+	// 2D projection
+	[director_ setProjection:kCCDirectorProjection2D];
+	//	[director setProjection:kCCDirectorProjection3D];
+	
+	// Enables High Res mode (Retina Display) on iPhone 4 and maintains low res on all other devices
+	if( ! [director_ enableRetinaDisplay:YES] )
+		CCLOG(@"Retina Display Not supported");
+	
+	rootViewController_ = [[UINavigationController alloc] initWithRootViewController:director_];
+	rootViewController_.navigationBarHidden = YES;
 	
 	// set the Navigation Controller as the root view controller
-	[window_ setRootViewController:navigationController_];
+	[window_ setRootViewController:rootViewController_];
 	
-	[viewController_ release];
-	[navigationController_ release];
+	[rootViewController_ release];
 	
 	// make main window visible
 	[window_ makeKeyAndVisible];	
@@ -107,37 +118,8 @@
 	// You can change anytime.
 	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA8888];
 	
-	[director pushScene:[Bug1159 scene] ];
+	[director_ pushScene:[Bug1159 scene] ];
+	
+	return YES;
 }
-
-// getting a call, pause the game
--(void) applicationWillResignActive:(UIApplication *)application
-{
-	[[CCDirector sharedDirector] pause];
-}
-
-// call got rejected
--(void) applicationDidBecomeActive:(UIApplication *)application
-{
-	[[CCDirector sharedDirector] resume];
-}
-
-// purge memroy
-- (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {
-	[[CCTextureCache sharedTextureCache] removeAllTextures];
-}
-
-// next delta time will be zero
--(void) applicationSignificantTimeChange:(UIApplication *)application
-{
-	[[CCDirector sharedDirector] setNextDeltaTimeZero:YES];
-}
-
-- (void) dealloc
-{
-	[window_ release];
-
-	[super dealloc];
-}
-
 @end

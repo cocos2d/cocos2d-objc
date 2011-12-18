@@ -7,10 +7,6 @@
 
 #import "MenuTest.h"
 
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
-#import "RootViewController.h"
-#endif
-
 enum {
 	kTagMenu = 1,
 	kTagMenu0 = 0,
@@ -102,7 +98,8 @@ enum {
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 -(void) registerWithTouchDispatcher
 {
-	[[CCTouchDispatcher sharedDispatcher] addTargetedDelegate:self priority:kCCMenuTouchPriority+1 swallowsTouches:YES];
+	CCDirectorIOS *director = (CCDirectorIOS*)[CCDirector sharedDirector];
+	[[director touchDispatcher] addTargetedDelegate:self priority:kCCMenuTouchPriority+1 swallowsTouches:YES];
 }
 
 -(BOOL) ccTouchBegan:(UITouch *)touch withEvent:(UIEvent *)event
@@ -142,7 +139,8 @@ enum {
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 -(void) allowTouches
 {
-    [[CCTouchDispatcher sharedDispatcher] setPriority:kCCMenuTouchPriority+1 forDelegate:self];
+	CCDirectorIOS *director = (CCDirectorIOS*)[CCDirector sharedDirector];
+    [[director touchDispatcher] setPriority:kCCMenuTouchPriority+1 forDelegate:self];
     [self unscheduleAllSelectors];
 	NSLog(@"TOUCHES ALLOWED AGAIN");
 
@@ -152,7 +150,9 @@ enum {
 -(void) menuCallbackDisabled:(id) sender {
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
     // hijack all touch events for 5 seconds
-    [[CCTouchDispatcher sharedDispatcher] setPriority:kCCMenuTouchPriority-1 forDelegate:self];
+	CCDirectorIOS *director = (CCDirectorIOS*)[CCDirector sharedDirector];
+    [[director touchDispatcher] setPriority:kCCMenuTouchPriority-1 forDelegate:self];
+
     [self schedule:@selector(allowTouches) interval:5.0f];
 	NSLog(@"TOUCHES DISABLED FOR 5 SECONDS");
 #endif
@@ -473,34 +473,16 @@ enum {
 
 @implementation AppController
 
-@synthesize window=window_, viewController=viewController_, navigationController=navigationController_;
-
-- (void) applicationDidFinishLaunching:(UIApplication*)application
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-	// CC_DIRECTOR_INIT()
-	//
-	// 1. Initializes an EAGLView with 0-bit depth format, and RGB565 render buffer
-	// 2. EAGLView multiple touches: disabled
-	// 3. creates a UIWindow, and assign it to the "window" var (it must already be declared)
-	// 4. Parents EAGLView to the newly created window
-	// 5. Creates Display Link Director
-	// 5a. If it fails, it will use an NSTimer director
-	// 6. It will try to run at 60 FPS
-	// 7. Display FPS: NO
-	// 8. Device orientation: Portrait
-	// 9. Connects the director to the EAGLView
-	//
-	CC_DIRECTOR_INIT();
-
-	// get instance of the shared director
-	CCDirector *director = [CCDirector sharedDirector];
+	[super application:application didFinishLaunchingWithOptions:launchOptions];
 
 	// Enables High Res mode (Retina Display) on iPhone 4 and maintains low res on all other devices
-	if( ! [director enableRetinaDisplay:YES] )
+	if( ! [director_ enableRetinaDisplay:YES] )
 		CCLOG(@"Retina Display Not supported");
 	
 	// display FPS (useful when debugging)
-	[director setDisplayStats:kCCDirectorStatsFPS];
+	[director_ setDisplayStats:kCCDirectorStatsFPS];
 	
 	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
 	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
@@ -517,71 +499,9 @@ enum {
 	CCLayerMultiplex *layer = [CCLayerMultiplex layerWithLayers: [Layer1 node], [Layer2 node], [Layer3 node], [Layer4 node], nil];
 	[scene addChild: layer z:0];
 
-	[director pushScene: scene];
-}
-
-// getting a call, pause the game
--(void) applicationWillResignActive:(UIApplication *)application
-{
-	AppController *app = [[UIApplication sharedApplication] delegate];
-	UINavigationController *nav = [app navigationController];
+	[director_ pushScene: scene];
 	
-	if( [nav visibleViewController] == viewController_ )
-		[[CCDirector sharedDirector] pause];
-}
-
-// call got rejected
--(void) applicationDidBecomeActive:(UIApplication *)application
-{
-	AppController *app = [[UIApplication sharedApplication] delegate];
-	UINavigationController *nav = [app navigationController];	
-	
-	if( [nav visibleViewController] == viewController_ )
-		[[CCDirector sharedDirector] resume];
-}
-
--(void) applicationDidEnterBackground:(UIApplication*)application
-{
-	AppController *app = [[UIApplication sharedApplication] delegate];
-	UINavigationController *nav = [app navigationController];	
-	
-	if( [nav visibleViewController] == viewController_ )
-		[[CCDirector sharedDirector] stopAnimation];
-}
-
--(void) applicationWillEnterForeground:(UIApplication*)application
-{
-	AppController *app = [[UIApplication sharedApplication] delegate];
-	UINavigationController *nav = [app navigationController];	
-	
-	if( [nav visibleViewController] == viewController_ )
-		[[CCDirector sharedDirector] startAnimation];
-}
-
-// application will be killed
-- (void)applicationWillTerminate:(UIApplication *)application
-{	
-	CC_DIRECTOR_END();
-}
-
-// purge memory
-- (void)applicationDidReceiveMemoryWarning:(UIApplication *)application
-{
-	[[CCDirector sharedDirector] purgeCachedData];
-}
-
-// next delta time will be zero
--(void) applicationSignificantTimeChange:(UIApplication *)application
-{
-	[[CCDirector sharedDirector] setNextDeltaTimeZero:YES];
-}
-
-- (void) dealloc
-{
-	[viewController_ release];
-	[window_ release];
-	
-	[super dealloc];
+	return YES;
 }
 @end
 

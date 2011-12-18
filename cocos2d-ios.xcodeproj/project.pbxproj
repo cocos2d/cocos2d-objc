@@ -1322,6 +1322,12 @@
 		A01AB916149709E300C93DB6 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 503092B210447296005F7AFC /* libz.dylib */; };
 		A01AB95414970B1F00C93DB6 /* DirectorTest.m in Sources */ = {isa = PBXBuildFile; fileRef = A01AB95314970B1F00C93DB6 /* DirectorTest.m */; };
 		A034FF86149DC994009F11AA /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A034FF85149DC993009F11AA /* GameKit.framework */; };
+		A04B0D4A149E701A005EB429 /* bugs in Resources */ = {isa = PBXBuildFile; fileRef = 50CBA4A711CBD7FB007B009D /* bugs */; };
+		A04B0D4C149E7FFA005EB429 /* BaseAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0D3A8FE149D2FA40077CD93 /* BaseAppController.m */; };
+		A04B0D4D149E7FFB005EB429 /* BaseAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0D3A8FE149D2FA40077CD93 /* BaseAppController.m */; };
+		A04B0D4E149E7FFB005EB429 /* BaseAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0D3A8FE149D2FA40077CD93 /* BaseAppController.m */; };
+		A04B0D4F149E7FFC005EB429 /* BaseAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0D3A8FE149D2FA40077CD93 /* BaseAppController.m */; };
+		A04B0D50149E7FFE005EB429 /* BaseAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0D3A8FE149D2FA40077CD93 /* BaseAppController.m */; };
 		A0600BF213C2074000BB6F49 /* fps_images-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E087B34E12785BB60076F6FF /* fps_images-hd.png */; };
 		A0600BF313C2074000BB6F49 /* fps_images-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E087B34E12785BB60076F6FF /* fps_images-hd.png */; };
 		A0600BF413C2074100BB6F49 /* fps_images-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E087B34E12785BB60076F6FF /* fps_images-hd.png */; };
@@ -9372,6 +9378,7 @@
 				A0EC4BB01403239F00EC482A /* PositionTextureA8Color.vsh in Resources */,
 				A0EC4BB11403239F00EC482A /* PositionTextureColor.fsh in Resources */,
 				A0EC4BB21403239F00EC482A /* PositionTextureColor.vsh in Resources */,
+				A04B0D4A149E701A005EB429 /* bugs in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -12388,6 +12395,7 @@
 			files = (
 				504E18EB11C4C91200E19835 /* EAGLViewTest.m in Sources */,
 				504E190211C4CB7D00E19835 /* main.m in Sources */,
+				A04B0D50149E7FFE005EB429 /* BaseAppController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -12406,6 +12414,7 @@
 				5052281411B3D7540061670F /* main.m in Sources */,
 				5052281511B3D7540061670F /* Monster.m in Sources */,
 				50522A0E11B3E1E20061670F /* CDXPropertyModifierAction.m in Sources */,
+				A04B0D4C149E7FFA005EB429 /* BaseAppController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -12415,6 +12424,7 @@
 			files = (
 				505228E611B3DC410061670F /* DenshionDemo.m in Sources */,
 				505228EB11B3DC410061670F /* main.m in Sources */,
+				A04B0D4D149E7FFB005EB429 /* BaseAppController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -12427,6 +12437,7 @@
 				505229DF11B3E0BC0061670F /* TheAudioCode.m in Sources */,
 				505229E011B3E0BC0061670F /* main.m in Sources */,
 				50522A0D11B3E1E20061670F /* CDXPropertyModifierAction.m in Sources */,
+				A04B0D4E149E7FFB005EB429 /* BaseAppController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -12439,6 +12450,7 @@
 				5052298A11B3DDBE0061670F /* FancyRatMeteringDemoAppDelegate.m in Sources */,
 				5052298B11B3DDBE0061670F /* HelloWorldScene.m in Sources */,
 				5052298C11B3DDBE0061670F /* main.m in Sources */,
+				A04B0D4F149E7FFC005EB429 /* BaseAppController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

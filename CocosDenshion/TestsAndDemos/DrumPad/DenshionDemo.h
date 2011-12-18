@@ -22,6 +22,7 @@
 
 #import "cocos2d.h"
 #import "CDAudioManager.h"
+#import "BaseAppController.h"
 
 typedef enum {
 	kAppStateAudioManagerInitialising,	//Audio manager is being initialised
@@ -29,17 +30,9 @@ typedef enum {
 	kAppStateReady						//Everything is loaded
 } tAppState;
 
-@interface AppController : NSObject <UIApplicationDelegate>
+@interface AppController : BaseAppController
 {
-	UIWindow *window_;	
-	UIViewController *viewController_;		// weak ref
-	UINavigationController *navigationController_;	// weak ref
 }
-
-@property (nonatomic, retain) UIWindow *window;
-@property (readonly) UIViewController *viewController;
-@property (readonly) UINavigationController *navigationController;
-
 -(void) setUpAudioManager:(NSObject*) data;
 @end
 

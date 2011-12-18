@@ -8,15 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface FadeToGreyAppDelegate : NSObject <UIApplicationDelegate>
-{
-	UIWindow *window_;
-	UIViewController *viewController_;		// weak ref
-	UINavigationController *navigationController_;	// weak ref
-}
+#import "BaseAppController.h"
 
-@property (nonatomic, retain) UIWindow *window;
-@property (readonly) UIViewController *viewController;
-@property (readonly) UINavigationController *navigationController;
-
+@interface FadeToGreyAppDelegate : BaseAppController
 @end
