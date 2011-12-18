@@ -10,10 +10,6 @@
 // local import
 #import "TileMapTest.h"
 
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
-#import "RootViewController.h"
-#endif
-
 static int sceneIdx=-1;
 static NSString *transitions[] = {	
 
@@ -135,7 +131,8 @@ Class restartAction()
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 -(void) registerWithTouchDispatcher
 {
-	[[CCTouchDispatcher sharedDispatcher] addTargetedDelegate:self priority:0 swallowsTouches:YES];
+	CCDirectorIOS *director = (CCDirectorIOS*) [CCDirector sharedDirector];
+	[[director touchDispatcher] addTargetedDelegate:self priority:0 swallowsTouches:YES];
 }
 
 -(BOOL) ccTouchBegan:(UITouch *)touch withEvent:(UIEvent *)event
@@ -1361,50 +1358,9 @@ Class restartAction()
 
 @implementation AppController
 
-@synthesize window=window_, viewController=viewController_, navigationController=navigationController_;
-
-- (void) applicationDidFinishLaunching:(UIApplication*)application
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-	// Init the window
-	window_ = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-
-	// get instance of the shared director
-	CCDirector *director = [CCDirector sharedDirector];
-
-	// display FPS (useful when debugging)
-	[director setDisplayStats:kCCDirectorStatsFPS];
-	
-	// frames per second
-	[director setAnimationInterval:1.0/60];
-	
-	// create an OpenGL view a depth buffer of 16-bits (needed for z ordering)
-	//   and an RGB8 color buffer
-	EAGLView *glView = [EAGLView viewWithFrame:[window_ bounds]
-								   pixelFormat:kEAGLColorFormatRGBA8
-								   depthFormat:GL_DEPTH_COMPONENT16_OES];
-	[glView setMultipleTouchEnabled:YES];
-
-	// connect it to the director
-	[director setOpenGLView:glView];
-
-	// Enables High Res mode (Retina Display) on iPhone 4 and maintains low res on all other devices
-	if( ! [director enableRetinaDisplay:YES] )
-		CCLOG(@"Retina Display Not supported");
-
-	viewController_ = [[RootViewController alloc] initWithNibName:nil bundle:nil];
-	[viewController_ setView:glView];
-	
-	navigationController_ = [[UINavigationController alloc] initWithRootViewController:viewController_];
-	navigationController_.navigationBarHidden = YES;
-
-	// glview is a child of the main window
-	[window_ setRootViewController:navigationController_];
-	
-	[navigationController_ release];
-	[viewController_ release];
-	
-	// Make the window visible
-	[window_ makeKeyAndVisible];
+	[super application:application didFinishLaunchingWithOptions:launchOptions];
 
 	// When in iPad / RetinaDisplay mode, CCFileUtils will append the "-ipad" / "-hd" to all loaded files
 	// If the -ipad  / -hdfile is not found, it will load the non-suffixed version
@@ -1417,78 +1373,18 @@ Class restartAction()
 	//
 	// Run all the test with 2d projection
 	//
-	[director setProjection:kCCDirectorProjection2D];
+	[director_ setProjection:kCCDirectorProjection2D];
 
+	[director_ setDisplayStats:kCCDirectorStatsFPS];
 	
 	//
-	// Finally, run the scene
+	// Push run the scene
 	//
-	[director pushScene: scene];
-}
-
-// getting a call, pause the game
--(void) applicationWillResignActive:(UIApplication *)application
-{
-	AppController *app = [[UIApplication sharedApplication] delegate];
-	UINavigationController *nav = [app navigationController];
+	[director_ pushScene: scene];
 	
-	if( [nav visibleViewController] == viewController_ )
-		[[CCDirector sharedDirector] pause];
+	return YES;
 }
 
-// call got rejected
--(void) applicationDidBecomeActive:(UIApplication *)application
-{
-	AppController *app = [[UIApplication sharedApplication] delegate];
-	UINavigationController *nav = [app navigationController];	
-	
-	if( [nav visibleViewController] == viewController_ )
-		[[CCDirector sharedDirector] resume];
-}
-
--(void) applicationDidEnterBackground:(UIApplication*)application
-{
-	AppController *app = [[UIApplication sharedApplication] delegate];
-	UINavigationController *nav = [app navigationController];	
-	
-	if( [nav visibleViewController] == viewController_ )
-		[[CCDirector sharedDirector] stopAnimation];
-}
-
--(void) applicationWillEnterForeground:(UIApplication*)application
-{
-	AppController *app = [[UIApplication sharedApplication] delegate];
-	UINavigationController *nav = [app navigationController];	
-	
-	if( [nav visibleViewController] == viewController_ )
-		[[CCDirector sharedDirector] startAnimation];
-}
-
-// application will be killed
-- (void)applicationWillTerminate:(UIApplication *)application
-{	
-	CCDirector *director = [CCDirector sharedDirector];
-	[[director openGLView] removeFromSuperview];
-	[director end];
-}
-
-// purge memory
-- (void)applicationDidReceiveMemoryWarning:(UIApplication *)application
-{
-	[[CCDirector sharedDirector] purgeCachedData];
-}
-
-// next delta time will be zero
--(void) applicationSignificantTimeChange:(UIApplication *)application
-{
-	[[CCDirector sharedDirector] setNextDeltaTimeZero:YES];
-}
-
-- (void) dealloc
-{
-	[window_ release];
-	[super dealloc];
-}
 @end
 
 #pragma mark -
