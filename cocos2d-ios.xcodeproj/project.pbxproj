@@ -1321,6 +1321,7 @@
 		A01AB915149709E300C93DB6 /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */; };
 		A01AB916149709E300C93DB6 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 503092B210447296005F7AFC /* libz.dylib */; };
 		A01AB95414970B1F00C93DB6 /* DirectorTest.m in Sources */ = {isa = PBXBuildFile; fileRef = A01AB95314970B1F00C93DB6 /* DirectorTest.m */; };
+		A034FF86149DC994009F11AA /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A034FF85149DC993009F11AA /* GameKit.framework */; };
 		A0600BF213C2074000BB6F49 /* fps_images-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E087B34E12785BB60076F6FF /* fps_images-hd.png */; };
 		A0600BF313C2074000BB6F49 /* fps_images-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E087B34E12785BB60076F6FF /* fps_images-hd.png */; };
 		A0600BF413C2074100BB6F49 /* fps_images-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E087B34E12785BB60076F6FF /* fps_images-hd.png */; };
@@ -4831,6 +4832,7 @@
 		A01AB91A149709E300C93DB6 /* DirectorTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DirectorTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A01AB95214970B1F00C93DB6 /* DirectorTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DirectorTest.h; path = tests/DirectorTest.h; sourceTree = "<group>"; };
 		A01AB95314970B1F00C93DB6 /* DirectorTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DirectorTest.m; path = tests/DirectorTest.m; sourceTree = "<group>"; };
+		A034FF85149DC993009F11AA /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		A04A1FEB13B826B300ABAFB7 /* libkazmath.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libkazmath.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		A060106813C2992800BB6F49 /* LICENSE_Kazmath.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE_Kazmath.txt; sourceTree = "<group>"; };
 		A079344F141990CC00AC44D4 /* AddPair.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddPair.h; sourceTree = "<group>"; };
@@ -5851,6 +5853,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A034FF86149DC994009F11AA /* GameKit.framework in Frameworks */,
 				A01AB910149709E300C93DB6 /* Foundation.framework in Frameworks */,
 				A01AB911149709E300C93DB6 /* UIKit.framework in Frameworks */,
 				A01AB912149709E300C93DB6 /* CoreGraphics.framework in Frameworks */,
@@ -6120,6 +6123,7 @@
 				50E3876C10446C6E00150883 /* AVFoundation.framework */,
 				50E3876E10446C6E00150883 /* AudioToolbox.framework */,
 				50E3877010446C6E00150883 /* OpenAL.framework */,
+				A034FF85149DC993009F11AA /* GameKit.framework */,
 				503092B210447296005F7AFC /* libz.dylib */,
 			);
 			name = Frameworks;

@@ -415,6 +415,7 @@ CGFloat	__ccContentScaleFactor = 1;
 
 - (void) startAnimation
 {
+
 	NSAssert( displayLink == nil, @"displayLink must be nil. Calling startAnimation twice?");
 
 	gettimeofday( &lastUpdate_, NULL);
@@ -422,8 +423,8 @@ CGFloat	__ccContentScaleFactor = 1;
 	// approximate frame rate
 	// assumes device refreshes at 60 fps
 	int frameInterval = (int) floor(animationInterval_ * 60.0f);
-	
-	CCLOG(@"cocos2d: Frame interval: %d", frameInterval);
+
+	CCLOG(@"cocos2d: animation started with frame interval: %d", frameInterval);
 
 	displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(mainLoop:)];
 	[displayLink setFrameInterval:frameInterval];
@@ -448,6 +449,8 @@ CGFloat	__ccContentScaleFactor = 1;
 
 - (void) stopAnimation
 {
+	CCLOG(@"cocos2d: animation stopped");
+
 #if CC_DIRECTOR_IOS_USE_BACKGROUND_THREAD
 	[runningThread_ cancel];
 	[runningThread_ release];
