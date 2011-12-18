@@ -1,15 +1,10 @@
+
+#import <GameKit/GameKit.h>
 #import "cocos2d.h"
+#import "BaseAppController.h"
 
 //CLASS INTERFACE
-@interface AppController : NSObject <UIApplicationDelegate>
-{
-	UIWindow *window_;
-	UIViewController *viewController_;
-	UINavigationController *navigationController_;
-}
-@property (nonatomic, retain) UIWindow *window;
-@property (readonly) UIViewController *viewController;
-@property (readonly) UINavigationController *navigationController;
+@interface AppController : BaseAppController
 @end
 
 
@@ -26,6 +21,10 @@
 
 
 @interface DirectorViewDidDisappear : DirectorTest
+{}
+@end
+
+@interface DirectorAndGameCenter : DirectorTest <GKAchievementViewControllerDelegate, GKLeaderboardViewControllerDelegate>
 {}
 @end
 
