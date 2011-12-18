@@ -4,69 +4,27 @@
 #import "PongScene.h"
 #import "cocos2d.h"
 
-#import "RootViewController.h"
-
 
 @implementation AppController
 
-@synthesize window=window_, viewController=viewController_, navigationController=navigationController_;
-
-- (void)applicationDidFinishLaunching:(UIApplication *)application
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-	// CC_DIRECTOR_INIT()
-	//
-	// 1. Initializes an EAGLView with 0-bit depth format, and RGB565 render buffer
-	// 2. EAGLView multiple touches: disabled
-	// 3. creates a UIWindow, and assign it to the "window" var (it must already be declared)
-	// 4. Parents EAGLView to the newly created window
-	// 5. Creates Display Link Director
-	// 5a. If it fails, it will use an NSTimer director
-	// 6. It will try to run at 60 FPS
-	// 7. Display FPS: NO
-	// 8. Device orientation: Portrait
-	// 9. Connects the director to the EAGLView
-	//
-	CC_DIRECTOR_INIT();
-	
-	// Obtain the shared director in order to...
-	CCDirector *director = [CCDirector sharedDirector];
+	[super application:application didFinishLaunchingWithOptions:launchOptions];
 	
 	// Turn on display FPS
-	[director setDisplayStats:kCCDirectorStatsFPS];
+	[director_ setDisplayStats:kCCDirectorStatsFPS];
 	
 	// Set multiple touches on
-	EAGLView *glView = [director openGLView];
-	[glView setMultipleTouchEnabled:YES];	
+	UIView *view = [director_ view];
+	[view setMultipleTouchEnabled:YES];	
 	
 	// Enables High Res mode (Retina Display) on iPhone 4 and maintains low res on all other devices
-	if( ! [director enableRetinaDisplay:YES] )
+	if( ! [director_ enableRetinaDisplay:YES] )
 		CCLOG(@"Retina Display Not supported");
 	
 //	[[CCTouchDispatcher sharedDispatcher] link];
-	[director pushScene:[PongScene node]];
+	[director_ pushScene:[PongScene node]];
+	
+	return YES;
 }
-
--(void)dealloc
-{
-	[window_ release];
-	[viewController_ release];
-
-	[super dealloc];
-}
-
--(void) applicationWillResignActive:(UIApplication *)application
-{
-	[[CCDirector sharedDirector] pause];
-}
-
--(void) applicationDidBecomeActive:(UIApplication *)application
-{
-	[[CCDirector sharedDirector] resume];
-}
-
-- (void)applicationDidReceiveMemoryWarning:(UIApplication *)application
-{
-	[[CCTextureCache sharedTextureCache] removeAllTextures];
-}
-
 @end
