@@ -101,7 +101,8 @@ enum {
 
 -(void) registerWithTouchDispatcher
 {
-	[[CCTouchDispatcher sharedDispatcher] addTargetedDelegate:self priority:0 swallowsTouches:YES];
+	CCDirectorIOS *director = (CCDirectorIOS*) [CCDirector sharedDirector];
+	[[director touchDispatcher] addTargetedDelegate:self priority:0 swallowsTouches:YES];
 }
 
 -(BOOL) ccTouchBegan:(UITouch *)touch withEvent:(UIEvent *)event
@@ -199,7 +200,8 @@ enum {
 -(void) registerWithTouchDispatcher
 {
 	// higher priority than dragging
-	[[CCTouchDispatcher sharedDispatcher] addTargetedDelegate:self priority:-10 swallowsTouches:YES];
+	CCDirectorIOS *director = (CCDirectorIOS*) [CCDirector sharedDirector];
+	[[director touchDispatcher] addTargetedDelegate:self priority:-10 swallowsTouches:YES];
 }
 
 - (BOOL) ccTouchBegan:(UITouch*)touch withEvent:(UIEvent*)event

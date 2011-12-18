@@ -6,7 +6,6 @@
 
 
 #import "MenuTestWithBlocks.h"
-#import "RootViewController.h"
 
 enum {
 	kTagMenu = 1,
@@ -392,45 +391,9 @@ enum {
 // CLASS IMPLEMENTATIONS
 @implementation AppController
 
-@synthesize window=window_, viewController=viewController_, navigationController=navigationController_;
-
-- (void) applicationDidFinishLaunching:(UIApplication*)application
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-	// Init the window
-	window_ = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-	
-	// get instance of the shared director
-	CCDirector *director = [CCDirector sharedDirector];
-
-	// display FPS (useful when debugging)
-	[director setDisplayStats:kCCDirectorStatsFPS];
-	
-	// frames per second
-	[director setAnimationInterval:1.0/60];
-	
-	// create an OpenGL view
-	EAGLView *glView = [EAGLView viewWithFrame:[window_ bounds]];
-	
-	// enable multiple touches
-//	[glView setMultipleTouchEnabled:YES];
-	
-	// connect it to the director
-	[director setOpenGLView:glView];
-	
-	viewController_ = [[RootViewController alloc] init];
-	[viewController_ setView: glView];
-	
-	navigationController_ = [[UINavigationController alloc] initWithRootViewController:viewController_];
-	navigationController_.navigationBarHidden = YES;
-	
-	// set the Navigation Controller as the root view controller
-	[window_ setRootViewController:navigationController_];
-	
-	[viewController_ release];
-	[navigationController_ release];
-	
-	// Make the window visible
-	[window_ makeKeyAndVisible];
+	[super application:application didFinishLaunchingWithOptions:launchOptions];
 
 	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
 	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
@@ -442,52 +405,8 @@ enum {
 	CCLayerMultiplex *layer = [CCLayerMultiplex layerWithLayers: [Layer1 node], [Layer2 node], [Layer3 node], [Layer4 node], nil];
 	[scene addChild: layer z:0];
 	
-	[director pushScene: scene];
+	[director_ pushScene: scene];
+	
+	return YES;
 }
-
-// getting a call, pause the game
--(void) applicationWillResignActive:(UIApplication *)application
-{
-	[[CCDirector sharedDirector] pause];
-}
-
-// call got rejected
--(void) applicationDidBecomeActive:(UIApplication *)application
-{
-	[[CCDirector sharedDirector] resume];
-}
-
--(void) applicationDidEnterBackground:(UIApplication*)application
-{
-	[[CCDirector sharedDirector] stopAnimation];
-}
-
--(void) applicationWillEnterForeground:(UIApplication*)application
-{
-	[[CCDirector sharedDirector] startAnimation];
-}
-
-- (void)applicationWillTerminate:(UIApplication *)application
-{	
-	[[CCDirector sharedDirector] end];
-}
-
-// purge memory
-- (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {
-	[[CCTextureCache sharedTextureCache] removeAllTextures];
-}
-
-// next delta time will be zero
--(void) applicationSignificantTimeChange:(UIApplication *)application
-{
-	[[CCDirector sharedDirector] setNextDeltaTimeZero:YES];
-}
-
-- (void) dealloc
-{
-	[window_ release];
-
-	[super dealloc];
-}
-
 @end

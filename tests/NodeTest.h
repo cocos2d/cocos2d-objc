@@ -1,20 +1,13 @@
 
+#import "BaseAppController.h"
+#import "cocos2d.h"
+
 @class CCSprite;
 
 //CLASS INTERFACE
-@interface AppController : NSObject <UIApplicationDelegate>
-{
-	UIWindow *window_;
-	
-	UIViewController *viewController_;				// weak ref
-	UINavigationController *navigationController_;	// weak ref
-}
-
-@property (nonatomic, retain) UIWindow *window;
-@property (readonly) UIViewController *viewController;
-@property (readonly) UINavigationController *navigationController;
-
+@interface AppController : BaseAppController
 @end
+
 @interface TestDemo : CCLayer
 {}
 -(NSString*) title;

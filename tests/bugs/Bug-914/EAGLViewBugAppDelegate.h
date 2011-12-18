@@ -9,14 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "cocos2d.h"
 #import "bugViewController.h"
+#import "BaseAppController.h"
 
-@interface EAGLViewBugAppDelegate : NSObject <UIApplicationDelegate> {
-	UIWindow *window;
-	bugViewController *viewController;
-}
-
-@property (nonatomic, retain) UIWindow *window;
-
-@property (nonatomic, retain) UIWindow *viewController;
-
+@interface EAGLViewBugAppDelegate : BaseAppController
 @end

@@ -34,7 +34,8 @@ static AudioVisualization *sharedAV = nil;
 		avAvgPowerLevelSel_ = @selector(avAvgPowerLevelDidChange:channel:);
 		avPeakPowerLevelSel_ = @selector(avPeakPowerLevelDidChange:channel:);
 
-		[[CCScheduler sharedScheduler] scheduleSelector:@selector(tick:) forTarget:self interval:0 paused:NO repeat:kCCRepeatForever delay:0.0f];
+		CCDirector *director = [CCDirector sharedDirector];
+		[[director scheduler] scheduleSelector:@selector(tick:) forTarget:self interval:0 paused:NO repeat:kCCRepeatForever delay:0.0f];
 
 		[SimpleAudioEngine sharedEngine];
 		if([[SimpleAudioEngine sharedEngine] isBackgroundMusicPlaying]){
@@ -54,14 +55,17 @@ static AudioVisualization *sharedAV = nil;
 	if(filteredAverage_)
 		free(filteredAverage_);
 	[delegates_ release];
-	[[CCScheduler sharedScheduler] unscheduleSelector:@selector(tick:) forTarget:self];
+	CCDirector *director = [CCDirector sharedDirector];
+	[[director scheduler] unscheduleSelector:@selector(tick:) forTarget:self];
 	[super dealloc];
 }
 
 -(void)setMeteringInterval:(float) seconds
 {
-	[[CCScheduler sharedScheduler] unscheduleSelector:@selector(tick:) forTarget:self];
-	[[CCScheduler sharedScheduler] scheduleSelector:@selector(tick:) forTarget:self interval:seconds paused:NO repeat:kCCRepeatForever delay:0.0f];
+	CCDirector *director = [CCDirector sharedDirector];
+	CCScheduler *scheduler = [director scheduler];
+	[scheduler unscheduleSelector:@selector(tick:) forTarget:self];
+	[scheduler scheduleSelector:@selector(tick:) forTarget:self interval:seconds paused:NO repeat:kCCRepeatForever delay:0.0f];
 }
 
 -(void)tick:(ccTime) dt

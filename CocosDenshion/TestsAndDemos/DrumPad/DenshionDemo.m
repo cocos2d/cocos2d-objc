@@ -24,7 +24,6 @@
 #import "ccMacros.h"
 //#import "CDXFaderAction.h"
 #import "CCActionManager.h"
-#import "RootViewController.h"
 
 ///////////////////////////////////////////////////////
 //Sound ids, these equate to buffer identifiers
@@ -469,8 +468,6 @@ CDSoundSource *toneSource;
 // CLASS IMPLEMENTATIONS
 @implementation AppController
 
-@synthesize window=window_, viewController=viewController_, navigationController=navigationController_;
-
 -(void) setUpAudioManager:(NSObject*) data {
 	
 	//Set up mixer rate for sound engine before CDAudioManager is initialised
@@ -483,38 +480,17 @@ CDSoundSource *toneSource;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-	// Init the window
-	window_ = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-	
-	// get instance of the shared director
-	CCDirector *director = [CCDirector sharedDirector];
+	[super application:application didFinishLaunchingWithOptions:launchOptions];
 
 	// display FPS (useful when debugging)
-	[director setDisplayStats:kCCDirectorStatsFPS];
+	[director_ setDisplayStats:kCCDirectorStatsFPS];
 	
 	// frames per second
-	[director setAnimationInterval:1.0/60];
+	[director_ setAnimationInterval:1.0/60];
 	
-	// create an OpenGL view
-	EAGLView *glView = [EAGLView viewWithFrame:[window_ bounds]];
-	[glView setMultipleTouchEnabled:YES];
+	// multiple touches
+	[director_.view setMultipleTouchEnabled:YES];
 	
-	// connect it to the director
-	[director setOpenGLView:glView];
-	
-	viewController_ = [[RootViewController alloc] init];
-	[viewController_ setView:glView];
-
-	navigationController_ = [[UINavigationController alloc] initWithRootViewController:viewController_];
-	navigationController_.navigationBarHidden = YES;
-	
-	// set the Navigation Controller as the root view controller
-	[window_ setRootViewController:navigationController_];
-	
-	[viewController_ release];
-	[navigationController_ release];
-	
-	// Make the window visible
 	[window_ makeKeyAndVisible];
 	
 	//Set up audio engine
@@ -523,39 +499,8 @@ CDSoundSource *toneSource;
 	CCScene *scene = [CCScene node];
 	[scene addChild: [DenshionLayer node]];
 	
-	[director pushScene: scene];
+	[director_ pushScene: scene];
 	
 	return YES;
 }
-
-// getting a call, pause the game
--(void) applicationWillResignActive:(UIApplication *)application
-{
-	[[CCDirector sharedDirector] pause];
-}
-
-// call got rejected
--(void) applicationDidBecomeActive:(UIApplication *)application
-{
-	[[CCDirector sharedDirector] resume];
-}
-
-// purge memroy
-- (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {
-	[[CCTextureCache sharedTextureCache] removeAllTextures];
-}
-
-// next delta time will be zero
--(void) applicationSignificantTimeChange:(UIApplication *)application
-{
-	[[CCDirector sharedDirector] setNextDeltaTimeZero:YES];
-}
-
-- (void) dealloc
-{
-	[window_ release];
-
-	[super dealloc];
-}
-
 @end

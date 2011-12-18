@@ -5,21 +5,10 @@
 #import "cocos2d.h"
 #import "Box2D.h"
 #import "GLES-Render.h"
-
+#import "BaseAppController.h"
 
 //CLASS INTERFACE
-@interface AppController : NSObject <UIApplicationDelegate>
-{
-	UIWindow *window_;
-	
-	UIViewController *viewController_;				// weak ref
-	UINavigationController *navigationController_;	// weak ref
-}
-
-@property (nonatomic, retain) UIWindow *window;
-@property (readonly) UIViewController *viewController;
-@property (readonly) UINavigationController *navigationController;
-
+@interface AppController : BaseAppController
 @end
 
 @interface MainLayer : CCLayer {

@@ -176,12 +176,12 @@ Class restartAction()
 
 -(NSString *) title
 {
-	return @"RootViewController";
+	return @"Navigation Controller";
 }
 
 -(NSString*) subtitle
 {
-	return @"RootViewController viewDidDissapear";
+	return @"Director should be paused when UIKit window appears";
 }
 @end
 

@@ -8,8 +8,6 @@
 #import "ActionsWithBlocks.h"
 
 
-#import "RootViewController.h"
-
 // HelloWorld implementation
 @implementation ActionsWithBlocks
 
@@ -120,51 +118,19 @@
 //
 @implementation AppController
 
-@synthesize window=window_, viewController=viewController_, navigationController=navigationController_;
-
-// Application entry point
-- (void) applicationDidFinishLaunching:(UIApplication*)application
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-	// Init the window
-	window_ = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-
-	// get instance of the shared director
-	CCDirector *director = [CCDirector sharedDirector];
+	[super application:application didFinishLaunchingWithOptions:launchOptions];
 
 	// display FPS (useful when debugging)
-	[director setDisplayStats:kCCDirectorStatsFPS];
+	[director_ setDisplayStats:kCCDirectorStatsFPS];
 	
 	// frames per second
-	[director setAnimationInterval:1.0/60];
-	
-	// create an OpenGL view
-	EAGLView *glView = [EAGLView viewWithFrame:[window_ bounds]];
+	[director_ setAnimationInterval:1.0/60];
 	
 	// enable multiple touches
-	[glView setMultipleTouchEnabled:YES];
+	[director_.view setMultipleTouchEnabled:YES];
 	
-	// connect it to the director
-	[director setOpenGLView:glView];
-	
-	// Init the View Controller
-	viewController_ = [[RootViewController alloc] initWithNibName:nil bundle:nil];
-	viewController_.wantsFullScreenLayout = YES;
-	
-	// make the OpenGLView a child of the view controller
-	[viewController_ setView:glView];
-	
-	navigationController_ = [[UINavigationController alloc] initWithRootViewController:viewController_];
-	navigationController_.navigationBarHidden = YES;
-	
-	// set the Navigation Controller as the root view controller
-	[window_ setRootViewController:navigationController_];
-	
-	[viewController_ release];
-	[navigationController_ release];
-	
-	// Make the window visible
-	[window_ makeKeyAndVisible];
-
 	// Create and initialize parent and empty Scene
 	CCScene *scene = [CCScene node];
 	
@@ -174,30 +140,10 @@
 	[scene addChild:layer];
 	
 	// Run!
-	[director pushScene: scene];
+	[director_ pushScene: scene];
+	
+	return YES;
 }
-
-- (void) dealloc
-{
-	[window_ release];
-	[super dealloc];
-}
-
--(void) applicationDidEnterBackground:(UIApplication*)application
-{
-	[[CCDirector sharedDirector] stopAnimation];
-}
-
--(void) applicationWillEnterForeground:(UIApplication*)application
-{
-	[[CCDirector sharedDirector] startAnimation];
-}
-
-- (void)applicationWillTerminate:(UIApplication *)application
-{	
-	[[CCDirector sharedDirector] end];
-}
-
 @end
 
 

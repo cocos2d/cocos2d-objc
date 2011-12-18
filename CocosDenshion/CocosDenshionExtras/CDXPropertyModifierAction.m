@@ -61,7 +61,8 @@
 {
 	//Check if modified property has been externally modified and if so bail out
 	if ([modifier _getTargetProperty] != lastSetValue) {
-		[[CCActionManager sharedManager] removeAction:self];
+		CCDirector *director = [CCDirector sharedDirector];
+		[[director actionManager] removeAction:self];
 		return;
 	}	
 	[modifier modify:t];
@@ -76,7 +77,9 @@
 	//Create a property modifier action to wrap the fader 
 	CDXPropertyModifierAction* action = [CDXPropertyModifierAction actionWithDuration:t modifier:fader];
 	[fader release];//Action will retain
-	[[CCActionManager sharedManager] addAction:action target:se paused:NO];
+	
+	CCDirector *director = [CCDirector sharedDirector];
+	[[director actionManager] addAction:action target:se paused:NO];
 }
 
 +(void) fadeSoundEffect:(ccTime)t finalVolume:(float)endVol curveType:(tCDInterpolationType)curve shouldStop:(BOOL) stop effect:(CDSoundSource*) effect{
@@ -86,7 +89,9 @@
 	//Create a property modifier action to wrap the fader 
 	CDXPropertyModifierAction* action = [CDXPropertyModifierAction actionWithDuration:t modifier:fader];
 	[fader release];//Action will retain
-	[[CCActionManager sharedManager] addAction:action target:effect paused:NO];
+	
+	CCDirector *director = [CCDirector sharedDirector];
+	[[director actionManager] addAction:action target:effect paused:NO];
 }
 
 
@@ -99,7 +104,9 @@
 	//Create a property modifier action to wrap the fader 
 	CDXPropertyModifierAction* action = [CDXPropertyModifierAction actionWithDuration:t modifier:fader];
 	[fader release];//Action will retain
-	[[CCActionManager sharedManager] addAction:action target:player paused:NO];
+	
+	CCDirector *director = [CCDirector sharedDirector];
+	[[director actionManager] addAction:action target:player paused:NO];
 }       
 
 @end
