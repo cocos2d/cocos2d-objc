@@ -237,7 +237,8 @@ Class restartAction()
 	
 	CCAction *action = [CCMoveBy actionWithDuration:1 position:ccp(150,0)];
 	
-	[[CCActionManager sharedManager] addAction:action target:grossini paused:YES];
+	CCDirector *director = [CCDirector sharedDirector];
+	[[director actionManager] addAction:action target:grossini paused:YES];
 
 	[self schedule:@selector(unpause:) interval:3];
 }
@@ -245,8 +246,11 @@ Class restartAction()
 -(void) unpause:(ccTime)dt
 {
 	[self unschedule:_cmd];
+	
 	CCNode *node = [self getChildByTag:kTagGrossini];
-	[[CCActionManager sharedManager] resumeTarget:node];
+	
+	CCDirector *director = [CCDirector sharedDirector];
+	[[director actionManager] resumeTarget:node];
 }
 
 -(NSString *) title
@@ -312,7 +316,8 @@ Class restartAction()
 {
 	[super onEnter];
 	
-	CGSize s = [[CCDirector sharedDirector] winSize];
+	CCDirector *director = [CCDirector sharedDirector];
+	CGSize s = [director winSize];
 
 	CCSprite *grossini = [CCSprite spriteWithFile:@"grossini.png"];
 	[self addChild:grossini z:0 tag:kTagGrossini];
@@ -322,7 +327,7 @@ Class restartAction()
 	// An action should be scheduled before calling pause, otherwise pause won't pause a non-existang target
 	[grossini runAction:[CCScaleBy actionWithDuration:2 scale:2]];
 
-	[[CCActionManager sharedManager] pauseTarget: grossini];
+	[[director actionManager] pauseTarget: grossini];
 	[grossini runAction:[CCRotateBy actionWithDuration:2 angle:360]];
 	
 	[self schedule:@selector(resumeGrossini:) interval:3];
@@ -342,8 +347,10 @@ Class restartAction()
 {
 	[self unschedule:_cmd];
 	
+	CCDirector *director = [CCDirector sharedDirector];
+	
 	id grossini = [self getChildByTag:kTagGrossini];
-	[[CCActionManager sharedManager] resumeTarget:grossini];
+	[[director actionManager] resumeTarget:grossini];
 }
 @end
 
@@ -354,23 +361,10 @@ Class restartAction()
 // CLASS IMPLEMENTATIONS
 @implementation AppController
 
-@synthesize window=window_, viewController=viewController_, navigationController=navigationController_;
-
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-	// CC_DIRECTOR_INIT()
-	//
-	// 1. Initializes an EAGLView with 0-bit depth format, and RGB565 render buffer
-	// 2. EAGLView multiple touches: disabled
-	// 3. creates a UIWindow, and assign it to the "window" var (it must already be declared)
-	// 4. Parents EAGLView to the newly created window
-	// 5. Creates Display Link Director
-	// 6. It will try to run at 60 FPS
-	// 7. Display FPS: NO
-	// 8. Will create a CCDirector and will associate the view with the director
-	// 9. Will create a UINavigationControlView with the director.
-	CC_DIRECTOR_INIT();
 
+	[super application:application didFinishLaunchingWithOptions:launchOptions];
 	
 	// 2D projection
 	[director_ setProjection:kCCDirectorProjection2D];
@@ -392,65 +386,4 @@ Class restartAction()
 	return YES;
 }
 
-// getting a call, pause the game
--(void) applicationWillResignActive:(UIApplication *)application
-{
-	AppController *app = [[UIApplication sharedApplication] delegate];
-	UINavigationController *nav = [app navigationController];
-	
-	if( [nav visibleViewController] == viewController_ )
-		[[CCDirector sharedDirector] pause];
-}
-
-// call got rejected
--(void) applicationDidBecomeActive:(UIApplication *)application
-{
-	AppController *app = [[UIApplication sharedApplication] delegate];
-	UINavigationController *nav = [app navigationController];	
-	
-	if( [nav visibleViewController] == viewController_ )
-		[[CCDirector sharedDirector] resume];
-}
-
--(void) applicationDidEnterBackground:(UIApplication*)application
-{
-	AppController *app = [[UIApplication sharedApplication] delegate];
-	UINavigationController *nav = [app navigationController];	
-	
-	if( [nav visibleViewController] == viewController_ )
-		[[CCDirector sharedDirector] stopAnimation];
-}
-
--(void) applicationWillEnterForeground:(UIApplication*)application
-{
-	AppController *app = [[UIApplication sharedApplication] delegate];
-	UINavigationController *nav = [app navigationController];	
-	
-	if( [nav visibleViewController] == viewController_ )
-		[[CCDirector sharedDirector] startAnimation];
-}
-
-// application will be killed
-- (void)applicationWillTerminate:(UIApplication *)application
-{	
-	CC_DIRECTOR_END();
-}
-
-// purge memroy
-- (void)applicationDidReceiveMemoryWarning:(UIApplication *)application
-{
-	[[CCDirector sharedDirector] purgeCachedData];
-}
-
-// next delta time will be zero
--(void) applicationSignificantTimeChange:(UIApplication *)application
-{
-	[[CCDirector sharedDirector] setNextDeltaTimeZero:YES];
-}
-
-- (void) dealloc
-{
-	[window_ release];
-	[super dealloc];
-}
 @end

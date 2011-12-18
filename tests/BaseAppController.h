@@ -13,6 +13,7 @@
 #import <Foundation/Foundation.h>
 
 @class CCDirector;
+@class UIWindow, UINavigationController;
 
 @interface BaseAppController : NSObject <UIApplicationDelegate>
 {

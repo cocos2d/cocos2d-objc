@@ -6,6 +6,8 @@
 //  Copyright (c) 2011 Sapus Media. All rights reserved.
 //
 
+#import <UIKit/UIKit.h>
+
 #import "BaseAppController.h"
 
 // CLASS IMPLEMENTATIONS

@@ -34,13 +34,17 @@
 
 - (void)onEnter
 {
-	[[CCTouchDispatcher sharedDispatcher] addTargetedDelegate:self priority:0 swallowsTouches:YES];
+	CCDirectorIOS *director =  (CCDirectorIOS*)[CCDirector sharedDirector];
+	
+	[[director touchDispatcher] addTargetedDelegate:self priority:0 swallowsTouches:YES];
 	[super onEnter];
 }
 
 - (void)onExit
 {
-	[[CCTouchDispatcher sharedDispatcher] removeDelegate:self];
+	CCDirectorIOS *director =  (CCDirectorIOS*)[CCDirector sharedDirector];
+
+	[[director touchDispatcher] removeDelegate:self];
 	[super onExit];
 }	
 

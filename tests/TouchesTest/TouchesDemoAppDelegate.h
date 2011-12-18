@@ -2,17 +2,7 @@
  */
 #import <UIKit/UIKit.h>
 #import "cocos2d.h"
+#import "BaseAppController.h"
 
-@interface AppController : NSObject <UIApplicationDelegate>
-{
-	UIWindow *window_;
-	
-	UIViewController *viewController_;				// weak ref
-	UINavigationController *navigationController_;	// weak ref
-}
-
-@property (nonatomic, retain) UIWindow *window;
-@property (readonly) UIViewController *viewController;
-@property (readonly) UINavigationController *navigationController;
-
+@interface AppController : BaseAppController
 @end

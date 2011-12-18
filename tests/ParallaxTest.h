@@ -1,19 +1,9 @@
 #import "cocos2d.h"
+#import "BaseAppController.h"
 
 //CLASS INTERFACE
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
-@interface AppController : NSObject <UIApplicationDelegate>
-{
-	UIWindow *window_;
-	
-	UINavigationController *rootViewController_;	// weak ref
-	CCDirector	*director_;							// weak ref
-}
-
-@property (nonatomic, retain) UIWindow *window;
-@property (readonly) UINavigationController *rootViewController;
-@property (readonly) CCDirector *director;
-
+@interface AppController : BaseAppController
 @end
 
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
