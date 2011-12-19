@@ -56,6 +56,9 @@ enum  {
     CGSize			originalWinSize_;
 	
 	NSWindow		*fullScreenWindow_;
+	
+	// OpenGLView
+	CC_GLVIEW		*view_;
     
 	// cache
 	NSWindow		*windowGLView_;

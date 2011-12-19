@@ -104,12 +104,12 @@ static CCDirector *_sharedDirector = nil;
 	if (!_sharedDirector) {
 
 		//
-		// Default Director is TimerDirector
+		// Default Director is DisplayLink
 		// 
 		if( [ [CCDirector class] isEqual:[self class]] )
-			_sharedDirector = [[CC_DIRECTOR_DEFAULT alloc] initWithNibName:nil bundle:nil];
+			_sharedDirector = [[CC_DIRECTOR_DEFAULT alloc] init];
 		else
-			_sharedDirector = [[self alloc] initWithNibName:nil bundle:nil];
+			_sharedDirector = [[self alloc] init];
 	}
 		
 	return _sharedDirector;
@@ -121,11 +121,11 @@ static CCDirector *_sharedDirector = nil;
 	return [super alloc];
 }
 
-- (id) initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+- (id) init
 {  
 	CCLOG(@"cocos2d: %@", cocos2dVersion() );
 
-	if( (self=[super initWithNibName:nibNameOrNil bundle:nibBundleOrNil]) ) {
+	if( (self=[super init] ) ) {
 
 		CCLOG(@"cocos2d: Using Director Type:%@", [self class]);
 		
@@ -290,7 +290,9 @@ static CCDirector *_sharedDirector = nil;
 {
 	NSAssert( view, @"OpenGLView must be non-nil");
 
+#ifdef CC_PLATFORM_IOS
 	[super setView:view];
+#endif
 	
 	// set size
 	winSizeInPixels_ = winSizeInPoints_ = CCNSSizeToCGSize( [view bounds].size );
@@ -300,6 +302,14 @@ static CCDirector *_sharedDirector = nil;
 	
 	CHECK_GL_ERROR_DEBUG();
 }
+
+#ifdef CC_PLATFORM_MAC
+-(CC_GLVIEW*) view
+{
+	// ignore on Mac
+	return nil;
+}
+#endif //
 
 #pragma mark Director Scene Landscape
 

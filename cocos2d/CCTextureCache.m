@@ -37,9 +37,13 @@
 #import "ccConfig.h"
 #import "ccTypes.h"
 
+#ifdef CC_PLATFORM_MAC
+#import "Platforms/Mac/CCDirectorMac.h"
+#endif
+
 // needed for CCCallFuncO in Mac-display_link version
-#import "CCActionManager.h"
-#import "CCActionInstant.h"
+//#import "CCActionManager.h"
+//#import "CCActionInstant.h"
 
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 static EAGLContext *_auxGLcontext = nil;
@@ -90,7 +94,7 @@ static CCTextureCache *sharedTextureCache;
 		
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 		
-		MacGLView *view = [[CCDirector sharedDirector] openGLView];
+		MacGLView *view = (CC_GLVIEW*)[[CCDirector sharedDirector] view];
 		NSAssert(view, @"Do not initialize the TextureCache before the Director");
 
 		

@@ -71,6 +71,12 @@ typedef enum {
 @class CCScheduler;
 @class CCActionManager;
 
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#define CC_VIEWCONTROLLER UIViewController
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+#define CC_VIEWCONTROLLER NSObject
+#endif
+
 /**Class that creates and handle the main Window and manages how
 and when to execute the Scenes.
  
@@ -89,7 +95,7 @@ and when to execute the Scenes.
   - GL_COLOR_ARRAY is enabled
   - GL_TEXTURE_COORD_ARRAY is enabled
 */
-@interface CCDirector : UIViewController
+@interface CCDirector : CC_VIEWCONTROLLER
 {
 	// internal timer
 	NSTimeInterval animationInterval_;
@@ -210,14 +216,15 @@ and when to execute the Scenes.
 +(CCDirector *)sharedDirector;
 
 
-// Statistics
+#pragma mark Director - Stats
+
 /** Whether or not to display the FPS on the bottom-left corner
  @deprecated Use setDisplayStats:kCCDirectorStatsFPS instead
  */
 -(void) setDisplayFPS:(BOOL)display DEPRECATED_ATTRIBUTE;
 
-// Window size
 
+#pragma mark Director - Win Size
 /** returns the size of the OpenGL view in points */
 - (CGSize) winSize;
 
@@ -241,7 +248,7 @@ and when to execute the Scenes.
 /// XXX: missing description
 -(float) getZEye;
 
-// Scene Management
+#pragma mark Director - Scene Management
 
 /**Enters the Director's main loop with the given Scene. 
  * Call it to run only your FIRST scene.
@@ -303,7 +310,13 @@ and when to execute the Scenes.
  */
 -(void) drawScene;
 
-// Memory Helper
+///** sets the openGL view */
+//-(void) setView:(CC_GLVIEW*)view;
+//
+///** returns the OpenGL view */
+//-(CC_GLVIEW*) view;
+
+#pragma mark Director - Memory Helper
 
 /** Removes all the cocos2d data that was cached automatically.
  It will purge the CCTextureCache, CCLabelBMFont cache.
