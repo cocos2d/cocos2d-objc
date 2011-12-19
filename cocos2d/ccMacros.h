@@ -140,8 +140,7 @@ do	{																							\
 	director_.wantsFullScreenLayout = YES;														\
 	rootViewController_ = [[UINavigationController alloc] initWithRootViewController:director_];\
 	rootViewController_.navigationBarHidden = YES;												\
-	[window_ setRootViewController:rootViewController_];										\
-	[rootViewController_ release];																\
+	[window_ addSubview:rootViewController_.view];												\
 	[window_ makeKeyAndVisible];																\
 } while(0)
 

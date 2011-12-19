@@ -78,6 +78,11 @@ CGFloat	__ccContentScaleFactor = 1;
 {
 	return [CCDirectorDisplayLink class];
 }
+
+-(void) setInterfaceOrientationDelegate:(id)delegate
+{
+	// override me
+}
 @end
 
 
@@ -209,8 +214,8 @@ CGFloat	__ccContentScaleFactor = 1;
 		}
 			
 		case kCCDirectorProjectionCustom:
-			if( projectionDelegate_ )
-				[projectionDelegate_ updateProjection];
+			if( [delegate_ respondsToSelector:@selector(updateProjection)] )
+				[delegate_ updateProjection];
 			break;
 
 		default:
@@ -316,7 +321,7 @@ CGFloat	__ccContentScaleFactor = 1;
 	[super end];
 }
 
-#pragma Director - UIViewController delegate
+#pragma mark Director - UIViewController delegate
 
 
 -(void) setView:(EAGLView *)view
@@ -335,34 +340,25 @@ CGFloat	__ccContentScaleFactor = 1;
 
 
 // Override to allow orientations other than the default portrait orientation.
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-	
-	// EAGLView will be rotated by the UIViewController
-	//
-	// return YES for the supported orientations
-	
-	
-	// For landscape only, uncomment the following line
-	//	return ( UIInterfaceOrientationIsLandscape( interfaceOrientation ) );
-	
-	
-	// For portrait only, uncomment the following line
-	//	return ( ! UIInterfaceOrientationIsLandscape( interfaceOrientation ) );
-	
-	// To support all oritentatiosn return YES
-	return YES;
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+	BOOL ret =YES;
+	if( [delegate_ respondsToSelector:_cmd] )
+		ret = (BOOL) [delegate_ shouldAutorotateToInterfaceOrientation:interfaceOrientation];
+
+	return ret;
 }
 
 -(void) viewWillAppear:(BOOL)animated
 {
 	[super viewWillAppear:animated];
-//	[self startAnimation];
+	[self startAnimation];
 }
 
 -(void) viewDidAppear:(BOOL)animated
 {
 	[super viewDidAppear:animated];
-	[self startAnimation];
+//	[self startAnimation];
 }
 
 -(void) viewWillDisappear:(BOOL)animated
@@ -379,23 +375,31 @@ CGFloat	__ccContentScaleFactor = 1;
 	[super viewDidDisappear:animated];
 }
 
-
 - (void)didReceiveMemoryWarning
 {
-    // Releases the view if it doesn't have a superview.
-    [super didReceiveMemoryWarning];
-    
-    // Release any cached data, images, etc that aren't in use.
+	// Release any cached data, images, etc that aren't in use.
 	[super purgeCachedData];
+
+    // Releases the view if it doesn't have a superview.
+    [super didReceiveMemoryWarning];    
 }
+
+-(void) viewDidLoad
+{
+	CCLOG(@"cocos2d: viewDidLoad");
+	
+	[super viewDidLoad];
+}
+
 
 - (void)viewDidUnload
 {
+	CCLOG(@"cocos2d: viewDidUnload");
+
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
 }
-
 @end
 
 
@@ -403,6 +407,12 @@ CGFloat	__ccContentScaleFactor = 1;
 #pragma mark DirectorDisplayLink
 
 @implementation CCDirectorDisplayLink
+
+
+-(void) mainLoop:(id)sender
+{
+	[self drawScene];	
+}
 
 - (void)setAnimationInterval:(NSTimeInterval)interval
 {
@@ -415,7 +425,6 @@ CGFloat	__ccContentScaleFactor = 1;
 
 - (void) startAnimation
 {
-
 	NSAssert( displayLink == nil, @"displayLink must be nil. Calling startAnimation twice?");
 
 	gettimeofday( &lastUpdate_, NULL);
@@ -440,11 +449,6 @@ CGFloat	__ccContentScaleFactor = 1;
 #endif
 	
 
-}
-
--(void) mainLoop:(id)sender
-{
-	[self drawScene];	
 }
 
 - (void) stopAnimation

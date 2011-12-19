@@ -8,18 +8,19 @@
 
 #import <Availability.h>
 
+#import "cocos2d.h"
+
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 
 #import <Foundation/Foundation.h>
 
-@class CCDirector;
 @class UIWindow, UINavigationController;
 
-@interface BaseAppController : NSObject <UIApplicationDelegate>
+@interface BaseAppController : NSObject <UIApplicationDelegate, CCDirectorDelegate>
 {
 	UIWindow *window_;
+	UINavigationController *rootViewController_;
 
-	UINavigationController *rootViewController_;	// weak ref
 	CCDirector	*director_;							// weak ref
 }
 

@@ -499,9 +499,16 @@ enum {
 	CCLayerMultiplex *layer = [CCLayerMultiplex layerWithLayers: [Layer1 node], [Layer2 node], [Layer3 node], [Layer4 node], nil];
 	[scene addChild: layer z:0];
 
+	[director_ setDelegate:self];	
+
 	[director_ pushScene: scene];
 	
 	return YES;
+}
+
+-(BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+	return UIInterfaceOrientationIsPortrait(interfaceOrientation);
 }
 @end
 
