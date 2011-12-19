@@ -660,16 +660,20 @@ Class restartAction()
 
 -(void) sliderAction:(id) sender
 {
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
-	CCDirector *director = [CCDirector sharedDirector];
-	[[director scheduler] setTimeScale: sliderCtl.value];
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+	ccTime scale;
+	
+#if CC_PLATFORM_IOS
+	scale = sliderCtl.value;
+#elif CC_PLATFORM_MAC
 	
 	float value = [sliderCtl floatValue];
 	if( value < 1 )
 		value = -value;
-	[[CCScheduler sharedScheduler] setTimeScale: value];
+	
+	scale = value;
 #endif
+	[[[CCDirector sharedDirector] scheduler] setTimeScale: scale];
+
 }
 
 -(void) onEnter
@@ -702,15 +706,15 @@ Class restartAction()
 	
 	sliderCtl = [self sliderCtl];
 
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef CC_PLATFORM_IOS
 	
 	AppController *app = (AppController*) [[UIApplication sharedApplication] delegate];
 	UIViewController *ctl = [app rootViewController];
 	
 	[ctl.view addSubview: sliderCtl];
 
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
-	MacGLView *view = [[CCDirector sharedDirector] openGLView];
+#elif CC_PLATFORM_MAC
+	MacGLView *view = (MacGLView*) [[CCDirector sharedDirector] view];
 
 	if( ! overlayWindow ) {
 		overlayWindow  = [[NSWindow alloc] initWithContentRect:[[view window] frame]
@@ -737,9 +741,8 @@ Class restartAction()
 {
 	[sliderCtl removeFromSuperview];
 
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
-	MacGLView *view = [[CCDirector sharedDirector] openGLView];
+#ifdef CC_PLATFORM_MAC
+	MacGLView *view = (MacGLView*) [[CCDirector sharedDirector] view];
 	[[view window] removeChildWindow:overlayWindow];
 	[overlayWindow release];
 	overlayWindow = nil;
@@ -805,7 +808,7 @@ Class restartAction()
 	
 	[director setDisplayStats:kCCDirectorStatsFPS];
 	
-	[director setOpenGLView:glView_];
+	[director setView:glView_];
 	
 	//	[director setProjection:kCCDirectorProjection2D];
 	
@@ -819,7 +822,7 @@ Class restartAction()
 	CCScene *scene = [CCScene node];
 	[scene addChild: [nextAction() node]];
 	
-	[director runWithScene:scene];
+	[director pushScene:scene];
 }
 
 - (BOOL) applicationShouldTerminateAfterLastWindowClosed: (NSApplication *) theApplication

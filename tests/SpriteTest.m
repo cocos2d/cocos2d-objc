@@ -4448,7 +4448,7 @@ Class restartAction()
 	
 	[director setDisplayStats:kCCDirectorStatsMPF];
 	
-	[director setOpenGLView:glView_];
+	[director setView:glView_];
 	
 	// Assume that PVR images have premultiplied alpha
 	[CCTexture2D PVRImagesHavePremultipliedAlpha:YES];
@@ -4465,7 +4465,7 @@ Class restartAction()
 	CCScene *scene = [CCScene node];
 	[scene addChild: [nextAction() node]];
 	
-	[director runWithScene:scene];
+	[director pushScene:scene];
 }
 
 - (BOOL) applicationShouldTerminateAfterLastWindowClosed: (NSApplication *) theApplication

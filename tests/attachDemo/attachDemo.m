@@ -119,6 +119,8 @@ enum {
 {
 	if( state == kStateEnd ) {
 		
+		director = [CCDirector sharedDirector];
+
 		EAGLView *glview = [EAGLView viewWithFrame:CGRectMake(0, 0, 250,350)];
 		
 		[director setView:glview];
