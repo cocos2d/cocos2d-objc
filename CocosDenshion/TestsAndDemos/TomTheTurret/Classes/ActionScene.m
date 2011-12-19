@@ -240,12 +240,13 @@ SimpleAudioEngine *soundEngine;
                 // We're done
                 _inLevel = FALSE;
                 [self fadeOutMusic];
-				ActionLevel *curLevel = (ActionLevel *) [GameState sharedState].curLevel;        
+				ActionLevel *curLevel = (ActionLevel *) [GameState sharedState].curLevel;
+				
+				TomTheTurretAppDelegate *delegate = (TomTheTurretAppDelegate*) [[UIApplication sharedApplication] delegate];
+
                 if (curLevel.isFinalLevel) {
-					TomTheTurretAppDelegate *delegate = [[UIApplication sharedApplication] delegate];
                     [delegate launchKillEnding];
                 } else {
-                    TomTheTurretAppDelegate *delegate = [[UIApplication sharedApplication] delegate];
                     [delegate launchNextLevel];
                 }
             } 
@@ -340,13 +341,14 @@ SimpleAudioEngine *soundEngine;
         // TODO: Explosion
         self.inLevel = FALSE;         
         ActionLevel *curLevel = (ActionLevel *) [GameState sharedState].curLevel;        
+
+		TomTheTurretAppDelegate *delegate = (TomTheTurretAppDelegate*) [[UIApplication sharedApplication] delegate];
+
         if (!curLevel.isFinalLevel || self.monsterHit) {
             [self fadeOutMusic];
-			TomTheTurretAppDelegate *delegate = [[UIApplication sharedApplication] delegate];
 			[delegate launchLoseEnding];
         } else {
 			[self fadeOutMusic];
-            TomTheTurretAppDelegate *delegate = [[UIApplication sharedApplication] delegate];
             [delegate launchSuicideEnding];
         }
 		

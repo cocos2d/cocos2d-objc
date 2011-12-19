@@ -62,7 +62,7 @@
 	CCDirector *director = [CCDirector sharedDirector];
 	[director setDisplayStats:kCCDirectorStatsFPS];
 
-	[director setOpenGLView:glView_];
+	[director setView:glView_];
 
 	// Enables High Res mode (Retina Display) on iPhone 4 and maintains low res on all other devices
 	if( ! [director enableRetinaDisplay:YES] )
@@ -75,6 +75,8 @@
 	[scene addChild: [LayerExample node]];
 	
 	[director pushScene:scene];
+	
+	[director startAnimation];
 	
 	return YES;
 }
@@ -98,7 +100,7 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {	
 	CCDirector *director = [CCDirector sharedDirector];
-	[[director openGLView] removeFromSuperview];
+	[director.view removeFromSuperview];
 	[director end];
 	
 	// release glView here, else it won't be dealloced
