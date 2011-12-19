@@ -513,7 +513,7 @@ enum {
 		
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 		
-		AppController *app = [[UIApplication sharedApplication] delegate];
+		AppController *app = (AppController*) [[UIApplication sharedApplication] delegate];
 		UIViewController *ctl = [app rootViewController];
 		
 		[ctl.view addSubview: sliderCtl_];
