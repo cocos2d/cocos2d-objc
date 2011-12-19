@@ -98,9 +98,9 @@ CGFloat	__ccContentScaleFactor = 1;
 
 @synthesize touchDispatcher=touchDispatcher_;
 
-- (id) initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+- (id) init
 {  
-	if( (self=[super initWithNibName:nibNameOrNil bundle:nibBundleOrNil]) ) {
+	if( (self=[super init]) ) {
 				
 		__ccContentScaleFactor = 1;
 		isContentScaleSupported_ = NO;
@@ -109,8 +109,6 @@ CGFloat	__ccContentScaleFactor = 1;
 
 		// running thread is main thread on iOS
 		runningThread_ = [NSThread currentThread];
-		
-
 	}
 	
 	return self;
@@ -137,7 +135,7 @@ CGFloat	__ccContentScaleFactor = 1;
 	
 	/* tick before glClear: issue #533 */
 	if( ! isPaused_ )
-		[scheduler_ tick: dt];	
+		[scheduler_ update: dt];	
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 

@@ -59,12 +59,11 @@
 @implementation CCDirector (MacExtension)
 -(CGPoint) convertEventToGL:(NSEvent*)event
 {
-	NSPoint point = [openGLView_ convertPoint:[event locationInWindow] fromView:nil];
+	NSPoint point = [self.view convertPoint:[event locationInWindow] fromView:nil];
 	CGPoint p = NSPointToCGPoint(point);
 	
 	return  [(CCDirectorMac*)self convertToLogicalCoordinates:p];
 }
-
 @end
 
 #pragma mark -
@@ -92,6 +91,7 @@
 
 - (void) dealloc
 {
+	[view_ release];
     [superViewGLView_ release];
 	[fullScreenWindow_ release];
 	[windowGLView_ release];
@@ -106,17 +106,20 @@
 	// Mac OS X 10.6 and later offer a simplified mechanism to create full-screen contexts
 #if MAC_OS_X_VERSION_MIN_REQUIRED > MAC_OS_X_VERSION_10_5
 	
-    if (isFullScreen_ == fullscreen) return;
+    if (isFullScreen_ == fullscreen)
+		return;
+	
+	MacGLView *openGLview = (MacGLView*) self.view;
     
     if( fullscreen ) {
-        originalWinRect_ = [openGLView_ frame];
+        originalWinRect_ = [openGLview frame];
 		
         // Cache normal window and superview of openGLView
         if(!windowGLView_)
-            windowGLView_ = [[openGLView_ window] retain];
+            windowGLView_ = [[openGLview window] retain];
         
         [superViewGLView_ release];
-        superViewGLView_ = [[openGLView_ superview] retain];
+        superViewGLView_ = [[openGLview superview] retain];
         
 		
         // Get screen size
@@ -126,13 +129,13 @@
         fullScreenWindow_ = [[MacWindow alloc] initWithFrame:displayRect fullscreen:YES];
         
         // Remove glView from window
-        [openGLView_ removeFromSuperview];
+        [openGLview removeFromSuperview];
         
         // Set new frame
-        [openGLView_ setFrame:displayRect];
+        [openGLview setFrame:displayRect];
         
         // Attach glView to fullscreen window
-        [fullScreenWindow_ setContentView:openGLView_];
+        [fullScreenWindow_ setContentView:openGLview];
         
         // Show the fullscreen window
         [fullScreenWindow_ makeKeyAndOrderFront:self];
@@ -141,17 +144,17 @@
     } else {
         
         // Remove glView from fullscreen window
-        [openGLView_ removeFromSuperview];
+        [openGLview removeFromSuperview];
         
         // Release fullscreen window
         [fullScreenWindow_ release];
         fullScreenWindow_ = nil;
         
         // Attach glView to superview
-        [superViewGLView_ addSubview:openGLView_];
+        [superViewGLView_ addSubview:openGLview];
         
         // Set new frame
-        [openGLView_ setFrame:originalWinRect_];
+        [openGLview setFrame:originalWinRect_];
         
         // Show the window
         [windowGLView_ makeKeyAndOrderFront:self];
@@ -159,29 +162,40 @@
     }
     isFullScreen_ = fullscreen;
     
-    [openGLView_ retain]; // Retain +1
+    [openGLview retain]; // Retain +1
     
     // re-configure glView
-    [self setOpenGLView:openGLView_];
+    [self setView:openGLview];
     
-    [openGLView_ release]; // Retain -1
+    [openGLview release]; // Retain -1
     
-    [openGLView_ setNeedsDisplay:YES];
+    [openGLview setNeedsDisplay:YES];
 #else
 #error Full screen is not supported for Mac OS 10.5 or older yet
 #error If you don't want FullScreen support, you can safely remove these 2 lines
 #endif
 }
 
--(void) setOpenGLView:(MacGLView *)view
+-(void) setView:(CC_GLVIEW *)view
 {
-	[super setOpenGLView:view];
-	
-	// cache the NSWindow and NSOpenGLView created from the NIB
-	if( !isFullScreen_ && CGSizeEqualToSize(originalWinSize_, CGSizeZero))
-    {
-		originalWinSize_ = winSizeInPixels_;
+	if( view != view_) {
+		
+		[view_ release];
+		view_ = [view retain];
+		
+		[super setView:view];
+		
+		// cache the NSWindow and NSOpenGLView created from the NIB
+		if( !isFullScreen_ && CGSizeEqualToSize(originalWinSize_, CGSizeZero))
+		{
+			originalWinSize_ = winSizeInPixels_;
+		}
 	}
+}
+
+-(CC_GLVIEW*) view
+{
+	return view_;
 }
 
 -(int) resizeMode
@@ -196,7 +210,7 @@
 		resizeMode_ = mode;
 		
         [self setProjection:projection_];
-        [openGLView_ setNeedsDisplay: YES];
+        [self.view setNeedsDisplay: YES];
 	}
 }
 
@@ -272,8 +286,8 @@
 		}
 			
 		case kCCDirectorProjectionCustom:
-			if( projectionDelegate_ )
-				[projectionDelegate_ updateProjection];
+			if( [delegate_ respondsToSelector:@selector(updateProjection)] )
+				[delegate_ updateProjection];
 			break;
 			
 		default:
@@ -362,6 +376,7 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 
 - (void) startAnimation
 {
+	CCLOG(@"cocos2d: startAnimation");
 #if ! CC_DIRECTOR_MAC_USE_DISPLAY_LINK_THREAD
 	runningThread_ = [[NSThread alloc] initWithTarget:self selector:@selector(mainLoop) object:nil];
 	[runningThread_ start];	
@@ -376,8 +391,9 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 	CVDisplayLinkSetOutputCallback(displayLink, &MyDisplayLinkCallback, self);
 	
 	// Set the display link for the current renderer
-	CGLContextObj cglContext = [[openGLView_ openGLContext] CGLContextObj];
-	CGLPixelFormatObj cglPixelFormat = [[openGLView_ pixelFormat] CGLPixelFormatObj];
+	MacGLView *openGLview = (MacGLView*) self.view;
+	CGLContextObj cglContext = [[openGLview openGLContext] CGLContextObj];
+	CGLPixelFormatObj cglPixelFormat = [[openGLview pixelFormat] CGLPixelFormatObj];
 	CVDisplayLinkSetCurrentCGDisplayFromOpenGLContext(displayLink, cglContext, cglPixelFormat);
 	
 	// Activate the display link
@@ -386,6 +402,8 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 
 - (void) stopAnimation
 {
+	CCLOG(@"cocos2d: stopAnimation");
+	
 	if( displayLink ) {
 		CVDisplayLinkStop(displayLink);
 		CVDisplayLinkRelease(displayLink);
@@ -435,12 +453,14 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 	// We draw on a secondary thread through the display link
 	// When resizing the view, -reshape is called automatically on the main thread
 	// Add a mutex around to avoid the threads accessing the context simultaneously	when resizing
-	CGLLockContext([[openGLView_ openGLContext] CGLContextObj]);
-	[[openGLView_ openGLContext] makeCurrentContext];	
+
+	MacGLView *openGLview = (MacGLView*) self.view;
+	CGLLockContext([[openGLview openGLContext] CGLContextObj]);
+	[[openGLview openGLContext] makeCurrentContext];	
 	
 	/* tick before glClear: issue #533 */
 	if( ! isPaused_ ) {
-		[[CCScheduler sharedScheduler] tick: dt];	
+		[scheduler_ update: dt];	
 	}
 	
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -466,38 +486,35 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 	
 	totalFrames_++;
 
-	[[openGLView_ openGLContext] flushBuffer];	
-	CGLUnlockContext([[openGLView_ openGLContext] CGLContextObj]);	
+	[[openGLview openGLContext] flushBuffer];	
+	CGLUnlockContext([[openGLview openGLContext] CGLContextObj]);	
 	
 	if( displayStats_ == kCCDirectorStatsMPF )
 		[self calculateMPF];
 }
 
 // set the event dispatcher
--(void) setOpenGLView:(MacGLView *)view
+-(void) setView:(CC_GLVIEW *)view
 {
-	if( view != openGLView_ ) {
-		
-		[super setOpenGLView:view];
-		
-		CCEventDispatcher *eventDispatcher = [CCEventDispatcher sharedDispatcher];
-		[openGLView_ setEventDelegate: eventDispatcher];
-		[eventDispatcher setDispatchEvents: YES];
-		
+	[super setView:view];
+	
+	CCEventDispatcher *eventDispatcher = [CCEventDispatcher sharedDispatcher];
+	[view setEventDelegate: eventDispatcher];
+	[eventDispatcher setDispatchEvents: YES];
+	
 
-		// Enable Touches. Default no.
-		// Only available on OS X 10.6+
+	// Enable Touches. Default no.
+	// Only available on OS X 10.6+
 #if MAC_OS_X_VERSION_MIN_REQUIRED > MAC_OS_X_VERSION_10_5
-		[view setAcceptsTouchEvents:NO];
+	[view setAcceptsTouchEvents:NO];
 //		[view setAcceptsTouchEvents:YES];
 #endif
-		
-		
-		// Synchronize buffer swaps with vertical refresh rate
-		[[view openGLContext] makeCurrentContext];
-		GLint swapInt = 1;
-		[[view openGLContext] setValues:&swapInt forParameter:NSOpenGLCPSwapInterval]; 
-	}
+	
+	
+	// Synchronize buffer swaps with vertical refresh rate
+	[[view openGLContext] makeCurrentContext];
+	GLint swapInt = 1;
+	[[view openGLContext] setValues:&swapInt forParameter:NSOpenGLCPSwapInterval]; 
 }
 
 @end
