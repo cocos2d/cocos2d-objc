@@ -35,6 +35,12 @@
  cocos2d helper macros
  */
 
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#define CC_PLATFORM_IOS 1
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+#define CC_PLATFORM_MAC 1
+#endif
+
 /*
  * if COCOS2D_DEBUG is not defined, or if it is 0 then
  *	all CCLOGXXX macros will be disabled
@@ -137,6 +143,7 @@ do	{																							\
 								numberOfSamples:0												\
 													];											\
 	[director_ setView:__glView];																\
+	[director_ setDelegate:self];																\
 	director_.wantsFullScreenLayout = YES;														\
 	rootViewController_ = [[UINavigationController alloc] initWithRootViewController:director_];\
 	rootViewController_.navigationBarHidden = YES;												\
