@@ -128,10 +128,10 @@ struct _hashUpdateEntry;
  */
 @property (nonatomic,readwrite) ccTime	timeScale;
 
-/** 'tick' the scheduler.
+/** 'update' the scheduler.
  You should NEVER call this method, unless you know what you are doing.
  */
--(void) tick:(ccTime)dt;
+-(void) update:(ccTime)dt;
 
 /** The scheduled method will be called every 'interval' seconds.
  If paused is YES, then it won't be called until it is resumed.
