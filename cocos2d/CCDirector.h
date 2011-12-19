@@ -135,8 +135,8 @@ and when to execute the Scenes.
 	/* projection used */
 	ccDirectorProjection projection_;
 	
-	/* Projection protocol delegate */
-	id<CCProjectionProtocol>	projectionDelegate_;
+	/* CCDirector delegate */
+	id<CCDirectorDelegate>	delegate_;
 
 	/* window size in points */
 	CGSize	winSizeInPoints_;
@@ -191,10 +191,10 @@ and when to execute the Scenes.
  */
 @property (nonatomic, readwrite, retain) id	notificationNode;
 
-/** This object will be called when the OpenGL projection is udpated and only when the kCCDirectorProjectionCustom projection is used.
+/** CCDirector delegate. It shall implemente the CCDirectorDelegate protocol
  @since v0.99.5
  */
-@property (nonatomic, readwrite, retain) id<CCProjectionProtocol> projectionDelegate;
+@property (nonatomic, readwrite, retain) id<CCDirectorDelegate> delegate;
 
 /** CCScheduler associated with this director
  @since v2.0
@@ -246,8 +246,10 @@ and when to execute the Scenes.
 /**Enters the Director's main loop with the given Scene. 
  * Call it to run only your FIRST scene.
  * Don't call it if there is already a running scene.
+ *
+ * @deprecated use popScene instead
  */
-- (void) runWithScene:(CCScene*) scene;
+- (void) runWithScene:(CCScene*) scene DEPRECATED_ATTRIBUTE;
 
 /**Suspends the execution of the running scene, pushing it on the stack of suspended scenes.
  * The new scene will be executed.

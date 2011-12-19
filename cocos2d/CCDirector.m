@@ -88,7 +88,7 @@ extern NSString * cocos2dVersion(void);
 @synthesize sendCleanupToScene = sendCleanupToScene_;
 @synthesize runningThread = runningThread_;
 @synthesize notificationNode = notificationNode_;
-@synthesize projectionDelegate = projectionDelegate_;
+@synthesize delegate = delegate_;
 @synthesize totalFrames = totalFrames_;
 @synthesize millisecondsPerFrame = millisecondsPerFrame_;
 @synthesize scheduler = scheduler_;
@@ -142,7 +142,7 @@ static CCDirector *_sharedDirector = nil;
 		projection_ = kCCDirectorProjectionDefault;
 
 		// projection delegate if "Custom" projection is used
-		projectionDelegate_ = nil;
+		delegate_ = nil;
 
 		// FPS
 		displayStats_ = kCCDirectorStatsNone;
@@ -177,8 +177,7 @@ static CCDirector *_sharedDirector = nil;
 	[scenesStack_ release];
 	[scheduler_ release];
 	[actionManager_ release];
-	
-	[projectionDelegate_ release];
+	[delegate_ release];
 	
 	_sharedDirector = nil;
 	
@@ -334,13 +333,12 @@ static CCDirector *_sharedDirector = nil;
 
 #pragma mark Director Scene Management
 
+// XXX deprecated
 - (void)runWithScene:(CCScene*) scene
 {
 	NSAssert( scene != nil, @"Argument must be non-nil");
-	NSAssert( runningScene_ == nil, @"You can't run an scene if another Scene is running. Use replaceScene or pushScene instead");
 	
 	[self pushScene:scene];
-	[self startAnimation];	
 }
 
 -(void) replaceScene: (CCScene*) scene
@@ -397,8 +395,8 @@ static CCDirector *_sharedDirector = nil;
 	[FPSLabel_ release];
 	FPSLabel_ = nil;
 
-	[projectionDelegate_ release];
-	projectionDelegate_ = nil;
+	[delegate_ release];
+	delegate_ = nil;
 	
 	// Purge bitmap cache
 	[CCLabelBMFont purgeCachedData];

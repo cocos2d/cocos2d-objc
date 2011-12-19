@@ -4381,9 +4381,13 @@ Class restartAction()
 	// attach the openglView to the director
 	[director_ setView:glView];
 
+	// for rotation and other messages
+	[director_ setDelegate:self];	
+
 	// 2D projection
 	[director_ setProjection:kCCDirectorProjection2D];
 //	[director setProjection:kCCDirectorProjection3D];
+
 
 	// Enables High Res mode (Retina Display) on iPhone 4 and maintains low res on all other devices
 	if( ! [director_ enableRetinaDisplay:YES] )
@@ -4391,15 +4395,14 @@ Class restartAction()
 	
 	rootViewController_ = [[UINavigationController alloc] initWithRootViewController:director_];
 	rootViewController_.navigationBarHidden = YES;
-	
+		
 	// set the Navigation Controller as the root view controller
-	[window_ setRootViewController:rootViewController_];
-	
-	[rootViewController_ release];
-	
+//	[window_ setRootViewController:rootViewController_];
+	[window_ addSubview:rootViewController_.view];
+
 	// make main window visible
-	[window_ makeKeyAndVisible];	
-	
+	[window_ makeKeyAndVisible];
+
 	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
 	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
 	// You can change anytime.
@@ -4417,12 +4420,17 @@ Class restartAction()
 	CCScene *scene = [CCScene node];
 	[scene addChild: [nextAction() node]];
 	
-	
 	// and run it!
 	[director_ pushScene: scene];
-	
+
 	return YES;
 }
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+	return UIInterfaceOrientationIsLandscape(interfaceOrientation);
+}
+
 @end
 
 #pragma mark -

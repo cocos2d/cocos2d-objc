@@ -46,19 +46,19 @@
 // call got rejected
 -(void) applicationDidBecomeActive:(UIApplication *)application
 {
-	if( [rootViewController_ visibleViewController] == director_ )
+//	if( [rootViewController_ visibleViewController] == director_ )
 		[director_ resume];
 }
 
 -(void) applicationDidEnterBackground:(UIApplication*)application
 {
-	if( [rootViewController_ visibleViewController] == director_ )
+//	if( [rootViewController_ visibleViewController] == director_ )
 		[director_ stopAnimation];
 }
 
 -(void) applicationWillEnterForeground:(UIApplication*)application
 {
-	if( [rootViewController_ visibleViewController] == director_ )
+//	if( [rootViewController_ visibleViewController] == director_ )
 		[director_ startAnimation];
 }
 
@@ -83,6 +83,7 @@
 - (void) dealloc
 {
 	[window_ release];
+	[rootViewController_ release];
 	
 	[super dealloc];
 }

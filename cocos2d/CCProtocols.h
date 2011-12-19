@@ -115,11 +115,15 @@
 
 
 #pragma mark -
-#pragma mark CCProjectionProtocol
-/** OpenGL projection protocol */
-@protocol CCProjectionProtocol <NSObject>
-/** Called by CCDirector when the porjection is updated, and "custom" projection is used
- @since v0.99.5
- */
+#pragma mark CCDirectorDelegate
+/** CCDirector delegate */
+@protocol CCDirectorDelegate <NSObject>
+
+@optional
+/** Called by CCDirector when the porjection is updated, and "custom" projection is used */
 -(void) updateProjection;
+
+/** Returns a Boolean value indicating whether the CCDirector supports the specified orientation. Default value is YES (supports all possible orientations) */
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation;
+
 @end

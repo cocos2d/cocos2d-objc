@@ -120,16 +120,16 @@ enum {
 	if( state == kStateEnd ) {
 		
 		EAGLView *glview = [EAGLView viewWithFrame:CGRectMake(0, 0, 250,350)];
-		[mainView addSubview:glview];
 		
-		CCDirector *director = [CCDirector sharedDirector];
-		[director setOpenGLView:glview];
+		[director setView:glview];
+		
+		[mainView addSubview:glview];
 		
 		CCScene *scene = [CCScene node];
 		id node = [LayerExample node];
 		[scene addChild: node];
 		
-		[director runWithScene:scene];
+		[director pushScene:scene];
 		
 		state = kStateRun;
 	}
@@ -142,11 +142,8 @@ enum {
 {
 	if( state == kStateRun || state == kStateAttach) {
 
-		CCDirector *director = [CCDirector sharedDirector];
-
 		// Since v0.99.4 you have to remove the OpenGL View manually
-		EAGLView *view = [director openGLView];
-		[view removeFromSuperview];
+		[director.view removeFromSuperview];
 		
 		// kill the director
 		[director end];
@@ -165,14 +162,8 @@ enum {
 -(void) attachView
 {
 	if( state == kStateDetach ) {
-		CCDirector *director = [CCDirector sharedDirector];
-
 		// attach to super view
-		EAGLView *glview = [director openGLView];
-		[mainView addSubview:glview];
-		
-		// start the animation again
-		[director startAnimation];
+		[mainView addSubview:director.view];
 
 		state = kStateAttach;
 	}
@@ -183,16 +174,9 @@ enum {
 -(void) detachView
 {
 	if( state == kStateRun || state == kStateAttach ) {
-		
-		CCDirector *director = [CCDirector sharedDirector];
 
 		// remove the OpenGL view from the superview
-		EAGLView *view = [director openGLView];
-		[view removeFromSuperview];
-		
-		// Stop animation
-		[director stopAnimation];
-
+		[director.view removeFromSuperview];
 
 		state = kStateDetach;
 	} else {
@@ -224,19 +208,15 @@ enum {
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {	
-	CCDirector *director = [CCDirector sharedDirector];
+	director = [CCDirector sharedDirector];
 	[director setDisplayStats:kCCDirectorStatsFPS];
-
-	// Enables High Res mode (Retina Display) on iPhone 4 and maintains low res on all other devices
-	if( ! [director enableRetinaDisplay:YES] )
-		CCLOG(@"Retina Display Not supported");
-	
-	[window makeKeyAndVisible];
 	
 	state = kStateEnd;
 
 	[self runCocos2d];
-	
+
+	[window makeKeyAndVisible];
+
 	return YES;
 }
 
