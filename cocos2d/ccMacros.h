@@ -163,8 +163,8 @@ do	{																							\
 	glView_ = [[MacGLView alloc] initWithFrame:frameRect shareContext:nil];						\
 	[self.window setContentView:self.glView];													\
 	CCDirector *__director = [CCDirector sharedDirector];										\
-	[__director setDisplayStats:kCCDirectorStatsNone];																\
-	[__director setView:self.glView];														\
+	[__director setDisplayStats:NO];															\
+	[__director setView:self.glView];															\
 	[(CCDirectorMac*)__director setOriginalWinSize:__WINSIZE__];								\
 	[self.window makeMainWindow];																\
 	[self.window makeKeyAndOrderFront:self];													\

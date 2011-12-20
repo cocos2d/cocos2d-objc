@@ -281,7 +281,7 @@ void removeShape( cpBody *body, cpShape *shape, void *data )
 	[super application:application didFinishLaunchingWithOptions:launchOptions];
 	
 	// Turn on display FPS
-	[director_ setDisplayStats:kCCDirectorStatsFPS];
+	[director_ setDisplayStats:YES];
 	
 	// Turn on multiple touches
 	[director_.view setMultipleTouchEnabled:YES];

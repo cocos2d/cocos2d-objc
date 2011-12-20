@@ -144,7 +144,7 @@ Class restartAction()
 
 		[self addChild: menu z:100];	
 		
-		CCLabelAtlas *labelAtlas = [CCLabelAtlas labelWithString:@"0000" charMapFile:@"fps_images.png" itemWidth:16 itemHeight:24 startCharMap:'.'];
+		CCLabelAtlas *labelAtlas = [CCLabelAtlas labelWithString:@"0000" charMapFile:@"fps_images.png" itemWidth:8 itemHeight:12 startCharMap:'.'];
 		[self addChild:labelAtlas z:100 tag:kTagParticleCount];
 		labelAtlas.position = ccp(s.width-66,50);
 		
@@ -1646,7 +1646,7 @@ Class restartAction()
 	[super application:application didFinishLaunchingWithOptions:launchOptions];
 	
 	// Turn on display FPS
-	[director_ setDisplayStats:kCCDirectorStatsMPF];
+	[director_ setDisplayStats:YES];
 		
 	// Enables High Res mode (Retina Display) on iPhone 4 and maintains low res on all other devices
 	if( ! [director_ enableRetinaDisplay:YES] )
@@ -1687,7 +1687,7 @@ Class restartAction()
 {
 	CCDirectorMac *director = (CCDirectorMac*) [CCDirector sharedDirector];
 	
-	[director setDisplayStats:kCCDirectorStatsMPF];
+	[director setDisplayStats:YES];
 	
 	[director setView:glView_];
 	

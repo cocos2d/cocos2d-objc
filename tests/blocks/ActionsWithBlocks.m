@@ -123,7 +123,7 @@
 	[super application:application didFinishLaunchingWithOptions:launchOptions];
 
 	// display FPS (useful when debugging)
-	[director_ setDisplayStats:kCCDirectorStatsFPS];
+	[director_ setDisplayStats:YES];
 	
 	// frames per second
 	[director_ setAnimationInterval:1.0/60];
