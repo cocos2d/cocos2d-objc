@@ -214,9 +214,6 @@ struct _listEntry;
 @property (nonatomic, readwrite) BOOL dispatchEvents;
 
 
-/** CCEventDispatcher singleton */
-+(CCEventDispatcher*) sharedDispatcher;
-
 #pragma mark CCEventDispatcher - Mouse
 
 /** Adds a mouse delegate to the dispatcher's list.

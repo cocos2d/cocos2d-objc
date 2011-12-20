@@ -33,6 +33,8 @@
 #import <QuartzCore/CVDisplayLink.h>
 #import "../../CCDirector.h"
 
+@class CCEventDispatcher;
+
 enum  {
 	/// If the window is resized, it won't be autoscaled
 	kCCDirectorResize_NoScale,
@@ -60,6 +62,9 @@ enum  {
 	// OpenGLView
 	CC_GLVIEW		*view_;
     
+	// Event Dispatcher
+	CCEventDispatcher	*eventDispatcher_;
+
 	// cache
 	NSWindow		*windowGLView_;
     NSView          *superViewGLView_;
@@ -82,6 +87,9 @@ enum  {
  If resizeMode is kCCDirectorResize_NoScale, then no conversion will be done.
 */
 - (CGPoint) convertToLogicalCoordinates:(CGPoint)coordinates;
+
+/** CCEventDispatcher associated with the CCDirector */
+@property (nonatomic, retain, readwrite) CCEventDispatcher *eventDispatcher;
 @end
 
 

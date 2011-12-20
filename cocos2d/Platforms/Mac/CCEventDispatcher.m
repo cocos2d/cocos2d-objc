@@ -32,8 +32,6 @@
 #import "CCEventDispatcher.h"
 #import "../../ccConfig.h"
 
-static CCEventDispatcher *sharedDispatcher = nil;
-
 enum  {
 	// mouse
 	kCCImplementsMouseDown			= 1 << 0,
@@ -89,25 +87,6 @@ static int		eventQueueCount;
 
 @synthesize dispatchEvents=dispatchEvents_;
 
-
-+(CCEventDispatcher*) sharedDispatcher
-{
-	@synchronized(self) {
-		if (sharedDispatcher == nil)
-			sharedDispatcher = [[self alloc] init]; // assignment not done here
-	}
-	return sharedDispatcher;
-}
-
-+(id) allocWithZone:(NSZone *)zone
-{
-	@synchronized(self) {
-		NSAssert(sharedDispatcher == nil, @"Attempted to allocate a second instance of a singleton.");
-		return [super allocWithZone:zone];
-	}
-	return nil; // on subsequent allocation attempts return nil
-}
-
 -(id) init
 {
 	if( (self = [super init]) )
@@ -118,7 +97,7 @@ static int		eventQueueCount;
 		// delegates
 		keyboardDelegates_ = NULL;
 		mouseDelegates_ = NULL;
-                touchDelegates_ = NULL;
+		touchDelegates_ = NULL;
 		
 #if	CC_DIRECTOR_MAC_USE_DISPLAY_LINK_THREAD
 		eventQueueCount = 0;
