@@ -145,7 +145,7 @@ static CCDirector *_sharedDirector = nil;
 		delegate_ = nil;
 
 		// FPS
-		displayStats_ = kCCDirectorStatsNone;
+		displayStats_ = NO;
 		totalFrames_ = frames_ = 0;
 		
 		// paused ?
@@ -298,7 +298,7 @@ static CCDirector *_sharedDirector = nil;
 	winSizeInPixels_ = winSizeInPoints_ = CCNSSizeToCGSize( [view bounds].size );
 
 	[self setGLDefaultValues];
-	[self createFPSLabel];
+	[self createStatsLabel];
 	
 	CHECK_GL_ERROR_DEBUG();
 }
@@ -506,33 +506,35 @@ static CCDirector *_sharedDirector = nil;
 	frames_++;
 	accumDt_ += dt;
 
-	if( displayStats_ == kCCDirectorStatsMPF ) {
-		NSString *str = [[NSString alloc] initWithFormat:@"%.4f", millisecondsPerFrame_];
-		[FPSLabel_ setString:str];
-		[str release];
-	}
-	else if( displayStats_ == kCCDirectorStatsFPS && accumDt_ > CC_DIRECTOR_FPS_INTERVAL) 
-	{
-		frameRate_ = frames_/accumDt_;
-		frames_ = 0;
-		accumDt_ = 0;
+	if( displayStats_ ) {
+		// Ms per Frame
+		NSString *mpfstr = [[NSString alloc] initWithFormat:@"%.4f", millisecondsPerFrame_];
+		[MPFLabel_ setString:mpfstr];
+		[mpfstr release];
+	
+		if( accumDt_ > CC_DIRECTOR_FPS_INTERVAL)
+		{
+			frameRate_ = frames_/accumDt_;
+			frames_ = 0;
+			accumDt_ = 0;
 
-//		sprintf(format,"%.1f",frameRate);
-//		[FPSLabel setCString:format];
+//			sprintf(format,"%.1f",frameRate);
+//			[FPSLabel setCString:format];
 
-		NSString *str = [[NSString alloc] initWithFormat:@"%.1f", frameRate_];
-		[FPSLabel_ setString:str];
-		[str release];
+			NSString *fpsstr = [[NSString alloc] initWithFormat:@"%.1f", frameRate_];
+			[FPSLabel_ setString:fpsstr];
+			[fpsstr release];
+		}
+
+		[MPFLabel_ visit];
+		[FPSLabel_ visit];
 	}
-	[FPSLabel_ visit];
 }
 
+// XXX Deprecated
 -(void) setDisplayFPS:(BOOL)display
 {
-	if( display )
-		self.displayStats = kCCDirectorStatsFPS;
-	else
-		self.displayStats = kCCDirectorStatsNone;
+	self.displayStats = display;
 }
 
 -(void) calculateMPF
@@ -545,22 +547,26 @@ static CCDirector *_sharedDirector = nil;
 
 #pragma mark Director - Helper
 
--(void) createFPSLabel
+-(void) createStatsLabel
 {
-	if( FPSLabel_ ) {
+	if( FPSLabel_ && MPFLabel_ ) {
 		CCTexture2D *texture = [FPSLabel_ texture];
 
 		[FPSLabel_ release];
+		[MPFLabel_ release];
 		[[CCTextureCache sharedTextureCache ] removeTexture:texture];
 		FPSLabel_ = nil;
+		MPFLabel_ = nil;
 	}
 
 	CCTexture2DPixelFormat currentFormat = [CCTexture2D defaultAlphaPixelFormat];
 	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA4444];
-	FPSLabel_ = [[CCLabelAtlas alloc]  initWithString:@"00.0" charMapFile:@"fps_images.png" itemWidth:16 itemHeight:24 startCharMap:'.'];
+	FPSLabel_ = [[CCLabelAtlas alloc]  initWithString:@"00.0" charMapFile:@"fps_images.png" itemWidth:8 itemHeight:12 startCharMap:'.'];
+	MPFLabel_ = [[CCLabelAtlas alloc]  initWithString:@"0.0000" charMapFile:@"fps_images.png" itemWidth:8 itemHeight:12 startCharMap:'.'];
 	[CCTexture2D setDefaultAlphaPixelFormat:currentFormat];
-	
-	[FPSLabel_ setPosition: CC_DIRECTOR_FPS_POSITION];
+
+	[FPSLabel_ setPosition: ccpAdd( ccp(0,12), CC_DIRECTOR_FPS_POSITION ) ];
+	[MPFLabel_ setPosition: CC_DIRECTOR_FPS_POSITION];
 }
 
 @end

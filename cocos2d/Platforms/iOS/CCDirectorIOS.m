@@ -159,7 +159,7 @@ CGFloat	__ccContentScaleFactor = 1;
 
 	[openGLview swapBuffers];
 	
-	if( displayStats_ == kCCDirectorStatsMPF )
+	if( displayStats_ )
 		[self calculateMPF];
 }
 
@@ -278,7 +278,7 @@ CGFloat	__ccContentScaleFactor = 1;
 	[self setContentScaleFactor:newScale];
 	
 	// Load Hi-Res FPS label
-	[self createFPSLabel];
+	[self createStatsLabel];
 	
 	return YES;
 }

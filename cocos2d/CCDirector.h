@@ -51,22 +51,6 @@ typedef enum {
 
 } ccDirectorProjection;
 
-/** @typdef ccDirectorStats
- Possible statistics that are going to be dispayed by the CCDirector
- @since v2.0
- */
-typedef enum {
-	/// No statistics displayed
-	kCCDirectorStatsNone,
-
-	/// Frames Per Second statistics
-	kCCDirectorStatsFPS,
-	
-	/// Milliseconds per Frame statistics
-	kCCDirectorStatsMPF,
-
-} ccDirectorStats;
-
 
 @class CCLabelAtlas;
 @class CCScene;
@@ -105,7 +89,7 @@ and when to execute the Scenes.
 	NSTimeInterval oldAnimationInterval_;	
 	
 	/* stats */
-	ccDirectorStats	displayStats_;
+	BOOL	displayStats_;
 
 	NSUInteger frames_;
 	NSUInteger totalFrames_;
@@ -114,6 +98,7 @@ and when to execute the Scenes.
 	ccTime accumDt_;
 	ccTime frameRate_;
 	CCLabelAtlas *FPSLabel_;
+	CCLabelAtlas *MPFLabel_;
 	
 	/* is the running scene paused */
 	BOOL isPaused_;
@@ -174,7 +159,7 @@ and when to execute the Scenes.
 /** The FPS value */
 @property (nonatomic,readwrite, assign) NSTimeInterval animationInterval;
 /** Whether or not to display director statistics */
-@property (nonatomic, readwrite, assign) ccDirectorStats displayStats;
+@property (nonatomic, readwrite, assign) BOOL displayStats;
 /** whether or not the next delta time will be zero */
 @property (nonatomic,readwrite,assign) BOOL nextDeltaTimeZero;
 /** Whether or not the Director is paused */
@@ -222,7 +207,7 @@ and when to execute the Scenes.
 #pragma mark Director - Stats
 
 /** Whether or not to display the FPS on the bottom-left corner
- @deprecated Use setDisplayStats:kCCDirectorStatsFPS instead
+ @deprecated Use setDisplayStats:YES instead
  */
 -(void) setDisplayFPS:(BOOL)display DEPRECATED_ATTRIBUTE;
 
@@ -343,7 +328,7 @@ and when to execute the Scenes.
 - (void) setDepthTest: (BOOL) on;
 
 // helper
-/** creates the FPS label */
--(void) createFPSLabel;
+/** creates the Stats labels */
+-(void) createStatsLabel;
 @end
 
