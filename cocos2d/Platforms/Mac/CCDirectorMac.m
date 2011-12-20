@@ -494,7 +494,7 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 	[[openGLview openGLContext] flushBuffer];	
 	CGLUnlockContext([[openGLview openGLContext] CGLContextObj]);	
 	
-	if( displayStats_ == kCCDirectorStatsMPF )
+	if( displayStats_ )
 		[self calculateMPF];
 }
 
