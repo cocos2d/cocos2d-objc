@@ -12,7 +12,7 @@
 	[super application:application didFinishLaunchingWithOptions:launchOptions];
 	
 	// Turn on display FPS
-	[director_ setDisplayStats:kCCDirectorStatsFPS];
+	[director_ setDisplayStats:YES];
 	
 	// Set multiple touches on
 	UIView *view = [director_ view];

@@ -251,7 +251,7 @@ static int spriteFrameIndex = 0;
 	[director_ setAnimationInterval:1.0/60];
 	
 	// Display FPS: yes
-	[director_ setDisplayStats:kCCDirectorStatsFPS];
+	[director_ setDisplayStats:YES];
 	
 	
 	// 2D projection

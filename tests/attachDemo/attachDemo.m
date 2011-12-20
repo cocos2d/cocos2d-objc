@@ -211,7 +211,7 @@ enum {
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {	
 	director = [CCDirector sharedDirector];
-	[director setDisplayStats:kCCDirectorStatsFPS];
+	[director setDisplayStats:YES];
 	
 	state = kStateEnd;
 

@@ -1375,7 +1375,7 @@ Class restartAction()
 	//
 	[director_ setProjection:kCCDirectorProjection2D];
 
-	[director_ setDisplayStats:kCCDirectorStatsFPS];
+	[director_ setDisplayStats:YES];
 	
 	//
 	// Push run the scene
@@ -1423,7 +1423,7 @@ Class restartAction()
 	//
 	[director setProjection:kCCDirectorProjection2D];
     
-    [director setDisplayStats:kCCDirectorStatsFPS];
+    [director setDisplayStats:YES];
 	
 	CCScene *scene = [CCScene node];
 	[scene addChild: [nextAction() node]];

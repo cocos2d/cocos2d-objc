@@ -482,7 +482,7 @@ enum {
 		CCLOG(@"Retina Display Not supported");
 	
 	// display FPS (useful when debugging)
-	[director_ setDisplayStats:kCCDirectorStatsFPS];
+	[director_ setDisplayStats:YES];
 	
 	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
 	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
@@ -525,7 +525,7 @@ enum {
 {
 	CCDirectorMac *director = (CCDirectorMac*) [CCDirector sharedDirector];
 	
-	[director setDisplayStats:kCCDirectorStatsFPS];
+	[director setDisplayStats:YES];
 	
 	[director setView:glView_];
 	

@@ -41,7 +41,7 @@
 
 
 	// Turn on display FPS
-	[director_ setDisplayStats:kCCDirectorStatsFPS];
+	[director_ setDisplayStats:YES];
 	
 //	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA4444];
 

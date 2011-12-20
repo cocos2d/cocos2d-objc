@@ -522,7 +522,7 @@ Class restartAction()
 {
 	CCDirectorMac *director = (CCDirectorMac*) [CCDirector sharedDirector];
 	
-	[director setDisplayStats:kCCDirectorStatsMPF];
+	[director setDisplayStats:YES];
 	
 	[director setView:glView_];
 	

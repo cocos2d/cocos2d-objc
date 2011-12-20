@@ -25,7 +25,7 @@
     [application setStatusBarHidden:true];
 	
 	// Turn on display FPS
-	[director_ setDisplayStats:kCCDirectorStatsFPS];	
+	[director_ setDisplayStats:YES];	
 
 	// 2D projection
 	[director_ setProjection:kCCDirectorProjection2D];

@@ -618,7 +618,7 @@ enum {
 	[super application:application didFinishLaunchingWithOptions:launchOptions];
 	
 	// Turn on display FPS
-	[director_ setDisplayStats:kCCDirectorStatsFPS];
+	[director_ setDisplayStats:YES];
 	
 	// Enables High Res mode (Retina Display) on iPhone 4 and maintains low res on all other devices
 //	if( ! [director enableRetinaDisplay:YES] )
@@ -661,7 +661,7 @@ enum {
 	[director setResizeMode:kCCDirectorResize_AutoScale];	
 	
 	// Turn on display FPS
-	[director setDisplayStats:kCCDirectorStatsFPS];
+	[director setDisplayStats:YES];
 	
 	CCScene *scene = [CCScene node];
 	[scene addChild: [nextAction() node]];

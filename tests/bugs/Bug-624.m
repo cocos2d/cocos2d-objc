@@ -89,7 +89,7 @@
 	[super application:application didFinishLaunchingWithOptions:launchOptions];
 
 	// Turn on display FPS
-	[director_ setDisplayStats:kCCDirectorStatsFPS];
+	[director_ setDisplayStats:YES];
 	
 	CCScene *scene = [CCScene node];	
 	[scene addChild:[Layer1 node] z:0];

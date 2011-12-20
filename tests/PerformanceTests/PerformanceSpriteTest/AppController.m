@@ -22,7 +22,7 @@
 	[director setAnimationInterval:1.0/60];
 	
 	// Display FPS: yes
-	[director setDisplayStats:kCCDirectorStatsFPS];
+	[director setDisplayStats:YES];
 	
 	// Create an EAGLView with a RGB8 color buffer, and a depth buffer of 24-bits
 	EAGLView *glView = [EAGLView viewWithFrame:[window_ bounds]];
