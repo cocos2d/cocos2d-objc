@@ -3514,6 +3514,8 @@
 		FD6ACD7B14A1094F00E95E30 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E0F9256D1224207200EF2362 /* libz.dylib */; };
 		FD6ACD9914A10AB500E95E30 /* AMCTest.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6ACD9814A10AB400E95E30 /* AMCTest.m */; };
 		FD6ACD9B14A10B6000E95E30 /* SpriteTest.m in Sources */ = {isa = PBXBuildFile; fileRef = E076F21E12268AF100DE0DA2 /* SpriteTest.m */; };
+		FD6ACDA314A11CDE00E95E30 /* NSObject+AutoMagicCoding.h in Headers */ = {isa = PBXBuildFile; fileRef = FD6ACDA114A11CDE00E95E30 /* NSObject+AutoMagicCoding.h */; };
+		FD6ACDA414A11CDE00E95E30 /* NSObject+AutoMagicCoding.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6ACDA214A11CDE00E95E30 /* NSObject+AutoMagicCoding.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -4381,6 +4383,8 @@
 		FD6ACD7F14A1094F00E95E30 /* AMCTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AMCTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FD6ACD9714A10AB400E95E30 /* AMCTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AMCTest.h; path = tests/AMCTest.h; sourceTree = "<group>"; };
 		FD6ACD9814A10AB400E95E30 /* AMCTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AMCTest.m; path = tests/AMCTest.m; sourceTree = "<group>"; };
+		FD6ACDA114A11CDE00E95E30 /* NSObject+AutoMagicCoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+AutoMagicCoding.h"; sourceTree = "<group>"; };
+		FD6ACDA214A11CDE00E95E30 /* NSObject+AutoMagicCoding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+AutoMagicCoding.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -5054,6 +5058,7 @@
 		E076E6281225EC7400DE0DA2 /* cocos2d */ = {
 			isa = PBXGroup;
 			children = (
+				FD6ACDA014A11CDD00E95E30 /* AutoMagicCoding */,
 				E076E77B1225ED1100DE0DA2 /* Base Nodes */,
 				E076E7721225EC8C00DE0DA2 /* Label Nodes */,
 				E076E7751225ECB100DE0DA2 /* Sprite Nodes */,
@@ -5616,6 +5621,15 @@
 			name = "PVR Test Images";
 			sourceTree = "<group>";
 		};
+		FD6ACDA014A11CDD00E95E30 /* AutoMagicCoding */ = {
+			isa = PBXGroup;
+			children = (
+				FD6ACDA114A11CDE00E95E30 /* NSObject+AutoMagicCoding.h */,
+				FD6ACDA214A11CDE00E95E30 /* NSObject+AutoMagicCoding.m */,
+			);
+			path = AutoMagicCoding;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -5704,6 +5718,7 @@
 				E026452912A59F1E009D04FE /* CCParticleSystemPoint.h in Headers */,
 				E08AA19B12C262B3000341BD /* MacWindow.h in Headers */,
 				A0AAB8241451C8C000850F2C /* CCParticleBatchNode.h in Headers */,
+				FD6ACDA314A11CDE00E95E30 /* NSObject+AutoMagicCoding.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9475,6 +9490,7 @@
 				E026452A12A59F1E009D04FE /* CCParticleSystemPoint.m in Sources */,
 				E08AA19C12C262B3000341BD /* MacWindow.m in Sources */,
 				A0AAB8251451C8C000850F2C /* CCParticleBatchNode.m in Sources */,
+				FD6ACDA414A11CDE00E95E30 /* NSObject+AutoMagicCoding.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
