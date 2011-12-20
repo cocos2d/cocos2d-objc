@@ -183,6 +183,12 @@ enum nodeTags {
 {
 	return nil;
 }
+
+-(CCLayer *) insideLayer
+{
+    return nil;
+}
+
 @end
 
 #pragma mark -
