@@ -164,7 +164,7 @@ do	{																							\
 	[self.window setContentView:self.glView];													\
 	CCDirector *__director = [CCDirector sharedDirector];										\
 	[__director setDisplayStats:kCCDirectorStatsNone];																\
-	[__director setOpenGLView:self.glView];														\
+	[__director setView:self.glView];														\
 	[(CCDirectorMac*)__director setOriginalWinSize:__WINSIZE__];								\
 	[self.window makeMainWindow];																\
 	[self.window makeKeyAndOrderFront:self];													\

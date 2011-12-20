@@ -524,7 +524,7 @@ Class restartAction()
 	
 	[director setDisplayStats:kCCDirectorStatsMPF];
 	
-	[director setOpenGLView:glView_];
+	[director setView:glView_];
 	
 	[self toggleFullScreen:self];
 

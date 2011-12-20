@@ -24,6 +24,8 @@
  */
 
 
+#import <Availability.h>
+
 #import "ccConfig.h"
 #import "ccTypes.h"
 
@@ -70,6 +72,7 @@ typedef enum {
 @class CCScene;
 @class CCScheduler;
 @class CCActionManager;
+
 
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 #define CC_VIEWCONTROLLER UIViewController
@@ -213,7 +216,7 @@ and when to execute the Scenes.
 @property (nonatomic,readwrite,retain) CCActionManager *actionManager;
 
 /** returns a shared instance of the director */
-+(CCDirector *)sharedDirector;
++(CCDirector*)sharedDirector;
 
 
 #pragma mark Director - Stats
@@ -254,9 +257,9 @@ and when to execute the Scenes.
  * Call it to run only your FIRST scene.
  * Don't call it if there is already a running scene.
  *
- * @deprecated use popScene instead
+ * It will call pushScene: and then it will call startAnimation
  */
-- (void) runWithScene:(CCScene*) scene DEPRECATED_ATTRIBUTE;
+- (void) runWithScene:(CCScene*) scene;
 
 /**Suspends the execution of the running scene, pushing it on the stack of suspended scenes.
  * The new scene will be executed.
@@ -310,11 +313,16 @@ and when to execute the Scenes.
  */
 -(void) drawScene;
 
-///** sets the openGL view */
-//-(void) setView:(CC_GLVIEW*)view;
-//
-///** returns the OpenGL view */
-//-(CC_GLVIEW*) view;
+
+// XXX: Hack. Should be placed on CCDirectorMac.h. Refactoring needed
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+/** sets the openGL view */
+-(void) setView:(CC_GLVIEW*)view;
+
+/** returns the OpenGL view */
+-(CC_GLVIEW*) view;
+#endif
 
 #pragma mark Director - Memory Helper
 

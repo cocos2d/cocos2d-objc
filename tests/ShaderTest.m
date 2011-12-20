@@ -519,7 +519,7 @@ enum {
 		[ctl.view addSubview: sliderCtl_];
 		
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
-		MacGLView *view = [[CCDirector sharedDirector] openGLView];
+		MacGLView *view = [[CCDirector sharedDirector] view];
 		
 		if( ! overlayWindow ) {
 			overlayWindow  = [[NSWindow alloc] initWithContentRect:[[view window] frame]

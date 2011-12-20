@@ -187,7 +187,7 @@ static CCDirector *_sharedDirector = nil;
 -(void) setGLDefaultValues
 {
 	// This method SHOULD be called only after openGLView_ was initialized
-	NSAssert( self.view, @"openGLView_ must be initialized");
+	NSAssert( [self view], @"openGLView_ must be initialized");
 
 	[self setAlphaBlending: YES];
 	[self setDepthTest: YES];
@@ -343,12 +343,12 @@ static CCDirector *_sharedDirector = nil;
 
 #pragma mark Director Scene Management
 
-// XXX deprecated
 - (void)runWithScene:(CCScene*) scene
 {
 	NSAssert( scene != nil, @"Argument must be non-nil");
 	
 	[self pushScene:scene];
+	[self startAnimation];
 }
 
 -(void) replaceScene: (CCScene*) scene
