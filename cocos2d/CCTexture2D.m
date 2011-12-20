@@ -472,10 +472,8 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 		
         NSBitmapImageRep *bitmap = [[NSBitmapImageRep alloc] initWithFocusedViewRect:NSMakeRect(0.0f, 0.0f, POTSize.width, POTSize.height)];
 		[image unlockFocus];
-        
-		unsigned char *data = (unsigned char *) [bitmap bitmapData];  // Use the same buffer to improve the performance.
-		
-		data = (unsigned char*) [bitmap bitmapData];  //Use the same buffer to improve the performance.
+
+		unsigned char *data = (unsigned char*) [bitmap bitmapData];  //Use the same buffer to improve the performance.
 		
 		NSUInteger textureSize = POTSize.width * POTSize.height;
 #if CC_USE_LA88_LABELS
