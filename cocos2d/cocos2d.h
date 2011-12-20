@@ -152,6 +152,11 @@
 #endif // CC_ENABLE_PROFILERS
 
 
+//
+// AutoMagicCoding - NSCoding alternative
+//
+#import "AutoMagicCoding/NSObject+AutoMagicCoding.h"
+
 // free functions
 NSString * cocos2dVersion(void);
 
