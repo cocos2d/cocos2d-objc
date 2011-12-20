@@ -73,6 +73,7 @@
 
 @synthesize isFullScreen = isFullScreen_;
 @synthesize originalWinSize = originalWinSize_;
+@synthesize eventDispatcher = eventDispatcher_;
 
 -(id) init
 {
@@ -84,6 +85,8 @@
 		fullScreenWindow_ = nil;
 		windowGLView_ = nil;
 		winOffset_ = CGPointZero;
+		
+		eventDispatcher_ = [[CCEventDispatcher alloc] init];
 	}
 	
 	return self;
@@ -91,10 +94,12 @@
 
 - (void) dealloc
 {
+	[eventDispatcher_ release];
 	[view_ release];
     [superViewGLView_ release];
 	[fullScreenWindow_ release];
 	[windowGLView_ release];
+
 	[super dealloc];
 }
 
@@ -354,7 +359,7 @@
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 	
 	[self drawScene];
-	[[CCEventDispatcher sharedDispatcher] dispatchQueuedEvents];
+	[eventDispatcher_ dispatchQueuedEvents];
 	
 	[[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:nil];
 	
@@ -498,10 +503,8 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 {
 	[super setView:view];
 	
-	CCEventDispatcher *eventDispatcher = [CCEventDispatcher sharedDispatcher];
-	[view setEventDelegate: eventDispatcher];
-	[eventDispatcher setDispatchEvents: YES];
-	
+	[view setEventDelegate:eventDispatcher_];
+	[eventDispatcher_ setDispatchEvents: YES];
 
 	// Enable Touches. Default no.
 	// Only available on OS X 10.6+

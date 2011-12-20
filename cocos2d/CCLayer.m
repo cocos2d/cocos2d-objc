@@ -43,6 +43,7 @@
 #import "Platforms/iOS/CCDirectorIOS.h"
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 #import "Platforms/Mac/CCEventDispatcher.h"
+#import "Platforms/Mac/CCDirectorMac.h"
 #endif
 
 // extern
@@ -143,10 +144,11 @@
 		isMouseEnabled_ = enabled;
 		
 		if( isRunning_ ) {
+			CCDirectorMac *director = (CCDirectorMac*)[CCDirector sharedDirector];
 			if( enabled )
-				[[CCEventDispatcher sharedDispatcher] addMouseDelegate:self priority:[self mouseDelegatePriority]];
+				[[director eventDispatcher] addMouseDelegate:self priority:[self mouseDelegatePriority]];
 			else
-				[[CCEventDispatcher sharedDispatcher] removeMouseDelegate:self];
+				[[director eventDispatcher] removeMouseDelegate:self];
 		}
 	}
 }
@@ -167,10 +169,11 @@
 		isKeyboardEnabled_ = enabled;
 		
 		if( isRunning_ ) {
+			CCDirectorMac *director = (CCDirectorMac*)[CCDirector sharedDirector];
 			if( enabled )
-				[[CCEventDispatcher sharedDispatcher] addKeyboardDelegate:self priority:[self keyboardDelegatePriority] ];
+				[[director eventDispatcher] addKeyboardDelegate:self priority:[self keyboardDelegatePriority] ];
 			else
-				[[CCEventDispatcher sharedDispatcher] removeKeyboardDelegate:self];
+				[[director eventDispatcher] removeKeyboardDelegate:self];
 		}
 	}
 }
@@ -190,10 +193,11 @@
 	if( isTouchEnabled_ != enabled ) {
 		isTouchEnabled_ = enabled;
 		if( isRunning_ ) {
+			CCDirectorMac *director = (CCDirectorMac*) [CCDirector sharedDirector];
 			if( enabled )
-				[[CCEventDispatcher sharedDispatcher] addTouchDelegate:self priority:[self touchDelegatePriority]];
+				[[director eventDispatcher] addTouchDelegate:self priority:[self touchDelegatePriority]];
 			else
-				[[CCEventDispatcher sharedDispatcher] removeTouchDelegate:self];
+				[[director eventDispatcher] removeTouchDelegate:self];
 		}
 	}
 }
@@ -212,14 +216,17 @@
 		[self registerWithTouchDispatcher];
 
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+	CCDirectorMac *director = (CCDirectorMac*) [CCDirector sharedDirector];
+	CCEventDispatcher *eventDispatcher = [director eventDispatcher];
+
 	if( isMouseEnabled_ )
-		[[CCEventDispatcher sharedDispatcher] addMouseDelegate:self priority:[self mouseDelegatePriority]];
+		[eventDispatcher addMouseDelegate:self priority:[self mouseDelegatePriority]];
 	
 	if( isKeyboardEnabled_)
-		[[CCEventDispatcher sharedDispatcher] addKeyboardDelegate:self priority:[self keyboardDelegatePriority]];
+		[eventDispatcher addKeyboardDelegate:self priority:[self keyboardDelegatePriority]];
 
 	if( isTouchEnabled_)
-		[[CCEventDispatcher sharedDispatcher] addTouchDelegate:self priority:[self touchDelegatePriority]];
+		[eventDispatcher addTouchDelegate:self priority:[self touchDelegatePriority]];
 
 #endif
 	
@@ -252,14 +259,16 @@
 		[[UIAccelerometer sharedAccelerometer] setDelegate:nil];
 
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+	CCDirectorMac *director = (CCDirectorMac*) [CCDirector sharedDirector];
+	CCEventDispatcher *eventDispatcher = [director eventDispatcher];
 	if( isMouseEnabled_ )
-		[[CCEventDispatcher sharedDispatcher] removeMouseDelegate:self];
+		[eventDispatcher removeMouseDelegate:self];
 	
 	if( isKeyboardEnabled_ )
-		[[CCEventDispatcher sharedDispatcher] removeKeyboardDelegate:self];
+		[eventDispatcher removeKeyboardDelegate:self];
 
 	if( isTouchEnabled_ )
-		[[CCEventDispatcher sharedDispatcher] removeTouchDelegate:self];
+		[eventDispatcher removeTouchDelegate:self];
 
 #endif
 	

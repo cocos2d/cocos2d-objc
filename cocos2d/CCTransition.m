@@ -44,6 +44,7 @@
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 #import "Platforms/iOS/CCTouchDispatcher.h"
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+#import "Platforms/Mac/CCDirectorMac.h"
 #import "Platforms/Mac/CCEventDispatcher.h"
 #endif
 
@@ -81,7 +82,8 @@ const NSInteger kSceneFade = 0xFADEFADE;
 		CCDirectorIOS *director = (CCDirectorIOS*)[CCDirector sharedDirector];
 		[[director touchDispatcher] setDispatchEvents: NO];
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
-		[[CCEventDispatcher sharedDispatcher] setDispatchEvents: NO];
+		CCDirectorMac *director = (CCDirectorMac*)[CCDirector sharedDirector];
+		[[director eventDispatcher] setDispatchEvents: NO];
 #endif
 
 		[self sceneOrder];
@@ -139,7 +141,7 @@ const NSInteger kSceneFade = 0xFADEFADE;
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 	[[((CCDirectorIOS*)director) touchDispatcher] setDispatchEvents: YES];
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
-	[[CCEventDispatcher sharedDispatcher] setDispatchEvents: YES];
+	[[((CCDirectorMac*)director) eventDispatcher] setDispatchEvents: YES];
 #endif
 	
 	// issue #267
