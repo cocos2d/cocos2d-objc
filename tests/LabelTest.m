@@ -1474,7 +1474,7 @@ static float menuItemPaddingCenter = 50;
 	
 	[director setDisplayStats:kCCDirectorStatsFPS];
 	
-	[director setOpenGLView:glView_];
+	[director setView:glView_];
 	
 	//	[director setProjection:kCCDirectorProjection2D];
 	

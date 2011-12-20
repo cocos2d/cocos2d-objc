@@ -1156,7 +1156,7 @@ Class restartAction()
 	
 	[director setDisplayStats:kCCDirectorStatsFPS];
 	
-	[director setOpenGLView:glView_];
+	[director setView:glView_];
 	
 	//	[director setProjection:kCCDirectorProjection2D];
 	

@@ -59,7 +59,7 @@
 @implementation CCDirector (MacExtension)
 -(CGPoint) convertEventToGL:(NSEvent*)event
 {
-	NSPoint point = [self.view convertPoint:[event locationInWindow] fromView:nil];
+	NSPoint point = [[self view] convertPoint:[event locationInWindow] fromView:nil];
 	CGPoint p = NSPointToCGPoint(point);
 	
 	return  [(CCDirectorMac*)self convertToLogicalCoordinates:p];

@@ -325,13 +325,13 @@ Class restartAction()
 {
 	[super onEnter];
 	CCDirector *director = [CCDirector sharedDirector];
-	[[director openGLView] setAcceptsTouchEvents:YES];
+	[[director view] setAcceptsTouchEvents:YES];
 }
 
 -(void) onExit
 {
 	CCDirector *director = [CCDirector sharedDirector];
-	[[director openGLView] setAcceptsTouchEvents:NO];
+	[[director view] setAcceptsTouchEvents:NO];
 	
 	[super onExit];
 }
@@ -340,7 +340,7 @@ Class restartAction()
 {
 	NSLog(@"touchesBegan: %@", event);
 
-	NSView *view = [[CCDirector sharedDirector] openGLView];
+	NSView *view = [[CCDirector sharedDirector] view];
 	NSSet *touches = [event touchesMatchingPhase:NSTouchPhaseBegan inView:view];
 	
 	for (NSTouch *touch in touches)
@@ -364,7 +364,7 @@ Class restartAction()
 {
 	NSLog(@"touchesMoved: %@", event);
 
-	NSView *view = [[CCDirector sharedDirector] openGLView];
+	NSView *view = [[CCDirector sharedDirector] view];
 	NSSet *touches = [event touchesMatchingPhase:NSTouchPhaseMoved inView:view];
 	
 	for (NSTouch *touch in touches)
@@ -387,7 +387,7 @@ Class restartAction()
 {
 	NSLog(@"touchesEnded: %@", event);
 
-	NSView *view = [[CCDirector sharedDirector] openGLView];
+	NSView *view = [[CCDirector sharedDirector] view];
 	NSSet *touches = [event touchesMatchingPhase:NSTouchPhaseEnded inView:view];
 	
 	for (NSTouch *touch in touches)
@@ -415,7 +415,7 @@ Class restartAction()
 {
 	NSLog(@"touchesCancelled: %@", event);
 
-	NSView *view = [[CCDirector sharedDirector] openGLView];
+	NSView *view = [[CCDirector sharedDirector] view];
 	NSSet *touches = [event touchesMatchingPhase:NSTouchPhaseCancelled inView:view];
 	
 	for (NSTouch *touch in touches)
@@ -551,7 +551,7 @@ Class restartAction()
 	
 	[director setDisplayStats:kCCDirectorStatsMPF];
 	
-	[director setOpenGLView:glView_];
+	[director setView:glView_];
 	
 //	[director setProjection:kCCDirectorProjection2D];
 	

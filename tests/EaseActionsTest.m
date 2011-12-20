@@ -714,7 +714,7 @@ Class restartAction()
 	[ctl.view addSubview: sliderCtl];
 
 #elif CC_PLATFORM_MAC
-	MacGLView *view = (MacGLView*) [[CCDirector sharedDirector] view];
+	MacGLView *view = (MacGLView*) [[CCDirectorMac sharedDirector] view];
 
 	if( ! overlayWindow ) {
 		overlayWindow  = [[NSWindow alloc] initWithContentRect:[[view window] frame]
@@ -822,7 +822,7 @@ Class restartAction()
 	CCScene *scene = [CCScene node];
 	[scene addChild: [nextAction() node]];
 	
-	[director pushScene:scene];
+	[director runWithScene:scene];
 }
 
 - (BOOL) applicationShouldTerminateAfterLastWindowClosed: (NSApplication *) theApplication
