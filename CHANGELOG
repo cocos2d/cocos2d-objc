@@ -1,6 +1,12 @@
 version 2.0-beta2 XX-Dec-2011
-. [NEW] Forward-ported changes from v1.1 branch:
+. [NEW] v1.1 Forward-ported changes:
 		LabelTTF: word wrap works on Mac (issue #1074)
+. [NEW] ActionManager: It is no longer a singleton. It is an ivar of director
+. [NEW] Director: it is a subclass of UIViewController (iOS only)
+. [NEW] Director: pushScene is the new recommended way to start the scene. Director will start the animation
+		automatically once the view is displayed (iOS only)
+. [NEW] EventDispatcher / TouchDispatcher: They are no longer singletons. They are an ivar of director.
+. [NEW] Scheduler: It is no longer a singleton. It is an ivar of director
 . [NEW] Template: RootViewController viewDidAppear / viewDidDissapear will run/pause the director
 . [NEW] Template: AppController rootViewController is a UINavigationController
 . [FIX] EaseActions: EaseIn/EaseOut actions support float arguments
