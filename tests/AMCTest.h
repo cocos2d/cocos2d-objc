@@ -27,6 +27,10 @@
 {
     CCTextureAtlas	*atlas;
 }
+
+// Creates layer first time, that we will save/load after.
+-(CCLayer *) insideLayer;
+
 -(NSString*) title;
 -(NSString*) subtitle;
 @end
@@ -34,7 +38,7 @@
 
 @interface SpriteAMC1 : AMCDemo
 {}
--(void) addNewSpriteWithCoords:(CGPoint)p;
+-(CCSprite *) spriteWithCoords:(CGPoint)p;
 @end
 
 

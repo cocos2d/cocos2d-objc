@@ -52,13 +52,74 @@ Class restartAction()
 #pragma mark -
 #pragma mark SpriteDemo
 
+enum nodeTags {
+    kLayer, //< tag for layer that we will save/load
+};
+
 @implementation AMCDemo
+
+- (NSString *) testFilePath
+{    
+    NSString *filename = [NSString stringWithFormat:@"%@.plist", [self className] ];
+    
+    NSArray *paths					= NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+	NSString *documentsDirectory	= [paths objectAtIndex:0];
+	NSString *fullPath				= [documentsDirectory stringByAppendingPathComponent: filename ];
+	return fullPath;
+}
+
+- (void) save
+{
+    CCNode *layer = [self getChildByTag: kLayer];
+    NSDictionary *dict = [layer dictionaryRepresentation];
+    [dict writeToFile:[self testFilePath] atomically:YES];
+}
+
+- (void) purge
+{
+    [self removeChildByTag: kLayer cleanup:YES];
+    
+    [CCAnimationCache purgeSharedAnimationCache];
+    [CCSpriteFrameCache purgeSharedSpriteFrameCache];
+    [[CCTextureCache sharedTextureCache] removeAllTextures];    
+}
+
+- (void) load
+{
+    NSString *path = [self testFilePath];
+    CCLayer *layer = [NSObject objectWithDictionaryRepresentation: [NSDictionary dictionaryWithContentsOfFile: path]];    
+    
+	[self addChild: layer z: 0 tag: kLayer];
+}
+
+- (void) savePurgeLoadCallback: (id) sender
+{
+    CCMenuItemToggle *toggle = (CCMenuItemToggle *)sender;
+    NSUInteger selected = toggle.selectedIndex;
+    switch (selected) {
+        case 0:
+            NSLog(@"Loading...");
+            [self load];
+            break;
+        case 1:
+            NSLog(@"Saving...");
+            [self save];
+            break;
+        case 2:
+            NSLog(@"Purging...");
+            [self purge];
+            break;
+            
+    }
+
+}
+
 -(id) init
 {
 	if( (self = [super init]) ) {
-
-
 		CGSize s = [[CCDirector sharedDirector] winSize];
+        
+        [self addChild: [self insideLayer]  z: 0 tag: kLayer];
 			
 		CCLabelTTF *label = [CCLabelTTF labelWithString:[self title] fontName:@"Arial" fontSize:26];
 		[self addChild: label z:1];
@@ -74,13 +135,19 @@ Class restartAction()
 		CCMenuItemImage *item1 = [CCMenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
 		CCMenuItemImage *item2 = [CCMenuItemImage itemFromNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
 		CCMenuItemImage *item3 = [CCMenuItemImage itemFromNormalImage:@"f1.png" selectedImage:@"f2.png" target:self selector:@selector(nextCallback:)];
+        
+        CCMenuItemLabel *save = [CCMenuItemLabel itemWithLabel: [CCLabelTTF labelWithString: @"Save" fontName: @"Marker Felt" fontSize:12]];
+        CCMenuItemLabel *purge = [CCMenuItemLabel itemWithLabel: [CCLabelTTF labelWithString: @"Purge" fontName: @"Marker Felt" fontSize:12]];
+        CCMenuItemLabel *load = [CCMenuItemLabel itemWithLabel: [CCLabelTTF labelWithString: @"Load" fontName: @"Marker Felt" fontSize:12]];
+        CCMenuItem *trigger = [CCMenuItemToggle itemWithTarget:self selector: @selector(savePurgeLoadCallback:) items: save, purge, load, nil];
 		
-		CCMenu *menu = [CCMenu menuWithItems:item1, item2, item3, nil];
+		CCMenu *menu = [CCMenu menuWithItems:item1, item2, item3, trigger, nil];
 		
 		menu.position = CGPointZero;
 		item1.position = ccp( s.width/2 - 100,30);
 		item2.position = ccp( s.width/2, 30);
 		item3.position = ccp( s.width/2 + 100,30);
+        trigger.position = ccp( s.width/2, 80);
 		[self addChild: menu z:1];	
 	}
 	return self;
@@ -124,26 +191,26 @@ Class restartAction()
 
 @implementation SpriteAMC1
 
--(id) init
+-(CCLayer *) insideLayer
 {
-	if( (self=[super init]) ) {
+	CCLayer *layer = [CCLayer node];
 		
-		CGSize s = [[CCDirector sharedDirector] winSize];
-		[self addNewSpriteWithCoords:ccp(s.width/2, s.height/2)];				
-	}	
-	return self;
+    CGSize s = [[CCDirector sharedDirector] winSize];
+	CCSprite *sprite = [self spriteWithCoords:ccp(s.width/2, s.height/2)];				
+	
+    [layer addChild:sprite];
+    
+	return layer;
 }
 
--(void) addNewSpriteWithCoords:(CGPoint)p
+-(CCSprite *) spriteWithCoords:(CGPoint)p
 {
 	int idx = CCRANDOM_0_1() * 1400 / 100;
 	int x = (idx%5) * 85;
 	int y = (idx/5) * 121;
 	
 	
-	CCSprite *sprite = [CCSprite spriteWithFile:@"grossini_dance_atlas.png" rect:CGRectMake(x,y,85,121)];
-	[self addChild:sprite];
-	
+	CCSprite *sprite = [CCSprite spriteWithFile:@"grossini_dance_atlas.png" rect:CGRectMake(x,y,85,121)];	
 	sprite.position = ccp( p.x, p.y);
 	
 	id action;
@@ -163,6 +230,8 @@ Class restartAction()
 	id seq = [CCSequence actions:action, action_back, nil];
 	
 	[sprite runAction: [CCRepeatForever actionWithAction:seq]];
+    
+    return sprite;
 }
 
 -(NSString *) title
