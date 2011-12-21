@@ -13,6 +13,8 @@ enum {
 
 static int sceneIdx=-1;
 static NSString *transitions[] = {
+	@"SchedulerTimeScale",
+	
 	@"SchedulerAutoremove",
 	@"SchedulerPauseResume",
 	@"SchedulerUnscheduleAll",
@@ -23,7 +25,6 @@ static NSString *transitions[] = {
 	@"SchedulerUpdateFromCustom",
 	@"RescheduleSelector",
 	@"SchedulerDelayAndRepeat",
-
 };
 
 Class nextTest(void);
@@ -619,8 +620,158 @@ Class restartTest()
 
 @end
 
+#pragma mark - SchedulerTiimeScale
 
-// CLASS IMPLEMENTATIONS
+@implementation SchedulerTimeScale
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+- (UISlider *)sliderCtl
+{
+    if (sliderCtl == nil) 
+    {
+        CGRect frame = CGRectMake(12.0f, 12.0f, 120.0f, 7.0f);
+        sliderCtl = [[UISlider alloc] initWithFrame:frame];
+        [sliderCtl addTarget:self action:@selector(sliderAction:) forControlEvents:UIControlEventValueChanged];
+        
+        // in case the parent view draws with a custom color or gradient, use a transparent color
+        sliderCtl.backgroundColor = [UIColor clearColor];
+        
+        sliderCtl.minimumValue = -3.0f;
+        sliderCtl.maximumValue = 3.0f;
+        sliderCtl.continuous = YES;
+        sliderCtl.value = 1.0f;		
+    }
+    return [sliderCtl autorelease];
+}
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+-(NSSlider*) sliderCtl
+{
+	if( sliderCtl == nil )
+	{
+		sliderCtl = [[NSSlider alloc] initWithFrame: NSMakeRect (0, 0, 200, 20)];
+		[sliderCtl setMinValue: -3];
+		[sliderCtl setMaxValue: 3];
+		[sliderCtl setFloatValue: 1];
+		[sliderCtl setAction: @selector (sliderAction:)];
+		[sliderCtl setTarget: self];
+		[sliderCtl setContinuous: YES];
+	}
+	
+	return sliderCtl;
+}
+#endif // Mac
+
+-(void) sliderAction:(id) sender
+{
+	ccTime scale;
+	
+#if CC_PLATFORM_IOS
+	scale = sliderCtl.value;
+#elif CC_PLATFORM_MAC
+	
+	float value = [sliderCtl floatValue];	
+	scale = value;
+#endif
+	[[[CCDirector sharedDirector] scheduler] setTimeScale: scale];
+	
+}
+
+-(void) onEnter
+{
+	[super onEnter];
+	
+	CGSize s = [[CCDirector sharedDirector] winSize];
+	
+	// rotate and jump
+	CCActionInterval *jump1 = [CCJumpBy actionWithDuration:4 position:ccp(-s.width+80,0) height:100 jumps:4];
+	CCActionInterval *jump2 = [jump1 reverse];
+	CCActionInterval *rot1 = [CCRotateBy actionWithDuration:4 angle:360*2];
+	CCActionInterval *rot2 = [rot1 reverse];
+	
+	id seq3_1 = [CCSequence actions:jump2, jump1, nil];
+	id seq3_2 = [CCSequence actions: rot1, rot2, nil];
+	id spawn = [CCSpawn actions:seq3_1, seq3_2, nil];
+	id action = [CCRepeatForever actionWithAction:spawn];
+	
+	id action2 = [[action copy] autorelease];
+	id action3 = [[action copy] autorelease];
+	
+	CCSprite *grossini = [CCSprite spriteWithFile:@"grossini.png"];
+	CCSprite *tamara = [CCSprite spriteWithFile:@"grossinis_sister1.png"];
+	CCSprite *kathia = [CCSprite spriteWithFile:@"grossinis_sister2.png"];
+	
+	[self addChild:grossini];
+	[self addChild:tamara];
+	[self addChild:kathia];
+
+	[grossini runAction: [CCSpeed actionWithAction:action speed:0.5f]];
+	[tamara runAction: [CCSpeed actionWithAction:action2 speed:1.5f]];
+	[kathia runAction: [CCSpeed actionWithAction:action3 speed:1.0f]];
+	
+	CCParticleSystem *emitter = [CCParticleFireworks node];
+	[self addChild:emitter];
+	
+	sliderCtl = [self sliderCtl];
+	
+#ifdef CC_PLATFORM_IOS
+	
+	AppController *app = (AppController*) [[UIApplication sharedApplication] delegate];
+	UIViewController *ctl = [app rootViewController];
+	
+	[ctl.view addSubview: sliderCtl];
+	
+#elif CC_PLATFORM_MAC
+	MacGLView *view = (MacGLView*) [[CCDirectorMac sharedDirector] view];
+	
+	if( ! overlayWindow ) {
+		overlayWindow  = [[NSWindow alloc] initWithContentRect:[[view window] frame]
+													 styleMask:NSBorderlessWindowMask
+													   backing:NSBackingStoreBuffered
+														 defer:NO];
+		
+		[overlayWindow setFrame:[[view window] frame] display:NO];
+		
+		[[overlayWindow contentView] addSubview:sliderCtl];
+		[overlayWindow setParentWindow:[view window]];
+		[overlayWindow setOpaque:NO];
+		[overlayWindow makeKeyAndOrderFront:nil];
+		[overlayWindow setBackgroundColor:[NSColor clearColor]];
+		[[overlayWindow contentView] display];
+	}
+	
+	[[view window] addChildWindow:overlayWindow ordered:NSWindowAbove];
+#endif
+	
+}
+
+-(void) onExit
+{
+	[sliderCtl removeFromSuperview];
+	
+#ifdef CC_PLATFORM_MAC
+	MacGLView *view = (MacGLView*) [[CCDirector sharedDirector] view];
+	[[view window] removeChildWindow:overlayWindow];
+	[overlayWindow release];
+	overlayWindow = nil;
+#endif
+	[super onExit];
+}
+
+-(NSString *) title
+{
+	return @"Scheduler timeScale Test";
+}
+
+-(NSString *) subtitle
+{
+	return @"Fast-forward and rewind using scheduler.timeScale";
+}
+
+@end
+
+#pragma mark - AppController
+
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+
 @implementation AppController
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -651,5 +802,54 @@ Class restartTest()
 	
 	return YES;
 }
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+	return UIInterfaceOrientationIsLandscape(interfaceOrientation);
+}
 @end
+
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+
+@implementation cocos2dmacAppDelegate
+
+@synthesize window=window_, glView=glView_;
+
+- (void)applicationDidFinishLaunching:(NSNotification *)aNotification
+{
+	CCDirectorMac *director = (CCDirectorMac*) [CCDirector sharedDirector];
+	
+	[director setDisplayStats:YES];
+	
+	[director setView:glView_];
+	
+	//	[director setProjection:kCCDirectorProjection2D];
+	
+	// Enable "moving" mouse event. Default no.
+	[window_ setAcceptsMouseMovedEvents:NO];
+	
+	// EXPERIMENTAL stuff.
+	// 'Effects' don't work correctly when autoscale is turned on.
+	[director setResizeMode:kCCDirectorResize_AutoScale];
+	
+	CCScene *scene = [CCScene node];
+	[scene addChild: [nextTest() node]];
+	
+	[director runWithScene:scene];
+}
+
+- (BOOL) applicationShouldTerminateAfterLastWindowClosed: (NSApplication *) theApplication
+{
+	return YES;
+}
+
+- (IBAction)toggleFullScreen: (id)sender
+{
+	CCDirectorMac *director = (CCDirectorMac*) [CCDirector sharedDirector];
+	[director setFullScreen: ! [director isFullScreen] ];
+}
+
+@end
+#endif
+
 

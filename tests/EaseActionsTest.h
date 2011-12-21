@@ -92,15 +92,3 @@
 @interface SpeedTest : SpriteDemo
 {}
 @end
-
-@interface SchedulerTest : SpriteDemo
-{
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
-	UISlider	*sliderCtl;
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
-	NSSlider	*sliderCtl;
-	NSWindow	*overlayWindow;
-#endif
-}
-@end
-
