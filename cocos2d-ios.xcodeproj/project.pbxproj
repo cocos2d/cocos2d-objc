@@ -1328,6 +1328,7 @@
 		A04B0D4E149E7FFB005EB429 /* BaseAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0D3A8FE149D2FA40077CD93 /* BaseAppController.m */; };
 		A04B0D4F149E7FFC005EB429 /* BaseAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0D3A8FE149D2FA40077CD93 /* BaseAppController.m */; };
 		A04B0D50149E7FFE005EB429 /* BaseAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0D3A8FE149D2FA40077CD93 /* BaseAppController.m */; };
+		A04B0F9814A2A038005EB429 /* fire.png in Resources */ = {isa = PBXBuildFile; fileRef = 50F9EA8F0E1AE87E000E7616 /* fire.png */; };
 		A0600BF213C2074000BB6F49 /* fps_images-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E087B34E12785BB60076F6FF /* fps_images-hd.png */; };
 		A0600BF313C2074000BB6F49 /* fps_images-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E087B34E12785BB60076F6FF /* fps_images-hd.png */; };
 		A0600BF413C2074100BB6F49 /* fps_images-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E087B34E12785BB60076F6FF /* fps_images-hd.png */; };
@@ -11031,6 +11032,7 @@
 				A0EC4BD4140323A300EC482A /* PositionTextureA8Color.vsh in Resources */,
 				A0EC4BD5140323A300EC482A /* PositionTextureColor.fsh in Resources */,
 				A0EC4BD6140323A300EC482A /* PositionTextureColor.vsh in Resources */,
+				A04B0F9814A2A038005EB429 /* fire.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
