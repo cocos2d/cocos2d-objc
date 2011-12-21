@@ -38,6 +38,7 @@
 
 #import "CCDirectorMac.h"
 #import "../../ccConfig.h"
+#import "../../ccMacros.h"
 
 
 @implementation MacGLView
@@ -46,7 +47,7 @@
 
 +(void) load_
 {
-	NSLog(@"%@ loaded", self);
+	CCLOG(@"%@ loaded", self);
 }
 
 - (id) initWithFrame:(NSRect)frameRect
@@ -91,6 +92,19 @@
 	return self;
 }
 	
+- (void) update
+{
+	NSLog(@"update*********");
+	[super update];
+}
+
+- (void) prepareOpenGL
+{
+	[super prepareOpenGL];
+	
+	// Initialize OpenGL context
+}
+
 - (void) reshape
 {
 	// We draw on a secondary thread through the display link
@@ -112,7 +126,8 @@
 
 - (void) dealloc
 {	
-
+	CCLOGINFO(@"cocos2d: deallocing %@", self);
+	
 	[super dealloc];
 }
 
@@ -128,6 +143,7 @@
 #endif
 
 #pragma mark MacGLView - Mouse events
+
 - (void)mouseDown:(NSEvent *)theEvent
 {
 	DISPATCH_EVENT(theEvent, _cmd);

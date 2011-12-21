@@ -93,12 +93,12 @@ and when to execute the Scenes.
 
 	NSUInteger frames_;
 	NSUInteger totalFrames_;
-	ccTime millisecondsPerFrame_;
+	ccTime secondsPerFrame_;
 
 	ccTime accumDt_;
 	ccTime frameRate_;
 	CCLabelAtlas *FPSLabel_;
-	CCLabelAtlas *MPFLabel_;
+	CCLabelAtlas *SPFLabel_;
 	
 	/* is the running scene paused */
 	BOOL isPaused_;
@@ -168,8 +168,8 @@ and when to execute the Scenes.
 @property (nonatomic,readwrite) ccDirectorProjection projection;
 /** How many frames were called since the director started */
 @property (nonatomic,readonly) NSUInteger	totalFrames;
-/** milliseconds per frame */
-@property (nonatomic, readonly) ccTime millisecondsPerFrame;
+/** seconds per frame */
+@property (nonatomic, readonly) ccTime secondsPerFrame;
 
 /** Whether or not the replaced scene will receive the cleanup message.
  If the new scene is pushed, then the old scene won't receive the "cleanup" message.
