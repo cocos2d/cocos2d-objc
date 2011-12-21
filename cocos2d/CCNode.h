@@ -28,9 +28,7 @@
 #import <Availability.h>
 
 #import "Platforms/CCGL.h"
-#import "CCAction.h"
 #import "ccTypes.h"
-#import "CCTexture2D.h"
 #import "CCProtocols.h"
 #import "ccConfig.h"
 #import "ccGLState.h"
@@ -44,6 +42,9 @@ enum {
 @class CCCamera;
 @class CCGridBase;
 @class GLProgram;
+@class CCScheduler;
+@class CCActionManager;
+@class CCAction;
 
 /** CCNode is the main element. Anything thats gets drawn or contains things that get drawn is a CCNode.
  The most popular CCNodes are: CCScene, CCLayer, CCSprite, CCMenu.
@@ -156,12 +157,18 @@ enum {
 	// Server side state
 	ccGLServerState glServerState_;
 
+	// used to preserve sequence while sorting children with the same zOrder
+	NSUInteger orderOfArrival_;
+	
+	// scheduler used to schedule timers and updates
+	CCScheduler		*scheduler_;
+	
+	// ActionManager used to handle all the actions
+	CCActionManager	*actionManager_;
+	
 	// Is running
 	BOOL isRunning_:1;
 	
-	// used to preserve sequence while sorting children with the same zOrder
-	NSUInteger orderOfArrival_;
-
 	// To reduce memory, place BOOLs that are not properties here:
 	BOOL isTransformDirty_:1;
 	BOOL isInverseDirty_:1;
@@ -264,6 +271,18 @@ enum {
  @since v2.0
 */
 @property (nonatomic, readwrite) ccGLServerState glServerState;
+
+/** CCActionManager used by all the actions.
+ IMPORTANT: If you set a new CCActionManager, then previously created actions are going to be removed.
+ @since v2.0
+ */
+@property (nonatomic, readwrite, retain) CCActionManager *actionManager;
+
+/** CCScheduler used to schedule all "updates" and timers.
+ IMPORTANT: If you set a new CCScheduler, then previously created timers/update are going to be removed.
+ @since v2.0
+ */
+@property (nonatomic, readwrite, retain) CCScheduler *scheduler;
 
 // initializators
 /** allocates and initializes a node.

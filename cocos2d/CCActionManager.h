@@ -47,10 +47,9 @@ typedef struct _hashElement
 } tHashElement;
 
 
-/** CCActionManager is a singleton that manages all the actions.
- Normally you won't need to use this singleton directly. 99% of the cases you will use the CCNode interface,
- which uses this singleton.
- But there are some cases where you might need to use this singleton.
+/** CCActionManager the object that manages all the actions.
+ Normally you won't need to use this API directly. 99% of the cases you will use the CCNode interface, which uses this object.
+ But there are some cases where you might need to use this API dirctly:
  Examples:
 	- When you want to run an action where the target is different from a CCNode. 
 	- When you want to pause / resume the actions
