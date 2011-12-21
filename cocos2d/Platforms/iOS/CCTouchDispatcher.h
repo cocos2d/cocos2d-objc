@@ -58,7 +58,7 @@ struct ccTouchHandlerHelperData {
 };
 
 /** CCTouchDispatcher.
- Singleton that handles all the touch events.
+ Object that handles all the touch events.
  The dispatcher dispatches events to the registered TouchHandlers.
  There are 2 different type of touch handlers:
    - Standard Touch Handlers

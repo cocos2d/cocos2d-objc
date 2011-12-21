@@ -145,6 +145,11 @@ static NSUInteger globalOrderOfArrival = 1;
 		orderOfArrival_ = 0;
 		
 		glServerState_ = CC_GL_BLEND;
+		
+		// set default scheduler and actionManager
+		CCDirector *director = [CCDirector sharedDirector];
+		self.actionManager = [director actionManager];
+		self.scheduler = [director scheduler];
 	}
 	
 	return self;
@@ -168,12 +173,11 @@ static NSUInteger globalOrderOfArrival = 1;
 - (void) dealloc
 {
 	CCLOGINFO( @"cocos2d: deallocing %@", self);
-	
-	// attributes
+
+	[actionManager_ release];
+	[scheduler_ release];
 	[camera_ release];
-	
 	[grid_ release];
-	
 	[shaderProgram_ release];
 	
 	// children
@@ -594,42 +598,72 @@ static NSUInteger globalOrderOfArrival = 1;
 
 #pragma mark CCNode Actions
 
+-(void) setActionManager:(CCActionManager *)actionManager
+{
+	if( actionManager != actionManager_ ) {
+		[self stopAllActions];
+		[actionManager_ release];
+		
+		actionManager_ = [actionManager retain];
+	}
+}
+
+-(CCActionManager*) actionManager
+{
+	return actionManager_;
+}
+
 -(CCAction*) runAction:(CCAction*) action
 {
 	NSAssert( action != nil, @"Argument must be non-nil");
 	
-	[[[CCDirector sharedDirector] actionManager] addAction:action target:self paused:!isRunning_];
+	[actionManager_ addAction:action target:self paused:!isRunning_];
 	return action;
 }
 
 -(void) stopAllActions
 {
-	[[[CCDirector sharedDirector] actionManager] removeAllActionsFromTarget:self];
+	[actionManager_ removeAllActionsFromTarget:self];
 }
 
 -(void) stopAction: (CCAction*) action
 {
-	[[[CCDirector sharedDirector] actionManager] removeAction:action];
+	[actionManager_ removeAction:action];
 }
 
 -(void) stopActionByTag:(NSInteger)aTag
 {
 	NSAssert( aTag != kCCActionTagInvalid, @"Invalid tag");
-	[[[CCDirector sharedDirector] actionManager] removeActionByTag:aTag target:self];
+	[actionManager_ removeActionByTag:aTag target:self];
 }
 
 -(CCAction*) getActionByTag:(NSInteger) aTag
 {
 	NSAssert( aTag != kCCActionTagInvalid, @"Invalid tag");
-	return 	[[[CCDirector sharedDirector] actionManager] getActionByTag:aTag target:self];
+	return 	[actionManager_ getActionByTag:aTag target:self];
 }
 
 -(NSUInteger) numberOfRunningActions
 {
-	return [[[CCDirector sharedDirector] actionManager] numberOfRunningActionsInTarget:self];
+	return [actionManager_ numberOfRunningActionsInTarget:self];
 }
 
 #pragma mark CCNode - Scheduler
+
+-(void) setScheduler:(CCScheduler *)scheduler
+{
+	if( scheduler != scheduler_ ) {
+		[self unscheduleAllSelectors];
+		[scheduler_ release];
+		
+		scheduler_ = [scheduler retain];
+	}
+}
+
+-(CCScheduler*) scheduler
+{
+	return scheduler_;
+}
 
 -(void) scheduleUpdate
 {
@@ -638,12 +672,12 @@ static NSUInteger globalOrderOfArrival = 1;
 
 -(void) scheduleUpdateWithPriority:(NSInteger)priority
 {
-	[[[CCDirector sharedDirector] scheduler] scheduleUpdateForTarget:self priority:priority paused:!isRunning_];
+	[scheduler_ scheduleUpdateForTarget:self priority:priority paused:!isRunning_];
 }
 
 -(void) unscheduleUpdate
 {
-	[[[CCDirector sharedDirector] scheduler] unscheduleUpdateForTarget:self];
+	[scheduler_ unscheduleUpdateForTarget:self];
 }
 
 -(void) schedule:(SEL)selector
@@ -661,7 +695,7 @@ static NSUInteger globalOrderOfArrival = 1;
 	NSAssert( selector != nil, @"Argument must be non-nil");
 	NSAssert( interval >=0, @"Arguemnt must be positive");
 	
-	[[[CCDirector sharedDirector] scheduler] scheduleSelector:selector forTarget:self interval:interval paused:!isRunning_ repeat:repeat delay:delay];
+	[scheduler_ scheduleSelector:selector forTarget:self interval:interval paused:!isRunning_ repeat:repeat delay:delay];
 }
 
 - (void) scheduleOnce:(SEL) selector delay:(ccTime) delay
@@ -675,27 +709,23 @@ static NSUInteger globalOrderOfArrival = 1;
 	if (selector == nil)
 		return;
 	
-	[[[CCDirector sharedDirector] scheduler] unscheduleSelector:selector forTarget:self];
+	[scheduler_ unscheduleSelector:selector forTarget:self];
 }
 
 -(void) unscheduleAllSelectors
 {
-	[[[CCDirector sharedDirector] scheduler] unscheduleAllSelectorsForTarget:self];
+	[scheduler_ unscheduleAllSelectorsForTarget:self];
 }
 - (void) resumeSchedulerAndActions
 {
-	CCDirector *director = [CCDirector sharedDirector];
-
-	[[director scheduler] resumeTarget:self];
-	[[director actionManager] resumeTarget:self];
+	[scheduler_ resumeTarget:self];
+	[actionManager_ resumeTarget:self];
 }
 
 - (void) pauseSchedulerAndActions
 {
-	CCDirector *director = [CCDirector sharedDirector];
-
-	[[director scheduler] pauseTarget:self];
-	[[director actionManager] pauseTarget:self];
+	[scheduler_ pauseTarget:self];
+	[actionManager_ pauseTarget:self];
 }
 
 #pragma mark CCNode Transform

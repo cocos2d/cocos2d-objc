@@ -79,7 +79,7 @@ typedef void (*TICK_IMP)(id, SEL, ccTime);
 //
 // CCScheduler
 //
-/** Scheduler is responsible of triggering the scheduled callbacks.
+/** CCScheduler is responsible of triggering the scheduled callbacks.
  You should not use NSTimer. Instead use this class.
  
  There are 2 different types of callbacks (selectors):
