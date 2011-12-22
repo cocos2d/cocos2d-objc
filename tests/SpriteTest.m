@@ -61,6 +61,7 @@ static NSString *transitions[] = {
 	@"SpriteBatchNodeChildrenScale",
 	@"SpriteChildrenChildren",
 	@"SpriteBatchNodeChildrenChildren",
+	@"SpriteBatchNodeSkewNegativeScaleChildren",
 	@"SpriteNilTexture",
 	@"SpriteSubclass",
 	@"AnimationCache",
@@ -3997,6 +3998,67 @@ Class restartAction()
 -(NSString *) title
 {
 	return @"SpriteBatchNode multiple levels of children";
+}
+@end
+
+#pragma mark -
+#pragma mark Example SpriteBatchNodeSkewNegativeScaleChildren
+
+@implementation SpriteBatchNodeSkewNegativeScaleChildren
+
+-(id) init
+{
+	if( (self=[super init]) ) {
+		
+		CGSize s = [[CCDirector sharedDirector] winSize];		
+		
+		CCSpriteFrameCache *cache = [CCSpriteFrameCache sharedSpriteFrameCache];
+		[cache addSpriteFramesWithFile:@"animations/grossini.plist"];
+		[cache addSpriteFramesWithFile:@"animations/grossini_gray.plist" textureFile:@"animations/grossini_gray.png"];
+		
+		CCSpriteBatchNode *spritebatch = [CCSpriteBatchNode batchNodeWithFile:@"animations/grossini.pvr.gz"];
+		[self addChild:spritebatch];
+		
+		for(int i=0;i<2;i++) {
+			CCSprite *sprite = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_01.png"];
+			sprite.position = ccp( s.width/4*(i+1), s.height/2);
+			
+			// Skew
+			id skewX = [CCSkewBy actionWithDuration:2 skewX:45 skewY:0];
+			id skewX_back = [skewX reverse];
+			id skewY = [CCSkewBy actionWithDuration:2 skewX:0 skewY:45];
+			id skewY_back = [skewY reverse];
+			
+			if(i == 1)
+			{
+				[sprite setScaleX:-1.0f];
+			}
+			
+			id seq_skew = [CCSequence actions:skewX, skewX_back, skewY, skewY_back, nil];
+			[sprite runAction:[CCRepeatForever actionWithAction:seq_skew]];
+			
+			CCSprite *child1 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_01.png"];
+			[child1 setPosition: ccp(sprite.contentSize.width / 2.0f, sprite.contentSize.height / 2.0f)];
+			
+			[sprite addChild: child1];
+			
+			[spritebatch addChild:sprite z:i];
+		}
+	}
+	return self;
+}
+
+- (void) dealloc
+{
+	CCSpriteFrameCache *cache = [CCSpriteFrameCache sharedSpriteFrameCache];
+	[cache removeSpriteFramesFromFile:@"animations/grossini.plist"];
+	[cache removeSpriteFramesFromFile:@"animations/grossini_gray.plist"];
+	[super dealloc];
+}
+
+-(NSString *) title
+{
+	return @"SpriteBatchNode skew + negative scale with children";
 }
 @end
 
