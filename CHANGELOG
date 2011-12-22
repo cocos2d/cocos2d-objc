@@ -11,7 +11,8 @@ version 2.0-beta2 XX-Dec-2011
 . [NEW] Scheduler: It is no longer a singleton. It is an ivar of director
 . [NEW] Template: RootViewController viewDidAppear / viewDidDissapear will run/pause the director
 . [NEW] Template: AppController rootViewController is a UINavigationController
-. [FIX] EaseActions: EaseIn/EaseOut actions support float arguments
+. [FIX] Actions: IntervalAction works OK in rewind mode
+. [FIX] Actions: EaseIn/EaseOut actions support float arguments
 . [FIX] Test: ShaderTest works (issue #1285)
 . [FIX] Texture2D: Uses CGImageRef instead of UIKit for iOS API
 
