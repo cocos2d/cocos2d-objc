@@ -46,7 +46,7 @@ typedef struct _listEntry
 	id			target;				// not retained (retained by hashUpdateEntry)
 	NSInteger	priority;
 	BOOL		paused;	
-    BOOL    markedForDeletion;		// selector will no longer be called and entry will be removed at end of the next tick
+    BOOL		markedForDeletion;	// selector will no longer be called and entry will be removed at end of the next tick
 } tListEntry;
 
 typedef struct _hashUpdateEntry
@@ -226,6 +226,11 @@ typedef struct _hashSelectorEntry
 	}
 
 	return self;
+}
+
+- (NSString*) description
+{
+	return [NSString stringWithFormat:@"<%@ = %08X | timeScale = %0.2f >", [self class], self, timeScale_];
 }
 
 - (void) dealloc

@@ -89,6 +89,21 @@
 }
 @end
 
-
-
+@interface TwoSchedulers : SchedulerTest
+{
+	CCScheduler *sched1;
+	CCScheduler *sched2;
+	CCActionManager *actionManager1;
+	CCActionManager *actionManager2;
+	
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+	UISlider	*sliderCtl1;
+	UISlider	*sliderCtl2;
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+	NSSlider	*sliderCtl1;
+	NSSlider	*sliderCtl2;
+	NSWindow	*overlayWindow;
+#endif
+}
+@end
 
