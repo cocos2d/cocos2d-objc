@@ -90,7 +90,13 @@
 	} else
 		elapsed_ += dt;
 
-	[self update: MIN(1, elapsed_/MAX(duration_,FLT_EPSILON))];
+	
+	[self update: MAX(0,					// needed for rewind. elapsed could be negative
+					  MIN(1, elapsed_/
+						  MAX(duration_,FLT_EPSILON)	// division by 0
+						  )
+					  )
+	 ];
 }
 
 -(void) startWithTarget:(id)aTarget
@@ -197,6 +203,9 @@
 
 -(void) update: (ccTime) t
 {
+	if( t < 0 )
+		NSLog(@"time: %f", t);
+
 	int found = 0;
 	ccTime new_t = 0.0f;
 	
