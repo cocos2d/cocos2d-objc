@@ -627,37 +627,31 @@ Class restartTest()
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 - (UISlider *)sliderCtl
 {
-    if (sliderCtl == nil) 
-    {
-        CGRect frame = CGRectMake(12.0f, 12.0f, 120.0f, 7.0f);
-        sliderCtl = [[UISlider alloc] initWithFrame:frame];
-        [sliderCtl addTarget:self action:@selector(sliderAction:) forControlEvents:UIControlEventValueChanged];
-        
-        // in case the parent view draws with a custom color or gradient, use a transparent color
-        sliderCtl.backgroundColor = [UIColor clearColor];
-        
-        sliderCtl.minimumValue = -3.0f;
-        sliderCtl.maximumValue = 3.0f;
-        sliderCtl.continuous = YES;
-        sliderCtl.value = 1.0f;		
-    }
-    return [sliderCtl autorelease];
+	UISlider * slider = [[UISlider alloc] initWithFrame:frame];
+	[slider addTarget:self action:@selector(sliderAction:) forControlEvents:UIControlEventValueChanged];
+	
+	// in case the parent view draws with a custom color or gradient, use a transparent color
+	slider.backgroundColor = [UIColor clearColor];
+	
+	slider.minimumValue = -3.0f;
+	slider.maximumValue = 3.0f;
+	slider.continuous = YES;
+	slider.value = 1.0f;		
+
+    return [slider autorelease];
 }
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 -(NSSlider*) sliderCtl
 {
-	if( sliderCtl == nil )
-	{
-		sliderCtl = [[NSSlider alloc] initWithFrame: NSMakeRect (0, 0, 200, 20)];
-		[sliderCtl setMinValue: -3];
-		[sliderCtl setMaxValue: 3];
-		[sliderCtl setFloatValue: 1];
-		[sliderCtl setAction: @selector (sliderAction:)];
-		[sliderCtl setTarget: self];
-		[sliderCtl setContinuous: YES];
-	}
+	NSSlider* slider = [[NSSlider alloc] initWithFrame: NSMakeRect (0, 0, 200, 20)];
+	[slider setMinValue: -3];
+	[slider setMaxValue: 3];
+	[slider setFloatValue: 1];
+	[slider setAction: @selector (sliderAction:)];
+	[slider setTarget: self];
+	[slider setContinuous: YES];
 	
-	return sliderCtl;
+	return [slider autorelease];
 }
 #endif // Mac
 
@@ -691,7 +685,7 @@ Class restartTest()
 	id seq3_1 = [CCSequence actions:jump2, jump1, nil];
 	id seq3_2 = [CCSequence actions: rot1, rot2, nil];
 	id spawn = [CCSpawn actions:seq3_1, seq3_2, nil];
-	id action = [CCRepeatForever actionWithAction:spawn];
+	id action = [CCRepeat  actionWithAction:spawn times:50];
 	
 	id action2 = [[action copy] autorelease];
 	id action3 = [[action copy] autorelease];
@@ -699,6 +693,10 @@ Class restartTest()
 	CCSprite *grossini = [CCSprite spriteWithFile:@"grossini.png"];
 	CCSprite *tamara = [CCSprite spriteWithFile:@"grossinis_sister1.png"];
 	CCSprite *kathia = [CCSprite spriteWithFile:@"grossinis_sister2.png"];
+	
+	grossini.position = ccp(40,80);
+	tamara.position = ccp(40,80);
+	kathia.position = ccp(40,80);
 	
 	[self addChild:grossini];
 	[self addChild:tamara];
@@ -746,6 +744,9 @@ Class restartTest()
 
 -(void) onExit
 {
+	// restore scale
+	[[[CCDirector sharedDirector] scheduler] setTimeScale:1];
+
 	[sliderCtl removeFromSuperview];
 	
 #ifdef CC_PLATFORM_MAC
