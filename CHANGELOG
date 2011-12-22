@@ -7,6 +7,7 @@ version 2.0-beta2 XX-Dec-2011
 		automatically once the view is displayed (iOS only)
 . [NEW] Director: FPS & seconds per frame are displayed at the same time
 . [NEW] EventDispatcher / TouchDispatcher: They are no longer singletons. They are an ivar of director.
+. [NEW] Node: Supports custom scheduler and actionManager
 . [NEW] Scheduler: It is no longer a singleton. It is an ivar of director
 . [NEW] Template: RootViewController viewDidAppear / viewDidDissapear will run/pause the director
 . [NEW] Template: AppController rootViewController is a UINavigationController

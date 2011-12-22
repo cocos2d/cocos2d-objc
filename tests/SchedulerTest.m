@@ -14,6 +14,7 @@ enum {
 static int sceneIdx=-1;
 static NSString *transitions[] = {
 	@"SchedulerTimeScale",
+	@"TwoSchedulers",
 	
 	@"SchedulerAutoremove",
 	@"SchedulerPauseResume",
@@ -620,7 +621,7 @@ Class restartTest()
 
 @end
 
-#pragma mark - SchedulerTiimeScale
+#pragma mark - SchedulerTimeScale
 
 @implementation SchedulerTimeScale
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
@@ -766,6 +767,213 @@ Class restartTest()
 	return @"Fast-forward and rewind using scheduler.timeScale";
 }
 
+@end
+
+#pragma mark - TwoSchedulers
+
+@implementation TwoSchedulers
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+- (UISlider *)sliderCtl
+{
+	CGRect frame = CGRectMake(12.0f, 12.0f, 120.0f, 7.0f);
+	UISlider *slider = [[UISlider alloc] initWithFrame:frame];
+	[slider addTarget:self action:@selector(sliderAction:) forControlEvents:UIControlEventValueChanged];
+	
+	// in case the parent view draws with a custom color or gradient, use a transparent color
+	slider.backgroundColor = [UIColor clearColor];
+	
+	slider.minimumValue = 0.0f;
+	slider.maximumValue = 2.0f;
+	slider.continuous = YES;
+	slider.value = 1.0f;		
+
+    return [slider autorelease];
+}
+
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+
+-(NSSlider*) sliderCtl
+{
+	NSSlider *slider = [[NSSlider alloc] initWithFrame: NSMakeRect (0, 0, 200, 20)];
+	[slider setMinValue: 0];
+	[slider setMaxValue: 2];
+	[slider setFloatValue: 1];
+	[slider setAction: @selector (sliderAction:)];
+	[slider setTarget: self];
+	[slider setContinuous: YES];
+	
+	return [slider autorelease];
+}
+#endif // Mac
+
+-(void) sliderAction:(id) sender
+{
+	ccTime scale;
+	
+#if CC_PLATFORM_IOS
+	UISlider *slider = (UISlider*) sender;
+	scale = slider.value;
+#elif CC_PLATFORM_MAC
+	
+	NSSlider *slider = (NSSlider*) sender;
+	float value = [slider floatValue];	
+	scale = value;
+#endif
+	if( sender == sliderCtl1 )
+		[sched1 setTimeScale: scale];
+	else
+		[sched2 setTimeScale: scale];	
+}
+
+-(id) init
+{
+	if( (self=[super init]) ) {
+	
+		CGSize s = [[CCDirector sharedDirector] winSize];
+		
+		// rotate and jump
+		CCActionInterval *jump1 = [CCJumpBy actionWithDuration:4 position:ccp(0,0) height:100 jumps:4];
+		CCActionInterval *jump2 = [jump1 reverse];
+		
+		id seq = [CCSequence actions:jump2, jump1, nil];
+		id action = [CCRepeatForever actionWithAction:seq];
+
+		//
+		// Center
+		//
+		CCSprite *grossini = [CCSprite spriteWithFile:@"grossini.png"];
+		[self addChild:grossini];
+		[grossini setPosition:ccp(s.width/2,100)];
+		[grossini runAction:[[action copy] autorelease]];
+
+		
+		
+		CCScheduler *defaultScheduler = [[CCDirector sharedDirector] scheduler];
+
+		//
+		// Left:
+		//
+
+		// Create a new scheduler, and link it to the main scheduler
+		sched1 = [[CCScheduler alloc] init];
+		[defaultScheduler scheduleUpdateForTarget:sched1 priority:0 paused:NO];
+		
+		// Create a new ActionManager, and link it to the new scheudler
+		actionManager1 = [[CCActionManager alloc] init];
+		[sched1 scheduleUpdateForTarget:actionManager1 priority:0 paused:NO];
+		
+		for( NSUInteger i=0; i < 10; i++ ) {
+			CCSprite *sprite = [CCSprite spriteWithFile:@"grossinis_sister1.png"];
+			
+			// IMPORTANT: Set the actionManager running any action
+			[sprite setActionManager:actionManager1];
+			
+			[self addChild:sprite];
+			[sprite setPosition:ccp(30+15*i,100)];
+			
+			[sprite runAction:[[action copy] autorelease]];
+		}
+		sliderCtl1 = [self sliderCtl];
+
+		//
+		// Right:
+		//
+		
+		// Create a new scheduler, and link it to the main scheduler
+		sched2 = [[CCScheduler alloc] init];
+		[defaultScheduler scheduleUpdateForTarget:sched2 priority:0 paused:NO];
+		
+		// Create a new ActionManager, and link it to the new scheudler
+		actionManager2 = [[CCActionManager alloc] init];
+		[sched2 scheduleUpdateForTarget:actionManager2 priority:0 paused:NO];
+		
+		for( NSUInteger i=0; i < 10; i++ ) {
+			CCSprite *sprite = [CCSprite spriteWithFile:@"grossinis_sister2.png"];
+			
+			// IMPORTANT: Set the actionManager running any action
+			[sprite setActionManager:actionManager2];
+			
+			[self addChild:sprite];
+			[sprite setPosition:ccp(s.width-30-15*i,100)];
+			
+			[sprite runAction:[[action copy] autorelease]];
+		}
+		sliderCtl2 = [self sliderCtl];
+		CGRect frame = [sliderCtl2 frame];
+		frame.origin.x += 300;
+		[sliderCtl2 setFrame:frame];
+		
+#ifdef CC_PLATFORM_IOS
+		
+		AppController *app = (AppController*) [[UIApplication sharedApplication] delegate];
+		UIViewController *ctl = [app rootViewController];
+		
+		[ctl.view addSubview: sliderCtl1];
+		[ctl.view addSubview: sliderCtl2];
+		
+#elif CC_PLATFORM_MAC
+		MacGLView *view = (MacGLView*) [[CCDirectorMac sharedDirector] view];
+		
+		if( ! overlayWindow ) {
+			overlayWindow  = [[NSWindow alloc] initWithContentRect:[[view window] frame]
+														 styleMask:NSBorderlessWindowMask
+														   backing:NSBackingStoreBuffered
+															 defer:NO];
+			
+			[overlayWindow setFrame:[[view window] frame] display:NO];
+			
+			[[overlayWindow contentView] addSubview:sliderCtl1];
+			[[overlayWindow contentView] addSubview:sliderCtl2];
+
+			[overlayWindow setParentWindow:[view window]];
+			[overlayWindow setOpaque:NO];
+			[overlayWindow makeKeyAndOrderFront:nil];
+			[overlayWindow setBackgroundColor:[NSColor clearColor]];
+			[[overlayWindow contentView] display];
+		}
+		
+		[[view window] addChildWindow:overlayWindow ordered:NSWindowAbove];
+#endif
+	}
+	
+	return self;
+		
+}
+
+-(void) dealloc
+{
+	CCScheduler *defaultScheduler = [[CCDirector sharedDirector] scheduler];
+	[defaultScheduler unscheduleAllSelectorsForTarget:sched1];
+	[defaultScheduler unscheduleAllSelectorsForTarget:sched2];
+
+	[sched1 release];
+	[sched2 release];
+	
+	[actionManager1 release];
+	[actionManager2 release];
+
+	[sliderCtl1 removeFromSuperview];
+	[sliderCtl2 removeFromSuperview];
+	
+#ifdef CC_PLATFORM_MAC
+	MacGLView *view = (MacGLView*) [[CCDirector sharedDirector] view];
+	[[view window] removeChildWindow:overlayWindow];
+	[overlayWindow release];
+	overlayWindow = nil;
+#endif
+	
+	[super dealloc];
+}
+
+-(NSString *) title
+{
+	return @"Two custom schedulers";
+}
+
+-(NSString *) subtitle
+{
+	return @"Three schedulers. 2 custom + 1 default. Two different time scales";
+}
 @end
 
 #pragma mark - AppController

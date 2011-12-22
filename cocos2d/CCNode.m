@@ -151,7 +151,7 @@ static NSUInteger globalOrderOfArrival = 1;
 		self.actionManager = [director actionManager];
 		self.scheduler = [director scheduler];
 	}
-	
+
 	return self;
 }
 
@@ -160,7 +160,7 @@ static NSUInteger globalOrderOfArrival = 1;
 	// actions
 	[self stopAllActions];
 	[self unscheduleAllSelectors];
-	
+
 	// timers
 	[children_ makeObjectsPerformSelector:@selector(cleanup)];
 }
@@ -179,14 +179,14 @@ static NSUInteger globalOrderOfArrival = 1;
 	[camera_ release];
 	[grid_ release];
 	[shaderProgram_ release];
-	
+
 	// children
 	CCNode *child;
 	CCARRAY_FOREACH(children_, child)
 		child.parent = nil;
-	
+
 	[children_ release];
-	
+
 	[super dealloc];
 }
 
@@ -304,7 +304,7 @@ static NSUInteger globalOrderOfArrival = 1;
 -(CCNode*) getChildByTag:(NSInteger) aTag
 {
 	NSAssert( aTag != kCCNodeTagInvalid, @"Invalid tag");
-	
+
 	CCNode *node;
 	CCARRAY_FOREACH(children_, node){
 		if( node.tag == aTag )
@@ -325,15 +325,15 @@ static NSUInteger globalOrderOfArrival = 1;
 	
 	if( ! children_ )
 		[self childrenAlloc];
-	
+
 	[self insertChild:child z:z];
-	
+
 	child.tag = aTag;
-	
+
 	[child setParent: self];
-	
+
 	[child setOrderOfArrival: globalOrderOfArrival++];
-	
+
 	if( isRunning_ ) {
 		[child onEnter];
 		[child onEnterTransitionDidFinish];

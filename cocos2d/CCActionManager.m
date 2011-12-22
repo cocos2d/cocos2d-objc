@@ -49,6 +49,11 @@
 	return self;
 }
 
+- (NSString*) description
+{
+	return [NSString stringWithFormat:@"<%@ = %08X>", [self class], self];
+}
+
 - (void) dealloc
 {
 	CCLOGINFO( @"cocos2d: deallocing %@", self);
