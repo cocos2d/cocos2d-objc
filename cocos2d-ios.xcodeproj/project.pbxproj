@@ -14685,10 +14685,6 @@
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				HEADER_SEARCH_PATHS = external/Chipmunk/include/chipmunk;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/Chipmunk/MSVCSolution\"",
-				);
 				PRODUCT_NAME = Chipmunk;
 			};
 			name = Debug;
@@ -14704,10 +14700,6 @@
 					NS_BLOCK_ASSERTIONS,
 				);
 				HEADER_SEARCH_PATHS = external/Chipmunk/include/chipmunk;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/Chipmunk/MSVCSolution\"",
-				);
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = Chipmunk;
 				ZERO_LINK = NO;
