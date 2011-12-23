@@ -54,6 +54,8 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	
 * Sergey Tikhonov (AKA haqu) (http://haqu.net)
 	Tests: Improved Shader test. Fixed memory leak in Guassian Blur test
+	Tests: Shader tests center the fragment shader effects on Mac
+	Director: On Mac, CC_DIRECTOR_INIT() centers the main window
 
 
 cocos2d for iPhone authors for v1.1
