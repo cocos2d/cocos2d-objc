@@ -279,6 +279,10 @@
 {}
 @end
 
+@interface SpriteSkewNegativeScaleChildren : SpriteDemo 
+{}
+@end
+
 @interface SpriteNilTexture : SpriteDemo
 {}
 @end
