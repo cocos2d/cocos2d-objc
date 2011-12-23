@@ -102,8 +102,14 @@ How to contribute to the project
 Did you find a bug ? Do you have feature request ? Do you want to merge a feature ?
 
   * [contributing to cocos2d][3]
+  
+Forum
+-----
+  * [cocos2d for iphone forum][4]
+
 
 
 [1]: http://www.cocos2d-iphone.org "cocos2d for iPhone"
 [2]: http://www.cocos2d.org "cocos2d"
 [3]: http://www.cocos2d-iphone.org/wiki/doku.php/faq#i_found_a_bug_i_have_an_enhancement_proposal_what_should_i_do "contributing to cocos2d"
+[4]: http://www.cocos2d-iphone.org/forum "cocos2d for iPhone forum"
