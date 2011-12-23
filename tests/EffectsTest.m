@@ -438,6 +438,8 @@ Class restartAction()
 }	
 @end
 
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+
 // CLASS IMPLEMENTATIONS
 @implementation AppController
 
@@ -513,3 +515,49 @@ Class restartAction()
 }
 
 @end
+
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+
+@implementation cocos2dmacAppDelegate
+
+@synthesize window=window_, glView=glView_;
+
+- (void)applicationDidFinishLaunching:(NSNotification *)aNotification
+{	
+	CCDirectorMac *director = (CCDirectorMac*) [CCDirector sharedDirector];
+	
+	[director setDisplayStats:YES];
+	
+	[director setView:glView_];
+	
+	// Disable depth test for this test
+	[director setDepthTest:NO];
+	
+	//	[director setProjection:kCCDirectorProjection2D];
+	
+	// Enable "moving" mouse event. Default no.
+	[window_ setAcceptsMouseMovedEvents:NO];
+	
+	// EXPERIMENTAL stuff.
+	// 'Effects' don't work correctly when autoscale is turned on.
+	[director setResizeMode:kCCDirectorResize_AutoScale];	
+	
+	CCScene *scene = [CCScene node];
+	[scene addChild: [TextLayer node] z:0 tag:kTagTextLayer];
+	
+	[director runWithScene:scene];
+}
+
+- (BOOL) applicationShouldTerminateAfterLastWindowClosed: (NSApplication *) theApplication
+{
+	return YES;
+}
+
+- (IBAction)toggleFullScreen: (id)sender
+{
+	CCDirectorMac *director = (CCDirectorMac*) [CCDirector sharedDirector];
+	[director setFullScreen: ! [director isFullScreen] ];
+}
+
+@end
+#endif
