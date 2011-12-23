@@ -501,13 +501,13 @@ static SEL selSortMethod = NULL;
 				newMatrix = CGAffineTransformTranslate(newMatrix, tv.pos.x, tv.pos.y);
 			if( prevHonor & CC_HONOR_PARENT_TRANSFORM_ROTATE )
 				newMatrix = CGAffineTransformRotate(newMatrix, -CC_DEGREES_TO_RADIANS(tv.rotation));
+			if( prevHonor & CC_HONOR_PARENT_TRANSFORM_SCALE ) {
+				newMatrix = CGAffineTransformScale(newMatrix, tv.scale.x, tv.scale.y);
+			}
 			if ( prevHonor & CC_HONOR_PARENT_TRANSFORM_SKEW ) {
 				CGAffineTransform skew = CGAffineTransformMake(1.0f, tanf(CC_DEGREES_TO_RADIANS(tv.skew.y)), tanf(CC_DEGREES_TO_RADIANS(tv.skew.x)), 1.0f, 0.0f, 0.0f);
 				// apply the skew to the transform
 				newMatrix = CGAffineTransformConcat(skew, newMatrix);
-			}
-			if( prevHonor & CC_HONOR_PARENT_TRANSFORM_SCALE ) {
-				newMatrix = CGAffineTransformScale(newMatrix, tv.scale.x, tv.scale.y);
 			}
 			
 			// 3rd: Translate anchor point
