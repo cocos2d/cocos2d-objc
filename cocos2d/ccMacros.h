@@ -168,6 +168,7 @@ do	{																							\
 	[(CCDirectorMac*)__director setOriginalWinSize:__WINSIZE__];								\
 	[self.window makeMainWindow];																\
 	[self.window makeKeyAndOrderFront:self];													\
+	[self.window center];																		\
 } while(0)
 
 #endif
