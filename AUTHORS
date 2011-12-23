@@ -218,6 +218,8 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		actions uses FLT_EPSILON macro. patch.
 	* effervens:
 		patches for Director
+	* effervecents (https://github.com/effervescent):
+		Sprite: Skew is performed after scale
 	* Ernesto Corvi & On-Core (http://www.on-core.com/):
 		author of TGA RLE support
 		patches for TextureMgr
