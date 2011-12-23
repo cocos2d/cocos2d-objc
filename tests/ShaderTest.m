@@ -125,6 +125,7 @@ Class restartAction()
 
 @interface ShaderNode : CCNode
 {
+	ccVertex2F	center_;
 	ccVertex2F	resolution_;
 	float		time_;
 	GLuint		uniformCenter, uniformResolution, uniformTime;
@@ -188,6 +189,11 @@ enum {
 	time_ += dt;
 }
 
+-(void) setPosition:(CGPoint)newPosition
+{
+	[super setPosition:newPosition];
+	center_ = (ccVertex2F) { position_.x, position_.y };
+}
 
 -(void) draw
 {
@@ -199,7 +205,7 @@ enum {
 	//
 	// Uniforms
 	//
-	glUniform2fv( uniformCenter, 1, (GLfloat*)&position_ );
+	glUniform2fv( uniformCenter, 1, (GLfloat*)&center_ );
 	glUniform2fv( uniformResolution, 1, (GLfloat*)&resolution_ );
 	glUniform1f( uniformTime, time_ );
 	
@@ -222,7 +228,7 @@ enum {
 		ShaderNode *sn = [ShaderNode shaderNodeWithVertex:@"Monjori.vsh" fragment:@"Monjori.fsh"];
 		
 		CGSize s = [[CCDirector sharedDirector] winSize];
-		[sn setPosition:ccp(s.width/2, s.height/2)];
+		sn.position = ccp(s.width/2, s.height/2);
 		
 		[self addChild:sn];
 	}
@@ -252,7 +258,7 @@ enum {
 		ShaderNode *sn = [ShaderNode shaderNodeWithVertex:@"Mandelbrot.vsh" fragment:@"Mandelbrot.fsh"];
 		
 		CGSize s = [[CCDirector sharedDirector] winSize];
-		[sn setPosition:ccp(s.width/2, s.height/2)];
+		sn.position = ccp(s.width/2, s.height/2);
 		
 		[self addChild:sn];
 	}
@@ -281,7 +287,7 @@ enum {
 		ShaderNode *sn = [ShaderNode shaderNodeWithVertex:@"Julia.vsh" fragment:@"Julia.fsh"];
 		
 		CGSize s = [[CCDirector sharedDirector] winSize];
-		[sn setPosition:ccp(s.width/2, s.height/2)];
+		sn.position = ccp(s.width/2, s.height/2);
 		
 		[self addChild:sn];
 	}
@@ -312,7 +318,7 @@ enum {
 		ShaderNode *sn = [ShaderNode shaderNodeWithVertex:@"Heart.vsh" fragment:@"Heart.fsh"];
 		
 		CGSize s = [[CCDirector sharedDirector] winSize];
-		[sn setPosition:ccp(s.width/2, s.height/2)];
+		sn.position = ccp(s.width/2, s.height/2);
 
 		[self addChild:sn];
 	}
@@ -342,7 +348,7 @@ enum {
 		ShaderNode *sn = [ShaderNode shaderNodeWithVertex:@"Flower.vsh" fragment:@"Flower.fsh"];
 		
 		CGSize s = [[CCDirector sharedDirector] winSize];
-		[sn setPosition:ccp(s.width/2, s.height/2)];
+		sn.position = ccp(s.width/2, s.height/2);
 
 		[self addChild:sn];
 	}
@@ -371,7 +377,7 @@ enum {
 		ShaderNode *sn = [ShaderNode shaderNodeWithVertex:@"Plasma.vsh" fragment:@"Plasma.fsh"];
 		
 		CGSize s = [[CCDirector sharedDirector] winSize];
-		[sn setPosition:ccp(s.width/2, s.height/2)];
+		sn.position = ccp(s.width/2, s.height/2);
 		
 		[self addChild:sn];
 	}
