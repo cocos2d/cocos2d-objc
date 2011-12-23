@@ -275,6 +275,10 @@
 {}
 @end
 
+@interface SpriteBatchNodeSkewNegativeScaleChildren : SpriteDemo
+{}
+@end
+
 @interface SpriteNilTexture : SpriteDemo
 {}
 @end
