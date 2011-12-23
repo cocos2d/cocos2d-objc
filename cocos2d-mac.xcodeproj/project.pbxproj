@@ -4002,6 +4002,7 @@
 		A0443E8414A42E4500E62742 /* EffectsTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EffectsTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0443E8814A42EBB00E62742 /* EffectsTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EffectsTest.h; path = tests/EffectsTest.h; sourceTree = "<group>"; };
 		A0443E8914A42EBB00E62742 /* EffectsTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EffectsTest.m; path = tests/EffectsTest.m; sourceTree = "<group>"; };
+		A0443F7E14A5131900E62742 /* LICENSE_Kazmath.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE_Kazmath.txt; sourceTree = "<group>"; };
 		A04B0DC714A007D0005EB429 /* bugs */ = {isa = PBXFileReference; lastKnownFileType = folder; name = bugs; path = Resources/Images/bugs; sourceTree = "<group>"; };
 		A04B0F5D14A29B77005EB429 /* SchedulerTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SchedulerTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A04B0F6114A29BEB005EB429 /* SchedulerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SchedulerTest.m; path = tests/SchedulerTest.m; sourceTree = "<group>"; };
@@ -4882,6 +4883,7 @@
 				E0D5D6DD1343FAEF00A7B1B9 /* LICENSE_Chipmunk.txt */,
 				E0D5D6DF1343FAEF00A7B1B9 /* LICENSE_cocosdenshion.txt */,
 				E0D5D6E11343FAEF00A7B1B9 /* LICENSE_libpng.txt */,
+				A0443F7E14A5131900E62742 /* LICENSE_Kazmath.txt */,
 				E076E6281225EC7400DE0DA2 /* cocos2d */,
 				E076E4531225C53300DE0DA2 /* Tests */,
 				E076EF801225FF3E00DE0DA2 /* external */,
