@@ -36,6 +36,7 @@
 #import "CCTextureCache.h"
 #import "Support/CGPointExtension.h"
 #import "CCDrawingPrimitives.h"
+#import "AutoMagicCoding/AutoMagicCoding/NSObject+AutoMagicCoding.h"
 
 #pragma mark -
 #pragma mark CCSprite
@@ -1035,4 +1036,47 @@ static SEL selSortMethod = NULL;
 	return texture_;
 }
 
+#pragma mark AutoMagicCoding Support
+
++ (BOOL) AMCEnabled
+{
+    return YES;
+}
+
+- (NSArray *) AMCKeysForDictionaryRepresentation
+{
+    NSArray *nodeKeys = [super AMCKeysForDictionaryRepresentation];
+    NSArray *spriteKeys = [NSArray arrayWithObjects: 
+                           @"flipX", 
+                           @"flipY",
+                           @"opacity",
+                           @"color",
+                           @"honorParentTransform",
+                           @"blendFunc",
+                           @"displayFrame", 
+                           nil];
+    
+    return [nodeKeys arrayByAddingObjectsFromArray: spriteKeys ];
+}
+
+-(CCSpriteFrame*) displayFrame
+{
+    return [self displayedFrame];
+}
+
+- (AMCFieldType) AMCFieldTypeForValueWithKey: (NSString *) aKey
+{
+    if ([aKey isEqualToString: @"displayFrame"])
+        return kAMCFieldTypeCustomObject;
+    else 
+        return [super AMCFieldTypeForValueWithKey: aKey];
+}
+
+- (id) initWithDictionaryRepresentation:(NSDictionary *)aDict
+{
+    self = [self init];
+    self = [super initWithDictionaryRepresentation: aDict];
+    
+    return self;
+}
 @end
