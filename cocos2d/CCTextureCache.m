@@ -283,7 +283,10 @@ static CCTextureCache *sharedTextureCache;
 			[jpg release];
 			
 			if( tex )
+            {
+                tex.key = path;
 				[textures_ setObject: tex forKey:path];
+            }
 			else
 				CCLOG(@"cocos2d: Couldn't add image:%@ in CCTextureCache", path);
 			
@@ -301,7 +304,10 @@ static CCTextureCache *sharedTextureCache;
 			[image release];
 			
 			if( tex )
+            {
+                tex.key = path;
 				[textures_ setObject: tex forKey:path];
+            }
 			else
 				CCLOG(@"cocos2d: Couldn't add image:%@ in CCTextureCache", path);
 			
@@ -322,7 +328,10 @@ static CCTextureCache *sharedTextureCache;
 			[image release];
 
 			if( tex )
+            {
+                tex.key = path;
 				[textures_ setObject: tex forKey:path];
+            }
 			else
 				CCLOG(@"cocos2d: Couldn't add image:%@ in CCTextureCache", path);
 			
@@ -361,7 +370,10 @@ static CCTextureCache *sharedTextureCache;
 #endif
 	
 	if(tex && key)
+    {
+        tex.key = key;
 		[textures_ setObject: tex forKey:key];
+    }
 	else
 		CCLOG(@"cocos2d: Couldn't add CGImage in CCTextureCache");
 	
@@ -439,7 +451,10 @@ static CCTextureCache *sharedTextureCache;
 	NSData *nsdata = [[NSData alloc] initWithContentsOfFile:fullpath];
 	tex = [[CCTexture2D alloc] initWithPVRTCData:[nsdata bytes] level:0 bpp:bpp hasAlpha:alpha length:w pixelFormat:bpp==2?kCCTexture2DPixelFormat_PVRTC2:kCCTexture2DPixelFormat_PVRTC4];
 	if( tex )
+    {
+        tex.key = path;
 		[textures_ setObject: tex forKey:path];
+    }
 	else
 		CCLOG(@"cocos2d: Couldn't add PVRTCImage:%@ in CCTextureCache",path);
 	
@@ -466,7 +481,10 @@ static CCTextureCache *sharedTextureCache;
 	
 	tex = [[CCTexture2D alloc] initWithPVRFile: path];
 	if( tex )
+    {
+        tex.key = path;
 		[textures_ setObject: tex forKey:path];
+    }
 	else
 		CCLOG(@"cocos2d: Couldn't add PVRImage:%@ in CCTextureCache",path);	
 	
