@@ -100,7 +100,6 @@
 #import "CCDrawingPrimitives.h"
 #import "CCScene.h"
 #import "CCScheduler.h"
-#import "CCBlockSupport.h"
 #import "CCCamera.h"
 #import "CCProtocols.h"
 #import "CCNode.h"

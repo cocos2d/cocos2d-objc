@@ -9,8 +9,6 @@
 /* Begin PBXBuildFile section */
 		0529445D11098D6F00E500F3 /* CCProfiling.h in Headers */ = {isa = PBXBuildFile; fileRef = 0529445911098D6F00E500F3 /* CCProfiling.h */; };
 		0529445E11098D6F00E500F3 /* CCProfiling.m in Sources */ = {isa = PBXBuildFile; fileRef = 0529445A11098D6F00E500F3 /* CCProfiling.m */; };
-		05AAF16F10EE79E600CACA2B /* CCBlockSupport.h in Headers */ = {isa = PBXBuildFile; fileRef = 05AAF16D10EE79E600CACA2B /* CCBlockSupport.h */; };
-		05AAF17010EE79E600CACA2B /* CCBlockSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = 05AAF16E10EE79E600CACA2B /* CCBlockSupport.m */; };
 		05AAF3BB10EE85B300CACA2B /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB240E10EE4A00AE9530 /* Default.png */; };
 		05AAF3BC10EE85B300CACA2B /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB250E10EE4A00AE9530 /* Icon.png */; };
 		05AAF3BD10EE85B300CACA2B /* grossini.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB280E10EE4A00AE9530 /* grossini.png */; };
@@ -4191,8 +4189,6 @@
 /* Begin PBXFileReference section */
 		0529445911098D6F00E500F3 /* CCProfiling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCProfiling.h; sourceTree = "<group>"; };
 		0529445A11098D6F00E500F3 /* CCProfiling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCProfiling.m; sourceTree = "<group>"; };
-		05AAF16D10EE79E600CACA2B /* CCBlockSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBlockSupport.h; sourceTree = "<group>"; };
-		05AAF16E10EE79E600CACA2B /* CCBlockSupport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBlockSupport.m; sourceTree = "<group>"; };
 		05AAF3E410EE85B300CACA2B /* MenuTestWithBlocks.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MenuTestWithBlocks.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		05AAF3E710EE85D200CACA2B /* MenuTestWithBlocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuTestWithBlocks.h; sourceTree = "<group>"; };
 		05AAF3E810EE85D200CACA2B /* MenuTestWithBlocks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuTestWithBlocks.m; sourceTree = "<group>"; };
@@ -5979,15 +5975,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		05AAF16B10EE79B700CACA2B /* Block Support */ = {
-			isa = PBXGroup;
-			children = (
-				05AAF16D10EE79E600CACA2B /* CCBlockSupport.h */,
-				05AAF16E10EE79E600CACA2B /* CCBlockSupport.m */,
-			);
-			name = "Block Support";
-			sourceTree = "<group>";
-		};
 		05CA7B0910ED679000F12774 /* blocks */ = {
 			isa = PBXGroup;
 			children = (
@@ -6213,7 +6200,6 @@
 				50A24E760F378092007CAEB0 /* Effects */,
 				50E1355310ADEA9400C9E7FA /* Textures */,
 				501CCFA30E99657C00B86F68 /* Support */,
-				05AAF16B10EE79B700CACA2B /* Block Support */,
 				E0BC7DA11342CE83001B4DCC /* Shaders */,
 				E0EAD0E8121F4B4600B0C81C /* Platforms */,
 				50305AF30E40E33200F63373 /* cocos2d.h */,
@@ -7884,7 +7870,6 @@
 				50E1357510ADEB1B00C9E7FA /* CCTexture2D.h in Headers */,
 				50D2AC9510E90DFA0068ECEB /* CCTMXLayer.h in Headers */,
 				50D2AC9710E90DFA0068ECEB /* CCTMXObjectGroup.h in Headers */,
-				05AAF16F10EE79E600CACA2B /* CCBlockSupport.h in Headers */,
 				0529445D11098D6F00E500F3 /* CCProfiling.h in Headers */,
 				50150439113300F900A9CA65 /* CCProgressTimer.h in Headers */,
 				5015043B113300F900A9CA65 /* CCActionProgressTimer.h in Headers */,
@@ -12186,7 +12171,6 @@
 				50E1357610ADEB1B00C9E7FA /* CCTexture2D.m in Sources */,
 				50D2AC9610E90DFA0068ECEB /* CCTMXLayer.m in Sources */,
 				50D2AC9810E90DFA0068ECEB /* CCTMXObjectGroup.m in Sources */,
-				05AAF17010EE79E600CACA2B /* CCBlockSupport.m in Sources */,
 				503862E6110072BC005D2C92 /* CCConfiguration.m in Sources */,
 				0529445E11098D6F00E500F3 /* CCProfiling.m in Sources */,
 				5015043A113300F900A9CA65 /* CCProgressTimer.m in Sources */,

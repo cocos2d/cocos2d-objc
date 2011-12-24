@@ -7,16 +7,19 @@ version 2.0-beta2 XX-Dec-2011
 		automatically once the view is displayed (iOS only)
 . [NEW] Director: FPS & seconds per frame are displayed at the same time
 . [NEW] EventDispatcher / TouchDispatcher: They are no longer singletons. They are an ivar of director.
+. [NEW] Menu: target/selector pattern simulated with blocks. Before, blocks were simulated with target/selector
 . [NEW] Node: Supports custom scheduler and actionManager
 . [NEW] Scheduler: It is no longer a singleton. It is an ivar of director
 . [NEW] Template: RootViewController viewDidAppear / viewDidDissapear will run/pause the director
 . [NEW] Template: AppController rootViewController is a UINavigationController
-. [NEW] [IOS] Test: Added Director tests. Tests integration with GameCenter and other UIKit components
+. [NEW] Test: Added Director tests. Tests integration with GameCenter and other UIKit components (iOS only)
 . [FIX] Actions: IntervalAction works OK in rewind mode
 . [FIX] Actions: EaseIn/EaseOut actions support float arguments
-. [FIX] [MAC] Director: CC_DIRECTOR_INIT() centers main window
+. [FIX] Director: CC_DIRECTOR_INIT() centers main window (Mac only)
+. [FIX] Menu: Blocks API doesn't crash (Mac only)
 . [FIX] Test: ShaderTest works (issue #1285)
-. [FIX] Test: ShaderTest centers shaders on Mac
+. [FIX] Test: ShaderTest centers shaders (Mac only)
+. [FIX] Test: ChipmunkTest works (Mac only)
 . [FIX] Texture2D: Uses CGImageRef instead of UIKit for iOS API
 
 version 2.0-beta 27-Nov-2011
