@@ -30,7 +30,6 @@
 #endif
 
 #import "Platforms/CCGL.h"
-#import "CCBlockSupport.h"
 #import "CCConfiguration.h"
 #import "ccMacros.h"
 #import "ccConfig.h"
