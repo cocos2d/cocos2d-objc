@@ -35,7 +35,22 @@
 -(NSString*) subtitle;
 @end
 
+#pragma mark - Actual AMC Tests
 
+#pragma mark Node + Children
+
+/** @class RectNode Simple CCNode that draws a rectangle around it's bounds. */
+@interface RectNode : CCNode
+@end
+
+/** @class NodeAMC Visual test for CCNode save/load with hierarchy,tag, zOrder 
+ * & all transformations.
+ * Uses RectNode for all nodes.
+ */
+@interface NodeAMC : AMCDemo
+@end
+
+#pragma mark Sprite + SpriteFrame + Texture
 @interface SpriteAMC1 : AMCDemo
 {}
 -(CCSprite *) spriteWithCoords:(CGPoint)p;

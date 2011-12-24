@@ -12,7 +12,7 @@
 
 static int sceneIdx=-1;
 static NSString *transitions[] = {	
-	
+    @"NodeAMC",
 	@"SpriteAMC1",
 };
 
@@ -50,7 +50,6 @@ Class restartAction()
 }
 
 #pragma mark -
-#pragma mark SpriteDemo
 
 enum nodeTags {
     kLayer, //< tag for layer that we will save/load
@@ -191,10 +190,179 @@ enum nodeTags {
 
 @end
 
-#pragma mark -
-#pragma mark Example Sprite 1
+#pragma mark - Actual AMC Tests
+
+#pragma mark Node + Children
+
+@implementation RectNode
+
+- (void) draw
+{
+    [super draw];
+    
+    glColor4f(1.0f, 0.0f, 0.0f, 1.0);
+    glLineWidth(2.0f); 
+	CGSize s = [self contentSize];
+	CGPoint vertices[4]={
+		ccp(0,0),ccp(s.width,0),
+		ccp(s.width,s.height),ccp(0,s.height),
+	};
+	ccDrawPoly(vertices, 4, YES);
+}
+
+@end
+
+@implementation NodeAMC
+
+-(CCLayer *) insideLayer
+{
+	CCLayer *layer = [CCLayer node];
+    
+    CGSize s = [[CCDirector sharedDirector] winSize];
+	
+    CCNode *node1 = [RectNode node];
+    node1.position = ccp(0.5f * s.width, 0.5f * s.height);
+    node1.rotation = 15;
+    node1.scaleX = 1.0f;
+    node1.scaleY = 1.0f;
+    node1.skewX = 0;
+    node1.skewY = 0;
+    node1.anchorPoint = ccp(0.5f, 0.5f);
+    node1.isRelativeAnchorPoint = YES;
+	node1.contentSize = CGSizeMake(125, 125);    
+    [layer addChild:node1 z: 2 tag: 1];
+    
+    CCNode *node2 = [RectNode node];
+    node2.position = ccp(0.0f * s.width, 0.0f * s.height);
+    node2.rotation = 50;
+    node2.scaleX = 0.24f;
+    node2.scaleY = 0.24f;
+    node2.skewX = 0;
+    node2.skewY = 0;
+    node2.anchorPoint = ccp(0.0f, 0.0f);
+    node2.isRelativeAnchorPoint = YES;
+	node2.contentSize = CGSizeMake(400, 400);    
+    [node1 addChild:node2 z: 4 tag: 2];
+    
+    CCNode *node3 = [RectNode node];
+    node3.position = ccp(node1.contentSize.width + 50, -30);
+    node3.rotation = -56;
+    node3.scaleX = 2.0f;
+    node3.scaleY = 2.0f;
+    node3.skewX = 15;
+    node3.skewY = 5;
+    node3.anchorPoint = ccp(0.75f, 0.25f);
+    node3.isRelativeAnchorPoint = YES;
+	node3.contentSize = CGSizeMake(30, 30);    
+    [node1 addChild:node3 z: 6 tag: 3];
+    
+    CCNode *node4 = [RectNode node];
+    node4.position = ccp(0, 0);
+    node4.rotation = 15;
+    node4.scaleX = 1.0f;
+    node4.scaleY = 1.0f;
+    node4.skewX = 0;
+    node4.skewY = 0;
+    node4.anchorPoint = ccp(0.7f, 0.7f);
+    node4.isRelativeAnchorPoint = NO;
+	node4.contentSize = CGSizeMake(10, 10);    
+    [node3 addChild:node4 z: 8 tag: 4];
+    
+    CCNode *node5 = [RectNode node];
+    node5.position = ccp(0.5f * s.width, 0.5f * s.height);
+    node5.rotation = 0;
+    node5.scaleX = 1.0f;
+    node5.scaleY = 1.0f;
+    node5.skewX = 0;
+    node5.skewY = 0;
+    node5.anchorPoint = ccp(0.5f, 0.5f);
+    node5.isRelativeAnchorPoint = YES;
+	node5.contentSize = CGSizeMake(50, 50);    
+    [layer addChild:node5 z: 10 tag: 5];
+    
+    CCNode *node6 = [RectNode node];
+    node6.position = ccp(0.0f * s.width, 0.5f * s.height);
+    node6.rotation = 0;
+    node6.scaleX = 0.5f;
+    node6.scaleY = 0.5f;
+    node6.skewX = 0;
+    node6.skewY = 0;
+    node6.anchorPoint = ccp(0.0f, 0.5f);
+    node6.isRelativeAnchorPoint = YES;
+	node6.contentSize = CGSizeMake(45, 45);    
+    [node5 addChild:node6 z: 12 tag: 6];
+    
+    CCNode *node7 = [RectNode node];
+    node7.position = ccp(0.4f * s.width, 0.3f * s.height);
+    node7.rotation = 116;
+    node7.scaleX = 0.8f;
+    node7.scaleY = 1.4f;
+    node7.skewX = 12;
+    node7.skewY = 16;
+    node7.anchorPoint = ccp(0.5f, 0.5f);
+    node7.isRelativeAnchorPoint = NO;
+	node7.contentSize = CGSizeMake(15, 35);    
+    [layer addChild:node7 z: 14 tag: 7];
+    
+    CCNode *node8 = [RectNode node];
+    node8.position = ccp(0.75f * s.width, 0.25f * s.height);
+    node8.rotation = 415;
+    node8.scaleX = 1.5f;
+    node8.scaleY = 0.8f;
+    node8.skewX = 80;
+    node8.skewY = 15;
+    node8.anchorPoint = ccp(0.6f, 0.1f);
+    node8.isRelativeAnchorPoint = YES;
+	node8.contentSize = CGSizeMake(50, 45); 
+    // Make it blink to test visible property.
+    [node8 runAction:[CCBlink actionWithDuration:256.0f blinks:256]];
+	[layer addChild:node8 z: 16 tag: 8];
+    
+	return layer;
+}
+
+- (BOOL) isTagAndZOrderCorrectInNode: (CCNode *) node
+{
+    for (CCNode *child in node.children)
+    {
+        if (child.zOrder != 2 * child.tag)
+            return NO;
+    }
+    
+    return YES;
+}
 
 
+// Removes layer if at least one of it's children doesnt have zOrder = 2 * tag.
+// It can be done better with unit tests, but currently there no unit tests for
+// cocos2d-iphone, so i will try to avoid them for AMC-for-Cocos2d tests.
+- (void) load
+{
+    [super load];
+    
+    CCNode *layer = [self getChildByTag: kLayer];
+    
+    if (![self isTagAndZOrderCorrectInNode: layer])
+    {
+        NSLog(@"Z & Tag Test Failed.");
+        
+        [self removeChildByTag: kLayer cleanup:YES];
+    }
+    
+}
+
+-(NSString *) title
+{
+	return @"Simple Nodes - AMC";
+}
+
+- (NSString *) subtitle
+{
+    return @"8 nodes should load the same as were saved.";
+}
+@end
+
+#pragma mark Sprite + SpriteFrame + Texture
 @implementation SpriteAMC1
 
 -(CCLayer *) insideLayer
