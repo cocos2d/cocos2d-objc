@@ -1079,4 +1079,47 @@ static SEL selSortMethod = NULL;
     
     return self;
 }
+
+
+// TODO: Add actual support for custom structs:
+//    ccColor3B color;
+//    blendFunc
+- (NSString *) AMCEncodeStructWithValue: (NSValue *) structValue withName: (NSString *) structName
+{
+    if ([structName isEqualToString: @"_ccColor3B"]
+        || [structName isEqualToString: @"ccColor3B"])
+    {
+        return @"ccColor3B - not Encoded.";
+    }
+    else if ([structName isEqualToString: @"_ccBlendFunc"]
+             || [structName isEqualToString: @"ccBlendFunc"])
+    {
+        return @"ccBlendFunc - not Encoded.";
+    }
+    else
+        return [super AMCEncodeStructWithValue:structValue withName:structName];
+}
+
+- (NSValue *) AMCDecodeStructFromString: (NSString *)value withName: (NSString *) structName
+{
+    if ([structName isEqualToString: @"_ccColor3B"]
+        || [structName isEqualToString: @"ccColor3B"])
+    {
+        ccColor3B color = ccc3(255, 255, 255);
+        return [NSValue valueWithBytes: &color objCType: @encode(ccColor3B) ];
+    }
+    else if ([structName isEqualToString: @"_ccBlendFunc"]
+             || [structName isEqualToString: @"ccBlendFunc"] )
+    {
+        ccBlendFunc blendFunc;
+        blendFunc.src = CC_BLEND_SRC;
+        blendFunc.dst = CC_BLEND_DST;
+        
+        return [NSValue valueWithBytes: &blendFunc objCType: @encode(ccBlendFunc) ];
+    }
+    else
+        return [super AMCDecodeStructFromString:value withName:structName];
+}
+
 @end
+
