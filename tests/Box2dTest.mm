@@ -89,8 +89,13 @@ enum {
 	if( (self=[super init])) {
 		
 		// enable events
+		
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 		self.isTouchEnabled = YES;
 		self.isAccelerometerEnabled = YES;
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+		self.isMouseEnabled = YES;
+#endif
 
 		CGSize s = [CCDirector sharedDirector].winSize;
 		
@@ -283,6 +288,8 @@ enum {
 	world->Step(dt, velocityIterations, positionIterations);	
 }
 
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+
 - (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
 	//Add a new body/atlas sprite at the touched location
@@ -315,10 +322,23 @@ enum {
 	world->SetGravity( gravity );
 }
 
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+-(BOOL) ccMouseUp:(NSEvent *)event
+{
+	CGPoint location = [[CCDirector sharedDirector] convertEventToGL:event];
+		
+	[self addNewSpriteAtPosition: location];
+
+	return YES;
+}
+#endif
 
 @end
 
-// CLASS IMPLEMENTATIONS
+#pragma mark - AppDelegate
+
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+
 @implementation AppController
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -362,3 +382,49 @@ enum {
 	return YES;
 }
 @end
+
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+
+#pragma mark AppController - Mac
+
+@implementation cocos2dmacAppDelegate
+
+@synthesize window=window_, glView=glView_;
+
+- (void)applicationDidFinishLaunching:(NSNotification *)aNotification
+{
+	CCDirectorMac *director = (CCDirectorMac*) [CCDirector sharedDirector];
+	
+	[director setDisplayStats:YES];
+	
+	[director setView:glView_];
+	
+//	[director setProjection:kCCDirectorProjection2D];
+	
+	// Enable "moving" mouse event. Default no.
+	[window_ setAcceptsMouseMovedEvents:NO];
+	
+	// EXPERIMENTAL stuff.
+	// 'Effects' don't work correctly when autoscale is turned on.
+	[director setResizeMode:kCCDirectorResize_AutoScale];	
+	
+	// add layer
+	CCScene *scene = [CCScene node];
+	[scene addChild: [MainLayer node] ];
+	
+	[director runWithScene:scene];
+}
+
+- (BOOL) applicationShouldTerminateAfterLastWindowClosed: (NSApplication *) theApplication
+{
+	return YES;
+}
+
+- (IBAction)toggleFullScreen: (id)sender
+{
+	CCDirectorMac *director = (CCDirectorMac*) [CCDirector sharedDirector];
+	[director setFullScreen: ! [director isFullScreen] ];
+}
+
+@end
+#endif

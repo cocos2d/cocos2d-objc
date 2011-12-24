@@ -294,9 +294,9 @@ void removeShape( cpBody *body, cpShape *shape, void *data )
 
 @end
 
-// CLASS IMPLEMENTATIONS
-
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+
+#pragma mark - AppController - iOS
 
 @implementation AppController
 
@@ -339,7 +339,7 @@ void removeShape( cpBody *body, cpShape *shape, void *data )
 
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 
-#pragma mark AppController - Mac
+#pragma mark - AppController - Mac
 
 @implementation cocos2dmacAppDelegate
 
