@@ -86,8 +86,13 @@ void removeShape( cpBody *body, cpShape *shape, void *data )
 	if( (self=[super init])) {
 
 		// enable events
+		
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 		self.isTouchEnabled = YES;
 		self.isAccelerometerEnabled = YES;
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+		self.isMouseEnabled = YES;
+#endif
 
 		CGSize s = [[CCDirector sharedDirector] winSize];
 
@@ -99,10 +104,8 @@ void removeShape( cpBody *body, cpShape *shape, void *data )
 		// reset button
 		[self createResetButton];
 
-		
 		// init physics
 		[self initPhysics];
-
 
 #if 1
 		// Use batch node. Faster
@@ -170,13 +173,6 @@ void removeShape( cpBody *body, cpShape *shape, void *data )
 
 }
 
--(void) onEnter
-{
-	[super onEnter];
-
-	[[UIAccelerometer sharedAccelerometer] setUpdateInterval:(1.0 / 60)];
-}
-
 -(void) update:(ccTime) delta
 {
 	// Should use a fixed size step based on the animation interval.
@@ -204,7 +200,6 @@ void removeShape( cpBody *body, cpShape *shape, void *data )
 	
 	menu.position = ccp(s.width/2, 30);
 	[self addChild: menu z:-1];	
-
 }
 
 -(void) addNewSpriteAtPosition:(CGPoint)pos
@@ -244,6 +239,16 @@ void removeShape( cpBody *body, cpShape *shape, void *data )
 	[sprite setPhysicsBody:body];
 }
 
+#pragma mark iOS Events
+#ifdef	__IPHONE_OS_VERSION_MAX_ALLOWED
+
+-(void) onEnter
+{
+	[super onEnter];
+	
+	[[UIAccelerometer sharedAccelerometer] setUpdateInterval:(1.0 / 60)];
+}
+
 - (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
 	for( UITouch *touch in touches ) {
@@ -271,9 +276,28 @@ void removeShape( cpBody *body, cpShape *shape, void *data )
 
 	space_->gravity = ccpMult(v, 200);
 }
+
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+
+#pragma mark Mac Events
+
+-(BOOL) ccMouseUp:(NSEvent *)event
+{
+	CGPoint location = [[CCDirector sharedDirector] convertEventToGL:event];
+	[self addNewSpriteAtPosition: location];
+	
+	return YES;
+}
+
+
+#endif
+
 @end
 
 // CLASS IMPLEMENTATIONS
+
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+
 @implementation AppController
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -312,3 +336,49 @@ void removeShape( cpBody *body, cpShape *shape, void *data )
 	return YES;
 }
 @end
+
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+
+#pragma mark AppController - Mac
+
+@implementation cocos2dmacAppDelegate
+
+@synthesize window=window_, glView=glView_;
+
+- (void)applicationDidFinishLaunching:(NSNotification *)aNotification
+{
+	CCDirectorMac *director = (CCDirectorMac*) [CCDirector sharedDirector];
+	
+	[director setDisplayStats:YES];
+	
+	[director setView:glView_];
+	
+	//	[director setProjection:kCCDirectorProjection2D];
+	
+	// Enable "moving" mouse event. Default no.
+	[window_ setAcceptsMouseMovedEvents:NO];
+	
+	// EXPERIMENTAL stuff.
+	// 'Effects' don't work correctly when autoscale is turned on.
+	[director setResizeMode:kCCDirectorResize_AutoScale];	
+	
+	// add layer
+	CCScene *scene = [CCScene node];
+	[scene addChild: [MainLayer node] ];
+	
+	[director runWithScene:scene];
+}
+
+- (BOOL) applicationShouldTerminateAfterLastWindowClosed: (NSApplication *) theApplication
+{
+	return YES;
+}
+
+- (IBAction)toggleFullScreen: (id)sender
+{
+	CCDirectorMac *director = (CCDirectorMac*) [CCDirector sharedDirector];
+	[director setFullScreen: ! [director isFullScreen] ];
+}
+
+@end
+#endif
