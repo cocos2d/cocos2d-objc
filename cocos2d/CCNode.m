@@ -312,6 +312,30 @@ static NSUInteger globalOrderOfArrival = 0;
 	return self;
 }
 
++ (BOOL) AMCEnabled
+{
+   return YES;
+}
+
+- (NSArray *) AMCKeysForDictionaryRepresentation
+{
+    return [NSArray arrayWithObjects:
+            @"zOrder",
+            @"skewX",
+            @"skewY",
+            @"rotation",
+            @"scaleX",
+            @"scaleY",
+            @"position",
+            @"visible",
+            @"anchorPoint",
+            @"contentSize",
+            @"isRelativeAnchorPoint",
+            @"tag",
+            @"vertexZ",
+            @"children",
+            nil ];
+}
 - (void)cleanup
 {
 	// actions
