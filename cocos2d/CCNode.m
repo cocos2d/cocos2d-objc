@@ -336,6 +336,9 @@ static NSUInteger globalOrderOfArrival = 0;
             @"children",
             nil ];
 }
+
+// TODO: save Grid
+// TODO: save Camera
 - (void)cleanup
 {
 	// actions
