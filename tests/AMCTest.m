@@ -80,8 +80,12 @@ enum nodeTags {
     
     [CCAnimationCache purgeSharedAnimationCache];
     [CCSpriteFrameCache purgeSharedSpriteFrameCache];
-    [[CCTextureCache sharedTextureCache] removeAllTextures];    
+    //[CCTextureCache purgeSharedTextureCache];    
+    
+    // TODO: purge textures without crashing somehow
 }
+
+// TODO: fix crashing on second texture creation.
 
 - (void) load
 {
@@ -423,6 +427,12 @@ enum nodeTags {
 // TODO: Node + CCCamera 
 // TODO: Node + CCGridBase
 // TODO: Node + vertexZ
+
+// TODO: Sprite + Blend Func
+
+// TODO: Sprite + flipX + flipY;
+// TODO: SpriteBatchNode + honorParentTransform;
+// TODO: Sprite + blendFunc;
 
 
 #pragma mark -
