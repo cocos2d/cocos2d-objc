@@ -37,6 +37,7 @@
 #import "Support/ccCArray.h"
 #import "Support/TransformUtils.h"
 #import "ccMacros.h"
+#import "NSObject+AutoMagicCoding.h"
 
 #import <Availability.h>
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
@@ -339,6 +340,45 @@ static NSUInteger globalOrderOfArrival = 0;
 
 // TODO: save Grid
 // TODO: save Camera
+
+- (id) initWithDictionaryRepresentation: (NSDictionary *) aDict
+{
+    if ( ( self = [super initWithDictionaryRepresentation: aDict] ) )
+    {
+        isTransformDirty_ = isInverseDirty_ = YES;
+#if CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
+        isTransformGLDirty_ = YES;
+#endif
+
+        //TODO: load Grid & Camera
+        grid_ = nil;
+        camera_ = nil;
+    
+        // Add children from loaded children array.
+        // It can be a little bit slower, but it's more stable.
+        if ([children_ count])
+        {
+            CCArray *loadedChildren = children_;
+            children_ = [[CCArray alloc] initWithCapacity: [loadedChildren capacity]];
+            
+            // Set parent for all children.
+            CCNode *child;
+            CCARRAY_FOREACH(loadedChildren, child)
+            {
+                [self addChild: child z: child.zOrder tag: child.tag];
+            }
+            
+            [loadedChildren release];
+        }
+        else
+        {
+            NSLog(@"children = %@", children_);
+        }
+        
+    }
+    
+    return self;
+}
 - (void)cleanup
 {
 	// actions
