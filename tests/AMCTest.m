@@ -419,6 +419,9 @@ enum nodeTags {
 }
 @end
 
+// TODO : Node + CCCamera 
+// TODO: Node + CCGridBase
+
 
 #pragma mark -
 #pragma mark AppDelegate
