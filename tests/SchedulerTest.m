@@ -627,7 +627,7 @@ Class restartTest()
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 - (UISlider *)sliderCtl
 {
-	UISlider * slider = [[UISlider alloc] initWithFrame:frame];
+	UISlider * slider = [[UISlider alloc] initWithFrame:CGRectMake(0,0,120,7)];
 	[slider addTarget:self action:@selector(sliderAction:) forControlEvents:UIControlEventValueChanged];
 	
 	// in case the parent view draws with a custom color or gradient, use a transparent color
@@ -874,7 +874,7 @@ Class restartTest()
 			
 			[sprite runAction:[[action copy] autorelease]];
 		}
-		sliderCtl1 = [self sliderCtl];
+		sliderCtl1 = [[self sliderCtl] retain];
 
 		//
 		// Right:
@@ -899,59 +899,59 @@ Class restartTest()
 			
 			[sprite runAction:[[action copy] autorelease]];
 		}
-		sliderCtl2 = [self sliderCtl];
+		sliderCtl2 = [[self sliderCtl] retain];
+		
 		CGRect frame = [sliderCtl2 frame];
 		frame.origin.x += 300;
 		[sliderCtl2 setFrame:frame];
 		
-#ifdef CC_PLATFORM_IOS
-		
-		AppController *app = (AppController*) [[UIApplication sharedApplication] delegate];
-		UIViewController *ctl = [app rootViewController];
-		
-		[ctl.view addSubview: sliderCtl1];
-		[ctl.view addSubview: sliderCtl2];
-		
-#elif CC_PLATFORM_MAC
-		MacGLView *view = (MacGLView*) [[CCDirectorMac sharedDirector] view];
-		
-		if( ! overlayWindow ) {
-			overlayWindow  = [[NSWindow alloc] initWithContentRect:[[view window] frame]
-														 styleMask:NSBorderlessWindowMask
-														   backing:NSBackingStoreBuffered
-															 defer:NO];
-			
-			[overlayWindow setFrame:[[view window] frame] display:NO];
-			
-			[[overlayWindow contentView] addSubview:sliderCtl1];
-			[[overlayWindow contentView] addSubview:sliderCtl2];
-
-			[overlayWindow setParentWindow:[view window]];
-			[overlayWindow setOpaque:NO];
-			[overlayWindow makeKeyAndOrderFront:nil];
-			[overlayWindow setBackgroundColor:[NSColor clearColor]];
-			[[overlayWindow contentView] display];
-		}
-		
-		[[view window] addChildWindow:overlayWindow ordered:NSWindowAbove];
-#endif
 	}
 	
 	return self;
 		
 }
 
--(void) dealloc
-{
-	CCScheduler *defaultScheduler = [[CCDirector sharedDirector] scheduler];
-	[defaultScheduler unscheduleAllSelectorsForTarget:sched1];
-	[defaultScheduler unscheduleAllSelectorsForTarget:sched2];
 
-	[sched1 release];
-	[sched2 release];
+-(void) onEnter
+{
+	[super onEnter];
 	
-	[actionManager1 release];
-	[actionManager2 release];
+#ifdef CC_PLATFORM_IOS
+	
+	AppController *app = (AppController*) [[UIApplication sharedApplication] delegate];
+	UIViewController *ctl = [app rootViewController];
+	
+	[ctl.view addSubview: sliderCtl1];
+	[ctl.view addSubview: sliderCtl2];
+	
+#elif CC_PLATFORM_MAC
+	MacGLView *view = (MacGLView*) [[CCDirectorMac sharedDirector] view];
+	
+	if( ! overlayWindow ) {
+		overlayWindow  = [[NSWindow alloc] initWithContentRect:[[view window] frame]
+													 styleMask:NSBorderlessWindowMask
+													   backing:NSBackingStoreBuffered
+														 defer:NO];
+		
+		[overlayWindow setFrame:[[view window] frame] display:NO];
+		
+		[[overlayWindow contentView] addSubview:sliderCtl1];
+		[[overlayWindow contentView] addSubview:sliderCtl2];
+		
+		[overlayWindow setParentWindow:[view window]];
+		[overlayWindow setOpaque:NO];
+		[overlayWindow makeKeyAndOrderFront:nil];
+		[overlayWindow setBackgroundColor:[NSColor clearColor]];
+		[[overlayWindow contentView] display];
+	}
+	
+	[[view window] addChildWindow:overlayWindow ordered:NSWindowAbove];
+#endif
+}
+
+-(void) onExit
+{
+	[super onExit];
 
 	[sliderCtl1 removeFromSuperview];
 	[sliderCtl2 removeFromSuperview];
@@ -962,6 +962,22 @@ Class restartTest()
 	[overlayWindow release];
 	overlayWindow = nil;
 #endif
+}
+
+-(void) dealloc
+{
+	CCScheduler *defaultScheduler = [[CCDirector sharedDirector] scheduler];
+	[defaultScheduler unscheduleAllSelectorsForTarget:sched1];
+	[defaultScheduler unscheduleAllSelectorsForTarget:sched2];
+	
+	[sliderCtl1 release];
+	[sliderCtl2 release];
+
+	[sched1 release];
+	[sched2 release];
+	
+	[actionManager1 release];
+	[actionManager2 release];
 	
 	[super dealloc];
 }
