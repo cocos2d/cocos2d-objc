@@ -82,6 +82,7 @@
 #import "CCTexturePVR.h"
 #import "Support/ccUtils.h"
 #import "Support/CCFileUtils.h"
+#import "CCTextureCache.h"
 
 
 #if defined(__IPHONE_OS_VERSION_MAX_ALLOWED) && CC_FONT_LABEL_SUPPORT
@@ -866,4 +867,34 @@ static BOOL PVRHaveAlphaPremultiplied_ = NO;
 	return ret;
 }
 @end
+
+#pragma mark -
+#pragma mark CCTexture2D - AutoMagicCoding
+
+//
+// AutoMagicCoding support - simply use key & CCTextureCache for save/load
+//
+@implementation CCTexture2D(AutoMagicCoding)
+
++ (BOOL) AMCEnabled
+{
+    return YES;
+}
+
+- (NSArray *) AMCKeysForDictionaryRepresentation
+{
+    return [NSArray arrayWithObject: @"key"];
+}
+
+- (id) initWithDictionaryRepresentation: (NSDictionary *) aDict
+{
+    [self release];
+    
+    self = [[CCTextureCache sharedTextureCache] addImage: [aDict objectForKey: @"key"] ];
+    return self;
+}
+
+@end
+
+
 
