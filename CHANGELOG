@@ -12,14 +12,15 @@ version 2.0-beta2 XX-Dec-2011
 . [NEW] Scheduler: It is no longer a singleton. It is an ivar of director
 . [NEW] Template: RootViewController viewDidAppear / viewDidDissapear will run/pause the director
 . [NEW] Template: AppController rootViewController is a UINavigationController
-. [NEW] Test: Added Director tests. Tests integration with GameCenter and other UIKit components (iOS only)
+. [NEW] Test: Added Director tests. Tests integration with GameCenter and other UIKit components (iOS)
 . [FIX] Actions: IntervalAction works OK in rewind mode
 . [FIX] Actions: EaseIn/EaseOut actions support float arguments
-. [FIX] Director: CC_DIRECTOR_INIT() centers main window (Mac only)
-. [FIX] Menu: Blocks API doesn't crash (Mac only)
+. [FIX] Director: CC_DIRECTOR_INIT() centers main window (Mac)
+. [FIX] Menu: Blocks API doesn't crash on Mac
+. [FIX] Test: ChipmunkTest works on Mac
+. [FIX] Tests: Box2dTest works on Mac
 . [FIX] Test: ShaderTest works (issue #1285)
-. [FIX] Test: ShaderTest centers shaders (Mac only)
-. [FIX] Test: ChipmunkTest works (Mac only)
+. [FIX] Test: ShaderTest centers shaders (Mac)
 . [FIX] Texture2D: Uses CGImageRef instead of UIKit for iOS API
 
 version 2.0-beta 27-Nov-2011

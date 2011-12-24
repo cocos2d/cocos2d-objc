@@ -628,6 +628,9 @@
 		A044438214A5167E00E62742 /* liblibpng.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E076EDB91225FEAA00DE0DA2 /* liblibpng.a */; };
 		A044438D14A516F000E62742 /* ChipmunkAccelTouchTest.m in Sources */ = {isa = PBXBuildFile; fileRef = A044438C14A516F000E62742 /* ChipmunkAccelTouchTest.m */; };
 		A044438E14A518AF00E62742 /* libchipmunk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0FBA8A614A51386002DF395 /* libchipmunk.a */; };
+		A044439114A6023800E62742 /* Box2dTest.mm in Sources */ = {isa = PBXBuildFile; fileRef = A044439014A6023800E62742 /* Box2dTest.mm */; };
+		A044439414A6027300E62742 /* GLES-Render.mm in Sources */ = {isa = PBXBuildFile; fileRef = A044439314A6027300E62742 /* GLES-Render.mm */; };
+		A044439614A6040700E62742 /* libbox2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0FBA8AF14A5138F002DF395 /* libbox2d.a */; };
 		A04B0DC814A007D0005EB429 /* bugs in Resources */ = {isa = PBXBuildFile; fileRef = A04B0DC714A007D0005EB429 /* bugs */; };
 		A04B0EF914A29B77005EB429 /* PositionTextureColorAlphaTest.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A05483151457C4AB00B47D05 /* PositionTextureColorAlphaTest.fsh */; };
 		A04B0EFA14A29B77005EB429 /* Position_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4CAF1403278200EC482A /* Position_uColor.fsh */; };
@@ -4586,6 +4589,10 @@
 		A044438614A5167E00E62742 /* Box2dTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Box2dTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A044438B14A516F000E62742 /* ChipmunkAccelTouchTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChipmunkAccelTouchTest.h; path = tests/ChipmunkAccelTouchTest.h; sourceTree = "<group>"; };
 		A044438C14A516F000E62742 /* ChipmunkAccelTouchTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChipmunkAccelTouchTest.m; path = tests/ChipmunkAccelTouchTest.m; sourceTree = "<group>"; };
+		A044438F14A6023800E62742 /* Box2dTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Box2dTest.h; path = tests/Box2dTest.h; sourceTree = "<group>"; };
+		A044439014A6023800E62742 /* Box2dTest.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = Box2dTest.mm; path = tests/Box2dTest.mm; sourceTree = "<group>"; };
+		A044439214A6027300E62742 /* GLES-Render.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "GLES-Render.h"; path = "tests/Box2DTestBed-Cocos2dIntegration/GLES-Render.h"; sourceTree = "<group>"; };
+		A044439314A6027300E62742 /* GLES-Render.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "GLES-Render.mm"; path = "tests/Box2DTestBed-Cocos2dIntegration/GLES-Render.mm"; sourceTree = "<group>"; };
 		A04B0DC714A007D0005EB429 /* bugs */ = {isa = PBXFileReference; lastKnownFileType = folder; name = bugs; path = Resources/Images/bugs; sourceTree = "<group>"; };
 		A04B0F5D14A29B77005EB429 /* SchedulerTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SchedulerTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A04B0F6114A29BEB005EB429 /* SchedulerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SchedulerTest.m; path = tests/SchedulerTest.m; sourceTree = "<group>"; };
@@ -5166,6 +5173,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A044439614A6040700E62742 /* libbox2d.a in Frameworks */,
 				A044437C14A5167E00E62742 /* Cocoa.framework in Frameworks */,
 				A044437D14A5167E00E62742 /* OpenGL.framework in Frameworks */,
 				A044437E14A5167E00E62742 /* QuartzCore.framework in Frameworks */,
@@ -5823,6 +5831,15 @@
 			path = Rope;
 			sourceTree = "<group>";
 		};
+		A044439514A6027B00E62742 /* Box2dTest Helper */ = {
+			isa = PBXGroup;
+			children = (
+				A044439214A6027300E62742 /* GLES-Render.h */,
+				A044439314A6027300E62742 /* GLES-Render.mm */,
+			);
+			name = "Box2dTest Helper";
+			sourceTree = "<group>";
+		};
 		A0B5329713C141FF0072EDA4 /* kazmath */ = {
 			isa = PBXGroup;
 			children = (
@@ -5956,8 +5973,11 @@
 		E076E4531225C53300DE0DA2 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				A044439514A6027B00E62742 /* Box2dTest Helper */,
 				E0AC06A81228027D00EFA814 /* ActionsTest.h */,
 				E0AC06A91228027D00EFA814 /* ActionsTest.m */,
+				A044438F14A6023800E62742 /* Box2dTest.h */,
+				A044439014A6023800E62742 /* Box2dTest.mm */,
 				A044438B14A516F000E62742 /* ChipmunkAccelTouchTest.h */,
 				A044438C14A516F000E62742 /* ChipmunkAccelTouchTest.m */,
 				E0AC079E1228041700EFA814 /* drawPrimitivesTest.h */,
@@ -11017,6 +11037,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				A044437A14A5167E00E62742 /* main.m in Sources */,
+				A044439114A6023800E62742 /* Box2dTest.mm in Sources */,
+				A044439414A6027300E62742 /* GLES-Render.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
