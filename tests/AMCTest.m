@@ -86,7 +86,8 @@ enum nodeTags {
 - (void) load
 {
     NSString *path = [self testFilePath];
-    CCLayer *layer = [NSObject objectWithDictionaryRepresentation: [NSDictionary dictionaryWithContentsOfFile: path]];    
+    NSDictionary *aDict = [NSDictionary dictionaryWithContentsOfFile: path];
+    CCLayer *layer = [NSObject objectWithDictionaryRepresentation: aDict ];    
     
 	[self addChild: layer z: 0 tag: kLayer];
 }
