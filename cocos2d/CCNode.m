@@ -256,6 +256,15 @@ static NSUInteger globalOrderOfArrival = 0;
 #endif	
 }
 
+- (void) setChildren:(CCArray *)children
+{
+    CCArray *oldChildren = children_;
+
+    children_ = [children retain];
+    
+    [oldChildren release];
+}
+
 #pragma mark CCNode - Init & cleanup
 
 +(id) node
