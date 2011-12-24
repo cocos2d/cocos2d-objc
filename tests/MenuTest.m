@@ -38,7 +38,7 @@ enum {
 		CCMenuItem *item2 = [CCMenuItemImage itemFromNormalImage:@"SendScoreButton.png" selectedImage:@"SendScoreButtonPressed.png" target:self selector:@selector(menuCallback2:)];
 
 		// Label Item (LabelAtlas)
-		CCLabelAtlas *labelAtlas = [CCLabelAtlas labelWithString:@"0123456789" charMapFile:@"fps_images.png" itemWidth:16 itemHeight:24 startCharMap:'.'];
+		CCLabelAtlas *labelAtlas = [CCLabelAtlas labelWithString:@"0123456789" charMapFile:@"fps_images.png" itemWidth:8 itemHeight:12 startCharMap:'.'];
 		CCMenuItemLabel *item3 = [CCMenuItemLabel itemWithLabel:labelAtlas target:self selector:@selector(menuCallbackDisabled:)];
 		item3.disabledColor = ccc3(32,32,64);
 		item3.color = ccc3(200,200,255);
@@ -119,7 +119,26 @@ enum {
 {
 }
 
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+-(BOOL) ccMouseDown:(NSEvent *)event
+{
+	return YES;
+}
+-(BOOL) ccMouseUp:(NSEvent *)event
+{
+	return YES;
+}
+
+-(BOOL) ccMouseMoved:(NSEvent *)event
+{
+	return YES;
+}
+-(BOOL) ccMouseDragged:(NSEvent *)event
+{
+	return YES;
+}
 #endif
+
 -(void) dealloc
 {
 	[disabledItem release];
@@ -136,26 +155,42 @@ enum {
 	[(CCLayerMultiplex*)parent_ switchTo:3];
 }
 
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 -(void) allowTouches
 {
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+
 	CCDirectorIOS *director = (CCDirectorIOS*)[CCDirector sharedDirector];
     [[director touchDispatcher] setPriority:kCCMenuTouchPriority+1 forDelegate:self];
     [self unscheduleAllSelectors];
-	NSLog(@"TOUCHES ALLOWED AGAIN");
 
-}
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+	CCDirectorMac *director = (CCDirectorMac*)[CCDirector sharedDirector];
+    [[director eventDispatcher] removeMouseDelegate:self];
 #endif
+	
+	NSLog(@"TOUCHES ALLOWED AGAIN");
+}
+
 
 -(void) menuCallbackDisabled:(id) sender {
+
+	// hijack all touch events for 5 seconds
+
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
-    // hijack all touch events for 5 seconds
 	CCDirectorIOS *director = (CCDirectorIOS*)[CCDirector sharedDirector];
     [[director touchDispatcher] setPriority:kCCMenuTouchPriority-1 forDelegate:self];
 
+    [self schedule:@selector(allowTouches) interval:5.0f repeat:0 delay:0];
+
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+	CCDirectorMac *director = (CCDirectorMac*)[CCDirector sharedDirector];
+    [[director eventDispatcher] addMouseDelegate:self priority:kCCMenuTouchPriority-1];
+	
     [self schedule:@selector(allowTouches) interval:5.0f];
-	NSLog(@"TOUCHES DISABLED FOR 5 SECONDS");
+
 #endif
+	NSLog(@"TOUCHES DISABLED FOR 5 SECONDS");
+
 }
 
 -(void) menuCallbackEnable:(id) sender {
