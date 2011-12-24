@@ -24,8 +24,6 @@
  *
  */
 
-#import "CCBlockSupport.h"
-
 #import "CCNode.h"
 #import "CCProtocols.h"
 
@@ -41,7 +39,6 @@
  */
 @interface CCMenuItem : CCNode
 {
-	NSInvocation *invocation_;
 	// used for menu items using a block
 	void (^block_)(id sender);
 	
@@ -57,13 +54,13 @@
 /** Creates a CCMenuItem with a target/selector */
 +(id) itemWithTarget:(id)target selector:(SEL)selector;
 
-/** Initializes a CCMenuItem with a target/selector */
--(id) initWithTarget:(id)target selector:(SEL)selector;
-
 /** Creates a CCMenuItem with the specified block.
  The block will be "copied".
  */
 +(id) itemWithBlock:(void(^)(id sender))block;
+
+/** Initializes a CCMenuItem with a target/selector */
+-(id) initWithTarget:(id)target selector:(SEL)selector;
 
 /** Initializes a CCMenuItem with the specified block.
  The block will be "copied".
@@ -112,22 +109,25 @@
 /** Label that is rendered. It can be any CCNode that implements the CCLabelProtocol */
 @property (nonatomic,readwrite,assign) CCNode<CCLabelProtocol, CCRGBAProtocol>* label;
 
-/** creates a CCMenuItemLabel with a Label. Target and selector will be nill */
+/** creates a CCMenuItemLabel with a Label. Block will benil */
 +(id) itemWithLabel:(CCNode<CCLabelProtocol,CCRGBAProtocol>*)label;
 
 /** creates a CCMenuItemLabel with a Label, target and selector */
 +(id) itemWithLabel:(CCNode<CCLabelProtocol,CCRGBAProtocol>*)label target:(id)target selector:(SEL)selector;
-
-/** initializes a CCMenuItemLabel with a Label, target and selector */
--(id) initWithLabel:(CCNode<CCLabelProtocol,CCRGBAProtocol>*)label target:(id)target selector:(SEL)selector;
 
 /** creates a CCMenuItemLabel with a Label and a block to execute.
  The block will be "copied".
  */
 +(id) itemWithLabel:(CCNode<CCLabelProtocol,CCRGBAProtocol>*)label block:(void(^)(id sender))block;
 
+/** initializes a CCMenuItemLabel with a Label, target and selector.
+ Internally it will create a block that executes the target/selector.
+ */
+-(id) initWithLabel:(CCNode<CCLabelProtocol,CCRGBAProtocol>*)label target:(id)target selector:(SEL)selector;
+
 /** initializes a CCMenuItemLabel with a Label and a block to execute.
  The block will be "copied".
+ This is the designated initializer.
  */
 -(id) initWithLabel:(CCNode<CCLabelProtocol,CCRGBAProtocol>*)label block:(void(^)(id sender))block;
 
@@ -154,10 +154,10 @@
 +(id) itemFromString: (NSString*) value charMapFile:(NSString*) charMapFile itemWidth:(int)itemWidth itemHeight:(int)itemHeight startCharMap:(char)startCharMap;
 
 /** creates a menu item from a string and atlas. Use it with MenuItemToggle */
-+(id) itemFromString: (NSString*) value charMapFile:(NSString*) charMapFile itemWidth:(int)itemWidth itemHeight:(int)itemHeight startCharMap:(char)startCharMap target:(id) rec selector:(SEL) cb;
++(id) itemFromString: (NSString*) value charMapFile:(NSString*) charMapFile itemWidth:(int)itemWidth itemHeight:(int)itemHeight startCharMap:(char)startCharMap target:(id)target selector:(SEL)selector;
 
 /** initializes a menu item from a string and atlas with a target/selector */
--(id) initFromString: (NSString*) value charMapFile:(NSString*) charMapFile itemWidth:(int)itemWidth itemHeight:(int)itemHeight startCharMap:(char)startCharMap target:(id) rec selector:(SEL) cb;
+-(id) initFromString: (NSString*) value charMapFile:(NSString*) charMapFile itemWidth:(int)itemWidth itemHeight:(int)itemHeight startCharMap:(char)startCharMap target:(id)target selector:(SEL)selector;
 
 /** creates a menu item from a string and atlas. Use it with MenuItemToggle.
  The block will be "copied".
@@ -341,20 +341,20 @@
 @property (nonatomic,readwrite,retain) NSMutableArray *subItems;
 
 /** creates a menu item from a list of items with a target/selector */
-+(id) itemWithTarget:(id)t selector:(SEL)s items:(CCMenuItem*) item, ... NS_REQUIRES_NIL_TERMINATION;
-
-/** initializes a menu item from a list of items with a target selector */
--(id) initWithTarget:(id)t selector:(SEL)s items:(CCMenuItem*) item vaList:(va_list) args;
++(id) itemWithTarget:(id)target selector:(SEL)selector items:(CCMenuItem*) item, ... NS_REQUIRES_NIL_TERMINATION;
 
 /** creates a menu item from a list of items and executes the given block when the item is selected.
  The block will be "copied".
  */
-+(id) itemWithBlock:(void(^)(id sender))block items:(CCMenuItem*)item, ... NS_REQUIRES_NIL_TERMINATION;
++(id) itemWithItems:(NSArray*)arrayOfItems block:(void(^)(id sender))block;
+
+/** initializes a menu item from a list of items with a target selector */
+-(id) initWithTarget:(id)target selector:(SEL)selector items:(CCMenuItem*) item vaList:(va_list) args;
 
 /** initializes a menu item from a list of items with a block.
  The block will be "copied".
  */
--(id) initWithBlock:(void (^)(id))block items:(CCMenuItem*)item vaList:(va_list)args;
+-(id) initWithItems:(NSArray*)arrayOfItems block:(void (^)(id))block;
 
 /** return the selected item */
 -(CCMenuItem*) selectedItem;
