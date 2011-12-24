@@ -94,15 +94,15 @@
 	
 - (void) update
 {
-	NSLog(@"update*********");
+	// XXX: Should I do something here ?
 	[super update];
 }
 
 - (void) prepareOpenGL
 {
-	[super prepareOpenGL];
-	
-	// Initialize OpenGL context
+	// XXX: Initialize OpenGL context
+
+	[super prepareOpenGL];	
 }
 
 - (void) reshape
