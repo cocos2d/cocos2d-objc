@@ -108,4 +108,12 @@
 	rectInPixels_ = rectInPixels;
 	rect_ = CC_RECT_PIXELS_TO_POINTS(rectInPixels);
 }
+
+#pragma mark AutoMagicCoding Support
+
++ (BOOL) AMCEnabled
+{
+    return YES;
+}
+
 @end
