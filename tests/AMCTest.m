@@ -420,8 +420,9 @@ enum nodeTags {
 }
 @end
 
-// TODO : Node + CCCamera 
+// TODO: Node + CCCamera 
 // TODO: Node + CCGridBase
+// TODO: Node + vertexZ
 
 
 #pragma mark -
