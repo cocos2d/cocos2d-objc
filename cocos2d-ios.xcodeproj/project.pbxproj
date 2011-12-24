@@ -4058,6 +4058,13 @@
 			remoteGlobalIDString = 5018F24C0DFDEAC400C013A5;
 			remoteInfo = cocos2d;
 		};
+		A044439714A60C2000E62742 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A01AB8C2149709E300C93DB6;
+			remoteInfo = DirectorTest;
+		};
 		DA5F0EC30FFE96D400C7C82E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
@@ -8705,6 +8712,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				A044439814A60C2000E62742 /* PBXTargetDependency */,
 				E03A50EC135525C200D4B515 /* PBXTargetDependency */,
 				E03A50EE135525C200D4B515 /* PBXTargetDependency */,
 				5098070E1175042A00EA7266 /* PBXTargetDependency */,
@@ -13268,6 +13276,11 @@
 			isa = PBXTargetDependency;
 			target = 5018F24C0DFDEAC400C013A5 /* cocos2d */;
 			targetProxy = A01AB8C4149709E300C93DB6 /* PBXContainerItemProxy */;
+		};
+		A044439814A60C2000E62742 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A01AB8C2149709E300C93DB6 /* DirectorTest */;
+			targetProxy = A044439714A60C2000E62742 /* PBXContainerItemProxy */;
 		};
 		DA5F0EC20FFE96D400C7C82E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;

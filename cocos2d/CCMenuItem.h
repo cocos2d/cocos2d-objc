@@ -151,23 +151,23 @@
 }
 
 /** creates a menu item from a string and atlas with a target/selector */
-+(id) itemFromString: (NSString*) value charMapFile:(NSString*) charMapFile itemWidth:(int)itemWidth itemHeight:(int)itemHeight startCharMap:(char)startCharMap;
++(id) itemWithString: (NSString*) value charMapFile:(NSString*) charMapFile itemWidth:(int)itemWidth itemHeight:(int)itemHeight startCharMap:(char)startCharMap;
 
 /** creates a menu item from a string and atlas. Use it with MenuItemToggle */
-+(id) itemFromString: (NSString*) value charMapFile:(NSString*) charMapFile itemWidth:(int)itemWidth itemHeight:(int)itemHeight startCharMap:(char)startCharMap target:(id)target selector:(SEL)selector;
++(id) itemWithString: (NSString*) value charMapFile:(NSString*) charMapFile itemWidth:(int)itemWidth itemHeight:(int)itemHeight startCharMap:(char)startCharMap target:(id)target selector:(SEL)selector;
 
 /** initializes a menu item from a string and atlas with a target/selector */
--(id) initFromString: (NSString*) value charMapFile:(NSString*) charMapFile itemWidth:(int)itemWidth itemHeight:(int)itemHeight startCharMap:(char)startCharMap target:(id)target selector:(SEL)selector;
+-(id) initWithString: (NSString*) value charMapFile:(NSString*) charMapFile itemWidth:(int)itemWidth itemHeight:(int)itemHeight startCharMap:(char)startCharMap target:(id)target selector:(SEL)selector;
 
 /** creates a menu item from a string and atlas. Use it with MenuItemToggle.
  The block will be "copied".
  */
-+(id) itemFromString: (NSString*) value charMapFile:(NSString*) charMapFile itemWidth:(int)itemWidth itemHeight:(int)itemHeight startCharMap:(char)startCharMap block:(void(^)(id sender))block;
++(id) itemWithString: (NSString*) value charMapFile:(NSString*) charMapFile itemWidth:(int)itemWidth itemHeight:(int)itemHeight startCharMap:(char)startCharMap block:(void(^)(id sender))block;
 
 /** initializes a menu item from a string and atlas with a  block.
  The block will be "copied".
  */
--(id) initFromString: (NSString*) value charMapFile:(NSString*) charMapFile itemWidth:(int)itemWidth itemHeight:(int)itemHeight startCharMap:(char)startCharMap block:(void(^)(id sender))block;
+-(id) initWithString: (NSString*) value charMapFile:(NSString*) charMapFile itemWidth:(int)itemWidth itemHeight:(int)itemHeight startCharMap:(char)startCharMap block:(void(^)(id sender))block;
 
 @end
 
@@ -195,13 +195,13 @@
 +(NSString*) fontName;
 
 /** creates a menu item from a string without target/selector. To be used with CCMenuItemToggle */
-+(id) itemFromString: (NSString*) value;
++(id) itemWithString: (NSString*) value;
 
 /** creates a menu item from a string with a target/selector */
-+(id) itemFromString: (NSString*) value target:(id) r selector:(SEL) s;
++(id) itemWithString: (NSString*) value target:(id) r selector:(SEL) s;
 
 /** initializes a menu item from a string with a target/selector */
--(id) initFromString: (NSString*) value target:(id) r selector:(SEL) s;
+-(id) initWithString: (NSString*) value target:(id) r selector:(SEL) s;
 
 /** set font size */
 -(void) setFontSize: (NSUInteger) s;
@@ -218,12 +218,12 @@
 /** creates a menu item from a string with the specified block.
  The block will be "copied".
  */
-+(id) itemFromString: (NSString*) value block:(void(^)(id sender))block;
++(id) itemWithString: (NSString*) value block:(void(^)(id sender))block;
 
 /** initializes a menu item from a string with the specified block.
  The block will be "copied".
  */
--(id) initFromString: (NSString*) value block:(void(^)(id sender))block;
+-(id) initWithString: (NSString*) value block:(void(^)(id sender))block;
 
 @end
 
@@ -253,26 +253,26 @@
 @property (nonatomic,readwrite,assign) CCNode<CCRGBAProtocol> *disabledImage;
 
 /** creates a menu item with a normal and selected image*/
-+(id) itemFromNormalSprite:(CCNode<CCRGBAProtocol>*)normalSprite selectedSprite:(CCNode<CCRGBAProtocol>*)selectedSprite;
++(id) itemWithNormalSprite:(CCNode<CCRGBAProtocol>*)normalSprite selectedSprite:(CCNode<CCRGBAProtocol>*)selectedSprite;
 /** creates a menu item with a normal and selected image with target/selector */
-+(id) itemFromNormalSprite:(CCNode<CCRGBAProtocol>*)normalSprite selectedSprite:(CCNode<CCRGBAProtocol>*)selectedSprite target:(id)target selector:(SEL)selector;
++(id) itemWithNormalSprite:(CCNode<CCRGBAProtocol>*)normalSprite selectedSprite:(CCNode<CCRGBAProtocol>*)selectedSprite target:(id)target selector:(SEL)selector;
 /** creates a menu item with a normal,selected  and disabled image with target/selector */
-+(id) itemFromNormalSprite:(CCNode<CCRGBAProtocol>*)normalSprite selectedSprite:(CCNode<CCRGBAProtocol>*)selectedSprite disabledSprite:(CCNode<CCRGBAProtocol>*)disabledSprite target:(id)target selector:(SEL)selector;
++(id) itemWithNormalSprite:(CCNode<CCRGBAProtocol>*)normalSprite selectedSprite:(CCNode<CCRGBAProtocol>*)selectedSprite disabledSprite:(CCNode<CCRGBAProtocol>*)disabledSprite target:(id)target selector:(SEL)selector;
 /** initializes a menu item with a normal, selected  and disabled image with target/selector */
--(id) initFromNormalSprite:(CCNode<CCRGBAProtocol>*)normalSprite selectedSprite:(CCNode<CCRGBAProtocol>*)selectedSprite disabledSprite:(CCNode<CCRGBAProtocol>*)disabledSprite target:(id)target selector:(SEL)selector;
+-(id) initWithNormalSprite:(CCNode<CCRGBAProtocol>*)normalSprite selectedSprite:(CCNode<CCRGBAProtocol>*)selectedSprite disabledSprite:(CCNode<CCRGBAProtocol>*)disabledSprite target:(id)target selector:(SEL)selector;
 
 /** creates a menu item with a normal and selected image with a block.
  The block will be "copied".
  */
-+(id) itemFromNormalSprite:(CCNode<CCRGBAProtocol>*)normalSprite selectedSprite:(CCNode<CCRGBAProtocol>*)selectedSprite block:(void(^)(id sender))block;
++(id) itemWithNormalSprite:(CCNode<CCRGBAProtocol>*)normalSprite selectedSprite:(CCNode<CCRGBAProtocol>*)selectedSprite block:(void(^)(id sender))block;
 /** creates a menu item with a normal,selected  and disabled image with a block.
  The block will be "copied".
  */
-+(id) itemFromNormalSprite:(CCNode<CCRGBAProtocol>*)normalSprite selectedSprite:(CCNode<CCRGBAProtocol>*)selectedSprite disabledSprite:(CCNode<CCRGBAProtocol>*)disabledSprite block:(void(^)(id sender))block;
++(id) itemWithNormalSprite:(CCNode<CCRGBAProtocol>*)normalSprite selectedSprite:(CCNode<CCRGBAProtocol>*)selectedSprite disabledSprite:(CCNode<CCRGBAProtocol>*)disabledSprite block:(void(^)(id sender))block;
 /** initializes a menu item with a normal, selected  and disabled image with a block.
  The block will be "copied".
  */
--(id) initFromNormalSprite:(CCNode<CCRGBAProtocol>*)normalSprite selectedSprite:(CCNode<CCRGBAProtocol>*)selectedSprite disabledSprite:(CCNode<CCRGBAProtocol>*)disabledSprite block:(void(^)(id sender))block;
+-(id) initWithNormalSprite:(CCNode<CCRGBAProtocol>*)normalSprite selectedSprite:(CCNode<CCRGBAProtocol>*)selectedSprite disabledSprite:(CCNode<CCRGBAProtocol>*)disabledSprite block:(void(^)(id sender))block;
 
 @end
 
@@ -292,25 +292,25 @@
 }
 
 /** creates a menu item with a normal and selected image*/
-+(id) itemFromNormalImage: (NSString*)value selectedImage:(NSString*) value2;
++(id) itemWithNormalImage: (NSString*)value selectedImage:(NSString*) value2;
 /** creates a menu item with a normal and selected image with target/selector */
-+(id) itemFromNormalImage: (NSString*)value selectedImage:(NSString*) value2 target:(id) r selector:(SEL) s;
++(id) itemWithNormalImage: (NSString*)value selectedImage:(NSString*) value2 target:(id) r selector:(SEL) s;
 /** creates a menu item with a normal,selected  and disabled image with target/selector */
-+(id) itemFromNormalImage: (NSString*)value selectedImage:(NSString*) value2 disabledImage:(NSString*) value3 target:(id) r selector:(SEL) s;
++(id) itemWithNormalImage: (NSString*)value selectedImage:(NSString*) value2 disabledImage:(NSString*) value3 target:(id) r selector:(SEL) s;
 /** initializes a menu item with a normal, selected  and disabled image with target/selector */
--(id) initFromNormalImage: (NSString*) value selectedImage:(NSString*)value2 disabledImage:(NSString*) value3 target:(id) r selector:(SEL) s;
+-(id) initWithNormalImage: (NSString*) value selectedImage:(NSString*)value2 disabledImage:(NSString*) value3 target:(id) r selector:(SEL) s;
 /** creates a menu item with a normal and selected image with a block.
  The block will be "copied".
  */
-+(id) itemFromNormalImage: (NSString*)value selectedImage:(NSString*) value2 block:(void(^)(id sender))block;
++(id) itemWithNormalImage: (NSString*)value selectedImage:(NSString*) value2 block:(void(^)(id sender))block;
 /** creates a menu item with a normal,selected  and disabled image with a block.
  The block will be "copied".
 */
-+(id) itemFromNormalImage: (NSString*)value selectedImage:(NSString*) value2 disabledImage:(NSString*) value3 block:(void(^)(id sender))block;
++(id) itemWithNormalImage: (NSString*)value selectedImage:(NSString*) value2 disabledImage:(NSString*) value3 block:(void(^)(id sender))block;
 /** initializes a menu item with a normal, selected  and disabled image with a block.
  The block will be "copied".
 */
--(id) initFromNormalImage: (NSString*) value selectedImage:(NSString*)value2 disabledImage:(NSString*) value3 block:(void(^)(id sender))block;
+-(id) initWithNormalImage: (NSString*) value selectedImage:(NSString*)value2 disabledImage:(NSString*) value3 block:(void(^)(id sender))block;
 @end
 
 #pragma mark -

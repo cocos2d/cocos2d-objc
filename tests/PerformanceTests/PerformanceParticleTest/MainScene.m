@@ -73,9 +73,9 @@ Class restartAction()
 		quantityParticles = particles;
 
 		[CCMenuItemFont setFontSize:65];
-		CCMenuItemFont *decrease = [CCMenuItemFont itemFromString: @" - " target:self selector:@selector(onDecrease:)];
+		CCMenuItemFont *decrease = [CCMenuItemFont itemWithString: @" - " target:self selector:@selector(onDecrease:)];
 		[decrease.label setColor:ccc3(0,200,20)];
-		CCMenuItemFont *increase = [CCMenuItemFont itemFromString: @" + " target:self selector:@selector(onIncrease:)];
+		CCMenuItemFont *increase = [CCMenuItemFont itemWithString: @" + " target:self selector:@selector(onIncrease:)];
 		[increase.label setColor:ccc3(0,200,20)];
 		
 		CCMenu *menu = [CCMenu menuWithItems: decrease, increase, nil];
@@ -94,9 +94,9 @@ Class restartAction()
 		labelAtlas.position = ccp(s.width-66,50);
 		
 		// Next Prev Test
-		CCMenuItemImage *item1 = [CCMenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
-		CCMenuItemImage *item2 = [CCMenuItemImage itemFromNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
-		CCMenuItemImage *item3 = [CCMenuItemImage itemFromNormalImage:@"f1.png" selectedImage:@"f2.png" target:self selector:@selector(nextCallback:)];
+		CCMenuItemImage *item1 = [CCMenuItemImage itemWithNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
+		CCMenuItemImage *item2 = [CCMenuItemImage itemWithNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
+		CCMenuItemImage *item3 = [CCMenuItemImage itemWithNormalImage:@"f1.png" selectedImage:@"f2.png" target:self selector:@selector(nextCallback:)];
 		menu = [CCMenu menuWithItems:item1, item2, item3, nil];
 		[menu alignItemsHorizontally];
 		menu.position = ccp(s.width/2, 30);
@@ -104,15 +104,15 @@ Class restartAction()
 		
 		// Sub Tests
 		[CCMenuItemFont setFontSize:40];
-		CCMenuItemFont  *itemF1 = [CCMenuItemFont itemFromString:@"1 " target:self selector:@selector(testNCallback:)];
-		CCMenuItemFont  *itemF2 = [CCMenuItemFont itemFromString:@"2 " target:self selector:@selector(testNCallback:)];
-		CCMenuItemFont  *itemF3 = [CCMenuItemFont itemFromString:@"3 " target:self selector:@selector(testNCallback:)];
-		CCMenuItemFont  *itemF4 = [CCMenuItemFont itemFromString:@"4 " target:self selector:@selector(testNCallback:)];
+		CCMenuItemFont  *itemF1 = [CCMenuItemFont itemWithString:@"1 " target:self selector:@selector(testNCallback:)];
+		CCMenuItemFont  *itemF2 = [CCMenuItemFont itemWithString:@"2 " target:self selector:@selector(testNCallback:)];
+		CCMenuItemFont  *itemF3 = [CCMenuItemFont itemWithString:@"3 " target:self selector:@selector(testNCallback:)];
+		CCMenuItemFont  *itemF4 = [CCMenuItemFont itemWithString:@"4 " target:self selector:@selector(testNCallback:)];
 
-		CCMenuItemFont  *itemF5 = [CCMenuItemFont itemFromString:@"5 " target:self selector:@selector(testNCallback:)];
-		CCMenuItemFont  *itemF6 = [CCMenuItemFont itemFromString:@"6 " target:self selector:@selector(testNCallback:)];
-		CCMenuItemFont  *itemF7 = [CCMenuItemFont itemFromString:@"7 " target:self selector:@selector(testNCallback:)];
-		CCMenuItemFont  *itemF8 = [CCMenuItemFont itemFromString:@"8 " target:self selector:@selector(testNCallback:)];
+		CCMenuItemFont  *itemF5 = [CCMenuItemFont itemWithString:@"5 " target:self selector:@selector(testNCallback:)];
+		CCMenuItemFont  *itemF6 = [CCMenuItemFont itemWithString:@"6 " target:self selector:@selector(testNCallback:)];
+		CCMenuItemFont  *itemF7 = [CCMenuItemFont itemWithString:@"7 " target:self selector:@selector(testNCallback:)];
+		CCMenuItemFont  *itemF8 = [CCMenuItemFont itemWithString:@"8 " target:self selector:@selector(testNCallback:)];
 
 		itemF1.tag = 1;
 		itemF2.tag = 2;

@@ -34,10 +34,10 @@ enum {
 			[(CCLayerMultiplex*)_self->parent_ switchTo:[sender tag]];
 		};
 		
-		CCMenuItemSprite *item1 = [CCMenuItemSprite itemFromNormalSprite:spriteNormal selectedSprite:spriteSelected disabledSprite:spriteDisabled block:reusableBlock];
+		CCMenuItemSprite *item1 = [CCMenuItemSprite itemWithNormalSprite:spriteNormal selectedSprite:spriteSelected disabledSprite:spriteDisabled block:reusableBlock];
 		item1.tag = 1;
 		// Image Item
-		CCMenuItem *item2 = [CCMenuItemImage itemFromNormalImage:@"SendScoreButton.png" selectedImage:@"SendScoreButtonPressed.png" block:reusableBlock];
+		CCMenuItem *item2 = [CCMenuItemImage itemWithNormalImage:@"SendScoreButton.png" selectedImage:@"SendScoreButtonPressed.png" block:reusableBlock];
 		item2.tag = 2;
 		
 		// Label Item (LabelAtlas)
@@ -48,7 +48,7 @@ enum {
 		
 		
 		// Font Item
-		CCMenuItem *item4 = [CCMenuItemFont itemFromString: @"I toggle enable items" block:^(id sender){
+		CCMenuItem *item4 = [CCMenuItemFont itemWithString: @"I toggle enable items" block:^(id sender){
 			_self->disabledItem.isEnabled = ~_self->disabledItem.isEnabled;
 		}];
 		
@@ -58,7 +58,7 @@ enum {
 		item5.tag = 3;
 		
 		// Font Item
-		CCMenuItemFont *item6 = [CCMenuItemFont itemFromString: @"Quit" block:^(id sender){
+		CCMenuItemFont *item6 = [CCMenuItemFont itemWithString: @"Quit" block:^(id sender){
 			[[CCDirector sharedDirector] end];
 			
 			// HA HA... no more terminate on sdk v3.0
@@ -164,11 +164,11 @@ enum {
 	if( (self=[super init]) ) {
 		
 		for( int i=0;i < 2;i++ ) {
-			CCMenuItemImage *item1 = [CCMenuItemImage itemFromNormalImage:@"btn-play-normal.png" selectedImage:@"btn-play-selected.png" block:^(id sender){
+			CCMenuItemImage *item1 = [CCMenuItemImage itemWithNormalImage:@"btn-play-normal.png" selectedImage:@"btn-play-selected.png" block:^(id sender){
 				[(CCLayerMultiplex*)parent_ switchTo:0];
 			}];
 			
-			CCMenuItemImage *item2 = [CCMenuItemImage itemFromNormalImage:@"btn-highscores-normal.png" selectedImage:@"btn-highscores-selected.png" block:^(id sender){
+			CCMenuItemImage *item2 = [CCMenuItemImage itemWithNormalImage:@"btn-highscores-normal.png" selectedImage:@"btn-highscores-selected.png" block:^(id sender){
 				CCMenu *menu = (CCMenu*)[sender parent];
 				GLubyte opacity = [menu opacity];
 				if( opacity == 128 )
@@ -177,7 +177,7 @@ enum {
 					[menu setOpacity: 128];
 			}];
 
-			CCMenuItemImage *item3 = [CCMenuItemImage itemFromNormalImage:@"btn-about-normal.png" selectedImage:@"btn-about-selected.png" block:^(id sender){
+			CCMenuItemImage *item3 = [CCMenuItemImage itemWithNormalImage:@"btn-about-normal.png" selectedImage:@"btn-about-selected.png" block:^(id sender){
 				alignedH = ! alignedH;
 				
 				if( alignedH )
@@ -224,13 +224,13 @@ enum {
 		
 		CCLabelBMFont *label = [CCLabelBMFont labelWithString:@"Enable AtlasItem" fntFile:@"bitmapFontTest3.fnt"];
 		CCMenuItemLabel *item1 = [CCMenuItemLabel itemWithLabel:label target:self selector:@selector(menuCallback2:)];
-		CCMenuItemFont *item2 = [CCMenuItemFont itemFromString: @"--- Go Back ---" target:self selector:@selector(menuCallback:)];
+		CCMenuItemFont *item2 = [CCMenuItemFont itemWithString: @"--- Go Back ---" target:self selector:@selector(menuCallback:)];
 		
 		CCSprite *spriteNormal = [CCSprite spriteWithFile:@"menuitemsprite.png" rect:CGRectMake(0,23*2,115,23)];
 		CCSprite *spriteSelected = [CCSprite spriteWithFile:@"menuitemsprite.png" rect:CGRectMake(0,23*1,115,23)];
 		CCSprite *spriteDisabled = [CCSprite spriteWithFile:@"menuitemsprite.png" rect:CGRectMake(0,23*0,115,23)];
 		
-		CCMenuItemSprite *item3 = [CCMenuItemSprite itemFromNormalSprite:spriteNormal selectedSprite:spriteSelected disabledSprite:spriteDisabled target:self selector:@selector(menuCallback3:)];
+		CCMenuItemSprite *item3 = [CCMenuItemSprite itemWithNormalSprite:spriteNormal selectedSprite:spriteSelected disabledSprite:spriteDisabled target:self selector:@selector(menuCallback3:)];
 		disabledItem = item3;
 		disabledItem.isEnabled = NO;
 		
@@ -291,50 +291,50 @@ enum {
 	
 		[CCMenuItemFont setFontName: @"American Typewriter"];
 		[CCMenuItemFont setFontSize:18];
-		CCMenuItemFont *title1 = [CCMenuItemFont itemFromString: @"Sound"];
+		CCMenuItemFont *title1 = [CCMenuItemFont itemWithString: @"Sound"];
 		[title1 setIsEnabled:NO];
 		[CCMenuItemFont setFontName: @"Marker Felt"];
 		[CCMenuItemFont setFontSize:34];
 		CCMenuItemToggle *item1 = [CCMenuItemToggle itemWithTarget:self selector:@selector(menuCallback:) items:
-								   [CCMenuItemFont itemFromString: @"On"],
-								   [CCMenuItemFont itemFromString: @"Off"],
+								   [CCMenuItemFont itemWithString: @"On"],
+								   [CCMenuItemFont itemWithString: @"Off"],
 								   nil];
 		
 		[CCMenuItemFont setFontName: @"American Typewriter"];
 		[CCMenuItemFont setFontSize:18];
-		CCMenuItemFont *title2 = [CCMenuItemFont itemFromString: @"Music"];
+		CCMenuItemFont *title2 = [CCMenuItemFont itemWithString: @"Music"];
 		[title2 setIsEnabled:NO];
 		[CCMenuItemFont setFontName: @"Marker Felt"];
 		[CCMenuItemFont setFontSize:34];
 		CCMenuItemToggle *item2 = [CCMenuItemToggle itemWithTarget:self selector:@selector(menuCallback:) items:
-								   [CCMenuItemFont itemFromString: @"On"],
-								   [CCMenuItemFont itemFromString: @"Off"],
+								   [CCMenuItemFont itemWithString: @"On"],
+								   [CCMenuItemFont itemWithString: @"Off"],
 								   nil];
 		
 		[CCMenuItemFont setFontName: @"American Typewriter"];
 		[CCMenuItemFont setFontSize:18];
-		CCMenuItemFont *title3 = [CCMenuItemFont itemFromString: @"Quality"];
+		CCMenuItemFont *title3 = [CCMenuItemFont itemWithString: @"Quality"];
 		[title3 setIsEnabled:NO];
 		[CCMenuItemFont setFontName: @"Marker Felt"];
 		[CCMenuItemFont setFontSize:34];
 		CCMenuItemToggle *item3 = [CCMenuItemToggle itemWithTarget:self selector:@selector(menuCallback:) items:
-								   [CCMenuItemFont itemFromString: @"High"],
-								   [CCMenuItemFont itemFromString: @"Low"],
+								   [CCMenuItemFont itemWithString: @"High"],
+								   [CCMenuItemFont itemWithString: @"Low"],
 								   nil];
 		
 		[CCMenuItemFont setFontName: @"American Typewriter"];
 		[CCMenuItemFont setFontSize:18];
-		CCMenuItemFont *title4 = [CCMenuItemFont itemFromString: @"Orientation"];
+		CCMenuItemFont *title4 = [CCMenuItemFont itemWithString: @"Orientation"];
 		[title4 setIsEnabled:NO];
 		[CCMenuItemFont setFontName: @"Marker Felt"];
 		[CCMenuItemFont setFontSize:34];
 		CCMenuItemToggle *item4 = [CCMenuItemToggle itemWithTarget:self selector:@selector(menuCallback:) items:
-								   [CCMenuItemFont itemFromString: @"Off"], nil];
+								   [CCMenuItemFont itemWithString: @"Off"], nil];
 		
 		NSArray *more_items = [NSArray arrayWithObjects:
-							   [CCMenuItemFont itemFromString: @"33%"],
-							   [CCMenuItemFont itemFromString: @"66%"],
-							   [CCMenuItemFont itemFromString: @"100%"],
+							   [CCMenuItemFont itemWithString: @"33%"],
+							   [CCMenuItemFont itemWithString: @"66%"],
+							   [CCMenuItemFont itemWithString: @"100%"],
 							   nil];
 		// TIP: you can manipulate the items like any other NSMutableArray
 		[item4.subItems addObjectsFromArray: more_items];

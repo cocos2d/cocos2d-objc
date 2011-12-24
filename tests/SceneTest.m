@@ -15,9 +15,9 @@
 	if( (self=[super initWithColor: ccc4(0,255,0,255)]) ) {
 	
 		
-		CCMenuItemFont *item1 = [CCMenuItemFont itemFromString: @"Test pushScene" target:self selector:@selector(onPushScene:)];
-		CCMenuItemFont *item2 = [CCMenuItemFont itemFromString: @"Test pushScene w/transition" target:self selector:@selector(onPushSceneTran:)];
-		CCMenuItemFont *item3 = [CCMenuItemFont itemFromString: @"Quit" target:self selector:@selector(onQuit:)];
+		CCMenuItemFont *item1 = [CCMenuItemFont itemWithString: @"Test pushScene" target:self selector:@selector(onPushScene:)];
+		CCMenuItemFont *item2 = [CCMenuItemFont itemWithString: @"Test pushScene w/transition" target:self selector:@selector(onPushSceneTran:)];
+		CCMenuItemFont *item3 = [CCMenuItemFont itemWithString: @"Quit" target:self selector:@selector(onQuit:)];
 		
 		CCMenu *menu = [CCMenu menuWithItems: item1, item2, item3, nil];
 		[menu alignItemsVertically];
@@ -105,9 +105,9 @@
 	
 		timeCounter = 0;
 
-		CCMenuItemFont *item1 = [CCMenuItemFont itemFromString: @"replaceScene" target:self selector:@selector(onReplaceScene:)];
-		CCMenuItemFont *item2 = [CCMenuItemFont itemFromString: @"replaceScene w/transition" target:self selector:@selector(onReplaceSceneTran:)];
-		CCMenuItemFont *item3 = [CCMenuItemFont itemFromString: @"Go Back" target:self selector:@selector(onGoBack:)];
+		CCMenuItemFont *item1 = [CCMenuItemFont itemWithString: @"replaceScene" target:self selector:@selector(onReplaceScene:)];
+		CCMenuItemFont *item2 = [CCMenuItemFont itemWithString: @"replaceScene w/transition" target:self selector:@selector(onReplaceSceneTran:)];
+		CCMenuItemFont *item3 = [CCMenuItemFont itemWithString: @"Go Back" target:self selector:@selector(onGoBack:)];
 		
 		CCMenu *menu = [CCMenu menuWithItems: item1, item2, item3, nil];
 		[menu alignItemsVertically];

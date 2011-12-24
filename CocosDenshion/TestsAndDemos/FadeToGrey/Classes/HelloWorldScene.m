@@ -67,19 +67,19 @@
 	
 	[CCMenuItemFont setFontName: @"Arial"];
 	[CCMenuItemFont setFontSize:32];
-	CCMenuItemFont *item1 = [CCMenuItemFont itemFromString: @"Harder" target:self selector:@selector(menuHandler:)];
+	CCMenuItemFont *item1 = [CCMenuItemFont itemWithString: @"Harder" target:self selector:@selector(menuHandler:)];
 	item1.tag = 1;
-	CCMenuItemFont *item2 = [CCMenuItemFont itemFromString: @"Better" target:self selector:@selector(menuHandler:)];
+	CCMenuItemFont *item2 = [CCMenuItemFont itemWithString: @"Better" target:self selector:@selector(menuHandler:)];
 	item2.tag = 2;
-	CCMenuItemFont *item3 = [CCMenuItemFont itemFromString: @"Faster" target:self selector:@selector(menuHandler:)];
+	CCMenuItemFont *item3 = [CCMenuItemFont itemWithString: @"Faster" target:self selector:@selector(menuHandler:)];
 	item3.tag = 3;
-	CCMenuItemFont *item4 = [CCMenuItemFont itemFromString: @"Stronger" target:self selector:@selector(menuHandler:)];
+	CCMenuItemFont *item4 = [CCMenuItemFont itemWithString: @"Stronger" target:self selector:@selector(menuHandler:)];
 	item4.tag = 4;
-	CCMenuItemFont *item5 = [CCMenuItemFont itemFromString: @"Background Music" target:self selector:@selector(menuHandler:)];
+	CCMenuItemFont *item5 = [CCMenuItemFont itemWithString: @"Background Music" target:self selector:@selector(menuHandler:)];
 	item5.tag = 5;
-	CCMenuItemFont *item6 = [CCMenuItemFont itemFromString: @"Sound Effects" target:self selector:@selector(menuHandler:)];
+	CCMenuItemFont *item6 = [CCMenuItemFont itemWithString: @"Sound Effects" target:self selector:@selector(menuHandler:)];
 	item6.tag = 6;
-	CCMenuItemFont *item7 = [CCMenuItemFont itemFromString: @"Reset" target:self selector:@selector(reset:)];
+	CCMenuItemFont *item7 = [CCMenuItemFont itemWithString: @"Reset" target:self selector:@selector(reset:)];
     
 	CCMenu *menu = [CCMenu menuWithItems:
 					item1, item2,

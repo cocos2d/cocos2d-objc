@@ -33,10 +33,10 @@
 	[self removeChild:node cleanup:NO];
 //	[self removeChildByTag:localtag-1 cleanup:NO];
 	
-	CCMenuItem *item1 = [CCMenuItemFont itemFromString: @"One"
+	CCMenuItem *item1 = [CCMenuItemFont itemWithString: @"One"
                                             target: self selector:@selector(menuCallback:)];
 	NSLog(@"MenuItemFont: %@", item1);
-    CCMenuItem *item2 = [CCMenuItemFont itemFromString: @"Two"
+    CCMenuItem *item2 = [CCMenuItemFont itemWithString: @"Two"
                                             target: self selector:@selector(menuCallback:)];
     
     CCMenu *menu = [CCMenu menuWithItems: item1, item2, nil];

@@ -106,9 +106,9 @@ Class restartAction()
 			[l setPosition:ccp(s.width/2, s.height-80)];
 		}	
 		
-		CCMenuItemImage *item1 = [CCMenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
-		CCMenuItemImage *item2 = [CCMenuItemImage itemFromNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
-		CCMenuItemImage *item3 = [CCMenuItemImage itemFromNormalImage:@"f1.png" selectedImage:@"f2.png" target:self selector:@selector(nextCallback:)];
+		CCMenuItemImage *item1 = [CCMenuItemImage itemWithNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
+		CCMenuItemImage *item2 = [CCMenuItemImage itemWithNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
+		CCMenuItemImage *item3 = [CCMenuItemImage itemWithNormalImage:@"f1.png" selectedImage:@"f2.png" target:self selector:@selector(nextCallback:)];
 		
 		CCMenu *menu = [CCMenu menuWithItems:item1, item2, item3, nil];
 		
@@ -839,9 +839,9 @@ static float menuItemPaddingCenter = 50;
         self.arrows = [CCSprite spriteWithFile:@"arrows.png"];
         
         [CCMenuItemFont setFontSize:20];
-        CCMenuItemFont *longSentences = [CCMenuItemFont itemFromString:@"Long Flowing Sentences" target:self selector:@selector(stringChanged:)];
-        CCMenuItemFont *lineBreaks = [CCMenuItemFont itemFromString:@"Short Sentences With Intentional Line Breaks" target:self selector:@selector(stringChanged:)];
-        CCMenuItemFont *mixed = [CCMenuItemFont itemFromString:@"Long Sentences Mixed With Intentional Line Breaks" target:self selector:@selector(stringChanged:)];
+        CCMenuItemFont *longSentences = [CCMenuItemFont itemWithString:@"Long Flowing Sentences" target:self selector:@selector(stringChanged:)];
+        CCMenuItemFont *lineBreaks = [CCMenuItemFont itemWithString:@"Short Sentences With Intentional Line Breaks" target:self selector:@selector(stringChanged:)];
+        CCMenuItemFont *mixed = [CCMenuItemFont itemWithString:@"Long Sentences Mixed With Intentional Line Breaks" target:self selector:@selector(stringChanged:)];
         CCMenu *stringMenu = [CCMenu menuWithItems:longSentences, lineBreaks, mixed, nil];
         [stringMenu alignItemsVertically];
         
@@ -853,9 +853,9 @@ static float menuItemPaddingCenter = 50;
         
         [CCMenuItemFont setFontSize:30];
         
-        CCMenuItemFont *left = [CCMenuItemFont itemFromString:@"Left" target:self selector:@selector(alignmentChanged:)];
-        CCMenuItemFont *center = [CCMenuItemFont itemFromString:@"Center" target:self selector:@selector(alignmentChanged:)];
-        CCMenuItemFont *right = [CCMenuItemFont itemFromString:@"Right" target:self selector:@selector(alignmentChanged:)];
+        CCMenuItemFont *left = [CCMenuItemFont itemWithString:@"Left" target:self selector:@selector(alignmentChanged:)];
+        CCMenuItemFont *center = [CCMenuItemFont itemWithString:@"Center" target:self selector:@selector(alignmentChanged:)];
+        CCMenuItemFont *right = [CCMenuItemFont itemWithString:@"Right" target:self selector:@selector(alignmentChanged:)];
         CCMenu *alignmentMenu = [CCMenu menuWithItems:left, center, right, nil];
         [alignmentMenu alignItemsHorizontallyWithPadding:alignmentItemPadding];
         

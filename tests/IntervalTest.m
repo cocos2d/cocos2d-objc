@@ -59,7 +59,7 @@
 		 ];
 
 		// pause button
-		CCMenuItem *item1 = [CCMenuItemFont itemFromString: @"Pause" target:self selector:@selector(pause:)];
+		CCMenuItem *item1 = [CCMenuItemFont itemWithString: @"Pause" target:self selector:@selector(pause:)];
 		CCMenu *menu = [CCMenu menuWithItems: item1, nil];
 		menu.position = ccp(s.width/2, s.height-50);
 

@@ -186,7 +186,7 @@ void removeShape( cpBody *body, cpShape *shape, void *data )
 
 -(void) createResetButton
 {
-	CCMenuItemImage *reset = [CCMenuItemImage itemFromNormalImage:@"r1.png" selectedImage:@"r2.png" block:^(id sender) {
+	CCMenuItemImage *reset = [CCMenuItemImage itemWithNormalImage:@"r1.png" selectedImage:@"r2.png" block:^(id sender) {
 		CCScene *s = [CCScene node];
 		id child = [[[MainLayer class] alloc] init];
 		[s addChild:child];
