@@ -75,6 +75,45 @@ static const ccColor3B ccORANGE = {255,127,0};
 //! Gray Color (166,166,166)
 static const ccColor3B ccGRAY = {166,166,166};
 
+//! ccColor3B encoder for AMC. Encodes ccc3 to NSString.
+static NSString *NSStringFromCCColor3B(ccColor3B color)
+{
+    return [NSString stringWithFormat:@"r=%d, g=%d, b=%d", color.r, color.g, color.b];
+}
+
+//! ccColor3B decoder for AMC. Decodes ccc3 from NSString.
+static ccColor3B ccColor3BFromNSString(NSString *string)
+{
+    ccColor3B result;
+    
+    NSArray *components = [string componentsSeparatedByString:@", "];
+    for (NSString *component in components)
+    {
+        NSArray *keyValue = [component componentsSeparatedByString:@"="];
+        if ([keyValue count] > 1)
+        {
+            NSString *key = [keyValue objectAtIndex: 0];
+            NSString *value = [keyValue objectAtIndex:1];
+            
+            if ([key isEqualToString:@"r"])
+            {
+                result.r = [value integerValue];
+            }
+            else if ([key isEqualToString:@"g"])
+            {
+                result.g = [value integerValue];
+            }
+            else if ([key isEqualToString:@"b"])
+            {
+                result.b = [value integerValue];
+            }
+        }
+    }
+    
+    return result;
+}
+
+
 /** RGBA color composed of 4 bytes
 @since v0.8
 */

@@ -1089,7 +1089,9 @@ static SEL selSortMethod = NULL;
     if ([structName isEqualToString: @"_ccColor3B"]
         || [structName isEqualToString: @"ccColor3B"])
     {
-        return @"ccColor3B - not Encoded.";
+        ccColor3B color;
+        [structValue getValue: &color];
+        return NSStringFromCCColor3B(color);
     }
     else if ([structName isEqualToString: @"_ccBlendFunc"]
              || [structName isEqualToString: @"ccBlendFunc"])
@@ -1105,7 +1107,8 @@ static SEL selSortMethod = NULL;
     if ([structName isEqualToString: @"_ccColor3B"]
         || [structName isEqualToString: @"ccColor3B"])
     {
-        ccColor3B color = ccc3(255, 255, 255);
+        ccColor3B color = ccColor3BFromNSString(value);
+        
         return [NSValue valueWithBytes: &color objCType: @encode(ccColor3B) ];
     }
     else if ([structName isEqualToString: @"_ccBlendFunc"]
