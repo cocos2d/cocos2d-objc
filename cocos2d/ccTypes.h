@@ -320,6 +320,40 @@ typedef struct _ccBlendFunc
 	GLenum dst;
 } ccBlendFunc;
 
+//! ccBlendFunc encoder for AMC. Encodes ccBlendFunc to NSString.
+static NSString *NSStringFromCCBlendFunc(ccBlendFunc blendFunc)
+{
+    return [NSString stringWithFormat:@"src=%d, dst=%d", blendFunc.src, blendFunc.dst];
+}
+
+//! ccBlendFunc decoder for AMC. Decodes ccBlendFunc from NSString.
+static ccBlendFunc ccBlendFuncFromNSString(NSString *string)
+{
+    ccBlendFunc result;
+    
+    NSArray *components = [string componentsSeparatedByString:@", "];
+    for (NSString *component in components)
+    {
+        NSArray *keyValue = [component componentsSeparatedByString:@"="];
+        if ([keyValue count] > 1)
+        {
+            NSString *key = [keyValue objectAtIndex: 0];
+            NSString *value = [keyValue objectAtIndex:1];
+            
+            if ([key isEqualToString:@"src"])
+            {
+                result.src = (GLenum)[value integerValue];
+            }
+            else if ([key isEqualToString:@"dst"])
+            {
+                result.dst = (GLenum)[value integerValue];
+            }
+        }
+    }
+    
+    return result;
+}
+
 //! ccResolutionType
 typedef enum
 {

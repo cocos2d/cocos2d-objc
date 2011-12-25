@@ -1080,10 +1080,6 @@ static SEL selSortMethod = NULL;
     return self;
 }
 
-
-// TODO: Add actual support for custom structs:
-//    ccColor3B color;
-//    blendFunc
 - (NSString *) AMCEncodeStructWithValue: (NSValue *) structValue withName: (NSString *) structName
 {
     if ([structName isEqualToString: @"_ccColor3B"]
@@ -1096,7 +1092,9 @@ static SEL selSortMethod = NULL;
     else if ([structName isEqualToString: @"_ccBlendFunc"]
              || [structName isEqualToString: @"ccBlendFunc"])
     {
-        return @"ccBlendFunc - not Encoded.";
+        ccBlendFunc blendFunc;
+        [structValue getValue: &blendFunc];
+        return NSStringFromCCBlendFunc(blendFunc);
     }
     else
         return [super AMCEncodeStructWithValue:structValue withName:structName];
@@ -1114,9 +1112,7 @@ static SEL selSortMethod = NULL;
     else if ([structName isEqualToString: @"_ccBlendFunc"]
              || [structName isEqualToString: @"ccBlendFunc"] )
     {
-        ccBlendFunc blendFunc;
-        blendFunc.src = CC_BLEND_SRC;
-        blendFunc.dst = CC_BLEND_DST;
+        ccBlendFunc blendFunc = ccBlendFuncFromNSString(value);
         
         return [NSValue valueWithBytes: &blendFunc objCType: @encode(ccBlendFunc) ];
     }
