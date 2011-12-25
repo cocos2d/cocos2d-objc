@@ -420,15 +420,71 @@ enum nodeTags {
 }
 @end
 
-// TODO: Node + CCCamera 
-// TODO: Node + CCGridBase
-// TODO: Node + vertexZ
+// TODO: Node + CCCamera (not supported by AMC now)
+// TODO: Node + CCGridBase (not supported by AMC now)
+// TODO: Node + vertexZ (should work, just got no explicit test)
 
-// TODO: Sprite + Blend Func
+// TODO: Sprite + Blend Func (should work, just got no explicit test)
 
-// TODO: Sprite + flipX + flipY;
-// TODO: SpriteBatchNode + honorParentTransform;
-// TODO: Sprite + blendFunc;
+// TODO: Sprite + flipX + flipY; (should work, just got no explicit test)
+// TODO: SpriteBatchNode + honorParentTransform; (not supported by AMC now)
+
+//  TODO: more to go:
+// ---------------------
+//
+// CCAtlasNode - should be pretty easy, but i never used it - dunno if i can provide good test.
+// CCLabelAtlas - very easy after supporting CCAtlasNode
+//
+// CCTextureAtlas - just save texture & capacity & use initWithFile:capacity: and you should be ok.
+// CCSpriteBatchNode - don't save @"descendants" & you'll be cool.
+// CCLabelMBFont - some work needed (3 structs, 1 additional class), but should be straight forward after BatchNode.
+// 
+// CCLabelTTF - hackish stuff - it's subclass of CCSprite & it creates custom texture each time. But i think it's possible
+// just don't save the texture =).
+//
+// CCAnimation - should work out of the box, cause CCSpriteFrame is ready.
+//
+// CCMenu - straight-forward. Only selectedItem should be saved as selectedItemIndex number with dynamic setter.
+// CCMenuItems - lot of work, especially for Label menu items, but it should be ok. Will not save invocation & blocks, of course.
+//
+// CCParticleBatchNode & other from "Particle Nodes" - OMG, fucking particles! Anyway - it should be possible, just needs time.
+//
+// CCParalaxNode - pretty easy, just need to save CGPointObject's in parallaxRatio array & then use it in
+// -initWIthDictionaryRepresentation: for parallaxRatio argument, when reading childs from loadedChildren.
+//
+// CCTileMapAtlas - DEPRECATED. No AMC Support.
+//
+// CCTMXLayer, CCTMXObjectGroup, CCTMXTiledMap - lot of pain, and Tiled editor
+// file format is already supported in cocos2d-iphone.
+// Conclusion: support only -initWithTMXFile: - use key for this & forget about it.
+//
+// CCScene - should work without any modifications - cause it's simple CCNode.
+// CCTransition & it's subclasses - should be VERY simple. Should we really support this??????????
+//
+// CCProgressTimer - straight-forward.
+//
+// ====== ACTIONS ====
+// TODO: look through them. Think a lot. Be cool ;)
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+// ====== Not to be supported by AMC =====
+// Can't imagine someone need to save/load this.
+//  * CCGrabber, 
+//  * CCRenderTexture, 
+//  * CCRibbon,
+//  * CCMotionStreak
+//
+
+
 
 
 #pragma mark -
