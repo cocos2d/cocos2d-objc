@@ -80,12 +80,8 @@ enum nodeTags {
     
     [CCAnimationCache purgeSharedAnimationCache];
     [CCSpriteFrameCache purgeSharedSpriteFrameCache];
-    //[CCTextureCache purgeSharedTextureCache];    
-    
-    // TODO: purge textures without crashing somehow
+    [CCTextureCache purgeSharedTextureCache];    
 }
-
-// TODO: fix crashing on second texture creation.
 
 - (void) load
 {
