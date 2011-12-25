@@ -890,9 +890,7 @@ static BOOL PVRHaveAlphaPremultiplied_ = NO;
 {
     [self release];
     
-    // TODO: fix crashes on second creation.
-    
-    self = [[CCTextureCache sharedTextureCache] addImage: [aDict objectForKey: @"key"] ];
+    self = [[[CCTextureCache sharedTextureCache] addImage: [aDict objectForKey: @"key"] ] retain];
     return self;
 }
 
