@@ -463,17 +463,31 @@ enum nodeTags {
 //
 // CCProgressTimer - straight-forward.
 //
-// ====== ACTIONS ====
-// TODO: look through them. Think a lot. Be cool ;)
+// ====== ACTIONS ======
+//
+// CCAction - just save tag. target & original target will be set on runAction.
+// Add -allActionsForTarget: to CCActionManager to retreive all actions.
+// Add dynamic property - array of actions.
+// For getter - use CCActionManager#allActionsForTarget:
+// For setter - use runAction
+//
+// CCFiniteTimeAction - save tag & duration.
+// CCRepeatForever - save tag & innerAction.
+// CCSpeed - save tag speed & innerAction.
+// CCFollow - save followedNode (CCActionTargetCache + CCActionTargetProxy or load actions after all targets loaded? THINK!!!), 
+// boundarySet(simple BOOL), boundaryRect (need to calculate it back to rect 
+// from 4 floats on save.)
+//
+// TODO: investigate further.
 //
 //
 //
 //
 //
 //
-//
-//
-//
+// TODO: think about Timers, updates, look through CCScheduler.
+// TODO: Look through cocos2d-iphone documentation for any classes, that i may have
+// skipped here & that we need to support.
 //
 //
 // ====== Not to be supported by AMC =====
