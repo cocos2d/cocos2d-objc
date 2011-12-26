@@ -445,7 +445,9 @@ Class restartAction()
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-	// Don't calls super
+	// Don't call super
+//	[super applicationDidFinishLaunching:application didFinishLaunchingWithOptions:launchOptions];
+
 	// Init the window
 	window_ = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 	
@@ -459,7 +461,7 @@ Class restartAction()
 								 multiSampling:NO
 							   numberOfSamples:0];
 	
-	director_ = [CCDirector sharedDirector];
+	director_ = (CCDirectorIOS*) [CCDirector sharedDirector];
 	
 	director_.wantsFullScreenLayout = YES;
 	// Display Milliseconds Per Frame
