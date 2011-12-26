@@ -82,7 +82,7 @@
 								 multiSampling:NO
 							   numberOfSamples:0];
 	
-	director_ = [CCDirector sharedDirector];
+	director_ = (CCDirectorIOS*) [CCDirector sharedDirector];
 	
 	director_.wantsFullScreenLayout = YES;
 	// Display Milliseconds Per Frame

@@ -131,7 +131,7 @@ default gl blend src function. Compatible with premultiplied alpha images.
 #define CC_DIRECTOR_INIT()																		\
 do	{																							\
 	window_ = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];					\
-	director_ = [CCDirector sharedDirector];													\
+	director_ = (CCDirectorIOS*)[CCDirector sharedDirector];													\
 	[director_ setDisplayStats:NO];																\
 	[director_ setAnimationInterval:1.0/60];													\
 	EAGLView *__glView = [EAGLView viewWithFrame:[window_ bounds]								\

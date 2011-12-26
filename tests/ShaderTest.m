@@ -142,7 +142,8 @@ enum {
 	SIZE_Y = 256,
 };
 
-+(id) shaderNodeWithVertex:(NSString*)vert fragment:(NSString*)frag {
++(id) shaderNodeWithVertex:(NSString*)vert fragment:(NSString*)frag
+{
 	return [[[self alloc] initWithVertex:vert fragment:frag] autorelease];
 }
 
@@ -162,6 +163,12 @@ enum {
 	}
 	
 	return self;
+}
+
+- (void)dealloc
+{
+	NSLog(@"Shader dealloc called **********");
+    [super dealloc];
 }
 
 -(void) loadShaderVertex:(NSString*)vert fragment:(NSString*)frag
@@ -236,6 +243,10 @@ enum {
 	return self;	
 }
 
+- (void)dealloc {
+    NSLog(@"ShaderMonjori dealloc **********");
+    [super dealloc];
+}
 -(NSString *) title
 {
 	return @"Shader: Frag shader";
@@ -553,8 +564,9 @@ enum {
 
 -(void) dealloc
 {
+	[sliderCtl_ release];
 	[sliderCtl_ removeFromSuperview];
-	self.sliderCtl = nil;
+
 	[super dealloc];
 }
 

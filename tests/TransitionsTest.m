@@ -425,61 +425,19 @@ Class restartTransition()
 
 @implementation AppController
 
-@synthesize window=window_, rootViewController=rootViewController_, director=director_;
-
-- (void) applicationDidFinishLaunching:(UIApplication*)application
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-	// Init the window
-	window_ = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-
-	// get instance of the shared director
-	director_ = [CCDirector sharedDirector];
-	
-	// display FPS (useful when debugging)
-	[director_ setDisplayStats:YES];
-	
-	// frames per second
-	[director_ setAnimationInterval:1.0/60];
-	
-	// fullscreen
-	director_.wantsFullScreenLayout = YES;
-	
-	// create an OpenGL view
-	// PageTurnTransition needs a depth buffer of 16 or 24 bits
-	// These means that openGL z-order will be taken into account
-	// On the other hand "Flip" transitions doesn't work with DepthBuffer > 0
-	EAGLView *glView = [EAGLView viewWithFrame:[window_ bounds]
-								   pixelFormat:kEAGLColorFormatRGBA8
-								   depthFormat:0 //GL_DEPTH_COMPONENT24_OES
-						];
-	[glView setMultipleTouchEnabled:YES];
-	
-	// connect it to the director
-	[director_ setView:glView];
+	[super application:application didFinishLaunchingWithOptions:launchOptions];
 	
 	// Enables High Res mode (Retina Display) on iPhone 4 and maintains low res on all other devices
 	if( ! [director_ enableRetinaDisplay:YES] )
 		CCLOG(@"Retina Display Not supported");
-	
-	
-	rootViewController_ = [[UINavigationController alloc] initWithRootViewController:director_];
-	rootViewController_.navigationBarHidden = YES;
-	
-	// set the Navigation Controller as the root view controller
-	[window_ setRootViewController:rootViewController_];
-	
-	[rootViewController_ release];
 
 	// When in iPad / RetinaDisplay mode, CCFileUtils will append the "-ipad" / "-hd" to all loaded files
 	// If the -ipad  / -hdfile is not found, it will load the non-suffixed version
 	[CCFileUtils setiPadSuffix:@"-ipad"];			// Default on iPad is "" (empty string)
 	[CCFileUtils setRetinaDisplaySuffix:@"-hd"];	// Default on RetinaDisplay is "-hd"
 
-	
-	// Make the window visible
-	[window_ makeKeyAndVisible];
-	
-		
 	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
 	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
 	// You can change anytime.
@@ -489,58 +447,9 @@ Class restartTransition()
 	[scene addChild: [TextLayer node]];
 	
 	[director_ pushScene: scene];
+	
+	return YES;
 }
-
-// getting a call, pause the game
--(void) applicationWillResignActive:(UIApplication *)application
-{
-	if( [rootViewController_ visibleViewController] == director_ )
-		[director_ pause];
-}
-
-// call got rejected
--(void) applicationDidBecomeActive:(UIApplication *)application
-{
-	if( [rootViewController_ visibleViewController] == director_ )
-		[director_ resume];
-}
-
--(void) applicationDidEnterBackground:(UIApplication*)application
-{
-	if( [rootViewController_ visibleViewController] == director_ )
-		[director_ stopAnimation];
-}
-
--(void) applicationWillEnterForeground:(UIApplication*)application
-{
-	if( [rootViewController_ visibleViewController] == director_ )
-		[director_ startAnimation];
-}
-
-- (void)applicationWillTerminate:(UIApplication *)application
-{	
-	[director_ end];
-}
-
-// purge memory
-- (void)applicationDidReceiveMemoryWarning:(UIApplication *)application
-{
-	[[CCDirector sharedDirector] purgeCachedData];
-}
-
-// next delta time will be zero
--(void) applicationSignificantTimeChange:(UIApplication *)application
-{
-	[[CCDirector sharedDirector] setNextDeltaTimeZero:YES];
-}
-
-- (void) dealloc
-{
-	[window_ release];
-
-	[super dealloc];
-}
-
 @end
 
 #pragma mark -
