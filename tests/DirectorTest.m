@@ -153,7 +153,7 @@ Class restartAction()
 			
 			viewController.view = view;
 			
-			AppController *app = [[UIApplication sharedApplication] delegate];
+			AppController *app = (AppController*)[[UIApplication sharedApplication] delegate];
 
 			UINavigationController *nav = [app rootViewController];
 			[nav pushViewController:viewController animated:YES];
@@ -169,7 +169,7 @@ Class restartAction()
 
 -(void) buttonBack:(id)sender
 {
-	AppController *app = [[UIApplication sharedApplication] delegate];
+	AppController *app = (AppController*) [[UIApplication sharedApplication] delegate];
 	UINavigationController *nav = [app rootViewController];
 	[nav popViewControllerAnimated:YES];
 }
@@ -199,7 +199,7 @@ Class restartAction()
 			GKAchievementViewController *achivementViewController = [[GKAchievementViewController alloc] init];
 			achivementViewController.achievementDelegate = self;
 
-			AppController *app = [[UIApplication sharedApplication] delegate];
+			AppController *app = (AppController*) [[UIApplication sharedApplication] delegate];
 			
 			[[app rootViewController] presentModalViewController:achivementViewController animated:YES];
 		}
@@ -211,7 +211,7 @@ Class restartAction()
 			GKLeaderboardViewController *leaderboardViewController = [[GKLeaderboardViewController alloc] init];
 			leaderboardViewController.leaderboardDelegate = self;
 			
-			AppController *app = [[UIApplication sharedApplication] delegate];
+			AppController *app = (AppController*) [[UIApplication sharedApplication] delegate];
 			
 			[[app rootViewController] presentModalViewController:leaderboardViewController animated:YES];
 		}
@@ -237,13 +237,13 @@ Class restartAction()
 
 -(void) achievementViewControllerDidFinish:(GKAchievementViewController *)viewController
 {
-	AppController *app = [[UIApplication sharedApplication] delegate];
+	AppController *app = (AppController*) [[UIApplication sharedApplication] delegate];
 	[[app rootViewController] dismissModalViewControllerAnimated:YES];
 }
 
 -(void) leaderboardViewControllerDidFinish:(GKLeaderboardViewController *)viewController
 {
-	AppController *app = [[UIApplication sharedApplication] delegate];
+	AppController *app = (AppController*) [[UIApplication sharedApplication] delegate];
 	[[app rootViewController] dismissModalViewControllerAnimated:YES];
 }
 

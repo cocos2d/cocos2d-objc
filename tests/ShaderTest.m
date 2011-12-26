@@ -640,12 +640,13 @@ enum {
 @end
 
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
-@implementation cocos2dmacAppDelegate
-
-@synthesize window=window_, glView=glView_;
+@implementation AppController
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
+	// don't call super. Window is created manually in this sample
+//	[super applicationDidFinishLaunching:aNotification];
+
 	CGSize winSize = CGSizeMake(640,480);
 	
 	//
@@ -661,30 +662,15 @@ enum {
 	// Enable "moving" mouse event. Default no.
 	[window_ setAcceptsMouseMovedEvents:NO];
 	
-	// EXPERIMENTAL stuff.
-	// 'Effects' don't work correctly when autoscale is turned on.
-	CCDirectorMac *director = (CCDirectorMac*) [CCDirector sharedDirector];
-	[director setResizeMode:kCCDirectorResize_AutoScale];	
+	[director_ setResizeMode:kCCDirectorResize_AutoScale];	
 	
 	// Turn on display FPS
-	[director setDisplayStats:YES];
+	[director_ setDisplayStats:YES];
 	
 	CCScene *scene = [CCScene node];
 	[scene addChild: [nextAction() node]];
 	
-	[director runWithScene:scene];
+	[director_ runWithScene:scene];
 }
-
-- (BOOL) applicationShouldTerminateAfterLastWindowClosed: (NSApplication *) theApplication
-{
-	return YES;
-}
-
-- (IBAction)toggleFullScreen: (id)sender
-{
-	CCDirectorMac *director = (CCDirectorMac*) [CCDirector sharedDirector];
-	[director setFullScreen: ! [director isFullScreen] ];
-}
-
 @end
 #endif

@@ -636,6 +636,26 @@
 		A044439114A6023800E62742 /* Box2dTest.mm in Sources */ = {isa = PBXBuildFile; fileRef = A044439014A6023800E62742 /* Box2dTest.mm */; };
 		A044439414A6027300E62742 /* GLES-Render.mm in Sources */ = {isa = PBXBuildFile; fileRef = A044439314A6027300E62742 /* GLES-Render.mm */; };
 		A044439614A6040700E62742 /* libbox2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0FBA8AF14A5138F002DF395 /* libbox2d.a */; };
+		A04443E214A91DB600E62742 /* BaseAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = A04443E114A91DB600E62742 /* BaseAppController.m */; };
+		A04443E314A91DB600E62742 /* BaseAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = A04443E114A91DB600E62742 /* BaseAppController.m */; };
+		A04443E414A91DB600E62742 /* BaseAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = A04443E114A91DB600E62742 /* BaseAppController.m */; };
+		A04443E514A91DB600E62742 /* BaseAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = A04443E114A91DB600E62742 /* BaseAppController.m */; };
+		A04443E614A91DB600E62742 /* BaseAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = A04443E114A91DB600E62742 /* BaseAppController.m */; };
+		A04443E714A91DB600E62742 /* BaseAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = A04443E114A91DB600E62742 /* BaseAppController.m */; };
+		A04443E814A91DB600E62742 /* BaseAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = A04443E114A91DB600E62742 /* BaseAppController.m */; };
+		A04443E914A91DB600E62742 /* BaseAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = A04443E114A91DB600E62742 /* BaseAppController.m */; };
+		A04443EA14A91DB600E62742 /* BaseAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = A04443E114A91DB600E62742 /* BaseAppController.m */; };
+		A04443EB14A91DB600E62742 /* BaseAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = A04443E114A91DB600E62742 /* BaseAppController.m */; };
+		A04443EC14A91DB600E62742 /* BaseAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = A04443E114A91DB600E62742 /* BaseAppController.m */; };
+		A04443ED14A91DB600E62742 /* BaseAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = A04443E114A91DB600E62742 /* BaseAppController.m */; };
+		A04443EE14A91DB600E62742 /* BaseAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = A04443E114A91DB600E62742 /* BaseAppController.m */; };
+		A04443EF14A91DB600E62742 /* BaseAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = A04443E114A91DB600E62742 /* BaseAppController.m */; };
+		A04443F014A91DB600E62742 /* BaseAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = A04443E114A91DB600E62742 /* BaseAppController.m */; };
+		A04443F114A91DB600E62742 /* BaseAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = A04443E114A91DB600E62742 /* BaseAppController.m */; };
+		A04443F214A91DB600E62742 /* BaseAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = A04443E114A91DB600E62742 /* BaseAppController.m */; };
+		A04443F314A91DB600E62742 /* BaseAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = A04443E114A91DB600E62742 /* BaseAppController.m */; };
+		A04443F414A91DB600E62742 /* BaseAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = A04443E114A91DB600E62742 /* BaseAppController.m */; };
+		A04443F514A91DB600E62742 /* BaseAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = A04443E114A91DB600E62742 /* BaseAppController.m */; };
 		A04B0DC814A007D0005EB429 /* bugs in Resources */ = {isa = PBXBuildFile; fileRef = A04B0DC714A007D0005EB429 /* bugs */; };
 		A04B0EF914A29B77005EB429 /* PositionTextureColorAlphaTest.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A05483151457C4AB00B47D05 /* PositionTextureColorAlphaTest.fsh */; };
 		A04B0EFA14A29B77005EB429 /* Position_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4CAF1403278200EC482A /* Position_uColor.fsh */; };
@@ -4633,6 +4653,8 @@
 		A044439014A6023800E62742 /* Box2dTest.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = Box2dTest.mm; path = tests/Box2dTest.mm; sourceTree = "<group>"; };
 		A044439214A6027300E62742 /* GLES-Render.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "GLES-Render.h"; path = "tests/Box2DTestBed-Cocos2dIntegration/GLES-Render.h"; sourceTree = "<group>"; };
 		A044439314A6027300E62742 /* GLES-Render.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "GLES-Render.mm"; path = "tests/Box2DTestBed-Cocos2dIntegration/GLES-Render.mm"; sourceTree = "<group>"; };
+		A04443E014A91DB600E62742 /* BaseAppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BaseAppController.h; path = tests/BaseAppController.h; sourceTree = "<group>"; };
+		A04443E114A91DB600E62742 /* BaseAppController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BaseAppController.m; path = tests/BaseAppController.m; sourceTree = "<group>"; };
 		A04B0DC714A007D0005EB429 /* bugs */ = {isa = PBXFileReference; lastKnownFileType = folder; name = bugs; path = Resources/Images/bugs; sourceTree = "<group>"; };
 		A04B0F5D14A29B77005EB429 /* SchedulerTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SchedulerTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A04B0F6114A29BEB005EB429 /* SchedulerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SchedulerTest.m; path = tests/SchedulerTest.m; sourceTree = "<group>"; };
@@ -6014,6 +6036,8 @@
 			isa = PBXGroup;
 			children = (
 				A044439514A6027B00E62742 /* Box2dTest Helper */,
+				A04443E014A91DB600E62742 /* BaseAppController.h */,
+				A04443E114A91DB600E62742 /* BaseAppController.m */,
 				E0AC06A81228027D00EFA814 /* ActionsTest.h */,
 				E0AC06A91228027D00EFA814 /* ActionsTest.m */,
 				A044438F14A6023800E62742 /* Box2dTest.h */,
@@ -11060,6 +11084,7 @@
 			files = (
 				A0443E7714A42E4500E62742 /* main.m in Sources */,
 				A0443E8A14A42EBB00E62742 /* EffectsTest.m in Sources */,
+				A04443E714A91DB600E62742 /* BaseAppController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11069,6 +11094,7 @@
 			files = (
 				A04442F314A515EE00E62742 /* main.m in Sources */,
 				A044438D14A516F000E62742 /* ChipmunkAccelTouchTest.m in Sources */,
+				A04443E514A91DB600E62742 /* BaseAppController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11079,6 +11105,7 @@
 				A044437A14A5167E00E62742 /* main.m in Sources */,
 				A044439114A6023800E62742 /* Box2dTest.mm in Sources */,
 				A044439414A6027300E62742 /* GLES-Render.mm in Sources */,
+				A04443E414A91DB600E62742 /* BaseAppController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11088,6 +11115,7 @@
 			files = (
 				A04B0F5114A29B77005EB429 /* main.m in Sources */,
 				A04B0F6314A29BEB005EB429 /* SchedulerTest.m in Sources */,
+				A04443F014A91DB600E62742 /* BaseAppController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11116,6 +11144,7 @@
 			files = (
 				A0ADF03714584BD3009A71F1 /* main.m in Sources */,
 				A0ADF04A14584C9B009A71F1 /* ShaderTest.m in Sources */,
+				A04443F114A91DB600E62742 /* BaseAppController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11297,6 +11326,7 @@
 			files = (
 				E026450C12A59DA7009D04FE /* main.m in Sources */,
 				E026451E12A59E07009D04FE /* ParticleTest.m in Sources */,
+				A04443EE14A91DB600E62742 /* BaseAppController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11306,6 +11336,7 @@
 			files = (
 				E05053F5122D5AE6005B74CB /* main.m in Sources */,
 				E0505406122D5B58005B74CB /* RenderTextureTest.m in Sources */,
+				A04443EF14A91DB600E62742 /* BaseAppController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11315,6 +11346,7 @@
 			files = (
 				E076E6241225EC4E00DE0DA2 /* MenuTest.m in Sources */,
 				E076EAF01225EE8500DE0DA2 /* main.m in Sources */,
+				A04443EB14A91DB600E62742 /* BaseAppController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11324,6 +11356,7 @@
 			files = (
 				E076E6271225EC5F00DE0DA2 /* TransitionsTest.m in Sources */,
 				E076EAF31225EE8500DE0DA2 /* main.m in Sources */,
+				A04443F514A91DB600E62742 /* BaseAppController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11333,6 +11366,7 @@
 			files = (
 				E076EC551225F82200DE0DA2 /* main.m in Sources */,
 				E076EC651225F84A00DE0DA2 /* TileMapTest.m in Sources */,
+				A04443F414A91DB600E62742 /* BaseAppController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11342,6 +11376,7 @@
 			files = (
 				E076ED9F1225FDE300DE0DA2 /* main.m in Sources */,
 				E076EDB01225FE2E00DE0DA2 /* Texture2dTest.m in Sources */,
+				A04443F314A91DB600E62742 /* BaseAppController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11375,6 +11410,7 @@
 			files = (
 				E076F20D12268A9800DE0DA2 /* main.m in Sources */,
 				E076F21F12268AF100DE0DA2 /* SpriteTest.m in Sources */,
+				A04443F214A91DB600E62742 /* BaseAppController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11384,6 +11420,7 @@
 			files = (
 				E0AC06991228021600EFA814 /* main.m in Sources */,
 				E0AC06AA1228027D00EFA814 /* ActionsTest.m in Sources */,
+				A04443E214A91DB600E62742 /* BaseAppController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11393,6 +11430,7 @@
 			files = (
 				E0AC078D122803BC00EFA814 /* main.m in Sources */,
 				E0AC07A01228041700EFA814 /* drawPrimitivesTest.m in Sources */,
+				A04443E614A91DB600E62742 /* BaseAppController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11402,6 +11440,7 @@
 			files = (
 				E0AC091E12280B7000EFA814 /* main.m in Sources */,
 				E0AC093112280BB900EFA814 /* LabelTest.m in Sources */,
+				A04443EC14A91DB600E62742 /* BaseAppController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11411,6 +11450,7 @@
 			files = (
 				E0B92DC01226A0C9003FF67E /* main.m in Sources */,
 				E0B92DD41226A123003FF67E /* ParallaxTest.m in Sources */,
+				A04443ED14A91DB600E62742 /* BaseAppController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11420,6 +11460,7 @@
 			files = (
 				E0B92EE91226A621003FF67E /* main.m in Sources */,
 				E0B92EFB1226A67B003FF67E /* EffectsAdvancedTest.m in Sources */,
+				A04443E814A91DB600E62742 /* BaseAppController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11429,6 +11470,7 @@
 			files = (
 				E0B92FFB1226C0DD003FF67E /* main.m in Sources */,
 				A04B0F6414A29CDE005EB429 /* EaseActionsTest.m in Sources */,
+				A04443E314A91DB600E62742 /* BaseAppController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11438,6 +11480,7 @@
 			files = (
 				E0D2CED612B93736008D5DBB /* main.m in Sources */,
 				E0D2CEF012B93923008D5DBB /* EventsTest.m in Sources */,
+				A04443E914A91DB600E62742 /* BaseAppController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11447,6 +11490,7 @@
 			files = (
 				E0DA433512A03A3C00210ACE /* main.m in Sources */,
 				E0DA434912A03AE200210ACE /* FullScreenTest.m in Sources */,
+				A04443EA14A91DB600E62742 /* BaseAppController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
