@@ -94,6 +94,13 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 	[super dealloc];
 }
 
+-(void) cleanup
+{
+	[super cleanup];
+	[block_ release];
+	block_ = nil;
+}
+
 -(void) selected
 {
 	isSelected_ = YES;

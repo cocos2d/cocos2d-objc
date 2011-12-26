@@ -40,7 +40,7 @@
 #pragma mark -
 #pragma mark CCLayer
 
-/** CCLayer is a subclass of CCNode that implements the TouchEventsDelegate protocol.
+/** CCLayer is a subclass of CCNode that implements the CCTouchEventsDelegate protocol.
  
  All features from CCNode are valid, plus the following new features:
  - It can receive iPhone Touches
@@ -54,11 +54,11 @@
 }
 /** If isTouchEnabled, this method is called onEnter. Override it to change the
  way CCLayer receives touch events.
- ( Default: [[TouchDispatcher sharedDispatcher] addStandardDelegate:self priority:0] )
+ ( Default: [touchDispatcher addStandardDelegate:self priority:0] )
  Example:
      -(void) registerWithTouchDispatcher
      {
-        [[TouchDispatcher sharedDispatcher] addTargetedDelegate:self priority:INT_MIN+1 swallowsTouches:YES];
+        [touchDispatcher addTargetedDelegate:self priority:INT_MIN+1 swallowsTouches:YES];
      }
  
  Valid only on iOS. Not valid on Mac.

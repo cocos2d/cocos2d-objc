@@ -165,12 +165,6 @@ enum {
 	return self;
 }
 
-- (void)dealloc
-{
-	NSLog(@"Shader dealloc called **********");
-    [super dealloc];
-}
-
 -(void) loadShaderVertex:(NSString*)vert fragment:(NSString*)frag
 {
 	GLProgram *shader = [[GLProgram alloc] initWithVertexShaderFilename:vert
@@ -243,10 +237,6 @@ enum {
 	return self;	
 }
 
-- (void)dealloc {
-    NSLog(@"ShaderMonjori dealloc **********");
-    [super dealloc];
-}
 -(NSString *) title
 {
 	return @"Shader: Frag shader";
