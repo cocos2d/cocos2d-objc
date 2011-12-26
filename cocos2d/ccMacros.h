@@ -162,10 +162,10 @@ do	{																							\
 	window_ = [[MacWindow alloc] initWithFrame:frameRect fullscreen:NO];						\
 	glView_ = [[MacGLView alloc] initWithFrame:frameRect shareContext:nil];						\
 	[self.window setContentView:self.glView];													\
-	CCDirector *__director = [CCDirector sharedDirector];										\
-	[__director setDisplayStats:NO];															\
-	[__director setView:self.glView];															\
-	[(CCDirectorMac*)__director setOriginalWinSize:__WINSIZE__];								\
+	director_ = (CCDirectorMac*) [CCDirector sharedDirector];									\
+	[director_ setDisplayStats:NO];																\
+	[director_ setView:self.glView];															\
+	[director_ setOriginalWinSize:__WINSIZE__];													\
 	[self.window makeMainWindow];																\
 	[self.window makeKeyAndOrderFront:self];													\
 	[self.window center];																		\

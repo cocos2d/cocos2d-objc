@@ -6,12 +6,12 @@
 //  Copyright (c) 2011 Sapus Media. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-
 #import "BaseAppController.h"
 
 // CLASS IMPLEMENTATIONS
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+
+#import <UIKit/UIKit.h>
 
 #import "cocos2d.h"
 @implementation BaseAppController
@@ -46,19 +46,19 @@
 // call got rejected
 -(void) applicationDidBecomeActive:(UIApplication *)application
 {
-//	if( [rootViewController_ visibleViewController] == director_ )
+	if( [rootViewController_ visibleViewController] == director_ )
 		[director_ resume];
 }
 
 -(void) applicationDidEnterBackground:(UIApplication*)application
 {
-//	if( [rootViewController_ visibleViewController] == director_ )
+	if( [rootViewController_ visibleViewController] == director_ )
 		[director_ stopAnimation];
 }
 
 -(void) applicationWillEnterForeground:(UIApplication*)application
 {
-//	if( [rootViewController_ visibleViewController] == director_ )
+	if( [rootViewController_ visibleViewController] == director_ )
 		[director_ startAnimation];
 }
 
@@ -89,6 +89,43 @@
 }
 @end
 
-#endif // __IPHONE_OS_VERSION_MAX_ALLOWED
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+
+@implementation BaseAppController
+
+@synthesize window=window_, glView=glView_, director = director_;
+
+- (void)applicationDidFinishLaunching:(NSNotification *)aNotification
+{
+	director_ = (CCDirectorMac*) [CCDirector sharedDirector];
+	
+	[director_ setDisplayStats:YES];
+	
+	[director_ setView:glView_];
+	
+	//	[director setProjection:kCCDirectorProjection2D];
+	
+	// Enable "moving" mouse event. Default no.
+	[window_ setAcceptsMouseMovedEvents:NO];
+	
+	// EXPERIMENTAL stuff.
+	// 'Effects' don't work correctly when autoscale is turned on.
+	[director_ setResizeMode:kCCDirectorResize_AutoScale];	
+}
+
+- (BOOL) applicationShouldTerminateAfterLastWindowClosed: (NSApplication *) theApplication
+{
+	return YES;
+}
+
+- (IBAction)toggleFullScreen: (id)sender
+{
+	CCDirectorMac *director = (CCDirectorMac*) [CCDirector sharedDirector];
+	[director setFullScreen: ! [director isFullScreen] ];
+}
+
+@end
+
+#endif // __MAC_OS_X_VERSION_MAX_ALLOWED
 
 

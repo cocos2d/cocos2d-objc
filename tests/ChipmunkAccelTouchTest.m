@@ -341,44 +341,18 @@ void removeShape( cpBody *body, cpShape *shape, void *data )
 
 #pragma mark - AppController - Mac
 
-@implementation cocos2dmacAppDelegate
+@implementation AppController
 
-@synthesize window=window_, glView=glView_;
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-	CCDirectorMac *director = (CCDirectorMac*) [CCDirector sharedDirector];
-	
-	[director setDisplayStats:YES];
-	
-	[director setView:glView_];
-	
-	//	[director setProjection:kCCDirectorProjection2D];
-	
-	// Enable "moving" mouse event. Default no.
-	[window_ setAcceptsMouseMovedEvents:NO];
-	
-	// EXPERIMENTAL stuff.
-	// 'Effects' don't work correctly when autoscale is turned on.
-	[director setResizeMode:kCCDirectorResize_AutoScale];	
-	
+	[super applicationDidFinishLaunching:aNotification];
+
 	// add layer
 	CCScene *scene = [CCScene node];
 	[scene addChild: [MainLayer node] ];
 	
-	[director runWithScene:scene];
+	[director_ runWithScene:scene];
 }
-
-- (BOOL) applicationShouldTerminateAfterLastWindowClosed: (NSApplication *) theApplication
-{
-	return YES;
-}
-
-- (IBAction)toggleFullScreen: (id)sender
-{
-	CCDirectorMac *director = (CCDirectorMac*) [CCDirector sharedDirector];
-	[director setFullScreen: ! [director isFullScreen] ];
-}
-
 @end
 #endif
