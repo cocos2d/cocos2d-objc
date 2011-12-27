@@ -62,9 +62,11 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 
 -(id) initWithTarget:(id)target selector:(SEL)selector
 {
+	// avoid retain cycle
+	__block id t = target;
 	return [self initWithBlock:^(id sender) {
 		
-		[target performSelector:selector withObject:sender];
+		[t performSelector:selector withObject:sender];
 	}];
 	
 }
@@ -92,13 +94,6 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 	[block_ release];
 	
 	[super dealloc];
-}
-
--(void) cleanup
-{
-	[super cleanup];
-	[block_ release];
-	block_ = nil;
 }
 
 -(void) selected
@@ -161,8 +156,11 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 
 -(id) initWithLabel:(CCNode<CCLabelProtocol,CCRGBAProtocol>*)label target:(id)target selector:(SEL)selector
 {
+	// avoid retain cycle
+	__block id t = target;
+
 	self = [self initWithLabel:label block: ^(id sender) {
-		[target performSelector:selector withObject:sender];
+		[t performSelector:selector withObject:sender];
 	}
 			];
 	return self;
@@ -299,8 +297,11 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 
 -(id) initWithString: (NSString*) value charMapFile:(NSString*) charMapFile itemWidth:(int)itemWidth itemHeight:(int)itemHeight startCharMap:(char)startCharMap target:(id)target selector:(SEL)selector
 {
+	// avoid retain cycle
+	__block id t = target;
+
 	return [self initWithString:value charMapFile:charMapFile itemWidth:itemWidth itemHeight:itemHeight startCharMap:startCharMap block:^(id sender) {
-		[target performSelector:selector withObject:sender];
+		[t performSelector:selector withObject:sender];
 	} ];
 }
 
@@ -373,8 +374,11 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 
 -(id) initWithString: (NSString*) value target:(id)target selector:(SEL)selector
 {
+	// avoid retain cycle
+	__block id t = target;
+
 	return [self initWithString:value block:^(id sender) {
-		[target performSelector:selector withObject:sender];
+		[t performSelector:selector withObject:sender];
 	}];
 }
 
@@ -462,8 +466,11 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 
 -(id) initWithNormalSprite:(CCNode<CCRGBAProtocol>*)normalSprite selectedSprite:(CCNode<CCRGBAProtocol>*)selectedSprite disabledSprite:(CCNode<CCRGBAProtocol>*)disabledSprite target:(id)target selector:(SEL)selector
 {
+	// avoid retain cycle
+	__block id t = target;
+
 	return [self initWithNormalSprite:normalSprite selectedSprite:selectedSprite disabledSprite:disabledSprite block:^(id sender) {
-		[target performSelector:selector withObject:sender];
+		[t performSelector:selector withObject:sender];
 	} ];
 }
 
@@ -633,8 +640,11 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 
 -(id) initWithNormalImage: (NSString*) normalI selectedImage:(NSString*)selectedI disabledImage: (NSString*) disabledI target:(id)target selector:(SEL)selector
 {
+	// avoid retain cycle
+	__block id t = target;
+
 	return [self initWithNormalImage:normalI selectedImage:selectedI disabledImage:disabledI block:^(id sender) {
-		[target performSelector:selector withObject:sender];
+		[t performSelector:selector withObject:sender];
 	}];
 }
 
@@ -696,8 +706,11 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 		i = va_arg(args, CCMenuItem*);
 	}
 
+	// avoid retain cycle
+	__block id t = target;
+
 	return [self initWithItems:array block:^(id sender) {
-		[target performSelector:selector withObject:sender];
+		[t performSelector:selector withObject:sender];
 	}
 			];
 }
