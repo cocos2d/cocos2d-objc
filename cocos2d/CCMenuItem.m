@@ -71,9 +71,8 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 	
 }
 
-//
+
 // Designated initializer
-//
 -(id) initWithBlock:(void (^)(id))block
 {
 	if((self=[super init]) ) {
@@ -94,6 +93,14 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 	[block_ release];
 	
 	[super dealloc];
+}
+
+-(void) cleanup
+{
+	[block_ release];
+	block_ = nil;
+
+	[super cleanup];
 }
 
 -(void) selected

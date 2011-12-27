@@ -10,10 +10,6 @@
 {
 	CCMenuItem	*disabledItem;
 }
-
--(void) menuCallback:(id) sender;
--(void) menuCallback2:(id) sender;
--(void) onQuit:(id) sender;
 @end
 
 @interface Layer2 : CCLayer
