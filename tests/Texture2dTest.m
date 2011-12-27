@@ -1792,11 +1792,15 @@ Class restartAction()
 	}
 	return self;
 }
+
 -(void) dealloc
 {
 	[tex1_ release];
 	[tex2_ release];
+	
+	[super dealloc];
 }
+
 -(void) draw
 {
 	[super draw];
@@ -1836,11 +1840,15 @@ Class restartAction()
 	}
 	return self;
 }
+
 -(void) dealloc
 {
 	[tex1_ release];
 	[tex2_ release];
+	
+	[super dealloc];
 }
+
 -(void) draw
 {
 	[super draw];
