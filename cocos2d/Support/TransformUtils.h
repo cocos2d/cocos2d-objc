@@ -23,12 +23,12 @@
  *
  */
 
-#import <Availability.h>
+#import "../ccMacros.h"
 
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef __CC_PLATFORM_IOS
 #import <UIKit/UIKit.h>
 #import <OpenGLES/ES2/gl.h>
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+#elif defined(__CC_PLATFORM_MAC)
 #import <OpenGL/gl.h>
 #import <Foundation/Foundation.h>
 #endif

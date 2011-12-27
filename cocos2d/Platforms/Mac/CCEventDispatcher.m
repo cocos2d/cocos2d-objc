@@ -25,9 +25,8 @@
 
 // Only compile this code on Mac. These files should not be included on your iOS project.
 // But in case they are included, it won't be compiled.
-#import <Availability.h>
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+#import "../../ccMacros.h"
+#ifdef __CC_PLATFORM_MAC
 
 #import "CCEventDispatcher.h"
 #import "../../ccConfig.h"
@@ -621,4 +620,4 @@ static int		eventQueueCount;
 
 @end
 
-#endif // __MAC_OS_X_VERSION_MAX_ALLOWED
+#endif // __CC_PLATFORM_MAC

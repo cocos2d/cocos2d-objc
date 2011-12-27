@@ -47,7 +47,7 @@
 +(NSString*) fullPathFromRelativePath:(NSString*) relPath;
 
 
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef __CC_PLATFORM_IOS
 
 /** Returns the fullpath of an filename including the resolution of the image.
 
@@ -104,7 +104,7 @@
  */
 +(BOOL) retinaDisplayFileExistsAtPath:(NSString*)filename;
 
-#endif // __IPHONE_OS_VERSION_MAX_ALLOWED
+#endif // __CC_PLATFORM_IOS
 
 @end
 

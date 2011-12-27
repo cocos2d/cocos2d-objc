@@ -26,16 +26,15 @@
 #ifndef GLES_RENDER_H
 #define GLES_RENDER_H
 
-#import <Availability.h>
+#import "cocos2d.h"
 
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef __CC_PLATFORM_IOS
 #import <OpenGLES/EAGL.h>
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+#elif defined(__CC_PLATFORM_MAC)
 #import <OpenGL/OpenGL.h>
 #endif
 
 #include "Box2D.h"
-#import "cocos2d.h"
 
 struct b2AABB;
 

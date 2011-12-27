@@ -38,10 +38,10 @@
 #import "Support/TransformUtils.h"
 #import "Support/CGPointExtension.h"
 
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef __CC_PLATFORM_IOS
 #import "Platforms/iOS/CCTouchDispatcher.h"
 #import "Platforms/iOS/CCDirectorIOS.h"
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+#elif defined(__CC_PLATFORM_MAC)
 #import "Platforms/Mac/CCEventDispatcher.h"
 #import "Platforms/Mac/CCDirectorMac.h"
 #endif
@@ -66,9 +66,9 @@
 
 		isTouchEnabled_ = NO;
 
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef __CC_PLATFORM_IOS
 		isAccelerometerEnabled_ = NO;
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+#elif defined(__CC_PLATFORM_MAC)
 		isMouseEnabled_ = NO;
 		isKeyboardEnabled_ = NO;
 #endif
@@ -79,7 +79,7 @@
 
 #pragma mark Layer - Touch and Accelerometer related
 
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef __CC_PLATFORM_IOS
 -(void) registerWithTouchDispatcher
 {
 	CCDirectorIOS *director = (CCDirectorIOS*)[CCDirector sharedDirector];
@@ -124,7 +124,7 @@
 	}
 }
 
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+#elif defined(__CC_PLATFORM_MAC)
 
 #pragma mark CCLayer - Mouse, Keyboard & Touch events
 
@@ -209,13 +209,13 @@
 #pragma mark Layer - Callbacks
 -(void) onEnter
 {
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef __CC_PLATFORM_IOS
 	// register 'parent' nodes first
 	// since events are propagated in reverse order
 	if (isTouchEnabled_)
 		[self registerWithTouchDispatcher];
 
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+#elif defined(__CC_PLATFORM_MAC)
 	CCDirectorMac *director = (CCDirectorMac*) [CCDirector sharedDirector];
 	CCEventDispatcher *eventDispatcher = [director eventDispatcher];
 
@@ -238,7 +238,7 @@
 // Can't register mouse, touches here because of #issue #1018, and #1021
 -(void) onEnterTransitionDidFinish
 {
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef __CC_PLATFORM_IOS
 	if( isAccelerometerEnabled_ )
 		[[UIAccelerometer sharedAccelerometer] setDelegate:self];
 #endif
@@ -249,7 +249,7 @@
 
 -(void) onExit
 {
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef __CC_PLATFORM_IOS
 	if( isTouchEnabled_ ) {
 		CCDirectorIOS *director = (CCDirectorIOS*) [CCDirector sharedDirector];
 		[[director touchDispatcher] removeDelegate:self];
@@ -258,7 +258,7 @@
 	if( isAccelerometerEnabled_ )
 		[[UIAccelerometer sharedAccelerometer] setDelegate:nil];
 
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+#elif defined(__CC_PLATFORM_MAC)
 	CCDirectorMac *director = (CCDirectorMac*) [CCDirector sharedDirector];
 	CCEventDispatcher *eventDispatcher = [director eventDispatcher];
 	if( isMouseEnabled_ )
@@ -275,7 +275,7 @@
 	[super onExit];
 }
 
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef __CC_PLATFORM_IOS
 -(BOOL) ccTouchBegan:(UITouch *)touch withEvent:(UIEvent *)event
 {
 	NSAssert(NO, @"Layer#ccTouchBegan override me");

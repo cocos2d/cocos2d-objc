@@ -27,12 +27,12 @@
 #ifndef __CC_DRAWING_PRIMITIVES_H
 #define __CC_DRAWING_PRIMITIVES_H
 
-#import <Availability.h>
 #import <Foundation/Foundation.h>
 
 #import "ccTypes.h"
+#import "ccMacros.h"
 
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef __CC_PLATFORM_IOS
 #import <CoreGraphics/CGGeometry.h>	// for CGPoint
 #endif
 

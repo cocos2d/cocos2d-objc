@@ -1106,7 +1106,7 @@ Class restartAction()
 
 // CLASS IMPLEMENTATIONS
 
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef __CC_PLATFORM_IOS
 
 #pragma mark AppController - iOS
 
@@ -1142,7 +1142,7 @@ Class restartAction()
 }
 @end
 
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+#elif defined(__CC_PLATFORM_MAC)
 
 #pragma mark AppController - Mac
 

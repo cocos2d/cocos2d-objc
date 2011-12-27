@@ -60,11 +60,10 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 */
 
-#import <Availability.h>
-
 #import <Foundation/Foundation.h> //	for NSObject
 
 #import "ccTypes.h"
+#import "ccMacros.h"
 
 #import "Platforms/CCGL.h" // OpenGL stuff
 #import "Platforms/CCNS.h" // Next-Step stuff
@@ -122,7 +121,7 @@ typedef enum {
 								maxT_;
 	BOOL						hasPremultipliedAlpha_;
 	
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef __CC_PLATFORM_IOS
 	ccResolutionType			resolutionType_;
 #endif
 	
@@ -160,7 +159,7 @@ typedef enum {
 /** shader program used by drawAtPoint and drawInRect */
 @property(nonatomic,readwrite,retain) GLProgram *shaderProgram;
 
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef __CC_PLATFORM_IOS
 /** Returns the resolution type of the texture.
  Is it a RetinaDisplay texture, an iPad texture or an standard texture ?
  Only valid on iOS. Not valid on OS X.
@@ -195,9 +194,9 @@ Note that RGBA type textures will have their alpha premultiplied - use the blend
 */
 @interface CCTexture2D (Image)
 /** Initializes a texture from a CGImage object */
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef __CC_PLATFORM_IOS
 - (id) initWithImage:(CGImageRef)cgImage resolutionType:(ccResolutionType)resolution;
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+#elif defined(__CC_PLATFORM_MAC)
 - (id) initWithImage:(CGImageRef)cgImage;
 #endif
 @end

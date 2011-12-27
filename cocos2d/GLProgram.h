@@ -24,13 +24,14 @@
 // Adapted for cocos2d http://www.cocos2d-iphone.org
 
 #import <Foundation/Foundation.h>
+#import "ccMacros.h"
 
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef __CC_PLATFORM_IOS
 #import <OpenGLES/ES2/gl.h>
 #import <OpenGLES/ES2/glext.h>
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+#elif defined(__CC_PLATFORM_MAC)
 #import <OpenGL/gl.h>
-#endif // __MAC_OS_X_VERSION_MAX_ALLOWED
+#endif // __CC_PLATFORM_MAC
 
 enum {
 	kCCVertexAttrib_Position,

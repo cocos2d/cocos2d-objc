@@ -88,9 +88,9 @@ Class restartAction()
 {
 	if( (self=[super init] )) {
 
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef __CC_PLATFORM_IOS
 		self.isTouchEnabled = YES;
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+#elif defined(__CC_PLATFORM_MAC)
 		self.isMouseEnabled = YES;
 #endif
 
@@ -128,7 +128,7 @@ Class restartAction()
 	[super dealloc];
 }
 
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef __CC_PLATFORM_IOS
 -(void) registerWithTouchDispatcher
 {
 	CCDirectorIOS *director = (CCDirectorIOS*) [CCDirector sharedDirector];
@@ -162,7 +162,7 @@ Class restartAction()
 	CGPoint currentPos = [node position];
 	[node setPosition: ccpAdd(currentPos, diff)];
 }
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+#elif defined(__CC_PLATFORM_MAC)
 
 -(BOOL) ccMouseDragged:(NSEvent *)event
 {
@@ -1354,7 +1354,7 @@ Class restartAction()
 #pragma mark -
 #pragma mark AppController - iPhone
 
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef __CC_PLATFORM_IOS
 
 @implementation AppController
 
@@ -1390,7 +1390,7 @@ Class restartAction()
 #pragma mark -
 #pragma mark AppController - Mac
 
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+#elif defined(__CC_PLATFORM_MAC)
 
 @implementation AppController
 

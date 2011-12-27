@@ -23,7 +23,7 @@ enum {
 		[CCMenuItemFont setFontSize:30];
 		[CCMenuItemFont setFontName: @"Courier New"];
         
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef __CC_PLATFORM_IOS
         self.isTouchEnabled = YES;
 #endif
 		// Font Item
@@ -48,12 +48,12 @@ enum {
 		CCLabelAtlas *labelAtlas = [CCLabelAtlas labelWithString:@"0123456789" charMapFile:@"fps_images.png" itemWidth:8 itemHeight:12 startCharMap:'.'];
 		CCMenuItemLabel *item3 = [CCMenuItemLabel itemWithLabel:labelAtlas block:^(id sender) {
 				// hijack all touch events for 5 seconds				
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef __CC_PLATFORM_IOS
 				CCDirectorIOS *director = (CCDirectorIOS*)[CCDirector sharedDirector];
 				[[director touchDispatcher] setPriority:kCCMenuTouchPriority-1 forDelegate:self];
 				[self schedule:@selector(allowTouches) interval:5.0f repeat:0 delay:0];
 				
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+#elif defined(__CC_PLATFORM_MAC)
 				CCDirectorMac *director = (CCDirectorMac*)[CCDirector sharedDirector];
 				[[director eventDispatcher] addMouseDelegate:self priority:kCCMenuTouchPriority-1];
 				[self schedule:@selector(allowTouches) interval:5.0f];
@@ -126,7 +126,7 @@ enum {
 	return self;
 }
 
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef __CC_PLATFORM_IOS
 -(void) registerWithTouchDispatcher
 {
 	CCDirectorIOS *director = (CCDirectorIOS*)[CCDirector sharedDirector];
@@ -150,7 +150,7 @@ enum {
 {
 }
 
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+#elif defined(__CC_PLATFORM_MAC)
 -(BOOL) ccMouseDown:(NSEvent *)event
 {
 	return YES;
@@ -178,13 +178,13 @@ enum {
 
 -(void) allowTouches
 {
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef __CC_PLATFORM_IOS
 	
 	CCDirectorIOS *director = (CCDirectorIOS*)[CCDirector sharedDirector];
     [[director touchDispatcher] setPriority:kCCMenuTouchPriority+1 forDelegate:self];
     [self unscheduleAllSelectors];
 	
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+#elif defined(__CC_PLATFORM_MAC)
 	CCDirectorMac *director = (CCDirectorMac*)[CCDirector sharedDirector];
     [[director eventDispatcher] removeMouseDelegate:self];
 #endif
@@ -500,7 +500,7 @@ enum {
 
 #pragma mark - AppController - iOS
 
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef __CC_PLATFORM_IOS
 
 @implementation AppController
 
@@ -542,7 +542,7 @@ enum {
 
 #pragma mark - AppController - Mac
 
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+#elif defined(__CC_PLATFORM_MAC)
 
 @implementation AppController
 

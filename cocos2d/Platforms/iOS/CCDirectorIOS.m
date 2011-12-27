@@ -26,8 +26,8 @@
 
 // Only compile this code on iOS. These files should NOT be included on your Mac project.
 // But in case they are included, it won't be compiled.
-#import <Availability.h>
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#import "../../ccMacros.h"
+#ifdef __CC_PLATFORM_IOS
 
 #import <unistd.h>
 
@@ -487,4 +487,4 @@ CGFloat	__ccContentScaleFactor = 1;
 }
 @end
 
-#endif // __IPHONE_OS_VERSION_MAX_ALLOWED
+#endif // __CC_PLATFORM_IOS

@@ -24,8 +24,6 @@
  *
  */
 
-#import <Availability.h>
-
 #import "ccConfig.h"
 #import "CCSpriteBatchNode.h"
 #import "CCSprite.h"

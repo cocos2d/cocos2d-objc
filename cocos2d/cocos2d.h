@@ -42,7 +42,6 @@
 // 00   02 00 00
 #define COCOS2D_VERSION 0x00020000
 
-#import <Availability.h>
 
 //
 // all cocos2d include files
@@ -128,16 +127,18 @@
 #import "Platforms/CCGL.h"
 #import "Platforms/CCNS.h"
 
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef __CC_PLATFORM_IOS
 #import "Platforms/iOS/CCTouchDispatcher.h"
 #import "Platforms/iOS/CCTouchDelegateProtocol.h"
 #import "Platforms/iOS/CCTouchHandler.h"
 #import "Platforms/iOS/EAGLView.h"
 #import "Platforms/iOS/CCDirectorIOS.h"
 
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+#elif defined(__CC_PLATFORM_MAC)
 #import "Platforms/Mac/MacGLView.h"
 #import "Platforms/Mac/CCDirectorMac.h"
+#import "Platforms/Mac/MacWindow.h"
+#import "Platforms/Mac/CCEventDispatcher.h"
 #endif
 
 //
@@ -163,7 +164,7 @@
 // free functions
 NSString * cocos2dVersion(void);
 
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef __CC_PLATFORM_IOS
 #ifndef __IPHONE_4_0
 #error "If you are targeting iPad, you should set BASE SDK = 4.0 (or 4.1, or 4.2), and set the 'iOS deploy target' = 3.2"
 #endif

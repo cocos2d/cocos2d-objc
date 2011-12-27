@@ -29,10 +29,10 @@
  cocos2d (cc) types
 */
 
-#import <Availability.h>
 #import <Foundation/Foundation.h>
+#import "ccMacros.h"
 
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef __CC_PLATFORM_IOS
 #import <CoreGraphics/CGGeometry.h>	// CGPoint
 #endif
 

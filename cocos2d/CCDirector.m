@@ -28,7 +28,6 @@
  */
 
 #import <unistd.h>
-#import <Availability.h>
 
 // cocos2d imports
 #import "CCDirector.h"
@@ -54,10 +53,10 @@
 #import "Support/OpenGL_Internal.h"
 #import "Support/CGPointExtension.h"
 
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef __CC_PLATFORM_IOS
 #import "Platforms/iOS/CCDirectorIOS.h"
 #define CC_DIRECTOR_DEFAULT CCDirectorDisplayLink
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+#elif defined(__CC_PLATFORM_MAC)
 #import "Platforms/Mac/CCDirectorMac.h"
 #define CC_DIRECTOR_DEFAULT CCDirectorDisplayLink
 #endif
@@ -291,7 +290,7 @@ static CCDirector *_sharedDirector = nil;
 {
 	NSAssert( view, @"OpenGLView must be non-nil");
 
-#ifdef CC_PLATFORM_IOS
+#ifdef __CC_PLATFORM_IOS
 	[super setView:view];
 #endif
 	
@@ -304,7 +303,7 @@ static CCDirector *_sharedDirector = nil;
 	CHECK_GL_ERROR_DEBUG();
 }
 
-#ifdef CC_PLATFORM_MAC
+#ifdef __CC_PLATFORM_MAC
 -(CC_GLVIEW*) view
 {
 	// ignore on Mac

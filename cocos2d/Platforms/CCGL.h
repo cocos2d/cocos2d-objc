@@ -27,15 +27,15 @@
 // Common layer for OpenGL stuff
 //
 
-#import <Availability.h>
+#import "../ccMacros.h"
 
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef __CC_PLATFORM_IOS
 #import <OpenGLES/ES2/gl.h>
 #import <OpenGLES/ES2/glext.h>
 #import <OpenGLES/EAGL.h>
 #import "iOS/EAGLView.h"
 
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+#elif defined(__CC_PLATFORM_MAC)
 #import <OpenGL/gl.h>
 #import <OpenGL/glu.h>
 #import <Cocoa/Cocoa.h>	// needed for NSOpenGLView
@@ -44,7 +44,7 @@
 
 
 // iOS
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef __CC_PLATFORM_IOS
 #define CC_GLVIEW					EAGLView
 #define	glClearDepth				glClearDepthf
 #define glGenerateMipmap			glGenerateMipmapOES
@@ -63,7 +63,7 @@
 #define CC_GL_FRAMEBUFFER_COMPLETE	GL_FRAMEBUFFER_COMPLETE_OES
 
 // Mac
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+#elif defined(__CC_PLATFORM_MAC)
 #define CC_GLVIEW					MacGLView
 #define glDeleteVertexArrays		glDeleteVertexArraysAPPLE
 #define glGenVertexArrays			glGenVertexArraysAPPLE

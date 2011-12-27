@@ -14,8 +14,6 @@
  *		from the mapreader.cpp file 
  */
 
-#import <Availability.h>
-
 #import <zlib.h>
 #import <stdlib.h>
 #import <assert.h>

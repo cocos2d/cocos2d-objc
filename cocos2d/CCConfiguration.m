@@ -23,9 +23,9 @@
  * THE SOFTWARE.
  */
 
-#import <Availability.h>
+#import "ccMacros.h"
 
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef __CC_PLATFORM_IOS
 #import <UIKit/UIKit.h>		// Needed for UIDevice
 #endif
 
@@ -67,8 +67,8 @@ static char * glExtensions;
 }
 
 
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+#ifdef __CC_PLATFORM_IOS
+#elif defined(__CC_PLATFORM_MAC)
 - (NSString*)getMacVersion
 {
     SInt32 versionMajor, versionMinor, versionBugFix;
@@ -78,7 +78,7 @@ static char * glExtensions;
 	
 	return [NSString stringWithFormat:@"%d.%d.%d", versionMajor, versionMinor, versionBugFix];
 }
-#endif // __MAC_OS_X_VERSION_MAX_ALLOWED
+#endif // __CC_PLATFORM_MAC
 
 -(id) init
 {
@@ -86,9 +86,9 @@ static char * glExtensions;
 		
 		// Obtain iOS version
 		OSVersion_ = 0;
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef __CC_PLATFORM_IOS
 		NSString *OSVer = [[UIDevice currentDevice] systemVersion];
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+#elif defined(__CC_PLATFORM_MAC)
 		NSString *OSVer = [self getMacVersion];
 #endif
 		NSArray *arr = [OSVer componentsSeparatedByString:@"."];		
@@ -109,29 +109,29 @@ static char * glExtensions;
 		glGetIntegerv(GL_MAX_TEXTURE_SIZE, &maxTextureSize_);
 		glGetIntegerv(GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS, &maxTextureUnits_ );
 
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef __CC_PLATFORM_IOS
 		if( OSVersion_ >= kCCiOSVersion_4_0 )
 			glGetIntegerv(GL_MAX_SAMPLES_APPLE, &maxSamplesAllowed_);
 		else
 			maxSamplesAllowed_ = 0;
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+#elif defined(__CC_PLATFORM_MAC)
 		glGetIntegerv(GL_MAX_SAMPLES, &maxSamplesAllowed_);
 #endif
 		
 		supportsPVRTC_ = [self checkForGLExtension:@"GL_IMG_texture_compression_pvrtc"];
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef __CC_PLATFORM_IOS
 		supportsNPOT_ = YES;
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+#elif defined(__CC_PLATFORM_MAC)
 		supportsNPOT_ = [self checkForGLExtension:@"GL_ARB_texture_non_power_of_two"];
 #endif
 		// It seems that somewhere between firmware iOS 3.0 and 4.2 Apple renamed
 		// GL_IMG_... to GL_APPLE.... So we should check both names
 		
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef __CC_PLATFORM_IOS
 		BOOL bgra8a = [self checkForGLExtension:@"GL_IMG_texture_format_BGRA8888"];
 		BOOL bgra8b = [self checkForGLExtension:@"GL_APPLE_texture_format_BGRA8888"];
 		supportsBGRA8888_ = bgra8a | bgra8b;
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+#elif defined(__CC_PLATFORM_MAC)
 		supportsBGRA8888_ = [self checkForGLExtension:@"GL_EXT_bgra"];
 #endif
 		

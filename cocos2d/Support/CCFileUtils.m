@@ -25,7 +25,6 @@
  */
 
 
-#import <Availability.h>
 #import "CCFileUtils.h"
 #import "../CCConfiguration.h"
 #import "../ccMacros.h"
@@ -34,12 +33,12 @@
 
 static NSFileManager *__localFileManager=nil;
 
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef __CC_PLATFORM_IOS
 
 static NSString *__suffixRetinaDisplay =@"-hd";
 static NSString *__suffixiPad =@"-ipad";
 
-#endif // __IPHONE_OS_VERSION_MAX_ALLOWED
+#endif // __CC_PLATFORM_IOS
 
 
 NSString *ccRemoveSuffixFromPath( NSString *suffix, NSString *path);
@@ -75,12 +74,12 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 }
 
 
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef __CC_PLATFORM_IOS
 @interface CCFileUtils()
 +(NSString *) removeSuffix:(NSString*)suffix fromPath:(NSString*)path;
 +(BOOL) fileExistsAtPath:(NSString*)string withSuffix:(NSString*)suffix;
 @end
-#endif // __IPHONE_OS_VERSION_MAX_ALLOWED
+#endif // __CC_PLATFORM_IOS
 
 @implementation CCFileUtils
 
@@ -152,7 +151,7 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 	if (fullpath == nil)
 		fullpath = relPath;
 	
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef __CC_PLATFORM_IOS
 	
 	NSString *ret = nil;
 	
@@ -179,13 +178,13 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 	
 	return ret;
 	
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+#elif defined(__CC_PLATFORM_MAC)
 	
 	*resolutionType = kCCResolutionStandard;
 	
 	return fullpath;	
 	
-#endif // __MAC_OS_X_VERSION_MAX_ALLOWED
+#endif // __CC_PLATFORM_MAC
 
 }
 
@@ -198,7 +197,7 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 #pragma mark CCFileUtils - Suffix (iOS only)
 
 
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef __CC_PLATFORM_IOS
 
 +(NSString *) removeSuffix:(NSString*)suffix fromPath:(NSString*)path
 {
@@ -283,7 +282,7 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 	return [self fileExistsAtPath:path withSuffix:__suffixRetinaDisplay];
 }
 
-#endif // __IPHONE_OS_VERSION_MAX_ALLOWED
+#endif // __CC_PLATFORM_IOS
 
 
 @end

@@ -518,14 +518,14 @@ enum {
 		
 		self.sliderCtl = [self createSliderCtl];
 		
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef __CC_PLATFORM_IOS
 		
 		AppController *app = (AppController*) [[UIApplication sharedApplication] delegate];
 		UIViewController *ctl = [app rootViewController];
 		
 		[ctl.view addSubview: sliderCtl_];
 		
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+#elif defined(__CC_PLATFORM_MAC)
 		MacGLView *view = [[CCDirector sharedDirector] view];
 		
 		if( ! overlayWindow ) {
@@ -570,7 +570,7 @@ enum {
 	return @"Gaussian blur";
 }
 
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef __CC_PLATFORM_IOS
 -(UISlider*) createSliderCtl
 {
 	CGRect frame = CGRectMake(40.0f, 110.0f, 240.0f, 7.0f);
@@ -587,7 +587,7 @@ enum {
 
 	return [slider autorelease];
 }
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+#elif defined(__CC_PLATFORM_MAC)
 -(NSSlider*) createSliderCtl
 {
 	NSSlider *slider = [[NSSlider alloc] initWithFrame: NSMakeRect(200, 350, 240, 20)];
@@ -604,9 +604,9 @@ enum {
 
 -(void) sliderAction:(id) sender
 {
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef __CC_PLATFORM_IOS
 	[blurSprite setBlurSize: sliderCtl_.value];
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+#elif defined(__CC_PLATFORM_MAC)
 	[blurSprite setBlurSize: [sliderCtl_ floatValue]];
 #endif
 }
@@ -614,7 +614,7 @@ enum {
 @end
 
 // CLASS IMPLEMENTATIONS
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef __CC_PLATFORM_IOS
 
 #pragma mark -
 #pragma mark AppController
@@ -641,7 +641,7 @@ enum {
 }
 @end
 
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+#elif defined(__CC_PLATFORM_MAC)
 @implementation AppController
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification

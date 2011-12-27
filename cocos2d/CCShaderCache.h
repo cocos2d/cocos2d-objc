@@ -24,9 +24,9 @@
  */
 
 #import <Foundation/Foundation.h>
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef __CC_PLATFORM_IOS
 #import <OpenGLES/ES2/gl.h>
-#endif // __IPHONE_OS_VERSION_MAX_ALLOWED
+#endif // __CC_PLATFORM_IOS
 
 @class GLProgram;
 

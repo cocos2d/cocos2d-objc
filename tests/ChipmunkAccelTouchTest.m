@@ -87,10 +87,10 @@ void removeShape( cpBody *body, cpShape *shape, void *data )
 
 		// enable events
 		
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef __CC_PLATFORM_IOS
 		self.isTouchEnabled = YES;
 		self.isAccelerometerEnabled = YES;
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+#elif defined(__CC_PLATFORM_MAC)
 		self.isMouseEnabled = YES;
 #endif
 
@@ -240,7 +240,7 @@ void removeShape( cpBody *body, cpShape *shape, void *data )
 }
 
 #pragma mark iOS Events
-#ifdef	__IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef	__CC_PLATFORM_IOS
 
 -(void) onEnter
 {
@@ -277,7 +277,7 @@ void removeShape( cpBody *body, cpShape *shape, void *data )
 	space_->gravity = ccpMult(v, 200);
 }
 
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+#elif defined(__CC_PLATFORM_MAC)
 
 #pragma mark Mac Events
 
@@ -294,7 +294,7 @@ void removeShape( cpBody *body, cpShape *shape, void *data )
 
 @end
 
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef __CC_PLATFORM_IOS
 
 #pragma mark - AppController - iOS
 
@@ -337,7 +337,7 @@ void removeShape( cpBody *body, cpShape *shape, void *data )
 }
 @end
 
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+#elif defined(__CC_PLATFORM_MAC)
 
 #pragma mark - AppController - Mac
 

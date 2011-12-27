@@ -822,9 +822,9 @@ static float menuItemPaddingCenter = 50;
 	// Apple recommends to re-assign "self" with the "super" return value
 	if( (self=[super init])) {
 		
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef __CC_PLATFORM_IOS
         self.isTouchEnabled = YES;
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+#elif defined(__CC_PLATFORM_MAC)
 		self.isMouseEnabled = YES;
 #endif
         
@@ -951,7 +951,7 @@ static float menuItemPaddingCenter = 50;
 
 #pragma mark Touch Methods
 
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef __CC_PLATFORM_IOS
 - (void)ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     UITouch *touch = [touches anyObject];
     CGPoint location = [touch locationInView:[touch view]];
@@ -984,7 +984,7 @@ static float menuItemPaddingCenter = 50;
     [self.label setWidth:labelWidth];
 }
 
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+#elif defined(__CC_PLATFORM_MAC)
 
 - (BOOL)ccMouseDown:(NSEvent*)event
 {
@@ -1029,7 +1029,7 @@ static float menuItemPaddingCenter = 50;
 	return NO;
 }
 
-#endif // __MAC_OS_X_VERSION_MAX_ALLOWED
+#endif // __CC_PLATFORM_MAC
 
 - (void)snapArrowsToEdge {
     self.arrows.position = ccp(self.label.position.x + self.label.contentSize.width/2, self.label.position.y);
@@ -1268,7 +1268,7 @@ static float menuItemPaddingCenter = 50;
 {
 	if( (self=[super init]) ) {
 		
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef __CC_PLATFORM_IOS
 		CGSize s = [[CCDirector sharedDirector] winSize];
 		
 		// CCLabelBMFont
@@ -1278,7 +1278,7 @@ static float menuItemPaddingCenter = 50;
 		center.position = ccp(s.width/2,150);
 		
 		[self addChild:center];
-#endif // __IPHONE_OS_VERSION_MAX_ALLOWED
+#endif // __CC_PLATFORM_IOS
 	}
 	
 	return self;
@@ -1291,9 +1291,9 @@ static float menuItemPaddingCenter = 50;
 
 -(NSString *) subtitle
 {
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef __CC_PLATFORM_IOS
 	return @"Word wrap using CCLabelTTF";
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+#elif defined(__CC_PLATFORM_MAC)
 	return @"Custom TTF are not supported in Mac OS X";
 #endif
 }
@@ -1367,7 +1367,7 @@ static float menuItemPaddingCenter = 50;
 		label.position = ccp(s.width/2,90);
 		[self addChild:label];
 
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef __CC_PLATFORM_IOS
 		
 		CCLabelTTF *charwrap = [CCLabelTTF labelWithString:@"Testing line character wrap mode mode mode mode"
 											  dimensions:CGSizeMake(s.width/4,40)
@@ -1391,7 +1391,7 @@ static float menuItemPaddingCenter = 50;
 		[self addChild:clip];
 
 
-#endif // __IPHONE_OS_VERSION_MAX_ALLOWED
+#endif // __CC_PLATFORM_IOS
 	}
 	
 	return self;
@@ -1404,9 +1404,9 @@ static float menuItemPaddingCenter = 50;
 
 -(NSString *) subtitle
 {
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef __CC_PLATFORM_IOS
 	return @"Testing different line break modes";
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+#elif defined(__CC_PLATFORM_MAC)
 	return @"On Mac OS X only Word Wrap mode is supported";
 #endif
 }
@@ -1419,7 +1419,7 @@ static float menuItemPaddingCenter = 50;
 
 // CLASS IMPLEMENTATIONS
 
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef __CC_PLATFORM_IOS
 @implementation AppController
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -1457,10 +1457,14 @@ static float menuItemPaddingCenter = 50;
 	
 	return YES;
 }
+-(BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+	return UIInterfaceOrientationIsLandscape(interfaceOrientation);
+}
 @end
 
 
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+#elif defined(__CC_PLATFORM_MAC)
 
 #pragma mark AppController - Mac
 

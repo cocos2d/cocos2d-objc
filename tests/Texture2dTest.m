@@ -296,9 +296,9 @@ Class restartAction()
 	[super onEnter];
 	CGSize s = [[CCDirector sharedDirector] winSize];
 	
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef __CC_PLATFORM_IOS
 	UIImage *image = [[UIImage alloc] initWithContentsOfFile:[CCFileUtils fullPathFromRelativePath: @"test_image.png" ]];
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+#elif defined(__CC_PLATFORM_MAC)
 	
 	NSString *fullpath = [CCFileUtils fullPathFromRelativePath:@"test_image.png"];
 	NSData *data = [NSData dataWithContentsOfFile:fullpath];
@@ -1906,7 +1906,7 @@ Class restartAction()
 		}
 
 		
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef __CC_PLATFORM_IOS
 		// Testint CCFileUtils API
 		BOOL ret;
 		ret = [CCFileUtils retinaDisplayFileExistsAtPath:@"bugs/test_issue_1179.png"];
@@ -1921,7 +1921,7 @@ Class restartAction()
 			NSLog(@"Test #4: retinaDisplayFileExistsAtPath: OK");
 		else
 			NSLog(@"Test #4: retinaDisplayFileExistsAtPath: FAILED");
-#endif // __IPHONE_OS_VERSION_MAX_ALLOWED
+#endif // __CC_PLATFORM_IOS
 		
 	}
 	return self;
@@ -1948,7 +1948,7 @@ Class restartAction()
 #pragma mark -
 #pragma mark AppController - iPhone
 
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef __CC_PLATFORM_IOS
 
 @implementation AppController
 
@@ -1991,7 +1991,7 @@ Class restartAction()
 #pragma mark -
 #pragma mark AppController - Mac
 
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+#elif defined(__CC_PLATFORM_MAC)
 
 @implementation AppController
 

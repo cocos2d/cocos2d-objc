@@ -266,8 +266,8 @@ void ccDrawColor4f( GLubyte r, GLubyte g, GLubyte b, GLubyte a )
 void ccPointSize( GLfloat pointSize )
 {
 	pointSize_ = pointSize * CC_CONTENT_SCALE_FACTOR();
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+#ifdef __CC_PLATFORM_IOS
+#elif defined(__CC_PLATFORM_MAC)
 	glPointSize( pointSize );
 #endif
 }

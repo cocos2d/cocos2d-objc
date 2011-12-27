@@ -24,10 +24,9 @@
  */
 
 
-#import <Availability.h>
-
 #import "ccConfig.h"
 #import "ccTypes.h"
+#import "ccMacros.h"
 
 #import "CCProtocols.h"
 #import "Platforms/CCGL.h"
@@ -58,9 +57,9 @@ typedef enum {
 @class CCActionManager;
 
 
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef __CC_PLATFORM_IOS
 #define CC_VIEWCONTROLLER UIViewController
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+#elif defined(__CC_PLATFORM_MAC)
 #define CC_VIEWCONTROLLER NSObject
 #endif
 
@@ -300,8 +299,8 @@ and when to execute the Scenes.
 
 
 // XXX: Hack. Should be placed on CCDirectorMac.h. Refactoring needed
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+#ifdef __CC_PLATFORM_IOS
+#elif defined(__CC_PLATFORM_MAC)
 /** sets the openGL view */
 -(void) setView:(CC_GLVIEW*)view;
 

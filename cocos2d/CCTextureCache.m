@@ -24,20 +24,18 @@
  *
  */
 
-#import <Availability.h>
-
+#import "ccMacros.h"
 #import "Platforms/CCGL.h"
 #import "CCTextureCache.h"
 #import "CCTexture2D.h"
 #import "CCTexturePVR.h"
-#import "ccMacros.h"
 #import "CCConfiguration.h"
 #import "Support/CCFileUtils.h"
 #import "CCDirector.h"
 #import "ccConfig.h"
 #import "ccTypes.h"
 
-#ifdef CC_PLATFORM_MAC
+#ifdef __CC_PLATFORM_MAC
 #import "Platforms/Mac/CCDirectorMac.h"
 #endif
 
@@ -45,9 +43,9 @@
 //#import "CCActionManager.h"
 //#import "CCActionInstant.h"
 
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef __CC_PLATFORM_IOS
 static EAGLContext *_auxGLcontext = nil;
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+#elif defined(__CC_PLATFORM_MAC)
 static NSOpenGLContext *_auxGLcontext = nil;
 #endif
 
@@ -85,14 +83,14 @@ static CCTextureCache *sharedTextureCache;
 		_loadingQueue = dispatch_queue_create("org.cocos2d.texturecacheloading", NULL);		
 		_dictQueue = dispatch_queue_create("org.cocos2d.texturecachedict", NULL);
 
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef __CC_PLATFORM_IOS
 		CC_GLVIEW *view = (CC_GLVIEW*)[[CCDirector sharedDirector] view];
 		NSAssert(view, @"Do not initialize the TextureCache before the Director");
 		_auxGLcontext = [[EAGLContext alloc]
 						 initWithAPI:kEAGLRenderingAPIOpenGLES2
 						 sharegroup:[[view context] sharegroup]];
 		
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+#elif defined(__CC_PLATFORM_MAC)
 		
 		MacGLView *view = (CC_GLVIEW*)[[CCDirector sharedDirector] view];
 		NSAssert(view, @"Do not initialize the TextureCache before the Director");
@@ -103,7 +101,7 @@ static CCTextureCache *sharedTextureCache;
 		
 		_auxGLcontext = [[NSOpenGLContext alloc] initWithFormat:pf shareContext:share];
 
-#endif // __MAC_OS_X_VERSION_MAX_ALLOWED
+#endif // __CC_PLATFORM_MAC
 
 		NSAssert( _auxGLcontext, @"TextureCache: Could not create EAGL context");		
 
@@ -154,7 +152,7 @@ static CCTextureCache *sharedTextureCache;
 	
 	__block CCTexture2D * tex;
 	
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef __CC_PLATFORM_IOS
 	path = [CCFileUtils removeSuffixFromFile:path];
 #endif
 	
@@ -172,7 +170,7 @@ static CCTextureCache *sharedTextureCache;
 		
 		CCTexture2D *texture;
 		
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef __CC_PLATFORM_IOS
 		if( [EAGLContext setCurrentContext:_auxGLcontext] ) {
 			
 			// load / create the texture
@@ -190,7 +188,7 @@ static CCTextureCache *sharedTextureCache;
 			CCLOG(@"cocos2d: ERROR: TetureCache: Could not set EAGLContext");
 		}
 		
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+#elif defined(__CC_PLATFORM_MAC)
 		
 		[_auxGLcontext makeCurrentContext];
 		
@@ -206,7 +204,7 @@ static CCTextureCache *sharedTextureCache;
 		
 		[NSOpenGLContext clearCurrentContext];
 				
-#endif // __MAC_OS_X_VERSION_MAX_ALLOWED
+#endif // __CC_PLATFORM_MAC
 
 	});	
 }
@@ -219,7 +217,7 @@ static CCTextureCache *sharedTextureCache;
 	
 	__block CCTexture2D * tex;
 	
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef __CC_PLATFORM_IOS
 	path = [CCFileUtils removeSuffixFromFile:path];
 #endif
 	
@@ -237,7 +235,7 @@ static CCTextureCache *sharedTextureCache;
 		
 		CCTexture2D *texture;
 
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef __CC_PLATFORM_IOS
 		if( [EAGLContext setCurrentContext:_auxGLcontext] ) {
 			
 			// load / create the texture
@@ -255,7 +253,7 @@ static CCTextureCache *sharedTextureCache;
 			CCLOG(@"cocos2d: ERROR: TetureCache: Could not set EAGLContext");
 		}
 
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+#elif defined(__CC_PLATFORM_MAC)
 		
 		[_auxGLcontext makeCurrentContext];
 		
@@ -271,7 +269,7 @@ static CCTextureCache *sharedTextureCache;
 		
 		[NSOpenGLContext clearCurrentContext];
 		
-#endif // __MAC_OS_X_VERSION_MAX_ALLOWED
+#endif // __CC_PLATFORM_MAC
 
 	});	
 }
@@ -283,7 +281,7 @@ static CCTextureCache *sharedTextureCache;
 	__block CCTexture2D * tex = nil;
 
 	// remove possible -HD suffix to prevent caching the same image twice (issue #1040)
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef __CC_PLATFORM_IOS
 	path = [CCFileUtils removeSuffixFromFile: path];
 #endif
 
@@ -300,7 +298,7 @@ static CCTextureCache *sharedTextureCache;
 			tex = [self addPVRImage:path];
 
 		// Only iPhone
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef __CC_PLATFORM_IOS
 
 		// Issue #886: TEMPORARY FIX FOR TRANSPARENT JPEGS IN IOS4
 		else if ( ( [[CCConfiguration sharedConfiguration] OSVersion] >= kCCiOSVersion_4_0) &&
@@ -354,7 +352,7 @@ static CCTextureCache *sharedTextureCache;
 
 		
 		// Only in Mac
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+#elif defined(__CC_PLATFORM_MAC)
 		else {
 			NSString *fullpath = [CCFileUtils fullPathFromRelativePath: path ];
 
@@ -377,7 +375,7 @@ static CCTextureCache *sharedTextureCache;
 			[tex autorelease];			
 		}
 
-#endif // __MAC_OS_X_VERSION_MAX_ALLOWED
+#endif // __CC_PLATFORM_MAC
 
 	}
 	
@@ -400,13 +398,13 @@ static CCTextureCache *sharedTextureCache;
 			return tex;
 	}
 	
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef __CC_PLATFORM_IOS
 	// prevents overloading the autorelease pool
 	UIImage *image = [[UIImage alloc] initWithCGImage:imageref];
 	tex = [[CCTexture2D alloc] initWithImage:image.CGImage resolutionType:kCCResolutionUnknown];
 	[image release];
 
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+#elif defined(__CC_PLATFORM_MAC)
 	tex = [[CCTexture2D alloc] initWithImage: imageref];
 #endif
 	
@@ -491,7 +489,7 @@ static CCTextureCache *sharedTextureCache;
 	__block CCTexture2D * tex;
 	
 	// remove possible -HD suffix to prevent caching the same image twice (issue #1040)
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef __CC_PLATFORM_IOS
 	path = [CCFileUtils removeSuffixFromFile: path];
 #endif
 	

@@ -38,12 +38,13 @@
 #import "CCActionTiledGrid.h"
 #import "CCActionEase.h"
 #import "CCRenderTexture.h"
+#import "ccMacros.h"
 #import "Support/CGPointExtension.h"
 
-#import <Availability.h>
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef __CC_PLATFORM_IOS
 #import "Platforms/iOS/CCTouchDispatcher.h"
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+#import "Platforms/iOS/CCDirectorIOS.h"
+#elif defined(__CC_PLATFORM_MAC)
 #import "Platforms/Mac/CCDirectorMac.h"
 #import "Platforms/Mac/CCEventDispatcher.h"
 #endif
@@ -78,10 +79,10 @@ const NSInteger kSceneFade = 0xFADEFADE;
 		NSAssert( inScene_ != outScene_, @"Incoming scene must be different from the outgoing scene" );
 
 		// disable events while transitions
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef __CC_PLATFORM_IOS
 		CCDirectorIOS *director = (CCDirectorIOS*)[CCDirector sharedDirector];
 		[[director touchDispatcher] setDispatchEvents: NO];
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+#elif defined(__CC_PLATFORM_MAC)
 		CCDirectorMac *director = (CCDirectorMac*)[CCDirector sharedDirector];
 		[[director eventDispatcher] setDispatchEvents: NO];
 #endif
@@ -138,9 +139,9 @@ const NSInteger kSceneFade = 0xFADEFADE;
 	[director replaceScene: inScene_];
 
 	// enable events while transitions
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef __CC_PLATFORM_IOS
 	[[((CCDirectorIOS*)director) touchDispatcher] setDispatchEvents: YES];
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+#elif defined(__CC_PLATFORM_MAC)
 	[[((CCDirectorMac*)director) eventDispatcher] setDispatchEvents: YES];
 #endif
 	
