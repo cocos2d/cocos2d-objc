@@ -120,6 +120,7 @@ enum {
 		disabledItem.isEnabled = NO;
 
 		[self addChild: menu];
+		[menu setPosition:ccp(s.width/2, s.height/2)];
 	}
 
 	return self;
@@ -263,6 +264,9 @@ enum {
 		
 		CCMenu *menu = [CCMenu menuWithItems:item1, item2, item3, nil];
 		
+		CGSize s = [[CCDirector sharedDirector] winSize];
+		[menu setPosition:ccp(s.width/2, s.height/2)];
+		
 		menu.tag = kTagMenu;
 		
 		[self addChild:menu z:0 tag:100+i];
@@ -294,6 +298,7 @@ enum {
 	else
 		[menu setOpacity: 128];	
 }
+
 -(void) menuCallbackAlign: (id) sender
 {
 	alignedH = ! alignedH;
@@ -328,7 +333,6 @@ enum {
 		disabledItem.isEnabled = NO;
 		
 		CCMenu *menu = [CCMenu menuWithItems: item1, item2, item3, nil];	
-		menu.position = ccp(0,0);
 		
 		CGSize s = [[CCDirector sharedDirector] winSize];
 		
@@ -350,6 +354,8 @@ enum {
 		[item3 runAction: [CCRepeatForever actionWithAction:spin3]];
 		
 		[self addChild: menu];
+		[menu setPosition:ccp(0,0)];
+
 	}
 	
 	return self;
@@ -380,6 +386,7 @@ enum {
 
 @end
 
+#pragma mark - Layer4
 
 @implementation Layer4
 -(id) init
@@ -461,6 +468,8 @@ enum {
 		]; // 2 + 2 + 2 + 2 + 1 = total count of 9.
 		
 		[self addChild: menu];
+		CGSize s = [[CCDirector sharedDirector] winSize];
+		[menu setPosition:ccp(s.width/2, s.height/2)];
 	}
 	
 	return self;
@@ -518,11 +527,7 @@ enum {
 
 	CCScene *scene = [CCScene node];
 
-	CCLayerMultiplex *layer = [CCLayerMultiplex layerWithLayers: [Layer1 node], [Layer2 node], [Layer3 node], [Layer4 node], nil];
-	[scene addChild: layer z:0];
-
-	[director_ setDelegate:self];	
-
+	[scene addChild: [Layer1 node]];
 	[director_ pushScene: scene];
 	
 	return YES;
@@ -530,7 +535,8 @@ enum {
 
 -(BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-	return UIInterfaceOrientationIsPortrait(interfaceOrientation);
+	// supports all 4 orientations
+	return YES;
 }
 @end
 
