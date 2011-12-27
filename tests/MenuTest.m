@@ -13,8 +13,7 @@ enum {
 	kTagMenu1 = 1,
 };
 
-#pragma mark -
-#pragma mark MainMenu
+#pragma mark - MainMenu
 
 @implementation Layer1
 -(id) init
@@ -32,34 +31,65 @@ enum {
 		CCSprite *spriteNormal = [CCSprite spriteWithFile:@"menuitemsprite.png" rect:CGRectMake(0,23*2,115,23)];
 		CCSprite *spriteSelected = [CCSprite spriteWithFile:@"menuitemsprite.png" rect:CGRectMake(0,23*1,115,23)];
 		CCSprite *spriteDisabled = [CCSprite spriteWithFile:@"menuitemsprite.png" rect:CGRectMake(0,23*0,115,23)];
-		CCMenuItemSprite *item1 = [CCMenuItemSprite itemWithNormalSprite:spriteNormal selectedSprite:spriteSelected disabledSprite:spriteDisabled target:self selector:@selector(menuCallback:)];
+		CCMenuItemSprite *item1 = [CCMenuItemSprite itemWithNormalSprite:spriteNormal selectedSprite:spriteSelected disabledSprite:spriteDisabled block:^(id sender) {			
+				CCScene *scene = [CCScene node];
+				[scene addChild:[Layer2 node]];
+				[[CCDirector sharedDirector] replaceScene:scene];
+		}];
 		
 		// Image Item
-		CCMenuItem *item2 = [CCMenuItemImage itemWithNormalImage:@"SendScoreButton.png" selectedImage:@"SendScoreButtonPressed.png" target:self selector:@selector(menuCallback2:)];
+		CCMenuItem *item2 = [CCMenuItemImage itemWithNormalImage:@"SendScoreButton.png" selectedImage:@"SendScoreButtonPressed.png" block:^(id sender) {
+				CCScene *scene = [CCScene node];
+				[scene addChild:[Layer3 node]];
+				[[CCDirector sharedDirector] replaceScene:scene];
+		}];
 
 		// Label Item (LabelAtlas)
 		CCLabelAtlas *labelAtlas = [CCLabelAtlas labelWithString:@"0123456789" charMapFile:@"fps_images.png" itemWidth:8 itemHeight:12 startCharMap:'.'];
-		CCMenuItemLabel *item3 = [CCMenuItemLabel itemWithLabel:labelAtlas target:self selector:@selector(menuCallbackDisabled:)];
+		CCMenuItemLabel *item3 = [CCMenuItemLabel itemWithLabel:labelAtlas block:^(id sender) {
+				// hijack all touch events for 5 seconds				
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+				CCDirectorIOS *director = (CCDirectorIOS*)[CCDirector sharedDirector];
+				[[director touchDispatcher] setPriority:kCCMenuTouchPriority-1 forDelegate:self];
+				[self schedule:@selector(allowTouches) interval:5.0f repeat:0 delay:0];
+				
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+				CCDirectorMac *director = (CCDirectorMac*)[CCDirector sharedDirector];
+				[[director eventDispatcher] addMouseDelegate:self priority:kCCMenuTouchPriority-1];
+				[self schedule:@selector(allowTouches) interval:5.0f];
+#endif
+				NSLog(@"TOUCHES DISABLED FOR 5 SECONDS");
+		}];
+
 		item3.disabledColor = ccc3(32,32,64);
 		item3.color = ccc3(200,200,255);
 		
 
 		// Font Item
-		CCMenuItemFont *item4 = [CCMenuItemFont itemWithString: @"I toggle enable items" target: self selector:@selector(menuCallbackEnable:)];
+		CCMenuItemFont *item4 = [CCMenuItemFont itemWithString: @"I toggle enable items" block:^(id sender) {
+			// IMPORTANT: It is safe to use "self" because CCMenuItem#cleanup will break any possible circular reference.
+			self->disabledItem.isEnabled = ~self->disabledItem.isEnabled;
+		}];
 		
 		[item4 setFontSize:20];
 		[item4 setFontName:@"Marker Felt"];
 		
 		// Label Item (CCLabelBMFont)
 		CCLabelBMFont *label = [CCLabelBMFont labelWithString:@"configuration" fntFile:@"bitmapFontTest3.fnt"];
-		CCMenuItemLabel *item5 = [CCMenuItemLabel itemWithLabel:label target:self selector:@selector(menuCallbackConfig:)];
+		CCMenuItemLabel *item5 = [CCMenuItemLabel itemWithLabel:label block:^(id sender) {
+			CCScene *scene = [CCScene node];
+			[scene addChild:[Layer4 node]];
+			[[CCDirector sharedDirector] replaceScene:scene];
+		}];
 		
 		// Testing issue #500
 		item5.scale = 0.8f;
 		
 		// Font Item
-		CCMenuItemFont *item6 = [CCMenuItemFont itemWithString: @"Quit" target:self selector:@selector(onQuit:)];
-		
+		CCMenuItemFont *item6 = [CCMenuItemFont itemWithString: @"Quit" block:^(id sender){
+			CC_DIRECTOR_END();
+		}];
+
 		id color_action = [CCTintBy actionWithDuration:0.5f red:0 green:-255 blue:-255];
 		id color_back = [color_action reverse];
 		id seq = [CCSequence actions:color_action, color_back, nil];
@@ -145,24 +175,14 @@ enum {
 	[super dealloc];
 }
 
--(void) menuCallback: (id) sender
-{
-	[(CCLayerMultiplex*)parent_ switchTo:1];
-}
-
--(void) menuCallbackConfig:(id) sender
-{
-	[(CCLayerMultiplex*)parent_ switchTo:3];
-}
-
 -(void) allowTouches
 {
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
-
+	
 	CCDirectorIOS *director = (CCDirectorIOS*)[CCDirector sharedDirector];
     [[director touchDispatcher] setPriority:kCCMenuTouchPriority+1 forDelegate:self];
     [self unscheduleAllSelectors];
-
+	
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 	CCDirectorMac *director = (CCDirectorMac*)[CCDirector sharedDirector];
     [[director eventDispatcher] removeMouseDelegate:self];
@@ -170,46 +190,9 @@ enum {
 	
 	NSLog(@"TOUCHES ALLOWED AGAIN");
 }
-
-
--(void) menuCallbackDisabled:(id) sender {
-
-	// hijack all touch events for 5 seconds
-
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
-	CCDirectorIOS *director = (CCDirectorIOS*)[CCDirector sharedDirector];
-    [[director touchDispatcher] setPriority:kCCMenuTouchPriority-1 forDelegate:self];
-
-    [self schedule:@selector(allowTouches) interval:5.0f repeat:0 delay:0];
-
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
-	CCDirectorMac *director = (CCDirectorMac*)[CCDirector sharedDirector];
-    [[director eventDispatcher] addMouseDelegate:self priority:kCCMenuTouchPriority-1];
-	
-    [self schedule:@selector(allowTouches) interval:5.0f];
-
-#endif
-	NSLog(@"TOUCHES DISABLED FOR 5 SECONDS");
-
-}
-
--(void) menuCallbackEnable:(id) sender {
-	disabledItem.isEnabled = ~disabledItem.isEnabled;
-}
-
--(void) menuCallback2: (id) sender
-{
-	[(CCLayerMultiplex*)parent_ switchTo:2];
-}
-
--(void) onQuit: (id) sender
-{
-	CC_DIRECTOR_END();	
-}
 @end
 
-#pragma mark -
-#pragma mark StartMenu
+#pragma mark - StartMenu
 
 @implementation Layer2
 
@@ -297,7 +280,9 @@ enum {
 
 -(void) menuCallbackBack: (id) sender
 {
-	[(CCLayerMultiplex*)parent_ switchTo:0];
+	CCScene *scene = [CCScene node];
+	[scene addChild:[Layer1 node]];
+	[[CCDirector sharedDirector] replaceScene:scene];
 }
 
 -(void) menuCallbackOpacity: (id) sender
@@ -321,8 +306,7 @@ enum {
 
 @end
 
-#pragma mark -
-#pragma mark SendScores
+#pragma mark - SendScores
 
 @implementation Layer3
 -(id) init
@@ -378,7 +362,9 @@ enum {
 
 -(void) menuCallback: (id) sender
 {
-	[(CCLayerMultiplex*)parent_ switchTo:0];
+	CCScene *scene = [CCScene node];
+	[scene addChild:[Layer1 node]];
+	[[CCDirector sharedDirector] replaceScene:scene];
 }
 
 -(void) menuCallback2: (id) sender
@@ -492,7 +478,9 @@ enum {
 
 -(void) backCallback: (id) sender
 {
-	[(CCLayerMultiplex*)parent_ switchTo:0];
+	CCScene *scene = [CCScene node];
+	[scene addChild:[Layer1 node]];
+	[[CCDirector sharedDirector] replaceScene:scene];
 }
 
 @end
@@ -501,8 +489,7 @@ enum {
 
 // CLASS IMPLEMENTATIONS
 
-#pragma mark -
-#pragma mark AppController - iPhone
+#pragma mark - AppController - iOS
 
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 
@@ -547,8 +534,7 @@ enum {
 }
 @end
 
-#pragma mark -
-#pragma mark AppController - Mac
+#pragma mark - AppController - Mac
 
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 
@@ -559,9 +545,7 @@ enum {
 	[super applicationDidFinishLaunching:aNotification];
 	
 	CCScene *scene = [CCScene node];
-	
-	CCLayerMultiplex *layer = [CCLayerMultiplex layerWithLayers: [Layer1 node], [Layer2 node], [Layer3 node], [Layer4 node], nil];
-	[scene addChild: layer z:0];
+	[scene addChild: [Layer1 node]];
 	
 	[director_ runWithScene:scene];
 }

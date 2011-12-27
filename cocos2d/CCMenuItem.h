@@ -84,8 +84,13 @@
 
 /** Enable or disabled the CCMenuItem */
 -(void) setIsEnabled:(BOOL)enabled;
+
 /** Returns whether or not the CCMenuItem is enabled */
 -(BOOL) isEnabled;
+
+/** cleanup event. It will release the block and call [super cleanup] */
+-(void) cleanup;
+
 @end
 
 #pragma mark -

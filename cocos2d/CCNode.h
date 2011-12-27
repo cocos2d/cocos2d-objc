@@ -295,19 +295,24 @@ enum {
 
 // scene managment
 
-/** callback that is called every time the CCNode enters the 'stage'.
- If the CCNode enters the 'stage' with a transition, this callback is called when the transition starts.
- During onEnter you can't a "sister/brother" node.
+/** Event that is called every time the CCNode enters the 'stage'.
+ If the CCNode enters the 'stage' with a transition, this event is called when the transition starts.
+ During onEnter you can't access a sibling node.
+ If you override onEnter, you shall call [super onEnter].
  */
 -(void) onEnter;
-/** callback that is called when the CCNode enters in the 'stage'.
- If the CCNode enters the 'stage' with a transition, this callback is called when the transition finishes.
+
+/** Event that is called when the CCNode enters in the 'stage'.
+ If the CCNode enters the 'stage' with a transition, this event is called when the transition finishes.
+ If you override onEnterTransitionDidFinish, you shall call [super onEnterTransitionDidFinish].
  @since v0.8
  */
 -(void) onEnterTransitionDidFinish;
-/** callback that is called every time the CCNode leaves the 'stage'.
- If the CCNode leaves the 'stage' with a transition, this callback is called when the transition finishes.
+
+/** Event that is called every time the CCNode leaves the 'stage'.
+ If the CCNode leaves the 'stage' with a transition, this event is called when the transition finishes.
  During onExit you can't access a sibling node.
+ If you override onExit, you shall call [super onExit].
  */
 -(void) onExit;
 
@@ -371,7 +376,10 @@ enum {
  don't call this manually unless a child added needs to be removed in the same frame */
 - (void) sortAllChildren;
 
-/** Stops all running actions and schedulers
+/** Event that is called when the running node is no longer running (eg: its CCScene is being removed from the "stage" ).
+ On cleanup you should break any possible circular references.
+ CCNode's cleanup removes any possible scheduled timer and/or any possible action.
+ If you override cleanup, you shall call [super cleanup]
  @since v0.8
  */
 -(void) cleanup;
@@ -380,7 +388,8 @@ enum {
 
 /** Override this method to draw your own node.
  You should use cocos2d's GL API to enable/disable the GL state / shaders.
- For further info, please see ccGLstate.h 
+ For further info, please see ccGLstate.h.
+ You shall NOT call [super draw];
  */
 -(void) draw;
 
