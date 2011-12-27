@@ -27,11 +27,11 @@
 // Common layer for NS (Next-Step) stuff
 //
 
-#import <Availability.h>
+#import "../ccMacros.h"
 
 #import <Foundation/Foundation.h> //	for NSObject
 
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef __CC_PLATFORM_IOS
 
 #define CCRectFromString(__r__)		CGRectFromString(__r__)
 #define CCPointFromString(__p__)	CGPointFromString(__p__)
@@ -53,7 +53,7 @@
 
 
 
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+#elif defined(__CC_PLATFORM_MAC)
 
 #define CCRectFromString(__r__)		NSRectToCGRect( NSRectFromString(__r__) )
 #define CCPointFromString(__p__)	NSPointToCGPoint( NSPointFromString(__p__) )

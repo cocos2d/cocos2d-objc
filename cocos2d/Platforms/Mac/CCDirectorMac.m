@@ -25,15 +25,15 @@
 
 // Only compile this code on Mac. These files should not be included on your iOS project.
 // But in case they are included, it won't be compiled.
-#import <Availability.h>
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+#import "../../ccMacros.h"
+#ifdef __CC_PLATFORM_MAC
 
 #import <sys/time.h>
 
 #import "CCDirectorMac.h"
 #import "CCEventDispatcher.h"
 #import "MacGLView.h"
+#import "MacWindow.h"
 
 #import "../../CCNode.h"
 #import "../../CCScheduler.h"
@@ -522,4 +522,4 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 
 @end
 
-#endif // __MAC_OS_X_VERSION_MAX_ALLOWED
+#endif // __CC_PLATFORM_MAC

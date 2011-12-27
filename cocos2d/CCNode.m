@@ -42,8 +42,7 @@
 // externals
 #import "kazmath/GL/matrix.h"
 
-#import <Availability.h>
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef __CC_PLATFORM_IOS
 #import "Platforms/iOS/CCDirectorIOS.h"
 #endif
 
@@ -843,7 +842,7 @@ static NSUInteger globalOrderOfArrival = 1;
 
 // convenience methods which take a UITouch instead of CGPoint
 
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef __CC_PLATFORM_IOS
 
 - (CGPoint)convertTouchToNodeSpace:(UITouch *)touch
 {
@@ -859,7 +858,7 @@ static NSUInteger globalOrderOfArrival = 1;
 	return [self convertToNodeSpaceAR:point];
 }
 
-#endif // __IPHONE_OS_VERSION_MAX_ALLOWED
+#endif // __CC_PLATFORM_IOS
 
 
 @end

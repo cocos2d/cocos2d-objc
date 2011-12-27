@@ -26,11 +26,12 @@
 
 
 
-#import <Availability.h>
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
-#import <UIKit/UIKit.h>					// Needed for UIAccelerometerDelegate
+#import "ccMacros.h"
+
+#ifdef __CC_PLATFORM_IOS
+#import <UIKit/UIKit.h>									// Needed for UIAccelerometerDelegate
 #import "Platforms/iOS/CCTouchDelegateProtocol.h"		// Touches only supported on iOS
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+#elif defined(__CC_PLATFORM_MAC)
 #import "Platforms/Mac/CCEventDispatcher.h"
 #endif
 
@@ -46,7 +47,7 @@
  - It can receive iPhone Touches
  - It can receive Accelerometer input
 */
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef __CC_PLATFORM_IOS
 @interface CCLayer : CCNode <UIAccelerometerDelegate, CCStandardTouchDelegate, CCTargetedTouchDelegate>
 {
 	BOOL isTouchEnabled_;
@@ -85,7 +86,7 @@
  */
 @property(nonatomic,assign) BOOL isAccelerometerEnabled;
 
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+#elif defined(__CC_PLATFORM_MAC)
 
 
 @interface CCLayer : CCNode <CCKeyboardEventDelegate, CCMouseEventDelegate, CCTouchEventDelegate>

@@ -7,9 +7,9 @@
 // local import
 #import "ParticleTest.h"
 
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef __CC_PLATFORM_IOS
 #define PARTICLE_FIRE_NAME @"fire.pvr"
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+#elif defined(__CC_PLATFORM_MAC)
 #define PARTICLE_FIRE_NAME @"fire.png"
 #endif
 enum {
@@ -103,9 +103,9 @@ Class restartAction()
 {
 	if( (self=[super initWithColor:ccc4(127,127,127,255)] )) {
 
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef __CC_PLATFORM_IOS
 		self.isTouchEnabled = YES;
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+#elif defined(__CC_PLATFORM_MAC)
 		self.isMouseEnabled = YES;
 #endif
 		
@@ -172,7 +172,7 @@ Class restartAction()
 }
 
 
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef __CC_PLATFORM_IOS
 -(void) registerWithTouchDispatcher
 {
 	CCDirectorIOS *director = (CCDirectorIOS*)[CCDirector sharedDirector];
@@ -202,7 +202,7 @@ Class restartAction()
 		pos = [background convertToWorldSpace:CGPointZero];
 	emitter_.position = ccpSub(convertedLocation, pos);	
 }
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+#elif defined(__CC_PLATFORM_MAC)
 
 
 -(BOOL) ccMouseDragged:(NSEvent *)event
@@ -217,7 +217,7 @@ Class restartAction()
 	// swallow the event. Don't propagate it
 	return YES;	
 }
-#endif // __MAC_OS_X_VERSION_MAX_ALLOWED
+#endif // __CC_PLATFORM_MAC
 
 -(void) update:(ccTime) dt
 {
@@ -1638,7 +1638,7 @@ Class restartAction()
 #pragma mark App Delegate
 
 // CLASS IMPLEMENTATIONS
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef __CC_PLATFORM_IOS
 @implementation AppController
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -1677,7 +1677,7 @@ Class restartAction()
 @end
 
 
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+#elif defined(__CC_PLATFORM_MAC)
 
 @implementation AppController
 

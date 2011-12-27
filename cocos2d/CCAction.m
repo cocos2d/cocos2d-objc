@@ -25,8 +25,6 @@
  */
 
 
-
-#import <Availability.h>
 #import "CCDirector.h"
 #import "ccMacros.h"
 #import "CCAction.h"

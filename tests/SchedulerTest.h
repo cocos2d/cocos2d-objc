@@ -62,9 +62,9 @@
 
 @interface SchedulerTimeScale : SchedulerTest
 {
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef __CC_PLATFORM_IOS
 	UISlider	*sliderCtl;
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+#elif defined(__CC_PLATFORM_MAC)
 	NSSlider	*sliderCtl;
 	NSWindow	*overlayWindow;
 #endif
@@ -78,10 +78,10 @@
 	CCActionManager *actionManager1;
 	CCActionManager *actionManager2;
 	
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef __CC_PLATFORM_IOS
 	UISlider	*sliderCtl1;
 	UISlider	*sliderCtl2;
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+#elif defined(__CC_PLATFORM_MAC)
 	NSSlider	*sliderCtl1;
 	NSSlider	*sliderCtl2;
 	NSWindow	*overlayWindow;

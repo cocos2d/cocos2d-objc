@@ -624,7 +624,7 @@ Class restartTest()
 #pragma mark - SchedulerTimeScale
 
 @implementation SchedulerTimeScale
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef __CC_PLATFORM_IOS
 - (UISlider *)sliderCtl
 {
 	UISlider * slider = [[UISlider alloc] initWithFrame:CGRectMake(0,0,120,7)];
@@ -640,7 +640,7 @@ Class restartTest()
 
     return [slider autorelease];
 }
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+#elif defined(__CC_PLATFORM_MAC)
 -(NSSlider*) sliderCtl
 {
 	NSSlider* slider = [[NSSlider alloc] initWithFrame: NSMakeRect (0, 0, 200, 20)];
@@ -659,15 +659,15 @@ Class restartTest()
 {
 	ccTime scale;
 	
-#if CC_PLATFORM_IOS
+#ifdef __CC_PLATFORM_IOS
 	scale = sliderCtl.value;
-#elif CC_PLATFORM_MAC
-	
+
+#elif defined(__CC_PLATFORM_MAC)
 	float value = [sliderCtl floatValue];	
 	scale = value;
 #endif
+
 	[[[CCDirector sharedDirector] scheduler] setTimeScale: scale];
-	
 }
 
 -(void) onEnter
@@ -711,14 +711,13 @@ Class restartTest()
 	
 	sliderCtl = [self sliderCtl];
 	
-#ifdef CC_PLATFORM_IOS
-	
+#ifdef __CC_PLATFORM_IOS
 	AppController *app = (AppController*) [[UIApplication sharedApplication] delegate];
 	UIViewController *ctl = [app rootViewController];
 	
 	[ctl.view addSubview: sliderCtl];
 	
-#elif CC_PLATFORM_MAC
+#elif defined(__CC_PLATFORM_MAC)
 	MacGLView *view = (MacGLView*) [[CCDirectorMac sharedDirector] view];
 	
 	if( ! overlayWindow ) {
@@ -749,7 +748,7 @@ Class restartTest()
 
 	[sliderCtl removeFromSuperview];
 	
-#ifdef CC_PLATFORM_MAC
+#ifdef __CC_PLATFORM_MAC
 	MacGLView *view = (MacGLView*) [[CCDirector sharedDirector] view];
 	[[view window] removeChildWindow:overlayWindow];
 	[overlayWindow release];
@@ -773,7 +772,7 @@ Class restartTest()
 #pragma mark - TwoSchedulers
 
 @implementation TwoSchedulers
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef __CC_PLATFORM_IOS
 - (UISlider *)sliderCtl
 {
 	CGRect frame = CGRectMake(12.0f, 12.0f, 120.0f, 7.0f);
@@ -791,7 +790,7 @@ Class restartTest()
     return [slider autorelease];
 }
 
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+#elif defined(__CC_PLATFORM_MAC)
 
 -(NSSlider*) sliderCtl
 {
@@ -811,15 +810,16 @@ Class restartTest()
 {
 	ccTime scale;
 	
-#if CC_PLATFORM_IOS
+#ifdef __CC_PLATFORM_IOS
 	UISlider *slider = (UISlider*) sender;
 	scale = slider.value;
-#elif CC_PLATFORM_MAC
-	
+
+#elif defined(__CC_PLATFORM_MAC)	
 	NSSlider *slider = (NSSlider*) sender;
 	float value = [slider floatValue];	
 	scale = value;
 #endif
+
 	if( sender == sliderCtl1 )
 		[sched1 setTimeScale: scale];
 	else
@@ -916,7 +916,7 @@ Class restartTest()
 {
 	[super onEnter];
 	
-#ifdef CC_PLATFORM_IOS
+#ifdef __CC_PLATFORM_IOS
 	
 	AppController *app = (AppController*) [[UIApplication sharedApplication] delegate];
 	UIViewController *ctl = [app rootViewController];
@@ -924,7 +924,7 @@ Class restartTest()
 	[ctl.view addSubview: sliderCtl1];
 	[ctl.view addSubview: sliderCtl2];
 	
-#elif CC_PLATFORM_MAC
+#elif defined(__CC_PLATFORM_MAC)
 	MacGLView *view = (MacGLView*) [[CCDirectorMac sharedDirector] view];
 	
 	if( ! overlayWindow ) {
@@ -956,12 +956,12 @@ Class restartTest()
 	[sliderCtl1 removeFromSuperview];
 	[sliderCtl2 removeFromSuperview];
 	
-#ifdef CC_PLATFORM_MAC
+#ifdef __CC_PLATFORM_MAC
 	MacGLView *view = (MacGLView*) [[CCDirector sharedDirector] view];
 	[[view window] removeChildWindow:overlayWindow];
 	[overlayWindow release];
 	overlayWindow = nil;
-#endif
+#endif // MAC
 }
 
 -(void) dealloc
@@ -995,7 +995,7 @@ Class restartTest()
 
 #pragma mark - AppController
 
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef __CC_PLATFORM_IOS
 
 @implementation AppController
 
@@ -1034,7 +1034,7 @@ Class restartTest()
 }
 @end
 
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+#elif defined(__CC_PLATFORM_MAC)
 
 @implementation AppController
 

@@ -24,13 +24,14 @@
  */
 
 #import <Foundation/Foundation.h>
+
+#import "ccMacros.h"
 #import "CCNode.h"
 #import "CCSprite.h"
 #import "Support/OpenGL_Internal.h"
 #import "kazmath/mat4.h"
 
-#import <Availability.h>
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef __CC_PLATFORM_IOS
 #import <UIKit/UIKit.h>
 #endif // iPHone
 
@@ -91,7 +92,7 @@ enum
 /** clears the texture with a color */
 -(void)clear:(float)r g:(float)g b:(float)b a:(float)a;
 
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef __CC_PLATFORM_IOS
 
 /** saves the texture into a file */
 -(BOOL)saveBuffer:(NSString*)name;
@@ -102,7 +103,7 @@ enum
 /* get buffer as UIImage */
 -(UIImage *)getUIImageFromBuffer;
 
-#endif // __IPHONE_OS_VERSION_MAX_ALLOWED
+#endif // __CC_PLATFORM_IOS
 
 @end
 

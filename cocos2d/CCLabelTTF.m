@@ -25,15 +25,13 @@
  */
 
 
-#import <Availability.h>
-
 #import "CCLabelTTF.h"
 #import "Support/CGPointExtension.h"
 #import "ccMacros.h"
 #import "CCShaderCache.h"
 #import "GLProgram.h"
 
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef __CC_PLATFORM_IOS
 #import "Platforms/iOS/CCDirectorIOS.h"
 #endif
 
@@ -125,7 +123,7 @@
 										 fontName:fontName_
 										 fontSize:fontSize_  * CC_CONTENT_SCALE_FACTOR()];
 
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef __CC_PLATFORM_IOS
 	if( CC_CONTENT_SCALE_FACTOR() == 2 )
 		[tex setResolutionType:kCCResolutionRetinaDisplay];
 	else

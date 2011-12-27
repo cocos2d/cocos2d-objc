@@ -150,9 +150,9 @@ Class restartAction()
 		brush = [[CCSprite spriteWithFile:@"fire.png"] retain];
 		[brush setColor:ccRED];
 		[brush setOpacity:20];
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef __CC_PLATFORM_IOS
 		self.isTouchEnabled = YES;
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+#elif defined(__CC_PLATFORM_MAC)
 		self.isMouseEnabled = YES;
 		lastLocation = CGPointMake( s.width/2, s.height/2);
 #endif
@@ -186,7 +186,7 @@ Class restartAction()
 
 -(void) saveImage:(id)sender
 {
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef __CC_PLATFORM_IOS
 	static int counter=0;
 	
 	NSString *str = [NSString stringWithFormat:@"image-%d.png", counter];
@@ -194,9 +194,9 @@ Class restartAction()
 	NSLog(@"Image saved: %@", str);
 	
 	counter++;
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+#elif defined(__CC_PLATFORM_MAC)
 	NSLog(@"CCRenderTexture Save is not supported yet");
-#endif // __MAC_OS_X_VERSION_MAX_ALLOWED
+#endif // __CC_PLATFORM_MAC
 }
 
 -(void) dealloc
@@ -208,7 +208,7 @@ Class restartAction()
 }
 
 
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef __CC_PLATFORM_IOS
 
 -(void)ccTouchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
@@ -245,7 +245,7 @@ Class restartAction()
 	[target end];	
 }
 
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+#elif defined(__CC_PLATFORM_MAC)
 
 -(BOOL) ccMouseDown:(NSEvent *)event
 {
@@ -292,7 +292,7 @@ Class restartAction()
 	return YES;
 	
 }
-#endif // __MAC_OS_X_VERSION_MAX_ALLOWED
+#endif // __CC_PLATFORM_MAC
 @end
 
 #pragma mark -
@@ -445,7 +445,7 @@ Class restartAction()
 	return @"Touch screen. It should be green";
 }
 
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef __CC_PLATFORM_IOS
 
 - (void)ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
@@ -485,7 +485,7 @@ Class restartAction()
 {
 	[self renderScreenShot];
 }
-#endif // __IPHONE_OS_VERSION_MAX_ALLOWED
+#endif // __CC_PLATFORM_IOS
 
 -(void)renderScreenShot
 {
@@ -521,7 +521,7 @@ Class restartAction()
 #pragma mark -
 #pragma mark AppDelegate (iOS)
 
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef __CC_PLATFORM_IOS
 
 // CLASS IMPLEMENTATIONS
 @implementation AppController
@@ -556,7 +556,7 @@ Class restartAction()
 }
 @end
 
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+#elif defined(__CC_PLATFORM_MAC)
 
 #pragma mark -
 #pragma mark AppDelegate (Mac)

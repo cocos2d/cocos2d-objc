@@ -90,10 +90,10 @@ enum {
 		
 		// enable events
 		
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef __CC_PLATFORM_IOS
 		self.isTouchEnabled = YES;
 		self.isAccelerometerEnabled = YES;
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+#elif defined(__CC_PLATFORM_MAC)
 		self.isMouseEnabled = YES;
 #endif
 
@@ -288,7 +288,7 @@ enum {
 	world->Step(dt, velocityIterations, positionIterations);	
 }
 
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef __CC_PLATFORM_IOS
 
 - (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
@@ -322,7 +322,7 @@ enum {
 	world->SetGravity( gravity );
 }
 
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+#elif defined(__CC_PLATFORM_MAC)
 -(BOOL) ccMouseUp:(NSEvent *)event
 {
 	CGPoint location = [[CCDirector sharedDirector] convertEventToGL:event];
@@ -337,7 +337,7 @@ enum {
 
 #pragma mark - AppDelegate
 
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef __CC_PLATFORM_IOS
 
 @implementation AppController
 
@@ -383,7 +383,7 @@ enum {
 }
 @end
 
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+#elif defined(__CC_PLATFORM_MAC)
 
 #pragma mark AppController - Mac
 

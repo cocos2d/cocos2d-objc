@@ -36,9 +36,9 @@
  */
 
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
-#define CC_PLATFORM_IOS 1
+#define __CC_PLATFORM_IOS 1
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
-#define CC_PLATFORM_MAC 1
+#define __CC_PLATFORM_MAC 1
 #endif
 
 /*
@@ -126,7 +126,7 @@ default gl blend src function. Compatible with premultiplied alpha images.
  @since v0.99.4
  */
 
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef __CC_PLATFORM_IOS
 
 #define CC_DIRECTOR_INIT()																		\
 do	{																							\
@@ -152,9 +152,7 @@ do	{																							\
 } while(0)
 
 
-#elif __MAC_OS_X_VERSION_MAX_ALLOWED
-
-#import "Platforms/Mac/MacWindow.h"
+#elif __CC_PLATFORM_MAC
 
 #define CC_DIRECTOR_INIT(__WINSIZE__)															\
 do	{																							\
@@ -200,7 +198,7 @@ do {															\
 
 
 
-#if __IPHONE_OS_VERSION_MAX_ALLOWED
+#if __CC_PLATFORM_IOS
 
 /****************************/
 /** RETINA DISPLAY ENABLED **/
@@ -210,7 +208,7 @@ do {															\
  On Mac it returns 1;
  On iPhone it returns 2 if RetinaDisplay is On. Otherwise it returns 1
  */
-#import "Platforms/iOS/CCDirectorIOS.h"
+extern float __ccContentScaleFactor;
 #define CC_CONTENT_SCALE_FACTOR() __ccContentScaleFactor
 
 
@@ -253,7 +251,7 @@ CGSizeMake( (__size_in_pixels__).width / CC_CONTENT_SCALE_FACTOR(), (__size_in_p
 CGSizeMake( (__size_in_points__).width * CC_CONTENT_SCALE_FACTOR(), (__size_in_points__).height * CC_CONTENT_SCALE_FACTOR())
 
 
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+#elif defined(__CC_PLATFORM_MAC)
 
 /*****************************/
 /** RETINA DISPLAY DISABLED **/
@@ -268,7 +266,7 @@ CGSizeMake( (__size_in_points__).width * CC_CONTENT_SCALE_FACTOR(), (__size_in_p
 #define CC_POINT_POINTS_TO_PIXELS(__points__) __points__
 
 
-#endif // __MAC_OS_X_VERSION_MAX_ALLOWED
+#endif // __CC_PLATFORM_MAC
 
 
 /**********************/

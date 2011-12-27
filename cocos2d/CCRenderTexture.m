@@ -23,7 +23,6 @@
  *
  */
 
-#import <Availability.h>
 #import "CCRenderTexture.h"
 #import "CCDirector.h"
 #import "ccMacros.h"
@@ -185,7 +184,7 @@
 
 #pragma mark RenderTexture - Save Image
 
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef __CC_PLATFORM_IOS
 -(BOOL)saveBuffer:(NSString*)name
 {
 	return [self saveBuffer:name format:kCCImageFormatJPG];
@@ -348,5 +347,5 @@
 	return data;
 }
 
-#endif // __IPHONE_OS_VERSION_MAX_ALLOWED
+#endif // __CC_PLATFORM_IOS
 @end

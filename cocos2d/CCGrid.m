@@ -24,8 +24,6 @@
  */
 
 
-#import <Availability.h>
-
 #import "ccMacros.h"
 #import "CCGrid.h"
 #import "CCTexture2D.h"
@@ -44,9 +42,9 @@
 #import "kazmath/kazmath.h"
 #import "kazmath/GL/matrix.h"
 
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef __CC_PLATFORM_IOS
 #import "Platforms/iOS/CCDirectorIOS.h"
-#endif // __IPHONE_OS_VERSION_MAX_ALLOWED
+#endif // __CC_PLATFORM_IOS
 
 #pragma mark -
 #pragma mark CCGridBase
@@ -104,7 +102,7 @@
 	unsigned long POTWide = ccNextPOT(s.width);
 	unsigned long POTHigh = ccNextPOT(s.height);
 	
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef __CC_PLATFORM_IOS
 	EAGLView *glview = (CC_GLVIEW*)[[CCDirector sharedDirector] view];
 	NSString *pixelFormat = [glview pixelFormat];
 

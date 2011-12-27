@@ -23,7 +23,7 @@
  * THE SOFTWARE.
  */
 
-#import <Availability.h>
+#import "ccMacros.h"
 #import "ccTypes.h"
 #import "CCTexture2D.h"
 
@@ -123,10 +123,10 @@
 /** Called by CCDirector when the porjection is updated, and "custom" projection is used */
 -(void) updateProjection;
 
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef __CC_PLATFORM_IOS
 /** Returns a Boolean value indicating whether the CCDirector supports the specified orientation. Default value is YES (supports all possible orientations) */
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation;
 
-#endif // __IPHONE_OS_VERSION_MAX_ALLOWED
+#endif // __CC_PLATFORM_IOS
 
 @end
