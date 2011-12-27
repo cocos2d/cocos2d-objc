@@ -474,9 +474,11 @@ enum nodeTags {
 // CCFiniteTimeAction - save tag & duration.
 // CCRepeatForever - save tag & innerAction.
 // CCSpeed - save tag speed & innerAction.
-// CCFollow - save followedNode (CCActionTargetCache + CCActionTargetProxy or load actions after all targets loaded? THINK!!!), 
+// CCFollow - change followedNode to followedNodeName - simple!
 // boundarySet(simple BOOL), boundaryRect (need to calculate it back to rect 
 // from 4 floats on save.)
+// To load CCFollow - just set followedNode on first CCAction#update: call - at this time
+// node should alredy exist in CCNodeCache.
 //
 // TODO: investigate further.
 //
@@ -489,6 +491,13 @@ enum nodeTags {
 // TODO: Look through cocos2d-iphone documentation for any classes, that i may have
 // skipped here & that we need to support.
 //
+//
+// ++++++ CCNodeCache ++++++
+// ++++++ CCNode.name property +++++++ 
+// to use in CCNodeCache, default value is nil.
+// CCNode should update CCNodeCache about changes in it's name.
+// CCNodeCache SHOULDN'T retain Nodes. Node should remove itself from CCNodeCache
+// on dealloc.
 //
 // ====== Not to be supported by AMC =====
 // Can't imagine someone need to save/load this.
