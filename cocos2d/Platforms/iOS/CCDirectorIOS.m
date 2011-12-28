@@ -336,7 +336,6 @@ CGFloat	__ccContentScaleFactor = 1;
 	[touchDispatcher_ setDispatchEvents: YES];
 }
 
-
 // Override to allow orientations other than the default portrait orientation.
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
@@ -346,6 +345,12 @@ CGFloat	__ccContentScaleFactor = 1;
 
 	return ret;
 }
+
+-(void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+	// do something ?
+}
+
 
 -(void) viewWillAppear:(BOOL)animated
 {
