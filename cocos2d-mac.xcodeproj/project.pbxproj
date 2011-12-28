@@ -3316,6 +3316,7 @@
 		E0DA433D12A03A3C00210ACE /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E0F9256D1224207200EF2362 /* libz.dylib */; };
 		E0DA433E12A03A3C00210ACE /* liblibpng.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E076EDB91225FEAA00DE0DA2 /* liblibpng.a */; };
 		E0DA434912A03AE200210ACE /* FullScreenTest.m in Sources */ = {isa = PBXBuildFile; fileRef = E0DA434812A03AE100210ACE /* FullScreenTest.m */; };
+		FD135B8B14ABA5D5005A4254 /* NSObject+AutoMagicCoding.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6ACDAC14A232D600E95E30 /* NSObject+AutoMagicCoding.m */; };
 		FD6ACCB514A1094F00E95E30 /* A Damn Mess.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E076E7A21225EDD000DE0DA2 /* A Damn Mess.ttf */; };
 		FD6ACCB614A1094F00E95E30 /* Abberancy.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E076E7A31225EDD000DE0DA2 /* Abberancy.ttf */; };
 		FD6ACCB714A1094F00E95E30 /* Abduction.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E076E7A41225EDD000DE0DA2 /* Abduction.ttf */; };
@@ -9667,6 +9668,7 @@
 			files = (
 				E076F20D12268A9800DE0DA2 /* main.m in Sources */,
 				FD6ACD9B14A10B6000E95E30 /* SpriteTest.m in Sources */,
+				FD135B8B14ABA5D5005A4254 /* NSObject+AutoMagicCoding.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
