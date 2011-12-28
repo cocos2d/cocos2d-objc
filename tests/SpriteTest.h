@@ -27,50 +27,55 @@
 {
     CCTextureAtlas	*atlas;
 }
+
++(id) nodeWithInsideLayer: (CCLayer *) insideLayer;
+-(id) initWithInsideLayer: (CCLayer *) insideLayer;
+
 -(NSString*) title;
 -(NSString*) subtitle;
+-(CCLayer *) insideLayer;
 @end
 
 
-@interface Sprite1 : SpriteDemo
+@interface Sprite1 : CCLayer 
 {}
 -(void) addNewSpriteWithCoords:(CGPoint)p;
 @end
 
-@interface SpriteBatchNode1 : SpriteDemo
+@interface SpriteBatchNode1 : CCLayer
 {}
 -(void) addNewSpriteWithCoords:(CGPoint)p;
 @end
 
-@interface SpriteColorOpacity : SpriteDemo
+@interface SpriteColorOpacity : CCLayer
 {}
 @end
 
-@interface SpriteBatchNodeColorOpacity : SpriteDemo
+@interface SpriteBatchNodeColorOpacity : CCLayer
 {}
 @end
 
-@interface SpriteZOrder : SpriteDemo
+@interface SpriteZOrder : CCLayer
 {
 	int dir;
 }
 @end
 
-@interface SpriteBatchNodeZOrder : SpriteDemo
+@interface SpriteBatchNodeZOrder : CCLayer
 {
 	int dir;
 }
 @end
 
-@interface SpriteBatchNodeReorder : SpriteDemo
+@interface SpriteBatchNodeReorder : CCLayer
 {}
 @end
 
-@interface SpriteBatchNodeReorderIssue744 : SpriteDemo
+@interface SpriteBatchNodeReorderIssue744 : CCLayer
 {}
 @end
 
-@interface SpriteBatchNodeReorderIssue766 : SpriteDemo
+@interface SpriteBatchNodeReorderIssue766 : CCLayer
 {
 	CCSpriteBatchNode *batchNode;
 	CCSprite *sprite1;
@@ -79,7 +84,7 @@
 }
 @end
 
-@interface NodeSort : SpriteDemo
+@interface NodeSort : CCLayer
 {
 	CCNode *node;
 	CCSprite *sprite1;
@@ -90,7 +95,7 @@
 }
 @end
 
-@interface SpriteBatchNodeReorderSameIndex : SpriteDemo
+@interface SpriteBatchNodeReorderSameIndex : CCLayer
 {
 	CCSpriteBatchNode *batchNode;
 	CCSprite *sprite1;
@@ -101,25 +106,25 @@
 }
 @end
 
-@interface SpriteBatchNodeReorderOneChild : SpriteDemo
+@interface SpriteBatchNodeReorderOneChild : CCLayer
 {
 	CCSpriteBatchNode *batchNode_;
 	CCSprite *reorderSprite_;		
 }
 @end
 
-@interface SpriteBatchNodeReorderIssue767 : SpriteDemo
+@interface SpriteBatchNodeReorderIssue767 : CCLayer
 {}
 @end
 
-@interface SpriteZVertex : SpriteDemo
+@interface SpriteZVertex : CCLayer
 {
 	int dir;
 	float	time;
 }
 @end
 
-@interface SpriteBatchNodeZVertex : SpriteDemo
+@interface SpriteBatchNodeZVertex : CCLayer
 {
 	int dir;
 	float	time;
@@ -127,35 +132,35 @@
 @end
 
 
-@interface SpriteAnchorPoint : SpriteDemo
+@interface SpriteAnchorPoint : CCLayer
 {}
 @end
 
-@interface SpriteBatchNodeAnchorPoint : SpriteDemo
+@interface SpriteBatchNodeAnchorPoint : CCLayer
 {}
 @end
 
-@interface Sprite6 : SpriteDemo
+@interface Sprite6 : CCLayer
 {}
 @end
 
-@interface SpriteFlip : SpriteDemo
+@interface SpriteFlip : CCLayer
 {}
 @end
 
-@interface SpriteBatchNodeFlip : SpriteDemo
+@interface SpriteBatchNodeFlip : CCLayer
 {}
 @end
 
-@interface SpriteAliased : SpriteDemo
+@interface SpriteAliased : CCLayer
 {}
 @end
 
-@interface SpriteBatchNodeAliased : SpriteDemo
+@interface SpriteBatchNodeAliased : CCLayer
 {}
 @end
 
-@interface SpriteNewTexture : SpriteDemo
+@interface SpriteNewTexture : CCLayer
 {
 	BOOL	usingTexture1;
 	CCTexture2D	*texture1;
@@ -164,7 +169,7 @@
 -(void) addNewSprite;
 @end
 
-@interface SpriteBatchNodeNewTexture : SpriteDemo
+@interface SpriteBatchNodeNewTexture : CCLayer
 {
 	CCTexture2D	*texture1;
 	CCTexture2D	*texture2;
@@ -172,122 +177,122 @@
 -(void) addNewSprite;
 @end
 
-@interface SpriteAnimationSplit : SpriteDemo
+@interface SpriteAnimationSplit : CCLayer
 {}
 @end
 
-@interface SpriteFrameTest : SpriteDemo
+@interface SpriteFrameTest : CCLayer
 {
 	CCSprite *sprite1, *sprite2;
 	int counter;
 }
 @end
 
-@interface SpriteFrameAliasNameTest : SpriteDemo
+@interface SpriteFrameAliasNameTest : CCLayer
 {}
 @end
 
-@interface SpriteOffsetAnchorRotation : SpriteDemo
+@interface SpriteOffsetAnchorRotation : CCLayer
 {}
 @end
 
-@interface SpriteBatchNodeOffsetAnchorRotation : SpriteDemo
+@interface SpriteBatchNodeOffsetAnchorRotation : CCLayer
 {}
 @end
 
-@interface SpriteOffsetAnchorScale : SpriteDemo
+@interface SpriteOffsetAnchorScale : CCLayer
 {}
 @end
 
-@interface SpriteBatchNodeOffsetAnchorScale : SpriteDemo
+@interface SpriteBatchNodeOffsetAnchorScale : CCLayer
 {}
 @end
 
-@interface SpriteOffsetAnchorSkew : SpriteDemo
+@interface SpriteOffsetAnchorSkew : CCLayer
 {}
 @end
 
-@interface SpriteBatchNodeOffsetAnchorSkew : SpriteDemo
+@interface SpriteBatchNodeOffsetAnchorSkew : CCLayer
 {}
 @end
 
-@interface SpriteOffsetAnchorSkewScale : SpriteDemo
+@interface SpriteOffsetAnchorSkewScale : CCLayer
 {}
 @end
 
-@interface SpriteBatchNodeOffsetAnchorSkewScale : SpriteDemo
-{}
-@end
-
-
-@interface SpriteOffsetAnchorFlip : SpriteDemo
-{}
-@end
-
-@interface SpriteBatchNodeOffsetAnchorFlip : SpriteDemo
+@interface SpriteBatchNodeOffsetAnchorSkewScale : CCLayer
 {}
 @end
 
 
-@interface SpriteHybrid : SpriteDemo
+@interface SpriteOffsetAnchorFlip : CCLayer
+{}
+@end
+
+@interface SpriteBatchNodeOffsetAnchorFlip : CCLayer
+{}
+@end
+
+
+@interface SpriteHybrid : CCLayer
 {
 	BOOL	usingSpriteBatchNode;
 }
 @end
 
-@interface SpriteBatchNodeChildren : SpriteDemo
+@interface SpriteBatchNodeChildren : CCLayer
 {}
 @end
 
-@interface SpriteBatchNodeChildren2 : SpriteDemo
+@interface SpriteBatchNodeChildren2 : CCLayer
 {}
 @end
 
-@interface SpriteBatchNodeChildrenZ : SpriteDemo
+@interface SpriteBatchNodeChildrenZ : CCLayer
 {}
 @end
 
-@interface SpriteChildrenVisibility : SpriteDemo
+@interface SpriteChildrenVisibility : CCLayer
 {}
 @end
 
-@interface SpriteChildrenVisibilityIssue665 : SpriteDemo
+@interface SpriteChildrenVisibilityIssue665 : CCLayer
 {}
 @end
 
-@interface SpriteChildrenAnchorPoint : SpriteDemo
+@interface SpriteChildrenAnchorPoint : CCLayer
 {}
 @end
 
-@interface SpriteBatchNodeChildrenAnchorPoint : SpriteDemo
+@interface SpriteBatchNodeChildrenAnchorPoint : CCLayer
 {}
 @end
 
-@interface SpriteBatchNodeChildrenScale : SpriteDemo
+@interface SpriteBatchNodeChildrenScale : CCLayer
 {}
 @end
 
-@interface SpriteChildrenChildren: SpriteDemo
+@interface SpriteChildrenChildren: CCLayer
 {}
 @end
 
-@interface SpriteBatchNodeChildrenChildren: SpriteDemo
+@interface SpriteBatchNodeChildrenChildren: CCLayer
 {}
 @end
 
-@interface SpriteNilTexture : SpriteDemo
+@interface SpriteNilTexture : CCLayer
 {}
 @end
 
-@interface SpriteSubclass : SpriteDemo
+@interface SpriteSubclass : CCLayer
 {}
 @end
 
-@interface AnimationCache : SpriteDemo
+@interface AnimationCache : CCLayer
 {}
 @end
 
-@interface AnimationCacheFile : SpriteDemo
+@interface AnimationCacheFile : CCLayer
 {}
 @end
 
