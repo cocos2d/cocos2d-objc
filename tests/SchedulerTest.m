@@ -713,7 +713,7 @@ Class restartTest()
 	
 #ifdef __CC_PLATFORM_IOS
 	AppController *app = (AppController*) [[UIApplication sharedApplication] delegate];
-	UIViewController *ctl = [app rootViewController];
+	UIViewController *ctl = [app navController];
 	
 	[ctl.view addSubview: sliderCtl];
 	
@@ -919,7 +919,7 @@ Class restartTest()
 #ifdef __CC_PLATFORM_IOS
 	
 	AppController *app = (AppController*) [[UIApplication sharedApplication] delegate];
-	UIViewController *ctl = [app rootViewController];
+	UIViewController *ctl = [app navController];
 	
 	[ctl.view addSubview: sliderCtl1];
 	[ctl.view addSubview: sliderCtl2];

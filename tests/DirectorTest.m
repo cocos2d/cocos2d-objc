@@ -155,7 +155,7 @@ Class restartAction()
 			
 			AppController *app = (AppController*)[[UIApplication sharedApplication] delegate];
 
-			UINavigationController *nav = [app rootViewController];
+			UINavigationController *nav = [app navController];
 			[nav pushViewController:viewController animated:YES];
 		}
 							];
@@ -170,7 +170,7 @@ Class restartAction()
 -(void) buttonBack:(id)sender
 {
 	AppController *app = (AppController*) [[UIApplication sharedApplication] delegate];
-	UINavigationController *nav = [app rootViewController];
+	UINavigationController *nav = [app navController];
 	[nav popViewControllerAnimated:YES];
 }
 
@@ -201,7 +201,7 @@ Class restartAction()
 
 			AppController *app = (AppController*) [[UIApplication sharedApplication] delegate];
 			
-			[[app rootViewController] presentModalViewController:achivementViewController animated:YES];
+			[[app navController] presentModalViewController:achivementViewController animated:YES];
 		}
 							];
 
@@ -213,7 +213,7 @@ Class restartAction()
 			
 			AppController *app = (AppController*) [[UIApplication sharedApplication] delegate];
 			
-			[[app rootViewController] presentModalViewController:leaderboardViewController animated:YES];
+			[[app navController] presentModalViewController:leaderboardViewController animated:YES];
 		}
 							];
 
@@ -238,13 +238,13 @@ Class restartAction()
 -(void) achievementViewControllerDidFinish:(GKAchievementViewController *)viewController
 {
 	AppController *app = (AppController*) [[UIApplication sharedApplication] delegate];
-	[[app rootViewController] dismissModalViewControllerAnimated:YES];
+	[[app navController] dismissModalViewControllerAnimated:YES];
 }
 
 -(void) leaderboardViewControllerDidFinish:(GKLeaderboardViewController *)viewController
 {
 	AppController *app = (AppController*) [[UIApplication sharedApplication] delegate];
-	[[app rootViewController] dismissModalViewControllerAnimated:YES];
+	[[app navController] dismissModalViewControllerAnimated:YES];
 }
 
 

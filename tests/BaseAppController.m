@@ -16,7 +16,7 @@
 #import "cocos2d.h"
 @implementation BaseAppController
 
-@synthesize window=window_, rootViewController=rootViewController_, director=director_;
+@synthesize window=window_, navController=navController_, director=director_;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -39,26 +39,26 @@
 // getting a call, pause the game
 -(void) applicationWillResignActive:(UIApplication *)application
 {
-	if( [rootViewController_ visibleViewController] == director_ )
+	if( [navController_ visibleViewController] == director_ )
 		[director_ pause];
 }
 
 // call got rejected
 -(void) applicationDidBecomeActive:(UIApplication *)application
 {
-	if( [rootViewController_ visibleViewController] == director_ )
+	if( [navController_ visibleViewController] == director_ )
 		[director_ resume];
 }
 
 -(void) applicationDidEnterBackground:(UIApplication*)application
 {
-	if( [rootViewController_ visibleViewController] == director_ )
+	if( [navController_ visibleViewController] == director_ )
 		[director_ stopAnimation];
 }
 
 -(void) applicationWillEnterForeground:(UIApplication*)application
 {
-	if( [rootViewController_ visibleViewController] == director_ )
+	if( [navController_ visibleViewController] == director_ )
 		[director_ startAnimation];
 }
 
@@ -83,7 +83,7 @@
 - (void) dealloc
 {
 	[window_ release];
-	[rootViewController_ release];
+	[navController_ release];
 	
 	[super dealloc];
 }

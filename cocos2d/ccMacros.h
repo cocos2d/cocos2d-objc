@@ -145,9 +145,9 @@ do	{																							\
 	[director_ setView:__glView];																\
 	[director_ setDelegate:self];																\
 	director_.wantsFullScreenLayout = YES;														\
-	rootViewController_ = [[UINavigationController alloc] initWithRootViewController:director_];\
-	rootViewController_.navigationBarHidden = YES;												\
-	[window_ addSubview:rootViewController_.view];												\
+	navController_ = [[UINavigationController alloc] initWithRootViewController:director_];		\
+	navController_.navigationBarHidden = YES;													\
+	[window_ addSubview:navController_.view];													\
 	[window_ makeKeyAndVisible];																\
 } while(0)
 

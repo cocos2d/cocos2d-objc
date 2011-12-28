@@ -521,7 +521,7 @@ enum {
 #ifdef __CC_PLATFORM_IOS
 		
 		AppController *app = (AppController*) [[UIApplication sharedApplication] delegate];
-		UIViewController *ctl = [app rootViewController];
+		UIViewController *ctl = [app navController];
 		
 		[ctl.view addSubview: sliderCtl_];
 		

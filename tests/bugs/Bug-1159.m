@@ -102,13 +102,13 @@
 	if( ! [director_ enableRetinaDisplay:YES] )
 		CCLOG(@"Retina Display Not supported");
 	
-	rootViewController_ = [[UINavigationController alloc] initWithRootViewController:director_];
-	rootViewController_.navigationBarHidden = YES;
+	navController_ = [[UINavigationController alloc] initWithRootViewController:director_];
+	navController_.navigationBarHidden = YES;
 	
 	// set the Navigation Controller as the root view controller
-	[window_ setRootViewController:rootViewController_];
+	[window_ setRootViewController:navController_];
 	
-	[rootViewController_ release];
+	[navController_ release];
 	
 	// make main window visible
 	[window_ makeKeyAndVisible];	

@@ -18,13 +18,13 @@
 @interface BaseAppController : NSObject <UIApplicationDelegate, CCDirectorDelegate>
 {
 	UIWindow *window_;
-	UINavigationController *rootViewController_;
+	UINavigationController *navController_;
 
 	CCDirectorIOS	*director_;							// weak ref
 }
 
 @property (nonatomic, retain) UIWindow *window;
-@property (readonly) UINavigationController *rootViewController;
+@property (readonly) UINavigationController *navController;
 @property (readonly) CCDirectorIOS *director;
 
 @end
