@@ -432,61 +432,59 @@ enum nodeTags {
 //  TODO: more to go:
 // ---------------------
 //
-// CCAtlasNode - should be pretty easy, but i never used it - dunno if i can provide good test.
-// CCLabelAtlas - very easy after supporting CCAtlasNode
+// * CCAtlasNode - should be pretty easy, but i never used it - dunno if i can provide good test.
 //
-// CCTextureAtlas - just save texture & capacity & use initWithFile:capacity: and you should be ok.
-// CCSpriteBatchNode - don't save @"descendants" & you'll be cool.
-// CCLabelMBFont - some work needed (3 structs, 1 additional class), but should be straight forward after BatchNode.
-// 
-// CCLabelTTF - hackish stuff - it's subclass of CCSprite & it creates custom texture each time. But i think it's possible
+// * CCLabelAtlas - very easy after supporting CCAtlasNode
+//
+// * CCTextureAtlas - just save texture & capacity & use initWithFile:capacity: and you should be ok.
+//
+// * CCSpriteBatchNode - don't save @"descendants" & you'll be cool.
+//
+// * CCLabelMBFont - some work needed (3 structs, 1 additional class), but should be straight forward after BatchNode.
+//
+// * CCLabelTTF - hackish stuff - it's subclass of CCSprite & it creates custom texture each time. But i think it's possible
 // just don't save the texture =).
 //
-// CCAnimation - should work out of the box, cause CCSpriteFrame is ready.
+// * CCAnimation - should work out of the box, cause CCSpriteFrame is ready.
 //
-// CCMenu - straight-forward. Only selectedItem should be saved as selectedItemIndex number with dynamic setter.
-// CCMenuItems - lot of work, especially for Label menu items, but it should be ok. Will not save invocation & blocks, of course.
+// * CCMenu - straight-forward. Only selectedItem should be saved as selectedItemIndex number with dynamic setter.
+//
+// * CCMenuItems - lot of work, especially for Label menu items, but it should be ok. Will not save invocation & blocks, of course.
 // Developer should use CCNode name & CCNodeCache to set blocks/invocations.
 //
-// 
-//
-// CCParalaxNode - pretty easy, just need to save CGPointObject's in parallaxRatio array & then use it in
+// * CCParalaxNode - pretty easy, just need to save CGPointObject's in parallaxRatio array & then use it in
 // -initWithDictionaryRepresentation: for parallaxRatio argument, when reading childs from loadedChildren.
 //
-// 
-//
-// CCTMXTiledMap - incomplete support. Save only tmx filename. It's supported by
+// * CCTMXTiledMap - incomplete support. Save only tmx filename. It's supported by
 // cocos2d-iphone. The only issue is that if you're changed something after loading tmx
 // - this will not be saved (full support is added in  "Possible future features" section below )
 //
-// CCScene - should work without any modifications - cause it's simple CCNode.
-// CCTransition & it's subclasses - should be VERY simple. Should we really support this??????????
+// * CCScene - should work without any modifications - cause it's simple CCNode.
+// * CCTransition & it's subclasses - should be VERY simple. Should we really support this??????????
 //
-// CCProgressTimer - straight-forward.
+// * CCProgressTimer - straight-forward.
 //
 // ====== ACTIONS ======
 //
-// CCAction - just save tag. target & original target will be set on runAction.
-// Add -allActionsForTarget: to CCActionManager to retreive all actions.
-// Add dynamic property - array of actions.
-// For getter - use CCActionManager#allActionsForTarget:
-// For setter - use runAction
+// * CCAction - just save tag. target & original target will be set on runAction.
+//    Add -allActionsForTarget: to CCActionManager to retreive all actions.
+//    Add dynamic property - array of actions.
+//    For getter - use CCActionManager#allActionsForTarget:
+//    For setter - use runAction
 //
-// CCFiniteTimeAction - save tag & duration.
-// CCRepeatForever - save tag & innerAction.
-// CCSpeed - save tag speed & innerAction.
-// CCFollow - change followedNode to followedNodeName - simple!
-// boundarySet(simple BOOL), boundaryRect (need to calculate it back to rect 
-// from 4 floats on save.)
-// To load CCFollow - just set followedNode on first CCAction#update: call - at this time
-// node should alredy exist in CCNodeCache.
+// * CCFiniteTimeAction - save tag & duration.
+//
+// * CCRepeatForever - save tag & innerAction.
+//
+// * CCSpeed - save tag speed & innerAction.
+//
+// * CCFollow - change followedNode to followedNodeName - simple!
+//      boundarySet(simple BOOL), boundaryRect (need to calculate it back to rect 
+//      from 4 floats on save.)
+//      To load CCFollow - just set followedNode on first CCAction#update: call - at this time
+//      node should alredy exist in CCNodeCache.
 //
 // TODO: investigate further.
-//
-//
-//
-//
-//
 //
 // TODO: Look through cocos2d-iphone documentation for any classes, that i may have
 // skipped here & that we need to support.
