@@ -446,17 +446,18 @@ enum nodeTags {
 //
 // CCMenu - straight-forward. Only selectedItem should be saved as selectedItemIndex number with dynamic setter.
 // CCMenuItems - lot of work, especially for Label menu items, but it should be ok. Will not save invocation & blocks, of course.
+// Developer should use CCNode name & CCNodeCache to set blocks/invocations.
 //
-// CCParticleBatchNode & other from "Particle Nodes" - OMG, fucking particles! Anyway - it should be possible, just needs time.
+// 
 //
 // CCParalaxNode - pretty easy, just need to save CGPointObject's in parallaxRatio array & then use it in
-// -initWIthDictionaryRepresentation: for parallaxRatio argument, when reading childs from loadedChildren.
+// -initWithDictionaryRepresentation: for parallaxRatio argument, when reading childs from loadedChildren.
 //
-// CCTileMapAtlas - DEPRECATED. No AMC Support.
+// 
 //
-// CCTMXLayer, CCTMXObjectGroup, CCTMXTiledMap - lot of pain, and Tiled editor
-// file format is already supported in cocos2d-iphone.
-// Conclusion: support only -initWithTMXFile: - use key for this & forget about it.
+// CCTMXTiledMap - incomplete support. Save only tmx filename. It's supported by
+// cocos2d-iphone. The only issue is that if you're changed something after loading tmx
+// - this will not be saved (full support is added in  "Possible future features" section below )
 //
 // CCScene - should work without any modifications - cause it's simple CCNode.
 // CCTransition & it's subclasses - should be VERY simple. Should we really support this??????????
@@ -487,24 +488,38 @@ enum nodeTags {
 //
 //
 //
-// TODO: think about Timers, updates, look through CCScheduler.
 // TODO: Look through cocos2d-iphone documentation for any classes, that i may have
 // skipped here & that we need to support.
 //
 //
-// ++++++ CCNodeCache ++++++
-// ++++++ CCNode.name property +++++++ 
-// to use in CCNodeCache, default value is nil.
-// CCNode should update CCNodeCache about changes in it's name.
-// CCNodeCache SHOULDN'T retain Nodes. Node should remove itself from CCNodeCache
-// on dealloc.
+// ====== New Cocos2D-iPhone Features & Classes for AMC ======
+// 1. CCNodeCache & CCNode.name property
+//   * CCNode.name: to use in CCNodeCache, default value is nil.
+//       CCNode.name is dynamic property - all CCNodeCache calls must be done only from
+//       CCNode#setName setter. If name set to nil - node must be removed from CCNodeCache.
+//       If node name is changed  - node should change it's name in CCNodeCache.
+//       If node name is set first time - node should register in CCNodeCache.
+//       On dealloc node sets it's name to nil - and this removes node from cache.
+//   * CCNodeCache SHOULDN'T retain Nodes. 
+//
+// ====== Possible future features ======
+//  * CCTimer & scheduled methods. (Not used by Cocos2D-iPhone classes 
+// themselves - should be used by developer expicitly ).
+//  * CCParticleBatchNode & other from "Particle Nodes" - OMG, fucking particles! Anyway - it should be possible, just needs time.
+//  * Full support for CCTMXLayer, CCTMXObjectGroup, CCTMXTiledMap. That means that you can change something & it will be saved with changes.
+//  *
 //
 // ====== Not to be supported by AMC =====
-// Can't imagine someone need to save/load this.
+//
+// 1. Can't imagine someone need to save/load this.
 //  * CCGrabber, 
 //  * CCRenderTexture, 
 //  * CCRibbon,
 //  * CCMotionStreak
+//
+// 2. CCTileMapAtlas - DEPRECATED. 
+//
+//
 //
 
 
