@@ -432,6 +432,11 @@ enum nodeTags {
 //  TODO: more to go:
 // ---------------------
 //
+// * CCLayer - currently saved as node - without mouse, keyboard, touch & accelerometer. Add keys to AMCKeys
+// * CCLayerColor
+// * CCLayerGradient
+// * CCLayerMultiplex
+//
 // * CCAtlasNode - should be pretty easy, but i never used it - dunno if i can provide good test.
 //
 // * CCLabelAtlas - very easy after supporting CCAtlasNode
