@@ -25,7 +25,6 @@
 
 @interface SpriteDemo: CCLayer
 {
-    CCTextureAtlas	*atlas;
 }
 
 +(id) nodeWithInsideLayer: (CCLayer *) insideLayer;
