@@ -84,11 +84,8 @@
 		glFramebufferTexture2D(CC_GL_FRAMEBUFFER, CC_GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texture_.name, 0);
     
 		// check if it worked (probably worth doing :) )
-		GLuint status = glCheckFramebufferStatus(CC_GL_FRAMEBUFFER);
-		if (status != CC_GL_FRAMEBUFFER_COMPLETE)
-		{
-			[NSException raise:@"Render Texture" format:@"Could not attach texture to framebuffer"];
-		}
+		NSAssert( glCheckFramebufferStatus(CC_GL_FRAMEBUFFER) == CC_GL_FRAMEBUFFER_COMPLETE, @"Could not attach texture to framebuffer");
+
 		[texture_ setAliasTexParameters];
 		
 		sprite_ = [CCSprite spriteWithTexture:texture_];

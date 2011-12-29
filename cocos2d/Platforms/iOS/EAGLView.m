@@ -179,7 +179,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 									[NSNumber numberWithBool:preserveBackbuffer_], kEAGLDrawablePropertyRetainedBacking,
 									pixelformat_, kEAGLDrawablePropertyColorFormat, nil];
 	
-	// Try ES2 renderer first
+	// ES2 renderer only
 	renderer_ = [[ES2Renderer alloc] initWithDepthFormat:depthFormat_
 										 withPixelFormat:[self convertPixelFormat:pixelformat_]
 										  withSharegroup:sharegroup

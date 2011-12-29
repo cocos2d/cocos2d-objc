@@ -135,7 +135,7 @@ Class restartAction()
 		CGSize s = [[CCDirector sharedDirector] winSize];	
 		
 		// create a render texture, this is what we're going to draw into
-		target = [[CCRenderTexture renderTextureWithWidth:s.width height:s.height] retain];
+		target = [[CCRenderTexture alloc] initWithWidth:s.width height:s.height pixelFormat:kCCTexture2DPixelFormat_RGBA8888];
 		[target setPosition:ccp(s.width/2, s.height/2)];
 		
 		
@@ -329,7 +329,8 @@ Class restartAction()
 
 
 		/* A2 & B2 setup */
-		CCRenderTexture *rend = [CCRenderTexture renderTextureWithWidth:32 height:64];
+		CCRenderTexture *rend = [CCRenderTexture renderTextureWithWidth:32 height:64 pixelFormat:kCCTexture2DPixelFormat_RGBA4444];
+
 		
 		// It's possible to modify the RenderTexture blending function by
 //		[[rend sprite] setBlendFunc:(ccBlendFunc) {GL_ONE, GL_ONE_MINUS_SRC_ALPHA}];
