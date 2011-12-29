@@ -513,6 +513,9 @@ enum nodeTags {
 
 @end
 
+// TODO: Sprite OpenGL Z vertex - 3d rotation of sprite doesn't get saved.
+// Need CCCamera support? Try it! If not - investigate in CCOrbitCamera.
+
 // TODO: Node + CCCamera (not supported by AMC now)
 // TODO: Node + CCGridBase (not supported by AMC now)
 // TODO: Node + vertexZ (should work, just got no explicit test)
