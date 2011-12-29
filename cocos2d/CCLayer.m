@@ -33,6 +33,7 @@
 #import "CCDirector.h"
 #import "ccMacros.h"
 #import "Support/CGPointExtension.h"
+#import "AutoMagicCoding/AutoMagicCoding/NSObject+AutoMagicCoding.h"
 
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 #import "Platforms/iOS/CCTouchDispatcher.h"
@@ -45,6 +46,26 @@
 #pragma mark Layer
 
 @implementation CCLayer
+
+-(NSArray *) AMCKeysForDictionaryRepresentation
+{
+    NSArray *nodeKeys = [super AMCKeysForDictionaryRepresentation];
+    
+    #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+    return [nodeKeys arrayByAddingObjectsFromArray:
+                   [NSArray arrayWithObjects:
+                    @"isTouchEnabled", 
+                    @"isAccelerometerEnabled",
+                    nil]];
+    #elif defined (__MAC_OS_X_VERSION_MAX_ALLOWED)
+    return [nodeKeys arrayByAddingObjectsFromArray:
+            [NSArray arrayWithObjects: 
+             @"isKeyboardEnabled", 
+             @"isMouseEnabled", 
+             @"isTouchEnabled",
+             nil]];
+    #endif
+}
 
 #pragma mark Layer - Init
 -(id) init
