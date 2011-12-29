@@ -456,6 +456,9 @@ enum nodeTags {
 - (void) load
 {
     [super load];
+    
+    CCLayerMultiplex *layer = (CCLayerMultiplex *)[self getChildByTag:kLayer];
+    [layer runAction:[self flipFlopActionForMulti: layer]];
 }
 
 -(CCLayer *) insideLayer
