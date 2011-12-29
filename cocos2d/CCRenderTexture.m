@@ -28,6 +28,7 @@
 #import "ccMacros.h"
 #import "GLProgram.h"
 #import "ccGLState.h"
+#import "CCConfiguration.h"
 #import "Support/ccUtils.h"
 #import "Support/CCFileUtils.h"
 
@@ -66,8 +67,16 @@
 		glGetIntegerv(CC_GL_FRAMEBUFFER_BINDING, &oldFBO_);
 		
 		// textures must be power of two
-		NSUInteger powW = ccNextPOT(w);
-		NSUInteger powH = ccNextPOT(h);
+		NSUInteger powW;
+		NSUInteger powH;
+
+		if( [[CCConfiguration sharedConfiguration] supportsNPOT] ) {
+			powW = w;
+			powH = h;
+		} else {
+			powW = ccNextPOT(w);
+			powH = ccNextPOT(h);
+		}
 		
 		void *data = malloc((int)(powW * powH * 4));
 		memset(data, 0, (int)(powW * powH * 4));

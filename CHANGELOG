@@ -21,6 +21,7 @@ version 2.0-beta2 XX-Dec-2011
 . [FIX] Director: CC_DIRECTOR_INIT() centers main window (Mac)
 . [FIX] Menu: Blocks API doesn't crash on Mac
 . [FIX] RenderTexture: Works with RGB888 (issue #1293)
+. [FIX] RenderTexture: Supports NPOT textures (issue #1291)
 . [FIX] Test: ChipmunkTest works on Mac
 . [FIX] Tests: Box2dTest works on Mac
 . [FIX] Tests: MenuTestBlocks removed. Merged into MenuTest
