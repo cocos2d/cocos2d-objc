@@ -14,6 +14,7 @@ static int sceneIdx=-1;
 static NSString *transitions[] = {	
     @"NodeAMC",
 	@"SpriteAMC1",
+    @"LayersAMC",
 };
 
 Class nextAction(void);
@@ -418,6 +419,93 @@ enum nodeTags {
 {
     return @"It should load the same as was saved.";
 }
+@end
+
+@interface CCLayerMultiplex(flipFlop)
+- (void) flip;
+@end
+
+@implementation CCLayerMultiplex(flipFlop)
+- (void) flip
+{
+    static unsigned int l = 0;
+    
+    [self switchTo: l];
+    
+    l++;
+    if (l>1)
+        l = 0;
+}
+@end
+
+
+@implementation LayersAMC
+
+- (CCAction *) flipFlopActionForMulti: (CCLayerMultiplex *) multi
+{
+    return [CCRepeatForever actionWithAction: 
+            [CCSequence actions: 
+             [CCDelayTime actionWithDuration:0.5f],
+             [CCCallFunc actionWithTarget: multi selector:@selector(flip)],
+             [CCDelayTime actionWithDuration:0.5f],
+             [CCCallFunc actionWithTarget: multi selector:@selector(flip)],
+             nil]
+            ];
+}
+
+- (void) load
+{
+    [super load];
+}
+
+-(CCLayer *) insideLayer
+{    
+	CCLayer *layer = [CCLayer node];
+    
+    CGSize s = [[CCDirector sharedDirector] winSize];
+	CCLayerColor *color1 = [CCLayerColor layerWithColor:ccc4(0x96, 0x51, 0x17, 0xFF) width: s.width/2 height:s.height/2];		
+    CCLayerColor *color2 = [CCLayerColor layerWithColor:ccc4(0xFF, 0x51, 0x17, 0xAA) width: s.width/4 height:s.height/4];
+    CCLayerGradient *grad1 = [CCLayerGradient layerWithColor: ccc4(0xFF, 0x17, 0x17, 0xFF)
+                                                    fadingTo: ccc4(0x11, 0xFF, 0x17, 0xCC) 
+                                                 alongVector: ccp(0.5f, 1.0f)];
+    CCLayerGradient *grad2 = [CCLayerGradient layerWithColor: ccc4(0xAA, 0x51, 0xFF, 0xDD)
+                                                    fadingTo: ccc4(0x0F, 0x51, 0xFF, 0xCC) 
+                                                 alongVector: ccp(0.3f, 1.0f)];
+    grad2.contentSize = CGSizeMake(s.width/6, s.height/6);
+    grad2.rotation = 45;
+    
+    color1.position = ccp(s.width/2, s.height/2);
+    color2.position = ccp(s.width/4, s.height/2);
+    color1.anchorPoint = ccp(0.5f, 0.5f);
+    color2.anchorPoint = ccp(0.5f, 0.5f);
+    color2.rotation = 45;
+    color1.isRelativeAnchorPoint = YES;
+    color2.isRelativeAnchorPoint = YES;
+    grad2.isRelativeAnchorPoint = YES;
+    grad2.anchorPoint = ccp(0.5f, 0.5f);
+    grad2.position = ccp(s.width/4, s.height/4);
+	
+    [layer addChild:grad1];
+    [layer addChild:color1];
+    [layer addChild:color2];
+    [layer addChild:grad2];
+    
+    CCLayerColor *anotherLayer = [CCLayerColor layerWithColor: ccc4(255, 0, 0, 255)];
+    CCLayerMultiplex *multi = [CCLayerMultiplex layerWithLayers: layer, anotherLayer, nil];
+    [multi runAction:[self flipFlopActionForMulti: multi]];
+	return multi;
+}
+
+-(NSString *) title
+{
+	return @"CCLayer (Color, Gradient & Multiplex)";
+}
+
+- (NSString *) subtitle
+{
+    return @"They should load the same as were saved.";
+}
+
 @end
 
 // TODO: Node + CCCamera (not supported by AMC now)

@@ -56,6 +56,11 @@
 -(CCSprite *) spriteWithCoords:(CGPoint)p;
 @end
 
+@interface LayersAMC : AMCDemo {
+
+}
+@end
+
 
 
 
