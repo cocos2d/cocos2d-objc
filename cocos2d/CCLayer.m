@@ -427,6 +427,61 @@
 	opacity_ = o;
 	[self updateColor];
 }
+
+#pragma mark AutoMagicCoding
+
+- (NSArray *) AMCKeysForDictionaryRepresentation
+{
+    NSArray *layerKeys = [super AMCKeysForDictionaryRepresentation];
+    NSArray *layerColorKeys = [NSArray arrayWithObjects:
+                               @"opacity",
+                               @"color",
+                               @"blendFunc",
+                               nil];
+    
+    return [layerKeys arrayByAddingObjectsFromArray: layerColorKeys ];
+}
+
+- (NSString *) AMCEncodeStructWithValue: (NSValue *) structValue withName: (NSString *) structName
+{
+    if ([structName isEqualToString: @"_ccColor3B"]
+        || [structName isEqualToString: @"ccColor3B"])
+    {
+        ccColor3B color;
+        [structValue getValue: &color];
+        return NSStringFromCCColor3B(color);
+    }
+    else if ([structName isEqualToString: @"_ccBlendFunc"]
+             || [structName isEqualToString: @"ccBlendFunc"])
+    {
+        ccBlendFunc blendFunc;
+        [structValue getValue: &blendFunc];
+        return NSStringFromCCBlendFunc(blendFunc);
+    }
+    else
+        return [super AMCEncodeStructWithValue:structValue withName:structName];
+}
+
+- (NSValue *) AMCDecodeStructFromString: (NSString *)value withName: (NSString *) structName
+{
+    if ([structName isEqualToString: @"_ccColor3B"]
+        || [structName isEqualToString: @"ccColor3B"])
+    {
+        ccColor3B color = ccColor3BFromNSString(value);
+        
+        return [NSValue valueWithBytes: &color objCType: @encode(ccColor3B) ];
+    }
+    else if ([structName isEqualToString: @"_ccBlendFunc"]
+             || [structName isEqualToString: @"ccBlendFunc"] )
+    {
+        ccBlendFunc blendFunc = ccBlendFuncFromNSString(value);
+        
+        return [NSValue valueWithBytes: &blendFunc objCType: @encode(ccBlendFunc) ];
+    }
+    else
+        return [super AMCDecodeStructFromString:value withName:structName];
+}
+
 @end
 
 
@@ -570,12 +625,39 @@
 	compressedInterpolation_ = compress;
 	[self updateColor];
 }
+
+#pragma mark AutoMagicCoding
+
+- (NSArray *) AMCKeysForDictionaryRepresentation
+{
+    NSArray *layerColorKeys = [super AMCKeysForDictionaryRepresentation];
+    NSArray *layerGradientKeys = [NSArray arrayWithObjects:
+                                  @"startColor",
+                                  @"endColor",
+                                  @"startOpacity",
+                                  @"endOpacity",
+                                  @"vector",
+                                  @"compressedInterpolation",
+                                  nil];
+    
+    return [layerColorKeys arrayByAddingObjectsFromArray: layerGradientKeys ];
+}
+
 @end
 
 #pragma mark -
 #pragma mark MultiplexLayer
 
+@interface CCLayerMultiplex ()
+
+@property(readwrite, retain) NSMutableArray *layers;
+
+@end
+
 @implementation CCLayerMultiplex
+
+@synthesize layers = _layers;
+
 +(id) layerWithLayers: (CCLayer*) layer, ... 
 {
 	va_list args;
@@ -591,51 +673,78 @@
 {
 	if( (self=[super init]) ) {
 	
-		layers_ = [[NSMutableArray arrayWithCapacity:5] retain];
+		self.layers = [NSMutableArray arrayWithCapacity:5];
 		
-		[layers_ addObject: layer];
+		[self.layers addObject: layer];
 		
 		CCLayer *l = va_arg(params,CCLayer*);
 		while( l ) {
-			[layers_ addObject: l];
+			[self.layers addObject: l];
 			l = va_arg(params,CCLayer*);
 		}
 		
 		enabledLayer_ = 0;
-		[self addChild: [layers_ objectAtIndex: enabledLayer_]];
+		[self addChild: [self.layers objectAtIndex: enabledLayer_]];
 	}
 	
 	return self;
 }
 
+- (NSArray *) AMCKeysForDictionaryRepresentation
+{
+    NSArray *layerKeys = [super AMCKeysForDictionaryRepresentation];
+
+    NSArray *layerMultiplexKeys = [NSArray arrayWithObjects:
+                                  @"layers",
+                                  nil];
+    
+    return [layerKeys arrayByAddingObjectsFromArray: layerMultiplexKeys ];
+}
+
+- (id) initWithDictionaryRepresentation:(NSDictionary *)aDict
+{
+    self = [super initWithDictionaryRepresentation: aDict];
+    if (self)
+    {
+        if (!self.layers)
+        {
+            [self release];
+            return nil;
+        }
+        
+        [self addChild: [self.layers objectAtIndex: 0]];
+    }
+    return self;
+}
+
 -(void) dealloc
 {
-	[layers_ release];
+	self.layers = nil;
 	[super dealloc];
 }
 
 -(void) switchTo: (unsigned int) n
 {
-	NSAssert( n < [layers_ count], @"Invalid index in MultiplexLayer switchTo message" );
+	NSAssert( n < [self.layers count], @"Invalid index in MultiplexLayer switchTo message" );
 		
-	[self removeChild: [layers_ objectAtIndex:enabledLayer_] cleanup:YES];
+	[self removeChild: [self.layers objectAtIndex:enabledLayer_] cleanup:YES];
 	
 	enabledLayer_ = n;
 	
-	[self addChild: [layers_ objectAtIndex:n]];		
+	[self addChild: [self.layers objectAtIndex:n]];		
 }
 
 -(void) switchToAndReleaseMe: (unsigned int) n
 {
-	NSAssert( n < [layers_ count], @"Invalid index in MultiplexLayer switchTo message" );
+	NSAssert( n < [self.layers count], @"Invalid index in MultiplexLayer switchTo message" );
 	
-	[self removeChild: [layers_ objectAtIndex:enabledLayer_] cleanup:YES];
+	[self removeChild: [self.layers objectAtIndex:enabledLayer_] cleanup:YES];
 	
-	[layers_ replaceObjectAtIndex:enabledLayer_ withObject:[NSNull null]];
+	[self.layers replaceObjectAtIndex:enabledLayer_ withObject:[NSNull null]];
 	
 	enabledLayer_ = n;
 	
-	[self addChild: [layers_ objectAtIndex:n]];		
+	[self addChild: [self.layers objectAtIndex:n]];		
 }
 @end
 
