@@ -51,6 +51,12 @@
 @end
 
 #pragma mark Sprite + SpriteFrame + Texture
+/** @class SpriteAMC1 Visual test for CCSprite save/load.
+ * 
+ * @todo Remove this test - SpriteTest should be used instead & AMCTest
+ * should contain only additional tests for AMC, that cocos2d tests doesnt
+ * include.
+ */
 @interface SpriteAMC1 : AMCDemo
 {}
 -(CCSprite *) spriteWithCoords:(CGPoint)p;

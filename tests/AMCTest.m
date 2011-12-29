@@ -520,7 +520,6 @@ enum nodeTags {
 //  TODO: more to go:
 // ---------------------
 //
-// * CCLayer - currently saved as node - without mouse, keyboard, touch & accelerometer. Add keys to AMCKeys
 // * CCLayerColor
 // * CCLayerGradient
 // * CCLayerMultiplex
