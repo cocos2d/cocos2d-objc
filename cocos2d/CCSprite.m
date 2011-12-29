@@ -993,7 +993,9 @@ static SEL selSortMethod = NULL;
 
 -(CCSpriteFrame*) displayedFrame
 {	
-	return [CCSpriteFrame frameWithTexture:texture_
+    CCTexture2D *curTex = (usesBatchNode_) ? batchNode_.texture : texture_;
+    
+	return [CCSpriteFrame frameWithTexture:curTex
 							  rectInPixels:rectInPixels_
 								   rotated:rectRotated_
 									offset:unflippedOffsetPositionFromCenter_
