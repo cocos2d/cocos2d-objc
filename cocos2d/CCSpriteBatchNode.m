@@ -34,6 +34,7 @@
 #import "CCDrawingPrimitives.h"
 #import "CCTextureCache.h"
 #import "Support/CGPointExtension.h"
+#import "AutoMagicCoding/AutoMagicCoding/NSObject+AutoMagicCoding.h"
 
 const NSUInteger defaultCapacity = 29;
 
@@ -629,4 +630,53 @@ static SEL selSortMethod =NULL;
 {
 	return textureAtlas_.texture;
 }
+
+#pragma mark CCSpriteBatchNode - AutoMagicCoding Support
+
+- (NSArray *) AMCKeysForDictionaryRepresentation
+{
+    NSArray *nodeKeys = [super AMCKeysForDictionaryRepresentation];
+    NSArray *batchNodeKeys = [NSArray arrayWithObjects: @"textureAtlas", @"blendFunc", nil];
+    
+    return [nodeKeys arrayByAddingObjectsFromArray:batchNodeKeys];
+}
+
+- (id) initWithDictionaryRepresentation:(NSDictionary *)aDict
+{
+    descendants_ = [[CCArray alloc] initWithCapacity: [[aDict objectForKey:@"children"] count] ];
+    self = [super initWithDictionaryRepresentation:aDict];
+    updateAtlasIndexMethod_ = (__typeof__(updateAtlasIndexMethod_)) [self methodForSelector:selUpdateAtlasIndex];
+    [self updateBlendFunc];
+    
+    return self;
+}
+
+- (NSString *) AMCEncodeStructWithValue: (NSValue *) structValue withName: (NSString *) structName
+{
+    if ([structName isEqualToString: @"_ccBlendFunc"]
+             || [structName isEqualToString: @"ccBlendFunc"])
+    {
+        ccBlendFunc blendFunc;
+        [structValue getValue: &blendFunc];
+        return NSStringFromCCBlendFunc(blendFunc);
+    }
+    else
+        return [super AMCEncodeStructWithValue:structValue withName:structName];
+}
+
+- (NSValue *) AMCDecodeStructFromString: (NSString *)value withName: (NSString *) structName
+{
+    if ([structName isEqualToString: @"_ccBlendFunc"]
+             || [structName isEqualToString: @"ccBlendFunc"] )
+    {
+        ccBlendFunc blendFunc = ccBlendFuncFromNSString(value);
+        
+        return [NSValue valueWithBytes: &blendFunc objCType: @encode(ccBlendFunc) ];
+    }
+    else
+        return [super AMCDecodeStructFromString:value withName:structName];
+}
+
+
+
 @end
