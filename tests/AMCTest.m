@@ -457,6 +457,8 @@ enum nodeTags {
 {
     [super load];
     
+    // Start CCLayerMultiplex flipFlop action after loading to demonstrate, that
+    // it saves/loads as expected.
     CCLayerMultiplex *layer = (CCLayerMultiplex *)[self getChildByTag:kLayer];
     [layer runAction:[self flipFlopActionForMulti: layer]];
 }
