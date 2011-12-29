@@ -525,9 +525,6 @@ enum nodeTags {
 //  TODO: more to go:
 // ---------------------
 //
-// * CCLayerColor
-// * CCLayerGradient
-// * CCLayerMultiplex
 //
 // * CCAtlasNode - should be pretty easy, but i never used it - dunno if i can provide good test.
 //
