@@ -2,17 +2,17 @@
  * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
  * Copyright (c) 2010 Stuart Carnie
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -51,7 +51,7 @@ static CCProfiler* g_sharedProfiler;
 {
 	if (!g_sharedProfiler)
 		g_sharedProfiler = [[CCProfiler alloc] init];
-	
+
 	return g_sharedProfiler;
 }
 
@@ -78,7 +78,7 @@ static CCProfiler* g_sharedProfiler;
 	if ((self = [super init])) {
 		activeTimers = [[NSMutableDictionary alloc] initWithCapacity:10];
 	}
-	
+
 	return self;
 }
 
@@ -89,7 +89,7 @@ static CCProfiler* g_sharedProfiler;
 }
 
 - (void)displayTimers
-{	
+{
 	NSArray *values = [activeTimers allValues];
 	for (CCProfilingTimer *timer in values) {
 		printf("%s\n", [[timer description] cStringUsingEncoding:[NSString defaultCStringEncoding]]);
@@ -114,7 +114,7 @@ static CCProfiler* g_sharedProfiler;
 		maxTime = 0;
 		gettimeofday(&startTime, NULL);
 	}
-	
+
 	return self;
 }
 
@@ -151,7 +151,7 @@ void CCProfilingBeginTimingBlock(NSString *timerName)
 		timer = [p createAndAddTimerWithName:timerName];
 
 	gettimeofday(&timer->startTime, NULL);
-	
+
 	timer->numberOfCalls++;
 }
 
@@ -159,14 +159,14 @@ void CCProfilingEndTimingBlock(NSString *timerName)
 {
 	CCProfiler* p = [CCProfiler sharedProfiler];
 	CCProfilingTimer *timer = [p->activeTimers objectForKey:timerName];
-	
+
 	NSCAssert1(timer, @"CCProfilingTimer %@ not found", timerName);
 
 	struct timeval currentTime;
 	gettimeofday(&currentTime, NULL);
 	timersub(&currentTime, &timer->startTime, &currentTime);
 	double duration = currentTime.tv_sec * 1000.0 + currentTime.tv_usec / 1000.0;
-	
+
 	// milliseconds
 	timer->averageTime = (timer->averageTime + duration) / 2.0f;
 	timer->totalTime += duration;
@@ -179,7 +179,7 @@ void CCProfilingResetTimingBlock(NSString *timerName)
 {
 	CCProfiler* p = [CCProfiler sharedProfiler];
 	CCProfilingTimer *timer = [p->activeTimers objectForKey:timerName];
-	
+
 	NSCAssert1(timer, @"CCProfilingTimer %@ not found", timerName);
 
 	[timer reset];

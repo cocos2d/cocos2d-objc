@@ -21,7 +21,7 @@ Class restartAction(void);
 
 Class nextAction()
 {
-	
+
 	sceneIdx++;
 	sceneIdx = sceneIdx % ( sizeof(transitions) / sizeof(transitions[0]) );
 	NSString *r = transitions[sceneIdx];
@@ -34,8 +34,8 @@ Class backAction()
 	sceneIdx--;
 	int total = ( sizeof(transitions) / sizeof(transitions[0]) );
 	if( sceneIdx < 0 )
-		sceneIdx += total;	
-	
+		sceneIdx += total;
+
 	NSString *r = transitions[sceneIdx];
 	Class c = NSClassFromString(r);
 	return c;
@@ -57,22 +57,22 @@ Class restartAction()
 	if( (self=[super init]) ) {
 
 		CGSize s = [[CCDirector sharedDirector] winSize];
-	
+
  		CCLabelTTF *label = [CCLabelTTF labelWithString:[self title] fontName:@"Arial" fontSize:32];
 		[self addChild: label];
 		[label setPosition: ccp(s.width/2, s.height-50)];
-		
+
 		CCMenuItemImage *item1 = [CCMenuItemImage itemWithNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
 		CCMenuItemImage *item2 = [CCMenuItemImage itemWithNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
 		CCMenuItemImage *item3 = [CCMenuItemImage itemWithNormalImage:@"f1.png" selectedImage:@"f2.png" target:self selector:@selector(nextCallback:)];
-		
+
 		CCMenu *menu = [CCMenu menuWithItems:item1, item2, item3, nil];
-		
+
 		menu.position = CGPointZero;
 		item1.position = ccp( s.width/2 - 100,30);
 		item2.position = ccp( s.width/2, 30);
 		item3.position = ccp( s.width/2 + 100,30);
-		[self addChild: menu z:-1];	
+		[self addChild: menu z:-1];
 	}
 
 	return self;
@@ -86,7 +86,7 @@ Class restartAction()
 -(void) restartCallback: (id) sender
 {
 	CCScene *s = [CCScene node];
-	[s addChild: [restartAction() node]];	
+	[s addChild: [restartAction() node]];
 
 	[[CCDirector sharedDirector] replaceScene: s];
 }
@@ -137,9 +137,9 @@ Class restartAction()
 -(void) draw
 {
 	CGSize s = [[CCDirector sharedDirector] winSize];
-	
+
 	CHECK_GL_ERROR_DEBUG();
-	
+
 	// draw a simple line
 	// The default state is:
 	// Line Width: 1
@@ -147,9 +147,9 @@ Class restartAction()
 	// Anti-Aliased
 //	glEnable(GL_LINE_SMOOTH);
 	ccDrawLine( ccp(0, 0), ccp(s.width, s.height) );
-	
+
 	CHECK_GL_ERROR_DEBUG();
-	
+
 	// line: color, width, aliased
 	// glLineWidth > 1 and GL_LINE_SMOOTH are not compatible
 	// GL_SMOOTH_LINE_WIDTH_RANGE = (1,1) on iPhone
@@ -157,7 +157,7 @@ Class restartAction()
 	glLineWidth( 5.0f );
 	ccDrawColor4B(255,0,0,255);
 	ccDrawLine( ccp(0, s.height), ccp(s.width, 0) );
-	
+
 	CHECK_GL_ERROR_DEBUG();
 
 	// TIP:
@@ -165,12 +165,12 @@ Class restartAction()
 	// need to call it before every draw
 	//
 	// Remember: OpenGL is a state-machine.
-	
+
 	// draw big point in the center
 	ccPointSize(64);
 	ccDrawColor4B(0,0,255,128);
 	ccDrawPoint( ccp(s.width / 2, s.height / 2) );
-	
+
 	CHECK_GL_ERROR_DEBUG();
 
 	// draw 4 small points
@@ -178,9 +178,9 @@ Class restartAction()
 	ccPointSize(4);
 	ccDrawColor4B(0,255,255,255);
 	ccDrawPoints( points, 4);
-	
+
 	CHECK_GL_ERROR_DEBUG();
-	
+
 	// draw a green circle with 10 segments
 	glLineWidth(16);
 	ccDrawColor4B(0, 255, 0, 255);
@@ -191,8 +191,8 @@ Class restartAction()
 	// draw a green circle with 50 segments with line to center
 	glLineWidth(2);
 	ccDrawColor4B(0, 255, 255, 255);
-	ccDrawCircle( ccp(s.width/2, s.height/2), 50, CC_DEGREES_TO_RADIANS(90), 50, YES);	
-	
+	ccDrawCircle( ccp(s.width/2, s.height/2), 50, CC_DEGREES_TO_RADIANS(90), 50, YES);
+
 	CHECK_GL_ERROR_DEBUG();
 
 	// open yellow poly
@@ -200,7 +200,7 @@ Class restartAction()
 	glLineWidth(10);
 	CGPoint vertices[] = { ccp(0,0), ccp(50,50), ccp(100,50), ccp(100,100), ccp(50,100) };
 	ccDrawPoly( vertices, 5, NO);
-	
+
 	CHECK_GL_ERROR_DEBUG();
 
 	// closed purble poly
@@ -208,7 +208,7 @@ Class restartAction()
 	glLineWidth(2);
 	CGPoint vertices2[] = { ccp(30,130), ccp(30,230), ccp(50,200) };
 	ccDrawPoly( vertices2, 3, YES);
-	
+
 	CHECK_GL_ERROR_DEBUG();
 
 	// draw quad bezier path
@@ -220,12 +220,12 @@ Class restartAction()
 	ccDrawCubicBezier(ccp(s.width/2, s.height/2), ccp(s.width/2+30,s.height/2+50), ccp(s.width/2+60,s.height/2-50),ccp(s.width, s.height/2),100);
 
 	CHECK_GL_ERROR_DEBUG();
-	
+
 	// restore original values
 	glLineWidth(1);
 	ccDrawColor4B(255,255,255,255);
 	ccPointSize(1);
-	
+
 	CHECK_GL_ERROR_DEBUG();
 }
 -(NSString *) title
@@ -248,26 +248,26 @@ Class restartAction()
 
 	// Turn on display FPS
 	[director_ setDisplayStats:YES];
-	
+
 	// Enables High Res mode (Retina Display) on iPhone 4 and maintains low res on all other devices
 	if( ! [director_ enableRetinaDisplay:YES] )
 		CCLOG(@"Retina Display Not supported");
-	
+
 	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
 	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
 	// You can change anytime.
 	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA8888];
-	
+
 	// When in iPad / RetinaDisplay mode, CCFileUtils will append the "-ipad" / "-hd" to all loaded files
 	// If the -ipad  / -hdfile is not found, it will load the non-suffixed version
 	[CCFileUtils setiPadSuffix:@"-ipad"];			// Default on iPad is "" (empty string)
 	[CCFileUtils setRetinaDisplaySuffix:@"-hd"];	// Default on RetinaDisplay is "-hd"
-	
+
 	CCScene *scene = [CCScene node];
 	[scene addChild: [nextAction() node]];
-			 
+
 	[director_ pushScene: scene];
-	
+
 	return YES;
 }
 @end
@@ -279,13 +279,13 @@ Class restartAction()
 @implementation AppController
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
-{		
+{
 	[super applicationDidFinishLaunching:aNotification];
-	
-	
+
+
 	CCScene *scene = [CCScene node];
 	[scene addChild: [nextAction() node]];
-	
+
 	[director_ runWithScene:scene];
 }
 @end

@@ -18,7 +18,7 @@ void main(void)
     ss -= ss*0.2*sin(tt*6.2831*5.0)*exp(-tt*6.0);
     p *= vec2(0.5,1.5) + ss*vec2(0.5,-0.5);
 
-    
+
     float a = atan(p.x,p.y)/3.141593;
     float r = length(p);
 

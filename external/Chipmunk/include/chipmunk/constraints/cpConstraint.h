@@ -1,15 +1,15 @@
 /* Copyright (c) 2007 Scott Lembcke
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -45,17 +45,17 @@ typedef void (*cpConstraintPostSolveFunc)(cpConstraint *constraint, cpSpace *spa
 /// Opaque cpConstraint struct.
 struct cpConstraint {
 	CP_PRIVATE(const cpConstraintClass *klass);
-	
+
 	/// The first body connected to this constraint.
 	cpBody *a;
 	/// The second body connected to this constraint.
 	cpBody *b;
-	
+
 	CP_PRIVATE(cpSpace *space);
-	
+
 	CP_PRIVATE(cpConstraint *next_a);
 	CP_PRIVATE(cpConstraint *next_b);
-	
+
 	/// The maximum force that this constraint is allowed to use.
 	/// Defaults to infinity.
 	cpFloat maxForce;
@@ -66,15 +66,15 @@ struct cpConstraint {
 	/// The maximum rate at which joint error is corrected.
 	/// Defaults to infinity.
 	cpFloat maxBias;
-	
+
 	/// Function called before the solver runs.
 	/// Animate your joint anchors, update your motor torque, etc.
 	cpConstraintPreSolveFunc preSolve;
-	
+
 	/// Function called after the solver runs.
 	/// Use the applied impulse to perform effects like breakable joints.
 	cpConstraintPostSolveFunc postSolve;
-	
+
 	/// User definable data pointer.
 	/// Generally this points to your the game object class so you can access it
 	/// when given a cpConstraint reference in a callback.

@@ -24,7 +24,7 @@ class Car : public Test
 {
 public:
 	Car()
-	{		
+	{
 		m_hz = 4.0f;
 		m_zeta = 0.7f;
 		m_speed = 50.0f;

@@ -27,49 +27,49 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
 	[super application:application didFinishLaunchingWithOptions:launchOptions];
-	
+
 	//Kick off sound initialisation, this will happen in a separate thread
 	[[GameSoundManager sharedManager] setup];
-	
+
 
 	// display FPS (useful when debugging)
 	[director_ setDisplayStats:YES];
-	
+
 	// frames per second
 	[director_ setAnimationInterval:1.0/60];
-	
+
 	// multiple touches on
 	[director_.view setMultipleTouchEnabled:YES];
 
-    self.loadingScene = [[[LoadingScene alloc] init] autorelease];		
+    self.loadingScene = [[[LoadingScene alloc] init] autorelease];
 	[director_ pushScene: _loadingScene];
-	
+
 	return YES;
 }
 
 - (void)loadScenes {
-   
+
     // Create a shared opengl context so any textures we load can be shared with the
     // main content
     // See http://www.cocos2d-iphone.org/forum/topic/363 for more details
-	
+
 	EAGLView *view = (EAGLView*) [[CCDirector sharedDirector] view];
     EAGLContext *k_context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2
 													sharegroup: [view.context sharegroup]];
-							  
+
     [EAGLContext setCurrentContext:k_context];
 	[k_context release];
-    
-    self.mainMenuScene = [[[MainMenuScene alloc] init] autorelease];    
+
+    self.mainMenuScene = [[[MainMenuScene alloc] init] autorelease];
     self.storyScene = [[[StoryScene alloc] init] autorelease];
     self.actionScene = [[[ActionScene alloc] init] autorelease];
- 
+
 }
 
 - (void)launchMainMenu {
- 
+
     [[CCDirector sharedDirector] replaceScene:[CCTransitionRadialCW transitionWithDuration:0.5f scene:_mainMenuScene]];
-    
+
 }
 
 - (void)launchCurLevel {
@@ -86,9 +86,9 @@
     [self launchCurLevel];
 }
 
-- (void)launchNewGame { 
+- (void)launchNewGame {
     [[GameState sharedState] reset];
-    [self launchCurLevel];    
+    [self launchCurLevel];
 }
 
 - (void)launchKillEnding {
@@ -111,7 +111,7 @@
     self.mainMenuScene = nil;
     self.storyScene = nil;
     self.actionScene = nil;
-	
+
 	[super dealloc];
 }
 

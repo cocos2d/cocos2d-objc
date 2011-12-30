@@ -3,17 +3,17 @@
  *
  * Copyright (c) 2010 Ricardo Quesada
  * Copyright (c) 2011 Zynga Inc.
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -99,23 +99,23 @@ CGFloat	__ccContentScaleFactor = 1;
 @synthesize touchDispatcher=touchDispatcher_;
 
 - (id) init
-{  
+{
 	if( (self=[super init]) ) {
-				
+
 		__ccContentScaleFactor = 1;
 		isContentScaleSupported_ = NO;
-		
+
 		touchDispatcher_ = [[CCTouchDispatcher alloc] init];
 
 		// running thread is main thread on iOS
 		runningThread_ = [NSThread currentThread];
 	}
-	
+
 	return self;
 }
 
 - (void) dealloc
-{	
+{
 	[touchDispatcher_ release];
 
 	[super dealloc];
@@ -125,17 +125,17 @@ CGFloat	__ccContentScaleFactor = 1;
 // Draw the Scene
 //
 - (void) drawScene
-{    
+{
 	/* calculate "global" dt */
 	[self calculateDeltaTime];
-	
+
 	CC_GLVIEW *openGLview = (CC_GLVIEW*)[self view];
-	
+
 	[EAGLContext setCurrentContext: [openGLview context]];
-	
+
 	/* tick before glClear: issue #533 */
 	if( ! isPaused_ )
-		[scheduler_ update: dt];	
+		[scheduler_ update: dt];
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -158,7 +158,7 @@ CGFloat	__ccContentScaleFactor = 1;
 	totalFrames_++;
 
 	[openGLview swapBuffers];
-	
+
 	if( displayStats_ )
 		[self calculateMPF];
 }
@@ -172,7 +172,7 @@ CGFloat	__ccContentScaleFactor = 1;
 
 	switch (projection) {
 		case kCCDirectorProjection2D:
-			
+
 			kmGLMatrixMode(KM_GL_PROJECTION);
 			kmGLLoadIdentity();
 
@@ -189,17 +189,17 @@ CGFloat	__ccContentScaleFactor = 1;
 			// reset the viewport if 3d proj & retina display
 			if( CC_CONTENT_SCALE_FACTOR() != 1 )
 				glViewport(-size.width/2, -size.height/2, size.width * CC_CONTENT_SCALE_FACTOR(), size.height * CC_CONTENT_SCALE_FACTOR() );
-	
+
 			float zeye = [self getZEye];
 
 			kmMat4 matrixPerspective, matrixLookup;
 
 			kmGLMatrixMode(KM_GL_PROJECTION);
 			kmGLLoadIdentity();
-			
+
 			kmMat4PerspectiveProjection( &matrixPerspective, 60, (GLfloat)sizePoint.width/sizePoint.height, 0.5f, 1500.0f );
 			kmGLMultMatrix(&matrixPerspective);
-			
+
 			kmGLMatrixMode(KM_GL_MODELVIEW);
 			kmGLLoadIdentity();
 			kmVec3 eye, center, up;
@@ -210,7 +210,7 @@ CGFloat	__ccContentScaleFactor = 1;
 			kmGLMultMatrix(&matrixLookup);
 			break;
 		}
-			
+
 		case kCCDirectorProjectionCustom:
 			if( [delegate_ respondsToSelector:@selector(updateProjection)] )
 				[delegate_ updateProjection];
@@ -220,9 +220,9 @@ CGFloat	__ccContentScaleFactor = 1;
 			CCLOG(@"cocos2d: Director: unrecognized projecgtion");
 			break;
 	}
-	
+
 	projection_ = projection;
-	
+
 	ccSetProjectionMatrixDirty();
 }
 
@@ -236,13 +236,13 @@ CGFloat	__ccContentScaleFactor = 1;
 -(void) setContentScaleFactor:(CGFloat)scaleFactor
 {
 	if( scaleFactor != __ccContentScaleFactor ) {
-		
+
 		__ccContentScaleFactor = scaleFactor;
 		winSizeInPixels_ = CGSizeMake( winSizeInPoints_.width * scaleFactor, winSizeInPoints_.height * scaleFactor );
-		
+
 		if( self.view )
 			[self updateContentScaleFactor];
-		
+
 		// update projection
 		[self setProjection:projection_];
 	}
@@ -251,7 +251,7 @@ CGFloat	__ccContentScaleFactor = 1;
 -(void) updateContentScaleFactor
 {
 	NSAssert( [self.view respondsToSelector:@selector(setContentScaleFactor:)], @"cocos2d v2.0+ runs on iOS 4 or later");
-	
+
 	[self.view setContentScaleFactor: __ccContentScaleFactor];
 	isContentScaleSupported_ = YES;
 }
@@ -261,7 +261,7 @@ CGFloat	__ccContentScaleFactor = 1;
 	// Already enabled ?
 	if( enabled && __ccContentScaleFactor == 2 )
 		return YES;
-	
+
 	// Already disabled
 	if( ! enabled && __ccContentScaleFactor == 1 )
 		return YES;
@@ -276,10 +276,10 @@ CGFloat	__ccContentScaleFactor = 1;
 
 	float newScale = enabled ? 2 : 1;
 	[self setContentScaleFactor:newScale];
-	
+
 	// Load Hi-Res FPS label
 	[self createStatsLabel];
-	
+
 	return YES;
 }
 
@@ -288,7 +288,7 @@ CGFloat	__ccContentScaleFactor = 1;
 {
 	winSizeInPoints_ = [self.view bounds].size;
 	winSizeInPixels_ = CGSizeMake(winSizeInPoints_.width * __ccContentScaleFactor, winSizeInPoints_.height *__ccContentScaleFactor);
-	
+
 	[self setProjection:projection_];
 }
 
@@ -298,7 +298,7 @@ CGFloat	__ccContentScaleFactor = 1;
 {
 	CGSize s = winSizeInPoints_;
 	float newY = s.height - uiPoint.y;
-	
+
 	return ccp( uiPoint.x, newY );
 }
 
@@ -306,7 +306,7 @@ CGFloat	__ccContentScaleFactor = 1;
 {
 	CGSize winSize = winSizeInPoints_;
 	int oppositeY = winSize.height - glPoint.y;
-	
+
 	return ccp(glPoint.x, oppositeY);
 }
 
@@ -315,7 +315,7 @@ CGFloat	__ccContentScaleFactor = 1;
 	// don't release the event handlers
 	// They are needed in case the director is run again
 	[touchDispatcher_ removeAllDelegates];
-	
+
 	[super end];
 }
 
@@ -325,13 +325,13 @@ CGFloat	__ccContentScaleFactor = 1;
 -(void) setView:(EAGLView *)view
 {
 	[super setView:view];
-	
+
 	// set size
 	winSizeInPixels_ = CGSizeMake(winSizeInPoints_.width * __ccContentScaleFactor, winSizeInPoints_.height *__ccContentScaleFactor);
-	
+
 	if( __ccContentScaleFactor != 1 )
 		[self updateContentScaleFactor];
-	
+
 	[view setTouchDelegate: touchDispatcher_];
 	[touchDispatcher_ setDispatchEvents: YES];
 }
@@ -367,14 +367,14 @@ CGFloat	__ccContentScaleFactor = 1;
 -(void) viewWillDisappear:(BOOL)animated
 {
 //	[self stopAnimation];
-	
+
 	[super viewWillDisappear:animated];
 }
 
 -(void) viewDidDisappear:(BOOL)animated
 {
 	[self stopAnimation];
-	
+
 	[super viewDidDisappear:animated];
 }
 
@@ -384,13 +384,13 @@ CGFloat	__ccContentScaleFactor = 1;
 	[super purgeCachedData];
 
     // Releases the view if it doesn't have a superview.
-    [super didReceiveMemoryWarning];    
+    [super didReceiveMemoryWarning];
 }
 
 -(void) viewDidLoad
 {
 	CCLOG(@"cocos2d: viewDidLoad");
-	
+
 	[super viewDidLoad];
 }
 
@@ -414,7 +414,7 @@ CGFloat	__ccContentScaleFactor = 1;
 
 -(void) mainLoop:(id)sender
 {
-	[self drawScene];	
+	[self drawScene];
 }
 
 - (void)setAnimationInterval:(NSTimeInterval)interval
@@ -431,7 +431,7 @@ CGFloat	__ccContentScaleFactor = 1;
 	NSAssert( displayLink == nil, @"displayLink must be nil. Calling startAnimation twice?");
 
 	gettimeofday( &lastUpdate_, NULL);
-	
+
 	// approximate frame rate
 	// assumes device refreshes at 60 fps
 	int frameInterval = (int) floor(animationInterval_ * 60.0f);
@@ -444,13 +444,13 @@ CGFloat	__ccContentScaleFactor = 1;
 #if CC_DIRECTOR_IOS_USE_BACKGROUND_THREAD
 	//
 	runningThread_ = [[NSThread alloc] initWithTarget:self selector:@selector(threadMainLoop) object:nil];
-	[runningThread_ start];	
-	
+	[runningThread_ start];
+
 #else
 	// setup DisplayLink in main thread
-	[displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];	
+	[displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
 #endif
-	
+
 
 }
 
@@ -477,10 +477,10 @@ CGFloat	__ccContentScaleFactor = 1;
 {
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 
-	[displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];	
+	[displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
 
 	// start the run loop
-	[[NSRunLoop currentRunLoop] run];	
+	[[NSRunLoop currentRunLoop] run];
 
 	[pool release];
 }

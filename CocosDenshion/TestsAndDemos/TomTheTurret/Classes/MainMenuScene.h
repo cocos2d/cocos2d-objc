@@ -20,7 +20,7 @@
 
 
 @interface MainMenuScene : CCScene {
-    MainMenuLayer *_layer;    
+    MainMenuLayer *_layer;
 }
 
 @property (nonatomic, assign) MainMenuLayer *layer;

@@ -7,17 +7,17 @@
  * Copyright (c) 2011 Zynga Inc.
  *
  * Copyright (c) 2011 Marco Tillemans
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -54,7 +54,7 @@
 @implementation CCNode (extension)
 -(void) setZOrder:(NSUInteger) z
 {
-	zOrder_ = z; 	
+	zOrder_ = z;
 }
 @end
 
@@ -133,7 +133,7 @@
 }
 
 -(void)dealloc
-{	
+{
 	[textureAtlas_ release];
 	[super dealloc];
 }
@@ -153,21 +153,21 @@
 	//
 	if (!visible_)
 		return;
-	
+
 	kmGLPushMatrix();
-	
+
 	if ( grid_ && grid_.active) {
 		[grid_ beforeDraw];
 		[self transformAncestors];
 	}
 
 	[self transform];
-	
+
 	[self draw];
-		
+
 	if ( grid_ && grid_.active)
 		[grid_ afterDraw:self];
-	
+
 	kmGLPopMatrix();
 }
 
@@ -177,24 +177,24 @@
 	NSAssert( child != nil, @"Argument must be non-nil");
 	NSAssert( [child isKindOfClass:[CCParticleSystem class]], @"CCParticleBatchNode only supports CCQuadParticleSystems as children");
 	NSAssert( child.texture.name == textureAtlas_.texture.name, @"CCParticleSystem is not using the same texture id");
-	
+
 	// If this is the 1st children, then copy blending function
 	if( [children_ count] == 0 )
 		blendFunc_ = [child blendFunc];
 
 	NSAssert( blendFunc_.src  == child.blendFunc.src && blendFunc_.dst  == child.blendFunc.dst, @"Can't add a PaticleSystem that uses a differnt blending function");
-	
+
 	//no lazy sorting, so don't call super addChild, call helper instead
 	NSUInteger pos = [self addChildHelper:child z:z tag:aTag];
-	
+
 	//get new atlasIndex
 	NSUInteger atlasIndex;
-	
+
 	if (pos != 0)
 		atlasIndex = [[children_ objectAtIndex:pos-1] atlasIndex] + [[children_ objectAtIndex:pos-1] totalParticles];
 	else
 		atlasIndex = 0;
-	
+
 	[self insertChild:child inAtlasAtIndex:atlasIndex];
 
 	// update quad info
@@ -206,23 +206,23 @@
 // XXX or possibly using vertexZ for reordering, that would be fastest
 // this helper is almost equivalent to CCNode's addChild, but doesn't make use of the lazy sorting
 -(NSUInteger) addChildHelper: (CCNode*) child z:(NSInteger)z tag:(NSInteger) aTag
-{	
+{
 	NSAssert( child != nil, @"Argument must be non-nil");
 	NSAssert( child.parent == nil, @"child already added. It can't be added again");
-	
+
 	if( ! children_ )
 		children_ = [[CCArray alloc] initWithCapacity:4];
-			
+
 	//don't use a lazy insert
 	NSUInteger pos = [self searchNewPositionInChildrenForZ:z];
-	
+
 	[children_ insertObject:child atIndex:pos];
-	
+
 	child.tag = aTag;
-	[child setZOrder:z]; 
-	
+	[child setZOrder:z];
+
 	[child setParent: self];
-		
+
 	if( isRunning_ ) {
 		[child onEnter];
 		[child onEnterTransitionDidFinish];
@@ -235,28 +235,28 @@
 {
 	NSAssert( child != nil, @"Child must be non-nil");
 	NSAssert( [children_ containsObject:child], @"Child doesn't belong to batch" );
-	
+
 	if( z == child.zOrder )
 		return;
-	
+
 	// no reordering if only 1 child
 	if( [children_ count] > 1)
 	{
 		NSUInteger newIndex, oldIndex;
-		
+
 		[self getCurrentIndex:&oldIndex newIndex:&newIndex forChild:child z:z];
-		
+
 		if( oldIndex != newIndex ) {
-			
+
 			// reorder children_ array
 			[child retain];
 			[children_ removeObjectAtIndex:oldIndex];
 			[children_ insertObject:child atIndex:newIndex];
 			[child release];
-			
+
 			// save old altasIndex
 			NSUInteger oldAtlasIndex = child.atlasIndex;
-			
+
 			// update atlas index
 			[self updateAllAtlasIndexes];
 
@@ -269,17 +269,17 @@
 					break;
 				}
 			}
-			
+
 			// reorder textureAtlas quads
 			[textureAtlas_ moveQuadsFromIndex:oldAtlasIndex  amount:child.totalParticles atIndex:newAtlasIndex];
-			
+
 			[child updateWithNoTime];
-		}	
+		}
 	}
-	
+
 	[child setZOrder:z];
 }
-			
+
 -(void) getCurrentIndex:(NSUInteger*)oldIndex newIndex:(NSUInteger*)newIndex forChild:(CCNode*)child z:(NSInteger)z
 {
 	BOOL foundCurrentIdx = NO;
@@ -287,7 +287,7 @@
 
 	NSInteger  minusOne = 0;
 	NSUInteger count = [children_ count];
-	
+
 	for( NSUInteger i=0; i < count; i++ ) {
 
 		CCNode *node = [children_ objectAtIndex:i];
@@ -296,7 +296,7 @@
 		if( node.zOrder > z &&  ! foundNewIdx ) {
 			*newIndex = i;
 			foundNewIdx = YES;
-			
+
 			if( foundCurrentIdx && foundNewIdx )
 				break;
 		}
@@ -308,24 +308,24 @@
 
 			if( ! foundNewIdx )
 				minusOne = -1;
-			
+
 			if( foundCurrentIdx && foundNewIdx )
 				break;
-			
+
 		}
 
 	}
-	
+
 	if( ! foundNewIdx )
 		*newIndex = count;
-	
-	*newIndex += minusOne;	
+
+	*newIndex += minusOne;
 }
 
 -(NSUInteger) searchNewPositionInChildrenForZ: (NSInteger) z
 {
 	NSUInteger count = [children_ count];
-	
+
 	for( NSUInteger i=0; i < count; i++ ) {
 		CCNode *child = [children_ objectAtIndex:i];
 		if (child.zOrder > z)
@@ -340,20 +340,20 @@
 	// explicit nil handling
 	if (child == nil)
 		return;
-	
+
 	NSAssert([children_ containsObject:child], @"CCParticleBatchNode doesn't contain the sprite. Can't remove it");
-	
+
 	[super removeChild:child cleanup:doCleanup];
-	
+
 	// remove child helper
 	[textureAtlas_ removeQuadsAtIndex:child.atlasIndex amount:child.totalParticles];
-	
+
 	// after memmove of data, empty the quads at the end of array
 	[textureAtlas_ fillWithEmptyQuadsFromIndex:textureAtlas_.totalQuads amount:child.totalParticles];
-	
+
 	// paticle could be reused for self rendering
 	[child setBatchNode:nil];
-	
+
 	[self updateAllAtlasIndexes];
 }
 
@@ -365,9 +365,9 @@
 -(void)removeAllChildrenWithCleanup:(BOOL)doCleanup
 {
 	[children_ makeObjectsPerformSelector:@selector(useSelfRender)];
-	
+
 	[super removeAllChildrenWithCleanup:doCleanup];
-	
+
 	[textureAtlas_ removeAllQuads];
 }
 
@@ -377,14 +377,14 @@
 	CC_PROFILER_STOP(@"CCParticleBatchNode - draw");
 
 	if( textureAtlas_.totalQuads == 0 )
-		return;	
+		return;
 
 	CC_NODE_DRAW_SETUP();
-	
+
 	ccGLBlendFunc( blendFunc_.src, blendFunc_.dst );
-	
+
 	[textureAtlas_ drawQuads];
-	
+
 	CC_PROFILER_STOP(@"CCParticleBatchNode - draw");
 }
 
@@ -395,19 +395,19 @@
 	CCLOG(@"cocos2d: CCParticleBatchNode: resizing TextureAtlas capacity from [%lu] to [%lu].",
 		  (long)textureAtlas_.capacity,
 		  (long)quantity);
-		
+
 	if( ! [textureAtlas_ resizeCapacity:quantity] ) {
 		// serious problems
 		CCLOG(@"cocos2d: WARNING: Not enough memory to resize the atlas");
 		NSAssert(NO,@"XXX: CCParticleBatchNode #increaseAtlasCapacity SHALL handle this assert");
-	}	
+	}
 }
 
 //sets a 0'd quad into the quads array
 -(void) disableParticle:(NSUInteger)particleIndex
 {
 	ccV3F_C4B_T2F_Quad* quad = &((textureAtlas_.quads)[particleIndex]);
-	quad->br.vertices.x = quad->br.vertices.y = quad->tr.vertices.x = quad->tr.vertices.y = quad->tl.vertices.x = quad->tl.vertices.y = quad->bl.vertices.x = quad->bl.vertices.y = 0.0f;		
+	quad->br.vertices.x = quad->br.vertices.y = quad->tr.vertices.x = quad->tr.vertices.y = quad->tl.vertices.x = quad->tl.vertices.y = quad->bl.vertices.x = quad->bl.vertices.y = 0.0f;
 }
 
 #pragma mark CCParticleBatchNode - add / remove / reorder helper methods
@@ -416,22 +416,22 @@
 -(void) insertChild:(CCParticleSystem*) pSystem inAtlasAtIndex:(NSUInteger)index
 {
 	pSystem.atlasIndex = index;
-	
+
 	if(textureAtlas_.totalQuads + pSystem.totalParticles > textureAtlas_.capacity)
-	{	
+	{
 		[self increaseAtlasCapacityTo:textureAtlas_.totalQuads + pSystem.totalParticles];
-		
+
 		// after a realloc empty quads of textureAtlas can be filled with gibberish (realloc doesn't perform calloc), insert empty quads to prevent it
 		[textureAtlas_ fillWithEmptyQuadsFromIndex:textureAtlas_.capacity - pSystem.totalParticles amount:pSystem.totalParticles];
 	}
-	
-	// make room for quads, not necessary for last child		
+
+	// make room for quads, not necessary for last child
 	if (pSystem.atlasIndex + pSystem.totalParticles != textureAtlas_.totalQuads)
 		[textureAtlas_ moveQuadsFromIndex:index to:index+pSystem.totalParticles];
-	
+
 	// increase totalParticles here for new particles, update method of particlesystem will fill the quads
 	[textureAtlas_ increaseTotalQuadsWith:pSystem.totalParticles];
-	
+
 	[self updateAllAtlasIndexes];
 }
 
@@ -443,11 +443,11 @@
 
 	CCARRAY_FOREACH(children_,child)
 	{
-		child.atlasIndex = index; 
+		child.atlasIndex = index;
 		index += child.totalParticles;
 	}
-}	
-	
+}
+
 #pragma mark CCParticleBatchNode - CocosNodeTexture protocol
 
 -(void) updateBlendFunc
@@ -461,9 +461,9 @@
 -(void) setTexture:(CCTexture2D*)texture
 {
 	textureAtlas_.texture = texture;
-			
+
 	// If the new texture has No premultiplied alpha, AND the blendFunc hasn't been changed, then update it
-	if( texture && ! [texture hasPremultipliedAlpha] && ( blendFunc_.src == CC_BLEND_SRC && blendFunc_.dst == CC_BLEND_DST ) ) 
+	if( texture && ! [texture hasPremultipliedAlpha] && ( blendFunc_.src == CC_BLEND_SRC && blendFunc_.dst == CC_BLEND_DST ) )
 	{
 			blendFunc_.src = GL_SRC_ALPHA;
 			blendFunc_.dst = GL_ONE_MINUS_SRC_ALPHA;

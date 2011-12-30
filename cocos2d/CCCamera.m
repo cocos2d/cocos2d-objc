@@ -3,17 +3,17 @@
  *
  * Copyright (c) 2008-2010 Ricardo Quesada
  * Copyright (c) 2011 Zynga Inc.
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -38,7 +38,7 @@
 {
 	if( (self=[super init]) )
 		[self restore];
-	
+
 	return self;
 }
 
@@ -58,34 +58,34 @@
 {
 	eyeX_ = eyeY_ = 0;
 	eyeZ_ = [CCCamera getZEye];
-	
+
 	centerX_ = centerY_ = centerZ_ = 0;
-	
+
 	upX_ = 0.0f;
 	upY_ = 1.0f;
 	upZ_ = 0.0f;
-	
+
 	kmMat4Identity( &lookupMatrix_ );
-	
+
 	dirty_ = NO;
 }
 
 -(void) locate
 {
 	if( dirty_ ) {
-		
+
 		kmVec3 eye, center, up;
-		
+
 		kmVec3Fill( &eye, eyeX_, eyeY_ , eyeZ_ );
 		kmVec3Fill( &center, centerX_, centerY_, centerZ_ );
-		
+
 		kmVec3Fill( &up, upX_, upY_, upZ_);
 		kmMat4LookAt( &lookupMatrix_, &eye, &center, &up);
-		
+
 		dirty_ = NO;
-		
+
 	}
-	
+
 	kmGLMultMatrix( &lookupMatrix_ );
 
 }
@@ -103,7 +103,7 @@
 	eyeY_ = y;
 	eyeZ_ = z;
 
-	dirty_ = YES;	
+	dirty_ = YES;
 }
 
 -(void) setCenterX: (float)x centerY:(float)y centerZ:(float)z
@@ -111,7 +111,7 @@
 	centerX_ = x;
 	centerY_ = y;
 	centerZ_ = z;
-	
+
 	dirty_ = YES;
 }
 

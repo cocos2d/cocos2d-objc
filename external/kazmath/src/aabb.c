@@ -36,7 +36,7 @@ const int kmAABBContainsPoint(const kmVec3* pPoint, const kmAABB* pBox)
        pPoint->z >= pBox->min.z && pPoint->z <= pBox->max.z) {
         return KM_TRUE;
     }
-       
+
     return KM_FALSE;
 }
 

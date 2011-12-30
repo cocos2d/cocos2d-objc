@@ -12,7 +12,7 @@ Main features
    * Transitions between scenes
    * Sprites and Sprite Sheets
    * Effects: Lens, Ripple, Waves, Liquid, etc.
-   * Actions (behaviours): 
+   * Actions (behaviours):
      * Trasformation Actions: Move, Rotate, Scale, Fade, Tint, etc.
      * Composable actions: Sequence, Spawn, Repeat, Reverse
      * Ease Actions: Exp, Sin, Cubic, Elastic, etc.
@@ -60,19 +60,19 @@ Runtime Requirements
 Files and Folders
 -----------------
 
-  * cocos2d/  
+  * cocos2d/
      core files and folders of cocos2d
-  * cocoslive/  
+  * cocoslive/
      high score client library
-  * CocosDenshion/  
+  * CocosDenshion/
      sound engine library
-  * tests/  
+  * tests/
      tests, demo examples
   * templates/
      folder that contains the Xcode templates
-  * experimental/  
+  * experimental/
      experimental stuff
-  * external/  
+  * external/
      3rd party libraries used by cocos2d or any other project.
      * Chipmunk/: physics library
      * Box2d/: physics library
@@ -83,7 +83,7 @@ Files and Folders
 How to run the tests
 --------------------
 
-Xcode -> View -> Customize toolbar  
+Xcode -> View -> Customize toolbar
 Then, drag "Active Target" and "Active Executable" to your top project tool bar.
 Select the test you want to view in both drop downs and hit Build and Go.
 
@@ -102,7 +102,7 @@ How to contribute to the project
 Did you find a bug ? Do you have feature request ? Do you want to merge a feature ?
 
   * [contributing to cocos2d][3]
-  
+
 Forum
 -----
   * [cocos2d for iphone forum][4]

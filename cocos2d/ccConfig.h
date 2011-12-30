@@ -3,17 +3,17 @@
  *
  * Copyright (c) 2008-2010 Ricardo Quesada
  * Copyright (c) 2011 Zynga Inc.
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -34,12 +34,12 @@
 	- ccGLUseProgram() instead of glUseProgram()
 	- ccGLDeleteProgram() instead of glDeleteProgram()
 	- ccGLBlendFunc() instead of glBlendFunc()
- 
+
  If this functionality is disabled, then ccGLUseProgram(), ccGLDeleteProgram(), ccGLBlendFunc() will call the GL ones, without using the cache.
- 
+
  It is recommened to enable whenever possible to improve speed.
  If you are migrating your code from GL ES 1.1, then keep it disabled. Once all your code works as expected, turn it on.
- 
+
  @since v2.0.0
  */
 #ifndef CC_ENABLE_GL_STATE_CACHE
@@ -50,31 +50,31 @@
  If enabled, the texture coordinates will be calculated by using this formula:
    - texCoord.left = (rect.origin.x*2+1) / (texture.wide*2);
    - texCoord.right = texCoord.left + (rect.size.width*2-2)/(texture.wide*2);
- 
+
  The same for bottom and top.
- 
+
  This formula prevents artifacts by using 99% of the texture.
  The "correct" way to prevent artifacts is by using the spritesheet-artifact-fixer.py or a similar tool.
- 
+
  Affected nodes:
 	- CCSprite / CCSpriteBatchNode and subclasses: CCLabelBMFont, CCTMXLayer
 	- CCLabelAtlas
 	- CCParticleSystemQuad
 	- CCTileMap
- 
+
  To enabled set it to 1. Disabled by default.
- 
+
  @since v0.99.5
  */
 #ifndef CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
 #define CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL 0
 #endif
- 
+
 /** @def CC_DIRECTOR_FPS_INTERVAL
  Seconds between FPS updates.
  0.5 seconds, means that the FPS number will be updated every 0.5 seconds.
  Having a bigger number means a more reliable FPS
- 
+
  Default value: 0.1f
  */
 #ifndef CC_DIRECTOR_FPS_INTERVAL
@@ -83,7 +83,7 @@
 
 /** @def CC_DIRECTOR_FPS_POSITION
  Position of the FPS
- 
+
  Default: 0,0 (bottom-left corner)
  */
 #ifndef CC_DIRECTOR_FPS_POSITION
@@ -92,11 +92,11 @@
 
 /** @def CC_DIRECTOR_IOS_USE_BACKGROUND_THREAD
  If enabled, cocos2d-ios will run on a background thread. If disabled cocos2d-ios will run the main thread.
- 
+
  To enable set it to a 1, to disable it set to 0. Enabled by default.
- 
+
  Only valid for cocos2d-ios. Not supported on cocos2d-mac.
- 
+
  */
 #ifndef CC_DIRECTOR_IOS_USE_BACKGROUND_THREAD
 #define CC_DIRECTOR_IOS_USE_BACKGROUND_THREAD 0
@@ -104,10 +104,10 @@
 
 /** @def CC_DIRECTOR_MAC_USE_DISPLAY_LINK_THREAD
  If enabled, cocos2d-mac will run on the Display Link thread. If disabled cocos2d-mac will run in its own thread.
- 
+
  If enabled, the images will be drawn at the "correct" time, but the events might not be very responsive.
  If disabled, some frames might be skipped, but the events will be dispatched as they arrived.
- 
+
  To enable set it to a 1, to disable it set to 0. Enabled by default.
 
  Only valid for cocos2d-mac. Not supported on cocos2d-ios.
@@ -120,7 +120,7 @@
 /** @def CC_NODE_RENDER_SUBPIXEL
  If enabled, the CCNode objects (CCSprite, CCLabel,etc) will be able to render in subpixels.
  If disabled, integer pixels will be used.
- 
+
  To enable set it to 1. Enabled by default.
  */
 #ifndef CC_NODE_RENDER_SUBPIXEL
@@ -130,7 +130,7 @@
 /** @def CC_SPRITEBATCHNODE_RENDER_SUBPIXEL
  If enabled, the CCSprite objects rendered with CCSpriteBatchNode will be able to render in subpixels.
  If disabled, integer pixels will be used.
- 
+
  To enable set it to 1. Enabled by default.
  */
 #ifndef CC_SPRITEBATCHNODE_RENDER_SUBPIXEL
@@ -140,7 +140,7 @@
 /** @def CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP
  Use GL_TRIANGLE_STRIP instead of GL_TRIANGLES when rendering the texture atlas.
  It seems it is the recommend way, but it is much slower, so, enable it at your own risk
- 
+
  To enable set it to a value different than 0. Disabled by default.
 
  */
@@ -153,9 +153,9 @@
  If enabled, it will use LA88 (Luminance Alpha 16-bit textures) for CCLabelTTF objects.
  If it is disabled, it will use A8 (Alpha 8-bit textures).
  LA88 textures are 6% faster than A8 textures, but they will consume 2x memory.
- 
+
  This feature is enabled by default.
-  
+
  @since v0.99.5
  */
 #ifndef CC_USE_LA88_LABELS
@@ -165,7 +165,7 @@
 /** @def CC_SPRITE_DEBUG_DRAW
  If enabled, all subclasses of CCSprite will draw a bounding box.
  Useful for debugging purposes only. It is recommened to leave it disabled.
- 
+
  If the CCSprite is being drawn by a CCSpriteBatchNode, the bounding box might be a bit different.
  To enable set it to a value different than 0. Disabled by default:
  0 -- disabled
@@ -180,7 +180,7 @@
 /** @def CC_LABELBMFONT_DEBUG_DRAW
  If enabled, all subclasses of CCLabelBMFont will draw a bounding box
  Useful for debugging purposes only. It is recommened to leave it disabled.
- 
+
  To enable set it to a value different than 0. Disabled by default.
  */
 #ifndef CC_LABELBMFONT_DEBUG_DRAW
@@ -190,7 +190,7 @@
 /** @def CC_LABELATLAS_DEBUG_DRAW
  If enabled, all subclasses of CCLabeltAtlas will draw a bounding box
  Useful for debugging purposes only. It is recommened to leave it disabled.
- 
+
  To enable set it to a value different than 0. Disabled by default.
  */
 #ifndef CC_LABELATLAS_DEBUG_DRAW
@@ -201,7 +201,7 @@
  If enabled, will activate various profilers withing cocos2d. This statistical data will be saved in the CCProfiler singleton.
  In order to display saved data, you have to call the CC_PROFILER_DISPLAY_TIMERS() macro.
  Useful for profiling purposes only. If unsure, leave it disabled.
- 
+
  To enable set it to a value different than 0. Disabled by default.
  */
 #ifndef CC_ENABLE_PROFILERS

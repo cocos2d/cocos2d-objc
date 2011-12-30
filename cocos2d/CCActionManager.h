@@ -12,10 +12,10 @@
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -39,9 +39,9 @@ typedef struct _hashElement
 	struct ccArray	*actions;
 	NSUInteger		actionIndex;
 	BOOL			currentActionSalvaged;
-	BOOL			paused;	
+	BOOL			paused;
 	UT_hash_handle	hh;
-	
+
 	CC_ARC_UNSAFE_RETAINED	id				target;
 	CC_ARC_UNSAFE_RETAINED	CCAction		*currentAction;
 } tHashElement;
@@ -51,9 +51,9 @@ typedef struct _hashElement
  Normally you won't need to use this API directly. 99% of the cases you will use the CCNode interface, which uses this object.
  But there are some cases where you might need to use this API dirctly:
  Examples:
-	- When you want to run an action where the target is different from a CCNode. 
+	- When you want to run an action where the target is different from a CCNode.
 	- When you want to pause / resume the actions
- 
+
  @since v0.8
  */
 @interface CCActionManager : NSObject

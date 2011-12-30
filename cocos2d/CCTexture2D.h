@@ -90,7 +90,7 @@ typedef enum {
 	//! 16-bit textures: RGBA4444
 	kCCTexture2DPixelFormat_RGBA4444,
 	//! 16-bit textures: RGB5A1
-	kCCTexture2DPixelFormat_RGB5A1,	
+	kCCTexture2DPixelFormat_RGB5A1,
 	//! 4-bit PVRTC-compressed texture: PVRTC4
 	kCCTexture2DPixelFormat_PVRTC4,
 	//! 2-bit PVRTC-compressed texture: PVRTC2
@@ -98,7 +98,7 @@ typedef enum {
 
 	//! Default texture format: RGBA8888
 	kCCTexture2DPixelFormat_Default = kCCTexture2DPixelFormat_RGBA8888,
-	
+
 } CCTexture2DPixelFormat;
 
 
@@ -106,7 +106,7 @@ typedef enum {
 
 /** CCTexture2D class.
  * This class allows to easily create OpenGL 2D textures from images, text or raw data.
- * The created CCTexture2D object will always have power-of-two dimensions. 
+ * The created CCTexture2D object will always have power-of-two dimensions.
  * Depending on how you create the CCTexture2D object, the actual image area of the texture might be smaller than the texture dimensions i.e. "contentSize" != (pixelsWide, pixelsHigh) and (maxS, maxT) != (1.0, 1.0).
  * Be aware that the content of the generated textures will be upside-down!
  */
@@ -120,11 +120,11 @@ typedef enum {
 	GLfloat						maxS_,
 								maxT_;
 	BOOL						hasPremultipliedAlpha_;
-	
+
 #ifdef __CC_PLATFORM_IOS
 	ccResolutionType			resolutionType_;
 #endif
-	
+
 	// needed for drawAtRect, drawInPoint
 	GLProgram					*shaderProgram_;
 
@@ -163,9 +163,9 @@ typedef enum {
 /** Returns the resolution type of the texture.
  Is it a RetinaDisplay texture, an iPad texture or an standard texture ?
  Only valid on iOS. Not valid on OS X.
- 
+
  Should be a readonly property. It is readwrite as a hack.
- 
+
  @since v1.1
  */
 @property (nonatomic, readwrite) ccResolutionType resolutionType;
@@ -226,7 +226,7 @@ Note that the generated textures are of type A8 - use the blending mode (GL_SRC_
  */
 @interface CCTexture2D (PVRSupport)
 /** Initializes a texture from a PVR file.
- 
+
  Supported PVR formats:
  - BGRA 8888
  - RGBA 8888
@@ -238,21 +238,21 @@ Note that the generated textures are of type A8 - use the blending mode (GL_SRC_
  - AI 8
  - PVRTC 2BPP
  - PVRTC 4BPP
- 
+
  By default PVR images are treated as if they alpha channel is NOT premultiplied. You can override this behavior with this class method:
  - PVRImagesHavePremultipliedAlpha:(BOOL)haveAlphaPremultiplied;
- 
+
  IMPORTANT: This method is only defined on iOS. It is not supported on the Mac version.
- 
+
  */
 -(id) initWithPVRFile: (NSString*) file;
 
 /** treats (or not) PVR files as if they have alpha premultiplied.
  Since it is impossible to know at runtime if the PVR images have the alpha channel premultiplied, it is
  possible load them as if they have (or not) the alpha channel premultiplied.
- 
+
  By default it is disabled.
- 
+
  @since v0.99.5
  */
 +(void) PVRImagesHavePremultipliedAlpha:(BOOL)haveAlphaPremultiplied;
@@ -286,7 +286,7 @@ typedef struct _ccTexParams {
 /** sets alias texture parameters:
   - GL_TEXTURE_MIN_FILTER = GL_NEAREST
   - GL_TEXTURE_MAG_FILTER = GL_NEAREST
- 
+
  @since v0.8
  */
 - (void) setAliasTexParameters;
@@ -313,9 +313,9 @@ typedef struct _ccTexParams {
  How does it work ?
    - If the image is an RGBA (with Alpha) then the default pixel format will be used (it can be a 8-bit, 16-bit or 32-bit texture)
    - If the image is an RGB (without Alpha) then an RGB565 texture will be used (16-bit texture)
- 
+
  This parameter is not valid for PVR images.
- 
+
  @since v0.8
  */
 +(void) setDefaultAlphaPixelFormat:(CCTexture2DPixelFormat)format;

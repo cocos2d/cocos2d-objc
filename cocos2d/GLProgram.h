@@ -37,7 +37,7 @@ enum {
 	kCCVertexAttrib_Position,
 	kCCVertexAttrib_Color,
 	kCCVertexAttrib_TexCoords,
-	
+
 	kCCVertexAttrib_MAX,
 };
 
@@ -68,17 +68,17 @@ enum {
 
 /** GLProgram
  */
-@interface GLProgram : NSObject 
+@interface GLProgram : NSObject
 {
 @public
 	GLuint          program_,
 					vertShader_,
 					fragShader_;
-	
+
 	GLint			uniforms_[kCCUniform_MAX];
 }
 
-- (id)initWithVertexShaderFilename:(NSString *)vShaderFilename 
+- (id)initWithVertexShaderFilename:(NSString *)vShaderFilename
             fragmentShaderFilename:(NSString *)fShaderFilename;
 - (void)addAttribute:(NSString *)attributeName index:(GLuint)index;
 - (BOOL)link;
@@ -87,7 +87,7 @@ enum {
 	- kCCUniformPMatrix
 	- kCCUniformMVMatrix
 	- kCCUniformSampler
- 
+
  And it will bind "kCCUniformSampler" to 0
 
  @since v2.0.0

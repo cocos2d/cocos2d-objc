@@ -74,7 +74,7 @@ public:
 
 		b2Body* body2 = m_world->CreateBody(&triangleBodyDef);
 		body2->CreateFixture(&triangleShapeDef);
-		
+
 		// Small box
 		polygon.SetAsBox(1.0f, 0.5f);
 
@@ -92,7 +92,7 @@ public:
 		// Large box (recycle definitions)
 		polygon.SetAsBox(2.0f, 1.0f);
 		boxBodyDef.position.Set(RandomFloat(xLo, xHi), RandomFloat(yLo, yHi));
-		
+
 		b2Body* body4 = m_world->CreateBody(&boxBodyDef);
 		body4->CreateFixture(&boxShapeDef);
 

@@ -152,7 +152,7 @@ void b2Fixture::DestroyProxies(b2BroadPhase* broadPhase)
 void b2Fixture::Synchronize(b2BroadPhase* broadPhase, const b2Transform& transform1, const b2Transform& transform2)
 {
 	if (m_proxyCount == 0)
-	{	
+	{
 		return;
 	}
 
@@ -164,7 +164,7 @@ void b2Fixture::Synchronize(b2BroadPhase* broadPhase, const b2Transform& transfo
 		b2AABB aabb1, aabb2;
 		m_shape->ComputeAABB(&aabb1, transform1, proxy->childIndex);
 		m_shape->ComputeAABB(&aabb2, transform2, proxy->childIndex);
-	
+
 		proxy->aabb.Combine(aabb1, aabb2);
 
 		b2Vec2 displacement = transform2.p - transform1.p;

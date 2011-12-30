@@ -32,7 +32,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	TextureCache: Uses a serial queue to protect access to the texture dictionary. No need to use @syncronize on CCTexture2D
 
 * Lam Pham (http://www.fancyratstudios.com/)
-	CCProgressTimer: Improved API 
+	CCProgressTimer: Improved API
 	CCProgressTimer: Works with Tint and opacity
 	Added Tint + opacity test cases for CCProgressTimer
 
@@ -54,7 +54,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 
 * Scott Lembcke (AKA slembcke) (http://chipmunk-physics.net/)
 	Mentor & contributor of new Physics + cocos2d integration via nodeToParentTransform
-	
+
 * Sergey Tikhonov (AKA haqu) (http://haqu.net)
 	Tests: Improved Shader test. Fixed memory leak in Guassian Blur test
 	Tests: Shader tests center the fragment shader effects on Mac
@@ -73,10 +73,10 @@ Contributors (alphabetically ordered):
 
 * Christoph Winkler (http://raketenbasis.de)
 	Word Wrap works on LabelTTF on Mac
-	
+
 * Jerrod Putman (http://www.tinytimgames.com)
 	Original author of ARC compatibility code
-	
+
 * John Wordsworth ( http://www.johnwordsworth.com/ )
 	CCAnimationCache: Added animation data format. Can be loaded into the animation cache
 
@@ -91,7 +91,7 @@ Contributors (alphabetically ordered):
 	Actions: Repeat & RepeatForever work as expectd
 	Author of ParticleBatchNode node
 	Improved ESRenderer layoutSubview
-	Improved Debug Drawing for Sprite batched node	
+	Improved Debug Drawing for Sprite batched node
 
 * podhrask...@gmail.com
 	TouchDispatcher: correctly handles addition and removal of handlers when being inside a touch handler. patch
@@ -151,7 +151,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Repeat action works OK
 	* Barney Mattox:
 		templates use rfc1034identifier patch.
-		XCode doxygen script runs with spaces in subdirectories.	
+		XCode doxygen script runs with spaces in subdirectories.
 	* Booyah (http://booyah.com/):
 		Added support for GL sharegroup in EAGLView
 	* Brad Parks:
@@ -355,7 +355,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 			ccpRotateByAngle, ccpLineIntersect
 		Author of sample "CocosDenshion - Fancy Rat Metering Demo"
 		Added BarMid to CCProgressTo
-		CCProgressTimer: Improved API 
+		CCProgressTimer: Improved API
 		CCProgressTimer: Works with Tint and opacity
 		Added Tint + opacity test cases for CCProgressTimer
 	* Leonardo Kasperavičius (http://www.instantgames.com.br/):
@@ -385,7 +385,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Author of FontTest
 		PointParticleSystem doesn't draw if there are no particles patch
 		Actions: cleaner way to start/stop actions patches
-		author of CCPropertyAction 
+		author of CCPropertyAction
 	* magicyu (crmagicxxx):
 		CocosLive client supports ranking request patch
 	* manucorporat (manu.valladolid) (http://forzefield.com/):
@@ -394,7 +394,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		MenuItemLabel: color is saved when item is disabled
 		Update status in CocosDenshion patch
 		Added CocosNode#boundingBox method
-		Added debuging draw method to AtlasSpriteManager 
+		Added debuging draw method to AtlasSpriteManager
 		ColorLayer supports blend protocol patch
 		performance improvement on particles
 		TextureAtlas uses VBO instead of vertex array list patch
@@ -506,7 +506,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	* Piero Tofy (http://indieappsalliance.org):
 		Web: Author of the scraper script used to parse games data in the cocos2d site
 	* Pieter van de Bruggen
-		Author of Gradient layer  
+		Author of Gradient layer
     * podhraski.tomislav:
         Mac Director compiles when slow FPS are selected. patch.
 	* psionic81:

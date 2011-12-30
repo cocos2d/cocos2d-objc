@@ -70,7 +70,7 @@
     CCSprite *arrowsBar_;
     CCSprite *arrows_;
     CCMenuItemFont *lastSentenceItem_, *lastAlignmentItem_;
-    
+
     BOOL drag_;
 }
 @property (nonatomic,retain) CCLabelBMFont *label;

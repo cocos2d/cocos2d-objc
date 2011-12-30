@@ -13,15 +13,15 @@
 -(id) init
 {
 	if( (self=[super initWithColor: ccc4(0,255,0,255)]) ) {
-	
-		
+
+
 		CCMenuItemFont *item1 = [CCMenuItemFont itemWithString: @"Test pushScene" target:self selector:@selector(onPushScene:)];
 		CCMenuItemFont *item2 = [CCMenuItemFont itemWithString: @"Test pushScene w/transition" target:self selector:@selector(onPushSceneTran:)];
 		CCMenuItemFont *item3 = [CCMenuItemFont itemWithString: @"Quit" target:self selector:@selector(onQuit:)];
-		
+
 		CCMenu *menu = [CCMenu menuWithItems: item1, item2, item3, nil];
 		[menu alignItemsVertically];
-		
+
 		[self addChild: menu];
 
 		CGSize s = [CCDirector sharedDirector].winSize;
@@ -31,8 +31,8 @@
 		id rotate = [CCRotateBy actionWithDuration:2 angle:360];
 		id repeat = [CCRepeatForever actionWithAction:rotate];
 		[sprite runAction:repeat];
-		
-		
+
+
 		[self schedule:@selector(testDealloc:)];
 	}
 
@@ -102,27 +102,27 @@
 -(id) init
 {
 	if( (self=[super initWithColor: ccc4(255,0,0,255)]) ) {
-	
+
 		timeCounter = 0;
 
 		CCMenuItemFont *item1 = [CCMenuItemFont itemWithString: @"replaceScene" target:self selector:@selector(onReplaceScene:)];
 		CCMenuItemFont *item2 = [CCMenuItemFont itemWithString: @"replaceScene w/transition" target:self selector:@selector(onReplaceSceneTran:)];
 		CCMenuItemFont *item3 = [CCMenuItemFont itemWithString: @"Go Back" target:self selector:@selector(onGoBack:)];
-		
+
 		CCMenu *menu = [CCMenu menuWithItems: item1, item2, item3, nil];
 		[menu alignItemsVertically];
-		
+
 		[self addChild: menu];
-		
+
 		[self schedule:@selector(testDealloc:)];
-		
+
 		CGSize s = [CCDirector sharedDirector].winSize;
 		CCSprite *sprite = [CCSprite spriteWithFile:@"grossini.png"];
 		[self addChild:sprite];
 		sprite.position = ccp(40, s.height/2);
 		id rotate = [CCRotateBy actionWithDuration:2 angle:360];
 		id repeat = [CCRepeatForever actionWithAction:rotate];
-		[sprite runAction:repeat];		
+		[sprite runAction:repeat];
 	}
 
 	return self;
@@ -174,16 +174,16 @@
 		[self addChild:label];
 		CGSize s = [[CCDirector sharedDirector] winSize];
 		[label setPosition:ccp(s.width/2, s.height/2)];
-		
+
 		[self schedule:@selector(testDealloc:)];
-		
+
 		CCSprite *sprite = [CCSprite spriteWithFile:@"grossini.png"];
 		[self addChild:sprite];
 		sprite.position = ccp(s.width/2, 40);
 		id rotate = [CCRotateBy actionWithDuration:2 angle:360];
 		id repeat = [CCRepeatForever actionWithAction:rotate];
-		[sprite runAction:repeat];		
-		
+		[sprite runAction:repeat];
+
 	}
 	return self;
 }
@@ -214,31 +214,31 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
 	[super application:application didFinishLaunchingWithOptions:launchOptions];
-	
+
 	// Enables High Res mode (Retina Display) on iPhone 4 and maintains low res on all other devices
 	if( ! [director_ enableRetinaDisplay:YES] )
 		CCLOG(@"Retina Display Not supported");
-	
+
 	// Turn on display FPS
 	[director_ setDisplayStats:YES];
-	
-	
+
+
 	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
 	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
 	// You can change anytime.
 	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA8888];
-	
+
 	// When in iPad / RetinaDisplay mode, CCFileUtils will append the "-ipad" / "-hd" to all loaded files
 	// If the -ipad  / -hdfile is not found, it will load the non-suffixed version
 	[CCFileUtils setiPadSuffix:@"-ipad"];			// Default on iPad is "" (empty string)
 	[CCFileUtils setRetinaDisplaySuffix:@"-hd"];	// Default on RetinaDisplay is "-hd"
-	
+
 	CCScene *scene = [CCScene node];
 
 	[scene addChild: [Layer1 node] z:0];
-	
+
 	[director_ pushScene: scene];
-	
+
 	return YES;
 }
 @end

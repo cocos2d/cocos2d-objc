@@ -10,7 +10,7 @@
 {
 	IBOutlet UIWindow				*window;
 	IBOutlet UIView					*mainView;
-	IBOutlet UINavigationBar		*myNavigation;	
+	IBOutlet UINavigationBar		*myNavigation;
 
 	CCDirector						*director;
 	int	state;

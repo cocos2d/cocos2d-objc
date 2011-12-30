@@ -1,15 +1,15 @@
 /* Copyright (c) 2007 Scott Lembcke
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -18,7 +18,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
- 
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -34,7 +34,7 @@ arbiterSetEql(cpShape **shapes, cpArbiter *arb)
 {
 	cpShape *a = shapes[0];
 	cpShape *b = shapes[1];
-	
+
 	return ((a == arb->a && b == arb->b) || (b == arb->a && a == arb->b));
 }
 
@@ -53,7 +53,7 @@ handlerSetTrans(cpCollisionHandler *handler, void *unused)
 {
 	cpCollisionHandler *copy = (cpCollisionHandler *)cpcalloc(1, sizeof(cpCollisionHandler));
 	(*copy) = (*handler);
-	
+
 	return copy;
 }
 
@@ -87,48 +87,48 @@ cpSpaceInit(cpSpace *space)
 #endif
 
 	space->iterations = 10;
-	
+
 	space->gravity = cpvzero;
 	space->damping = 1.0f;
-	
+
 	space->collisionSlop = 0.1f;
 	space->collisionBias = cpfpow(1.0f - 0.1f, 60.0f);
 	space->collisionPersistence = 3;
-	
+
 	space->locked = 0;
 	space->stamp = 0;
 
 	space->staticShapes = cpBBTreeNew((cpSpatialIndexBBFunc)cpShapeGetBB, NULL);
 	space->activeShapes = cpBBTreeNew((cpSpatialIndexBBFunc)cpShapeGetBB, space->staticShapes);
 	cpBBTreeSetVelocityFunc(space->activeShapes, (cpBBTreeVelocityFunc)shapeVelocityFunc);
-	
+
 	space->allocatedBuffers = cpArrayNew(0);
-	
+
 	space->bodies = cpArrayNew(0);
 	space->sleepingComponents = cpArrayNew(0);
 	space->rousedBodies = cpArrayNew(0);
-	
+
 	space->sleepTimeThreshold = INFINITY;
 	space->idleSpeedThreshold = 0.0f;
 	space->enableContactGraph = cpFalse;
-	
+
 	space->arbiters = cpArrayNew(0);
 	space->pooledArbiters = cpArrayNew(0);
-	
+
 	space->contactBuffersHead = NULL;
 	space->cachedArbiters = cpHashSetNew(0, (cpHashSetEqlFunc)arbiterSetEql);
-	
+
 	space->constraints = cpArrayNew(0);
-	
+
 	space->defaultHandler = cpDefaultCollisionHandler;
 	space->collisionHandlers = cpHashSetNew(0, (cpHashSetEqlFunc)handlerSetEql);
 	cpHashSetSetDefaultValue(space->collisionHandlers, &cpDefaultCollisionHandler);
-	
+
 	space->postStepCallbacks = NULL;
-	
+
 	cpBodyInitStatic(&space->_staticBody);
 	space->staticBody = &space->_staticBody;
-	
+
 	return space;
 }
 
@@ -143,26 +143,26 @@ cpSpaceDestroy(cpSpace *space)
 {
 	cpSpatialIndexFree(space->staticShapes);
 	cpSpatialIndexFree(space->activeShapes);
-	
+
 	cpArrayFree(space->bodies);
 	cpArrayFree(space->sleepingComponents);
 	cpArrayFree(space->rousedBodies);
-	
+
 	cpArrayFree(space->constraints);
-	
+
 	cpHashSetFree(space->cachedArbiters);
-	
+
 	cpArrayFree(space->arbiters);
 	cpArrayFree(space->pooledArbiters);
-	
+
 	if(space->allocatedBuffers){
 		cpArrayFreeEach(space->allocatedBuffers, cpfree);
 		cpArrayFree(space->allocatedBuffers);
 	}
-	
+
 	if(space->postStepCallbacks) cpHashSetEach(space->postStepCallbacks, freeWrap, NULL);
 	cpHashSetFree(space->postStepCallbacks);
-	
+
 	if(space->collisionHandlers) cpHashSetEach(space->collisionHandlers, freeWrap, NULL);
 	cpHashSetFree(space->collisionHandlers);
 }
@@ -195,10 +195,10 @@ cpSpaceAddCollisionHandler(
 	void *data
 ){
 	cpAssertSpaceUnlocked(space);
-	
+
 	// Remove any old function so the new one will get added.
 	cpSpaceRemoveCollisionHandler(space, a, b);
-	
+
 	cpCollisionHandler handler = {
 		a, b,
 		begin ? begin : alwaysCollide,
@@ -207,7 +207,7 @@ cpSpaceAddCollisionHandler(
 		separate ? separate : nothing,
 		data
 	};
-	
+
 	cpHashSetInsert(space->collisionHandlers, CP_HASH_PAIR(a, b), &handler, NULL, (cpHashSetTransFunc)handlerSetTrans);
 }
 
@@ -215,7 +215,7 @@ void
 cpSpaceRemoveCollisionHandler(cpSpace *space, cpCollisionType a, cpCollisionType b)
 {
 	cpAssertSpaceUnlocked(space);
-	
+
 	struct { cpCollisionType a, b; } ids = {a, b};
 	cpCollisionHandler *old_handler = (cpCollisionHandler *) cpHashSetRemove(space->collisionHandlers, CP_HASH_PAIR(a, b), &ids);
 	cpfree(old_handler);
@@ -231,7 +231,7 @@ cpSpaceSetDefaultCollisionHandler(
 	void *data
 ){
 	cpAssertSpaceUnlocked(space);
-	
+
 	cpCollisionHandler handler = {
 		0, 0,
 		begin ? begin : alwaysCollide,
@@ -240,7 +240,7 @@ cpSpaceSetDefaultCollisionHandler(
 		separate ? separate : nothing,
 		data
 	};
-	
+
 	space->defaultHandler = handler;
 	cpHashSetSetDefaultValue(space->collisionHandlers, &space->defaultHandler);
 }
@@ -251,18 +251,18 @@ cpSpaceAddShape(cpSpace *space, cpShape *shape)
 {
 	cpBody *body = shape->body;
 	if(cpBodyIsStatic(body)) return cpSpaceAddStaticShape(space, shape);
-	
+
 	// TODO change these to check if it was added to a space at all.
 	cpAssertSoft(!shape->space, "This shape is already added to a space and cannot be added to another.");
 	cpAssertSpaceUnlocked(space);
-	
+
 	cpBodyActivate(body);
 	cpBodyAddShape(body, shape);
-	
+
 	cpShapeUpdate(shape, body->p, body->rot);
 	cpSpatialIndexInsert(space->activeShapes, shape, shape->hashid);
 	shape->space = space;
-		
+
 	return shape;
 }
 
@@ -271,13 +271,13 @@ cpSpaceAddStaticShape(cpSpace *space, cpShape *shape)
 {
 	cpAssertSoft(!shape->space, "This shape is already added to a space and cannot be added to another.");
 	cpAssertSpaceUnlocked(space);
-	
+
 	cpBody *body = shape->body;
 	cpBodyAddShape(body, shape);
 	cpShapeUpdate(shape, body->p, body->rot);
 	cpSpatialIndexInsert(space->staticShapes, shape, shape->hashid);
 	shape->space = space;
-	
+
 	return shape;
 }
 
@@ -287,10 +287,10 @@ cpSpaceAddBody(cpSpace *space, cpBody *body)
 	cpAssertHard(!cpBodyIsStatic(body), "Static bodies cannot be added to a space as they are not meant to be simulated.");
 	cpAssertSoft(!body->space, "This body is already added to a space and cannot be added to another.");
 	cpAssertSpaceUnlocked(space);
-	
+
 	cpArrayPush(space->bodies, body);
 	body->space = space;
-	
+
 	return body;
 }
 
@@ -299,17 +299,17 @@ cpSpaceAddConstraint(cpSpace *space, cpConstraint *constraint)
 {
 	cpAssertSoft(!constraint->space, "This shape is already added to a space and cannot be added to another.");
 	cpAssertSpaceUnlocked(space);
-	
+
 	cpBodyActivate(constraint->a);
 	cpBodyActivate(constraint->b);
 	cpArrayPush(space->constraints, constraint);
-	
+
 	// Push onto the heads of the bodies' constraint lists
 	cpBody *a = constraint->a, *b = constraint->b;
 	constraint->next_a = a->constraintList; a->constraintList = constraint;
 	constraint->next_b = b->constraintList; b->constraintList = constraint;
 	constraint->space = space;
-	
+
 	return constraint;
 }
 
@@ -324,8 +324,8 @@ cachedArbitersFilter(cpArbiter *arb, struct arbiterFilterContext *context)
 {
 	cpShape *shape = context->shape;
 	cpBody *body = context->body;
-	
-	
+
+
 	// Match on the filter shape, or if it's NULL the filter body
 	if(
 		(body == arb->body_a && (shape == arb->a || shape == NULL)) ||
@@ -333,14 +333,14 @@ cachedArbitersFilter(cpArbiter *arb, struct arbiterFilterContext *context)
 	){
 		// Call separate when removing shapes.
 		if(shape && arb->state != cpArbiterStateCached) cpArbiterCallSeparate(arb, context->space);
-		
+
 		cpArbiterUnthread(arb);
 		cpArrayDeleteObj(context->space->arbiters, arb);
 		cpArrayPush(context->space->pooledArbiters, arb);
-		
+
 		return cpFalse;
 	}
-	
+
 	return cpTrue;
 }
 
@@ -361,7 +361,7 @@ cpSpaceRemoveShape(cpSpace *space, cpShape *shape)
 		cpAssertSoft(cpSpaceContainsShape(space, shape),
 			"Cannot remove a shape that was not added to the space. (Removed twice maybe?)");
 		cpAssertSpaceUnlocked(space);
-		
+
 		cpBodyActivate(body);
 		cpBodyRemoveShape(body, shape);
 		cpSpaceFilterArbiters(space, body, shape);
@@ -376,7 +376,7 @@ cpSpaceRemoveStaticShape(cpSpace *space, cpShape *shape)
 	cpAssertSoft(cpSpaceContainsShape(space, shape),
 		"Cannot remove a static or sleeping shape that was not added to the space. (Removed twice maybe?)");
 	cpAssertSpaceUnlocked(space);
-	
+
 	cpBody *body = shape->body;
 	if(cpBodyIsStatic(body)) cpBodyActivateStatic(body, shape);
 	cpBodyRemoveShape(body, shape);
@@ -391,7 +391,7 @@ cpSpaceRemoveBody(cpSpace *space, cpBody *body)
 	cpAssertWarn(cpSpaceContainsBody(space, body),
 		"Cannot remove a body that was not added to the space. (Removed twice maybe?)");
 	cpAssertSpaceUnlocked(space);
-	
+
 	cpBodyActivate(body);
 //	cpSpaceFilterArbiters(space, body, NULL);
 	cpArrayDeleteObj(space->bodies, body);
@@ -404,11 +404,11 @@ cpSpaceRemoveConstraint(cpSpace *space, cpConstraint *constraint)
 	cpAssertWarn(cpSpaceContainsConstraint(space, constraint),
 		"Cannot remove a constraint that was not added to the space. (Removed twice maybe?)");
 	cpAssertSpaceUnlocked(space);
-	
+
 	cpBodyActivate(constraint->a);
 	cpBodyActivate(constraint->b);
 	cpArrayDeleteObj(space->constraints, constraint);
-	
+
 	cpBodyRemoveConstraint(constraint->a, constraint);
 	cpBodyRemoveConstraint(constraint->b, constraint);
 	constraint->space = NULL;
@@ -437,16 +437,16 @@ cpSpaceEachBody(cpSpace *space, cpSpaceBodyIteratorFunc func, void *data)
 {
 	cpSpaceLock(space); {
 		cpArray *bodies = space->bodies;
-		
+
 		for(int i=0; i<bodies->num; i++){
 			func((cpBody *)bodies->arr[i], data);
 		}
-		
+
 		// TODO BUG not safe to activate sleeping bodies from here!
 		cpArray *components = space->sleepingComponents;
 		for(int i=0; i<components->num; i++){
 			cpBody *root = (cpBody *)components->arr[i];
-			
+
 			cpBody *body = root;
 			while(body){
 				cpBody *next = body->node.next;
@@ -483,7 +483,7 @@ cpSpaceEachConstraint(cpSpace *space, cpSpaceConstraintIteratorFunc func, void *
 {
 	cpSpaceLock(space); {
 		cpArray *constraints = space->constraints;
-		
+
 		for(int i=0; i<constraints->num; i++){
 			func((cpConstraint *)constraints->arr[i], data);
 		}
@@ -499,7 +499,7 @@ updateBBCache(cpShape *shape, void *unused)
 	cpShapeUpdate(shape, body->p, body->rot);
 }
 
-void 
+void
 cpSpaceReindexStatic(cpSpace *space)
 {
 	cpSpatialIndexEach(space->staticShapes, (cpSpatialIndexIteratorFunc)&updateBBCache, NULL);
@@ -511,7 +511,7 @@ cpSpaceReindexShape(cpSpace *space, cpShape *shape)
 {
 	cpBody *body = shape->body;
 	cpShapeUpdate(shape, body->p, body->rot);
-	
+
 	// attempt to rehash the shape in both hashes
 	cpSpatialIndexReindexObject(space->activeShapes, shape, shape->hashid);
 	cpSpatialIndexReindexObject(space->staticShapes, shape, shape->hashid);
@@ -535,13 +535,13 @@ cpSpaceUseSpatialHash(cpSpace *space, cpFloat dim, int count)
 {
 	cpSpatialIndex *staticShapes = cpSpaceHashNew(dim, count, (cpSpatialIndexBBFunc)cpShapeGetBB, NULL);
 	cpSpatialIndex *activeShapes = cpSpaceHashNew(dim, count, (cpSpatialIndexBBFunc)cpShapeGetBB, staticShapes);
-	
+
 	cpSpatialIndexEach(space->staticShapes, (cpSpatialIndexIteratorFunc)copyShapes, staticShapes);
 	cpSpatialIndexEach(space->activeShapes, (cpSpatialIndexIteratorFunc)copyShapes, activeShapes);
-	
+
 	cpSpatialIndexFree(space->staticShapes);
 	cpSpatialIndexFree(space->activeShapes);
-	
+
 	space->staticShapes = staticShapes;
 	space->activeShapes = activeShapes;
 }

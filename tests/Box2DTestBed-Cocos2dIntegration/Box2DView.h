@@ -19,18 +19,18 @@
 
 
 @interface MenuLayer : CCLayer
-{    
-	int		entryID;	
+{
+	int		entryID;
 }
 +(id) menuWithEntryID:(int)entryId;
 -(id) initWithEntryID:(int)entryId;
 @end
 
 @interface Box2DView : CCLayer {
-    
+
 	TestEntry* entry;
 	Test* test;
-	int		entryID;	
+	int		entryID;
 }
 +(id) viewWithEntryID:(int)entryId;
 -(id) initWithEntryID:(int)entryId;

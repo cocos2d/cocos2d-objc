@@ -9,10 +9,10 @@
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -32,7 +32,7 @@
 
 /**
  CCTargetedTouchDelegate.
- 
+
  Using this type of delegate results in two benefits:
  1. You don't need to deal with NSSets, the dispatcher does the job of splitting
  them. You get exactly one UITouch per call.
@@ -40,7 +40,7 @@
  touches are sent only to the delegate(s) that claimed them. So if you get a move/
  ended/cancelled update you're sure it is your touch. This frees you from doing a
  lot of checks when doing multi-touch.
- 
+
  (The name TargetedTouchDelegate relates to updates "targeting" their specific
  handler, without bothering the other handlers.)
  @since v0.8
@@ -60,7 +60,7 @@
 
 /**
  CCStandardTouchDelegate.
- 
+
  This type of delegate is the same one used by CocoaTouch. You will receive all the events (Began,Moved,Ended,Cancelled).
  @since v0.8
 */

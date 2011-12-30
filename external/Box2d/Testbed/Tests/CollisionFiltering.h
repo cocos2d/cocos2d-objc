@@ -155,7 +155,7 @@ public:
 		b2BodyDef circleBodyDef;
 		circleBodyDef.type = b2_dynamicBody;
 		circleBodyDef.position.Set(5.0f, 2.0f);
-		
+
 		b2Body* body5 = m_world->CreateBody(&circleBodyDef);
 		body5->CreateFixture(&circleShapeDef);
 

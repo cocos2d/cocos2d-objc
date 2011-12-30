@@ -20,7 +20,7 @@
 @interface AudioVisualization : NSObject {
 	//	weak reference
 	AVAudioPlayer	*audioPlayer_;
-	
+
 	double			filterSmooth_;
 	double			*filteredPeak_;
 	double			*filteredAverage_;
@@ -33,7 +33,7 @@
 ///
 @property double filterSmooth;
 
-/// 
+///
 //	returns the shared instance
 ///
 +(AudioVisualization*)sharedAV;

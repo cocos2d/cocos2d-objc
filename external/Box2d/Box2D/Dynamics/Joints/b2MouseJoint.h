@@ -106,7 +106,7 @@ protected:
 	float32 m_frequencyHz;
 	float32 m_dampingRatio;
 	float32 m_beta;
-	
+
 	// Solver shared
 	b2Vec2 m_impulse;
 	float32 m_maxForce;

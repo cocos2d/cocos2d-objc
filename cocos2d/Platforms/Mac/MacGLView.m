@@ -3,17 +3,17 @@
  *
  * Copyright (c) 2010 Ricardo Quesada
  * Copyright (c) 2011 Zynga Inc.
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -63,34 +63,34 @@
 		NSOpenGLPFANoRecovery,
 		NSOpenGLPFADoubleBuffer,
 		NSOpenGLPFADepthSize, 24,
-		
+
 		0
     };
-	
+
 	NSOpenGLPixelFormat *pixelFormat = [[NSOpenGLPixelFormat alloc] initWithAttributes:attribs];
-	
+
 	if (!pixelFormat)
 		NSLog(@"No OpenGL pixel format");
-	
+
 	if( (self = [super initWithFrame:frameRect pixelFormat:[pixelFormat autorelease]]) ) {
-		
+
 		if( context )
 			[self setOpenGLContext:context];
 
 		// Synchronize buffer swaps with vertical refresh rate
 		GLint swapInt = 1;
-		[[self openGLContext] setValues:&swapInt forParameter:NSOpenGLCPSwapInterval]; 
-		
+		[[self openGLContext] setValues:&swapInt forParameter:NSOpenGLCPSwapInterval];
+
 //		GLint order = -1;
 //		[[self openGLContext] setValues:&order forParameter:NSOpenGLCPSurfaceOrder];
-		
+
 		// event delegate
-		eventDelegate_ = nil;		
+		eventDelegate_ = nil;
 	}
-	
+
 	return self;
 }
-	
+
 - (void) update
 {
 	// XXX: Should I do something here ?
@@ -101,7 +101,7 @@
 {
 	// XXX: Initialize OpenGL context
 
-	[super prepareOpenGL];	
+	[super prepareOpenGL];
 }
 
 - (void) reshape
@@ -110,23 +110,23 @@
 	// When resizing the view, -reshape is called automatically on the main thread
 	// Add a mutex around to avoid the threads accessing the context simultaneously when resizing
 	CGLLockContext([[self openGLContext] CGLContextObj]);
-	
+
 	NSRect rect = [self bounds];
-	
+
 	CCDirector *director = [CCDirector sharedDirector];
 	[director reshapeProjection: NSSizeToCGSize(rect.size) ];
-	
+
 	// avoid flicker
 	[director drawScene];
 //	[self setNeedsDisplay:YES];
-	
+
 	CGLUnlockContext([[self openGLContext] CGLContextObj]);
 }
 
 - (void) dealloc
-{	
+{
 	CCLOGINFO(@"cocos2d: deallocing %@", self);
-	
+
 	[super dealloc];
 }
 

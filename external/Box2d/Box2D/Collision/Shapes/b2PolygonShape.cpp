@@ -155,7 +155,7 @@ void b2PolygonShape::Set(const b2Vec2* vertices, int32 count)
 			{
 				continue;
 			}
-			
+
 			b2Vec2 r = m_vertices[j] - m_vertices[i1];
 
 			// If this crashes, your polygon is non-convex, has colinear edges,
@@ -209,7 +209,7 @@ bool b2PolygonShape::RayCast(b2RayCastOutput* output, const b2RayCastInput& inpu
 		float32 denominator = b2Dot(m_normals[i], d);
 
 		if (denominator == 0.0f)
-		{	
+		{
 			if (numerator < 0.0f)
 			{
 				return false;
@@ -355,7 +355,7 @@ void b2PolygonShape::ComputeMass(b2MassData* massData, float32 density) const
 
 	// Inertia tensor relative to the local origin (point s).
 	massData->I = density * I;
-	
+
 	// Shift to center of mass then to original body origin.
 	massData->I += massData->mass * (b2Dot(massData->center, massData->center) - b2Dot(center, center));
 }

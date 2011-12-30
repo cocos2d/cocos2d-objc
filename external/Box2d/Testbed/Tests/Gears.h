@@ -44,7 +44,7 @@ public:
 
 			b2CircleShape circle2;
 			circle2.m_radius = 2.0f;
-			
+
 			b2BodyDef bd1;
 			bd1.type = b2_staticBody;
 			bd1.position.Set(10.0f, 9.0f);
@@ -86,7 +86,7 @@ public:
 
 			b2CircleShape circle2;
 			circle2.m_radius = 2.0f;
-			
+
 			b2PolygonShape box;
 			box.SetAsBox(0.5f, 5.0f);
 
@@ -160,7 +160,7 @@ public:
 		Test::Step(settings);
 
 		float32 ratio, value;
-		
+
 		ratio = m_joint4->GetRatio();
 		value = m_joint1->GetJointAngle() + ratio * m_joint2->GetJointAngle();
 		m_debugDraw.DrawString(5, m_textLine, "theta1 + %4.2f * theta2 = %4.2f", (float) ratio, (float) value);

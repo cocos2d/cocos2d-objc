@@ -34,24 +34,24 @@ void removeShape( cpBody *body, cpShape *shape, void *data )
 
 // returns the transform matrix according the Chipmunk Body values
 -(CGAffineTransform) nodeToParentTransform
-{	
+{
 	CGFloat x = body_->p.x;
 	CGFloat y = body_->p.y;
-	
+
 	if ( !isRelativeAnchorPoint_ ) {
 		x += anchorPointInPoints_.x;
 		y += anchorPointInPoints_.y;
 	}
-		
+
 	// Make matrix
 	CGFloat c = body_->rot.x;
 	CGFloat s = body_->rot.y;
-	
+
 	if( ! CGPointEqualToPoint(anchorPointInPoints_, CGPointZero) ){
 		x += c*-anchorPointInPoints_.x + -s*-anchorPointInPoints_.y;
 		y += s*-anchorPointInPoints_.x + c*-anchorPointInPoints_.y;
 	}
-	
+
 	// Translate, Rot, anchor Matrix
 	transform_ = CGAffineTransformMake( c,  s,
 									   -s,	c,
@@ -86,7 +86,7 @@ void removeShape( cpBody *body, cpShape *shape, void *data )
 	if( (self=[super init])) {
 
 		// enable events
-		
+
 #ifdef __CC_PLATFORM_IOS
 		self.isTouchEnabled = YES;
 		self.isAccelerometerEnabled = YES;
@@ -114,10 +114,10 @@ void removeShape( cpBody *body, cpShape *shape, void *data )
 #else
 		// doesn't use batch node. Slower
 		spriteTexture_ = [[CCTextureCache sharedTextureCache] addImage:@"grossini_dance_atlas.png"];
-		CCNode *parent = [CCNode node];		
+		CCNode *parent = [CCNode node];
 #endif
 		[self addChild:parent z:0 tag:kTagParentNode];
-		
+
 		[self addNewSpriteAtPosition:ccp(200,200)];
 
 		[self scheduleUpdate];
@@ -129,14 +129,14 @@ void removeShape( cpBody *body, cpShape *shape, void *data )
 -(void) initPhysics
 {
 	CGSize s = [[CCDirector sharedDirector] winSize];
-	
+
 	// init chipmunk
 	cpInitChipmunk();
-	
+
 	space_ = cpSpaceNew();
-	
+
 	space_->gravity = ccp(0, -100);
-	
+
 	//
 	// rogue shapes
 	// We have to free them manually
@@ -157,7 +157,7 @@ void removeShape( cpBody *body, cpShape *shape, void *data )
 		walls_[i]->e = 1.0f;
 		walls_[i]->u = 1.0f;
 		cpSpaceAddStaticShape(space_, walls_[i] );
-	}	
+	}
 }
 
 - (void)dealloc
@@ -178,7 +178,7 @@ void removeShape( cpBody *body, cpShape *shape, void *data )
 	// Should use a fixed size step based on the animation interval.
 	int steps = 2;
 	CGFloat dt = [[CCDirector sharedDirector] animationInterval]/(CGFloat)steps;
-	
+
 	for(int i=0; i<steps; i++){
 		cpSpaceStep(space_, dt);
 	}
@@ -193,32 +193,32 @@ void removeShape( cpBody *body, cpShape *shape, void *data )
 		[child release];
 		[[CCDirector sharedDirector] replaceScene: s];
 	}];
-	
+
 	CCMenu *menu = [CCMenu menuWithItems:reset, nil];
-	
+
 	CGSize s = [[CCDirector sharedDirector] winSize];
-	
+
 	menu.position = ccp(s.width/2, 30);
-	[self addChild: menu z:-1];	
+	[self addChild: menu z:-1];
 }
 
 -(void) addNewSpriteAtPosition:(CGPoint)pos
 {
 	int posx, posy;
-	
+
 	CCNode *parent = [self getChildByTag:kTagParentNode];
-	
+
 	posx = CCRANDOM_0_1() * 200.0f;
 	posy = CCRANDOM_0_1() * 200.0f;
-	
+
 	posx = (posx % 4) * 85;
 	posy = (posy % 3) * 121;
-	
+
 	PhysicsSprite *sprite = [PhysicsSprite spriteWithTexture:spriteTexture_ rect:CGRectMake(posx, posy, 85, 121)];
 	[parent addChild: sprite];
-	
+
 	sprite.position = pos;
-	
+
 	int num = 4;
 	CGPoint verts[] = {
 		ccp(-24,-54),
@@ -226,16 +226,16 @@ void removeShape( cpBody *body, cpShape *shape, void *data )
 		ccp( 24, 54),
 		ccp( 24,-54),
 	};
-	
+
 	cpBody *body = cpBodyNew(1.0f, cpMomentForPoly(1.0f, num, verts, CGPointZero));
 
 	body->p = pos;
 	cpSpaceAddBody(space_, body);
-	
+
 	cpShape* shape = cpPolyShapeNew(body, num, verts, CGPointZero);
 	shape->e = 0.5f; shape->u = 0.5f;
 	cpSpaceAddShape(space_, shape);
-	
+
 	[sprite setPhysicsBody:body];
 }
 
@@ -245,7 +245,7 @@ void removeShape( cpBody *body, cpShape *shape, void *data )
 -(void) onEnter
 {
 	[super onEnter];
-	
+
 	[[UIAccelerometer sharedAccelerometer] setUpdateInterval:(1.0 / 60)];
 }
 
@@ -253,22 +253,22 @@ void removeShape( cpBody *body, cpShape *shape, void *data )
 {
 	for( UITouch *touch in touches ) {
 		CGPoint location = [touch locationInView: [touch view]];
-				
+
 		location = [[CCDirector sharedDirector] convertToGL: location];
-		
+
 		[self addNewSpriteAtPosition: location];
 	}
 }
 
 - (void)accelerometer:(UIAccelerometer*)accelerometer didAccelerate:(UIAcceleration*)acceleration
-{	
+{
 	static float prevX=0, prevY=0;
-	
+
 #define kFilterFactor 0.05f
-	
+
 	float accelX = (float) acceleration.x * kFilterFactor + (1- kFilterFactor)*prevX;
 	float accelY = (float) acceleration.y * kFilterFactor + (1- kFilterFactor)*prevY;
-	
+
 	prevX = accelX;
 	prevY = accelY;
 
@@ -285,7 +285,7 @@ void removeShape( cpBody *body, cpShape *shape, void *data )
 {
 	CGPoint location = [[CCDirector sharedDirector] convertEventToGL:event];
 	[self addNewSpriteAtPosition: location];
-	
+
 	return YES;
 }
 
@@ -303,36 +303,36 @@ void removeShape( cpBody *body, cpShape *shape, void *data )
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
 	[super application:application didFinishLaunchingWithOptions:launchOptions];
-	
+
 	// Turn on display FPS
 	[director_ setDisplayStats:YES];
-	
+
 	// Turn on multiple touches
 	[director_.view setMultipleTouchEnabled:YES];
-	
+
 	// Enables High Res mode (Retina Display) on iPhone 4 and maintains low res on all other devices
 	if( ! [director_ enableRetinaDisplay:YES] )
 		CCLOG(@"Retina Display Not supported");
-	
+
 	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
 	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
 	// You can change anytime.
 	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA8888];
-	
+
 	// Assume that PVR images have the alpha channel premultiplied
 	[CCTexture2D PVRImagesHavePremultipliedAlpha:YES];
-	
+
 	// When in iPad / RetinaDisplay mode, CCFileUtils will append the "-ipad" / "-hd" to all loaded files
 	// If the -ipad  / -hdfile is not found, it will load the non-suffixed version
 	[CCFileUtils setiPadSuffix:@"-ipad"];			// Default on iPad is "" (empty string)
 	[CCFileUtils setRetinaDisplaySuffix:@"-hd"];	// Default on RetinaDisplay is "-hd"
-	
+
 	// add layer
 	CCScene *scene = [CCScene node];
 	[scene addChild: [MainLayer node] ];
-	
+
 	[director_ pushScene:scene];
-	
+
 	return YES;
 }
 @end
@@ -351,7 +351,7 @@ void removeShape( cpBody *body, cpShape *shape, void *data )
 	// add layer
 	CCScene *scene = [CCScene node];
 	[scene addChild: [MainLayer node] ];
-	
+
 	[director_ runWithScene:scene];
 }
 @end

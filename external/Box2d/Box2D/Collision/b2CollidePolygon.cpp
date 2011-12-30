@@ -250,13 +250,13 @@ void b2CollidePolygons(b2Manifold* manifold,
 
 	b2Vec2 localTangent = v12 - v11;
 	localTangent.Normalize();
-	
+
 	b2Vec2 localNormal = b2Cross(localTangent, 1.0f);
 	b2Vec2 planePoint = 0.5f * (v11 + v12);
 
 	b2Vec2 tangent = b2Mul(xf1.q, localTangent);
 	b2Vec2 normal = b2Cross(tangent, 1.0f);
-	
+
 	v11 = b2Mul(xf1, v11);
 	v12 = b2Mul(xf1, v12);
 

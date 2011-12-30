@@ -54,7 +54,7 @@ kmVec2* kmVec2Normalize(kmVec2* pOut, const kmVec2* pIn)
 	kmVec2 v;
 	v.x = pIn->x * l;
 	v.y = pIn->y * l;
-    
+
 	pOut->x = v.x;
 	pOut->y = v.y;
 

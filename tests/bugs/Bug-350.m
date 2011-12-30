@@ -1,5 +1,5 @@
 //
-// Bug-350 
+// Bug-350
 // http://code.google.com/p/cocos2d-iphone/issues/detail?id=350
 //
 
@@ -16,9 +16,9 @@
 		CCSprite *background = [CCSprite spriteWithFile:@"Default.png"];
 		background.position = ccp(size.width/2, size.height/2);
 		[self addChild:background];
-		
+
 	}
-    
+
 	return self;
 }
 @end
@@ -32,19 +32,19 @@
 
 	// Turn on display FPS
 	[director_ setDisplayStats:YES];
-	
-	CCScene *scene = [CCScene node];	
+
+	CCScene *scene = [CCScene node];
 	[scene addChild:[Layer1 node] z:0];
-		
+
 //	CCSprite *sprite = [CCSprite spriteWithFile:@"Default.png"];
 //	sprite.anchorPoint = CGPointZero;
 //	CC_ENABLE_DEFAULT_GL_STATES();
 //	[sprite draw];
 //	CC_DISABLE_DEFAULT_GL_STATES();
 //	[[[CCDirector sharedDirector] openGLView] swapBuffers];
-	
+
 	[director_ pushScene: scene];
-	
+
 	return YES;
 }
 @end

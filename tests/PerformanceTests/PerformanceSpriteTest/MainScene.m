@@ -29,7 +29,7 @@ static NSString *transitions[] = {
 
 Class nextAction()
 {
-	
+
 	sceneIdx++;
 	sceneIdx = sceneIdx % ( sizeof(transitions) / sizeof(transitions[0]) );
 	NSString *r = transitions[sceneIdx];
@@ -42,8 +42,8 @@ Class backAction()
 	sceneIdx--;
 	int total = ( sizeof(transitions) / sizeof(transitions[0]) );
 	if( sceneIdx < 0 )
-		sceneIdx += total;	
-	
+		sceneIdx += total;
+
 	NSString *r = transitions[sceneIdx];
 	Class c = NSClassFromString(r);
 	return c;
@@ -62,7 +62,7 @@ Class restartAction()
 -(id) initWithSubTest:(int) subtest parent:(id)p
 {
 	if( (self=[super init]) ) {
-		
+
 		subtestNumber = subtest;
 		parent = p;
 		batchNode = nil;
@@ -77,20 +77,20 @@ Class restartAction()
  * 6: 14 (32-bit) PNG Batch Node of 85 x 121 each
  * 7: 14 (16-bit) PNG Batch Node of 85 x 121 each
  * 8: 14 (4-bit) PVRTC Batch Node of 85 x 121 each
- 
+
  * 9: 64 (32-bit) sprites of 32 x 32 each
  *10: 64 (32-bit) PNG Batch Node of 32 x 32 each
  *11: 64 (16-bit) PNG Batch Node of 32 x 32 each
  *12: 64 (4-bit) PVRTC Batch Node of 32 x 32 each
  */
-		
+
 		// purge textures
 		CCTextureCache *mgr = [CCTextureCache sharedTextureCache];
 //		[mgr removeAllTextures];
 		[mgr removeTexture: [mgr addImage:@"grossinis_sister1.png"]];
 		[mgr removeTexture: [mgr addImage:@"grossini_dance_atlas.png"]];
 		[mgr removeTexture: [mgr addImage:@"spritesheet1.png"]];
-		
+
 		switch( subtestNumber) {
 			case 1:
 			case 5:
@@ -111,18 +111,18 @@ Class restartAction()
 				batchNode = [CCSpriteBatchNode batchNodeWithFile:@"grossinis_sister1.pvr" capacity:100];
 				[p addChild:batchNode z:0];
 				break;
-				
+
 				///
 			case 6:
 				[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA8888];
 				batchNode = [CCSpriteBatchNode batchNodeWithFile:@"grossini_dance_atlas.png" capacity:100];
 				[p addChild:batchNode z:0];
-				break;				
+				break;
 			case 7:
 				[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA4444];
 				batchNode = [CCSpriteBatchNode batchNodeWithFile:@"grossini_dance_atlas.png" capacity:100];
 				[p addChild:batchNode z:0];
-				break;								
+				break;
 			case 8:
 				batchNode = [CCSpriteBatchNode batchNodeWithFile:@"grossini_dance_atlas.pvr" capacity:100];
 				[p addChild:batchNode z:0];
@@ -138,22 +138,22 @@ Class restartAction()
 				[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA4444];
 				batchNode = [CCSpriteBatchNode batchNodeWithFile:@"spritesheet1.png" capacity:100];
 				[p addChild:batchNode z:0];
-				break;				
+				break;
 			case 12:
 				batchNode = [CCSpriteBatchNode batchNodeWithFile:@"spritesheet1.pvr" capacity:100];
 				[p addChild:batchNode z:0];
 				break;
-				
+
 			default:
 				break;
 		}
-		
+
 		[batchNode retain];
 
 		[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_Default];
 
 	}
-	
+
 	return self;
 }
 
@@ -165,7 +165,7 @@ Class restartAction()
 
 -(id) createSpriteWithTag:(int)tag
 {
-	// create 
+	// create
 	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA8888];
 
 	id sprite = nil;
@@ -176,7 +176,7 @@ Class restartAction()
 			break;
 		}
 		case 2:
-		case 3: 
+		case 3:
 		case 4: {
 			sprite = [CCSprite spriteWithBatchNode:batchNode rect:CGRectMake(0, 0, 52, 139)];
 			[batchNode addChild:sprite z:0 tag:tag+100];
@@ -196,7 +196,7 @@ Class restartAction()
 		{
 			int y,x;
 			int r = (CCRANDOM_0_1() * 1400 / 100);
-			
+
 			y = r / 5;
 			x = r % 5;
 
@@ -211,36 +211,36 @@ Class restartAction()
 		{
 			int y,x;
 			int r = (CCRANDOM_0_1() * 6400 / 100);
-			
+
 			y = r / 8;
 			x = r % 8;
-			
+
 			sprite = [CCSprite spriteWithFile: [NSString stringWithFormat:@"sprite-%d-%d.png", x, y]];
 			[parent addChild:sprite z:0 tag:tag+100];
 			break;
 		}
-			
+
 		case 10:
 		case 11:
 		case 12:
 		{
 			int y,x;
 			int r = (CCRANDOM_0_1() * 6400 / 100);
-			
+
 			y = r / 8;
 			x = r % 8;
-			
+
 			x *= 32;
 			y *= 32;
 			sprite = [CCSprite spriteWithBatchNode:batchNode rect:CGRectMake(x,y,32,32)];
 			[batchNode addChild:sprite z:0 tag:tag+100];
 			break;
 		}
-			
+
 		default:
 			break;
 	}
-		
+
 	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_Default];
 
 	return sprite;
@@ -285,9 +285,9 @@ Class restartAction()
 - (id)initWithSubTest:(int) asubtest nodes:(int)nodes
 {
 	if ((self = [super init]) != nil) {
-		
+
 		srandom(0);
-		
+
 		subtestNumber = asubtest;
 		subTest = [[SubTest alloc] initWithSubTest:asubtest parent:self];
 
@@ -295,24 +295,24 @@ Class restartAction()
 
 		lastRenderedCount = 0;
 		quantityNodes = 0;
-		
+
 		[CCMenuItemFont setFontSize:65];
 		CCMenuItemFont *decrease = [CCMenuItemFont itemWithString: @" - " target:self selector:@selector(onDecrease:)];
 		[decrease.label setColor:ccc3(0,200,20)];
 		CCMenuItemFont *increase = [CCMenuItemFont itemWithString: @" + " target:self selector:@selector(onIncrease:)];
 		[increase.label setColor:ccc3(0,200,20)];
-		
+
 		CCMenu *menu = [CCMenu menuWithItems: decrease, increase, nil];
 		[menu alignItemsHorizontally];
 		menu.position = ccp(s.width/2, s.height-65);
 		[self addChild:menu z:1];
-		
+
 		CCLabelTTF *infoLabel = [CCLabelTTF labelWithString:@"0 nodes" fontName:@"Marker Felt" fontSize:30];
 		[infoLabel setColor:ccc3(0,200,20)];
 		infoLabel.position = ccp(s.width/2, s.height-90);
 		[self addChild:infoLabel z:1 tag:kTagInfoLayer];
-				
-		
+
+
 		// Next Prev Test
 		CCMenuItemImage *item1 = [CCMenuItemImage itemWithNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
 		CCMenuItemImage *item2 = [CCMenuItemImage itemWithNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
@@ -320,8 +320,8 @@ Class restartAction()
 		menu = [CCMenu menuWithItems:item1, item2, item3, nil];
 		[menu alignItemsHorizontally];
 		menu.position = ccp(s.width/2, 30);
-		[self addChild: menu z:1];	
-		
+		[self addChild: menu z:1];
+
 		// Sub Tests
 		[CCMenuItemFont setFontSize:32];
 		CCMenuItemFont  *itemF1 = [CCMenuItemFont itemWithString:@"1 " target:self selector:@selector(testNCallback:)];
@@ -352,7 +352,7 @@ Class restartAction()
 
 
 		menu = [CCMenu menuWithItems:itemF1, itemF2, itemF3, itemF4, itemF5, itemF6, itemF7, itemF8, itemF9, itemF10, itemF11, itemF12, nil];
-		
+
 		int i=0;
 		for( id child in [menu children] ) {
 			if( i<4)
@@ -363,22 +363,22 @@ Class restartAction()
 				[[child label] setColor:ccc3(0,20,200)];
 			i++;
 		}
-		
+
 		[menu alignItemsHorizontally];
 		menu.position = ccp(s.width/2, 80);
 		[self addChild:menu z:2];
-		
+
 
 		CCLabelTTF *label = [CCLabelTTF labelWithString:[self title] fontName:@"Arial" fontSize:40];
 		[self addChild:label z:1];
 		[label setPosition: ccp(s.width/2, s.height-32)];
 		[label setColor:ccc3(255,255,40)];
 
-		
+
 		while(quantityNodes < nodes )
 			[self onIncrease:self];
 	}
-	
+
 	return self;
 }
 
@@ -431,7 +431,7 @@ Class restartAction()
 
 		CCLabelTTF *infoLabel = (CCLabelTTF *) [self getChildByTag:kTagInfoLayer];
 		[infoLabel setString: [NSString stringWithFormat:@"%u nodes", quantityNodes] ];
-		
+
 		lastRenderedCount = quantityNodes;
 	}
 }
@@ -445,15 +445,15 @@ Class restartAction()
 {
 	if( quantityNodes >= kMaxNodes)
 		return;
-	
+
 	for( int i=0;i< kNodesIncrease;i++) {
-		
+
 		CCSprite *sprite = [subTest createSpriteWithTag: quantityNodes];
 		[self doTest:sprite];
-		
+
 		quantityNodes++;
 	}
-	
+
 	[self updateNodes];
 }
 
@@ -461,12 +461,12 @@ Class restartAction()
 {
 	if( quantityNodes <= 0 )
 		return;
-	
+
 	for( int i=0;i < kNodesIncrease;i++) {
 		quantityNodes--;
 		[subTest removeByTag:quantityNodes];
 	}
-	
+
 	[self updateNodes];
 }
 

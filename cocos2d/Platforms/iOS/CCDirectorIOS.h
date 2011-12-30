@@ -3,17 +3,17 @@
  *
  * Copyright (c) 2008-2010 Ricardo Quesada
  * Copyright (c) 2011 Zynga Inc.
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -51,7 +51,7 @@
 /** Will enable Retina Display on devices that supports it.
  It will enable Retina Display on iPhone4 and iPod Touch 4.
  It will return YES, if it could enabled it, otherwise it will return NO.
- 
+
  This is the recommened way to enable Retina Display.
  @since v0.99.5
  */
@@ -71,9 +71,9 @@
 {
 	/* contentScaleFactor could be simulated */
 	BOOL	isContentScaleSupported_;
-	
+
 	/* touch dispatcher */
-	CCTouchDispatcher	*touchDispatcher_;	
+	CCTouchDispatcher	*touchDispatcher_;
 }
 
 /** Touch Dispatcher */

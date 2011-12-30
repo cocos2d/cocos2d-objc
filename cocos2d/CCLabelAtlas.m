@@ -3,17 +3,17 @@
  *
  * Copyright (c) 2008-2011 Ricardo Quesada
  * Copyright (c) 2011 Zynga Inc.
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -52,7 +52,7 @@
 
 	if ((self=[super initWithTileFile:charmapfile tileWidth:w tileHeight:h itemsToRender:[theString length] ]) ) {
 
-		mapStartChar_ = c;		
+		mapStartChar_ = c;
 		[self setString: theString];
 	}
 
@@ -71,7 +71,7 @@
 -(void) updateAtlasValues
 {
 	NSUInteger n = [string_ length];
-	
+
 	ccV3F_C4B_T2F_Quad quad;
 
 	const unsigned char *s = (unsigned char*) [string_ UTF8String];
@@ -88,7 +88,7 @@
 		unsigned char a = s[i] - mapStartChar_;
 		float row = (a % itemsPerRow_);
 		float col = (a / itemsPerRow_);
-		
+
 #if CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
 		// Issue #938. Don't use texStepX & texStepY
 		float left		= (2*row*itemWidthInPixels+1)/(2*textureWide);
@@ -101,7 +101,7 @@
 		float top		= col*itemHeightInPixels/textureHigh;
 		float bottom	= top+itemHeightInPixels/textureHigh;
 #endif // ! CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
-		
+
 		quad.tl.texCoords.u = left;
 		quad.tl.texCoords.v = top;
 		quad.tr.texCoords.u = right;
@@ -110,7 +110,7 @@
 		quad.bl.texCoords.v = bottom;
 		quad.br.texCoords.u = right;
 		quad.br.texCoords.v = bottom;
-		
+
 		quad.bl.vertices.x = (int) (i * itemWidth_);
 		quad.bl.vertices.y = 0;
 		quad.bl.vertices.z = 0.0f;
@@ -123,7 +123,7 @@
 		quad.tr.vertices.x = (int)(i * itemWidth_ + itemWidth_);
 		quad.tr.vertices.y = (int)(itemHeight_);
 		quad.tr.vertices.z = 0.0f;
-		
+
 		ccColor4B c = { color_.r, color_.g, color_.b, opacity_ };
 		quad.tl.colors = c;
 		quad.tr.colors = c;
@@ -147,7 +147,7 @@
 
 	CGSize s = CGSizeMake(len * itemWidth_, itemHeight_);
 	[self setContentSize:s];
-	
+
 	self.quadsToDraw = len;
 }
 
@@ -160,7 +160,7 @@
 
 #if CC_LABELATLAS_DEBUG_DRAW
 - (void) draw
-{	
+{
 	[super draw];
 
 	CGSize s = [self contentSize];

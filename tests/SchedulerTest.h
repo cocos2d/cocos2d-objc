@@ -77,7 +77,7 @@
 	CCScheduler *sched2;
 	CCActionManager *actionManager1;
 	CCActionManager *actionManager2;
-	
+
 #ifdef __CC_PLATFORM_IOS
 	UISlider	*sliderCtl1;
 	UISlider	*sliderCtl2;

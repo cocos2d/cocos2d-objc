@@ -12,10 +12,10 @@
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -45,7 +45,7 @@
 	if ((self=[super init]) ) {
 		targets = NULL;
 	}
-	
+
 	return self;
 }
 
@@ -57,7 +57,7 @@
 - (void) dealloc
 {
 	CCLOGINFO( @"cocos2d: deallocing %@", self);
-	
+
 	[self removeAllActions];
 
 	[super dealloc];
@@ -80,24 +80,24 @@
 	if( element->actions == nil )
 		element->actions = ccArrayNew(4);
 	else if( element->actions->num == element->actions->max )
-		ccArrayDoubleCapacity(element->actions);	
+		ccArrayDoubleCapacity(element->actions);
 }
 
 -(void) removeActionAtIndex:(NSUInteger)index hashElement:(tHashElement*)element
-{	
+{
 	id action = element->actions->arr[index];
 
 	if( action == element->currentAction && !element->currentActionSalvaged ) {
 		[element->currentAction retain];
 		element->currentActionSalvaged = YES;
 	}
-	
+
 	ccArrayRemoveObjectAtIndex(element->actions, index);
 
 	// update actionIndex in case we are in tick:, looping over the actions
 	if( element->actionIndex >= index )
 		element->actionIndex--;
-	
+
 	if( element->actions->num == 0 ) {
 		if( currentTarget == element )
 			currentTargetSalvaged = YES;
@@ -133,8 +133,8 @@
 -(void) addAction:(CCAction*)action target:(id)target paused:(BOOL)paused
 {
 	NSAssert( action != nil, @"Argument action must be non-nil");
-	NSAssert( target != nil, @"Argument target must be non-nil");	
-	
+	NSAssert( target != nil, @"Argument target must be non-nil");
+
 	tHashElement *element = NULL;
 	HASH_FIND_INT(targets, &target, element);
 	if( ! element ) {
@@ -145,12 +145,12 @@
 //		CCLOG(@"cocos2d: ---- buckets: %d/%d - %@", targets->entries, targets->size, element->target);
 
 	}
-	
+
 	[self actionAllocWithHashElement:element];
 
-	NSAssert( !ccArrayContainsObject(element->actions, action), @"runAction: Action already running");	
+	NSAssert( !ccArrayContainsObject(element->actions, action), @"runAction: Action already running");
 	ccArrayAppendObject(element->actions, action);
-	
+
 	[action startWithTarget:target];
 }
 
@@ -158,7 +158,7 @@
 
 -(void) removeAllActions
 {
-	for(tHashElement *element=targets; element != NULL; ) {	
+	for(tHashElement *element=targets; element != NULL; ) {
 		id target = element->target;
 		element = element->hh.next;
 		[self removeAllActionsFromTarget:target];
@@ -169,7 +169,7 @@
 	// explicit nil handling
 	if( target == nil )
 		return;
-	
+
 	tHashElement *element = NULL;
 	HASH_FIND_INT(targets, &target, element);
 	if( element ) {
@@ -193,7 +193,7 @@
 	// explicit nil handling
 	if (action == nil)
 		return;
-	
+
 	tHashElement *element = NULL;
 	id target = [action originalTarget];
 	HASH_FIND_INT(targets, &target, element );
@@ -211,15 +211,15 @@
 {
 	NSAssert( aTag != kCCActionTagInvalid, @"Invalid tag");
 	NSAssert( target != nil, @"Target should be ! nil");
-	
+
 	tHashElement *element = NULL;
 	HASH_FIND_INT(targets, &target, element);
-	
+
 	if( element ) {
 		NSUInteger limit = element->actions->num;
 		for( NSUInteger i = 0; i < limit; i++) {
 			CCAction *a = element->actions->arr[i];
-			
+
 			if( a.tag == aTag && [a originalTarget]==target) {
 				[self removeActionAtIndex:i hashElement:element];
 				break;
@@ -243,9 +243,9 @@
 			NSUInteger limit = element->actions->num;
 			for( NSUInteger i = 0; i < limit; i++) {
 				CCAction *a = element->actions->arr[i];
-			
+
 				if( a.tag == aTag )
-					return a; 
+					return a;
 			}
 		}
 //		CCLOG(@"cocos2d: getActionByTag: Action not found");
@@ -271,18 +271,18 @@
 
 -(void) update: (ccTime) dt
 {
-	for(tHashElement *elt = targets; elt != NULL; ) {	
+	for(tHashElement *elt = targets; elt != NULL; ) {
 
 		currentTarget = elt;
 		currentTargetSalvaged = NO;
-		
+
 		if( ! currentTarget->paused ) {
-			
+
 			// The 'actions' ccArray may change while inside this loop.
 			for( currentTarget->actionIndex = 0; currentTarget->actionIndex < currentTarget->actions->num; currentTarget->actionIndex++) {
 				currentTarget->currentAction = currentTarget->actions->arr[currentTarget->actionIndex];
 				currentTarget->currentActionSalvaged = NO;
-				
+
 				[currentTarget->currentAction step: dt];
 
 				if( currentTarget->currentActionSalvaged ) {
@@ -293,13 +293,13 @@
 
 				} else if( [currentTarget->currentAction isDone] ) {
 					[currentTarget->currentAction stop];
-					
+
 					CCAction *a = currentTarget->currentAction;
 					// Make currentAction nil to prevent removeAction from salvaging it.
 					currentTarget->currentAction = nil;
 					[self removeAction:a];
 				}
-				
+
 				currentTarget->currentAction = nil;
 			}
 		}
@@ -307,12 +307,12 @@
 		// elt, at this moment, is still valid
 		// so it is safe to ask this here (issue #490)
 		elt = elt->hh.next;
-	
+
 		// only delete currentTarget if no actions were scheduled during the cycle (issue #481)
 		if( currentTargetSalvaged && currentTarget->actions->num == 0 )
 			[self deleteHashElement:currentTarget];
 	}
-	
+
 	// issue #635
 	currentTarget = nil;
 }

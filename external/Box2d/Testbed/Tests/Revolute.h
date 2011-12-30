@@ -107,14 +107,14 @@ public:
 			b2BodyDef bodyDef;
 			bodyDef.type = b2_dynamicBody;
 			b2Body* body = m_world->CreateBody(&bodyDef);
-		
-			b2PolygonShape polyShape;		
+
+			b2PolygonShape polyShape;
 			b2Vec2 verts[3];
 			verts[0].Set( 17.63f, 36.31f );
 			verts[1].Set( 17.52f, 36.69f );
 			verts[2].Set( 17.19f, 36.36f );
 			polyShape.Set(verts, 3);
-		
+
 			b2FixtureDef polyFixtureDef;
 			polyFixtureDef.shape = &polyShape;
 			polyFixtureDef.density = 1;

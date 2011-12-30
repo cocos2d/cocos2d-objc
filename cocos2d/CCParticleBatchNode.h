@@ -7,17 +7,17 @@
  * Copyright (c) 2011 Zynga Inc.
  *
  * Copyright (c) 2011 Marco Tillemans
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -33,8 +33,8 @@
 @class CCParticleSystem;
 
 //don't use lazy sorting for particle systems
-@interface CCNode (extension) 
--(void) setZOrder:(NSUInteger) z; 
+@interface CCNode (extension)
+-(void) setZOrder:(NSUInteger) z;
 @end
 
 /** CCParticleBatchNode is like a batch node: if it contains children, it will draw them in 1 single OpenGL call
@@ -49,7 +49,7 @@
  * Limitations:
  * - At the moment only CCParticleSystemQuad is supported
  * - All systems need to be drawn with the same parameters, blend function, aliasing, texture
- * 
+ *
  * Most efficient usage
  * - Initialize the ParticleBatchNode with the texture and enough capacity for all the particle systems
  * - Initialize all particle systems and add them as child to the batch node
@@ -88,10 +88,10 @@
 /** Add a child into the CCParticleBatchNode */
 -(void) addChild:(CCParticleSystem*)child z:(NSInteger)z tag:(NSInteger) aTag;
 
-/** Inserts a child into the CCParticleBatchNode */ 
+/** Inserts a child into the CCParticleBatchNode */
 -(void) insertChild:(CCParticleSystem*) pSystem inAtlasAtIndex:(NSUInteger)index;
 
-/** remove child from the CCParticleBatchNode */ 
+/** remove child from the CCParticleBatchNode */
 -(void) removeChild:(CCParticleSystem*) pSystem cleanup:(BOOL)doCleanUp;
 
 /** disables a particle by inserting a 0'd quad into the texture atlas */

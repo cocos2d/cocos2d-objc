@@ -84,7 +84,7 @@ struct Settings
 	pause(0),
 	singleStep(0)
 	{}
-	
+
 	b2Vec2 viewCenter;
 	float32 hz;
 	int32 velocityIterations;
@@ -122,7 +122,7 @@ class DestructionListener : public b2DestructionListener
 	public:
 		void SayGoodbye(b2Fixture* fixture) { B2_NOT_USED(fixture); }
 		void SayGoodbye(b2Joint* joint);
-		
+
 		Test* test;
 	};
 
@@ -140,10 +140,10 @@ struct ContactPoint
 class Test : public b2ContactListener
 	{
 	public:
-		
+
 		Test();
 		virtual ~Test();
-		
+
 		void SetGravity(float x,float y);	// iPhone specific
 
 		void SetTextLine(int32 line) { m_textLine = line; }
@@ -156,13 +156,13 @@ class Test : public b2ContactListener
 		void MouseMove(const b2Vec2& p);
 		void LaunchBomb();
 		void LaunchBomb(const b2Vec2& position, const b2Vec2& velocity);
-		
+
 		void SpawnBomb(const b2Vec2& worldPt);
 		void CompleteBombSpawn(const b2Vec2& p);
-		
+
 		// Let derived tests know that a joint was destroyed.
 		virtual void JointDestroyed(b2Joint* joint) { B2_NOT_USED(joint); }
-		
+
 		// Callbacks for derived classes.
 		virtual void BeginContact(b2Contact* contact) { B2_NOT_USED(contact); }
 		virtual void EndContact(b2Contact* contact) { B2_NOT_USED(contact); }
@@ -179,7 +179,7 @@ class Test : public b2ContactListener
 		friend class DestructionListener;
 		friend class BoundaryListener;
 		friend class ContactListener;
-		
+
 		b2Body* m_groundBody;
 		b2AABB m_worldAABB;
 		ContactPoint m_points[k_maxContactPoints];

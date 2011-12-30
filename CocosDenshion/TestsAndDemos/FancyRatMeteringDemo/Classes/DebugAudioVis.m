@@ -40,19 +40,19 @@
 }
 
 -(void)draw
-{	
+{
 
 //	glDisable(GL_TEXTURE_2D);
 //	glDisableClientState(GL_COLOR_ARRAY);
 //	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 //	glPushMatrix();
-	
+
 	kmGLPushMatrix();
 	{
 		glLineWidth(10.f);
 		ccDrawColor4B(255, 255, 255, 64);
 		ccDrawLine(ccp(20.f, 0.f), ccp(20.f, 460.f*avgPower_));
-		
+
 		ccDrawColor4B(255, 255, 255, 255);
 		kmGLPushMatrix();
 

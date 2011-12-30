@@ -21,7 +21,7 @@ static NSString *transitions[] = {
 
 Class nextAction()
 {
-	
+
 	sceneIdx++;
 	sceneIdx = sceneIdx % ( sizeof(transitions) / sizeof(transitions[0]) );
 	NSString *r = transitions[sceneIdx];
@@ -34,8 +34,8 @@ Class backAction()
 	sceneIdx--;
 	int total = ( sizeof(transitions) / sizeof(transitions[0]) );
 	if( sceneIdx < 0 )
-		sceneIdx += total;	
-	
+		sceneIdx += total;
+
 	NSString *r = transitions[sceneIdx];
 	Class c = NSClassFromString(r);
 	return c;
@@ -55,29 +55,29 @@ Class restartAction()
 	if( (self = [super init])) {
 
 		CGSize s = [[CCDirector sharedDirector] winSize];
-			
+
 		CCLabelTTF* label = [CCLabelTTF labelWithString:[self title] fontName:@"Arial" fontSize:32];
 		[self addChild: label z:1];
 		[label setPosition: ccp(s.width/2, s.height-50)];
-		
+
 		NSString *subtitle = [self subtitle];
 		if( subtitle ) {
 			CCLabelTTF* l = [CCLabelTTF labelWithString:subtitle fontName:@"Thonburi" fontSize:16];
 			[self addChild:l z:1];
 			[l setPosition:ccp(s.width/2, s.height-80)];
-		}	
-		
+		}
+
 		CCMenuItemImage *item1 = [CCMenuItemImage itemWithNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
 		CCMenuItemImage *item2 = [CCMenuItemImage itemWithNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
 		CCMenuItemImage *item3 = [CCMenuItemImage itemWithNormalImage:@"f1.png" selectedImage:@"f2.png" target:self selector:@selector(nextCallback:)];
-		
+
 		CCMenu *menu = [CCMenu menuWithItems:item1, item2, item3, nil];
-		
+
 		menu.position = CGPointZero;
 		item1.position = ccp( s.width/2 - 100,30);
 		item2.position = ccp( s.width/2, 30);
 		item3.position = ccp( s.width/2 + 100,30);
-		[self addChild: menu z:1];	
+		[self addChild: menu z:1];
 	}
 
 	return self;
@@ -128,10 +128,10 @@ Class restartAction()
 -(id) init
 {
 	if( (self=[super init]) ) {
-		
-		self.isKeyboardEnabled = YES;		
+
+		self.isKeyboardEnabled = YES;
 	}
-	
+
 	return self;
 }
 
@@ -177,10 +177,10 @@ Class restartAction()
 -(id) init
 {
 	if( (self=[super init]) ) {
-		
+
 		self.isMouseEnabled = YES;
 	}
-	
+
 	return self;
 }
 
@@ -278,29 +278,29 @@ Class restartAction()
 -(id) init
 {
 	if( (self=[super init]) ) {
-		
+
 		capacity = 12;
-		
+
 		batch_ = [CCSpriteBatchNode batchNodeWithFile:@"snow.png" capacity:capacity];
 		[self addChild:batch_];
-		
+
 		CGRect rect;
 		rect.origin = CGPointZero;
 		rect.size = [[batch_ texture] contentSize];
-		
+
 		sprites_ = (CCSprite**) malloc(sizeof(id)*capacity);
 		nuSprites_ = 0;
-		
+
 		for(int i = 0; i<capacity; i++)
 		{
 			sprites_[i] = [CCSprite spriteWithBatchNode:batch_ rect:rect];
 			[sprites_[i] setVisible:NO];
 			[batch_ addChild:sprites_[i]];
 		}
-		
+
 		self.isTouchEnabled = YES;
 	}
-	
+
 	return self;
 }
 
@@ -332,7 +332,7 @@ Class restartAction()
 {
 	CCDirector *director = [CCDirector sharedDirector];
 	[[director view] setAcceptsTouchEvents:NO];
-	
+
 	[super onExit];
 }
 
@@ -342,18 +342,18 @@ Class restartAction()
 
 	NSView *view = [[CCDirector sharedDirector] view];
 	NSSet *touches = [event touchesMatchingPhase:NSTouchPhaseBegan inView:view];
-	
+
 	for (NSTouch *touch in touches)
 	{
 		CGPoint pos = CCNSPointToCGPoint(touch.normalizedPosition);
 		// convert to absolute position
 		pos = ccpCompMult(pos, ccp(contentSize_.width, contentSize_.height));
-		
+
 		CCSprite *newSprite = sprites_[nuSprites_];
 		[newSprite setVisible:YES];
 		[newSprite setUserData:[touch identity]];
 		[newSprite setPosition:pos];
-		
+
 		nuSprites_++;
 		nuSprites_ = nuSprites_ >capacity ? capacity : nuSprites_;
 	}
@@ -366,13 +366,13 @@ Class restartAction()
 
 	NSView *view = [[CCDirector sharedDirector] view];
 	NSSet *touches = [event touchesMatchingPhase:NSTouchPhaseMoved inView:view];
-	
+
 	for (NSTouch *touch in touches)
 	{
 		id <NSObject> identity = [touch identity];
 		CGPoint pos = CCNSPointToCGPoint(touch.normalizedPosition);
 		pos = ccpCompMult(pos, ccp(contentSize_.width, contentSize_.height));
-		
+
 		for(int i = 0; i<nuSprites_; i++)
 		{
 			CCSprite *sprite = sprites_[i];
@@ -389,11 +389,11 @@ Class restartAction()
 
 	NSView *view = [[CCDirector sharedDirector] view];
 	NSSet *touches = [event touchesMatchingPhase:NSTouchPhaseEnded inView:view];
-	
+
 	for (NSTouch *touch in touches)
 	{
 		id <NSObject> identity = [touch identity];
-		
+
 		for(int i = 0; i<nuSprites_; i++)
 		{
 			CCSprite *sprite = sprites_[i];
@@ -401,7 +401,7 @@ Class restartAction()
 			{
 				[sprite setVisible:NO];
 				[sprite setUserData:nil];
-				
+
 				nuSprites_--;
 				sprites_[i] = sprites_[nuSprites_];
 				sprites_[nuSprites_] = sprite;
@@ -417,11 +417,11 @@ Class restartAction()
 
 	NSView *view = [[CCDirector sharedDirector] view];
 	NSSet *touches = [event touchesMatchingPhase:NSTouchPhaseCancelled inView:view];
-	
+
 	for (NSTouch *touch in touches)
 	{
 		id <NSObject> identity = [touch identity];
-		
+
 		for(int i = 0; i<nuSprites_; i++)
 		{
 			CCSprite *sprite = sprites_[i];
@@ -429,7 +429,7 @@ Class restartAction()
 			{
 				[sprite setVisible:NO];
 				[sprite setUserData:nil];
-				
+
 				nuSprites_--;
 				sprites_[i] = sprites_[nuSprites_];
 				sprites_[nuSprites_] = sprite;
@@ -467,20 +467,20 @@ Class restartAction()
 	// 9. Connects the director to the EAGLView
 	//
 	CC_DIRECTOR_INIT();
-	
+
 	// Obtain the shared director in order to...
 	CCDirector *director = [CCDirector sharedDirector];
-	
+
 	// Sets landscape mode
 	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
-	
+
 	// Enables High Res mode (Retina Display) on iPhone 4 and maintains low res on all other devices
 	if( ! [director enableRetinaDisplay:YES] )
 		CCLOG(@"Retina Display Not supported");
-	
+
 	// Turn on display FPS
 	[director setDisplayFPS:YES];
-	
+
 	CCScene *scene = [CCScene node];
 	[scene addChild: [nextAction() node]];
 
@@ -507,7 +507,7 @@ Class restartAction()
 
 // application will be killed
 - (void)applicationWillTerminate:(UIApplication *)application
-{	
+{
 	CC_DIRECTOR_END();
 }
 
@@ -546,12 +546,12 @@ Class restartAction()
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
 	[super applicationDidFinishLaunching:aNotification];
-	
+
 	CCScene *scene = [CCScene node];
 	[scene addChild: [nextAction() node]];
-	
+
 	//[self toggleFullScreen:self];
-	
+
 	[director_ runWithScene:scene];
 }
 @end

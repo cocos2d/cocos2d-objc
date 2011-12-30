@@ -16,7 +16,7 @@ enum {
 	int			lastRenderedCount;
 	int			quantityOfNodes;
 	int			currentQuantityOfNodes;
-	
+
 }
 
 +(id) testWithQuantityOfNodes:(unsigned int)nodes;

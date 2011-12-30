@@ -23,27 +23,27 @@
 	// 8. Connects the director to the EAGLView
 	//
 	CC_DIRECTOR_INIT();
-	
+
 	// get instance of the shared director
 	CCDirector *director = [CCDirector sharedDirector];
-	
+
 	// before creating any layer, set the landscape mode
 	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
-	
+
 	// Enables High Res mode (Retina Display) on iPhone 4 and maintains low res on all other devices
 	if( ! [director enableRetinaDisplay:YES] )
 		CCLOG(@"Retina Display Not supported");
-	
+
 	// display FPS (useful when debugging)
 	[director setDisplayStats:YES];
-	
+
 	// set multiple touches ON
 	EAGLView *glView = [director openGLView];
 	[glView setMultipleTouchEnabled:YES];
-		
+
 	CCScene *scene = [CCScene node];
 	[scene addChild: [nextAction() node]];
-	
+
 	[director pushScene:scene];
 }
 
@@ -75,7 +75,7 @@
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
-{	
+{
 	[[CCDirector sharedDirector] end];
 }
 
