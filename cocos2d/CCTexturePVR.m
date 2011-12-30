@@ -345,16 +345,21 @@ typedef struct _PVRTexHeader
 
 - (id)initWithContentsOfFile:(NSString *)path
 {
+	return [self initWithContentsOfFile:path fileFormat:nil];
+}
+
+- (id)initWithContentsOfFile:(NSString *)path fileFormat:(NSString *)format
+{
 	if((self = [super init]))  
 	{ 
 		unsigned char *pvrdata = NULL;
 		NSInteger pvrlen = 0;
 		NSString *lowerCase = [path lowercaseString];       
 		
-        if ( [lowerCase hasSuffix:@".ccz"]) 
+        if ( [format isEqualToString:@"ccz"] || [lowerCase hasSuffix:@".ccz"]) 
 			pvrlen = ccInflateCCZFile( [path UTF8String], &pvrdata );
-			
-		else if( [lowerCase hasSuffix:@".gz"] )
+		
+		else if( [format isEqualToString:@"gz"] || [lowerCase hasSuffix:@".gz"] )
 			pvrlen = ccInflateGZipFile( [path UTF8String], &pvrdata );
 		
 		else
@@ -365,14 +370,14 @@ typedef struct _PVRTexHeader
 			return nil;
 		}			
 		
-
+		
         numberOfMipmaps_ = 0;
         
 		name_ = 0;
 		width_ = height_ = 0;
 		tableFormatIndex_ = -1;
 		hasAlpha_ = FALSE;
-
+		
 		retainName_ = NO; // cocos2d integration
 		
 		if( ! [self unpackPVRData:pvrdata PVRLen:pvrlen] || ![self createGLTexture]  ) {
@@ -383,7 +388,7 @@ typedef struct _PVRTexHeader
 		
 		free(pvrdata);
 	}
-
+	
 	return self;
 }
 
