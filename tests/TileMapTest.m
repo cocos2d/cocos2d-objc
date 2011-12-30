@@ -15,6 +15,8 @@ static NSString *transitions[] = {
 
 	@"TMXIsoZorder",
 	@"TMXOrthoZorder",
+	@"TMXIsoVertexZ",
+	@"TMXOrthoVertexZ",
 	@"TMXOrthoTest",
 	@"TMXOrthoTest2",
 	@"TMXOrthoTest3",
@@ -1160,8 +1162,154 @@ Class restartAction()
 }
 @end
 
-#pragma mark -
-#pragma mark TMXIsoMoveLayer
+#pragma mark - TMXIsoVertexZ
+
+@implementation TMXIsoVertexZ
+-(id) init
+{
+	if( (self=[super init]) ) {
+		
+		CCTMXTiledMap *map = [CCTMXTiledMap tiledMapWithTMXFile:@"TileMaps/iso-test-vertexz.tmx"];
+		[self addChild:map z:0 tag:kTagTileMap];
+		
+		CGSize s = map.contentSize;
+		NSLog(@"ContentSize: %f, %f", s.width,s.height);
+		
+		[map setPosition:ccp(-s.width/2,0)];
+		
+		// because I'm lazy, I'm reusing a tile as an sprite, but since this method uses vertexZ, you
+		// can use any CCSprite and it will work OK.
+		CCTMXLayer *layer = [map layerNamed:@"Trees"];
+		tamara = [layer tileAt:ccp(29,29)];
+		[tamara retain];
+		
+		id move = [CCMoveBy actionWithDuration:10 position:ccpMult( ccp(300,250), 1/CC_CONTENT_SCALE_FACTOR() ) ];
+		id back = [move reverse];
+		id seq = [CCSequence actions:move, back, nil];
+		[tamara runAction: [CCRepeatForever actionWithAction:seq]];
+		
+		[self schedule:@selector(repositionSprite:)];
+		
+	}	
+	return self;
+}
+
+-(void) dealloc
+{
+	[tamara release];
+	[super dealloc];
+}
+
+-(void) repositionSprite:(ccTime)dt
+{
+	// tile height is 64x32
+	// map size: 30x30
+	CGPoint p = [tamara position];
+	p = CC_POINT_POINTS_TO_PIXELS(p);
+	float newZ = -(p.y+32) /16;
+	[tamara setVertexZ: newZ];
+}
+
+-(void) onEnter
+{
+	[super onEnter];
+	
+	// TIP: 2d projection should be used
+	[[CCDirector sharedDirector] setProjection:kCCDirectorProjection2D];
+}
+
+-(void) onExit
+{
+	// At exit use any other projection. 
+	//	[[CCDirector sharedDirector] setProjection:kCCDirectorProjection3D];
+	[super onExit];
+}
+
+-(NSString *) title
+{
+	return @"TMX Iso VertexZ";
+}
+
+-(NSString *) subtitle
+{
+	return @"Sprite should hide behind the trees";
+}
+@end
+
+#pragma mark - TMXOrthoVertexZ
+
+@implementation TMXOrthoVertexZ
+-(id) init
+{
+	if( (self=[super init]) ) {
+		
+		CCTMXTiledMap *map = [CCTMXTiledMap tiledMapWithTMXFile:@"TileMaps/orthogonal-test-vertexz.tmx"];
+		[self addChild:map z:0 tag:kTagTileMap];
+		
+		CGSize s = map.contentSize;
+		NSLog(@"ContentSize: %f, %f", s.width,s.height);
+		
+		// because I'm lazy, I'm reusing a tile as an sprite, but since this method uses vertexZ, you
+		// can use any CCSprite and it will work OK.
+		CCTMXLayer *layer = [map layerNamed:@"trees"];
+		
+		tamara = [layer tileAt:ccp(0,11)];
+		NSLog(@"%@ vertexZ: %f", tamara, tamara.vertexZ);
+		[tamara retain];
+		
+		id move = [CCMoveBy actionWithDuration:10 position:ccpMult( ccp(400,450), 1/CC_CONTENT_SCALE_FACTOR()) ];
+		id back = [move reverse];
+		id seq = [CCSequence actions:move, back, nil];
+		[tamara runAction: [CCRepeatForever actionWithAction:seq]];
+		
+		[self schedule:@selector(repositionSprite:)];
+		
+	}	
+	return self;
+}
+
+-(void) dealloc
+{
+	[tamara release];
+	[super dealloc];
+}
+
+-(void) repositionSprite:(ccTime)dt
+{
+	// tile height is 101x81
+	// map size: 12x12
+	CGPoint p = [tamara position];
+	p = CC_POINT_POINTS_TO_PIXELS(p);
+	[tamara setVertexZ: -( (p.y+81) /81) ];
+}
+
+-(void) onEnter
+{
+	[super onEnter];
+	
+	// TIP: 2d projection should be used
+	[[CCDirector sharedDirector] setProjection:kCCDirectorProjection2D];
+}
+
+-(void) onExit
+{
+	// At exit use any other projection. 
+	//	[[CCDirector sharedDirector] setProjection:kCCDirectorProjection3D];
+	[super onExit];
+}
+
+-(NSString *) title
+{
+	return @"TMX Ortho vertexZ";
+}
+
+-(NSString *) subtitle
+{
+	return @"Sprite should hide behind the trees";
+}
+@end
+
+#pragma mark - TMXIsoMoveLayer
 
 @implementation TMXIsoMoveLayer
 -(id) init
@@ -1360,31 +1508,81 @@ Class restartAction()
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-	[super application:application didFinishLaunchingWithOptions:launchOptions];
-
+	// Don't call super
+	// Init the window
+	window_ = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+	
+	
+	// Create an EAGLView with a RGB8 color buffer, and a depth buffer of 24-bits
+	EAGLView *glView = [EAGLView viewWithFrame:[window_ bounds]
+								   pixelFormat:kEAGLColorFormatRGBA8
+								   depthFormat:GL_DEPTH_COMPONENT24_OES
+							preserveBackbuffer:NO
+									sharegroup:nil
+								 multiSampling:NO
+							   numberOfSamples:0];
+	
+	director_ = (CCDirectorIOS*) [CCDirector sharedDirector];
+	
+	director_.wantsFullScreenLayout = YES;
+	// Display Milliseconds Per Frame
+	[director_ setDisplayStats:YES];
+	
+	// set FPS at 60
+	[director_ setAnimationInterval:1.0/60];
+	
+	// attach the openglView to the director
+	[director_ setView:glView];
+	
+	// for rotation and other messages
+	[director_ setDelegate:self];	
+	
+	// 2D projection
+	[director_ setProjection:kCCDirectorProjection2D];
+//	[director setProjection:kCCDirectorProjection3D];
+	
+	
+	// Enables High Res mode (Retina Display) on iPhone 4 and maintains low res on all other devices
+	if( ! [director_ enableRetinaDisplay:YES] )
+		CCLOG(@"Retina Display Not supported");
+	
+	navController_ = [[UINavigationController alloc] initWithRootViewController:director_];
+	navController_.navigationBarHidden = YES;
+	
+	// set the Navigation Controller as the root view controller
+	//	[window_ setRootViewController:rootViewController_];
+	[window_ addSubview:navController_.view];
+	
+	// make main window visible
+	[window_ makeKeyAndVisible];
+	
+	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
+	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
+	// You can change anytime.
+	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA8888];
+	
 	// When in iPad / RetinaDisplay mode, CCFileUtils will append the "-ipad" / "-hd" to all loaded files
 	// If the -ipad  / -hdfile is not found, it will load the non-suffixed version
 	[CCFileUtils setiPadSuffix:@"-ipad"];			// Default on iPad is "" (empty string)
 	[CCFileUtils setRetinaDisplaySuffix:@"-hd"];	// Default on RetinaDisplay is "-hd"
 	
+	// Assume that PVR images have premultiplied alpha
+	[CCTexture2D PVRImagesHavePremultipliedAlpha:YES];
+	
+	// create the main scene
 	CCScene *scene = [CCScene node];
 	[scene addChild: [nextAction() node]];
 	
-	//
-	// Run all the test with 2d projection
-	//
-	[director_ setProjection:kCCDirectorProjection2D];
-
-	[director_ setDisplayStats:YES];
-	
-	//
-	// Push run the scene
-	//
+	// and run it!
 	[director_ pushScene: scene];
 	
 	return YES;
 }
 
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+	return UIInterfaceOrientationIsLandscape(interfaceOrientation);
+}
 @end
 
 #pragma mark -

@@ -71,6 +71,10 @@
 	NSUInteger			minGID_;
 	NSUInteger			maxGID_;
 	
+	// Only used when vertexZ is used
+	NSInteger			vertexZvalue_;
+	BOOL				useAutomaticVertexZ_;
+
 	// used for optimization
 	CCSprite		*reusedTile_;
 	ccCArray		*atlasIndexArray_;
