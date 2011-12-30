@@ -59,6 +59,9 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	Tests: Improved Shader test. Fixed memory leak in Guassian Blur test
 	Tests: Shader tests center the fragment shader effects on Mac
 	Director: On Mac, CC_DIRECTOR_INIT() centers the main window
+	
+* zergyo:
+	Grid: Fixed memory leak when setIsTextureFlipped is used
 
 
 cocos2d for iPhone authors for v1.1
