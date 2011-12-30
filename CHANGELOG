@@ -22,6 +22,7 @@ version 2.0-beta2 XX-Jan-2012
 . [FIX] Menu: Blocks API doesn't crash on Mac
 . [FIX] RenderTexture: Works with RGB888 (issue #1293)
 . [FIX] RenderTexture: Supports NPOT textures (issue #1291)
+. [FIX] Sprite: isFrameDisplayed takes into accout the offset (issue #1295)
 . [FIX] Test: ChipmunkTest works on Mac
 . [FIX] Tests: Box2dTest works on Mac
 . [FIX] Tests: MenuTestBlocks removed. Merged into MenuTest
@@ -117,7 +118,7 @@ version 2.0-alpha 18-Sept-2011
 version 1.1-beta2 xx - 2011
 . [NEW] All: Code is compatible with ARC (issue #1199)
 . [NEW] TileMap: supports in-memory TMX map creation (issue #1239)
-. [FIX] Node & Sprite: Scale before Skew to prevent issues with negatives scales.
+. [FIX] Node & Sprite: Scale before Skew to prevent issues with negatives scales (issue #1296)
 . [FIX] TouchDispatcher: correctly handles addition and removal of handlers when being inside a touch handler (issue #1084, #1139)
 . [FIX-MAC] LabelTTF: word wrap works on Mac (issue #1074)
 

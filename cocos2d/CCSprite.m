@@ -915,7 +915,8 @@
 {
 	CGRect r = [frame rect];
 	return ( CGRectEqualToRect(r, rect_) &&
-			frame.texture.name == self.texture.name );
+			frame.texture.name == self.texture.name &&
+			CGPointEqualToPoint( frame.offset, unflippedOffsetPositionFromCenter_ ) );
 }
 
 -(CCSpriteFrame*) displayedFrame
