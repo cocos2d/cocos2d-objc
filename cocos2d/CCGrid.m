@@ -323,6 +323,11 @@
 
 	int x, y, i;
 
+	if (vertices) free(vertices);
+	if (originalVertices) free(originalVertices);
+	if (texCoordinates) free(texCoordinates);
+	if (indices) free(indices);
+	
 	vertices = malloc((gridSize_.x+1)*(gridSize_.y+1)*sizeof(ccVertex3F));
 	originalVertices = malloc((gridSize_.x+1)*(gridSize_.y+1)*sizeof(ccVertex3F));
 	texCoordinates = malloc((gridSize_.x+1)*(gridSize_.y+1)*sizeof(CGPoint));
@@ -465,6 +470,11 @@
 	float imageH = texture_.contentSizeInPixels.height;
 
 	NSInteger numQuads = gridSize_.x * gridSize_.y;
+
+	if (vertices) free(vertices);
+	if (originalVertices) free(originalVertices);
+	if (texCoordinates) free(texCoordinates);
+	if (indices) free(indices);
 
 	vertices = malloc(numQuads*12*sizeof(GLfloat));
 	originalVertices = malloc(numQuads*12*sizeof(GLfloat));
