@@ -96,6 +96,18 @@
 }
 @end
 
+@interface TMXIsoVertexZ : TileDemo
+{
+	CCSprite *tamara;
+}
+@end
+
+@interface TMXOrthoVertexZ : TileDemo
+{
+	CCSprite *tamara;
+}
+@end
+
 @interface TMXIsoMoveLayer : TileDemo
 {}
 @end

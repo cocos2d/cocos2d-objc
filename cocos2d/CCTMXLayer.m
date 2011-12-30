@@ -34,6 +34,8 @@
 #import "CCSprite.h"
 #import "CCSpriteBatchNode.h"
 #import "CCTextureCache.h"
+#import "CCShaderCache.h"
+#import "GLProgram.h"
 #import "Support/CGPointExtension.h"
 
 
@@ -131,6 +133,8 @@ int compareInts (const void * a, const void * b);
 /* The layer recognizes some special properties, like cc_vertez */
 -(void) parseInternalProperties;
 
+-(NSInteger) vertexZForPos:(CGPoint)pos;
+
 // index
 -(NSUInteger) atlasIndexForExistantZ:(NSUInteger)z;
 -(NSUInteger) atlasIndexForNewZ:(NSUInteger)z;
@@ -186,7 +190,11 @@ int compareInts (const void * a, const void * b);
 		atlasIndexArray_ = ccCArrayNew(totalNumberOfTiles);
 		
 		[self setContentSize:CC_SIZE_PIXELS_TO_POINTS(CGSizeMake( layerSize_.width * mapTileSize_.width, layerSize_.height * mapTileSize_.height ))];
+		
+		useAutomaticVertexZ_= NO;
+		vertexZvalue_ = 0;
 	}
+
 	return self;
 }
 
@@ -277,7 +285,28 @@ int compareInts (const void * a, const void * b);
 
 -(void) parseInternalProperties
 {
-	NSAssert( ! [self propertyNamed:@"cc_vertexz"], @"cocos2d 2.x doesn't support cc_vertez");
+	// if cc_vertex=automatic, then tiles will be rendered using vertexz
+	
+	NSString *vertexz = [self propertyNamed:@"cc_vertexz"];
+	if( vertexz ) {
+		
+		// If "automatic" is on, then parse the "cc_alpha_func" too
+		if( [vertexz isEqualToString:@"automatic"] ) {
+			useAutomaticVertexZ_ = YES;
+
+			NSString *alphaFuncVal = [self propertyNamed:@"cc_alpha_func"];
+			float alphaFuncValue = [alphaFuncVal floatValue];
+			
+			self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTextureColorAlphaTest];
+			
+			GLint alphaValueLocation = glGetUniformLocation(self.shaderProgram->program_, kCCUniformAlphaTestValue);
+			
+			// NOTE: alpha test shader is hard-coded to use the equivalent of a glAlphaFunc(GL_GREATER) comparison
+			glUniform1f(alphaValueLocation, alphaFuncValue);
+		}
+		else
+			vertexZvalue_ = [vertexz intValue];
+	}
 }
 
 #pragma mark CCTMXLayer - obtaining tiles/gids
@@ -303,6 +332,7 @@ int compareInts (const void * a, const void * b);
 			
             CGPoint p = [self positionAt:pos];
             [tile setPosition:p];
+			[tile setVertexZ: [self vertexZForPos:pos]];
 			tile.anchorPoint = CGPointZero;
 			[tile setOpacity:opacity_];
 			
@@ -330,6 +360,7 @@ int compareInts (const void * a, const void * b);
 - (void) setupReusedTile:(CGPoint)pos withGID:(uint32_t)gid
 {
 	[reusedTile_ setPosition: [self positionAt:pos]];
+	[reusedTile_ setVertexZ: [self vertexZForPos:pos]];
 	reusedTile_.anchorPoint = CGPointZero;
 	[reusedTile_ setOpacity:opacity_];
 	
@@ -624,6 +655,32 @@ int compareInts (const void * a, const void * b)
 		(layerSize_.height - pos.y - 1) * mapTileSize_.height + diffY
 	};
 	return xy;
+}
+
+-(NSInteger) vertexZForPos:(CGPoint)pos
+{
+	NSInteger ret = 0;
+	NSUInteger maxVal = 0;
+	if( useAutomaticVertexZ_ ) {
+		switch( layerOrientation_ ) {
+			case CCTMXOrientationIso:
+				maxVal = layerSize_.width + layerSize_.height;
+				ret = -(maxVal - (pos.x + pos.y));
+				break;
+			case CCTMXOrientationOrtho:
+				ret = -(layerSize_.height-pos.y);
+				break;
+			case CCTMXOrientationHex:
+				NSAssert(NO,@"TMX Hexa zOrder not supported");
+				break;
+			default:
+				NSAssert(NO,@"TMX invalid value");
+				break;
+		}
+	} else
+		ret = vertexZvalue_;
+	
+	return ret;
 }
 
 @end
