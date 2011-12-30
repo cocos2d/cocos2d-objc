@@ -30,7 +30,7 @@
 /** CCActionTween
  
  CCActionTween is an action that lets you update any property of an object.
- For example, if you want to modify the "width" property of a target from 200 to 300 in 2 senconds, then:
+ For example, if you want to modify the "width" property of a target from 200 to 300 in 2 seconds, then:
  
 	id modifyWidth = [CCActionTween actionWithDuration:2 key:@"width" from:200 to:300];
 	[target runAction:modifyWidth];

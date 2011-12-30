@@ -71,7 +71,7 @@
 #endif
  
 /** @def CC_DIRECTOR_FPS_INTERVAL
- Senconds between FPS updates.
+ Seconds between FPS updates.
  0.5 seconds, means that the FPS number will be updated every 0.5 seconds.
  Having a bigger number means a more reliable FPS
  
