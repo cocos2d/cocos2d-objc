@@ -3,17 +3,17 @@
  *
  * Copyright (c) 2008-2011 Ricardo Quesada
  * Copyright (c) 2011 Zynga Inc.
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -65,10 +65,10 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 	// avoid retain cycle
 	__block id t = target;
 	return [self initWithBlock:^(id sender) {
-		
+
 		[t performSelector:selector withObject:sender];
 	}];
-	
+
 }
 
 
@@ -76,7 +76,7 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 -(id) initWithBlock:(void (^)(id))block
 {
 	if((self=[super init]) ) {
-		
+
 		if( block )
 			block_ = [block copy];
 
@@ -91,7 +91,7 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 -(void) dealloc
 {
 	[block_ release];
-	
+
 	[super dealloc];
 }
 
@@ -133,7 +133,7 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 {
 	return CGRectMake( position_.x - contentSize_.width*anchorPoint_.x,
 					  position_.y - contentSize_.height*anchorPoint_.y,
-					  contentSize_.width, contentSize_.height);	
+					  contentSize_.width, contentSize_.height);
 }
 
 @end
@@ -184,7 +184,7 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 		disabledColor_ = ccc3( 126,126,126);
 		self.label = label;
 	}
-	   
+
 	return self;
 }
 
@@ -197,7 +197,7 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 	if( label != label_ ) {
 		[self removeChild:label_ cleanup:YES];
 		[self addChild:label];
-		
+
 		label_ = label;
 		label_.anchorPoint = ccp(0,0);
 
@@ -214,9 +214,9 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 -(void) activate {
 	if(isEnabled_) {
 		[self stopAllActions];
-        
+
 		self.scale = originalScale_;
-        
+
 		[super activate];
 	}
 }
@@ -224,7 +224,7 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 -(void) selected
 {
 	// subclass to change the default action
-	if(isEnabled_) {	
+	if(isEnabled_) {
 		[super selected];
 
 		CCAction *action = [self getActionByTag:kCCZoomActionTag];
@@ -261,7 +261,7 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 		else
 			[label_ setColor:colorBackup];
 	}
-    
+
 	[super setIsEnabled:enabled];
 }
 
@@ -318,13 +318,13 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 -(id) initWithString:(NSString*)value charMapFile:(NSString*)charMapFile itemWidth:(int)itemWidth itemHeight:(int)itemHeight startCharMap:(char)startCharMap block:(void(^)(id sender))block
 {
 	NSAssert( [value length] > 0, @"value length must be greater than 0");
-	
+
 	CCLabelAtlas *label = [[CCLabelAtlas alloc] initWithString:value charMapFile:charMapFile itemWidth:itemWidth itemHeight:itemHeight startCharMap:startCharMap];
 
 	id ret = [self initWithLabel:label block:block];
-	
+
 	[label release];
-	
+
 	return ret;
 
 }
@@ -354,7 +354,7 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 {
 	if( _fontNameRelease )
 		[_fontName release];
-	
+
 	_fontName = [n retain];
 	_fontNameRelease = YES;
 }
@@ -395,16 +395,16 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 -(id) initWithString: (NSString*)string block:(void(^)(id sender))block
 {
 	NSAssert( [string length] > 0, @"Value length must be greater than 0");
-	
+
 	fontName_ = [_fontName copy];
 	fontSize_ = _fontSize;
-	
+
 	CCLabelTTF *label = [CCLabelTTF labelWithString:string fontName:fontName_ fontSize:fontSize_];
-	
+
 	if((self=[super initWithLabel:label block:block]) ) {
 		// do something ?
 	}
-	
+
 	return self;
 }
 
@@ -491,7 +491,7 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 		self.normalImage = normalSprite;
 		self.selectedImage = selectedSprite;
 		self.disabledImage = disabledSprite;
-		
+
 		[self setContentSize: [normalImage_ contentSize]];
 	}
 	return self;
@@ -502,10 +502,10 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 	if( image != normalImage_ ) {
 		image.anchorPoint = ccp(0,0);
 		image.visible = YES;
-		
+
 		[self removeChild:normalImage_ cleanup:YES];
 		[self addChild:image];
-		
+
 		normalImage_ = image;
 	}
 }
@@ -515,10 +515,10 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 	if( image != selectedImage_ ) {
 		image.anchorPoint = ccp(0,0);
 		image.visible = NO;
-		
+
 		[self removeChild:selectedImage_ cleanup:YES];
 		[self addChild:image];
-		
+
 		selectedImage_ = image;
 	}
 }
@@ -528,10 +528,10 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 	if( image != disabledImage_ ) {
 		image.anchorPoint = ccp(0,0);
 		image.visible = NO;
-		
+
 		[self removeChild:disabledImage_ cleanup:YES];
 		[self addChild:image];
-		
+
 		disabledImage_ = image;
 	}
 }
@@ -549,7 +549,7 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 {
 	[normalImage_ setColor:color];
 	[selectedImage_ setColor:color];
-	[disabledImage_ setColor:color];	
+	[disabledImage_ setColor:color];
 }
 
 -(GLubyte) opacity
@@ -570,12 +570,12 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 		[normalImage_ setVisible:NO];
 		[selectedImage_ setVisible:YES];
 		[disabledImage_ setVisible:NO];
-		
+
 	} else { // there is not selected image
-	
+
 		[normalImage_ setVisible:YES];
 		[selectedImage_ setVisible:NO];
-		[disabledImage_ setVisible:NO];		
+		[disabledImage_ setVisible:NO];
 	}
 }
 
@@ -600,7 +600,7 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 		if( disabledImage_ ) {
 			[normalImage_ setVisible:NO];
 			[selectedImage_ setVisible:NO];
-			[disabledImage_ setVisible:YES];		
+			[disabledImage_ setVisible:YES];
 		} else {
 			[normalImage_ setVisible:YES];
 			[selectedImage_ setVisible:NO];
@@ -664,9 +664,9 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 	CCNode<CCRGBAProtocol> *normalImage = [CCSprite spriteWithFile:normalI];
 	CCNode<CCRGBAProtocol> *selectedImage = nil;
 	CCNode<CCRGBAProtocol> *disabledImage = nil;
-	
+
 	if( selectedI )
-		selectedImage = [CCSprite spriteWithFile:selectedI]; 
+		selectedImage = [CCSprite spriteWithFile:selectedI];
 	if(disabledI)
 		disabledImage = [CCSprite spriteWithFile:disabledI];
 
@@ -689,9 +689,9 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 {
 	va_list args;
 	va_start(args, item);
-	
+
 	id s = [[[self alloc] initWithTarget: t selector:sel items: item vaList:args] autorelease];
-	
+
 	va_end(args);
 	return s;
 }
@@ -704,7 +704,7 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 -(id) initWithTarget:(id)target selector:(SEL)selector items:(CCMenuItem*) item vaList: (va_list) args
 {
 	NSMutableArray *array = [NSMutableArray arrayWithCapacity:2];
-	
+
 	int z = 0;
 	CCMenuItem *i = item;
 	while(i) {
@@ -721,17 +721,17 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 	}
 			];
 }
-								  
+
 -(id) initWithItems:(NSArray*)arrayOfItems block:(void(^)(id sender))block
 {
 	if( (self=[super initWithBlock:block] ) ) {
 
 		self.subItems = [NSMutableArray arrayWithArray:arrayOfItems];
-				
+
 		selectedIndex_ = NSUIntegerMax;
 		[self setSelectedIndex:0];
 	}
-	
+
 	return self;
 }
 
@@ -746,10 +746,10 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 	if( index != selectedIndex_ ) {
 		selectedIndex_=index;
 		[self removeChildByTag:kCCCurrentItemTag cleanup:NO];
-		
+
 		CCMenuItem *item = [subItems_ objectAtIndex:selectedIndex_];
 		[self addChild:item z:0 tag:kCCCurrentItemTag];
-		
+
 		CGSize s = [item contentSize];
 		[self setContentSize: s];
 		item.position = ccp( s.width/2, s.height/2 );

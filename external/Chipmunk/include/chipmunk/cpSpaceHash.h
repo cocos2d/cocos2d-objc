@@ -1,15 +1,15 @@
 /* Copyright (c) 2007 Scott Lembcke
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -47,21 +47,21 @@ typedef struct cpSpaceHash{
 	CP_PRIVATE(int numcells);
 	// Dimentions of the cells.
 	CP_PRIVATE(cpFloat celldim);
-	
+
 	// BBox callback.
 	CP_PRIVATE(cpSpaceHashBBFunc bbfunc);
 
 	// Hashset of the handles and the recycled ones.
 	CP_PRIVATE(cpHashSet *handleSet);
 	CP_PRIVATE(cpArray *pooledHandles);
-	
+
 	// The table and the recycled bins.
 	CP_PRIVATE(cpSpaceHashBin **table);
 	CP_PRIVATE(cpSpaceHashBin *pooledBins);
-	
+
 	// list of buffers to free on destruction.
 	CP_PRIVATE(cpArray *allocatedBuffers);
-	
+
 	// Incremented on each query. See cpHandle.stamp.
 	CP_PRIVATE(cpTimestamp stamp);
 } cpSpaceHash;
@@ -100,7 +100,7 @@ void cpSpaceHashPointQuery(cpSpaceHash *hash, cpVect point, cpSpaceHashQueryFunc
 void cpSpaceHashQuery(cpSpaceHash *hash, void *obj, cpBB bb, cpSpaceHashQueryFunc func, void *data);
 // Run a query for the object, then insert it. (Optimized case)
 void cpSpaceHashQueryInsert(cpSpaceHash *hash, void *obj, cpBB bb, cpSpaceHashQueryFunc func, void *data);
-// Rehashes while querying for each object. (Optimized case) 
+// Rehashes while querying for each object. (Optimized case)
 void cpSpaceHashQueryRehash(cpSpaceHash *hash, cpSpaceHashQueryFunc func, void *data);
 
 // Segment Query callback.

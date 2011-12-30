@@ -3,17 +3,17 @@
  *
  * Copyright (c) 2011 Ricardo Quesada
  * Copyright (c) 2011 Zynga Inc.
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -82,7 +82,7 @@ void ccGLUseProgram( GLuint program )
 		glUseProgram(program);
 	}
 #else
-	glUseProgram(program);	
+	glUseProgram(program);
 #endif // CC_ENABLE_GL_STATE_CACHE
 }
 
@@ -117,8 +117,8 @@ void ccGLActiveTexture( GLenum textureEnum )
 	NSCAssert1( (textureEnum - GL_TEXTURE0) < kCCMaxActiveTexture, @"cocos2d ERROR: Increase kCCMaxActiveTexture to %d!", (textureEnum-GL_TEXTURE0) );
 	if( (textureEnum - GL_TEXTURE0) != _ccCurrentActiveTexture ) {
 		_ccCurrentActiveTexture = (textureEnum - GL_TEXTURE0);
-		glActiveTexture( textureEnum );		
-	} 	
+		glActiveTexture( textureEnum );
+	}
 #else
 	glActiveTexture( textureEnum );
 #endif
@@ -152,7 +152,7 @@ void ccGLEnable( ccGLServerState flags )
 #if CC_ENABLE_GL_STATE_CACHE
 
 	BOOL enabled = NO;
-	
+
 	/* GL_BLEND */
 	if( (enabled=(flags & CC_GL_BLEND)) != (_ccGLServerState & CC_GL_BLEND) ) {
 		if( enabled ) {
@@ -190,13 +190,13 @@ void ccGLEnableVertexAttribs( unsigned int flags )
 
 	/* Color */
 	BOOL enableColor = flags & kCCVertexAttribFlag_Color;
-	
+
 	if( enableColor != _vertexAttribColor ) {
 		if( enableColor )
 			glEnableVertexAttribArray( kCCVertexAttrib_Color );
 		else
 			glDisableVertexAttribArray( kCCVertexAttrib_Color );
-		
+
 		_vertexAttribColor = enableColor;
 	}
 
@@ -204,11 +204,11 @@ void ccGLEnableVertexAttribs( unsigned int flags )
 	BOOL enableTexCoords = flags & kCCVertexAttribFlag_TexCoords;
 
 	if( enableTexCoords != _vertexAttribTexCoords ) {
-		if( enableTexCoords ) 
+		if( enableTexCoords )
 			glEnableVertexAttribArray( kCCVertexAttrib_TexCoords );
 		else
 			glDisableVertexAttribArray( kCCVertexAttrib_TexCoords );
-		
+
 		_vertexAttribTexCoords = enableTexCoords;
 	}
 }
@@ -223,9 +223,9 @@ void ccGLUniformModelViewProjectionMatrix( GLProgram *shaderProgram )
 
 	kmGLGetMatrix(KM_GL_PROJECTION, &matrixP );
 	kmGLGetMatrix(KM_GL_MODELVIEW, &matrixMV );
-	
+
 	kmMat4Multiply(&matrixMVP, &matrixP, &matrixMV);
-	
+
 	glUniformMatrix4fv( shaderProgram->uniforms_[kCCUniformMVPMatrix], 1, GL_FALSE, matrixMVP.mat);
 }
 

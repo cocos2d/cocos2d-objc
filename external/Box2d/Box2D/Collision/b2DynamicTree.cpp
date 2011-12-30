@@ -456,7 +456,7 @@ int32 b2DynamicTree::Balance(int32 iA)
 
 		return iC;
 	}
-	
+
 	// Rotate B up
 	if (balance < -1)
 	{

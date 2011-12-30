@@ -15,7 +15,7 @@ static int sceneIdx=-1;
 static NSString *transitions[] = {
 	@"SchedulerTimeScale",
 	@"TwoSchedulers",
-	
+
 	@"SchedulerAutoremove",
 	@"SchedulerPauseResume",
 	@"SchedulerUnscheduleAll",
@@ -46,7 +46,7 @@ Class prevTest()
 {
 	sceneIdx--;
 	if( sceneIdx < 0 )
-		sceneIdx = sizeof(transitions) / sizeof(transitions[0]) -1;	
+		sceneIdx = sizeof(transitions) / sizeof(transitions[0]) -1;
 	NSString *r = transitions[sceneIdx];
 	Class c = NSClassFromString(r);
 	return c;
@@ -65,26 +65,26 @@ Class restartTest()
 -(id) init
 {
 	if( (self=[super init])) {
-	
-		
+
+
 		CGSize s = [[CCDirector sharedDirector] winSize];
-				
+
 		CCLabelTTF *label = [CCLabelTTF labelWithString:[self title] fontName:@"Arial" fontSize:32];
 		[self addChild: label];
 		[label setPosition: ccp(s.width/2, s.height-50)];
-		
+
 		NSString *subtitle = [self subtitle];
 		if( subtitle ) {
 			CCLabelTTF *l = [CCLabelTTF labelWithString:subtitle fontName:@"Thonburi" fontSize:16];
 			[self addChild:l z:1];
 			[l setPosition:ccp(s.width/2, s.height-80)];
 		}
-		
+
 
 		CCMenuItemImage *item1 = [CCMenuItemImage itemWithNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
 		CCMenuItemImage *item2 = [CCMenuItemImage itemWithNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
 		CCMenuItemImage *item3 = [CCMenuItemImage itemWithNormalImage:@"f1.png" selectedImage:@"f2.png" target:self selector:@selector(nextCallback:)];
-		
+
 		CCMenu *menu = [CCMenu menuWithItems:item1, item2, item3, nil];
 		menu.position = CGPointZero;
 		item1.position = ccp( s.width/2 - 100,30);
@@ -140,12 +140,12 @@ Class restartTest()
 -(id) init
 {
 	if( (self=[super init]) ) {
-		
+
 		[self schedule:@selector(autoremove:) interval:0.5f];
 		[self schedule:@selector(tick:) interval:0.5f];
 		accum = 0;
 	}
-	
+
 	return self;
 }
 
@@ -157,7 +157,7 @@ Class restartTest()
 -(NSString *) subtitle
 {
 	return @"1 scheduler will be autoremoved in 3 seconds. See console";
-}								 
+}
 
 -(void) tick:(ccTime)dt
 {
@@ -167,7 +167,7 @@ Class restartTest()
 {
 	accum += dt;
 	NSLog(@"Time: %f", accum);
-	
+
 	if( accum > 3 ) {
 		[self unschedule:_cmd];
 		NSLog(@"scheduler removed");
@@ -185,7 +185,7 @@ Class restartTest()
 		[self schedule:@selector(tick2:) interval:1];
 		[self schedule:@selector(pause:) interval:3];
 	}
-	
+
 	return self;
 }
 
@@ -197,7 +197,7 @@ Class restartTest()
 -(NSString *) subtitle
 {
 	return @"Scheduler should be paused after 3 seconds. See console";
-}								 
+}
 
 -(void) tick1:(ccTime)dt
 {
@@ -221,14 +221,14 @@ Class restartTest()
 -(id) init
 {
 	if( (self=[super init]) ) {
-		
+
 		[self schedule:@selector(tick1:) interval:0.5f];
 		[self schedule:@selector(tick2:) interval:1];
 		[self schedule:@selector(tick3:) interval:1.5f];
 		[self schedule:@selector(tick4:) interval:1.5f];
 		[self schedule:@selector(unscheduleAll:) interval:4];
 	}
-	
+
 	return self;
 }
 
@@ -240,7 +240,7 @@ Class restartTest()
 -(NSString *) subtitle
 {
 	return @"All scheduled selectors will be unscheduled in 4 seconds. See console";
-}								 
+}
 
 -(void) tick1:(ccTime)dt
 {
@@ -273,14 +273,14 @@ Class restartTest()
 -(id) init
 {
 	if( (self=[super init]) ) {
-		
+
 		[self schedule:@selector(tick1:) interval:0.5f];
 		[self schedule:@selector(tick2:) interval:1];
 		[self schedule:@selector(tick3:) interval:1.5f];
 		[self schedule:@selector(tick4:) interval:1.5f];
 		[self schedule:@selector(unscheduleAll:) interval:4];
 	}
-	
+
 	return self;
 }
 
@@ -292,7 +292,7 @@ Class restartTest()
 -(NSString *) subtitle
 {
 	return @"Unschedules all selectors after 4s. Uses CCScheduler. See console";
-}								 
+}
 
 -(void) tick1:(ccTime)dt
 {
@@ -327,12 +327,12 @@ Class restartTest()
 -(id) init
 {
 	if( (self=[super init]) ) {
-		
+
 		[self schedule:@selector(tick1:) interval:0.5f];
 		[self schedule:@selector(tick2:) interval:1];
 		[self schedule:@selector(scheduleAndUnschedule:) interval:4];
 	}
-	
+
 	return self;
 }
 
@@ -344,7 +344,7 @@ Class restartTest()
 -(NSString *) subtitle
 {
 	return @"Will unschedule and schedule selectors in 4s. See console";
-}								 
+}
 
 -(void) tick1:(ccTime)dt
 {
@@ -389,13 +389,13 @@ Class restartTest()
 -(id) initWithString:(NSString*)string priority:(int)priority
 {
 	if( (self = [super init] ) ) {
-		
+
 		string_ = [string retain];
-		
+
 		[self scheduleUpdateWithPriority:priority];
-		
+
 	}
-	
+
 	return self;
 }
 
@@ -421,7 +421,7 @@ Class restartTest()
 		TestNode *d = [[TestNode alloc] initWithString:@"---" priority:50];
 		[self addChild:d];
 		[d release];
-		
+
 		TestNode *b = [[TestNode alloc] initWithString:@"3rd" priority:0];
 		[self addChild:b];
 		[b release];
@@ -441,11 +441,11 @@ Class restartTest()
 		TestNode *f = [[TestNode alloc] initWithString:@"2nd" priority:-5];
 		[self addChild:f];
 		[f release];
-		
-		
+
+
 		[self schedule:@selector(removeUpdates:) interval:4];
 	}
-	
+
 	return self;
 }
 
@@ -457,7 +457,7 @@ Class restartTest()
 -(NSString *) subtitle
 {
 	return @"3 scheduled updates. Priority should work. Stops in 4s. See console";
-}								 
+}
 
 -(void) removeUpdates:(ccTime)dt
 {
@@ -472,13 +472,13 @@ Class restartTest()
 -(id) init
 {
 	if( (self=[super init]) ) {
-	
+
 		[self scheduleUpdate];
 		[self schedule:@selector(tick:)];
 		[self schedule:@selector(stopSelectors:) interval:4];
-		
+
 	}
-	
+
 	return self;
 }
 
@@ -490,7 +490,7 @@ Class restartTest()
 -(NSString *) subtitle
 {
 	return @"Update + custom selector at the same time. Stops in 4s. See console";
-}								 
+}
 
 -(void) update:(ccTime)dt
 {
@@ -513,11 +513,11 @@ Class restartTest()
 -(id) init
 {
 	if( (self=[super init]) ) {
-		
+
 		[self schedule:@selector(schedUpdate:) interval:2];
-		
+
 	}
-	
+
 	return self;
 }
 
@@ -529,7 +529,7 @@ Class restartTest()
 -(NSString *) subtitle
 {
 	return @"Update schedules in 2 secs. Stops 2 sec later. See console";
-}								 
+}
 
 -(void) update:(ccTime)dt
 {
@@ -557,13 +557,13 @@ Class restartTest()
 -(id) init
 {
 	if( (self=[super init]) ) {
-		
+
 		interval = 1;
 		ticks = 0;
 		[self schedule:@selector(schedUpdate:) interval:interval];
-		
+
 	}
-	
+
 	return self;
 }
 
@@ -575,7 +575,7 @@ Class restartTest()
 -(NSString *) subtitle
 {
 	return @"Interval is 1 second, then 2, then 3...";
-}								 
+}
 
 
 -(void) schedUpdate:(ccTime)dt
@@ -587,7 +587,7 @@ Class restartTest()
 		[self schedule:_cmd interval:++interval];
 		ticks = 0;
 	}
-		
+
 }
 
 @end
@@ -596,11 +596,11 @@ Class restartTest()
 -(id) init
 {
 	if( (self=[super init]) ) {
-		
+
 		[self schedule:@selector(update:) interval:0 repeat:4 delay:3.f];
 		CCLOG(@"update is scheduled should begin after 3 seconds");
 	}
-	
+
 	return self;
 }
 
@@ -612,7 +612,7 @@ Class restartTest()
 -(NSString *) subtitle
 {
 	return @"After 5 x executed, method unscheduled. See console";
-}								 
+}
 
 -(void) update:(ccTime)dt
 {
@@ -629,14 +629,14 @@ Class restartTest()
 {
 	UISlider * slider = [[UISlider alloc] initWithFrame:CGRectMake(0,0,120,7)];
 	[slider addTarget:self action:@selector(sliderAction:) forControlEvents:UIControlEventValueChanged];
-	
+
 	// in case the parent view draws with a custom color or gradient, use a transparent color
 	slider.backgroundColor = [UIColor clearColor];
-	
+
 	slider.minimumValue = -3.0f;
 	slider.maximumValue = 3.0f;
 	slider.continuous = YES;
-	slider.value = 1.0f;		
+	slider.value = 1.0f;
 
     return [slider autorelease];
 }
@@ -650,7 +650,7 @@ Class restartTest()
 	[slider setAction: @selector (sliderAction:)];
 	[slider setTarget: self];
 	[slider setContinuous: YES];
-	
+
 	return [slider autorelease];
 }
 #endif // Mac
@@ -658,12 +658,12 @@ Class restartTest()
 -(void) sliderAction:(id) sender
 {
 	ccTime scale;
-	
+
 #ifdef __CC_PLATFORM_IOS
 	scale = sliderCtl.value;
 
 #elif defined(__CC_PLATFORM_MAC)
-	float value = [sliderCtl floatValue];	
+	float value = [sliderCtl floatValue];
 	scale = value;
 #endif
 
@@ -673,31 +673,31 @@ Class restartTest()
 -(void) onEnter
 {
 	[super onEnter];
-	
+
 	CGSize s = [[CCDirector sharedDirector] winSize];
-	
+
 	// rotate and jump
 	CCActionInterval *jump1 = [CCJumpBy actionWithDuration:4 position:ccp(-s.width+80,0) height:100 jumps:4];
 	CCActionInterval *jump2 = [jump1 reverse];
 	CCActionInterval *rot1 = [CCRotateBy actionWithDuration:4 angle:360*2];
 	CCActionInterval *rot2 = [rot1 reverse];
-	
+
 	id seq3_1 = [CCSequence actions:jump2, jump1, nil];
 	id seq3_2 = [CCSequence actions: rot1, rot2, nil];
 	id spawn = [CCSpawn actions:seq3_1, seq3_2, nil];
 	id action = [CCRepeat  actionWithAction:spawn times:50];
-	
+
 	id action2 = [[action copy] autorelease];
 	id action3 = [[action copy] autorelease];
-	
+
 	CCSprite *grossini = [CCSprite spriteWithFile:@"grossini.png"];
 	CCSprite *tamara = [CCSprite spriteWithFile:@"grossinis_sister1.png"];
 	CCSprite *kathia = [CCSprite spriteWithFile:@"grossinis_sister2.png"];
-	
+
 	grossini.position = ccp(40,80);
 	tamara.position = ccp(40,80);
 	kathia.position = ccp(40,80);
-	
+
 	[self addChild:grossini];
 	[self addChild:tamara];
 	[self addChild:kathia];
@@ -705,29 +705,29 @@ Class restartTest()
 	[grossini runAction: [CCSpeed actionWithAction:action speed:0.5f]];
 	[tamara runAction: [CCSpeed actionWithAction:action2 speed:1.5f]];
 	[kathia runAction: [CCSpeed actionWithAction:action3 speed:1.0f]];
-	
+
 	CCParticleSystem *emitter = [CCParticleFireworks node];
 	[self addChild:emitter];
-	
+
 	sliderCtl = [self sliderCtl];
-	
+
 #ifdef __CC_PLATFORM_IOS
 	AppController *app = (AppController*) [[UIApplication sharedApplication] delegate];
 	UIViewController *ctl = [app navController];
-	
+
 	[ctl.view addSubview: sliderCtl];
-	
+
 #elif defined(__CC_PLATFORM_MAC)
 	MacGLView *view = (MacGLView*) [[CCDirectorMac sharedDirector] view];
-	
+
 	if( ! overlayWindow ) {
 		overlayWindow  = [[NSWindow alloc] initWithContentRect:[[view window] frame]
 													 styleMask:NSBorderlessWindowMask
 													   backing:NSBackingStoreBuffered
 														 defer:NO];
-		
+
 		[overlayWindow setFrame:[[view window] frame] display:NO];
-		
+
 		[[overlayWindow contentView] addSubview:sliderCtl];
 		[overlayWindow setParentWindow:[view window]];
 		[overlayWindow setOpaque:NO];
@@ -735,10 +735,10 @@ Class restartTest()
 		[overlayWindow setBackgroundColor:[NSColor clearColor]];
 		[[overlayWindow contentView] display];
 	}
-	
+
 	[[view window] addChildWindow:overlayWindow ordered:NSWindowAbove];
 #endif
-	
+
 }
 
 -(void) onExit
@@ -747,7 +747,7 @@ Class restartTest()
 	[[[CCDirector sharedDirector] scheduler] setTimeScale:1];
 
 	[sliderCtl removeFromSuperview];
-	
+
 #ifdef __CC_PLATFORM_MAC
 	MacGLView *view = (MacGLView*) [[CCDirector sharedDirector] view];
 	[[view window] removeChildWindow:overlayWindow];
@@ -778,14 +778,14 @@ Class restartTest()
 	CGRect frame = CGRectMake(12.0f, 12.0f, 120.0f, 7.0f);
 	UISlider *slider = [[UISlider alloc] initWithFrame:frame];
 	[slider addTarget:self action:@selector(sliderAction:) forControlEvents:UIControlEventValueChanged];
-	
+
 	// in case the parent view draws with a custom color or gradient, use a transparent color
 	slider.backgroundColor = [UIColor clearColor];
-	
+
 	slider.minimumValue = 0.0f;
 	slider.maximumValue = 2.0f;
 	slider.continuous = YES;
-	slider.value = 1.0f;		
+	slider.value = 1.0f;
 
     return [slider autorelease];
 }
@@ -801,7 +801,7 @@ Class restartTest()
 	[slider setAction: @selector (sliderAction:)];
 	[slider setTarget: self];
 	[slider setContinuous: YES];
-	
+
 	return [slider autorelease];
 }
 #endif // Mac
@@ -809,33 +809,33 @@ Class restartTest()
 -(void) sliderAction:(id) sender
 {
 	ccTime scale;
-	
+
 #ifdef __CC_PLATFORM_IOS
 	UISlider *slider = (UISlider*) sender;
 	scale = slider.value;
 
-#elif defined(__CC_PLATFORM_MAC)	
+#elif defined(__CC_PLATFORM_MAC)
 	NSSlider *slider = (NSSlider*) sender;
-	float value = [slider floatValue];	
+	float value = [slider floatValue];
 	scale = value;
 #endif
 
 	if( sender == sliderCtl1 )
 		[sched1 setTimeScale: scale];
 	else
-		[sched2 setTimeScale: scale];	
+		[sched2 setTimeScale: scale];
 }
 
 -(id) init
 {
 	if( (self=[super init]) ) {
-	
+
 		CGSize s = [[CCDirector sharedDirector] winSize];
-		
+
 		// rotate and jump
 		CCActionInterval *jump1 = [CCJumpBy actionWithDuration:4 position:ccp(0,0) height:100 jumps:4];
 		CCActionInterval *jump2 = [jump1 reverse];
-		
+
 		id seq = [CCSequence actions:jump2, jump1, nil];
 		id action = [CCRepeatForever actionWithAction:seq];
 
@@ -847,8 +847,8 @@ Class restartTest()
 		[grossini setPosition:ccp(s.width/2,100)];
 		[grossini runAction:[[action copy] autorelease]];
 
-		
-		
+
+
 		CCScheduler *defaultScheduler = [[CCDirector sharedDirector] scheduler];
 
 		//
@@ -858,20 +858,20 @@ Class restartTest()
 		// Create a new scheduler, and link it to the main scheduler
 		sched1 = [[CCScheduler alloc] init];
 		[defaultScheduler scheduleUpdateForTarget:sched1 priority:0 paused:NO];
-		
+
 		// Create a new ActionManager, and link it to the new scheudler
 		actionManager1 = [[CCActionManager alloc] init];
 		[sched1 scheduleUpdateForTarget:actionManager1 priority:0 paused:NO];
-		
+
 		for( NSUInteger i=0; i < 10; i++ ) {
 			CCSprite *sprite = [CCSprite spriteWithFile:@"grossinis_sister1.png"];
-			
+
 			// IMPORTANT: Set the actionManager running any action
 			[sprite setActionManager:actionManager1];
-			
+
 			[self addChild:sprite];
 			[sprite setPosition:ccp(30+15*i,100)];
-			
+
 			[sprite runAction:[[action copy] autorelease]];
 		}
 		sliderCtl1 = [[self sliderCtl] retain];
@@ -879,72 +879,72 @@ Class restartTest()
 		//
 		// Right:
 		//
-		
+
 		// Create a new scheduler, and link it to the main scheduler
 		sched2 = [[CCScheduler alloc] init];
 		[defaultScheduler scheduleUpdateForTarget:sched2 priority:0 paused:NO];
-		
+
 		// Create a new ActionManager, and link it to the new scheudler
 		actionManager2 = [[CCActionManager alloc] init];
 		[sched2 scheduleUpdateForTarget:actionManager2 priority:0 paused:NO];
-		
+
 		for( NSUInteger i=0; i < 10; i++ ) {
 			CCSprite *sprite = [CCSprite spriteWithFile:@"grossinis_sister2.png"];
-			
+
 			// IMPORTANT: Set the actionManager running any action
 			[sprite setActionManager:actionManager2];
-			
+
 			[self addChild:sprite];
 			[sprite setPosition:ccp(s.width-30-15*i,100)];
-			
+
 			[sprite runAction:[[action copy] autorelease]];
 		}
 		sliderCtl2 = [[self sliderCtl] retain];
-		
+
 		CGRect frame = [sliderCtl2 frame];
 		frame.origin.x += 300;
 		[sliderCtl2 setFrame:frame];
-		
+
 	}
-	
+
 	return self;
-		
+
 }
 
 
 -(void) onEnter
 {
 	[super onEnter];
-	
+
 #ifdef __CC_PLATFORM_IOS
-	
+
 	AppController *app = (AppController*) [[UIApplication sharedApplication] delegate];
 	UIViewController *ctl = [app navController];
-	
+
 	[ctl.view addSubview: sliderCtl1];
 	[ctl.view addSubview: sliderCtl2];
-	
+
 #elif defined(__CC_PLATFORM_MAC)
 	MacGLView *view = (MacGLView*) [[CCDirectorMac sharedDirector] view];
-	
+
 	if( ! overlayWindow ) {
 		overlayWindow  = [[NSWindow alloc] initWithContentRect:[[view window] frame]
 													 styleMask:NSBorderlessWindowMask
 													   backing:NSBackingStoreBuffered
 														 defer:NO];
-		
+
 		[overlayWindow setFrame:[[view window] frame] display:NO];
-		
+
 		[[overlayWindow contentView] addSubview:sliderCtl1];
 		[[overlayWindow contentView] addSubview:sliderCtl2];
-		
+
 		[overlayWindow setParentWindow:[view window]];
 		[overlayWindow setOpaque:NO];
 		[overlayWindow makeKeyAndOrderFront:nil];
 		[overlayWindow setBackgroundColor:[NSColor clearColor]];
 		[[overlayWindow contentView] display];
 	}
-	
+
 	[[view window] addChildWindow:overlayWindow ordered:NSWindowAbove];
 #endif
 }
@@ -955,7 +955,7 @@ Class restartTest()
 
 	[sliderCtl1 removeFromSuperview];
 	[sliderCtl2 removeFromSuperview];
-	
+
 #ifdef __CC_PLATFORM_MAC
 	MacGLView *view = (MacGLView*) [[CCDirector sharedDirector] view];
 	[[view window] removeChildWindow:overlayWindow];
@@ -969,16 +969,16 @@ Class restartTest()
 	CCScheduler *defaultScheduler = [[CCDirector sharedDirector] scheduler];
 	[defaultScheduler unscheduleAllSelectorsForTarget:sched1];
 	[defaultScheduler unscheduleAllSelectorsForTarget:sched2];
-	
+
 	[sliderCtl1 release];
 	[sliderCtl2 release];
 
 	[sched1 release];
 	[sched2 release];
-	
+
 	[actionManager1 release];
 	[actionManager2 release];
-	
+
 	[super dealloc];
 }
 
@@ -1006,25 +1006,25 @@ Class restartTest()
 	// Enables High Res mode (Retina Display) on iPhone 4 and maintains low res on all other devices
 	if( ! [director_ enableRetinaDisplay:YES] )
 		CCLOG(@"Retina Display Not supported");
-	
+
 	// Turn on display FPS
 	[director_ setDisplayStats:YES];
-	
+
 	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
 	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
 	// You can change anytime.
 	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA8888];
-	
+
 	// When in iPad / RetinaDisplay mode, CCFileUtils will append the "-ipad" / "-hd" to all loaded files
 	// If the -ipad  / -hdfile is not found, it will load the non-suffixed version
 	[CCFileUtils setiPadSuffix:@"-ipad"];			// Default on iPad is "" (empty string)
 	[CCFileUtils setRetinaDisplaySuffix:@"-hd"];	// Default on RetinaDisplay is "-hd"
-	
+
 	CCScene *scene = [CCScene node];
 	[scene addChild: [nextTest() node]];
-	
+
 	[director_ pushScene: scene];
-	
+
 	return YES;
 }
 
@@ -1041,10 +1041,10 @@ Class restartTest()
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
 	[super applicationDidFinishLaunching:aNotification];
-	
+
 	CCScene *scene = [CCScene node];
 	[scene addChild: [nextTest() node]];
-	
+
 	[director_ runWithScene:scene];
 }
 @end

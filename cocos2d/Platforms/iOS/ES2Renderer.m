@@ -3,17 +3,17 @@
  *
  * Copyright (c) 2011 Ricardo Quesada
  * Copyright (c) 2011 Zynga Inc.
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -48,7 +48,7 @@
     {
 		if( ! sharegroup )
 			context_ = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
-		else 
+		else
 			context_ = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2 sharegroup:sharegroup];
 
         if (!context_ || ![EAGLContext setCurrentContext:context_] )
@@ -67,11 +67,11 @@
         glBindFramebuffer(GL_FRAMEBUFFER, defaultFramebuffer_);
         glBindRenderbuffer(GL_RENDERBUFFER, colorRenderbuffer_);
         glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_RENDERBUFFER, colorRenderbuffer_);
-		
+
 		depthFormat_ = depthFormat;
 		pixelFormat_ = pixelFormat;
-		
-		
+
+
 		CHECK_GL_ERROR_DEBUG();
     }
 
@@ -85,29 +85,29 @@
 
 	if( ! [context_ renderbufferStorage:GL_RENDERBUFFER fromDrawable:layer] )
 		CCLOG(@"failed to call context");
-	
+
 	glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_WIDTH, &backingWidth_);
 	glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_HEIGHT, &backingHeight_);
-	
+
 	CCLOG(@"cocos2d: surface size: %dx%d", (int)backingWidth_, (int)backingHeight_);
 
 
-	if (depthFormat_) 
+	if (depthFormat_)
 	{
 		if( ! depthBuffer_ )
 			glGenRenderbuffers(1, &depthBuffer_);
-	
+
 		glBindRenderbuffer(GL_RENDERBUFFER, depthBuffer_);
 
 		glRenderbufferStorage(GL_RENDERBUFFER, depthFormat_, backingWidth_, backingHeight_);
 
 		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, depthBuffer_);
-		
+
 		// bind color buffer
 		glBindRenderbuffer(GL_RENDERBUFFER, colorRenderbuffer_);
 	}
-	
-	
+
+
 	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
 	{
 		NSLog(@"Failed to make complete framebuffer object %x", glCheckFramebufferStatus(GL_FRAMEBUFFER));
@@ -141,12 +141,12 @@
 
 - (unsigned int) msaaFrameBuffer
 {
-	return msaaFramebuffer_;	
+	return msaaFramebuffer_;
 }
 
 - (unsigned int) msaaColorBuffer
 {
-	return msaaColorbuffer_;	
+	return msaaColorbuffer_;
 }
 
 - (void)dealloc
@@ -163,7 +163,7 @@
         glDeleteRenderbuffers(1, &colorRenderbuffer_);
         colorRenderbuffer_ = 0;
     }
-	
+
 	if( depthBuffer_ ) {
 		glDeleteRenderbuffers(1, &depthBuffer_ );
 		depthBuffer_ = 0;

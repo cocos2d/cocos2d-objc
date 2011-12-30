@@ -16,7 +16,7 @@
 	CCLabelBMFont *label2;
 	CCLabelBMFont *label3;
 	CCLabelBMFont *label4;
-	
+
 	ccTime time0, time1, time2, time3, time4;
 }
 

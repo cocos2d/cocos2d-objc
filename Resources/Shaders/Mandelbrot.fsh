@@ -24,7 +24,7 @@ void main(void)
 	vec2 z2 = z*z;
 	float m2;
 	float co = 0.0;
-    
+
 	for( int i=0; i<256; i++ )
 	{
 		z = cc + vec2( z.x*z.x - z.y*z.y, 2.0*z.x*z.y );

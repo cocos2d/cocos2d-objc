@@ -52,7 +52,7 @@ public:
 		m_normal = normal;
 		return fraction;
 	}
-	
+
 	bool m_hit;
 	b2Vec2 m_point;
 	b2Vec2 m_normal;

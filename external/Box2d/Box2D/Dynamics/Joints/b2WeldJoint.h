@@ -48,7 +48,7 @@ struct b2WeldJointDef : public b2JointDef
 
 	/// The bodyB angle minus bodyA angle in the reference state (radians).
 	float32 referenceAngle;
-	
+
 	/// The mass-spring-damper frequency in Hertz. Rotation only.
 	/// Disable softness with a value of 0.
 	float32 frequencyHz;

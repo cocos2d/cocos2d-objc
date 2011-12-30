@@ -17,12 +17,12 @@
 {
 	[super application:application didFinishLaunchingWithOptions:launchOptions];
 
-	
+
 	[director_.view setMultipleTouchEnabled:YES];
 
 	[director_ setAnimationInterval:1.0/60];
 	[director_ setDisplayStats:YES];
-	
+
 	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
 	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
 	// You can change anytime.
@@ -30,10 +30,10 @@
 
 	// Turn on display FPS
 	[director_ setDisplayStats:YES];
-	
+
 	// Run the intro Scene
 	[director_ pushScene: [HelloWorld scene]];
-	
+
 	return YES;
 }
 @end

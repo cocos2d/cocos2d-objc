@@ -18,7 +18,7 @@
 
     NSMutableArray *_storyStrings;
     BOOL _isGameOver;
-    
+
 }
 
 @property (nonatomic, retain) NSMutableArray *storyStrings;
@@ -32,7 +32,7 @@
     float _spawnRate;
     NSMutableArray *_spawnIds;
     BOOL _isFinalLevel;
-    
+
 }
 
 @property (nonatomic, assign) float spawnSeconds;

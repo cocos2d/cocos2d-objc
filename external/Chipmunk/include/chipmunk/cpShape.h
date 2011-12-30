@@ -1,15 +1,15 @@
 /* Copyright (c) 2007 Scott Lembcke
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -18,7 +18,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
- 
+
 /// @defgroup cpShape cpShape
 /// The cpShape struct defines the shape of a rigid body.
 /// @{
@@ -51,7 +51,7 @@ typedef void (*cpShapeSegmentQueryImpl)(cpShape *shape, cpVect a, cpVect b, cpSe
 /// @private
 struct cpShapeClass {
 	cpShapeType type;
-	
+
 	cpShapeCacheDataImpl cacheData;
 	cpShapeDestroyImpl destroy;
 	cpShapePointQueryImpl pointQuery;
@@ -61,17 +61,17 @@ struct cpShapeClass {
 /// Opaque collision shape struct.
 struct cpShape {
 	CP_PRIVATE(const cpShapeClass *klass);
-	
+
 	/// The rigid body this collision shape is attached to.
 	cpBody *body;
 
 	/// The current bounding box of the shape.
 	cpBB bb;
-	
+
 	/// Sensor flag.
 	/// Sensor shapes call collision callbacks but don't produce collisions.
 	cpBool sensor;
-	
+
 	/// Coefficient of restitution. (elasticity)
 	cpFloat e;
 	/// Coefficient of friction.
@@ -83,19 +83,19 @@ struct cpShape {
 	/// Generally this points to your the game object class so you can access it
 	/// when given a cpShape reference in a callback.
 	cpDataPointer data;
-	
+
 	/// Collision type of this shape used when picking collision handlers.
 	cpCollisionType collision_type;
 	/// Group of this shape. Shapes in the same group don't collide.
 	cpGroup group;
 	// Layer bitmask for this shape. Shapes only collide if the bitwise and of their layers is non-zero.
 	cpLayers layers;
-	
+
 	CP_PRIVATE(cpSpace *space);
-	
+
 	CP_PRIVATE(cpShape *next);
 	CP_PRIVATE(cpShape *prev);
-	
+
 	CP_PRIVATE(cpHashValue hashid);
 };
 
@@ -166,7 +166,7 @@ static inline cpFloat cpSegmentQueryHitDist(const cpVect start, const cpVect end
 /// @private
 typedef struct cpCircleShape {
 	cpShape shape;
-	
+
 	cpVect c, tc;
 	cpFloat r;
 } cpCircleShape;
@@ -187,11 +187,11 @@ CP_DeclareShapeGetter(cpCircleShape, cpFloat, Radius);
 /// @private
 typedef struct cpSegmentShape {
 	cpShape shape;
-	
+
 	cpVect a, b, n;
 	cpVect ta, tb, tn;
 	cpFloat r;
-	
+
 	cpVect a_tangent, b_tangent;
 } cpSegmentShape;
 

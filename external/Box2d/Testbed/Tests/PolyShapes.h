@@ -30,7 +30,7 @@ const int32 k_maxBodies = 256;
 class PolyShapesCallback : public b2QueryCallback
 {
 public:
-	
+
 	enum
 	{
 		e_maxCount = 4
@@ -74,7 +74,7 @@ public:
 				m_debugDraw->DrawPolygon(vertices, vertexCount, color);
 			}
 			break;
-				
+
 		default:
 			break;
 		}
@@ -131,7 +131,7 @@ public:
 			vertices[2].Set(0.0f, 1.5f);
 			m_polygons[0].Set(vertices, 3);
 		}
-		
+
 		{
 			b2Vec2 vertices[3];
 			vertices[0].Set(-0.1f, 0.0f);

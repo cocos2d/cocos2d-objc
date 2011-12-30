@@ -14,7 +14,7 @@
 {
 	CCRenderTexture* target;
 	CCSprite* brush;
-	
+
 #ifdef __CC_PLATFORM_IOS
 #elif defined(__CC_PLATFORM_MAC)
 	CGPoint		lastLocation;
@@ -37,7 +37,7 @@
 	CCSprite *sp7;
 	CCSprite *sp8;
 	CCSprite *sp9;
-	
+
 	CCSpriteBatchNode *mgr;
 }
 -(void)renderScreenShot;

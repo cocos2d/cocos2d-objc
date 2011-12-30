@@ -3,17 +3,17 @@
  *
  * Copyright (c) 2008-2010 Ricardo Quesada
  * Copyright (c) 2011 Zynga Inc.
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -46,26 +46,26 @@ static GLfloat pointSize_ = 1;
 static void lazy_init( void )
 {
 	if( ! initialized ) {
-		
+
 		//
 		// Position and 1 color passed as a uniform (to similate glColor4ub )
 		//
 		shader_ = [[GLProgram alloc] initWithVertexShaderFilename:@"Position_uColor.vsh"
 									 fragmentShaderFilename:@"Position_uColor.fsh"];
-		
+
 
 		[shader_ addAttribute:@"aVertex" index:kCCVertexAttrib_Position];
-		
+
 		[shader_ link];
-		
+
 		[shader_ updateUniforms];
-		
+
 		colorLocation_ = glGetUniformLocation( shader_->program_, "u_color");
 		pointSizeLocation_ = glGetUniformLocation( shader_->program_, "u_pointSize");
-				
+
 		initialized = YES;
 	}
-	
+
 }
 
 void ccDrawPoint( CGPoint point )
@@ -73,17 +73,17 @@ void ccDrawPoint( CGPoint point )
 	lazy_init();
 
 	ccVertex2F p = (ccVertex2F) {point.x, point.y};
-	
+
 	ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position );
 	ccGLUseProgram( shader_->program_ );
 	ccGLUniformModelViewProjectionMatrix( shader_ );
-	
+
 	glUniform4f( colorLocation_, color_.r, color_.g, color_.b, color_.a );
 	glUniform1f( pointSizeLocation_, pointSize_ );
 
 	glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, &p);
 
-	glDrawArrays(GL_POINTS, 0, 1);	
+	glDrawArrays(GL_POINTS, 0, 1);
 }
 
 void ccDrawPoints( const CGPoint *points, NSUInteger numberOfPoints )
@@ -93,23 +93,23 @@ void ccDrawPoints( const CGPoint *points, NSUInteger numberOfPoints )
 	ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position );
 	ccGLUseProgram( shader_->program_ );
 	ccGLUniformModelViewProjectionMatrix( shader_ );
-	
+
 	glUniform4f( colorLocation_, color_.r, color_.g, color_.b, color_.a );
 	glUniform1f( pointSizeLocation_, pointSize_ );
 
 	// XXX: Mac OpenGL error. arrays can't go out of scope before draw is executed
-	ccVertex2F newPoints[numberOfPoints];	
+	ccVertex2F newPoints[numberOfPoints];
 
 	// iPhone and 32-bit machines optimization
 	if( sizeof(CGPoint) == sizeof(ccVertex2F) )
 		glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, points);
-	
+
 	else
     {
 		// Mac on 64-bit
 		for( NSUInteger i=0; i<numberOfPoints;i++)
 			newPoints[i] = (ccVertex2F) { points[i].x, points[i].y };
-		
+
 		glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, newPoints);
 	}
 
@@ -125,15 +125,15 @@ void ccDrawLine( CGPoint origin, CGPoint destination )
 		{origin.x, origin.y},
 		{destination.x, destination.y}
 	};
-	
+
 
 	ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position );
 	ccGLUseProgram( shader_->program_ );
 	ccGLUniformModelViewProjectionMatrix( shader_ );
-	
+
 	glUniform4f( colorLocation_, color_.r, color_.g, color_.b, color_.a );
-	
-	glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, vertices);	
+
+	glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, vertices);
 	glDrawArrays(GL_LINES, 0, 2);
 }
 
@@ -145,25 +145,25 @@ void ccDrawPoly( const CGPoint *poli, NSUInteger numberOfPoints, BOOL closePolyg
 	ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position );
 	ccGLUseProgram( shader_->program_ );
 	ccGLUniformModelViewProjectionMatrix( shader_ );
-	
+
 	glUniform4f( colorLocation_, color_.r, color_.g, color_.b, color_.a );
 
 	// XXX: Mac OpenGL error. arrays can't go out of scope before draw is executed
-	ccVertex2F newPoli[numberOfPoints];	
+	ccVertex2F newPoli[numberOfPoints];
 
 	// iPhone and 32-bit machines optimization
 	if( sizeof(CGPoint) == sizeof(ccVertex2F) )
 		glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, poli);
-	
+
 	else
     {
 		// Mac on 64-bit
 		for( NSUInteger i=0; i<numberOfPoints;i++)
 			newPoli[i] = (ccVertex2F) { poli[i].x, poli[i].y };
-		
+
 		glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, newPoli);
 	}
-		
+
 	if( closePolygon )
 		glDrawArrays(GL_LINE_LOOP, 0, (GLsizei) numberOfPoints);
 	else
@@ -173,22 +173,22 @@ void ccDrawPoly( const CGPoint *poli, NSUInteger numberOfPoints, BOOL closePolyg
 void ccDrawCircle( CGPoint center, float r, float a, NSUInteger segs, BOOL drawLineToCenter)
 {
 	lazy_init();
-	
+
 	int additionalSegment = 1;
 	if (drawLineToCenter)
 		additionalSegment++;
-	
+
 	const float coef = 2.0f * (float)M_PI/segs;
-	
+
 	GLfloat *vertices = calloc( sizeof(GLfloat)*2*(segs+2), 1);
 	if( ! vertices )
 		return;
-	
+
 	for(NSUInteger i = 0;i <= segs; i++) {
 		float rads = i*coef;
 		GLfloat j = r * cosf(rads + a) + center.x;
 		GLfloat k = r * sinf(rads + a) + center.y;
-		
+
 		vertices[i*2] = j;
 		vertices[i*2+1] = k;
 	}
@@ -198,13 +198,13 @@ void ccDrawCircle( CGPoint center, float r, float a, NSUInteger segs, BOOL drawL
 	ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position );
 	ccGLUseProgram( shader_->program_ );
 	ccGLUniformModelViewProjectionMatrix( shader_ );
-	
+
 	glUniform4f( colorLocation_, color_.r, color_.g, color_.b, color_.a );
-	
-	glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, vertices);	
-	glDrawArrays(GL_LINE_STRIP, 0, (GLsizei) segs+additionalSegment);	
-	
-	free( vertices );	
+
+	glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, vertices);
+	glDrawArrays(GL_LINE_STRIP, 0, (GLsizei) segs+additionalSegment);
+
+	free( vertices );
 }
 
 void ccDrawQuadBezier(CGPoint origin, CGPoint control, CGPoint destination, NSUInteger segments)
@@ -212,7 +212,7 @@ void ccDrawQuadBezier(CGPoint origin, CGPoint control, CGPoint destination, NSUI
 	lazy_init();
 
 	ccVertex2F vertices[segments + 1];
-	
+
 	float t = 0.0f;
 	for(NSUInteger i = 0; i < segments; i++)
 	{
@@ -225,10 +225,10 @@ void ccDrawQuadBezier(CGPoint origin, CGPoint control, CGPoint destination, NSUI
 	ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position );
 	ccGLUseProgram( shader_->program_ );
 	ccGLUniformModelViewProjectionMatrix( shader_ );
-	
+
 	glUniform4f( colorLocation_, color_.r, color_.g, color_.b, color_.a );
-	
-	glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, vertices);	
+
+	glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, vertices);
 	glDrawArrays(GL_LINE_STRIP, 0, (GLsizei) segments + 1);
 }
 
@@ -237,7 +237,7 @@ void ccDrawCubicBezier(CGPoint origin, CGPoint control1, CGPoint control2, CGPoi
 	lazy_init();
 
 	ccVertex2F vertices[segments + 1];
-	
+
 	float t = 0;
 	for(NSUInteger i = 0; i < segments; i++)
 	{
@@ -247,15 +247,15 @@ void ccDrawCubicBezier(CGPoint origin, CGPoint control1, CGPoint control2, CGPoi
 	}
 	vertices[segments] = (ccVertex2F) {destination.x, destination.y};
 
-	
+
 	ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position );
 	ccGLUseProgram( shader_->program_ );
 	ccGLUniformModelViewProjectionMatrix( shader_ );
-	
+
 	glUniform4f( colorLocation_, color_.r, color_.g, color_.b, color_.a );
-	
-	glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, vertices);	
-	glDrawArrays(GL_LINE_STRIP, 0, (GLsizei) segments + 1);	
+
+	glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, vertices);
+	glDrawArrays(GL_LINE_STRIP, 0, (GLsizei) segments + 1);
 }
 
 void ccDrawColor4f( GLubyte r, GLubyte g, GLubyte b, GLubyte a )

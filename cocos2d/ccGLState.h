@@ -3,17 +3,17 @@
  *
  * Copyright (c) 2011 Ricardo Quesada
  * Copyright (c) 2011 Zynga Inc.
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -30,7 +30,7 @@
 #import <OpenGLES/ES2/glext.h>
 #elif (TARGET_OS_MAC == 1)
 #import <OpenGL/gl.h>
-#endif // 
+#endif //
 
 @class GLProgram;
 
@@ -52,7 +52,7 @@ typedef enum {
 //	CC_GL_DEPTH_TEST = 1 << 2,
 	CC_GL_BLEND = 1 << 3,
 //	CC_GL_DITHER = 1 << 4,
-	
+
 //	CC_GL_ALL = ( CC_GL_SCISSOR_TEST | CC_GL_STENCIL_TEST | CC_GL_DEPTH_TEST | CC_GL_BLEND | CC_GL_DITHER ),
 	CC_GL_ALL = ( CC_GL_BLEND ),
 
@@ -60,9 +60,9 @@ typedef enum {
 
 #ifdef __cplusplus
 extern "C" {
-#endif	
+#endif
 
-/** @file A set of OpenGL helpers functions 
+/** @file A set of OpenGL helpers functions
 */
 
 /** Invalidates the GL state cache.
@@ -101,13 +101,13 @@ void ccSetProjectionMatrixDirty( void );
 
 /** Will enable the vertex attribs that are passed as flags.
  Possible flags:
-	
+
 	* kCCVertexAttribFlag_Position
 	* kCCVertexAttribFlag_Color
 	* kCCVertexAttribFlag_TexCoords
- 
+
  These flags can be ORed. The flags that are not present, will be disabled.
- 
+
  @since v2.0.0
  */
 void ccGLEnableVertexAttribs( unsigned int flags );
@@ -117,7 +117,7 @@ void ccGLEnableVertexAttribs( unsigned int flags );
  @since v2.0.0
  */
 void ccGLActiveTexture(GLenum textureEnum );
-	
+
 /** Returns the active texture.
  If CC_ENABLE_GL_STATE_CACHE is disabled, it will call glGetIntegerv(GL_ACTIVE_TEXTURE);
  @since v2.0.0
@@ -145,4 +145,4 @@ void ccGLEnable( ccGLServerState flags );
 
 #ifdef __cplusplus
 }
-#endif	
+#endif

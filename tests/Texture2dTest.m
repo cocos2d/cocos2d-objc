@@ -84,7 +84,7 @@ Class backAction()
 {
 	sceneIdx--;
 	if( sceneIdx < 0 )
-		sceneIdx = sizeof(transitions) / sizeof(transitions[0]) -1;	
+		sceneIdx = sizeof(transitions) / sizeof(transitions[0]) -1;
 	NSString *r = transitions[sceneIdx];
 	Class c = NSClassFromString(r);
 	return c;
@@ -106,32 +106,32 @@ Class restartAction()
 	if( (self = [super init]) ) {
 
 		[[CCTextureCache sharedTextureCache] dumpCachedTextureInfo];
-		CGSize s = [[CCDirector sharedDirector] winSize];	
+		CGSize s = [[CCDirector sharedDirector] winSize];
 		CCLabelTTF *label = [CCLabelTTF labelWithString:[self title] fontName:@"Arial" fontSize:26];
 		[self addChild:label z:1 tag:kTagLabel];
 		[label setPosition: ccp(s.width/2, s.height-50)];
-		
+
 		NSString *subtitle = [self subtitle];
 		if( subtitle ) {
 			CCLabelTTF *l = [CCLabelTTF labelWithString:subtitle fontName:@"Thonburi" fontSize:16];
 			[self addChild:l z:1];
 			[l setPosition:ccp(s.width/2, s.height-80)];
-		}		
+		}
 
 		CCMenuItemImage *item1 = [CCMenuItemImage itemWithNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
 		CCMenuItemImage *item2 = [CCMenuItemImage itemWithNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
 		CCMenuItemImage *item3 = [CCMenuItemImage itemWithNormalImage:@"f1.png" selectedImage:@"f2.png" target:self selector:@selector(nextCallback:)];
-		
+
 		CCMenu *menu = [CCMenu menuWithItems:item1, item2, item3, nil];
 		menu.position = CGPointZero;
 		item1.position = ccp( s.width/2 - 100,30);
 		item2.position = ccp( s.width/2, 30);
 		item3.position = ccp( s.width/2 + 100,30);
-		[self addChild: menu z:1];	
-		
+		[self addChild: menu z:1];
+
 		CCLayerColor *col = [CCLayerColor layerWithColor:ccc4(128,128,128,255)];
 		[self addChild:col z:-10];
-		
+
 		[[CCTextureCache sharedTextureCache] dumpCachedTextureInfo];
 	}
 	return self;
@@ -182,7 +182,7 @@ Class restartAction()
 @implementation TexturePNG
 -(void) onEnter
 {
-	[super onEnter];	
+	[super onEnter];
 
 	CGSize s = [[CCDirector sharedDirector] winSize];
 
@@ -190,7 +190,7 @@ Class restartAction()
 	img.position = ccp( s.width/2.0f, s.height/2.0f);
 	[self addChild:img];
 	[[CCTextureCache sharedTextureCache] dumpCachedTextureInfo];
-	
+
 }
 
 -(NSString *) title
@@ -207,12 +207,12 @@ Class restartAction()
 {
 	[super onEnter];
 	CGSize s = [[CCDirector sharedDirector] winSize];
-	
+
 	CCSprite *img = [CCSprite spriteWithFile:@"test_image.jpeg"];
 	img.position = ccp( s.width/2.0f, s.height/2.0f);
 	[self addChild:img];
 	[[CCTextureCache sharedTextureCache] dumpCachedTextureInfo];
-	
+
 }
 
 -(NSString *) title
@@ -229,12 +229,12 @@ Class restartAction()
 {
 	[super onEnter];
 	CGSize s = [[CCDirector sharedDirector] winSize];
-	
+
 	CCSprite *img = [CCSprite spriteWithFile:@"test_image.bmp"];
 	img.position = ccp( s.width/2.0f, s.height/2.0f);
 	[self addChild:img];
 	[[CCTextureCache sharedTextureCache] dumpCachedTextureInfo];
-	
+
 }
 
 -(NSString *) title
@@ -251,12 +251,12 @@ Class restartAction()
 {
 	[super onEnter];
 	CGSize s = [[CCDirector sharedDirector] winSize];
-	
+
 	CCSprite *img = [CCSprite spriteWithFile:@"test_image.tiff"];
 	img.position = ccp( s.width/2.0f, s.height/2.0f);
 	[self addChild:img];
 	[[CCTextureCache sharedTextureCache] dumpCachedTextureInfo];
-	
+
 }
 
 -(NSString *) title
@@ -273,12 +273,12 @@ Class restartAction()
 {
 	[super onEnter];
 	CGSize s = [[CCDirector sharedDirector] winSize];
-	
+
 	CCSprite *img = [CCSprite spriteWithFile:@"test_image.gif"];
 	img.position = ccp( s.width/2.0f, s.height/2.0f);
 	[self addChild:img];
 	[[CCTextureCache sharedTextureCache] dumpCachedTextureInfo];
-	
+
 }
 
 -(NSString *) title
@@ -295,28 +295,28 @@ Class restartAction()
 {
 	[super onEnter];
 	CGSize s = [[CCDirector sharedDirector] winSize];
-	
+
 #ifdef __CC_PLATFORM_IOS
 	UIImage *image = [[UIImage alloc] initWithContentsOfFile:[CCFileUtils fullPathFromRelativePath: @"test_image.png" ]];
 #elif defined(__CC_PLATFORM_MAC)
-	
+
 	NSString *fullpath = [CCFileUtils fullPathFromRelativePath:@"test_image.png"];
 	NSData *data = [NSData dataWithContentsOfFile:fullpath];
 	NSBitmapImageRep *image = [[NSBitmapImageRep alloc] initWithData:data];
 #endif
-	
+
 	CGImageRef imageref = [image CGImage];
-	
+
 	CCTexture2D *tex = [[CCTextureCache sharedTextureCache] addCGImage:imageref forKey:@"test_image.png"];
 	CCSprite *img = [CCSprite spriteWithTexture:tex];
 	img.position = ccp( 3*s.width/4.0f, s.height/2.0f);
 	[self addChild:img];
-	
+
 	// It shall reuse the texture
 	CCSprite *sprite = [CCSprite spriteWithCGImage:imageref key:@"test_image.png"];
 	sprite.position = ccp(s.width/4, s.height/2);
 	[self addChild:sprite];
-	
+
 	NSAssert( img.texture.name == sprite.texture.name, @"Error: CCTextureCache is not reusing the texture");
 
 	[image release];
@@ -337,10 +337,10 @@ Class restartAction()
 {
 	[super onEnter];
 	CGSize s = [[CCDirector sharedDirector] winSize];
-	
+
 	CCTexture2D *texture0 = [[CCTextureCache sharedTextureCache] addImage:@"grossini_dance_atlas.png"];
 	[texture0 generateMipmap];
-	ccTexParams texParams = { GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR, GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE };	
+	ccTexParams texParams = { GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR, GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE };
 	[texture0 setTexParameters:&texParams];
 
 	CCTexture2D *texture1 = [[CCTextureCache sharedTextureCache] addImage:@"grossini_dance_atlas_nomipmap.png"];
@@ -349,21 +349,21 @@ Class restartAction()
 	[img0 setTextureRect:CGRectMake(85, 121, 85, 121)];
 	img0.position = ccp( s.width/3.0f, s.height/2.0f);
 	[self addChild:img0];
-	
+
 	CCSprite *img1 = [CCSprite spriteWithTexture:texture1];
 	[img1 setTextureRect:CGRectMake(85, 121, 85, 121)];
 	img1.position = ccp( 2*s.width/3.0f, s.height/2.0f);
 	[self addChild:img1];
-	
-	
+
+
 	id scale1 = [CCEaseOut actionWithAction: [CCScaleBy actionWithDuration:4 scale:0.01f] rate:3];
 	id sc_back = [scale1 reverse];
-	
+
 	id scale2 = [[scale1 copy] autorelease];
 	id sc_back2 = [scale2 reverse];
-	
+
 	[img0 runAction: [CCRepeatForever actionWithAction: [CCSequence actions: scale1, sc_back, nil]]];
-	[img1 runAction: [CCRepeatForever actionWithAction: [CCSequence actions: scale2, sc_back2, nil]]];	
+	[img1 runAction: [CCRepeatForever actionWithAction: [CCSequence actions: scale2, sc_back2, nil]]];
 	[[CCTextureCache sharedTextureCache] dumpCachedTextureInfo];
 }
 
@@ -395,21 +395,21 @@ Class restartAction()
 		[self addChild:imgMipMap];
 
 		// support mipmap filtering
-		ccTexParams texParams = { GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR, GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE };	
+		ccTexParams texParams = { GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR, GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE };
 		[imgMipMap.texture setTexParameters:&texParams];
 	}
-	
+
 	CCSprite *img = [CCSprite spriteWithFile:@"logo-nomipmap.pvr"];
 	if( img ) {
 		img.position = ccp( s.width/2.0f+100, s.height/2.0f);
 		[self addChild:img];
-		
+
 		id scale1 = [CCEaseOut actionWithAction: [CCScaleBy actionWithDuration:4 scale:0.01f] rate:3];
 		id sc_back = [scale1 reverse];
-		
+
 		id scale2 = [[scale1 copy] autorelease];
 		id sc_back2 = [scale2 reverse];
-		
+
 		[imgMipMap runAction: [CCRepeatForever actionWithAction: [CCSequence actions: scale1, sc_back, nil]]];
 		[img runAction: [CCRepeatForever actionWithAction: [CCSequence actions: scale2, sc_back2, nil]]];
 	}
@@ -434,25 +434,25 @@ Class restartAction()
 {
 	[super onEnter];
 	CGSize s = [[CCDirector sharedDirector] winSize];
-	
+
 	CCSprite *imgMipMap = [CCSprite spriteWithFile:@"test_image_rgba4444_mipmap.pvr"];
 	imgMipMap.position = ccp( s.width/2.0f-100, s.height/2.0f);
 	[self addChild:imgMipMap];
-	
+
 	// support mipmap filtering
-	ccTexParams texParams = { GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR, GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE };	
+	ccTexParams texParams = { GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR, GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE };
 	[imgMipMap.texture setTexParameters:&texParams];
 
 	CCSprite *img = [CCSprite spriteWithFile:@"test_image.png"];
 	img.position = ccp( s.width/2.0f+100, s.height/2.0f);
 	[self addChild:img];
-	
+
 	id scale1 = [CCEaseOut actionWithAction: [CCScaleBy actionWithDuration:4 scale:0.01f] rate:3];
 	id sc_back = [scale1 reverse];
-	
+
 	id scale2 = [[scale1 copy] autorelease];
 	id sc_back2 = [scale2 reverse];
-	
+
 	[imgMipMap runAction: [CCRepeatForever actionWithAction: [CCSequence actions: scale1, sc_back, nil]]];
 	[img runAction: [CCRepeatForever actionWithAction: [CCSequence actions: scale2, sc_back2, nil]]];
 	[[CCTextureCache sharedTextureCache] dumpCachedTextureInfo];
@@ -479,9 +479,9 @@ Class restartAction()
 {
 	[super onEnter];
 	CGSize s = [[CCDirector sharedDirector] winSize];
-	
+
 	CCSprite *img = [CCSprite spriteWithFile:@"test_image_pvrtc2bpp.pvr"];
-	
+
 	if( img ) {
 		img.position = ccp( s.width/2.0f, s.height/2.0f);
 		[self addChild:img];
@@ -506,9 +506,9 @@ Class restartAction()
 {
 	[super onEnter];
 	CGSize s = [[CCDirector sharedDirector] winSize];
-	
+
 	CCSprite *img = [CCSprite spriteWithFile:@"test_image.pvr"];
-	
+
 	if( img ) {
 		img.position = ccp( s.width/2.0f, s.height/2.0f);
 		[self addChild:img];
@@ -516,7 +516,7 @@ Class restartAction()
 		NSLog(@"This test is not supported in cocos2d-mac");
 	}
 	[[CCTextureCache sharedTextureCache] dumpCachedTextureInfo];
-	
+
 }
 
 -(NSString *) title
@@ -536,9 +536,9 @@ Class restartAction()
 {
 	[super onEnter];
 	CGSize s = [[CCDirector sharedDirector] winSize];
-	
+
 	CCSprite *img = [CCSprite spriteWithFile:@"test_image_pvrtc4bpp.pvr"];
-	
+
 	if( img ) {
 		img.position = ccp( s.width/2.0f, s.height/2.0f);
 		[self addChild:img];
@@ -567,7 +567,7 @@ Class restartAction()
 {
 	[super onEnter];
 	CGSize s = [[CCDirector sharedDirector] winSize];
-	
+
 	CCSprite *img = [CCSprite spriteWithFile:@"test_image_rgba8888.pvr"];
 	img.position = ccp( s.width/2.0f, s.height/2.0f);
 	[self addChild:img];
@@ -592,7 +592,7 @@ Class restartAction()
 {
 	[super onEnter];
 	CGSize s = [[CCDirector sharedDirector] winSize];
-	
+
 	CCSprite *img = [CCSprite spriteWithFile:@"test_image_bgra8888.pvr"];
 	if( img ) {
 		img.position = ccp( s.width/2.0f, s.height/2.0f);
@@ -621,12 +621,12 @@ Class restartAction()
 {
 	[super onEnter];
 	CGSize s = [[CCDirector sharedDirector] winSize];
-	
+
 	CCSprite *img = [CCSprite spriteWithFile:@"test_image_rgba5551.pvr"];
 	img.position = ccp( s.width/2.0f, s.height/2.0f);
 	[self addChild:img];
 	[[CCTextureCache sharedTextureCache] dumpCachedTextureInfo];
-	
+
 }
 
 -(NSString *) title
@@ -646,7 +646,7 @@ Class restartAction()
 {
 	[super onEnter];
 	CGSize s = [[CCDirector sharedDirector] winSize];
-	
+
 	CCSprite *img = [CCSprite spriteWithFile:@"test_image_rgba4444.pvr"];
 	img.position = ccp( s.width/2.0f, s.height/2.0f);
 	[self addChild:img];
@@ -671,7 +671,7 @@ Class restartAction()
 {
 	[super onEnter];
 	CGSize s = [[CCDirector sharedDirector] winSize];
-	
+
 	CCSprite *img = [CCSprite spriteWithFile:@"test_image_rgba4444.pvr.gz"];
 	img.position = ccp( s.width/2.0f, s.height/2.0f);
 	[self addChild:img];
@@ -702,10 +702,10 @@ Class restartAction()
 {
 	[super onEnter];
 	CGSize s = [[CCDirector sharedDirector] winSize];
-	
+
 	CCSprite *img = [CCSprite spriteWithFile:@"test_image_rgba4444.pvr.ccz"];
 	img.position = ccp( s.width/2.0f, s.height/2.0f);
-	[self addChild:img];	
+	[self addChild:img];
 	[[CCTextureCache sharedTextureCache] dumpCachedTextureInfo];
 }
 
@@ -733,12 +733,12 @@ Class restartAction()
 {
 	[super onEnter];
 	CGSize s = [[CCDirector sharedDirector] winSize];
-	
+
 	CCSprite *img = [CCSprite spriteWithFile:@"test_image_rgb565.pvr"];
 	img.position = ccp( s.width/2.0f, s.height/2.0f);
 	[self addChild:img];
 	[[CCTextureCache sharedTextureCache] dumpCachedTextureInfo];
-	
+
 }
 
 -(NSString *) title
@@ -758,12 +758,12 @@ Class restartAction()
 {
 	[super onEnter];
 	CGSize s = [[CCDirector sharedDirector] winSize];
-	
+
 	CCSprite *img = [CCSprite spriteWithFile:@"test_image_rgb888.pvr"];
 	img.position = ccp( s.width/2.0f, s.height/2.0f);
 	[self addChild:img];
 	[[CCTextureCache sharedTextureCache] dumpCachedTextureInfo];
-	
+
 }
 
 -(NSString *) title
@@ -783,7 +783,7 @@ Class restartAction()
 {
 	[super onEnter];
 	CGSize s = [[CCDirector sharedDirector] winSize];
-	
+
 	CCSprite *img = [CCSprite spriteWithFile:@"test_image_a8.pvr"];
 	img.position = ccp( s.width/2.0f, s.height/2.0f);
 	[self addChild:img];
@@ -808,7 +808,7 @@ Class restartAction()
 {
 	[super onEnter];
 	CGSize s = [[CCDirector sharedDirector] winSize];
-	
+
 	CCSprite *img = [CCSprite spriteWithFile:@"test_image_i8.pvr"];
 	img.position = ccp( s.width/2.0f, s.height/2.0f);
 	[self addChild:img];
@@ -833,7 +833,7 @@ Class restartAction()
 {
 	[super onEnter];
 	CGSize s = [[CCDirector sharedDirector] winSize];
-	
+
 	CCSprite *img = [CCSprite spriteWithFile:@"test_image_ai88.pvr"];
 	img.position = ccp( s.width/2.0f, s.height/2.0f);
 	[self addChild:img];
@@ -858,7 +858,7 @@ Class restartAction()
 {
 	[super onEnter];
 	CGSize s = [[CCDirector sharedDirector] winSize];
-	
+
 	CCSprite *img = [CCSprite spriteWithFile:@"test_image-bad_encoding.pvr"];
 	if( img ) {
 		img.position = ccp( s.width/2.0f, s.height/2.0f);
@@ -886,7 +886,7 @@ Class restartAction()
 {
 	[super onEnter];
 	CGSize s = [[CCDirector sharedDirector] winSize];
-	
+
 	CCSprite *img = [CCSprite spriteWithFile:@"grossini_128x256_mipmap.pvr"];
 	img.position = ccp( s.width/2.0f, s.height/2.0f);
 	[self addChild:img];
@@ -914,7 +914,7 @@ Class restartAction()
 {
 	[super onEnter];
 	CGSize s = [[CCDirector sharedDirector] winSize];
-	
+
 	CCSprite *img = [CCSprite spriteWithFile:@"grossini_pvr_rgba4444.pvr"];
 	if( img ) {
 		img.position = ccp( s.width/2.0f, s.height/2.0f);
@@ -942,7 +942,7 @@ Class restartAction()
 {
 	[super onEnter];
 	CGSize s = [[CCDirector sharedDirector] winSize];
-	
+
 	CCSprite *img = [CCSprite spriteWithFile:@"grossini_pvr_rgba8888.pvr"];
 	if( img ) {
 		img.position = ccp( s.width/2.0f, s.height/2.0f);
@@ -971,36 +971,36 @@ Class restartAction()
 {
 	[super onEnter];
 	CGSize s = [[CCDirector sharedDirector] winSize];
-	
+
 	//
 	// Sprite 1: GL_LINEAR
 	//
 	// Default filter is GL_LINEAR
-	
+
 	CCSprite *sprite = [CCSprite spriteWithFile:@"grossinis_sister1.png"];
 	sprite.position = ccp( s.width/3.0f, s.height/2.0f);
 	[self addChild:sprite];
-	
+
 	// this is the default filterting
 	[sprite.texture setAntiAliasTexParameters];
-	
+
 	//
 	// Sprite 1: GL_NEAREST
-	//	
-	
+	//
+
 	CCSprite *sprite2 = [CCSprite spriteWithFile:@"grossinis_sister2.png"];
 	sprite2.position = ccp( 2*s.width/3.0f, s.height/2.0f);
 	[self addChild:sprite2];
-	
+
 	// Use Nearest in this one
 	[sprite2.texture setAliasTexParameters];
 
-		
+
 	// scale them to show
 	id sc = [CCScaleBy actionWithDuration:3 scale:8.0f];
 	id sc_back = [sc reverse];
 	id scaleforever = [CCRepeatForever actionWithAction: [CCSequence actions: sc, sc_back, nil]];
-	
+
 	[sprite2 runAction:scaleforever];
 	[sprite runAction: [[scaleforever copy] autorelease]];
 	[[CCTextureCache sharedTextureCache] dumpCachedTextureInfo];
@@ -1031,22 +1031,22 @@ Class restartAction()
 	// 3- 16-bit RGB5A1
 	// 4- 16-bit RGB565
 	[super onEnter];
-	
+
 	CCLabelTTF *label = (CCLabelTTF*) [self getChildByTag:kTagLabel];
 	[label setColor:ccc3(16,16,255)];
-	
+
 	CGSize s = [[CCDirector sharedDirector] winSize];
-		
+
 	CCLayerColor *background = [CCLayerColor layerWithColor:ccc4(128,128,128,255) width:s.width height:s.height];
 	[self addChild:background z:-1];
-	
+
 	// RGBA 8888 image (32-bit)
 	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA8888];
 	CCSprite *sprite1 = [CCSprite spriteWithFile:@"test-rgba1.png"];
 	sprite1.position = ccp(1*s.width/6, s.height/2+32);
 	[self addChild:sprite1 z:0];
-	
-	// remove texture from texture manager	
+
+	// remove texture from texture manager
 	[[CCTextureCache sharedTextureCache] removeTexture:sprite1.texture];
 
 	// RGBA 4444 image (16-bit)
@@ -1055,7 +1055,7 @@ Class restartAction()
 	sprite2.position = ccp(2*s.width/6, s.height/2-32);
 	[self addChild:sprite2 z:0];
 
-	// remove texture from texture manager	
+	// remove texture from texture manager
 	[[CCTextureCache sharedTextureCache] removeTexture:sprite2.texture];
 
 	// RGB5A1 image (16-bit)
@@ -1064,7 +1064,7 @@ Class restartAction()
 	sprite3.position = ccp(3*s.width/6, s.height/2+32);
 	[self addChild:sprite3 z:0];
 
-	// remove texture from texture manager	
+	// remove texture from texture manager
 	[[CCTextureCache sharedTextureCache] removeTexture:sprite3.texture];
 
 	// RGB565 image (16-bit)
@@ -1073,7 +1073,7 @@ Class restartAction()
 	sprite4.position = ccp(4*s.width/6, s.height/2-32);
 	[self addChild:sprite4 z:0];
 
-	// remove texture from texture manager	
+	// remove texture from texture manager
 	[[CCTextureCache sharedTextureCache] removeTexture:sprite4.texture];
 
 	// A8 image (8-bit)
@@ -1081,16 +1081,16 @@ Class restartAction()
 	CCSprite *sprite5 = [CCSprite spriteWithFile:@"test-rgba1.png"];
 	sprite5.position = ccp(5*s.width/6, s.height/2+32);
 	[self addChild:sprite5 z:0];
-	
-	// remove texture from texture manager	
+
+	// remove texture from texture manager
 	[[CCTextureCache sharedTextureCache] removeTexture:sprite5.texture];
-	
-	
+
+
 	id fadeout = [CCFadeOut actionWithDuration:2];
 	id fadein = [CCFadeIn actionWithDuration:2];
 	id seq = [CCSequence actions: [CCDelayTime actionWithDuration:2], fadeout, fadein, nil];
 	id seq_4ever = [CCRepeatForever actionWithAction:seq];
-	
+
 	[sprite1 runAction:seq_4ever];
 	[sprite2 runAction: [[seq_4ever copy] autorelease]];
 	[sprite3 runAction: [[seq_4ever copy] autorelease]];
@@ -1120,9 +1120,9 @@ Class restartAction()
 -(id) init
 {
 	if( (self=[super init]) ) {
-		
+
 		for( int i=0;i < 15;i++ ) {
-			
+
 			// BOTTOM sprites have alpha pre-multiplied
 			// they use by default GL_ONE, GL_ONE_MINUS_SRC_ALPHA
 			CCSprite *cloud = [CCSprite spriteWithFile:@"test_blend.png"];
@@ -1137,7 +1137,7 @@ Class restartAction()
 			cloud.position = ccp(50+25*i, 160);
 			[cloud setBlendFunc:(ccBlendFunc){GL_ONE_MINUS_DST_COLOR, GL_ZERO}];
 
-			
+
 			// UPPER sprites are using custom blending function
 			// You can set any blend function to your sprites
 			cloud = [CCSprite spriteWithFile:@"test_blend.png"];
@@ -1167,22 +1167,22 @@ Class restartAction()
 -(id) init
 {
 	if( (self=[super init]) ) {
-		
+
 		imageOffset = 0;
-	
+
 		CGSize size =[[CCDirector sharedDirector] winSize];
 
 		CCLabelTTF *label = [CCLabelTTF labelWithString:@"Loading..." fontName:@"Marker Felt" fontSize:32];
 		label.position = ccp( size.width/2, size.height/2);
 		[self addChild:label z:10];
-		
+
 		id scale = [CCScaleBy actionWithDuration:0.3f scale:2];
 		id scale_back = [scale reverse];
 		id seq = [CCSequence actions: scale, scale_back, nil];
 		[label runAction: [CCRepeatForever actionWithAction:seq]];
-		
+
 		[self schedule:@selector(loadImages:) interval:1.0f];
-		
+
 	}
 	return self;
 }
@@ -1203,7 +1203,7 @@ Class restartAction()
 			NSString *sprite = [NSString stringWithFormat:@"sprite-%d-%d.png", i, j];
 			[[CCTextureCache sharedTextureCache] addImageAsync:sprite target:self selector:@selector(imageLoaded:)];
 		}
-	}	
+	}
 
 	[[CCTextureCache sharedTextureCache] addImageAsync:@"background1.jpg" target:self selector:@selector(imageLoaded:)];
 	[[CCTextureCache sharedTextureCache] addImageAsync:@"background2.jpg" target:self selector:@selector(imageLoaded:)];
@@ -1218,18 +1218,18 @@ Class restartAction()
 	// IMPORTANT: The order on the callback is not guaranteed. Don't depend on the callback
 
 	// This test just creates a sprite based on the Texture
-	
+
 	CCSprite *sprite = [CCSprite spriteWithTexture:tex];
 	sprite.anchorPoint = ccp(0,0);
 	[self addChild:sprite z:-1];
-	
+
 	CGSize size =[[CCDirector sharedDirector] winSize];
-	
+
 	int i = imageOffset * 32;
 	sprite.position = ccp( i % (int)size.width, (i / (int)size.width) * 32 );
-	
+
 	imageOffset++;
-	
+
 	NSLog(@"Image loaded: %@", tex);
 }
 
@@ -1252,22 +1252,22 @@ Class restartAction()
 -(id) init
 {
 	if( (self=[super init]) ) {
-		
+
 		imageOffset = 0;
-		
+
 		CGSize size =[[CCDirector sharedDirector] winSize];
-		
+
 		CCLabelTTF *label = [CCLabelTTF labelWithString:@"Loading..." fontName:@"Marker Felt" fontSize:32];
 		label.position = ccp( size.width/2, size.height/2);
 		[self addChild:label z:10];
-		
+
 		id scale = [CCScaleBy actionWithDuration:0.3f scale:2];
 		id scale_back = [scale reverse];
 		id seq = [CCSequence actions: scale, scale_back, nil];
 		[label runAction: [CCRepeatForever actionWithAction:seq]];
-		
+
 		[self schedule:@selector(loadImages:) interval:1.0f];
-		
+
 	}
 	return self;
 }
@@ -1284,20 +1284,20 @@ Class restartAction()
 	[self unschedule:_cmd];
 
 	void(^block)(CCTexture2D *block) = ^(CCTexture2D* tex){
-		
+
 		CCSprite *sprite = [CCSprite spriteWithTexture:tex];
 		sprite.anchorPoint = ccp(0,0);
 		[self addChild:sprite z:-1];
-		
+
 		CGSize size =[[CCDirector sharedDirector] winSize];
-		
+
 		int i = imageOffset * 32;
 		sprite.position = ccp( i % (int)size.width, (i / (int)size.width) * 32 );
-		
+
 		imageOffset++;
-		
+
 		NSLog(@"Image loaded: %@", tex);
-		
+
 	};
 
 	for( int i=0;i < 8;i++) {
@@ -1305,8 +1305,8 @@ Class restartAction()
 			NSString *sprite = [NSString stringWithFormat:@"sprite-%d-%d.png", i, j];
 			[[CCTextureCache sharedTextureCache] addImageAsync:sprite withBlock:block];
 		}
-	}	
-	
+	}
+
 	[[CCTextureCache sharedTextureCache] addImageAsync:@"background1.jpg" withBlock:block];
 	[[CCTextureCache sharedTextureCache] addImageAsync:@"background2.jpg" withBlock:block];
 	[[CCTextureCache sharedTextureCache] addImageAsync:@"background.png" withBlock:block];
@@ -1334,7 +1334,7 @@ Class restartAction()
 -(id) init
 {
 	if( (self=[super init]) ) {
-		
+
 		CGSize size =[[CCDirector sharedDirector] winSize];
 
 		// The .png image MUST be power of 2 in order to create a continue effect.
@@ -1344,14 +1344,14 @@ Class restartAction()
 		[sprite setPosition:ccp(size.width/2,size.height/2)];
 		ccTexParams params = {GL_LINEAR,GL_LINEAR,GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE};
 		[sprite.texture setTexParameters:&params];
-		
+
 		id rotate = [CCRotateBy actionWithDuration:4 angle:360];
 		[sprite runAction:rotate];
 		id scale = [CCScaleBy actionWithDuration:2 scale:0.04f];
 		id scaleBack = [scale reverse];
 		id seq = [CCSequence actions:scale, scaleBack, nil];
 		[sprite runAction:seq];
-		
+
 	}
 	return self;
 }
@@ -1374,9 +1374,9 @@ Class restartAction()
 -(id) init
 {
 	if( (self=[super init]) ) {
-		
+
 		CGSize size =[[CCDirector sharedDirector] winSize];
-		
+
 		// The .png image MUST be power of 2 in order to create a continue effect.
 		// eg: 32x64, 512x128, 256x1024, 64x64, etc..
 		CCSprite *sprite = [CCSprite spriteWithFile:@"pattern1.png" rect:CGRectMake(0, 0, 4096, 4096)];
@@ -1384,13 +1384,13 @@ Class restartAction()
 		[sprite setPosition:ccp(size.width/2,size.height/2)];
 		ccTexParams params = {GL_LINEAR,GL_LINEAR,GL_REPEAT,GL_REPEAT};
 		[sprite.texture setTexParameters:&params];
-		
+
 		id rotate = [CCRotateBy actionWithDuration:4 angle:360];
 		[sprite runAction:rotate];
 		id scale = [CCScaleBy actionWithDuration:2 scale:0.04f];
 		id scaleBack = [scale reverse];
 		id seq = [CCSequence actions:scale, scaleBack, nil];
-		[sprite runAction:seq];		
+		[sprite runAction:seq];
 	}
 	return self;
 }
@@ -1413,74 +1413,74 @@ Class restartAction()
 
 #define PNG_SIG_BYTES 8
 -(CCTexture2D*) loadPNG:(NSString*)name
-{	
+{
 	png_uint_32 width, height, width2, height2;
 	int bits = 0;
 	NSString *newName = [CCFileUtils fullPathFromRelativePath:name];
-	
+
 	FILE *png_file = fopen([newName UTF8String], "rb");
 	NSAssert(png_file, @"PNG doesn't exists");
 
-	uint8_t header[PNG_SIG_BYTES];	
+	uint8_t header[PNG_SIG_BYTES];
 	fread(header, 1, PNG_SIG_BYTES, png_file);
 	NSAssert(!png_sig_cmp(header, 0, PNG_SIG_BYTES), @"Unkonw file format");
-	
+
 	png_structp png_ptr = png_create_read_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
 	NSAssert(png_ptr, @"No mem");
-	
+
 	png_infop info_ptr = png_create_info_struct(png_ptr);
 	NSAssert(info_ptr, @"No mem");
-	
+
 	png_infop end_info = png_create_info_struct(png_ptr);
 	NSAssert(end_info, @"No mem");
-	
+
 	NSAssert(!setjmp(png_jmpbuf(png_ptr)), @"setjmp error");
 	png_init_io(png_ptr, png_file);
 	png_set_sig_bytes(png_ptr, PNG_SIG_BYTES);
 	png_read_info(png_ptr, info_ptr);
-	
+
 	width = png_get_image_width(png_ptr, info_ptr);
 	height = png_get_image_height(png_ptr, info_ptr);
-	
+
 	int bit_depth, color_type;
 	bit_depth = png_get_bit_depth(png_ptr, info_ptr);
 	color_type = png_get_color_type(png_ptr, info_ptr);
 
 	if( color_type == PNG_COLOR_TYPE_PALETTE )
 		png_set_palette_to_rgb( png_ptr );
-	
+
 	if( color_type == PNG_COLOR_TYPE_GRAY && bit_depth < 8 )
 		png_set_expand_gray_1_2_4_to_8( png_ptr );
-	
+
 	if( png_get_valid( png_ptr, info_ptr, PNG_INFO_tRNS ) )
 		png_set_tRNS_to_alpha (png_ptr);
-	
+
 	if( bit_depth == 16 )
 		png_set_strip_16( png_ptr );
-	
+
 	else if( bit_depth < 8 )
 		png_set_packing( png_ptr );
-	
+
 	png_read_update_info(png_ptr, info_ptr);
-	
+
 	png_get_IHDR( png_ptr, info_ptr,
 				&width, &height, &bit_depth, &color_type,
 				 NULL, NULL, NULL );
-	
+
 	switch( color_type )
 	{
 		case PNG_COLOR_TYPE_GRAY:
 			bits = 1;
 			break;
-			
+
 		case PNG_COLOR_TYPE_GRAY_ALPHA:
 			bits = 2;
 			break;
-			
+
 		case PNG_COLOR_TYPE_RGB:
 			bits = 3;
 			break;
-			
+
 		case PNG_COLOR_TYPE_RGB_ALPHA:
 			bits = 4;
 			break;
@@ -1502,25 +1502,25 @@ Class restartAction()
 		while(i < height2)
 			i *= 2;
 		height2 = i;
-	}	
+	}
 
 	png_byte* pixels = calloc( width2 * height2 * bits, sizeof(png_byte) );
 	png_byte** row_ptrs = malloc(height * sizeof(png_bytep));
-	
+
 	// since Texture2D loads the image "upside-down", there's no need
 	// to flip the image here
 	for (i=0; i<height; i++)
 		row_ptrs[i] = pixels + i*width2*bits;
 
-	png_read_image(png_ptr, row_ptrs);	
+	png_read_image(png_ptr, row_ptrs);
 	png_read_end( png_ptr, NULL );
 	png_destroy_read_struct( &png_ptr, &info_ptr, &end_info );
 	free( row_ptrs );
-	
+
 	fclose(png_file);
-	
+
 	CGSize size = CGSizeMake(width,height);
-	
+
 	CCTexture2D *tex2d = [[CCTexture2D alloc] initWithData:pixels
 										 pixelFormat:kCCTexture2DPixelFormat_RGBA8888
 										  pixelsWide:width2
@@ -1533,20 +1533,20 @@ Class restartAction()
 -(id) init
 {
 	if( (self=[super init]) ) {
-				
+
 		CGSize size =[[CCDirector sharedDirector] winSize];
-	
+
 		CCLayerColor *background = [CCLayerColor layerWithColor:ccc4(128,128,128,255) width:size.width height:size.height];
 		[self addChild:background z:-1];
-		
-		
+
+
 		// PNG sprite. Loaded using UIImage
 		//   - Probably it will be premultiplied image
 		CCSprite *png1 = [CCSprite spriteWithFile:@"grossinis_sister1-testalpha.png"];
 		[self addChild:png1 z:0];
 		png1.position = ccp(size.width/5, size.height/2);
 		[self transformSprite:png1];
-		
+
 		// BMP image. Loaded using UIImage
 		//   - Probably it will be premultiplied image
 		CCSprite *uncPNG = [CCSprite spriteWithFile:@"grossinis_sister1-testalpha.bmp"];
@@ -1554,7 +1554,7 @@ Class restartAction()
 		uncPNG.position = ccp(size.width/5*2, size.height/2);
 		[self transformSprite:uncPNG];
 
-		
+
 		// PNG sprite. Loaded using UIImage
 		//  - Probably it will be a premultiplied image
 		//  - We are forcing a new blend function just to see if it uses premultiplied or not
@@ -1564,7 +1564,7 @@ Class restartAction()
 		[png3 setBlendFunc:(ccBlendFunc){GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA}];
 		[png3 setOpacityModifyRGB:NO];
 		[self transformSprite:png3];
-		
+
 		// PNG 32-bit RGBA
 		//  - This is a non-premultiplied image. It is loaded using libpng
 		CCTexture2D *tex2d = [self loadPNG:@"grossinis_sister1-testalpha.ppng"];
@@ -1602,7 +1602,7 @@ Class restartAction()
 	id fadein = [fade reverse];
 	id seq = [CCSequence actions: fade, fadein, dl, nil];
 	id repeat = [CCRepeatForever actionWithAction:seq];
-	[sprite runAction:repeat];	
+	[sprite runAction:repeat];
 }
 -(NSString*) title
 {
@@ -1642,21 +1642,21 @@ Class restartAction()
 
 @implementation TextureLibPNGTest3
 -(void) transformSprite:(CCSprite*)sprite
-{	
+{
 	id fade = [CCFadeOut actionWithDuration:2];
 	id dl = [CCDelayTime actionWithDuration:2];
 	id fadein = [fade reverse];
 	id seq = [CCSequence actions: fade, fadein, dl, nil];
 	id repeat = [CCRepeatForever actionWithAction:seq];
 	[sprite runAction:repeat];
-	
+
 	id tint = [CCTintBy actionWithDuration:2 red:-64 green:-224 blue:-255];
 	id dl2 = [CCDelayTime actionWithDuration:2];
 	id tintback = [tint reverse];
 	id seq2 = [CCSequence actions: tint, dl2, tintback, nil];
 	id repeat2 = [CCRepeatForever actionWithAction:seq2];
 	[sprite runAction:repeat2];
-	
+
 }
 -(NSString*) title
 {
@@ -1673,10 +1673,10 @@ Class restartAction()
 
 @implementation TextureSizeTest
 -(id) init
-{	
+{
 	if ((self=[super init]) ) {
 		CCSprite *sprite = nil;
-		
+
 		printf("Loading 512x512 image...");
 		sprite = [CCSprite spriteWithFile:@"texture512x512.png"];
 		if( sprite )
@@ -1690,21 +1690,21 @@ Class restartAction()
 			printf("OK\n");
 		else
 			printf("Error\n");
-		
+
 		printf("Loading 2048x2048 image...");
 		sprite = [CCSprite spriteWithFile:@"texture2048x2048.png"];
 		if( sprite )
 			printf("OK\n");
 		else
 			printf("Error\n");
-		
+
 		printf("Loading 4096x4096 image...");
 		sprite = [CCSprite spriteWithFile:@"texture4096x4096.png"];
 		if( sprite )
 			printf("OK\n");
 		else
 			printf("Error\n");
-		
+
 	}
 	return self;
 }
@@ -1724,13 +1724,13 @@ Class restartAction()
 
 @implementation TextureCache1
 -(id) init
-{	
+{
 	if ((self=[super init]) ) {
-		
+
 		CGSize s = [[CCDirector sharedDirector] winSize];
-		
+
 		CCSprite *sprite;
-		
+
 		sprite = [CCSprite spriteWithFile:@"grossinis_sister1.png"];
 		[sprite setPosition:ccp(s.width/5*1, s.height/2)];
 		[[sprite texture] setAliasTexParameters];
@@ -1738,7 +1738,7 @@ Class restartAction()
 		[self addChild:sprite];
 
 		[[CCTextureCache sharedTextureCache] removeTexture:[sprite texture]];
-		
+
 		sprite = [CCSprite spriteWithFile:@"grossinis_sister1.png"];
 		[sprite setPosition:ccp(s.width/5*2, s.height/2)];
 		[[sprite texture] setAntiAliasTexParameters];
@@ -1746,21 +1746,21 @@ Class restartAction()
 		[self addChild:sprite];
 
 		// 2nd set of sprites
-		
+
 		sprite = [CCSprite spriteWithFile:@"grossinis_sister2.png"];
 		[sprite setPosition:ccp(s.width/5*3, s.height/2)];
 		[[sprite texture] setAliasTexParameters];
 		[sprite setScale:2];
 		[self addChild:sprite];
-		
+
 		[[CCTextureCache sharedTextureCache] removeTextureForKey:@"grossinis_sister2.png"];
-		
+
 		sprite = [CCSprite spriteWithFile:@"grossinis_sister2.png"];
 		[sprite setPosition:ccp(s.width/5*4, s.height/2)];
 		[[sprite texture] setAntiAliasTexParameters];
 		[sprite setScale:2];
 		[self addChild:sprite];
-		
+
 	}
 	return self;
 }
@@ -1780,15 +1780,15 @@ Class restartAction()
 
 @implementation TextureDrawAtPoint
 -(id) init
-{	
+{
 	if ((self=[super init]) ) {
-		
+
 		tex1_ = [[CCTextureCache sharedTextureCache] addImage:@"grossinis_sister1.png"];
 		tex2_ = [[CCTextureCache sharedTextureCache] addImage:@"grossinis_sister2.png"];
-		
+
 		[tex1_ retain];
 		[tex2_ retain];
-		
+
 	}
 	return self;
 }
@@ -1797,16 +1797,16 @@ Class restartAction()
 {
 	[tex1_ release];
 	[tex2_ release];
-	
+
 	[super dealloc];
 }
 
 -(void) draw
 {
 	[super draw];
-	
+
 	CGSize s = [[CCDirector sharedDirector] winSize];
-	
+
 	[tex1_ drawAtPoint:ccp(s.width/2-50, s.height/2 - 50)];
 	[tex2_ drawAtPoint:ccp(s.width/2+50, s.height/2 - 50)];
 
@@ -1828,15 +1828,15 @@ Class restartAction()
 
 @implementation TextureDrawInRect
 -(id) init
-{	
+{
 	if ((self=[super init]) ) {
-		
+
 		tex1_ = [[CCTextureCache sharedTextureCache] addImage:@"grossinis_sister1.png"];
 		tex2_ = [[CCTextureCache sharedTextureCache] addImage:@"grossinis_sister2.png"];
-		
+
 		[tex1_ retain];
 		[tex2_ retain];
-		
+
 	}
 	return self;
 }
@@ -1845,22 +1845,22 @@ Class restartAction()
 {
 	[tex1_ release];
 	[tex2_ release];
-	
+
 	[super dealloc];
 }
 
 -(void) draw
 {
 	[super draw];
-	
+
 	CGSize s = [[CCDirector sharedDirector] winSize];
-	
+
 	CGRect rect1 = CGRectMake( s.width/2 - 80, 20, tex1_.contentSize.width * 0.5f, tex1_.contentSize.height *2 );
 	CGRect rect2 = CGRectMake( s.width/2 + 80, s.height/2, tex1_.contentSize.width * 2, tex1_.contentSize.height * 0.5f );
-	
+
 	[tex1_ drawInRect:rect1];
 	[tex2_ drawInRect:rect2];
-	
+
 }
 
 -(NSString*) title
@@ -1878,19 +1878,19 @@ Class restartAction()
 
 @implementation FileUtilsTest
 -(id) init
-{	
+{
 	if ((self=[super init]) ) {
-		
+
 		// This test is only valid in Retinadisplay
-		
+
 		if( CC_CONTENT_SCALE_FACTOR() == 2 ) {
-			
+
 			CCSprite *sprite = [[CCSprite alloc] initWithFile:@"bugs/test_issue_1179.png"];
 			if( sprite )
 				NSLog(@"Test #1 issue 1179: OK");
 			else
 				NSLog(@"Test #1 issue 1179: FAILED");
-				
+
 			[sprite release];
 
 			sprite = [[CCSprite alloc] initWithFile:@"only_in_hd.pvr.ccz"];
@@ -1898,14 +1898,14 @@ Class restartAction()
 				NSLog(@"Test #2 issue 1179: OK");
 			else
 				NSLog(@"Test #2 issue 1179: FAILED");
-			
+
 			[sprite release];
 
 		} else {
 			NSLog(@"Test issue #1179 failed. Needs to be tested with RetinaDispaly");
 		}
 
-		
+
 #ifdef __CC_PLATFORM_IOS
 		// Testint CCFileUtils API
 		BOOL ret;
@@ -1922,7 +1922,7 @@ Class restartAction()
 		else
 			NSLog(@"Test #4: retinaDisplayFileExistsAtPath: FAILED");
 #endif // __CC_PLATFORM_IOS
-		
+
 	}
 	return self;
 }
@@ -1955,29 +1955,29 @@ Class restartAction()
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
 	[super application:application didFinishLaunchingWithOptions:launchOptions];
-	
+
 	// Enables High Res mode (Retina Display) on iPhone 4 and maintains low res on all other devices
 	if( ! [director_ enableRetinaDisplay:YES] )
 		CCLOG(@"Retina Display Not supported");
-	
+
 	// Turn on display FPS
 	[director_ setDisplayStats:YES];
-	
+
 	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
 	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
 	// You can change it at anytime.
-	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA8888];	
-	
+	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA8888];
+
 	// When in iPad / RetinaDisplay mode, CCFileUtils will append the "-ipad" / "-hd" to all loaded files
 	// If the -ipad  / -hdfile is not found, it will load the non-suffixed version
 	[CCFileUtils setiPadSuffix:@"-ipad"];	// Default on iPad is "" (empty string)
 	[CCFileUtils setRetinaDisplaySuffix:@"-hd"];	// Default on RetinaDisplay is "-hd"
-	
+
 	CCScene *scene = [CCScene node];
 	[scene addChild: [nextAction() node]];
-	
+
 	[director_ pushScene: scene];
-	
+
 	return YES;
 }
 
@@ -2001,7 +2001,7 @@ Class restartAction()
 //	[super applicationDidFinishLaunching:aNotification];
 
 	CGSize winSize = CGSizeMake(640,480);
-	
+
 	//
 	// CC_DIRECTOR_INIT:
 	// 1. It will create an NSWindow with a given size
@@ -2009,22 +2009,22 @@ Class restartAction()
 	// 3. It will register the MacGLView to the CCDirector
 	//
 	// If you want to create a fullscreen window, you should do it AFTER calling this macro
-	//	
+	//
 	CC_DIRECTOR_INIT(winSize);
-	
+
 	// Enable "moving" mouse event. Default no.
 	[window_ setAcceptsMouseMovedEvents:NO];
-	
+
 	// EXPERIMENTAL stuff.
 	// 'Effects' don't work correctly when autoscale is turned on.
-	[director_ setResizeMode:kCCDirectorResize_AutoScale];	
-	
+	[director_ setResizeMode:kCCDirectorResize_AutoScale];
+
 	// Turn on display FPS
 	[director_ setDisplayStats:YES];
 
 	CCScene *scene = [CCScene node];
 	[scene addChild: [nextAction() node]];
-	
+
 	[director_ runWithScene:scene];
 }
 @end

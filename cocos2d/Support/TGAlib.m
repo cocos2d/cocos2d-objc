@@ -36,24 +36,24 @@ void tgaLoadHeader(FILE *file, tImageTGA *info) {
 	fread(&info->pixelDepth, sizeof(unsigned char), 1, file);
 
 	fread(&cGarbage, sizeof(unsigned char), 1, file);
-	
+
 	info->flipped = 0;
 	if ( cGarbage & 0x20 ) info->flipped = 1;
 }
 
 // loads the image pixels. You shouldn't call this function directly
 void tgaLoadImageData(FILE *file, tImageTGA *info) {
-	
+
 	int mode,total,i;
 	unsigned char aux;
-	
+
 	// mode equal the number of components for each pixel
 	mode = info->pixelDepth / 8;
 	// total is the number of unsigned chars we'll have to read
 	total = info->height * info->width * mode;
-	
+
 	fread(info->imageData,sizeof(unsigned char),total,file);
-	
+
 	// mode=3 or 4 implies that the image is RGB(A). However TGA
 	// stores it as BGR(A) so we'll have to swap R and B.
 	if (mode >= 3)
@@ -70,12 +70,12 @@ void tgaLoadRLEImageData(FILE *file, tImageTGA *info)
 	unsigned int mode,total,i, index = 0;
 	unsigned char aux[4], runlength = 0;
 	unsigned int skip = 0, flag = 0;
-	
+
 	// mode equal the number of components for each pixel
 	mode = info->pixelDepth / 8;
 	// total is the number of unsigned chars we'll have to read
 	total = info->height * info->width;
-	
+
 	for( i = 0; i < total; i++ )
 	{
 		// if we have a run length pending, run it
@@ -90,32 +90,32 @@ void tgaLoadRLEImageData(FILE *file, tImageTGA *info)
 			// otherwise, read in the run length token
 			if ( fread(&runlength,sizeof(unsigned char),1,file) != 1 )
 				return;
-			
+
 			// see if it's a RLE encoded sequence
 			flag = runlength & 0x80;
 			if ( flag ) runlength -= 128;
 			skip = 0;
 		}
-		
+
 		// do we need to skip reading this pixel?
 		if ( !skip )
 		{
 			// no, read in the pixel data
 			if ( fread(aux,sizeof(unsigned char),mode,file) != mode )
 				return;
-			
+
 			// mode=3 or 4 implies that the image is RGB(A). However TGA
 			// stores it as BGR(A) so we'll have to swap R and B.
 			if ( mode >= 3 )
 			{
 				unsigned char tmp;
-				
+
 				tmp = aux[0];
 				aux[0] = aux[2];
 				aux[2] = tmp;
 			}
 		}
-		
+
 		// add the pixel to our image
 		memcpy(&info->imageData[index], aux, mode);
 		index += mode;
@@ -129,50 +129,50 @@ void tgaFlipImage( tImageTGA *info )
 	int rowbytes = info->width*mode;
 	unsigned char *row = (unsigned char *)malloc(rowbytes);
 	int y;
-	
+
 	if (row == NULL) return;
-	
+
 	for( y = 0; y < (info->height/2); y++ )
 	{
 		memcpy(row, &info->imageData[y*rowbytes],rowbytes);
 		memcpy(&info->imageData[y*rowbytes], &info->imageData[(info->height-(y+1))*rowbytes], rowbytes);
 		memcpy(&info->imageData[(info->height-(y+1))*rowbytes], row, rowbytes);
 	}
-	
+
 	free(row);
 	info->flipped = 0;
 }
 
 // this is the function to call when we want to load an image
 tImageTGA * tgaLoad(const char *filename) {
-	
+
 	FILE *file;
 	tImageTGA *info;
 	int mode,total;
-	
+
 	// allocate memory for the info struct and check!
 	info = (tImageTGA *)malloc(sizeof(tImageTGA));
 	if (info == NULL)
 		return(NULL);
-	
-	
+
+
 	// open the file for reading (binary mode)
 	file = fopen(filename, "rb");
 	if (file == NULL) {
 		info->status = TGA_ERROR_FILE_OPEN;
 		return(info);
 	}
-	
+
 	// load the header
 	tgaLoadHeader(file,info);
-	
+
 	// check for errors when loading the header
 	if (ferror(file)) {
 		info->status = TGA_ERROR_READING_FILE;
 		fclose(file);
 		return(info);
 	}
-	
+
 	// check if the image is color indexed
 	if (info->type == 1) {
 		info->status = TGA_ERROR_INDEXED_COLOR;
@@ -185,7 +185,7 @@ tImageTGA * tgaLoad(const char *filename) {
 		fclose(file);
 		return(info);
 	}
-	
+
 	// mode equals the number of image components
 	mode = info->pixelDepth / 8;
 	// total is the number of unsigned chars to read
@@ -193,7 +193,7 @@ tImageTGA * tgaLoad(const char *filename) {
 	// allocate memory for image pixels
 	info->imageData = (unsigned char *)malloc(sizeof(unsigned char) *
 											  total);
-	
+
 	// check to make sure we have the memory required
 	if (info->imageData == NULL) {
 		info->status = TGA_ERROR_MEMORY;
@@ -205,7 +205,7 @@ tImageTGA * tgaLoad(const char *filename) {
 		tgaLoadRLEImageData(file, info);
 	else
 		tgaLoadImageData(file,info);
-	
+
 	// check for errors when reading the pixels
 	if (ferror(file)) {
 		info->status = TGA_ERROR_READING_FILE;
@@ -214,48 +214,48 @@ tImageTGA * tgaLoad(const char *filename) {
 	}
 	fclose(file);
 	info->status = TGA_OK;
-	
+
 	if ( info->flipped )
 	{
 		tgaFlipImage( info );
 		if ( info->flipped ) info->status = TGA_ERROR_MEMORY;
 	}
-	
+
 	return(info);
 }
 
 // converts RGB to greyscale
 void tgaRGBtogreyscale(tImageTGA *info) {
-	
+
 	int mode,i,j;
-	
+
 	unsigned char *newImageData;
-	
+
 	// if the image is already greyscale do nothing
 	if (info->pixelDepth == 8)
 		return;
-	
+
 	// compute the number of actual components
 	mode = info->pixelDepth / 8;
-	
+
 	// allocate an array for the new image data
-	newImageData = (unsigned char *)malloc(sizeof(unsigned char) * 
+	newImageData = (unsigned char *)malloc(sizeof(unsigned char) *
 										   info->height * info->width);
 	if (newImageData == NULL) {
 		return;
 	}
-	
+
 	// convert pixels: greyscale = o.30 * R + 0.59 * G + 0.11 * B
 	for (i = 0,j = 0; j < info->width * info->height; i +=mode, j++)
-		newImageData[j] =	
-		(unsigned char)(0.30 * info->imageData[i] + 
+		newImageData[j] =
+		(unsigned char)(0.30 * info->imageData[i] +
 						0.59 * info->imageData[i+1] +
 						0.11 * info->imageData[i+2]);
-	
-	
+
+
 	//free old image data
 	free(info->imageData);
-	
+
 	// reassign pixelDepth and type according to the new image type
 	info->pixelDepth = 8;
 	info->type = 3;
@@ -265,7 +265,7 @@ void tgaRGBtogreyscale(tImageTGA *info) {
 
 // releases the memory used for the image
 void tgaDestroy(tImageTGA *info) {
-	
+
 	if (info != NULL) {
 		if (info->imageData != NULL)
 			free(info->imageData);

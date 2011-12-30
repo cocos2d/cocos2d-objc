@@ -3,17 +3,17 @@
  *
  * Copyright (c) 2009-2010 Ricardo Quesada
  * Copyright (c) 2011 Zynga Inc.
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -38,22 +38,22 @@
 @class CCTMXTilesetInfo;
 
 /** CCTMXLayer represents the TMX layer.
- 
+
  It is a subclass of CCSpriteBatchNode. By default the tiles are rendered using a CCTextureAtlas.
  If you mofify a tile on runtime, then, that tile will become a CCSprite, otherwise no CCSprite objects are created.
  The benefits of using CCSprite objects as tiles are:
  - tiles (CCSprite) can be rotated/scaled/moved with a nice API
- 
+
  cocos2d v2.0 doesn't support the cc_vertexz value. Whenever a the cc_vertexz property is found, it will raise an exception.
- 
+
  "value" by default is 0, but you can change it from Tiled by adding the "cc_alpha_func" property to the layer.
  The value 0 should work for most cases, but if you have tiles that are semi-transparent, then you might want to use a differnt
  value, like 0.5.
- 
+
  For further information, please see the programming guide:
- 
+
 	http://www.cocos2d-iphone.org/wiki/doku.php/prog_guide:tiled_maps
- 
+
  @since v0.8.1
  */
 @interface CCTMXLayer : CCSpriteBatchNode
@@ -65,12 +65,12 @@
 	uint32_t			*tiles_;			// GID are 32 bit
 	NSUInteger			layerOrientation_;
 	NSMutableArray		*properties_;
-	
+
 	unsigned char		opacity_; // TMX Layer supports opacity
-	
+
 	NSUInteger			minGID_;
 	NSUInteger			maxGID_;
-	
+
 	// Only used when vertexZ is used
 	NSInteger			vertexZvalue_;
 	BOOL				useAutomaticVertexZ_;

@@ -12,7 +12,7 @@
 @interface bugViewController : UIViewController {
 
 	// weak reference
-	EAGLView *glView;	
+	EAGLView *glView;
 }
 
 @end

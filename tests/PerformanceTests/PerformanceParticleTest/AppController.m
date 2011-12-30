@@ -14,69 +14,69 @@
 {
 	// Init the window
 	window_ = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-	
+
 	// before creating any layer, set the landscape mode
 	CCDirector *director = [CCDirector sharedDirector];
-	
+
 	// set FPS at 60
 	[director setAnimationInterval:1.0/60];
-	
+
 	// Display FPS: yes
 	[director setDisplayStats:YES];
-	
+
 	// Create an EAGLView with a RGB8 color buffer, and a depth buffer of 24-bits
 	EAGLView *glView = [EAGLView viewWithFrame:[window_ bounds]];
-	
+
 	// attach the openglView to the director
 	[director setOpenGLView:glView];
-	
+
 	// 2D projection
 	[director setProjection:kCCDirectorProjection2D];
 	//	[director setProjection:kCCDirectorProjection3D];
-	
+
 	// Enables High Res mode (Retina Display) on iPhone 4 and maintains low res on all other devices
 	if( ! [director enableRetinaDisplay:YES] )
 		CCLOG(@"Retina Display Not supported");
-	
+
 	// Init the View Controller
 	viewController_ = [[RootViewController alloc] initWithNibName:nil bundle:nil];
 	viewController_.wantsFullScreenLayout = YES;
-	
+
 	// make the OpenGLView a child of the view controller
 	[viewController_ setView:glView];
-	
+
 	navigationController_ = [[UINavigationController alloc] initWithRootViewController:viewController_];
 	navigationController_.navigationBarHidden = YES;
-	
+
 	// set the Navigation Controller as the root view controller
 	[window_ setRootViewController:navigationController_];
-	
+
 	[viewController_ release];
 	[navigationController_ release];
-	
+
 	// make main window visible
-	[window_ makeKeyAndVisible];	
-	
+	[window_ makeKeyAndVisible];
+
 	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
 	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
 	// You can change anytime.
 	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA8888];
-	
+
 	// When in iPad / RetinaDisplay mode, CCFileUtils will append the "-ipad" / "-hd" to all loaded files
 	// If the -ipad  / -hdfile is not found, it will load the non-suffixed version
 	[CCFileUtils setiPadSuffix:@"-ipad"];			// Default on iPad is "" (empty string)
 	[CCFileUtils setRetinaDisplaySuffix:@"-hd"];	// Default on RetinaDisplay is "-hd"
-	
+
 	// Assume that PVR images have premultiplied alpha
 	[CCTexture2D PVRImagesHavePremultipliedAlpha:NO];
-	
+
 	// create the main scene
 	CCScene *scene = [CCScene node];
 	[scene addChild: [nextAction() testWithSubTest:1 particles:kNodesIncrease]];
-	
+
 	[director pushScene:scene];
-	
-	
+
+
 	return YES;
 }
 
@@ -110,7 +110,7 @@
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
-{	
+{
 	[[CCDirector sharedDirector] end];
 }
 

@@ -32,7 +32,7 @@
 	// 8. Will create a CCDirector and will associate the view with the director
 	// 9. Will create a UINavigationControlView with the director.
 	CC_DIRECTOR_INIT();
-	
+
 	return YES;
 }
 
@@ -64,7 +64,7 @@
 
 // application will be killed
 - (void)applicationWillTerminate:(UIApplication *)application
-{	
+{
 	CC_DIRECTOR_END();
 }
 
@@ -84,7 +84,7 @@
 {
 	[window_ release];
 	[navController_ release];
-	
+
 	[super dealloc];
 }
 @end
@@ -98,19 +98,19 @@
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
 	director_ = (CCDirectorMac*) [CCDirector sharedDirector];
-	
+
 	[director_ setDisplayStats:YES];
-	
+
 	[director_ setView:glView_];
-	
+
 	//	[director setProjection:kCCDirectorProjection2D];
-	
+
 	// Enable "moving" mouse event. Default no.
 	[window_ setAcceptsMouseMovedEvents:NO];
-	
+
 	// EXPERIMENTAL stuff.
 	// 'Effects' don't work correctly when autoscale is turned on.
-	[director_ setResizeMode:kCCDirectorResize_AutoScale];	
+	[director_ setResizeMode:kCCDirectorResize_AutoScale];
 }
 
 - (BOOL) applicationShouldTerminateAfterLastWindowClosed: (NSApplication *) theApplication

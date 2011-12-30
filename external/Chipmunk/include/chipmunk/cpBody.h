@@ -1,15 +1,15 @@
 /* Copyright (c) 2007 Scott Lembcke
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -42,29 +42,29 @@ typedef struct cpComponentNode {
 struct cpBody {
 	/// Function that is called to integrate the body's velocity. (Defaults to cpBodyUpdateVelocity)
 	cpBodyVelocityFunc velocity_func;
-	
+
 	/// Function that is called to integrate the body's position. (Defaults to cpBodyUpdatePosition)
 	cpBodyPositionFunc position_func;
-	
+
 	/// Mass of the body.
 	/// Must agree with cpBody.m_inv! Use cpBodySetMass() when changing the mass for this reason.
 	cpFloat m;
 	/// Mass inverse.
 	cpFloat m_inv;
-	
+
 	/// Moment of inertia of the body.
 	/// Must agree with cpBody.i_inv! Use cpBodySetMoment() when changing the moment for this reason.
 	cpFloat i;
 	/// Moment of inertia inverse.
 	cpFloat i_inv;
-	
+
 	/// Position of the rigid body's center of gravity.
 	cpVect p;
 	/// Velocity of the rigid body's center of gravity.
 	cpVect v;
 	/// Force acting on the rigid body's center of gravity.
 	cpVect f;
-	
+
 	/// Rotation of the body around it's center of gravity in radians.
 	/// Must agree with cpBody.rot! Use cpBodySetAngle() when changing the angle for this reason.
 	cpFloat a;
@@ -72,30 +72,30 @@ struct cpBody {
 	cpFloat w;
 	/// Torque applied to the body around it's center of gravity.
 	cpFloat t;
-	
+
 	/// Cached unit length vector representing the angle of the body.
 	/// Used for fast rotations using cpvrotate().
 	cpVect rot;
-	
+
 	/// User definable data pointer.
 	/// Generally this points to your the game object class so you can access it
 	/// when given a cpBody reference in a callback.
 	cpDataPointer data;
-	
+
 	/// Maximum velocity allowed when updating the velocity.
 	cpFloat v_limit;
 	/// Maximum rotational rate (in radians/second) allowed when updating the angular velocity.
 	cpFloat w_limit;
-	
+
 	CP_PRIVATE(cpVect v_bias);
 	CP_PRIVATE(cpFloat w_bias);
-	
+
 	CP_PRIVATE(cpSpace *space);
-	
+
 	CP_PRIVATE(cpShape *shapeList);
 	CP_PRIVATE(cpArbiter *arbiterList);
 	CP_PRIVATE(cpConstraint *constraintList);
-	
+
 	CP_PRIVATE(cpComponentNode node);
 };
 
@@ -223,17 +223,17 @@ static inline cpFloat cpBodyKineticEnergy(const cpBody *body)
 	return (vsq ? vsq*body->m : 0.0f) + (wsq ? wsq*body->i : 0.0f);
 }
 
-/// Body/shape iterator callback function type. 
+/// Body/shape iterator callback function type.
 typedef void (*cpBodyShapeIteratorFunc)(cpBody *body, cpShape *shape, void *data);
 /// Call @c func once for each shape attached to @c body and added to the space.
 void cpBodyEachShape(cpBody *body, cpBodyShapeIteratorFunc func, void *data);
 
-/// Body/constraint iterator callback function type. 
+/// Body/constraint iterator callback function type.
 typedef void (*cpBodyConstraintIteratorFunc)(cpBody *body, cpConstraint *constraint, void *data);
 /// Call @c func once for each constraint attached to @c body and added to the space.
 void cpBodyEachConstraint(cpBody *body, cpBodyConstraintIteratorFunc func, void *data);
 
-/// Body/arbiter iterator callback function type. 
+/// Body/arbiter iterator callback function type.
 typedef void (*cpBodyArbiterIteratorFunc)(cpBody *body, cpArbiter *arbiter, void *data);
 /// Call @c func once for each arbiter that is currently active on the body.
 void cpBodyEachArbiter(cpBody *body, cpBodyArbiterIteratorFunc func, void *data);

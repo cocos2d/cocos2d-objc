@@ -13,41 +13,41 @@
 {
 	// Init the window
 	window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-	
+
 	// get instance of the shared director
 	CCDirector *director = [CCDirector sharedDirector];
 
 	// display FPS (useful when debugging)
 	[director setDisplayStats:YES];
-	
+
 	// frames per second
 	[director setAnimationInterval:1.0/60];
-	
+
 	// create an OpenGL view
 	EAGLView *glView = [EAGLView viewWithFrame:[window bounds]];
-	
+
 	// connect it to the director
 	[director setOpenGLView:glView];
-	
+
 	// Enables High Res mode (Retina Display) on iPhone 4 and maintains low res on all other devices
 	if( ! [director enableRetinaDisplay:YES] )
 		CCLOG(@"Retina Display Not supported");
-	
+
 	navigationController_ = [[UINavigationController alloc] initWithRootViewController:viewController_];
 	navigationController_.navigationBarHidden = YES;
-	
+
 	// set the Navigation Controller as the root view controller
 	[window_ setRootViewController:navigationController_];
-	
+
 	[viewController_ release];
 	[navigationController_ release];
-	
+
 	// Make the window visible
 	[window makeKeyAndVisible];
-	
+
 	CCScene *scene = [CCScene node];
 	[scene addChild: [nextAction() testWithQuantityOfNodes:kNodesIncrease]];
-	
+
 	[[CCScheduler sharedScheduler] scheduleSelector:@selector(dumpProfilerInfo:) forTarget:self interval:2 paused:NO];
 	[director pushScene:scene];
 }
@@ -85,7 +85,7 @@
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
-{	
+{
 	[[CCDirector sharedDirector] end];
 }
 

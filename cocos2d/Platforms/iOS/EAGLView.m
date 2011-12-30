@@ -121,7 +121,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	return [self initWithFrame:frame pixelFormat:kEAGLColorFormatRGB565 depthFormat:0 preserveBackbuffer:NO sharegroup:nil multiSampling:NO numberOfSamples:0];
 }
 
-- (id) initWithFrame:(CGRect)frame pixelFormat:(NSString*)format 
+- (id) initWithFrame:(CGRect)frame pixelFormat:(NSString*)format
 {
 	return [self initWithFrame:frame pixelFormat:format depthFormat:0 preserveBackbuffer:NO sharegroup:nil multiSampling:NO numberOfSamples:0];
 }
@@ -135,7 +135,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 		multiSampling_ = sampling;
 		requestedSamples_ = nSamples;
 		preserveBackbuffer_ = retained;
-		
+
 		if( ! [self setupSurfaceWithSharegroup:sharegroup] ) {
 			[self release];
 			return nil;
@@ -150,9 +150,9 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 -(id) initWithCoder:(NSCoder *)aDecoder
 {
 	if( (self = [super initWithCoder:aDecoder]) ) {
-		
+
 		CAEAGLLayer*			eaglLayer = (CAEAGLLayer*)[self layer];
-		
+
 		pixelformat_ = kEAGLColorFormatRGB565;
 		depthFormat_ = 0; // GL_DEPTH_COMPONENT24_OES;
 		multiSampling_= NO;
@@ -166,38 +166,38 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 		CHECK_GL_ERROR_DEBUG();
     }
-	
+
     return self;
 }
 
 -(BOOL) setupSurfaceWithSharegroup:(EAGLSharegroup*)sharegroup
 {
 	CAEAGLLayer *eaglLayer = (CAEAGLLayer *)self.layer;
-	
+
 	eaglLayer.opaque = YES;
 	eaglLayer.drawableProperties = [NSDictionary dictionaryWithObjectsAndKeys:
 									[NSNumber numberWithBool:preserveBackbuffer_], kEAGLDrawablePropertyRetainedBacking,
 									pixelformat_, kEAGLDrawablePropertyColorFormat, nil];
-	
+
 	// ES2 renderer only
 	renderer_ = [[ES2Renderer alloc] initWithDepthFormat:depthFormat_
 										 withPixelFormat:[self convertPixelFormat:pixelformat_]
 										  withSharegroup:sharegroup
 									   withMultiSampling:multiSampling_
 									 withNumberOfSamples:requestedSamples_];
-	
+
 	NSAssert( renderer_, @"OpenGL ES 2.0 is required");
 
 	if (!renderer_)
 		return NO;
-	
+
 	context_ = [renderer_ context];
 	[context_ renderbufferStorage:GL_RENDERBUFFER_OES fromDrawable:eaglLayer];
 
 	discardFramebufferSupported_ = [[CCConfiguration sharedConfiguration] supportsDiscardFramebuffer];
-	
+
 	CHECK_GL_ERROR_DEBUG();
-	
+
 	return YES;
 }
 
@@ -220,7 +220,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 	// Avoid flicker. Issue #350
 	NSThread *thread = [director runningThread];
-	[director performSelector:@selector(drawScene) onThread:thread withObject:nil waitUntilDone:YES];		
+	[director performSelector:@selector(drawScene) onThread:thread withObject:nil waitUntilDone:YES];
 }
 
 - (void) swapBuffers
@@ -233,14 +233,14 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	if (multiSampling_)
 	{
 		/* Resolve from msaaFramebuffer to resolveFramebuffer */
-		//glDisable(GL_SCISSOR_TEST);     
+		//glDisable(GL_SCISSOR_TEST);
 		glBindFramebufferOES(GL_READ_FRAMEBUFFER_APPLE, [renderer_ msaaFrameBuffer]);
 		glBindFramebufferOES(GL_DRAW_FRAMEBUFFER_APPLE, [renderer_ defaultFrameBuffer]);
 		glResolveMultisampleFramebufferAPPLE();
 	}
-	
+
 	if( discardFramebufferSupported_)
-	{	
+	{
 		if (multiSampling_)
 		{
 			if (depthFormat_)
@@ -253,23 +253,23 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 				GLenum attachments[] = {GL_COLOR_ATTACHMENT0_OES};
 				glDiscardFramebufferEXT(GL_READ_FRAMEBUFFER_APPLE, 1, attachments);
 			}
-			
+
 			glBindRenderbufferOES(GL_RENDERBUFFER_OES, [renderer_ colorRenderBuffer]);
-	
-		}	
-		
+
+		}
+
 		// not MSAA
 		else if (depthFormat_ ) {
 			GLenum attachments[] = { GL_DEPTH_ATTACHMENT_OES};
 			glDiscardFramebufferEXT(GL_FRAMEBUFFER_OES, 1, attachments);
 		}
 	}
-	
+
 	if(![context_ presentRenderbuffer:GL_RENDERBUFFER_OES])
 		CCLOG(@"cocos2d: Failed to swap renderbuffer in %s\n", __FUNCTION__);
 
 	CHECK_GL_ERROR_DEBUG();
-	
+
 	// We can safely re-bind the framebuffer here, since this will be the
 	// 1st instruction of the new main loop
 	if( multiSampling_ )
@@ -280,13 +280,13 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 {
 	// define the pixel format
 	GLenum pFormat;
-	
-	
-	if([pixelFormat isEqualToString:@"EAGLColorFormat565"]) 
+
+
+	if([pixelFormat isEqualToString:@"EAGLColorFormat565"])
 		pFormat = GL_RGB565_OES;
-	else 
+	else
 		pFormat = GL_RGBA8_OES;
-	
+
 	return pFormat;
 }
 
@@ -295,14 +295,14 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 - (CGPoint) convertPointFromViewToSurface:(CGPoint)point
 {
 	CGRect bounds = [self bounds];
-	
+
 	return CGPointMake((point.x - bounds.origin.x) / bounds.size.width * size_.width, (point.y - bounds.origin.y) / bounds.size.height * size_.height);
 }
 
 - (CGRect) convertRectFromViewToSurface:(CGRect)rect
 {
 	CGRect bounds = [self bounds];
-	
+
 	return CGRectMake((rect.origin.x - bounds.origin.x) / bounds.size.width * size_.width, (rect.origin.y - bounds.origin.y) / bounds.size.height * size_.height, rect.size.width / bounds.size.width * size_.width, rect.size.height / bounds.size.height * size_.height);
 }
 

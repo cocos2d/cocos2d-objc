@@ -13,13 +13,13 @@
 @interface MainLayer : CCLayer
 {
 	CCTexture2D *spriteTexture_; // weak ref
-	
+
 	cpSpace *space_; // strong ref
-	
+
 	cpShape *walls_[4];
 }
 @end
-	
+
 
 @interface PhysicsSprite : CCSprite
 {

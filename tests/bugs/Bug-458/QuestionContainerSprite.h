@@ -2,9 +2,9 @@
 #import "cocos2d.h"
 
 
-@interface QuestionContainerSprite : CCSprite 
+@interface QuestionContainerSprite : CCSprite
 {
-    
+
 }
 
 @end

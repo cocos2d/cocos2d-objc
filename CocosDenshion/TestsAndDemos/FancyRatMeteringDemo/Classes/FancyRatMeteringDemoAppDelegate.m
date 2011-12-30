@@ -18,15 +18,15 @@
 
 	// display FPS (useful when debugging)
 	[director_ setDisplayStats:YES];
-	
+
 	// frames per second
 	[director_ setAnimationInterval:1.0/60];
-	
+
 	// multiple touches
 	[director_.view setMultipleTouchEnabled:YES];
-			
+
 	[director_ pushScene: [HelloWorld scene]];
-	
+
 	return YES;
 }
 @end
