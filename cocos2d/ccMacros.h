@@ -111,12 +111,12 @@ default gl blend src function. Compatible with premultiplied alpha images.
 	- Initializes an EAGLView with 0-bit depth format, and RGB565 render buffer.
 	- The EAGLView view will have multiple touches disabled.
 	- It will create a UIWindow and it will assign it the 'window_' ivar. 'window_' must be declared before calling this marcro.
-	- It will create a RootViewController and it will assign it the 'viewController_' ivar. 'viewController_' must be declared before using this macro. The file "RootViewController.h" should be imported
-	- It will create a UINavigationController and it will assign it the 'navigationController_' ivar. 'navigationController_' must be declared before using this macro.
-	- It will connect the EAGLView to the UIViewController view.
-	- It will connect the UIViewController view to the UIWindow.
+    - It will create a UINavigationController and it will assign it the 'navigationController_' ivar. 'navController_' must be declared before using this macro.
+    - The director_ will be the root view controller of the navController.
+    - It will try to enable Retina Display for the Director
+	- It will connect the EAGLView to the Director
+	- It will connect the UINavController view to the UIWindow.
 	- It will try to run at 60 FPS.
-	- The FPS won't be displayed.
 	- It will connect the director with the EAGLView.
 
  IMPORTANT: If you want to use another type of render buffer (eg: RGBA8)
@@ -145,6 +145,7 @@ do	{																							\
 	[director_ setView:__glView];																\
 	[director_ setDelegate:self];																\
 	director_.wantsFullScreenLayout = YES;														\
+	[director_ enableRetinaDisplay:YES];														\
 	navController_ = [[UINavigationController alloc] initWithRootViewController:director_];		\
 	navController_.navigationBarHidden = YES;													\
 	[window_ addSubview:navController_.view];													\
