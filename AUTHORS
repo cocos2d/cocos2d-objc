@@ -31,6 +31,9 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	TextureCache: Use blocks instead of CCCall actions to dispatch code
 	TextureCache: Uses a serial queue to protect access to the texture dictionary. No need to use @syncronize on CCTexture2D
 
+* Giles Hammond:
+	iOS Director uses DisplayLink timestamp for more stable delta times
+
 * Lam Pham (http://www.fancyratstudios.com/)
 	CCProgressTimer: Improved API
 	CCProgressTimer: Works with Tint and opacity

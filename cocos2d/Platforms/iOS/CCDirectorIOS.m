@@ -420,7 +420,7 @@ CGFloat	__ccContentScaleFactor = 1;
 - (void)setAnimationInterval:(NSTimeInterval)interval
 {
 	animationInterval_ = interval;
-	if(displayLink){
+	if(displayLink_){
 		[self stopAnimation];
 		[self startAnimation];
 	}
@@ -428,7 +428,7 @@ CGFloat	__ccContentScaleFactor = 1;
 
 - (void) startAnimation
 {
-	NSAssert( displayLink == nil, @"displayLink must be nil. Calling startAnimation twice?");
+	NSAssert( displayLink_ == nil, @"displayLink must be nil. Calling startAnimation twice?");
 
 	gettimeofday( &lastUpdate_, NULL);
 
@@ -438,8 +438,8 @@ CGFloat	__ccContentScaleFactor = 1;
 
 	CCLOG(@"cocos2d: animation started with frame interval: %.2f", 60.0f/frameInterval);
 
-	displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(mainLoop:)];
-	[displayLink setFrameInterval:frameInterval];
+	displayLink_ = [CADisplayLink displayLinkWithTarget:self selector:@selector(mainLoop:)];
+	[displayLink_ setFrameInterval:frameInterval];
 
 #if CC_DIRECTOR_IOS_USE_BACKGROUND_THREAD
 	//
@@ -448,7 +448,7 @@ CGFloat	__ccContentScaleFactor = 1;
 
 #else
 	// setup DisplayLink in main thread
-	[displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
+	[displayLink_ addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
 #endif
 
 
@@ -464,9 +464,35 @@ CGFloat	__ccContentScaleFactor = 1;
 	runningThread_ = nil;
 #endif
 
-	[displayLink invalidate];
-	displayLink = nil;
+	[displayLink_ invalidate];
+	displayLink_ = nil;
 }
+
+// Overriden in order to use a more stable delta time
+-(void) calculateDeltaTime
+{
+    // New delta time
+    if( nextDeltaTimeZero_ ) {
+        dt = 0;
+        nextDeltaTimeZero_ = NO;
+    } else {
+        dt = displayLink_.timestamp - lastDisplayTime_;
+        dt = MAX(0,dt);
+    }
+    // Store this timestamp for next time
+    lastDisplayTime_ = displayLink_.timestamp;
+
+	// needed for SPF
+	if( displayStats_ )
+		gettimeofday( &lastUpdate_, NULL);
+
+#ifdef DEBUG
+	// If we are debugging our code, prevent big delta time
+	if( dt > 0.2f )
+		dt = 1/60.0f;
+#endif
+}
+
 
 #pragma mark Director Thread
 
@@ -477,7 +503,7 @@ CGFloat	__ccContentScaleFactor = 1;
 {
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 
-	[displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
+	[displayLink_ addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
 
 	// start the run loop
 	[[NSRunLoop currentRunLoop] run];
@@ -487,7 +513,7 @@ CGFloat	__ccContentScaleFactor = 1;
 
 -(void) dealloc
 {
-	[displayLink release];
+	[displayLink_ release];
 	[super dealloc];
 }
 @end

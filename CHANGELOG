@@ -18,6 +18,7 @@ version 2.0-beta2 XX-Jan-2012
 . [NEW] Test: Added Director tests. Tests integration with GameCenter and other UIKit components (iOS)
 . [FIX] Actions: IntervalAction works OK in rewind mode
 . [FIX] Actions: EaseIn/EaseOut actions support float arguments
+. [FIX] Director: Uses DisplayLink timestamp. More stable delta times (iOS) (issue #1277)
 . [FIX] Director: CC_DIRECTOR_INIT() centers main window (Mac)
 . [FIX] Grid: Fixed two big memory leaks (issue #1280)
 . [FIX] Menu: Blocks API doesn't crash on Mac
