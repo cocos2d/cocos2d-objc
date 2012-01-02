@@ -343,6 +343,11 @@
     return self;
 }
 
+- (void) setGridSize:(ccGridSize)gridSize
+{
+    gridSize_ = gridSize;
+}
+
 -(NSString *) AMCEncodeStructWithValue:(NSValue *)structValue withName:(NSString *)structName
 {
     if ( [structName isEqualToString: @"_ccGridSize"]
@@ -712,8 +717,7 @@
 
 #pragma mark CCTiledGrid3D - AutoMagicCoding Support
 
-
--(NSArray *)verticesAsStringArray
+-(NSArray *)verticesAsNSArray
 {
     NSInteger numQuads = gridSize_.x * gridSize_.y;
     NSInteger count = numQuads*12;   
@@ -728,7 +732,7 @@
     return array;
 }
 
--(void)setVerticesAsStringArray: (NSArray *) array
+-(void)setVerticesAsNSArray: (NSArray *) array
 {
     NSInteger numQuads = gridSize_.x * gridSize_.y;
     NSInteger count = numQuads*12;
@@ -739,6 +743,34 @@
         curFloat++;
     }
 }
+
+-(NSArray *)originalVerticesAsNSArray
+{
+    NSInteger numQuads = gridSize_.x * gridSize_.y;
+    NSInteger count = numQuads*12;   
+    NSMutableArray *array = [NSMutableArray arrayWithCapacity: count];
+    
+    for (NSUInteger i = 0; i < count; ++i)
+    {
+        GLfloat curFloat = ((GLfloat *)originalVertices)[i];
+        [array addObject: [NSNumber numberWithFloat: curFloat]];
+    }
+    
+    return array;
+}
+
+-(void)setOriginalVerticesAsNSArray: (NSArray *) array
+{
+    NSInteger numQuads = gridSize_.x * gridSize_.y;
+    NSInteger count = numQuads*12;
+    GLfloat *curFloat = (GLfloat *)originalVertices;
+    for (NSUInteger i = 0; i < count; ++i)
+    {        
+        *curFloat = [[array objectAtIndex: i] floatValue];
+        curFloat++;
+    }
+}
+
 
 
 @end
