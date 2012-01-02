@@ -344,11 +344,20 @@ static NSUInteger globalOrderOfArrival = 0;
             @"tag",
             @"vertexZ",
             @"children",
+            @"camera",
             nil ];
 }
 
 // TODO: save Grid
 // TODO: save Camera
+
+- (void) setCamera:(CCCamera *)camera
+{
+    CCCamera *oldCamera = camera_;
+    
+    camera_ = [camera retain];
+    [oldCamera release];
+}
 
 - (id) initWithDictionaryRepresentation: (NSDictionary *) aDict
 {
@@ -361,7 +370,6 @@ static NSUInteger globalOrderOfArrival = 0;
 
         //TODO: load Grid & Camera
         grid_ = nil;
-        camera_ = nil;
     
         // Add children from loaded children array.
         // It can be a little bit slower, but it's more stable.
