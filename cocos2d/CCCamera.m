@@ -28,6 +28,7 @@
 #import "CCCamera.h"
 #import "ccMacros.h"
 #import "CCDrawingPrimitives.h"
+#import "AutoMagicCoding/AutoMagicCoding/NSObject+AutoMagicCoding.h"
 
 @implementation CCCamera
 
@@ -127,5 +128,39 @@
 	*y = upY_;
 	*z = upZ_;
 }
+
+#pragma mark AutoMagicCoding Support
+
++ (BOOL) AMCEnabled
+{
+    return YES;
+}
+
+- (NSArray *) AMCKeysForDictionaryRepresentation
+{
+    return [NSArray arrayWithObjects: 
+            @"eyeX_",
+            @"eyeY_",
+            @"eyeZ_",
+            @"centerX_",
+            @"centerY_",
+            @"centerZ_",
+            @"upX_",
+            @"upY_",
+            @"upZ_", 
+            nil];
+}
+
+- (id) initWithDictionaryRepresentation:(NSDictionary *)aDict
+{
+    self = [super initWithDictionaryRepresentation:aDict];
+    if (self)
+    {
+        dirty_ = YES;
+    }
+    
+    return self;
+}
+
 
 @end
