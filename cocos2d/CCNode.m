@@ -354,7 +354,6 @@ static NSUInteger globalOrderOfArrival = 0;
             nil ];
 }
 
-// TODO: save Grid
 - (AMCFieldType) AMCFieldTypeForValueWithKey:(NSString *)aKey
 {
     if ( [aKey isEqualToString:@"noLazyAllocCamera"] )
@@ -386,8 +385,6 @@ static NSUInteger globalOrderOfArrival = 0;
 #if CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
         isTransformGLDirty_ = YES;
 #endif
-
-        //TODO: load Grid
     
         // Add children from loaded children array.
         // It can be a little bit slower, but it's more stable.

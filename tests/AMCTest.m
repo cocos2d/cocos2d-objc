@@ -514,39 +514,79 @@ enum nodeTags {
 @end
 
 //
-// ====== CCNode =====
+// TODO: Use these notes for pull request info.
+// Update them regulary
 //
-// TODO: Node + CCGridBase (not supported by AMC now)
 
 //
-// ====== More Tests =====
+// ====== Supported by AMC =====
+//
+// 1. Basic Nodes
+//      * CCNode - FULL SUPPORT
+//          * Children & all properties except for Camera & Grid ( tested in AMCTest.m in NodeAMC )
+//          * CCCamera ( tested in SpriteTest.m in SpriteZVertex )
+//          * CCGrid ( tested in EffectsAdvancedTest.m in Effect1, Effect2, etc... )
+//      * CCLayer - FULL SUPPORT ( tested in AMCTest.m LayersAMC )
+//          * CCLayerColor ( tested in AMCTest.m LayersAMC )
+//          * CCLayerGradient ( tested in AMCTest.m LayersAMC )
+//          * CCLayerMultiplex 
+//
+// 2. Sprites - FULL SUPPORT (tested in SpriteTest.m - AMCTest functionality added to existing test)
+//      * CCSprite
+//      * CCSpriteFrame
+//      * CCSpriteBatchNode
+//
+// 3. Textures - only key for CCTextureCache saved (no custom texture support).
+//      As Riq said on forums: "serializing the TextureCache is sort of hackish." 
+//      ( http://www.cocos2d-iphone.org/forum/topic/16980#post-95815 )
+//
+//      So we will save only key (filepath) for Texture, making developer responsible 
+//      for creating custom texture on deserialization 
+//      (-initWithDctionaryRepresentation: method) or saving generated texture to
+//      documents or cache folder & setting it's key to that path, so next time it could 
+//      be loaded from there.
+// 
+//
+//
+//
+//
+
+
+//
+// ====== TODO: Tests =====
 //
 // TODO: Sprite + Blend Func (should work, just got no explicit test)
+// TODO: CCScene (should work, just got no explicit test)
 
 
 // 
-// ===== Labels =====
+// ===== TODO: Labels =====
 //
 // * CCAtlasNode - should be pretty easy, but i never used it - dunno if i can provide good test.
 //
 // * CCLabelAtlas - very easy after supporting CCAtlasNode
 //
-//
 // * CCLabelMBFont - some work needed (3 structs, 1 additional class), but should be straight forward after BatchNode.
 //
-// * CCLabelTTF - hackish stuff - it's subclass of CCSprite & it creates custom texture each time. But i think it's possible
-// just don't save the texture =).
+// * CCLabelTTF - hackish stuff - it's subclass of CCSprite & it creates custom texture each time. 
+// But i think it's possible - just don't save the texture =).
 //
 //
 
 //
-// ======= Animation =====
+// ======= TODO: Animation =====
 //
 // * CCAnimation - should work out of the box, cause CCSpriteFrame is ready.
+//      But i need to decide where it should be saved. 
+//      Cocos2D-iPhone AMC Support is node-centric, so it's not a problem to
+//      save animation for CCAnimate action, but what if user wants to load
+//      a lot of animations & then use them later? 
+//      He must load them from CCAnimationsCache.
+//      
 //
 
 //
-// ====== Menus =====
+// ====== TODO: Menus =====
 //
 // * CCMenu - straight-forward. Only selectedItem should be saved as selectedItemIndex number with dynamic setter.
 //
