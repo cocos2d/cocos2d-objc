@@ -274,6 +274,41 @@ ccg(const NSInteger x, const NSInteger y)
 	return v;
 }
 
+//! ccGridSize encoder for AMC. Encodes ccGridSize to NSString.
+static NSString *NSStringFromCCGridSize(ccGridSize gridSize)
+{
+    return [NSString stringWithFormat:@"x=%d, y=%d", gridSize.x, gridSize.y];
+}
+
+//! ccGridSize decoder for AMC. Decodes ccGridSize from NSString.
+static ccGridSize ccGridSizeFromNSString(NSString *string)
+{
+    ccGridSize result;
+    
+    NSArray *components = [string componentsSeparatedByString:@", "];
+    for (NSString *component in components)
+    {
+        NSArray *keyValue = [component componentsSeparatedByString:@"="];
+        if ([keyValue count] > 1)
+        {
+            NSString *key = [keyValue objectAtIndex: 0];
+            NSString *value = [keyValue objectAtIndex:1];
+            
+            GLfloat floatValue = [value floatValue];
+            if ([key isEqualToString:@"x"])
+            {
+                result.x = floatValue;
+            }
+            else if ([key isEqualToString:@"y"])
+            {
+                result.y = floatValue;
+            }
+        }
+    }
+    
+    return result;
+}
+
 //! a Point with a vertex point, a tex coord point and a color 4B
 typedef struct _ccV2F_C4B_T2F
 {
