@@ -26,27 +26,29 @@
 
 @interface TextLayer: CCLayer
 {}
++(id) nodeWithInsideLayer: (CCLayer *) insideLayer;
+-(id) initWithInsideLayer: (CCLayer *) insideLayer;
 -(NSString*) title;
 -(NSString*) subtitle;
 @end
 
-@interface Effect1 : TextLayer
+@interface Effect1 : CCLayer
 {}
 @end
 
-@interface Effect2 : TextLayer
+@interface Effect2 : CCLayer
 {}
 @end
 
-@interface Effect3 : TextLayer
+@interface Effect3 : CCLayer
 {}
 @end
 
-@interface Effect4 : TextLayer
+@interface Effect4 : CCLayer
 {}
 @end
 
-@interface Effect5 : TextLayer
+@interface Effect5 : CCLayer
 {}
 @end
 

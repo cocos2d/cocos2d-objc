@@ -11,6 +11,7 @@
 #import "EffectsAdvancedTest.h"
 
 enum {
+    kLayer,
 	kTagTextLayer = 1,
 
 	kTagSprite1 = 1,
@@ -253,8 +254,21 @@ Class restartAction()
 	return c;
 }
 
+@protocol DemoTitleProvider <NSObject>
+
+- (NSString *) title;
+- (NSString *) subtitle;
+
+@end
+
 @implementation TextLayer
--(id) init
+
++(id) nodeWithInsideLayer: (CCLayer *) insideLayer
+{
+    return [[[self alloc] initWithInsideLayer:insideLayer] autorelease];
+}
+
+-(id) initWithInsideLayer:(CCLayer *)insideLayer
 {
 	if( (self = [super init]) ) {
 	
@@ -263,9 +277,11 @@ Class restartAction()
 		CGSize size = [[CCDirector sharedDirector] winSize];
 		x = size.width;
 		y = size.height;
+        
+        [self addChild: insideLayer z:0 tag: kLayer ];
 		
 		CCSprite *bg = [CCSprite spriteWithFile:@"background3.png"];
-		[self addChild: bg z:0 tag:kTagBackground];
+		[insideLayer addChild: bg z:0 tag:kTagBackground];
 //		bg.anchorPoint = CGPointZero;
 		bg.position = ccp(x/2,y/2);
 		
@@ -314,34 +330,53 @@ Class restartAction()
 	return self;
 }
 
+-(CCLayer *) insideLayer
+{
+    return (CCLayer *)[self getChildByTag: kLayer];
+}
+
 -(NSString*) title
 {
+    id<DemoTitleProvider> titleProvider = (id<DemoTitleProvider>)[self insideLayer];
+    
+    if ([titleProvider respondsToSelector: @selector(title)])
+    {
+        return [titleProvider title];
+    }
+    
 	return @"No title";
 }
 
 -(NSString*) subtitle
 {
+	id<DemoTitleProvider> titleProvider = (id<DemoTitleProvider>)[self insideLayer];
+    
+    if ([titleProvider respondsToSelector: @selector(subtitle)])
+    {
+        return [titleProvider subtitle];
+    }
+    
 	return nil;
 }
 
 -(void) restartCallback: (id) sender
 {
 	CCScene *s = [CCScene node];
-	[s addChild: [restartAction() node]];
+	[s addChild: [TextLayer nodeWithInsideLayer: [restartAction() node]]];
 	[[CCDirector sharedDirector] replaceScene: s];
 }
 
 -(void) nextCallback: (id) sender
 {
 	CCScene *s = [CCScene node];
-	[s addChild: [nextAction() node]];
+	[s addChild: [TextLayer nodeWithInsideLayer: [nextAction() node]]];
 	[[CCDirector sharedDirector] replaceScene: s];
 }
 
 -(void) backCallback: (id) sender
 {
 	CCScene *s = [CCScene node];
-	[s addChild: [backAction() node]];
+	[s addChild: [TextLayer nodeWithInsideLayer: [backAction() node]]];
 	[[CCDirector sharedDirector] replaceScene: s];
 }
 
@@ -408,7 +443,7 @@ Class restartAction()
 	[CCFileUtils setRetinaDisplaySuffix:@"-hd"];	// Default on RetinaDisplay is "-hd"
 	
 	CCScene *scene = [CCScene node];
-	[scene addChild: [nextAction() node]];
+	[scene addChild: [TextLayer nodeWithInsideLayer: [nextAction() node]]];
 
 	[director runWithScene: scene];
 }
@@ -488,7 +523,7 @@ Class restartAction()
 	[director setResizeMode:kCCDirectorResize_AutoScale];	
 	
 	CCScene *scene = [CCScene node];
-	[scene addChild: [nextAction() node]];
+	[scene addChild: [TextLayer nodeWithInsideLayer: [nextAction() node]]];
 	
 	[director runWithScene:scene];
 }
