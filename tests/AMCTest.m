@@ -513,14 +513,19 @@ enum nodeTags {
 
 @end
 
+//
+// ====== CCNode =====
+//
 // TODO: Node + CCGridBase (not supported by AMC now)
 
+//
+// ====== More Tests =====
+//
 // TODO: Sprite + Blend Func (should work, just got no explicit test)
 
 
-//  TODO: more to go:
-// ---------------------
-//
+// 
+// ===== Labels =====
 //
 // * CCAtlasNode - should be pretty easy, but i never used it - dunno if i can provide good test.
 //
@@ -532,12 +537,26 @@ enum nodeTags {
 // * CCLabelTTF - hackish stuff - it's subclass of CCSprite & it creates custom texture each time. But i think it's possible
 // just don't save the texture =).
 //
+//
+
+//
+// ======= Animation =====
+//
 // * CCAnimation - should work out of the box, cause CCSpriteFrame is ready.
+//
+
+//
+// ====== Menus =====
 //
 // * CCMenu - straight-forward. Only selectedItem should be saved as selectedItemIndex number with dynamic setter.
 //
 // * CCMenuItems - lot of work, especially for Label menu items, but it should be ok. Will not save invocation & blocks, of course.
 // Developer should use CCNode name & CCNodeCache to set blocks/invocations.
+//
+//
+
+//
+// ====== More Nodes ======
 //
 // * CCParalaxNode - pretty easy, just need to save CGPointObject's in parallaxRatio array & then use it in
 // -initWithDictionaryRepresentation: for parallaxRatio argument, when reading childs from loadedChildren.
@@ -550,6 +569,8 @@ enum nodeTags {
 // * CCTransition & it's subclasses - should be VERY simple. Should we really support this??????????
 //
 // * CCProgressTimer - straight-forward.
+//
+
 //
 // ====== ACTIONS ======
 //
@@ -573,11 +594,16 @@ enum nodeTags {
 //
 // TODO: investigate further.
 //
+//
+
+//
 // TODO: Look through cocos2d-iphone documentation for any classes, that i may have
 // skipped here & that we need to support.
 //
+
 //
 // ====== New Cocos2D-iPhone Features & Classes for AMC ======
+//
 // 1. CCNodeCache & CCNode.name property
 //   * CCNode.name: to use in CCNodeCache, default value is nil.
 //       CCNode.name is dynamic property - all CCNodeCache calls must be done only from
@@ -587,12 +613,17 @@ enum nodeTags {
 //       On dealloc node sets it's name to nil - and this removes node from cache.
 //   * CCNodeCache SHOULDN'T retain Nodes. 
 //
+
+//
 // ====== Possible future features ======
+//
 //  * CCTimer & scheduled methods. (Not used by Cocos2D-iPhone classes 
 // themselves - should be used by developer expicitly ).
 //  * CCParticleBatchNode & other from "Particle Nodes" - OMG, fucking particles! Anyway - it should be possible, just needs time.
 //  * Full support for CCTMXLayer, CCTMXObjectGroup, CCTMXTiledMap. That means that you can change something & it will be saved with changes.
 //  *
+//
+
 //
 // ====== Not to be supported by AMC =====
 //
