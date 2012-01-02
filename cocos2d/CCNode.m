@@ -344,13 +344,31 @@ static NSUInteger globalOrderOfArrival = 0;
             @"tag",
             @"vertexZ",
             @"children",
-            @"camera",
+            
+            // Default camera getter does lazy alloc, we don't need it to be
+            // created only for saving, so we will use another getter to save it
+            // as nil if it doesn't exist.
+            @"noLazyAllocCamera", 
             nil ];
 }
 
 // TODO: save Grid
+- (AMCFieldType) AMCFieldTypeForValueWithKey:(NSString *)aKey
+{
+    if ( [aKey isEqualToString:@"noLazyAllocCamera"] )
+    {
+        return kAMCFieldTypeCustomObject;
+    }
+    else
+        return [super AMCFieldTypeForValueWithKey: aKey];
+}
 
-- (void) setCamera:(CCCamera *)camera
+- (CCCamera *) noLazyAllocCamera
+{
+    return camera_;
+}
+
+- (void) setNoLazyAllocCamera:(CCCamera *)camera
 {
     CCCamera *oldCamera = camera_;
     
