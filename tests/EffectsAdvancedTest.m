@@ -295,6 +295,19 @@ Class restartAction()
 {
     NSString *path = [self testFilePath];
     NSDictionary *aDict = [NSDictionary dictionaryWithContentsOfFile: path];
+    
+    // Change className to CCLayer to avoid calling -onEnter & launching actions.
+    // This needed to see how exactly was layer & it's children saved. 
+    // (Testing CCGrid AMC Support).
+    //
+    // In the future - for static/withActions tests probably there will be two
+    // buttons "load" & "load without actions".
+    //
+    NSMutableDictionary *mutableDict = [NSMutableDictionary dictionaryWithDictionary: aDict];
+    [mutableDict setObject:@"CCLayer" forKey:kAMCDictionaryKeyClassName];
+    aDict = mutableDict;
+    
+    
     CCLayer *layer = [NSObject objectWithDictionaryRepresentation: aDict ];    
     
 	[self addChild: layer z: 0 tag: kLayer];
@@ -390,7 +403,7 @@ Class restartAction()
 		item1.position = ccp(size.width/2-100,30);
 		item2.position = ccp(size.width/2, 30);
 		item3.position = ccp(size.width/2+100,30);
-        trigger.position = ccp(size.width/2, 80);
+        trigger.position = ccp( size.width/2, 80);
         
 		[self addChild: menu z:101];
     }
