@@ -349,6 +349,8 @@ static NSUInteger globalOrderOfArrival = 0;
             // created only for saving, so we will use another getter to save it
             // as nil if it doesn't exist.
             @"noLazyAllocCamera", 
+            
+            @"grid",
             nil ];
 }
 
@@ -386,7 +388,6 @@ static NSUInteger globalOrderOfArrival = 0;
 #endif
 
         //TODO: load Grid
-        grid_ = nil;
     
         // Add children from loaded children array.
         // It can be a little bit slower, but it's more stable.

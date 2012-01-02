@@ -185,6 +185,45 @@ typedef struct _ccVertex3F
 	GLfloat y;
 	GLfloat z;
 } ccVertex3F;
+
+//! ccVertex3F encoder for AMC. Encodes ccVertex3F to NSString.
+static NSString *NSStringFromCCVertex3F(ccVertex3F vertex)
+{
+    return [NSString stringWithFormat:@"x=%f, y=%f, z=%f", vertex.x, vertex.y, vertex.z];
+}
+
+//! ccVertex3F decoder for AMC. Decodes ccVertex3F from NSString.
+static ccVertex3F ccVertex3FFromNSString(NSString *string)
+{
+    ccVertex3F result;
+    
+    NSArray *components = [string componentsSeparatedByString:@", "];
+    for (NSString *component in components)
+    {
+        NSArray *keyValue = [component componentsSeparatedByString:@"="];
+        if ([keyValue count] > 1)
+        {
+            NSString *key = [keyValue objectAtIndex: 0];
+            NSString *value = [keyValue objectAtIndex:1];
+            
+            GLfloat floatValue = [value floatValue];
+            if ([key isEqualToString:@"x"])
+            {
+                result.x = floatValue;
+            }
+            else if ([key isEqualToString:@"y"])
+            {
+                result.y = floatValue;
+            }
+            else if ([key isEqualToString:@"z"])
+            {
+                result.z = floatValue;
+            }
+        }
+    }
+    
+    return result;
+}
 		
 /** A texcoord composed of 2 floats: u, y
  @since v0.8
@@ -233,6 +272,41 @@ ccg(const NSInteger x, const NSInteger y)
 {
 	ccGridSize v = {x, y};
 	return v;
+}
+
+//! ccGridSize encoder for AMC. Encodes ccGridSize to NSString.
+static NSString *NSStringFromCCGridSize(ccGridSize gridSize)
+{
+    return [NSString stringWithFormat:@"x=%d, y=%d", gridSize.x, gridSize.y];
+}
+
+//! ccGridSize decoder for AMC. Decodes ccGridSize from NSString.
+static ccGridSize ccGridSizeFromNSString(NSString *string)
+{
+    ccGridSize result;
+    
+    NSArray *components = [string componentsSeparatedByString:@", "];
+    for (NSString *component in components)
+    {
+        NSArray *keyValue = [component componentsSeparatedByString:@"="];
+        if ([keyValue count] > 1)
+        {
+            NSString *key = [keyValue objectAtIndex: 0];
+            NSString *value = [keyValue objectAtIndex:1];
+            
+            GLfloat floatValue = [value floatValue];
+            if ([key isEqualToString:@"x"])
+            {
+                result.x = floatValue;
+            }
+            else if ([key isEqualToString:@"y"])
+            {
+                result.y = floatValue;
+            }
+        }
+    }
+    
+    return result;
 }
 
 //! a Point with a vertex point, a tex coord point and a color 4B
