@@ -349,7 +349,6 @@ static NSUInteger globalOrderOfArrival = 0;
 }
 
 // TODO: save Grid
-// TODO: save Camera
 
 - (void) setCamera:(CCCamera *)camera
 {
@@ -368,7 +367,7 @@ static NSUInteger globalOrderOfArrival = 0;
         isTransformGLDirty_ = YES;
 #endif
 
-        //TODO: load Grid & Camera
+        //TODO: load Grid
         grid_ = nil;
     
         // Add children from loaded children array.

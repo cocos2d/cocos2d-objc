@@ -513,10 +513,6 @@ enum nodeTags {
 
 @end
 
-// TODO: Sprite OpenGL Z vertex - 3d rotation of sprite doesn't get saved.
-// Need CCCamera support? Try it! If not - investigate in CCOrbitCamera.
-
-// TODO: Node + CCCamera (not supported by AMC now)
 // TODO: Node + CCGridBase (not supported by AMC now)
 // TODO: Node + vertexZ (should work, just got no explicit test)
 
@@ -533,9 +529,6 @@ enum nodeTags {
 //
 // * CCLabelAtlas - very easy after supporting CCAtlasNode
 //
-// * CCTextureAtlas - just save texture & capacity & use initWithFile:capacity: and you should be ok.
-//
-// * CCSpriteBatchNode - don't save @"descendants" & you'll be cool.
 //
 // * CCLabelMBFont - some work needed (3 structs, 1 additional class), but should be straight forward after BatchNode.
 //
