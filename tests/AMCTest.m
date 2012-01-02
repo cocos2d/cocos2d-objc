@@ -514,12 +514,9 @@ enum nodeTags {
 @end
 
 // TODO: Node + CCGridBase (not supported by AMC now)
-// TODO: Node + vertexZ (should work, just got no explicit test)
 
 // TODO: Sprite + Blend Func (should work, just got no explicit test)
 
-// TODO: Sprite + flipX + flipY; (should work, just got no explicit test)
-// TODO: SpriteBatchNode + honorParentTransform; (not supported by AMC now)
 
 //  TODO: more to go:
 // ---------------------
