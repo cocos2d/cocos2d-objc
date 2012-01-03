@@ -556,14 +556,6 @@ enum nodeTags {
 //
 
 
-//
-// ====== TODO: Tests =====
-//
-// TODO: Sprite + Blend Func (should work, just got no explicit test)
-// TODO: CCScene (should work, just got no explicit test)
-// TODO: Animation key (Issue #9) test. 
-
-
 // 
 // ===== TODO: Labels =====
 //
@@ -662,6 +654,13 @@ enum nodeTags {
 // TODO: Look through cocos2d-iphone documentation for any classes, that i may have
 // skipped here & that we need to support.
 //
+
+//
+// ====== TODO: Tests =====
+//
+// TODO: Sprite + Blend Func (should work, just got no explicit test)
+// TODO: CCScene (should work, just got no explicit test)
+// TODO: Animation key (Issue #9) test. 
 
 //
 // ====== New Cocos2D-iPhone Features & Classes for AMC ======
