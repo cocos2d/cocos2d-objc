@@ -42,6 +42,7 @@
 #import "Support/CCFileUtils.h"
 #import "Support/CGPointExtension.h"
 #import "Support/uthash.h"
+#import "AutoMagicCoding/AutoMagicCoding/NSObject+AutoMagicCoding.h"
 
 #pragma mark -
 #pragma mark FNTConfig Cache - free functions
@@ -467,6 +468,7 @@ typedef struct _KerningHashElement
 
 		anchorPoint_ = ccp(0.5f, 0.5f);
 
+        fntFile_ = [fntFile copy];
 		[self setString:theString];
 	}
 
@@ -476,6 +478,8 @@ typedef struct _KerningHashElement
 -(void) dealloc
 {
 	[string_ release];
+    [fntFile_ release];
+    fntFile_ = nil;
 	[configuration_ release];
 	[super dealloc];
 }
@@ -666,4 +670,67 @@ typedef struct _KerningHashElement
 	ccDrawPoly(vertices, 4, YES);
 }
 #endif // CC_LABELBMFONT_DEBUG_DRAW
+
+
+#pragma mark LabelBMFont - AutoMagicCoding Support
+
+- (NSArray *) AMCKeysForDictionaryRepresentation
+{
+    NSArray *spriteBatchNodeKeys = [super AMCKeysForDictionaryRepresentation];
+    NSMutableArray *allCurrentKeys = [NSMutableArray arrayWithArray: spriteBatchNodeKeys];
+    //[allCurrentKeys removeObjectIdenticalTo: @"textureAtlas"];
+    [allCurrentKeys addObjectsFromArray: [NSArray arrayWithObjects:
+                                          @"opacity",
+                                          @"color",
+                                          @"string",
+                                          @"fntFile_",
+                                          nil] ];
+    return allCurrentKeys;
+}
+
+- (NSString *) AMCEncodeStructWithValue: (NSValue *) structValue withName: (NSString *) structName
+{
+    if ([structName isEqualToString: @"_ccColor3B"]
+        || [structName isEqualToString: @"ccColor3B"])
+    {
+        ccColor3B color;
+        [structValue getValue: &color];
+        return NSStringFromCCColor3B(color);
+    }
+    else
+        return [super AMCEncodeStructWithValue:structValue withName:structName];
+}
+
+- (NSValue *) AMCDecodeStructFromString: (NSString *)value withName: (NSString *) structName
+{
+    if ([structName isEqualToString: @"_ccColor3B"]
+        || [structName isEqualToString: @"ccColor3B"])
+    {
+        ccColor3B color = ccColor3BFromNSString(value);
+        
+        return [NSValue valueWithBytes: &color objCType: @encode(ccColor3B) ];
+    }
+    else
+        return [super AMCDecodeStructFromString:value withName:structName];
+}
+
+- (id) initWithDictionaryRepresentation:(NSDictionary *)aDict
+{
+    NSString *fntFile = [aDict objectForKey:@"fntFile_"];
+    NSString *string = [aDict objectForKey:@"string"];
+    NSMutableDictionary *mutableDict = [NSMutableDictionary dictionaryWithDictionary:aDict];
+    [mutableDict removeObjectForKey: @"fntFile_"];
+    [mutableDict removeObjectForKey: @"string"];
+    
+    self = [self initWithString:string fntFile:fntFile];
+    
+    if (self)
+    {
+        self = [super initWithDictionaryRepresentation: mutableDict];
+    }
+    
+    return self;
+}
+
+
 @end
