@@ -116,4 +116,9 @@
     return YES;
 }
 
+// TODO: save key. ( Issue #9 )
+// TODO: in initWithDictionaryRepresentation: - use cached spriteFrame & check 
+// equality if it exist, or save self in cache if it isn't yet saved to cache, but have key.
+// 
+
 @end

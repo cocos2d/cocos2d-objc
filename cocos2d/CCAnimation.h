@@ -92,4 +92,6 @@
  */
 -(void) addFrameWithTexture:(CCTexture2D*)texture rect:(CGRect)rect;
 
+// TODO: add key property and -isEqual: method. (Issue #9)
+
 @end

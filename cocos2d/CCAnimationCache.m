@@ -87,6 +87,8 @@ static CCAnimationCache *sharedAnimationCache_=nil;
 
 -(void) addAnimation:(CCAnimation*)animation name:(NSString*)name
 {
+    // TODO: set animation.key. (Issue #9)
+    
 	[animations_ setObject:animation forKey:name];
 }
 
@@ -95,6 +97,8 @@ static CCAnimationCache *sharedAnimationCache_=nil;
 	if( ! name )
 		return;
 	
+    // TODO: set animation.key to nil. (Issue #9)
+    
 	[animations_ removeObjectForKey:name];
 }
 

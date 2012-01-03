@@ -104,4 +104,9 @@
 	[frames_ addObject:frame];
 }
 
+// TODO: (Issue #9) For AMC Support - in initWithDictionaryRepresentation: 
+// - use cached animation & check equality if it exist, or save self in cache 
+// if it isn't yet saved to cache, but have key.
+// 
+
 @end

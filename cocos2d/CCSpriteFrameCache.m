@@ -188,6 +188,8 @@ static CCSpriteFrameCache *sharedSpriteFrameCache_=nil;
 		// add sprite frame
 		[spriteFrames_ setObject:spriteFrame forKey:frameDictKey];
 		[spriteFrame release];
+        
+        // TODO: set spriteFrame.key = frameDictKey. (Issue #9)
 	}
 }
 
@@ -246,6 +248,8 @@ static CCSpriteFrameCache *sharedSpriteFrameCache_=nil;
 
 -(void) addSpriteFrame:(CCSpriteFrame*)frame name:(NSString*)frameName
 {
+    // TODO: set frame.key (Issue #9)
+    
 	[spriteFrames_ setObject:frame forKey:frameName];
 }
 
@@ -253,6 +257,8 @@ static CCSpriteFrameCache *sharedSpriteFrameCache_=nil;
 
 -(void) removeSpriteFrames
 {
+    // TODO: set all keys in all frames to nil ( frame.key ) (Issue #9)
+    
 	[spriteFrames_ removeAllObjects];
 	[spriteFramesAliases_ removeAllObjects];
 }
@@ -264,6 +270,9 @@ static CCSpriteFrameCache *sharedSpriteFrameCache_=nil;
 		id value = [spriteFrames_ objectForKey:key];		
 		if( [value retainCount] == 1 ) {
 			CCLOG(@"cocos2d: CCSpriteFrameCache: removing unused frame: %@", key);
+            
+            // TODO: set value.key to nil. (Issue #9)
+            
 			[spriteFrames_ removeObjectForKey:key];
 		}
 	}	
@@ -279,11 +288,16 @@ static CCSpriteFrameCache *sharedSpriteFrameCache_=nil;
 	NSString *key = [spriteFramesAliases_ objectForKey:name];
 	
 	if( key ) {
+        // TODO: Set frame.key to nil (get frame by key). (Issue #9)
+        
 		[spriteFrames_ removeObjectForKey:key];
 		[spriteFramesAliases_ removeObjectForKey:name];
 
 	} else
+    {
+        // TODO: Set frame.key to nil (get frame by name). (Issue #9)
 		[spriteFrames_ removeObjectForKey:name];
+    }
 }
 
 - (void) removeSpriteFramesFromFile:(NSString*) plist
@@ -304,6 +318,9 @@ static CCSpriteFrameCache *sharedSpriteFrameCache_=nil;
 		if ([spriteFrames_ objectForKey:frameDictKey]!=nil)
 			[keysToRemove addObject:frameDictKey];
 	}
+    
+    // TODO: Set frame.key to nil for all frames that will be removed. (Issue #9)
+    
 	[spriteFrames_ removeObjectsForKeys:keysToRemove];
 }
 
@@ -317,6 +334,9 @@ static CCSpriteFrameCache *sharedSpriteFrameCache_=nil;
 			[keysToRemove addObject:spriteFrameKey];
 		
 	}
+    
+    // TODO: Set frame.key to nil for all frames that will be removed. (Issue #9)
+    
 	[spriteFrames_ removeObjectsForKeys:keysToRemove];
 }
 
