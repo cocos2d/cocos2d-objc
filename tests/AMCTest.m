@@ -515,7 +515,7 @@ enum nodeTags {
 
 //
 // TODO: Use these notes for pull request info.
-// Update them regulary
+// Update them regularly.
 //
 
 //
