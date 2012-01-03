@@ -3519,6 +3519,7 @@
 		FD6ACDAE14A232D600E95E30 /* NSObject+AutoMagicCoding.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6ACDAC14A232D600E95E30 /* NSObject+AutoMagicCoding.m */; };
 		FD6ACDAF14A232D600E95E30 /* NSObject+AutoMagicCoding.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6ACDAC14A232D600E95E30 /* NSObject+AutoMagicCoding.m */; };
 		FD7DF92D14B2312B002C5DE0 /* NSObject+AutoMagicCoding.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6ACDAC14A232D600E95E30 /* NSObject+AutoMagicCoding.m */; };
+		FD7DF95514B372EB002C5DE0 /* NSObject+AutoMagicCoding.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6ACDAC14A232D600E95E30 /* NSObject+AutoMagicCoding.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -9695,6 +9696,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FD7DF95514B372EB002C5DE0 /* NSObject+AutoMagicCoding.m in Sources */,
 				E0AC091E12280B7000EFA814 /* main.m in Sources */,
 				E0AC093112280BB900EFA814 /* LabelTest.m in Sources */,
 			);
