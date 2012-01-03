@@ -178,6 +178,10 @@ typedef enum {
  * unique value for this property.
  * In order to load custom textures - create & store them with that key in
  * CCTextureCache before loading anything, that uses your custom texture.
+ *
+ * ATTENTION: Changing this value may lead to making it's impossible to
+ * load this texture again. Usually you don't need to change this key - it
+ * should be used only by CCTextureCache.
  */
 @property (nonatomic, readwrite, copy) NSString *key;
 
