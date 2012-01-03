@@ -551,32 +551,21 @@ enum nodeTags {
 //          (Can be saved as array of texture keys - can be useful for preloading all
 //          needed for scene textures)
 //
+// 4. Labels - FULL SUPPORT (Tested in LabelTest.m)
+//      * CCAtlasNode - FULL SUPPORT (not tested independently, but used only by CCLabelAtlas)
+//      * CCLabelAtlas - FULL SUPPORT
+//      * CCLabelTTF - MAC SUPPORT (iOS also should work, but i tested only on a Mac)
+//      * CCLabelMBFont - FULL SUPPORT by Magic. True magic... Tested only on a Mac, but...
+//          You know - i'll better just trust the Magic, cause Magic is VERY powerfull!
 //
-//
-//
+// DON'T MESS WITH 
+//     .___  ___.      ___       _______  __    ______ 
+//     |   \/   |     /   \     /  _____||  |  /      |
+//     |  \  /  |    /  ^  \   |  |  __  |  | |  ,----'
+//     |  |\/|  |   /  /_\  \  |  | |_ | |  | |  |     
+//     |  |  |  |  /  _____  \ |  |__| | |  | |  `----.
+//     |__|  |__| /__/     \__\ \______| |__|  \______|
 
-
-//
-// ====== TODO: Tests =====
-//
-// TODO: Sprite + Blend Func (should work, just got no explicit test)
-// TODO: CCScene (should work, just got no explicit test)
-// TODO: Animation key (Issue #9) test. 
-
-
-// 
-// ===== TODO: Labels =====
-//
-// * CCAtlasNode - should be pretty easy, but i never used it - dunno if i can provide good test.
-//
-// * CCLabelAtlas - very easy after supporting CCAtlasNode
-//
-// * CCLabelMBFont - some work needed (3 structs, 1 additional class), but should be straight forward after BatchNode.
-//
-// * CCLabelTTF - hackish stuff - it's subclass of CCSprite & it creates custom texture each time. 
-// But i think it's possible - just don't save the texture =).
-//
-//
 
 //
 // ======= TODO: Animation =====
@@ -662,6 +651,13 @@ enum nodeTags {
 // TODO: Look through cocos2d-iphone documentation for any classes, that i may have
 // skipped here & that we need to support.
 //
+
+//
+// ====== TODO: Tests =====
+//
+// TODO: Sprite + Blend Func (should work, just got no explicit test)
+// TODO: CCScene (should work, just got no explicit test)
+// TODO: Animation key (Issue #9) test. 
 
 //
 // ====== New Cocos2D-iPhone Features & Classes for AMC ======

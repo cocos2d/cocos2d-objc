@@ -890,8 +890,13 @@ static BOOL PVRHaveAlphaPremultiplied_ = NO;
 {
     [self release];
     
-    self = [[[CCTextureCache sharedTextureCache] addImage: [aDict objectForKey: @"key"] ] retain];
-    return self;
+    NSString *key = [aDict objectForKey: @"key"];
+    if (key)
+    {
+        self = [[[CCTextureCache sharedTextureCache] addImage: key  ] retain];
+        return self;
+    }
+    return nil;
 }
 
 @end
