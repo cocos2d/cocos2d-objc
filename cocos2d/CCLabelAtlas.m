@@ -32,7 +32,11 @@
 #import "Support/CGPointExtension.h"
 #import "AutoMagicCoding/AutoMagicCoding/NSObject+AutoMagicCoding.h"
 
+@interface CCAtlasNode ()
 
+-(void) calculateMaxItems;
+
+@end
 
 @implementation CCLabelAtlas
 
