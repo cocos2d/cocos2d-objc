@@ -26,6 +26,7 @@
 
 #import "CCAtlasNode.h"
 #import "ccMacros.h"
+#import "AutoMagicCoding/AutoMagicCoding/NSObject+AutoMagicCoding.h"
 
 
 @interface CCAtlasNode ()
@@ -207,5 +208,69 @@
 {
 	return textureAtlas_.texture;
 }
+
+#pragma mark CCAtlasNode - AutoMagicCoding Support
+
++ (BOOL) AMCEnabled
+{
+    return YES;
+}
+
+- (NSArray *) AMCKeysForDictionaryRepresentation
+{
+    NSArray *nodeKeys = [super AMCKeysForDictionaryRepresentation];
+    NSArray *atlasNodeKeys = [NSArray arrayWithObjects:
+                              @"opacityModifyRGB_",
+                              @"itemWidth",
+                              @"itemHeight",
+                              @"quadsToDraw",
+                              @"textureAtlas",
+                              @"blendFunc",
+                              @"color",
+                              @"opacity",
+                              nil];
+    
+    return [nodeKeys arrayByAddingObjectsFromArray: atlasNodeKeys];
+}
+
+- (NSUInteger) itemWidth
+{
+    return itemWidth_ / CC_CONTENT_SCALE_FACTOR();
+}
+
+- (void) setItemWidth: (NSUInteger) w
+{
+    itemWidth_ = w * CC_CONTENT_SCALE_FACTOR();
+}
+
+- (NSUInteger) itemHeight
+{
+    return itemHeight_ / CC_CONTENT_SCALE_FACTOR();
+}
+
+- (void) setItemHeight: (NSUInteger) h
+{
+    itemHeight_ = h * CC_CONTENT_SCALE_FACTOR();
+}
+
+-(id) initWithDictionaryRepresentation:(NSDictionary *)aDict
+{
+	if( (self=[super initWithDictionaryRepresentation: aDict]) ) {
+		
+		if( ! textureAtlas_ ) {
+			CCLOG(@"cocos2d: Could not initialize CCAtlasNode. Invalid Texture");
+			[self release];
+			return nil;
+		}
+		
+		[self updateBlendFunc];
+		[self updateOpacityModifyRGB];
+		
+		[self calculateMaxItems];
+		
+	}
+	return self;
+}
+
 
 @end
