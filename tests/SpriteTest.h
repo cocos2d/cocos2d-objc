@@ -279,6 +279,14 @@
 {}
 @end
 
+@interface SpriteBatchNodeSkewNegativeScaleChildren : CCLayer
+{}
+@end
+
+@interface SpriteSkewNegativeScaleChildren : CCLayer 
+{}
+@end
+
 @interface SpriteNilTexture : CCLayer
 {}
 @end
