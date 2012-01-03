@@ -533,19 +533,23 @@ enum nodeTags {
 //
 // 2. Sprites - FULL SUPPORT (tested in SpriteTest.m - AMCTest functionality added to existing test)
 //      * CCSprite
-//      * CCSpriteFrame
+//      * CCSpriteFrame (key for CCSpriteFrameCache not saved yet - all SpriteFrames will be independent after loading).
 //      * CCSpriteBatchNode
 //
-// 3. Textures - only key for CCTextureCache saved (no custom texture support).
-//      As Riq said on forums: "serializing the TextureCache is sort of hackish." 
-//      ( http://www.cocos2d-iphone.org/forum/topic/16980#post-95815 )
-//
-//      So we will save only key (filepath) for Texture, making developer responsible 
-//      for creating custom texture on deserialization 
-//      (-initWithDctionaryRepresentation: method) or saving generated texture to
-//      documents or cache folder & setting it's key to that path, so next time it could 
-//      be loaded from there.
-// 
+// 3. Textures - ALL NEEDED SUPPORT
+//      * CCTexture2D - only key for CCTextureCache saved (no custom texture support).
+//          As Riq said on forums: "serializing the TextureCache is sort of hackish." 
+//          ( http://www.cocos2d-iphone.org/forum/topic/16980#post-95815 )
+//          So we will save only key (filepath) for Texture, making developer responsible 
+//          for creating custom texture on deserialization 
+//          (-initWithDictionaryRepresentation: method) or saving generated texture to
+//          documents or cache folder & setting it's key to that path, so next time it could 
+//          be loaded from there.
+//      * CCTextureAtlas - Saves CCTexture2D (via key) & capacity (Tested in SpriteTest.m).
+//          (Used by CCSpriteBatchNode, so tested everywhere where BatchNode is tested.)
+//      * CCTextureCache - not supported - not needed. 
+//          (Can be saved as array of texture keys - can be useful for preloading all
+//          needed for scene textures)
 //
 //
 //
