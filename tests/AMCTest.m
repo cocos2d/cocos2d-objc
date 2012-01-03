@@ -551,21 +551,21 @@ enum nodeTags {
 //          (Can be saved as array of texture keys - can be useful for preloading all
 //          needed for scene textures)
 //
-// 4. Labels (Tested in LabelTest.m)
+// 4. Labels - FULL SUPPORT (Tested in LabelTest.m)
 //      * CCAtlasNode - FULL SUPPORT (not tested independently, but used only by CCLabelAtlas)
 //      * CCLabelAtlas - FULL SUPPORT
 //      * CCLabelTTF - MAC SUPPORT (iOS also should work, but i tested only on a Mac)
+//      * CCLabelMBFont - FULL SUPPORT by Magic. True magic... Tested only on a Mac, but...
+//          You know - i'll better just trust the Magic, cause Magic is VERY powerfull!
+//
+// DON'T MESS WITH 
+//     .___  ___.      ___       _______  __    ______ 
+//     |   \/   |     /   \     /  _____||  |  /      |
+//     |  \  /  |    /  ^  \   |  |  __  |  | |  ,----'
+//     |  |\/|  |   /  /_\  \  |  | |_ | |  | |  |     
+//     |  |  |  |  /  _____  \ |  |__| | |  | |  `----.
+//     |__|  |__| /__/     \__\ \______| |__|  \______|
 
-
-// 
-// ===== TODO: Labels =====
-//
-//
-// * CCLabelMBFont - some work needed (3 structs, 1 additional class), but should be straight forward after BatchNode.
-//
-
-//
-//
 
 //
 // ======= TODO: Animation =====
