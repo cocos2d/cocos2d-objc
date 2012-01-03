@@ -66,6 +66,9 @@
 -(void) updateAtlasValues
 {
 	NSUInteger n = [string_ length];
+    
+    if (!itemsPerRow_ || !itemsPerColumn_)
+        [self calculateMaxItems];
 	
 	ccV3F_C4B_T2F_Quad quad;
 
