@@ -551,17 +551,15 @@ enum nodeTags {
 //          (Can be saved as array of texture keys - can be useful for preloading all
 //          needed for scene textures)
 //
-//
-//
+// 4. Labels (Tested in LabelTest.m)
+//      * CCAtlasNode - FULL SUPPORT (not tested independently, but used only by CCLabelAtlas)
+//      * CCLabelAtlas - FULL SUPPORT
 //
 
 
 // 
 // ===== TODO: Labels =====
 //
-// * CCAtlasNode - should be pretty easy, but i never used it - dunno if i can provide good test.
-//
-// * CCLabelAtlas - very easy after supporting CCAtlasNode
 //
 // * CCLabelMBFont - some work needed (3 structs, 1 additional class), but should be straight forward after BatchNode.
 //
