@@ -43,6 +43,7 @@ enum {
 };
 
 enum {
+    kLayer,
 	kTagSprite1,
 	kTagSprite2,
 	kTagSprite3,
@@ -85,13 +86,28 @@ Class restartAction()
 	return c;
 }
 
+@protocol DemoTitleProvider <NSObject>
+
+- (NSString *) title;
+- (NSString *) subtitle;
+
+@end
+
 
 @implementation AtlasDemo
--(id) init
+
++(id) nodeWithInsideLayer: (CCLayer *) insideLayer
+{
+    return [[[self alloc] initWithInsideLayer: insideLayer] autorelease];
+}
+
+-(id) initWithInsideLayer: (CCLayer *) insideLayer
 {
 	if( (self = [super init])) {
 
 		CGSize s = [[CCDirector sharedDirector] winSize];
+        
+        [self addChild: insideLayer z: 0 tag: kLayer];
 			
 		CCLabelTTF* label = [CCLabelTTF labelWithString:[self title] fontName:@"Arial" fontSize:32];
 		[self addChild: label z:1];
@@ -128,31 +144,50 @@ Class restartAction()
 -(void) restartCallback: (id) sender
 {
 	CCScene *s = [CCScene node];
-	[s addChild: [restartAction() node]];
+	[s addChild: [AtlasDemo nodeWithInsideLayer:[restartAction() node]]];
 	[[CCDirector sharedDirector] replaceScene: s];
 }
 
 -(void) nextCallback: (id) sender
 {
 	CCScene *s = [CCScene node];
-	[s addChild: [nextAction() node]];
+	[s addChild: [AtlasDemo nodeWithInsideLayer: [nextAction() node]]];
 	[[CCDirector sharedDirector] replaceScene: s];
 }
 
 -(void) backCallback: (id) sender
 {
 	CCScene *s = [CCScene node];
-	[s addChild: [backAction() node]];
+	[s addChild: [AtlasDemo nodeWithInsideLayer:[backAction() node]]];
 	[[CCDirector sharedDirector] replaceScene: s];
+}
+
+-(CCLayer *) insideLayer
+{
+    return (CCLayer *)[self getChildByTag: kLayer];
 }
 
 -(NSString*) title
 {
+    id<DemoTitleProvider> titleProvider = (id<DemoTitleProvider>)[self insideLayer];
+    
+    if ([titleProvider respondsToSelector: @selector(title)])
+    {
+        return [titleProvider title];
+    }
+    
 	return @"No title";
 }
 
 -(NSString*) subtitle
 {
+	id<DemoTitleProvider> titleProvider = (id<DemoTitleProvider>)[self insideLayer];
+    
+    if ([titleProvider respondsToSelector: @selector(subtitle)])
+    {
+        return [titleProvider subtitle];
+    }
+    
 	return nil;
 }
 @end
@@ -1164,7 +1199,7 @@ Class restartAction()
 	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA8888];	
 		
 	CCScene *scene = [CCScene node];
-	[scene addChild: [nextAction() node]];
+	[scene addChild: [AtlasDemo nodeWithInsideLayer: [nextAction() node] ] ];
 
 	[director runWithScene: scene];
 }
@@ -1245,7 +1280,7 @@ Class restartAction()
 	[director setResizeMode:kCCDirectorResize_AutoScale];	
 	
 	CCScene *scene = [CCScene node];
-	[scene addChild: [nextAction() node]];
+	[scene addChild: [AtlasDemo nodeWithInsideLayer: [nextAction() node] ] ];
 	
 	[director runWithScene:scene];
 }

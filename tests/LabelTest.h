@@ -26,94 +26,96 @@
 @interface AtlasDemo: CCLayer
 {
 }
++(id) nodeWithInsideLayer: (CCLayer *) insideLayer;
+-(id) initWithInsideLayer: (CCLayer *) insideLayer;
 -(NSString*) title;
 -(NSString*) subtitle;
 @end
 
-@interface Atlas1 : AtlasDemo
+@interface Atlas1 : CCLayer
 {
 	CCTextureAtlas *textureAtlas;
 }
 @end
 
-@interface LabelAtlasTest : AtlasDemo
+@interface LabelAtlasTest : CCLayer
 {
 	ccTime		time;
 }
 @end
 
-@interface LabelAtlasColorTest : AtlasDemo
+@interface LabelAtlasColorTest : CCLayer
 {
 	ccTime		time;
 }
 @end
 
 
-@interface Atlas3 : AtlasDemo
+@interface Atlas3 : CCLayer
 {
 	ccTime		time;
 }
 @end
 
-@interface Atlas4 : AtlasDemo
+@interface Atlas4 : CCLayer
 {
 	ccTime		time;
 }
 @end
 
-@interface Atlas5 : AtlasDemo
+@interface Atlas5 : CCLayer
 {}
 @end
 
-@interface Atlas6 : AtlasDemo
+@interface Atlas6 : CCLayer
 {}
 @end
 
-@interface AtlasBitmapColor : AtlasDemo
+@interface AtlasBitmapColor : CCLayer
 {}
 @end
 
 
-@interface AtlasFastBitmap : AtlasDemo
+@interface AtlasFastBitmap : CCLayer
 {}
 @end
 
-@interface BitmapFontMultiLine : AtlasDemo
+@interface BitmapFontMultiLine : CCLayer
 {}
 @end
 
-@interface LabelsEmpty : AtlasDemo
+@interface LabelsEmpty : CCLayer
 {
 	BOOL setEmpty;
 }
 @end
 
-@interface LabelBMFontHD : AtlasDemo
+@interface LabelBMFontHD : CCLayer
 {
 }
 @end
 
-@interface LabelAtlasHD : AtlasDemo
+@interface LabelAtlasHD : CCLayer
 {
 }
 @end
 
-@interface LabelGlyphDesigner : AtlasDemo
+@interface LabelGlyphDesigner : CCLayer
 {
 }
 @end
 
-@interface LabelTTFTest : AtlasDemo
+@interface LabelTTFTest : CCLayer
 {
 }
 @end
 
-@interface LabelTTFMultiline : AtlasDemo
+@interface LabelTTFMultiline : CCLayer
 {
 }
 @end
 
-@interface LabelTTFLineBreak : AtlasDemo
+@interface LabelTTFLineBreak : CCLayer
 {
 }
 @end
