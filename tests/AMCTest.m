@@ -554,7 +554,7 @@ enum nodeTags {
 // 4. Labels (Tested in LabelTest.m)
 //      * CCAtlasNode - FULL SUPPORT (not tested independently, but used only by CCLabelAtlas)
 //      * CCLabelAtlas - FULL SUPPORT
-//
+//      * CCLabelTTF - MAC SUPPORT (iOS also should work, but i tested only on a Mac)
 
 
 // 
@@ -563,8 +563,7 @@ enum nodeTags {
 //
 // * CCLabelMBFont - some work needed (3 structs, 1 additional class), but should be straight forward after BatchNode.
 //
-// * CCLabelTTF - hackish stuff - it's subclass of CCSprite & it creates custom texture each time. 
-// But i think it's possible - just don't save the texture =).
+
 //
 //
 
