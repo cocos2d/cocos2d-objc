@@ -30,6 +30,7 @@
 #import "CCDrawingPrimitives.h"
 #import "CCLabelAtlas.h"
 #import "Support/CGPointExtension.h"
+#import "AutoMagicCoding/AutoMagicCoding/NSObject+AutoMagicCoding.h"
 
 
 
@@ -159,5 +160,15 @@
 
 }
 #endif // CC_LABELATLAS_DEBUG_DRAW
+
+#pragma mark CCLabelAtlas - AutoMagicCoding Support
+
+- (NSArray *) AMCKeysForDictionaryRepresentation
+{
+    NSArray *atlasNodeKeys = [super AMCKeysForDictionaryRepresentation];
+    NSArray *labelAtlasKeys = [NSArray arrayWithObjects: @"mapStartChar_", @"string", nil];
+    
+    return [atlasNodeKeys arrayByAddingObjectsFromArray:labelAtlasKeys];
+}
 
 @end
