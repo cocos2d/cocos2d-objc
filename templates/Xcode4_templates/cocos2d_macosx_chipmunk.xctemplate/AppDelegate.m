@@ -16,9 +16,11 @@
 {
 	CCDirectorMac *director = (CCDirectorMac*) [CCDirector sharedDirector];
 	
-	[director setDisplayStats:kCCDirectorStatsFPS];
+	// enable FPS and SPF
+	[director setDisplayStats:YES];
 	
-	[director setOpenGLView:glView_];
+	// connect the OpenGL view with the director
+	[director setView:glView_];
 
 	// EXPERIMENTAL stuff.
 	// 'Effects' don't work correctly when autoscale is turned on.

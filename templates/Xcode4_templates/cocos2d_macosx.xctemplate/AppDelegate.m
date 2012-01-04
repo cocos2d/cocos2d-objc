@@ -15,10 +15,12 @@
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
 	CCDirectorMac *director = (CCDirectorMac*) [CCDirector sharedDirector];
+
+	// enable FPS and SPF
+	[director setDisplayStats:YES];
 	
-	[director setDisplayStats:kCCDirectorStatsFPS];
-	
-	[director setOpenGLView:glView_];
+	// connect the OpenGL view with the director
+	[director setView:glView_];
 
 	// EXPERIMENTAL stuff.
 	// 'Effects' don't work correctly when autoscale is turned on.

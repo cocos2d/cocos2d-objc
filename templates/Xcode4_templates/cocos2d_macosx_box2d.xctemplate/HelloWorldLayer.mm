@@ -144,7 +144,7 @@ enum {
 
 -(void) createResetButton
 {
-	CCMenuItemLabel *reset = [CCMenuItemFont itemFromString:@"Reset" block:^(id sender){
+	CCMenuItemLabel *reset = [CCMenuItemFont itemWithString:@"Reset" block:^(id sender){
 		CCScene *s = [CCScene node];
 		id child = [HelloWorldLayer node];
 		[s addChild:child];
