@@ -31,6 +31,7 @@
 #import "CCSprite.h"
 #import "Support/CGPointExtension.h"
 #import "CCBlockSupport.h"
+#import "AutoMagicCoding/AutoMagicCoding/NSObject+AutoMagicCoding.h"
 
 	static NSUInteger _fontSize = kCCItemSize;
 static NSString *_fontName = @"Marker Felt";
@@ -143,6 +144,14 @@ const uint32_t	kZoomActionTag = 0xc0c05002;
 	return CGRectMake( position_.x - contentSize_.width*anchorPoint_.x,
 					  position_.y - contentSize_.height*anchorPoint_.y,
 					  contentSize_.width, contentSize_.height);	
+}
+
+#pragma mark CCMenuItem - AutoMagicCoding Support
+
+- (NSArray *) AMCKeysForDictionaryRepresentation
+{
+    // Node keys + isEnabled property.
+    return [[super AMCKeysForDictionaryRepresentation] arrayByAddingObject: @"isEnabled"];
 }
 
 @end
