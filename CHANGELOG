@@ -1,6 +1,7 @@
 version 2.0-beta2 XX-Jan-2012
 . [NEW] v1.1 Forward-ported changes:
 		LabelTTF: word wrap works on Mac (issue #1074)
+		Node: Added onExitTransitionDidStart (issue #792)
 . [NEW] ActionManager: It is no longer a singleton. It is an ivar of director
 . [NEW] Director: it is a subclass of UIViewController (iOS only)
 . [NEW] Director: pushScene is the new recommended way to start the scene. Director will start the animation
