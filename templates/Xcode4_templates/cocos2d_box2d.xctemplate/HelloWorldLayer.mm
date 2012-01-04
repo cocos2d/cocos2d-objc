@@ -9,78 +9,22 @@
 // Import the interfaces
 #import "HelloWorldLayer.h"
 
-//Pixel to metres ratio. Box2D uses metres as the unit for measurement.
-//This ratio defines how many pixels correspond to 1 Box2D "metre"
-//Box2D is optimized for objects of 1x1 metre therefore it makes sense
-//to define the ratio so that your most common object type is 1x1 metre.
-#define PTM_RATIO 32
+// Needed to obtain the Navigation Controller
+#import "AppDelegate.h"
+
+#import "PhysicsSprite.h"
 
 enum {
 	kTagParentNode = 1,
 };
 
 
-#pragma mark - PhysicsSprite
-@implementation PhysicsSprite
-
--(void) setPhysicsBody:(b2Body *)body
-{
-	body_ = body;
-}
-
-// this method will only get called if the sprite is batched.
-// return YES if the physics values (angles, position ) changed
-// If you return NO, then nodeToParentTransform won't be called.
--(BOOL) dirty
-{
-	return YES;
-}
-
-// returns the transform matrix according the Chipmunk Body values
--(CGAffineTransform) nodeToParentTransform
-{	
-	b2Vec2 pos  = body_->GetPosition();
-	
-	float x = pos.x * PTM_RATIO;
-	float y = pos.y * PTM_RATIO;
-	
-	if ( !isRelativeAnchorPoint_ ) {
-		x += anchorPointInPoints_.x;
-		y += anchorPointInPoints_.y;
-	}
-	
-	// Make matrix
-	float radians = body_->GetAngle();
-	float c = cosf(radians);
-	float s = sinf(radians);
-	
-	if( ! CGPointEqualToPoint(anchorPointInPoints_, CGPointZero) ){
-		x += c*-anchorPointInPoints_.x + -s*-anchorPointInPoints_.y;
-		y += s*-anchorPointInPoints_.x + c*-anchorPointInPoints_.y;
-	}
-	
-	// Rot, Translate Matrix
-	transform_ = CGAffineTransformMake( c,  s,
-									   -s,	c,
-									   x,	y );	
-	
-	return transform_;
-}
-
--(void) dealloc
-{
-	// 
-	[super dealloc];
-}
-
-@end
-
 #pragma mark - HelloWorldLayer
 
 @interface HelloWorldLayer()
 -(void) initPhysics;
 -(void) addNewSpriteAtPosition:(CGPoint)p;
--(void) createResetButton;
+-(void) createMenu;
 @end
 
 @implementation HelloWorldLayer
@@ -106,19 +50,15 @@ enum {
 		
 		// enable events
 		
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 		self.isTouchEnabled = YES;
 		self.isAccelerometerEnabled = YES;
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
-		self.isMouseEnabled = YES;
-#endif
 		CGSize s = [CCDirector sharedDirector].winSize;
 		
 		// init physics
 		[self initPhysics];
 		
 		// create reset button
-		[self createResetButton];
+		[self createMenu];
 		
 		//Set up sprite
 		
@@ -157,19 +97,49 @@ enum {
 	[super dealloc];
 }	
 
--(void) createResetButton
+-(void) createMenu
 {
+	// Default font size will be 22 points.
+	[CCMenuItemFont setFontSize:22];
+	
+	// Reset Button
 	CCMenuItemLabel *reset = [CCMenuItemFont itemWithString:@"Reset" block:^(id sender){
 		[[CCDirector sharedDirector] replaceScene: [HelloWorldLayer scene]];
 	}];
 	
-	CCMenu *menu = [CCMenu menuWithItems:reset, nil];
+	// Achievement Menu Item using blocks
+	CCMenuItem *itemAchievement = [CCMenuItemFont itemWithString:@"Achievements" block:^(id sender) {
+		
+		
+		GKAchievementViewController *achivementViewController = [[GKAchievementViewController alloc] init];
+		achivementViewController.achievementDelegate = self;
+		
+		AppController *app = (AppController*) [[UIApplication sharedApplication] delegate];
+		
+		[[app navController] presentModalViewController:achivementViewController animated:YES];
+	}];
 	
-	CGSize s = [[CCDirector sharedDirector] winSize];
+	// Leaderboard Menu Item using blocks
+	CCMenuItem *itemLeaderboard = [CCMenuItemFont itemWithString:@"Leaderboard" block:^(id sender) {
+		
+		
+		GKLeaderboardViewController *leaderboardViewController = [[GKLeaderboardViewController alloc] init];
+		leaderboardViewController.leaderboardDelegate = self;
+		
+		AppController *app = (AppController*) [[UIApplication sharedApplication] delegate];
+		
+		[[app navController] presentModalViewController:leaderboardViewController animated:YES];
+	}];
 	
-	menu.position = ccp(s.width/2, 30);
+	CCMenu *menu = [CCMenu menuWithItems:itemAchievement, itemLeaderboard, reset, nil];
+	
+	[menu alignItemsVertically];
+	
+	CGSize size = [[CCDirector sharedDirector] winSize];
+	[menu setPosition:ccp( size.width/2, size.height/2)];
+	
+	
 	[self addChild: menu z:-1];	
-	
 }
 
 -(void) initPhysics
@@ -297,8 +267,6 @@ enum {
 	world->Step(dt, velocityIterations, positionIterations);	
 }
 
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
-
 - (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
 	//Add a new body/atlas sprite at the touched location
@@ -311,15 +279,18 @@ enum {
 	}
 }
 
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+#pragma mark GameKit delegate
 
-- (BOOL) ccMouseDown:(NSEvent *)event
+-(void) achievementViewControllerDidFinish:(GKAchievementViewController *)viewController
 {
-	CGPoint location = [(CCDirectorMac*)[CCDirector sharedDirector] convertEventToGL:event];
-	[self addNewSpriteAtPosition: location];
-	
-	return YES;
+	AppController *app = (AppController*) [[UIApplication sharedApplication] delegate];
+	[[app navController] dismissModalViewControllerAnimated:YES];
 }
-#endif
+
+-(void) leaderboardViewControllerDidFinish:(GKLeaderboardViewController *)viewController
+{
+	AppController *app = (AppController*) [[UIApplication sharedApplication] delegate];
+	[[app navController] dismissModalViewControllerAnimated:YES];
+}
 
 @end

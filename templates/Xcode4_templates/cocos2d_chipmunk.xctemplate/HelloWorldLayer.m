@@ -6,86 +6,29 @@
 //  Copyright ___ORGANIZATIONNAME___ ___YEAR___. All rights reserved.
 //
 
-
+#import "AppDelegate.h"
 
 // Import the interfaces
 #import "HelloWorldLayer.h"
+#import "PhysicsSprite.h"
 
 enum {
 	kTagParentNode = 1,
 };
 
-// callback to remove Shapes from the Space
-void removeShape( cpBody *body, cpShape *shape, void *data )
-{
-	cpShapeFree( shape );
-}
-
-#pragma mark - PhysicsSprite
-@implementation PhysicsSprite
-
--(void) setPhysicsBody:(cpBody *)body
-{
-	body_ = body;
-}
-
-// this method will only get called if the sprite is batched.
-// return YES if the physics values (angles, position ) changed
-// If you return NO, then nodeToParentTransform won't be called.
--(BOOL) dirty
-{
-	return YES;
-}
-
-// returns the transform matrix according the Chipmunk Body values
--(CGAffineTransform) nodeToParentTransform
-{	
-	CGFloat x = body_->p.x;
-	CGFloat y = body_->p.y;
-	
-	if ( !isRelativeAnchorPoint_ ) {
-		x += anchorPointInPoints_.x;
-		y += anchorPointInPoints_.y;
-	}
-	
-	// Make matrix
-	CGFloat c = body_->rot.x;
-	CGFloat s = body_->rot.y;
-	
-	if( ! CGPointEqualToPoint(anchorPointInPoints_, CGPointZero) ){
-		x += c*-anchorPointInPoints_.x + -s*-anchorPointInPoints_.y;
-		y += s*-anchorPointInPoints_.x + c*-anchorPointInPoints_.y;
-	}
-	
-	// Translate, Rot, anchor Matrix
-	transform_ = CGAffineTransformMake( c,  s,
-									   -s,	c,
-									   x,	y );
-	
-	return transform_;
-}
-
--(void) dealloc
-{
-	cpBodyEachShape(body_, removeShape, NULL);
-	cpBodyFree( body_ );
-	
-	[super dealloc];
-}
-
-@end
 
 #pragma mark - HelloWorldLayer
 
 @interface HelloWorldLayer ()
 -(void) addNewSpriteAtPosition:(CGPoint)pos;
--(void) createResetButton;
+-(void) createMenu;
 -(void) initPhysics;
 @end
 
 
 @implementation HelloWorldLayer
 
+// Helper class method that creates a Scene with the HelloWorldLayer as the only child.
 +(CCScene *) scene
 {
 	// 'scene' is an autorelease object.
@@ -106,12 +49,8 @@ void removeShape( cpBody *body, cpShape *shape, void *data )
 	if( (self=[super init])) {
 		
 		// enable events
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 		self.isTouchEnabled = YES;
 		self.isAccelerometerEnabled = YES;
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
-		self.isMouseEnabled = YES;
-#endif
 		
 		CGSize s = [[CCDirector sharedDirector] winSize];
 		
@@ -121,7 +60,7 @@ void removeShape( cpBody *body, cpShape *shape, void *data )
 		[self addChild:label z:-1];
 		
 		// reset button
-		[self createResetButton];
+		[self createMenu];
 		
 		
 		// init physics
@@ -205,19 +144,49 @@ void removeShape( cpBody *body, cpShape *shape, void *data )
 	}
 }
 
--(void) createResetButton
+-(void) createMenu
 {
+	// Default font size will be 22 points.
+	[CCMenuItemFont setFontSize:22];
+
+	// Reset Button
 	CCMenuItemLabel *reset = [CCMenuItemFont itemWithString:@"Reset" block:^(id sender){
 		[[CCDirector sharedDirector] replaceScene: [HelloWorldLayer scene]];
 	}];
+		
+	// Achievement Menu Item using blocks
+	CCMenuItem *itemAchievement = [CCMenuItemFont itemWithString:@"Achievements" block:^(id sender) {
+		
+		
+		GKAchievementViewController *achivementViewController = [[GKAchievementViewController alloc] init];
+		achivementViewController.achievementDelegate = self;
+		
+		AppController *app = (AppController*) [[UIApplication sharedApplication] delegate];
+		
+		[[app navController] presentModalViewController:achivementViewController animated:YES];
+	}];
 	
-	CCMenu *menu = [CCMenu menuWithItems:reset, nil];
+	// Leaderboard Menu Item using blocks
+	CCMenuItem *itemLeaderboard = [CCMenuItemFont itemWithString:@"Leaderboard" block:^(id sender) {
+		
+		
+		GKLeaderboardViewController *leaderboardViewController = [[GKLeaderboardViewController alloc] init];
+		leaderboardViewController.leaderboardDelegate = self;
+		
+		AppController *app = (AppController*) [[UIApplication sharedApplication] delegate];
+		
+		[[app navController] presentModalViewController:leaderboardViewController animated:YES];
+	}];
 	
-	CGSize s = [[CCDirector sharedDirector] winSize];
+	CCMenu *menu = [CCMenu menuWithItems:itemAchievement, itemLeaderboard, reset, nil];
 	
-	menu.position = ccp(s.width/2, 30);
+	[menu alignItemsVertically];
+	
+	CGSize size = [[CCDirector sharedDirector] winSize];
+	[menu setPosition:ccp( size.width/2, size.height/2)];
+	
+	
 	[self addChild: menu z:-1];	
-	
 }
 
 -(void) addNewSpriteAtPosition:(CGPoint)pos
@@ -257,8 +226,6 @@ void removeShape( cpBody *body, cpShape *shape, void *data )
 	[sprite setPhysicsBody:body];
 }
 
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
-
 - (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
 	for( UITouch *touch in touches ) {
@@ -287,15 +254,19 @@ void removeShape( cpBody *body, cpShape *shape, void *data )
 	space_->gravity = ccpMult(v, 200);
 }
 
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 
--(BOOL) ccMouseDown:(NSEvent *)event
+#pragma mark GameKit delegate
+
+-(void) achievementViewControllerDidFinish:(GKAchievementViewController *)viewController
 {
-	CGPoint location = [(CCDirectorMac*)[CCDirector sharedDirector] convertEventToGL:event];
-	[self addNewSpriteAtPosition:location];
-	
-	return YES;
+	AppController *app = (AppController*) [[UIApplication sharedApplication] delegate];
+	[[app navController] dismissModalViewControllerAnimated:YES];
 }
 
-#endif
+-(void) leaderboardViewControllerDidFinish:(GKLeaderboardViewController *)viewController
+{
+	AppController *app = (AppController*) [[UIApplication sharedApplication] delegate];
+	[[app navController] dismissModalViewControllerAnimated:YES];
+}
+
 @end
