@@ -49,6 +49,9 @@ Contributors (alphabetically ordered):
 * Scott Lembcke (AKA slembcke) (http://chipmunk-physics.net/)
 	Improved ARC compatiblity code
 
+* Shakthi:
+	Added CCNode#onExitTransitionDidStart method
+
 * slycrel (http://geopherlite.blogspot.com/)
 	Added support for flipped tiles in TMX maps. Also added test case
 	Added support for in-memory TMX map creation. Also added a test case
