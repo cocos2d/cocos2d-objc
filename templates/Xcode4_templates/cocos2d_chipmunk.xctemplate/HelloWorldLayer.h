@@ -7,6 +7,7 @@
 //
 
 
+#import <GameKit/GameKit.h>
 
 // When you import this file, you import all the cocos2d classes
 #import "cocos2d.h"
@@ -14,7 +15,7 @@
 // Importing Chipmunk headers
 #import "chipmunk.h"
 
-@interface HelloWorldLayer : CCLayer
+@interface HelloWorldLayer : CCLayer <GKAchievementViewControllerDelegate, GKLeaderboardViewControllerDelegate>
 {
 	CCTexture2D *spriteTexture_; // weak ref
 	
@@ -25,15 +26,5 @@
 
 // returns a CCScene that contains the HelloWorldLayer as the only child
 +(CCScene *) scene;
-
-@end
-
-
-@interface PhysicsSprite : CCSprite
-{
-	cpBody *body_;	// strong ref
-}
-
--(void) setPhysicsBody:(cpBody*)body;
 
 @end

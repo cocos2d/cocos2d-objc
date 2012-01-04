@@ -79,6 +79,16 @@
 			<key>Path</key>
 			<string>GLES-Render.mm</string>
 		</dict>
+		<key>PhysicsSprite.h</key>
+		<dict>
+			<key>Path</key>
+			<string>PhysicsSprite.h</string>
+		</dict>
+		<key>PhysicsSprite.mm</key>
+		<dict>
+			<key>Path</key>
+			<string>PhysicsSprite.mm</string>
+		</dict>
 		<key>Resources/blocks.png</key>
 		<dict>
 			<key>Group</key>
@@ -103,6 +113,8 @@
 		<string>HelloWorldLayer.mm</string>
 		<string>GLES-Render.h</string>
 		<string>GLES-Render.mm</string>
+		<string>PhysicsSprite.h</string>
+		<string>PhysicsSprite.mm</string>
 		<string>Resources/blocks.png</string>
 	</array>
 	<key>Options</key>

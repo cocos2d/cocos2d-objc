@@ -10,9 +10,15 @@
 // Import the interfaces
 #import "HelloWorldLayer.h"
 
+// Needed to obtain the Navigation Controller
+#import "AppDelegate.h"
+
+#pragma mark - HelloWorldLayer
+
 // HelloWorldLayer implementation
 @implementation HelloWorldLayer
 
+// Helper class method that creates a Scene with the HelloWorldLayer as the only child.
 +(CCScene *) scene
 {
 	// 'scene' is an autorelease object.
@@ -32,7 +38,7 @@
 -(id) init
 {
 	// always call "super" init
-	// Apple recommends to re-assign "self" with the "super" return value
+	// Apple recommends to re-assign "self" with the "super's" return value
 	if( (self=[super init])) {
 		
 		// create and initialize a Label
@@ -46,6 +52,50 @@
 		
 		// add the label as a child to this Layer
 		[self addChild: label];
+		
+		
+		
+		//
+		// Leaderboards and Achievements
+		//
+		
+		// Default font size will be 28 points.
+		[CCMenuItemFont setFontSize:28];
+		
+		// Achievement Menu Item using blocks
+		CCMenuItem *itemAchievement = [CCMenuItemFont itemWithString:@"Achievements" block:^(id sender) {
+			
+			
+			GKAchievementViewController *achivementViewController = [[GKAchievementViewController alloc] init];
+			achivementViewController.achievementDelegate = self;
+			
+			AppController *app = (AppController*) [[UIApplication sharedApplication] delegate];
+			
+			[[app navController] presentModalViewController:achivementViewController animated:YES];
+		}
+									   ];
+
+		// Leaderboard Menu Item using blocks
+		CCMenuItem *itemLeaderboard = [CCMenuItemFont itemWithString:@"Leaderboard" block:^(id sender) {
+			
+			
+			GKLeaderboardViewController *leaderboardViewController = [[GKLeaderboardViewController alloc] init];
+			leaderboardViewController.leaderboardDelegate = self;
+			
+			AppController *app = (AppController*) [[UIApplication sharedApplication] delegate];
+			
+			[[app navController] presentModalViewController:leaderboardViewController animated:YES];
+		}
+									   ];
+		
+		CCMenu *menu = [CCMenu menuWithItems:itemAchievement, itemLeaderboard, nil];
+		
+		[menu alignItemsHorizontallyWithPadding:20];
+		[menu setPosition:ccp( size.width/2, size.height/2 - 50)];
+		
+		// Add the menu to the layer
+		[self addChild:menu];
+
 	}
 	return self;
 }
@@ -59,5 +109,19 @@
 	
 	// don't forget to call "super dealloc"
 	[super dealloc];
+}
+
+#pragma mark GameKit delegate
+
+-(void) achievementViewControllerDidFinish:(GKAchievementViewController *)viewController
+{
+	AppController *app = (AppController*) [[UIApplication sharedApplication] delegate];
+	[[app navController] dismissModalViewControllerAnimated:YES];
+}
+
+-(void) leaderboardViewControllerDidFinish:(GKLeaderboardViewController *)viewController
+{
+	AppController *app = (AppController*) [[UIApplication sharedApplication] delegate];
+	[[app navController] dismissModalViewControllerAnimated:YES];
 }
 @end
