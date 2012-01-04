@@ -688,7 +688,7 @@ const uint32_t	kZoomActionTag = 0xc0c05002;
 
 -(void) setNormalImageIndex:(NSUInteger) childIndex
 {    
-    if (childIndex > 0 && childIndex < [children_ count])
+    if (childIndex < [children_ count])
     {
         normalImage_ = [children_ objectAtIndex: childIndex];
         normalImage_.visible = YES;
@@ -703,7 +703,7 @@ const uint32_t	kZoomActionTag = 0xc0c05002;
 
 -(void) setSelectedImageIndex:(NSUInteger) childIndex
 {    
-    if (childIndex > 0 && childIndex < [children_ count])
+    if (childIndex < [children_ count])
     {
         selectedImage_ = [children_ objectAtIndex: childIndex];
         selectedImage_.visible = NO;
@@ -717,7 +717,7 @@ const uint32_t	kZoomActionTag = 0xc0c05002;
 
 -(void) setDisabledImageIndex:(NSUInteger) childIndex
 {    
-    if (childIndex > 0 && childIndex < [children_ count])
+    if (childIndex < [children_ count])
     {
         disabledImage_ = [children_ objectAtIndex: childIndex];
         disabledImage_.visible = NO;
