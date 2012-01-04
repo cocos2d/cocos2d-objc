@@ -469,6 +469,17 @@ const uint32_t	kZoomActionTag = 0xc0c05002;
 }
 #endif // NS_BLOCKS_AVAILABLE
 
+
+#pragma mark CCMenuItemFont - AutoMagicCoding Support
+
+- (NSArray *) AMCKeysForDictionaryRepresentation
+{
+    NSArray *menuItemLabelKeys = [super AMCKeysForDictionaryRepresentation];
+    NSArray *menuItemFontKeys = [NSArray arrayWithObjects: @"fontSize_", @"fontName_", nil];
+    
+    return [menuItemLabelKeys arrayByAddingObjectsFromArray: menuItemFontKeys];
+}
+
 @end
 
 #pragma mark -
