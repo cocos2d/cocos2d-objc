@@ -85,7 +85,24 @@ void* MyGetOpenALAudioData(CFURLRef inFileURL, ALsizei *outDataSize, ALenum *out
 		{
 			// success
 			*outDataSize = (ALsizei)dataSize;
-			*outDataFormat = (theFileFormat.mChannelsPerFrame > 1) ? AL_FORMAT_STEREO16 : AL_FORMAT_MONO16;
+            if(theFileFormat.mChannelsPerFrame == 1){
+                // Mono sound
+                if (theFileFormat.mBitsPerChannel == 16) {
+                    *outDataFormat = AL_FORMAT_MONO16;
+                }
+                else {
+                    *outDataFormat = AL_FORMAT_MONO8;
+                }
+            }
+            else {
+                // Stereo sound
+                if (theFileFormat.mBitsPerChannel == 16) {
+                    *outDataFormat = AL_FORMAT_STEREO16;
+                }
+                else {
+                    *outDataFormat = AL_FORMAT_STEREO8;
+                }
+            }
 			*outSampleRate = (ALsizei)theFileFormat.mSampleRate;
 		}
 		else 
