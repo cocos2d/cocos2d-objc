@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>Identifier</key>
-	<string>com.cocos2d.macbase</string>
+	<string>com.cocos2d-v2.macbase</string>
 	<key>Kind</key>
 	<string>Xcode.Xcode3.ProjectTemplateUnitKind</string>
 	<key>Platforms</key>
@@ -11,7 +11,7 @@
 		<string>com.apple.platform.macosx</string>
 	</array>
 	<key>Project</key>
-    <dict>
+	<dict>
 		<key>SDK</key>
 		<string>macosx</string>
 		<key>SharedSettings</key>
@@ -31,8 +31,7 @@
 				<string>YES</string>
 			</dict>
 		</dict>
-    </dict>
-
+	</dict>
 	<key>Targets</key>
 	<array>
 		<dict>
@@ -119,8 +118,8 @@
 			</array>
 			<key>Path</key>
 			<string>Resources/Info.plist</string>
- 			<key>TargetIndices</key>
- 			<array/>
+			<key>TargetIndices</key>
+			<array/>
 		</dict>
 	</dict>
 	<key>Nodes</key>
