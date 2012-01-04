@@ -292,6 +292,35 @@ const uint32_t	kZoomActionTag = 0xc0c05002;
 {
 	return [label_ color];
 }
+
+#pragma mark CCMenuItemLabel - AutoMagicCoding Support
+
+- (NSArray *) AMCKeysForDictionaryRepresentation
+{
+    NSArray *nodeKeys = [super AMCKeysForDictionaryRepresentation];
+    NSArray *menuItemLabelKeys = [NSArray  arrayWithObjects:
+                                  @"disabledColor",
+                                  @"labelIndex",
+                                  @"isEnabled",
+                                  nil];
+    
+    return [nodeKeys arrayByAddingObjectsFromArray: menuItemLabelKeys];
+}
+
+-(NSUInteger) labelIndex
+{
+	return [children_ indexOfObject: label_];
+}
+
+-(void) setLabelIndex:(NSUInteger) labelIndex
+{    
+    if (labelIndex > 0 && labelIndex < [children_ count])
+    {
+        label_ = [children_ objectAtIndex: labelIndex];
+        [self setContentSize:[label_ contentSize]];
+    }
+}
+
 @end
 
 #pragma mark  -
