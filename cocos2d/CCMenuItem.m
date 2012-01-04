@@ -899,4 +899,19 @@ const uint32_t	kZoomActionTag = 0xc0c05002;
 		[item setColor:color];
 }
 
+#pragma mark CCMenuItemToggle - AutoMagicCoding Support
+
+- (NSArray *) AMCKeysForDictionaryRepresentation
+{
+    NSArray *menuItemKeys = [super AMCKeysForDictionaryRepresentation];
+    NSArray *menuItemToggleKeys = [NSArray arrayWithObjects:
+                                   @"subItems",
+                                   @"selectedIndex",
+                                   @"isEnabled",
+                                   nil];
+    
+    return [menuItemKeys arrayByAddingObjectsFromArray: menuItemToggleKeys];
+}
+
+
 @end
