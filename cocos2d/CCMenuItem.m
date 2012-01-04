@@ -640,6 +640,64 @@ const uint32_t	kZoomActionTag = 0xc0c05002;
 	}
 }
 
+#pragma mark CCMenuItemSprite - AutoMagicCoding Support
+
+- (NSArray *) AMCKeysForDictionaryRepresentation
+{
+    NSArray *menuItemKeys = [super AMCKeysForDictionaryRepresentation];
+    NSArray *menuItemSpriteKeys = [NSArray arrayWithObjects:
+                                   @"normalImageIndex",
+                                   @"selectedImageIndex",
+                                   @"disabledImageIndex",
+                                   @"isEnabled",
+                                   nil];
+    
+    return [menuItemKeys arrayByAddingObjectsFromArray: menuItemSpriteKeys];
+}
+
+-(NSUInteger) normalImageIndex
+{
+	return [children_ indexOfObject: normalImage_];
+}
+
+-(void) setNormalImageIndex:(NSUInteger) childIndex
+{    
+    if (childIndex > 0 && childIndex < [children_ count])
+    {
+        normalImage_ = [children_ objectAtIndex: childIndex];
+        normalImage_.visible = YES;
+        [self setContentSize: [normalImage_ contentSize]];
+    }
+}
+
+-(NSUInteger) selectedImageIndex
+{
+	return [children_ indexOfObject: selectedImage_];
+}
+
+-(void) setSelectedImageIndex:(NSUInteger) childIndex
+{    
+    if (childIndex > 0 && childIndex < [children_ count])
+    {
+        selectedImage_ = [children_ objectAtIndex: childIndex];
+        selectedImage_.visible = NO;
+    }
+}
+
+-(NSUInteger)disabledImageIndex
+{
+	return [children_ indexOfObject: disabledImage_];
+}
+
+-(void) setDisabledImageIndex:(NSUInteger) childIndex
+{    
+    if (childIndex > 0 && childIndex < [children_ count])
+    {
+        disabledImage_ = [children_ objectAtIndex: childIndex];
+        disabledImage_.visible = NO;
+    }
+}
+
 @end
 
 #pragma mark -
