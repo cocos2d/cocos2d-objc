@@ -696,6 +696,7 @@
 
     NSArray *layerMultiplexKeys = [NSArray arrayWithObjects:
                                   @"layers",
+                                  @"enabledLayer_",
                                   nil];
     
     return [layerKeys arrayByAddingObjectsFromArray: layerMultiplexKeys ];
@@ -711,8 +712,6 @@
             [self release];
             return nil;
         }
-        
-        [self addChild: [self.layers objectAtIndex: 0]];
     }
     return self;
 }
