@@ -567,8 +567,78 @@ enum nodeTags {
 //     |__|  |__| /__/     \__\ \______| |__|  \______|
 
 
+
+//
+// ====== TODO: Menus ===== 
+// <# assigned: Stepan Generalov (must be done today: 4 Jan 2012) #>
+//
+// * CCMenu - straight-forward. Only selectedItem should be saved as selectedItemIndex number with dynamic setter.
+//
+// * CCMenuItems - lot of work, especially for Label menu items, but it should be ok. Will not save invocation & blocks, of course.
+// Developer should use CCNode name & CCNodeCache to set blocks/invocations.
+//
+//
+
+//
+// ====== New Cocos2D-iPhone Features & Classes for AMC ======
+// <# assigned: Stepan Generalov (must be done today: 4 Jan 2012) #>
+//
+// 1. CCNodeCache & CCNode.name property 
+//   * CCNode.name: to use in CCNodeCache, default value is nil.
+//       CCNode.name is dynamic property - all CCNodeCache calls must be done only from
+//       CCNode#setName setter. If name set to nil - node must be removed from CCNodeCache.
+//       If node name is changed  - node should change it's name in CCNodeCache.
+//       If node name is set first time - node should register in CCNodeCache.
+//       On dealloc node sets it's name to nil - and this removes node from cache.
+//   * CCNodeCache SHOULDN'T retain Nodes. 
+//
+
+//
+// ====== TODO: More Nodes ====== 
+// <# assigned: Stepan Generalov (must be done today-tomorrow 4-5 Jan 2012) #>
+//
+// * CCParalaxNode - pretty easy, just need to save CGPointObject's in parallaxRatio array & then use it in
+// -initWithDictionaryRepresentation: for parallaxRatio argument, when reading childs from loadedChildren.
+//
+// * CCTMXTiledMap - incomplete support. Save only tmx filename. It's supported by
+// cocos2d-iphone. The only issue is that if you're changed something after loading tmx
+// - this will not be saved (full support is added in  "Possible future features" section below )
+//
+// * CCScene - should work without any modifications - cause it's simple CCNode.
+// * CCTransition & it's subclasses - should be VERY simple. Should we really support this??????????
+//
+// * CCProgressTimer - straight-forward.
+//
+
+//
+// ====== ACTIONS ======
+// <# NOT ASSIGNED TO ANYBODY #>
+//
+// * CCAction - just save tag. target & original target will be set on runAction.
+//    Add -allActionsForTarget: to CCActionManager to retreive all actions.
+//    Add dynamic property - array of actions.
+//    For getter - use CCActionManager#allActionsForTarget:
+//    For setter - use runAction
+//
+// * CCFiniteTimeAction - save tag & duration.
+//
+// * CCRepeatForever - save tag & innerAction.
+//
+// * CCSpeed - save tag speed & innerAction.
+//
+// * CCFollow - change followedNode to followedNodeName - simple!
+//      boundarySet(simple BOOL), boundaryRect (need to calculate it back to rect 
+//      from 4 floats on save.)
+//      To load CCFollow - just set followedNode on first CCAction#update: call - at this time
+//      node should alredy exist in CCNodeCache.
+//
+// TODO: investigate further.
+//
+//
+
 //
 // ======= TODO: Animation =====
+// <# NOT ASSIGNED TO ANYBODY #>
 //
 // * CCAnimation - should work out of the box, cause CCSpriteFrame is ready.
 // Just some additional logic must be added to recache used animations & spriteFrames.
@@ -597,57 +667,6 @@ enum nodeTags {
 //
 
 //
-// ====== TODO: Menus =====
-//
-// * CCMenu - straight-forward. Only selectedItem should be saved as selectedItemIndex number with dynamic setter.
-//
-// * CCMenuItems - lot of work, especially for Label menu items, but it should be ok. Will not save invocation & blocks, of course.
-// Developer should use CCNode name & CCNodeCache to set blocks/invocations.
-//
-//
-
-//
-// ====== More Nodes ======
-//
-// * CCParalaxNode - pretty easy, just need to save CGPointObject's in parallaxRatio array & then use it in
-// -initWithDictionaryRepresentation: for parallaxRatio argument, when reading childs from loadedChildren.
-//
-// * CCTMXTiledMap - incomplete support. Save only tmx filename. It's supported by
-// cocos2d-iphone. The only issue is that if you're changed something after loading tmx
-// - this will not be saved (full support is added in  "Possible future features" section below )
-//
-// * CCScene - should work without any modifications - cause it's simple CCNode.
-// * CCTransition & it's subclasses - should be VERY simple. Should we really support this??????????
-//
-// * CCProgressTimer - straight-forward.
-//
-
-//
-// ====== ACTIONS ======
-//
-// * CCAction - just save tag. target & original target will be set on runAction.
-//    Add -allActionsForTarget: to CCActionManager to retreive all actions.
-//    Add dynamic property - array of actions.
-//    For getter - use CCActionManager#allActionsForTarget:
-//    For setter - use runAction
-//
-// * CCFiniteTimeAction - save tag & duration.
-//
-// * CCRepeatForever - save tag & innerAction.
-//
-// * CCSpeed - save tag speed & innerAction.
-//
-// * CCFollow - change followedNode to followedNodeName - simple!
-//      boundarySet(simple BOOL), boundaryRect (need to calculate it back to rect 
-//      from 4 floats on save.)
-//      To load CCFollow - just set followedNode on first CCAction#update: call - at this time
-//      node should alredy exist in CCNodeCache.
-//
-// TODO: investigate further.
-//
-//
-
-//
 // TODO: Look through cocos2d-iphone documentation for any classes, that i may have
 // skipped here & that we need to support.
 //
@@ -659,21 +678,11 @@ enum nodeTags {
 // TODO: CCScene (should work, just got no explicit test)
 // TODO: Animation key (Issue #9) test. 
 
-//
-// ====== New Cocos2D-iPhone Features & Classes for AMC ======
-//
-// 1. CCNodeCache & CCNode.name property
-//   * CCNode.name: to use in CCNodeCache, default value is nil.
-//       CCNode.name is dynamic property - all CCNodeCache calls must be done only from
-//       CCNode#setName setter. If name set to nil - node must be removed from CCNodeCache.
-//       If node name is changed  - node should change it's name in CCNodeCache.
-//       If node name is set first time - node should register in CCNodeCache.
-//       On dealloc node sets it's name to nil - and this removes node from cache.
-//   * CCNodeCache SHOULDN'T retain Nodes. 
-//
+
 
 //
-// ====== Possible future features ======
+// ====== Possible future features ====== 
+// <# DON'T DO THIS - NOT NEEDED FOR FIRST RELEASE #>
 //
 //  * CCTimer & scheduled methods. (Not used by Cocos2D-iPhone classes 
 // themselves - should be used by developer expicitly ).
