@@ -30,6 +30,7 @@
 #import "CCDirector.h"
 #import "Support/CGPointExtension.h"
 #import "ccMacros.h"
+#import "AutoMagicCoding/AutoMagicCoding/NSObject+AutoMagicCoding.h"
 
 #import <Availability.h>
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
@@ -524,4 +525,24 @@ enum {
 	CCARRAY_FOREACH(children_, item)
 		[item setColor:color_];
 }
+
+
+#pragma mark Menu - AutoMagicCoding Support
+
+-(id) initWithDictionaryRepresentation:(NSDictionary *)aDict
+{
+	if( (self=[super initWithDictionaryRepresentation: aDict]) ) {
+        
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+		self.isTouchEnabled = YES;
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+		self.isMouseEnabled = YES;
+#endif		
+		selectedItem_ = nil;
+		state_ = kCCMenuStateWaiting;
+	}
+	
+	return self;
+}
+
 @end
