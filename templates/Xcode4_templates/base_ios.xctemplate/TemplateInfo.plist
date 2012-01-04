@@ -40,8 +40,6 @@
 			</array>
 			<key>SharedSettings</key>
 			<dict>
-				<key>GCC_THUMB_SUPPORT[arch=armv6]</key>
-				<string></string>
 				<key>OTHER_LDFLAGS</key>
 				<string>-lz</string>
 			</dict>
