@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<!-- File autogenrated by cocos2d/tools/template_generator.py DO NOT EDIT IT MANUALLY -->
 <plist version="1.0">
 <dict>
 	<key>Description</key>
 	<string>This template provides an starting point for cocos2d for iOS.</string>
 	<key>Identifier</key>
-	<string>com.cocos2d.cocosdenshionlib</string>
+	<string>com.cocos2d-v2.cocosdenshionlib</string>
 	<key>Kind</key>
 	<string>Xcode.Xcode3.ProjectTemplateUnitKind</string>
-
 	<key>Definitions</key>
 	<dict>
 		<key>libs/CocosDenshion/CDAudioManager.h</key>

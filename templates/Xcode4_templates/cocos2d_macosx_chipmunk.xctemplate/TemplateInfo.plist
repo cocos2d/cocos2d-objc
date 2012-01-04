@@ -4,13 +4,13 @@
 <dict>
 	<key>Ancestors</key>
 	<array>
-		<string>com.cocos2d.bundlebase</string>
-		<string>com.cocos2d.macbase</string>
-		<string>com.cocos2d.cocos2dlib</string>
-		<string>com.cocos2d.chipmunklib</string>
-		<string>com.cocos2d.cocosdenshionlib</string>
-		<string>com.cocos2d.cocosdenshionextraslib</string>
-		<string>com.cocos2d.kazmathlib</string>
+		<string>com.cocos2d-v2.bundlebase</string>
+		<string>com.cocos2d-v2.macbase</string>
+		<string>com.cocos2d-v2.cocos2dlib</string>
+		<string>com.cocos2d-v2.chipmunklib</string>
+		<string>com.cocos2d-v2.cocosdenshionlib</string>
+		<string>com.cocos2d-v2.cocosdenshionextraslib</string>
+		<string>com.cocos2d-v2.kazmathlib</string>
 	</array>
 	<key>Concrete</key>
 	<true/>
@@ -67,7 +67,7 @@
 	<key>Description</key>
 	<string>This template provides a starting point for an application that uses cocos2d and Chipmunk for Mac OS X.</string>
 	<key>Identifier</key>
-	<string>com.cocos2d.cocos2dChipmunkMacTemplate</string>
+	<string>com.cocos2d-v2.cocos2dChipmunkMacTemplate</string>
 	<key>Kind</key>
 	<string>Xcode.Xcode3.ProjectTemplateUnitKind</string>
 	<key>Nodes</key>
@@ -88,7 +88,7 @@
 				<key>ALWAYS_SEARCH_USER_PATHS</key>
 				<string>YES</string>
 				<key>USER_HEADER_SEARCH_PATHS</key>
-				<string>"___PACKAGENAME___/libs/Chipmunk/include/chipmunk"</string>
+				<string>&quot;___PACKAGENAME___/libs/Chipmunk/include/chipmunk&quot;</string>
 			</dict>
 		</dict>
 	</array>
