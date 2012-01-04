@@ -314,7 +314,7 @@ const uint32_t	kZoomActionTag = 0xc0c05002;
 
 -(void) setLabelIndex:(NSUInteger) labelIndex
 {    
-    if (labelIndex > 0 && labelIndex < [children_ count])
+    if (labelIndex < [children_ count])
     {
         label_ = [children_ objectAtIndex: labelIndex];
         [self setContentSize:[label_ contentSize]];
