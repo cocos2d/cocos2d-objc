@@ -558,6 +558,19 @@ enum nodeTags {
 //      * CCLabelMBFont - FULL SUPPORT by Magic. True magic... Tested only on a Mac, but...
 //          You know - i'll better just trust the Magic, cause Magic is VERY powerfull!
 //
+// 5. Menus - FULL SUPPORT EXCEPT INVOCATIONS/BLOCKS
+//      * CCMenu - FULL SUPORT
+//      * CCMenuItem - ALL SUBCLASSES SUPPORTED, Invocation & block doesn't get saved with AMC.
+//          * CCMenuItemLabel
+//          * CCMenuItemAtlasFont
+//          * CCMenuItemFont
+//          * CCMenuItemSprite
+//          * CCMenuItemImage
+//          * CCMenuItemToggle
+//
+//
+//
+//
 // DON'T MESS WITH 
 //     .___  ___.      ___       _______  __    ______ 
 //     |   \/   |     /   \     /  _____||  |  /      |
@@ -572,30 +585,24 @@ enum nodeTags {
 // ====== TODO: Menus ===== 
 // <# assigned: Stepan Generalov (must be done today: 4 Jan 2012) #>
 //
-// * CCMenu - straight-forward. Only selectedItem should be saved as selectedItemIndex number with dynamic setter.
+// 1. CCMenuItem: Add ability to set invocation/block during runtime.
+//    Set invocation via setting Target & Selector OR Invocation itself.
 //
-// * CCMenuItems - lot of work, especially for Label menu items, but it should be ok. Will not save invocation & blocks, of course.
-// Developer should use CCNode name & CCNodeCache to set blocks/invocations.
-//
-//
-
-//
-// ====== New Cocos2D-iPhone Features & Classes for AMC ======
-// <# assigned: Stepan Generalov (must be done today: 4 Jan 2012) #>
-//
-// 1. CCNodeCache & CCNode.name property 
+// 2. CCNodeRegistry & CCNode.name property 
 //   * CCNode.name: to use in CCNodeCache, default value is nil.
 //       CCNode.name is dynamic property - all CCNodeCache calls must be done only from
 //       CCNode#setName setter. If name set to nil - node must be removed from CCNodeCache.
 //       If node name is changed  - node should change it's name in CCNodeCache.
 //       If node name is set first time - node should register in CCNodeCache.
 //       On dealloc node sets it's name to nil - and this removes node from cache.
-//   * CCNodeCache SHOULDN'T retain Nodes. 
+//   * CCNodeCache SHOULDN'T retain Nodes.
+//
+// 3. MenuTest: Use CCNodeRegistry to restore menuItems functionality.
 //
 
 //
 // ====== TODO: More Nodes ====== 
-// <# assigned: Stepan Generalov (must be done today-tomorrow 4-5 Jan 2012) #>
+// <# assigned: Stepan Generalov (must be done tomorrow 5 Jan 2012) #>
 //
 // * CCParalaxNode - pretty easy, just need to save CGPointObject's in parallaxRatio array & then use it in
 // -initWithDictionaryRepresentation: for parallaxRatio argument, when reading childs from loadedChildren.
@@ -672,7 +679,7 @@ enum nodeTags {
 //
 
 //
-// ====== TODO: Tests =====
+// ====== TODO: More Tests =====
 //
 // TODO: Sprite + Blend Func (should work, just got no explicit test)
 // TODO: CCScene (should work, just got no explicit test)
