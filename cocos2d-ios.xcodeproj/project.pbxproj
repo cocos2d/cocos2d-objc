@@ -1291,8 +1291,6 @@
 		A04B0D4F149E7FFC005EB429 /* BaseAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0D3A8FE149D2FA40077CD93 /* BaseAppController.m */; };
 		A04B0D50149E7FFE005EB429 /* BaseAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0D3A8FE149D2FA40077CD93 /* BaseAppController.m */; };
 		A04B0F9814A2A038005EB429 /* fire.png in Resources */ = {isa = PBXBuildFile; fileRef = 50F9EA8F0E1AE87E000E7616 /* fire.png */; };
-		A054DAC114B47B260005FE2D /* PhysicsSprite.h in Headers */ = {isa = PBXBuildFile; fileRef = A054DABF14B47B260005FE2D /* PhysicsSprite.h */; };
-		A054DAC214B47B260005FE2D /* PhysicsSprite.mm in Sources */ = {isa = PBXBuildFile; fileRef = A054DAC014B47B260005FE2D /* PhysicsSprite.mm */; };
 		A0600BF213C2074000BB6F49 /* fps_images-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E087B34E12785BB60076F6FF /* fps_images-hd.png */; };
 		A0600BF313C2074000BB6F49 /* fps_images-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E087B34E12785BB60076F6FF /* fps_images-hd.png */; };
 		A0600BF413C2074100BB6F49 /* fps_images-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E087B34E12785BB60076F6FF /* fps_images-hd.png */; };
@@ -4759,101 +4757,6 @@
 		A01AB95314970B1F00C93DB6 /* DirectorTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DirectorTest.m; path = tests/DirectorTest.m; sourceTree = "<group>"; };
 		A034FF85149DC993009F11AA /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		A04A1FEB13B826B300ABAFB7 /* libkazmath.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libkazmath.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		A054CFE214B46D340005FE2D /* TemplateInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = TemplateInfo.plist; sourceTree = "<group>"; };
-		A054CFE514B46D340005FE2D /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
-		A054CFE614B46D340005FE2D /* fps_images-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fps_images-hd.png"; sourceTree = "<group>"; };
-		A054CFE714B46D340005FE2D /* fps_images.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fps_images.png; sourceTree = "<group>"; };
-		A054CFE814B46D340005FE2D /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72.png"; sourceTree = "<group>"; };
-		A054CFE914B46D340005FE2D /* Icon-Small-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small-50.png"; sourceTree = "<group>"; };
-		A054CFEA14B46D340005FE2D /* Icon-Small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small.png"; sourceTree = "<group>"; };
-		A054CFEB14B46D340005FE2D /* Icon-Small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small@2x.png"; sourceTree = "<group>"; };
-		A054CFEC14B46D340005FE2D /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
-		A054CFED14B46D340005FE2D /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
-		A054CFEE14B46D340005FE2D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		A054CFEF14B46D340005FE2D /* iTunesArtwork */ = {isa = PBXFileReference; lastKnownFileType = file; path = iTunesArtwork; sourceTree = "<group>"; };
-		A054CFF014B46D340005FE2D /* TemplateInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = TemplateInfo.plist; sourceTree = "<group>"; };
-		A054CFF414B46D340005FE2D /* English */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		A054CFF614B46D340005FE2D /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
-		A054CFF714B46D340005FE2D /* fps_images.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fps_images.png; sourceTree = "<group>"; };
-		A054CFF814B46D340005FE2D /* icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = icon.icns; sourceTree = "<group>"; };
-		A054CFF914B46D340005FE2D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		A054CFFA14B46D340005FE2D /* TemplateInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = TemplateInfo.plist; sourceTree = "<group>"; };
-		A054CFFC14B46D340005FE2D /* TemplateInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = TemplateInfo.plist; sourceTree = "<group>"; };
-		A054CFFF14B46D340005FE2D /* ___FILEBASENAME___.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "___FILEBASENAME___.h"; sourceTree = "<group>"; };
-		A054D00014B46D340005FE2D /* ___FILEBASENAME___.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "___FILEBASENAME___.m"; sourceTree = "<group>"; };
-		A054D00214B46D340005FE2D /* ___FILEBASENAME___.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "___FILEBASENAME___.h"; sourceTree = "<group>"; };
-		A054D00314B46D340005FE2D /* ___FILEBASENAME___.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "___FILEBASENAME___.m"; sourceTree = "<group>"; };
-		A054D00514B46D340005FE2D /* ___FILEBASENAME___.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "___FILEBASENAME___.h"; sourceTree = "<group>"; };
-		A054D00614B46D340005FE2D /* ___FILEBASENAME___.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "___FILEBASENAME___.m"; sourceTree = "<group>"; };
-		A054D00714B46D340005FE2D /* TemplateIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = TemplateIcon.icns; sourceTree = "<group>"; };
-		A054D00814B46D340005FE2D /* TemplateInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = TemplateInfo.plist; sourceTree = "<group>"; };
-		A054D00A14B46D340005FE2D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		A054D00B14B46D340005FE2D /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		A054D00C14B46D340005FE2D /* HelloWorldLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HelloWorldLayer.h; sourceTree = "<group>"; };
-		A054D00D14B46D340005FE2D /* HelloWorldLayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HelloWorldLayer.m; sourceTree = "<group>"; };
-		A054D00E14B46D340005FE2D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		A054D00F14B46D340005FE2D /* Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Prefix.pch; sourceTree = "<group>"; };
-		A054D01014B46D340005FE2D /* TemplateIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = TemplateIcon.icns; sourceTree = "<group>"; };
-		A054D01114B46D340005FE2D /* TemplateInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = TemplateInfo.plist; sourceTree = "<group>"; };
-		A054D01314B46D340005FE2D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		A054D01414B46D340005FE2D /* AppDelegate.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = AppDelegate.mm; sourceTree = "<group>"; };
-		A054D01514B46D340005FE2D /* GLES-Render.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "GLES-Render.h"; sourceTree = "<group>"; };
-		A054D01614B46D340005FE2D /* GLES-Render.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = "GLES-Render.mm"; sourceTree = "<group>"; };
-		A054D01714B46D340005FE2D /* HelloWorldLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HelloWorldLayer.h; sourceTree = "<group>"; };
-		A054D01814B46D340005FE2D /* HelloWorldLayer.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = HelloWorldLayer.mm; sourceTree = "<group>"; };
-		A054D01914B46D340005FE2D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		A054D01A14B46D340005FE2D /* Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Prefix.pch; sourceTree = "<group>"; };
-		A054D01C14B46D340005FE2D /* blocks.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blocks.png; sourceTree = "<group>"; };
-		A054D01D14B46D340005FE2D /* TemplateIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = TemplateIcon.icns; sourceTree = "<group>"; };
-		A054D01E14B46D340005FE2D /* TemplateInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = TemplateInfo.plist; sourceTree = "<group>"; };
-		A054D02014B46D340005FE2D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		A054D02114B46D340005FE2D /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		A054D02214B46D340005FE2D /* HelloWorldLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HelloWorldLayer.h; sourceTree = "<group>"; };
-		A054D02314B46D340005FE2D /* HelloWorldLayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HelloWorldLayer.m; sourceTree = "<group>"; };
-		A054D02414B46D340005FE2D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		A054D02514B46D340005FE2D /* Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Prefix.pch; sourceTree = "<group>"; };
-		A054D02714B46D340005FE2D /* grossini_dance_atlas.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grossini_dance_atlas.png; sourceTree = "<group>"; };
-		A054D02814B46D340005FE2D /* TemplateIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = TemplateIcon.icns; sourceTree = "<group>"; };
-		A054D02914B46D340005FE2D /* TemplateInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = TemplateInfo.plist; sourceTree = "<group>"; };
-		A054D02B14B46D340005FE2D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		A054D02C14B46D340005FE2D /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		A054D02D14B46D340005FE2D /* HelloWorldLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HelloWorldLayer.h; sourceTree = "<group>"; };
-		A054D02E14B46D340005FE2D /* HelloWorldLayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HelloWorldLayer.m; sourceTree = "<group>"; };
-		A054D02F14B46D340005FE2D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		A054D03014B46D340005FE2D /* Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Prefix.pch; sourceTree = "<group>"; };
-		A054D03114B46D340005FE2D /* TemplateIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = TemplateIcon.icns; sourceTree = "<group>"; };
-		A054D03214B46D340005FE2D /* TemplateInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = TemplateInfo.plist; sourceTree = "<group>"; };
-		A054D03414B46D340005FE2D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		A054D03514B46D350005FE2D /* AppDelegate.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = AppDelegate.mm; sourceTree = "<group>"; };
-		A054D03614B46D350005FE2D /* GLES-Render.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "GLES-Render.h"; sourceTree = "<group>"; };
-		A054D03714B46D350005FE2D /* GLES-Render.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = "GLES-Render.mm"; sourceTree = "<group>"; };
-		A054D03814B46D350005FE2D /* HelloWorldLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HelloWorldLayer.h; sourceTree = "<group>"; };
-		A054D03914B46D350005FE2D /* HelloWorldLayer.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = HelloWorldLayer.mm; sourceTree = "<group>"; };
-		A054D03A14B46D350005FE2D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		A054D03B14B46D350005FE2D /* Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Prefix.pch; sourceTree = "<group>"; };
-		A054D03D14B46D350005FE2D /* blocks.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blocks.png; sourceTree = "<group>"; };
-		A054D03E14B46D350005FE2D /* TemplateIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = TemplateIcon.icns; sourceTree = "<group>"; };
-		A054D03F14B46D350005FE2D /* TemplateInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = TemplateInfo.plist; sourceTree = "<group>"; };
-		A054D04114B46D350005FE2D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		A054D04214B46D350005FE2D /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		A054D04314B46D350005FE2D /* HelloWorldLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HelloWorldLayer.h; sourceTree = "<group>"; };
-		A054D04414B46D350005FE2D /* HelloWorldLayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HelloWorldLayer.m; sourceTree = "<group>"; };
-		A054D04514B46D350005FE2D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		A054D04614B46D350005FE2D /* Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Prefix.pch; sourceTree = "<group>"; };
-		A054D04814B46D350005FE2D /* grossini_dance_atlas.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grossini_dance_atlas.png; sourceTree = "<group>"; };
-		A054D04914B46D350005FE2D /* TemplateIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = TemplateIcon.icns; sourceTree = "<group>"; };
-		A054D04A14B46D350005FE2D /* TemplateInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = TemplateInfo.plist; sourceTree = "<group>"; };
-		A054D04C14B46D350005FE2D /* TemplateInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = TemplateInfo.plist; sourceTree = "<group>"; };
-		A054D04E14B46D350005FE2D /* TemplateInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = TemplateInfo.plist; sourceTree = "<group>"; };
-		A054D05014B46D350005FE2D /* TemplateInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = TemplateInfo.plist; sourceTree = "<group>"; };
-		A054D05214B46D350005FE2D /* TemplateInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = TemplateInfo.plist; sourceTree = "<group>"; };
-		A054D05414B46D350005FE2D /* TemplateInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = TemplateInfo.plist; sourceTree = "<group>"; };
-		A054D05614B46D350005FE2D /* TemplateInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = TemplateInfo.plist; sourceTree = "<group>"; };
-		A054D05814B46D350005FE2D /* TemplateInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = TemplateInfo.plist; sourceTree = "<group>"; };
-		A054D89D14B479460005FE2D /* PhysicsSprite.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PhysicsSprite.h; sourceTree = "<group>"; };
-		A054D89E14B479460005FE2D /* PhysicsSprite.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PhysicsSprite.m; sourceTree = "<group>"; };
-		A054DABF14B47B260005FE2D /* PhysicsSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhysicsSprite.h; sourceTree = "<group>"; };
-		A054DAC014B47B260005FE2D /* PhysicsSprite.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = PhysicsSprite.mm; sourceTree = "<group>"; };
 		A060106813C2992800BB6F49 /* LICENSE_Kazmath.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE_Kazmath.txt; sourceTree = "<group>"; };
 		A079344F141990CC00AC44D4 /* AddPair.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddPair.h; sourceTree = "<group>"; };
 		A0793450141990CC00AC44D4 /* ApplyForce.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApplyForce.h; sourceTree = "<group>"; };
@@ -6053,7 +5956,6 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
-				A054CFE014B46D340005FE2D /* Xcode4_templates */,
 				A07EC9B2141A8D32008C1F12 /* README.md */,
 				501A7CAC0EBC97BA005BC158 /* AUTHORS */,
 				508A4A2310B47A46004B9CC3 /* RELEASE_NOTES */,
@@ -7350,325 +7252,6 @@
 			path = gl_utils;
 			sourceTree = "<group>";
 		};
-		A054CFE014B46D340005FE2D /* Xcode4_templates */ = {
-			isa = PBXGroup;
-			children = (
-				A054CFE114B46D340005FE2D /* base.xctemplate */,
-				A054CFE314B46D340005FE2D /* base_ios.xctemplate */,
-				A054CFF114B46D340005FE2D /* base_mac.xctemplate */,
-				A054CFFB14B46D340005FE2D /* bundle.xctemplate */,
-				A054CFFD14B46D340005FE2D /* CCNode class.xctemplate */,
-				A054D00914B46D340005FE2D /* cocos2d.xctemplate */,
-				A054D01214B46D340005FE2D /* cocos2d_box2d.xctemplate */,
-				A054D01F14B46D340005FE2D /* cocos2d_chipmunk.xctemplate */,
-				A054D02A14B46D340005FE2D /* cocos2d_macosx.xctemplate */,
-				A054D03314B46D340005FE2D /* cocos2d_macosx_box2d.xctemplate */,
-				A054D04014B46D350005FE2D /* cocos2d_macosx_chipmunk.xctemplate */,
-				A054D04B14B46D350005FE2D /* lib_box2d.xctemplate */,
-				A054D04D14B46D350005FE2D /* lib_chipmunk.xctemplate */,
-				A054D04F14B46D350005FE2D /* lib_cocos2d.xctemplate */,
-				A054D05114B46D350005FE2D /* lib_cocos2d_shaders.xctemplate */,
-				A054D05314B46D350005FE2D /* lib_cocosdenshion.xctemplate */,
-				A054D05514B46D350005FE2D /* lib_cocosdenshionextras.xctemplate */,
-				A054D05714B46D350005FE2D /* lib_kazmath.xctemplate */,
-			);
-			name = Xcode4_templates;
-			path = templates/Xcode4_templates;
-			sourceTree = "<group>";
-		};
-		A054CFE114B46D340005FE2D /* base.xctemplate */ = {
-			isa = PBXGroup;
-			children = (
-				A054CFE214B46D340005FE2D /* TemplateInfo.plist */,
-			);
-			path = base.xctemplate;
-			sourceTree = "<group>";
-		};
-		A054CFE314B46D340005FE2D /* base_ios.xctemplate */ = {
-			isa = PBXGroup;
-			children = (
-				A054CFE414B46D340005FE2D /* Resources */,
-				A054CFF014B46D340005FE2D /* TemplateInfo.plist */,
-			);
-			path = base_ios.xctemplate;
-			sourceTree = "<group>";
-		};
-		A054CFE414B46D340005FE2D /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				A054CFE514B46D340005FE2D /* Default.png */,
-				A054CFE614B46D340005FE2D /* fps_images-hd.png */,
-				A054CFE714B46D340005FE2D /* fps_images.png */,
-				A054CFE814B46D340005FE2D /* Icon-72.png */,
-				A054CFE914B46D340005FE2D /* Icon-Small-50.png */,
-				A054CFEA14B46D340005FE2D /* Icon-Small.png */,
-				A054CFEB14B46D340005FE2D /* Icon-Small@2x.png */,
-				A054CFEC14B46D340005FE2D /* Icon.png */,
-				A054CFED14B46D340005FE2D /* Icon@2x.png */,
-				A054CFEE14B46D340005FE2D /* Info.plist */,
-				A054CFEF14B46D340005FE2D /* iTunesArtwork */,
-			);
-			path = Resources;
-			sourceTree = "<group>";
-		};
-		A054CFF114B46D340005FE2D /* base_mac.xctemplate */ = {
-			isa = PBXGroup;
-			children = (
-				A054CFF214B46D340005FE2D /* Resources */,
-				A054CFFA14B46D340005FE2D /* TemplateInfo.plist */,
-			);
-			path = base_mac.xctemplate;
-			sourceTree = "<group>";
-		};
-		A054CFF214B46D340005FE2D /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				A054CFF314B46D340005FE2D /* InfoPlist.strings */,
-				A054CFF514B46D340005FE2D /* MainMenu.xib */,
-				A054CFF714B46D340005FE2D /* fps_images.png */,
-				A054CFF814B46D340005FE2D /* icon.icns */,
-				A054CFF914B46D340005FE2D /* Info.plist */,
-			);
-			path = Resources;
-			sourceTree = "<group>";
-		};
-		A054CFFB14B46D340005FE2D /* bundle.xctemplate */ = {
-			isa = PBXGroup;
-			children = (
-				A054CFFC14B46D340005FE2D /* TemplateInfo.plist */,
-			);
-			path = bundle.xctemplate;
-			sourceTree = "<group>";
-		};
-		A054CFFD14B46D340005FE2D /* CCNode class.xctemplate */ = {
-			isa = PBXGroup;
-			children = (
-				A054CFFE14B46D340005FE2D /* CCLayer */,
-				A054D00114B46D340005FE2D /* CCNode */,
-				A054D00414B46D340005FE2D /* CCSprite */,
-				A054D00714B46D340005FE2D /* TemplateIcon.icns */,
-				A054D00814B46D340005FE2D /* TemplateInfo.plist */,
-			);
-			path = "CCNode class.xctemplate";
-			sourceTree = "<group>";
-		};
-		A054CFFE14B46D340005FE2D /* CCLayer */ = {
-			isa = PBXGroup;
-			children = (
-				A054CFFF14B46D340005FE2D /* ___FILEBASENAME___.h */,
-				A054D00014B46D340005FE2D /* ___FILEBASENAME___.m */,
-			);
-			path = CCLayer;
-			sourceTree = "<group>";
-		};
-		A054D00114B46D340005FE2D /* CCNode */ = {
-			isa = PBXGroup;
-			children = (
-				A054D00214B46D340005FE2D /* ___FILEBASENAME___.h */,
-				A054D00314B46D340005FE2D /* ___FILEBASENAME___.m */,
-			);
-			path = CCNode;
-			sourceTree = "<group>";
-		};
-		A054D00414B46D340005FE2D /* CCSprite */ = {
-			isa = PBXGroup;
-			children = (
-				A054D00514B46D340005FE2D /* ___FILEBASENAME___.h */,
-				A054D00614B46D340005FE2D /* ___FILEBASENAME___.m */,
-			);
-			path = CCSprite;
-			sourceTree = "<group>";
-		};
-		A054D00914B46D340005FE2D /* cocos2d.xctemplate */ = {
-			isa = PBXGroup;
-			children = (
-				A054D00A14B46D340005FE2D /* AppDelegate.h */,
-				A054D00B14B46D340005FE2D /* AppDelegate.m */,
-				A054D00C14B46D340005FE2D /* HelloWorldLayer.h */,
-				A054D00D14B46D340005FE2D /* HelloWorldLayer.m */,
-				A054D00E14B46D340005FE2D /* main.m */,
-				A054D00F14B46D340005FE2D /* Prefix.pch */,
-				A054D01014B46D340005FE2D /* TemplateIcon.icns */,
-				A054D01114B46D340005FE2D /* TemplateInfo.plist */,
-			);
-			path = cocos2d.xctemplate;
-			sourceTree = "<group>";
-		};
-		A054D01214B46D340005FE2D /* cocos2d_box2d.xctemplate */ = {
-			isa = PBXGroup;
-			children = (
-				A054D01314B46D340005FE2D /* AppDelegate.h */,
-				A054D01414B46D340005FE2D /* AppDelegate.mm */,
-				A054D01514B46D340005FE2D /* GLES-Render.h */,
-				A054D01614B46D340005FE2D /* GLES-Render.mm */,
-				A054D01714B46D340005FE2D /* HelloWorldLayer.h */,
-				A054D01814B46D340005FE2D /* HelloWorldLayer.mm */,
-				A054D01914B46D340005FE2D /* main.m */,
-				A054D01A14B46D340005FE2D /* Prefix.pch */,
-				A054D01B14B46D340005FE2D /* Resources */,
-				A054D01D14B46D340005FE2D /* TemplateIcon.icns */,
-				A054D01E14B46D340005FE2D /* TemplateInfo.plist */,
-				A054DABF14B47B260005FE2D /* PhysicsSprite.h */,
-				A054DAC014B47B260005FE2D /* PhysicsSprite.mm */,
-			);
-			path = cocos2d_box2d.xctemplate;
-			sourceTree = "<group>";
-		};
-		A054D01B14B46D340005FE2D /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				A054D01C14B46D340005FE2D /* blocks.png */,
-			);
-			path = Resources;
-			sourceTree = "<group>";
-		};
-		A054D01F14B46D340005FE2D /* cocos2d_chipmunk.xctemplate */ = {
-			isa = PBXGroup;
-			children = (
-				A054D02014B46D340005FE2D /* AppDelegate.h */,
-				A054D02114B46D340005FE2D /* AppDelegate.m */,
-				A054D02214B46D340005FE2D /* HelloWorldLayer.h */,
-				A054D02314B46D340005FE2D /* HelloWorldLayer.m */,
-				A054D89D14B479460005FE2D /* PhysicsSprite.h */,
-				A054D89E14B479460005FE2D /* PhysicsSprite.m */,
-				A054D02414B46D340005FE2D /* main.m */,
-				A054D02514B46D340005FE2D /* Prefix.pch */,
-				A054D02614B46D340005FE2D /* Resources */,
-				A054D02814B46D340005FE2D /* TemplateIcon.icns */,
-				A054D02914B46D340005FE2D /* TemplateInfo.plist */,
-			);
-			path = cocos2d_chipmunk.xctemplate;
-			sourceTree = "<group>";
-		};
-		A054D02614B46D340005FE2D /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				A054D02714B46D340005FE2D /* grossini_dance_atlas.png */,
-			);
-			path = Resources;
-			sourceTree = "<group>";
-		};
-		A054D02A14B46D340005FE2D /* cocos2d_macosx.xctemplate */ = {
-			isa = PBXGroup;
-			children = (
-				A054D02B14B46D340005FE2D /* AppDelegate.h */,
-				A054D02C14B46D340005FE2D /* AppDelegate.m */,
-				A054D02D14B46D340005FE2D /* HelloWorldLayer.h */,
-				A054D02E14B46D340005FE2D /* HelloWorldLayer.m */,
-				A054D02F14B46D340005FE2D /* main.m */,
-				A054D03014B46D340005FE2D /* Prefix.pch */,
-				A054D03114B46D340005FE2D /* TemplateIcon.icns */,
-				A054D03214B46D340005FE2D /* TemplateInfo.plist */,
-			);
-			path = cocos2d_macosx.xctemplate;
-			sourceTree = "<group>";
-		};
-		A054D03314B46D340005FE2D /* cocos2d_macosx_box2d.xctemplate */ = {
-			isa = PBXGroup;
-			children = (
-				A054D03414B46D340005FE2D /* AppDelegate.h */,
-				A054D03514B46D350005FE2D /* AppDelegate.mm */,
-				A054D03614B46D350005FE2D /* GLES-Render.h */,
-				A054D03714B46D350005FE2D /* GLES-Render.mm */,
-				A054D03814B46D350005FE2D /* HelloWorldLayer.h */,
-				A054D03914B46D350005FE2D /* HelloWorldLayer.mm */,
-				A054D03A14B46D350005FE2D /* main.m */,
-				A054D03B14B46D350005FE2D /* Prefix.pch */,
-				A054D03C14B46D350005FE2D /* Resources */,
-				A054D03E14B46D350005FE2D /* TemplateIcon.icns */,
-				A054D03F14B46D350005FE2D /* TemplateInfo.plist */,
-			);
-			path = cocos2d_macosx_box2d.xctemplate;
-			sourceTree = "<group>";
-		};
-		A054D03C14B46D350005FE2D /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				A054D03D14B46D350005FE2D /* blocks.png */,
-			);
-			path = Resources;
-			sourceTree = "<group>";
-		};
-		A054D04014B46D350005FE2D /* cocos2d_macosx_chipmunk.xctemplate */ = {
-			isa = PBXGroup;
-			children = (
-				A054D04114B46D350005FE2D /* AppDelegate.h */,
-				A054D04214B46D350005FE2D /* AppDelegate.m */,
-				A054D04314B46D350005FE2D /* HelloWorldLayer.h */,
-				A054D04414B46D350005FE2D /* HelloWorldLayer.m */,
-				A054D04514B46D350005FE2D /* main.m */,
-				A054D04614B46D350005FE2D /* Prefix.pch */,
-				A054D04714B46D350005FE2D /* Resources */,
-				A054D04914B46D350005FE2D /* TemplateIcon.icns */,
-				A054D04A14B46D350005FE2D /* TemplateInfo.plist */,
-			);
-			path = cocos2d_macosx_chipmunk.xctemplate;
-			sourceTree = "<group>";
-		};
-		A054D04714B46D350005FE2D /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				A054D04814B46D350005FE2D /* grossini_dance_atlas.png */,
-			);
-			path = Resources;
-			sourceTree = "<group>";
-		};
-		A054D04B14B46D350005FE2D /* lib_box2d.xctemplate */ = {
-			isa = PBXGroup;
-			children = (
-				A054D04C14B46D350005FE2D /* TemplateInfo.plist */,
-			);
-			path = lib_box2d.xctemplate;
-			sourceTree = "<group>";
-		};
-		A054D04D14B46D350005FE2D /* lib_chipmunk.xctemplate */ = {
-			isa = PBXGroup;
-			children = (
-				A054D04E14B46D350005FE2D /* TemplateInfo.plist */,
-			);
-			path = lib_chipmunk.xctemplate;
-			sourceTree = "<group>";
-		};
-		A054D04F14B46D350005FE2D /* lib_cocos2d.xctemplate */ = {
-			isa = PBXGroup;
-			children = (
-				A054D05014B46D350005FE2D /* TemplateInfo.plist */,
-			);
-			path = lib_cocos2d.xctemplate;
-			sourceTree = "<group>";
-		};
-		A054D05114B46D350005FE2D /* lib_cocos2d_shaders.xctemplate */ = {
-			isa = PBXGroup;
-			children = (
-				A054D05214B46D350005FE2D /* TemplateInfo.plist */,
-			);
-			path = lib_cocos2d_shaders.xctemplate;
-			sourceTree = "<group>";
-		};
-		A054D05314B46D350005FE2D /* lib_cocosdenshion.xctemplate */ = {
-			isa = PBXGroup;
-			children = (
-				A054D05414B46D350005FE2D /* TemplateInfo.plist */,
-			);
-			path = lib_cocosdenshion.xctemplate;
-			sourceTree = "<group>";
-		};
-		A054D05514B46D350005FE2D /* lib_cocosdenshionextras.xctemplate */ = {
-			isa = PBXGroup;
-			children = (
-				A054D05614B46D350005FE2D /* TemplateInfo.plist */,
-			);
-			path = lib_cocosdenshionextras.xctemplate;
-			sourceTree = "<group>";
-		};
-		A054D05714B46D350005FE2D /* lib_kazmath.xctemplate */ = {
-			isa = PBXGroup;
-			children = (
-				A054D05814B46D350005FE2D /* TemplateInfo.plist */,
-			);
-			path = lib_kazmath.xctemplate;
-			sourceTree = "<group>";
-		};
 		A0793447141990CC00AC44D4 /* Testbed */ = {
 			isa = PBXGroup;
 			children = (
@@ -8300,7 +7883,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A054DAC114B47B260005FE2D /* PhysicsSprite.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -12780,7 +12362,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A054DAC214B47B260005FE2D /* PhysicsSprite.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -13581,25 +13162,6 @@
 			targetProxy = E0EA5677134B9CA800F212C8 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		A054CFF314B46D340005FE2D /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				A054CFF414B46D340005FE2D /* English */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		A054CFF514B46D340005FE2D /* MainMenu.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				A054CFF614B46D340005FE2D /* English */,
-			);
-			name = MainMenu.xib;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		05CA7B0210ED674700F12774 /* Debug */ = {

@@ -13,9 +13,9 @@ version 2.0-beta2 XX-Jan-2012
 . [NEW] MenuItem: overrides "cleanup" in order to break circular references.
 . [NEW] Node: Supports custom scheduler and actionManager
 . [NEW] Scheduler: It is no longer a singleton. It is an ivar of director
-. [NEW] Template: RootViewController viewDidAppear / viewDidDissapear will run/pause the director
-. [NEW] Template: AppController rootViewController is a UINavigationController
+. [NEW] Template: AppController use a navigation controller (like the cocos2d's tests)
 . [NEW] Template: cocos2d v2 and v1 templates can be installed at the same time
+. [NEW] Template: Added option for Device Family
 . [NEW] Test: Added Director tests. Tests integration with GameCenter and other UIKit components (iOS)
 . [FIX] Actions: IntervalAction works OK in rewind mode
 . [FIX] Actions: EaseIn/EaseOut actions support float arguments
