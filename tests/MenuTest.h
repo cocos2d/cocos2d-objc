@@ -25,6 +25,12 @@
 @end
 #endif // Mac
 
+@interface MenuTest : CCLayer
+
++(id) nodeWithInsideLayer: (CCLayer *) insideLayer;
+-(id) initWithInsideLayer: (CCLayer *) insideLayer;
+@end
+
 @interface Layer1 : CCLayer
 {
 	CCMenuItem	*disabledItem;

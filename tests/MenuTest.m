@@ -459,6 +459,98 @@ enum {
 @end
 
 
+@implementation MenuTest
+
+enum nodeTags
+{
+    kLayer,
+};
+
+- (NSString *) testFilePath
+{    
+    NSString *filename = [NSString stringWithFormat:@"%@.plist", [self className] ];
+    
+    NSArray *paths					= NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+	NSString *documentsDirectory	= [paths objectAtIndex:0];
+	NSString *fullPath				= [documentsDirectory stringByAppendingPathComponent: filename ];
+	return fullPath;
+}
+
+- (void) save
+{
+    CCNode *layer = [self getChildByTag: kLayer];
+    NSDictionary *dict = [layer dictionaryRepresentation];
+    [dict writeToFile:[self testFilePath] atomically:YES];
+}
+
+- (void) purge
+{
+    [self removeChildByTag: kLayer cleanup:YES];
+    
+    [CCAnimationCache purgeSharedAnimationCache];
+    [CCSpriteFrameCache purgeSharedSpriteFrameCache];
+    [CCTextureCache purgeSharedTextureCache];    
+}
+
+- (void) load
+{
+    NSString *path = [self testFilePath];
+    NSDictionary *aDict = [NSDictionary dictionaryWithContentsOfFile: path];
+    CCLayer *layer = [NSObject objectWithDictionaryRepresentation: aDict ];    
+    
+	[self addChild: layer z: 0 tag: kLayer];
+}
+
+- (void) savePurgeLoadCallback: (id) sender
+{
+    CCMenuItemToggle *toggle = (CCMenuItemToggle *)sender;
+    NSUInteger selected = toggle.selectedIndex;
+    switch (selected) {
+        case 0:
+            NSLog(@"Loading...");
+            [self load];
+            break;
+        case 1:
+            NSLog(@"Saving...");
+            [self save];
+            break;
+        case 2:
+            NSLog(@"Purging...");
+            [self purge];
+            break;
+            
+    }
+    
+}
+
++ (id) nodeWithInsideLayer:(CCLayer *)insideLayer
+{
+    return [[[self alloc] initWithInsideLayer: insideLayer]autorelease];
+}
+
+-(id) initWithInsideLayer:(CCLayer *)insideLayer
+{
+	if( (self = [super init]) ) {
+		CGSize s = [[CCDirector sharedDirector] winSize];
+        
+        [self addChild: insideLayer z:0 tag: kLayer ];		
+        
+        CCMenuItemLabel *save = [CCMenuItemLabel itemWithLabel: [CCLabelTTF labelWithString: @"Save" fontName: @"Marker Felt" fontSize:12]];
+        CCMenuItemLabel *purge = [CCMenuItemLabel itemWithLabel: [CCLabelTTF labelWithString: @"Purge" fontName: @"Marker Felt" fontSize:12]];
+        CCMenuItemLabel *load = [CCMenuItemLabel itemWithLabel: [CCLabelTTF labelWithString: @"Load" fontName: @"Marker Felt" fontSize:12]];
+        CCMenuItem *trigger = [CCMenuItemToggle itemWithTarget:self selector: @selector(savePurgeLoadCallback:) items: save, purge, load, nil];
+        
+		CCMenu *menu = [CCMenu menuWithItems: trigger, nil];
+		
+		menu.position = CGPointZero;
+        trigger.position = ccp( s.width/2, 30);
+		[self addChild: menu z:1];	
+	}
+	return self;
+}
+
+@end
+
 
 // CLASS IMPLEMENTATIONS
 
@@ -511,7 +603,7 @@ enum {
 	CCScene *scene = [CCScene node];
 
 	CCLayerMultiplex *layer = [CCLayerMultiplex layerWithLayers: [Layer1 node], [Layer2 node], [Layer3 node], [Layer4 node], nil];
-	[scene addChild: layer z:0];
+	[scene addChild: [MenuTest nodeWithInsideLayer: layer] z:0];
 
 	[director runWithScene: scene];
 }
@@ -593,7 +685,7 @@ enum {
 	CCScene *scene = [CCScene node];
 	
 	CCLayerMultiplex *layer = [CCLayerMultiplex layerWithLayers: [Layer1 node], [Layer2 node], [Layer3 node], [Layer4 node], nil];
-	[scene addChild: layer z:0];
+	[scene addChild: [MenuTest nodeWithInsideLayer: layer] z:0];
 	
 	[director runWithScene:scene];
 }
