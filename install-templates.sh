@@ -2,10 +2,10 @@
 
 echo 'cocos2d-iphone template installer'
 
-COCOS2D_VER='cocos2d 2.0.0'
+COCOS2D_VER='cocos2d 2.0-beta2'
 SCRIPT_DIR=$(dirname $0)
 
-COCOS2D_DST_DIR='cocos2d-v2'
+COCOS2D_DST_DIR='cocos2d-v2.0'
 
 force=
 user_dir=

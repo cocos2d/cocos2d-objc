@@ -42,18 +42,6 @@
 			<key>Path</key>
 			<string>HelloWorldLayer.m</string>
 		</dict>
-		<key>RootViewController.h</key>
-		<dict>
-			<key>Path</key>
-			<string>RootViewController.h</string>
-			<key>TargetIndices</key>
-			<array/>
-		</dict>
-		<key>RootViewController.m</key>
-		<dict>
-			<key>Path</key>
-			<string>RootViewController.m</string>
-		</dict>
 		<key>AppDelegate.h</key>
 		<dict>
 			<key>Path</key>
@@ -68,7 +56,7 @@
 		</dict>
 	</dict>
 	<key>Description</key>
-	<string>This template provides a starting point for an application that uses cocos2d for iOS. It also includes CocosDenshion.</string>
+	<string>This template provides a starting point for an application that uses cocos2d v2.0 for iOS. It also includes CocosDenshion.</string>
 	<key>Identifier</key>
 	<string>com.cocos2d-v2.cocos2dOnlyIOSTemplate</string>
 	<key>Kind</key>
@@ -79,8 +67,6 @@
 		<string>main.m</string>
 		<string>AppDelegate.h</string>
 		<string>AppDelegate.m</string>
-		<string>RootViewController.h</string>
-		<string>RootViewController.m</string>
 		<string>HelloWorldLayer.h</string>
 		<string>HelloWorldLayer.m</string>
 	</array>

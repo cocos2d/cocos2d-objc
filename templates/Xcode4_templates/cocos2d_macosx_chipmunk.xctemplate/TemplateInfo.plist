@@ -65,7 +65,7 @@
 		</dict>
 	</dict>
 	<key>Description</key>
-	<string>This template provides a starting point for an application that uses cocos2d and Chipmunk for Mac OS X.</string>
+	<string>This template provides a starting point for an application that uses cocos2d v2.0 and Chipmunk for Mac OS X.</string>
 	<key>Identifier</key>
 	<string>com.cocos2d-v2.cocos2dChipmunkMacTemplate</string>
 	<key>Kind</key>

@@ -86,6 +86,21 @@ void removeShape( cpBody *body, cpShape *shape, void *data )
 
 @implementation HelloWorldLayer
 
++(CCScene *) scene
+{
+	// 'scene' is an autorelease object.
+	CCScene *scene = [CCScene node];
+	
+	// 'layer' is an autorelease object.
+	HelloWorldLayer *layer = [HelloWorldLayer node];
+	
+	// add layer as a child to scene
+	[scene addChild: layer];
+	
+	// return the scene
+	return scene;
+}
+
 -(id) init
 {
 	if( (self=[super init])) {
@@ -192,11 +207,8 @@ void removeShape( cpBody *body, cpShape *shape, void *data )
 
 -(void) createResetButton
 {
-	CCMenuItemLabel *reset = [CCMenuItemFont itemFromString:@"Reset" block:^(id sender){
-		CCScene *s = [CCScene node];
-		id child = [HelloWorldLayer node];
-		[s addChild:child];
-		[[CCDirector sharedDirector] replaceScene: s];
+	CCMenuItemLabel *reset = [CCMenuItemFont itemWithString:@"Reset" block:^(id sender){
+		[[CCDirector sharedDirector] replaceScene: [HelloWorldLayer scene]];
 	}];
 	
 	CCMenu *menu = [CCMenu menuWithItems:reset, nil];
