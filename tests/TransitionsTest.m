@@ -309,7 +309,13 @@ Class restartTransition()
 -(void) onEnterTransitionDidFinish
 {
 	[super onEnterTransitionDidFinish];
-	NSLog(@"Scene 1: transition did finish");
+	NSLog(@"Scene 1: onEnterTransitionDidFinish");
+}
+
+-(void) onExitTransitionDidStart
+{
+	[super onExitTransitionDidStart];
+	NSLog(@"Scene 1: onExitTransitionDidStart");
 }
 
 -(void) onExit
@@ -408,7 +414,13 @@ Class restartTransition()
 -(void) onEnterTransitionDidFinish
 {
 	[super onEnterTransitionDidFinish];
-	NSLog(@"Scene 2: transition did finish");
+	NSLog(@"Scene 2: onEnterTransitionDidFinish");
+}
+
+-(void) onExitTransitionDidStart
+{
+	[super onExitTransitionDidStart];
+	NSLog(@"Scene 2: onExitTransitionDidStart");
 }
 
 -(void) onExit
