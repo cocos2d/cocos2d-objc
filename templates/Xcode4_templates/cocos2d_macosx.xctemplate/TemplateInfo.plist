@@ -66,7 +66,7 @@
 		<string>HelloWorldLayer.m</string>
 	</array>
 	<key>Description</key>
-	<string>This template provides a starting point for an application that uses cocos2d for Mac. It also includes CocosDenshion.</string>
+	<string>This template provides a starting point for an application that uses cocos2d v2.0 for Mac. It also includes CocosDenshion.</string>
 	<key>Identifier</key>
 	<string>com.cocos2d-v2.cocos2dOnlyMacTemplate</string>
 	<key>Kind</key>

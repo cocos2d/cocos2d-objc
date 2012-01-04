@@ -88,7 +88,7 @@
 		</dict>
 	</dict>
 	<key>Description</key>
-	<string>This template provides a starting point for an application that uses cocos2d and Box2d for iOS. It includes CocosDenshion, FontLabel and cocosLive.</string>
+	<string>This template provides a starting point for an application that uses cocos2d v2.0 and Box2d for iOS. It also includes CocosDenshion.</string>
 	<key>Identifier</key>
 	<string>com.cocos2d-v2.cocos2dBox2dIOSTemplate</string>
 	<key>Kind</key>
@@ -99,8 +99,6 @@
 		<string>main.m</string>
 		<string>AppDelegate.h</string>
 		<string>AppDelegate.mm</string>
-		<string>RootViewController.h</string>
-		<string>RootViewController.m</string>
 		<string>HelloWorldLayer.h</string>
 		<string>HelloWorldLayer.mm</string>
 		<string>GLES-Render.h</string>
