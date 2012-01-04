@@ -159,8 +159,12 @@ const NSInteger kSceneFade = 0xFADEFADE;
 -(void) onEnter
 {
 	[super onEnter];
+	
+	// outScene_ should not receive the onExit callback
+	// only the onExitTransitionDidStart
+	[outScene_ onExitTransitionDidStart];
+	
 	[inScene_ onEnter];
-	// outScene_ should not receive the onEnter callback
 }
 
 // custom onExit
@@ -169,7 +173,7 @@ const NSInteger kSceneFade = 0xFADEFADE;
 	[super onExit];
 	[outScene_ onExit];
 
-	// inScene_ should not receive the onExit callback
+	// inScene_ should not receive the onEnter callback
 	// only the onEnterTransitionDidFinish
 	[inScene_ onEnterTransitionDidFinish];
 }
