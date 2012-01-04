@@ -297,14 +297,14 @@ const uint32_t	kZoomActionTag = 0xc0c05002;
 
 - (NSArray *) AMCKeysForDictionaryRepresentation
 {
-    NSArray *nodeKeys = [super AMCKeysForDictionaryRepresentation];
+    NSArray *menuItemKeys = [super AMCKeysForDictionaryRepresentation];
     NSArray *menuItemLabelKeys = [NSArray  arrayWithObjects:
                                   @"disabledColor",
                                   @"labelIndex",
                                   @"isEnabled",
                                   nil];
     
-    return [nodeKeys arrayByAddingObjectsFromArray: menuItemLabelKeys];
+    return [menuItemKeys arrayByAddingObjectsFromArray: menuItemLabelKeys];
 }
 
 -(NSUInteger) labelIndex
@@ -932,7 +932,7 @@ const uint32_t	kZoomActionTag = 0xc0c05002;
     NSArray *menuItemKeys = [super AMCKeysForDictionaryRepresentation];
     NSArray *menuItemToggleKeys = [NSArray arrayWithObjects:
                                    @"subItems",
-                                   @"selectedIndex",
+                                   @"selectedIndex_",
                                    @"isEnabled",
                                    nil];
     
