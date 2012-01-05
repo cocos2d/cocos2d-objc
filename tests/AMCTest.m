@@ -1,5 +1,7 @@
 //
-// Sprite Demo
+// AutoMagicCoding Additonal Tests/Demo
+// (For other AMC tests - see other Cocos2D-iPhone demos)
+//
 // a cocos2d example
 // http://www.cocos2d-iphone.org
 //
