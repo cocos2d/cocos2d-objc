@@ -19,8 +19,11 @@ static NSString *const layer2Name = @"layer2";
 static NSString *const layer3Name = @"layer3";
 static NSString *const layer4Name = @"layer4";
 
-// Menu Items Names (Used to manually restore invocation/block for CCMenuItems)
+// Menu Items Names (Used to manually restore invocation/block for CCMenuItems
+// or weak-link to children).
 static NSString *const layer3Item2Name = @"layer3Item2";
+static NSString *const layer1DisabledItem = @"layer1DisabledItem";
+static NSString *const layer3DisabledItem = @"layer3DisabledItem";
 
 
 #pragma mark -
@@ -100,11 +103,24 @@ static NSString *const layer3Item2Name = @"layer3Item2";
 
 		disabledItem = [item3 retain];
 		disabledItem.isEnabled = NO;
+        disabledItem.name = layer1DisabledItem;
 
 		[self addChild: menu];
 	}
 
 	return self;
+}
+
+- (id) initWithDictionaryRepresentation:(NSDictionary *)aDict
+{
+    self = [super initWithDictionaryRepresentation:aDict];
+    if (self)
+    {
+        disabledItem = (CCMenuItem *)[[CCNodeRegistry sharedRegistry] nodeByName: layer1DisabledItem];
+        [disabledItem retain];
+    }
+    
+    return self;    
 }
 
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
@@ -322,6 +338,7 @@ static NSString *const layer3Item2Name = @"layer3Item2";
 		CCMenuItemSprite *item3 = [CCMenuItemSprite itemFromNormalSprite:spriteNormal selectedSprite:spriteSelected disabledSprite:spriteDisabled target:self selector:@selector(menuCallback3:)];
 		disabledItem = item3;
 		disabledItem.isEnabled = NO;
+        disabledItem.name = layer3DisabledItem;
 		
 		CCMenu *menu = [CCMenu menuWithItems: item1, item2, item3, nil];	
 		menu.position = ccp(0,0);
@@ -349,6 +366,17 @@ static NSString *const layer3Item2Name = @"layer3Item2";
 	}
 	
 	return self;
+}
+
+- (id) initWithDictionaryRepresentation:(NSDictionary *)aDict
+{
+    self = [super initWithDictionaryRepresentation:aDict];
+    if (self)
+    {
+        disabledItem = (CCMenuItem *)[[CCNodeRegistry sharedRegistry] nodeByName: layer3DisabledItem];
+    }
+    
+    return self;    
 }
 
 - (void) dealloc
