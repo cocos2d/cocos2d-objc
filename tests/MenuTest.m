@@ -523,7 +523,7 @@ enum nodeTags
     CCMenuItem *layer3Item2 = (CCMenuItem *)[[CCNodeRegistry sharedRegistry] nodeByName: layer3Item2Name];
     layer3Item2.block = ^(id sender)
     {
-        id layer3 = [CCNodeRegistry sharedRegistry] nodeByName: layer3Name];
+        id layer3 = [[CCNodeRegistry sharedRegistry] nodeByName: layer3Name];
         [layer3 menuCallback: sender];
     };
     
