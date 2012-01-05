@@ -339,6 +339,7 @@ static NSUInteger globalOrderOfArrival = 0;
 - (NSArray *) AMCKeysForDictionaryRepresentation
 {
     return [NSArray arrayWithObjects:
+            @"name",
             @"zOrder",
             @"skewX",
             @"skewY",
