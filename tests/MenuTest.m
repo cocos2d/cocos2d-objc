@@ -13,6 +13,13 @@ enum {
 	kTagMenu1 = 1,
 };
 
+// Layers Names
+static NSString *const layer1Name = @"layer1";
+static NSString *const layer2Name = @"layer2";
+static NSString *const layer3Name = @"layer3";
+static NSString *const layer4Name = @"layer4";
+
+
 #pragma mark -
 #pragma mark MainMenu
 
@@ -20,6 +27,8 @@ enum {
 -(id) init
 {
 	if( (self=[super init])) {
+        
+        self.name = layer1Name;
 	
 		[CCMenuItemFont setFontSize:30];
 		[CCMenuItemFont setFontName: @"Courier New"];
@@ -216,7 +225,7 @@ enum {
 -(id) init
 {
 	if( (self=[super init]) ) {
-			
+        self.name = layer2Name;
 	}
 
 	return self;
@@ -289,6 +298,9 @@ enum {
 -(id) init
 {
 	if( (self=[super init]) ) {
+        
+        self.name = layer3Name;
+        
 		[CCMenuItemFont setFontName: @"Marker Felt"];
 		[CCMenuItemFont setFontSize:28];
 
@@ -360,6 +372,8 @@ enum {
 -(id) init
 {
 	if( (self = [super init] ) ) {
+        
+        self.name = layer4Name;
 
 		[CCMenuItemFont setFontName: @"American Typewriter"];
 		[CCMenuItemFont setFontSize:18];
