@@ -209,13 +209,29 @@ const uint32_t	kZoomActionTag = 0xc0c05002;
 
 - (void) setInvocationDictionary:(NSDictionary *)aDict
 {
-    NSString *targetName = [aDict objectForKey:@"targetName"];
-    NSString *selectorName = [aDict objectForKey:@"selectorName"];
+    // Retain invocationDictionary to setup target & selector later -
+    // when target will be loaded (it's possible that target will be loaded
+    // after this menuItem ).
+    tempInvocationDictionary_ = [aDict retain];
+}
+
+- (void) onEnter
+{
+    [super onEnter];
     
-    CCNode *target = [[CCNodeRegistry sharedRegistry] nodeByName:targetName];
-    SEL selector = NSSelectorFromString(selectorName);
-    
-    [self setTarget:target selector:selector];
+    // Set target & selector onEnter - when target should be already loaded from AMC.
+    if (tempInvocationDictionary_)
+    {
+        NSString *targetName = [tempInvocationDictionary_ objectForKey:@"targetName"];
+        NSString *selectorName = [tempInvocationDictionary_ objectForKey:@"selectorName"];
+        
+        CCNode *target = [[CCNodeRegistry sharedRegistry] nodeByName:targetName];
+        SEL selector = NSSelectorFromString(selectorName);
+        
+        [self setTarget:target selector:selector];
+        [tempInvocationDictionary_ release];
+        tempInvocationDictionary_ = nil;
+    }
 }
 
 @end

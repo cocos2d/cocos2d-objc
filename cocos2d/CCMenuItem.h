@@ -41,6 +41,7 @@
  */
 @interface CCMenuItem : CCNode
 {
+    NSDictionary *tempInvocationDictionary_;
 	NSInvocation *invocation_;
 #if NS_BLOCKS_AVAILABLE
 	// used for menu items using a block
