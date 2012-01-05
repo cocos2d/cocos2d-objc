@@ -56,6 +56,14 @@
 */
 @property (nonatomic,readonly) BOOL isSelected;
 
+#if NS_BLOCKS_AVAILABLE
+/** Sets new block after init. */
+@property (nonatomic, readwrite, copy) void(^block)(id sender);
+#endif
+
+/** Sets new target & selector after init */
+- (void) setTarget: (id) target selector: (SEL) selector;
+
 /** Creates a CCMenuItem with a target/selector */
 +(id) itemWithTarget:(id)target selector:(SEL)selector;
 

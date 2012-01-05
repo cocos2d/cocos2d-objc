@@ -56,6 +56,7 @@ const uint32_t	kZoomActionTag = 0xc0c05002;
 @synthesize isSelected=isSelected_;
 @synthesize invocation = invocation_;
 
+
 -(id) init
 {
 	NSAssert(NO, @"MenuItemInit: Init not supported.");
@@ -73,19 +74,8 @@ const uint32_t	kZoomActionTag = 0xc0c05002;
 	if((self=[super init]) ) {
 	
 		anchorPoint_ = ccp(0.5f, 0.5f);
-		NSMethodSignature * sig = nil;
 		
-		if( rec && cb ) {
-			sig = [rec methodSignatureForSelector:cb];
-			
-			self.invocation = [NSInvocation invocationWithMethodSignature:sig];
-			[self.invocation setTarget:rec];
-			[self.invocation setSelector:cb];
-#if NS_BLOCKS_AVAILABLE
-			if ([sig numberOfArguments] == 3) 
-#endif
-			[self.invocation setArgument:&self atIndex:2];
-		}
+        [self setTarget:rec selector:cb];
 		
 		isEnabled_ = YES;
 		isSelected_ = NO;
@@ -103,6 +93,36 @@ const uint32_t	kZoomActionTag = 0xc0c05002;
 -(id) initWithBlock:(void(^)(id sender))block {
 	block_ = [block copy];
 	return [self initWithTarget:block_ selector:@selector(ccCallbackBlockWithSender:)];
+}
+
+@dynamic block;
+- (void(^)(id sender)) block
+{
+    return block_;
+}
+
+- (void) setBlock: (void(^)(id sender)) block
+{
+    [block_ release];
+    block_ = [block copy];
+    
+    [self setTarget: block_ selector: @selector(ccCallbackBlockWithSender:)];
+}
+- (void) setTarget: (id) target selector: (SEL) selector
+{
+    NSMethodSignature *sig = nil;
+    
+    if( target && selector ) {
+        sig = [target methodSignatureForSelector:selector];
+        
+        self.invocation = [NSInvocation invocationWithMethodSignature:sig];
+        [self.invocation setTarget:target];
+        [self.invocation setSelector:selector];
+#if NS_BLOCKS_AVAILABLE
+        if ([sig numberOfArguments] == 3) 
+#endif
+			[self.invocation setArgument:&self atIndex:2];
+    }
 }
 
 #endif // NS_BLOCKS_AVAILABLE
