@@ -1,5 +1,7 @@
 //
-// Sprite Demo
+// AutoMagicCoding Additonal Tests/Demo
+// (For other AMC tests - see other Cocos2D-iPhone demos)
+//
 // a cocos2d example
 // http://www.cocos2d-iphone.org
 //
@@ -526,6 +528,7 @@ enum nodeTags {
 //          * Children & all properties except for Camera & Grid ( tested in AMCTest.m in NodeAMC )
 //          * CCCamera ( tested in SpriteTest.m in SpriteZVertex )
 //          * CCGrid ( tested in EffectsAdvancedTest.m in Effect1, Effect2, etc... )
+//          * Name & CCNodeRegistry (tested in MenuTest - weak links to children & targets for menuItems)
 //      * CCLayer - FULL SUPPORT ( tested in AMCTest.m LayersAMC )
 //          * CCLayerColor ( tested in AMCTest.m LayersAMC )
 //          * CCLayerGradient ( tested in AMCTest.m LayersAMC )
@@ -558,6 +561,25 @@ enum nodeTags {
 //      * CCLabelMBFont - FULL SUPPORT by Magic. True magic... Tested only on a Mac, but...
 //          You know - i'll better just trust the Magic, cause Magic is VERY powerfull!
 //
+// 5. Menus - FULL POSSIBLE SUPPORT
+//      * CCMenu - FULL SUPORT
+//      * CCMenuItem - ALL SUBCLASSES SUPPORTED:
+//          * CCMenuItemLabel
+//          * CCMenuItemAtlasFont
+//          * CCMenuItemFont
+//          * CCMenuItemSprite
+//          * CCMenuItemImage
+//          * CCMenuItemToggle
+//
+//        Target saved as name of CCNode in CCNodeRegistry, selecter saved as 
+//        NSString. It's impossible to save Blocks - user should manually restore
+//        them after loading 
+//              (CCNodeRegistry can be used to obtain target nodes).
+
+//
+//
+//
+//
 // DON'T MESS WITH 
 //     .___  ___.      ___       _______  __    ______ 
 //     |   \/   |     /   \     /  _____||  |  /      |
@@ -566,36 +588,9 @@ enum nodeTags {
 //     |  |  |  |  /  _____  \ |  |__| | |  | |  `----.
 //     |__|  |__| /__/     \__\ \______| |__|  \______|
 
-
-
-//
-// ====== TODO: Menus ===== 
-// <# assigned: Stepan Generalov (must be done today: 4 Jan 2012) #>
-//
-// * CCMenu - straight-forward. Only selectedItem should be saved as selectedItemIndex number with dynamic setter.
-//
-// * CCMenuItems - lot of work, especially for Label menu items, but it should be ok. Will not save invocation & blocks, of course.
-// Developer should use CCNode name & CCNodeCache to set blocks/invocations.
-//
-//
-
-//
-// ====== New Cocos2D-iPhone Features & Classes for AMC ======
-// <# assigned: Stepan Generalov (must be done today: 4 Jan 2012) #>
-//
-// 1. CCNodeCache & CCNode.name property 
-//   * CCNode.name: to use in CCNodeCache, default value is nil.
-//       CCNode.name is dynamic property - all CCNodeCache calls must be done only from
-//       CCNode#setName setter. If name set to nil - node must be removed from CCNodeCache.
-//       If node name is changed  - node should change it's name in CCNodeCache.
-//       If node name is set first time - node should register in CCNodeCache.
-//       On dealloc node sets it's name to nil - and this removes node from cache.
-//   * CCNodeCache SHOULDN'T retain Nodes. 
-//
-
 //
 // ====== TODO: More Nodes ====== 
-// <# assigned: Stepan Generalov (must be done today-tomorrow 4-5 Jan 2012) #>
+// <# assigned: Stepan Generalov (must be done tomorrow 5 Jan 2012) #>
 //
 // * CCParalaxNode - pretty easy, just need to save CGPointObject's in parallaxRatio array & then use it in
 // -initWithDictionaryRepresentation: for parallaxRatio argument, when reading childs from loadedChildren.
@@ -672,7 +667,7 @@ enum nodeTags {
 //
 
 //
-// ====== TODO: Tests =====
+// ====== TODO: More Tests =====
 //
 // TODO: Sprite + Blend Func (should work, just got no explicit test)
 // TODO: CCScene (should work, just got no explicit test)

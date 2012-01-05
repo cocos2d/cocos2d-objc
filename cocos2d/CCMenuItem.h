@@ -41,6 +41,7 @@
  */
 @interface CCMenuItem : CCNode
 {
+    NSDictionary *tempInvocationDictionary_;
 	NSInvocation *invocation_;
 #if NS_BLOCKS_AVAILABLE
 	// used for menu items using a block
@@ -55,6 +56,14 @@
 @since v0.8.2
 */
 @property (nonatomic,readonly) BOOL isSelected;
+
+#if NS_BLOCKS_AVAILABLE
+/** Sets new block after init. */
+@property (nonatomic, readwrite, copy) void(^block)(id sender);
+#endif
+
+/** Sets new target & selector after init */
+- (void) setTarget: (id) target selector: (SEL) selector;
 
 /** Creates a CCMenuItem with a target/selector */
 +(id) itemWithTarget:(id)target selector:(SEL)selector;
@@ -105,7 +114,7 @@
 @interface CCMenuItemLabel : CCMenuItem  <CCRGBAProtocol>
 {
 	CCNode<CCLabelProtocol, CCRGBAProtocol> *label_;
-	ccColor3B	colorBackup;
+	ccColor3B	colorBackup_;
 	ccColor3B	disabledColor_;
 	float		originalScale_;
 }

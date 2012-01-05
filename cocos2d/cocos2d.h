@@ -105,6 +105,7 @@
 #import "CCCamera.h"
 #import "CCProtocols.h"
 #import "CCNode.h"
+#import "CCNodeRegistry.h"
 #import "CCDirector.h"
 #import "CCAtlasNode.h"
 #import "CCGrabber.h"

@@ -637,7 +637,6 @@
 		E076E6E71225EC7400DE0DA2 /* CCAtlasNode.h in Headers */ = {isa = PBXBuildFile; fileRef = E076E6411225EC7400DE0DA2 /* CCAtlasNode.h */; };
 		E076E6E81225EC7400DE0DA2 /* CCAtlasNode.m in Sources */ = {isa = PBXBuildFile; fileRef = E076E6421225EC7400DE0DA2 /* CCAtlasNode.m */; };
 		E076E6E91225EC7400DE0DA2 /* CCBlockSupport.h in Headers */ = {isa = PBXBuildFile; fileRef = E076E6431225EC7400DE0DA2 /* CCBlockSupport.h */; };
-		E076E6EA1225EC7400DE0DA2 /* CCBlockSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = E076E6441225EC7400DE0DA2 /* CCBlockSupport.m */; };
 		E076E6EB1225EC7400DE0DA2 /* CCCamera.h in Headers */ = {isa = PBXBuildFile; fileRef = E076E6451225EC7400DE0DA2 /* CCCamera.h */; };
 		E076E6EC1225EC7400DE0DA2 /* CCCamera.m in Sources */ = {isa = PBXBuildFile; fileRef = E076E6461225EC7400DE0DA2 /* CCCamera.m */; };
 		E076E6EF1225EC7400DE0DA2 /* ccConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = E076E6491225EC7400DE0DA2 /* ccConfig.h */; };
@@ -3317,6 +3316,9 @@
 		E0DA433E12A03A3C00210ACE /* liblibpng.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E076EDB91225FEAA00DE0DA2 /* liblibpng.a */; };
 		E0DA434912A03AE200210ACE /* FullScreenTest.m in Sources */ = {isa = PBXBuildFile; fileRef = E0DA434812A03AE100210ACE /* FullScreenTest.m */; };
 		FD135B8B14ABA5D5005A4254 /* NSObject+AutoMagicCoding.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6ACDAC14A232D600E95E30 /* NSObject+AutoMagicCoding.m */; };
+		FD30147514B4B1DF003C4D98 /* NSObject+AutoMagicCoding.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6ACDAC14A232D600E95E30 /* NSObject+AutoMagicCoding.m */; };
+		FD63366314B6080E00512A1D /* CCNodeRegistry.h in Headers */ = {isa = PBXBuildFile; fileRef = FD63366114B6080E00512A1D /* CCNodeRegistry.h */; };
+		FD63366414B6080E00512A1D /* CCNodeRegistry.m in Sources */ = {isa = PBXBuildFile; fileRef = FD63366214B6080E00512A1D /* CCNodeRegistry.m */; };
 		FD6ACCB514A1094F00E95E30 /* A Damn Mess.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E076E7A21225EDD000DE0DA2 /* A Damn Mess.ttf */; };
 		FD6ACCB614A1094F00E95E30 /* Abberancy.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E076E7A31225EDD000DE0DA2 /* Abberancy.ttf */; };
 		FD6ACCB714A1094F00E95E30 /* Abduction.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E076E7A41225EDD000DE0DA2 /* Abduction.ttf */; };
@@ -3986,7 +3988,6 @@
 		E076E6411225EC7400DE0DA2 /* CCAtlasNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAtlasNode.h; sourceTree = "<group>"; };
 		E076E6421225EC7400DE0DA2 /* CCAtlasNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCAtlasNode.m; sourceTree = "<group>"; };
 		E076E6431225EC7400DE0DA2 /* CCBlockSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBlockSupport.h; sourceTree = "<group>"; };
-		E076E6441225EC7400DE0DA2 /* CCBlockSupport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBlockSupport.m; sourceTree = "<group>"; };
 		E076E6451225EC7400DE0DA2 /* CCCamera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCCamera.h; sourceTree = "<group>"; };
 		E076E6461225EC7400DE0DA2 /* CCCamera.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCCamera.m; sourceTree = "<group>"; };
 		E076E6491225EC7400DE0DA2 /* ccConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccConfig.h; sourceTree = "<group>"; };
@@ -4384,6 +4385,8 @@
 		E0DA434812A03AE100210ACE /* FullScreenTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FullScreenTest.m; path = tests/FullScreenTest.m; sourceTree = "<group>"; };
 		E0DA434A12A03B0C00210ACE /* FullScreenTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FullScreenTest.h; path = tests/FullScreenTest.h; sourceTree = "<group>"; };
 		E0F9256D1224207200EF2362 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		FD63366114B6080E00512A1D /* CCNodeRegistry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCNodeRegistry.h; sourceTree = "<group>"; };
+		FD63366214B6080E00512A1D /* CCNodeRegistry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCNodeRegistry.m; sourceTree = "<group>"; };
 		FD6ACD7F14A1094F00E95E30 /* AMCTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AMCTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FD6ACD9714A10AB400E95E30 /* AMCTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AMCTest.h; path = tests/AMCTest.h; sourceTree = "<group>"; };
 		FD6ACD9814A10AB400E95E30 /* AMCTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AMCTest.m; path = tests/AMCTest.m; sourceTree = "<group>"; };
@@ -5077,7 +5080,6 @@
 				E076E69F1225EC7400DE0DA2 /* Platforms */,
 				E076E6B81225EC7400DE0DA2 /* Support */,
 				E076E6431225EC7400DE0DA2 /* CCBlockSupport.h */,
-				E076E6441225EC7400DE0DA2 /* CCBlockSupport.m */,
 				E076E6451225EC7400DE0DA2 /* CCCamera.h */,
 				E076E6461225EC7400DE0DA2 /* CCCamera.m */,
 				E076E6491225EC7400DE0DA2 /* ccConfig.h */,
@@ -5327,6 +5329,8 @@
 				E076E6421225EC7400DE0DA2 /* CCAtlasNode.m */,
 				E076E6631225EC7400DE0DA2 /* CCNode.h */,
 				E076E6641225EC7400DE0DA2 /* CCNode.m */,
+				FD63366114B6080E00512A1D /* CCNodeRegistry.h */,
+				FD63366214B6080E00512A1D /* CCNodeRegistry.m */,
 			);
 			name = "Base Nodes";
 			sourceTree = "<group>";
@@ -5723,6 +5727,7 @@
 				E08AA19B12C262B3000341BD /* MacWindow.h in Headers */,
 				A0AAB8241451C8C000850F2C /* CCParticleBatchNode.h in Headers */,
 				FD6ACDAD14A232D600E95E30 /* NSObject+AutoMagicCoding.h in Headers */,
+				FD63366314B6080E00512A1D /* CCNodeRegistry.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9436,7 +9441,6 @@
 				E076E6E41225EC7400DE0DA2 /* CCActionTiledGrid.m in Sources */,
 				E076E6E61225EC7400DE0DA2 /* CCActionTween.m in Sources */,
 				E076E6E81225EC7400DE0DA2 /* CCAtlasNode.m in Sources */,
-				E076E6EA1225EC7400DE0DA2 /* CCBlockSupport.m in Sources */,
 				E076E6EC1225EC7400DE0DA2 /* CCCamera.m in Sources */,
 				E076E6F11225EC7400DE0DA2 /* CCConfiguration.m in Sources */,
 				E076E6F31225EC7400DE0DA2 /* CCDirector.m in Sources */,
@@ -9495,6 +9499,7 @@
 				E08AA19C12C262B3000341BD /* MacWindow.m in Sources */,
 				A0AAB8251451C8C000850F2C /* CCParticleBatchNode.m in Sources */,
 				FD6ACDAE14A232D600E95E30 /* NSObject+AutoMagicCoding.m in Sources */,
+				FD63366414B6080E00512A1D /* CCNodeRegistry.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9610,6 +9615,7 @@
 			files = (
 				E076E6241225EC4E00DE0DA2 /* MenuTest.m in Sources */,
 				E076EAF01225EE8500DE0DA2 /* main.m in Sources */,
+				FD30147514B4B1DF003C4D98 /* NSObject+AutoMagicCoding.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
