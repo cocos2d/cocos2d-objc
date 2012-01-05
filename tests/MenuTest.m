@@ -517,7 +517,16 @@ enum nodeTags
 {
     NSString *path = [self testFilePath];
     NSDictionary *aDict = [NSDictionary dictionaryWithContentsOfFile: path];
-    CCLayer *layer = [NSObject objectWithDictionaryRepresentation: aDict ];    
+    CCLayer *layer = [NSObject objectWithDictionaryRepresentation: aDict ];
+    
+    // Manually restore block, cause AMC can't save blocks.
+    CCMenuItem *layer3Item2 = (CCMenuItem *)[[CCNodeRegistry sharedRegistry] nodeWithName: layer3Item2Name];
+    layer3Item2.block = ^(id sender)
+    {
+        id layer3 = [CCNodeRegistry sharedRegistry] nodeWithName: layer3Name];
+        [layer3 menuCallback: sender];
+    };
+    
     
 	[self addChild: layer z: 0 tag: kLayer];
 }
