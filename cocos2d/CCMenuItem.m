@@ -171,8 +171,51 @@ const uint32_t	kZoomActionTag = 0xc0c05002;
 
 - (NSArray *) AMCKeysForDictionaryRepresentation
 {
-    // Node keys + isEnabled property.
-    return [[super AMCKeysForDictionaryRepresentation] arrayByAddingObject: @"isEnabled"];
+    NSArray *nodeKeys = [super AMCKeysForDictionaryRepresentation];
+    NSArray *menuItemKeys = [NSArray arrayWithObjects: 
+                             @"isEnabled", 
+                             @"invocationDictionary", 
+                             nil];
+
+    return [nodeKeys arrayByAddingObjectsFromArray: menuItemKeys];
+}
+
+- (AMCFieldType) AMCFieldTypeForValueWithKey:(NSString *)aKey
+{
+    if ( [aKey isEqualToString:@"invocationDictionary"] )
+    {
+        return kAMCFieldTypeCollectionHash;
+    }
+    else
+        return [super AMCFieldTypeForValueWithKey:aKey];
+}
+
+- (NSDictionary *) invocationDictionary
+{
+    if ([self.invocation.target respondsToSelector:@selector(name)])
+    {
+        NSString *targetName = [(CCNode *)self.invocation.target name];
+        NSString *selectorName = NSStringFromSelector(self.invocation.selector);
+        if (targetName && selectorName)
+            return [NSDictionary dictionaryWithObjects: 
+                    [NSArray arrayWithObjects:targetName, selectorName, nil] 
+                                               forKeys:
+                    [NSArray arrayWithObjects: @"targetName",@"selectorName", nil]
+                    ];
+    }
+    
+    return nil;
+}
+
+- (void) setInvocationDictionary:(NSDictionary *)aDict
+{
+    NSString *targetName = [aDict objectForKey:@"targetName"];
+    NSString *selectorName = [aDict objectForKey:@"selectorName"];
+    
+    CCNode *target = [[CCNodeRegistry sharedRegistry] nodeByName:targetName];
+    SEL selector = NSSelectorFromString(selectorName);
+    
+    [self setTarget:target selector:selector];
 }
 
 @end
