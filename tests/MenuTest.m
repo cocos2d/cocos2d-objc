@@ -19,6 +19,9 @@ static NSString *const layer2Name = @"layer2";
 static NSString *const layer3Name = @"layer3";
 static NSString *const layer4Name = @"layer4";
 
+// Menu Items Names (Used to manually restore invocation/block for CCMenuItems)
+static NSString *const layer3Item2Name = @"layer3Item2";
+
 
 #pragma mark -
 #pragma mark MainMenu
@@ -306,7 +309,11 @@ static NSString *const layer4Name = @"layer4";
 
 		CCLabelBMFont *label = [CCLabelBMFont labelWithString:@"Enable AtlasItem" fntFile:@"bitmapFontTest3.fnt"];
 		CCMenuItemLabel *item1 = [CCMenuItemLabel itemWithLabel:label target:self selector:@selector(menuCallback2:)];
-		CCMenuItemFont *item2 = [CCMenuItemFont itemFromString: @"--- Go Back ---" target:self selector:@selector(menuCallback:)];
+		CCMenuItemFont *item2 = [CCMenuItemFont itemFromString:@"--- Go Back ---" block:^(id sender)
+                                 {
+                                     [self menuCallback: sender];
+                                 }];
+        item2.name = layer3Item2Name;
 		
 		CCSprite *spriteNormal = [CCSprite spriteWithFile:@"menuitemsprite.png" rect:CGRectMake(0,23*2,115,23)];
 		CCSprite *spriteSelected = [CCSprite spriteWithFile:@"menuitemsprite.png" rect:CGRectMake(0,23*1,115,23)];
