@@ -692,7 +692,9 @@
 
 - (NSArray *) AMCKeysForDictionaryRepresentation
 {
-    NSArray *layerKeys = [super AMCKeysForDictionaryRepresentation];
+    NSMutableArray *layerKeys = [NSMutableArray arrayWithArray: [super AMCKeysForDictionaryRepresentation]];
+    [layerKeys replaceObjectAtIndex:[layerKeys indexOfObjectIdenticalTo:@"children"] 
+                         withObject:@"childrenWithoutEnabledLayer"];
 
     NSArray *layerMultiplexKeys = [NSArray arrayWithObjects:
                                   @"layers",
@@ -700,6 +702,28 @@
                                   nil];
     
     return [layerKeys arrayByAddingObjectsFromArray: layerMultiplexKeys ];
+}
+
+- (AMCFieldType) AMCFieldTypeForValueWithKey:(NSString *)aKey
+{
+    if ( [aKey isEqualToString:@"childrenWithoutEnabledLayer"] )
+        return kAMCFieldTypeCollectionArrayMutable;
+    else
+        return [super AMCFieldTypeForValueWithKey:aKey];
+}
+
+- (CCArray *) childrenWithoutEnabledLayer
+{
+    CCArray *childrenCopy = [children_ copy];
+    [childrenCopy removeObject:[self.layers objectAtIndex:enabledLayer_]];
+    return childrenCopy;
+}
+
+- (void) setChildrenWithoutEnabledLayer: (NSArray *) childrenWithoutEnabledLayer
+{
+    id value = AMCDecodeObject(childrenWithoutEnabledLayer, kAMCFieldTypeCollectionArrayMutable, [CCArray class]);
+
+    [self setValue: value forKey: @"children"];
 }
 
 - (id) initWithDictionaryRepresentation:(NSDictionary *)aDict
@@ -712,6 +736,8 @@
             [self release];
             return nil;
         }
+        
+        [self addChild: [self.layers objectAtIndex:enabledLayer_]];
     }
     return self;
 }
