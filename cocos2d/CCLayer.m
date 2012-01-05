@@ -656,7 +656,7 @@
 
 @implementation CCLayerMultiplex
 
-@synthesize layers = _layers;
+@synthesize layers = layers_;
 
 +(id) layerWithLayers: (CCLayer*) layer, ... 
 {
