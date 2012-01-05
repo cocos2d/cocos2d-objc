@@ -520,10 +520,10 @@ enum nodeTags
     CCLayer *layer = [NSObject objectWithDictionaryRepresentation: aDict ];
     
     // Manually restore block, cause AMC can't save blocks.
-    CCMenuItem *layer3Item2 = (CCMenuItem *)[[CCNodeRegistry sharedRegistry] nodeWithName: layer3Item2Name];
+    CCMenuItem *layer3Item2 = (CCMenuItem *)[[CCNodeRegistry sharedRegistry] nodeByName: layer3Item2Name];
     layer3Item2.block = ^(id sender)
     {
-        id layer3 = [CCNodeRegistry sharedRegistry] nodeWithName: layer3Name];
+        id layer3 = [CCNodeRegistry sharedRegistry] nodeByName: layer3Name];
         [layer3 menuCallback: sender];
     };
     
