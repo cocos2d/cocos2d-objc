@@ -240,9 +240,16 @@ const uint32_t	kZoomActionTag = 0xc0c05002;
 #pragma mark -
 #pragma mark CCMenuItemLabel
 
+@interface CCMenuItemLabel ()
+
+@property(readwrite,assign) ccColor3B colorBackup;
+
+@end
+
 @implementation CCMenuItemLabel
 
 @synthesize disabledColor = disabledColor_;
+@synthesize colorBackup = colorBackup_;
 
 +(id) itemWithLabel:(CCNode<CCLabelProtocol,CCRGBAProtocol>*)label target:(id)target selector:(SEL)selector
 {
@@ -258,7 +265,7 @@ const uint32_t	kZoomActionTag = 0xc0c05002;
 {
 	if( (self=[super initWithTarget:target selector:selector]) ) {
 		originalScale_ = 1;
-		colorBackup = ccWHITE;
+		self.colorBackup = ccWHITE;
 		disabledColor_ = ccc3( 126,126,126);
 		self.label = label;
 		
@@ -351,11 +358,11 @@ const uint32_t	kZoomActionTag = 0xc0c05002;
 {
 	if( isEnabled_ != enabled ) {
 		if(enabled == NO) {
-			colorBackup = [label_ color];
+			self.colorBackup = [label_ color];
 			[label_ setColor: disabledColor_];
 		}
 		else
-			[label_ setColor:colorBackup];
+			[label_ setColor:self.colorBackup];
 	}
     
 	[super setIsEnabled:enabled];
@@ -384,6 +391,7 @@ const uint32_t	kZoomActionTag = 0xc0c05002;
 {
     NSArray *menuItemKeys = [super AMCKeysForDictionaryRepresentation];
     NSArray *menuItemLabelKeys = [NSArray  arrayWithObjects:
+                                  @"colorBackup",
                                   @"disabledColor",
                                   @"labelIndex",
                                   @"isEnabled",

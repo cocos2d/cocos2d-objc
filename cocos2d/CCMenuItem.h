@@ -114,7 +114,7 @@
 @interface CCMenuItemLabel : CCMenuItem  <CCRGBAProtocol>
 {
 	CCNode<CCLabelProtocol, CCRGBAProtocol> *label_;
-	ccColor3B	colorBackup;
+	ccColor3B	colorBackup_;
 	ccColor3B	disabledColor_;
 	float		originalScale_;
 }
