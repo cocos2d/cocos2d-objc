@@ -13,7 +13,7 @@ enum {
 	kTagMenu1 = 1,
 };
 
-// Layers Names
+// Layers Names (used by AMC to load targets for CCMenuItems).
 static NSString *const layer1Name = @"layer1";
 static NSString *const layer2Name = @"layer2";
 static NSString *const layer3Name = @"layer3";
