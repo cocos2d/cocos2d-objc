@@ -38,14 +38,3 @@
 		#define NS_BLOCKS_AVAILABLE 0
 	#endif
 #endif
-
-#if NS_BLOCKS_AVAILABLE
-
-@interface NSObject(CCBlocksAdditions)
-
-- (void)ccCallbackBlock;
-- (void)ccCallbackBlockWithSender:(id)sender;
-
-@end
-
-#endif // NS_BLOCKS_AVAILABLE

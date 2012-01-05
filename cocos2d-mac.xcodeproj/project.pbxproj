@@ -637,7 +637,6 @@
 		E076E6E71225EC7400DE0DA2 /* CCAtlasNode.h in Headers */ = {isa = PBXBuildFile; fileRef = E076E6411225EC7400DE0DA2 /* CCAtlasNode.h */; };
 		E076E6E81225EC7400DE0DA2 /* CCAtlasNode.m in Sources */ = {isa = PBXBuildFile; fileRef = E076E6421225EC7400DE0DA2 /* CCAtlasNode.m */; };
 		E076E6E91225EC7400DE0DA2 /* CCBlockSupport.h in Headers */ = {isa = PBXBuildFile; fileRef = E076E6431225EC7400DE0DA2 /* CCBlockSupport.h */; };
-		E076E6EA1225EC7400DE0DA2 /* CCBlockSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = E076E6441225EC7400DE0DA2 /* CCBlockSupport.m */; };
 		E076E6EB1225EC7400DE0DA2 /* CCCamera.h in Headers */ = {isa = PBXBuildFile; fileRef = E076E6451225EC7400DE0DA2 /* CCCamera.h */; };
 		E076E6EC1225EC7400DE0DA2 /* CCCamera.m in Sources */ = {isa = PBXBuildFile; fileRef = E076E6461225EC7400DE0DA2 /* CCCamera.m */; };
 		E076E6EF1225EC7400DE0DA2 /* ccConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = E076E6491225EC7400DE0DA2 /* ccConfig.h */; };
@@ -3989,7 +3988,6 @@
 		E076E6411225EC7400DE0DA2 /* CCAtlasNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAtlasNode.h; sourceTree = "<group>"; };
 		E076E6421225EC7400DE0DA2 /* CCAtlasNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCAtlasNode.m; sourceTree = "<group>"; };
 		E076E6431225EC7400DE0DA2 /* CCBlockSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBlockSupport.h; sourceTree = "<group>"; };
-		E076E6441225EC7400DE0DA2 /* CCBlockSupport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBlockSupport.m; sourceTree = "<group>"; };
 		E076E6451225EC7400DE0DA2 /* CCCamera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCCamera.h; sourceTree = "<group>"; };
 		E076E6461225EC7400DE0DA2 /* CCCamera.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCCamera.m; sourceTree = "<group>"; };
 		E076E6491225EC7400DE0DA2 /* ccConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccConfig.h; sourceTree = "<group>"; };
@@ -5082,7 +5080,6 @@
 				E076E69F1225EC7400DE0DA2 /* Platforms */,
 				E076E6B81225EC7400DE0DA2 /* Support */,
 				E076E6431225EC7400DE0DA2 /* CCBlockSupport.h */,
-				E076E6441225EC7400DE0DA2 /* CCBlockSupport.m */,
 				E076E6451225EC7400DE0DA2 /* CCCamera.h */,
 				E076E6461225EC7400DE0DA2 /* CCCamera.m */,
 				E076E6491225EC7400DE0DA2 /* ccConfig.h */,
@@ -9444,7 +9441,6 @@
 				E076E6E41225EC7400DE0DA2 /* CCActionTiledGrid.m in Sources */,
 				E076E6E61225EC7400DE0DA2 /* CCActionTween.m in Sources */,
 				E076E6E81225EC7400DE0DA2 /* CCAtlasNode.m in Sources */,
-				E076E6EA1225EC7400DE0DA2 /* CCBlockSupport.m in Sources */,
 				E076E6EC1225EC7400DE0DA2 /* CCCamera.m in Sources */,
 				E076E6F11225EC7400DE0DA2 /* CCConfiguration.m in Sources */,
 				E076E6F31225EC7400DE0DA2 /* CCDirector.m in Sources */,
