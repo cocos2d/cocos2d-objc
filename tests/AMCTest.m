@@ -526,6 +526,7 @@ enum nodeTags {
 //          * Children & all properties except for Camera & Grid ( tested in AMCTest.m in NodeAMC )
 //          * CCCamera ( tested in SpriteTest.m in SpriteZVertex )
 //          * CCGrid ( tested in EffectsAdvancedTest.m in Effect1, Effect2, etc... )
+//          * Name & CCNodeRegistry (tested in MenuTest - weak links to children & targets for menuItems)
 //      * CCLayer - FULL SUPPORT ( tested in AMCTest.m LayersAMC )
 //          * CCLayerColor ( tested in AMCTest.m LayersAMC )
 //          * CCLayerGradient ( tested in AMCTest.m LayersAMC )
@@ -558,15 +559,21 @@ enum nodeTags {
 //      * CCLabelMBFont - FULL SUPPORT by Magic. True magic... Tested only on a Mac, but...
 //          You know - i'll better just trust the Magic, cause Magic is VERY powerfull!
 //
-// 5. Menus - FULL SUPPORT EXCEPT INVOCATIONS/BLOCKS
+// 5. Menus - FULL POSSIBLE SUPPORT
 //      * CCMenu - FULL SUPORT
-//      * CCMenuItem - ALL SUBCLASSES SUPPORTED, Invocation & block doesn't get saved with AMC.
+//      * CCMenuItem - ALL SUBCLASSES SUPPORTED:
 //          * CCMenuItemLabel
 //          * CCMenuItemAtlasFont
 //          * CCMenuItemFont
 //          * CCMenuItemSprite
 //          * CCMenuItemImage
 //          * CCMenuItemToggle
+//
+//        Target saved as name of CCNode in CCNodeRegistry, selecter saved as 
+//        NSString. It's impossible to save Blocks - user should manually restore
+//        them after loading 
+//              (CCNodeRegistry can be used to obtain target nodes).
+
 //
 //
 //
@@ -578,27 +585,6 @@ enum nodeTags {
 //     |  |\/|  |   /  /_\  \  |  | |_ | |  | |  |     
 //     |  |  |  |  /  _____  \ |  |__| | |  | |  `----.
 //     |__|  |__| /__/     \__\ \______| |__|  \______|
-
-
-
-//
-// ====== TODO: Menus ===== 
-// <# assigned: Stepan Generalov (must be done today: 4 Jan 2012) #>
-//
-// 1. CCMenuItem: Add ability to set invocation/block during runtime.
-//    Set invocation via setting Target & Selector OR Invocation itself.
-//
-// 2. CCNodeRegistry & CCNode.name property 
-//   * CCNode.name: to use in CCNodeCache, default value is nil.
-//       CCNode.name is dynamic property - all CCNodeCache calls must be done only from
-//       CCNode#setName setter. If name set to nil - node must be removed from CCNodeCache.
-//       If node name is changed  - node should change it's name in CCNodeCache.
-//       If node name is set first time - node should register in CCNodeCache.
-//       On dealloc node sets it's name to nil - and this removes node from cache.
-//   * CCNodeCache SHOULDN'T retain Nodes.
-//
-// 3. MenuTest: Use CCNodeRegistry to restore menuItems functionality.
-//
 
 //
 // ====== TODO: More Nodes ====== 
