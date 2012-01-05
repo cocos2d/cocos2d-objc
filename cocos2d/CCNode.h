@@ -99,7 +99,9 @@ enum {
  */ 
 @interface CCNode : NSObject
 {	
-	// rotation angle
+	NSString *name_;
+    
+    // rotation angle
 	float rotation_;	
 	
 	// scaling factors
@@ -172,6 +174,20 @@ enum {
 	BOOL isTransformGLDirty_:1;
 #endif
 }
+
+/** Name of the node, that is used to register it in CCNodeRegistry.
+ Default value is nil.
+ Set this property to any non-nil value to register node in CCNodeRegistry 
+ (node doesn't get retained).
+ Set this property to nil value to remove node's registration from CCNodeRegistry.
+ On dealloc node will automatically remove itself from CCNodeRegistry.
+ 
+ This value get's saved by AutoMagicCoding, so you can use it to restore 
+ weak links and other dependencies after loading node.
+ 
+ @since v1.1+ ("feature-amc" branch) 
+ */
+@property(nonatomic, readwrite, copy) NSString *name;
 
 /** The z order of the node relative to it's "brothers": children of the same parent */
 @property(nonatomic,readonly) NSInteger zOrder;

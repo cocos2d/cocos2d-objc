@@ -85,6 +85,7 @@ static NSUInteger globalOrderOfArrival = 0;
 @synthesize anchorPoint = anchorPoint_, anchorPointInPixels = anchorPointInPixels_;
 @synthesize contentSize = contentSize_, contentSizeInPixels = contentSizeInPixels_;
 @synthesize isRelativeAnchorPoint = isRelativeAnchorPoint_;
+@synthesize name = name_;
 
 // getters synthesized, setters explicit
 
@@ -265,6 +266,14 @@ static NSUInteger globalOrderOfArrival = 0;
     [oldChildren release];
 }
 
+- (void) setName:(NSString *) name
+{
+    NSString *prevName = name_;
+    name_ = [name copy];
+    [[CCNodeRegistry sharedRegistry] node: self didChangeNameTo: name_ previousName: prevName ];
+    [prevName release];
+}
+
 #pragma mark CCNode - Init & cleanup
 
 +(id) node
@@ -431,6 +440,8 @@ static NSUInteger globalOrderOfArrival = 0;
 - (void) dealloc
 {
 	CCLOGINFO( @"cocos2d: deallocing %@", self);
+    
+    self.name = nil;
 	
 	// attributes
 	[camera_ release];
