@@ -34,6 +34,7 @@
 #import "CCProtocols.h"
 #import "ccConfig.h"
 #import "Support/CCArray.h"
+#import "CCNodeRegistry.h"
 
 enum {
 	kCCNodeTagInvalid = -1,
