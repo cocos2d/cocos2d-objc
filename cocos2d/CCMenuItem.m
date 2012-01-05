@@ -45,9 +45,17 @@ const uint32_t	kZoomActionTag = 0xc0c05002;
 #pragma mark -
 #pragma mark CCMenuItem
 
+@interface CCMenuItem ()
+
+@property (nonatomic,readwrite, retain) NSInvocation *invocation;
+
+@end
+
 @implementation CCMenuItem
 
 @synthesize isSelected=isSelected_;
+@synthesize invocation = invocation_;
+
 -(id) init
 {
 	NSAssert(NO, @"MenuItemInit: Init not supported.");
@@ -70,16 +78,13 @@ const uint32_t	kZoomActionTag = 0xc0c05002;
 		if( rec && cb ) {
 			sig = [rec methodSignatureForSelector:cb];
 			
-			invocation_ = nil;
-			invocation_ = [NSInvocation invocationWithMethodSignature:sig];
-			[invocation_ setTarget:rec];
-			[invocation_ setSelector:cb];
+			self.invocation = [NSInvocation invocationWithMethodSignature:sig];
+			[self.invocation setTarget:rec];
+			[self.invocation setSelector:cb];
 #if NS_BLOCKS_AVAILABLE
 			if ([sig numberOfArguments] == 3) 
 #endif
-			[invocation_ setArgument:&self atIndex:2];
-			
-			[invocation_ retain];
+			[self.invocation setArgument:&self atIndex:2];
 		}
 		
 		isEnabled_ = YES;
@@ -104,7 +109,7 @@ const uint32_t	kZoomActionTag = 0xc0c05002;
 
 -(void) dealloc
 {
-	[invocation_ release];
+	self.invocation = nil;
 
 #if NS_BLOCKS_AVAILABLE
 	[block_ release];
