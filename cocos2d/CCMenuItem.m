@@ -91,23 +91,19 @@ const uint32_t	kZoomActionTag = 0xc0c05002;
 }
 
 -(id) initWithBlock:(void(^)(id sender))block {
-	block_ = [block copy];
-	return [self initWithTarget:block_ selector:@selector(ccCallbackBlockWithSender:)];
+	
+    [self initWithTarget:nil selector: nil];
+    if (self)
+    {
+        self.block = block;
+    }
+    return self;
 }
 
-@dynamic block;
-- (void(^)(id sender)) block
-{
-    return block_;
-}
+@synthesize block = block_;
 
-- (void) setBlock: (void(^)(id sender)) block
-{
-    [block_ release];
-    block_ = [block copy];
-    
-    [self setTarget: block_ selector: @selector(ccCallbackBlockWithSender:)];
-}
+#endif // NS_BLOCKS_AVAILABLE
+
 - (void) setTarget: (id) target selector: (SEL) selector
 {
     NSMethodSignature *sig = nil;
@@ -118,21 +114,16 @@ const uint32_t	kZoomActionTag = 0xc0c05002;
         self.invocation = [NSInvocation invocationWithMethodSignature:sig];
         [self.invocation setTarget:target];
         [self.invocation setSelector:selector];
-#if NS_BLOCKS_AVAILABLE
-        if ([sig numberOfArguments] == 3) 
-#endif
-			[self.invocation setArgument:&self atIndex:2];
+        [self.invocation setArgument:&self atIndex:2];
     }
 }
-
-#endif // NS_BLOCKS_AVAILABLE
 
 -(void) dealloc
 {
 	self.invocation = nil;
 
 #if NS_BLOCKS_AVAILABLE
-	[block_ release];
+	self.block = nil;
 #endif
 	
 	[super dealloc];
@@ -151,7 +142,12 @@ const uint32_t	kZoomActionTag = 0xc0c05002;
 -(void) activate
 {
 	if(isEnabled_)
-        [invocation_ invoke];
+    {
+        if (self.block)
+            self.block(self);
+        else        
+            [self.invocation invoke];
+    }
 }
 
 -(void) setIsEnabled: (BOOL)enabled
@@ -218,8 +214,13 @@ const uint32_t	kZoomActionTag = 0xc0c05002;
 }
 
 -(id) initWithLabel:(CCNode<CCLabelProtocol,CCRGBAProtocol>*)label block:(void(^)(id sender))block {
-	block_ = [block copy];
-	return [self initWithLabel:label target:block_ selector:@selector(ccCallbackBlockWithSender:)];
+	
+	[self initWithLabel:label target:nil selector:nil];
+    if (self)
+    {
+        self.block = block;
+    }
+    return self;
 }
 
 #endif // NS_BLOCKS_AVAILABLE
@@ -409,8 +410,13 @@ const uint32_t	kZoomActionTag = 0xc0c05002;
 }
 
 -(id) initFromString:(NSString*)value charMapFile:(NSString*)charMapFile itemWidth:(int)itemWidth itemHeight:(int)itemHeight startCharMap:(char)startCharMap block:(void(^)(id sender))block {
-	block_ = [block copy];
-	return [self initFromString:value charMapFile:charMapFile itemWidth:itemWidth itemHeight:itemHeight startCharMap:startCharMap target:block_ selector:@selector(ccCallbackBlockWithSender:)];
+	
+    [self initFromString:value charMapFile:charMapFile itemWidth:itemWidth itemHeight:itemHeight startCharMap:startCharMap target:nil selector:nil];
+    if (self)
+    {
+        self.block = block;
+    }
+    return self;
 }
 #endif // NS_BLOCKS_AVAILABLE
 
@@ -514,9 +520,14 @@ const uint32_t	kZoomActionTag = 0xc0c05002;
 }
 
 -(id) initFromString: (NSString*) value block:(void(^)(id sender))block
-{
-	block_ = [block copy];
-	return [self initFromString:value target:block_ selector:@selector(ccCallbackBlockWithSender:)];
+{	
+    [self initFromString:value target:nil selector:nil];
+    if (self)
+    {
+        self.block = block;
+    }
+    
+    return self;
 }
 #endif // NS_BLOCKS_AVAILABLE
 
@@ -574,8 +585,13 @@ const uint32_t	kZoomActionTag = 0xc0c05002;
 }
 
 -(id) initFromNormalSprite:(CCNode<CCRGBAProtocol>*)normalSprite selectedSprite:(CCNode<CCRGBAProtocol>*)selectedSprite disabledSprite:(CCNode<CCRGBAProtocol>*)disabledSprite block:(void(^)(id sender))block {
-	block_ = [block copy];
-	return [self initFromNormalSprite:normalSprite selectedSprite:selectedSprite disabledSprite:disabledSprite target:block_ selector:@selector(ccCallbackBlockWithSender:)];
+	
+    [self initFromNormalSprite:normalSprite selectedSprite:selectedSprite disabledSprite:disabledSprite target:nil selector:nil];
+    if (self)
+    {
+        self.block = block;
+    }
+    return self;
 }
 #endif // NS_BLOCKS_AVAILABLE
 
@@ -801,8 +817,14 @@ const uint32_t	kZoomActionTag = 0xc0c05002;
 }
 
 -(id) initFromNormalImage: (NSString*) value selectedImage:(NSString*)value2 disabledImage:(NSString*) value3 block:(void(^)(id sender))block {
-	block_ = [block copy];
-	return [self initFromNormalImage:value selectedImage:value2 disabledImage:value3 target:block_ selector:@selector(ccCallbackBlockWithSender:)];
+	
+    [self initFromNormalImage:value selectedImage:value2 disabledImage:value3 target:nil selector:nil];
+    if (self)
+    {
+        self.block = block;
+    }
+    
+    return self;
 }
 
 #endif // NS_BLOCKS_AVAILABLE
@@ -865,8 +887,13 @@ const uint32_t	kZoomActionTag = 0xc0c05002;
 }
 
 -(id) initWithBlock:(void (^)(id))block items:(CCMenuItem*)item vaList:(va_list)args {
-	block_ = [block copy];
-	return [self initWithTarget:block_ selector:@selector(ccCallbackBlockWithSender:) items:item vaList:args];
+	
+    [self initWithTarget:nil selector: nil items:item vaList:args];
+    if (self)
+    {
+        self.block = block;
+    }
+    return self;
 }
 
 #endif // NS_BLOCKS_AVAILABLE
