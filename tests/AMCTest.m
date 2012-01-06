@@ -56,6 +56,7 @@ Class restartAction()
 
 enum nodeTags {
     kLayer, //< tag for layer that we will save/load
+    kParallax, //< parallax node in Parallax test.
 };
 
 @implementation AMCDemo
@@ -479,10 +480,10 @@ enum nodeTags {
 		
 		
 		// Middle layer: a Tile map atlas
-		CCSprite *tilesImage =  [CCSPrite spriteWithFile: @"TileMaps/tiles.png" ];
+		CCSprite *tilesImage =  [CCSprite spriteWithFile: @"TileMaps/tiles.png" ];
 		
 		// change the transform anchor to 0,0 (optional)
-		tilemap.anchorPoint = ccp(0, 0);        
+		tilesImage.anchorPoint = ccp(0, 0);        
 		
 		
 		// background layer: another image
@@ -506,7 +507,7 @@ enum nodeTags {
 		
 		// top image is moved at a ratio of 3.0x, 2.5y
 		[voidNode addChild:cocosImage z:2 parallaxRatio:ccp(3.0f,2.5f) positionOffset:ccp(200,1000)];
-		[self addChild:voidNode z:0 tag:kTagNode];
+		[self addChild:voidNode z:0 tag:kParallax];
         
 	}
 	
@@ -542,7 +543,7 @@ enum nodeTags {
     
 	CGPoint diff = ccpSub(touchLocation,prevLocation);
 	
-	CCNode *node = [self getChildByTag:kTagNode];
+	CCNode *node = [self getChildByTag:kParallax];
 	CGPoint currentPos = [node position];
 	[node setPosition: ccpAdd(currentPos, diff)];
 }
@@ -551,7 +552,7 @@ enum nodeTags {
 
 -(BOOL) ccMouseDragged:(NSEvent *)event
 {
-	CCNode *node = [self getChildByTag:kTagNode];
+	CCNode *node = [self getChildByTag:kParallax];
 	CGPoint currentPos = [node position];
 	[node setPosition: ccpAdd(currentPos, CGPointMake( event.deltaX, -event.deltaY) )];
 	
