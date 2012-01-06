@@ -15,7 +15,6 @@
 static int sceneIdx=-1;
 static NSString *transitions[] = {	
     @"NodeAMC",
-	@"SpriteAMC1",
     @"LayersAMC",
     @"ParallaxAMC",
 };
@@ -367,62 +366,6 @@ enum nodeTags {
 }
 @end
 
-#pragma mark Sprite + SpriteFrame + Texture
-@implementation SpriteAMC1
-
--(CCLayer *) insideLayer
-{
-	CCLayer *layer = [CCLayer node];
-		
-    CGSize s = [[CCDirector sharedDirector] winSize];
-	CCSprite *sprite = [self spriteWithCoords:ccp(s.width/2, s.height/2)];				
-	
-    [layer addChild:sprite];
-    
-	return layer;
-}
-
--(CCSprite *) spriteWithCoords:(CGPoint)p
-{
-	int idx = CCRANDOM_0_1() * 1400 / 100;
-	int x = (idx%5) * 85;
-	int y = (idx/5) * 121;
-	
-	
-	CCSprite *sprite = [CCSprite spriteWithFile:@"grossini_dance_atlas.png" rect:CGRectMake(x,y,85,121)];	
-	sprite.position = ccp( p.x, p.y);
-	
-	id action;
-	float rand = CCRANDOM_0_1();
-	
-	if( rand < 0.20 )
-		action = [CCScaleBy actionWithDuration:3 scale:2];
-	else if(rand < 0.40)
-		action = [CCRotateBy actionWithDuration:3 angle:360];
-	else if( rand < 0.60)
-		action = [CCBlink actionWithDuration:1 blinks:3];
-	else if( rand < 0.8 )
-		action = [CCTintBy actionWithDuration:2 red:0 green:-255 blue:-255];
-	else 
-		action = [CCFadeOut actionWithDuration:2];
-	id action_back = [action reverse];
-	id seq = [CCSequence actions:action, action_back, nil];
-	
-	[sprite runAction: [CCRepeatForever actionWithAction:seq]];
-    
-    return sprite;
-}
-
--(NSString *) title
-{
-	return @"Simple Sprite - AMC";
-}
-
-- (NSString *) subtitle
-{
-    return @"It should load the same as was saved.";
-}
-@end
 
 @interface CCLayerMultiplex(flipFlop)
 - (void) flip;
