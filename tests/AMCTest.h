@@ -67,6 +67,10 @@
 }
 @end
 
+@interface ParallaxAMC : CCLayer {
+}
+@end
+
 
 
 
