@@ -171,7 +171,9 @@
 
 - (NSArray *) AMCKeysForDictionaryRepresentation
 {
-    NSArray *nodeKeys = [super AMCKeysForDictionaryRepresentation];
+    NSMutableArray *nodeKeys = [NSMutableArray arrayWithArray: [super AMCKeysForDictionaryRepresentation]];
+    [nodeKeys removeObjectIdenticalTo:@"children"];
+    
     NSArray *parallaxNodeKeys = [NSArray arrayWithObjects:
                                  @"lastPosition",
                                  @"parallaxArrayForAMC",
@@ -199,18 +201,17 @@
         {
             CGPointObject *point = parallaxArray_->arr[i];
             
-            NSUInteger childIndex = [children_ indexOfObject: point.child];
             NSString *ratioString = [point AMCEncodeStructWithValue: [point valueForKey:@"ratio"] withName: @"CGPoint"];
             NSString *offsetString = [point AMCEncodeStructWithValue: [point valueForKey:@"offset"] withName: @"CGPoint"];
             
             NSDictionary *pointDict = 
             [NSDictionary dictionaryWithObjects: [NSArray arrayWithObjects:
-                                                  [NSNumber numberWithUnsignedInteger:childIndex], 
+                                                  [point.child dictionaryRepresentation], 
                                                   ratioString, 
                                                   offsetString, 
                                                   nil]
                                         forKeys:[NSArray arrayWithObjects:
-                                                 @"childIndex", 
+                                                 @"child", 
                                                  @"ratioString", 
                                                  @"offsetString", 
                                                  nil]
@@ -230,47 +231,24 @@
     for (NSDictionary *pointDict in parallaxPointDictsArray)
     {
         CGPointObject *obj = [CGPointObject pointWithCGPoint:CGPointZero offset:CGPointZero];
-        
-        NSUInteger childIndex = [[pointDict objectForKey:@"childIndex"] unsignedIntegerValue];
         [obj setValue: [obj AMCDecodeStructFromString:[pointDict objectForKey:@"ratioString"] withName:@"CGPoint"] forKey:@"ratio"];
-        [obj setValue: [obj AMCDecodeStructFromString:[pointDict objectForKey:@"offsetString"] withName:@"CGPoint"] forKey:@"offset"];        
+        [obj setValue: [obj AMCDecodeStructFromString:[pointDict objectForKey:@"offsetString"] withName:@"CGPoint"] forKey:@"offset"];
         
-        obj.child = [children_ objectAtIndex: childIndex];
-        ccArrayAppendObjectWithResize(parallaxArray_, obj);
+        // In collection inside collection (dict in array) AMC will automatically
+        // decode everything, that looks like dictionaryRepresentation of an object.
+        // It's a little trick, so be carefull here.
+        CCNode *child = (CCNode *)[pointDict objectForKey:@"child"];
+        NSAssert([child isKindOfClass: [CCNode class]], @"Child isn't a CCNode. If it's a dictionary - Fix me! ~AMC");
+        obj.child = child;
+        
+        [self addChild:obj.child z: obj.child.zOrder parallaxRatio: obj.ratio positionOffset: obj.offset ];
     }
 }
 
 -(void) prepareChildrenAfterAMCLoad
 {
-    // Add children from loaded children array.
-    // It can be a little bit slower, but it's more stable.
-    if ([children_ count])
-    {
-        CCArray *loadedChildren = children_;
-        ccArray *loadedParallaxArray = parallaxArray_;
-        
-        children_ = [[CCArray alloc] initWithCapacity: [loadedChildren count]];
-        parallaxArray_ = ccArrayNew([loadedChildren count]);
-        
-        // Re-add all children.
-        NSUInteger i = 0;
-        for (CCNode *child in loadedChildren)
-        {
-            CGPointObject *obj = parallaxArray_->arr[i];
-            CGPoint ratio = obj.ratio;
-            CGPoint offset = obj.offset;
-            
-            [self addChild: child z: child.zOrder parallaxRatio: ratio positionOffset: offset];
-            ++i;
-        }
-        
-        [loadedChildren release];
-        ccArrayFree(loadedParallaxArray);
-    }
-    else
-    {
-        NSLog(@"children = %@", children_);
-    }
+    // Nothing here - all children should be properly added in -setParallaxArrayForAMC:
+}
 }
 
 @end
