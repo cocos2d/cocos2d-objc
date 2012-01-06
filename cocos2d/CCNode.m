@@ -387,6 +387,30 @@ static NSUInteger globalOrderOfArrival = 0;
     [oldCamera release];
 }
 
+- (void) prepareChildrenAfterAMCLoad
+{
+    // Add children from loaded children array.
+    // It can be a little bit slower, but it's more stable.
+    if ([children_ count])
+    {
+        CCArray *loadedChildren = children_;
+        children_ = [[CCArray alloc] initWithCapacity: [loadedChildren count]];
+        
+        // Set parent for all children.
+        CCNode *child;
+        CCARRAY_FOREACH(loadedChildren, child)
+        {
+            [self addChild: child z: child.zOrder tag: child.tag];
+        }
+        
+        [loadedChildren release];
+    }
+    else
+    {
+        NSLog(@"children = %@", children_);
+    }
+}
+
 - (id) initWithDictionaryRepresentation: (NSDictionary *) aDict
 {
     if ( ( self = [super initWithDictionaryRepresentation: aDict] ) )
@@ -396,27 +420,7 @@ static NSUInteger globalOrderOfArrival = 0;
         isTransformGLDirty_ = YES;
 #endif
     
-        // Add children from loaded children array.
-        // It can be a little bit slower, but it's more stable.
-        if ([children_ count])
-        {
-            CCArray *loadedChildren = children_;
-            children_ = [[CCArray alloc] initWithCapacity: [loadedChildren capacity]];
-            
-            // Set parent for all children.
-            CCNode *child;
-            CCARRAY_FOREACH(loadedChildren, child)
-            {
-                [self addChild: child z: child.zOrder tag: child.tag];
-            }
-            
-            [loadedChildren release];
-        }
-        else
-        {
-            NSLog(@"children = %@", children_);
-        }
-        
+        [self prepareChildrenAfterAMCLoad];        
     }
     
     return self;
