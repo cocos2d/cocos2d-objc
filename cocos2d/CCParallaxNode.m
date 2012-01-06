@@ -249,6 +249,14 @@
 {
     // Nothing here - all children should be properly added in -setParallaxArrayForAMC:
 }
+
+- (NSDictionary *) dictionaryRepresentation
+{
+    // Change last position before saving it to ensure that children positions
+    // will be updated at first visit after loading.
+    lastPosition.x++;
+    
+    return [super dictionaryRepresentation];
 }
 
 @end
