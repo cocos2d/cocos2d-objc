@@ -37,8 +37,6 @@
 
 #pragma mark - Actual AMC Tests
 
-#pragma mark Node + Children
-
 /** @class RectNode Simple CCNode that draws a rectangle around it's bounds. */
 @interface RectNode : CCNode
 @end
@@ -50,12 +48,19 @@
 @interface NodeAMC : AMCDemo
 @end
 
+/** @class LayersAMC Visual test for CCLayer, CCLayerColor, CCLayerGradient & 
+ * CCLayerMultiplex.
+ * Added to AMCTest target, cause there was no tests for Layers before.
  */
 @interface LayersAMC : AMCDemo {
 
 }
 @end
 
+/** @class ParallaxAMC Visual test for CCParallaxNode.
+ * Added to AMCTest target, cause there ParallaxTest isn't compatible with AMC
+ * due to depreceted (=> not-AMC-Supported) class use (CCTileMapAtlas).
+ */
 @interface ParallaxAMC : CCLayer {
 }
 @end

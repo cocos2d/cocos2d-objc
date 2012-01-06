@@ -197,8 +197,6 @@ enum nodeTags {
 
 #pragma mark - Actual AMC Tests
 
-#pragma mark Node + Children
-
 @implementation RectNode
 
 - (void) draw
@@ -367,6 +365,7 @@ enum nodeTags {
 }
 @end
 
+#pragma mark -
 
 @interface CCLayerMultiplex(flipFlop)
 - (void) flip;
@@ -461,6 +460,7 @@ enum nodeTags {
 @end
 
 @implementation ParallaxAMC
+
 -(id) init
 {
 	if( (self=[super init] )) {
