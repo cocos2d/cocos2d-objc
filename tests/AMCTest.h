@@ -61,7 +61,7 @@
  * Added to AMCTest target, cause there ParallaxTest isn't compatible with AMC
  * due to depreceted (=> not-AMC-Supported) class use (CCTileMapAtlas).
  */
-@interface ParallaxAMC : CCLayer {
+@interface ParallaxAMC : AMCDemo {
 }
 @end
 

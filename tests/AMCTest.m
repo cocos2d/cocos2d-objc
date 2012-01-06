@@ -459,7 +459,12 @@ enum nodeTags {
 
 @end
 
-@implementation ParallaxAMC
+#pragma mark -
+
+@interface ParallaxAMCInsideLayer : CCLayer
+@end
+
+@implementation ParallaxAMCInsideLayer
 
 -(id) init
 {
@@ -506,7 +511,7 @@ enum nodeTags {
 		[voidNode addChild:tilesImage z:1 parallaxRatio:ccp(1.0f,1.0f) positionOffset:ccp(0,-200)];
 		
 		// top image is moved at a ratio of 3.0x, 2.5y
-		[voidNode addChild:cocosImage z:2 parallaxRatio:ccp(3.0f,2.5f) positionOffset:ccp(200,1000)];
+		[voidNode addChild:cocosImage z:2 parallaxRatio:ccp(3.0f,2.5f) positionOffset:ccp(200,500)];
 		[self addChild:voidNode z:0 tag:kParallax];
         
 	}
@@ -561,6 +566,14 @@ enum nodeTags {
 
 #endif
 
+@end
+
+@implementation ParallaxAMC
+
+- (CCLayer *) insideLayer
+{
+    return [ParallaxAMCInsideLayer node];
+}
 
 -(NSString *) title
 {
