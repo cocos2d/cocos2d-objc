@@ -27,6 +27,7 @@
 #import "CCParallaxNode.h"
 #import "Support/CGPointExtension.h"
 #import "Support/ccCArray.h"
+#import "AutoMagicCoding/AutoMagicCoding/NSObject+AutoMagicCoding.h"
 
 @interface CGPointObject : NSObject
 {
@@ -158,4 +159,111 @@
 	
 	[super visit];
 }
+
+#pragma mark CCParallaxNode - AutoMagicCoding Support
+
+- (NSArray *) AMCKeysForDictionaryRepresentation
+{
+    NSArray *nodeKeys = [super AMCKeysForDictionaryRepresentation];
+    NSArray *parallaxNodeKeys = [NSArray arrayWithObjects:
+                                 @"lastPosition",
+                                 @"parallaxArrayForAMC",
+                                 nil];
+    return [nodeKeys arrayByAddingObjectsFromArray: parallaxNodeKeys];
+}
+
+- (AMCFieldType) AMCFieldTypeForValueWithKey:(NSString *)aKey
+{
+    if ([aKey isEqualToString:@"parallaxArrayForAMC"])
+    {
+        return kAMCFieldTypeCollectionArrayMutable;
+    }
+    else
+        return [super AMCFieldTypeForValueWithKey:aKey];
+}
+
+- (NSArray *) parallaxArrayForAMC
+{
+    if (parallaxArray_ && parallaxArray_->num)
+    {
+        NSMutableArray *array = [NSMutableArray arrayWithCapacity: parallaxArray_->num];
+        
+        for( unsigned int i=0;i < parallaxArray_->num;i++) 
+        {
+            CGPointObject *point = parallaxArray_->arr[i];
+            
+            NSUInteger childIndex = [children_ indexOfObject: point.child];
+            NSString *ratioString = [point AMCEncodeStructWithValue: [point valueForKey:@"ratio"] withName: @"CGPoint"];
+            NSString *offsetString = [point AMCEncodeStructWithValue: [point valueForKey:@"offset"] withName: @"CGPoint"];
+            
+            NSDictionary *pointDict = 
+            [NSDictionary dictionaryWithObjects: [NSArray arrayWithObjects:
+                                                  [NSNumber numberWithUnsignedInteger:childIndex], 
+                                                  ratioString, 
+                                                  offsetString, 
+                                                  nil]
+                                        forKeys:[NSArray arrayWithObjects:
+                                                 @"childIndex", 
+                                                 @"ratioString", 
+                                                 @"offsetString", 
+                                                 nil]
+             ];
+            [array addObject:pointDict];
+        }
+        
+        return array;
+    }
+    
+    return nil;
+}
+
+- (void) setParallaxArrayForAMC:(NSArray *)parallaxPointDictsArray
+{
+    parallaxArray_ = ccArrayNew( [parallaxPointDictsArray count]);
+    for (NSDictionary *pointDict in parallaxPointDictsArray)
+    {
+        CGPointObject *obj = [CGPointObject pointWithCGPoint:CGPointZero offset:CGPointZero];
+        
+        NSUInteger childIndex = [[pointDict objectForKey:@"childIndex"] unsignedIntegerValue];
+        [obj setValue: [obj AMCDecodeStructFromString:[pointDict objectForKey:@"ratioString"] withName:@"CGPoint"] forKey:@"ratio"];
+        [obj setValue: [obj AMCDecodeStructFromString:[pointDict objectForKey:@"offsetString"] withName:@"CGPoint"] forKey:@"offset"];        
+        
+        obj.child = [children_ objectAtIndex: childIndex];
+        ccArrayAppendObjectWithResize(parallaxArray_, obj);
+    }
+}
+
+-(void) prepareChildrenAfterAMCLoad
+{
+    // Add children from loaded children array.
+    // It can be a little bit slower, but it's more stable.
+    if ([children_ count])
+    {
+        CCArray *loadedChildren = children_;
+        ccArray *loadedParallaxArray = parallaxArray_;
+        
+        children_ = [[CCArray alloc] initWithCapacity: [loadedChildren count]];
+        parallaxArray_ = ccArrayNew([loadedChildren count]);
+        
+        // Re-add all children.
+        NSUInteger i = 0;
+        for (CCNode *child in loadedChildren)
+        {
+            CGPointObject *obj = parallaxArray_->arr[i];
+            CGPoint ratio = obj.ratio;
+            CGPoint offset = obj.offset;
+            
+            [self addChild: child z: child.zOrder parallaxRatio: ratio positionOffset: offset];
+            ++i;
+        }
+        
+        [loadedChildren release];
+        ccArrayFree(loadedParallaxArray);
+    }
+    else
+    {
+        NSLog(@"children = %@", children_);
+    }
+}
+
 @end
