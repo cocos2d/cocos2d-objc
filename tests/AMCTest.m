@@ -590,19 +590,25 @@ enum nodeTags {
 
 //
 // ====== TODO: More Nodes ====== 
-// <# assigned: Stepan Generalov (must be done tomorrow 5 Jan 2012) #>
+// assigned: Stepan Generalov - today
 //
 // * CCParalaxNode - pretty easy, just need to save CGPointObject's in parallaxRatio array & then use it in
 // -initWithDictionaryRepresentation: for parallaxRatio argument, when reading childs from loadedChildren.
+// Also this needs additional test in AMCTest, cause built-in ParallaxTest uses deprecetad class that will not
+// be supported by AMC (CCTileMapAtlas)
+//
+// * CCProgressTimer - straight-forward.
 //
 // * CCTMXTiledMap - incomplete support. Save only tmx filename. It's supported by
 // cocos2d-iphone. The only issue is that if you're changed something after loading tmx
 // - this will not be saved (full support is added in  "Possible future features" section below )
 //
 // * CCScene - should work without any modifications - cause it's simple CCNode.
-// * CCTransition & it's subclasses - should be VERY simple. Should we really support this??????????
+// * CCTransitions - easy to save, hard to test.
+// Only if do first ammount of tests that saves transition & 2nd - that loads it.
 //
-// * CCProgressTimer - straight-forward.
+//
+
 //
 
 //
