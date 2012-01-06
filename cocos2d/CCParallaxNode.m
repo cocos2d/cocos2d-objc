@@ -60,9 +60,16 @@
 }
 @end
 
+@interface CCParallaxNode ()
+
+@property(readwrite, assign) CGPoint lastPosition;
+
+@end
+
 @implementation CCParallaxNode
 
 @synthesize parallaxArray = parallaxArray_;
+@synthesize lastPosition;
 
 -(id) init
 {
