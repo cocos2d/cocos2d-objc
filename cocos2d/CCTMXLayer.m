@@ -352,7 +352,7 @@ int compareInts (const void * a, const void * b);
 	NSInteger idx = pos.x + pos.y * layerSize_.width;
 
 	// Bits on the far end of the 32-bit global tile ID are used for tile flags
-	return (tiles_[ idx ] & kFlippedMask);
+	return (tiles_[ idx ] & kCCFlippedMask);
 }
 
 #pragma mark CCTMXLayer - adding helper methods
@@ -364,10 +364,12 @@ int compareInts (const void * a, const void * b);
 	reusedTile_.anchorPoint = CGPointZero;
 	[reusedTile_ setOpacity:opacity_];
 
-	if (gid & kFlippedHorizontallyFlag)
+	if (gid & kCCFlippedHorizontallyFlag)
 		reusedTile_.flipX = YES;
-	if (gid & kFlippedVerticallyFlag)
+	if (gid & kCCFlippedVerticallyFlag)
 		reusedTile_.flipY = YES;
+	if( gid & kCCFlippedAntiDiagonallyFlag )
+		NSAssert(NO, @"Tiled Anti-Diagonally Flip not supported yet");
 }
 
 -(CCSprite*) insertTileForGID:(uint32_t)gid at:(CGPoint)pos
