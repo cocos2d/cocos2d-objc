@@ -642,6 +642,10 @@ enum nodeTags {
 //        NSString. It's impossible to save Blocks - user should manually restore
 //        them after loading 
 //              (CCNodeRegistry can be used to obtain target nodes).
+//
+// 6. More Nodes
+//      * CCParallaxNode - FULL SUPPORT (tested in AMCTest.m ParallaxAMC)
+//      * 
 
 //
 //
@@ -659,23 +663,14 @@ enum nodeTags {
 // ====== TODO: More Nodes ====== 
 // assigned: Stepan Generalov - today
 //
-// * CCParalaxNode - pretty easy, just need to save CGPointObject's in parallaxRatio array & then use it in
-// -initWithDictionaryRepresentation: for parallaxRatio argument, when reading childs from loadedChildren.
-// Also this needs additional test in AMCTest, cause built-in ParallaxTest uses deprecetad class that will not
-// be supported by AMC (CCTileMapAtlas)
-//
 // * CCProgressTimer - straight-forward.
 //
-// * CCTMXTiledMap - incomplete support. Save only tmx filename. It's supported by
-// cocos2d-iphone. The only issue is that if you're changed something after loading tmx
-// - this will not be saved (full support is added in  "Possible future features" section below )
 //
 // * CCScene - should work without any modifications - cause it's simple CCNode.
 // * CCTransitions - easy to save, hard to test.
 // Only if do first ammount of tests that saves transition & 2nd - that loads it.
 //
 //
-
 //
 
 //
@@ -754,8 +749,8 @@ enum nodeTags {
 //
 //  * CCTimer & scheduled methods. (Not used by Cocos2D-iPhone classes 
 // themselves - should be used by developer expicitly ).
-//  * CCParticleBatchNode & other from "Particle Nodes" - OMG, fucking particles! Anyway - it should be possible, just needs time.
-//  * Full support for CCTMXLayer, CCTMXObjectGroup, CCTMXTiledMap. That means that you can change something & it will be saved with changes.
+//  * CCParticleBatchNode & other from "Particle Nodes" - OMG, lot of iVars & structs! Anyway - it should be possible, just needs time.
+//  * CCTMXLayer, CCTMXObjectGroup, CCTMXTiledMap. With ability to change something & it will be saved with changes.
 //  *
 //
 
