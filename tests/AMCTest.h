@@ -58,7 +58,7 @@
 @end
 
 /** @class ParallaxAMC Visual test for CCParallaxNode.
- * Added to AMCTest target, cause there ParallaxTest isn't compatible with AMC
+ * Added to AMCTest target, cause ParallaxTest isn't compatible with AMC
  * due to depreceted (=> not-AMC-Supported) class use (CCTileMapAtlas).
  */
 @interface ParallaxAMC : AMCDemo {
