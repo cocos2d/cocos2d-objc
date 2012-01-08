@@ -103,6 +103,9 @@
 
 	[director_ setView:glView_];
 
+	// Center window
+	[self.window center];																		\
+	
 	//	[director setProjection:kCCDirectorProjection2D];
 
 	// Enable "moving" mouse event. Default no.

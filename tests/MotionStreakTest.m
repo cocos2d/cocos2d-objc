@@ -211,7 +211,11 @@ Class restartAction()
 {
 	[super onEnter];
 
+#ifdef __CC_PLATFORM_IOS
 	self.isTouchEnabled = YES;
+#elif defined(__CC_PLATFORM_MAC)
+	self.isMouseEnabled = YES;
+#endif
 
 	CGSize s = [[CCDirector sharedDirector] winSize];
 
@@ -226,6 +230,7 @@ Class restartAction()
 	streak_ = streak;
 }
 
+#ifdef __CC_PLATFORM_IOS
 -(void)ccTouchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
 	UITouch *touch = [touches anyObject];
@@ -234,8 +239,20 @@ Class restartAction()
 
 	[streak setPosition:touchLocation];
 }
+
+#elif defined(__CC_PLATFORM_MAC)
+
+-(BOOL) ccMouseDragged:(NSEvent *)event
+{
+	CGPoint touchLocation = [[CCDirector sharedDirector] convertEventToGL:event];
+	[streak setPosition:touchLocation];
+	return YES;
+}
+#endif
+
 @end
 
+#if defined(__CC_PLATFORM_IOS)
 
 // CLASS IMPLEMENTATIONS
 @implementation AppController
@@ -264,8 +281,25 @@ Class restartAction()
 	return  YES;
 }
 
-- (void) dealloc
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-	[super dealloc];
+	return UIInterfaceOrientationIsLandscape(interfaceOrientation);
 }
 @end
+
+#elif defined(__CC_PLATFORM_MAC)
+
+@implementation AppController
+
+- (void)applicationDidFinishLaunching:(NSNotification *)aNotification
+{
+	[super applicationDidFinishLaunching:aNotification];
+	
+	CCScene *scene = [CCScene node];
+	[scene addChild: [nextAction() node]];
+	
+	[director_ runWithScene:scene];
+}
+@end
+#endif
+
