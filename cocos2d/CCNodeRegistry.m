@@ -88,7 +88,16 @@ static CCNodeRegistry *sharedRegistry_=nil;
 {
     if (prevName)
     {
-        [nodes_ removeObjectForKey: prevName];
+        // Allow removing node from registry only by itself.
+        // When replacing scene - nodes from old scene will dealloc AFTER
+        // nodes from new will be added.
+        // So if nodes from OLD scene have names equal to some nodes from NEW
+        // scene - they will remove new nodes from Registry, and this shouldn't happen.
+        CCNode *nodeToRemove = [[nodes_ objectForKey:prevName] nonretainedObjectValue];
+        if (nodeToRemove == aNode)
+        {
+            [nodes_ removeObjectForKey: prevName];
+        }
     }
     
     if (newName && aNode)
