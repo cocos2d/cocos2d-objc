@@ -802,7 +802,72 @@ static NSString *const kAMCTestLayerName = @"curAMCTestLayer";
 //      * CCProgressTimer - FULL SUPPORT (tested in AMCTest.m ProgressTimerAMC)
 //        (btw found a bug - different acnhorPoints for radial timers aren't supported)
 //
+
 //
+//
+// What's new
+// ===========
+//
+// 1. Cocos2D-iPhone Sources:
+//      1. ADDED: cocos2d/AutoMagicCoding - AMC submodule
+//          TODO: remove submodule, use easier path, update all files , that uses that path.
+//
+//      2. CHANGED: Many cocos2d classes, that now have AMC Support (see notes above).
+//
+//      3. ADDED: CCNodeRegistry - central key-value (by name string) for nodes, that
+//              doesn't retain nodes (Used for restoring links after loading, such as
+//              CCMenuItem target & other).
+//
+//      4. REMOVED: CCBlocksAdditions category & CCBlockSupport.m (only implementation file
+//              header is still used) - CCMenuItem was refactored a little for
+//              better AMC support, now blocks used directly, but it's still 
+//              backward compatible with old iOS versions & now you can set
+//              target/selector or block after creating CCMenuItem (or it's subclasses).
+//
+// 2. Tests:
+//      1. ADDED: New test target: AMCTest - includes additional tests for AMC:
+//          * NodeAMC - Simple node properties/hierarchy test.
+//          * LayersAMC - Test for CCLayer, CCLayerColor, CCLayerGradient & CCLayerMultiplex.
+//              (There was no Layers test before - so added new one).
+//          * ParallaxAMC - Test for AMC-Support CCParallaxNode with AMC-Supported children.
+//              (Used instead of existing test, cause it includes deprecated class children,
+//              that will not be supported by AMC).
+//          * ProgressTimerAMC - Test for CCProgressTimer AMC Support (there was no test for
+//              progressTimer before).
+//          * SceneAMC - explicit test for whole CCScene test.
+//
+//      2. CHANGED: Existing tests - added save/purge/load toggle menu item. 
+//
+
+//
+// ====== Not Supported =====
+//
+// 1. Possible in the future releases:
+//
+//    * CCTimer & scheduled methods. (Not used by Cocos2D-iPhone classes 
+//      themselves - should be used by developer expicitly ).
+//
+//    * CCParticleBatchNode & other from "Particle Nodes" - OMG, lot of iVars & structs! 
+//      Anyway - it should be possible, just needs time.
+//
+//    * CCTMXLayer, CCTMXObjectGroup, CCTMXTiledMap. With ability to change something & it will be saved with changes.
+//
+//    * CCTransitions - Low priority feature. Easy to save, hard to test.
+//      Only if do first ammount of tests that saves transition & 2nd - that loads it.
+//
+//    * CCRibbon  - probably hard to support
+//
+//    * CCMotionStreak - uses CCRibon.
+//
+//
+// 2. Probably not to be supported by AMC
+//
+//   * CCGrabber (helper class), 
+//   * CCRenderTexture (helper class), 
+//   * CCTileMapAtlas (DEPRECATED (Will be removed from Cocos2D-iPhone in 1.0+ )). 
+//
+//
+
 
 //
 //
@@ -817,20 +882,36 @@ static NSString *const kAMCTestLayerName = @"curAMCTestLayer";
 //
 //
 
+// ====== Current TODO: =======
 //
-// ====== TODO: More Nodes ====== 
-// assigned: Stepan Generalov - today
+
 //
-// * CCScene - should work without any modifications - cause it's simple CCNode.
-// * CCTransitions - easy to save, hard to test.
-// Only if do first ammount of tests that saves transition & 2nd - that loads it.
+// TODO: Look through cocos2d-iphone documentation & sources carefully for any 
+// classes, that i may have skipped here & that we need to support.
 //
+
+// Right after that:
 //
+// 1. Update iOS project, test & fix if needed.
+//
+// 2. Check issues & TODOs in code - try to close them.
+//
+// 3. Think what to do NeXT ;)
+//    * Start developing an editor without actions support. 
+//  OR
+//    * ADD actions support. 
+//  OR
+//    * Start doing a pull-request and:
+//      * Add actions support.
+//     OR
+//      * Start developing an editor without actions support. 
+//
+//      Mmmmm.... Sweet time to make a decision... 
+//      Take your time. Feeeeeeeeel it. Enjoy it.
 //
 
 //
 // ====== ACTIONS ======
-// <# NOT ASSIGNED TO ANYBODY #>
 //
 // * CCAction - just save tag. target & original target will be set on runAction.
 //    Add -allActionsForTarget: to CCActionManager to retreive all actions.
@@ -856,7 +937,6 @@ static NSString *const kAMCTestLayerName = @"curAMCTestLayer";
 
 //
 // ======= TODO: Animation =====
-// <# NOT ASSIGNED TO ANYBODY #>
 //
 // * CCAnimation - should work out of the box, cause CCSpriteFrame is ready.
 // Just some additional logic must be added to recache used animations & spriteFrames.
@@ -885,43 +965,10 @@ static NSString *const kAMCTestLayerName = @"curAMCTestLayer";
 //
 
 //
-// TODO: Look through cocos2d-iphone documentation for any classes, that i may have
-// skipped here & that we need to support.
-//
-
-//
 // ====== TODO: More Tests =====
 //
 // TODO: Sprite + Blend Func (should work, just got no explicit test)
-// TODO: CCScene (should work, just got no explicit test)
 // TODO: Animation key (Issue #9) test. 
-
-
-
-//
-// ====== Possible future features ====== 
-// <# DON'T DO THIS - NOT NEEDED FOR FIRST RELEASE #>
-//
-//  * CCTimer & scheduled methods. (Not used by Cocos2D-iPhone classes 
-// themselves - should be used by developer expicitly ).
-//  * CCParticleBatchNode & other from "Particle Nodes" - OMG, lot of iVars & structs! Anyway - it should be possible, just needs time.
-//  * CCTMXLayer, CCTMXObjectGroup, CCTMXTiledMap. With ability to change something & it will be saved with changes.
-//  *
-//
-
-//
-// ====== Not to be supported by AMC =====
-//
-// 1. Can't imagine someone need to save/load this.
-//  * CCGrabber, 
-//  * CCRenderTexture, 
-//  * CCRibbon,
-//  * CCMotionStreak
-//
-// 2. CCTileMapAtlas - DEPRECATED. 
-//
-//
-//
 
 
 
