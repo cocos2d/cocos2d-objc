@@ -18,6 +18,7 @@ static NSString *transitions[] = {
     @"LayersAMC",
     @"ParallaxAMC",
     @"ProgessTimerAMC",
+    @"SceneAMC",
 };
 
 Class nextAction(void);
@@ -62,6 +63,8 @@ enum nodeTags {
     kAMCTestMenu,
     kSavePurgeLoadToggle,
 };
+
+static NSString *const kAMCTestLayerName = @"curAMCTestLayer";
 
 @implementation AMCDemo
 
@@ -650,6 +653,87 @@ enum nodeTags {
 }
 
 
+@end
+
+
+@implementation SceneAMC
+
+- (id) init
+{
+    [super init];
+    if (self)
+    {
+        // Set name to make it possible to load target/selector for CCMenuItems.
+        self.name = kAMCTestLayerName;
+        
+        // Remove standard save/purge/load.
+        CCNode *menu = [self getChildByTag: kAMCTestMenu];
+        [menu removeChildByTag:kSavePurgeLoadToggle cleanup:YES];
+    }
+    
+    return self;
+}
+
+- (CCLayer *) insideLayer
+{
+    CGSize s = [CCDirector sharedDirector].winSize;
+    
+    CCLayer *layer = [CCLayer node];
+    
+    CCMenuItemLabel *load = [CCMenuItemLabel itemWithLabel: [CCLabelTTF labelWithString: @"Load" fontName: @"Marker Felt" fontSize:48]];
+    [load setTarget:self selector:@selector(loadScene:)];
+    
+    CCMenu *menu = [CCMenu menuWithItems:load, nil];
+    
+    menu.position = CGPointZero;
+    load.position = ccp( s.width/2, 160);
+    [layer addChild: menu];
+    
+    return layer;
+}
+
+- (NSString *) sceneFilePath
+{
+    NSString *filename = [NSString stringWithFormat:@"SceneAMC.plist", [self className] ];
+    
+    NSArray *paths					= NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+	NSString *documentsDirectory	= [paths objectAtIndex:0];
+	NSString *path                  = [documentsDirectory stringByAppendingPathComponent: filename ];
+    
+    return path;
+}
+
+- (void) saveScene
+{
+    NSDictionary *dict = [[[CCDirector sharedDirector] runningScene] dictionaryRepresentation];
+    [dict writeToFile:[self sceneFilePath] atomically:YES];
+}
+
+- (void) loadScene: (id) sender
+{
+    NSString *path = [self sceneFilePath];    
+    
+    NSDictionary *aDict = [NSDictionary dictionaryWithContentsOfFile: path];
+    CCScene *scene = [NSObject objectWithDictionaryRepresentation: aDict ];    
+    
+	[[CCDirector sharedDirector] replaceScene:scene];
+}
+
+- (void) onEnterTransitionDidFinish
+{
+    [super onEnterTransitionDidFinish];
+    [self saveScene];
+}
+
+- (NSString *) title
+{
+    return @"Load CCScene";
+}
+
+- (NSString *) subtitle
+{
+    return @"Press load to reload cur scene from AMC.";
+}
 @end
 
 //
