@@ -1,11 +1,8 @@
 //
-// cocos node tests
+// CCNode tests
 // a cocos2d example
 // http://www.cocos2d-iphone.org
 //
-
-// cocos import
-#import "cocos2d.h"
 
 // local import
 #import "NodeTest.h"
@@ -24,9 +21,6 @@ Class restartAction(void);
 
 static int sceneIdx=-1;
 static NSString *transitions[] = {
-
-	@"NodeOpaqueTest",
-	@"NodeNonOpaqueTest",
 
 	@"Test2",
 	@"Test4",
@@ -504,16 +498,16 @@ Class restartAction()
 
 	if( ( self=[super init]) ) {
 		CCLayer *layer = [CustomNode node];
-		NSLog(@"retain count after init is %d", [layer retainCount]);                // 1
+		NSLog(@"retain count after init is %lu", (long)[layer retainCount]);                // 1
 
 		[self addChild:layer z:0];
-		NSLog(@"retain count after addChild is %d", [layer retainCount]);      // 2
+		NSLog(@"retain count after addChild is %lu", (long)[layer retainCount]);      // 2
 
 		[layer schedule:@selector(doSomething:)];
-		NSLog(@"retain count after schedule is %d", [layer retainCount]);      // 3
+		NSLog(@"retain count after schedule is %lu", (long)[layer retainCount]);      // 3
 
 		[layer unschedule:@selector(doSomething:)];
-		NSLog(@"retain count after unschedule is %d", [layer retainCount]);		// STILL 3!
+		NSLog(@"retain count after unschedule is %lu", (long)[layer retainCount]);		// STILL 3!
 	}
 
 	return self;
@@ -830,8 +824,12 @@ Class restartAction()
 {
 	if( ( self=[super init]) ) {
 
+#if defined(__CC_PLATFORM_IOS)
 		self.isTouchEnabled = YES;
-
+#elif defined(__CC_PLATFORM_MAC)
+		self.isMouseEnabled = YES;
+#endif
+		
 		CGSize s = [[CCDirector sharedDirector] winSize];
 
 		id rotate = [CCRotateBy actionWithDuration:10 angle:360];
@@ -868,6 +866,7 @@ Class restartAction()
 	return self;
 }
 
+#if defined(__CC_PLATFORM_IOS)
 -(void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
 	for( UITouch *touch in touches ) {
@@ -887,6 +886,24 @@ Class restartAction()
 		}
 	}
 }
+#elif defined(__CC_PLATFORM_MAC)
+-(BOOL) ccMouseUp:(NSEvent *)event
+{
+	CGPoint	location = [[CCDirector sharedDirector] convertEventToGL:event];
+		
+	for( int i=0; i<3; i++) {
+		CCNode *node = [self getChildByTag:100+i];
+		
+		CGPoint p1, p2;
+		
+		p1 = [node convertToNodeSpaceAR:location];
+		p2 = [node convertToNodeSpace:location];
+		
+		NSLog(@"AR: x=%.2f, y=%.2f -- Not AR: x=%.2f, y=%.2f", p1.x, p1.y, p2.x, p2.y);
+	}
+	return YES;
+}
+#endif
 
 -(NSString *) title
 {
@@ -1018,7 +1035,8 @@ Class restartAction()
 #pragma mark -
 #pragma mark AppController
 
-// CLASS IMPLEMENTATIONS
+#if defined(__CC_PLATFORM_IOS)
+
 @implementation AppController
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -1054,3 +1072,20 @@ Class restartAction()
 	return YES;
 }
 @end
+
+#elif defined(__CC_PLATFORM_MAC)
+
+@implementation AppController
+
+- (void)applicationDidFinishLaunching:(NSNotification *)aNotification
+{
+	[super applicationDidFinishLaunching:aNotification];
+	
+	CCScene *scene = [CCScene node];
+	[scene addChild: [nextAction() node]];
+	
+	[director_ runWithScene:scene];
+}
+@end
+#endif
+
