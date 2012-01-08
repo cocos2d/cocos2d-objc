@@ -137,41 +137,57 @@
 @end
 
 static int sceneIdx=0;
-static NSString *transitions[] = {
-
+static NSString *transitions[] =
+{
 	@"CCTransitionJumpZoom",
+
+	@"CCTransitionProgressRadialCCW",
+	@"CCTransitionProgressRadialCW",
+	@"CCTransitionProgressHorizontal",
+	@"CCTransitionProgressVertical",
+	@"CCTransitionProgressInOut",
+	@"CCTransitionProgressOutIn",
+
 	@"CCTransitionCrossFade",
-	@"CCTransitionRadialCCW",
-	@"CCTransitionRadialCW",
+
 	@"TransitionPageForward",
 	@"TransitionPageBackward",
+
 	@"CCTransitionFadeTR",
 	@"CCTransitionFadeBL",
 	@"CCTransitionFadeUp",
 	@"CCTransitionFadeDown",
+
 	@"CCTransitionTurnOffTiles",
+
 	@"CCTransitionSplitRows",
 	@"CCTransitionSplitCols",
+
 	@"CCTransitionFade",
 	@"FadeWhiteTransition",
+
 	@"FlipXLeftOver",
 	@"FlipXRightOver",
 	@"FlipYUpOver",
 	@"FlipYDownOver",
 	@"FlipAngularLeftOver",
 	@"FlipAngularRightOver",
+
 	@"ZoomFlipXLeftOver",
 	@"ZoomFlipXRightOver",
 	@"ZoomFlipYUpOver",
 	@"ZoomFlipYDownOver",
 	@"ZoomFlipAngularLeftOver",
 	@"ZoomFlipAngularRightOver",
+
 	@"CCTransitionShrinkGrow",
 	@"CCTransitionRotoZoom",
+	
 	@"CCTransitionMoveInL",
 	@"CCTransitionMoveInR",
 	@"CCTransitionMoveInT",
 	@"CCTransitionMoveInB",
+
 	@"CCTransitionSlideInL",
 	@"CCTransitionSlideInR",
 	@"CCTransitionSlideInT",
@@ -185,7 +201,7 @@ Class restartTransition(void);
 Class nextTransition()
 {
 	// HACK: else NSClassFromString will fail
-	[CCTransitionRadialCCW node];
+	[CCTransitionProgressRadialCCW node];
 
 	sceneIdx++;
 	sceneIdx = sceneIdx % ( sizeof(transitions) / sizeof(transitions[0]) );

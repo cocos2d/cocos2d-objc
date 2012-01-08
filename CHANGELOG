@@ -1,4 +1,4 @@
-version 2.0-beta2 7-Jan-2012
+version 2.0-beta2 8-Jan-2012
 . [NEW] v1.1 Forward-ported changes:
 		LabelTTF: word wrap works on Mac (issue #1074)
 		Node: Added onExitTransitionDidStart (issue #792)
@@ -18,6 +18,9 @@ version 2.0-beta2 7-Jan-2012
 . [NEW] Template: cocos2d v2 and v1 templates can be installed at the same time
 . [NEW] Template: Added option for Device Family
 . [NEW] Test: Added Director tests. Tests integration with GameCenter and other UIKit components (iOS)
+. [NEW] Transitios: Added new transitions: CCTransitionProgressHorizontal, CCTransitionProgressVertical,
+		CCTransitionProgressInOut and CCTransitionProgressOutIn
+. [NEW] Transitions: CCTransitionRadial... renamed to CCTransitionProgressRadial...
 . [FIX] Actions: IntervalAction works OK in rewind mode
 . [FIX] Actions: EaseIn/EaseOut actions support float arguments
 . [FIX] Director: Uses DisplayLink timestamp. More stable delta times (iOS) (issue #1277)

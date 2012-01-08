@@ -2678,8 +2678,8 @@
 		E076E73D1225EC7400DE0DA2 /* CCTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = E076E6971225EC7400DE0DA2 /* CCTransition.m */; };
 		E076E73E1225EC7400DE0DA2 /* CCTransitionPageTurn.h in Headers */ = {isa = PBXBuildFile; fileRef = E076E6981225EC7400DE0DA2 /* CCTransitionPageTurn.h */; };
 		E076E73F1225EC7400DE0DA2 /* CCTransitionPageTurn.m in Sources */ = {isa = PBXBuildFile; fileRef = E076E6991225EC7400DE0DA2 /* CCTransitionPageTurn.m */; };
-		E076E7401225EC7400DE0DA2 /* CCTransitionRadial.h in Headers */ = {isa = PBXBuildFile; fileRef = E076E69A1225EC7400DE0DA2 /* CCTransitionRadial.h */; };
-		E076E7411225EC7400DE0DA2 /* CCTransitionRadial.m in Sources */ = {isa = PBXBuildFile; fileRef = E076E69B1225EC7400DE0DA2 /* CCTransitionRadial.m */; };
+		E076E7401225EC7400DE0DA2 /* CCTransitionProgress.h in Headers */ = {isa = PBXBuildFile; fileRef = E076E69A1225EC7400DE0DA2 /* CCTransitionProgress.h */; };
+		E076E7411225EC7400DE0DA2 /* CCTransitionProgress.m in Sources */ = {isa = PBXBuildFile; fileRef = E076E69B1225EC7400DE0DA2 /* CCTransitionProgress.m */; };
 		E076E7421225EC7400DE0DA2 /* ccTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = E076E69C1225EC7400DE0DA2 /* ccTypes.h */; };
 		E076E7431225EC7400DE0DA2 /* cocos2d.h in Headers */ = {isa = PBXBuildFile; fileRef = E076E69D1225EC7400DE0DA2 /* cocos2d.h */; };
 		E076E7441225EC7400DE0DA2 /* cocos2d.m in Sources */ = {isa = PBXBuildFile; fileRef = E076E69E1225EC7400DE0DA2 /* cocos2d.m */; };
@@ -6042,8 +6042,8 @@
 		E076E6971225EC7400DE0DA2 /* CCTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCTransition.m; sourceTree = "<group>"; };
 		E076E6981225EC7400DE0DA2 /* CCTransitionPageTurn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTransitionPageTurn.h; sourceTree = "<group>"; };
 		E076E6991225EC7400DE0DA2 /* CCTransitionPageTurn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCTransitionPageTurn.m; sourceTree = "<group>"; };
-		E076E69A1225EC7400DE0DA2 /* CCTransitionRadial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTransitionRadial.h; sourceTree = "<group>"; };
-		E076E69B1225EC7400DE0DA2 /* CCTransitionRadial.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCTransitionRadial.m; sourceTree = "<group>"; };
+		E076E69A1225EC7400DE0DA2 /* CCTransitionProgress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTransitionProgress.h; sourceTree = "<group>"; };
+		E076E69B1225EC7400DE0DA2 /* CCTransitionProgress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCTransitionProgress.m; sourceTree = "<group>"; };
 		E076E69C1225EC7400DE0DA2 /* ccTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccTypes.h; sourceTree = "<group>"; };
 		E076E69D1225EC7400DE0DA2 /* cocos2d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cocos2d.h; sourceTree = "<group>"; };
 		E076E69E1225EC7400DE0DA2 /* cocos2d.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = cocos2d.m; sourceTree = "<group>"; };
@@ -7586,8 +7586,8 @@
 				E076E6971225EC7400DE0DA2 /* CCTransition.m */,
 				E076E6981225EC7400DE0DA2 /* CCTransitionPageTurn.h */,
 				E076E6991225EC7400DE0DA2 /* CCTransitionPageTurn.m */,
-				E076E69A1225EC7400DE0DA2 /* CCTransitionRadial.h */,
-				E076E69B1225EC7400DE0DA2 /* CCTransitionRadial.m */,
+				E076E69A1225EC7400DE0DA2 /* CCTransitionProgress.h */,
+				E076E69B1225EC7400DE0DA2 /* CCTransitionProgress.m */,
 			);
 			name = "Layer, Scene & Transition Nodes";
 			sourceTree = "<group>";
@@ -8110,7 +8110,7 @@
 				E076E73A1225EC7400DE0DA2 /* CCTMXXMLParser.h in Headers */,
 				E076E73C1225EC7400DE0DA2 /* CCTransition.h in Headers */,
 				E076E73E1225EC7400DE0DA2 /* CCTransitionPageTurn.h in Headers */,
-				E076E7401225EC7400DE0DA2 /* CCTransitionRadial.h in Headers */,
+				E076E7401225EC7400DE0DA2 /* CCTransitionProgress.h in Headers */,
 				E076E7421225EC7400DE0DA2 /* ccTypes.h in Headers */,
 				E076E7431225EC7400DE0DA2 /* cocos2d.h in Headers */,
 				E076E7451225EC7400DE0DA2 /* CCGL.h in Headers */,
@@ -13774,7 +13774,7 @@
 				E076E73B1225EC7400DE0DA2 /* CCTMXXMLParser.m in Sources */,
 				E076E73D1225EC7400DE0DA2 /* CCTransition.m in Sources */,
 				E076E73F1225EC7400DE0DA2 /* CCTransitionPageTurn.m in Sources */,
-				E076E7411225EC7400DE0DA2 /* CCTransitionRadial.m in Sources */,
+				E076E7411225EC7400DE0DA2 /* CCTransitionProgress.m in Sources */,
 				E076E7441225EC7400DE0DA2 /* cocos2d.m in Sources */,
 				E076E7561225EC7400DE0DA2 /* CCDirectorMac.m in Sources */,
 				E076E7581225EC7400DE0DA2 /* CCEventDispatcher.m in Sources */,

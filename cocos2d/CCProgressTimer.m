@@ -42,7 +42,7 @@
 //  kProgressTextureCoords holds points {0,1} {0,0} {1,0} {1,1} we can represent it as bits
 const char kCCProgressTextureCoords = 0x4b;
 
-@interface CCProgressTimer (Internal)
+@interface CCProgressTimer ()
 
 -(void)updateProgress;
 -(void)updateBar;
@@ -57,7 +57,6 @@ const char kCCProgressTextureCoords = 0x4b;
 @synthesize sprite = sprite_;
 @synthesize type = type_;
 @synthesize reverseDirection = reverseDirection_;
-@synthesize midpoint = midpoint_;
 @synthesize barChangeRate = barChangeRate_;
 @synthesize vertexData = vertexData_;
 @synthesize vertexDataCount = vertexDataCount_;
@@ -102,6 +101,7 @@ const char kCCProgressTextureCoords = 0x4b;
 		[self updateProgress];
 	}
 }
+
 -(void)setSprite:(CCSprite *)newSprite
 {
 	if(sprite_ != newSprite){
@@ -117,6 +117,7 @@ const char kCCProgressTextureCoords = 0x4b;
 		}
 	}
 }
+
 -(void)setType:(CCProgressTimerType)newType
 {
 	if (newType != type_) {
@@ -130,6 +131,7 @@ const char kCCProgressTextureCoords = 0x4b;
 		type_ = newType;
 	}
 }
+
 -(void)setReverseProgress:(BOOL)reverse
 {
 	if( reverseDirection_ != reverse ) {
@@ -143,27 +145,30 @@ const char kCCProgressTextureCoords = 0x4b;
 		}
 	}
 }
+
 -(void)setColor:(ccColor3B)c
 {
 	sprite_.color = c;
 	[self updateColor];
 }
+
 -(ccColor3B)color
 {
 	return sprite_.color;
 }
+
 -(void)setOpacity:(GLubyte)o
 {
 	sprite_.opacity = o;
 	[self updateColor];
 }
+
 -(GLubyte)opacity
 {
 	return sprite_.opacity;
 }
-@end
 
-@implementation CCProgressTimer(Internal)
+#pragma mark ProgressTimer Internal
 
 ///
 //	@returns the vertex position from the texture coordinate
@@ -190,7 +195,8 @@ const char kCCProgressTextureCoords = 0x4b;
 	return (ccVertex2F){min.x * (1.f - alpha.x) + max.x * alpha.x, min.y * (1.f - alpha.y) + max.y * alpha.y};
 }
 
--(void)updateColor {
+-(void)updateColor
+{
 	if (!sprite_) {
 		return;
 	}
@@ -219,6 +225,11 @@ const char kCCProgressTextureCoords = 0x4b;
 -(void)setAnchorPoint:(CGPoint)anchorPoint
 {
 	[super setAnchorPoint:anchorPoint];
+}
+
+-(CGPoint) midpoint
+{
+	return midpoint_;
 }
 
 -(void)setMidpoint:(CGPoint)midPoint
