@@ -1261,7 +1261,7 @@
 			<key>Path</key>
 			<string>libs/cocos2d/CCTransitionPageTurn.m</string>
 		</dict>
-		<key>libs/cocos2d/CCTransitionRadial.h</key>
+		<key>libs/cocos2d/CCTransitionProgress.h</key>
 		<dict>
 			<key>Group</key>
 			<array>
@@ -1269,11 +1269,11 @@
 				<string>cocos2d</string>
 			</array>
 			<key>Path</key>
-			<string>libs/cocos2d/CCTransitionRadial.h</string>
+			<string>libs/cocos2d/CCTransitionProgress.h</string>
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
-		<key>libs/cocos2d/CCTransitionRadial.m</key>
+		<key>libs/cocos2d/CCTransitionProgress.m</key>
 		<dict>
 			<key>Group</key>
 			<array>
@@ -1281,7 +1281,7 @@
 				<string>cocos2d</string>
 			</array>
 			<key>Path</key>
-			<string>libs/cocos2d/CCTransitionRadial.m</string>
+			<string>libs/cocos2d/CCTransitionProgress.m</string>
 		</dict>
 		<key>libs/cocos2d/ccTypes.h</key>
 		<dict>
@@ -2046,8 +2046,8 @@
 		<string>libs/cocos2d/CCTransition.m</string>
 		<string>libs/cocos2d/CCTransitionPageTurn.h</string>
 		<string>libs/cocos2d/CCTransitionPageTurn.m</string>
-		<string>libs/cocos2d/CCTransitionRadial.h</string>
-		<string>libs/cocos2d/CCTransitionRadial.m</string>
+		<string>libs/cocos2d/CCTransitionProgress.h</string>
+		<string>libs/cocos2d/CCTransitionProgress.m</string>
 		<string>libs/cocos2d/ccTypes.h</string>
 		<string>libs/cocos2d/cocos2d.h</string>
 		<string>libs/cocos2d/cocos2d.m</string>
