@@ -711,9 +711,11 @@ enum nodeTags {
 //
 // 6. More Nodes
 //      * CCParallaxNode - FULL SUPPORT (tested in AMCTest.m ParallaxAMC)
-//      * 
-
+//      * CCProgressTimer - FULL SUPPORT (tested in AMCTest.m ProgressTimerAMC)
+//        (btw found a bug - different acnhorPoints for radial timers aren't supported)
 //
+//
+
 //
 //
 //
@@ -724,13 +726,12 @@ enum nodeTags {
 //     |  |\/|  |   /  /_\  \  |  | |_ | |  | |  |     
 //     |  |  |  |  /  _____  \ |  |__| | |  | |  `----.
 //     |__|  |__| /__/     \__\ \______| |__|  \______|
+//
+//
 
 //
 // ====== TODO: More Nodes ====== 
 // assigned: Stepan Generalov - today
-//
-// * CCProgressTimer - straight-forward.
-//
 //
 // * CCScene - should work without any modifications - cause it's simple CCNode.
 // * CCTransitions - easy to save, hard to test.
