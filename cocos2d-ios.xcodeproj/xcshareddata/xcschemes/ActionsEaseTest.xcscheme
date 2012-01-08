@@ -13,9 +13,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "501504CD11330E1700A9CA65"
-               BuildableName = "ProgressActionsTest.app"
-               BlueprintName = "ProgressActionsTest"
+               BlueprintIdentifier = "505B63780F2F4210001B4104"
+               BuildableName = "ActionsEaseTest.app"
+               BlueprintName = "ActionsEaseTest"
                ReferencedContainer = "container:cocos2d-ios.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -31,9 +31,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "501504CD11330E1700A9CA65"
-            BuildableName = "ProgressActionsTest.app"
-            BlueprintName = "ProgressActionsTest"
+            BlueprintIdentifier = "505B63780F2F4210001B4104"
+            BuildableName = "ActionsEaseTest.app"
+            BlueprintName = "ActionsEaseTest"
             ReferencedContainer = "container:cocos2d-ios.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -49,9 +49,9 @@
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "501504CD11330E1700A9CA65"
-            BuildableName = "ProgressActionsTest.app"
-            BlueprintName = "ProgressActionsTest"
+            BlueprintIdentifier = "505B63780F2F4210001B4104"
+            BuildableName = "ActionsEaseTest.app"
+            BlueprintName = "ActionsEaseTest"
             ReferencedContainer = "container:cocos2d-ios.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -67,9 +67,9 @@
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "501504CD11330E1700A9CA65"
-            BuildableName = "ProgressActionsTest.app"
-            BlueprintName = "ProgressActionsTest"
+            BlueprintIdentifier = "505B63780F2F4210001B4104"
+            BuildableName = "ActionsEaseTest.app"
+            BlueprintName = "ActionsEaseTest"
             ReferencedContainer = "container:cocos2d-ios.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
