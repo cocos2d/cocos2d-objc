@@ -716,7 +716,7 @@ static NSString *const kAMCTestLayerName = @"curAMCTestLayer";
     NSDictionary *aDict = [NSDictionary dictionaryWithContentsOfFile: path];
     CCScene *scene = [NSObject objectWithDictionaryRepresentation: aDict ];    
     
-	[[CCDirector sharedDirector] replaceScene:scene];
+	[[CCDirector sharedDirector] replaceScene:[CCTransitionPageTurn transitionWithDuration:1.0f scene:scene backwards:NO]];
 }
 
 - (void) onEnterTransitionDidFinish
