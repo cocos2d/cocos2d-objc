@@ -58,6 +58,9 @@ Class restartAction()
 enum nodeTags {
     kLayer, //< tag for layer that we will save/load
     kParallax, //< parallax node in Parallax test.
+    
+    kAMCTestMenu,
+    kSavePurgeLoadToggle,
 };
 
 @implementation AMCDemo
@@ -145,6 +148,7 @@ enum nodeTags {
         CCMenuItemLabel *purge = [CCMenuItemLabel itemWithLabel: [CCLabelTTF labelWithString: @"Purge" fontName: @"Marker Felt" fontSize:12]];
         CCMenuItemLabel *load = [CCMenuItemLabel itemWithLabel: [CCLabelTTF labelWithString: @"Load" fontName: @"Marker Felt" fontSize:12]];
         CCMenuItem *trigger = [CCMenuItemToggle itemWithTarget:self selector: @selector(savePurgeLoadCallback:) items: save, purge, load, nil];
+        trigger.tag = kSavePurgeLoadToggle;
 		
 		CCMenu *menu = [CCMenu menuWithItems:item1, item2, item3, trigger, nil];
 		
@@ -153,7 +157,7 @@ enum nodeTags {
 		item2.position = ccp( s.width/2, 30);
 		item3.position = ccp( s.width/2 + 100,30);
         trigger.position = ccp( s.width/2, 80);
-		[self addChild: menu z:1];	
+		[self addChild: menu z:1 tag: kAMCTestMenu];	
 	}
 	return self;
 }
