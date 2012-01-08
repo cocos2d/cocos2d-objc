@@ -705,7 +705,7 @@ static NSString *const kAMCTestLayerName = @"curAMCTestLayer";
 
 - (void) saveScene
 {
-    NSDictionary *dict = [[[CCDirector sharedDirector] runningScene] dictionaryRepresentation];
+    NSDictionary *dict = [self.parent dictionaryRepresentation];
     [dict writeToFile:[self sceneFilePath] atomically:YES];
 }
 
