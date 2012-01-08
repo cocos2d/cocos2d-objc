@@ -65,6 +65,13 @@
 }
 @end
 
+/** @class ProgessTimerAMC Visual test for CCProgressTimer.
+ * Added to AMCTest target, cause there was no test for CCProgressTimer before.
+ */
+@interface ProgessTimerAMC : AMCDemo {
+}
+@end
+
 
 
 

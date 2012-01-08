@@ -17,6 +17,7 @@ static NSString *transitions[] = {
     @"NodeAMC",
     @"LayersAMC",
     @"ParallaxAMC",
+    @"ProgessTimerAMC",
 };
 
 Class nextAction(void);
@@ -579,6 +580,71 @@ enum nodeTags {
 {
 	return @"Parallax: drag screen";
 }
+
+@end
+
+@implementation ProgessTimerAMC
+
+- (CCLayer *) insideLayer
+{
+    CGSize s = [[CCDirector sharedDirector] winSize];
+    
+    CCLayer *layer = [CCLayer node];
+    
+    CCProgressTimer *timer1 = [CCProgressTimer progressWithFile:@"blocks.png"];
+    CCProgressTimer *timer2 = [CCProgressTimer progressWithFile:@"grossini.png"];
+    CCProgressTimer *timer3 = [CCProgressTimer progressWithFile:@"b1.png"];
+    CCProgressTimer *timer4 = [CCProgressTimer progressWithFile:@"b1.png"];
+    CCProgressTimer *timer5 = [CCProgressTimer progressWithFile:@"grossini.png"];
+    CCProgressTimer *timer6 = [CCProgressTimer progressWithFile:@"grossini.png"];
+    
+    timer1.type = kCCProgressTimerTypeVerticalBarTB;
+    timer2.type = kCCProgressTimerTypeRadialCW;
+    timer3.type = kCCProgressTimerTypeHorizontalBarLR;
+    timer4.type = kCCProgressTimerTypeHorizontalBarRL;
+    timer5.type = kCCProgressTimerTypeVerticalBarBT;
+    timer6.type = kCCProgressTimerTypeRadialCCW;
+    
+    // TODO: looks like progressTimers (especially radial) don't like anchorPoint,
+    // other than default one. Report a bug.
+    
+    timer1.position = ccp(120, s.height - 120);
+    timer2.position = ccp(0.5f * s.width, s.height - 120);
+    timer3.position = ccp(s.width - 120, s.height - 120);
+    timer4.position = ccp(120, 120);
+    timer5.position = ccp(0.5f * s.width, 120);
+    timer6.position = ccp(s.width - 120, 120);
+    
+    CCProgressFromTo *percentsAction = [CCProgressFromTo actionWithDuration:3.0f from: 0 to: 100];
+    
+    [timer1 runAction:[CCRepeatForever actionWithAction: [percentsAction copy]]];
+    [timer2 runAction:[CCRepeatForever actionWithAction: [percentsAction copy]]];
+    [timer3 runAction:[CCRepeatForever actionWithAction: [percentsAction copy]]];
+    [timer4 runAction:[CCRepeatForever actionWithAction: [percentsAction copy]]];
+    [timer5 runAction:[CCRepeatForever actionWithAction: [percentsAction copy]]];
+    [timer6 runAction:[CCRepeatForever actionWithAction: [percentsAction copy]]];
+    
+    [layer addChild: [CCLayerColor layerWithColor: ccc4(0xFF, 0xFF, 0xFF, 0x40)]];
+    [layer addChild:timer1];
+    [layer addChild:timer2];
+    [layer addChild:timer3];
+    [layer addChild:timer4];
+    [layer addChild:timer5];
+    [layer addChild:timer6];
+    
+    return layer;
+}
+
+- (NSString *) title
+{
+    return @"CCProgressTimer";
+}
+
+- (NSString *) subtitle
+{
+    return @"All timers should load the same as was saved.";
+}
+
 
 @end
 
