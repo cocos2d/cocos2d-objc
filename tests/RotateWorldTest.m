@@ -19,9 +19,6 @@
 		x = size.width;
 		y = size.height;
 
-		NSArray *array = [UIFont familyNames];
-		for( NSString *s in array )
-			NSLog( @"%@",s );
 		CCLabelTTF *label = [CCLabelTTF labelWithString:@"cocos2d" fontName:@"Marker Felt" fontSize:64];
 
 		[label setPosition: ccp(x/2,y/2)];
@@ -142,7 +139,10 @@
 
 @end
 
-// CLASS IMPLEMENTATIONS
+#pragma mark - AppController - iOS
+
+#if defined(__CC_PLATFORM_IOS)
+
 @implementation AppController
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -178,4 +178,34 @@
 
 	return YES;
 }
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+	return UIInterfaceOrientationIsLandscape(interfaceOrientation);
+}
+
 @end
+
+#pragma mark - AppController - Mac
+
+#elif defined(__CC_PLATFORM_MAC)
+
+@implementation AppController
+
+- (void)applicationDidFinishLaunching:(NSNotification *)aNotification
+{
+	[super applicationDidFinishLaunching:aNotification];
+	
+	CCScene *scene = [CCScene node];
+	
+	MainLayer * mainLayer =[MainLayer node];
+	
+	[scene addChild: mainLayer];
+	
+	[scene runAction: [CCRotateBy actionWithDuration: 4 angle:-360]];
+	
+	[director_ runWithScene:scene];
+}
+@end
+#endif
+

@@ -136,8 +136,12 @@ Class restartAction()
 {
 	if( (self=[super init] )) {
 
+#if defined(__CC_PLATFORM_IOS)
 		self.isTouchEnabled = YES;
-
+#elif defined(__CC_PLATFORM_MAC)
+		self.isMouseEnabled = YES;
+#endif
+		
 		CGSize s = [[CCDirector sharedDirector] winSize];
 		CCLayerColor* layer = [CCLayerColor layerWithColor: ccc4(0xFF, 0x00, 0x00, 0x80)
 												 width: 200
@@ -149,50 +153,71 @@ Class restartAction()
 	return self;
 }
 
+-(void) updateSize:(CGPoint)touchLocation
+{
+	CGSize s = [[CCDirector sharedDirector] winSize];
+	
+	CGSize newSize = CGSizeMake( abs( touchLocation.x - s.width/2)*2, abs(touchLocation.y - s.height/2)*2);
+	
+	CCLayerColor *l = (CCLayerColor*) [self getChildByTag:kTagLayer];
+	
+	//	[l changeWidth:newSize.width];
+	//	[l changeHeight:newSize.height];
+	//	[l changeWidth:newSize.width height:newSize.height];
+	
+	[l setContentSize: newSize];
+}
+
+#if defined(__CC_PLATFORM_IOS)
 -(void) registerWithTouchDispatcher
 {
 	CCDirectorIOS *director = (CCDirectorIOS*) [CCDirector sharedDirector];
 	[[director touchDispatcher] addTargetedDelegate:self priority:kCCMenuTouchPriority+1 swallowsTouches:YES];
 }
 
--(void) updateSize:(UITouch*)touch
+-(BOOL) ccTouchBegan:(UITouch *)touch withEvent:(UIEvent *)event
 {
 	CGPoint touchLocation = [touch locationInView: [touch view]];
 	touchLocation = [[CCDirector sharedDirector] convertToGL: touchLocation];
-
-	CGSize s = [[CCDirector sharedDirector] winSize];
-
-	CGSize newSize = CGSizeMake( abs( touchLocation.x - s.width/2)*2, abs(touchLocation.y - s.height/2)*2);
-
-	CCLayerColor *l = (CCLayerColor*) [self getChildByTag:kTagLayer];
-
-//	[l changeWidth:newSize.width];
-//	[l changeHeight:newSize.height];
-//	[l changeWidth:newSize.width height:newSize.height];
-
-	[l setContentSize: newSize];
-}
--(BOOL) ccTouchBegan:(UITouch *)touch withEvent:(UIEvent *)event
-{
-	[self updateSize:touch];
+	
+	[self updateSize:touchLocation];
 
 	return YES;
 }
 
 -(void) ccTouchEnded:(UITouch *)touch withEvent:(UIEvent *)event
 {
-	[self updateSize:touch];
+	CGPoint touchLocation = [touch locationInView: [touch view]];
+	touchLocation = [[CCDirector sharedDirector] convertToGL: touchLocation];
+	
+	[self updateSize:touchLocation];
 }
 
 -(void) ccTouchCancelled:(UITouch *)touch withEvent:(UIEvent *)event
 {
-	[self updateSize:touch];
+	CGPoint touchLocation = [touch locationInView: [touch view]];
+	touchLocation = [[CCDirector sharedDirector] convertToGL: touchLocation];
+	
+	[self updateSize:touchLocation];
 }
 
 -(void) ccTouchMoved:(UITouch *)touch withEvent:(UIEvent *)event
 {
-	[self updateSize:touch];
+	CGPoint touchLocation = [touch locationInView: [touch view]];
+	touchLocation = [[CCDirector sharedDirector] convertToGL: touchLocation];
+	
+	[self updateSize:touchLocation];
+
 }
+
+#elif defined(__CC_PLATFORM_MAC)
+-(BOOL) ccMouseDragged:(NSEvent *)event
+{
+	CGPoint	location = [[CCDirector sharedDirector] convertEventToGL:event];
+	[self updateSize:location];
+	return YES;
+}
+#endif
 
 
 -(NSString *) title
@@ -305,7 +330,11 @@ Class restartAction()
 
 		[self addChild:layer1 z:0 tag:kTagLayer];
 
+#if defined(__CC_PLATFORM_IOS)
 		self.isTouchEnabled = YES;
+#elif defined(__CC_PLATFORM_MAC)
+		self.isMouseEnabled = YES;
+#endif
 
 		CCLabelTTF *label1 = [CCLabelTTF labelWithString:@"Compressed Interpolation: Enabled" fontName:@"Marker Felt" fontSize:26];
 		CCLabelTTF *label2 = [CCLabelTTF labelWithString:@"Compressed Interpolation: Disabled" fontName:@"Marker Felt" fontSize:26];
@@ -327,6 +356,7 @@ Class restartAction()
 	[gradient setCompressedInterpolation: ! gradient.compressedInterpolation];
 }
 
+#if defined(__CC_PLATFORM_IOS)
 -(void)ccTouchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
 	CGSize s = [[CCDirector sharedDirector] winSize];
@@ -342,6 +372,23 @@ Class restartAction()
 
 	[gradient setVector:diff];
 }
+#elif defined(__CC_PLATFORM_MAC)
+-(BOOL) ccMouseDragged:(NSEvent *)event
+{
+	CGSize s = [[CCDirector sharedDirector] winSize];
+	
+	CGPoint	start = [[CCDirector sharedDirector] convertEventToGL:event];
+	
+	CGPoint diff = ccpSub( ccp(s.width/2,s.height/2), start);
+	diff = ccpNormalize(diff);
+	
+	CCLayerGradient *gradient = (CCLayerGradient*) [self getChildByTag:1];
+	
+	[gradient setVector:diff];
+	
+	return YES;
+}
+#endif
 
 -(NSString *) title
 {
@@ -354,10 +401,10 @@ Class restartAction()
 }
 @end
 
-#pragma mark -
-#pragma mark AppController
+#pragma mark - AppController
 
-// CLASS IMPLEMENTATIONS
+#if defined(__CC_PLATFORM_IOS)
+
 @implementation AppController
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -381,4 +428,30 @@ Class restartAction()
 
 	return YES;
 }
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+	return UIInterfaceOrientationIsLandscape(interfaceOrientation);
+}
+
 @end
+
+#pragma mark -
+#pragma mark AppController - Mac
+
+#elif defined(__CC_PLATFORM_MAC)
+
+@implementation AppController
+
+- (void)applicationDidFinishLaunching:(NSNotification *)aNotification
+{
+	[super applicationDidFinishLaunching:aNotification];
+	
+	CCScene *scene = [CCScene node];
+	[scene addChild: [nextAction() node]];
+	
+	[director_ runWithScene:scene];
+}
+@end
+#endif
+

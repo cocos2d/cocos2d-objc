@@ -169,7 +169,13 @@
 -(id) init
 {
 	if( (self=[super initWithColor: ccc4(0,0,255,255)]) ) {
+		
+#if defined(__CC_PLATFORM_IOS)
 		self.isTouchEnabled = YES;
+#elif defined(__CC_PLATFORM_MAC)
+		self.isMouseEnabled = YES;
+#endif
+
 		id label = [CCLabelTTF labelWithString:@"Touch to popScene" fontName:@"Marker Felt" fontSize:32];
 		[self addChild:label];
 		CGSize s = [[CCDirector sharedDirector] winSize];
@@ -198,17 +204,26 @@
 {
 	NSLog(@"Layer3:testDealloc");
 }
+
+#if defined(__CC_PLATFORM_IOS)
 - (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
 	[[CCDirector sharedDirector] popScene];
 }
+#elif defined(__CC_PLATFORM_MAC)
+- (BOOL) ccMouseUp:(NSEvent *)event
+{
+	[[CCDirector sharedDirector] popScene];
+	return YES;
+}
+#endif
 @end
 
 
-#pragma mark -
-#pragma mark AppController
+#pragma mark - AppController - iOS
 
-// CLASS IMPLEMENTATIONS
+#if defined(__CC_PLATFORM_IOS)
+
 @implementation AppController
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -241,4 +256,29 @@
 
 	return YES;
 }
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+	return UIInterfaceOrientationIsLandscape(interfaceOrientation);
+}
 @end
+
+#pragma mark - AppController - Mac
+
+#elif defined(__CC_PLATFORM_MAC)
+
+@implementation AppController
+
+- (void)applicationDidFinishLaunching:(NSNotification *)aNotification
+{
+	[super applicationDidFinishLaunching:aNotification];
+	
+	CCScene *scene = [CCScene node];
+	
+	[scene addChild: [Layer1 node] z:0];
+	
+	[director_ runWithScene:scene];
+}
+@end
+#endif
+
