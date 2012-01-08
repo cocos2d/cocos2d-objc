@@ -18,6 +18,7 @@ static NSString *transitions[] = {
     @"LayersAMC",
     @"ParallaxAMC",
     @"ProgessTimerAMC",
+    @"SceneAMC",
 };
 
 Class nextAction(void);
@@ -58,7 +59,12 @@ Class restartAction()
 enum nodeTags {
     kLayer, //< tag for layer that we will save/load
     kParallax, //< parallax node in Parallax test.
+    
+    kAMCTestMenu,
+    kSavePurgeLoadToggle,
 };
+
+static NSString *const kAMCTestLayerName = @"curAMCTestLayer";
 
 @implementation AMCDemo
 
@@ -145,6 +151,7 @@ enum nodeTags {
         CCMenuItemLabel *purge = [CCMenuItemLabel itemWithLabel: [CCLabelTTF labelWithString: @"Purge" fontName: @"Marker Felt" fontSize:12]];
         CCMenuItemLabel *load = [CCMenuItemLabel itemWithLabel: [CCLabelTTF labelWithString: @"Load" fontName: @"Marker Felt" fontSize:12]];
         CCMenuItem *trigger = [CCMenuItemToggle itemWithTarget:self selector: @selector(savePurgeLoadCallback:) items: save, purge, load, nil];
+        trigger.tag = kSavePurgeLoadToggle;
 		
 		CCMenu *menu = [CCMenu menuWithItems:item1, item2, item3, trigger, nil];
 		
@@ -153,7 +160,7 @@ enum nodeTags {
 		item2.position = ccp( s.width/2, 30);
 		item3.position = ccp( s.width/2 + 100,30);
         trigger.position = ccp( s.width/2, 80);
-		[self addChild: menu z:1];	
+		[self addChild: menu z:1 tag: kAMCTestMenu];	
 	}
 	return self;
 }
@@ -648,6 +655,87 @@ enum nodeTags {
 
 @end
 
+
+@implementation SceneAMC
+
+- (id) init
+{
+    [super init];
+    if (self)
+    {
+        // Set name to make it possible to load target/selector for CCMenuItems.
+        self.name = kAMCTestLayerName;
+        
+        // Remove standard save/purge/load.
+        CCNode *menu = [self getChildByTag: kAMCTestMenu];
+        [menu removeChildByTag:kSavePurgeLoadToggle cleanup:YES];
+    }
+    
+    return self;
+}
+
+- (CCLayer *) insideLayer
+{
+    CGSize s = [CCDirector sharedDirector].winSize;
+    
+    CCLayer *layer = [CCLayer node];
+    
+    CCMenuItemLabel *load = [CCMenuItemLabel itemWithLabel: [CCLabelTTF labelWithString: @"Load" fontName: @"Marker Felt" fontSize:48]];
+    [load setTarget:self selector:@selector(loadScene:)];
+    
+    CCMenu *menu = [CCMenu menuWithItems:load, nil];
+    
+    menu.position = CGPointZero;
+    load.position = ccp( s.width/2, 160);
+    [layer addChild: menu];
+    
+    return layer;
+}
+
+- (NSString *) sceneFilePath
+{
+    NSString *filename = [NSString stringWithFormat:@"SceneAMC.plist", [self className] ];
+    
+    NSArray *paths					= NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+	NSString *documentsDirectory	= [paths objectAtIndex:0];
+	NSString *path                  = [documentsDirectory stringByAppendingPathComponent: filename ];
+    
+    return path;
+}
+
+- (void) saveScene
+{
+    NSDictionary *dict = [self.parent dictionaryRepresentation];
+    [dict writeToFile:[self sceneFilePath] atomically:YES];
+}
+
+- (void) loadScene: (id) sender
+{
+    NSString *path = [self sceneFilePath];    
+    
+    NSDictionary *aDict = [NSDictionary dictionaryWithContentsOfFile: path];
+    CCScene *scene = [NSObject objectWithDictionaryRepresentation: aDict ];    
+    
+	[[CCDirector sharedDirector] replaceScene:[CCTransitionPageTurn transitionWithDuration:1.0f scene:scene backwards:NO]];
+}
+
+- (void) onEnterTransitionDidFinish
+{
+    [super onEnterTransitionDidFinish];
+    [self saveScene];
+}
+
+- (NSString *) title
+{
+    return @"Load CCScene";
+}
+
+- (NSString *) subtitle
+{
+    return @"Press load to reload cur scene from AMC.";
+}
+@end
+
 //
 // TODO: Use these notes for pull request info.
 // Update them regularly.
@@ -714,7 +802,72 @@ enum nodeTags {
 //      * CCProgressTimer - FULL SUPPORT (tested in AMCTest.m ProgressTimerAMC)
 //        (btw found a bug - different acnhorPoints for radial timers aren't supported)
 //
+
 //
+//
+// What's new
+// ===========
+//
+// 1. Cocos2D-iPhone Sources:
+//      1. ADDED: cocos2d/AutoMagicCoding - AMC submodule
+//          TODO: remove submodule, use easier path, update all files , that uses that path.
+//
+//      2. CHANGED: Many cocos2d classes, that now have AMC Support (see notes above).
+//
+//      3. ADDED: CCNodeRegistry - central key-value (by name string) for nodes, that
+//              doesn't retain nodes (Used for restoring links after loading, such as
+//              CCMenuItem target & other).
+//
+//      4. REMOVED: CCBlocksAdditions category & CCBlockSupport.m (only implementation file
+//              header is still used) - CCMenuItem was refactored a little for
+//              better AMC support, now blocks used directly, but it's still 
+//              backward compatible with old iOS versions & now you can set
+//              target/selector or block after creating CCMenuItem (or it's subclasses).
+//
+// 2. Tests:
+//      1. ADDED: New test target: AMCTest - includes additional tests for AMC:
+//          * NodeAMC - Simple node properties/hierarchy test.
+//          * LayersAMC - Test for CCLayer, CCLayerColor, CCLayerGradient & CCLayerMultiplex.
+//              (There was no Layers test before - so added new one).
+//          * ParallaxAMC - Test for AMC-Support CCParallaxNode with AMC-Supported children.
+//              (Used instead of existing test, cause it includes deprecated class children,
+//              that will not be supported by AMC).
+//          * ProgressTimerAMC - Test for CCProgressTimer AMC Support (there was no test for
+//              progressTimer before).
+//          * SceneAMC - explicit test for whole CCScene test.
+//
+//      2. CHANGED: Existing tests - added save/purge/load toggle menu item. 
+//
+
+//
+// ====== Not Supported =====
+//
+// 1. Possible in the future releases:
+//
+//    * CCTimer & scheduled methods. (Not used by Cocos2D-iPhone classes 
+//      themselves - should be used by developer expicitly ).
+//
+//    * CCParticleBatchNode & other from "Particle Nodes" - OMG, lot of iVars & structs! 
+//      Anyway - it should be possible, just needs time.
+//
+//    * CCTMXLayer, CCTMXObjectGroup, CCTMXTiledMap. With ability to change something & it will be saved with changes.
+//
+//    * CCTransitions - Low priority feature. Easy to save, hard to test.
+//      Only if do first ammount of tests that saves transition & 2nd - that loads it.
+//
+//    * CCRibbon  - probably hard to support
+//
+//    * CCMotionStreak - uses CCRibon.
+//
+//
+// 2. Probably not to be supported by AMC
+//
+//   * CCGrabber (helper class), 
+//   * CCRenderTexture (helper class), 
+//   * CCTileMapAtlas (DEPRECATED (Will be removed from Cocos2D-iPhone in 1.0+ )). 
+//
+//
+
 
 //
 //
@@ -729,20 +882,36 @@ enum nodeTags {
 //
 //
 
+// ====== Current TODO: =======
 //
-// ====== TODO: More Nodes ====== 
-// assigned: Stepan Generalov - today
+
 //
-// * CCScene - should work without any modifications - cause it's simple CCNode.
-// * CCTransitions - easy to save, hard to test.
-// Only if do first ammount of tests that saves transition & 2nd - that loads it.
+// TODO: Look through cocos2d-iphone documentation & sources carefully for any 
+// classes, that i may have skipped here & that we need to support.
 //
+
+// Right after that:
 //
+// 1. Update iOS project, test & fix if needed.
+//
+// 2. Check issues & TODOs in code - try to close them.
+//
+// 3. Think what to do NeXT ;)
+//    * Start developing an editor without actions support. 
+//  OR
+//    * ADD actions support. 
+//  OR
+//    * Start doing a pull-request and:
+//      * Add actions support.
+//     OR
+//      * Start developing an editor without actions support. 
+//
+//      Mmmmm.... Sweet time to make a decision... 
+//      Take your time. Feeeeeeeeel it. Enjoy it.
 //
 
 //
 // ====== ACTIONS ======
-// <# NOT ASSIGNED TO ANYBODY #>
 //
 // * CCAction - just save tag. target & original target will be set on runAction.
 //    Add -allActionsForTarget: to CCActionManager to retreive all actions.
@@ -768,7 +937,6 @@ enum nodeTags {
 
 //
 // ======= TODO: Animation =====
-// <# NOT ASSIGNED TO ANYBODY #>
 //
 // * CCAnimation - should work out of the box, cause CCSpriteFrame is ready.
 // Just some additional logic must be added to recache used animations & spriteFrames.
@@ -797,43 +965,10 @@ enum nodeTags {
 //
 
 //
-// TODO: Look through cocos2d-iphone documentation for any classes, that i may have
-// skipped here & that we need to support.
-//
-
-//
 // ====== TODO: More Tests =====
 //
 // TODO: Sprite + Blend Func (should work, just got no explicit test)
-// TODO: CCScene (should work, just got no explicit test)
 // TODO: Animation key (Issue #9) test. 
-
-
-
-//
-// ====== Possible future features ====== 
-// <# DON'T DO THIS - NOT NEEDED FOR FIRST RELEASE #>
-//
-//  * CCTimer & scheduled methods. (Not used by Cocos2D-iPhone classes 
-// themselves - should be used by developer expicitly ).
-//  * CCParticleBatchNode & other from "Particle Nodes" - OMG, lot of iVars & structs! Anyway - it should be possible, just needs time.
-//  * CCTMXLayer, CCTMXObjectGroup, CCTMXTiledMap. With ability to change something & it will be saved with changes.
-//  *
-//
-
-//
-// ====== Not to be supported by AMC =====
-//
-// 1. Can't imagine someone need to save/load this.
-//  * CCGrabber, 
-//  * CCRenderTexture, 
-//  * CCRibbon,
-//  * CCMotionStreak
-//
-// 2. CCTileMapAtlas - DEPRECATED. 
-//
-//
-//
 
 
 

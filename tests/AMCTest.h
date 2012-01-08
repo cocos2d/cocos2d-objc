@@ -72,6 +72,13 @@
 }
 @end
 
+/** @class SceneAMC Visual test for saving/loading whole CCScene.
+ *
+ */
+@interface SceneAMC : AMCDemo {
+}
+@end
+
 
 
 
