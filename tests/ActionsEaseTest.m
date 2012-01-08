@@ -4,8 +4,7 @@
 //
 
 // local import
-#import "cocos2d.h"
-#import "EaseActionsTest.h"
+#import "ActionsEaseTest.h"
 
 static int sceneIdx=-1;
 static NSString *transitions[] = {
@@ -632,10 +631,6 @@ Class restartAction()
 	// Turn on display FPS
 	[director_ setDisplayStats:YES];
 
-	// Enables High Res mode (Retina Display) on iPhone 4 and maintains low res on all other devices
-	if( ! [director_ enableRetinaDisplay:YES] )
-		CCLOG(@"Retina Display Not supported");
-
 	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
 	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
 	// You can change anytime.
@@ -652,6 +647,11 @@ Class restartAction()
 	[director_ pushScene: scene];
 
 	return YES;
+}
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+	return UIInterfaceOrientationIsLandscape(interfaceOrientation);
 }
 @end
 

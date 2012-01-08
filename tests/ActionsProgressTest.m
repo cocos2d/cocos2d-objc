@@ -4,8 +4,7 @@
 //
 
 // local import
-#import "cocos2d.h"
-#import "ProgressActionsTest.h"
+#import "ActionsProgressTest.h"
 
 static int sceneIdx=-1;
 static NSString *transitions[] = {
@@ -347,6 +346,8 @@ Class restartAction()
 #pragma mark -
 #pragma mark AppController
 
+#if defined(__CC_PLATFORM_IOS)
+
 // CLASS IMPLEMENTATIONS
 @implementation AppController
 
@@ -385,3 +386,19 @@ Class restartAction()
 }
 
 @end
+
+#elif defined(__CC_PLATFORM_MAC)
+
+@implementation AppController
+
+- (void)applicationDidFinishLaunching:(NSNotification *)aNotification
+{
+	[super applicationDidFinishLaunching:aNotification];
+	
+	CCScene *scene = [CCScene node];
+	[scene addChild: [nextAction() node]];
+	
+	[director_ runWithScene:scene];
+}
+@end
+#endif

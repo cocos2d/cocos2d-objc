@@ -1,4 +1,4 @@
-version 2.0-beta2 XX-Jan-2012
+version 2.0-beta2 7-Jan-2012
 . [NEW] v1.1 Forward-ported changes:
 		LabelTTF: word wrap works on Mac (issue #1074)
 		Node: Added onExitTransitionDidStart (issue #792)

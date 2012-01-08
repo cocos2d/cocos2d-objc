@@ -146,7 +146,6 @@
 		501504E711330E1700A9CA65 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */; };
 		501504E811330E1700A9CA65 /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */; };
 		501504E911330E1700A9CA65 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 503092B210447296005F7AFC /* libz.dylib */; };
-		5015050111330EA700A9CA65 /* ProgressActionsTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5015050011330EA700A9CA65 /* ProgressActionsTest.m */; };
 		5018F2690DFDEAFF00C013A5 /* CCAction.h in Headers */ = {isa = PBXBuildFile; fileRef = 5018F2520DFDEAFF00C013A5 /* CCAction.h */; };
 		5018F26A0DFDEAFF00C013A5 /* CCAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 5018F2530DFDEAFF00C013A5 /* CCAction.m */; };
 		5018F26B0DFDEAFF00C013A5 /* CCNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 5018F2540DFDEAFF00C013A5 /* CCNode.h */; };
@@ -606,7 +605,6 @@
 		505B639D0F2F4210001B4104 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B920D5A79C200DBA0E3 /* OpenGLES.framework */; };
 		505B639E0F2F4210001B4104 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */; };
 		505B639F0F2F4210001B4104 /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */; };
-		505B63A80F2F4295001B4104 /* EaseActionsTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 505B63A70F2F4295001B4104 /* EaseActionsTest.m */; };
 		505DEE5311C4DCFC0045B393 /* MainWindow-ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 505DEE5211C4DCFC0045B393 /* MainWindow-ipad.xib */; };
 		505DEF8A11C58AD10045B393 /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = 505464301062886600AB7C52 /* fps_images.png */; };
 		506046A20E75CEFB0044A29B /* b1.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659D0E72DB470085673F /* b1.png */; };
@@ -1340,6 +1338,8 @@
 		A0600CE413C2757D00BB6F49 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		A08C378F14144FC6004538FD /* neon_matrix_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = A08C378E14144FBB004538FD /* neon_matrix_impl.h */; };
 		A08C379114144FDE004538FD /* neon_matrix_impl.c in Sources */ = {isa = PBXBuildFile; fileRef = A08C379014144FDE004538FD /* neon_matrix_impl.c */; };
+		A0980F3914B92C5E004812AD /* ActionsEaseTest.m in Sources */ = {isa = PBXBuildFile; fileRef = A0980F3614B92C5E004812AD /* ActionsEaseTest.m */; };
+		A0980F3B14B92C7B004812AD /* ActionsProgressTest.m in Sources */ = {isa = PBXBuildFile; fileRef = A0980F3814B92C5E004812AD /* ActionsProgressTest.m */; };
 		A0ADEF1E1457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0ADEF1D1457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh */; };
 		A0ADEF1F1457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0ADEF1D1457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh */; };
 		A0ADEF201457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0ADEF1D1457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh */; };
@@ -4167,9 +4167,7 @@
 		50150434113300F900A9CA65 /* CCProgressTimer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CCProgressTimer.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		50150435113300F900A9CA65 /* CCActionProgressTimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCActionProgressTimer.h; sourceTree = "<group>"; };
 		50150436113300F900A9CA65 /* CCActionProgressTimer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCActionProgressTimer.m; sourceTree = "<group>"; };
-		501504ED11330E1700A9CA65 /* ProgressActionsTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ProgressActionsTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		501504FF11330EA700A9CA65 /* ProgressActionsTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ProgressActionsTest.h; path = tests/ProgressActionsTest.h; sourceTree = "<group>"; };
-		5015050011330EA700A9CA65 /* ProgressActionsTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ProgressActionsTest.m; path = tests/ProgressActionsTest.m; sourceTree = "<group>"; };
+		501504ED11330E1700A9CA65 /* ActionsProgressTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ActionsProgressTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5018F24D0DFDEAC400C013A5 /* libcocos2d.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libcocos2d.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		5018F2520DFDEAFF00C013A5 /* CCAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAction.h; sourceTree = "<group>"; };
 		5018F2530DFDEAFF00C013A5 /* CCAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCAction.m; sourceTree = "<group>"; };
@@ -4408,9 +4406,7 @@
 		505B62D60F2E6A0F001B4104 /* Texture2dTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Texture2dTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		505B62DE0F2E6A66001B4104 /* Texture2dTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Texture2dTest.h; path = tests/Texture2dTest.h; sourceTree = "<group>"; };
 		505B62DF0F2E6A66001B4104 /* Texture2dTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Texture2dTest.m; path = tests/Texture2dTest.m; sourceTree = "<group>"; };
-		505B63A30F2F4210001B4104 /* EaseActionsTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EaseActionsTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		505B63A60F2F4295001B4104 /* EaseActionsTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EaseActionsTest.h; path = tests/EaseActionsTest.h; sourceTree = "<group>"; };
-		505B63A70F2F4295001B4104 /* EaseActionsTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EaseActionsTest.m; path = tests/EaseActionsTest.m; sourceTree = "<group>"; };
+		505B63A30F2F4210001B4104 /* ActionsEaseTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ActionsEaseTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		505DEE5211C4DCFC0045B393 /* MainWindow-ipad.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = "MainWindow-ipad.xib"; sourceTree = "<group>"; };
 		506144080E589A2E003CCDB7 /* cocosnodeTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = cocosnodeTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5061440B0E589A7B003CCDB7 /* NodeTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NodeTest.h; path = tests/NodeTest.h; sourceTree = "<group>"; };
@@ -4804,6 +4800,10 @@
 		A07EC9B2141A8D32008C1F12 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		A08C378E14144FBB004538FD /* neon_matrix_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = neon_matrix_impl.h; sourceTree = "<group>"; };
 		A08C379014144FDE004538FD /* neon_matrix_impl.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = neon_matrix_impl.c; sourceTree = "<group>"; };
+		A0980F3514B92C5E004812AD /* ActionsEaseTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ActionsEaseTest.h; path = tests/ActionsEaseTest.h; sourceTree = "<group>"; };
+		A0980F3614B92C5E004812AD /* ActionsEaseTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ActionsEaseTest.m; path = tests/ActionsEaseTest.m; sourceTree = "<group>"; };
+		A0980F3714B92C5E004812AD /* ActionsProgressTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ActionsProgressTest.h; path = tests/ActionsProgressTest.h; sourceTree = "<group>"; };
+		A0980F3814B92C5E004812AD /* ActionsProgressTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ActionsProgressTest.m; path = tests/ActionsProgressTest.m; sourceTree = "<group>"; };
 		A0ADEF1D1457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = PositionTextureColorAlphaTest.fsh; sourceTree = "<group>"; };
 		A0B035FA13EA09270073E59A /* only_in_hd-hd.pvr.ccz */ = {isa = PBXFileReference; lastKnownFileType = file; path = "only_in_hd-hd.pvr.ccz"; sourceTree = "<group>"; };
 		A0B0376D13EA1FDB0073E59A /* b1-ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "b1-ipad.png"; sourceTree = "<group>"; };
@@ -5910,7 +5910,7 @@
 				506882110E95761200F943E5 /* LabelTest.app */,
 				50C195600EE4B57E00829067 /* ParallaxTest.app */,
 				505B62D60F2E6A0F001B4104 /* Texture2dTest.app */,
-				505B63A30F2F4210001B4104 /* EaseActionsTest.app */,
+				505B63A30F2F4210001B4104 /* ActionsEaseTest.app */,
 				50A24E440F377FA1007CAEB0 /* EffectsTest.app */,
 				50A783C40F3AFCE500104C45 /* MotionStreakTest.app */,
 				50D56FD20F3FABEC007CD6B9 /* EffectsAdvancedTest.app */,
@@ -5930,7 +5930,7 @@
 				495E73F7104B74E20012BB52 /* RenderTextureTest.app */,
 				DAABAA9A1059A42E00794EB3 /* FontTest.app */,
 				05CA7B0410ED674700F12774 /* ActionsWithBlocksSample.app */,
-				501504ED11330E1700A9CA65 /* ProgressActionsTest.app */,
+				501504ED11330E1700A9CA65 /* ActionsProgressTest.app */,
 				507FF8F2116D16F600B6FAB2 /* Bug350.app */,
 				509807081175041800EA7266 /* libbuild all tests.a */,
 				508CA7DA1193270F003AC397 /* SchedulerTest.app */,
@@ -6850,6 +6850,10 @@
 				A0D3A8FE149D2FA40077CD93 /* BaseAppController.m */,
 				504CC3441035BECA0096894C /* ActionManagerTest.h */,
 				504CC3451035BECA0096894C /* ActionManagerTest.m */,
+				A0980F3514B92C5E004812AD /* ActionsEaseTest.h */,
+				A0980F3614B92C5E004812AD /* ActionsEaseTest.m */,
+				A0980F3714B92C5E004812AD /* ActionsProgressTest.h */,
+				A0980F3814B92C5E004812AD /* ActionsProgressTest.m */,
 				50C93AC30E0BF8FC00517B01 /* ActionsTest.h */,
 				50C93AC40E0BF8FC00517B01 /* ActionsTest.m */,
 				504227120FC0B96E00B992F7 /* Box2dTest.h */,
@@ -6864,8 +6868,6 @@
 				A01AB95314970B1F00C93DB6 /* DirectorTest.m */,
 				5019457F0F964CFD0059CE7C /* drawPrimitivesTest.h */,
 				501945800F964CFD0059CE7C /* drawPrimitivesTest.m */,
-				505B63A60F2F4295001B4104 /* EaseActionsTest.h */,
-				505B63A70F2F4295001B4104 /* EaseActionsTest.m */,
 				50D5700D0F3FAD3C007CD6B9 /* EffectsAdvancedTest.h */,
 				50D5700E0F3FAD3C007CD6B9 /* EffectsAdvancedTest.m */,
 				50A24E6F0F377FE8007CAEB0 /* EffectsTest.h */,
@@ -6886,8 +6888,6 @@
 				50C195640EE4B5B700829067 /* ParallaxTest.m */,
 				50DB1BCE0E1C1EF000A89DFF /* ParticleTest.h */,
 				50DB1BCF0E1C1EF000A89DFF /* ParticleTest.m */,
-				501504FF11330EA700A9CA65 /* ProgressActionsTest.h */,
-				5015050011330EA700A9CA65 /* ProgressActionsTest.m */,
 				495E74F6104B756D0012BB52 /* RenderTextureTest.h */,
 				495E74F7104B756D0012BB52 /* RenderTextureTest.m */,
 				502C664D0DFEFD6800E4107D /* RotateWorldTest.h */,
@@ -8032,9 +8032,9 @@
 			productReference = 5012DD3B0FE2994300D6DDD1 /* TouchesTest.app */;
 			productType = "com.apple.product-type.application";
 		};
-		501504CD11330E1700A9CA65 /* ProgressActionsTest */ = {
+		501504CD11330E1700A9CA65 /* ActionsProgressTest */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 501504EA11330E1700A9CA65 /* Build configuration list for PBXNativeTarget "ProgressActionsTest" */;
+			buildConfigurationList = 501504EA11330E1700A9CA65 /* Build configuration list for PBXNativeTarget "ActionsProgressTest" */;
 			buildPhases = (
 				501504D011330E1700A9CA65 /* Resources */,
 				501504DF11330E1700A9CA65 /* Sources */,
@@ -8045,9 +8045,9 @@
 			dependencies = (
 				501504CE11330E1700A9CA65 /* PBXTargetDependency */,
 			);
-			name = ProgressActionsTest;
+			name = ActionsProgressTest;
 			productName = EaseActionsTest;
-			productReference = 501504ED11330E1700A9CA65 /* ProgressActionsTest.app */;
+			productReference = 501504ED11330E1700A9CA65 /* ActionsProgressTest.app */;
 			productType = "com.apple.product-type.application";
 		};
 		5018F24C0DFDEAC400C013A5 /* cocos2d */ = {
@@ -8397,9 +8397,9 @@
 			productReference = 505B62D60F2E6A0F001B4104 /* Texture2dTest.app */;
 			productType = "com.apple.product-type.application";
 		};
-		505B63780F2F4210001B4104 /* EaseActionsTest */ = {
+		505B63780F2F4210001B4104 /* ActionsEaseTest */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 505B63A00F2F4210001B4104 /* Build configuration list for PBXNativeTarget "EaseActionsTest" */;
+			buildConfigurationList = 505B63A00F2F4210001B4104 /* Build configuration list for PBXNativeTarget "ActionsEaseTest" */;
 			buildPhases = (
 				505B637B0F2F4210001B4104 /* Resources */,
 				505B63960F2F4210001B4104 /* Sources */,
@@ -8410,9 +8410,9 @@
 			dependencies = (
 				505B63790F2F4210001B4104 /* PBXTargetDependency */,
 			);
-			name = EaseActionsTest;
+			name = ActionsEaseTest;
 			productName = EaseActionsTest;
-			productReference = 505B63A30F2F4210001B4104 /* EaseActionsTest.app */;
+			productReference = 505B63A30F2F4210001B4104 /* ActionsEaseTest.app */;
 			productType = "com.apple.product-type.application";
 		};
 		506143F10E589A2E003CCDB7 /* NodeTest */ = {
@@ -9051,7 +9051,7 @@
 				A01AB8C2149709E300C93DB6 /* DirectorTest */,
 				501945550F964C620059CE7C /* drawPrimitivesTest */,
 				504E17DB11C4C7E100E19835 /* EAGLViewTest */,
-				505B63780F2F4210001B4104 /* EaseActionsTest */,
+				505B63780F2F4210001B4104 /* ActionsEaseTest */,
 				50A24E190F377FA1007CAEB0 /* EffectsTest */,
 				50D56FA60F3FABEC007CD6B9 /* EffectsAdvancedTest */,
 				DAABAA7D1059A42E00794EB3 /* FontTest */,
@@ -9063,7 +9063,7 @@
 				506143F10E589A2E003CCDB7 /* NodeTest */,
 				50C1953E0EE4B57E00829067 /* ParallaxTest */,
 				50DB1BB10E1C1E5900A89DFF /* ParticleTest */,
-				501504CD11330E1700A9CA65 /* ProgressActionsTest */,
+				501504CD11330E1700A9CA65 /* ActionsProgressTest */,
 				495E73F6104B74E20012BB52 /* RenderTextureTest */,
 				502C66170DFEFCCA00E4107D /* RotateWorldTest */,
 				506C7FF70E041C9300B48100 /* SceneTest */,
@@ -11921,8 +11921,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				501504E011330E1700A9CA65 /* main.m in Sources */,
-				5015050111330EA700A9CA65 /* ProgressActionsTest.m in Sources */,
 				A0D3A916149D2FAE0077CD93 /* BaseAppController.m in Sources */,
+				A0980F3B14B92C7B004812AD /* ActionsProgressTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -12263,8 +12263,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				505B63980F2F4210001B4104 /* main.m in Sources */,
-				505B63A80F2F4295001B4104 /* EaseActionsTest.m in Sources */,
 				A0D3A908149D2FAE0077CD93 /* BaseAppController.m in Sources */,
+				A0980F3914B92C5E004812AD /* ActionsEaseTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -12628,7 +12628,7 @@
 		};
 		501504F411330E2E00A9CA65 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 501504CD11330E1700A9CA65 /* ProgressActionsTest */;
+			target = 501504CD11330E1700A9CA65 /* ActionsProgressTest */;
 			targetProxy = 501504F311330E2E00A9CA65 /* PBXContainerItemProxy */;
 		};
 		501945560F964C620059CE7C /* PBXTargetDependency */ = {
@@ -12643,7 +12643,7 @@
 		};
 		502BF54511E39CC30030C477 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 501504CD11330E1700A9CA65 /* ProgressActionsTest */;
+			target = 501504CD11330E1700A9CA65 /* ActionsProgressTest */;
 			targetProxy = 502BF54611E39CC30030C477 /* PBXContainerItemProxy */;
 		};
 		502BF54711E39CC30030C477 /* PBXTargetDependency */ = {
@@ -12808,7 +12808,7 @@
 		};
 		507C0EE711D609290075E747 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 501504CD11330E1700A9CA65 /* ProgressActionsTest */;
+			target = 501504CD11330E1700A9CA65 /* ActionsProgressTest */;
 			targetProxy = 507C0EE811D609290075E747 /* PBXContainerItemProxy */;
 		};
 		507C0EE911D609290075E747 /* PBXTargetDependency */ = {
@@ -12833,7 +12833,7 @@
 		};
 		507FF8CF116D16F600B6FAB2 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 501504CD11330E1700A9CA65 /* ProgressActionsTest */;
+			target = 501504CD11330E1700A9CA65 /* ActionsProgressTest */;
 			targetProxy = 507FF8D0116D16F600B6FAB2 /* PBXContainerItemProxy */;
 		};
 		507FF8D1116D16F600B6FAB2 /* PBXTargetDependency */ = {
@@ -12883,7 +12883,7 @@
 		};
 		5098072A1175042A00EA7266 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 505B63780F2F4210001B4104 /* EaseActionsTest */;
+			target = 505B63780F2F4210001B4104 /* ActionsEaseTest */;
 			targetProxy = 509807291175042A00EA7266 /* PBXContainerItemProxy */;
 		};
 		5098072C1175042A00EA7266 /* PBXTargetDependency */ = {
@@ -12933,7 +12933,7 @@
 		};
 		5098074A1175042A00EA7266 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 501504CD11330E1700A9CA65 /* ProgressActionsTest */;
+			target = 501504CD11330E1700A9CA65 /* ActionsProgressTest */;
 			targetProxy = 509807491175042A00EA7266 /* PBXContainerItemProxy */;
 		};
 		5098074C1175042A00EA7266 /* PBXTargetDependency */ = {
@@ -13038,7 +13038,7 @@
 		};
 		50CBA46411CBD6FB007B009D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 501504CD11330E1700A9CA65 /* ProgressActionsTest */;
+			target = 501504CD11330E1700A9CA65 /* ActionsProgressTest */;
 			targetProxy = 50CBA46511CBD6FB007B009D /* PBXContainerItemProxy */;
 		};
 		50CBA46611CBD6FB007B009D /* PBXTargetDependency */ = {
@@ -13083,7 +13083,7 @@
 		};
 		E02BC2AA1270E489006E46A2 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 501504CD11330E1700A9CA65 /* ProgressActionsTest */;
+			target = 501504CD11330E1700A9CA65 /* ActionsProgressTest */;
 			targetProxy = E02BC2AB1270E489006E46A2 /* PBXContainerItemProxy */;
 		};
 		E02BC2AC1270E489006E46A2 /* PBXTargetDependency */ = {
@@ -13093,7 +13093,7 @@
 		};
 		E037DA1C1281C7F0003D39D7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 501504CD11330E1700A9CA65 /* ProgressActionsTest */;
+			target = 501504CD11330E1700A9CA65 /* ActionsProgressTest */;
 			targetProxy = E037DA1D1281C7F0003D39D7 /* PBXContainerItemProxy */;
 		};
 		E037DA1E1281C7F0003D39D7 /* PBXTargetDependency */ = {
@@ -13153,7 +13153,7 @@
 		};
 		E0EA5674134B9CA800F212C8 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 501504CD11330E1700A9CA65 /* ProgressActionsTest */;
+			target = 501504CD11330E1700A9CA65 /* ActionsProgressTest */;
 			targetProxy = E0EA5675134B9CA800F212C8 /* PBXContainerItemProxy */;
 		};
 		E0EA5676134B9CA800F212C8 /* PBXTargetDependency */ = {
@@ -13331,7 +13331,7 @@
 					"-framework",
 					UIKit,
 				);
-				PRODUCT_NAME = ProgressActionsTest;
+				PRODUCT_NAME = ActionsProgressTest;
 			};
 			name = Debug;
 		};
@@ -13353,7 +13353,7 @@
 					"-framework",
 					UIKit,
 				);
-				PRODUCT_NAME = ProgressActionsTest;
+				PRODUCT_NAME = ActionsProgressTest;
 				ZERO_LINK = NO;
 			};
 			name = Release;
@@ -14007,7 +14007,7 @@
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				PRODUCT_NAME = EaseActionsTest;
+				PRODUCT_NAME = ActionsEaseTest;
 			};
 			name = Debug;
 		};
@@ -14022,7 +14022,7 @@
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				PRODUCT_NAME = EaseActionsTest;
+				PRODUCT_NAME = ActionsEaseTest;
 				ZERO_LINK = NO;
 			};
 			name = Release;
@@ -15123,7 +15123,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		501504EA11330E1700A9CA65 /* Build configuration list for PBXNativeTarget "ProgressActionsTest" */ = {
+		501504EA11330E1700A9CA65 /* Build configuration list for PBXNativeTarget "ActionsProgressTest" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				501504EB11330E1700A9CA65 /* Debug */,
@@ -15303,7 +15303,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		505B63A00F2F4210001B4104 /* Build configuration list for PBXNativeTarget "EaseActionsTest" */ = {
+		505B63A00F2F4210001B4104 /* Build configuration list for PBXNativeTarget "ActionsEaseTest" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				505B63A10F2F4210001B4104 /* Debug */,
