@@ -3,6 +3,8 @@
  *
  * Copyright (c) 2009 Lam Pham
  *
+ * Copyright (c) 2012 Ricardo Quesada
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
@@ -24,17 +26,37 @@
  */
 
 #import "CCTransition.h"
-#import "CCProgressTimer.h"
-#import "CCActionProgressTimer.h"
+
+@interface CCTransitionProgress : CCTransitionScene
+{
+	float to_, from_;
+	CCScene *sceneToBeModified_;
+}
+@end
 
 /** CCTransitionRadialCCW transition.
  A counter colock-wise radial transition to the next scene
  */
-@interface CCTransitionRadialCCW : CCTransitionScene
+@interface CCTransitionProgressRadialCCW : CCTransitionProgress
 @end
 
 /** CCTransitionRadialCW transition.
  A counter colock-wise radial transition to the next scene
 */
-@interface CCTransitionRadialCW : CCTransitionRadialCCW
+@interface CCTransitionProgressRadialCW : CCTransitionProgress
+@end
+
+/** CCTransitionProgressHorizontal transition.
+ A  colock-wise radial transition to the next scene
+ */
+@interface CCTransitionProgressHorizontal : CCTransitionProgress
+@end
+
+@interface CCTransitionProgressVertical : CCTransitionProgress
+@end
+
+@interface CCTransitionProgressInOut : CCTransitionProgress
+@end
+
+@interface CCTransitionProgressOutIn : CCTransitionProgress
 @end

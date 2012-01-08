@@ -85,7 +85,7 @@
 
 #import "CCTransition.h"
 #import "CCTransitionPageTurn.h"
-#import "CCTransitionRadial.h"
+#import "CCTransitionProgress.h"
 
 #import "CCTMXTiledMap.h"
 #import "CCTMXLayer.h"
