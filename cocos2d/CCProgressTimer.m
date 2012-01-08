@@ -28,6 +28,7 @@
 #import "ccMacros.h"
 #import "CCTextureCache.h"
 #import "Support/CGPointExtension.h"
+#import "AutoMagicCoding/AutoMagicCoding/NSObject+AutoMagicCoding.h"
 
 
 
@@ -488,6 +489,20 @@ const char kProgressTextureCoords = 0x1e;
 	
 	if( newBlend )
 		glBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);
+}
+
+#pragma mark CCProgressTimer - AutoMagicCoding Support
+
+- (NSArray *) AMCKeysForDictionaryRepresentation
+{
+    NSArray *nodeKeys = [super AMCKeysForDictionaryRepresentation];
+    NSArray *progressTimerKeys = [NSArray arrayWithObjects: 
+                                  @"sprite",
+                                  @"type",
+                                  @"percentage",
+                                  nil];
+    
+    return [nodeKeys arrayByAddingObjectsFromArray: progressTimerKeys];
 }
 
 @end
