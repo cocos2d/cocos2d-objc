@@ -34,7 +34,7 @@
 
 - (void)onEnter
 {
-	CCDirectorIOS *director =  (CCDirectorIOS*)[CCDirector sharedDirector];
+	CCDirector *director =  [CCDirector sharedDirector];
 
 	[[director touchDispatcher] addTargetedDelegate:self priority:0 swallowsTouches:YES];
 	[super onEnter];
@@ -42,7 +42,7 @@
 
 - (void)onExit
 {
-	CCDirectorIOS *director =  (CCDirectorIOS*)[CCDirector sharedDirector];
+	CCDirector *director = [CCDirector sharedDirector];
 
 	[[director touchDispatcher] removeDelegate:self];
 	[super onExit];

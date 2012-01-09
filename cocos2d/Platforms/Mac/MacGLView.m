@@ -136,7 +136,7 @@
 #define DISPATCH_EVENT(__event__, __selector__)												\
 	id obj = eventDelegate_;																\
 	[obj performSelector:__selector__														\
-			onThread:[(CCDirectorMac*)[CCDirector sharedDirector] runningThread]			\
+			onThread:[[CCDirector sharedDirector] runningThread]							\
 		  withObject:__event__																\
 	   waitUntilDone:NO];
 #endif

@@ -83,6 +83,16 @@ CGFloat	__ccContentScaleFactor = 1;
 {
 	// override me
 }
+
+-(CCTouchDispatcher*) touchDispatcher
+{
+	return nil;
+}
+
+-(void) setTouchDispatcher:(CCTouchDispatcher*)touchDispatcher
+{
+	//
+}
 @end
 
 
@@ -95,8 +105,6 @@ CGFloat	__ccContentScaleFactor = 1;
 @end
 
 @implementation CCDirectorIOS
-
-@synthesize touchDispatcher=touchDispatcher_;
 
 - (id) init
 {
@@ -224,6 +232,21 @@ CGFloat	__ccContentScaleFactor = 1;
 	projection_ = projection;
 
 	ccSetProjectionMatrixDirty();
+}
+
+#pragma mark Director - TouchDispatcher
+
+-(CCTouchDispatcher*) touchDispatcher
+{
+	return touchDispatcher_;
+}
+
+-(void) setTouchDispatcher:(CCTouchDispatcher*)touchDispatcher
+{
+	if( touchDispatcher != touchDispatcher_ ) {
+		[touchDispatcher_ release];
+		touchDispatcher_ = [touchDispatcher retain];
+	}
 }
 
 #pragma mark Director - Retina Display

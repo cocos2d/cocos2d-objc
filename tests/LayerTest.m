@@ -171,7 +171,7 @@ Class restartAction()
 #if defined(__CC_PLATFORM_IOS)
 -(void) registerWithTouchDispatcher
 {
-	CCDirectorIOS *director = (CCDirectorIOS*) [CCDirector sharedDirector];
+	CCDirector *director = [CCDirector sharedDirector];
 	[[director touchDispatcher] addTargetedDelegate:self priority:kCCMenuTouchPriority+1 swallowsTouches:YES];
 }
 

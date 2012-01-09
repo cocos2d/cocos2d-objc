@@ -140,7 +140,7 @@ enum {
 #ifdef __CC_PLATFORM_IOS
 -(void) registerWithTouchDispatcher
 {
-	CCDirectorIOS *director = (CCDirectorIOS*)[CCDirector sharedDirector];
+	CCDirector *director = [CCDirector sharedDirector];
 	[[director touchDispatcher] addTargetedDelegate:self priority:kCCMenuTouchPriority swallowsTouches:YES];
 }
 
@@ -227,7 +227,7 @@ enum {
 
 -(CCMenuItem *) itemForMouseEvent: (NSEvent *) event
 {
-	CGPoint location = [(CCDirectorMac*)[CCDirector sharedDirector] convertEventToGL:event];
+	CGPoint location = [[CCDirector sharedDirector] convertEventToGL:event];
 
 	CCMenuItem* item;
 	CCARRAY_FOREACH(children_, item){

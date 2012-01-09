@@ -133,7 +133,7 @@ Class restartAction()
 #ifdef __CC_PLATFORM_IOS
 -(void) registerWithTouchDispatcher
 {
-	CCDirectorIOS *director = (CCDirectorIOS*) [CCDirector sharedDirector];
+	CCDirector *director = [CCDirector sharedDirector];
 	[[director touchDispatcher] addTargetedDelegate:self priority:0 swallowsTouches:YES];
 }
 

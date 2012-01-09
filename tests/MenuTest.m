@@ -47,16 +47,14 @@ enum {
 		// Label Item (LabelAtlas)
 		CCLabelAtlas *labelAtlas = [CCLabelAtlas labelWithString:@"0123456789" charMapFile:@"fps_images.png" itemWidth:8 itemHeight:12 startCharMap:'.'];
 		CCMenuItemLabel *item3 = [CCMenuItemLabel itemWithLabel:labelAtlas block:^(id sender) {
-				// hijack all touch events for 5 seconds
+			// hijack all touch events for 5 seconds
+			CCDirector *director = [CCDirector sharedDirector];
 #ifdef __CC_PLATFORM_IOS
-				CCDirectorIOS *director = (CCDirectorIOS*)[CCDirector sharedDirector];
-				[[director touchDispatcher] setPriority:kCCMenuTouchPriority-1 forDelegate:self];
-				[self schedule:@selector(allowTouches) interval:5.0f repeat:0 delay:0];
-
+			[[director touchDispatcher] setPriority:kCCMenuTouchPriority-1 forDelegate:self];
+			[self schedule:@selector(allowTouches) interval:5.0f repeat:0 delay:0];
 #elif defined(__CC_PLATFORM_MAC)
-				CCDirectorMac *director = (CCDirectorMac*)[CCDirector sharedDirector];
-				[[director eventDispatcher] addMouseDelegate:self priority:kCCMenuTouchPriority-1];
-				[self schedule:@selector(allowTouches) interval:5.0f];
+			[[director eventDispatcher] addMouseDelegate:self priority:kCCMenuTouchPriority-1];
+			[self schedule:@selector(allowTouches) interval:5.0f];
 #endif
 				NSLog(@"TOUCHES DISABLED FOR 5 SECONDS");
 		}];
@@ -129,7 +127,7 @@ enum {
 #ifdef __CC_PLATFORM_IOS
 -(void) registerWithTouchDispatcher
 {
-	CCDirectorIOS *director = (CCDirectorIOS*)[CCDirector sharedDirector];
+	CCDirector *director = [CCDirector sharedDirector];
 	[[director touchDispatcher] addTargetedDelegate:self priority:kCCMenuTouchPriority+1 swallowsTouches:YES];
 }
 
@@ -178,14 +176,12 @@ enum {
 
 -(void) allowTouches
 {
+	CCDirector *director = [CCDirector sharedDirector];
 #ifdef __CC_PLATFORM_IOS
-
-	CCDirectorIOS *director = (CCDirectorIOS*)[CCDirector sharedDirector];
     [[director touchDispatcher] setPriority:kCCMenuTouchPriority+1 forDelegate:self];
     [self unscheduleAllSelectors];
 
 #elif defined(__CC_PLATFORM_MAC)
-	CCDirectorMac *director = (CCDirectorMac*)[CCDirector sharedDirector];
     [[director eventDispatcher] removeMouseDelegate:self];
 #endif
 

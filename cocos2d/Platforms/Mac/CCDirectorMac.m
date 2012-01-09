@@ -64,6 +64,17 @@
 
 	return  [(CCDirectorMac*)self convertToLogicalCoordinates:p];
 }
+
+-(void) setEventDispatcher:(CCEventDispatcher *)dispatcher
+{
+	NSAssert(NO, @"override me");
+}
+
+-(CCEventDispatcher *) eventDispatcher
+{
+	NSAssert(NO, @"override me");
+	return nil;
+}
 @end
 
 #pragma mark -
@@ -73,7 +84,6 @@
 
 @synthesize isFullScreen = isFullScreen_;
 @synthesize originalWinSize = originalWinSize_;
-@synthesize eventDispatcher = eventDispatcher_;
 
 -(id) init
 {
@@ -340,6 +350,19 @@
 	}
 
 	return ret;
+}
+
+-(void) setEventDispatcher:(CCEventDispatcher *)dispatcher
+{
+	if( dispatcher != eventDispatcher_ ) {
+		[eventDispatcher_ release];
+		eventDispatcher_ = [dispatcher retain];
+	}
+}
+
+-(CCEventDispatcher *) eventDispatcher
+{
+	return eventDispatcher_;
 }
 @end
 
