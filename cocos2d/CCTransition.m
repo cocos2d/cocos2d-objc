@@ -1032,7 +1032,7 @@ const NSInteger kSceneFade = 0xFADEFADE;
 -(CCActionInterval*) easeActionWithAction:(CCActionInterval*)action
 {
 	return action;
-//	return [EaseIn actionWithAction:action rate:2.0f];
+//	return [CCEaseOut actionWithAction:action rate:3.0f];
 }
 @end
 

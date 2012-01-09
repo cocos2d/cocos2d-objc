@@ -29,6 +29,7 @@
 #import "CCNode.h"
 #import "CCCamera.h"
 #import "ccTypes.h"
+#import "CCDirector.h"
 #import "kazmath/mat4.h"
 
 @class CCTexture2D;
@@ -48,6 +49,8 @@
 	BOOL		isTextureFlipped_;
 
 	GLProgram	*shaderProgram_;
+
+	ccDirectorProjection	directorProjection_;
 }
 
 /** wheter or not the grid is active */

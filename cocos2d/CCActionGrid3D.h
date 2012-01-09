@@ -121,7 +121,7 @@
 /** CCShaky3D action */
 @interface CCShaky3D : CCGrid3DAction
 {
-	int randrange;
+	int		randrange;
 	BOOL	shakeZ;
 }
 

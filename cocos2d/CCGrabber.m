@@ -64,9 +64,10 @@
 	glGetIntegerv(CC_GL_FRAMEBUFFER_BINDING, &oldFBO_);
 	glBindFramebuffer(CC_GL_FRAMEBUFFER, fbo_);
 
+	// save clear color
+	glGetFloatv(GL_COLOR_CLEAR_VALUE,oldClearColor_);
+
 	// BUG XXX: doesn't work with RGB565.
-
-
 	glClearColor(0,0,0,0);
 
 	// BUG #631: To fix #631, uncomment the lines with #631
@@ -83,6 +84,9 @@
 {
 	glBindFramebuffer(CC_GL_FRAMEBUFFER, oldFBO_);
 //	glColorMask(TRUE, TRUE, TRUE, TRUE);	// #631
+	
+	// Restore clear color
+	glClearColor( oldClearColor_[0], oldClearColor_[1], oldClearColor_[2], oldClearColor_[3] );
 }
 
 - (void) dealloc
