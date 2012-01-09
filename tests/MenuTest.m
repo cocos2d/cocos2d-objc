@@ -166,7 +166,7 @@ enum {
 {
 	return YES;
 }
-#endif
+#endif // __CC_PLATFORM_MAC
 
 -(void) dealloc
 {
