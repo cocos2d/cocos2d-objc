@@ -34,6 +34,7 @@
 {
 	GLuint	fbo_;
 	GLint	oldFBO_;
+	GLfloat	oldClearColor_[4];
 }
 
 -(void)grab:(CCTexture2D*)texture;

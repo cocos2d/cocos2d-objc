@@ -460,6 +460,8 @@ Class restartTransition()
 	// Enables High Res mode (Retina Display) on iPhone 4 and maintains low res on all other devices
 	if( ! [director_ enableRetinaDisplay:YES] )
 		CCLOG(@"Retina Display Not supported");
+	
+	[director_ setDisplayStats:YES];
 
 	// When in iPad / RetinaDisplay mode, CCFileUtils will append the "-ipad" / "-hd" to all loaded files
 	// If the -ipad  / -hdfile is not found, it will load the non-suffixed version
@@ -471,6 +473,9 @@ Class restartTransition()
 	// You can change anytime.
 	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA8888];
 
+	// 2D on transitions only for debugging purposes
+//	[director_ setProjection:kCCDirectorProjection2D];
+	
 	CCScene *scene = [CCScene node];
 	[scene addChild: [TextLayer node]];
 
@@ -510,6 +515,8 @@ Class restartTransition()
 
 	CC_DIRECTOR_INIT(winSize);
 
+	[director_ setDisplayStats:YES];
+
 	// Enable "moving" mouse event. Default no.
 	[window_ setAcceptsMouseMovedEvents:NO];
 
@@ -517,6 +524,10 @@ Class restartTransition()
 	// 'Effects' don't work correctly when autoscale is turned on.
 	[director_ setResizeMode:kCCDirectorResize_AutoScale];
 
+	// 2D on transitions only for debugging purposes
+//	[director_ setProjection:kCCDirectorProjection2D];
+
+	
 	CCScene *scene = [CCScene node];
 	[scene addChild: [TextLayer node]];
 

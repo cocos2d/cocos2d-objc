@@ -93,7 +93,7 @@ enum {
 @implementation Shaky3DDemo
 +(id) actionWithDuration:(ccTime)t
 {
-	return [self actionWithRange:5 shakeZ:YES grid:ccg(15,10) duration:t];
+	return [self actionWithRange:5 shakeZ:NO grid:ccg(15,10) duration:t];
 }
 @end
 @implementation Waves3DDemo
@@ -158,13 +158,13 @@ enum {
 @implementation ShakyTiles3DDemo
 +(id) actionWithDuration:(ccTime)t
 {
-	return [self actionWithRange:5 shakeZ:YES grid:ccg(16,12) duration:t];
+	return [self actionWithRange:5 shakeZ:NO grid:ccg(16,12) duration:t];
 }
 @end
 @implementation ShatteredTiles3DDemo
 +(id) actionWithDuration:(ccTime)t
 {
-	return [self actionWithRange:5 shatterZ:YES grid:ccg(16,12) duration:t];
+	return [self actionWithRange:5 shatterZ:NO grid:ccg(16,12) duration:t];
 }
 @end
 @implementation ShuffleTilesDemo
@@ -349,7 +349,7 @@ Class restartAction()
 @implementation TextLayer
 -(id) init
 {
-	if( (self=[super initWithColor: ccc4(32,32,32,255)] )) {
+	if( (self=[super initWithColor: ccc4(32,128,32,255)] )) {
 
 		float x,y;
 
@@ -455,7 +455,7 @@ Class restartAction()
 	// Create an EAGLView with a RGB8 color buffer, and a depth buffer of 0-bits
 	EAGLView *glView = [EAGLView viewWithFrame:[window_ bounds]
 								   pixelFormat:kEAGLColorFormatRGBA8
-								   depthFormat:0			//GL_DEPTH_COMPONENT24_OES
+								   depthFormat:0 //GL_DEPTH_COMPONENT24_OES
 							preserveBackbuffer:NO
 									sharegroup:nil
 								 multiSampling:NO
@@ -482,6 +482,8 @@ Class restartAction()
 
 	navController_ = [[UINavigationController alloc] initWithRootViewController:director_];
 	navController_.navigationBarHidden = YES;
+	
+	[director_ setDelegate:self];
 
 	// set the Navigation Controller as the root view controller
 //	[window_ setRootViewController:rootViewController_];
@@ -493,7 +495,7 @@ Class restartAction()
 	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
 	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
 	// You can change anytime.
-	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA8888];
+	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA4444];
 
 	// When in iPad / RetinaDisplay mode, CCFileUtils will append the "-ipad" / "-hd" to all loaded files
 	// If the -ipad  / -hdfile is not found, it will load the non-suffixed version
@@ -508,13 +510,10 @@ Class restartAction()
 	return YES;
 }
 
-- (void) dealloc
+-(BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-	[window_ release];
-
-	[super dealloc];
+	return UIInterfaceOrientationIsLandscape(interfaceOrientation);
 }
-
 @end
 
 #elif defined(__CC_PLATFORM_MAC)

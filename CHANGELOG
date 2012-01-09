@@ -25,6 +25,7 @@ version 2.0-beta2 8-Jan-2012
 . [FIX] Actions: EaseIn/EaseOut actions support float arguments
 . [FIX] Director: Uses DisplayLink timestamp. More stable delta times (iOS) (issue #1277)
 . [FIX] Director: CC_DIRECTOR_INIT() centers main window (Mac)
+. [FIX] Effects: 2D Effects and Transitions work as expected with a 2D projection
 . [FIX] Grid: Fixed two big memory leaks (issue #1280)
 . [FIX] Menu: Blocks API doesn't crash on Mac
 . [FIX] RenderTexture: Works with RGB888 (issue #1293)

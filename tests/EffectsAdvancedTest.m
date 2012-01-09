@@ -400,6 +400,8 @@ Class restartAction()
 	if( ! [director_ enableRetinaDisplay:YES] )
 		CCLOG(@"Retina Display Not supported");
 
+	[director_ setDelegate:self];
+	
 	navController_ = [[UINavigationController alloc] initWithRootViewController:director_];
 	navController_.navigationBarHidden = YES;
 
@@ -425,6 +427,11 @@ Class restartAction()
 	[director_ pushScene: scene];
 
 	return YES;
+}
+
+-(BOOL) shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+	return UIInterfaceOrientationIsLandscape(interfaceOrientation);
 }
 
 @end
