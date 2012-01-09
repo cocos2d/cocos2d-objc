@@ -42,8 +42,12 @@ enum  {
 };
 
 @interface CCDirector (MacExtension)
-/** converts an NSEvent to GL coordinates */
+/** converts an NSEvent to GL coordinates (Mac only) */
 -(CGPoint) convertEventToGL:(NSEvent*)event;
+/** sets the CCEventDispatcher (Mac only) */
+-(void) setEventDispatcher:(CCEventDispatcher*)dispatcher;
+/** returns the CCEventDispatcher (Mac only) */
+-(CCEventDispatcher*) eventDispatcher;
 @end
 
 /** Base class of Mac directors
@@ -86,9 +90,6 @@ enum  {
  If resizeMode is kCCDirectorResize_NoScale, then no conversion will be done.
 */
 - (CGPoint) convertToLogicalCoordinates:(CGPoint)coordinates;
-
-/** CCEventDispatcher associated with the CCDirector */
-@property (nonatomic, retain, readwrite) CCEventDispatcher *eventDispatcher;
 @end
 
 

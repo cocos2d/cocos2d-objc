@@ -68,16 +68,16 @@
 
 - (void)launchMainMenu {
 
-    [[CCDirector sharedDirector] replaceScene:[CCTransitionRadialCW transitionWithDuration:0.5f scene:_mainMenuScene]];
+    [[CCDirector sharedDirector] replaceScene:[CCTransitionProgressRadialCW transitionWithDuration:0.5f scene:_mainMenuScene]];
 
 }
 
 - (void)launchCurLevel {
     Level *curLevel = [[GameState sharedState] curLevel];
     if ([curLevel isKindOfClass:[StoryLevel class]]) {
-        [[CCDirector sharedDirector] replaceScene:[CCTransitionRadialCW transitionWithDuration:0.5f scene:_storyScene]];
+        [[CCDirector sharedDirector] replaceScene:[CCTransitionProgressRadialCW transitionWithDuration:0.5f scene:_storyScene]];
     } else if ([curLevel isKindOfClass:[ActionLevel class]]) {
-        [[CCDirector sharedDirector] replaceScene:[CCTransitionRadialCW transitionWithDuration:0.5f scene:_actionScene]];
+        [[CCDirector sharedDirector] replaceScene:[CCTransitionProgressRadialCW transitionWithDuration:0.5f scene:_actionScene]];
     }
 }
 

@@ -988,7 +988,7 @@ static float menuItemPaddingCenter = 50;
 
 - (BOOL)ccMouseDown:(NSEvent*)event
 {
-	CGPoint location = [(CCDirectorMac*)[CCDirector sharedDirector] convertEventToGL:event];
+	CGPoint location = [[CCDirector sharedDirector] convertEventToGL:event];
 
     if (CGRectContainsPoint([self.arrows boundingBox], location)) {
         drag_ = YES;
@@ -1013,7 +1013,7 @@ static float menuItemPaddingCenter = 50;
 {
     if ( drag_) {
 
-		CGPoint location = [(CCDirectorMac*)[CCDirector sharedDirector] convertEventToGL:event];
+		CGPoint location = [[CCDirector sharedDirector] convertEventToGL:event];
 
 		CGSize winSize = [CCDirector sharedDirector].winSize;
 

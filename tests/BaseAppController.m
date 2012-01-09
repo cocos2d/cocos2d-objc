@@ -71,13 +71,13 @@
 // purge memory
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application
 {
-	[[CCDirector sharedDirector] purgeCachedData];
+	[director_ purgeCachedData];
 }
 
 // next delta time will be zero
 -(void) applicationSignificantTimeChange:(UIApplication *)application
 {
-	[[CCDirector sharedDirector] setNextDeltaTimeZero:YES];
+	[director_ setNextDeltaTimeZero:YES];
 }
 
 - (void) dealloc

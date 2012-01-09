@@ -79,11 +79,10 @@ const NSInteger kSceneFade = 0xFADEFADE;
 		NSAssert( inScene_ != outScene_, @"Incoming scene must be different from the outgoing scene" );
 
 		// disable events while transitions
+		CCDirector *director = [CCDirector sharedDirector];
 #ifdef __CC_PLATFORM_IOS
-		CCDirectorIOS *director = (CCDirectorIOS*)[CCDirector sharedDirector];
 		[[director touchDispatcher] setDispatchEvents: NO];
 #elif defined(__CC_PLATFORM_MAC)
-		CCDirectorMac *director = (CCDirectorMac*)[CCDirector sharedDirector];
 		[[director eventDispatcher] setDispatchEvents: NO];
 #endif
 
@@ -140,9 +139,9 @@ const NSInteger kSceneFade = 0xFADEFADE;
 
 	// enable events while transitions
 #ifdef __CC_PLATFORM_IOS
-	[[((CCDirectorIOS*)director) touchDispatcher] setDispatchEvents: YES];
+	[[director touchDispatcher] setDispatchEvents: YES];
 #elif defined(__CC_PLATFORM_MAC)
-	[[((CCDirectorMac*)director) eventDispatcher] setDispatchEvents: YES];
+	[[director eventDispatcher] setDispatchEvents: YES];
 #endif
 
 	// issue #267

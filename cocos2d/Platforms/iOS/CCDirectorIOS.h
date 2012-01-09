@@ -38,6 +38,9 @@
  */
 @interface CCDirector (iOSExtension)
 
+/** Touch Dispatcher */
+@property (nonatomic,readwrite,retain) CCTouchDispatcher * touchDispatcher;
+
 /** The size in pixels of the surface. It could be different than the screen size.
  High-res devices might have a higher surface size than the screen size.
  In non High-res device the contentScale will be emulated.
@@ -71,14 +74,9 @@
 {
 	/* contentScaleFactor could be simulated */
 	BOOL	isContentScaleSupported_;
-
-	/* touch dispatcher */
+	
 	CCTouchDispatcher	*touchDispatcher_;
 }
-
-/** Touch Dispatcher */
-@property (nonatomic,readwrite,retain) CCTouchDispatcher * touchDispatcher;
-
 @end
 
 /** DisplayLinkDirector is a Director that synchronizes timers with the refresh rate of the display.
