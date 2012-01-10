@@ -34,11 +34,12 @@ Contributors (alphabetically ordered):
 	Schedule: added support for delay and repeat
 	ESRenderer: don't recreate the renderer when it is not needed
 	Actions: Instant actions can be sequenceables
-	Actions: durtion is not divided by zero
-	Actions: Repeat & RepeatForever work as expectd
+	Actions: duration is not divided by zero
+	Actions: Repeat & RepeatForever work as expected
 	Author of ParticleBatchNode node
 	Improved ESRenderer layoutSubview
 	Improved Debug Drawing for Sprite batched node	
+	EAGLView destroys and recreates all OpenGL buffers correctly
 
 * podhrask...@gmail.com
 	TouchDispatcher: correctly handles addition and removal of handlers when being inside a touch handler. patch
