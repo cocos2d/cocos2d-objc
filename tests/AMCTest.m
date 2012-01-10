@@ -844,9 +844,6 @@ static NSString *const kAMCTestLayerName = @"curAMCTestLayer";
 //
 // 1. Possible in the future releases:
 //
-//    * CCTimer & scheduled methods. (Not used by Cocos2D-iPhone classes 
-//      themselves - should be used by developer expicitly ).
-//
 //    * CCParticleBatchNode & other from "Particle Nodes" - OMG, lot of iVars & structs! 
 //      Anyway - it should be possible, just needs time.
 //
@@ -862,6 +859,8 @@ static NSString *const kAMCTestLayerName = @"curAMCTestLayer";
 //
 // 2. Probably not to be supported by AMC
 //
+//  * CCTimer & scheduled methods. (Not used by Cocos2D-iPhone classes 
+//      themselves - should be used by developer expicitly ).
 //   * CCGrabber (helper class), 
 //   * CCRenderTexture (helper class), 
 //   * CCTileMapAtlas (DEPRECATED (Will be removed from Cocos2D-iPhone in 1.0+ )). 
