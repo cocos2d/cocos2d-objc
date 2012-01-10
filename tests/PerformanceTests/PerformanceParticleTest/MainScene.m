@@ -89,7 +89,7 @@ Class restartAction()
 		[self addChild:infoLabel z:1 tag:kTagInfoLayer];
 
 		// particles on stage
-		CCLabelAtlas *labelAtlas = [CCLabelAtlas labelWithString:@"0000" charMapFile:@"fps_images.png" itemWidth:16 itemHeight:24 startCharMap:'.'];
+		CCLabelAtlas *labelAtlas = [CCLabelAtlas labelWithString:@"0000" charMapFile:@"fps_images.png" itemWidth:8 itemHeight:12 startCharMap:'.'];
 		[self addChild:labelAtlas z:0 tag:kTagLabelAtlas];
 		labelAtlas.position = ccp(s.width-66,50);
 
@@ -199,26 +199,33 @@ Class restartAction()
 
 
 	switch( subtestNumber) {
+			//
+			// Point Particle system is no longer supported. Using Quad
+			//
 		case 1:
 			[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA8888];
-			particleSystem = [[CCParticleSystemPoint alloc] initWithTotalParticles:quantityParticles];
+			particleSystem = [[CCParticleSystemQuad alloc] initWithTotalParticles:quantityParticles];
 			particleSystem.texture = [[CCTextureCache sharedTextureCache] addImage:@"fire.png"];
 			break;
 		case 2:
 			[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA4444];
-			particleSystem = [[CCParticleSystemPoint alloc] initWithTotalParticles:quantityParticles];
+			particleSystem = [[CCParticleSystemQuad alloc] initWithTotalParticles:quantityParticles];
 			particleSystem.texture = [[CCTextureCache sharedTextureCache] addImage:@"fire.png"];
 			break;
 		case 3:
 			[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_A8];
-			particleSystem = [[CCParticleSystemPoint alloc] initWithTotalParticles:quantityParticles];
+			particleSystem = [[CCParticleSystemQuad alloc] initWithTotalParticles:quantityParticles];
 			particleSystem.texture = [[CCTextureCache sharedTextureCache] addImage:@"fire.png"];
 			particleSystem.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTextureA8Color];
 			break;
 		case 4:
-			particleSystem = [[CCParticleSystemPoint alloc] initWithTotalParticles:quantityParticles];
+			particleSystem = [[CCParticleSystemQuad alloc] initWithTotalParticles:quantityParticles];
 			particleSystem.texture = [[CCTextureCache sharedTextureCache] addImage:@"fire.pvr"];
 			break;
+			
+			//
+			// Quad Particle System
+			//
 		case 5:
 			[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA8888];
 			particleSystem = [[CCParticleSystemQuad alloc] initWithTotalParticles:quantityParticles];
