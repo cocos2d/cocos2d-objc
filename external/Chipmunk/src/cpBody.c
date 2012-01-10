@@ -1,15 +1,15 @@
 /* Copyright (c) 2007 Scott Lembcke
- *
+ * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- *
+ * 
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- *
+ * 
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -18,7 +18,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-
+ 
 #include <stdlib.h>
 #include <float.h>
 #include <math.h>
@@ -42,33 +42,33 @@ cpBodyInit(cpBody *body, cpFloat m, cpFloat i)
 	body->shapeList = NULL;
 	body->arbiterList = NULL;
 	body->constraintList = NULL;
-
+	
 	body->velocity_func = cpBodyUpdateVelocity;
 	body->position_func = cpBodyUpdatePosition;
-
+	
 	cpComponentNode node = {NULL, NULL, 0.0f};
 	body->node = node;
-
+	
 	body->p = cpvzero;
 	body->v = cpvzero;
 	body->f = cpvzero;
-
+	
 	body->w = 0.0f;
 	body->t = 0.0f;
-
+	
 	body->v_bias = cpvzero;
 	body->w_bias = 0.0f;
-
+	
 	body->v_limit = (cpFloat)INFINITY;
 	body->w_limit = (cpFloat)INFINITY;
-
+	
 	body->data = NULL;
-
+	
 	// Setters must be called after full initialization so the sanity checks don't assert on garbage data.
 	cpBodySetMass(body, m);
 	cpBodySetMoment(body, i);
 	cpBodySetAngle(body, 0.0f);
-
+	
 	return body;
 }
 
@@ -83,12 +83,12 @@ cpBodyInitStatic(cpBody *body)
 {
 	cpBodyInit(body, (cpFloat)INFINITY, (cpFloat)INFINITY);
 	body->node.idleTime = (cpFloat)INFINITY;
-
+	
 	return body;
 }
 
 cpBody *
-cpBodyNewStatic()
+cpBodyNewStatic(void)
 {
 	return cpBodyInitStatic(cpBodyAlloc());
 }
@@ -117,7 +117,7 @@ cpBodySanityCheck(cpBody *body)
 {
 	cpAssertSoft(body->m == body->m && body->m_inv == body->m_inv, "Body's mass is invalid.");
 	cpAssertSoft(body->i == body->i && body->i_inv == body->i_inv, "Body's moment is invalid.");
-
+	
 	cpv_assert_sane(body->p, "Body's position is invalid.");
 	cpv_assert_sane(body->v, "Body's velocity is invalid.");
 	cpv_assert_sane(body->f, "Body's force is invalid.");
@@ -125,9 +125,9 @@ cpBodySanityCheck(cpBody *body)
 	cpAssertSoft(body->a == body->a && cpfabs(body->a) != INFINITY, "Body's angle is invalid.");
 	cpAssertSoft(body->w == body->w && cpfabs(body->w) != INFINITY, "Body's angular velocity is invalid.");
 	cpAssertSoft(body->t == body->t && cpfabs(body->t) != INFINITY, "Body's torque is invalid.");
-
+	
 	cpv_assert_sane(body->rot, "Internal error: Body's rotation vector is invalid.");
-
+	
 	cpAssertSoft(body->v_limit == body->v_limit, "Body's velocity limit is invalid.");
 	cpAssertSoft(body->w_limit == body->w_limit, "Body's angular velocity limit is invalid.");
 }
@@ -139,6 +139,8 @@ cpBodySanityCheck(cpBody *body)
 void
 cpBodySetMass(cpBody *body, cpFloat mass)
 {
+	cpAssertHard(mass > 0.0f, "Mass must be positive and non-zero.");
+	
 	cpBodyActivate(body);
 	body->m = mass;
 	body->m_inv = 1.0f/mass;
@@ -147,6 +149,8 @@ cpBodySetMass(cpBody *body, cpFloat mass)
 void
 cpBodySetMoment(cpBody *body, cpFloat moment)
 {
+	cpAssertHard(moment > 0.0f, "Moment of Inertia must be positive and non-zero.");
+	
 	cpBodyActivate(body);
 	body->i = moment;
 	body->i_inv = 1.0f/moment;
@@ -157,7 +161,7 @@ cpBodyAddShape(cpBody *body, cpShape *shape)
 {
 	cpShape *next = body->shapeList;
 	if(next) next->prev = shape;
-
+	
 	shape->next = next;
 	body->shapeList = shape;
 }
@@ -167,17 +171,17 @@ cpBodyRemoveShape(cpBody *body, cpShape *shape)
 {
   cpShape *prev = shape->prev;
   cpShape *next = shape->next;
-
+  
   if(prev){
 		prev->next = next;
   } else {
 		body->shapeList = next;
   }
-
+  
   if(next){
 		next->prev = prev;
 	}
-
+  
   shape->prev = NULL;
   shape->next = NULL;
 }
@@ -192,7 +196,7 @@ filterConstraints(cpConstraint *node, cpBody *body, cpConstraint *filter)
 	} else {
 		node->next_b = filterConstraints(node->next_b, body, filter);
 	}
-
+	
 	return node;
 }
 
@@ -229,10 +233,10 @@ void
 cpBodyUpdateVelocity(cpBody *body, cpVect gravity, cpFloat damping, cpFloat dt)
 {
 	body->v = cpvclamp(cpvadd(cpvmult(body->v, damping), cpvmult(cpvadd(gravity, cpvmult(body->f, body->m_inv)), dt)), body->v_limit);
-
+	
 	cpFloat w_limit = body->w_limit;
 	body->w = cpfclamp(body->w*damping + body->t*body->i_inv*dt, -w_limit, w_limit);
-
+	
 	cpBodySanityCheck(body);
 }
 
@@ -241,10 +245,10 @@ cpBodyUpdatePosition(cpBody *body, cpFloat dt)
 {
 	body->p = cpvadd(body->p, cpvmult(cpvadd(body->v, body->v_bias), dt));
 	setAngle(body, body->a + (body->w + body->w_bias)*dt);
-
+	
 	body->v_bias = cpvzero;
 	body->w_bias = 0.0f;
-
+	
 	cpBodySanityCheck(body);
 }
 
@@ -269,6 +273,24 @@ cpBodyApplyImpulse(cpBody *body, const cpVect j, const cpVect r)
 {
 	cpBodyActivate(body);
 	apply_impulse(body, j, r);
+}
+
+static inline cpVect
+cpBodyGetVelAtPoint(cpBody *body, cpVect r)
+{
+	return cpvadd(body->v, cpvmult(cpvperp(r), body->w));
+}
+
+cpVect
+cpBodyGetVelAtWorldPoint(cpBody *body, cpVect point)
+{
+	return cpBodyGetVelAtPoint(body, cpvsub(point, body->p));
+}
+
+cpVect
+cpBodyGetVelAtLocalPoint(cpBody *body, cpVect point)
+{
+	return cpBodyGetVelAtPoint(body, cpvrotate(point, body->rot));
 }
 
 void
@@ -299,10 +321,10 @@ cpBodyEachArbiter(cpBody *body, cpBodyArbiterIteratorFunc func, void *data)
 	cpArbiter *arb = body->arbiterList;
 	while(arb){
 		cpArbiter *next = cpArbiterNext(arb, body);
-
+		
 		arb->swappedColl = (body == arb->body_b);
 		func(body, arb, data);
-
+		
 		arb = next;
 	}
 }

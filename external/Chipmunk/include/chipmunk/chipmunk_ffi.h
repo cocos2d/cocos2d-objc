@@ -47,6 +47,7 @@ MAKE_REF(cpflerp);
 MAKE_REF(cpflerpconst);
 
 MAKE_REF(cpBBNew);
+MAKE_REF(cpBBNewForCircle);
 MAKE_REF(cpBBIntersects);
 MAKE_REF(cpBBContainsBB);
 MAKE_REF(cpBBContainsVect);
@@ -54,6 +55,7 @@ MAKE_REF(cpBBMerge);
 MAKE_REF(cpBBExpand);
 MAKE_REF(cpBBArea);
 MAKE_REF(cpBBMergedArea);
+MAKE_REF(cpBBSegmentQuery);
 MAKE_REF(cpBBIntersectsSegment);
 
 MAKE_REF(cpBodyGetMass);
@@ -159,7 +161,6 @@ MAKE_PROPERTIES_REF(cpSpace, Iterations);
 MAKE_PROPERTIES_REF(cpSpace, Gravity);
 MAKE_PROPERTIES_REF(cpSpace, Damping);
 MAKE_PROPERTIES_REF(cpSpace, IdleSpeedThreshold);
-MAKE_PROPERTIES_REF(cpSpace, SleepTimeThreshold);
 MAKE_PROPERTIES_REF(cpSpace, SleepTimeThreshold);
 MAKE_PROPERTIES_REF(cpSpace, CollisionSlop);
 MAKE_PROPERTIES_REF(cpSpace, CollisionBias);
