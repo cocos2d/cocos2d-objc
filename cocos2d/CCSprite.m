@@ -501,13 +501,13 @@ static SEL selSortMethod = NULL;
 				newMatrix = CGAffineTransformTranslate(newMatrix, tv.pos.x, tv.pos.y);
 			if( prevHonor & CC_HONOR_PARENT_TRANSFORM_ROTATE )
 				newMatrix = CGAffineTransformRotate(newMatrix, -CC_DEGREES_TO_RADIANS(tv.rotation));
+			if( prevHonor & CC_HONOR_PARENT_TRANSFORM_SCALE ) {
+				newMatrix = CGAffineTransformScale(newMatrix, tv.scale.x, tv.scale.y);
+			}
 			if ( prevHonor & CC_HONOR_PARENT_TRANSFORM_SKEW ) {
 				CGAffineTransform skew = CGAffineTransformMake(1.0f, tanf(CC_DEGREES_TO_RADIANS(tv.skew.y)), tanf(CC_DEGREES_TO_RADIANS(tv.skew.x)), 1.0f, 0.0f, 0.0f);
 				// apply the skew to the transform
 				newMatrix = CGAffineTransformConcat(skew, newMatrix);
-			}
-			if( prevHonor & CC_HONOR_PARENT_TRANSFORM_SCALE ) {
-				newMatrix = CGAffineTransformScale(newMatrix, tv.scale.x, tv.scale.y);
 			}
 			
 			// 3rd: Translate anchor point
@@ -614,10 +614,11 @@ static SEL selSortMethod = NULL;
 	
 #if CC_SPRITE_DEBUG_DRAW == 1
 	// draw bounding box
-	CGSize s = self.contentSize;
-	CGPoint vertices[4] = {
-		ccp(0,0), ccp(s.width,0),
-		ccp(s.width,s.height), ccp(0,s.height)
+	CGPoint vertices[4]={
+		ccp(quad_.tl.vertices.x,quad_.tl.vertices.y),
+		ccp(quad_.bl.vertices.x,quad_.bl.vertices.y),
+		ccp(quad_.br.vertices.x,quad_.br.vertices.y),
+		ccp(quad_.tr.vertices.x,quad_.tr.vertices.y),
 	};
 	ccDrawPoly(vertices, 4, YES);
 #elif CC_SPRITE_DEBUG_DRAW == 2
@@ -668,7 +669,7 @@ static SEL selSortMethod = NULL;
 		if (!isReorderChildDirty_) 
 		{	
 			[self setReorderChildDirtyRecursively];
-			[batchNode_ reorderBatch];
+			[batchNode_ reorderBatch:YES];
 		}	
 	}
 	
@@ -702,9 +703,9 @@ static SEL selSortMethod = NULL;
 {
 	if (isReorderChildDirty_) 
 	{	
-		int i,j,length=children_->data->num;
-		id* x=children_->data->arr;
-		id tempItem;
+		NSInteger i,j,length=children_->data->num;
+		CCNode ** x=children_->data->arr;
+		CCNode * tempItem;
 		
 		//insertion sort
 		for(i=1; i<length; i++)
@@ -712,8 +713,8 @@ static SEL selSortMethod = NULL;
 			tempItem = x[i];
 			j = i-1;
 			
-			//continue moving element downwards while zOrder is smaller or when zOrder is the same but mutatedIndex is smaller
-			while(j>=0 && ( ((CCNode*) tempItem).zOrder<((CCNode*)x[j]).zOrder || ( ((CCNode*) tempItem).zOrder== ((CCNode*)x[j]).zOrder &&  ((CCNode*) tempItem).mutatedIndex < ((CCNode*)x[j]).mutatedIndex ) ) ) 
+			//continue moving element downwards while zOrder is smaller or when zOrder is the same but orderOfArrival is smaller
+			while(j>=0 && ( tempItem.zOrder < x[j].zOrder || ( tempItem.zOrder == x[j].zOrder && tempItem.orderOfArrival < x[j].orderOfArrival ) ) ) 
 			{
 				x[j+1] = x[j];
 				j = j-1;

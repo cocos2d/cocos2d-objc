@@ -39,7 +39,7 @@
 
 #define CCARRAY_FOREACH(__array__, __object__)												\
 if (__array__ && __array__->data->num > 0)													\
-for(id *__arr__ = __array__->data->arr, *end = __array__->data->arr + __array__->data->num-1;	\
+for(CC_ARC_UNSAFE_RETAINED id *__arr__ = __array__->data->arr, *end = __array__->data->arr + __array__->data->num-1;	\
 	__arr__ <= end && ((__object__ = *__arr__) != nil || true);										\
 	__arr__++)
 

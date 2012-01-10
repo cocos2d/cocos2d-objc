@@ -50,6 +50,9 @@
 #define RENDER_IN_SUBPIXEL (NSInteger)
 #endif
 
+// XXX: Yes, nodes might have a sort problem once per year
+static NSUInteger globalOrderOfArrival = 0;
+
 @interface CCNode ()
 // lazy allocs
 -(void) childrenAlloc;
@@ -71,7 +74,7 @@
 @synthesize vertexZ = vertexZ_;
 @synthesize isRunning = isRunning_;
 @synthesize userData = userData_;
-@synthesize mutatedIndex = mutatedIndex_;
+@synthesize orderOfArrival = orderOfArrival_;
 
 #pragma mark CCNode - Transform related properties
 
@@ -303,7 +306,7 @@
 		//initialize parent to nil
 		parent_ = nil;
 		
-		mutatedIndex_=0;
+		orderOfArrival_=0;
 	}
 	
 	return self;
@@ -399,8 +402,8 @@
 	
 	[child setParent: self];
 	
-	//CCDirector.sharedDirector->getMutatedIndex
-	[child setMutatedIndex:[[CCDirector sharedDirector] getMutatedIndex]];
+	//CCDirector.sharedDirector->getorderOfArrival
+	[child setOrderOfArrival: globalOrderOfArrival++];
 	
 	if( isRunning_ ) {
 		[child onEnter];
@@ -461,7 +464,10 @@
 		//  -1st do onExit
 		//  -2nd cleanup
 		if (isRunning_)
+		{
+			[c onExitTransitionDidStart];
 			[c onExit];
+		}
 		
 		if (cleanup)
 			[c cleanup];
@@ -479,7 +485,10 @@
 	//  -1st do onExit
 	//  -2nd cleanup
 	if (isRunning_)
+	{
+		[child onExitTransitionDidStart];
 		[child onExit];
+	}
 	
 	// If you don't do cleanup, the child's actions will not get removed and the
 	// its scheduledSelectors_ dict will not get released!
@@ -512,7 +521,7 @@
 	NSAssert( child != nil, @"Child must be non-nil");
 	
 	isReorderChildDirty_=YES;
-	[child setMutatedIndex:[[CCDirector sharedDirector] getMutatedIndex]];
+	[child setOrderOfArrival: globalOrderOfArrival++];
 	[child _setZOrder:z];
 }
 
@@ -520,9 +529,9 @@
 {
 	if (isReorderChildDirty_) 
 	{	
-		int i,j,length=children_->data->num;
-		id* x=children_->data->arr;
-		id tempItem;
+		NSInteger i,j,length=children_->data->num;
+		CCNode ** x=children_->data->arr;
+		CCNode *tempItem;
 		
 		//insertion sort
 		for(i=1; i<length; i++)
@@ -530,8 +539,8 @@
 			tempItem = x[i];
 			j = i-1;
 			
-			//continue moving element downwards while zOrder is smaller or when zOrder is the same but mutatedIndex is smaller
-			while(j>=0 && ( ((CCNode*) tempItem).zOrder<((CCNode*)x[j]).zOrder || ( ((CCNode*) tempItem).zOrder== ((CCNode*)x[j]).zOrder &&  ((CCNode*) tempItem).mutatedIndex < ((CCNode*)x[j]).mutatedIndex ) ) ) 
+			//continue moving element downwards while zOrder is smaller or when zOrder is the same but orderOfArrival is smaller
+			while(j>=0 && ( tempItem.zOrder< x[j].zOrder || ( tempItem.zOrder == x[j].zOrder && tempItem.orderOfArrival < x[j].orderOfArrival ) ) )
 			{
 				x[j+1] = x[j];
 				j = j-1;
@@ -595,7 +604,7 @@
 	} else
 		[self draw];
 	
-	mutatedIndex_=0;
+	orderOfArrival_=0;
 	
 	if ( grid_ && grid_.active)
 		[grid_ afterDraw:self];
@@ -663,6 +672,10 @@
 	if (rotation_ != 0.0f )
 		glRotatef( -rotation_, 0.0f, 0.0f, 1.0f );
 	
+	// scale
+	if (scaleX_ != 1.0f || scaleY_ != 1.0f)
+		glScalef( scaleX_, scaleY_, 1.0f );
+
 	// skew
 	if ( (skewX_ != 0.0f) || (skewY_ != 0.0f) ) {
 		CGAffineTransform skewMatrix = CGAffineTransformMake( 1.0f, tanf(CC_DEGREES_TO_RADIANS(skewY_)), tanf(CC_DEGREES_TO_RADIANS(skewX_)), 1.0f, 0.0f, 0.0f );
@@ -670,10 +683,6 @@
 		CGAffineToGL(&skewMatrix, glMatrix);															 
 		glMultMatrixf(glMatrix);
 	}
-	
-	// scale
-	if (scaleX_ != 1.0f || scaleY_ != 1.0f)
-		glScalef( scaleX_, scaleY_, 1.0f );
 	
 	if ( camera_ && !(grid_ && grid_.active) )
 		[camera_ locate];
@@ -701,6 +710,11 @@
 -(void) onEnterTransitionDidFinish
 {
 	[children_ makeObjectsPerformSelector:@selector(onEnterTransitionDidFinish)];
+}
+
+-(void) onExitTransitionDidStart
+{
+	[children_ makeObjectsPerformSelector:@selector(onExitTransitionDidStart)];
 }
 
 -(void) onExit
@@ -830,15 +844,15 @@
 		if( rotation_ != 0 )
 			transform_ = CGAffineTransformRotate(transform_, -CC_DEGREES_TO_RADIANS(rotation_));
 		
+		if( ! (scaleX_ == 1 && scaleY_ == 1) ) 
+			transform_ = CGAffineTransformScale(transform_, scaleX_, scaleY_);
+
 		if( skewX_ != 0 || skewY_ != 0 ) {
 			// create a skewed coordinate system
 			CGAffineTransform skew = CGAffineTransformMake(1.0f, tanf(CC_DEGREES_TO_RADIANS(skewY_)), tanf(CC_DEGREES_TO_RADIANS(skewX_)), 1.0f, 0.0f, 0.0f);
 			// apply the skew to the transform
 			transform_ = CGAffineTransformConcat(skew, transform_);
 		}
-		
-		if( ! (scaleX_ == 1 && scaleY_ == 1) ) 
-			transform_ = CGAffineTransformScale(transform_, scaleX_, scaleY_);
 		
 		if( ! CGPointEqualToPoint(anchorPointInPixels_, CGPointZero) )
 			transform_ = CGAffineTransformTranslate(transform_, -anchorPointInPixels_.x, -anchorPointInPixels_.y);

@@ -41,7 +41,6 @@
 - (id) initWithDepthFormat:(unsigned int)depthFormat withPixelFormat:(unsigned int)pixelFormat withSharegroup:(EAGLSharegroup*)sharegroup withMultiSampling:(BOOL) multiSampling withNumberOfSamples:(unsigned int) requestedSamples;
 
 - (BOOL) resizeFromLayer:(CAEAGLLayer *)layer;
-- (void) createFrameBuffer:(CAEAGLLayer *)layer;
 
 - (EAGLContext*) context;
 - (CGSize) backingSize;

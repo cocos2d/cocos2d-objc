@@ -46,8 +46,8 @@ static SEL selSortMethod =NULL;
 
 @interface CCSpriteBatchNode (private)
 -(void) updateBlendFunc;
--(void) updateAtlasIndex:(CCSprite*) sprite currentIndex:(int*) curIndex;
--(void) swap:(int) oldIndex withNewIndex:(int) newIndex;
+-(void) updateAtlasIndex:(CCSprite*) sprite currentIndex:(NSInteger*) curIndex;
+-(void) swap:(NSInteger) oldIndex withNewIndex:(NSInteger) newIndex;
 
 @end
 
@@ -165,7 +165,7 @@ static SEL selSortMethod =NULL;
 	[self transform];
 	[self draw];
 	
-	mutatedIndex_=0;
+	orderOfArrival_=0;
 	
 	if ( grid_ && grid_.active)
 		[grid_ afterDraw:self];
@@ -237,8 +237,8 @@ static SEL selSortMethod =NULL;
 	if (isReorderChildDirty_) 
 	{	
 		NSInteger i,j,length=children_->data->num;
-		id* x=children_->data->arr;		
-		id tempItem;
+		CCNode ** x=children_->data->arr;		
+		CCNode *tempItem;
 		CCSprite *child;
 
 		//insertion sort
@@ -247,8 +247,8 @@ static SEL selSortMethod =NULL;
 			tempItem = x[i];
 			j = i-1;
 			
-			//continue moving element downwards while zOrder is smaller or when zOrder is the same but mutatedIndex is smaller
-			while(j>=0 && ( ((CCNode*) tempItem).zOrder<((CCNode*)x[j]).zOrder || ( ((CCNode*) tempItem).zOrder == ((CCNode*)x[j]).zOrder &&  ((CCNode*) tempItem).mutatedIndex < ((CCNode*)x[j]).mutatedIndex ) ) ) 
+			//continue moving element downwards while zOrder is smaller or when zOrder is the same but orderOfArrival is smaller
+			while(j>=0 && ( tempItem.zOrder < x[j].zOrder || ( tempItem.zOrder == x[j].zOrder && tempItem.orderOfArrival < x[j].orderOfArrival ) ) ) 
 			{
 				x[j+1] = x[j];
 				j--;
@@ -263,20 +263,17 @@ static SEL selSortMethod =NULL;
 			//first sort all children recursively based on zOrder
 			CCARRAY_FOREACH(children_, child) child->sortMethod(child,selSortMethod);
 			
-			int *index=malloc(sizeof(int));
-			*index=0;
+			NSInteger index=0;
 			
 			//fast dispatch, give every child a new atlasIndex based on their relative zOrder (keep parent -> child relations intact) and at the same time reorder descedants and the quads to the right index
-			CCARRAY_FOREACH(children_, child) updateAtlasIndexMethod_(self,selUpdateAtlasIndex,child,index);
-			
-			free(index);
+			CCARRAY_FOREACH(children_, child) updateAtlasIndexMethod_(self,selUpdateAtlasIndex,child,&index);
 		}
 		
 		isReorderChildDirty_=NO;	
 	}
 }
 
--(void) updateAtlasIndex:(CCSprite*) sprite currentIndex:(int*) curIndex
+-(void) updateAtlasIndex:(CCSprite*) sprite currentIndex:(NSInteger*) curIndex
 {
 	CCArray *array = [sprite children];
 	NSUInteger count = [array count];
@@ -286,8 +283,9 @@ static SEL selSortMethod =NULL;
 	{	
 		oldIndex=sprite.atlasIndex;
 		sprite.atlasIndex=*curIndex;
-		sprite.mutatedIndex=0;
-		if (oldIndex!=*curIndex) [self swap:oldIndex withNewIndex:*curIndex];
+		sprite.orderOfArrival=0;
+		if (oldIndex!=*curIndex)
+			[self swap:oldIndex withNewIndex:*curIndex];
 		(*curIndex)++;
 	}
 	else
@@ -298,8 +296,9 @@ static SEL selSortMethod =NULL;
 		{//all children are in front of the parent
 			oldIndex=sprite.atlasIndex;
 			sprite.atlasIndex=*curIndex;
-			sprite.mutatedIndex=0;
-			if (oldIndex!=*curIndex) [self swap:oldIndex withNewIndex:*curIndex];
+			sprite.orderOfArrival=0;
+			if (oldIndex!=*curIndex)
+				[self swap:oldIndex withNewIndex:*curIndex];
 			(*curIndex)++;
 			
 			needNewIndex=NO;
@@ -312,8 +311,9 @@ static SEL selSortMethod =NULL;
 			{
 				oldIndex=sprite.atlasIndex;
 				sprite.atlasIndex=*curIndex;
-				sprite.mutatedIndex=0;
-				if (oldIndex!=*curIndex) [self swap:oldIndex withNewIndex:*curIndex];
+				sprite.orderOfArrival=0;
+				if (oldIndex!=*curIndex)
+					[self swap:oldIndex withNewIndex:*curIndex];
 				(*curIndex)++;
 				needNewIndex=NO;
 				
@@ -326,14 +326,15 @@ static SEL selSortMethod =NULL;
 		{//all children have a zOrder < 0)
 			oldIndex=sprite.atlasIndex;
 			sprite.atlasIndex=*curIndex;
-			sprite.mutatedIndex=0;
-			if (oldIndex!=*curIndex) [self swap:oldIndex withNewIndex:*curIndex];
+			sprite.orderOfArrival=0;
+			if (oldIndex!=*curIndex)
+				[self swap:oldIndex withNewIndex:*curIndex];
 			(*curIndex)++;
 		}
 	}
 }
 
-- (void) swap:(int) oldIndex withNewIndex:(int) newIndex
+- (void) swap:(NSInteger) oldIndex withNewIndex:(NSInteger) newIndex
 {
 	id* x=descendants_->data->arr;
 	ccV3F_C4B_T2F_Quad* quads=textureAtlas_.quads;
@@ -350,9 +351,9 @@ static SEL selSortMethod =NULL;
 	quads[newIndex]=tempItemQuad;
 }
 
-- (void) reorderBatch
+- (void) reorderBatch:(BOOL) reorder
 {
-	isReorderChildDirty_=YES;	
+	isReorderChildDirty_=reorder;	
 }
 
 #pragma mark CCSpriteBatchNode - draw
@@ -379,13 +380,14 @@ static SEL selSortMethod =NULL;
 			child->updateMethod(child, selUpdate);
 			
 #if CC_SPRITEBATCHNODE_DEBUG_DRAW
-			//Issue #528
-			CGRect rect = [child boundingBox];
+			//Issue #528, 1069
+			ccV3F_C4B_T2F_Quad *quads = [textureAtlas_ quads];
+			ccV3F_C4B_T2F_Quad *quad= &(quads[child.atlasIndex]);
 			CGPoint vertices[4]={
-				ccp(rect.origin.x,rect.origin.y),
-				ccp(rect.origin.x+rect.size.width,rect.origin.y),
-				ccp(rect.origin.x+rect.size.width,rect.origin.y+rect.size.height),
-				ccp(rect.origin.x,rect.origin.y+rect.size.height),
+				ccp(quad->tl.vertices.x,quad->tl.vertices.y),
+				ccp(quad->bl.vertices.x,quad->bl.vertices.y),
+				ccp(quad->br.vertices.x,quad->br.vertices.y),
+				ccp(quad->tr.vertices.x,quad->tr.vertices.y),
 			};
 			ccDrawPoly(vertices, 4, YES);
 #endif // CC_SPRITEBATCHNODE_DEBUG_DRAW
