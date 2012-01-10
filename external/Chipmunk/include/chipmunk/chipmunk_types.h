@@ -1,11 +1,12 @@
+#include <math.h>
 #include <stdint.h>
 
 #ifdef __APPLE__
    #import "TargetConditionals.h"
 #endif
 
-#if (defined TARGET_OS_IPHONE) && (!defined CP_USE_CGPOINTS)
-	#define CP_USE_CGPOINTS
+#if (TARGET_OS_IPHONE == 1) && (!defined CP_USE_CGPOINTS)
+	#define CP_USE_CGPOINTS 1
 #endif
 
 #ifdef CP_USE_CGPOINTS
@@ -14,7 +15,7 @@
 	#elif TARGET_OS_MAC
 		#import <ApplicationServices/ApplicationServices.h>
 	#endif
-
+	
 	#if defined(__LP64__) && __LP64__
 		#define CP_USE_DOUBLES 1
 	#else
@@ -70,11 +71,11 @@
 		static union MSVC_EVIL_FLOAT_HACK INFINITY_HACK = {{0x00, 0x00, 0x80, 0x7F}};
 		#define INFINITY (INFINITY_HACK.Value)
 	#endif
-
+	
 	#ifdef __GNUC__
 		#define INFINITY (__builtin_inf())
 	#endif
-
+	
 	#ifndef INFINITY
 		#define INFINITY (1e1000)
 	#endif
@@ -136,8 +137,8 @@ static inline cpFloat cpflerpconst(cpFloat f1, cpFloat f2, cpFloat d)
 /// Hash value type.
 typedef uintptr_t cpHashValue;
 
+// Oh C, how we love to define our own boolean types to get compiler compatibility
 /// Chipmunk's boolean type.
-/// Oh C, how we love to define our own boolean types to get compiler compatibility
 #ifdef CP_BOOL_TYPE
 	typedef CP_BOOL_TYPE cpBool;
 #else

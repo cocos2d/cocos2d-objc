@@ -1,15 +1,15 @@
 /* Copyright (c) 2007 Scott Lembcke
- *
+ * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- *
+ * 
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- *
+ * 
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -29,11 +29,16 @@ typedef struct cpBB{
 } cpBB;
 
 /// Convenience constructor for cpBB structs.
-static inline cpBB cpBBNew(const cpFloat l, const cpFloat b,
-		const cpFloat r, const cpFloat t)
+static inline cpBB cpBBNew(const cpFloat l, const cpFloat b, const cpFloat r, const cpFloat t)
 {
 	cpBB bb = {l, b, r, t};
 	return bb;
+}
+
+/// Constructs a cpBB for a circle with the given position and radius.
+static inline cpBB cpBBNewForCircle(const cpVect p, const cpFloat r)
+{
+	return cpBBNew(p.x - r, p.y - r, p.x + r, p.y + r);
 }
 
 /// Returns true if @c a and @c b intersect.
@@ -86,19 +91,35 @@ static inline cpFloat cpBBMergedArea(cpBB a, cpBB b)
 	return (cpfmax(a.r, b.r) - cpfmin(a.l, b.l))*(cpfmax(a.t, b.t) - cpfmin(a.b, b.b));
 }
 
+/// Returns the fraction along the segment query the cpBB is hit. Returns INFINITY if it doesn't hit.
+static inline cpFloat cpBBSegmentQuery(cpBB bb, cpVect a, cpVect b)
+{
+	cpFloat idx = 1.0f/(b.x - a.x);
+	cpFloat tx1 = (bb.l == a.x ? -INFINITY : (bb.l - a.x)*idx);
+	cpFloat tx2 = (bb.r == a.x ?  INFINITY : (bb.r - a.x)*idx);
+	cpFloat txmin = cpfmin(tx1, tx2);
+	cpFloat txmax = cpfmax(tx1, tx2);
+	
+	cpFloat idy = 1.0f/(b.y - a.y);
+	cpFloat ty1 = (bb.b == a.y ? -INFINITY : (bb.b - a.y)*idy);
+	cpFloat ty2 = (bb.t == a.y ?  INFINITY : (bb.t - a.y)*idy);
+	cpFloat tymin = cpfmin(ty1, ty2);
+	cpFloat tymax = cpfmax(ty1, ty2);
+	
+	if(tymin <= txmax && txmin <= tymax){
+		cpFloat min = cpfmax(txmin, tymin);
+		cpFloat max = cpfmin(txmax, tymax);
+		
+		if(0.0 <= max && min <= 1.0) return cpfmax(min, 0.0);
+	}
+	
+	return INFINITY;
+}
+
 /// Return true if the bounding box intersects the line segment with ends @c a and @c b.
 static inline cpBool cpBBIntersectsSegment(cpBB bb, cpVect a, cpVect b)
 {
-	cpBB seg_bb = cpBBNew(cpfmin(a.x, b.x), cpfmin(a.y, b.y), cpfmax(a.x, b.x), cpfmax(a.y, b.y));
-	if(cpBBIntersects(bb, seg_bb)){
-		cpVect axis = cpv(b.y - a.y, a.x - b.x);
-		cpVect offset = cpv((a.x + b.x - bb.r - bb.l), (a.y + b.y - bb.t - bb.b));
-		cpVect extents = cpv(bb.r - bb.l, bb.t - bb.b);
-
-		return (cpfabs(cpvdot(axis, offset)) < cpfabs(axis.x*extents.x) + cpfabs(axis.y*extents.y));
-	}
-
-	return cpFalse;
+	return (cpBBSegmentQuery(bb, a, b) != INFINITY);
 }
 
 /// Clamp a vector to a bounding box.

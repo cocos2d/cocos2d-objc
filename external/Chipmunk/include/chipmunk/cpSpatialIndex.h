@@ -1,15 +1,15 @@
 /* Copyright (c) 2010 Scott Lembcke
- *
+ * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- *
+ * 
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- *
+ * 
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -21,23 +21,23 @@
 
 /**
 	@defgroup cpSpatialIndex cpSpatialIndex
-
+	
 	Spatial indexes are data structures that are used to accelerate collision detection
 	and spatial queries. Chipmunk provides a number of spatial index algorithms to pick from
 	and they are programmed in a generic way so that you can use them for holding more than
 	just cpShape structs.
-
+	
 	It works by using @c void pointers to the objects you add and using a callback to ask your code
 	for bounding boxes when it needs them. Several types of queries can be performed an index as well
 	as reindexing and full collision information. All communication to the spatial indexes is performed
 	through callback functions.
-
+	
 	Spatial indexes should be treated as opaque structs.
 	This meanns you shouldn't be reading any of the struct fields.
 	@{
 */
 
-#pragma mark Spatial Index
+//MARK: Spatial Index
 
 /// Spatial index bounding box callback function type.
 /// The spatial index calls this function and passes you a pointer to an object you added
@@ -57,23 +57,23 @@ typedef struct cpSpatialIndex cpSpatialIndex;
 /// @private
 struct cpSpatialIndex {
 	cpSpatialIndexClass *klass;
-
+	
 	cpSpatialIndexBBFunc bbfunc;
-
+	
 	cpSpatialIndex *staticIndex, *dynamicIndex;
 };
 
 
-#pragma mark Spatial Hash
+//MARK: Spatial Hash
 
 typedef struct cpSpaceHash cpSpaceHash;
 
 /// Allocate a spatial hash.
-cpSpaceHash *cpSpaceHashAlloc(void);
-/// Initialize a spatial hash.
-cpSpatialIndex *cpSpaceHashInit(cpSpaceHash *hash, cpFloat celldim, int numcells, cpSpatialIndexBBFunc bbfunc, cpSpatialIndex *staticIndex);
+cpSpaceHash* cpSpaceHashAlloc(void);
+/// Initialize a spatial hash. 
+cpSpatialIndex* cpSpaceHashInit(cpSpaceHash *hash, cpFloat celldim, int numcells, cpSpatialIndexBBFunc bbfunc, cpSpatialIndex *staticIndex);
 /// Allocate and initialize a spatial hash.
-cpSpatialIndex *cpSpaceHashNew(cpFloat celldim, int cells, cpSpatialIndexBBFunc bbfunc, cpSpatialIndex *staticIndex);
+cpSpatialIndex* cpSpaceHashNew(cpFloat celldim, int cells, cpSpatialIndexBBFunc bbfunc, cpSpatialIndex *staticIndex);
 
 /// Change the cell dimensions and table size of the spatial hash to tune it.
 /// The cell dimensions should roughly match the average size of your objects
@@ -81,16 +81,16 @@ cpSpatialIndex *cpSpaceHashNew(cpFloat celldim, int cells, cpSpatialIndexBBFunc 
 /// Some trial and error is required to find the optimum numbers for efficiency.
 void cpSpaceHashResize(cpSpaceHash *hash, cpFloat celldim, int numcells);
 
-#pragma mark AABB Tree
+//MARK: AABB Tree
 
 typedef struct cpBBTree cpBBTree;
 
 /// Allocate a bounding box tree.
-cpBBTree *cpBBTreeAlloc(void);
+cpBBTree* cpBBTreeAlloc(void);
 /// Initialize a bounding box tree.
-cpSpatialIndex *cpBBTreeInit(cpBBTree *tree, cpSpatialIndexBBFunc bbfunc, cpSpatialIndex *staticIndex);
+cpSpatialIndex* cpBBTreeInit(cpBBTree *tree, cpSpatialIndexBBFunc bbfunc, cpSpatialIndex *staticIndex);
 /// Allocate and initialize a bounding box tree.
-cpSpatialIndex *cpBBTreeNew(cpSpatialIndexBBFunc bbfunc, cpSpatialIndex *staticIndex);
+cpSpatialIndex* cpBBTreeNew(cpSpatialIndexBBFunc bbfunc, cpSpatialIndex *staticIndex);
 
 /// Perform a static top down optimization of the tree.
 void cpBBTreeOptimize(cpSpatialIndex *index);
@@ -101,18 +101,18 @@ typedef cpVect (*cpBBTreeVelocityFunc)(void *obj);
 /// Set the velocity function for the bounding box tree to enable temporal coherence.
 void cpBBTreeSetVelocityFunc(cpSpatialIndex *index, cpBBTreeVelocityFunc func);
 
-#pragma mark Single Axis Sweep
+//MARK: Single Axis Sweep
 
 typedef struct cpSweep1D cpSweep1D;
 
 /// Allocate a 1D sort and sweep broadphase.
-cpSweep1D *cpSweep1DAlloc(void);
+cpSweep1D* cpSweep1DAlloc(void);
 /// Initialize a 1D sort and sweep broadphase.
-cpSpatialIndex *cpSweep1DInit(cpSweep1D *sweep, cpSpatialIndexBBFunc bbfunc, cpSpatialIndex *staticIndex);
+cpSpatialIndex* cpSweep1DInit(cpSweep1D *sweep, cpSpatialIndexBBFunc bbfunc, cpSpatialIndex *staticIndex);
 /// Allocate and initialize a 1D sort and sweep broadphase.
-cpSpatialIndex *cpSweep1DNew(cpSpatialIndexBBFunc bbfunc, cpSpatialIndex *staticIndex);
+cpSpatialIndex* cpSweep1DNew(cpSpatialIndexBBFunc bbfunc, cpSpatialIndex *staticIndex);
 
-#pragma mark Spatial Index Implementation
+//MARK: Spatial Index Implementation
 
 typedef void (*cpSpatialIndexDestroyImpl)(cpSpatialIndex *index);
 
@@ -133,18 +133,18 @@ typedef void (*cpSpatialIndexQueryImpl)(cpSpatialIndex *index, void *obj, cpBB b
 
 struct cpSpatialIndexClass {
 	cpSpatialIndexDestroyImpl destroy;
-
+	
 	cpSpatialIndexCountImpl count;
 	cpSpatialIndexEachImpl each;
-
+	
 	cpSpatialIndexContainsImpl contains;
 	cpSpatialIndexInsertImpl insert;
 	cpSpatialIndexRemoveImpl remove;
-
+	
 	cpSpatialIndexReindexImpl reindex;
 	cpSpatialIndexReindexObjectImpl reindexObject;
 	cpSpatialIndexReindexQueryImpl reindexQuery;
-
+	
 	cpSpatialIndexPointQueryImpl pointQuery;
 	cpSpatialIndexSegmentQueryImpl segmentQuery;
 	cpSpatialIndexQueryImpl query;

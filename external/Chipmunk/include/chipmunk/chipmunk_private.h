@@ -1,15 +1,15 @@
 /* Copyright (c) 2007 Scott Lembcke
- *
+ * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- *
+ * 
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- *
+ * 
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -25,7 +25,7 @@
 #define CP_HASH_COEF (3344921057ul)
 #define CP_HASH_PAIR(A, B) ((cpHashValue)(A)*CP_HASH_COEF ^ (cpHashValue)(B)*CP_HASH_COEF)
 
-#pragma mark cpArray
+//MARK: cpArray
 
 struct cpArray {
 	int num, max;
@@ -43,7 +43,7 @@ cpBool cpArrayContains(cpArray *arr, void *ptr);
 
 void cpArrayFreeEach(cpArray *arr, void (freeFunc)(void*));
 
-#pragma mark Foreach loops
+//MARK: Foreach loops
 
 static inline cpConstraint *
 cpConstraintNext(cpConstraint *node, cpBody *body)
@@ -69,7 +69,7 @@ cpArbiterNext(cpArbiter *node, cpBody *body)
 #define CP_BODY_FOREACH_COMPONENT(root, var)\
 	for(cpBody *var = root; var; var = var->node.next)
 
-#pragma mark cpHashSet
+//MARK: cpHashSet
 
 typedef cpBool (*cpHashSetEqlFunc)(void *ptr, void *elt);
 typedef void *(*cpHashSetTransFunc)(void *ptr, void *data);
@@ -90,14 +90,14 @@ void cpHashSetEach(cpHashSet *set, cpHashSetIteratorFunc func, void *data);
 typedef cpBool (*cpHashSetFilterFunc)(void *elt, void *data);
 void cpHashSetFilter(cpHashSet *set, cpHashSetFilterFunc func, void *data);
 
-#pragma mark Body Functions
+//MARK: Body Functions
 
 void cpBodyAddShape(cpBody *body, cpShape *shape);
 void cpBodyRemoveShape(cpBody *body, cpShape *shape);
 void cpBodyRemoveConstraint(cpBody *body, cpConstraint *constraint);
 
 
-#pragma mark Shape/Collision Functions
+//MARK: Shape/Collision Functions
 
 cpShape* cpShapeInit(cpShape *shape, const cpShapeClass *klass, cpBody *body);
 
@@ -114,11 +114,11 @@ cpPolyShapeValueOnAxis(const cpPolyShape *poly, const cpVect n, const cpFloat d)
 {
 	cpVect *verts = poly->tVerts;
 	cpFloat min = cpvdot(n, verts[0]);
-
+	
 	for(int i=1; i<poly->numVerts; i++){
 		min = cpfmin(min, cpvdot(n, verts[i]));
 	}
-
+	
 	return min - d;
 }
 
@@ -126,12 +126,12 @@ static inline cpBool
 cpPolyShapeContainsVert(const cpPolyShape *poly, const cpVect v)
 {
 	cpPolyShapeAxis *axes = poly->tAxes;
-
+	
 	for(int i=0; i<poly->numVerts; i++){
 		cpFloat dist = cpvdot(axes[i].n, v) - axes[i].d;
 		if(dist > 0.0f) return cpFalse;
 	}
-
+	
 	return cpTrue;
 }
 
@@ -139,30 +139,32 @@ static inline cpBool
 cpPolyShapeContainsVertPartial(const cpPolyShape *poly, const cpVect v, const cpVect n)
 {
 	cpPolyShapeAxis *axes = poly->tAxes;
-
+	
 	for(int i=0; i<poly->numVerts; i++){
 		if(cpvdot(axes[i].n, n) < 0.0f) continue;
 		cpFloat dist = cpvdot(axes[i].n, v) - axes[i].d;
 		if(dist > 0.0f) return cpFalse;
 	}
-
+	
 	return cpTrue;
 }
 
-#pragma mark Spatial Index Functions
+//MARK: Spatial Index Functions
 
 cpSpatialIndex *cpSpatialIndexInit(cpSpatialIndex *index, cpSpatialIndexClass *klass, cpSpatialIndexBBFunc bbfunc, cpSpatialIndex *staticIndex);
 
-#pragma mark Space Functions
+//MARK: Space Functions
 
 extern cpCollisionHandler cpDefaultCollisionHandler;
 void cpSpaceProcessComponents(cpSpace *space, cpFloat dt);
 
+void cpSpacePushFreshContactBuffer(cpSpace *space);
 cpContact *cpContactBufferGetArray(cpSpace *space);
 void cpSpacePushContacts(cpSpace *space, int count);
 
 void *cpSpaceGetPostStepData(cpSpace *space, void *obj);
 
+cpBool cpSpaceArbiterSetFilter(cpArbiter *arb, cpSpace *space);
 void cpSpaceFilterArbiters(cpSpace *space, cpBody *body, cpShape *filter);
 
 void cpSpaceActivateBody(cpSpace *space, cpBody *body);
@@ -181,23 +183,28 @@ cpSpaceUncacheArbiter(cpSpace *space, cpArbiter *arb)
 {
 	cpShape *a = arb->a, *b = arb->b;
 	cpShape *shape_pair[] = {a, b};
-	cpHashValue arbHashID = CP_HASH_PAIR((size_t)a, (size_t)b);
+	cpHashValue arbHashID = CP_HASH_PAIR((cpHashValue)a, (cpHashValue)b);
 	cpHashSetRemove(space->cachedArbiters, arbHashID, shape_pair);
 	cpArrayDeleteObj(space->arbiters, arb);
 }
 
-#pragma mark Arbiters
+void cpShapeUpdateFunc(cpShape *shape, void *unused);
+void cpSpaceCollideShapes(cpShape *a, cpShape *b, cpSpace *space);
+
+
+
+//MARK: Arbiters
 
 struct cpContact {
 	cpVect p, n;
 	cpFloat dist;
-
+	
 	cpVect r1, r2;
 	cpFloat nMass, tMass, bounce;
 
 	cpFloat jnAcc, jtAcc, jBias;
 	cpFloat bias;
-
+	
 	cpHashValue hash;
 };
 

@@ -1,15 +1,15 @@
 /* Copyright (c) 2007 Scott Lembcke
- *
+ * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- *
+ * 
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- *
+ * 
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -51,7 +51,7 @@ cpFloat cpvtoangle(const cpVect v);
 ///	Returns a string representation of v. Intended mostly for debugging purposes and not production use.
 ///	@attention The string points to a static local and is reset every time the function is called.
 ///	If you want to print more than one vector you will have to split up your printing onto separate lines.
-char *cpvstr(const cpVect v);
+char* cpvstr(const cpVect v);
 
 /// Check if two vectors are equal. (Be careful when comparing floating point numbers!)
 static inline cpBool cpveql(const cpVect v1, const cpVect v2)

@@ -1,15 +1,15 @@
 /* Copyright (c) 2007 Scott Lembcke
- *
+ * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- *
+ * 
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- *
+ * 
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -82,18 +82,18 @@ struct cpArbiter {
 	 /// Calculated value to use for applying surface velocities.
 	/// Override in a pre-solve collision handler for custom behavior.
 	cpVect surface_vr;
-
+	
 	CP_PRIVATE(cpShape *a);
 	CP_PRIVATE(cpShape *b);
 	CP_PRIVATE(cpBody *body_a);
 	CP_PRIVATE(cpBody *body_b);
-
+	
 	CP_PRIVATE(struct cpArbiterThread thread_a);
 	CP_PRIVATE(struct cpArbiterThread thread_b);
-
+	
 	CP_PRIVATE(int numContacts);
 	CP_PRIVATE(cpContact *contacts);
-
+	
 	CP_PRIVATE(cpTimestamp stamp);
 	CP_PRIVATE(cpCollisionHandler *handler);
 	CP_PRIVATE(cpBool swappedColl);
@@ -115,11 +115,15 @@ CP_DefineArbiterStructProperty(cpFloat, u, Friction);
 CP_DefineArbiterStructProperty(cpVect, surface_vr, SurfaceVelocity);
 
 /// Calculate the total impulse that was applied by this arbiter.
-/// Calling this function from a begin or pre-solve callback is undefined.
+/// This function should only be called from a post-solve, post-step or cpBodyEachArbiter callback.
 cpVect cpArbiterTotalImpulse(const cpArbiter *arb);
 /// Calculate the total impulse including the friction that was applied by this arbiter.
-/// Calling this function from a begin or pre-solve callback is undefined.
+/// This function should only be called from a post-solve, post-step or cpBodyEachArbiter callback.
 cpVect cpArbiterTotalImpulseWithFriction(const cpArbiter *arb);
+/// Calculate the amount of energy lost in a collision including static, but not dynamic friction.
+/// This function should only be called from a post-solve, post-step or cpBodyEachArbiter callback.
+cpFloat cpArbiterTotalKE(const cpArbiter *arb);
+
 
 /// Causes a collision pair to be ignored as if you returned false from a begin callback.
 /// If called from a pre-step callback, you will still need to return false
@@ -168,7 +172,7 @@ static inline int cpArbiterGetCount(const cpArbiter *arb)
 typedef struct cpContactPointSet {
 	/// The number of contact points in the set.
 	int count;
-
+	
 	/// The array of contact points.
 	struct {
 		/// The position of the contact point.
