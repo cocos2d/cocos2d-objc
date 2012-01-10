@@ -100,17 +100,34 @@
  */
 -(void) insertQuad:(ccV3F_C4B_T2F_Quad*)quad atIndex:(NSUInteger)index;
 
+/** Inserts a c array of quads at a given index
+ index must be between 0 and the atlas capacity - 1
+ this method doesn't enlarge the array when amount + index > totalQuads
+ @since v1.1
+*/
+-(void) insertQuads:(ccV3F_C4B_T2F_Quad*)quads atIndex:(NSUInteger)index amount:(NSUInteger) amount;
+
 /** Removes the quad that is located at a certain index and inserts it at a new index
  This operation is faster than removing and inserting in a quad in 2 different steps
  @since v0.7.2
 */
 -(void) insertQuadFromIndex:(NSUInteger)fromIndex atIndex:(NSUInteger)newIndex;
 
+/** Inserts a amount of quads from oldIndex at newIndex, while moving quads at newIndex - oldIndex back accordingly 
+ @since v1.1
+ */
+-(void) insertQuadsFromIndex:(NSUInteger)oldIndex amount:(NSUInteger) amount atIndex:(NSUInteger)newIndex;
+
 /** removes a quad at a given index number.
  The capacity remains the same, but the total number of quads to be drawn is reduced in 1
  @since v0.7.2
  */
 -(void) removeQuadAtIndex:(NSUInteger) index;
+
+/** removes a amount of quads starting from index 
+	@since 1.1
+ */
+- (void) removeQuadsAtIndex:(NSUInteger) index amount:(NSUInteger) amount;
 
 /** removes all Quads.
  The TextureAtlas capacity remains untouched. No memory is freed.
@@ -126,12 +143,33 @@
  */
 -(BOOL) resizeCapacity: (NSUInteger) n;
 
+/** 
+ Used internally by CCParticleBatchNode
+ don't use this unless you know what you're doing
+ @since 1.1
+*/
+- (void) increaseTotalQuadsWith:(NSUInteger) amount;
+
+/** 
+ Moves quads from index till totalQuads to the newIndex
+ Used internally by CCParticleBatchNode
+ This method doesn't enlarge the array if newIndex + quads to be moved > capacity
+ @since 1.1
+*/
+- (void) moveQuadsFromIndex:(NSUInteger) index to:(NSUInteger) newIndex;
+
+/** 
+ Ensures that after a realloc quads are still empty
+ Used internally by CCParticleBatchNode
+ @since 1.1
+*/
+- (void) fillWithEmptyQuadsFromIndex:(NSUInteger) index amount:(NSUInteger) amount;
 
 /** draws n quads
  * n can't be greater than the capacity of the Atlas
  */
--(void) drawNumberOfQuads: (NSUInteger) n;
 
+-(void) drawNumberOfQuads: (NSUInteger) n;
 
 /** draws n quads from an index (offset).
  n + start can't be greater than the capacity of the atlas

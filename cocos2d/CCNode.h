@@ -161,7 +161,7 @@ enum {
 	BOOL isRunning_;
 	
 	//used to preserve sequence while sorting children with the same zOrder
-	int mutatedIndex_;
+	NSUInteger orderOfArrival_;
 
 	// To reduce memory, place BOOLs that are not properties here:
 	BOOL isTransformDirty_:1;
@@ -260,7 +260,7 @@ enum {
 @property(nonatomic,readwrite,assign) void *userData;
 
 /** used internally for zOrder sorting, don't change this manually */
-@property(nonatomic,readwrite) int mutatedIndex;
+@property(nonatomic,readwrite) NSUInteger orderOfArrival;
 
 // initializators
 /** allocates and initializes a node.
@@ -289,6 +289,10 @@ enum {
  */
 -(void) onExit;
 
+/** callback that is called every time the CCNode leaves the 'stage'.
+ If the CCNode leaves the 'stage' with a transition, this callback is called when the transition starts.
+ */
+-(void) onExitTransitionDidStart;
 
 // composition: ADD
 

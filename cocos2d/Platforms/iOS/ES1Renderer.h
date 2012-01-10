@@ -50,14 +50,14 @@
 	unsigned int	pixelFormat_;
 
 	// The OpenGL ES names for the framebuffer and renderbuffer used to render to this view
-    GLuint defaultFrameBuffer_;
-	GLuint colorRenderBuffer_;
+    GLuint defaultFramebuffer_;
+	GLuint colorRenderbuffer_;
 	GLuint depthBuffer_;
 	
 	
 	//buffers for MSAA
-	GLuint msaaFrameBuffer_;
-	GLuint msaaColorBuffer_;
+	GLuint msaaFramebuffer_;
+	GLuint msaaColorbuffer_;
 	
 	EAGLContext *context_;
 }
@@ -66,8 +66,6 @@
 @property (nonatomic,readonly) EAGLContext* context;
 
 - (BOOL)resizeFromLayer:(CAEAGLLayer *)layer;
-- (void) createFrameBuffer:(CAEAGLLayer *)layer;
-- (void) destroyFrameBuffer;
 
 @end
 

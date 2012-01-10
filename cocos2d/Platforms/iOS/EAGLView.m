@@ -185,6 +185,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 		return NO;
 	
 	context_ = [renderer_ context];
+	[context_ renderbufferStorage:GL_RENDERBUFFER_OES fromDrawable:eaglLayer];
 
 	discardFramebufferSupported_ = [[CCConfiguration sharedConfiguration] supportsDiscardFramebuffer];
 	
@@ -203,14 +204,15 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 - (void) layoutSubviews
 {
 	[renderer_ resizeFromLayer:(CAEAGLLayer*)self.layer];
-	/*size_ = [renderer_ backingSize];
 	
+	size_ = [renderer_ backingSize];
+
 	// Issue #914 #924
 	CCDirector *director = [CCDirector sharedDirector];
 	[director reshapeProjection:size_];
-	*/
+	
 	// Avoid flicker. Issue #350
-	//[director performSelectorOnMainThread:@selector(drawScene) withObject:nil waitUntilDone:YES];
+	[director performSelectorOnMainThread:@selector(drawScene) withObject:nil waitUntilDone:YES];
 }	
 
 - (void) swapBuffers

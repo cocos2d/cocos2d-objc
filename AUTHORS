@@ -18,6 +18,15 @@ Lead Developers:
 
 Contributors (alphabetically ordered):
 
+* Christoph Winkler (http://raketenbasis.de)
+	Word Wrap works on LabelTTF on Mac
+	
+* Jerrod Putman (http://www.tinytimgames.com)
+	Original author of ARC compatibility code
+	
+* John Wordsworth ( http://www.johnwordsworth.com/ )
+	CCAnimationCache: Added animation data format. Can be loaded into the animation cache
+
 * Marco Tillemans (AKA araker: http://www.welcometothefabrik.com/)
 	Texture2D: drawInRect / drawAtPoint disables color state
 	SpriteBatchNode: fixed bug in removeAllChildrenWithCleanup
@@ -27,18 +36,28 @@ Contributors (alphabetically ordered):
 	Actions: Instant actions can be sequenceables
 	Actions: durtion is not divided by zero
 	Actions: Repeat & RepeatForever work as expectd
+	Author of ParticleBatchNode node
+	Improved ESRenderer layoutSubview
+	Improved Debug Drawing for Sprite batched node	
+
+* podhrask...@gmail.com
+	TouchDispatcher: correctly handles addition and removal of handlers when being inside a touch handler. patch
 
 * Ricardo Ruiz:
 	Added support for RGB888 textures
 
+* Scott Lembcke (AKA slembcke) (http://chipmunk-physics.net/)
+	Improved ARC compatiblity code
+
+* Shakthi:
+	Added CCNode#onExitTransitionDidStart method
+
 * slycrel (http://geopherlite.blogspot.com/)
 	Added support for flipped tiles in TMX maps. Also added test case
+	Added support for in-memory TMX map creation. Also added a test case
 
 * Stepan Generalov (iPsi) (http://www.itraceur.ru/)
 	FileUtils: Loads -hd resources even if the -sd resource is not present. patch
-
-* John Wordsworth ( http://www.johnwordsworth.com/ )
-	CCAnimationCache: Added animation data format. Can be loaded into the animation cache
 
 
 cocos2d for iPhone authors for v1.0
@@ -152,6 +171,8 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		actions uses FLT_EPSILON macro. patch.
 	* effervens:
 		patches for Director
+	* effervecents (https://github.com/effervescent):
+		Sprite: Skew is performed after scale
 	* Ernesto Corvi & On-Core (http://www.on-core.com/):
 		author of TGA RLE support
 		patches for TextureMgr

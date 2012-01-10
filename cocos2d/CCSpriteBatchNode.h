@@ -61,7 +61,7 @@
 	
 	@private
 	
-	void (*updateAtlasIndexMethod_)(id, SEL,CCSprite*,int*);
+	void (*updateAtlasIndexMethod_)(id, SEL,CCSprite*,NSInteger*);
 	
 }
 
@@ -125,6 +125,6 @@
 -(NSUInteger) rebuildIndexInOrder:(CCSprite*)parent atlasIndex:(NSUInteger)index;
 -(NSUInteger) atlasIndexForChild:(CCSprite*)sprite atZ:(NSInteger)z;
 /* Sprites use this to start sortChildren, don't call this manually */
-- (void) reorderBatch;
+- (void) reorderBatch:(BOOL) reorder;
 
 @end
