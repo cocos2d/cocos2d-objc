@@ -346,6 +346,10 @@
 		A0A3CECC14BBF7840079CD11 /* utlist.h in Headers */ = {isa = PBXBuildFile; fileRef = A0A3CE2614BBF7840079CD11 /* utlist.h */; };
 		A0A3CECD14BBF7840079CD11 /* ZipUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = A0A3CE2714BBF7840079CD11 /* ZipUtils.h */; };
 		A0A3CECE14BBF7840079CD11 /* ZipUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = A0A3CE2814BBF7840079CD11 /* ZipUtils.m */; };
+		A0A3CF0214BBFCDC0079CD11 /* fps_images-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = A0A3CF0114BBFCDC0079CD11 /* fps_images-hd.png */; };
+		A0A3CF0314BBFCDC0079CD11 /* fps_images-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = A0A3CF0114BBFCDC0079CD11 /* fps_images-hd.png */; };
+		A0A3CF0414BBFCDC0079CD11 /* fps_images-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = A0A3CF0114BBFCDC0079CD11 /* fps_images-hd.png */; };
+		A0A3CF0514BBFCDC0079CD11 /* fps_images-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = A0A3CF0114BBFCDC0079CD11 /* fps_images-hd.png */; };
 		A0AE163B14151611009AA391 /* Blur.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0AE162014151611009AA391 /* Blur.fsh */; };
 		A0AE163C14151611009AA391 /* Blur.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0AE162014151611009AA391 /* Blur.fsh */; };
 		A0AE163D14151611009AA391 /* Blur.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0AE162014151611009AA391 /* Blur.fsh */; };
@@ -882,6 +886,7 @@
 		A0A3CE2614BBF7840079CD11 /* utlist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = utlist.h; sourceTree = "<group>"; };
 		A0A3CE2714BBF7840079CD11 /* ZipUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZipUtils.h; sourceTree = "<group>"; };
 		A0A3CE2814BBF7840079CD11 /* ZipUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZipUtils.m; sourceTree = "<group>"; };
+		A0A3CF0114BBFCDC0079CD11 /* fps_images-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "fps_images-hd.png"; path = "../../Resources/Fonts/fps_images-hd.png"; sourceTree = "<group>"; };
 		A0AE162014151611009AA391 /* Blur.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Blur.fsh; sourceTree = "<group>"; };
 		A0AE162114151611009AA391 /* Flower.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Flower.fsh; sourceTree = "<group>"; };
 		A0AE162214151611009AA391 /* Flower.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Flower.vsh; sourceTree = "<group>"; };
@@ -1056,6 +1061,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				A0A3CF0114BBFCDC0079CD11 /* fps_images-hd.png */,
 				50F48B0C1045AD2F00755CFB /* Icon.png */,
 				A0F6EA8814152314008F01A1 /* Icon-72.png */,
 				A0F6EA8914152314008F01A1 /* Icon-Small-50.png */,
@@ -1873,6 +1879,7 @@
 				A0F6EA9B14152314008F01A1 /* Icon-Small@2x.png in Resources */,
 				A0F6EA9F14152314008F01A1 /* Icon@2x.png in Resources */,
 				A0F6EAA214152323008F01A1 /* Icon.png in Resources */,
+				A0A3CF0414BBFCDC0079CD11 /* fps_images-hd.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2008,6 +2015,7 @@
 				A0F6EA9514152314008F01A1 /* Icon-Small.png in Resources */,
 				A0F6EA9914152314008F01A1 /* Icon-Small@2x.png in Resources */,
 				A0F6EA9D14152314008F01A1 /* Icon@2x.png in Resources */,
+				A0A3CF0214BBFCDC0079CD11 /* fps_images-hd.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2061,6 +2069,7 @@
 				A0F6EA9A14152314008F01A1 /* Icon-Small@2x.png in Resources */,
 				A0F6EA9E14152314008F01A1 /* Icon@2x.png in Resources */,
 				A0F6EAA114152322008F01A1 /* Icon.png in Resources */,
+				A0A3CF0314BBFCDC0079CD11 /* fps_images-hd.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2145,6 +2154,7 @@
 				A0F6EA9C14152314008F01A1 /* Icon-Small@2x.png in Resources */,
 				A0F6EAA014152314008F01A1 /* Icon@2x.png in Resources */,
 				A0F6EAA314152323008F01A1 /* Icon.png in Resources */,
+				A0A3CF0514BBFCDC0079CD11 /* fps_images-hd.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
