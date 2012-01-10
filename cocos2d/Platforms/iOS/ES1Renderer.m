@@ -79,6 +79,8 @@
 			glGetIntegerv(GL_MAX_SAMPLES_APPLE, &maxSamplesAllowed);
 			samplesToUse_ = MIN(maxSamplesAllowed,requestedSamples);
 		}
+		
+		//[self createFrameBuffer:(CAEAGLLayer*) self.layer];
     }
 
     return self;
@@ -129,6 +131,8 @@
 	glBindRenderbufferOES(GL_RENDERBUFFER_OES, colorRenderBuffer_);
 	
 	NSAssert( colorRenderBuffer_, @"Can't create default render buffer");
+
+	
 	
 	// Create default framebuffer object. The backing will be allocated for the current layer in -resizeFromLayer
 	if (![context_ renderbufferStorage:GL_RENDERBUFFER_OES fromDrawable:layer])
@@ -187,6 +191,7 @@
 
 - (BOOL)resizeFromLayer:(CAEAGLLayer *)layer
 {
+	//issue #1254, destroy and recreate OpenGL buffers completely
 	if (colorRenderBuffer_)
 	{
 		[self destroyFrameBuffer];
