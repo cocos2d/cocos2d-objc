@@ -40,6 +40,7 @@ Contributors (alphabetically ordered):
 	Improved ESRenderer layoutSubview
 	Improved Debug Drawing for Sprite batched node	
 	EAGLView destroys and recreates all OpenGL buffers correctly
+	TileMap: flipped tiles can be changed during runtime
 
 * podhrask...@gmail.com
 	TouchDispatcher: correctly handles addition and removal of handlers when being inside a touch handler. patch
