@@ -38,6 +38,7 @@ static NSString *transitions[] = {
 	@"TMXIsoMoveLayer",
 	@"TMXOrthoMoveLayer",
 	@"TMXOrthoFlipTest",
+	@"TMXOrthoFlipRunTimeTest",
 	@"TMXOrthoFromXMLTest",
 	@"TMXBug987",
 	@"TMXBug787",
@@ -1394,6 +1395,76 @@ Class restartAction()
 }
 @end
 
+#pragma mark -
+#pragma mark TMXOrthoFlipRunTimeTest
+
+@implementation TMXOrthoFlipRunTimeTest
+-(id) init
+{
+	if( (self=[super init]) ) {		
+		CCTMXTiledMap *map = [CCTMXTiledMap tiledMapWithTMXFile:@"TileMaps/ortho-rotation-test.tmx"];
+		[self addChild:map z:0 tag:kTagTileMap];
+		
+		CGSize s = map.contentSize;
+		NSLog(@"ContentSize: %f, %f", s.width,s.height);
+		
+		for( CCSpriteBatchNode* child in [map children] ) {
+			[[child texture] setAntiAliasTexParameters];
+		}
+		
+		id action = [CCScaleBy actionWithDuration:2 scale:0.5f];
+		[map runAction:action];
+		
+		[self schedule:@selector(flipIt) interval:0.f repeat:0.f delay:2.f]; 
+	}	
+	return self;
+}
+
+-(NSString *) title
+{
+	return @"TMX tile flip run time test";
+}
+
+-(NSString *) subtitle
+{
+	return @"in 2 sec bottom left tiles will flip";
+}
+
+- (void) flipIt 
+{
+	CCTMXTiledMap *map = (CCTMXTiledMap*) [self getChildByTag:kTagTileMap]; 
+	CCTMXLayer *layer = [map layerNamed:@"Layer 0"]; 
+	
+	//blue diamond 
+	CGPoint tileCoord = ccp(1,10);
+	
+	uint32_t GID = [layer tileGIDAt:tileCoord withFlags:NO]; 
+	GID = GID | kFlippedVerticallyFlag;
+	
+	//only the vertical flag is now set
+	[layer setTileGID:GID  at:tileCoord withFlags:YES]; 
+	
+	tileCoord = ccp(2,10);
+	
+	//tile has horizontal flag
+	GID = [layer tileGIDAt:tileCoord withFlags:YES]; 
+	GID = GID | kFlippedVerticallyFlag;
+	
+	//tile has horizontal + vertical flag
+	[layer setTileGID:GID at:tileCoord withFlags:YES]; 
+	
+	//the bug
+	tileCoord = ccp(2,8);
+	
+	//want to reset flip of tile, get original tile gid
+	GID = [layer tileGIDAt:tileCoord withFlags:NO]; 
+	
+	//overwrite the flags by setting withFlags to YES
+	[layer setTileGID:GID  at:tileCoord withFlags:YES]; 
+}
+@end
+
+
 
 #pragma mark -
 #pragma mark TMXOrthoFromXMLTest
@@ -1420,6 +1491,7 @@ Class restartAction()
 		
 		id action = [CCScaleBy actionWithDuration:2 scale:0.5f];
 		[map runAction:action];
+	
 	}	
 	return self;
 }
