@@ -143,6 +143,10 @@
 {}
 @end
 
+@interface TMXOrthoFlipRunTimeTest : TileDemo
+{}
+@end
+
 @interface TMXOrthoFromXMLTest : TileDemo 
 {}
 @end
