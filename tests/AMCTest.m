@@ -859,7 +859,7 @@ static NSString *const kAMCTestLayerName = @"curAMCTestLayer";
 //
 // 2. Probably not to be supported by AMC
 //
-//  * CCTimer & scheduled methods. (Not used by Cocos2D-iPhone classes 
+//   * CCTimer & scheduled methods. (Not used by Cocos2D-iPhone classes 
 //      themselves - should be used by developer expicitly ).
 //   * CCGrabber (helper class), 
 //   * CCRenderTexture (helper class), 
@@ -882,11 +882,6 @@ static NSString *const kAMCTestLayerName = @"curAMCTestLayer";
 //
 
 // ====== Current TODO: =======
-//
-
-//
-// TODO: Look through cocos2d-iphone documentation & sources carefully for any 
-// classes, that i may have skipped here & that we need to support.
 //
 
 // Right after that:
