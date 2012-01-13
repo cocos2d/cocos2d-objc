@@ -864,6 +864,7 @@ static NSString *const kAMCTestLayerName = @"curAMCTestLayer";
 //
 // 2. Probably not to be supported by AMC
 //
+//   * CCTextureAtlas - Manual atlas not supported (last test in LabelTest)
 //   * CCTimer & scheduled methods. (Not used by Cocos2D-iPhone classes 
 //      themselves - should be used by developer expicitly ).
 //   * CCGrabber (helper class), 
