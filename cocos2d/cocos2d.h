@@ -52,6 +52,7 @@
 //jpsarda extensions
 #import "CCSpriteScale9.h"
 #import "CCSpriteHole.h"
+#import "CCProgressBar.h"
 
 //reguar cocos2d
 #import "CCActionManager.h"

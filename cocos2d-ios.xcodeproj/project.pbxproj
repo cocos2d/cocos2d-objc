@@ -3020,6 +3020,12 @@
 		FA11337A14BF50EF00B27C3C /* scale9.png in Resources */ = {isa = PBXBuildFile; fileRef = FA11337614BF50EF00B27C3C /* scale9.png */; };
 		FA4E040114BF636700B9E158 /* background2-hd.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E0704C2A123821EE009C628B /* background2-hd.jpg */; };
 		FA4E040214BF636700B9E158 /* background2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 50A2522A0F38B8DC007CAEB0 /* background2.jpg */; };
+		FADB530D14C02794000E4A22 /* CCProgressBar.h in Headers */ = {isa = PBXBuildFile; fileRef = FADB530B14C02794000E4A22 /* CCProgressBar.h */; };
+		FADB530E14C02794000E4A22 /* CCProgressBar.m in Sources */ = {isa = PBXBuildFile; fileRef = FADB530C14C02794000E4A22 /* CCProgressBar.m */; };
+		FADB531414C028C1000E4A22 /* progressbarbg-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = FADB531014C028C1000E4A22 /* progressbarbg-hd.png */; };
+		FADB531514C028C1000E4A22 /* progressbarbg.png in Resources */ = {isa = PBXBuildFile; fileRef = FADB531114C028C1000E4A22 /* progressbarbg.png */; };
+		FADB531614C028C1000E4A22 /* progressbarfg-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = FADB531214C028C1000E4A22 /* progressbarfg-hd.png */; };
+		FADB531714C028C1000E4A22 /* progressbarfg.png in Resources */ = {isa = PBXBuildFile; fileRef = FADB531314C028C1000E4A22 /* progressbarfg.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -4983,6 +4989,12 @@
 		FA11337414BF50EF00B27C3C /* hole.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hole.png; sourceTree = "<group>"; };
 		FA11337514BF50EF00B27C3C /* scale9-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "scale9-hd.png"; sourceTree = "<group>"; };
 		FA11337614BF50EF00B27C3C /* scale9.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = scale9.png; sourceTree = "<group>"; };
+		FADB530B14C02794000E4A22 /* CCProgressBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCProgressBar.h; sourceTree = "<group>"; };
+		FADB530C14C02794000E4A22 /* CCProgressBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCProgressBar.m; sourceTree = "<group>"; };
+		FADB531014C028C1000E4A22 /* progressbarbg-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "progressbarbg-hd.png"; sourceTree = "<group>"; };
+		FADB531114C028C1000E4A22 /* progressbarbg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = progressbarbg.png; sourceTree = "<group>"; };
+		FADB531214C028C1000E4A22 /* progressbarfg-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "progressbarfg-hd.png"; sourceTree = "<group>"; };
+		FADB531314C028C1000E4A22 /* progressbarfg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = progressbarfg.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -6743,6 +6755,8 @@
 		506414C40F9C6792007A7B24 /* Sprite & Animation Nodes */ = {
 			isa = PBXGroup;
 			children = (
+				FADB530B14C02794000E4A22 /* CCProgressBar.h */,
+				FADB530C14C02794000E4A22 /* CCProgressBar.m */,
 				FA11332814BF4B7300B27C3C /* CCSpriteHole.h */,
 				FA11332914BF4B7300B27C3C /* CCSpriteHole.m */,
 				FA11332A14BF4B7300B27C3C /* CCSpriteScale9.h */,
@@ -7799,6 +7813,10 @@
 		FA11337214BF50EF00B27C3C /* jpsarda */ = {
 			isa = PBXGroup;
 			children = (
+				FADB531014C028C1000E4A22 /* progressbarbg-hd.png */,
+				FADB531114C028C1000E4A22 /* progressbarbg.png */,
+				FADB531214C028C1000E4A22 /* progressbarfg-hd.png */,
+				FADB531314C028C1000E4A22 /* progressbarfg.png */,
 				FA11337314BF50EF00B27C3C /* hole-hd.png */,
 				FA11337414BF50EF00B27C3C /* hole.png */,
 				FA11337514BF50EF00B27C3C /* scale9-hd.png */,
@@ -7902,6 +7920,7 @@
 				A0EF0A111443725B006A4302 /* CCParticleBatchNode.h in Headers */,
 				FA11332C14BF4B7300B27C3C /* CCSpriteHole.h in Headers */,
 				FA11332E14BF4B7300B27C3C /* CCSpriteScale9.h in Headers */,
+				FADB530D14C02794000E4A22 /* CCProgressBar.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11912,6 +11931,10 @@
 				FA11337A14BF50EF00B27C3C /* scale9.png in Resources */,
 				FA4E040114BF636700B9E158 /* background2-hd.jpg in Resources */,
 				FA4E040214BF636700B9E158 /* background2.jpg in Resources */,
+				FADB531414C028C1000E4A22 /* progressbarbg-hd.png in Resources */,
+				FADB531514C028C1000E4A22 /* progressbarbg.png in Resources */,
+				FADB531614C028C1000E4A22 /* progressbarfg-hd.png in Resources */,
+				FADB531714C028C1000E4A22 /* progressbarfg.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -12077,6 +12100,7 @@
 				A0EF0A121443725B006A4302 /* CCParticleBatchNode.m in Sources */,
 				FA11332D14BF4B7300B27C3C /* CCSpriteHole.m in Sources */,
 				FA11332F14BF4B7300B27C3C /* CCSpriteScale9.m in Sources */,
+				FADB530E14C02794000E4A22 /* CCProgressBar.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

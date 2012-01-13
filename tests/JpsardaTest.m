@@ -14,6 +14,7 @@ static int sceneIdx=-1;
 static NSString *transitions[] = {	
 	
 	@"CCSpriteScale9Demo",
+    @"CCProgressBarDemo",
 	@"CCSpriteHoleDemo",
 };
 
@@ -75,7 +76,29 @@ Class restartAction()
 
 
 
-#pragma mark SpriteDemo
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#pragma mark JpsardaDemo
 
 @implementation JpsardaDemo
 -(id) init
@@ -153,88 +176,27 @@ Class restartAction()
 
 
 
-#pragma mark CCSpriteHoleDemo
 
-#define CCSPRITEHOLEDEMO_HOLE_SIZE 200
-@implementation CCSpriteHoleDemo
--(void)setHole:(CGPoint)pos {
-    [sprite setHole:CGRectMake(pos.x-CCSPRITEHOLEDEMO_HOLE_SIZE*0.5f,pos.y-CCSPRITEHOLEDEMO_HOLE_SIZE*0.5f, CCSPRITEHOLEDEMO_HOLE_SIZE, CCSPRITEHOLEDEMO_HOLE_SIZE) inRect:screenRect];
-    sprite.position=pos;
-}
--(id) init
-{
-	if( (self=[super init]) ) {
-		
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
-		self.isTouchEnabled = YES;
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
-		self.isMouseEnabled = YES;
-#endif
-        
-        screenRect.origin=CGPointZero;
-        screenRect.size=[[CCDirector sharedDirector] winSize];
-        
-        
-        
-        CCSprite *bg=[CCSprite spriteWithFile:@"background2.jpg"];
-        bg.position=ccp(screenRect.size
-                        .width*0.5f, screenRect.size.height*0.5f);
-        bg.color=ccc3(100, 255, 100);
-        [self addChild:bg];
 
-		sprite=[CCSpriteHole spriteWithFile:@"hole.png"];
-        
-        [self addChild:sprite];
-        //sprite.opacity=200;
-        holeCurrent=holeGoal=ccp(screenRect.size
-                                 .width*0.5f, screenRect.size.height*0.5f);
-        [self setHole:holeCurrent];
-        [[CCScheduler sharedScheduler] scheduleSelector:@selector(tick:) forTarget:self interval:1.0f/60.0f paused:NO];
-	}	
-	return self;
-}
 
--(void)tick:(ccTime)dt {
-    holeCurrent.x+=(holeGoal.x-holeCurrent.x)*0.1f;
-    holeCurrent.y+=(holeGoal.y-holeCurrent.y)*0.1f;
-    [self setHole:holeCurrent];
-}
 
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
-- (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
-{
-	for( UITouch *touch in touches ) {
-		CGPoint location = [touch locationInView: [touch view]];
-		
-		holeGoal = [[CCDirector sharedDirector] convertToGL: location];
-	}
-}
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
--(BOOL) ccMouseUp:(NSEvent *)event
-{
-	holeGoal = [[CCDirector sharedDirector] convertEventToGL:event];
 
-	return YES;
 
-}
-#endif
 
--(NSString *) title
-{
-	return @"CCSpriteHole (tap screen)";
-}
--(NSString *) subtitle
-{
-	return nil;
-}
-@end
-#pragma mark -
+
+
+
+
+
 
 #pragma mark CCSpriteScale9Demo
 
 @implementation CCSpriteScale9Demo
--(void)newSize {
-    sizeGoal=CGSizeMake(screenRect.size.width*rand()/RAND_MAX, screenRect.size.height*rand()/RAND_MAX);
+-(void)newSize:(CGPoint)p {
+    //sizeGoal=CGSizeMake(screenRect.size.width*rand()/RAND_MAX, screenRect.size.height*rand()/RAND_MAX);
+    sizeGoal=CGSizeMake(fabsf(p.x-screenRect.size
+                              .width*0.5f)*2, fabsf(p.y-screenRect.size
+                                                  .height*0.5f)*2);
 }
 -(id) init
 {
@@ -266,10 +228,8 @@ Class restartAction()
         
         sizeCurrent=sizeGoal=CGSizeMake(100, 100);
         [sprite adaptiveScale9:sizeCurrent];
-        
-        //[self newSize];
-        
-        [[CCScheduler sharedScheduler] scheduleSelector:@selector(tick:) forTarget:self interval:1.0f/60.0f paused:NO];
+
+        [self schedule:@selector(tick:)];
 	}	
 	return self;
 }
@@ -283,12 +243,18 @@ Class restartAction()
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 - (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
-	[self newSize];
+	for( UITouch *touch in touches ) {
+		CGPoint location = [touch locationInView: [touch view]];
+		
+		location = [[CCDirector sharedDirector] convertToGL: location];
+        [self newSize:location];
+	}
 }
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 -(BOOL) ccMouseUp:(NSEvent *)event
 {
-	[self newSize];
+	CGPoint *location = [[CCDirector sharedDirector] convertEventToGL:event];
+    [self newSize:location];
 	return YES;
     
 }
@@ -296,7 +262,7 @@ Class restartAction()
 
 -(NSString *) title
 {
-	return @"CCSpriteScale9 (tap to change size)";
+	return @"CCSpriteScale9 (tap screen)";
 }
 -(NSString *) subtitle
 {
@@ -304,6 +270,231 @@ Class restartAction()
 }
 @end
 #pragma mark -
+
+
+
+#pragma mark CCSpriteHoleDemo
+
+
+#define CCPROGRESSBAR_DEFAULT_BG_FILENAME @"progressbarbg.png"
+#define CCPROGRESSBAR_DEFAULT_BG_CAP_WIDTH 8.0f
+#define CCPROGRESSBAR_DEFAULT_BG_CAP_HEIGHT 8.0f
+
+
+#define CCPROGRESSBAR_DEFAULT_FG_FILENAME @"progressbarfg.png"
+#define CCPROGRESSBAR_DEFAULT_FG_CAP_WIDTH 8.0f
+#define CCPROGRESSBAR_DEFAULT_FG_CAP_HEIGHT 8.0f
+
+@implementation CCProgressBarDemo
+-(void)setProgress:(float)progress {
+    [bar0 setProgress:progress];
+    [bar1 setProgress:progress];
+    [bar2 setProgress:progress];
+}
+-(id) init
+{
+	if( (self=[super init]) ) {
+		
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+		self.isTouchEnabled = YES;
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+		self.isMouseEnabled = YES;
+#endif
+        
+        screenRect.origin=CGPointZero;
+        screenRect.size=[[CCDirector sharedDirector] winSize];
+        
+        
+        
+        CCSprite *bg=[CCSprite spriteWithFile:@"background2.jpg"];
+        bg.position=ccp(screenRect.size
+                        .width*0.5f, screenRect.size.height*0.5f);
+        bg.color=ccc3(100, 255, 100);
+        [self addChild:bg];
+        
+
+        
+        CCSpriteScale9 *b,*f;
+  
+        // Background sprite (scale9)
+        b=[CCSpriteScale9 spriteWithFile:CCPROGRESSBAR_DEFAULT_BG_FILENAME andLeftCapWidth:CCPROGRESSBAR_DEFAULT_BG_CAP_WIDTH andTopCapHeight:CCPROGRESSBAR_DEFAULT_BG_CAP_HEIGHT];
+        [b setColor:ccc3(255, 255, 255)];
+        // Foreground sprite (scale9)
+        f=[CCSpriteScale9 spriteWithFile:CCPROGRESSBAR_DEFAULT_FG_FILENAME andLeftCapWidth:CCPROGRESSBAR_DEFAULT_FG_CAP_WIDTH andTopCapHeight:CCPROGRESSBAR_DEFAULT_FG_CAP_HEIGHT];
+        [f setColor:ccc3(255, 255, 255)];
+		bar0=[CCProgressBar progressBarWithBgSprite:b andFgSprite:f andSize:CGSizeMake(300, 16) andMargin:CGSizeMake(0, 0)];
+        
+        bar0.position=ccp(screenRect.size.width*0.5f,screenRect.size.height*4/6);
+        [self addChild:bar0];
+        
+        
+        // Background sprite (scale9)
+        b=[CCSpriteScale9 spriteWithFile:CCPROGRESSBAR_DEFAULT_BG_FILENAME andLeftCapWidth:CCPROGRESSBAR_DEFAULT_BG_CAP_WIDTH andTopCapHeight:CCPROGRESSBAR_DEFAULT_BG_CAP_HEIGHT];
+        [b setColor:ccc3(255, 0, 255)];
+        // Foreground sprite (scale9)
+        f=[CCSpriteScale9 spriteWithFile:CCPROGRESSBAR_DEFAULT_FG_FILENAME andLeftCapWidth:CCPROGRESSBAR_DEFAULT_FG_CAP_WIDTH andTopCapHeight:CCPROGRESSBAR_DEFAULT_FG_CAP_HEIGHT];
+        [f setColor:ccc3(255,200,0)];
+		bar1=[CCProgressBar progressBarWithBgSprite:b andFgSprite:f andSize:CGSizeMake(300, 30) andMargin:CGSizeMake(2, 2)];
+        
+        bar1.position=ccp(screenRect.size.width*0.5f,screenRect.size.height*3/6);
+        [self addChild:bar1];
+        
+        
+        // Background sprite (scale9)
+        b=[CCSpriteScale9 spriteWithFile:CCPROGRESSBAR_DEFAULT_BG_FILENAME andLeftCapWidth:CCPROGRESSBAR_DEFAULT_BG_CAP_WIDTH andTopCapHeight:CCPROGRESSBAR_DEFAULT_BG_CAP_HEIGHT];
+        [b setColor:ccc3(255, 255, 255)];
+        // Foreground sprite (scale9)
+        f=[CCSpriteScale9 spriteWithFile:CCPROGRESSBAR_DEFAULT_FG_FILENAME andLeftCapWidth:CCPROGRESSBAR_DEFAULT_FG_CAP_WIDTH andTopCapHeight:CCPROGRESSBAR_DEFAULT_FG_CAP_HEIGHT];
+        [f setColor:ccc3(255, 0, 0)];
+		bar2=[CCProgressBar progressBarWithBgSprite:b andFgSprite:f andSize:CGSizeMake(300, 40) andMargin:CGSizeMake(5, 10)];
+        // Waiting bar mode (useful if you don't know the progress)
+        [bar2 startAnimation];
+        
+        bar2.position=ccp(screenRect.size.width*0.5f,screenRect.size.height*2/6);
+        [self addChild:bar2];
+        
+        //sprite.opacity=200;
+        progressGoal=progressCurrent=0;
+        [self setProgress:progressCurrent];
+        
+        [self schedule:@selector(tick:)];
+	}	
+	return self;
+}
+
+-(void)tick:(ccTime)dt {
+    progressCurrent+=(progressGoal-progressCurrent)*0.1f;
+    [self setProgress:progressCurrent];
+}
+
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+- (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+{
+	for( UITouch *touch in touches ) {
+		CGPoint location = [touch locationInView: [touch view]];
+		
+		location = [[CCDirector sharedDirector] convertToGL: location];
+        progressGoal=location.x/screenRect.size.width;
+	}
+}
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+-(BOOL) ccMouseUp:(NSEvent *)event
+{
+	CGPoint *location = [[CCDirector sharedDirector] convertEventToGL:event];
+    progressGoal=location.x/screenRect.size.width;
+	return YES;
+    
+}
+#endif
+
+-(NSString *) title
+{
+	return @"CCProgressBar (tap screen)";
+}
+-(NSString *) subtitle
+{
+	return @"Based on 2 CCSpriteScale9";
+}
+@end
+#pragma mark -
+
+#pragma mark CCSpriteHoleDemo
+
+#define CCSPRITEHOLEDEMO_HOLE_SIZE 200
+@implementation CCSpriteHoleDemo
+-(void)setHole:(CGPoint)pos {
+    [sprite setHole:CGRectMake(pos.x-CCSPRITEHOLEDEMO_HOLE_SIZE*0.5f,pos.y-CCSPRITEHOLEDEMO_HOLE_SIZE*0.5f, CCSPRITEHOLEDEMO_HOLE_SIZE, CCSPRITEHOLEDEMO_HOLE_SIZE) inRect:screenRect];
+    sprite.position=pos;
+}
+-(id) init
+{
+	if( (self=[super init]) ) {
+		
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+		self.isTouchEnabled = YES;
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+		self.isMouseEnabled = YES;
+#endif
+        
+        screenRect.origin=CGPointZero;
+        screenRect.size=[[CCDirector sharedDirector] winSize];
+        
+        
+        
+        CCSprite *bg=[CCSprite spriteWithFile:@"background2.jpg"];
+        bg.position=ccp(screenRect.size
+                        .width*0.5f, screenRect.size.height*0.5f);
+        bg.color=ccc3(100, 255, 100);
+        [self addChild:bg];
+        
+		sprite=[CCSpriteHole spriteWithFile:@"hole.png"];
+        
+        [self addChild:sprite];
+        //sprite.opacity=200;
+        holeCurrent=holeGoal=ccp(screenRect.size
+                                 .width*0.5f, screenRect.size.height*0.5f);
+        [self setHole:holeCurrent];
+        
+        [self schedule:@selector(tick:)];
+	}	
+	return self;
+}
+
+-(void)tick:(ccTime)dt {
+    holeCurrent.x+=(holeGoal.x-holeCurrent.x)*0.1f;
+    holeCurrent.y+=(holeGoal.y-holeCurrent.y)*0.1f;
+    [self setHole:holeCurrent];
+}
+
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+- (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+{
+	for( UITouch *touch in touches ) {
+		CGPoint location = [touch locationInView: [touch view]];
+		
+		holeGoal = [[CCDirector sharedDirector] convertToGL: location];
+	}
+}
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+-(BOOL) ccMouseUp:(NSEvent *)event
+{
+	holeGoal = [[CCDirector sharedDirector] convertEventToGL:event];
+    
+	return YES;
+    
+}
+#endif
+
+-(NSString *) title
+{
+	return @"CCSpriteHole (tap screen)";
+}
+@end
+#pragma mark -
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 #pragma mark AppDelegate
 

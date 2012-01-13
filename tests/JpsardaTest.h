@@ -27,33 +27,34 @@
 @interface JpsardaDemo: CCLayer
 {
     CCTextureAtlas	*atlas;
+    CGRect screenRect;
 }
 -(NSString*) title;
 -(NSString*) subtitle;
 @end
-
 
 
 @interface CCSpriteScale9Demo : JpsardaDemo
 {
     CCSpriteScale9	*sprite;
-    CGRect screenRect;
     CGSize sizeGoal,sizeCurrent;
 }
--(NSString*) title;
--(NSString*) subtitle;
 @end
 
+
+@interface CCProgressBarDemo : JpsardaDemo
+{
+    CCProgressBar	*bar0,*bar1,*bar2;
+    float progressCurrent,progressGoal;
+}
+@end
 
 
 @interface CCSpriteHoleDemo : JpsardaDemo
 {
     CCSpriteHole	*sprite;
-    CGRect screenRect;
     CGPoint holeCurrent,holeGoal;
 }
--(NSString*) title;
--(NSString*) subtitle;
 @end
 
 
