@@ -10,7 +10,6 @@
 		0529445D11098D6F00E500F3 /* CCProfiling.h in Headers */ = {isa = PBXBuildFile; fileRef = 0529445911098D6F00E500F3 /* CCProfiling.h */; };
 		0529445E11098D6F00E500F3 /* CCProfiling.m in Sources */ = {isa = PBXBuildFile; fileRef = 0529445A11098D6F00E500F3 /* CCProfiling.m */; };
 		05AAF16F10EE79E600CACA2B /* CCBlockSupport.h in Headers */ = {isa = PBXBuildFile; fileRef = 05AAF16D10EE79E600CACA2B /* CCBlockSupport.h */; };
-		05AAF17010EE79E600CACA2B /* CCBlockSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = 05AAF16E10EE79E600CACA2B /* CCBlockSupport.m */; };
 		05AAF3BB10EE85B300CACA2B /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB240E10EE4A00AE9530 /* Default.png */; };
 		05AAF3BC10EE85B300CACA2B /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB250E10EE4A00AE9530 /* Icon.png */; };
 		05AAF3BD10EE85B300CACA2B /* grossini.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB280E10EE4A00AE9530 /* grossini.png */; };
@@ -2960,6 +2959,12 @@
 		E0FDACE7123DAC8300F25BB4 /* larabie-16-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E0FDACE5123DAC8300F25BB4 /* larabie-16-hd.png */; };
 		E0FDACE8123DAC8300F25BB4 /* larabie-16.png in Resources */ = {isa = PBXBuildFile; fileRef = E0FDACE6123DAC8300F25BB4 /* larabie-16.png */; };
 		E0FDACEE123DAD0000F25BB4 /* tuffy_bold_italic-charmap-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E0FDACED123DAD0000F25BB4 /* tuffy_bold_italic-charmap-hd.png */; };
+		FD6C3E5314C0023D00C4883C /* NSObject+AutoMagicCoding.h in Headers */ = {isa = PBXBuildFile; fileRef = FD6C3E5114C0023D00C4883C /* NSObject+AutoMagicCoding.h */; };
+		FD6C3E5414C0023D00C4883C /* NSObject+AutoMagicCoding.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6C3E5214C0023D00C4883C /* NSObject+AutoMagicCoding.m */; };
+		FD6C3E5514C0026100C4883C /* NSObject+AutoMagicCoding.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6C3E5214C0023D00C4883C /* NSObject+AutoMagicCoding.m */; };
+		FD6C3E5614C0026800C4883C /* NSObject+AutoMagicCoding.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6C3E5214C0023D00C4883C /* NSObject+AutoMagicCoding.m */; };
+		FD6C3E5714C0026A00C4883C /* NSObject+AutoMagicCoding.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6C3E5214C0023D00C4883C /* NSObject+AutoMagicCoding.m */; };
+		FD6C3E5814C0026D00C4883C /* NSObject+AutoMagicCoding.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6C3E5214C0023D00C4883C /* NSObject+AutoMagicCoding.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -3844,7 +3849,6 @@
 		0529445911098D6F00E500F3 /* CCProfiling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCProfiling.h; sourceTree = "<group>"; };
 		0529445A11098D6F00E500F3 /* CCProfiling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCProfiling.m; sourceTree = "<group>"; };
 		05AAF16D10EE79E600CACA2B /* CCBlockSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBlockSupport.h; sourceTree = "<group>"; };
-		05AAF16E10EE79E600CACA2B /* CCBlockSupport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBlockSupport.m; sourceTree = "<group>"; };
 		05AAF3E410EE85B300CACA2B /* MenuTestWithBlocks.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MenuTestWithBlocks.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		05AAF3E710EE85D200CACA2B /* MenuTestWithBlocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuTestWithBlocks.h; sourceTree = "<group>"; };
 		05AAF3E810EE85D200CACA2B /* MenuTestWithBlocks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuTestWithBlocks.m; sourceTree = "<group>"; };
@@ -4905,6 +4909,8 @@
 		E0FDACE5123DAC8300F25BB4 /* larabie-16-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "larabie-16-hd.png"; sourceTree = "<group>"; };
 		E0FDACE6123DAC8300F25BB4 /* larabie-16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "larabie-16.png"; sourceTree = "<group>"; };
 		E0FDACED123DAD0000F25BB4 /* tuffy_bold_italic-charmap-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tuffy_bold_italic-charmap-hd.png"; sourceTree = "<group>"; };
+		FD6C3E5114C0023D00C4883C /* NSObject+AutoMagicCoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+AutoMagicCoding.h"; sourceTree = "<group>"; };
+		FD6C3E5214C0023D00C4883C /* NSObject+AutoMagicCoding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+AutoMagicCoding.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -5821,7 +5827,6 @@
 			isa = PBXGroup;
 			children = (
 				05AAF16D10EE79E600CACA2B /* CCBlockSupport.h */,
-				05AAF16E10EE79E600CACA2B /* CCBlockSupport.m */,
 			);
 			name = "Block Support";
 			sourceTree = "<group>";
@@ -6136,6 +6141,7 @@
 		5018F2510DFDEAFF00C013A5 /* cocos2d */ = {
 			isa = PBXGroup;
 			children = (
+				FD6C3E5014C0023D00C4883C /* AutoMagicCoding */,
 				50A24F010F3788C6007CAEB0 /* Base Nodes */,
 				506414C50F9C67C0007A7B24 /* Label Nodes */,
 				506414C40F9C6792007A7B24 /* Sprite & Animation Nodes */,
@@ -7696,6 +7702,16 @@
 			path = iOS;
 			sourceTree = "<group>";
 		};
+		FD6C3E5014C0023D00C4883C /* AutoMagicCoding */ = {
+			isa = PBXGroup;
+			children = (
+				FD6C3E5114C0023D00C4883C /* NSObject+AutoMagicCoding.h */,
+				FD6C3E5214C0023D00C4883C /* NSObject+AutoMagicCoding.m */,
+			);
+			name = AutoMagicCoding;
+			path = AutoMagicCoding/AutoMagicCoding;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -7788,6 +7804,7 @@
 				E02BB6D6126CA93A006E46A2 /* CCAnimationCache.h in Headers */,
 				E02BB704126CADEA006E46A2 /* CCAnimation.h in Headers */,
 				A0EF0A111443725B006A4302 /* CCParticleBatchNode.h in Headers */,
+				FD6C3E5314C0023D00C4883C /* NSObject+AutoMagicCoding.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11863,7 +11880,6 @@
 				50E1357610ADEB1B00C9E7FA /* CCTexture2D.m in Sources */,
 				50D2AC9610E90DFA0068ECEB /* CCTMXLayer.m in Sources */,
 				50D2AC9810E90DFA0068ECEB /* CCTMXObjectGroup.m in Sources */,
-				05AAF17010EE79E600CACA2B /* CCBlockSupport.m in Sources */,
 				503862E6110072BC005D2C92 /* CCConfiguration.m in Sources */,
 				0529445E11098D6F00E500F3 /* CCProfiling.m in Sources */,
 				5015043A113300F900A9CA65 /* CCProgressTimer.m in Sources */,
@@ -11888,6 +11904,7 @@
 				E02BB6D7126CA93A006E46A2 /* CCAnimationCache.m in Sources */,
 				E02BB705126CADEA006E46A2 /* CCAnimation.m in Sources */,
 				A0EF0A121443725B006A4302 /* CCParticleBatchNode.m in Sources */,
+				FD6C3E5414C0023D00C4883C /* NSObject+AutoMagicCoding.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11906,6 +11923,7 @@
 			files = (
 				501C7C860F91EFFF0024A296 /* main.m in Sources */,
 				501C7CA80F91F1B20024A296 /* SpriteTest.m in Sources */,
+				FD6C3E5814C0026D00C4883C /* NSObject+AutoMagicCoding.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -12152,6 +12170,7 @@
 			files = (
 				506882140E95763E00F943E5 /* LabelTest.m in Sources */,
 				506882050E95761200F943E5 /* main.m in Sources */,
+				FD6C3E5614C0026800C4883C /* NSObject+AutoMagicCoding.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -12170,6 +12189,7 @@
 			files = (
 				506C7A0E0E01C78700B48100 /* MenuTest.m in Sources */,
 				50B2CB1E0E10EE0800AE9530 /* main.m in Sources */,
+				FD6C3E5714C0026A00C4883C /* NSObject+AutoMagicCoding.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -12419,6 +12439,7 @@
 			files = (
 				50D56FC60F3FABEC007CD6B9 /* main.m in Sources */,
 				50D5700F0F3FAD3C007CD6B9 /* EffectsAdvancedTest.m in Sources */,
+				FD6C3E5514C0026100C4883C /* NSObject+AutoMagicCoding.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
