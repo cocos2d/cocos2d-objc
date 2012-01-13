@@ -1528,6 +1528,7 @@
 		50FD7B3C0FFAA8AC004073B5 /* grossini_dance_atlas.png in Resources */ = {isa = PBXBuildFile; fileRef = 509A7A970F61A2400032F449 /* grossini_dance_atlas.png */; };
 		50FD7B3F0FFAA8BC004073B5 /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = 50C1959C0EE4B90800829067 /* background.png */; };
 		50FD7B450FFAA8C6004073B5 /* atlastest.png in Resources */ = {isa = PBXBuildFile; fileRef = 506882680E957C4A00F943E5 /* atlastest.png */; };
+		53FE3C7214C835DF006D067D /* Cyber Advance!.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 53FE3C7114C835DF006D067D /* Cyber Advance!.mp3 */; };
 		6513D8901444B78F00917359 /* b1.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659D0E72DB470085673F /* b1.png */; };
 		6513D8911444B78F00917359 /* b2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659E0E72DB470085673F /* b2.png */; };
 		6513D8921444B78F00917359 /* f1.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659F0E72DB470085673F /* f1.png */; };
@@ -4695,6 +4696,7 @@
 		50F9EA8F0E1AE87E000E7616 /* fire.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fire.png; sourceTree = "<group>"; };
 		50FBB2D8117613F500150761 /* CCActionTween.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCActionTween.h; sourceTree = "<group>"; };
 		50FBB2D9117613F500150761 /* CCActionTween.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCActionTween.m; sourceTree = "<group>"; };
+		53FE3C7114C835DF006D067D /* Cyber Advance!.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = "Cyber Advance!.mp3"; path = "CocosDenshion/TestsAndDemos/FancyRatMeteringDemo/Resources/Cyber Advance!.mp3"; sourceTree = SOURCE_ROOT; };
 		6F305B5D0FB9D2790052E700 /* TransformUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransformUtils.h; sourceTree = "<group>"; };
 		6F305B5E0FB9D2790052E700 /* TransformUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransformUtils.m; sourceTree = "<group>"; };
 		8E3FC8910F7B8BE900B3E5DE /* trance-loop.ogg */ = {isa = PBXFileReference; lastKnownFileType = text; path = "trance-loop.ogg"; sourceTree = "<group>"; };
@@ -6530,6 +6532,7 @@
 			isa = PBXGroup;
 			children = (
 				505229D811B3E0BC0061670F /* bgm.mp3 */,
+				53FE3C7114C835DF006D067D /* Cyber Advance!.mp3 */,
 				505229D911B3E0BC0061670F /* dp1.caf */,
 				505229DA11B3E0BC0061670F /* dp2.caf */,
 				505229DB11B3E0BC0061670F /* dp3.caf */,
@@ -10068,6 +10071,7 @@
 				A0B036B213EA101F0073E59A /* f2-ipad.png in Resources */,
 				A0B036E713EA10200073E59A /* r1-ipad.png in Resources */,
 				A0B0371C13EA10210073E59A /* r2-ipad.png in Resources */,
+				53FE3C7214C835DF006D067D /* Cyber Advance!.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
