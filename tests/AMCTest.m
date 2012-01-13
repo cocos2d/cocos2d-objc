@@ -837,6 +837,11 @@ static NSString *const kAMCTestLayerName = @"curAMCTestLayer";
 //          * SceneAMC - explicit test for whole CCScene test.
 //
 //      2. CHANGED: Existing tests - added save/purge/load toggle menu item. 
+//          * EffectsAdvancedTest - tests CCGrid AMC Support.
+//          * LabelTest - tests CCLabel AMC Support.
+//          * MenuTest - tests CCMenu & Items subclasses AMC Support & CCNodeRegistry.
+//          * SpriteTest - tests CCSprite, Frame, BatchNode & CCCamera AMC Support.
+//          *
 //
 
 //
