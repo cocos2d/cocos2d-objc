@@ -2961,10 +2961,6 @@
 		E0FDACEE123DAD0000F25BB4 /* tuffy_bold_italic-charmap-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E0FDACED123DAD0000F25BB4 /* tuffy_bold_italic-charmap-hd.png */; };
 		FD6C3E5314C0023D00C4883C /* NSObject+AutoMagicCoding.h in Headers */ = {isa = PBXBuildFile; fileRef = FD6C3E5114C0023D00C4883C /* NSObject+AutoMagicCoding.h */; };
 		FD6C3E5414C0023D00C4883C /* NSObject+AutoMagicCoding.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6C3E5214C0023D00C4883C /* NSObject+AutoMagicCoding.m */; };
-		FD6C3E5514C0026100C4883C /* NSObject+AutoMagicCoding.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6C3E5214C0023D00C4883C /* NSObject+AutoMagicCoding.m */; };
-		FD6C3E5614C0026800C4883C /* NSObject+AutoMagicCoding.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6C3E5214C0023D00C4883C /* NSObject+AutoMagicCoding.m */; };
-		FD6C3E5714C0026A00C4883C /* NSObject+AutoMagicCoding.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6C3E5214C0023D00C4883C /* NSObject+AutoMagicCoding.m */; };
-		FD6C3E5814C0026D00C4883C /* NSObject+AutoMagicCoding.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6C3E5214C0023D00C4883C /* NSObject+AutoMagicCoding.m */; };
 		FD6C3E5D14C0032F00C4883C /* b1.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659D0E72DB470085673F /* b1.png */; };
 		FD6C3E5E14C0032F00C4883C /* b2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659E0E72DB470085673F /* b2.png */; };
 		FD6C3E5F14C0032F00C4883C /* f1.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659F0E72DB470085673F /* f1.png */; };
@@ -3007,7 +3003,6 @@
 		FD6C3E8414C0032F00C4883C /* r1-ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = A0B0360613EA101C0073E59A /* r1-ipad.png */; };
 		FD6C3E8514C0032F00C4883C /* r2-ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = A0B0360713EA101C0073E59A /* r2-ipad.png */; };
 		FD6C3E8714C0032F00C4883C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B2CB170E10EE0800AE9530 /* main.m */; };
-		FD6C3E8914C0032F00C4883C /* NSObject+AutoMagicCoding.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6C3E5214C0023D00C4883C /* NSObject+AutoMagicCoding.m */; };
 		FD6C3E8B14C0032F00C4883C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		FD6C3E8C14C0032F00C4883C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		FD6C3E8D14C0032F00C4883C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D3623EB0D0F72F000981E51 /* CoreGraphics.framework */; };
@@ -12070,7 +12065,6 @@
 			files = (
 				501C7C860F91EFFF0024A296 /* main.m in Sources */,
 				501C7CA80F91F1B20024A296 /* SpriteTest.m in Sources */,
-				FD6C3E5814C0026D00C4883C /* NSObject+AutoMagicCoding.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -12317,7 +12311,6 @@
 			files = (
 				506882140E95763E00F943E5 /* LabelTest.m in Sources */,
 				506882050E95761200F943E5 /* main.m in Sources */,
-				FD6C3E5614C0026800C4883C /* NSObject+AutoMagicCoding.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -12336,7 +12329,6 @@
 			files = (
 				506C7A0E0E01C78700B48100 /* MenuTest.m in Sources */,
 				50B2CB1E0E10EE0800AE9530 /* main.m in Sources */,
-				FD6C3E5714C0026A00C4883C /* NSObject+AutoMagicCoding.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -12586,7 +12578,6 @@
 			files = (
 				50D56FC60F3FABEC007CD6B9 /* main.m in Sources */,
 				50D5700F0F3FAD3C007CD6B9 /* EffectsAdvancedTest.m in Sources */,
-				FD6C3E5514C0026100C4883C /* NSObject+AutoMagicCoding.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -12747,7 +12738,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				FD6C3E8714C0032F00C4883C /* main.m in Sources */,
-				FD6C3E8914C0032F00C4883C /* NSObject+AutoMagicCoding.m in Sources */,
 				FD6C3E9A14C003CD00C4883C /* AMCTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
