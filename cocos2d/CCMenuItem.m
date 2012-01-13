@@ -242,7 +242,7 @@ const uint32_t	kZoomActionTag = 0xc0c05002;
 
 @interface CCMenuItemLabel ()
 
-@property(readwrite,assign) ccColor3B colorBackup;
+@property(nonatomic, readwrite,assign) ccColor3B colorBackup;
 
 @end
 

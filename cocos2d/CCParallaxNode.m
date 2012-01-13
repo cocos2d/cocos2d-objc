@@ -62,7 +62,7 @@
 
 @interface CCParallaxNode ()
 
-@property(readwrite, assign) CGPoint lastPosition;
+@property(nonatomic, readwrite, assign) CGPoint lastPosition;
 
 @end
 

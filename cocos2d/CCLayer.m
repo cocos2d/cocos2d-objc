@@ -650,7 +650,7 @@
 
 @interface CCLayerMultiplex ()
 
-@property(readwrite, retain) NSMutableArray *layers;
+@property(nonatomic,readwrite, retain) NSMutableArray *layers;
 
 @end
 

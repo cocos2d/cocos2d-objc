@@ -38,7 +38,7 @@
 
 @interface CCLabelTTF ()
 
-@property(readwrite, assign) CGSize dimensions;
+@property(nonatomic, readwrite, assign) CGSize dimensions;
 
 @end
 
