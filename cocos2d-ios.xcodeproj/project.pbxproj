@@ -3013,6 +3013,8 @@
 		FD6C3E9A14C003CD00C4883C /* AMCTest.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6C3E9914C003CD00C4883C /* AMCTest.m */; };
 		FD6C3E9D14C0069F00C4883C /* CCNodeRegistry.h in Headers */ = {isa = PBXBuildFile; fileRef = FD6C3E9B14C0069F00C4883C /* CCNodeRegistry.h */; };
 		FD6C3E9E14C0069F00C4883C /* CCNodeRegistry.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6C3E9C14C0069F00C4883C /* CCNodeRegistry.m */; };
+		FD6C3E9F14C00BEB00C4883C /* blocks.png in Resources */ = {isa = PBXBuildFile; fileRef = AAEA834A0FD5704400F08728 /* blocks.png */; };
+		FD6C3EA014C00BEE00C4883C /* blocks-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E0CC4F7C12677DB400691051 /* blocks-hd.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -11891,6 +11893,8 @@
 				FD6C3E8314C0032F00C4883C /* f2-ipad.png in Resources */,
 				FD6C3E8414C0032F00C4883C /* r1-ipad.png in Resources */,
 				FD6C3E8514C0032F00C4883C /* r2-ipad.png in Resources */,
+				FD6C3E9F14C00BEB00C4883C /* blocks.png in Resources */,
+				FD6C3EA014C00BEE00C4883C /* blocks-hd.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
