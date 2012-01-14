@@ -4972,7 +4972,6 @@
 		FD6C3E5114C0023D00C4883C /* NSObject+AutoMagicCoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+AutoMagicCoding.h"; sourceTree = "<group>"; };
 		FD6C3E5214C0023D00C4883C /* NSObject+AutoMagicCoding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+AutoMagicCoding.m"; sourceTree = "<group>"; };
 		FD6C3E9514C0032F00C4883C /* AMCTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AMCTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		FD6C3E9714C0033000C4883C /* SpriteTest copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "SpriteTest copy-Info.plist"; path = "/Users/Stepan/Documents/cocos2d-iphone/SpriteTest copy-Info.plist"; sourceTree = "<absolute>"; };
 		FD6C3E9814C003CD00C4883C /* AMCTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AMCTest.h; path = tests/AMCTest.h; sourceTree = "<group>"; };
 		FD6C3E9914C003CD00C4883C /* AMCTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AMCTest.m; path = tests/AMCTest.m; sourceTree = "<group>"; };
 		FD6C3E9B14C0069F00C4883C /* CCNodeRegistry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCNodeRegistry.h; path = cocos2d/CCNodeRegistry.h; sourceTree = SOURCE_ROOT; };
@@ -6026,7 +6025,6 @@
 				50671C1211B99FC8006C0061 /* Resources-iPad */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
-				FD6C3E9714C0033000C4883C /* SpriteTest copy-Info.plist */,
 			);
 			name = CustomTemplate;
 			sourceTree = "<group>";
