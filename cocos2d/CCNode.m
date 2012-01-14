@@ -581,7 +581,10 @@ static NSUInteger globalOrderOfArrival = 0;
 		//  -1st do onExit
 		//  -2nd cleanup
 		if (isRunning_)
+		{
+			[c onExitTransitionDidStart];
 			[c onExit];
+		}
 		
 		if (cleanup)
 			[c cleanup];
@@ -599,7 +602,10 @@ static NSUInteger globalOrderOfArrival = 0;
 	//  -1st do onExit
 	//  -2nd cleanup
 	if (isRunning_)
+	{
+		[child onExitTransitionDidStart];
 		[child onExit];
+	}
 	
 	// If you don't do cleanup, the child's actions will not get removed and the
 	// its scheduledSelectors_ dict will not get released!
@@ -821,6 +827,11 @@ static NSUInteger globalOrderOfArrival = 0;
 -(void) onEnterTransitionDidFinish
 {
 	[children_ makeObjectsPerformSelector:@selector(onEnterTransitionDidFinish)];
+}
+
+-(void) onExitTransitionDidStart
+{
+	[children_ makeObjectsPerformSelector:@selector(onExitTransitionDidStart)];
 }
 
 -(void) onExit
