@@ -899,59 +899,6 @@ static NSString *const kAMCTestLayerName = @"curAMCTestLayer";
 //
 //
 
-//
-// ====== ACTIONS ======
-//
-// * CCAction - just save tag. target & original target will be set on runAction.
-//    Add -allActionsForTarget: to CCActionManager to retreive all actions.
-//    Add dynamic property - array of actions.
-//    For getter - use CCActionManager#allActionsForTarget:
-//    For setter - use runAction
-//
-// * CCFiniteTimeAction - save tag & duration.
-//
-// * CCRepeatForever - save tag & innerAction.
-//
-// * CCSpeed - save tag speed & innerAction.
-//
-// * CCFollow - change followedNode to followedNodeName - simple!
-//      boundarySet(simple BOOL), boundaryRect (need to calculate it back to rect 
-//      from 4 floats on save.)
-//      To load CCFollow - just set followedNode on first CCAction#update: call - at this time
-//      node should alredy exist in CCNodeCache.
-//
-// TODO: investigate further.
-//
-//
-
-//
-// ======= TODO: Animation =====
-//
-// * CCAnimation - should work out of the box, cause CCSpriteFrame is ready.
-// Just some additional logic must be added to recache used animations & spriteFrames.
-// Look for TODOs for Issue #9 in psineur/cocos2d-iphone.
-//      
-//
-// Для того чтобы экономить память и хранить Анимации И Кадры в едином месте 
-// удобном для редактирования - необходимо ввести понятие key в CCSpriteFrame
-// и в CCAnimation.
-//
-// CCAnimation использует те же самые кадры, которые ей дали.
-// ССAnimate использует ту же самую анимацию, что ей дали.
-//
-// Обычно CCAnimation & CCSpriteFrame поступают из одного места и сохранены по 
-// каким-то ключам в своих кешах.
-// Так что делаем следующим образом:
-// 1. Когда сохраняем анимацию в кеше - задаем ей имя. Когда выкидываем - убираем ей имя.
-// 2. Когда сохраняем анимацию - сохраняем ее имя (не проверяем закешировано ли 
-//    - для того, чтобы можно было сохранить анимацию на будущее для шары с другими, 
-//    даже если она не в кеше) и все данные - всегда.
-// 3. Когда грузим - проверяем есть ли в кеше уже с таким именем
-//   * Если нет - добавляем
-//   * Если есть - используем повторно всегда, но проверяем равны ли,
-//   * Не равны - говорим об этом
-//   * Равны - все ок.
-//
 
 //
 // ====== TODO: More Tests =====
