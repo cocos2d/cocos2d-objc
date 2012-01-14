@@ -54,7 +54,11 @@ typedef struct _ccColor3B
     // On iPad 2 with iOS 5.0.1 this bug doesn't exist.
     // ( https://github.com/psineur/NSObject-AutomagicCoding/issues/19 )
     GLubyte reserved1;
+    
+    // On 4.3 Simulator ccColor3B should be 4 bytes instead of 5 to avoid KVC failure.
+#if !TARGET_IPHONE_SIMULATOR
     GLubyte reserved2;
+#endif
 } ccColor3B;
 
 //! helper macro that creates an ccColor3B type
