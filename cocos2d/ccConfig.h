@@ -96,6 +96,8 @@
  To enable set it to a 1, to disable it set to 0. Enabled by default.
 
  Only valid for cocos2d-ios. Not supported on cocos2d-mac.
+ 
+ This is an EXPERIMENTAL feature. Do not use it unless you are a developer.
 
  */
 #ifndef CC_DIRECTOR_IOS_USE_BACKGROUND_THREAD
@@ -198,7 +200,7 @@
 #endif
 
 /** @def CC_ENABLE_PROFILERS
- If enabled, will activate various profilers withing cocos2d. This statistical data will be saved in the CCProfiler singleton.
+ If enabled, it will activate various profilers within cocos2d. This statistical data will be saved in the CCProfiler singleton.
  In order to display saved data, you have to call the CC_PROFILER_DISPLAY_TIMERS() macro.
  Useful for profiling purposes only. If unsure, leave it disabled.
 

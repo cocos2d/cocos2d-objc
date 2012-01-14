@@ -249,17 +249,16 @@
 
 -(void) onExit
 {
+	CCDirector *director = [CCDirector sharedDirector];
+
 #ifdef __CC_PLATFORM_IOS
-	if( isTouchEnabled_ ) {
-		CCDirector *director = [CCDirector sharedDirector];
+	if( isTouchEnabled_ )
 		[[director touchDispatcher] removeDelegate:self];
-	}
 
 	if( isAccelerometerEnabled_ )
 		[[UIAccelerometer sharedAccelerometer] setDelegate:nil];
 
 #elif defined(__CC_PLATFORM_MAC)
-	CCDirector *director = [CCDirector sharedDirector];
 	CCEventDispatcher *eventDispatcher = [director eventDispatcher];
 	if( isMouseEnabled_ )
 		[eventDispatcher removeMouseDelegate:self];

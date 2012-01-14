@@ -186,11 +186,21 @@
 
 @end
 
+#pragma mark - CCEventObject
 
-#pragma mark -
-#pragma mark CCEventDispatcher
+@interface CCEventObject : NSObject
+{
+@public
+	NSEvent		*event;
+	SEL			selector;
+}
+@end
+
+#pragma mark - CCEventDispatcher
 
 struct _listEntry;
+struct _listDeletedEntry;
+struct _listAddedEntry;
 
 /** CCEventDispatcher
 
@@ -204,14 +214,18 @@ struct _listEntry;
 @interface CCEventDispatcher : NSObject <MacEventDelegate> {
 
 	BOOL					dispatchEvents_;
+	BOOL					dispatchingInProgress_;
 
 	struct	_listEntry		*keyboardDelegates_;
 	struct	_listEntry		*mouseDelegates_;
 	struct	_listEntry		*touchDelegates_;
+	
+	struct	_listDeletedEntry	*delegatesToBeRemoved_;
+	struct	_listAddedEntry		*delegatesToBeAdded_;
+	
 }
 
 @property (nonatomic, readwrite) BOOL dispatchEvents;
-
 
 #pragma mark CCEventDispatcher - Mouse
 
@@ -261,11 +275,7 @@ struct _listEntry;
 /** Removes all touch delegates, releasing all the delegates */
 - (void)removeAllTouchDelegates;
 
-#pragma mark CCEventDispatcher - Dispatch Events
-
-#if CC_DIRECTOR_MAC_USE_DISPLAY_LINK_THREAD
--(void) dispatchQueuedEvents;
-#endif
+-(void) dispatchEvent:(CCEventObject*)event;
 
 @end
 
