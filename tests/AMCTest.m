@@ -812,7 +812,7 @@ static NSString *const kAMCTestLayerName = @"curAMCTestLayer";
 //      1. ADDED: cocos2d/AutoMagicCoding - AMC submodule
 //          TODO: remove submodule, use easier path, update all files , that uses that path.
 //
-//      2. CHANGED: Many cocos2d classes, that now have AMC Support (see notes above).
+//      2. CHANGED: Many cocos2d classes, that now have AMC Support (see pull request notes).
 //
 //      3. ADDED: CCNodeRegistry - central key-value (by name string) for nodes, that
 //              doesn't retain nodes (Used for restoring links after loading, such as
@@ -892,7 +892,7 @@ static NSString *const kAMCTestLayerName = @"curAMCTestLayer";
 
 // Right after that:
 //
-// 1. Update iOS project, test & fix if needed.
+// 1. Test Mac project after changing AMC sources.
 //
 // 2. Check issues & TODOs in code - try to close them.
 //
