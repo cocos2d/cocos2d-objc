@@ -46,6 +46,12 @@ typedef struct _ccColor3B
 	GLubyte	r;
 	GLubyte	g;
 	GLubyte b;
+    
+    // Without this, valueForKey: @"color" in CCSprite will return garbage
+    // and corrupt isa of inspected object on device with iOS 4 (other versions not
+    // tested yet).
+    GLubyte reserved1;
+    GLubyte reserved2;
 } ccColor3B;
 
 //! helper macro that creates an ccColor3B type
