@@ -93,7 +93,6 @@
 		E02BB82B126CC224006E46A2 /* CCAtlasNode.h in Headers */ = {isa = PBXBuildFile; fileRef = E02BB781126CC223006E46A2 /* CCAtlasNode.h */; };
 		E02BB82C126CC224006E46A2 /* CCAtlasNode.m in Sources */ = {isa = PBXBuildFile; fileRef = E02BB782126CC223006E46A2 /* CCAtlasNode.m */; };
 		E02BB82D126CC224006E46A2 /* CCBlockSupport.h in Headers */ = {isa = PBXBuildFile; fileRef = E02BB783126CC223006E46A2 /* CCBlockSupport.h */; };
-		E02BB82E126CC224006E46A2 /* CCBlockSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = E02BB784126CC223006E46A2 /* CCBlockSupport.m */; };
 		E02BB82F126CC224006E46A2 /* CCCamera.h in Headers */ = {isa = PBXBuildFile; fileRef = E02BB785126CC223006E46A2 /* CCCamera.h */; };
 		E02BB830126CC224006E46A2 /* CCCamera.m in Sources */ = {isa = PBXBuildFile; fileRef = E02BB786126CC223006E46A2 /* CCCamera.m */; };
 		E02BB833126CC224006E46A2 /* ccConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = E02BB789126CC223006E46A2 /* ccConfig.h */; };
@@ -238,6 +237,9 @@
 		E0ECA3C2134E5E5600E7A048 /* CJSONSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = E0ECA3B5134E5E5600E7A048 /* CJSONSerializer.m */; };
 		E0ECA3C3134E5E5600E7A048 /* JSONRepresentation.h in Headers */ = {isa = PBXBuildFile; fileRef = E0ECA3B6134E5E5600E7A048 /* JSONRepresentation.h */; };
 		E0F80F60120A0182005866B8 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E0F80F5F120A0182005866B8 /* RootViewController.m */; };
+		FD63F36614C1C7D100DDF10B /* CCNodeRegistry.m in Sources */ = {isa = PBXBuildFile; fileRef = FD63F36414C1C7CD00DDF10B /* CCNodeRegistry.m */; };
+		FD63F3FE14C1C9B600DDF10B /* NSObject+AutoMagicCoding.h in Headers */ = {isa = PBXBuildFile; fileRef = FD63F3FC14C1C9B600DDF10B /* NSObject+AutoMagicCoding.h */; };
+		FD63F3FF14C1C9B600DDF10B /* NSObject+AutoMagicCoding.m in Sources */ = {isa = PBXBuildFile; fileRef = FD63F3FD14C1C9B600DDF10B /* NSObject+AutoMagicCoding.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -337,7 +339,6 @@
 		E02BB781126CC223006E46A2 /* CCAtlasNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAtlasNode.h; sourceTree = "<group>"; };
 		E02BB782126CC223006E46A2 /* CCAtlasNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCAtlasNode.m; sourceTree = "<group>"; };
 		E02BB783126CC223006E46A2 /* CCBlockSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBlockSupport.h; sourceTree = "<group>"; };
-		E02BB784126CC223006E46A2 /* CCBlockSupport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBlockSupport.m; sourceTree = "<group>"; };
 		E02BB785126CC223006E46A2 /* CCCamera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCCamera.h; sourceTree = "<group>"; };
 		E02BB786126CC223006E46A2 /* CCCamera.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCCamera.m; sourceTree = "<group>"; };
 		E02BB789126CC223006E46A2 /* ccConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccConfig.h; sourceTree = "<group>"; };
@@ -484,6 +485,10 @@
 		E0F80F5D120A0182005866B8 /* GameConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameConfig.h; sourceTree = "<group>"; };
 		E0F80F5E120A0182005866B8 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
 		E0F80F5F120A0182005866B8 /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
+		FD63F36314C1C7CD00DDF10B /* CCNodeRegistry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCNodeRegistry.h; sourceTree = "<group>"; };
+		FD63F36414C1C7CD00DDF10B /* CCNodeRegistry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCNodeRegistry.m; sourceTree = "<group>"; };
+		FD63F3FC14C1C9B600DDF10B /* NSObject+AutoMagicCoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+AutoMagicCoding.h"; sourceTree = "<group>"; };
+		FD63F3FD14C1C9B600DDF10B /* NSObject+AutoMagicCoding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+AutoMagicCoding.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -666,6 +671,7 @@
 		E02BB764126CC223006E46A2 /* cocos2d */ = {
 			isa = PBXGroup;
 			children = (
+				FD63F3F914C1C9B600DDF10B /* AutoMagicCoding */,
 				E02BB765126CC223006E46A2 /* CCAction.h */,
 				E02BB766126CC223006E46A2 /* CCAction.m */,
 				E02BB767126CC223006E46A2 /* CCActionCamera.h */,
@@ -697,7 +703,6 @@
 				E02BB781126CC223006E46A2 /* CCAtlasNode.h */,
 				E02BB782126CC223006E46A2 /* CCAtlasNode.m */,
 				E02BB783126CC223006E46A2 /* CCBlockSupport.h */,
-				E02BB784126CC223006E46A2 /* CCBlockSupport.m */,
 				E02BB785126CC223006E46A2 /* CCCamera.h */,
 				E02BB786126CC223006E46A2 /* CCCamera.m */,
 				E02BB789126CC223006E46A2 /* ccConfig.h */,
@@ -728,6 +733,8 @@
 				E02BB7A2126CC224006E46A2 /* CCMotionStreak.m */,
 				E02BB7A3126CC224006E46A2 /* CCNode.h */,
 				E02BB7A4126CC224006E46A2 /* CCNode.m */,
+				FD63F36314C1C7CD00DDF10B /* CCNodeRegistry.h */,
+				FD63F36414C1C7CD00DDF10B /* CCNodeRegistry.m */,
 				E02BB7A5126CC224006E46A2 /* CCParallaxNode.h */,
 				E02BB7A6126CC224006E46A2 /* CCParallaxNode.m */,
 				E02BB7A7126CC224006E46A2 /* CCParticleExamples.h */,
@@ -902,6 +909,23 @@
 			path = JSON;
 			sourceTree = "<group>";
 		};
+		FD63F3F914C1C9B600DDF10B /* AutoMagicCoding */ = {
+			isa = PBXGroup;
+			children = (
+				FD63F3FB14C1C9B600DDF10B /* AutoMagicCoding */,
+			);
+			path = AutoMagicCoding;
+			sourceTree = "<group>";
+		};
+		FD63F3FB14C1C9B600DDF10B /* AutoMagicCoding */ = {
+			isa = PBXGroup;
+			children = (
+				FD63F3FC14C1C9B600DDF10B /* NSObject+AutoMagicCoding.h */,
+				FD63F3FD14C1C9B600DDF10B /* NSObject+AutoMagicCoding.m */,
+			);
+			path = AutoMagicCoding;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -1017,6 +1041,7 @@
 				E0ECA3BF134E5E5600E7A048 /* CJSONScanner.h in Headers */,
 				E0ECA3C1134E5E5600E7A048 /* CJSONSerializer.h in Headers */,
 				E0ECA3C3134E5E5600E7A048 /* JSONRepresentation.h in Headers */,
+				FD63F3FE14C1C9B600DDF10B /* NSObject+AutoMagicCoding.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1072,6 +1097,7 @@
 				Japanese,
 				French,
 				German,
+				en,
 			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* CustomTemplate */;
 			projectDirPath = "";
@@ -1145,7 +1171,6 @@
 				E02BB828126CC224006E46A2 /* CCAnimation.m in Sources */,
 				E02BB82A126CC224006E46A2 /* CCAnimationCache.m in Sources */,
 				E02BB82C126CC224006E46A2 /* CCAtlasNode.m in Sources */,
-				E02BB82E126CC224006E46A2 /* CCBlockSupport.m in Sources */,
 				E02BB830126CC224006E46A2 /* CCCamera.m in Sources */,
 				E02BB835126CC224006E46A2 /* CCConfiguration.m in Sources */,
 				E02BB837126CC224006E46A2 /* CCDirector.m in Sources */,
@@ -1211,6 +1236,8 @@
 				E0ECA3BE134E5E5600E7A048 /* CJSONDeserializer.m in Sources */,
 				E0ECA3C0134E5E5600E7A048 /* CJSONScanner.m in Sources */,
 				E0ECA3C2134E5E5600E7A048 /* CJSONSerializer.m in Sources */,
+				FD63F36614C1C7D100DDF10B /* CCNodeRegistry.m in Sources */,
+				FD63F3FF14C1C9B600DDF10B /* NSObject+AutoMagicCoding.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
