@@ -92,6 +92,6 @@
  */
 -(void) addFrameWithTexture:(CCTexture2D*)texture rect:(CGRect)rect;
 
-// TODO: add key property and -isEqual: method. (Issue #9)
+// TODO: add key property and -isEqual: method. (Issue #9 in psineur/cocos2d-iphone)
 
 @end
