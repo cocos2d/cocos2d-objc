@@ -3315,8 +3315,6 @@
 		E0DA433D12A03A3C00210ACE /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E0F9256D1224207200EF2362 /* libz.dylib */; };
 		E0DA433E12A03A3C00210ACE /* liblibpng.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E076EDB91225FEAA00DE0DA2 /* liblibpng.a */; };
 		E0DA434912A03AE200210ACE /* FullScreenTest.m in Sources */ = {isa = PBXBuildFile; fileRef = E0DA434812A03AE100210ACE /* FullScreenTest.m */; };
-		FD135B8B14ABA5D5005A4254 /* NSObject+AutoMagicCoding.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6ACDAC14A232D600E95E30 /* NSObject+AutoMagicCoding.m */; };
-		FD30147514B4B1DF003C4D98 /* NSObject+AutoMagicCoding.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6ACDAC14A232D600E95E30 /* NSObject+AutoMagicCoding.m */; };
 		FD63366314B6080E00512A1D /* CCNodeRegistry.h in Headers */ = {isa = PBXBuildFile; fileRef = FD63366114B6080E00512A1D /* CCNodeRegistry.h */; };
 		FD63366414B6080E00512A1D /* CCNodeRegistry.m in Sources */ = {isa = PBXBuildFile; fileRef = FD63366214B6080E00512A1D /* CCNodeRegistry.m */; };
 		FD6ACCB514A1094F00E95E30 /* A Damn Mess.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E076E7A21225EDD000DE0DA2 /* A Damn Mess.ttf */; };
@@ -3518,10 +3516,7 @@
 		FD6ACD9914A10AB500E95E30 /* AMCTest.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6ACD9814A10AB400E95E30 /* AMCTest.m */; };
 		FD6ACD9B14A10B6000E95E30 /* SpriteTest.m in Sources */ = {isa = PBXBuildFile; fileRef = E076F21E12268AF100DE0DA2 /* SpriteTest.m */; };
 		FD6ACDAD14A232D600E95E30 /* NSObject+AutoMagicCoding.h in Headers */ = {isa = PBXBuildFile; fileRef = FD6ACDAB14A232D600E95E30 /* NSObject+AutoMagicCoding.h */; };
-		FD6ACDAE14A232D600E95E30 /* NSObject+AutoMagicCoding.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6ACDAC14A232D600E95E30 /* NSObject+AutoMagicCoding.m */; };
-		FD6ACDAF14A232D600E95E30 /* NSObject+AutoMagicCoding.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6ACDAC14A232D600E95E30 /* NSObject+AutoMagicCoding.m */; };
-		FD7DF92D14B2312B002C5DE0 /* NSObject+AutoMagicCoding.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6ACDAC14A232D600E95E30 /* NSObject+AutoMagicCoding.m */; };
-		FD7DF95514B372EB002C5DE0 /* NSObject+AutoMagicCoding.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6ACDAC14A232D600E95E30 /* NSObject+AutoMagicCoding.m */; };
+		FDE2317A14C1BCD400B3610A /* NSObject+AutoMagicCoding.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6ACDAC14A232D600E95E30 /* NSObject+AutoMagicCoding.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -9498,8 +9493,8 @@
 				E026452A12A59F1E009D04FE /* CCParticleSystemPoint.m in Sources */,
 				E08AA19C12C262B3000341BD /* MacWindow.m in Sources */,
 				A0AAB8251451C8C000850F2C /* CCParticleBatchNode.m in Sources */,
-				FD6ACDAE14A232D600E95E30 /* NSObject+AutoMagicCoding.m in Sources */,
 				FD63366414B6080E00512A1D /* CCNodeRegistry.m in Sources */,
+				FDE2317A14C1BCD400B3610A /* NSObject+AutoMagicCoding.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9615,7 +9610,6 @@
 			files = (
 				E076E6241225EC4E00DE0DA2 /* MenuTest.m in Sources */,
 				E076EAF01225EE8500DE0DA2 /* main.m in Sources */,
-				FD30147514B4B1DF003C4D98 /* NSObject+AutoMagicCoding.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9676,7 +9670,6 @@
 			files = (
 				E076F20D12268A9800DE0DA2 /* main.m in Sources */,
 				FD6ACD9B14A10B6000E95E30 /* SpriteTest.m in Sources */,
-				FD135B8B14ABA5D5005A4254 /* NSObject+AutoMagicCoding.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9702,7 +9695,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FD7DF95514B372EB002C5DE0 /* NSObject+AutoMagicCoding.m in Sources */,
 				E0AC091E12280B7000EFA814 /* main.m in Sources */,
 				E0AC093112280BB900EFA814 /* LabelTest.m in Sources */,
 			);
@@ -9723,7 +9715,6 @@
 			files = (
 				E0B92EE91226A621003FF67E /* main.m in Sources */,
 				E0B92EFB1226A67B003FF67E /* EffectsAdvancedTest.m in Sources */,
-				FD7DF92D14B2312B002C5DE0 /* NSObject+AutoMagicCoding.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9760,7 +9751,6 @@
 			files = (
 				FD6ACD7314A1094F00E95E30 /* main.m in Sources */,
 				FD6ACD9914A10AB500E95E30 /* AMCTest.m in Sources */,
-				FD6ACDAF14A232D600E95E30 /* NSObject+AutoMagicCoding.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
