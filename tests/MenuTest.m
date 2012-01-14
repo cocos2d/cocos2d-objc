@@ -593,15 +593,15 @@ enum nodeTags
         
         [self addChild: insideLayer z:0 tag: kLayer ];		
         
-        CCMenuItemLabel *save = [CCMenuItemLabel itemWithLabel: [CCLabelTTF labelWithString: @"Save" fontName: @"Marker Felt" fontSize:12]];
-        CCMenuItemLabel *purge = [CCMenuItemLabel itemWithLabel: [CCLabelTTF labelWithString: @"Purge" fontName: @"Marker Felt" fontSize:12]];
-        CCMenuItemLabel *load = [CCMenuItemLabel itemWithLabel: [CCLabelTTF labelWithString: @"Load" fontName: @"Marker Felt" fontSize:12]];
+        CCMenuItemLabel *save = [CCMenuItemLabel itemWithLabel: [CCLabelTTF labelWithString: @"Save" fontName: @"Marker Felt" fontSize:18]];
+        CCMenuItemLabel *purge = [CCMenuItemLabel itemWithLabel: [CCLabelTTF labelWithString: @"Purge" fontName: @"Marker Felt" fontSize:18]];
+        CCMenuItemLabel *load = [CCMenuItemLabel itemWithLabel: [CCLabelTTF labelWithString: @"Load" fontName: @"Marker Felt" fontSize:18]];
         CCMenuItem *trigger = [CCMenuItemToggle itemWithTarget:self selector: @selector(savePurgeLoadCallback:) items: save, purge, load, nil];
         
 		CCMenu *menu = [CCMenu menuWithItems: trigger, nil];
 		
 		menu.position = CGPointZero;
-        trigger.position = ccp( s.width/2, 30);
+        trigger.position = ccp( 0.5f * s.width, 0.25f * s.height);
 		[self addChild: menu z:1];	
 	}
 	return self;

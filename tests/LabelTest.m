@@ -185,9 +185,9 @@ Class restartAction()
 		CCMenuItemImage *item2 = [CCMenuItemImage itemFromNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
 		CCMenuItemImage *item3 = [CCMenuItemImage itemFromNormalImage:@"f1.png" selectedImage:@"f2.png" target:self selector:@selector(nextCallback:)];
         
-        CCMenuItemLabel *save = [CCMenuItemLabel itemWithLabel: [CCLabelTTF labelWithString: @"Save" fontName: @"Marker Felt" fontSize:12]];
-        CCMenuItemLabel *purge = [CCMenuItemLabel itemWithLabel: [CCLabelTTF labelWithString: @"Purge" fontName: @"Marker Felt" fontSize:12]];
-        CCMenuItemLabel *load = [CCMenuItemLabel itemWithLabel: [CCLabelTTF labelWithString: @"Load" fontName: @"Marker Felt" fontSize:12]];
+        CCMenuItemLabel *save = [CCMenuItemLabel itemWithLabel: [CCLabelTTF labelWithString: @"Save" fontName: @"Marker Felt" fontSize:18]];
+        CCMenuItemLabel *purge = [CCMenuItemLabel itemWithLabel: [CCLabelTTF labelWithString: @"Purge" fontName: @"Marker Felt" fontSize:18]];
+        CCMenuItemLabel *load = [CCMenuItemLabel itemWithLabel: [CCLabelTTF labelWithString: @"Load" fontName: @"Marker Felt" fontSize:18]];
         CCMenuItem *trigger = [CCMenuItemToggle itemWithTarget:self selector: @selector(savePurgeLoadCallback:) items: save, purge, load, nil];
         
 		CCMenu *menu = [CCMenu menuWithItems:item1, item2, item3, trigger, nil];
@@ -196,7 +196,7 @@ Class restartAction()
 		item1.position = ccp( s.width/2 - 100,30);
 		item2.position = ccp( s.width/2, 30);
 		item3.position = ccp( s.width/2 + 100,30);
-        trigger.position = ccp( s.width/2, 80);
+        trigger.position = ccp( 0.5f * s.width, 0.25f * s.height);
 		[self addChild: menu z:1];	
 	}
 
