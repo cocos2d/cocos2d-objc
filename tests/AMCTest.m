@@ -824,6 +824,11 @@ static NSString *const kAMCTestLayerName = @"curAMCTestLayer";
 //              backward compatible with old iOS versions & now you can set
 //              target/selector or block after creating CCMenuItem (or it's subclasses).
 //
+//      5. CHANGED: Memory footprint of ccColor3B. 3 bytes is too small. It
+//              should be 5 bytes at least, to avoid KVC failure (corrupted isa
+//              pointer & garbage value returned).
+//
+//
 // 2. Tests:
 //      1. ADDED: New test target: AMCTest - includes additional tests for AMC:
 //          * NodeAMC - Simple node properties/hierarchy test.
