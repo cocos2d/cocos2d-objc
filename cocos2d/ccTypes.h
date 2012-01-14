@@ -47,9 +47,12 @@ typedef struct _ccColor3B
 	GLubyte	g;
 	GLubyte b;
     
-    // Without this, valueForKey: @"color" in CCSprite will return garbage
-    // and corrupt isa of inspected object on device with iOS 4 (other versions not
-    // tested yet).
+    // Without this, valueForKey: @"color" in CCSprite can return garbage
+    // and corrupt isa of inspected object on device with iOS versions:
+    // 4.3.1 (tested on iPod Touch 4), 4.3.2 (tested on iPhone 4).
+    //
+    // On iPad 2 with iOS 5.0.1 this bug doesn't exist.
+    // ( https://github.com/psineur/NSObject-AutomagicCoding/issues/19 )
     GLubyte reserved1;
     GLubyte reserved2;
 } ccColor3B;
