@@ -900,15 +900,6 @@ static NSString *const kAMCTestLayerName = @"curAMCTestLayer";
 //
 
 
-//
-// ====== TODO: More Tests =====
-//
-// TODO: Sprite + Blend Func (should work, just got no explicit test)
-// TODO: Animation key (Issue #9) test. 
-
-
-
-
 #pragma mark -
 #pragma mark AppDelegate
 
