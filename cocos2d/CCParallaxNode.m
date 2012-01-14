@@ -175,7 +175,6 @@
     [nodeKeys removeObjectIdenticalTo:@"children"];
     
     NSArray *parallaxNodeKeys = [NSArray arrayWithObjects:
-                                 @"lastPosition",
                                  @"parallaxArrayForAMC",
                                  nil];
     return [nodeKeys arrayByAddingObjectsFromArray: parallaxNodeKeys];
@@ -250,13 +249,18 @@
     // Nothing here - all children should be properly added in -setParallaxArrayForAMC:
 }
 
-- (NSDictionary *) dictionaryRepresentation
+- (id) initWithDictionaryRepresentation:(NSDictionary *)aDict
 {
-    // Change last position before saving it to ensure that children positions
-    // will be updated at first visit after loading.
-    lastPosition.x++;
+    [super initWithDictionaryRepresentation:aDict];
+    if (self)
+    {
+        // Ensure that last position != position to update children positions
+        // at first visit after loading.
+        lastPosition = self.position;
+        lastPosition.x++;
+    }
     
-    return [super dictionaryRepresentation];
+    return self;
 }
 
 @end
