@@ -69,7 +69,6 @@
 		E0B4518A12C3AEBE0007F742 /* CCAtlasNode.h in Headers */ = {isa = PBXBuildFile; fileRef = E0B450DE12C3AEBD0007F742 /* CCAtlasNode.h */; };
 		E0B4518B12C3AEBE0007F742 /* CCAtlasNode.m in Sources */ = {isa = PBXBuildFile; fileRef = E0B450DF12C3AEBD0007F742 /* CCAtlasNode.m */; };
 		E0B4518C12C3AEBE0007F742 /* CCBlockSupport.h in Headers */ = {isa = PBXBuildFile; fileRef = E0B450E012C3AEBD0007F742 /* CCBlockSupport.h */; };
-		E0B4518D12C3AEBE0007F742 /* CCBlockSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = E0B450E112C3AEBD0007F742 /* CCBlockSupport.m */; };
 		E0B4518E12C3AEBE0007F742 /* CCCamera.h in Headers */ = {isa = PBXBuildFile; fileRef = E0B450E212C3AEBD0007F742 /* CCCamera.h */; };
 		E0B4518F12C3AEBE0007F742 /* CCCamera.m in Sources */ = {isa = PBXBuildFile; fileRef = E0B450E312C3AEBD0007F742 /* CCCamera.m */; };
 		E0B4519212C3AEBE0007F742 /* ccConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = E0B450E612C3AEBD0007F742 /* ccConfig.h */; };
@@ -188,6 +187,9 @@
 		E0B4521312C3AEBE0007F742 /* utlist.h in Headers */ = {isa = PBXBuildFile; fileRef = E0B4516B12C3AEBE0007F742 /* utlist.h */; };
 		E0B4521412C3AEBE0007F742 /* ZipUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = E0B4516C12C3AEBE0007F742 /* ZipUtils.h */; };
 		E0B4521512C3AEBE0007F742 /* ZipUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = E0B4516D12C3AEBE0007F742 /* ZipUtils.m */; };
+		FD63FA0F14C1D21900DDF10B /* NSObject+AutoMagicCoding.m in Sources */ = {isa = PBXBuildFile; fileRef = FD63FA0C14C1D20E00DDF10B /* NSObject+AutoMagicCoding.m */; };
+		FD63FA1214C1D23500DDF10B /* CCNodeRegistry.h in Headers */ = {isa = PBXBuildFile; fileRef = FD63FA1014C1D23500DDF10B /* CCNodeRegistry.h */; };
+		FD63FA1314C1D23500DDF10B /* CCNodeRegistry.m in Sources */ = {isa = PBXBuildFile; fileRef = FD63FA1114C1D23500DDF10B /* CCNodeRegistry.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -269,7 +271,6 @@
 		E0B450DE12C3AEBD0007F742 /* CCAtlasNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAtlasNode.h; sourceTree = "<group>"; };
 		E0B450DF12C3AEBD0007F742 /* CCAtlasNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCAtlasNode.m; sourceTree = "<group>"; };
 		E0B450E012C3AEBD0007F742 /* CCBlockSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBlockSupport.h; sourceTree = "<group>"; };
-		E0B450E112C3AEBD0007F742 /* CCBlockSupport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBlockSupport.m; sourceTree = "<group>"; };
 		E0B450E212C3AEBD0007F742 /* CCCamera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCCamera.h; sourceTree = "<group>"; };
 		E0B450E312C3AEBD0007F742 /* CCCamera.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCCamera.m; sourceTree = "<group>"; };
 		E0B450E612C3AEBD0007F742 /* ccConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccConfig.h; sourceTree = "<group>"; };
@@ -389,6 +390,10 @@
 		E0B4516C12C3AEBE0007F742 /* ZipUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZipUtils.h; sourceTree = "<group>"; };
 		E0B4516D12C3AEBE0007F742 /* ZipUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZipUtils.m; sourceTree = "<group>"; };
 		E0F9256D1224207200EF2362 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		FD63FA0B14C1D20E00DDF10B /* NSObject+AutoMagicCoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+AutoMagicCoding.h"; sourceTree = "<group>"; };
+		FD63FA0C14C1D20E00DDF10B /* NSObject+AutoMagicCoding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+AutoMagicCoding.m"; sourceTree = "<group>"; };
+		FD63FA1014C1D23500DDF10B /* CCNodeRegistry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCNodeRegistry.h; sourceTree = "<group>"; };
+		FD63FA1114C1D23500DDF10B /* CCNodeRegistry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCNodeRegistry.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -550,6 +555,7 @@
 		E0B450C112C3AEBD0007F742 /* cocos2d */ = {
 			isa = PBXGroup;
 			children = (
+				FD63FA0814C1D20E00DDF10B /* AutoMagicCoding */,
 				E0B450C212C3AEBD0007F742 /* CCAction.h */,
 				E0B450C312C3AEBD0007F742 /* CCAction.m */,
 				E0B450C412C3AEBD0007F742 /* CCActionCamera.h */,
@@ -581,7 +587,6 @@
 				E0B450DE12C3AEBD0007F742 /* CCAtlasNode.h */,
 				E0B450DF12C3AEBD0007F742 /* CCAtlasNode.m */,
 				E0B450E012C3AEBD0007F742 /* CCBlockSupport.h */,
-				E0B450E112C3AEBD0007F742 /* CCBlockSupport.m */,
 				E0B450E212C3AEBD0007F742 /* CCCamera.h */,
 				E0B450E312C3AEBD0007F742 /* CCCamera.m */,
 				E0B450E612C3AEBD0007F742 /* ccConfig.h */,
@@ -612,6 +617,8 @@
 				E0B450FF12C3AEBE0007F742 /* CCMotionStreak.m */,
 				E0B4510012C3AEBE0007F742 /* CCNode.h */,
 				E0B4510112C3AEBE0007F742 /* CCNode.m */,
+				FD63FA1014C1D23500DDF10B /* CCNodeRegistry.h */,
+				FD63FA1114C1D23500DDF10B /* CCNodeRegistry.m */,
 				E0B4510212C3AEBE0007F742 /* CCParallaxNode.h */,
 				E0B4510312C3AEBE0007F742 /* CCParallaxNode.m */,
 				E0B4510412C3AEBE0007F742 /* CCParticleExamples.h */,
@@ -729,6 +736,23 @@
 			path = Support;
 			sourceTree = "<group>";
 		};
+		FD63FA0814C1D20E00DDF10B /* AutoMagicCoding */ = {
+			isa = PBXGroup;
+			children = (
+				FD63FA0A14C1D20E00DDF10B /* AutoMagicCoding */,
+			);
+			path = AutoMagicCoding;
+			sourceTree = "<group>";
+		};
+		FD63FA0A14C1D20E00DDF10B /* AutoMagicCoding */ = {
+			isa = PBXGroup;
+			children = (
+				FD63FA0B14C1D20E00DDF10B /* NSObject+AutoMagicCoding.h */,
+				FD63FA0C14C1D20E00DDF10B /* NSObject+AutoMagicCoding.m */,
+			);
+			path = AutoMagicCoding;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -823,6 +847,7 @@
 				E0B4521212C3AEBE0007F742 /* uthash.h in Headers */,
 				E0B4521312C3AEBE0007F742 /* utlist.h in Headers */,
 				E0B4521412C3AEBE0007F742 /* ZipUtils.h in Headers */,
+				FD63FA1214C1D23500DDF10B /* CCNodeRegistry.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -930,7 +955,6 @@
 				E0B4518712C3AEBE0007F742 /* CCAnimation.m in Sources */,
 				E0B4518912C3AEBE0007F742 /* CCAnimationCache.m in Sources */,
 				E0B4518B12C3AEBE0007F742 /* CCAtlasNode.m in Sources */,
-				E0B4518D12C3AEBE0007F742 /* CCBlockSupport.m in Sources */,
 				E0B4518F12C3AEBE0007F742 /* CCCamera.m in Sources */,
 				E0B4519412C3AEBE0007F742 /* CCConfiguration.m in Sources */,
 				E0B4519612C3AEBE0007F742 /* CCDirector.m in Sources */,
@@ -985,6 +1009,8 @@
 				E0B4520F12C3AEBE0007F742 /* TGAlib.m in Sources */,
 				E0B4521112C3AEBE0007F742 /* TransformUtils.m in Sources */,
 				E0B4521512C3AEBE0007F742 /* ZipUtils.m in Sources */,
+				FD63FA0F14C1D21900DDF10B /* NSObject+AutoMagicCoding.m in Sources */,
+				FD63FA1314C1D23500DDF10B /* CCNodeRegistry.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
