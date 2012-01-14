@@ -31,12 +31,12 @@
 #import "../../ccMacros.h"
 #ifdef __CC_PLATFORM_IOS
 
-#import "ES2Renderer.h"
+#import "CCES2Renderer.h"
 
 #import "../../Support/OpenGL_Internal.h"
 #import "../../ccMacros.h"
 
-@implementation ES2Renderer
+@implementation CCES2Renderer
 
 @synthesize context=context_;
 

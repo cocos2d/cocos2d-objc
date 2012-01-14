@@ -11,11 +11,11 @@
 @interface ___PROJECTNAMEASIDENTIFIER___AppDelegate : NSObject <NSApplicationDelegate>
 {
 	NSWindow	*window_;
-	MacGLView	*glView_;
+	CCGLView	*glView_;
 }
 
 @property (assign) IBOutlet NSWindow	*window;
-@property (assign) IBOutlet MacGLView	*glView;
+@property (assign) IBOutlet CCGLView	*glView;
 
 - (IBAction)toggleFullScreen:(id)sender;
 

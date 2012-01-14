@@ -21,8 +21,8 @@
 	window_ = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 
 
-	// Create an EAGLView with a RGB565 color buffer, and a depth buffer of 0-bits
-	EAGLView *glView = [EAGLView viewWithFrame:[window_ bounds]
+	// Create an CCGLView with a RGB565 color buffer, and a depth buffer of 0-bits
+	CCGLView *glView = [CCGLView viewWithFrame:[window_ bounds]
 								   pixelFormat:kEAGLColorFormatRGB565	//kEAGLColorFormatRGBA8
 								   depthFormat:0	//GL_DEPTH_COMPONENT24_OES
 							preserveBackbuffer:NO

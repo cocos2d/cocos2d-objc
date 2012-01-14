@@ -173,7 +173,7 @@
 						<reference key="dict.values" ref="0"/>
 					</object>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-					<string>EAGLView</string>
+					<string>CCGLView</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				</object>
 			</object>
@@ -195,11 +195,11 @@
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
 				<bool key="EncodedWithXMLCoder">YES</bool>
 				<object class="IBPartialClassDescription">
-					<string key="className">EAGLView</string>
+					<string key="className">CCGLView</string>
 					<string key="superclassName">UIView</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/EAGLView.h</string>
+						<string key="minorKey">./Classes/CCGLView.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -214,7 +214,7 @@
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>EAGLView</string>
+							<string>CCGLView</string>
 							<string>UIWindow</string>
 						</object>
 					</object>
@@ -229,7 +229,7 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<object class="IBToOneOutletInfo">
 								<string key="name">glView_</string>
-								<string key="candidateClassName">EAGLView</string>
+								<string key="candidateClassName">CCGLView</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">window_</string>

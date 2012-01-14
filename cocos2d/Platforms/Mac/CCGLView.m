@@ -32,16 +32,16 @@
 #import "../../ccMacros.h"
 #ifdef __CC_PLATFORM_MAC
 
-#import "MacGLView.h"
 #import <OpenGL/gl.h>
 
+#import "CCGLView.h"
 #import "CCDirectorMac.h"
 #import "CCEventDispatcher.h"
 #import "../../ccConfig.h"
 #import "../../ccMacros.h"
 
 
-@implementation MacGLView
+@implementation CCGLView
 
 @synthesize eventDelegate = eventDelegate_;
 
@@ -141,7 +141,7 @@
 		  withObject:event																	\
 	   waitUntilDone:NO];
 
-#pragma mark MacGLView - Mouse events
+#pragma mark CCGLView - Mouse events
 
 - (void)mouseDown:(NSEvent *)theEvent
 {
@@ -199,7 +199,7 @@
 	DISPATCH_EVENT(theEvent, _cmd);
 }
 
-#pragma mark MacGLView - Key events
+#pragma mark CCGLView - Key events
 
 -(BOOL) becomeFirstResponder
 {
@@ -231,7 +231,7 @@
 	DISPATCH_EVENT(theEvent, _cmd);
 }
 
-#pragma mark MacGLView - Touch events
+#pragma mark CCGLView - Touch events
 - (void)touchesBeganWithEvent:(NSEvent *)theEvent
 {
 	DISPATCH_EVENT(theEvent, _cmd);

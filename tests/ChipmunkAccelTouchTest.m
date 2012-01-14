@@ -135,23 +135,23 @@ void removeShape( cpBody *body, cpShape *shape, void *data )
 
 	space_ = cpSpaceNew();
 
-	space_->gravity = ccp(0, -100);
+	space_->gravity = cpv(0, -100);
 
 	//
 	// rogue shapes
 	// We have to free them manually
 	//
 	// bottom
-	walls_[0] = cpSegmentShapeNew( space_->staticBody, ccp(0,0), ccp(s.width,0), 0.0f);
+	walls_[0] = cpSegmentShapeNew( space_->staticBody, cpv(0,0), cpv(s.width,0), 0.0f);
 
 	// top
-	walls_[1] = cpSegmentShapeNew( space_->staticBody, ccp(0,s.height), ccp(s.width,s.height), 0.0f);
+	walls_[1] = cpSegmentShapeNew( space_->staticBody, cpv(0,s.height), cpv(s.width,s.height), 0.0f);
 
 	// left
-	walls_[2] = cpSegmentShapeNew( space_->staticBody, ccp(0,0), ccp(0,s.height), 0.0f);
+	walls_[2] = cpSegmentShapeNew( space_->staticBody, cpv(0,0), cpv(0,s.height), 0.0f);
 
 	// right
-	walls_[3] = cpSegmentShapeNew( space_->staticBody, ccp(s.width,0), ccp(s.width,s.height), 0.0f);
+	walls_[3] = cpSegmentShapeNew( space_->staticBody, cpv(s.width,0), cpv(s.width,s.height), 0.0f);
 
 	for( int i=0;i<4;i++) {
 		walls_[i]->e = 1.0f;
@@ -220,19 +220,19 @@ void removeShape( cpBody *body, cpShape *shape, void *data )
 	sprite.position = pos;
 
 	int num = 4;
-	CGPoint verts[] = {
-		ccp(-24,-54),
-		ccp(-24, 54),
-		ccp( 24, 54),
-		ccp( 24,-54),
+	cpVect verts[] = {
+		cpv(-24,-54),
+		cpv(-24, 54),
+		cpv( 24, 54),
+		cpv( 24,-54),
 	};
 
-	cpBody *body = cpBodyNew(1.0f, cpMomentForPoly(1.0f, num, verts, CGPointZero));
+	cpBody *body = cpBodyNew(1.0f, cpMomentForPoly(1.0f, num, verts, cpvzero));
 
-	body->p = pos;
+	body->p = cpv(pos.x, pos.y);
 	cpSpaceAddBody(space_, body);
 
-	cpShape* shape = cpPolyShapeNew(body, num, verts, CGPointZero);
+	cpShape* shape = cpPolyShapeNew(body, num, verts, cpvzero);
 	shape->e = 0.5f; shape->u = 0.5f;
 	cpSpaceAddShape(space_, shape);
 

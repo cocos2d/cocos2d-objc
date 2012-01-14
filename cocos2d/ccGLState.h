@@ -32,7 +32,7 @@
 #import <OpenGL/gl.h>
 #endif //
 
-@class GLProgram;
+@class CCGLProgram;
 
 /** vertex attrib flags */
 enum {
@@ -92,7 +92,7 @@ void ccGLBlendFunc(GLenum sfactor, GLenum dfactor);
 /** sets the ModelViewProjection Matrix in the GL program
  @since v2.0.0
  */
-void ccGLUniformModelViewProjectionMatrix( GLProgram *shaderProgram );
+void ccGLUniformModelViewProjectionMatrix( CCGLProgram *shaderProgram );
 
 /** sets the projection matrix as dirty
  @since v2.0.0

@@ -1,6 +1,6 @@
 //
-// EAGLViewTest
-// This sample/test shows how to create an EAGLView using Interface Builder
+// CCGLViewTest
+// This sample/test shows how to create an CCGLView using Interface Builder
 //
 // http://www.cocos2d-iphone.org
 //

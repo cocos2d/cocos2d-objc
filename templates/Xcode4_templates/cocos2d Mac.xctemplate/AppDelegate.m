@@ -30,6 +30,8 @@
 	// Enable "moving" mouse event. Default no.
 	[window_ setAcceptsMouseMovedEvents:NO];
 	
+	// Center main window
+	[window_ center];
 	
 	[director runWithScene:[HelloWorldLayer scene]];
 }

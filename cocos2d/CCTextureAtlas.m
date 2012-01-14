@@ -30,7 +30,7 @@
 #import "ccMacros.h"
 #import "CCTexture2D.h"
 #import "CCTextureCache.h"
-#import "GLProgram.h"
+#import "CCGLProgram.h"
 #import "ccGLState.h"
 #import "Support/OpenGL_Internal.h"
 //#import "CGPointExtension.h"

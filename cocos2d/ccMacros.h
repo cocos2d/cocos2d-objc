@@ -108,20 +108,20 @@ default gl blend src function. Compatible with premultiplied alpha images.
 #define CC_BLEND_DST GL_ONE_MINUS_SRC_ALPHA
 
 /** @def CC_DIRECTOR_INIT
-	- Initializes an EAGLView with 0-bit depth format, and RGB565 render buffer.
-	- The EAGLView view will have multiple touches disabled.
+	- Initializes an CCGLView with 0-bit depth format, and RGB565 render buffer.
+	- The CCGLView view will have multiple touches disabled.
 	- It will create a UIWindow and it will assign it the 'window_' ivar. 'window_' must be declared before calling this marcro.
     - It will create a UINavigationController and it will assign it the 'navigationController_' ivar. 'navController_' must be declared before using this macro.
     - The director_ will be the root view controller of the navController.
     - It will try to enable Retina Display for the Director
-	- It will connect the EAGLView to the Director
+	- It will connect the CCGLView to the Director
 	- It will connect the UINavController view to the UIWindow.
 	- It will try to run at 60 FPS.
-	- It will connect the director with the EAGLView.
+	- It will connect the director with the CCGLView.
 
  IMPORTANT: If you want to use another type of render buffer (eg: RGBA8)
  or if you want to use a 16-bit or 24-bit depth buffer, you should NOT
- use this macro. Instead, you should create the EAGLView manually.
+ use this macro. Instead, you should create the CCGLView manually.
 
  @since v0.99.4
  */
@@ -134,7 +134,7 @@ do	{																							\
 	director_ = (CCDirectorIOS*)[CCDirector sharedDirector];									\
 	[director_ setDisplayStats:NO];																\
 	[director_ setAnimationInterval:1.0/60];													\
-	EAGLView *__glView = [EAGLView viewWithFrame:[window_ bounds]								\
+	CCGLView *__glView = [CCGLView viewWithFrame:[window_ bounds]								\
 									pixelFormat:kEAGLColorFormatRGB565							\
 									depthFormat:0 /* GL_DEPTH_COMPONENT24_OES */				\
 							 preserveBackbuffer:NO												\
@@ -158,8 +158,8 @@ do	{																							\
 #define CC_DIRECTOR_INIT(__WINSIZE__)															\
 do	{																							\
 	NSRect frameRect = NSMakeRect(0, 0, (__WINSIZE__).width, (__WINSIZE__).height);				\
-	window_ = [[MacWindow alloc] initWithFrame:frameRect fullscreen:NO];						\
-	glView_ = [[MacGLView alloc] initWithFrame:frameRect shareContext:nil];						\
+	window_ = [[CCWindow alloc] initWithFrame:frameRect fullscreen:NO];						\
+	glView_ = [[CCGLView alloc] initWithFrame:frameRect shareContext:nil];						\
 	[self.window setContentView:self.glView];													\
 	director_ = (CCDirectorMac*) [CCDirector sharedDirector];									\
 	[director_ setDisplayStats:NO];																\
@@ -186,7 +186,7 @@ do {																							\
 
  /** @def CC_DIRECTOR_END
   Stops and removes the director from memory.
-  Removes the EAGLView from its parent
+  Removes the CCGLView from its parent
 
   @since v0.99.4
   */

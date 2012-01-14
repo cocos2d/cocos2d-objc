@@ -121,7 +121,7 @@ enum {
 
 		director = [CCDirector sharedDirector];
 
-		EAGLView *glview = [EAGLView viewWithFrame:CGRectMake(0, 0, 250,350)];
+		CCGLView *glview = [CCGLView viewWithFrame:CGRectMake(0, 0, 250,350)];
 
 		[director setView:glview];
 

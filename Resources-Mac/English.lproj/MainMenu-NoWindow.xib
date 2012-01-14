@@ -736,7 +736,7 @@
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>MacGLView</string>
+							<string>CCGLView</string>
 							<string>NSWindow</string>
 						</object>
 					</object>
@@ -751,7 +751,7 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<object class="IBToOneOutletInfo">
 								<string key="name">glView</string>
-								<string key="candidateClassName">MacGLView</string>
+								<string key="candidateClassName">CCGLView</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">window</string>
@@ -765,11 +765,11 @@
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
-					<string key="className">MacGLView</string>
+					<string key="className">CCGLView</string>
 					<string key="superclassName">NSOpenGLView</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/MacGLView.h</string>
+						<string key="minorKey">./Classes/CCGLView.h</string>
 					</object>
 				</object>
 			</object>

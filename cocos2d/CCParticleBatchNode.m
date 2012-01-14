@@ -38,7 +38,7 @@
 #import "CCParticleSystem.h"
 #import "CCParticleSystem.h"
 #import "CCShaderCache.h"
-#import "GLProgram.h"
+#import "CCGLProgram.h"
 #import "ccGLState.h"
 
 #import "Support/base64.h"

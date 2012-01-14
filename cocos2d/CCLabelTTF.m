@@ -29,7 +29,7 @@
 #import "Support/CGPointExtension.h"
 #import "ccMacros.h"
 #import "CCShaderCache.h"
-#import "GLProgram.h"
+#import "CCGLProgram.h"
 
 #ifdef __CC_PLATFORM_IOS
 #import "Platforms/iOS/CCDirectorIOS.h"

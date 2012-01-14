@@ -445,6 +445,28 @@
 			<key>Path</key>
 			<string>libs/cocos2d/CCDrawingPrimitives.m</string>
 		</dict>
+		<key>libs/cocos2d/CCGLProgram.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2d</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2d/CCGLProgram.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/cocos2d/CCGLProgram.m</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2d</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2d/CCGLProgram.m</string>
+		</dict>
 		<key>libs/cocos2d/ccGLState.h</key>
 		<dict>
 			<key>Group</key>
@@ -1317,28 +1339,6 @@
 			<key>Path</key>
 			<string>libs/cocos2d/cocos2d.m</string>
 		</dict>
-		<key>libs/cocos2d/GLProgram.h</key>
-		<dict>
-			<key>Group</key>
-			<array>
-				<string>libs</string>
-				<string>cocos2d</string>
-			</array>
-			<key>Path</key>
-			<string>libs/cocos2d/GLProgram.h</string>
-			<key>TargetIndices</key>
-			<array/>
-		</dict>
-		<key>libs/cocos2d/GLProgram.m</key>
-		<dict>
-			<key>Group</key>
-			<array>
-				<string>libs</string>
-				<string>cocos2d</string>
-			</array>
-			<key>Path</key>
-			<string>libs/cocos2d/GLProgram.m</string>
-		</dict>
 		<key>libs/cocos2d/Platforms/CCGL.h</key>
 		<dict>
 			<key>Group</key>
@@ -1390,6 +1390,72 @@
 			</array>
 			<key>Path</key>
 			<string>libs/cocos2d/Platforms/iOS/CCDirectorIOS.m</string>
+		</dict>
+		<key>libs/cocos2d/Platforms/iOS/CCES2Renderer.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2d</string>
+				<string>Platforms</string>
+				<string>iOS</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2d/Platforms/iOS/CCES2Renderer.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/cocos2d/Platforms/iOS/CCES2Renderer.m</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2d</string>
+				<string>Platforms</string>
+				<string>iOS</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2d/Platforms/iOS/CCES2Renderer.m</string>
+		</dict>
+		<key>libs/cocos2d/Platforms/iOS/CCESRenderer.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2d</string>
+				<string>Platforms</string>
+				<string>iOS</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2d/Platforms/iOS/CCESRenderer.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/cocos2d/Platforms/iOS/CCGLView.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2d</string>
+				<string>Platforms</string>
+				<string>iOS</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2d/Platforms/iOS/CCGLView.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/cocos2d/Platforms/iOS/CCGLView.m</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2d</string>
+				<string>Platforms</string>
+				<string>iOS</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2d/Platforms/iOS/CCGLView.m</string>
 		</dict>
 		<key>libs/cocos2d/Platforms/iOS/CCTouchDelegateProtocol.h</key>
 		<dict>
@@ -1457,72 +1523,6 @@
 			<key>Path</key>
 			<string>libs/cocos2d/Platforms/iOS/CCTouchHandler.m</string>
 		</dict>
-		<key>libs/cocos2d/Platforms/iOS/EAGLView.h</key>
-		<dict>
-			<key>Group</key>
-			<array>
-				<string>libs</string>
-				<string>cocos2d</string>
-				<string>Platforms</string>
-				<string>iOS</string>
-			</array>
-			<key>Path</key>
-			<string>libs/cocos2d/Platforms/iOS/EAGLView.h</string>
-			<key>TargetIndices</key>
-			<array/>
-		</dict>
-		<key>libs/cocos2d/Platforms/iOS/EAGLView.m</key>
-		<dict>
-			<key>Group</key>
-			<array>
-				<string>libs</string>
-				<string>cocos2d</string>
-				<string>Platforms</string>
-				<string>iOS</string>
-			</array>
-			<key>Path</key>
-			<string>libs/cocos2d/Platforms/iOS/EAGLView.m</string>
-		</dict>
-		<key>libs/cocos2d/Platforms/iOS/ES2Renderer.h</key>
-		<dict>
-			<key>Group</key>
-			<array>
-				<string>libs</string>
-				<string>cocos2d</string>
-				<string>Platforms</string>
-				<string>iOS</string>
-			</array>
-			<key>Path</key>
-			<string>libs/cocos2d/Platforms/iOS/ES2Renderer.h</string>
-			<key>TargetIndices</key>
-			<array/>
-		</dict>
-		<key>libs/cocos2d/Platforms/iOS/ES2Renderer.m</key>
-		<dict>
-			<key>Group</key>
-			<array>
-				<string>libs</string>
-				<string>cocos2d</string>
-				<string>Platforms</string>
-				<string>iOS</string>
-			</array>
-			<key>Path</key>
-			<string>libs/cocos2d/Platforms/iOS/ES2Renderer.m</string>
-		</dict>
-		<key>libs/cocos2d/Platforms/iOS/ESRenderer.h</key>
-		<dict>
-			<key>Group</key>
-			<array>
-				<string>libs</string>
-				<string>cocos2d</string>
-				<string>Platforms</string>
-				<string>iOS</string>
-			</array>
-			<key>Path</key>
-			<string>libs/cocos2d/Platforms/iOS/ESRenderer.h</string>
-			<key>TargetIndices</key>
-			<array/>
-		</dict>
 		<key>libs/cocos2d/Platforms/Mac/CCDirectorMac.h</key>
 		<dict>
 			<key>Group</key>
@@ -1575,7 +1575,7 @@
 			<key>Path</key>
 			<string>libs/cocos2d/Platforms/Mac/CCEventDispatcher.m</string>
 		</dict>
-		<key>libs/cocos2d/Platforms/Mac/MacGLView.h</key>
+		<key>libs/cocos2d/Platforms/Mac/CCGLView.h</key>
 		<dict>
 			<key>Group</key>
 			<array>
@@ -1585,11 +1585,11 @@
 				<string>Mac</string>
 			</array>
 			<key>Path</key>
-			<string>libs/cocos2d/Platforms/Mac/MacGLView.h</string>
+			<string>libs/cocos2d/Platforms/Mac/CCGLView.h</string>
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
-		<key>libs/cocos2d/Platforms/Mac/MacGLView.m</key>
+		<key>libs/cocos2d/Platforms/Mac/CCGLView.m</key>
 		<dict>
 			<key>Group</key>
 			<array>
@@ -1599,9 +1599,9 @@
 				<string>Mac</string>
 			</array>
 			<key>Path</key>
-			<string>libs/cocos2d/Platforms/Mac/MacGLView.m</string>
+			<string>libs/cocos2d/Platforms/Mac/CCGLView.m</string>
 		</dict>
-		<key>libs/cocos2d/Platforms/Mac/MacWindow.h</key>
+		<key>libs/cocos2d/Platforms/Mac/CCWindow.h</key>
 		<dict>
 			<key>Group</key>
 			<array>
@@ -1611,11 +1611,11 @@
 				<string>Mac</string>
 			</array>
 			<key>Path</key>
-			<string>libs/cocos2d/Platforms/Mac/MacWindow.h</string>
+			<string>libs/cocos2d/Platforms/Mac/CCWindow.h</string>
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
-		<key>libs/cocos2d/Platforms/Mac/MacWindow.m</key>
+		<key>libs/cocos2d/Platforms/Mac/CCWindow.m</key>
 		<dict>
 			<key>Group</key>
 			<array>
@@ -1625,7 +1625,7 @@
 				<string>Mac</string>
 			</array>
 			<key>Path</key>
-			<string>libs/cocos2d/Platforms/Mac/MacWindow.m</string>
+			<string>libs/cocos2d/Platforms/Mac/CCWindow.m</string>
 		</dict>
 		<key>libs/cocos2d/Support/base64.c</key>
 		<dict>
@@ -1972,6 +1972,8 @@
 		<string>libs/cocos2d/CCDirector.m</string>
 		<string>libs/cocos2d/CCDrawingPrimitives.h</string>
 		<string>libs/cocos2d/CCDrawingPrimitives.m</string>
+		<string>libs/cocos2d/CCGLProgram.h</string>
+		<string>libs/cocos2d/CCGLProgram.m</string>
 		<string>libs/cocos2d/ccGLState.h</string>
 		<string>libs/cocos2d/ccGLState.m</string>
 		<string>libs/cocos2d/CCGrabber.h</string>
@@ -2051,30 +2053,28 @@
 		<string>libs/cocos2d/ccTypes.h</string>
 		<string>libs/cocos2d/cocos2d.h</string>
 		<string>libs/cocos2d/cocos2d.m</string>
-		<string>libs/cocos2d/GLProgram.h</string>
-		<string>libs/cocos2d/GLProgram.m</string>
 		<string>libs/cocos2d/Platforms/CCGL.h</string>
 		<string>libs/cocos2d/Platforms/CCNS.h</string>
 		<string>libs/cocos2d/Platforms/iOS/CCDirectorIOS.h</string>
 		<string>libs/cocos2d/Platforms/iOS/CCDirectorIOS.m</string>
+		<string>libs/cocos2d/Platforms/iOS/CCES2Renderer.h</string>
+		<string>libs/cocos2d/Platforms/iOS/CCES2Renderer.m</string>
+		<string>libs/cocos2d/Platforms/iOS/CCESRenderer.h</string>
+		<string>libs/cocos2d/Platforms/iOS/CCGLView.h</string>
+		<string>libs/cocos2d/Platforms/iOS/CCGLView.m</string>
 		<string>libs/cocos2d/Platforms/iOS/CCTouchDelegateProtocol.h</string>
 		<string>libs/cocos2d/Platforms/iOS/CCTouchDispatcher.h</string>
 		<string>libs/cocos2d/Platforms/iOS/CCTouchDispatcher.m</string>
 		<string>libs/cocos2d/Platforms/iOS/CCTouchHandler.h</string>
 		<string>libs/cocos2d/Platforms/iOS/CCTouchHandler.m</string>
-		<string>libs/cocos2d/Platforms/iOS/EAGLView.h</string>
-		<string>libs/cocos2d/Platforms/iOS/EAGLView.m</string>
-		<string>libs/cocos2d/Platforms/iOS/ES2Renderer.h</string>
-		<string>libs/cocos2d/Platforms/iOS/ES2Renderer.m</string>
-		<string>libs/cocos2d/Platforms/iOS/ESRenderer.h</string>
 		<string>libs/cocos2d/Platforms/Mac/CCDirectorMac.h</string>
 		<string>libs/cocos2d/Platforms/Mac/CCDirectorMac.m</string>
 		<string>libs/cocos2d/Platforms/Mac/CCEventDispatcher.h</string>
 		<string>libs/cocos2d/Platforms/Mac/CCEventDispatcher.m</string>
-		<string>libs/cocos2d/Platforms/Mac/MacGLView.h</string>
-		<string>libs/cocos2d/Platforms/Mac/MacGLView.m</string>
-		<string>libs/cocos2d/Platforms/Mac/MacWindow.h</string>
-		<string>libs/cocos2d/Platforms/Mac/MacWindow.m</string>
+		<string>libs/cocos2d/Platforms/Mac/CCGLView.h</string>
+		<string>libs/cocos2d/Platforms/Mac/CCGLView.m</string>
+		<string>libs/cocos2d/Platforms/Mac/CCWindow.h</string>
+		<string>libs/cocos2d/Platforms/Mac/CCWindow.m</string>
 		<string>libs/cocos2d/Support/base64.c</string>
 		<string>libs/cocos2d/Support/base64.h</string>
 		<string>libs/cocos2d/Support/CCArray.h</string>

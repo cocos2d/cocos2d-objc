@@ -15,7 +15,7 @@ seeds.
 
 =====================
 
-File: EAGLView.m
+File: CCGLView.m
 Abstract: Convenience class that wraps the CAEAGLLayer from CoreAnimation into a
 UIView subclass.
 
@@ -61,6 +61,10 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 */
 
+/*
+ Modified for cocos2d project
+ */
+
 // Only compile this code on iOS. These files should NOT be included on your Mac project.
 // But in case they are included, it won't be compiled.
 #import "../../ccMacros.h"
@@ -68,8 +72,8 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 #import <QuartzCore/QuartzCore.h>
 
-#import "EAGLView.h"
-#import "ES2Renderer.h"
+#import "CCGLView.h"
+#import "CCES2Renderer.h"
 #import "../../CCDirector.h"
 #import "../../ccMacros.h"
 #import "../../CCConfiguration.h"
@@ -78,12 +82,12 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 //CLASS IMPLEMENTATIONS:
 
-@interface EAGLView (Private)
+@interface CCGLView (Private)
 - (BOOL) setupSurfaceWithSharegroup:(EAGLSharegroup*)sharegroup;
 - (unsigned int) convertPixelFormat:(NSString*) pixelFormat;
 @end
 
-@implementation EAGLView
+@implementation CCGLView
 
 @synthesize surfaceSize=size_;
 @synthesize pixelFormat=pixelformat_, depthFormat=depthFormat_;
@@ -180,7 +184,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 									pixelformat_, kEAGLDrawablePropertyColorFormat, nil];
 
 	// ES2 renderer only
-	renderer_ = [[ES2Renderer alloc] initWithDepthFormat:depthFormat_
+	renderer_ = [[CCES2Renderer alloc] initWithDepthFormat:depthFormat_
 										 withPixelFormat:[self convertPixelFormat:pixelformat_]
 										  withSharegroup:sharegroup
 									   withMultiSampling:multiSampling_
@@ -290,7 +294,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	return pFormat;
 }
 
-#pragma mark EAGLView - Point conversion
+#pragma mark CCGLView - Point conversion
 
 - (CGPoint) convertPointFromViewToSurface:(CGPoint)point
 {
@@ -307,7 +311,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 }
 
 // Pass the touches to the superview
-#pragma mark EAGLView - Touch Delegate
+#pragma mark CCGLView - Touch Delegate
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {

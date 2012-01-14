@@ -22,7 +22,7 @@
 //
 // Adapted for cocos2d http://www.cocos2d-iphone.org
 
-#import "GLProgram.h"
+#import "CCGLProgram.h"
 #import "ccGLState.h"
 #import "ccMacros.h"
 #import "Support/CCFileUtils.h"
@@ -39,7 +39,7 @@ typedef void (*GLLogFunction) (GLuint program,
 #pragma mark -
 #pragma mark Private Extension Method Declaration
 
-@interface GLProgram()
+@interface CCGLProgram()
 - (BOOL)compileShader:(GLuint *)shader
                  type:(GLenum)type
                  file:(NSString *)file;
@@ -50,7 +50,7 @@ typedef void (*GLLogFunction) (GLuint program,
 
 #pragma mark -
 
-@implementation GLProgram
+@implementation CCGLProgram
 - (id)initWithVertexShaderFilename:(NSString *)vShaderFilename
             fragmentShaderFilename:(NSString *)fShaderFilename
 {

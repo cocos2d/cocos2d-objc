@@ -34,7 +34,7 @@
 
 //PROTOCOLS:
 
-@protocol MacEventDelegate <NSObject>
+@protocol CCEventDelegate <NSObject>
 // Mouse
 - (void)mouseDown:(NSEvent *)theEvent;
 - (void)mouseUp:(NSEvent *)theEvent;
@@ -64,17 +64,17 @@
 
 @end
 
-/** MacGLView
+/** CCGLView
 
  Only available for Mac OS X
  */
-@interface MacGLView : NSOpenGLView {
-	id<MacEventDelegate> eventDelegate_;
+@interface CCGLView : NSOpenGLView {
+	id<CCEventDelegate> eventDelegate_;
 }
 
-@property (nonatomic, readwrite, assign) id<MacEventDelegate> eventDelegate;
+@property (nonatomic, readwrite, assign) id<CCEventDelegate> eventDelegate;
 
-// initializes the MacGLView with a frame rect and an OpenGL context
+// initializes the CCGLView with a frame rect and an OpenGL context
 - (id) initWithFrame:(NSRect)frameRect shareContext:(NSOpenGLContext*)context;
 
 // private

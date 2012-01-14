@@ -718,7 +718,7 @@ Class restartTest()
 	[ctl.view addSubview: sliderCtl];
 
 #elif defined(__CC_PLATFORM_MAC)
-	MacGLView *view = (MacGLView*) [[CCDirectorMac sharedDirector] view];
+	CCGLView *view = (CCGLView*) [[CCDirectorMac sharedDirector] view];
 
 	if( ! overlayWindow ) {
 		overlayWindow  = [[NSWindow alloc] initWithContentRect:[[view window] frame]
@@ -749,7 +749,7 @@ Class restartTest()
 	[sliderCtl removeFromSuperview];
 
 #ifdef __CC_PLATFORM_MAC
-	MacGLView *view = (MacGLView*) [[CCDirector sharedDirector] view];
+	CCGLView *view = (CCGLView*) [[CCDirector sharedDirector] view];
 	[[view window] removeChildWindow:overlayWindow];
 	[overlayWindow release];
 	overlayWindow = nil;
@@ -901,7 +901,11 @@ Class restartTest()
 		}
 		sliderCtl2 = [[self sliderCtl] retain];
 
+#ifdef __CC_PLATFORM_IOS
 		CGRect frame = [sliderCtl2 frame];
+#elif defined(__CC_PLATFORM_MAC)
+		NSRect frame = [sliderCtl2 frame];
+#endif
 		frame.origin.x += 300;
 		[sliderCtl2 setFrame:frame];
 
@@ -925,7 +929,7 @@ Class restartTest()
 	[ctl.view addSubview: sliderCtl2];
 
 #elif defined(__CC_PLATFORM_MAC)
-	MacGLView *view = (MacGLView*) [[CCDirectorMac sharedDirector] view];
+	CCGLView *view = (CCGLView*) [[CCDirectorMac sharedDirector] view];
 
 	if( ! overlayWindow ) {
 		overlayWindow  = [[NSWindow alloc] initWithContentRect:[[view window] frame]
@@ -957,7 +961,7 @@ Class restartTest()
 	[sliderCtl2 removeFromSuperview];
 
 #ifdef __CC_PLATFORM_MAC
-	MacGLView *view = (MacGLView*) [[CCDirector sharedDirector] view];
+	CCGLView *view = (CCGLView*) [[CCDirector sharedDirector] view];
 	[[view window] removeChildWindow:overlayWindow];
 	[overlayWindow release];
 	overlayWindow = nil;

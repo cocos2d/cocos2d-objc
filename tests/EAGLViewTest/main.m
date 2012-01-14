@@ -1,6 +1,6 @@
 //
 //  main.m
-//  EAGLViewTest
+//  CCGLViewTest
 //
 //  Created by Ricardo Quesada on 09/06/10.
 //  Copyright Sapus Media 2010. All rights reserved.

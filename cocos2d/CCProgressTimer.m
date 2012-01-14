@@ -27,7 +27,7 @@
 
 #import "ccMacros.h"
 #import "CCTextureCache.h"
-#import "GLProgram.h"
+#import "CCGLProgram.h"
 #import "CCShaderCache.h"
 #import "ccGLState.h"
 #import "CCDirector.h"

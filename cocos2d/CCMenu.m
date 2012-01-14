@@ -35,7 +35,7 @@
 #import "Platforms/iOS/CCDirectorIOS.h"
 #import "Platforms/iOS/CCTouchDispatcher.h"
 #elif defined(__CC_PLATFORM_MAC)
-#import "Platforms/Mac/MacGLView.h"
+#import "Platforms/Mac/CCGLView.h"
 #import "Platforms/Mac/CCDirectorMac.h"
 #endif
 

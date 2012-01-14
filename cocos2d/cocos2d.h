@@ -112,7 +112,7 @@
 #import "CCConfiguration.h"
 
 // Shaders
-#import "GLProgram.h"
+#import "CCGLProgram.h"
 #import "ccGLState.h"
 #import "CCShaderCache.h"
 
@@ -131,13 +131,13 @@
 #import "Platforms/iOS/CCTouchDispatcher.h"
 #import "Platforms/iOS/CCTouchDelegateProtocol.h"
 #import "Platforms/iOS/CCTouchHandler.h"
-#import "Platforms/iOS/EAGLView.h"
+#import "Platforms/iOS/CCGLView.h"
 #import "Platforms/iOS/CCDirectorIOS.h"
 
 #elif defined(__CC_PLATFORM_MAC)
-#import "Platforms/Mac/MacGLView.h"
+#import "Platforms/Mac/CCGLView.h"
 #import "Platforms/Mac/CCDirectorMac.h"
-#import "Platforms/Mac/MacWindow.h"
+#import "Platforms/Mac/CCWindow.h"
 #import "Platforms/Mac/CCEventDispatcher.h"
 #endif
 

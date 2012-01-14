@@ -30,7 +30,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-#import "MacGLView.h"
+#import "CCGLView.h"
 #import "../../Support/uthash.h"	// hack: uthash needs to be imported before utlist to prevent warning
 #import "../../Support/utlist.h"
 #import "../../ccConfig.h"
@@ -211,7 +211,7 @@ struct _listAddedEntry;
 
  Only available on Mac
  */
-@interface CCEventDispatcher : NSObject <MacEventDelegate> {
+@interface CCEventDispatcher : NSObject <CCEventDelegate> {
 
 	BOOL					dispatchEvents_;
 	BOOL					dispatchingInProgress_;

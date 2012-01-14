@@ -26,7 +26,7 @@
 
 #import "CCAtlasNode.h"
 #import "ccMacros.h"
-#import "GLProgram.h"
+#import "CCGLProgram.h"
 #import "CCShaderCache.h"
 #import "ccGLState.h"
 #import "CCDirector.h"

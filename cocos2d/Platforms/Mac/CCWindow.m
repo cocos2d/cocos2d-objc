@@ -27,10 +27,10 @@
 #import "../../ccMacros.h"
 #ifdef __CC_PLATFORM_MAC
 
-#import "MacWindow.h"
+#import "CCWindow.h"
 
 
-@implementation MacWindow
+@implementation CCWindow
 
 - (id) initWithFrame:(NSRect)frame fullscreen:(BOOL)fullscreen
 {
