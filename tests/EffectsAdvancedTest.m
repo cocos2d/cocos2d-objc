@@ -403,7 +403,7 @@ Class restartAction()
 		item1.position = ccp(size.width/2-100,30);
 		item2.position = ccp(size.width/2, 30);
 		item3.position = ccp(size.width/2+100,30);
-        trigger.position = ccp( 0.5f * s.width, 0.25f * s.height);
+        trigger.position = ccp( 0.5f * size.width, 0.25f * size.height);
         
 		[self addChild: menu z:101];
     }
