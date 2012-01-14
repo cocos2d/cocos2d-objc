@@ -612,8 +612,9 @@ static NSString *const kAMCTestLayerName = @"curAMCTestLayer";
     timer5.type = kCCProgressTimerTypeVerticalBarBT;
     timer6.type = kCCProgressTimerTypeRadialCCW;
     
-    // TODO: looks like progressTimers (especially radial) don't like anchorPoint,
-    // other than default one. Report a bug.
+    // Looks like progressTimers (especially radial) don't like anchorPoint,
+    // other than default one. Issue #1300:
+    // http://code.google.com/p/cocos2d-iphone/issues/detail?id=1300
     
     timer1.position = ccp(120, s.height - 120);
     timer2.position = ccp(0.5f * s.width, s.height - 120);
@@ -811,6 +812,8 @@ static NSString *const kAMCTestLayerName = @"curAMCTestLayer";
 // 1. Cocos2D-iPhone Sources:
 //      1. ADDED: cocos2d/AutoMagicCoding - AMC submodule
 //          TODO: remove submodule, use easier path, update all files , that uses that path.
+//          before adding actions amc support & merging it all - it's better to have AMC
+//          as a submodule - easier to maintain.
 //
 //      2. CHANGED: Many cocos2d classes, that now have AMC Support (see pull request notes).
 //
@@ -827,6 +830,10 @@ static NSString *const kAMCTestLayerName = @"curAMCTestLayer";
 //      5. CHANGED: Memory footprint of ccColor3B. 3 bytes is too small. It
 //              should be 5 bytes at least, to avoid KVC failure (corrupted isa
 //              pointer & garbage value returned).
+//
+//      6. CHANGED: Templates. Removed CCBlockSupport.m, added Node Registry &
+//          AMC sources.
+//          TODO: test XCode3 templates, i don't have XCode3, so i can't test it.
 //
 //
 // 2. Tests:
@@ -892,29 +899,6 @@ static NSString *const kAMCTestLayerName = @"curAMCTestLayer";
 //
 //
 
-// ====== Current TODO: =======
-//
-
-// Right after that:
-//
-// 1. Test Mac project after changing AMC sources.
-//
-// 2. Check issues & TODOs in code - try to close them.
-//
-// 3. Think what to do NeXT ;)
-//    * Start developing an editor without actions support. 
-//  OR
-//    * ADD actions support. 
-//  OR
-//    * Start doing a pull-request and:
-//      * Add actions support.
-//     OR
-//      * Start developing an editor without actions support. 
-//
-//      Mmmmm.... Sweet time to make a decision... 
-//      Take your time. Feeeeeeeeel it. Enjoy it.
-//
-
 //
 // ====== ACTIONS ======
 //
@@ -945,7 +929,7 @@ static NSString *const kAMCTestLayerName = @"curAMCTestLayer";
 //
 // * CCAnimation - should work out of the box, cause CCSpriteFrame is ready.
 // Just some additional logic must be added to recache used animations & spriteFrames.
-// Look for TODOs for Issue #9.
+// Look for TODOs for Issue #9 in psineur/cocos2d-iphone.
 //      
 //
 // Для того чтобы экономить память и хранить Анимации И Кадры в едином месте 
