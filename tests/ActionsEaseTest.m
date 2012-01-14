@@ -96,10 +96,27 @@ Class restartAction()
 		item2.position = ccp(s.width/2, 30);
 		item3.position = ccp(s.width/2+100,30);
 		[self addChild: menu z:1];
+		
+//        CCMenuItemLabel *test = [CCMenuItemLabel itemWithLabel:[CCLabelTTF labelWithString:@"Test" fontName:@"Arial" fontSize:32] target:self selector:@selector(test)];
+//        CCMenu *testMenu = [CCMenu menuWithItems:test, nil];
+//        testMenu.position = ccp(testMenu.contentSize.width/2, testMenu.contentSize.height/2);
+//        [self addChild:testMenu z:1 tag:10];
 	}
-
+	
 	return self;
 }
+
+//-(void) test
+//{
+//    CCLOG(@"Test");
+//	for( int i=0; i<1;i++) {
+//		[self removeChildByTag:10 cleanup:YES];
+//		CCMenuItemLabel *test = [CCMenuItemLabel itemWithLabel:[CCLabelTTF labelWithString:@"Test" fontName:@"Arial" fontSize:32] target:self selector:@selector(test)];
+//		CCMenu *testMenu = [CCMenu menuWithItems:test, nil];
+//		testMenu.position = ccp(testMenu.contentSize.width/2, testMenu.contentSize.height/2);
+//		[self addChild:testMenu z:1 tag:10];
+//	}
+//}
 
 -(void) dealloc
 {

@@ -382,12 +382,12 @@
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 
 	[self drawScene];
-	[eventDispatcher_ dispatchQueuedEvents];
 
+	// Process timers and other events
 	[[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:nil];
 
 	[pool release];
-
+		
 #else
 	[self performSelector:@selector(drawScene) onThread:runningThread_ withObject:nil waitUntilDone:YES];
 #endif
@@ -487,9 +487,8 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 	[[openGLview openGLContext] makeCurrentContext];
 
 	/* tick before glClear: issue #533 */
-	if( ! isPaused_ ) {
+	if( ! isPaused_ )
 		[scheduler_ update: dt];
-	}
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -513,7 +512,7 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 	kmGLPopMatrix();
 
 	totalFrames_++;
-
+	
 	[[openGLview openGLContext] flushBuffer];
 	CGLUnlockContext([[openGLview openGLContext] CGLContextObj]);
 

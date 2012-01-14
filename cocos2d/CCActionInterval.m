@@ -203,9 +203,6 @@
 
 -(void) update: (ccTime) t
 {
-	if( t < 0 )
-		NSLog(@"time: %f", t);
-
 	int found = 0;
 	ccTime new_t = 0.0f;
 

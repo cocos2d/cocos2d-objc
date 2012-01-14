@@ -307,7 +307,8 @@ NSComparisonResult sortByPriority(id first, id second, void *context)
 			[self forceRemoveDelegate:delegate];
 		[handlersToRemove removeAllObjects];
 	}
-		if( toQuit ) {
+
+	if( toQuit ) {
 		toQuit = NO;
 		[self forceRemoveAllDelegates];
 	}
