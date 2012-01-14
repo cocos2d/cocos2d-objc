@@ -30,6 +30,9 @@
 	// Enable "moving" mouse event. Default no.
 	[window_ setAcceptsMouseMovedEvents:NO];
 	
+	// Center main window
+	[window_ center];
+	
 	CCScene *scene = [CCScene node];
 	[scene addChild:[HelloWorldLayer node]];
 	

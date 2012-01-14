@@ -33,19 +33,18 @@
 #import <OpenGLES/ES2/gl.h>
 #import <OpenGLES/ES2/glext.h>
 #import <OpenGLES/EAGL.h>
-#import "iOS/EAGLView.h"
+#import "iOS/CCGLView.h"
 
 #elif defined(__CC_PLATFORM_MAC)
 #import <OpenGL/gl.h>
 #import <OpenGL/glu.h>
 #import <Cocoa/Cocoa.h>	// needed for NSOpenGLView
-#import "Mac/MacGLView.h"
+#import "Mac/CCGLView.h"
 #endif
 
 
 // iOS
 #ifdef __CC_PLATFORM_IOS
-#define CC_GLVIEW					EAGLView
 #define	glClearDepth				glClearDepthf
 #define glGenerateMipmap			glGenerateMipmapOES
 #define glGenFramebuffers			glGenFramebuffersOES
@@ -64,7 +63,6 @@
 
 // Mac
 #elif defined(__CC_PLATFORM_MAC)
-#define CC_GLVIEW					MacGLView
 #define glDeleteVertexArrays		glDeleteVertexArraysAPPLE
 #define glGenVertexArrays			glGenVertexArraysAPPLE
 #define glBindVertexArray			glBindVertexArrayAPPLE

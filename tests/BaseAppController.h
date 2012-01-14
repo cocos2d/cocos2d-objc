@@ -34,12 +34,12 @@
 @interface BaseAppController : NSObject <NSApplicationDelegate>
 {
 	NSWindow		*window_;
-	MacGLView		*glView_;
+	CCGLView		*glView_;
 	CCDirectorMac	*director_;							// weak ref
 }
 
 @property (nonatomic, assign) IBOutlet NSWindow	*window;
-@property (nonatomic, assign) IBOutlet MacGLView	*glView;
+@property (nonatomic, assign) IBOutlet CCGLView	*glView;
 @property (nonatomic, readonly) CCDirectorMac	*director;
 
 - (IBAction)toggleFullScreen:(id)sender;

@@ -41,7 +41,7 @@
 #import "CCDirector.h"
 #import "CCShaderCache.h"
 #import "ccGLState.h"
-#import "GLProgram.h"
+#import "CCGLProgram.h"
 
 // support
 #import "Support/OpenGL_Internal.h"

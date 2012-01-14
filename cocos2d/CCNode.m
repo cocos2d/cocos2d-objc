@@ -37,7 +37,7 @@
 #import "Support/ccCArray.h"
 #import "Support/TransformUtils.h"
 #import "ccMacros.h"
-#import "GLProgram.h"
+#import "CCGLProgram.h"
 
 // externals
 #import "kazmath/GL/matrix.h"

@@ -167,7 +167,7 @@ enum {
 
 -(void) loadShaderVertex:(NSString*)vert fragment:(NSString*)frag
 {
-	GLProgram *shader = [[GLProgram alloc] initWithVertexShaderFilename:vert
+	CCGLProgram *shader = [[CCGLProgram alloc] initWithVertexShaderFilename:vert
 												 fragmentShaderFilename:frag];
 
 	[shader addAttribute:@"aVertex" index:kCCVertexAttrib_Position];
@@ -422,7 +422,7 @@ enum {
 		blur_ = ccp(1/s.width, 1/s.height);
 		sub_[0] = sub_[1] = sub_[2] = sub_[3] = 0;
 
-		self.shaderProgram = [[GLProgram alloc] initWithVertexShaderFilename:@"PositionTextureColor.vsh"
+		self.shaderProgram = [[CCGLProgram alloc] initWithVertexShaderFilename:@"PositionTextureColor.vsh"
 													 fragmentShaderFilename:@"Blur.fsh"];
 
 		[self.shaderProgram release];
@@ -526,7 +526,7 @@ enum {
 		[ctl.view addSubview: sliderCtl_];
 
 #elif defined(__CC_PLATFORM_MAC)
-		MacGLView *view = [[CCDirector sharedDirector] view];
+		CCGLView *view = [[CCDirector sharedDirector] view];
 
 		if( ! overlayWindow ) {
 			overlayWindow  = [[NSWindow alloc] initWithContentRect:[[view window] frame]
@@ -654,8 +654,8 @@ enum {
 	//
 	// CC_DIRECTOR_INIT:
 	// 1. It will create an NSWindow with a given size
-	// 2. It will create a MacGLView and it will associate it with the NSWindow
-	// 3. It will register the MacGLView to the CCDirector
+	// 2. It will create a CCGLView and it will associate it with the NSWindow
+	// 3. It will register the CCGLView to the CCDirector
 	//
 	// If you want to create a fullscreen window, you should do it AFTER calling this macro
 	//

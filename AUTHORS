@@ -40,7 +40,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	Added Tint + opacity test cases for CCProgressTimer
 
 * Justin Graham (http://www.zynga.com)
-	GLProgram: fixes in fragmentShaderLog
+	CCGLProgram: fixes in fragmentShaderLog
 	CCShaderCache: Added addProgram:forKey: method
 	CCArray: Fixed copyWithZone
 

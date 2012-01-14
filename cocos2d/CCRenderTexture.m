@@ -26,7 +26,7 @@
 #import "CCRenderTexture.h"
 #import "CCDirector.h"
 #import "ccMacros.h"
-#import "GLProgram.h"
+#import "CCGLProgram.h"
 #import "ccGLState.h"
 #import "CCConfiguration.h"
 #import "Support/ccUtils.h"

@@ -30,7 +30,7 @@
 #import <Cocoa/Cocoa.h>
 
 
-@interface MacWindow : NSWindow
+@interface CCWindow : NSWindow
 {
 }
 - (id) initWithFrame:(NSRect)frame fullscreen:(BOOL)fullscreen;

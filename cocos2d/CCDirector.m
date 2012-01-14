@@ -291,7 +291,7 @@ static CCDirector *_sharedDirector = nil;
 
 #pragma mark Director Integration with a UIKit view
 
--(void) setView:(CC_GLVIEW *)view
+-(void) setView:(CCGLView*)view
 {
 	NSAssert( view, @"OpenGLView must be non-nil");
 
@@ -309,7 +309,7 @@ static CCDirector *_sharedDirector = nil;
 }
 
 #ifdef __CC_PLATFORM_MAC
--(CC_GLVIEW*) view
+-(CCGLView*) view
 {
 	// ignore on Mac
 	return nil;

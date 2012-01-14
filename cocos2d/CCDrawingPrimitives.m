@@ -32,12 +32,12 @@
 #import "Platforms/CCGL.h"
 #import "ccGLState.h"
 #import "CCShaderCache.h"
-#import "GLProgram.h"
+#import "CCGLProgram.h"
 #import "Support/OpenGL_Internal.h"
 
 
 static BOOL initialized = NO;
-static GLProgram *shader_ = nil;
+static CCGLProgram *shader_ = nil;
 static int colorLocation_ = -1;
 static ccColor4F color_ = {1,1,1,1};
 static int pointSizeLocation_ = -1;
@@ -50,7 +50,7 @@ static void lazy_init( void )
 		//
 		// Position and 1 color passed as a uniform (to similate glColor4ub )
 		//
-		shader_ = [[GLProgram alloc] initWithVertexShaderFilename:@"Position_uColor.vsh"
+		shader_ = [[CCGLProgram alloc] initWithVertexShaderFilename:@"Position_uColor.vsh"
 									 fragmentShaderFilename:@"Position_uColor.fsh"];
 
 

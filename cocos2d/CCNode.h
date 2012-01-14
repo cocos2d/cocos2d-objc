@@ -39,7 +39,7 @@ enum {
 
 @class CCCamera;
 @class CCGridBase;
-@class GLProgram;
+@class CCGLProgram;
 @class CCScheduler;
 @class CCActionManager;
 @class CCAction;
@@ -150,7 +150,7 @@ enum {
 	void *userData_;
 
 	// Shader
-	GLProgram	*shaderProgram_;
+	CCGLProgram	*shaderProgram_;
 
 	// Server side state
 	ccGLServerState glServerState_;
@@ -260,7 +260,7 @@ enum {
 /** Shader Program
  @since v2.0
  */
-@property(nonatomic,readwrite,retain) GLProgram *shaderProgram;
+@property(nonatomic,readwrite,retain) CCGLProgram *shaderProgram;
 
 /** used internally for zOrder sorting, don't change this manually */
 @property(nonatomic,readwrite) NSUInteger orderOfArrival;

@@ -15,7 +15,7 @@ seeds.
 
 =====================
 
-File: EAGLView.h
+File: CCGLView.h
 Abstract: Convenience class that wraps the CAEAGLLayer from CoreAnimation into a
 UIView subclass.
 
@@ -72,16 +72,15 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #import <OpenGLES/ES1/gl.h>
 #import <OpenGLES/ES1/glext.h>
 
-#import "ESRenderer.h"
+#import "CCESRenderer.h"
 
 //CLASSES:
 
-@class EAGLView;
-@class EAGLSharegroup;
+@class CCGLView;
 
 //PROTOCOLS:
 
-@protocol EAGLTouchDelegate <NSObject>
+@protocol CCTouchDelegate <NSObject>
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event;
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event;
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event;
@@ -90,14 +89,14 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 //CLASS INTERFACE:
 
-/** EAGLView Class.
+/** CCGLView Class.
  * This class wraps the CAEAGLLayer from CoreAnimation into a convenient UIView subclass.
  * The view content is basically an EAGL surface you render your OpenGL scene into.
  * Note that setting the view non-opaque will only work if the EAGL surface has an alpha channel.
  */
-@interface EAGLView : UIView
+@interface CCGLView : UIView
 {
-    id<ESRenderer>			renderer_;
+    id<CCESRenderer>		renderer_;
 	EAGLContext				*context_; // weak ref
 
 	NSString				*pixelformat_;
@@ -106,27 +105,27 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 	CGSize					size_;
 	BOOL					discardFramebufferSupported_;
-	id<EAGLTouchDelegate>   touchDelegate_;
+	id<CCTouchDelegate>		touchDelegate_;
 
 	//fsaa addition
 	BOOL					multisampling_;
 	unsigned int			requestedSamples_;
 }
 
-/** creates an initializes an EAGLView with a frame and 0-bit depth buffer, and a RGB565 color buffer. */
+/** creates an initializes an CCGLView with a frame and 0-bit depth buffer, and a RGB565 color buffer. */
 + (id) viewWithFrame:(CGRect)frame;
-/** creates an initializes an EAGLView with a frame, a color buffer format, and 0-bit depth buffer. */
+/** creates an initializes an CCGLView with a frame, a color buffer format, and 0-bit depth buffer. */
 + (id) viewWithFrame:(CGRect)frame pixelFormat:(NSString*)format;
-/** creates an initializes an EAGLView with a frame, a color buffer format, and a depth buffer. */
+/** creates an initializes an CCGLView with a frame, a color buffer format, and a depth buffer. */
 + (id) viewWithFrame:(CGRect)frame pixelFormat:(NSString*)format depthFormat:(GLuint)depth;
-/** creates an initializes an EAGLView with a frame, a color buffer format, a depth buffer format, a sharegroup, and multisamping */
+/** creates an initializes an CCGLView with a frame, a color buffer format, a depth buffer format, a sharegroup, and multisamping */
 + (id) viewWithFrame:(CGRect)frame pixelFormat:(NSString*)format depthFormat:(GLuint)depth preserveBackbuffer:(BOOL)retained sharegroup:(EAGLSharegroup*)sharegroup multiSampling:(BOOL)multisampling numberOfSamples:(unsigned int)samples;
 
-/** Initializes an EAGLView with a frame and 0-bit depth buffer, and a RGB565 color buffer */
+/** Initializes an CCGLView with a frame and 0-bit depth buffer, and a RGB565 color buffer */
 - (id) initWithFrame:(CGRect)frame; //These also set the current context
-/** Initializes an EAGLView with a frame, a color buffer format, and 0-bit depth buffer */
+/** Initializes an CCGLView with a frame, a color buffer format, and 0-bit depth buffer */
 - (id) initWithFrame:(CGRect)frame pixelFormat:(NSString*)format;
-/** Initializes an EAGLView with a frame, a color buffer format, a depth buffer format, a sharegroup and multisampling support */
+/** Initializes an CCGLView with a frame, a color buffer format, a depth buffer format, a sharegroup and multisampling support */
 - (id) initWithFrame:(CGRect)frame pixelFormat:(NSString*)format depthFormat:(GLuint)depth preserveBackbuffer:(BOOL)retained sharegroup:(EAGLSharegroup*)sharegroup multiSampling:(BOOL)sampling numberOfSamples:(unsigned int)nSamples;
 
 /** pixel format: it could be RGBA8 (32-bit) or RGB565 (16-bit) */
@@ -143,9 +142,9 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 @property(nonatomic,readwrite) BOOL multiSampling;
 
 /** touch delegate */
-@property(nonatomic,readwrite,assign) id<EAGLTouchDelegate> touchDelegate;
+@property(nonatomic,readwrite,assign) id<CCTouchDelegate> touchDelegate;
 
-/** EAGLView uses double-buffer. This method swaps the buffers */
+/** CCGLView uses double-buffer. This method swaps the buffers */
 -(void) swapBuffers;
 
 - (CGPoint) convertPointFromViewToSurface:(CGPoint)point;

@@ -1,6 +1,6 @@
 //
 //  bugViewController.m
-//  EAGLViewBug
+//  CCGLViewBug
 //
 //  Created by Wylan Werth on 7/5/10.
 //  Copyright 2010 BanditBear Games. All rights reserved.
@@ -30,10 +30,10 @@
 -(void)viewWillAppear:(BOOL)animated {
 
 	for (UIView *view in self.view.subviews) {
-		if ([view isKindOfClass:[EAGLView class]]) {
+		if ([view isKindOfClass:[CCGLView class]]) {
 
 			// weak reference
-			glView = (EAGLView *) view;
+			glView = (CCGLView *) view;
 			break;
 		}
 	}

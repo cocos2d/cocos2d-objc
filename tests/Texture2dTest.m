@@ -2005,8 +2005,8 @@ Class restartAction()
 	//
 	// CC_DIRECTOR_INIT:
 	// 1. It will create an NSWindow with a given size
-	// 2. It will create a MacGLView and it will associate it with the NSWindow
-	// 3. It will register the MacGLView to the CCDirector
+	// 2. It will create a CCGLView and it will associate it with the NSWindow
+	// 3. It will register the CCGLView to the CCDirector
 	//
 	// If you want to create a fullscreen window, you should do it AFTER calling this macro
 	//

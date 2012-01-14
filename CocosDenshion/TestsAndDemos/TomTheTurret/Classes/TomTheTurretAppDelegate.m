@@ -53,7 +53,7 @@
     // main content
     // See http://www.cocos2d-iphone.org/forum/topic/363 for more details
 
-	EAGLView *view = (EAGLView*) [[CCDirector sharedDirector] view];
+	CCGLView *view = (CCGLView*) [[CCDirector sharedDirector] view];
     EAGLContext *k_context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2
 													sharegroup: [view.context sharegroup]];
 

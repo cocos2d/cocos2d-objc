@@ -24,7 +24,7 @@
  */
 
 #import "ccGLState.h"
-#import "GLProgram.h"
+#import "CCGLProgram.h"
 #import "CCDirector.h"
 #import "ccConfig.h"
 
@@ -215,7 +215,7 @@ void ccGLEnableVertexAttribs( unsigned int flags )
 
 #pragma mark - GL Uniforms functions
 
-void ccGLUniformModelViewProjectionMatrix( GLProgram *shaderProgram )
+void ccGLUniformModelViewProjectionMatrix( CCGLProgram *shaderProgram )
 {
 	kmMat4 matrixP;
 	kmMat4 matrixMV;

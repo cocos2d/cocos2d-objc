@@ -35,7 +35,7 @@
 #import "CCDrawingPrimitives.h"
 #import "CCShaderCache.h"
 #import "ccGLState.h"
-#import "GLProgram.h"
+#import "CCGLProgram.h"
 #import "CCDirector.h"
 #import "Support/CGPointExtension.h"
 #import "Support/TransformUtils.h"

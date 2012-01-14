@@ -29,7 +29,7 @@
 #ifdef __CC_PLATFORM_IOS
 
 #import "CCTouchDelegateProtocol.h"
-#import "EAGLView.h"
+#import "CCGLView.h"
 
 
 typedef enum
@@ -73,7 +73,7 @@ struct ccTouchHandlerHelperData {
 
  @since v0.8.0
  */
-@interface CCTouchDispatcher : NSObject <EAGLTouchDelegate>
+@interface CCTouchDispatcher : NSObject <CCTouchDelegate>
 {
 	NSMutableArray	*targetedHandlers;
 	NSMutableArray	*standardHandlers;

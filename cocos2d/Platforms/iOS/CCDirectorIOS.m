@@ -40,7 +40,7 @@
 #import "../../CCTextureCache.h"
 #import "../../ccMacros.h"
 #import "../../CCScene.h"
-#import "../../GLProgram.h"
+#import "../../CCGLProgram.h"
 #import "../../ccGLState.h"
 #import "../../CCLayer.h"
 
@@ -137,7 +137,7 @@ CGFloat	__ccContentScaleFactor = 1;
 	/* calculate "global" dt */
 	[self calculateDeltaTime];
 
-	CC_GLVIEW *openGLview = (CC_GLVIEW*)[self view];
+	CCGLView *openGLview = (CCGLView*)[self view];
 
 	[EAGLContext setCurrentContext: [openGLview context]];
 
@@ -345,7 +345,7 @@ CGFloat	__ccContentScaleFactor = 1;
 #pragma mark Director - UIViewController delegate
 
 
--(void) setView:(EAGLView *)view
+-(void) setView:(CCGLView *)view
 {
 	[super setView:view];
 

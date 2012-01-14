@@ -83,19 +83,15 @@ static CCTextureCache *sharedTextureCache;
 		_loadingQueue = dispatch_queue_create("org.cocos2d.texturecacheloading", NULL);
 		_dictQueue = dispatch_queue_create("org.cocos2d.texturecachedict", NULL);
 
-#ifdef __CC_PLATFORM_IOS
-		CC_GLVIEW *view = (CC_GLVIEW*)[[CCDirector sharedDirector] view];
+		CCGLView *view = (CCGLView*)[[CCDirector sharedDirector] view];
 		NSAssert(view, @"Do not initialize the TextureCache before the Director");
+
+#ifdef __CC_PLATFORM_IOS
 		_auxGLcontext = [[EAGLContext alloc]
 						 initWithAPI:kEAGLRenderingAPIOpenGLES2
 						 sharegroup:[[view context] sharegroup]];
 
 #elif defined(__CC_PLATFORM_MAC)
-
-		MacGLView *view = (CC_GLVIEW*)[[CCDirector sharedDirector] view];
-		NSAssert(view, @"Do not initialize the TextureCache before the Director");
-
-
 		NSOpenGLPixelFormat *pf = [view pixelFormat];
 		NSOpenGLContext *share = [view openGLContext];
 

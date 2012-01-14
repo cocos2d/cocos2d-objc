@@ -66,9 +66,10 @@ enum {
 #define	kCCAttributeNameTexCoord		@"a_texCoord"
 
 
-/** GLProgram
+/** CCGLProgram
+ Class that implements a glProgram
  */
-@interface GLProgram : NSObject
+@interface CCGLProgram : NSObject
 {
 @public
 	GLuint          program_,

@@ -28,7 +28,7 @@
 #import <OpenGLES/ES2/gl.h>
 #endif // __CC_PLATFORM_IOS
 
-@class GLProgram;
+@class CCGLProgram;
 
 /** CCShaderCache
  Singleton that stores manages GL shaders
@@ -50,10 +50,10 @@
 -(void) loadDefaultShaders;
 
 /** returns a GL program for a given key */
--(GLProgram *) programForKey:(NSString*)key;
+-(CCGLProgram *) programForKey:(NSString*)key;
 
-/** adds a GLProgram to the cache for a given name */
-- (void) addProgram:(GLProgram*)program forKey:(NSString*)key;
+/** adds a CCGLProgram to the cache for a given name */
+- (void) addProgram:(CCGLProgram*)program forKey:(NSString*)key;
 
 @end
 

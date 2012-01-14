@@ -77,7 +77,7 @@
 #import "ccMacros.h"
 #import "CCConfiguration.h"
 #import "CCTexturePVR.h"
-#import "GLProgram.h"
+#import "CCGLProgram.h"
 #import "ccGLState.h"
 #import "CCShaderCache.h"
 

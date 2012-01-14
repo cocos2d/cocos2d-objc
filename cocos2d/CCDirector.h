@@ -299,13 +299,12 @@ and when to execute the Scenes.
 
 
 // XXX: Hack. Should be placed on CCDirectorMac.h. Refactoring needed
-#ifdef __CC_PLATFORM_IOS
-#elif defined(__CC_PLATFORM_MAC)
+#if defined(__CC_PLATFORM_MAC)
 /** sets the openGL view */
--(void) setView:(CC_GLVIEW*)view;
+-(void) setView:(CCGLView*)view;
 
 /** returns the OpenGL view */
--(CC_GLVIEW*) view;
+-(CCGLView*) view;
 #endif
 
 #pragma mark Director - Memory Helper
