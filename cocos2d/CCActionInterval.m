@@ -37,8 +37,7 @@
 //
 // IntervalAction
 //
-#pragma mark -
-#pragma mark IntervalAction
+#pragma mark - CCIntervalAction
 @implementation CCActionInterval
 
 @synthesize elapsed = elapsed_;
@@ -116,8 +115,7 @@
 //
 // Sequence
 //
-#pragma mark -
-#pragma mark Sequence
+#pragma mark - CCSequence
 @implementation CCSequence
 +(id) actions: (CCFiniteTimeAction*) action1, ...
 {
@@ -246,8 +244,7 @@
 //
 // Repeat
 //
-#pragma mark -
-#pragma mark CCRepeat
+#pragma mark - CCRepeat
 @implementation CCRepeat
 @synthesize innerAction=innerAction_;
 
@@ -350,8 +347,7 @@
 //
 // Spawn
 //
-#pragma mark -
-#pragma mark Spawn
+#pragma mark - CCSpawn
 
 @implementation CCSpawn
 +(id) actions: (CCFiniteTimeAction*) action1, ...
@@ -459,8 +455,7 @@
 //
 // RotateTo
 //
-#pragma mark -
-#pragma mark RotateTo
+#pragma mark - CCRotateTo
 
 @implementation CCRotateTo
 +(id) actionWithDuration: (ccTime) t angle:(float) a
@@ -508,8 +503,7 @@
 //
 // RotateBy
 //
-#pragma mark -
-#pragma mark RotateBy
+#pragma mark - CCRotateBy
 
 @implementation CCRotateBy
 +(id) actionWithDuration: (ccTime) t angle:(float) a
@@ -553,8 +547,7 @@
 //
 // MoveTo
 //
-#pragma mark -
-#pragma mark MoveTo
+#pragma mark - CCMoveTo
 
 @implementation CCMoveTo
 +(id) actionWithDuration: (ccTime) t position: (CGPoint) p
@@ -592,8 +585,7 @@
 //
 // MoveBy
 //
-#pragma mark -
-#pragma mark MoveBy
+#pragma mark - CCMoveBy
 
 @implementation CCMoveBy
 +(id) actionWithDuration: (ccTime) t position: (CGPoint) p
@@ -632,8 +624,7 @@
 //
 // SkewTo
 //
-#pragma mark -
-#pragma mark SkewTo
+#pragma mark - CCSkewTo
 
 @implementation CCSkewTo
 +(id) actionWithDuration:(ccTime)t skewX:(float)sx skewY:(float)sy
@@ -704,6 +695,8 @@
 //
 // CCSkewBy
 //
+#pragma mark - CCSkewBy
+
 @implementation CCSkewBy
 
 -(id) initWithDuration:(ccTime)t skewX:(float)deltaSkewX skewY:(float)deltaSkewY
@@ -734,8 +727,7 @@
 //
 // JumpBy
 //
-#pragma mark -
-#pragma mark JumpBy
+#pragma mark - CCJumpBy
 
 @implementation CCJumpBy
 +(id) actionWithDuration: (ccTime) t position: (CGPoint) pos height: (ccTime) h jumps:(NSUInteger)j
@@ -791,8 +783,7 @@
 //
 // JumpTo
 //
-#pragma mark -
-#pragma mark JumpTo
+#pragma mark - CCJumpTo
 
 @implementation CCJumpTo
 -(void) startWithTarget:(CCNode *)aTarget
@@ -803,8 +794,7 @@
 @end
 
 
-#pragma mark -
-#pragma mark BezierBy
+#pragma mark - CCBezierBy
 
 // Bezier cubic formula:
 //	((1 - t) + t)3 = 1
@@ -880,8 +870,7 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 //
 // BezierTo
 //
-#pragma mark -
-#pragma mark BezierTo
+#pragma mark - CCBezierTo
 @implementation CCBezierTo
 -(void) startWithTarget:(id)aTarget
 {
@@ -896,8 +885,7 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 //
 // ScaleTo
 //
-#pragma mark -
-#pragma mark ScaleTo
+#pragma mark - CCScaleTo
 @implementation CCScaleTo
 +(id) actionWithDuration: (ccTime) t scale:(float) s
 {
@@ -952,8 +940,7 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 //
 // ScaleBy
 //
-#pragma mark -
-#pragma mark ScaleBy
+#pragma mark - CCScaleBy
 @implementation CCScaleBy
 -(void) startWithTarget:(CCNode *)aTarget
 {
@@ -971,8 +958,7 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 //
 // Blink
 //
-#pragma mark -
-#pragma mark Blink
+#pragma mark - CCBlink
 @implementation CCBlink
 +(id) actionWithDuration: (ccTime) t blinks: (NSUInteger) b
 {
@@ -1012,8 +998,7 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 //
 // FadeIn
 //
-#pragma mark -
-#pragma mark FadeIn
+#pragma mark - CCFadeIn
 @implementation CCFadeIn
 -(void) update: (ccTime) t
 {
@@ -1029,8 +1014,7 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 //
 // FadeOut
 //
-#pragma mark -
-#pragma mark FadeOut
+#pragma mark - CCFadeOut
 @implementation CCFadeOut
 -(void) update: (ccTime) t
 {
@@ -1046,8 +1030,7 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 //
 // FadeTo
 //
-#pragma mark -
-#pragma mark FadeTo
+#pragma mark - CCFadeTo
 @implementation CCFadeTo
 +(id) actionWithDuration: (ccTime) t opacity: (GLubyte) o
 {
@@ -1083,8 +1066,7 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 //
 // TintTo
 //
-#pragma mark -
-#pragma mark TintTo
+#pragma mark - CCTintTo
 @implementation CCTintTo
 +(id) actionWithDuration:(ccTime)t red:(GLubyte)r green:(GLubyte)g blue:(GLubyte)b
 {
@@ -1123,8 +1105,7 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 //
 // TintBy
 //
-#pragma mark -
-#pragma mark TintBy
+#pragma mark - CCTintBy
 @implementation CCTintBy
 +(id) actionWithDuration:(ccTime)t red:(GLshort)r green:(GLshort)g blue:(GLshort)b
 {
@@ -1172,8 +1153,7 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 //
 // DelayTime
 //
-#pragma mark -
-#pragma mark DelayTime
+#pragma mark - CCDelayTime
 @implementation CCDelayTime
 -(void) update: (ccTime) t
 {
@@ -1189,13 +1169,12 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 //
 // ReverseTime
 //
-#pragma mark -
-#pragma mark ReverseTime
+#pragma mark - CCReverseTime
 @implementation CCReverseTime
 +(id) actionWithAction: (CCFiniteTimeAction*) action
 {
 	// casting to prevent warnings
-	CCReverseTime *a = [super alloc];
+	CCReverseTime *a = [self alloc];
 	return [[a initWithAction:action] autorelease];
 }
 
@@ -1251,8 +1230,7 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 // Animate
 //
 
-#pragma mark -
-#pragma mark Animate
+#pragma mark - CCAnimate
 @implementation CCAnimate
 
 @synthesize animation = animation_;

@@ -49,13 +49,13 @@
 	return self;
 }
 
--(void)startWithTarget:(id)aTarget
+-(void)startWithTarget:(id)target
 {
-	[super startWithTarget:aTarget];
+	[super startWithTarget:target];
 
 	CCGridBase *newgrid = [self grid];
 
-	CCNode *t = (CCNode*) target_;
+	CCNode *t = (CCNode*) target;
 	CCGridBase *targetGrid = [t grid];
 
 	if ( targetGrid && targetGrid.reuseGrid > 0 )
@@ -70,7 +70,7 @@
 		if ( targetGrid && targetGrid.active )
 			targetGrid.active = NO;
 
-		t.grid = newgrid;
+		[t setGrid: newgrid];
 		t.grid.active = YES;
 	}
 }

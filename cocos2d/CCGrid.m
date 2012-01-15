@@ -107,7 +107,7 @@
 	NSString *pixelFormat = [glview pixelFormat];
 
 	CCTexture2DPixelFormat format = [pixelFormat isEqualToString: kEAGLColorFormatRGB565] ? kCCTexture2DPixelFormat_RGB565 : kCCTexture2DPixelFormat_RGBA8888;
-#else
+#elif defined(__CC_PLATFORM_MAC)
 	CCTexture2DPixelFormat format = kCCTexture2DPixelFormat_RGBA8888;
 #endif
 
@@ -144,7 +144,7 @@
 {
 	CCLOGINFO(@"cocos2d: deallocing %@", self);
 
-	[self setActive: NO];
+//	[self setActive: NO];
 
 	[texture_ release];
 	[grabber_ release];
@@ -285,13 +285,15 @@
 	if (texCoordinates) free(texCoordinates);
 	if (indices) free(indices);
 	
-	vertices = malloc((gridSize_.x+1)*(gridSize_.y+1)*sizeof(ccVertex3F));
-	originalVertices = malloc((gridSize_.x+1)*(gridSize_.y+1)*sizeof(ccVertex3F));
-	texCoordinates = malloc((gridSize_.x+1)*(gridSize_.y+1)*sizeof(CGPoint));
-	indices = malloc(gridSize_.x*gridSize_.y*sizeof(GLushort)*6);
+	NSUInteger numOfPoints = (gridSize_.x+1) * (gridSize_.y+1);
+	
+	vertices = malloc(numOfPoints * sizeof(ccVertex3F));
+	originalVertices = malloc(numOfPoints * sizeof(ccVertex3F));
+	texCoordinates = malloc(numOfPoints * sizeof(ccVertex2F));
+	indices = malloc( (gridSize_.x * gridSize_.y) * sizeof(GLushort)*6);
 
-	float *vertArray = (float*)vertices;
-	float *texArray = (float*)texCoordinates;
+	GLfloat *vertArray = (GLfloat*)vertices;
+	GLfloat *texArray = (GLfloat*)texCoordinates;
 	GLushort *idxArray = (GLushort *)indices;
 
 	for( x = 0; x < gridSize_.x; x++ )
@@ -300,10 +302,10 @@
 		{
 			NSInteger idx = (y * gridSize_.x) + x;
 
-			float x1 = x * step_.x;
-			float x2 = x1 + step_.x;
-			float y1 = y * step_.y;
-			float y2 = y1 + step_.y;
+			GLfloat x1 = x * step_.x;
+			GLfloat x2 = x1 + step_.x;
+			GLfloat y1 = y * step_.y;
+			GLfloat y2 = y1 + step_.y;
 
 			GLushort a = x * (gridSize_.y+1) + y;
 			GLushort b = (x+1) * (gridSize_.y+1) + y;
@@ -433,13 +435,13 @@
 	if (texCoordinates) free(texCoordinates);
 	if (indices) free(indices);
 
-	vertices = malloc(numQuads*12*sizeof(GLfloat));
-	originalVertices = malloc(numQuads*12*sizeof(GLfloat));
-	texCoordinates = malloc(numQuads*8*sizeof(GLfloat));
+	vertices = malloc(numQuads*4*sizeof(ccVertex3F));
+	originalVertices = malloc(numQuads*4*sizeof(ccVertex3F));
+	texCoordinates = malloc(numQuads*4*sizeof(ccVertex2F));
 	indices = malloc(numQuads*6*sizeof(GLushort));
 
-	float *vertArray = (float*)vertices;
-	float *texArray = (float*)texCoordinates;
+	GLfloat *vertArray = (GLfloat*)vertices;
+	GLfloat *texArray = (GLfloat*)texCoordinates;
 	GLushort *idxArray = (GLushort *)indices;
 
 	int x, y;
