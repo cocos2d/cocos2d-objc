@@ -132,18 +132,17 @@
 	float heightRatio = size.height / texSize.height;
 
 
-	// Adjust the orthographic propjection and viewport
-	kmMat4 orthoMatrix;
-	kmMat4OrthographicProjection(&orthoMatrix, (float)-1.0 / widthRatio,  (float)1.0 / widthRatio,
-								 (float)-1.0 / heightRatio, (float)1.0 / heightRatio, -1,1 );
-	kmGLMultMatrix(&orthoMatrix);
-
+	// Adjust the orthographic projection and viewport
 	glViewport(0, 0, texSize.width * CC_CONTENT_SCALE_FACTOR(), texSize.height * CC_CONTENT_SCALE_FACTOR() );
 
 	// special viewport for 3d projection + retina display
 	if ( director.projection == kCCDirectorProjection3D && CC_CONTENT_SCALE_FACTOR() != 1 )
 		glViewport(-texSize.width/2, -texSize.height/2, texSize.width * CC_CONTENT_SCALE_FACTOR(), texSize.height * CC_CONTENT_SCALE_FACTOR() );
 
+	kmMat4 orthoMatrix;
+	kmMat4OrthographicProjection(&orthoMatrix, (float)-1.0 / widthRatio,  (float)1.0 / widthRatio,
+								 (float)-1.0 / heightRatio, (float)1.0 / heightRatio, -1,1 );
+	kmGLMultMatrix(&orthoMatrix);
 
 	glGetIntegerv(CC_GL_FRAMEBUFFER_BINDING, &oldFBO_);
 	glBindFramebuffer(CC_GL_FRAMEBUFFER, fbo_);
@@ -180,6 +179,8 @@
 	// special viewport for 3d projection + retina display
 	if ( director.projection == kCCDirectorProjection3D && CC_CONTENT_SCALE_FACTOR() != 1 )
 		glViewport(-size.width/2, -size.height/2, size.width * CC_CONTENT_SCALE_FACTOR(), size.height * CC_CONTENT_SCALE_FACTOR() );
+	
+	[director setProjection:director.projection];
 }
 
 -(void)clear:(float)r g:(float)g b:(float)b a:(float)a
