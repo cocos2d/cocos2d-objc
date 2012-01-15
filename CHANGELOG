@@ -1,4 +1,4 @@
-version 2.0-beta2 14-Jan-2012
+version 2.0-beta2 16-Jan-2012
 . [NEW] v1.1 Forward-ported changes:
 		LabelTTF: word wrap works on Mac (issue #1074)
 		Node: Added onExitTransitionDidStart (issue #792)
@@ -36,6 +36,7 @@ version 2.0-beta2 14-Jan-2012
 . [FIX] Events: Events are removed/added from outside an event (Mac)
 . [FIX] Events: Fixed memory leak when removing delegate (Mac)
 . [FIX] Grid: Fixed two big memory leaks (issue #1280)
+. [FIX] Grid: CCGrid3D was allocating 2x memory on Mac
 . [FIX] Menu: Blocks API doesn't crash on Mac
 . [FIX] RenderTexture: Works with RGB888 (issue #1293)
 . [FIX] RenderTexture: Supports NPOT textures (issue #1291)
