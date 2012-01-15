@@ -532,11 +532,13 @@ Class restartAction()
 	[super application:application didFinishLaunchingWithOptions:launchOptions];
 
 	// 2D projection
-//	[director setProjection:kCCDirectorProjection2D];
+//	[director_ setProjection:kCCDirectorProjection2D];
 
 	// Enables High Res mode (Retina Display) on iPhone 4 and maintains low res on all other devices
 	if( ! [director_ enableRetinaDisplay:YES] )
 		CCLOG(@"Retina Display Not supported");
+	
+	[director_ setDisplayStats:YES];
 
 	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
 	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
@@ -550,10 +552,15 @@ Class restartAction()
 
 	CCScene *scene = [CCScene node];
 	[scene addChild: [nextAction() node]];
-
+	
 	[director_ pushScene:scene];
 
 	return YES;
+}
+
+-(BOOL) shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+	return UIInterfaceOrientationIsLandscape(interfaceOrientation);
 }
 @end
 
@@ -570,6 +577,8 @@ Class restartAction()
 
 	CCScene *scene = [CCScene node];
 	[scene addChild: [nextAction() node]];
+
+	[director_ setDisplayStats:YES];
 
 	[director_ runWithScene:scene];
 }

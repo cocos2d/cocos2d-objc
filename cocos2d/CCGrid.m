@@ -180,6 +180,27 @@
 	}
 }
 
+-(void)set2DProjection
+{	
+	CCDirector *director = [CCDirector sharedDirector];
+
+	CGSize	size = [director winSizeInPixels];
+	
+	glViewport(0, 0, size.width * CC_CONTENT_SCALE_FACTOR(), size.height * CC_CONTENT_SCALE_FACTOR() );
+	kmGLMatrixMode(KM_GL_PROJECTION);
+	kmGLLoadIdentity();
+	
+	kmMat4 orthoMatrix;
+	kmMat4OrthographicProjection(&orthoMatrix, 0, size.width * CC_CONTENT_SCALE_FACTOR(), 0, size.height * CC_CONTENT_SCALE_FACTOR(), -1, 1);
+	kmGLMultMatrix( &orthoMatrix );
+	
+	kmGLMatrixMode(KM_GL_MODELVIEW);
+	kmGLLoadIdentity();
+
+	
+	ccSetProjectionMatrixDirty();
+}
+
 -(void)beforeDraw
 {
 	// save projection
@@ -187,8 +208,10 @@
 	directorProjection_ = [director projection];
 	
 	// 2d projection
-	[director setProjection:kCCDirectorProjection2D];
+//	[director setProjection:kCCDirectorProjection2D];
+	[self set2DProjection];
 
+	
 	[grabber_ beforeRender:texture_];
 }
 
