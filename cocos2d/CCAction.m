@@ -77,13 +77,15 @@
 
 -(void)startOrContinueWithTarget:(id)target
 {
+    started_ = YES;
+	originalTarget_ = target_ = target;
+    
     [self startWithTarget:target];
 }
 
 -(void) startWithTarget:(id)aTarget
 {
-    started_ = YES;
-	originalTarget_ = target_ = aTarget;
+    
 }
 
 -(void) continueWithTarget:(id)target
@@ -174,10 +176,8 @@
 	if( [innerAction_ isDone] ) {
 		ccTime diff = innerAction_.elapsed - innerAction_.duration;
         
-        // We shouldn't use -startOrContinueWithTarget: here, because
-        // innerAction must start from initial state when repeating.
         [innerAction_ stop];
-		[innerAction_ startWithTarget:target_];
+		[innerAction_ startOrContinueWithTarget:target_];
 		
 		// to prevent jerk. issue #390, 1247
 		[innerAction_ step: 0.0f];
