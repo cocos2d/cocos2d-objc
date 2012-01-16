@@ -186,20 +186,9 @@ enum {
 	CCNode	*followedNode_;
 	
 	/* whether camera should be limited to certain area */
-	BOOL boundarySet;
+	BOOL boundarySet_;
 	
-	/* if screensize is bigger than the boundary - update not needed */
-	BOOL boundaryFullyCovered;
-	
-	/* fast access to the screen dimensions */
-	CGPoint halfScreenSize;
-	CGPoint fullScreenSize;
-	
-	/* world boundaries */
-	float leftBoundary;
-	float rightBoundary;
-	float topBoundary;
-	float bottomBoundary;
+	CGRect worldBoundary_;
 }
 
 /** alter behavior - turn on/off boundary */

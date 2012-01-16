@@ -282,11 +282,7 @@
 	
 		followedNode_ = [fNode retain];
 		boundarySet = FALSE;
-		boundaryFullyCovered = FALSE;
 		
-		CGSize s = [[CCDirector sharedDirector] winSize];
-		fullScreenSize = CGPointMake(s.width, s.height);
-		halfScreenSize = ccpMult(fullScreenSize, .5f);
 	}
 	
 	return self;
@@ -297,17 +293,33 @@
 	if( (self=[super init]) ) {
 	
 		followedNode_ = [fNode retain];
-		boundarySet = TRUE;
-		boundaryFullyCovered = FALSE;
-		
-		CGSize winSize = [[CCDirector sharedDirector] winSize];
-		fullScreenSize = CGPointMake(winSize.width, winSize.height);
-		halfScreenSize = ccpMult(fullScreenSize, .5f);
-		
-		leftBoundary = -((rect.origin.x+rect.size.width) - fullScreenSize.x);
-		rightBoundary = -rect.origin.x ;
-		topBoundary = -rect.origin.y;
-		bottomBoundary = -((rect.origin.y+rect.size.height) - fullScreenSize.y);
+		boundarySet_ = YES;
+        worldBoundary_ = rect;
+	}
+	
+	return self;
+}
+
+-(id) copyWithZone: (NSZone*) zone
+{
+	CCAction *copy = [[[self class] allocWithZone: zone] init];
+	copy.tag = tag_;
+	return copy;
+}
+
+-(void) step:(ccTime) dt
+{
+    CGSize winSize = [[CCDirector sharedDirector] winSize];
+    CGPoint fullScreenSize = CGPointMake(winSize.width, winSize.height);
+    CGPoint halfScreenSize = ccpMult(fullScreenSize, .5f);
+    BOOL boundaryFullyCovered = NO;
+    
+	if(boundarySet)
+	{       
+		float leftBoundary = -((worldBoundary_.origin.x+worldBoundary_.size.width) - fullScreenSize.x);
+		float rightBoundary = -worldBoundary_.origin.x ;
+		float topBoundary = -worldBoundary_.origin.y;
+		float bottomBoundary = -((worldBoundary_.origin.y+worldBoundary_.size.height) - fullScreenSize.y);
 		
 		if(rightBoundary < leftBoundary)
 		{
@@ -323,23 +335,8 @@
 		}
 		
 		if( (topBoundary == bottomBoundary) && (leftBoundary == rightBoundary) )
-			boundaryFullyCovered = TRUE;
-	}
-	
-	return self;
-}
-
--(id) copyWithZone: (NSZone*) zone
-{
-	CCAction *copy = [[[self class] allocWithZone: zone] init];
-	copy.tag = tag_;
-	return copy;
-}
-
--(void) step:(ccTime) dt
-{
-	if(boundarySet)
-	{
+			boundaryFullyCovered = YES;
+        
 		// whole map fits inside a single screen, no need to modify the position - unless map boundaries are increased
 		if(boundaryFullyCovered)
 			return;
