@@ -80,8 +80,25 @@ enum {
 
 //! return YES if the action has finished
 -(BOOL) isDone;
-//! called before the action start. It will also set the target.
+/** called before the action start in CCActionManager. It will also set the target.
+ * Usually you don't need to reimplement this method.
+ * Reimplement -startWithTarget: or -continueWithTarget: instead.
+ */
+-(void)startOrContinueWithTarget:(id)target;
+/** called from -startOrContinueWithTarget: if action is starting from initial state.
+ * Reimplement this method to do your own action pre-start routines.
+ * You don't need to call [super startWithTarget:] from your reimplementation of this method.
+ * Don't call [super startOrContinueWithTarget:] from your reimplementation of this method
+ * - this will lead to infinite recursion.
+ */
 -(void) startWithTarget:(id)target;
+/** called from -startOrContinueWithTarget: if action is starting from intermidiate state.
+ * Reimplement this method to do your own action pre-continue routines.
+ * You don't need to call [super continueWithTarget:] from you reimplementation of this method.
+ * Don't call [super startOrContinueWithTarget:] from your reimplementation of this method
+ * - this will lead to infinite recursion.
+ */
+-(void) continueWithTarget:(id)target;
 //! called after the action has finished. It will set the 'target' to nil.
 //! IMPORTANT: You should never call "[action stop]" manually. Instead, use: "[target stopAction:action];"
 -(void) stop;

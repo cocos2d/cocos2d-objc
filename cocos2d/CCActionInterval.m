@@ -93,11 +93,20 @@
 	[self update: MIN(1, elapsed_/MAX(duration_,FLT_EPSILON))];
 }
 
--(void) startWithTarget:(id)aTarget
+-(void)startOrContinueWithTarget:(id)target
 {
-	[super startWithTarget:aTarget];
-	elapsed_ = 0.0f;
-	firstTick_ = YES;
+    started_ = YES;
+	originalTarget_ = target_ = target;
+    
+    if (elapsed_)
+    {
+        firstTick_ = NO;
+        [self continueWithTarget: target];
+    }
+    else
+    {
+        [self startWithTarget:target];
+    }
 }
 
 - (CCActionInterval*) reverse

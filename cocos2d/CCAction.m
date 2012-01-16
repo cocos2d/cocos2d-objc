@@ -75,10 +75,23 @@
 	return copy;
 }
 
--(void) startWithTarget:(id)aTarget
+-(void)startOrContinueWithTarget:(id)target
 {
     started_ = YES;
-	originalTarget_ = target_ = aTarget;
+	originalTarget_ = target_ = target;
+    
+    [self startWithTarget:target];
+}
+
+-(void) startWithTarget:(id)aTarget
+{
+    // Nothing to do.
+}
+
+-(void) continueWithTarget:(id)target
+{
+    // Should crash to warn about not-supported continue in CCAction.
+    NSAssert(NO, @"CCAction#continueWithTarget: called! This method must be reimplemented.");
 }
 
 -(void) stop

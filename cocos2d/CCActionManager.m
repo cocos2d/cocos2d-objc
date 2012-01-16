@@ -160,7 +160,7 @@ static CCActionManager *sharedManager_ = nil;
         CCARRAYDATA_FOREACH(actions, curAction)
         {
             if (!curAction.started)
-                [curAction startWithTarget: element->target];
+                [curAction startOrContinueWithTarget: element->target];
         }
     }
 //	else
@@ -193,7 +193,7 @@ static CCActionManager *sharedManager_ = nil;
     // Don't start action immediately if node is paused or didn't enter scene yet.
     if (!paused)
     {
-        [action startWithTarget:target];
+        [action startOrContinueWithTarget:target];
     }
 }
 
