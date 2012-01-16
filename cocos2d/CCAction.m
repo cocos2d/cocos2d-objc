@@ -267,7 +267,7 @@
 #pragma mark Follow
 @implementation CCFollow
 
-@synthesize boundarySet;
+@synthesize boundarySet = boundarySet_;
 
 +(id) actionWithTarget:(CCNode *) fNode
 {
@@ -317,7 +317,7 @@
     CGPoint halfScreenSize = ccpMult(fullScreenSize, .5f);
     BOOL boundaryFullyCovered = NO;
     
-	if(boundarySet)
+	if(boundarySet_)
 	{       
 		float leftBoundary = -((worldBoundary_.origin.x+worldBoundary_.size.width) - fullScreenSize.x);
 		float rightBoundary = -worldBoundary_.origin.x ;
