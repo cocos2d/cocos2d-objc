@@ -262,9 +262,11 @@ enum nodeTags
 
 
 @implementation ActionManual
--(void) onEnter
+-(id) init
 {
-	[super onEnter];
+    self = [super init];
+    if (!self)
+        return nil;
 
 	
 	CGSize s = [CCDirector sharedDirector].winSize;
@@ -281,6 +283,8 @@ enum nodeTags
 	
 	kathia.position = ccp(s.width-100, s.height/2);
 	kathia.color = ccBLUE;
+    
+    return self;
 }
 
 -(NSString *) title
@@ -291,9 +295,11 @@ enum nodeTags
 
 
 @implementation ActionMove
--(void) onEnter
+-(id) init
 {
-	[super onEnter];
+    self = [super init];
+    if (!self)
+        return nil;
 	
 	[self centerSprites:3];
 
@@ -308,6 +314,8 @@ enum nodeTags
 	[tamara runAction: actionTo];
 	[grossini runAction: [CCSequence actions:actionBy, actionByBack, nil]];
 	[kathia runAction:[ CCMoveTo actionWithDuration:1 position:ccp(40,40)]];
+    
+    return self;
 }
 -(NSString *) title
 {
@@ -316,9 +324,11 @@ enum nodeTags
 @end
 
 @implementation ActionRotate
--(void) onEnter
+-(id) init
 {
-	[super onEnter];
+    self = [super init];
+    if (!self)
+        return nil;
 	
 	[self centerSprites:3];
 		
@@ -332,8 +342,10 @@ enum nodeTags
 	[grossini runAction: [CCSequence actions:actionBy, actionByBack, nil]];
 
 	[kathia runAction: [CCSequence actions:actionTo2, [[actionTo0 copy] autorelease], nil]];
-	
+    
+    return self;
 }
+
 -(NSString *) title
 {
 	return @"RotateTo / RotateBy";
@@ -342,9 +354,11 @@ enum nodeTags
 @end
 
 @implementation ActionScale
--(void) onEnter
+-(id) init
 {
-	[super onEnter];
+    self = [super init];
+    if (!self)
+        return nil;
 
 	[self centerSprites:3];
 	
@@ -357,8 +371,10 @@ enum nodeTags
 	[grossini runAction: [CCSequence actions:actionBy, actionByBack, nil]];
 	
 	[kathia runAction: [CCSequence actions:actionBy2, [actionBy2 reverse], nil]];
-	
+
+	return self;
 }
+
 -(NSString *) title
 {
 	return @"ScaleTo / ScaleBy";
@@ -367,9 +383,11 @@ enum nodeTags
 @end
 
 @implementation ActionSkew
--(void) onEnter
+-(id) init
 {
-	[super onEnter];
+    self = [super init];
+    if (!self)
+        return nil;
 	
 	[self centerSprites:3];
 	
@@ -383,7 +401,10 @@ enum nodeTags
 	[grossini runAction: [CCSequence actions:actionBy, actionByBack, nil]];
 	
 	[kathia runAction: [CCSequence actions:actionBy2, [actionBy2 reverse], nil]];	
+    
+    return self;
 }
+
 -(NSString *) title
 {
 	return @"SkewTo / SkewBy";
@@ -392,9 +413,11 @@ enum nodeTags
 @end
 
 @implementation ActionSkewRotateScale
--(void) onEnter
+-(id) init
 {
-	[super onEnter];
+    self = [super init];
+    if (!self)
+        return nil;
 	
 	[tamara removeFromParentAndCleanup:YES];
 	[grossini removeFromParentAndCleanup:YES];
@@ -432,6 +455,8 @@ enum nodeTags
 	[box runAction:[CCSequence actions:actionTo, actionToBack, nil]];
 	[box runAction:[CCSequence actions:rotateTo, rotateToBack, nil]];
 	[box runAction:[CCSequence actions:actionScaleTo, actionScaleToBack, nil]];
+    
+    return self;
 }
 -(NSString *) title
 {
@@ -442,9 +467,11 @@ enum nodeTags
 
 
 @implementation ActionJump
--(void) onEnter
+-(id) init
 {
-	[super onEnter];
+    self = [super init];
+    if (!self)
+        return nil;
 			
 	id actionTo = [CCJumpTo actionWithDuration:2 position:ccp(300,300) height:50 jumps:4];
 	id actionBy = [CCJumpBy actionWithDuration:2 position:ccp(300,0) height:50 jumps:4];
@@ -453,7 +480,9 @@ enum nodeTags
 	
 	[tamara runAction: actionTo];
 	[grossini runAction: [CCSequence actions:actionBy, actionByBack, nil]];
-	[kathia runAction: [CCRepeatForever actionWithAction:actionUp]];
+	[kathia runAction: [CCRepeatForever actionWithAction:actionUp]];    
+    
+    return self;
 }
 -(NSString *) title
 {
@@ -462,9 +491,11 @@ enum nodeTags
 @end
 
 @implementation ActionBezier
--(void) onEnter
+-(id) init
 {
-	[super onEnter];
+    self = [super init];
+    if (!self)
+        return nil;
 	
 	CGSize s = [[CCDirector sharedDirector] winSize];
 	
@@ -501,8 +532,10 @@ enum nodeTags
 	[grossini runAction: rep];
 	[tamara runAction:bezierTo1];
 	[kathia runAction:bezierTo2];
-
+    
+    return self;
 }
+
 -(NSString *) title
 {
 	return @"BezierBy / BezierTo";
@@ -511,9 +544,11 @@ enum nodeTags
 
 
 @implementation ActionBlink
--(void) onEnter
+-(id) init
 {
-	[super onEnter];
+    self = [super init];
+    if (!self)
+        return nil;
 	
 	[self centerSprites:3];
 	
@@ -524,6 +559,9 @@ enum nodeTags
 	[tamara runAction: action1];
 	[kathia runAction:action2];
 	[grossini runAction:action3];
+    
+    
+    return self;
 }
 -(NSString *) title
 {
@@ -532,9 +570,11 @@ enum nodeTags
 @end
 
 @implementation ActionFade
--(void) onEnter
+-(id) init
 {
-	[super onEnter];
+    self = [super init];
+    if (!self)
+        return nil;
 	
 	[self centerSprites:2];
 	
@@ -547,6 +587,8 @@ enum nodeTags
 	
 	[tamara runAction: [CCSequence actions: action1, action1Back, nil]];
 	[kathia runAction: [CCSequence actions: action2, action2Back, nil]];
+    
+    return self;
 }
 -(NSString *) title
 {
@@ -555,9 +597,11 @@ enum nodeTags
 @end
 
 @implementation ActionTint
--(void) onEnter
+-(id) init
 {
-	[super onEnter];
+    self = [super init];
+    if (!self)
+        return nil;
 	
 	[self centerSprites:2];
 	
@@ -567,6 +611,8 @@ enum nodeTags
 	
 	[tamara runAction: action1];
 	[kathia runAction: [CCSequence actions: action2, action2Back, nil]];
+    
+    return self;
 }
 -(NSString *) title
 {
@@ -575,9 +621,11 @@ enum nodeTags
 @end
 
 @implementation ActionAnimate
--(void) onEnter
+-(id) init
 {
-	[super onEnter];
+    self = [super init];
+    if (!self)
+        return nil;
 	
 	[self centerSprites:1];
 	
@@ -589,6 +637,8 @@ enum nodeTags
 	id action_back = [action reverse];
 	
 	[grossini runAction: [CCSequence actions: action, action_back, nil]];
+    
+    return self;
 }
 -(NSString *) title
 {
@@ -598,9 +648,11 @@ enum nodeTags
 
 
 @implementation ActionSequence
--(void) onEnter
+-(id) init
 {
-	[super onEnter];
+    self = [super init];
+    if (!self)
+        return nil;
 	
 	[self alignSpritesLeft:1];
 
@@ -610,6 +662,8 @@ enum nodeTags
 				 nil];
 	
 	[grossini runAction:action];
+    
+    return self;
 }
 -(NSString *) title
 {
@@ -618,9 +672,11 @@ enum nodeTags
 @end
 
 @implementation ActionSequence2
--(void) onEnter
+-(id) init
 {
-	[super onEnter];
+    self = [super init];
+    if (!self)
+        return nil;
 	
 	[self alignSpritesLeft:1];
 
@@ -636,6 +692,8 @@ enum nodeTags
 				 nil];
 	
 	[grossini runAction:action];
+    
+    return self;
 }
 
 -(void) callback1
@@ -673,9 +731,11 @@ enum nodeTags
 @end
 
 @implementation ActionSpawn
--(void) onEnter
+-(id) init
 {
-	[super onEnter];
+    self = [super init];
+    if (!self)
+        return nil;
 	
 	[self alignSpritesLeft:1];
 
@@ -686,6 +746,8 @@ enum nodeTags
 				 nil];
 	
 	[grossini runAction:action];
+    
+    return self;
 }
 -(NSString *) title
 {
@@ -694,9 +756,11 @@ enum nodeTags
 @end
 
 @implementation ActionRepeatForever
--(void) onEnter
+-(id) init
 {
-	[super onEnter];
+    self = [super init];
+    if (!self)
+        return nil;
 	
 	[self centerSprites:1];
 	
@@ -706,6 +770,8 @@ enum nodeTags
 				 nil];
 	
 	[grossini runAction:action];
+    
+    return self;
 }
 
 -(void) repeatForever:(id)sender
@@ -723,9 +789,11 @@ enum nodeTags
 @end
 
 @implementation ActionRotateToRepeat
--(void) onEnter
+-(id) init
 {
-	[super onEnter];
+    self = [super init];
+    if (!self)
+        return nil;
 	
 	[self centerSprites:2];
 	
@@ -737,7 +805,8 @@ enum nodeTags
 	
 	[tamara runAction:rep1];
 	[kathia runAction:rep2];
-
+    
+    return self;
 }
 
 -(NSString *) title
@@ -752,9 +821,11 @@ enum nodeTags
 @end
 
 @implementation ActionRotateJerk
--(void) onEnter
+-(id) init
 {
-	[super onEnter];
+    self = [super init];
+    if (!self)
+        return nil;
 	
 	[self centerSprites:2];
 	
@@ -768,6 +839,8 @@ enum nodeTags
 	
 	[tamara runAction:rep1];
 	[kathia runAction:rep2];
+    
+    return self;
 }
 
 -(NSString *) title
@@ -782,9 +855,11 @@ enum nodeTags
 
 
 @implementation ActionReverse
--(void) onEnter
+-(id) init
 {
-	[super onEnter];
+    self = [super init];
+    if (!self)
+        return nil;
 	
 	[self alignSpritesLeft:1];
 	
@@ -792,7 +867,10 @@ enum nodeTags
 	id action = [CCSequence actions: jump, [jump reverse], nil];
 	
 	[grossini runAction:action];
+    
+    return self;
 }
+
 -(NSString *) title
 {
 	return @"Reverse an action";
@@ -800,9 +878,11 @@ enum nodeTags
 @end
 
 @implementation ActionDelayTime
--(void) onEnter
+-(id) init
 {
-	[super onEnter];
+    self = [super init];
+    if (!self)
+        return nil;
 	
 	[self alignSpritesLeft:1];
 	
@@ -810,7 +890,10 @@ enum nodeTags
 	id action = [CCSequence actions: move, [CCDelayTime actionWithDuration:2], move, nil];
 	
 	[grossini runAction:action];
+    
+    return self;
 }
+
 -(NSString *) title
 {
 	return @"DelayTime: m + delay + m";
@@ -818,9 +901,11 @@ enum nodeTags
 @end
 
 @implementation ActionReverseSequence
--(void) onEnter
+-(id) init
 {
-	[super onEnter];
+    self = [super init];
+    if (!self)
+        return nil;
 	
 	[self alignSpritesLeft:1];
 
@@ -830,7 +915,10 @@ enum nodeTags
 	id action = [CCSequence actions: seq, [seq reverse], nil];
 	
 	[grossini runAction:action];
+    
+    return self;
 }
+
 -(NSString *) title
 {
 	return @"Reverse a sequence";
@@ -838,9 +926,11 @@ enum nodeTags
 @end
 
 @implementation ActionReverseSequence2
--(void) onEnter
+-(id) init
 {
-	[super onEnter];
+    self = [super init];
+    if (!self)
+        return nil;
 	
 	[self alignSpritesLeft:2];
 
@@ -867,7 +957,11 @@ enum nodeTags
 	id seq_tamara = [CCSequence actions: move_tamara, hide, move_tamara2, nil];
 	id seq_back = [seq_tamara reverse];
 	[tamara runAction: [CCSequence actions: seq_tamara, seq_back, nil]];
+
+    
+    return self;
 }
+
 -(NSString *) title
 {
 	return @"Reverse sequence 2";
@@ -876,9 +970,11 @@ enum nodeTags
 
 
 @implementation ActionRepeat
--(void) onEnter
+-(id) init
 {
-	[super onEnter];
+    self = [super init];
+    if (!self)
+        return nil;
 	
 	[self alignSpritesLeft:2];
 
@@ -893,7 +989,10 @@ enum nodeTags
 	
 	[kathia runAction:action1];
 	[tamara runAction:action2];
+
+    return self;
 }
+
 -(NSString *) title
 {
 	return @"Repeat / RepeatForever actions";
@@ -901,9 +1000,11 @@ enum nodeTags
 @end
 
 @implementation ActionCallFunc
--(void) onEnter
+-(id) init
 {
-	[super onEnter];
+    self = [super init];
+    if (!self)
+        return nil;
 	
 	[self centerSprites:3];
 		
@@ -928,6 +1029,8 @@ enum nodeTags
 	[grossini runAction:action];
 	[tamara runAction:action2];
 	[kathia runAction:action3];
+
+    return self;
 }
 
 -(void) callback1
@@ -967,9 +1070,11 @@ enum nodeTags
 @end
 
 @implementation ActionCallFuncND
--(void) onEnter
+-(id) init
 {
-	[super onEnter];
+    self = [super init];
+    if (!self)
+        return nil;
 	
 	[self centerSprites:1];
 	
@@ -979,6 +1084,9 @@ enum nodeTags
 				 [CCCallFuncND actionWithTarget:grossini selector:@selector(removeFromParentAndCleanup:) data:(void*)YES],
 				 nil];
 	[grossini runAction:action];
+
+    
+    return self;
 }
 
 -(NSString *) title
@@ -994,9 +1102,11 @@ enum nodeTags
 @end
 
 @implementation ActionCallBlock
--(void) onEnter
+-(id) init
 {
-	[super onEnter];
+    self = [super init];
+    if (!self)
+        return nil;
 	
 	[self centerSprites:1];
 	
@@ -1009,6 +1119,9 @@ enum nodeTags
 				  } ],
 				  nil ];
 	[grossini runAction:action];
+
+    
+    return self;
 }
 
 -(NSString *) title
@@ -1025,9 +1138,11 @@ enum nodeTags
 
 
 @implementation ActionOrbit
--(void) onEnter
+-(id) init
 {
-	[super onEnter];
+    self = [super init];
+    if (!self)
+        return nil;
 
 	[self centerSprites:3];
 	
@@ -1060,6 +1175,9 @@ enum nodeTags
 	[kathia runAction:rfe];
 	[tamara runAction:[[rfe copy] autorelease]];
 	[grossini runAction:[[rfe copy] autorelease]];
+
+    
+    return self;
 }
 
 
@@ -1070,9 +1188,11 @@ enum nodeTags
 @end
 
 @implementation ActionFollow
--(void) onEnter
+-(id) init
 {
-	[super onEnter];
+    self = [super init];
+    if (!self)
+        return nil;
 	
 	[self centerSprites:1];
 
@@ -1090,6 +1210,9 @@ enum nodeTags
 	
 	
 	[self runAction:[CCFollow actionWithTarget:grossini worldBoundary:CGRectMake(0, 0, (winSize.width*2)-100, winSize.height)]];
+
+    
+    return self;
 }
 
 -(void) draw
@@ -1117,9 +1240,11 @@ enum nodeTags
 @end
 
 @implementation ActionProperty
--(void) onEnter
+-(id) init
 {
-	[super onEnter];
+    self = [super init];
+    if (!self)
+        return nil;
 	
 	[self centerSprites:3];
 
@@ -1138,6 +1263,9 @@ enum nodeTags
 	[grossini runAction:rot_seq];
 	[tamara runAction:scale_seq];
 	[kathia runAction:opacity_seq];
+
+    
+    return self;
 }
 
 -(NSString *) title
