@@ -77,14 +77,12 @@ Class restartAction()
 }
 
 
+@implementation ActionDemoInsideLayer
 
-
-
-@implementation ActionDemo
 -(id) init
 {
 	if( (self=[super init])) {
-	
+        
 		grossini = [[CCSprite alloc] initWithFile:@"grossini.png"];
 		tamara = [[CCSprite alloc] initWithFile:@"grossinis_sister1.png"];
 		kathia = [[CCSprite alloc] initWithFile:@"grossinis_sister2.png"];
@@ -92,70 +90,16 @@ Class restartAction()
 		[self addChild:grossini z:1];
 		[self addChild:tamara z:2];
 		[self addChild:kathia z:3];
-
+        
 		CGSize s = [[CCDirector sharedDirector] winSize];
 		
 		[grossini setPosition: ccp(s.width/2, s.height/3)];
 		[tamara setPosition: ccp(s.width/2, 2*s.height/3)];
 		[kathia setPosition: ccp(s.width/2, s.height/2)];
-		
-		CCLabelTTF* label = [CCLabelTTF labelWithString:[self title] fontName:@"Arial" fontSize:32];
-		[self addChild: label];
-		[label setPosition: ccp(s.width/2, s.height-50)];
-		
-		NSString *subtitle = [self subtitle];
-		if( subtitle ) {
-			CCLabelTTF* l = [CCLabelTTF labelWithString:subtitle fontName:@"Thonburi" fontSize:16];
-			[self addChild:l z:1];
-			[l setPosition:ccp(s.width/2, s.height-80)];
-		}
-		
-
-		CCMenuItemImage *item1 = [CCMenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
-		CCMenuItemImage *item2 = [CCMenuItemImage itemFromNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
-		CCMenuItemImage *item3 = [CCMenuItemImage itemFromNormalImage:@"f1.png" selectedImage:@"f2.png" target:self selector:@selector(nextCallback:)];
-		
-		CCMenu *menu = [CCMenu menuWithItems:item1, item2, item3, nil];
-		menu.position = CGPointZero;
-		item1.position = ccp( s.width/2 - 100,30);
-		item2.position = ccp( s.width/2, 30);
-		item3.position = ccp( s.width/2 + 100,30);
-		[self addChild: menu z:1];
-	}
-
-	return self;
+    }
+    
+    return self;
 }
-
--(void) dealloc
-{
-	[grossini release];
-	[tamara release];
-	[kathia release];
-	[super dealloc];
-}
-
-
--(void) restartCallback: (id) sender
-{
-	CCScene *s = [CCScene node];
-	[s addChild: [restartAction() node]];
-	[[CCDirector sharedDirector] replaceScene: s];
-}
-
--(void) nextCallback: (id) sender
-{
-	CCScene *s = [CCScene node];
-	[s addChild: [nextAction() node]];
-	[[CCDirector sharedDirector] replaceScene: s];
-}
-
--(void) backCallback: (id) sender
-{
-	CCScene *s = [CCScene node];
-	[s addChild: [backAction() node]];
-	[[CCDirector sharedDirector] replaceScene: s];
-}
-
 
 -(void) alignSpritesLeft:(unsigned int)numberOfSprites
 {
@@ -200,13 +144,118 @@ Class restartAction()
 		CCLOG(@"ActionsTests: Invalid number of Sprites");
 	}
 }
+
+-(void) dealloc
+{
+	[grossini release];
+	[tamara release];
+	[kathia release];
+	[super dealloc];
+}
+
+@end
+
+enum nodeTags
+{
+    kLayer,
+};
+
+@protocol DemoTitleProvider <NSObject>
+
+- (NSString *) title;
+- (NSString *) subtitle;
+
+@end
+
+@implementation ActionDemo
+
++ (id) nodeWithInsideLayer: (CCLayer *) insideLayer
+{
+    return [[[self alloc] initWithInsideLayer: insideLayer] autorelease];
+}
+
+- (id) initWithInsideLayer: (CCLayer *) insideLayer
+{
+	if( (self=[super init])) {
+	
+		[self addChild:insideLayer z:0 tag:kLayer];
+        
+        CGSize s = [[CCDirector sharedDirector] winSize];
+		
+		CCLabelTTF* label = [CCLabelTTF labelWithString:[self title] fontName:@"Arial" fontSize:32];
+		[self addChild: label];
+		[label setPosition: ccp(s.width/2, s.height-50)];
+		
+		NSString *subtitle = [self subtitle];
+		if( subtitle ) {
+			CCLabelTTF* l = [CCLabelTTF labelWithString:subtitle fontName:@"Thonburi" fontSize:16];
+			[self addChild:l z:1];
+			[l setPosition:ccp(s.width/2, s.height-80)];
+		}
+		
+
+		CCMenuItemImage *item1 = [CCMenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
+		CCMenuItemImage *item2 = [CCMenuItemImage itemFromNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
+		CCMenuItemImage *item3 = [CCMenuItemImage itemFromNormalImage:@"f1.png" selectedImage:@"f2.png" target:self selector:@selector(nextCallback:)];
+		
+		CCMenu *menu = [CCMenu menuWithItems:item1, item2, item3, nil];
+		menu.position = CGPointZero;
+		item1.position = ccp( s.width/2 - 100,30);
+		item2.position = ccp( s.width/2, 30);
+		item3.position = ccp( s.width/2 + 100,30);
+		[self addChild: menu z:1];
+	}
+
+	return self;
+}
+
+-(void) restartCallback: (id) sender
+{
+	CCScene *s = [CCScene node];
+	[s addChild: [ActionDemo nodeWithInsideLayer: [restartAction() node]]];
+	[[CCDirector sharedDirector] replaceScene: s];
+}
+
+-(void) nextCallback: (id) sender
+{
+	CCScene *s = [CCScene node];
+	[s addChild: [ActionDemo nodeWithInsideLayer: [nextAction() node]]];
+	[[CCDirector sharedDirector] replaceScene: s];
+}
+
+-(void) backCallback: (id) sender
+{
+	CCScene *s = [CCScene node];
+	[s addChild: [ActionDemo nodeWithInsideLayer: [backAction() node]]];
+	[[CCDirector sharedDirector] replaceScene: s];
+}
+
+-(CCLayer *) insideLayer
+{
+    return (CCLayer *)[self getChildByTag: kLayer];
+}
+
 -(NSString*) title
 {
+    id<DemoTitleProvider> titleProvider = (id<DemoTitleProvider>)[self insideLayer];
+    
+    if ([titleProvider respondsToSelector: @selector(title)])
+    {
+        return [titleProvider title];
+    }
+    
 	return @"No title";
 }
 
 -(NSString*) subtitle
 {
+	id<DemoTitleProvider> titleProvider = (id<DemoTitleProvider>)[self insideLayer];
+    
+    if ([titleProvider respondsToSelector: @selector(subtitle)])
+    {
+        return [titleProvider subtitle];
+    }
+    
 	return nil;
 }
 @end
@@ -1154,7 +1203,7 @@ Class restartAction()
 	[CCFileUtils setRetinaDisplaySuffix:@"-hd"];	// Default on RetinaDisplay is "-hd"
 	
 	CCScene *scene = [CCScene node];
-	[scene addChild: [nextAction() node]];
+	[scene addChild: [ActionDemo nodeWithInsideLayer: [nextAction() node]]];
 	
 	[director runWithScene: scene];
 		
@@ -1236,7 +1285,7 @@ Class restartAction()
 	[director setResizeMode:kCCDirectorResize_AutoScale];	
 	
 	CCScene *scene = [CCScene node];
-	[scene addChild: [nextAction() node]];
+	[scene addChild: [ActionDemo nodeWithInsideLayer: [nextAction() node]]];
 	
 	[director runWithScene:scene];
 }

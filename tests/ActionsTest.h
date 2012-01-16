@@ -25,13 +25,25 @@
 @end
 #endif // Mac
 
-@interface ActionDemo : CCLayer
-{
-	CCSprite * grossini;
+@interface ActionDemoInsideLayer : CCLayer {
+
+    CCSprite *grossini;
 	CCSprite *tamara;
 	CCSprite *kathia;
 }
+
 -(void) centerSprites:(unsigned int)numberOfSprites;
+
+@end
+
+@interface ActionDemo : CCLayer
+{
+	
+}
++ (id) nodeWithInsideLayer: (CCLayer *) insideLayer;
+- (id) initWithInsideLayer: (CCLayer *) insideLayer;
+
+
 -(NSString*) title;
 -(NSString*) subtitle;
 
@@ -41,119 +53,119 @@
 @end
 
 
-@interface ActionManual : ActionDemo
+@interface ActionManual : ActionDemoInsideLayer
 {}
 @end
 
-@interface ActionMove : ActionDemo
+@interface ActionMove : ActionDemoInsideLayer
 {}
 @end
 
-@interface ActionRotate : ActionDemo
+@interface ActionRotate : ActionDemoInsideLayer
 {}
 @end
 
-@interface ActionScale : ActionDemo
+@interface ActionScale : ActionDemoInsideLayer
 {}
 @end
 
-@interface ActionSkew : ActionDemo
+@interface ActionSkew : ActionDemoInsideLayer
 {}
 @end
 
-@interface ActionSkewRotateScale : ActionDemo
+@interface ActionSkewRotateScale : ActionDemoInsideLayer
 {}
 @end
 
-@interface ActionJump : ActionDemo
+@interface ActionJump : ActionDemoInsideLayer
 {}
 @end
 
-@interface ActionBlink : ActionDemo
+@interface ActionBlink : ActionDemoInsideLayer
 {}
 @end
 
-@interface ActionAnimate : ActionDemo
+@interface ActionAnimate : ActionDemoInsideLayer
 {}
 @end
 
-@interface ActionSequence : ActionDemo
+@interface ActionSequence : ActionDemoInsideLayer
 {}
 @end
 
-@interface ActionSequence2 : ActionDemo
+@interface ActionSequence2 : ActionDemoInsideLayer
 {}
 @end
 
-@interface ActionSpawn : ActionDemo
+@interface ActionSpawn : ActionDemoInsideLayer
 {}
 @end
 
-@interface ActionReverse : ActionDemo
+@interface ActionReverse : ActionDemoInsideLayer
 {}
 @end
 
-@interface ActionRepeat : ActionDemo
+@interface ActionRepeat : ActionDemoInsideLayer
 {}
 @end
 
-@interface ActionDelayTime : ActionDemo
+@interface ActionDelayTime : ActionDemoInsideLayer
 {}
 @end
 
-@interface ActionReverseSequence : ActionDemo
+@interface ActionReverseSequence : ActionDemoInsideLayer
 {}
 @end
 
-@interface ActionReverseSequence2 : ActionDemo
+@interface ActionReverseSequence2 : ActionDemoInsideLayer
 {}
 @end
 
-@interface ActionCallFunc : ActionDemo
+@interface ActionCallFunc : ActionDemoInsideLayer
 {}
 @end
 
-@interface ActionCallFuncND : ActionDemo
+@interface ActionCallFuncND : ActionDemoInsideLayer
 {}
 @end
 
-@interface ActionCallBlock : ActionDemo
+@interface ActionCallBlock : ActionDemoInsideLayer
 {}
 @end
 
-
-@interface ActionFade : ActionDemo
+@interface ActionFade : ActionDemoInsideLayer
 {}
 @end
 
-@interface ActionTint : ActionDemo
+@interface ActionTint : ActionDemoInsideLayer
 {}
 @end
 
-@interface ActionOrbit : ActionDemo
+@interface ActionOrbit : ActionDemoInsideLayer
 {}
 @end
 
-@interface ActionBezier : ActionDemo
+@interface ActionBezier : ActionDemoInsideLayer
 {}
 @end
 
-@interface ActionRepeatForever : ActionDemo
+@interface ActionRepeatForever : ActionDemoInsideLayer
 {}
 @end
 
-@interface ActionRotateToRepeat : ActionDemo
+@interface ActionRotateToRepeat : ActionDemoInsideLayer
 {}
 @end
 
-@interface ActionRotateJerk : ActionDemo
-{}
-@end
-@interface ActionFollow : ActionDemo
+@interface ActionRotateJerk : ActionDemoInsideLayer
 {}
 @end
 
-@interface ActionProperty : ActionDemo
+@interface ActionFollow : ActionDemoInsideLayer
+{}
+@end
+
+@interface ActionProperty : ActionDemoInsideLayer
 {}
 @end
 
