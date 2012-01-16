@@ -284,8 +284,7 @@
 	if( (self=[super init]) ) {
 	
 		followedNode_ = [fNode retain];
-		boundarySet = FALSE;
-		
+		boundarySet_ = NO;		
 	}
 	
 	return self;
