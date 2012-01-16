@@ -41,6 +41,7 @@
 @implementation CCAction
 
 @synthesize tag = tag_, target = target_, originalTarget = originalTarget_;
+@synthesize started = started_;
 
 +(id) action
 {
@@ -76,6 +77,7 @@
 
 -(void) startWithTarget:(id)aTarget
 {
+    started_ = YES;
 	originalTarget_ = target_ = aTarget;
 }
 

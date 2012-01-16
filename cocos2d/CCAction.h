@@ -39,10 +39,19 @@ enum {
  */
 @interface CCAction : NSObject <NSCopying>
 {
+    BOOL        started_;
 	id			originalTarget_;
 	id			target_;
 	NSInteger	tag_;
 }
+
+/** Flag that shows was action started or not.
+ Used in CCActionManager to start action in -resumeTarget: instead of
+ -addAction:target:paused if paused is YES (i.e. when -runAction: called
+ before calling addChild:)
+ @since v.1.0+ ("feature-amc-actions" branch of psineur/cocos2d-iphone)
+ */
+@property (nonatomic, readonly, assign) BOOL started;
 
 /** The "target". The action will modify the target properties.
  The target will be set with the 'startWithTarget' method.
