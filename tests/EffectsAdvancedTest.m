@@ -277,6 +277,9 @@ Class restartAction()
 
 - (void) save
 {
+    // Don't save actions in this test - actions are tested in ActionsTest.
+    [CCActionManager purgeSharedManager];
+    
     CCNode *layer = [self getChildByTag: kLayer];
     NSDictionary *dict = [layer dictionaryRepresentation];
     [dict writeToFile:[self testFilePath] atomically:YES];
