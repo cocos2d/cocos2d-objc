@@ -170,7 +170,7 @@
 
 					// Optimization: quick return
 					// if the layer is invalid (more than 1 tileset per layer) an assert will be thrown later
-					if( gid >= tileset.firstGid )
+					if( (gid & kCCFlippedMask) >= tileset.firstGid )
 						return tileset;
 				}
 			}
