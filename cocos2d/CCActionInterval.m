@@ -98,9 +98,8 @@
     started_ = YES;
 	originalTarget_ = target_ = target;
     
-    if (elapsed_)
+    if (!firstTick_)
     {
-        firstTick_ = NO;
         [self continueWithTarget: target];
     }
     else
