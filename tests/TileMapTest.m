@@ -13,6 +13,7 @@
 static int sceneIdx=-1;
 static NSString *transitions[] = {	
 
+	@"TMXOrthoFlipTest",
     @"TMXGIDObjectsTest",
     
 	@"TMXIsoZorder",
@@ -37,7 +38,6 @@ static NSString *transitions[] = {
 	@"TMXResizeTest",
 	@"TMXIsoMoveLayer",
 	@"TMXOrthoMoveLayer",
-	@"TMXOrthoFlipTest",
 	@"TMXOrthoFromXMLTest",
 	@"TMXBug987",
 	@"TMXBug787",

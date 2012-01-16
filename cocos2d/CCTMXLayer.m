@@ -264,6 +264,8 @@ int compareInts (const void * a, const void * b);
 				// Optimization: update min and max GID rendered by the layer
 				minGID_ = MIN(gid, minGID_);
 				maxGID_ = MAX(gid, maxGID_);
+//				minGID_ = MIN((gid & kFlippedMask), minGID_);
+//				maxGID_ = MAX((gid & kFlippedMask), maxGID_);
 			}
 		}
 	}
