@@ -36,6 +36,7 @@ static NSString *transitions[] = {
 	@"TMXIsoMoveLayer",
 	@"TMXOrthoMoveLayer",
 	@"TMXOrthoFlipTest",
+    @"TMXGIDObjectsTest",    
 	@"TMXOrthoFromXMLTest",
 	@"TMXBug987",
 	@"TMXBug787",
