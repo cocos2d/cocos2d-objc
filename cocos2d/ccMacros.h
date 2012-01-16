@@ -94,6 +94,7 @@ simple macro that swaps 2 variables
  */
 #define CC_RADIANS_TO_DEGREES(__ANGLE__) ((__ANGLE__) * 57.29577951f) // PI * 180
 
+#define kCCRepeatForever UINT_MAX -1
 /** @def CC_BLEND_SRC
 default gl blend src function. Compatible with premultiplied alpha images.
 */
@@ -253,3 +254,19 @@ do {															\
 #define CC_RECT_POINTS_TO_PIXELS(__points__) __points__
 
 #endif // __MAC_OS_X_VERSION_MAX_ALLOWED
+
+/*****************/
+/** ARC Macros  **/
+/*****************/
+#if defined(__has_feature) && __has_feature(objc_arc)
+// ARC (used for inline functions)
+#define CC_ARC_RETAIN(value)	value
+#define CC_ARC_RELEASE(value)	value = 0
+#define CC_ARC_UNSAFE_RETAINED	__unsafe_unretained
+
+#else
+// No ARC
+#define CC_ARC_RETAIN(value)	[value retain]
+#define CC_ARC_RELEASE(value)	[value release]
+#define CC_ARC_UNSAFE_RETAINED
+#endif

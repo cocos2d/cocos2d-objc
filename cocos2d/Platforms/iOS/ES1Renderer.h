@@ -50,14 +50,14 @@
 	unsigned int	pixelFormat_;
 
 	// The OpenGL ES names for the framebuffer and renderbuffer used to render to this view
-    GLuint defaultFramebuffer_;
-	GLuint colorRenderbuffer_;
+    GLuint defaultFrameBuffer_;
+	GLuint colorRenderBuffer_;
 	GLuint depthBuffer_;
 	
 	
 	//buffers for MSAA
-	GLuint msaaFramebuffer_;
-	GLuint msaaColorbuffer_;
+	GLuint msaaFrameBuffer_;
+	GLuint msaaColorBuffer_;
 	
 	EAGLContext *context_;
 }
@@ -67,6 +67,10 @@
 
 - (BOOL)resizeFromLayer:(CAEAGLLayer *)layer;
 
+- (unsigned int) colorRenderBuffer;
+- (unsigned int) defaultFrameBuffer;
+- (unsigned int) msaaFrameBuffer;
+- (unsigned int) msaaColorBuffer;
 @end
 
 #endif // __IPHONE_OS_VERSION_MAX_ALLOWED

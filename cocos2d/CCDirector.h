@@ -137,7 +137,7 @@ and when to execute the Scenes.
 
 	/* the cocos2d running thread */
 	NSThread	*runningThread_;
-
+	
 	// profiler
 #if CC_ENABLE_PROFILERS
 	ccTime accumDtForProfiler_;

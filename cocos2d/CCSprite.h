@@ -130,8 +130,10 @@ typedef enum {
 	BOOL	flipY_;
 		
 @public
-	// used internally.
+	// used internally
 	void (*updateMethod)(id, SEL);
+	void (*sortMethod)(id, SEL);
+	
 }
 
 /** whether or not the Sprite needs to be updated in the Atlas */

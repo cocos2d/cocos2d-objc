@@ -98,6 +98,10 @@
 {}
 @end
 
+@interface TexturePVRRGB888 : TextureDemo
+{}
+@end
+
 @interface TexturePVRA8 : TextureDemo
 {}
 @end
