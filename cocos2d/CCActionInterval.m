@@ -223,7 +223,7 @@
 	}
 	
 	if (last_ == -1 && found==1)	{
-		[actions_[0] startWithTarget:target_];
+		[actions_[0] startOrContinueWithTarget:target_];
 		[actions_[0] update:1.0f];
 		[actions_[0] stop];
 	}
@@ -233,7 +233,7 @@
 			[actions_[last_] update: 1.0f];
 			[actions_[last_] stop];
 		}
-		[actions_[found] startWithTarget:target_];
+		[actions_[found] startOrContinueWithTarget:target_];
 	}
 	[actions_[found] update: new_t];
 	last_ = found;
@@ -291,7 +291,7 @@
 	total_ = 0;
 	nextDt_ = [innerAction_ duration]/duration_;
 	[super startWithTarget:aTarget];
-	[innerAction_ startWithTarget:aTarget];
+	[innerAction_ startOrContinueWithTarget:aTarget];
 }
 
 -(void) stop
@@ -314,6 +314,8 @@
 			total_++;
 			
 			[innerAction_ stop];
+            // We shouldn't use -startOrContinueWithTarget: here, because
+            // innerAction must start from initial state when repeating.
 			[innerAction_ startWithTarget:target_]; 
 			nextDt_ += [innerAction_ duration]/duration_;
 		}
@@ -435,8 +437,8 @@
 -(void) startWithTarget:(id)aTarget
 {
 	[super startWithTarget:aTarget];
-	[one_ startWithTarget:target_];
-	[two_ startWithTarget:target_];
+	[one_ startOrContinueWithTarget:target_];
+	[two_ startOrContinueWithTarget:target_];
 }
 
 -(void) stop
@@ -1229,7 +1231,7 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 -(void) startWithTarget:(id)aTarget
 {
 	[super startWithTarget:aTarget];
-	[other_ startWithTarget:target_];
+	[other_ startOrContinueWithTarget:target_];
 }
 
 -(void) stop
