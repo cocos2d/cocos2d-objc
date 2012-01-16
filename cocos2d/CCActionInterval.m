@@ -108,6 +108,12 @@
     }
 }
 
+- (void) stop
+{
+    elapsed_ = 0;
+    [super stop];
+}
+
 - (CCActionInterval*) reverse
 {
 	NSAssert(NO, @"CCIntervalAction: reverse not implemented.");

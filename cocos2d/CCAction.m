@@ -94,6 +94,7 @@
 
 -(void) stop
 {
+    started_ = NO;
 	target_ = nil;
 }
 
@@ -175,6 +176,7 @@
         
         // We shouldn't use -startOrContinueWithTarget: here, because
         // innerAction must start from initial state when repeating.
+        [innerAction_ stop];
 		[innerAction_ startWithTarget:target_];
 		
 		// to prevent jerk. issue #390, 1247
