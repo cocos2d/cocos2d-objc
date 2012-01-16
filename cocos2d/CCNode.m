@@ -361,6 +361,7 @@ static NSUInteger globalOrderOfArrival = 0;
             @"noLazyAllocCamera", 
             
             @"grid",
+            @"actions",
             nil ];
 }
 
@@ -369,6 +370,10 @@ static NSUInteger globalOrderOfArrival = 0;
     if ( [aKey isEqualToString:@"noLazyAllocCamera"] )
     {
         return kAMCFieldTypeCustomObject;
+    }
+    else if ([aKey isEqualToString:@"actions"])
+    {
+        return kAMCFieldTypeCollectionArray;
     }
     else
         return [super AMCFieldTypeForValueWithKey: aKey];
@@ -385,6 +390,19 @@ static NSUInteger globalOrderOfArrival = 0;
     
     camera_ = [camera retain];
     [oldCamera release];
+}
+
+- (NSArray *)actions
+{
+    return [[CCActionManager sharedManager] allActionsForTarget:self];
+}
+
+- (void) setActions: (NSArray *) actions
+{
+    for (CCAction *action in actions)
+    {
+        [self runAction: action];
+    }
 }
 
 - (void) prepareChildrenAfterAMCLoad
