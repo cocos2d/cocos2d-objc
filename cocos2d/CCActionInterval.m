@@ -110,6 +110,7 @@
 
 - (void) stop
 {
+    firstTick_ = YES;
     elapsed_ = 0;
     [super stop];
 }
@@ -320,9 +321,7 @@
 			total_++;
 			
 			[innerAction_ stop];
-            // We shouldn't use -startOrContinueWithTarget: here, because
-            // innerAction must start from initial state when repeating.
-			[innerAction_ startWithTarget:target_]; 
+			[innerAction_ startOrContinueWithTarget:target_]; 
 			nextDt_ += [innerAction_ duration]/duration_;
 		}
 		
