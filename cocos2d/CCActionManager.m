@@ -214,6 +214,29 @@ static CCActionManager *sharedManager_ = nil;
 //	}
 }
 
+-(NSArray *) allActionsForTarget: (id) target
+{
+	if( target == nil )
+		return [NSArray array];
+	
+	tHashElement *element = NULL;
+	HASH_FIND_INT(targets, &target, element);
+	if( element ) 
+    {
+        ccArray *actions = element->actions;
+        NSMutableArray *array = [NSMutableArray arrayWithCapacity:actions->num];
+        CCAction *curAction = nil;
+        CCARRAYDATA_FOREACH(actions, curAction)
+        {
+            [array addObject:curAction];
+        }
+        
+        return array;
+	}
+    
+    return [NSArray array];
+}
+
 -(void) removeAction: (CCAction*) action
 {
 	// explicit nil handling
