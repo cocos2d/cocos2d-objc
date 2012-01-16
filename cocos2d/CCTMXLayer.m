@@ -102,6 +102,9 @@
 	
 	// IMPORTANT: Call super, and not self. Avoid adding it to the texture atlas array
 	[super addChild:child z:z tag:aTag];
+	
+	//#issue 1262 don't use lazy sorting, tiles are added as quads not as sprites, so sprites need to be added in order
+	[self reorderBatch:NO];
 	return self;	
 }
 @end
@@ -127,6 +130,7 @@ int compareInts (const void * a, const void * b);
 
 /* The layer recognizes some special properties, like cc_vertez */
 -(void) parseInternalProperties;
+- (void) setupTileSprite:(CCSprite*) sprite position:(CGPoint)pos withGID:(uint32_t)gid;
 
 -(NSInteger) vertexZForPos:(CGPoint)pos;
 
@@ -331,28 +335,43 @@ int compareInts (const void * a, const void * b);
 
 -(uint32_t) tileGIDAt:(CGPoint)pos
 {
+	return [self tileGIDAt:pos withFlags:NO];
+}
+
+-(uint32_t) tileGIDAt:(CGPoint)pos withFlags:(BOOL) flags
+{
 	NSAssert( pos.x < layerSize_.width && pos.y < layerSize_.height && pos.x >=0 && pos.y >=0, @"TMXLayer: invalid position");
 	NSAssert( tiles_ && atlasIndexArray_, @"TMXLayer: the tiles map has been released");
 	
 	NSInteger idx = pos.x + pos.y * layerSize_.width;
 	
 	// Bits on the far end of the 32-bit global tile ID are used for tile flags
-	return (tiles_[ idx ] & kFlippedMask);
+	// issue1264, flipped tiles can be changed dynamically
+	if (flags) 
+		return (tiles_[ idx ]);
+	else 
+		return (tiles_[ idx ] & kFlippedMask);
 }
 
 #pragma mark CCTMXLayer - adding helper methods
 
-- (void) setupReusedTile:(CGPoint)pos withGID:(uint32_t)gid
+- (void) setupTileSprite:(CCSprite*) sprite position:(CGPoint)pos withGID:(uint32_t)gid
 {
-	[reusedTile_ setPositionInPixels: [self positionAt:pos]];
-	[reusedTile_ setVertexZ: [self vertexZForPos:pos]];
-	reusedTile_.anchorPoint = CGPointZero;
-	[reusedTile_ setOpacity:opacity_];
+	[sprite setPositionInPixels: [self positionAt:pos]];
+	[sprite setVertexZ: [self vertexZForPos:pos]];
+	sprite.anchorPoint = CGPointZero;
+	[sprite setOpacity:opacity_];
 	
+	//issue 1264, flip can be undone as well
 	if (gid & kFlippedHorizontallyFlag)
-		reusedTile_.flipX = YES;
+		sprite.flipX = YES;
+	else 
+		sprite.flipX = NO;
+	
 	if (gid & kFlippedVerticallyFlag)
-		reusedTile_.flipY = YES;
+		sprite.flipY = YES;
+	else
+		sprite.flipY = NO;
 }
 
 -(CCSprite*) insertTileForGID:(uint32_t)gid at:(CGPoint)pos
@@ -366,7 +385,7 @@ int compareInts (const void * a, const void * b);
 	else
 		[reusedTile_ initWithBatchNode:self rectInPixels:rect];
 	
-	[self setupReusedTile:pos withGID:gid];
+	[self setupTileSprite:reusedTile_ position:pos withGID:gid];
 	
 	// get atlas index
 	NSUInteger indexForZ = [self atlasIndexForNewZ:z];
@@ -401,7 +420,7 @@ int compareInts (const void * a, const void * b);
 	else
 		[reusedTile_ initWithBatchNode:self rectInPixels:rect];
 	
-	[self setupReusedTile:pos withGID:gid];
+	[self setupTileSprite:reusedTile_ position:pos withGID:gid];
 	
 	// get atlas index
 	NSUInteger indexForZ = [self atlasIndexForExistantZ:z];
@@ -428,7 +447,7 @@ int compareInts (const void * a, const void * b);
 	else
 		[reusedTile_ initWithBatchNode:self rectInPixels:rect];
 	
-	[self setupReusedTile:pos withGID:gid];
+	[self setupTileSprite:reusedTile_ position:pos withGID:gid];
 	
 	// optimization:
 	// The difference between appendTileForGID and insertTileforGID is that append is faster, since
@@ -477,17 +496,21 @@ int compareInts (const void * a, const void * b)
 }
 
 #pragma mark CCTMXLayer - adding / remove tiles
-
 -(void) setTileGID:(uint32_t)gid at:(CGPoint)pos
+{
+	[self setTileGID:gid at:pos withFlags:NO];	
+}
+
+-(void) setTileGID:(uint32_t)gid at:(CGPoint)pos withFlags:(BOOL) flags
 {
 	NSAssert( pos.x < layerSize_.width && pos.y < layerSize_.height && pos.x >=0 && pos.y >=0, @"TMXLayer: invalid position");
 	NSAssert( tiles_ && atlasIndexArray_, @"TMXLayer: the tiles map has been released");
 	NSAssert( gid == 0 || gid >= tileset_.firstGid, @"TMXLayer: invalid gid" );
 
-	uint32_t currentGID = [self tileGIDAt:pos];
+	uint32_t currentGID = [self tileGIDAt:pos withFlags:flags];
 	
-	if( currentGID != gid ) {
-		
+	if (currentGID != gid) 
+	{
 		// setting gid=0 is equal to remove the tile
 		if( gid == 0 )
 			[self removeTileAt:pos];
@@ -504,6 +527,10 @@ int compareInts (const void * a, const void * b)
 			if( sprite ) {
 				CGRect rect = [tileset_ rectForGID:gid];
 				[sprite setTextureRectInPixels:rect rotated:NO untrimmedSize:rect.size];
+				
+				if (flags) 
+					[self setupTileSprite:sprite position:[sprite position] withGID:gid];
+				
 				tiles_[z] = gid;
 			} else
 				[self updateTileForGID:gid at:pos];

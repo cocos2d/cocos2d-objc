@@ -50,6 +50,9 @@
 #define RENDER_IN_SUBPIXEL (NSInteger)
 #endif
 
+// XXX: Yes, nodes might have a sort problem once per year
+static NSUInteger globalOrderOfArrival = 0;
+
 @interface CCNode ()
 // lazy allocs
 -(void) childrenAlloc;
@@ -71,6 +74,7 @@
 @synthesize vertexZ = vertexZ_;
 @synthesize isRunning = isRunning_;
 @synthesize userData = userData_;
+@synthesize orderOfArrival = orderOfArrival_;
 
 #pragma mark CCNode - Transform related properties
 
@@ -279,7 +283,7 @@
 #if CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
 		isTransformGLDirty_ = YES;
 #endif
-		
+		isReorderChildDirty_ = NO;	
 		vertexZ_ = 0;
 		
 		grid_ = nil;
@@ -301,6 +305,8 @@
 
 		//initialize parent to nil
 		parent_ = nil;
+		
+		orderOfArrival_=0;
 	}
 	
 	return self;
@@ -396,6 +402,9 @@
 	
 	[child setParent: self];
 	
+	//CCDirector.sharedDirector->getorderOfArrival
+	[child setOrderOfArrival: globalOrderOfArrival++];
+	
 	if( isRunning_ ) {
 		[child onEnter];
 		[child onEnterTransitionDidFinish];
@@ -455,7 +464,10 @@
 		//  -1st do onExit
 		//  -2nd cleanup
 		if (isRunning_)
+		{
+			[c onExitTransitionDidStart];
 			[c onExit];
+		}
 		
 		if (cleanup)
 			[c cleanup];
@@ -473,7 +485,10 @@
 	//  -1st do onExit
 	//  -2nd cleanup
 	if (isRunning_)
+	{
+		[child onExitTransitionDidStart];
 		[child onExit];
+	}
 	
 	// If you don't do cleanup, the child's actions will not get removed and the
 	// its scheduledSelectors_ dict will not get released!
@@ -495,24 +510,9 @@
 // helper used by reorderChild & add
 -(void) insertChild:(CCNode*)child z:(NSInteger)z
 {
-	NSUInteger index=0;
-	CCNode *a = [children_ lastObject];
+	isReorderChildDirty_=YES;	
 	
-	// quick comparison to improve performance
-	if (!a || a.zOrder <= z)
-		[children_ addObject:child];
-	
-	else
-	{
-		CCARRAY_FOREACH(children_, a) {
-			if ( a.zOrder > z ) {
-				[children_ insertObject:child atIndex:index];
-				break;
-			}
-			index++;
-		}
-	}
-	
+	ccArrayAppendObjectWithResize(children_->data, child);
 	[child _setZOrder:z];
 }
 
@@ -520,12 +520,38 @@
 {
 	NSAssert( child != nil, @"Child must be non-nil");
 	
-	[child retain];
-	[children_ removeObject:child];
-	
-	[self insertChild:child z:z];
-	
-	[child release];
+	isReorderChildDirty_=YES;
+	[child setOrderOfArrival: globalOrderOfArrival++];
+	[child _setZOrder:z];
+}
+
+- (void) sortAllChildren
+{
+	if (isReorderChildDirty_) 
+	{	
+		NSInteger i,j,length=children_->data->num;
+		CCNode ** x=children_->data->arr;
+		CCNode *tempItem;
+		
+		//insertion sort
+		for(i=1; i<length; i++)
+		{
+			tempItem = x[i];
+			j = i-1;
+			
+			//continue moving element downwards while zOrder is smaller or when zOrder is the same but orderOfArrival is smaller
+			while(j>=0 && ( tempItem.zOrder< x[j].zOrder || ( tempItem.zOrder == x[j].zOrder && tempItem.orderOfArrival < x[j].orderOfArrival ) ) )
+			{
+				x[j+1] = x[j];
+				j = j-1;
+			}
+			x[j+1] = tempItem;
+		}
+		
+		//don't need to check children recursively, that's done in visit of each child
+		
+		isReorderChildDirty_=NO;
+	}
 }
 
 #pragma mark CCNode Draw
@@ -553,6 +579,7 @@
 	[self transform];
 	
 	if(children_) {
+		[self sortAllChildren];
 		ccArray *arrayData = children_->data;
 		NSUInteger i = 0;
 		
@@ -576,6 +603,8 @@
 
 	} else
 		[self draw];
+	
+	orderOfArrival_=0;
 	
 	if ( grid_ && grid_.active)
 		[grid_ afterDraw:self];
@@ -643,6 +672,10 @@
 	if (rotation_ != 0.0f )
 		glRotatef( -rotation_, 0.0f, 0.0f, 1.0f );
 	
+	// scale
+	if (scaleX_ != 1.0f || scaleY_ != 1.0f)
+		glScalef( scaleX_, scaleY_, 1.0f );
+
 	// skew
 	if ( (skewX_ != 0.0f) || (skewY_ != 0.0f) ) {
 		CGAffineTransform skewMatrix = CGAffineTransformMake( 1.0f, tanf(CC_DEGREES_TO_RADIANS(skewY_)), tanf(CC_DEGREES_TO_RADIANS(skewX_)), 1.0f, 0.0f, 0.0f );
@@ -650,10 +683,6 @@
 		CGAffineToGL(&skewMatrix, glMatrix);															 
 		glMultMatrixf(glMatrix);
 	}
-	
-	// scale
-	if (scaleX_ != 1.0f || scaleY_ != 1.0f)
-		glScalef( scaleX_, scaleY_, 1.0f );
 	
 	if ( camera_ && !(grid_ && grid_.active) )
 		[camera_ locate];
@@ -681,6 +710,11 @@
 -(void) onEnterTransitionDidFinish
 {
 	[children_ makeObjectsPerformSelector:@selector(onEnterTransitionDidFinish)];
+}
+
+-(void) onExitTransitionDidStart
+{
+	[children_ makeObjectsPerformSelector:@selector(onExitTransitionDidStart)];
 }
 
 -(void) onExit
@@ -747,15 +781,25 @@
 
 -(void) schedule:(SEL)selector
 {
-	[self schedule:selector interval:0];
+	[self schedule:selector interval:0 repeat:kCCRepeatForever delay:0];
 }
 
 -(void) schedule:(SEL)selector interval:(ccTime)interval
 {
+	[self schedule:selector interval:interval repeat:kCCRepeatForever delay:0];
+}
+
+-(void) schedule:(SEL)selector interval:(ccTime)interval repeat: (uint) repeat delay:(ccTime) delay
+{
 	NSAssert( selector != nil, @"Argument must be non-nil");
 	NSAssert( interval >=0, @"Arguemnt must be positive");
 	
-	[[CCScheduler sharedScheduler] scheduleSelector:selector forTarget:self interval:interval paused:!isRunning_];
+	[[CCScheduler sharedScheduler] scheduleSelector:selector forTarget:self interval:interval paused:!isRunning_ repeat:repeat delay:delay];
+}
+
+- (void) scheduleOnce:(SEL) selector delay:(ccTime) delay
+{
+	[self schedule:selector interval:0.f repeat:0 delay:delay];	
 }
 
 -(void) unschedule:(SEL)selector
@@ -800,15 +844,15 @@
 		if( rotation_ != 0 )
 			transform_ = CGAffineTransformRotate(transform_, -CC_DEGREES_TO_RADIANS(rotation_));
 		
+		if( ! (scaleX_ == 1 && scaleY_ == 1) ) 
+			transform_ = CGAffineTransformScale(transform_, scaleX_, scaleY_);
+
 		if( skewX_ != 0 || skewY_ != 0 ) {
 			// create a skewed coordinate system
 			CGAffineTransform skew = CGAffineTransformMake(1.0f, tanf(CC_DEGREES_TO_RADIANS(skewY_)), tanf(CC_DEGREES_TO_RADIANS(skewX_)), 1.0f, 0.0f, 0.0f);
 			// apply the skew to the transform
 			transform_ = CGAffineTransformConcat(skew, transform_);
 		}
-		
-		if( ! (scaleX_ == 1 && scaleY_ == 1) ) 
-			transform_ = CGAffineTransformScale(transform_, scaleX_, scaleY_);
 		
 		if( ! CGPointEqualToPoint(anchorPointInPixels_, CGPointZero) )
 			transform_ = CGAffineTransformTranslate(transform_, -anchorPointInPixels_.x, -anchorPointInPixels_.y);

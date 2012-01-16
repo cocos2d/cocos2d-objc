@@ -41,9 +41,14 @@ const NSUInteger defaultCapacity = 29;
 #pragma mark CCSpriteBatchNode
 
 static 	SEL selUpdate = NULL;
+static SEL selUpdateAtlasIndex =NULL;
+static SEL selSortMethod =NULL;
 
 @interface CCSpriteBatchNode (private)
 -(void) updateBlendFunc;
+-(void) updateAtlasIndex:(CCSprite*) sprite currentIndex:(NSInteger*) curIndex;
+-(void) swap:(NSInteger) oldIndex withNewIndex:(NSInteger) newIndex;
+
 @end
 
 @implementation CCSpriteBatchNode
@@ -57,6 +62,8 @@ static 	SEL selUpdate = NULL;
 {
 	if ( self == [CCSpriteBatchNode class] ) {
 		selUpdate = @selector(updateTransform);
+		selUpdateAtlasIndex = @selector(updateAtlasIndex:currentIndex:);
+		selSortMethod = @selector(sortAllChildren);
 	}
 }
 /*
@@ -101,6 +108,8 @@ static 	SEL selUpdate = NULL;
 		// no lazy alloc in this node
 		children_ = [[CCArray alloc] initWithCapacity:capacity];
 		descendants_ = [[CCArray alloc] initWithCapacity:capacity];
+		
+		updateAtlasIndexMethod_ = (__typeof__(updateAtlasIndexMethod_)) [self methodForSelector:selUpdateAtlasIndex];
 	}
 	
 	return self;
@@ -152,9 +161,11 @@ static 	SEL selUpdate = NULL;
 		[self transformAncestors];
 	}
 	
+	[self sortAllChildren];
 	[self transform];
-	
 	[self draw];
+	
+	orderOfArrival_=0;
 	
 	if ( grid_ && grid_.active)
 		[grid_ afterDraw:self];
@@ -172,8 +183,7 @@ static 	SEL selUpdate = NULL;
 	
 	[super addChild:child z:z tag:aTag];
 	
-	NSUInteger index = [self atlasIndexForChild:child atZ:z];
-	[self insertChild:child inAtlasAtIndex:index];	
+	[self appendChild:child];
 }
 
 // override reorderChild
@@ -185,11 +195,8 @@ static 	SEL selUpdate = NULL;
 	if( z == child.zOrder )
 		return;
 	
-	// XXX: Instead of removing/adding, it is more efficient to reorder manually
-	[child retain];
-	[self removeChild:child cleanup:NO];
-	[self addChild:child z:z];
-	[child release];
+	//set the z-order and sort later
+	[super reorderChild:child z:z];
 }
 
 // override removeChild:
@@ -215,12 +222,138 @@ static 	SEL selUpdate = NULL;
 -(void)removeAllChildrenWithCleanup:(BOOL)doCleanup
 {
 	// Invalidate atlas index. issue #569
-	[children_ makeObjectsPerformSelector:@selector(useSelfRender)];
-	
+	// useSelfRender should be performed on all descendants. issue #1216
+	[descendants_ makeObjectsPerformSelector:@selector(useSelfRender)];
+        
 	[super removeAllChildrenWithCleanup:doCleanup];
-	
+
 	[descendants_ removeAllObjects];
 	[textureAtlas_ removeAllQuads];
+}
+
+//override sortAllChildren
+- (void) sortAllChildren
+{
+	if (isReorderChildDirty_) 
+	{	
+		NSInteger i,j,length=children_->data->num;
+		CCNode ** x=children_->data->arr;		
+		CCNode *tempItem;
+		CCSprite *child;
+
+		//insertion sort
+		for(i=1; i<length; i++)
+		{
+			tempItem = x[i];
+			j = i-1;
+			
+			//continue moving element downwards while zOrder is smaller or when zOrder is the same but orderOfArrival is smaller
+			while(j>=0 && ( tempItem.zOrder < x[j].zOrder || ( tempItem.zOrder == x[j].zOrder && tempItem.orderOfArrival < x[j].orderOfArrival ) ) ) 
+			{
+				x[j+1] = x[j];
+				j--;
+			}
+			
+			x[j+1] = tempItem;
+		}
+		
+		//sorted now check all children 
+		if ([children_ count] > 0)
+		{
+			//first sort all children recursively based on zOrder
+			CCARRAY_FOREACH(children_, child) child->sortMethod(child,selSortMethod);
+			
+			NSInteger index=0;
+			
+			//fast dispatch, give every child a new atlasIndex based on their relative zOrder (keep parent -> child relations intact) and at the same time reorder descedants and the quads to the right index
+			CCARRAY_FOREACH(children_, child) updateAtlasIndexMethod_(self,selUpdateAtlasIndex,child,&index);
+		}
+		
+		isReorderChildDirty_=NO;	
+	}
+}
+
+-(void) updateAtlasIndex:(CCSprite*) sprite currentIndex:(NSInteger*) curIndex
+{
+	CCArray *array = [sprite children];
+	NSUInteger count = [array count];
+	NSInteger oldIndex;
+	
+	if( count == 0 )
+	{	
+		oldIndex=sprite.atlasIndex;
+		sprite.atlasIndex=*curIndex;
+		sprite.orderOfArrival=0;
+		if (oldIndex!=*curIndex)
+			[self swap:oldIndex withNewIndex:*curIndex];
+		(*curIndex)++;
+	}
+	else
+	{
+		BOOL needNewIndex=YES;
+		
+		if (((CCSprite*) (array->data->arr[0])).zOrder >= 0) 
+		{//all children are in front of the parent
+			oldIndex=sprite.atlasIndex;
+			sprite.atlasIndex=*curIndex;
+			sprite.orderOfArrival=0;
+			if (oldIndex!=*curIndex)
+				[self swap:oldIndex withNewIndex:*curIndex];
+			(*curIndex)++;
+			
+			needNewIndex=NO;
+		}
+		
+		CCSprite* child;
+		CCARRAY_FOREACH(array,child) 
+		{
+			if (needNewIndex && child.zOrder >= 0) 
+			{
+				oldIndex=sprite.atlasIndex;
+				sprite.atlasIndex=*curIndex;
+				sprite.orderOfArrival=0;
+				if (oldIndex!=*curIndex)
+					[self swap:oldIndex withNewIndex:*curIndex];
+				(*curIndex)++;
+				needNewIndex=NO;
+				
+			}
+			//fast dispatch
+			updateAtlasIndexMethod_(self,selUpdateAtlasIndex,child,curIndex);
+		}	
+		
+		if (needNewIndex) 
+		{//all children have a zOrder < 0)
+			oldIndex=sprite.atlasIndex;
+			sprite.atlasIndex=*curIndex;
+			sprite.orderOfArrival=0;
+			if (oldIndex!=*curIndex)
+				[self swap:oldIndex withNewIndex:*curIndex];
+			(*curIndex)++;
+		}
+	}
+}
+
+- (void) swap:(NSInteger) oldIndex withNewIndex:(NSInteger) newIndex
+{
+	id* x=descendants_->data->arr;
+	ccV3F_C4B_T2F_Quad* quads=textureAtlas_.quads;
+	
+	id tempItem=x[oldIndex];
+	ccV3F_C4B_T2F_Quad tempItemQuad=quads[oldIndex];
+	
+	//update the index of other swapped item
+	((CCSprite*) x[newIndex]).atlasIndex=oldIndex;
+	
+	x[oldIndex]=x[newIndex];
+	quads[oldIndex]=quads[newIndex];
+	x[newIndex]=tempItem;
+	quads[newIndex]=tempItemQuad;
+}
+
+- (void) reorderBatch:(BOOL) reorder
+{
+	isReorderChildDirty_=reorder;	
 }
 
 #pragma mark CCSpriteBatchNode - draw
@@ -247,13 +380,14 @@ static 	SEL selUpdate = NULL;
 			child->updateMethod(child, selUpdate);
 			
 #if CC_SPRITEBATCHNODE_DEBUG_DRAW
-			//Issue #528
-			CGRect rect = [child boundingBox];
+			//Issue #528, 1069
+			ccV3F_C4B_T2F_Quad *quads = [textureAtlas_ quads];
+			ccV3F_C4B_T2F_Quad *quad= &(quads[child.atlasIndex]);
 			CGPoint vertices[4]={
-				ccp(rect.origin.x,rect.origin.y),
-				ccp(rect.origin.x+rect.size.width,rect.origin.y),
-				ccp(rect.origin.x+rect.size.width,rect.origin.y+rect.size.height),
-				ccp(rect.origin.x,rect.origin.y+rect.size.height),
+				ccp(quad->tl.vertices.x,quad->tl.vertices.y),
+				ccp(quad->bl.vertices.x,quad->bl.vertices.y),
+				ccp(quad->br.vertices.x,quad->br.vertices.y),
+				ccp(quad->tr.vertices.x,quad->tr.vertices.y),
 			};
 			ccDrawPoly(vertices, 4, YES);
 #endif // CC_SPRITEBATCHNODE_DEBUG_DRAW
@@ -417,6 +551,33 @@ static 	SEL selUpdate = NULL;
 		[self insertChild:child inAtlasAtIndex:idx];
 	}
 }
+
+// addChild helper, faster than insertChild
+-(void) appendChild:(CCSprite*)sprite
+{
+	isReorderChildDirty_=YES;
+	[sprite useBatchNode:self];
+	[sprite setDirty: YES];
+	
+	if(textureAtlas_.totalQuads == textureAtlas_.capacity)
+		[self increaseAtlasCapacity];
+	
+	ccArray *descendantsData = descendants_->data;
+	
+	ccArrayAppendObjectWithResize(descendantsData, sprite);
+	
+	NSUInteger index=descendantsData->num-1;
+	
+	sprite.atlasIndex=index;
+	
+	ccV3F_C4B_T2F_Quad quad = [sprite quad];
+	[textureAtlas_ insertQuad:&quad atIndex:index];
+	
+	// add children recursively
+	CCSprite* child;
+	CCARRAY_FOREACH(sprite.children, child) [self appendChild:child];
+}
+
 
 // remove child helper
 -(void) removeSpriteFromAtlas:(CCSprite*)sprite

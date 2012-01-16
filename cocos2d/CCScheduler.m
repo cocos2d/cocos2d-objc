@@ -89,20 +89,20 @@ typedef struct _hashSelectorEntry
 
 +(id) timerWithTarget:(id)t selector:(SEL)s
 {
-	return [[[self alloc] initWithTarget:t selector:s] autorelease];
+	return [[[self alloc] initWithTarget:t selector:s interval:0 repeat:kCCRepeatForever delay:0] autorelease];
 }
 
 +(id) timerWithTarget:(id)t selector:(SEL)s interval:(ccTime) i
 {
-	return [[[self alloc] initWithTarget:t selector:s interval:i] autorelease];
+	return [[[self alloc] initWithTarget:t selector:s interval:i repeat:kCCRepeatForever delay:0] autorelease];
 }
 
 -(id) initWithTarget:(id)t selector:(SEL)s
 {
-	return [self initWithTarget:t selector:s interval:0];
+	return [self initWithTarget:t selector:s interval:0 repeat:kCCRepeatForever delay: 0];
 }
 
--(id) initWithTarget:(id)t selector:(SEL)s interval:(ccTime) seconds
+-(id) initWithTarget:(id)t selector:(SEL)s interval:(ccTime) seconds repeat:(uint) r delay:(ccTime) d 
 {
 	if( (self=[super init]) ) {
 #if COCOS2D_DEBUG
@@ -116,9 +116,15 @@ typedef struct _hashSelectorEntry
 		impMethod = (TICK_IMP) [t methodForSelector:s];
 		elapsed = -1;
 		interval = seconds;
+		repeat = r;
+		delay = d;
+		useDelay = (delay > 0) ? YES : NO;
+		repeat = r;
+		runForever = (repeat == kCCRepeatForever) ? YES : NO; 
 	}
 	return self;
 }
+
 
 - (NSString*) description
 {
@@ -134,12 +140,50 @@ typedef struct _hashSelectorEntry
 -(void) update: (ccTime) dt
 {
 	if( elapsed == - 1)
+	{	
 		elapsed = 0;
+		nTimesExecuted = 0;
+	}
 	else
-		elapsed += dt;
-	if( elapsed >= interval ) {
-		impMethod(target, selector, elapsed);
-		elapsed = 0;
+	{	
+		if (runForever && !useDelay)
+		{//standard timer usage
+			elapsed += dt;
+			if( elapsed >= interval ) {
+				impMethod(target, selector, elapsed);
+				elapsed = 0;
+				
+			}
+		}
+		else 
+		{//advanced usage 
+			elapsed += dt;
+			if (useDelay) 
+			{
+				if( elapsed >= delay )
+				{
+					impMethod(target, selector, elapsed);
+					elapsed = elapsed - delay;
+					nTimesExecuted+=1;
+					useDelay = NO;
+				}
+			}
+			else 
+			{
+				if (elapsed >= interval) 
+				{
+					impMethod(target, selector, elapsed);
+					elapsed = 0;
+					nTimesExecuted += 1; 
+					
+				}
+			}
+			
+			if (nTimesExecuted > repeat) 
+			{//unschedule timer
+				[[CCScheduler sharedScheduler] unscheduleSelector:selector forTarget:target];
+			}
+		}
 	}
 }
 @end
@@ -229,6 +273,11 @@ static CCScheduler *sharedScheduler;
 
 -(void) scheduleSelector:(SEL)selector forTarget:(id)target interval:(ccTime)interval paused:(BOOL)paused
 {
+	[self scheduleSelector:selector forTarget:target interval:interval paused:paused repeat:kCCRepeatForever delay:0.0f];
+}
+
+-(void) scheduleSelector:(SEL)selector forTarget:(id)target interval:(ccTime)interval paused:(BOOL)paused repeat:(uint) repeat delay:(ccTime) delay
+{
 	NSAssert( selector != nil, @"Argument selector must be non-nil");
 	NSAssert( target != nil, @"Argument target must be non-nil");	
 	
@@ -239,10 +288,10 @@ static CCScheduler *sharedScheduler;
 		element = calloc( sizeof( *element ), 1 );
 		element->target = [target retain];
 		HASH_ADD_INT( hashForSelectors, target, element );
-	
+		
 		// Is this the 1st element ? Then set the pause level to all the selectors of this target
 		element->paused = paused;
-	
+		
 	} else
 		NSAssert( element->paused == paused, @"CCScheduler. Trying to schedule a selector with a pause value different than the target");
 	
@@ -262,7 +311,7 @@ static CCScheduler *sharedScheduler;
 		ccArrayEnsureExtraCapacity(element->timers, 1);
 	}
 	
-	CCTimer *timer = [[CCTimer alloc] initWithTarget:target selector:selector interval:interval];
+	CCTimer *timer = [[CCTimer alloc] initWithTarget:target selector:selector interval:interval repeat:repeat delay:delay];
 	ccArrayAppendObject(element->timers, timer);
 	[timer release];
 }

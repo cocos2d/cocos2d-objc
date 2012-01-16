@@ -26,10 +26,38 @@ _template_open_body = """<?xml version="1.0" encoding="UTF-8"?>
 	<key>Identifier</key>
 	<string>com.cocos2d.%s</string>
 	<key>Kind</key>
-	<string>Xcode.Xcode3.ProjectTemplateUnitKind</string>
-"""
+	<string>Xcode.Xcode3.ProjectTemplateUnitKind</string>"""
 
 _template_close_body = "</dict>\n</plist>"
+
+_template_header_path= """<key>Targets</key>
+	<array>
+		<dict>
+			<key>SharedSettings</key>
+			<dict>
+				<key>HEADER_SEARCH_PATHS</key>
+				<string>%s</string>
+			</dict>
+		</dict>
+	</array>"""
+
+_template_user_header_path= """<key>Targets</key>
+	<array>
+		<dict>
+			<key>SharedSettings</key>
+			<dict>
+				<key>ALWAYS_SEARCH_USER_PATHS</key>
+				<string>YES</string>
+				<key>USER_HEADER_SEARCH_PATHS</key>
+				<string>%s</string>
+			</dict>
+		</dict>
+	</array>"""
+
+_template_ancestor = """    <key>Ancestors</key>
+	<array>
+		<string>%s</string>
+	</array>"""
 
 # python
 import sys
@@ -38,14 +66,17 @@ import getopt
 import glob
 
 class Xcode4Template(object):
-    def __init__( self, directory, group=0, identifier="XXX" ):
+    def __init__( self, directory, group=0, identifier="XXX", header_path=None, user_header_path=None, ancestor=None ):
         self.directory = directory
         self.files_to_include = []
         self.wildcard = '*'
-        self.ignore_extensions = ['h','txt','html','patch']
+        self.ignore_extensions = ['h','txt','html','patch','cmake']
         self.group_start_index = group  # eg: if 1 then libs/cocos2d/support -> ["cocos2d", "support"] ignoring "libs"
         self.output = []
         self.identifier = identifier
+        self.header_path = header_path
+        self.user_header_path = user_header_path
+        self.ancestor = ancestor
 
     def scandirs(self, path):
         for currentFile in glob.glob( os.path.join(path, self.wildcard) ):
@@ -125,14 +156,34 @@ class Xcode4Template(object):
         self.output.append( output_open )
         self.output.append( "\n".join( output_body ) )
         self.output.append( output_close )
+
+
+    #
+    # Generate ancestors
+    #
+    def generate_ancestor( self ):
+        if self.ancestor:
+            self.output.append( _template_ancestor % self.ancestor )
+
+    #
+    # Generates the include directory
+    #
+    def generate_header_path( self ):
+        if self.header_path:
+            self.output.append( _template_header_path % self.header_path )
+
+        if self.user_header_path:
+            self.output.append( _template_user_header_path % self.user_header_path )
       
     #
     # Generates the plist. Send it to to stdout
     #
     def generate_xml( self ):
         self.output.append( _template_open_body % self.identifier )
+        self.generate_ancestor()
         self.generate_definitions()
         self.generate_nodes()
+        self.generate_header_path()
         self.output.append( _template_close_body )
 
         print "\n".join( self.output )
@@ -144,11 +195,15 @@ class Xcode4Template(object):
 def help():
     print "%s v1.0 - An utility to generate Xcode 4 templates" % sys.argv[0]
     print "Usage:"
-    print "\t-d directory (directory to parse)"
-    print "\t-g directory_used_as_starting_group (if 1, then 'libs/cocos2d/Support/' -> ['cocos2d','Support'] ignoring 'libs')"
-    print "\t-i identifier (Xcode4 template identifier)"
+    print "-g --group\t\tdirectory_used_as_starting_group (if 1, then 'libs/cocos2d/Support/' -> ['cocos2d','Support'] ignoring 'libs')"
+    print "-i --identifier\t\tidentifier (Xcode4 template identifier)"
+    print "-a --ancestor\t\tancestor identifier. Default: none"
+    print "--header-path\t\theader search path"
+    print "--user-header-path\tuser header search path"
+    print "directory_to_parse"
     print "\nExample:"
-    print "\t%s -d cocos2d -g 0 -i cocos2dlib" % sys.argv[0]
+    print "\t%s -i kazmathlib --header-path ___PACKAGENAME___/libs/kazmath/include libs" % sys.argv[0]
+    print "\t%s -i cocos2dlib --ancestor com.cocos2d.cocos2dshaders libs" % sys.argv[0]
     sys.exit(-1)
 
 if __name__ == "__main__":
@@ -156,23 +211,37 @@ if __name__ == "__main__":
         help()
 
     directory = None
-    group = None
+    group = 0
     identifier = None
+    header_path= None
+    user_header_path= None
+    ancestor = None
     argv = sys.argv[1:]
     try:                                
-        opts, args = getopt.getopt(argv, "d:g:i:", ["directory=","group=","identifier="])
+        opts, args = getopt.getopt(argv, "a:g:i:", ["ancestor=","group=","identifier=","header-path=", "user-header-path="])
+
+        if len(args) == 0:
+            help()
+
         for opt, arg in opts:
-            if opt in ("-d","--directory"):
-                directory = arg
             if opt in ("-g","--group"):
                 group = arg
             if opt in ("-i","--identifier"):
                 identifier = arg
+            if opt in  ["--header-path"]:
+                header_path= arg
+            if opt in  ["--user-header-path"]:
+                user_header_path= arg
+            if opt in  ("-a", "--ancestor"):
+                ancestor = arg
     except getopt.GetoptError,e:
         print e
+
+    directory = args[0]
 
     if directory == None:
         help()
 
-    gen = Xcode4Template( directory=directory, group=group, identifier=identifier )
+    gen = Xcode4Template( directory=directory, group=int(group), identifier=identifier, header_path=header_path, ancestor=ancestor)
     gen.generate()
+

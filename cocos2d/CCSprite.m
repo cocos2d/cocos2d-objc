@@ -56,11 +56,14 @@ struct transformValues_ {
 	BOOL	visible;
 };
 
+static SEL selSortMethod = NULL;
+
 @interface CCSprite (Private)
 -(void)updateTextureCoords:(CGRect)rect;
 -(void)updateBlendFunc;
 -(void) initAnimationDictionary;
 -(void) getTransformValues:(struct transformValues_*)tv;	// optimization
+-(void) setReorderChildDirtyRecursively;
 @end
 
 @implementation CCSprite
@@ -170,6 +173,10 @@ struct transformValues_ {
 		
 		// updateMethod selector
 		updateMethod = (__typeof__(updateMethod))[self methodForSelector:@selector(updateTransform)];
+		
+		// sortMethod selector
+		selSortMethod = @selector(sortAllChildren);
+		sortMethod = (__typeof__(sortMethod))[self methodForSelector:selSortMethod];
 	}
 	
 	return self;
@@ -494,13 +501,13 @@ struct transformValues_ {
 				newMatrix = CGAffineTransformTranslate(newMatrix, tv.pos.x, tv.pos.y);
 			if( prevHonor & CC_HONOR_PARENT_TRANSFORM_ROTATE )
 				newMatrix = CGAffineTransformRotate(newMatrix, -CC_DEGREES_TO_RADIANS(tv.rotation));
+			if( prevHonor & CC_HONOR_PARENT_TRANSFORM_SCALE ) {
+				newMatrix = CGAffineTransformScale(newMatrix, tv.scale.x, tv.scale.y);
+			}
 			if ( prevHonor & CC_HONOR_PARENT_TRANSFORM_SKEW ) {
 				CGAffineTransform skew = CGAffineTransformMake(1.0f, tanf(CC_DEGREES_TO_RADIANS(tv.skew.y)), tanf(CC_DEGREES_TO_RADIANS(tv.skew.x)), 1.0f, 0.0f, 0.0f);
 				// apply the skew to the transform
 				newMatrix = CGAffineTransformConcat(skew, newMatrix);
-			}
-			if( prevHonor & CC_HONOR_PARENT_TRANSFORM_SCALE ) {
-				newMatrix = CGAffineTransformScale(newMatrix, tv.scale.x, tv.scale.y);
 			}
 			
 			// 3rd: Translate anchor point
@@ -607,10 +614,11 @@ struct transformValues_ {
 	
 #if CC_SPRITE_DEBUG_DRAW == 1
 	// draw bounding box
-	CGSize s = self.contentSize;
-	CGPoint vertices[4] = {
-		ccp(0,0), ccp(s.width,0),
-		ccp(s.width,s.height), ccp(0,s.height)
+	CGPoint vertices[4]={
+		ccp(quad_.tl.vertices.x,quad_.tl.vertices.y),
+		ccp(quad_.bl.vertices.x,quad_.bl.vertices.y),
+		ccp(quad_.br.vertices.x,quad_.br.vertices.y),
+		ccp(quad_.tr.vertices.x,quad_.tr.vertices.y),
 	};
 	ccDrawPoly(vertices, 4, YES);
 #elif CC_SPRITE_DEBUG_DRAW == 2
@@ -631,16 +639,19 @@ struct transformValues_ {
 -(void) addChild:(CCSprite*)child z:(NSInteger)z tag:(NSInteger) aTag
 {
 	NSAssert( child != nil, @"Argument must be non-nil");
-	
-	[super addChild:child z:z tag:aTag];
-	
+		
 	if( usesBatchNode_ ) {
 		NSAssert( [child isKindOfClass:[CCSprite class]], @"CCSprite only supports CCSprites as children when using CCSpriteBatchNode");
 		NSAssert( child.texture.name == textureAtlas_.texture.name, @"CCSprite is not using the same texture id");
 		
-		NSUInteger index = [batchNode_ atlasIndexForChild:child atZ:z];
-		[batchNode_ insertChild:child inAtlasAtIndex:index];
+		//put it in descendants array of batch node
+		[batchNode_ appendChild:child];	
+		
+		if (!isReorderChildDirty_) [self setReorderChildDirtyRecursively];
 	}
+	
+	//CCNode already sets isReorderChildDirty_ so this needs to be after batchNode check
+	[super addChild:child z:z tag:aTag];
 	
 	hasChildren_ = YES;
 }
@@ -652,17 +663,17 @@ struct transformValues_ {
 
 	if( z == child.zOrder )
 		return;
-
-	if( usesBatchNode_ ) {
-		// XXX: Instead of removing/adding, it is more efficient to reorder manually
-		[child retain];
-		[self removeChild:child cleanup:NO];
-		[self addChild:child z:z];
-		[child release];
+	
+	if( usesBatchNode_ ) 
+	{	
+		if (!isReorderChildDirty_) 
+		{	
+			[self setReorderChildDirtyRecursively];
+			[batchNode_ reorderBatch:YES];
+		}	
 	}
-
-	else
-		[super reorderChild:child z:z];
+	
+	[super reorderChild:child z:z];
 }
 
 -(void)removeChild: (CCSprite *)sprite cleanup:(BOOL)doCleanup
@@ -688,12 +699,63 @@ struct transformValues_ {
 	hasChildren_ = NO;
 }
 
+- (void) sortAllChildren
+{
+	if (isReorderChildDirty_) 
+	{	
+		NSInteger i,j,length=children_->data->num;
+		CCNode ** x=children_->data->arr;
+		CCNode * tempItem;
+		
+		//insertion sort
+		for(i=1; i<length; i++)
+		{
+			tempItem = x[i];
+			j = i-1;
+			
+			//continue moving element downwards while zOrder is smaller or when zOrder is the same but orderOfArrival is smaller
+			while(j>=0 && ( tempItem.zOrder < x[j].zOrder || ( tempItem.zOrder == x[j].zOrder && tempItem.orderOfArrival < x[j].orderOfArrival ) ) ) 
+			{
+				x[j+1] = x[j];
+				j = j-1;
+			}
+			x[j+1] = tempItem;
+		}
+		
+		if (usesBatchNode_)
+		{
+			//sorted now check all children recursively
+			CCSprite *child;
+			// fast dispatch
+			CCARRAY_FOREACH(children_, child) child->sortMethod(child,selSortMethod);
+		}
+		
+		isReorderChildDirty_=NO;
+	}
+}
+
+
+
 //
 // CCNode property overloads
 // used only when parent is CCSpriteBatchNode
 //
 #pragma mark CCSprite - property overloads
 
+-(void) setReorderChildDirtyRecursively
+{
+	//only set parents flag the first time
+	if (!isReorderChildDirty_)
+	{	
+		isReorderChildDirty_=YES;
+		CCNode* node=(CCNode*) parent_;
+		while (node!=batchNode_) 
+		{
+			[(CCSprite*) node setReorderChildDirtyRecursively];
+			node=node.parent;
+		}
+	}
+}	
 
 -(void) setDirtyRecursively:(BOOL)b
 {
