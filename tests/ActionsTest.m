@@ -1280,6 +1280,40 @@ enum nodeTags
     return self;
 }
 
+- (void) startMovingGrossiniAgain
+{
+    [grossini stopAllActions];
+    
+    [self centerSprites:1];
+    
+    CGSize winSize = [[CCDirector sharedDirector] winSize];
+    
+    grossini.position = ccp(-200, winSize.height/2);
+    
+    id move = [CCMoveBy actionWithDuration:2 position:ccp(winSize.width*3,0)];
+    id move_back = [move reverse];
+    id seq = [CCSequence actions:move, move_back, nil];
+    id rep = [CCRepeatForever actionWithAction:seq];
+    
+    
+    [grossini runAction:rep];
+}
+
+- (id) initWithDictionaryRepresentation:(NSDictionary *)aDict
+{
+    self = [super initWithDictionaryRepresentation:aDict];
+    if (self)
+    {
+        grossini = [[CCNodeRegistry sharedRegistry] nodeByName:@"grossini"];
+        [self runAction:[CCSequence actions: [CCDelayTime actionWithDuration:1.0f], [CCCallFunc actionWithTarget:self selector:@selector(startMovingGrossiniAgain)] , nil]];
+        
+    }
+
+    return self;
+}
+
+
+
 -(void) draw
 {
 	CGSize winSize = [[CCDirector sharedDirector] winSize];
