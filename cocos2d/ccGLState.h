@@ -62,7 +62,7 @@ typedef enum {
 extern "C" {
 #endif
 
-/** @file A set of OpenGL helpers functions
+/** @file ccGLState.h
 */
 
 /** Invalidates the GL state cache.

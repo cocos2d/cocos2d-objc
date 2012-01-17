@@ -24,7 +24,7 @@
 
 #import "ccTypes.h"
 
-/** @file CCVertex */
+/** @file CCVertex.h */
 
 /** converts a line to a polygon */
 void ccVertexLineToPolygon(CGPoint *points, float stroke, ccVertex2F *vertices, ccTex2F *texCoords, NSUInteger offset, NSUInteger nuPoints);

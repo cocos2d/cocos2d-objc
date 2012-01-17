@@ -1,4 +1,4 @@
-version 2.0-beta2 16-Jan-2012
+version 2.0-beta2 17-Jan-2012
 . [NEW] v1.1 Forward-ported changes:
 		LabelTTF: word wrap works on Mac (issue #1074)
 		Node: Added onExitTransitionDidStart (issue #792)
@@ -82,7 +82,7 @@ version 2.0-alpha 18-Sept-2011
 . [NEW] ccConfig: removed CC_SPRITEBATCHNODE_DEBUG_DRAW. CC_SPRITE_DEBUG_DRAW can be used both for batches and non batches.
 . [NEW] ccConfig: renamed CC_COCOSNODE_RENDER_SUBPIXEL to CC_NODE_RENDER_SUBPIXEL
 . [NEW] ccGLState: added helper functions that keeps the GL state
-. [NEW] CProgressTimer:
+. [NEW] CCProgressTimer:
             - Convenience class constructor now passes in CCSprite (this gives developers easier access to timer with CCSpriteFrames, CCSprites, etc)
             - Reduced the progress timer types to just radial and bar - added in reverse, midpoint, barChangeRate to be have more flexible options to modify the progress.
 			- Supports Tint + Color
