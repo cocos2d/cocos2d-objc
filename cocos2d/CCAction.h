@@ -49,7 +49,7 @@ enum {
  Used in CCActionManager to start action in -resumeTarget: instead of
  -addAction:target:paused if paused is YES (i.e. when -runAction: called
  before calling addChild:)
- @since v.1.0+ ("feature-amc-actions" branch of psineur/cocos2d-iphone)
+ @since v.1.1+ ("feature-amc-actions" branch of psineur/cocos2d-iphone)
  */
 @property (nonatomic, readonly, assign) BOOL started;
 
