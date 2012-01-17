@@ -42,12 +42,11 @@ enum  {
 };
 
 @interface CCDirector (MacExtension)
+/** sets the CCEventDispatcher (Mac only) */
+@property (nonatomic, readwrite, retain) CCEventDispatcher* eventDispatcher;
+
 /** converts an NSEvent to GL coordinates (Mac only) */
 -(CGPoint) convertEventToGL:(NSEvent*)event;
-/** sets the CCEventDispatcher (Mac only) */
--(void) setEventDispatcher:(CCEventDispatcher*)dispatcher;
-/** returns the CCEventDispatcher (Mac only) */
--(CCEventDispatcher*) eventDispatcher;
 @end
 
 /** Base class of Mac directors
