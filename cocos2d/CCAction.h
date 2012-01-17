@@ -182,6 +182,10 @@ enum {
  */
 @interface CCFollow : CCAction <NSCopying>
 {
+    // Name of node to follow, used when loading action.
+    // Usually is nil.
+    NSString *followedNodeName_;
+    
 	/* node to follow */
 	CCNode	*followedNode_;
 	
@@ -193,6 +197,22 @@ enum {
 
 /** alter behavior - turn on/off boundary */
 @property (nonatomic,readwrite) BOOL boundarySet;
+
+/** Boundary rect, where camera position should be limited.
+ * Can be changed during runtime.
+ * @since 1.1+ ("feature-amc-actions" branch of psineur/cocos2d-iphone)
+ */
+@property (nonatomic, readwrite) CGRect worldBoundary;
+
+/** Name of followedNode. Can be used in three ways:
+ * 1. Getter: get current followedNode's name
+ * 2. Setter: (When action already running) change followedNode to node with 
+ * given name, if it exist right now or do nothing if it doesn't exist.
+ * 3. Setter: (When action didn't start yet) try to set followedNode by name now
+ * and, if no success, on start.
+ * @since 1.1+ ("feature-amc-actions" branch of psineur/cocos2d-iphone)
+ */
+@property(nonatomic, readwrite, retain) NSString *followedNodeName;
 
 /** creates the action with no boundary set */
 +(id) actionWithTarget:(CCNode *)followedNode;

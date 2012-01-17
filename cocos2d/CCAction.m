@@ -32,6 +32,7 @@
 #import "CCAction.h"
 #import "CCActionInterval.h"
 #import "Support/CGPointExtension.h"
+#import "AutoMagicCoding/AutoMagicCoding/NSObject+AutoMagicCoding.h"
 
 //
 // Action Base Class
@@ -114,6 +115,20 @@
 {
 	NSLog(@"[Action update]. override me");
 }
+
+#pragma mark CCAction - AutoMagicCoding Support
+
++ (BOOL) AMCEnabled
+{
+    return YES;
+}
+
+- (NSArray *) AMCKeysForDictionaryRepresentation
+{
+    return [NSArray arrayWithObject: @"tag"];
+}
+
+
 @end
 
 //
@@ -366,6 +381,70 @@
 {
 	[followedNode_ release];
 	[super dealloc];
+}
+
+#pragma mark CCFollow - AutoMagicCoding Support
+
+@dynamic followedNodeName;
+@synthesize worldBoundary = worldBoundary_;
+
+-(NSString *) followedNodeName
+{
+    if (followedNode_)
+        return followedNode_.name;
+    
+    return followedNodeName_;
+}
+
+- (void) setFollowedNodeName:(NSString *)followedNodeName
+{
+    if (started_)
+    {
+        CCNode *node = [[CCNodeRegistry sharedRegistry] nodeByName:followedNodeName_];
+        if (node && node != followedNode_)
+        {
+            [followedNode_ release];
+            followedNode_ = [node retain];
+        }
+    }
+    else
+    {
+        if (followedNodeName != followedNodeName_)
+        {
+            [followedNodeName_ release];
+            followedNodeName_ = [followedNodeName retain];
+        }
+    }
+}
+
+- (void) startWithTarget:(id)target
+{
+    if (followedNodeName_)
+    {
+        CCNode *node = [[CCNodeRegistry sharedRegistry] nodeByName:followedNodeName_];
+        [followedNodeName_ release];
+        followedNodeName_ = nil;
+        
+        if (node)
+        {
+            [followedNode_ release];
+            followedNode_ = [node retain];
+        }
+        else
+        {
+            CCLOGERROR(@"CCFollow#startWithTarget: can't set followedNode by it's name. Action will be stoped.");
+        }
+    }
+}
+
+- (NSArray *) AMCKeysForDictionaryRepresentation
+{
+    return [[super AMCKeysForDictionaryRepresentation] arrayByAddingObjectsFromArray: 
+            [NSArray arrayWithObjects: 
+             @"followedNodeName", 
+             @"boundarySet",
+             @"worldBoundary",
+             nil] ];
 }
 
 @end
