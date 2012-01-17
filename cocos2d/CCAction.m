@@ -144,6 +144,14 @@
 	CCLOG(@"cocos2d: FiniteTimeAction#reverse: Implement me");
 	return nil;
 }
+
+#pragma mark CCFiniteTimeAction - AutoMagicCoding Support
+
+- (NSArray *) AMCKeysForDictionaryRepresentation
+{
+    return [[super AMCKeysForDictionaryRepresentation] arrayByAddingObject:@"duration"];
+}
+
 @end
 
 
@@ -210,6 +218,14 @@
 {
 	return [CCRepeatForever actionWithAction:[innerAction_ reverse]];
 }
+
+#pragma mark CCRepeatForever - AutoMagicCoding Support
+
+- (NSArray *) AMCKeysForDictionaryRepresentation
+{
+    return [[super AMCKeysForDictionaryRepresentation] arrayByAddingObject:@"innerAction"];
+}
+
 @end
 
 //
@@ -273,6 +289,19 @@
 {
 	return [CCSpeed actionWithAction:[innerAction_ reverse] speed:speed_];
 }
+
+#pragma mark CCSpeed - AutoMagicCoding Support
+
+- (NSArray *) AMCKeysForDictionaryRepresentation
+{
+    return [[super AMCKeysForDictionaryRepresentation] arrayByAddingObjectsFromArray:
+            [NSArray arrayWithObjects:
+             @"speed",
+             @"innerAction",
+             nil]
+            ];
+}
+
 @end
 
 //
