@@ -38,7 +38,7 @@
  */
 @interface CCDirector (iOSExtension)
 
-/** Touch Dispatcher */
+/** sets the CCTouchDispatcher (iOS only) */
 @property (nonatomic,readwrite,retain) CCTouchDispatcher * touchDispatcher;
 
 /** The size in pixels of the surface. It could be different than the screen size.
