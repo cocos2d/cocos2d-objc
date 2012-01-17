@@ -40,11 +40,12 @@ version 2.0-beta2 16-Jan-2012
 . [FIX] Menu: Blocks API doesn't crash on Mac
 . [FIX] RenderTexture: Works with RGB888 (issue #1293)
 . [FIX] RenderTexture: Supports NPOT textures (issue #1291)
+. [FIX] Shaders: example shaders have the "example_" prefix
 . [FIX] Sprite: isFrameDisplayed takes into accout the offset (issue #1295)
 . [FIX] Tests: ActionProgress, Box2dtest, ChipmunkTest, LayerTest, MotionStreakTest, NodeTest, RotateWorld and SceneTest work on Mac
 . [FIX] Tests: MenuTestBlocks removed. Merged into MenuTest
 . [FIX] Tests: ShaderTest works (issue #1285)
-. [FIX] Tests: ShaderTest centers shaders (Mac)
+. [FIX] Tests: ShaderTest centers shaders (Mac and iOS Retina Display)
 . [FIX] Texture2D: Uses CGImageRef instead of UIKit for iOS API
 . [FIX] TileMaps: Re-added "cc_vertexz" property
 . [3RD] Chipmunk: Using Chipmunk v6.0.3

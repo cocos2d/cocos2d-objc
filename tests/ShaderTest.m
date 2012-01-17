@@ -193,7 +193,7 @@ enum {
 -(void) setPosition:(CGPoint)newPosition
 {
 	[super setPosition:newPosition];
-	center_ = (ccVertex2F) { position_.x, position_.y };
+	center_ = (ccVertex2F) { position_.x * CC_CONTENT_SCALE_FACTOR(), position_.y * CC_CONTENT_SCALE_FACTOR() };
 }
 
 -(void) draw
@@ -226,7 +226,7 @@ enum {
 -(id) init
 {
 	if( (self=[super init]) ) {
-		ShaderNode *sn = [ShaderNode shaderNodeWithVertex:@"Monjori.vsh" fragment:@"Monjori.fsh"];
+		ShaderNode *sn = [ShaderNode shaderNodeWithVertex:@"example_Monjori.vsh" fragment:@"example_Monjori.fsh"];
 
 		CGSize s = [[CCDirector sharedDirector] winSize];
 		sn.position = ccp(s.width/2, s.height/2);
@@ -256,7 +256,7 @@ enum {
 -(id) init
 {
 	if( (self=[super init] ) ) {
-		ShaderNode *sn = [ShaderNode shaderNodeWithVertex:@"Mandelbrot.vsh" fragment:@"Mandelbrot.fsh"];
+		ShaderNode *sn = [ShaderNode shaderNodeWithVertex:@"example_Mandelbrot.vsh" fragment:@"example_Mandelbrot.fsh"];
 
 		CGSize s = [[CCDirector sharedDirector] winSize];
 		sn.position = ccp(s.width/2, s.height/2);
@@ -285,7 +285,7 @@ enum {
 -(id) init
 {
 	if( (self=[super init] ) ) {
-		ShaderNode *sn = [ShaderNode shaderNodeWithVertex:@"Julia.vsh" fragment:@"Julia.fsh"];
+		ShaderNode *sn = [ShaderNode shaderNodeWithVertex:@"example_Julia.vsh" fragment:@"example_Julia.fsh"];
 
 		CGSize s = [[CCDirector sharedDirector] winSize];
 		sn.position = ccp(s.width/2, s.height/2);
@@ -316,7 +316,7 @@ enum {
 {
 	if( (self=[super init] ) ) {
 
-		ShaderNode *sn = [ShaderNode shaderNodeWithVertex:@"Heart.vsh" fragment:@"Heart.fsh"];
+		ShaderNode *sn = [ShaderNode shaderNodeWithVertex:@"example_Heart.vsh" fragment:@"example_Heart.fsh"];
 
 		CGSize s = [[CCDirector sharedDirector] winSize];
 		sn.position = ccp(s.width/2, s.height/2);
@@ -346,7 +346,7 @@ enum {
 {
 	if( (self=[super init] ) ) {
 
-		ShaderNode *sn = [ShaderNode shaderNodeWithVertex:@"Flower.vsh" fragment:@"Flower.fsh"];
+		ShaderNode *sn = [ShaderNode shaderNodeWithVertex:@"example_Flower.vsh" fragment:@"example_Flower.fsh"];
 
 		CGSize s = [[CCDirector sharedDirector] winSize];
 		sn.position = ccp(s.width/2, s.height/2);
@@ -375,7 +375,7 @@ enum {
 -(id) init
 {
 	if( (self=[super init] ) ) {
-		ShaderNode *sn = [ShaderNode shaderNodeWithVertex:@"Plasma.vsh" fragment:@"Plasma.fsh"];
+		ShaderNode *sn = [ShaderNode shaderNodeWithVertex:@"example_Plasma.vsh" fragment:@"example_Plasma.fsh"];
 
 		CGSize s = [[CCDirector sharedDirector] winSize];
 		sn.position = ccp(s.width/2, s.height/2);
@@ -423,7 +423,7 @@ enum {
 		sub_[0] = sub_[1] = sub_[2] = sub_[3] = 0;
 
 		self.shaderProgram = [[CCGLProgram alloc] initWithVertexShaderFilename:@"PositionTextureColor.vsh"
-													 fragmentShaderFilename:@"Blur.fsh"];
+													 fragmentShaderFilename:@"example_Blur.fsh"];
 
 		[self.shaderProgram release];
 

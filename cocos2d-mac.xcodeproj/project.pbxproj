@@ -1927,21 +1927,21 @@
 		A0ADF03F14584BD3009A71F1 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E0F9256D1224207200EF2362 /* libz.dylib */; };
 		A0ADF04014584BD3009A71F1 /* liblibpng.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E076EDB91225FEAA00DE0DA2 /* liblibpng.a */; };
 		A0ADF04A14584C9B009A71F1 /* ShaderTest.m in Sources */ = {isa = PBXBuildFile; fileRef = A0ADF04914584C9B009A71F1 /* ShaderTest.m */; };
-		A0ADF04B14584DC2009A71F1 /* Blur.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4CA21403278200EC482A /* Blur.fsh */; };
-		A0ADF04C14584DC2009A71F1 /* Flower.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4CA31403278200EC482A /* Flower.fsh */; };
-		A0ADF04D14584DC2009A71F1 /* Flower.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4CA41403278200EC482A /* Flower.vsh */; };
-		A0ADF04E14584DC2009A71F1 /* Heart.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4CA51403278200EC482A /* Heart.fsh */; };
-		A0ADF04F14584DC2009A71F1 /* Heart.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4CA61403278200EC482A /* Heart.vsh */; };
-		A0ADF05014584DC2009A71F1 /* Julia.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4CA71403278200EC482A /* Julia.fsh */; };
-		A0ADF05114584DC2009A71F1 /* Julia.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4CA81403278200EC482A /* Julia.vsh */; };
-		A0ADF05214584DC2009A71F1 /* Mandelbrot.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4CA91403278200EC482A /* Mandelbrot.fsh */; };
-		A0ADF05314584DC2009A71F1 /* Mandelbrot.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4CAA1403278200EC482A /* Mandelbrot.vsh */; };
-		A0ADF05414584DC2009A71F1 /* Monjori.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4CAB1403278200EC482A /* Monjori.fsh */; };
-		A0ADF05514584DC2009A71F1 /* Monjori.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4CAC1403278200EC482A /* Monjori.vsh */; };
-		A0ADF05614584DC2009A71F1 /* Plasma.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4CAD1403278200EC482A /* Plasma.fsh */; };
-		A0ADF05714584DC2009A71F1 /* Plasma.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4CAE1403278200EC482A /* Plasma.vsh */; };
-		A0ADF05814584DC2009A71F1 /* Twist.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4CBB1403278200EC482A /* Twist.fsh */; };
-		A0ADF05914584DC2009A71F1 /* Twist.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4CBC1403278200EC482A /* Twist.vsh */; };
+		A0ADF04B14584DC2009A71F1 /* example_Blur.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4CA21403278200EC482A /* example_Blur.fsh */; };
+		A0ADF04C14584DC2009A71F1 /* example_Flower.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4CA31403278200EC482A /* example_Flower.fsh */; };
+		A0ADF04D14584DC2009A71F1 /* example_Flower.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4CA41403278200EC482A /* example_Flower.vsh */; };
+		A0ADF04E14584DC2009A71F1 /* example_Heart.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4CA51403278200EC482A /* example_Heart.fsh */; };
+		A0ADF04F14584DC2009A71F1 /* example_Heart.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4CA61403278200EC482A /* example_Heart.vsh */; };
+		A0ADF05014584DC2009A71F1 /* example_Julia.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4CA71403278200EC482A /* example_Julia.fsh */; };
+		A0ADF05114584DC2009A71F1 /* example_Julia.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4CA81403278200EC482A /* example_Julia.vsh */; };
+		A0ADF05214584DC2009A71F1 /* example_Mandelbrot.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4CA91403278200EC482A /* example_Mandelbrot.fsh */; };
+		A0ADF05314584DC2009A71F1 /* example_Mandelbrot.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4CAA1403278200EC482A /* example_Mandelbrot.vsh */; };
+		A0ADF05414584DC2009A71F1 /* example_Monjori.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4CAB1403278200EC482A /* example_Monjori.fsh */; };
+		A0ADF05514584DC2009A71F1 /* example_Monjori.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4CAC1403278200EC482A /* example_Monjori.vsh */; };
+		A0ADF05614584DC2009A71F1 /* example_Plasma.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4CAD1403278200EC482A /* example_Plasma.fsh */; };
+		A0ADF05714584DC2009A71F1 /* example_Plasma.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4CAE1403278200EC482A /* example_Plasma.vsh */; };
+		A0ADF05814584DC2009A71F1 /* example_Twist.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4CBB1403278200EC482A /* example_Twist.fsh */; };
+		A0ADF05914584DC2009A71F1 /* example_Twist.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4CBC1403278200EC482A /* example_Twist.vsh */; };
 		A0B532B913C141FF0072EDA4 /* aabb.h in Headers */ = {isa = PBXBuildFile; fileRef = A0B5329A13C141FF0072EDA4 /* aabb.h */; };
 		A0B532BA13C141FF0072EDA4 /* mat4stack.h in Headers */ = {isa = PBXBuildFile; fileRef = A0B5329C13C141FF0072EDA4 /* mat4stack.h */; };
 		A0B532BB13C141FF0072EDA4 /* matrix.h in Headers */ = {isa = PBXBuildFile; fileRef = A0B5329D13C141FF0072EDA4 /* matrix.h */; };
@@ -5894,19 +5894,19 @@
 		A0DC2F601491B3FA005B814E /* test_image_rgb888.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = test_image_rgb888.pvr; sourceTree = "<group>"; };
 		A0E55417141EAEEE003F1E5A /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		A0E950FF142698D2009F9607 /* grossini_pvr_rgba8888.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = grossini_pvr_rgba8888.pvr; sourceTree = "<group>"; };
-		A0EC4CA21403278200EC482A /* Blur.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Blur.fsh; sourceTree = "<group>"; };
-		A0EC4CA31403278200EC482A /* Flower.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Flower.fsh; sourceTree = "<group>"; };
-		A0EC4CA41403278200EC482A /* Flower.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Flower.vsh; sourceTree = "<group>"; };
-		A0EC4CA51403278200EC482A /* Heart.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Heart.fsh; sourceTree = "<group>"; };
-		A0EC4CA61403278200EC482A /* Heart.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Heart.vsh; sourceTree = "<group>"; };
-		A0EC4CA71403278200EC482A /* Julia.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Julia.fsh; sourceTree = "<group>"; };
-		A0EC4CA81403278200EC482A /* Julia.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Julia.vsh; sourceTree = "<group>"; };
-		A0EC4CA91403278200EC482A /* Mandelbrot.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Mandelbrot.fsh; sourceTree = "<group>"; };
-		A0EC4CAA1403278200EC482A /* Mandelbrot.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Mandelbrot.vsh; sourceTree = "<group>"; };
-		A0EC4CAB1403278200EC482A /* Monjori.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Monjori.fsh; sourceTree = "<group>"; };
-		A0EC4CAC1403278200EC482A /* Monjori.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Monjori.vsh; sourceTree = "<group>"; };
-		A0EC4CAD1403278200EC482A /* Plasma.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Plasma.fsh; sourceTree = "<group>"; };
-		A0EC4CAE1403278200EC482A /* Plasma.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Plasma.vsh; sourceTree = "<group>"; };
+		A0EC4CA21403278200EC482A /* example_Blur.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_Blur.fsh; sourceTree = "<group>"; };
+		A0EC4CA31403278200EC482A /* example_Flower.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_Flower.fsh; sourceTree = "<group>"; };
+		A0EC4CA41403278200EC482A /* example_Flower.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_Flower.vsh; sourceTree = "<group>"; };
+		A0EC4CA51403278200EC482A /* example_Heart.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_Heart.fsh; sourceTree = "<group>"; };
+		A0EC4CA61403278200EC482A /* example_Heart.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_Heart.vsh; sourceTree = "<group>"; };
+		A0EC4CA71403278200EC482A /* example_Julia.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_Julia.fsh; sourceTree = "<group>"; };
+		A0EC4CA81403278200EC482A /* example_Julia.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_Julia.vsh; sourceTree = "<group>"; };
+		A0EC4CA91403278200EC482A /* example_Mandelbrot.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_Mandelbrot.fsh; sourceTree = "<group>"; };
+		A0EC4CAA1403278200EC482A /* example_Mandelbrot.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_Mandelbrot.vsh; sourceTree = "<group>"; };
+		A0EC4CAB1403278200EC482A /* example_Monjori.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_Monjori.fsh; sourceTree = "<group>"; };
+		A0EC4CAC1403278200EC482A /* example_Monjori.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_Monjori.vsh; sourceTree = "<group>"; };
+		A0EC4CAD1403278200EC482A /* example_Plasma.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_Plasma.fsh; sourceTree = "<group>"; };
+		A0EC4CAE1403278200EC482A /* example_Plasma.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_Plasma.vsh; sourceTree = "<group>"; };
 		A0EC4CAF1403278200EC482A /* Position_uColor.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Position_uColor.fsh; sourceTree = "<group>"; };
 		A0EC4CB01403278200EC482A /* Position_uColor.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Position_uColor.vsh; sourceTree = "<group>"; };
 		A0EC4CB11403278200EC482A /* PositionColor.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = PositionColor.fsh; sourceTree = "<group>"; };
@@ -5919,8 +5919,8 @@
 		A0EC4CB81403278200EC482A /* PositionTextureA8Color.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = PositionTextureA8Color.vsh; sourceTree = "<group>"; };
 		A0EC4CB91403278200EC482A /* PositionTextureColor.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = PositionTextureColor.fsh; sourceTree = "<group>"; };
 		A0EC4CBA1403278200EC482A /* PositionTextureColor.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = PositionTextureColor.vsh; sourceTree = "<group>"; };
-		A0EC4CBB1403278200EC482A /* Twist.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Twist.fsh; sourceTree = "<group>"; };
-		A0EC4CBC1403278200EC482A /* Twist.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Twist.vsh; sourceTree = "<group>"; };
+		A0EC4CBB1403278200EC482A /* example_Twist.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_Twist.fsh; sourceTree = "<group>"; };
+		A0EC4CBC1403278200EC482A /* example_Twist.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_Twist.vsh; sourceTree = "<group>"; };
 		A0FBA8A614A51386002DF395 /* libchipmunk.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libchipmunk.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0FBA8AF14A5138F002DF395 /* libbox2d.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libbox2d.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		E01E663D121CA00A001A484F /* libcocos2d.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libcocos2d.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -7251,19 +7251,19 @@
 			isa = PBXGroup;
 			children = (
 				A05483151457C4AB00B47D05 /* PositionTextureColorAlphaTest.fsh */,
-				A0EC4CA21403278200EC482A /* Blur.fsh */,
-				A0EC4CA31403278200EC482A /* Flower.fsh */,
-				A0EC4CA41403278200EC482A /* Flower.vsh */,
-				A0EC4CA51403278200EC482A /* Heart.fsh */,
-				A0EC4CA61403278200EC482A /* Heart.vsh */,
-				A0EC4CA71403278200EC482A /* Julia.fsh */,
-				A0EC4CA81403278200EC482A /* Julia.vsh */,
-				A0EC4CA91403278200EC482A /* Mandelbrot.fsh */,
-				A0EC4CAA1403278200EC482A /* Mandelbrot.vsh */,
-				A0EC4CAB1403278200EC482A /* Monjori.fsh */,
-				A0EC4CAC1403278200EC482A /* Monjori.vsh */,
-				A0EC4CAD1403278200EC482A /* Plasma.fsh */,
-				A0EC4CAE1403278200EC482A /* Plasma.vsh */,
+				A0EC4CA21403278200EC482A /* example_Blur.fsh */,
+				A0EC4CA31403278200EC482A /* example_Flower.fsh */,
+				A0EC4CA41403278200EC482A /* example_Flower.vsh */,
+				A0EC4CA51403278200EC482A /* example_Heart.fsh */,
+				A0EC4CA61403278200EC482A /* example_Heart.vsh */,
+				A0EC4CA71403278200EC482A /* example_Julia.fsh */,
+				A0EC4CA81403278200EC482A /* example_Julia.vsh */,
+				A0EC4CA91403278200EC482A /* example_Mandelbrot.fsh */,
+				A0EC4CAA1403278200EC482A /* example_Mandelbrot.vsh */,
+				A0EC4CAB1403278200EC482A /* example_Monjori.fsh */,
+				A0EC4CAC1403278200EC482A /* example_Monjori.vsh */,
+				A0EC4CAD1403278200EC482A /* example_Plasma.fsh */,
+				A0EC4CAE1403278200EC482A /* example_Plasma.vsh */,
 				A0EC4CAF1403278200EC482A /* Position_uColor.fsh */,
 				A0EC4CB01403278200EC482A /* Position_uColor.vsh */,
 				A0EC4CB11403278200EC482A /* PositionColor.fsh */,
@@ -7276,8 +7276,8 @@
 				A0EC4CB81403278200EC482A /* PositionTextureA8Color.vsh */,
 				A0EC4CB91403278200EC482A /* PositionTextureColor.fsh */,
 				A0EC4CBA1403278200EC482A /* PositionTextureColor.vsh */,
-				A0EC4CBB1403278200EC482A /* Twist.fsh */,
-				A0EC4CBC1403278200EC482A /* Twist.vsh */,
+				A0EC4CBB1403278200EC482A /* example_Twist.fsh */,
+				A0EC4CBC1403278200EC482A /* example_Twist.vsh */,
 			);
 			name = Shaders;
 			path = Resources/Shaders;
@@ -10372,21 +10372,21 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A0ADF04B14584DC2009A71F1 /* Blur.fsh in Resources */,
-				A0ADF04C14584DC2009A71F1 /* Flower.fsh in Resources */,
-				A0ADF04D14584DC2009A71F1 /* Flower.vsh in Resources */,
-				A0ADF04E14584DC2009A71F1 /* Heart.fsh in Resources */,
-				A0ADF04F14584DC2009A71F1 /* Heart.vsh in Resources */,
-				A0ADF05014584DC2009A71F1 /* Julia.fsh in Resources */,
-				A0ADF05114584DC2009A71F1 /* Julia.vsh in Resources */,
-				A0ADF05214584DC2009A71F1 /* Mandelbrot.fsh in Resources */,
-				A0ADF05314584DC2009A71F1 /* Mandelbrot.vsh in Resources */,
-				A0ADF05414584DC2009A71F1 /* Monjori.fsh in Resources */,
-				A0ADF05514584DC2009A71F1 /* Monjori.vsh in Resources */,
-				A0ADF05614584DC2009A71F1 /* Plasma.fsh in Resources */,
-				A0ADF05714584DC2009A71F1 /* Plasma.vsh in Resources */,
-				A0ADF05814584DC2009A71F1 /* Twist.fsh in Resources */,
-				A0ADF05914584DC2009A71F1 /* Twist.vsh in Resources */,
+				A0ADF04B14584DC2009A71F1 /* example_Blur.fsh in Resources */,
+				A0ADF04C14584DC2009A71F1 /* example_Flower.fsh in Resources */,
+				A0ADF04D14584DC2009A71F1 /* example_Flower.vsh in Resources */,
+				A0ADF04E14584DC2009A71F1 /* example_Heart.fsh in Resources */,
+				A0ADF04F14584DC2009A71F1 /* example_Heart.vsh in Resources */,
+				A0ADF05014584DC2009A71F1 /* example_Julia.fsh in Resources */,
+				A0ADF05114584DC2009A71F1 /* example_Julia.vsh in Resources */,
+				A0ADF05214584DC2009A71F1 /* example_Mandelbrot.fsh in Resources */,
+				A0ADF05314584DC2009A71F1 /* example_Mandelbrot.vsh in Resources */,
+				A0ADF05414584DC2009A71F1 /* example_Monjori.fsh in Resources */,
+				A0ADF05514584DC2009A71F1 /* example_Monjori.vsh in Resources */,
+				A0ADF05614584DC2009A71F1 /* example_Plasma.fsh in Resources */,
+				A0ADF05714584DC2009A71F1 /* example_Plasma.vsh in Resources */,
+				A0ADF05814584DC2009A71F1 /* example_Twist.fsh in Resources */,
+				A0ADF05914584DC2009A71F1 /* example_Twist.vsh in Resources */,
 				A0ADEF6614584BD3009A71F1 /* PositionTextureColorAlphaTest.fsh in Resources */,
 				A0ADEF6714584BD3009A71F1 /* Position_uColor.fsh in Resources */,
 				A0ADEF6814584BD3009A71F1 /* Position_uColor.vsh in Resources */,
