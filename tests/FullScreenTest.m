@@ -420,8 +420,8 @@ Class restartAction()
 	// Display FPS: yes
 	[director setDisplayFPS:YES];
 
-	// Create an EAGLView with a RGB8 color buffer, and a depth buffer of 24-bits
-	EAGLView *glView = [EAGLView viewWithFrame:[window bounds]
+	// Create an CCGLView with a RGB8 color buffer, and a depth buffer of 24-bits
+	CCGLView *glView = [CCGLView viewWithFrame:[window bounds]
 								   pixelFormat:kEAGLColorFormatRGBA8
 								   depthFormat:GL_DEPTH_COMPONENT24_OES
 							preserveBackbuffer:NO
