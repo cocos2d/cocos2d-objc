@@ -89,5 +89,6 @@ typedef enum {
 
 /** Creates a progress timer with the sprite as the shape the timer goes through */
 + (id) progressWithSprite:(CCSprite*) sprite;
+/** Initializes a progress timer with the sprite as the shape the timer goes through */
 - (id) initWithSprite:(CCSprite*) sprite;
 @end
