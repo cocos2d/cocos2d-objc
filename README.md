@@ -71,7 +71,7 @@ Mac OS X 10.6 (or newer), Xcode 4.2 (or newer)
 Runtime Requirements
 --------------------
   * iOS 4.0 or newer for iOS games
-  * Leopard (v10.5) or newer for Mac games
+  * Snow Leopard (v10.5) or newer for Mac games
 
 
 How to run the tests
