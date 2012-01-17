@@ -1271,6 +1271,7 @@ enum nodeTags
 	
 	
 	[grossini runAction:rep];
+    grossini.name = @"grossini";
 	
 	
 	[self runAction:[CCFollow actionWithTarget:grossini worldBoundary:CGRectMake(0, 0, (winSize.width*2)-100, winSize.height)]];
