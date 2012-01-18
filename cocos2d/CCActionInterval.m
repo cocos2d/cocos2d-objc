@@ -306,14 +306,6 @@
     }
 }
 
-- (void) setLast:(int)last
-{
-    if (last >= 0 && last <= 1)
-        last_ = last;
-    else
-        CCLOGERROR(@"CCSequence: cant set bad last_ = %d!", last);
-}
-
 - (NSArray *) AMCKeysForDictionaryRepresentation
 {
     return [[super AMCKeysForDictionaryRepresentation] arrayByAddingObjectsFromArray:
@@ -322,13 +314,13 @@
              @"elapsed_",
              @"actionOne",
              @"actionTwo",
-             @"last",
              nil]];
 }
 
 -(void) continueWithTarget:(id)aTarget
 {	
 	split_ = [actions_[0] duration] / MAX(duration_, FLT_EPSILON);
+    last_ = -1;
 }
 
 @end
