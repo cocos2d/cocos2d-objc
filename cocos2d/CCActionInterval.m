@@ -677,6 +677,20 @@
 {	
 	[target_ setPosition: ccp( (startPosition_.x + delta_.x * t ), (startPosition_.y + delta_.y * t ) )];
 }
+
+#pragma mark CCMoveTo - AutoMagicCoding Support
+
+- (NSArray *) AMCKeysForDictionaryRepresentation
+{
+    return [[super AMCKeysForDictionaryRepresentation] arrayByAddingObjectsFromArray:
+            [NSArray arrayWithObjects: 
+             @"endPosition_",
+             @"startPosition_",
+             @"delta_",
+             nil]
+            ];
+}
+
 @end
 
 //
