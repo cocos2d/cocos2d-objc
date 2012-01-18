@@ -687,6 +687,10 @@
 @synthesize startPosition = startPosition_;
 @synthesize delta = delta_;
 
+-(void) continueWithTarget:(id)target
+{
+}
+
 - (NSArray *) AMCKeysForDictionaryRepresentation
 {
     return [[super AMCKeysForDictionaryRepresentation] arrayByAddingObjectsFromArray:
