@@ -1285,7 +1285,7 @@ enum nodeTags
     self = [super initWithDictionaryRepresentation:aDict];
     if (self)
     {
-        grossini = [[CCNodeRegistry sharedRegistry] nodeByName:@"grossini"];
+        grossini = [[[CCNodeRegistry sharedRegistry] nodeByName:@"grossini"] retain];
     }
 
     return self;
