@@ -110,9 +110,9 @@ Class restartAction()
     self = [super initWithDictionaryRepresentation:aDict];
     if (self)
     {
-        grossini = [[[CCNodeRegistry sharedRegistry] nodeByName:@"grossini"] retain];
-        tamara = [[[CCNodeRegistry sharedRegistry] nodeByName:@"tamara"] retain];
-        kathia = [[[CCNodeRegistry sharedRegistry] nodeByName:@"kathia"] retain];
+        grossini = (CCSprite *)[[[CCNodeRegistry sharedRegistry] nodeByName:@"grossini"] retain];
+        tamara = (CCSprite *)[[[CCNodeRegistry sharedRegistry] nodeByName:@"tamara"] retain];
+        kathia = (CCSprite *)[[[CCNodeRegistry sharedRegistry] nodeByName:@"kathia"] retain];
     }
     
     return self;
