@@ -33,6 +33,7 @@
 #import "CCAnimation.h"
 #import "CCNode.h"
 #import "Support/CGPointExtension.h"
+#import "AutoMagicCoding/AutoMagicCoding/NSObject+AutoMagicCoding.h"
 
 //
 // IntervalAction
@@ -120,6 +121,18 @@
 	NSAssert(NO, @"CCIntervalAction: reverse not implemented.");
 	return nil;
 }
+
+#pragma mark CCIntervalAction - AutoMagicCoding Support
+
+- (NSArray *) AMCKeysForDictionaryRepresentation
+{
+    return [[super AMCKeysForDictionaryRepresentation] arrayByAddingObjectsFromArray:
+            [NSArray arrayWithObjects: 
+             @"firstTick_",
+             @"elapsed_",
+             nil]];
+}
+
 @end
 
 //
@@ -127,6 +140,15 @@
 //
 #pragma mark -
 #pragma mark Sequence
+
+@interface CCSequence ()
+
+@property (nonatomic, readwrite, retain) CCFiniteTimeAction *actionOne;
+@property (nonatomic, readwrite, retain) CCFiniteTimeAction *actionTwo;
+@property (nonatomic, readwrite, assign) int last;
+
+@end
+
 @implementation CCSequence
 +(id) actions: (CCFiniteTimeAction*) action1, ...
 {
@@ -250,6 +272,65 @@
 {
 	return [[self class] actionOne: [actions_[1] reverse] two: [actions_[0] reverse ] ];
 }
+
+#pragma mark CCSequence - AutoMagicCoding Support
+
+@dynamic actionOne, actionTwo;
+@synthesize last = last_;
+
+- (CCAction *) actionOne
+{
+    return actions_[0];
+}
+
+- (void) setActionOne:(CCFiniteTimeAction *)actionOne
+{
+    if (actions_[0] != actionOne)
+    {
+        [actions_[0] release];
+        actions_[0] = [actionOne retain];
+    }
+}
+
+- (CCAction *) actionTwo
+{
+    return actions_[1];
+}
+
+- (void) setActionTwo:(CCFiniteTimeAction *)actionTwo
+{
+    if (actions_[1] != actionTwo)
+    {
+        [actions_[1] release];
+        actions_[1] = [actionTwo retain];
+    }
+}
+
+- (void) setLast:(int)last
+{
+    if (last >= 0 && last <= 1)
+        last_ = last;
+    else
+        CCLOGERROR(@"CCSequence: cant set bad last_ = %d!", last);
+}
+
+- (NSArray *) AMCKeysForDictionaryRepresentation
+{
+    return [[super AMCKeysForDictionaryRepresentation] arrayByAddingObjectsFromArray:
+            [NSArray arrayWithObjects: 
+             @"firstTick_",
+             @"elapsed_",
+             @"actionOne",
+             @"actionTwo",
+             @"last",
+             nil]];
+}
+
+-(void) continueWithTarget:(id)aTarget
+{	
+	split_ = [actions_[0] duration] / MAX(duration_, FLT_EPSILON);
+}
+
 @end
 
 //
