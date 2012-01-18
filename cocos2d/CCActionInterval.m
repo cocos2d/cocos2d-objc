@@ -646,6 +646,14 @@
 #pragma mark -
 #pragma mark MoveTo
 
+@interface CCMoveTo()
+
+@property(nonatomic, readwrite, assign) CGPoint endPosition;
+@property(nonatomic, readwrite, assign) CGPoint startPosition;
+@property(nonatomic, readwrite, assign) CGPoint delta;
+
+@end
+
 @implementation CCMoveTo
 +(id) actionWithDuration: (ccTime) t position: (CGPoint) p
 {	
@@ -680,13 +688,17 @@
 
 #pragma mark CCMoveTo - AutoMagicCoding Support
 
+@synthesize endPosition = endPosition_;
+@synthesize startPosition = startPosition_;
+@synthesize delta = delta_;
+
 - (NSArray *) AMCKeysForDictionaryRepresentation
 {
     return [[super AMCKeysForDictionaryRepresentation] arrayByAddingObjectsFromArray:
             [NSArray arrayWithObjects: 
-             @"endPosition_",
-             @"startPosition_",
-             @"delta_",
+             @"endPosition",
+             @"startPosition",
+             @"delta",
              nil]
             ];
 }
