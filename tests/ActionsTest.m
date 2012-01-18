@@ -86,6 +86,10 @@ Class restartAction()
 		grossini = [[CCSprite alloc] initWithFile:@"grossini.png"];
 		tamara = [[CCSprite alloc] initWithFile:@"grossinis_sister1.png"];
 		kathia = [[CCSprite alloc] initWithFile:@"grossinis_sister2.png"];
+        
+        grossini.name = @"grossini";
+        tamara.name = @"tamara";
+        kathia.name = @"kathia";
 		
 		[self addChild:grossini z:1];
 		[self addChild:tamara z:2];
@@ -96,6 +100,19 @@ Class restartAction()
 		[grossini setPosition: ccp(s.width/2, s.height/3)];
 		[tamara setPosition: ccp(s.width/2, 2*s.height/3)];
 		[kathia setPosition: ccp(s.width/2, s.height/2)];
+    }
+    
+    return self;
+}
+
+- (id) initWithDictionaryRepresentation:(NSDictionary *)aDict
+{
+    self = [super initWithDictionaryRepresentation:aDict];
+    if (self)
+    {
+        grossini = [[[CCNodeRegistry sharedRegistry] nodeByName:@"grossini"] retain];
+        tamara = [[[CCNodeRegistry sharedRegistry] nodeByName:@"tamara"] retain];
+        kathia = [[[CCNodeRegistry sharedRegistry] nodeByName:@"kathia"] retain];
     }
     
     return self;
@@ -1270,28 +1287,13 @@ enum nodeTags
 	id rep = [CCRepeatForever actionWithAction:seq];
 	
 	
-	[grossini runAction:rep];
-    grossini.name = @"grossini";
-	
+	[grossini runAction:rep];	
 	
 	[self runAction:[CCFollow actionWithTarget:grossini worldBoundary:CGRectMake(0, 0, (winSize.width*2)-100, winSize.height)]];
 
     
     return self;
 }
-
-- (id) initWithDictionaryRepresentation:(NSDictionary *)aDict
-{
-    self = [super initWithDictionaryRepresentation:aDict];
-    if (self)
-    {
-        grossini = [[[CCNodeRegistry sharedRegistry] nodeByName:@"grossini"] retain];
-    }
-
-    return self;
-}
-
-
 
 -(void) draw
 {
