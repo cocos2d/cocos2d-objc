@@ -82,7 +82,7 @@
  */
 @interface CCPlace : CCActionInstant <NSCopying>
 {
-	CGPoint position;
+	CGPoint position_;
 }
 /** creates a Place action with a position */
 +(id) actionWithPosition: (CGPoint) pos;

@@ -211,21 +211,21 @@
 -(id) initWithPosition: (CGPoint) pos
 {
 	if( (self=[super init]) )
-		position = pos;
+		position_ = pos;
 	
 	return self;
 }
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	CCActionInstant *copy = [[[self class] allocWithZone: zone] initWithPosition: position];
+	CCActionInstant *copy = [[[self class] allocWithZone: zone] initWithPosition: position_];
 	return copy;
 }
 
 -(void) startWithTarget:(id)aTarget
 {
 	[super startWithTarget:aTarget];
-	((CCNode *)target_).position = position;
+	((CCNode *)target_).position = position_;
 }
 
 @end
