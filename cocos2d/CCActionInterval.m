@@ -1402,6 +1402,22 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 {
 	[(id<CCRGBAProtocol>)target_ setOpacity:fromOpacity_ + ( toOpacity_ - fromOpacity_ ) * t];
 }
+
+#pragma mark CCFadeTo - AutoMagicCoding Support
+
+- (void)continueWithTarget:(id)target
+{
+}
+
+- (NSArray *) AMCKeysForDictionaryRepresentation
+{
+    return [[super AMCKeysForDictionaryRepresentation] arrayByAddingObjectsFromArray:
+            [NSArray arrayWithObjects: 
+             @"toOpacity_",
+             @"fromOpacity_",
+             nil]];
+}
+
 @end
 
 //
