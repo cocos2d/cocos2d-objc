@@ -1016,6 +1016,15 @@
 #pragma mark -
 #pragma mark BezierBy
 
+@interface CCBezierBy ()
+
+@property (nonatomic, readwrite, assign) CGPoint startPosition;
+@property (nonatomic, readwrite, assign) CGPoint endPosition;
+@property (nonatomic, readwrite, assign) CGPoint controlPoint_1;
+@property (nonatomic, readwrite, assign) CGPoint controlPoint_2;
+
+@end
+
 // Bezier cubic formula:
 //	((1 - t) + t)3 = 1 
 // Expands to… 
@@ -1085,6 +1094,60 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 	CCBezierBy *action = [[self class] actionWithDuration:[self duration] bezier:r];
 	return action;
 }
+
+#pragma mark CCBezierBy - AutoMagicCoding Support
+
+@synthesize startPosition = startPosition_;
+@dynamic endPosition;
+@dynamic controlPoint_1;
+@dynamic controlPoint_2;
+
+- (CGPoint) endPosition
+{
+    return config_.endPosition;
+}
+
+- (void) setEndPosition:(CGPoint)endPosition
+{
+    config_.endPosition = endPosition;
+}
+
+- (CGPoint) controlPoint_1
+{
+    return config_.controlPoint_1;
+}
+
+- (void) setControlPoint_1:(CGPoint)point
+{
+    config_.controlPoint_1 = point;
+}
+
+- (CGPoint) controlPoint_2
+{
+    return config_.controlPoint_2;
+}
+
+- (void) setControlPoint_2:(CGPoint)point
+{
+    config_.controlPoint_2 = point;
+}
+
+- (void) continueWithTarget:(id)target
+{
+}
+
+- (NSArray *) AMCKeysForDictionaryRepresentation
+{
+    return [[super AMCKeysForDictionaryRepresentation] arrayByAddingObjectsFromArray:
+            [NSArray arrayWithObjects: 
+             @"startPosition",
+             @"endPosition",
+             @"controlPoint_1",
+             @"controlPoint_2",
+             nil]];
+}
+
+
 @end
 
 //
