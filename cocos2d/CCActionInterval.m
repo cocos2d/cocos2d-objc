@@ -1300,6 +1300,23 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 	// return 'self'
 	return [[self class] actionWithDuration:duration_ blinks: times_];
 }
+
+#pragma mark CCBlink - AutoMagicCoding Support
+
+- (void)continueWithTarget:(id)target
+{
+}
+
+- (NSArray *) AMCKeysForDictionaryRepresentation
+{
+    return [[super AMCKeysForDictionaryRepresentation] arrayByAddingObjectsFromArray:
+            [NSArray arrayWithObjects: 
+             @"times_",
+             nil]];
+}
+
+
+
 @end
 
 //
