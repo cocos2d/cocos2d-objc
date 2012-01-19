@@ -332,8 +332,18 @@
 
 -(void) continueWithTarget:(id)aTarget
 {	
+    // Init split & last same as when starting.
 	split_ = [actions_[0] duration] / MAX(duration_, FLT_EPSILON);
     last_ = -1;
+    
+    // But if first action is done - replace it with DelayTime to
+    // avoid completing it as instant action in -update: with [action[0] update: 1.0].
+    ccTime firstActionDuration = [actions_[0] duration];
+    if (elapsed_ >= firstActionDuration)
+    {
+        [actions_[0] release];
+        actions_[0] = [[CCDelayTime actionWithDuration: firstActionDuration] retain];
+    }
 }
 
 @end
