@@ -850,6 +850,27 @@
 	[target_ setSkewY: (startSkewY_ + deltaY_ * t ) ];
 }
 
+#pragma mark CCSkewTo - AutoMagicCoding
+
+-(void)continueWithTarget:(id)target
+{
+}
+
+- (NSArray *) AMCKeysForDictionaryRepresentation
+{
+    return [[super AMCKeysForDictionaryRepresentation] arrayByAddingObjectsFromArray:
+            [NSArray arrayWithObjects: 
+             @"skewX_",
+             @"skewY_",
+             @"startSkewX_",
+             @"startSkewY_",
+             @"endSkewX_",
+             @"endSkewY_",
+             @"deltaX_",
+             @"deltaY_",
+             nil]];
+}
+
 @end
 
 //
