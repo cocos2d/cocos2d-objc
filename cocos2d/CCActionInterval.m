@@ -909,6 +909,13 @@
 #pragma mark -
 #pragma mark JumpBy
 
+@interface CCJumpBy ()
+
+@property(nonatomic,readwrite,assign) CGPoint startPosition;
+@property(nonatomic,readwrite,assign) CGPoint delta;
+
+@end
+
 @implementation CCJumpBy
 +(id) actionWithDuration: (ccTime) t position: (CGPoint) pos height: (ccTime) h jumps:(NSUInteger)j
 {
@@ -958,6 +965,27 @@
 {
 	return [[self class] actionWithDuration:duration_ position: ccp(-delta_.x,-delta_.y) height:height_ jumps:jumps_];
 }
+
+#pragma mark CCJumpBy - AutoMagicCoding
+
+@synthesize startPosition = startPosition_;
+@synthesize delta = delta_;
+
+-(void)continueWithTarget:(id)target
+{
+}
+
+- (NSArray *) AMCKeysForDictionaryRepresentation
+{
+    return [[super AMCKeysForDictionaryRepresentation] arrayByAddingObjectsFromArray:
+            [NSArray arrayWithObjects: 
+             @"startPosition",
+             @"delta",
+             @"height_",
+             @"jumps_",
+             nil]];
+}
+
 @end
 
 //
