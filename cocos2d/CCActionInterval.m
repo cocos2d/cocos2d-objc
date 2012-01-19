@@ -234,6 +234,8 @@
 
 -(void) update: (ccTime) t
 {
+    t_ = t;
+    
 	int found = 0;
 	ccTime new_t = 0.0f;
 	
@@ -293,6 +295,13 @@
 
 - (CCAction *) actionOne
 {
+    // Don't save 1st action if its done - replace it with DelayTime to
+    // avoid completing it as instant action in -update: with [action[0] update: 1.0].
+    if ( t_ >= split_)
+    {
+        return [[CCDelayTime actionWithDuration: [actions_[0] duration] ] retain];
+    }
+    
     return actions_[0];
 }
 
@@ -335,15 +344,6 @@
     // Init split & last same as when starting.
 	split_ = [actions_[0] duration] / MAX(duration_, FLT_EPSILON);
     last_ = -1;
-    
-    // But if first action is done - replace it with DelayTime to
-    // avoid completing it as instant action in -update: with [action[0] update: 1.0].
-    ccTime firstActionDuration = [actions_[0] duration];
-    if (elapsed_ >= firstActionDuration)
-    {
-        [actions_[0] release];
-        actions_[0] = [[CCDelayTime actionWithDuration: firstActionDuration] retain];
-    }
 }
 
 @end
