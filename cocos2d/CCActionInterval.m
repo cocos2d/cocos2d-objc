@@ -1425,6 +1425,14 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 //
 #pragma mark -
 #pragma mark TintTo
+
+@interface CCTintTo ()
+
+@property(nonatomic, readwrite, assign) ccColor3B to;
+@property(nonatomic, readwrite, assign) ccColor3B from;
+
+@end
+
 @implementation CCTintTo
 +(id) actionWithDuration:(ccTime)t red:(GLubyte)r green:(GLubyte)g blue:(GLubyte)b
 {
@@ -1458,6 +1466,51 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 	id<CCRGBAProtocol> tn = (id<CCRGBAProtocol>) target_;
 	[tn setColor:ccc3(from_.r + (to_.r - from_.r) * t, from_.g + (to_.g - from_.g) * t, from_.b + (to_.b - from_.b) * t)];
 }
+
+#pragma mark CCTintTo - AutoMagicCoding Support
+
+@synthesize to = to_;
+@synthesize from = from_;
+
+- (void)continueWithTarget:(id)target
+{
+}
+
+- (NSArray *) AMCKeysForDictionaryRepresentation
+{
+    return [[super AMCKeysForDictionaryRepresentation] arrayByAddingObjectsFromArray:
+            [NSArray arrayWithObjects: 
+             @"to",
+             @"from",
+             nil]];
+}
+
+- (NSString *) AMCEncodeStructWithValue: (NSValue *) structValue withName: (NSString *) structName
+{
+    if ([structName isEqualToString: @"_ccColor3B"]
+        || [structName isEqualToString: @"ccColor3B"])
+    {
+        ccColor3B color;
+        [structValue getValue: &color];
+        return NSStringFromCCColor3B(color);
+    }
+    else
+        return [super AMCEncodeStructWithValue:structValue withName:structName];
+}
+
+- (NSValue *) AMCDecodeStructFromString: (NSString *)value withName: (NSString *) structName
+{
+    if ([structName isEqualToString: @"_ccColor3B"]
+        || [structName isEqualToString: @"ccColor3B"])
+    {
+        ccColor3B color = ccColor3BFromNSString(value);
+        
+        return [NSValue valueWithBytes: &color objCType: @encode(ccColor3B) ];
+    }
+    else
+        return [super AMCDecodeStructFromString:value withName:structName];
+}
+
 @end
 
 //
@@ -1507,6 +1560,26 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 {
 	return [CCTintBy actionWithDuration:duration_ red:-deltaR_ green:-deltaG_ blue:-deltaB_];
 }
+
+#pragma mark CCTintBy - AutoMagicCoding Support
+
+- (void)continueWithTarget:(id)target
+{
+}
+
+- (NSArray *) AMCKeysForDictionaryRepresentation
+{
+    return [[super AMCKeysForDictionaryRepresentation] arrayByAddingObjectsFromArray:
+            [NSArray arrayWithObjects: 
+             @"deltaR_",
+             @"deltaG_",
+             @"deltaB_",
+             @"fromR_",
+             @"fromG_",
+             @"fromB_",
+             nil]];
+}
+
 @end
 
 //
