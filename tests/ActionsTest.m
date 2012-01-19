@@ -979,7 +979,7 @@ enum nodeTags
 	[self alignSpritesLeft:1];
 	
 	id move = [CCMoveBy actionWithDuration:1 position:ccp(150,0)];
-	id action = [CCSequence actions: move, [CCDelayTime actionWithDuration:2], move, nil];
+	id action = [CCSequence actions: move, [CCDelayTime actionWithDuration:2], [move copy], nil];
 	
 	[grossini runAction:action];
     
