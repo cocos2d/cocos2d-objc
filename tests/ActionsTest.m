@@ -979,7 +979,7 @@ enum nodeTags
 	[self alignSpritesLeft:1];
 	
 	id move = [CCMoveBy actionWithDuration:1 position:ccp(150,0)];
-	id action = [CCSequence actions: move, [CCDelayTime actionWithDuration:2], [move copy], nil];
+	id action = [CCSequence actions: move, [CCDelayTime actionWithDuration:2], [move copy], [CCDelayTime actionWithDuration:2], [move copy], nil];
 	
 	[grossini runAction:action];
     
@@ -988,8 +988,14 @@ enum nodeTags
 
 -(NSString *) title
 {
-	return @"DelayTime: m + delay + m";
+	return @"DelayTime:";
 }
+
+- (NSString *) subtitle
+{
+     return @"m + delay + m + delay + m";
+}
+
 @end
 
 @implementation ActionReverseSequence
