@@ -1098,6 +1098,26 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 	[target_ setScaleX: (startScaleX_ + deltaX_ * t ) ];
 	[target_ setScaleY: (startScaleY_ + deltaY_ * t ) ];
 }
+
+#pragma mark CCScaleTo - AutoMagicCoding
+
+-(void)continueWithTarget:(id)target
+{
+}
+
+- (NSArray *) AMCKeysForDictionaryRepresentation
+{
+    return [[super AMCKeysForDictionaryRepresentation] arrayByAddingObjectsFromArray:
+            [NSArray arrayWithObjects: 
+             @"startScaleX_",
+             @"startScaleY_",
+             @"deltaX_",
+             @"deltaY_",
+             @"endScaleX_",
+             @"endScaleY_",
+             nil]];
+}
+
 @end
 
 //
