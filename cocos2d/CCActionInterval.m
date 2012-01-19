@@ -1334,6 +1334,13 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 {
 	return [CCFadeOut actionWithDuration:duration_];
 }
+
+#pragma mark CCFadeIn - AutoMagicCoding Support
+
+- (void)continueWithTarget:(id)target
+{
+}
+
 @end
 
 //
@@ -1351,6 +1358,13 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 {
 	return [CCFadeIn actionWithDuration:duration_];
 }
+
+#pragma mark CCFadeOut - AutoMagicCoding Support
+
+- (void)continueWithTarget:(id)target
+{
+}
+
 @end
 
 //
