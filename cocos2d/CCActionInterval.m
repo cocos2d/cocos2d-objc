@@ -1607,6 +1607,11 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 {
 	return [[self class] actionWithDuration:duration_];
 }
+
+-(void)continueWithTarget:(id)target
+{
+}
+
 @end
 
 //
