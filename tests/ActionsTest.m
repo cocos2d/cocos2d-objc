@@ -657,7 +657,7 @@ enum nodeTags
     if (!self)
         return nil;
 	
-	[self centerSprites:2];
+	[self centerSprites:3];
 	
 	tamara.opacity = 0;
 	id action1 = [CCFadeIn actionWithDuration:1.0f];
@@ -665,15 +665,20 @@ enum nodeTags
 	
 	id action2 = [CCFadeOut actionWithDuration:1.0f];
 	id action2Back = [action2 reverse];
+    
+    grossini.opacity = 128;
+    id action3 = [CCFadeTo actionWithDuration:1.0f opacity:0];
+    id action3Back = [CCFadeTo actionWithDuration:1.0f opacity:128];
 	
 	[tamara runAction: [CCSequence actions: action1, action1Back, nil]];
 	[kathia runAction: [CCSequence actions: action2, action2Back, nil]];
+    [grossini runAction: [CCSequence actions: action3, action3Back, nil]];
     
     return self;
 }
 -(NSString *) title
 {
-	return @"FadeIn / FadeOut";
+	return @"FadeIn / FadeOut / FadeTo";
 }
 @end
 
