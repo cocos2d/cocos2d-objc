@@ -947,19 +947,25 @@ enum nodeTags
     if (!self)
         return nil;
 	
-	[self alignSpritesLeft:1];
+	[self alignSpritesLeft:2];
 	
 	id jump = [CCJumpBy actionWithDuration:2 position:ccp(300,0) height:50 jumps:4];
 	id action = [CCSequence actions: jump, [jump reverse], nil];
+    
+    CGPoint tamarasStartPoint = [tamara position];
+    id jump2 = [jump copy];
+    id jumpReversedWithTime = [CCReverseTime actionWithAction: jump2];
+	id action2 = [CCSequence actions: jump2, [CCPlace actionWithPosition: tamarasStartPoint], jumpReversedWithTime, nil];
 	
-	[grossini runAction:action];
+	[kathia runAction:action];
+    [tamara runAction:action2];
     
     return self;
 }
 
 -(NSString *) title
 {
-	return @"Reverse an action";
+	return @"Reverse / CCReverseTime";
 }
 @end
 
