@@ -253,20 +253,30 @@
 	
 	if (last_ == -1 && found==1)	{
 		[actions_[0] startOrContinueWithTarget:target_];
+        if ([actions_[0] isKindOfClass:[CCActionInterval class]])
+        {
         [actions_[0] setValue:[NSNumber numberWithBool: NO] forKey:@"firstTick_"];
+        }
 		[actions_[0] update:1.0f];
 		[actions_[0] stop];
 	}
 
 	if (last_ != found ) {
 		if( last_ != -1 ) {
+            if ([actions_[last_] isKindOfClass:[CCActionInterval class]])
+            {
             [actions_[last_] setValue:[NSNumber numberWithBool: NO] forKey:@"firstTick_"];
+            }
 			[actions_[last_] update: 1.0f];
 			[actions_[last_] stop];
 		}
 		[actions_[found] startOrContinueWithTarget:target_];
 	}
+    
+    if ([actions_[found] isKindOfClass:[CCActionInterval class]])
+    {
     [actions_[found] setValue:[NSNumber numberWithBool: NO] forKey:@"firstTick_"];
+    }
 	[actions_[found] update: new_t];
 	last_ = found;
 }
