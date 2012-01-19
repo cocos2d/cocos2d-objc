@@ -29,7 +29,7 @@
 #import "CCActionInstant.h"
 #import "CCNode.h"
 #import "CCSprite.h"
-
+#import "AutoMagicCoding/AutoMagicCoding/NSObject+AutoMagicCoding.h"
 
 //
 // InstantAction
@@ -202,7 +202,16 @@
 //
 #pragma mark CCPlace
 
+@interface CCPlace ()
+
+@property (nonatomic, readwrite, assign) CGPoint position;
+
+@end
+
 @implementation CCPlace
+
+@synthesize position = position_;
+
 +(id) actionWithPosition: (CGPoint) pos
 {
 	return [[[self alloc]initWithPosition:pos]autorelease];
@@ -227,6 +236,17 @@
 	[super startWithTarget:aTarget];
 	((CCNode *)target_).position = position_;
 }
+
+#pragma mark CCPlace - AutoMagicCoding Support
+
+- (NSArray *) AMCKeysForDictionaryRepresentation
+{
+    return [[super AMCKeysForDictionaryRepresentation] arrayByAddingObjectsFromArray:
+            [NSArray arrayWithObjects: 
+             @"position",
+             nil]];
+}
+
 
 @end
 
