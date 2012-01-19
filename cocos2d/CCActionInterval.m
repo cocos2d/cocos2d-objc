@@ -587,6 +587,25 @@
 {
 	[target_ setRotation: startAngle_ + diffAngle_ * t];
 }
+
+#pragma mark CCRotateTo - AutoMagicCoding Support
+
+-(void) continueWithTarget:(id)target
+{
+    
+}
+
+- (NSArray *) AMCKeysForDictionaryRepresentation
+{
+    return [[super AMCKeysForDictionaryRepresentation] arrayByAddingObjectsFromArray:
+            [NSArray arrayWithObjects: 
+             @"dstAngle_",
+             @"startAngle_",
+             @"diffAngle_",
+             nil]
+            ];
+}
+
 @end
 
 
@@ -631,6 +650,23 @@
 -(CCActionInterval*) reverse
 {
 	return [[self class] actionWithDuration:duration_ angle:-angle_];
+}
+
+#pragma mark CCRotateBy - AutoMagicCoding Support
+
+-(void) continueWithTarget:(id)target
+{
+    
+}
+
+- (NSArray *) AMCKeysForDictionaryRepresentation
+{
+    return [[super AMCKeysForDictionaryRepresentation] arrayByAddingObjectsFromArray:
+            [NSArray arrayWithObjects: 
+             @"angle_",
+             @"startAngle_",
+             nil]
+            ];
 }
 
 @end
