@@ -1651,6 +1651,10 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 
 -(void) update:(ccTime)t
 {
+    if ([other_ isKindOfClass:[CCActionInterval class]])
+    {
+        [other_ setValue:[NSNumber numberWithBool: NO] forKey:@"firstTick_"];
+    }
 	[other_ update:1-t];
 }
 
@@ -1658,6 +1662,30 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 {
 	return [[other_ copy] autorelease];
 }
+
+- (void)continueWithTarget:(id)target
+{
+    [other_ startOrContinueWithTarget:target_];
+}
+
+- (AMCFieldType) AMCFieldTypeForValueWithKey:(NSString *)aKey
+{
+    if ( [aKey isEqualToString:@"other_"] )
+    {
+        return kAMCFieldTypeCustomObject;
+    }
+    else
+        return [super AMCFieldTypeForValueWithKey:aKey];
+}
+
+- (NSArray *) AMCKeysForDictionaryRepresentation
+{
+    return [[super AMCKeysForDictionaryRepresentation] arrayByAddingObjectsFromArray:
+            [NSArray arrayWithObjects: 
+             @"other_",
+             nil]];
+}
+
 @end
 
 //
