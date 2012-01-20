@@ -62,6 +62,9 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	Tests: Improved Shader test. Fixed memory leak in Guassian Blur test
 	Tests: Shader tests center the fragment shader effects on Mac
 	Director: On Mac, CC_DIRECTOR_INIT() centers the main window
+
+* Viktor Lidholt (http://www.cocosbuilder.com)
+	Added setters/getters for fontName, fontSize, fntFile in LabelBMFont and LabelTTF
 	
 * zergyo:
 	Grid: Fixed memory leak when setIsTextureFlipped is used
