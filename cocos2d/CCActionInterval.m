@@ -458,6 +458,13 @@
 #pragma mark -
 #pragma mark Spawn
 
+@interface CCSpawn ()
+
+@property(nonatomic, readwrite, retain) CCFiniteTimeAction *one;
+@property(nonatomic, readwrite, retain) CCFiniteTimeAction *two;
+
+@end
+
 @implementation CCSpawn
 +(id) actions: (CCFiniteTimeAction*) action1, ...
 {
@@ -559,6 +566,40 @@
 {
 	return [[self class] actionOne: [one_ reverse] two: [two_ reverse ] ];
 }
+
+#pragma mark CCSpawn - AutoMagicCoding Support
+
+@synthesize one = one_;
+@synthesize two = two_;
+
+- (NSArray *) AMCKeysForDictionaryRepresentation
+{
+    return [[super AMCKeysForDictionaryRepresentation] arrayByAddingObjectsFromArray:
+            [NSArray arrayWithObjects:
+             @"one",
+             @"two",
+             nil]];
+}
+
+-(void) continueWithTarget:(id)aTarget
+{	
+    // Set one_.firstTick_ & two.firstTick_ to YES to force them to use 
+    // -continueWithTarget: instead of -startWithTarget: in -startOrContinueWithTarget.
+    if ([one_ isKindOfClass:[CCActionInterval class]])
+    {
+        [one_ setValue:[NSNumber numberWithBool: firstTick_] forKey:@"firstTick_"];
+    }
+    
+    if ([two_ isKindOfClass:[CCActionInterval class]])
+    {
+        [two_ setValue:[NSNumber numberWithBool: firstTick_] forKey:@"firstTick_"];
+    }    
+    
+    // Continue.
+    [one_ startOrContinueWithTarget:target_];
+	[two_ startOrContinueWithTarget:target_];
+}
+
 @end
 
 //
