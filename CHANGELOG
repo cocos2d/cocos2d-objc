@@ -1,6 +1,6 @@
 version 2.0-rc0 11-Feb-2012
+. [NEW] LabelTTF: fontName and fontSize are properties
 . [FIX] Particles: Fixed memory leak in fillWithEmptyQuadsFromIndex
-
 
 version 2.0-beta2 17-Jan-2012
 . [NEW] v1.1 Forward-ported changes:
