@@ -40,6 +40,7 @@
 #import "CCSprite.h"
 #import "CCDrawingPrimitives.h"
 #import "CCConfiguration.h"
+#import "CCTextureCache.h"
 #import "Support/CCFileUtils.h"
 #import "Support/CGPointExtension.h"
 #import "Support/uthash.h"
@@ -849,6 +850,15 @@ typedef struct _KerningHashElement
 - (void)setAlignment:(CCTextAlignment)alignment {
     alignment_ = alignment;
     [self updateLabel];
+}
+
+- (void) setFntFile:(NSString*) fntFile
+{
+    [configuration_ release];
+    configuration_ = FNTConfigLoadFile(fntFile);
+    [configuration_ retain];
+    [self setTexture:[[CCTextureCache sharedTextureCache] addImage:configuration_->atlasName_]];
+    [self createFontChars];
 }
 
 #pragma mark LabelBMFont - Debug draw

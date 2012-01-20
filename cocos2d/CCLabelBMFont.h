@@ -182,8 +182,14 @@ enum {
 /** updates the font chars based on the string to render */
 -(void) createFontChars;
 
+/** set label width */
 - (void)setWidth:(float)width;
+
+/** set label alignment */
 - (void)setAlignment:(CCTextAlignment)alignment;
+
+/** set FNT file */
+- (void) setFntFile:(NSString*)fntFile;
 @end
 
 /** Free function that parses a FNT file a place it on the cache
