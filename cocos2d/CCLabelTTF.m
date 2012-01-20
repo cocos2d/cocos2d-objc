@@ -143,6 +143,37 @@
 	return string_;
 }
 
+- (void)setFontName:(NSString*)fontName
+{
+	if( fontName != fontName_ ) {
+		[fontName_ release];
+		fontName_ = [fontName retain];
+    
+		// Force update
+		[self setString:[self string]];
+	}
+}
+
+- (NSString*)fontName
+{
+    return fontName_;
+}
+
+- (void) setFontSize:(float)fontSize
+{
+	if( fontSize != fontSize_ ) {
+		fontSize_ = fontSize;
+		
+		// Force update
+		[self setString:[self string]];
+	}
+}
+
+- (float) fontSize
+{
+    return fontSize_;
+}
+
 - (void) dealloc
 {
 	[string_ release];
