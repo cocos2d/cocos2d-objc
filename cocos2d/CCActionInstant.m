@@ -423,6 +423,16 @@
 {
 	callbackMethod_(targetCallback_,selector_,target_, data_);
 }
+
+
+#pragma mark CCCallFuncND - AutoMagicCoding Support
+
+- (NSDictionary *) dictionaryRepresentation
+{
+    // CCCallFuncND can't be saved with AMC.
+    return nil;
+}
+
 @end
 
 @implementation CCCallFuncO
@@ -457,6 +467,14 @@
 -(void) execute
 {
 	[targetCallback_ performSelector:selector_ withObject:object_];
+}
+
+#pragma mark CCCallFuncO - AutoMagicCoding Support
+
+- (NSDictionary *) dictionaryRepresentation
+{
+    // CCCallFuncO can't be saved with AMC.
+    return nil;
 }
 
 @end
@@ -507,6 +525,14 @@
 	[super dealloc];
 }
 
+#pragma mark CCCallBlock - AutoMagicCoding Support
+
+- (NSDictionary *) dictionaryRepresentation
+{
+    // CCCallBlock can't be saved with AMC.
+    return nil;
+}
+
 @end
 
 #pragma mark CCCallBlockN
@@ -547,6 +573,14 @@
 {
 	[block_ release];
 	[super dealloc];
+}
+
+#pragma mark CCCallBlockN - AutoMagicCoding Support
+
+- (NSDictionary *) dictionaryRepresentation
+{
+    // CCCallBlockN can't be saved with AMC.
+    return nil;
 }
 
 @end
