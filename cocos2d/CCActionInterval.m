@@ -295,13 +295,6 @@
 
 - (CCAction *) actionOne
 {
-    // Don't save 1st action if its done - replace it with DelayTime to
-    // avoid completing it as instant action in -update: with [action[0] update: 1.0].
-    if ( t_ >= split_)
-    {
-        return [[CCDelayTime actionWithDuration: [actions_[0] duration] ] retain];
-    }
-    
     return actions_[0];
 }
 
@@ -336,6 +329,7 @@
              @"elapsed_",
              @"actionOne",
              @"actionTwo",
+             @"last",
              nil]];
 }
 
@@ -343,7 +337,16 @@
 {	
     // Init split & last same as when starting.
 	split_ = [actions_[0] duration] / MAX(duration_, FLT_EPSILON);
-    last_ = -1;
+    
+    // Start last active action if it was already started when saving.
+    if (last_ >= 0)
+    {
+        if ([actions_[last_] isKindOfClass:[CCActionInterval class]])
+        {
+            [actions_[last_] setValue:[NSNumber numberWithBool: NO] forKey:@"firstTick_"];
+        }
+        [actions_[last_] startOrContinueWithTarget:aTarget];
+    }
 }
 
 @end
