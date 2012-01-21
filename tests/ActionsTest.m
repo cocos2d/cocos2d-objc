@@ -1105,6 +1105,7 @@ enum nodeTags
         return nil;
 	
 	[self centerSprites:3];
+    self.name = @"ActionCallFunc";
 		
 		
 	id action = [CCSequence actions:
