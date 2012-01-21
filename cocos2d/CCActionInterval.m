@@ -449,6 +449,34 @@
 {
 	return [[self class] actionWithAction:[innerAction_ reverse] times:times_];
 }
+
+#pragma mark CCRepeat - AutoMagicCoding Support
+
+- (NSArray *) AMCKeysForDictionaryRepresentation
+{
+    return [[super AMCKeysForDictionaryRepresentation] arrayByAddingObjectsFromArray:
+            [NSArray arrayWithObjects: 
+             @"times_",
+             @"total_",
+             @"nextDt_",
+             @"innerAction",
+             nil]];
+}
+
+-(void) continueWithTarget:(id)aTarget
+{	
+    isActionInstant_ = [innerAction_ isKindOfClass:[CCActionInstant class]];
+    
+    if (elapsed_ && [innerAction_ isKindOfClass:[CCActionInterval class]])
+    {
+        [innerAction_ setValue:[NSNumber numberWithBool: NO] forKey:@"firstTick_"];
+    }
+    
+    [innerAction_ startOrContinueWithTarget:aTarget];
+}
+
+
+
 @end
 
 //
