@@ -30,6 +30,7 @@
 #import "CCNode.h"
 #import "CCSprite.h"
 #import "AutoMagicCoding/AutoMagicCoding/NSObject+AutoMagicCoding.h"
+#import "CCNodeRegistry.h"
 
 //
 // InstantAction
@@ -255,6 +256,12 @@
 //
 #pragma mark CCCallFunc
 
+@interface CCCallFunc ()
+
+@property(nonatomic, readwrite, copy) NSString *targetName;
+
+@end
+
 @implementation CCCallFunc
 
 @synthesize targetCallback = targetCallback_;
@@ -288,6 +295,7 @@
 {
 	[targetCallback_ release];
     targetCallback_ = nil;
+    self.targetName = nil;
 	[super dealloc];
 }
 
@@ -305,8 +313,54 @@
 
 -(void) execute
 {
+    if (!targetCallback_)
+        self.targetCallback = [[CCNodeRegistry sharedRegistry] nodeByName: self.targetName ];
+    
 	[targetCallback_ performSelector:selector_];
 }
+
+#pragma mark CCCallFunc - AutoMagicCoding Support
+
+@dynamic targetName;
+
+- (NSString *) targetName
+{
+    if ([self.targetCallback respondsToSelector:@selector(name)])
+    {
+        return [(CCNode *)self.targetCallback name];
+    }   
+    
+    return targetName_;
+}
+
+- (void) setTargetName: (NSString *) targetName
+{
+    if (targetName_ != targetName)
+    {
+        [targetName_ release];
+        targetName_ = [targetName retain];
+    }    
+}
+
+- (NSString *) selectorName
+{
+    return NSStringFromSelector(selector_);
+}
+
+- (void) setSelectorName: (NSString *) selName
+{
+    selector_ = NSSelectorFromString(selName);
+}
+
+- (NSArray *) AMCKeysForDictionaryRepresentation
+{
+    return [[super AMCKeysForDictionaryRepresentation] arrayByAddingObjectsFromArray:
+            [NSArray arrayWithObjects: 
+             @"targetName",
+             @"selectorName",
+             nil]];
+}
+
 @end
 
 //
@@ -318,6 +372,9 @@
 
 -(void) execute
 {
+    if (!targetCallback_)
+        self.targetCallback = [[CCNodeRegistry sharedRegistry] nodeByName: self.targetName ];
+    
 	[targetCallback_ performSelector:selector_ withObject:target_];
 }
 @end

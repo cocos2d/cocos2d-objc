@@ -96,6 +96,8 @@
 {
 	id targetCallback_;
 	SEL selector_;
+    
+    NSString *targetName_;
 }
 
 /** Target that will be called */
