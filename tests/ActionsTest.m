@@ -765,6 +765,7 @@ enum nodeTags
         return nil;
 	
 	[self alignSpritesLeft:1];
+    self.name = @"ActionSequence2";
 
 	[grossini setVisible:NO];
 	
@@ -772,6 +773,19 @@ enum nodeTags
 				 [CCPlace actionWithPosition:ccp(200,200)],
 				 [CCShow action],
 				 [CCMoveBy actionWithDuration:1 position:ccp(100,0)],
+                 [CCFlipX actionWithFlipX:YES],
+                 [CCDelayTime actionWithDuration: 0.5f],
+                 [CCFlipY actionWithFlipY:YES],
+                 [CCDelayTime actionWithDuration: 0.5f],
+                 [CCFlipX actionWithFlipX:NO],
+                 [CCDelayTime actionWithDuration: 0.5f],
+                 [CCFlipY actionWithFlipY:NO],
+                 [CCDelayTime actionWithDuration: 0.5f],
+                 [CCToggleVisibility action],
+                 [CCDelayTime actionWithDuration: 0.5f],
+                 [CCToggleVisibility action],
+                 [CCDelayTime actionWithDuration: 0.5f],
+                 [CCHide action],
 				 [CCCallFunc actionWithTarget:self selector:@selector(callback1)],
 				 [CCCallFuncN actionWithTarget:self selector:@selector(callback2:)],
 				 [CCCallFuncND actionWithTarget:self selector:@selector(callback3:data:) data:(void*)0xbebabeba],
