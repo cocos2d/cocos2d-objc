@@ -158,6 +158,21 @@
 	CCActionInstant *copy = [[[self class] allocWithZone: zone] initWithFlipX:flipX];
 	return copy;
 }
+
+#pragma mark CCFlipX - AutoMagicCoding Support
+
+-(void) continueWithTarget:(id)target
+{
+}
+
+- (NSArray *) AMCKeysForDictionaryRepresentation
+{
+    return [[super AMCKeysForDictionaryRepresentation] arrayByAddingObjectsFromArray:
+            [NSArray arrayWithObjects: 
+             @"flipX",
+             nil]];
+}
+
 @end
 
 //
@@ -195,6 +210,21 @@
 	CCActionInstant *copy = [[[self class] allocWithZone: zone] initWithFlipY:flipY];
 	return copy;
 }
+
+#pragma mark CCFlipY - AutoMagicCoding Support
+
+-(void) continueWithTarget:(id)target
+{
+}
+
+- (NSArray *) AMCKeysForDictionaryRepresentation
+{
+    return [[super AMCKeysForDictionaryRepresentation] arrayByAddingObjectsFromArray:
+            [NSArray arrayWithObjects: 
+             @"flipY",
+             nil]];
+}
+
 @end
 
 
