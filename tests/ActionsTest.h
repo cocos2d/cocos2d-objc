@@ -157,7 +157,7 @@
 {}
 @end
 
-@interface ActionRotateJerk : ActionDemoInsideLayer
+@interface ActionRotateJerkSpeed : ActionDemoInsideLayer
 {}
 @end
 

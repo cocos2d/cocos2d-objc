@@ -38,7 +38,7 @@ static NSString *transitions[] = {
 	@"ActionRepeat",
 	@"ActionRepeatForever",
 	@"ActionRotateToRepeat",
-	@"ActionRotateJerk",
+	@"ActionRotateJerkSpeed",
 	@"ActionCallFunc",
 	@"ActionCallFuncND",
 	@"ActionCallBlock",
@@ -906,7 +906,7 @@ enum nodeTags
 
 @end
 
-@implementation ActionRotateJerk
+@implementation ActionRotateJerkSpeed
 -(id) init
 {
     self = [super init];
@@ -920,8 +920,8 @@ enum nodeTags
 				  [CCRotateTo actionWithDuration:0.5f angle:20],
 			  nil];
 	
-	id rep1 = [CCRepeat actionWithAction:seq times:10];
-	id rep2 = [CCRepeatForever actionWithAction: [[seq copy] autorelease] ];
+	id rep1 = [CCSpeed actionWithAction: [CCRepeat actionWithAction:seq times:10]  speed: 2.0f];
+	id rep2 = [CCSpeed actionWithAction: [CCRepeatForever actionWithAction: [[seq copy] autorelease] ] speed: 0.5f ];
 	
 	[tamara runAction:rep1];
 	[kathia runAction:rep2];
@@ -931,7 +931,7 @@ enum nodeTags
 
 -(NSString *) title
 {
-	return @"RepeatForever / Repeat + Rotate";
+	return @"Speed of RepeatForever / Repeat";
 }
 -(NSString *) subtitle
 {
