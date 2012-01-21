@@ -322,9 +322,7 @@
 - (NSArray *) AMCKeysForDictionaryRepresentation
 {
     return [[super AMCKeysForDictionaryRepresentation] arrayByAddingObjectsFromArray:
-            [NSArray arrayWithObjects: 
-             @"firstTick_",
-             @"elapsed_",
+            [NSArray arrayWithObjects:
              @"actionOne",
              @"actionTwo",
              @"last",
