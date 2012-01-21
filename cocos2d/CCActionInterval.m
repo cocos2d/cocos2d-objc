@@ -234,8 +234,6 @@
 
 -(void) update: (ccTime) t
 {
-    t_ = t;
-    
 	int found = 0;
 	ccTime new_t = 0.0f;
 	

@@ -71,7 +71,7 @@ Example:
 @interface CCSequence : CCActionInterval <NSCopying>
 {
 	CCFiniteTimeAction *actions_[2];
-	ccTime split_, t_;
+	ccTime split_;
 	int last_;
 }
 /** helper contructor to create an array of sequenceable actions */
