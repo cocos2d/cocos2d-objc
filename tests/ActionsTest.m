@@ -967,7 +967,7 @@ enum nodeTags
 	id action = [CCSequence actions: jump, [jump reverse], nil];
     
     CGPoint tamarasStartPoint = [tamara position];
-    id jump2 = [jump copy];
+    id jump2 = [[jump copy] autorelease];
     id jumpReversedWithTime = [CCReverseTime actionWithAction: jump2];
 	id action2 = [CCSequence actions: jump2, [CCPlace actionWithPosition: tamarasStartPoint], jumpReversedWithTime, nil];
 	
@@ -993,7 +993,7 @@ enum nodeTags
 	[self alignSpritesLeft:1];
 	
 	id move = [CCMoveBy actionWithDuration:1 position:ccp(150,0)];
-	id action = [CCSequence actions: move, [CCDelayTime actionWithDuration:2], [move copy], [CCDelayTime actionWithDuration:2], [move copy], nil];
+	id action = [CCSequence actions: move, [CCDelayTime actionWithDuration:2], [[move copy] autorelease], [CCDelayTime actionWithDuration:2], [[move copy] autorelease], nil];
 	
 	[grossini runAction:action];
     
