@@ -169,4 +169,8 @@
 {}
 @end
 
+@interface ActionProgress : ActionDemoInsideLayer
+{}
+@end
+
 

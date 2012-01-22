@@ -47,6 +47,7 @@ static NSString *transitions[] = {
 	@"ActionOrbit",
 	@"ActionFollow",
 	@"ActionProperty",
+    @"ActionProgress",
 };
 
 Class nextAction()
@@ -1392,6 +1393,51 @@ enum nodeTags
 
 @end
 
+@implementation ActionProgress
+
+- (id) init
+{
+    if ( (self = [super init ]) )
+    {
+        grossini.visible = NO;
+        kathia.visible = NO;
+        tamara.visible = NO;
+        
+        CGSize s = [[CCDirector sharedDirector] winSize];
+        
+        CCProgressTimer *timer1 = [CCProgressTimer progressWithFile:@"blocks.png"];
+        CCProgressTimer *timer2 = [CCProgressTimer progressWithFile:@"grossini.png"];
+        
+        timer1.type = kCCProgressTimerTypeVerticalBarTB;
+        timer2.type = kCCProgressTimerTypeRadialCW;
+        
+        timer1.position = ccp(120, s.height - 220);
+        timer2.position = ccp(0.5f * s.width, s.height - 220);
+        
+        id to = [CCProgressTo actionWithDuration:3.0f percent:50];
+        id antiTo = [CCProgressFromTo actionWithDuration:3.0f from:50 to:0];
+        id fromTo = [CCProgressFromTo actionWithDuration:3.0f from: 30 to: 85];
+        id seq1 = [CCSequence actions: to, antiTo, nil];
+        id seq2 = [CCSequence actions:fromTo, [fromTo reverse], nil];
+        
+        
+        [timer1 runAction:[CCRepeatForever actionWithAction: seq1]];
+        [timer2 runAction:[CCRepeatForever actionWithAction: seq2]];
+        
+        [self addChild: [CCLayerColor layerWithColor: ccc4(0xFF, 0xFF, 0xFF, 0x40)]];
+        [self addChild:timer1];
+        [self addChild:timer2];
+    }
+    
+    return self;
+}
+
+- (NSString *) title
+{
+    return @"CCProgressTo/CCProgressFromTo";
+}
+
+@end
 
 
 // CLASS IMPLEMENTATIONS
