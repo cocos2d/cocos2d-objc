@@ -76,6 +76,10 @@ Class restartAction()
 		tamara = [[CCSprite alloc] initWithFile:@"grossinis_sister1.png"];
 		kathia = [[CCSprite alloc] initWithFile:@"grossinis_sister2.png"];
         
+        grossini.name = @"El-Chupacabra"; //< We found it! ;)
+        kathia.name = @"Kathia";
+        tamara.name = @"Tamara";
+        
         [grossini setPosition: ccp(60, 50)];
         [kathia setPosition: ccp(60, 150)];
         [tamara setPosition: ccp(60, 250)];
@@ -83,6 +87,18 @@ Class restartAction()
 		[self addChild: grossini z:3];
 		[self addChild: kathia z:2];
 		[self addChild: tamara z:1];
+    }
+    
+    return self;
+}
+
+- (id) initWithDictionaryRepresentation:(NSDictionary *)aDict
+{
+    if ( (self = [super initWithDictionaryRepresentation:aDict]) )
+    {
+        grossini = (CCSprite *)[[[CCNodeRegistry sharedRegistry] nodeByName:@"El-Chupacabra"] retain];
+        kathia = (CCSprite *)[[[CCNodeRegistry sharedRegistry] nodeByName:@"Kathia"] retain];
+        tamara = (CCSprite *)[[[CCNodeRegistry sharedRegistry] nodeByName:@"Tamara"] retain];
     }
     
     return self;
@@ -759,6 +775,17 @@ enum nodeTags
 	
 	
 	[self schedule:@selector(altertime:) interval:1.0f];
+    
+    return self;
+}
+
+- (id) initWithDictionaryRepresentation:(NSDictionary *)aDict
+{
+    self = [super initWithDictionaryRepresentation:aDict];
+    if (self)
+    {
+        [self schedule:@selector(altertime:) interval:1.0f];
+    }
     
     return self;
 }
