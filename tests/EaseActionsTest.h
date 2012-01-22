@@ -36,7 +36,7 @@
 
 @end
 
-@interface SpriteDemo : CCLayer
+@interface EaseActionsDemo : CCLayer
 {
 }
 

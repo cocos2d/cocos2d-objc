@@ -103,7 +103,7 @@ Class restartAction()
 
 @end
 
-@implementation SpriteDemo
+@implementation EaseActionsDemo
 
 enum nodeTags
 {
@@ -145,21 +145,21 @@ enum nodeTags
 -(void) restartCallback: (id) sender
 {
 	CCScene *s = [CCScene node];
-	[s addChild: [SpriteDemo nodeWithInsideLayer:[restartAction() node]]];
+	[s addChild: [[self class] nodeWithInsideLayer:[restartAction() node]]];
 	[[CCDirector sharedDirector] replaceScene: s];
 }
 
 -(void) nextCallback: (id) sender
 {
 	CCScene *s = [CCScene node];
-	[s addChild: [SpriteDemo nodeWithInsideLayer:[nextAction() node]]];
+	[s addChild: [[self class] nodeWithInsideLayer:[nextAction() node]]];
 	[[CCDirector sharedDirector] replaceScene: s];
 }
 
 -(void) backCallback: (id) sender
 {
 	CCScene *s = [CCScene node];
-	[s addChild: [SpriteDemo nodeWithInsideLayer:[backAction() node]]];
+	[s addChild: [[self class] nodeWithInsideLayer:[backAction() node]]];
 	[[CCDirector sharedDirector] replaceScene: s];
 }
 
@@ -901,7 +901,7 @@ enum nodeTags
 	[CCFileUtils setRetinaDisplaySuffix:@"-hd"];	// Default on RetinaDisplay is "-hd"
 	
 	CCScene *scene = [CCScene node];
-	[scene addChild: [SpriteDemo nodeWithInsideLayer:[nextAction() node]]];	
+	[scene addChild: [EaseActionsDemo nodeWithInsideLayer:[nextAction() node]]];	
 	
 	[director runWithScene: scene];
 }
@@ -979,7 +979,7 @@ enum nodeTags
 	[director setResizeMode:kCCDirectorResize_AutoScale];
 	
 	CCScene *scene = [CCScene node];
-	[scene addChild: [SpriteDemo nodeWithInsideLayer:[nextAction() node]]];
+	[scene addChild: [EaseActionsDemo nodeWithInsideLayer:[nextAction() node]]];
 	
 	[director runWithScene:scene];
 }
