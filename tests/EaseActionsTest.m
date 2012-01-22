@@ -64,26 +64,64 @@ Class restartAction()
 	return c;
 }
 
+@implementation ActionEaseTestInsideLayer
 
-
-@implementation SpriteDemo
--(id) init
+- (id) init
 {
-	if( (self=[super init])) {
-
-		grossini = [[CCSprite alloc] initWithFile:@"grossini.png"];
+    self = [super init];
+    if (self)
+    {
+        grossini = [[CCSprite alloc] initWithFile:@"grossini.png"];
 		tamara = [[CCSprite alloc] initWithFile:@"grossinis_sister1.png"];
 		kathia = [[CCSprite alloc] initWithFile:@"grossinis_sister2.png"];
+        
+        [grossini setPosition: ccp(60, 50)];
+        [kathia setPosition: ccp(60, 150)];
+        [tamara setPosition: ccp(60, 250)];
 		
 		[self addChild: grossini z:3];
 		[self addChild: kathia z:2];
 		[self addChild: tamara z:1];
+    }
+    
+    return self;
+}
 
+-(void) positionForTwo
+{	
+	grossini.position = ccp( 60, 120 );
+	tamara.position = ccp( 60, 220);
+	kathia.visible = NO;
+}
+
+@end
+
+@protocol DemoTitleProvider <NSObject>
+
+- (NSString *) title;
+- (NSString *) subtitle;
+
+@end
+
+@implementation SpriteDemo
+
+enum nodeTags
+{
+    kLayer,
+};
+
++(id) nodeWithInsideLayer: (CCLayer *) insideLayer
+{
+    return [[[self alloc] initWithInsideLayer: insideLayer ]autorelease];
+}
+
+-(id) initWithInsideLayer: (CCLayer *) insideLayer
+{
+	if( (self=[super init])) {
+        
 		CGSize s = [[CCDirector sharedDirector] winSize];
 		
-		[grossini setPosition: ccp(60, 50)];
-		[kathia setPosition: ccp(60, 150)];
-		[tamara setPosition: ccp(60, 250)];
+		[self addChild:insideLayer z: 0 tag: kLayer];
 		
  		CCLabelTTF *label = [CCLabelTTF labelWithString:[self title] fontName:@"Arial" fontSize:32];
 		[self addChild: label];
@@ -104,46 +142,54 @@ Class restartAction()
 	return self;
 }
 
--(void) dealloc
-{
-	[grossini release];
-	[tamara release];
-	[kathia release];
-	[super dealloc];
-}
-
-
 -(void) restartCallback: (id) sender
 {
 	CCScene *s = [CCScene node];
-	[s addChild: [restartAction() node]];
+	[s addChild: [SpriteDemo nodeWithInsideLayer:[restartAction() node]]];
 	[[CCDirector sharedDirector] replaceScene: s];
 }
 
 -(void) nextCallback: (id) sender
 {
 	CCScene *s = [CCScene node];
-	[s addChild: [nextAction() node]];
+	[s addChild: [SpriteDemo nodeWithInsideLayer:[nextAction() node]]];
 	[[CCDirector sharedDirector] replaceScene: s];
 }
 
 -(void) backCallback: (id) sender
 {
 	CCScene *s = [CCScene node];
-	[s addChild: [backAction() node]];
+	[s addChild: [SpriteDemo nodeWithInsideLayer:[backAction() node]]];
 	[[CCDirector sharedDirector] replaceScene: s];
 }
 
-
--(void) positionForTwo
-{	
-	grossini.position = ccp( 60, 120 );
-	tamara.position = ccp( 60, 220);
-	kathia.visible = NO;
+-(id) insideLayer
+{
+    return [self getChildByTag:kLayer];
 }
+
 -(NSString*) title
 {
+    id<DemoTitleProvider> titleProvider = (id<DemoTitleProvider>)[self insideLayer];
+    
+    if ([titleProvider respondsToSelector: @selector(title)])
+    {
+        return [titleProvider title];
+    }
+    
 	return @"No title";
+}
+
+-(NSString*) subtitle
+{
+	id<DemoTitleProvider> titleProvider = (id<DemoTitleProvider>)[self insideLayer];
+    
+    if ([titleProvider respondsToSelector: @selector(subtitle)])
+    {
+        return [titleProvider subtitle];
+    }
+    
+	return nil;
 }
 @end
 
@@ -795,7 +841,7 @@ Class restartAction()
 	[CCFileUtils setRetinaDisplaySuffix:@"-hd"];	// Default on RetinaDisplay is "-hd"
 	
 	CCScene *scene = [CCScene node];
-	[scene addChild: [nextAction() node]];	
+	[scene addChild: [SpriteDemo nodeWithInsideLayer:[nextAction() node]]];	
 	
 	[director runWithScene: scene];
 }
@@ -873,7 +919,7 @@ Class restartAction()
 	[director setResizeMode:kCCDirectorResize_AutoScale];
 	
 	CCScene *scene = [CCScene node];
-	[scene addChild: [nextAction() node]];
+	[scene addChild: [SpriteDemo nodeWithInsideLayer:[nextAction() node]]];
 	
 	[director runWithScene:scene];
 }

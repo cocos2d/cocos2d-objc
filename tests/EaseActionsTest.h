@@ -25,13 +25,24 @@
 @end
 #endif // Mac
 
-@interface SpriteDemo : CCLayer
-{
-	CCSprite * grossini;
+@interface ActionEaseTestInsideLayer : CCLayer {
+
+    CCSprite *grossini;
 	CCSprite *tamara;
 	CCSprite *kathia;
 }
+
 -(void) positionForTwo;
+
+@end
+
+@interface SpriteDemo : CCLayer
+{
+}
+
++(id) nodeWithInsideLayer: (CCLayer *) insideLayer;
+-(id) initWithInsideLayer: (CCLayer *) insideLayer;
+
 -(NSString*) title;
 
 -(void) backCallback:(id) sender;
@@ -39,61 +50,61 @@
 -(void) restartCallback:(id) sender;
 @end
 
-@interface SpriteEase : SpriteDemo
+@interface SpriteEase : ActionEaseTestInsideLayer
 {}
 @end
 
-@interface SpriteEaseInOut : SpriteDemo
-{}
-@end
-
-
-@interface SpriteEaseExponential : SpriteDemo
-{}
-@end
-
-@interface SpriteEaseExponentialInOut : SpriteDemo
-{}
-@end
-
-@interface SpriteEaseSine : SpriteDemo
-{}
-@end
-
-@interface SpriteEaseSineInOut : SpriteDemo
-{}
-@end
-
-@interface SpriteEaseElastic : SpriteDemo
-{}
-@end
-
-@interface SpriteEaseElasticInOut : SpriteDemo
-{}
-@end
-
-@interface SpriteEaseBounce : SpriteDemo
-{}
-@end
-
-@interface SpriteEaseBounceInOut : SpriteDemo
-{}
-@end
-
-@interface SpriteEaseBack : SpriteDemo
-{}
-@end
-
-@interface SpriteEaseBackInOut : SpriteDemo
+@interface SpriteEaseInOut : ActionEaseTestInsideLayer
 {}
 @end
 
 
-@interface SpeedTest : SpriteDemo
+@interface SpriteEaseExponential : ActionEaseTestInsideLayer
 {}
 @end
 
-@interface SchedulerTest : SpriteDemo
+@interface SpriteEaseExponentialInOut : ActionEaseTestInsideLayer
+{}
+@end
+
+@interface SpriteEaseSine : ActionEaseTestInsideLayer
+{}
+@end
+
+@interface SpriteEaseSineInOut : ActionEaseTestInsideLayer
+{}
+@end
+
+@interface SpriteEaseElastic : ActionEaseTestInsideLayer
+{}
+@end
+
+@interface SpriteEaseElasticInOut : ActionEaseTestInsideLayer
+{}
+@end
+
+@interface SpriteEaseBounce : ActionEaseTestInsideLayer
+{}
+@end
+
+@interface SpriteEaseBounceInOut : ActionEaseTestInsideLayer
+{}
+@end
+
+@interface SpriteEaseBack : ActionEaseTestInsideLayer
+{}
+@end
+
+@interface SpriteEaseBackInOut : ActionEaseTestInsideLayer
+{}
+@end
+
+
+@interface SpeedTest : ActionEaseTestInsideLayer
+{}
+@end
+
+@interface SchedulerTest : ActionEaseTestInsideLayer
 {
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 	UISlider	*sliderCtl;
