@@ -127,7 +127,7 @@
 	if( CC_CONTENT_SCALE_FACTOR() == 2 )
 		[tex setResolutionType:kCCResolutionRetinaDisplay];
 	else
-		[tex setResolutionType:kCCResolutionStandard];
+		[tex setResolutionType:kCCResolutioniPhone];
 #endif
 
 	[self setTexture:tex];

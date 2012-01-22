@@ -49,7 +49,8 @@ enum {
 	kCCiOSVersion_4_3_4 = 0x04030400,
 	kCCiOSVersion_4_3_5 = 0x04030500,
 	kCCiOSVersion_5_0_0 = 0x05000000,
-
+	kCCiOSVersion_5_0_1 = 0x05000100,
+	
 	kCCMacVersion_10_5  = 0x0a050000,
 	kCCMacVersion_10_6  = 0x0a060000,
 	kCCMacVersion_10_7  = 0x0a070000,
