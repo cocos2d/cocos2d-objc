@@ -123,3 +123,16 @@
 - (void) reorderBatch:(BOOL) reorder;
 
 @end
+
+@interface CCSpriteBatchNode (QuadExtensions)
+/** Adds a quad into the texture atlas but it won't be added into the children array.
+ This method should be called only when you are dealing with very big AtlasSrite and when most of the CCSprite won't be updated.
+ For example: a tile map (CCTMXMap) or a label with lots of characgers (CCLabelBMFont)
+ */
+-(id) addSpriteWithoutQuad:(CCSprite*)child z:(NSUInteger)z tag:(NSInteger)aTag;
+
+/* This is the opposite of "addQuadFromSprite".
+ It adds the sprite to the children and descendants array, but it doesn't add it to the texture atlas.
+ */
+-(void) addQuadFromSprite:(CCSprite*)sprite quadIndex:(NSUInteger)index;
+@end
