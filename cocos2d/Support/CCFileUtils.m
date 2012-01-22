@@ -180,7 +180,7 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 
 #elif defined(__CC_PLATFORM_MAC)
 
-	*resolutionType = kCCResolutionStandard;
+	*resolutionType = kCCResolutioniPhone;
 
 	return fullpath;
 

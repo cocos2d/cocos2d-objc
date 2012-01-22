@@ -353,7 +353,7 @@ static CCTextureCache *sharedTextureCache;
 
 			NSData *data = [[NSData alloc] initWithContentsOfFile:fullpath];
 			NSBitmapImageRep *image = [[NSBitmapImageRep alloc] initWithData:data];
-			tex = [ [CCTexture2D alloc] initWithImage:[image CGImage]];
+			tex = [ [CCTexture2D alloc] initWithCGImage:[image CGImage]];
 
 			[data release];
 			[image release];
