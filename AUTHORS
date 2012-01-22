@@ -20,6 +20,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 
 * Atte Kotiranta (https://github.com/akotiranta)
 	EaseActions: Ease Actions works OK with floating point values
+	Improved Texture2D API
 
 * Brian Chapados (http://chapados.org/):
 	Made easier to port to cocos2d v2.x from v1.x by adding alpha testing shader, added missing CCSpriteFrameCache

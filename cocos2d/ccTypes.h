@@ -310,8 +310,8 @@ typedef enum
 {
 	//! Unknonw resolution type
 	kCCResolutionUnknown,
-	//! standard (iphone) resolution type
-	kCCResolutionStandard,
+	//! iPhone resolution type
+	kCCResolutioniPhone,
 	//! RetinaDisplay resolution type
 	kCCResolutionRetinaDisplay,
 	//! iPad resolution type

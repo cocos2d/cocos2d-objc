@@ -195,9 +195,9 @@ Note that RGBA type textures will have their alpha premultiplied - use the blend
 @interface CCTexture2D (Image)
 /** Initializes a texture from a CGImage object */
 #ifdef __CC_PLATFORM_IOS
-- (id) initWithImage:(CGImageRef)cgImage resolutionType:(ccResolutionType)resolution;
+- (id) initWithCGImage:(CGImageRef)cgImage resolutionType:(ccResolutionType)resolution;
 #elif defined(__CC_PLATFORM_MAC)
-- (id) initWithImage:(CGImageRef)cgImage;
+- (id) initWithCGImage:(CGImageRef)cgImage;
 #endif
 @end
 
