@@ -64,6 +64,9 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	Tests: Shader tests center the fragment shader effects on Mac
 	Director: On Mac, CC_DIRECTOR_INIT() centers the main window
 
+* slycrel (http://folderapp.blogspot.com/)
+	TMX Map: fixed crash when multiple layers and tiles were used with rotation
+	
 * Viktor Lidholt (http://www.cocosbuilder.com)
 	Added setters/getters for fontName, fontSize, fntFile in LabelBMFont and LabelTTF
 	
@@ -115,7 +118,7 @@ Contributors (alphabetically ordered):
 * Shakthi:
 	Added CCNode#onExitTransitionDidStart method
 
-* slycrel (http://geopherlite.blogspot.com/)
+* slycrel (http://folderapp.blogspot.com/)
 	Added support for flipped tiles in TMX maps. Also added test case
 	Added support for in-memory TMX map creation. Also added a test case
 
