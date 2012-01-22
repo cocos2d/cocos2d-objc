@@ -604,3 +604,60 @@ const NSUInteger defaultCapacity = 29;
 }
 @end
 
+#pragma mark - CCSpriteBatchNode Extension
+
+
+@implementation CCSpriteBatchNode (QuadExtension)
+
+-(void) addQuadFromSprite:(CCSprite*)sprite quadIndex:(NSUInteger)index
+{
+	NSAssert( sprite != nil, @"Argument must be non-nil");
+	NSAssert( [sprite isKindOfClass:[CCSprite class]], @"CCSpriteBatchNode only supports CCSprites as children");
+	
+	
+	while(index >= textureAtlas_.capacity || textureAtlas_.capacity == textureAtlas_.totalQuads )
+		[self increaseAtlasCapacity];
+	
+	//
+	// update the quad directly. Don't add the sprite to the scene graph
+	//
+	
+	[sprite setBatchNode:self];
+	[sprite setAtlasIndex:index];
+	
+	ccV3F_C4B_T2F_Quad quad = [sprite quad];
+	[textureAtlas_ insertQuad:&quad atIndex:index];
+	
+	// XXX: updateTransform will update the textureAtlas too using updateQuad.
+	// XXX: so, it should be AFTER the insertQuad
+	[sprite setDirty:YES];
+	[sprite updateTransform];
+}
+
+-(id) addSpriteWithoutQuad:(CCSprite*)child z:(NSUInteger)z tag:(NSInteger)aTag
+{
+	NSAssert( child != nil, @"Argument must be non-nil");
+	NSAssert( [child isKindOfClass:[CCSprite class]], @"CCSpriteBatchNode only supports CCSprites as children");
+	
+	// quad index is Z
+	[child setAtlasIndex:z];
+	
+	// XXX: optimize with a binary search
+	int i=0;
+	for( CCSprite *c in descendants_ ) {
+		if( c.atlasIndex >= z )
+			break;
+		i++;
+	}
+	[descendants_ insertObject:child atIndex:i];
+	
+	
+	// IMPORTANT: Call super, and not self. Avoid adding it to the texture atlas array
+	[super addChild:child z:z tag:aTag];
+	
+	//#issue 1262 don't use lazy sorting, tiles are added as quads not as sprites, so sprites need to be added in order
+	[self reorderBatch:NO];
+	return self;
+}
+@end
+
