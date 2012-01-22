@@ -199,9 +199,11 @@ enum nodeTags
 #define CCCA(x) [[x copy] autorelease]
 
 @implementation SpriteEase
--(void) onEnter
+-(id) init
 {
-	[super onEnter];
+    self = [super init];
+    if (!self)
+        return nil;
 	
 	CGSize s = [[CCDirector sharedDirector] winSize];
 
@@ -231,6 +233,8 @@ enum nodeTags
 	[a setTag:1];
 	
 	[self schedule:@selector(testStopAction:) interval:6.25f];
+    
+    return self;
 }
 
 -(void) testStopAction:(ccTime)dt
@@ -248,9 +252,11 @@ enum nodeTags
 @end
 
 @implementation SpriteEaseInOut
--(void) onEnter
+-(id) init
 {
-	[super onEnter];
+    self = [super init];
+    if (!self)
+        return nil;
 	
 	CGSize s = [[CCDirector sharedDirector] winSize];
 
@@ -275,6 +281,8 @@ enum nodeTags
 	[tamara runAction: [CCRepeatForever actionWithAction:seq1]];
 	[kathia runAction: [CCRepeatForever actionWithAction:seq2]];
 	[grossini runAction: [CCRepeatForever actionWithAction:seq3]];
+    
+    return self;
 }
 -(NSString *) title
 {
@@ -284,9 +292,11 @@ enum nodeTags
 
 
 @implementation SpriteEaseSine
--(void) onEnter
+-(id) init
 {
-	[super onEnter];
+    self = [super init];
+    if (!self)
+        return nil;
 	
 	CGSize s = [[CCDirector sharedDirector] winSize];
 	
@@ -310,6 +320,8 @@ enum nodeTags
 	[grossini runAction: [CCRepeatForever actionWithAction:seq1]];
 	[tamara runAction: [CCRepeatForever actionWithAction:seq2]];
 	[kathia runAction: [CCRepeatForever actionWithAction:seq3]];
+    
+    return self;
 }
 -(NSString *) title
 {
@@ -318,9 +330,11 @@ enum nodeTags
 @end
 
 @implementation SpriteEaseSineInOut
--(void) onEnter
+-(id) init
 {
-	[super onEnter];
+    self = [super init];
+    if (!self)
+        return nil;
 	
 	CGSize s = [[CCDirector sharedDirector] winSize];
 	
@@ -339,6 +353,8 @@ enum nodeTags
 
 	[grossini runAction: [CCRepeatForever actionWithAction:seq1]];
 	[tamara runAction: [CCRepeatForever actionWithAction:seq2]];
+    
+    return self;
 }
 -(NSString *) title
 {
@@ -349,9 +365,11 @@ enum nodeTags
 #pragma mark SpriteEaseExponential
 
 @implementation SpriteEaseExponential
--(void) onEnter
+-(id) init
 {
-	[super onEnter];
+    self = [super init];
+    if (!self)
+        return nil;
 	
 	CGSize s = [[CCDirector sharedDirector] winSize];
 	
@@ -374,6 +392,8 @@ enum nodeTags
 	[grossini runAction: [CCRepeatForever actionWithAction:seq1]];
 	[tamara runAction: [CCRepeatForever actionWithAction:seq2]];
 	[kathia runAction: [CCRepeatForever actionWithAction:seq3]];
+    
+    return self;
 }
 -(NSString *) title
 {
@@ -384,9 +404,11 @@ enum nodeTags
 #pragma mark SpriteEaseExponentialInOut
 
 @implementation SpriteEaseExponentialInOut
--(void) onEnter
+-(id) init
 {
-	[super onEnter];
+    self = [super init];
+    if (!self)
+        return nil;
 	
 	CGSize s = [[CCDirector sharedDirector] winSize];
 	
@@ -406,6 +428,8 @@ enum nodeTags
 	
 	[grossini runAction: [CCRepeatForever actionWithAction:seq1]];
 	[tamara runAction: [CCRepeatForever actionWithAction:seq2]];
+    
+    return self;
 }
 -(NSString *) title
 {
@@ -416,9 +440,11 @@ enum nodeTags
 #pragma mark SpriteEaseElasticInOut
 
 @implementation SpriteEaseElasticInOut
--(void) onEnter
+-(id) init
 {
-	[super onEnter];
+    self = [super init];
+    if (!self)
+        return nil;
 
 	CGSize s = [[CCDirector sharedDirector] winSize];
 	
@@ -443,6 +469,8 @@ enum nodeTags
 	[tamara runAction: [CCRepeatForever actionWithAction:seq1]];
 	[kathia runAction: [CCRepeatForever actionWithAction:seq2]];
 	[grossini runAction: [CCRepeatForever actionWithAction:seq3]];
+    
+    return self;
 }
 -(NSString *) title
 {
@@ -453,9 +481,11 @@ enum nodeTags
 #pragma mark SpriteEaseElastic
 
 @implementation SpriteEaseElastic
--(void) onEnter
+-(id) init
 {
-	[super onEnter];
+    self = [super init];
+    if (!self)
+        return nil;
 	
 	CGSize s = [[CCDirector sharedDirector] winSize];
 	
@@ -477,6 +507,8 @@ enum nodeTags
 	[grossini runAction: [CCRepeatForever actionWithAction:seq1]];
 	[tamara runAction: [CCRepeatForever actionWithAction:seq2]];
 	[kathia runAction: [CCRepeatForever actionWithAction:seq3]];
+    
+    return self;
 }
 -(NSString *) title
 {
@@ -487,9 +519,11 @@ enum nodeTags
 #pragma mark SpriteEaseBounce
 
 @implementation SpriteEaseBounce
--(void) onEnter
+-(id) init
 {
-	[super onEnter];
+    self = [super init];
+    if (!self)
+        return nil;
 	
 	CGSize s = [[CCDirector sharedDirector] winSize];
 	
@@ -511,6 +545,8 @@ enum nodeTags
 	[grossini runAction: [CCRepeatForever actionWithAction:seq1]];
 	[tamara runAction: [CCRepeatForever actionWithAction:seq2]];
 	[kathia runAction: [CCRepeatForever actionWithAction:seq3]];
+    
+    return self;
 }
 -(NSString *) title
 {
@@ -519,9 +555,11 @@ enum nodeTags
 @end
 
 @implementation SpriteEaseBounceInOut
--(void) onEnter
+-(id) init
 {
-	[super onEnter];
+    self = [super init];
+    if (!self)
+        return nil;
 	
 	CGSize s = [[CCDirector sharedDirector] winSize];
 	
@@ -540,6 +578,8 @@ enum nodeTags
 	
 	[grossini runAction: [CCRepeatForever actionWithAction:seq1]];
 	[tamara runAction: [CCRepeatForever actionWithAction:seq2]];
+    
+    return self;
 }
 -(NSString *) title
 {
@@ -550,9 +590,11 @@ enum nodeTags
 #pragma mark SpriteEaseBack
 
 @implementation SpriteEaseBack
--(void) onEnter
+-(id) init
 {
-	[super onEnter];
+    self = [super init];
+    if (!self)
+        return nil;
 	
 	CGSize s = [[CCDirector sharedDirector] winSize];
 	
@@ -574,6 +616,8 @@ enum nodeTags
 	[grossini runAction: [CCRepeatForever actionWithAction:seq1]];
 	[tamara runAction: [CCRepeatForever actionWithAction:seq2]];
 	[kathia runAction: [CCRepeatForever actionWithAction:seq3]];
+    
+    return self;
 }
 -(NSString *) title
 {
@@ -582,9 +626,11 @@ enum nodeTags
 @end
 
 @implementation SpriteEaseBackInOut
--(void) onEnter
+-(id) init
 {
-	[super onEnter];
+    self = [super init];
+    if (!self)
+        return nil;
 	
 	CGSize s = [[CCDirector sharedDirector] winSize];
 	
@@ -604,6 +650,8 @@ enum nodeTags
 	
 	[grossini runAction: [CCRepeatForever actionWithAction:seq1]];
 	[tamara runAction: [CCRepeatForever actionWithAction:seq2]];
+    
+    return self;
 }
 -(NSString *) title
 {
@@ -615,9 +663,11 @@ enum nodeTags
 #pragma mark SpeedTest
 
 @implementation SpeedTest
--(void) onEnter
+-(id) init
 {
-	[super onEnter];
+    self = [super init];
+    if (!self)
+        return nil;
 	
 	CGSize s = [[CCDirector sharedDirector] winSize];
 	
@@ -645,6 +695,8 @@ enum nodeTags
 	
 	
 	[self schedule:@selector(altertime:) interval:1.0f];
+    
+    return self;
 }
 
 -(void) altertime:(ccTime)dt
@@ -715,9 +767,11 @@ enum nodeTags
 #endif
 }
 
--(void) onEnter
+-(id) init
 {
-	[super onEnter];
+    self = [super init];
+    if (!self)
+        return nil;
 	
 	CGSize s = [[CCDirector sharedDirector] winSize];
 	
@@ -743,20 +797,27 @@ enum nodeTags
 	CCParticleSystem *emitter = [CCParticleFireworks node];
 	[self addChild:emitter];
 	
-	sliderCtl = [self sliderCtl];
+    return self;
+}
+
+- (void) onEnter
+{
+    [super onEnter];
+    
+    sliderCtl = [self sliderCtl];
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 	[[[[CCDirector sharedDirector] openGLView] window] addSubview: sliderCtl];
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 	MacGLView *view = [[CCDirector sharedDirector] openGLView];
-
+    
 	if( ! overlayWindow ) {
 		overlayWindow  = [[NSWindow alloc] initWithContentRect:[[view window] frame]
 													 styleMask:NSBorderlessWindowMask
 													   backing:NSBackingStoreBuffered
 														 defer:NO];
-
+        
 		[overlayWindow setFrame:[[view window] frame] display:NO];
-				
+        
 		[[overlayWindow contentView] addSubview:sliderCtl];
 		[overlayWindow setParentWindow:[view window]];
 		[overlayWindow setOpaque:NO];
@@ -767,7 +828,6 @@ enum nodeTags
 	
 	[[view window] addChildWindow:overlayWindow ordered:NSWindowAbove];
 #endif
-	
 }
 
 -(void) onExit
