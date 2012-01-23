@@ -13,6 +13,8 @@
 static int sceneIdx=-1;
 static NSString *transitions[] = {
 
+	@"TMXOrthoFlipRunTimeTest",
+
 	@"TMXIsoZorder",
 	@"TMXOrthoZorder",
 	@"TMXIsoVertexZ",
@@ -36,7 +38,7 @@ static NSString *transitions[] = {
 	@"TMXIsoMoveLayer",
 	@"TMXOrthoMoveLayer",
 	@"TMXOrthoFlipTest",
-    @"TMXGIDObjectsTest",    
+	@"TMXOrthoFlipRunTimeTest",
 	@"TMXOrthoFromXMLTest",
 	@"TMXBug987",
 	@"TMXBug787",
@@ -1397,6 +1399,80 @@ Class restartAction()
 	return @"TMX tile flip test";
 }
 @end
+
+#pragma mark -
+#pragma mark TMXOrthoFlipRunTimeTest
+
+@implementation TMXOrthoFlipRunTimeTest
+-(id) init
+{
+	if( (self=[super init]) ) {		
+		CCTMXTiledMap *map = [CCTMXTiledMap tiledMapWithTMXFile:@"TileMaps/ortho-rotation-test.tmx"];
+		[self addChild:map z:0 tag:kTagTileMap];
+		
+		CGSize s = map.contentSize;
+		NSLog(@"ContentSize: %f, %f", s.width,s.height);
+		
+		for( CCSpriteBatchNode* child in [map children] ) {
+			[[child texture] setAntiAliasTexParameters];
+		}
+		
+		id action = [CCScaleBy actionWithDuration:2 scale:0.5f];
+		[map runAction:action];
+		
+		[self schedule:@selector(flipIt:) interval:1];
+	}	
+	return self;
+}
+
+-(NSString *) title
+{
+	return @"TMX tile flip run time test";
+}
+
+-(NSString *) subtitle
+{
+	return @"in 2 sec bottom left tiles will flip";
+}
+
+- (void) flipIt:(ccTime)dt
+{
+	CCTMXTiledMap *map = (CCTMXTiledMap*) [self getChildByTag:kTagTileMap]; 
+	CCTMXLayer *layer = [map layerNamed:@"Layer 0"]; 
+	
+	//blue diamond 
+	CGPoint tileCoord = ccp(1,10);
+	ccTMXTileFlags flags;
+	uint32_t GID = [layer tileGIDAt:tileCoord withFlags:&flags];
+	// Vertical
+	if( flags & kCCTMXTileVerticalFlag )
+		flags &= ~kCCTMXTileVerticalFlag;
+	else
+		flags |= kCCTMXTileVerticalFlag;
+	[layer setTileGID:GID  at:tileCoord withFlags:flags];
+	
+	
+	tileCoord = ccp(1,8);	
+	GID = [layer tileGIDAt:tileCoord withFlags:&flags];
+	// Vertical
+	if( flags & kCCTMXTileVerticalFlag )
+		flags &= ~kCCTMXTileVerticalFlag;
+	else
+		flags |= kCCTMXTileVerticalFlag;	
+	[layer setTileGID:GID at:tileCoord withFlags:flags];
+
+	
+	tileCoord = ccp(2,8);
+	GID = [layer tileGIDAt:tileCoord withFlags:&flags];
+	// Horizontal
+	if( flags & kCCTMXTileHorizontalFlag )
+		flags &= ~kCCTMXTileHorizontalFlag;
+	else
+		flags |= kCCTMXTileHorizontalFlag;	
+	[layer setTileGID:GID at:tileCoord withFlags:flags];	
+}
+@end
+
 
 
 #pragma mark -

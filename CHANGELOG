@@ -1,6 +1,9 @@
 version 2.0-rc0 11-Feb-2012
+. [NEW] v1.1 Forward-ported changes:
+		TileMap: Flipped tiles can be changed during runtime (issue #1264)
 . [NEW] LabelTTF: fontName and fontSize are properties
 . [NEW] LabelBMFont: added setFntFile method
+. [FIX] GLView: Fixed memory leak while dispatching events (Mac only)
 . [FIX] Particles: Fixed memory leak in fillWithEmptyQuadsFromIndex
 . [FIX] SpriteBatch: Quad extensions are public
 . [FIX] Texture2D: initWithImage renamed with initWithCGImage
@@ -148,9 +151,11 @@ version 1.1-beta2 xx - 2011
 . [NEW] All: Code is compatible with ARC (issue #1199)
 . [NEW] TileMap: supports in-memory TMX map creation (issue #1239)
 . [NEW] Node: Added onExitTransitionDidStart (issue #792)
+. [NEW] TileMap: Flipped tiles can be changed during runtime (issue #1264)
 . [FIX] Node: orderOfArrival is @synthezied correctly (issue #1273)
 . [FIX] Node & Sprite: Scale before Skew to prevent issues with negatives scales.
 . [FIX] TouchDispatcher: correctly handles addition and removal of handlers when being inside a touch handler (issue #1084, #1139)
+. [FIX] EAGLView: always destroy and recreate OpenGL buffers completely (issue #1254) 
 . [FIX-MAC] LabelTTF: word wrap works on Mac (issue #1074)
 
 version 1.1-beta 11-Oct-2011

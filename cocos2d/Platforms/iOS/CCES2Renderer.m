@@ -39,6 +39,10 @@
 @implementation CCES2Renderer
 
 @synthesize context=context_;
+@synthesize defaultFramebuffer=defaultFramebuffer_;
+@synthesize colorRenderbuffer=colorRenderbuffer_;
+@synthesize msaaColorbuffer=msaaColorbuffer_;
+@synthesize msaaFramebuffer=msaaFramebuffer_;
 
 // Create an OpenGL ES 2.0 context
 - (id) initWithDepthFormat:(unsigned int)depthFormat withPixelFormat:(unsigned int)pixelFormat withSharegroup:(EAGLSharegroup*)sharegroup withMultiSampling:(BOOL) multiSampling withNumberOfSamples:(unsigned int) requestedSamples
