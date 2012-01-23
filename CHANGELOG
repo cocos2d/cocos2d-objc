@@ -3,6 +3,7 @@ version 2.0-rc0 11-Feb-2012
 		TileMap: Flipped tiles can be changed during runtime (issue #1264)
 . [NEW] LabelTTF: fontName and fontSize are properties
 . [NEW] LabelBMFont: added setFntFile method
+. [FIX] DrawingPrimitives: drawColor4f() uses GLFloat instead of GLbyte (issue #1307)
 . [FIX] GLView: Fixed memory leak while dispatching events (Mac only)
 . [FIX] Particles: Fixed memory leak in fillWithEmptyQuadsFromIndex
 . [FIX] SpriteBatch: Quad extensions are public
