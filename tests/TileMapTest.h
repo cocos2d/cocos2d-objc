@@ -124,7 +124,11 @@
 {}
 @end
 
-@interface TMXOrthoFromXMLTest : TileDemo
+@interface TMXOrthoFlipRunTimeTest : TileDemo
+{}
+@end
+
+@interface TMXOrthoFromXMLTest : TileDemo 
 {}
 @end
 

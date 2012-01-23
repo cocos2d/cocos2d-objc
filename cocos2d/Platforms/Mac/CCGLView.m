@@ -139,7 +139,8 @@
 	[obj performSelector:@selector(dispatchEvent:)											\
 			onThread:[[CCDirector sharedDirector] runningThread]							\
 		  withObject:event																	\
-	   waitUntilDone:NO];
+	   waitUntilDone:NO];																	\
+	[event release];
 
 #pragma mark CCGLView - Mouse events
 

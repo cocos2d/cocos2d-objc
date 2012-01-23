@@ -196,7 +196,6 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 		return NO;
 
 	context_ = [renderer_ context];
-	[context_ renderbufferStorage:GL_RENDERBUFFER_OES fromDrawable:eaglLayer];
 
 	discardFramebufferSupported_ = [[CCConfiguration sharedConfiguration] supportsDiscardFramebuffer];
 
@@ -216,6 +215,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 - (void) layoutSubviews
 {
 	[renderer_ resizeFromLayer:(CAEAGLLayer*)self.layer];
+
 	size_ = [renderer_ backingSize];
 
 	// Issue #914 #924
@@ -345,5 +345,6 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 }
 
 @end
+
 
 #endif // __CC_PLATFORM_IOS
