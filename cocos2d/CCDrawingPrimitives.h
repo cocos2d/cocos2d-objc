@@ -95,7 +95,7 @@ void ccDrawColor4B( GLubyte r, GLubyte g, GLubyte b, GLubyte a );
 /** set the drawing color with 4 floats
  @since v2.0
  */
-void ccDrawColor4f( GLubyte r, GLubyte g, GLubyte b, GLubyte a );
+void ccDrawColor4f( GLfloat r, GLfloat g, GLfloat b, GLfloat a );
 
 /** set the point size in points. Default 1.
  @since v2.0

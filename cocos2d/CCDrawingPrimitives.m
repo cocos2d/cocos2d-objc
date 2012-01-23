@@ -258,7 +258,7 @@ void ccDrawCubicBezier(CGPoint origin, CGPoint control1, CGPoint control2, CGPoi
 	glDrawArrays(GL_LINE_STRIP, 0, (GLsizei) segments + 1);
 }
 
-void ccDrawColor4f( GLubyte r, GLubyte g, GLubyte b, GLubyte a )
+void ccDrawColor4f( GLfloat r, GLfloat g, GLfloat b, GLfloat a )
 {
 	color_ = (ccColor4F) {r, g, b, a};
 }
