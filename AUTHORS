@@ -64,9 +64,6 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	Tests: Shader tests center the fragment shader effects on Mac
 	Director: On Mac, CC_DIRECTOR_INIT() centers the main window
 
-* slycrel (http://folderapp.blogspot.com/)
-	TMX Map: fixed crash when multiple layers and tiles were used with rotation
-	
 * Viktor Lidholt (http://www.cocosbuilder.com)
 	Added setters/getters for fontName, fontSize, fntFile in LabelBMFont and LabelTTF
 	
@@ -78,8 +75,8 @@ cocos2d for iPhone authors for v1.1
 -----------------------------------
 
 Lead Developers:
-	Ricardo Quesada (http://www.cocos2d-iphone.org/)
 	Marco Tillemans (http://www.welcometothefabrik.com/)
+	Ricardo Quesada (http://www.zynga.com)
 
 
 Contributors (alphabetically ordered):
@@ -116,6 +113,9 @@ Contributors (alphabetically ordered):
 
 * Scott Lembcke (AKA slembcke) (http://chipmunk-physics.net/)
 	Improved ARC compatiblity code
+
+slycrel (http://folderapp.blogspot.com/)
+	TMX Map: fixed crash when multiple layers and tiles were used with rotation
 
 * Shakthi:
 	Added CCNode#onExitTransitionDidStart method

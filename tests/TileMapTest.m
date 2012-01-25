@@ -13,8 +13,6 @@
 static int sceneIdx=-1;
 static NSString *transitions[] = {
 
-	@"TMXOrthoFlipRunTimeTest",
-
 	@"TMXIsoZorder",
 	@"TMXOrthoZorder",
 	@"TMXIsoVertexZ",
