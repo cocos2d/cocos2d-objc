@@ -12,8 +12,8 @@ cocos2d for iPhone authors for v1.1
 -----------------------------------
 
 Lead Developers:
-	Ricardo Quesada (http://www.zynga.com)
 	Marco Tillemans (http://www.welcometothefabrik.com/)
+	Ricardo Quesada (http://www.zynga.com)
 
 
 Contributors (alphabetically ordered):
@@ -50,6 +50,9 @@ Contributors (alphabetically ordered):
 
 * Scott Lembcke (AKA slembcke) (http://chipmunk-physics.net/)
 	Improved ARC compatiblity code
+
+slycrel (http://folderapp.blogspot.com/)
+	TMX Map: fixed crash when multiple layers and tiles were used with rotation
 
 * Shakthi:
 	Added CCNode#onExitTransitionDidStart method
