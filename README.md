@@ -82,7 +82,6 @@ Select the test you want from Xcode Scheme chooser.
 Then click on Xcode -> Product -> Run
 
 
-
 How to contribute to the project
 --------------------------------
 
