@@ -18,6 +18,8 @@ Class restartAction(void);
 
 static int sceneIdx=-1;
 static NSString *transitions[] = {
+	@"ActionAnimate",
+
 	@"ActionManual",
 	@"ActionMove",
 	@"ActionRotate",
@@ -529,20 +531,37 @@ Class restartAction()
 {
 	[super onEnter];
 
-	[self centerSprites:1];
+	[self centerSprites:2];
 
-	CCAnimation* animation = [CCAnimation animation];
-	for( int i=1;i<15;i++)
-		[animation addFrameWithFilename: [NSString stringWithFormat:@"grossini_dance_%02d.png", i]];
+	// Left: using Old animation system
+//	CCAnimation* animation = [CCAnimation animation];
+//	for( int i=1;i<15;i++)
+//		[animation addFrameWithFilename: [NSString stringWithFormat:@"grossini_dance_%02d.png", i]];
+//
+//	id action = [CCAnimate actionWithDuration:3 animation:animation restoreOriginalFrame:NO];
+//	id action_back = [action reverse];
+//
+//	[kathia runAction: [CCSequence actions: action, action_back, nil]];
 
-	id action = [CCAnimate actionWithDuration:3 animation:animation restoreOriginalFrame:NO];
-	id action_back = [action reverse];
+	
+	// Right: Using new animation system
+	CCAnimationCache *cache = [CCAnimationCache sharedAnimationCache];
+	[cache addAnimationsWithFile:@"animations/animations-2.plist"];
+	CCAnimation *animation2 = [cache animationByName:@"dance_1"];
 
-	[grossini runAction: [CCSequence actions: action, action_back, nil]];
+	id action2 = [CCAnimate actionWithAnimation:animation2 restoreOriginalFrame:NO];
+//	id action2_back = [action2 reverse];
+
+	[tamara runAction: [CCSequence actions: action2, [action2 reverse], nil]];
+
 }
 -(NSString *) title
 {
 	return @"Animation";
+}
+-(NSString*) subtitle
+{
+	return @"Manual animation, and animation by parsing .plist";
 }
 @end
 
@@ -1139,6 +1158,11 @@ Class restartAction()
 	[director_ pushScene: scene];
 
 	return YES;
+}
+
+-(BOOL) shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+	return UIInterfaceOrientationIsLandscape(interfaceOrientation);
 }
 @end
 

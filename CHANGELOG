@@ -2,6 +2,7 @@ version 2.0-rc0 11-Feb-2012
 . [NEW] v1.1 Forward-ported changes:
 		TileMap: Flipped tiles can be changed during runtime (issue #1264)
 		TileMap: Fixed a problem with multiple layers and multiple tile sets that could cause TMX maps to not load if rotation is used (issue #1302)
+. [NEW] Animation: Added new animation format that supports delays per frame
 . [NEW] LabelTTF: fontName and fontSize are properties
 . [NEW] LabelBMFont: added setFntFile method
 . [FIX] DrawingPrimitives: drawColor4f() uses GLFloat instead of GLbyte (issue #1307)
