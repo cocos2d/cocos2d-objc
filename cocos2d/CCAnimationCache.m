@@ -132,7 +132,7 @@ static CCAnimationCache *sharedAnimationCache_=nil;
 				continue;
 			}
 			
-			CCAnimationFrame *animFrame = [[CCAnimationFrame alloc] initWithSpriteFrame:spriteFrame unitsOfTime:1 offset:CGPointZero];
+			CCAnimationFrame *animFrame = [[CCAnimationFrame alloc] initWithSpriteFrame:spriteFrame delayUnits:1 offset:CGPointZero];
 			[frames addObject:animFrame];
 			[animFrame release];
 		}
@@ -144,7 +144,7 @@ static CCAnimationCache *sharedAnimationCache_=nil;
 			CCLOG(@"cocos2d: CCAnimationCache: An animation in your dictionary refers to a frame which is not in the CCSpriteFrameCache. Some or all of the frames for the animation '%@' may be missing.", name);
 		}
 		
-		animation = [CCAnimation animationWithFrames:frames unitOfTimeValue:[delay floatValue]];
+		animation = [CCAnimation animationWithFrames:frames delayPerUnit:[delay floatValue]];
 		
 		[[CCAnimationCache sharedAnimationCache] addAnimation:animation name:name];
 	}	
@@ -183,17 +183,17 @@ static CCAnimationCache *sharedAnimationCache_=nil;
 				continue;
 			}
 
-			float unitsOfTime = [[entry objectForKey:@"units of time"] floatValue];
+			float delayUnits = [[entry objectForKey:@"delay units"] floatValue];
 			CGPoint offset =  CCPointFromString( [entry objectForKey:@"offset"] );
 			
-			CCAnimationFrame *animFrame = [[CCAnimationFrame alloc] initWithSpriteFrame:spriteFrame unitsOfTime:unitsOfTime offset:offset];
+			CCAnimationFrame *animFrame = [[CCAnimationFrame alloc] initWithSpriteFrame:spriteFrame delayUnits:delayUnits offset:offset];
 			
 			[array addObject:animFrame];
 			[animFrame release];
 		}
 		
-		float unitOfTimeValue = [[animationDict objectForKey:@"unit of time value"] floatValue];
-		CCAnimation *animation = [[CCAnimation alloc] initWithFrames:array unitOfTimeValue:unitOfTimeValue];
+		float delayPerUnit = [[animationDict objectForKey:@"delay per unit"] floatValue];
+		CCAnimation *animation = [[CCAnimation alloc] initWithFrames:array delayPerUnit:delayPerUnit];
 		[array release];
 		
 		[animation setRestoreOriginalFrame:restoreOriginalFrame];

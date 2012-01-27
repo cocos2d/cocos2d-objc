@@ -19,6 +19,8 @@ Class restartAction(void);
 static int sceneIdx=-1;
 static NSString *transitions[] = {
 	
+	@"ActionAnimate",
+
 	@"ActionManual",
 	@"ActionMove",
 	@"ActionRotate",

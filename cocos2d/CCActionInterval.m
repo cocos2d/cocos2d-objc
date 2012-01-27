@@ -1278,11 +1278,11 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 		splitTimes_ = [[NSMutableArray alloc] initWithCapacity:anim.frames.count];
 		
 		float accumUnitsOfTime = 0;
-		float newUnitOfTimeValue = aDuration / anim.totalUnitsOfTime;
+		float newUnitOfTimeValue = aDuration / anim.totalDelayUnits;
 		
 		for( CCAnimationFrame *frame in anim.frames ) {
 
-			accumUnitsOfTime += frame.unitsOfTime;
+			accumUnitsOfTime += frame.delayUnits;
 			NSNumber *value = [NSNumber numberWithFloat: (accumUnitsOfTime * newUnitOfTimeValue) / aDuration];
 			[splitTimes_ addObject:value];
 		}		
@@ -1353,7 +1353,7 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
     for (id element in enumerator)
         [newArray addObject:[[element copy] autorelease]];
 
-	CCAnimation *newAnim = [CCAnimation animationWithFrames:newArray unitOfTimeValue:animation_.unitOfTimeValue];
+	CCAnimation *newAnim = [CCAnimation animationWithFrames:newArray delayPerUnit:animation_.delayPerUnit];
 	return [[self class] actionWithDuration:duration_ animation:newAnim restoreOriginalFrame:restoreOriginalFrame_];
 }
 
