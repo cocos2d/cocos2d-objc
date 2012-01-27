@@ -51,7 +51,10 @@ Contributors (alphabetically ordered):
 * Scott Lembcke (AKA slembcke) (http://chipmunk-physics.net/)
 	Improved ARC compatiblity code
 
-slycrel (http://folderapp.blogspot.com/)
+* Sergey Tikhonov (AKA haqu) (http://haqu.net)
+	Removed warning in CCMenuItem
+
+* slycrel (http://folderapp.blogspot.com/)
 	TMX Map: fixed crash when multiple layers and tiles were used with rotation
 
 * Shakthi:

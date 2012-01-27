@@ -4,6 +4,7 @@ version 1.1-beta2 xx - 2011
 . [NEW] TileMap: supports in-memory TMX map creation (issue #1239)
 . [NEW] TileMap: Flipped tiles can be changed during runtime (issue #1264)
 . [FIX] EAGLView: always destroy and recreate OpenGL buffers completely (issue #1254) 
+. [FIX] MenuItem: removed warning when deleting item
 . [FIX] Node: orderOfArrival is @synthezied correctly (issue #1273)
 . [FIX] Node & Sprite: Scale before Skew to prevent issues with negatives scales.
 . [FIX] TileMap: Fixed a problem with multiple layers and multiple tile sets that could cause TMX maps to not load if rotation is used (issue #1302)
