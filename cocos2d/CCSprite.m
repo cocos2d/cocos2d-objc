@@ -111,11 +111,6 @@
 	return [[[self alloc] initWithCGImage:image key:key] autorelease];
 }
 
-+(id) spriteWithBatchNode:(CCSpriteBatchNode*)batchNode rect:(CGRect)rect
-{
-	return [[[self alloc] initWithBatchNode:batchNode rect:rect] autorelease];
-}
-
 -(id) init
 {
 	return [self initWithTexture:nil rect:CGRectZero];
@@ -240,19 +235,6 @@
 	rect.size = texture.contentSize;
 
 	return [self initWithTexture:texture rect:rect];
-}
-
--(id) initWithBatchNode:(CCSpriteBatchNode*)batchNode rect:(CGRect)rect
-{
-	return [self initWithBatchNode:batchNode rect:rect rotated:NO];
-}
-
--(id) initWithBatchNode:(CCSpriteBatchNode*)batchNode rect:(CGRect)rect rotated:(BOOL)rotated
-{
-	id ret = [self initWithTexture:batchNode.texture rect:rect rotated:rotated];
-	[self setBatchNode:batchNode];
-
-	return ret;
 }
 
 - (NSString*) description
@@ -682,7 +664,7 @@
 	{
 		isReorderChildDirty_ = YES;
 		CCNode* node = (CCNode*) parent_;
-		while (node != batchNode_)
+		while (node && node != batchNode_)
 		{
 			[(CCSprite*)node setReorderChildDirtyRecursively];
 			node=node.parent;

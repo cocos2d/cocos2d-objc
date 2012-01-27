@@ -12,7 +12,6 @@
 
 static int sceneIdx=-1;
 static NSString *transitions[] = {
-
 	@"Sprite1",
 	@"SpriteBatchNode1",
 	@"SpriteFrameTest",
@@ -65,6 +64,7 @@ static NSString *transitions[] = {
 	@"SpriteNilTexture",
 	@"SpriteSubclass",
 	@"SpriteDoubleResolution",
+	@"SpriteBatchBug1217",
 
 	@"AnimationCache",
 	@"AnimationCacheFile",
@@ -674,7 +674,7 @@ Class restartAction()
 
 		for(int i=0; i<10; i++)
 		{
-			CCSprite* s1 = [CCSprite spriteWithBatchNode:asmtest rect:CGRectMake(0, 0, 50, 50)];
+			CCSprite* s1 = [CCSprite spriteWithTexture:asmtest.texture rect:CGRectMake(0, 0, 50, 50)];
 			[a addObject:s1];
 			[asmtest addChild:s1 z:10];
 		}
@@ -733,7 +733,7 @@ Class restartAction()
 		CCSpriteBatchNode *batch = [CCSpriteBatchNode batchNodeWithFile:@"grossini_dance_atlas.png" capacity:15];
 		[self addChild:batch z:0 tag:kTagSpriteBatchNode];
 
-		CCSprite *sprite = [CCSprite spriteWithBatchNode:batch rect:CGRectMake(0, 0, 85, 121)];
+		CCSprite *sprite = [CCSprite spriteWithTexture:batch.texture rect:CGRectMake(0, 0, 85, 121)];
 		sprite.position = ccp(s.width/2, s.height/2);
 		[batch addChild:sprite z:3];
 		[batch reorderChild:sprite z:1];
@@ -852,23 +852,23 @@ Class restartAction()
 		batchNode = [CCSpriteBatchNode batchNodeWithFile:@"piece.png" capacity:15];
 		[self addChild:batchNode z:1 tag:0];
 
-		sprite1 = [CCSprite spriteWithBatchNode:batchNode rect:CGRectMake(128,0,64,64)];
+		sprite1 = [CCSprite spriteWithTexture:batchNode.texture rect:CGRectMake(128,0,64,64)];
 		sprite1.position = CGPointMake(100,160);
 		[batchNode addChild:sprite1 z:3 tag:1];
 
-		sprite2= [CCSprite spriteWithBatchNode:batchNode rect:CGRectMake(128,0,64,64)];
+		sprite2= [CCSprite spriteWithTexture:batchNode.texture rect:CGRectMake(128,0,64,64)];
 		sprite2.position = CGPointMake(164,160);
 		[batchNode addChild:sprite2 z:4 tag:2];
 
-		sprite3 = [CCSprite spriteWithBatchNode:batchNode rect:CGRectMake(128,0,64,64)];
+		sprite3 = [CCSprite spriteWithTexture:batchNode.texture rect:CGRectMake(128,0,64,64)];
 		sprite3.position = CGPointMake(228,160);
 		[batchNode addChild:sprite3 z:4 tag:3];
 
-		sprite4 = [CCSprite spriteWithBatchNode:batchNode rect:CGRectMake(128,0,64,64)];
+		sprite4 = [CCSprite spriteWithTexture:batchNode.texture rect:CGRectMake(128,0,64,64)];
 		sprite4.position = CGPointMake(292,160);
 		[batchNode addChild:sprite4 z:5 tag:4];
 
-		sprite5 = [CCSprite spriteWithBatchNode:batchNode rect:CGRectMake(128,0,64,64)];
+		sprite5 = [CCSprite spriteWithTexture:batchNode.texture rect:CGRectMake(128,0,64,64)];
 		sprite5.position = CGPointMake(356,160);
 		[batchNode addChild:sprite5 z:6 tag:5];
 
@@ -996,15 +996,15 @@ Class restartAction()
 @implementation SpriteBatchNodeReorderIssue766
 -(CCSprite *)makeSpriteZ:(int)aZ
 {
-	CCSprite *sprite = [CCSprite spriteWithBatchNode:batchNode rect:CGRectMake(128,0,64,64)];
+	CCSprite *sprite = [CCSprite spriteWithTexture:batchNode.texture rect:CGRectMake(128,0,64,64)];
 	[batchNode addChild:sprite z:aZ+1 tag:0];
 
 	//children
-	CCSprite *spriteShadow = [CCSprite spriteWithBatchNode:batchNode rect:CGRectMake(0,0,64,64)];
+	CCSprite *spriteShadow = [CCSprite spriteWithTexture:batchNode.texture rect:CGRectMake(0,0,64,64)];
 	spriteShadow.opacity = 128;
 	[sprite addChild:spriteShadow z:aZ tag:3];
 
-	CCSprite *spriteTop = [CCSprite spriteWithBatchNode:batchNode rect:CGRectMake(64,0,64,64)];
+	CCSprite *spriteTop = [CCSprite spriteWithTexture:batchNode.texture rect:CGRectMake(64,0,64,64)];
 	[sprite addChild:spriteTop z:aZ+2 tag:3];
 
 	return sprite;
@@ -4493,8 +4493,52 @@ Class restartAction()
 @end
 
 
-#pragma mark -
-#pragma mark AppDelegate - iOS
+#pragma mark - SpriteBatchBug1217
+
+@implementation SpriteBatchBug1217
+-(id) init
+{
+	if( (self=[super init]) ) {
+
+		CCSpriteBatchNode *bn = [CCSpriteBatchNode batchNodeWithFile:@"grossini_dance_atlas.png" capacity:15];
+
+		CCSprite * s1 = [CCSprite spriteWithTexture:bn.texture rect:CGRectMake(0, 0, 57, 57)];
+		CCSprite * s2 = [CCSprite spriteWithTexture:bn.texture rect:CGRectMake(0, 0, 57, 57)];
+		CCSprite * s3 = [CCSprite spriteWithTexture:bn.texture rect:CGRectMake(0, 0, 57, 57)];
+		
+		s1.color = ccc3(255, 0, 0);
+		s2.color = ccc3(0, 255, 0);
+		s3.color = ccc3(0, 0, 255);
+	
+		s1.position = ccp(20,200);
+		s2.position = ccp(100,0);
+		s3.position = ccp(100,0);
+
+		bn.position = ccp(0,0);
+
+		//!!!!!
+		[s1 addChild:s2];
+		[s2 addChild:s3];
+		[bn addChild:s1];
+
+		[self addChild:bn];
+	}
+	return self;
+}
+
+-(NSString *) title
+{
+	return @"SpriteBatch - Bug 1217";
+}
+
+-(NSString*) subtitle
+{
+	return @"Adding big family to spritebatch. You shall see 3 heads";
+}
+
+@end
+
+#pragma mark - AppDelegate - iOS
 
 // CLASS IMPLEMENTATIONS
 

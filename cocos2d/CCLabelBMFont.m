@@ -722,7 +722,7 @@ typedef struct _KerningHashElement
 
 		fontChar = (CCSprite*) [self getChildByTag:i];
 		if( ! fontChar ) {
-			fontChar = [[CCSprite alloc] initWithBatchNode:self rect:rect];
+			fontChar = [[CCSprite alloc] initWithTexture:textureAtlas_.texture rect:rect];
 			[self addChild:fontChar z:0 tag:i];
 			[fontChar release];
 		}

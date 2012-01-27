@@ -258,7 +258,7 @@ int compareInts (const void * a, const void * b);
 		if( ! tile ) {
 			CGRect rect = [tileset_ rectForGID:gid];
 			rect = CC_RECT_PIXELS_TO_POINTS(rect);
-			tile = [[CCSprite alloc] initWithBatchNode:self rect:rect];
+			tile = [[CCSprite alloc] initWithTexture:self.texture rect:rect];
 
             CGPoint p = [self positionAt:pos];
             [tile setPosition:p];
@@ -329,9 +329,9 @@ int compareInts (const void * a, const void * b);
 	NSInteger z = pos.x + pos.y * layerSize_.width;
 
 	if( ! reusedTile_ )
-		reusedTile_ = [[CCSprite alloc] initWithBatchNode:self rect:rect];
+		reusedTile_ = [[CCSprite alloc] initWithTexture:textureAtlas_.texture rect:rect];
 	else
-		[reusedTile_ initWithBatchNode:self rect:rect];
+		[reusedTile_ initWithTexture:textureAtlas_.texture rect:rect];
 
 	[self setupTileSprite:reusedTile_ position:pos withGID:gid];
 
@@ -365,9 +365,9 @@ int compareInts (const void * a, const void * b);
 	int z = pos.x + pos.y * layerSize_.width;
 
 	if( ! reusedTile_ )
-		reusedTile_ = [[CCSprite alloc] initWithBatchNode:self rect:rect];
+		reusedTile_ = [[CCSprite alloc] initWithTexture:textureAtlas_.texture rect:rect];
 	else
-		[reusedTile_ initWithBatchNode:self rect:rect];
+		[reusedTile_ initWithTexture:textureAtlas_.texture rect:rect];
 
 	[self setupTileSprite:reusedTile_ position:pos withGID:gid];
 
@@ -393,9 +393,9 @@ int compareInts (const void * a, const void * b);
 	NSInteger z = pos.x + pos.y * layerSize_.width;
 
 	if( ! reusedTile_ )
-		reusedTile_ = [[CCSprite alloc] initWithBatchNode:self rect:rect];
+		reusedTile_ = [[CCSprite alloc] initWithTexture:textureAtlas_.texture rect:rect];
 	else
-		[reusedTile_ initWithBatchNode:self rect:rect];
+		[reusedTile_ initWithTexture:textureAtlas_.texture rect:rect];
 
 	[self setupTileSprite:reusedTile_ position:pos withGID:gid];
 
