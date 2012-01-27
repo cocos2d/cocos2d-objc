@@ -18,6 +18,9 @@ Lead Developers:
 
 Contributors (alphabetically ordered):
 
+* Alexander Carter
+	Sprite: fixed possible opacity bug in setColor
+
 * Christoph Winkler (http://raketenbasis.de)
 	Word Wrap works on LabelTTF on Mac
 	
