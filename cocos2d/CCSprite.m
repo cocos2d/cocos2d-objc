@@ -855,9 +855,9 @@
 	color_ = colorUnmodified_ = color3;
 
 	if( opacityModifyRGB_ ){
-		color_.r = color3.r * opacity_/255.0;
-		color_.g = color3.g * opacity_/255.0;
-		color_.b = color3.b * opacity_/255.0;
+		color_.r = color3.r * opacity_/255.0f;
+		color_.g = color3.g * opacity_/255.0f;
+		color_.b = color3.b * opacity_/255.0f;
 	}
 
 	[self updateColor];
