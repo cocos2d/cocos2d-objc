@@ -745,8 +745,10 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 {
 	if( index != selectedIndex_ ) {
 		selectedIndex_=index;
-		[self removeChildByTag:kCCCurrentItemTag cleanup:NO];
-
+		CCMenuItem *currentItem = (CCMenuItem*)[self getChildByTag:kCCCurrentItemTag];
+		if( currentItem )
+			[currentItem removeFromParentAndCleanup:NO];
+		
 		CCMenuItem *item = [subItems_ objectAtIndex:selectedIndex_];
 		[self addChild:item z:0 tag:kCCCurrentItemTag];
 
