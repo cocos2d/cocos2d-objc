@@ -19,8 +19,6 @@ Class restartAction(void);
 static int sceneIdx=-1;
 static NSString *transitions[] = {
 	
-	@"ActionAnimate",
-
 	@"ActionManual",
 	@"ActionMove",
 	@"ActionRotate",
@@ -534,13 +532,12 @@ Class restartAction()
 
 	[self centerSprites:2];
 
-	// Left: using Old animation system (DO NOT USE IT. Use the new one)
+	// Left: using manual animation.
 	CCAnimation* animation = [CCAnimation animation];
 	for( int i=1;i<15;i++)
 		[animation addFrameWithFilename: [NSString stringWithFormat:@"grossini_dance_%02d.png", i]];
 
 	id action = [CCAnimate actionWithDuration:2.8f animation:animation restoreOriginalFrame:YES];
-
 	[kathia runAction: [CCSequence actions: action, [action reverse], nil]];
 
 	
@@ -550,7 +547,6 @@ Class restartAction()
 	CCAnimation *animation2 = [cache animationByName:@"dance_1"];
 
 	id action2 = [CCAnimate actionWithAnimation:animation2];
-
 	[tamara runAction: [CCSequence actions: action2, [action2 reverse], nil]];
 
 }
