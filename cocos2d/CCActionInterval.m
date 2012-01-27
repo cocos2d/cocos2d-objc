@@ -1264,11 +1264,11 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 }
 
 // delegate initializer
--(id) initWithDuration:(ccTime)aDuration animation: (CCAnimation*)anim restoreOriginalFrame:(BOOL)restoreOriginalFrame
+-(id) initWithDuration:(ccTime)duration animation: (CCAnimation*)anim restoreOriginalFrame:(BOOL)restoreOriginalFrame
 {
 	NSAssert( anim!=nil, @"Animate: argument Animation must be non-nil");
 
-	if( (self=[super initWithDuration:aDuration] ) ) {
+	if( (self=[super initWithDuration:duration] ) ) {
 
 		lastFrameDisplayed_ = 0;
 		restoreOriginalFrame_ = restoreOriginalFrame;
@@ -1278,12 +1278,12 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 		splitTimes_ = [[NSMutableArray alloc] initWithCapacity:anim.frames.count];
 		
 		float accumUnitsOfTime = 0;
-		float newUnitOfTimeValue = aDuration / anim.totalDelayUnits;
+		float newUnitOfTimeValue = duration / anim.totalDelayUnits;
 		
 		for( CCAnimationFrame *frame in anim.frames ) {
 
 			accumUnitsOfTime += frame.delayUnits;
-			NSNumber *value = [NSNumber numberWithFloat: (accumUnitsOfTime * newUnitOfTimeValue) / aDuration];
+			NSNumber *value = [NSNumber numberWithFloat: (accumUnitsOfTime * newUnitOfTimeValue) / duration];
 			[splitTimes_ addObject:value];
 		}		
 	}
@@ -1313,6 +1313,8 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 
 	if( restoreOriginalFrame_ )
 		origFrame_ = [[sprite displayedFrame] retain];
+	
+	lastFrameDisplayed_ = 0;
 }
 
 -(void) stop
