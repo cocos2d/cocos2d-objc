@@ -293,7 +293,7 @@ Class restartAction()
 
 		for(int i = 0; i<capacity; i++)
 		{
-			sprites_[i] = [CCSprite spriteWithBatchNode:batch_ rect:rect];
+			sprites_[i] = [CCSprite spriteWithTexture:batch_.texture rect:rect];
 			[sprites_[i] setVisible:NO];
 			[batch_ addChild:sprites_[i]];
 		}
