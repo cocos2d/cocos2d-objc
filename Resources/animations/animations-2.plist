@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>animations</key>
+	<dict>
+		<key>dance_1</key>
+		<dict>
+			<key>unit of time value</key>
+			<real>0.2</real>
+			<key>loop</key>
+			<true/>
+			<key>restore original frame</key>
+			<false/>
+			<key>frames</key>
+			<array>
+				<dict>
+					<key>spriteframe</key>
+					<string>grossini_dance_01.png</string>
+					<key>units of time</key>
+					<integer>1</integer>
+					<key>offset</key>
+					<string>{10,10}</string>
+				</dict>
+				<dict>
+					<key>spriteframe</key>
+					<string>grossini_dance_02.png</string>
+					<key>units of time</key>
+					<integer>1</integer>
+					<key>offset</key>
+					<string>{10,10}</string>
+				</dict>
+				<dict>
+					<key>spriteframe</key>
+					<string>grossini_dance_03.png</string>
+					<key>units of time</key>
+					<integer>1</integer>
+					<key>offset</key>
+					<string>{10,10}</string>
+				</dict>
+				<dict>
+					<key>spriteframe</key>
+					<string>grossini_dance_04.png</string>
+					<key>units of time</key>
+					<integer>1</integer>
+					<key>offset</key>
+					<string>{10,10}</string>
+				</dict>
+				<dict>
+					<key>spriteframe</key>
+					<string>grossini_dance_05.png</string>
+					<key>units of time</key>
+					<integer>1</integer>
+					<key>offset</key>
+					<string>{10,10}</string>
+				</dict>
+			</array>
+		</dict>
+	</dict>
+	<key>properties</key>
+	<dict>
+		<key>spritesheets</key>
+		<array>
+			<string>animations/grossini.plist</string>
+			<string>animations/grossini_blue.plist</string>
+			<string>animations/grossini_family.plist</string>
+		</array>
+		<key>format</key>
+		<integer>2</integer>
+	</dict>
+</dict>
+</plist>

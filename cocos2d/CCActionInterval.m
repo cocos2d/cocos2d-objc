@@ -1260,24 +1260,32 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 {
 	NSAssert( anim!=nil, @"Animate: argument Animation must be non-nil");
 
-	if( (self=[super initWithDuration: [[anim frames] count] * [anim delay]]) ) {
-
-		restoreOriginalFrame_ = b;
-		self.animation = anim;
-		origFrame_ = nil;
-	}
-	return self;
+	return [self initWithDuration:anim.duration animation:anim restoreOriginalFrame:b];
 }
 
+// delegate initializer
 -(id) initWithDuration:(ccTime)aDuration animation: (CCAnimation*)anim restoreOriginalFrame:(BOOL) b
 {
 	NSAssert( anim!=nil, @"Animate: argument Animation must be non-nil");
 
 	if( (self=[super initWithDuration:aDuration] ) ) {
 
+		lastFrameDisplayed_ = 0;
 		restoreOriginalFrame_ = b;
 		self.animation = anim;
 		origFrame_ = nil;
+		
+		splitTimes_ = [[NSMutableArray alloc] initWithCapacity:anim.frames.count];
+		
+		NSUInteger accumUnitsOfTime = 0;
+		float newUnitOfTimeValue = aDuration / anim.totalUnitsOfTime;
+		
+		for( CCAnimationFrame *frame in anim.frames ) {
+
+			accumUnitsOfTime += frame.unitsOfTime;
+			NSNumber *value = [NSNumber numberWithFloat: (accumUnitsOfTime * newUnitOfTimeValue) / aDuration];
+			[splitTimes_ addObject:value];
+		}		
 	}
 	return self;
 }
@@ -1290,6 +1298,7 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 
 -(void) dealloc
 {
+	[splitTimes_ release];
 	[animation_ release];
 	[origFrame_ release];
 	[super dealloc];
@@ -1320,15 +1329,20 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 {
 	NSArray *frames = [animation_ frames];
 	NSUInteger numberOfFrames = [frames count];
+	CCSpriteFrame *frameToDisplay = nil;
 
-	NSUInteger idx = t * numberOfFrames;
-
-	if( idx >= numberOfFrames )
-		idx = numberOfFrames -1;
-
+	for( NSUInteger i=lastFrameDisplayed_; i < numberOfFrames; i++ ) {
+		NSNumber *splitTime = [splitTimes_ objectAtIndex:i];
+		if( t <= [splitTime floatValue] ) {
+			frameToDisplay = [[frames objectAtIndex:i] spriteFrame];
+			lastFrameDisplayed_ = i;
+			break;
+		}
+	}
+	
 	CCSprite *sprite = target_;
-	if (! [sprite isFrameDisplayed: [frames objectAtIndex: idx]] )
-		[sprite setDisplayFrame: [frames objectAtIndex:idx]];
+	if (! [sprite isFrameDisplayed: frameToDisplay] )
+		[sprite setDisplayFrame: frameToDisplay];
 }
 
 - (CCActionInterval *) reverse
@@ -1339,7 +1353,7 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
     for (id element in enumerator)
         [newArray addObject:[[element copy] autorelease]];
 
-	CCAnimation *newAnim = [CCAnimation animationWithFrames:newArray delay:animation_.delay];
+	CCAnimation *newAnim = [CCAnimation animationWithFrames:newArray unitOfTimeValue:animation_.unitOfTimeValue];
 	return [[self class] actionWithDuration:duration_ animation:newAnim restoreOriginalFrame:restoreOriginalFrame_];
 }
 

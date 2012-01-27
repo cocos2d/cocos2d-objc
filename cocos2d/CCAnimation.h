@@ -31,24 +31,53 @@
 
 @class CCSpriteFrame;
 @class CCTexture2D;
+@class CCSpriteFrame;
+
+/** CCAnimationFrame
+ A frame of the animation. It contains information like:
+	- sprite frame name
+	- delay of the frame
+	- offset
+ 
+ @since v2.0
+ */
+@interface CCAnimationFrame : NSObject <NSCopying>
+{}
+/** CCSpriteFrameName to be used */
+@property (nonatomic, readwrite, retain) CCSpriteFrame* spriteFrame;
+
+/** offset when rendering the frame */
+@property (nonatomic, readwrite) CGPoint offset;
+
+/**  delay of the frame */
+@property (nonatomic, readwrite) NSUInteger unitsOfTime;
+
+/** initializes the animation frame with a spriteframe, a delay and an offset */
+-(id) initWithSpriteFrame:(CCSpriteFrame*)spriteFrame unitsOfTime:(NSUInteger)unitsOfTime offset:(CGPoint)offset;
+@end
 
 /** A CCAnimation object is used to perform animations on the CCSprite objects.
 
- The CCAnimation object contains CCSpriteFrame objects, and a possible delay between the frames.
+ The CCAnimation object contains CCAnimationFrame objects, and a possible delay between the frames.
  You can animate a CCAnimation object by using the CCAnimate action. Example:
 
   [sprite runAction:[CCAnimate actionWithAnimation:animation]];
 
  */
 @interface CCAnimation : NSObject
-{
-	float				delay_;
-	NSMutableArray		*frames_;
-}
+{}
 
-/** delay between frames in seconds. */
+/** total units of time of the animation */
+@property (nonatomic, readonly) NSUInteger totalUnitsOfTime;
+/** unit of time value */
+@property (nonatomic, readwrite) float unitOfTimeValue;
+/** duration in seconds of the animation. It is the result of totalUnitsOfTime * unitOfTimeValue */
+@property (nonatomic,readonly) float duration;
+/** average delay of each frame.
+ @deprecated Use duration and / or totalUnitsOfTime instead.
+ */
 @property (nonatomic,readwrite,assign) float delay;
-/** array of frames */
+/** array of CCAnimationFrames */
 @property (nonatomic,readwrite,retain) NSMutableArray *frames;
 
 /** Creates an animation
@@ -64,17 +93,28 @@
 /* Creates an animation with frames and a delay between frames.
  @since v0.99.5
  */
-+(id) animationWithFrames:(NSArray*)frames delay:(float)delay;
++(id) animationWithFrames:(NSArray*)arrayOfSpriteFrameNames delay:(float)delay;
+
+/* Creates an animation with an array of CCAnimationFrame and whether or not to loop the animation
+ @since v2.0
+ */
++(id) animationWithFrames:(NSArray*)arrayOfAnimationFrames unitOfTimeValue:(float)unitOfTimeValue;
+
 
 /** Initializes a CCAnimation with frames.
  @since v0.99.5
 */
--(id) initWithFrames:(NSArray*)frames;
+-(id) initWithFrames:(NSArray*)arrayOfSpriteFrameNames;
 
 /** Initializes a CCAnimation with frames and a delay between frames
  @since v0.99.5
  */
--(id) initWithFrames:(NSArray *)frames delay:(float)delay;
+-(id) initWithFrames:(NSArray *)arrayOfSpriteFrameNames delay:(float)delay;
+
+/* Initializes an animation with an array of CCAnimationFrame and whether or not to loop the animation
+ @since v2.0
+ */
+-(id) initWithFrames:(NSArray*)arrayOfAnimationFrames unitOfTimeValue:(float)unitOfTimeValue;
 
 /** Adds a frame to a CCAnimation. */
 -(void) addFrame:(CCSpriteFrame*)frame;
