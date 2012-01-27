@@ -54,6 +54,78 @@
 					<key>offset</key>
 					<string>{10,10}</string>
 				</dict>
+				<dict>
+					<key>spriteframe</key>
+					<string>grossini_dance_06.png</string>
+					<key>units of time</key>
+					<integer>1</integer>
+					<key>offset</key>
+					<string>{10,10}</string>
+				</dict>
+				<dict>
+					<key>spriteframe</key>
+					<string>grossini_dance_07.png</string>
+					<key>units of time</key>
+					<integer>1</integer>
+					<key>offset</key>
+					<string>{10,10}</string>
+				</dict>
+				<dict>
+					<key>spriteframe</key>
+					<string>grossini_dance_08.png</string>
+					<key>units of time</key>
+					<integer>1</integer>
+					<key>offset</key>
+					<string>{10,10}</string>
+				</dict>
+				<dict>
+					<key>spriteframe</key>
+					<string>grossini_dance_09.png</string>
+					<key>units of time</key>
+					<integer>1</integer>
+					<key>offset</key>
+					<string>{10,10}</string>
+				</dict>
+				<dict>
+					<key>spriteframe</key>
+					<string>grossini_dance_10.png</string>
+					<key>units of time</key>
+					<integer>1</integer>
+					<key>offset</key>
+					<string>{10,10}</string>
+				</dict>
+				<dict>
+					<key>spriteframe</key>
+					<string>grossini_dance_11.png</string>
+					<key>units of time</key>
+					<integer>1</integer>
+					<key>offset</key>
+					<string>{10,10}</string>
+				</dict>
+				<dict>
+					<key>spriteframe</key>
+					<string>grossini_dance_12.png</string>
+					<key>units of time</key>
+					<integer>1</integer>
+					<key>offset</key>
+					<string>{10,10}</string>
+				</dict>
+				<dict>
+					<key>spriteframe</key>
+					<string>grossini_dance_13.png</string>
+					<key>units of time</key>
+					<integer>1</integer>
+					<key>offset</key>
+					<string>{10,10}</string>
+				</dict>
+				<dict>
+					<key>spriteframe</key>
+					<string>grossini_dance_14.png</string>
+					<key>units of time</key>
+					<integer>1</integer>
+					<key>offset</key>
+					<string>{10,10}</string>
+				</dict>
 			</array>
 		</dict>
 	</dict>

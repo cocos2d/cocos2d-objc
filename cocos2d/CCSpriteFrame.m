@@ -122,7 +122,8 @@
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	CCSpriteFrame *copy = [[[self class] allocWithZone: zone] initWithTexture:texture_ rectInPixels:rectInPixels_ rotated:rotated_ offset:offsetInPixels_ originalSize:originalSizeInPixels_];
+	CCSpriteFrame *copy = [[[self class] allocWithZone: zone] initWithTextureFilename:textureFilename_ rectInPixels:rectInPixels_ rotated:rotated_ offset:offsetInPixels_ originalSize:originalSizeInPixels_];
+	copy.texture = texture_;
 	return copy;
 }
 

@@ -18,8 +18,6 @@ Class restartAction(void);
 
 static int sceneIdx=-1;
 static NSString *transitions[] = {
-	@"ActionAnimate",
-
 	@"ActionManual",
 	@"ActionMove",
 	@"ActionRotate",
@@ -533,15 +531,14 @@ Class restartAction()
 
 	[self centerSprites:2];
 
-	// Left: using Old animation system
-//	CCAnimation* animation = [CCAnimation animation];
-//	for( int i=1;i<15;i++)
-//		[animation addFrameWithFilename: [NSString stringWithFormat:@"grossini_dance_%02d.png", i]];
-//
-//	id action = [CCAnimate actionWithDuration:3 animation:animation restoreOriginalFrame:NO];
-//	id action_back = [action reverse];
-//
-//	[kathia runAction: [CCSequence actions: action, action_back, nil]];
+	// Left: using Old animation system (DO NOT USE IT. Use the new one)
+	CCAnimation* animation = [CCAnimation animation];
+	for( int i=1;i<15;i++)
+		[animation addFrameWithFilename: [NSString stringWithFormat:@"grossini_dance_%02d.png", i]];
+
+	id action = [CCAnimate actionWithDuration:2.8f animation:animation restoreOriginalFrame:YES];
+
+	[kathia runAction: [CCSequence actions: action, [action reverse], nil]];
 
 	
 	// Right: Using new animation system
@@ -549,8 +546,7 @@ Class restartAction()
 	[cache addAnimationsWithFile:@"animations/animations-2.plist"];
 	CCAnimation *animation2 = [cache animationByName:@"dance_1"];
 
-	id action2 = [CCAnimate actionWithAnimation:animation2 restoreOriginalFrame:NO];
-//	id action2_back = [action2 reverse];
+	id action2 = [CCAnimate actionWithAnimation:animation2 restoreOriginalFrame:YES];
 
 	[tamara runAction: [CCSequence actions: action2, [action2 reverse], nil]];
 
