@@ -193,11 +193,6 @@
  */
 +(id) spriteWithCGImage: (CGImageRef)image key:(NSString*)key;
 
-
-/** Creates an sprite with an CCBatchNode and a rect
- */
-+(id) spriteWithBatchNode:(CCSpriteBatchNode*)batchNode rect:(CGRect)rect;
-
 /** Initializes an sprite with a texture.
  The rect used will be the size of the texture.
  The offset will be (0,0).
@@ -245,14 +240,6 @@
  @since v0.99.0
  */
 -(id) initWithCGImage:(CGImageRef)image key:(NSString*)key;
-
-/** Initializes an sprite with an CCSpriteBatchNode and a rect in points
- */
--(id) initWithBatchNode:(CCSpriteBatchNode*)batchNode rect:(CGRect)rect;
-
-/** Initializes an sprite with an CCSpriteBatchNode and a rect in points, optionally rotated.
- */
--(id) initWithBatchNode:(CCSpriteBatchNode*)batchNode rect:(CGRect)rect rotated:(BOOL)rotated;
 
 #pragma mark CCSprite - BatchNode methods
 
