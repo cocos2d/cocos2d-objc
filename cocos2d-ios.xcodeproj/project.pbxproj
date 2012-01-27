@@ -1892,6 +1892,7 @@
 		A0DABE261426715A00F3FEBE /* b2Rope.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0DABDCB1426715A00F3FEBE /* b2Rope.cpp */; };
 		A0DABE271426715A00F3FEBE /* b2Rope.h in Headers */ = {isa = PBXBuildFile; fileRef = A0DABDCC1426715A00F3FEBE /* b2Rope.h */; };
 		A0DC2F5E1491B36A005B814E /* test_image_rgb888.pvr in Resources */ = {isa = PBXBuildFile; fileRef = A0DC2F5D1491B36A005B814E /* test_image_rgb888.pvr */; };
+		A0E2A52B14D26D8D003450DF /* animations in Resources */ = {isa = PBXBuildFile; fileRef = 502C8C9810A701D300D137BA /* animations */; };
 		A0E431F31460741E00424477 /* background1-hd.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E0704C29123821EE009C628B /* background1-hd.jpg */; };
 		A0E431F41460741E00424477 /* background2-hd.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E0704C2A123821EE009C628B /* background2-hd.jpg */; };
 		A0E431F51460741E00424477 /* background3-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E04C631512382E6B00A4B3E6 /* background3-hd.png */; };
@@ -11193,6 +11194,7 @@
 				A0B0380713EA1FE00073E59A /* f2-ipad.png in Resources */,
 				A0B0383813EA1FE10073E59A /* r1-ipad.png in Resources */,
 				A0B0386913EA1FE20073E59A /* r2-ipad.png in Resources */,
+				A0E2A52B14D26D8D003450DF /* animations in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

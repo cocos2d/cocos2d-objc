@@ -160,7 +160,7 @@ static CCAnimationCache *sharedAnimationCache_=nil;
 		NSDictionary* animationDict = [animations objectForKey:name];
 
 //		BOOL loop = [[animationDict objectForKey:@"loop"] boolValue];
-//		BOOL restoreOriginalFrame = [[animationDict objectForKey:@"restoreOriginalFrame"] boolValue];
+		BOOL restoreOriginalFrame = [[animationDict objectForKey:@"restore original frame"] boolValue];
 
 		NSArray *frameArray = [animationDict objectForKey:@"frames"];
 		
@@ -183,7 +183,7 @@ static CCAnimationCache *sharedAnimationCache_=nil;
 				continue;
 			}
 
-			NSUInteger unitsOfTime = [[entry objectForKey:@"units of time"] intValue];
+			float unitsOfTime = [[entry objectForKey:@"units of time"] floatValue];
 			CGPoint offset =  CCPointFromString( [entry objectForKey:@"offset"] );
 			
 			CCAnimationFrame *animFrame = [[CCAnimationFrame alloc] initWithSpriteFrame:spriteFrame unitsOfTime:unitsOfTime offset:offset];
@@ -195,8 +195,11 @@ static CCAnimationCache *sharedAnimationCache_=nil;
 		float unitOfTimeValue = [[animationDict objectForKey:@"unit of time value"] floatValue];
 		CCAnimation *animation = [[CCAnimation alloc] initWithFrames:array unitOfTimeValue:unitOfTimeValue];
 		[array release];
+		
+		[animation setRestoreOriginalFrame:restoreOriginalFrame];
 				
 		[[CCAnimationCache sharedAnimationCache] addAnimation:animation name:name];
+		[animation release];
 	}
 }
 

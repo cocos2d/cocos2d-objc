@@ -336,6 +336,11 @@ Class restartAction()
 
 	return YES;
 }
+
+-(BOOL) shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+	return UIInterfaceOrientationIsLandscape(interfaceOrientation);
+}
 @end
 
 #elif defined(__CC_PLATFORM_MAC)

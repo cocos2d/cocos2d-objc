@@ -35,7 +35,7 @@
 
 @synthesize spriteFrame = spriteFrame_, unitsOfTime = unitsOfTime_, offset = offset_;
 
--(id) initWithSpriteFrame:(CCSpriteFrame *)spriteFrame unitsOfTime:(NSUInteger)unitsOfTime offset:(CGPoint)offset
+-(id) initWithSpriteFrame:(CCSpriteFrame *)spriteFrame unitsOfTime:(float)unitsOfTime offset:(CGPoint)offset
 {
 	if( (self=[super init]) ) {
 		self.spriteFrame = spriteFrame;
@@ -70,7 +70,7 @@
 #pragma mark - CCAnimation
 
 @implementation CCAnimation
-@synthesize delay = delay_, frames = frames_, duration=duration_, totalUnitsOfTime=totalUnitsOfTime_, unitOfTimeValue=unitOfTimeValue_;
+@synthesize delay = delay_, frames = frames_, duration=duration_, totalUnitsOfTime=totalUnitsOfTime_, unitOfTimeValue=unitOfTimeValue_, restoreOriginalFrame=restoreOriginalFrame_;
 
 +(id) animation
 {

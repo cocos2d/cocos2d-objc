@@ -18,6 +18,7 @@ Class restartAction(void);
 
 static int sceneIdx=-1;
 static NSString *transitions[] = {
+	
 	@"ActionManual",
 	@"ActionMove",
 	@"ActionRotate",
@@ -546,7 +547,7 @@ Class restartAction()
 	[cache addAnimationsWithFile:@"animations/animations-2.plist"];
 	CCAnimation *animation2 = [cache animationByName:@"dance_1"];
 
-	id action2 = [CCAnimate actionWithAnimation:animation2 restoreOriginalFrame:YES];
+	id action2 = [CCAnimate actionWithAnimation:animation2];
 
 	[tamara runAction: [CCSequence actions: action2, [action2 reverse], nil]];
 

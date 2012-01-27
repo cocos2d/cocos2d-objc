@@ -36,7 +36,7 @@
 /** CCAnimationFrame
  A frame of the animation. It contains information like:
 	- sprite frame name
-	- delay of the frame
+	- # of units of time
 	- offset
  
  @since v2.0
@@ -49,11 +49,11 @@
 /** offset when rendering the frame */
 @property (nonatomic, readwrite) CGPoint offset;
 
-/**  delay of the frame */
-@property (nonatomic, readwrite) NSUInteger unitsOfTime;
+/**  how many units of time the frame takes */
+@property (nonatomic, readwrite) float unitsOfTime;
 
 /** initializes the animation frame with a spriteframe, a delay and an offset */
--(id) initWithSpriteFrame:(CCSpriteFrame*)spriteFrame unitsOfTime:(NSUInteger)unitsOfTime offset:(CGPoint)offset;
+-(id) initWithSpriteFrame:(CCSpriteFrame*)spriteFrame unitsOfTime:(float)unitsOfTime offset:(CGPoint)offset;
 @end
 
 /** A CCAnimation object is used to perform animations on the CCSprite objects.
@@ -68,7 +68,7 @@
 {}
 
 /** total units of time of the animation */
-@property (nonatomic, readonly) NSUInteger totalUnitsOfTime;
+@property (nonatomic, readonly) float totalUnitsOfTime;
 /** unit of time value */
 @property (nonatomic, readwrite) float unitOfTimeValue;
 /** duration in seconds of the animation. It is the result of totalUnitsOfTime * unitOfTimeValue */
@@ -79,6 +79,8 @@
 @property (nonatomic,readwrite,assign) float delay;
 /** array of CCAnimationFrames */
 @property (nonatomic,readwrite,retain) NSMutableArray *frames;
+/** whether or not it shall restore the original frame when the animation finishes */
+@property (nonatomic,readwrite) BOOL restoreOriginalFrame;
 
 /** Creates an animation
  @since v0.99.5

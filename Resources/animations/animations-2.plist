@@ -11,7 +11,7 @@
 			<key>loop</key>
 			<true/>
 			<key>restore original frame</key>
-			<false/>
+			<true/>
 			<key>frames</key>
 			<array>
 				<dict>
@@ -34,7 +34,7 @@
 					<key>spriteframe</key>
 					<string>grossini_dance_03.png</string>
 					<key>units of time</key>
-					<integer>1</integer>
+					<real>0.5</real>
 					<key>offset</key>
 					<string>{10,10}</string>
 				</dict>
@@ -74,7 +74,7 @@
 					<key>spriteframe</key>
 					<string>grossini_dance_08.png</string>
 					<key>units of time</key>
-					<integer>1</integer>
+					<integer>2</integer>
 					<key>offset</key>
 					<string>{10,10}</string>
 				</dict>
@@ -82,7 +82,7 @@
 					<key>spriteframe</key>
 					<string>grossini_dance_09.png</string>
 					<key>units of time</key>
-					<integer>1</integer>
+					<real>0.5</real>
 					<key>offset</key>
 					<string>{10,10}</string>
 				</dict>

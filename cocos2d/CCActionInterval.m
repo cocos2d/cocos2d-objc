@@ -1237,47 +1237,47 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 
 +(id) actionWithAnimation: (CCAnimation*)anim
 {
-	return [[[self alloc] initWithAnimation:anim restoreOriginalFrame:YES] autorelease];
+	return [[[self alloc] initWithAnimation:anim restoreOriginalFrame:anim.restoreOriginalFrame] autorelease];
 }
 
-+(id) actionWithAnimation: (CCAnimation*)anim restoreOriginalFrame:(BOOL)b
++(id) actionWithAnimation: (CCAnimation*)anim restoreOriginalFrame:(BOOL)restore
 {
-	return [[[self alloc] initWithAnimation:anim restoreOriginalFrame:b] autorelease];
+	return [[[self alloc] initWithAnimation:anim restoreOriginalFrame:restore] autorelease];
 }
 
-+(id) actionWithDuration:(ccTime)duration animation: (CCAnimation*)anim restoreOriginalFrame:(BOOL)b
++(id) actionWithDuration:(ccTime)duration animation: (CCAnimation*)anim restoreOriginalFrame:(BOOL)restore
 {
-	return [[[self alloc] initWithDuration:duration animation:anim restoreOriginalFrame:b] autorelease];
+	return [[[self alloc] initWithDuration:duration animation:anim restoreOriginalFrame:restore] autorelease];
 }
 
 -(id) initWithAnimation: (CCAnimation*)anim
 {
 	NSAssert( anim!=nil, @"Animate: argument Animation must be non-nil");
-	return [self initWithAnimation:anim restoreOriginalFrame:YES];
+	return [self initWithAnimation:anim restoreOriginalFrame:anim.restoreOriginalFrame];
 }
 
--(id) initWithAnimation: (CCAnimation*)anim restoreOriginalFrame:(BOOL) b
+-(id) initWithAnimation: (CCAnimation*)anim restoreOriginalFrame:(BOOL)restoreOriginalFrame
 {
 	NSAssert( anim!=nil, @"Animate: argument Animation must be non-nil");
 
-	return [self initWithDuration:anim.duration animation:anim restoreOriginalFrame:b];
+	return [self initWithDuration:anim.duration animation:anim restoreOriginalFrame:restoreOriginalFrame];
 }
 
 // delegate initializer
--(id) initWithDuration:(ccTime)aDuration animation: (CCAnimation*)anim restoreOriginalFrame:(BOOL) b
+-(id) initWithDuration:(ccTime)aDuration animation: (CCAnimation*)anim restoreOriginalFrame:(BOOL)restoreOriginalFrame
 {
 	NSAssert( anim!=nil, @"Animate: argument Animation must be non-nil");
 
 	if( (self=[super initWithDuration:aDuration] ) ) {
 
 		lastFrameDisplayed_ = 0;
-		restoreOriginalFrame_ = b;
+		restoreOriginalFrame_ = restoreOriginalFrame;
 		self.animation = anim;
 		origFrame_ = nil;
 		
 		splitTimes_ = [[NSMutableArray alloc] initWithCapacity:anim.frames.count];
 		
-		NSUInteger accumUnitsOfTime = 0;
+		float accumUnitsOfTime = 0;
 		float newUnitOfTimeValue = aDuration / anim.totalUnitsOfTime;
 		
 		for( CCAnimationFrame *frame in anim.frames ) {
