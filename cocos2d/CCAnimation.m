@@ -46,6 +46,14 @@
 	return self;
 }
 
+-(void) dealloc
+{    
+	CCLOGINFO( @"cocos2d: deallocing %@", self);
+
+	[spriteFrame_ release];
+    [super dealloc];
+}
+
 -(id) copyWithZone: (NSZone*) zone
 {
 	CCAnimationFrame *copy = [[[self class] allocWithZone: zone] initWithSpriteFrame:[[spriteFrame_ copy] autorelease] unitsOfTime:unitsOfTime_ offset:offset_];
@@ -146,6 +154,7 @@
 -(void) dealloc
 {
 	CCLOGINFO( @"cocos2d: deallocing %@",self);
+
 	[frames_ release];
 	[super dealloc];
 }
