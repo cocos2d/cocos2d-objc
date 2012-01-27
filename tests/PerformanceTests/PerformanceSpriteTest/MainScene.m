@@ -178,7 +178,7 @@ Class restartAction()
 		case 2:
 		case 3:
 		case 4: {
-			sprite = [CCSprite spriteWithBatchNode:batchNode rect:CGRectMake(0, 0, 52, 139)];
+			sprite = [CCSprite spriteWithTexture:batchNode.texture rect:CGRectMake(0, 0, 52, 139)];
 			[batchNode addChild:sprite z:0 tag:tag+100];
 			break;
 		}
@@ -202,7 +202,7 @@ Class restartAction()
 
 			x *= 85;
 			y *= 121;
-			sprite = [CCSprite spriteWithBatchNode:batchNode rect:CGRectMake(x,y,85,121)];
+			sprite = [CCSprite spriteWithTexture:batchNode.texture rect:CGRectMake(x,y,85,121)];
 			[batchNode addChild:sprite z:0 tag:tag+100];
 			break;
 		}
@@ -232,7 +232,7 @@ Class restartAction()
 
 			x *= 32;
 			y *= 32;
-			sprite = [CCSprite spriteWithBatchNode:batchNode rect:CGRectMake(x,y,32,32)];
+			sprite = [CCSprite spriteWithTexture:batchNode.texture rect:CGRectMake(x,y,32,32)];
 			[batchNode addChild:sprite z:0 tag:tag+100];
 			break;
 		}
