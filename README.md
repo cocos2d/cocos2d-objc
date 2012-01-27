@@ -20,7 +20,7 @@ How to start a new game
 
 1. Download the code from [Github][6] or from [cocos2d download site][5]
 
-2. Run the `install-templates.sh` script
+2. Run the `install-templates.sh' script
 
 Example:
 
