@@ -28,6 +28,8 @@
 #import "CCTextureCache.h"
 #import "CCSpriteFrame.h"
 #import "ccMacros.h"
+#import "AutoMagicCoding/AutoMagicCoding/NSObject+AutoMagicCoding.h"
+#import "CCSpriteFrameCache.h"
 
 @implementation CCSpriteFrame
 @synthesize rotated = rotated_, offsetInPixels = offsetInPixels_, texture = texture_;
@@ -148,9 +150,47 @@
     return YES;
 }
 
-// TODO: save key. ( Issue #9 in psineur/cocos2d-iphone)
-// TODO: in initWithDictionaryRepresentation: - use cached spriteFrame & check 
-// equality if it exist, or save self in cache if it isn't yet saved to cache, but have key.
-// 
+- (id) initWithDictionaryRepresentation: (NSDictionary *) aDict
+{
+    // Get name of loading sprite frame.
+    NSString *name = [aDict objectForKey:@"name"];
+    if ([name isKindOfClass:[NSString class]])
+    {
+        // Find existing frame with same name.
+        CCSpriteFrame *existingFrameWithSameName = [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName: name];
+        if (existingFrameWithSameName)
+        {
+            // On debug - warn developer if existing & loading frames with same names arent equal.
+#if COCOS2D_DEBUG 
+            
+            if ( (self = [super initWithDictionaryRepresentation: aDict]) )
+            {
+                if (![self isEqual: existingFrameWithSameName])
+                {
+                    CCLOG(@"WARNING: Loading spriteFrame \"%@\" isn't equal to existing spriteFrame with same name in CCSpriteFrameCache. Ignoring new one and using cached version! New = %@ Cached = %@", self.name, self, existingFrameWithSameName);
+                }
+            }
+#endif
+            
+            // Return existing sprite frame.
+            [self release];
+            return [existingFrameWithSameName retain]; 
+            //< init must return NSObject with +1 refCount.
+        }
+        else // Create new and save it in SpriteFrameCache
+        {
+            self = [super initWithDictionaryRepresentation: aDict];
+            if (self)
+            {
+                [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFrame:self name:self.name];
+            }
+            
+            return self;
+        }
+    }
+    
+    // Noname sprite frame - simply create new.
+    return [super initWithDictionaryRepresentation: aDict];
+}
 
 @end
