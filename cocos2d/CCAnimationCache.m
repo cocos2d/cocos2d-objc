@@ -132,7 +132,7 @@ static CCAnimationCache *sharedAnimationCache_=nil;
 				continue;
 			}
 			
-			CCAnimationFrame *animFrame = [[CCAnimationFrame alloc] initWithSpriteFrame:spriteFrame delayUnits:1 offset:CGPointZero];
+			CCAnimationFrame *animFrame = [[CCAnimationFrame alloc] initWithSpriteFrame:spriteFrame delayUnits:1 userInfo:nil];
 			[frames addObject:animFrame];
 			[animFrame release];
 		}
@@ -184,9 +184,9 @@ static CCAnimationCache *sharedAnimationCache_=nil;
 			}
 
 			float delayUnits = [[entry objectForKey:@"delay units"] floatValue];
-			CGPoint offset =  CCPointFromString( [entry objectForKey:@"offset"] );
+			NSDictionary *userInfo = [entry objectForKey:@"notification"];
 			
-			CCAnimationFrame *animFrame = [[CCAnimationFrame alloc] initWithSpriteFrame:spriteFrame delayUnits:delayUnits offset:offset];
+			CCAnimationFrame *animFrame = [[CCAnimationFrame alloc] initWithSpriteFrame:spriteFrame delayUnits:delayUnits userInfo:userInfo];
 			
 			[array addObject:animFrame];
 			[animFrame release];

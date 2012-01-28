@@ -17,112 +17,101 @@
 					<string>grossini_dance_01.png</string>
 					<key>delay units</key>
 					<integer>1</integer>
-					<key>offset</key>
-					<string>{10,10}</string>
+					<key>notification</key>
+					<dict>
+						<key>firstframe</key>
+						<true/>
+					</dict>
 				</dict>
 				<dict>
 					<key>spriteframe</key>
 					<string>grossini_dance_02.png</string>
 					<key>delay units</key>
 					<integer>1</integer>
-					<key>offset</key>
-					<string>{10,10}</string>
 				</dict>
 				<dict>
 					<key>spriteframe</key>
 					<string>grossini_dance_03.png</string>
 					<key>delay units</key>
 					<real>0.5</real>
-					<key>offset</key>
-					<string>{10,10}</string>
 				</dict>
 				<dict>
 					<key>spriteframe</key>
 					<string>grossini_dance_04.png</string>
 					<key>delay units</key>
 					<integer>1</integer>
-					<key>offset</key>
-					<string>{10,10}</string>
 				</dict>
 				<dict>
 					<key>spriteframe</key>
 					<string>grossini_dance_05.png</string>
 					<key>delay units</key>
 					<integer>1</integer>
-					<key>offset</key>
-					<string>{10,10}</string>
 				</dict>
 				<dict>
 					<key>spriteframe</key>
 					<string>grossini_dance_06.png</string>
 					<key>delay units</key>
 					<integer>1</integer>
-					<key>offset</key>
-					<string>{10,10}</string>
+					<key>notification</key>
+					<dict>
+						<key>key1</key>
+						<integer>1234</integer>
+						<key>key2</key>
+						<false/>
+					</dict>
 				</dict>
 				<dict>
 					<key>spriteframe</key>
 					<string>grossini_dance_07.png</string>
 					<key>delay units</key>
 					<integer>1</integer>
-					<key>offset</key>
-					<string>{10,10}</string>
 				</dict>
 				<dict>
 					<key>spriteframe</key>
 					<string>grossini_dance_08.png</string>
 					<key>delay units</key>
 					<integer>2</integer>
-					<key>offset</key>
-					<string>{10,10}</string>
 				</dict>
 				<dict>
 					<key>spriteframe</key>
 					<string>grossini_dance_09.png</string>
 					<key>delay units</key>
 					<real>0.5</real>
-					<key>offset</key>
-					<string>{10,10}</string>
 				</dict>
 				<dict>
 					<key>spriteframe</key>
 					<string>grossini_dance_10.png</string>
 					<key>delay units</key>
 					<integer>1</integer>
-					<key>offset</key>
-					<string>{10,10}</string>
 				</dict>
 				<dict>
 					<key>spriteframe</key>
 					<string>grossini_dance_11.png</string>
 					<key>delay units</key>
 					<integer>1</integer>
-					<key>offset</key>
-					<string>{10,10}</string>
 				</dict>
 				<dict>
 					<key>spriteframe</key>
 					<string>grossini_dance_12.png</string>
 					<key>delay units</key>
 					<integer>1</integer>
-					<key>offset</key>
-					<string>{10,10}</string>
 				</dict>
 				<dict>
 					<key>spriteframe</key>
 					<string>grossini_dance_13.png</string>
 					<key>delay units</key>
 					<integer>1</integer>
-					<key>offset</key>
-					<string>{10,10}</string>
 				</dict>
 				<dict>
 					<key>spriteframe</key>
 					<string>grossini_dance_14.png</string>
 					<key>delay units</key>
 					<integer>1</integer>
-					<key>offset</key>
-					<string>{10,10}</string>
+					<key>notification</key>
+					<dict>
+						<key>lastframe</key>
+						<true/>
+					</dict>
 				</dict>
 			</array>
 		</dict>
