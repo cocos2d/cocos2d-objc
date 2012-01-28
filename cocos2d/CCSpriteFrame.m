@@ -81,6 +81,7 @@
 {
 	CCLOGINFO( @"cocos2d: deallocing %@",self);
 	[texture_ release];
+    self.name = nil;
 	[super dealloc];
 }
 
