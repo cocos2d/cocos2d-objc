@@ -92,7 +92,5 @@
  */
 -(id) initWithTexture:(CCTexture2D*)texture rectInPixels:(CGRect)rect rotated:(BOOL)rotated offset:(CGPoint)offset originalSize:(CGSize)originalSize;
 
-// TODO: add key property and -isEqual: method. (Issue #9 in psineur/cocos2d-iphone)
-
 @end
 
