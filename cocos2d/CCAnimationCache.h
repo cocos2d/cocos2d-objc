@@ -46,10 +46,14 @@
 +(void)purgeSharedAnimationCache;
 
 /** Adds a CCAnimation with a name.
+ * @param name Name of new added animation - it will be set as animation.name
+ * and will be used as a key for this animation in animations_ dictionary.
  */
 -(void) addAnimation:(CCAnimation*)animation name:(NSString*)name;
 
 /** Deletes a CCAnimation from the cache.
+ * This method sets animation's name to nil, so if you retain it
+ * somewhere else - take this into account.
  */
 -(void) removeAnimationByName:(NSString*)name;
 
