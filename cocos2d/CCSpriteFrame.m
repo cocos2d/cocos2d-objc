@@ -67,8 +67,9 @@
 
 - (NSString*) description
 {
-	return [NSString stringWithFormat:@"<%@ = %08X | TextureName=%d, Rect = (%.2f,%.2f,%.2f,%.2f)> rotated:%d", [self class], self,
+	return [NSString stringWithFormat:@"<%@ = %08X | TextureName=%d, Name = %@, Rect = (%.2f,%.2f,%.2f,%.2f)> rotated:%d", [self class], self,
 			texture_.name,
+            self.name,
 			rect_.origin.x,
 			rect_.origin.y,
 			rect_.size.width,
