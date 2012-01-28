@@ -1777,6 +1777,13 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 
 #pragma mark -
 #pragma mark Animate
+
+@interface CCAnimate ()
+
+@property (nonatomic, readwrite, retain) id origFrame;
+
+@end
+
 @implementation CCAnimate
 
 @synthesize animation = animation_;
@@ -1887,6 +1894,24 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 	
 	CCAnimation *newAnim = [CCAnimation animationWithFrames:newArray delay:animation_.delay];
 	return [[self class] actionWithDuration:duration_ animation:newAnim restoreOriginalFrame:restoreOriginalFrame_];
+}
+
+#pragma mark CCAnimate - AutoMagicCoding Support
+
+@synthesize origFrame = _origFrame;
+
+- (void)continueWithTarget:(id)target
+{
+}
+
+- (NSArray *) AMCKeysForDictionaryRepresentation
+{
+    return [[super AMCKeysForDictionaryRepresentation] arrayByAddingObjectsFromArray:
+            [NSArray arrayWithObjects: 
+             @"animation",
+             @"origFrame",
+             @"restoreOriginalFrame_",
+             nil]];
 }
 
 @end
