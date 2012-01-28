@@ -49,7 +49,7 @@ enum {
  Used in CCActionManager to start action in -resumeTarget: instead of
  -addAction:target:paused if paused is YES (i.e. when -runAction: called
  before calling addChild:)
- @since v.1.1+ ("feature-amc-actions" branch of psineur/cocos2d-iphone)
+ @since v.1.1+ ("feature-amc-actions" branch of github.com/psineur/cocos2d-iphone)
  */
 @property (nonatomic, readonly, assign) BOOL started;
 
@@ -200,7 +200,7 @@ enum {
 
 /** Boundary rect, where camera position should be limited.
  * Can be changed during runtime.
- * @since 1.1+ ("feature-amc-actions" branch of psineur/cocos2d-iphone)
+ * @since 1.1+ ("feature-amc-actions" branch of github.com/psineur/cocos2d-iphone)
  */
 @property (nonatomic, readwrite) CGRect worldBoundary;
 
@@ -210,7 +210,7 @@ enum {
  * given name, if it exist right now or do nothing if it doesn't exist.
  * 3. Setter: (When action didn't start yet) try to set followedNode by name now
  * and, if no success, on start.
- * @since 1.1+ ("feature-amc-actions" branch of psineur/cocos2d-iphone)
+ * @since 1.1+ ("feature-amc-actions" branch of github.com/psineur/cocos2d-iphone)
  */
 @property(nonatomic, readwrite, retain) NSString *followedNodeName;
 

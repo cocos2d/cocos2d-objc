@@ -50,7 +50,14 @@
     NSString        *name_;
 }
 
-/** Name of the frame. Changed when frame added to CCSpriteFrameCache. */
+/** Name of the frame. Changed when frame added to CCSpriteFrameCache
+ * or removed from it.
+ * If you will not change this value manually - spriteframe's name will always be
+ * equal to the one, that is used to hold spriteFrame in CCSpriteFrameCache.
+ * Or nil if spriteFrame isn't present in CCSpriteFrameCache.
+ *
+ * @since v1.1+ ("feature-amc-actions" branch of github.com/psineur/cocos2d-iphone)
+ */
 @property (nonatomic, readwrite, copy) NSString *name;
 
 /** rect of the frame in points. If it is updated, then rectInPixels will be updated too. */

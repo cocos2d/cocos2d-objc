@@ -27,11 +27,11 @@
 @class CCNode;
 
 /** Singleton that holds pointers to named CCNode objects.
- It called Registry because it doesn't cache(retain) anything.
- You should use this class if you want to get ANY named node from ANY place.
- To save pointer to a node (without retaining it) - use CCNode's name property.
- 
- @since v1.1+ ("feature-amc" branch)
+ * It called Registry because it doesn't cache(retain) anything.
+ * You should use this class if you want to get ANY named node from ANY place.
+ * To save pointer to a node (without retaining it) - use CCNode's name property.
+ *
+ * @since v1.1+ ("feature-amc" branch of github.com/psineur/cocos2d-iphone)
  */
 @interface CCNodeRegistry : NSObject
 {
