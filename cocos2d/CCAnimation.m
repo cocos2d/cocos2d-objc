@@ -33,14 +33,14 @@
 #pragma mark - CCAnimationFrame
 @implementation CCAnimationFrame
 
-@synthesize spriteFrame = spriteFrame_, delayUnits = delayUnits_, offset = offset_;
+@synthesize spriteFrame = spriteFrame_, delayUnits = delayUnits_, userInfo=userInfo_;
 
--(id) initWithSpriteFrame:(CCSpriteFrame *)spriteFrame delayUnits:(float)delayUnits offset:(CGPoint)offset
+-(id) initWithSpriteFrame:(CCSpriteFrame *)spriteFrame delayUnits:(float)delayUnits userInfo:(NSDictionary*)userInfo
 {
 	if( (self=[super init]) ) {
 		self.spriteFrame = spriteFrame;
 		self.delayUnits = delayUnits;
-		self.offset = offset;
+		self.userInfo = userInfo;
 	}
 	
 	return self;
@@ -51,18 +51,20 @@
 	CCLOGINFO( @"cocos2d: deallocing %@", self);
 
 	[spriteFrame_ release];
+	[userInfo_ release];
+
     [super dealloc];
 }
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	CCAnimationFrame *copy = [[[self class] allocWithZone: zone] initWithSpriteFrame:[[spriteFrame_ copy] autorelease] delayUnits:delayUnits_ offset:offset_];
+	CCAnimationFrame *copy = [[[self class] allocWithZone: zone] initWithSpriteFrame:[[spriteFrame_ copy] autorelease] delayUnits:delayUnits_ userInfo:[[userInfo_ copy] autorelease] ];
 	return copy;
 }
 
 -(NSString*) description
 {
-	return [NSString stringWithFormat:@"<%@ = %08X | SpriteFrame = %@, delayUnits = %d>", [self class], self, self.spriteFrame, delayUnits_];
+	return [NSString stringWithFormat:@"<%@ = %08X | SpriteFrame = %08X, delayUnits = %0.2f >", [self class], self, spriteFrame_, delayUnits_ ];
 }
 @end
 
@@ -110,7 +112,7 @@
 		duration_ = [array count] * delay;
 		
 		for( CCSpriteFrame *frame in array ) {
-			CCAnimationFrame *animFrame = [[CCAnimationFrame alloc] initWithSpriteFrame:frame delayUnits:1 offset:CGPointZero];
+			CCAnimationFrame *animFrame = [[CCAnimationFrame alloc] initWithSpriteFrame:frame delayUnits:1 userInfo:nil];
 			
 			[self.frames addObject:animFrame];
 			[animFrame release];
@@ -155,7 +157,7 @@
 
 -(void) addFrame:(CCSpriteFrame*)frame
 {
-	CCAnimationFrame *animFrame = [[CCAnimationFrame alloc] initWithSpriteFrame:frame delayUnits:1 offset:CGPointZero];
+	CCAnimationFrame *animFrame = [[CCAnimationFrame alloc] initWithSpriteFrame:frame delayUnits:1 userInfo:nil];
 	[frames_ addObject:animFrame];
 	[animFrame release];
 	

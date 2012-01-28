@@ -396,7 +396,7 @@ typedef struct _ccBezierConfig {
 @interface CCAnimate : CCActionInterval <NSCopying>
 {
 	NSMutableArray		*splitTimes_;
-	NSUInteger			lastFrameDisplayed_;
+	NSInteger			nextFrame_;
 	CCAnimation			*animation_;
 	id					origFrame_;
 	BOOL				restoreOriginalFrame_;

@@ -148,8 +148,6 @@
 
 -(CCTMXTilesetInfo*) tilesetForLayer:(CCTMXLayerInfo*)layerInfo map:(CCTMXMapInfo*)mapInfo
 {
-	CFByteOrder o = CFByteOrderGetCurrent();
-
 	CGSize size = layerInfo.layerSize;
 
 	id iter = [mapInfo.tilesets reverseObjectEnumerator];
@@ -162,8 +160,7 @@
 
 				// gid are stored in little endian.
 				// if host is big endian, then swap
-				if( o == CFByteOrderBigEndian )
-					gid = CFSwapInt32( gid );
+				gid = CFSwapInt32LittleToHost( gid );
 
 				// XXX: gid == 0 --> empty tile
 				if( gid != 0 ) {

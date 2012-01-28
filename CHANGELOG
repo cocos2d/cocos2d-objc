@@ -4,7 +4,7 @@ version 2.0-rc0 XX-Feb-2012
 		Sprite: fixed possible setColor and opacity
 		TileMap: Flipped tiles can be changed during runtime (issue #1264)
 		TileMap: Fixed a problem with multiple layers and multiple tile sets that could cause TMX maps to not load if rotation is used (issue #1302)
-. [NEW] Animation: Added new animation format that supports delays per frame
+. [NEW] Animation: Added new animation format that supports delays per frame and notifications per frame
 . [NEW] LabelTTF: fontName and fontSize are properties
 . [NEW] LabelBMFont: added setFntFile method
 . [NEW] Sprite: spriteWithBatchNode / initWithBatchNode were removed. Use initWithTexture:batch.texture / spriteWithTexture:batch.texture instead

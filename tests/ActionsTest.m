@@ -19,6 +19,8 @@ Class restartAction(void);
 static int sceneIdx=-1;
 static NSString *transitions[] = {
 	
+	@"ActionAnimate",
+
 	@"ActionManual",
 	@"ActionMove",
 	@"ActionRotate",
@@ -525,6 +527,12 @@ Class restartAction()
 }
 @end
 
+@interface ActionAnimate()
+{ 
+	id observer_;
+}
+@end
+
 @implementation ActionAnimate
 -(void) onEnter
 {
@@ -548,8 +556,22 @@ Class restartAction()
 
 	id action2 = [CCAnimate actionWithAnimation:animation2];
 	[tamara runAction: [CCSequence actions: action2, [action2 reverse], nil]];
+	
+	observer_ = [[NSNotificationCenter defaultCenter] addObserverForName:CCAnimationFrameDisplayedNotification object:nil queue:nil usingBlock:^(NSNotification* notification) {
+
+		NSDictionary *userInfo = [notification userInfo];
+		NSLog(@"object %@ with data %@", [notification object], userInfo );
+	}];
 
 }
+
+-(void) onExit
+{
+	[super onExit];
+
+	[[NSNotificationCenter defaultCenter] removeObserver:observer_];
+}
+
 -(NSString *) title
 {
 	return @"Animation";

@@ -1270,7 +1270,7 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 
 	if( (self=[super initWithDuration:duration] ) ) {
 
-		lastFrameDisplayed_ = 0;
+		nextFrame_ = 0;
 		restoreOriginalFrame_ = restoreOriginalFrame;
 		self.animation = anim;
 		origFrame_ = nil;
@@ -1282,8 +1282,9 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 		
 		for( CCAnimationFrame *frame in anim.frames ) {
 
-			accumUnitsOfTime += frame.delayUnits;
 			NSNumber *value = [NSNumber numberWithFloat: (accumUnitsOfTime * newUnitOfTimeValue) / duration];
+			accumUnitsOfTime += frame.delayUnits;
+
 			[splitTimes_ addObject:value];
 		}		
 	}
@@ -1314,7 +1315,7 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 	if( restoreOriginalFrame_ )
 		origFrame_ = [[sprite displayedFrame] retain];
 	
-	lastFrameDisplayed_ = 0;
+	nextFrame_ = 0;
 }
 
 -(void) stop
@@ -1333,18 +1334,23 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 	NSUInteger numberOfFrames = [frames count];
 	CCSpriteFrame *frameToDisplay = nil;
 
-	for( NSUInteger i=lastFrameDisplayed_; i < numberOfFrames; i++ ) {
+	for( NSUInteger i=nextFrame_; i < numberOfFrames; i++ ) {
 		NSNumber *splitTime = [splitTimes_ objectAtIndex:i];
-		if( t <= [splitTime floatValue] ) {
-			frameToDisplay = [[frames objectAtIndex:i] spriteFrame];
-			lastFrameDisplayed_ = i;
+
+		if( [splitTime floatValue] <= t ) {
+			CCAnimationFrame *frame = [frames objectAtIndex:i];
+			frameToDisplay = [frame spriteFrame];
+			[(CCSprite*)target_ setDisplayFrame: frameToDisplay];
+			
+			NSDictionary *dict = [frame userInfo];
+			if( dict )
+				[[NSNotificationCenter defaultCenter] postNotificationName:CCAnimationFrameDisplayedNotification object:target_ userInfo:dict];
+
+			nextFrame_ = i+1;
+
 			break;
 		}
-	}
-	
-	CCSprite *sprite = target_;
-	if (! [sprite isFrameDisplayed: frameToDisplay] )
-		[sprite setDisplayFrame: frameToDisplay];
+	}	
 }
 
 - (CCActionInterval *) reverse

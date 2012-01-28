@@ -46,14 +46,14 @@
 /** CCSpriteFrameName to be used */
 @property (nonatomic, readwrite, retain) CCSpriteFrame* spriteFrame;
 
-/** offset when rendering the frame */
-@property (nonatomic, readwrite) CGPoint offset;
-
 /**  how many units of time the frame takes */
 @property (nonatomic, readwrite) float delayUnits;
 
-/** initializes the animation frame with a spriteframe, number of delay units and an offset */
--(id) initWithSpriteFrame:(CCSpriteFrame*)spriteFrame delayUnits:(float)delayUnits offset:(CGPoint)offset;
+/**  A CCAnimationFrameDisplayedNotification notification will be broadcasted when the frame is displayed with this dictionary as UserInfo. If UserInfo is nil, then no notification will be broadcasted. */
+@property (nonatomic, readwrite, retain) NSDictionary *userInfo;
+
+/** initializes the animation frame with a spriteframe, number of delay units and a notification user info */
+-(id) initWithSpriteFrame:(CCSpriteFrame*)spriteFrame delayUnits:(float)delayUnits userInfo:(NSDictionary*)userInfo;
 @end
 
 /** A CCAnimation object is used to perform animations on the CCSprite objects.

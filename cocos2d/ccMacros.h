@@ -325,3 +325,9 @@ CGSizeMake( (__size_in_points__).width * CC_CONTENT_SCALE_FACTOR(), (__size_in_p
 #define CC_ARC_RELEASE(value)	[value release]
 #define CC_ARC_UNSAFE_RETAINED
 #endif
+
+
+/*******************/
+/** Notifications **/
+/*******************/
+#define CCAnimationFrameDisplayedNotification @"CCAnimationFrameDisplayedNotification"
