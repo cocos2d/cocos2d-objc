@@ -110,6 +110,37 @@
 	rect_ = CC_RECT_PIXELS_TO_POINTS(rectInPixels);
 }
 
+- (BOOL) isEqual:(id)object
+{
+    CCSpriteFrame *other = (CCSpriteFrame *) object;
+    if (![other isKindOfClass:[CCSpriteFrame class]])
+        return NO;
+    
+    if (self.name != other.name)
+        return NO;
+    
+    // Texture's are equal pointers, or they both have equal, non-nil keys.
+    if (self.texture != other.texture && !( self.texture.key && self.texture.key == other.texture.key) )
+        return NO;
+    
+    if (!CGRectEqualToRect(self.rect, other.rect))
+        return NO;
+    
+    if (!CGRectEqualToRect(self.rectInPixels, other.rectInPixels))
+        return NO;
+    
+    if (self.rotated != other.rotated)
+        return NO;
+    
+    if (!CGPointEqualToPoint(self.offsetInPixels, other.offsetInPixels))
+        return NO;
+    
+    if (!CGSizeEqualToSize(self.originalSizeInPixels, other.originalSizeInPixels))
+        return NO;    
+    
+    return YES;
+}
+
 #pragma mark AutoMagicCoding Support
 
 + (BOOL) AMCEnabled
