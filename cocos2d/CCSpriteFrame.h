@@ -46,7 +46,13 @@
 	CGPoint			offsetInPixels_;
 	CGSize			originalSizeInPixels_;
 	CCTexture2D		*texture_;
+    
+    NSString        *name_;
 }
+
+/** Name of the frame. Changed when frame added to CCSpriteFrameCache. */
+@property (nonatomic, readwrite, copy) NSString *name;
+
 /** rect of the frame in points. If it is updated, then rectInPixels will be updated too. */
 @property (nonatomic,readwrite) CGRect rect;
 

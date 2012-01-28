@@ -32,6 +32,7 @@
 @implementation CCSpriteFrame
 @synthesize rotated = rotated_, offsetInPixels = offsetInPixels_, texture = texture_;
 @synthesize originalSizeInPixels=originalSizeInPixels_;
+@synthesize name = name_;
 
 +(id) frameWithTexture:(CCTexture2D*)texture rect:(CGRect)rect
 {
