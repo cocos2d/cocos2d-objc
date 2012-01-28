@@ -1817,7 +1817,6 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 
 		restoreOriginalFrame_ = b;
 		self.animation = anim;
-		origFrame_ = nil;
 	}
 	return self;
 }
@@ -1830,7 +1829,6 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 		
 		restoreOriginalFrame_ = b;
 		self.animation = anim;
-		origFrame_ = nil;
 	}
 	return self;
 }
@@ -1843,8 +1841,8 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 
 -(void) dealloc
 {
-	[animation_ release];
-	[origFrame_ release];
+	self.animation = nil;
+	self.origFrame = nil;
 	[super dealloc];
 }
 
@@ -1853,17 +1851,17 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 	[super startWithTarget:aTarget];
 	CCSprite *sprite = target_;
 
-	[origFrame_ release];
+    self.origFrame = nil;
 
 	if( restoreOriginalFrame_ )
-		origFrame_ = [[sprite displayedFrame] retain];
+		self.origFrame = [sprite displayedFrame];
 }
 
 -(void) stop
 {
 	if( restoreOriginalFrame_ ) {
 		CCSprite *sprite = target_;
-		[sprite setDisplayFrame:origFrame_];
+		[sprite setDisplayFrame:self.origFrame];
 	}
 	
 	[super stop];
