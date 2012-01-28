@@ -29,6 +29,8 @@
 #import "CCSpriteFrame.h"
 #import "CCTexture2D.h"
 #import "CCTextureCache.h"
+#import "CCAnimationCache.h"
+#import "AutoMagicCoding/AutoMagicCoding/NSObject+AutoMagicCoding.h"
 
 @implementation CCAnimation
 @synthesize name = name_, delay = delay_, frames = frames_;
@@ -104,9 +106,82 @@
 	[frames_ addObject:frame];
 }
 
-// TODO: (Issue #9 in psineur/cocos2d-iphone) For AMC Support - in initWithDictionaryRepresentation: 
-// - use cached animation & check equality if it exist, or save self in cache 
-// if it isn't yet saved to cache, but have key.
-// 
+- (BOOL) isEqual:(id)object
+{
+    CCAnimation *other = (CCAnimation *) object;
+    if (![other isKindOfClass:[CCAnimation class]])
+        return NO;
+    
+    if (self.name != other.name)
+        return NO;
+    
+    if (self.delay != other.delay)
+        return NO;
+    
+    NSUInteger framesCount = [self.frames count];
+    if (framesCount != [other.frames count])
+        return NO;
+    
+    for (NSUInteger i = 0; i < framesCount; ++i)
+    {
+        CCSpriteFrame *myFrame = [self.frames objectAtIndex: i];
+        CCSpriteFrame *otherFrame = [other.frames objectAtIndex: i];
+        
+        if (![myFrame isEqual:otherFrame])
+            return NO;
+    }
+    
+    return YES;
+}
+
+#pragma mark CCAnimation - AutoMagicCoding Support
+
++ (BOOL) AMCEnabled
+{
+    return YES;
+}
+
+- (id) initWithDictionaryRepresentation: (NSDictionary *) aDict
+{
+    // Get name of loading animation.
+    NSString *name = [aDict objectForKey:@"name"];
+    if ([name isKindOfClass:[NSString class]])
+    {
+        // Find existing animation with same name.
+        CCAnimation *existingAnimationWithSameName = [[CCAnimationCache sharedAnimationCache] animationByName: name];
+        if (existingAnimationWithSameName)
+        {
+            // On debug - warn developer if existing & loading animations with same names arent equal.
+#if COCOS2D_DEBUG 
+            
+            if ( (self = [super initWithDictionaryRepresentation: aDict]) )
+            {
+                if (![self isEqual: existingAnimationWithSameName])
+                {
+                    CCLOG(@"WARNING: Loading animation \"%@\" isn't equal to existing animation with same name in CCAnimationCache. Ignoring new one and using cached version! New = %@ Cached = %@", self.name, self, existingAnimationWithSameName);
+                }
+            }
+#endif
+            
+            // Return existing animation.
+            [self release];
+            return [existingAnimationWithSameName retain]; 
+            //< init must return NSObject with +1 refCount.
+        }
+        else // Create new and save it in AnimationCache
+        {
+            self = [super initWithDictionaryRepresentation: aDict];
+            if (self)
+            {
+                [[CCAnimationCache sharedAnimationCache] addAnimation:self name:self.name];
+            }
+            
+            return self;
+        }
+    }
+    
+    // Noname animation - simply create new.
+    return [super initWithDictionaryRepresentation: aDict];
+}
 
 @end
