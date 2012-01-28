@@ -12,7 +12,6 @@
 
 static int sceneIdx=-1;
 static NSString *transitions[] = {
-
 	@"TMXIsoZorder",
 	@"TMXOrthoZorder",
 	@"TMXIsoVertexZ",

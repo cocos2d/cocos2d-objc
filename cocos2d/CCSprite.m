@@ -410,7 +410,7 @@
 
 -(void)updateTransform
 {
-	NSAssert( batchNode_, @"updateTransform is only valid when CCSprite is being renderd using an CCSpriteBatchNode");
+	NSAssert( batchNode_, @"updateTransform is only valid when CCSprite is being rendered using an CCSpriteBatchNode");
 
 	// recaculate matrix only if it is dirty
 	if( self.dirty ) {

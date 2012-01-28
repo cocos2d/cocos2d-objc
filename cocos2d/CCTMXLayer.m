@@ -161,6 +161,26 @@ int compareInts (const void * a, const void * b);
 
 #pragma mark CCTMXLayer - setup Tiles
 
+-(CCSprite*) reusedTileWithRect:(CGRect)rect
+{	
+	if( ! reusedTile_ ) {
+		reusedTile_ = [[CCSprite alloc] initWithTexture:textureAtlas_.texture rect:rect rotated:NO];
+		[reusedTile_ setBatchNode:self];
+	}
+	else
+	{
+		// XXX: should not be re-init. Potential memeory leak. Not following best practices
+		// XXX: it shall call directory  [setRect:rect]
+		[reusedTile_ initWithTexture:textureAtlas_.texture rect:rect rotated:NO];
+		
+		// Since initWithTexture resets the batchNode, we need to re add it.
+		// but should be removed once initWithTexture is not called again
+		[reusedTile_ setBatchNode:self];
+	}
+
+	return reusedTile_;
+}
+
 -(void) setupTiles
 {
 	// Optimization: quick hack that sets the image size on the tileset
@@ -173,8 +193,6 @@ int compareInts (const void * a, const void * b);
 	//  - difficult to scale / rotate / etc.
 	[textureAtlas_.texture setAliasTexParameters];
 
-	CFByteOrder o = CFByteOrderGetCurrent();
-
 	// Parse cocos2d properties
 	[self parseInternalProperties];
 
@@ -186,8 +204,7 @@ int compareInts (const void * a, const void * b);
 
 			// gid are stored in little endian.
 			// if host is big endian, then swap
-			if( o == CFByteOrderBigEndian )
-				gid = CFSwapInt32( gid );
+			gid = CFSwapInt32LittleToHost( gid );
 
 			// XXX: gid == 0 --> empty tile
 			if( gid != 0 ) {
@@ -259,6 +276,7 @@ int compareInts (const void * a, const void * b);
 			CGRect rect = [tileset_ rectForGID:gid];
 			rect = CC_RECT_PIXELS_TO_POINTS(rect);
 			tile = [[CCSprite alloc] initWithTexture:self.texture rect:rect];
+			[tile setBatchNode:self];
 
             CGPoint p = [self positionAt:pos];
             [tile setPosition:p];
@@ -328,18 +346,15 @@ int compareInts (const void * a, const void * b);
 
 	NSInteger z = pos.x + pos.y * layerSize_.width;
 
-	if( ! reusedTile_ )
-		reusedTile_ = [[CCSprite alloc] initWithTexture:textureAtlas_.texture rect:rect];
-	else
-		[reusedTile_ initWithTexture:textureAtlas_.texture rect:rect];
+	CCSprite *tile = [self reusedTileWithRect:rect];
 
-	[self setupTileSprite:reusedTile_ position:pos withGID:gid];
+	[self setupTileSprite:tile position:pos withGID:gid];
 
 	// get atlas index
 	NSUInteger indexForZ = [self atlasIndexForNewZ:z];
 
 	// Optimization: add the quad without adding a child
-	[self addQuadFromSprite:reusedTile_ quadIndex:indexForZ];
+	[self addQuadFromSprite:tile quadIndex:indexForZ];
 
 	// insert it into the local atlasindex array
 	ccCArrayInsertValueAtIndex(atlasIndexArray_, (void*)z, indexForZ);
@@ -354,7 +369,7 @@ int compareInts (const void * a, const void * b);
 
 	tiles_[z] = gid;
 
-	return reusedTile_;
+	return tile;
 }
 
 -(CCSprite*) updateTileForGID:(uint32_t)gid at:(CGPoint)pos
@@ -364,22 +379,19 @@ int compareInts (const void * a, const void * b);
 
 	int z = pos.x + pos.y * layerSize_.width;
 
-	if( ! reusedTile_ )
-		reusedTile_ = [[CCSprite alloc] initWithTexture:textureAtlas_.texture rect:rect];
-	else
-		[reusedTile_ initWithTexture:textureAtlas_.texture rect:rect];
+	CCSprite *tile = [self reusedTileWithRect:rect];
 
-	[self setupTileSprite:reusedTile_ position:pos withGID:gid];
-
+	[self setupTileSprite:tile position:pos withGID:gid];
+	
 	// get atlas index
 	NSUInteger indexForZ = [self atlasIndexForExistantZ:z];
 
-	[reusedTile_ setAtlasIndex:indexForZ];
-	[reusedTile_ setDirty:YES];
-	[reusedTile_ updateTransform];
+	[tile setAtlasIndex:indexForZ];
+	[tile setDirty:YES];
+	[tile updateTransform];
 	tiles_[z] = gid;
 
-	return reusedTile_;
+	return tile;
 }
 
 
@@ -392,12 +404,9 @@ int compareInts (const void * a, const void * b);
 
 	NSInteger z = pos.x + pos.y * layerSize_.width;
 
-	if( ! reusedTile_ )
-		reusedTile_ = [[CCSprite alloc] initWithTexture:textureAtlas_.texture rect:rect];
-	else
-		[reusedTile_ initWithTexture:textureAtlas_.texture rect:rect];
+	CCSprite *tile = [self reusedTileWithRect:rect];
 
-	[self setupTileSprite:reusedTile_ position:pos withGID:gid];
+	[self setupTileSprite:tile position:pos withGID:gid];
 
 	// optimization:
 	// The difference between appendTileForGID and insertTileforGID is that append is faster, since
@@ -406,13 +415,13 @@ int compareInts (const void * a, const void * b);
 
 
 	// don't add it using the "standard" way.
-	[self addQuadFromSprite:reusedTile_ quadIndex:indexForZ];
+	[self addQuadFromSprite:tile quadIndex:indexForZ];
 
 
 	// append should be after addQuadFromSprite since it modifies the quantity values
 	ccCArrayInsertValueAtIndex(atlasIndexArray_, (void*)z, indexForZ);
 
-	return reusedTile_;
+	return tile;
 }
 
 #pragma mark CCTMXLayer - atlasIndex and Z
