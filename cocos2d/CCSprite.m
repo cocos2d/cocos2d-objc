@@ -621,6 +621,10 @@ static SEL selSortMethod = NULL;
 	};
     glColor4ub(0, 255, 0, 255);
 	ccDrawPoly(vertices, 4, YES);
+    ccDrawLine(ccp(quad_.tl.vertices.x,quad_.tl.vertices.y),
+               ccp(quad_.br.vertices.x,quad_.br.vertices.y));
+    ccDrawLine(ccp(quad_.tr.vertices.x,quad_.tr.vertices.y),
+               ccp(quad_.bl.vertices.x,quad_.bl.vertices.y));
 #elif CC_SPRITE_DEBUG_DRAW == 2
 	// draw texture box
 	CGSize s = self.textureRect.size;
