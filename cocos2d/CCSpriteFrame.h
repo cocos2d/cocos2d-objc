@@ -60,6 +60,9 @@
 @property (nonatomic,readwrite) CGPoint offsetInPixels;
 
 /** original size of the trimmed image in pixels */
+@property (nonatomic,readonly) CGSize originalSize;
+
+/** original size of the trimmed image in pixels */
 @property (nonatomic,readwrite) CGSize originalSizeInPixels;
 
 /** texture of the frame */

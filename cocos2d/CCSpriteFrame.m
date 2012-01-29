@@ -108,4 +108,9 @@
 	rectInPixels_ = rectInPixels;
 	rect_ = CC_RECT_PIXELS_TO_POINTS(rectInPixels);
 }
+
+-(CGSize) originalSize {
+    return CC_SIZE_PIXELS_TO_POINTS(originalSizeInPixels_);
+}
+
 @end
