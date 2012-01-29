@@ -225,7 +225,8 @@
 		{
 		// texture		
 		// Try to get the texture from the cache
-			NSString *textureName = [dictionary valueForKey:@"textureFileName"];
+            NSString *textureName = [path stringByAppendingPathComponent:[dictionary valueForKey:@"textureFileName"]];
+//			NSString *textureName = [dictionary valueForKey:@"textureFileName"];
 			
 			CCTexture2D *tex = [[CCTextureCache sharedTextureCache] addImage:textureName];
 			
@@ -420,6 +421,7 @@
 	else if (positionType_ == kCCPositionTypeRelative) {
 		particle->startPos = ccpMult( position_, CC_CONTENT_SCALE_FACTOR() );
 	}
+    // RelativeToGrandparent: Set transformed grandparent initial position
 	else if (positionType_ == kCCPositionTypeRelativeToGrandparent) {
         CGPoint p = ccpSub([self convertToWorldSpace:CGPointZero], ccpSub(self.parent.parent.position, grandparentInitialPosition_));
         particle->startPos = ccpMult( p, CC_CONTENT_SCALE_FACTOR() );
@@ -538,6 +540,7 @@
 		currentPosition.x *= CC_CONTENT_SCALE_FACTOR();
 		currentPosition.y *= CC_CONTENT_SCALE_FACTOR();
 	}
+    // RelativeToGrandparent: Update position (translation) according to grandparent position
 	else if( positionType_ == kCCPositionTypeRelativeToGrandparent) {
         currentPosition = ccpSub([self convertToWorldSpace:CGPointZero], ccpSub(self.parent.parent.position, grandparentInitialPosition_));
 		currentPosition.x *= CC_CONTENT_SCALE_FACTOR();
@@ -610,13 +613,18 @@
 				
 				CGPoint	newPos;
 				
-				if( positionType_ == kCCPositionTypeFree || positionType_ == kCCPositionTypeRelative || positionType_ == kCCPositionTypeRelativeToGrandparent ) 
+				if( positionType_ == kCCPositionTypeFree || positionType_ == kCCPositionTypeRelative ) 
 				{
 					CGPoint diff = ccpSub( currentPosition, p->startPos );
+                    // RelativeToGrandparent: Correct position according to grandparent scale
+                    if ( positionType_ == kCCPositionTypeRelativeToGrandparent ) {
+                        diff = ccpMult(diff, parent_.parent.scale);
+                    }
 					newPos = ccpSub(p->pos, diff);	
-				} else
+                } else {
 					newPos = p->pos;
-				
+				}
+                
 				//translate newPos to correct position, since matrix transform isn't performed in batchnode
 				//don't update the particle with the new position information, it will interfere with the radius and tangential calculations
 				if (useBatchNode_)
