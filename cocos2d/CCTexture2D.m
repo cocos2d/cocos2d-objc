@@ -435,12 +435,13 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 	if( [uifont isKindOfClass:[UIFont class] ] ) {
         // Calculate vertical offset
         stringSize_ = [string sizeWithFont:uifont constrainedToSize:dimensions lineBreakMode:UILineBreakModeWordWrap];
+        stringSize_ = CGSizeMake(stringSize_.width/CC_CONTENT_SCALE_FACTOR(), stringSize_.height/CC_CONTENT_SCALE_FACTOR());
         int verticalOffset=0;     // Default for verticalAlignment==kCCTextVerticalAlignmentTop
         if (verticalAlignment==kCCTextVerticalAlignmentCenter) {
-            verticalOffset=(dimensions.height-stringSize_.height)/2;
+            // Offset calculation needs to be in pixels
+            verticalOffset=(dimensions.height-stringSize_.height*CC_CONTENT_SCALE_FACTOR())/2;
         } else if (verticalAlignment==kCCTextVerticalAlignmentBottom) {
-            stringSize_ = [string sizeWithZFont:uifont constrainedToSize:dimensions lineBreakMode:UILineBreakModeWordWrap];
-            verticalOffset=(dimensions.height-stringSize_.height);
+            verticalOffset=(dimensions.height-stringSize_.height*CC_CONTENT_SCALE_FACTOR());
         }
 
 		[string drawInRect:CGRectMake(0, verticalOffset, dimensions.width, dimensions.height) withFont:uifont lineBreakMode:lineBreakMode alignment:alignment];
@@ -449,12 +450,12 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 	else { // ZFont class 
            // Calculate vertical offset
         stringSize_ = [string sizeWithZFont:uifont constrainedToSize:dimensions lineBreakMode:UILineBreakModeWordWrap];
+        stringSize_ = CGSizeMake(stringSize_.width/CC_CONTENT_SCALE_FACTOR(), stringSize_.height/CC_CONTENT_SCALE_FACTOR());
         int verticalOffset=0;     // Default for verticalAlignment==kCCTextVerticalAlignmentTop
         if (verticalAlignment==kCCTextVerticalAlignmentCenter) {
-            verticalOffset=(dimensions.height-stringSize_.height)/2;
+            verticalOffset=(dimensions.height-stringSize_.height*CC_CONTENT_SCALE_FACTOR())/2;
         } else if (verticalAlignment==kCCTextVerticalAlignmentBottom) {
-            stringSize_ = [string sizeWithZFont:uifont constrainedToSize:dimensions lineBreakMode:UILineBreakModeWordWrap];
-            verticalOffset=(dimensions.height-stringSize_.height);
+            verticalOffset=(dimensions.height-stringSize_.height*CC_CONTENT_SCALE_FACTOR());
         }
 
 		[string drawInRect:CGRectMake(0, verticalOffset, dimensions.width, dimensions.height) withZFont:uifont lineBreakMode:lineBreakMode alignment:alignment];
