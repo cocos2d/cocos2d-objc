@@ -155,4 +155,10 @@
 
 	return [NSString stringWithFormat:@"<%@ = %08X | FontSize = %.1f>", [self class], self, fontSize_];
 }
+
+- (void) setFontSize:(CGFloat)fontSize {
+    fontSize_ = fontSize * CC_CONTENT_SCALE_FACTOR();
+
+}
+
 @end
