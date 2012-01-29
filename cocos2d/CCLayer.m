@@ -119,12 +119,12 @@
 			else
 				[[CCTouchDispatcher sharedDispatcher] removeDelegate:self];
 		}
-        // Propagate isTouchEnabled to children that support touches (CCLayer and CCMenu mainly)
-        for (id child in [self children]) {
-            if ([child respondsToSelector:@selector(setIsTouchEnabled:)]) {
-                [child setIsTouchEnabled:enabled];
-            }
-        }
+//        // Propagate isTouchEnabled to children that support touches (CCLayer and CCMenu mainly)
+//        for (id child in [self children]) {
+//            if ([child respondsToSelector:@selector(setIsTouchEnabled:)]) {
+//                [child setIsTouchEnabled:enabled];
+//            }
+//        }
 	}
 }
 
@@ -212,12 +212,12 @@
 			else
 				[[CCEventDispatcher sharedDispatcher] removeTouchDelegate:self];
 		}
-        // Propagate isTouchEnabled to children that support touches (CCLayer and CCMenu mainly)
-        for (id child in [self children]) {
-            if ([child respondsToSelector:@selector(setIsTouchEnabled:)]) {
-                [child setIsTouchEnabled:enabled];
-            }
-        }
+//        // Propagate isTouchEnabled to children that support touches (CCLayer and CCMenu mainly)
+//        for (id child in [self children]) {
+//            if ([child respondsToSelector:@selector(setIsTouchEnabled:)]) {
+//                [child setIsTouchEnabled:enabled];
+//            }
+//        }
 	}
 }
 
