@@ -1,4 +1,4 @@
-/*
+  /*
  * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
  * Copyright (c) 2009 Valentin Milea
@@ -737,7 +737,11 @@ static NSUInteger globalOrderOfArrival = 0;
 	[self pauseSchedulerAndActions];
 	isRunning_ = NO;	
 	
-	[children_ makeObjectsPerformSelector:@selector(onExit)];
+    if (children_) {
+        CCArray *tempChildren = [[CCArray alloc] initWithArray:children_];
+        [tempChildren makeObjectsPerformSelector:@selector(onExit)];
+        [tempChildren release];
+    }
 }
 
 #pragma mark CCNode Actions
