@@ -124,7 +124,7 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 	if( [__localFileManager fileExistsAtPath:newName] )
 		return newName;
     
-	CCLOG(@"cocos2d: CCFileUtils: Warning file not found: %@", [newName lastPathComponent] );
+	//CCLOG(@"cocos2d: CCFileUtils: Warning file not found: %@", [newName lastPathComponent] );
 	
 	return nil;
 }
@@ -165,7 +165,13 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 	// iPad ?
 	else if( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
 		ret = [self getPath:fullpath forSuffix:__suffixiPad];
-		*resolutionType = kCCResolutioniPad;
+        if (ret) {
+            *resolutionType = kCCResolutioniPad;
+        // If no iPad file, try to use retina display
+        } else {
+            ret = [self getPath:fullpath forSuffix:__suffixRetinaDisplay];
+            *resolutionType = kCCResolutionRetinaDisplay;
+        }
 	}
 	
 	// It should be an iPhone in non Retina Display mode. So, do nothing
@@ -225,12 +231,14 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 +(NSString*) removeSuffixFromFile:(NSString*) path
 {
 	NSString *ret = nil;
-	if( CC_CONTENT_SCALE_FACTOR() == 2 )
+	if( CC_CONTENT_SCALE_FACTOR() == 2 || UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ) {
 		ret = [self removeSuffix:__suffixRetinaDisplay fromPath:path];
-	
-	else if( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-		ret = [self removeSuffix:__suffixiPad fromPath:path];
-	
+        
+        if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ) {
+            ret = [self removeSuffix:__suffixiPad fromPath:ret];
+        }
+    }
+		
 	else 
 		ret = path;
 	
