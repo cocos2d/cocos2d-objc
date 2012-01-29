@@ -92,6 +92,8 @@ Example:
 {
 	NSUInteger times_;
 	NSUInteger total_;
+	ccTime nextDt_; 
+	BOOL isActionInstant_;
 	CCFiniteTimeAction *innerAction_;
 }
 

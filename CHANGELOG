@@ -1,3 +1,30 @@
+version 1.1 - 11-Oct-2011
+. [NEW] Animation: Added file format. AnimationCache can load animations from file
+. [NEW] ccConfig: Removed CC_RETINA_DISPLAY_FILENAME_SUFFIX. Use CCFileUtils API instead
+. [NEW] ccConfig: Removed CC_RETINA_DISPLAY_SUPPORT. It is always enabled.
+. [NEW] FileUtils: Added iPad / RetinaDisplay extension. To use it, call [CCFileUtils setiPadSuffix:@"-ipad"] or setRetinaDisplaySuffix (issue #1211)
+. [NEW] FileUtils: Added xxxFileExistAtPath for iPad and RetinaDisplay resources
+. [NEW] Node: improved speed when reordering and adding nodes (integration of reorderSprite branch)
+. [NEW] Particles: Added ParticleBatchNode (issue #955)
+. [NEW] Sprite: improved speed when reordering and adding sprites (integration of reorderSprite branch)
+. [NEW] Scheduler: Added support for delay and repeat (issue #630)
+. [NEW] Textures: Added support for RGB888 textures (issue #958)
+. [NEW] TileMap: TMX map supports flipped tiles (issue #1233)
+. [FIX] TileMap: don't use new sorting for tilemap (issue #1262)
+. [FIX] Actions: removed #undef CLAMP (issue #1210)
+. [FIX] Actions: Repeat & RepeatForEver work as expected(issue #1247)
+. [FIX] Actions: duration is not divided by zero (issue #615)
+. [FIX] Actions: Instant actions can be sequenceables (issue #1166)
+. [FIX] FileUtils: Loads -hd resources even if the sd resource is not present (issue #1179)
+. [FIX] FileUtils: renamed ccRemoveSuffixFromFile to +[CCFileUtils removeSuffixFromFile:];
+. [FIX] FileUtils: localized resources can be loaded using fullPathFromRelativePath (issue #1230)
+. [FIX] LayerColor: init calls initWithColor:width:height (issue #1226)
+. [FIX] Sprite: Debug draw fixed (issue #1069)
+. [FIX] SpriteBatchNode: removeAllChildrenWithCleanup works correctly (issue #1216)
+. [FIX] Texture2D: drawAtPoint uses the correct vertices
+. [FIX] Texture2D: drawAtPoint, drawInRect disables color state (issue #1222)
+. [FIX-MAC] Director: Only call set setAcceptsTouchEvents: when OS X >= 10.6 (issue #1225)
+
 version 1.0.1 - 28-July-2011
 . [FIX] All: Implicit atomic properties converted to nonatomic
 . [FIX] All: Removed deprected code

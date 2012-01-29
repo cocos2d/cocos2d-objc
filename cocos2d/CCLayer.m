@@ -360,14 +360,6 @@
 
 @synthesize blendFunc = blendFunc_;
 
--(id) init
-{
-	if ( (self=[super init]) ) {
-        blendFunc_ = (ccBlendFunc) { CC_BLEND_SRC, CC_BLEND_DST };
-    }
-    return self;
-}
-
 + (id) layerWithColor:(ccColor4B)color width:(GLfloat)w  height:(GLfloat) h
 {
 	return [[[self alloc] initWithColor:color width:w height:h] autorelease];
@@ -378,6 +370,12 @@
 	return [[(CCLayerColor*)[self alloc] initWithColor:color] autorelease];
 }
 
+-(id) init
+{
+	return [self initWithColor:ccc4(0,0,0,0) width:0 height:0];
+}
+
+// Designated initializer
 - (id) initWithColor:(ccColor4B)color width:(GLfloat)w  height:(GLfloat) h
 {
 	if( (self=[super init]) ) {

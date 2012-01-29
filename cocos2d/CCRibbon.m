@@ -374,7 +374,7 @@
 		}
 		glVertexPointer(3, GL_FLOAT, 0, &verts[begin*6]);
 		glTexCoordPointer(2, GL_FLOAT, 0, &coords[begin*4]);
-		glDrawArrays(GL_TRIANGLE_STRIP, 0, (int)(end - begin) * 2);
+		glDrawArrays(GL_TRIANGLE_STRIP, 0, (GLsizei) (end - begin) * 2);
 	}
 	else
 		finished = YES;

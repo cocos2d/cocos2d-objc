@@ -219,42 +219,6 @@
 #define CC_TEXTURE_NPOT_SUPPORT 0
 #endif
 
-/** @def CC_RETINA_DISPLAY_SUPPORT
- If enabled, cocos2d supports retina display. 
- For performance reasons, it's recommended to disable it in games without retina display support, like iPad only games. It makes cocos2d to try loading assets with the "-hd" suffix. If not found, loads the regular asset.
- 
- To enable set it to 1. Use 0 to disable it. Enabled by default.
- 
- @since v0.99.5
- */
-#ifndef CC_RETINA_DISPLAY_SUPPORT
-#define CC_RETINA_DISPLAY_SUPPORT 1
-#endif
-
-/** @def CC_RETINA_DISPLAY_FILENAME_SUFFIX
- It's the suffix that will be appended to the files in order to load "retina display" images.
- 
- On an iPhone4 with Retina Display support enabled, the file @"sprite-hd.png" will be loaded instead of @"sprite.png".
- If the file doesn't exist it will use the non-retina display image.
- 
- Platforms: Only used on Retina Display devices like iPhone 4.
- 
- @since v0.99.5
- */ 
-#ifndef CC_RETINA_DISPLAY_FILENAME_SUFFIX
-#define CC_RETINA_DISPLAY_FILENAME_SUFFIX @"-hd"
-#endif
-
-/** @def CC_IPAD_SUPPORT
- If enabled, cocos2d supports ipad custom assets. 
- For performance reasons, it's recommended to disable it in games which are not universal. It makes cocos2d to try loading assets with the "-ip" suffix, then assets with the "-hd" suffix, then the regular asset
- 
- To enable set it to 1. Use 0 to disable it. Enabled by default.
- 
- @since v1.0.0-rsanchez
- */
-#define CC_IPAD_UNIVERSAL_SUPPORT 1
-
 /** @def CC_PROPAGATE_OPACITY
  If enabled, cocos2d uses transitive opacity.
  All classes calculate their cumulative opacity from self opacity and parent's opacity.
@@ -348,25 +312,4 @@
  */
 #ifndef CC_ENABLE_PROFILERS
 #define CC_ENABLE_PROFILERS 0
-#endif
-
-//
-// DON'T edit this macro.
-//
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
-
-#if CC_RETINA_DISPLAY_SUPPORT
-#define CC_IS_RETINA_DISPLAY_SUPPORTED 1
-#else
-#define CC_IS_RETINA_DISPLAY_SUPPORTED 0
-#endif
-
-#define CC_IS_IPAD_UNIVERSAL_SUPPORTED CC_IPAD_UNIVERSAL_SUPPORT
-
-#elif __MAC_OS_X_VERSION_MAX_ALLOWED
-
-#define CC_IS_RETINA_DISPLAY_SUPPORTED 0
-
-#define CC_IS_IPAD_UNIVERSAL_SUPPORTED 0
-
 #endif

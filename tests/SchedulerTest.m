@@ -22,6 +22,8 @@ static NSString *transitions[] = {
 	@"SchedulerUpdateAndCustom",
 	@"SchedulerUpdateFromCustom",
 	@"RescheduleSelector",
+	@"SchedulerDelayAndRepeat",
+
 };
 
 Class nextTest(void);
@@ -586,6 +588,34 @@ Class restartTest()
 
 @end
 
+@implementation SchedulerDelayAndRepeat
+-(id) init
+{
+	if( (self=[super init]) ) {
+		
+		[self schedule:@selector(update:) interval:0 repeat:4 delay:3.f];
+		CCLOG(@"update is scheduled should begin after 3 seconds");
+	}
+	
+	return self;
+}
+
+-(NSString *) title
+{
+	return @"Schedule with delay of 3 sec, repeat 4 times";
+}
+
+-(NSString *) subtitle
+{
+	return @"After 5 x executed, method unscheduled. See console";
+}								 
+
+-(void) update:(ccTime)dt
+{
+	NSLog(@"update called:%f", dt);
+}
+
+@end
 
 
 // CLASS IMPLEMENTATIONS
@@ -625,6 +655,11 @@ Class restartTest()
 	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
 	// You can change anytime.
 	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA8888];
+	
+	// When in iPad / RetinaDisplay mode, CCFileUtils will append the "-ipad" / "-hd" to all loaded files
+	// If the -ipad  / -hdfile is not found, it will load the non-suffixed version
+	[CCFileUtils setiPadSuffix:@"-ipad"];			// Default on iPad is "" (empty string)
+	[CCFileUtils setRetinaDisplaySuffix:@"-hd"];	// Default on RetinaDisplay is "-hd"
 	
 	CCScene *scene = [CCScene node];
 	[scene addChild: [nextTest() node]];
@@ -680,3 +715,4 @@ Class restartTest()
 }
 
 @end
+

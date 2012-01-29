@@ -60,6 +60,9 @@
 }
 @end
 
+@interface SchedulerDelayAndRepeat : SchedulerTest
+{}
+@end
 
 
 
