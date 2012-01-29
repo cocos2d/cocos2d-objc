@@ -179,9 +179,10 @@ static SEL selSortMethod =NULL;
 {
 	NSAssert( child != nil, @"Argument must be non-nil");
 	NSAssert( [child isKindOfClass:[CCSprite class]], @"CCSpriteBatchNode only supports CCSprites as children");
-	NSAssert( child.texture.name == textureAtlas_.texture.name, @"CCSprite is not using the same texture id");
+    // Allow empty textured sprites that won't get drawn
+	NSAssert( !child.texture ||  child.texture.name == textureAtlas_.texture.name, @"CCSprite is not using the same texture id");
 	
-	[super addChild:child z:z tag:aTag];
+    [super addChild:child z:z tag:aTag];
 	
 	[self appendChild:child];
 }
