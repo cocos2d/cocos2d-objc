@@ -46,7 +46,7 @@
 #pragma mark -
 #pragma mark FNTConfig Cache - free functions
 
-NSMutableDictionary *configurations = nil;
+static NSMutableDictionary *configurations = nil;
 CCBMFontConfiguration* FNTConfigLoadFile( NSString *fntFile)
 {
 	CCBMFontConfiguration *ret = nil;
