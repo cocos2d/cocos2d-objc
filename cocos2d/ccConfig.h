@@ -150,6 +150,18 @@
 #define CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP 0
 #endif
 
+/** @def CC_TEXTURE_ATLAS_USE_VAO
+ By default, CCTextureAtlas (used by many cocos2d classes) will use VAO (Vertex Array Objects).
+ Apple recommends its usage but they might consume a lot of memory, specially if you use many of them.
+ So for certain cases, where you might need hundreds of VAO objects, it might be a good idea to disable it.
+ 
+ To disable it set it to 0. Enabled by default.
+ 
+ */
+#ifndef CC_TEXTURE_ATLAS_USE_VAO
+#define CC_TEXTURE_ATLAS_USE_VAO 0
+#endif
+
 
 /** @def CC_USE_LA88_LABELS
  If enabled, it will use LA88 (Luminance Alpha 16-bit textures) for CCLabelTTF objects.

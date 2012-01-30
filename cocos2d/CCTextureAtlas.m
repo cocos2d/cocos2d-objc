@@ -24,7 +24,6 @@
  *
  */
 
-
 // cocos2d
 #import "CCTextureAtlas.h"
 #import "ccMacros.h"
@@ -33,13 +32,17 @@
 #import "CCGLProgram.h"
 #import "ccGLState.h"
 #import "Support/OpenGL_Internal.h"
-//#import "CGPointExtension.h"
-//#import "CCDrawingPrimitives.h"
 
 @interface CCTextureAtlas ()
--(void) initIndices;
--(void) initVAO;
+-(void) setupIndices;
 -(void) mapBuffers;
+
+
+#if CC_TEXTURE_ATLAS_USE_VAO
+-(void) setupVBOandVAO;
+#else
+-(void) setupVBO;
+#endif
 @end
 
 //According to some tests GL_TRIANGLE_STRIP is slower, MUCH slower. Probably I'm doing something very wrong
@@ -104,8 +107,13 @@
 			return nil;
 		}
 
-		[self initIndices];
-		[self initVAO];
+		[self setupIndices];
+
+#if CC_TEXTURE_ATLAS_USE_VAO
+		[self setupVBOandVAO];	
+#else	
+		[self setupVBO];
+#endif
 
 		dirty_ = YES;
 	}
@@ -126,14 +134,44 @@
 	free(indices_);
 
 	glDeleteBuffers(2, buffersVBO_);
+
+#if CC_TEXTURE_ATLAS_USE_VAO
 	glDeleteVertexArrays(1, &VAOname_);
+#endif
 
 	[texture_ release];
 
 	[super dealloc];
 }
 
--(void) initVAO
+-(void) setupIndices
+{
+	for( NSUInteger i = 0; i < capacity_;i++)
+    {
+#if CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP
+		indices_[i*6+0] = i*4+0;
+		indices_[i*6+1] = i*4+0;
+		indices_[i*6+2] = i*4+2;
+		indices_[i*6+3] = i*4+1;
+		indices_[i*6+4] = i*4+3;
+		indices_[i*6+5] = i*4+3;
+#else
+		indices_[i*6+0] = i*4+0;
+		indices_[i*6+1] = i*4+1;
+		indices_[i*6+2] = i*4+2;
+		
+		// inverted index. issue #179
+		indices_[i*6+3] = i*4+3;
+		indices_[i*6+4] = i*4+2;
+		indices_[i*6+5] = i*4+1;
+#endif
+	}
+}
+
+#pragma mark TextureAtlas - VAO / VBO specific
+
+#if CC_TEXTURE_ATLAS_USE_VAO
+-(void) setupVBOandVAO
 {
 	glGenVertexArrays(1, &VAOname_);
 	glBindVertexArray(VAOname_);
@@ -166,35 +204,18 @@
 
 	CHECK_GL_ERROR_DEBUG();
 }
-
--(void) initIndices
+#else // CC_TEXTURE_ATLAS_USE_VAO
+-(void) setupVBO
 {
-	for( NSUInteger i = 0; i < capacity_;i++)
-    {
-#if CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP
-		indices_[i*6+0] = i*4+0;
-		indices_[i*6+1] = i*4+0;
-		indices_[i*6+2] = i*4+2;
-		indices_[i*6+3] = i*4+1;
-		indices_[i*6+4] = i*4+3;
-		indices_[i*6+5] = i*4+3;
-#else
-		indices_[i*6+0] = i*4+0;
-		indices_[i*6+1] = i*4+1;
-		indices_[i*6+2] = i*4+2;
-
-		// inverted index. issue #179
-		indices_[i*6+3] = i*4+3;
-		indices_[i*6+4] = i*4+2;
-		indices_[i*6+5] = i*4+1;
-#endif
-	}
+	glGenBuffers(2, &buffersVBO_[0]);
+	
+	[self mapBuffers];
 }
+#endif // ! // CC_TEXTURE_ATLAS_USE_VAO
+
 
 -(void) mapBuffers
 {
-	[self initIndices];
-
 	glBindBuffer(GL_ARRAY_BUFFER, buffersVBO_[0]);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(quads_[0]) * capacity_, quads_, GL_DYNAMIC_DRAW);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -399,6 +420,8 @@
 	quads_ = tmpQuads;
 	indices_ = tmpIndices;
 
+	// Update Indices
+	[self setupIndices];
 	[self mapBuffers];
 
 	dirty_ = YES;
@@ -448,12 +471,16 @@
 {
 	ccGLBindTexture2D( [texture_ name] );
 
+#if CC_TEXTURE_ATLAS_USE_VAO
+
+	//
+	// Using VBO and VAO
+	//
+
 	// XXX: update is done in draw... perhaps it should be done in a timer
 	if (dirty_) {
 		glBindBuffer(GL_ARRAY_BUFFER, buffersVBO_[0]);
-
 		glBufferSubData(GL_ARRAY_BUFFER, sizeof(quads_[0])*start, sizeof(quads_[0]) * n , &quads_[start] );
-
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 		dirty_ = NO;
@@ -467,8 +494,48 @@
 	glDrawElements(GL_TRIANGLES, (GLsizei) n*6, GL_UNSIGNED_SHORT, (GLvoid*) (start*6*sizeof(indices_[0])) );
 #endif // CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP
 
-
 	glBindVertexArray(0);
+	
+
+#else // ! CC_TEXTURE_ATLAS_USE_VAO
+	
+	//
+	// Using VBO without VAO
+	//
+
+#define kQuadSize sizeof(quads_[0].bl)
+	glBindBuffer(GL_ARRAY_BUFFER, buffersVBO_[0]);
+    
+	// XXX: update is done in draw... perhaps it should be done in a timer
+	if (dirty_) {
+		glBufferSubData(GL_ARRAY_BUFFER, sizeof(quads_[0])*start, sizeof(quads_[0]) * n , &quads_[start] );
+		dirty_ = NO;
+	}
+
+	ccGLEnableVertexAttribs( kCCVertexAttribFlag_PosColorTex );
+
+	// vertices
+	glVertexAttribPointer(kCCVertexAttrib_Position, 3, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof( ccV3F_C4B_T2F, vertices));
+	
+	// colors
+	glVertexAttribPointer(kCCVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (GLvoid*) offsetof( ccV3F_C4B_T2F, colors));
+	
+	// tex coords
+	glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof( ccV3F_C4B_T2F, texCoords));
+
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffersVBO_[1]);
+
+#if CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP
+	glDrawElements(GL_TRIANGLE_STRIP, (GLsizei) n*6, GL_UNSIGNED_SHORT, (GLvoid*) (start*6*sizeof(indices_[0])) );
+#else
+	glDrawElements(GL_TRIANGLES, (GLsizei) n*6, GL_UNSIGNED_SHORT, (GLvoid*) (start*6*sizeof(indices_[0])) );
+#endif // CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
+#endif // CC_TEXTURE_ATLAS_USE_VAO
 
 	CHECK_GL_ERROR_DEBUG();
 }

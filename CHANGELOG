@@ -8,6 +8,7 @@ version 2.0-rc0 XX-Feb-2012
 . [NEW] LabelTTF: fontName and fontSize are properties
 . [NEW] LabelBMFont: added setFntFile method
 . [NEW] Sprite: spriteWithBatchNode / initWithBatchNode were removed. Use initWithTexture:batch.texture / spriteWithTexture:batch.texture instead
+. [NEW] TextureAtlas: Added option to not use VAO (might be a bit slower, but it consumes less memory)
 . [NEW] TileMap: polygon, polilines and gid are parsed from the objects (issue #1311)
 . [FIX] DrawingPrimitives: drawColor4f() uses GLFloat instead of GLbyte (issue #1307)
 . [FIX] GLView: Fixed memory leak while dispatching events (Mac only)
