@@ -153,6 +153,58 @@
 		50F411A91068D563002A0D5E /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = 50F411A81068D563002A0D5E /* fps_images.png */; };
 		50F48B0D1045AD2F00755CFB /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 50F48B0B1045AD2F00755CFB /* Default.png */; };
 		50F48B0E1045AD2F00755CFB /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 50F48B0C1045AD2F00755CFB /* Icon.png */; };
+		A002F79714D8A3DB00260150 /* Position_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A002F77D14D8A3AA00260150 /* Position_uColor.fsh */; };
+		A002F79814D8A3DB00260150 /* Position_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A002F77E14D8A3AA00260150 /* Position_uColor.vsh */; };
+		A002F79914D8A3DB00260150 /* PositionColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A002F77F14D8A3AA00260150 /* PositionColor.fsh */; };
+		A002F79A14D8A3DB00260150 /* PositionColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A002F78014D8A3AA00260150 /* PositionColor.vsh */; };
+		A002F79B14D8A3DB00260150 /* PositionTexture_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A002F78114D8A3AA00260150 /* PositionTexture_uColor.fsh */; };
+		A002F79C14D8A3DB00260150 /* PositionTexture_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A002F78214D8A3AA00260150 /* PositionTexture_uColor.vsh */; };
+		A002F79D14D8A3DB00260150 /* PositionTexture.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A002F78314D8A3AA00260150 /* PositionTexture.fsh */; };
+		A002F79E14D8A3DB00260150 /* PositionTexture.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A002F78414D8A3AA00260150 /* PositionTexture.vsh */; };
+		A002F79F14D8A3DB00260150 /* PositionTextureA8Color.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A002F78514D8A3AA00260150 /* PositionTextureA8Color.fsh */; };
+		A002F7A014D8A3DB00260150 /* PositionTextureA8Color.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A002F78614D8A3AA00260150 /* PositionTextureA8Color.vsh */; };
+		A002F7A114D8A3DB00260150 /* PositionTextureColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A002F78714D8A3AA00260150 /* PositionTextureColor.fsh */; };
+		A002F7A214D8A3DB00260150 /* PositionTextureColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A002F78814D8A3AA00260150 /* PositionTextureColor.vsh */; };
+		A002F7A314D8A3DB00260150 /* PositionTextureColorAlphaTest.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A002F78914D8A3AA00260150 /* PositionTextureColorAlphaTest.fsh */; };
+		A002F7A414D8A3DB00260150 /* Position_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A002F77D14D8A3AA00260150 /* Position_uColor.fsh */; };
+		A002F7A514D8A3DB00260150 /* Position_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A002F77E14D8A3AA00260150 /* Position_uColor.vsh */; };
+		A002F7A614D8A3DB00260150 /* PositionColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A002F77F14D8A3AA00260150 /* PositionColor.fsh */; };
+		A002F7A714D8A3DB00260150 /* PositionColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A002F78014D8A3AA00260150 /* PositionColor.vsh */; };
+		A002F7A814D8A3DB00260150 /* PositionTexture_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A002F78114D8A3AA00260150 /* PositionTexture_uColor.fsh */; };
+		A002F7A914D8A3DB00260150 /* PositionTexture_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A002F78214D8A3AA00260150 /* PositionTexture_uColor.vsh */; };
+		A002F7AA14D8A3DB00260150 /* PositionTexture.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A002F78314D8A3AA00260150 /* PositionTexture.fsh */; };
+		A002F7AB14D8A3DB00260150 /* PositionTexture.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A002F78414D8A3AA00260150 /* PositionTexture.vsh */; };
+		A002F7AC14D8A3DB00260150 /* PositionTextureA8Color.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A002F78514D8A3AA00260150 /* PositionTextureA8Color.fsh */; };
+		A002F7AD14D8A3DB00260150 /* PositionTextureA8Color.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A002F78614D8A3AA00260150 /* PositionTextureA8Color.vsh */; };
+		A002F7AE14D8A3DB00260150 /* PositionTextureColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A002F78714D8A3AA00260150 /* PositionTextureColor.fsh */; };
+		A002F7AF14D8A3DB00260150 /* PositionTextureColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A002F78814D8A3AA00260150 /* PositionTextureColor.vsh */; };
+		A002F7B014D8A3DB00260150 /* PositionTextureColorAlphaTest.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A002F78914D8A3AA00260150 /* PositionTextureColorAlphaTest.fsh */; };
+		A002F7B114D8A3DB00260150 /* Position_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A002F77D14D8A3AA00260150 /* Position_uColor.fsh */; };
+		A002F7B214D8A3DB00260150 /* Position_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A002F77E14D8A3AA00260150 /* Position_uColor.vsh */; };
+		A002F7B314D8A3DB00260150 /* PositionColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A002F77F14D8A3AA00260150 /* PositionColor.fsh */; };
+		A002F7B414D8A3DB00260150 /* PositionColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A002F78014D8A3AA00260150 /* PositionColor.vsh */; };
+		A002F7B514D8A3DB00260150 /* PositionTexture_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A002F78114D8A3AA00260150 /* PositionTexture_uColor.fsh */; };
+		A002F7B614D8A3DB00260150 /* PositionTexture_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A002F78214D8A3AA00260150 /* PositionTexture_uColor.vsh */; };
+		A002F7B714D8A3DB00260150 /* PositionTexture.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A002F78314D8A3AA00260150 /* PositionTexture.fsh */; };
+		A002F7B814D8A3DB00260150 /* PositionTexture.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A002F78414D8A3AA00260150 /* PositionTexture.vsh */; };
+		A002F7B914D8A3DB00260150 /* PositionTextureA8Color.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A002F78514D8A3AA00260150 /* PositionTextureA8Color.fsh */; };
+		A002F7BA14D8A3DB00260150 /* PositionTextureA8Color.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A002F78614D8A3AA00260150 /* PositionTextureA8Color.vsh */; };
+		A002F7BB14D8A3DB00260150 /* PositionTextureColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A002F78714D8A3AA00260150 /* PositionTextureColor.fsh */; };
+		A002F7BC14D8A3DB00260150 /* PositionTextureColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A002F78814D8A3AA00260150 /* PositionTextureColor.vsh */; };
+		A002F7BD14D8A3DB00260150 /* PositionTextureColorAlphaTest.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A002F78914D8A3AA00260150 /* PositionTextureColorAlphaTest.fsh */; };
+		A002F7BE14D8A3DC00260150 /* Position_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A002F77D14D8A3AA00260150 /* Position_uColor.fsh */; };
+		A002F7BF14D8A3DC00260150 /* Position_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A002F77E14D8A3AA00260150 /* Position_uColor.vsh */; };
+		A002F7C014D8A3DC00260150 /* PositionColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A002F77F14D8A3AA00260150 /* PositionColor.fsh */; };
+		A002F7C114D8A3DC00260150 /* PositionColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A002F78014D8A3AA00260150 /* PositionColor.vsh */; };
+		A002F7C214D8A3DC00260150 /* PositionTexture_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A002F78114D8A3AA00260150 /* PositionTexture_uColor.fsh */; };
+		A002F7C314D8A3DC00260150 /* PositionTexture_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A002F78214D8A3AA00260150 /* PositionTexture_uColor.vsh */; };
+		A002F7C414D8A3DC00260150 /* PositionTexture.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A002F78314D8A3AA00260150 /* PositionTexture.fsh */; };
+		A002F7C514D8A3DC00260150 /* PositionTexture.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A002F78414D8A3AA00260150 /* PositionTexture.vsh */; };
+		A002F7C614D8A3DC00260150 /* PositionTextureA8Color.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A002F78514D8A3AA00260150 /* PositionTextureA8Color.fsh */; };
+		A002F7C714D8A3DC00260150 /* PositionTextureA8Color.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A002F78614D8A3AA00260150 /* PositionTextureA8Color.vsh */; };
+		A002F7C814D8A3DC00260150 /* PositionTextureColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A002F78714D8A3AA00260150 /* PositionTextureColor.fsh */; };
+		A002F7C914D8A3DC00260150 /* PositionTextureColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A002F78814D8A3AA00260150 /* PositionTextureColor.vsh */; };
+		A002F7CA14D8A3DC00260150 /* PositionTextureColorAlphaTest.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A002F78914D8A3AA00260150 /* PositionTextureColorAlphaTest.fsh */; };
 		A037D1E9141510EB0091B5C7 /* aabb.h in Headers */ = {isa = PBXBuildFile; fileRef = A037D1C8141510EB0091B5C7 /* aabb.h */; };
 		A037D1EA141510EB0091B5C7 /* mat4stack.h in Headers */ = {isa = PBXBuildFile; fileRef = A037D1CA141510EB0091B5C7 /* mat4stack.h */; };
 		A037D1EB141510EB0091B5C7 /* matrix.h in Headers */ = {isa = PBXBuildFile; fileRef = A037D1CB141510EB0091B5C7 /* matrix.h */; };
@@ -184,54 +236,6 @@
 		A0A3CF0314BBFCDC0079CD11 /* fps_images-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = A0A3CF0114BBFCDC0079CD11 /* fps_images-hd.png */; };
 		A0A3CF0414BBFCDC0079CD11 /* fps_images-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = A0A3CF0114BBFCDC0079CD11 /* fps_images-hd.png */; };
 		A0A3CF0514BBFCDC0079CD11 /* fps_images-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = A0A3CF0114BBFCDC0079CD11 /* fps_images-hd.png */; };
-		A0AE166F14151611009AA391 /* Position_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0AE162D14151611009AA391 /* Position_uColor.fsh */; };
-		A0AE167014151611009AA391 /* Position_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0AE162D14151611009AA391 /* Position_uColor.fsh */; };
-		A0AE167114151611009AA391 /* Position_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0AE162D14151611009AA391 /* Position_uColor.fsh */; };
-		A0AE167214151611009AA391 /* Position_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0AE162D14151611009AA391 /* Position_uColor.fsh */; };
-		A0AE167314151611009AA391 /* Position_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0AE162E14151611009AA391 /* Position_uColor.vsh */; };
-		A0AE167414151611009AA391 /* Position_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0AE162E14151611009AA391 /* Position_uColor.vsh */; };
-		A0AE167514151611009AA391 /* Position_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0AE162E14151611009AA391 /* Position_uColor.vsh */; };
-		A0AE167614151611009AA391 /* Position_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0AE162E14151611009AA391 /* Position_uColor.vsh */; };
-		A0AE167714151611009AA391 /* PositionColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0AE162F14151611009AA391 /* PositionColor.fsh */; };
-		A0AE167814151611009AA391 /* PositionColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0AE162F14151611009AA391 /* PositionColor.fsh */; };
-		A0AE167914151611009AA391 /* PositionColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0AE162F14151611009AA391 /* PositionColor.fsh */; };
-		A0AE167A14151611009AA391 /* PositionColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0AE162F14151611009AA391 /* PositionColor.fsh */; };
-		A0AE167B14151611009AA391 /* PositionColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0AE163014151611009AA391 /* PositionColor.vsh */; };
-		A0AE167C14151611009AA391 /* PositionColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0AE163014151611009AA391 /* PositionColor.vsh */; };
-		A0AE167D14151611009AA391 /* PositionColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0AE163014151611009AA391 /* PositionColor.vsh */; };
-		A0AE167E14151611009AA391 /* PositionColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0AE163014151611009AA391 /* PositionColor.vsh */; };
-		A0AE167F14151611009AA391 /* PositionTexture.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0AE163114151611009AA391 /* PositionTexture.fsh */; };
-		A0AE168014151611009AA391 /* PositionTexture.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0AE163114151611009AA391 /* PositionTexture.fsh */; };
-		A0AE168114151611009AA391 /* PositionTexture.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0AE163114151611009AA391 /* PositionTexture.fsh */; };
-		A0AE168214151611009AA391 /* PositionTexture.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0AE163114151611009AA391 /* PositionTexture.fsh */; };
-		A0AE168314151611009AA391 /* PositionTexture.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0AE163214151611009AA391 /* PositionTexture.vsh */; };
-		A0AE168414151611009AA391 /* PositionTexture.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0AE163214151611009AA391 /* PositionTexture.vsh */; };
-		A0AE168514151611009AA391 /* PositionTexture.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0AE163214151611009AA391 /* PositionTexture.vsh */; };
-		A0AE168614151611009AA391 /* PositionTexture.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0AE163214151611009AA391 /* PositionTexture.vsh */; };
-		A0AE168714151611009AA391 /* PositionTexture_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0AE163314151611009AA391 /* PositionTexture_uColor.fsh */; };
-		A0AE168814151611009AA391 /* PositionTexture_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0AE163314151611009AA391 /* PositionTexture_uColor.fsh */; };
-		A0AE168914151611009AA391 /* PositionTexture_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0AE163314151611009AA391 /* PositionTexture_uColor.fsh */; };
-		A0AE168A14151611009AA391 /* PositionTexture_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0AE163314151611009AA391 /* PositionTexture_uColor.fsh */; };
-		A0AE168B14151611009AA391 /* PositionTexture_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0AE163414151611009AA391 /* PositionTexture_uColor.vsh */; };
-		A0AE168C14151611009AA391 /* PositionTexture_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0AE163414151611009AA391 /* PositionTexture_uColor.vsh */; };
-		A0AE168D14151611009AA391 /* PositionTexture_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0AE163414151611009AA391 /* PositionTexture_uColor.vsh */; };
-		A0AE168E14151611009AA391 /* PositionTexture_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0AE163414151611009AA391 /* PositionTexture_uColor.vsh */; };
-		A0AE168F14151611009AA391 /* PositionTextureA8Color.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0AE163514151611009AA391 /* PositionTextureA8Color.fsh */; };
-		A0AE169014151611009AA391 /* PositionTextureA8Color.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0AE163514151611009AA391 /* PositionTextureA8Color.fsh */; };
-		A0AE169114151611009AA391 /* PositionTextureA8Color.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0AE163514151611009AA391 /* PositionTextureA8Color.fsh */; };
-		A0AE169214151611009AA391 /* PositionTextureA8Color.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0AE163514151611009AA391 /* PositionTextureA8Color.fsh */; };
-		A0AE169314151611009AA391 /* PositionTextureA8Color.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0AE163614151611009AA391 /* PositionTextureA8Color.vsh */; };
-		A0AE169414151611009AA391 /* PositionTextureA8Color.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0AE163614151611009AA391 /* PositionTextureA8Color.vsh */; };
-		A0AE169514151611009AA391 /* PositionTextureA8Color.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0AE163614151611009AA391 /* PositionTextureA8Color.vsh */; };
-		A0AE169614151611009AA391 /* PositionTextureA8Color.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0AE163614151611009AA391 /* PositionTextureA8Color.vsh */; };
-		A0AE169714151611009AA391 /* PositionTextureColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0AE163714151611009AA391 /* PositionTextureColor.fsh */; };
-		A0AE169814151611009AA391 /* PositionTextureColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0AE163714151611009AA391 /* PositionTextureColor.fsh */; };
-		A0AE169914151611009AA391 /* PositionTextureColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0AE163714151611009AA391 /* PositionTextureColor.fsh */; };
-		A0AE169A14151611009AA391 /* PositionTextureColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0AE163714151611009AA391 /* PositionTextureColor.fsh */; };
-		A0AE169B14151611009AA391 /* PositionTextureColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0AE163814151611009AA391 /* PositionTextureColor.vsh */; };
-		A0AE169C14151611009AA391 /* PositionTextureColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0AE163814151611009AA391 /* PositionTextureColor.vsh */; };
-		A0AE169D14151611009AA391 /* PositionTextureColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0AE163814151611009AA391 /* PositionTextureColor.vsh */; };
-		A0AE169E14151611009AA391 /* PositionTextureColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0AE163814151611009AA391 /* PositionTextureColor.vsh */; };
 		A0EB919614C32A8700E5F5E3 /* CCAction.h in Headers */ = {isa = PBXBuildFile; fileRef = A0EB90EC14C32A8700E5F5E3 /* CCAction.h */; };
 		A0EB919714C32A8700E5F5E3 /* CCAction.m in Sources */ = {isa = PBXBuildFile; fileRef = A0EB90ED14C32A8700E5F5E3 /* CCAction.m */; };
 		A0EB919814C32A8700E5F5E3 /* CCActionCamera.h in Headers */ = {isa = PBXBuildFile; fileRef = A0EB90EE14C32A8700E5F5E3 /* CCActionCamera.h */; };
@@ -631,6 +635,19 @@
 		50F411A81068D563002A0D5E /* fps_images.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = fps_images.png; path = ../../Resources/Fonts/fps_images.png; sourceTree = SOURCE_ROOT; };
 		50F48B0B1045AD2F00755CFB /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = ../../Resources/Default.png; sourceTree = SOURCE_ROOT; };
 		50F48B0C1045AD2F00755CFB /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon.png; path = ../../Resources/Icon.png; sourceTree = SOURCE_ROOT; };
+		A002F77D14D8A3AA00260150 /* Position_uColor.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Position_uColor.fsh; sourceTree = "<group>"; };
+		A002F77E14D8A3AA00260150 /* Position_uColor.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Position_uColor.vsh; sourceTree = "<group>"; };
+		A002F77F14D8A3AA00260150 /* PositionColor.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = PositionColor.fsh; sourceTree = "<group>"; };
+		A002F78014D8A3AA00260150 /* PositionColor.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = PositionColor.vsh; sourceTree = "<group>"; };
+		A002F78114D8A3AA00260150 /* PositionTexture_uColor.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = PositionTexture_uColor.fsh; sourceTree = "<group>"; };
+		A002F78214D8A3AA00260150 /* PositionTexture_uColor.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = PositionTexture_uColor.vsh; sourceTree = "<group>"; };
+		A002F78314D8A3AA00260150 /* PositionTexture.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = PositionTexture.fsh; sourceTree = "<group>"; };
+		A002F78414D8A3AA00260150 /* PositionTexture.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = PositionTexture.vsh; sourceTree = "<group>"; };
+		A002F78514D8A3AA00260150 /* PositionTextureA8Color.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = PositionTextureA8Color.fsh; sourceTree = "<group>"; };
+		A002F78614D8A3AA00260150 /* PositionTextureA8Color.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = PositionTextureA8Color.vsh; sourceTree = "<group>"; };
+		A002F78714D8A3AA00260150 /* PositionTextureColor.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = PositionTextureColor.fsh; sourceTree = "<group>"; };
+		A002F78814D8A3AA00260150 /* PositionTextureColor.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = PositionTextureColor.vsh; sourceTree = "<group>"; };
+		A002F78914D8A3AA00260150 /* PositionTextureColorAlphaTest.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = PositionTextureColorAlphaTest.fsh; sourceTree = "<group>"; };
 		A037D1C8141510EB0091B5C7 /* aabb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aabb.h; sourceTree = "<group>"; };
 		A037D1CA141510EB0091B5C7 /* mat4stack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mat4stack.h; sourceTree = "<group>"; };
 		A037D1CB141510EB0091B5C7 /* matrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = matrix.h; sourceTree = "<group>"; };
@@ -661,18 +678,6 @@
 		A037D1E7141510EB0091B5C7 /* vec3.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vec3.c; sourceTree = "<group>"; };
 		A037D1E8141510EB0091B5C7 /* vec4.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vec4.c; sourceTree = "<group>"; };
 		A0A3CF0114BBFCDC0079CD11 /* fps_images-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "fps_images-hd.png"; path = "../../Resources/Fonts/fps_images-hd.png"; sourceTree = "<group>"; };
-		A0AE162D14151611009AA391 /* Position_uColor.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Position_uColor.fsh; sourceTree = "<group>"; };
-		A0AE162E14151611009AA391 /* Position_uColor.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Position_uColor.vsh; sourceTree = "<group>"; };
-		A0AE162F14151611009AA391 /* PositionColor.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = PositionColor.fsh; sourceTree = "<group>"; };
-		A0AE163014151611009AA391 /* PositionColor.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = PositionColor.vsh; sourceTree = "<group>"; };
-		A0AE163114151611009AA391 /* PositionTexture.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = PositionTexture.fsh; sourceTree = "<group>"; };
-		A0AE163214151611009AA391 /* PositionTexture.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = PositionTexture.vsh; sourceTree = "<group>"; };
-		A0AE163314151611009AA391 /* PositionTexture_uColor.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = PositionTexture_uColor.fsh; sourceTree = "<group>"; };
-		A0AE163414151611009AA391 /* PositionTexture_uColor.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = PositionTexture_uColor.vsh; sourceTree = "<group>"; };
-		A0AE163514151611009AA391 /* PositionTextureA8Color.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = PositionTextureA8Color.fsh; sourceTree = "<group>"; };
-		A0AE163614151611009AA391 /* PositionTextureA8Color.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = PositionTextureA8Color.vsh; sourceTree = "<group>"; };
-		A0AE163714151611009AA391 /* PositionTextureColor.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = PositionTextureColor.fsh; sourceTree = "<group>"; };
-		A0AE163814151611009AA391 /* PositionTextureColor.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = PositionTextureColor.vsh; sourceTree = "<group>"; };
 		A0EB90EC14C32A8700E5F5E3 /* CCAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAction.h; sourceTree = "<group>"; };
 		A0EB90ED14C32A8700E5F5E3 /* CCAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCAction.m; sourceTree = "<group>"; };
 		A0EB90EE14C32A8700E5F5E3 /* CCActionCamera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCActionCamera.h; sourceTree = "<group>"; };
@@ -1272,18 +1277,19 @@
 		A0AE161F14151611009AA391 /* Shaders */ = {
 			isa = PBXGroup;
 			children = (
-				A0AE162D14151611009AA391 /* Position_uColor.fsh */,
-				A0AE162E14151611009AA391 /* Position_uColor.vsh */,
-				A0AE162F14151611009AA391 /* PositionColor.fsh */,
-				A0AE163014151611009AA391 /* PositionColor.vsh */,
-				A0AE163114151611009AA391 /* PositionTexture.fsh */,
-				A0AE163214151611009AA391 /* PositionTexture.vsh */,
-				A0AE163314151611009AA391 /* PositionTexture_uColor.fsh */,
-				A0AE163414151611009AA391 /* PositionTexture_uColor.vsh */,
-				A0AE163514151611009AA391 /* PositionTextureA8Color.fsh */,
-				A0AE163614151611009AA391 /* PositionTextureA8Color.vsh */,
-				A0AE163714151611009AA391 /* PositionTextureColor.fsh */,
-				A0AE163814151611009AA391 /* PositionTextureColor.vsh */,
+				A002F77D14D8A3AA00260150 /* Position_uColor.fsh */,
+				A002F77E14D8A3AA00260150 /* Position_uColor.vsh */,
+				A002F77F14D8A3AA00260150 /* PositionColor.fsh */,
+				A002F78014D8A3AA00260150 /* PositionColor.vsh */,
+				A002F78114D8A3AA00260150 /* PositionTexture_uColor.fsh */,
+				A002F78214D8A3AA00260150 /* PositionTexture_uColor.vsh */,
+				A002F78314D8A3AA00260150 /* PositionTexture.fsh */,
+				A002F78414D8A3AA00260150 /* PositionTexture.vsh */,
+				A002F78514D8A3AA00260150 /* PositionTextureA8Color.fsh */,
+				A002F78614D8A3AA00260150 /* PositionTextureA8Color.vsh */,
+				A002F78714D8A3AA00260150 /* PositionTextureColor.fsh */,
+				A002F78814D8A3AA00260150 /* PositionTextureColor.vsh */,
+				A002F78914D8A3AA00260150 /* PositionTextureColorAlphaTest.fsh */,
 			);
 			name = Shaders;
 			path = ../../Resources/Shaders;
@@ -1747,6 +1753,19 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A002F7B114D8A3DB00260150 /* Position_uColor.fsh in Resources */,
+				A002F7B214D8A3DB00260150 /* Position_uColor.vsh in Resources */,
+				A002F7B314D8A3DB00260150 /* PositionColor.fsh in Resources */,
+				A002F7B414D8A3DB00260150 /* PositionColor.vsh in Resources */,
+				A002F7B514D8A3DB00260150 /* PositionTexture_uColor.fsh in Resources */,
+				A002F7B614D8A3DB00260150 /* PositionTexture_uColor.vsh in Resources */,
+				A002F7B714D8A3DB00260150 /* PositionTexture.fsh in Resources */,
+				A002F7B814D8A3DB00260150 /* PositionTexture.vsh in Resources */,
+				A002F7B914D8A3DB00260150 /* PositionTextureA8Color.fsh in Resources */,
+				A002F7BA14D8A3DB00260150 /* PositionTextureA8Color.vsh in Resources */,
+				A002F7BB14D8A3DB00260150 /* PositionTextureColor.fsh in Resources */,
+				A002F7BC14D8A3DB00260150 /* PositionTextureColor.vsh in Resources */,
+				A002F7BD14D8A3DB00260150 /* PositionTextureColorAlphaTest.fsh in Resources */,
 				5006BB1611BC07B300E488BD /* spritesheet1.png in Resources */,
 				5006BA3B11BBF4DB00E488BD /* Default.png in Resources */,
 				5006BA3F11BBF4DB00E488BD /* fps_images.png in Resources */,
@@ -1756,18 +1775,6 @@
 				5006BA4511BBF4DB00E488BD /* f2.png in Resources */,
 				5006BA4611BBF4DB00E488BD /* r1.png in Resources */,
 				5006BA4711BBF4DB00E488BD /* r2.png in Resources */,
-				A0AE167114151611009AA391 /* Position_uColor.fsh in Resources */,
-				A0AE167514151611009AA391 /* Position_uColor.vsh in Resources */,
-				A0AE167914151611009AA391 /* PositionColor.fsh in Resources */,
-				A0AE167D14151611009AA391 /* PositionColor.vsh in Resources */,
-				A0AE168114151611009AA391 /* PositionTexture.fsh in Resources */,
-				A0AE168514151611009AA391 /* PositionTexture.vsh in Resources */,
-				A0AE168914151611009AA391 /* PositionTexture_uColor.fsh in Resources */,
-				A0AE168D14151611009AA391 /* PositionTexture_uColor.vsh in Resources */,
-				A0AE169114151611009AA391 /* PositionTextureA8Color.fsh in Resources */,
-				A0AE169514151611009AA391 /* PositionTextureA8Color.vsh in Resources */,
-				A0AE169914151611009AA391 /* PositionTextureColor.fsh in Resources */,
-				A0AE169D14151611009AA391 /* PositionTextureColor.vsh in Resources */,
 				A0F6EA8F14152314008F01A1 /* Icon-72.png in Resources */,
 				A0F6EA9314152314008F01A1 /* Icon-Small-50.png in Resources */,
 				A0F6EA9714152314008F01A1 /* Icon-Small.png in Resources */,
@@ -1782,18 +1789,19 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A0AE166F14151611009AA391 /* Position_uColor.fsh in Resources */,
-				A0AE167314151611009AA391 /* Position_uColor.vsh in Resources */,
-				A0AE167714151611009AA391 /* PositionColor.fsh in Resources */,
-				A0AE167B14151611009AA391 /* PositionColor.vsh in Resources */,
-				A0AE167F14151611009AA391 /* PositionTexture.fsh in Resources */,
-				A0AE168314151611009AA391 /* PositionTexture.vsh in Resources */,
-				A0AE168714151611009AA391 /* PositionTexture_uColor.fsh in Resources */,
-				A0AE168B14151611009AA391 /* PositionTexture_uColor.vsh in Resources */,
-				A0AE168F14151611009AA391 /* PositionTextureA8Color.fsh in Resources */,
-				A0AE169314151611009AA391 /* PositionTextureA8Color.vsh in Resources */,
-				A0AE169714151611009AA391 /* PositionTextureColor.fsh in Resources */,
-				A0AE169B14151611009AA391 /* PositionTextureColor.vsh in Resources */,
+				A002F79714D8A3DB00260150 /* Position_uColor.fsh in Resources */,
+				A002F79814D8A3DB00260150 /* Position_uColor.vsh in Resources */,
+				A002F79914D8A3DB00260150 /* PositionColor.fsh in Resources */,
+				A002F79A14D8A3DB00260150 /* PositionColor.vsh in Resources */,
+				A002F79B14D8A3DB00260150 /* PositionTexture_uColor.fsh in Resources */,
+				A002F79C14D8A3DB00260150 /* PositionTexture_uColor.vsh in Resources */,
+				A002F79D14D8A3DB00260150 /* PositionTexture.fsh in Resources */,
+				A002F79E14D8A3DB00260150 /* PositionTexture.vsh in Resources */,
+				A002F79F14D8A3DB00260150 /* PositionTextureA8Color.fsh in Resources */,
+				A002F7A014D8A3DB00260150 /* PositionTextureA8Color.vsh in Resources */,
+				A002F7A114D8A3DB00260150 /* PositionTextureColor.fsh in Resources */,
+				A002F7A214D8A3DB00260150 /* PositionTextureColor.vsh in Resources */,
+				A002F7A314D8A3DB00260150 /* PositionTextureColorAlphaTest.fsh in Resources */,
 				5030947710447D98005F7AFC /* b1.png in Resources */,
 				5030947810447D98005F7AFC /* b2.png in Resources */,
 				5030947910447D98005F7AFC /* f1.png in Resources */,
@@ -1903,6 +1911,19 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A002F7A414D8A3DB00260150 /* Position_uColor.fsh in Resources */,
+				A002F7A514D8A3DB00260150 /* Position_uColor.vsh in Resources */,
+				A002F7A614D8A3DB00260150 /* PositionColor.fsh in Resources */,
+				A002F7A714D8A3DB00260150 /* PositionColor.vsh in Resources */,
+				A002F7A814D8A3DB00260150 /* PositionTexture_uColor.fsh in Resources */,
+				A002F7A914D8A3DB00260150 /* PositionTexture_uColor.vsh in Resources */,
+				A002F7AA14D8A3DB00260150 /* PositionTexture.fsh in Resources */,
+				A002F7AB14D8A3DB00260150 /* PositionTexture.vsh in Resources */,
+				A002F7AC14D8A3DB00260150 /* PositionTextureA8Color.fsh in Resources */,
+				A002F7AD14D8A3DB00260150 /* PositionTextureA8Color.vsh in Resources */,
+				A002F7AE14D8A3DB00260150 /* PositionTextureColor.fsh in Resources */,
+				A002F7AF14D8A3DB00260150 /* PositionTextureColor.vsh in Resources */,
+				A002F7B014D8A3DB00260150 /* PositionTextureColorAlphaTest.fsh in Resources */,
 				50671BA311B95D78006C0061 /* Default.png in Resources */,
 				50671BA411B95D82006C0061 /* fire-grayscale.png in Resources */,
 				50671BA511B95D82006C0061 /* stars-grayscale.png in Resources */,
@@ -1916,18 +1937,6 @@
 				50671BB111B95DD8006C0061 /* f2.png in Resources */,
 				50671BB211B95DD8006C0061 /* r1.png in Resources */,
 				50671BB311B95DD8006C0061 /* r2.png in Resources */,
-				A0AE167014151611009AA391 /* Position_uColor.fsh in Resources */,
-				A0AE167414151611009AA391 /* Position_uColor.vsh in Resources */,
-				A0AE167814151611009AA391 /* PositionColor.fsh in Resources */,
-				A0AE167C14151611009AA391 /* PositionColor.vsh in Resources */,
-				A0AE168014151611009AA391 /* PositionTexture.fsh in Resources */,
-				A0AE168414151611009AA391 /* PositionTexture.vsh in Resources */,
-				A0AE168814151611009AA391 /* PositionTexture_uColor.fsh in Resources */,
-				A0AE168C14151611009AA391 /* PositionTexture_uColor.vsh in Resources */,
-				A0AE169014151611009AA391 /* PositionTextureA8Color.fsh in Resources */,
-				A0AE169414151611009AA391 /* PositionTextureA8Color.vsh in Resources */,
-				A0AE169814151611009AA391 /* PositionTextureColor.fsh in Resources */,
-				A0AE169C14151611009AA391 /* PositionTextureColor.vsh in Resources */,
 				A0F6EA8E14152314008F01A1 /* Icon-72.png in Resources */,
 				A0F6EA9214152314008F01A1 /* Icon-Small-50.png in Resources */,
 				A0F6EA9614152314008F01A1 /* Icon-Small.png in Resources */,
@@ -1942,18 +1951,19 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A0AE167214151611009AA391 /* Position_uColor.fsh in Resources */,
-				A0AE167614151611009AA391 /* Position_uColor.vsh in Resources */,
-				A0AE167A14151611009AA391 /* PositionColor.fsh in Resources */,
-				A0AE167E14151611009AA391 /* PositionColor.vsh in Resources */,
-				A0AE168214151611009AA391 /* PositionTexture.fsh in Resources */,
-				A0AE168614151611009AA391 /* PositionTexture.vsh in Resources */,
-				A0AE168A14151611009AA391 /* PositionTexture_uColor.fsh in Resources */,
-				A0AE168E14151611009AA391 /* PositionTexture_uColor.vsh in Resources */,
-				A0AE169214151611009AA391 /* PositionTextureA8Color.fsh in Resources */,
-				A0AE169614151611009AA391 /* PositionTextureA8Color.vsh in Resources */,
-				A0AE169A14151611009AA391 /* PositionTextureColor.fsh in Resources */,
-				A0AE169E14151611009AA391 /* PositionTextureColor.vsh in Resources */,
+				A002F7BE14D8A3DC00260150 /* Position_uColor.fsh in Resources */,
+				A002F7BF14D8A3DC00260150 /* Position_uColor.vsh in Resources */,
+				A002F7C014D8A3DC00260150 /* PositionColor.fsh in Resources */,
+				A002F7C114D8A3DC00260150 /* PositionColor.vsh in Resources */,
+				A002F7C214D8A3DC00260150 /* PositionTexture_uColor.fsh in Resources */,
+				A002F7C314D8A3DC00260150 /* PositionTexture_uColor.vsh in Resources */,
+				A002F7C414D8A3DC00260150 /* PositionTexture.fsh in Resources */,
+				A002F7C514D8A3DC00260150 /* PositionTexture.vsh in Resources */,
+				A002F7C614D8A3DC00260150 /* PositionTextureA8Color.fsh in Resources */,
+				A002F7C714D8A3DC00260150 /* PositionTextureA8Color.vsh in Resources */,
+				A002F7C814D8A3DC00260150 /* PositionTextureColor.fsh in Resources */,
+				A002F7C914D8A3DC00260150 /* PositionTextureColor.vsh in Resources */,
+				A002F7CA14D8A3DC00260150 /* PositionTextureColorAlphaTest.fsh in Resources */,
 				E0B0E63211F8C3BB00414246 /* Default.png in Resources */,
 				E0B0E63311F8C3BB00414246 /* fire-grayscale.png in Resources */,
 				E0B0E63411F8C3BB00414246 /* stars-grayscale.png in Resources */,
