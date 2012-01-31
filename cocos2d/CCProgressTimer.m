@@ -503,16 +503,27 @@ const char kCCProgressTextureCoords = 0x4b;
     glVertexAttribPointer( kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, sizeof(vertexData_[0]), &vertexData_[0].texCoords);
     glVertexAttribPointer( kCCVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(vertexData_[0]), &vertexData_[0].colors);
 
-	if(type_ == kCCProgressTimerTypeRadial){
+	if(type_ == kCCProgressTimerTypeRadial)
+	{
 		glDrawArrays(GL_TRIANGLE_FAN, 0, vertexDataCount_);
-	} else if (type_ == kCCProgressTimerTypeBar) {
-		if (!reverseDirection_) {
+	} 
+	else if (type_ == kCCProgressTimerTypeBar)
+	{
+		if (!reverseDirection_)
+		{
 			glDrawArrays(GL_TRIANGLE_STRIP, 0, vertexDataCount_);
-		} else {
+		}
+		else
+		{
 			glDrawArrays(GL_TRIANGLE_STRIP, 0, vertexDataCount_/2);
 			glDrawArrays(GL_TRIANGLE_STRIP, 4, vertexDataCount_/2);
+			
+			// 2 draw calls
+			CC_INCREMENT_GL_DRAWS(1);
 		}
 	}
+	CC_INCREMENT_GL_DRAWS(1);
+
 }
 
 @end

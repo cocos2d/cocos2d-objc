@@ -215,6 +215,8 @@ enum {
 	glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, vertices);
 
 	glDrawArrays(GL_TRIANGLES, 0, 6);
+	
+	CC_INCREMENT_GL_DRAWS(1);
 }
 @end
 
@@ -485,6 +487,8 @@ enum {
 
 
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+	
+	CC_INCREMENT_GL_DRAWS(1);
 }
 
 -(void) setBlurSize:(CGFloat)f

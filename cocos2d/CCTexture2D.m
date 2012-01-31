@@ -670,6 +670,8 @@ static BOOL PVRHaveAlphaPremultiplied_ = NO;
 
 
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+	
+	CC_INCREMENT_GL_DRAWS(1);
 }
 
 
@@ -696,6 +698,8 @@ static BOOL PVRHaveAlphaPremultiplied_ = NO;
 
 
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+	
+	CC_INCREMENT_GL_DRAWS(1);
 }
 
 @end
