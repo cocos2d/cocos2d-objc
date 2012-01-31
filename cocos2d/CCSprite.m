@@ -935,10 +935,12 @@
 	// accept texture==nil as argument
 	NSAssert( !texture || [texture isKindOfClass:[CCTexture2D class]], @"setTexture expects a CCTexture2D. Invalid argument");
 
-	[texture_ release];
-	texture_ = [texture retain];
+	if( texture_ != texture ) {
+		[texture_ release];
+		texture_ = [texture retain];
 
-	[self updateBlendFunc];
+		[self updateBlendFunc];
+	}
 }
 
 -(CCTexture2D*) texture
