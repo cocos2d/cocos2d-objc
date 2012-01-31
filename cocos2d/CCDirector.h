@@ -94,10 +94,11 @@ and when to execute the Scenes.
 	NSUInteger totalFrames_;
 	ccTime secondsPerFrame_;
 
-	ccTime accumDt_;
-	ccTime frameRate_;
+	ccTime		accumDt_;
+	ccTime		frameRate_;
 	CCLabelAtlas *FPSLabel_;
 	CCLabelAtlas *SPFLabel_;
+	CCLabelAtlas *drawsLabel_;
 
 	/* is the running scene paused */
 	BOOL isPaused_;
@@ -330,3 +331,5 @@ and when to execute the Scenes.
 -(void) createStatsLabel;
 @end
 
+// optimization. Should only be used to read it. Never to write it.
+extern NSUInteger __ccNumberOfDraws;

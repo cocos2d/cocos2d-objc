@@ -552,6 +552,7 @@
 	ccDrawPoly(vertices, 4, YES);
 #endif // CC_SPRITE_DEBUG_DRAW
 
+	CC_INCREMENT_GL_DRAWS(1);
 
 	CC_PROFILER_STOP_CATEGORY(kCCProfilerCategorySprite, @"CCSprite - draw");
 }

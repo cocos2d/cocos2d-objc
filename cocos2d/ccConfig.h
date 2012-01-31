@@ -81,13 +81,13 @@
 #define CC_DIRECTOR_FPS_INTERVAL (0.1f)
 #endif
 
-/** @def CC_DIRECTOR_FPS_POSITION
+/** @def CC_DIRECTOR_STATS_POSITION
  Position of the FPS
 
  Default: 0,0 (bottom-left corner)
  */
-#ifndef CC_DIRECTOR_FPS_POSITION
-#define CC_DIRECTOR_FPS_POSITION ccp(0,0)
+#ifndef CC_DIRECTOR_STATS_POSITION
+#define CC_DIRECTOR_STATS_POSITION ccp(0,0)
 #endif
 
 /** @def CC_DIRECTOR_IOS_USE_BACKGROUND_THREAD

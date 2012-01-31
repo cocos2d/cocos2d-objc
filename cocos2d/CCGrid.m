@@ -293,6 +293,8 @@
 	glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, 0, texCoordinates);
 
 	glDrawElements(GL_TRIANGLES, (GLsizei) n*6, GL_UNSIGNED_SHORT, indices);
+	
+	CC_INCREMENT_GL_DRAWS(1);
 }
 
 -(void)calculateVertexPoints
@@ -443,6 +445,8 @@
 	glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, 0, texCoordinates);
 
 	glDrawElements(GL_TRIANGLES, (GLsizei) n*6, GL_UNSIGNED_SHORT, indices);
+	
+	CC_INCREMENT_GL_DRAWS(1);
 }
 
 -(void)calculateVertexPoints

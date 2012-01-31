@@ -84,6 +84,8 @@ void ccDrawPoint( CGPoint point )
 	glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, &p);
 
 	glDrawArrays(GL_POINTS, 0, 1);
+	
+	CC_INCREMENT_GL_DRAWS(1);
 }
 
 void ccDrawPoints( const CGPoint *points, NSUInteger numberOfPoints )
@@ -114,6 +116,8 @@ void ccDrawPoints( const CGPoint *points, NSUInteger numberOfPoints )
 	}
 
     glDrawArrays(GL_POINTS, 0, (GLsizei) numberOfPoints);
+	
+	CC_INCREMENT_GL_DRAWS(1);
 }
 
 
@@ -135,6 +139,8 @@ void ccDrawLine( CGPoint origin, CGPoint destination )
 
 	glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, vertices);
 	glDrawArrays(GL_LINES, 0, 2);
+	
+	CC_INCREMENT_GL_DRAWS(1);
 }
 
 
@@ -168,6 +174,8 @@ void ccDrawPoly( const CGPoint *poli, NSUInteger numberOfPoints, BOOL closePolyg
 		glDrawArrays(GL_LINE_LOOP, 0, (GLsizei) numberOfPoints);
 	else
 		glDrawArrays(GL_LINE_STRIP, 0, (GLsizei) numberOfPoints);
+	
+	CC_INCREMENT_GL_DRAWS(1);
 }
 
 void ccDrawCircle( CGPoint center, float r, float a, NSUInteger segs, BOOL drawLineToCenter)
@@ -205,6 +213,8 @@ void ccDrawCircle( CGPoint center, float r, float a, NSUInteger segs, BOOL drawL
 	glDrawArrays(GL_LINE_STRIP, 0, (GLsizei) segs+additionalSegment);
 
 	free( vertices );
+	
+	CC_INCREMENT_GL_DRAWS(1);
 }
 
 void ccDrawQuadBezier(CGPoint origin, CGPoint control, CGPoint destination, NSUInteger segments)
@@ -230,6 +240,8 @@ void ccDrawQuadBezier(CGPoint origin, CGPoint control, CGPoint destination, NSUI
 
 	glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, vertices);
 	glDrawArrays(GL_LINE_STRIP, 0, (GLsizei) segments + 1);
+	
+	CC_INCREMENT_GL_DRAWS(1);
 }
 
 void ccDrawCubicBezier(CGPoint origin, CGPoint control1, CGPoint control2, CGPoint destination, NSUInteger segments)
@@ -256,6 +268,8 @@ void ccDrawCubicBezier(CGPoint origin, CGPoint control1, CGPoint control2, CGPoi
 
 	glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, vertices);
 	glDrawArrays(GL_LINE_STRIP, 0, (GLsizei) segments + 1);
+	
+	CC_INCREMENT_GL_DRAWS(1);
 }
 
 void ccDrawColor4f( GLfloat r, GLfloat g, GLfloat b, GLfloat a )

@@ -326,8 +326,17 @@ CGSizeMake( (__size_in_points__).width * CC_CONTENT_SCALE_FACTOR(), (__size_in_p
 #define CC_ARC_UNSAFE_RETAINED
 #endif
 
+/** @def CC_INCREMENT_GL_DRAWS_BY_ONE
+ Increments the GL Draws counts by one.
+ The number of calls per frame are displayed on the screen when the CCDirector's stats are enabled.
+ */
+extern NSUInteger __ccNumberOfDraws;
+#define CC_INCREMENT_GL_DRAWS(__n__) __ccNumberOfDraws += __n__
 
 /*******************/
 /** Notifications **/
 /*******************/
+/** @def CCAnimationFrameDisplayedNotification
+ Notification name when a CCSpriteFrame is displayed
+ */
 #define CCAnimationFrameDisplayedNotification @"CCAnimationFrameDisplayedNotification"

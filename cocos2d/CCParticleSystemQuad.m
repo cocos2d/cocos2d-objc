@@ -354,6 +354,8 @@
 
 	glBindVertexArray( 0 );
 
+	CC_INCREMENT_GL_DRAWS(1);
+
 	CHECK_GL_ERROR_DEBUG();
 }
 

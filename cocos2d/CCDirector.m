@@ -52,6 +52,7 @@
 
 #import "Support/OpenGL_Internal.h"
 #import "Support/CGPointExtension.h"
+#import "Support/CCProfiling.h"
 
 #ifdef __CC_PLATFORM_IOS
 #import "Platforms/iOS/CCDirectorIOS.h"
@@ -61,7 +62,12 @@
 #define CC_DIRECTOR_DEFAULT CCDirectorDisplayLink
 #endif
 
-#import "Support/CCProfiling.h"
+
+#pragma mark -
+#pragma mark Director - global variables (optimization)
+
+// XXX it shoul be a Director ivar. Move it there once support for multiple directors is added
+NSUInteger	__ccNumberOfDraws = 0;
 
 #define kDefaultFPS		60.0	// 60 frames per second
 
@@ -177,6 +183,7 @@ static CCDirector *_sharedDirector = nil;
 
 	[FPSLabel_ release];
 	[SPFLabel_ release];
+	[drawsLabel_ release];
 	[runningScene_ release];
 	[notificationNode_ release];
 	[scenesStack_ release];
@@ -408,11 +415,14 @@ static CCDirector *_sharedDirector = nil;
 	[self stopAnimation];
 
 	[FPSLabel_ release];
-	FPSLabel_ = nil;
+	[SPFLabel_ release];
+	[drawsLabel_ release];
+	FPSLabel_ = nil, SPFLabel_=nil, drawsLabel_=nil;
 
 	[delegate_ release];
 	delegate_ = nil;
 
+	
 	// Purge bitmap cache
 	[CCLabelBMFont purgeCachedData];
 
@@ -529,11 +539,18 @@ static CCDirector *_sharedDirector = nil;
 			NSString *fpsstr = [[NSString alloc] initWithFormat:@"%.1f", frameRate_];
 			[FPSLabel_ setString:fpsstr];
 			[fpsstr release];
+			
+			NSString *draws = [[NSString alloc] initWithFormat:@"%4d", __ccNumberOfDraws];
+			[drawsLabel_ setString:draws];
+			[draws release];
 		}
 
-		[SPFLabel_ visit];
+		[drawsLabel_ visit];
 		[FPSLabel_ visit];
+		[SPFLabel_ visit];
 	}
+	
+	__ccNumberOfDraws = 0;
 }
 
 // XXX Deprecated
@@ -568,10 +585,13 @@ static CCDirector *_sharedDirector = nil;
 	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA4444];
 	FPSLabel_ = [[CCLabelAtlas alloc]  initWithString:@"00.0" charMapFile:@"fps_images.png" itemWidth:8 itemHeight:12 startCharMap:'.'];
 	SPFLabel_ = [[CCLabelAtlas alloc]  initWithString:@"0.0000" charMapFile:@"fps_images.png" itemWidth:8 itemHeight:12 startCharMap:'.'];
+	drawsLabel_ = [[CCLabelAtlas alloc]  initWithString:@"000" charMapFile:@"fps_images.png" itemWidth:8 itemHeight:12 startCharMap:'.'];
+
 	[CCTexture2D setDefaultAlphaPixelFormat:currentFormat];
 
-	[FPSLabel_ setPosition: ccpAdd( ccp(0,12), CC_DIRECTOR_FPS_POSITION ) ];
-	[SPFLabel_ setPosition: CC_DIRECTOR_FPS_POSITION];
+	[drawsLabel_ setPosition: ccpAdd( ccp(0,24), CC_DIRECTOR_STATS_POSITION ) ];
+	[FPSLabel_ setPosition: ccpAdd( ccp(0,12), CC_DIRECTOR_STATS_POSITION ) ];
+	[SPFLabel_ setPosition: CC_DIRECTOR_STATS_POSITION];
 }
 
 @end
