@@ -31,7 +31,7 @@
 #import "CCSprite.h"
 #import "Support/CGPointExtension.h"
 #import "CCBlockSupport.h"
-#import "AutoMagicCoding/AutoMagicCoding/NSObject+AutoMagicCoding.h"
+#import "AutoMagicCoding/NSObject+AutoMagicCoding.h"
 
 	static NSUInteger _fontSize = kCCItemSize;
 static NSString *_fontName = @"Marker Felt";

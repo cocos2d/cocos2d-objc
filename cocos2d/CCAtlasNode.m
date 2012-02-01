@@ -26,7 +26,7 @@
 
 #import "CCAtlasNode.h"
 #import "ccMacros.h"
-#import "AutoMagicCoding/AutoMagicCoding/NSObject+AutoMagicCoding.h"
+#import "AutoMagicCoding/NSObject+AutoMagicCoding.h"
 
 
 @interface CCAtlasNode ()

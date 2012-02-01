@@ -34,7 +34,7 @@
 #import "CCDrawingPrimitives.h"
 #import "CCTextureCache.h"
 #import "Support/CGPointExtension.h"
-#import "AutoMagicCoding/AutoMagicCoding/NSObject+AutoMagicCoding.h"
+#import "AutoMagicCoding/NSObject+AutoMagicCoding.h"
 
 const NSUInteger defaultCapacity = 29;
 

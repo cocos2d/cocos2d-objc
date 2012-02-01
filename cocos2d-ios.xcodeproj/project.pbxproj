@@ -2959,8 +2959,6 @@
 		E0FDACE7123DAC8300F25BB4 /* larabie-16-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E0FDACE5123DAC8300F25BB4 /* larabie-16-hd.png */; };
 		E0FDACE8123DAC8300F25BB4 /* larabie-16.png in Resources */ = {isa = PBXBuildFile; fileRef = E0FDACE6123DAC8300F25BB4 /* larabie-16.png */; };
 		E0FDACEE123DAD0000F25BB4 /* tuffy_bold_italic-charmap-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E0FDACED123DAD0000F25BB4 /* tuffy_bold_italic-charmap-hd.png */; };
-		FD6C3E5314C0023D00C4883C /* NSObject+AutoMagicCoding.h in Headers */ = {isa = PBXBuildFile; fileRef = FD6C3E5114C0023D00C4883C /* NSObject+AutoMagicCoding.h */; };
-		FD6C3E5414C0023D00C4883C /* NSObject+AutoMagicCoding.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6C3E5214C0023D00C4883C /* NSObject+AutoMagicCoding.m */; };
 		FD6C3E5D14C0032F00C4883C /* b1.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659D0E72DB470085673F /* b1.png */; };
 		FD6C3E5E14C0032F00C4883C /* b2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659E0E72DB470085673F /* b2.png */; };
 		FD6C3E5F14C0032F00C4883C /* f1.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659F0E72DB470085673F /* f1.png */; };
@@ -3015,6 +3013,8 @@
 		FD6C3E9E14C0069F00C4883C /* CCNodeRegistry.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6C3E9C14C0069F00C4883C /* CCNodeRegistry.m */; };
 		FD6C3E9F14C00BEB00C4883C /* blocks.png in Resources */ = {isa = PBXBuildFile; fileRef = AAEA834A0FD5704400F08728 /* blocks.png */; };
 		FD6C3EA014C00BEE00C4883C /* blocks-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E0CC4F7C12677DB400691051 /* blocks-hd.png */; };
+		FDA4D47514D9765F00B9AE2A /* NSObject+AutoMagicCoding.h in Headers */ = {isa = PBXBuildFile; fileRef = FDA4D47314D9765F00B9AE2A /* NSObject+AutoMagicCoding.h */; };
+		FDA4D47614D9765F00B9AE2A /* NSObject+AutoMagicCoding.m in Sources */ = {isa = PBXBuildFile; fileRef = FDA4D47414D9765F00B9AE2A /* NSObject+AutoMagicCoding.m */; };
 		FDE2306914C1722400B3610A /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = 50C1959C0EE4B90800829067 /* background.png */; };
 		FDE2306A14C1726D00B3610A /* powered.png in Resources */ = {isa = PBXBuildFile; fileRef = 5084D25C0EE5906100BD237C /* powered.png */; };
 		FDE2306B14C1728100B3610A /* TileMaps in Resources */ = {isa = PBXBuildFile; fileRef = 50CA8BF810B6AE340072E0D3 /* TileMaps */; };
@@ -4969,13 +4969,13 @@
 		E0FDACE5123DAC8300F25BB4 /* larabie-16-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "larabie-16-hd.png"; sourceTree = "<group>"; };
 		E0FDACE6123DAC8300F25BB4 /* larabie-16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "larabie-16.png"; sourceTree = "<group>"; };
 		E0FDACED123DAD0000F25BB4 /* tuffy_bold_italic-charmap-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tuffy_bold_italic-charmap-hd.png"; sourceTree = "<group>"; };
-		FD6C3E5114C0023D00C4883C /* NSObject+AutoMagicCoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+AutoMagicCoding.h"; sourceTree = "<group>"; };
-		FD6C3E5214C0023D00C4883C /* NSObject+AutoMagicCoding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+AutoMagicCoding.m"; sourceTree = "<group>"; };
 		FD6C3E9514C0032F00C4883C /* AMCTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AMCTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FD6C3E9814C003CD00C4883C /* AMCTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AMCTest.h; path = tests/AMCTest.h; sourceTree = "<group>"; };
 		FD6C3E9914C003CD00C4883C /* AMCTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AMCTest.m; path = tests/AMCTest.m; sourceTree = "<group>"; };
 		FD6C3E9B14C0069F00C4883C /* CCNodeRegistry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCNodeRegistry.h; path = cocos2d/CCNodeRegistry.h; sourceTree = SOURCE_ROOT; };
 		FD6C3E9C14C0069F00C4883C /* CCNodeRegistry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCNodeRegistry.m; path = cocos2d/CCNodeRegistry.m; sourceTree = SOURCE_ROOT; };
+		FDA4D47314D9765F00B9AE2A /* NSObject+AutoMagicCoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+AutoMagicCoding.h"; sourceTree = "<group>"; };
+		FDA4D47414D9765F00B9AE2A /* NSObject+AutoMagicCoding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+AutoMagicCoding.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -6221,7 +6221,7 @@
 		5018F2510DFDEAFF00C013A5 /* cocos2d */ = {
 			isa = PBXGroup;
 			children = (
-				FD6C3E5014C0023D00C4883C /* AutoMagicCoding */,
+				FDA4D47214D9765F00B9AE2A /* AutoMagicCoding */,
 				50A24F010F3788C6007CAEB0 /* Base Nodes */,
 				506414C50F9C67C0007A7B24 /* Label Nodes */,
 				506414C40F9C6792007A7B24 /* Sprite & Animation Nodes */,
@@ -7786,14 +7786,13 @@
 			path = iOS;
 			sourceTree = "<group>";
 		};
-		FD6C3E5014C0023D00C4883C /* AutoMagicCoding */ = {
+		FDA4D47214D9765F00B9AE2A /* AutoMagicCoding */ = {
 			isa = PBXGroup;
 			children = (
-				FD6C3E5114C0023D00C4883C /* NSObject+AutoMagicCoding.h */,
-				FD6C3E5214C0023D00C4883C /* NSObject+AutoMagicCoding.m */,
+				FDA4D47314D9765F00B9AE2A /* NSObject+AutoMagicCoding.h */,
+				FDA4D47414D9765F00B9AE2A /* NSObject+AutoMagicCoding.m */,
 			);
-			name = AutoMagicCoding;
-			path = AutoMagicCoding/AutoMagicCoding;
+			path = AutoMagicCoding;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -7888,8 +7887,8 @@
 				E02BB6D6126CA93A006E46A2 /* CCAnimationCache.h in Headers */,
 				E02BB704126CADEA006E46A2 /* CCAnimation.h in Headers */,
 				A0EF0A111443725B006A4302 /* CCParticleBatchNode.h in Headers */,
-				FD6C3E5314C0023D00C4883C /* NSObject+AutoMagicCoding.h in Headers */,
 				FD6C3E9D14C0069F00C4883C /* CCNodeRegistry.h in Headers */,
+				FDA4D47514D9765F00B9AE2A /* NSObject+AutoMagicCoding.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -12061,8 +12060,8 @@
 				E02BB6D7126CA93A006E46A2 /* CCAnimationCache.m in Sources */,
 				E02BB705126CADEA006E46A2 /* CCAnimation.m in Sources */,
 				A0EF0A121443725B006A4302 /* CCParticleBatchNode.m in Sources */,
-				FD6C3E5414C0023D00C4883C /* NSObject+AutoMagicCoding.m in Sources */,
 				FD6C3E9E14C0069F00C4883C /* CCNodeRegistry.m in Sources */,
+				FDA4D47614D9765F00B9AE2A /* NSObject+AutoMagicCoding.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

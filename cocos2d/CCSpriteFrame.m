@@ -28,7 +28,7 @@
 #import "CCTextureCache.h"
 #import "CCSpriteFrame.h"
 #import "ccMacros.h"
-#import "AutoMagicCoding/AutoMagicCoding/NSObject+AutoMagicCoding.h"
+#import "AutoMagicCoding/NSObject+AutoMagicCoding.h"
 #import "CCSpriteFrameCache.h"
 
 @implementation CCSpriteFrame

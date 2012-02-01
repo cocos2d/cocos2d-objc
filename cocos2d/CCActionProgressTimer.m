@@ -25,7 +25,7 @@
 
 
 #import "CCActionProgressTimer.h"
-#import "AutoMagicCoding/AutoMagicCoding/NSObject+AutoMagicCoding.h"
+#import "AutoMagicCoding/NSObject+AutoMagicCoding.h"
 
 #define kProgressTimerCast CCProgressTimer*
 

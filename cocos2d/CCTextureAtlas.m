@@ -32,7 +32,7 @@
 #import "CCTextureCache.h"
 #import "CGPointExtension.h"
 #import "CCDrawingPrimitives.h"
-#import "AutoMagicCoding/AutoMagicCoding/NSObject+AutoMagicCoding.h"
+#import "AutoMagicCoding/NSObject+AutoMagicCoding.h"
 
 
 @interface CCTextureAtlas (Private)

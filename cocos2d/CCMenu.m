@@ -30,7 +30,7 @@
 #import "CCDirector.h"
 #import "Support/CGPointExtension.h"
 #import "ccMacros.h"
-#import "AutoMagicCoding/AutoMagicCoding/NSObject+AutoMagicCoding.h"
+#import "AutoMagicCoding/NSObject+AutoMagicCoding.h"
 
 #import <Availability.h>
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED

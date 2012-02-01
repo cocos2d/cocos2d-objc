@@ -28,7 +28,7 @@
 #import "CCCamera.h"
 #import "ccMacros.h"
 #import "CCDrawingPrimitives.h"
-#import "AutoMagicCoding/AutoMagicCoding/NSObject+AutoMagicCoding.h"
+#import "AutoMagicCoding/NSObject+AutoMagicCoding.h"
 
 @implementation CCCamera
 

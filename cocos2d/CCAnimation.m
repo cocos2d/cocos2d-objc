@@ -30,7 +30,7 @@
 #import "CCTexture2D.h"
 #import "CCTextureCache.h"
 #import "CCAnimationCache.h"
-#import "AutoMagicCoding/AutoMagicCoding/NSObject+AutoMagicCoding.h"
+#import "AutoMagicCoding/NSObject+AutoMagicCoding.h"
 
 @implementation CCAnimation
 @synthesize name = name_, delay = delay_, frames = frames_;

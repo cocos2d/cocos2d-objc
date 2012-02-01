@@ -156,7 +156,7 @@
 //
 // AutoMagicCoding - NSCoding alternative
 //
-#import "AutoMagicCoding/AutoMagicCoding/NSObject+AutoMagicCoding.h"
+#import "AutoMagicCoding/NSObject+AutoMagicCoding.h"
 
 // free functions
 NSString * cocos2dVersion(void);

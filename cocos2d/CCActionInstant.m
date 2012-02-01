@@ -29,7 +29,7 @@
 #import "CCActionInstant.h"
 #import "CCNode.h"
 #import "CCSprite.h"
-#import "AutoMagicCoding/AutoMagicCoding/NSObject+AutoMagicCoding.h"
+#import "AutoMagicCoding/NSObject+AutoMagicCoding.h"
 #import "CCNodeRegistry.h"
 
 //

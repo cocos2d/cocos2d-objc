@@ -27,7 +27,7 @@
 #import "CCParallaxNode.h"
 #import "Support/CGPointExtension.h"
 #import "Support/ccCArray.h"
-#import "AutoMagicCoding/AutoMagicCoding/NSObject+AutoMagicCoding.h"
+#import "AutoMagicCoding/NSObject+AutoMagicCoding.h"
 
 @interface CGPointObject : NSObject
 {

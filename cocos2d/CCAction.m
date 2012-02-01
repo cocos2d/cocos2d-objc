@@ -32,7 +32,7 @@
 #import "CCAction.h"
 #import "CCActionInterval.h"
 #import "Support/CGPointExtension.h"
-#import "AutoMagicCoding/AutoMagicCoding/NSObject+AutoMagicCoding.h"
+#import "AutoMagicCoding/NSObject+AutoMagicCoding.h"
 
 //
 // Action Base Class

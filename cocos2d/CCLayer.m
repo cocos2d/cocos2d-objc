@@ -33,7 +33,7 @@
 #import "CCDirector.h"
 #import "ccMacros.h"
 #import "Support/CGPointExtension.h"
-#import "AutoMagicCoding/AutoMagicCoding/NSObject+AutoMagicCoding.h"
+#import "AutoMagicCoding/NSObject+AutoMagicCoding.h"
 
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 #import "Platforms/iOS/CCTouchDispatcher.h"

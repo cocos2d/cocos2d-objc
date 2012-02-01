@@ -30,7 +30,7 @@
 #import "CCNode.h"
 #import "CCCamera.h"
 #import "ccMacros.h"
-#import "AutoMagicCoding/AutoMagicCoding/NSObject+AutoMagicCoding.h"
+#import "AutoMagicCoding/NSObject+AutoMagicCoding.h"
 
 //
 // CameraAction

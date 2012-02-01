@@ -24,7 +24,7 @@
  */
 
 #import "CCActionTween.h"
-#import "AutoMagicCoding/AutoMagicCoding/NSObject+AutoMagicCoding.h"
+#import "AutoMagicCoding/NSObject+AutoMagicCoding.h"
 
 
 @implementation CCActionTween

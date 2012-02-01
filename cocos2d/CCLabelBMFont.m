@@ -42,7 +42,7 @@
 #import "Support/CCFileUtils.h"
 #import "Support/CGPointExtension.h"
 #import "Support/uthash.h"
-#import "AutoMagicCoding/AutoMagicCoding/NSObject+AutoMagicCoding.h"
+#import "AutoMagicCoding/NSObject+AutoMagicCoding.h"
 
 #pragma mark -
 #pragma mark FNTConfig Cache - free functions
