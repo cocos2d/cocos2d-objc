@@ -14,12 +14,11 @@
 	// Don't call super
 	// Init the window
 	window_ = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-	
-	
-	// Create an CCGLView with a RGB8 color buffer, and a depth buffer of 24-bits
+		
+	// Create an CCGLView with a RGB565 color buffer, and a depth buffer of 0-bits
 	CCGLView *glView = [CCGLView viewWithFrame:[window_ bounds]
-								   pixelFormat:kEAGLColorFormatRGBA8
-								   depthFormat:GL_DEPTH_COMPONENT24_OES
+								   pixelFormat:kEAGLColorFormatRGB565
+								   depthFormat:0	//GL_DEPTH_COMPONENT24_OES
 							preserveBackbuffer:NO
 									sharegroup:nil
 								 multiSampling:NO
@@ -42,7 +41,7 @@
 	
 	// 2D projection
 	[director_ setProjection:kCCDirectorProjection2D];
-	//	[director setProjection:kCCDirectorProjection3D];
+//	[director setProjection:kCCDirectorProjection3D];
 	
 	// Enables High Res mode (Retina Display) on iPhone 4 and maintains low res on all other devices
 //	if( ! [director_ enableRetinaDisplay:YES] )

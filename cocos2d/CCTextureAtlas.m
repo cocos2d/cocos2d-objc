@@ -38,6 +38,7 @@
 -(void) mapBuffers;
 
 
+
 #if CC_TEXTURE_ATLAS_USE_VAO
 -(void) setupVBOandVAO;
 #else
