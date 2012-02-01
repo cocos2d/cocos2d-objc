@@ -109,6 +109,7 @@ typedef struct _hashElement
  *    If you are running 7 Sequences of 2 actions, it will return array with count = 7.
  *
  * If target is nil, or doesn't run any actions - empty array (count = 0) will be returned.
+ * @since 1.1+ ("feature-amc" branch of github.com/psineur/cocos2d-iphone)
  */
 -(NSArray *) allActionsForTarget: (id) target;
 
