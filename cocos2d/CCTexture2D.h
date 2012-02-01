@@ -183,7 +183,7 @@ typedef enum {
  * load this texture again. Usually you don't need to change this key - it
  * should be used only by CCTextureCache.
  *
- * @since v1.1+ ("feature-amc-actions" branch of github.com/psineur/cocos2d-iphone)
+ * @since v1.1+ ("feature-amc" branch of github.com/psineur/cocos2d-iphone)
  */
 @property (nonatomic, readwrite, copy) NSString *key;
 

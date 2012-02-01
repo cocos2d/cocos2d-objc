@@ -56,7 +56,7 @@
  * equal to the one, that is used to hold spriteFrame in CCSpriteFrameCache.
  * Or nil if spriteFrame isn't present in CCSpriteFrameCache.
  *
- * @since v1.1+ ("feature-amc-actions" branch of github.com/psineur/cocos2d-iphone)
+ * @since v1.1+ ("feature-amc" branch of github.com/psineur/cocos2d-iphone)
  */
 @property (nonatomic, readwrite, copy) NSString *name;
 
