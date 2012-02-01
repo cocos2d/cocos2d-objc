@@ -210,7 +210,7 @@
 -(void)startWithTarget:(id)aTarget
 {
 	[super startWithTarget:aTarget];
-	[other_ startWithTarget:target_];
+	[other_ startOrContinueWithTarget:target_];
 }
 
 -(void) update: (ccTime) time
@@ -268,7 +268,7 @@
 -(void)startWithTarget:(id)aTarget
 {
 	[super startWithTarget:aTarget];
-	[other_ startWithTarget:target_];
+	[other_ startOrContinueWithTarget:target_];
 }
 
 -(void) update: (ccTime) time
@@ -318,7 +318,7 @@
 -(void)startWithTarget:(id)aTarget
 {
 	[super startWithTarget:aTarget];
-	[other_ startWithTarget:target_];
+	[other_ startOrContinueWithTarget:target_];
 }
 
 -(void) update: (ccTime) time

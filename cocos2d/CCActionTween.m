@@ -24,6 +24,7 @@
  */
 
 #import "CCActionTween.h"
+#import "AutoMagicCoding/AutoMagicCoding/NSObject+AutoMagicCoding.h"
 
 
 @implementation CCActionTween
@@ -66,6 +67,23 @@
 - (CCActionInterval *) reverse
 {
 	return [[self class] actionWithDuration:duration_ key:key_ from:to_ to:from_];
+}
+
+#pragma mark CCActionTween - AutoMagicCoding Support
+
+- (NSArray *) AMCKeysForDictionaryRepresentation
+{
+    return [[super AMCKeysForDictionaryRepresentation] arrayByAddingObjectsFromArray:
+            [NSArray arrayWithObjects: 
+             @"key_",
+             @"from_",
+             @"to_",
+             @"delta_",
+             nil]];
+}
+
+-(void) continueWithTarget:(id)aTarget
+{	
 }
 
 

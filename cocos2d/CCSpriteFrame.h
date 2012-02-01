@@ -46,7 +46,20 @@
 	CGPoint			offsetInPixels_;
 	CGSize			originalSizeInPixels_;
 	CCTexture2D		*texture_;
+    
+    NSString        *name_;
 }
+
+/** Name of the frame. Changed when frame added to CCSpriteFrameCache
+ * or removed from it.
+ * If you will not change this value manually - spriteframe's name will always be
+ * equal to the one, that is used to hold spriteFrame in CCSpriteFrameCache.
+ * Or nil if spriteFrame isn't present in CCSpriteFrameCache.
+ *
+ * @since v1.1+ ("feature-amc-actions" branch of github.com/psineur/cocos2d-iphone)
+ */
+@property (nonatomic, readwrite, copy) NSString *name;
+
 /** rect of the frame in points. If it is updated, then rectInPixels will be updated too. */
 @property (nonatomic,readwrite) CGRect rect;
 
@@ -85,8 +98,6 @@
  The originalSize is the size in points of the frame before being trimmed.
  */
 -(id) initWithTexture:(CCTexture2D*)texture rectInPixels:(CGRect)rect rotated:(BOOL)rotated offset:(CGPoint)offset originalSize:(CGSize)originalSize;
-
-// TODO: add key property and -isEqual: method. (Issue #9 in psineur/cocos2d-iphone)
 
 @end
 

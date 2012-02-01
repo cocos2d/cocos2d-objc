@@ -32,6 +32,7 @@
 #import "CCAction.h"
 #import "CCActionInterval.h"
 #import "Support/CGPointExtension.h"
+#import "AutoMagicCoding/AutoMagicCoding/NSObject+AutoMagicCoding.h"
 
 //
 // Action Base Class
@@ -41,6 +42,7 @@
 @implementation CCAction
 
 @synthesize tag = tag_, target = target_, originalTarget = originalTarget_;
+@synthesize started = started_;
 
 +(id) action
 {
@@ -74,13 +76,28 @@
 	return copy;
 }
 
+-(void)startOrContinueWithTarget:(id)target
+{
+    started_ = YES;
+	originalTarget_ = target_ = target;
+    
+    [self startWithTarget:target];
+}
+
 -(void) startWithTarget:(id)aTarget
 {
-	originalTarget_ = target_ = aTarget;
+    
+}
+
+-(void) continueWithTarget:(id)target
+{
+    // Should crash to warn about not-supported continue in CCAction.
+    NSAssert(NO, @"CCAction#continueWithTarget: called! This method must be reimplemented.");
 }
 
 -(void) stop
 {
+    started_ = NO;
 	target_ = nil;
 }
 
@@ -98,6 +115,20 @@
 {
 	NSLog(@"[Action update]. override me");
 }
+
+#pragma mark CCAction - AutoMagicCoding Support
+
++ (BOOL) AMCEnabled
+{
+    return YES;
+}
+
+- (NSArray *) AMCKeysForDictionaryRepresentation
+{
+    return [NSArray arrayWithObject: @"tag"];
+}
+
+
 @end
 
 //
@@ -113,6 +144,14 @@
 	CCLOG(@"cocos2d: FiniteTimeAction#reverse: Implement me");
 	return nil;
 }
+
+#pragma mark CCFiniteTimeAction - AutoMagicCoding Support
+
+- (NSArray *) AMCKeysForDictionaryRepresentation
+{
+    return [[super AMCKeysForDictionaryRepresentation] arrayByAddingObject:@"duration"];
+}
+
 @end
 
 
@@ -151,7 +190,7 @@
 -(void) startWithTarget:(id)aTarget
 {
 	[super startWithTarget:aTarget];
-	[innerAction_ startWithTarget:target_];
+	[innerAction_ startOrContinueWithTarget:target_];
 }
 
 -(void) step:(ccTime) dt
@@ -159,7 +198,9 @@
 	[innerAction_ step: dt];
 	if( [innerAction_ isDone] ) {
 		ccTime diff = innerAction_.elapsed - innerAction_.duration;
-		[innerAction_ startWithTarget:target_];
+        
+        [innerAction_ stop];
+		[innerAction_ startOrContinueWithTarget:target_];
 		
 		// to prevent jerk. issue #390, 1247
 		[innerAction_ step: 0.0f];
@@ -177,6 +218,14 @@
 {
 	return [CCRepeatForever actionWithAction:[innerAction_ reverse]];
 }
+
+#pragma mark CCRepeatForever - AutoMagicCoding Support
+
+- (NSArray *) AMCKeysForDictionaryRepresentation
+{
+    return [[super AMCKeysForDictionaryRepresentation] arrayByAddingObject:@"innerAction"];
+}
+
 @end
 
 //
@@ -217,7 +266,7 @@
 -(void) startWithTarget:(id)aTarget
 {
 	[super startWithTarget:aTarget];
-	[innerAction_ startWithTarget:target_];
+	[innerAction_ startOrContinueWithTarget:target_];
 }
 
 -(void) stop
@@ -240,6 +289,19 @@
 {
 	return [CCSpeed actionWithAction:[innerAction_ reverse] speed:speed_];
 }
+
+#pragma mark CCSpeed - AutoMagicCoding Support
+
+- (NSArray *) AMCKeysForDictionaryRepresentation
+{
+    return [[super AMCKeysForDictionaryRepresentation] arrayByAddingObjectsFromArray:
+            [NSArray arrayWithObjects:
+             @"speed",
+             @"innerAction",
+             nil]
+            ];
+}
+
 @end
 
 //
@@ -249,7 +311,7 @@
 #pragma mark Follow
 @implementation CCFollow
 
-@synthesize boundarySet;
+@synthesize boundarySet = boundarySet_;
 
 +(id) actionWithTarget:(CCNode *) fNode
 {
@@ -266,12 +328,7 @@
 	if( (self=[super init]) ) {
 	
 		followedNode_ = [fNode retain];
-		boundarySet = FALSE;
-		boundaryFullyCovered = FALSE;
-		
-		CGSize s = [[CCDirector sharedDirector] winSize];
-		fullScreenSize = CGPointMake(s.width, s.height);
-		halfScreenSize = ccpMult(fullScreenSize, .5f);
+		boundarySet_ = NO;		
 	}
 	
 	return self;
@@ -282,17 +339,33 @@
 	if( (self=[super init]) ) {
 	
 		followedNode_ = [fNode retain];
-		boundarySet = TRUE;
-		boundaryFullyCovered = FALSE;
-		
-		CGSize winSize = [[CCDirector sharedDirector] winSize];
-		fullScreenSize = CGPointMake(winSize.width, winSize.height);
-		halfScreenSize = ccpMult(fullScreenSize, .5f);
-		
-		leftBoundary = -((rect.origin.x+rect.size.width) - fullScreenSize.x);
-		rightBoundary = -rect.origin.x ;
-		topBoundary = -rect.origin.y;
-		bottomBoundary = -((rect.origin.y+rect.size.height) - fullScreenSize.y);
+		boundarySet_ = YES;
+        worldBoundary_ = rect;
+	}
+	
+	return self;
+}
+
+-(id) copyWithZone: (NSZone*) zone
+{
+	CCAction *copy = [[[self class] allocWithZone: zone] init];
+	copy.tag = tag_;
+	return copy;
+}
+
+-(void) step:(ccTime) dt
+{
+    CGSize winSize = [[CCDirector sharedDirector] winSize];
+    CGPoint fullScreenSize = CGPointMake(winSize.width, winSize.height);
+    CGPoint halfScreenSize = ccpMult(fullScreenSize, .5f);
+    BOOL boundaryFullyCovered = NO;
+    
+	if(boundarySet_)
+	{       
+		float leftBoundary = -((worldBoundary_.origin.x+worldBoundary_.size.width) - fullScreenSize.x);
+		float rightBoundary = -worldBoundary_.origin.x ;
+		float topBoundary = -worldBoundary_.origin.y;
+		float bottomBoundary = -((worldBoundary_.origin.y+worldBoundary_.size.height) - fullScreenSize.y);
 		
 		if(rightBoundary < leftBoundary)
 		{
@@ -308,23 +381,8 @@
 		}
 		
 		if( (topBoundary == bottomBoundary) && (leftBoundary == rightBoundary) )
-			boundaryFullyCovered = TRUE;
-	}
-	
-	return self;
-}
-
--(id) copyWithZone: (NSZone*) zone
-{
-	CCAction *copy = [[[self class] allocWithZone: zone] init];
-	copy.tag = tag_;
-	return copy;
-}
-
--(void) step:(ccTime) dt
-{
-	if(boundarySet)
-	{
+			boundaryFullyCovered = YES;
+        
 		// whole map fits inside a single screen, no need to modify the position - unless map boundaries are increased
 		if(boundaryFullyCovered)
 			return;
@@ -352,6 +410,70 @@
 {
 	[followedNode_ release];
 	[super dealloc];
+}
+
+#pragma mark CCFollow - AutoMagicCoding Support
+
+@dynamic followedNodeName;
+@synthesize worldBoundary = worldBoundary_;
+
+-(NSString *) followedNodeName
+{
+    if (followedNode_)
+        return followedNode_.name;
+    
+    return followedNodeName_;
+}
+
+- (void) setFollowedNodeName:(NSString *)followedNodeName
+{
+    if (started_)
+    {
+        CCNode *node = [[CCNodeRegistry sharedRegistry] nodeByName:followedNodeName_];
+        if (node && node != followedNode_)
+        {
+            [followedNode_ release];
+            followedNode_ = [node retain];
+        }
+    }
+    else
+    {
+        if (followedNodeName != followedNodeName_)
+        {
+            [followedNodeName_ release];
+            followedNodeName_ = [followedNodeName retain];
+        }
+    }
+}
+
+- (void) startWithTarget:(id)target
+{
+    if (followedNodeName_)
+    {
+        CCNode *node = [[CCNodeRegistry sharedRegistry] nodeByName:followedNodeName_];
+        [followedNodeName_ release];
+        followedNodeName_ = nil;
+        
+        if (node)
+        {
+            [followedNode_ release];
+            followedNode_ = [node retain];
+        }
+        else
+        {
+            CCLOGERROR(@"CCFollow#startWithTarget: can't set followedNode by it's name. Action will be stoped.");
+        }
+    }
+}
+
+- (NSArray *) AMCKeysForDictionaryRepresentation
+{
+    return [[super AMCKeysForDictionaryRepresentation] arrayByAddingObjectsFromArray: 
+            [NSArray arrayWithObjects: 
+             @"followedNodeName", 
+             @"boundarySet",
+             @"worldBoundary",
+             nil] ];
 }
 
 @end

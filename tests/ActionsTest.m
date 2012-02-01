@@ -38,7 +38,7 @@ static NSString *transitions[] = {
 	@"ActionRepeat",
 	@"ActionRepeatForever",
 	@"ActionRotateToRepeat",
-	@"ActionRotateJerk",
+	@"ActionRotateJerkSpeed",
 	@"ActionCallFunc",
 	@"ActionCallFuncND",
 	@"ActionCallBlock",
@@ -47,6 +47,7 @@ static NSString *transitions[] = {
 	@"ActionOrbit",
 	@"ActionFollow",
 	@"ActionProperty",
+    @"ActionProgress",
 };
 
 Class nextAction()
@@ -77,85 +78,46 @@ Class restartAction()
 }
 
 
+@implementation ActionDemoInsideLayer
 
-
-
-@implementation ActionDemo
 -(id) init
 {
 	if( (self=[super init])) {
-	
+        
 		grossini = [[CCSprite alloc] initWithFile:@"grossini.png"];
 		tamara = [[CCSprite alloc] initWithFile:@"grossinis_sister1.png"];
 		kathia = [[CCSprite alloc] initWithFile:@"grossinis_sister2.png"];
+        
+        grossini.name = @"grossini";
+        tamara.name = @"tamara";
+        kathia.name = @"kathia";
 		
 		[self addChild:grossini z:1];
 		[self addChild:tamara z:2];
 		[self addChild:kathia z:3];
-
+        
 		CGSize s = [[CCDirector sharedDirector] winSize];
 		
 		[grossini setPosition: ccp(s.width/2, s.height/3)];
 		[tamara setPosition: ccp(s.width/2, 2*s.height/3)];
 		[kathia setPosition: ccp(s.width/2, s.height/2)];
-		
-		CCLabelTTF* label = [CCLabelTTF labelWithString:[self title] fontName:@"Arial" fontSize:32];
-		[self addChild: label];
-		[label setPosition: ccp(s.width/2, s.height-50)];
-		
-		NSString *subtitle = [self subtitle];
-		if( subtitle ) {
-			CCLabelTTF* l = [CCLabelTTF labelWithString:subtitle fontName:@"Thonburi" fontSize:16];
-			[self addChild:l z:1];
-			[l setPosition:ccp(s.width/2, s.height-80)];
-		}
-		
-
-		CCMenuItemImage *item1 = [CCMenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
-		CCMenuItemImage *item2 = [CCMenuItemImage itemFromNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
-		CCMenuItemImage *item3 = [CCMenuItemImage itemFromNormalImage:@"f1.png" selectedImage:@"f2.png" target:self selector:@selector(nextCallback:)];
-		
-		CCMenu *menu = [CCMenu menuWithItems:item1, item2, item3, nil];
-		menu.position = CGPointZero;
-		item1.position = ccp( s.width/2 - 100,30);
-		item2.position = ccp( s.width/2, 30);
-		item3.position = ccp( s.width/2 + 100,30);
-		[self addChild: menu z:1];
-	}
-
-	return self;
+    }
+    
+    return self;
 }
 
--(void) dealloc
+- (id) initWithDictionaryRepresentation:(NSDictionary *)aDict
 {
-	[grossini release];
-	[tamara release];
-	[kathia release];
-	[super dealloc];
+    self = [super initWithDictionaryRepresentation:aDict];
+    if (self)
+    {
+        grossini = (CCSprite *)[[[CCNodeRegistry sharedRegistry] nodeByName:@"grossini"] retain];
+        tamara = (CCSprite *)[[[CCNodeRegistry sharedRegistry] nodeByName:@"tamara"] retain];
+        kathia = (CCSprite *)[[[CCNodeRegistry sharedRegistry] nodeByName:@"kathia"] retain];
+    }
+    
+    return self;
 }
-
-
--(void) restartCallback: (id) sender
-{
-	CCScene *s = [CCScene node];
-	[s addChild: [restartAction() node]];
-	[[CCDirector sharedDirector] replaceScene: s];
-}
-
--(void) nextCallback: (id) sender
-{
-	CCScene *s = [CCScene node];
-	[s addChild: [nextAction() node]];
-	[[CCDirector sharedDirector] replaceScene: s];
-}
-
--(void) backCallback: (id) sender
-{
-	CCScene *s = [CCScene node];
-	[s addChild: [backAction() node]];
-	[[CCDirector sharedDirector] replaceScene: s];
-}
-
 
 -(void) alignSpritesLeft:(unsigned int)numberOfSprites
 {
@@ -200,22 +162,193 @@ Class restartAction()
 		CCLOG(@"ActionsTests: Invalid number of Sprites");
 	}
 }
+
+-(void) dealloc
+{
+	[grossini release];
+	[tamara release];
+	[kathia release];
+	[super dealloc];
+}
+
+@end
+
+enum nodeTags
+{
+    kLayer,
+};
+
+@protocol DemoTitleProvider <NSObject>
+
+- (NSString *) title;
+- (NSString *) subtitle;
+
+@end
+
+@implementation ActionDemo
+
+- (NSString *) testFilePath
+{    
+    NSString *filename = [NSString stringWithFormat:@"%@.plist", [self className] ];
+    
+    NSArray *paths					= NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+	NSString *documentsDirectory	= [paths objectAtIndex:0];
+	NSString *fullPath				= [documentsDirectory stringByAppendingPathComponent: filename ];
+	return fullPath;
+}
+
+- (void) save
+{    
+    CCNode *layer = [self getChildByTag: kLayer];
+    NSDictionary *dict = [layer dictionaryRepresentation];
+    [dict writeToFile:[self testFilePath] atomically:YES];
+}
+
+- (void) purge
+{
+    [self removeChildByTag: kLayer cleanup:YES];
+    
+    [CCAnimationCache purgeSharedAnimationCache];
+    [CCSpriteFrameCache purgeSharedSpriteFrameCache];
+    [CCTextureCache purgeSharedTextureCache];    
+}
+
+- (void) load
+{
+    NSString *path = [self testFilePath];
+    NSDictionary *aDict = [NSDictionary dictionaryWithContentsOfFile: path];
+    CCLayer *layer = [NSObject objectWithDictionaryRepresentation: aDict ];    
+    
+	[self addChild: layer z: 0 tag: kLayer];
+}
+
+- (void) savePurgeLoadCallback: (id) sender
+{
+    CCMenuItemToggle *toggle = (CCMenuItemToggle *)sender;
+    NSUInteger selected = toggle.selectedIndex;
+    switch (selected) {
+        case 0:
+            NSLog(@"Loading...");
+            [self load];
+            break;
+        case 1:
+            NSLog(@"Saving...");
+            [self save];
+            break;
+        case 2:
+            NSLog(@"Purging...");
+            [self purge];
+            break;
+            
+    }
+    
+}
+
++ (id) nodeWithInsideLayer: (CCLayer *) insideLayer
+{
+    return [[[self alloc] initWithInsideLayer: insideLayer] autorelease];
+}
+
+- (id) initWithInsideLayer: (CCLayer *) insideLayer
+{
+	if( (self=[super init])) {
+	
+		[self addChild:insideLayer z:0 tag:kLayer];
+        
+        CGSize s = [[CCDirector sharedDirector] winSize];
+		
+		CCLabelTTF* label = [CCLabelTTF labelWithString:[self title] fontName:@"Arial" fontSize:32];
+		[self addChild: label];
+		[label setPosition: ccp(s.width/2, s.height-50)];
+		
+		NSString *subtitle = [self subtitle];
+		if( subtitle ) {
+			CCLabelTTF* l = [CCLabelTTF labelWithString:subtitle fontName:@"Thonburi" fontSize:16];
+			[self addChild:l z:1];
+			[l setPosition:ccp(s.width/2, s.height-80)];
+		}
+		
+
+		CCMenuItemImage *item1 = [CCMenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
+		CCMenuItemImage *item2 = [CCMenuItemImage itemFromNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
+		CCMenuItemImage *item3 = [CCMenuItemImage itemFromNormalImage:@"f1.png" selectedImage:@"f2.png" target:self selector:@selector(nextCallback:)];
+        
+        CCMenuItemLabel *save = [CCMenuItemLabel itemWithLabel: [CCLabelTTF labelWithString: @"Save" fontName: @"Marker Felt" fontSize:18]];
+        CCMenuItemLabel *purge = [CCMenuItemLabel itemWithLabel: [CCLabelTTF labelWithString: @"Purge" fontName: @"Marker Felt" fontSize:18]];
+        CCMenuItemLabel *load = [CCMenuItemLabel itemWithLabel: [CCLabelTTF labelWithString: @"Load" fontName: @"Marker Felt" fontSize:18]];
+        CCMenuItem *trigger = [CCMenuItemToggle itemWithTarget:self selector: @selector(savePurgeLoadCallback:) items: save, purge, load, nil];
+        
+		
+		CCMenu *menu = [CCMenu menuWithItems:item1, item2, item3, trigger, nil];
+		menu.position = CGPointZero;
+		item1.position = ccp( s.width/2 - 100,30);
+		item2.position = ccp( s.width/2, 30);
+		item3.position = ccp( s.width/2 + 100,30);
+        trigger.position = ccp( 0.5f * s.width, 0.25f * s.height);
+		[self addChild: menu z:1];
+	}
+
+	return self;
+}
+
+-(void) restartCallback: (id) sender
+{
+	CCScene *s = [CCScene node];
+	[s addChild: [ActionDemo nodeWithInsideLayer: [restartAction() node]]];
+	[[CCDirector sharedDirector] replaceScene: s];
+}
+
+-(void) nextCallback: (id) sender
+{
+	CCScene *s = [CCScene node];
+	[s addChild: [ActionDemo nodeWithInsideLayer: [nextAction() node]]];
+	[[CCDirector sharedDirector] replaceScene: s];
+}
+
+-(void) backCallback: (id) sender
+{
+	CCScene *s = [CCScene node];
+	[s addChild: [ActionDemo nodeWithInsideLayer: [backAction() node]]];
+	[[CCDirector sharedDirector] replaceScene: s];
+}
+
+-(CCLayer *) insideLayer
+{
+    return (CCLayer *)[self getChildByTag: kLayer];
+}
+
 -(NSString*) title
 {
+    id<DemoTitleProvider> titleProvider = (id<DemoTitleProvider>)[self insideLayer];
+    
+    if ([titleProvider respondsToSelector: @selector(title)])
+    {
+        return [titleProvider title];
+    }
+    
 	return @"No title";
 }
 
 -(NSString*) subtitle
 {
+	id<DemoTitleProvider> titleProvider = (id<DemoTitleProvider>)[self insideLayer];
+    
+    if ([titleProvider respondsToSelector: @selector(subtitle)])
+    {
+        return [titleProvider subtitle];
+    }
+    
 	return nil;
 }
 @end
 
 
 @implementation ActionManual
--(void) onEnter
+-(id) init
 {
-	[super onEnter];
+    self = [super init];
+    if (!self)
+        return nil;
 
 	
 	CGSize s = [CCDirector sharedDirector].winSize;
@@ -232,6 +365,8 @@ Class restartAction()
 	
 	kathia.position = ccp(s.width-100, s.height/2);
 	kathia.color = ccBLUE;
+    
+    return self;
 }
 
 -(NSString *) title
@@ -242,9 +377,11 @@ Class restartAction()
 
 
 @implementation ActionMove
--(void) onEnter
+-(id) init
 {
-	[super onEnter];
+    self = [super init];
+    if (!self)
+        return nil;
 	
 	[self centerSprites:3];
 
@@ -259,6 +396,8 @@ Class restartAction()
 	[tamara runAction: actionTo];
 	[grossini runAction: [CCSequence actions:actionBy, actionByBack, nil]];
 	[kathia runAction:[ CCMoveTo actionWithDuration:1 position:ccp(40,40)]];
+    
+    return self;
 }
 -(NSString *) title
 {
@@ -267,9 +406,11 @@ Class restartAction()
 @end
 
 @implementation ActionRotate
--(void) onEnter
+-(id) init
 {
-	[super onEnter];
+    self = [super init];
+    if (!self)
+        return nil;
 	
 	[self centerSprites:3];
 		
@@ -283,8 +424,10 @@ Class restartAction()
 	[grossini runAction: [CCSequence actions:actionBy, actionByBack, nil]];
 
 	[kathia runAction: [CCSequence actions:actionTo2, [[actionTo0 copy] autorelease], nil]];
-	
+    
+    return self;
 }
+
 -(NSString *) title
 {
 	return @"RotateTo / RotateBy";
@@ -293,9 +436,11 @@ Class restartAction()
 @end
 
 @implementation ActionScale
--(void) onEnter
+-(id) init
 {
-	[super onEnter];
+    self = [super init];
+    if (!self)
+        return nil;
 
 	[self centerSprites:3];
 	
@@ -308,8 +453,10 @@ Class restartAction()
 	[grossini runAction: [CCSequence actions:actionBy, actionByBack, nil]];
 	
 	[kathia runAction: [CCSequence actions:actionBy2, [actionBy2 reverse], nil]];
-	
+
+	return self;
 }
+
 -(NSString *) title
 {
 	return @"ScaleTo / ScaleBy";
@@ -318,9 +465,11 @@ Class restartAction()
 @end
 
 @implementation ActionSkew
--(void) onEnter
+-(id) init
 {
-	[super onEnter];
+    self = [super init];
+    if (!self)
+        return nil;
 	
 	[self centerSprites:3];
 	
@@ -334,7 +483,10 @@ Class restartAction()
 	[grossini runAction: [CCSequence actions:actionBy, actionByBack, nil]];
 	
 	[kathia runAction: [CCSequence actions:actionBy2, [actionBy2 reverse], nil]];	
+    
+    return self;
 }
+
 -(NSString *) title
 {
 	return @"SkewTo / SkewBy";
@@ -343,9 +495,11 @@ Class restartAction()
 @end
 
 @implementation ActionSkewRotateScale
--(void) onEnter
+-(id) init
 {
-	[super onEnter];
+    self = [super init];
+    if (!self)
+        return nil;
 	
 	[tamara removeFromParentAndCleanup:YES];
 	[grossini removeFromParentAndCleanup:YES];
@@ -383,6 +537,8 @@ Class restartAction()
 	[box runAction:[CCSequence actions:actionTo, actionToBack, nil]];
 	[box runAction:[CCSequence actions:rotateTo, rotateToBack, nil]];
 	[box runAction:[CCSequence actions:actionScaleTo, actionScaleToBack, nil]];
+    
+    return self;
 }
 -(NSString *) title
 {
@@ -393,9 +549,11 @@ Class restartAction()
 
 
 @implementation ActionJump
--(void) onEnter
+-(id) init
 {
-	[super onEnter];
+    self = [super init];
+    if (!self)
+        return nil;
 			
 	id actionTo = [CCJumpTo actionWithDuration:2 position:ccp(300,300) height:50 jumps:4];
 	id actionBy = [CCJumpBy actionWithDuration:2 position:ccp(300,0) height:50 jumps:4];
@@ -404,7 +562,9 @@ Class restartAction()
 	
 	[tamara runAction: actionTo];
 	[grossini runAction: [CCSequence actions:actionBy, actionByBack, nil]];
-	[kathia runAction: [CCRepeatForever actionWithAction:actionUp]];
+	[kathia runAction: [CCRepeatForever actionWithAction:actionUp]];    
+    
+    return self;
 }
 -(NSString *) title
 {
@@ -413,9 +573,11 @@ Class restartAction()
 @end
 
 @implementation ActionBezier
--(void) onEnter
+-(id) init
 {
-	[super onEnter];
+    self = [super init];
+    if (!self)
+        return nil;
 	
 	CGSize s = [[CCDirector sharedDirector] winSize];
 	
@@ -452,8 +614,10 @@ Class restartAction()
 	[grossini runAction: rep];
 	[tamara runAction:bezierTo1];
 	[kathia runAction:bezierTo2];
-
+    
+    return self;
 }
+
 -(NSString *) title
 {
 	return @"BezierBy / BezierTo";
@@ -462,9 +626,11 @@ Class restartAction()
 
 
 @implementation ActionBlink
--(void) onEnter
+-(id) init
 {
-	[super onEnter];
+    self = [super init];
+    if (!self)
+        return nil;
 	
 	[self centerSprites:3];
 	
@@ -475,6 +641,9 @@ Class restartAction()
 	[tamara runAction: action1];
 	[kathia runAction:action2];
 	[grossini runAction:action3];
+    
+    
+    return self;
 }
 -(NSString *) title
 {
@@ -483,11 +652,13 @@ Class restartAction()
 @end
 
 @implementation ActionFade
--(void) onEnter
+-(id) init
 {
-	[super onEnter];
+    self = [super init];
+    if (!self)
+        return nil;
 	
-	[self centerSprites:2];
+	[self centerSprites:3];
 	
 	tamara.opacity = 0;
 	id action1 = [CCFadeIn actionWithDuration:1.0f];
@@ -495,20 +666,29 @@ Class restartAction()
 	
 	id action2 = [CCFadeOut actionWithDuration:1.0f];
 	id action2Back = [action2 reverse];
+    
+    grossini.opacity = 128;
+    id action3 = [CCFadeTo actionWithDuration:1.0f opacity:0];
+    id action3Back = [CCFadeTo actionWithDuration:1.0f opacity:128];
 	
 	[tamara runAction: [CCSequence actions: action1, action1Back, nil]];
 	[kathia runAction: [CCSequence actions: action2, action2Back, nil]];
+    [grossini runAction: [CCSequence actions: action3, action3Back, nil]];
+    
+    return self;
 }
 -(NSString *) title
 {
-	return @"FadeIn / FadeOut";
+	return @"FadeIn / FadeOut / FadeTo";
 }
 @end
 
 @implementation ActionTint
--(void) onEnter
+-(id) init
 {
-	[super onEnter];
+    self = [super init];
+    if (!self)
+        return nil;
 	
 	[self centerSprites:2];
 	
@@ -518,6 +698,8 @@ Class restartAction()
 	
 	[tamara runAction: action1];
 	[kathia runAction: [CCSequence actions: action2, action2Back, nil]];
+    
+    return self;
 }
 -(NSString *) title
 {
@@ -526,9 +708,11 @@ Class restartAction()
 @end
 
 @implementation ActionAnimate
--(void) onEnter
+-(id) init
 {
-	[super onEnter];
+    self = [super init];
+    if (!self)
+        return nil;
 	
 	[self centerSprites:1];
 	
@@ -540,6 +724,8 @@ Class restartAction()
 	id action_back = [action reverse];
 	
 	[grossini runAction: [CCSequence actions: action, action_back, nil]];
+    
+    return self;
 }
 -(NSString *) title
 {
@@ -549,9 +735,11 @@ Class restartAction()
 
 
 @implementation ActionSequence
--(void) onEnter
+-(id) init
 {
-	[super onEnter];
+    self = [super init];
+    if (!self)
+        return nil;
 	
 	[self alignSpritesLeft:1];
 
@@ -561,6 +749,8 @@ Class restartAction()
 				 nil];
 	
 	[grossini runAction:action];
+    
+    return self;
 }
 -(NSString *) title
 {
@@ -569,11 +759,14 @@ Class restartAction()
 @end
 
 @implementation ActionSequence2
--(void) onEnter
+-(id) init
 {
-	[super onEnter];
+    self = [super init];
+    if (!self)
+        return nil;
 	
 	[self alignSpritesLeft:1];
+    self.name = @"ActionSequence2";
 
 	[grossini setVisible:NO];
 	
@@ -581,12 +774,27 @@ Class restartAction()
 				 [CCPlace actionWithPosition:ccp(200,200)],
 				 [CCShow action],
 				 [CCMoveBy actionWithDuration:1 position:ccp(100,0)],
+                 [CCFlipX actionWithFlipX:YES],
+                 [CCDelayTime actionWithDuration: 0.5f],
+                 [CCFlipY actionWithFlipY:YES],
+                 [CCDelayTime actionWithDuration: 0.5f],
+                 [CCFlipX actionWithFlipX:NO],
+                 [CCDelayTime actionWithDuration: 0.5f],
+                 [CCFlipY actionWithFlipY:NO],
+                 [CCDelayTime actionWithDuration: 0.5f],
+                 [CCToggleVisibility action],
+                 [CCDelayTime actionWithDuration: 0.5f],
+                 [CCToggleVisibility action],
+                 [CCDelayTime actionWithDuration: 0.5f],
+                 [CCHide action],
 				 [CCCallFunc actionWithTarget:self selector:@selector(callback1)],
 				 [CCCallFuncN actionWithTarget:self selector:@selector(callback2:)],
 				 [CCCallFuncND actionWithTarget:self selector:@selector(callback3:data:) data:(void*)0xbebabeba],
 				 nil];
 	
 	[grossini runAction:action];
+    
+    return self;
 }
 
 -(void) callback1
@@ -624,9 +832,11 @@ Class restartAction()
 @end
 
 @implementation ActionSpawn
--(void) onEnter
+-(id) init
 {
-	[super onEnter];
+    self = [super init];
+    if (!self)
+        return nil;
 	
 	[self alignSpritesLeft:1];
 
@@ -637,6 +847,8 @@ Class restartAction()
 				 nil];
 	
 	[grossini runAction:action];
+    
+    return self;
 }
 -(NSString *) title
 {
@@ -645,9 +857,11 @@ Class restartAction()
 @end
 
 @implementation ActionRepeatForever
--(void) onEnter
+-(id) init
 {
-	[super onEnter];
+    self = [super init];
+    if (!self)
+        return nil;
 	
 	[self centerSprites:1];
 	
@@ -657,6 +871,8 @@ Class restartAction()
 				 nil];
 	
 	[grossini runAction:action];
+    
+    return self;
 }
 
 -(void) repeatForever:(id)sender
@@ -674,9 +890,11 @@ Class restartAction()
 @end
 
 @implementation ActionRotateToRepeat
--(void) onEnter
+-(id) init
 {
-	[super onEnter];
+    self = [super init];
+    if (!self)
+        return nil;
 	
 	[self centerSprites:2];
 	
@@ -688,7 +906,8 @@ Class restartAction()
 	
 	[tamara runAction:rep1];
 	[kathia runAction:rep2];
-
+    
+    return self;
 }
 
 -(NSString *) title
@@ -702,10 +921,12 @@ Class restartAction()
 
 @end
 
-@implementation ActionRotateJerk
--(void) onEnter
+@implementation ActionRotateJerkSpeed
+-(id) init
 {
-	[super onEnter];
+    self = [super init];
+    if (!self)
+        return nil;
 	
 	[self centerSprites:2];
 	
@@ -714,16 +935,18 @@ Class restartAction()
 				  [CCRotateTo actionWithDuration:0.5f angle:20],
 			  nil];
 	
-	id rep1 = [CCRepeat actionWithAction:seq times:10];
-	id rep2 = [CCRepeatForever actionWithAction: [[seq copy] autorelease] ];
+	id rep1 = [CCSpeed actionWithAction: [CCRepeat actionWithAction:seq times:10]  speed: 2.0f];
+	id rep2 = [CCSpeed actionWithAction: [CCRepeatForever actionWithAction: [[seq copy] autorelease] ] speed: 0.5f ];
 	
 	[tamara runAction:rep1];
 	[kathia runAction:rep2];
+    
+    return self;
 }
 
 -(NSString *) title
 {
-	return @"RepeatForever / Repeat + Rotate";
+	return @"Speed of RepeatForever / Repeat";
 }
 -(NSString *) subtitle
 {
@@ -733,45 +956,69 @@ Class restartAction()
 
 
 @implementation ActionReverse
--(void) onEnter
+-(id) init
 {
-	[super onEnter];
+    self = [super init];
+    if (!self)
+        return nil;
 	
-	[self alignSpritesLeft:1];
+	[self alignSpritesLeft:2];
 	
 	id jump = [CCJumpBy actionWithDuration:2 position:ccp(300,0) height:50 jumps:4];
 	id action = [CCSequence actions: jump, [jump reverse], nil];
+    
+    CGPoint tamarasStartPoint = [tamara position];
+    id jump2 = [[jump copy] autorelease];
+    id jumpReversedWithTime = [CCReverseTime actionWithAction: jump2];
+	id action2 = [CCSequence actions: jump2, [CCPlace actionWithPosition: tamarasStartPoint], jumpReversedWithTime, nil];
 	
-	[grossini runAction:action];
+	[kathia runAction:action];
+    [tamara runAction:action2];
+    
+    return self;
 }
+
 -(NSString *) title
 {
-	return @"Reverse an action";
+	return @"Reverse / CCReverseTime";
 }
 @end
 
 @implementation ActionDelayTime
--(void) onEnter
+-(id) init
 {
-	[super onEnter];
+    self = [super init];
+    if (!self)
+        return nil;
 	
 	[self alignSpritesLeft:1];
 	
 	id move = [CCMoveBy actionWithDuration:1 position:ccp(150,0)];
-	id action = [CCSequence actions: move, [CCDelayTime actionWithDuration:2], move, nil];
+	id action = [CCSequence actions: move, [CCDelayTime actionWithDuration:2], [[move copy] autorelease], [CCDelayTime actionWithDuration:2], [[move copy] autorelease], nil];
 	
 	[grossini runAction:action];
+    
+    return self;
 }
+
 -(NSString *) title
 {
-	return @"DelayTime: m + delay + m";
+	return @"DelayTime:";
 }
+
+- (NSString *) subtitle
+{
+     return @"m + delay + m + delay + m";
+}
+
 @end
 
 @implementation ActionReverseSequence
--(void) onEnter
+-(id) init
 {
-	[super onEnter];
+    self = [super init];
+    if (!self)
+        return nil;
 	
 	[self alignSpritesLeft:1];
 
@@ -781,7 +1028,10 @@ Class restartAction()
 	id action = [CCSequence actions: seq, [seq reverse], nil];
 	
 	[grossini runAction:action];
+    
+    return self;
 }
+
 -(NSString *) title
 {
 	return @"Reverse a sequence";
@@ -789,9 +1039,11 @@ Class restartAction()
 @end
 
 @implementation ActionReverseSequence2
--(void) onEnter
+-(id) init
 {
-	[super onEnter];
+    self = [super init];
+    if (!self)
+        return nil;
 	
 	[self alignSpritesLeft:2];
 
@@ -818,7 +1070,11 @@ Class restartAction()
 	id seq_tamara = [CCSequence actions: move_tamara, hide, move_tamara2, nil];
 	id seq_back = [seq_tamara reverse];
 	[tamara runAction: [CCSequence actions: seq_tamara, seq_back, nil]];
+
+    
+    return self;
 }
+
 -(NSString *) title
 {
 	return @"Reverse sequence 2";
@@ -827,9 +1083,11 @@ Class restartAction()
 
 
 @implementation ActionRepeat
--(void) onEnter
+-(id) init
 {
-	[super onEnter];
+    self = [super init];
+    if (!self)
+        return nil;
 	
 	[self alignSpritesLeft:2];
 
@@ -844,7 +1102,10 @@ Class restartAction()
 	
 	[kathia runAction:action1];
 	[tamara runAction:action2];
+
+    return self;
 }
+
 -(NSString *) title
 {
 	return @"Repeat / RepeatForever actions";
@@ -852,11 +1113,14 @@ Class restartAction()
 @end
 
 @implementation ActionCallFunc
--(void) onEnter
+-(id) init
 {
-	[super onEnter];
+    self = [super init];
+    if (!self)
+        return nil;
 	
 	[self centerSprites:3];
+    self.name = @"ActionCallFunc";
 		
 		
 	id action = [CCSequence actions:
@@ -879,6 +1143,8 @@ Class restartAction()
 	[grossini runAction:action];
 	[tamara runAction:action2];
 	[kathia runAction:action3];
+
+    return self;
 }
 
 -(void) callback1
@@ -918,9 +1184,11 @@ Class restartAction()
 @end
 
 @implementation ActionCallFuncND
--(void) onEnter
+-(id) init
 {
-	[super onEnter];
+    self = [super init];
+    if (!self)
+        return nil;
 	
 	[self centerSprites:1];
 	
@@ -930,6 +1198,9 @@ Class restartAction()
 				 [CCCallFuncND actionWithTarget:grossini selector:@selector(removeFromParentAndCleanup:) data:(void*)YES],
 				 nil];
 	[grossini runAction:action];
+
+    
+    return self;
 }
 
 -(NSString *) title
@@ -945,9 +1216,11 @@ Class restartAction()
 @end
 
 @implementation ActionCallBlock
--(void) onEnter
+-(id) init
 {
-	[super onEnter];
+    self = [super init];
+    if (!self)
+        return nil;
 	
 	[self centerSprites:1];
 	
@@ -960,6 +1233,9 @@ Class restartAction()
 				  } ],
 				  nil ];
 	[grossini runAction:action];
+
+    
+    return self;
 }
 
 -(NSString *) title
@@ -976,9 +1252,11 @@ Class restartAction()
 
 
 @implementation ActionOrbit
--(void) onEnter
+-(id) init
 {
-	[super onEnter];
+    self = [super init];
+    if (!self)
+        return nil;
 
 	[self centerSprites:3];
 	
@@ -1011,6 +1289,9 @@ Class restartAction()
 	[kathia runAction:rfe];
 	[tamara runAction:[[rfe copy] autorelease]];
 	[grossini runAction:[[rfe copy] autorelease]];
+
+    
+    return self;
 }
 
 
@@ -1021,9 +1302,11 @@ Class restartAction()
 @end
 
 @implementation ActionFollow
--(void) onEnter
+-(id) init
 {
-	[super onEnter];
+    self = [super init];
+    if (!self)
+        return nil;
 	
 	[self centerSprites:1];
 
@@ -1037,10 +1320,12 @@ Class restartAction()
 	id rep = [CCRepeatForever actionWithAction:seq];
 	
 	
-	[grossini runAction:rep];
-	
+	[grossini runAction:rep];	
 	
 	[self runAction:[CCFollow actionWithTarget:grossini worldBoundary:CGRectMake(0, 0, (winSize.width*2)-100, winSize.height)]];
+
+    
+    return self;
 }
 
 -(void) draw
@@ -1068,9 +1353,11 @@ Class restartAction()
 @end
 
 @implementation ActionProperty
--(void) onEnter
+-(id) init
 {
-	[super onEnter];
+    self = [super init];
+    if (!self)
+        return nil;
 	
 	[self centerSprites:3];
 
@@ -1089,6 +1376,9 @@ Class restartAction()
 	[grossini runAction:rot_seq];
 	[tamara runAction:scale_seq];
 	[kathia runAction:opacity_seq];
+
+    
+    return self;
 }
 
 -(NSString *) title
@@ -1103,6 +1393,51 @@ Class restartAction()
 
 @end
 
+@implementation ActionProgress
+
+- (id) init
+{
+    if ( (self = [super init ]) )
+    {
+        grossini.visible = NO;
+        kathia.visible = NO;
+        tamara.visible = NO;
+        
+        CGSize s = [[CCDirector sharedDirector] winSize];
+        
+        CCProgressTimer *timer1 = [CCProgressTimer progressWithFile:@"blocks.png"];
+        CCProgressTimer *timer2 = [CCProgressTimer progressWithFile:@"grossini.png"];
+        
+        timer1.type = kCCProgressTimerTypeVerticalBarTB;
+        timer2.type = kCCProgressTimerTypeRadialCW;
+        
+        timer1.position = ccp(120, s.height - 220);
+        timer2.position = ccp(0.5f * s.width, s.height - 220);
+        
+        id to = [CCProgressTo actionWithDuration:3.0f percent:50];
+        id antiTo = [CCProgressFromTo actionWithDuration:3.0f from:50 to:0];
+        id fromTo = [CCProgressFromTo actionWithDuration:3.0f from: 30 to: 85];
+        id seq1 = [CCSequence actions: to, antiTo, nil];
+        id seq2 = [CCSequence actions:fromTo, [fromTo reverse], nil];
+        
+        
+        [timer1 runAction:[CCRepeatForever actionWithAction: seq1]];
+        [timer2 runAction:[CCRepeatForever actionWithAction: seq2]];
+        
+        [self addChild: [CCLayerColor layerWithColor: ccc4(0xFF, 0xFF, 0xFF, 0x40)]];
+        [self addChild:timer1];
+        [self addChild:timer2];
+    }
+    
+    return self;
+}
+
+- (NSString *) title
+{
+    return @"CCProgressTo/CCProgressFromTo";
+}
+
+@end
 
 
 // CLASS IMPLEMENTATIONS
@@ -1154,7 +1489,7 @@ Class restartAction()
 	[CCFileUtils setRetinaDisplaySuffix:@"-hd"];	// Default on RetinaDisplay is "-hd"
 	
 	CCScene *scene = [CCScene node];
-	[scene addChild: [nextAction() node]];
+	[scene addChild: [ActionDemo nodeWithInsideLayer: [nextAction() node]]];
 	
 	[director runWithScene: scene];
 		
@@ -1236,7 +1571,7 @@ Class restartAction()
 	[director setResizeMode:kCCDirectorResize_AutoScale];	
 	
 	CCScene *scene = [CCScene node];
-	[scene addChild: [nextAction() node]];
+	[scene addChild: [ActionDemo nodeWithInsideLayer: [nextAction() node]]];
 	
 	[director runWithScene:scene];
 }

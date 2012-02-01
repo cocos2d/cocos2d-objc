@@ -149,7 +149,20 @@ static CCActionManager *sharedManager_ = nil;
 	tHashElement *element = NULL;
 	HASH_FIND_INT(targets, &target, element);
 	if( element )
+    {
 		element->paused = NO;
+        
+        // Start actions on resuming target, if they wasn't started before.
+        // It's possible if -runAction: gets called before onEnter,
+        // when CCNode.isRunning == NO;
+        ccArray *actions = element->actions;
+        CCAction *curAction = nil;
+        CCARRAYDATA_FOREACH(actions, curAction)
+        {
+            if (!curAction.started)
+                [curAction startOrContinueWithTarget: element->target];
+        }
+    }
 //	else
 //		CCLOG(@"cocos2d: resumeAllActions: Target not found");
 }
@@ -177,7 +190,11 @@ static CCActionManager *sharedManager_ = nil;
 	NSAssert( !ccArrayContainsObject(element->actions, action), @"runAction: Action already running");	
 	ccArrayAppendObject(element->actions, action);
 	
-	[action startWithTarget:target];
+    // Don't start action immediately if node is paused or didn't enter scene yet.
+    if (!paused)
+    {
+        [action startOrContinueWithTarget:target];
+    }
 }
 
 #pragma mark ActionManager - remove
@@ -212,6 +229,29 @@ static CCActionManager *sharedManager_ = nil;
 //	else {
 //		CCLOG(@"cocos2d: removeAllActionsFromTarget: Target not found");
 //	}
+}
+
+-(NSArray *) allActionsForTarget: (id) target
+{
+	if( target == nil )
+		return [NSArray array];
+	
+	tHashElement *element = NULL;
+	HASH_FIND_INT(targets, &target, element);
+	if( element ) 
+    {
+        ccArray *actions = element->actions;
+        NSMutableArray *array = [NSMutableArray arrayWithCapacity:actions->num];
+        CCAction *curAction = nil;
+        CCARRAYDATA_FOREACH(actions, curAction)
+        {
+            [array addObject:curAction];
+        }
+        
+        return array;
+	}
+    
+    return [NSArray array];
 }
 
 -(void) removeAction: (CCAction*) action

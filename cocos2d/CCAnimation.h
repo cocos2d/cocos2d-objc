@@ -47,7 +47,7 @@
 	NSMutableArray		*frames_;
 }
 
-/** name of the animation */
+/** name of the animation. Changed when animation added to CCAnimationCache. */
 @property (nonatomic,readwrite,retain) NSString *name;
 /** delay between frames in seconds. */
 @property (nonatomic,readwrite,assign) float delay;
@@ -91,7 +91,5 @@
  Added to facilitate the migration from v0.8 to v0.9.
  */
 -(void) addFrameWithTexture:(CCTexture2D*)texture rect:(CGRect)rect;
-
-// TODO: add key property and -isEqual: method. (Issue #9 in psineur/cocos2d-iphone)
 
 @end

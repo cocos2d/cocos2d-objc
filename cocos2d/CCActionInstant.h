@@ -82,7 +82,7 @@
  */
 @interface CCPlace : CCActionInstant <NSCopying>
 {
-	CGPoint position;
+	CGPoint position_;
 }
 /** creates a Place action with a position */
 +(id) actionWithPosition: (CGPoint) pos;
@@ -96,6 +96,8 @@
 {
 	id targetCallback_;
 	SEL selector_;
+    
+    NSString *targetName_;
 }
 
 /** Target that will be called */

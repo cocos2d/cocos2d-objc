@@ -29,7 +29,8 @@
 #import "CCActionInstant.h"
 #import "CCNode.h"
 #import "CCSprite.h"
-
+#import "AutoMagicCoding/AutoMagicCoding/NSObject+AutoMagicCoding.h"
+#import "CCNodeRegistry.h"
 
 //
 // InstantAction
@@ -157,6 +158,21 @@
 	CCActionInstant *copy = [[[self class] allocWithZone: zone] initWithFlipX:flipX];
 	return copy;
 }
+
+#pragma mark CCFlipX - AutoMagicCoding Support
+
+-(void) continueWithTarget:(id)target
+{
+}
+
+- (NSArray *) AMCKeysForDictionaryRepresentation
+{
+    return [[super AMCKeysForDictionaryRepresentation] arrayByAddingObjectsFromArray:
+            [NSArray arrayWithObjects: 
+             @"flipX",
+             nil]];
+}
+
 @end
 
 //
@@ -194,6 +210,21 @@
 	CCActionInstant *copy = [[[self class] allocWithZone: zone] initWithFlipY:flipY];
 	return copy;
 }
+
+#pragma mark CCFlipY - AutoMagicCoding Support
+
+-(void) continueWithTarget:(id)target
+{
+}
+
+- (NSArray *) AMCKeysForDictionaryRepresentation
+{
+    return [[super AMCKeysForDictionaryRepresentation] arrayByAddingObjectsFromArray:
+            [NSArray arrayWithObjects: 
+             @"flipY",
+             nil]];
+}
+
 @end
 
 
@@ -202,7 +233,16 @@
 //
 #pragma mark CCPlace
 
+@interface CCPlace ()
+
+@property (nonatomic, readwrite, assign) CGPoint position;
+
+@end
+
 @implementation CCPlace
+
+@synthesize position = position_;
+
 +(id) actionWithPosition: (CGPoint) pos
 {
 	return [[[self alloc]initWithPosition:pos]autorelease];
@@ -211,22 +251,33 @@
 -(id) initWithPosition: (CGPoint) pos
 {
 	if( (self=[super init]) )
-		position = pos;
+		position_ = pos;
 	
 	return self;
 }
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	CCActionInstant *copy = [[[self class] allocWithZone: zone] initWithPosition: position];
+	CCActionInstant *copy = [[[self class] allocWithZone: zone] initWithPosition: position_];
 	return copy;
 }
 
 -(void) startWithTarget:(id)aTarget
 {
 	[super startWithTarget:aTarget];
-	((CCNode *)target_).position = position;
+	((CCNode *)target_).position = position_;
 }
+
+#pragma mark CCPlace - AutoMagicCoding Support
+
+- (NSArray *) AMCKeysForDictionaryRepresentation
+{
+    return [[super AMCKeysForDictionaryRepresentation] arrayByAddingObjectsFromArray:
+            [NSArray arrayWithObjects: 
+             @"position",
+             nil]];
+}
+
 
 @end
 
@@ -234,6 +285,12 @@
 // CallFunc
 //
 #pragma mark CCCallFunc
+
+@interface CCCallFunc ()
+
+@property(nonatomic, readwrite, copy) NSString *targetName;
+
+@end
 
 @implementation CCCallFunc
 
@@ -267,6 +324,8 @@
 -(void) dealloc
 {
 	[targetCallback_ release];
+    targetCallback_ = nil;
+    self.targetName = nil;
 	[super dealloc];
 }
 
@@ -284,8 +343,54 @@
 
 -(void) execute
 {
+    if (!targetCallback_)
+        self.targetCallback = [[CCNodeRegistry sharedRegistry] nodeByName: self.targetName ];
+    
 	[targetCallback_ performSelector:selector_];
 }
+
+#pragma mark CCCallFunc - AutoMagicCoding Support
+
+@dynamic targetName;
+
+- (NSString *) targetName
+{
+    if ([self.targetCallback respondsToSelector:@selector(name)])
+    {
+        return [(CCNode *)self.targetCallback name];
+    }   
+    
+    return targetName_;
+}
+
+- (void) setTargetName: (NSString *) targetName
+{
+    if (targetName_ != targetName)
+    {
+        [targetName_ release];
+        targetName_ = [targetName retain];
+    }    
+}
+
+- (NSString *) selectorName
+{
+    return NSStringFromSelector(selector_);
+}
+
+- (void) setSelectorName: (NSString *) selName
+{
+    selector_ = NSSelectorFromString(selName);
+}
+
+- (NSArray *) AMCKeysForDictionaryRepresentation
+{
+    return [[super AMCKeysForDictionaryRepresentation] arrayByAddingObjectsFromArray:
+            [NSArray arrayWithObjects: 
+             @"targetName",
+             @"selectorName",
+             nil]];
+}
+
 @end
 
 //
@@ -297,6 +402,9 @@
 
 -(void) execute
 {
+    if (!targetCallback_)
+        self.targetCallback = [[CCNodeRegistry sharedRegistry] nodeByName: self.targetName ];
+    
 	[targetCallback_ performSelector:selector_ withObject:target_];
 }
 @end
@@ -345,6 +453,16 @@
 {
 	callbackMethod_(targetCallback_,selector_,target_, data_);
 }
+
+
+#pragma mark CCCallFuncND - AutoMagicCoding Support
+
+- (NSDictionary *) dictionaryRepresentation
+{
+    // CCCallFuncND can't be saved with AMC.
+    return nil;
+}
+
 @end
 
 @implementation CCCallFuncO
@@ -379,6 +497,14 @@
 -(void) execute
 {
 	[targetCallback_ performSelector:selector_ withObject:object_];
+}
+
+#pragma mark CCCallFuncO - AutoMagicCoding Support
+
+- (NSDictionary *) dictionaryRepresentation
+{
+    // CCCallFuncO can't be saved with AMC.
+    return nil;
 }
 
 @end
@@ -429,6 +555,14 @@
 	[super dealloc];
 }
 
+#pragma mark CCCallBlock - AutoMagicCoding Support
+
+- (NSDictionary *) dictionaryRepresentation
+{
+    // CCCallBlock can't be saved with AMC.
+    return nil;
+}
+
 @end
 
 #pragma mark CCCallBlockN
@@ -469,6 +603,14 @@
 {
 	[block_ release];
 	[super dealloc];
+}
+
+#pragma mark CCCallBlockN - AutoMagicCoding Support
+
+- (NSDictionary *) dictionaryRepresentation
+{
+    // CCCallBlockN can't be saved with AMC.
+    return nil;
 }
 
 @end

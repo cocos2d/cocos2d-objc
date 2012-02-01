@@ -268,8 +268,6 @@ typedef struct _ccBezierConfig {
  */
 @interface CCScaleTo : CCActionInterval <NSCopying>
 {
-	float scaleX_;
-	float scaleY_;
 	float startScaleX_;
 	float startScaleY_;
 	float endScaleX_;

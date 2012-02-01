@@ -33,6 +33,7 @@
 #import "CCAnimation.h"
 #import "CCNode.h"
 #import "Support/CGPointExtension.h"
+#import "AutoMagicCoding/AutoMagicCoding/NSObject+AutoMagicCoding.h"
 
 //
 // IntervalAction
@@ -93,11 +94,26 @@
 	[self update: MIN(1, elapsed_/MAX(duration_,FLT_EPSILON))];
 }
 
--(void) startWithTarget:(id)aTarget
+-(void)startOrContinueWithTarget:(id)target
 {
-	[super startWithTarget:aTarget];
-	elapsed_ = 0.0f;
-	firstTick_ = YES;
+    started_ = YES;
+	originalTarget_ = target_ = target;
+    
+    if (!firstTick_)
+    {
+        [self continueWithTarget: target];
+    }
+    else
+    {
+        [self startWithTarget:target];
+    }
+}
+
+- (void) stop
+{
+    firstTick_ = YES;
+    elapsed_ = 0;
+    [super stop];
 }
 
 - (CCActionInterval*) reverse
@@ -105,6 +121,18 @@
 	NSAssert(NO, @"CCIntervalAction: reverse not implemented.");
 	return nil;
 }
+
+#pragma mark CCIntervalAction - AutoMagicCoding Support
+
+- (NSArray *) AMCKeysForDictionaryRepresentation
+{
+    return [[super AMCKeysForDictionaryRepresentation] arrayByAddingObjectsFromArray:
+            [NSArray arrayWithObjects: 
+             @"firstTick_",
+             @"elapsed_",
+             nil]];
+}
+
 @end
 
 //
@@ -112,6 +140,15 @@
 //
 #pragma mark -
 #pragma mark Sequence
+
+@interface CCSequence ()
+
+@property (nonatomic, readwrite, retain) CCFiniteTimeAction *actionOne;
+@property (nonatomic, readwrite, retain) CCFiniteTimeAction *actionTwo;
+@property (nonatomic, readwrite, assign) int last;
+
+@end
+
 @implementation CCSequence
 +(id) actions: (CCFiniteTimeAction*) action1, ...
 {
@@ -215,18 +252,31 @@
 	}
 	
 	if (last_ == -1 && found==1)	{
-		[actions_[0] startWithTarget:target_];
+		[actions_[0] startOrContinueWithTarget:target_];
+        if ([actions_[0] isKindOfClass:[CCActionInterval class]])
+        {
+            [actions_[0] setValue:[NSNumber numberWithBool: NO] forKey:@"firstTick_"];
+        }
 		[actions_[0] update:1.0f];
 		[actions_[0] stop];
 	}
-
+    
 	if (last_ != found ) {
 		if( last_ != -1 ) {
+            if ([actions_[last_] isKindOfClass:[CCActionInterval class]])
+            {
+                [actions_[last_] setValue:[NSNumber numberWithBool: NO] forKey:@"firstTick_"];
+            }
 			[actions_[last_] update: 1.0f];
 			[actions_[last_] stop];
 		}
-		[actions_[found] startWithTarget:target_];
+		[actions_[found] startOrContinueWithTarget:target_];
 	}
+    
+    if ([actions_[found] isKindOfClass:[CCActionInterval class]])
+    {
+        [actions_[found] setValue:[NSNumber numberWithBool: NO] forKey:@"firstTick_"];
+    }
 	[actions_[found] update: new_t];
 	last_ = found;
 }
@@ -235,6 +285,66 @@
 {
 	return [[self class] actionOne: [actions_[1] reverse] two: [actions_[0] reverse ] ];
 }
+
+#pragma mark CCSequence - AutoMagicCoding Support
+
+@dynamic actionOne, actionTwo;
+@synthesize last = last_;
+
+- (CCAction *) actionOne
+{
+    return actions_[0];
+}
+
+- (void) setActionOne:(CCFiniteTimeAction *)actionOne
+{
+    if (actions_[0] != actionOne)
+    {
+        [actions_[0] release];
+        actions_[0] = [actionOne retain];
+    }
+}
+
+- (CCAction *) actionTwo
+{
+    return actions_[1];
+}
+
+- (void) setActionTwo:(CCFiniteTimeAction *)actionTwo
+{
+    if (actions_[1] != actionTwo)
+    {
+        [actions_[1] release];
+        actions_[1] = [actionTwo retain];
+    }
+}
+
+- (NSArray *) AMCKeysForDictionaryRepresentation
+{
+    return [[super AMCKeysForDictionaryRepresentation] arrayByAddingObjectsFromArray:
+            [NSArray arrayWithObjects:
+             @"actionOne",
+             @"actionTwo",
+             @"last",
+             nil]];
+}
+
+-(void) continueWithTarget:(id)aTarget
+{	
+    // Init split & last same as when starting.
+	split_ = [actions_[0] duration] / MAX(duration_, FLT_EPSILON);
+    
+    // Start last active action if it was already started when saving.
+    if (last_ >= 0)
+    {
+        if ([actions_[last_] isKindOfClass:[CCActionInterval class]])
+        {
+            [actions_[last_] setValue:[NSNumber numberWithBool: NO] forKey:@"firstTick_"];
+        }
+        [actions_[last_] startOrContinueWithTarget:aTarget];
+    }
+}
+
 @end
 
 //
@@ -283,7 +393,7 @@
 	total_ = 0;
 	nextDt_ = [innerAction_ duration]/duration_;
 	[super startWithTarget:aTarget];
-	[innerAction_ startWithTarget:aTarget];
+	[innerAction_ startOrContinueWithTarget:aTarget];
 }
 
 -(void) stop
@@ -306,7 +416,7 @@
 			total_++;
 			
 			[innerAction_ stop];
-			[innerAction_ startWithTarget:target_]; 
+			[innerAction_ startOrContinueWithTarget:target_]; 
 			nextDt_ += [innerAction_ duration]/duration_;
 		}
 		
@@ -339,6 +449,34 @@
 {
 	return [[self class] actionWithAction:[innerAction_ reverse] times:times_];
 }
+
+#pragma mark CCRepeat - AutoMagicCoding Support
+
+- (NSArray *) AMCKeysForDictionaryRepresentation
+{
+    return [[super AMCKeysForDictionaryRepresentation] arrayByAddingObjectsFromArray:
+            [NSArray arrayWithObjects: 
+             @"times_",
+             @"total_",
+             @"nextDt_",
+             @"innerAction",
+             nil]];
+}
+
+-(void) continueWithTarget:(id)aTarget
+{	
+    isActionInstant_ = [innerAction_ isKindOfClass:[CCActionInstant class]];
+    
+    if (elapsed_ && [innerAction_ isKindOfClass:[CCActionInterval class]])
+    {
+        [innerAction_ setValue:[NSNumber numberWithBool: NO] forKey:@"firstTick_"];
+    }
+    
+    [innerAction_ startOrContinueWithTarget:aTarget];
+}
+
+
+
 @end
 
 //
@@ -346,6 +484,13 @@
 //
 #pragma mark -
 #pragma mark Spawn
+
+@interface CCSpawn ()
+
+@property(nonatomic, readwrite, retain) CCFiniteTimeAction *one;
+@property(nonatomic, readwrite, retain) CCFiniteTimeAction *two;
+
+@end
 
 @implementation CCSpawn
 +(id) actions: (CCFiniteTimeAction*) action1, ...
@@ -427,8 +572,8 @@
 -(void) startWithTarget:(id)aTarget
 {
 	[super startWithTarget:aTarget];
-	[one_ startWithTarget:target_];
-	[two_ startWithTarget:target_];
+	[one_ startOrContinueWithTarget:target_];
+	[two_ startOrContinueWithTarget:target_];
 }
 
 -(void) stop
@@ -448,6 +593,40 @@
 {
 	return [[self class] actionOne: [one_ reverse] two: [two_ reverse ] ];
 }
+
+#pragma mark CCSpawn - AutoMagicCoding Support
+
+@synthesize one = one_;
+@synthesize two = two_;
+
+- (NSArray *) AMCKeysForDictionaryRepresentation
+{
+    return [[super AMCKeysForDictionaryRepresentation] arrayByAddingObjectsFromArray:
+            [NSArray arrayWithObjects:
+             @"one",
+             @"two",
+             nil]];
+}
+
+-(void) continueWithTarget:(id)aTarget
+{	
+    // Set one_.firstTick_ & two.firstTick_ to YES to force them to use 
+    // -continueWithTarget: instead of -startWithTarget: in -startOrContinueWithTarget.
+    if ([one_ isKindOfClass:[CCActionInterval class]])
+    {
+        [one_ setValue:[NSNumber numberWithBool: firstTick_] forKey:@"firstTick_"];
+    }
+    
+    if ([two_ isKindOfClass:[CCActionInterval class]])
+    {
+        [two_ setValue:[NSNumber numberWithBool: firstTick_] forKey:@"firstTick_"];
+    }    
+    
+    // Continue.
+    [one_ startOrContinueWithTarget:target_];
+	[two_ startOrContinueWithTarget:target_];
+}
+
 @end
 
 //
@@ -496,6 +675,25 @@
 {
 	[target_ setRotation: startAngle_ + diffAngle_ * t];
 }
+
+#pragma mark CCRotateTo - AutoMagicCoding Support
+
+-(void) continueWithTarget:(id)target
+{
+    
+}
+
+- (NSArray *) AMCKeysForDictionaryRepresentation
+{
+    return [[super AMCKeysForDictionaryRepresentation] arrayByAddingObjectsFromArray:
+            [NSArray arrayWithObjects: 
+             @"dstAngle_",
+             @"startAngle_",
+             @"diffAngle_",
+             nil]
+            ];
+}
+
 @end
 
 
@@ -542,6 +740,23 @@
 	return [[self class] actionWithDuration:duration_ angle:-angle_];
 }
 
+#pragma mark CCRotateBy - AutoMagicCoding Support
+
+-(void) continueWithTarget:(id)target
+{
+    
+}
+
+- (NSArray *) AMCKeysForDictionaryRepresentation
+{
+    return [[super AMCKeysForDictionaryRepresentation] arrayByAddingObjectsFromArray:
+            [NSArray arrayWithObjects: 
+             @"angle_",
+             @"startAngle_",
+             nil]
+            ];
+}
+
 @end
 
 //
@@ -549,6 +764,14 @@
 //
 #pragma mark -
 #pragma mark MoveTo
+
+@interface CCMoveTo()
+
+@property(nonatomic, readwrite, assign) CGPoint endPosition;
+@property(nonatomic, readwrite, assign) CGPoint startPosition;
+@property(nonatomic, readwrite, assign) CGPoint delta;
+
+@end
 
 @implementation CCMoveTo
 +(id) actionWithDuration: (ccTime) t position: (CGPoint) p
@@ -581,6 +804,28 @@
 {	
 	[target_ setPosition: ccp( (startPosition_.x + delta_.x * t ), (startPosition_.y + delta_.y * t ) )];
 }
+
+#pragma mark CCMoveTo - AutoMagicCoding Support
+
+@synthesize endPosition = endPosition_;
+@synthesize startPosition = startPosition_;
+@synthesize delta = delta_;
+
+-(void) continueWithTarget:(id)target
+{
+}
+
+- (NSArray *) AMCKeysForDictionaryRepresentation
+{
+    return [[super AMCKeysForDictionaryRepresentation] arrayByAddingObjectsFromArray:
+            [NSArray arrayWithObjects: 
+             @"endPosition",
+             @"startPosition",
+             @"delta",
+             nil]
+            ];
+}
+
 @end
 
 //
@@ -693,6 +938,27 @@
 	[target_ setSkewY: (startSkewY_ + deltaY_ * t ) ];
 }
 
+#pragma mark CCSkewTo - AutoMagicCoding
+
+-(void)continueWithTarget:(id)target
+{
+}
+
+- (NSArray *) AMCKeysForDictionaryRepresentation
+{
+    return [[super AMCKeysForDictionaryRepresentation] arrayByAddingObjectsFromArray:
+            [NSArray arrayWithObjects: 
+             @"skewX_",
+             @"skewY_",
+             @"startSkewX_",
+             @"startSkewY_",
+             @"endSkewX_",
+             @"endSkewY_",
+             @"deltaX_",
+             @"deltaY_",
+             nil]];
+}
+
 @end
 
 //
@@ -730,6 +996,13 @@
 //
 #pragma mark -
 #pragma mark JumpBy
+
+@interface CCJumpBy ()
+
+@property(nonatomic,readwrite,assign) CGPoint startPosition;
+@property(nonatomic,readwrite,assign) CGPoint delta;
+
+@end
 
 @implementation CCJumpBy
 +(id) actionWithDuration: (ccTime) t position: (CGPoint) pos height: (ccTime) h jumps:(NSUInteger)j
@@ -780,6 +1053,27 @@
 {
 	return [[self class] actionWithDuration:duration_ position: ccp(-delta_.x,-delta_.y) height:height_ jumps:jumps_];
 }
+
+#pragma mark CCJumpBy - AutoMagicCoding
+
+@synthesize startPosition = startPosition_;
+@synthesize delta = delta_;
+
+-(void)continueWithTarget:(id)target
+{
+}
+
+- (NSArray *) AMCKeysForDictionaryRepresentation
+{
+    return [[super AMCKeysForDictionaryRepresentation] arrayByAddingObjectsFromArray:
+            [NSArray arrayWithObjects: 
+             @"startPosition",
+             @"delta",
+             @"height_",
+             @"jumps_",
+             nil]];
+}
+
 @end
 
 //
@@ -799,6 +1093,15 @@
 
 #pragma mark -
 #pragma mark BezierBy
+
+@interface CCBezierBy ()
+
+@property (nonatomic, readwrite, assign) CGPoint startPosition;
+@property (nonatomic, readwrite, assign) CGPoint endPosition;
+@property (nonatomic, readwrite, assign) CGPoint controlPoint_1;
+@property (nonatomic, readwrite, assign) CGPoint controlPoint_2;
+
+@end
 
 // Bezier cubic formula:
 //	((1 - t) + t)3 = 1 
@@ -869,6 +1172,60 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 	CCBezierBy *action = [[self class] actionWithDuration:[self duration] bezier:r];
 	return action;
 }
+
+#pragma mark CCBezierBy - AutoMagicCoding Support
+
+@synthesize startPosition = startPosition_;
+@dynamic endPosition;
+@dynamic controlPoint_1;
+@dynamic controlPoint_2;
+
+- (CGPoint) endPosition
+{
+    return config_.endPosition;
+}
+
+- (void) setEndPosition:(CGPoint)endPosition
+{
+    config_.endPosition = endPosition;
+}
+
+- (CGPoint) controlPoint_1
+{
+    return config_.controlPoint_1;
+}
+
+- (void) setControlPoint_1:(CGPoint)point
+{
+    config_.controlPoint_1 = point;
+}
+
+- (CGPoint) controlPoint_2
+{
+    return config_.controlPoint_2;
+}
+
+- (void) setControlPoint_2:(CGPoint)point
+{
+    config_.controlPoint_2 = point;
+}
+
+- (void) continueWithTarget:(id)target
+{
+}
+
+- (NSArray *) AMCKeysForDictionaryRepresentation
+{
+    return [[super AMCKeysForDictionaryRepresentation] arrayByAddingObjectsFromArray:
+            [NSArray arrayWithObjects: 
+             @"startPosition",
+             @"endPosition",
+             @"controlPoint_1",
+             @"controlPoint_2",
+             nil]];
+}
+
+
 @end
 
 //
@@ -941,6 +1298,26 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 	[target_ setScaleX: (startScaleX_ + deltaX_ * t ) ];
 	[target_ setScaleY: (startScaleY_ + deltaY_ * t ) ];
 }
+
+#pragma mark CCScaleTo - AutoMagicCoding
+
+-(void)continueWithTarget:(id)target
+{
+}
+
+- (NSArray *) AMCKeysForDictionaryRepresentation
+{
+    return [[super AMCKeysForDictionaryRepresentation] arrayByAddingObjectsFromArray:
+            [NSArray arrayWithObjects: 
+             @"startScaleX_",
+             @"startScaleY_",
+             @"deltaX_",
+             @"deltaY_",
+             @"endScaleX_",
+             @"endScaleY_",
+             nil]];
+}
+
 @end
 
 //
@@ -1001,6 +1378,23 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 	// return 'self'
 	return [[self class] actionWithDuration:duration_ blinks: times_];
 }
+
+#pragma mark CCBlink - AutoMagicCoding Support
+
+- (void)continueWithTarget:(id)target
+{
+}
+
+- (NSArray *) AMCKeysForDictionaryRepresentation
+{
+    return [[super AMCKeysForDictionaryRepresentation] arrayByAddingObjectsFromArray:
+            [NSArray arrayWithObjects: 
+             @"times_",
+             nil]];
+}
+
+
+
 @end
 
 //
@@ -1018,6 +1412,13 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 {
 	return [CCFadeOut actionWithDuration:duration_];
 }
+
+#pragma mark CCFadeIn - AutoMagicCoding Support
+
+- (void)continueWithTarget:(id)target
+{
+}
+
 @end
 
 //
@@ -1035,6 +1436,13 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 {
 	return [CCFadeIn actionWithDuration:duration_];
 }
+
+#pragma mark CCFadeOut - AutoMagicCoding Support
+
+- (void)continueWithTarget:(id)target
+{
+}
+
 @end
 
 //
@@ -1072,6 +1480,22 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 {
 	[(id<CCRGBAProtocol>)target_ setOpacity:fromOpacity_ + ( toOpacity_ - fromOpacity_ ) * t];
 }
+
+#pragma mark CCFadeTo - AutoMagicCoding Support
+
+- (void)continueWithTarget:(id)target
+{
+}
+
+- (NSArray *) AMCKeysForDictionaryRepresentation
+{
+    return [[super AMCKeysForDictionaryRepresentation] arrayByAddingObjectsFromArray:
+            [NSArray arrayWithObjects: 
+             @"toOpacity_",
+             @"fromOpacity_",
+             nil]];
+}
+
 @end
 
 //
@@ -1079,6 +1503,14 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 //
 #pragma mark -
 #pragma mark TintTo
+
+@interface CCTintTo ()
+
+@property(nonatomic, readwrite, assign) ccColor3B to;
+@property(nonatomic, readwrite, assign) ccColor3B from;
+
+@end
+
 @implementation CCTintTo
 +(id) actionWithDuration:(ccTime)t red:(GLubyte)r green:(GLubyte)g blue:(GLubyte)b
 {
@@ -1112,6 +1544,51 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 	id<CCRGBAProtocol> tn = (id<CCRGBAProtocol>) target_;
 	[tn setColor:ccc3(from_.r + (to_.r - from_.r) * t, from_.g + (to_.g - from_.g) * t, from_.b + (to_.b - from_.b) * t)];
 }
+
+#pragma mark CCTintTo - AutoMagicCoding Support
+
+@synthesize to = to_;
+@synthesize from = from_;
+
+- (void)continueWithTarget:(id)target
+{
+}
+
+- (NSArray *) AMCKeysForDictionaryRepresentation
+{
+    return [[super AMCKeysForDictionaryRepresentation] arrayByAddingObjectsFromArray:
+            [NSArray arrayWithObjects: 
+             @"to",
+             @"from",
+             nil]];
+}
+
+- (NSString *) AMCEncodeStructWithValue: (NSValue *) structValue withName: (NSString *) structName
+{
+    if ([structName isEqualToString: @"_ccColor3B"]
+        || [structName isEqualToString: @"ccColor3B"])
+    {
+        ccColor3B color;
+        [structValue getValue: &color];
+        return NSStringFromCCColor3B(color);
+    }
+    else
+        return [super AMCEncodeStructWithValue:structValue withName:structName];
+}
+
+- (NSValue *) AMCDecodeStructFromString: (NSString *)value withName: (NSString *) structName
+{
+    if ([structName isEqualToString: @"_ccColor3B"]
+        || [structName isEqualToString: @"ccColor3B"])
+    {
+        ccColor3B color = ccColor3BFromNSString(value);
+        
+        return [NSValue valueWithBytes: &color objCType: @encode(ccColor3B) ];
+    }
+    else
+        return [super AMCDecodeStructFromString:value withName:structName];
+}
+
 @end
 
 //
@@ -1161,6 +1638,26 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 {
 	return [CCTintBy actionWithDuration:duration_ red:-deltaR_ green:-deltaG_ blue:-deltaB_];
 }
+
+#pragma mark CCTintBy - AutoMagicCoding Support
+
+- (void)continueWithTarget:(id)target
+{
+}
+
+- (NSArray *) AMCKeysForDictionaryRepresentation
+{
+    return [[super AMCKeysForDictionaryRepresentation] arrayByAddingObjectsFromArray:
+            [NSArray arrayWithObjects: 
+             @"deltaR_",
+             @"deltaG_",
+             @"deltaB_",
+             @"fromR_",
+             @"fromG_",
+             @"fromB_",
+             nil]];
+}
+
 @end
 
 //
@@ -1178,6 +1675,11 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 {
 	return [[self class] actionWithDuration:duration_];
 }
+
+-(void)continueWithTarget:(id)target
+{
+}
+
 @end
 
 //
@@ -1221,7 +1723,7 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 -(void) startWithTarget:(id)aTarget
 {
 	[super startWithTarget:aTarget];
-	[other_ startWithTarget:target_];
+	[other_ startOrContinueWithTarget:target_];
 }
 
 -(void) stop
@@ -1232,6 +1734,10 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 
 -(void) update:(ccTime)t
 {
+    if ([other_ isKindOfClass:[CCActionInterval class]])
+    {
+        [other_ setValue:[NSNumber numberWithBool: NO] forKey:@"firstTick_"];
+    }
 	[other_ update:1-t];
 }
 
@@ -1239,6 +1745,30 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 {
 	return [[other_ copy] autorelease];
 }
+
+- (void)continueWithTarget:(id)target
+{
+    [other_ startOrContinueWithTarget:target_];
+}
+
+- (AMCFieldType) AMCFieldTypeForValueWithKey:(NSString *)aKey
+{
+    if ( [aKey isEqualToString:@"other_"] )
+    {
+        return kAMCFieldTypeCustomObject;
+    }
+    else
+        return [super AMCFieldTypeForValueWithKey:aKey];
+}
+
+- (NSArray *) AMCKeysForDictionaryRepresentation
+{
+    return [[super AMCKeysForDictionaryRepresentation] arrayByAddingObjectsFromArray:
+            [NSArray arrayWithObjects: 
+             @"other_",
+             nil]];
+}
+
 @end
 
 //
@@ -1247,6 +1777,13 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 
 #pragma mark -
 #pragma mark Animate
+
+@interface CCAnimate ()
+
+@property (nonatomic, readwrite, retain) id origFrame;
+
+@end
+
 @implementation CCAnimate
 
 @synthesize animation = animation_;
@@ -1280,7 +1817,6 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 
 		restoreOriginalFrame_ = b;
 		self.animation = anim;
-		origFrame_ = nil;
 	}
 	return self;
 }
@@ -1293,7 +1829,6 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 		
 		restoreOriginalFrame_ = b;
 		self.animation = anim;
-		origFrame_ = nil;
 	}
 	return self;
 }
@@ -1306,8 +1841,8 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 
 -(void) dealloc
 {
-	[animation_ release];
-	[origFrame_ release];
+	self.animation = nil;
+	self.origFrame = nil;
 	[super dealloc];
 }
 
@@ -1316,17 +1851,17 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 	[super startWithTarget:aTarget];
 	CCSprite *sprite = target_;
 
-	[origFrame_ release];
+    self.origFrame = nil;
 
 	if( restoreOriginalFrame_ )
-		origFrame_ = [[sprite displayedFrame] retain];
+		self.origFrame = [sprite displayedFrame];
 }
 
 -(void) stop
 {
 	if( restoreOriginalFrame_ ) {
 		CCSprite *sprite = target_;
-		[sprite setDisplayFrame:origFrame_];
+		[sprite setDisplayFrame:self.origFrame];
 	}
 	
 	[super stop];
@@ -1357,6 +1892,24 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 	
 	CCAnimation *newAnim = [CCAnimation animationWithFrames:newArray delay:animation_.delay];
 	return [[self class] actionWithDuration:duration_ animation:newAnim restoreOriginalFrame:restoreOriginalFrame_];
+}
+
+#pragma mark CCAnimate - AutoMagicCoding Support
+
+@synthesize origFrame = _origFrame;
+
+- (void)continueWithTarget:(id)target
+{
+}
+
+- (NSArray *) AMCKeysForDictionaryRepresentation
+{
+    return [[super AMCKeysForDictionaryRepresentation] arrayByAddingObjectsFromArray:
+            [NSArray arrayWithObjects: 
+             @"animation",
+             @"origFrame",
+             @"restoreOriginalFrame_",
+             nil]];
 }
 
 @end

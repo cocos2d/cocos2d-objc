@@ -189,7 +189,7 @@ static CCSpriteFrameCache *sharedSpriteFrameCache_=nil;
 		[spriteFrames_ setObject:spriteFrame forKey:frameDictKey];
 		[spriteFrame release];
         
-        // TODO: set spriteFrame.key = frameDictKey. (Issue #9 in psineur/cocos2d-iphone)
+        spriteFrame.name = frameDictKey;
 	}
 }
 
@@ -248,7 +248,7 @@ static CCSpriteFrameCache *sharedSpriteFrameCache_=nil;
 
 -(void) addSpriteFrame:(CCSpriteFrame*)frame name:(NSString*)frameName
 {
-    // TODO: set frame.key (Issue #9 in psineur/cocos2d-iphone)
+    frame.name = frameName;
     
 	[spriteFrames_ setObject:frame forKey:frameName];
 }
@@ -257,7 +257,8 @@ static CCSpriteFrameCache *sharedSpriteFrameCache_=nil;
 
 -(void) removeSpriteFrames
 {
-    // TODO: set all keys in all frames to nil ( frame.key ) (Issue #9 in psineur/cocos2d-iphone)
+    for (CCSpriteFrame *curFrame in spriteFrames_)
+        curFrame.name = nil;
     
 	[spriteFrames_ removeAllObjects];
 	[spriteFramesAliases_ removeAllObjects];
@@ -271,7 +272,8 @@ static CCSpriteFrameCache *sharedSpriteFrameCache_=nil;
 		if( [value retainCount] == 1 ) {
 			CCLOG(@"cocos2d: CCSpriteFrameCache: removing unused frame: %@", key);
             
-            // TODO: set value.key to nil. (Issue #9 in psineur/cocos2d-iphone)
+            CCSpriteFrame *frame = (CCSpriteFrame *)value;
+            frame.name = nil;
             
 			[spriteFrames_ removeObjectForKey:key];
 		}
@@ -288,14 +290,16 @@ static CCSpriteFrameCache *sharedSpriteFrameCache_=nil;
 	NSString *key = [spriteFramesAliases_ objectForKey:name];
 	
 	if( key ) {
-        // TODO: Set frame.key to nil (get frame by key). (Issue #9 in psineur/cocos2d-iphone)
+        CCSpriteFrame *frame = [spriteFrames_ objectForKey:key];
+        frame.name = nil;
         
 		[spriteFrames_ removeObjectForKey:key];
 		[spriteFramesAliases_ removeObjectForKey:name];
 
 	} else
     {
-        // TODO: Set frame.key to nil (get frame by name). (Issue #9 in psineur/cocos2d-iphone)
+        CCSpriteFrame *frame = [spriteFrames_ objectForKey:name];
+        frame.name = nil;
 		[spriteFrames_ removeObjectForKey:name];
     }
 }
@@ -315,11 +319,12 @@ static CCSpriteFrameCache *sharedSpriteFrameCache_=nil;
 	
 	for(NSString *frameDictKey in framesDict)
 	{
-		if ([spriteFrames_ objectForKey:frameDictKey]!=nil)
+        CCSpriteFrame *frame = [spriteFrames_ objectForKey:frameDictKey];
+        frame.name = nil;
+        
+		if (frame!=nil)
 			[keysToRemove addObject:frameDictKey];
 	}
-    
-    // TODO: Set frame.key to nil for all frames that will be removed. (Issue #9 in psineur/cocos2d-iphone)
     
 	[spriteFrames_ removeObjectsForKeys:keysToRemove];
 }
@@ -330,12 +335,15 @@ static CCSpriteFrameCache *sharedSpriteFrameCache_=nil;
 	
 	for (NSString *spriteFrameKey in spriteFrames_)
 	{
-		if ([[spriteFrames_ valueForKey:spriteFrameKey] texture] == texture) 
+        CCSpriteFrame *frame = [spriteFrames_ objectForKey:spriteFrameKey];
+        
+		if ([frame texture] == texture) 
+        {
+            frame.name = nil;
 			[keysToRemove addObject:spriteFrameKey];
+        }
 		
 	}
-    
-    // TODO: Set frame.key to nil for all frames that will be removed. (Issue #9 in psineur/cocos2d-iphone)
     
 	[spriteFrames_ removeObjectsForKeys:keysToRemove];
 }

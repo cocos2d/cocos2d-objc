@@ -25,6 +25,7 @@
 
 
 #import "CCActionProgressTimer.h"
+#import "AutoMagicCoding/AutoMagicCoding/NSObject+AutoMagicCoding.h"
 
 #define kProgressTimerCast CCProgressTimer*
 
@@ -63,6 +64,22 @@
 {
 	[(kProgressTimerCast)target_ setPercentage: from_ + ( to_ - from_ ) * t];
 }
+
+#pragma mark CCProgressTo - AutoMagicCoding Support
+
+- (NSArray *) AMCKeysForDictionaryRepresentation
+{
+    return [[super AMCKeysForDictionaryRepresentation] arrayByAddingObjectsFromArray:
+            [NSArray arrayWithObjects:
+             @"to_",
+             @"from_",
+             nil]];
+}
+
+-(void) continueWithTarget:(id)aTarget
+{	
+}
+
 @end
 
 @implementation CCProgressFromTo
@@ -100,4 +117,20 @@
 {
 	[(kProgressTimerCast)target_ setPercentage: from_ + ( to_ - from_ ) * t];
 }
+
+#pragma mark CCProgressFromTo - AutoMagicCoding Support
+
+- (NSArray *) AMCKeysForDictionaryRepresentation
+{
+    return [[super AMCKeysForDictionaryRepresentation] arrayByAddingObjectsFromArray:
+            [NSArray arrayWithObjects:
+             @"to_",
+             @"from_",
+             nil]];
+}
+
+-(void) continueWithTarget:(id)aTarget
+{	
+}
+
 @end
