@@ -1,3 +1,0 @@
-[submodule "cocos2d/AutoMagicCoding"]
-	path = cocos2d/AutoMagicCoding
-	url = git@github.com:psineur/NSObject-AutomagicCoding.git
