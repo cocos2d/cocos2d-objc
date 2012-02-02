@@ -696,7 +696,8 @@
 
 -(void) update: (ccTime) t
 {	
-	[target_ setPosition: ccpAdd(((CCNode*)target_).position, ccpMult(positionDelta_, t-previousTick_) )];
+    [target_ moveBy:ccpMult(positionDelta_, t-previousTick_)];
+//	[target_ setPosition: ccpAdd(((CCNode*)target_).position, ccpMult(positionDelta_, t-previousTick_) )];
     previousTick_=t;
 }
 @end
