@@ -289,6 +289,19 @@ enum {
  */
 -(void) onExit;
 
+// Custom methods
+
+/** Updates position by positionDelta.
+ This method is used by CCMoveByEx actions so setPosition can be overriden without interfering with the actions.
+ @since v1.1-rsanchez
+ */
+-(void) moveBy: (CGPoint)positionDelta;
+
+/** Returns centered sprite position, regardless of the anchor point.
+
+ @since v1.1-rsanchez
+ */
+-(CGPoint) unanchoredPosition;
 
 // composition: ADD
 

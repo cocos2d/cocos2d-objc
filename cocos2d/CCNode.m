@@ -161,6 +161,26 @@ static NSUInteger globalOrderOfArrival = 0;
 #endif	
 }
 
+-(void) moveBy: (CGPoint)positionDelta
+{
+    CGPoint positionDeltaInPixels = positionDelta;
+	if( CC_CONTENT_SCALE_FACTOR() != 1 ) {
+		positionDeltaInPixels = ccpMult( positionDeltaInPixels,  CC_CONTENT_SCALE_FACTOR() );
+    }
+    position_ = ccpAdd(position_, positionDelta);
+    positionInPixels_ = ccpAdd(positionInPixels_, positionDeltaInPixels);
+    
+	isTransformDirty_ = isInverseDirty_ = YES;
+#if CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
+	isTransformGLDirty_ = YES;
+#endif	
+}
+
+-(CGPoint) unanchoredPosition {
+    return ccp(position_.x + (0.5 - anchorPoint_.x) * contentSize_.width,
+               position_.y + (0.5 - anchorPoint_.y) * contentSize_.height);
+}
+
 -(void) setIsRelativeAnchorPoint: (BOOL)newValue
 {
 	isRelativeAnchorPoint_ = newValue;

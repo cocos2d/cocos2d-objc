@@ -793,6 +793,12 @@ static SEL selSortMethod = NULL;
 	SET_DIRTY_RECURSIVELY();
 }
 
+-(void)moveBy:(CGPoint)positionDelta
+{
+    [super moveBy:positionDelta];
+    SET_DIRTY_RECURSIVELY();
+}
+
 -(void)setRotation:(float)rot
 {
 	[super setRotation:rot];
