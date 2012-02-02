@@ -236,7 +236,7 @@ const uint32_t	kZoomActionTag = 0xc0c05002;
 		else
 			originalScale_ = self.scale;
 
-		CCAction *zoomAction = [CCScaleTo actionWithDuration:0.1f scale:originalScale_ * 1.2f];
+		CCAction *zoomAction = [CCScaleTo actionWithDuration:0.04f scale:originalScale_ * 0.9f];
 		zoomAction.tag = kZoomActionTag;
 		[self runAction:zoomAction];
 	}
@@ -248,7 +248,7 @@ const uint32_t	kZoomActionTag = 0xc0c05002;
 	if(isEnabled_) {
 		[super unselected];
 		[self stopActionByTag:kZoomActionTag];
-		CCAction *zoomAction = [CCScaleTo actionWithDuration:0.1f scale:originalScale_];
+		CCAction *zoomAction = [CCScaleTo actionWithDuration:0.04f scale:originalScale_];
 		zoomAction.tag = kZoomActionTag;
 		[self runAction:zoomAction];
 	}
