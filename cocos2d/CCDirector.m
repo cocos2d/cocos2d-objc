@@ -523,12 +523,13 @@ static CCDirector *_sharedDirector = nil;
 
 	if( displayStats_ ) {
 		// Ms per Frame
-		NSString *spfstr = [[NSString alloc] initWithFormat:@"%.4f", secondsPerFrame_];
-		[SPFLabel_ setString:spfstr];
-		[spfstr release];
 
 		if( accumDt_ > CC_DIRECTOR_FPS_INTERVAL)
 		{
+			NSString *spfstr = [[NSString alloc] initWithFormat:@"%.4f", secondsPerFrame_];
+			[SPFLabel_ setString:spfstr];
+			[spfstr release];
+
 			frameRate_ = frames_/accumDt_;
 			frames_ = 0;
 			accumDt_ = 0;
