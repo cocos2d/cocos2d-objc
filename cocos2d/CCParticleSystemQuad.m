@@ -203,20 +203,29 @@
 			start = 0; 
 			end = totalParticles; 
 		}
+		
+		ccV3F_C4B_T2F_Quad quad;
+		bzero( &quad, sizeof(quad) );
 
 		for(NSInteger i=start; i<end; i++) {
 			// bottom-left vertex:
-			quadCollection[i].bl.texCoords.u = left;
-			quadCollection[i].bl.texCoords.v = bottom;
+			quad.bl.texCoords.u = left;
+			quad.bl.texCoords.v = bottom;
 			// bottom-right vertex:
-			quadCollection[i].br.texCoords.u = right;
-			quadCollection[i].br.texCoords.v = bottom;
+			quad.br.texCoords.u = right;
+			quad.br.texCoords.v = bottom;
 			// top-left vertex:
-			quadCollection[i].tl.texCoords.u = left;
-			quadCollection[i].tl.texCoords.v = top;
+			quad.tl.texCoords.u = left;
+			quad.tl.texCoords.v = top;
 			// top-right vertex:
-			quadCollection[i].tr.texCoords.u = right;
-			quadCollection[i].tr.texCoords.v = top;
+			quad.tr.texCoords.u = right;
+			quad.tr.texCoords.v = top;
+			
+			quad.bl.texCoords.u = left;
+			quad.bl.texCoords.v = bottom;
+			
+			quadCollection[i] = quad;
+		
 		}
 	}
 }
