@@ -1766,25 +1766,25 @@ Class restartAction()
 	CGRect rect = CGRectMake(0.f,0.f,0.f,0.f);
 	//adds the texture inside the plist to the texture cache
 	[CCParticleBatchNode extractTextureFromPlist:@"Particles/Spiral.plist"];
-	batchNode_ = [CCParticleBatchNode particleBatchNodeWithFile:@"Spiral.png" capacity:20 useQuad:YES additiveBlending:NO];
-
+	batchNode_ = [CCParticleBatchNode particleBatchNodeWithFile:@"Spiral.png" capacity:16000 useQuad:YES additiveBlending:NO];
+	
 	[self addChild:batchNode_ z:1 tag:2];
 	
-	for (int i = 0; i<5; i++) {
+	for (int i = 0; i<6; i++) {
 		
 		CCParticleSystemQuad *particleSystem = [CCParticleSystemQuad particleWithFile:@"Particles/Spiral.plist" batchNode:batchNode_ rect:rect];
 		
 		particleSystem.positionType = kCCPositionTypeGrouped;		 
-		particleSystem.totalParticles = 2;
-
+		particleSystem.totalParticles = 200;
+		
 		particleSystem.position = ccp(i*15 +100,i*15+100);
 		
-		
-		[batchNode_ addChild:particleSystem z:i tag:-1];
+		uint randZ = arc4random() % 100; 
+		[batchNode_ addChild:particleSystem z:randZ tag:-1];
 		
 	}
 	
-	[self schedule:@selector(removeSystem) interval:2];
+	[self schedule:@selector(removeSystem) interval:0.5];
 	emitter_ = nil;
 	
 }
@@ -1794,15 +1794,25 @@ Class restartAction()
 	if ([[batchNode_ children] count] > 0) 
 	{
 		
-		[batchNode_ removeChild:[[batchNode_ children] objectAtIndex:0] cleanup:YES];
+		/*CCARRAY_FOREACH([[batchNode_ children],aSystem) 
+		 {
+		 CCLOG(@"pos %f %f, atlas %i",system.position.x,system.position.y,system.atlasIndex); 
+		 }*/
+		CCLOG(@"remove random system");
+		uint rand = arc4random() % ([[batchNode_ children] count] - 1);
+		[batchNode_ removeChild:[[batchNode_ children] objectAtIndex:rand] cleanup:YES];
 		CCParticleSystemQuad *particleSystem = [CCParticleSystemQuad particleWithFile:@"Particles/Spiral.plist" batchNode:batchNode_ rect:CGRectMake(0.f,0.f,0.f,0.f)];
 		
+		//add new
+		
 		particleSystem.positionType = kCCPositionTypeGrouped;		 
-		particleSystem.totalParticles = 2;
+		particleSystem.totalParticles = 200;
 		
-		particleSystem.position = ccp(150 ,300);
-		
-		//[batchNode_ addChild:particleSystem z:2 tag:-1];
+		particleSystem.position = ccp(arc4random() % 300 ,arc4random() % 400);
+
+		CCLOG(@"add a new system");
+		uint randZ = arc4random() % 100; 
+		[batchNode_ addChild:particleSystem z:randZ tag:-1];
 	}
 }
 
@@ -1831,9 +1841,10 @@ Class restartAction()
 
 -(NSString*) subtitle
 {
-	return @"every 2 sec 2 particles disappear";
+	return @"every 2 sec 1 system disappear, 1 appears";
 }
 @end
+
 
 
 @implementation ReorderParticleSystems

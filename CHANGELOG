@@ -7,8 +7,10 @@ version 1.1-beta2 xx - 2011
 . [FIX] MenuItem: removed warning when deleting item
 . [FIX] Node: orderOfArrival is @synthezied correctly (issue #1273)
 . [FIX] Node & Sprite: Scale before Skew to prevent issues with negatives scales.
+. [FIX] ParticleBatchNode: removeChild error and 'freezing' particles (issue #1316)
 . [FIX] Sprite: fixed possible setColor and opacity
 . [FIX] TileMap: Fixed a problem with multiple layers and multiple tile sets that could cause TMX maps to not load if rotation is used (issue #1302)
+
 . [FIX] TouchDispatcher: correctly handles addition and removal of handlers when being inside a touch handler (issue #1084, #1139)
 . [FIX-MAC] LabelTTF: word wrap works on Mac (issue #1074)
 
