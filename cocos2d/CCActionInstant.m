@@ -450,7 +450,9 @@
 
 -(void) execute
 {
-	block_();
+    if (block_) {
+        block_();
+    }
 }
 
 -(void) dealloc
