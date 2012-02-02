@@ -49,6 +49,12 @@
 //
 #import "ccConfig.h"	// should be included first
 
+//jpsarda extensions
+#import "CCSpriteScale9.h"
+#import "CCSpriteHole.h"
+#import "CCProgressBar.h"
+
+//reguar cocos2d
 #import "CCActionManager.h"
 #import "CCAction.h"
 #import "CCActionInstant.h"

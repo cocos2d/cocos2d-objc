@@ -644,8 +644,10 @@ static SEL selSortMethod = NULL;
 		NSAssert( [child isKindOfClass:[CCSprite class]], @"CCSprite only supports CCSprites as children when using CCSpriteBatchNode");
 		NSAssert( child.texture.name == textureAtlas_.texture.name, @"CCSprite is not using the same texture id");
 		
-		//put it in descendants array of batch node
-		[batchNode_ appendChild:child];	
+		if( atlasIndex_ != CCSpriteIndexNotInitialized) {
+            //put it in descendants array of batch node if self is already added
+            [batchNode_ appendChild:child];
+        }
 		
 		if (!isReorderChildDirty_) [self setReorderChildDirtyRecursively];
 	}
@@ -678,8 +680,12 @@ static SEL selSortMethod = NULL;
 
 -(void)removeChild: (CCSprite *)sprite cleanup:(BOOL)doCleanup
 {
-	if( usesBatchNode_ )
-		[batchNode_ removeSpriteFromAtlas:sprite];
+	if( usesBatchNode_ ) {
+        if( atlasIndex_ != CCSpriteIndexNotInitialized) {
+            //remove from batchNode decendants only if self is still in the descendants
+            [batchNode_ removeSpriteFromAtlas:sprite];
+        }
+    }
 
 	[super removeChild:sprite cleanup:doCleanup];
 	
@@ -749,7 +755,8 @@ static SEL selSortMethod = NULL;
 	{	
 		isReorderChildDirty_=YES;
 		CCNode* node=(CCNode*) parent_;
-		while (node!=batchNode_) 
+        // Added test (node!=nil) for the case you're added a CCSprite into a CCSprite that uses batcNode but that is not yet added to the CCSpriteBatchNode (parent_==nil)
+		while ((node!=nil)&&(node!=batchNode_)) 
 		{
 			[(CCSprite*) node setReorderChildDirtyRecursively];
 			node=node.parent;
