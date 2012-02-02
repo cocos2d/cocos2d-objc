@@ -65,6 +65,7 @@ static NSString *transitions[] = {
 	@"SpriteBatchNodeSkewNegativeScaleChildren",
 	@"SpriteNilTexture",
 	@"SpriteSubclass",
+	@"SpriteBatchBug1217",
 	@"AnimationCache",
 	@"AnimationCacheFile",
 };
@@ -4442,6 +4443,50 @@ Class restartAction()
 
 @end
 
+#pragma mark - SpriteBatchBug1217
+
+@implementation SpriteBatchBug1217
+-(id) init
+{
+	if( (self=[super init]) ) {
+		
+		CCSpriteBatchNode *bn = [CCSpriteBatchNode batchNodeWithFile:@"grossini_dance_atlas.png" capacity:15];
+		
+		CCSprite * s1 = [CCSprite spriteWithTexture:bn.texture rect:CGRectMake(0, 0, 57, 57)];
+		CCSprite * s2 = [CCSprite spriteWithTexture:bn.texture rect:CGRectMake(0, 0, 57, 57)];
+		CCSprite * s3 = [CCSprite spriteWithTexture:bn.texture rect:CGRectMake(0, 0, 57, 57)];
+		
+		s1.color = ccc3(255, 0, 0);
+		s2.color = ccc3(0, 255, 0);
+		s3.color = ccc3(0, 0, 255);
+		
+		s1.position = ccp(20,200);
+		s2.position = ccp(100,0);
+		s3.position = ccp(100,0);
+		
+		bn.position = ccp(0,0);
+		
+		//!!!!!
+		[s1 addChild:s2];
+		[s2 addChild:s3];
+		[bn addChild:s1];
+		
+		[self addChild:bn];
+	}
+	return self;
+}
+
+-(NSString *) title
+{
+	return @"SpriteBatch - Bug 1217";
+}
+
+-(NSString*) subtitle
+{
+	return @"Adding big family to spritebatch. You shall see 3 heads";
+}
+
+@end
 
 #pragma mark -
 #pragma mark AppDelegate

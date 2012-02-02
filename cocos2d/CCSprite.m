@@ -639,20 +639,18 @@ static SEL selSortMethod = NULL;
 -(void) addChild:(CCSprite*)child z:(NSInteger)z tag:(NSInteger) aTag
 {
 	NSAssert( child != nil, @"Argument must be non-nil");
-		
 	if( usesBatchNode_ ) {
 		NSAssert( [child isKindOfClass:[CCSprite class]], @"CCSprite only supports CCSprites as children when using CCSpriteBatchNode");
 		NSAssert( child.texture.name == textureAtlas_.texture.name, @"CCSprite is not using the same texture id");
 		
-		//put it in descendants array of batch node
-		[batchNode_ appendChild:child];	
-		
+        if( atlasIndex_ != CCSpriteIndexNotInitialized) {
+            //put it in descendants array of batch node only if not already added in descendants
+            [batchNode_ appendChild:child];
+        }
 		if (!isReorderChildDirty_) [self setReorderChildDirtyRecursively];
 	}
-	
 	//CCNode already sets isReorderChildDirty_ so this needs to be after batchNode check
 	[super addChild:child z:z tag:aTag];
-	
 	hasChildren_ = YES;
 }
 
@@ -678,9 +676,12 @@ static SEL selSortMethod = NULL;
 
 -(void)removeChild: (CCSprite *)sprite cleanup:(BOOL)doCleanup
 {
-	if( usesBatchNode_ )
-		[batchNode_ removeSpriteFromAtlas:sprite];
-
+	if( usesBatchNode_ ) {
+        if( atlasIndex_ != CCSpriteIndexNotInitialized) {
+            [batchNode_ removeSpriteFromAtlas:sprite];
+        }
+    }
+	
 	[super removeChild:sprite cleanup:doCleanup];
 	
 	hasChildren_ = ( [children_ count] > 0 );
@@ -734,8 +735,6 @@ static SEL selSortMethod = NULL;
 	}
 }
 
-
-
 //
 // CCNode property overloads
 // used only when parent is CCSpriteBatchNode
@@ -746,16 +745,16 @@ static SEL selSortMethod = NULL;
 {
 	//only set parents flag the first time
 	if (!isReorderChildDirty_)
-	{	
+	{
 		isReorderChildDirty_=YES;
 		CCNode* node=(CCNode*) parent_;
-		while (node!=batchNode_) 
+		while ( node!=nil && node!=batchNode_)
 		{
 			[(CCSprite*) node setReorderChildDirtyRecursively];
 			node=node.parent;
 		}
 	}
-}	
+}
 
 -(void) setDirtyRecursively:(BOOL)b
 {
