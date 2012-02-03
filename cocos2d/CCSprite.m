@@ -886,11 +886,11 @@
 
 	NSAssert( a, @"CCSprite#setDisplayFrameWithAnimationName: Frame not found");
 
-	CCSpriteFrame *frame = [[a frames] objectAtIndex:frameIndex];
+	CCAnimationFrame *frame = [[a frames] objectAtIndex:frameIndex];
 
 	NSAssert( frame, @"CCSprite#setDisplayFrame. Invalid frame");
 
-	[self setDisplayFrame:frame];
+	[self setDisplayFrame:frame.spriteFrame];
 }
 
 
