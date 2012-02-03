@@ -124,7 +124,7 @@
 	[director reshapeProjection: NSSizeToCGSize(rect.size) ];
 
 	// avoid flicker
-//	[director drawScene];
+	[director drawScene];
 //	[self setNeedsDisplay:YES];
 
 	CGLUnlockContext([glContext CGLContextObj]);
