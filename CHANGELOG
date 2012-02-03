@@ -16,6 +16,7 @@ version 2.0-rc0 XX-Feb-2012
 . [FIX] Particles: Fixed memory leak in fillWithEmptyQuadsFromIndex
 . [FIX] Sprite: adding family of sprites to a batchnode works as expected (issue #1217)
 . [FIX] SpriteBatch: Quad extensions are public
+. [FIX] Tests: LabelTest with custom TTF font works on Mac too
 . [FIX] Texture2D: initWithImage renamed with initWithCGImage
 . [FIX] Types: kCCResolutionStandard renamed to kCCResolutioniPhone
 
