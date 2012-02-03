@@ -117,6 +117,9 @@ CGFloat	__ccContentScaleFactor = 1;
 
 		// running thread is main thread on iOS
 		runningThread_ = [NSThread currentThread];
+		
+		// Apparently it comes with a default view, and we don't want it
+		self.view = nil;
 	}
 
 	return self;
