@@ -28,5 +28,7 @@
 	<string>MainMenu-NoWindow</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
+	<key>ATSApplicationFontsPath</key>
+	<string>Paint Boy.ttf</string>
 </dict>
 </plist>

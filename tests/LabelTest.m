@@ -1268,7 +1268,6 @@ static float menuItemPaddingCenter = 50;
 {
 	if( (self=[super init]) ) {
 
-#ifdef __CC_PLATFORM_IOS
 		CGSize s = [[CCDirector sharedDirector] winSize];
 
 		// CCLabelBMFont
@@ -1278,7 +1277,6 @@ static float menuItemPaddingCenter = 50;
 		center.position = ccp(s.width/2,150);
 
 		[self addChild:center];
-#endif // __CC_PLATFORM_IOS
 	}
 
 	return self;
@@ -1291,11 +1289,7 @@ static float menuItemPaddingCenter = 50;
 
 -(NSString *) subtitle
 {
-#ifdef __CC_PLATFORM_IOS
-	return @"Word wrap using CCLabelTTF";
-#elif defined(__CC_PLATFORM_MAC)
-	return @"Custom TTF are not supported in Mac OS X";
-#endif
+	return @"Word wrap using CCLabelTTF and a custom TTF font";
 }
 
 @end
