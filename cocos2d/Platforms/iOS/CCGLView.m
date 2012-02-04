@@ -155,10 +155,10 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 {
 	if( (self = [super initWithCoder:aDecoder]) ) {
 
-		CAEAGLLayer*			eaglLayer = (CAEAGLLayer*)[self layer];
+		CAEAGLLayer* eaglLayer = (CAEAGLLayer*)[self layer];
 
 		pixelformat_ = kEAGLColorFormatRGB565;
-		depthFormat_ = 0; // GL_DEPTH_COMPONENT24_OES;
+		depthFormat_ = 0; // GL_DEPTH_COMPONENT24;
 		multiSampling_= NO;
 		requestedSamples_ = 0;
 		size_ = [eaglLayer bounds].size;
@@ -249,35 +249,35 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 		{
 			if (depthFormat_)
 			{
-				GLenum attachments[] = {GL_COLOR_ATTACHMENT0_OES, GL_DEPTH_ATTACHMENT_OES};
+				GLenum attachments[] = {GL_COLOR_ATTACHMENT0, GL_DEPTH_ATTACHMENT};
 				glDiscardFramebufferEXT(GL_READ_FRAMEBUFFER_APPLE, 2, attachments);
 			}
 			else
 			{
-				GLenum attachments[] = {GL_COLOR_ATTACHMENT0_OES};
+				GLenum attachments[] = {GL_COLOR_ATTACHMENT0};
 				glDiscardFramebufferEXT(GL_READ_FRAMEBUFFER_APPLE, 1, attachments);
 			}
 
-			glBindRenderbufferOES(GL_RENDERBUFFER_OES, [renderer_ colorRenderBuffer]);
+			glBindRenderbuffer(GL_RENDERBUFFER, [renderer_ colorRenderBuffer]);
 
 		}
 
 		// not MSAA
 		else if (depthFormat_ ) {
-			GLenum attachments[] = { GL_DEPTH_ATTACHMENT_OES};
-			glDiscardFramebufferEXT(GL_FRAMEBUFFER_OES, 1, attachments);
+			GLenum attachments[] = { GL_DEPTH_ATTACHMENT};
+			glDiscardFramebufferEXT(GL_FRAMEBUFFER, 1, attachments);
 		}
 	}
 
-	if(![context_ presentRenderbuffer:GL_RENDERBUFFER_OES])
+	if(![context_ presentRenderbuffer:GL_RENDERBUFFER])
 		CCLOG(@"cocos2d: Failed to swap renderbuffer in %s\n", __FUNCTION__);
-
-	CHECK_GL_ERROR_DEBUG();
 
 	// We can safely re-bind the framebuffer here, since this will be the
 	// 1st instruction of the new main loop
 	if( multiSampling_ )
-		glBindFramebufferOES(GL_FRAMEBUFFER_OES, [renderer_ msaaFrameBuffer]);
+		glBindFramebufferOES(GL_FRAMEBUFFER, [renderer_ msaaFrameBuffer]);
+
+	CHECK_GL_ERROR_DEBUG();
 }
 
 - (unsigned int) convertPixelFormat:(NSString*) pixelFormat

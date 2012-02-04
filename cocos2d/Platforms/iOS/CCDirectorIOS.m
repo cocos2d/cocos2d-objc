@@ -119,7 +119,7 @@ CGFloat	__ccContentScaleFactor = 1;
 		runningThread_ = [NSThread currentThread];
 		
 		// Apparently it comes with a default view, and we don't want it
-		self.view = nil;
+//		[self setView:nil];
 	}
 
 	return self;
