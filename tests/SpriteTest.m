@@ -4558,8 +4558,8 @@ Class restartAction()
 								   depthFormat:GL_DEPTH_COMPONENT24_OES
 							preserveBackbuffer:NO
 									sharegroup:nil
-								 multiSampling:NO
-							   numberOfSamples:0];
+								 multiSampling:YES
+							   numberOfSamples:4];
 
 	director_ = (CCDirectorIOS*) [CCDirector sharedDirector];
 
