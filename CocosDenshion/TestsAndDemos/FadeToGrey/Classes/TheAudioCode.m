@@ -195,4 +195,48 @@ BOOL fadingOut;
 }	
 
 
+
+
+
+/**
+ Test fading out of a background music and starting another with fadein issue-1304
+ */
+-(void) testEight:(id) sender {
+
+	CDLOG(@">>Test Eight");
+	if (![sae isBackgroundMusicPlaying]) {
+		CDLOG(@">> Background music is not playing");
+		[sae setBackgroundMusicVolume:1.0f];
+		[sae rewindBackgroundMusic];
+		[sae playBackgroundMusic:@"bgm.mp3"];
+	} else {
+
+
+		CDLongAudioSource *player = [[CDAudioManager sharedManager] audioSourceForChannel:kASC_Left];
+		CDLongAudioSourceFader* faderout = [[CDLongAudioSourceFader alloc] init:player interpolationType:kIT_Linear startVal:player.volume endVal:0.0f];
+		[faderout setStopTargetWhenComplete:YES];
+		//Create a property modifier action to wrap the fader 
+		CDXPropertyModifierAction* fadeoutaction = [CDXPropertyModifierAction actionWithDuration:4 modifier:faderout];
+		[faderout release];//Action will retain
+
+		CDLongAudioSourceFader* faderin = [[CDLongAudioSourceFader alloc] init:player interpolationType:kIT_Linear startVal:0 endVal:1];
+		[faderin setStopTargetWhenComplete:NO];
+		CDXPropertyModifierAction* faderinaction = [CDXPropertyModifierAction actionWithDuration:4 modifier:faderin];
+		[faderin release];
+
+
+
+		CCSequence * action =[CCSequence actions:
+							  fadeoutaction,
+							  [CCCallFuncO actionWithTarget:sae selector:@selector(playBackgroundMusic:) object:@"Cyber Advance!.mp3"],
+							  faderinaction,
+							  Nil];
+
+
+		[[CCActionManager sharedManager] addAction:action target:player paused:NO];
+
+	}
+}
+
+
 @end
