@@ -11,6 +11,7 @@
 #import "EffectsAdvancedTest.h"
 
 enum {
+    kLayer,
 	kTagTextLayer = 1,
 
 	kTagSprite1 = 1,
@@ -253,8 +254,98 @@ Class restartAction()
 	return c;
 }
 
+@protocol DemoTitleProvider <NSObject>
+
+- (NSString *) title;
+- (NSString *) subtitle;
+
+@end
+
 @implementation TextLayer
--(id) init
+
+#pragma mark AMCTest Functionality
+
+- (NSString *) testFilePath
+{    
+    NSString *filename = [NSString stringWithFormat:@"%@.plist", [self className] ];
+    
+    NSArray *paths					= NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+	NSString *documentsDirectory	= [paths objectAtIndex:0];
+	NSString *fullPath				= [documentsDirectory stringByAppendingPathComponent: filename ];
+	return fullPath;
+}
+
+- (void) save
+{
+    // Don't save actions in this test - actions are tested in ActionsTest.
+    [CCActionManager purgeSharedManager];
+    
+    CCNode *layer = [self getChildByTag: kLayer];
+    NSDictionary *dict = [layer dictionaryRepresentation];
+    [dict writeToFile:[self testFilePath] atomically:YES];
+}
+
+- (void) purge
+{
+    [self removeChildByTag: kLayer cleanup:YES];
+    
+    [CCAnimationCache purgeSharedAnimationCache];
+    [CCSpriteFrameCache purgeSharedSpriteFrameCache];
+    [CCTextureCache purgeSharedTextureCache];    
+}
+
+- (void) load
+{
+    NSString *path = [self testFilePath];
+    NSDictionary *aDict = [NSDictionary dictionaryWithContentsOfFile: path];
+    
+    // Change className to CCLayer to avoid calling -onEnter & launching actions.
+    // This needed to see how exactly was layer & it's children saved. 
+    // (Testing CCGrid AMC Support).
+    //
+    // In the future - for static/withActions tests probably there will be two
+    // buttons "load" & "load without actions".
+    //
+    NSMutableDictionary *mutableDict = [NSMutableDictionary dictionaryWithDictionary: aDict];
+    [mutableDict setObject:@"CCLayer" forKey:kAMCDictionaryKeyClassName];
+    aDict = mutableDict;
+    
+    
+    CCLayer *layer = [NSObject objectWithDictionaryRepresentation: aDict ];    
+    
+	[self addChild: layer z: 0 tag: kLayer];
+}
+
+- (void) savePurgeLoadCallback: (id) sender
+{
+    CCMenuItemToggle *toggle = (CCMenuItemToggle *)sender;
+    NSUInteger selected = toggle.selectedIndex;
+    switch (selected) {
+        case 0:
+            NSLog(@"Loading...");
+            [self load];
+            break;
+        case 1:
+            NSLog(@"Saving...");
+            [self save];
+            break;
+        case 2:
+            NSLog(@"Purging...");
+            [self purge];
+            break;
+            
+    }
+    
+}
+
+#pragma mark -
+
++(id) nodeWithInsideLayer: (CCLayer *) insideLayer
+{
+    return [[[self alloc] initWithInsideLayer:insideLayer] autorelease];
+}
+
+-(id) initWithInsideLayer:(CCLayer *)insideLayer
 {
 	if( (self = [super init]) ) {
 	
@@ -263,9 +354,11 @@ Class restartAction()
 		CGSize size = [[CCDirector sharedDirector] winSize];
 		x = size.width;
 		y = size.height;
+        
+        [self addChild: insideLayer z:0 tag: kLayer ];
 		
 		CCSprite *bg = [CCSprite spriteWithFile:@"background3.png"];
-		[self addChild: bg z:0 tag:kTagBackground];
+		[insideLayer addChild: bg z:0 tag:kTagBackground];
 //		bg.anchorPoint = CGPointZero;
 		bg.position = ccp(x/2,y/2);
 		
@@ -302,46 +395,72 @@ Class restartAction()
 		CCMenuItemImage *item1 = [CCMenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
 		CCMenuItemImage *item2 = [CCMenuItemImage itemFromNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
 		CCMenuItemImage *item3 = [CCMenuItemImage itemFromNormalImage:@"f1.png" selectedImage:@"f2.png" target:self selector:@selector(nextCallback:)];
-		CCMenu *menu = [CCMenu menuWithItems:item1, item2, item3, nil];
+        
+        CCMenuItemLabel *save = [CCMenuItemLabel itemWithLabel: [CCLabelTTF labelWithString: @"Save" fontName: @"Marker Felt" fontSize:18]];
+        CCMenuItemLabel *purge = [CCMenuItemLabel itemWithLabel: [CCLabelTTF labelWithString: @"Purge" fontName: @"Marker Felt" fontSize:18]];
+        CCMenuItemLabel *load = [CCMenuItemLabel itemWithLabel: [CCLabelTTF labelWithString: @"Load" fontName: @"Marker Felt" fontSize:18]];
+        CCMenuItem *trigger = [CCMenuItemToggle itemWithTarget:self selector: @selector(savePurgeLoadCallback:) items: save, purge, load, nil];
+        
+		CCMenu *menu = [CCMenu menuWithItems:item1, item2, item3, trigger, nil];
 		menu.position = CGPointZero;
 		item1.position = ccp(size.width/2-100,30);
 		item2.position = ccp(size.width/2, 30);
 		item3.position = ccp(size.width/2+100,30);
+        trigger.position = ccp( 0.5f * size.width, 0.25f * size.height);
+        
 		[self addChild: menu z:101];
-
-	}
+    }
 	
 	return self;
 }
 
+-(CCLayer *) insideLayer
+{
+    return (CCLayer *)[self getChildByTag: kLayer];
+}
+
 -(NSString*) title
 {
+    id<DemoTitleProvider> titleProvider = (id<DemoTitleProvider>)[self insideLayer];
+    
+    if ([titleProvider respondsToSelector: @selector(title)])
+    {
+        return [titleProvider title];
+    }
+    
 	return @"No title";
 }
 
 -(NSString*) subtitle
 {
+	id<DemoTitleProvider> titleProvider = (id<DemoTitleProvider>)[self insideLayer];
+    
+    if ([titleProvider respondsToSelector: @selector(subtitle)])
+    {
+        return [titleProvider subtitle];
+    }
+    
 	return nil;
 }
 
 -(void) restartCallback: (id) sender
 {
 	CCScene *s = [CCScene node];
-	[s addChild: [restartAction() node]];
+	[s addChild: [TextLayer nodeWithInsideLayer: [restartAction() node]]];
 	[[CCDirector sharedDirector] replaceScene: s];
 }
 
 -(void) nextCallback: (id) sender
 {
 	CCScene *s = [CCScene node];
-	[s addChild: [nextAction() node]];
+	[s addChild: [TextLayer nodeWithInsideLayer: [nextAction() node]]];
 	[[CCDirector sharedDirector] replaceScene: s];
 }
 
 -(void) backCallback: (id) sender
 {
 	CCScene *s = [CCScene node];
-	[s addChild: [backAction() node]];
+	[s addChild: [TextLayer nodeWithInsideLayer: [backAction() node]]];
 	[[CCDirector sharedDirector] replaceScene: s];
 }
 
@@ -408,7 +527,7 @@ Class restartAction()
 	[CCFileUtils setRetinaDisplaySuffix:@"-hd"];	// Default on RetinaDisplay is "-hd"
 	
 	CCScene *scene = [CCScene node];
-	[scene addChild: [nextAction() node]];
+	[scene addChild: [TextLayer nodeWithInsideLayer: [nextAction() node]]];
 
 	[director runWithScene: scene];
 }
@@ -488,7 +607,7 @@ Class restartAction()
 	[director setResizeMode:kCCDirectorResize_AutoScale];	
 	
 	CCScene *scene = [CCScene node];
-	[scene addChild: [nextAction() node]];
+	[scene addChild: [TextLayer nodeWithInsideLayer: [nextAction() node]]];
 	
 	[director runWithScene:scene];
 }

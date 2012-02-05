@@ -37,6 +37,7 @@
 #import "Support/ccCArray.h"
 #import "Support/TransformUtils.h"
 #import "ccMacros.h"
+#import "NSObject+AutoMagicCoding.h"
 
 #import <Availability.h>
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
@@ -84,6 +85,7 @@ static NSUInteger globalOrderOfArrival = 0;
 @synthesize anchorPoint = anchorPoint_, anchorPointInPixels = anchorPointInPixels_;
 @synthesize contentSize = contentSize_, contentSizeInPixels = contentSizeInPixels_;
 @synthesize isRelativeAnchorPoint = isRelativeAnchorPoint_;
+@synthesize name = name_;
 
 // getters synthesized, setters explicit
 
@@ -255,6 +257,23 @@ static NSUInteger globalOrderOfArrival = 0;
 #endif	
 }
 
+- (void) setChildren:(CCArray *)children
+{
+    CCArray *oldChildren = children_;
+
+    children_ = [children retain];
+    
+    [oldChildren release];
+}
+
+- (void) setName:(NSString *) name
+{
+    NSString *prevName = name_;
+    name_ = [name copy];
+    [[CCNodeRegistry sharedRegistry] node: self didChangeNameTo: name_ previousName: prevName ];
+    [prevName release];
+}
+
 #pragma mark CCNode - Init & cleanup
 
 +(id) node
@@ -312,6 +331,120 @@ static NSUInteger globalOrderOfArrival = 0;
 	return self;
 }
 
++ (BOOL) AMCEnabled
+{
+   return YES;
+}
+
+- (NSArray *) AMCKeysForDictionaryRepresentation
+{
+    return [NSArray arrayWithObjects:
+            @"name",
+            @"zOrder",
+            @"skewX",
+            @"skewY",
+            @"rotation",
+            @"scaleX",
+            @"scaleY",
+            @"position",
+            @"visible",
+            @"anchorPoint",
+            @"contentSize",
+            @"isRelativeAnchorPoint",
+            @"tag",
+            @"vertexZ",
+            @"children",
+            
+            // Default camera getter does lazy alloc, we don't need it to be
+            // created only for saving, so we will use another getter to save it
+            // as nil if it doesn't exist.
+            @"noLazyAllocCamera", 
+            
+            @"grid",
+            @"actions",
+            nil ];
+}
+
+- (AMCFieldType) AMCFieldTypeForValueWithKey:(NSString *)aKey
+{
+    if ( [aKey isEqualToString:@"noLazyAllocCamera"] )
+    {
+        return kAMCFieldTypeCustomObject;
+    }
+    else if ([aKey isEqualToString:@"actions"])
+    {
+        return kAMCFieldTypeCollectionArray;
+    }
+    else
+        return [super AMCFieldTypeForValueWithKey: aKey];
+}
+
+- (CCCamera *) noLazyAllocCamera
+{
+    return camera_;
+}
+
+- (void) setNoLazyAllocCamera:(CCCamera *)camera
+{
+    CCCamera *oldCamera = camera_;
+    
+    camera_ = [camera retain];
+    [oldCamera release];
+}
+
+- (NSArray *)actions
+{
+    return [[CCActionManager sharedManager] allActionsForTarget:self];
+}
+
+- (void) setActions: (NSArray *) actions
+{
+    for (CCAction *action in actions)
+    {
+        [self runAction: action];
+    }
+}
+
+- (void) prepareChildrenAfterAMCLoad
+{
+    // Add children from loaded children array.
+    // It can be a little bit slower, but it's more stable.
+    if ([children_ count])
+    {
+        CCArray *loadedChildren = children_;
+        children_ = [[CCArray alloc] initWithCapacity: [loadedChildren count]];
+        
+        // Set parent for all children.
+        CCNode *child;
+        CCARRAY_FOREACH(loadedChildren, child)
+        {
+            [self addChild: child z: child.zOrder tag: child.tag];
+        }
+        
+        [loadedChildren release];
+    }
+    else
+    {
+        NSLog(@"children = %@", children_);
+    }
+}
+
+- (id) initWithDictionaryRepresentation: (NSDictionary *) aDict
+{
+    if ( ( self = [super initWithDictionaryRepresentation: aDict] ) )
+    {
+        isTransformDirty_ = isInverseDirty_ = YES;
+#if CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
+        isTransformGLDirty_ = YES;
+#endif
+    
+        [self prepareChildrenAfterAMCLoad];        
+    }
+    
+    return self;
+}
+
+
 - (void)cleanup
 {
 	// actions
@@ -330,6 +463,8 @@ static NSUInteger globalOrderOfArrival = 0;
 - (void) dealloc
 {
 	CCLOGINFO( @"cocos2d: deallocing %@", self);
+    
+    self.name = nil;
 	
 	// attributes
 	[camera_ release];

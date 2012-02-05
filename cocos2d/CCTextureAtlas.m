@@ -32,6 +32,7 @@
 #import "CCTextureCache.h"
 #import "CGPointExtension.h"
 #import "CCDrawingPrimitives.h"
+#import "AutoMagicCoding/NSObject+AutoMagicCoding.h"
 
 
 @interface CCTextureAtlas (Private)
@@ -482,4 +483,31 @@
 
 #endif // CC_USES_VBO
 }
+
+
+#pragma mark AutoMagicCoding
+
++ (BOOL) AMCEnabled
+{
+    return YES;
+}
+
+- (NSArray *) AMCKeysForDictionaryRepresentation
+{
+    return [NSArray arrayWithObjects: @"texture", @"capacity", nil];
+}
+
+- (id) initWithDictionaryRepresentation:(NSDictionary *)aDict
+{
+    self = [super initWithDictionaryRepresentation:aDict];
+    self = [self initWithTexture:self.texture capacity:self.capacity];
+    
+    return self;
+}
+
+- (void) setCapacity:(NSUInteger)capacity
+{
+    capacity_ = capacity;
+}
+
 @end

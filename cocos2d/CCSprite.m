@@ -36,6 +36,7 @@
 #import "CCTextureCache.h"
 #import "Support/CGPointExtension.h"
 #import "CCDrawingPrimitives.h"
+#import "AutoMagicCoding/NSObject+AutoMagicCoding.h"
 
 #pragma mark -
 #pragma mark CCSprite
@@ -991,7 +992,9 @@ static SEL selSortMethod = NULL;
 
 -(CCSpriteFrame*) displayedFrame
 {	
-	return [CCSpriteFrame frameWithTexture:texture_
+    CCTexture2D *curTex = (usesBatchNode_) ? batchNode_.texture : texture_;
+    
+	return [CCSpriteFrame frameWithTexture:curTex
 							  rectInPixels:rectInPixels_
 								   rotated:rectRotated_
 									offset:unflippedOffsetPositionFromCenter_
@@ -1034,4 +1037,89 @@ static SEL selSortMethod = NULL;
 	return texture_;
 }
 
+#pragma mark AutoMagicCoding Support
+
++ (BOOL) AMCEnabled
+{
+    return YES;
+}
+
+- (NSArray *) AMCKeysForDictionaryRepresentation
+{
+    NSArray *nodeKeys = [super AMCKeysForDictionaryRepresentation];
+    NSArray *spriteKeys = [NSArray arrayWithObjects: 
+                           @"flipX", 
+                           @"flipY",
+                           @"opacity",
+                           @"color",
+                           @"honorParentTransform",
+                           @"blendFunc",
+                           @"displayFrame", 
+                           nil];
+    
+    return [nodeKeys arrayByAddingObjectsFromArray: spriteKeys ];
+}
+
+-(CCSpriteFrame*) displayFrame
+{
+    return [self displayedFrame];
+}
+
+- (AMCFieldType) AMCFieldTypeForValueWithKey: (NSString *) aKey
+{
+    if ([aKey isEqualToString: @"displayFrame"])
+        return kAMCFieldTypeCustomObject;
+    else 
+        return [super AMCFieldTypeForValueWithKey: aKey];
+}
+
+- (id) initWithDictionaryRepresentation:(NSDictionary *)aDict
+{
+    self = [self init];
+    self = [super initWithDictionaryRepresentation: aDict];
+    
+    return self;
+}
+
+- (NSString *) AMCEncodeStructWithValue: (NSValue *) structValue withName: (NSString *) structName
+{
+    if ([structName isEqualToString: @"_ccColor3B"]
+        || [structName isEqualToString: @"ccColor3B"])
+    {
+        ccColor3B color;
+        [structValue getValue: &color];
+        return NSStringFromCCColor3B(color);
+    }
+    else if ([structName isEqualToString: @"_ccBlendFunc"]
+             || [structName isEqualToString: @"ccBlendFunc"])
+    {
+        ccBlendFunc blendFunc;
+        [structValue getValue: &blendFunc];
+        return NSStringFromCCBlendFunc(blendFunc);
+    }
+    else
+        return [super AMCEncodeStructWithValue:structValue withName:structName];
+}
+
+- (NSValue *) AMCDecodeStructFromString: (NSString *)value withName: (NSString *) structName
+{
+    if ([structName isEqualToString: @"_ccColor3B"]
+        || [structName isEqualToString: @"ccColor3B"])
+    {
+        ccColor3B color = ccColor3BFromNSString(value);
+        
+        return [NSValue valueWithBytes: &color objCType: @encode(ccColor3B) ];
+    }
+    else if ([structName isEqualToString: @"_ccBlendFunc"]
+             || [structName isEqualToString: @"ccBlendFunc"] )
+    {
+        ccBlendFunc blendFunc = ccBlendFuncFromNSString(value);
+        
+        return [NSValue valueWithBytes: &blendFunc objCType: @encode(ccBlendFunc) ];
+    }
+    else
+        return [super AMCDecodeStructFromString:value withName:structName];
+}
+
 @end
+

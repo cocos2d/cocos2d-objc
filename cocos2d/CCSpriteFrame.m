@@ -28,10 +28,13 @@
 #import "CCTextureCache.h"
 #import "CCSpriteFrame.h"
 #import "ccMacros.h"
+#import "AutoMagicCoding/NSObject+AutoMagicCoding.h"
+#import "CCSpriteFrameCache.h"
 
 @implementation CCSpriteFrame
 @synthesize rotated = rotated_, offsetInPixels = offsetInPixels_, texture = texture_;
 @synthesize originalSizeInPixels=originalSizeInPixels_;
+@synthesize name = name_;
 
 +(id) frameWithTexture:(CCTexture2D*)texture rect:(CGRect)rect
 {
@@ -64,8 +67,9 @@
 
 - (NSString*) description
 {
-	return [NSString stringWithFormat:@"<%@ = %08X | TextureName=%d, Rect = (%.2f,%.2f,%.2f,%.2f)> rotated:%d", [self class], self,
+	return [NSString stringWithFormat:@"<%@ = %08X | TextureName=%d, Name = %@, Rect = (%.2f,%.2f,%.2f,%.2f)> rotated:%d", [self class], self,
 			texture_.name,
+            self.name,
 			rect_.origin.x,
 			rect_.origin.y,
 			rect_.size.width,
@@ -78,6 +82,7 @@
 {
 	CCLOGINFO( @"cocos2d: deallocing %@",self);
 	[texture_ release];
+    self.name = nil;
 	[super dealloc];
 }
 
@@ -108,4 +113,86 @@
 	rectInPixels_ = rectInPixels;
 	rect_ = CC_RECT_PIXELS_TO_POINTS(rectInPixels);
 }
+
+- (BOOL) isEqual:(id)object
+{
+    CCSpriteFrame *other = (CCSpriteFrame *) object;
+    if (![other isKindOfClass:[CCSpriteFrame class]])
+        return NO;
+    
+    if (self.name != other.name)
+        return NO;
+    
+    // Texture's are equal pointers, or they both have equal, non-nil keys.
+    if (self.texture != other.texture && !( self.texture.key && self.texture.key == other.texture.key) )
+        return NO;
+    
+    if (!CGRectEqualToRect(self.rect, other.rect))
+        return NO;
+    
+    if (!CGRectEqualToRect(self.rectInPixels, other.rectInPixels))
+        return NO;
+    
+    if (self.rotated != other.rotated)
+        return NO;
+    
+    if (!CGPointEqualToPoint(self.offsetInPixels, other.offsetInPixels))
+        return NO;
+    
+    if (!CGSizeEqualToSize(self.originalSizeInPixels, other.originalSizeInPixels))
+        return NO;    
+    
+    return YES;
+}
+
+#pragma mark AutoMagicCoding Support
+
++ (BOOL) AMCEnabled
+{
+    return YES;
+}
+
+- (id) initWithDictionaryRepresentation: (NSDictionary *) aDict
+{
+    // Get name of loading sprite frame.
+    NSString *name = [aDict objectForKey:@"name"];
+    if ([name isKindOfClass:[NSString class]])
+    {
+        // Find existing frame with same name.
+        CCSpriteFrame *existingFrameWithSameName = [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName: name];
+        if (existingFrameWithSameName)
+        {
+            // On debug - warn developer if existing & loading frames with same names arent equal.
+#if COCOS2D_DEBUG 
+            
+            if ( (self = [super initWithDictionaryRepresentation: aDict]) )
+            {
+                if (![self isEqual: existingFrameWithSameName])
+                {
+                    CCLOG(@"WARNING: Loading spriteFrame \"%@\" isn't equal to existing spriteFrame with same name in CCSpriteFrameCache. Ignoring new one and using cached version! New = %@ Cached = %@", self.name, self, existingFrameWithSameName);
+                }
+            }
+#endif
+            
+            // Return existing sprite frame.
+            [self release];
+            return [existingFrameWithSameName retain]; 
+            //< init must return NSObject with +1 refCount.
+        }
+        else // Create new and save it in SpriteFrameCache
+        {
+            self = [super initWithDictionaryRepresentation: aDict];
+            if (self)
+            {
+                [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFrame:self name:self.name];
+            }
+            
+            return self;
+        }
+    }
+    
+    // Noname sprite frame - simply create new.
+    return [super initWithDictionaryRepresentation: aDict];
+}
+
 @end

@@ -46,6 +46,19 @@ typedef struct _ccColor3B
 	GLubyte	r;
 	GLubyte	g;
 	GLubyte b;
+    
+    // Without this, valueForKey: @"color" in CCSprite can return garbage
+    // and corrupt isa of inspected object on device with iOS versions:
+    // 4.3.1 (tested on iPod Touch 4), 4.3.2 (tested on iPhone 4).
+    //
+    // On iPad 2 with iOS 5.0.1 this bug doesn't exist.
+    // ( https://github.com/psineur/NSObject-AutomagicCoding/issues/19 )
+    GLubyte reserved1;
+    
+    // On 4.3 Simulator ccColor3B should be 4 bytes instead of 5 to avoid KVC failure.
+#if !TARGET_IPHONE_SIMULATOR
+    GLubyte reserved2;
+#endif
 } ccColor3B;
 
 //! helper macro that creates an ccColor3B type
@@ -74,6 +87,45 @@ static const ccColor3B ccBLACK = {0,0,0};
 static const ccColor3B ccORANGE = {255,127,0};
 //! Gray Color (166,166,166)
 static const ccColor3B ccGRAY = {166,166,166};
+
+//! ccColor3B encoder for AMC. Encodes ccc3 to NSString.
+static NSString *NSStringFromCCColor3B(ccColor3B color)
+{
+    return [NSString stringWithFormat:@"r=%d, g=%d, b=%d", color.r, color.g, color.b];
+}
+
+//! ccColor3B decoder for AMC. Decodes ccc3 from NSString.
+static ccColor3B ccColor3BFromNSString(NSString *string)
+{
+    ccColor3B result;
+    
+    NSArray *components = [string componentsSeparatedByString:@", "];
+    for (NSString *component in components)
+    {
+        NSArray *keyValue = [component componentsSeparatedByString:@"="];
+        if ([keyValue count] > 1)
+        {
+            NSString *key = [keyValue objectAtIndex: 0];
+            NSString *value = [keyValue objectAtIndex:1];
+            
+            if ([key isEqualToString:@"r"])
+            {
+                result.r = [value integerValue];
+            }
+            else if ([key isEqualToString:@"g"])
+            {
+                result.g = [value integerValue];
+            }
+            else if ([key isEqualToString:@"b"])
+            {
+                result.b = [value integerValue];
+            }
+        }
+    }
+    
+    return result;
+}
+
 
 /** RGBA color composed of 4 bytes
 @since v0.8
@@ -146,6 +198,45 @@ typedef struct _ccVertex3F
 	GLfloat y;
 	GLfloat z;
 } ccVertex3F;
+
+//! ccVertex3F encoder for AMC. Encodes ccVertex3F to NSString.
+static NSString *NSStringFromCCVertex3F(ccVertex3F vertex)
+{
+    return [NSString stringWithFormat:@"x=%f, y=%f, z=%f", vertex.x, vertex.y, vertex.z];
+}
+
+//! ccVertex3F decoder for AMC. Decodes ccVertex3F from NSString.
+static ccVertex3F ccVertex3FFromNSString(NSString *string)
+{
+    ccVertex3F result;
+    
+    NSArray *components = [string componentsSeparatedByString:@", "];
+    for (NSString *component in components)
+    {
+        NSArray *keyValue = [component componentsSeparatedByString:@"="];
+        if ([keyValue count] > 1)
+        {
+            NSString *key = [keyValue objectAtIndex: 0];
+            NSString *value = [keyValue objectAtIndex:1];
+            
+            GLfloat floatValue = [value floatValue];
+            if ([key isEqualToString:@"x"])
+            {
+                result.x = floatValue;
+            }
+            else if ([key isEqualToString:@"y"])
+            {
+                result.y = floatValue;
+            }
+            else if ([key isEqualToString:@"z"])
+            {
+                result.z = floatValue;
+            }
+        }
+    }
+    
+    return result;
+}
 		
 /** A texcoord composed of 2 floats: u, y
  @since v0.8
@@ -194,6 +285,41 @@ ccg(const NSInteger x, const NSInteger y)
 {
 	ccGridSize v = {x, y};
 	return v;
+}
+
+//! ccGridSize encoder for AMC. Encodes ccGridSize to NSString.
+static NSString *NSStringFromCCGridSize(ccGridSize gridSize)
+{
+    return [NSString stringWithFormat:@"x=%d, y=%d", gridSize.x, gridSize.y];
+}
+
+//! ccGridSize decoder for AMC. Decodes ccGridSize from NSString.
+static ccGridSize ccGridSizeFromNSString(NSString *string)
+{
+    ccGridSize result;
+    
+    NSArray *components = [string componentsSeparatedByString:@", "];
+    for (NSString *component in components)
+    {
+        NSArray *keyValue = [component componentsSeparatedByString:@"="];
+        if ([keyValue count] > 1)
+        {
+            NSString *key = [keyValue objectAtIndex: 0];
+            NSString *value = [keyValue objectAtIndex:1];
+            
+            GLfloat floatValue = [value floatValue];
+            if ([key isEqualToString:@"x"])
+            {
+                result.x = floatValue;
+            }
+            else if ([key isEqualToString:@"y"])
+            {
+                result.y = floatValue;
+            }
+        }
+    }
+    
+    return result;
 }
 
 //! a Point with a vertex point, a tex coord point and a color 4B
@@ -280,6 +406,40 @@ typedef struct _ccBlendFunc
 	//! destination blend function
 	GLenum dst;
 } ccBlendFunc;
+
+//! ccBlendFunc encoder for AMC. Encodes ccBlendFunc to NSString.
+static NSString *NSStringFromCCBlendFunc(ccBlendFunc blendFunc)
+{
+    return [NSString stringWithFormat:@"src=%d, dst=%d", blendFunc.src, blendFunc.dst];
+}
+
+//! ccBlendFunc decoder for AMC. Decodes ccBlendFunc from NSString.
+static ccBlendFunc ccBlendFuncFromNSString(NSString *string)
+{
+    ccBlendFunc result;
+    
+    NSArray *components = [string componentsSeparatedByString:@", "];
+    for (NSString *component in components)
+    {
+        NSArray *keyValue = [component componentsSeparatedByString:@"="];
+        if ([keyValue count] > 1)
+        {
+            NSString *key = [keyValue objectAtIndex: 0];
+            NSString *value = [keyValue objectAtIndex:1];
+            
+            if ([key isEqualToString:@"src"])
+            {
+                result.src = (GLenum)[value integerValue];
+            }
+            else if ([key isEqualToString:@"dst"])
+            {
+                result.dst = (GLenum)[value integerValue];
+            }
+        }
+    }
+    
+    return result;
+}
 
 //! ccResolutionType
 typedef enum

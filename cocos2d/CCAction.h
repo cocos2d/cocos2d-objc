@@ -39,10 +39,19 @@ enum {
  */
 @interface CCAction : NSObject <NSCopying>
 {
+    BOOL        started_;
 	id			originalTarget_;
 	id			target_;
 	NSInteger	tag_;
 }
+
+/** Flag that shows was action started or not.
+ Used in CCActionManager to start action in -resumeTarget: instead of
+ -addAction:target:paused if paused is YES (i.e. when -runAction: called
+ before calling addChild:)
+ @since v.1.1+ ("feature-amc" branch of github.com/psineur/cocos2d-iphone)
+ */
+@property (nonatomic, readonly, assign) BOOL started;
 
 /** The "target". The action will modify the target properties.
  The target will be set with the 'startWithTarget' method.
@@ -71,8 +80,25 @@ enum {
 
 //! return YES if the action has finished
 -(BOOL) isDone;
-//! called before the action start. It will also set the target.
+/** called before the action start in CCActionManager. It will also set the target.
+ * Usually you don't need to reimplement this method.
+ * Reimplement -startWithTarget: or -continueWithTarget: instead.
+ */
+-(void)startOrContinueWithTarget:(id)target;
+/** called from -startOrContinueWithTarget: if action is starting from initial state.
+ * Reimplement this method to do your own action pre-start routines.
+ * You don't need to call [super startWithTarget:] from your reimplementation of this method.
+ * Don't call [super startOrContinueWithTarget:] from your reimplementation of this method
+ * - this will lead to infinite recursion.
+ */
 -(void) startWithTarget:(id)target;
+/** called from -startOrContinueWithTarget: if action is starting from intermidiate state.
+ * Reimplement this method to do your own action pre-continue routines.
+ * You don't need to call [super continueWithTarget:] from you reimplementation of this method.
+ * Don't call [super startOrContinueWithTarget:] from your reimplementation of this method
+ * - this will lead to infinite recursion.
+ */
+-(void) continueWithTarget:(id)target;
 //! called after the action has finished. It will set the 'target' to nil.
 //! IMPORTANT: You should never call "[action stop]" manually. Instead, use: "[target stopAction:action];"
 -(void) stop;
@@ -156,28 +182,37 @@ enum {
  */
 @interface CCFollow : CCAction <NSCopying>
 {
+    // Name of node to follow, used when loading action.
+    // Usually is nil.
+    NSString *followedNodeName_;
+    
 	/* node to follow */
 	CCNode	*followedNode_;
 	
 	/* whether camera should be limited to certain area */
-	BOOL boundarySet;
+	BOOL boundarySet_;
 	
-	/* if screensize is bigger than the boundary - update not needed */
-	BOOL boundaryFullyCovered;
-	
-	/* fast access to the screen dimensions */
-	CGPoint halfScreenSize;
-	CGPoint fullScreenSize;
-	
-	/* world boundaries */
-	float leftBoundary;
-	float rightBoundary;
-	float topBoundary;
-	float bottomBoundary;
+	CGRect worldBoundary_;
 }
 
 /** alter behavior - turn on/off boundary */
 @property (nonatomic,readwrite) BOOL boundarySet;
+
+/** Boundary rect, where camera position should be limited.
+ * Can be changed during runtime.
+ * @since 1.1+ ("feature-amc" branch of github.com/psineur/cocos2d-iphone)
+ */
+@property (nonatomic, readwrite) CGRect worldBoundary;
+
+/** Name of followedNode. Can be used in three ways:
+ * 1. Getter: get current followedNode's name
+ * 2. Setter: (When action already running) change followedNode to node with 
+ * given name, if it exist right now or do nothing if it doesn't exist.
+ * 3. Setter: (When action didn't start yet) try to set followedNode by name now
+ * and, if no success, on start.
+ * @since 1.1+ ("feature-amc" branch of github.com/psineur/cocos2d-iphone)
+ */
+@property(nonatomic, readwrite, retain) NSString *followedNodeName;
 
 /** creates the action with no boundary set */
 +(id) actionWithTarget:(CCNode *)followedNode;

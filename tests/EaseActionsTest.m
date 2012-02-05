@@ -64,26 +64,138 @@ Class restartAction()
 	return c;
 }
 
+@implementation ActionEaseTestInsideLayer
 
 
-@implementation SpriteDemo
--(id) init
+- (id) init
 {
-	if( (self=[super init])) {
-
-		grossini = [[CCSprite alloc] initWithFile:@"grossini.png"];
+    self = [super init];
+    if (self)
+    {
+        grossini = [[CCSprite alloc] initWithFile:@"grossini.png"];
 		tamara = [[CCSprite alloc] initWithFile:@"grossinis_sister1.png"];
 		kathia = [[CCSprite alloc] initWithFile:@"grossinis_sister2.png"];
+        
+        grossini.name = @"El-Chupacabra"; //< We found it! ;)
+        kathia.name = @"Kathia";
+        tamara.name = @"Tamara";
+        
+        [grossini setPosition: ccp(60, 50)];
+        [kathia setPosition: ccp(60, 150)];
+        [tamara setPosition: ccp(60, 250)];
 		
 		[self addChild: grossini z:3];
 		[self addChild: kathia z:2];
 		[self addChild: tamara z:1];
+    }
+    
+    return self;
+}
 
+- (id) initWithDictionaryRepresentation:(NSDictionary *)aDict
+{
+    if ( (self = [super initWithDictionaryRepresentation:aDict]) )
+    {
+        grossini = (CCSprite *)[[[CCNodeRegistry sharedRegistry] nodeByName:@"El-Chupacabra"] retain];
+        kathia = (CCSprite *)[[[CCNodeRegistry sharedRegistry] nodeByName:@"Kathia"] retain];
+        tamara = (CCSprite *)[[[CCNodeRegistry sharedRegistry] nodeByName:@"Tamara"] retain];
+    }
+    
+    return self;
+}
+
+-(void) positionForTwo
+{	
+	grossini.position = ccp( 60, 120 );
+	tamara.position = ccp( 60, 220);
+	kathia.visible = NO;
+}
+
+@end
+
+@protocol DemoTitleProvider <NSObject>
+
+- (NSString *) title;
+- (NSString *) subtitle;
+
+@end
+
+@implementation EaseActionsDemo
+
+enum nodeTags
+{
+    kLayer,
+};
+
+- (NSString *) testFilePath
+{    
+    NSString *filename = [NSString stringWithFormat:@"%@.plist", [self className] ];
+    
+    NSArray *paths					= NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+	NSString *documentsDirectory	= [paths objectAtIndex:0];
+	NSString *fullPath				= [documentsDirectory stringByAppendingPathComponent: filename ];
+	return fullPath;
+}
+
+- (void) save
+{    
+    CCNode *layer = [self getChildByTag: kLayer];
+    NSDictionary *dict = [layer dictionaryRepresentation];
+    [dict writeToFile:[self testFilePath] atomically:YES];
+}
+
+- (void) purge
+{
+    [self removeChildByTag: kLayer cleanup:YES];
+    
+    [CCAnimationCache purgeSharedAnimationCache];
+    [CCSpriteFrameCache purgeSharedSpriteFrameCache];
+    [CCTextureCache purgeSharedTextureCache];    
+}
+
+- (void) load
+{
+    NSString *path = [self testFilePath];
+    NSDictionary *aDict = [NSDictionary dictionaryWithContentsOfFile: path];
+    CCLayer *layer = [NSObject objectWithDictionaryRepresentation: aDict ];    
+    
+	[self addChild: layer z: 0 tag: kLayer];
+}
+
+- (void) savePurgeLoadCallback: (id) sender
+{
+    CCMenuItemToggle *toggle = (CCMenuItemToggle *)sender;
+    NSUInteger selected = toggle.selectedIndex;
+    switch (selected) {
+        case 0:
+            NSLog(@"Loading...");
+            [self load];
+            break;
+        case 1:
+            NSLog(@"Saving...");
+            [self save];
+            break;
+        case 2:
+            NSLog(@"Purging...");
+            [self purge];
+            break;
+            
+    }
+    
+}
+
++(id) nodeWithInsideLayer: (CCLayer *) insideLayer
+{
+    return [[[self alloc] initWithInsideLayer: insideLayer ]autorelease];
+}
+
+-(id) initWithInsideLayer: (CCLayer *) insideLayer
+{
+	if( (self=[super init])) {
+        
 		CGSize s = [[CCDirector sharedDirector] winSize];
 		
-		[grossini setPosition: ccp(60, 50)];
-		[kathia setPosition: ccp(60, 150)];
-		[tamara setPosition: ccp(60, 250)];
+		[self addChild:insideLayer z: 0 tag: kLayer];
 		
  		CCLabelTTF *label = [CCLabelTTF labelWithString:[self title] fontName:@"Arial" fontSize:32];
 		[self addChild: label];
@@ -92,58 +204,72 @@ Class restartAction()
 		CCMenuItemImage *item1 = [CCMenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
 		CCMenuItemImage *item2 = [CCMenuItemImage itemFromNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
 		CCMenuItemImage *item3 = [CCMenuItemImage itemFromNormalImage:@"f1.png" selectedImage:@"f2.png" target:self selector:@selector(nextCallback:)];
-		
-		CCMenu *menu = [CCMenu menuWithItems:item1, item2, item3, nil];
+        
+        CCMenuItemLabel *save = [CCMenuItemLabel itemWithLabel: [CCLabelTTF labelWithString: @"Save" fontName: @"Marker Felt" fontSize:18]];
+        CCMenuItemLabel *purge = [CCMenuItemLabel itemWithLabel: [CCLabelTTF labelWithString: @"Purge" fontName: @"Marker Felt" fontSize:18]];
+        CCMenuItemLabel *load = [CCMenuItemLabel itemWithLabel: [CCLabelTTF labelWithString: @"Load" fontName: @"Marker Felt" fontSize:18]];
+        CCMenuItem *trigger = [CCMenuItemToggle itemWithTarget:self selector: @selector(savePurgeLoadCallback:) items: save, purge, load, nil];
+        
+		CCMenu *menu = [CCMenu menuWithItems:item1, item2, item3, trigger, nil];
 		menu.position = CGPointZero;
 		item1.position = ccp(s.width/2-100,30);
 		item2.position = ccp(s.width/2, 30);
 		item3.position = ccp(s.width/2+100,30);
+        trigger.position = ccp(0.5f * s.width, 0.25f * s.height);
 		[self addChild: menu z:1];
 	}
 
 	return self;
 }
 
--(void) dealloc
-{
-	[grossini release];
-	[tamara release];
-	[kathia release];
-	[super dealloc];
-}
-
-
 -(void) restartCallback: (id) sender
 {
 	CCScene *s = [CCScene node];
-	[s addChild: [restartAction() node]];
+	[s addChild: [[self class] nodeWithInsideLayer:[restartAction() node]]];
 	[[CCDirector sharedDirector] replaceScene: s];
 }
 
 -(void) nextCallback: (id) sender
 {
 	CCScene *s = [CCScene node];
-	[s addChild: [nextAction() node]];
+	[s addChild: [[self class] nodeWithInsideLayer:[nextAction() node]]];
 	[[CCDirector sharedDirector] replaceScene: s];
 }
 
 -(void) backCallback: (id) sender
 {
 	CCScene *s = [CCScene node];
-	[s addChild: [backAction() node]];
+	[s addChild: [[self class] nodeWithInsideLayer:[backAction() node]]];
 	[[CCDirector sharedDirector] replaceScene: s];
 }
 
-
--(void) positionForTwo
-{	
-	grossini.position = ccp( 60, 120 );
-	tamara.position = ccp( 60, 220);
-	kathia.visible = NO;
+-(id) insideLayer
+{
+    return [self getChildByTag:kLayer];
 }
+
 -(NSString*) title
 {
+    id<DemoTitleProvider> titleProvider = (id<DemoTitleProvider>)[self insideLayer];
+    
+    if ([titleProvider respondsToSelector: @selector(title)])
+    {
+        return [titleProvider title];
+    }
+    
 	return @"No title";
+}
+
+-(NSString*) subtitle
+{
+	id<DemoTitleProvider> titleProvider = (id<DemoTitleProvider>)[self insideLayer];
+    
+    if ([titleProvider respondsToSelector: @selector(subtitle)])
+    {
+        return [titleProvider subtitle];
+    }
+    
+	return nil;
 }
 @end
 
@@ -153,9 +279,11 @@ Class restartAction()
 #define CCCA(x) [[x copy] autorelease]
 
 @implementation SpriteEase
--(void) onEnter
+-(id) init
 {
-	[super onEnter];
+    self = [super init];
+    if (!self)
+        return nil;
 	
 	CGSize s = [[CCDirector sharedDirector] winSize];
 
@@ -185,6 +313,8 @@ Class restartAction()
 	[a setTag:1];
 	
 	[self schedule:@selector(testStopAction:) interval:6.25f];
+    
+    return self;
 }
 
 -(void) testStopAction:(ccTime)dt
@@ -202,9 +332,11 @@ Class restartAction()
 @end
 
 @implementation SpriteEaseInOut
--(void) onEnter
+-(id) init
 {
-	[super onEnter];
+    self = [super init];
+    if (!self)
+        return nil;
 	
 	CGSize s = [[CCDirector sharedDirector] winSize];
 
@@ -229,6 +361,8 @@ Class restartAction()
 	[tamara runAction: [CCRepeatForever actionWithAction:seq1]];
 	[kathia runAction: [CCRepeatForever actionWithAction:seq2]];
 	[grossini runAction: [CCRepeatForever actionWithAction:seq3]];
+    
+    return self;
 }
 -(NSString *) title
 {
@@ -238,9 +372,11 @@ Class restartAction()
 
 
 @implementation SpriteEaseSine
--(void) onEnter
+-(id) init
 {
-	[super onEnter];
+    self = [super init];
+    if (!self)
+        return nil;
 	
 	CGSize s = [[CCDirector sharedDirector] winSize];
 	
@@ -264,6 +400,8 @@ Class restartAction()
 	[grossini runAction: [CCRepeatForever actionWithAction:seq1]];
 	[tamara runAction: [CCRepeatForever actionWithAction:seq2]];
 	[kathia runAction: [CCRepeatForever actionWithAction:seq3]];
+    
+    return self;
 }
 -(NSString *) title
 {
@@ -272,9 +410,11 @@ Class restartAction()
 @end
 
 @implementation SpriteEaseSineInOut
--(void) onEnter
+-(id) init
 {
-	[super onEnter];
+    self = [super init];
+    if (!self)
+        return nil;
 	
 	CGSize s = [[CCDirector sharedDirector] winSize];
 	
@@ -293,6 +433,8 @@ Class restartAction()
 
 	[grossini runAction: [CCRepeatForever actionWithAction:seq1]];
 	[tamara runAction: [CCRepeatForever actionWithAction:seq2]];
+    
+    return self;
 }
 -(NSString *) title
 {
@@ -303,9 +445,11 @@ Class restartAction()
 #pragma mark SpriteEaseExponential
 
 @implementation SpriteEaseExponential
--(void) onEnter
+-(id) init
 {
-	[super onEnter];
+    self = [super init];
+    if (!self)
+        return nil;
 	
 	CGSize s = [[CCDirector sharedDirector] winSize];
 	
@@ -328,6 +472,8 @@ Class restartAction()
 	[grossini runAction: [CCRepeatForever actionWithAction:seq1]];
 	[tamara runAction: [CCRepeatForever actionWithAction:seq2]];
 	[kathia runAction: [CCRepeatForever actionWithAction:seq3]];
+    
+    return self;
 }
 -(NSString *) title
 {
@@ -338,9 +484,11 @@ Class restartAction()
 #pragma mark SpriteEaseExponentialInOut
 
 @implementation SpriteEaseExponentialInOut
--(void) onEnter
+-(id) init
 {
-	[super onEnter];
+    self = [super init];
+    if (!self)
+        return nil;
 	
 	CGSize s = [[CCDirector sharedDirector] winSize];
 	
@@ -360,6 +508,8 @@ Class restartAction()
 	
 	[grossini runAction: [CCRepeatForever actionWithAction:seq1]];
 	[tamara runAction: [CCRepeatForever actionWithAction:seq2]];
+    
+    return self;
 }
 -(NSString *) title
 {
@@ -370,9 +520,11 @@ Class restartAction()
 #pragma mark SpriteEaseElasticInOut
 
 @implementation SpriteEaseElasticInOut
--(void) onEnter
+-(id) init
 {
-	[super onEnter];
+    self = [super init];
+    if (!self)
+        return nil;
 
 	CGSize s = [[CCDirector sharedDirector] winSize];
 	
@@ -397,6 +549,8 @@ Class restartAction()
 	[tamara runAction: [CCRepeatForever actionWithAction:seq1]];
 	[kathia runAction: [CCRepeatForever actionWithAction:seq2]];
 	[grossini runAction: [CCRepeatForever actionWithAction:seq3]];
+    
+    return self;
 }
 -(NSString *) title
 {
@@ -407,9 +561,11 @@ Class restartAction()
 #pragma mark SpriteEaseElastic
 
 @implementation SpriteEaseElastic
--(void) onEnter
+-(id) init
 {
-	[super onEnter];
+    self = [super init];
+    if (!self)
+        return nil;
 	
 	CGSize s = [[CCDirector sharedDirector] winSize];
 	
@@ -431,6 +587,8 @@ Class restartAction()
 	[grossini runAction: [CCRepeatForever actionWithAction:seq1]];
 	[tamara runAction: [CCRepeatForever actionWithAction:seq2]];
 	[kathia runAction: [CCRepeatForever actionWithAction:seq3]];
+    
+    return self;
 }
 -(NSString *) title
 {
@@ -441,9 +599,11 @@ Class restartAction()
 #pragma mark SpriteEaseBounce
 
 @implementation SpriteEaseBounce
--(void) onEnter
+-(id) init
 {
-	[super onEnter];
+    self = [super init];
+    if (!self)
+        return nil;
 	
 	CGSize s = [[CCDirector sharedDirector] winSize];
 	
@@ -465,6 +625,8 @@ Class restartAction()
 	[grossini runAction: [CCRepeatForever actionWithAction:seq1]];
 	[tamara runAction: [CCRepeatForever actionWithAction:seq2]];
 	[kathia runAction: [CCRepeatForever actionWithAction:seq3]];
+    
+    return self;
 }
 -(NSString *) title
 {
@@ -473,9 +635,11 @@ Class restartAction()
 @end
 
 @implementation SpriteEaseBounceInOut
--(void) onEnter
+-(id) init
 {
-	[super onEnter];
+    self = [super init];
+    if (!self)
+        return nil;
 	
 	CGSize s = [[CCDirector sharedDirector] winSize];
 	
@@ -494,6 +658,8 @@ Class restartAction()
 	
 	[grossini runAction: [CCRepeatForever actionWithAction:seq1]];
 	[tamara runAction: [CCRepeatForever actionWithAction:seq2]];
+    
+    return self;
 }
 -(NSString *) title
 {
@@ -504,9 +670,11 @@ Class restartAction()
 #pragma mark SpriteEaseBack
 
 @implementation SpriteEaseBack
--(void) onEnter
+-(id) init
 {
-	[super onEnter];
+    self = [super init];
+    if (!self)
+        return nil;
 	
 	CGSize s = [[CCDirector sharedDirector] winSize];
 	
@@ -528,6 +696,8 @@ Class restartAction()
 	[grossini runAction: [CCRepeatForever actionWithAction:seq1]];
 	[tamara runAction: [CCRepeatForever actionWithAction:seq2]];
 	[kathia runAction: [CCRepeatForever actionWithAction:seq3]];
+    
+    return self;
 }
 -(NSString *) title
 {
@@ -536,9 +706,11 @@ Class restartAction()
 @end
 
 @implementation SpriteEaseBackInOut
--(void) onEnter
+-(id) init
 {
-	[super onEnter];
+    self = [super init];
+    if (!self)
+        return nil;
 	
 	CGSize s = [[CCDirector sharedDirector] winSize];
 	
@@ -558,6 +730,8 @@ Class restartAction()
 	
 	[grossini runAction: [CCRepeatForever actionWithAction:seq1]];
 	[tamara runAction: [CCRepeatForever actionWithAction:seq2]];
+    
+    return self;
 }
 -(NSString *) title
 {
@@ -569,9 +743,11 @@ Class restartAction()
 #pragma mark SpeedTest
 
 @implementation SpeedTest
--(void) onEnter
+-(id) init
 {
-	[super onEnter];
+    self = [super init];
+    if (!self)
+        return nil;
 	
 	CGSize s = [[CCDirector sharedDirector] winSize];
 	
@@ -599,6 +775,19 @@ Class restartAction()
 	
 	
 	[self schedule:@selector(altertime:) interval:1.0f];
+    
+    return self;
+}
+
+- (id) initWithDictionaryRepresentation:(NSDictionary *)aDict
+{
+    self = [super initWithDictionaryRepresentation:aDict];
+    if (self)
+    {
+        [self schedule:@selector(altertime:) interval:1.0f];
+    }
+    
+    return self;
 }
 
 -(void) altertime:(ccTime)dt
@@ -669,9 +858,11 @@ Class restartAction()
 #endif
 }
 
--(void) onEnter
+-(id) init
 {
-	[super onEnter];
+    self = [super init];
+    if (!self)
+        return nil;
 	
 	CGSize s = [[CCDirector sharedDirector] winSize];
 	
@@ -697,20 +888,27 @@ Class restartAction()
 	CCParticleSystem *emitter = [CCParticleFireworks node];
 	[self addChild:emitter];
 	
-	sliderCtl = [self sliderCtl];
+    return self;
+}
+
+- (void) onEnter
+{
+    [super onEnter];
+    
+    sliderCtl = [self sliderCtl];
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 	[[[[CCDirector sharedDirector] openGLView] window] addSubview: sliderCtl];
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 	MacGLView *view = [[CCDirector sharedDirector] openGLView];
-
+    
 	if( ! overlayWindow ) {
 		overlayWindow  = [[NSWindow alloc] initWithContentRect:[[view window] frame]
 													 styleMask:NSBorderlessWindowMask
 													   backing:NSBackingStoreBuffered
 														 defer:NO];
-
+        
 		[overlayWindow setFrame:[[view window] frame] display:NO];
-				
+        
 		[[overlayWindow contentView] addSubview:sliderCtl];
 		[overlayWindow setParentWindow:[view window]];
 		[overlayWindow setOpaque:NO];
@@ -721,7 +919,6 @@ Class restartAction()
 	
 	[[view window] addChildWindow:overlayWindow ordered:NSWindowAbove];
 #endif
-	
 }
 
 -(void) onExit
@@ -795,7 +992,7 @@ Class restartAction()
 	[CCFileUtils setRetinaDisplaySuffix:@"-hd"];	// Default on RetinaDisplay is "-hd"
 	
 	CCScene *scene = [CCScene node];
-	[scene addChild: [nextAction() node]];	
+	[scene addChild: [EaseActionsDemo nodeWithInsideLayer:[nextAction() node]]];	
 	
 	[director runWithScene: scene];
 }
@@ -873,7 +1070,7 @@ Class restartAction()
 	[director setResizeMode:kCCDirectorResize_AutoScale];
 	
 	CCScene *scene = [CCScene node];
-	[scene addChild: [nextAction() node]];
+	[scene addChild: [EaseActionsDemo nodeWithInsideLayer:[nextAction() node]]];
 	
 	[director runWithScene:scene];
 }

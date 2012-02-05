@@ -50,13 +50,13 @@ for(CC_ARC_UNSAFE_RETAINED id *__arr__ = __array__->data->arr, *end = __array__-
 
 + (id) array;
 + (id) arrayWithCapacity:(NSUInteger)capacity;
-+ (id) arrayWithArray:(CCArray*)otherArray;
-+ (id) arrayWithNSArray:(NSArray*)otherArray;
++ (id) arrayWithCCArray:(CCArray*)otherArray;
++ (id) arrayWithArray:(NSArray*)otherArray;
 
 
 - (id) initWithCapacity:(NSUInteger)capacity;
-- (id) initWithArray:(CCArray*)otherArray;
-- (id) initWithNSArray:(NSArray*)otherArray;
+- (id) initWithCCArray:(CCArray*)otherArray;
+- (id) initWithArray:(NSArray*)otherArray;
 
 
 // Querying an Array

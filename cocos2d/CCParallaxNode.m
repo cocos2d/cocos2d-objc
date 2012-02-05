@@ -27,6 +27,7 @@
 #import "CCParallaxNode.h"
 #import "Support/CGPointExtension.h"
 #import "Support/ccCArray.h"
+#import "AutoMagicCoding/NSObject+AutoMagicCoding.h"
 
 @interface CGPointObject : NSObject
 {
@@ -59,9 +60,16 @@
 }
 @end
 
+@interface CCParallaxNode ()
+
+@property(nonatomic, readwrite, assign) CGPoint lastPosition;
+
+@end
+
 @implementation CCParallaxNode
 
 @synthesize parallaxArray = parallaxArray_;
+@synthesize lastPosition;
 
 -(id) init
 {
@@ -158,4 +166,101 @@
 	
 	[super visit];
 }
+
+#pragma mark CCParallaxNode - AutoMagicCoding Support
+
+- (NSArray *) AMCKeysForDictionaryRepresentation
+{
+    NSMutableArray *nodeKeys = [NSMutableArray arrayWithArray: [super AMCKeysForDictionaryRepresentation]];
+    [nodeKeys removeObjectIdenticalTo:@"children"];
+    
+    NSArray *parallaxNodeKeys = [NSArray arrayWithObjects:
+                                 @"parallaxArrayForAMC",
+                                 nil];
+    return [nodeKeys arrayByAddingObjectsFromArray: parallaxNodeKeys];
+}
+
+- (AMCFieldType) AMCFieldTypeForValueWithKey:(NSString *)aKey
+{
+    if ([aKey isEqualToString:@"parallaxArrayForAMC"])
+    {
+        return kAMCFieldTypeCollectionArrayMutable;
+    }
+    else
+        return [super AMCFieldTypeForValueWithKey:aKey];
+}
+
+- (NSArray *) parallaxArrayForAMC
+{
+    if (parallaxArray_ && parallaxArray_->num)
+    {
+        NSMutableArray *array = [NSMutableArray arrayWithCapacity: parallaxArray_->num];
+        
+        for( unsigned int i=0;i < parallaxArray_->num;i++) 
+        {
+            CGPointObject *point = parallaxArray_->arr[i];
+            
+            NSString *ratioString = [point AMCEncodeStructWithValue: [point valueForKey:@"ratio"] withName: @"CGPoint"];
+            NSString *offsetString = [point AMCEncodeStructWithValue: [point valueForKey:@"offset"] withName: @"CGPoint"];
+            
+            NSDictionary *pointDict = 
+            [NSDictionary dictionaryWithObjects: [NSArray arrayWithObjects:
+                                                  [point.child dictionaryRepresentation], 
+                                                  ratioString, 
+                                                  offsetString, 
+                                                  nil]
+                                        forKeys:[NSArray arrayWithObjects:
+                                                 @"child", 
+                                                 @"ratioString", 
+                                                 @"offsetString", 
+                                                 nil]
+             ];
+            [array addObject:pointDict];
+        }
+        
+        return array;
+    }
+    
+    return nil;
+}
+
+- (void) setParallaxArrayForAMC:(NSArray *)parallaxPointDictsArray
+{
+    parallaxArray_ = ccArrayNew( [parallaxPointDictsArray count]);
+    for (NSDictionary *pointDict in parallaxPointDictsArray)
+    {
+        CGPointObject *obj = [CGPointObject pointWithCGPoint:CGPointZero offset:CGPointZero];
+        [obj setValue: [obj AMCDecodeStructFromString:[pointDict objectForKey:@"ratioString"] withName:@"CGPoint"] forKey:@"ratio"];
+        [obj setValue: [obj AMCDecodeStructFromString:[pointDict objectForKey:@"offsetString"] withName:@"CGPoint"] forKey:@"offset"];
+        
+        // In collection inside collection (dict in array) AMC will automatically
+        // decode everything, that looks like dictionaryRepresentation of an object.
+        // It's a little trick, so be carefull here.
+        CCNode *child = (CCNode *)[pointDict objectForKey:@"child"];
+        NSAssert([child isKindOfClass: [CCNode class]], @"Child isn't a CCNode. If it's a dictionary - Fix me! ~AMC");
+        obj.child = child;
+        
+        [self addChild:obj.child z: obj.child.zOrder parallaxRatio: obj.ratio positionOffset: obj.offset ];
+    }
+}
+
+-(void) prepareChildrenAfterAMCLoad
+{
+    // Nothing here - all children should be properly added in -setParallaxArrayForAMC:
+}
+
+- (id) initWithDictionaryRepresentation:(NSDictionary *)aDict
+{
+    [super initWithDictionaryRepresentation:aDict];
+    if (self)
+    {
+        // Ensure that last position != position to update children positions
+        // at first visit after loading.
+        lastPosition = self.position;
+        lastPosition.x++;
+    }
+    
+    return self;
+}
+
 @end

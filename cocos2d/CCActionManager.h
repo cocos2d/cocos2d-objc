@@ -102,6 +102,17 @@ typedef struct _hashElement
  */
 -(NSUInteger) numberOfRunningActionsInTarget:(id)target;
 
+/** Returns array of all actions that are running in a certain target.
+ * Used to save actions by AMC, when saving nodes.
+ * Composable actions will be returned as 1 action. Example:
+ *    If you are running 1 Sequence of 7 actions, it will return array with count = 1.
+ *    If you are running 7 Sequences of 2 actions, it will return array with count = 7.
+ *
+ * If target is nil, or doesn't run any actions - empty array (count = 0) will be returned.
+ * @since 1.1+ ("feature-amc" branch of github.com/psineur/cocos2d-iphone)
+ */
+-(NSArray *) allActionsForTarget: (id) target;
+
 /** Pauses the target: all running actions and newly added actions will be paused.
  */
 -(void) pauseTarget:(id)target;

@@ -13,6 +13,19 @@ enum {
 	kTagMenu1 = 1,
 };
 
+// Layers Names (used by AMC to load targets for CCMenuItems).
+static NSString *const layer1Name = @"layer1";
+static NSString *const layer2Name = @"layer2";
+static NSString *const layer3Name = @"layer3";
+static NSString *const layer4Name = @"layer4";
+
+// Menu Items Names (Used to manually restore invocation/block for CCMenuItems
+// or weak-link to children).
+static NSString *const layer3Item2Name = @"layer3Item2";
+static NSString *const layer1DisabledItem = @"layer1DisabledItem";
+static NSString *const layer3DisabledItem = @"layer3DisabledItem";
+
+
 #pragma mark -
 #pragma mark MainMenu
 
@@ -20,6 +33,8 @@ enum {
 -(id) init
 {
 	if( (self=[super init])) {
+        
+        self.name = layer1Name;
 	
 		[CCMenuItemFont setFontSize:30];
 		[CCMenuItemFont setFontName: @"Courier New"];
@@ -88,11 +103,24 @@ enum {
 
 		disabledItem = [item3 retain];
 		disabledItem.isEnabled = NO;
+        disabledItem.name = layer1DisabledItem;
 
 		[self addChild: menu];
 	}
 
 	return self;
+}
+
+- (id) initWithDictionaryRepresentation:(NSDictionary *)aDict
+{
+    self = [super initWithDictionaryRepresentation:aDict];
+    if (self)
+    {
+        disabledItem = (CCMenuItem *)[[CCNodeRegistry sharedRegistry] nodeByName: layer1DisabledItem];
+        [disabledItem retain];
+    }
+    
+    return self;    
 }
 
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
@@ -216,7 +244,7 @@ enum {
 -(id) init
 {
 	if( (self=[super init]) ) {
-			
+        self.name = layer2Name;
 	}
 
 	return self;
@@ -289,12 +317,19 @@ enum {
 -(id) init
 {
 	if( (self=[super init]) ) {
+        
+        self.name = layer3Name;
+        
 		[CCMenuItemFont setFontName: @"Marker Felt"];
 		[CCMenuItemFont setFontSize:28];
 
 		CCLabelBMFont *label = [CCLabelBMFont labelWithString:@"Enable AtlasItem" fntFile:@"bitmapFontTest3.fnt"];
 		CCMenuItemLabel *item1 = [CCMenuItemLabel itemWithLabel:label target:self selector:@selector(menuCallback2:)];
-		CCMenuItemFont *item2 = [CCMenuItemFont itemFromString: @"--- Go Back ---" target:self selector:@selector(menuCallback:)];
+		CCMenuItemFont *item2 = [CCMenuItemFont itemFromString:@"--- Go Back ---" block:^(id sender)
+                                 {
+                                     [self menuCallback: sender];
+                                 }];
+        item2.name = layer3Item2Name;
 		
 		CCSprite *spriteNormal = [CCSprite spriteWithFile:@"menuitemsprite.png" rect:CGRectMake(0,23*2,115,23)];
 		CCSprite *spriteSelected = [CCSprite spriteWithFile:@"menuitemsprite.png" rect:CGRectMake(0,23*1,115,23)];
@@ -303,6 +338,7 @@ enum {
 		CCMenuItemSprite *item3 = [CCMenuItemSprite itemFromNormalSprite:spriteNormal selectedSprite:spriteSelected disabledSprite:spriteDisabled target:self selector:@selector(menuCallback3:)];
 		disabledItem = item3;
 		disabledItem.isEnabled = NO;
+        disabledItem.name = layer3DisabledItem;
 		
 		CCMenu *menu = [CCMenu menuWithItems: item1, item2, item3, nil];	
 		menu.position = ccp(0,0);
@@ -330,6 +366,17 @@ enum {
 	}
 	
 	return self;
+}
+
+- (id) initWithDictionaryRepresentation:(NSDictionary *)aDict
+{
+    self = [super initWithDictionaryRepresentation:aDict];
+    if (self)
+    {
+        disabledItem = (CCMenuItem *)[[CCNodeRegistry sharedRegistry] nodeByName: layer3DisabledItem];
+    }
+    
+    return self;    
 }
 
 - (void) dealloc
@@ -360,6 +407,8 @@ enum {
 -(id) init
 {
 	if( (self = [super init] ) ) {
+        
+        self.name = layer4Name;
 
 		[CCMenuItemFont setFontName: @"American Typewriter"];
 		[CCMenuItemFont setFontSize:18];
@@ -459,6 +508,110 @@ enum {
 @end
 
 
+@implementation MenuTest
+
+enum nodeTags
+{
+    kLayer,
+};
+
+- (NSString *) testFilePath
+{    
+    NSString *filename = [NSString stringWithFormat:@"%@.plist", [self className] ];
+    
+    NSArray *paths					= NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+	NSString *documentsDirectory	= [paths objectAtIndex:0];
+	NSString *fullPath				= [documentsDirectory stringByAppendingPathComponent: filename ];
+	return fullPath;
+}
+
+- (void) save
+{
+    // Don't save actions in this test - actions are tested in ActionsTest.
+    [CCActionManager purgeSharedManager];
+    
+    CCNode *layer = [self getChildByTag: kLayer];
+    NSDictionary *dict = [layer dictionaryRepresentation];
+    [dict writeToFile:[self testFilePath] atomically:YES];
+}
+
+- (void) purge
+{
+    [self removeChildByTag: kLayer cleanup:YES];
+    
+    [CCAnimationCache purgeSharedAnimationCache];
+    [CCSpriteFrameCache purgeSharedSpriteFrameCache];
+    [CCTextureCache purgeSharedTextureCache];    
+}
+
+- (void) load
+{
+    NSString *path = [self testFilePath];
+    NSDictionary *aDict = [NSDictionary dictionaryWithContentsOfFile: path];
+    CCLayer *layer = [NSObject objectWithDictionaryRepresentation: aDict ];
+    
+    // Manually restore block, cause AMC can't save blocks.
+    CCMenuItem *layer3Item2 = (CCMenuItem *)[[CCNodeRegistry sharedRegistry] nodeByName: layer3Item2Name];
+    layer3Item2.block = ^(id sender)
+    {
+        id layer3 = [[CCNodeRegistry sharedRegistry] nodeByName: layer3Name];
+        [layer3 menuCallback: sender];
+    };
+    
+    
+	[self addChild: layer z: 0 tag: kLayer];
+}
+
+- (void) savePurgeLoadCallback: (id) sender
+{
+    CCMenuItemToggle *toggle = (CCMenuItemToggle *)sender;
+    NSUInteger selected = toggle.selectedIndex;
+    switch (selected) {
+        case 0:
+            NSLog(@"Loading...");
+            [self load];
+            break;
+        case 1:
+            NSLog(@"Saving...");
+            [self save];
+            break;
+        case 2:
+            NSLog(@"Purging...");
+            [self purge];
+            break;
+            
+    }
+    
+}
+
++ (id) nodeWithInsideLayer:(CCLayer *)insideLayer
+{
+    return [[[self alloc] initWithInsideLayer: insideLayer]autorelease];
+}
+
+-(id) initWithInsideLayer:(CCLayer *)insideLayer
+{
+	if( (self = [super init]) ) {
+		CGSize s = [[CCDirector sharedDirector] winSize];
+        
+        [self addChild: insideLayer z:0 tag: kLayer ];		
+        
+        CCMenuItemLabel *save = [CCMenuItemLabel itemWithLabel: [CCLabelTTF labelWithString: @"Save" fontName: @"Marker Felt" fontSize:18]];
+        CCMenuItemLabel *purge = [CCMenuItemLabel itemWithLabel: [CCLabelTTF labelWithString: @"Purge" fontName: @"Marker Felt" fontSize:18]];
+        CCMenuItemLabel *load = [CCMenuItemLabel itemWithLabel: [CCLabelTTF labelWithString: @"Load" fontName: @"Marker Felt" fontSize:18]];
+        CCMenuItem *trigger = [CCMenuItemToggle itemWithTarget:self selector: @selector(savePurgeLoadCallback:) items: save, purge, load, nil];
+        
+		CCMenu *menu = [CCMenu menuWithItems: trigger, nil];
+		
+		menu.position = CGPointZero;
+        trigger.position = ccp( 0.5f * s.width, 0.25f * s.height);
+		[self addChild: menu z:1];	
+	}
+	return self;
+}
+
+@end
+
 
 // CLASS IMPLEMENTATIONS
 
@@ -511,7 +664,7 @@ enum {
 	CCScene *scene = [CCScene node];
 
 	CCLayerMultiplex *layer = [CCLayerMultiplex layerWithLayers: [Layer1 node], [Layer2 node], [Layer3 node], [Layer4 node], nil];
-	[scene addChild: layer z:0];
+	[scene addChild: [MenuTest nodeWithInsideLayer: layer] z:0];
 
 	[director runWithScene: scene];
 }
@@ -593,7 +746,7 @@ enum {
 	CCScene *scene = [CCScene node];
 	
 	CCLayerMultiplex *layer = [CCLayerMultiplex layerWithLayers: [Layer1 node], [Layer2 node], [Layer3 node], [Layer4 node], nil];
-	[scene addChild: layer z:0];
+	[scene addChild: [MenuTest nodeWithInsideLayer: layer] z:0];
 	
 	[director runWithScene:scene];
 }

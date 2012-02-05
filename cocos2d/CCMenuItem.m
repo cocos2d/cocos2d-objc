@@ -31,6 +31,7 @@
 #import "CCSprite.h"
 #import "Support/CGPointExtension.h"
 #import "CCBlockSupport.h"
+#import "AutoMagicCoding/NSObject+AutoMagicCoding.h"
 
 	static NSUInteger _fontSize = kCCItemSize;
 static NSString *_fontName = @"Marker Felt";
@@ -44,9 +45,18 @@ const uint32_t	kZoomActionTag = 0xc0c05002;
 #pragma mark -
 #pragma mark CCMenuItem
 
+@interface CCMenuItem ()
+
+@property (nonatomic,readwrite, retain) NSInvocation *invocation;
+
+@end
+
 @implementation CCMenuItem
 
 @synthesize isSelected=isSelected_;
+@synthesize invocation = invocation_;
+
+
 -(id) init
 {
 	NSAssert(NO, @"MenuItemInit: Init not supported.");
@@ -64,22 +74,8 @@ const uint32_t	kZoomActionTag = 0xc0c05002;
 	if((self=[super init]) ) {
 	
 		anchorPoint_ = ccp(0.5f, 0.5f);
-		NSMethodSignature * sig = nil;
 		
-		if( rec && cb ) {
-			sig = [rec methodSignatureForSelector:cb];
-			
-			invocation_ = nil;
-			invocation_ = [NSInvocation invocationWithMethodSignature:sig];
-			[invocation_ setTarget:rec];
-			[invocation_ setSelector:cb];
-#if NS_BLOCKS_AVAILABLE
-			if ([sig numberOfArguments] == 3) 
-#endif
-			[invocation_ setArgument:&self atIndex:2];
-			
-			[invocation_ retain];
-		}
+        [self setTarget:rec selector:cb];
 		
 		isEnabled_ = YES;
 		isSelected_ = NO;
@@ -95,18 +91,39 @@ const uint32_t	kZoomActionTag = 0xc0c05002;
 }
 
 -(id) initWithBlock:(void(^)(id sender))block {
-	block_ = [block copy];
-	return [self initWithTarget:block_ selector:@selector(ccCallbackBlockWithSender:)];
+	
+    [self initWithTarget:nil selector: nil];
+    if (self)
+    {
+        self.block = block;
+    }
+    return self;
 }
+
+@synthesize block = block_;
 
 #endif // NS_BLOCKS_AVAILABLE
 
+- (void) setTarget: (id) target selector: (SEL) selector
+{
+    NSMethodSignature *sig = nil;
+    
+    if( target && selector ) {
+        sig = [target methodSignatureForSelector:selector];
+        
+        self.invocation = [NSInvocation invocationWithMethodSignature:sig];
+        [self.invocation setTarget:target];
+        [self.invocation setSelector:selector];
+        [self.invocation setArgument:&self atIndex:2];
+    }
+}
+
 -(void) dealloc
 {
-	[invocation_ release];
+	self.invocation = nil;
 
 #if NS_BLOCKS_AVAILABLE
-	[block_ release];
+	self.block = nil;
 #endif
 	
 	[super dealloc];
@@ -125,7 +142,12 @@ const uint32_t	kZoomActionTag = 0xc0c05002;
 -(void) activate
 {
 	if(isEnabled_)
-        [invocation_ invoke];
+    {
+        if (self.block)
+            self.block(self);
+        else        
+            [self.invocation invoke];
+    }
 }
 
 -(void) setIsEnabled: (BOOL)enabled
@@ -145,15 +167,89 @@ const uint32_t	kZoomActionTag = 0xc0c05002;
 					  contentSize_.width, contentSize_.height);	
 }
 
+#pragma mark CCMenuItem - AutoMagicCoding Support
+
+- (NSArray *) AMCKeysForDictionaryRepresentation
+{
+    NSArray *nodeKeys = [super AMCKeysForDictionaryRepresentation];
+    NSArray *menuItemKeys = [NSArray arrayWithObjects: 
+                             @"isEnabled", 
+                             @"invocationDictionary", 
+                             nil];
+
+    return [nodeKeys arrayByAddingObjectsFromArray: menuItemKeys];
+}
+
+- (AMCFieldType) AMCFieldTypeForValueWithKey:(NSString *)aKey
+{
+    if ( [aKey isEqualToString:@"invocationDictionary"] )
+    {
+        return kAMCFieldTypeCollectionHash;
+    }
+    else
+        return [super AMCFieldTypeForValueWithKey:aKey];
+}
+
+- (NSDictionary *) invocationDictionary
+{
+    if ([self.invocation.target respondsToSelector:@selector(name)])
+    {
+        NSString *targetName = [(CCNode *)self.invocation.target name];
+        NSString *selectorName = NSStringFromSelector(self.invocation.selector);
+        if (targetName && selectorName)
+            return [NSDictionary dictionaryWithObjects: 
+                    [NSArray arrayWithObjects:targetName, selectorName, nil] 
+                                               forKeys:
+                    [NSArray arrayWithObjects: @"targetName",@"selectorName", nil]
+                    ];
+    }
+    
+    return nil;
+}
+
+- (void) setInvocationDictionary:(NSDictionary *)aDict
+{
+    // Retain invocationDictionary to setup target & selector later -
+    // when target will be loaded (it's possible that target will be loaded
+    // after this menuItem ).
+    tempInvocationDictionary_ = [aDict retain];
+}
+
+- (void) onEnter
+{
+    [super onEnter];
+    
+    // Set target & selector onEnter - when target should be already loaded from AMC.
+    if (tempInvocationDictionary_)
+    {
+        NSString *targetName = [tempInvocationDictionary_ objectForKey:@"targetName"];
+        NSString *selectorName = [tempInvocationDictionary_ objectForKey:@"selectorName"];
+        
+        CCNode *target = [[CCNodeRegistry sharedRegistry] nodeByName:targetName];
+        SEL selector = NSSelectorFromString(selectorName);
+        
+        [self setTarget:target selector:selector];
+        [tempInvocationDictionary_ release];
+        tempInvocationDictionary_ = nil;
+    }
+}
+
 @end
 
 
 #pragma mark -
 #pragma mark CCMenuItemLabel
 
+@interface CCMenuItemLabel ()
+
+@property(nonatomic, readwrite,assign) ccColor3B colorBackup;
+
+@end
+
 @implementation CCMenuItemLabel
 
 @synthesize disabledColor = disabledColor_;
+@synthesize colorBackup = colorBackup_;
 
 +(id) itemWithLabel:(CCNode<CCLabelProtocol,CCRGBAProtocol>*)label target:(id)target selector:(SEL)selector
 {
@@ -169,7 +265,7 @@ const uint32_t	kZoomActionTag = 0xc0c05002;
 {
 	if( (self=[super initWithTarget:target selector:selector]) ) {
 		originalScale_ = 1;
-		colorBackup = ccWHITE;
+		self.colorBackup = ccWHITE;
 		disabledColor_ = ccc3( 126,126,126);
 		self.label = label;
 		
@@ -184,8 +280,13 @@ const uint32_t	kZoomActionTag = 0xc0c05002;
 }
 
 -(id) initWithLabel:(CCNode<CCLabelProtocol,CCRGBAProtocol>*)label block:(void(^)(id sender))block {
-	block_ = [block copy];
-	return [self initWithLabel:label target:block_ selector:@selector(ccCallbackBlockWithSender:)];
+	
+	[self initWithLabel:label target:nil selector:nil];
+    if (self)
+    {
+        self.block = block;
+    }
+    return self;
 }
 
 #endif // NS_BLOCKS_AVAILABLE
@@ -257,11 +358,11 @@ const uint32_t	kZoomActionTag = 0xc0c05002;
 {
 	if( isEnabled_ != enabled ) {
 		if(enabled == NO) {
-			colorBackup = [label_ color];
+			self.colorBackup = [label_ color];
 			[label_ setColor: disabledColor_];
 		}
 		else
-			[label_ setColor:colorBackup];
+			[label_ setColor:self.colorBackup];
 	}
     
 	[super setIsEnabled:enabled];
@@ -283,6 +384,62 @@ const uint32_t	kZoomActionTag = 0xc0c05002;
 {
 	return [label_ color];
 }
+
+#pragma mark CCMenuItemLabel - AutoMagicCoding Support
+
+- (NSArray *) AMCKeysForDictionaryRepresentation
+{
+    NSArray *menuItemKeys = [super AMCKeysForDictionaryRepresentation];
+    NSArray *menuItemLabelKeys = [NSArray  arrayWithObjects:
+                                  @"colorBackup",
+                                  @"disabledColor",
+                                  @"labelIndex",
+                                  @"isEnabled",
+                                  nil];
+    
+    return [menuItemKeys arrayByAddingObjectsFromArray: menuItemLabelKeys];
+}
+
+-(NSUInteger) labelIndex
+{
+	return [children_ indexOfObject: label_];
+}
+
+-(void) setLabelIndex:(NSUInteger) labelIndex
+{    
+    if (labelIndex < [children_ count])
+    {
+        label_ = [children_ objectAtIndex: labelIndex];
+        [self setContentSize:[label_ contentSize]];
+    }
+}
+
+- (NSString *) AMCEncodeStructWithValue: (NSValue *) structValue withName: (NSString *) structName
+{
+    if ([structName isEqualToString: @"_ccColor3B"]
+        || [structName isEqualToString: @"ccColor3B"])
+    {
+        ccColor3B color;
+        [structValue getValue: &color];
+        return NSStringFromCCColor3B(color);
+    }
+    else
+        return [super AMCEncodeStructWithValue:structValue withName:structName];
+}
+
+- (NSValue *) AMCDecodeStructFromString: (NSString *)value withName: (NSString *) structName
+{
+    if ([structName isEqualToString: @"_ccColor3B"]
+        || [structName isEqualToString: @"ccColor3B"])
+    {
+        ccColor3B color = ccColor3BFromNSString(value);
+        
+        return [NSValue valueWithBytes: &color objCType: @encode(ccColor3B) ];
+    }
+    else
+        return [super AMCDecodeStructFromString:value withName:structName];
+}
+
 @end
 
 #pragma mark  -
@@ -320,8 +477,13 @@ const uint32_t	kZoomActionTag = 0xc0c05002;
 }
 
 -(id) initFromString:(NSString*)value charMapFile:(NSString*)charMapFile itemWidth:(int)itemWidth itemHeight:(int)itemHeight startCharMap:(char)startCharMap block:(void(^)(id sender))block {
-	block_ = [block copy];
-	return [self initFromString:value charMapFile:charMapFile itemWidth:itemWidth itemHeight:itemHeight startCharMap:startCharMap target:block_ selector:@selector(ccCallbackBlockWithSender:)];
+	
+    [self initFromString:value charMapFile:charMapFile itemWidth:itemWidth itemHeight:itemHeight startCharMap:startCharMap target:nil selector:nil];
+    if (self)
+    {
+        self.block = block;
+    }
+    return self;
 }
 #endif // NS_BLOCKS_AVAILABLE
 
@@ -425,11 +587,27 @@ const uint32_t	kZoomActionTag = 0xc0c05002;
 }
 
 -(id) initFromString: (NSString*) value block:(void(^)(id sender))block
-{
-	block_ = [block copy];
-	return [self initFromString:value target:block_ selector:@selector(ccCallbackBlockWithSender:)];
+{	
+    [self initFromString:value target:nil selector:nil];
+    if (self)
+    {
+        self.block = block;
+    }
+    
+    return self;
 }
 #endif // NS_BLOCKS_AVAILABLE
+
+
+#pragma mark CCMenuItemFont - AutoMagicCoding Support
+
+- (NSArray *) AMCKeysForDictionaryRepresentation
+{
+    NSArray *menuItemLabelKeys = [super AMCKeysForDictionaryRepresentation];
+    NSArray *menuItemFontKeys = [NSArray arrayWithObjects: @"fontSize_", @"fontName_", nil];
+    
+    return [menuItemLabelKeys arrayByAddingObjectsFromArray: menuItemFontKeys];
+}
 
 @end
 
@@ -474,8 +652,13 @@ const uint32_t	kZoomActionTag = 0xc0c05002;
 }
 
 -(id) initFromNormalSprite:(CCNode<CCRGBAProtocol>*)normalSprite selectedSprite:(CCNode<CCRGBAProtocol>*)selectedSprite disabledSprite:(CCNode<CCRGBAProtocol>*)disabledSprite block:(void(^)(id sender))block {
-	block_ = [block copy];
-	return [self initFromNormalSprite:normalSprite selectedSprite:selectedSprite disabledSprite:disabledSprite target:block_ selector:@selector(ccCallbackBlockWithSender:)];
+	
+    [self initFromNormalSprite:normalSprite selectedSprite:selectedSprite disabledSprite:disabledSprite target:nil selector:nil];
+    if (self)
+    {
+        self.block = block;
+    }
+    return self;
 }
 #endif // NS_BLOCKS_AVAILABLE
 
@@ -591,6 +774,64 @@ const uint32_t	kZoomActionTag = 0xc0c05002;
 	}
 }
 
+#pragma mark CCMenuItemSprite - AutoMagicCoding Support
+
+- (NSArray *) AMCKeysForDictionaryRepresentation
+{
+    NSArray *menuItemKeys = [super AMCKeysForDictionaryRepresentation];
+    NSArray *menuItemSpriteKeys = [NSArray arrayWithObjects:
+                                   @"normalImageIndex",
+                                   @"selectedImageIndex",
+                                   @"disabledImageIndex",
+                                   @"isEnabled",
+                                   nil];
+    
+    return [menuItemKeys arrayByAddingObjectsFromArray: menuItemSpriteKeys];
+}
+
+-(NSUInteger) normalImageIndex
+{
+	return [children_ indexOfObject: normalImage_];
+}
+
+-(void) setNormalImageIndex:(NSUInteger) childIndex
+{    
+    if (childIndex < [children_ count])
+    {
+        normalImage_ = [children_ objectAtIndex: childIndex];
+        normalImage_.visible = YES;
+        [self setContentSize: [normalImage_ contentSize]];
+    }
+}
+
+-(NSUInteger) selectedImageIndex
+{
+	return [children_ indexOfObject: selectedImage_];
+}
+
+-(void) setSelectedImageIndex:(NSUInteger) childIndex
+{    
+    if (childIndex < [children_ count])
+    {
+        selectedImage_ = [children_ objectAtIndex: childIndex];
+        selectedImage_.visible = NO;
+    }
+}
+
+-(NSUInteger)disabledImageIndex
+{
+	return [children_ indexOfObject: disabledImage_];
+}
+
+-(void) setDisabledImageIndex:(NSUInteger) childIndex
+{    
+    if (childIndex < [children_ count])
+    {
+        disabledImage_ = [children_ objectAtIndex: childIndex];
+        disabledImage_.visible = NO;
+    }
+}
+
 @end
 
 #pragma mark -
@@ -643,8 +884,14 @@ const uint32_t	kZoomActionTag = 0xc0c05002;
 }
 
 -(id) initFromNormalImage: (NSString*) value selectedImage:(NSString*)value2 disabledImage:(NSString*) value3 block:(void(^)(id sender))block {
-	block_ = [block copy];
-	return [self initFromNormalImage:value selectedImage:value2 disabledImage:value3 target:block_ selector:@selector(ccCallbackBlockWithSender:)];
+	
+    [self initFromNormalImage:value selectedImage:value2 disabledImage:value3 target:nil selector:nil];
+    if (self)
+    {
+        self.block = block;
+    }
+    
+    return self;
 }
 
 #endif // NS_BLOCKS_AVAILABLE
@@ -707,8 +954,13 @@ const uint32_t	kZoomActionTag = 0xc0c05002;
 }
 
 -(id) initWithBlock:(void (^)(id))block items:(CCMenuItem*)item vaList:(va_list)args {
-	block_ = [block copy];
-	return [self initWithTarget:block_ selector:@selector(ccCallbackBlockWithSender:) items:item vaList:args];
+	
+    [self initWithTarget:nil selector: nil items:item vaList:args];
+    if (self)
+    {
+        self.block = block;
+    }
+    return self;
 }
 
 #endif // NS_BLOCKS_AVAILABLE
@@ -794,5 +1046,20 @@ const uint32_t	kZoomActionTag = 0xc0c05002;
 	for(CCMenuItem<CCRGBAProtocol>* item in subItems_)
 		[item setColor:color];
 }
+
+#pragma mark CCMenuItemToggle - AutoMagicCoding Support
+
+- (NSArray *) AMCKeysForDictionaryRepresentation
+{
+    NSArray *menuItemKeys = [super AMCKeysForDictionaryRepresentation];
+    NSArray *menuItemToggleKeys = [NSArray arrayWithObjects:
+                                   @"subItems",
+                                   @"selectedIndex_",
+                                   @"isEnabled",
+                                   nil];
+    
+    return [menuItemKeys arrayByAddingObjectsFromArray: menuItemToggleKeys];
+}
+
 
 @end

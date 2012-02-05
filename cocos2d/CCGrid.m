@@ -35,6 +35,7 @@
 #import "Platforms/CCGL.h"
 #import "Support/CGPointExtension.h"
 #import "Support/ccUtils.h"
+#import "AutoMagicCoding/NSObject+AutoMagicCoding.h"
 
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 #import "Platforms/iOS/CCDirectorIOS.h"
@@ -281,6 +282,100 @@
 	[NSException raise:@"GridBase" format:@"Abstract class needs implementation"];
 }
 
+#pragma mark CCGridBase - AutoMagicCoding Support
+
++ (BOOL) AMCEnabled
+{
+    return YES;
+}
+
+- (NSArray *) AMCKeysForDictionaryRepresentation
+{
+    return [NSArray arrayWithObjects: 
+            @"active",
+            @"reuseGrid",
+            @"gridSize",
+            @"step",
+            @"isTextureFlipped",
+            
+            // vertices saved as NSArray of NSStrings (ccVertex3F for CCGrid3D)
+            // or as NSArray of NSNumbers(float) (GLfloat for CCTiledGrid3D)
+            // vertices stored as array in dictionaryRepresentation, but set as
+            // scalar value - custom dynamic setter is used to set C-style array
+            // contents from NSString/NSNumber.
+            @"verticesAsNSArray",
+            @"originalVerticesAsNSArray",
+            nil];
+}
+
+-(NSString *)verticesAsStringArray
+{
+    [NSException raise:@"GridBase" format:@"Abstract class needs implementation"];
+    return nil;
+}
+
+-(void)setVerticesAsStringArray: (NSArray *) array
+{
+    [NSException raise:@"GridBase" format:@"Abstract class needs implementation"];
+}
+
+-(NSString *)originalVerticesAsStringArray
+{
+    [NSException raise:@"GridBase" format:@"Abstract class needs implementation"];
+    return nil;
+}
+
+-(void)setOriginalVerticesAsStringArray: (NSArray *) array
+{
+    [NSException raise:@"GridBase" format:@"Abstract class needs implementation"];
+}
+
+- (id) initWithDictionaryRepresentation: (NSDictionary *) aDict
+{
+    [self loadValueForKey:@"gridSize" fromDictionaryRepresentation:aDict];
+    self = [self initWithSize:self.gridSize];
+    
+    if (self)
+    {
+        self = [super initWithDictionaryRepresentation:aDict];
+    }
+    
+    return self;
+}
+
+- (void) setGridSize:(ccGridSize)gridSize
+{
+    gridSize_ = gridSize;
+}
+
+-(NSString *) AMCEncodeStructWithValue:(NSValue *)structValue withName:(NSString *)structName
+{
+    if ( [structName isEqualToString: @"_ccGridSize"]
+        || [structName isEqualToString: @"ccGridSize"]
+        )
+    {
+        ccGridSize gridSize;
+        [structValue getValue: &gridSize];
+        return NSStringFromCCGridSize(gridSize);       
+    }
+    else
+        return [super AMCEncodeStructWithValue:structValue withName:structName];
+}
+
+- (NSValue *) AMCDecodeStructFromString:(NSString *)value withName:(NSString *)structName
+{
+    if ( [structName isEqualToString: @"_ccGridSize"]
+        || [structName isEqualToString: @"ccGridSize"]
+        )
+    {
+        ccGridSize gridSize = ccGridSizeFromNSString(value);
+    
+        return [NSValue valueWithBytes: &gridSize objCType: @encode(ccGridSize) ];
+    }
+    else
+        return [super AMCDecodeStructFromString:value withName:structName];
+}
+
 @end
 
 ////////////////////////////////////////////////////////////
@@ -417,6 +512,58 @@
 		memcpy(originalVertices, vertices, (gridSize_.x+1)*(gridSize_.y+1)*sizeof(ccVertex3F));
 		reuseGrid_--;
 	}
+}
+
+#pragma mark CCGrid3D - AutoMagicCoding Support
+
+-(NSArray *)verticesAsNSArray
+{
+    NSUInteger count = (gridSize_.x+1)*(gridSize_.y+1);
+    NSMutableArray *array = [NSMutableArray arrayWithCapacity: count];
+    
+    for (NSUInteger i = 0; i < count; ++i)
+    {
+        ccVertex3F curVertex3F = ((ccVertex3F *)vertices)[i];
+        [array addObject: NSStringFromCCVertex3F(curVertex3F)];
+    }
+    
+    return array;
+}
+
+-(void)setVerticesAsNSArray: (NSArray *) array
+{
+    NSUInteger count = [array count];
+    ccVertex3F *curVertex3F = (ccVertex3F *)vertices;
+    for (NSUInteger i = 0; i < count; ++i)
+    {        
+        *curVertex3F = ccVertex3FFromNSString([array objectAtIndex: i]);
+        curVertex3F++;
+    }
+}
+
+-(NSArray *)originalVerticesAsNSArray
+{
+    NSUInteger count = (gridSize_.x+1)*(gridSize_.y+1);
+    NSMutableArray *array = [NSMutableArray arrayWithCapacity: count];
+    
+    for (NSUInteger i = 0; i < count; ++i)
+    {
+        ccVertex3F curVertex3F = ((ccVertex3F *)originalVertices)[i];
+        [array addObject: NSStringFromCCVertex3F(curVertex3F)];
+    }
+    
+    return array;
+}
+
+-(void)setOriginalVerticesAsNSArray: (NSArray *) array
+{
+    NSUInteger count = [array count];
+    ccVertex3F *curVertex3F = (ccVertex3F *)originalVertices;
+    for (NSUInteger i = 0; i < count; ++i)
+    {        
+        *curVertex3F = ccVertex3FFromNSString([array objectAtIndex: i]);
+        curVertex3F++;
+    }
 }
 
 @end
@@ -567,5 +714,63 @@
 		reuseGrid_--;
 	}
 }
+
+#pragma mark CCTiledGrid3D - AutoMagicCoding Support
+
+-(NSArray *)verticesAsNSArray
+{
+    NSInteger numQuads = gridSize_.x * gridSize_.y;
+    NSInteger count = numQuads*12;   
+    NSMutableArray *array = [NSMutableArray arrayWithCapacity: count];
+    
+    for (NSUInteger i = 0; i < count; ++i)
+    {
+        GLfloat curFloat = ((GLfloat *)vertices)[i];
+        [array addObject: [NSNumber numberWithFloat: curFloat]];
+    }
+    
+    return array;
+}
+
+-(void)setVerticesAsNSArray: (NSArray *) array
+{
+    NSInteger numQuads = gridSize_.x * gridSize_.y;
+    NSInteger count = numQuads*12;
+    GLfloat *curFloat = (GLfloat *)vertices;
+    for (NSUInteger i = 0; i < count; ++i)
+    {        
+        *curFloat = [[array objectAtIndex: i] floatValue];
+        curFloat++;
+    }
+}
+
+-(NSArray *)originalVerticesAsNSArray
+{
+    NSInteger numQuads = gridSize_.x * gridSize_.y;
+    NSInteger count = numQuads*12;   
+    NSMutableArray *array = [NSMutableArray arrayWithCapacity: count];
+    
+    for (NSUInteger i = 0; i < count; ++i)
+    {
+        GLfloat curFloat = ((GLfloat *)originalVertices)[i];
+        [array addObject: [NSNumber numberWithFloat: curFloat]];
+    }
+    
+    return array;
+}
+
+-(void)setOriginalVerticesAsNSArray: (NSArray *) array
+{
+    NSInteger numQuads = gridSize_.x * gridSize_.y;
+    NSInteger count = numQuads*12;
+    GLfloat *curFloat = (GLfloat *)originalVertices;
+    for (NSUInteger i = 0; i < count; ++i)
+    {        
+        *curFloat = [[array objectAtIndex: i] floatValue];
+        curFloat++;
+    }
+}
+
+
 
 @end

@@ -29,6 +29,8 @@
 #import "CCSpriteFrame.h"
 #import "CCTexture2D.h"
 #import "CCTextureCache.h"
+#import "CCAnimationCache.h"
+#import "AutoMagicCoding/NSObject+AutoMagicCoding.h"
 
 @implementation CCAnimation
 @synthesize name = name_, delay = delay_, frames = frames_;
@@ -70,8 +72,9 @@
 
 - (NSString*) description
 {
-	return [NSString stringWithFormat:@"<%@ = %08X | frames=%d, delay:%f>", [self class], self,
-			[frames_ count],
+	return [NSString stringWithFormat:@"<%@ = %08X | name = %@, frames=%@, delay:%f>", [self class], self,
+            name_,
+			frames_,
 			delay_
 			];
 }
@@ -102,6 +105,84 @@
 {
 	CCSpriteFrame *frame = [CCSpriteFrame frameWithTexture:texture rect:rect];
 	[frames_ addObject:frame];
+}
+
+- (BOOL) isEqual:(id)object
+{
+    CCAnimation *other = (CCAnimation *) object;
+    if (![other isKindOfClass:[CCAnimation class]])
+        return NO;
+    
+    if (self.name != other.name)
+        return NO;
+    
+    if (self.delay != other.delay)
+        return NO;
+    
+    NSUInteger framesCount = [self.frames count];
+    if (framesCount != [other.frames count])
+        return NO;
+    
+    for (NSUInteger i = 0; i < framesCount; ++i)
+    {
+        CCSpriteFrame *myFrame = [self.frames objectAtIndex: i];
+        CCSpriteFrame *otherFrame = [other.frames objectAtIndex: i];
+        
+        if (![myFrame isEqual:otherFrame])
+            return NO;
+    }
+    
+    return YES;
+}
+
+#pragma mark CCAnimation - AutoMagicCoding Support
+
++ (BOOL) AMCEnabled
+{
+    return YES;
+}
+
+- (id) initWithDictionaryRepresentation: (NSDictionary *) aDict
+{
+    // Get name of loading animation.
+    NSString *name = [aDict objectForKey:@"name"];
+    if ([name isKindOfClass:[NSString class]])
+    {
+        // Find existing animation with same name.
+        CCAnimation *existingAnimationWithSameName = [[CCAnimationCache sharedAnimationCache] animationByName: name];
+        if (existingAnimationWithSameName)
+        {
+            // On debug - warn developer if existing & loading animations with same names arent equal.
+#if COCOS2D_DEBUG 
+            
+            if ( (self = [super initWithDictionaryRepresentation: aDict]) )
+            {
+                if (![self isEqual: existingAnimationWithSameName])
+                {
+                    CCLOG(@"WARNING: Loading animation \"%@\" isn't equal to existing animation with same name in CCAnimationCache. Ignoring new one and using cached version! New = %@ Cached = %@", self.name, self, existingAnimationWithSameName);
+                }
+            }
+#endif
+            
+            // Return existing animation.
+            [self release];
+            return [existingAnimationWithSameName retain]; 
+            //< init must return NSObject with +1 refCount.
+        }
+        else // Create new and save it in AnimationCache
+        {
+            self = [super initWithDictionaryRepresentation: aDict];
+            if (self)
+            {
+                [[CCAnimationCache sharedAnimationCache] addAnimation:self name:self.name];
+            }
+            
+            return self;
+        }
+    }
+    
+    // Noname animation - simply create new.
+    return [super initWithDictionaryRepresentation: aDict];
 }
 
 @end

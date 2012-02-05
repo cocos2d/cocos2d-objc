@@ -188,6 +188,8 @@ static CCSpriteFrameCache *sharedSpriteFrameCache_=nil;
 		// add sprite frame
 		[spriteFrames_ setObject:spriteFrame forKey:frameDictKey];
 		[spriteFrame release];
+        
+        spriteFrame.name = frameDictKey;
 	}
 }
 
@@ -246,6 +248,8 @@ static CCSpriteFrameCache *sharedSpriteFrameCache_=nil;
 
 -(void) addSpriteFrame:(CCSpriteFrame*)frame name:(NSString*)frameName
 {
+    frame.name = frameName;
+    
 	[spriteFrames_ setObject:frame forKey:frameName];
 }
 
@@ -253,6 +257,9 @@ static CCSpriteFrameCache *sharedSpriteFrameCache_=nil;
 
 -(void) removeSpriteFrames
 {
+    for (CCSpriteFrame *curFrame in spriteFrames_)
+        curFrame.name = nil;
+    
 	[spriteFrames_ removeAllObjects];
 	[spriteFramesAliases_ removeAllObjects];
 }
@@ -264,6 +271,10 @@ static CCSpriteFrameCache *sharedSpriteFrameCache_=nil;
 		id value = [spriteFrames_ objectForKey:key];		
 		if( [value retainCount] == 1 ) {
 			CCLOG(@"cocos2d: CCSpriteFrameCache: removing unused frame: %@", key);
+            
+            CCSpriteFrame *frame = (CCSpriteFrame *)value;
+            frame.name = nil;
+            
 			[spriteFrames_ removeObjectForKey:key];
 		}
 	}	
@@ -279,11 +290,18 @@ static CCSpriteFrameCache *sharedSpriteFrameCache_=nil;
 	NSString *key = [spriteFramesAliases_ objectForKey:name];
 	
 	if( key ) {
+        CCSpriteFrame *frame = [spriteFrames_ objectForKey:key];
+        frame.name = nil;
+        
 		[spriteFrames_ removeObjectForKey:key];
 		[spriteFramesAliases_ removeObjectForKey:name];
 
 	} else
+    {
+        CCSpriteFrame *frame = [spriteFrames_ objectForKey:name];
+        frame.name = nil;
 		[spriteFrames_ removeObjectForKey:name];
+    }
 }
 
 - (void) removeSpriteFramesFromFile:(NSString*) plist
@@ -301,9 +319,13 @@ static CCSpriteFrameCache *sharedSpriteFrameCache_=nil;
 	
 	for(NSString *frameDictKey in framesDict)
 	{
-		if ([spriteFrames_ objectForKey:frameDictKey]!=nil)
+        CCSpriteFrame *frame = [spriteFrames_ objectForKey:frameDictKey];
+        frame.name = nil;
+        
+		if (frame!=nil)
 			[keysToRemove addObject:frameDictKey];
 	}
+    
 	[spriteFrames_ removeObjectsForKeys:keysToRemove];
 }
 
@@ -313,10 +335,16 @@ static CCSpriteFrameCache *sharedSpriteFrameCache_=nil;
 	
 	for (NSString *spriteFrameKey in spriteFrames_)
 	{
-		if ([[spriteFrames_ valueForKey:spriteFrameKey] texture] == texture) 
+        CCSpriteFrame *frame = [spriteFrames_ objectForKey:spriteFrameKey];
+        
+		if ([frame texture] == texture) 
+        {
+            frame.name = nil;
 			[keysToRemove addObject:spriteFrameKey];
+        }
 		
 	}
+    
 	[spriteFrames_ removeObjectsForKeys:keysToRemove];
 }
 

@@ -80,6 +80,7 @@ enum {
 };
 
 enum {
+    kLayer,
 	kTagSprite1,
 	kTagSprite2,
 	kTagSprite3,
@@ -123,21 +124,94 @@ Class restartAction()
 	return c;
 }
 
+@protocol DemoTitleProvider <NSObject>
+
+- (NSString *) title;
+- (NSString *) subtitle;
+
+@end
+
 #pragma mark -
 #pragma mark SpriteDemo
 
 @implementation SpriteDemo
--(id) init
+
+- (NSString *) testFilePath
+{    
+    NSString *filename = [NSString stringWithFormat:@"%@.plist", [self className] ];
+    
+    NSArray *paths					= NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+	NSString *documentsDirectory	= [paths objectAtIndex:0];
+	NSString *fullPath				= [documentsDirectory stringByAppendingPathComponent: filename ];
+	return fullPath;
+}
+
+- (void) save
+{
+    // Don't save actions in this test - actions are tested in ActionsTest.
+    [CCActionManager purgeSharedManager];
+    
+    CCNode *layer = [self getChildByTag: kLayer];
+    NSDictionary *dict = [layer dictionaryRepresentation];
+    [dict writeToFile:[self testFilePath] atomically:YES];
+}
+
+- (void) purge
+{
+    [self removeChildByTag: kLayer cleanup:YES];
+    
+    [CCAnimationCache purgeSharedAnimationCache];
+    [CCSpriteFrameCache purgeSharedSpriteFrameCache];
+    [CCTextureCache purgeSharedTextureCache];    
+}
+
+- (void) load
+{
+    NSString *path = [self testFilePath];
+    NSDictionary *aDict = [NSDictionary dictionaryWithContentsOfFile: path];
+    CCLayer *layer = [NSObject objectWithDictionaryRepresentation: aDict ];    
+    
+	[self addChild: layer z: 0 tag: kLayer];
+}
+
+- (void) savePurgeLoadCallback: (id) sender
+{
+    CCMenuItemToggle *toggle = (CCMenuItemToggle *)sender;
+    NSUInteger selected = toggle.selectedIndex;
+    switch (selected) {
+        case 0:
+            NSLog(@"Loading...");
+            [self load];
+            break;
+        case 1:
+            NSLog(@"Saving...");
+            [self save];
+            break;
+        case 2:
+            NSLog(@"Purging...");
+            [self purge];
+            break;
+            
+    }
+    
+}
+
++ (id) nodeWithInsideLayer:(CCLayer *)insideLayer
+{
+    return [[[self alloc] initWithInsideLayer: insideLayer]autorelease];
+}
+
+-(id) initWithInsideLayer:(CCLayer *)insideLayer
 {
 	if( (self = [super init]) ) {
-
-
 		CGSize s = [[CCDirector sharedDirector] winSize];
-			
+        
+        [self addChild: insideLayer z:0 tag: kLayer ];
+        
 		CCLabelTTF *label = [CCLabelTTF labelWithString:[self title] fontName:@"Arial" fontSize:26];
 		[self addChild: label z:1];
 		[label setPosition: ccp(s.width/2, s.height-50)];
-
+        
 		NSString *subtitle = [self subtitle];
 		if( subtitle ) {
 			CCLabelTTF *l = [CCLabelTTF labelWithString:subtitle fontName:@"Thonburi" fontSize:16];
@@ -148,13 +222,19 @@ Class restartAction()
 		CCMenuItemImage *item1 = [CCMenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
 		CCMenuItemImage *item2 = [CCMenuItemImage itemFromNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
 		CCMenuItemImage *item3 = [CCMenuItemImage itemFromNormalImage:@"f1.png" selectedImage:@"f2.png" target:self selector:@selector(nextCallback:)];
-		
-		CCMenu *menu = [CCMenu menuWithItems:item1, item2, item3, nil];
+        
+        CCMenuItemLabel *save = [CCMenuItemLabel itemWithLabel: [CCLabelTTF labelWithString: @"Save" fontName: @"Marker Felt" fontSize:18]];
+        CCMenuItemLabel *purge = [CCMenuItemLabel itemWithLabel: [CCLabelTTF labelWithString: @"Purge" fontName: @"Marker Felt" fontSize:18]];
+        CCMenuItemLabel *load = [CCMenuItemLabel itemWithLabel: [CCLabelTTF labelWithString: @"Load" fontName: @"Marker Felt" fontSize:18]];
+        CCMenuItem *trigger = [CCMenuItemToggle itemWithTarget:self selector: @selector(savePurgeLoadCallback:) items: save, purge, load, nil];
+        		
+		CCMenu *menu = [CCMenu menuWithItems:item1, item2, item3, trigger, nil];
 		
 		menu.position = CGPointZero;
 		item1.position = ccp( s.width/2 - 100,30);
 		item2.position = ccp( s.width/2, 30);
 		item3.position = ccp( s.width/2 + 100,30);
+        trigger.position = ccp( 0.5f * s.width, 0.25f * s.height);
 		[self addChild: menu z:1];	
 	}
 	return self;
@@ -168,31 +248,50 @@ Class restartAction()
 -(void) restartCallback: (id) sender
 {
 	CCScene *s = [CCScene node];
-	[s addChild: [restartAction() node]];
+	[s addChild: [SpriteDemo nodeWithInsideLayer:[restartAction() node]]];
 	[[CCDirector sharedDirector] replaceScene: s];
 }
 
 -(void) nextCallback: (id) sender
 {
 	CCScene *s = [CCScene node];
-	[s addChild: [nextAction() node]];
+	[s addChild: [SpriteDemo nodeWithInsideLayer: [nextAction() node]]];
 	[[CCDirector sharedDirector] replaceScene: s];
 }
 
 -(void) backCallback: (id) sender
 {
 	CCScene *s = [CCScene node];
-	[s addChild: [backAction() node]];
+	[s addChild: [SpriteDemo nodeWithInsideLayer:[backAction() node]]];
 	[[CCDirector sharedDirector] replaceScene: s];
+}
+
+-(CCLayer *) insideLayer
+{
+    return (CCLayer *)[self getChildByTag: kLayer];
 }
 
 -(NSString*) title
 {
+    id<DemoTitleProvider> titleProvider = (id<DemoTitleProvider>)[self insideLayer];
+
+    if ([titleProvider respondsToSelector: @selector(title)])
+    {
+        return [titleProvider title];
+    }
+    
 	return @"No title";
 }
 
 -(NSString*) subtitle
 {
+	id<DemoTitleProvider> titleProvider = (id<DemoTitleProvider>)[self insideLayer];
+    
+    if ([titleProvider respondsToSelector: @selector(subtitle)])
+    {
+        return [titleProvider subtitle];
+    }
+    
 	return nil;
 }
 @end
@@ -4557,7 +4656,7 @@ Class restartAction()
 	
 	// create the main scene
 	CCScene *scene = [CCScene node];
-	[scene addChild: [nextAction() node]];
+	[scene addChild: [SpriteDemo nodeWithInsideLayer: [nextAction() node]] ];
 	
 	
 	// and run it!
@@ -4644,7 +4743,7 @@ Class restartAction()
 	[director setResizeMode:kCCDirectorResize_AutoScale];	
 	
 	CCScene *scene = [CCScene node];
-	[scene addChild: [nextAction() node]];
+	[scene addChild: [SpriteDemo nodeWithInsideLayer: [nextAction() node]] ];
 	
 	[director runWithScene:scene];
 }

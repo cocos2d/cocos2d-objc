@@ -30,6 +30,7 @@
 #import "CCNode.h"
 #import "CCCamera.h"
 #import "ccMacros.h"
+#import "AutoMagicCoding/NSObject+AutoMagicCoding.h"
 
 //
 // CameraAction
@@ -48,6 +49,31 @@
 {
 	return [CCReverseTime actionWithAction:self];
 }
+
+#pragma mark CCActionCamera - AutoMagicCoding Support
+
+- (void) continueWithTarget:(id)target
+{
+    // Force CCNode to alloc camera on action continue.
+    [target_ camera];
+}
+
+- (NSArray *) AMCKeysForDictionaryRepresentation
+{
+    return [[super AMCKeysForDictionaryRepresentation] arrayByAddingObjectsFromArray:
+            [NSArray arrayWithObjects: 
+             @"centerXOrig_",
+             @"centerYOrig_",
+             @"centerZOrig_",
+             @"eyeXOrig_",
+             @"eyeYOrig_",
+             @"eyeZOrig_",
+             @"upXOrig_",
+             @"upYOrig_",
+             @"upZOrig_",
+             nil]];
+}
+
 @end
 
 @implementation CCOrbitCamera
@@ -144,4 +170,34 @@
 					
 	*newRadius = r / [CCCamera getZEye];					
 }
+
+#pragma mark CCOrbitCamera - AutoMagicCoding Support
+
+- (void) continueWithTarget:(id)target
+{
+    // Force CCNode to alloc camera on action continue.
+    [target_ camera];
+    
+    radZ_ = (CGFloat)CC_DEGREES_TO_RADIANS(angleZ_);
+	radX_ = (CGFloat)CC_DEGREES_TO_RADIANS(angleX_);
+}
+
+- (NSArray *) AMCKeysForDictionaryRepresentation
+{
+    return [[super AMCKeysForDictionaryRepresentation] arrayByAddingObjectsFromArray:
+            [NSArray arrayWithObjects: 
+             @"radius_",
+             @"deltaRadius_",
+             @"angleZ_",
+             @"deltaAngleZ_",
+             @"angleX_",
+             @"eyeZOrig_",
+             @"deltaAngleX_",
+             @"radZ_",
+             @"radDeltaZ_",
+             @"radX_",
+             @"radDeltaX_",
+             nil]];
+}
+
 @end

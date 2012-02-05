@@ -30,19 +30,19 @@
 #import "CCLabelTTF.h"
 #import "Support/CGPointExtension.h"
 #import "ccMacros.h"
+#import "AutoMagicCoding/NSObject+AutoMagicCoding.h"
 
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 #import "Platforms/iOS/CCDirectorIOS.h"
 #endif
 
-@implementation CCLabelTTF
+@interface CCLabelTTF ()
 
-- (id) init
-{
-	NSAssert(NO, @"CCLabelTTF: Init not supported. Use initWithString");
-	[self release];
-	return nil;
-}
+@property(nonatomic, readwrite, assign) CGSize dimensions;
+
+@end
+
+@implementation CCLabelTTF
 
 + (id) labelWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(CCTextAlignment)alignment lineBreakMode:(CCLineBreakMode)lineBreakMode fontName:(NSString*)name fontSize:(CGFloat)size;
 {
@@ -145,4 +145,55 @@
 
 	return [NSString stringWithFormat:@"<%@ = %08X | FontSize = %.1f>", [self class], self, fontSize_];
 }
+
+
+#pragma mark CCLabelTTF - AutoMagicCoding Support
+
+@dynamic dimensions;
+-(CGSize) dimensions
+{
+    return CGSizeMake( dimensions_.width / CC_CONTENT_SCALE_FACTOR(), dimensions_.height / CC_CONTENT_SCALE_FACTOR() );
+}
+
+- (void) setDimensions: (CGSize) dimensions
+{
+    dimensions_ = CGSizeMake( dimensions.width * CC_CONTENT_SCALE_FACTOR(), dimensions.height * CC_CONTENT_SCALE_FACTOR() );
+}
+
+- (CGFloat) fontSize
+{
+    return fontSize_ / CC_CONTENT_SCALE_FACTOR();
+}
+
+- (void) setFontSize: (CGFloat) size
+{
+     fontSize_ = size * CC_CONTENT_SCALE_FACTOR();
+}
+
+- (NSString *) fontName
+{
+    return fontName_;
+}
+
+- (void) setFontName: (NSString *) name
+{
+    [fontName_ release];
+    fontName_ = [name retain];
+}
+
+- (NSArray *) AMCKeysForDictionaryRepresentation
+{
+    NSArray *spriteKeys = [super AMCKeysForDictionaryRepresentation];
+    NSArray *labelTTFKeys = [NSArray arrayWithObjects: 
+                             @"dimensions",
+                             @"alignment_",
+                             @"fontName",
+                             @"fontSize",
+                             @"lineBreakMode_",
+                             @"string",
+                             nil];
+    
+    return [spriteKeys arrayByAddingObjectsFromArray: labelTTFKeys];
+}
+
 @end

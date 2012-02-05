@@ -128,6 +128,8 @@ typedef enum {
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 	ccResolutionType			resolutionType_;
 #endif
+    
+    NSString *key_;
 
 }
 /** Intializes with a texture2d with data */
@@ -168,6 +170,22 @@ typedef enum {
  */
 @property (nonatomic, readwrite) ccResolutionType resolutionType;
 #endif
+
+/** Key for this texture in CCTextureCache. Used for saving/loading sprites &
+ * other objects, that incapsulates texture. Can be nil.
+ * Set when texture created by CCTextureCache methods.
+ * In order to save custom texture (that isn't stored in CCTextureCache) - set 
+ * unique value for this property.
+ * In order to load custom textures - create & store them with that key in
+ * CCTextureCache before loading anything, that uses your custom texture.
+ *
+ * ATTENTION: Changing this value may lead to making it's impossible to
+ * load this texture again. Usually you don't need to change this key - it
+ * should be used only by CCTextureCache.
+ *
+ * @since v1.1+ ("feature-amc" branch of github.com/psineur/cocos2d-iphone)
+ */
+@property (nonatomic, readwrite, copy) NSString *key;
 
 /** returns the content size of the texture in points */
 -(CGSize) contentSize;

@@ -105,6 +105,7 @@
 #import "CCCamera.h"
 #import "CCProtocols.h"
 #import "CCNode.h"
+#import "CCNodeRegistry.h"
 #import "CCDirector.h"
 #import "CCAtlasNode.h"
 #import "CCGrabber.h"
@@ -151,6 +152,11 @@
 #import "Support/CCProfiling.h"
 #endif // CC_ENABLE_PROFILERS
 
+
+//
+// AutoMagicCoding - NSCoding alternative
+//
+#import "AutoMagicCoding/NSObject+AutoMagicCoding.h"
 
 // free functions
 NSString * cocos2dVersion(void);

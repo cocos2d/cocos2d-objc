@@ -11,6 +11,28 @@
 	<string>Xcode.Xcode3.ProjectTemplateUnitKind</string>
 	<key>Definitions</key>
 	<dict>
+		<key>libs/cocos2d/AutoMagicCoding/AutoMagicCoding/NSObject+AutoMagicCoding.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2d</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2d/AutoMagicCoding/AutoMagicCoding/NSObject+AutoMagicCoding.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/cocos2d/AutoMagicCoding/AutoMagicCoding/NSObject+AutoMagicCoding.m</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2d</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2d/AutoMagicCoding/AutoMagicCoding/NSObject+AutoMagicCoding.m</string>
+		</dict>
 		<key>libs/cocos2d/CCAction.h</key>
 		<dict>
 			<key>Group</key>
@@ -694,6 +716,28 @@
 			</array>
 			<key>Path</key>
 			<string>libs/cocos2d/CCNode.m</string>
+		</dict>
+		<key>libs/cocos2d/CCNodeRegistry.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2d</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2d/CCNodeRegistry.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/cocos2d/CCNodeRegistry.m</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2d</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2d/CCNodeRegistry.m</string>
 		</dict>
 		<key>libs/cocos2d/CCParallaxNode.h</key>
 		<dict>
@@ -1931,6 +1975,8 @@
 	</dict>
 	<key>Nodes</key>
 	<array>
+		<string>libs/cocos2d/AutoMagicCoding/AutoMagicCoding/NSObject+AutoMagicCoding.h</string>
+		<string>libs/cocos2d/AutoMagicCoding/AutoMagicCoding/NSObject+AutoMagicCoding.m</string>
 		<string>libs/cocos2d/CCAction.h</string>
 		<string>libs/cocos2d/CCAction.m</string>
 		<string>libs/cocos2d/CCActionCamera.h</string>
@@ -1993,6 +2039,8 @@
 		<string>libs/cocos2d/CCMotionStreak.m</string>
 		<string>libs/cocos2d/CCNode.h</string>
 		<string>libs/cocos2d/CCNode.m</string>
+		<string>libs/cocos2d/CCNodeRegistry.h</string>
+		<string>libs/cocos2d/CCNodeRegistry.m</string>
 		<string>libs/cocos2d/CCParallaxNode.h</string>
 		<string>libs/cocos2d/CCParallaxNode.m</string>
 		<string>libs/cocos2d/CCParticleBatchNode.h</string>

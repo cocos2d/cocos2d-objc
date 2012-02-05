@@ -137,6 +137,9 @@ enum {
 {
 	// string to render
 	NSString		*string_;
+    
+    // Name of fnt file.
+    NSString *fntFile_;
 	
 	CCBMFontConfiguration	*configuration_;
 

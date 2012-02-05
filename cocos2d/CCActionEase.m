@@ -32,6 +32,7 @@
  */
 
 #import "CCActionEase.h"
+#import "AutoMagicCoding/NSObject+AutoMagicCoding.h"
 
 #ifndef M_PI_X_2
 #define M_PI_X_2 (float)M_PI * 2.0f
@@ -42,7 +43,15 @@
 //
 // EaseAction
 //
+
+@interface CCActionEase ()
+
+@property(nonatomic,readwrite, retain) CCActionInterval *other;
+
+@end
+
 @implementation CCActionEase
+@synthesize other = other;
 
 +(id) actionWithAction: (CCActionInterval*) action
 {
@@ -74,7 +83,7 @@
 -(void) startWithTarget:(id)aTarget
 {
 	[super startWithTarget:aTarget];
-	[other startWithTarget:target_];
+	[other startOrContinueWithTarget:target_];
 }
 
 -(void) stop
@@ -92,6 +101,26 @@
 {
 	return [[self class] actionWithAction: [other reverse]];
 }
+
+#pragma mark CCActionEase - AutoMagicCoding Support
+
+- (NSArray *) AMCKeysForDictionaryRepresentation
+{
+    return [[super AMCKeysForDictionaryRepresentation] arrayByAddingObjectsFromArray:
+            [NSArray arrayWithObjects: 
+             @"other",
+             nil]];
+}
+
+- (void) continueWithTarget:(id)target
+{
+    if ([other isKindOfClass:[CCActionInterval class]])
+    {
+        [other setValue:[NSNumber numberWithBool: NO] forKey:@"firstTick_"];
+    }
+    [other startOrContinueWithTarget:target];
+}
+
 @end
 
 
@@ -131,6 +160,17 @@
 {
 	return [[self class] actionWithAction: [other reverse] rate:1/rate];
 }
+
+#pragma mark CCEaseRateAction - AutoMagicCoding Support
+
+- (NSArray *) AMCKeysForDictionaryRepresentation
+{
+    return [[super AMCKeysForDictionaryRepresentation] arrayByAddingObjectsFromArray:
+            [NSArray arrayWithObjects: 
+             @"rate",
+             nil]];
+}
+
 @end
 
 //
@@ -314,6 +354,16 @@
 {
 	NSAssert(NO,@"Override me");
 	return nil;
+}
+
+#pragma mark CCActionElastic - AutoMagicCoding Support
+
+- (NSArray *) AMCKeysForDictionaryRepresentation
+{
+    return [[super AMCKeysForDictionaryRepresentation] arrayByAddingObjectsFromArray:
+            [NSArray arrayWithObjects: 
+             @"period",
+             nil]];
 }
 
 @end

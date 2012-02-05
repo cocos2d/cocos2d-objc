@@ -82,6 +82,7 @@
 #import "CCTexturePVR.h"
 #import "Support/ccUtils.h"
 #import "Support/CCFileUtils.h"
+#import "CCTextureCache.h"
 
 
 #if defined(__IPHONE_OS_VERSION_MAX_ALLOWED) && CC_FONT_LABEL_SUPPORT
@@ -113,6 +114,7 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 
 @synthesize contentSizeInPixels = size_, pixelFormat = format_, pixelsWide = width_, pixelsHigh = height_, name = name_, maxS = maxS_, maxT = maxT_;
 @synthesize hasPremultipliedAlpha = hasPremultipliedAlpha_;
+@synthesize key = key_;
 
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 @synthesize resolutionType = resolutionType_;
@@ -865,4 +867,39 @@ static BOOL PVRHaveAlphaPremultiplied_ = NO;
 	return ret;
 }
 @end
+
+#pragma mark -
+#pragma mark CCTexture2D - AutoMagicCoding
+
+//
+// AutoMagicCoding support - simply use key & CCTextureCache for save/load
+//
+@implementation CCTexture2D(AutoMagicCoding)
+
++ (BOOL) AMCEnabled
+{
+    return YES;
+}
+
+- (NSArray *) AMCKeysForDictionaryRepresentation
+{
+    return [NSArray arrayWithObject: @"key"];
+}
+
+- (id) initWithDictionaryRepresentation: (NSDictionary *) aDict
+{
+    [self release];
+    
+    NSString *key = [aDict objectForKey: @"key"];
+    if (key)
+    {
+        self = [[[CCTextureCache sharedTextureCache] addImage: key  ] retain];
+        return self;
+    }
+    return nil;
+}
+
+@end
+
+
 
