@@ -40,10 +40,18 @@
 		}	
 		modifier = aModifier;
 		[modifier retain];
-		lastSetValue = [modifier _getTargetProperty];
+		//lastSetValue = [modifier _getTargetProperty];//Issue 1304
 	}
 	return self;
 }	
+
+
+
+-(void) startWithTarget:(id)aTarget
+{
+	[super startWithTarget:aTarget];
+	lastSetValue = [modifier _getTargetProperty];
+}
 
 -(void) dealloc {
 	CDLOG(@"Denshon::CDXPropertyModifierAction deallocated %@",self);
