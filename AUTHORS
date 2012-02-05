@@ -62,6 +62,7 @@ Contributors (alphabetically ordered):
 
 * Shakthi:
 	Added CCNode#onExitTransitionDidStart method
+	Fixed fading background music issue
 
 * slycrel (http://geopherlite.blogspot.com/)
 	Added support for flipped tiles in TMX maps. Also added test case
