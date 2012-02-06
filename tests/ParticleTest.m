@@ -1670,7 +1670,7 @@ Class restartAction()
 
 -(NSString*) subtitle
 {
-	return @"FPS should be lower than next test";
+	return @"v1.1 test: FPS should be lower than next test";
 }
 
 -(void) update:(ccTime) dt
@@ -1747,7 +1747,7 @@ Class restartAction()
 
 -(NSString*) subtitle
 {
-	return @"should perform better than previous test";
+	return @"v1.1 test: should perform better than previous test";
 }
 @end
 
@@ -1762,14 +1762,14 @@ Class restartAction()
 	background = nil;
 	
 	//adds the texture inside the plist to the texture cache
-	batchNode_ = [CCParticleBatchNode batchNodeWithFile:@"Spiral.png" capacity:16000];
+	batchNode_ = [CCParticleBatchNode batchNodeWithTexture:nil capacity:16000];
 	
 	[self addChild:batchNode_ z:1 tag:2];
 	
 	for (int i = 0; i<6; i++) {
 		
 		CCParticleSystemQuad *particleSystem = [CCParticleSystemQuad particleWithFile:@"Particles/Spiral.plist"];
-		[particleSystem setTexture:batchNode_.texture];
+		[batchNode_ setTexture:particleSystem.texture];
 		
 		particleSystem.positionType = kCCPositionTypeGrouped;		 
 		particleSystem.totalParticles = 200;
@@ -1781,7 +1781,7 @@ Class restartAction()
 		
 	}
 	
-	[self schedule:@selector(removeSystem) interval:5];
+	[self schedule:@selector(removeSystem) interval:0.5];
 	emitter_ = nil;
 	
 }
@@ -1791,15 +1791,11 @@ Class restartAction()
 	if ([[batchNode_ children] count] > 0) 
 	{
 		
-		/*CCARRAY_FOREACH([[batchNode_ children],aSystem) 
-		 {
-		 CCLOG(@"pos %f %f, atlas %i",system.position.x,system.position.y,system.atlasIndex); 
-		 }*/
 		CCLOG(@"remove random system");
 		uint rand = arc4random() % ([[batchNode_ children] count] - 1);
 		[batchNode_ removeChild:[[batchNode_ children] objectAtIndex:rand] cleanup:YES];
+		
 		CCParticleSystemQuad *particleSystem = [CCParticleSystemQuad particleWithFile:@"Particles/Spiral.plist"];
-		[particleSystem setTexture:batchNode_.texture withRect:CGRectMake(0.f,0.f,0.f,0.f)];
 		//add new
 		
 		particleSystem.positionType = kCCPositionTypeGrouped;		 
@@ -1833,12 +1829,12 @@ Class restartAction()
 
 -(NSString *) title
 {
-	return @"add and remove";
+	return @"Add and remove Particle System";
 }
 
 -(NSString*) subtitle
 {
-	return @"every 2 sec 1 system disappear, 1 appears";
+	return @"v1.1 test: every 2 sec 1 system disappear, 1 appears";
 }
 @end
 
@@ -1859,7 +1855,7 @@ Class restartAction()
 	[self addChild:batchNode_ z:1 tag:2];
 	
 	
-	for (int i = 0; i<2; i++) {
+	for (int i = 0; i<3; i++) {
 		
 		CCParticleSystemQuad* particleSystem = [[CCParticleSystemQuad alloc] initWithTotalParticles:200];
 		[particleSystem setTexture:batchNode_.texture];
@@ -1900,16 +1896,18 @@ Class restartAction()
 		particleSystem.endSpinVar = 0;
 		
 		// color of particles
-		ccColor4F startColor = {1, i, i, 1.0f};
+		float color[3] = {0,0,0};
+		color[i] = 1;
+		ccColor4F startColor = {color[0], color[1], color[2], 1.0f};
 		particleSystem.startColor = startColor;
 		
 		ccColor4F startColorVar = {0, 0, 0, 0};
 		particleSystem.startColorVar = startColorVar;
 		
-		ccColor4F endColor = {1, i, i, 1 };
+		ccColor4F endColor = startColor;
 		particleSystem.endColor = endColor;
 		
-		ccColor4F endColorVar = {0, 0, 0, 0};
+		ccColor4F endColorVar = startColorVar;
 		particleSystem.endColorVar = endColorVar;
 		
 		// size, in pixels

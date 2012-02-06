@@ -342,7 +342,6 @@
 		return;
 
 	NSAssert([children_ containsObject:child], @"CCParticleBatchNode doesn't contain the sprite. Can't remove it");
-//<<<<<<< HEAD
 
 	[super removeChild:child cleanup:doCleanup];
 
@@ -355,14 +354,6 @@
 	// paticle could be reused for self rendering
 	[child setBatchNode:nil];
 
-//=======
-//	
-//	// cleanup before removing, issue 1316 clean before calling super
-//	[self removeChildFromAtlas:child cleanup:doCleanup];
-//	
-//	[super removeChild:child cleanup:doCleanup];
-//	
-//>>>>>>> develop
 	[self updateAllAtlasIndexes];
 }
 
@@ -434,7 +425,6 @@
 		[textureAtlas_ fillWithEmptyQuadsFromIndex:textureAtlas_.capacity - pSystem.totalParticles amount:pSystem.totalParticles];
 	}
 
-//<<<<<<< HEAD
 	// make room for quads, not necessary for last child
 	if (pSystem.atlasIndex + pSystem.totalParticles != textureAtlas_.totalQuads)
 		[textureAtlas_ moveQuadsFromIndex:index to:index+pSystem.totalParticles];
@@ -443,19 +433,6 @@
 	[textureAtlas_ increaseTotalQuadsWith:pSystem.totalParticles];
 
 	[self updateAllAtlasIndexes];
-//=======
-//// remove child helper
-//-(void) removeChildFromAtlas:(CCParticleSystem*) pSystem cleanup:(BOOL) doCleanUp
-//{
-//	[textureAtlas_ removeQuadsAtIndex:pSystem.atlasIndex amount:pSystem.totalParticles];
-//	
-//	//after memove of data, empty the quads at the end of array
-//	[textureAtlas_ fillWithEmptyQuadsFromIndex:textureAtlas_.totalQuads amount:pSystem.totalParticles];
-//	
-//	//with no cleanup the particle system could be reused for self rendering
-//	if (!doCleanUp) [pSystem useSelfRender];
-//	
-//>>>>>>> develop
 }
 
 //rebuild atlas indexes
