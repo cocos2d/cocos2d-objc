@@ -175,4 +175,24 @@
 }
 @end
 
+@interface MultipleParticleSystems : ParticleDemo
+{}
+@end
 
+@interface MultipleParticleSystemsBatched : ParticleDemo
+{
+	CCParticleBatchNode *batchNode_;
+}
+@end
+
+@interface AddAndDeleteParticleSystems : ParticleDemo
+{
+	CCParticleBatchNode *batchNode_;
+}
+@end
+
+@interface ReorderParticleSystems : ParticleDemo
+{
+	CCParticleBatchNode *batchNode_;
+}
+@end

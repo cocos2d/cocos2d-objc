@@ -56,7 +56,9 @@
 		case 6:
 			[audioTests testSix:nil];
 			//[audioTests testSeven:nil];
-
+			break;
+		case 8:
+			[audioTests testEight:nil];
 			break;
 		default:
 			break;
@@ -80,12 +82,14 @@
 	CCMenuItemFont *item6 = [CCMenuItemFont itemWithString: @"Sound Effects" target:self selector:@selector(menuHandler:)];
 	item6.tag = 6;
 	CCMenuItemFont *item7 = [CCMenuItemFont itemWithString: @"Reset" target:self selector:@selector(reset:)];
+	CCMenuItemFont *item8 = [CCMenuItemFont itemWithString: @"Background Music switch" target:self selector:@selector(menuHandler:)];
+	item8.tag = 8;
 
 	CCMenu *menu = [CCMenu menuWithItems:
 					item1, item2,
 					item3, item4,
-					item5, item6,
-					item7, nil];
+					item7, item8,
+					nil];
     [menu alignItemsVerticallyWithPadding:20];
 	[self addChild: menu];
 

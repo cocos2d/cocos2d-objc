@@ -178,6 +178,7 @@
 #endif // ! CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
 
 	// Important. Texture in cocos2d are inverted, so the Y component should be inverted
+//<<<<<<< HEAD
 	CC_SWAP( top, bottom);
 
 	ccV3F_C4B_T2F_Quad *quads;
@@ -209,6 +210,48 @@
 		// top-right vertex:
 		quads[i].tr.texCoords.u = right;
 		quads[i].tr.texCoords.v = top;
+//=======
+//		CC_SWAP( top, bottom);
+//		
+//		ccV3F_C4B_T2F_Quad *quadCollection; 
+//		NSUInteger start, end; 
+//		if (useBatchNode_)
+//		{
+//			quadCollection = [[batchNode_ textureAtlas] quads]; 
+//			start = atlasIndex_; 
+//			end = atlasIndex_ + totalParticles; 
+//		}
+//		else 
+//		{
+//			quadCollection = quads_; 
+//			start = 0; 
+//			end = totalParticles; 
+//		}
+//		
+//		ccV3F_C4B_T2F_Quad quad;
+//		bzero( &quad, sizeof(quad) );
+//
+//		for(NSInteger i=start; i<end; i++) {
+//			// bottom-left vertex:
+//			quad.bl.texCoords.u = left;
+//			quad.bl.texCoords.v = bottom;
+//			// bottom-right vertex:
+//			quad.br.texCoords.u = right;
+//			quad.br.texCoords.v = bottom;
+//			// top-left vertex:
+//			quad.tl.texCoords.u = left;
+//			quad.tl.texCoords.v = top;
+//			// top-right vertex:
+//			quad.tr.texCoords.u = right;
+//			quad.tr.texCoords.v = top;
+//			
+//			quad.bl.texCoords.u = left;
+//			quad.bl.texCoords.v = bottom;
+//			
+//			quadCollection[i] = quad;
+//		
+//		}
+//>>>>>>> develop
 	}
 }
 

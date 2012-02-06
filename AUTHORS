@@ -92,7 +92,10 @@ Contributors (alphabetically ordered):
 
 * Jerrod Putman (http://www.tinytimgames.com)
 	Original author of ARC compatibility code
-
+	
+* jptsetung (http://www.bonuslevel.org/games/) 
+	Patch for CCSprite, premade hierarchies of sprites will be rendered correctly by a batchNode
+	
 * John Wordsworth ( http://www.johnwordsworth.com/ )
 	CCAnimationCache: Added animation data format. Can be loaded into the animation cache
 
@@ -128,6 +131,7 @@ Contributors (alphabetically ordered):
 
 * Shakthi:
 	Added CCNode#onExitTransitionDidStart method
+	Fixed fading background music issue
 
 * slycrel (http://folderapp.blogspot.com/)
 	Added support for flipped tiles in TMX maps. Also added test case
