@@ -1,5 +1,6 @@
 version 2.0-rc0 XX-Feb-2012
 . [NEW] v1.1 Forward-ported changes:
+		Denshion: Background music fades ok (issue #1304)
 		MenuItem: removed warning when deleting item
 		Sprite: fixed possible setColor and opacity
 		TileMap: Flipped tiles can be changed during runtime (issue #1264)
@@ -73,7 +74,6 @@ version 2.0-beta2 17-Jan-2012
 . [FIX] Texture2D: Uses CGImageRef instead of UIKit for iOS API
 . [FIX] TileMaps: Re-added "cc_vertexz" property
 . [3RD] Chipmunk: Using Chipmunk v6.0.3
-
 
 version 2.0-beta 27-Nov-2011
 . [NEW] v1.1 Forward-ported changes:
