@@ -650,8 +650,6 @@
 	}
 }
 
-
-
 //
 // CCNode property overloads
 // used only when parent is CCSpriteBatchNode
@@ -661,6 +659,7 @@
 -(void) setReorderChildDirtyRecursively
 {
 	//only set parents flag the first time
+
 	if ( ! isReorderChildDirty_ )
 	{
 		isReorderChildDirty_ = YES;

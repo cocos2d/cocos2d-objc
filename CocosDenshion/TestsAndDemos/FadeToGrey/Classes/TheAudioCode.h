@@ -24,5 +24,6 @@
 -(void) testFive:(id) sender;
 -(void) testSix:(id) sender;
 -(void) testSeven:(id) sender;
+-(void) testEight:(id) sender;
 
 @end

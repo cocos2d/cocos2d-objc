@@ -286,5 +286,3 @@
 @interface SpriteBatchBug1217 : SpriteDemo
 {}
 @end
-
-
