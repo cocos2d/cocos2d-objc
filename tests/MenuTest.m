@@ -42,7 +42,7 @@ enum {
 		}];
 
 		// Label Item (LabelAtlas)
-		CCLabelAtlas *labelAtlas = [CCLabelAtlas labelWithString:@"0123456789" charMapFile:@"fps_images.png" itemWidth:8 itemHeight:12 startCharMap:'.'];
+		CCLabelAtlas *labelAtlas = [CCLabelAtlas labelWithString:@"0123456789" charMapFile:@"fps_images.png" itemWidth:12 itemHeight:32 startCharMap:'.'];
 		CCMenuItemLabel *item3 = [CCMenuItemLabel itemWithLabel:labelAtlas block:^(id sender) {
 			// hijack all touch events for 5 seconds
 			CCDirector *director = [CCDirector sharedDirector];
