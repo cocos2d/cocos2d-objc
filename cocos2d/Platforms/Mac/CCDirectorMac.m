@@ -375,7 +375,7 @@
 
 - (CVReturn) getFrameForTime:(const CVTimeStamp*)outputTime
 {
-#if CC_DIRECTOR_MAC_USE_DISPLAY_LINK_THREAD
+#if CC_DIRECTOR_MAC_THREAD == CC_MAC_USE_DISPLAY_LINK_THREAD
 	if( ! runningThread_ )
 		runningThread_ = [NSThread currentThread];
 
@@ -405,7 +405,7 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 - (void) startAnimation
 {
 	CCLOG(@"cocos2d: startAnimation");
-#if ! CC_DIRECTOR_MAC_USE_DISPLAY_LINK_THREAD
+#if (CC_DIRECTOR_MAC_THREAD == CC_MAC_USE_OWN_THREAD)
 	runningThread_ = [[NSThread alloc] initWithTarget:self selector:@selector(mainLoop) object:nil];
 	[runningThread_ start];
 #endif
@@ -437,7 +437,7 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 		CVDisplayLinkRelease(displayLink);
 		displayLink = NULL;
 
-#if ! CC_DIRECTOR_MAC_USE_DISPLAY_LINK_THREAD
+#if CC_DIRECTOR_MAC_THREAD == CC_MAC_USE_OWN_THREAD
 		[runningThread_ cancel];
 		[runningThread_ release];
 		runningThread_ = nil;
