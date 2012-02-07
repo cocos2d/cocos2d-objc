@@ -69,6 +69,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	
 * Viktor Lidholt (http://www.cocosbuilder.com)
 	Added setters/getters for fontName, fontSize, fntFile in LabelBMFont and LabelTTF
+	Added support for MainThread Mac Director
 	
 * zergyo:
 	Grid: Fixed memory leak when setIsTextureFlipped is used
