@@ -55,11 +55,22 @@ enum {
 	ccColor3B	color_;
 }
 
+/** conforms to CCRGBAProtocol protocol */
+@property (nonatomic,readonly) GLubyte opacity;
+/** conforms to CCRGBAProtocol protocol */
+@property (nonatomic,readonly) ccColor3B color;
+
 /** creates a CCMenu with its items */
 + (id) menuWithItems: (CCMenuItem*) item, ... NS_REQUIRES_NIL_TERMINATION;
 
+/** creates a CCMenu with a NSArray of CCMenuItem objects */
++ (id) menuWithArray:(NSArray*)arrayOfItems;
+
 /** initializes a CCMenu with its items */
 - (id) initWithItems: (CCMenuItem*) item vaList: (va_list) args;
+
+/** initializes a CCMenu with a NSArray of CCMenuItem objects */
+- (id) initWithArray:(NSArray*)arrayOfItems;
 
 /** align items vertically */
 -(void) alignItemsVertically;
@@ -83,11 +94,5 @@ enum {
 /** align items in columns of rows */
 -(void) alignItemsInRows: (NSNumber *) rows, ... NS_REQUIRES_NIL_TERMINATION;
 -(void) alignItemsInRows: (NSNumber *) rows vaList: (va_list) args;
-
-
-/** conforms to CCRGBAProtocol protocol */
-@property (nonatomic,readonly) GLubyte opacity;
-/** conforms to CCRGBAProtocol protocol */
-@property (nonatomic,readonly) ccColor3B color;
 
 @end
