@@ -15,13 +15,10 @@ enum {
 
 #pragma mark - MainMenu
 
-@implementation Layer1
+@implementation LayerMainMenu
 -(id) init
 {
 	if( (self=[super init])) {
-
-		[CCMenuItemFont setFontSize:30];
-		[CCMenuItemFont setFontName: @"Courier New"];
 
 #ifdef __CC_PLATFORM_IOS
         self.isTouchEnabled = YES;
@@ -50,10 +47,10 @@ enum {
 			// hijack all touch events for 5 seconds
 			CCDirector *director = [CCDirector sharedDirector];
 #ifdef __CC_PLATFORM_IOS
-			[[director touchDispatcher] setPriority:kCCMenuTouchPriority-1 forDelegate:self];
+			[[director touchDispatcher] setPriority:kCCMenuHandlerPriority-1 forDelegate:self];
 			[self schedule:@selector(allowTouches) interval:5.0f repeat:0 delay:0];
 #elif defined(__CC_PLATFORM_MAC)
-			[[director eventDispatcher] addMouseDelegate:self priority:kCCMenuTouchPriority-1];
+			[[director eventDispatcher] addMouseDelegate:self priority:kCCMenuHandlerPriority-1];
 			[self schedule:@selector(allowTouches) interval:5.0f];
 #endif
 				NSLog(@"TOUCHES DISABLED FOR 5 SECONDS");
@@ -83,17 +80,26 @@ enum {
 		// Testing issue #500
 		item5.scale = 0.8f;
 
+		// Events
+		CCMenuItemFont *item6 = [CCMenuItemFont itemWithString:@"Priority Test" block:^(id sender) {
+			CCScene *scene = [CCScene node];
+			[scene addChild:[LayerPriorityTest node]];
+			[[CCDirector sharedDirector] pushScene:scene];			
+		}];
+		
 		// Font Item
-		CCMenuItemFont *item6 = [CCMenuItemFont itemWithString: @"Quit" block:^(id sender){
+		[CCMenuItemFont setFontSize:30];
+		[CCMenuItemFont setFontName: @"Courier New"];
+		CCMenuItemFont *item7 = [CCMenuItemFont itemWithString: @"Quit" block:^(id sender){
 			CC_DIRECTOR_END();
 		}];
 
 		id color_action = [CCTintBy actionWithDuration:0.5f red:0 green:-255 blue:-255];
 		id color_back = [color_action reverse];
 		id seq = [CCSequence actions:color_action, color_back, nil];
-		[item6 runAction:[CCRepeatForever actionWithAction:seq]];
+		[item7 runAction:[CCRepeatForever actionWithAction:seq]];
 
-		CCMenu *menu = [CCMenu menuWithItems: item1, item2, item3, item4, item5, item6, nil];
+		CCMenu *menu = [CCMenu menuWithItems: item1, item2, item3, item4, item5, item6, item7, nil];
 		[menu alignItemsVertically];
 
 
@@ -128,7 +134,7 @@ enum {
 -(void) registerWithTouchDispatcher
 {
 	CCDirector *director = [CCDirector sharedDirector];
-	[[director touchDispatcher] addTargetedDelegate:self priority:kCCMenuTouchPriority+1 swallowsTouches:YES];
+	[[director touchDispatcher] addTargetedDelegate:self priority:kCCMenuHandlerPriority+1 swallowsTouches:YES];
 }
 
 -(BOOL) ccTouchBegan:(UITouch *)touch withEvent:(UIEvent *)event
@@ -178,7 +184,7 @@ enum {
 {
 	CCDirector *director = [CCDirector sharedDirector];
 #ifdef __CC_PLATFORM_IOS
-    [[director touchDispatcher] setPriority:kCCMenuTouchPriority+1 forDelegate:self];
+    [[director touchDispatcher] setPriority:kCCMenuHandlerPriority+1 forDelegate:self];
     [self unscheduleAllSelectors];
 
 #elif defined(__CC_PLATFORM_MAC)
@@ -281,7 +287,7 @@ enum {
 -(void) menuCallbackBack: (id) sender
 {
 	CCScene *scene = [CCScene node];
-	[scene addChild:[Layer1 node]];
+	[scene addChild:[LayerMainMenu node]];
 	[[CCDirector sharedDirector] replaceScene:scene];
 }
 
@@ -365,7 +371,7 @@ enum {
 -(void) menuCallback: (id) sender
 {
 	CCScene *scene = [CCScene node];
-	[scene addChild:[Layer1 node]];
+	[scene addChild:[LayerMainMenu node]];
 	[[CCDirector sharedDirector] replaceScene:scene];
 }
 
@@ -484,11 +490,78 @@ enum {
 -(void) backCallback: (id) sender
 {
 	CCScene *scene = [CCScene node];
-	[scene addChild:[Layer1 node]];
+	[scene addChild:[LayerMainMenu node]];
 	[[CCDirector sharedDirector] replaceScene:scene];
 }
 
 @end
+
+#pragma mark - LayerPriorityTest
+
+@implementation LayerPriorityTest
+-(id) init
+{
+	if( (self = [super init] ) ) {
+		
+		// Testing empty menu
+		CCMenu *menu1 = [CCMenu node];
+		CCMenu *menu2 = [CCMenu node];
+		
+		
+		// Menu 1
+		[CCMenuItemFont setFontName:@"Marker Felt"];
+		[CCMenuItemFont setFontSize:18];
+		CCMenuItemFont *item1 = [CCMenuItemFont itemWithString:@"Return to Main Menu" block:^(id sender) {
+			[[CCDirector sharedDirector] popScene];
+		}];
+
+		CCMenuItemFont *item2 = [CCMenuItemFont itemWithString:@"Disable menu for 5 seconds" block:^(id sender) {
+			[menu1 setEnabled:NO];
+			CCDelayTime *wait = [CCDelayTime actionWithDuration:5];
+			CCCallBlockO *enable = [CCCallBlockO actionWithBlock:^(id object) {
+				[object setEnabled:YES];
+			}object:menu1];
+			CCSequence *seq = [CCSequence actions:wait, enable, nil];
+			[menu1 runAction:seq];
+		}];
+
+		
+		[menu1 addChild:item1];
+		[menu1 addChild:item2];
+		
+		[menu1 alignItemsVerticallyWithPadding:2];
+		
+		[self addChild:menu1];
+		
+		
+		// Menu 2
+		static BOOL priority = 1;
+		[CCMenuItemFont setFontSize:48];
+		item1 = [CCMenuItemFont itemWithString:@"Toggle priority" block:^(id sender) {
+			if( priority == 1) {
+				[menu2 setHandlerPriority:kCCMenuHandlerPriority + 20];
+				priority = 0;
+			} else {
+				[menu2 setHandlerPriority:kCCMenuHandlerPriority - 20];
+				priority = 1;
+			}
+		}];
+		[item1 setColor:ccc3(0,0,255)];
+		[menu2 addChild:item1];
+		[self addChild:menu2];
+	}
+	
+	return self;
+}
+
+- (void) dealloc
+{
+	[super dealloc];
+}
+
+@end
+
+
 
 
 
@@ -523,7 +596,7 @@ enum {
 
 	CCScene *scene = [CCScene node];
 
-	[scene addChild: [Layer1 node]];
+	[scene addChild: [LayerMainMenu node]];
 	[director_ pushScene: scene];
 
 	return YES;
@@ -547,7 +620,7 @@ enum {
 	[super applicationDidFinishLaunching:aNotification];
 
 	CCScene *scene = [CCScene node];
-	[scene addChild: [Layer1 node]];
+	[scene addChild: [LayerMainMenu node]];
 
 	[director_ runWithScene:scene];
 }
