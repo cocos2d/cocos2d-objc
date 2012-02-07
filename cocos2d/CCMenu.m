@@ -72,8 +72,9 @@ enum {
 
 -(id) initWithItems: (CCMenuItem*) item vaList: (va_list) args
 {
-	NSMutableArray *array = [NSMutableArray arrayWithObject:item];
-	if (item) {
+	NSMutableArray *array = nil;
+	if( item ) {
+		array = [NSMutableArray arrayWithObject:item];
 		CCMenuItem *i = va_arg(args, CCMenuItem*);
 		while(i) {
 			[array addObject:i];
