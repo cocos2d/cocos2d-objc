@@ -375,7 +375,7 @@
 
 - (CVReturn) getFrameForTime:(const CVTimeStamp*)outputTime
 {
-#if CC_DIRECTOR_MAC_THREAD == CC_MAC_USE_DISPLAY_LINK_THREAD
+#if (CC_DIRECTOR_MAC_THREAD == CC_MAC_USE_DISPLAY_LINK_THREAD)
 	if( ! runningThread_ )
 		runningThread_ = [NSThread currentThread];
 
@@ -408,6 +408,8 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 #if (CC_DIRECTOR_MAC_THREAD == CC_MAC_USE_OWN_THREAD)
 	runningThread_ = [[NSThread alloc] initWithTarget:self selector:@selector(mainLoop) object:nil];
 	[runningThread_ start];
+#elif (CC_DIRECTOR_MAC_THREAD == CC_MAC_USE_MAIN_THREAD)
+    runningThread_ = [NSThread mainThread];
 #endif
 
 	gettimeofday( &lastUpdate_, NULL);
@@ -441,6 +443,8 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 		[runningThread_ cancel];
 		[runningThread_ release];
 		runningThread_ = nil;
+#elif (CC_DIRECTOR_MAC_THREAD == CC_MAC_USE_MAIN_THREAD)
+        runningThread_ = nil;
 #endif
 	}
 }
