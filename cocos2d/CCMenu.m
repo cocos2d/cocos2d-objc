@@ -54,6 +54,11 @@ enum {
 	return nil;
 }
 
++(id) menuWithArray:(NSArray *)arrayOfItems
+{
+	return [[[self alloc] initWithArray:arrayOfItems] autorelease];
+}
+
 +(id) menuWithItems: (CCMenuItem*) item, ...
 {
 	va_list args;
@@ -67,21 +72,34 @@ enum {
 
 -(id) initWithItems: (CCMenuItem*) item vaList: (va_list) args
 {
-	if( (self=[super init]) ) {
+	NSMutableArray *array = [NSMutableArray arrayWithObject:item];
+	if (item) {
+		CCMenuItem *i = va_arg(args, CCMenuItem*);
+		while(i) {
+			[array addObject:i];
+			i = va_arg(args, CCMenuItem*);
+		}
+	}
 
+	return [self initWithArray:array];
+}
+
+-(id) initWithArray:(NSArray *)arrayOfItems
+{
+	if( (self=[super init]) ) {
 #ifdef __CC_PLATFORM_IOS
 		self.isTouchEnabled = YES;
 #elif defined(__CC_PLATFORM_MAC)
 		self.isMouseEnabled = YES;
 #endif
-
-		// menu in the center of the screen
+		
+		// by default, menu in the center of the screen
 		CGSize s = [[CCDirector sharedDirector] winSize];
-
+		
 		self.isRelativeAnchorPoint = NO;
 		anchorPoint_ = ccp(0.5f, 0.5f);
 		[self setContentSize:s];
-
+		
 		// XXX: in v0.7, winSize should return the visible size
 		// XXX: so the bar calculation should be done there
 #ifdef __CC_PLATFORM_IOS
@@ -89,24 +107,19 @@ enum {
 		s.height -= r.size.height;
 #endif
 		self.position = ccp(s.width/2, s.height/2);
-
+		
 		int z=0;
-
-		if (item) {
+		
+		for( CCMenuItem *item in arrayOfItems) {
 			[self addChild: item z:z];
-			CCMenuItem *i = va_arg(args, CCMenuItem*);
-			while(i) {
-				z++;
-				[self addChild: i z:z];
-				i = va_arg(args, CCMenuItem*);
-			}
+			z++;
 		}
-	//	[self alignItemsVertically];
-
+		//	[self alignItemsVertically];
+		
 		selectedItem_ = nil;
 		state_ = kCCMenuStateWaiting;
 	}
-
+	
 	return self;
 }
 
