@@ -297,11 +297,19 @@ enum {
  */
 -(void) moveBy: (CGPoint)positionDelta;
 
-/** Returns centered sprite position, regardless of the anchor point.
+/** Returns centered sprite position,regardless of the anchor point.
 
  @since v1.1-rsanchez
  */
 -(CGPoint) unanchoredPosition;
+
+/** Returns sprite position,
+    usong provided anchor point
+ (does't alter anchorPoint variable).
+ 
+ @since v1.1-rsanchez
+ */
+-(CGPoint) anchoredPosition:(CGPoint)anchorPoint;
 
 // composition: ADD
 

@@ -181,6 +181,11 @@ static NSUInteger globalOrderOfArrival = 0;
                position_.y + (0.5 - anchorPoint_.y) * contentSize_.height);
 }
 
+-(CGPoint) anchoredPosition:(CGPoint)anchorPoint {
+    return ccp(position_.x + (anchorPoint.x - anchorPoint_.x) * contentSize_.width,
+               position_.y + (anchorPoint.y - anchorPoint_.y) * contentSize_.height);
+}
+
 -(void) setIsRelativeAnchorPoint: (BOOL)newValue
 {
 	isRelativeAnchorPoint_ = newValue;
