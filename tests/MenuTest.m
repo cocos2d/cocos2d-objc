@@ -81,6 +81,7 @@ enum {
 		item5.scale = 0.8f;
 
 		// Events
+		[CCMenuItemFont setFontName: @"Marker Felt"];
 		CCMenuItemFont *item6 = [CCMenuItemFont itemWithString:@"Priority Test" block:^(id sender) {
 			CCScene *scene = [CCScene node];
 			[scene addChild:[LayerPriorityTest node]];
