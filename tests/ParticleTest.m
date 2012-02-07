@@ -1792,7 +1792,7 @@ Class restartAction()
 	{
 		
 		CCLOG(@"remove random system");
-		uint rand = arc4random() % ([[batchNode_ children] count] - 1);
+		NSUInteger rand = arc4random() % ([[batchNode_ children] count] - 1);
 		[batchNode_ removeChild:[[batchNode_ children] objectAtIndex:rand] cleanup:YES];
 		
 		CCParticleSystemQuad *particleSystem = [CCParticleSystemQuad particleWithFile:@"Particles/Spiral.plist"];

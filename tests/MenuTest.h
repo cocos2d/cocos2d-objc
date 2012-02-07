@@ -6,7 +6,7 @@
 @interface AppController : BaseAppController
 @end
 
-@interface Layer1 : CCLayer
+@interface LayerMainMenu : CCLayer
 {
 	CCMenuItem	*disabledItem;
 }
@@ -35,4 +35,9 @@
 }
 -(void) menuCallback: (id) sender;
 -(void) backCallback: (id) sender;
+@end
+
+@interface LayerPriorityTest : CCLayer
+{
+}
 @end
