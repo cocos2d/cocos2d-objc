@@ -19,11 +19,6 @@ enum {
 static int sceneIdx=-1;
 static NSString *transitions[] = {
 
-	@"MultipleParticleSystems",
-	@"MultipleParticleSystemsBatched",	
-	@"AddAndDeleteParticleSystems",
-	@"ReorderParticleSystems",
-	
 	@"ParticleReorder",
 	@"ParticleBatchHybrid",
 	@"ParticleBatchMultipleEmitters",
@@ -64,6 +59,13 @@ static NSString *transitions[] = {
 	@"Issue704",
 	@"Issue872",
 	@"Issue870",
+	
+	// v1.1 tests
+	@"MultipleParticleSystems",
+	@"MultipleParticleSystemsBatched",	
+	@"AddAndDeleteParticleSystems",
+	@"ReorderParticleSystems",
+	
 };
 
 Class nextAction(void);

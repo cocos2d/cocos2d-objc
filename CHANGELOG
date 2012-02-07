@@ -13,7 +13,7 @@ version 2.0-rc0 XX-Feb-2012
 			Menu could be created without items
 			Menu could be enabled/disabled (no events will be accepted when it is disabled)
 			It is possible to change its priority on runtime
-			kCCMenuTouchPriority -> kCCMenuHandlerPriority
+			Renamed kCCMenuTouchPriority -> kCCMenuHandlerPriority
 . [NEW] Sprite: spriteWithBatchNode / initWithBatchNode were removed. Use initWithTexture:batch.texture / spriteWithTexture:batch.texture instead
 . [NEW] TextureAtlas: Added option to not use VAO (might be a bit slower, but it consumes less memory)
 . [NEW] TileMap: polygon, polilines and gid are parsed from the objects (issue #1311)
