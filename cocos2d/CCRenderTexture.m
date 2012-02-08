@@ -64,7 +64,7 @@
 		w *= CC_CONTENT_SCALE_FACTOR();
 		h *= CC_CONTENT_SCALE_FACTOR();
 
-		glGetIntegerv(CC_GL_FRAMEBUFFER_BINDING, &oldFBO_);
+		glGetIntegerv(GL_FRAMEBUFFER_BINDING, &oldFBO_);
 
 		// textures must be power of two
 		NSUInteger powW;
@@ -87,13 +87,13 @@
 
 		// generate FBO
 		glGenFramebuffers(1, &fbo_);
-		glBindFramebuffer(CC_GL_FRAMEBUFFER, fbo_);
+		glBindFramebuffer(GL_FRAMEBUFFER, fbo_);
 
 		// associate texture with FBO
-		glFramebufferTexture2D(CC_GL_FRAMEBUFFER, CC_GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texture_.name, 0);
+		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texture_.name, 0);
 
 		// check if it worked (probably worth doing :) )
-		NSAssert( glCheckFramebufferStatus(CC_GL_FRAMEBUFFER) == CC_GL_FRAMEBUFFER_COMPLETE, @"Could not attach texture to framebuffer");
+		NSAssert( glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE, @"Could not attach texture to framebuffer");
 
 		[texture_ setAliasTexParameters];
 
@@ -106,7 +106,7 @@
 		// issue #937
 		[sprite_ setBlendFunc:(ccBlendFunc){GL_ONE, GL_ONE_MINUS_SRC_ALPHA}];
 
-		glBindFramebuffer(CC_GL_FRAMEBUFFER, oldFBO_);
+		glBindFramebuffer(GL_FRAMEBUFFER, oldFBO_);
 	}
 	return self;
 }
@@ -144,8 +144,8 @@
 								 (float)-1.0 / heightRatio, (float)1.0 / heightRatio, -1,1 );
 	kmGLMultMatrix(&orthoMatrix);
 
-	glGetIntegerv(CC_GL_FRAMEBUFFER_BINDING, &oldFBO_);
-	glBindFramebuffer(CC_GL_FRAMEBUFFER, fbo_);
+	glGetIntegerv(GL_FRAMEBUFFER_BINDING, &oldFBO_);
+	glBindFramebuffer(GL_FRAMEBUFFER, fbo_);
 }
 
 -(void)beginWithClear:(float)r g:(float)g b:(float)b a:(float)a
@@ -165,7 +165,7 @@
 
 -(void)end
 {
-	glBindFramebuffer(CC_GL_FRAMEBUFFER, oldFBO_);
+	glBindFramebuffer(GL_FRAMEBUFFER, oldFBO_);
 
 	kmGLPopMatrix();
 

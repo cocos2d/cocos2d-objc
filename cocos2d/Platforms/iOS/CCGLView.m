@@ -238,8 +238,8 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	{
 		/* Resolve from msaaFramebuffer to resolveFramebuffer */
 		//glDisable(GL_SCISSOR_TEST);
-		glBindFramebufferOES(GL_READ_FRAMEBUFFER_APPLE, [renderer_ msaaFrameBuffer]);
-		glBindFramebufferOES(GL_DRAW_FRAMEBUFFER_APPLE, [renderer_ defaultFrameBuffer]);
+		glBindFramebuffer(GL_READ_FRAMEBUFFER_APPLE, [renderer_ msaaFrameBuffer]);
+		glBindFramebuffer(GL_DRAW_FRAMEBUFFER_APPLE, [renderer_ defaultFrameBuffer]);
 		glResolveMultisampleFramebufferAPPLE();
 	}
 
@@ -275,7 +275,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	// We can safely re-bind the framebuffer here, since this will be the
 	// 1st instruction of the new main loop
 	if( multiSampling_ )
-		glBindFramebufferOES(GL_FRAMEBUFFER, [renderer_ msaaFrameBuffer]);
+		glBindFramebuffer(GL_FRAMEBUFFER, [renderer_ msaaFrameBuffer]);
 
 	CHECK_GL_ERROR_DEBUG();
 }
@@ -287,7 +287,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 
 	if([pixelFormat isEqualToString:@"EAGLColorFormat565"])
-		pFormat = GL_RGB565_OES;
+		pFormat = GL_RGB565;
 	else
 		pFormat = GL_RGBA8_OES;
 
