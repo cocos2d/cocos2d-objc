@@ -46,30 +46,14 @@
 // iOS
 #ifdef __CC_PLATFORM_IOS
 #define	glClearDepth				glClearDepthf
-#define glGenerateMipmap			glGenerateMipmapOES
-#define glGenFramebuffers			glGenFramebuffersOES
-#define glBindFramebuffer			glBindFramebufferOES
-#define glFramebufferTexture2D		glFramebufferTexture2DOES
-#define glDeleteFramebuffers		glDeleteFramebuffersOES
-#define glCheckFramebufferStatus	glCheckFramebufferStatusOES
 #define glDeleteVertexArrays		glDeleteVertexArraysOES
 #define glGenVertexArrays			glGenVertexArraysOES
 #define glBindVertexArray			glBindVertexArrayOES
-
-#define CC_GL_FRAMEBUFFER			GL_FRAMEBUFFER_OES
-#define CC_GL_FRAMEBUFFER_BINDING	GL_FRAMEBUFFER_BINDING_OES
-#define CC_GL_COLOR_ATTACHMENT0		GL_COLOR_ATTACHMENT0_OES
-#define CC_GL_FRAMEBUFFER_COMPLETE	GL_FRAMEBUFFER_COMPLETE_OES
 
 // Mac
 #elif defined(__CC_PLATFORM_MAC)
 #define glDeleteVertexArrays		glDeleteVertexArraysAPPLE
 #define glGenVertexArrays			glGenVertexArraysAPPLE
 #define glBindVertexArray			glBindVertexArrayAPPLE
-
-#define CC_GL_FRAMEBUFFER			GL_FRAMEBUFFER
-#define CC_GL_FRAMEBUFFER_BINDING	GL_FRAMEBUFFER_BINDING
-#define CC_GL_COLOR_ATTACHMENT0		GL_COLOR_ATTACHMENT0
-#define CC_GL_FRAMEBUFFER_COMPLETE	GL_FRAMEBUFFER_COMPLETE
 
 #endif

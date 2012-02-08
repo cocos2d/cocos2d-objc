@@ -43,26 +43,26 @@
 
 -(void)grab:(CCTexture2D*)texture
 {
-	glGetIntegerv(CC_GL_FRAMEBUFFER_BINDING, &oldFBO_);
+	glGetIntegerv(GL_FRAMEBUFFER_BINDING, &oldFBO_);
 
 	// bind
-	glBindFramebuffer(CC_GL_FRAMEBUFFER, fbo_);
+	glBindFramebuffer(GL_FRAMEBUFFER, fbo_);
 
 	// associate texture with FBO
-	glFramebufferTexture2D(CC_GL_FRAMEBUFFER, CC_GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texture.name, 0);
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texture.name, 0);
 
 	// check if it worked (probably worth doing :) )
-	GLuint status = glCheckFramebufferStatus(CC_GL_FRAMEBUFFER);
-	if (status != CC_GL_FRAMEBUFFER_COMPLETE)
+	GLuint status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
+	if (status != GL_FRAMEBUFFER_COMPLETE)
 		[NSException raise:@"Frame Grabber" format:@"Could not attach texture to framebuffer"];
 
-	glBindFramebuffer(CC_GL_FRAMEBUFFER, oldFBO_);
+	glBindFramebuffer(GL_FRAMEBUFFER, oldFBO_);
 }
 
 -(void)beforeRender:(CCTexture2D*)texture
 {
-	glGetIntegerv(CC_GL_FRAMEBUFFER_BINDING, &oldFBO_);
-	glBindFramebuffer(CC_GL_FRAMEBUFFER, fbo_);
+	glGetIntegerv(GL_FRAMEBUFFER_BINDING, &oldFBO_);
+	glBindFramebuffer(GL_FRAMEBUFFER, fbo_);
 
 	// save clear color
 	glGetFloatv(GL_COLOR_CLEAR_VALUE,oldClearColor_);
@@ -82,7 +82,7 @@
 
 -(void)afterRender:(CCTexture2D*)texture
 {
-	glBindFramebuffer(CC_GL_FRAMEBUFFER, oldFBO_);
+	glBindFramebuffer(GL_FRAMEBUFFER, oldFBO_);
 //	glColorMask(TRUE, TRUE, TRUE, TRUE);	// #631
 	
 	// Restore clear color
