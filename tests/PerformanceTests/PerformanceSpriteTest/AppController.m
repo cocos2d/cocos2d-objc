@@ -9,92 +9,132 @@
 
 @implementation AppController
 
-- (void)applicationDidFinishLaunching:(UIApplication *)application
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+	// Don't call super
 	// Init the window
-	window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+	window_ = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+		
+	// Create an CCGLView with a RGB565 color buffer, and a depth buffer of 0-bits
+	CCGLView *glView = [CCGLView viewWithFrame:[window_ bounds]
+								   pixelFormat:kEAGLColorFormatRGB565
+								   depthFormat:0	//GL_DEPTH_COMPONENT24_OES
+							preserveBackbuffer:NO
+									sharegroup:nil
+								 multiSampling:NO
+							   numberOfSamples:0];
 	
-	// must be called before any othe call to the director
-	if( ! [CCDirector setDirectorType:kCCDirectorTypeDisplayLink] )
-		[CCDirector setDirectorType:kCCDirectorTypeMainLoop];
+	director_ = (CCDirectorIOS*) [CCDirector sharedDirector];
 	
-	// get instance of the shared director
-	CCDirector *director = [CCDirector sharedDirector];
+	director_.wantsFullScreenLayout = YES;
+	// Display Milliseconds Per Frame
+	[director_ setDisplayStats:YES];
 	
-	// before creating any layer, set the landscape mode
-	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
+	// set FPS at 60
+	[director_ setAnimationInterval:1.0/60];
 	
-	// display FPS (useful when debugging)
-	[director setDisplayFPS:YES];
+	// attach the openglView to the director
+	[director_ setView:glView];
 	
-	// frames per second
-	[director setAnimationInterval:1.0/60];
+	// for rotation and other messages
+	[director_ setDelegate:self];
 	
-	// create an OpenGL view
-	EAGLView *glView = [EAGLView viewWithFrame:[window bounds]];
+	// 2D projection
+	[director_ setProjection:kCCDirectorProjection2D];
+//	[director setProjection:kCCDirectorProjection3D];
 	
-	// connect it to the director
-	[director setOpenGLView:glView];
-
 	// Enables High Res mode (Retina Display) on iPhone 4 and maintains low res on all other devices
-//	if( ! [director enableRetinaDisplay:YES] )
+//	if( ! [director_ enableRetinaDisplay:YES] )
 //		CCLOG(@"Retina Display Not supported");
 	
+	navController_ = [[UINavigationController alloc] initWithRootViewController:director_];
+	navController_.navigationBarHidden = YES;
 	
-	// glview is a child of the main window
-	[window addSubview:glView];
+	// set the Navigation Controller as the root view controller
+	//	[window_ setRootViewController:rootViewController_];
+	[window_ addSubview:navController_.view];
 	
-	// Make the window visible
-	[window makeKeyAndVisible];
+	// make main window visible
+	[window_ makeKeyAndVisible];
 	
+	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
+	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
+	// You can change anytime.
+	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA8888];
+	
+	// When in iPad / RetinaDisplay mode, CCFileUtils will append the "-ipad" / "-hd" to all loaded files
+	// If the -ipad  / -hdfile is not found, it will load the non-suffixed version
+	[CCFileUtils setiPadSuffix:@"-ipad"];			// Default on iPad is "" (empty string)
+	[CCFileUtils setRetinaDisplaySuffix:@"-hd"];	// Default on RetinaDisplay is "-hd"
+	
+	// Assume that PVR images have premultiplied alpha
+	[CCTexture2D PVRImagesHavePremultipliedAlpha:YES];
+	
+	// create the main scene
 	CCScene *scene = [CCScene node];
 	[scene addChild: [nextAction() testWithSubTest:1 nodes:50]];
 	
-	[director runWithScene:scene];
+	// and run it!
+	[director_ pushScene: scene];
+	
+	return YES;
 }
 
-- (void)dealloc {
-	[window release];
-	[super dealloc];
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+	return UIInterfaceOrientationIsLandscape(interfaceOrientation);
 }
 
 // getting a call, pause the game
 -(void) applicationWillResignActive:(UIApplication *)application
 {
-	[[CCDirector sharedDirector] pause];
+	if( [navController_ visibleViewController] == director_ )
+		[director_ pause];
 }
 
 // call got rejected
 -(void) applicationDidBecomeActive:(UIApplication *)application
 {
-	[[CCDirector sharedDirector] resume];
+	if( [navController_ visibleViewController] == director_ )
+		[director_ resume];
 }
 
 -(void) applicationDidEnterBackground:(UIApplication*)application
 {
-	[[CCDirector sharedDirector] stopAnimation];
+	if( [navController_ visibleViewController] == director_ )
+		[director_ stopAnimation];
 }
 
 -(void) applicationWillEnterForeground:(UIApplication*)application
 {
-	[[CCDirector sharedDirector] startAnimation];
+	if( [navController_ visibleViewController] == director_ )
+		[director_ startAnimation];
 }
 
+// application will be killed
 - (void)applicationWillTerminate:(UIApplication *)application
-{	
-	[[CCDirector sharedDirector] end];
+{
+	CC_DIRECTOR_END();
 }
 
 // purge memory
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application
 {
-	[[CCDirector sharedDirector] purgeCachedData];
+	[director_ purgeCachedData];
 }
 
 // next delta time will be zero
 -(void) applicationSignificantTimeChange:(UIApplication *)application
 {
-	[[CCDirector sharedDirector] setNextDeltaTimeZero:YES];
+	[director_ setNextDeltaTimeZero:YES];
+}
+
+- (void) dealloc
+{
+	[window_ release];
+	[navController_ release];
+	
+	[super dealloc];
 }
 
 @end

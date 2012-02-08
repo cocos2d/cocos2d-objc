@@ -9,10 +9,10 @@
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -49,7 +49,7 @@
 		amplitude = amp;
 		amplitudeRate = 1.0f;
 	}
-	
+
 	return self;
 }
 
@@ -63,7 +63,7 @@
 -(void)update:(ccTime)time
 {
 	int i, j;
-	
+
 	for( i = 0; i < (gridSize_.x+1); i++ )
 	{
 		for( j = 0; j < (gridSize_.y+1); j++ )
@@ -99,7 +99,7 @@
 	{
 		[NSException raise:@"FlipX3D" format:@"Grid size must be (1,1)"];
 	}
-	
+
 	return [super initWithSize:gSize duration:d];
 }
 
@@ -116,17 +116,17 @@
 	CGFloat mz = sinf( angle );
 	angle = angle / 2.0f;     // x calculates degrees from 0 to 90
 	CGFloat mx = cosf( angle );
-	
+
 	ccVertex3F	v0, v1, v, diff;
-	
+
 	v0 = [self originalVertex:ccg(1,1)];
 	v1 = [self originalVertex:ccg(0,0)];
-	
+
 	CGFloat	x0 = v0.x;
 	CGFloat	x1 = v1.x;
 	CGFloat x;
 	ccGridSize	a, b, c, d;
-	
+
 	if ( x0 > x1 )
 	{
 		// Normal Grid
@@ -145,28 +145,28 @@
 		b = ccg(1,1);
 		x = x1;
 	}
-	
+
 	diff.x = ( x - x * mx );
 	diff.z = fabsf( floorf( (x * mz) / 4.0f ) );
-	
+
 // bottom-left
 	v = [self originalVertex:a];
 	v.x = diff.x;
 	v.z += diff.z;
 	[self setVertex:a vertex:v];
-	
+
 // upper-left
 	v = [self originalVertex:b];
 	v.x = diff.x;
 	v.z += diff.z;
 	[self setVertex:b vertex:v];
-	
+
 // bottom-right
 	v = [self originalVertex:c];
 	v.x -= diff.x;
 	v.z -= diff.z;
 	[self setVertex:c vertex:v];
-	
+
 // upper-right
 	v = [self originalVertex:d];
 	v.x -= diff.x;
@@ -189,17 +189,17 @@
 	CGFloat mz = sinf( angle );
 	angle = angle / 2.0f;     // x calculates degrees from 0 to 90
 	CGFloat my = cosf( angle );
-	
+
 	ccVertex3F	v0, v1, v, diff;
-	
+
 	v0 = [self originalVertex:ccg(1,1)];
 	v1 = [self originalVertex:ccg(0,0)];
-	
+
 	CGFloat	y0 = v0.y;
 	CGFloat	y1 = v1.y;
 	CGFloat y;
 	ccGridSize	a, b, c, d;
-	
+
 	if ( y0 > y1 )
 	{
 		// Normal Grid
@@ -218,28 +218,28 @@
 		c = ccg(1,1);
 		y = y1;
 	}
-	
+
 	diff.y = y - y * my;
 	diff.z = fabsf( floorf( (y * mz) / 4.0f ) );
-	
+
 	// bottom-left
 	v = [self originalVertex:a];
 	v.y = diff.y;
 	v.z += diff.z;
 	[self setVertex:a vertex:v];
-	
+
 	// upper-left
 	v = [self originalVertex:b];
 	v.y -= diff.y;
 	v.z -= diff.z;
 	[self setVertex:b vertex:v];
-	
+
 	// bottom-right
 	v = [self originalVertex:c];
 	v.y = diff.y;
 	v.z += diff.z;
 	[self setVertex:c vertex:v];
-	
+
 	// upper-right
 	v = [self originalVertex:d];
 	v.y -= diff.y;
@@ -273,7 +273,7 @@
 		lensEffect_ = 0.7f;
 		dirty_ = YES;
 	}
-	
+
 	return self;
 }
 
@@ -287,9 +287,6 @@
 {
 	if( ! CGPointEqualToPoint(pos, position_) ) {
 		position_ = pos;
-		positionInPixels_.x = pos.x * CC_CONTENT_SCALE_FACTOR();
-		positionInPixels_.y = pos.y * CC_CONTENT_SCALE_FACTOR();
-		
 		dirty_ = YES;
 	}
 }
@@ -298,21 +295,21 @@
 {
 	return position_;
 }
-	
+
 -(void)update:(ccTime)time
 {
 	if ( dirty_ )
 	{
 		int i, j;
-		
+
 		for( i = 0; i < gridSize_.x+1; i++ )
 		{
 			for( j = 0; j < gridSize_.y+1; j++ )
 			{
 				ccVertex3F	v = [self originalVertex:ccg(i,j)];
-				CGPoint vect = ccpSub(positionInPixels_, ccp(v.x,v.y));
+				CGPoint vect = ccpSub(position_, ccp(v.x,v.y));
 				CGFloat r = ccpLength(vect);
-				
+
 				if ( r < radius_ )
 				{
 					r = radius_ - r;
@@ -320,7 +317,7 @@
 					if ( pre_log == 0 ) pre_log = 0.001f;
 					float l = logf(pre_log) * lensEffect_;
 					float new_r = expf( l ) * radius_;
-					
+
 					if ( ccpLength(vect) > 0 )
 					{
 						vect = ccpNormalize(vect);
@@ -328,11 +325,11 @@
 						v.z += ccpLength(new_vect) * lensEffect_;
 					}
 				}
-				
+
 				[self setVertex:ccg(i,j) vertex:v];
 			}
 		}
-		
+
 		dirty_ = NO;
 	}
 }
@@ -364,7 +361,7 @@
 		amplitude_ = amp;
 		amplitudeRate_ = 1.0f;
 	}
-	
+
 	return self;
 }
 
@@ -376,8 +373,6 @@
 -(void) setPosition:(CGPoint)pos
 {
 	position_ = pos;
-	positionInPixels_.x = pos.x * CC_CONTENT_SCALE_FACTOR();
-	positionInPixels_.y = pos.y * CC_CONTENT_SCALE_FACTOR();
 }
 
 -(id) copyWithZone: (NSZone*) zone
@@ -390,22 +385,22 @@
 -(void)update:(ccTime)time
 {
 	int i, j;
-	
+
 	for( i = 0; i < (gridSize_.x+1); i++ )
 	{
 		for( j = 0; j < (gridSize_.y+1); j++ )
 		{
 			ccVertex3F	v = [self originalVertex:ccg(i,j)];
-			CGPoint vect = ccpSub(positionInPixels_, ccp(v.x,v.y));
+			CGPoint vect = ccpSub(position_, ccp(v.x,v.y));
 			CGFloat r = ccpLength(vect);
-			
+
 			if ( r < radius_ )
 			{
 				r = radius_ - r;
 				CGFloat rate = powf( r / radius_, 2);
 				v.z += (sinf( time*(CGFloat)M_PI*waves_*2 + r * 0.1f) * amplitude_ * amplitudeRate_ * rate );
 			}
-			
+
 			[self setVertex:ccg(i,j) vertex:v];
 		}
 	}
@@ -432,7 +427,7 @@
 		randrange = range;
 		shakeZ = sz;
 	}
-	
+
 	return self;
 }
 
@@ -445,7 +440,7 @@
 -(void)update:(ccTime)time
 {
 	int i, j;
-	
+
 	for( i = 0; i < (gridSize_.x+1); i++ )
 	{
 		for( j = 0; j < (gridSize_.y+1); j++ )
@@ -455,7 +450,7 @@
 			v.y += ( rand() % (randrange*2) ) - randrange;
 			if( shakeZ )
 				v.z += ( rand() % (randrange*2) ) - randrange;
-			
+
 			[self setVertex:ccg(i,j) vertex:v];
 		}
 	}
@@ -486,14 +481,14 @@
 		amplitude = amp;
 		amplitudeRate = 1.0f;
 	}
-	
+
 	return self;
 }
 
 -(void)update:(ccTime)time
 {
 	int i, j;
-	
+
 	for( i = 1; i < gridSize_.x; i++ )
 	{
 		for( j = 1; j < gridSize_.y; j++ )
@@ -504,7 +499,7 @@
 			[self setVertex:ccg(i,j) vertex:v];
 		}
 	}
-}	
+}
 
 -(id) copyWithZone: (NSZone*) zone
 {
@@ -539,26 +534,26 @@
 		horizontal = h;
 		vertical = v;
 	}
-	
+
 	return self;
 }
 
 -(void)update:(ccTime)time
 {
 	int i, j;
-	
+
 	for( i = 0; i < (gridSize_.x+1); i++ )
 	{
 		for( j = 0; j < (gridSize_.y+1); j++ )
 		{
 			ccVertex3F	v = [self originalVertex:ccg(i,j)];
-			
+
 			if ( vertical )
 				v.x = (v.x + (sinf(time*(CGFloat)M_PI*waves*2 + v.y * .01f) * amplitude * amplitudeRate));
-			
+
 			if ( horizontal )
 				v.y = (v.y + (sinf(time*(CGFloat)M_PI*waves*2 + v.x * .01f) * amplitude * amplitudeRate));
-					
+
 			[self setVertex:ccg(i,j) vertex:v];
 		}
 	}
@@ -596,15 +591,13 @@
 		amplitude_ = amp;
 		amplitudeRate_ = 1.0f;
 	}
-	
+
 	return self;
 }
 
 -(void) setPosition:(CGPoint)pos
 {
 	position_ = pos;
-	positionInPixels_.x = pos.x * CC_CONTENT_SCALE_FACTOR();
-	positionInPixels_.y = pos.y * CC_CONTENT_SCALE_FACTOR();
 }
 
 -(CGPoint) position
@@ -615,31 +608,31 @@
 -(void)update:(ccTime)time
 {
 	int i, j;
-	CGPoint	c = positionInPixels_;
-	
+	CGPoint	c = position_;
+
 	for( i = 0; i < (gridSize_.x+1); i++ )
 	{
 		for( j = 0; j < (gridSize_.y+1); j++ )
 		{
 			ccVertex3F v = [self originalVertex:ccg(i,j)];
-			
+
 			CGPoint	avg = ccp(i-(gridSize_.x/2.0f), j-(gridSize_.y/2.0f));
 			CGFloat r = ccpLength( avg );
-			
+
 			CGFloat amp = 0.1f * amplitude_ * amplitudeRate_;
 			CGFloat a = r * cosf( (CGFloat)M_PI/2.0f + time * (CGFloat)M_PI * twirls_ * 2 ) * amp;
-			
+
 			float cosA = cosf(a);
 			float sinA = sinf(a);
-			
+
 			CGPoint	d = {
 				sinA * (v.y-c.y) + cosA * (v.x-c.x),
 				cosA * (v.y-c.y) - sinA * (v.x-c.x)
 			};
-			
+
 			v.x = c.x + d.x;
 			v.y = c.y + d.y;
-			
+
 			[self setVertex:ccg(i,j) vertex:v];
 		}
 	}

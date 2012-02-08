@@ -1,29 +1,8 @@
 #import "Cocos2d.h"
+#import "BaseAppController.h"
 
-@class Sprite;
-
-//CLASS INTERFACE
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
-@interface AppController : NSObject <UIApplicationDelegate>
-{
-	UIWindow *window;
-}
+@interface AppController : BaseAppController
 @end
-
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
-@interface cocos2dmacAppDelegate : NSObject <NSApplicationDelegate>
-{
-	NSWindow	*window_;
-	MacGLView	*glView_;
-}
-
-@property (assign) IBOutlet NSWindow	*window;
-@property (assign) IBOutlet MacGLView	*glView;
-
-- (IBAction)toggleFullScreen:(id)sender;
-
-@end
-#endif // Mac
 
 @interface RenderTextureTest : CCLayer
 {}
@@ -35,9 +14,9 @@
 {
 	CCRenderTexture* target;
 	CCSprite* brush;
-	
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+
+#ifdef __CC_PLATFORM_IOS
+#elif defined(__CC_PLATFORM_MAC)
 	CGPoint		lastLocation;
 #endif
 }
@@ -58,7 +37,7 @@
 	CCSprite *sp7;
 	CCSprite *sp8;
 	CCSprite *sp9;
-	
+
 	CCSpriteBatchNode *mgr;
 }
 -(void)renderScreenShot;

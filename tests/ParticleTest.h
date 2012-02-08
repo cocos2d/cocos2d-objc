@@ -4,27 +4,10 @@
 @class CCSprite;
 
 //CLASS INTERFACE
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
-@interface AppController : NSObject <UIApplicationDelegate>
-{
-	UIWindow *window;
-}
+#import "BaseAppController.h"
+
+@interface AppController : BaseAppController
 @end
-
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
-@interface cocos2dmacAppDelegate : NSObject <NSApplicationDelegate>
-{
-	NSWindow	*window_;
-	MacGLView	*glView_;
-}
-
-@property (assign) IBOutlet NSWindow	*window;
-@property (assign) IBOutlet MacGLView	*glView;
-
-- (IBAction)toggleFullScreen:(id)sender;
-
-@end
-#endif // Mac
 
 @class Emitter;
 
@@ -175,4 +158,41 @@
 }
 @end
 
+@interface ParticleBatchHybrid : ParticleDemo
+{
+	CCNode *parent1;
+	CCNode *parent2;
+}
+@end
 
+@interface ParticleBatchMultipleEmitters : ParticleDemo
+{}
+@end
+
+@interface ParticleReorder : ParticleDemo
+{
+	NSUInteger order;
+}
+@end
+
+@interface MultipleParticleSystems : ParticleDemo
+{}
+@end
+
+@interface MultipleParticleSystemsBatched : ParticleDemo
+{
+	CCParticleBatchNode *batchNode_;
+}
+@end
+
+@interface AddAndDeleteParticleSystems : ParticleDemo
+{
+	CCParticleBatchNode *batchNode_;
+}
+@end
+
+@interface ReorderParticleSystems : ParticleDemo
+{
+	CCParticleBatchNode *batchNode_;
+}
+@end

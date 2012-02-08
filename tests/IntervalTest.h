@@ -3,12 +3,10 @@
 //
 
 #import "cocos2d.h"
+#import "BaseAppController.h"
 
 //CLASS INTERFACE
-@interface AppController : NSObject <UIAlertViewDelegate, UITextFieldDelegate, UIApplicationDelegate>
-{
-	UIWindow	*window;
-}
+@interface AppController : BaseAppController
 @end
 
 @interface Layer1 : CCLayer
@@ -18,7 +16,7 @@
 	CCLabelBMFont *label2;
 	CCLabelBMFont *label3;
 	CCLabelBMFont *label4;
-	
+
 	ccTime time0, time1, time2, time3, time4;
 }
 

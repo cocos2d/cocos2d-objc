@@ -2,17 +2,17 @@
  * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
  * Copyright (c) 2009 Sindesso Pty Ltd http://www.sindesso.com/
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -58,7 +58,7 @@
 -(void) onEnter
 {
 	[super onEnter];
-	
+
 	CGSize s = [[CCDirector sharedDirector] winSize];
 	int x, y;
 	if( s.width > s.height)
@@ -71,9 +71,9 @@
 		x = 12;
 		y = 16;
 	}
-	
+
 	id action  = [self actionWithSize:ccg(x,y)];
-	
+
 	if(! back_ )
 	{
 		[outScene_ runAction: [CCSequence actions:
@@ -95,7 +95,7 @@
 							 nil]
 		 ];
 	}
-	
+
 }
 
 -(CCActionInterval*) actionWithSize: (ccGridSize) v

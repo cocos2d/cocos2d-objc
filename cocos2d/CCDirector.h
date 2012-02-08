@@ -3,17 +3,17 @@
  *
  * Copyright (c) 2008-2010 Ricardo Quesada
  * Copyright (c) 2011 Zynga Inc.
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -26,10 +26,11 @@
 
 #import "ccConfig.h"
 #import "ccTypes.h"
+#import "ccMacros.h"
 
-// OpenGL related
-#import "Platforms/CCGL.h"
 #import "CCProtocols.h"
+#import "Platforms/CCGL.h"
+#import "kazmath/mat4.h"
 
 /** @typedef ccDirectorProjection
  Possible OpenGL projections used by director
@@ -37,111 +38,114 @@
 typedef enum {
 	/// sets a 2D projection (orthogonal projection).
 	kCCDirectorProjection2D,
-	
+
 	/// sets a 3D projection with a fovy=60, znear=0.5f and zfar=1500.
 	kCCDirectorProjection3D,
-	
+
 	/// it calls "updateProjection" on the projection delegate.
 	kCCDirectorProjectionCustom,
-	
+
 	/// Detault projection is 3D projection
 	kCCDirectorProjectionDefault = kCCDirectorProjection3D,
-	
-	// backward compatibility stuff
-	CCDirectorProjection2D = kCCDirectorProjection2D,
-	CCDirectorProjection3D = kCCDirectorProjection3D,
-	CCDirectorProjectionCustom = kCCDirectorProjectionCustom,
 
 } ccDirectorProjection;
 
 
 @class CCLabelAtlas;
 @class CCScene;
+@class CCScheduler;
+@class CCActionManager;
+
+
+#ifdef __CC_PLATFORM_IOS
+#define CC_VIEWCONTROLLER UIViewController
+#elif defined(__CC_PLATFORM_MAC)
+#define CC_VIEWCONTROLLER NSObject
+#endif
 
 /**Class that creates and handle the main Window and manages how
 and when to execute the Scenes.
- 
+
  The CCDirector is also resposible for:
   - initializing the OpenGL ES context
   - setting the OpenGL pixel format (default on is RGB565)
   - setting the OpenGL buffer depth (default one is 0-bit)
   - setting the projection (default one is 3D)
-  - setting the orientation (default one is Protrait)
- 
+
  Since the CCDirector is a singleton, the standard way to use it is by calling:
   - [[CCDirector sharedDirector] methodName];
- 
+
  The CCDirector also sets the default OpenGL context:
   - GL_TEXTURE_2D is enabled
   - GL_VERTEX_ARRAY is enabled
   - GL_COLOR_ARRAY is enabled
   - GL_TEXTURE_COORD_ARRAY is enabled
 */
-@interface CCDirector : NSObject
+@interface CCDirector : CC_VIEWCONTROLLER
 {
-	CC_GLVIEW	*openGLView_;
-
 	// internal timer
 	NSTimeInterval animationInterval_;
-	NSTimeInterval oldAnimationInterval_;	
-	
-	/* display FPS ? */
-	BOOL displayFPS_;
+	NSTimeInterval oldAnimationInterval_;
+
+	/* stats */
+	BOOL	displayStats_;
 
 	NSUInteger frames_;
 	NSUInteger totalFrames_;
+	ccTime secondsPerFrame_;
 
-	ccTime accumDt_;
-	ccTime frameRate_;
-#if	CC_DIRECTOR_FAST_FPS
+	ccTime		accumDt_;
+	ccTime		frameRate_;
 	CCLabelAtlas *FPSLabel_;
-#endif
-	
+	CCLabelAtlas *SPFLabel_;
+	CCLabelAtlas *drawsLabel_;
+
 	/* is the running scene paused */
 	BOOL isPaused_;
-	
+
 	/* The running scene */
 	CCScene *runningScene_;
-	
+
 	/* This object will be visited after the scene. Useful to hook a notification node */
 	id notificationNode_;
-	
+
 	/* will be the next 'runningScene' in the next frame
 	 nextScene is a weak reference. */
 	CCScene *nextScene_;
-	
+
 	/* If YES, then "old" scene will receive the cleanup message */
 	BOOL	sendCleanupToScene_;
 
 	/* scheduled scenes */
 	NSMutableArray *scenesStack_;
-	
+
 	/* last time the main loop was updated */
 	struct timeval lastUpdate_;
 	/* delta time since last tick to main loop */
 	ccTime dt;
 	/* whether or not the next delta time will be zero */
 	BOOL nextDeltaTimeZero_;
-	
+
 	/* projection used */
 	ccDirectorProjection projection_;
-	
-	/* Projection protocol delegate */
-	id<CCProjectionProtocol>	projectionDelegate_;
+
+	/* CCDirector delegate */
+	id<CCDirectorDelegate>	delegate_;
 
 	/* window size in points */
 	CGSize	winSizeInPoints_;
-	
+
 	/* window size in pixels */
 	CGSize	winSizeInPixels_;
 
 	/* the cocos2d running thread */
 	NSThread	*runningThread_;
-	
-	// profiler
-#if CC_ENABLE_PROFILERS
-	ccTime accumDtForProfiler_;
-#endif
+
+	/* scheduler associated with this director */
+	CCScheduler *scheduler_;
+
+	/* action manager associated with this director */
+	CCActionManager *actionManager_;
 }
 
 /** returns the cocos2d thread.
@@ -154,20 +158,18 @@ and when to execute the Scenes.
 @property (nonatomic,readonly) CCScene* runningScene;
 /** The FPS value */
 @property (nonatomic,readwrite, assign) NSTimeInterval animationInterval;
-/** Whether or not to display the FPS on the bottom-left corner */
-@property (nonatomic,readwrite, assign) BOOL displayFPS;
-/** The OpenGLView, where everything is rendered */
-@property (nonatomic,readwrite,retain) CC_GLVIEW *openGLView;
+/** Whether or not to display director statistics */
+@property (nonatomic, readwrite, assign) BOOL displayStats;
 /** whether or not the next delta time will be zero */
 @property (nonatomic,readwrite,assign) BOOL nextDeltaTimeZero;
 /** Whether or not the Director is paused */
 @property (nonatomic,readonly) BOOL isPaused;
-/** Sets an OpenGL projection
- @since v0.8.2
- */
+/** Sets an OpenGL projection */
 @property (nonatomic,readwrite) ccDirectorProjection projection;
 /** How many frames were called since the director started */
 @property (nonatomic,readonly) NSUInteger	totalFrames;
+/** seconds per frame */
+@property (nonatomic, readonly) ccTime secondsPerFrame;
 
 /** Whether or not the replaced scene will receive the cleanup message.
  If the new scene is pushed, then the old scene won't receive the "cleanup" message.
@@ -183,32 +185,42 @@ and when to execute the Scenes.
  */
 @property (nonatomic, readwrite, retain) id	notificationNode;
 
-/** This object will be called when the OpenGL projection is udpated and only when the kCCDirectorProjectionCustom projection is used.
+/** CCDirector delegate. It shall implemente the CCDirectorDelegate protocol
  @since v0.99.5
  */
-@property (nonatomic, readwrite, retain) id<CCProjectionProtocol> projectionDelegate;
+@property (nonatomic, readwrite, retain) id<CCDirectorDelegate> delegate;
+
+/** CCScheduler associated with this director
+ @since v2.0
+ */
+@property (nonatomic,readwrite,retain) CCScheduler *scheduler;
+
+/** CCActionManager associated with this director
+ @since v2.0
+ */
+@property (nonatomic,readwrite,retain) CCActionManager *actionManager;
 
 /** returns a shared instance of the director */
-+(CCDirector *)sharedDirector;
++(CCDirector*)sharedDirector;
 
 
+#pragma mark Director - Stats
 
-// Window size
-
-/** returns the size of the OpenGL view in points.
- It takes into account any possible rotation (device orientation) of the window
+/** Whether or not to display the FPS on the bottom-left corner
+ @deprecated Use setDisplayStats:YES instead
  */
+-(void) setDisplayFPS:(BOOL)display DEPRECATED_ATTRIBUTE;
+
+
+#pragma mark Director - Win Size
+/** returns the size of the OpenGL view in points */
 - (CGSize) winSize;
 
 /** returns the size of the OpenGL view in pixels.
- It takes into account any possible rotation (device orientation) of the window.
  On Mac winSize and winSizeInPixels return the same value.
  */
 - (CGSize) winSizeInPixels;
-/** returns the display size of the OpenGL view in pixels.
- It doesn't take into account any possible rotation of the window.
- */
--(CGSize) displaySizeInPixels;
+
 /** changes the projection size */
 -(void) reshapeProjection:(CGSize)newWindowSize;
 
@@ -224,17 +236,19 @@ and when to execute the Scenes.
 /// XXX: missing description
 -(float) getZEye;
 
-// Scene Management
+#pragma mark Director - Scene Management
 
-/**Enters the Director's main loop with the given Scene. 
+/**Enters the Director's main loop with the given Scene.
  * Call it to run only your FIRST scene.
  * Don't call it if there is already a running scene.
+ *
+ * It will call pushScene: and then it will call startAnimation
  */
 - (void) runWithScene:(CCScene*) scene;
 
 /**Suspends the execution of the running scene, pushing it on the stack of suspended scenes.
  * The new scene will be executed.
- * Try to avoid big stacks of pushed scenes to reduce memory allocation. 
+ * Try to avoid big stacks of pushed scenes to reduce memory allocation.
  * ONLY call it if there is a running scene.
  */
 - (void) pushScene:(CCScene*) scene;
@@ -284,26 +298,38 @@ and when to execute the Scenes.
  */
 -(void) drawScene;
 
-// Memory Helper
+
+// XXX: Hack. Should be placed on CCDirectorMac.h. Refactoring needed
+#if defined(__CC_PLATFORM_MAC)
+/** sets the openGL view */
+-(void) setView:(CCGLView*)view;
+
+/** returns the OpenGL view */
+-(CCGLView*) view;
+#endif
+
+#pragma mark Director - Memory Helper
 
 /** Removes all the cocos2d data that was cached automatically.
  It will purge the CCTextureCache, CCLabelBMFont cache.
  IMPORTANT: The CCSpriteFrameCache won't be purged. If you want to purge it, you have to purge it manually.
  @since v0.99.3
  */
--(void) purgeCachedData; 
+-(void) purgeCachedData;
 
 // OpenGL Helper
 
 /** sets the OpenGL default values */
 -(void) setGLDefaultValues;
-
 /** enables/disables OpenGL alpha blending */
 - (void) setAlphaBlending: (BOOL) on;
 /** enables/disables OpenGL depth test */
 - (void) setDepthTest: (BOOL) on;
 
-// Profiler
--(void) showProfilers;
-
+// helper
+/** creates the Stats labels */
+-(void) createStatsLabel;
 @end
+
+// optimization. Should only be used to read it. Never to write it.
+extern NSUInteger __ccNumberOfDraws;

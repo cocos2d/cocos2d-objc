@@ -9,10 +9,10 @@
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -26,8 +26,8 @@
 
 // Only compile this code on iOS. These files should NOT be included on your Mac project.
 // But in case they are included, it won't be compiled.
-#import <Availability.h>
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#import "../../ccMacros.h"
+#ifdef __CC_PLATFORM_IOS
 
 /*
  * This file contains the delegates of the touches
@@ -54,13 +54,13 @@
 - (id)initWithDelegate:(id) aDelegate priority:(int)aPriority
 {
 	NSAssert(aDelegate != nil, @"Touch delegate may not be nil");
-	
+
 	if ((self = [super init])) {
 		self.delegate = aDelegate;
 		priority = aPriority;
 		enabledSelectors_ = 0;
 	}
-	
+
 	return self;
 }
 
@@ -108,10 +108,10 @@
 
 - (id)initWithDelegate:(id)aDelegate priority:(int)aPriority swallowsTouches:(BOOL)swallow
 {
-	if ((self = [super initWithDelegate:aDelegate priority:aPriority])) {	
+	if ((self = [super initWithDelegate:aDelegate priority:aPriority])) {
 		claimedTouches = [[NSMutableSet alloc] initWithCapacity:2];
 		swallowsTouches = swallow;
-		
+
 		if( [aDelegate respondsToSelector:@selector(ccTouchBegan:withEvent:)] )
 			enabledSelectors_ |= kCCTouchSelectorBeganBit;
 		if( [aDelegate respondsToSelector:@selector(ccTouchMoved:withEvent:)] )
@@ -121,7 +121,7 @@
 		if( [aDelegate respondsToSelector:@selector(ccTouchCancelled:withEvent:)] )
 			enabledSelectors_ |= kCCTouchSelectorCancelledBit;
 	}
-	
+
 	return self;
 }
 
@@ -132,4 +132,4 @@
 @end
 
 
-#endif // __IPHONE_OS_VERSION_MAX_ALLOWED
+#endif // __CC_PLATFORM_IOS

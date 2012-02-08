@@ -11,7 +11,7 @@
 #import "LabelTest.h"
 static int sceneIdx=-1;
 static NSString *transitions[] = {
-	
+
 	@"LabelAtlasTest",
 	@"LabelAtlasColorTest",
 	@"Atlas3",
@@ -21,14 +21,16 @@ static NSString *transitions[] = {
 	@"AtlasBitmapColor",
 	@"AtlasFastBitmap",
 	@"BitmapFontMultiLine",
+	@"BitmapFontMultiLineAlignment",
 	@"LabelsEmpty",
 	@"LabelBMFontHD",
 	@"LabelAtlasHD",
 	@"LabelGlyphDesigner",
 	@"LabelTTFTest",
 	@"LabelTTFMultiline",
+	@"LabelTTFA8Test",
 	@"LabelTTFLineBreak",
-	
+
 	// Not a label test. Should be moved to Atlas test
 	@"Atlas1",
 };
@@ -58,7 +60,7 @@ Class restartAction(void);
 
 Class nextAction()
 {
-	
+
 	sceneIdx++;
 	sceneIdx = sceneIdx % ( sizeof(transitions) / sizeof(transitions[0]) );
 	NSString *r = transitions[sceneIdx];
@@ -71,8 +73,8 @@ Class backAction()
 	sceneIdx--;
 	int total = ( sizeof(transitions) / sizeof(transitions[0]) );
 	if( sceneIdx < 0 )
-		sceneIdx += total;	
-	
+		sceneIdx += total;
+
 	NSString *r = transitions[sceneIdx];
 	Class c = NSClassFromString(r);
 	return c;
@@ -92,29 +94,29 @@ Class restartAction()
 	if( (self = [super init])) {
 
 		CGSize s = [[CCDirector sharedDirector] winSize];
-			
+
 		CCLabelTTF* label = [CCLabelTTF labelWithString:[self title] fontName:@"Arial" fontSize:32];
 		[self addChild: label z:1];
 		[label setPosition: ccp(s.width/2, s.height-50)];
-		
+
 		NSString *subtitle = [self subtitle];
 		if( subtitle ) {
 			CCLabelTTF* l = [CCLabelTTF labelWithString:subtitle fontName:@"Thonburi" fontSize:16];
 			[self addChild:l z:1];
 			[l setPosition:ccp(s.width/2, s.height-80)];
-		}	
-		
-		CCMenuItemImage *item1 = [CCMenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
-		CCMenuItemImage *item2 = [CCMenuItemImage itemFromNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
-		CCMenuItemImage *item3 = [CCMenuItemImage itemFromNormalImage:@"f1.png" selectedImage:@"f2.png" target:self selector:@selector(nextCallback:)];
-		
+		}
+
+		CCMenuItemImage *item1 = [CCMenuItemImage itemWithNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
+		CCMenuItemImage *item2 = [CCMenuItemImage itemWithNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
+		CCMenuItemImage *item3 = [CCMenuItemImage itemWithNormalImage:@"f1.png" selectedImage:@"f2.png" target:self selector:@selector(nextCallback:)];
+
 		CCMenu *menu = [CCMenu menuWithItems:item1, item2, item3, nil];
-		
+
 		menu.position = CGPointZero;
 		item1.position = ccp( s.width/2 - 100,30);
 		item2.position = ccp( s.width/2, 30);
 		item3.position = ccp( s.width/2 + 100,30);
-		[self addChild: menu z:1];	
+		[self addChild: menu z:1];
 	}
 
 	return self;
@@ -165,9 +167,9 @@ Class restartAction()
 -(id) init
 {
 	if( (self=[super init] ) ) {
-	
+
 		textureAtlas = [[CCTextureAtlas textureAtlasWithFile: @"atlastest.png" capacity:3] retain];
-		
+
 		CGSize s = [[CCDirector sharedDirector] winSize];
 
 		//
@@ -179,7 +181,7 @@ Class restartAction()
 				{{s.width,0,0},{0,0,255,0},{1.0f,1.0f},},			// bottom right
 				{{0,s.height,0},{0,0,255,0},{0.0f,0.0f},},			// top left
 				{{s.width,s.height,0},{0,0,255,255},{1.0f,0.0f},},	// top right
-			},		
+			},
 			{
 				{{40,40,0},{255,255,255,255},{0.0f,0.2f},},			// bottom left
 				{{120,80,0},{255,0,0,255},{0.5f,0.2f},},			// bottom right
@@ -190,18 +192,16 @@ Class restartAction()
 			{
 				{{s.width/2,40,0},{255,0,0,255},{0.0f,1.0f},},		// bottom left
 				{{s.width,40,0},{0,255,0,255},{1.0f,1.0f},},		// bottom right
-				{{s.width/2-50,200,0},{0,0,255,255},{0.0f,0.0f},},		// top left
-				{{s.width,100,0},{255,255,0,255},{1.0f,0.0f},},		// top right
+				{{s.width/2-50,200,0},{0,0,255,255},{0.0f,0.0f},},	// top left
+				{{s.width,100,0},{255,0,255,255},{1.0f,0.0f},},		// top right
 			},
-			
+
 		};
-		
-		
+
+
 		for( int i=0;i<3;i++) {
 			[textureAtlas updateQuad:&quads[i] atIndex:i];
 		}
-			
-	//	[textureAtlas removeQuadAtIndex:0];
 	}
 
 	return self;
@@ -223,9 +223,9 @@ Class restartAction()
 	[textureAtlas drawQuads];
 
 //	[textureAtlas drawNumberOfQuads:3];
-		
+
 }
-					
+
 -(NSString *) title
 {
 	return @"CCTextureAtlas";
@@ -244,7 +244,7 @@ Class restartAction()
 -(id) init
 {
 	if( (self=[super init] )) {
-	
+
 		CCLabelAtlas *label1 = [CCLabelAtlas labelWithString:@"123 Test" charMapFile:@"tuffy_bold_italic-charmap.png" itemWidth:48 itemHeight:64 startCharMap:' '];
 		[self addChild:label1 z:0 tag:kTagSprite1];
 		label1.position = ccp(10,100);
@@ -293,12 +293,12 @@ Class restartAction()
 -(id) init
 {
 	if( (self=[super init] )) {
-		
+
 		CCLabelAtlas *label1 = [CCLabelAtlas labelWithString:@"123 Test" charMapFile:@"tuffy_bold_italic-charmap.png" itemWidth:48 itemHeight:64 startCharMap:' '];
 		[self addChild:label1 z:0 tag:kTagSprite1];
 		label1.position = ccp(10,100);
 		label1.opacity = 200;
-		
+
 		CCLabelAtlas *label2 = [CCLabelAtlas labelWithString:@"0123456789" charMapFile:@"tuffy_bold_italic-charmap.png" itemWidth:48 itemHeight:64 startCharMap:' '];
 		[self addChild:label2 z:0 tag:kTagSprite2];
 		label2.position = ccp(10,200);
@@ -308,9 +308,9 @@ Class restartAction()
 		id fade_in = [fade reverse];
 		id seq = [CCSequence actions:fade, fade_in, nil];
 		id repeat = [CCRepeatForever actionWithAction:seq];
-		[label2 runAction:repeat];	
-		
-		
+		[label2 runAction:repeat];
+
+
 		[self schedule:@selector(step:)];
 	}
 	return self;
@@ -322,9 +322,9 @@ Class restartAction()
 	NSString *string = [NSString stringWithFormat:@"%2.2f Test", time];
 	CCLabelAtlas *label1 = (CCLabelAtlas*) [self getChildByTag:kTagSprite1];
 	[label1 setString:string];
-	
+
 	CCLabelAtlas *label2 = (CCLabelAtlas*) [self getChildByTag:kTagSprite2];
-	[label2 setString: [NSString stringWithFormat:@"%d", (int)time]];	
+	[label2 setString: [NSString stringWithFormat:@"%d", (int)time]];
 }
 
 -(void) dealloc
@@ -358,12 +358,12 @@ Class restartAction()
 -(id) init
 {
 	if( (self=[super init]) ) {
-		
+
 		CCLayerColor *col = [CCLayerColor layerWithColor:ccc4(128,128,128,255)];
 		[self addChild:col z:-10];
-		
+
 		CCLabelBMFont *label1 = [CCLabelBMFont labelWithString:@"Test" fntFile:@"bitmapFontTest2.fnt"];
-		
+
 		// testing anchors
 		label1.anchorPoint = ccp(0,0);
 		[self addChild:label1 z:0 tag:kTagBitmapAtlas1];
@@ -372,7 +372,7 @@ Class restartAction()
 		id seq = [CCSequence actions:fade, fade_in, nil];
 		id repeat = [CCRepeatForever actionWithAction:seq];
 		[label1 runAction:repeat];
-		
+
 
 		// VERY IMPORTANT
 		// color and opacity work OK because bitmapFontAltas2 loads a BMP image (not a PNG image)
@@ -384,21 +384,21 @@ Class restartAction()
 		label2.color = ccRED;
 		[self addChild:label2 z:0 tag:kTagBitmapAtlas2];
 		[label2 runAction: [[repeat copy] autorelease]];
-		
+
 		CCLabelBMFont *label3 = [CCLabelBMFont labelWithString:@"Test" fntFile:@"bitmapFontTest2.fnt"];
 		// testing anchors
 		label3.anchorPoint = ccp(1,1);
 		[self addChild:label3 z:0 tag:kTagBitmapAtlas3];
-		
-		
-		CGSize s = [[CCDirector sharedDirector] winSize];	
+
+
+		CGSize s = [[CCDirector sharedDirector] winSize];
 		label1.position = ccp( 0,0);
 		label2.position = ccp( s.width/2, s.height/2);
 		label3.position = ccp( s.width, s.height);
 
 		[self schedule:@selector(step:)];
 	}
-	
+
 	return self;
 }
 
@@ -406,13 +406,13 @@ Class restartAction()
 {
 	time += dt;
 	NSString *string = [NSString stringWithFormat:@"%2.2f Test j", time];
-	
+
 	CCLabelBMFont *label1 = (CCLabelBMFont*) [self getChildByTag:kTagBitmapAtlas1];
 	[label1 setString:string];
-	
+
 	CCLabelBMFont *label2 = (CCLabelBMFont*) [self getChildByTag:kTagBitmapAtlas2];
 	[label2 setString:string];
-	
+
 	CCLabelBMFont *label3 = (CCLabelBMFont*) [self getChildByTag:kTagBitmapAtlas3];
 	[label3 setString:string];
 }
@@ -443,55 +443,55 @@ Class restartAction()
 -(id) init
 {
 	if( (self=[super init]) ) {
-		
+
 		// Upper Label
 		CCLabelBMFont *label = [CCLabelBMFont labelWithString:@"BMFont label" fntFile:@"bitmapFontTest.fnt"];
 		[self addChild:label];
-		
+
 		CGSize s = [[CCDirector sharedDirector] winSize];
-		
+
 		label.position = ccp(s.width/2, s.height/2);
 		label.anchorPoint = ccp(0.5f, 0.5f);
-		
-		
+
+
 		CCSprite *BChar = (CCSprite*) [label getChildByTag:0];
 		CCSprite *FChar = (CCSprite*) [label getChildByTag:7];
 		CCSprite *AChar = (CCSprite*) [label getChildByTag:12];
-		
-		
+
+
 		id rotate = [CCRotateBy actionWithDuration:2 angle:360];
 		id rot_4ever = [CCRepeatForever actionWithAction:rotate];
-		
+
 		id scale = [CCScaleBy actionWithDuration:2 scale:1.5f];
 		id scale_back = [scale reverse];
 		id scale_seq = [CCSequence actions:scale, scale_back,nil];
 		id scale_4ever = [CCRepeatForever actionWithAction:scale_seq];
-		
+
 		id jump = [CCJumpBy actionWithDuration:0.5f position:CGPointZero height:60 jumps:1];
 		id jump_4ever = [CCRepeatForever actionWithAction:jump];
-		
+
 		id fade_out = [CCFadeOut actionWithDuration:1];
 		id fade_in = [CCFadeIn actionWithDuration:1];
 		id seq = [CCSequence actions:fade_out, fade_in, nil];
 		id fade_4ever = [CCRepeatForever actionWithAction:seq];
-		
+
 		[BChar runAction:rot_4ever];
 		[BChar runAction:scale_4ever];
 		[FChar runAction:jump_4ever];
 		[AChar runAction:fade_4ever];
-		
-		
+
+
 		// Bottom Label
 		CCLabelBMFont *label2 = [CCLabelBMFont labelWithString:@"00.0" fntFile:@"bitmapFontTest.fnt"];
 		[self addChild:label2 z:0 tag:kTagBitmapAtlas2];
 		label2.position = ccp(s.width/2.0f, 80);
-		
+
 		CCSprite *lastChar = (CCSprite*) [label2 getChildByTag:3];
 		[lastChar runAction: [[rot_4ever copy] autorelease]];
-		
+
 		[self schedule:@selector(step:) interval:0.1f];
 	}
-	
+
 	return self;
 }
 
@@ -507,9 +507,9 @@ Class restartAction()
 {
 	time += dt;
 	NSString *string = [NSString stringWithFormat:@"%04.1f", time];
-	
+
 	CCLabelBMFont *label1 = (CCLabelBMFont*) [self getChildByTag:kTagBitmapAtlas2];
-	[label1 setString:string];	
+	[label1 setString:string];
 }
 
 -(NSString*) title
@@ -538,16 +538,16 @@ Class restartAction()
 -(id) init
 {
 	if( (self=[super init]) ) {
-		
+
 		CCLabelBMFont *label = [CCLabelBMFont labelWithString:@"abcdefg" fntFile:@"bitmapFontTest4.fnt"];
 		[self addChild:label];
-		
+
 		CGSize s = [[CCDirector sharedDirector] winSize];
-		
+
 		label.position = ccp(s.width/2, s.height/2);
 		label.anchorPoint = ccp(0.5f, 0.5f);
 	}
-	
+
 	return self;
 }
 
@@ -586,7 +586,7 @@ Class restartAction()
 		[self addChild:label];
 		label.position = ccp(s.width/2, s.height/2+50);
 		label.anchorPoint = ccp(0.5f, 0.5f);
-		
+
 		label = [CCLabelBMFont labelWithString:@"fafefifofu" fntFile:@"bitmapFontTest5.fnt"];
 		[self addChild:label];
 		label.position = ccp(s.width/2, s.height/2);
@@ -596,9 +596,9 @@ Class restartAction()
 		[self addChild:label];
 		label.position = ccp(s.width/2, s.height/2-50);
 		label.anchorPoint = ccp(0.5f, 0.5f);
-		
+
 	}
-	
+
 	return self;
 }
 
@@ -629,9 +629,9 @@ Class restartAction()
 -(id) init
 {
 	if( (self=[super init]) ) {
-		
+
 		CGSize s = [[CCDirector sharedDirector] winSize];
-		
+
 		CCLabelBMFont *label = nil;
 		label = [CCLabelBMFont labelWithString:@"Blue" fntFile:@"bitmapFontTest5.fnt"];
 		label.color = ccBLUE;
@@ -651,9 +651,9 @@ Class restartAction()
 		label.anchorPoint = ccp(0.5f, 0.5f);
 		label.color = ccGREEN;
 		[label setString: @"Green"];
-		
+
 	}
-	
+
 	return self;
 }
 
@@ -684,12 +684,12 @@ Class restartAction()
 -(id) init
 {
 	if( (self=[super init]) ) {
-		
+
 		// Upper Label
 		for( int i=0 ; i < 100;i ++ ) {
 			CCLabelBMFont *label = [CCLabelBMFont labelWithString:[NSString stringWithFormat:@"-%d-",i] fntFile:@"bitmapFontTest.fnt"];
 			[self addChild:label];
-			
+
 			CGSize s = [[CCDirector sharedDirector] winSize];
 
 			CGPoint p = ccp( CCRANDOM_0_1() * s.width, CCRANDOM_0_1() * s.height);
@@ -697,7 +697,7 @@ Class restartAction()
 			label.anchorPoint = ccp(0.5f, 0.5f);
 		}
 	}
-	
+
 	return self;
 }
 
@@ -728,18 +728,18 @@ Class restartAction()
 -(id) init
 {
 	if( (self=[super init]) ) {
-		
+
 		CGSize s;
 
 		// Left
 		CCLabelBMFont *label1 = [CCLabelBMFont labelWithString:@"Multi line\nLeft" fntFile:@"bitmapFontTest3.fnt"];
 		label1.anchorPoint = ccp(0,0);
 		[self addChild:label1 z:0 tag:kTagBitmapAtlas1];
-		
+
 		s = [label1 contentSize];
 		NSLog(@"content size: %.2fx%.2f", s.width, s.height);
-		
-		
+
+
 		// Center
 		CCLabelBMFont *label2 = [CCLabelBMFont labelWithString:@"Multi line\nCenter" fntFile:@"bitmapFontTest3.fnt"];
 		label2.anchorPoint = ccp(0.5f, 0.5f);
@@ -748,7 +748,7 @@ Class restartAction()
 		s = [label2 contentSize];
 		NSLog(@"content size: %.2fx%.2f", s.width, s.height);
 
-		
+
 		// right
 		CCLabelBMFont *label3 = [CCLabelBMFont labelWithString:@"Multi line\nRight\nThree lines Three" fntFile:@"bitmapFontTest3.fnt"];
 		label3.anchorPoint = ccp(1,1);
@@ -757,13 +757,13 @@ Class restartAction()
 		s = [label3 contentSize];
 		NSLog(@"content size: %.2fx%.2f", s.width, s.height);
 
-		
-		s = [[CCDirector sharedDirector] winSize];	
+
+		s = [[CCDirector sharedDirector] winSize];
 		label1.position = ccp( 0,0);
 		label2.position = ccp( s.width/2, s.height/2);
 		label3.position = ccp( s.width, s.height);
 	}
-	
+
 	return self;
 }
 
@@ -779,6 +779,274 @@ Class restartAction()
 
 @end
 
+#pragma mark -
+#pragma mark BitmapFontMultiLineAlignment
+
+/*
+ * Use any of these editors to generate BMFonts:
+ *   http://glyphdesigner.71squared.com/ (Commercial, Mac OS X)
+ *   http://www.n4te.com/hiero/hiero.jnlp (Free, Java)
+ *   http://slick.cokeandcode.com/demos/hiero.jnlp (Free, Java)
+ *   http://www.angelcode.com/products/bmfont/ (Free, Windows only)
+ */
+
+#define LongSentencesExample @"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+#define LineBreaksExample @"Lorem ipsum dolor\nsit amet\nconsectetur adipisicing elit\nblah\nblah"
+#define MixedExample @"ABC\nLorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt\nDEF"
+
+#define ArrowsMax 0.95
+#define ArrowsMin 0.7
+
+#define LeftAlign 0
+#define CenterAlign 1
+#define RightAlign 2
+
+#define LongSentences 0
+#define LineBreaks 1
+#define Mixed 2
+
+static float alignmentItemPadding = 50;
+static float menuItemPaddingCenter = 50;
+
+
+@implementation BitmapFontMultiLineAlignment
+
+@synthesize label = label_;
+@synthesize arrowsBar = arrowsBar_;
+@synthesize arrows = arrows_;
+
+// on "init" you need to initialize your instance
+-(id) init
+{
+	// always call "super" init
+	// Apple recommends to re-assign "self" with the "super" return value
+	if( (self=[super init])) {
+
+#ifdef __CC_PLATFORM_IOS
+        self.isTouchEnabled = YES;
+#elif defined(__CC_PLATFORM_MAC)
+		self.isMouseEnabled = YES;
+#endif
+
+		// ask director the the window size
+		CGSize size = [[CCDirector sharedDirector] winSize];
+
+		// create and initialize a Label
+		self.label = [CCLabelBMFont labelWithString:LongSentencesExample fntFile:@"markerFelt.fnt" width:size.width/1.5 alignment:CCTextAlignmentCenter];
+        //self.label.debug = YES;
+
+        self.arrowsBar = [CCSprite spriteWithFile:@"arrowsBar.png"];
+        self.arrows = [CCSprite spriteWithFile:@"arrows.png"];
+
+        [CCMenuItemFont setFontSize:20];
+        CCMenuItemFont *longSentences = [CCMenuItemFont itemWithString:@"Long Flowing Sentences" target:self selector:@selector(stringChanged:)];
+        CCMenuItemFont *lineBreaks = [CCMenuItemFont itemWithString:@"Short Sentences With Intentional Line Breaks" target:self selector:@selector(stringChanged:)];
+        CCMenuItemFont *mixed = [CCMenuItemFont itemWithString:@"Long Sentences Mixed With Intentional Line Breaks" target:self selector:@selector(stringChanged:)];
+        CCMenu *stringMenu = [CCMenu menuWithItems:longSentences, lineBreaks, mixed, nil];
+        [stringMenu alignItemsVertically];
+
+        [longSentences setColor:ccRED];
+        lastSentenceItem_ = longSentences;
+        longSentences.tag = LongSentences;
+        lineBreaks.tag = LineBreaks;
+        mixed.tag = Mixed;
+
+        [CCMenuItemFont setFontSize:30];
+
+        CCMenuItemFont *left = [CCMenuItemFont itemWithString:@"Left" target:self selector:@selector(alignmentChanged:)];
+        CCMenuItemFont *center = [CCMenuItemFont itemWithString:@"Center" target:self selector:@selector(alignmentChanged:)];
+        CCMenuItemFont *right = [CCMenuItemFont itemWithString:@"Right" target:self selector:@selector(alignmentChanged:)];
+        CCMenu *alignmentMenu = [CCMenu menuWithItems:left, center, right, nil];
+        [alignmentMenu alignItemsHorizontallyWithPadding:alignmentItemPadding];
+
+        [center setColor:ccRED];
+        lastAlignmentItem_ = center;
+        left.tag = LeftAlign;
+        center.tag = CenterAlign;
+        right.tag = RightAlign;
+
+		// position the label on the center of the screen
+		self.label.position =  ccp( size.width/2 , size.height/2 );
+
+        self.arrowsBar.visible = NO;
+
+        float arrowsWidth = (ArrowsMax - ArrowsMin) * size.width;
+        self.arrowsBar.scaleX = arrowsWidth / self.arrowsBar.contentSize.width;
+        self.arrowsBar.position = ccp(((ArrowsMax + ArrowsMin) / 2) * size.width, self.label.position.y);
+
+        [self snapArrowsToEdge];
+
+        stringMenu.position = ccp(size.width/2, size.height - menuItemPaddingCenter);
+        alignmentMenu.position = ccp(size.width/2, menuItemPaddingCenter+15);
+
+		// add the label as a child to this Layer
+		[self addChild:self.label];
+        [self addChild:self.arrowsBar];
+        [self addChild:self.arrows];
+        [self addChild:stringMenu];
+        [self addChild:alignmentMenu];
+	}
+	return self;
+}
+
+// on "dealloc" you need to release all your retained objects
+- (void) dealloc
+{
+    self.label = nil;
+    self.arrows = nil;
+    self.arrowsBar = nil;
+
+	[super dealloc];
+}
+
+#pragma mark Action Methods
+
+- (void)stringChanged:(id)sender {
+    CCMenuItemFont *item = sender;
+    [item setColor:ccRED];
+    [lastSentenceItem_ setColor:ccWHITE];
+    lastSentenceItem_ = item;
+
+    switch (item.tag) {
+        case LongSentences:
+            [self.label setString:LongSentencesExample];
+            break;
+        case LineBreaks:
+            [self.label setString:LineBreaksExample];
+            break;
+        case Mixed:
+            [self.label setString:MixedExample];
+            break;
+
+        default:
+            break;
+    }
+
+    [self snapArrowsToEdge];
+}
+
+- (void)alignmentChanged:(id)sender {
+    CCMenuItemFont *item = sender;
+    [item setColor:ccRED];
+    [lastAlignmentItem_ setColor:ccWHITE];
+    lastAlignmentItem_ = item;
+
+    switch (item.tag) {
+        case LeftAlign:
+            [self.label setAlignment:CCTextAlignmentLeft];
+            break;
+        case CenterAlign:
+            [self.label setAlignment:CCTextAlignmentCenter];
+            break;
+        case RightAlign:
+            [self.label setAlignment:CCTextAlignmentRight];
+            break;
+
+        default:
+            break;
+    }
+
+    [self snapArrowsToEdge];
+}
+
+#pragma mark Touch Methods
+
+#ifdef __CC_PLATFORM_IOS
+- (void)ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    UITouch *touch = [touches anyObject];
+    CGPoint location = [touch locationInView:[touch view]];
+
+    if (CGRectContainsPoint([self.arrows boundingBox], location)) {
+        drag_ = YES;
+        self.arrowsBar.visible = YES;
+    }
+}
+
+- (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+    drag_ = NO;
+    [self snapArrowsToEdge];
+
+    self.arrowsBar.visible = NO;
+}
+
+- (void)ccTouchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
+    if (!drag_) return;
+
+    UITouch *touch = [touches anyObject];
+    CGPoint location = [touch locationInView:[touch view]];
+
+    CGSize winSize = [CCDirector sharedDirector].winSize;
+
+    self.arrows.position = ccp(MAX(MIN(location.x, ArrowsMax*winSize.width), ArrowsMin*winSize.width), self.arrows.position.y);
+
+    float labelWidth = abs(self.arrows.position.x - self.label.position.x) * 2;
+
+    [self.label setWidth:labelWidth];
+}
+
+#elif defined(__CC_PLATFORM_MAC)
+
+- (BOOL)ccMouseDown:(NSEvent*)event
+{
+	CGPoint location = [[CCDirector sharedDirector] convertEventToGL:event];
+
+    if (CGRectContainsPoint([self.arrows boundingBox], location)) {
+        drag_ = YES;
+        self.arrowsBar.visible = YES;
+
+		return YES;
+    }
+	return  NO;
+}
+
+- (BOOL)ccMouseUp:(NSEvent*)event
+{
+    drag_ = NO;
+    [self snapArrowsToEdge];
+
+    self.arrowsBar.visible = NO;
+
+	return NO;
+}
+
+- (BOOL)ccMouseDragged:(NSEvent*)event
+{
+    if ( drag_) {
+
+		CGPoint location = [[CCDirector sharedDirector] convertEventToGL:event];
+
+		CGSize winSize = [CCDirector sharedDirector].winSize;
+
+		self.arrows.position = ccp(MAX(MIN(location.x, ArrowsMax*winSize.width), ArrowsMin*winSize.width), self.arrows.position.y);
+
+		float labelWidth = abs(self.arrows.position.x - self.label.position.x) * 2;
+
+		[self.label setWidth:labelWidth];
+
+		return YES;
+	}
+
+	return NO;
+}
+
+#endif // __CC_PLATFORM_MAC
+
+- (void)snapArrowsToEdge {
+    self.arrows.position = ccp(self.label.position.x + self.label.contentSize.width/2, self.label.position.y);
+}
+
+-(NSString*) title
+{
+	return @"";
+}
+
+-(NSString *) subtitle
+{
+	return @"";
+}
+
+@end
+
 
 #pragma mark -
 #pragma mark LabelsEmpty
@@ -787,7 +1055,7 @@ Class restartAction()
 -(id) init
 {
 	if( (self=[super init]) ) {
-		
+
 		CGSize s = [[CCDirector sharedDirector] winSize];
 
 		// CCLabelBMFont
@@ -795,7 +1063,7 @@ Class restartAction()
 		[self addChild:label1 z:0 tag:kTagBitmapAtlas1];
 		[label1 setPosition: ccp(s.width/2, s.height-100)];
 
-		
+
 		// CCLabelTTF
 		CCLabelTTF* label2 = [CCLabelTTF labelWithString:@"" fontName:@"Arial" fontSize:24];
 		[self addChild:label2 z:0 tag:kTagBitmapAtlas2];
@@ -805,14 +1073,14 @@ Class restartAction()
 		CCLabelAtlas *label3 = [CCLabelAtlas labelWithString:@"" charMapFile:@"tuffy_bold_italic-charmap.png" itemWidth:48 itemHeight:64 startCharMap:' '];
 		[self addChild:label3 z:0 tag:kTagBitmapAtlas3];
 		label3.position = ccp(s.width/2, 0+100);
-		
-		
+
+
 		[self schedule:@selector(updateStrings:) interval:1];
-		
+
 		setEmpty = NO;
 
 	}
-	
+
 	return self;
 }
 
@@ -821,20 +1089,20 @@ Class restartAction()
 	id<CCLabelProtocol> label1 = (id<CCLabelProtocol>) [self getChildByTag:kTagBitmapAtlas1];
 	id<CCLabelProtocol> label2 = (id<CCLabelProtocol>) [self getChildByTag:kTagBitmapAtlas2];
 	id<CCLabelProtocol> label3 = (id<CCLabelProtocol>) [self getChildByTag:kTagBitmapAtlas3];
-	
+
 	if( ! setEmpty ) {
 		[label1 setString: @"not empty"];
 		[label2 setString: @"not empty"];
 		[label3 setString: @"hi"];
-		
+
 		setEmpty = YES;
 
 	} else {
-		
+
 		[label1 setString:@""];
 		[label2 setString:@""];
 		[label3 setString:@""];
-		
+
 		setEmpty = NO;
 	}
 
@@ -859,16 +1127,16 @@ Class restartAction()
 -(id) init
 {
 	if( (self=[super init]) ) {
-		
+
 		CGSize s = [[CCDirector sharedDirector] winSize];
-		
+
 		// CCLabelBMFont
 		CCLabelBMFont *label1 = [CCLabelBMFont labelWithString:@"TESTING RETINA DISPLAY" fntFile:@"konqa32.fnt"];
 		[self addChild:label1];
 		[label1 setPosition: ccp(s.width/2, s.height/2)];
-		
+
 	}
-	
+
 	return self;
 }
 
@@ -891,18 +1159,18 @@ Class restartAction()
 -(id) init
 {
 	if( (self=[super init]) ) {
-		
+
 		CGSize s = [[CCDirector sharedDirector] winSize];
-		
+
 		// CCLabelBMFont
 		CCLabelAtlas *label1 = [CCLabelAtlas labelWithString:@"TESTING RETINA DISPLAY" charMapFile:@"larabie-16.png" itemWidth:10 itemHeight:20 startCharMap:'A'];
 		label1.anchorPoint = ccp(0.5f, 0.5f);
-		
+
 		[self addChild:label1];
 		[label1 setPosition: ccp(s.width/2, s.height/2)];
-		
+
 	}
-	
+
 	return self;
 }
 
@@ -925,19 +1193,19 @@ Class restartAction()
 -(id) init
 {
 	if( (self=[super init]) ) {
-		
+
 		CGSize s = [[CCDirector sharedDirector] winSize];
-		
+
 		CCLayerColor *layer = [CCLayerColor layerWithColor:ccc4(128,128,128,255)];
 		[self addChild:layer z:-10];
-		
+
 		// CCLabelBMFont
 		CCLabelBMFont *label1 = [CCLabelBMFont labelWithString:@"Testing Glyph Designer" fntFile:@"futura-48.fnt"];
 		[self addChild:label1];
 		[label1 setPosition: ccp(s.width/2, s.height/2)];
-		
+
 	}
-	
+
 	return self;
 }
 
@@ -960,9 +1228,9 @@ Class restartAction()
 -(id) init
 {
 	if( (self=[super init]) ) {
-		
+
 		CGSize s = [[CCDirector sharedDirector] winSize];
-		
+
 		// CCLabelBMFont
 		CCLabelTTF *left = [CCLabelTTF labelWithString:@"alignment left" dimensions:CGSizeMake(s.width,50) alignment:CCTextAlignmentLeft fontName:@"Marker Felt" fontSize:32];
 		CCLabelTTF *center = [CCLabelTTF labelWithString:@"alignment center" dimensions:CGSizeMake(s.width,50) alignment:CCTextAlignmentCenter fontName:@"Marker Felt" fontSize:32];
@@ -971,12 +1239,12 @@ Class restartAction()
 		left.position = ccp(s.width/2,200);
 		center.position = ccp(s.width/2,150);
 		right.position = ccp(s.width/2,100);
-		
+
 		[self addChild:left];
 		[self addChild:right];
 		[self addChild:center];
 	}
-	
+
 	return self;
 }
 
@@ -999,20 +1267,18 @@ Class restartAction()
 -(id) init
 {
 	if( (self=[super init]) ) {
-		
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+
 		CGSize s = [[CCDirector sharedDirector] winSize];
-		
+
 		// CCLabelBMFont
 //		CCLabelTTF *center =  [[CCLabelTTF alloc] initWithString:@"Bla bla bla bla bla bla bla bla bla bla bla (bla)" dimensions:CGSizeMake(150,84) alignment:UITextAlignmentLeft fontName: @"MarkerFelt.ttc" fontSize: 14];
 
-		CCLabelTTF *center = [CCLabelTTF labelWithString:@"word wrap \"testing\" (bla0) bla1 'bla2' [bla3] (bla4) {bla5} {bla6} [bla7] (bla8) [bla9] 'bla0' \"bla1\"" dimensions:CGSizeMake(s.width/2,200) alignment:CCTextAlignmentCenter fontName:@"MarkerFelt.ttc" fontSize:32];
+		CCLabelTTF *center = [CCLabelTTF labelWithString:@"word wrap \"testing\" (bla0) bla1 'bla2' [bla3] (bla4) {bla5} {bla6} [bla7] (bla8) [bla9] 'bla0' \"bla1\"" dimensions:CGSizeMake(s.width/2,200) alignment:CCTextAlignmentCenter fontName:@"Paint Boy" fontSize:32];
 		center.position = ccp(s.width/2,150);
-		
+
 		[self addChild:center];
-#endif // __IPHONE_OS_VERSION_MAX_ALLOWED
 	}
-	
+
 	return self;
 }
 
@@ -1023,14 +1289,52 @@ Class restartAction()
 
 -(NSString *) subtitle
 {
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
-	return @"Word wrap using CCLabelTTF";
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
-	return @"Custom TTF are not supported in Mac OS X";
-#endif
+	return @"Word wrap using CCLabelTTF and a custom TTF font";
 }
 
 @end
+
+#pragma mark -
+#pragma mark LabelTTFA8Test
+
+@implementation LabelTTFA8Test
+-(id) init
+{
+	if( (self=[super init]) ) {
+
+		CGSize s = [[CCDirector sharedDirector] winSize];
+
+		CCLayerColor *layer = [CCLayerColor layerWithColor:ccc4(128,128,128,255)];
+		[self addChild:layer z:-10];
+
+		// CCLabelBMFont
+		CCLabelTTF *label1 = [CCLabelTTF labelWithString:@"Testing A8 Format" fontName:@"Marker Felt" fontSize:48];
+		[self addChild:label1];
+		[label1 setColor:ccRED];
+		[label1 setPosition: ccp(s.width/2, s.height/2)];
+
+		CCFadeOut *fadeOut = [CCFadeOut actionWithDuration:2];
+		CCFadeIn *fadeIn = [CCFadeIn actionWithDuration:2];
+		CCSequence *seq = [CCSequence actions:fadeOut, fadeIn, nil];
+		CCRepeatForever *forever = [CCRepeatForever actionWithAction:seq];
+		[label1 runAction:forever];
+	}
+
+	return self;
+}
+
+-(NSString*) title
+{
+	return @"Testing A8 Format";
+}
+
+-(NSString *) subtitle
+{
+	return @"RED label, fading In and Out in the center of the screen";
+}
+
+@end
+
 
 
 #pragma mark -
@@ -1050,15 +1354,15 @@ Class restartAction()
 												  fontName:@"Marker Felt"
 												  fontSize:16];
 		wordwrap.position = ccp(s.width/2,60);
-		
+
 		[self addChild:wordwrap];
-		
+
 		CCLabelTTF *label = [CCLabelTTF labelWithString: @"A really long line of text that is longer than the width of the label" dimensions:CGSizeMake(280, 60) alignment:CCTextAlignmentCenter fontName: @"Impact" fontSize: 14];
 		label.position = ccp(s.width/2,90);
 		[self addChild:label];
 
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
-		
+#ifdef __CC_PLATFORM_IOS
+
 		CCLabelTTF *charwrap = [CCLabelTTF labelWithString:@"Testing line character wrap mode mode mode mode"
 											  dimensions:CGSizeMake(s.width/4,40)
 											   alignment:CCTextAlignmentCenter
@@ -1066,7 +1370,7 @@ Class restartAction()
 												fontName:@"Marker Felt"
 												fontSize:16];
 		charwrap.position = ccp(s.width/2,140);
-		
+
 		[self addChild:charwrap];
 
 
@@ -1077,13 +1381,13 @@ Class restartAction()
 												  fontName:@"Marker Felt"
 												  fontSize:16];
 		clip.position = ccp(s.width/2,200);
-		
+
 		[self addChild:clip];
 
 
-#endif // __IPHONE_OS_VERSION_MAX_ALLOWED
+#endif // __CC_PLATFORM_IOS
 	}
-	
+
 	return self;
 }
 
@@ -1094,9 +1398,9 @@ Class restartAction()
 
 -(NSString *) subtitle
 {
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef __CC_PLATFORM_IOS
 	return @"Testing different line break modes";
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+#elif defined(__CC_PLATFORM_MAC)
 	return @"On Mac OS X only Word Wrap mode is supported";
 #endif
 }
@@ -1109,158 +1413,68 @@ Class restartAction()
 
 // CLASS IMPLEMENTATIONS
 
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef __CC_PLATFORM_IOS
 @implementation AppController
 
-- (void) applicationDidFinishLaunching:(UIApplication*)application
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-	// Init the window
-	window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+	[super application:application didFinishLaunchingWithOptions:launchOptions];
+
+	// 2D projection
+	[director_ setProjection:kCCDirectorProjection2D];
+//	[director setProjection:kCCDirectorProjection3D];
 	
-	// must be called before any othe call to the director
-	[CCDirector setDirectorType:kCCDirectorTypeDisplayLink];
-	//	[CCDirector setDirectorType:kCCDirectorTypeThreadMainLoop];
-	
-	// before creating any layer, set the landscape mode
-	CCDirector *director = [CCDirector sharedDirector];
-	
-	// landscape orientation
-	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
-	
-	// set FPS at 60
-	[director setAnimationInterval:1.0/60];
-	
+	[director_ setDisplayStats:YES];
+
+	// Enables High Res mode (Retina Display) on iPhone 4 and maintains low res on all other devices
+	if( ! [director_ enableRetinaDisplay:YES] )
+		CCLOG(@"Retina Display Not supported");
+
+	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
+	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
+	// You can change anytime.
+	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA8888];
+
 	// When in iPad / RetinaDisplay mode, CCFileUtils will append the "-ipad" / "-hd" to all loaded files
 	// If the -ipad  / -hdfile is not found, it will load the non-suffixed version
 	[CCFileUtils setiPadSuffix:@"-ipad"];			// Default on iPad is "" (empty string)
 	[CCFileUtils setRetinaDisplaySuffix:@"-hd"];	// Default on RetinaDisplay is "-hd"
-	
-	// Turn on display FPS
-	[director setDisplayFPS:YES];
-	
-	// Create an EAGLView with a RGB8 color buffer, and a depth buffer of 0 without multisampling
-	EAGLView *glView = [EAGLView viewWithFrame:[window bounds]
-								   pixelFormat:kEAGLColorFormatRGBA8
-								   depthFormat:0];
-	
-	// attach the openglView to the director
-	[director setOpenGLView:glView];
-	
-	// 2D projection
-	[director setProjection:kCCDirectorProjection2D];
-	
-	// Enables High Res mode (Retina Display) on iPhone 4 and maintains low res on all other devices
-	[director enableRetinaDisplay:YES];
-	
-	// make the OpenGLView a child of the main window
-	[window addSubview:glView];
-	
-	// make main window visible
-	[window makeKeyAndVisible];	
-	
-	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
-	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
-	// You can change anytime.
-	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA8888];	
-		
+
+	// Assume that PVR images have premultiplied alpha
+	[CCTexture2D PVRImagesHavePremultipliedAlpha:YES];
+
+	// create the main scene
 	CCScene *scene = [CCScene node];
 	[scene addChild: [nextAction() node]];
 
-	[director runWithScene: scene];
-}
 
-// getting a call, pause the game
--(void) applicationWillResignActive:(UIApplication *)application
+	// and run it!
+	[director_ pushScene: scene];
+
+	return YES;
+}
+-(BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-	[[CCDirector sharedDirector] pause];
-}
-
-// call got rejected
--(void) applicationDidBecomeActive:(UIApplication *)application
-{
-	[[CCDirector sharedDirector] resume];
-}
-
-// sent to background
--(void) applicationDidEnterBackground:(UIApplication*)application
-{
-	[[CCDirector sharedDirector] stopAnimation];
-}
-
-// application will be killed
-- (void)applicationWillTerminate:(UIApplication *)application
-{	
-	CC_DIRECTOR_END();
-}
-
-// sent to foreground
--(void) applicationWillEnterForeground:(UIApplication*)application
-{
-	[[CCDirector sharedDirector] startAnimation];
-}
-
-// purge memroy
-- (void)applicationDidReceiveMemoryWarning:(UIApplication *)application
-{
-	[[CCDirector sharedDirector] purgeCachedData];
-}
-
-// next delta time will be zero
--(void) applicationSignificantTimeChange:(UIApplication *)application
-{
-	[[CCDirector sharedDirector] setNextDeltaTimeZero:YES];
-}
-
-- (void) dealloc
-{
-	[window release];
-	[super dealloc];
+	return UIInterfaceOrientationIsLandscape(interfaceOrientation);
 }
 @end
 
 
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+#elif defined(__CC_PLATFORM_MAC)
 
 #pragma mark AppController - Mac
 
-@implementation cocos2dmacAppDelegate
-
-@synthesize window=window_, glView=glView_;
+@implementation AppController
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-	CCDirectorMac *director = (CCDirectorMac*) [CCDirector sharedDirector];
-	
-	[director setDisplayFPS:YES];
-	
-	[director setOpenGLView:glView_];
-	
-	//	[director setProjection:kCCDirectorProjection2D];
-	
-	// Enable "moving" mouse event. Default no.
-	[window_ setAcceptsMouseMovedEvents:NO];
-	
-	// EXPERIMENTAL stuff.
-	// 'Effects' don't work correctly when autoscale is turned on.
-	[director setResizeMode:kCCDirectorResize_AutoScale];	
-	
+	[super applicationDidFinishLaunching:aNotification];
+
 	CCScene *scene = [CCScene node];
 	[scene addChild: [nextAction() node]];
-	
-	[director runWithScene:scene];
-}
 
-- (BOOL) applicationShouldTerminateAfterLastWindowClosed: (NSApplication *) theApplication
-{
-	return YES;
+	[director_ runWithScene:scene];
 }
-
-- (IBAction)toggleFullScreen: (id)sender
-{
-	CCDirectorMac *director = (CCDirectorMac*) [CCDirector sharedDirector];
-	[director setFullScreen: ! [director isFullScreen] ];
-}
-
 @end
 #endif
 

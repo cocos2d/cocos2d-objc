@@ -1,10 +1,8 @@
 #import "cocos2d.h"
+#import "BaseAppController.h"
 
 //CLASS INTERFACE
-@interface AppController : NSObject <UIApplicationDelegate>
-{
-	UIWindow	*window;
-}
+@interface AppController : BaseAppController
 @end
 
 @interface ActionManagerTest: CCLayer

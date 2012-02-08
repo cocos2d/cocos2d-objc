@@ -9,10 +9,10 @@
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -24,21 +24,27 @@
  */
 
 
-#import <Availability.h>
-
 #import "ccMacros.h"
 #import "CCGrid.h"
 #import "CCTexture2D.h"
 #import "CCDirector.h"
 #import "CCGrabber.h"
+#import "CCGLProgram.h"
+#import "CCShaderCache.h"
+#import "ccGLState.h"
 
 #import "Platforms/CCGL.h"
 #import "Support/CGPointExtension.h"
 #import "Support/ccUtils.h"
+#import "Support/TransformUtils.h"
+#import "Support/OpenGL_Internal.h"
 
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#import "kazmath/kazmath.h"
+#import "kazmath/GL/matrix.h"
+
+#ifdef __CC_PLATFORM_IOS
 #import "Platforms/iOS/CCDirectorIOS.h"
-#endif // __IPHONE_OS_VERSION_MAX_ALLOWED
+#endif // __CC_PLATFORM_IOS
 
 #pragma mark -
 #pragma mark CCGridBase
@@ -50,6 +56,7 @@
 @synthesize grabber = grabber_;
 @synthesize gridSize = gridSize_;
 @synthesize step = step_;
+@synthesize shaderProgram = shaderProgram_;
 
 +(id) gridWithSize:(ccGridSize)gridSize texture:(CCTexture2D*)texture flippedTexture:(BOOL)flipped
 {
@@ -64,21 +71,23 @@
 -(id) initWithSize:(ccGridSize)gridSize texture:(CCTexture2D*)texture flippedTexture:(BOOL)flipped
 {
 	if( (self=[super init]) ) {
-		
+
 		active_ = NO;
 		reuseGrid_ = 0;
 		gridSize_ = gridSize;
 
 		self.texture = texture;
 		isTextureFlipped_ = flipped;
-		
-		CGSize texSize = [texture_ contentSizeInPixels];
+
+		CGSize texSize = [texture_ contentSize];
 		step_.x = texSize.width / gridSize_.x;
 		step_.y = texSize.height / gridSize_.y;
-		
+
 		grabber_ = [[CCGrabber alloc] init];
 		[grabber_ grab:texture_];
-		
+
+		self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTexture];
+
 		[self calculateVertexPoints];
 	}
 	return self;
@@ -88,26 +97,29 @@
 {
 	CCDirector *director = [CCDirector sharedDirector];
 	CGSize s = [director winSizeInPixels];
-	
+
+
 	unsigned long POTWide = ccNextPOT(s.width);
 	unsigned long POTHigh = ccNextPOT(s.height);
-	
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
-	EAGLView *glview = [[CCDirector sharedDirector] openGLView];
+
+#ifdef __CC_PLATFORM_IOS
+	CCGLView *glview = (CCGLView*)[[CCDirector sharedDirector] view];
 	NSString *pixelFormat = [glview pixelFormat];
 
 	CCTexture2DPixelFormat format = [pixelFormat isEqualToString: kEAGLColorFormatRGB565] ? kCCTexture2DPixelFormat_RGB565 : kCCTexture2DPixelFormat_RGBA8888;
-#else
+#elif defined(__CC_PLATFORM_MAC)
 	CCTexture2DPixelFormat format = kCCTexture2DPixelFormat_RGBA8888;
 #endif
-	
-	void *data = calloc((int)(POTWide * POTHigh * 4), 1);
+
+	int bpp = ( format == kCCTexture2DPixelFormat_RGB565 ? 2 : 4 );
+
+	void *data = calloc((size_t)(POTWide * POTHigh * bpp), 1);
 	if( ! data ) {
 		CCLOG(@"cocos2d: CCGrid: not enough memory");
 		[self release];
 		return nil;
 	}
-	
+
 	CCTexture2D *texture = [[CCTexture2D alloc] initWithData:data pixelFormat:format pixelsWide:POTWide pixelsHigh:POTHigh contentSize:s];
 	free( data );
 
@@ -116,11 +128,11 @@
 		[self release];
 		return nil;
 	}
-	
+
 	self = [self initWithSize:gSize texture:texture flippedTexture:NO];
-	
+
 	[texture release];
-	
+
 	return self;
 }
 - (NSString*) description
@@ -132,7 +144,7 @@
 {
 	CCLOGINFO(@"cocos2d: deallocing %@", self);
 
-	[self setActive: NO];
+//	[self setActive: NO];
 
 	[texture_ release];
 	[grabber_ release];
@@ -168,103 +180,67 @@
 	}
 }
 
-// This routine can be merged with Director
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
--(void)applyLandscape
-{
-	CCDirector *director = [CCDirector sharedDirector];
-	
-	CGSize winSize = [director displaySizeInPixels];
-	float w = winSize.width / 2;
-	float h = winSize.height / 2;
-
-	ccDeviceOrientation orientation  = [director deviceOrientation];
-
-	switch (orientation) {
-		case CCDeviceOrientationLandscapeLeft:
-			glTranslatef(w,h,0);
-			glRotatef(-90,0,0,1);
-			glTranslatef(-h,-w,0);
-			break;
-		case CCDeviceOrientationLandscapeRight:
-			glTranslatef(w,h,0);
-			glRotatef(90,0,0,1);
-			glTranslatef(-h,-w,0);
-			break;
-		case CCDeviceOrientationPortraitUpsideDown:
-			glTranslatef(w,h,0);
-			glRotatef(180,0,0,1);
-			glTranslatef(-w,-h,0);
-			break;
-		default:
-			break;
-	}
-}
-#endif
-
 -(void)set2DProjection
-{
-	CGSize	winSize = [[CCDirector sharedDirector] winSizeInPixels];
-	
-	glLoadIdentity();
-	glViewport(0, 0, winSize.width, winSize.height);
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	ccglOrtho(0, winSize.width, 0, winSize.height, -1024, 1024);
-	glMatrixMode(GL_MODELVIEW);
-}
-
-// This routine can be merged with Director
--(void)set3DProjection
-{
+{	
 	CCDirector *director = [CCDirector sharedDirector];
+
+	CGSize	size = [director winSizeInPixels];
 	
-	CGSize	winSize = [director displaySizeInPixels];
+	glViewport(0, 0, size.width * CC_CONTENT_SCALE_FACTOR(), size.height * CC_CONTENT_SCALE_FACTOR() );
+	kmGLMatrixMode(KM_GL_PROJECTION);
+	kmGLLoadIdentity();
 	
-	glViewport(0, 0, winSize.width, winSize.height);
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	gluPerspective(60, (GLfloat)winSize.width/winSize.height, 0.5f, 1500.0f);
+	kmMat4 orthoMatrix;
+	kmMat4OrthographicProjection(&orthoMatrix, 0, size.width * CC_CONTENT_SCALE_FACTOR(), 0, size.height * CC_CONTENT_SCALE_FACTOR(), -1, 1);
+	kmGLMultMatrix( &orthoMatrix );
 	
-	glMatrixMode(GL_MODELVIEW);	
-	glLoadIdentity();
-	gluLookAt( winSize.width/2, winSize.height/2, [director getZEye],
-			  winSize.width/2, winSize.height/2, 0,
-			  0.0f, 1.0f, 0.0f
-			  );
+	kmGLMatrixMode(KM_GL_MODELVIEW);
+	kmGLLoadIdentity();
+
+	
+	ccSetProjectionMatrixDirty();
 }
 
 -(void)beforeDraw
 {
+	// save projection
+	CCDirector *director = [CCDirector sharedDirector];
+	directorProjection_ = [director projection];
+	
+	// 2d projection
+//	[director setProjection:kCCDirectorProjection2D];
 	[self set2DProjection];
+
+	
 	[grabber_ beforeRender:texture_];
 }
+
 
 -(void)afterDraw:(CCNode *)target
 {
 	[grabber_ afterRender:texture_];
-	
-	[self set3DProjection];
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
-	[self applyLandscape];
-#endif
+
+	// restore projection
+	CCDirector *director = [CCDirector sharedDirector];
+	[director setProjection: directorProjection_];
 
 	if( target.camera.dirty ) {
 
-		CGPoint offset = [target anchorPointInPixels];
+		CGPoint offset = [target anchorPointInPoints];
 
 		//
 		// XXX: Camera should be applied in the AnchorPoint
 		//
-		ccglTranslate(offset.x, offset.y, 0);
+		kmGLTranslatef(offset.x, offset.y, 0);
 		[target.camera locate];
-		ccglTranslate(-offset.x, -offset.y, 0);
+		kmGLTranslatef(-offset.x, -offset.y, 0);
 	}
-		
-	glBindTexture(GL_TEXTURE_2D, texture_.name);
+
+	ccGLBindTexture2D( texture_.name );
 
 	[self blit];
 }
+
 
 -(void)blit
 {
@@ -301,18 +277,24 @@
 -(void)blit
 {
 	NSInteger n = gridSize_.x * gridSize_.y;
-	
-	// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
-	// Needed states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_TEXTURE_COORD_ARRAY
-	// Unneeded states: GL_COLOR_ARRAY
-	glDisableClientState(GL_COLOR_ARRAY);	
-	
-	glVertexPointer(3, GL_FLOAT, 0, vertices);
-	glTexCoordPointer(2, GL_FLOAT, 0, texCoordinates);
+
+	ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position | kCCVertexAttribFlag_TexCoords );
+	ccGLUseProgram( shaderProgram_->program_ );
+	ccGLUniformModelViewProjectionMatrix( shaderProgram_ );
+
+	//
+	// Attributes
+	//
+
+	// position
+	glVertexAttribPointer(kCCVertexAttrib_Position, 3, GL_FLOAT, GL_FALSE, 0, vertices);
+
+	// texCoods
+	glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, 0, texCoordinates);
+
 	glDrawElements(GL_TRIANGLES, (GLsizei) n*6, GL_UNSIGNED_SHORT, indices);
 	
-	// restore GL default state
-	glEnableClientState(GL_COLOR_ARRAY);
+	CC_INCREMENT_GL_DRAWS(1);
 }
 
 -(void)calculateVertexPoints
@@ -320,55 +302,62 @@
 	float width = (float)texture_.pixelsWide;
 	float height = (float)texture_.pixelsHigh;
 	float imageH = texture_.contentSizeInPixels.height;
-	
+
 	int x, y, i;
+
+	if (vertices) free(vertices);
+	if (originalVertices) free(originalVertices);
+	if (texCoordinates) free(texCoordinates);
+	if (indices) free(indices);
 	
-	vertices = malloc((gridSize_.x+1)*(gridSize_.y+1)*sizeof(ccVertex3F));
-	originalVertices = malloc((gridSize_.x+1)*(gridSize_.y+1)*sizeof(ccVertex3F));
-	texCoordinates = malloc((gridSize_.x+1)*(gridSize_.y+1)*sizeof(CGPoint));
-	indices = malloc(gridSize_.x*gridSize_.y*sizeof(GLushort)*6);
+	NSUInteger numOfPoints = (gridSize_.x+1) * (gridSize_.y+1);
 	
-	float *vertArray = (float*)vertices;
-	float *texArray = (float*)texCoordinates;
+	vertices = malloc(numOfPoints * sizeof(ccVertex3F));
+	originalVertices = malloc(numOfPoints * sizeof(ccVertex3F));
+	texCoordinates = malloc(numOfPoints * sizeof(ccVertex2F));
+	indices = malloc( (gridSize_.x * gridSize_.y) * sizeof(GLushort)*6);
+
+	GLfloat *vertArray = (GLfloat*)vertices;
+	GLfloat *texArray = (GLfloat*)texCoordinates;
 	GLushort *idxArray = (GLushort *)indices;
-	
+
 	for( x = 0; x < gridSize_.x; x++ )
 	{
 		for( y = 0; y < gridSize_.y; y++ )
 		{
 			NSInteger idx = (y * gridSize_.x) + x;
-			
-			float x1 = x * step_.x;
-			float x2 = x1 + step_.x;
-			float y1 = y * step_.y;
-			float y2 = y1 + step_.y;
-			
+
+			GLfloat x1 = x * step_.x;
+			GLfloat x2 = x1 + step_.x;
+			GLfloat y1 = y * step_.y;
+			GLfloat y2 = y1 + step_.y;
+
 			GLushort a = x * (gridSize_.y+1) + y;
 			GLushort b = (x+1) * (gridSize_.y+1) + y;
 			GLushort c = (x+1) * (gridSize_.y+1) + (y+1);
 			GLushort d = x * (gridSize_.y+1) + (y+1);
-			
+
 			GLushort	tempidx[6] = { a, b, d, b, c, d };
-			
+
 			memcpy(&idxArray[6*idx], tempidx, 6*sizeof(GLushort));
-			
+
 			int l1[4] = { a*3, b*3, c*3, d*3 };
 			ccVertex3F	e = {x1,y1,0};
 			ccVertex3F	f = {x2,y1,0};
 			ccVertex3F	g = {x2,y2,0};
 			ccVertex3F	h = {x1,y2,0};
-			
+
 			ccVertex3F l2[4] = { e, f, g, h };
-			
+
 			int tex1[4] = { a*2, b*2, c*2, d*2 };
 			CGPoint tex2[4] = { ccp(x1, y1), ccp(x2, y1), ccp(x2, y2), ccp(x1, y2) };
-			
+
 			for( i = 0; i < 4; i++ )
 			{
 				vertArray[ l1[i] ] = l2[i].x;
 				vertArray[ l1[i] + 1 ] = l2[i].y;
 				vertArray[ l1[i] + 2 ] = l2[i].z;
-				
+
 				texArray[ tex1[i] ] = tex2[i].x / width;
 				if( isTextureFlipped_ )
 					texArray[ tex1[i] + 1 ] = (imageH - tex2[i].y) / height;
@@ -377,7 +366,7 @@
 			}
 		}
 	}
-	
+
 	memcpy(originalVertices, vertices, (gridSize_.x+1)*(gridSize_.y+1)*sizeof(ccVertex3F));
 }
 
@@ -385,9 +374,9 @@
 {
 	NSInteger index = (pos.x * (gridSize_.y+1) + pos.y) * 3;
 	float *vertArray = (float *)vertices;
-	
+
 	ccVertex3F	vert = { vertArray[index], vertArray[index+1], vertArray[index+2] };
-	
+
 	return vert;
 }
 
@@ -395,9 +384,9 @@
 {
 	NSInteger index = (pos.x * (gridSize_.y+1) + pos.y) * 3;
 	float *vertArray = (float *)originalVertices;
-	
+
 	ccVertex3F	vert = { vertArray[index], vertArray[index+1], vertArray[index+2] };
-	
+
 	return vert;
 }
 
@@ -440,18 +429,24 @@
 -(void)blit
 {
 	NSInteger n = gridSize_.x * gridSize_.y;
-	
-	// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
-	// Needed states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_TEXTURE_COORD_ARRAY
-	// Unneeded states: GL_COLOR_ARRAY
-	glDisableClientState(GL_COLOR_ARRAY);	
-	
-	glVertexPointer(3, GL_FLOAT, 0, vertices);
-	glTexCoordPointer(2, GL_FLOAT, 0, texCoordinates);
-	glDrawElements(GL_TRIANGLES, (GLsizei) n*6, GL_UNSIGNED_SHORT, indices);
 
-	// restore default GL state
-	glEnableClientState(GL_COLOR_ARRAY);
+	ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position | kCCVertexAttribFlag_TexCoords );
+	ccGLUseProgram( shaderProgram_->program_ );
+	ccGLUniformModelViewProjectionMatrix( shaderProgram_ );
+
+	//
+	// Attributes
+	//
+
+	// position
+	glVertexAttribPointer(kCCVertexAttrib_Position, 3, GL_FLOAT, GL_FALSE, 0, vertices);
+
+	// texCoods
+	glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, 0, texCoordinates);
+
+	glDrawElements(GL_TRIANGLES, (GLsizei) n*6, GL_UNSIGNED_SHORT, indices);
+	
+	CC_INCREMENT_GL_DRAWS(1);
 }
 
 -(void)calculateVertexPoints
@@ -459,20 +454,25 @@
 	float width = (float)texture_.pixelsWide;
 	float height = (float)texture_.pixelsHigh;
 	float imageH = texture_.contentSizeInPixels.height;
-	
+
 	NSInteger numQuads = gridSize_.x * gridSize_.y;
-	
-	vertices = malloc(numQuads*12*sizeof(GLfloat));
-	originalVertices = malloc(numQuads*12*sizeof(GLfloat));
-	texCoordinates = malloc(numQuads*8*sizeof(GLfloat));
+
+	if (vertices) free(vertices);
+	if (originalVertices) free(originalVertices);
+	if (texCoordinates) free(texCoordinates);
+	if (indices) free(indices);
+
+	vertices = malloc(numQuads*4*sizeof(ccVertex3F));
+	originalVertices = malloc(numQuads*4*sizeof(ccVertex3F));
+	texCoordinates = malloc(numQuads*4*sizeof(ccVertex2F));
 	indices = malloc(numQuads*6*sizeof(GLushort));
-	
-	float *vertArray = (float*)vertices;
-	float *texArray = (float*)texCoordinates;
+
+	GLfloat *vertArray = (GLfloat*)vertices;
+	GLfloat *texArray = (GLfloat*)texCoordinates;
 	GLushort *idxArray = (GLushort *)indices;
-	
+
 	int x, y;
-	
+
 	for( x = 0; x < gridSize_.x; x++ )
 	{
 		for( y = 0; y < gridSize_.y; y++ )
@@ -481,7 +481,7 @@
 			float x2 = x1 + step_.x;
 			float y1 = y * step_.y;
 			float y2 = y1 + step_.y;
-			
+
 			*vertArray++ = x1;
 			*vertArray++ = y1;
 			*vertArray++ = 0;
@@ -494,10 +494,10 @@
 			*vertArray++ = x2;
 			*vertArray++ = y2;
 			*vertArray++ = 0;
-			
+
 			float newY1 = y1;
 			float newY2 = y2;
-			
+
 			if( isTextureFlipped_ ) {
 				newY1 = imageH - y1;
 				newY2 = imageH - y2;
@@ -513,18 +513,18 @@
 			*texArray++ = newY2 / height;
 		}
 	}
-	
+
 	for( x = 0; x < numQuads; x++)
 	{
 		idxArray[x*6+0] = x*4+0;
 		idxArray[x*6+1] = x*4+1;
 		idxArray[x*6+2] = x*4+2;
-		
+
 		idxArray[x*6+3] = x*4+1;
 		idxArray[x*6+4] = x*4+2;
 		idxArray[x*6+5] = x*4+3;
 	}
-	
+
 	memcpy(originalVertices, vertices, numQuads*12*sizeof(GLfloat));
 }
 
@@ -539,10 +539,10 @@
 {
 	NSInteger idx = (gridSize_.y * pos.x + pos.y) * 4 * 3;
 	float *vertArray = (float*)originalVertices;
-	
+
 	ccQuad3 ret;
 	memcpy(&ret, &vertArray[idx], sizeof(ccQuad3));
-	
+
 	return ret;
 }
 
@@ -550,10 +550,10 @@
 {
 	NSInteger idx = (gridSize_.y * pos.x + pos.y) * 4 * 3;
 	float *vertArray = (float*)vertices;
-	
+
 	ccQuad3 ret;
 	memcpy(&ret, &vertArray[idx], sizeof(ccQuad3));
-	
+
 	return ret;
 }
 
@@ -562,7 +562,7 @@
 	if ( reuseGrid_ > 0 )
 	{
 		NSInteger numQuads = gridSize_.x * gridSize_.y;
-		
+
 		memcpy(originalVertices, vertices, numQuads*12*sizeof(GLfloat));
 		reuseGrid_--;
 	}

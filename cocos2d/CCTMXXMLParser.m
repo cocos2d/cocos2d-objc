@@ -3,17 +3,17 @@
  *
  * Copyright (c) 2009-2010 Ricardo Quesada
  * Copyright (c) 2011 Zynga Inc.
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -65,7 +65,7 @@
 - (void) dealloc
 {
 	CCLOGINFO(@"cocos2d: deallocing %@",self);
-	
+
 	[name_ release];
 	[properties_ release];
 
@@ -96,16 +96,16 @@
 {
 	CGRect rect;
 	rect.size = tileSize_;
-	
-	gid &= kFlippedMask;
+
+	gid &= kCCFlippedMask;
 	gid = gid - firstGid_;
-	
+
 	int max_x = (imageSize_.width - margin_*2 + spacing_) / (tileSize_.width + spacing_);
 	//	int max_y = (imageSize.height - margin*2 + spacing) / (tileSize.height + spacing);
-	
+
 	rect.origin.x = (gid % max_x) * (tileSize_.width + spacing_) + margin_;
 	rect.origin.y = (gid / max_x) * (tileSize_.height + spacing_) + margin_;
-	
+
 	return rect;
 }
 @end
@@ -146,7 +146,7 @@
 	self.objectGroups = [NSMutableArray arrayWithCapacity:4];
 	self.properties = [NSMutableDictionary dictionaryWithCapacity:5];
 	self.tileProperties = [NSMutableDictionary dictionaryWithCapacity:5];
-	
+
 	// tmp vars
 	currentString = [[NSMutableString alloc] initWithCapacity:1024];
 	storingCharacters = NO;
@@ -158,7 +158,7 @@
 {
 	if( (self=[super init])) {
 		[self internalInit:nil resourcePath:resourcePath];
-		[self parseXMLString:tmxString];		
+		[self parseXMLString:tmxString];
 	}
 	return self;
 }
@@ -167,7 +167,7 @@
 {
 	if( (self=[super init])) {
 		[self internalInit:tmxFile resourcePath:nil];
-		[self parseXMLFile:filename_];		
+		[self parseXMLFile:filename_];
 	}
 	return self;
 }
@@ -189,14 +189,14 @@
 - (NSError*) parseXMLData:(NSData*)data
 {
 	NSXMLParser *parser = [[[NSXMLParser alloc] initWithData:data] autorelease];
-	
+
 	// we'll do the parsing
 	[parser setDelegate:self];
 	[parser setShouldProcessNamespaces:NO];
 	[parser setShouldReportNamespacePrefixes:NO];
 	[parser setShouldResolveExternalEntities:NO];
 	[parser parse];
-	
+
 	return [parser parserError];
 }
 
@@ -204,6 +204,7 @@
 {
 	NSData* data = [xmlString dataUsingEncoding:NSUTF8StringEncoding];
 	NSError* err = [self parseXMLData:data];
+	(void)err;
 	NSAssert1( !err, @"Error parsing TMX data: %@.", [NSString stringWithCharacters:[data bytes] length:[data length]] );
 }
 
@@ -212,17 +213,18 @@
 	NSURL *url = [NSURL fileURLWithPath:[CCFileUtils fullPathFromRelativePath:xmlFilename] ];
 	NSData *data = [NSData dataWithContentsOfURL:url];
 	NSError* err = [self parseXMLData:data];
+	(void)err;
 	NSAssert3(!err, @"Error parsing TMX file: %@, %@ (%d).", xmlFilename, [err localizedDescription], [err code]);
 }
 
 // the XML parser calls here with all the elements
 -(void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName attributes:(NSDictionary *)attributeDict
-{	
+{
 	if([elementName isEqualToString:@"map"]) {
-		NSString *version = [attributeDict valueForKey:@"version"];
+		NSString *version = [attributeDict objectForKey:@"version"];
 		if( ! [version isEqualToString:@"1.0"] )
 			CCLOG(@"cocos2d: TMXFormat: Unsupported TMX version: %@", version);
-		NSString *orientationStr = [attributeDict valueForKey:@"orientation"];
+		NSString *orientationStr = [attributeDict objectForKey:@"orientation"];
 		if( [orientationStr isEqualToString:@"orthogonal"])
 			orientation_ = CCTMXOrientationOrtho;
 		else if ( [orientationStr isEqualToString:@"isometric"])
@@ -232,37 +234,37 @@
 		else
 			CCLOG(@"cocos2d: TMXFomat: Unsupported orientation: %@", orientation_);
 
-		mapSize_.width = [[attributeDict valueForKey:@"width"] intValue];
-		mapSize_.height = [[attributeDict valueForKey:@"height"] intValue];
-		tileSize_.width = [[attributeDict valueForKey:@"tilewidth"] intValue];
-		tileSize_.height = [[attributeDict valueForKey:@"tileheight"] intValue];
+		mapSize_.width = [[attributeDict objectForKey:@"width"] intValue];
+		mapSize_.height = [[attributeDict objectForKey:@"height"] intValue];
+		tileSize_.width = [[attributeDict objectForKey:@"tilewidth"] intValue];
+		tileSize_.height = [[attributeDict objectForKey:@"tileheight"] intValue];
 
 		// The parent element is now "map"
 		parentElement = TMXPropertyMap;
 	} else if([elementName isEqualToString:@"tileset"]) {
-		
+
 		// If this is an external tileset then start parsing that
-		NSString *externalTilesetFilename = [attributeDict valueForKey:@"source"];
+		NSString *externalTilesetFilename = [attributeDict objectForKey:@"source"];
 		if (externalTilesetFilename) {
 				// Tileset file will be relative to the map file. So we need to convert it to an absolute path
 				NSString *dir = [filename_ stringByDeletingLastPathComponent];	// Directory of map file
 				if (!dir)
 					dir = resources_;
 				externalTilesetFilename = [dir stringByAppendingPathComponent:externalTilesetFilename];	// Append path to tileset file
-				
+
 				[self parseXMLFile:externalTilesetFilename];
 		} else {
-				
+
 			CCTMXTilesetInfo *tileset = [CCTMXTilesetInfo new];
-			tileset.name = [attributeDict valueForKey:@"name"];
-			tileset.firstGid = [[attributeDict valueForKey:@"firstgid"] intValue];
-			tileset.spacing = [[attributeDict valueForKey:@"spacing"] intValue];
-			tileset.margin = [[attributeDict valueForKey:@"margin"] intValue];
+			tileset.name = [attributeDict objectForKey:@"name"];
+			tileset.firstGid = [[attributeDict objectForKey:@"firstgid"] intValue];
+			tileset.spacing = [[attributeDict objectForKey:@"spacing"] intValue];
+			tileset.margin = [[attributeDict objectForKey:@"margin"] intValue];
 			CGSize s;
-			s.width = [[attributeDict valueForKey:@"tilewidth"] intValue];
-			s.height = [[attributeDict valueForKey:@"tileheight"] intValue];
+			s.width = [[attributeDict objectForKey:@"tilewidth"] intValue];
+			s.height = [[attributeDict objectForKey:@"tileheight"] intValue];
 			tileset.tileSize = s;
-			
+
 			[tilesets_ addObject:tileset];
 			[tileset release];
 		}
@@ -270,71 +272,71 @@
 	}else if([elementName isEqualToString:@"tile"]){
 		CCTMXTilesetInfo* info = [tilesets_ lastObject];
 		NSMutableDictionary* dict = [NSMutableDictionary dictionaryWithCapacity:3];
-		parentGID_ =  [info firstGid] + [[attributeDict valueForKey:@"id"] intValue];
+		parentGID_ =  [info firstGid] + [[attributeDict objectForKey:@"id"] intValue];
 		[tileProperties_ setObject:dict forKey:[NSNumber numberWithInt:parentGID_]];
-		
+
 		parentElement = TMXPropertyTile;
-		
+
 	}else if([elementName isEqualToString:@"layer"]) {
 		CCTMXLayerInfo *layer = [CCTMXLayerInfo new];
-		layer.name = [attributeDict valueForKey:@"name"];
-		
+		layer.name = [attributeDict objectForKey:@"name"];
+
 		CGSize s;
-		s.width = [[attributeDict valueForKey:@"width"] intValue];
-		s.height = [[attributeDict valueForKey:@"height"] intValue];
+		s.width = [[attributeDict objectForKey:@"width"] intValue];
+		s.height = [[attributeDict objectForKey:@"height"] intValue];
 		layer.layerSize = s;
-		
-		layer.visible = ![[attributeDict valueForKey:@"visible"] isEqualToString:@"0"];
-		
-		if( [attributeDict valueForKey:@"opacity"] )
-			layer.opacity = 255 * [[attributeDict valueForKey:@"opacity"] floatValue];
+
+		layer.visible = ![[attributeDict objectForKey:@"visible"] isEqualToString:@"0"];
+
+		if( [attributeDict objectForKey:@"opacity"] )
+			layer.opacity = 255 * [[attributeDict objectForKey:@"opacity"] floatValue];
 		else
 			layer.opacity = 255;
-		
-		int x = [[attributeDict valueForKey:@"x"] intValue];
-		int y = [[attributeDict valueForKey:@"y"] intValue];
+
+		int x = [[attributeDict objectForKey:@"x"] intValue];
+		int y = [[attributeDict objectForKey:@"y"] intValue];
 		layer.offset = ccp(x,y);
-		
+
 		[layers_ addObject:layer];
 		[layer release];
-		
+
 		// The parent element is now "layer"
 		parentElement = TMXPropertyLayer;
-	
+
 	} else if([elementName isEqualToString:@"objectgroup"]) {
-		
+
 		CCTMXObjectGroup *objectGroup = [[CCTMXObjectGroup alloc] init];
-		objectGroup.groupName = [attributeDict valueForKey:@"name"];
+		objectGroup.groupName = [attributeDict objectForKey:@"name"];
 		CGPoint positionOffset;
-		positionOffset.x = [[attributeDict valueForKey:@"x"] intValue] * tileSize_.width;
-		positionOffset.y = [[attributeDict valueForKey:@"y"] intValue] * tileSize_.height;
+		positionOffset.x = [[attributeDict objectForKey:@"x"] intValue] * tileSize_.width;
+		positionOffset.y = [[attributeDict objectForKey:@"y"] intValue] * tileSize_.height;
 		objectGroup.positionOffset = positionOffset;
-		
+
 		[objectGroups_ addObject:objectGroup];
 		[objectGroup release];
-		
+
 		// The parent element is now "objectgroup"
 		parentElement = TMXPropertyObjectGroup;
-			
+
 	} else if([elementName isEqualToString:@"image"]) {
 
 		CCTMXTilesetInfo *tileset = [tilesets_ lastObject];
-		
+
 		// build full path
-		NSString *imagename = [attributeDict valueForKey:@"source"];		
+		NSString *imagename = [attributeDict objectForKey:@"source"];
 		NSString *path = [filename_ stringByDeletingLastPathComponent];
 		if (!path)
 			path = resources_;
 		tileset.sourceImage = [path stringByAppendingPathComponent:imagename];
 
 	} else if([elementName isEqualToString:@"data"]) {
-		NSString *encoding = [attributeDict valueForKey:@"encoding"];
-		NSString *compression = [attributeDict valueForKey:@"compression"];
-		
+		NSString *encoding = [attributeDict objectForKey:@"encoding"];
+		NSString *compression = [attributeDict objectForKey:@"compression"];
+
 		if( [encoding isEqualToString:@"base64"] ) {
 			layerAttribs |= TMXLayerAttribBase64;
 			storingCharacters = YES;
-			
+
 			if( [compression isEqualToString:@"gzip"] )
 				layerAttribs |= TMXLayerAttribGzip;
 
@@ -343,81 +345,107 @@
 
 			NSAssert( !compression || [compression isEqualToString:@"gzip"] || [compression isEqualToString:@"zlib"], @"TMX: unsupported compression method" );
 		}
-		
+
 		NSAssert( layerAttribs != TMXLayerAttribNone, @"TMX tile map: Only base64 and/or gzip/zlib maps are supported" );
-		
+
 	} else if([elementName isEqualToString:@"object"]) {
-	
+
 		CCTMXObjectGroup *objectGroup = [objectGroups_ lastObject];
-		
+
 		// The value for "type" was blank or not a valid class name
 		// Create an instance of TMXObjectInfo to store the object and its properties
-		NSMutableDictionary *dict = [[NSMutableDictionary alloc] initWithCapacity:5];
+		NSMutableDictionary *dict = [[NSMutableDictionary alloc] initWithCapacity:10];
+
+		// Parse everything automatically
+		NSArray *array = [NSArray arrayWithObjects:@"name", @"type", @"width", @"height", @"gid", nil];
+		for( NSObject *key in array ) {
+			NSObject *obj = [attributeDict objectForKey:key];
+			if( obj )
+				[dict setObject:obj forKey:key];
+		}
 		
-		// Set the name of the object to the value for "name"
-		[dict setValue:[attributeDict valueForKey:@"name"] forKey:@"name"];
+		// But X and Y since they need special treatment
+		// X
+		NSString *value = [attributeDict objectForKey:@"x"];
+		if( value ) {
+			int x = [value intValue] + objectGroup.positionOffset.x;
+			[dict setObject:[NSNumber numberWithInt:x] forKey:@"x"];
+		}
 		
-		// Assign all the attributes as key/name pairs in the properties dictionary
-		[dict setValue:[attributeDict valueForKey:@"type"] forKey:@"type"];
-		int x = [[attributeDict valueForKey:@"x"] intValue] + objectGroup.positionOffset.x;
-		[dict setValue:[NSNumber numberWithInt:x] forKey:@"x"];
-		int y = [[attributeDict valueForKey:@"y"] intValue] + objectGroup.positionOffset.y;
-		// Correct y position. (Tiled uses Flipped, cocos2d uses Standard)
-		y = (mapSize_.height * tileSize_.height) - y - [[attributeDict valueForKey:@"height"] intValue];
-		[dict setValue:[NSNumber numberWithInt:y] forKey:@"y"];
-		[dict setValue:[attributeDict valueForKey:@"width"] forKey:@"width"];
-		[dict setValue:[attributeDict valueForKey:@"height"] forKey:@"height"];
+		// Y
+		value = [attributeDict objectForKey:@"y"];
+		if( value )  {
+		int y = [value intValue] + objectGroup.positionOffset.y;
+
+			// Correct y position. (Tiled uses Flipped, cocos2d uses Standard)
+			y = (mapSize_.height * tileSize_.height) - y - [[attributeDict objectForKey:@"height"] intValue];
+			[dict setObject:[NSNumber numberWithInt:y] forKey:@"y"];
+		}
 		
 		// Add the object to the objectGroup
 		[[objectGroup objects] addObject:dict];
 		[dict release];
-		
+
 		// The parent element is now "object"
 		parentElement = TMXPropertyObject;
-		
+
 	} else if([elementName isEqualToString:@"property"]) {
-	
+
 		if ( parentElement == TMXPropertyNone ) {
-		
+
 			CCLOG( @"TMX tile map: Parent element is unsupported. Cannot add property named '%@' with value '%@'",
-			[attributeDict valueForKey:@"name"], [attributeDict valueForKey:@"value"] );
-			
+			[attributeDict objectForKey:@"name"], [attributeDict objectForKey:@"value"] );
+
 		} else if ( parentElement == TMXPropertyMap ) {
-		
+
 			// The parent element is the map
-			[properties_ setValue:[attributeDict valueForKey:@"value"] forKey:[attributeDict valueForKey:@"name"]];
-			
+			[properties_ setObject:[attributeDict objectForKey:@"value"] forKey:[attributeDict objectForKey:@"name"]];
+
 		} else if ( parentElement == TMXPropertyLayer ) {
-		
+
 			// The parent element is the last layer
 			CCTMXLayerInfo *layer = [layers_ lastObject];
 			// Add the property to the layer
-			[[layer properties] setValue:[attributeDict valueForKey:@"value"] forKey:[attributeDict valueForKey:@"name"]];
-			
+			[[layer properties] setObject:[attributeDict objectForKey:@"value"] forKey:[attributeDict objectForKey:@"name"]];
+
 		} else if ( parentElement == TMXPropertyObjectGroup ) {
-			
+
 			// The parent element is the last object group
 			CCTMXObjectGroup *objectGroup = [objectGroups_ lastObject];
-			[[objectGroup properties] setValue:[attributeDict valueForKey:@"value"] forKey:[attributeDict valueForKey:@"name"]];
-			
+			[[objectGroup properties] setObject:[attributeDict objectForKey:@"value"] forKey:[attributeDict objectForKey:@"name"]];
+
 		} else if ( parentElement == TMXPropertyObject ) {
-			
+
 			// The parent element is the last object
 			CCTMXObjectGroup *objectGroup = [objectGroups_ lastObject];
 			NSMutableDictionary *dict = [[objectGroup objects] lastObject];
-			
-			NSString *propertyName = [attributeDict valueForKey:@"name"];
-			NSString *propertyValue = [attributeDict valueForKey:@"value"];
 
-			[dict setValue:propertyValue forKey:propertyName];
-		} else if ( parentElement == TMXPropertyTile ) {
-			
-			NSMutableDictionary* dict = [tileProperties_ objectForKey:[NSNumber numberWithInt:parentGID_]];
-			NSString *propertyName = [attributeDict valueForKey:@"name"];
-			NSString *propertyValue = [attributeDict valueForKey:@"value"];
+			NSString *propertyName = [attributeDict objectForKey:@"name"];
+			NSString *propertyValue = [attributeDict objectForKey:@"value"];
+
 			[dict setObject:propertyValue forKey:propertyName];
-			
+
+		} else if ( parentElement == TMXPropertyTile ) {
+
+			NSMutableDictionary* dict = [tileProperties_ objectForKey:[NSNumber numberWithInt:parentGID_]];
+			NSString *propertyName = [attributeDict objectForKey:@"name"];
+			NSString *propertyValue = [attributeDict objectForKey:@"value"];
+			[dict setObject:propertyValue forKey:propertyName];
 		}
+
+	} else if ([elementName isEqualToString:@"polygon"]) {
+		
+		// find parent object's dict and add polygon-points to it
+		CCTMXObjectGroup *objectGroup = [objectGroups_ lastObject];
+		NSMutableDictionary *dict = [[objectGroup objects] lastObject];
+		[dict setObject:[attributeDict objectForKey:@"points"] forKey:@"polygonPoints"];
+		
+	} else if ([elementName isEqualToString:@"polyline"]) {
+		
+		// find parent object's dict and add polyline-points to it
+		CCTMXObjectGroup *objectGroup = [objectGroups_ lastObject];
+		NSMutableDictionary *dict = [[objectGroup objects] lastObject];
+		[dict setObject:[attributeDict objectForKey:@"points"] forKey:@"polylinePoints"];
 	}
 }
 
@@ -427,16 +455,16 @@
 
 	if([elementName isEqualToString:@"data"] && layerAttribs&TMXLayerAttribBase64) {
 		storingCharacters = NO;
-		
+
 		CCTMXLayerInfo *layer = [layers_ lastObject];
-		
+
 		unsigned char *buffer;
 		len = base64Decode((unsigned char*)[currentString UTF8String], (unsigned int) [currentString length], &buffer);
 		if( ! buffer ) {
 			CCLOG(@"cocos2d: TiledMap: decode data error");
 			return;
 		}
-		
+
 		if( layerAttribs & (TMXLayerAttribGzip | TMXLayerAttribZlib) ) {
 			unsigned char *deflated;
 			CGSize s = [layer layerSize];
@@ -444,34 +472,34 @@
 
 			int inflatedLen = ccInflateMemoryWithHint(buffer, len, &deflated, sizeHint);
 			NSAssert( inflatedLen == sizeHint, @"CCTMXXMLParser: Hint failed!");
-			
+
 			inflatedLen = (int)&inflatedLen; // XXX: to avoid warings in compiler
 
 			free( buffer );
-			
+
 			if( ! deflated ) {
 				CCLOG(@"cocos2d: TiledMap: inflate data error");
 				return;
 			}
-			
+
 			layer.tiles = (unsigned int*) deflated;
 		} else
 			layer.tiles = (unsigned int*) buffer;
-		
+
 		[currentString setString:@""];
-			
+
 	} else if ([elementName isEqualToString:@"map"]) {
 		// The map element has ended
 		parentElement = TMXPropertyNone;
-		
+
 	}	else if ([elementName isEqualToString:@"layer"]) {
 		// The layer element has ended
 		parentElement = TMXPropertyNone;
-		
+
 	} else if ([elementName isEqualToString:@"objectgroup"]) {
 		// The objectgroup element has ended
 		parentElement = TMXPropertyNone;
-		
+
 	} else if ([elementName isEqualToString:@"object"]) {
 		// The object element has ended
 		parentElement = TMXPropertyNone;

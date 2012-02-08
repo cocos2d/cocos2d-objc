@@ -3,17 +3,17 @@
  *
  * Copyright (c) 2008-2010 Ricardo Quesada
  * Copyright (c) 2011 Zynga Inc.
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -47,6 +47,11 @@
 	NSString	*string_;
 }
 
+/** Font name used in the label */
+@property (nonatomic,retain) NSString* fontName;
+/** Font size of the label */
+@property (nonatomic,assign) float fontSize;
+
 /** creates a CCLabel from a fontname, alignment, dimension in points, line break mode, and font size in points.
  Supported lineBreakModes:
  - iOS: all UILineBreakMode supported modes
@@ -74,5 +79,7 @@
  * @warning Changing the string is as expensive as creating a new CCLabel. To obtain better performance use CCLabelAtlas
  */
 - (void) setString:(NSString*)str;
+
+
 
 @end

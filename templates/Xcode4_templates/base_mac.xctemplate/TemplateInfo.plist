@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>Identifier</key>
-	<string>com.cocos2d.macbase</string>
+	<string>com.cocos2d-v2.macbase</string>
 	<key>Kind</key>
 	<string>Xcode.Xcode3.ProjectTemplateUnitKind</string>
 	<key>Platforms</key>
@@ -11,15 +11,13 @@
 		<string>com.apple.platform.macosx</string>
 	</array>
 	<key>Project</key>
-    <dict>
+	<dict>
 		<key>SDK</key>
 		<string>macosx</string>
 		<key>SharedSettings</key>
 		<dict>
 			<key>ARCHS</key>
 			<string>$(ARCHS_STANDARD_32_64_BIT)</string>
-			<key>GCC_VERSION</key>
-			<string>com.apple.compilers.llvm.clang.1_0</string>
 			<key>MACOSX_DEPLOYMENT_TARGET</key>
 			<string>latest_macosx</string>
 			<key>GCC_WARN_64_TO_32_BIT_CONVERSION</key>
@@ -32,14 +30,8 @@
 				<key>ONLY_ACTIVE_ARCH</key>
 				<string>YES</string>
 			</dict>
-			<key>Release</key>
-			<dict>
-				<key>OTHER_CFLAGS</key>
-				<string>-DNS_BLOCK_ASSERTIONS=1</string>
-			</dict>
 		</dict>
-    </dict>
-
+	</dict>
 	<key>Targets</key>
 	<array>
 		<dict>
@@ -126,8 +118,8 @@
 			</array>
 			<key>Path</key>
 			<string>Resources/Info.plist</string>
- 			<key>TargetIndices</key>
- 			<array/>
+			<key>TargetIndices</key>
+			<array/>
 		</dict>
 	</dict>
 	<key>Nodes</key>

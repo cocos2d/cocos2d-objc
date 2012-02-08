@@ -3,17 +3,17 @@
  *
  * Copyright (c) 2008-2010 Ricardo Quesada
  * Copyright (c) 2011 Zynga Inc.
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -25,14 +25,20 @@
  */
 
 
-#import <Availability.h>
-
 #import "CCLabelTTF.h"
 #import "Support/CGPointExtension.h"
 #import "ccMacros.h"
+#import "CCShaderCache.h"
+#import "CCGLProgram.h"
 
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef __CC_PLATFORM_IOS
 #import "Platforms/iOS/CCDirectorIOS.h"
+#endif
+
+#if CC_USE_LA88_LABELS
+#define SHADER_PROGRAM kCCShader_PositionTextureColor
+#else
+#define SHADER_PROGRAM kCCShader_PositionTextureA8Color
 #endif
 
 @implementation CCLabelTTF
@@ -64,12 +70,15 @@
 {
 	if( (self=[super init]) ) {
 
-		dimensions_ = CGSizeMake( dimensions.width * CC_CONTENT_SCALE_FACTOR(), dimensions.height * CC_CONTENT_SCALE_FACTOR() );
+		// shader program
+		self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:SHADER_PROGRAM];
+
+		dimensions_ = CGSizeMake( dimensions.width, dimensions.height );
 		alignment_ = alignment;
 		fontName_ = [name retain];
-		fontSize_ = size * CC_CONTENT_SCALE_FACTOR();
+		fontSize_ = size;
 		lineBreakMode_ = lineBreakMode;
-		
+
 		[self setString:str];
 	}
 	return self;
@@ -83,11 +92,14 @@
 - (id) initWithString:(NSString*)str fontName:(NSString*)name fontSize:(CGFloat)size
 {
 	if( (self=[super init]) ) {
-		
+
+		// shader program
+		self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:SHADER_PROGRAM];
+
 		dimensions_ = CGSizeZero;
 		fontName_ = [name retain];
-		fontSize_ = size * CC_CONTENT_SCALE_FACTOR();
-		
+		fontSize_ = size;
+
 		[self setString:str];
 	}
 	return self;
@@ -102,20 +114,20 @@
 	if( CGSizeEqualToSize( dimensions_, CGSizeZero ) )
 		tex = [[CCTexture2D alloc] initWithString:str
 										 fontName:fontName_
-										 fontSize:fontSize_];
+										 fontSize:fontSize_  * CC_CONTENT_SCALE_FACTOR()];
 	else
 		tex = [[CCTexture2D alloc] initWithString:str
-									   dimensions:dimensions_
+									   dimensions:CC_SIZE_POINTS_TO_PIXELS(dimensions_)
 										alignment:alignment_
 									lineBreakMode:lineBreakMode_
 										 fontName:fontName_
-										 fontSize:fontSize_];
+										 fontSize:fontSize_  * CC_CONTENT_SCALE_FACTOR()];
 
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef __CC_PLATFORM_IOS
 	if( CC_CONTENT_SCALE_FACTOR() == 2 )
 		[tex setResolutionType:kCCResolutionRetinaDisplay];
 	else
-		[tex setResolutionType:kCCResolutionStandard];
+		[tex setResolutionType:kCCResolutioniPhone];
 #endif
 
 	[self setTexture:tex];
@@ -129,6 +141,37 @@
 -(NSString*) string
 {
 	return string_;
+}
+
+- (void)setFontName:(NSString*)fontName
+{
+	if( fontName != fontName_ ) {
+		[fontName_ release];
+		fontName_ = [fontName retain];
+    
+		// Force update
+		[self setString:[self string]];
+	}
+}
+
+- (NSString*)fontName
+{
+    return fontName_;
+}
+
+- (void) setFontSize:(float)fontSize
+{
+	if( fontSize != fontSize_ ) {
+		fontSize_ = fontSize;
+		
+		// Force update
+		[self setString:[self string]];
+	}
+}
+
+- (float) fontSize
+{
+    return fontSize_;
 }
 
 - (void) dealloc

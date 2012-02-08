@@ -1,6 +1,6 @@
 //
 //  bugViewController.h
-//  EAGLViewBug
+//  CCGLViewBug
 //
 //  Created by Wylan Werth on 7/5/10.
 //  Copyright 2010 BanditBear Games. All rights reserved.
@@ -12,7 +12,7 @@
 @interface bugViewController : UIViewController {
 
 	// weak reference
-	EAGLView *glView;	
+	CCGLView *glView;
 }
 
 @end

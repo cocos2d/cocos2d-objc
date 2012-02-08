@@ -1,18 +1,18 @@
 /*
  * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
- * Copyright (c) 2008, 2009 Jason Booth
- * 
+ * Copyright (c) 2011 ForzeField Studios S.L. http://forzefield.com
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -23,45 +23,62 @@
  *
  */
 
+
 #import <Foundation/Foundation.h>
+#import "CCTexture2D.h"
+#import "ccTypes.h"
 #import "CCNode.h"
-#import "CCRibbon.h"
 
-/**
- * CCMotionStreak manages a Ribbon based on it's motion in absolute space.
- * You construct it with a fadeTime, minimum segment size, texture path, texture
- * length and color. The fadeTime controls how long it takes each vertex in
- * the streak to fade out, the minimum segment size it how many pixels the
- * streak will move before adding a new ribbon segement, and the texture
- * length is the how many pixels the texture is stretched across. The texture
- * is vertically aligned along the streak segemnts. 
- *
- * Limitations:
- *   CCMotionStreak, by default, will use the GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA blending function.
- *   This blending function might not be the correct one for certain textures.
- *   But you can change it by using:
- *     [obj setBlendFunc: (ccBlendfunc) {new_src_blend_func, new_dst_blend_func}];
- *
- * @since v0.8.1
+/** MotionStreak.
+ Creates a trailing path.
  */
-@interface CCMotionStreak : CCNode <CCTextureProtocol>
+@interface CCMotionStreak : CCNode <CCTextureProtocol, CCRGBAProtocol>
 {
-	CCRibbon*	ribbon_;
-	float		segThreshold_;
-	float		width_;
-	CGPoint	lastLocation_;
+    CCTexture2D *texture_;
+    CGPoint positionR_;
+    ccColor3B color_;
+    ccBlendFunc blendFunc_;
+    float stroke_;
+    float fadeDelta_;
+    float minSeg_;
+
+    NSUInteger maxPoints_;
+    NSUInteger nuPoints_;
+
+    /** Pointers */
+    CGPoint *pointVertexes_;
+    float *pointState_;
+
+    // Opengl
+    ccVertex2F *vertices_;
+    unsigned char *colorPointer_;
+    ccTex2F *texCoords_;
+
+    BOOL	fastMode_;
 }
+/** blending function */
+@property (nonatomic, readwrite, assign) ccBlendFunc blendFunc;
 
-/** Ribbon used by MotionStreak (weak reference) */
-@property (nonatomic,readonly) CCRibbon *ribbon;
+/** When fast mode is enbled, new points are added faster but with lower precision */
+@property (nonatomic, readwrite, assign, getter = isFastMode) BOOL fastMode;
 
-/** creates the a MotionStreak. The image will be loaded using the TextureMgr. */
-+(id)streakWithFade:(float)fade minSeg:(float)seg image:(NSString*)path width:(float)width length:(float)length color:(ccColor4B)color;
+/** texture used for the motion streak */
+@property (nonatomic, retain) CCTexture2D *texture;
 
-/** initializes a MotionStreak. The file will be loaded using the TextureMgr. */
--(id)initWithFade:(float)fade minSeg:(float)seg image:(NSString*)path width:(float)width length:(float)length color:(ccColor4B)color;
+/** creates and initializes a motion streak with fade in seconds, minimum segments, stroke's width, color, texture filename */
++ (id) streakWithFade:(float)fade minSeg:(float)minSeg width:(float)stroke color:(ccColor3B)color textureFilename:(NSString*)path;
+/** creates and initializes a motion streak with fade in seconds, minimum segments, stroke's width, color, texture */
++ (id) streakWithFade:(float)fade minSeg:(float)minSeg width:(float)stroke color:(ccColor3B)color texture:(CCTexture2D*)texture;
 
-/** polling function */
--(void)update:(ccTime)delta;
+/** initializes a motion streak with fade in seconds, minimum segments, stroke's width, color and texture filename */
+- (id) initWithFade:(float)fade minSeg:(float)minSeg width:(float)stroke color:(ccColor3B)color textureFilename:(NSString*)path;
+/** initializes a motion streak with fade in seconds, minimum segments, stroke's width, color and texture  */
+- (id) initWithFade:(float)fade minSeg:(float)minSeg width:(float)stroke color:(ccColor3B)color texture:(CCTexture2D*)texture;
+
+/** color used for the tint */
+- (void) tintWithColor:(ccColor3B)colors;
+
+/** Remove all living segments of the ribbon */
+- (void) reset;
 
 @end

@@ -25,24 +25,28 @@
 - (id)initWithTexture:(CCTexture2D *)aTexture
 {
 	if ((self = [super initWithTexture:aTexture]) ) {
-	
+
 		state = kPaddleStateUngrabbed;
 	}
-	
+
 	return self;
 }
 
 - (void)onEnter
 {
-	[[CCTouchDispatcher sharedDispatcher] addTargetedDelegate:self priority:0 swallowsTouches:YES];
+	CCDirector *director =  [CCDirector sharedDirector];
+
+	[[director touchDispatcher] addTargetedDelegate:self priority:0 swallowsTouches:YES];
 	[super onEnter];
 }
 
 - (void)onExit
 {
-	[[CCTouchDispatcher sharedDispatcher] removeDelegate:self];
+	CCDirector *director = [CCDirector sharedDirector];
+
+	[[director touchDispatcher] removeDelegate:self];
 	[super onExit];
-}	
+}
 
 - (BOOL)containsTouchLocation:(UITouch *)touch
 {
@@ -55,7 +59,7 @@
 {
 	if (state != kPaddleStateUngrabbed) return NO;
 	if ( ![self containsTouchLocation:touch] ) return NO;
-	
+
 	state = kPaddleStateGrabbed;
 	return YES;
 }
@@ -68,19 +72,19 @@
 	// Actually, it would be even more complicated since in the Cocos dispatcher
 	// you get NSSets instead of 1 UITouch, so you'd need to loop through the set
 	// in each touchXXX method.
-	
-	NSAssert(state == kPaddleStateGrabbed, @"Paddle - Unexpected state!");	
-	
+
+	NSAssert(state == kPaddleStateGrabbed, @"Paddle - Unexpected state!");
+
 	CGPoint touchPoint = [touch locationInView:[touch view]];
 	touchPoint = [[CCDirector sharedDirector] convertToGL:touchPoint];
-	
+
 	self.position = CGPointMake(touchPoint.x, self.position.y);
 }
 
 - (void)ccTouchEnded:(UITouch *)touch withEvent:(UIEvent *)event
 {
-	NSAssert(state == kPaddleStateGrabbed, @"Paddle - Unexpected state!");	
-	
+	NSAssert(state == kPaddleStateGrabbed, @"Paddle - Unexpected state!");
+
 	state = kPaddleStateUngrabbed;
 }
 @end

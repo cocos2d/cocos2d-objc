@@ -18,66 +18,28 @@
 
 @implementation Box2DAppDelegate
 
-@synthesize window;
-
-- (void)applicationDidFinishLaunching:(UIApplication *)application
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+	[super application:application didFinishLaunchingWithOptions:launchOptions];
+
     [application setStatusBarHidden:true];
-	
-	// CC_DIRECTOR_INIT()
-	//
-	// 1. Initializes an EAGLView with 0-bit depth format, and RGB565 render buffer
-	// 2. EAGLView multiple touches: disabled
-	// 3. Parents EAGLView to the main window
-	// 4. Creates Display Link Director
-	// 4a. If it fails, it will use an NSTimer director
-	// 5. It will try to run at 60 FPS
-	// 6. Display FPS: NO
-	// 7. Device orientation: Portrait
-	// 8. Connects the director to the EAGLView
-	//
-	CC_DIRECTOR_INIT();
-	
-	// Obtain the shared director in order to...
-	CCDirector *director = [CCDirector sharedDirector];
-	
-	// Sets landscape mode
-	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
-	
+
 	// Turn on display FPS
-	[director setDisplayFPS:YES];	
-	
+	[director_ setDisplayStats:YES];
+
+	// 2D projection
+	[director_ setProjection:kCCDirectorProjection2D];
+//	[director_ setProjection:kCCDirectorProjection3D];
+
 	// Enables High Res mode (Retina Display) on iPhone 4 and maintains low res on all other devices
-	if ([UIScreen instancesRespondToSelector:@selector(scale)])
-		[director setContentScaleFactor:[[UIScreen mainScreen] scale]];
-	
+	if( ! [director_ enableRetinaDisplay:NO] )
+		CCLOG(@"Retina Display Not supported");
+
 	CCScene *scene = [CCScene node];
 	[scene addChild: [MenuLayer menuWithEntryID:0]];
-	
-	[director runWithScene: scene];
-}
 
-// getting a call, pause the game
--(void) applicationWillResignActive:(UIApplication *)application
-{
-	[[CCDirector sharedDirector] pause];
-}
+	[director_ pushScene: scene];
 
-// call got rejected
--(void) applicationDidBecomeActive:(UIApplication *)application
-{
-	[[CCDirector sharedDirector] resume];
+	return YES;
 }
-
-// purge memory
-- (void)applicationDidReceiveMemoryWarning:(UIApplication *)application
-{
-	[[CCDirector sharedDirector] purgeCachedData];
-}
-
-- (void)dealloc {
-	[window release];
-	[super dealloc];
-}
-
 @end

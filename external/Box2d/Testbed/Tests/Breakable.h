@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2008-2009 Erin Catto http://www.gphysics.com
+* Copyright (c) 2008-2009 Erin Catto http://www.box2d.org
 *
 * This software is provided 'as-is', without any express or implied
 * warranty.  In no event will the authors be held liable for any damages
@@ -36,8 +36,8 @@ public:
 			b2BodyDef bd;
 			b2Body* ground = m_world->CreateBody(&bd);
 
-			b2PolygonShape shape;
-			shape.SetAsEdge(b2Vec2(-40.0f, 0.0f), b2Vec2(40.0f, 0.0f));
+			b2EdgeShape shape;
+			shape.Set(b2Vec2(-40.0f, 0.0f), b2Vec2(40.0f, 0.0f));
 			ground->CreateFixture(&shape, 0.0f);
 		}
 
@@ -105,7 +105,7 @@ public:
 		// cached velocity.
 		b2Vec2 center1 = body1->GetWorldCenter();
 		b2Vec2 center2 = body2->GetWorldCenter();
-		
+
 		b2Vec2 velocity1 = m_velocity + b2Cross(m_angularVelocity, center1 - center);
 		b2Vec2 velocity2 = m_velocity + b2Cross(m_angularVelocity, center2 - center);
 

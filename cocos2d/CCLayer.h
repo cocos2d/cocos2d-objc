@@ -3,17 +3,17 @@
  *
  * Copyright (c) 2008-2010 Ricardo Quesada
  * Copyright (c) 2011 Zynga Inc.
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -26,11 +26,12 @@
 
 
 
-#import <Availability.h>
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
-#import <UIKit/UIKit.h>					// Needed for UIAccelerometerDelegate
+#import "ccMacros.h"
+
+#ifdef __CC_PLATFORM_IOS
+#import <UIKit/UIKit.h>									// Needed for UIAccelerometerDelegate
 #import "Platforms/iOS/CCTouchDelegateProtocol.h"		// Touches only supported on iOS
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+#elif defined(__CC_PLATFORM_MAC)
 #import "Platforms/Mac/CCEventDispatcher.h"
 #endif
 
@@ -40,13 +41,13 @@
 #pragma mark -
 #pragma mark CCLayer
 
-/** CCLayer is a subclass of CCNode that implements the TouchEventsDelegate protocol.
- 
+/** CCLayer is a subclass of CCNode that implements the CCTouchEventsDelegate protocol.
+
  All features from CCNode are valid, plus the following new features:
  - It can receive iPhone Touches
  - It can receive Accelerometer input
 */
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef __CC_PLATFORM_IOS
 @interface CCLayer : CCNode <UIAccelerometerDelegate, CCStandardTouchDelegate, CCTargetedTouchDelegate>
 {
 	BOOL isTouchEnabled_;
@@ -54,23 +55,23 @@
 }
 /** If isTouchEnabled, this method is called onEnter. Override it to change the
  way CCLayer receives touch events.
- ( Default: [[TouchDispatcher sharedDispatcher] addStandardDelegate:self priority:0] )
+ ( Default: [touchDispatcher addStandardDelegate:self priority:0] )
  Example:
      -(void) registerWithTouchDispatcher
      {
-        [[TouchDispatcher sharedDispatcher] addTargetedDelegate:self priority:INT_MIN+1 swallowsTouches:YES];
+        [touchDispatcher addTargetedDelegate:self priority:INT_MIN+1 swallowsTouches:YES];
      }
- 
+
  Valid only on iOS. Not valid on Mac.
- 
+
  @since v0.8.0
  */
 -(void) registerWithTouchDispatcher;
 
 /** whether or not it will receive Touch events.
  You can enable / disable touch events with this property.
- Only the touches of this node will be affected. This "method" is not propagated to it's children.
- 
+ Only the touches of this node will be affected. This "method" is not propagated to its children.
+
  Valid on iOS and Mac OS X v10.6 and later.
 
  @since v0.8.1
@@ -78,14 +79,14 @@
 @property(nonatomic,assign) BOOL isTouchEnabled;
 /** whether or not it will receive Accelerometer events
  You can enable / disable accelerometer events with this property.
- 
+
  Valid only on iOS. Not valid on Mac.
 
  @since v0.8.1
  */
 @property(nonatomic,assign) BOOL isAccelerometerEnabled;
 
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+#elif defined(__CC_PLATFORM_MAC)
 
 
 @interface CCLayer : CCNode <CCKeyboardEventDelegate, CCMouseEventDelegate, CCTouchEventDelegate>
@@ -96,19 +97,19 @@
 }
 
 /** whether or not it will receive mouse events.
- 
+
  Valind only Mac. Not valid on iOS
  */
 @property (nonatomic, readwrite) BOOL isMouseEnabled;
 
 /** whether or not it will receive keyboard events.
- 
+
  Valind only Mac. Not valid on iOS
  */
 @property (nonatomic, readwrite) BOOL isKeyboardEnabled;
 
 /** whether or not it will receive touch events.
- 
+
  Valid on iOS and Mac OS X v10.6 and later.
  */
 @property (nonatomic, readwrite) BOOL isTouchEnabled;
@@ -116,24 +117,24 @@
 /** priority of the mouse event delegate.
  Default 0.
  Override this method to set another priority.
- 
- Valind only Mac. Not valid on iOS 
+
+ Valind only Mac. Not valid on iOS
  */
 -(NSInteger) mouseDelegatePriority;
 
 /** priority of the keyboard event delegate.
  Default 0.
  Override this method to set another priority.
- 
- Valind only Mac. Not valid on iOS 
+
+ Valind only Mac. Not valid on iOS
  */
 -(NSInteger) keyboardDelegatePriority;
 
 /** priority of the touch event delegate.
  Default 0.
  Override this method to set another priority.
- 
- Valind only Mac. Not valid on iOS 
+
+ Valind only Mac. Not valid on iOS
  */
 -(NSInteger) touchDelegatePriority;
 
@@ -146,7 +147,7 @@
 #pragma mark CCLayerColor
 
 /** CCLayerColor is a subclass of CCLayer that implements the CCRGBAProtocol protocol.
- 
+
  All features from CCLayer are valid, plus the following new features:
  - opacity
  - RGB colors
@@ -154,10 +155,10 @@
 @interface CCLayerColor : CCLayer <CCRGBAProtocol, CCBlendProtocol>
 {
 	GLubyte		opacity_;
-	ccColor3B	color_;	
+	ccColor3B	color_;
 	ccVertex2F	squareVertices_[4];
-	ccColor4B	squareColors_[4];
-	
+	ccColor4F	squareColors_[4];
+
 	ccBlendFunc	blendFunc_;
 }
 
@@ -166,7 +167,7 @@
 /** creates a CCLayer with color. Width and height are the window size. */
 + (id) layerWithColor: (ccColor4B)color;
 
-/** initializes a CCLayer with color, width and height in Points. 
+/** initializes a CCLayer with color, width and height in Points.
  This is the designated initializer.
  */
 - (id) initWithColor:(ccColor4B)color width:(GLfloat)w height:(GLfloat)h;
@@ -200,17 +201,17 @@ the background.
  - direction
  - final color
  - interpolation mode
- 
+
  Color is interpolated between the startColor and endColor along the given
  vector (starting at the origin, ending at the terminus).  If no vector is
  supplied, it defaults to (0, -1) -- a fade from top to bottom.
- 
+
  If 'compressedInterpolation' is disabled, you will not see either the start or end color for
  non-cardinal vectors; a smooth gradient implying both end points will be still
  be drawn, however.
- 
+
  If ' compressedInterpolation' is enabled (default mode) you will see both the start and end colors of the gradient.
- 
+
  @since v0.99.5
  */
 @interface CCLayerGradient : CCLayerColor
@@ -246,13 +247,13 @@ the background.
  Default: YES
  */
 @property (nonatomic, readwrite) BOOL compressedInterpolation;
- 
+
 @end
 
 #pragma mark -
 #pragma mark CCLayerMultiplex
 
-/** CCLayerMultiplex is a CCLayer with the ability to multiplex it's children.
+/** CCLayerMultiplex is a CCLayer with the ability to multiplex its children.
  Features:
    - It supports one or more children
    - Only one children will be active a time
@@ -267,12 +268,12 @@ the background.
 +(id) layerWithLayers: (CCLayer*) layer, ... NS_REQUIRES_NIL_TERMINATION;
 /** initializes a MultiplexLayer with one or more layers using a variable argument list. */
 -(id) initWithLayers: (CCLayer*) layer vaList:(va_list) params;
-/** switches to a certain layer indexed by n. 
- The current (old) layer will be removed from it's parent with 'cleanup:YES'.
+/** switches to a certain layer indexed by n.
+ The current (old) layer will be removed from its parent with 'cleanup:YES'.
  */
 -(void) switchTo: (unsigned int) n;
 /** release the current layer and switches to another layer indexed by n.
- The current (old) layer will be removed from it's parent with 'cleanup:YES'.
+ The current (old) layer will be removed from its parent with 'cleanup:YES'.
  */
 -(void) switchToAndReleaseMe: (unsigned int) n;
 @end

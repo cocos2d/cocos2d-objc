@@ -5,17 +5,17 @@
  *
  * Copyright (c) 2008-2010 Ricardo Quesada
  * Copyright (c) 2011 Zynga Inc.
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -25,15 +25,13 @@
  * THE SOFTWARE.
  */
 
-#import <Availability.h>
-
 #import "Platforms/CCGL.h"
-#import "CCAction.h"
 #import "ccTypes.h"
-#import "CCTexture2D.h"
 #import "CCProtocols.h"
 #import "ccConfig.h"
+#import "ccGLState.h"
 #import "Support/CCArray.h"
+#import "kazmath/kazmath.h"
 
 enum {
 	kCCNodeTagInvalid = -1,
@@ -41,22 +39,26 @@ enum {
 
 @class CCCamera;
 @class CCGridBase;
+@class CCGLProgram;
+@class CCScheduler;
+@class CCActionManager;
+@class CCAction;
 
 /** CCNode is the main element. Anything thats gets drawn or contains things that get drawn is a CCNode.
  The most popular CCNodes are: CCScene, CCLayer, CCSprite, CCMenu.
- 
+
  The main features of a CCNode are:
  - They can contain other CCNode nodes (addChild, getChildByTag, removeChild, etc)
  - They can schedule periodic callback (schedule, unschedule, etc)
  - They can execute actions (runAction, stopAction, etc)
- 
+
  Some CCNode nodes provide extra functionality for them or their children.
- 
+
  Subclassing a CCNode usually means (one/all) of:
  - overriding init to initialize resources and schedule callbacks
  - create callbacks to handle the advancement of time
  - overriding draw to render the node
- 
+
  Features of CCNode:
  - position
  - scale (x, y)
@@ -68,111 +70,118 @@ enum {
  - visible
  - z-order
  - openGL z position
- 
+
  Default values:
   - rotation: 0
   - position: (x=0,y=0)
   - scale: (x=1,y=1)
   - contentSize: (x=0,y=0)
   - anchorPoint: (x=0,y=0)
- 
+
  Limitations:
  - A CCNode is a "void" object. It doesn't have a texture
- 
+
  Order in transformations with grid disabled
  -# The node will be translated (position)
  -# The node will be rotated (rotation)
- -# The node will be scaled (scale)
+ -# The node will be skewed (skewX, skewY)
+ -# The node will be scaled (scale, scaleX, scaleY)
  -# The node will be moved according to the camera values (camera)
- 
+
  Order in transformations with grid enabled
  -# The node will be translated (position)
  -# The node will be rotated (rotation)
- -# The node will be scaled (scale)
+ -# The node will be skewed (skewX, skewY)
+ -# The node will be scaled (scale, scaleX, scaleY)
  -# The grid will capture the screen
  -# The node will be moved according to the camera values (camera)
  -# The grid will render the captured screen
- 
+
  Camera:
  - Each node has a camera. By default it points to the center of the CCNode.
- */ 
+ */
 @interface CCNode : NSObject
-{	
+{
 	// rotation angle
-	float rotation_;	
-	
+	float rotation_;
+
 	// scaling factors
 	float scaleX_, scaleY_;
-	
-	// position of the node
-	CGPoint position_;
-	CGPoint	positionInPixels_;
-	
-	// skew angles
-	float skewX_, skewY_;
-
-	// is visible
-	BOOL visible_;
-	
-	// anchor point in pixels
-	CGPoint anchorPointInPixels_;	
-	// anchor point normalized
-	CGPoint anchorPoint_;	
-	// If YES the transformtions will be relative to (-transform.x, -transform.y).
-	// Sprites, Labels and any other "small" object uses it.
-	// Scenes, Layers and other "whole screen" object don't use it.
-	BOOL isRelativeAnchorPoint_;
-	
-	// untransformed size of the node
-	CGSize	contentSize_;
-	CGSize	contentSizeInPixels_;
-	
-	// transform
-	CGAffineTransform transform_, inverse_;
-#if	CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
-	GLfloat	transformGL_[16];
-#endif
 
 	// openGL real Z vertex
 	float vertexZ_;
-	
+
+	// position of the node
+	CGPoint position_;
+
+	// skew angles
+	float skewX_, skewY_;
+
+	// anchor point in points
+	CGPoint anchorPointInPoints_;
+	// anchor point normalized (NOT in points)
+	CGPoint anchorPoint_;
+
+	// untransformed size of the node
+	CGSize	contentSize_;
+
+	// transform
+	CGAffineTransform transform_, inverse_;
+
 	// a Camera
 	CCCamera *camera_;
-	
+
 	// a Grid
 	CCGridBase *grid_;
-	
+
 	// z-order value
 	NSInteger zOrder_;
-	
+
 	// array of children
 	CCArray *children_;
-	
+
 	// weakref to parent
 	CCNode *parent_;
-	
+
 	// a tag. any number you want to assign to the node
 	NSInteger tag_;
-    
+
 	// user data field
 	void *userData_;
 
-	// Is running
-	BOOL isRunning_;
-	
-	//used to preserve sequence while sorting children with the same zOrder
+	// Shader
+	CCGLProgram	*shaderProgram_;
+
+	// Server side state
+	ccGLServerState glServerState_;
+
+	// used to preserve sequence while sorting children with the same zOrder
 	NSUInteger orderOfArrival_;
+
+	// scheduler used to schedule timers and updates
+	CCScheduler		*scheduler_;
+
+	// ActionManager used to handle all the actions
+	CCActionManager	*actionManager_;
+
+	// Is running
+	BOOL isRunning_:1;
 
 	// To reduce memory, place BOOLs that are not properties here:
 	BOOL isTransformDirty_:1;
 	BOOL isInverseDirty_:1;
+
+	// is visible
+	BOOL visible_:1;
+	// If YES the transformtions will be relative to (-transform.x, -transform.y).
+	// Sprites, Labels and any other "small" object uses it.
+	// Scenes, Layers and other "whole screen" object don't use it.
+	BOOL isRelativeAnchorPoint_:1;
+
 	BOOL isReorderChildDirty_:1;
-#if	CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
-	BOOL isTransformGLDirty_:1;
-#endif
 }
 
-/** The z order of the node relative to it's "brothers": children of the same parent */
+/** The z order of the node relative to its "siblings": children of the same parent */
 @property(nonatomic,readonly) NSInteger zOrder;
 /** The real openGL Z vertex.
  Differences between openGL Z vertex and cocos2d Z order:
@@ -207,10 +216,7 @@ enum {
 @property(nonatomic,readwrite,assign) float scaleY;
 /** Position (x,y) of the node in points. (0,0) is the left-bottom corner. */
 @property(nonatomic,readwrite,assign) CGPoint position;
-/** Position (x,y) of the node in points. (0,0) is the left-bottom corner. */
-@property(nonatomic,readwrite,assign) CGPoint positionInPixels;
-/** A CCCamera object that lets you move the node using a gluLookAt
-*/
+/** A CCCamera object that lets you move the node using a gluLookAt */
 @property(nonatomic,readonly) CCCamera* camera;
 /** Array of children */
 @property(nonatomic,readonly) CCArray *children;
@@ -229,7 +235,7 @@ enum {
 /** The anchorPoint in absolute pixels.
  Since v0.8 you can only read it. If you wish to modify it, use anchorPoint instead
  */
-@property(nonatomic,readonly) CGPoint anchorPointInPixels;
+@property(nonatomic,readonly) CGPoint anchorPointInPoints;
 
 /** The untransformed size of the node in Points
  The contentSize remains the same no matter the node is scaled or rotated.
@@ -238,18 +244,11 @@ enum {
  */
 @property (nonatomic,readwrite) CGSize contentSize;
 
-/** The untransformed size of the node in Pixels
- The contentSize remains the same no matter the node is scaled or rotated.
- All nodes has a size. Layer and Scene has the same size of the screen.
- @since v0.8
- */
-@property (nonatomic,readwrite) CGSize contentSizeInPixels;
-
 /** whether or not the node is running */
 @property(nonatomic,readonly) BOOL isRunning;
 /** A weak reference to the parent */
 @property(nonatomic,readwrite,assign) CCNode* parent;
-/** If YES the transformtions will be relative to it's anchor point.
+/** If YES the transformtions will be relative to its anchor point.
  * Sprites, Labels and any other sizeble object use it have it enabled by default.
  * Scenes, Layers and other "whole screen" object don't use it, have it disabled by default.
  */
@@ -258,9 +257,30 @@ enum {
 @property(nonatomic,readwrite,assign) NSInteger tag;
 /** A custom user data pointer */
 @property(nonatomic,readwrite,assign) void *userData;
+/** Shader Program
+ @since v2.0
+ */
+@property(nonatomic,readwrite,retain) CCGLProgram *shaderProgram;
 
 /** used internally for zOrder sorting, don't change this manually */
 @property(nonatomic,readwrite) NSUInteger orderOfArrival;
+
+/** GL server side state
+ @since v2.0
+*/
+@property (nonatomic, readwrite) ccGLServerState glServerState;
+
+/** CCActionManager used by all the actions.
+ IMPORTANT: If you set a new CCActionManager, then previously created actions are going to be removed.
+ @since v2.0
+ */
+@property (nonatomic, readwrite, retain) CCActionManager *actionManager;
+
+/** CCScheduler used to schedule all "updates" and timers.
+ IMPORTANT: If you set a new CCScheduler, then previously created timers/update are going to be removed.
+ @since v2.0
+ */
+@property (nonatomic, readwrite, retain) CCScheduler *scheduler;
 
 // initializators
 /** allocates and initializes a node.
@@ -273,19 +293,24 @@ enum {
 
 // scene managment
 
-/** callback that is called every time the CCNode enters the 'stage'.
- If the CCNode enters the 'stage' with a transition, this callback is called when the transition starts.
- During onEnter you can't a "sister/brother" node.
+/** Event that is called every time the CCNode enters the 'stage'.
+ If the CCNode enters the 'stage' with a transition, this event is called when the transition starts.
+ During onEnter you can't access a sibling node.
+ If you override onEnter, you shall call [super onEnter].
  */
 -(void) onEnter;
-/** callback that is called when the CCNode enters in the 'stage'.
- If the CCNode enters the 'stage' with a transition, this callback is called when the transition finishes.
+
+/** Event that is called when the CCNode enters in the 'stage'.
+ If the CCNode enters the 'stage' with a transition, this event is called when the transition finishes.
+ If you override onEnterTransitionDidFinish, you shall call [super onEnterTransitionDidFinish].
  @since v0.8
  */
 -(void) onEnterTransitionDidFinish;
-/** callback that is called every time the CCNode leaves the 'stage'.
- If the CCNode leaves the 'stage' with a transition, this callback is called when the transition finishes.
+
+/** Event that is called every time the CCNode leaves the 'stage'.
+ If the CCNode leaves the 'stage' with a transition, this event is called when the transition finishes.
  During onExit you can't access a sibling node.
+ If you override onExit, you shall call [super onExit].
  */
 -(void) onExit;
 
@@ -353,7 +378,10 @@ enum {
  don't call this manually unless a child added needs to be removed in the same frame */
 - (void) sortAllChildren;
 
-/** Stops all running actions and schedulers
+/** Event that is called when the running node is no longer running (eg: its CCScene is being removed from the "stage" ).
+ On cleanup you should break any possible circular references.
+ CCNode's cleanup removes any possible scheduled timer and/or any possible action.
+ If you override cleanup, you shall call [super cleanup]
  @since v0.8
  */
 -(void) cleanup;
@@ -361,17 +389,12 @@ enum {
 // draw
 
 /** Override this method to draw your own node.
- The following GL states will be enabled by default:
-	- glEnableClientState(GL_VERTEX_ARRAY);
-	- glEnableClientState(GL_COLOR_ARRAY);
-	- glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-	- glEnable(GL_TEXTURE_2D);
- 
-   AND YOU SHOULD NOT DISABLE THEM AFTER DRAWING YOUR NODE
- 
- But if you enable any other GL state, you should disable it after drawing your node.
+ You should use cocos2d's GL API to enable/disable the GL state / shaders.
+ For further info, please see ccGLstate.h.
+ You shall NOT call [super draw];
  */
 -(void) draw;
+
 /** recursive method that visit its children and draw them */
 -(void) visit;
 
@@ -380,9 +403,8 @@ enum {
 /** performs OpenGL view-matrix transformation based on position, scale, rotation and other attributes. */
 -(void) transform;
 
-/** performs OpenGL view-matrix transformation of it's ancestors.
- Generally the ancestors are already transformed, but in certain cases (eg: attaching a FBO)
- it's necessary to transform the ancestors again.
+/** performs OpenGL view-matrix transformation of its ancestors.
+ Generally the ancestors are already transformed, but in certain cases (eg: attaching a FBO) it is necessary to transform the ancestors again.
  @since v0.7.2
  */
 -(void) transformAncestors;
@@ -390,19 +412,10 @@ enum {
 /** returns a "local" axis aligned bounding box of the node in points.
  The returned box is relative only to its parent.
  The returned box is in Points.
- 
+
  @since v0.8.2
  */
 - (CGRect) boundingBox;
-
-/** returns a "local" axis aligned bounding box of the node in pixels.
- The returned box is relative only to its parent.
- The returned box is in Points.
- 
- @since v0.99.5
- */
-- (CGRect) boundingBoxInPixels;
-
 
 // actions
 
@@ -426,7 +439,7 @@ enum {
  @return the Action the with the given tag
  */
 -(CCAction*) getActionByTag:(NSInteger) tag;
-/** Returns the numbers of actions that are running plus the ones that are schedule to run (actions in actionsToAdd and actions arrays). 
+/** Returns the numbers of actions that are running plus the ones that are schedule to run (actions in actionsToAdd and actions arrays).
  * Composable actions are counted as 1 action. Example:
  *    If you are running 1 Sequence of 7 actions, it will return 1.
  *    If you are running 7 Sequences of 2 actions, it will return 7.
@@ -441,7 +454,7 @@ enum {
 /** schedules the "update" method. It will use the order number 0. This method will be called every frame.
  Scheduled methods with a lower order value will be called before the ones that have a higher order value.
  Only one "udpate" method could be scheduled per node.
- 
+
  @since v0.99.3
  */
 -(void) scheduleUpdate;
@@ -455,7 +468,7 @@ enum {
 -(void) scheduleUpdateWithPriority:(NSInteger)priority;
 
 /* unschedules the "update" method.
- 
+
  @since v0.99.3
  */
 -(void) unscheduleUpdate;
@@ -468,7 +481,7 @@ enum {
 /** schedules a custom selector with an interval time in seconds.
  If time is 0 it will be ticked every frame.
  If time is 0, it is recommended to use 'scheduleUpdate' instead.
- 
+
  If the selector is already scheduled, then the interval parameter will be updated without scheduling it again.
  */
 -(void) schedule: (SEL) s interval:(ccTime)seconds;
@@ -479,7 +492,7 @@ enum {
 -(void) schedule:(SEL)selector interval:(ccTime)interval repeat: (uint) repeat delay:(ccTime) delay;
 
 /**
- Schedules a selector that runs only once, with a delay of 0 or larger 
+ Schedules a selector that runs only once, with a delay of 0 or larger
 */
 - (void) scheduleOnce:(SEL) selector delay:(ccTime) delay;
 
@@ -541,7 +554,7 @@ enum {
  */
 - (CGPoint)convertToWorldSpaceAR:(CGPoint)nodePoint;
 
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef __CC_PLATFORM_IOS
 /** Converts a UITouch to node (local) space coordinates. The result is in Points.
  @since v0.7.1
  */
@@ -551,5 +564,5 @@ enum {
  @since v0.7.1
  */
 - (CGPoint)convertTouchToNodeSpaceAR:(UITouch *)touch;
-#endif // __IPHONE_OS_VERSION_MAX_ALLOWED
+#endif // __CC_PLATFORM_IOS
 @end

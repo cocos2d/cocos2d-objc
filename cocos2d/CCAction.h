@@ -10,10 +10,10 @@
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -76,10 +76,10 @@ enum {
 //! called after the action has finished. It will set the 'target' to nil.
 //! IMPORTANT: You should never call "[action stop]" manually. Instead, use: "[target stopAction:action];"
 -(void) stop;
-//! called every frame with it's delta time. DON'T override unless you know what you are doing.
+//! called every frame with its delta time. DON'T override unless you know what you are doing.
 -(void) step: (ccTime) dt;
 //! called once per frame. time a value between 0 and 1
-//! For example: 
+//! For example:
 //! * 0 means that the action just started
 //! * 0.5 means that the action is in the middle
 //! * 1 means that the action is over
@@ -147,10 +147,10 @@ enum {
 
 @class CCNode;
 /** CCFollow is an action that "follows" a node.
- 
+
  Eg:
 	[layer runAction: [CCFollow actionWithTarget:hero]];
- 
+
  Instead of using CCCamera as a "follower", use this action instead.
  @since v0.99.2
  */
@@ -158,17 +158,17 @@ enum {
 {
 	/* node to follow */
 	CCNode	*followedNode_;
-	
+
 	/* whether camera should be limited to certain area */
 	BOOL boundarySet;
-	
+
 	/* if screensize is bigger than the boundary - update not needed */
 	BOOL boundaryFullyCovered;
-	
+
 	/* fast access to the screen dimensions */
 	CGPoint halfScreenSize;
 	CGPoint fullScreenSize;
-	
+
 	/* world boundaries */
 	float leftBoundary;
 	float rightBoundary;

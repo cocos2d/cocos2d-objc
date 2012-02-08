@@ -13,15 +13,15 @@
 -(id) init
 {
 	if( (self=[super initWithColor: ccc4(0,255,0,255)]) ) {
-	
-		
-		CCMenuItemFont *item1 = [CCMenuItemFont itemFromString: @"Test pushScene" target:self selector:@selector(onPushScene:)];
-		CCMenuItemFont *item2 = [CCMenuItemFont itemFromString: @"Test pushScene w/transition" target:self selector:@selector(onPushSceneTran:)];
-		CCMenuItemFont *item3 = [CCMenuItemFont itemFromString: @"Quit" target:self selector:@selector(onQuit:)];
-		
+
+
+		CCMenuItemFont *item1 = [CCMenuItemFont itemWithString: @"Test pushScene" target:self selector:@selector(onPushScene:)];
+		CCMenuItemFont *item2 = [CCMenuItemFont itemWithString: @"Test pushScene w/transition" target:self selector:@selector(onPushSceneTran:)];
+		CCMenuItemFont *item3 = [CCMenuItemFont itemWithString: @"Quit" target:self selector:@selector(onQuit:)];
+
 		CCMenu *menu = [CCMenu menuWithItems: item1, item2, item3, nil];
 		[menu alignItemsVertically];
-		
+
 		[self addChild: menu];
 
 		CGSize s = [CCDirector sharedDirector].winSize;
@@ -31,8 +31,8 @@
 		id rotate = [CCRotateBy actionWithDuration:2 angle:360];
 		id repeat = [CCRepeatForever actionWithAction:rotate];
 		[sprite runAction:repeat];
-		
-		
+
+
 		[self schedule:@selector(testDealloc:)];
 	}
 
@@ -87,11 +87,7 @@
 -(void) onQuit: (id) sender
 {
 	[[CCDirector sharedDirector] popScene];
-
-	// HA HA... no more terminate on sdk v3.0
-	// http://developer.apple.com/iphone/library/qa/qa2008/qa1561.html
-	if( [[UIApplication sharedApplication] respondsToSelector:@selector(terminate)] )
-		[[UIApplication sharedApplication] performSelector:@selector(terminate)];
+	[[CCDirector sharedDirector] end];
 }
 
 -(void) onVoid: (id) sender
@@ -106,27 +102,27 @@
 -(id) init
 {
 	if( (self=[super initWithColor: ccc4(255,0,0,255)]) ) {
-	
+
 		timeCounter = 0;
 
-		CCMenuItemFont *item1 = [CCMenuItemFont itemFromString: @"replaceScene" target:self selector:@selector(onReplaceScene:)];
-		CCMenuItemFont *item2 = [CCMenuItemFont itemFromString: @"replaceScene w/transition" target:self selector:@selector(onReplaceSceneTran:)];
-		CCMenuItemFont *item3 = [CCMenuItemFont itemFromString: @"Go Back" target:self selector:@selector(onGoBack:)];
-		
+		CCMenuItemFont *item1 = [CCMenuItemFont itemWithString: @"replaceScene" target:self selector:@selector(onReplaceScene:)];
+		CCMenuItemFont *item2 = [CCMenuItemFont itemWithString: @"replaceScene w/transition" target:self selector:@selector(onReplaceSceneTran:)];
+		CCMenuItemFont *item3 = [CCMenuItemFont itemWithString: @"Go Back" target:self selector:@selector(onGoBack:)];
+
 		CCMenu *menu = [CCMenu menuWithItems: item1, item2, item3, nil];
 		[menu alignItemsVertically];
-		
+
 		[self addChild: menu];
-		
+
 		[self schedule:@selector(testDealloc:)];
-		
+
 		CGSize s = [CCDirector sharedDirector].winSize;
 		CCSprite *sprite = [CCSprite spriteWithFile:@"grossini.png"];
 		[self addChild:sprite];
 		sprite.position = ccp(40, s.height/2);
 		id rotate = [CCRotateBy actionWithDuration:2 angle:360];
 		id repeat = [CCRepeatForever actionWithAction:rotate];
-		[sprite runAction:repeat];		
+		[sprite runAction:repeat];
 	}
 
 	return self;
@@ -173,21 +169,27 @@
 -(id) init
 {
 	if( (self=[super initWithColor: ccc4(0,0,255,255)]) ) {
+		
+#if defined(__CC_PLATFORM_IOS)
 		self.isTouchEnabled = YES;
+#elif defined(__CC_PLATFORM_MAC)
+		self.isMouseEnabled = YES;
+#endif
+
 		id label = [CCLabelTTF labelWithString:@"Touch to popScene" fontName:@"Marker Felt" fontSize:32];
 		[self addChild:label];
 		CGSize s = [[CCDirector sharedDirector] winSize];
 		[label setPosition:ccp(s.width/2, s.height/2)];
-		
+
 		[self schedule:@selector(testDealloc:)];
-		
+
 		CCSprite *sprite = [CCSprite spriteWithFile:@"grossini.png"];
 		[self addChild:sprite];
 		sprite.position = ccp(s.width/2, 40);
 		id rotate = [CCRotateBy actionWithDuration:2 angle:360];
 		id repeat = [CCRepeatForever actionWithAction:rotate];
-		[sprite runAction:repeat];		
-		
+		[sprite runAction:repeat];
+
 	}
 	return self;
 }
@@ -202,111 +204,81 @@
 {
 	NSLog(@"Layer3:testDealloc");
 }
+
+#if defined(__CC_PLATFORM_IOS)
 - (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
 	[[CCDirector sharedDirector] popScene];
 }
+#elif defined(__CC_PLATFORM_MAC)
+- (BOOL) ccMouseUp:(NSEvent *)event
+{
+	[[CCDirector sharedDirector] popScene];
+	return YES;
+}
+#endif
 @end
 
 
-#pragma mark -
-#pragma mark AppController
+#pragma mark - AppController - iOS
 
-// CLASS IMPLEMENTATIONS
+#if defined(__CC_PLATFORM_IOS)
+
 @implementation AppController
 
-- (void) applicationDidFinishLaunching:(UIApplication*)application
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-	// CC_DIRECTOR_INIT()
-	//
-	// 1. Initializes an EAGLView with 0-bit depth format, and RGB565 render buffer
-	// 2. EAGLView multiple touches: disabled
-	// 3. creates a UIWindow, and assign it to the "window" var (it must already be declared)
-	// 4. Parents EAGLView to the newly created window
-	// 5. Creates Display Link Director
-	// 5a. If it fails, it will use an NSTimer director
-	// 6. It will try to run at 60 FPS
-	// 7. Display FPS: NO
-	// 8. Device orientation: Portrait
-	// 9. Connects the director to the EAGLView
-	//
-	CC_DIRECTOR_INIT();
-	
-	// Obtain the shared director in order to...
-	CCDirector *director = [CCDirector sharedDirector];
-	
-	// Sets landscape mode
-	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
-	
+	[super application:application didFinishLaunchingWithOptions:launchOptions];
+
 	// Enables High Res mode (Retina Display) on iPhone 4 and maintains low res on all other devices
-	if( ! [director enableRetinaDisplay:YES] )
+	if( ! [director_ enableRetinaDisplay:YES] )
 		CCLOG(@"Retina Display Not supported");
-	
+
 	// Turn on display FPS
-	[director setDisplayFPS:YES];
-	
-	
+	[director_ setDisplayStats:YES];
+
+
 	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
 	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
 	// You can change anytime.
 	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA8888];
-	
+
 	// When in iPad / RetinaDisplay mode, CCFileUtils will append the "-ipad" / "-hd" to all loaded files
 	// If the -ipad  / -hdfile is not found, it will load the non-suffixed version
 	[CCFileUtils setiPadSuffix:@"-ipad"];			// Default on iPad is "" (empty string)
 	[CCFileUtils setRetinaDisplaySuffix:@"-hd"];	// Default on RetinaDisplay is "-hd"
-	
+
 	CCScene *scene = [CCScene node];
 
 	[scene addChild: [Layer1 node] z:0];
-	
-	[director runWithScene: scene];
+
+	[director_ pushScene: scene];
+
+	return YES;
 }
 
-// getting a call, pause the game
--(void) applicationWillResignActive:(UIApplication *)application
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-	[[CCDirector sharedDirector] pause];
+	return UIInterfaceOrientationIsLandscape(interfaceOrientation);
 }
-
-// call got rejected
--(void) applicationDidBecomeActive:(UIApplication *)application
-{
-	[[CCDirector sharedDirector] resume];
-}
-
--(void) applicationDidEnterBackground:(UIApplication*)application
-{
-	[[CCDirector sharedDirector] stopAnimation];
-}
-
--(void) applicationWillEnterForeground:(UIApplication*)application
-{
-	[[CCDirector sharedDirector] startAnimation];
-}
-
-// application will be killed
-- (void)applicationWillTerminate:(UIApplication *)application
-{	
-	CC_DIRECTOR_END();
-}
-
-// purge memory
-- (void)applicationDidReceiveMemoryWarning:(UIApplication *)application
-{
-	[[CCDirector sharedDirector] purgeCachedData];
-}
-
-// next delta time will be zero
--(void) applicationSignificantTimeChange:(UIApplication *)application
-{
-	[[CCDirector sharedDirector] setNextDeltaTimeZero:YES];
-}
-
-- (void) dealloc
-{
-	[window release];
-	[super dealloc];
-}
-
 @end
+
+#pragma mark - AppController - Mac
+
+#elif defined(__CC_PLATFORM_MAC)
+
+@implementation AppController
+
+- (void)applicationDidFinishLaunching:(NSNotification *)aNotification
+{
+	[super applicationDidFinishLaunching:aNotification];
+	
+	CCScene *scene = [CCScene node];
+	
+	[scene addChild: [Layer1 node] z:0];
+	
+	[director_ runWithScene:scene];
+}
+@end
+#endif
+

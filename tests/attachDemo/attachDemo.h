@@ -10,10 +10,9 @@
 {
 	IBOutlet UIWindow				*window;
 	IBOutlet UIView					*mainView;
-	IBOutlet UITableView			*myTableView;
-	IBOutlet UINavigationBar		*myNavigation;	
-	
+	IBOutlet UINavigationBar		*myNavigation;
 
+	CCDirector						*director;
 	int	state;
 }
 

@@ -3,17 +3,17 @@
  *
  * Copyright (c) 2009-2010 Ricardo Quesada
  * Copyright (c) 2011 Zynga Inc.
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -35,10 +35,11 @@
  * since the user should not use them.
  *
  */
- 
 
-#import <Availability.h>
+
 #import <Foundation/Foundation.h>
+
+#import "ccMacros.h"
 
 enum {
 	TMXLayerAttribNone = 1 << 0,
@@ -56,17 +57,23 @@ enum {
 	TMXPropertyTile
 };
 
+typedef enum ccTMXTileFlags_ {
+	kCCTMXTileHorizontalFlag		= 0x80000000,
+	kCCTMXTileVerticalFlag			= 0x40000000,
+	kCCTMXTileDiagonalFlag			= 0x20000000,
+
+	kCCFlipedAll					= (kCCTMXTileHorizontalFlag|kCCTMXTileVerticalFlag|kCCTMXTileDiagonalFlag),
+	kCCFlippedMask					= ~(kCCFlipedAll),
+} ccTMXTileFlags;
+
 // Bits on the far end of the 32-bit global tile ID (GID's) are used for tile flags
-#define kFlippedHorizontallyFlag	0x80000000
-#define kFlippedVerticallyFlag		0x40000000
-#define kFlippedMask				~(kFlippedHorizontallyFlag|kFlippedVerticallyFlag)
 
 /* CCTMXLayerInfo contains the information about the layers like:
  - Layer name
  - Layer size
  - Layer opacity at creation time (it can be modified at runtime)
- - Whether the layer is visible (if it's not visible, then the CocosNode won't be created)
- 
+ - Whether the layer is visible (if it is not visible, then the CCNode won't be created)
+
  This information is obtained from the TMX file.
  */
 @interface CCTMXLayerInfo : NSObject
@@ -102,8 +109,8 @@ enum {
  - size of the tiles
  - Image used for the tiles
  - Image size
- 
- This information is obtained from the TMX file. 
+
+ This information is obtained from the TMX file.
  */
 @interface CCTMXTilesetInfo : NSObject
 {
@@ -112,10 +119,10 @@ enum {
 	CGSize			tileSize_;
 	unsigned int	spacing_;
 	unsigned int	margin_;
-	
+
 	// filename containing the tiles (should be spritesheet / texture atlas)
 	NSString	*sourceImage_;
-	
+
 	// size in pixels of the image
 	CGSize		imageSize_;
 }
@@ -134,60 +141,60 @@ enum {
  - Map orientation (hexagonal, isometric or orthogonal)
  - Tile size
  - Map size
- 
+
  And it also contains:
  - Layers (an array of TMXLayerInfo objects)
  - Tilesets (an array of TMXTilesetInfo objects)
  - ObjectGroups (an array of TMXObjectGroupInfo objects)
- 
+
  This information is obtained from the TMX file.
- 
+
  */
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef __CC_PLATFORM_IOS
 #if defined(__IPHONE_4_0)
 @interface CCTMXMapInfo : NSObject <NSXMLParserDelegate>
 #else
 @interface CCTMXMapInfo : NSObject
 #endif
 
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+#elif defined(__CC_PLATFORM_MAC)
 @interface CCTMXMapInfo : NSObject <NSXMLParserDelegate>
 #endif
-{	
+{
 	NSMutableString	*currentString;
-    BOOL				storingCharacters;	
+    BOOL				storingCharacters;
 	int					layerAttribs;
 	int					parentElement;
 	unsigned int		parentGID_;
 
-	
+
 	// tmx filename
 	NSString *filename_;
 
 	// tmx resource path
 	NSString *resources_;
-	
+
 	// map orientation
-	int	orientation_;	
-	
+	int	orientation_;
+
 	// map width & height
 	CGSize	mapSize_;
-	
+
 	// tiles width & height
 	CGSize	tileSize_;
-	
+
 	// Layers
 	NSMutableArray *layers_;
-	
+
 	// tilesets
 	NSMutableArray *tilesets_;
-		
+
 	// ObjectGroups
 	NSMutableArray *objectGroups_;
-	
+
 	// properties
 	NSMutableDictionary *properties_;
-	
+
 	// tile properties
 	NSMutableDictionary *tileProperties_;
 }

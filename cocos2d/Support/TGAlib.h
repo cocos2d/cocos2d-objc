@@ -25,13 +25,13 @@ enum {
 typedef struct sImageTGA {
 	int status;
 	unsigned char type, pixelDepth;
-	
+
 	/** map width */
 	short int width;
-	
+
 	/** map height */
 	short int height;
-	
+
 	/** raw data */
 	unsigned char *imageData;
 	int flipped;

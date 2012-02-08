@@ -10,66 +10,81 @@
 
 @implementation AppController
 
-- (void)applicationDidFinishLaunching:(UIApplication *)application
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
 	// Init the window
 	
 	CC_DIRECTOR_INIT();
 	
-	// get instance of the shared director
-	CCDirector *director = [CCDirector sharedDirector];
-	
-	// before creating any layer, set the landscape mode
-	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
-	
 	// display FPS (useful when debugging)
-	[director setDisplayFPS:YES];
+	[director_ setDisplayStats:YES];
 
 	CCScene *scene = [nextAction() node];
-	[director runWithScene:scene];
+	[director_ pushScene:scene];
+	
+	return YES;
 }
 
-- (void)dealloc {
-	[window release];
-	[super dealloc];
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+	return UIInterfaceOrientationIsLandscape(interfaceOrientation);
+}
+
+-(void) dumpProfilerInfo:(ccTime)dt
+{
+	CC_PROFILER_DISPLAY_TIMERS();
 }
 
 // getting a call, pause the game
 -(void) applicationWillResignActive:(UIApplication *)application
 {
-	[[CCDirector sharedDirector] pause];
+	if( [navController_ visibleViewController] == director_ )
+		[director_ pause];
 }
 
 // call got rejected
 -(void) applicationDidBecomeActive:(UIApplication *)application
 {
-	[[CCDirector sharedDirector] resume];
+	if( [navController_ visibleViewController] == director_ )
+		[director_ resume];
 }
 
 -(void) applicationDidEnterBackground:(UIApplication*)application
 {
-	[[CCDirector sharedDirector] stopAnimation];
+	if( [navController_ visibleViewController] == director_ )
+		[director_ stopAnimation];
 }
 
 -(void) applicationWillEnterForeground:(UIApplication*)application
 {
-	[[CCDirector sharedDirector] startAnimation];
+	if( [navController_ visibleViewController] == director_ )
+		[director_ startAnimation];
 }
 
+// application will be killed
 - (void)applicationWillTerminate:(UIApplication *)application
-{	
+{
 	CC_DIRECTOR_END();
 }
 
 // purge memory
-- (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {
-	[[CCDirector sharedDirector] purgeCachedData];
+- (void)applicationDidReceiveMemoryWarning:(UIApplication *)application
+{
+	[director_ purgeCachedData];
 }
 
 // next delta time will be zero
 -(void) applicationSignificantTimeChange:(UIApplication *)application
 {
-	[[CCDirector sharedDirector] setNextDeltaTimeZero:YES];
+	[director_ setNextDeltaTimeZero:YES];
+}
+
+- (void) dealloc
+{
+	[window_ release];
+	[navController_ release];
+	
+	[super dealloc];
 }
 
 @end

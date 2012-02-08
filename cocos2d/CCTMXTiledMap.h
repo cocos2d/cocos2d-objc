@@ -3,17 +3,17 @@
  *
  * Copyright (c) 2009-2010 Ricardo Quesada
  * Copyright (c) 2011 Zynga Inc.
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -30,7 +30,6 @@
 
 #import "CCNode.h"
 
-
 @class CCTMXLayer;
 @class CCTMXObjectGroup;
 
@@ -39,16 +38,16 @@ enum
 {
 	/** Orthogonal orientation */
 	CCTMXOrientationOrtho,
-	
+
 	/** Hexagonal orientation */
 	CCTMXOrientationHex,
-	
+
 	/** Isometric orientation */
 	CCTMXOrientationIso,
 };
 
 /** CCTMXTiledMap knows how to parse and render a TMX map.
- 
+
  It adds support for the TMX tiled map format used by http://www.mapeditor.org
  It supports isometric, hexagonal and orthogonal tiles.
  It also supports object groups, objects, and properties.
@@ -69,12 +68,12 @@ enum
  - Each object group will be treated as an NSMutableArray
  - Object class which will contain all the properties in a dictionary
  - Properties can be assigned to the Map, Layer, Object Group, and Object
- 
+
  Limitations:
  - It only supports one tileset per layer.
  - Embeded images are not supported
  - It only supports the XML format (the JSON format is not supported)
- 
+
  Technical description:
    Each layer is created using an CCTMXLayer (subclass of CCSpriteBatchNode). If you have 5 layers, then 5 CCTMXLayer will be created,
    unless the layer visibility is off. In that case, the layer won't be created at all.
@@ -85,12 +84,12 @@ enum
    Each object group is created using a CCTMXObjectGroup which is a subclass of NSMutableArray.
    You can obtain the object groups at runtime by:
    - [map objectGroupNamed: name_of_the_object_group];
-  
+
    Each object is a CCTMXObject.
 
    Each property is stored as a key-value pair in an NSMutableDictionary.
    You can obtain the properties at runtime by:
- 
+
 		[map propertyNamed: name_of_the_property];
 		[layer propertyNamed: name_of_the_property];
 		[objectGroup propertyNamed: name_of_the_property];

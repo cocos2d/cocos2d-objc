@@ -1,5 +1,5 @@
 //
-// EAGLViewTest
+// CCGLViewTest
 // http://www.cocos2d-iphone.org
 //
 
@@ -9,10 +9,10 @@
 @interface EAGLViewTestDelegate : NSObject <UIApplicationDelegate>
 {
 	IBOutlet UIWindow				*window_;
-	IBOutlet EAGLView				*glView_;	
+	IBOutlet CCGLView				*glView_;
 }
 
 @property (nonatomic, retain) UIWindow *window;
-@property (nonatomic, retain) EAGLView *glView;
+@property (nonatomic, retain) CCGLView *glView;
 
 @end

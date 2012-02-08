@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BaseAppController.h"
 
 //Channel group ids, the channel groups define how voices
 //will be shared.  If you wish you can simply have a single
@@ -25,15 +26,13 @@
 @class StoryScene;
 @class ActionScene;
 
-@interface TomTheTurretAppDelegate : NSObject <UIApplicationDelegate> {
-	UIWindow *window;
+@interface TomTheTurretAppDelegate : BaseAppController {
     LoadingScene *_loadingScene;
     MainMenuScene *_mainMenuScene;
     StoryScene *_storyScene;
     ActionScene *_actionScene;
 }
 
-@property (nonatomic, retain) UIWindow *window;
 @property (nonatomic, retain) LoadingScene *loadingScene;
 @property (nonatomic, retain) MainMenuScene *mainMenuScene;
 @property (nonatomic, retain) StoryScene *storyScene;

@@ -15,38 +15,40 @@ BOOL fadingOut;
 	CDLOG(@">> Audio tests init");
 
 	if( (self=[super init] )) {
-		//Get a pointer to the sound engine 
+		//Get a pointer to the sound engine
 		sae = [SimpleAudioEngine sharedEngine];
 		[[CDAudioManager sharedManager] setResignBehavior:kAMRBStopPlay autoHandle:YES];
-		actionManager = [CCActionManager sharedManager];
-		
+
+		CCDirector *director = [CCDirector sharedDirector];
+		actionManager = [director actionManager];
+
 		//Test preloading two of our files, this will have no performance effect. In reality you would
 		//probably do this during start up
 		[sae preloadEffect:@"dp1.caf"];
 		[sae preloadEffect:@"dp2.caf"];
 		[sae preloadBackgroundMusic:@"bgm.mp3"];
-		
-		//Get sound sources for our files, we must retain them if we want to use them 
+
+		//Get sound sources for our files, we must retain them if we want to use them
 		//outside this method.
 		sound1 = [[sae soundSourceForFile:@"dp3.caf"] retain];
 		sound2 = [[sae soundSourceForFile:@"dp1.caf"] retain];
 		sound3 = [[sae soundSourceForFile:@"dp2.caf"] retain];
 		CDLOG(@"Sound 1 duration %0.4f",sound1.durationInSeconds);
-		
+
 		//Used in test 3
 		fadingOut = YES;
 		sound3.gain = 0.0f;
-		
+
 		//Used in test 1
 		sourceFader = [[CDSoundSourceFader alloc] init:sound1 interpolationType:kIT_SCurve startVal:1.0f endVal:0.0f];
 		[sourceFader setStopTargetWhenComplete:YES];
-		//Create a property modifier action to wrap the fader 
+		//Create a property modifier action to wrap the fader
 		faderAction = [CDXPropertyModifierAction actionWithDuration:1.0f modifier:sourceFader];
 		[faderAction retain];
 		return self;
-	} 
+	}
 	return self;
-}	
+}
 
 //NB: this dealloc is completely shutting down the audio system. It is used for testing for memory leaks.
 //in practice you would most likely only release everything when your app terminates.
@@ -71,7 +73,7 @@ BOOL fadingOut;
 	[SimpleAudioEngine end];
 	sae = nil;
 	[super dealloc];
-}	
+}
 
 /**
  This test shows how to do a fade with a reused action and property modifier. The action and property modifier are created
@@ -94,7 +96,7 @@ BOOL fadingOut;
 	[faderAction initWithDuration:1.0f modifier:sourceFader];
 	//Now just run our action.
 	[actionManager addAction:faderAction target:sound1 paused:NO];
-}	
+}
 
 /**
  This test shows how to use the convenience method fadeSoundEffect to fade out a sound effect. It will result in a
@@ -108,16 +110,18 @@ BOOL fadingOut;
 	sound2.gain = 0.0f;
 	[sound2 play];
 	[CDXPropertyModifierAction fadeSoundEffect:2.0f finalVolume:1.0f curveType:kIT_SCurve shouldStop:YES effect:sound2];
-}	
+}
 
-/** 
+/**
  This test alternates between fading a sound in and out using the convenience method fadeSoundEffect.
  Note that the sound does not stop when the fade in finishes, as would be normal but stops after the fade out.
  */
 -(void) testThree:(id) sender {
 	CDLOG(@">>Test three");
 	//Stop any actions currently running
-	[[CCActionManager sharedManager] removeAllActionsFromTarget:sound3];
+	CCDirector *director = [CCDirector sharedDirector];
+
+	[[director actionManager] removeAllActionsFromTarget:sound3];
 	if (!fadingOut) {
 		//Fade it out
 		[CDXPropertyModifierAction fadeSoundEffect:1.0f finalVolume:0.0f curveType:kIT_Linear shouldStop:YES effect:sound3];
@@ -128,7 +132,7 @@ BOOL fadingOut;
 		[CDXPropertyModifierAction fadeSoundEffect:1.0f finalVolume:1.0f curveType:kIT_Linear shouldStop:NO effect:sound3];
 	}
 	fadingOut = !fadingOut;
-}	
+}
 
 /**
  This test is a stress test, it rapidly plays back enough sounds to exhaust the number of allocated sources/voices.
@@ -141,18 +145,18 @@ BOOL fadingOut;
 	//Test locking
 	float pitch = 2.0f;
 	for (int i = 0; i < 32; i++) {
-//		ALuint played = 
+//		ALuint played =
 		[sae playEffect:@"dp4.caf" pitch:pitch pan:0.0f gain:0.1f];
 		//CDLOG(@"-->Played %i",played);
 		pitch -= 1.5f/32.0f;
 	}
 }
 
-/** 
+/**
  Test fading out of background music. The test toggles between starting the music with no fade and fading it out.
  */
 -(void) testFive:(id) sender {
-	
+
 	CDLOG(@">>Test five");
 	if (![sae isBackgroundMusicPlaying]) {
 		CDLOG(@">> Background music is not playing");
@@ -162,7 +166,7 @@ BOOL fadingOut;
 	} else {
 		[CDXPropertyModifierAction fadeBackgroundMusic:2.0f finalVolume:0.0f curveType:kIT_Exponential shouldStop:YES];
 	}
-	
+
 	//CDLOG(@">>Will play background music? %i",[[CDAudioManager sharedManager] willPlayBackgroundMusic]);
 }
 
@@ -179,8 +183,8 @@ BOOL fadingOut;
 	} else {
 		//Fade out
 		[CDXPropertyModifierAction fadeSoundEffects:2.0f finalVolume:0.0f curveType:kIT_Linear shouldStop:NO];
-	}	
-}	
+	}
+}
 
 /**
  Test unloading effects
@@ -192,7 +196,7 @@ BOOL fadingOut;
 	[sae preloadEffect:@"nosuchfile.caf"];
 	[sae preloadEffect:@"dp1.caf"];
 	[sae playEffect:@"dp1.caf"];
-}	
+}
 
 
 
@@ -232,8 +236,9 @@ BOOL fadingOut;
 							  faderinaction,
 							  Nil];
 
-
-		[[CCActionManager sharedManager] addAction:action target:player paused:NO];
+		
+		CCActionManager *actionMgr = [[CCDirector sharedDirector] actionManager];
+		[actionMgr addAction:action target:player paused:NO];
 
 	}
 }

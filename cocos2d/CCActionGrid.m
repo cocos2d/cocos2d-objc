@@ -9,10 +9,10 @@
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -45,19 +45,19 @@
 	{
 		gridSize_ = gSize;
 	}
-	
+
 	return self;
 }
 
--(void)startWithTarget:(id)aTarget
+-(void)startWithTarget:(id)target
 {
-	[super startWithTarget:aTarget];
+	[super startWithTarget:target];
 
 	CCGridBase *newgrid = [self grid];
-	
-	CCNode *t = (CCNode*) target_;
+
+	CCNode *t = (CCNode*) target;
 	CCGridBase *targetGrid = [t grid];
-	
+
 	if ( targetGrid && targetGrid.reuseGrid > 0 )
 	{
 		if ( targetGrid.active && targetGrid.gridSize.x == gridSize_.x && targetGrid.gridSize.y == gridSize_.y && [targetGrid isKindOfClass:[newgrid class]] )
@@ -69,10 +69,10 @@
 	{
 		if ( targetGrid && targetGrid.active )
 			targetGrid.active = NO;
-		
-		t.grid = newgrid;
+
+		[t setGrid: newgrid];
 		t.grid.active = YES;
-	}	
+	}
 }
 
 -(CCGridBase *)grid
@@ -197,7 +197,7 @@
 		rate_ = 1.0f;
 		other_ = (CCActionInterval*)[action retain];
 	}
-	
+
 	return self;
 }
 
@@ -216,13 +216,13 @@
 -(void) update: (ccTime) time
 {
 	float f = time*2;
-	
+
 	if (f > 1)
 	{
 		f -= 1;
 		f = 1 - f;
 	}
-	
+
 	[other_ setAmplitudeRate:powf(f, rate_)];
 	[other_ update:time];
 }
@@ -255,7 +255,7 @@
 		rate_ = 1.0f;
 		other_ = (CCActionInterval*)[action retain];
 	}
-	
+
 	return self;
 }
 
@@ -305,7 +305,7 @@
 		rate_ = 1.0f;
 		other_ = (CCActionInterval*)[action retain];
 	}
-	
+
 	return self;
 }
 
@@ -347,7 +347,7 @@
 
 	if ( [[self target] grid] && [[[self target] grid] active] ) {
 		[[[self target] grid] setActive: NO];
-		
+
 //		[[self target] setGrid: nil];
 	}
 }
@@ -370,7 +370,7 @@
 {
 	if ( (self = [super init]) )
 		t_ = times;
-	
+
 	return self;
 }
 

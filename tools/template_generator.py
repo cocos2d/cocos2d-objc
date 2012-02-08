@@ -24,7 +24,7 @@ _template_open_body = """<?xml version="1.0" encoding="UTF-8"?>
 	<key>Description</key>
 	<string>This is a template description.</string>
 	<key>Identifier</key>
-	<string>com.cocos2d.%s</string>
+	<string>com.cocos2d-v2.%s</string>
 	<key>Kind</key>
 	<string>Xcode.Xcode3.ProjectTemplateUnitKind</string>"""
 
@@ -203,7 +203,7 @@ def help():
     print "directory_to_parse"
     print "\nExample:"
     print "\t%s -i kazmathlib --header-path ___PACKAGENAME___/libs/kazmath/include libs" % sys.argv[0]
-    print "\t%s -i cocos2dlib --ancestor com.cocos2d.cocos2dshaders libs" % sys.argv[0]
+    print "\t%s -i cocos2dlib --ancestor com.cocos2d-v2.cocos2dshaders libs" % sys.argv[0]
     sys.exit(-1)
 
 if __name__ == "__main__":

@@ -26,7 +26,7 @@ void PNGAPI
 png_set_crc_action(png_structp png_ptr, int crit_action, int ancil_action)
 {
    png_debug(1, "in png_set_crc_action");
- 
+
    if (png_ptr == NULL)
       return;
 
@@ -98,7 +98,7 @@ png_set_background(png_structp png_ptr,
    int need_expand, double background_gamma)
 {
    png_debug(1, "in png_set_background");
- 
+
    if (png_ptr == NULL)
       return;
    if (background_gamma_code == PNG_BACKGROUND_GAMMA_UNKNOWN)

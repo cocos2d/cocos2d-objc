@@ -3,17 +3,17 @@
  *
  * Copyright (c) 2008-2010 Ricardo Quesada
  * Copyright (c) 2011 Zynga Inc.
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -24,8 +24,6 @@
  *
  */
 
-#import <Availability.h>
-
 #import "ccConfig.h"
 #import "CCSpriteBatchNode.h"
 #import "CCSprite.h"
@@ -34,8 +32,18 @@
 #import "CCAnimation.h"
 #import "CCAnimationCache.h"
 #import "CCTextureCache.h"
-#import "Support/CGPointExtension.h"
 #import "CCDrawingPrimitives.h"
+#import "CCShaderCache.h"
+#import "ccGLState.h"
+#import "CCGLProgram.h"
+#import "CCDirector.h"
+#import "Support/CGPointExtension.h"
+#import "Support/TransformUtils.h"
+#import "Support/CCProfiling.h"
+#import "Support/OpenGL_Internal.h"
+
+// external
+#import "kazmath/GL/matrix.h"
 
 #pragma mark -
 #pragma mark CCSprite
@@ -46,23 +54,10 @@
 #define RENDER_IN_SUBPIXEL(__A__) ( (int)(__A__))
 #endif
 
-// XXX: Optmization
-struct transformValues_ {
-	CGPoint pos;		// position x and y
-	CGPoint	scale;		// scale x and y
-	float	rotation;
-	CGPoint skew;		// skew x and y
-	CGPoint ap;			// anchor point in pixels
-	BOOL	visible;
-};
 
-static SEL selSortMethod = NULL;
-
-@interface CCSprite (Private)
--(void)updateTextureCoords:(CGRect)rect;
--(void)updateBlendFunc;
--(void) initAnimationDictionary;
--(void) getTransformValues:(struct transformValues_*)tv;	// optimization
+@interface CCSprite ()
+-(void) setTextureCoords:(CGRect)rect;
+-(void) updateBlendFunc;
 -(void) setReorderChildDirtyRecursively;
 @end
 
@@ -74,11 +69,8 @@ static SEL selSortMethod = NULL;
 @synthesize textureRect = rect_;
 @synthesize textureRectRotated = rectRotated_;
 @synthesize blendFunc = blendFunc_;
-@synthesize usesBatchNode = usesBatchNode_;
 @synthesize textureAtlas = textureAtlas_;
-@synthesize batchNode = batchNode_;
-@synthesize honorParentTransform = honorParentTransform_;
-@synthesize offsetPositionInPixels = offsetPositionInPixels_;
+@synthesize offsetPosition = offsetPosition_;
 
 
 +(id)spriteWithTexture:(CCTexture2D*)texture
@@ -109,7 +101,7 @@ static SEL selSortMethod = NULL;
 +(id)spriteWithSpriteFrameName:(NSString*)spriteFrameName
 {
 	CCSpriteFrame *frame = [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:spriteFrameName];
-	
+
 	NSAssert1(frame!=nil, @"Invalid spriteFrameName: %@", spriteFrameName);
 	return [self spriteWithSpriteFrame:frame];
 }
@@ -119,79 +111,64 @@ static SEL selSortMethod = NULL;
 	return [[[self alloc] initWithCGImage:image key:key] autorelease];
 }
 
-+(id) spriteWithBatchNode:(CCSpriteBatchNode*)batchNode rect:(CGRect)rect
-{
-	return [[[self alloc] initWithBatchNode:batchNode rect:rect] autorelease];
-}
-
 -(id) init
 {
-	if( (self=[super init]) ) {
+	return [self initWithTexture:nil rect:CGRectZero];
+}
+
+// designated initializer
+-(id) initWithTexture:(CCTexture2D*)texture rect:(CGRect)rect rotated:(BOOL)rotated
+{
+	if( (self = [super init]) )
+	{
+		// shader program
+		self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTextureColor];
+
 		dirty_ = recursiveDirty_ = NO;
-		
-		// by default use "Self Render".
-		// if the sprite is added to a batchnode, then it will automatically switch to "batchnode Render"
-		[self useSelfRender];
-		
+
 		opacityModifyRGB_			= YES;
 		opacity_					= 255;
 		color_ = colorUnmodified_	= ccWHITE;
-		
+
 		blendFunc_.src = CC_BLEND_SRC;
 		blendFunc_.dst = CC_BLEND_DST;
-		
-		// update texture (calls updateBlendFunc)
-		[self setTexture:nil];
-		
-		// clean the Quad
-		bzero(&quad_, sizeof(quad_));
-		
+
 		flipY_ = flipX_ = NO;
-		
+
 		// default transform anchor: center
 		anchorPoint_ =  ccp(0.5f, 0.5f);
-		
+
 		// zwoptex default values
-		offsetPositionInPixels_ = CGPointZero;
-		
-		honorParentTransform_ = CC_HONOR_PARENT_TRANSFORM_ALL;
+		offsetPosition_ = CGPointZero;
+
 		hasChildren_ = NO;
-		
+		batchNode_ = nil;
+
+		// clean the Quad
+		bzero(&quad_, sizeof(quad_));
+
 		// Atlas: Color
 		ccColor4B tmpColor = {255,255,255,255};
 		quad_.bl.colors = tmpColor;
 		quad_.br.colors = tmpColor;
 		quad_.tl.colors = tmpColor;
-		quad_.tr.colors = tmpColor;	
-		
-		// Atlas: Vertex
-		
-		// updated in "useSelfRender"
-		
-		// Atlas: TexCoords
-		[self setTextureRectInPixels:CGRectZero rotated:NO untrimmedSize:CGSizeZero];
-		
-		// updateMethod selector
-		updateMethod = (__typeof__(updateMethod))[self methodForSelector:@selector(updateTransform)];
-		
-		// sortMethod selector
-		selSortMethod = @selector(sortAllChildren);
-		sortMethod = (__typeof__(sortMethod))[self methodForSelector:selSortMethod];
+		quad_.tr.colors = tmpColor;
+
+		[self setTexture:texture];
+		[self setTextureRect:rect rotated:rotated untrimmedSize:rect.size];
+
+
+		// by default use "Self Render".
+		// if the sprite is added to a batchnode, then it will automatically switch to "batchnode Render"
+		[self setBatchNode:nil];
+
 	}
-	
 	return self;
 }
 
 -(id) initWithTexture:(CCTexture2D*)texture rect:(CGRect)rect
 {
-	NSAssert(texture!=nil, @"Invalid texture for sprite");
-	// IMPORTANT: [self init] and not [super init];
-	if( (self = [self init]) )
-	{
-		[self setTexture:texture];
-		[self setTextureRect:rect];
-	}
-	return self;
+	return [self initWithTexture:texture rect:rect rotated:NO];
 }
 
 -(id) initWithTexture:(CCTexture2D*)texture
@@ -205,7 +182,7 @@ static SEL selSortMethod = NULL;
 
 -(id) initWithFile:(NSString*)filename
 {
-	NSAssert(filename!=nil, @"Invalid filename for sprite");
+	NSAssert(filename != nil, @"Invalid filename for sprite");
 
 	CCTexture2D *texture = [[CCTextureCache sharedTextureCache] addImage: filename];
 	if( texture ) {
@@ -250,31 +227,14 @@ static SEL selSortMethod = NULL;
 - (id) initWithCGImage:(CGImageRef)image key:(NSString*)key
 {
 	NSAssert(image!=nil, @"Invalid CGImageRef for sprite");
-	
+
 	// XXX: possible bug. See issue #349. New API should be added
 	CCTexture2D *texture = [[CCTextureCache sharedTextureCache] addCGImage:image forKey:key];
-	
+
 	CGRect rect = CGRectZero;
 	rect.size = texture.contentSize;
-	
+
 	return [self initWithTexture:texture rect:rect];
-}
-
--(id) initWithBatchNode:(CCSpriteBatchNode*)batchNode rect:(CGRect)rect
-{
-	id ret = [self initWithTexture:batchNode.texture rect:rect];
-	[self useBatchNode:batchNode];
-	
-	return ret;
-}
-
--(id) initWithBatchNode:(CCSpriteBatchNode*)batchNode rectInPixels:(CGRect)rect
-{
-	id ret = [self initWithTexture:batchNode.texture];
-	[self setTextureRectInPixels:rect rotated:NO untrimmedSize:rect.size];
-	[self useBatchNode:batchNode];
-	
-	return ret;
 }
 
 - (NSString*) description
@@ -292,60 +252,66 @@ static SEL selSortMethod = NULL;
 	[super dealloc];
 }
 
--(void) useSelfRender
+-(CCSpriteBatchNode*) batchNode
 {
-	atlasIndex_ = CCSpriteIndexNotInitialized;
-	usesBatchNode_ = NO;
-	textureAtlas_ = nil;
-	batchNode_ = nil;
-	dirty_ = recursiveDirty_ = NO;
-	
-	float x1 = 0 + offsetPositionInPixels_.x;
-	float y1 = 0 + offsetPositionInPixels_.y;
-	float x2 = x1 + rectInPixels_.size.width;
-	float y2 = y1 + rectInPixels_.size.height;
-	quad_.bl.vertices = (ccVertex3F) { x1, y1, 0 };
-	quad_.br.vertices = (ccVertex3F) { x2, y1, 0 };
-	quad_.tl.vertices = (ccVertex3F) { x1, y2, 0 };
-	quad_.tr.vertices = (ccVertex3F) { x2, y2, 0 };		
+	return batchNode_;
 }
 
--(void) useBatchNode:(CCSpriteBatchNode*)batchNode
+-(void) setBatchNode:(CCSpriteBatchNode *)batchNode
 {
-	usesBatchNode_ = YES;
-	textureAtlas_ = [batchNode textureAtlas]; // weak ref
-	batchNode_ = batchNode; // weak ref
+	batchNode_ = batchNode; // weak reference
+
+	// self render
+	if( ! batchNode ) {
+		atlasIndex_ = CCSpriteIndexNotInitialized;
+		textureAtlas_ = nil;
+		dirty_ = recursiveDirty_ = NO;
+
+		float x1 = offsetPosition_.x;
+		float y1 = offsetPosition_.y;
+		float x2 = x1 + rect_.size.width;
+		float y2 = y1 + rect_.size.height;
+		quad_.bl.vertices = (ccVertex3F) { x1, y1, 0 };
+		quad_.br.vertices = (ccVertex3F) { x2, y1, 0 };
+		quad_.tl.vertices = (ccVertex3F) { x1, y2, 0 };
+		quad_.tr.vertices = (ccVertex3F) { x2, y2, 0 };
+
+	} else {
+
+		// using batch
+		transformToBatch_ = CGAffineTransformIdentity;
+		textureAtlas_ = [batchNode textureAtlas]; // weak ref
+	}
 }
 
--(void)setTextureRect:(CGRect)rect
+-(void) setTextureRect:(CGRect)rect
 {
-	CGRect rectInPixels = CC_RECT_POINTS_TO_PIXELS( rect );
-	[self setTextureRectInPixels:rectInPixels rotated:NO untrimmedSize:rectInPixels.size];
+	[self setTextureRect:rect rotated:NO untrimmedSize:rect.size];
 }
 
--(void)setTextureRectInPixels:(CGRect)rect rotated:(BOOL)rotated untrimmedSize:(CGSize)untrimmedSize
+-(void) setTextureRect:(CGRect)rect rotated:(BOOL)rotated untrimmedSize:(CGSize)untrimmedSize
 {
-	rectInPixels_ = rect;
-	rect_ = CC_RECT_PIXELS_TO_POINTS( rect );
 	rectRotated_ = rotated;
 
-	[self setContentSizeInPixels:untrimmedSize];
-	[self updateTextureCoords:rectInPixels_];
+	[self setContentSize:untrimmedSize];
+	[self setVertexRect:rect];
+	[self setTextureCoords:rect];
 
-	CGPoint relativeOffsetInPixels = unflippedOffsetPositionFromCenter_;
-	
+	CGPoint relativeOffset = unflippedOffsetPositionFromCenter_;
+
 	// issue #732
 	if( flipX_ )
-		relativeOffsetInPixels.x = -relativeOffsetInPixels.x;
+		relativeOffset.x = -relativeOffset.x;
 	if( flipY_ )
-		relativeOffsetInPixels.y = -relativeOffsetInPixels.y;
-	
-	offsetPositionInPixels_.x = relativeOffsetInPixels.x + (contentSizeInPixels_.width - rectInPixels_.size.width) / 2;
-	offsetPositionInPixels_.y = relativeOffsetInPixels.y + (contentSizeInPixels_.height - rectInPixels_.size.height) / 2;
-	
-	
+		relativeOffset.y = -relativeOffset.y;
+
+
+	offsetPosition_.x = relativeOffset.x + (contentSize_.width - rect_.size.width) / 2;
+	offsetPosition_.y = relativeOffset.y + (contentSize_.height - rect_.size.height) / 2;
+
+
 	// rendering using batch node
-	if( usesBatchNode_ ) {
+	if( batchNode_ ) {
 		// update dirty_, don't update recursiveDirty_
 		dirty_ = YES;
 	}
@@ -354,31 +320,40 @@ static SEL selSortMethod = NULL;
 	else
 	{
 		// Atlas: Vertex
-		float x1 = 0 + offsetPositionInPixels_.x;
-		float y1 = 0 + offsetPositionInPixels_.y;
-		float x2 = x1 + rectInPixels_.size.width;
-		float y2 = y1 + rectInPixels_.size.height;
-		
+		float x1 = offsetPosition_.x;
+		float y1 = offsetPosition_.y;
+		float x2 = x1 + rect_.size.width;
+		float y2 = y1 + rect_.size.height;
+
 		// Don't update Z.
 		quad_.bl.vertices = (ccVertex3F) { x1, y1, 0 };
 		quad_.br.vertices = (ccVertex3F) { x2, y1, 0 };
 		quad_.tl.vertices = (ccVertex3F) { x1, y2, 0 };
-		quad_.tr.vertices = (ccVertex3F) { x2, y2, 0 };	
-	}			
+		quad_.tr.vertices = (ccVertex3F) { x2, y2, 0 };
+	}
 }
 
--(void)updateTextureCoords:(CGRect)rect
+// override this method to generate "double scale" sprites
+-(void) setVertexRect:(CGRect)rect
 {
-	CCTexture2D *tex	= (usesBatchNode_)?[textureAtlas_ texture]:texture_;
+	rect_ = rect;
+}
+
+-(void) setTextureCoords:(CGRect)rect
+{
+	rect = CC_RECT_POINTS_TO_PIXELS(rect);
+
+	CCTexture2D *tex	= (batchNode_) ? [textureAtlas_ texture] : texture_;
 	if(!tex)
 		return;
-	
+
 	float atlasWidth = (float)tex.pixelsWide;
 	float atlasHeight = (float)tex.pixelsHigh;
-	
-	float left,right,top,bottom;
-	
-	if(rectRotated_){
+
+	float left, right ,top , bottom;
+
+	if(rectRotated_)
+    {
 #if CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
 		left	= (2*rect.origin.x+1)/(2*atlasWidth);
 		right	= left+(rect.size.height*2-2)/(2*atlasWidth);
@@ -390,12 +365,12 @@ static SEL selSortMethod = NULL;
 		top		= rect.origin.y/atlasHeight;
 		bottom	= top+(rect.size.width/atlasHeight);
 #endif // ! CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
-		
+
 		if( flipX_)
 			CC_SWAP(top,bottom);
 		if( flipY_)
 			CC_SWAP(left,right);
-		
+
 		quad_.bl.texCoords.u = left;
 		quad_.bl.texCoords.v = top;
 		quad_.br.texCoords.u = left;
@@ -416,12 +391,12 @@ static SEL selSortMethod = NULL;
 		top		= rect.origin.y/atlasHeight;
 		bottom	= top + rect.size.height/atlasHeight;
 #endif // ! CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
-		
+
 		if( flipX_)
 			CC_SWAP(left,right);
 		if( flipY_)
 			CC_SWAP(top,bottom);
-		
+
 		quad_.bl.texCoords.u = left;
 		quad_.bl.texCoords.v = bottom;
 		quad_.br.texCoords.u = right;
@@ -435,183 +410,128 @@ static SEL selSortMethod = NULL;
 
 -(void)updateTransform
 {
-	NSAssert( usesBatchNode_, @"updateTransform is only valid when CCSprite is being renderd using an CCSpriteBatchNode");
+	NSAssert( batchNode_, @"updateTransform is only valid when CCSprite is being rendered using an CCSpriteBatchNode");
 
-	// optimization. Quick return if not dirty
-	if( ! dirty_ )
-		return;
-	
-	CGAffineTransform matrix;
-	
-	// Optimization: if it is not visible, then do nothing
-	if( ! visible_ ) {
-		quad_.br.vertices = quad_.tl.vertices = quad_.tr.vertices = quad_.bl.vertices = (ccVertex3F){0,0,0};
+	// recaculate matrix only if it is dirty
+	if( self.dirty ) {
+
+		// If it is not visible, or one of its ancestors is not visible, then do nothing:
+		if( !visible_ || ( parent_ && parent_ != batchNode_ && ((CCSprite*)parent_)->shouldBeHidden_) ) {
+			quad_.br.vertices = quad_.tl.vertices = quad_.tr.vertices = quad_.bl.vertices = (ccVertex3F){0,0,0};
+			shouldBeHidden_ = YES;
+		}
+
+		else {
+
+			shouldBeHidden_ = NO;
+
+			if( ! parent_ || parent_ == batchNode_ )
+				transformToBatch_ = [self nodeToParentTransform];
+
+			else {
+				NSAssert( [parent_ isKindOfClass:[CCSprite class]], @"Logic error in CCSprite. Parent must be a CCSprite");
+
+				transformToBatch_ = CGAffineTransformConcat( [self nodeToParentTransform] , ((CCSprite*)parent_)->transformToBatch_ );
+			}
+
+			//
+			// calculate the Quad based on the Affine Matrix
+			//
+
+			CGSize size = rect_.size;
+
+			float x1 = offsetPosition_.x;
+			float y1 = offsetPosition_.y;
+
+			float x2 = x1 + size.width;
+			float y2 = y1 + size.height;
+			float x = transformToBatch_.tx;
+			float y = transformToBatch_.ty;
+
+			float cr = transformToBatch_.a;
+			float sr = transformToBatch_.b;
+			float cr2 = transformToBatch_.d;
+			float sr2 = -transformToBatch_.c;
+			float ax = x1 * cr - y1 * sr2 + x;
+			float ay = x1 * sr + y1 * cr2 + y;
+
+			float bx = x2 * cr - y1 * sr2 + x;
+			float by = x2 * sr + y1 * cr2 + y;
+
+			float cx = x2 * cr - y2 * sr2 + x;
+			float cy = x2 * sr + y2 * cr2 + y;
+
+			float dx = x1 * cr - y2 * sr2 + x;
+			float dy = x1 * sr + y2 * cr2 + y;
+
+			quad_.bl.vertices = (ccVertex3F) { RENDER_IN_SUBPIXEL(ax), RENDER_IN_SUBPIXEL(ay), vertexZ_ };
+			quad_.br.vertices = (ccVertex3F) { RENDER_IN_SUBPIXEL(bx), RENDER_IN_SUBPIXEL(by), vertexZ_ };
+			quad_.tl.vertices = (ccVertex3F) { RENDER_IN_SUBPIXEL(dx), RENDER_IN_SUBPIXEL(dy), vertexZ_ };
+			quad_.tr.vertices = (ccVertex3F) { RENDER_IN_SUBPIXEL(cx), RENDER_IN_SUBPIXEL(cy), vertexZ_ };
+		}
+
 		[textureAtlas_ updateQuad:&quad_ atIndex:atlasIndex_];
 		dirty_ = recursiveDirty_ = NO;
-		return ;
 	}
-	
 
-	// Optimization: If parent is batchnode, or parent is nil
-	// build Affine transform manually
-	if( ! parent_ || parent_ == batchNode_ ) {
-		
-		float radians = -CC_DEGREES_TO_RADIANS(rotation_);
-		float c = cosf(radians);
-		float s = sinf(radians);
+	// recursively iterate over children
+	if( hasChildren_ )
+		[children_ makeObjectsPerformSelector:@selector(updateTransform)];
 
-		matrix = CGAffineTransformMake( c * scaleX_,  s * scaleX_,
-									   -s * scaleY_, c * scaleY_,
-									   positionInPixels_.x, positionInPixels_.y);
-		if( skewX_ || skewY_ ) {
-			CGAffineTransform skewMatrix = CGAffineTransformMake(1.0f, tanf(CC_DEGREES_TO_RADIANS(skewY_)),
-																 tanf(CC_DEGREES_TO_RADIANS(skewX_)), 1.0f,
-																 0.0f, 0.0f);
-			matrix = CGAffineTransformConcat(skewMatrix, matrix);
-		}
-		matrix = CGAffineTransformTranslate(matrix, -anchorPointInPixels_.x, -anchorPointInPixels_.y);		
+#if CC_SPRITE_DEBUG_DRAW
+	// draw bounding box
+	CGPoint vertices[4] = {
+		ccp( quad_.bl.vertices.x, quad_.bl.vertices.y ),
+		ccp( quad_.br.vertices.x, quad_.br.vertices.y ),
+		ccp( quad_.tr.vertices.x, quad_.tr.vertices.y ),
+		ccp( quad_.tl.vertices.x, quad_.tl.vertices.y ),
+	};
+	ccDrawPoly(vertices, 4, YES);
+#endif // CC_SPRITE_DEBUG_DRAW
 
-		
-	}  else { 	// parent_ != batchNode_ 
-
-		// else do affine transformation according to the HonorParentTransform
-
-		matrix = CGAffineTransformIdentity;
-		ccHonorParentTransform prevHonor = CC_HONOR_PARENT_TRANSFORM_ALL;
-		
-		for (CCNode *p = self ; p && p != batchNode_ ; p = p.parent) {
-			
-			// Might happen. Issue #1053
-			NSAssert( [p isKindOfClass:[CCSprite class]], @"CCSprite should be a CCSprite subclass. Probably you initialized an sprite with a batchnode, but you didn't add it to the batch node." );
-
-			struct transformValues_ tv;
-			[(CCSprite*)p getTransformValues: &tv];
-			
-			// If any of the parents are not visible, then don't draw this node
-			if( ! tv.visible ) {
-				quad_.br.vertices = quad_.tl.vertices = quad_.tr.vertices = quad_.bl.vertices = (ccVertex3F){0,0,0};
-				[textureAtlas_ updateQuad:&quad_ atIndex:atlasIndex_];
-				dirty_ = recursiveDirty_ = NO;
-				return;
-			}
-			CGAffineTransform newMatrix = CGAffineTransformIdentity;
-			
-			// 2nd: Translate, Skew, Rotate, Scale
-			if( prevHonor & CC_HONOR_PARENT_TRANSFORM_TRANSLATE )
-				newMatrix = CGAffineTransformTranslate(newMatrix, tv.pos.x, tv.pos.y);
-			if( prevHonor & CC_HONOR_PARENT_TRANSFORM_ROTATE )
-				newMatrix = CGAffineTransformRotate(newMatrix, -CC_DEGREES_TO_RADIANS(tv.rotation));
-			if( prevHonor & CC_HONOR_PARENT_TRANSFORM_SCALE ) {
-				newMatrix = CGAffineTransformScale(newMatrix, tv.scale.x, tv.scale.y);
-			}
-			if ( prevHonor & CC_HONOR_PARENT_TRANSFORM_SKEW ) {
-				CGAffineTransform skew = CGAffineTransformMake(1.0f, tanf(CC_DEGREES_TO_RADIANS(tv.skew.y)), tanf(CC_DEGREES_TO_RADIANS(tv.skew.x)), 1.0f, 0.0f, 0.0f);
-				// apply the skew to the transform
-				newMatrix = CGAffineTransformConcat(skew, newMatrix);
-			}
-			
-			// 3rd: Translate anchor point
-			newMatrix = CGAffineTransformTranslate(newMatrix, -tv.ap.x, -tv.ap.y);
-
-			// 4th: Matrix multiplication
-			matrix = CGAffineTransformConcat( matrix, newMatrix);
-			
-			prevHonor = [(CCSprite*)p honorParentTransform];
-		}		
-	}
-	
-	
-	//
-	// calculate the Quad based on the Affine Matrix
-	//	
-
-	CGSize size = rectInPixels_.size;
-
-	float x1 = offsetPositionInPixels_.x;
-	float y1 = offsetPositionInPixels_.y;
-	
-	float x2 = x1 + size.width;
-	float y2 = y1 + size.height;
-	float x = matrix.tx;
-	float y = matrix.ty;
-	
-	float cr = matrix.a;
-	float sr = matrix.b;
-	float cr2 = matrix.d;
-	float sr2 = -matrix.c;
-	float ax = x1 * cr - y1 * sr2 + x;
-	float ay = x1 * sr + y1 * cr2 + y;
-	
-	float bx = x2 * cr - y1 * sr2 + x;
-	float by = x2 * sr + y1 * cr2 + y;
-	
-	float cx = x2 * cr - y2 * sr2 + x;
-	float cy = x2 * sr + y2 * cr2 + y;
-	
-	float dx = x1 * cr - y2 * sr2 + x;
-	float dy = x1 * sr + y2 * cr2 + y;
-	
-	quad_.bl.vertices = (ccVertex3F) { RENDER_IN_SUBPIXEL(ax), RENDER_IN_SUBPIXEL(ay), vertexZ_ };
-	quad_.br.vertices = (ccVertex3F) { RENDER_IN_SUBPIXEL(bx), RENDER_IN_SUBPIXEL(by), vertexZ_ };
-	quad_.tl.vertices = (ccVertex3F) { RENDER_IN_SUBPIXEL(dx), RENDER_IN_SUBPIXEL(dy), vertexZ_ };
-	quad_.tr.vertices = (ccVertex3F) { RENDER_IN_SUBPIXEL(cx), RENDER_IN_SUBPIXEL(cy), vertexZ_ };
-		
-	[textureAtlas_ updateQuad:&quad_ atIndex:atlasIndex_];
-	dirty_ = recursiveDirty_ = NO;
-}
-
-// XXX: Optimization: instead of calling 5 times the parent sprite to obtain: position, scale.x, scale.y, anchorpoint and rotation,
-// this fuction return the 5 values in 1 single call
--(void) getTransformValues:(struct transformValues_*) tv
-{
-	tv->pos			= positionInPixels_;
-	tv->scale.x		= scaleX_;
-	tv->scale.y		= scaleY_;
-	tv->rotation	= rotation_;
-	tv->skew.x		= skewX_;
-	tv->skew.y		= skewY_;
-	tv->ap			= anchorPointInPixels_;
-	tv->visible		= visible_;
 }
 
 #pragma mark CCSprite - draw
 
 -(void) draw
 {
-	[super draw];
+	CC_PROFILER_START_CATEGORY(kCCProfilerCategorySprite, @"CCSprite - draw");
 
-	NSAssert(!usesBatchNode_, @"If CCSprite is being rendered by CCSpriteBatchNode, CCSprite#draw SHOULD NOT be called");
+	NSAssert(!batchNode_, @"If CCSprite is being rendered by CCSpriteBatchNode, CCSprite#draw SHOULD NOT be called");
 
-	// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
-	// Needed states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
-	// Unneeded states: -
+	CC_NODE_DRAW_SETUP();
 
-	BOOL newBlend = blendFunc_.src != CC_BLEND_SRC || blendFunc_.dst != CC_BLEND_DST;
-	if( newBlend )
-		glBlendFunc( blendFunc_.src, blendFunc_.dst );
+	ccGLBlendFunc( blendFunc_.src, blendFunc_.dst );
+
+	ccGLBindTexture2D( [texture_ name] );
+
+	//
+	// Attributes
+	//
+
+	ccGLEnableVertexAttribs( kCCVertexAttribFlag_PosColorTex );
 
 #define kQuadSize sizeof(quad_.bl)
-	glBindTexture(GL_TEXTURE_2D, [texture_ name]);
-	
 	long offset = (long)&quad_;
-	
+
 	// vertex
 	NSInteger diff = offsetof( ccV3F_C4B_T2F, vertices);
-	glVertexPointer(3, GL_FLOAT, kQuadSize, (void*) (offset + diff) );
-	
+	glVertexAttribPointer(kCCVertexAttrib_Position, 3, GL_FLOAT, GL_FALSE, kQuadSize, (void*) (offset + diff));
+
+	// texCoods
+	diff = offsetof( ccV3F_C4B_T2F, texCoords);
+	glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, kQuadSize, (void*)(offset + diff));
+
 	// color
 	diff = offsetof( ccV3F_C4B_T2F, colors);
-	glColorPointer(4, GL_UNSIGNED_BYTE, kQuadSize, (void*)(offset + diff));
-	
-	// tex coords
-	diff = offsetof( ccV3F_C4B_T2F, texCoords);
-	glTexCoordPointer(2, GL_FLOAT, kQuadSize, (void*)(offset + diff));
-	
+	glVertexAttribPointer(kCCVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (void*)(offset + diff));
+
+
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-	
-	if( newBlend )
-		glBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);
-	
+
+	CHECK_GL_ERROR_DEBUG();
+
+
 #if CC_SPRITE_DEBUG_DRAW == 1
 	// draw bounding box
 	CGPoint vertices[4]={
@@ -624,14 +544,17 @@ static SEL selSortMethod = NULL;
 #elif CC_SPRITE_DEBUG_DRAW == 2
 	// draw texture box
 	CGSize s = self.textureRect.size;
-	CGPoint offsetPix = self.offsetPositionInPixels;
+	CGPoint offsetPix = self.offsetPosition;
 	CGPoint vertices[4] = {
 		ccp(offsetPix.x,offsetPix.y), ccp(offsetPix.x+s.width,offsetPix.y),
 		ccp(offsetPix.x+s.width,offsetPix.y+s.height), ccp(offsetPix.x,offsetPix.y+s.height)
 	};
 	ccDrawPoly(vertices, 4, YES);
 #endif // CC_SPRITE_DEBUG_DRAW
-	
+
+	CC_INCREMENT_GL_DRAWS(1);
+
+	CC_PROFILER_STOP_CATEGORY(kCCProfilerCategorySprite, @"CCSprite - draw");
 }
 
 #pragma mark CCSprite - CCNode overrides
@@ -639,18 +562,21 @@ static SEL selSortMethod = NULL;
 -(void) addChild:(CCSprite*)child z:(NSInteger)z tag:(NSInteger) aTag
 {
 	NSAssert( child != nil, @"Argument must be non-nil");
-	if( usesBatchNode_ ) {
+
+	if( batchNode_ ) {
 		NSAssert( [child isKindOfClass:[CCSprite class]], @"CCSprite only supports CCSprites as children when using CCSpriteBatchNode");
 		NSAssert( child.texture.name == textureAtlas_.texture.name, @"CCSprite is not using the same texture id");
-		
-        if( atlasIndex_ != CCSpriteIndexNotInitialized) {
-            //put it in descendants array of batch node only if not already added in descendants
-            [batchNode_ appendChild:child];
-        }
-		if (!isReorderChildDirty_) [self setReorderChildDirtyRecursively];
+
+		//put it in descendants array of batch node
+		[batchNode_ appendChild:child];
+
+		if (!isReorderChildDirty_)
+			[self setReorderChildDirtyRecursively];
 	}
+
 	//CCNode already sets isReorderChildDirty_ so this needs to be after batchNode check
 	[super addChild:child z:z tag:aTag];
+
 	hasChildren_ = YES;
 }
 
@@ -661,76 +587,65 @@ static SEL selSortMethod = NULL;
 
 	if( z == child.zOrder )
 		return;
-	
-	if( usesBatchNode_ ) 
-	{	
-		if (!isReorderChildDirty_) 
-		{	
-			[self setReorderChildDirtyRecursively];
-			[batchNode_ reorderBatch:YES];
-		}	
+
+	if( batchNode_ && ! isReorderChildDirty_)
+	{
+		[self setReorderChildDirtyRecursively];
+		[batchNode_ reorderBatch:YES];
 	}
-	
+
 	[super reorderChild:child z:z];
 }
 
 -(void)removeChild: (CCSprite *)sprite cleanup:(BOOL)doCleanup
 {
-	if( usesBatchNode_ ) {
-        if( atlasIndex_ != CCSpriteIndexNotInitialized) {
-            [batchNode_ removeSpriteFromAtlas:sprite];
-        }
-    }
-	
+	if( batchNode_ )
+		[batchNode_ removeSpriteFromAtlas:sprite];
+
 	[super removeChild:sprite cleanup:doCleanup];
-	
+
 	hasChildren_ = ( [children_ count] > 0 );
 }
 
 -(void)removeAllChildrenWithCleanup:(BOOL)doCleanup
 {
-	if( usesBatchNode_ ) {
+	if( batchNode_ ) {
 		CCSprite *child;
 		CCARRAY_FOREACH(children_, child)
 			[batchNode_ removeSpriteFromAtlas:child];
 	}
-	
+
 	[super removeAllChildrenWithCleanup:doCleanup];
-	
+
 	hasChildren_ = NO;
 }
 
 - (void) sortAllChildren
 {
-	if (isReorderChildDirty_) 
-	{	
-		NSInteger i,j,length=children_->data->num;
-		CCNode ** x=children_->data->arr;
-		CCNode * tempItem;
-		
-		//insertion sort
+	if (isReorderChildDirty_)
+	{
+		NSInteger i,j,length = children_->data->num;
+		CCNode** x = children_->data->arr;
+		CCNode *tempItem;
+
+		// insertion sort
 		for(i=1; i<length; i++)
 		{
 			tempItem = x[i];
 			j = i-1;
-			
+
 			//continue moving element downwards while zOrder is smaller or when zOrder is the same but orderOfArrival is smaller
-			while(j>=0 && ( tempItem.zOrder < x[j].zOrder || ( tempItem.zOrder == x[j].zOrder && tempItem.orderOfArrival < x[j].orderOfArrival ) ) ) 
+			while(j>=0 && ( tempItem.zOrder < x[j].zOrder || ( tempItem.zOrder == x[j].zOrder && tempItem.orderOfArrival < x[j].orderOfArrival ) ) )
 			{
 				x[j+1] = x[j];
 				j = j-1;
 			}
 			x[j+1] = tempItem;
 		}
-		
-		if (usesBatchNode_)
-		{
-			//sorted now check all children recursively
-			CCSprite *child;
-			// fast dispatch
-			CCARRAY_FOREACH(children_, child) child->sortMethod(child,selSortMethod);
-		}
-		
+
+		if ( batchNode_)
+			[children_ makeObjectsPerformSelector:@selector(sortAllChildren)];
+
 		isReorderChildDirty_=NO;
 	}
 }
@@ -744,13 +659,14 @@ static SEL selSortMethod = NULL;
 -(void) setReorderChildDirtyRecursively
 {
 	//only set parents flag the first time
-	if (!isReorderChildDirty_)
+
+	if ( ! isReorderChildDirty_ )
 	{
-		isReorderChildDirty_=YES;
-		CCNode* node=(CCNode*) parent_;
-		while ( node!=nil && node!=batchNode_)
+		isReorderChildDirty_ = YES;
+		CCNode* node = (CCNode*) parent_;
+		while (node && node != batchNode_)
 		{
-			[(CCSprite*) node setReorderChildDirtyRecursively];
+			[(CCSprite*)node setReorderChildDirtyRecursively];
 			node=node.parent;
 		}
 	}
@@ -769,7 +685,7 @@ static SEL selSortMethod = NULL;
 
 // XXX HACK: optimization
 #define SET_DIRTY_RECURSIVELY() {									\
-					if( usesBatchNode_ && ! recursiveDirty_ ) {	\
+					if( batchNode_ && ! recursiveDirty_ ) {	\
 						dirty_ = recursiveDirty_ = YES;				\
 						if( hasChildren_)							\
 							[self setDirtyRecursively:YES];			\
@@ -779,12 +695,6 @@ static SEL selSortMethod = NULL;
 -(void)setPosition:(CGPoint)pos
 {
 	[super setPosition:pos];
-	SET_DIRTY_RECURSIVELY();
-}
-
--(void)setPositionInPixels:(CGPoint)pos
-{
-	[super setPositionInPixels:pos];
 	SET_DIRTY_RECURSIVELY();
 }
 
@@ -838,7 +748,7 @@ static SEL selSortMethod = NULL;
 
 -(void)setIsRelativeAnchorPoint:(BOOL)relative
 {
-	NSAssert( ! usesBatchNode_, @"relativeTransformAnchor is invalid in CCSprite");
+	NSAssert( ! batchNode_, @"relativeTransformAnchor is invalid in CCSprite");
 	[super setIsRelativeAnchorPoint:relative];
 }
 
@@ -852,7 +762,7 @@ static SEL selSortMethod = NULL;
 {
 	if( flipX_ != b ) {
 		flipX_ = b;
-		[self setTextureRectInPixels:rectInPixels_ rotated:rectRotated_ untrimmedSize:contentSizeInPixels_];
+		[self setTextureRect:rect_ rotated:rectRotated_ untrimmedSize:contentSize_];
 	}
 }
 -(BOOL) flipX
@@ -863,9 +773,9 @@ static SEL selSortMethod = NULL;
 -(void) setFlipY:(BOOL)b
 {
 	if( flipY_ != b ) {
-		flipY_ = b;	
-		[self setTextureRectInPixels:rectInPixels_ rotated:rectRotated_ untrimmedSize:contentSizeInPixels_];
-	}	
+		flipY_ = b;
+		[self setTextureRect:rect_ rotated:rectRotated_ untrimmedSize:contentSize_];
+	}
 }
 -(BOOL) flipY
 {
@@ -878,15 +788,15 @@ static SEL selSortMethod = NULL;
 #pragma mark CCSprite - RGBA protocol
 -(void) updateColor
 {
-	ccColor4B color4 = {color_.r, color_.g, color_.b, opacity_ };
-	
+	ccColor4B color4 = {color_.r, color_.g, color_.b, opacity_};
+
 	quad_.bl.colors = color4;
 	quad_.br.colors = color4;
 	quad_.tl.colors = color4;
 	quad_.tr.colors = color4;
-	
-	// renders using Sprite Manager
-	if( usesBatchNode_ ) {
+
+	// renders using batch node
+	if( batchNode_ ) {
 		if( atlasIndex_ != CCSpriteIndexNotInitialized)
 			[textureAtlas_ updateQuad:&quad_ atIndex:atlasIndex_];
 		else
@@ -910,7 +820,7 @@ static SEL selSortMethod = NULL;
 	// special opacity for premultiplied textures
 	if( opacityModifyRGB_ )
 		[self setColor: colorUnmodified_];
-	
+
 	[self updateColor];
 }
 
@@ -918,20 +828,20 @@ static SEL selSortMethod = NULL;
 {
 	if(opacityModifyRGB_)
 		return colorUnmodified_;
-	
+
 	return color_;
 }
 
 -(void) setColor:(ccColor3B)color3
 {
 	color_ = colorUnmodified_ = color3;
-	
+
 	if( opacityModifyRGB_ ){
 		color_.r = color3.r * opacity_/255.0f;
 		color_.g = color3.g * opacity_/255.0f;
 		color_.b = color3.b * opacity_/255.0f;
 	}
-	
+
 	[self updateColor];
 }
 
@@ -954,57 +864,59 @@ static SEL selSortMethod = NULL;
 
 -(void) setDisplayFrame:(CCSpriteFrame*)frame
 {
-	unflippedOffsetPositionFromCenter_ = frame.offsetInPixels;
+	unflippedOffsetPositionFromCenter_ = frame.offset;
 
 	CCTexture2D *newTexture = [frame texture];
 	// update texture before updating texture rect
 	if ( newTexture.name != texture_.name )
 		[self setTexture: newTexture];
-	
+
 	// update rect
 	rectRotated_ = frame.rotated;
-	[self setTextureRectInPixels:frame.rectInPixels rotated:frame.rotated untrimmedSize:frame.originalSizeInPixels];
+
+	[self setTextureRect:frame.rect rotated:rectRotated_ untrimmedSize:frame.originalSize];
 }
 
 -(void) setDisplayFrameWithAnimationName: (NSString*) animationName index:(int) frameIndex
 {
 	NSAssert( animationName, @"CCSprite#setDisplayFrameWithAnimationName. animationName must not be nil");
-	
+
 	CCAnimation *a = [[CCAnimationCache sharedAnimationCache] animationByName:animationName];
-	
+
 	NSAssert( a, @"CCSprite#setDisplayFrameWithAnimationName: Frame not found");
-	
-	CCSpriteFrame *frame = [[a frames] objectAtIndex:frameIndex];
-	
+
+	CCAnimationFrame *frame = [[a frames] objectAtIndex:frameIndex];
+
 	NSAssert( frame, @"CCSprite#setDisplayFrame. Invalid frame");
-	
-	[self setDisplayFrame:frame];
+
+	[self setDisplayFrame:frame.spriteFrame];
 }
 
 
--(BOOL) isFrameDisplayed:(CCSpriteFrame*)frame 
+-(BOOL) isFrameDisplayed:(CCSpriteFrame*)frame
 {
 	CGRect r = [frame rect];
 	return ( CGRectEqualToRect(r, rect_) &&
-			frame.texture.name == self.texture.name );
+			frame.texture.name == self.texture.name &&
+			CGPointEqualToPoint( frame.offset, unflippedOffsetPositionFromCenter_ ) );
 }
 
 -(CCSpriteFrame*) displayedFrame
-{	
+{
 	return [CCSpriteFrame frameWithTexture:texture_
-							  rectInPixels:rectInPixels_
+							  rectInPixels:CC_RECT_POINTS_TO_PIXELS(rect_)
 								   rotated:rectRotated_
 									offset:unflippedOffsetPositionFromCenter_
-							  originalSize:contentSizeInPixels_];
+							  originalSize:CC_SIZE_POINTS_TO_PIXELS(contentSize_)];
 }
 
 #pragma mark CCSprite - CocosNodeTexture protocol
 
 -(void) updateBlendFunc
 {
-	NSAssert( ! usesBatchNode_, @"CCSprite: updateBlendFunc doesn't work when the sprite is rendered using a CCSpriteBatchNode");
+	NSAssert( ! batchNode_, @"CCSprite: updateBlendFunc doesn't work when the sprite is rendered using a CCSpriteBatchNode");
 
-	// it's possible to have an untextured sprite
+	// it is possible to have an untextured sprite
 	if( !texture_ || ! [texture_ hasPremultipliedAlpha] ) {
 		blendFunc_.src = GL_SRC_ALPHA;
 		blendFunc_.dst = GL_ONE_MINUS_SRC_ALPHA;
@@ -1018,15 +930,17 @@ static SEL selSortMethod = NULL;
 
 -(void) setTexture:(CCTexture2D*)texture
 {
-	NSAssert( ! usesBatchNode_, @"CCSprite: setTexture doesn't work when the sprite is rendered using a CCSpriteBatchNode");
-	
+	NSAssert( ! batchNode_, @"CCSprite: setTexture doesn't work when the sprite is rendered using a CCSpriteBatchNode");
+
 	// accept texture==nil as argument
 	NSAssert( !texture || [texture isKindOfClass:[CCTexture2D class]], @"setTexture expects a CCTexture2D. Invalid argument");
 
-	[texture_ release];
-	texture_ = [texture retain];
-	
-	[self updateBlendFunc];
+	if( texture_ != texture ) {
+		[texture_ release];
+		texture_ = [texture retain];
+
+		[self updateBlendFunc];
+	}
 }
 
 -(CCTexture2D*) texture

@@ -10,10 +10,10 @@
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -44,7 +44,7 @@ For example, you can simulate a Ping Pong effect running the action normally and
 then running it again in Reverse mode.
 
 Example:
- 
+
 	CCAction * pingPongAction = [CCSequence actions: action, [action reverse], nil];
 */
 @interface CCActionInterval: CCFiniteTimeAction <NSCopying>
@@ -92,7 +92,7 @@ Example:
 {
 	NSUInteger times_;
 	NSUInteger total_;
-	ccTime nextDt_; 
+	ccTime nextDt_;
 	BOOL isActionInstant_;
 	CCFiniteTimeAction *innerAction_;
 }
@@ -126,7 +126,7 @@ Example:
 /**  Rotates a CCNode object to a certain angle by modifying it's
  rotation attribute.
  The direction will be decided by the shortest angle.
-*/ 
+*/
 @interface CCRotateTo : CCActionInterval <NSCopying>
 {
 	float dstAngle_;
@@ -139,7 +139,7 @@ Example:
 -(id) initWithDuration:(ccTime)duration angle:(float)angle;
 @end
 
-/** Rotates a CCNode object clockwise a number of degrees by modiying it's rotation attribute.
+/** Rotates a CCNode object clockwise a number of degrees by modiying its rotation attribute.
 */
 @interface CCRotateBy : CCActionInterval <NSCopying>
 {
@@ -152,7 +152,7 @@ Example:
 -(id) initWithDuration:(ccTime)duration angle:(float)deltaAngle;
 @end
 
-/** Moves a CCNode object to the position x,y. x and y are absolute coordinates by modifying it's position attribute.
+/** Moves a CCNode object to the position x,y. x and y are absolute coordinates by modifying its position attribute.
 */
 @interface CCMoveTo : CCActionInterval <NSCopying>
 {
@@ -166,10 +166,10 @@ Example:
 -(id) initWithDuration:(ccTime)duration position:(CGPoint)position;
 @end
 
-/**  Moves a CCNode object x,y pixels by modifying it's position attribute.
+/**  Moves a CCNode object x,y pixels by modifying its position attribute.
  x and y are relative to the position of the object.
  Duration is is seconds.
-*/ 
+*/
 @interface CCMoveBy : CCMoveTo <NSCopying>
 {
 }
@@ -179,7 +179,7 @@ Example:
 -(id) initWithDuration: (ccTime)duration position:(CGPoint)deltaPosition;
 @end
 
-/** Skews a CCNode object to given angles by modifying it's skewX and skewY attributes
+/** Skews a CCNode object to given angles by modifying its skewX and skewY attributes
  @since v1.0
  */
 @interface CCSkewTo : CCActionInterval <NSCopying>
@@ -207,7 +207,7 @@ Example:
 }
 @end
 
-/** Moves a CCNode object simulating a parabolic jump movement by modifying it's position attribute.
+/** Moves a CCNode object simulating a parabolic jump movement by modifying its position attribute.
 */
  @interface CCJumpBy : CCActionInterval <NSCopying>
 {
@@ -222,8 +222,8 @@ Example:
 -(id) initWithDuration: (ccTime)duration position:(CGPoint)position height:(ccTime)height jumps:(NSUInteger)jumps;
 @end
 
-/** Moves a CCNode object to a parabolic position simulating a jump movement by modifying it's position attribute.
-*/ 
+/** Moves a CCNode object to a parabolic position simulating a jump movement by modifying its position attribute.
+*/
  @interface CCJumpTo : CCJumpBy <NSCopying>
 {
 }
@@ -263,7 +263,7 @@ typedef struct _ccBezierConfig {
 }
 @end
 
-/** Scales a CCNode object to a zoom factor by modifying it's scale attribute.
+/** Scales a CCNode object to a zoom factor by modifying its scale attribute.
  @warning This action doesn't support "reverse"
  */
 @interface CCScaleTo : CCActionInterval <NSCopying>
@@ -287,14 +287,14 @@ typedef struct _ccBezierConfig {
 -(id) initWithDuration: (ccTime)duration scaleX:(float) sx scaleY:(float)sy;
 @end
 
-/** Scales a CCNode object a zoom factor by modifying it's scale attribute.
+/** Scales a CCNode object a zoom factor by modifying its scale attribute.
 */
 @interface CCScaleBy : CCScaleTo <NSCopying>
 {
 }
 @end
 
-/** Blinks a CCNode object by modifying it's visible attribute
+/** Blinks a CCNode object by modifying its visible attribute
 */
 @interface CCBlink : CCActionInterval <NSCopying>
 {
@@ -373,7 +373,7 @@ typedef struct _ccBezierConfig {
 @end
 
 /** Executes an action in reverse order, from time=duration to time=0
- 
+
  @warning Use this action carefully. This action is not
  sequenceable. Use it as the default "reversed" method
  of your own actions, but using it outside the "reversed"
@@ -395,29 +395,50 @@ typedef struct _ccBezierConfig {
 /** Animates a sprite given the name of an Animation */
 @interface CCAnimate : CCActionInterval <NSCopying>
 {
-	CCAnimation *animation_;
-	id origFrame_;
-	BOOL restoreOriginalFrame_;
+	NSMutableArray		*splitTimes_;
+	NSInteger			nextFrame_;
+	CCAnimation			*animation_;
+	id					origFrame_;
+	BOOL				restoreOriginalFrame_;
 }
 /** animation used for the animage */
 @property (readwrite,nonatomic,retain) CCAnimation * animation;
 
 /** creates the action with an Animation and will restore the original frame when the animation is over */
-+(id) actionWithAnimation:(CCAnimation*) a;
++(id) actionWithAnimation:(CCAnimation*)animation;
 /** initializes the action with an Animation and will restore the original frame when the animtion is over */
--(id) initWithAnimation:(CCAnimation*) a;
+-(id) initWithAnimation:(CCAnimation*)animation;
 /** creates the action with an Animation */
-+(id) actionWithAnimation:(CCAnimation*) a restoreOriginalFrame:(BOOL)b;
++(id) actionWithAnimation:(CCAnimation*)animation restoreOriginalFrame:(BOOL)restoreOriginalFrame;
 /** initializes the action with an Animation */
--(id) initWithAnimation:(CCAnimation*) a restoreOriginalFrame:(BOOL)b;
+-(id) initWithAnimation:(CCAnimation*) a restoreOriginalFrame:(BOOL)restoreOriginalFrame;
 /** creates an action with a duration, animation and depending of the restoreOriginalFrame, it will restore the original frame or not.
  The 'delay' parameter of the animation will be overrided by the duration parameter.
  @since v0.99.0
  */
-+(id) actionWithDuration:(ccTime)duration animation:(CCAnimation*)animation restoreOriginalFrame:(BOOL)b;
++(id) actionWithDuration:(ccTime)duration animation:(CCAnimation*)animation restoreOriginalFrame:(BOOL)restoreOriginalFrame;
 /** initializes an action with a duration, animation and depending of the restoreOriginalFrame, it will restore the original frame or not.
  The 'delay' parameter of the animation will be overrided by the duration parameter.
  @since v0.99.0
  */
--(id) initWithDuration:(ccTime)duration animation:(CCAnimation*)animation restoreOriginalFrame:(BOOL)b;
+-(id) initWithDuration:(ccTime)duration animation:(CCAnimation*)animation restoreOriginalFrame:(BOOL)restoreOriginalFrame;
+@end
+
+/** Overrides the target of an action so that it always runs on the target
+ * specified at action creation rather than the one specified by runAction.
+ */
+@interface TargetedAction : CCActionInterval <NSCopying>
+{
+	id forcedTarget;
+	CCFiniteTimeAction* action;
+}
+/** This is the target that the action will be forced to run with */
+@property(readwrite,nonatomic,retain) id forcedTarget;
+
+/** Create an action with the specified action and forced target */
++ (id) actionWithTarget:(id) target action:(CCFiniteTimeAction*) action;
+
+/** Init an action with the specified action and forced target */
+- (id) initWithTarget:(id) target action:(CCFiniteTimeAction*) action;
+
 @end

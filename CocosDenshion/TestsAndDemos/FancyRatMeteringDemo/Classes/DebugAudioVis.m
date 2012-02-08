@@ -41,25 +41,30 @@
 
 -(void)draw
 {
-	glDisable(GL_TEXTURE_2D);
-	glDisableClientState(GL_COLOR_ARRAY);
-	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-	glPushMatrix();
+
+//	glDisable(GL_TEXTURE_2D);
+//	glDisableClientState(GL_COLOR_ARRAY);
+//	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+//	glPushMatrix();
+
+	kmGLPushMatrix();
 	{
 		glLineWidth(10.f);
-		glColor4ub(255, 255, 255, 64);
+		ccDrawColor4B(255, 255, 255, 64);
 		ccDrawLine(ccp(20.f, 0.f), ccp(20.f, 460.f*avgPower_));
-		
-		glColor4ub(255, 255, 255, 255);
-		glPushMatrix();
-		glTranslatef(0.f, 460.f*peakPower_, 0.f);
+
+		ccDrawColor4B(255, 255, 255, 255);
+		kmGLPushMatrix();
+
+		kmGLTranslatef(0.f, 460.f*peakPower_, 0.f);
 		ccDrawLine(ccp(20.f, 0.f), ccp(20.f, 5.f));
-		glPopMatrix();
+		kmGLPopMatrix();
+
 		glLineWidth(1.f);
 	}
-	glPopMatrix();
-	glEnable(GL_TEXTURE_2D);
-	glEnableClientState(GL_COLOR_ARRAY);
-	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+	kmGLPopMatrix();
+//	glEnable(GL_TEXTURE_2D);
+//	glEnableClientState(GL_COLOR_ARRAY);
+//	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 }
 @end

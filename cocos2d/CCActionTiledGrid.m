@@ -9,10 +9,10 @@
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -53,7 +53,7 @@ typedef struct
 		randrange = range;
 		shakeZ = sz;
 	}
-	
+
 	return self;
 }
 
@@ -67,7 +67,7 @@ typedef struct
 -(void)update:(ccTime)time
 {
 	int i, j;
-	
+
 	for( i = 0; i < gridSize_.x; i++ )
 	{
 		for( j = 0; j < gridSize_.y; j++ )
@@ -92,7 +92,7 @@ typedef struct
 				coords.tl.z += ( rand() % (randrange*2) ) - randrange;
 				coords.tr.z += ( rand() % (randrange*2) ) - randrange;
 			}
-						
+
 			[self setTile:ccg(i,j) coords:coords];
 		}
 	}
@@ -120,7 +120,7 @@ typedef struct
 		randrange = range;
 		shatterZ = sz;
 	}
-	
+
 	return self;
 }
 
@@ -134,7 +134,7 @@ typedef struct
 -(void)update:(ccTime)time
 {
 	int i, j;
-	
+
 	if ( once == NO )
 	{
 		for( i = 0; i < gridSize_.x; i++ )
@@ -142,13 +142,13 @@ typedef struct
 			for( j = 0; j < gridSize_.y; j++ )
 			{
 				ccQuad3 coords = [self originalTile:ccg(i,j)];
-				
+
 				// X
 				coords.bl.x += ( rand() % (randrange*2) ) - randrange;
 				coords.br.x += ( rand() % (randrange*2) ) - randrange;
 				coords.tl.x += ( rand() % (randrange*2) ) - randrange;
 				coords.tr.x += ( rand() % (randrange*2) ) - randrange;
-				
+
 				// Y
 				coords.bl.y += ( rand() % (randrange*2) ) - randrange;
 				coords.br.y += ( rand() % (randrange*2) ) - randrange;
@@ -157,15 +157,15 @@ typedef struct
 
 				if( shatterZ ) {
 					coords.bl.z += ( rand() % (randrange*2) ) - randrange;
-					coords.br.z += ( rand() % (randrange*2) ) - randrange;				
+					coords.br.z += ( rand() % (randrange*2) ) - randrange;
 					coords.tl.z += ( rand() % (randrange*2) ) - randrange;
 					coords.tr.z += ( rand() % (randrange*2) ) - randrange;
 				}
-				
+
 				[self setTile:ccg(i,j) coords:coords];
 			}
 		}
-		
+
 		once = YES;
 	}
 }
@@ -192,7 +192,7 @@ typedef struct
 		tilesOrder = nil;
 		tiles = nil;
 	}
-	
+
 	return self;
 }
 
@@ -225,19 +225,19 @@ typedef struct
 -(ccGridSize)getDelta:(ccGridSize)pos
 {
 	CGPoint	pos2;
-	
+
 	NSInteger idx = pos.x * gridSize_.y + pos.y;
-	
+
 	pos2.x = tilesOrder[idx] / (int)gridSize_.y;
 	pos2.y = tilesOrder[idx] % (int)gridSize_.y;
-	
+
 	return ccg(pos2.x - pos.x, pos2.y - pos.y);
 }
 
 -(void)placeTile:(ccGridSize)pos tile:(Tile)t
 {
 	ccQuad3	coords = [self originalTile:pos];
-	
+
 	CGPoint step = [[target_ grid] step];
 	coords.bl.x += (int)(t.position.x * step.x);
 	coords.bl.y += (int)(t.position.y * step.y);
@@ -257,22 +257,22 @@ typedef struct
 -(void)startWithTarget:(id)aTarget
 {
 	[super startWithTarget:aTarget];
-	
+
 	if ( seed != -1 )
 		srand(seed);
-	
+
 	tilesCount = gridSize_.x * gridSize_.y;
 	tilesOrder = (int*)malloc(tilesCount*sizeof(int));
 	int i, j;
-	
+
 	for( i = 0; i < tilesCount; i++ )
 		tilesOrder[i] = i;
-	
+
 	[self shuffle:tilesOrder count:tilesCount];
-	
+
 	tiles = malloc(tilesCount*sizeof(Tile));
 	Tile *tileArray = (Tile*)tiles;
-	
+
 	for( i = 0; i < gridSize_.x; i++ )
 	{
 		for( j = 0; j < gridSize_.y; j++ )
@@ -288,9 +288,9 @@ typedef struct
 -(void)update:(ccTime)time
 {
 	int i, j;
-	
+
 	Tile *tileArray = (Tile*)tiles;
-	
+
 	for( i = 0; i < gridSize_.x; i++ )
 	{
 		for( j = 0; j < gridSize_.y; j++ )
@@ -316,7 +316,7 @@ typedef struct
 	CGPoint	n = ccpMult( ccp(gridSize_.x,gridSize_.y), time);
 	if ( (n.x+n.y) == 0.0f )
 		return 1.0f;
-	
+
 	return powf( (pos.x+pos.y) / (n.x+n.y), 6 );
 }
 
@@ -327,7 +327,7 @@ typedef struct
 
 -(void)turnOffTile:(ccGridSize)pos
 {
-	ccQuad3	coords;	
+	ccQuad3	coords;
 	bzero(&coords, sizeof(ccQuad3));
 	[self setTile:pos coords:coords];
 }
@@ -336,7 +336,7 @@ typedef struct
 {
 	ccQuad3	coords = [self originalTile:pos];
 	CGPoint	step = [[target_ grid] step];
-	
+
 	coords.bl.x += (step.x / 2) * (1.0f - distance);
 	coords.bl.y += (step.y / 2) * (1.0f - distance);
 
@@ -355,7 +355,7 @@ typedef struct
 -(void)update:(ccTime)time
 {
 	int i, j;
-	
+
 	for( i = 0; i < gridSize_.x; i++ )
 	{
 		for( j = 0; j < gridSize_.y; j++ )
@@ -385,7 +385,7 @@ typedef struct
 	CGPoint	n = ccpMult(ccp(gridSize_.x, gridSize_.y), (1.0f-time));
 	if ( (pos.x+pos.y) == 0 )
 		return 1.0f;
-	
+
 	return powf( (n.x+n.y) / (pos.x+pos.y), 6 );
 }
 
@@ -403,7 +403,7 @@ typedef struct
 	CGPoint	n = ccpMult(ccp(gridSize_.x, gridSize_.y), time);
 	if ( n.y == 0 )
 		return 1.0f;
-	
+
 	return powf( pos.y / n.y, 6 );
 }
 
@@ -411,12 +411,12 @@ typedef struct
 {
 	ccQuad3	coords = [self originalTile:pos];
 	CGPoint step = [[target_ grid] step];
-	
+
 	coords.bl.y += (step.y / 2) * (1.0f - distance);
 	coords.br.y += (step.y / 2) * (1.0f - distance);
 	coords.tl.y -= (step.y / 2) * (1.0f - distance);
 	coords.tr.y -= (step.y / 2) * (1.0f - distance);
-	
+
 	[self setTile:pos coords:coords];
 }
 
@@ -434,7 +434,7 @@ typedef struct
 	CGPoint	n = ccpMult(ccp(gridSize_.x,gridSize_.y), (1.0f - time));
 	if ( pos.y == 0 )
 		return 1.0f;
-	
+
 	return powf( n.y / pos.y, 6 );
 }
 
@@ -459,7 +459,7 @@ typedef struct
 		seed = s;
 		tilesOrder = nil;
 	}
-	
+
 	return self;
 }
 
@@ -495,7 +495,7 @@ typedef struct
 -(void)turnOffTile:(ccGridSize)pos
 {
 	ccQuad3	coords;
-	
+
 	bzero(&coords, sizeof(ccQuad3));
 	[self setTile:pos coords:coords];
 }
@@ -503,32 +503,32 @@ typedef struct
 -(void)startWithTarget:(id)aTarget
 {
 	int i;
-	
+
 	[super startWithTarget:aTarget];
-	
+
 	if ( seed != -1 )
 		srand(seed);
-	
+
 	tilesCount = gridSize_.x * gridSize_.y;
 	tilesOrder = (int*)malloc(tilesCount*sizeof(int));
 
 	for( i = 0; i < tilesCount; i++ )
 		tilesOrder[i] = i;
-	
+
 	[self shuffle:tilesOrder count:tilesCount];
 }
 
 -(void)update:(ccTime)time
 {
 	int i, l, t;
-	
+
 	l = (int)(time * (float)tilesCount);
-	
+
 	for( i = 0; i < tilesCount; i++ )
 	{
 		t = tilesOrder[i];
 		ccGridSize tilePos = ccg( t / gridSize_.y, t % gridSize_.y );
-		
+
 		if ( i < l )
 			[self turnOffTile:tilePos];
 		else
@@ -561,7 +561,7 @@ typedef struct
 		amplitude = amp;
 		amplitudeRate = 1.0f;
 	}
-	
+
 	return self;
 }
 
@@ -575,18 +575,18 @@ typedef struct
 -(void)update:(ccTime)time
 {
 	int i, j;
-	
+
 	for( i = 0; i < gridSize_.x; i++ )
 	{
 		for( j = 0; j < gridSize_.y; j++ )
 		{
 			ccQuad3 coords = [self originalTile:ccg(i,j)];
-			
+
 			coords.bl.z = (sinf(time*(CGFloat)M_PI*waves*2 + (coords.bl.y+coords.bl.x) * .01f) * amplitude * amplitudeRate );
 			coords.br.z	= coords.bl.z;
 			coords.tl.z = coords.bl.z;
 			coords.tr.z = coords.bl.z;
-			
+
 			[self setTile:ccg(i,j) coords:coords];
 		}
 	}
@@ -616,7 +616,7 @@ typedef struct
 		amplitude = amp;
 		amplitudeRate = 1.0f;
 	}
-	
+
 	return self;
 }
 
@@ -630,16 +630,16 @@ typedef struct
 -(void)update:(ccTime)time
 {
 	int i, j;
-	
+
 	float sinz =  (sinf((CGFloat)M_PI*time*jumps*2) * amplitude * amplitudeRate );
 	float sinz2 = (sinf((CGFloat)M_PI*(time*jumps*2 + 1)) * amplitude * amplitudeRate );
-	
+
 	for( i = 0; i < gridSize_.x; i++ )
 	{
 		for( j = 0; j < gridSize_.y; j++ )
 		{
 			ccQuad3 coords = [self originalTile:ccg(i,j)];
-			
+
 			if ( ((i+j) % 2) == 0 )
 			{
 				coords.bl.z += sinz;
@@ -654,7 +654,7 @@ typedef struct
 				coords.tl.z += sinz2;
 				coords.tr.z += sinz2;
 			}
-			
+
 			[self setTile:ccg(i,j) coords:coords];
 		}
 	}
@@ -694,20 +694,20 @@ typedef struct
 -(void)update:(ccTime)time
 {
 	int j;
-	
+
 	for( j = 0; j < gridSize_.y; j++ )
 	{
 		ccQuad3 coords = [self originalTile:ccg(0,j)];
 		float	direction = 1;
-		
+
 		if ( (j % 2 ) == 0 )
 			direction = -1;
-		
+
 		coords.bl.x += direction * winSize.width * time;
 		coords.br.x += direction * winSize.width * time;
 		coords.tl.x += direction * winSize.width * time;
 		coords.tr.x += direction * winSize.width * time;
-		
+
 		[self setTile:ccg(0,j) coords:coords];
 	}
 }
@@ -747,20 +747,20 @@ typedef struct
 -(void)update:(ccTime)time
 {
 	int i;
-	
+
 	for( i = 0; i < gridSize_.x; i++ )
 	{
 		ccQuad3 coords = [self originalTile:ccg(i,0)];
 		float	direction = 1;
-		
+
 		if ( (i % 2 ) == 0 )
 			direction = -1;
-		
+
 		coords.bl.y += direction * winSize.height * time;
 		coords.br.y += direction * winSize.height * time;
 		coords.tl.y += direction * winSize.height * time;
 		coords.tr.y += direction * winSize.height * time;
-		
+
 		[self setTile:ccg(i,0) coords:coords];
 	}
 }

@@ -59,13 +59,14 @@ inline float32 RandomFloat(float32 lo, float32 hi)
 }
 
 /// Test settings. Some can be controlled in the GUI.
+/// Test settings. Some can be controlled in the GUI.
 struct Settings
 {
 	Settings() :
+	viewCenter(0.0f, 20.0f),
 	hz(60.0f),
 	velocityIterations(8),
 	positionIterations(3),
-	drawStats(0),
 	drawShapes(1),
 	drawJoints(1),
 	drawAABBs(0),
@@ -75,12 +76,16 @@ struct Settings
 	drawContactForces(0),
 	drawFrictionForces(0),
 	drawCOMs(0),
+	drawStats(0),
+	drawProfile(0),
 	enableWarmStarting(1),
 	enableContinuous(1),
+	enableSubStepping(0),
 	pause(0),
 	singleStep(0)
 	{}
-	
+
+	b2Vec2 viewCenter;
 	float32 hz;
 	int32 velocityIterations;
 	int32 positionIterations;
@@ -94,8 +99,10 @@ struct Settings
 	int32 drawFrictionForces;
 	int32 drawCOMs;
 	int32 drawStats;
+	int32 drawProfile;
 	int32 enableWarmStarting;
 	int32 enableContinuous;
+	int32 enableSubStepping;
 	int32 pause;
 	int32 singleStep;
 };
@@ -115,7 +122,7 @@ class DestructionListener : public b2DestructionListener
 	public:
 		void SayGoodbye(b2Fixture* fixture) { B2_NOT_USED(fixture); }
 		void SayGoodbye(b2Joint* joint);
-		
+
 		Test* test;
 	};
 
@@ -133,10 +140,10 @@ struct ContactPoint
 class Test : public b2ContactListener
 	{
 	public:
-		
+
 		Test();
 		virtual ~Test();
-		
+
 		void SetGravity(float x,float y);	// iPhone specific
 
 		void SetTextLine(int32 line) { m_textLine = line; }
@@ -149,13 +156,13 @@ class Test : public b2ContactListener
 		void MouseMove(const b2Vec2& p);
 		void LaunchBomb();
 		void LaunchBomb(const b2Vec2& position, const b2Vec2& velocity);
-		
+
 		void SpawnBomb(const b2Vec2& worldPt);
 		void CompleteBombSpawn(const b2Vec2& p);
-		
+
 		// Let derived tests know that a joint was destroyed.
 		virtual void JointDestroyed(b2Joint* joint) { B2_NOT_USED(joint); }
-		
+
 		// Callbacks for derived classes.
 		virtual void BeginContact(b2Contact* contact) { B2_NOT_USED(contact); }
 		virtual void EndContact(b2Contact* contact) { B2_NOT_USED(contact); }
@@ -172,7 +179,7 @@ class Test : public b2ContactListener
 		friend class DestructionListener;
 		friend class BoundaryListener;
 		friend class ContactListener;
-		
+
 		b2Body* m_groundBody;
 		b2AABB m_worldAABB;
 		ContactPoint m_points[k_maxContactPoints];

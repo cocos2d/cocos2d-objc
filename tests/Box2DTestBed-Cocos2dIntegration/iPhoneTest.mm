@@ -44,22 +44,22 @@ Test::Test()
 {
 	b2Vec2 gravity;
 	gravity.Set(0.0f, -10.0f);
-	bool doSleep = true;
-	m_world = new b2World(gravity, doSleep);
+	m_world = new b2World(gravity);
+
 	m_bomb = NULL;
 	m_textLine = 30;
 	m_mouseJoint = NULL;
 	m_pointCount = 0;
-	
+
 	m_destructionListener.test = this;
 	m_world->SetDestructionListener(&m_destructionListener);
 	m_world->SetContactListener(this);
 	m_world->SetDebugDraw(&m_debugDraw);
-	
+
 	m_bombSpawning = false;
-	
+
 	m_stepCount = 0;
-	
+
 	b2BodyDef bodyDef;
 	m_groundBody = m_world->CreateBody(&bodyDef);
 }
@@ -76,27 +76,27 @@ void Test::SetGravity( float x, float y)
 	float tVectorLength=sqrtf(x*x+y*y);
 	float newGravityX=9.81f*x/tVectorLength;
 	float newGravityY=9.81f*y/tVectorLength;
-	m_world->SetGravity(b2Vec2(newGravityX,newGravityY));	
+	m_world->SetGravity(b2Vec2(newGravityX,newGravityY));
 }
 
 void Test::PreSolve(b2Contact* contact, const b2Manifold* oldManifold)
 {
 	const b2Manifold* manifold = contact->GetManifold();
-	
+
 	if (manifold->pointCount == 0)
 	{
 		return;
 	}
-	
+
 	b2Fixture* fixtureA = contact->GetFixtureA();
 	b2Fixture* fixtureB = contact->GetFixtureB();
-	
+
 	b2PointState state1[b2_maxManifoldPoints], state2[b2_maxManifoldPoints];
 	b2GetPointStates(state1, state2, oldManifold, manifold);
-	
+
 	b2WorldManifold worldManifold;
 	contact->GetWorldManifold(&worldManifold);
-	
+
 	for (int32 i = 0; i < manifold->pointCount && m_pointCount < k_maxContactPoints; ++i)
 	{
 		ContactPoint* cp = m_points + m_pointCount;
@@ -122,7 +122,7 @@ class QueryCallback : public b2QueryCallback
 			m_point = point;
 			m_fixture = NULL;
 		}
-		
+
 		bool ReportFixture(b2Fixture* fixture)
 		{
 			b2Body* body = fixture->GetBody();
@@ -132,16 +132,16 @@ class QueryCallback : public b2QueryCallback
 				if (inside)
 				{
 					m_fixture = fixture;
-					
+
 					// We are done, terminate the query.
 					return false;
 				}
 			}
-			
+
 			// Continue the query.
 			return true;
 		}
-		
+
 		b2Vec2 m_point;
 		b2Fixture* m_fixture;
 	};
@@ -149,23 +149,23 @@ class QueryCallback : public b2QueryCallback
 bool Test::MouseDown(const b2Vec2& p)
 {
 	m_mouseWorld = p;
-	
+
 	if (m_mouseJoint != NULL)
 	{
 		return false;
 	}
-	
+
 	// Make a small box.
 	b2AABB aabb;
 	b2Vec2 d;
 	d.Set(0.001f, 0.001f);
 	aabb.lowerBound = p - d;
 	aabb.upperBound = p + d;
-	
+
 	// Query the world for overlapping shapes.
 	QueryCallback callback(p);
 	m_world->QueryAABB(&callback, aabb);
-	
+
 	if (callback.m_fixture)
 	{
 		b2Body* body = callback.m_fixture->GetBody();
@@ -177,10 +177,10 @@ bool Test::MouseDown(const b2Vec2& p)
 
 		m_mouseJoint = (b2MouseJoint*)m_world->CreateJoint(&md);
 		body->SetAwake(true);
-		
+
 		return true;
 	}
-	
+
 	return false;
 }
 
@@ -196,7 +196,7 @@ void Test::CompleteBombSpawn(const b2Vec2& p)
 	{
 		return;
 	}
-	
+
 	const float multiplier = 30.0f;
 	b2Vec2 vel = m_bombSpawnPoint - p;
 	vel *= multiplier;
@@ -207,12 +207,12 @@ void Test::CompleteBombSpawn(const b2Vec2& p)
 void Test::ShiftMouseDown(const b2Vec2& p)
 {
 	m_mouseWorld = p;
-	
+
 	if (m_mouseJoint != NULL)
 	{
 		return;
 	}
-	
+
 	SpawnBomb(p);
 }
 
@@ -223,7 +223,7 @@ void Test::MouseUp(const b2Vec2& p)
 		m_world->DestroyJoint(m_mouseJoint);
 		m_mouseJoint = NULL;
 	}
-	
+
 	if (m_bombSpawning)
 	{
 		CompleteBombSpawn(p);
@@ -233,7 +233,7 @@ void Test::MouseUp(const b2Vec2& p)
 void Test::MouseMove(const b2Vec2& p)
 {
 	m_mouseWorld = p;
-	
+
 	if (m_mouseJoint)
 	{
 		m_mouseJoint->SetTarget(p);
@@ -254,37 +254,37 @@ void Test::LaunchBomb(const b2Vec2& position, const b2Vec2& velocity)
 		m_world->DestroyBody(m_bomb);
 		m_bomb = NULL;
 	}
-	
+
 	b2BodyDef bd;
 	bd.type = b2_dynamicBody;
 	bd.position = position;
 	bd.bullet = true;
 	m_bomb = m_world->CreateBody(&bd);
 	m_bomb->SetLinearVelocity(velocity);
-	
+
 	b2CircleShape circle;
 	circle.m_radius = 0.3f;
-	
+
 	b2FixtureDef fd;
 	fd.shape = &circle;
 	fd.density = 20.0f;
 	fd.restitution = 0.0f;
-	
-	
+
+
 	b2Vec2 minV = position - b2Vec2(0.3f,0.3f);
 	b2Vec2 maxV = position + b2Vec2(0.3f,0.3f);
-	
+
 	b2AABB aabb;
 	aabb.lowerBound = minV;
 	aabb.upperBound = maxV;
-	
+
 	m_bomb->CreateFixture(&fd);
 }
 
 void Test::Step(Settings* settings)
 {
 	float32 timeStep = settings->hz > 0.0f ? 1.0f / settings->hz : float32(0.0f);
-	
+
 	if (settings->pause)
 	{
 		if (settings->singleStep)
@@ -295,46 +295,46 @@ void Test::Step(Settings* settings)
 		{
 			timeStep = 0.0f;
 		}
-		
+
 		m_debugDraw.DrawString(5, m_textLine, "****PAUSED****");
 		m_textLine += 15;
 	}
-	
+
 	uint32 flags = 0;
-	flags += settings->drawShapes			* b2DebugDraw::e_shapeBit;
-	flags += settings->drawJoints			* b2DebugDraw::e_jointBit;
-	flags += settings->drawAABBs			* b2DebugDraw::e_aabbBit;
-	flags += settings->drawPairs			* b2DebugDraw::e_pairBit;
-	flags += settings->drawCOMs				* b2DebugDraw::e_centerOfMassBit;
+	flags += settings->drawShapes			* b2Draw::e_shapeBit;
+	flags += settings->drawJoints			* b2Draw::e_jointBit;
+	flags += settings->drawAABBs			* b2Draw::e_aabbBit;
+	flags += settings->drawPairs			* b2Draw::e_pairBit;
+	flags += settings->drawCOMs				* b2Draw::e_centerOfMassBit;
 	m_debugDraw.SetFlags(flags);
-	
+
 	m_world->SetWarmStarting(settings->enableWarmStarting > 0);
 	m_world->SetContinuousPhysics(settings->enableContinuous > 0);
-	
+
 	m_pointCount = 0;
-	
+
 	m_world->Step(timeStep, settings->velocityIterations, settings->positionIterations);
-	
+
 //	m_world->DrawDebugData();
-	
+
 	if (timeStep > 0.0f)
 	{
 		++m_stepCount;
 	}
-	
+
 	if (settings->drawStats)
 	{
 		m_debugDraw.DrawString(5, m_textLine, "bodies/contacts/joints/proxies = %d/%d/%d",
 							   m_world->GetBodyCount(), m_world->GetContactCount(), m_world->GetJointCount(), m_world->GetProxyCount());
-		m_textLine += 15;		
+		m_textLine += 15;
 	}
-	
+
 	if (m_mouseJoint)
 	{
 //		b2Body* body = m_mouseJoint->GetBodyB();
 //		b2Vec2 p1 = body->GetWorldPoint(m_mouseJoint->m_localAnchor);
 //		b2Vec2 p2 = m_mouseJoint->m_target;
-//		
+//
 //		glPointSize(4.0f);
 //		glColor3f(0.0f, 1.0f, 0.0f);
 //		glBegin(GL_POINTS);
@@ -342,14 +342,14 @@ void Test::Step(Settings* settings)
 //		glVertex2f(p2.x, p2.y);
 //		glEnd();
 //		glPointSize(1.0f);
-//		
+//
 //		glColor3f(0.8f, 0.8f, 0.8f);
 //		glBegin(GL_LINES);
 //		glVertex2f(p1.x, p1.y);
 //		glVertex2f(p2.x, p2.y);
 //		glEnd();
 	}
-	
+
 	if (m_bombSpawning)
 	{
 //		glPointSize(4.0f);
@@ -358,23 +358,23 @@ void Test::Step(Settings* settings)
 //		glColor3f(0.0f, 0.0f, 1.0f);
 //		glVertex2f(m_bombSpawnPoint.x, m_bombSpawnPoint.y);
 //		glEnd();
-//		
+//
 //		glColor3f(0.8f, 0.8f, 0.8f);
 //		glBegin(GL_LINES);
 //		glVertex2f(m_mouseWorld.x, m_mouseWorld.y);
 //		glVertex2f(m_bombSpawnPoint.x, m_bombSpawnPoint.y);
 //		glEnd();
 	}
-	
+
 	if (settings->drawContactPoints)
 	{
 		//const float32 k_impulseScale = 0.1f;
 		const float32 k_axisScale = 0.3f;
-		
+
 		for (int32 i = 0; i < m_pointCount; ++i)
 		{
 			ContactPoint* point = m_points + i;
-			
+
 			if (point->state == b2_addState)
 			{
 				// Add
@@ -385,7 +385,7 @@ void Test::Step(Settings* settings)
 				// Persist
 				m_debugDraw.DrawPoint(point->position, 5.0f, b2Color(0.3f, 0.3f, 0.95f));
 			}
-			
+
 			if (settings->drawContactNormals == 1)
 			{
 				b2Vec2 p1 = point->position;
@@ -398,7 +398,7 @@ void Test::Step(Settings* settings)
 				//b2Vec2 p2 = p1 + k_forceScale * point->normalForce * point->normal;
 				//DrawSegment(p1, p2, b2Color(0.9f, 0.9f, 0.3f));
 			}
-			
+
 			if (settings->drawFrictionForces == 1)
 			{
 				//b2Vec2 tangent = b2Cross(point->normal, 1.0f);

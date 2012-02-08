@@ -5,17 +5,17 @@
  *
  * Copyright (c) 2009-2010 Ricardo Quesada
  * Copyright (c) 2011 Zynga Inc.
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -48,7 +48,7 @@
  * Limitations:
  *  - The only object that is accepted as child (or grandchild, grand-grandchild, etc...) is CCSprite or any subclass of CCSprite. eg: particles, labels and layer can't be added to a CCSpriteBatchNode.
  *  - Either all its children are Aliased or Antialiased. It can't be a mix. This is because "alias" is a property of the texture, and all the sprites share the same texture.
- * 
+ *
  * @since v0.7.1
  */
 @interface CCSpriteBatchNode : CCNode <CCTextureProtocol>
@@ -58,11 +58,6 @@
 
 	// all descendants: chlidren, gran children, etc...
 	CCArray	*descendants_;
-	
-	@private
-	
-	void (*updateAtlasIndexMethod_)(id, SEL,CCSprite*,NSInteger*);
-	
 }
 
 /** returns the TextureAtlas that is used */
@@ -127,4 +122,17 @@
 /* Sprites use this to start sortChildren, don't call this manually */
 - (void) reorderBatch:(BOOL) reorder;
 
+@end
+
+@interface CCSpriteBatchNode (QuadExtensions)
+/** Adds a quad into the texture atlas but it won't be added into the children array.
+ This method should be called only when you are dealing with very big AtlasSrite and when most of the CCSprite won't be updated.
+ For example: a tile map (CCTMXMap) or a label with lots of characgers (CCLabelBMFont)
+ */
+-(id) addSpriteWithoutQuad:(CCSprite*)child z:(NSUInteger)z tag:(NSInteger)aTag;
+
+/* This is the opposite of "addQuadFromSprite".
+ It adds the sprite to the children and descendants array, but it doesn't add it to the texture atlas.
+ */
+-(void) addQuadFromSprite:(CCSprite*)sprite quadIndex:(NSUInteger)index;
 @end

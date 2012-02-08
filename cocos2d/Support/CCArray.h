@@ -2,17 +2,17 @@
  * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
  * Copyright (c) 2010 ForzeField Studios S.L. http://forzefield.com
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -39,8 +39,8 @@
 
 #define CCARRAY_FOREACH(__array__, __object__)												\
 if (__array__ && __array__->data->num > 0)													\
-for(CC_ARC_UNSAFE_RETAINED id *__arr__ = __array__->data->arr, *end = __array__->data->arr + __array__->data->num-1;	\
-	__arr__ <= end && ((__object__ = *__arr__) != nil || true);										\
+for(const CC_ARC_UNSAFE_RETAINED id *__arr__ = __array__->data->arr, *end = __array__->data->arr + __array__->data->num-1;	\
+	__arr__ <= end && ((__object__ = *__arr__) != nil || true);								\
 	__arr__++)
 
 @interface CCArray : NSObject <NSFastEnumeration, NSCoding, NSCopying>

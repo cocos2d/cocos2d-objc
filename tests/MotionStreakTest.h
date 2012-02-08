@@ -1,18 +1,17 @@
-#import <UIKit/UIKit.h>
-#import "CCNode.h"
-#import "CCMotionStreak.h"
+
+
+#import "BaseAppController.h"
 
 @class CCSprite;
 
 //CLASS INTERFACE
-@interface AppController : NSObject <UIAccelerometerDelegate, UIAlertViewDelegate, UITextFieldDelegate, UIApplicationDelegate>
-{
-	UIWindow	*window;
-}
+@interface AppController : BaseAppController
 @end
 
 @interface MotionStreakTest : CCLayer
-{}
+{
+	CCMotionStreak *streak_;
+}
 
 -(NSString*) title;
 

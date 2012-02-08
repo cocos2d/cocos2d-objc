@@ -9,10 +9,10 @@
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -36,59 +36,63 @@
 {
 	if(( self = [super init] )) {
 		// generate FBO
-		ccglGenFramebuffers(1, &fbo);		
+		glGenFramebuffers(1, &fbo_);
 	}
 	return self;
 }
 
 -(void)grab:(CCTexture2D*)texture
 {
-	glGetIntegerv(CC_GL_FRAMEBUFFER_BINDING, &oldFBO);
-	
+	glGetIntegerv(CC_GL_FRAMEBUFFER_BINDING, &oldFBO_);
+
 	// bind
-	ccglBindFramebuffer(CC_GL_FRAMEBUFFER, fbo);
+	glBindFramebuffer(CC_GL_FRAMEBUFFER, fbo_);
 
 	// associate texture with FBO
-	ccglFramebufferTexture2D(CC_GL_FRAMEBUFFER, CC_GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texture.name, 0);
-	
+	glFramebufferTexture2D(CC_GL_FRAMEBUFFER, CC_GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texture.name, 0);
+
 	// check if it worked (probably worth doing :) )
-	GLuint status = ccglCheckFramebufferStatus(CC_GL_FRAMEBUFFER);
+	GLuint status = glCheckFramebufferStatus(CC_GL_FRAMEBUFFER);
 	if (status != CC_GL_FRAMEBUFFER_COMPLETE)
 		[NSException raise:@"Frame Grabber" format:@"Could not attach texture to framebuffer"];
-	
-	ccglBindFramebuffer(CC_GL_FRAMEBUFFER, oldFBO);
+
+	glBindFramebuffer(CC_GL_FRAMEBUFFER, oldFBO_);
 }
 
 -(void)beforeRender:(CCTexture2D*)texture
 {
-	glGetIntegerv(CC_GL_FRAMEBUFFER_BINDING, &oldFBO);
-	ccglBindFramebuffer(CC_GL_FRAMEBUFFER, fbo);
+	glGetIntegerv(CC_GL_FRAMEBUFFER_BINDING, &oldFBO_);
+	glBindFramebuffer(CC_GL_FRAMEBUFFER, fbo_);
+
+	// save clear color
+	glGetFloatv(GL_COLOR_CLEAR_VALUE,oldClearColor_);
 
 	// BUG XXX: doesn't work with RGB565.
-
-
 	glClearColor(0,0,0,0);
-	
+
 	// BUG #631: To fix #631, uncomment the lines with #631
 	// Warning: But it CCGrabber won't work with 2 effects at the same time
 //	glClearColor(0.0f,0.0f,0.0f,1.0f);	// #631
-	
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	
-	
+
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
 //	glColorMask(TRUE, TRUE, TRUE, FALSE);	// #631
 
 }
 
 -(void)afterRender:(CCTexture2D*)texture
 {
- 	ccglBindFramebuffer(CC_GL_FRAMEBUFFER, oldFBO);
+	glBindFramebuffer(CC_GL_FRAMEBUFFER, oldFBO_);
 //	glColorMask(TRUE, TRUE, TRUE, TRUE);	// #631
+	
+	// Restore clear color
+	glClearColor( oldClearColor_[0], oldClearColor_[1], oldClearColor_[2], oldClearColor_[3] );
 }
 
 - (void) dealloc
 {
 	CCLOGINFO(@"cocos2d: deallocing %@", self);
-	ccglDeleteFramebuffers(1, &fbo);
+	glDeleteFramebuffers(1, &fbo_);
 	[super dealloc];
 }
 

@@ -7,11 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BaseAppController.h"
 
-@interface FancyRatMeteringDemoAppDelegate : NSObject <UIApplicationDelegate> {
-	UIWindow *window;
-}
-
-@property (nonatomic, retain) UIWindow *window;
-
+@interface FancyRatMeteringDemoAppDelegate : BaseAppController
 @end

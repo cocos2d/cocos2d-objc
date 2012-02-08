@@ -10,10 +10,10 @@
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -29,7 +29,7 @@
 
 /** Instant actions are immediate actions. They don't have a duration like
  the CCIntervalAction actions.
-*/ 
+*/
 @interface CCActionInstant : CCFiniteTimeAction <NSCopying>
 {
 }
@@ -156,8 +156,6 @@ typedef void (*CC_CALLBACK_ND)(id, SEL, id, void *);
 
 #pragma mark Blocks Support
 
-#if NS_BLOCKS_AVAILABLE
-
 /** Executes a callback using a block.
  */
 @interface CCCallBlock : CCActionInstant<NSCopying>
@@ -202,4 +200,28 @@ typedef void (*CC_CALLBACK_ND)(id, SEL, id, void *);
 -(void) execute;
 @end
 
-#endif
+/** Executes a callback using a block with a single NSObject parameter.
+ @since v2.0
+ */
+@interface CCCallBlockO : CCActionInstant<NSCopying>
+{
+	void (^block_)(id object);
+	id object_;
+}
+
+/** object to be passed to the block */
+@property (nonatomic,retain) id object;
+
+/** creates the action with the specified block, to be used as a callback.
+ The block will be "copied".
+ */
++(id) actionWithBlock:(void(^)(id object))block object:(id)object;
+
+/** initialized the action with the specified block, to be used as a callback.
+ The block will be "copied".
+ */
+-(id) initWithBlock:(void(^)(id object))block object:(id)object;
+
+/** executes the callback */
+-(void) execute;
+@end

@@ -26,11 +26,11 @@
 #ifndef GLES_RENDER_H
 #define GLES_RENDER_H
 
-#import <Availability.h>
+#import "cocos2d.h"
 
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef __CC_PLATFORM_IOS
 #import <OpenGLES/EAGL.h>
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+#elif defined(__CC_PLATFORM_MAC)
 #import <OpenGL/OpenGL.h>
 #endif
 
@@ -40,9 +40,13 @@ struct b2AABB;
 
 // This class implements debug drawing callbacks that are invoked
 // inside b2World::Step.
-class GLESDebugDraw : public b2DebugDraw
+class GLESDebugDraw : public b2Draw
 {
 	float32 mRatio;
+	CCGLProgram *mShaderProgram;
+	GLint		mColorLocation;
+
+	void initShader( void );
 public:
 	GLESDebugDraw();
 
@@ -62,7 +66,7 @@ public:
 
     void DrawPoint(const b2Vec2& p, float32 size, const b2Color& color);
 
-    void DrawString(int x, int y, const char* string, ...); 
+    void DrawString(int x, int y, const char* string, ...);
 
     void DrawAABB(b2AABB* aabb, const b2Color& color);
 };

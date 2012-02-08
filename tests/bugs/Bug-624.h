@@ -1,10 +1,9 @@
 #import "cocos2d.h"
+#import "BaseAppController.h"
+
 
 //CLASS INTERFACE
-@interface AppController : NSObject <UIAccelerometerDelegate, UIAlertViewDelegate, UITextFieldDelegate, UIApplicationDelegate>
-{
-	UIWindow *window;
-}
+@interface AppController : BaseAppController
 @end
 
 

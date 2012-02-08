@@ -9,10 +9,10 @@
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -29,9 +29,12 @@
 #import "CCNode.h"
 #import "CCCamera.h"
 #import "ccTypes.h"
+#import "CCDirector.h"
+#import "kazmath/mat4.h"
 
 @class CCTexture2D;
 @class CCGrabber;
+@class CCGLProgram;
 
 /** Base class for other
  */
@@ -44,6 +47,10 @@
 	CGPoint		step_;
 	CCGrabber	*grabber_;
 	BOOL		isTextureFlipped_;
+
+	CCGLProgram	*shaderProgram_;
+
+	ccDirectorProjection	directorProjection_;
 }
 
 /** wheter or not the grid is active */
@@ -60,6 +67,8 @@
 @property (nonatomic, retain) CCGrabber *grabber;
 /** is texture flipped */
 @property (nonatomic, readwrite) BOOL isTextureFlipped;
+/** shader program */
+@property (nonatomic, readwrite, assign) CCGLProgram *shaderProgram;
 
 +(id) gridWithSize:(ccGridSize)gridSize texture:(CCTexture2D*)texture flippedTexture:(BOOL)flipped;
 +(id) gridWithSize:(ccGridSize)gridSize;

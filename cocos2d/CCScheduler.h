@@ -3,17 +3,17 @@
  *
  * Copyright (c) 2008-2010 Ricardo Quesada
  * Copyright (c) 2011 Zynga Inc.
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -38,13 +38,13 @@ typedef void (*TICK_IMP)(id, SEL, ccTime);
 {
 	id target;
 	TICK_IMP impMethod;
-	
+
 	ccTime elapsed;
 	BOOL runForever;
 	BOOL useDelay;
-	uint nTimesExecuted; 
+	uint nTimesExecuted;
 	uint repeat; //0 = once, 1 is 2 x executed
-	ccTime delay; 
+	ccTime delay;
 
 @public					// optimization
 	ccTime interval;
@@ -79,14 +79,14 @@ typedef void (*TICK_IMP)(id, SEL, ccTime);
 //
 // CCScheduler
 //
-/** Scheduler is responsible of triggering the scheduled callbacks.
+/** CCScheduler is responsible of triggering the scheduled callbacks.
  You should not use NSTimer. Instead use this class.
- 
+
  There are 2 different types of callbacks (selectors):
 
 	- update selector: the 'update' selector will be called every frame. You can customize the priority.
 	- custom selector: A custom selector will be called every frame, or with a custom interval of time
- 
+
  The 'custom selectors' should be avoided when possible. It is faster, and consumes less memory to use the 'update selector'.
 
 */
@@ -96,9 +96,9 @@ struct _hashSelectorEntry;
 struct _hashUpdateEntry;
 
 @interface CCScheduler : NSObject
-{	
+{
 	ccTime				timeScale_;
-	
+
 	//
 	// "updates with priority" stuff
 	//
@@ -106,16 +106,16 @@ struct _hashUpdateEntry;
 	struct _listEntry			*updates0;		// list priority == 0
 	struct _listEntry			*updatesPos;	// list priority > 0
 	struct _hashUpdateEntry		*hashForUpdates;	// hash used to fetch quickly the list entries for pause,delete,etc.
-		
+
 	// Used for "selectors with interval"
 	struct _hashSelectorEntry	*hashForSelectors;
 	struct _hashSelectorEntry	*currentTarget;
 	BOOL						currentTargetSalvaged;
-	
+
 	// Optimization
 	TICK_IMP			impMethod;
 	SEL					updateSelector;
-    
+
     BOOL updateHashLocked; // If true unschedule will not remove anything from a hash. Elements will only be marked for deletion.
 }
 
@@ -128,26 +128,18 @@ struct _hashUpdateEntry;
  */
 @property (nonatomic,readwrite) ccTime	timeScale;
 
-/** returns a shared instance of the Scheduler */
-+(CCScheduler *)sharedScheduler;
-
-/** purges the shared scheduler. It releases the retained instance.
- @since v0.99.0
- */
-+(void)purgeSharedScheduler;
-
-/** 'tick' the scheduler.
+/** 'update' the scheduler.
  You should NEVER call this method, unless you know what you are doing.
  */
--(void) tick:(ccTime)dt;
+-(void) update:(ccTime)dt;
 
 /** The scheduled method will be called every 'interval' seconds.
  If paused is YES, then it won't be called until it is resumed.
  If 'interval' is 0, it will be called every frame, but if so, it recommened to use 'scheduleUpdateForTarget:' instead.
  If the selector is already scheduled, then only the interval parameter will be updated without re-scheduling it again.
- repeat let the action be repeated repeat + 1 times, use kCCRepeatForever to let the action run continiously 
+ repeat let the action be repeated repeat + 1 times, use kCCRepeatForever to let the action run continiously
  delay is the amount of time the action will wait before it'll start
- 
+
  @since v0.99.3, repeat and delay added in v1.1
  */
 -(void) scheduleSelector:(SEL)selector forTarget:(id)target interval:(ccTime)interval paused:(BOOL)paused repeat: (uint) repeat delay: (ccTime) delay;

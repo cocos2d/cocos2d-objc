@@ -8,10 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface FadeToGreyAppDelegate : NSObject <UIApplicationDelegate> {
-	UIWindow *window;
-}
+#import "BaseAppController.h"
 
-@property (nonatomic, retain) UIWindow *window;
-
+@interface FadeToGreyAppDelegate : BaseAppController
 @end

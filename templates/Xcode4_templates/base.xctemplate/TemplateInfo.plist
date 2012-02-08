@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>Identifier</key>
-	<string>com.cocos2d.base</string>
+	<string>com.cocos2d-v2.base</string>
 	<key>Kind</key>
 	<string>Xcode.Xcode3.ProjectTemplateUnitKind</string>
 	<key>Options</key>
@@ -46,17 +46,20 @@
 				<key>GCC_OPTIMIZATION_LEVEL</key>
 				<string>0</string>
 				<key>GCC_PREPROCESSOR_DEFINITIONS</key>
-                <array>
-                    <string>DEBUG</string>
-                    <string>COCOS2D_DEBUG=1</string>
-                </array>
+				<array>
+					<string>DEBUG</string>
+					<string>COCOS2D_DEBUG=1</string>
+				</array>
 				<key>GCC_SYMBOLS_PRIVATE_EXTERN</key>
 				<string>NO</string>
 			</dict>
 			<key>Release</key>
 			<dict>
 				<key>GCC_PREPROCESSOR_DEFINITIONS</key>
-                <string>NDEBUG</string>
+				<array>
+					<string>NDEBUG</string>
+					<string>NS_BLOCK_ASSERTIONS=1</string>
+				</array>
 			</dict>
 		</dict>
 		<key>SharedSettings</key>
@@ -67,7 +70,9 @@
 			<string>YES</string>
 			<key>GCC_WARN_UNUSED_VARIABLE</key>
 			<string>YES</string>
-        </dict>
+			<key>GCC_VERSION</key>
+			<string>com.apple.compilers.llvm.clang.1_0</string>
+		</dict>
 	</dict>
 	<key>Targets</key>
 	<array>

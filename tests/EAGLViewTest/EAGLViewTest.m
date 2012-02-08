@@ -1,6 +1,6 @@
 //
-// EAGLViewTest
-// This sample/test shows how to create an EAGLView using Interface Builder
+// CCGLViewTest
+// This sample/test shows how to create an CCGLView using Interface Builder
 //
 // http://www.cocos2d-iphone.org
 //
@@ -24,7 +24,7 @@
 	{
 		CGSize s = [[CCDirector sharedDirector] winSize];
 		CCLabelTTF *label;
-		
+
 #ifdef __IPHONE_3_2
 		if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
 			label = [CCLabelTTF labelWithString:@"Hello iPad" fontName:@"Marker Felt" fontSize:40];
@@ -35,7 +35,7 @@
 
 		label.position = ccp(s.width/2, s.height/2);
 		[self addChild:label];
-		
+
 	}
 	return self;
 }
@@ -58,28 +58,26 @@
 #pragma mark Application Delegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
-{	
-	if( ! [CCDirector setDirectorType:kCCDirectorTypeDisplayLink] )
-		[CCDirector setDirectorType:kCCDirectorTypeThreadMainLoop];
-
+{
 	CCDirector *director = [CCDirector sharedDirector];
-	[director setDisplayFPS:YES];
-	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
+	[director setDisplayStats:YES];
 
-	[director setOpenGLView:glView_];
+	[director setView:glView_];
 
 	// Enables High Res mode (Retina Display) on iPhone 4 and maintains low res on all other devices
 	if( ! [director enableRetinaDisplay:YES] )
 		CCLOG(@"Retina Display Not supported");
-	
+
 	// turn on multiple touches
 	[glView_ setMultipleTouchEnabled:YES];
 
 	CCScene *scene = [CCScene node];
 	[scene addChild: [LayerExample node]];
-	
-	[director runWithScene:scene];
-	
+
+	[director pushScene:scene];
+
+	[director startAnimation];
+
 	return YES;
 }
 
@@ -100,11 +98,11 @@
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
-{	
+{
 	CCDirector *director = [CCDirector sharedDirector];
-	[[director openGLView] removeFromSuperview];
+	[director.view removeFromSuperview];
 	[director end];
-	
+
 	// release glView here, else it won't be dealloced
 	[glView_ release];
 	glView_ = nil;

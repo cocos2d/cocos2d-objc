@@ -2,11 +2,6 @@
 // cocos2d node-children performance test
 //
 
-#import "cocos2d.h"
-
-#if ! CC_ENABLE_PROFILERS
-#error CC_ENABLE_PROFILERS must be enabled. Edit ccConfig.h
-#endif
 
 #import "PerformanceNodeChildrenTest.h"
 
@@ -14,7 +9,7 @@ enum {
 	kTagInfoLayer = 1,
 	kTagMainLayer = 2,
 	kTagLabelAtlas = 3,
-	
+
 	kTagBase = 20000,
 };
 
@@ -27,13 +22,13 @@ static NSString *transitions[] = {
 		@"ReorderSpriteSheet",
 		@"ReorderSpriteSheetInOrder",
 		@"ReorderSpriteSheetInReverseOrder",
-		@"AddSpriteSheetInOrder",	
+		@"AddSpriteSheetInOrder",
 		@"AddSpriteSheetInReverseOrder",
 };
 
 Class nextAction()
 {
-	
+
 	sceneIdx++;
 	sceneIdx = sceneIdx % ( sizeof(transitions) / sizeof(transitions[0]) );
 	NSString *r = transitions[sceneIdx];
@@ -46,8 +41,8 @@ Class backAction()
 	sceneIdx--;
 	int total = ( sizeof(transitions) / sizeof(transitions[0]) );
 	if( sceneIdx < 0 )
-		sceneIdx += total;	
-	
+		sceneIdx += total;
+
 	NSString *r = transitions[sceneIdx];
 	Class c = NSClassFromString(r);
 	return c;
@@ -73,17 +68,17 @@ Class restartAction()
 - (id)initWithQuantityOfNodes:(unsigned int)nodes
 {
 	if ((self = [super init])) {
-		
+
 		srandom(0);
-		
+
 		CGSize s = [[CCDirector sharedDirector] winSize];
-		
+
 		// Title
 		CCLabelTTF *label = [CCLabelTTF labelWithString:[self title] fontName:@"Arial" fontSize:40];
 		[self addChild:label z:1];
 		[label setPosition: ccp(s.width/2, s.height-32)];
 		[label setColor:ccc3(255,255,40)];
-		
+
 		// Subtitle
 		NSString *subtitle = [self subtitle];
 		if( subtitle ) {
@@ -97,36 +92,36 @@ Class restartAction()
 		quantityOfNodes = nodes;
 
 		[CCMenuItemFont setFontSize:65];
-		CCMenuItemFont *decrease = [CCMenuItemFont itemFromString: @" - " target:self selector:@selector(onDecrease:)];
+		CCMenuItemFont *decrease = [CCMenuItemFont itemWithString: @" - " target:self selector:@selector(onDecrease:)];
 		[decrease.label setColor:ccc3(0,200,20)];
-		CCMenuItemFont *increase = [CCMenuItemFont itemFromString: @" + " target:self selector:@selector(onIncrease:)];
+		CCMenuItemFont *increase = [CCMenuItemFont itemWithString: @" + " target:self selector:@selector(onIncrease:)];
 		[increase.label setColor:ccc3(0,200,20)];
-		
+
 		CCMenu *menu = [CCMenu menuWithItems: decrease, increase, nil];
 		[menu alignItemsHorizontally];
 		menu.position = ccp(s.width/2, s.height/2+15);
 		[self addChild:menu z:1];
-		
+
 		CCLabelTTF *infoLabel = [CCLabelTTF labelWithString:@"0 nodes" fontName:@"Marker Felt" fontSize:30];
 		[infoLabel setColor:ccc3(0,200,20)];
 		infoLabel.position = ccp(s.width/2, s.height/2-15);
 		[self addChild:infoLabel z:1 tag:kTagInfoLayer];
-		
-		
+
+
 		// Next Prev Test
-		CCMenuItemImage *item1 = [CCMenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
-		CCMenuItemImage *item2 = [CCMenuItemImage itemFromNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
-		CCMenuItemImage *item3 = [CCMenuItemImage itemFromNormalImage:@"f1.png" selectedImage:@"f2.png" target:self selector:@selector(nextCallback:)];
+		CCMenuItemImage *item1 = [CCMenuItemImage itemWithNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
+		CCMenuItemImage *item2 = [CCMenuItemImage itemWithNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
+		CCMenuItemImage *item3 = [CCMenuItemImage itemWithNormalImage:@"f1.png" selectedImage:@"f2.png" target:self selector:@selector(nextCallback:)];
 		menu = [CCMenu menuWithItems:item1, item2, item3, nil];
 		[menu alignItemsHorizontally];
 		menu.position = ccp(s.width/2, 30);
-		[self addChild: menu z:1];	
-		
+		[self addChild: menu z:1];
+
 
 		[self updateQuantityLabel];
-		[self updateQuantityOfNodes];		
+		[self updateQuantityOfNodes];
 	}
-	
+
 	return self;
 }
 
@@ -142,6 +137,8 @@ Class restartAction()
 
 -(void) dealloc
 {
+	CC_PROFILER_PURGE_ALL();
+
 	[super dealloc];
 }
 
@@ -187,7 +184,7 @@ Class restartAction()
 	quantityOfNodes -= kNodesIncrease;
 	if( quantityOfNodes < 0 )
 		quantityOfNodes = 0;
-	
+
 	[self updateQuantityLabel];
 	[self updateQuantityOfNodes];
 }
@@ -195,10 +192,10 @@ Class restartAction()
 - (void)updateQuantityLabel
 {
 	if( quantityOfNodes != lastRenderedCount ) {
-		
+
 		CCLabelTTF *infoLabel = (CCLabelTTF *) [self getChildByTag:kTagInfoLayer];
 		[infoLabel setString: [NSString stringWithFormat:@"%u nodes", quantityOfNodes] ];
-		
+
 		lastRenderedCount = quantityOfNodes;
 	}
 }
@@ -220,19 +217,16 @@ Class restartAction()
 	batchNode = [CCSpriteBatchNode batchNodeWithFile:@"spritesheet1.png"];
 
 	if( ( self=[super initWithQuantityOfNodes:nodes]) ) {
-	
-		_profilingTimer = [[CCProfiler timerWithName:[self profilerName] andInstance:self] retain];
 
-		[self addChild:batchNode];		
+		[self addChild:batchNode];
 		[self scheduleUpdate];
 	}
-	
+
 	return self;
 }
 
 - (void) dealloc
 {
-	[CCProfiler releaseTimer:_profilingTimer];
 	[super dealloc];
 }
 
@@ -247,8 +241,8 @@ Class restartAction()
 			[sprite setPosition:ccp( CCRANDOM_0_1()*s.width, CCRANDOM_0_1()*s.height)];
 		}
 	}
-	
-	
+
+
 	// decrease nodes
 	else if ( currentQuantityOfNodes > quantityOfNodes ) {
 		for(int i=0;i < (currentQuantityOfNodes-quantityOfNodes);i++) {
@@ -257,7 +251,7 @@ Class restartAction()
 		}
 
 	}
-	
+
 	currentQuantityOfNodes = quantityOfNodes;
 }
 
@@ -275,15 +269,16 @@ Class restartAction()
 
 -(void) update:(ccTime)dt
 {
-	CCProfilingBeginTimingBlock(_profilingTimer);
-	
+	CC_PROFILER_START_INSTANCE(self, [self profilerName] );
+
+
 	// iterate using fast enumeration protocol
 	for( CCSprite* sprite in [batchNode children] )
 	{
 		[sprite setVisible:NO];
 	}
-	
-	CCProfilingEndTimingBlock(_profilingTimer);
+
+	CC_PROFILER_STOP_INSTANCE(self, [self profilerName] );
 }
 
 -(NSString*) title
@@ -307,16 +302,16 @@ Class restartAction()
 {
 	ccArray *array = batchNode.children->data;
 
-	CCProfilingBeginTimingBlock(_profilingTimer);
-	
+	CC_PROFILER_START( [self profilerName] );
+
 	// iterate using fast enumeration protocol
 	for( int i=0; i < array->num; i++)
 	{
 		CCSprite *sprite = array->arr[i];
 		[sprite setVisible:NO];
 	}
-	
-	CCProfilingEndTimingBlock(_profilingTimer);
+
+	CC_PROFILER_STOP( [self profilerName] );
 }
 
 -(NSString*) title
@@ -343,21 +338,18 @@ Class restartAction()
 - (id)initWithQuantityOfNodes:(unsigned int)nodes
 {
 	batchNode = [CCSpriteBatchNode batchNodeWithFile:@"spritesheet1.png"];
-	
+
 	if( ( self=[super initWithQuantityOfNodes:nodes]) ) {
-		
-		_profilingTimer = [[CCProfiler timerWithName:[self profilerName] andInstance:self] retain];
-		
-		[self addChild:batchNode];		
+
+		[self addChild:batchNode];
 		[self scheduleUpdate];
 	}
-	
+
 	return self;
 }
 
 - (void) dealloc
 {
-	[CCProfiler releaseTimer:_profilingTimer];
 	[super dealloc];
 }
 
@@ -373,17 +365,17 @@ Class restartAction()
 			[sprite setVisible:NO];
 		}
 	}
-	
-	
+
+
 	// decrease nodes
 	else if ( currentQuantityOfNodes > quantityOfNodes ) {
 		for(int i=0;i < (currentQuantityOfNodes-quantityOfNodes);i++) {
 			int index = currentQuantityOfNodes-i-1;
 			[batchNode removeChildAtIndex:index cleanup:YES];
 		}
-		
+
 	}
-	
+
 	currentQuantityOfNodes = quantityOfNodes;
 }
 
@@ -408,25 +400,27 @@ Class restartAction()
 	int totalToAdd = currentQuantityOfNodes * 0.15f;
 
 	if( totalToAdd > 0 ) {
-		
+
 		CCSprite *sprites[ totalToAdd ];
 		int		zs[ totalToAdd];
-		
+
 		// Don't include the sprite creation time and random as part of the profiling
 		for(int i=0;i<totalToAdd;i++) {
 			sprites[i] = [CCSprite spriteWithTexture:[batchNode texture] rect:CGRectMake(0,0,32,32)];
 			zs[i] = CCRANDOM_MINUS1_1() * 50;
 		}
-		
+
 		// add them with random Z (very important!)
-		CCProfilingBeginTimingBlock(_profilingTimer);
+		CC_PROFILER_START( [self profilerName] );
+
 		for( int i=0; i < totalToAdd;i++ )
 		{
 			[batchNode addChild:sprites[i] z:zs[i] tag:kTagBase+i];
 		}
+
 		[batchNode sortAllChildren];
-		CCProfilingEndTimingBlock(_profilingTimer);
-		
+		CC_PROFILER_STOP( [self profilerName] );
+
 		// remove them
 		for( int i=0;i <  totalToAdd;i++)
 		{
@@ -456,29 +450,30 @@ Class restartAction()
 
 	// 15 percent
 	int totalToAdd = currentQuantityOfNodes * 0.15f;
-	
+
 	if( totalToAdd > 0 ) {
-		
+
 		CCSprite *sprites[ totalToAdd ];
-		
+
 		// Don't include the sprite creation time as part of the profiling
 		for(int i=0;i<totalToAdd;i++) {
 			sprites[i] = [CCSprite spriteWithTexture:[batchNode texture] rect:CGRectMake(0,0,32,32)];
 		}
-		
+
 		// add them with random Z (very important!)
 		for( int i=0; i < totalToAdd;i++ )
 		{
 			[batchNode addChild:sprites[i] z:CCRANDOM_MINUS1_1() * 50 tag:kTagBase+i];
 		}
-		
+
 		// remove them
-		CCProfilingBeginTimingBlock(_profilingTimer);
+		CC_PROFILER_START( [self profilerName] );
+
 		for( int i=0;i <  totalToAdd;i++)
 		{
 			[batchNode removeChildByTag:kTagBase+i cleanup:YES];
 		}
-		CCProfilingEndTimingBlock(_profilingTimer);
+		CC_PROFILER_STOP( [self profilerName] );
 	}
 }
 
@@ -500,36 +495,37 @@ Class restartAction()
 -(void) update:(ccTime)dt
 {
 	srandom(0);
-	
+
 	// 15 percent
 	int totalToAdd = currentQuantityOfNodes * 0.15f;
-	
+
 	if( totalToAdd > 0 ) {
-		
+
 		CCSprite *sprites[ totalToAdd ];
-		
+
 		// Don't include the sprite creation time as part of the profiling
 		for(int i=0;i<totalToAdd;i++) {
 			sprites[i] = [CCSprite spriteWithTexture:[batchNode texture] rect:CGRectMake(0,0,32,32)];
 		}
-		
+
 		// add them with random Z (very important!)
 		for( int i=0; i < totalToAdd;i++ )
 		{
 			[batchNode addChild:sprites[i] z:CCRANDOM_MINUS1_1() * 50 tag:kTagBase+i];
 		}
-		
+
 		[batchNode sortAllChildren];
-	
+
 		// reorder them
-		CCProfilingBeginTimingBlock(_profilingTimer);
+		CC_PROFILER_START( [self profilerName] );
 		for( int i=0;i <  totalToAdd;i++)
 		{
 			[batchNode reorderChild:[[batchNode children] objectAtIndex:i] z:CCRANDOM_MINUS1_1() * 50];
 		}
+
 		[batchNode sortAllChildren];
-		CCProfilingEndTimingBlock(_profilingTimer);
-		
+		CC_PROFILER_STOP( [self profilerName] );
+
 		// remove them
 		for( int i=0;i <  totalToAdd;i++)
 		{
@@ -556,37 +552,36 @@ Class restartAction()
 -(void) update:(ccTime)dt
 {
 	srandom(0);
-	
+
 	// 15 percent
 	int totalToAdd = currentQuantityOfNodes * 0.15f;
-	
+
 	if( totalToAdd > 0 ) {
-		
+
 		CCSprite *sprites[ totalToAdd ];
-		
+
 		// Don't include the sprite creation time as part of the profiling
 		for(int i=0;i<totalToAdd;i++) {
 			sprites[i] = [CCSprite spriteWithTexture:[batchNode texture] rect:CGRectMake(0,0,32,32)];
 		}
-		
-		
+
+
 		for( int i=0; i < totalToAdd;i++ )
 		{
 			[batchNode addChild:sprites[i] z:i tag:kTagBase+i];
 		}
-		
+
 		[batchNode sortAllChildren];
-		
+
 		// reorder them
-		CCProfilingBeginTimingBlock(_profilingTimer);
+		CC_PROFILER_START([self profilerName]);
 		for( int i=0;i <  totalToAdd;i++)
 		{
 			CCSprite* temp =[[batchNode children] objectAtIndex:i];
 			[batchNode reorderChild:temp z:i+1];
 		}
 		[batchNode sortAllChildren];
-		CCProfilingEndTimingBlock(_profilingTimer);
-		
+		CC_PROFILER_STOP([self profilerName]);
 		// remove them
 		for( int i=0;i <  totalToAdd;i++)
 		{
@@ -613,19 +608,19 @@ Class restartAction()
 -(void) update:(ccTime)dt
 {
 	srandom(0);
-	
+
 	// 15 percent
 	int totalToAdd = currentQuantityOfNodes * 0.15f;
-	
+
 	if( totalToAdd > 0 ) {
-		
+
 		CCSprite *sprites[ totalToAdd ];
-		
+
 		// Don't include the sprite creation time as part of the profiling
 		for(int i=0;i<totalToAdd;i++) {
 			sprites[i] = [CCSprite spriteWithTexture:[batchNode texture] rect:CGRectMake(0,0,32,32)];
 		}
-		
+
 
 
 		for( int i=0; i < totalToAdd;i++ )
@@ -634,17 +629,17 @@ Class restartAction()
 		}
 		[batchNode sortAllChildren];
 
-		
+
 		// reorder them, worst case scenario
-		CCProfilingBeginTimingBlock(_profilingTimer);
+		CC_PROFILER_START([self profilerName]);
 		for( int i=0;i <  totalToAdd;i++)
 		{
 			CCSprite* temp =[[batchNode children] objectAtIndex:i];
 			[batchNode reorderChild:temp z:totalToAdd-i];
 		}
 		[batchNode sortAllChildren];
-		CCProfilingEndTimingBlock(_profilingTimer);
-		
+		CC_PROFILER_STOP([self profilerName]);
+
 		// remove them
 		for( int i=0;i <  totalToAdd;i++)
 		{
@@ -671,28 +666,28 @@ Class restartAction()
 -(void) update:(ccTime)dt
 {
 	srandom(0);
-	
+
 	// 15 percent
 	int totalToAdd = currentQuantityOfNodes * 0.15f;
-	
+
 	if( totalToAdd > 0 ) {
-		
+
 		CCSprite *sprites[ totalToAdd ];
-		
+
 		// Don't include the sprite creation time as part of the profiling
 		for(int i=0;i<totalToAdd;i++) {
 			sprites[i] = [CCSprite spriteWithTexture:[batchNode texture] rect:CGRectMake(0,0,32,32)];
 		}
-		
+
 		//best case scenario
-		CCProfilingBeginTimingBlock(_profilingTimer);
+		CC_PROFILER_START([self profilerName]);
 		for( int i=0; i < totalToAdd;i++ )
 		{
 			[batchNode addChild:sprites[i] z:i tag:kTagBase+i];
 		}
 		[batchNode sortAllChildren];
-		CCProfilingEndTimingBlock(_profilingTimer);
-		
+		CC_PROFILER_STOP([self profilerName]);
+
 		// remove them
 		for( int i=0;i <  totalToAdd;i++)
 		{
@@ -719,29 +714,29 @@ Class restartAction()
 -(void) update:(ccTime)dt
 {
 	srandom(0);
-	
+
 	// 15 percent
 	int totalToAdd = currentQuantityOfNodes * 0.15f;
-	
+
 	if( totalToAdd > 0 ) {
-		
+
 		CCSprite *sprites[ totalToAdd ];
-		
+
 		// Don't include the sprite creation time as part of the profiling
 		for(int i=0;i<totalToAdd;i++) {
 			sprites[i] = [CCSprite spriteWithTexture:[batchNode texture] rect:CGRectMake(0,0,32,32)];
 		}
-		
-		
+
+
 		//worst case scenario
-		CCProfilingBeginTimingBlock(_profilingTimer);
+		CC_PROFILER_START([self profilerName]);
 		for( int i=0; i < totalToAdd;i++ )
 		{
 			[batchNode addChild:sprites[i] z:totalToAdd-i tag:kTagBase+i];
 		}
 		[batchNode sortAllChildren];
-		CCProfilingEndTimingBlock(_profilingTimer);		
-		
+		CC_PROFILER_STOP([self profilerName]);
+
 		// remove them
 		for( int i=0;i <  totalToAdd;i++)
 		{

@@ -9,10 +9,10 @@
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -25,11 +25,11 @@
 
 // Only compile this code on iOS. These files should NOT be included on your Mac project.
 // But in case they are included, it won't be compiled.
-#import <Availability.h>
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#import "../../ccMacros.h"
+#ifdef __CC_PLATFORM_IOS
 
 #import "CCTouchDelegateProtocol.h"
-#import "EAGLView.h"
+#import "CCGLView.h"
 
 
 typedef enum
@@ -47,7 +47,7 @@ enum {
 	kCCTouchMoved,
 	kCCTouchEnded,
 	kCCTouchCancelled,
-	
+
 	kCCTouchMax,
 };
 
@@ -58,22 +58,22 @@ struct ccTouchHandlerHelperData {
 };
 
 /** CCTouchDispatcher.
- Singleton that handles all the touch events.
+ Object that handles all the touch events.
  The dispatcher dispatches events to the registered TouchHandlers.
  There are 2 different type of touch handlers:
    - Standard Touch Handlers
    - Targeted Touch Handlers
- 
+
  The Standard Touch Handlers work like the CocoaTouch touch handler: a set of touches is passed to the delegate.
  On the other hand, the Targeted Touch Handlers only receive 1 touch at the time, and they can "swallow" touches (avoid the propagation of the event).
- 
+
  Firstly, the dispatcher sends the received touches to the targeted touches.
  These touches can be swallowed by the Targeted Touch Handlers. If there are still remaining touches, then the remaining touches will be sent
  to the Standard Touch Handlers.
 
  @since v0.8.0
  */
-@interface CCTouchDispatcher : NSObject <EAGLTouchDelegate>
+@interface CCTouchDispatcher : NSObject <CCTouchDelegate>
 {
 	NSMutableArray	*targetedHandlers;
 	NSMutableArray	*standardHandlers;
@@ -86,13 +86,10 @@ struct ccTouchHandlerHelperData {
 	BOOL			toQuit;
 
 	BOOL	dispatchEvents;
-	
+
 	// 4, 1 for each type of event
 	struct ccTouchHandlerHelperData handlerHelperData[kCCTouchMax];
 }
-
-/** singleton of the CCTouchDispatcher */
-+ (CCTouchDispatcher*)sharedDispatcher;
 
 /** Whether or not the events are going to be dispatched. Default: YES */
 @property (nonatomic,readwrite, assign) BOOL dispatchEvents;
@@ -120,4 +117,4 @@ struct ccTouchHandlerHelperData {
 NSComparisonResult sortByPriority(id first, id second, void *context);
 @end
 
-#endif // __IPHONE_OS_VERSION_MAX_ALLOWED
+#endif // __CC_PLATFORM_IOS

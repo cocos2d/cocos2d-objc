@@ -9,10 +9,10 @@
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -28,27 +28,27 @@
 #import "CCActionInterval.h"
 
 /** CCActionTween
- 
+
  CCActionTween is an action that lets you update any property of an object.
- For example, if you want to modify the "width" property of a target from 200 to 300 in 2 senconds, then:
- 
+ For example, if you want to modify the "width" property of a target from 200 to 300 in 2 seconds, then:
+
 	id modifyWidth = [CCActionTween actionWithDuration:2 key:@"width" from:200 to:300];
 	[target runAction:modifyWidth];
- 
+
 
  Another example: CCScaleTo action could be rewriten using CCPropertyAction:
- 
+
 	// scaleA and scaleB are equivalents
 	id scaleA = [CCScaleTo actionWithDuration:2 scale:3];
 	id scaleB = [CCActionTween actionWithDuration:2 key:@"scale" from:1 to:3];
 
- 
+
  @since v0.99.2
  */
 @interface CCActionTween : CCActionInterval
 {
 	NSString		*key_;
-    
+
 	float			from_, to_;
 	float			delta_;
 }
@@ -58,5 +58,5 @@
 
 /** initializes the action with the property name (key), and the from and to parameters. */
 - (id)initWithDuration:(ccTime)aDuration key:(NSString *)key from:(float)from to:(float)to;
-    
+
 @end
