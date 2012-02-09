@@ -1386,6 +1386,12 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 	return self;
 }
 
+-(id) copyWithZone: (NSZone*) zone
+{
+	CCAction *copy = [ (CCTargetedAction*) [[self class] allocWithZone: zone] initWithTarget:target_ action:[[action_ copy] autorelease]];
+	return copy;
+}
+
 - (void) dealloc
 {
 	[forcedTarget_ release];
