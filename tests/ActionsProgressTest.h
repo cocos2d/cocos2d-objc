@@ -23,6 +23,10 @@
 {}
 @end
 
+@interface SpriteProgressToRadialMidpointChanged : SpriteDemo
+{}
+@end
+
 @interface SpriteProgressToHorizontal : SpriteDemo
 {}
 @end
@@ -39,4 +43,6 @@
 {}
 @end
 
-
+@interface SpriteProgressWithSpriteFrame : SpriteDemo
+{}
+@end
