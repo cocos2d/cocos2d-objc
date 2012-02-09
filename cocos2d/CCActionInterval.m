@@ -1364,44 +1364,32 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 	CCAnimation *newAnim = [CCAnimation animationWithFrames:newArray delayPerUnit:animation_.delayPerUnit];
 	return [[self class] actionWithDuration:duration_ animation:newAnim restoreOriginalFrame:restoreOriginalFrame_];
 }
-
 @end
 
-@interface TargetedAction (Private)
 
-// Ugly hack to get around a compiler bug.
-- (id) initWithTarget:(id) targetIn actionByAnotherName:(CCFiniteTimeAction*) actionIn;
+@implementation CCTargetedAction
 
-@end
-
-@implementation TargetedAction
-
-@synthesize forcedTarget;
+@synthesize forcedTarget = forcedTarget_;
 
 + (id) actionWithTarget:(id) target action:(CCFiniteTimeAction*) action
 {
-	return [[[self alloc] initWithTarget:target actionByAnotherName:action] autorelease];
+	return [[ (CCTargetedAction*)[self alloc] initWithTarget:target action:action] autorelease];
 }
 
 - (id) initWithTarget:(id) targetIn action:(CCFiniteTimeAction*) actionIn
 {
-	return [self initWithTarget:targetIn actionByAnotherName:actionIn];
-}
-
-- (id) initWithTarget:(id) targetIn actionByAnotherName:(CCFiniteTimeAction*) actionIn
-{
-	if(nil != (self = [super initWithDuration:actionIn.duration]))
+	if((self = [super initWithDuration:actionIn.duration]))
 	{
-		forcedTarget = [targetIn retain];
-		action = [actionIn retain];
+		forcedTarget_ = [targetIn retain];
+		action_ = [actionIn retain];
 	}
 	return self;
 }
 
 - (void) dealloc
 {
-	[forcedTarget release];
-	[action release];
+	[forcedTarget_ release];
+	[action_ release];
 	[super dealloc];
 }
 
@@ -1413,18 +1401,18 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 
 - (void) startWithTarget:(id)aTarget
 {
-	[super startWithTarget:forcedTarget];
-	[action startWithTarget:forcedTarget];
+	[super startWithTarget:forcedTarget_];
+	[action_ startWithTarget:forcedTarget_];
 }
 
 - (void) stop
 {
-	[action stop];
+	[action_ stop];
 }
 
 - (void) update:(ccTime) time
 {
-	[action update:time];
+	[action_ update:time];
 }
 
 @end

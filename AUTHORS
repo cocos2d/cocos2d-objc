@@ -44,6 +44,9 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	CCGLProgram: fixes in fragmentShaderLog
 	CCShaderCache: Added addProgram:forKey: method
 	CCArray: Fixed copyWithZone
+	
+* Karl Stenerud (http://www.mindsnacks.com/):
+	Author of ActionTargeted
 
 * manucorporat (manu.valladolid) (http://forzefield.com/):
 	Author of new Retina Display code:

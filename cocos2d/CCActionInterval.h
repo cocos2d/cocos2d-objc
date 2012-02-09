@@ -427,10 +427,10 @@ typedef struct _ccBezierConfig {
 /** Overrides the target of an action so that it always runs on the target
  * specified at action creation rather than the one specified by runAction.
  */
-@interface TargetedAction : CCActionInterval <NSCopying>
+@interface CCTargetedAction : CCActionInterval <NSCopying>
 {
-	id forcedTarget;
-	CCFiniteTimeAction* action;
+	id forcedTarget_;
+	CCFiniteTimeAction* action_;
 }
 /** This is the target that the action will be forced to run with */
 @property(readwrite,nonatomic,retain) id forcedTarget;
