@@ -19,8 +19,6 @@ Class restartAction(void);
 static int sceneIdx=-1;
 static NSString *transitions[] = {
 	
-	@"ActionAnimate",
-
 	@"ActionManual",
 	@"ActionMove",
 	@"ActionRotate",
@@ -50,6 +48,7 @@ static NSString *transitions[] = {
 	@"ActionOrbit",
 	@"ActionFollow",
 	@"ActionProperty",
+	@"ActionTargeted",
 };
 
 Class nextAction()
@@ -1138,6 +1137,38 @@ Class restartAction()
 
 @end
 
+@implementation ActionTargeted
+-(void) onEnter
+{
+	[super onEnter];
+	
+	[self centerSprites:2];
+	
+	CCJumpBy *jump1 = [CCJumpBy actionWithDuration:2 position:CGPointZero height:100 jumps:3];
+	CCJumpBy *jump2 = [[jump1 copy] autorelease];
+	CCRotateBy *rot1 =  [CCRotateBy actionWithDuration:1 angle:360];
+	CCRotateBy *rot2 = [[rot1 copy] autorelease];
+
+	CCTargetedAction *t1 = [CCTargetedAction actionWithTarget:kathia action:jump2];
+	CCTargetedAction *t2 = [CCTargetedAction actionWithTarget:kathia action:rot2];
+
+	
+	CCSequence *seq = [CCSequence actions:jump1, t1, rot1, t2, nil];
+	CCRepeatForever *always = [CCRepeatForever actionWithAction:seq];
+	
+	[tamara runAction:always];
+}
+
+-(NSString *) title
+{
+	return @"ActionTargeted";
+}
+
+-(NSString*) subtitle
+{
+	return @"Action that runs on another target. Useful for sequences";
+}
+@end
 
 
 // CLASS IMPLEMENTATIONS
