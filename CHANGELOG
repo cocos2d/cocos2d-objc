@@ -24,6 +24,7 @@ version 2.0-rc0 XX-Feb-2012
 . [FIX] GLView: Fixed memory leak while dispatching events (Mac only)
 . [FIX] GLView: MSAA support is working (issue #1315)
 . [FIX] Particles: Fixed memory leak in fillWithEmptyQuadsFromIndex
+. [FIX] Progress: works with rotated sprite frames (issue #1303)
 . [FIX] Sprite: adding family of sprites to a batchnode works as expected (issue #1217)
 . [FIX] SpriteBatch: Quad extensions are public
 . [FIX] Tests: LabelTest with custom TTF font works on Mac too

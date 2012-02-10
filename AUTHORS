@@ -39,6 +39,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	CCProgressTimer: Improved API
 	CCProgressTimer: Works with Tint and opacity
 	Added Tint + opacity test cases for CCProgressTimer
+	CCProgressTimer: Supports rotates SpriteFrames
 
 * Justin Graham (http://www.zynga.com)
 	CCGLProgram: fixes in fragmentShaderLog
