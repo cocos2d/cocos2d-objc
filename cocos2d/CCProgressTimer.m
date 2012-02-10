@@ -67,9 +67,9 @@ const char kCCProgressTextureCoords = 0x4b;
 	return [[[self alloc]initWithSprite:sprite] autorelease];
 }
 
--(id)init
+-(id)initWithSprite:(CCSprite*) sprite
 {
-	if( (self=[super init]) ) {
+	if(( self = [super init] )){
 		percentage_ = 0.f;
 		vertexData_ = NULL;
 		vertexDataCount_ = 0;
@@ -78,13 +78,6 @@ const char kCCProgressTextureCoords = 0x4b;
 		self.reverseDirection = NO;
 		self.midpoint = ccp(.5f, .5f);
 		self.barChangeRate = ccp(1,1);
-  }
-  return self;
-}
-
--(id)initWithSprite:(CCSprite*) sprite
-{
-	if(( self = [self init] )){
 		self.sprite = sprite;
     
 		// shader program
