@@ -23,6 +23,7 @@
 		05CA7AFE10ED674700F12774 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */; };
 		05CA7B0010ED674700F12774 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 503092B210447296005F7AFC /* libz.dylib */; };
 		05CA7B0C10ED67CE00F12774 /* ActionsWithBlocks.m in Sources */ = {isa = PBXBuildFile; fileRef = 05CA7B0B10ED67CE00F12774 /* ActionsWithBlocks.m */; };
+		3BB41AD414E43A51006CD0D8 /* zwoptex in Resources */ = {isa = PBXBuildFile; fileRef = E0C5588E11FE4CF100B9E4CB /* zwoptex */; };
 		3BB5C8E911410A4000DD65EF /* blocks.png in Resources */ = {isa = PBXBuildFile; fileRef = AAEA834A0FD5704400F08728 /* blocks.png */; };
 		3BB5C8EF11410A5300DD65EF /* blocks.png in Resources */ = {isa = PBXBuildFile; fileRef = AAEA834A0FD5704400F08728 /* blocks.png */; };
 		495E73FD104B75090012BB52 /* r1.png in Resources */ = {isa = PBXBuildFile; fileRef = 500165990E72DB0E0085673F /* r1.png */; };
@@ -4167,7 +4168,7 @@
 		5012DD4B0FE29A7D00D6DDD1 /* ball.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ball.png; sourceTree = "<group>"; };
 		5012DD4C0FE29A7D00D6DDD1 /* paddle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = paddle.png; sourceTree = "<group>"; };
 		50150433113300F900A9CA65 /* CCProgressTimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CCProgressTimer.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		50150434113300F900A9CA65 /* CCProgressTimer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CCProgressTimer.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		50150434113300F900A9CA65 /* CCProgressTimer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CCProgressTimer.m; sourceTree = "<group>"; };
 		50150435113300F900A9CA65 /* CCActionProgressTimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCActionProgressTimer.h; sourceTree = "<group>"; };
 		50150436113300F900A9CA65 /* CCActionProgressTimer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCActionProgressTimer.m; sourceTree = "<group>"; };
 		501504ED11330E1700A9CA65 /* ActionsProgressTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ActionsProgressTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -9353,6 +9354,7 @@
 				A0EC4BA41403239E00EC482A /* PositionTextureA8Color.vsh in Resources */,
 				A0EC4BA51403239E00EC482A /* PositionTextureColor.fsh in Resources */,
 				A0EC4BA61403239E00EC482A /* PositionTextureColor.vsh in Resources */,
+				3BB41AD414E43A51006CD0D8 /* zwoptex in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
