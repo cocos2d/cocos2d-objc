@@ -138,4 +138,8 @@
 {}
 @end
 
+@interface ActionTargeted : ActionDemo
+{}
+@end
+
 
