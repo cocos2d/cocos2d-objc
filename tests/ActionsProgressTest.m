@@ -9,10 +9,12 @@
 static int sceneIdx=-1;
 static NSString *transitions[] = {
 	@"SpriteProgressToRadial",
+  @"SpriteProgressToRadialMidpointChanged",
 	@"SpriteProgressToHorizontal",
 	@"SpriteProgressToVertical",
 	@"SpriteProgressBarVarious",
 	@"SpriteProgressBarTintAndFade",
+  @"SpriteProgressWithSpriteFrame",
 
 };
 
@@ -150,6 +152,47 @@ Class restartAction()
 -(NSString *) title
 {
 	return @"ProgressTo Radial";
+}
+@end
+
+@implementation SpriteProgressToRadialMidpointChanged
+-(void) onEnter
+{
+	[super onEnter];
+	
+	CGSize s = [[CCDirector sharedDirector] winSize];
+  
+	CCProgressTo *action = [CCProgressTo actionWithDuration:2 percent:100];
+  
+  /**
+   *  Our image on the left should be a radial progress indicator, clockwise
+   */
+	CCProgressTimer *left = [CCProgressTimer progressWithSprite:[CCSprite spriteWithFile:@"blocks.png"]];
+	left.type = kCCProgressTimerTypeRadial;
+	[self addChild:left];
+  left.midpoint = ccp(.25,.75);
+	[left setPosition:ccp(100, s.height/2)];
+	[left runAction: [CCRepeatForever actionWithAction:[[action copy]autorelease]]];
+	
+  /**
+   *  Our image on the left should be a radial progress indicator, counter clockwise
+   */
+	CCProgressTimer *right = [CCProgressTimer progressWithSprite:[CCSprite spriteWithFile:@"blocks.png"]];
+	right.type = kCCProgressTimerTypeRadial;
+  right.midpoint = ccp(.75,.25);
+  
+  /**
+   *  Note the reverse property (default=NO) is only added to the right image. That's how
+   *  we get a counter clockwise progress.
+   */
+	[self addChild:right];
+	[right setPosition:ccp(s.width-100, s.height/2)];
+	[right runAction: [CCRepeatForever actionWithAction:[[action copy]autorelease]]];
+}
+
+-(NSString *) title
+{
+	return @"Radial w/ Different Midpoints";
 }
 @end
 
@@ -340,6 +383,57 @@ Class restartAction()
 -(NSString *) title
 {
 	return @"ProgressTo Bar Mid";
+}
+@end
+
+@implementation SpriteProgressWithSpriteFrame
+-(void) onEnter
+{
+	[super onEnter];
+  
+	CGSize s = [[CCDirector sharedDirector] winSize];
+  
+	CCProgressTo *to = [CCProgressTo actionWithDuration:6 percent:100];
+  
+  [[CCSpriteFrameCache sharedSpriteFrameCache]addSpriteFramesWithFile:@"zwoptex/grossini.plist"];
+  
+	CCProgressTimer *left = [CCProgressTimer progressWithSprite:[CCSprite spriteWithSpriteFrameName:@"grossini_dance_01.png"]];
+	left.type = kCCProgressTimerTypeBar;
+  
+	//	Setup for a bar starting from the bottom since the midpoint is 0 for the y
+	left.midpoint = ccp(.5f, .5f);
+	//	Setup for a vertical bar since the bar change rate is 0 for x meaning no horizontal change
+	left.barChangeRate = ccp(1,0);
+	[self addChild:left];
+	[left setPosition:ccp(100, s.height/2)];
+	[left runAction:[CCRepeatForever actionWithAction:[[to copy]autorelease]]];
+  
+  
+	CCProgressTimer *middle = [CCProgressTimer progressWithSprite:[CCSprite spriteWithSpriteFrameName:@"grossini_dance_02.png"]];
+	middle.type = kCCProgressTimerTypeBar;
+	//	Setup for a bar starting from the bottom since the midpoint is 0 for the y
+	middle.midpoint = ccp(.5f, .5f);
+	//	Setup for a vertical bar since the bar change rate is 0 for x meaning no horizontal change
+	middle.barChangeRate = ccp(1, 1);
+	[self addChild:middle];
+	[middle setPosition:ccp(s.width/2, s.height/2)];
+	[middle runAction:[CCRepeatForever actionWithAction:[[to copy]autorelease]]];
+  
+  
+	CCProgressTimer *right = [CCProgressTimer progressWithSprite:[CCSprite spriteWithSpriteFrameName:@"grossini_dance_03.png"]];
+	right.type = kCCProgressTimerTypeRadial;
+	//	Setup for a bar starting from the bottom since the midpoint is 0 for the y
+	right.midpoint = ccp(.5f, .5f);
+	//	Setup for a vertical bar since the bar change rate is 0 for x meaning no horizontal change
+	right.barChangeRate = ccp(0, 1);
+	[self addChild:right];
+	[right setPosition:ccp(s.width-100, s.height/2)];
+	[right runAction:[CCRepeatForever actionWithAction:[[to copy]autorelease]]];
+}
+
+-(NSString *) title
+{
+	return @"Progress With Sprite Frame";
 }
 @end
 
