@@ -1364,5 +1364,61 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 	CCAnimation *newAnim = [CCAnimation animationWithFrames:newArray delayPerUnit:animation_.delayPerUnit];
 	return [[self class] actionWithDuration:duration_ animation:newAnim restoreOriginalFrame:restoreOriginalFrame_];
 }
+@end
+
+
+@implementation CCTargetedAction
+
+@synthesize forcedTarget = forcedTarget_;
+
++ (id) actionWithTarget:(id) target action:(CCFiniteTimeAction*) action
+{
+	return [[ (CCTargetedAction*)[self alloc] initWithTarget:target action:action] autorelease];
+}
+
+- (id) initWithTarget:(id) targetIn action:(CCFiniteTimeAction*) actionIn
+{
+	if((self = [super initWithDuration:actionIn.duration]))
+	{
+		forcedTarget_ = [targetIn retain];
+		action_ = [actionIn retain];
+	}
+	return self;
+}
+
+-(id) copyWithZone: (NSZone*) zone
+{
+	CCAction *copy = [ (CCTargetedAction*) [[self class] allocWithZone: zone] initWithTarget:target_ action:[[action_ copy] autorelease]];
+	return copy;
+}
+
+- (void) dealloc
+{
+	[forcedTarget_ release];
+	[action_ release];
+	[super dealloc];
+}
+
+//- (void) updateDuration:(id)aTarget
+//{
+//	[action updateDuration:forcedTarget];
+//	duration_ = action.duration;
+//}
+
+- (void) startWithTarget:(id)aTarget
+{
+	[super startWithTarget:forcedTarget_];
+	[action_ startWithTarget:forcedTarget_];
+}
+
+- (void) stop
+{
+	[action_ stop];
+}
+
+- (void) update:(ccTime) time
+{
+	[action_ update:time];
+}
 
 @end
