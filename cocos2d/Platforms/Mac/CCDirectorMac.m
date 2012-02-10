@@ -261,7 +261,7 @@
 	switch (projection) {
 		case kCCDirectorProjection2D:
 
-			glViewport(offset.x, offset.y, widthAspect, heightAspect);
+			ccGLViewport(offset.x, offset.y, widthAspect, heightAspect);
 			kmGLMatrixMode(KM_GL_PROJECTION);
 			kmGLLoadIdentity();
 
@@ -277,7 +277,7 @@
 		case kCCDirectorProjection3D:
 		{
 
-			glViewport(offset.x, offset.y, widthAspect, heightAspect);
+			ccGLViewport(offset.x, offset.y, widthAspect, heightAspect);
 			kmGLMatrixMode(KM_GL_PROJECTION);
 			kmGLLoadIdentity();
 

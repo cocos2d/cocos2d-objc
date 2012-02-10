@@ -123,6 +123,7 @@
 	{
 		// shader program
 		self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTextureColor];
+        self.shaderProgram->projMatrixDirty = -1;
 
 		dirty_ = recursiveDirty_ = NO;
 

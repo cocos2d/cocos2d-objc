@@ -459,7 +459,7 @@ enum {
 	ccGLEnableVertexAttribs(kCCVertexAttribFlag_PosColorTex );
 	ccGLBlendFunc( blendFunc_.src, blendFunc_.dst );
 
-	ccGLUseProgram( shaderProgram_->program_ );
+	ccGLUseProgram( shaderProgram_ );
 	ccGLUniformModelViewProjectionMatrix( shaderProgram_ );
 
 	glUniform2f( blurLocation, blur_.x, blur_.y );

@@ -77,7 +77,14 @@ enum {
 					fragShader_;
 
 	GLint			uniforms_[kCCUniform_MAX];
+    GLint           projMatrixDirty;
+    NSString *vShaderName;
+    NSString *fShaderName;
 }
+
+@property (nonatomic, retain) NSMutableDictionary* uniformsLoc;
+@property (nonatomic, retain) NSMutableDictionary* uniforms;
+@property (nonatomic, retain) NSMutableDictionary* uniformsOld;
 
 - (id)initWithVertexShaderFilename:(NSString *)vShaderFilename
             fragmentShaderFilename:(NSString *)fShaderFilename;
@@ -94,6 +101,8 @@ enum {
  @since v2.0.0
  */
 - (void) updateUniforms;
+- (void) loadUniform:(NSString*)uniform withValue:(void*)value withType:(NSString*)type;
+- (void) loadUniformLoc:(GLuint)uLoc withValue:(void*)value withType:(NSString*)type;
 
 - (NSString *)vertexShaderLog;
 - (NSString *)fragmentShaderLog;

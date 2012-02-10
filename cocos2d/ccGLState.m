@@ -39,12 +39,19 @@ static BOOL		_vertexAttribTexCoords = NO;
 
 #if CC_ENABLE_GL_STATE_CACHE
 #define kCCMaxActiveTexture 16
+static CCGLProgram * _ccCurrentCCGLProgram = nil;
 static GLuint	_ccCurrentShaderProgram = -1;
 static GLuint	_ccCurrentBoundTexture[kCCMaxActiveTexture] =  {-1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1, };
 static GLenum	_ccCurrentActiveTexture = (GL_TEXTURE0 - GL_TEXTURE0);
 static GLenum	_ccBlendingSource = -1;
 static GLenum	_ccBlendingDest = -1;
 static ccGLServerState _ccGLServerState = 0;
+
+static GLint x_ = 0;
+static GLint y_ = 0; 
+static GLsizei width_ = 0;
+static GLsizei height_ = 0;
+
 #endif // CC_ENABLE_GL_STATE_CACHE
 
 #pragma mark - GL State Cache functions
@@ -52,7 +59,7 @@ static ccGLServerState _ccGLServerState = 0;
 void ccGLInvalidateStateCache( void )
 {
 	kmGLFreeAll();
-
+    
 #if CC_ENABLE_GL_STATE_CACHE
 	_ccCurrentShaderProgram = -1;
 	for( NSInteger i=0; i < kCCMaxActiveTexture; i++ )
@@ -61,28 +68,39 @@ void ccGLInvalidateStateCache( void )
 	_ccBlendingSource = -1;
 	_ccBlendingDest = -1;
 	_ccGLServerState = 0;
+    
+    x_ = 0;
+    y_ = 0; 
+    width_ = 0;
+    height_ = 0;
 #endif
+    
+    ccSetProjectionMatrixDirty();
 }
 
-void ccGLDeleteProgram( GLuint program )
+void ccGLDeleteProgram( CCGLProgram *shaderProgram  )
 {
 #if CC_ENABLE_GL_STATE_CACHE
-	if( program == _ccCurrentShaderProgram )
+	if( shaderProgram->program_ == _ccCurrentShaderProgram ) {
 		_ccCurrentShaderProgram = -1;
+        _ccCurrentCCGLProgram = nil;
+    }
 #endif // CC_ENABLE_GL_STATE_CACHE
-
-	glDeleteProgram( program );
+    
+    ccSetProjectionMatrixDirty();
+	glDeleteProgram( shaderProgram->program_ );
 }
 
-void ccGLUseProgram( GLuint program )
+void ccGLUseProgram( CCGLProgram *shaderProgram )
 {
 #if CC_ENABLE_GL_STATE_CACHE
-	if( program != _ccCurrentShaderProgram ) {
-		_ccCurrentShaderProgram = program;
-		glUseProgram(program);
+	if( shaderProgram->program_ != _ccCurrentShaderProgram ) {
+		_ccCurrentShaderProgram = shaderProgram->program_;
+        _ccCurrentCCGLProgram = shaderProgram;
+		glUseProgram(shaderProgram->program_);
 	}
 #else
-	glUseProgram(program);
+	glUseProgram(shaderProgram->program_);
 #endif // CC_ENABLE_GL_STATE_CACHE
 }
 
@@ -142,7 +160,7 @@ void ccGLDeleteTexture( GLuint textureId )
 {
 #if CC_ENABLE_GL_STATE_CACHE
 	if( textureId == _ccCurrentBoundTexture[ _ccCurrentActiveTexture ] )
-	   _ccCurrentBoundTexture[ _ccCurrentActiveTexture ] = -1;
+        _ccCurrentBoundTexture[ _ccCurrentActiveTexture ] = -1;
 #endif
 	glDeleteTextures(1, &textureId );
 }
@@ -150,9 +168,9 @@ void ccGLDeleteTexture( GLuint textureId )
 void ccGLEnable( ccGLServerState flags )
 {
 #if CC_ENABLE_GL_STATE_CACHE
-
+    
 	BOOL enabled = NO;
-
+    
 	/* GL_BLEND */
 	if( (enabled=(flags & CC_GL_BLEND)) != (_ccGLServerState & CC_GL_BLEND) ) {
 		if( enabled ) {
@@ -163,7 +181,7 @@ void ccGLEnable( ccGLServerState flags )
 			_ccGLServerState &=  ~CC_GL_BLEND;
 		}
 	}
-
+    
 #else
 	if( flags & CC_GL_BLEND )
 		glEnable( GL_BLEND );
@@ -178,37 +196,37 @@ void ccGLEnableVertexAttribs( unsigned int flags )
 {
 	/* Position */
 	BOOL enablePosition = flags & kCCVertexAttribFlag_Position;
-
+    
 	if( enablePosition != _vertexAttribPosition ) {
 		if( enablePosition )
 			glEnableVertexAttribArray( kCCVertexAttrib_Position );
 		else
 			glDisableVertexAttribArray( kCCVertexAttrib_Position );
-
+        
 		_vertexAttribPosition = enablePosition;
 	}
-
+    
 	/* Color */
 	BOOL enableColor = flags & kCCVertexAttribFlag_Color;
-
+    
 	if( enableColor != _vertexAttribColor ) {
 		if( enableColor )
 			glEnableVertexAttribArray( kCCVertexAttrib_Color );
 		else
 			glDisableVertexAttribArray( kCCVertexAttrib_Color );
-
+        
 		_vertexAttribColor = enableColor;
 	}
-
+    
 	/* Tex Coords */
 	BOOL enableTexCoords = flags & kCCVertexAttribFlag_TexCoords;
-
+    
 	if( enableTexCoords != _vertexAttribTexCoords ) {
 		if( enableTexCoords )
 			glEnableVertexAttribArray( kCCVertexAttrib_TexCoords );
 		else
 			glDisableVertexAttribArray( kCCVertexAttrib_TexCoords );
-
+        
 		_vertexAttribTexCoords = enableTexCoords;
 	}
 }
@@ -217,19 +235,43 @@ void ccGLEnableVertexAttribs( unsigned int flags )
 
 void ccGLUniformModelViewProjectionMatrix( CCGLProgram *shaderProgram )
 {
-	kmMat4 matrixP;
-	kmMat4 matrixMV;
-	kmMat4 matrixMVP;
+    //if (_ccCurrentCCGLProgram->projMatrixDirty  == -1 || _ccCurrentProjectionMatrix == -1) {
+        kmMat4 matrixP;
+        kmMat4 matrixMV;
+        kmMat4 matrixMVP;
+        
+        kmGLGetMatrix(KM_GL_PROJECTION, &matrixP );
+        kmGLGetMatrix(KM_GL_MODELVIEW, &matrixMV );
+        
+        kmMat4Multiply(&matrixMVP, &matrixP, &matrixMV);
+    
+        [_ccCurrentCCGLProgram loadUniformLoc:shaderProgram->uniforms_[kCCUniformMVPMatrix] 
+                            withValue:&matrixMVP withType:@"mat4"];
+        
+        //glUniformMatrix4fv( shaderProgram->uniforms_[kCCUniformMVPMatrix], 1, GL_FALSE, matrixMVP.mat);
+      //  _ccCurrentProjectionMatrix = 0;
+      //  _ccCurrentCCGLProgram->projMatrixDirty=0;
+    //}
+}
 
-	kmGLGetMatrix(KM_GL_PROJECTION, &matrixP );
-	kmGLGetMatrix(KM_GL_MODELVIEW, &matrixMV );
-
-	kmMat4Multiply(&matrixMVP, &matrixP, &matrixMV);
-
-	glUniformMatrix4fv( shaderProgram->uniforms_[kCCUniformMVPMatrix], 1, GL_FALSE, matrixMVP.mat);
+void ccGLViewport (GLint x, GLint y, GLsizei width, GLsizei height) {
+#if CC_ENABLE_GL_STATE_CACHE
+    if (x_ != x || y_!= y || width_ != width || height_ != height) {
+        glViewport(x, y, width, height);
+        x_ = x;
+        y_ = y;
+        width_ = width;
+        height_ = height;
+    }
+#else
+	glViewport(x, y, width, height);
+#endif
 }
 
 void ccSetProjectionMatrixDirty( void )
 {
 	_ccCurrentProjectionMatrix = -1;
+    if(_ccCurrentCCGLProgram) {
+        _ccCurrentCCGLProgram->projMatrixDirty=-1;
+    }
 }

@@ -179,7 +179,7 @@ CGFloat	__ccContentScaleFactor = 1;
 	CGSize size = winSizeInPixels_;
 	CGSize sizePoint = winSizeInPoints_;
 
-	glViewport(0, 0, size.width * CC_CONTENT_SCALE_FACTOR(), size.height * CC_CONTENT_SCALE_FACTOR() );
+	ccGLViewport(0, 0, size.width * CC_CONTENT_SCALE_FACTOR(), size.height * CC_CONTENT_SCALE_FACTOR() );
 
 	switch (projection) {
 		case kCCDirectorProjection2D:
@@ -199,7 +199,7 @@ CGFloat	__ccContentScaleFactor = 1;
 		{
 			// reset the viewport if 3d proj & retina display
 			if( CC_CONTENT_SCALE_FACTOR() != 1 )
-				glViewport(-size.width/2, -size.height/2, size.width * CC_CONTENT_SCALE_FACTOR(), size.height * CC_CONTENT_SCALE_FACTOR() );
+				ccGLViewport(-size.width/2, -size.height/2, size.width * CC_CONTENT_SCALE_FACTOR(), size.height * CC_CONTENT_SCALE_FACTOR() );
 
 			float zeye = [self getZEye];
 

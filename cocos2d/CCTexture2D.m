@@ -164,6 +164,7 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 		resolutionType_ = kCCResolutionUnknown;
 #endif
 		self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTexture];
+        self.shaderProgram->projMatrixDirty = -1;
 	}
 	return self;
 }
@@ -659,7 +660,7 @@ static BOOL PVRHaveAlphaPremultiplied_ = NO;
 		width + point.x,	height  + point.y };
 
 	ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position | kCCVertexAttribFlag_TexCoords );
-	ccGLUseProgram( shaderProgram_->program_ );
+	ccGLUseProgram( shaderProgram_);
 	ccGLUniformModelViewProjectionMatrix( shaderProgram_ );
 
 	ccGLBindTexture2D( name_ );
@@ -688,7 +689,7 @@ static BOOL PVRHaveAlphaPremultiplied_ = NO;
 
 
 	ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position | kCCVertexAttribFlag_TexCoords );
-	ccGLUseProgram( shaderProgram_->program_ );
+	ccGLUseProgram( shaderProgram_ );
 	ccGLUniformModelViewProjectionMatrix( shaderProgram_ );
 
 	ccGLBindTexture2D( name_ );
