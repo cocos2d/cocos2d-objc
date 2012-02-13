@@ -18,6 +18,7 @@ Class restartAction(void);
 
 static int sceneIdx=-1;
 static NSString *transitions[] = {
+
 	@"ActionManual",
 	@"ActionMove",
 	@"ActionRotate",
@@ -530,20 +531,47 @@ Class restartAction()
 {
 	[super onEnter];
 	
-	[self centerSprites:1];
+	[self centerSprites:2];
 	
+	// Left: using manual animation.
 	CCAnimation* animation = [CCAnimation animation];
 	for( int i=1;i<15;i++)
 		[animation addFrameWithFilename: [NSString stringWithFormat:@"grossini_dance_%02d.png", i]];
 	
-	id action = [CCAnimate actionWithDuration:3 animation:animation restoreOriginalFrame:NO];
-	id action_back = [action reverse];
+	id action = [CCAnimate actionWithDuration:2.8f animation:animation restoreOriginalFrame:YES];
+	[kathia runAction: [CCSequence actions: action, [action reverse], nil]];
 	
-	[grossini runAction: [CCSequence actions: action, action_back, nil]];
+	
+	// Right: Using new animation system
+	CCAnimationCache *cache = [CCAnimationCache sharedAnimationCache];
+	[cache addAnimationsWithFile:@"animations/animations-2.plist"];
+	CCAnimation *animation2 = [cache animationByName:@"dance_1"];
+	
+	id action2 = [CCAnimate actionWithAnimation:animation2];
+	[tamara runAction: [CCSequence actions: action2, [action2 reverse], nil]];
+	
+	observer_ = [[NSNotificationCenter defaultCenter] addObserverForName:CCAnimationFrameDisplayedNotification object:nil queue:nil usingBlock:^(NSNotification* notification) {
+		
+		NSDictionary *userInfo = [notification userInfo];
+		NSLog(@"object %@ with data %@", [notification object], userInfo );
+	}];
 }
+
+-(void) onExit
+{
+	[super onExit];
+	
+	[[NSNotificationCenter defaultCenter] removeObserver:observer_];
+}
+
 -(NSString *) title
 {
 	return @"Animation";
+}
+
+-(NSString*) subtitle
+{
+	return @"Manual animation, and animation by parsing .plist";
 }
 @end
 
@@ -565,6 +593,10 @@ Class restartAction()
 -(NSString *) title
 {
 	return @"Sequence: Move + Rotate";
+}
+-(NSString*) subtitle
+{
+	return @"Manual animation, and animation by parsing .plist";
 }
 @end
 
