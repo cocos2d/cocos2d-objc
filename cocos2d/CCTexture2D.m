@@ -552,18 +552,19 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
     CGSize dim;
 
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
-	id font;
-	font = [UIFont fontWithName:name size:size];
-	if( font )
-		dim = [string sizeWithFont:font];
+	id font = nil;
 
 #if CC_FONT_LABEL_SUPPORT
-	if( ! font ){
-		font = [[FontManager sharedManager] zFontWithName:name pointSize:size];
-		if (font)
-			dim = [string sizeWithZFont:font];
-	}
+    font = [[FontManager sharedManager] zFontWithName:name pointSize:size];
+    if (font)
+        dim = [string sizeWithZFont:font];
 #endif // CC_FONT_LABEL_SUPPORT
+
+    if (!font) {
+        font = [UIFont fontWithName:name size:size];
+        if( font )
+            dim = [string sizeWithFont:font];
+    }
 	
 	if( ! font ) {
 		CCLOG(@"cocos2d: Unable to load font %@", name);
