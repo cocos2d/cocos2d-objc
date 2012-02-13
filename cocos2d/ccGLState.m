@@ -235,7 +235,7 @@ void ccGLEnableVertexAttribs( unsigned int flags )
 
 void ccGLUniformModelViewProjectionMatrix( CCGLProgram *shaderProgram )
 {
-    //if (_ccCurrentCCGLProgram->projMatrixDirty  == -1 || _ccCurrentProjectionMatrix == -1) {
+#if CC_ENABLE_GL_STATE_CACHE
         kmMat4 matrixP;
         kmMat4 matrixMV;
         kmMat4 matrixMVP;
@@ -247,11 +247,10 @@ void ccGLUniformModelViewProjectionMatrix( CCGLProgram *shaderProgram )
     
         [_ccCurrentCCGLProgram loadUniformLoc:shaderProgram->uniforms_[kCCUniformMVPMatrix] 
                             withValue:&matrixMVP withType:@"mat4"];
-        
-        //glUniformMatrix4fv( shaderProgram->uniforms_[kCCUniformMVPMatrix], 1, GL_FALSE, matrixMVP.mat);
-      //  _ccCurrentProjectionMatrix = 0;
-      //  _ccCurrentCCGLProgram->projMatrixDirty=0;
-    //}
+#else
+        glUniformMatrix4fv( shaderProgram->uniforms_[kCCUniformMVPMatrix], 1, GL_FALSE, matrixMVP.mat);
+#endif
+
 }
 
 void ccGLViewport (GLint x, GLint y, GLsizei width, GLsizei height) {
@@ -271,7 +270,4 @@ void ccGLViewport (GLint x, GLint y, GLsizei width, GLsizei height) {
 void ccSetProjectionMatrixDirty( void )
 {
 	_ccCurrentProjectionMatrix = -1;
-    if(_ccCurrentCCGLProgram) {
-        _ccCurrentCCGLProgram->projMatrixDirty=-1;
-    }
 }
