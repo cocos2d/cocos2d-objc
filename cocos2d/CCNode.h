@@ -147,7 +147,7 @@ enum {
 	NSInteger tag_;
 
 	// user data field
-	void *userData_;
+	id userData_;
 
 	// Shader
 	CCGLProgram	*shaderProgram_;
@@ -256,7 +256,7 @@ enum {
 /** A tag used to identify the node easily */
 @property(nonatomic,readwrite,assign) NSInteger tag;
 /** A custom user data pointer */
-@property(nonatomic,readwrite,assign) void *userData;
+@property(nonatomic,readwrite,retain) id userData;
 /** Shader Program
  @since v2.0
  */

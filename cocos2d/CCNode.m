@@ -178,6 +178,7 @@ static NSUInteger globalOrderOfArrival = 1;
 	[camera_ release];
 	[grid_ release];
 	[shaderProgram_ release];
+	[userData_ release];
 
 	// children
 	CCNode *child;
