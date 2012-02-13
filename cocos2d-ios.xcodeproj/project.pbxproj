@@ -1535,6 +1535,7 @@
 		6513D8931444B78F00917359 /* f2.png in Resources */ = {isa = PBXBuildFile; fileRef = 500165A00E72DB470085673F /* f2.png */; };
 		6513D8941444B78F00917359 /* r1.png in Resources */ = {isa = PBXBuildFile; fileRef = 500165990E72DB0E0085673F /* r1.png */; };
 		6513D8951444B78F00917359 /* r2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659A0E72DB0E0085673F /* r2.png */; };
+		654094D314E9856000FC93EA /* animations in Resources */ = {isa = PBXBuildFile; fileRef = 502C8C9810A701D300D137BA /* animations */; };
 		6F305B5F0FB9D2790052E700 /* TransformUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 6F305B5D0FB9D2790052E700 /* TransformUtils.h */; };
 		6F305B600FB9D2790052E700 /* TransformUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F305B5E0FB9D2790052E700 /* TransformUtils.m */; };
 		8E3FC8920F7B8BE900B3E5DE /* trance-loop.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 8E3FC8910F7B8BE900B3E5DE /* trance-loop.ogg */; };
@@ -3982,7 +3983,7 @@
 		502C8BCC10A65D0F00D137BA /* LICENSE_cocos2d.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE_cocos2d.txt; sourceTree = "<group>"; };
 		502C8BDE10A661E200D137BA /* CCSpriteFrameCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSpriteFrameCache.h; sourceTree = "<group>"; };
 		502C8BDF10A661E200D137BA /* CCSpriteFrameCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCSpriteFrameCache.m; sourceTree = "<group>"; };
-		502C8C9810A701D300D137BA /* animations */ = {isa = PBXFileReference; lastKnownFileType = folder; name = animations; path = Resources/animations; sourceTree = "<group>"; };
+		502C8C9810A701D300D137BA /* animations */ = {isa = PBXFileReference; explicitFileType = folder; name = animations; path = Resources/animations; sourceTree = "<group>"; };
 		50305AF30E40E33200F63373 /* cocos2d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cocos2d.h; sourceTree = "<group>"; };
 		503092B210447296005F7AFC /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		503162E5102726E8003ACFE7 /* background3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = background3.jpg; sourceTree = "<group>"; };
@@ -11023,6 +11024,7 @@
 				A0B036A813EA101F0073E59A /* f2-ipad.png in Resources */,
 				A0B036DD13EA10200073E59A /* r1-ipad.png in Resources */,
 				A0B0371213EA10210073E59A /* r2-ipad.png in Resources */,
+				654094D314E9856000FC93EA /* animations in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
