@@ -270,3 +270,8 @@ do {															\
 #define CC_ARC_RELEASE(value)	[value release]
 #define CC_ARC_UNSAFE_RETAINED
 #endif
+
+/*******************/
+/** Notifications **/
+/*******************/
+#define CCAnimationFrameDisplayedNotification @"CCAnimationFrameDisplayedNotification"
