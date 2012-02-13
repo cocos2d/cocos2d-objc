@@ -67,6 +67,12 @@ const char kCCProgressTextureCoords = 0x4b;
 	return [[[self alloc]initWithSprite:sprite] autorelease];
 }
 
+-(id) init
+{
+	return [self initWithSprite:nil];
+}
+
+// designated initializer
 -(id)initWithSprite:(CCSprite*) sprite
 {
 	if(( self = [super init] )){
