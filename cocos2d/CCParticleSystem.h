@@ -75,6 +75,9 @@ typedef enum {
 	kCCPositionTypeRelative,
 
     /** Living particles are attached to the world but will follow the emitter repositioning.
+     WARNING: This type of emitter doesn't
+        support scaling of the grandparent
+        while the emitter is running.
 	 Use case: Particles on a map.
 	 */
 	kCCPositionTypeRelativeToGrandparent,

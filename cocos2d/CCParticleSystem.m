@@ -613,13 +613,9 @@
 				
 				CGPoint	newPos;
 				
-				if( positionType_ == kCCPositionTypeFree || positionType_ == kCCPositionTypeRelative ) 
+				if( positionType_ == kCCPositionTypeFree || positionType_ == kCCPositionTypeRelative || positionType_ == kCCPositionTypeRelativeToGrandparent ) 
 				{
 					CGPoint diff = ccpSub( currentPosition, p->startPos );
-                    // RelativeToGrandparent: Correct position according to grandparent scale
-                    if ( positionType_ == kCCPositionTypeRelativeToGrandparent ) {
-                        diff = ccpMult(diff, parent_.parent.scale);
-                    }
 					newPos = ccpSub(p->pos, diff);	
                 } else {
 					newPos = p->pos;
