@@ -122,6 +122,10 @@
 #import "ccTypes.h"
 #import "ccMacros.h"
 
+//
+// Compatibility with v1.0
+//
+#import "ccBackwardCompatibility.h"
 
 // Platform common
 #import "Platforms/CCGL.h"
