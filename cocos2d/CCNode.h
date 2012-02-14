@@ -569,7 +569,7 @@ enum {
 - (CGPoint)convertTouchToNodeSpaceAR:(UITouch *)touch;
 #endif // __CC_PLATFORM_IOS
 
-/** set the user data, if retainData is YES, "userData" will be treated like an NSObject
+/** Set the user data. If retainData is YES, "userData" will be treated like an NSObject. Retain/Release will be called.
  @since v2.0
  */
 -(void) setUserData:(void *)userData retainData:(BOOL)retainData;
