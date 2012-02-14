@@ -179,6 +179,9 @@ enum {
 	BOOL isRelativeAnchorPoint_:1;
 
 	BOOL isReorderChildDirty_:1;
+	
+	// userData is going to be retained.
+	BOOL retainUserData_:1;
 }
 
 /** The z order of the node relative to its "siblings": children of the same parent */
@@ -256,7 +259,7 @@ enum {
 /** A tag used to identify the node easily */
 @property(nonatomic,readwrite,assign) NSInteger tag;
 /** A custom user data pointer */
-@property(nonatomic,readwrite,retain) id userData;
+@property(nonatomic,readwrite,assign) void* userData;
 /** Shader Program
  @since v2.0
  */
@@ -565,4 +568,9 @@ enum {
  */
 - (CGPoint)convertTouchToNodeSpaceAR:(UITouch *)touch;
 #endif // __CC_PLATFORM_IOS
+
+/** set the user data, if retainData is YES, "userData" will be treated like an NSObject
+ @since v2.0
+ */
+-(void) setUserData:(void *)userData retainData:(BOOL)retainData;
 @end
