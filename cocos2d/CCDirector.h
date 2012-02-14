@@ -146,6 +146,9 @@ and when to execute the Scenes.
 
 	/* action manager associated with this director */
 	CCActionManager *actionManager_;
+	
+	/*  OpenGLView. On iOS it is a copy of self.view */
+	CCGLView		*view_;
 }
 
 /** returns the cocos2d thread.

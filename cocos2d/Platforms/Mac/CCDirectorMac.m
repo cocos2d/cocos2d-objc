@@ -195,9 +195,6 @@
 {
 	if( view != view_) {
 
-		[view_ release];
-		view_ = [view retain];
-
 		[super setView:view];
 
 		// cache the NSWindow and NSOpenGLView created from the NIB
@@ -206,11 +203,6 @@
 			originalWinSize_ = winSizeInPixels_;
 		}
 	}
-}
-
--(CCGLView*) view
-{
-	return view_;
 }
 
 -(int) resizeMode

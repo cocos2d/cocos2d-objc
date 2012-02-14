@@ -266,7 +266,7 @@ CGFloat	__ccContentScaleFactor = 1;
 		__ccContentScaleFactor = scaleFactor;
 		winSizeInPixels_ = CGSizeMake( winSizeInPoints_.width * scaleFactor, winSizeInPoints_.height * scaleFactor );
 
-		if( self.view )
+		if( view_ )
 			[self updateContentScaleFactor];
 
 		// update projection
@@ -276,9 +276,9 @@ CGFloat	__ccContentScaleFactor = 1;
 
 -(void) updateContentScaleFactor
 {
-	NSAssert( [self.view respondsToSelector:@selector(setContentScaleFactor:)], @"cocos2d v2.0+ runs on iOS 4 or later");
+	NSAssert( [view_ respondsToSelector:@selector(setContentScaleFactor:)], @"cocos2d v2.0+ runs on iOS 4 or later");
 
-	[self.view setContentScaleFactor: __ccContentScaleFactor];
+	[view_ setContentScaleFactor: __ccContentScaleFactor];
 	isContentScaleSupported_ = YES;
 }
 
@@ -293,7 +293,7 @@ CGFloat	__ccContentScaleFactor = 1;
 		return YES;
 
 	// setContentScaleFactor is not supported
-	if (! [self.view respondsToSelector:@selector(setContentScaleFactor:)])
+	if (! [view_ respondsToSelector:@selector(setContentScaleFactor:)])
 		return NO;
 
 	// SD device
@@ -312,7 +312,7 @@ CGFloat	__ccContentScaleFactor = 1;
 // overriden, don't call super
 -(void) reshapeProjection:(CGSize)size
 {
-	winSizeInPoints_ = [self.view bounds].size;
+	winSizeInPoints_ = [view_ bounds].size;
 	winSizeInPixels_ = CGSizeMake(winSizeInPoints_.width * __ccContentScaleFactor, winSizeInPoints_.height *__ccContentScaleFactor);
 
 	[self setProjection:projection_];
@@ -350,16 +350,18 @@ CGFloat	__ccContentScaleFactor = 1;
 
 -(void) setView:(CCGLView *)view
 {
-	[super setView:view];
+	if( view != view_) {
+		[super setView:view];
 
-	// set size
-	winSizeInPixels_ = CGSizeMake(winSizeInPoints_.width * __ccContentScaleFactor, winSizeInPoints_.height *__ccContentScaleFactor);
+		// set size
+		winSizeInPixels_ = CGSizeMake(winSizeInPoints_.width * __ccContentScaleFactor, winSizeInPoints_.height *__ccContentScaleFactor);
 
-	if( __ccContentScaleFactor != 1 )
-		[self updateContentScaleFactor];
+		if( __ccContentScaleFactor != 1 )
+			[self updateContentScaleFactor];
 
-	[view setTouchDelegate: touchDispatcher_];
-	[touchDispatcher_ setDispatchEvents: YES];
+		[view setTouchDelegate: touchDispatcher_];
+		[touchDispatcher_ setDispatchEvents: YES];
+	}
 }
 
 // Override to allow orientations other than the default portrait orientation.
