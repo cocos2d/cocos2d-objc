@@ -26,6 +26,7 @@
 
 #if CC_BACKWARD_COMPATIBILITY
 
+#import "ccMacros.h"
 #import "CCMenu.h"
 #import "CCDirector.h"
 #import "CCSprite.h"
@@ -60,9 +61,15 @@
 +(CCActionManager*) sharedManager DEPRECATED_ATTRIBUTE;
 @end
 
+#if __CC_PLATFORM_IOS
 @interface CCTouchDispatcher (Compatibility)
 +(CCTouchDispatcher*) sharedDispatcher DEPRECATED_ATTRIBUTE;
 @end
+#elif __CC_PLATFORM_MAC
+@interface CCEventDispatcher (Compatibility)
++(CCEventDispatcher*) sharedDispatcher DEPRECATED_ATTRIBUTE;
+@end
+#endif // __CC_PLATFORM_MAC
 
 @interface CCDirector (Compatibility)
 -(void) setOpenGLView:(CCGLView*)view DEPRECATED_ATTRIBUTE;
