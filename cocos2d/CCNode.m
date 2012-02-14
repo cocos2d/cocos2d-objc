@@ -582,6 +582,15 @@ static NSUInteger globalOrderOfArrival = 0;
 	}
 }
 
+- (int) zOrderOfHighestChildren
+{
+    if ([children_ count]==0) {
+        return 0;
+    } else {
+        return ((CCNode*)[children_ lastObject]).zOrder;
+    }
+}
+
 #pragma mark CCNode Draw
 
 -(void) draw

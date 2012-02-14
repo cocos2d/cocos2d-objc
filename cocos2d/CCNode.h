@@ -382,6 +382,11 @@ enum {
  don't call this manually unless a child added needs to be removed in the same frame */
 - (void) sortAllChildren;
 
+/** Returns the z value of the highest children.
+ @since v1.1-rsanchez
+ */
+- (int) zOrderOfHighestChildren;
+
 /** Stops all running actions and schedulers
  @since v0.8
  */
