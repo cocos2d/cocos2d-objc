@@ -37,14 +37,29 @@
 
  If this functionality is disabled, then ccGLUseProgram(), ccGLDeleteProgram(), ccGLBlendFunc() will call the GL ones, without using the cache.
 
- It is recommened to enable whenever possible to improve speed.
+ It is recommened to enable it whenever possible to improve speed.
  If you are migrating your code from GL ES 1.1, then keep it disabled. Once all your code works as expected, turn it on.
+
+ Default value: Enabled by default
 
  @since v2.0.0
  */
 #ifndef CC_ENABLE_GL_STATE_CACHE
-#define CC_ENABLE_GL_STATE_CACHE 0
+#define CC_ENABLE_GL_STATE_CACHE 1
 #endif
+
+/** @def CC_BACKWARD_COMPATIBILITY
+ If enabled, cocos2d will compile all deprecated methods and classes. Also, renamed constants will be active as well.
+ Enable it only when migrating a v1.0 or earlier v2.0 versions to the most recent cocdos2d version.
+ 
+ Default value: Disabled by default
+ 
+ @since v2.0.0
+ */
+#ifndef CC_BACKWARD_COMPATIBILITY
+#define CC_BACKWARD_COMPATIBILITY 0
+#endif
+
 
 /** @def CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
  If enabled, the texture coordinates will be calculated by using this formula:

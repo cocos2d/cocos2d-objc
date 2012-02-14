@@ -22,7 +22,11 @@
  * THE SOFTWARE.
  */
 
-#import "cocos2d_compatibility.h"
+#import "ccBackwardCompatibility.h"
+
+#if CC_BACKWARD_COMPATIBILITY
+
+#import "CCSpriteBatchNode.h"
 
 @implementation CCScheduler (Compatibility)
 +(CCScheduler*) sharedScheduler
@@ -73,4 +77,4 @@
 
 @end
 
-
+#endif // CC_BACKWARD_COMPATIBILITY

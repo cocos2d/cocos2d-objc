@@ -22,15 +22,34 @@
  * THE SOFTWARE.
  */
 
-#import <Foundation/Foundation.h>
-#import "cocos2d.h"
+#import "ccConfig.h"
+
+#if CC_BACKWARD_COMPATIBILITY
+
+#import "CCMenu.h"
+#import "CCDirector.h"
+#import "CCSprite.h"
+#import "CCGLProgram.h"
+#import "CCScheduler.h"
+#import "CCActionManager.h"
+#import "Platforms/Mac/CCDirectorMac.h"
+#import "Platforms/iOS/CCTouchDispatcher.h"
+#import "Platforms/iOS/CCDirectorIOS.h"
 
 // Renamed constants
-#define EAGLView				CCGLView
-#define MacView					CCGLView
 #define kCCResolutionStandard	kCCResolutioniPhone
-#define GLProgram				CCGLProgram
 #define kCCMenuTouchPriority	kCCMenuHandlerPriority
+
+// Renamed classes
+@interface EAGLView : CCGLView
+@end
+
+@interface MacView : CCGLView
+@end
+
+@interface GLProgram : CCGLProgram
+@end
+
 
 // Extensions
 @interface CCScheduler (Compatibility)
@@ -55,3 +74,6 @@
 @interface CCSprite (Compatibility)
 -(id) initWithBatchNode:(CCSpriteBatchNode*)node rect:(CGRect)rect DEPRECATED_ATTRIBUTE;
 @end
+
+#endif // CC_BACKWARD_COMPATIBILITY
+
