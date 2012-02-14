@@ -53,6 +53,11 @@ void ccGLInvalidateStateCache( void )
 {
 	kmGLFreeAll();
 
+	_ccCurrentProjectionMatrix = -1;
+	_vertexAttribPosition = NO;
+	_vertexAttribColor = NO;
+	_vertexAttribTexCoords = NO;
+
 #if CC_ENABLE_GL_STATE_CACHE
 	_ccCurrentShaderProgram = -1;
 	for( NSInteger i=0; i < kCCMaxActiveTexture; i++ )
