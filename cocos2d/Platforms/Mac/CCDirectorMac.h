@@ -61,9 +61,6 @@ enum  {
 
 	NSWindow		*fullScreenWindow_;
 
-	// OpenGLView
-	CCGLView		*view_;
-
 	// Event Dispatcher
 	CCEventDispatcher	*eventDispatcher_;
 
