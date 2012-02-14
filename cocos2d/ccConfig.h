@@ -70,15 +70,15 @@
 #define CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL 0
 #endif
 
-/** @def CC_DIRECTOR_FPS_INTERVAL
- Seconds between FPS updates.
- 0.5 seconds, means that the FPS number will be updated every 0.5 seconds.
- Having a bigger number means a more reliable FPS
+/** @def CC_DIRECTOR_STATS_INTERVAL
+ Seconds between stats updates.
+ 0.5 seconds, means that the stats will be updated every 0.5 seconds.
+ Having a bigger number means more stable stats
 
  Default value: 0.1f
  */
-#ifndef CC_DIRECTOR_FPS_INTERVAL
-#define CC_DIRECTOR_FPS_INTERVAL (0.1f)
+#ifndef CC_DIRECTOR_STATS_INTERVAL
+#define CC_DIRECTOR_STATS_INTERVAL (0.1f)
 #endif
 
 /** @def CC_DIRECTOR_STATS_POSITION
