@@ -206,12 +206,6 @@ and when to execute the Scenes.
 
 #pragma mark Director - Stats
 
-/** Whether or not to display the FPS on the bottom-left corner
- @deprecated Use setDisplayStats:YES instead
- */
--(void) setDisplayFPS:(BOOL)display DEPRECATED_ATTRIBUTE;
-
-
 #pragma mark Director - Win Size
 /** returns the size of the OpenGL view in points */
 - (CGSize) winSize;

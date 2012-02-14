@@ -554,12 +554,6 @@ static CCDirector *_sharedDirector = nil;
 	__ccNumberOfDraws = 0;
 }
 
-// XXX Deprecated
--(void) setDisplayFPS:(BOOL)display
-{
-	self.displayStats = display;
-}
-
 -(void) calculateMPF
 {
 	struct timeval now;
