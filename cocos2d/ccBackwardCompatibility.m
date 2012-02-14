@@ -42,12 +42,21 @@
 }
 @end
 
+#if __CC_PLATFORM_IOS
 @implementation CCTouchDispatcher (Compatibility)
 +(CCTouchDispatcher*) sharedDispatcher
 {
 	return [[CCDirector sharedDirector] touchDispatcher];
 }
 @end
+#elif __CC_PLATFORM_MAC
+@implementation CCEventDispatcher (Compatibility)
++(CCEventDispatcher*) sharedDispatcher
+{
+	return [[CCDirector sharedDirector] eventDispatcher];
+}
+@end
+#endif // __CC_PLATFORM_MAC
 
 @implementation CCDirector (Compatibility)
 -(void) setDisplayFPS:(BOOL)display
