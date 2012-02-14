@@ -27,6 +27,7 @@
 #import "ccMacros.h"
 #import "Support/CCFileUtils.h"
 #import "Support/OpenGL_Internal.h"
+#import "kazmath.h"
 
 #pragma mark Function Pointer Definitions
 typedef void (*GLInfoFunction)(GLuint program,
@@ -51,11 +52,18 @@ typedef void (*GLLogFunction) (GLuint program,
 #pragma mark -
 
 @implementation CCGLProgram
+
+@synthesize uniformsLoc, uniforms, uniformsOld;
+
 - (id)initWithVertexShaderFilename:(NSString *)vShaderFilename
             fragmentShaderFilename:(NSString *)fShaderFilename
 {
     if ((self = [super init]) )
     {
+        projMatrixDirty = -1;
+        uniformsLoc = [[NSMutableDictionary alloc] initWithCapacity:5];
+		uniforms = [[NSMutableDictionary alloc] initWithCapacity:5];
+        uniformsOld = [[NSMutableDictionary alloc] initWithCapacity:5];
         program_ = glCreateProgram();
 
 		vertShader_ = fragShader_ = 0;
@@ -78,12 +86,17 @@ typedef void (*GLLogFunction) (GLuint program,
 								file:fullname])
 				CCLOG(@"cocos2d: ERROR: Failed to compile fragment shader: %@", fShaderFilename);
 		}
+        
+        vShaderName = [vShaderFilename retain];
+        fShaderName = [fShaderFilename retain];
 
-		if( vertShader_ )
+		if( vertShader_ ) {
 			glAttachShader(program_, vertShader_);
+        }
 
-		if( fragShader_ )
+		if( fragShader_ ) {
 			glAttachShader(program_, fragShader_);
+        }
 
     }
 
@@ -143,8 +156,179 @@ typedef void (*GLLogFunction) (GLuint program,
 
 	uniforms_[kCCUniformSampler] = glGetUniformLocation(program_, kCCUniformSampler_s);
 
-	ccGLUseProgram( program_ );
+	ccGLUseProgram( self );
 	glUniform1i( uniforms_[kCCUniformSampler], 0 );
+}
+
+- (void) loadUniform:(NSString*)name withValue:(void*)value withType:(NSString*)type { 
+    GLuint tempLoc;
+	NSNumber* oldUniform;
+	
+	if(!name || !value || !type) return;
+	oldUniform = [uniformsLoc objectForKey:name];
+	if(!oldUniform) {
+		tempLoc = -1;
+	}
+	else {
+		tempLoc = [oldUniform intValue];
+	}
+	
+	if (-1 == tempLoc) {
+		//if tempLoc is equal to -1, then the uniform has not been added yet or it cannot be found in the shader...
+		tempLoc = glGetUniformLocation(self->program_, [name UTF8String]);
+		if (-1 == tempLoc) {
+            NSLog(@"(!)...this uniform (%@) could not be added to %@.vsh and %@.fsh...(!)", name, vShaderName, fShaderName);
+			return;
+		}
+		NSNumber *locValue = [NSNumber numberWithInt:tempLoc]; 
+		[uniformsLoc setObject:locValue forKey:name];
+	}
+    
+    [self loadUniformLoc:tempLoc withValue:value withType:type];
+}
+
+- (void) loadUniformLoc:(GLuint)uLoc withValue:(void*)value withType:(NSString*)type {
+	NSNumber* oldUniform;
+    NSNumber* uLocKey = [NSNumber numberWithUnsignedInt:uLoc];
+    
+    BOOL updateUniform = NO;
+	
+	if(value == NULL || !type) { 
+        return;
+    }
+    
+    oldUniform = [uniforms objectForKey:uLocKey];
+	
+	if (NSOrderedSame ==[type compare:@"mat4"]) {
+        kmMat4 matOld; 
+        [((NSData*)oldUniform) getBytes:&matOld length:sizeof(kmMat4)];
+        kmMat4* matNew = (kmMat4*)value;
+        
+        if(kmMat4AreEqual(&matOld, matNew) == KM_TRUE) {
+            //NSLog(@"mat4 already available");
+            return;
+        }
+        
+        NSData* temp = [NSData dataWithBytes:value length:sizeof(kmMat4)];
+        
+		[uniforms setObject:temp forKey:uLocKey];
+		glUniformMatrix4fv(uLoc, 1, GL_FALSE, matNew->mat);
+
+	}
+	else if (NSOrderedSame ==[type compare:@"vec4f"]) {
+        ccColor4F oldVec;
+        [((NSData*)oldUniform) getBytes:&oldVec length:sizeof(ccColor4F)];
+        ccColor4F * newVec = (ccColor4F*) value;
+        
+        updateUniform = ((oldVec.r < (newVec->r-0.001f) || oldVec.r > (newVec->r+0.001f)) ||
+                         (oldVec.g < (newVec->g-0.001f) || oldVec.g > (newVec->g+0.001f)) ||
+                         (oldVec.b < (newVec->b-0.001f) || oldVec.b > (newVec->b+0.001f)) ||
+                         (oldVec.a < (newVec->a-0.001f) || oldVec.a > (newVec->a+0.001f)));
+        
+        if(!updateUniform) {
+            return;
+        }
+        
+        NSData* temp = [NSData dataWithBytes:value length:sizeof(ccColor4F)];
+		[uniforms setObject:temp forKey:uLocKey];
+        glUniform4fv(uLoc, 1, (void*)newVec);
+
+	}
+	else if (NSOrderedSame ==[type compare:@"vec3f"]) {
+        ccVertex3F oldVec;
+        [((NSData*)oldUniform) getBytes:&oldVec length:sizeof(ccVertex3F)];
+        
+        ccVertex3F * newVec = (ccVertex3F*) value;
+        
+        updateUniform = ((oldVec.x < (newVec->x-0.001f) || oldVec.x > (newVec->x+0.001f)) ||
+                         (oldVec.y < (newVec->y-0.001f) || oldVec.y > (newVec->y+0.001f)) ||
+                         (oldVec.z < (newVec->z-0.001f) || oldVec.z > (newVec->z+0.001f)));
+        
+        if(!updateUniform) {
+            return;
+        }
+        
+        NSData* temp = [NSData dataWithBytes:value length:sizeof(ccVertex3F)];
+		[uniforms setObject:temp forKey:uLocKey];
+        glUniform3fv(uLoc, 1, (void*)newVec);
+
+	}
+	else if (NSOrderedSame ==[type compare:@"vec2f"]) {
+        ccVertex2F oldVec;
+        [((NSData*)oldUniform) getBytes:&oldVec length:sizeof(ccVertex2F)];
+        
+        ccVertex2F * newVec = (ccVertex2F*) value;
+        
+        updateUniform = ((oldVec.x < (newVec->x-0.001f) || oldVec.x > (newVec->x+0.001f)) ||
+                         (oldVec.y < (newVec->y-0.001f) || oldVec.y > (newVec->y+0.001f)) );
+        
+        if(!updateUniform) {
+            return;
+        }
+        
+        NSData* temp = [NSData dataWithBytes:value length:sizeof(ccVertex2F)];
+		[uniforms setObject:temp forKey:uLocKey];
+        glUniform2fv(uLoc, 1, (void*)newVec);
+	}
+	else if (NSOrderedSame ==[type compare:@"sampler2D"]) {
+        int newInt = [(NSNumber*)value intValue];
+        if (nil == oldUniform) {
+            updateUniform = YES;
+        }
+        else {
+            int oldValue = [(NSNumber*)oldUniform intValue];
+            updateUniform = (oldValue != newInt)? YES: NO;
+        }
+		if(updateUniform) {
+            [uniforms setObject:value forKey:uLocKey];
+            glUniform1i(uLoc, newInt); //each sampler should be bound to a different texture unit...
+        }
+	}
+	else if (NSOrderedSame ==[type compare:@"float"]) {
+        float newFloat = [(NSNumber*)value floatValue];
+        if (nil == oldUniform) {
+            updateUniform = YES;
+        }
+        else {
+            float oldValue = [(NSNumber*)oldUniform floatValue];
+            updateUniform = (oldValue < (newFloat-0.001f) || oldValue > (newFloat+0.001f))? YES: NO;
+        }
+		if(updateUniform) {
+            [uniforms setObject:value forKey:uLocKey];
+            glUniform1f(uLoc, newFloat); //each sampler should be bound to a different texture unit...
+        }
+	}
+	else if (NSOrderedSame ==[type compare:@"BOOL"]) {
+        BOOL newBOOL = [(NSNumber*)value boolValue];
+        if (nil == oldUniform) {
+            updateUniform = YES;
+        }
+        else {
+            BOOL oldValue = [(NSNumber*)oldUniform intValue];
+            updateUniform = (oldValue != newBOOL)? YES: NO;
+        }
+		if(updateUniform) {
+            [uniforms setObject:value forKey:uLocKey];
+            glUniform1i(uLoc, newBOOL); //each sampler should be bound to a different texture unit...
+        }
+	}
+	else if (NSOrderedSame ==[type compare:@"int"]) {
+        int newInt = [(NSNumber*)value intValue];
+        if (nil == oldUniform) {
+            updateUniform = YES;
+        }
+        else {
+            int oldValue = [(NSNumber*)oldUniform intValue];
+            updateUniform = (oldValue != newInt)? YES: NO;
+        }
+		if(updateUniform) {
+            [uniforms setObject:value forKey:uLocKey];
+            glUniform1i(uLoc, newInt); //each sampler should be bound to a different texture unit...
+        }
+	}
+	else {
+		NSAssert(0, @"(!)... only mat4, vec4f, vec3f, vec2f, float, int, and samplers uniforms can be loaded for now... (!)");
+	}
 }
 
 #pragma mark -
@@ -164,7 +348,7 @@ typedef void (*GLLogFunction) (GLuint program,
 			glDeleteShader( vertShader_ );
 		if( fragShader_ )
 			glDeleteShader( fragShader_ );
-		ccGLDeleteProgram( program_ );
+		ccGLDeleteProgram( self );
 		vertShader_ = fragShader_ = program_ = 0;
         return NO;
 	}
@@ -182,7 +366,7 @@ typedef void (*GLLogFunction) (GLuint program,
 
 - (void)use
 {
-    ccGLUseProgram(program_);
+    ccGLUseProgram(self);
 }
 
 #pragma mark -
@@ -239,8 +423,18 @@ typedef void (*GLLogFunction) (GLuint program,
 	NSAssert( vertShader_ == 0, @"Vertex Shaders should have been already deleted");
 	NSAssert( fragShader_ == 0, @"Vertex Shaders should have been already deleted");
 
-    if (program_)
-        ccGLDeleteProgram(program_);
+    if (program_) {
+        ccGLDeleteProgram(self);
+    }
+    
+    if(vShaderName) {
+        [vShaderName release];
+        vShaderName = nil;
+    }
+    if(fShaderName) {
+        [fShaderName release];
+        fShaderName = nil;
+    }
 
     [super dealloc];
 }

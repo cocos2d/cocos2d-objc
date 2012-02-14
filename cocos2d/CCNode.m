@@ -579,6 +579,7 @@ static NSUInteger globalOrderOfArrival = 1;
 	transfrom4x4.mat[14] = vertexZ_;
 
 	kmGLMultMatrix( &transfrom4x4 );
+    ccSetProjectionMatrixDirty();
 
 
 	// XXX: Expensive calls. Camera should be integrated into the cached affine matrix

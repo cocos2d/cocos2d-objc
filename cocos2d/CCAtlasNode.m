@@ -124,7 +124,10 @@
 
 	ccGLBlendFunc( blendFunc_.src, blendFunc_.dst );
 
-	glUniform4f( uniformColor_, color_.r / 255.0f, color_.g / 255.0f, color_.b / 255.0f, opacity_ / 255.0f );
+	//glUniform4f( uniformColor_, color_.r / 255.0f, color_.g / 255.0f, color_.b / 255.0f, opacity_ / 255.0f );
+    
+    ccColor4F col = {color_.r / 255.0f, color_.g / 255.0f, color_.b / 255.0f, opacity_ / 255.0f };
+    [shaderProgram_ loadUniform:@"u_color" withValue:&col withType:@"vec4f"];
 
 	[textureAtlas_ drawNumberOfQuads:quadsToDraw_ fromIndex:0];
 }

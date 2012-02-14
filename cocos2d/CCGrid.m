@@ -186,7 +186,7 @@
 
 	CGSize	size = [director winSizeInPixels];
 	
-	glViewport(0, 0, size.width * CC_CONTENT_SCALE_FACTOR(), size.height * CC_CONTENT_SCALE_FACTOR() );
+	ccGLViewport(0, 0, size.width * CC_CONTENT_SCALE_FACTOR(), size.height * CC_CONTENT_SCALE_FACTOR() );
 	kmGLMatrixMode(KM_GL_PROJECTION);
 	kmGLLoadIdentity();
 	
@@ -279,7 +279,7 @@
 	NSInteger n = gridSize_.x * gridSize_.y;
 
 	ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position | kCCVertexAttribFlag_TexCoords );
-	ccGLUseProgram( shaderProgram_->program_ );
+	ccGLUseProgram( shaderProgram_ );
 	ccGLUniformModelViewProjectionMatrix( shaderProgram_ );
 
 	//
@@ -431,7 +431,7 @@
 	NSInteger n = gridSize_.x * gridSize_.y;
 
 	ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position | kCCVertexAttribFlag_TexCoords );
-	ccGLUseProgram( shaderProgram_->program_ );
+	ccGLUseProgram( shaderProgram_ );
 	ccGLUniformModelViewProjectionMatrix( shaderProgram_ );
 
 	//

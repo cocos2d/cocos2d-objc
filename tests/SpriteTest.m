@@ -1186,6 +1186,8 @@ Class restartAction()
 		//
 		CCGLProgram *alphaTestShader = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTextureColorAlphaTest];
 		GLint alphaValueLocation = glGetUniformLocation(alphaTestShader->program_, kCCUniformAlphaTestValue);
+        
+        alphaTestShader->projMatrixDirty = -1;
 
 		// set alpha test value
 		// NOTE: alpha test shader is hard-coded to use the equivalent of a glAlphaFunc(GL_GREATER) comparison

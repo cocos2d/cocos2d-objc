@@ -75,7 +75,7 @@ void ccDrawPoint( CGPoint point )
 	ccVertex2F p = (ccVertex2F) {point.x, point.y};
 
 	ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position );
-	ccGLUseProgram( shader_->program_ );
+	ccGLUseProgram( shader_ );
 	ccGLUniformModelViewProjectionMatrix( shader_ );
 
 	glUniform4f( colorLocation_, color_.r, color_.g, color_.b, color_.a );
@@ -93,7 +93,7 @@ void ccDrawPoints( const CGPoint *points, NSUInteger numberOfPoints )
 	lazy_init();
 
 	ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position );
-	ccGLUseProgram( shader_->program_ );
+	ccGLUseProgram( shader_ );
 	ccGLUniformModelViewProjectionMatrix( shader_ );
 
 	glUniform4f( colorLocation_, color_.r, color_.g, color_.b, color_.a );
@@ -132,7 +132,7 @@ void ccDrawLine( CGPoint origin, CGPoint destination )
 
 
 	ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position );
-	ccGLUseProgram( shader_->program_ );
+	ccGLUseProgram( shader_ );
 	ccGLUniformModelViewProjectionMatrix( shader_ );
 
 	glUniform4f( colorLocation_, color_.r, color_.g, color_.b, color_.a );
@@ -149,7 +149,7 @@ void ccDrawPoly( const CGPoint *poli, NSUInteger numberOfPoints, BOOL closePolyg
 	lazy_init();
 
 	ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position );
-	ccGLUseProgram( shader_->program_ );
+	ccGLUseProgram( shader_ );
 	ccGLUniformModelViewProjectionMatrix( shader_ );
 
 	glUniform4f( colorLocation_, color_.r, color_.g, color_.b, color_.a );
@@ -204,7 +204,7 @@ void ccDrawCircle( CGPoint center, float r, float a, NSUInteger segs, BOOL drawL
 	vertices[(segs+1)*2+1] = center.y;
 
 	ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position );
-	ccGLUseProgram( shader_->program_ );
+	ccGLUseProgram( shader_ );
 	ccGLUniformModelViewProjectionMatrix( shader_ );
 
 	glUniform4f( colorLocation_, color_.r, color_.g, color_.b, color_.a );
@@ -233,7 +233,7 @@ void ccDrawQuadBezier(CGPoint origin, CGPoint control, CGPoint destination, NSUI
 	vertices[segments] = (ccVertex2F) {destination.x, destination.y};
 
 	ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position );
-	ccGLUseProgram( shader_->program_ );
+	ccGLUseProgram( shader_ );
 	ccGLUniformModelViewProjectionMatrix( shader_ );
 
 	glUniform4f( colorLocation_, color_.r, color_.g, color_.b, color_.a );
@@ -261,7 +261,7 @@ void ccDrawCubicBezier(CGPoint origin, CGPoint control1, CGPoint control2, CGPoi
 
 
 	ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position );
-	ccGLUseProgram( shader_->program_ );
+	ccGLUseProgram( shader_ );
 	ccGLUniformModelViewProjectionMatrix( shader_ );
 
 	glUniform4f( colorLocation_, color_.r, color_.g, color_.b, color_.a );
