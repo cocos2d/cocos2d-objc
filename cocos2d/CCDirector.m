@@ -531,7 +531,7 @@ static CCDirector *_sharedDirector = nil;
 	if( displayStats_ ) {
 		// Ms per Frame
 
-		if( accumDt_ > CC_DIRECTOR_FPS_INTERVAL)
+		if( accumDt_ > CC_DIRECTOR_STATS_INTERVAL)
 		{
 			NSString *spfstr = [[NSString alloc] initWithFormat:@"%.3f", secondsPerFrame_];
 			[SPFLabel_ setString:spfstr];
