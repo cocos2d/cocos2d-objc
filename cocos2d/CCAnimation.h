@@ -65,7 +65,13 @@
 
  */
 @interface CCAnimation : NSObject
-{}
+{
+	NSMutableArray	*frames_;
+	float			totalDelayUnits_;
+	float			delayPerUnit_;
+	float			duration_;
+	BOOL			restoreOriginalFrame_;
+}
 
 /** total Delay units of the CCAnimation. */
 @property (nonatomic, readonly) float totalDelayUnits;
