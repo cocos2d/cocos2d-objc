@@ -58,6 +58,8 @@
 @end
 #endif // __CC_PLATFORM_MAC
 
+#pragma mark - CCDirector
+
 @implementation CCDirector (Compatibility)
 -(void) setDisplayFPS:(BOOL)display
 {
@@ -77,6 +79,13 @@
 
 @implementation CCSprite (Compatibility)
 
++(id) spriteWithBatchNode:(CCSpriteBatchNode*)node rect:(CGRect)rect
+{
+	id ret = [self spriteWithTexture:node.texture rect:rect];
+	[ret setBatchNode:node];
+	return ret;
+}
+
 -(id) initWithBatchNode:(CCSpriteBatchNode*)node rect:(CGRect)rect
 {
 	[self initWithTexture:node.texture rect:rect];
@@ -85,5 +94,79 @@
 }
 
 @end
+
+@implementation CCMenuItemSprite (Compatibility)
++(id) itemFromNormalSprite:(CCNode<CCRGBAProtocol>*)normalSprite selectedSprite:(CCNode<CCRGBAProtocol>*)selectedSprite
+{
+	return [self itemWithNormalSprite:normalSprite selectedSprite:selectedSprite];
+}
++(id) itemFromNormalSprite:(CCNode<CCRGBAProtocol>*)normalSprite selectedSprite:(CCNode<CCRGBAProtocol>*)selectedSprite target:(id)target selector:(SEL)selector
+{
+	return [self itemWithNormalSprite:normalSprite selectedSprite:selectedSprite target:target selector:selector];	
+}
++(id) itemFromNormalSprite:(CCNode<CCRGBAProtocol>*)normalSprite selectedSprite:(CCNode<CCRGBAProtocol>*)selectedSprite disabledSprite:(CCNode<CCRGBAProtocol>*)disabledSprite target:(id)target selector:(SEL)selector
+{
+	return [self itemWithNormalSprite:normalSprite selectedSprite:selectedSprite disabledSprite:disabledSprite target:target selector:selector];
+}
++(id) itemFromNormalSprite:(CCNode<CCRGBAProtocol>*)normalSprite selectedSprite:(CCNode<CCRGBAProtocol>*)selectedSprite block:(void(^)(id sender))block
+{
+	return [self itemWithNormalSprite:normalSprite selectedSprite:selectedSprite block:block];
+}
++(id) itemFromNormalSprite:(CCNode<CCRGBAProtocol>*)normalSprite selectedSprite:(CCNode<CCRGBAProtocol>*)selectedSprite disabledSprite:(CCNode<CCRGBAProtocol>*)disabledSprite block:(void(^)(id sender))block
+{
+	return [self itemWithNormalSprite:normalSprite selectedSprite:selectedSprite disabledSprite:disabledSprite block:block];
+}
+
+-(id) initFromNormalSprite:(CCNode<CCRGBAProtocol>*)normalSprite selectedSprite:(CCNode<CCRGBAProtocol>*)selectedSprite disabledSprite:(CCNode<CCRGBAProtocol>*)disabledSprite target:(id)target selector:(SEL)selector
+{
+	return [self initWithNormalSprite:normalSprite selectedSprite:selectedSprite disabledSprite:disabledSprite target:target selector:selector];
+}
+-(id) initFromNormalSprite:(CCNode<CCRGBAProtocol>*)normalSprite selectedSprite:(CCNode<CCRGBAProtocol>*)selectedSprite disabledSprite:(CCNode<CCRGBAProtocol>*)disabledSprite block:(void(^)(id sender))block
+{
+	return [self initWithNormalSprite:normalSprite selectedSprite:selectedSprite disabledSprite:disabledSprite block:block];
+}
+@end
+
+@implementation CCMenuItemImage (Compatibility)
++(id) itemFromNormalImage: (NSString*)value selectedImage:(NSString*) value2
+{
+	return [self itemWithNormalImage:value selectedImage:value2];
+}
++(id) itemFromNormalImage: (NSString*)value selectedImage:(NSString*) value2 target:(id) r selector:(SEL) s
+{
+	return [self itemWithNormalImage:value selectedImage:value2 target:r selector:s];	
+}
++(id) itemFromNormalImage: (NSString*)value selectedImage:(NSString*) value2 disabledImage:(NSString*) value3 target:(id) r selector:(SEL) s
+{
+	return [self itemWithNormalImage:value selectedImage:value2 disabledImage:value3 target:r selector:s];	
+}
++(id) itemFromNormalImage: (NSString*)value selectedImage:(NSString*) value2 block:(void(^)(id sender))block
+{
+	return [self itemWithNormalImage:value selectedImage:value2 block:block];
+}
++(id) itemFromNormalImage: (NSString*)value selectedImage:(NSString*) value2 disabledImage:(NSString*) value3 block:(void(^)(id sender))block
+{
+	return [self itemWithNormalImage:value selectedImage:value2 disabledImage:value3 block:block];
+}
+-(id) initFromNormalImage: (NSString*) value selectedImage:(NSString*)value2 disabledImage:(NSString*) value3 target:(id) r selector:(SEL) s
+{
+	return [self initWithNormalImage:value selectedImage:value2 disabledImage:value3 target:r selector:s];
+}
+-(id) initFromNormalImage: (NSString*) value selectedImage:(NSString*)value2 disabledImage:(NSString*) value3 block:(void(^)(id sender))block
+{
+	return [self initWithNormalImage:value selectedImage:value2 disabledImage:value3 block:block];
+}
+@end
+
+#if __CC_PLATFORM_IOS
+@implementation EAGLView
+@end
+
+#elif __CC_PLATFORM_MAC
+
+@implementation MacView
+@end
+
+#endif // __CC_PLATFORM_MAC
 
 #endif // CC_BACKWARD_COMPATIBILITY
