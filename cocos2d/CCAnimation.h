@@ -39,7 +39,7 @@
  - # of delay units.
  - offset
  
- @since v2.0
+ @since v1.1
  */
 @interface CCAnimationFrame : NSObject <NSCopying>
 {}
@@ -122,6 +122,10 @@
  The frame will be added with one "delay unit".
  */
 -(void) addFrame:(CCSpriteFrame*)frame;
+/** Adds a CCSpriteFrame to a CCAnimation.
+	delay is in seconds
+*/
+-(void) addFrame:(CCSpriteFrame*)frame delay:(float) delay;
 
 /** Adds a frame with an image filename. Internally it will create a CCSpriteFrame and it will add it.
  The frame will be added with one "delay unit".

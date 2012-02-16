@@ -175,4 +175,8 @@
 }
 @end
 
+@interface AnimatedParticles : ParticleDemo
+{}
+@end
+
 
