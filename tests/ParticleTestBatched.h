@@ -196,4 +196,7 @@
 }
 @end
 
+@interface AnimatedParticles : ParticleDemoBatch
+{}
+@end
 

@@ -1536,6 +1536,8 @@
 		6513D8941444B78F00917359 /* r1.png in Resources */ = {isa = PBXBuildFile; fileRef = 500165990E72DB0E0085673F /* r1.png */; };
 		6513D8951444B78F00917359 /* r2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659A0E72DB0E0085673F /* r2.png */; };
 		654094D314E9856000FC93EA /* animations in Resources */ = {isa = PBXBuildFile; fileRef = 502C8C9810A701D300D137BA /* animations */; };
+		6540963B14E9E7D000FC93EA /* animations in Resources */ = {isa = PBXBuildFile; fileRef = 502C8C9810A701D300D137BA /* animations */; };
+		6540963C14E9E7D300FC93EA /* animations in Resources */ = {isa = PBXBuildFile; fileRef = 502C8C9810A701D300D137BA /* animations */; };
 		6F305B5F0FB9D2790052E700 /* TransformUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 6F305B5D0FB9D2790052E700 /* TransformUtils.h */; };
 		6F305B600FB9D2790052E700 /* TransformUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F305B5E0FB9D2790052E700 /* TransformUtils.m */; };
 		8E3FC8920F7B8BE900B3E5DE /* trance-loop.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 8E3FC8910F7B8BE900B3E5DE /* trance-loop.ogg */; };
@@ -11223,6 +11225,7 @@
 				A0B036C513EA101F0073E59A /* f2-ipad.png in Resources */,
 				A0B036FA13EA10200073E59A /* r1-ipad.png in Resources */,
 				A0B0372F13EA10210073E59A /* r2-ipad.png in Resources */,
+				6540963B14E9E7D000FC93EA /* animations in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11461,6 +11464,7 @@
 				A094A9B314436D9A0055E239 /* f2-ipad.png in Resources */,
 				A094A9B414436D9A0055E239 /* r1-ipad.png in Resources */,
 				A094A9B514436D9A0055E239 /* r2-ipad.png in Resources */,
+				6540963C14E9E7D300FC93EA /* animations in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

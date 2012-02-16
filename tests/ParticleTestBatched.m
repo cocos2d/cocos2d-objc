@@ -58,7 +58,8 @@ static NSString *transitions[] = {
 	@"MultipleParticleSystems",
 	@"MultipleParticleSystemsBatched",	
 	@"AddAndDeleteParticleSystems",
-	@"ReorderParticleSystems"
+	@"ReorderParticleSystems",
+	@"AnimatedParticles"
 	
 };
 
@@ -1975,6 +1976,80 @@ Class restartAction()
 -(NSString*) subtitle
 {
 	return @"changes every 2 seconds";
+}
+@end
+
+@implementation AnimatedParticles
+-(void) onEnter
+{
+	[super onEnter];
+	
+	[self setColor:ccBLACK];
+	[self removeChild:background cleanup:YES];
+	background = nil;
+	
+	CGRect rect = CGRectMake(0.f,0.f,0.f,0.f);
+	batchNode_ = [CCParticleBatchNode  particleBatchNodeWithFile:@"animations/animated_particles.png" capacity:4 useQuad:YES additiveBlending:NO];
+	
+	[self addChild:batchNode_ z:1 tag:2];
+	
+	
+	CCSpriteFrameCache* sfc = [CCSpriteFrameCache sharedSpriteFrameCache];
+	[sfc addSpriteFramesWithFile:@"animations/animated_particles.plist"];
+	
+	CCAnimation* anim2 = [CCAnimation animation];
+	
+	[anim2 addFrame:[sfc spriteFrameByName:@"coco_1.png"] delay:0.5f];
+	[anim2 addFrame:[sfc spriteFrameByName:@"coco_2.png"] delay:0.5f];
+	[anim2 addFrame:[sfc spriteFrameByName:@"coco_3.png"] delay:0.5f];
+	[anim2 addFrame:[sfc spriteFrameByName:@"coco_4.png"] delay:0.5f];
+	[anim2 addFrame:[sfc spriteFrameByName:@"coco_5.png"] delay:0.5f];
+	[anim2 addFrame:[sfc spriteFrameByName:@"coco_4.png"] delay:0.5f];
+	[anim2 addFrame:[sfc spriteFrameByName:@"coco_3.png"] delay:0.5f];
+	[anim2 addFrame:[sfc spriteFrameByName:@"coco_2.png"] delay:0.5f];
+	
+	//new properties in plist define startScale, startScaleVar, endScale, endScaleVar
+	for (int i = 0; i < 4; i++)
+	{
+		CCParticleSystemQuad *system = [CCParticleSystemQuad particleWithFile:@"Particles/OneParticle.plist" batchNode:batchNode_ rect:rect];
+		system.emissionRate = 1.f;
+		[system setPosition:ccp(30+i*60,200)];
+		[system setAnimation:anim2 withAnchorPoint:ccp(0.5f,0.0f)];
+		[system setAnimationType:i]; 
+		
+		[batchNode_ addChild: system z:10];
+		
+	}	
+}
+
+
+
+-(NSString *) title
+{
+	return @"AnimatedParticles";
+}
+
+-(NSString*) subtitle
+{
+	return @"4 modes";
+}
+
+-(void) update:(ccTime) dt
+{
+	CCLabelAtlas *atlas = (CCLabelAtlas*) [self getChildByTag:kTagLabelAtlas];
+	
+	uint count = 0; 
+	CCNode* item;
+	CCNode* batchNode = [self getChildByTag:2];
+	CCARRAY_FOREACH(batchNode.children, item)
+	{
+		if ([item isKindOfClass:[CCParticleSystem class]])
+		{
+			count += [(CCParticleSystem*) item particleCount];	
+		}
+	}
+	NSString *str = [NSString stringWithFormat:@"%4d", count];
+	[atlas setString:str];
 }
 @end
 

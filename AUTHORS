@@ -42,11 +42,15 @@ Contributors (alphabetically ordered):
 	Actions: Instant actions can be sequenceables
 	Actions: duration is not divided by zero
 	Actions: Repeat & RepeatForever work as expected
+	Co-author of animated particle system
 	Author of ParticleBatchNode node
 	Improved ESRenderer layoutSubview
 	Improved Debug Drawing for Sprite batched node	
 	EAGLView destroys and recreates all OpenGL buffers correctly
 	TileMap: flipped tiles can be changed during runtime
+
+* Martin 
+  Co-author of animated particle system
 
 * podhrask...@gmail.com
 	TouchDispatcher: correctly handles addition and removal of handlers when being inside a touch handler. patch

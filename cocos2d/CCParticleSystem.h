@@ -37,6 +37,22 @@
 #endif
 
 //* @enum
+
+/** @typedef tCCParticleAnimationType
+ possible types of particle animations
+ */
+typedef enum { 
+	/** New particles play the animation in a loop. */
+	kCCParticleAnimationTypeLoop = 0,
+	/** New particles play the animation in a loop with a random starting frame. */
+	kCCParticleAnimationTypeLoopWithRandomStartFrame,
+	/** New particles play the animation once. */
+	kCCParticleAnimationTypeOnce,
+	/** New particles choose a single random frame from the animation. */
+	kCCParticleAnimationTypeRandomFrame
+	
+} tCCParticleAnimationType;
+
 enum {
 	/** The Particle emitter lives forever */
 	kCCParticleDurationInfinity = -1,
@@ -121,6 +137,11 @@ typedef struct sCCParticle {
 			float		deltaRadius;
 		} B;
 	} mode;
+	
+	// animation 
+	ccTime		elapsed;
+	ccTime		split;
+	NSUInteger  currentFrame;
 
 }tCCParticle;
 
@@ -242,6 +263,11 @@ typedef void (*CC_UPDATE_PARTICLE_IMP)(id, SEL, tCCParticle*, CGPoint);
 	// end size of variance
 	float endSizeVar;
 	
+	float startScale;
+	float startScaleVar;
+	float endScale;
+	float endScaleVar;
+	
 	// How many seconds will the particle live
 	float life;
 	// Life variance
@@ -301,6 +327,15 @@ typedef void (*CC_UPDATE_PARTICLE_IMP)(id, SEL, tCCParticle*, CGPoint);
 	NSUInteger atlasIndex_; 
 	//YES if scaled or rotated
 	BOOL transformSystemDirty_;
+	
+	// animation
+	BOOL				useAnimation_;
+	NSUInteger			totalFrameCount_;
+	
+	//contains offset positions for vertex and precalculated texture coordinates
+	ccAnimationFrameData	*animationFrameData_;
+	tCCParticleAnimationType animationType_; 
+	
 	
 // profiling
 #if CC_ENABLE_PROFILERS
@@ -363,6 +398,22 @@ typedef void (*CC_UPDATE_PARTICLE_IMP)(id, SEL, tCCParticle*, CGPoint);
 @property (nonatomic,readwrite,assign) float endSize;
 /** end size variance in pixels of each particle */
 @property (nonatomic,readwrite,assign) float endSizeVar;
+/** start scale in pixels of each particle. Only used by animation
+ @since 1.1
+ */
+@property (nonatomic,readwrite,assign) float startScale;
+/** scale variance in pixels of each particle. Only used by animation 
+ @since 1.1
+ */
+@property (nonatomic,readwrite,assign) float startScaleVar;
+/** end scale in pixels of each particle. Only used by animation 
+ @since 1.1
+ */
+@property (nonatomic,readwrite,assign) float endScale;
+/** end scale variance in pixels of each particle. Only used by animation 
+ @since 1.1
+ */
+@property (nonatomic,readwrite,assign) float endScaleVar;
 /** start color of each particle */
 @property (nonatomic,readwrite,assign) ccColor4F startColor;
 /** start color variance of each particle */
@@ -409,11 +460,19 @@ typedef void (*CC_UPDATE_PARTICLE_IMP)(id, SEL, tCCParticle*, CGPoint);
    - kCCParticleModeRadius: uses radius movement + rotation
  */
 @property (nonatomic,readwrite) NSInteger emitterMode;
-
+/** Index of first particle in texture atlas of batch node 
+ @since 1.1
+ */
 @property (nonatomic,readwrite) NSUInteger atlasIndex;
-
+/** YES if a particle batchnode is used for rendering, NO for self rendering
+ @since 1.1
+ */
 @property (nonatomic,readonly) BOOL useBatchNode; 
 
+/** animation type, once, loop from beginning, random frame, or loop with random start frame
+ @since 1.1
+ */
+@property (nonatomic,readwrite) tCCParticleAnimationType animationType;
 /** creates an initializes a CCParticleSystem from a plist file.
  This plist files can be creted manually or with Particle Designer:
 	http://particledesigner.71squared.com/
