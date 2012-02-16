@@ -299,3 +299,26 @@ typedef enum
 //! if you want more resolution redefine it as a double
 typedef float ccTime;
 //typedef double ccTime;
+
+// types for animation in particle systems
+
+// texture coordinates for a quad
+typedef struct _ccT2F_Quad
+{
+	//! bottom left
+	ccTex2F	bl;
+	//! bottom right
+	ccTex2F	br;
+	//! top left
+	ccTex2F	tl;
+	//! top right
+	ccTex2F	tr;
+} ccT2F_Quad;
+
+// struct that holds the size in pixels, texture coordinates and delays for animated CCParticleSystemQuad
+typedef struct
+{
+	ccT2F_Quad texCoords;
+	ccTime delay;
+	CGSize size; 
+} ccAnimationFrameData;

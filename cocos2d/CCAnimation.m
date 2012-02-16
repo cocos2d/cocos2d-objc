@@ -166,6 +166,22 @@
 	totalDelayUnits_++;
 }
 
+-(void) addFrame:(CCSpriteFrame*)frame delay:(float) delay
+{
+	if ([frames_ count] == 0)
+	{
+		delayPerUnit_ = delay; 	
+	}
+	
+	float delayUnits = delay / delayPerUnit_;
+	totalDelayUnits_+= delayUnits;  
+	duration_ += delay; 
+	
+	CCAnimationFrame *animFrame = [[CCAnimationFrame alloc] initWithSpriteFrame:frame delayUnits:delayUnits userInfo:nil];
+	[frames_ addObject:animFrame];
+	[animFrame release];
+}
+
 -(void) addFrameWithFilename:(NSString*)filename
 {
 	CCTexture2D *texture = [[CCTextureCache sharedTextureCache] addImage:filename];

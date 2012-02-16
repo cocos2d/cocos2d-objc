@@ -31,6 +31,7 @@
 #import "ccConfig.h"
 
 @class CCSpriteFrame;
+@class CCAnimation;
 
 /** CCParticleSystemQuad is a subclass of CCParticleSystem
 
@@ -55,9 +56,16 @@
 #if CC_USES_VBO
 	GLuint				quadsID_;		// VBO id
 #endif
+	
+	CGPoint particleAnchorPoint_;
+	CCAnimation			*animation_;
 }
 
 @property (nonatomic, readwrite) ccV3F_C4B_T2F_Quad* quads;
+/** animation that holds the sprite frames 
+ @since 1.1
+ */
+@property (nonatomic, retain) CCAnimation* animation;
 
 /** create system with properties from plist, batchnode and rect on the sprite sheet 
    use nil for batchNode to not use batch rendering 
@@ -86,5 +94,15 @@
  @since v0.99.4
  */
 -(void) setTexture:(CCTexture2D *)texture withRect:(CGRect)rect;
+
+/** sets a animation that will be used for each particle, default particle anchorpoint of (0.5,0.5)
+ @since 1.1
+ */
+-(void) setAnimation:(CCAnimation*) anim;
+/** sets a animation that will be used for each particle, and the anchor point for each particle
+	Note, offsets of sprite frames are not used
+ @since 1.1
+ */
+-(void) setAnimation:(CCAnimation*) anim withAnchorPoint:(CGPoint) particleAP;
 
 @end
