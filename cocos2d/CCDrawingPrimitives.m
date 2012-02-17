@@ -178,6 +178,22 @@ void ccDrawPoly( const CGPoint *poli, NSUInteger numberOfPoints, BOOL closePolyg
 	CC_INCREMENT_GL_DRAWS(1);
 }
 
+void ccDrawFilledPoly( const CGPoint *poli, NSUInteger numberOfPoints, ccColor4F color)
+{
+	lazy_init();
+    
+	ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position );
+	ccGLUseProgram(shader_->program_ );
+	ccGLUniformModelViewProjectionMatrix( shader_ );
+    
+	glUniform4f( colorLocation_, color.r, color.g, color.b, color.a );
+    
+	glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, poli);
+    
+	glDrawArrays(GL_TRIANGLE_FAN, 0, (GLsizei) numberOfPoints);
+}
+
+
 void ccDrawCircle( CGPoint center, float r, float a, NSUInteger segs, BOOL drawLineToCenter)
 {
 	lazy_init();
