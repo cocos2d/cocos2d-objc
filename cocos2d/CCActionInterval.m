@@ -1381,3 +1381,47 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 }
 
 @end
+
+@implementation CCTargetedAction
+
+@synthesize forcedTarget = forcedTarget_;
+
++ (id) actionWithTarget:(id) target action:(CCFiniteTimeAction*) action
+{
+	return [[ (CCTargetedAction*)[self alloc] initWithTarget:target action:action] autorelease];
+}
+
+- (id) initWithTarget:(id) targetIn action:(CCFiniteTimeAction*) actionIn
+{
+	if((self = [super initWithDuration:actionIn.duration]))
+	{
+		forcedTarget_ = [targetIn retain];
+		action_ = [actionIn retain];
+	}
+	return self;
+}
+
+- (void) dealloc
+{
+	[forcedTarget_ release];
+	[action_ release];
+	[super dealloc];
+}
+
+- (void) startWithTarget:(id)aTarget
+{
+	[super startWithTarget:forcedTarget_];
+	[action_ startWithTarget:forcedTarget_];
+}
+
+- (void) stop
+{
+	[action_ stop];
+}
+
+- (void) update:(ccTime) time
+{
+	[action_ update:time];
+}
+
+@end
