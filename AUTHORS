@@ -18,6 +18,9 @@ Lead Developers:
 
 Contributors (alphabetically ordered):
 
+* akotiranta 
+	backported CCLabelBMFont implementation from 2.0 branch
+
 * Alexander Carter
 	Sprite: fixed possible opacity bug in setColor
 
