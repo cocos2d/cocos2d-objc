@@ -547,12 +547,15 @@
 {
 	if( active && emissionRate ) {
 		float rate = 1.0f / emissionRate;
-		emitCounter += dt;
+		
+		//issue #1201, prevent bursts of particles, due to too high emitCounter
+		if (particleCount < totalParticles) emitCounter += dt; 
+		
 		while( particleCount < totalParticles && emitCounter > rate ) {
 			[self addParticle];
 			emitCounter -= rate;
 		}
-		
+		CCLOG(@"emitCounter %f",emitCounter);
 		elapsed += dt;
 		if(duration != -1 && duration < elapsed)
 			[self stopSystem];
