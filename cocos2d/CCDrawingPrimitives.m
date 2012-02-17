@@ -178,7 +178,7 @@ void ccDrawPoly( const CGPoint *poli, NSUInteger numberOfPoints, BOOL closePolyg
 	CC_INCREMENT_GL_DRAWS(1);
 }
 
-void ccDrawFilledPoly( const CGPoint *poli, NSUInteger numberOfPoints, ccColor4F color)
+void ccDrawFilledPoly( const CGPoint *poli, NSUInteger numberOfPoints, ccColor4B color )
 {
 	lazy_init();
     
@@ -186,9 +186,23 @@ void ccDrawFilledPoly( const CGPoint *poli, NSUInteger numberOfPoints, ccColor4F
 	ccGLUseProgram(shader_->program_ );
 	ccGLUniformModelViewProjectionMatrix( shader_ );
     
-	glUniform4f( colorLocation_, color.r, color.g, color.b, color.a );
-    
-	glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, poli);
+	glUniform4f( colorLocation_, color.r/255.0f, color.g/255.0f, color.b/255.0f, color.a/255.0f );
+	
+	// XXX: Mac OpenGL error. arrays can't go out of scope before draw is executed
+	ccVertex2F newPoli[numberOfPoints];
+
+	// iPhone and 32-bit machines optimization
+	if( sizeof(CGPoint) == sizeof(ccVertex2F) )
+		glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, poli);
+	
+	else
+    {
+		// Mac on 64-bit
+		for( NSUInteger i=0; i<numberOfPoints;i++)
+			newPoli[i] = (ccVertex2F) { poli[i].x, poli[i].y };
+		
+		glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, newPoli);
+	}    
     
 	glDrawArrays(GL_TRIANGLE_FAN, 0, (GLsizei) numberOfPoints);
 }
