@@ -36,6 +36,9 @@ Contributors (alphabetically ordered):
 * John Wordsworth ( http://www.johnwordsworth.com/ )
 	CCAnimationCache: Added animation data format. Can be loaded into the animation cache
 
+* Karl Stenerud (http://www.mindsnacks.com/):
+	Author of ActionTargeted
+
 * Marco Tillemans (AKA araker: http://www.welcometothefabrik.com/)
 	Texture2D: drawInRect / drawAtPoint disables color state
 	SpriteBatchNode: fixed bug in removeAllChildrenWithCleanup
