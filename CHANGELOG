@@ -13,6 +13,7 @@ version 1.1-beta2 xx - 2011
 . [FIX] MenuItem: removed warning when deleting item
 . [FIX] Node: orderOfArrival is @synthezied correctly (issue #1273)
 . [FIX] Node & Sprite: Scale before Skew to prevent issues with negatives scales.
+. [FIX] ParticleSystem: prevent bursts of particles due to too high emitCounter (issue #1201)
 . [FIX] ParticleBatchNode: removeChild error and 'freezing' particles (issue #1316)
 . [FIX] ParticleBatchNode: memoryleak (issue #1306)
 . [FIX] Sprite: fixed possible setColor and opacity
