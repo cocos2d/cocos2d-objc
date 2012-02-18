@@ -90,10 +90,13 @@ cocos2d for iPhone authors for v1.1
 
 Lead Developers:
 	Marco Tillemans (http://www.welcometothefabrik.com/)
-	Ricardo Quesada (http://www.cocos2d-iphone.org/)
+	Ricardo Quesada (http://www.cocos2d-iphone.org)
 
 
 Contributors (alphabetically ordered):
+
+* akotiranta 
+	backported CCLabelBMFont implementation from 2.0 branch
 
 * Alexander Carter
 	Sprite: fixed possible opacity bug in setColor
@@ -110,6 +113,9 @@ Contributors (alphabetically ordered):
 * John Wordsworth ( http://www.johnwordsworth.com/ )
 	CCAnimationCache: Added animation data format. Can be loaded into the animation cache
 
+* Karl Stenerud (http://www.mindsnacks.com/):
+	Author of ActionTargeted
+
 * Marco Tillemans (AKA araker: http://www.welcometothefabrik.com/)
 	Texture2D: drawInRect / drawAtPoint disables color state
 	SpriteBatchNode: fixed bug in removeAllChildrenWithCleanup
@@ -119,11 +125,18 @@ Contributors (alphabetically ordered):
 	Actions: Instant actions can be sequenceables
 	Actions: duration is not divided by zero
 	Actions: Repeat & RepeatForever work as expected
+	Co-author of animated particle system
 	Author of ParticleBatchNode node
 	Improved ESRenderer layoutSubview
 	Improved Debug Drawing for Sprite batched node	
 	EAGLView destroys and recreates all OpenGL buffers correctly
 	TileMap: flipped tiles can be changed during runtime
+
+* Martin 
+	Co-author of animated particle system
+
+* Nicky Weber (https://github.com/nickyEnjoysWoogoo):
+	Added convenience function to create a ccColor4F from color components	
 
 * podhrask...@gmail.com
 	TouchDispatcher: correctly handles addition and removal of handlers when being inside a touch handler. patch
