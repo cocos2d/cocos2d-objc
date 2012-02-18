@@ -1,4 +1,4 @@
-version 1.1-beta2 xx - 2011
+version 1.1-beta2 xx - 2012
 . [NEW] v2.0 forward ported changes:
 			LabelBMFont: added setFntFile method
 			Animation: Added new animation format that supports delays per frame and notifications per frame
@@ -8,6 +8,7 @@ version 1.1-beta2 xx - 2011
 . [NEW] ParticleSystem: supports animations in new animation format 
 . [NEW] TileMap: supports in-memory TMX map creation (issue #1239)
 . [NEW] TileMap: Flipped tiles can be changed during runtime (issue #1264)
+. [NEW] Types: Added convenience function to create a ccColor4F from color components
 . [FIX] ColorLayer: incorrect size in init method
 . [FIX] Denshion: Background music fades ok (issue #1304)
 . [FIX] EAGLView: always destroy and recreate OpenGL buffers completely (issue #1254) 
