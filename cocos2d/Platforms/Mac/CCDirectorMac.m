@@ -39,7 +39,7 @@
 #import "../../CCScheduler.h"
 #import "../../ccMacros.h"
 #import "../../CCGLProgram.h"
-#import "../../ccGLState.h"
+#import "../../ccGLStateCache.h"
 
 // external
 #import "kazmath/kazmath.h"

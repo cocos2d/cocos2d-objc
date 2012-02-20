@@ -43,7 +43,7 @@
 #import "CCTexture2D.h"
 #import "CCLabelBMFont.h"
 #import "CCLayer.h"
-#import "ccGLState.h"
+#import "ccGLStateCache.h"
 #import "CCShaderCache.h"
 
 // support imports

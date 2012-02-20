@@ -24,7 +24,7 @@
 
 #import "ccConfig.h"
 
-#if CC_BACKWARD_COMPATIBILITY
+#if CC_ENABLE_DEPRECATED
 
 #import "ccMacros.h"
 #import "CCMenu.h"
@@ -38,8 +38,13 @@
 #import "Platforms/iOS/CCDirectorIOS.h"
 
 // Renamed constants
-#define kCCResolutionStandard	kCCResolutioniPhone
-#define kCCMenuTouchPriority	kCCMenuHandlerPriority
+enum {
+	kCCResolutionStandard DEPRECATED_ATTRIBUTE	= kCCResolutioniPhone,
+	kCCMenuTouchPriority DEPRECATED_ATTRIBUTE	= kCCMenuHandlerPriority,
+};
+
+// Free functions
+void ccGLUniformModelViewProjectionMatrix(CCGLProgram* program) DEPRECATED_ATTRIBUTE;
 
 // Renamed classes
 DEPRECATED_ATTRIBUTE @interface EAGLView : CCGLView
@@ -52,37 +57,37 @@ DEPRECATED_ATTRIBUTE @interface MacView : CCGLView
 #define GLProgram CCGLProgram
 
 // Extensions
-@interface CCScheduler (Compatibility)
+@interface CCScheduler (Deprecated)
 +(CCScheduler*) sharedScheduler DEPRECATED_ATTRIBUTE;
 @end
 
-@interface CCActionManager (Compatibility)
+@interface CCActionManager (Deprecated)
 +(CCActionManager*) sharedManager DEPRECATED_ATTRIBUTE;
 @end
 
 #if __CC_PLATFORM_IOS
-@interface CCTouchDispatcher (Compatibility)
+@interface CCTouchDispatcher (Deprecated)
 +(CCTouchDispatcher*) sharedDispatcher DEPRECATED_ATTRIBUTE;
 @end
 #elif __CC_PLATFORM_MAC
-@interface CCEventDispatcher (Compatibility)
+@interface CCEventDispatcher (Deprecated)
 +(CCEventDispatcher*) sharedDispatcher DEPRECATED_ATTRIBUTE;
 @end
 #endif // __CC_PLATFORM_MAC
 
-@interface CCDirector (Compatibility)
+@interface CCDirector (Deprecated)
 -(void) setOpenGLView:(CCGLView*)view DEPRECATED_ATTRIBUTE;
 -(CCGLView*) openGLView DEPRECATED_ATTRIBUTE;
 -(void) setDisplayFPS:(BOOL)display DEPRECATED_ATTRIBUTE;
 @end
 
 
-@interface CCSprite (Compatibility)
+@interface CCSprite (Deprecated)
 +(id) spriteWithBatchNode:(CCSpriteBatchNode*)node rect:(CGRect)rect DEPRECATED_ATTRIBUTE;
 -(id) initWithBatchNode:(CCSpriteBatchNode*)node rect:(CGRect)rect DEPRECATED_ATTRIBUTE;
 @end
 
-@interface CCMenuItemSprite (Compatibility)
+@interface CCMenuItemSprite (Deprecated)
 +(id) itemFromNormalSprite:(CCNode<CCRGBAProtocol>*)normalSprite selectedSprite:(CCNode<CCRGBAProtocol>*)selectedSprite DEPRECATED_ATTRIBUTE;
 +(id) itemFromNormalSprite:(CCNode<CCRGBAProtocol>*)normalSprite selectedSprite:(CCNode<CCRGBAProtocol>*)selectedSprite target:(id)target selector:(SEL)selector DEPRECATED_ATTRIBUTE;
 +(id) itemFromNormalSprite:(CCNode<CCRGBAProtocol>*)normalSprite selectedSprite:(CCNode<CCRGBAProtocol>*)selectedSprite disabledSprite:(CCNode<CCRGBAProtocol>*)disabledSprite target:(id)target selector:(SEL)selector DEPRECATED_ATTRIBUTE;
@@ -93,7 +98,7 @@ DEPRECATED_ATTRIBUTE @interface MacView : CCGLView
 -(id) initFromNormalSprite:(CCNode<CCRGBAProtocol>*)normalSprite selectedSprite:(CCNode<CCRGBAProtocol>*)selectedSprite disabledSprite:(CCNode<CCRGBAProtocol>*)disabledSprite block:(void(^)(id sender))block DEPRECATED_ATTRIBUTE;
 @end
 
-@interface CCMenuItemImage (Compatibility)
+@interface CCMenuItemImage (Deprecated)
 +(id) itemFromNormalImage: (NSString*)value selectedImage:(NSString*) value2 DEPRECATED_ATTRIBUTE;
 +(id) itemFromNormalImage: (NSString*)value selectedImage:(NSString*) value2 target:(id) r selector:(SEL) s DEPRECATED_ATTRIBUTE;
 +(id) itemFromNormalImage: (NSString*)value selectedImage:(NSString*) value2 disabledImage:(NSString*) value3 target:(id) r selector:(SEL) s DEPRECATED_ATTRIBUTE;
@@ -104,5 +109,5 @@ DEPRECATED_ATTRIBUTE @interface MacView : CCGLView
 @end
 
 
-#endif // CC_BACKWARD_COMPATIBILITY
+#endif // CC_ENABLE_DEPRECATED
 

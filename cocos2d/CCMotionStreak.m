@@ -25,7 +25,7 @@
 
 #import "CCMotionStreak.h"
 #import "CCTextureCache.h"
-#import "ccGLState.h"
+#import "ccGLStateCache.h"
 #import "CCGLProgram.h"
 #import "CCShaderCache.h"
 #import "ccMacros.h"

@@ -40,7 +40,7 @@
 #import "CCSpriteFrame.h"
 #import "CCDirector.h"
 #import "CCShaderCache.h"
-#import "ccGLState.h"
+#import "ccGLStateCache.h"
 #import "CCGLProgram.h"
 
 // support

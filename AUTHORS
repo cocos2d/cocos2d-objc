@@ -38,6 +38,9 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 * Giles Hammond:
 	iOS Director uses DisplayLink timestamp for more stable delta times
 
+* Goffredo Marocchi (https://github.com/panajev):
+	Original author/mentor of caching uniforms in CCGLProgram
+	
 * Lam Pham (http://www.fancyratstudios.com/)
 	CCProgressTimer: Improved API
 	CCProgressTimer: Works with Tint and opacity

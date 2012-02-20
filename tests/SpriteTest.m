@@ -1189,7 +1189,7 @@ Class restartAction()
 
 		// set alpha test value
 		// NOTE: alpha test shader is hard-coded to use the equivalent of a glAlphaFunc(GL_GREATER) comparison
-		glUniform1f(alphaValueLocation, 0.0f);
+		[shaderProgram_ setUniformLocation:alphaValueLocation withf1:0.0f];
 
 		dir = 1;
 		time = 0;
@@ -1267,7 +1267,8 @@ Class restartAction()
 
 		// set alpha test value
 		// NOTE: alpha test shader is hard-coded to use the equivalent of a glAlphaFunc(GL_GREATER) comparison
-		glUniform1f(alphaValueLocation, 0.0f);
+		[shaderProgram_ setUniformLocation:alphaValueLocation withf1:0.0f];
+
 
 		CGSize s = [[CCDirector sharedDirector] winSize];
 		float step = s.width/12;

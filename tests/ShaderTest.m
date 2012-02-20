@@ -206,9 +206,13 @@ enum {
 	//
 	// Uniforms
 	//
-	glUniform2fv( uniformCenter, 1, (GLfloat*)&center_ );
-	glUniform2fv( uniformResolution, 1, (GLfloat*)&resolution_ );
+	[shaderProgram_ setUniformLocation:uniformCenter withf1:center_.x f2:center_.y];
+	[shaderProgram_ setUniformLocation:uniformResolution withf1:resolution_.x f2:resolution_.y];
+
+	// time changes all the time, so it is Ok to call OpenGL directly, and not the "cached" version
 	glUniform1f( uniformTime, time_ );
+//	[shaderProgram_ setUniformLocation:uniformTime with1f:time_];
+
 
 	ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position );
 
@@ -405,7 +409,7 @@ enum {
 @interface SpriteBlur : CCSprite
 {
 	CGPoint blur_;
-	CGFloat	sub_[4];
+	GLfloat	sub_[4];
 
 	GLuint	blurLocation;
 	GLuint	subLocation;
@@ -459,11 +463,10 @@ enum {
 	ccGLEnableVertexAttribs(kCCVertexAttribFlag_PosColorTex );
 	ccGLBlendFunc( blendFunc_.src, blendFunc_.dst );
 
-	ccGLUseProgram( shaderProgram_->program_ );
-	ccGLUniformModelViewProjectionMatrix( shaderProgram_ );
-
-	glUniform2f( blurLocation, blur_.x, blur_.y );
-	glUniform4f( subLocation, sub_[0], sub_[1], sub_[2], sub_[3] );
+	[shaderProgram_ use];
+	[shaderProgram_ setUniformForModelViewProjectionMatrix];
+	[shaderProgram_ setUniformLocation:blurLocation withf1:blur_.x f2:blur_.y];
+	[shaderProgram_ setUniformLocation:subLocation with4fv:sub_ count:1];
 
 	ccGLBindTexture2D(  [texture_ name] );
 

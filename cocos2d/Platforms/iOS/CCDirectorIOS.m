@@ -41,7 +41,7 @@
 #import "../../ccMacros.h"
 #import "../../CCScene.h"
 #import "../../CCGLProgram.h"
-#import "../../ccGLState.h"
+#import "../../ccGLStateCache.h"
 #import "../../CCLayer.h"
 
 // support imports

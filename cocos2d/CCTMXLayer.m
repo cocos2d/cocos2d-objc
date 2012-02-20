@@ -249,7 +249,7 @@ int compareInts (const void * a, const void * b);
 			GLint alphaValueLocation = glGetUniformLocation(self.shaderProgram->program_, kCCUniformAlphaTestValue);
 
 			// NOTE: alpha test shader is hard-coded to use the equivalent of a glAlphaFunc(GL_GREATER) comparison
-			glUniform1f(alphaValueLocation, alphaFuncValue);
+			[self.shaderProgram setUniformLocation:alphaValueLocation withf1:alphaFuncValue];
 		}
 		else
 			vertexZvalue_ = [vertexz intValue];
