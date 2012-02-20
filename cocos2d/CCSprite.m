@@ -34,7 +34,7 @@
 #import "CCTextureCache.h"
 #import "CCDrawingPrimitives.h"
 #import "CCShaderCache.h"
-#import "ccGLState.h"
+#import "ccGLStateCache.h"
 #import "CCGLProgram.h"
 #import "CCDirector.h"
 #import "Support/CGPointExtension.h"

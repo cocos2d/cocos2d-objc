@@ -29,7 +29,7 @@
 #import "ccTypes.h"
 #import "CCProtocols.h"
 #import "ccConfig.h"
-#import "ccGLState.h"
+#import "ccGLStateCache.h"
 #import "Support/CCArray.h"
 #import "kazmath/kazmath.h"
 

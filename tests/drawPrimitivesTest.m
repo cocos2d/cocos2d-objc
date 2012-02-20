@@ -206,7 +206,7 @@ Class restartAction()
 	// filled poly
 	glLineWidth(1);
 	CGPoint filledVertices[] = { ccp(0,120), ccp(50,120), ccp(50,170), ccp(25,200), ccp(0,170) };
-	ccDrawFilledPoly(filledVertices, 5, ccc4(128,255,128,255) );
+	ccDrawFilledPoly(filledVertices, 5, ccc4f(0.5f, 0.5f, 1, 1 ) );
 
 
 	// closed purble poly

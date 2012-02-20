@@ -30,7 +30,7 @@
 #import "CCTexture2D.h"
 #import "CCTextureCache.h"
 #import "CCGLProgram.h"
-#import "ccGLState.h"
+#import "ccGLStateCache.h"
 #import "Support/OpenGL_Internal.h"
 
 @interface CCTextureAtlas ()

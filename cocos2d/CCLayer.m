@@ -34,7 +34,7 @@
 #import "ccMacros.h"
 #import "CCShaderCache.h"
 #import "CCGLProgram.h"
-#import "ccGLState.h"
+#import "ccGLStateCache.h"
 #import "Support/TransformUtils.h"
 #import "Support/CGPointExtension.h"
 

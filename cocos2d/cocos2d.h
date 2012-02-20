@@ -113,7 +113,7 @@
 
 // Shaders
 #import "CCGLProgram.h"
-#import "ccGLState.h"
+#import "ccGLStateCache.h"
 #import "CCShaderCache.h"
 
 //
@@ -123,9 +123,9 @@
 #import "ccMacros.h"
 
 //
-// Compatibility with v1.0
+// Deprecated methods/classes/functions since v1.0
 //
-#import "ccBackwardCompatibility.h"
+#import "ccDeprecated.h"
 
 // Platform common
 #import "Platforms/CCGL.h"

@@ -22,20 +22,26 @@
  * THE SOFTWARE.
  */
 
-#import "ccBackwardCompatibility.h"
+#import "ccDeprecated.h"
 
-#if CC_BACKWARD_COMPATIBILITY
+#if CC_ENABLE_DEPRECATED
 
 #import "CCSpriteBatchNode.h"
 
-@implementation CCScheduler (Compatibility)
+// Free functions
+void ccGLUniformModelViewProjectionMatrix( CCGLProgram* program )
+{
+	[program setUniformForModelViewProjectionMatrix];
+}
+
+@implementation CCScheduler (Deprecated)
 +(CCScheduler*) sharedScheduler
 {
 	return [[CCDirector sharedDirector] scheduler];
 }
 @end
 
-@implementation CCActionManager (Compatibility)
+@implementation CCActionManager (Deprecated)
 +(CCActionManager*) sharedManager
 {
 	return [[CCDirector sharedDirector] actionManager];
@@ -43,14 +49,14 @@
 @end
 
 #if __CC_PLATFORM_IOS
-@implementation CCTouchDispatcher (Compatibility)
+@implementation CCTouchDispatcher (Deprecated)
 +(CCTouchDispatcher*) sharedDispatcher
 {
 	return [[CCDirector sharedDirector] touchDispatcher];
 }
 @end
 #elif __CC_PLATFORM_MAC
-@implementation CCEventDispatcher (Compatibility)
+@implementation CCEventDispatcher (Deprecated)
 +(CCEventDispatcher*) sharedDispatcher
 {
 	return [[CCDirector sharedDirector] eventDispatcher];
@@ -60,7 +66,7 @@
 
 #pragma mark - CCDirector
 
-@implementation CCDirector (Compatibility)
+@implementation CCDirector (Deprecated)
 -(void) setDisplayFPS:(BOOL)display
 {
 	[self setDisplayStats:display];
@@ -77,7 +83,7 @@
 }
 @end
 
-@implementation CCSprite (Compatibility)
+@implementation CCSprite (Deprecated)
 
 +(id) spriteWithBatchNode:(CCSpriteBatchNode*)node rect:(CGRect)rect
 {
@@ -88,14 +94,14 @@
 
 -(id) initWithBatchNode:(CCSpriteBatchNode*)node rect:(CGRect)rect
 {
-	[self initWithTexture:node.texture rect:rect];
+	self = [self initWithTexture:node.texture rect:rect];
 	[self setBatchNode:node];
 	return self;
 }
 
 @end
 
-@implementation CCMenuItemSprite (Compatibility)
+@implementation CCMenuItemSprite (Deprecated)
 +(id) itemFromNormalSprite:(CCNode<CCRGBAProtocol>*)normalSprite selectedSprite:(CCNode<CCRGBAProtocol>*)selectedSprite
 {
 	return [self itemWithNormalSprite:normalSprite selectedSprite:selectedSprite];
@@ -127,7 +133,7 @@
 }
 @end
 
-@implementation CCMenuItemImage (Compatibility)
+@implementation CCMenuItemImage (Deprecated)
 +(id) itemFromNormalImage: (NSString*)value selectedImage:(NSString*) value2
 {
 	return [self itemWithNormalImage:value selectedImage:value2];
@@ -169,4 +175,4 @@
 
 #endif // __CC_PLATFORM_MAC
 
-#endif // CC_BACKWARD_COMPATIBILITY
+#endif // CC_ENABLE_DEPRECATED
