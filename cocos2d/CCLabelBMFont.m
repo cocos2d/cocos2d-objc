@@ -463,6 +463,12 @@ typedef struct _KerningHashElement
     return [[[self alloc] initWithString:string fntFile:fntFile width:width alignment:alignment] autorelease];
 }
 
+-(id) init
+{
+#warning This works for CocosBuilder, but a more general solution is needed
+    return [self initWithString:@"" fntFile:@"missing-font.fnt"];
+}
+
 -(id) initWithString:(NSString*)theString fntFile:(NSString*)fntFile
 {
     return [self initWithString:theString fntFile:fntFile width:-1 alignment:CCTextAlignmentLeft];
