@@ -137,6 +137,9 @@ enum {
 {
 	// string to render
 	NSString		*string_;
+    
+    // name of fntFile
+    NSString        *fntFile_;
 
     // initial string without line breaks
     NSString *initialString_;
@@ -162,6 +165,7 @@ enum {
 @property (nonatomic,copy,readonly) NSString *initialString;
 @property (nonatomic,assign,readonly) float width;
 @property (nonatomic,assign,readonly) CCTextAlignment alignment;
+@property (nonatomic,retain) NSString* fntFile;
 
 /** conforms to CCRGBAProtocol protocol */
 @property (nonatomic,readwrite) GLubyte opacity;
@@ -188,8 +192,6 @@ enum {
 /** set label alignment */
 - (void)setAlignment:(CCTextAlignment)alignment;
 
-/** set FNT file */
-- (void) setFntFile:(NSString*)fntFile;
 @end
 
 /** Free function that parses a FNT file a place it on the cache

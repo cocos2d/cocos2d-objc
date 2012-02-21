@@ -475,6 +475,8 @@ typedef struct _KerningHashElement
 
 	configuration_ = FNTConfigLoadFile(fntFile);
 	[configuration_ retain];
+    
+    fntFile_ = [fntFile retain];
 
 	NSAssert( configuration_, @"Error creating config for LabelBMFont");
 
@@ -509,6 +511,7 @@ typedef struct _KerningHashElement
 	[string_ release];
     [initialString_ release], initialString_ = nil;
 	[configuration_ release];
+    [fntFile_ release];
 	[super dealloc];
 }
 
@@ -852,13 +855,21 @@ typedef struct _KerningHashElement
     [self updateLabel];
 }
 
+#pragma mark LabelBMFont - FntFile
 - (void) setFntFile:(NSString*) fntFile
 {
+    [fntFile_ release];
+    fntFile_ = [fntFile retain];
     [configuration_ release];
     configuration_ = FNTConfigLoadFile(fntFile);
     [configuration_ retain];
     [self setTexture:[[CCTextureCache sharedTextureCache] addImage:configuration_->atlasName_]];
     [self createFontChars];
+}
+
+- (NSString*) fntFile
+{
+    return fntFile_;
 }
 
 #pragma mark LabelBMFont - Debug draw
