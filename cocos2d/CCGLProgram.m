@@ -162,9 +162,9 @@ typedef void (*GLLogFunction) (GLuint program,
 
 	uniforms_[kCCUniformSampler] = glGetUniformLocation(program_, kCCUniformSampler_s);
 
-	ccGLUseProgram( program_ );
+	[self use];
 	
-	[self setUniformLocation:uniforms_[kCCUniformSampler] withf1:0];
+	[self setUniformLocation:uniforms_[kCCUniformSampler] withI1:0];
 }
 
 #pragma mark -
@@ -281,15 +281,23 @@ typedef void (*GLLogFunction) (GLuint program,
 	return updated;
 }
 
--(void) setUniformLocation:(NSUInteger)location withf1:(GLfloat)f1
+-(void) setUniformLocation:(NSUInteger)location withI1:(GLint)i1
 {
-	BOOL updated =  [self updateUniformLocation:location withData:&f1 sizeOfData:sizeof(float)*1];
+	BOOL updated =  [self updateUniformLocation:location withData:&i1 sizeOfData:sizeof(i1)*1];
+	
+	if( updated )
+		glUniform1i( (GLint)location, i1);
+}
+
+-(void) setUniformLocation:(NSUInteger)location withF1:(GLfloat)f1
+{
+	BOOL updated =  [self updateUniformLocation:location withData:&f1 sizeOfData:sizeof(f1)*1];
 	
 	if( updated )
 		glUniform1f( (GLint)location, f1);
 }
 
--(void) setUniformLocation:(NSUInteger)location withf1:(GLfloat)f1 f2:(GLfloat)f2
+-(void) setUniformLocation:(NSUInteger)location withF1:(GLfloat)f1 f2:(GLfloat)f2
 {
 	GLfloat floats[2] = {f1,f2};
 	BOOL updated =  [self updateUniformLocation:location withData:floats sizeOfData:sizeof(floats)];
@@ -298,7 +306,7 @@ typedef void (*GLLogFunction) (GLuint program,
 		glUniform2f( (GLint)location, f1, f2);
 }
 
--(void) setUniformLocation:(NSUInteger)location withf1:(GLfloat)f1 f2:(GLfloat)f2 f3:(GLfloat)f3
+-(void) setUniformLocation:(NSUInteger)location withF1:(GLfloat)f1 f2:(GLfloat)f2 f3:(GLfloat)f3
 {
 	GLfloat floats[3] = {f1,f2,f3};
 	BOOL updated =  [self updateUniformLocation:location withData:floats sizeOfData:sizeof(floats)];
@@ -307,7 +315,7 @@ typedef void (*GLLogFunction) (GLuint program,
 		glUniform3f( (GLint)location, f1, f2, f3);
 }
 
--(void) setUniformLocation:(NSUInteger)location withf1:(GLfloat)f1 f2:(GLfloat)f2 f3:(GLfloat)f3 f4:(GLfloat)f4
+-(void) setUniformLocation:(NSUInteger)location withF1:(GLfloat)f1 f2:(GLfloat)f2 f3:(GLfloat)f3 f4:(GLfloat)f4
 {
 	GLfloat floats[4] = {f1,f2,f3,f4};
 	BOOL updated =  [self updateUniformLocation:location withData:floats sizeOfData:sizeof(floats)];
