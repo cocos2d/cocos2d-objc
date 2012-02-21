@@ -63,7 +63,7 @@
 
 -(void) update: (ccTime) t
 {
-	// ignore
+	// nothing
 }
 
 -(CCFiniteTimeAction*) reverse
@@ -78,10 +78,11 @@
 #pragma mark CCShow
 
 @implementation CCShow
--(void) startWithTarget:(id)aTarget
+-(void) stop
 {
-	[super startWithTarget:aTarget];
 	((CCNode *)target_).visible = YES;
+
+	[super stop];
 }
 
 -(CCFiniteTimeAction*) reverse
@@ -96,10 +97,11 @@
 #pragma mark CCHide
 
 @implementation CCHide
--(void) startWithTarget:(id)aTarget
+-(void) stop
 {
-	[super startWithTarget:aTarget];
 	((CCNode *)target_).visible = NO;
+
+	[super stop];
 }
 
 -(CCFiniteTimeAction*) reverse
@@ -114,10 +116,11 @@
 #pragma mark CCToggleVisibility
 
 @implementation CCToggleVisibility
--(void) startWithTarget:(id)aTarget
+-(void) stop
 {
-	[super startWithTarget:aTarget];
 	((CCNode *)target_).visible = !((CCNode *)target_).visible;
+
+	[super stop];
 }
 @end
 
@@ -140,10 +143,11 @@
 	return self;
 }
 
--(void) startWithTarget:(id)aTarget
+-(void) stop
 {
-	[super startWithTarget:aTarget];
-	[(CCSprite*)aTarget setFlipX:flipX];
+	[(CCSprite*)target_ setFlipX:flipX];
+
+	[super stop];
 }
 
 -(CCFiniteTimeAction*) reverse
@@ -177,10 +181,11 @@
 	return self;
 }
 
--(void) startWithTarget:(id)aTarget
+-(void) stop
 {
-	[super startWithTarget:aTarget];
-	[(CCSprite*)aTarget setFlipY:flipY];
+	[(CCSprite*)target_ setFlipY:flipY];
+
+	[super stop];
 }
 
 -(CCFiniteTimeAction*) reverse
@@ -221,10 +226,11 @@
 	return copy;
 }
 
--(void) startWithTarget:(id)aTarget
+-(void) stop
 {
-	[super startWithTarget:aTarget];
 	((CCNode *)target_).position = position;
+
+	[super stop];
 }
 
 @end
@@ -275,10 +281,11 @@
 	return copy;
 }
 
--(void) startWithTarget:(id)aTarget
+-(void) stop
 {
-	[super startWithTarget:aTarget];
 	[self execute];
+
+	[super stop];
 }
 
 -(void) execute
@@ -409,10 +416,11 @@
 	return copy;
 }
 
--(void) startWithTarget:(id)aTarget
+-(void) stop
 {
-	[super startWithTarget:aTarget];
 	[self execute];
+	
+	[super stop];
 }
 
 -(void) execute
@@ -451,10 +459,11 @@
 	return copy;
 }
 
--(void) startWithTarget:(id)aTarget
+-(void) stop
 {
-	[super startWithTarget:aTarget];
 	[self execute];
+	
+	[super stop];
 }
 
 -(void) execute
@@ -497,10 +506,11 @@
 	return copy;
 }
 
--(void) startWithTarget:(id)aTarget
+-(void) stop
 {
-	[super startWithTarget:aTarget];
 	[self execute];
+	
+	[super stop];
 }
 
 -(void) execute
