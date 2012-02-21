@@ -18,6 +18,9 @@ Lead Developers:
 
 Contributors (alphabetically ordered):
 
+* andy
+	fix for incorrect CCRepeat behavior
+	
 * akotiranta 
 	backported CCLabelBMFont implementation from 2.0 branch
 
