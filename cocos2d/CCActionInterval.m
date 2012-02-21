@@ -310,6 +310,12 @@
 			nextDt_ += [innerAction_ duration]/duration_;
 		}
 		
+		//fix for issue #1288, incorrect end value of repeat
+		if(dt == 1.0 && total_ < times_) 
+        {
+            total_++;
+        }
+		
 		//don't set a instantaction back or update it, it has no use because it has no duration
 		if (!isActionInstant_)
 		{
