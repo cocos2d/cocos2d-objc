@@ -41,12 +41,6 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 * Goffredo Marocchi (https://github.com/panajev):
 	Original author/mentor of caching uniforms in CCGLProgram
 	
-* Lam Pham (http://www.fancyratstudios.com/)
-	CCProgressTimer: Improved API
-	CCProgressTimer: Works with Tint and opacity
-	Added Tint + opacity test cases for CCProgressTimer
-	CCProgressTimer: Supports rotates SpriteFrames
-
 * Justin Graham (http://www.zynga.com)
 	CCGLProgram: fixes in fragmentShaderLog
 	CCShaderCache: Added addProgram:forKey: method
@@ -55,12 +49,21 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 * Karl Stenerud (http://www.mindsnacks.com/):
 	Author of ActionTargeted
 
+* Lam Pham (http://www.fancyratstudios.com/)
+	CCProgressTimer: Improved API
+	CCProgressTimer: Works with Tint and opacity
+	Added Tint + opacity test cases for CCProgressTimer
+	CCProgressTimer: Supports rotates SpriteFrames
+
 * manucorporat (manu.valladolid) (http://forzefield.com/):
 	Author of new Retina Display code:
 		Intead of recalculating the position of the nodes, the ViewPort is increased.
 		Code is much simpler to read and maintain
 	Author of new MotionStreak code:
 		Much faster rendering. No need to use Ribbon
+
+* magicyu (AKA crmagicxxx):
+	LabelBMFont y-offset work as expected on RetinaDisplay (patch).
 
 * Mark Wei (http://www.facebook.com/markwei):
 	Added support for alignment in multiline in CCLabelBMFont objects
