@@ -150,4 +150,6 @@
 }
 @end
 
-
+@interface Issue1305_2 : ActionDemo
+{}
+@end

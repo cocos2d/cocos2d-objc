@@ -194,8 +194,9 @@
 
 -(void) stop
 {
-	[actions_[0] stop];
-	[actions_[1] stop];
+	if( last_ != -1 )
+		[actions_[last_] stop];
+
 	[super stop];
 }
 
@@ -204,34 +205,50 @@
 	int found = 0;
 	ccTime new_t = 0.0f;
 
-	if( t >= split_ ) {
-		found = 1;
-		if ( split_ == 1 )
-			new_t = 1;
-		else
-			new_t = (t-split_) / (1 - split_ );
-	} else {
+	// find delta for action
+	if( t < split_ )
+	{
+		// 1st action
 		found = 0;
 		if( split_ != 0 )
 			new_t = t / split_;
 		else
 			new_t = 1;
 	}
+	else
+	{
+		// 2nd action
+		found = 1;
+		if ( split_ == 1 )
+			new_t = 1;
+		else
+			new_t = (t-split_) / (1 - split_ );
+	}
 
-	if (last_ == -1 && found==1)	{
+
+	if (last_ == -1 && found==1)
+	{
+		// action[0] was "skipped", execute it.
 		[actions_[0] startWithTarget:target_];
 		[actions_[0] update:1.0f];
 		[actions_[0] stop];
 	}
 
-	if (last_ != found ) {
-		if( last_ != -1 ) {
-			[actions_[last_] update: 1.0f];
-			[actions_[last_] stop];
-		}
+	// start new action
+	if( last_ != found )
 		[actions_[found] startWithTarget:target_];
-	}
+
+
+	if (last_==0 && found==1)
+	{
+		// Switching to new action
+		[actions_[0] update: 1.0f];
+		[actions_[0] stop];
+	}	
+	
+	// update action
 	[actions_[found] update: new_t];
+
 	last_ = found;
 }
 
