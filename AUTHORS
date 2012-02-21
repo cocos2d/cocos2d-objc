@@ -32,6 +32,9 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	TextureCache: Use blocks instead of CCCall actions to dispatch code
 	TextureCache: Uses a serial queue to protect access to the texture dictionary. No need to use @syncronize on CCTexture2D
 
+* Christoph Winkler:
+	SpriteFrame and Animation compile on 32-bit Mac
+	
 * Dmitry Kudryashov:
 	Director could be re-initialized. Patch.
 
