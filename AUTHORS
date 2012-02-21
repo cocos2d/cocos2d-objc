@@ -38,6 +38,9 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 * Dmitry Kudryashov:
 	Director could be re-initialized. Patch.
 
+* Dusan Lazarevic (AKA crmagicxxx):
+	LabelBMFont y-offset work as expected on RetinaDisplay (patch).
+
 * Giles Hammond:
 	iOS Director uses DisplayLink timestamp for more stable delta times
 
@@ -64,9 +67,6 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Code is much simpler to read and maintain
 	Author of new MotionStreak code:
 		Much faster rendering. No need to use Ribbon
-
-* magicyu (AKA crmagicxxx):
-	LabelBMFont y-offset work as expected on RetinaDisplay (patch).
 
 * Mark Wei (http://www.facebook.com/markwei):
 	Added support for alignment in multiline in CCLabelBMFont objects
@@ -450,7 +450,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		PointParticleSystem doesn't draw if there are no particles patch
 		Actions: cleaner way to start/stop actions patches
 		author of CCPropertyAction
-	* magicyu (crmagicxxx):
+	* Dusan Lazarevic (AKA crmagicxxx):
 		CocosLive client supports ranking request patch
 	* manucorporat (manu.valladolid) (http://forzefield.com/):
 		added isPaused property to Director
