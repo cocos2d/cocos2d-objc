@@ -120,6 +120,49 @@ void ccDrawLine( CGPoint origin, CGPoint destination )
 	glEnable(GL_TEXTURE_2D);		
 }
 
+void ccDrawLines( CGPoint* points, NSUInteger numberOfPoints )
+{
+	//layout of points [0] = origin, [1] = destination and so on
+	
+	ccVertex2F vertices[numberOfPoints];
+	
+	// iPhone and 32-bit machines
+	if( sizeof(CGPoint) == sizeof(ccVertex2F) ) 
+	{
+		if (CC_CONTENT_SCALE_FACTOR() != 1 )
+		{
+			for (int i=0;i<numberOfPoints;i++)
+			{
+				vertices[i].x=points[i].x * CC_CONTENT_SCALE_FACTOR();
+				vertices[i].y=points[i].y * CC_CONTENT_SCALE_FACTOR();
+			}
+			glVertexPointer(2, GL_FLOAT, 0, vertices);
+		}
+		else glVertexPointer(2, GL_FLOAT, 0, points);
+	}
+	else 
+	{
+		for( NSUInteger i=0; i< numberOfPoints; i++)
+			vertices[i] = (ccVertex2F) { points[i].x, points[i].y };
+		
+		glVertexPointer(2, GL_FLOAT, 0, vertices );
+		
+	}
+	// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
+	// Needed states: GL_VERTEX_ARRAY,
+	// Unneeded states: GL_TEXTURE_2D, GL_TEXTURE_COORD_ARRAY, GL_COLOR_ARRAY
+	glDisable(GL_TEXTURE_2D);
+	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+	glDisableClientState(GL_COLOR_ARRAY);
+	
+	glDrawArrays(GL_LINES, 0, numberOfPoints);
+	
+	// restore default state
+	glEnableClientState(GL_COLOR_ARRAY);
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+	glEnable(GL_TEXTURE_2D);
+}
+
 void ccDrawRect( CGPoint origin, CGPoint destination )
 {
 	ccDrawLine(CGPointMake(origin.x, origin.y), CGPointMake(destination.x, origin.y));
@@ -141,7 +184,7 @@ void ccDrawSolidRect( CGPoint origin, CGPoint destination )
 }
 
 
-void ccDrawPoly( const CGPoint *poli, NSUInteger numberOfPoints, BOOL closePolygon )
+void ccDrawPoly( const CGPoint *vertices, NSUInteger numberOfPoints, BOOL closePolygon )
 {
 	ccVertex2F newPoint[numberOfPoints];
 
@@ -158,21 +201,21 @@ void ccDrawPoly( const CGPoint *poli, NSUInteger numberOfPoints, BOOL closePolyg
 
 		// convert to pixels ?
 		if( CC_CONTENT_SCALE_FACTOR() != 1 ) {
-			memcpy( newPoint, poli, numberOfPoints * sizeof(ccVertex2F) );
+			memcpy( newPoint, vertices, numberOfPoints * sizeof(ccVertex2F) );
 			for( NSUInteger i=0; i<numberOfPoints;i++)
-				newPoint[i] = (ccVertex2F) { poli[i].x * CC_CONTENT_SCALE_FACTOR(), poli[i].y * CC_CONTENT_SCALE_FACTOR() };
+				newPoint[i] = (ccVertex2F) { vertices[i].x * CC_CONTENT_SCALE_FACTOR(), vertices[i].y * CC_CONTENT_SCALE_FACTOR() };
 
 			glVertexPointer(2, GL_FLOAT, 0, newPoint);
 
 		} else
-			glVertexPointer(2, GL_FLOAT, 0, poli);
+			glVertexPointer(2, GL_FLOAT, 0, vertices);
 
 		
 	} else {
 		// 64-bit machines (Mac)
 		
 		for( NSUInteger i=0; i<numberOfPoints;i++)
-			newPoint[i] = (ccVertex2F) { poli[i].x, poli[i].y };
+			newPoint[i] = (ccVertex2F) { vertices[i].x, vertices[i].y };
 
 		glVertexPointer(2, GL_FLOAT, 0, newPoint );
 
@@ -189,7 +232,7 @@ void ccDrawPoly( const CGPoint *poli, NSUInteger numberOfPoints, BOOL closePolyg
 	glEnable(GL_TEXTURE_2D);	
 }
 //const CGPoint *vertices, NSUInteger numOfVertices, BOOL closePolygon
-void ccDrawSolidPoly( CGPoint *poli, int points, BOOL closePolygon )
+void ccDrawSolidPoly(const CGPoint *vertices, NSUInteger numOfVertices, BOOL closePolygon )
 {
 	ccVertex2F newPoint[numOfVertices];
 	
