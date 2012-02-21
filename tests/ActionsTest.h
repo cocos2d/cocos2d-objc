@@ -142,4 +142,10 @@
 {}
 @end
 
+@interface Issue1305 : ActionDemo
+{
+	CCSprite *spriteTmp_;
+}
+@end
+
 
