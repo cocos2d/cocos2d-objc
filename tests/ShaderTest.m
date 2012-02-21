@@ -206,8 +206,8 @@ enum {
 	//
 	// Uniforms
 	//
-	[shaderProgram_ setUniformLocation:uniformCenter withf1:center_.x f2:center_.y];
-	[shaderProgram_ setUniformLocation:uniformResolution withf1:resolution_.x f2:resolution_.y];
+	[shaderProgram_ setUniformLocation:uniformCenter withF1:center_.x f2:center_.y];
+	[shaderProgram_ setUniformLocation:uniformResolution withF1:resolution_.x f2:resolution_.y];
 
 	// time changes all the time, so it is Ok to call OpenGL directly, and not the "cached" version
 	glUniform1f( uniformTime, time_ );
@@ -465,7 +465,7 @@ enum {
 
 	[shaderProgram_ use];
 	[shaderProgram_ setUniformForModelViewProjectionMatrix];
-	[shaderProgram_ setUniformLocation:blurLocation withf1:blur_.x f2:blur_.y];
+	[shaderProgram_ setUniformLocation:blurLocation withF1:blur_.x f2:blur_.y];
 	[shaderProgram_ setUniformLocation:subLocation with4fv:sub_ count:1];
 
 	ccGLBindTexture2D(  [texture_ name] );

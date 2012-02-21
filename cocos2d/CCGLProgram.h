@@ -111,17 +111,20 @@ struct _hashUniformEntry;
  */
 - (void) updateUniforms;
 
+/** calls glUniform1i only if the values are different than the previous call for this same shader program. */
+-(void) setUniformLocation:(NSUInteger)location withI1:(GLint)i1;
+
 /** calls glUniform1f only if the values are different than the previous call for this same shader program. */
--(void) setUniformLocation:(NSUInteger)location withf1:(GLfloat)f1;
+-(void) setUniformLocation:(NSUInteger)location withF1:(GLfloat)f1;
 
 /** calls glUniform2f only if the values are different than the previous call for this same shader program. */
--(void) setUniformLocation:(NSUInteger)location withf1:(GLfloat)f1 f2:(GLfloat)f2;
+-(void) setUniformLocation:(NSUInteger)location withF1:(GLfloat)f1 f2:(GLfloat)f2;
 
 /** calls glUniform3f only if the values are different than the previous call for this same shader program. */
--(void) setUniformLocation:(NSUInteger)location withf1:(GLfloat)f1 f2:(GLfloat)f2 f3:(GLfloat)f3;
+-(void) setUniformLocation:(NSUInteger)location withF1:(GLfloat)f1 f2:(GLfloat)f2 f3:(GLfloat)f3;
 
 /** calls glUniform4f only if the values are different than the previous call for this same shader program. */
--(void) setUniformLocation:(NSUInteger)location withf1:(GLfloat)f1 f2:(GLfloat)f2 f3:(GLfloat)f3 f4:(GLfloat)f4;
+-(void) setUniformLocation:(NSUInteger)location withF1:(GLfloat)f1 f2:(GLfloat)f2 f3:(GLfloat)f3 f4:(GLfloat)f4;
 
 /** calls glUniform2fv only if the values are different than the previous call for this same shader program. */
 -(void) setUniformLocation:(NSUInteger)location with2fv:(GLfloat*)floats count:(NSUInteger)numberOfArrays;

@@ -80,7 +80,7 @@ void ccDrawPoint( CGPoint point )
 	[shader_ setUniformForModelViewProjectionMatrix];
 
 	[shader_ setUniformLocation:colorLocation_ with4fv:(GLfloat*) &color_.r count:1];
-	[shader_ setUniformLocation:pointSizeLocation_ withf1:pointSize_];
+	[shader_ setUniformLocation:pointSizeLocation_ withF1:pointSize_];
 
 	glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, &p);
 
@@ -98,7 +98,7 @@ void ccDrawPoints( const CGPoint *points, NSUInteger numberOfPoints )
 	[shader_ use];
 	[shader_ setUniformForModelViewProjectionMatrix];
 	[shader_ setUniformLocation:colorLocation_ with4fv:(GLfloat*) &color_.r count:1];
-	[shader_ setUniformLocation:pointSizeLocation_ withf1:pointSize_];
+	[shader_ setUniformLocation:pointSizeLocation_ withF1:pointSize_];
 
 	// XXX: Mac OpenGL error. arrays can't go out of scope before draw is executed
 	ccVertex2F newPoints[numberOfPoints];
