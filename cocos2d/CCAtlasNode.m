@@ -28,7 +28,7 @@
 #import "ccMacros.h"
 #import "CCGLProgram.h"
 #import "CCShaderCache.h"
-#import "ccGLState.h"
+#import "ccGLStateCache.h"
 #import "CCDirector.h"
 #import "Support/TransformUtils.h"
 
@@ -123,8 +123,9 @@
 	CC_NODE_DRAW_SETUP();
 
 	ccGLBlendFunc( blendFunc_.src, blendFunc_.dst );
-
-	glUniform4f( uniformColor_, color_.r / 255.0f, color_.g / 255.0f, color_.b / 255.0f, opacity_ / 255.0f );
+	
+	GLfloat colors[4] = {color_.r / 255.0f, color_.g / 255.0f, color_.b / 255.0f, opacity_ / 255.0f};
+	[shaderProgram_ setUniformLocation:uniformColor_ with4fv:colors count:1];
 
 	[textureAtlas_ drawNumberOfQuads:quadsToDraw_ fromIndex:0];
 }

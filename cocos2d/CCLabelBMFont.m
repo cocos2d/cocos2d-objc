@@ -745,7 +745,7 @@ typedef struct _KerningHashElement
 		}
 
 		float yOffset = configuration_->commonHeight_ - fontDef.yOffset;
-        CGPoint fontPos = ccp( (float)nextFontPositionX + fontDef.xOffset + fontDef.rect.size.width*0.5f + kerningAmount, (float)nextFontPositionY + yOffset - rect.size.height*0.5f );
+		CGPoint fontPos = ccp( (float)nextFontPositionX + fontDef.xOffset + fontDef.rect.size.width*0.5f + kerningAmount, (float)nextFontPositionY + yOffset - rect.size.height*0.5f*CC_CONTENT_SCALE_FACTOR() );
         fontChar.position = CC_POINT_PIXELS_TO_POINTS(fontPos);
 
 		// update kerning

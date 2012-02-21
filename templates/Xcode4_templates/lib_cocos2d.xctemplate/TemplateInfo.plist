@@ -401,6 +401,28 @@
 			<key>Path</key>
 			<string>libs/cocos2d/CCConfiguration.m</string>
 		</dict>
+		<key>libs/cocos2d/ccDeprecated.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2d</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2d/ccDeprecated.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/cocos2d/ccDeprecated.m</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2d</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2d/ccDeprecated.m</string>
+		</dict>
 		<key>libs/cocos2d/CCDirector.h</key>
 		<dict>
 			<key>Group</key>
@@ -467,7 +489,7 @@
 			<key>Path</key>
 			<string>libs/cocos2d/CCGLProgram.m</string>
 		</dict>
-		<key>libs/cocos2d/ccGLState.h</key>
+		<key>libs/cocos2d/ccGLStateCache.h</key>
 		<dict>
 			<key>Group</key>
 			<array>
@@ -475,11 +497,11 @@
 				<string>cocos2d</string>
 			</array>
 			<key>Path</key>
-			<string>libs/cocos2d/ccGLState.h</string>
+			<string>libs/cocos2d/ccGLStateCache.h</string>
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
-		<key>libs/cocos2d/ccGLState.m</key>
+		<key>libs/cocos2d/ccGLStateCache.m</key>
 		<dict>
 			<key>Group</key>
 			<array>
@@ -487,7 +509,7 @@
 				<string>cocos2d</string>
 			</array>
 			<key>Path</key>
-			<string>libs/cocos2d/ccGLState.m</string>
+			<string>libs/cocos2d/ccGLStateCache.m</string>
 		</dict>
 		<key>libs/cocos2d/CCGrabber.h</key>
 		<dict>
@@ -1968,14 +1990,16 @@
 		<string>libs/cocos2d/ccConfig.h</string>
 		<string>libs/cocos2d/CCConfiguration.h</string>
 		<string>libs/cocos2d/CCConfiguration.m</string>
+		<string>libs/cocos2d/ccDeprecated.h</string>
+		<string>libs/cocos2d/ccDeprecated.m</string>
 		<string>libs/cocos2d/CCDirector.h</string>
 		<string>libs/cocos2d/CCDirector.m</string>
 		<string>libs/cocos2d/CCDrawingPrimitives.h</string>
 		<string>libs/cocos2d/CCDrawingPrimitives.m</string>
 		<string>libs/cocos2d/CCGLProgram.h</string>
 		<string>libs/cocos2d/CCGLProgram.m</string>
-		<string>libs/cocos2d/ccGLState.h</string>
-		<string>libs/cocos2d/ccGLState.m</string>
+		<string>libs/cocos2d/ccGLStateCache.h</string>
+		<string>libs/cocos2d/ccGLStateCache.m</string>
 		<string>libs/cocos2d/CCGrabber.h</string>
 		<string>libs/cocos2d/CCGrabber.m</string>
 		<string>libs/cocos2d/CCGrid.h</string>

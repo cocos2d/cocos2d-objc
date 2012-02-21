@@ -1,6 +1,11 @@
 //
 // Copyright 2011 Jeff Lamarche
 //
+// Copyright 2012 Goffredo Marocchi
+//
+// Copyright 2012 Ricardo Quesada
+//
+//
 // Redistribution and use in source and binary forms, with or without modification, are permitted provided
 // that the following conditions are met:
 //	1. Redistributions of source code must retain the above copyright notice, this list of conditions and
@@ -19,14 +24,27 @@
 //	AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
 //	NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 //	ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-//
-// Adapted for cocos2d http://www.cocos2d-iphone.org
+
 
 #import "CCGLProgram.h"
-#import "ccGLState.h"
+#import "ccGLStateCache.h"
 #import "ccMacros.h"
+#import "Support/uthash.h"
 #import "Support/CCFileUtils.h"
 #import "Support/OpenGL_Internal.h"
+
+// extern
+#import "kazmath/GL/matrix.h"
+#import "kazmath/kazmath.h"
+
+
+typedef struct _hashUniformEntry
+{
+	GLvoid			*value;		// value
+	NSUInteger		location;	// Key
+	UT_hash_handle  hh;			// hash entry
+} tHashUniformEntry;
+
 
 #pragma mark Function Pointer Definitions
 typedef void (*GLInfoFunction)(GLuint program,
@@ -51,8 +69,7 @@ typedef void (*GLLogFunction) (GLuint program,
 #pragma mark -
 
 @implementation CCGLProgram
-- (id)initWithVertexShaderFilename:(NSString *)vShaderFilename
-            fragmentShaderFilename:(NSString *)fShaderFilename
+- (id)initWithVertexShaderFilename:(NSString *)vShaderFilename fragmentShaderFilename:(NSString *)fShaderFilename
 {
     if ((self = [super init]) )
     {
@@ -84,6 +101,8 @@ typedef void (*GLLogFunction) (GLuint program,
 
 		if( fragShader_ )
 			glAttachShader(program_, fragShader_);
+		
+		hashForUniforms_ = NULL;
 
     }
 
@@ -143,8 +162,9 @@ typedef void (*GLLogFunction) (GLuint program,
 
 	uniforms_[kCCUniformSampler] = glGetUniformLocation(program_, kCCUniformSampler_s);
 
-	ccGLUseProgram( program_ );
-	glUniform1i( uniforms_[kCCUniformSampler], 0 );
+	[self use];
+	
+	[self setUniformLocation:uniforms_[kCCUniformSampler] withI1:0];
 }
 
 #pragma mark -
@@ -229,6 +249,129 @@ typedef void (*GLLogFunction) (GLuint program,
                             logFunc:(GLLogFunction)&glGetProgramInfoLog];
 }
 
+#pragma mark - Uniform cache
+
+-(BOOL) updateUniformLocation:(NSUInteger)location withData:(GLvoid*)data sizeOfData:(NSUInteger)bytes
+{
+	BOOL updated = YES;
+	tHashUniformEntry *element = NULL;
+	HASH_FIND_INT(hashForUniforms_, &location, element);
+	
+	if( ! element ) {
+
+		element = malloc( sizeof(*element) );
+
+		// key
+		element->location = location;
+
+		// value
+		element->value = malloc( bytes );
+		memcpy(element->value, data, bytes );
+		
+		HASH_ADD_INT(hashForUniforms_, location, element);
+	}
+	else
+	{
+		if( memcmp( element->value, data, bytes) == 0 )
+			updated = NO;
+		else
+			memcpy( element->value, data, bytes );
+	}
+	
+	return updated;
+}
+
+-(void) setUniformLocation:(NSUInteger)location withI1:(GLint)i1
+{
+	BOOL updated =  [self updateUniformLocation:location withData:&i1 sizeOfData:sizeof(i1)*1];
+	
+	if( updated )
+		glUniform1i( (GLint)location, i1);
+}
+
+-(void) setUniformLocation:(NSUInteger)location withF1:(GLfloat)f1
+{
+	BOOL updated =  [self updateUniformLocation:location withData:&f1 sizeOfData:sizeof(f1)*1];
+	
+	if( updated )
+		glUniform1f( (GLint)location, f1);
+}
+
+-(void) setUniformLocation:(NSUInteger)location withF1:(GLfloat)f1 f2:(GLfloat)f2
+{
+	GLfloat floats[2] = {f1,f2};
+	BOOL updated =  [self updateUniformLocation:location withData:floats sizeOfData:sizeof(floats)];
+	
+	if( updated )
+		glUniform2f( (GLint)location, f1, f2);
+}
+
+-(void) setUniformLocation:(NSUInteger)location withF1:(GLfloat)f1 f2:(GLfloat)f2 f3:(GLfloat)f3
+{
+	GLfloat floats[3] = {f1,f2,f3};
+	BOOL updated =  [self updateUniformLocation:location withData:floats sizeOfData:sizeof(floats)];
+	
+	if( updated )
+		glUniform3f( (GLint)location, f1, f2, f3);
+}
+
+-(void) setUniformLocation:(NSUInteger)location withF1:(GLfloat)f1 f2:(GLfloat)f2 f3:(GLfloat)f3 f4:(GLfloat)f4
+{
+	GLfloat floats[4] = {f1,f2,f3,f4};
+	BOOL updated =  [self updateUniformLocation:location withData:floats sizeOfData:sizeof(floats)];
+	
+	if( updated )
+		glUniform4f( (GLint)location, f1, f2, f3,f4);
+}
+
+-(void) setUniformLocation:(NSUInteger)location with2fv:(GLfloat*)floats count:(NSUInteger)numberOfArrays
+{
+	BOOL updated =  [self updateUniformLocation:location withData:floats sizeOfData:sizeof(float)*2*numberOfArrays];
+	
+	if( updated )
+		glUniform2fv( (GLint)location, (GLsizei)numberOfArrays, floats );
+}
+
+-(void) setUniformLocation:(NSUInteger)location with3fv:(GLfloat*)floats count:(NSUInteger)numberOfArrays
+{
+	BOOL updated =  [self updateUniformLocation:location withData:floats sizeOfData:sizeof(float)*3*numberOfArrays];
+	
+	if( updated )
+		glUniform3fv( (GLint)location, (GLsizei)numberOfArrays, floats );
+}
+
+-(void) setUniformLocation:(NSUInteger)location with4fv:(GLvoid*)floats count:(NSUInteger)numberOfArrays
+{
+	BOOL updated =  [self updateUniformLocation:location withData:floats sizeOfData:sizeof(float)*4*numberOfArrays];
+	
+	if( updated )
+		glUniform4fv( (GLint)location, (GLsizei)numberOfArrays, floats );
+}
+
+
+-(void) setUniformLocation:(NSUInteger)location withMatrix4fv:(GLvoid*)matrixArray count:(NSUInteger)numberOfMatrices
+{
+	BOOL updated =  [self updateUniformLocation:location withData:matrixArray sizeOfData:sizeof(float)*16*numberOfMatrices];
+	
+	if( updated )
+		glUniformMatrix4fv( (GLint)location, (GLsizei)numberOfMatrices, GL_FALSE, matrixArray);
+}
+
+-(void) setUniformForModelViewProjectionMatrix
+{
+	kmMat4 matrixP;
+	kmMat4 matrixMV;
+	kmMat4 matrixMVP;
+	
+	kmGLGetMatrix(KM_GL_PROJECTION, &matrixP );
+	kmGLGetMatrix(KM_GL_MODELVIEW, &matrixMV );
+	
+	kmMat4Multiply(&matrixMVP, &matrixP, &matrixMV);
+	
+	[self setUniformLocation:uniforms_[kCCUniformMVPMatrix] withMatrix4fv:matrixMVP.mat count:1];
+}
+
+
 #pragma mark -
 
 - (void)dealloc
@@ -241,6 +384,15 @@ typedef void (*GLLogFunction) (GLuint program,
 
     if (program_)
         ccGLDeleteProgram(program_);
+	
+	tHashUniformEntry *current_element, *tmp;
+	
+	// Purge uniform hash
+	HASH_ITER(hh, hashForUniforms_, current_element, tmp) {
+		HASH_DEL(hashForUniforms_, current_element);
+		free(current_element->value);
+		free(current_element);
+	}
 
     [super dealloc];
 }

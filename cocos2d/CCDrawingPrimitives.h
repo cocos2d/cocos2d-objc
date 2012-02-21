@@ -74,6 +74,10 @@ void ccDrawLine( CGPoint origin, CGPoint destination );
  */
 void ccDrawPoly( const CGPoint *vertices, NSUInteger numOfVertices, BOOL closePolygon );
 
+/** draws a filled polygon given a pointer to CGPoint coordiantes, the number of vertices measured in points, and a color.
+ */
+void ccDrawFilledPoly( const CGPoint *poli, NSUInteger numberOfPoints, ccColor4F color );
+    
 /** draws a circle given the center, radius and number of segments measured in points */
 void ccDrawCircle( CGPoint center, float radius, float angle, NSUInteger segments, BOOL drawLineToCenter);
 
@@ -95,7 +99,7 @@ void ccDrawColor4B( GLubyte r, GLubyte g, GLubyte b, GLubyte a );
 /** set the drawing color with 4 floats
  @since v2.0
  */
-void ccDrawColor4f( GLfloat r, GLfloat g, GLfloat b, GLfloat a );
+void ccDrawColor4F( GLfloat r, GLfloat g, GLfloat b, GLfloat a );
 
 /** set the point size in points. Default 1.
  @since v2.0

@@ -43,7 +43,7 @@
 #import "CCTexture2D.h"
 #import "CCLabelBMFont.h"
 #import "CCLayer.h"
-#import "ccGLState.h"
+#import "ccGLStateCache.h"
 #import "CCShaderCache.h"
 
 // support imports
@@ -174,7 +174,7 @@ static CCDirector *_sharedDirector = nil;
 
 - (NSString*) description
 {
-	return [NSString stringWithFormat:@"<%@ = %08X | Size: %0.f x %0.f, view = %@>", [self class], self, winSizeInPoints_.width, winSizeInPoints_.height, self.view];
+	return [NSString stringWithFormat:@"<%@ = %08X | Size: %0.f x %0.f, view = %@>", [self class], self, winSizeInPoints_.width, winSizeInPoints_.height, view_];
 }
 
 - (void) dealloc
@@ -198,8 +198,8 @@ static CCDirector *_sharedDirector = nil;
 
 -(void) setGLDefaultValues
 {
-	// This method SHOULD be called only after openGLView_ was initialized
-	NSAssert( [self view], @"openGLView_ must be initialized");
+	// This method SHOULD be called only after view_ was initialized
+	NSAssert( view_, @"view_ must be initialized");
 
 	[self setAlphaBlending: YES];
 	[self setDepthTest: YES];
@@ -300,28 +300,34 @@ static CCDirector *_sharedDirector = nil;
 
 -(void) setView:(CCGLView*)view
 {
-	NSAssert( view, @"OpenGLView must be non-nil");
+//	NSAssert( view, @"OpenGLView must be non-nil");
 
+	if( view != view_ ) {
+	
 #ifdef __CC_PLATFORM_IOS
-	[super setView:view];
+		[super setView:view];
 #endif
+		[view_ release];
+		view_ = [view retain];
 
-	// set size
-	winSizeInPixels_ = winSizeInPoints_ = CCNSSizeToCGSize( [view bounds].size );
+		// set size
+		winSizeInPixels_ = winSizeInPoints_ = CCNSSizeToCGSize( [view_ bounds].size );
 
-	[self setGLDefaultValues];
-	[self createStatsLabel];
+		[self createStatsLabel];
+		
+		// it could be nil
+		if( view )
+			[self setGLDefaultValues];
 
-	CHECK_GL_ERROR_DEBUG();
+		CHECK_GL_ERROR_DEBUG();
+	}
 }
 
-#ifdef __CC_PLATFORM_MAC
 -(CCGLView*) view
 {
-	// ignore on Mac
-	return nil;
+	return  view_;
 }
-#endif //
+
 
 #pragma mark Director Scene Landscape
 
@@ -422,6 +428,7 @@ static CCDirector *_sharedDirector = nil;
 	[delegate_ release];
 	delegate_ = nil;
 
+	[self setView:nil];
 	
 	// Purge bitmap cache
 	[CCLabelBMFont purgeCachedData];
@@ -524,7 +531,7 @@ static CCDirector *_sharedDirector = nil;
 	if( displayStats_ ) {
 		// Ms per Frame
 
-		if( accumDt_ > CC_DIRECTOR_FPS_INTERVAL)
+		if( accumDt_ > CC_DIRECTOR_STATS_INTERVAL)
 		{
 			NSString *spfstr = [[NSString alloc] initWithFormat:@"%.3f", secondsPerFrame_];
 			[SPFLabel_ setString:spfstr];
@@ -552,12 +559,6 @@ static CCDirector *_sharedDirector = nil;
 	}
 	
 	__ccNumberOfDraws = 0;
-}
-
-// XXX Deprecated
--(void) setDisplayFPS:(BOOL)display
-{
-	self.displayStats = display;
 }
 
 -(void) calculateMPF

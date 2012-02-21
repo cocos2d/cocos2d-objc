@@ -29,7 +29,7 @@
 #import "ccTypes.h"
 #import "CCProtocols.h"
 #import "ccConfig.h"
-#import "ccGLState.h"
+#import "ccGLStateCache.h"
 #import "Support/CCArray.h"
 #import "kazmath/kazmath.h"
 
@@ -165,23 +165,22 @@ enum {
 	CCActionManager	*actionManager_;
 
 	// Is running
-	BOOL isRunning_:1;
+	BOOL isRunning_;
 
-	// To reduce memory, place BOOLs that are not properties here:
-	BOOL isTransformDirty_:1;
-	BOOL isInverseDirty_:1;
+	BOOL isTransformDirty_;
+	BOOL isInverseDirty_;
 
 	// is visible
-	BOOL visible_:1;
+	BOOL visible_;
 	// If YES the transformtions will be relative to (-transform.x, -transform.y).
 	// Sprites, Labels and any other "small" object uses it.
 	// Scenes, Layers and other "whole screen" object don't use it.
-	BOOL isRelativeAnchorPoint_:1;
+	BOOL isRelativeAnchorPoint_;
 
-	BOOL isReorderChildDirty_:1;
+	BOOL isReorderChildDirty_;
 	
 	// userData is going to be retained.
-	BOOL retainUserData_:1;
+	BOOL retainUserData_;
 }
 
 /** The z order of the node relative to its "siblings": children of the same parent */
@@ -569,7 +568,7 @@ enum {
 - (CGPoint)convertTouchToNodeSpaceAR:(UITouch *)touch;
 #endif // __CC_PLATFORM_IOS
 
-/** set the user data, if retainData is YES, "userData" will be treated like an NSObject
+/** Set the user data. If retainData is YES, "userData" will be treated like an NSObject. Retain/Release will be called.
  @since v2.0
  */
 -(void) setUserData:(void *)userData retainData:(BOOL)retainData;

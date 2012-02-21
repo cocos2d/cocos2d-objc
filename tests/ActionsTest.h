@@ -55,7 +55,9 @@
 @end
 
 @interface ActionAnimate : ActionDemo
-{}
+{
+	id observer_;
+}
 @end
 
 @interface ActionSequence : ActionDemo
@@ -140,6 +142,12 @@
 
 @interface ActionTargeted : ActionDemo
 {}
+@end
+
+@interface Issue1305 : ActionDemo
+{
+	CCSprite *spriteTmp_;
+}
 @end
 
 

@@ -1349,6 +1349,10 @@
 		A08C379114144FDE004538FD /* neon_matrix_impl.c in Sources */ = {isa = PBXBuildFile; fileRef = A08C379014144FDE004538FD /* neon_matrix_impl.c */; };
 		A0980F3914B92C5E004812AD /* ActionsEaseTest.m in Sources */ = {isa = PBXBuildFile; fileRef = A0980F3614B92C5E004812AD /* ActionsEaseTest.m */; };
 		A0980F3B14B92C7B004812AD /* ActionsProgressTest.m in Sources */ = {isa = PBXBuildFile; fileRef = A0980F3814B92C5E004812AD /* ActionsProgressTest.m */; };
+		A09AB76914EA12F7009C8B91 /* ccDeprecated.h in Headers */ = {isa = PBXBuildFile; fileRef = A09AB76714EA12F7009C8B91 /* ccDeprecated.h */; };
+		A09AB76A14EA12F7009C8B91 /* ccDeprecated.m in Sources */ = {isa = PBXBuildFile; fileRef = A09AB76814EA12F7009C8B91 /* ccDeprecated.m */; };
+		A0A10B5714F3011F00FA38C1 /* ccGLStateCache.h in Headers */ = {isa = PBXBuildFile; fileRef = A0A10B5514F3011F00FA38C1 /* ccGLStateCache.h */; };
+		A0A10B5814F3011F00FA38C1 /* ccGLStateCache.m in Sources */ = {isa = PBXBuildFile; fileRef = A0A10B5614F3011F00FA38C1 /* ccGLStateCache.m */; };
 		A0ADEF1E1457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0ADEF1D1457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh */; };
 		A0ADEF1F1457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0ADEF1D1457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh */; };
 		A0ADEF201457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0ADEF1D1457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh */; };
@@ -2849,8 +2853,6 @@
 		E037DA921281EFE2003D39D7 /* edge.png in Resources */ = {isa = PBXBuildFile; fileRef = E037DA8C1281EFE2003D39D7 /* edge.png */; };
 		E037DA931281EFE2003D39D7 /* fill.png in Resources */ = {isa = PBXBuildFile; fileRef = E037DA8D1281EFE2003D39D7 /* fill.png */; };
 		E037DA941281EFE2003D39D7 /* QuestionContainerSprite.m in Sources */ = {isa = PBXBuildFile; fileRef = E037DA8F1281EFE2003D39D7 /* QuestionContainerSprite.m */; };
-		E03A4F291354E2F100D4B515 /* ccGLState.m in Sources */ = {isa = PBXBuildFile; fileRef = E03A4F271354E2F000D4B515 /* ccGLState.m */; };
-		E03A4F2A1354E2F100D4B515 /* ccGLState.h in Headers */ = {isa = PBXBuildFile; fileRef = E03A4F281354E2F000D4B515 /* ccGLState.h */; };
 		E03A4F371355041F00D4B515 /* b1.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659D0E72DB470085673F /* b1.png */; };
 		E03A4F381355041F00D4B515 /* b2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659E0E72DB470085673F /* b2.png */; };
 		E03A4F391355041F00D4B515 /* f1.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659F0E72DB470085673F /* f1.png */; };
@@ -4816,6 +4818,10 @@
 		A0980F3614B92C5E004812AD /* ActionsEaseTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ActionsEaseTest.m; path = tests/ActionsEaseTest.m; sourceTree = "<group>"; };
 		A0980F3714B92C5E004812AD /* ActionsProgressTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ActionsProgressTest.h; path = tests/ActionsProgressTest.h; sourceTree = "<group>"; };
 		A0980F3814B92C5E004812AD /* ActionsProgressTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ActionsProgressTest.m; path = tests/ActionsProgressTest.m; sourceTree = "<group>"; };
+		A09AB76714EA12F7009C8B91 /* ccDeprecated.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccDeprecated.h; sourceTree = "<group>"; };
+		A09AB76814EA12F7009C8B91 /* ccDeprecated.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ccDeprecated.m; sourceTree = "<group>"; };
+		A0A10B5514F3011F00FA38C1 /* ccGLStateCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccGLStateCache.h; sourceTree = "<group>"; };
+		A0A10B5614F3011F00FA38C1 /* ccGLStateCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ccGLStateCache.m; sourceTree = "<group>"; };
 		A0ADEF1D1457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = PositionTextureColorAlphaTest.fsh; sourceTree = "<group>"; };
 		A0B035FA13EA09270073E59A /* only_in_hd-hd.pvr.ccz */ = {isa = PBXFileReference; lastKnownFileType = file; path = "only_in_hd-hd.pvr.ccz"; sourceTree = "<group>"; };
 		A0B0376D13EA1FDB0073E59A /* b1-ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "b1-ipad.png"; sourceTree = "<group>"; };
@@ -5048,8 +5054,6 @@
 		E037DA8D1281EFE2003D39D7 /* fill.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fill.png; sourceTree = "<group>"; };
 		E037DA8E1281EFE2003D39D7 /* QuestionContainerSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuestionContainerSprite.h; sourceTree = "<group>"; };
 		E037DA8F1281EFE2003D39D7 /* QuestionContainerSprite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuestionContainerSprite.m; sourceTree = "<group>"; };
-		E03A4F271354E2F000D4B515 /* ccGLState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ccGLState.m; sourceTree = "<group>"; };
-		E03A4F281354E2F000D4B515 /* ccGLState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccGLState.h; sourceTree = "<group>"; };
 		E03A4F691355041F00D4B515 /* ShaderTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShaderTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E03A4F6B1355047600D4B515 /* ShaderTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ShaderTest.m; path = tests/ShaderTest.m; sourceTree = "<group>"; };
 		E03A4F6C1355047600D4B515 /* ShaderTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ShaderTest.h; path = tests/ShaderTest.h; sourceTree = "<group>"; };
@@ -6113,6 +6117,8 @@
 				E0EAD0E8121F4B4600B0C81C /* Platforms */,
 				50305AF30E40E33200F63373 /* cocos2d.h */,
 				50A07B7A0E4CBCD300AAF0BB /* cocos2d.m */,
+				A09AB76714EA12F7009C8B91 /* ccDeprecated.h */,
+				A09AB76814EA12F7009C8B91 /* ccDeprecated.m */,
 				505462FB1062768000AB7C52 /* ccConfig.h */,
 				5018F2560DFDEAFF00C013A5 /* CCDirector.h */,
 				5018F2570DFDEAFF00C013A5 /* CCDirector.m */,
@@ -7657,12 +7663,12 @@
 		E0BC7DA11342CE83001B4DCC /* Shaders */ = {
 			isa = PBXGroup;
 			children = (
+				A0A10B5514F3011F00FA38C1 /* ccGLStateCache.h */,
+				A0A10B5614F3011F00FA38C1 /* ccGLStateCache.m */,
 				E0BC7D991342CE7B001B4DCC /* CCShaderCache.h */,
 				E0BC7D9A1342CE7B001B4DCC /* CCShaderCache.m */,
 				E0BC7D9B1342CE7B001B4DCC /* CCGLProgram.h */,
 				E0BC7D9C1342CE7B001B4DCC /* CCGLProgram.m */,
-				E03A4F281354E2F000D4B515 /* ccGLState.h */,
-				E03A4F271354E2F000D4B515 /* ccGLState.m */,
 			);
 			name = Shaders;
 			sourceTree = "<group>";
@@ -7808,7 +7814,6 @@
 				E0BC7D9D1342CE7B001B4DCC /* CCShaderCache.h in Headers */,
 				E0BC7D9F1342CE7B001B4DCC /* CCGLProgram.h in Headers */,
 				E0BC7DA81342CF27001B4DCC /* CCES2Renderer.h in Headers */,
-				E03A4F2A1354E2F100D4B515 /* ccGLState.h in Headers */,
 				A0BE62D9140535F000DAA336 /* CCVertex.h in Headers */,
 				A0C20AC8144FDAF700D84B47 /* CCParticleBatchNode.h in Headers */,
 				A0C3815114BA0548001655CC /* CCTransitionProgress.h in Headers */,
@@ -7816,6 +7821,8 @@
 				A046E29514C1DB7D0005BBF2 /* CCEventDispatcher.h in Headers */,
 				A046E29714C1DB7D0005BBF2 /* CCGLView.h in Headers */,
 				A046E29914C1DB7E0005BBF2 /* CCWindow.h in Headers */,
+				A09AB76914EA12F7009C8B91 /* ccDeprecated.h in Headers */,
+				A0A10B5714F3011F00FA38C1 /* ccGLStateCache.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -12010,7 +12017,6 @@
 				E0BC7D9E1342CE7B001B4DCC /* CCShaderCache.m in Sources */,
 				E0BC7DA01342CE7B001B4DCC /* CCGLProgram.m in Sources */,
 				E0BC7DA91342CF27001B4DCC /* CCES2Renderer.m in Sources */,
-				E03A4F291354E2F100D4B515 /* ccGLState.m in Sources */,
 				A0BE62DA140535F000DAA336 /* CCVertex.m in Sources */,
 				A0C20AC9144FDAF700D84B47 /* CCParticleBatchNode.m in Sources */,
 				A0C3815214BA0548001655CC /* CCTransitionProgress.m in Sources */,
@@ -12018,6 +12024,8 @@
 				A046E29614C1DB7D0005BBF2 /* CCEventDispatcher.m in Sources */,
 				A046E29814C1DB7D0005BBF2 /* CCGLView.m in Sources */,
 				A046E29A14C1DB7E0005BBF2 /* CCWindow.m in Sources */,
+				A09AB76A14EA12F7009C8B91 /* ccDeprecated.m in Sources */,
+				A0A10B5814F3011F00FA38C1 /* ccGLStateCache.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

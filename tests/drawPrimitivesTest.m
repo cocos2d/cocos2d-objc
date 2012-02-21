@@ -202,6 +202,12 @@ Class restartAction()
 	ccDrawPoly( vertices, 5, NO);
 
 	CHECK_GL_ERROR_DEBUG();
+	
+	// filled poly
+	glLineWidth(1);
+	CGPoint filledVertices[] = { ccp(0,120), ccp(50,120), ccp(50,170), ccp(25,200), ccp(0,170) };
+	ccDrawFilledPoly(filledVertices, 5, ccc4f(0.5f, 0.5f, 1, 1 ) );
+
 
 	// closed purble poly
 	ccDrawColor4B(255, 0, 255, 255);

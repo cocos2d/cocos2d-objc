@@ -23,7 +23,7 @@
  * THE SOFTWARE.
  */
 
-#import "ccGLState.h"
+#import "ccGLStateCache.h"
 #import "CCGLProgram.h"
 #import "CCDirector.h"
 #import "ccConfig.h"
@@ -52,6 +52,11 @@ static ccGLServerState _ccGLServerState = 0;
 void ccGLInvalidateStateCache( void )
 {
 	kmGLFreeAll();
+
+	_ccCurrentProjectionMatrix = -1;
+	_vertexAttribPosition = NO;
+	_vertexAttribColor = NO;
+	_vertexAttribTexCoords = NO;
 
 #if CC_ENABLE_GL_STATE_CACHE
 	_ccCurrentShaderProgram = -1;
@@ -214,20 +219,6 @@ void ccGLEnableVertexAttribs( unsigned int flags )
 }
 
 #pragma mark - GL Uniforms functions
-
-void ccGLUniformModelViewProjectionMatrix( CCGLProgram *shaderProgram )
-{
-	kmMat4 matrixP;
-	kmMat4 matrixMV;
-	kmMat4 matrixMVP;
-
-	kmGLGetMatrix(KM_GL_PROJECTION, &matrixP );
-	kmGLGetMatrix(KM_GL_MODELVIEW, &matrixMV );
-
-	kmMat4Multiply(&matrixMVP, &matrixP, &matrixMV);
-
-	glUniformMatrix4fv( shaderProgram->uniforms_[kCCUniformMVPMatrix], 1, GL_FALSE, matrixMVP.mat);
-}
 
 void ccSetProjectionMatrixDirty( void )
 {

@@ -1,6 +1,11 @@
 //
 // Copyright 2011 Jeff Lamarche
 //
+// Copyright 2012 Goffredo Marocchi
+//
+// Copyright 2012 Ricardo Quesada
+//
+//
 // Redistribution and use in source and binary forms, with or without modification, are permitted provided
 // that the following conditions are met:
 //	1. Redistributions of source code must retain the above copyright notice, this list of conditions and
@@ -21,7 +26,6 @@
 //	ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 //
-// Adapted for cocos2d http://www.cocos2d-iphone.org
 
 #import <Foundation/Foundation.h>
 #import "ccMacros.h"
@@ -66,11 +70,18 @@ enum {
 #define	kCCAttributeNameTexCoord		@"a_texCoord"
 
 
+struct _hashUniformEntry;
+
 /** CCGLProgram
  Class that implements a glProgram
+ 
+ 
+ @since v2.0.0
  */
 @interface CCGLProgram : NSObject
 {
+	struct _hashUniformEntry	*hashForUniforms_;
+
 @public
 	GLuint          program_,
 					vertShader_,
@@ -81,21 +92,61 @@ enum {
 
 - (id)initWithVertexShaderFilename:(NSString *)vShaderFilename
             fragmentShaderFilename:(NSString *)fShaderFilename;
+
+/**  It will add a new attribute to the shader */
 - (void)addAttribute:(NSString *)attributeName index:(GLuint)index;
+
+/** links the glProgram */
 - (BOOL)link;
+
+/** it will call glUseProgram() */
 - (void)use;
-/* It will create 3 uniforms:
+
+/** It will create 3 uniforms:
 	- kCCUniformPMatrix
 	- kCCUniformMVMatrix
 	- kCCUniformSampler
 
  And it will bind "kCCUniformSampler" to 0
-
- @since v2.0.0
  */
 - (void) updateUniforms;
 
+/** calls glUniform1i only if the values are different than the previous call for this same shader program. */
+-(void) setUniformLocation:(NSUInteger)location withI1:(GLint)i1;
+
+/** calls glUniform1f only if the values are different than the previous call for this same shader program. */
+-(void) setUniformLocation:(NSUInteger)location withF1:(GLfloat)f1;
+
+/** calls glUniform2f only if the values are different than the previous call for this same shader program. */
+-(void) setUniformLocation:(NSUInteger)location withF1:(GLfloat)f1 f2:(GLfloat)f2;
+
+/** calls glUniform3f only if the values are different than the previous call for this same shader program. */
+-(void) setUniformLocation:(NSUInteger)location withF1:(GLfloat)f1 f2:(GLfloat)f2 f3:(GLfloat)f3;
+
+/** calls glUniform4f only if the values are different than the previous call for this same shader program. */
+-(void) setUniformLocation:(NSUInteger)location withF1:(GLfloat)f1 f2:(GLfloat)f2 f3:(GLfloat)f3 f4:(GLfloat)f4;
+
+/** calls glUniform2fv only if the values are different than the previous call for this same shader program. */
+-(void) setUniformLocation:(NSUInteger)location with2fv:(GLfloat*)floats count:(NSUInteger)numberOfArrays;
+
+/** calls glUniform3fv only if the values are different than the previous call for this same shader program. */
+-(void) setUniformLocation:(NSUInteger)location with3fv:(GLfloat*)floats count:(NSUInteger)numberOfArrays;
+
+/** calls glUniform4fv only if the values are different than the previous call for this same shader program. */
+-(void) setUniformLocation:(NSUInteger)location with4fv:(GLvoid*)floats count:(NSUInteger)numberOfArrays;
+
+/** calls glUniformMatrix4fv only if the values are different than the previous call for this same shader program. */
+-(void) setUniformLocation:(NSUInteger)location withMatrix4fv:(GLvoid*)matrix_array count:(NSUInteger)numberOfMatrix;
+
+/** will update the MVP matrix on the MVP uniform if it is different than the previous call for this same shader program. */
+-(void) setUniformForModelViewProjectionMatrix;
+
+/** returns the vertexShader error log */
 - (NSString *)vertexShaderLog;
+
+/** returns the fragmentShader error log */
 - (NSString *)fragmentShaderLog;
+
+/** returns the program error log */
 - (NSString *)programLog;
 @end
