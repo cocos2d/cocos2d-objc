@@ -26,6 +26,8 @@ Contributors (alphabetically ordered):
 
 * Christoph Winkler (http://raketenbasis.de)
 	Word Wrap works on LabelTTF on Mac
+	bug fixes for failure to compile on 32-bit mac builds
+	created new drawPrimitives functions, ccDrawRect, ccDrawSolidRect and ccDrawSolidPoly.
 	
 * Jerrod Putman (http://www.tinytimgames.com)
 	Original author of ARC compatibility code
