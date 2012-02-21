@@ -233,7 +233,7 @@ static NSUInteger globalOrderOfArrival = 1;
 	isTransformDirty_ = isInverseDirty_ = YES;
 }
 
--(void) setIsRelativeAnchorPoint: (BOOL)newValue
+-(void) setIsRelativeAnchorPoint: (bool)newValue
 {
 	isRelativeAnchorPoint_ = newValue;
 	isTransformDirty_ = isInverseDirty_ = YES;

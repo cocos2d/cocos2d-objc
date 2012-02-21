@@ -165,23 +165,23 @@ enum {
 	CCActionManager	*actionManager_;
 
 	// Is running
-	BOOL isRunning_:1;
+	bool isRunning_:1;
 
 	// To reduce memory, place BOOLs that are not properties here:
-	BOOL isTransformDirty_:1;
-	BOOL isInverseDirty_:1;
+	bool isTransformDirty_:1;
+	bool isInverseDirty_:1;
 
 	// is visible
-	BOOL visible_:1;
+	bool visible_:1;
 	// If YES the transformtions will be relative to (-transform.x, -transform.y).
 	// Sprites, Labels and any other "small" object uses it.
 	// Scenes, Layers and other "whole screen" object don't use it.
-	BOOL isRelativeAnchorPoint_:1;
+	bool isRelativeAnchorPoint_:1;
 
-	BOOL isReorderChildDirty_:1;
+	bool isReorderChildDirty_:1;
 	
 	// userData is going to be retained.
-	BOOL retainUserData_:1;
+	bool retainUserData_:1;
 }
 
 /** The z order of the node relative to its "siblings": children of the same parent */
@@ -226,7 +226,7 @@ enum {
 /** A CCGrid object that is used when applying effects */
 @property(nonatomic,readwrite,retain) CCGridBase* grid;
 /** Whether of not the node is visible. Default is YES */
-@property(nonatomic,readwrite,assign) BOOL visible;
+@property(nonatomic,readwrite,assign) bool visible;
 /** anchorPoint is the point around which all transformations and positioning manipulations take place.
  It's like a pin in the node where it is "attached" to its parent.
  The anchorPoint is normalized, like a percentage. (0,0) means the bottom-left corner and (1,1) means the top-right corner.
@@ -248,14 +248,14 @@ enum {
 @property (nonatomic,readwrite) CGSize contentSize;
 
 /** whether or not the node is running */
-@property(nonatomic,readonly) BOOL isRunning;
+@property(nonatomic,readonly) bool isRunning;
 /** A weak reference to the parent */
 @property(nonatomic,readwrite,assign) CCNode* parent;
 /** If YES the transformtions will be relative to its anchor point.
  * Sprites, Labels and any other sizeble object use it have it enabled by default.
  * Scenes, Layers and other "whole screen" object don't use it, have it disabled by default.
  */
-@property(nonatomic,readwrite,assign) BOOL isRelativeAnchorPoint;
+@property(nonatomic,readwrite,assign) bool isRelativeAnchorPoint;
 /** A tag used to identify the node easily */
 @property(nonatomic,readwrite,assign) NSInteger tag;
 /** A custom user data pointer */
