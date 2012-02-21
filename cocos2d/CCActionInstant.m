@@ -78,11 +78,9 @@
 #pragma mark CCShow
 
 @implementation CCShow
--(void) stop
+-(void) update:(ccTime)time
 {
 	((CCNode *)target_).visible = YES;
-
-	[super stop];
 }
 
 -(CCFiniteTimeAction*) reverse
@@ -97,11 +95,9 @@
 #pragma mark CCHide
 
 @implementation CCHide
--(void) stop
+-(void) update:(ccTime)time
 {
 	((CCNode *)target_).visible = NO;
-
-	[super stop];
 }
 
 -(CCFiniteTimeAction*) reverse
@@ -116,11 +112,9 @@
 #pragma mark CCToggleVisibility
 
 @implementation CCToggleVisibility
--(void) stop
+-(void) update:(ccTime)time
 {
 	((CCNode *)target_).visible = !((CCNode *)target_).visible;
-
-	[super stop];
 }
 @end
 
@@ -143,11 +137,9 @@
 	return self;
 }
 
--(void) stop
+-(void) update:(ccTime)time
 {
 	[(CCSprite*)target_ setFlipX:flipX];
-
-	[super stop];
 }
 
 -(CCFiniteTimeAction*) reverse
@@ -181,11 +173,9 @@
 	return self;
 }
 
--(void) stop
+-(void) update:(ccTime)time
 {
 	[(CCSprite*)target_ setFlipY:flipY];
-
-	[super stop];
 }
 
 -(CCFiniteTimeAction*) reverse
@@ -226,11 +216,9 @@
 	return copy;
 }
 
--(void) stop
+-(void) update:(ccTime)time
 {
 	((CCNode *)target_).position = position;
-
-	[super stop];
 }
 
 @end
@@ -281,11 +269,9 @@
 	return copy;
 }
 
--(void) stop
+-(void) update:(ccTime)time
 {
 	[self execute];
-
-	[super stop];
 }
 
 -(void) execute
@@ -416,11 +402,9 @@
 	return copy;
 }
 
--(void) stop
+-(void) update:(ccTime)time
 {
 	[self execute];
-	
-	[super stop];
 }
 
 -(void) execute
@@ -459,11 +443,9 @@
 	return copy;
 }
 
--(void) stop
+-(void) update:(ccTime)time
 {
 	[self execute];
-	
-	[super stop];
 }
 
 -(void) execute
@@ -506,11 +488,9 @@
 	return copy;
 }
 
--(void) stop
+-(void) update:(ccTime)time
 {
 	[self execute];
-	
-	[super stop];
 }
 
 -(void) execute
