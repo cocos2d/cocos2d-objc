@@ -99,6 +99,10 @@ void ccGLUniformModelViewProjectionMatrix( CCGLProgram* program )
 	return self;
 }
 
+-(CCSpriteFrame*) displayedFrame
+{
+	return [self displayedFrame];
+}
 @end
 
 @implementation CCMenuItemSprite (Deprecated)

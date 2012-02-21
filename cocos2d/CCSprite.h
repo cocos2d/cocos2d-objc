@@ -275,7 +275,7 @@
 -(BOOL) isFrameDisplayed:(CCSpriteFrame*)frame;
 
 /** returns the current displayed frame. */
--(CCSpriteFrame*) displayedFrame;
+-(CCSpriteFrame*) displayFrame;
 
 #pragma mark CCSprite - Animation
 

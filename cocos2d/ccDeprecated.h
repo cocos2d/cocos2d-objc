@@ -85,6 +85,7 @@ DEPRECATED_ATTRIBUTE @interface MacView : CCGLView
 @interface CCSprite (Deprecated)
 +(id) spriteWithBatchNode:(CCSpriteBatchNode*)node rect:(CGRect)rect DEPRECATED_ATTRIBUTE;
 -(id) initWithBatchNode:(CCSpriteBatchNode*)node rect:(CGRect)rect DEPRECATED_ATTRIBUTE;
+-(CCSpriteFrame*) displayedFrame DEPRECATED_ATTRIBUTE;
 @end
 
 @interface CCMenuItemSprite (Deprecated)
