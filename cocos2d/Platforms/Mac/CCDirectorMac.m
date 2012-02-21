@@ -175,6 +175,10 @@
         [windowGLView_ makeKeyAndOrderFront:self];
 		[windowGLView_ makeMainWindow];
     }
+	
+	// issue #1189
+	[windowGLView_ makeFirstResponder:openGLview];
+
     isFullScreen_ = fullscreen;
 
     [openGLview retain]; // Retain +1
