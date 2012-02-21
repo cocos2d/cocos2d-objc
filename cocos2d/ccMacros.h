@@ -179,8 +179,8 @@ do	{																							\
 #define CC_NODE_DRAW_SETUP()																	\
 do {																							\
 	ccGLEnable( glServerState_ );																\
-	ccGLUseProgram( shaderProgram_->program_ );													\
-	ccGLUniformModelViewProjectionMatrix( shaderProgram_ );										\
+	[shaderProgram_ use];																		\
+	[shaderProgram_ setUniformForModelViewProjectionMatrix];									\
 } while(0)
 
 

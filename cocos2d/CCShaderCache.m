@@ -96,6 +96,8 @@ static CCShaderCache *_sharedShaderCache;
 	[programs_ setObject:p forKey:kCCShader_PositionTextureColor];
 	[p release];
 
+	CHECK_GL_ERROR_DEBUG();
+
 	// Position Texture Color alpha test
 	p = [[CCGLProgram alloc] initWithVertexShaderFilename:@"PositionTextureColor.vsh"
 								 fragmentShaderFilename:@"PositionTextureColorAlphaTest.fsh"];
@@ -109,6 +111,8 @@ static CCShaderCache *_sharedShaderCache;
 
 	[programs_ setObject:p forKey:kCCShader_PositionTextureColorAlphaTest];
 	[p release];
+
+	CHECK_GL_ERROR_DEBUG();
 
 	//
 	// Position, Color shader
@@ -125,6 +129,8 @@ static CCShaderCache *_sharedShaderCache;
 	[programs_ setObject:p forKey:kCCShader_PositionColor];
 	[p release];
 
+	CHECK_GL_ERROR_DEBUG();
+
 	//
 	// Position Texture shader
 	//
@@ -140,6 +146,8 @@ static CCShaderCache *_sharedShaderCache;
 	[programs_ setObject:p forKey:kCCShader_PositionTexture];
 	[p release];
 
+	CHECK_GL_ERROR_DEBUG();
+
 	//
 	// Position, Texture attribs, 1 Color as uniform shader
 	//
@@ -154,6 +162,8 @@ static CCShaderCache *_sharedShaderCache;
 
 	[programs_ setObject:p forKey:kCCShader_PositionTexture_uColor];
 	[p release];
+	
+	CHECK_GL_ERROR_DEBUG();
 
 	//
 	// Position Texture A8 Color shader

@@ -78,7 +78,7 @@
 #import "CCConfiguration.h"
 #import "CCTexturePVR.h"
 #import "CCGLProgram.h"
-#import "ccGLState.h"
+#import "ccGLStateCache.h"
 #import "CCShaderCache.h"
 
 #import "Support/ccUtils.h"
@@ -659,8 +659,8 @@ static BOOL PVRHaveAlphaPremultiplied_ = NO;
 		width + point.x,	height  + point.y };
 
 	ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position | kCCVertexAttribFlag_TexCoords );
-	ccGLUseProgram( shaderProgram_->program_ );
-	ccGLUniformModelViewProjectionMatrix( shaderProgram_ );
+	[shaderProgram_ use];
+	[shaderProgram_ setUniformForModelViewProjectionMatrix];
 
 	ccGLBindTexture2D( name_ );
 
@@ -687,9 +687,10 @@ static BOOL PVRHaveAlphaPremultiplied_ = NO;
 		rect.origin.x + rect.size.width,						rect.origin.y + rect.size.height };
 
 
+	[shaderProgram_ use];
+	[shaderProgram_ setUniformForModelViewProjectionMatrix];    
+
 	ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position | kCCVertexAttribFlag_TexCoords );
-	ccGLUseProgram( shaderProgram_->program_ );
-	ccGLUniformModelViewProjectionMatrix( shaderProgram_ );
 
 	ccGLBindTexture2D( name_ );
 

@@ -34,7 +34,7 @@
 #import "ccMacros.h"
 #import "CCShaderCache.h"
 #import "CCGLProgram.h"
-#import "ccGLState.h"
+#import "ccGLStateCache.h"
 #import "Support/TransformUtils.h"
 #import "Support/CGPointExtension.h"
 
@@ -309,7 +309,8 @@
 
 -(id) init
 {
-	return [self initWithColor:ccc4(0,0,0,0) width:0 height:0];
+	CGSize s = [[CCDirector sharedDirector] winSize];
+	return [self initWithColor:ccc4(0,0,0,0) width:s.width height:s.height];
 }
 
 // Designated initializer

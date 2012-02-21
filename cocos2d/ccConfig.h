@@ -37,14 +37,29 @@
 
  If this functionality is disabled, then ccGLUseProgram(), ccGLDeleteProgram(), ccGLBlendFunc() will call the GL ones, without using the cache.
 
- It is recommened to enable whenever possible to improve speed.
+ It is recommened to enable it whenever possible to improve speed.
  If you are migrating your code from GL ES 1.1, then keep it disabled. Once all your code works as expected, turn it on.
+
+ Default value: Disabled by default
 
  @since v2.0.0
  */
 #ifndef CC_ENABLE_GL_STATE_CACHE
 #define CC_ENABLE_GL_STATE_CACHE 0
 #endif
+
+/** @def CC_ENABLE_DEPRECATED
+ If enabled, cocos2d will compile all deprecated methods, classes and free functions. Also, renamed constants will be active as well.
+ Enable it only when migrating a v1.0 or earlier v2.0 versions to the most recent cocdos2d version.
+ 
+ Default value: Enabled by default
+ 
+ @since v2.0.0
+ */
+#ifndef CC_ENABLE_DEPRECATED
+#define CC_ENABLE_DEPRECATED 1
+#endif
+
 
 /** @def CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
  If enabled, the texture coordinates will be calculated by using this formula:
@@ -70,15 +85,15 @@
 #define CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL 0
 #endif
 
-/** @def CC_DIRECTOR_FPS_INTERVAL
- Seconds between FPS updates.
- 0.5 seconds, means that the FPS number will be updated every 0.5 seconds.
- Having a bigger number means a more reliable FPS
+/** @def CC_DIRECTOR_STATS_INTERVAL
+ Seconds between stats updates.
+ 0.5 seconds, means that the stats will be updated every 0.5 seconds.
+ Having a bigger number means more stable stats
 
  Default value: 0.1f
  */
-#ifndef CC_DIRECTOR_FPS_INTERVAL
-#define CC_DIRECTOR_FPS_INTERVAL (0.1f)
+#ifndef CC_DIRECTOR_STATS_INTERVAL
+#define CC_DIRECTOR_STATS_INTERVAL (0.1f)
 #endif
 
 /** @def CC_DIRECTOR_STATS_POSITION

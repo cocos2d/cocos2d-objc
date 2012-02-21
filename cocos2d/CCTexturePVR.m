@@ -62,7 +62,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #import "CCTexturePVR.h"
 #import "ccMacros.h"
 #import "CCConfiguration.h"
-#import "ccGLState.h"
+#import "ccGLStateCache.h"
 #import "Support/ccUtils.h"
 #import "Support/CCFileUtils.h"
 #import "Support/ZipUtils.h"

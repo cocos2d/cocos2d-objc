@@ -49,6 +49,8 @@ static NSString *transitions[] = {
 	@"ActionFollow",
 	@"ActionProperty",
 	@"ActionTargeted",
+
+	@"Issue1305",
 };
 
 Class nextAction()
@@ -185,7 +187,11 @@ Class restartAction()
 {
 	CGSize s = [[CCDirector sharedDirector] winSize];
 
-	if( numberOfSprites == 1 ) {
+	if( numberOfSprites == 0 ) {
+		tamara.visible = NO;
+		kathia.visible = NO;
+		grossini.visible = NO;
+	} else if( numberOfSprites == 1 ) {
 		tamara.visible = NO;
 		kathia.visible = NO;
 		[grossini setPosition:ccp(s.width/2, s.height/2)];
@@ -523,12 +529,6 @@ Class restartAction()
 -(NSString *) title
 {
 	return @"TintTo / TintBy";
-}
-@end
-
-@interface ActionAnimate()
-{ 
-	id observer_;
 }
 @end
 
@@ -1137,6 +1137,8 @@ Class restartAction()
 
 @end
 
+#pragma mark - ActionTargeted
+
 @implementation ActionTargeted
 -(void) onEnter
 {
@@ -1169,6 +1171,50 @@ Class restartAction()
 	return @"Action that runs on another target. Useful for sequences";
 }
 @end
+
+#pragma mark - Issue1305
+
+@implementation Issue1305
+-(void) onEnter
+{
+	[super onEnter];
+	
+	[self centerSprites:0];
+	
+	spriteTmp_ = [CCSprite spriteWithFile:@"grossini.png"];
+	[spriteTmp_ runAction:[CCCallBlockN actionWithBlock:^(CCNode* node) {
+		NSLog(@"This message SHALL ONLY appear when the sprite is added to the scene, NOT BEFORE");
+	}] ];
+	
+	
+	[spriteTmp_ retain];
+	
+	[self scheduleOnce:@selector(addSprite:) delay:2];
+}
+
+-(void) addSprite:(ccTime)dt
+{
+	[spriteTmp_ setPosition:ccp(250,250)];
+	[self addChild:spriteTmp_];
+}
+	
+
+-(NSString *) title
+{
+	return @"Issue 1305";
+}
+
+-(NSString*) subtitle
+{
+	return @"In two seconds you should see a message on the console. NOT BEFORE.";
+}
+
+- (void)dealloc {
+    [spriteTmp_ release];
+    [super dealloc];
+}
+@end
+
 
 
 // CLASS IMPLEMENTATIONS

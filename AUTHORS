@@ -32,15 +32,18 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	TextureCache: Use blocks instead of CCCall actions to dispatch code
 	TextureCache: Uses a serial queue to protect access to the texture dictionary. No need to use @syncronize on CCTexture2D
 
+* Christoph Winkler:
+	SpriteFrame and Animation compile on 32-bit Mac
+	
+* Dmitry Kudryashov:
+	Director could be re-initialized. Patch.
+
 * Giles Hammond:
 	iOS Director uses DisplayLink timestamp for more stable delta times
 
-* Lam Pham (http://www.fancyratstudios.com/)
-	CCProgressTimer: Improved API
-	CCProgressTimer: Works with Tint and opacity
-	Added Tint + opacity test cases for CCProgressTimer
-	CCProgressTimer: Supports rotates SpriteFrames
-
+* Goffredo Marocchi (https://github.com/panajev):
+	Original author/mentor of caching uniforms in CCGLProgram
+	
 * Justin Graham (http://www.zynga.com)
 	CCGLProgram: fixes in fragmentShaderLog
 	CCShaderCache: Added addProgram:forKey: method
@@ -49,6 +52,12 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 * Karl Stenerud (http://www.mindsnacks.com/):
 	Author of ActionTargeted
 
+* Lam Pham (http://www.fancyratstudios.com/)
+	CCProgressTimer: Improved API
+	CCProgressTimer: Works with Tint and opacity
+	Added Tint + opacity test cases for CCProgressTimer
+	CCProgressTimer: Supports rotates SpriteFrames
+
 * manucorporat (manu.valladolid) (http://forzefield.com/):
 	Author of new Retina Display code:
 		Intead of recalculating the position of the nodes, the ViewPort is increased.
@@ -56,9 +65,15 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	Author of new MotionStreak code:
 		Much faster rendering. No need to use Ribbon
 
-* Mark Wei ( http://www.facebook.com/markwei ):
+* magicyu (AKA crmagicxxx):
+	LabelBMFont y-offset work as expected on RetinaDisplay (patch).
+
+* Mark Wei (http://www.facebook.com/markwei):
 	Added support for alignment in multiline in CCLabelBMFont objects
 	Author of alignment multiline test case
+
+* Nicky Weber (https://github.com/nickyEnjoysWoogoo):
+	Added ccDrawFilledPoly to DrawingPrimitives
 
 * Scott Lembcke (AKA slembcke) (http://chipmunk-physics.net/)
 	Mentor & contributor of new Physics + cocos2d integration via nodeToParentTransform
@@ -84,10 +99,13 @@ cocos2d for iPhone authors for v1.1
 
 Lead Developers:
 	Marco Tillemans (http://www.welcometothefabrik.com/)
-	Ricardo Quesada (http://www.cocos2d-iphone.org/)
+	Ricardo Quesada (http://www.cocos2d-iphone.org)
 
 
 Contributors (alphabetically ordered):
+
+* akotiranta 
+	backported CCLabelBMFont implementation from 2.0 branch
 
 * Alexander Carter
 	Sprite: fixed possible opacity bug in setColor
@@ -104,6 +122,9 @@ Contributors (alphabetically ordered):
 * John Wordsworth ( http://www.johnwordsworth.com/ )
 	CCAnimationCache: Added animation data format. Can be loaded into the animation cache
 
+* Karl Stenerud (http://www.mindsnacks.com/):
+	Author of ActionTargeted
+
 * Marco Tillemans (AKA araker: http://www.welcometothefabrik.com/)
 	Texture2D: drawInRect / drawAtPoint disables color state
 	SpriteBatchNode: fixed bug in removeAllChildrenWithCleanup
@@ -113,11 +134,18 @@ Contributors (alphabetically ordered):
 	Actions: Instant actions can be sequenceables
 	Actions: duration is not divided by zero
 	Actions: Repeat & RepeatForever work as expected
+	Co-author of animated particle system
 	Author of ParticleBatchNode node
 	Improved ESRenderer layoutSubview
 	Improved Debug Drawing for Sprite batched node	
 	EAGLView destroys and recreates all OpenGL buffers correctly
 	TileMap: flipped tiles can be changed during runtime
+
+* Martin 
+	Co-author of animated particle system
+
+* Nicky Weber (https://github.com/nickyEnjoysWoogoo):
+	Added convenience function to create a ccColor4F from color components	
 
 * podhrask...@gmail.com
 	TouchDispatcher: correctly handles addition and removal of handlers when being inside a touch handler. patch

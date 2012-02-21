@@ -283,15 +283,18 @@ static NSUInteger globalOrderOfArrival = 1;
 
 -(void) setUserData:(void *)userData retainData:(BOOL)retainData
 {
-	if( retainUserData_ )
-		[userData_ release];
-	
-	retainUserData_ = retainData;
-	
-	userData_ = userData;
-	
-	if( retainUserData_ )
-		[userData_ retain];
+	if( userData_ != userData ) {
+
+		if( retainUserData_ )
+			[userData_ release];
+		
+		retainUserData_ = retainData;
+		
+		userData_ = userData;
+		
+		if( retainUserData_ )
+			[userData_ retain];
+	}
 }
 
 #pragma mark CCNode Composition

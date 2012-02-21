@@ -39,7 +39,7 @@
 #import "../../CCScheduler.h"
 #import "../../ccMacros.h"
 #import "../../CCGLProgram.h"
-#import "../../ccGLState.h"
+#import "../../ccGLStateCache.h"
 
 // external
 #import "kazmath/kazmath.h"
@@ -175,6 +175,10 @@
         [windowGLView_ makeKeyAndOrderFront:self];
 		[windowGLView_ makeMainWindow];
     }
+	
+	// issue #1189
+	[windowGLView_ makeFirstResponder:openGLview];
+
     isFullScreen_ = fullscreen;
 
     [openGLview retain]; // Retain +1
@@ -195,9 +199,6 @@
 {
 	if( view != view_) {
 
-		[view_ release];
-		view_ = [view retain];
-
 		[super setView:view];
 
 		// cache the NSWindow and NSOpenGLView created from the NIB
@@ -206,11 +207,6 @@
 			originalWinSize_ = winSizeInPixels_;
 		}
 	}
-}
-
--(CCGLView*) view
-{
-	return view_;
 }
 
 -(int) resizeMode
