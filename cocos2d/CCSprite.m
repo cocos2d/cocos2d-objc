@@ -746,38 +746,38 @@
 	SET_DIRTY_RECURSIVELY();
 }
 
--(void)setIsRelativeAnchorPoint:(bool)relative
+-(void)setIsRelativeAnchorPoint:(BOOL)relative
 {
 	NSAssert( ! batchNode_, @"relativeTransformAnchor is invalid in CCSprite");
 	[super setIsRelativeAnchorPoint:relative];
 }
 
--(void)setVisible:(bool)v
+-(void)setVisible:(BOOL)v
 {
 	[super setVisible:v];
 	SET_DIRTY_RECURSIVELY();
 }
 
--(void)setFlipX:(bool)b
+-(void)setFlipX:(BOOL)b
 {
 	if( flipX_ != b ) {
 		flipX_ = b;
 		[self setTextureRect:rect_ rotated:rectRotated_ untrimmedSize:contentSize_];
 	}
 }
--(bool) flipX
+-(BOOL) flipX
 {
 	return flipX_;
 }
 
--(void) setFlipY:(bool)b
+-(void) setFlipY:(BOOL)b
 {
 	if( flipY_ != b ) {
 		flipY_ = b;
 		[self setTextureRect:rect_ rotated:rectRotated_ untrimmedSize:contentSize_];
 	}
 }
--(bool) flipY
+-(BOOL) flipY
 {
 	return flipY_;
 }

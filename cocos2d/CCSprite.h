@@ -70,10 +70,10 @@
 	NSUInteger				atlasIndex_;			// Absolute (real) Index on the batch node
 	CCSpriteBatchNode		*batchNode_;			// Used batch node (weak reference)
 	CGAffineTransform		transformToBatch_;		//
-	bool					dirty_:1;				// Sprite needs to be updated
-	bool					recursiveDirty_:1;		// Subchildren needs to be updated
-	bool					hasChildren_:1;			// optimization to check if it contain children
-	bool					shouldBeHidden_:1;		// should not be drawn because one of the ancestors is not visible
+	BOOL					dirty_;					// Sprite needs to be updated
+	BOOL					recursiveDirty_;		// Subchildren needs to be updated
+	BOOL					hasChildren_;			// optimization to check if it contain children
+	BOOL					shouldBeHidden_;		// should not be drawn because one of the ancestors is not visible
 
 	//
 	// Data used when the sprite is self-rendered
@@ -89,7 +89,7 @@
 	CGRect	rect_;
 
 	// texture
-	bool	rectRotated_:1;
+	BOOL	rectRotated_;
 
 	// Offset Position (used by Zwoptex)
 	CGPoint	offsetPosition_;
@@ -102,15 +102,15 @@
 	GLubyte		opacity_;
 	ccColor3B	color_;
 	ccColor3B	colorUnmodified_;
-	bool		opacityModifyRGB_:1;
+	BOOL		opacityModifyRGB_;
 
 	// image is flipped
-	bool	flipX_:1;
-	bool	flipY_:1;
+	BOOL	flipX_:1;
+	BOOL	flipY_:1;
 }
 
 /** whether or not the Sprite needs to be updated in the Atlas */
-@property (nonatomic,readwrite) bool dirty;
+@property (nonatomic,readwrite) BOOL dirty;
 /** the quad (tex coords, vertex coords and color) information */
 @property (nonatomic,readonly) ccV3F_C4B_T2F_Quad quad;
 /** The index used on the TextureAtlas. Don't modify this value unless you know what you are doing */
@@ -118,7 +118,7 @@
 /** returns the texture rect of the CCSprite in points */
 @property (nonatomic,readonly) CGRect textureRect;
 /** returns whether or not the texture rectangle is rotated */
-@property (nonatomic,readonly) bool textureRectRotated;
+@property (nonatomic,readonly) BOOL textureRectRotated;
 /** whether or not the sprite is flipped horizontally.
  It only flips the texture of the sprite, and not the texture of the sprite's children.
  Also, flipping the texture doesn't alter the anchorPoint.
@@ -126,7 +126,7 @@
 
 	sprite.scaleX *= -1;
  */
-@property (nonatomic,readwrite) bool flipX;
+@property (nonatomic,readwrite) BOOL flipX;
 /** whether or not the sprite is flipped vertically.
  It only flips the texture of the sprite, and not the texture of the sprite's children.
  Also, flipping the texture doesn't alter the anchorPoint.
@@ -134,7 +134,7 @@
 
 	sprite.scaleY *= -1;
  */
-@property (nonatomic,readwrite) bool flipY;
+@property (nonatomic,readwrite) BOOL flipY;
 /** opacity: conforms to CCRGBAProtocol protocol */
 @property (nonatomic,readwrite) GLubyte opacity;
 /** RGB colors: conforms to CCRGBAProtocol protocol */

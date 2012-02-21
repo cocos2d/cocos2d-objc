@@ -27,7 +27,7 @@ void removeShape( cpBody *body, cpShape *shape, void *data )
 // this method will only get called if the sprite is batched.
 // return YES if the physics values (angles, position ) changed
 // If you return NO, then nodeToParentTransform won't be called.
--(bool) dirty
+-(BOOL) dirty
 {
 	return YES;
 }
