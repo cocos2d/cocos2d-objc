@@ -523,7 +523,7 @@ int compareInts (const void * a, const void * b)
 		else {
 
 			NSUInteger z = pos.x + pos.y * layerSize_.width;
-			id sprite = [self getChildByTag:z];
+			CCSprite *sprite = (CCSprite *)[self getChildByTag:z];
 			if( sprite ) {
 				CGRect rect = [tileset_ rectForGID:gid];
 				[sprite setTextureRectInPixels:rect rotated:NO untrimmedSize:rect.size];

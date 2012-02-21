@@ -67,10 +67,21 @@ void ccDrawPoints( const CGPoint *points, NSUInteger numberOfPoints );
 /** draws a line given the origin and destination point measured in points. */
 void ccDrawLine( CGPoint origin, CGPoint destination );
 
+/** draws a rectangle given the origin and destination point measured in points. */
+void ccDrawRect( CGPoint origin, CGPoint destination );
+
+/** draws a solid rectangle given the origin and destination point measured in points. */
+void ccDrawSolidRect( CGPoint origin, CGPoint destination );
+
 /** draws a poligon given a pointer to CGPoint coordiantes and the number of vertices measured in points.
  The polygon can be closed or open
  */
 void ccDrawPoly( const CGPoint *vertices, NSUInteger numOfVertices, BOOL closePolygon );
+
+/** draws a solid poligon given a pointer to CGPoint coordiantes and the number of vertices measured in points.
+ The polygon can be closed or open
+ */
+void ccDrawSolidPoly( const CGPoint *vertices, NSUInteger numOfVertices, BOOL closePolygon );
 
 /** draws a circle given the center, radius and number of segments measured in points */
 void ccDrawCircle( CGPoint center, float radius, float angle, NSUInteger segments, BOOL drawLineToCenter);
