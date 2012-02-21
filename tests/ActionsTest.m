@@ -51,6 +51,8 @@ static NSString *transitions[] = {
 	@"ActionTargeted",
 
 	@"Issue1305",
+	@"Issue1305_2",
+
 };
 
 Class nextAction()
@@ -1215,6 +1217,56 @@ Class restartAction()
 }
 @end
 
+#pragma mark - Issue1305_2
+
+@implementation Issue1305_2
+-(void) onEnter
+{
+	[super onEnter];
+	
+	[self centerSprites:0];
+	
+	CCSprite *spr = [CCSprite spriteWithFile:@"grossini.png"];
+	spr.position = ccp(200,200);
+	[self addChild:spr];
+	
+	id act1 = [CCMoveBy actionWithDuration:2 position:ccp(0, 100)];
+	id act2 = [CCCallBlock actionWithBlock:^{
+		NSLog(@"1st block");
+	}];
+	id act3 = [CCMoveBy actionWithDuration:2 position:ccp(0, -100)];
+	id act4 = [CCCallBlock actionWithBlock:^{
+		NSLog(@"2nd block");
+	}];
+	id act5 = [CCMoveBy actionWithDuration:2 position:ccp(100, -100)];
+	id act6 = [CCCallBlock actionWithBlock:^{
+		NSLog(@"3rd block");
+	}];
+	id act7 = [CCMoveBy actionWithDuration:2 position:ccp(-100, 0)];
+	id act8 = [CCCallBlock actionWithBlock:^{
+		NSLog(@"4th block");
+	}];
+
+	id actF = [CCSequence actions:act1, act2, act3, act4, act5, act6, act7, act8, nil];
+
+//	[spr runAction:actF];
+	[[[CCDirector sharedDirector] actionManager] addAction:actF target:spr paused:NO];
+}
+
+-(NSString *) title
+{
+	return @"Issue 1305 #2";
+}
+
+-(NSString*) subtitle
+{
+	return @"See console. You should only see one message for each block";
+}
+
+- (void)dealloc {
+    [super dealloc];
+}
+@end
 
 
 // CLASS IMPLEMENTATIONS
