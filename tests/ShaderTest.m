@@ -640,6 +640,7 @@ enum {
 //		CCLOG(@"Retina Display Not supported");
 
 	CCScene *scene = [CCScene node];
+	
 	[scene addChild: [nextAction() node]];
 
 	[director_ pushScene: scene];
