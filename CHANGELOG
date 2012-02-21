@@ -4,7 +4,8 @@ version 1.1-beta2 xx - 2012
 			Animation: Added new animation format that supports delays per frame and notifications per frame
 			Actions: Added ActionTargeted action. Useful to target other nodes from a sequence.
 . [NEW] All: Code is compatible with ARC (issue #1199) 
-. [NEW] DrawPrimitives: Added new functions, ccDrawRect, ccDrawSolidRect and ccDrawSolidPoly.
+. [NEW] DrawPrimitives: Added new functions, ccDrawRect, ccDrawSolidRect, ccDrawSolidPoly
+. [NEW] DrawPrimitives: Added batch drawing of lines, ccDrawLines (issue #1081)
 . [NEW] Node: Added onExitTransitionDidStart (issue #792)
 . [NEW] ParticleSystem: supports animations in new animation format 
 . [NEW] TileMap: supports in-memory TMX map creation (issue #1239)
