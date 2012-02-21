@@ -89,12 +89,12 @@
 
 -(void) step: (ccTime) dt
 {
-	NSLog(@"[Action step]. override me");
+	CCLOG(@"[Action step]. override me");
 }
 
 -(void) update: (ccTime) time
 {
-	NSLog(@"[Action update]. override me");
+	CCLOG(@"[Action update]. override me");
 }
 @end
 

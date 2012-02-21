@@ -25,6 +25,7 @@ version 2.0-rc0 XX-Feb-2012
 . [NEW] Sprite: spriteWithBatchNode / initWithBatchNode were removed. Use initWithTexture:batch.texture / spriteWithTexture:batch.texture instead
 . [NEW] TextureAtlas: Added option to not use VAO (might be a bit slower, but it consumes less memory)
 . [NEW] TileMap: polygon, polilines and gid are parsed from the objects (issue #1311)
+. [FIX] All: replaced some NSLog() with CCLOG() is some parts of the code (issue #1250)
 . [FIX] Actions: Instant actions are trigged on stop and not start (issue #1305)
 . [FIX] CocosDenshion: fixed memory leak on CDBufferLoadRequest (issue #1286)
 . [FIX] Director: It is possible to re-init a director after it has been quit (issue #1313)

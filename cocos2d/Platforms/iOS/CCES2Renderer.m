@@ -164,7 +164,7 @@
 	GLenum error;
 	if( (error=glCheckFramebufferStatus(GL_FRAMEBUFFER)) != GL_FRAMEBUFFER_COMPLETE)
 	{
-		NSLog(@"Failed to make complete framebuffer object 0x%X", error);
+		CCLOG(@"Failed to make complete framebuffer object 0x%X", error);
 		return NO;
 	}
 
