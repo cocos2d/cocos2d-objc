@@ -42,7 +42,11 @@
  @since v2.0
  */
 @interface CCAnimationFrame : NSObject <NSCopying>
-{}
+{
+    CCSpriteFrame* spriteFrame_;
+    float delayUnits_;
+    NSDictionary *userInfo_;
+}
 /** CCSpriteFrameName to be used */
 @property (nonatomic, readwrite, retain) CCSpriteFrame* spriteFrame;
 
