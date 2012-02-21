@@ -55,7 +55,9 @@
 @end
 
 @interface ActionAnimate : ActionDemo
-{}
+{
+	id observer_;
+}
 @end
 
 @interface ActionSequence : ActionDemo

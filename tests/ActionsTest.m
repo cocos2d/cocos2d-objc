@@ -532,12 +532,6 @@ Class restartAction()
 }
 @end
 
-@interface ActionAnimate()
-{ 
-	id observer_;
-}
-@end
-
 @implementation ActionAnimate
 -(void) onEnter
 {
