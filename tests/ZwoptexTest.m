@@ -212,10 +212,10 @@ static int spriteFrameIndex = 0;
 		spriteFrameIndex = 1;
 	}
 	[sprite1 setDisplayFrame:[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:[NSString stringWithFormat:@"grossini_dance_%02d.png",spriteFrameIndex]]];
-	NSLog(@"Sprite 1 Displayed Frame: %@", [sprite1 displayedFrame]);
+	NSLog(@"Sprite 1 Displayed Frame: %@", [sprite1 displayFrame]);
 
 	[sprite2 setDisplayFrame:[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:[NSString stringWithFormat:@"grossini_dance_generic_%02d.png",spriteFrameIndex]]];
-	NSLog(@"Sprite 2 Displayed Frame: %@", [sprite2 displayedFrame]);
+	NSLog(@"Sprite 2 Displayed Frame: %@", [sprite2 displayFrame]);
 
 }
 

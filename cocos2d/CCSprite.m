@@ -901,7 +901,7 @@
 			CGPointEqualToPoint( frame.offset, unflippedOffsetPositionFromCenter_ ) );
 }
 
--(CCSpriteFrame*) displayedFrame
+-(CCSpriteFrame*) displayFrame
 {
 	return [CCSpriteFrame frameWithTexture:texture_
 							  rectInPixels:CC_RECT_POINTS_TO_PIXELS(rect_)
