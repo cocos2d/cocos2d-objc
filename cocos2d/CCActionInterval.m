@@ -1159,6 +1159,11 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 #pragma mark -
 #pragma mark TintTo
 @implementation CCTintTo
++(id) actionWithDuration:(ccTime)t color:(ccColor3B)color
+{
+	return [[(CCTintTo*)[ self alloc] initWithDuration:t red:color.r green:color.g blue:color.b] autorelease];
+}
+
 +(id) actionWithDuration:(ccTime)t red:(GLubyte)r green:(GLubyte)g blue:(GLubyte)b
 {
 	return [[(CCTintTo*)[ self alloc] initWithDuration:t red:r green:g blue:b] autorelease];

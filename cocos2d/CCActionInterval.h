@@ -376,6 +376,7 @@ typedef struct _ccBezierConfig {
 	ccColor3B from_;
 }
 /** creates an action with duration and color */
++(id) actionWithDuration:(ccTime)t color:(ccColor3B)color;
 +(id) actionWithDuration:(ccTime)duration red:(GLubyte)red green:(GLubyte)green blue:(GLubyte)blue;
 /** initializes the action with duration and color */
 -(id) initWithDuration:(ccTime)duration red:(GLubyte)red green:(GLubyte)green blue:(GLubyte)blue;
