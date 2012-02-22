@@ -17,7 +17,7 @@ version 2.0-rc0 XX-Feb-2012
 		Added KVO for isPaused (issue #1324)
 . [NEW] DrawingPrimitives: Added ccDrawPoly() free function
 . [NEW] LabelTTF: fontName and fontSize are properties
-. [NEW] LabelBMFont: added setFntFile method
+. [NEW] LabelBMFont: added setFntFile method (issue #1119)
 . [NEW] Menu: could be created/initialized using NSArray
 			Menu could be created without items
 			Menu could be enabled/disabled (no events will be accepted when it is disabled)
@@ -107,7 +107,7 @@ version 2.0-beta 27-Nov-2011
 		events fixes
 		ARC compatible
 . [NEW] Director: Added API to display Milliseconds Per Frame
-. [NEW] LabelBMFont: Added support for alignment, also in multiline
+. [NEW] LabelBMFont: Added support for alignment, also in multiline (issue #1178)
 . [NEW] Node: Added glServerState property. Ideal to enable/disabled blending for certain nodes.
 . [NEW] Particle: ParticlePoint removed
 . [NEW] Shader: Added AlphaTesting shader
