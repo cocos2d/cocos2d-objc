@@ -1407,11 +1407,15 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 	NSArray *frames = [animation_ frames];
 	NSUInteger numberOfFrames = [frames count];
 	
-	NSUInteger idx = round(t * (numberOfFrames-1));
-	
+    NSUInteger idx = t * numberOfFrames;
+    if( idx >= numberOfFrames ) {
+        idx = numberOfFrames - 1;
+    }
+    
 	CCSprite *sprite = target_;
-	if (! [sprite isFrameDisplayed: [frames objectAtIndex: idx]] )
+	if (! [sprite isFrameDisplayed: [frames objectAtIndex: idx]] ) {
 		[sprite setDisplayFrame: [frames objectAtIndex:idx]];
+    }
 }
 
 - (CCActionInterval *) reverse
@@ -1508,7 +1512,9 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 	NSArray *frames = [animation_ frames];
 	NSUInteger numberOfFrames = [frames count];
 	
-    NSUInteger idx = round(t * (numberOfFrames-1));
+    NSUInteger idx = t * numberOfFrames;
+    if( idx >= numberOfFrames )
+        idx = numberOfFrames - 1;
 
     idx = (idx + startIndex_) % numberOfFrames;
 
