@@ -32,9 +32,6 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	TextureCache: Use blocks instead of CCCall actions to dispatch code
 	TextureCache: Uses a serial queue to protect access to the texture dictionary. No need to use @syncronize on CCTexture2D
 
-* Christoph Winkler:
-	SpriteFrame and Animation compile on 32-bit Mac
-	
 * Dmitry Kudryashov:
 	Director could be re-initialized. Patch.
 
@@ -104,6 +101,9 @@ Lead Developers:
 
 Contributors (alphabetically ordered):
 
+* andy
+	fix for incorrect CCRepeat behavior
+	
 * akotiranta 
 	backported CCLabelBMFont implementation from 2.0 branch
 
@@ -112,7 +112,9 @@ Contributors (alphabetically ordered):
 
 * Christoph Winkler (http://raketenbasis.de)
 	Word Wrap works on LabelTTF on Mac
-
+	bug fixes for failure to compile on 32-bit mac builds
+	created new drawPrimitives functions, ccDrawRect, ccDrawSolidRect and ccDrawSolidPoly.
+	
 * Jerrod Putman (http://www.tinytimgames.com)
 	Original author of ARC compatibility code
 	

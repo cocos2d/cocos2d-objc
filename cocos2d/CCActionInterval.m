@@ -315,7 +315,7 @@
 
 
 // issue #80. Instead of hooking step:, hook update: since it can be called by any
-// container action like Repeat, Sequence, AccelDeccel, etc..
+// container action like CCRepeat, CCSequence, CCEase, etc..
 -(void) update:(ccTime) dt
 {
 	if (dt >= nextDt_)
@@ -330,17 +330,24 @@
 			[innerAction_ startWithTarget:target_];
 			nextDt_ += [innerAction_ duration]/duration_;
 		}
-
-		//don't set a instantaction back or update it, it has no use because it has no duration
+		
+		// fix for issue #1288, incorrect end value of repeat
+		if(dt == 1.0 && total_ < times_) 
+		{
+			total_++;
+		}
+		
+		// don't set a instantaction back or update it, it has no use because it has no duration
 		if (!isActionInstant_)
 		{
 			if (total_ == times_)
 			{
 				[innerAction_ update:0];
 				[innerAction_ stop];
-			}//issue #390 prevent jerk, use right update
+			}
 			else
 			{
+				// issue #390 prevent jerk, use right update
 				[innerAction_ update:dt - (nextDt_ - innerAction_.duration/duration_)];
 			}
 		}
