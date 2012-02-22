@@ -48,6 +48,14 @@ typedef struct _ccColor3B
 	GLubyte b;
 } ccColor3B;
 
+/** returns YES if both ccColor4F are equal. Otherwise it returns NO.
+ @since v1.1-rsanchez
+ */
+static inline BOOL ccc3BEqual(ccColor3B a, ccColor3B b)
+{
+	return a.r == b.r && a.g == b.g && a.b == b.b;
+}
+
 //! helper macro that creates an ccColor3B type
 static inline ccColor3B
 ccc3(const GLubyte r, const GLubyte g, const GLubyte b)
