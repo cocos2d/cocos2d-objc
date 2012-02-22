@@ -321,7 +321,7 @@
 		{
 			if (total_ == times_)
 			{	
-				[innerAction_ update:0];
+				[innerAction_ update:1];
 				[innerAction_ stop];
 			}//issue #390 prevent jerk, use right update
 			else 
