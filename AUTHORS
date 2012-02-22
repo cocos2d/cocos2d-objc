@@ -72,6 +72,9 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 * Nicky Weber (https://github.com/nickyEnjoysWoogoo):
 	Added ccDrawFilledPoly to DrawingPrimitives
 
+* Plangworthy:
+	Music: Fixed issue when Background music looping was not respected on resume if playback was stopped
+	
 * Scott Lembcke (AKA slembcke) (http://chipmunk-physics.net/)
 	Mentor & contributor of new Physics + cocos2d integration via nodeToParentTransform
 

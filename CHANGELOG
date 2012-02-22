@@ -29,6 +29,7 @@ version 2.0-rc0 XX-Feb-2012
 . [FIX] All: replaced some NSLog() with CCLOG() is some parts of the code (issue #1250)
 . [FIX] Actions: Instant actions are trigged on stop and not start (issue #1305)
 . [FIX] CocosDenshion: fixed memory leak on CDBufferLoadRequest (issue #1286)
+. [FIX] CocosDenshion: fixed issue when background music looping was not respected on resume if playback was stopped (issue #1284)
 . [FIX] Director: It is possible to re-init a director after it has been quit (issue #1313)
 . [FIX] Director: becomes firstResponder after toggling fullscreen (Mac only) (issue #1189)
 . [FIX] DrawingPrimitives: drawColor4f() uses GLFloat instead of GLbyte (issue #1307)
