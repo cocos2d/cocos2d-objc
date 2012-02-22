@@ -68,6 +68,9 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 * Mark Wei (http://www.facebook.com/markwei):
 	Added support for alignment in multiline in CCLabelBMFont objects
 	Author of alignment multiline test case
+	
+* mlilback:
+	Added KVO pattern for CCDirector#isPaused
 
 * Nicky Weber (https://github.com/nickyEnjoysWoogoo):
 	Added ccDrawFilledPoly to DrawingPrimitives
