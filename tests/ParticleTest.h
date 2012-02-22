@@ -158,6 +158,10 @@
 }
 @end
 
+@interface Issue1201 : ParticleDemo
+{}
+@end
+
 @interface ParticleBatchHybrid : ParticleDemo
 {
 	CCNode *parent1;

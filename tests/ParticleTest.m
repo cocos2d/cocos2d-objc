@@ -59,6 +59,7 @@ static NSString *transitions[] = {
 	@"Issue704",
 	@"Issue872",
 	@"Issue870",
+	@"Issue1201",
 	
 	// v1.1 tests
 	@"MultipleParticleSystems",
@@ -1638,6 +1639,125 @@ Class restartAction()
 	return @"Every 2 seconds the particle should change";
 }
 @end
+
+#pragma mark - Issue #1201
+
+@interface RainbowEffect : CCParticleSystemQuad
+@end
+
+@implementation RainbowEffect
+-(id) init
+{
+	return [self initWithTotalParticles:150];
+}
+
+-(id) initWithTotalParticles:(NSUInteger) p
+{
+	if( (self=[super initWithTotalParticles:p]) ) {
+        
+		// additive
+		self.blendAdditive = NO;
+        
+		// duration
+		duration = kCCParticleDurationInfinity;
+		
+		// Gravity Mode
+		self.emitterMode = kCCParticleModeGravity;
+		
+		// Gravity Mode: gravity
+		self.gravity = ccp(0,0);
+		
+		// Gravity mode: radial acceleration
+		self.radialAccel = 0;
+		self.radialAccelVar = 0;
+		
+		// Gravity mode: speed of particles
+		self.speed = 120;
+		self.speedVar = 0;
+        
+		
+		// angle
+		angle = 180;
+		angleVar = 0;
+		
+		// emitter position
+		CGSize winSize = [[CCDirector sharedDirector] winSize];
+		self.position = ccp(winSize.width/2, winSize.height/2);
+		posVar = CGPointZero;
+		
+		// life of particles
+		life = 0.5f;
+		lifeVar = 0;
+		
+		// size, in pixels
+		startSize = 25.0f;
+		startSizeVar = 0;
+		endSize = kCCParticleStartSizeEqualToEndSize;
+        
+		// emits per seconds
+		emissionRate = totalParticles/life;
+		
+		// color of particles
+		startColor = ccc4FFromccc4B(ccc4(50, 50, 50, 50));
+        endColor = ccc4FFromccc4B(ccc4(0, 0, 0, 0));
+        
+        startColorVar.r = 0.0f;
+		startColorVar.g = 0.0f;
+		startColorVar.b = 0.0f;
+		startColorVar.a = 0.0f;
+		endColorVar.r = 0.0f;
+		endColorVar.g = 0.0f;
+		endColorVar.b = 0.0f;
+		endColorVar.a = 0.0f;
+		
+		self.texture = [[CCTextureCache sharedTextureCache] addImage: @"particles.png"];
+	}
+    
+	return self;
+}
+
+-(void) update: (ccTime) dt
+{
+    emitCounter = 0;
+    [super update: dt];
+}
+@end
+
+
+@implementation Issue1201
+-(void) onEnter
+{
+	[super onEnter];
+	
+	[self setColor:ccBLACK];
+	[self removeChild:background cleanup:YES];
+	background = nil;
+
+	RainbowEffect *particle = [[RainbowEffect alloc] initWithTotalParticles:150];
+	
+	[self addChild:particle];
+
+	CGSize s = [[CCDirector sharedDirector] winSize];
+	
+	[particle setPosition:ccp(s.width/2, s.height/2)];
+	
+	emitter_ = particle;
+}
+
+-(NSString *) title
+{
+	return @"Issue 1201. Unfinished";
+}
+
+-(NSString*) subtitle
+{
+	return @"Unfinished test. Ignore it";
+}
+
+@end
+
+
+
 
 #pragma mark - MultipleParticleSystems
 @implementation MultipleParticleSystems
