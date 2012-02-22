@@ -14,6 +14,7 @@ version 2.0-rc0 XX-Feb-2012
 . [NEW] Deprecated: Added CC_ENABLE_DEPRECATED in ccConfig.h. All deprecated functions, methods and classed are included by default.
 . [NEW] Director: When the stats are on, the number of GL draw calls per frame are displayed
 		Added support for main-thread director (Mac only. Needed for some editors)
+		Added KVO for isPaused (issue #1324)
 . [NEW] DrawingPrimitives: Added ccDrawPoly() free function
 . [NEW] LabelTTF: fontName and fontSize are properties
 . [NEW] LabelBMFont: added setFntFile method
