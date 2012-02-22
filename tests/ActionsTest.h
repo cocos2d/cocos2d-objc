@@ -153,3 +153,7 @@
 @interface Issue1305_2 : ActionDemo
 {}
 @end
+
+@interface Issue1288 : ActionDemo
+{}
+@end

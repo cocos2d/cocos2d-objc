@@ -52,6 +52,7 @@ static NSString *transitions[] = {
 
 	@"Issue1305",
 	@"Issue1305_2",
+	@"Issue1288",
 
 };
 
@@ -1268,6 +1269,43 @@ Class restartAction()
 }
 @end
 
+#pragma mark - Issue1305_2
+
+@implementation Issue1288
+-(void) onEnter
+{
+	[super onEnter];
+	
+	[self centerSprites:0];
+	
+	CCSprite *spr = [CCSprite spriteWithFile:@"grossini.png"];
+	spr.position = ccp(100, 100);
+	[self addChild:spr];
+
+	id act1 = [CCMoveBy actionWithDuration:0.5 position:ccp(100, 0)];
+	id act2 = [act1 reverse];
+	id act3 = [CCSequence actions:act1, act2, nil];
+	id act4 = [CCRepeat actionWithAction:act3 times:2];
+
+	[spr runAction:act4];
+}
+
+-(NSString *) title
+{
+	return @"Issue 1288";
+}
+
+-(NSString*) subtitle
+{
+	return @"Sprite should end at the position where it started.";
+}
+
+- (void)dealloc {
+    [super dealloc];
+}
+@end
+
+#pragma mark - AppDelegate
 
 // CLASS IMPLEMENTATIONS
 
