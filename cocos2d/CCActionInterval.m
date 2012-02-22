@@ -332,7 +332,7 @@
 		}
 		
 		// fix for issue #1288, incorrect end value of repeat
-		if(dt == 1.0 && total_ < times_) 
+		if(dt >= 1.0f && total_ < times_) 
 		{
 			total_++;
 		}
@@ -342,7 +342,7 @@
 		{
 			if (total_ == times_)
 			{
-				[innerAction_ update:0];
+				[innerAction_ update:1];
 				[innerAction_ stop];
 			}
 			else
