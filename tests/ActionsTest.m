@@ -53,7 +53,7 @@ static NSString *transitions[] = {
 	@"Issue1305",
 	@"Issue1305_2",
 	@"Issue1288",
-
+	@"Issue1288_2",
 };
 
 Class nextAction()
@@ -1269,7 +1269,7 @@ Class restartAction()
 }
 @end
 
-#pragma mark - Issue1305_2
+#pragma mark - Issue1288
 
 @implementation Issue1288
 -(void) onEnter
@@ -1304,6 +1304,39 @@ Class restartAction()
     [super dealloc];
 }
 @end
+
+#pragma mark - Issue1288_2
+
+@implementation Issue1288_2
+-(void) onEnter
+{
+	[super onEnter];
+	
+	[self centerSprites:0];
+	
+	CCSprite *spr = [CCSprite spriteWithFile:@"grossini.png"];
+	spr.position = ccp(100, 100);
+	[self addChild:spr];
+	
+	id act1 = [CCMoveBy actionWithDuration:0.5 position:ccp(100, 0)];
+	[spr runAction: [CCRepeat actionWithAction:act1 times:1]];
+}
+
+-(NSString *) title
+{
+	return @"Issue 1288 #2";
+}
+
+-(NSString*) subtitle
+{
+	return @"Sprite should move 100 pixels, and stay there";
+}
+
+- (void)dealloc {
+    [super dealloc];
+}
+@end
+
 
 #pragma mark - AppDelegate
 
