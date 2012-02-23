@@ -124,8 +124,8 @@ enum {
 -(id) initWithAction: (CCActionInterval*) action;
 @end
 
-/** Changes the speed of an action, making it take longer (speed>1)
- or less (speed<1) time.
+/** Changes the speed of an action, making it take longer (speed<1)
+ or less (speed>1) time.
  Useful to simulate 'slow motion' or 'fast forward' effect.
  @warning This action can't be Sequenceable because it is not an CCIntervalAction
  */
@@ -140,9 +140,9 @@ enum {
 @property (nonatomic, readwrite, retain) CCActionInterval *innerAction;
 
 /** creates the action */
-+(id) actionWithAction: (CCActionInterval*) action speed:(float)rate;
++(id) actionWithAction: (CCActionInterval*) action speed:(float)value;
 /** initializes the action */
--(id) initWithAction: (CCActionInterval*) action speed:(float)rate;
+-(id) initWithAction: (CCActionInterval*) action speed:(float)value;
 @end
 
 @class CCNode;
