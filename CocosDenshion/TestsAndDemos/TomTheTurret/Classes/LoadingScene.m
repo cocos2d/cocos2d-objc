@@ -169,7 +169,7 @@
     [blinkAnimFrames addObject:[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"Tom.png"]];
     [blinkAnimFrames addObject:[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"Tom_blink.png"]];
     [blinkAnimFrames addObject:[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"Tom.png"]];
-    CCAnimation *blinkAnimation = [CCAnimation animationWithFrames:blinkAnimFrames delay:0.1f];
+    CCAnimation *blinkAnimation = [CCAnimation animationWithSpriteFrames:blinkAnimFrames delay:0.1f];
     [_tom runAction:[CCRepeatForever actionWithAction:
                      [CCSequence actions:
                       [CCAnimate actionWithAnimation:blinkAnimation restoreOriginalFrame:NO],

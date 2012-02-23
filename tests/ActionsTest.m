@@ -546,7 +546,7 @@ Class restartAction()
 	// Left: using manual animation.
 	CCAnimation* animation = [CCAnimation animation];
 	for( int i=1;i<15;i++)
-		[animation addFrameWithFilename: [NSString stringWithFormat:@"grossini_dance_%02d.png", i]];
+		[animation addSpriteFrameWithFilename: [NSString stringWithFormat:@"grossini_dance_%02d.png", i]];
 
 	id action = [CCAnimate actionWithDuration:2.8f animation:animation restoreOriginalFrame:YES];
 	[kathia runAction: [CCSequence actions: action, [action reverse], nil]];
