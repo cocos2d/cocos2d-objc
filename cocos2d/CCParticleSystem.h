@@ -266,6 +266,8 @@ typedef void (*CC_UPDATE_PARTICLE_IMP)(id, SEL, tCCParticle*, CGPoint);
 	NSUInteger totalParticles;
 	// Count of active particles
 	NSUInteger particleCount;
+    // Number of allocated particles
+    NSUInteger allocatedParticles;
 
 	// How many particles can be emitted per second
 	float emissionRate;

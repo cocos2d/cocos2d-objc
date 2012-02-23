@@ -103,6 +103,57 @@
 	return YES;
 }
 
+- (void) setTotalParticles:(NSUInteger)tp
+{
+    // If we are setting the total numer of particles to a number higher
+    // than what is allocated, we need to allocate new arrays
+    if( tp > allocatedParticles )
+    {
+        // Allocate new memory
+        tCCParticle* particlesNew = calloc( tp, sizeof(tCCParticle) );
+        ccV3F_C4B_T2F_Quad *quadsNew = calloc( sizeof(quads_[0]) * tp, 1 );
+        GLushort* indicesNew = calloc( sizeof(indices_[0]) * tp * 6, 1 );
+        
+        if (particlesNew && quadsNew && indicesNew)
+        {
+            // Free old memory
+            if ( particles ) free( particles );
+            if ( quads_ ) free( quads_ );
+            if ( indices_ ) free( indices_ );
+            
+            // Assign pointers
+            particles = particlesNew;
+            quads_ = quadsNew;
+            indices_ = indicesNew;
+            
+            allocatedParticles = tp;
+        }
+        else
+        {
+            // Out of memory, failed to resize array
+            CCLOG(@"Particle system: out of memory");
+            return;
+        }
+        
+        totalParticles = tp;
+        
+        // Init particles
+        if (batchNode_)
+		{
+			for (int i = 0; i < totalParticles; i++)
+			{
+				particles[i].atlasIndex=i;
+			}
+		}
+        
+        [self initIndices];
+        [self initVAO];
+    }
+    else
+    {
+        totalParticles = tp;
+    }
+}
 
 -(void) initVAO
 {
