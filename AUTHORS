@@ -27,6 +27,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 
 * Chere Loque:
 	Added support for NPOT texture in CCRenderTexture
+	Added image offset in CCLabelBMFont in order to share the same texture
 
 * CJ Hanson (myBuddyCJ) (http://www.hansoninteractive.com/):
 	TextureCache: Use blocks instead of CCCall actions to dispatch code

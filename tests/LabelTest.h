@@ -122,3 +122,7 @@
 }
 @end
 
+@interface BMFontOneAtlas : AtlasDemo
+{
+}
+@end
