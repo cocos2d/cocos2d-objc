@@ -1392,6 +1392,8 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 @end
 
 
+#pragma mark - CCTargetedAction
+
 @implementation CCTargetedAction
 
 @synthesize forcedTarget = forcedTarget_;
