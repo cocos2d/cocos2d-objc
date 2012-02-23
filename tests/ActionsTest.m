@@ -54,7 +54,7 @@ static NSString *transitions[] = {
 	@"Issue1305_2",
 	@"Issue1288",
 	@"Issue1288_2",
-	@"Issue1288_3",
+	@"IssueXXXX",
 };
 
 Class nextAction()
@@ -1338,7 +1338,7 @@ Class restartAction()
 }
 @end
 
-@implementation Issue1288_3
+@implementation IssueXXXX
 -(void) onEnter
 {
 	[super onEnter];
@@ -1364,7 +1364,7 @@ Class restartAction()
 }
 -(NSString *) title
 {
-	return @"Issue 1288 #3";
+	return @"Issue XXXX";
 }
 
 -(NSString*) subtitle

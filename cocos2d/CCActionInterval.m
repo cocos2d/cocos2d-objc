@@ -121,10 +121,10 @@
 {
 	va_list params;
 	va_start(params,action1);
-
+	
 	CCFiniteTimeAction *now;
 	CCFiniteTimeAction *prev = action1;
-
+	
 	while( action1 ) {
 		now = va_arg(params,CCFiniteTimeAction*);
 		if ( now )
@@ -139,10 +139,10 @@
 +(id) actionsWithArray: (NSArray*) actions
 {
 	CCFiniteTimeAction *prev = [actions objectAtIndex:0];
-
+	
 	for (NSUInteger i = 1; i < [actions count]; i++)
 		prev = [self actionOne:prev two:[actions objectAtIndex:i]];
-
+	
 	return prev;
 }
 
@@ -156,19 +156,19 @@
 	NSAssert( one!=nil && two!=nil, @"Sequence: arguments must be non-nil");
 	NSAssert( one!=actions_[0] && one!=actions_[1], @"Sequence: re-init using the same parameters is not supported");
 	NSAssert( two!=actions_[1] && two!=actions_[0], @"Sequence: re-init using the same parameters is not supported");
-
+	
 	ccTime d = [one duration] + [two duration];
-
+	
 	if( (self=[super initWithDuration: d]) ) {
-
+		
 		// XXX: Supports re-init without leaking. Fails if one==one_ || two==two_
 		[actions_[0] release];
 		[actions_[1] release];
-
+		
 		actions_[0] = [one retain];
 		actions_[1] = [two retain];
 	}
-
+	
 	return self;
 }
 
@@ -195,7 +195,7 @@
 -(void) stop
 {
 	// Issue #1305
-	if( last_ != -1 )
+	if( last_ != - 1)
 		[actions_[last_] stop];
 
 	[super stop];
@@ -205,51 +205,45 @@
 {
 	int found = 0;
 	ccTime new_t = 0.0f;
-
-	// find delta for action
-	if( t < split_ )
-	{
-		// 1st action
+	
+	if( t < split_ ) {
+		// action[0]
 		found = 0;
 		if( split_ != 0 )
 			new_t = t / split_;
 		else
 			new_t = 1;
-	}
-	else
-	{
-		// 2nd action
+
+	} else {
+		// action[1]
 		found = 1;
 		if ( split_ == 1 )
 			new_t = 1;
 		else
 			new_t = (t-split_) / (1 - split_ );
 	}
-
-
-	if (last_ == -1 && found==1)
-	{
-		// action[0] was "skipped", execute it.
-		[actions_[0] startWithTarget:target_];
-		[actions_[0] update:1.0f];
-		[actions_[0] stop];
-	}
-
-	// start new action
-	if( last_ != found )
-		[actions_[found] startWithTarget:target_];
-
-
-	if (last_==0 && found==1)
-	{
-		// Switching to new action
-		[actions_[0] update: 1.0f];
-		[actions_[0] stop];
-	}	
 	
-	// update action
+	if ( found==1 ) {
+		
+		if( last_ == -1 ) {
+			// action[0] was skipped, execute it.
+			[actions_[0] startWithTarget:target_];
+			[actions_[0] update:1.0f];
+			[actions_[0] stop];
+		}
+		else if( last_ == 0 )
+		{
+			// switching to action 1. stop action 0.
+			[actions_[0] update: 1.0f];
+			[actions_[0] stop];
+		}
+	}
+	
+	// New action. Start it.
+	if( found != last_ )
+		[actions_[found] startWithTarget:target_];
+	
 	[actions_[found] update: new_t];
-
 	last_ = found;
 }
 
