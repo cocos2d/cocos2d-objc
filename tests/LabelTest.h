@@ -126,3 +126,8 @@
 {
 }
 @end
+
+@interface BMFontUnicode : AtlasDemo
+{
+}
+@end
