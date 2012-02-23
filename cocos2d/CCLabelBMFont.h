@@ -43,15 +43,15 @@ struct _KerningHashElement;
  */
 typedef struct _BMFontDef {
 	//! ID of the character
-	NSUInteger charID;
+	unichar charID;
 	//! origin and size of the font
 	CGRect rect;
 	//! The X amount the image should be offset when drawing the image (in pixels)
-	NSInteger xOffset;
+	short xOffset;
 	//! The Y amount the image should be offset when drawing the image (in pixels)
-	NSInteger yOffset;
+	short yOffset;
 	//! The amount to move the current position after drawing the character (in pixels)
-	NSInteger xAdvance;
+	short xAdvance;
 } ccBMFontDef;
 
 /** @struct ccBMFontPadding
