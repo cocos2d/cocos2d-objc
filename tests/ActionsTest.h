@@ -162,6 +162,6 @@
 {}
 @end
 
-@interface Issue1288_3 : ActionDemo
+@interface IssueXXXX : ActionDemo
 {}
 @end
