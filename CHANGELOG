@@ -18,12 +18,13 @@ version 2.0-rc0 XX-Feb-2012
 . [NEW] DrawingPrimitives: Added ccDrawPoly() free function
 . [NEW] LabelTTF: fontName and fontSize are properties
 . [NEW] LabelBMFont: added setFntFile method (issue #1119)
-			Added support for image offset in order to share the texture (issue #762)
+		Added support for image offset in order to share the texture (issue #762)
+		Added support for any unicode char (issue #770)
 . [NEW] Menu: could be created/initialized using NSArray
-			Menu could be created without items
-			Menu could be enabled/disabled (no events will be accepted when it is disabled)
-			It is possible to change its priority on runtime
-			Renamed kCCMenuTouchPriority -> kCCMenuHandlerPriority
+		Menu could be created without items
+		Menu could be enabled/disabled (no events will be accepted when it is disabled)
+		It is possible to change its priority on runtime
+		Renamed kCCMenuTouchPriority -> kCCMenuHandlerPriority
 . [NEW] Node: userData has the option of being retained and treated like an id.
 . [NEW] Sprite: spriteWithBatchNode / initWithBatchNode were removed. Use initWithTexture:batch.texture / spriteWithTexture:batch.texture instead
 . [NEW] TextureAtlas: Added option to not use VAO (might be a bit slower, but it consumes less memory)

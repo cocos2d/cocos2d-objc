@@ -80,11 +80,19 @@ typedef struct _KerningHashElement
 	UT_hash_handle	hh;
 } tKerningHashElement;
 
+
 #pragma mark -
 #pragma mark BitmapFontConfiguration
 
+typedef struct _FontDefHashElement
+{
+	NSUInteger		key;		// key. Font Unicode value
+	ccBMFontDef		fontDef;	// font definition
+	UT_hash_handle	hh;
+} tFontDefHashElement;
 
-@interface CCBMFontConfiguration (Private)
+
+@interface CCBMFontConfiguration ()
 -(void) parseConfigFile:(NSString*)controlFile;
 -(void) parseCharacterDefinition:(NSString*)line charDef:(ccBMFontDef*)characterDefinition;
 -(void) parseInfoArguments:(NSString*)line;
@@ -93,6 +101,7 @@ typedef struct _KerningHashElement
 -(void) parseKerningCapacity:(NSString*)line;
 -(void) parseKerningEntry:(NSString*)line;
 -(void) purgeKerningDictionary;
+-(void) purgeFontDefDictionary;
 @end
 
 #pragma mark -
@@ -110,6 +119,7 @@ typedef struct _KerningHashElement
 	if((self=[super init])) {
 
 		kerningDictionary_ = NULL;
+		fontDefDictionary_ = NULL;
 
 		[self parseConfigFile:fntFile];
 	}
@@ -119,6 +129,7 @@ typedef struct _KerningHashElement
 - (void) dealloc
 {
 	CCLOGINFO( @"cocos2d: deallocing %@", self);
+	[self purgeFontDefDictionary];
 	[self purgeKerningDictionary];
 	[atlasName_ release];
 	[super dealloc];
@@ -126,11 +137,22 @@ typedef struct _KerningHashElement
 
 - (NSString*) description
 {
-	return [NSString stringWithFormat:@"<%@ = %08X | Kernings:%d | Image = %@>", [self class], self,
+	return [NSString stringWithFormat:@"<%@ = %08X | Glphys:%d Kernings:%d | Image = %@>", [self class], self,
+			HASH_COUNT(fontDefDictionary_),
 			HASH_COUNT(kerningDictionary_),
 			atlasName_];
 }
 
+
+-(void) purgeFontDefDictionary
+{	
+	tFontDefHashElement *current, *tmp;
+	
+	HASH_ITER(hh, fontDefDictionary_, current, tmp) {
+		HASH_DEL(fontDefDictionary_, current);
+		free(current);
+	}
+}
 
 -(void) purgeKerningDictionary
 {
@@ -181,11 +203,12 @@ typedef struct _KerningHashElement
 		}
 		else if([line hasPrefix:@"char"]) {
 			// Parse the current line and create a new CharDef
-			ccBMFontDef characterDefinition;
-			[self parseCharacterDefinition:line charDef:&characterDefinition];
-
-			// Add the CharDef returned to the charArray
-			BMFontArray_[ characterDefinition.charID ] = characterDefinition;
+			tFontDefHashElement *element = malloc( sizeof(*element) );
+			
+			[self parseCharacterDefinition:line charDef:&element->fontDef];
+			
+			element->key = element->fontDef.charID;
+			HASH_ADD_INT(fontDefDictionary_, key, element);
 		}
 		else if([line hasPrefix:@"kernings count"]) {
 			[self parseKerningCapacity:line];
@@ -347,7 +370,6 @@ typedef struct _KerningHashElement
 	propertyValue = [nse nextObject];
 	propertyValue = [propertyValue substringToIndex: [propertyValue rangeOfString: @" "].location];
 	characterDefinition->charID = [propertyValue intValue];
-	NSAssert(characterDefinition->charID < kCCBMFontMaxChars, @"BitmpaFontAtlas: CharID bigger than supported");
 
 	// Character x
 	propertyValue = [nse nextObject];
@@ -709,7 +731,6 @@ typedef struct _KerningHashElement
 
 	for(NSUInteger i = 0; i<stringLen; i++) {
 		unichar c = [string_ characterAtIndex:i];
-		NSAssert( c < kCCBMFontMaxChars, @"LabelBMFont: character outside bounds");
 
 		if (c == '\n') {
 			nextFontPositionX = 0;
@@ -719,7 +740,15 @@ typedef struct _KerningHashElement
 
 		kerningAmount = [self kerningAmountForFirst:prev second:c];
 
-		ccBMFontDef fontDef = configuration_->BMFontArray_[c];
+		
+		tFontDefHashElement *element = NULL;
+		
+		// unichar is a short, and an int is needed on HASH_FIND_INT
+		NSUInteger key = (NSUInteger)c;
+		HASH_FIND_INT(configuration_->fontDefDictionary_ , &key, element);
+		NSAssert(element, @"FontDefinition could not be found!");
+
+		ccBMFontDef fontDef = element->fontDef;
 
 		CGRect rect = fontDef.rect;
 		rect = CC_RECT_PIXELS_TO_POINTS(rect);
@@ -750,7 +779,7 @@ typedef struct _KerningHashElement
         fontChar.position = CC_POINT_PIXELS_TO_POINTS(fontPos);
 
 		// update kerning
-		nextFontPositionX += configuration_->BMFontArray_[c].xAdvance + kerningAmount;
+		nextFontPositionX += fontDef.xAdvance + kerningAmount;
 		prev = c;
 
 		// Apply label properties
