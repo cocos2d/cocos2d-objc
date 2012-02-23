@@ -186,16 +186,16 @@
 @synthesize speed=speed_;
 @synthesize innerAction=innerAction_;
 
-+(id) actionWithAction: (CCActionInterval*) action speed:(float)r
++(id) actionWithAction: (CCActionInterval*) action speed:(float)value
 {
-	return [[[self alloc] initWithAction: action speed:r] autorelease];
+	return [[[self alloc] initWithAction: action speed:value] autorelease];
 }
 
--(id) initWithAction: (CCActionInterval*) action speed:(float)r
+-(id) initWithAction: (CCActionInterval*) action speed:(float)value
 {
 	if( (self=[super init]) ) {
 		self.innerAction = action;
-		speed_ = r;
+		speed_ = value;
 	}
 	return self;
 }
