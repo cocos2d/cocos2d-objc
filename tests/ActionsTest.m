@@ -54,6 +54,7 @@ static NSString *transitions[] = {
 	@"Issue1305_2",
 	@"Issue1288",
 	@"Issue1288_2",
+	@"Issue1288_3",
 };
 
 Class nextAction()
@@ -1334,6 +1335,41 @@ Class restartAction()
 
 - (void)dealloc {
     [super dealloc];
+}
+@end
+
+@implementation Issue1288_3
+-(void) onEnter
+{
+	[super onEnter];
+	
+	[self centerSprites:0];
+	
+	CCSprite *spr = [CCSprite spriteWithFile:@"grossini.png"];
+	spr.position = ccp(100, 100);
+	[self addChild:spr];
+	
+	id act1 = [CCCallBlock actionWithBlock:^{ NSLog(@"%f", spr.rotation); }];
+	id act2 = [CCRotateBy actionWithDuration:0.25 angle:45];
+	id act3 = [CCCallBlock actionWithBlock:^{ NSLog(@"%f", spr.rotation); }];
+	id act4 = [CCRotateBy actionWithDuration:0.25 angle:45];
+	id act5 = [CCCallBlock actionWithBlock:^{ NSLog(@"%f", spr.rotation); }];
+	id act6 = [CCRotateBy actionWithDuration:0.25 angle:45];
+	id act7 = [CCCallBlock actionWithBlock:^{ NSLog(@"%f", spr.rotation); }];
+	id act8 = [CCRotateBy actionWithDuration:0.25 angle:45];
+	id act9 = [CCCallBlock actionWithBlock:^{ NSLog(@"%f", spr.rotation); }];
+	
+	id actF = [CCSequence actions:act1, act2, act3, act4, act5, act6, act7, act8, act9, nil];
+	[spr runAction:actF];
+}
+-(NSString *) title
+{
+	return @"Issue 1288 #3";
+}
+
+-(NSString*) subtitle
+{
+	return @"See console: You should see: 0, 45, 90, 135, 180";
 }
 @end
 

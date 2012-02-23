@@ -161,3 +161,7 @@
 @interface Issue1288_2 : ActionDemo
 {}
 @end
+
+@interface Issue1288_3 : ActionDemo
+{}
+@end
