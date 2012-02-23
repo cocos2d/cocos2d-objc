@@ -100,7 +100,8 @@ Example:
 /** Inner action */
 @property (nonatomic,readwrite,retain) CCFiniteTimeAction *innerAction;
 
-/** creates a CCRepeat action. Times is an unsigned integer between 1 and MAX_UINT */
+/** creates a CCRepeat action. Times is an unsigned integer between 1 and MAX_UINT.
+ */
 +(id) actionWithAction:(CCFiniteTimeAction*)action times: (NSUInteger)times;
 /** initializes a CCRepeat action. Times is an unsigned integer between 1 and MAX_UINT */
 -(id) initWithAction:(CCFiniteTimeAction*)action times: (NSUInteger)times;

@@ -75,6 +75,7 @@
 	float			delayPerUnit_;
 	float			duration_;
 	BOOL			restoreOriginalFrame_;
+	NSUInteger		loop_;
 }
 
 /** total Delay units of the CCAnimation. */
@@ -87,6 +88,8 @@
 @property (nonatomic,readwrite,retain) NSMutableArray *frames;
 /** whether or not it shall restore the original frame when the animation finishes */
 @property (nonatomic,readwrite) BOOL restoreOriginalFrame;
+/** how many times the animation is going to loop. 0 means animation is not animated. 1, animation is executed one time, ... */
+@property (nonatomic, readwrite) NSUInteger loop;
 
 /** Creates an animation
  @since v0.99.5
@@ -97,52 +100,52 @@
  The frames will be created with one "delay unit".
  @since v0.99.5
  */
-+(id) animationWithFrames:(NSArray*)arrayOfSpriteFrameNames;
++(id) animationWithSpriteFrames:(NSArray*)arrayOfSpriteFrameNames;
 
 /* Creates an animation with an array of CCSpriteFrame and a delay between frames in seconds.
  The frames will be added with one "delay unit".
  @since v0.99.5
  */
-+(id) animationWithFrames:(NSArray*)arrayOfSpriteFrameNames delay:(float)delay;
++(id) animationWithSpriteFrames:(NSArray*)arrayOfSpriteFrameNames delay:(float)delay;
 
 /* Creates an animation with an array of CCAnimationFrame and the delay per units in seconds.
  @since v2.0
  */
-+(id) animationWithFrames:(NSArray*)arrayOfAnimationFrames delayPerUnit:(float)delayPerUnit;
++(id) animationWithAnimationFrames:(NSArray*)arrayOfAnimationFrames delayPerUnit:(float)delayPerUnit;
 
 
 /** Initializes a CCAnimation with an array of CCSpriteFrame.
  The frames will be added with one "delay unit".
  @since v0.99.5
 */
--(id) initWithFrames:(NSArray*)arrayOfSpriteFrameNames;
+-(id) initWithSpriteFrames:(NSArray*)arrayOfSpriteFrameNames;
 
 /** Initializes a CCAnimation with an array of CCSpriteFrames and a delay between frames in seconds.
  The frames will be added with one "delay unit".
  @since v0.99.5
  */
--(id) initWithFrames:(NSArray *)arrayOfSpriteFrameNames delay:(float)delay;
+-(id) initWithSpriteFrames:(NSArray *)arrayOfSpriteFrameNames delay:(float)delay;
 
 /* Initializes an animation with an array of CCAnimationFrame and the delay per units in seconds.
  @since v2.0
  */
--(id) initWithFrames:(NSArray*)arrayOfAnimationFrames delayPerUnit:(float)delayPerUnit;
+-(id) initWithAnimationFrames:(NSArray*)arrayOfAnimationFrames delayPerUnit:(float)delayPerUnit;
 
 /** Adds a CCSpriteFrame to a CCAnimation.
  The frame will be added with one "delay unit".
 */
--(void) addFrame:(CCSpriteFrame*)frame;
+-(void) addSpriteFrame:(CCSpriteFrame*)frame;
 
 /** Adds a frame with an image filename. Internally it will create a CCSpriteFrame and it will add it.
  The frame will be added with one "delay unit".
  Added to facilitate the migration from v0.8 to v0.9.
  */
--(void) addFrameWithFilename:(NSString*)filename;
+-(void) addSpriteFrameWithFilename:(NSString*)filename;
 
 /** Adds a frame with a texture and a rect. Internally it will create a CCSpriteFrame and it will add it.
  The frame will be added with one "delay unit".
  Added to facilitate the migration from v0.8 to v0.9.
  */
--(void) addFrameWithTexture:(CCTexture2D*)texture rect:(CGRect)rect;
+-(void) addSpriteFrameWithTexture:(CCTexture2D*)texture rect:(CGRect)rect;
 
 @end

@@ -31,6 +31,7 @@
 #import "CCDirector.h"
 #import "CCSprite.h"
 #import "CCGLProgram.h"
+#import "CCAnimation.h"
 #import "CCScheduler.h"
 #import "CCActionManager.h"
 #import "Platforms/Mac/CCDirectorMac.h"
@@ -107,6 +108,16 @@ DEPRECATED_ATTRIBUTE @interface MacView : CCGLView
 +(id) itemFromNormalImage: (NSString*)value selectedImage:(NSString*) value2 disabledImage:(NSString*) value3 block:(void(^)(id sender))block DEPRECATED_ATTRIBUTE;
 -(id) initFromNormalImage: (NSString*) value selectedImage:(NSString*)value2 disabledImage:(NSString*) value3 target:(id) r selector:(SEL) s DEPRECATED_ATTRIBUTE;
 -(id) initFromNormalImage: (NSString*) value selectedImage:(NSString*)value2 disabledImage:(NSString*) value3 block:(void(^)(id sender))block DEPRECATED_ATTRIBUTE;
+@end
+
+@interface CCAnimation (Deprecated)
++(id) animationWithFrames:(NSArray*)arrayOfSpriteFrameNames DEPRECATED_ATTRIBUTE;
++(id) animationWithFrames:(NSArray*)arrayOfSpriteFrameNames delay:(float)delay DEPRECATED_ATTRIBUTE;
+-(id) initWithFrames:(NSArray*)arrayOfSpriteFrameNames DEPRECATED_ATTRIBUTE;
+-(id) initWithFrames:(NSArray *)arrayOfSpriteFrameNames delay:(float)delay DEPRECATED_ATTRIBUTE;
+-(void) addFrame:(CCSpriteFrame*)frame DEPRECATED_ATTRIBUTE;
+-(void) addFrameWithFilename:(NSString*)filename DEPRECATED_ATTRIBUTE;
+-(void) addFrameWithTexture:(CCTexture2D*)texture rect:(CGRect)rect DEPRECATED_ATTRIBUTE;
 @end
 
 
