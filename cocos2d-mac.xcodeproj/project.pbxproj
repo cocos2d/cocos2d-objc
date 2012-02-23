@@ -46,6 +46,9 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		A03A1CBA14F5B3F00019B6F3 /* geneva-32.fnt in Resources */ = {isa = PBXBuildFile; fileRef = A03A1CB714F5B3F00019B6F3 /* geneva-32.fnt */; };
+		A03A1CBB14F5B3F00019B6F3 /* helvetica-32.fnt in Resources */ = {isa = PBXBuildFile; fileRef = A03A1CB814F5B3F00019B6F3 /* helvetica-32.fnt */; };
+		A03A1CBC14F5B3F00019B6F3 /* helvetica-geneva-32.png in Resources */ = {isa = PBXBuildFile; fileRef = A03A1CB914F5B3F00019B6F3 /* helvetica-geneva-32.png */; };
 		A0443DAE14A42E4500E62742 /* PositionTextureColorAlphaTest.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A05483151457C4AB00B47D05 /* PositionTextureColorAlphaTest.fsh */; };
 		A0443DAF14A42E4500E62742 /* Position_uColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4CAF1403278200EC482A /* Position_uColor.fsh */; };
 		A0443DB014A42E4500E62742 /* Position_uColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4CB01403278200EC482A /* Position_uColor.vsh */; };
@@ -5645,6 +5648,9 @@
 		13E42FB307B3F0F600E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		A03A1CB714F5B3F00019B6F3 /* geneva-32.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "geneva-32.fnt"; sourceTree = "<group>"; };
+		A03A1CB814F5B3F00019B6F3 /* helvetica-32.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "helvetica-32.fnt"; sourceTree = "<group>"; };
+		A03A1CB914F5B3F00019B6F3 /* helvetica-geneva-32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "helvetica-geneva-32.png"; sourceTree = "<group>"; };
 		A0443E8414A42E4500E62742 /* EffectsTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EffectsTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0443E8814A42EBB00E62742 /* EffectsTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EffectsTest.h; path = tests/EffectsTest.h; sourceTree = "<group>"; };
 		A0443E8914A42EBB00E62742 /* EffectsTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EffectsTest.m; path = tests/EffectsTest.m; sourceTree = "<group>"; };
@@ -7661,6 +7667,9 @@
 		E076E7A11225EDD000DE0DA2 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
+				A03A1CB714F5B3F00019B6F3 /* geneva-32.fnt */,
+				A03A1CB814F5B3F00019B6F3 /* helvetica-32.fnt */,
+				A03A1CB914F5B3F00019B6F3 /* helvetica-geneva-32.png */,
 				A0C491DE146F8C9100C4C037 /* markerFelt-hd.fnt */,
 				A0C491DF146F8C9100C4C037 /* markerFelt-hd.png */,
 				A0C491E0146F8C9100C4C037 /* markerFelt.fnt */,
@@ -12574,6 +12583,9 @@
 				A0C491EC146F8CA500C4C037 /* arrows.png in Resources */,
 				A0C491ED146F8CA500C4C037 /* arrowsBar-hd.png in Resources */,
 				A0C491EE146F8CA500C4C037 /* arrowsBar.png in Resources */,
+				A03A1CBA14F5B3F00019B6F3 /* geneva-32.fnt in Resources */,
+				A03A1CBB14F5B3F00019B6F3 /* helvetica-32.fnt in Resources */,
+				A03A1CBC14F5B3F00019B6F3 /* helvetica-geneva-32.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

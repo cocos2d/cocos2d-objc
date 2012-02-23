@@ -1283,6 +1283,9 @@
 		A01AB916149709E300C93DB6 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 503092B210447296005F7AFC /* libz.dylib */; };
 		A01AB95414970B1F00C93DB6 /* DirectorTest.m in Sources */ = {isa = PBXBuildFile; fileRef = A01AB95314970B1F00C93DB6 /* DirectorTest.m */; };
 		A034FF86149DC994009F11AA /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A034FF85149DC993009F11AA /* GameKit.framework */; };
+		A03A1D0814F5BEFA0019B6F3 /* geneva-32.fnt in Resources */ = {isa = PBXBuildFile; fileRef = A03A1D0514F5BEFA0019B6F3 /* geneva-32.fnt */; };
+		A03A1D0914F5BEFA0019B6F3 /* helvetica-32.fnt in Resources */ = {isa = PBXBuildFile; fileRef = A03A1D0614F5BEFA0019B6F3 /* helvetica-32.fnt */; };
+		A03A1D0A14F5BEFA0019B6F3 /* helvetica-geneva-32.png in Resources */ = {isa = PBXBuildFile; fileRef = A03A1D0714F5BEFA0019B6F3 /* helvetica-geneva-32.png */; };
 		A046E29314C1DB7D0005BBF2 /* CCDirectorMac.h in Headers */ = {isa = PBXBuildFile; fileRef = A046E28B14C1DB7D0005BBF2 /* CCDirectorMac.h */; };
 		A046E29414C1DB7D0005BBF2 /* CCDirectorMac.m in Sources */ = {isa = PBXBuildFile; fileRef = A046E28C14C1DB7D0005BBF2 /* CCDirectorMac.m */; };
 		A046E29514C1DB7D0005BBF2 /* CCEventDispatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = A046E28D14C1DB7D0005BBF2 /* CCEventDispatcher.h */; };
@@ -4758,6 +4761,9 @@
 		A01AB95214970B1F00C93DB6 /* DirectorTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DirectorTest.h; path = tests/DirectorTest.h; sourceTree = "<group>"; };
 		A01AB95314970B1F00C93DB6 /* DirectorTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DirectorTest.m; path = tests/DirectorTest.m; sourceTree = "<group>"; };
 		A034FF85149DC993009F11AA /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
+		A03A1D0514F5BEFA0019B6F3 /* geneva-32.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "geneva-32.fnt"; sourceTree = "<group>"; };
+		A03A1D0614F5BEFA0019B6F3 /* helvetica-32.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "helvetica-32.fnt"; sourceTree = "<group>"; };
+		A03A1D0714F5BEFA0019B6F3 /* helvetica-geneva-32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "helvetica-geneva-32.png"; sourceTree = "<group>"; };
 		A046E28B14C1DB7D0005BBF2 /* CCDirectorMac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCDirectorMac.h; sourceTree = "<group>"; };
 		A046E28C14C1DB7D0005BBF2 /* CCDirectorMac.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCDirectorMac.m; sourceTree = "<group>"; };
 		A046E28D14C1DB7D0005BBF2 /* CCEventDispatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEventDispatcher.h; sourceTree = "<group>"; };
@@ -6539,6 +6545,9 @@
 		505463B81062868100AB7C52 /* BMFont fonts */ = {
 			isa = PBXGroup;
 			children = (
+				A03A1D0514F5BEFA0019B6F3 /* geneva-32.fnt */,
+				A03A1D0614F5BEFA0019B6F3 /* helvetica-32.fnt */,
+				A03A1D0714F5BEFA0019B6F3 /* helvetica-geneva-32.png */,
 				A0D77A0E146E3244000960C7 /* markerFelt-hd.fnt */,
 				A0D77A0F146E3244000960C7 /* markerFelt-hd.png */,
 				A0D77A10146E3244000960C7 /* markerFelt.fnt */,
@@ -10461,6 +10470,9 @@
 				A0D77A1B146E3268000960C7 /* arrows.png in Resources */,
 				A0D77A1C146E3268000960C7 /* arrowsBar-hd.png in Resources */,
 				A0D77A1D146E3268000960C7 /* arrowsBar.png in Resources */,
+				A03A1D0814F5BEFA0019B6F3 /* geneva-32.fnt in Resources */,
+				A03A1D0914F5BEFA0019B6F3 /* helvetica-32.fnt in Resources */,
+				A03A1D0A14F5BEFA0019B6F3 /* helvetica-geneva-32.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

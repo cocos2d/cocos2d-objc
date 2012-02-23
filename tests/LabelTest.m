@@ -30,6 +30,7 @@ static NSString *transitions[] = {
 	@"LabelTTFMultiline",
 	@"LabelTTFA8Test",
 	@"LabelTTFLineBreak",
+	@"BMFontOneAtlas",
 
 	// Not a label test. Should be moved to Atlas test
 	@"Atlas1",
@@ -1332,9 +1333,7 @@ static float menuItemPaddingCenter = 50;
 {
 	return @"RED label, fading In and Out in the center of the screen";
 }
-
 @end
-
 
 
 #pragma mark -
@@ -1404,9 +1403,40 @@ static float menuItemPaddingCenter = 50;
 	return @"On Mac OS X only Word Wrap mode is supported";
 #endif
 }
-
 @end
 
+#pragma mark -
+#pragma mark BMFontOneAtlas
+
+@implementation BMFontOneAtlas
+-(id) init
+{
+	if( (self=[super init]) ) {
+		
+		CGSize s = [[CCDirector sharedDirector] winSize];
+	
+		CCLabelBMFont *label1 = [CCLabelBMFont labelWithString:@"This is Helvetica" fntFile:@"helvetica-32.fnt" width:-1 alignment:CCTextAlignmentLeft imageOffset:CGPointZero];
+		[self addChild:label1];
+		[label1 setPosition:ccp(s.width/2,s.height/3*2)];
+
+		CCLabelBMFont *label2 = [CCLabelBMFont labelWithString:@"And this is Geneva" fntFile:@"geneva-32.fnt" width:-1 alignment:CCTextAlignmentLeft imageOffset:ccp(0,128)];		
+		[self addChild:label2];
+		[label2 setPosition:ccp(s.width/2,s.height/3*1)];
+	}
+	
+	return self;
+}
+
+-(NSString*) title
+{
+	return @"CCLabelBMFont with one texture";
+}
+
+-(NSString *) subtitle
+{
+	return @"Using 2 .fnt definitions that share the same texture atlas.";
+}
+@end
 
 #pragma mark -
 #pragma mark Application Delegate - iPhone
