@@ -228,7 +228,7 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 {
 	NSUInteger				POTWide, POTHigh;
 	CGContextRef			context = nil;
-	void*					data = nil;;
+	void*					data = nil;
 	CGColorSpaceRef			colorSpace;
 	void*					tempData;
 	unsigned int*			inPixel32;
@@ -273,11 +273,21 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 	colorSpace = CGImageGetColorSpace(cgImage);
 
 	if(colorSpace) {
-		if(hasAlpha || bpp >= 8)
+		if( hasAlpha ) {
 			pixelFormat = defaultAlphaPixelFormat_;
-		else {
-			CCLOG(@"cocos2d: CCTexture2D: Using RGB565 texture since image has no alpha");
-			pixelFormat = kCCTexture2DPixelFormat_RGB565;
+			info = kCGImageAlphaPremultipliedLast;
+		}
+		else
+		{
+			info = kCGImageAlphaNoneSkipLast;
+
+			if( bpp >= 8 )
+				pixelFormat = kCCTexture2DPixelFormat_RGB888;
+			else
+				pixelFormat = kCCTexture2DPixelFormat_RGB565;
+			
+			CCLOG(@"cocos2d: CCTexture2D: Using %@ texture since image has no alpha", (bpp>=8) ? @"RGBA888" : @"RGB565" );
+				
 		}
 	} else {
 		// NOTE: No colorspace means a mask image
@@ -293,18 +303,12 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 		case kCCTexture2DPixelFormat_RGBA8888:
 		case kCCTexture2DPixelFormat_RGBA4444:
 		case kCCTexture2DPixelFormat_RGB5A1:
-			colorSpace = CGColorSpaceCreateDeviceRGB();
-			data = malloc(POTHigh * POTWide * 4);
-			info = hasAlpha ? kCGImageAlphaPremultipliedLast : kCGImageAlphaNoneSkipLast;
-            //			info = kCGImageAlphaPremultipliedLast;  // issue #886. This patch breaks BMP images.
-			context = CGBitmapContextCreate(data, POTWide, POTHigh, 8, 4 * POTWide, colorSpace, info | kCGBitmapByteOrder32Big);
-			CGColorSpaceRelease(colorSpace);
-			break;
-
 		case kCCTexture2DPixelFormat_RGB565:
+		case kCCTexture2DPixelFormat_RGB888:
 			colorSpace = CGColorSpaceCreateDeviceRGB();
 			data = malloc(POTHigh * POTWide * 4);
-			info = kCGImageAlphaNoneSkipLast;
+//			info = hasAlpha ? kCGImageAlphaPremultipliedLast : kCGImageAlphaNoneSkipLast;
+//			info = kCGImageAlphaPremultipliedLast;  // issue #886. This patch breaks BMP images.
 			context = CGBitmapContextCreate(data, POTWide, POTHigh, 8, 4 * POTWide, colorSpace, info | kCGBitmapByteOrder32Big);
 			CGColorSpaceRelease(colorSpace);
 			break;
@@ -335,6 +339,23 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 		data = tempData;
 
 	}
+
+	else if(pixelFormat == kCCTexture2DPixelFormat_RGB888) {
+		//Convert "RRRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA" to "RRRRRRRRGGGGGGGGBBBBBBB"
+		tempData = malloc(POTHigh * POTWide * 3);
+		char *inData = (char*)data;
+		char *outData = (char*)tempData;
+		int j=0;
+		for(unsigned int i = 0; i < POTWide * POTHigh *4; i++) {
+			outData[j++] = inData[i++];
+			outData[j++] = inData[i++];
+			outData[j++] = inData[i++];
+		}
+		free(data);
+		data = tempData;
+		
+	}
+
 	else if (pixelFormat == kCCTexture2DPixelFormat_RGBA4444) {
 		//Convert "RRRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA" to "RRRRGGGGBBBBAAAA"
 		tempData = malloc(POTHigh * POTWide * 2);
