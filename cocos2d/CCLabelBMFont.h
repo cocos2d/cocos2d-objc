@@ -126,6 +126,8 @@ enum {
  If in doubt, use CCLabelBMFont instead of CCLabelAtlas / CCLabel.
 
  Supported editors:
+ - http://glyphdesigner.71squared.com/
+ - http://www.bmglyph.com/
  - http://www.n4te.com/hiero/hiero.jnlp
  - http://slick.cokeandcode.com/demos/hiero.jnlp
  - http://www.angelcode.com/products/bmfont/
