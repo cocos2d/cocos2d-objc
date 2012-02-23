@@ -20,6 +20,7 @@ version 2.0-rc0 XX-Feb-2012
 . [NEW] LabelBMFont: added setFntFile method (issue #1119)
 		Added support for image offset in order to share the texture (issue #762)
 		Added support for any unicode char (issue #770)
+		Consumes less memory. Only defined Glyphs are allocated.
 . [NEW] Menu: could be created/initialized using NSArray
 		Menu could be created without items
 		Menu could be enabled/disabled (no events will be accepted when it is disabled)
@@ -28,6 +29,7 @@ version 2.0-rc0 XX-Feb-2012
 . [NEW] Node: userData has the option of being retained and treated like an id.
 . [NEW] Sprite: spriteWithBatchNode / initWithBatchNode were removed. Use initWithTexture:batch.texture / spriteWithTexture:batch.texture instead
 . [NEW] TextureAtlas: Added option to not use VAO (might be a bit slower, but it consumes less memory)
+. [NEW] Texture2D: Added kCCTexture2DPixelFormat_RGB888 to the list of "default alpha pixel formats"
 . [NEW] TileMap: polygon, polilines and gid are parsed from the objects (issue #1311)
 . [FIX] All: replaced some NSLog() with CCLOG() is some parts of the code (issue #1250)
 . [FIX] Actions: Instant actions are trigged on stop and not start (issue #1305)
@@ -47,6 +49,8 @@ version 2.0-rc0 XX-Feb-2012
 . [FIX] SpriteBatch: Quad extensions are public
 . [FIX] Tests: LabelTest with custom TTF font works on Mac too
 . [FIX] Texture2D: initWithImage renamed with initWithCGImage
+		JPEG: No need to convert JPG to PNG on iOS4 (issue #886 re-fixed)
+		BMP: Images are displayed on iOS4 like on iOS5 (without alpha channel) [iOS5 BUG]
 . [FIX] Types: kCCResolutionStandard renamed to kCCResolutioniPhone
 
 version 2.0-beta2 17-Jan-2012

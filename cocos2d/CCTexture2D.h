@@ -307,12 +307,13 @@ typedef struct _ccTexParams {
 	- generate 32-bit textures: kCCTexture2DPixelFormat_RGBA8888 (default one)
 	- generate 16-bit textures: kCCTexture2DPixelFormat_RGBA4444
 	- generate 16-bit textures: kCCTexture2DPixelFormat_RGB5A1
-	- generate 16-bit textures: kCCTexture2DPixelFormat_RGB565
+	- generate 24-bit textures: kCCTexture2DPixelFormat_RGB888 (no alpha)
+	- generate 16-bit textures: kCCTexture2DPixelFormat_RGB565 (no alpha)
 	- generate 8-bit textures: kCCTexture2DPixelFormat_A8 (only use it if you use just 1 color)
 
  How does it work ?
    - If the image is an RGBA (with Alpha) then the default pixel format will be used (it can be a 8-bit, 16-bit or 32-bit texture)
-   - If the image is an RGB (without Alpha) then an RGB565 texture will be used (16-bit texture)
+   - If the image is an RGB (without Alpha) then RGB888 (24-bit) or RGB565 texture will be used (16-bit texture) depending on the bpp of the orignal image
 
  This parameter is not valid for PVR images.
 
