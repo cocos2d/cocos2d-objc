@@ -155,7 +155,7 @@ void ccDrawLines( CGPoint* points, NSUInteger numberOfPoints )
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 	glDisableClientState(GL_COLOR_ARRAY);
 	
-	glDrawArrays(GL_LINES, 0, numberOfPoints);
+	glDrawArrays(GL_LINES, 0, (GLsizei) numberOfPoints);
 	
 	// restore default state
 	glEnableClientState(GL_COLOR_ARRAY);
@@ -231,7 +231,7 @@ void ccDrawPoly( const CGPoint *vertices, NSUInteger numberOfPoints, BOOL closeP
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 	glEnable(GL_TEXTURE_2D);	
 }
-//const CGPoint *vertices, NSUInteger numOfVertices, BOOL closePolygon
+
 void ccDrawSolidPoly(const CGPoint *vertices, NSUInteger numOfVertices, BOOL closePolygon )
 {
 	ccVertex2F newPoint[numOfVertices];
