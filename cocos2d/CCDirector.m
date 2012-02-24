@@ -488,7 +488,10 @@ static CCDirector *_sharedDirector = nil;
 
 	// when paused, don't consume CPU
 	[self setAnimationInterval:1/4.0];
+	
+	[self willChangeValueForKey:@"isPaused"];
 	isPaused_ = YES;
+	[self didChangeValueForKey:@"isPaused"];
 }
 
 -(void) resume
@@ -502,7 +505,10 @@ static CCDirector *_sharedDirector = nil;
 		CCLOG(@"cocos2d: Director: Error in gettimeofday");
 	}
 
+	[self willChangeValueForKey:@"isPaused"];
 	isPaused_ = NO;
+	[self didChangeValueForKey:@"isPaused"];
+
 	dt = 0;
 }
 

@@ -18,7 +18,7 @@ enum {
 
 static int sceneIdx=-1;
 static NSString *transitions[] = {
-
+	
 	@"TextureAlias",
 	@"TextureMipMap",
 	@"TexturePVRMipMap",
@@ -1043,7 +1043,7 @@ Class restartAction()
 	// RGBA 8888 image (32-bit)
 	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA8888];
 	CCSprite *sprite1 = [CCSprite spriteWithFile:@"test-rgba1.png"];
-	sprite1.position = ccp(1*s.width/6, s.height/2+32);
+	sprite1.position = ccp(1*s.width/7, s.height/2+32);
 	[self addChild:sprite1 z:0];
 
 	// remove texture from texture manager
@@ -1052,7 +1052,7 @@ Class restartAction()
 	// RGBA 4444 image (16-bit)
 	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA4444];
 	CCSprite *sprite2 = [CCSprite spriteWithFile:@"test-rgba1.png"];
-	sprite2.position = ccp(2*s.width/6, s.height/2-32);
+	sprite2.position = ccp(2*s.width/7, s.height/2-32);
 	[self addChild:sprite2 z:0];
 
 	// remove texture from texture manager
@@ -1061,29 +1061,38 @@ Class restartAction()
 	// RGB5A1 image (16-bit)
 	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGB5A1];
 	CCSprite *sprite3 = [CCSprite spriteWithFile:@"test-rgba1.png"];
-	sprite3.position = ccp(3*s.width/6, s.height/2+32);
+	sprite3.position = ccp(3*s.width/7, s.height/2+32);
 	[self addChild:sprite3 z:0];
 
 	// remove texture from texture manager
 	[[CCTextureCache sharedTextureCache] removeTexture:sprite3.texture];
-
+	
 	// RGB565 image (16-bit)
-	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGB565];
+	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGB888];
 	CCSprite *sprite4 = [CCSprite spriteWithFile:@"test-rgba1.png"];
-	sprite4.position = ccp(4*s.width/6, s.height/2-32);
+	sprite4.position = ccp(4*s.width/7, s.height/2-32);
 	[self addChild:sprite4 z:0];
 
 	// remove texture from texture manager
 	[[CCTextureCache sharedTextureCache] removeTexture:sprite4.texture];
 
-	// A8 image (8-bit)
-	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_A8];
+	// RGB565 image (16-bit)
+	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGB565];
 	CCSprite *sprite5 = [CCSprite spriteWithFile:@"test-rgba1.png"];
-	sprite5.position = ccp(5*s.width/6, s.height/2+32);
+	sprite5.position = ccp(5*s.width/7, s.height/2+32);
 	[self addChild:sprite5 z:0];
 
 	// remove texture from texture manager
 	[[CCTextureCache sharedTextureCache] removeTexture:sprite5.texture];
+
+	// A8 image (8-bit)
+	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_A8];
+	CCSprite *sprite6 = [CCSprite spriteWithFile:@"test-rgba1.png"];
+	sprite6.position = ccp(6*s.width/7, s.height/2-32);
+	[self addChild:sprite6 z:0];
+
+	// remove texture from texture manager
+	[[CCTextureCache sharedTextureCache] removeTexture:sprite6.texture];
 
 
 	id fadeout = [CCFadeOut actionWithDuration:2];
@@ -1109,7 +1118,7 @@ Class restartAction()
 
 -(NSString *) subtitle
 {
-	return @"Textures: RGBA8888, RGBA4444, RGB5A1, RGB565, A8";
+	return @"Textures: RGBA8888, RGBA4444, RGB5A1, RGB888, RGB565, A8";
 }
 @end
 
@@ -1957,8 +1966,8 @@ Class restartAction()
 	[super application:application didFinishLaunchingWithOptions:launchOptions];
 
 	// Enables High Res mode (Retina Display) on iPhone 4 and maintains low res on all other devices
-	if( ! [director_ enableRetinaDisplay:YES] )
-		CCLOG(@"Retina Display Not supported");
+//	if( ! [director_ enableRetinaDisplay:YES] )
+//		CCLOG(@"Retina Display Not supported");
 
 	// Turn on display FPS
 	[director_ setDisplayStats:YES];

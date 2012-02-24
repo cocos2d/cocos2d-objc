@@ -30,6 +30,8 @@ static NSString *transitions[] = {
 	@"LabelTTFMultiline",
 	@"LabelTTFA8Test",
 	@"LabelTTFLineBreak",
+	@"BMFontOneAtlas",
+	@"BMFontUnicode",
 
 	// Not a label test. Should be moved to Atlas test
 	@"Atlas1",
@@ -1332,9 +1334,7 @@ static float menuItemPaddingCenter = 50;
 {
 	return @"RED label, fading In and Out in the center of the screen";
 }
-
 @end
-
 
 
 #pragma mark -
@@ -1404,7 +1404,75 @@ static float menuItemPaddingCenter = 50;
 	return @"On Mac OS X only Word Wrap mode is supported";
 #endif
 }
+@end
 
+#pragma mark - BMFontOneAtlas
+
+@implementation BMFontOneAtlas
+-(id) init
+{
+	if( (self=[super init]) ) {
+		
+		CGSize s = [[CCDirector sharedDirector] winSize];
+	
+		CCLabelBMFont *label1 = [CCLabelBMFont labelWithString:@"This is Helvetica" fntFile:@"helvetica-32.fnt" width:kCCLabelAutomaticWidth alignment:CCTextAlignmentLeft imageOffset:CGPointZero];
+		[self addChild:label1];
+		[label1 setPosition:ccp(s.width/2,s.height/3*2)];
+
+		CCLabelBMFont *label2 = [CCLabelBMFont labelWithString:@"And this is Geneva" fntFile:@"geneva-32.fnt" width:kCCLabelAutomaticWidth alignment:CCTextAlignmentLeft imageOffset:ccp(0,128)];		
+		[self addChild:label2];
+		[label2 setPosition:ccp(s.width/2,s.height/3*1)];
+	}
+	
+	return self;
+}
+
+-(NSString*) title
+{
+	return @"CCLabelBMFont with one texture";
+}
+
+-(NSString *) subtitle
+{
+	return @"Using 2 .fnt definitions that share the same texture atlas.";
+}
+@end
+
+#pragma mark - BMFontUnicode
+
+@implementation BMFontUnicode
+-(id) init
+{
+	if( (self=[super init]) ) {
+		
+		CGSize s = [[CCDirector sharedDirector] winSize];
+		
+		CCLabelBMFont *label1 = [CCLabelBMFont labelWithString:@"Buen día" fntFile:@"arial-unicode-26.fnt"];
+		[self addChild:label1];
+		[label1 setPosition:ccp(s.width/2,s.height/4*3)];
+
+		CCLabelBMFont *label2 = [CCLabelBMFont labelWithString:@"美好的一天" fntFile:@"arial-unicode-26.fnt"];
+		[self addChild:label2];
+		[label2 setPosition:ccp(s.width/2,s.height/4*2)];
+
+		CCLabelBMFont *label3 = [CCLabelBMFont labelWithString:@"良い一日を" fntFile:@"arial-unicode-26.fnt"];
+		[self addChild:label3];
+		[label3 setPosition:ccp(s.width/2,s.height/4*1)];
+
+	}
+	
+	return self;
+}
+
+-(NSString*) title
+{
+	return @"CCLabelBMFont with Unicode support";
+}
+
+-(NSString *) subtitle
+{
+	return @"You should see 3 differnt labels: In Spanish, Chinese and Korean";
+}
 @end
 
 

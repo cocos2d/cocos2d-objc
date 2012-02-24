@@ -122,3 +122,12 @@
 }
 @end
 
+@interface BMFontOneAtlas : AtlasDemo
+{
+}
+@end
+
+@interface BMFontUnicode : AtlasDemo
+{
+}
+@end

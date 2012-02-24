@@ -36,6 +36,10 @@
 #import "CCSpriteBatchNode.h"
 #import "Support/uthash.h"
 
+enum {
+	kCCLabelAutomaticWidth = -1,
+};
+
 struct _KerningHashElement;
 
 /** @struct ccBMFontDef
@@ -43,15 +47,15 @@ struct _KerningHashElement;
  */
 typedef struct _BMFontDef {
 	//! ID of the character
-	unsigned int charID;
+	unichar charID;
 	//! origin and size of the font
 	CGRect rect;
 	//! The X amount the image should be offset when drawing the image (in pixels)
-	int xOffset;
+	short xOffset;
 	//! The Y amount the image should be offset when drawing the image (in pixels)
-	int yOffset;
+	short yOffset;
 	//! The amount to move the current position after drawing the character (in pixels)
-	int xAdvance;
+	short xAdvance;
 } ccBMFontDef;
 
 /** @struct ccBMFontPadding
@@ -69,10 +73,6 @@ typedef struct _BMFontPadding {
 	int bottom;
 } ccBMFontPadding;
 
-enum {
-	// how many characters are supported
-	kCCBMFontMaxChars = 2048, //256,
-};
 
 /** CCBMFontConfiguration has parsed configuration of the the .fnt file
  @since v0.8
@@ -81,8 +81,9 @@ enum {
 {
     // XXX: Creating a public interface so that the bitmapFontArray[] is accesible
 @public
-	// The characters building up the font
-	ccBMFontDef	BMFontArray_[kCCBMFontMaxChars];
+
+	// BMFont definitions
+	struct _FontDefHashElement	*fontDefDictionary_;
 
 	// FNTConfig: Common Height
 	NSUInteger		commonHeight_;
@@ -126,6 +127,8 @@ enum {
  If in doubt, use CCLabelBMFont instead of CCLabelAtlas / CCLabel.
 
  Supported editors:
+ - http://glyphdesigner.71squared.com/
+ - http://www.bmglyph.com/
  - http://www.n4te.com/hiero/hiero.jnlp
  - http://slick.cokeandcode.com/demos/hiero.jnlp
  - http://www.angelcode.com/products/bmfont/
@@ -154,6 +157,9 @@ enum {
 	GLubyte		opacity_;
 	ccColor3B	color_;
 	BOOL opacityModifyRGB_;
+	
+	// offset of the texture atlas
+	CGPoint			imageOffset_;
 }
 
 /** Purges the cached data.
@@ -173,15 +179,19 @@ enum {
 @property (nonatomic,readwrite) ccColor3B color;
 
 
-/** creates a BMFont label with an initial string and the FNT file */
+/** creates a BMFont label with an initial string and the FNT file. */
 +(id) labelWithString:(NSString*)string fntFile:(NSString*)fntFile;
 /** creates a BMFont label with an initial string, the FNT file, width, and alignment option */
 +(id) labelWithString:(NSString*)string fntFile:(NSString*)fntFile width:(float)width alignment:(CCTextAlignment)alignment;
+/** creates a BMFont label with an initial string, the FNT file, width, alignment option and the offset of where the glpyhs start on the .PNG image */
++(id) labelWithString:(NSString*)string fntFile:(NSString*)fntFile width:(float)width alignment:(CCTextAlignment)alignment imageOffset:(CGPoint)offset;
 
 /** init a BMFont label with an initial string and the FNT file */
 -(id) initWithString:(NSString*)string fntFile:(NSString*)fntFile;
 /** init a BMFont label with an initial string and the FNT file, width, and alignment option*/
 -(id) initWithString:(NSString*)string fntFile:(NSString*)fntFile width:(float)width alignment:(CCTextAlignment)alignment;
+/** init a BMFont label with an initial string and the FNT file, width, alignment option and the offset of where the glyphs start on the .PNG image */
+-(id) initWithString:(NSString*)string fntFile:(NSString*)fntFile width:(float)width alignment:(CCTextAlignment)alignment imageOffset:(CGPoint)offset;
 
 /** updates the font chars based on the string to render */
 -(void) createFontChars;

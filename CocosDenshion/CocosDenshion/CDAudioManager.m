@@ -542,16 +542,17 @@ static BOOL configured = FALSE;
 {
 	[self.backgroundMusic load:filePath];
 
-	if (!willPlayBackgroundMusic || _mute) {
-		CDLOGINFO(@"Denshion::CDAudioManager - play bgm aborted because audio is not exclusive or sound is muted");
-		return;
-	}
-
 	if (loop) {
 		[self.backgroundMusic setNumberOfLoops:-1];
 	} else {
 		[self.backgroundMusic setNumberOfLoops:0];
 	}
+
+	if (!willPlayBackgroundMusic || _mute) {
+		CDLOGINFO(@"Denshion::CDAudioManager - play bgm aborted because audio is not exclusive or sound is muted");
+		return;
+	}
+
 	[self.backgroundMusic play];
 }
 

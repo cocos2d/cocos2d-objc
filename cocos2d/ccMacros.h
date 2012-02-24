@@ -113,7 +113,6 @@ default gl blend src function. Compatible with premultiplied alpha images.
 	- It will create a UIWindow and it will assign it the 'window_' ivar. 'window_' must be declared before calling this marcro.
     - It will create a UINavigationController and it will assign it the 'navigationController_' ivar. 'navController_' must be declared before using this macro.
     - The director_ will be the root view controller of the navController.
-    - It will try to enable Retina Display for the Director
 	- It will connect the CCGLView to the Director
 	- It will connect the UINavController view to the UIWindow.
 	- It will try to run at 60 FPS.
@@ -145,7 +144,6 @@ do	{																							\
 	[director_ setView:__glView];																\
 	[director_ setDelegate:self];																\
 	director_.wantsFullScreenLayout = YES;														\
-	[director_ enableRetinaDisplay:YES];														\
 	navController_ = [[UINavigationController alloc] initWithRootViewController:director_];		\
 	navController_.navigationBarHidden = YES;													\
 	[window_ addSubview:navController_.view];													\

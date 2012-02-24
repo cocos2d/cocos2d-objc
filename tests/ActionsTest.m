@@ -18,7 +18,9 @@ Class restartAction(void);
 
 static int sceneIdx=-1;
 static NSString *transitions[] = {
-	
+
+	@"ActionAnimate",
+
 	@"ActionManual",
 	@"ActionMove",
 	@"ActionRotate",
@@ -51,6 +53,10 @@ static NSString *transitions[] = {
 	@"ActionTargeted",
 
 	@"Issue1305",
+	@"Issue1305_2",
+	@"Issue1288",
+	@"Issue1288_2",
+	@"Issue1327",
 };
 
 Class nextAction()
@@ -537,18 +543,27 @@ Class restartAction()
 {
 	[super onEnter];
 
-	[self centerSprites:2];
+	[self centerSprites:3];
 
-	// Left: using manual animation.
+	//
+	// Manual animation
+	//
 	CCAnimation* animation = [CCAnimation animation];
 	for( int i=1;i<15;i++)
-		[animation addFrameWithFilename: [NSString stringWithFormat:@"grossini_dance_%02d.png", i]];
+		[animation addSpriteFrameWithFilename: [NSString stringWithFormat:@"grossini_dance_%02d.png", i]];
 
-	id action = [CCAnimate actionWithDuration:2.8f animation:animation restoreOriginalFrame:YES];
-	[kathia runAction: [CCSequence actions: action, [action reverse], nil]];
+	// should last 2.8 seconds. And there are 14 frames.
+	animation.delayPerUnit = 2.8f / 14.0f;
+	animation.restoreOriginalFrame = YES;
+	
+	id action = [CCAnimate actionWithAnimation:animation];
+	[grossini runAction: [CCSequence actions: action, [action reverse], nil]];
 
 	
-	// Right: Using new animation system
+	//
+	// File animation
+	//
+	// With 2 loops and reverse
 	CCAnimationCache *cache = [CCAnimationCache sharedAnimationCache];
 	[cache addAnimationsWithFile:@"animations/animations-2.plist"];
 	CCAnimation *animation2 = [cache animationByName:@"dance_1"];
@@ -562,6 +577,18 @@ Class restartAction()
 		NSLog(@"object %@ with data %@", [notification object], userInfo );
 	}];
 
+	
+	//
+	// File animation
+	//
+	// with 4 loops
+	CCAnimation *animation3 = [[animation2 copy] autorelease];
+	animation3.loops = 4;
+	
+	
+	id action3 = [CCAnimate actionWithAnimation:animation3];
+	[kathia runAction:action3];
+	
 }
 
 -(void) onExit
@@ -577,7 +604,7 @@ Class restartAction()
 }
 -(NSString*) subtitle
 {
-	return @"Manual animation, and animation by parsing .plist";
+	return @"Center: Manual animation. Border: using file format animation";
 }
 @end
 
@@ -1215,7 +1242,162 @@ Class restartAction()
 }
 @end
 
+#pragma mark - Issue1305_2
 
+@implementation Issue1305_2
+-(void) onEnter
+{
+	[super onEnter];
+	
+	[self centerSprites:0];
+	
+	CCSprite *spr = [CCSprite spriteWithFile:@"grossini.png"];
+	spr.position = ccp(200,200);
+	[self addChild:spr];
+	
+	id act1 = [CCMoveBy actionWithDuration:2 position:ccp(0, 100)];
+	id act2 = [CCCallBlock actionWithBlock:^{
+		NSLog(@"1st block");
+	}];
+	id act3 = [CCMoveBy actionWithDuration:2 position:ccp(0, -100)];
+	id act4 = [CCCallBlock actionWithBlock:^{
+		NSLog(@"2nd block");
+	}];
+	id act5 = [CCMoveBy actionWithDuration:2 position:ccp(100, -100)];
+	id act6 = [CCCallBlock actionWithBlock:^{
+		NSLog(@"3rd block");
+	}];
+	id act7 = [CCMoveBy actionWithDuration:2 position:ccp(-100, 0)];
+	id act8 = [CCCallBlock actionWithBlock:^{
+		NSLog(@"4th block");
+	}];
+
+	id actF = [CCSequence actions:act1, act2, act3, act4, act5, act6, act7, act8, nil];
+
+//	[spr runAction:actF];
+	[[[CCDirector sharedDirector] actionManager] addAction:actF target:spr paused:NO];
+}
+
+-(NSString *) title
+{
+	return @"Issue 1305 #2";
+}
+
+-(NSString*) subtitle
+{
+	return @"See console. You should only see one message for each block";
+}
+
+- (void)dealloc {
+    [super dealloc];
+}
+@end
+
+#pragma mark - Issue1288
+
+@implementation Issue1288
+-(void) onEnter
+{
+	[super onEnter];
+	
+	[self centerSprites:0];
+	
+	CCSprite *spr = [CCSprite spriteWithFile:@"grossini.png"];
+	spr.position = ccp(100, 100);
+	[self addChild:spr];
+
+	id act1 = [CCMoveBy actionWithDuration:0.5 position:ccp(100, 0)];
+	id act2 = [act1 reverse];
+	id act3 = [CCSequence actions:act1, act2, nil];
+	id act4 = [CCRepeat actionWithAction:act3 times:2];
+
+	[spr runAction:act4];
+}
+
+-(NSString *) title
+{
+	return @"Issue 1288";
+}
+
+-(NSString*) subtitle
+{
+	return @"Sprite should end at the position where it started.";
+}
+
+- (void)dealloc {
+    [super dealloc];
+}
+@end
+
+#pragma mark - Issue1288_2
+
+@implementation Issue1288_2
+-(void) onEnter
+{
+	[super onEnter];
+	
+	[self centerSprites:0];
+	
+	CCSprite *spr = [CCSprite spriteWithFile:@"grossini.png"];
+	spr.position = ccp(100, 100);
+	[self addChild:spr];
+	
+	id act1 = [CCMoveBy actionWithDuration:0.5 position:ccp(100, 0)];
+	[spr runAction: [CCRepeat actionWithAction:act1 times:1]];
+}
+
+-(NSString *) title
+{
+	return @"Issue 1288 #2";
+}
+
+-(NSString*) subtitle
+{
+	return @"Sprite should move 100 pixels, and stay there";
+}
+
+- (void)dealloc {
+    [super dealloc];
+}
+@end
+
+@implementation Issue1327
+-(void) onEnter
+{
+	[super onEnter];
+	
+	[self centerSprites:0];
+	
+	CCSprite *spr = [CCSprite spriteWithFile:@"grossini.png"];
+	spr.position = ccp(100, 100);
+	[self addChild:spr];
+	
+	id act1 = [CCCallBlock actionWithBlock:^{ NSLog(@"%f", spr.rotation); }];
+	id act2 = [CCRotateBy actionWithDuration:0.25 angle:45];
+	id act3 = [CCCallBlock actionWithBlock:^{ NSLog(@"%f", spr.rotation); }];
+	id act4 = [CCRotateBy actionWithDuration:0.25 angle:45];
+	id act5 = [CCCallBlock actionWithBlock:^{ NSLog(@"%f", spr.rotation); }];
+	id act6 = [CCRotateBy actionWithDuration:0.25 angle:45];
+	id act7 = [CCCallBlock actionWithBlock:^{ NSLog(@"%f", spr.rotation); }];
+	id act8 = [CCRotateBy actionWithDuration:0.25 angle:45];
+	id act9 = [CCCallBlock actionWithBlock:^{ NSLog(@"%f", spr.rotation); }];
+	
+	id actF = [CCSequence actions:act1, act2, act3, act4, act5, act6, act7, act8, act9, nil];
+	[spr runAction:actF];
+}
+-(NSString *) title
+{
+	return @"Issue 1327";
+}
+
+-(NSString*) subtitle
+{
+	return @"See console: You should see: 0, 45, 90, 135, 180";
+}
+@end
+
+
+#pragma mark - AppDelegate
 
 // CLASS IMPLEMENTATIONS
 
