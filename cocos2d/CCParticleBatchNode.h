@@ -34,7 +34,7 @@
 
 //don't use lazy sorting for particle systems
 @interface CCNode (extension)
--(void) setZOrder:(NSUInteger) z;
+-(void) setZOrderRaw:(NSUInteger) z;
 @end
 
 /** CCParticleBatchNode is like a batch node: if it contains children, it will draw them in 1 single OpenGL call

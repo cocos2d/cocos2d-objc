@@ -52,7 +52,8 @@
 
 //need to set z-order manualy, because fast reordering of childs would be complexer / slower
 @implementation CCNode (extension)
--(void) setZOrder:(NSUInteger) z
+
+-(void) setZOrderRaw:(NSUInteger) z
 {
 	zOrder_ = z;
 }
@@ -219,7 +220,7 @@
 	[children_ insertObject:child atIndex:pos];
 
 	child.tag = aTag;
-	[child setZOrder:z];
+	[child setZOrderRaw:z];
 
 	[child setParent: self];
 
@@ -277,7 +278,7 @@
 		}
 	}
 
-	[child setZOrder:z];
+	[child setZOrderRaw:z];
 }
 
 -(void) getCurrentIndex:(NSUInteger*)oldIndex newIndex:(NSUInteger*)newIndex forChild:(CCNode*)child z:(NSInteger)z
