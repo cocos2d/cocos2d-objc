@@ -172,6 +172,22 @@
     return fontSize_;
 }
 
+-(void) setDimensions:(CGSize) dim
+{
+    if( dim.width != dimensions_.width || dim.height != dimensions_.height)
+	{
+        dimensions_ = dim;
+        
+		// Force update
+		[self setString:[self string]];
+    }
+}
+
+-(CGSize) dimensions
+{
+    return dimensions_;
+}
+
 - (void) dealloc
 {
 	[string_ release];

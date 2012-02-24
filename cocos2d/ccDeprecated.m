@@ -168,6 +168,72 @@ void ccGLUniformModelViewProjectionMatrix( CCGLProgram* program )
 }
 @end
 
+
+@implementation CCAnimation (Deprecated)
++(id) animationWithFrames:(NSArray*)arrayOfSpriteFrameNames
+{
+	return [self animationWithSpriteFrames:arrayOfSpriteFrameNames];
+}
++(id) animationWithFrames:(NSArray*)arrayOfSpriteFrameNames delay:(float)delay
+{
+	return [self animationWithSpriteFrames:arrayOfSpriteFrameNames delay:delay];
+}
+-(id) initWithFrames:(NSArray*)arrayOfSpriteFrameNames
+{
+	return [self initWithSpriteFrames:arrayOfSpriteFrameNames];
+}
+-(id) initWithFrames:(NSArray *)arrayOfSpriteFrameNames delay:(float)delay
+{
+	return [self initWithSpriteFrames:arrayOfSpriteFrameNames delay:delay];
+}
+-(void) addFrame:(CCSpriteFrame*)frame
+{
+	[self addSpriteFrame:frame];
+}
+-(void) addFrameWithFilename:(NSString*)filename
+{
+	[self addSpriteFrameWithFilename:filename];
+}
+-(void) addFrameWithTexture:(CCTexture2D*)texture rect:(CGRect)rect
+{
+	[self addSpriteFrameWithTexture:texture rect:rect];
+}
+@end
+
+@implementation CCAnimate (Deprecated)
++(id) actionWithAnimation:(CCAnimation*)animation restoreOriginalFrame:(BOOL)restoreOriginalFrame
+{
+	CCAnimation *anim = [[animation copy] autorelease];
+	anim.restoreOriginalFrame = restoreOriginalFrame;
+	
+	return [[[self alloc] initWithAnimation:anim] autorelease];
+}
++(id) actionWithDuration:(ccTime)duration animation:(CCAnimation*)animation restoreOriginalFrame:(BOOL)restoreOriginalFrame
+{
+	CCAnimation *anim = [[animation copy] autorelease];
+	anim.restoreOriginalFrame = restoreOriginalFrame;
+	anim.delayPerUnit =  duration / animation.frames.count;
+	
+	return [[[self alloc] initWithAnimation:anim] autorelease];	
+}
+-(id) initWithAnimation:(CCAnimation*)animation restoreOriginalFrame:(BOOL)restoreOriginalFrame
+{
+	CCAnimation *anim = [[animation copy] autorelease];
+	anim.restoreOriginalFrame = restoreOriginalFrame;
+	
+	return [self initWithAnimation:anim];	
+}
+-(id) initWithDuration:(ccTime)duration animation:(CCAnimation*)animation restoreOriginalFrame:(BOOL)restoreOriginalFrame
+{
+	CCAnimation *anim = [[animation copy] autorelease];
+	anim.restoreOriginalFrame = restoreOriginalFrame;
+	anim.delayPerUnit =  duration / animation.frames.count;
+	
+	return [self initWithAnimation:anim];
+}
+@end
+
+
 #if __CC_PLATFORM_IOS
 @implementation EAGLView
 @end

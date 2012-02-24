@@ -150,4 +150,18 @@
 }
 @end
 
+@interface Issue1305_2 : ActionDemo
+{}
+@end
 
+@interface Issue1288 : ActionDemo
+{}
+@end
+
+@interface Issue1288_2 : ActionDemo
+{}
+@end
+
+@interface Issue1327 : ActionDemo
+{}
+@end
