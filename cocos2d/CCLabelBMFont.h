@@ -36,6 +36,10 @@
 #import "CCSpriteBatchNode.h"
 #import "Support/uthash.h"
 
+enum {
+	kCCLabelAutomaticWidth = -1,
+};
+
 struct _KerningHashElement;
 
 /** @struct ccBMFontDef
