@@ -28,6 +28,7 @@
 #import "CCProtocols.h"
 
 @class CCSprite;
+@class CCSpriteFrame;
 
 #define kCCItemSize 32
 
@@ -87,6 +88,17 @@
 
 /** Returns whether or not the CCMenuItem is enabled */
 -(BOOL) isEnabled;
+
+/** Sets the block that is called when the item is tapped.
+ The block will be "copied".
+ */
+-(void) setBlock:(void(^)(id sender))block;
+
+/** Sets the target and selector that is called when the item is tapped.
+ target/selector will be implemented using blocks.
+ "target" won't be retained.
+ */
+-(void) setTarget:(id)target selector:(SEL)selector;
 
 /** cleanup event. It will release the block and call [super cleanup] */
 -(void) cleanup;
@@ -350,6 +362,16 @@
  The block will be "copied".
 */
 -(id) initWithNormalImage: (NSString*) value selectedImage:(NSString*)value2 disabledImage:(NSString*) value3 block:(void(^)(id sender))block;
+
+/** sets the sprite frame for the normal image */
+- (void) setNormalSpriteFrame:(CCSpriteFrame*)frame;
+
+/** sets the sprite frame for the selected image */
+- (void) setSelectedSpriteFrame:(CCSpriteFrame*)frame;
+
+/** sets the sprite frame for the disabled image */
+- (void) setDisabledSpriteFrame:(CCSpriteFrame*)frame;
+
 @end
 
 #pragma mark -

@@ -110,27 +110,35 @@
     if( tp > allocatedParticles )
     {
         // Allocate new memory
-        tCCParticle* particlesNew = calloc( tp, sizeof(tCCParticle) );
-        ccV3F_C4B_T2F_Quad *quadsNew = calloc( sizeof(quads_[0]) * tp, 1 );
-        GLushort* indicesNew = calloc( sizeof(indices_[0]) * tp * 6, 1 );
+        size_t particlesSize = tp * sizeof(tCCParticle);
+        size_t quadsSize = sizeof(quads_[0]) * tp * 1;
+        size_t indicesSize = sizeof(indices_[0]) * tp * 6 * 1;
+        
+        tCCParticle* particlesNew = realloc(particles, particlesSize);
+        ccV3F_C4B_T2F_Quad *quadsNew = realloc(quads_, quadsSize);
+        GLushort* indicesNew = realloc(indices_, indicesSize);
         
         if (particlesNew && quadsNew && indicesNew)
         {
-            // Free old memory
-            if ( particles ) free( particles );
-            if ( quads_ ) free( quads_ );
-            if ( indices_ ) free( indices_ );
-            
             // Assign pointers
             particles = particlesNew;
             quads_ = quadsNew;
             indices_ = indicesNew;
             
+            // Clear the memory
+            memset(particles, 0, particlesSize);
+            memset(quads_, 0, quadsSize);
+            memset(indices_, 0, indicesSize);
+            
             allocatedParticles = tp;
         }
         else
         {
-            // Out of memory, failed to resize array
+            // Out of memory, failed to resize some array
+            if (particlesNew) particles = particlesNew;
+            if (quadsNew) quads_ = quadsNew;
+            if (indicesNew) indices_ = indicesNew;
+            
             CCLOG(@"Particle system: out of memory");
             return;
         }
