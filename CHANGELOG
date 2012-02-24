@@ -16,7 +16,7 @@ version 2.0-rc0 XX-Feb-2012
 		Added support for main-thread director (Mac only. Needed for some editors)
 		Added KVO for isPaused (issue #1324)
 . [NEW] DrawingPrimitives: Added ccDrawPoly() free function
-. [NEW] LabelTTF: fontName and fontSize are properties
+. [NEW] LabelTTF: fontName, fontSize and dimensions are properties
 . [NEW] LabelBMFont: added setFntFile method (issue #1119)
 		Added support for image offset in order to share the texture (issue #762)
 		Added support for any unicode char (issue #770)

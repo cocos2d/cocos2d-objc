@@ -39,6 +39,9 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 * Dusan Lazarevic (AKA crmagicxxx):
 	LabelBMFont y-offset work as expected on RetinaDisplay (patch).
 
+* Gene Peterson (http://zynga.com)
+	Dimension is a property on CCLabelTTF
+	
 * Giles Hammond:
 	iOS Director uses DisplayLink timestamp for more stable delta times
 
