@@ -297,6 +297,14 @@ static NSUInteger globalOrderOfArrival = 1;
 	}
 }
 
+- (void) setZOrder:(NSInteger)zOrder
+{
+	[self _setZOrder:zOrder];
+
+    if (parent_)
+        [parent_ reorderChild:self z:zOrder];
+}
+
 #pragma mark CCNode Composition
 
 -(void) childrenAlloc
