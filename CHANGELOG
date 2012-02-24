@@ -16,7 +16,8 @@ version 2.0-rc0 XX-Feb-2012
 		Added support for main-thread director (Mac only. Needed for some editors)
 		Added KVO for isPaused (issue #1324)
 . [NEW] DrawingPrimitives: Added ccDrawPoly() free function
-. [NEW] LabelTTF: fontName, fontSize and dimensions are properties
+. [NEW] LabelTTF: fontName, fontSize and dimensions are properties.
+		It is possible to init one without parameters
 . [NEW] LabelBMFont: added setFntFile method (issue #1119)
 		Added support for image offset in order to share the texture (issue #762)
 		Added support for any unicode char (issue #770)
@@ -26,7 +27,10 @@ version 2.0-rc0 XX-Feb-2012
 		Menu could be enabled/disabled (no events will be accepted when it is disabled)
 		It is possible to change its priority on runtime
 		Renamed kCCMenuTouchPriority -> kCCMenuHandlerPriority
+. [NEW] MenuItem: SpriteItem: Added setters for enabled,disabled,selected sprites
+		Added setter for targe:selector and block
 . [NEW] Node: userData has the option of being retained and treated like an id.
+. [NEW] Particle: It is possible to resize the particle in runtime
 . [NEW] Sprite: spriteWithBatchNode / initWithBatchNode were removed. Use initWithTexture:batch.texture / spriteWithTexture:batch.texture instead
 . [NEW] TextureAtlas: Added option to not use VAO (might be a bit slower, but it consumes less memory)
 . [NEW] Texture2D: Added kCCTexture2DPixelFormat_RGB888 to the list of "default alpha pixel formats"

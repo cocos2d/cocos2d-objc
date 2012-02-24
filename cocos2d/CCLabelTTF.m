@@ -45,9 +45,7 @@
 
 - (id) init
 {
-	NSAssert(NO, @"CCLabelTTF: Init not supported. Use initWithString");
-	[self release];
-	return nil;
+    return [self initWithString:@"" fontName:@"Helvetica" fontSize:12];
 }
 
 + (id) labelWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(CCTextAlignment)alignment lineBreakMode:(CCLineBreakMode)lineBreakMode fontName:(NSString*)name fontSize:(CGFloat)size;

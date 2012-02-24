@@ -461,7 +461,7 @@ typedef struct _FontDefHashElement
 
 @implementation CCLabelBMFont
 
-@synthesize initialString = initialString_, width = width_, alignment = alignment_;
+@synthesize alignment = alignment_;
 @synthesize opacity = opacity_, color = color_;
 
 
@@ -500,14 +500,14 @@ typedef struct _FontDefHashElement
 
 -(id) initWithString:(NSString*)theString fntFile:(NSString*)fntFile width:(float)width alignment:(CCTextAlignment)alignment imageOffset:(CGPoint)offset
 {
-
-	[configuration_ release]; // allow re-init
+	NSAssert(!configuration_, @"re-init is no longer supported");
 
 	configuration_ = FNTConfigLoadFile(fntFile);
 	[configuration_ retain];
+    
+    fntFile_ = [fntFile retain];
 
 	NSAssert( configuration_, @"Error creating config for LabelBMFont");
-
 
 	if ((self=[super initWithFile:configuration_->atlasName_ capacity:[theString length]])) {
 
@@ -536,6 +536,7 @@ typedef struct _FontDefHashElement
 	[string_ release];
     [initialString_ release];
 	[configuration_ release];
+    [fntFile_ release];
 
 	[super dealloc];
 }
@@ -611,7 +612,7 @@ typedef struct _FontDefHashElement
             //Character is out of bounds
             //Do not put lastWord on current line. Add "\n" to current line to start a new line
             //Append to lastWord
-            if (characterSprite.position.x + characterSprite.contentSize.width/2 - startOfLine > self.width) {
+            if (characterSprite.position.x + characterSprite.contentSize.width/2 - startOfLine >  width_) {
                 lastWord = [lastWord stringByAppendingFormat:@"%C", character];
                 NSString *trimmedString = [multilineString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
                 multilineString = [trimmedString stringByAppendingString:@"\n"];
@@ -891,13 +892,25 @@ typedef struct _FontDefHashElement
     [self updateLabel];
 }
 
+#pragma mark LabelBMFont - FntFile
 - (void) setFntFile:(NSString*) fntFile
 {
-    [configuration_ release];
-    configuration_ = FNTConfigLoadFile(fntFile);
-    [configuration_ retain];
-    [self setTexture:[[CCTextureCache sharedTextureCache] addImage:configuration_->atlasName_]];
-    [self createFontChars];
+	if( fntFile != fntFile_ ) {
+		[fntFile_ release];
+		fntFile_ = [fntFile retain];
+		
+		[configuration_ release];
+		configuration_ = FNTConfigLoadFile(fntFile);
+		[configuration_ retain];
+	
+		[self setTexture:[[CCTextureCache sharedTextureCache] addImage:configuration_->atlasName_]];
+		[self createFontChars];
+	}
+}
+
+- (NSString*) fntFile
+{
+    return fntFile_;
 }
 
 #pragma mark LabelBMFont - Debug draw

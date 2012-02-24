@@ -136,6 +136,20 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 					  contentSize_.width, contentSize_.height);
 }
 
+-(void) setBlock:(void(^)(id sender))block
+{
+    [block_ release];
+    block_ = [block copy];
+}
+
+-(void) setTarget:(id)target selector:(SEL)selector
+{
+    [self setBlock:^(id sender) {
+        
+		[target performSelector:selector withObject:sender];
+	}];
+}
+
 @end
 
 
@@ -507,6 +521,8 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 		[self addChild:image];
 
 		normalImage_ = image;
+        
+        [self setContentSize: [normalImage_ contentSize]];
 	}
 }
 
@@ -671,6 +687,24 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 		disabledImage = [CCSprite spriteWithFile:disabledI];
 
 	return [super initWithNormalSprite:normalImage selectedSprite:selectedImage disabledSprite:disabledImage block:block];
+}
+
+//
+// Setter of sprite frames
+//
+-(void) setNormalSpriteFrame:(CCSpriteFrame *)frame
+{
+    [self setNormalImage:[CCSprite spriteWithSpriteFrame:frame]];
+}
+
+-(void) setSelectedSpriteFrame:(CCSpriteFrame *)frame
+{
+    [self setSelectedImage:[CCSprite spriteWithSpriteFrame:frame]];
+}
+
+-(void) setDisabledSpriteFrame:(CCSpriteFrame *)frame
+{
+    [self setDisabledImage:[CCSprite spriteWithSpriteFrame:frame]];
 }
 
 @end
