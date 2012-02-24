@@ -84,7 +84,7 @@
 }
 
 -(id) init {
-	return [self initWithTotalParticles:1];
+	return [self initWithTotalParticles:150];
 }
 
 -(id) initWithFile:(NSString *)plistFile
@@ -665,11 +665,7 @@
 
 - (void) setTotalParticles:(NSUInteger)tp
 {
-    if ( tp > allocatedParticles )
-    {
-        CCLOG(@"Particle system: resizing particle array only supported for quads");
-        return;
-    }
+    NSAssert( tp <= allocatedParticles, @"Particle: resizing particle array only supported for quads");
     totalParticles = tp;
 }
 
