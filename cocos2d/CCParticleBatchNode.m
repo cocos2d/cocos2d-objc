@@ -47,15 +47,10 @@
 
 #import "kazmath/GL/matrix.h"
 
-
 #define kCCParticleDefaultCapacity 500
 
-//need to set z-order manualy, because fast reordering of childs would be complexer / slower
-@implementation CCNode (extension)
--(void) setZOrder:(NSUInteger) z
-{
-	zOrder_ = z;
-}
+@interface CCNode()
+-(void) _setZOrder:(NSInteger)z;
 @end
 
 @interface CCParticleBatchNode (private)
@@ -219,7 +214,7 @@
 	[children_ insertObject:child atIndex:pos];
 
 	child.tag = aTag;
-	[child setZOrder:z];
+	[child _setZOrder:z];
 
 	[child setParent: self];
 
@@ -277,7 +272,7 @@
 		}
 	}
 
-	[child setZOrder:z];
+	[child _setZOrder:z];
 }
 
 -(void) getCurrentIndex:(NSUInteger*)oldIndex newIndex:(NSUInteger*)newIndex forChild:(CCNode*)child z:(NSInteger)z
@@ -371,7 +366,7 @@
 	[textureAtlas_ removeAllQuads];
 }
 
-#pragma mark CCParticleBatchNode - draw
+#pragma mark CCParticleBatchNode - Node overrides
 -(void) draw
 {
 	CC_PROFILER_STOP(@"CCParticleBatchNode - draw");

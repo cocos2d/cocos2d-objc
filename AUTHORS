@@ -99,6 +99,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	Particle can be resized in runtime
 	LabelTTF can be init without params
 	MenuItem: added setters for target:selctor, block and sprites
+	Node: zOrder property is readwrite
 	
 * zergyo:
 	Grid: Fixed memory leak when setIsTextureFlipped is used

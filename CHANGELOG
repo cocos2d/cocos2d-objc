@@ -30,6 +30,7 @@ version 2.0-rc0 XX-Feb-2012
 . [NEW] MenuItem: SpriteItem: Added setters for enabled,disabled,selected sprites
 		Added setter for targe:selector and block
 . [NEW] Node: userData has the option of being retained and treated like an id.
+		zOrder property is readwrite
 . [NEW] Particle: It is possible to resize the particle in runtime
 . [NEW] Sprite: spriteWithBatchNode / initWithBatchNode were removed. Use initWithTexture:batch.texture / spriteWithTexture:batch.texture instead
 . [NEW] TextureAtlas: Added option to not use VAO (might be a bit slower, but it consumes less memory)
