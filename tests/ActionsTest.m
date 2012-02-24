@@ -18,7 +18,9 @@ Class restartAction(void);
 
 static int sceneIdx=-1;
 static NSString *transitions[] = {
-	
+
+	@"ActionAnimate",
+
 	@"ActionManual",
 	@"ActionMove",
 	@"ActionRotate",
@@ -541,18 +543,27 @@ Class restartAction()
 {
 	[super onEnter];
 
-	[self centerSprites:2];
+	[self centerSprites:3];
 
-	// Left: using manual animation.
+	//
+	// Manual animation
+	//
 	CCAnimation* animation = [CCAnimation animation];
 	for( int i=1;i<15;i++)
 		[animation addSpriteFrameWithFilename: [NSString stringWithFormat:@"grossini_dance_%02d.png", i]];
 
-	id action = [CCAnimate actionWithDuration:2.8f animation:animation restoreOriginalFrame:YES];
-	[kathia runAction: [CCSequence actions: action, [action reverse], nil]];
+	// should last 2.8 seconds. And there are 14 frames.
+	animation.delayPerUnit = 2.8f / 14.0f;
+	animation.restoreOriginalFrame = YES;
+	
+	id action = [CCAnimate actionWithAnimation:animation];
+	[grossini runAction: [CCSequence actions: action, [action reverse], nil]];
 
 	
-	// Right: Using new animation system
+	//
+	// File animation
+	//
+	// With 2 loops and reverse
 	CCAnimationCache *cache = [CCAnimationCache sharedAnimationCache];
 	[cache addAnimationsWithFile:@"animations/animations-2.plist"];
 	CCAnimation *animation2 = [cache animationByName:@"dance_1"];
@@ -566,6 +577,18 @@ Class restartAction()
 		NSLog(@"object %@ with data %@", [notification object], userInfo );
 	}];
 
+	
+	//
+	// File animation
+	//
+	// with 4 loops
+	CCAnimation *animation3 = [[animation2 copy] autorelease];
+	animation3.loops = 4;
+	
+	
+	id action3 = [CCAnimate actionWithAnimation:animation3];
+	[kathia runAction:action3];
+	
 }
 
 -(void) onExit
@@ -581,7 +604,7 @@ Class restartAction()
 }
 -(NSString*) subtitle
 {
-	return @"Manual animation, and animation by parsing .plist";
+	return @"Center: Manual animation. Border: using file format animation";
 }
 @end
 

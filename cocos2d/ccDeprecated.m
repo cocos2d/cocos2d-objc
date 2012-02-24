@@ -200,6 +200,38 @@ void ccGLUniformModelViewProjectionMatrix( CCGLProgram* program )
 }
 @end
 
+@implementation CCAnimate (Deprecated)
++(id) actionWithAnimation:(CCAnimation*)animation restoreOriginalFrame:(BOOL)restoreOriginalFrame
+{
+	CCAnimation *anim = [[animation copy] autorelease];
+	anim.restoreOriginalFrame = restoreOriginalFrame;
+	
+	return [[[self alloc] initWithAnimation:anim] autorelease];
+}
++(id) actionWithDuration:(ccTime)duration animation:(CCAnimation*)animation restoreOriginalFrame:(BOOL)restoreOriginalFrame
+{
+	CCAnimation *anim = [[animation copy] autorelease];
+	anim.restoreOriginalFrame = restoreOriginalFrame;
+	anim.delayPerUnit =  duration / animation.frames.count;
+	
+	return [[[self alloc] initWithAnimation:anim] autorelease];	
+}
+-(id) initWithAnimation:(CCAnimation*)animation restoreOriginalFrame:(BOOL)restoreOriginalFrame
+{
+	CCAnimation *anim = [[animation copy] autorelease];
+	anim.restoreOriginalFrame = restoreOriginalFrame;
+	
+	return [self initWithAnimation:anim];	
+}
+-(id) initWithDuration:(ccTime)duration animation:(CCAnimation*)animation restoreOriginalFrame:(BOOL)restoreOriginalFrame
+{
+	CCAnimation *anim = [[animation copy] autorelease];
+	anim.restoreOriginalFrame = restoreOriginalFrame;
+	anim.delayPerUnit =  duration / animation.frames.count;
+	
+	return [self initWithAnimation:anim];
+}
+@end
 
 
 #if __CC_PLATFORM_IOS

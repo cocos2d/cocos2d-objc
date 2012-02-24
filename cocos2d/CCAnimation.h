@@ -68,14 +68,13 @@
   [sprite runAction:[CCAnimate actionWithAnimation:animation]];
 
  */
-@interface CCAnimation : NSObject
+@interface CCAnimation : NSObject <NSCopying>
 {
 	NSMutableArray	*frames_;
 	float			totalDelayUnits_;
 	float			delayPerUnit_;
-	float			duration_;
 	BOOL			restoreOriginalFrame_;
-	NSUInteger		loop_;
+	NSUInteger		loops_;
 }
 
 /** total Delay units of the CCAnimation. */
@@ -89,7 +88,7 @@
 /** whether or not it shall restore the original frame when the animation finishes */
 @property (nonatomic,readwrite) BOOL restoreOriginalFrame;
 /** how many times the animation is going to loop. 0 means animation is not animated. 1, animation is executed one time, ... */
-@property (nonatomic, readwrite) NSUInteger loop;
+@property (nonatomic, readwrite) NSUInteger loops;
 
 /** Creates an animation
  @since v0.99.5
@@ -108,10 +107,10 @@
  */
 +(id) animationWithSpriteFrames:(NSArray*)arrayOfSpriteFrameNames delay:(float)delay;
 
-/* Creates an animation with an array of CCAnimationFrame and the delay per units in seconds.
+/* Creates an animation with an array of CCAnimationFrame, the delay per units in seconds and and how many times it should be executed.
  @since v2.0
  */
-+(id) animationWithAnimationFrames:(NSArray*)arrayOfAnimationFrames delayPerUnit:(float)delayPerUnit;
++(id) animationWithAnimationFrames:(NSArray*)arrayOfAnimationFrames delayPerUnit:(float)delayPerUnit loops:(NSUInteger)loops;
 
 
 /** Initializes a CCAnimation with an array of CCSpriteFrame.
@@ -129,7 +128,7 @@
 /* Initializes an animation with an array of CCAnimationFrame and the delay per units in seconds.
  @since v2.0
  */
--(id) initWithAnimationFrames:(NSArray*)arrayOfAnimationFrames delayPerUnit:(float)delayPerUnit;
+-(id) initWithAnimationFrames:(NSArray*)arrayOfAnimationFrames delayPerUnit:(float)delayPerUnit loops:(NSUInteger)loops;
 
 /** Adds a CCSpriteFrame to a CCAnimation.
  The frame will be added with one "delay unit".

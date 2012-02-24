@@ -1256,52 +1256,31 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 
 +(id) actionWithAnimation: (CCAnimation*)anim
 {
-	return [[[self alloc] initWithAnimation:anim restoreOriginalFrame:anim.restoreOriginalFrame] autorelease];
-}
-
-+(id) actionWithAnimation: (CCAnimation*)anim restoreOriginalFrame:(BOOL)restore
-{
-	return [[[self alloc] initWithAnimation:anim restoreOriginalFrame:restore] autorelease];
-}
-
-+(id) actionWithDuration:(ccTime)duration animation: (CCAnimation*)anim restoreOriginalFrame:(BOOL)restore
-{
-	return [[[self alloc] initWithDuration:duration animation:anim restoreOriginalFrame:restore] autorelease];
-}
-
--(id) initWithAnimation: (CCAnimation*)anim
-{
-	NSAssert( anim!=nil, @"Animate: argument Animation must be non-nil");
-	return [self initWithAnimation:anim restoreOriginalFrame:anim.restoreOriginalFrame];
-}
-
--(id) initWithAnimation: (CCAnimation*)anim restoreOriginalFrame:(BOOL)restoreOriginalFrame
-{
-	NSAssert( anim!=nil, @"Animate: argument Animation must be non-nil");
-
-	return [self initWithDuration:anim.duration animation:anim restoreOriginalFrame:restoreOriginalFrame];
+	return [[[self alloc] initWithAnimation:anim] autorelease];
 }
 
 // delegate initializer
--(id) initWithDuration:(ccTime)duration animation: (CCAnimation*)anim restoreOriginalFrame:(BOOL)restoreOriginalFrame
+-(id) initWithAnimation:(CCAnimation*)anim
 {
 	NSAssert( anim!=nil, @"Animate: argument Animation must be non-nil");
+	
+	float singleDuration = anim.duration;
 
-	if( (self=[super initWithDuration:duration] ) ) {
+	if( (self=[super initWithDuration:singleDuration * anim.loops] ) ) {
 
 		nextFrame_ = 0;
-		restoreOriginalFrame_ = restoreOriginalFrame;
 		self.animation = anim;
 		origFrame_ = nil;
+		executedLoops_ = 0;
 		
 		splitTimes_ = [[NSMutableArray alloc] initWithCapacity:anim.frames.count];
 		
 		float accumUnitsOfTime = 0;
-		float newUnitOfTimeValue = duration / anim.totalDelayUnits;
+		float newUnitOfTimeValue = singleDuration / anim.totalDelayUnits;
 		
 		for( CCAnimationFrame *frame in anim.frames ) {
 
-			NSNumber *value = [NSNumber numberWithFloat: (accumUnitsOfTime * newUnitOfTimeValue) / duration];
+			NSNumber *value = [NSNumber numberWithFloat: (accumUnitsOfTime * newUnitOfTimeValue) / singleDuration];
 			accumUnitsOfTime += frame.delayUnits;
 
 			[splitTimes_ addObject:value];
@@ -1313,7 +1292,7 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	return [[[self class] allocWithZone: zone] initWithDuration:duration_ animation:animation_ restoreOriginalFrame:restoreOriginalFrame_];
+	return [[[self class] allocWithZone: zone] initWithAnimation:[[animation_ copy]autorelease] ];
 }
 
 -(void) dealloc
@@ -1331,15 +1310,16 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 
 	[origFrame_ release];
 
-	if( restoreOriginalFrame_ )
+	if( animation_.restoreOriginalFrame )
 		origFrame_ = [[sprite displayFrame] retain];
 	
 	nextFrame_ = 0;
+	executedLoops_ = 0;
 }
 
 -(void) stop
 {
-	if( restoreOriginalFrame_ ) {
+	if( animation_.restoreOriginalFrame ) {
 		CCSprite *sprite = target_;
 		[sprite setDisplayFrame:origFrame_];
 	}
@@ -1349,6 +1329,22 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 
 -(void) update: (ccTime) t
 {
+	
+	// if t==1, ignore. Animation should finish with t==1
+	if( t < 1.0f ) {
+		t *= animation_.loops;
+		
+		// new loop?  If so, reset frame counter
+		NSUInteger loopNumber = (NSUInteger)t;
+		if( loopNumber > executedLoops_ ) {
+			nextFrame_ = 0;
+			executedLoops_++;
+		}
+		
+		// new t for animations
+		t = fmodf(t, 1.0f);
+	}
+	
 	NSArray *frames = [animation_ frames];
 	NSUInteger numberOfFrames = [frames count];
 	CCSpriteFrame *frameToDisplay = nil;
@@ -1380,8 +1376,9 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
     for (id element in enumerator)
         [newArray addObject:[[element copy] autorelease]];
 
-	CCAnimation *newAnim = [CCAnimation animationWithAnimationFrames:newArray delayPerUnit:animation_.delayPerUnit];
-	return [[self class] actionWithDuration:duration_ animation:newAnim restoreOriginalFrame:restoreOriginalFrame_];
+	CCAnimation *newAnim = [CCAnimation animationWithAnimationFrames:newArray delayPerUnit:animation_.delayPerUnit loops:animation_.loops];
+	newAnim.restoreOriginalFrame = animation_.restoreOriginalFrame;
+	return [[self class] actionWithAnimation:newAnim];
 }
 @end
 
