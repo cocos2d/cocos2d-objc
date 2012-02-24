@@ -184,7 +184,7 @@ enum {
 }
 
 /** The z order of the node relative to its "siblings": children of the same parent */
-@property(nonatomic,readonly) NSInteger zOrder;
+@property(nonatomic,assign) NSInteger zOrder;
 /** The real openGL Z vertex.
  Differences between openGL Z vertex and cocos2d Z order:
    - OpenGL Z modifies the Z vertex, and not the Z order in the relation between parent-children
