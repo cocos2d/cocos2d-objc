@@ -1415,11 +1415,11 @@ static float menuItemPaddingCenter = 50;
 		
 		CGSize s = [[CCDirector sharedDirector] winSize];
 	
-		CCLabelBMFont *label1 = [CCLabelBMFont labelWithString:@"This is Helvetica" fntFile:@"helvetica-32.fnt" width:-1 alignment:CCTextAlignmentLeft imageOffset:CGPointZero];
+		CCLabelBMFont *label1 = [CCLabelBMFont labelWithString:@"This is Helvetica" fntFile:@"helvetica-32.fnt" width:kCCLabelAutomaticWidth alignment:CCTextAlignmentLeft imageOffset:CGPointZero];
 		[self addChild:label1];
 		[label1 setPosition:ccp(s.width/2,s.height/3*2)];
 
-		CCLabelBMFont *label2 = [CCLabelBMFont labelWithString:@"And this is Geneva" fntFile:@"geneva-32.fnt" width:-1 alignment:CCTextAlignmentLeft imageOffset:ccp(0,128)];		
+		CCLabelBMFont *label2 = [CCLabelBMFont labelWithString:@"And this is Geneva" fntFile:@"geneva-32.fnt" width:kCCLabelAutomaticWidth alignment:CCTextAlignmentLeft imageOffset:ccp(0,128)];		
 		[self addChild:label2];
 		[label2 setPosition:ccp(s.width/2,s.height/3*1)];
 	}
