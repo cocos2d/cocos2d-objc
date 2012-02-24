@@ -172,7 +172,7 @@
     CCAnimation *blinkAnimation = [CCAnimation animationWithSpriteFrames:blinkAnimFrames delay:0.1f];
     [_tom runAction:[CCRepeatForever actionWithAction:
                      [CCSequence actions:
-                      [CCAnimate actionWithAnimation:blinkAnimation restoreOriginalFrame:NO],
+                      [CCAnimate actionWithAnimation:blinkAnimation],
                       [CCDelayTime actionWithDuration:2.5f],
                       nil]]];
 

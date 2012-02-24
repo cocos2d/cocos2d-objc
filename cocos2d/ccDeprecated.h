@@ -34,6 +34,7 @@
 #import "CCAnimation.h"
 #import "CCScheduler.h"
 #import "CCActionManager.h"
+#import "CCActionInterval.h"
 #import "Platforms/Mac/CCDirectorMac.h"
 #import "Platforms/iOS/CCTouchDispatcher.h"
 #import "Platforms/iOS/CCDirectorIOS.h"
@@ -118,6 +119,13 @@ DEPRECATED_ATTRIBUTE @interface MacView : CCGLView
 -(void) addFrame:(CCSpriteFrame*)frame DEPRECATED_ATTRIBUTE;
 -(void) addFrameWithFilename:(NSString*)filename DEPRECATED_ATTRIBUTE;
 -(void) addFrameWithTexture:(CCTexture2D*)texture rect:(CGRect)rect DEPRECATED_ATTRIBUTE;
+@end
+
+@interface CCAnimate (Deprecated)
++(id) actionWithAnimation:(CCAnimation*)animation restoreOriginalFrame:(BOOL)restoreOriginalFrame DEPRECATED_ATTRIBUTE;
+-(id) initWithAnimation:(CCAnimation*) a restoreOriginalFrame:(BOOL)restoreOriginalFrame DEPRECATED_ATTRIBUTE;
++(id) actionWithDuration:(ccTime)duration animation:(CCAnimation*)animation restoreOriginalFrame:(BOOL)restoreOriginalFrame DEPRECATED_ATTRIBUTE;
+-(id) initWithDuration:(ccTime)duration animation:(CCAnimation*)animation restoreOriginalFrame:(BOOL)restoreOriginalFrame DEPRECATED_ATTRIBUTE;
 @end
 
 

@@ -144,7 +144,7 @@ static CCAnimationCache *sharedAnimationCache_=nil;
 			CCLOG(@"cocos2d: CCAnimationCache: An animation in your dictionary refers to a frame which is not in the CCSpriteFrameCache. Some or all of the frames for the animation '%@' may be missing.", name);
 		}
 		
-		animation = [CCAnimation animationWithAnimationFrames:frames delayPerUnit:[delay floatValue]];
+		animation = [CCAnimation animationWithAnimationFrames:frames delayPerUnit:[delay floatValue] loops:1 ];
 		
 		[[CCAnimationCache sharedAnimationCache] addAnimation:animation name:name];
 	}	
@@ -159,9 +159,8 @@ static CCAnimationCache *sharedAnimationCache_=nil;
 	{
 		NSDictionary* animationDict = [animations objectForKey:name];
 
-//		BOOL loop = [[animationDict objectForKey:@"loop"] boolValue];
+		NSNumber *loops = [animationDict objectForKey:@"loops"];
 		BOOL restoreOriginalFrame = [[animationDict objectForKey:@"restoreOriginalFrame"] boolValue];
-
 		NSArray *frameArray = [animationDict objectForKey:@"frames"];
 		
 		
@@ -193,7 +192,7 @@ static CCAnimationCache *sharedAnimationCache_=nil;
 		}
 		
 		float delayPerUnit = [[animationDict objectForKey:@"delayPerUnit"] floatValue];
-		CCAnimation *animation = [[CCAnimation alloc] initWithAnimationFrames:array delayPerUnit:delayPerUnit];
+		CCAnimation *animation = [[CCAnimation alloc] initWithAnimationFrames:array delayPerUnit:delayPerUnit loops:(loops?[loops intValue]:1)];
 		[array release];
 		
 		[animation setRestoreOriginalFrame:restoreOriginalFrame];

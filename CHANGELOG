@@ -10,7 +10,7 @@ version 2.0-rc0 XX-Feb-2012
 		TileMap: Fixed a problem with multiple layers and multiple tile sets that could cause TMX maps to not load if rotation is used (issue #1302)
 		Types: Added convenience function to create a ccColor4F from color components
 . [NEW] Actions: Added ActionTargeted action. Useful to target other nodes from a sequence.
-. [NEW] Animation: Added new animation format that supports delays per frame and notifications per frame
+. [NEW] Animation: Added new animation format that supports delays per frame, loops and notifications per frame
 . [NEW] Deprecated: Added CC_ENABLE_DEPRECATED in ccConfig.h. All deprecated functions, methods and classed are included by default.
 . [NEW] Director: When the stats are on, the number of GL draw calls per frame are displayed
 		Added support for main-thread director (Mac only. Needed for some editors)

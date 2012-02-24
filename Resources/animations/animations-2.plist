@@ -10,7 +10,7 @@
 			<real>0.2</real>
 			<key>restoreOriginalFrame</key>
 			<true/>
-			<key>loop</key>
+			<key>loops</key>
 			<integer>2</integer>
 			<key>frames</key>
 			<array>
