@@ -140,6 +140,9 @@ typedef struct _BMFontPadding {
 {
 	// string to render
 	NSString		*string_;
+    
+    // name of fntFile
+    NSString        *fntFile_;
 
     // initial string without line breaks
     NSString *initialString_;
@@ -165,10 +168,10 @@ typedef struct _BMFontPadding {
  */
 +(void) purgeCachedData;
 
-@property (nonatomic,copy,readonly) NSString *initialString;
-@property (nonatomic,assign,readonly) float width;
+/** alignment used for the label */
 @property (nonatomic,assign,readonly) CCTextAlignment alignment;
-
+/** fntFile used for the font */
+@property (nonatomic,retain) NSString* fntFile;
 /** conforms to CCRGBAProtocol protocol */
 @property (nonatomic,readwrite) GLubyte opacity;
 /** conforms to CCRGBAProtocol protocol */
@@ -198,8 +201,6 @@ typedef struct _BMFontPadding {
 /** set label alignment */
 - (void)setAlignment:(CCTextAlignment)alignment;
 
-/** set FNT file */
-- (void) setFntFile:(NSString*)fntFile;
 @end
 
 /** Free function that parses a FNT file a place it on the cache

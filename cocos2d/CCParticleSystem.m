@@ -70,7 +70,6 @@
 @synthesize startColor, startColorVar, endColor, endColorVar;
 @synthesize startSpin, startSpinVar, endSpin, endSpinVar;
 @synthesize emissionRate;
-@synthesize totalParticles;
 @synthesize startSize, startSizeVar;
 @synthesize endSize, endSizeVar;
 @synthesize blendFunc = blendFunc_;
@@ -85,9 +84,7 @@
 }
 
 -(id) init {
-	NSAssert(NO, @"CCParticleSystem: Init not supported.");
-	[self release];
-	return nil;
+	return [self initWithTotalParticles:150];
 }
 
 -(id) initWithFile:(NSString *)plistFile
@@ -276,6 +273,7 @@
 			[self release];
 			return nil;
 		}
+        allocatedParticles = numberOfParticles;
 
 		if (batchNode_)
 		{
@@ -661,6 +659,19 @@
 -(BOOL) blendAdditive
 {
 	return( blendFunc_.src == GL_SRC_ALPHA && blendFunc_.dst == GL_ONE);
+}
+
+#pragma mark ParticleSystem - Total Particles Property
+
+- (void) setTotalParticles:(NSUInteger)tp
+{
+    NSAssert( tp <= allocatedParticles, @"Particle: resizing particle array only supported for quads");
+    totalParticles = tp;
+}
+
+- (NSUInteger) totalParticles
+{
+    return totalParticles;
 }
 
 #pragma mark ParticleSystem - Properties of Gravity Mode
