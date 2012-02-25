@@ -50,6 +50,7 @@ version 2.0-rc0 XX-Feb-2012
 . [FIX] Node: flip, visible are no longer bitfields to prevent signed issues (issue #1314, issue #1287)
 . [FIX] Particles: Fixed memory leak in fillWithEmptyQuadsFromIndex
 . [FIX] Progress: works with rotated sprite frames (issue #1303)
+. [FIX] RenderTexture: If (running thread != cocos2d thread ) then it locks the OpenGL context. Prevents nasty crash
 . [FIX] Sprite: adding family of sprites to a batchnode works as expected (issue #1217)
 . [FIX] SpriteBatch: Quad extensions are public
 . [FIX] Tests: LabelTest with custom TTF font works on Mac too

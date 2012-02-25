@@ -147,6 +147,12 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 /** CCGLView uses double-buffer. This method swaps the buffers */
 -(void) swapBuffers;
 
+/** uses and locks the OpenGL context */
+-(void) lockOpenGLContext;
+
+/** unlocks the openGL context */
+-(void) unlockOpenGLContext;
+
 - (CGPoint) convertPointFromViewToSurface:(CGPoint)point;
 - (CGRect) convertRectFromViewToSurface:(CGRect)rect;
 @end

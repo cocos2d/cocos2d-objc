@@ -482,14 +482,7 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 	// When resizing the view, -reshape is called automatically on the main thread
 	// Add a mutex around to avoid the threads accessing the context simultaneously	when resizing
 
-	CCGLView *openGLview = (CCGLView*) self.view;
-
-	NSOpenGLContext *openGLContext = [openGLview openGLContext];
-	if( ! openGLContext )
-		return;
-
-	CGLLockContext([openGLContext CGLContextObj]);
-	[openGLContext makeCurrentContext];
+	[self.view lockOpenGLContext];
 
 	/* tick before glClear: issue #533 */
 	if( ! isPaused_ )
@@ -518,8 +511,11 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 
 	totalFrames_++;
 	
-	[openGLContext flushBuffer];
-	CGLUnlockContext([openGLContext CGLContextObj]);
+
+	// flush buffer
+	[self.view.openGLContext flushBuffer];	
+
+	[self.view unlockOpenGLContext];
 
 	if( displayStats_ )
 		[self calculateMPF];

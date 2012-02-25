@@ -79,7 +79,7 @@ void ccGLUniformModelViewProjectionMatrix( CCGLProgram* program )
 
 -(CCGLView*) openGLView
 {
-	return (CCGLView*)self.view;
+	return (CCGLView*)view_;
 }
 @end
 

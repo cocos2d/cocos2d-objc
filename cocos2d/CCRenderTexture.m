@@ -61,6 +61,13 @@
 	{
 		NSAssert(format != kCCTexture2DPixelFormat_A8,@"only RGB and RGBA formats are valid for a render texture");
 
+		CCDirector *director = [CCDirector sharedDirector];
+
+		if( [director runningThread] != [NSThread currentThread] ) {
+			CCLOG(@"cocos2d: WARNING. CCRenderTexture is running on its own thread. Locking OpenGL context to prevent possible crashes...");
+			[(CCGLView*)[director view] lockOpenGLContext];
+		}
+		
 		w *= CC_CONTENT_SCALE_FACTOR();
 		h *= CC_CONTENT_SCALE_FACTOR();
 
@@ -107,18 +114,35 @@
 		[sprite_ setBlendFunc:(ccBlendFunc){GL_ONE, GL_ONE_MINUS_SRC_ALPHA}];
 
 		glBindFramebuffer(GL_FRAMEBUFFER, oldFBO_);
+		
+		if( [director runningThread] != [NSThread currentThread] )
+			[(CCGLView*)[director view] unlockOpenGLContext];
 	}
 	return self;
 }
 
 -(void)dealloc
 {
+	CCDirector *director = [CCDirector sharedDirector];
+
+	if( [director runningThread] != [NSThread currentThread] )
+		[(CCGLView*)[director view] lockOpenGLContext];
+
 	glDeleteFramebuffers(1, &fbo_);
+	
+	if( [director runningThread] != [NSThread currentThread] )
+		[(CCGLView*)[director view] unlockOpenGLContext];
+
 	[super dealloc];
 }
 
 -(void)begin
 {
+	CCDirector *director = [CCDirector sharedDirector];
+	
+	if( [director runningThread] != [NSThread currentThread] )
+		[(CCGLView*)[director view] lockOpenGLContext];
+
 	// Save the current matrix
 	kmGLPushMatrix();
 
@@ -126,7 +150,6 @@
 
 
 	// Calculate the adjustment ratios based on the old and new projections
-	CCDirector *director = [CCDirector sharedDirector];
 	CGSize size = [director winSizeInPixels];
 	float widthRatio = size.width / texSize.width;
 	float heightRatio = size.height / texSize.height;
@@ -146,11 +169,19 @@
 
 	glGetIntegerv(GL_FRAMEBUFFER_BINDING, &oldFBO_);
 	glBindFramebuffer(GL_FRAMEBUFFER, fbo_);
+	
+	if( [director runningThread] != [NSThread currentThread] )
+		[(CCGLView*)[director view] unlockOpenGLContext];
 }
 
 -(void)beginWithClear:(float)r g:(float)g b:(float)b a:(float)a
 {
 	[self begin];
+
+	CCDirector *director = [CCDirector sharedDirector];
+	
+	if( [director runningThread] != [NSThread currentThread] )
+		[(CCGLView*)[director view] lockOpenGLContext];
 
 	// save clear color
 	GLfloat	clearColor[4];
@@ -161,15 +192,21 @@
 
 	// restore clear color
 	glClearColor(clearColor[0], clearColor[1], clearColor[2], clearColor[3]);
+	
+	if( [director runningThread] != [NSThread currentThread] )
+		[(CCGLView*)[director view] unlockOpenGLContext];
 }
 
 -(void)end
 {
+	CCDirector *director = [CCDirector sharedDirector];
+	
+	if( [director runningThread] != [NSThread currentThread] )
+		[(CCGLView*)[director view] lockOpenGLContext];
+
 	glBindFramebuffer(GL_FRAMEBUFFER, oldFBO_);
 
 	kmGLPopMatrix();
-
-	CCDirector *director = [CCDirector sharedDirector];
 
 	CGSize size = [director winSizeInPixels];
 
@@ -181,6 +218,9 @@
 		glViewport(-size.width/2, -size.height/2, size.width * CC_CONTENT_SCALE_FACTOR(), size.height * CC_CONTENT_SCALE_FACTOR() );
 	
 	[director setProjection:director.projection];
+	
+	if( [director runningThread] != [NSThread currentThread] )
+		[(CCGLView*)[director view] unlockOpenGLContext];
 }
 
 -(void)clear:(float)r g:(float)g b:(float)b a:(float)a

@@ -280,6 +280,16 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	CHECK_GL_ERROR_DEBUG();
 }
 
+-(void) lockOpenGLContext
+{
+	// unused on iOS
+}
+
+-(void) unlockOpenGLContext
+{
+	// unused on iOS
+}
+
 - (unsigned int) convertPixelFormat:(NSString*) pixelFormat
 {
 	// define the pixel format

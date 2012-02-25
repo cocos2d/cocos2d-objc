@@ -190,7 +190,7 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 
 		GLuint name = name_;
 
-		//It is very likely dealloc will get called from the texture cache's dictionary thread but this must be run from the main thread.
+		//It is very likely dealloc will get called from the texture cache's dictionary thread but this must be run from the cocos2d thread
 		dispatch_async(dispatch_get_main_queue(), ^(void) {
 			ccGLDeleteTexture( name );
 		});

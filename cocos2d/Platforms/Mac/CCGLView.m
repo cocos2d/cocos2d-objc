@@ -110,13 +110,8 @@
 	// We draw on a secondary thread through the display link
 	// When resizing the view, -reshape is called automatically on the main thread
 	// Add a mutex around to avoid the threads accessing the context simultaneously when resizing
-	
-	NSOpenGLContext *glContext = [self openGLContext];
-	if( ! glContext )
-		return;
-	
-	CGLLockContext([glContext CGLContextObj]);	
-	[glContext makeCurrentContext];
+
+	[self lockOpenGLContext];
 
 	NSRect rect = [self bounds];
 
@@ -126,6 +121,24 @@
 	// avoid flicker
 	[director drawScene];
 //	[self setNeedsDisplay:YES];
+	
+	[self unlockOpenGLContext];
+}
+
+
+-(void) lockOpenGLContext
+{
+	NSOpenGLContext *glContext = [self openGLContext];
+	NSAssert( glContext, @"FATAL: could not get openGL context");
+		
+	CGLLockContext([glContext CGLContextObj]);	
+	[glContext makeCurrentContext];	
+}
+
+-(void) unlockOpenGLContext
+{
+	NSOpenGLContext *glContext = [self openGLContext];
+	NSAssert( glContext, @"FATAL: could not get openGL context");
 
 	CGLUnlockContext([glContext CGLContextObj]);
 }
