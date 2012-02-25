@@ -425,7 +425,7 @@ static NSUInteger globalOrderOfArrival = 0;
     }
     else
     {
-        NSLog(@"children = %@", children_);
+        CCLOG(@"children = %@", children_);
     }
 }
 
