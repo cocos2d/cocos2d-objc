@@ -80,6 +80,7 @@
 #import "CCGLProgram.h"
 #import "ccGLStateCache.h"
 #import "CCShaderCache.h"
+#import "CCDirector.h"
 
 #import "Support/ccUtils.h"
 #import "Support/CCFileUtils.h"
@@ -188,12 +189,9 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 
 	if( name_ ) {
 
-		GLuint name = name_;
+		NSAssert( [[CCDirector sharedDirector] runningThread] == [NSThread currentThread], @"cocos2d: Shall not happen. Please report this bug on the cocos2d issue tracker" );
 
-		//It is very likely dealloc will get called from the texture cache's dictionary thread but this must be run from the cocos2d thread
-		dispatch_async(dispatch_get_main_queue(), ^(void) {
-			ccGLDeleteTexture( name );
-		});
+		ccGLDeleteTexture( name_ );
 	}
 
 	[super dealloc];
