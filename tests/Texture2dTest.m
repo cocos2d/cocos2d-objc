@@ -19,6 +19,9 @@ enum {
 static int sceneIdx=-1;
 static NSString *transitions[] = {
 	
+	@"TextureAsync",
+	@"TextureAsyncBlock",
+
 	@"TextureAlias",
 	@"TextureMipMap",
 	@"TexturePVRMipMap",
@@ -1224,6 +1227,10 @@ Class restartAction()
 
 -(void) imageLoaded: (CCTexture2D*) tex
 {
+	CCDirector *director = [CCDirector sharedDirector];
+	
+	NSAssert( [NSThread currentThread] == [director runningThread], @"FAIL. Callback should be on cocos2d thread");
+	
 	// IMPORTANT: The order on the callback is not guaranteed. Don't depend on the callback
 
 	// This test just creates a sprite based on the Texture
@@ -1232,8 +1239,7 @@ Class restartAction()
 	sprite.anchorPoint = ccp(0,0);
 	[self addChild:sprite z:-1];
 
-	CGSize size =[[CCDirector sharedDirector] winSize];
-
+	CGSize size = [director winSize];
 	int i = imageOffset * 32;
 	sprite.position = ccp( i % (int)size.width, (i / (int)size.width) * 32 );
 
@@ -1294,13 +1300,17 @@ Class restartAction()
 
 	void(^block)(CCTexture2D *block) = ^(CCTexture2D* tex){
 
+		CCDirector *director = [CCDirector sharedDirector];
+
+		NSAssert( [NSThread currentThread] == [director runningThread], @"FAIL. Callback should be on cocos2d thread");
+
 		CCSprite *sprite = [CCSprite spriteWithTexture:tex];
 		sprite.anchorPoint = ccp(0,0);
 		[self addChild:sprite z:-1];
 
-		CGSize size =[[CCDirector sharedDirector] winSize];
 
 		int i = imageOffset * 32;
+		CGSize size = [director winSize];
 		sprite.position = ccp( i % (int)size.width, (i / (int)size.width) * 32 );
 
 		imageOffset++;

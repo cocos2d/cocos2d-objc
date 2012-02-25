@@ -30,10 +30,13 @@
 #import "CCTexture2D.h"
 #import "CCTexturePVR.h"
 #import "CCConfiguration.h"
-#import "Support/CCFileUtils.h"
 #import "CCDirector.h"
 #import "ccConfig.h"
 #import "ccTypes.h"
+
+#import "Support/CCFileUtils.h"
+#import "Support/NSThread+performBlock.h"
+
 
 #ifdef __CC_PLATFORM_MAC
 #import "Platforms/Mac/CCDirectorMac.h"
@@ -175,9 +178,7 @@ static CCTextureCache *sharedTextureCache;
 			glFlush();
 
 			// callback should be executed in cocos2d thread
-			dispatch_async(dispatch_get_main_queue(), ^{
-				[target performSelector:selector withObject:texture];
-			});
+			[target performSelector:selector onThread:[[CCDirector sharedDirector] runningThread] withObject:texture waitUntilDone:NO];
 
 			[EAGLContext setCurrentContext:nil];
 		} else {
@@ -194,9 +195,7 @@ static CCTextureCache *sharedTextureCache;
 		glFlush();
 
 		// callback should be executed in cocos2d thread
-		dispatch_async(dispatch_get_main_queue(), ^{
-			[target performSelector:selector withObject:texture];
-		});
+		[target performSelector:selector onThread:[[CCDirector sharedDirector] runningThread] withObject:texture waitUntilDone:NO];
 
 		[NSOpenGLContext clearCurrentContext];
 
@@ -240,9 +239,8 @@ static CCTextureCache *sharedTextureCache;
 			glFlush();
 
 			// callback should be executed in cocos2d thread
-			dispatch_async(dispatch_get_main_queue(), ^{
-				block(texture);
-			});
+			NSThread *thread = [[CCDirector sharedDirector] runningThread];
+			[thread performBlock:block withObject:texture waitUntilDone:NO];
 
 			[EAGLContext setCurrentContext:nil];
 		} else {
@@ -259,9 +257,8 @@ static CCTextureCache *sharedTextureCache;
 		glFlush();
 
 		// callback should be executed in cocos2d thread
-		dispatch_async(dispatch_get_main_queue(), ^{
-			block(texture);
-		});
+		NSThread *thread = [[CCDirector sharedDirector] runningThread];
+		[thread performBlock:block withObject:texture waitUntilDone:NO];
 
 		[NSOpenGLContext clearCurrentContext];
 
@@ -295,35 +292,6 @@ static CCTextureCache *sharedTextureCache;
 			tex = [self addPVRImage:path];
 
 #ifdef __CC_PLATFORM_IOS
-
-		// Issue #886: TEMPORARY FIX FOR TRANSPARENT JPEGS IN IOS4
-//		else if ( ([[CCConfiguration sharedConfiguration] OSVersion] < kCCiOSVersion_5_0) &&
-//				  ( [lowerCase hasSuffix:@".jpg"] || [lowerCase hasSuffix:@".jpeg"] )
-//				 ) {
-//			// convert jpg to png before loading the texture
-//
-//			CCLOG(@"cocos2d: WARNING: Loading JPEG image. For faster loading times, convert it to PVR or PNG. See issue #886");
-//
-//			ccResolutionType resolution;
-//			NSString *fullpath = [CCFileUtils fullPathFromRelativePath:path resolutionType:&resolution];
-//
-//			UIImage *jpg = [[UIImage alloc] initWithContentsOfFile:fullpath];
-//			UIImage *png = [[UIImage alloc] initWithData:UIImagePNGRepresentation(jpg)];
-//			tex = [ [CCTexture2D alloc] initWithCGImage:png.CGImage resolutionType:resolution];
-//			[png release];
-//			[jpg release];
-//
-//			if( tex ){
-//				dispatch_sync(_dictQueue, ^{
-//					[textures_ setObject: tex forKey:path];
-//				});
-//			}else{
-//				CCLOG(@"cocos2d: Couldn't add image:%@ in CCTextureCache", path);
-//			}
-//
-//			// autorelease prevents possible crash in multithreaded environments
-//			[tex autorelease];
-//		}
 
 		else {
 
