@@ -132,6 +132,13 @@ Class restartAction()
 {
 	if( (self = [super init]) ) {
 
+		
+		CCDirector *director = [CCDirector sharedDirector];
+		
+		// Testing multiple OpenGL locks
+		if( [NSThread currentThread] != [director runningThread] )
+			[(CCGLView*)[director view] lockOpenGLContext];
+		
 		CGSize s = [[CCDirector sharedDirector] winSize];
 
 		// create a render texture, this is what we're going to draw into
@@ -165,6 +172,9 @@ Class restartAction()
 		[self addChild:menu];
 		[menu alignItemsVertically];
 		[menu setPosition:ccp(s.width-80, s.height-30)];
+		
+		if( [NSThread currentThread] != [director runningThread] )
+			[(CCGLView*)[director view] unlockOpenGLContext];
 	}
 	return self;
 }
@@ -327,7 +337,7 @@ Class restartAction()
 		CCSprite *spr_nonpremulti = [CCSprite spriteWithFile:@"fire_rgba8888.pvr"];
 		[spr_nonpremulti setPosition:ccp(16,16)];
 
-
+		
 		/* A2 & B2 setup */
 		CCRenderTexture *rend = [CCRenderTexture renderTextureWithWidth:32 height:64 pixelFormat:kCCTexture2DPixelFormat_RGBA4444];
 
@@ -379,7 +389,13 @@ Class restartAction()
 -(id) init
 {
 	if( (self=[super init] )) {
+		
+#ifdef __CC_PLATFORM_IOS
 		self.isTouchEnabled = YES;
+#elif defined(__CC_PLATFORM_MAC)
+		self.isMouseEnabled = YES;
+#endif
+
 		CGSize size = [[CCDirector sharedDirector] winSize];
 		CCLabelTTF *label = [CCLabelTTF labelWithString:@"vertexZ = 50" fontName:@"Marker Felt" fontSize:64];
 		label.position =  ccp( size.width /2 , size.height*0.25f );
@@ -485,6 +501,48 @@ Class restartAction()
 - (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
 	[self renderScreenShot];
+}
+
+#elif defined(__CC_PLATFORM_MAC)
+
+- (BOOL) ccMouseDown:(NSEvent *)event
+{
+	CGPoint location = [[CCDirector sharedDirector] convertEventToGL:event];
+
+	sp1.position = location;
+	sp2.position = location;
+	sp3.position = location;
+	sp4.position = location;
+	sp5.position = location;
+	sp6.position = location;
+	sp7.position = location;
+	sp8.position = location;
+	sp9.position = location;
+	
+	return YES;
+}
+
+- (BOOL)ccMouseDragged:(NSEvent *)event
+{
+	CGPoint location = [[CCDirector sharedDirector] convertEventToGL:event];
+
+	sp1.position = location;
+	sp2.position = location;
+	sp3.position = location;
+	sp4.position = location;
+	sp5.position = location;
+	sp6.position = location;
+	sp7.position = location;
+	sp8.position = location;
+	sp9.position = location;
+	
+	return YES;
+}
+
+- (BOOL)ccMouseUp:(NSEvent*)event
+{
+	[self renderScreenShot];
+	return YES;
 }
 #endif // __CC_PLATFORM_IOS
 
