@@ -52,6 +52,8 @@ typedef struct _BMFontDef {
 	int yOffset;
 	//! The amount to move the current position after drawing the character (in pixels)
 	int xAdvance;
+    // Enable Hash Table
+    UT_hash_handle hh;
 } ccBMFontDef;
 
 /** @struct ccBMFontPadding
@@ -69,11 +71,6 @@ typedef struct _BMFontPadding {
 	int bottom;
 } ccBMFontPadding;
 
-enum {
-	// how many characters are supported
-	kCCBMFontMaxChars = 2048, //256,
-};
-
 /** CCBMFontConfiguration has parsed configuration of the the .fnt file
  @since v0.8
  */
@@ -82,7 +79,7 @@ enum {
     // XXX: Creating a public interface so that the bitmapFontArray[] is accesible
 @public
 	// The characters building up the font
-	ccBMFontDef	BMFontArray_[kCCBMFontMaxChars];
+	ccBMFontDef *BMFontHash_;
 	
 	// FNTConfig: Common Height
 	NSUInteger		commonHeight_;
