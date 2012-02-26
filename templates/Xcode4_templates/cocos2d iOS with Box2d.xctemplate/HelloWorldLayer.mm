@@ -117,6 +117,8 @@ enum {
 		AppController *app = (AppController*) [[UIApplication sharedApplication] delegate];
 		
 		[[app navController] presentModalViewController:achivementViewController animated:YES];
+		
+		[achivementViewController release];
 	}];
 	
 	// Leaderboard Menu Item using blocks
@@ -129,6 +131,8 @@ enum {
 		AppController *app = (AppController*) [[UIApplication sharedApplication] delegate];
 		
 		[[app navController] presentModalViewController:leaderboardViewController animated:YES];
+		
+		[leaderboardViewController release];
 	}];
 	
 	CCMenu *menu = [CCMenu menuWithItems:itemAchievement, itemLeaderboard, reset, nil];

@@ -72,6 +72,8 @@
 			AppController *app = (AppController*) [[UIApplication sharedApplication] delegate];
 			
 			[[app navController] presentModalViewController:achivementViewController animated:YES];
+			
+			[achivementViewController release];
 		}
 									   ];
 
@@ -85,6 +87,8 @@
 			AppController *app = (AppController*) [[UIApplication sharedApplication] delegate];
 			
 			[[app navController] presentModalViewController:leaderboardViewController animated:YES];
+			
+			[leaderboardViewController release];
 		}
 									   ];
 		
