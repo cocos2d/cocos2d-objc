@@ -49,10 +49,16 @@
  *
  */
 
-// Renamed constants
+// ccTypes.h
 enum {
 	kCCResolutionStandard DEPRECATED_ATTRIBUTE	= kCCResolutioniPhone,
 	kCCMenuTouchPriority DEPRECATED_ATTRIBUTE	= kCCMenuHandlerPriority,
+};
+
+// CCRenderTexture.h
+enum {
+	kCCImageFormatJPG DEPRECATED_ATTRIBUTE = kCCImageFormatJPEG,
+	kCCImageFormatRawData UNAVAILABLE_ATTRIBUTE,
 };
 
 // Free functions
@@ -108,6 +114,33 @@ DEPRECATED_ATTRIBUTE @interface MacView : CCGLView
 -(id) initWithBatchNode:(CCSpriteBatchNode*)node rect:(CGRect)rect DEPRECATED_ATTRIBUTE;
 // displayFrame
 -(CCSpriteFrame*) displayedFrame DEPRECATED_ATTRIBUTE;
+@end
+
+@interface CCMenuItemAtlasFont (Deprecated)
+// new itemWithStirng:charmapFile:itemWidth:itemHeight:startCharMap
++(id) itemFromString: (NSString*) value charMapFile:(NSString*) charMapFile itemWidth:(int)itemWidth itemHeight:(int)itemHeight startCharMap:(char)startCharMap DEPRECATED_ATTRIBUTE;
+// new itemWithStirng:charmapFile:itemWidth:itemHeight:startCharMap:target:selector
++(id) itemFromString: (NSString*) value charMapFile:(NSString*) charMapFile itemWidth:(int)itemWidth itemHeight:(int)itemHeight startCharMap:(char)startCharMap target:(id) rec selector:(SEL) cb DEPRECATED_ATTRIBUTE;
+// new itemWithStirng:charmapFile:itemWidth:itemHeight:startCharMap:block
++(id) itemFromString: (NSString*) value charMapFile:(NSString*) charMapFile itemWidth:(int)itemWidth itemHeight:(int)itemHeight startCharMap:(char)startCharMap block:(void(^)(id sender))block DEPRECATED_ATTRIBUTE;
+// new initWithStirng:charmapFile:itemWidth:itemHeight:startCharMap:target:selector
+-(id) initFromString: (NSString*) value charMapFile:(NSString*) charMapFile itemWidth:(int)itemWidth itemHeight:(int)itemHeight startCharMap:(char)startCharMap target:(id) rec selector:(SEL) cb DEPRECATED_ATTRIBUTE;
+// new initWithStirng:charmapFile:itemWidth:itemHeight:startCharMap:block
+-(id) initFromString: (NSString*) value charMapFile:(NSString*) charMapFile itemWidth:(int)itemWidth itemHeight:(int)itemHeight startCharMap:(char)startCharMap block:(void(^)(id sender))block DEPRECATED_ATTRIBUTE;
+@end
+
+
+@interface CCMenuItemFont (Deprecated)
+// new: itemWithString:
++(id) itemFromString: (NSString*) value DEPRECATED_ATTRIBUTE;
+// new: itemWithString:target:selector
++(id) itemFromString: (NSString*) value target:(id) r selector:(SEL) s DEPRECATED_ATTRIBUTE;
+// new: itemWithString:block:
++(id) itemFromString: (NSString*) value block:(void(^)(id sender))block DEPRECATED_ATTRIBUTE;
+// new: initWithString:target:selector
+-(id) initFromString: (NSString*) value target:(id) r selector:(SEL) s DEPRECATED_ATTRIBUTE;
+// new: initWithString:block:
+-(id) initFromString: (NSString*) value block:(void(^)(id sender))block DEPRECATED_ATTRIBUTE;
 @end
 
 @interface CCMenuItemSprite (Deprecated)
