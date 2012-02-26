@@ -35,9 +35,19 @@
 #import "CCScheduler.h"
 #import "CCActionManager.h"
 #import "CCActionInterval.h"
+#import "CCRenderTexture.h"
 #import "Platforms/Mac/CCDirectorMac.h"
 #import "Platforms/iOS/CCTouchDispatcher.h"
 #import "Platforms/iOS/CCDirectorIOS.h"
+
+
+/*
+ *
+ * IMPORTANT
+ *
+ * See the ccDrepecated.m file to see the name of the new methods
+ *
+ */
 
 // Renamed constants
 enum {
@@ -60,33 +70,43 @@ DEPRECATED_ATTRIBUTE @interface MacView : CCGLView
 
 // Extensions
 @interface CCScheduler (Deprecated)
+// new: [director scheduler]
 +(CCScheduler*) sharedScheduler DEPRECATED_ATTRIBUTE;
 @end
 
 @interface CCActionManager (Deprecated)
+// new: [director actionManager]
 +(CCActionManager*) sharedManager DEPRECATED_ATTRIBUTE;
 @end
 
 #if __CC_PLATFORM_IOS
 @interface CCTouchDispatcher (Deprecated)
+// new: [director touchDispatcher]
 +(CCTouchDispatcher*) sharedDispatcher DEPRECATED_ATTRIBUTE;
 @end
 #elif __CC_PLATFORM_MAC
 @interface CCEventDispatcher (Deprecated)
+// new: [director eventDispatcher]
 +(CCEventDispatcher*) sharedDispatcher DEPRECATED_ATTRIBUTE;
 @end
 #endif // __CC_PLATFORM_MAC
 
 @interface CCDirector (Deprecated)
+// new: setView:
 -(void) setOpenGLView:(CCGLView*)view DEPRECATED_ATTRIBUTE;
+// new: view
 -(CCGLView*) openGLView DEPRECATED_ATTRIBUTE;
+// new: setDisplayStats:
 -(void) setDisplayFPS:(BOOL)display DEPRECATED_ATTRIBUTE;
 @end
 
 
 @interface CCSprite (Deprecated)
+// new: spriteWithTexture:rect:
 +(id) spriteWithBatchNode:(CCSpriteBatchNode*)node rect:(CGRect)rect DEPRECATED_ATTRIBUTE;
+// new: initWithTexture:rect:
 -(id) initWithBatchNode:(CCSpriteBatchNode*)node rect:(CGRect)rect DEPRECATED_ATTRIBUTE;
+// displayFrame
 -(CCSpriteFrame*) displayedFrame DEPRECATED_ATTRIBUTE;
 @end
 
@@ -102,12 +122,19 @@ DEPRECATED_ATTRIBUTE @interface MacView : CCGLView
 @end
 
 @interface CCMenuItemImage (Deprecated)
+// new: itemWithNormalImage:selectedImage:
 +(id) itemFromNormalImage: (NSString*)value selectedImage:(NSString*) value2 DEPRECATED_ATTRIBUTE;
+// new: itemWithNormalImage:selectedImage:target:selector
 +(id) itemFromNormalImage: (NSString*)value selectedImage:(NSString*) value2 target:(id) r selector:(SEL) s DEPRECATED_ATTRIBUTE;
+// new: itemWithNormalImage:selectedImage:disabledImage:target:selector
 +(id) itemFromNormalImage: (NSString*)value selectedImage:(NSString*) value2 disabledImage:(NSString*) value3 target:(id) r selector:(SEL) s DEPRECATED_ATTRIBUTE;
+// new: itemWithNormalImage:selectedImage:block
 +(id) itemFromNormalImage: (NSString*)value selectedImage:(NSString*) value2 block:(void(^)(id sender))block DEPRECATED_ATTRIBUTE;
+// new: itemWithNormalImage:selectedImage:disabledImage:block
 +(id) itemFromNormalImage: (NSString*)value selectedImage:(NSString*) value2 disabledImage:(NSString*) value3 block:(void(^)(id sender))block DEPRECATED_ATTRIBUTE;
+// new: initWithNormalImage:selectedImage:disabledImage:target:selector
 -(id) initFromNormalImage: (NSString*) value selectedImage:(NSString*)value2 disabledImage:(NSString*) value3 target:(id) r selector:(SEL) s DEPRECATED_ATTRIBUTE;
+// new: initWithNormalImage:selectedImage:disabledImage:block
 -(id) initFromNormalImage: (NSString*) value selectedImage:(NSString*)value2 disabledImage:(NSString*) value3 block:(void(^)(id sender))block DEPRECATED_ATTRIBUTE;
 @end
 
@@ -122,12 +149,28 @@ DEPRECATED_ATTRIBUTE @interface MacView : CCGLView
 @end
 
 @interface CCAnimate (Deprecated)
+// new: actionWithAnimation:
 +(id) actionWithAnimation:(CCAnimation*)animation restoreOriginalFrame:(BOOL)restoreOriginalFrame DEPRECATED_ATTRIBUTE;
--(id) initWithAnimation:(CCAnimation*) a restoreOriginalFrame:(BOOL)restoreOriginalFrame DEPRECATED_ATTRIBUTE;
+// new: actiontWithAnimation:
 +(id) actionWithDuration:(ccTime)duration animation:(CCAnimation*)animation restoreOriginalFrame:(BOOL)restoreOriginalFrame DEPRECATED_ATTRIBUTE;
+// new: initWithAnimation:
+-(id) initWithAnimation:(CCAnimation*) a restoreOriginalFrame:(BOOL)restoreOriginalFrame DEPRECATED_ATTRIBUTE;
+// new: initWithAnimation:
 -(id) initWithDuration:(ccTime)duration animation:(CCAnimation*)animation restoreOriginalFrame:(BOOL)restoreOriginalFrame DEPRECATED_ATTRIBUTE;
 @end
 
+@interface CCRenderTexture (Deprecated)
+// new: saveToFile:
+-(BOOL)saveBuffer:(NSString*)name DEPRECATED_ATTRIBUTE;
+// new: saveToFile:format:
+-(BOOL)saveBuffer:(NSString*)name format:(int)format DEPRECATED_ATTRIBUTE;
+// new: -- not implemented on v2.0
+-(NSData*)getUIImageAsDataFromBuffer:(int) format UNAVAILABLE_ATTRIBUTE;
+#if __CC_PLATFORM_IOS
+// new: getUIImage
+-(UIImage *)getUIImageFromBuffer DEPRECATED_ATTRIBUTE;
+#endif
+@end
 
 #endif // CC_ENABLE_DEPRECATED
 

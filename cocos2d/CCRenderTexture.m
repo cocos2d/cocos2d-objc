@@ -32,6 +32,10 @@
 #import "Support/ccUtils.h"
 #import "Support/CCFileUtils.h"
 
+#if __CC_PLATFORM_MAC
+#import <ApplicationServices/ApplicationServices.h>
+#endif
+
 // extern
 #import "kazmath/GL/matrix.h"
 
@@ -63,10 +67,12 @@
 
 		CCDirector *director = [CCDirector sharedDirector];
 
+		// XXX multithread
 		if( [director runningThread] != [NSThread currentThread] ) {
 			CCLOG(@"cocos2d: WARNING. CCRenderTexture is running on its own thread. Locking OpenGL context to prevent possible crashes...");
 			[(CCGLView*)[director view] lockOpenGLContext];
 		}
+
 		
 		w *= CC_CONTENT_SCALE_FACTOR();
 		h *= CC_CONTENT_SCALE_FACTOR();
@@ -115,6 +121,8 @@
 
 		glBindFramebuffer(GL_FRAMEBUFFER, oldFBO_);
 		
+
+		// XXX multithread
 		if( [director runningThread] != [NSThread currentThread] )
 			[(CCGLView*)[director view] unlockOpenGLContext];
 	}
@@ -125,11 +133,15 @@
 {
 	CCDirector *director = [CCDirector sharedDirector];
 
+	// XXX multithread
 	if( [director runningThread] != [NSThread currentThread] )
 		[(CCGLView*)[director view] lockOpenGLContext];
 
+
 	glDeleteFramebuffers(1, &fbo_);
 	
+
+	// XXX multithread
 	if( [director runningThread] != [NSThread currentThread] )
 		[(CCGLView*)[director view] unlockOpenGLContext];
 
@@ -140,9 +152,11 @@
 {
 	CCDirector *director = [CCDirector sharedDirector];
 	
+	// XXX multithread
 	if( [director runningThread] != [NSThread currentThread] )
 		[(CCGLView*)[director view] lockOpenGLContext];
 
+	
 	// Save the current matrix
 	kmGLPushMatrix();
 
@@ -170,6 +184,8 @@
 	glGetIntegerv(GL_FRAMEBUFFER_BINDING, &oldFBO_);
 	glBindFramebuffer(GL_FRAMEBUFFER, fbo_);
 	
+	
+	// XXX multithread
 	if( [director runningThread] != [NSThread currentThread] )
 		[(CCGLView*)[director view] unlockOpenGLContext];
 }
@@ -180,9 +196,11 @@
 
 	CCDirector *director = [CCDirector sharedDirector];
 	
+	// XXX multithread
 	if( [director runningThread] != [NSThread currentThread] )
 		[(CCGLView*)[director view] lockOpenGLContext];
 
+	
 	// save clear color
 	GLfloat	clearColor[4];
 	glGetFloatv(GL_COLOR_CLEAR_VALUE,clearColor);
@@ -192,7 +210,9 @@
 
 	// restore clear color
 	glClearColor(clearColor[0], clearColor[1], clearColor[2], clearColor[3]);
-	
+
+
+	// XXX multithread
 	if( [director runningThread] != [NSThread currentThread] )
 		[(CCGLView*)[director view] unlockOpenGLContext];
 }
@@ -201,9 +221,11 @@
 {
 	CCDirector *director = [CCDirector sharedDirector];
 	
+	// XXX multithread
 	if( [director runningThread] != [NSThread currentThread] )
 		[(CCGLView*)[director view] lockOpenGLContext];
 
+	
 	glBindFramebuffer(GL_FRAMEBUFFER, oldFBO_);
 
 	kmGLPopMatrix();
@@ -219,6 +241,7 @@
 	
 	[director setProjection:director.projection];
 	
+	// XXX multithread
 	if( [director runningThread] != [NSThread currentThread] )
 		[(CCGLView*)[director view] unlockOpenGLContext];
 }
@@ -231,53 +254,51 @@
 
 #pragma mark RenderTexture - Save Image
 
-#ifdef __CC_PLATFORM_IOS
--(BOOL)saveBuffer:(NSString*)name
-{
-	return [self saveBuffer:name format:kCCImageFormatJPG];
-}
-
--(BOOL)saveBuffer:(NSString*)fileName format:(int)format
-{
-    NSString *fullPath = [CCFileUtils fullPathFromRelativePath:fileName];
-
-	NSData *data = [self getUIImageAsDataFromBuffer:format];
-
-	return [data writeToFile:fullPath atomically:YES];
-}
-
-/* get buffer as UIImage */
--(UIImage *)getUIImageFromBuffer
+-(CGImageRef) newCGImage
 {
     NSAssert(pixelFormat_ == kCCTexture2DPixelFormat_RGBA8888,@"only RGBA8888 can be saved as image");
-
+	
+	
 	CGSize s = [texture_ contentSizeInPixels];
 	int tx = s.width;
 	int ty = s.height;
-
+	
 	int bitsPerComponent			= 8;
 	int bitsPerPixel				= 32;
 	int bytesPerPixel				= (bitsPerComponent * 4)/8;
 	int bytesPerRow					= bytesPerPixel * tx;
 	NSInteger myDataLength			= bytesPerRow * ty;
-
+	
 	GLubyte *buffer	= calloc(myDataLength,1);
 	GLubyte *pixels	= calloc(myDataLength,1);
-
-
+	
+	
 	if( ! (buffer && pixels) ) {
-		CCLOG(@"cocos2d: CCRenderTexture#getUIImageFromBuffer: not enough memory");
+		CCLOG(@"cocos2d: CCRenderTexture#getCGImageFromBuffer: not enough memory");
 		free(buffer);
 		free(pixels);
 		return nil;
 	}
-
+	
 	[self begin];
+	
+
+	CCDirector *director = [CCDirector sharedDirector];
+
+	// XXX multithread
+	if( [NSThread currentThread] != [director runningThread] )
+		[(CCGLView*)director.view lockOpenGLContext];
+
 	glReadPixels(0,0,tx,ty,GL_RGBA,GL_UNSIGNED_BYTE, buffer);
+
+	// XXX multithread
+	if( [NSThread currentThread] != [director runningThread] )
+		[(CCGLView*)director.view unlockOpenGLContext];
+
 	[self end];
-
+	
 	// make data provider with data.
-
+	
 	CGBitmapInfo bitmapInfo	= kCGImageAlphaPremultipliedLast | kCGBitmapByteOrderDefault;
 	CGDataProviderRef provider = CGDataProviderCreateWithData(NULL, buffer, myDataLength, NULL);
 	CGColorSpaceRef colorSpaceRef = CGColorSpaceCreateDeviceRGB();
@@ -286,113 +307,110 @@
 									colorSpaceRef, bitmapInfo, provider,
 									NULL, false,
 									kCGRenderingIntentDefault);
-
+	
 	CGContextRef context = CGBitmapContextCreate(pixels, tx,
 												 ty, CGImageGetBitsPerComponent(iref),
 												 CGImageGetBytesPerRow(iref), CGImageGetColorSpace(iref),
 												 bitmapInfo);
-	CGContextTranslateCTM(context, 0.0f, ty);
-	CGContextScaleCTM(context, 1.0f, -1.0f);
+	
+	// vertically flipped
+	if( YES ) {
+		CGContextTranslateCTM(context, 0.0f, ty);
+		CGContextScaleCTM(context, 1.0f, -1.0f);
+	}
 	CGContextDrawImage(context, CGRectMake(0.0f, 0.0f, tx, ty), iref);
-	CGImageRef outputRef = CGBitmapContextCreateImage(context);
-	UIImage* image	= [[UIImage alloc] initWithCGImage:outputRef scale:CC_CONTENT_SCALE_FACTOR() orientation:UIImageOrientationUp];
-
+	CGImageRef image = CGBitmapContextCreateImage(context);
+	
 	CGImageRelease(iref);
 	CGContextRelease(context);
 	CGColorSpaceRelease(colorSpaceRef);
 	CGDataProviderRelease(provider);
-	CGImageRelease(outputRef);
-
+	
 	free(pixels);
 	free(buffer);
+	
+	return image;
+}
+
+-(BOOL) saveToFile:(NSString*)name
+{
+	return [self saveToFile:name format:kCCImageFormatJPEG];
+}
+
+-(BOOL)saveToFile:(NSString*)fileName format:(tCCImageFormat)format
+{
+	BOOL success;
+	
+	NSString *fullPath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:fileName];
+	
+	CGImageRef imageRef = [self newCGImage];
+
+	if( ! imageRef ) {
+		CCLOG(@"cocos2d: Error: Cannot create CGImage ref from texture");
+		return NO;
+	}
+	
+#if __CC_PLATFORM_IOS
+	
+	UIImage* image	= [[UIImage alloc] initWithCGImage:imageRef scale:CC_CONTENT_SCALE_FACTOR() orientation:UIImageOrientationUp];
+	NSData *imageData;
+
+	if( format == kCCImageFormatPNG )
+		imageData = UIImagePNGRepresentation( image );
+
+	else if( format == kCCImageFormatJPEG )
+		imageData = UIImageJPEGRepresentation(image, 0.9f);
+
+	else
+		NSAssert(NO, @"Unsupported format");
+	
+	[image release];
+
+	success = [imageData writeToFile:fullPath atomically:YES];
+
+	
+#elif __CC_PLATFORM_MAC
+	
+	CFURLRef url = (CFURLRef)[NSURL fileURLWithPath:fullPath];
+	
+	CGImageDestinationRef dest;
+
+	if( format == kCCImageFormatPNG )
+		dest = 	CGImageDestinationCreateWithURL(url, kUTTypePNG, 1, NULL);
+
+	else if( format == kCCImageFormatJPEG )
+		dest = 	CGImageDestinationCreateWithURL(url, kUTTypeJPEG, 1, NULL);
+
+	else
+		NSAssert(NO, @"Unsupported format");
+
+	CGImageDestinationAddImage(dest, imageRef, nil);
+		
+	success = CGImageDestinationFinalize(dest);
+
+	CFRelease(dest);
+#endif
+
+	CGImageRelease(imageRef);
+	
+	if( ! success )
+		CCLOG(@"cocos2d: ERROR: Failed to save file:%@ to disk",fullPath);
+
+	return success;
+}
+
+
+#if __CC_PLATFORM_IOS
+
+-(UIImage *) getUIImage
+{
+	CGImageRef imageRef = [self newCGImage];
+	
+	UIImage* image	= [[UIImage alloc] initWithCGImage:imageRef scale:CC_CONTENT_SCALE_FACTOR() orientation:UIImageOrientationUp];
+
+	CGImageRelease( imageRef );
 
 	return [image autorelease];
 }
-
--(NSData*)getUIImageAsDataFromBuffer:(int) format
-{
-	NSAssert(pixelFormat_ == kCCTexture2DPixelFormat_RGBA8888,@"only RGBA8888 can be saved as image");
-
-	CGSize s = [texture_ contentSizeInPixels];
-	int tx = s.width;
-	int ty = s.height;
-
-	int bitsPerComponent=8;
-	int bitsPerPixel=32;
-
-	int bytesPerRow					= (bitsPerPixel/8) * tx;
-	NSInteger myDataLength			= bytesPerRow * ty;
-
-	GLubyte *buffer	= malloc(sizeof(GLubyte)*myDataLength);
-	GLubyte *pixels	= malloc(sizeof(GLubyte)*myDataLength);
-
-	if( ! (buffer && pixels) ) {
-		CCLOG(@"cocos2d: CCRenderTexture#getUIImageFromBuffer: not enough memory");
-		free(buffer);
-		free(pixels);
-		return nil;
-	}
-
-	[self begin];
-	glReadPixels(0,0,tx,ty,GL_RGBA,GL_UNSIGNED_BYTE, buffer);
-	[self end];
-
-	int x,y;
-
-	for(y = 0; y <ty; y++) {
-		for(x = 0; x <tx * 4; x++) {
-			pixels[((ty - 1 - y) * tx * 4 + x)] = buffer[(y * 4 * tx + x)];
-		}
-	}
-
-	NSData* data;
-
-	if (format == kCCImageFormatRawData)
-	{
-		free(buffer);
-		//data frees buffer when it is deallocated
-		data = [NSData dataWithBytesNoCopy:pixels length:myDataLength];
-
-	} else {
-
-		/*
-		 CGImageCreate(size_t width, size_t height,
-		 size_t bitsPerComponent, size_t bitsPerPixel, size_t bytesPerRow,
-		 CGColorSpaceRef space, CGBitmapInfo bitmapInfo, CGDataProviderRef provider,
-		 const CGFloat decode[], bool shouldInterpolate,
-		 CGColorRenderingIntent intent)
-		 */
-		// make data provider with data.
-		CGBitmapInfo bitmapInfo = kCGImageAlphaPremultipliedLast | kCGBitmapByteOrderDefault;
-		CGDataProviderRef provider		= CGDataProviderCreateWithData(NULL, pixels, myDataLength, NULL);
-		CGColorSpaceRef colorSpaceRef	= CGColorSpaceCreateDeviceRGB();
-		CGImageRef iref					= CGImageCreate(tx, ty,
-														bitsPerComponent, bitsPerPixel, bytesPerRow,
-														colorSpaceRef, bitmapInfo, provider,
-														NULL, false,
-														kCGRenderingIntentDefault);
-
-		UIImage* image					= [[UIImage alloc] initWithCGImage:iref];
-
-		CGImageRelease(iref);
-		CGColorSpaceRelease(colorSpaceRef);
-		CGDataProviderRelease(provider);
-
-
-
-		if (format == kCCImageFormatPNG)
-			data = UIImagePNGRepresentation(image);
-		else
-			data = UIImageJPEGRepresentation(image, 1.0f);
-
-		[image release];
-
-		free(pixels);
-		free(buffer);
-	}
-
-	return data;
-}
-
 #endif // __CC_PLATFORM_IOS
 @end

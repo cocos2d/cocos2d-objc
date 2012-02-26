@@ -35,12 +35,11 @@
 #import <UIKit/UIKit.h>
 #endif // iPHone
 
-enum
+typedef enum
 {
-	kCCImageFormatJPG = 0,
+	kCCImageFormatJPEG = 0,
 	kCCImageFormatPNG = 1,
-	kCCImageFormatRawData =2
-};
+} tCCImageFormat;
 
 
 /**
@@ -92,19 +91,27 @@ enum
 /** clears the texture with a color */
 -(void)clear:(float)r g:(float)g b:(float)b a:(float)a;
 
+/* creates a new CGImage from with the texture's data.
+ Caller is responsible for releasing it by calling CGImageRelease().
+ */
+-(CGImageRef) newCGImage;
+
+/** saves the texture into a file using JPEG format. The file will be saved in the Documents folder.
+ Returns YES if the operation is successful.
+ */
+-(BOOL)saveToFile:(NSString*)name;
+
+/** saves the texture into a file. The format could be JPG or PNG. The file will be saved in the Documents folder.
+  Returns YES if the operation is successful.
+ */
+-(BOOL)saveToFile:(NSString*)name format:(tCCImageFormat)format;
+
 #ifdef __CC_PLATFORM_IOS
 
-/** saves the texture into a file */
--(BOOL)saveBuffer:(NSString*)name;
-/** saves the texture into a file. The format can be JPG or PNG */
--(BOOL)saveBuffer:(NSString*)name format:(int)format;
-/* get buffer as UIImage, can only save a render buffer which has a RGBA8888 pixel format */
--(NSData*)getUIImageAsDataFromBuffer:(int) format;
-/* get buffer as UIImage */
--(UIImage *)getUIImageFromBuffer;
+/* returns an autoreleased UIImage from the texture */
+-(UIImage *) getUIImage;
 
 #endif // __CC_PLATFORM_IOS
 
 @end
-
 
