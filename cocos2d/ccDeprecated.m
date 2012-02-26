@@ -234,6 +234,32 @@ void ccGLUniformModelViewProjectionMatrix( CCGLProgram* program )
 @end
 
 
+@implementation CCRenderTexture (Deprecated)
+-(BOOL)saveBuffer:(NSString*)name
+{
+	return [self saveToFile:name];
+}
+-(BOOL)saveBuffer:(NSString*)name format:(int)format
+{
+	return [self saveToFile:name format:format];
+}
+
+-(NSData*)getUIImageAsDataFromBuffer:(int) format
+{
+	NSAssert(NO, @"NOT IMPLEMENTED IN V2.0");
+	
+	return nil;
+}
+#if __CC_PLATFORM_IOS
+-(UIImage *)getUIImageFromBuffer
+{
+	return [self getUIImage];
+}
+#endif
+@end
+
+
+
 #if __CC_PLATFORM_IOS
 @implementation EAGLView
 @end

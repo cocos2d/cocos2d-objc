@@ -127,6 +127,10 @@ Class restartAction()
 #pragma mark -
 #pragma mark RenderTextureSave
 
+@interface RenderTextureSave ()
+-(void)testUIImage;
+@end
+
 @implementation RenderTextureSave
 -(id) init
 {
@@ -196,17 +200,33 @@ Class restartAction()
 
 -(void) saveImage:(id)sender
 {
-#ifdef __CC_PLATFORM_IOS
 	static int counter=0;
 
-	NSString *str = [NSString stringWithFormat:@"image-%d.png", counter];
-	[target saveBuffer:str format:kCCImageFormatPNG];
-	NSLog(@"Image saved: %@", str);
+	NSString *png = [NSString stringWithFormat:@"image-%d.png", counter];
+	NSString *jpg = [NSString stringWithFormat:@"image-%d.jpg", counter];
+
+	[target saveToFile:png format:kCCImageFormatPNG];
+	[target saveToFile:jpg format:kCCImageFormatJPEG];
+	
+	CGImageRef ref = [target newCGImage];
+	
+	CCTexture2D *tex = [[CCTextureCache sharedTextureCache] addCGImage:ref forKey:png];
+
+	CGImageRelease(ref);
+
+	CCSprite *sprite = [CCSprite spriteWithTexture:tex];
+	
+	
+	sprite.scale = 0.3f;
+	[self addChild:sprite];
+	sprite.position = ccp(40,40);
+	sprite.rotation = counter *3;
+	
+	NSLog(@"Image saved: %@  and %@", png, jpg);
+
+	[self testUIImage];
 
 	counter++;
-#elif defined(__CC_PLATFORM_MAC)
-	NSLog(@"CCRenderTexture Save is not supported yet");
-#endif // __CC_PLATFORM_MAC
 }
 
 -(void) dealloc
@@ -219,6 +239,42 @@ Class restartAction()
 
 
 #ifdef __CC_PLATFORM_IOS
+
+-(void) testUIImage
+{
+	
+	UIButton *myButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    myButton.frame = CGRectMake(20, 20, 200, 44); // position in the parent view and set the size of the button
+    [myButton setTitle:@"Dismiss" forState:UIControlStateNormal];
+	
+    // add targets and actions
+    [myButton addTarget:self action:@selector(buttonClicked:) forControlEvents:UIControlEventTouchUpInside];
+
+	
+	UIImage *image = [target getUIImage];
+	UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
+	
+	UIView *view = [[UIView alloc] initWithFrame:[imageView frame]];
+
+	[view addSubview:imageView];
+	[view addSubview:myButton];
+	
+	UIViewController *viewController = [[UIViewController alloc] initWithNibName:nil bundle:nil];
+	[viewController setView:view];
+	
+	AppController *controller = (AppController*) [[UIApplication sharedApplication] delegate];	
+	[[controller navController] pushViewController:viewController animated:YES];
+	
+	[viewController release];
+	[view release];
+	[imageView release];
+}
+
+-(void) buttonClicked:(id) sender
+{
+	AppController *controller = (AppController*) [[UIApplication sharedApplication] delegate];	
+	[[controller navController] popViewControllerAnimated:YES];
+}
 
 -(void)ccTouchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
@@ -257,6 +313,10 @@ Class restartAction()
 
 #elif defined(__CC_PLATFORM_MAC)
 
+-(void) testUIImage
+{
+	// ignore
+}
 -(BOOL) ccMouseDown:(NSEvent *)event
 {
 	lastLocation = [[CCDirector sharedDirector] convertEventToGL:event];
@@ -591,10 +651,6 @@ Class restartAction()
 
 	// 2D projection
 //	[director_ setProjection:kCCDirectorProjection2D];
-
-	// Enables High Res mode (Retina Display) on iPhone 4 and maintains low res on all other devices
-	if( ! [director_ enableRetinaDisplay:YES] )
-		CCLOG(@"Retina Display Not supported");
 	
 	[director_ setDisplayStats:YES];
 
