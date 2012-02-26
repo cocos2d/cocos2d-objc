@@ -1830,6 +1830,30 @@
 			<key>Path</key>
 			<string>libs/cocos2d/Support/CGPointExtension.m</string>
 		</dict>
+		<key>libs/cocos2d/Support/NSThread+performBlock.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2d</string>
+				<string>Support</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2d/Support/NSThread+performBlock.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/cocos2d/Support/NSThread+performBlock.m</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2d</string>
+				<string>Support</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2d/Support/NSThread+performBlock.m</string>
+		</dict>
 		<key>libs/cocos2d/Support/OpenGL_Internal.h</key>
 		<dict>
 			<key>Group</key>
@@ -2114,6 +2138,8 @@
 		<string>libs/cocos2d/Support/CCVertex.m</string>
 		<string>libs/cocos2d/Support/CGPointExtension.h</string>
 		<string>libs/cocos2d/Support/CGPointExtension.m</string>
+		<string>libs/cocos2d/Support/NSThread+performBlock.h</string>
+		<string>libs/cocos2d/Support/NSThread+performBlock.m</string>
 		<string>libs/cocos2d/Support/OpenGL_Internal.h</string>
 		<string>libs/cocos2d/Support/TGAlib.h</string>
 		<string>libs/cocos2d/Support/TGAlib.m</string>
