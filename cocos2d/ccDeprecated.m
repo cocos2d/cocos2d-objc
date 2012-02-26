@@ -105,6 +105,52 @@ void ccGLUniformModelViewProjectionMatrix( CCGLProgram* program )
 }
 @end
 
+@implementation CCMenuItemAtlasFont (Deprecated)
++(id) itemFromString: (NSString*) value charMapFile:(NSString*) charMapFile itemWidth:(int)itemWidth itemHeight:(int)itemHeight startCharMap:(char)startCharMap
+{
+	return [self itemWithString:value charMapFile:charMapFile itemWidth:itemWidth itemHeight:itemHeight startCharMap:startCharMap];
+}
++(id) itemFromString: (NSString*) value charMapFile:(NSString*) charMapFile itemWidth:(int)itemWidth itemHeight:(int)itemHeight startCharMap:(char)startCharMap target:(id) rec selector:(SEL) cb
+{
+	return [self itemWithString:value charMapFile:charMapFile itemWidth:itemWidth itemHeight:itemHeight startCharMap:startCharMap target:rec selector:cb];
+}
++(id) itemFromString: (NSString*) value charMapFile:(NSString*) charMapFile itemWidth:(int)itemWidth itemHeight:(int)itemHeight startCharMap:(char)startCharMap block:(void(^)(id sender))block
+{
+	return  [self itemWithString:value charMapFile:charMapFile itemWidth:itemWidth itemHeight:itemHeight startCharMap:startCharMap block:block];
+}
+-(id) initFromString: (NSString*) value charMapFile:(NSString*) charMapFile itemWidth:(int)itemWidth itemHeight:(int)itemHeight startCharMap:(char)startCharMap target:(id) rec selector:(SEL) cb
+{
+	return [self initWithString:value charMapFile:charMapFile itemWidth:itemWidth itemHeight:itemHeight startCharMap:startCharMap target:rec selector:cb];
+}
+-(id) initFromString: (NSString*) value charMapFile:(NSString*) charMapFile itemWidth:(int)itemWidth itemHeight:(int)itemHeight startCharMap:(char)startCharMap block:(void(^)(id sender))block
+{
+	return [self initWithString:value charMapFile:charMapFile itemWidth:itemWidth itemHeight:itemHeight startCharMap:startCharMap block:block];
+}
+@end
+
+@implementation CCMenuItemFont (Deprecated)
++(id) itemFromString: (NSString*) value
+{
+	return [self itemWithString:value];
+}
++(id) itemFromString: (NSString*) value target:(id) r selector:(SEL) s
+{
+	return [self itemWithString:value target:r selector:s];
+}
++(id) itemFromString: (NSString*) value block:(void(^)(id sender))block
+{
+	return [self itemWithString:value block:block];
+}
+-(id) initFromString: (NSString*) value target:(id) r selector:(SEL) s
+{
+	return [self initWithString:value target:r selector:s];
+}
+-(id) initFromString: (NSString*) value block:(void(^)(id sender))block
+{
+	return [self initWithString:value block:block];
+}
+@end
+
 @implementation CCMenuItemSprite (Deprecated)
 +(id) itemFromNormalSprite:(CCNode<CCRGBAProtocol>*)normalSprite selectedSprite:(CCNode<CCRGBAProtocol>*)selectedSprite
 {
