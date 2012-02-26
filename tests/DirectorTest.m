@@ -159,6 +159,8 @@ Class restartAction()
 
 			UINavigationController *nav = [app navController];
 			[nav pushViewController:viewController animated:YES];
+			
+			[viewController release];
 		}
 							];
 
