@@ -56,6 +56,7 @@ version 2.0-rc0 XX-Feb-2012
 		Refactored save code: easier to read and mantain
 . [FIX] Sprite: adding family of sprites to a batchnode works as expected (issue #1217)
 . [FIX] SpriteBatch: Quad extensions are public
+. [FIX] Templates: added -all_load -ObjC on "other linkers"
 . [FIX] Tests: LabelTest with custom TTF font works on Mac too
 . [FIX] Texture2D: initWithImage renamed with initWithCGImage
 		JPEG: No need to convert JPG to PNG on iOS4 (issue #886 re-fixed)

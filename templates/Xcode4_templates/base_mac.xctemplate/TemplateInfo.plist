@@ -47,7 +47,11 @@
 			<key>SharedSettings</key>
 			<dict>
 				<key>OTHER_LDFLAGS</key>
-				<string>-lz</string>
+                <array>
+                    <string>-lz</string>
+                    <string>-ObjC</string>
+                    <string>-all_load</string>
+                </array>
 				<key>GCC_ENABLE_OBJC_EXCEPTIONS</key>
 				<string>YES</string>
 			</dict>
