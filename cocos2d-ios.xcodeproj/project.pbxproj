@@ -1903,6 +1903,9 @@
 		A0DABE251426715A00F3FEBE /* b2WheelJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = A0DABDC91426715A00F3FEBE /* b2WheelJoint.h */; };
 		A0DABE261426715A00F3FEBE /* b2Rope.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0DABDCB1426715A00F3FEBE /* b2Rope.cpp */; };
 		A0DABE271426715A00F3FEBE /* b2Rope.h in Headers */ = {isa = PBXBuildFile; fileRef = A0DABDCC1426715A00F3FEBE /* b2Rope.h */; };
+		A0DB141614FC420E00F7CC49 /* west_england-64.fnt in Resources */ = {isa = PBXBuildFile; fileRef = A0DB141414FC420E00F7CC49 /* west_england-64.fnt */; };
+		A0DB141714FC420E00F7CC49 /* west_england-64.png in Resources */ = {isa = PBXBuildFile; fileRef = A0DB141514FC420E00F7CC49 /* west_england-64.png */; };
+		A0DB141A14FC422E00F7CC49 /* example_HorizontalColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0DB141914FC422E00F7CC49 /* example_HorizontalColor.fsh */; };
 		A0DC2F5E1491B36A005B814E /* test_image_rgb888.pvr in Resources */ = {isa = PBXBuildFile; fileRef = A0DC2F5D1491B36A005B814E /* test_image_rgb888.pvr */; };
 		A0E2A52B14D26D8D003450DF /* animations in Resources */ = {isa = PBXBuildFile; fileRef = 502C8C9810A701D300D137BA /* animations */; };
 		A0E431F31460741E00424477 /* background1-hd.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E0704C29123821EE009C628B /* background1-hd.jpg */; };
@@ -5010,6 +5013,9 @@
 		A0DABDC91426715A00F3FEBE /* b2WheelJoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = b2WheelJoint.h; sourceTree = "<group>"; };
 		A0DABDCB1426715A00F3FEBE /* b2Rope.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = b2Rope.cpp; sourceTree = "<group>"; };
 		A0DABDCC1426715A00F3FEBE /* b2Rope.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = b2Rope.h; sourceTree = "<group>"; };
+		A0DB141414FC420E00F7CC49 /* west_england-64.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "west_england-64.fnt"; sourceTree = "<group>"; };
+		A0DB141514FC420E00F7CC49 /* west_england-64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "west_england-64.png"; sourceTree = "<group>"; };
+		A0DB141914FC422E00F7CC49 /* example_HorizontalColor.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_HorizontalColor.fsh; sourceTree = "<group>"; };
 		A0DC2F5D1491B36A005B814E /* test_image_rgb888.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = test_image_rgb888.pvr; sourceTree = "<group>"; };
 		A0EC4A091403236C00EC482A /* example_Blur.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_Blur.fsh; sourceTree = "<group>"; };
 		A0EC4A0A1403236C00EC482A /* example_Flower.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_Flower.fsh; sourceTree = "<group>"; };
@@ -6555,6 +6561,8 @@
 		505463B81062868100AB7C52 /* BMFont fonts */ = {
 			isa = PBXGroup;
 			children = (
+				A0DB141414FC420E00F7CC49 /* west_england-64.fnt */,
+				A0DB141514FC420E00F7CC49 /* west_england-64.png */,
 				A03A1D4D14F5E1160019B6F3 /* arial-unicode-26.fnt */,
 				A03A1D4E14F5E1160019B6F3 /* arial-unicode-26.png */,
 				A03A1D0514F5BEFA0019B6F3 /* geneva-32.fnt */,
@@ -7599,6 +7607,7 @@
 		A0EC4A081403236C00EC482A /* Shaders */ = {
 			isa = PBXGroup;
 			children = (
+				A0DB141914FC422E00F7CC49 /* example_HorizontalColor.fsh */,
 				A0EC4A091403236C00EC482A /* example_Blur.fsh */,
 				A0EC4A0A1403236C00EC482A /* example_Flower.fsh */,
 				A0EC4A0B1403236C00EC482A /* example_Flower.vsh */,
@@ -11708,6 +11717,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A0ADEF3F1457CE9D009A71F1 /* PositionTextureColorAlphaTest.fsh in Resources */,
+				A0DB141A14FC422E00F7CC49 /* example_HorizontalColor.fsh in Resources */,
 				E03A4F371355041F00D4B515 /* b1.png in Resources */,
 				E03A4F381355041F00D4B515 /* b2.png in Resources */,
 				E03A4F391355041F00D4B515 /* f1.png in Resources */,
@@ -11777,6 +11787,8 @@
 				A0EC4C8B140323C500EC482A /* example_Plasma.vsh in Resources */,
 				A0EC4C8C140323C500EC482A /* example_Twist.fsh in Resources */,
 				A0EC4C8D140323C500EC482A /* example_Twist.vsh in Resources */,
+				A0DB141614FC420E00F7CC49 /* west_england-64.fnt in Resources */,
+				A0DB141714FC420E00F7CC49 /* west_england-64.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

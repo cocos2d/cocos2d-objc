@@ -12,6 +12,9 @@
 
 static int sceneIdx=-1;
 static NSString *transitions[] = {
+	
+	@"ShaderRetroEffect",
+	
 	@"ShaderMonjori",
 	@"ShaderMandelbrot",
 	@"ShaderJulia",
@@ -19,6 +22,7 @@ static NSString *transitions[] = {
 	@"ShaderFlower",
 	@"ShaderPlasma",
 	@"ShaderBlur",
+	@"ShaderRetroEffect",
 };
 
 Class nextAction()
@@ -616,8 +620,77 @@ enum {
 	[blurSprite setBlurSize: [sliderCtl_ floatValue]];
 #endif
 }
-
 @end
+
+#pragma mark -
+#pragma mark ShaderRetroEffect
+
+@implementation ShaderRetroEffect
+-(id) init
+{
+	if( (self=[super init] ) ) {
+		CCGLProgram *p = [[CCGLProgram alloc] initWithVertexShaderFilename:@"PositionTexture.vsh"
+									   fragmentShaderFilename:@"example_HorizontalColor.fsh"];
+		
+		[p addAttribute:kCCAttributeNamePosition index:kCCVertexAttrib_Position];
+		[p addAttribute:kCCAttributeNameTexCoord index:kCCVertexAttrib_TexCoords];
+		
+		[p link];
+		[p updateUniforms];
+
+
+		CCDirector *director = [CCDirector sharedDirector];
+		CGSize s = [director winSize];
+
+		label_ = [CCLabelBMFont labelWithString:@"RETRO EFFECT" fntFile:@"west_england-64.fnt"];
+		
+		label_.shaderProgram = p;
+		
+		[p release];
+		
+	
+		[label_ setPosition:ccp(s.width/2,s.height/2)];
+		
+		[self addChild:label_];
+		
+		[self scheduleUpdate];
+		
+	}
+	
+	return self;
+}
+
+-(void) update:(ccTime)dt
+{
+//	CGSize size = [[CCDirector sharedDirector] winSize];
+
+	accum_ += dt;
+
+	CCArray *array = [label_ children];
+	
+	int i=0;
+	for( CCSprite *sprite in array ) {
+		i++;
+		CGPoint oldPosition = sprite.position;
+		sprite.position = ccp( oldPosition.x, sinf( accum_ * 2 + i/2.0) * 20  );
+		
+		float scaleY = fabs( sinf( accum_ * 2 + i/2.0 + 0.707) );
+		
+		sprite.scaleY = scaleY;
+	}
+}
+
+-(NSString *) title
+{
+	return @"Shader: Retro test";
+}
+
+-(NSString *) subtitle
+{
+	return @"sin() effect with moving colors";
+}
+@end
+
 
 // CLASS IMPLEMENTATIONS
 #ifdef __CC_PLATFORM_IOS

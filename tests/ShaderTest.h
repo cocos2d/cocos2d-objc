@@ -68,3 +68,11 @@
 #endif
 
 @end
+
+@interface ShaderRetroEffect : ShaderTest
+{
+	CCLabelBMFont *label_;
+	ccTime			accum_;
+}
+@end
+
