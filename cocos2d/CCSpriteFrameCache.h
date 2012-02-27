@@ -82,8 +82,8 @@
 /** Adds an sprite frame with a given name.
  If the name already exists, then the contents of the old name will be replaced with the new one.
  */
--(void) addSpriteFrame:(CCSpriteFrame*)frame name:(NSString*)frameName;
-
+-(CCSpriteFrame*) addSpriteFrame:(CCSpriteFrame*)frame name:(NSString*)frameName;
+-(CCSpriteFrame*) addSpriteFrameWithTextureFile:(NSString*)textureFilename;
 
 /** Purges the dictionary of loaded sprite frames.
  * Call this method if you receive the "Memory Warning".

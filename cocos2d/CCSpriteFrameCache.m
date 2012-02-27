@@ -250,9 +250,21 @@ static CCSpriteFrameCache *sharedSpriteFrameCache_=nil;
     }
 }
 
--(void) addSpriteFrame:(CCSpriteFrame*)frame name:(NSString*)frameName
+-(CCSpriteFrame*) addSpriteFrameWithTextureFile:(NSString*)textureFilename {
+    CCTexture2D *texture = [[CCTextureCache sharedTextureCache] addImage:textureFilename];
+	if( texture ) {
+		CGRect rect = CGRectZero;
+		rect.size = texture.contentSize;
+        CCSpriteFrame *spriteFrame = [CCSpriteFrame frameWithTexture:texture rect:rect];
+        return [self addSpriteFrame:spriteFrame name:textureFilename];
+	}
+    return nil;
+}
+
+-(CCSpriteFrame*) addSpriteFrame:(CCSpriteFrame*)frame name:(NSString*)frameName
 {
 	[spriteFrames_ setObject:frame forKey:frameName];
+    return frame;
 }
 
 #pragma mark CCSpriteFrameCache - removing
