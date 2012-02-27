@@ -308,6 +308,7 @@ typedef enum {
 
 /** sets a new display frame to the CCSprite. */
 -(void) setDisplayFrame:(CCSpriteFrame*)newFrame;
+-(void) setDisplayFrameWithName:(NSString*)frameName;
 
 /** returns whether or not a CCSpriteFrame is being displayed */
 -(BOOL) isFrameDisplayed:(CCSpriteFrame*)frame;
