@@ -45,7 +45,6 @@
                 <array>
                     <string>-lz</string>
                     <string>-ObjC</string>
-                    <string>-all_load</string>
                 </array>
 			</dict>
 			<key>Configurations</key>

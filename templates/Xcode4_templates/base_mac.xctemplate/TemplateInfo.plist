@@ -50,7 +50,6 @@
                 <array>
                     <string>-lz</string>
                     <string>-ObjC</string>
-                    <string>-all_load</string>
                 </array>
 				<key>GCC_ENABLE_OBJC_EXCEPTIONS</key>
 				<string>YES</string>
