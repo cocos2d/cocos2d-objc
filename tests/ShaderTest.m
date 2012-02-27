@@ -428,10 +428,9 @@ enum {
 		blur_ = ccp(1/s.width, 1/s.height);
 		sub_[0] = sub_[1] = sub_[2] = sub_[3] = 0;
 
-		self.shaderProgram = [[CCGLProgram alloc] initWithVertexShaderFilename:@"PositionTextureColor.vsh"
+		shaderProgram_ = [[CCGLProgram alloc] initWithVertexShaderFilename:@"PositionTextureColor.vsh"
 													 fragmentShaderFilename:@"example_Blur.fsh"];
 
-		[self.shaderProgram release];
 
 		CHECK_GL_ERROR_DEBUG();
 
