@@ -674,7 +674,9 @@ enum {
 		CGPoint oldPosition = sprite.position;
 		sprite.position = ccp( oldPosition.x, sinf( accum_ * 2 + i/2.0) * 20  );
 		
-		float scaleY = fabs( sinf( accum_ * 2 + i/2.0 + 0.707) );
+		
+		// add fabs() to prevent negative scaling
+		float scaleY = ( sinf( accum_ * 2 + i/2.0 + 0.707) );
 		
 		sprite.scaleY = scaleY;
 	}
