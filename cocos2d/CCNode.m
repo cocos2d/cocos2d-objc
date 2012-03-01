@@ -176,6 +176,10 @@ static NSUInteger globalOrderOfArrival = 0;
 #endif	
 }
 
+-(CGPoint) centerPoint {
+    return ccp(contentSize_.width/2, contentSize_.height/2);
+}
+
 -(CGPoint) unanchoredPosition {
     return ccp(position_.x + (0.5 - anchorPoint_.x) * contentSize_.width,
                position_.y + (0.5 - anchorPoint_.y) * contentSize_.height);
