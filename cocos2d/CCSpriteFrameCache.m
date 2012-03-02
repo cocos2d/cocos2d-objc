@@ -250,13 +250,27 @@ static CCSpriteFrameCache *sharedSpriteFrameCache_=nil;
     }
 }
 
--(CCSpriteFrame*) addSpriteFrameWithTextureFile:(NSString*)textureFilename {
+-(CCSpriteFrame*) addSpriteFrameWithTextureFile:(NSString*)textureFilename name:(NSString*)name {
     CCTexture2D *texture = [[CCTextureCache sharedTextureCache] addImage:textureFilename];
 	if( texture ) {
 		CGRect rect = CGRectZero;
 		rect.size = texture.contentSize;
         CCSpriteFrame *spriteFrame = [CCSpriteFrame frameWithTexture:texture rect:rect];
-        return [self addSpriteFrame:spriteFrame name:textureFilename];
+        return [self addSpriteFrame:spriteFrame name:name];
+	}
+    return nil;
+}
+
+-(CCSpriteFrame*) addSpriteFrameWithTextureFile:(NSString*)textureFilename {
+    CCTexture2D *texture = [[CCTextureCache sharedTextureCache] addImage:textureFilename];
+	if( texture ) {
+		CGRect rect = CGRectZero;
+		rect.size = texture.contentSize;
+        // Delete path extension twice
+        // (covers double-extension cases like '.pvr.ccz' or '.pvr.gz')
+        NSString *name = [[[[textureFilename lastPathComponent] stringByDeletingPathExtension] stringByDeletingPathExtension] stringByAppendingPathExtension:@"png"]; 
+        CCSpriteFrame *spriteFrame = [CCSpriteFrame frameWithTexture:texture rect:rect];
+        return [self addSpriteFrame:spriteFrame name:name];
 	}
     return nil;
 }

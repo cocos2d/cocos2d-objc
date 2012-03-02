@@ -84,6 +84,7 @@
  */
 -(CCSpriteFrame*) addSpriteFrame:(CCSpriteFrame*)frame name:(NSString*)frameName;
 -(CCSpriteFrame*) addSpriteFrameWithTextureFile:(NSString*)textureFilename;
+-(CCSpriteFrame*) addSpriteFrameWithTextureFile:(NSString*)textureFilename name:(NSString*)name;
 
 /** Purges the dictionary of loaded sprite frames.
  * Call this method if you receive the "Memory Warning".
