@@ -199,55 +199,52 @@
 	int ty = s.height;
 	
 	int bitsPerComponent			= 8;
-	int bitsPerPixel				= 32;
-	int bytesPerPixel				= (bitsPerComponent * 4)/8;
+    int bitsPerPixel                = 4 * 8;
+    int bytesPerPixel               = bitsPerPixel / 8;
 	int bytesPerRow					= bytesPerPixel * tx;
 	NSInteger myDataLength			= bytesPerRow * ty;
 	
-	NSMutableData *buffer	= [[NSMutableData alloc] initWithCapacity:myDataLength];
-	NSMutableData *pixels	= [[NSMutableData alloc] initWithCapacity:myDataLength];
+	GLubyte *buffer	= malloc(sizeof(GLubyte)*myDataLength);
+	GLubyte *pixels	= malloc(sizeof(GLubyte)*myDataLength);
 	
 	if( ! (buffer && pixels) ) {
 		CCLOG(@"cocos2d: CCRenderTexture#getUIImageFromBuffer: not enough memory");
-		[buffer release];
-		[pixels release];
+        free(buffer);
+		free(pixels);
 		return nil;
 	}
 	
 	[self begin];
-	glReadPixels(0,0,tx,ty,GL_RGBA,GL_UNSIGNED_BYTE, [buffer mutableBytes]);
+        glReadPixels(0,0,tx,ty,GL_RGBA,GL_UNSIGNED_BYTE, buffer);
 	[self end];
 	
-	// make data provider with data.
+	// flip image
+    int x,y;
 	
-	CGBitmapInfo bitmapInfo	= kCGImageAlphaPremultipliedLast | kCGBitmapByteOrderDefault;
-	CGDataProviderRef provider = CGDataProviderCreateWithData(NULL, [buffer mutableBytes], myDataLength, NULL);
-	CGColorSpaceRef colorSpaceRef = CGColorSpaceCreateDeviceRGB();
-	CGImageRef iref	= CGImageCreate(tx, ty,
-									bitsPerComponent, bitsPerPixel, bytesPerRow,
-									colorSpaceRef, bitmapInfo, provider,
-									NULL, false,
-									kCGRenderingIntentDefault);
-	
-	CGContextRef context = CGBitmapContextCreate([pixels mutableBytes], tx,
-												 ty, CGImageGetBitsPerComponent(iref),
-												 CGImageGetBytesPerRow(iref), CGImageGetColorSpace(iref),
-												 bitmapInfo);
-	CGContextTranslateCTM(context, 0.0f, ty);
-	CGContextScaleCTM(context, 1.0f, -1.0f);
-	CGContextDrawImage(context, CGRectMake(0.0f, 0.0f, tx, ty), iref);
-	CGImageRef outputRef = CGBitmapContextCreateImage(context);
-	UIImage* image	= [[UIImage alloc] initWithCGImage:outputRef];
-	
-	CGImageRelease(iref);
-	CGContextRelease(context);
-	CGColorSpaceRelease(colorSpaceRef);
-	CGDataProviderRelease(provider);
-	CGImageRelease(outputRef);
-	
-	[pixels release];
-	[buffer release];
-	
+	for(y = 0; y <ty; y++) {
+		for(x = 0; x <tx * 4; x++) {
+			pixels[((ty - 1 - y) * tx * 4 + x)] = buffer[(y * 4 * tx + x)];
+		}
+	}
+    
+	CGBitmapInfo bitmapInfo = kCGImageAlphaPremultipliedLast | kCGBitmapByteOrderDefault;
+    CGDataProviderRef provider		= CGDataProviderCreateWithData(NULL, pixels, myDataLength, NULL);
+    CGColorSpaceRef colorSpaceRef	= CGColorSpaceCreateDeviceRGB();
+    CGImageRef iref					= CGImageCreate(tx, ty,
+                                                    bitsPerComponent, bitsPerPixel, bytesPerRow,
+                                                    colorSpaceRef, bitmapInfo, provider,
+                                                    NULL, false,
+                                                    kCGRenderingIntentDefault);
+    
+    UIImage* image					= [[UIImage alloc] initWithCGImage:iref];
+    
+    CGImageRelease(iref);	
+    CGColorSpaceRelease(colorSpaceRef);
+    CGDataProviderRelease(provider);
+    
+    free(pixels);
+    free(buffer);
+    
 	return [image autorelease];
 }
 
@@ -319,8 +316,6 @@
 		CGImageRelease(iref);	
 		CGColorSpaceRelease(colorSpaceRef);
 		CGDataProviderRelease(provider);
-		
-		
 		
 		if (format == kCCImageFormatPNG)
 			data = UIImagePNGRepresentation(image);
