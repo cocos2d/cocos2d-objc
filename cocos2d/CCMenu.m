@@ -210,6 +210,15 @@ enum {
 	}
 }
 
+// Reset menu state so menu doesn't break if
+// touch is disabled while pressing a button
+-(void) setIsTouchEnabled:(BOOL)isTouchEnabled {
+    [selectedItem_ unselected];	
+	state_ = kCCMenuStateWaiting;
+
+    [super setIsTouchEnabled:isTouchEnabled];
+}
+
 #pragma mark Menu - Mouse
 
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
