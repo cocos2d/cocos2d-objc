@@ -634,6 +634,15 @@ static SEL selSortMethod = NULL;
 	
 }
 
+- (void)visit
+{
+  if ( opacity_ == 0 )
+    return;
+  
+  [super visit];
+}
+
+
 #pragma mark CCSprite - CCNode overrides
 
 -(void) addChild:(CCSprite*)child z:(NSInteger)z tag:(NSInteger) aTag
