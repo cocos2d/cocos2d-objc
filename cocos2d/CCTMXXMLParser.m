@@ -186,7 +186,7 @@
 	[super dealloc];
 }
 
-- (NSError*) parseXMLData:(NSData*)data
+- (void) parseXMLData:(NSData*)data
 {
 	NSXMLParser *parser = [[[NSXMLParser alloc] initWithData:data] autorelease];
 	
@@ -197,22 +197,21 @@
 	[parser setShouldResolveExternalEntities:NO];
 	[parser parse];
 	
-	return [parser parserError];
+     NSAssert1( ![parser parserError], @"Error parsing TMX data: %@.", [NSString stringWithCharacters:[data bytes] length:[data length]] );
 }
 
 - (void) parseXMLString:(NSString *)xmlString
 {
 	NSData* data = [xmlString dataUsingEncoding:NSUTF8StringEncoding];
-	NSError* err = [self parseXMLData:data];
-	NSAssert1( !err, @"Error parsing TMX data: %@.", [NSString stringWithCharacters:[data bytes] length:[data length]] );
+	[self parseXMLData:data];
+	
 }
 
 - (void) parseXMLFile:(NSString *)xmlFilename
 {
 	NSURL *url = [NSURL fileURLWithPath:[CCFileUtils fullPathFromRelativePath:xmlFilename] ];
 	NSData *data = [NSData dataWithContentsOfURL:url];
-	NSError* err = [self parseXMLData:data];
-	NSAssert3(!err, @"Error parsing TMX file: %@, %@ (%d).", xmlFilename, [err localizedDescription], [err code]);
+	[self parseXMLData:data];
 }
 
 // the XML parser calls here with all the elements
