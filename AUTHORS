@@ -71,7 +71,10 @@ Contributors (alphabetically ordered):
 
 * Ricardo Ruiz:
 	Added support for RGB888 textures
-
+    
+* Rick Smorawski
+    Added full unicode support to CCLabelBMFont
+    
 * Scott Lembcke (AKA slembcke) (http://chipmunk-physics.net/)
 	Improved ARC compatiblity code
 
