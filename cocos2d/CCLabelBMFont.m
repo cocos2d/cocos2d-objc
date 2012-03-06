@@ -85,13 +85,14 @@ typedef struct _KerningHashElement
 
 @interface CCBMFontConfiguration (Private)
 -(void) parseConfigFile:(NSString*)controlFile;
--(void) parseCharacterDefinition:(NSString*)line charDef:(ccBMFontDef*)characterDefinition;
+-(void) parseCharacterDefinition:(NSString*)line;
 -(void) parseInfoArguments:(NSString*)line;
 -(void) parseCommonArguments:(NSString*)line;
 -(void) parseImageFileName:(NSString*)line fntFile:(NSString*)fntFile;
 -(void) parseKerningCapacity:(NSString*)line;
 -(void) parseKerningEntry:(NSString*)line;
 -(void) purgeKerningDictionary;
+-(void) purgeBMFontHash;
 @end
 
 #pragma mark -
@@ -107,7 +108,7 @@ typedef struct _KerningHashElement
 -(id) initWithFNTfile:(NSString*)fntFile
 {
 	if((self=[super init])) {
-		
+		BMFontHash_ = NULL;
 		kerningDictionary_ = NULL;
         
 		[self parseConfigFile:fntFile];
@@ -119,6 +120,7 @@ typedef struct _KerningHashElement
 {
 	CCLOGINFO( @"cocos2d: deallocing %@", self);
 	[self purgeKerningDictionary];
+    [self purgeBMFontHash];
 	[atlasName_ release];
 	[super dealloc];
 }
@@ -138,6 +140,17 @@ typedef struct _KerningHashElement
 	while(kerningDictionary_) {
 		current = kerningDictionary_; 
 		HASH_DEL(kerningDictionary_,current);
+		free(current);
+	}
+}
+
+-(void) purgeBMFontHash
+{
+	ccBMFontDef *current;
+	
+	while(BMFontHash_) {
+		current = BMFontHash_; 
+		HASH_DEL(BMFontHash_,current);
 		free(current);
 	}
 }
@@ -179,12 +192,7 @@ typedef struct _KerningHashElement
 			// Ignore this line
 		}
 		else if([line hasPrefix:@"char"]) {
-			// Parse the current line and create a new CharDef
-			ccBMFontDef characterDefinition;
-			[self parseCharacterDefinition:line charDef:&characterDefinition];
-            
-			// Add the CharDef returned to the charArray
-			BMFontArray_[ characterDefinition.charID ] = characterDefinition;
+			[self parseCharacterDefinition:line];
 		}
 		else if([line hasPrefix:@"kernings count"]) {
 			[self parseKerningCapacity:line];
@@ -332,8 +340,11 @@ typedef struct _KerningHashElement
 	
 	// packed (ignore) What does this mean ??
 }
-- (void)parseCharacterDefinition:(NSString*)line charDef:(ccBMFontDef*)characterDefinition
-{	
+- (void)parseCharacterDefinition:(NSString*)line
+{
+    ccBMFontDef *characterDefinition = NULL;
+	characterDefinition = calloc(sizeof(ccBMFontDef),1);
+	
 	// Break the values for this line up using =
 	NSArray *values = [line componentsSeparatedByString:@"="];
 	NSEnumerator *nse = [values objectEnumerator];	
@@ -346,7 +357,6 @@ typedef struct _KerningHashElement
 	propertyValue = [nse nextObject];
 	propertyValue = [propertyValue substringToIndex: [propertyValue rangeOfString: @" "].location];
 	characterDefinition->charID = [propertyValue intValue];
-	NSAssert(characterDefinition->charID < kCCBMFontMaxChars, @"BitmpaFontAtlas: CharID bigger than supported");
     
 	// Character x
 	propertyValue = [nse nextObject];
@@ -369,6 +379,9 @@ typedef struct _KerningHashElement
 	// Character xadvance
 	propertyValue = [nse nextObject];
 	characterDefinition->xAdvance = [propertyValue intValue];
+
+	// Add the CharDef returned to the charHash
+	HASH_ADD_INT(BMFontHash_, charID, characterDefinition);
 }
 
 -(void) parseKerningCapacity:(NSString*) line
@@ -702,7 +715,6 @@ typedef struct _KerningHashElement
 	
 	for(NSUInteger i = 0; i<stringLen; i++) {
 		unichar c = [string_ characterAtIndex:i];
-		NSAssert( c < kCCBMFontMaxChars, @"LabelBMFont: character outside bounds");
 		
 		if (c == '\n') {
 			nextFontPositionX = 0;
@@ -712,52 +724,56 @@ typedef struct _KerningHashElement
         
 		kerningAmount = [self kerningAmountForFirst:prev second:c];
 		
-		ccBMFontDef fontDef = configuration_->BMFontArray_[c];
-		
-		CGRect rect = fontDef.rect;
-		
-		CCSprite *fontChar;
-		
-		fontChar = (CCSprite*) [self getChildByTag:i];
-		if( ! fontChar ) {
-			fontChar = [[CCSprite alloc] initWithBatchNode:self rectInPixels:rect];
-			[self addChild:fontChar z:0 tag:i];
-			[fontChar release];
-		}
-		else {
-			// reusing fonts
-			[fontChar setTextureRectInPixels:rect rotated:NO untrimmedSize:rect.size];
-			
-			// restore to default in case they were modified
-			fontChar.visible = YES;
-			fontChar.opacity = 255;
-		}
-		
-		float yOffset = configuration_->commonHeight_ - fontDef.yOffset;
-        fontChar.positionInPixels = ccp( (float)nextFontPositionX + fontDef.xOffset + fontDef.rect.size.width*0.5f + kerningAmount, (float)nextFontPositionY + yOffset - rect.size.height*0.5f );
-		
-		// update kerning
-		nextFontPositionX += configuration_->BMFontArray_[c].xAdvance + kerningAmount;
-		prev = c;
-        
-		// Apply label properties
-		[fontChar setOpacityModifyRGB:opacityModifyRGB_];
-		// Color MUST be set before opacity, since opacity might change color if OpacityModifyRGB is on
-		[fontChar setColor:color_];
-        
-		// only apply opacity if it is different than 255 )
-		// to prevent modifying the color too (issue #610)
-		if( opacity_ != 255 )
-			[fontChar setOpacity: opacity_];
-        
-		if (longestLine < nextFontPositionX)
-			longestLine = nextFontPositionX;
-	}
-    
-	tmpSize.width = longestLine;
-	tmpSize.height = totalHeight;
-	
-	[self setContentSizeInPixels:tmpSize];
+        ccBMFontDef *fontDef = NULL;
+        unsigned int charKey = c;
+        HASH_FIND_INT(configuration_->BMFontHash_,&charKey,fontDef);
+
+        if(fontDef) {			
+            CGRect rect = fontDef->rect;
+            
+            CCSprite *fontChar;
+            
+            fontChar = (CCSprite*) [self getChildByTag:i];
+            if( ! fontChar ) {
+                fontChar = [[CCSprite alloc] initWithBatchNode:self rectInPixels:rect];
+                [self addChild:fontChar z:0 tag:i];
+                [fontChar release];
+            }
+            else {
+                // reusing fonts
+                [fontChar setTextureRectInPixels:rect rotated:NO untrimmedSize:rect.size];
+                
+                // restore to default in case they were modified
+                fontChar.visible = YES;
+                fontChar.opacity = 255;
+            }
+            
+            float yOffset = configuration_->commonHeight_ - fontDef->yOffset;
+            fontChar.positionInPixels = ccp( (float)nextFontPositionX + fontDef->xOffset + fontDef->rect.size.width*0.5f + kerningAmount, (float)nextFontPositionY + yOffset - rect.size.height*0.5f );
+            
+            // update kerning
+            nextFontPositionX += fontDef->xAdvance + kerningAmount;
+            prev = c;
+            
+            // Apply label properties
+            [fontChar setOpacityModifyRGB:opacityModifyRGB_];
+            // Color MUST be set before opacity, since opacity might change color if OpacityModifyRGB is on
+            [fontChar setColor:color_];
+            
+            // only apply opacity if it is different than 255 )
+            // to prevent modifying the color too (issue #610)
+            if( opacity_ != 255 )
+                [fontChar setOpacity: opacity_];
+            
+            if (longestLine < nextFontPositionX)
+                longestLine = nextFontPositionX;
+            
+            tmpSize.width = longestLine;
+            tmpSize.height = totalHeight;
+            
+            [self setContentSizeInPixels:tmpSize];
+        }
+    }
 }
 
 #pragma mark LabelBMFont - CCLabelProtocol protocol
