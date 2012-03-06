@@ -31,6 +31,7 @@ Contributors (alphabetically ordered):
 	Word Wrap works on LabelTTF on Mac
 	bug fixes for failure to compile on 32-bit mac builds
 	created new drawPrimitives functions, ccDrawRect, ccDrawSolidRect and ccDrawSolidPoly.
+    bug fix for CCTMXXMLParser in release mode
 	
 * Jerrod Putman (http://www.tinytimgames.com)
 	Original author of ARC compatibility code
