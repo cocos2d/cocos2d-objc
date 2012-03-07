@@ -702,14 +702,14 @@ enum {
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+	// Display retina Display
+	useRetinaDisplay_ = NO;
+
 	[super application:application didFinishLaunchingWithOptions:launchOptions];
 
 	// Turn on display FPS
 	[director_ setDisplayStats:YES];
 
-	// Enables High Res mode (Retina Display) on iPhone 4 and maintains low res on all other devices
-//	if( ! [director enableRetinaDisplay:YES] )
-//		CCLOG(@"Retina Display Not supported");
 
 	CCScene *scene = [CCScene node];
 	
