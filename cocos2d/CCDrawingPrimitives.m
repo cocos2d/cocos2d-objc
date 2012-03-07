@@ -210,11 +210,11 @@ void ccDrawTriangleStrip( const CGPoint *poli, NSUInteger numberOfPoints, ccColo
 {
 	lazy_init();
     
-	ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position );
-	ccGLUseProgram(shader_->program_ );
-	ccGLUniformModelViewProjectionMatrix( shader_ );
+	[shader_ use];
+	[shader_ setUniformForModelViewProjectionMatrix];    
+	[shader_ setUniformLocation:colorLocation_ with4fv:(GLfloat*) &color.r count:1];
     
-	glUniform4f( colorLocation_, color.r/255.0f, color.g/255.0f, color.b/255.0f, color.a/255.0f );
+	ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position );
 	
 	// XXX: Mac OpenGL error. arrays can't go out of scope before draw is executed
 	ccVertex2F newPoli[numberOfPoints];

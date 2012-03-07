@@ -582,6 +582,11 @@
 	return self;
 }
 
+-(void) setEndPosition:(CGPoint)p
+{
+	endPosition_ = p;
+}
+
 -(id) copyWithZone: (NSZone*) zone
 {
 	CCAction *copy = [[[self class] allocWithZone: zone] initWithDuration: [self duration] position: endPosition_];
