@@ -8,7 +8,6 @@ SCRIPT_DIR=$(dirname $0)
 COCOS2D_DST_DIR='cocos2d v2.x'
 
 force=
-user_dir=
 
 usage(){
 cat << EOF
@@ -19,7 +18,6 @@ Install / update templates for ${COCOS2D_VER}
 OPTIONS:
    -f	force overwrite if directories exist
    -h	this help
-   -u	install in user's Library directory instead of global directory
 EOF
 }
 
@@ -33,7 +31,6 @@ while getopts "fhu" OPTION; do
 			exit 0
 			;;
 		u)
-			user_dir=1
 			;;
 	esac
 done
@@ -46,7 +43,7 @@ if [[ "$(id -u)" == "0" ]]; then
 	echo "'root' is no longer supported" 1>&2
 	echo ""
 	echo "RECOMMENDED WAY:" 1>&2
-	echo " $0 -u -f" 1>&2
+	echo " $0 -f" 1>&2
 	echo ""
 exit 1
 fi
