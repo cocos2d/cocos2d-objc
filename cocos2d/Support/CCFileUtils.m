@@ -38,6 +38,7 @@ static NSFileManager *__localFileManager=nil;
 
 static NSString *__suffixRetinaDisplay =@"-hd";
 static NSString *__suffixiPad =@"-ipad";
+static NSString *__suffixiPadRetinaDisplay = @"-iPadHD";
 
 #endif // __IPHONE_OS_VERSION_MAX_ALLOWED
 
@@ -158,8 +159,15 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 	
 	// Retina Display ?
 	if( CC_CONTENT_SCALE_FACTOR() == 2 ) {
-		ret = [self getPath:fullpath forSuffix:__suffixRetinaDisplay];
-		*resolutionType = kCCResolutionRetinaDisplay;
+		
+		// iPad ?
+		if( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+			ret = [self getPath:fullpath forSuffix:__suffixiPadRetinaDisplay];
+			*resolutionType = kCCResolutioniPadRetinaDisplay;
+		} else {
+			ret = [self getPath:fullpath forSuffix:__suffixRetinaDisplay];
+			*resolutionType = kCCResolutionRetinaDisplay;
+		}
 	}
 	
 	// iPad ?
@@ -225,9 +233,14 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 +(NSString*) removeSuffixFromFile:(NSString*) path
 {
 	NSString *ret = nil;
-	if( CC_CONTENT_SCALE_FACTOR() == 2 )
-		ret = [self removeSuffix:__suffixRetinaDisplay fromPath:path];
-	
+	if( CC_CONTENT_SCALE_FACTOR() == 2 ) {
+		if( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+			ret = [self removeSuffix:__suffixiPadRetinaDisplay fromPath:path];
+		} else {
+			ret = [self removeSuffix:__suffixRetinaDisplay fromPath:path];
+		}
+		
+	}
 	else if( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
 		ret = [self removeSuffix:__suffixiPad fromPath:path];
 	
@@ -247,6 +260,12 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 {
 	[__suffixiPad release];
 	__suffixiPad = [suffix copy];
+}
+
++(void) setiPadRetinaSuffix:(NSString*)suffix
+{
+	[__suffixiPadRetinaDisplay release];
+	__suffixiPadRetinaDisplay = [suffix copy];
 }
 
 +(BOOL) fileExistsAtPath:(NSString*)relPath withSuffix:(NSString*)suffix
@@ -281,6 +300,11 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 +(BOOL) retinaDisplayFileExistsAtPath:(NSString*)path
 {
 	return [self fileExistsAtPath:path withSuffix:__suffixRetinaDisplay];
+}
+
++(BOOL) iPadRetinaFileExistsAtPath:(NSString*)path
+{
+	return [self fileExistsAtPath:path withSuffix:__suffixiPadRetinaDisplay];
 }
 
 #endif // __IPHONE_OS_VERSION_MAX_ALLOWED

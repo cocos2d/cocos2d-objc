@@ -92,11 +92,27 @@
  */
 +(void) setiPadSuffix:(NSString*)suffix;
 
+
+/** Sets the iPad retina suffix to load resources.
+ By default it is "".
+ Only valid on iOS. Not valid for OS X.
+ 
+ @since xxxx
+ */
++(void) setiPadRetinaSuffix:(NSString*)suffix;
+
 /** Returns whether or not a given filename exists with the iPad suffix.
  Only available on iOS. Not supported on OS X.
  @since v1.1
  */
 +(BOOL) iPadFileExistsAtPath:(NSString*)filename;
+
+
+/** Returns whether or not a given filename exists with the iPad retina suffix.
+ Only available on iOS. Not supported on OS X.
+ @since v1.1
+ */
++(BOOL) iPadRetinaFileExistsAtPath:(NSString*)filename;
 
 /** Returns whether or not a given path exists with the RetinaDisplay suffix.
  Only available on iOS. Not supported on OS X.
