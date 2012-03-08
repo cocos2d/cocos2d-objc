@@ -49,40 +49,77 @@
 @end
 
 
-@interface Atlas3 : AtlasDemo
+@interface Atlas3BM : AtlasDemo
 {
 	ccTime		time;
 }
 @end
 
-@interface Atlas4 : AtlasDemo
+@interface Atlas3BN : AtlasDemo
 {
 	ccTime		time;
 }
 @end
 
-@interface Atlas5 : AtlasDemo
+@interface Atlas4BM : AtlasDemo
+{
+	ccTime		time;
+}
+@end
+
+@interface Atlas4BN : AtlasDemo
+{
+	ccTime		time;
+}
+@end
+
+@interface Atlas5BM : AtlasDemo
 {}
 @end
 
-@interface Atlas6 : AtlasDemo
+@interface Atlas5BN : AtlasDemo
 {}
 @end
 
-@interface AtlasBitmapColor : AtlasDemo
+@interface Atlas6BM : AtlasDemo
 {}
 @end
 
-
-@interface AtlasFastBitmap : AtlasDemo
+@interface Atlas6BN : AtlasDemo
 {}
 @end
 
-@interface BitmapFontMultiLine : AtlasDemo
+@interface AtlasBitmapColorBM : AtlasDemo
 {}
 @end
 
-@interface LabelsEmpty : AtlasDemo
+@interface AtlasBitmapColorBN : AtlasDemo
+{}
+@end
+
+@interface AtlasFastBitmapBM : AtlasDemo
+{}
+@end
+
+@interface AtlasFastBitmapBN : AtlasDemo
+{}
+@end
+
+@interface BitmapFontMultiLineBM : AtlasDemo
+{}
+@end
+
+@interface BitmapFontMultiLineBN : AtlasDemo
+{}
+@end
+
+@interface LabelsEmptyBM : AtlasDemo
+{
+	BOOL setEmpty;
+}
+@end
+
+@interface LabelsEmptyBN : AtlasDemo
 {
 	BOOL setEmpty;
 }
@@ -93,12 +130,22 @@
 }
 @end
 
+@interface LabelBNFontHD : AtlasDemo
+{
+}
+@end
+
 @interface LabelAtlasHD : AtlasDemo
 {
 }
 @end
 
-@interface LabelGlyphDesigner : AtlasDemo
+@interface LabelGlyphDesignerBM : AtlasDemo
+{
+}
+@end
+
+@interface LabelGlyphDesignerBN : AtlasDemo
 {
 }
 @end

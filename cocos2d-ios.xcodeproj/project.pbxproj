@@ -2009,6 +2009,10 @@
 		A0EF0A111443725B006A4302 /* CCParticleBatchNode.h in Headers */ = {isa = PBXBuildFile; fileRef = A0EF0A0F1443725B006A4302 /* CCParticleBatchNode.h */; };
 		A0EF0A121443725B006A4302 /* CCParticleBatchNode.m in Sources */ = {isa = PBXBuildFile; fileRef = A0EF0A101443725B006A4302 /* CCParticleBatchNode.m */; };
 		AAEA834B0FD5704400F08728 /* blocks.png in Resources */ = {isa = PBXBuildFile; fileRef = AAEA834A0FD5704400F08728 /* blocks.png */; };
+		C5622885150777BB00FA8CE3 /* CCLabelBNFont.h in Headers */ = {isa = PBXBuildFile; fileRef = C5622883150777BB00FA8CE3 /* CCLabelBNFont.h */; };
+		C5622886150777BB00FA8CE3 /* CCLabelBNFont.m in Sources */ = {isa = PBXBuildFile; fileRef = C5622884150777BB00FA8CE3 /* CCLabelBNFont.m */; };
+		C5994CB81508E8FF005EDD85 /* CCLabelBNFont.plist in Resources */ = {isa = PBXBuildFile; fileRef = C5994CB61508E8FF005EDD85 /* CCLabelBNFont.plist */; };
+		C5994CB91508E8FF005EDD85 /* CCLabelBNFont.png in Resources */ = {isa = PBXBuildFile; fileRef = C5994CB71508E8FF005EDD85 /* CCLabelBNFont.png */; };
 		DA5F0EC50FFE96D400C7C82E /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB240E10EE4A00AE9530 /* Default.png */; };
 		DA5F0EC60FFE96D400C7C82E /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB250E10EE4A00AE9530 /* Icon.png */; };
 		DA5F0EC70FFE96D400C7C82E /* grossini.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB280E10EE4A00AE9530 /* grossini.png */; };
@@ -4742,6 +4746,10 @@
 		A0EF0A0F1443725B006A4302 /* CCParticleBatchNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCParticleBatchNode.h; sourceTree = "<group>"; };
 		A0EF0A101443725B006A4302 /* CCParticleBatchNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCParticleBatchNode.m; sourceTree = "<group>"; };
 		AAEA834A0FD5704400F08728 /* blocks.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blocks.png; sourceTree = "<group>"; };
+		C5622883150777BB00FA8CE3 /* CCLabelBNFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLabelBNFont.h; sourceTree = "<group>"; };
+		C5622884150777BB00FA8CE3 /* CCLabelBNFont.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCLabelBNFont.m; sourceTree = "<group>"; };
+		C5994CB61508E8FF005EDD85 /* CCLabelBNFont.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = CCLabelBNFont.plist; sourceTree = "<group>"; };
+		C5994CB71508E8FF005EDD85 /* CCLabelBNFont.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CCLabelBNFont.png; sourceTree = "<group>"; };
 		DA90D87B1059A54D0039F26A /* FontTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FontTest.h; path = tests/FontTest.h; sourceTree = "<group>"; };
 		DA90D87C1059A54D0039F26A /* FontTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FontTest.m; path = tests/FontTest.m; sourceTree = "<group>"; };
 		DAABAA9A1059A42E00794EB3 /* FontTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FontTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -6556,6 +6564,7 @@
 		505460E91061413300AB7C52 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
+				C56228881507781600FA8CE3 /* BNFont fonts */,
 				505463B81062868100AB7C52 /* BMFont fonts */,
 				505463B91062869E00AB7C52 /* LabelAtlas fonts */,
 				505463961062864900AB7C52 /* TTF fonts */,
@@ -6674,6 +6683,8 @@
 		506414C50F9C67C0007A7B24 /* Label Nodes */ = {
 			isa = PBXGroup;
 			children = (
+				C5622883150777BB00FA8CE3 /* CCLabelBNFont.h */,
+				C5622884150777BB00FA8CE3 /* CCLabelBNFont.m */,
 				E01E6D8A121F130E001A484F /* CCLabelBMFont.h */,
 				E01E6D8B121F130E001A484F /* CCLabelBMFont.m */,
 				5018F25C0DFDEAFF00C013A5 /* CCLabelTTF.h */,
@@ -7569,6 +7580,15 @@
 			path = "sound-engine-sample";
 			sourceTree = "<group>";
 		};
+		C56228881507781600FA8CE3 /* BNFont fonts */ = {
+			isa = PBXGroup;
+			children = (
+				C5994CB61508E8FF005EDD85 /* CCLabelBNFont.plist */,
+				C5994CB71508E8FF005EDD85 /* CCLabelBNFont.png */,
+			);
+			name = "BNFont fonts";
+			sourceTree = "<group>";
+		};
 		E037DA881281EFE2003D39D7 /* Bug-458 */ = {
 			isa = PBXGroup;
 			children = (
@@ -7794,6 +7814,7 @@
 				E02BB6D6126CA93A006E46A2 /* CCAnimationCache.h in Headers */,
 				E02BB704126CADEA006E46A2 /* CCAnimation.h in Headers */,
 				A0EF0A111443725B006A4302 /* CCParticleBatchNode.h in Headers */,
+				C5622885150777BB00FA8CE3 /* CCLabelBNFont.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10420,6 +10441,8 @@
 				A0B036BF13EA101F0073E59A /* f2-ipad.png in Resources */,
 				A0B036F413EA10200073E59A /* r1-ipad.png in Resources */,
 				A0B0372913EA10210073E59A /* r2-ipad.png in Resources */,
+				C5994CB81508E8FF005EDD85 /* CCLabelBNFont.plist in Resources */,
+				C5994CB91508E8FF005EDD85 /* CCLabelBNFont.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11898,6 +11921,7 @@
 				E02BB6D7126CA93A006E46A2 /* CCAnimationCache.m in Sources */,
 				E02BB705126CADEA006E46A2 /* CCAnimation.m in Sources */,
 				A0EF0A121443725B006A4302 /* CCParticleBatchNode.m in Sources */,
+				C5622886150777BB00FA8CE3 /* CCLabelBNFont.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

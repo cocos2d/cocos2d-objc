@@ -42,6 +42,8 @@
 		A0AAB8251451C8C000850F2C /* CCParticleBatchNode.m in Sources */ = {isa = PBXBuildFile; fileRef = A0AAB8231451C8C000850F2C /* CCParticleBatchNode.m */; };
 		A0B0375E13EA1A2A0073E59A /* bugs in Resources */ = {isa = PBXBuildFile; fileRef = A0B0375D13EA1A290073E59A /* bugs */; };
 		A0B0375F13EA1A2A0073E59A /* bugs in Resources */ = {isa = PBXBuildFile; fileRef = A0B0375D13EA1A290073E59A /* bugs */; };
+		C5994CBF1508EBD9005EDD85 /* CCLabelBNFont.m in Sources */ = {isa = PBXBuildFile; fileRef = C5994CBE1508EBD9005EDD85 /* CCLabelBNFont.m */; };
+		C5994CC21508EBE5005EDD85 /* CCLabelBNFont.h in Headers */ = {isa = PBXBuildFile; fileRef = C5994CC11508EBE5005EDD85 /* CCLabelBNFont.h */; };
 		E01E6A3E121EDCD3001A484F /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E01E6A3D121EDCD3001A484F /* ApplicationServices.framework */; };
 		E01E6B36121EDCED001A484F /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E036A79E121B5C870037C5C6 /* QuartzCore.framework */; };
 		E01E6B49121EDCF4001A484F /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E036A79C121B5C720037C5C6 /* OpenGL.framework */; };
@@ -3570,6 +3572,8 @@
 		A0AAB8221451C8C000850F2C /* CCParticleBatchNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCParticleBatchNode.h; sourceTree = "<group>"; };
 		A0AAB8231451C8C000850F2C /* CCParticleBatchNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCParticleBatchNode.m; sourceTree = "<group>"; };
 		A0B0375D13EA1A290073E59A /* bugs */ = {isa = PBXFileReference; lastKnownFileType = folder; name = bugs; path = Resources/Images/bugs; sourceTree = "<group>"; };
+		C5994CBE1508EBD9005EDD85 /* CCLabelBNFont.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCLabelBNFont.m; sourceTree = "<group>"; };
+		C5994CC11508EBE5005EDD85 /* CCLabelBNFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLabelBNFont.h; sourceTree = "<group>"; };
 		E01E663D121CA00A001A484F /* libcocos2d.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libcocos2d.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		E01E6A3D121EDCD3001A484F /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = System/Library/Frameworks/ApplicationServices.framework; sourceTree = SDKROOT; };
 		E026451912A59DA7009D04FE /* ParticleTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ParticleTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -4954,6 +4958,8 @@
 		E076E7721225EC8C00DE0DA2 /* Label Nodes */ = {
 			isa = PBXGroup;
 			children = (
+				C5994CC11508EBE5005EDD85 /* CCLabelBNFont.h */,
+				C5994CBE1508EBD9005EDD85 /* CCLabelBNFont.m */,
 				E076E6541225EC7400DE0DA2 /* CCLabelAtlas.h */,
 				E076E6551225EC7400DE0DA2 /* CCLabelAtlas.m */,
 				E076E6561225EC7400DE0DA2 /* CCLabelBMFont.h */,
@@ -5481,6 +5487,7 @@
 				E026452912A59F1E009D04FE /* CCParticleSystemPoint.h in Headers */,
 				E08AA19B12C262B3000341BD /* MacWindow.h in Headers */,
 				A0AAB8241451C8C000850F2C /* CCParticleBatchNode.h in Headers */,
+				C5994CC21508EBE5005EDD85 /* CCLabelBNFont.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9036,6 +9043,7 @@
 				E026452A12A59F1E009D04FE /* CCParticleSystemPoint.m in Sources */,
 				E08AA19C12C262B3000341BD /* MacWindow.m in Sources */,
 				A0AAB8251451C8C000850F2C /* CCParticleBatchNode.m in Sources */,
+				C5994CBF1508EBD9005EDD85 /* CCLabelBNFont.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

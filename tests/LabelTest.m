@@ -14,17 +14,27 @@ static NSString *transitions[] = {
 	
 	@"LabelAtlasTest",
 	@"LabelAtlasColorTest",
-	@"Atlas3",
-	@"Atlas4",
-	@"Atlas5",
-	@"Atlas6",
-	@"AtlasBitmapColor",
-	@"AtlasFastBitmap",
-	@"BitmapFontMultiLine",
-	@"LabelsEmpty",
+	@"Atlas3BM",
+	@"Atlas3BN",
+	@"Atlas4BM",
+	@"Atlas4BN",
+	@"Atlas5BM",
+	@"Atlas5BN",
+	@"Atlas6BM",
+	@"Atlas6BN",
+	@"AtlasBitmapColorBM",
+	@"AtlasBitmapColorBN",
+	@"AtlasFastBitmapBM",
+	@"AtlasFastBitmapBN",
+	@"BitmapFontMultiLineBM",
+	@"BitmapFontMultiLineBN",
+	@"LabelsEmptyBM",
+	@"LabelsEmptyBN",
 	@"LabelBMFontHD",
+	@"LabelBNFontHD",
 	@"LabelAtlasHD",
-	@"LabelGlyphDesigner",
+	@"LabelGlyphDesignerBM",
+	@"LabelGlyphDesignerBN",
 	@"LabelTTFTest",
 	@"LabelTTFMultiline",
 	@"LabelTTFLineBreak",
@@ -104,9 +114,24 @@ Class restartAction()
 			[l setPosition:ccp(s.width/2, s.height-80)];
 		}	
 		
-		CCMenuItemImage *item1 = [CCMenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
-		CCMenuItemImage *item2 = [CCMenuItemImage itemFromNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
-		CCMenuItemImage *item3 = [CCMenuItemImage itemFromNormalImage:@"f1.png" selectedImage:@"f2.png" target:self selector:@selector(nextCallback:)];
+        [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"CCLabelBNFont.plist"];
+        CCSpriteBatchNode *batchNode = [CCSpriteBatchNode batchNodeWithFile:@"CCLabelBNFont.png"];
+        [self addChild:batchNode];
+        
+        CCSprite *left1 = [CCSprite spriteWithSpriteFrameName:@"b1.png"];
+        CCSprite *left2 = [CCSprite spriteWithSpriteFrameName:@"b2.png"];
+        CCSprite *center1 = [CCSprite spriteWithSpriteFrameName:@"r1.png"];
+        CCSprite *center2 = [CCSprite spriteWithSpriteFrameName:@"r2.png"];
+        CCSprite *right1 = [CCSprite spriteWithSpriteFrameName:@"f1.png"];
+        CCSprite *right2 = [CCSprite spriteWithSpriteFrameName:@"f2.png"];
+        
+        CCMenuItemSprite *item1 = [CCMenuItemSprite itemFromNormalSprite:left1 selectedSprite:left2 target:self selector:@selector(backCallback:)];
+        CCMenuItemSprite *item2 = [CCMenuItemSprite itemFromNormalSprite:center1 selectedSprite:center2 target:self selector:@selector(restartCallback:)];
+        CCMenuItemSprite *item3 = [CCMenuItemSprite itemFromNormalSprite:right1 selectedSprite:right2 target:self selector:@selector(nextCallback:)];
+
+//		CCMenuItemImage *item1 = [CCMenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
+//		CCMenuItemImage *item2 = [CCMenuItemImage itemFromNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
+//		CCMenuItemImage *item3 = [CCMenuItemImage itemFromNormalImage:@"f1.png" selectedImage:@"f2.png" target:self selector:@selector(nextCallback:)];
 		
 		CCMenu *menu = [CCMenu menuWithItems:item1, item2, item3, nil];
 		
@@ -157,11 +182,8 @@ Class restartAction()
 }
 @end
 
-#pragma mark Example Atlas 1
-
+#pragma mark - Example Atlas 1
 @implementation Atlas1
-
-
 -(id) init
 {
 	if( (self=[super init] ) ) {
@@ -238,8 +260,7 @@ Class restartAction()
 
 @end
 
-#pragma mark Example LabelAtlasTest
-
+#pragma mark - Example LabelAtlasTest
 @implementation LabelAtlasTest
 -(id) init
 {
@@ -287,8 +308,7 @@ Class restartAction()
 }
 @end
 
-#pragma mark Example LabelAtlasColorTest
-
+#pragma mark - Example LabelAtlasColorTest
 @implementation LabelAtlasColorTest
 -(id) init
 {
@@ -345,8 +365,7 @@ Class restartAction()
 
 
 
-#pragma mark Example Atlas3
-
+#pragma mark - Example Atlas3BM
 /*
  * Use any of these editors to generate BMFonts:
  *   http://glyphdesigner.71squared.com/ (Commercial, Mac OS X)
@@ -354,7 +373,7 @@ Class restartAction()
  *   http://slick.cokeandcode.com/demos/hiero.jnlp (Free, Java)
  *   http://www.angelcode.com/products/bmfont/ (Free, Windows only)
  */
-@implementation Atlas3
+@implementation Atlas3BM
 -(id) init
 {
 	if( (self=[super init]) ) {
@@ -429,8 +448,101 @@ Class restartAction()
 
 @end
 
-#pragma mark Example Atlas4
+#pragma mark - Example Atlas3BN
+/*
+ * Use any of these editors to generate BNFonts:
+ *   http://glyphdesigner.71squared.com/ (Commercial, Mac OS X)
+ *   http://www.n4te.com/hiero/hiero.jnlp (Free, Java)
+ *   http://slick.cokeandcode.com/demos/hiero.jnlp (Free, Java)
+ *   http://www.angelcode.com/products/bmfont/ (Free, Windows only)
+ */
+@implementation Atlas3BN
+CCSpriteBatchNode *batchNode;
 
+-(id) init
+{
+	if( (self=[super init]) ) {
+		CCLayerColor *col = [CCLayerColor layerWithColor:ccc4(128,128,128,255)];
+		[self addChild:col z:-10];
+		
+        [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"CCLabelBNFont.plist"];
+        batchNode = [[CCSpriteBatchNode alloc] initWithFile:@"CCLabelBNFont.png" capacity:10];
+        [self addChild:batchNode z:0];
+        
+		CCLabelBNFont *label1 = [CCLabelBNFont labelWithString:@"Test" fntFile:@"bitmapFontTest2.fnt"];
+        [batchNode addChild:label1 z:0 tag:kTagBitmapAtlas1];
+        
+		// testing anchors
+		label1.anchorPoint = ccp(0,0);
+        
+        id fade = [CCFadeOut actionWithDuration:1.0f];
+		id fade_in = [fade reverse];
+		id seq = [CCSequence actions:fade, fade_in, nil];
+		id repeat = [CCRepeatForever actionWithAction:seq];
+		[label1 runAction:repeat];
+        
+		// VERY IMPORTANT
+		// color and opacity work OK because bitmapFontAltas2 loads a BMP image (not a PNG image)
+		// If you want to use both opacity and color, it is recommended to use NON premultiplied images like BMP images
+		// Of course, you can also tell XCode not to compress PNG images, but I think it doesn't work as expected
+		CCLabelBNFont *label2 = [CCLabelBNFont labelWithString:@"Test" fntFile:@"bitmapFontTest2.fnt"];
+        
+		// testing anchors
+		label2.anchorPoint = ccp(0.5f, 0.5f);
+		label2.color = ccRED;
+        [batchNode addChild:label2 z:0 tag:kTagBitmapAtlas2];
+		[label2 runAction: [[repeat copy] autorelease]];
+		
+		CCLabelBNFont *label3 = [CCLabelBNFont labelWithString:@"Test" fntFile:@"bitmapFontTest2.fnt"];
+        
+		// testing anchors
+		label3.anchorPoint = ccp(1,1);
+        [batchNode addChild:label3 z:0 tag:kTagBitmapAtlas3];
+		
+		CGSize s = [[CCDirector sharedDirector] winSize];	
+		label1.position = ccp( 0,0);
+		label2.position = ccp( s.width/2, s.height/2);
+		label3.position = ccp( s.width, s.height);
+        
+		[self schedule:@selector(step:)];
+	}
+	
+	return self;
+}
+
+-(void) step:(ccTime) dt
+{
+	time += dt;
+	NSString *string = [NSString stringWithFormat:@"%2.2f Test j", time];
+	
+	CCLabelBNFont *label1 = (CCLabelBNFont*) [batchNode getChildByTag:kTagBitmapAtlas1];
+	[label1 setString:string];
+    
+	CCLabelBNFont *label2 = (CCLabelBNFont*) [batchNode getChildByTag:kTagBitmapAtlas2];
+	[label2 setString:string];
+    
+	CCLabelBNFont *label3 = (CCLabelBNFont*) [batchNode getChildByTag:kTagBitmapAtlas3];
+	[label3 setString:string];
+}
+
+-(NSString*) title
+{
+	return @"CCLabelBNFont";
+}
+
+-(NSString *) subtitle
+{
+	return @"Testing alignment. Testing opacity + tint with CCSpriteBatchNode";
+}
+
+-(void)dealloc {
+    [batchNode release];
+    [super dealloc];
+}
+
+@end
+
+#pragma mark - Example Atlas4BM
 /*
  * Use any of these editors to generate BMFonts:
  *   http://glyphdesigner.71squared.com/ (Commercial, Mac OS X)
@@ -439,7 +551,7 @@ Class restartAction()
  *   http://www.angelcode.com/products/bmfont/ (Free, Windows only)
  */
 
-@implementation Atlas4
+@implementation Atlas4BM
 -(id) init
 {
 	if( (self=[super init]) ) {
@@ -523,9 +635,99 @@ Class restartAction()
 }
 @end
 
+#pragma mark - Example Atlas4BN
+@implementation Atlas4BN
+CCSpriteBatchNode *batchNode;
+-(id) init
+{
+	if( (self=[super init]) ) {
+		CGSize s = [[CCDirector sharedDirector] winSize];
+        
+        [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"CCLabelBNFont.plist"];
+        batchNode = [[CCSpriteBatchNode alloc] initWithFile:@"CCLabelBNFont.png" capacity:10];
+        [self addChild:batchNode];
+        
+		// Upper Label
+		CCLabelBNFont *label = [CCLabelBNFont labelWithString:@"BNFont label" fntFile:@"bitmapFontTest.fnt"];
+		[batchNode addChild:label];
+        
+		label.position = ccp(s.width/2, s.height/2);
+		label.anchorPoint = ccp(0.5f, 0.5f);
+		
+		CCSprite *BChar = (CCSprite*) [label getChildByTag:0];
+		CCSprite *FChar = (CCSprite*) [label getChildByTag:7];
+		CCSprite *AChar = (CCSprite*) [label getChildByTag:12];
+        
+		id rotate = [CCRotateBy actionWithDuration:2 angle:360];
+		id rot_4ever = [CCRepeatForever actionWithAction:rotate];
+		
+		id scale = [CCScaleBy actionWithDuration:2 scale:1.5f];
+		id scale_back = [scale reverse];
+		id scale_seq = [CCSequence actions:scale, scale_back,nil];
+		id scale_4ever = [CCRepeatForever actionWithAction:scale_seq];
+		
+		id jump = [CCJumpBy actionWithDuration:0.5f position:CGPointZero height:60 jumps:1];
+		id jump_4ever = [CCRepeatForever actionWithAction:jump];
+		
+		id fade_out = [CCFadeOut actionWithDuration:1];
+		id fade_in = [CCFadeIn actionWithDuration:1];
+		id seq = [CCSequence actions:fade_out, fade_in, nil];
+		id fade_4ever = [CCRepeatForever actionWithAction:seq];
+		
+		[BChar runAction:rot_4ever];
+		[BChar runAction:scale_4ever];
+		[FChar runAction:jump_4ever];
+		[AChar runAction:fade_4ever];
+		
+		// Bottom Label
+		CCLabelBNFont *label2 = [CCLabelBNFont labelWithString:@"00.0" fntFile:@"bitmapFontTest.fnt"];
+		[batchNode addChild:label2 z:0 tag:kTagBitmapAtlas2];
+        
+		label2.position = ccp(s.width/2.0f, 80);
+		
+		CCSprite *lastChar = (CCSprite*) [label2 getChildByTag:3];
+		[lastChar runAction: [[rot_4ever copy] autorelease]];
+		
+		[self schedule:@selector(step:) interval:0.1f];
+	}
+	
+	return self;
+}
 
-#pragma mark Example Atlas5
+-(void) draw
+{
+	CGSize s = [[CCDirector sharedDirector] winSize];
+	ccDrawLine( ccp(0, s.height/2), ccp(s.width, s.height/2) );
+	ccDrawLine( ccp(s.width/2, 0), ccp(s.width/2, s.height) );
+    
+}
 
+-(void) step:(ccTime) dt
+{
+	time += dt;
+	NSString *string = [NSString stringWithFormat:@"%04.1f", time];
+	
+	CCLabelBNFont *label2 = (CCLabelBNFont*) [batchNode getChildByTag:kTagBitmapAtlas2];
+	[label2 setString:string];	
+}
+
+-(NSString*) title
+{
+	return @"CCLabelBNFont";
+}
+
+-(NSString *) subtitle
+{
+	return @"Using fonts as CCSprite objects with CCSpriteBatchNode. Some characters should rotate.";
+}
+
+-(void)dealloc {
+    [batchNode release];
+    [super dealloc];
+}
+@end
+
+#pragma mark - Example Atlas5BM
 /*
  * Use any of these editors to generate BMFonts:
  *   http://glyphdesigner.71squared.com/ (Commercial, Mac OS X)
@@ -534,7 +736,7 @@ Class restartAction()
  *   http://www.angelcode.com/products/bmfont/ (Free, Windows only)
  */
 
-@implementation Atlas5
+@implementation Atlas5BM
 -(id) init
 {
 	if( (self=[super init]) ) {
@@ -563,9 +765,40 @@ Class restartAction()
 
 @end
 
-#pragma mark -
-#pragma mark Example Atlas6
+#pragma mark - Example Atlas5BN
+@implementation Atlas5BN
+-(id) init
+{
+	if( (self=[super init]) ) {
+		CGSize s = [[CCDirector sharedDirector] winSize];
+		
+        [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"CCLabelBNFont.plist"];
+        CCSpriteBatchNode *batchNode = [CCSpriteBatchNode batchNodeWithFile:@"CCLabelBNFont.png"];
+        [self addChild:batchNode];
+        
+		CCLabelBNFont *label = [CCLabelBNFont labelWithString:@"abcdefg" fntFile:@"bitmapFontTest4.fnt"];
+		[batchNode addChild:label];
+        
+		label.position = ccp(s.width/2, s.height/2);
+		label.anchorPoint = ccp(0.5f, 0.5f);
+	}
+	
+	return self;
+}
 
+-(NSString*) title
+{
+	return @"CCLabelBNFont";
+}
+
+-(NSString *) subtitle
+{
+	return @"Testing padding with CCSpriteBatchNode";
+}
+
+@end
+
+#pragma mark - Example Atlas6BM
 /*
  * Use any of these editors to generate BMFonts:
  *   http://glyphdesigner.71squared.com/ (Commercial, Mac OS X)
@@ -574,7 +807,7 @@ Class restartAction()
  *   http://www.angelcode.com/products/bmfont/ (Free, Windows only)
  */
 
-@implementation Atlas6
+@implementation Atlas6BM
 -(id) init
 {
 	if( (self=[super init]) ) {
@@ -614,9 +847,50 @@ Class restartAction()
 
 @end
 
-#pragma mark -
-#pragma mark Example AtlasBitmapColor
+#pragma mark - Example Atlas6BN
+@implementation Atlas6BN
+-(id) init
+{
+	if( (self=[super init]) ) {
+		CGSize s = [[CCDirector sharedDirector] winSize];
+        
+        [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"CCLabelBNFont.plist"];
+        CCSpriteBatchNode *batchNode = [CCSpriteBatchNode batchNodeWithFile:@"CCLabelBNFont.png"];
+        [self addChild:batchNode];
+        
+		CCLabelBNFont *label;
+        label = [CCLabelBNFont labelWithString:@"FaFeFiFoFu" fntFile:@"bitmapFontTest5.fnt"];
+		[batchNode addChild:label];
+		label.position = ccp(s.width/2, s.height/2+50);
+		label.anchorPoint = ccp(0.5f, 0.5f);
+        
+		label = [CCLabelBNFont labelWithString:@"fafefifofu" fntFile:@"bitmapFontTest5.fnt"];
+		[batchNode addChild:label];
+		label.position = ccp(s.width/2, s.height/2);
+		label.anchorPoint = ccp(0.5f, 0.5f);
+        
+		label = [CCLabelBNFont labelWithString:@"aeiou" fntFile:@"bitmapFontTest5.fnt"];
+		[batchNode addChild:label];
+		label.position = ccp(s.width/2, s.height/2-50);
+		label.anchorPoint = ccp(0.5f, 0.5f);		
+	}
+	
+	return self;
+}
 
+-(NSString*) title
+{
+	return @"CCLabelBNFont";
+}
+
+-(NSString *) subtitle
+{
+	return @"Rendering should be OK. Testing offset with CCSpriteBatchNode";
+}
+
+@end
+
+#pragma mark - Example AtlasBitmapColorBM
 /*
  * Use any of these editors to generate BMFonts:
  *   http://glyphdesigner.71squared.com/ (Commercial, Mac OS X)
@@ -625,7 +899,7 @@ Class restartAction()
  *   http://www.angelcode.com/products/bmfont/ (Free, Windows only)
  */
 
-@implementation AtlasBitmapColor
+@implementation AtlasBitmapColorBM
 -(id) init
 {
 	if( (self=[super init]) ) {
@@ -669,9 +943,54 @@ Class restartAction()
 
 @end
 
-#pragma mark -
-#pragma mark Example AtlasFastBitmap
+#pragma mark - Example AtlasBitmapColorBN
+@implementation AtlasBitmapColorBN
+-(id) init
+{
+	if( (self=[super init]) ) {
+		CGSize s = [[CCDirector sharedDirector] winSize];
+		
+        [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"CCLabelBNFont.plist"];
+        CCSpriteBatchNode *batchNode = [CCSpriteBatchNode batchNodeWithFile:@"CCLabelBNFont.png"];
+        [self addChild:batchNode];
+        
+		CCLabelBNFont *label;
+        label = [CCLabelBNFont labelWithString:@"Blue" fntFile:@"bitmapFontTest5.fnt"];
+		[batchNode addChild:label];
+        label.color = ccBLUE;
+		label.position = ccp(s.width/2, s.height/4);
+		label.anchorPoint = ccp(0.5f, 0.5f);
+        
+        label = [CCLabelBNFont labelWithString:@"Red" fntFile:@"bitmapFontTest5.fnt"];
+		[batchNode addChild:label];
+		label.position = ccp(s.width/2, 2*s.height/4);
+		label.anchorPoint = ccp(0.5f, 0.5f);
+		label.color = ccRED;
+        
+		label = [CCLabelBNFont labelWithString:@"G" fntFile:@"bitmapFontTest5.fnt"];
+		[batchNode addChild:label];
+		label.position = ccp(s.width/2, 3*s.height/4);
+		label.anchorPoint = ccp(0.5f, 0.5f);
+		label.color = ccGREEN;
+		[label setString:@"Green"];
+	}
+	
+	return self;
+}
 
+-(NSString*) title
+{
+	return @"CCLabelBNFont";
+}
+
+-(NSString *) subtitle
+{
+	return @"Testing color with CCSpriteBatchNode";
+}
+
+@end
+
+#pragma mark - Example AtlasFastBitmapBM
 /*
  * Use any of these editors to generate BMFonts:
  *   http://glyphdesigner.71squared.com/ (Commercial, Mac OS X)
@@ -680,7 +999,7 @@ Class restartAction()
  *   http://www.angelcode.com/products/bmfont/ (Free, Windows only)
  */
 
-@implementation AtlasFastBitmap
+@implementation AtlasFastBitmapBM
 -(id) init
 {
 	if( (self=[super init]) ) {
@@ -713,9 +1032,44 @@ Class restartAction()
 
 @end
 
-#pragma mark -
-#pragma mark BitmapFontMultiLine
+#pragma mark - Example AtlasFastBitmapBN
+@implementation AtlasFastBitmapBN
+-(id) init
+{
+	if( (self=[super init]) ) {
+        [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"CCLabelBNFont.plist"];
+        CCSpriteBatchNode *batchNode = [CCSpriteBatchNode batchNodeWithFile:@"CCLabelBNFont.png"];
+        [self addChild:batchNode];
+        
+		// Upper Label
+		for( int i=0 ; i < 100;i ++ ) {
+			CCLabelBNFont *label = [CCLabelBNFont labelWithString:[NSString stringWithFormat:@"-%d-",i] fntFile:@"bitmapFontTest.fnt"];
+            [batchNode addChild:label];
+			
+			CGSize s = [[CCDirector sharedDirector] winSize];
+            
+			CGPoint p = ccp( CCRANDOM_0_1() * s.width, CCRANDOM_0_1() * s.height);
+			label.position = p;
+			label.anchorPoint = ccp(0.5f, 0.5f);
+		}
+	}
+	
+	return self;
+}
 
+-(NSString*) title
+{
+	return @"CCLabelBNFont";
+}
+
+-(NSString *) subtitle
+{
+	return @"Creating several CCLabelBNFont with the same .fnt file and CCSpriteBatchNode should be more fast";
+}
+
+@end
+
+#pragma mark - BitmapFontMultiLineBM
 /*
  * Use any of these editors to generate BMFonts:
  *   http://glyphdesigner.71squared.com/ (Commercial, Mac OS X)
@@ -724,7 +1078,7 @@ Class restartAction()
  *   http://www.angelcode.com/products/bmfont/ (Free, Windows only)
  */
 
-@implementation BitmapFontMultiLine
+@implementation BitmapFontMultiLineBM
 -(id) init
 {
 	if( (self=[super init]) ) {
@@ -779,11 +1133,63 @@ Class restartAction()
 
 @end
 
+#pragma mark - BitmapFontMultiLineBN
+@implementation BitmapFontMultiLineBN
+-(id) init
+{
+	if( (self=[super init]) ) {
+		
+		CGSize s = [[CCDirector sharedDirector] winSize];	
+        
+        [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"CCLabelBNFont.plist"];
+        CCSpriteBatchNode *batchNode = [CCSpriteBatchNode batchNodeWithFile:@"CCLabelBNFont.png"];
+        [self addChild:batchNode];
+        
+		// Left
+		CCLabelBNFont *label1 = [CCLabelBNFont labelWithString:@"Multi line\nLeft" fntFile:@"bitmapFontTest3.fnt"];
+		label1.anchorPoint = ccp(0.0f,0.0f);
+		label1.position = ccp(0.0f,0.0f);
+		[batchNode addChild:label1];
+		
+		CGSize s1 = [label1 contentSizeInPixels];
+		NSLog(@"content size: %.2fx%.2f", s1.width, s1.height);
+		
+		// Center
+		CCLabelBNFont *label2 = [CCLabelBNFont labelWithString:@"Multi line\nCenter" fntFile:@"bitmapFontTest3.fnt"];
+		label2.anchorPoint = ccp(0.5f, 0.5f);
+		label2.position = ccp( s.width/2, s.height/2);
+		[batchNode addChild:label2];
+        
+		s1 = [label2 contentSizeInPixels];
+		NSLog(@"content size: %.2fx%.2f", s1.width, s1.height);
+        
+		// right
+		CCLabelBNFont *label3 = [CCLabelBNFont labelWithString:@"Multi line\nRight\nThree lines Three" fntFile:@"bitmapFontTest3.fnt"];
+		label3.anchorPoint = ccp(1.0f,1.0f);
+		label3.position = ccp( s.width, s.height);
+		[batchNode addChild:label3];
+        
+		s1 = [label3 contentSizeInPixels];
+		NSLog(@"content size: %.2fx%.2f", s1.width, s1.height);
+	}
+	
+	return self;
+}
 
-#pragma mark -
-#pragma mark LabelsEmpty
+-(NSString*) title
+{
+	return @"CCLabelBNFont";
+}
 
-@implementation LabelsEmpty
+-(NSString *) subtitle
+{
+	return @"Multiline + anchor point with CCSpriteBatchNode";
+}
+
+@end
+
+#pragma mark - LabelsEmptyBM
+@implementation LabelsEmptyBM
 -(id) init
 {
 	if( (self=[super init]) ) {
@@ -852,9 +1258,83 @@ Class restartAction()
 
 @end
 
-#pragma mark -
-#pragma mark LabelBMFontHD
+#pragma mark - LabelEmptyBN
+@implementation LabelsEmptyBN
+CCSpriteBatchNode *batchNode;
+-(id) init
+{
+	if( (self=[super init]) ) {
+		CGSize s = [[CCDirector sharedDirector] winSize];
+        
+        [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"CCLabelBNFont.plist"];
+        batchNode = [[CCSpriteBatchNode alloc] initWithFile:@"CCLabelBNFont.png" capacity:10];
+        [self addChild:batchNode];
+        
+		// CCLabelBNFont
+		CCLabelBNFont *label1 = [CCLabelBNFont labelWithString:@"" fntFile:@"bitmapFontTest3.fnt"];
+		[batchNode addChild:label1 z:0 tag:kTagBitmapAtlas1];
+		[label1 setPosition: ccp(s.width/2, s.height-100)];
+		
+		// CCLabelTTF
+		CCLabelTTF* label2 = [CCLabelTTF labelWithString:@"" fontName:@"Arial" fontSize:24];
+		[self addChild:label2 z:0 tag:kTagBitmapAtlas2];
+		[label2 setPosition: ccp(s.width/2, s.height/2) ];
+        
+		// CCLabelAtlas
+		CCLabelAtlas *label3 = [CCLabelAtlas labelWithString:@"" charMapFile:@"tuffy_bold_italic-charmap.png" itemWidth:48 itemHeight:64 startCharMap:' '];
+		[self addChild:label3 z:0 tag:kTagBitmapAtlas3];
+		label3.position = ccp(s.width/2, 0+100);
+		
+		
+		[self schedule:@selector(updateStrings:) interval:1];
+		
+		setEmpty = NO;
+        
+	}
+	
+	return self;
+}
 
+-(void) updateStrings:(ccTime)dt
+{
+	id<CCLabelProtocol> label1 = (id<CCLabelProtocol>) [batchNode getChildByTag:kTagBitmapAtlas1];
+	id<CCLabelProtocol> label2 = (id<CCLabelProtocol>) [self getChildByTag:kTagBitmapAtlas2];
+	id<CCLabelProtocol> label3 = (id<CCLabelProtocol>) [self getChildByTag:kTagBitmapAtlas3];
+	
+	if (!setEmpty) {
+		[label1 setString: @"not empty"];
+		[label2 setString: @"not empty"];
+		[label3 setString: @"hi"];
+		
+		setEmpty = YES;
+        
+	} else {
+		[label1 setString:@""];
+		[label2 setString:@""];
+		[label3 setString:@""];
+		
+		setEmpty = NO;
+	}
+    
+}
+
+-(NSString*) title
+{
+	return @"Testing empty labels";
+}
+
+-(NSString *) subtitle
+{
+	return @"3 empty labels: LabelAtlas, LabelTTF and LabelBNFont";
+}
+
+-(void)dealloc {
+    [batchNode release];
+    [super dealloc];
+}
+@end
+
+#pragma mark - LabelBMFontHD
 @implementation LabelBMFontHD
 -(id) init
 {
@@ -884,9 +1364,40 @@ Class restartAction()
 
 @end
 
-#pragma mark -
-#pragma mark LabelAtlasHD
+#pragma mark - LabelBNFontHD
+@implementation LabelBNFontHD
+-(id) init
+{
+	if( (self=[super init]) ) {
+		CGSize s = [[CCDirector sharedDirector] winSize];
+		
+        [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"CCLabelBNFont.plist"];
+        CCSpriteBatchNode *batchNode = [CCSpriteBatchNode batchNodeWithFile:@"CCLabelBNFont.png"];
+        [self addChild:batchNode];
+        
+		// CCLabelBMFont
+		CCLabelBNFont *label1 = [CCLabelBNFont labelWithString:@"TESTING RETINA DISPLAY" fntFile:@"konqa32.fnt"];
+		[batchNode addChild:label1];
+		[label1 setPosition: ccp(s.width/2, s.height/2)];
+		
+	}
+	
+	return self;
+}
 
+-(NSString*) title
+{
+	return @"Testing Retina Display BNFont";
+}
+
+-(NSString *) subtitle
+{
+	return @"loading konqa32 or konqa32-hd";
+}
+
+@end
+
+#pragma mark - LabelAtlasHD
 @implementation LabelAtlasHD
 -(id) init
 {
@@ -918,10 +1429,8 @@ Class restartAction()
 
 @end
 
-#pragma mark -
-#pragma mark LabelGlyphDesigner
-
-@implementation LabelGlyphDesigner
+#pragma mark - LabelGlyphDesignerBM
+@implementation LabelGlyphDesignerBM
 -(id) init
 {
 	if( (self=[super init]) ) {
@@ -953,9 +1462,43 @@ Class restartAction()
 
 @end
 
-#pragma mark -
-#pragma mark LabelTTFTest
+#pragma mark LabelGlyphDesignerBN
+@implementation LabelGlyphDesignerBN
+-(id) init
+{
+	if( (self=[super init]) ) {
+		CGSize s = [[CCDirector sharedDirector] winSize];
+		
+		CCLayerColor *layer = [CCLayerColor layerWithColor:ccc4(128,128,128,255)];
+		[self addChild:layer z:-10];
+		
+        [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"CCLabelBNFont.plist"];
+        CCSpriteBatchNode *batchNode = [CCSpriteBatchNode batchNodeWithFile:@"CCLabelBNFont.png"];
+        [self addChild:batchNode];
+        
+		// CCLabelBMFont
+		CCLabelBNFont *label1 = [CCLabelBNFont labelWithString:@"Testing Glyph Designer" fntFile:@"futura-48.fnt"];
+		[batchNode addChild:label1];
+		[label1 setPosition: ccp(s.width/2, s.height/2)];
+		
+	}
+	
+	return self;
+}
 
+-(NSString*) title
+{
+	return @"Testing Glyph Designer";
+}
+
+-(NSString *) subtitle
+{
+	return @"You should see BN font with shadows and outline";
+}
+
+@end
+
+#pragma mark - LabelTTFTest
 @implementation LabelTTFTest
 -(id) init
 {
@@ -992,9 +1535,7 @@ Class restartAction()
 
 @end
 
-#pragma mark -
-#pragma mark LabelTTFMultiline
-
+#pragma mark - LabelTTFMultiline
 @implementation LabelTTFMultiline
 -(id) init
 {
@@ -1033,9 +1574,7 @@ Class restartAction()
 @end
 
 
-#pragma mark -
-#pragma mark LabelTTFLineBreak
-
+#pragma mark - LabelTTFLineBreak
 @implementation LabelTTFLineBreak
 -(id) init
 {
@@ -1104,8 +1643,7 @@ Class restartAction()
 @end
 
 
-#pragma mark -
-#pragma mark Application Delegate - iPhone
+#pragma mark - Application Delegate - iPhone
 
 // CLASS IMPLEMENTATIONS
 
@@ -1221,8 +1759,7 @@ Class restartAction()
 
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 
-#pragma mark AppController - Mac
-
+#pragma mark - AppController - Mac
 @implementation cocos2dmacAppDelegate
 
 @synthesize window=window_, glView=glView_;
