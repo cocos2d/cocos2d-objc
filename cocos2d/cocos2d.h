@@ -72,6 +72,7 @@
 
 #import "CCLabelTTF.h"
 #import "CCLabelBMFont.h"
+#import "CCLabelBNFont.h"
 #import "CCLabelAtlas.h"
 
 #import "CCParticleSystem.h"
