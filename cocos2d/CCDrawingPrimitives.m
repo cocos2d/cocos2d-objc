@@ -206,7 +206,7 @@ void ccDrawFilledPoly( const CGPoint *poli, NSUInteger numberOfPoints, ccColor4F
 	glDrawArrays(GL_TRIANGLE_FAN, 0, (GLsizei) numberOfPoints);
 }
 
-void ccDrawTriangleStrip( const CGPoint *poli, NSUInteger numberOfPoints, ccColor4B color )
+void ccDrawTriangleStrip( const CGPoint *poli, NSUInteger numberOfPoints, ccColor4F color )
 {
 	lazy_init();
     
