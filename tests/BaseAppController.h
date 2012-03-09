@@ -20,7 +20,7 @@
 	UIWindow *window_;
 	UINavigationController *navController_;
 
-	BOOL			useRetinaDisplay_;
+	BOOL			useNonRetinaDisplay_;
 	CCDirectorIOS	*director_;							// weak ref
 }
 

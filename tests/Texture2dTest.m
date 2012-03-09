@@ -1972,10 +1972,6 @@ Class restartAction()
 {
 	[super application:application didFinishLaunchingWithOptions:launchOptions];
 
-	// Enables High Res mode (Retina Display) on iPhone 4 and maintains low res on all other devices
-//	if( ! [director_ enableRetinaDisplay:YES] )
-//		CCLOG(@"Retina Display Not supported");
-
 	// Turn on display FPS
 	[director_ setDisplayStats:YES];
 

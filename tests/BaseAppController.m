@@ -43,7 +43,7 @@
 	director_.wantsFullScreenLayout = YES;
 
 	// Retina Display ?
-	[director_ enableRetinaDisplay:useRetinaDisplay_];
+	[director_ enableRetinaDisplay:!useNonRetinaDisplay_];
 	
 	// Navigation Controller
 	navController_ = [[UINavigationController alloc] initWithRootViewController:director_];
