@@ -703,7 +703,7 @@ enum {
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
 	// Display retina Display
-	useRetinaDisplay_ = NO;
+	useNonRetinaDisplay_ = YES;
 
 	[super application:application didFinishLaunchingWithOptions:launchOptions];
 
