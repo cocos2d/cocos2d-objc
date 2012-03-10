@@ -76,13 +76,13 @@
  */
 +(NSString *)removeSuffixFromFile:(NSString*) path;
 
-/** Sets the RetinaDisplay suffix to load resources.
+/** Sets the iPhone RetinaDisplay suffix to load resources.
  By default it is "-hd".
  Only valid on iOS. Not valid for OS X.
 
  @since v1.1
  */
-+(void) setRetinaDisplaySuffix:(NSString*)suffix;
++(void) setiPhoneRetinaDisplaySuffix:(NSString*)suffix;
 
 /** Sets the iPad suffix to load resources.
  By default it is "".
@@ -92,17 +92,31 @@
  */
 +(void) setiPadSuffix:(NSString*)suffix;
 
+/** Sets the iPad Retina Display suffix to load resources.
+ By default it is "-ipad-hd".
+ Only valid on iOS. Not valid for OS X.
+ 
+ @since v1.1
+ */
++(void) setiPadRetinaDisplaySuffix:(NSString*)suffix;
+
 /** Returns whether or not a given filename exists with the iPad suffix.
  Only available on iOS. Not supported on OS X.
  @since v1.1
  */
 +(BOOL) iPadFileExistsAtPath:(NSString*)filename;
 
-/** Returns whether or not a given path exists with the RetinaDisplay suffix.
+/** Returns whether or not a given filename exists with the iPad RetinaDisplay suffix.
+ Only available on iOS. Not supported on OS X.
+ @since v2.0
+ */
++(BOOL) iPadFileExistsAtPath:(NSString*)filename;
+
+/** Returns whether or not a given path exists with the iPhone RetinaDisplay suffix.
  Only available on iOS. Not supported on OS X.
  @since v1.1
  */
-+(BOOL) retinaDisplayFileExistsAtPath:(NSString*)filename;
++(BOOL) iPhoneRetinaDisplayFileExistsAtPath:(NSString*)filename;
 
 #endif // __CC_PLATFORM_IOS
 

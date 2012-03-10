@@ -36,6 +36,7 @@
 #import "CCActionManager.h"
 #import "CCActionInterval.h"
 #import "CCRenderTexture.h"
+#import "Support/CCFileUtils.h"
 #import "Platforms/Mac/CCDirectorMac.h"
 #import "Platforms/iOS/CCTouchDispatcher.h"
 #import "Platforms/iOS/CCDirectorIOS.h"
@@ -52,6 +53,7 @@
 // ccTypes.h
 enum {
 	kCCResolutionStandard DEPRECATED_ATTRIBUTE	= kCCResolutioniPhone,
+	kCCResolutionRetinaDisplay DEPRECATED_ATTRIBUTE = kCCResolutioniPhoneRetinaDisplay,
 	kCCMenuTouchPriority DEPRECATED_ATTRIBUTE	= kCCMenuHandlerPriority,
 };
 
@@ -203,6 +205,11 @@ DEPRECATED_ATTRIBUTE @interface MacView : CCGLView
 // new: getUIImage
 -(UIImage *)getUIImageFromBuffer DEPRECATED_ATTRIBUTE;
 #endif
+@end
+
+@interface CCFileUtils (Deprecated)
+// new: setiPhoneRetinaDisplaySuffix
++(void) setRetinaDisplaySuffix:(NSString*)suffix DEPRECATED_ATTRIBUTE;
 @end
 
 #endif // CC_ENABLE_DEPRECATED

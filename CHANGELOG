@@ -22,6 +22,7 @@ version 2.0-rc0 XX-Feb-2012
 		Added support for image offset in order to share the texture (issue #762)
 		Added support for any unicode char (issue #770)
 		Consumes less memory. Only defined Glyphs are allocated.
+. [NEW] FileUtils: Added support for iPad RetinaDisplay files (default suffix is: -ipadhd )
 . [NEW] Menu: could be created/initialized using NSArray
 		Menu could be created without items
 		Menu could be enabled/disabled (no events will be accepted when it is disabled)

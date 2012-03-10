@@ -122,10 +122,21 @@
 										 fontSize:fontSize_  * CC_CONTENT_SCALE_FACTOR()];
 
 #ifdef __CC_PLATFORM_IOS
-	if( CC_CONTENT_SCALE_FACTOR() == 2 )
-		[tex setResolutionType:kCCResolutionRetinaDisplay];
+	// iPad ?
+	if( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ) {
+		if( CC_CONTENT_SCALE_FACTOR() == 2 )
+			[tex setResolutionType:kCCResolutioniPadRetinaDisplay];
+		else
+			[tex setResolutionType:kCCResolutioniPad];
+	}
+	// iPhone ?
 	else
-		[tex setResolutionType:kCCResolutioniPhone];
+	{
+		if( CC_CONTENT_SCALE_FACTOR() == 2 )
+			[tex setResolutionType:kCCResolutioniPhoneRetinaDisplay];
+		else
+			[tex setResolutionType:kCCResolutioniPhone];
+	}
 #endif
 
 	[self setTexture:tex];
