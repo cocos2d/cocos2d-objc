@@ -52,7 +52,6 @@
 
 static BOOL	reversePriority;			// default is NO;
 
-static NSComparisonResult zOrderComparator(const void * first, const void * second);
 static NSComparisonResult sortByPriority(const void * first, const void * second);
 static BOOL eval(int v, ccOperators op, int arg);
 static ccOperators calcOp1(ccOperators compOp);
@@ -133,33 +132,6 @@ static CCTouchDispatcher *sharedDispatcher = nil;
 
 #pragma mark -
 #pragma mark - Changing priority of the added handlers
-
-static NSComparisonResult zOrderComparator(const void * first, const void * second)
-{	
-    id fId = ((id *) first)[0];  
-    id sId = ((id *) second)[0]; 	
-	
-	CCTouchHandler *f = (CCTouchHandler*) fId;
-	CCTouchHandler *s = (CCTouchHandler*) sId;
-    
-	int fP = [f.delegate zOrder];   // delegate has to descend from CCNode
-	int sP = [s.delegate zOrder];  
-	
-	if (fP == sP) return NSOrderedSame;
-	
-	if (reversePriority){
-		if (fP < sP)   // if z1 < z2 < z3   order:  z1,z2,z3 
-			return NSOrderedAscending;
-		else
-			return NSOrderedDescending;
-	}
-	else{ // default
-		if (fP > sP)   // if z1 > z2 > z3   order:  z1,z2,z3 
-			return NSOrderedAscending;
-		else
-			return NSOrderedDescending;
-	}
-}
 
 static NSComparisonResult sortByPriority(const void * first, const void * second)
 {	
@@ -1017,11 +989,6 @@ static BOOL evaluate(int v, ccOperators op1, int v1, BOOL useAnd, ccOperators op
 		}
 	}
 	return usersComparator;
-}
-
-- (int(*)(const void *, const void *)) zOrderComparator
-{
-	return zOrderComparator;
 }
 
 #pragma mark TouchDispatcher  - retrieveField
