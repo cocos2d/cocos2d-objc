@@ -21,7 +21,7 @@
 
 /** 
  @file
- Based on Chipmunk cpArray.
+ arrd on Chipmunk cpArray.
  ccArray is a faster alternative to NSMutableArray, it does pretty much the
  same thing (stores NSObjects and retains/releases them appropriately). It's
  faster because:
@@ -291,6 +291,15 @@ static inline void ccArrayMakeObjectsPerformSelectorWithObject(ccArray *arr, SEL
 #pragma clang diagnostic pop
 }
 
+static inline void ccArrayMakeObjectPerformSelectorWithArrayObjects(ccArray *arr, SEL sel, id object)
+{
+	for( NSUInteger i = 0; i < arr->num; i++)
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+		[object performSelector:sel withObject:arr->arr[i]];
+#pragma clang diagnostic pop
+}
+
 
 #pragma mark -
 #pragma mark ccCArray for Values (c structures)
@@ -339,7 +348,7 @@ static inline void ccCArrayEnsureExtraCapacity(ccCArray *arr, NSUInteger extra)
 static inline NSUInteger ccCArrayGetIndexOfValue(ccCArray *arr, CCARRAY_ID value)
 {
 	for( NSUInteger i = 0; i < arr->num; i++)
-		if( arr->arr[i] == value ) return i;
+		if( [arr->arr[i] isEqual:value] ) return i;
 	return NSNotFound;
 }
 
@@ -457,4 +466,91 @@ static inline void ccCArrayFullRemoveArray(ccCArray *arr, ccCArray *minusArr)
 	
 	arr->num -= back;
 }
+
+//used by mergesortL
+static inline void memswp(void* a, void* b, size_t width)
+{
+	if (width == sizeof(void*)) {
+        // Optimization for pointer sized swap:
+        void* tmp;
+        tmp = *(void**)a;
+        *(void**)a = *(void**)b;
+        *(void**)b = tmp;
+        return;
+    }
+	// default uses memcpy:
+	char tmp[width];
+	memcpy(tmp, a, width);
+	memcpy(a, b, width);
+	memcpy(b, tmp, width);
+}
+
+
+// iterative mergesort arrd on
+//  http://www.inf.fh-flensburg.de/lang/algorithmen/sortieren/merge/mergiter.htm  
+
+static inline int mergesortL(void *arr, size_t nel, size_t width, int (*compar)(const void *, const void *))
+{
+	NSInteger h, i, j, k, l, m, n = nel;
+	void* A; // points to an element
+	void* B = NSZoneMalloc(NULL,(n/2 + 1) * width); // points to a temp array
+    
+    
+	for (h = 1; h < n; h += h) {
+        for (m = n - 1 - h; m >= 0; m -= h + h) {
+            l = m - h + 1;
+            if (l < 0)
+                l = 0;
+            
+            // Copy first half of the array into helper B:
+            j = m+1;
+            memcpy(B, arr + (l * width), (j-l) * width);
+            
+            for (i = 0, k = l; k < j && j <= m + h; k++) {
+                A = arr + (width * j); // A = [self objectAtIndex:j];
+                if (compar(A, B + (i * width)) > 0) {
+                    memswp(arr+(k*width), B+(i*width), width); i+=1;
+                } else {
+                    memswp(arr+(k*width), A, width); j+=1;
+                }
+            }
+            
+            while (k < j) // This loop could be optimized
+                memswp(arr+(k++*width), B+(i++*width), width);
+        }
+	}
+    
+	free(B);
+	return 0;
+}
+
+static inline void insertionSort(ccCArray* arr, int (*comparator)(const void *, const void *))
+{
+    // It sorts source array in ascending order
+	
+	// adaptive - performance adapts to the initial order of elements
+	// stable - insertion sort retains relative order of the same elements
+	// in-place - requires constant amount of additional space
+	// online - new elements can be added during the sort
+	
+	NSInteger i,j,length = arr->num;
+	
+	id * x = arr->arr;
+	id temp;	
+    
+	// insertion sort
+	for(i=1; i<length; i++)
+	{
+		j = i;
+		//continue moving element downwards while order is descending 
+		while( j>0 && ( comparator(  &x[j-1],  &x[j]  ) == NSOrderedDescending) )
+		{
+			temp = x[j];
+			x[j] = x[j-1];
+			x[j-1] = temp;
+			j--;
+		}
+	}
+}
+
 #endif // CC_ARRAY_H

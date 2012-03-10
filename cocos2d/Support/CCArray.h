@@ -69,6 +69,7 @@ for(CC_ARC_UNSAFE_RETAINED id *__arr__ = __array__->data->arr, *end = __array__-
 - (id) randomObject;
 - (id) lastObject;
 - (NSArray*) getNSArray;
+- (BOOL) isEqualToArray:(CCArray*)otherArray;
 
 
 // Adding Objects
@@ -94,13 +95,24 @@ for(CC_ARC_UNSAFE_RETAINED id *__arr__ = __array__->data->arr, *end = __array__-
 
 - (void) exchangeObject:(id)object1 withObject:(id)object2;
 - (void) exchangeObjectAtIndex:(NSUInteger)index1 withObjectAtIndex:(NSUInteger)index2;
+/** @since 1.1 */
+- (void) replaceObjectAtIndex:(NSUInteger)index withObject:(id)anObject;
 - (void) reverseObjects;
 - (void) reduceMemoryFootprint;
+
+// Sorting Array 
+/** since @1.1 */
+- (void) qsortUsingCFuncComparator:(int(*)(const void *, const void *))comparator;	// c qsort is used for sorting
+- (void) insertionSortUsingCFuncComparator:(int(*)(const void *, const void *))comparator;  // insertion sort 
+- (void) mergesortLUsingCFuncComparator:(int(*)(const void *, const void *))comparator;	// mergesort
+- (void) insertionSort:(SEL)selector; // It sorts source array in ascending order
+- (void) sortUsingFunction:(NSInteger (*)(id, id, void *))compare context:(void *)context;
 
 // Sending Messages to Elements
 
 - (void) makeObjectsPerformSelector:(SEL)aSelector;
 - (void) makeObjectsPerformSelector:(SEL)aSelector withObject:(id)object;
-
+/** @since 1.1 */
+- (void) makeObjectPerformSelectorWithArrayObjects:(id)object selector:(SEL)aSelector; 
 
 @end
