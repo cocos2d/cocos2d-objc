@@ -2,6 +2,7 @@
  * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
  * Copyright (c) 2009 Valentin Milea
+ * Copyright (c) 2011 Samuel J. Grabski
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -43,25 +44,36 @@
 #pragma mark TouchHandler
 @implementation CCTouchHandler
 
-@synthesize delegate, priority;
-@synthesize enabledSelectors=enabledSelectors_;
+@synthesize delegate, priority, tag, disable, remove;
+@synthesize enabledSelectors = enabledSelectors_;
 
++ (id)handlerWithDelegate:(id) aDelegate priority:(int)aPriority tag:(int)aTag disable:(int)yesOrNo
+{
+	return [[[self alloc] initWithDelegate:aDelegate priority:aPriority tag:aTag disable:yesOrNo] autorelease];
+}
 + (id)handlerWithDelegate:(id) aDelegate priority:(int)aPriority
 {
-	return [[[self alloc] initWithDelegate:aDelegate priority:aPriority] autorelease];
+	return [[[self alloc] initWithDelegate:aDelegate priority:aPriority tag:0 disable:NO] autorelease];
 }
 
-- (id)initWithDelegate:(id) aDelegate priority:(int)aPriority
+- (id)initWithDelegate:(id) aDelegate priority:(int)aPriority tag:(int)aTag disable:(int)yesOrNo
 {
 	NSAssert(aDelegate != nil, @"Touch delegate may not be nil");
 	
 	if ((self = [super init])) {
 		self.delegate = aDelegate;
 		priority = aPriority;
+		tag = aTag;
+		disable = yesOrNo;
+		remove = NO;
 		enabledSelectors_ = 0;
 	}
 	
 	return self;
+}
+
+- (id)initWithDelegate:(id) aDelegate priority:(int)aPriority{
+	return ( [self initWithDelegate:aDelegate priority:aPriority tag:0 disable:NO] );
 }
 
 - (void)dealloc {
@@ -74,19 +86,25 @@
 #pragma mark -
 #pragma mark StandardTouchHandler
 @implementation CCStandardTouchHandler
--(id) initWithDelegate:(id)del priority:(int)pri
+
+-(id) initWithDelegate:(id)aDelegate priority:(int)aPriority tag:(int)aTag disable:(int)yesOrNo
 {
-	if( (self=[super initWithDelegate:del priority:pri]) ) {
-		if( [del respondsToSelector:@selector(ccTouchesBegan:withEvent:)] )
+	if( (self=[super initWithDelegate:aDelegate priority:aPriority tag:aTag disable:yesOrNo]) ) {
+		if( [aDelegate respondsToSelector:@selector(ccTouchesBegan:withEvent:)] )
 			enabledSelectors_ |= kCCTouchSelectorBeganBit;
-		if( [del respondsToSelector:@selector(ccTouchesMoved:withEvent:)] )
+		if( [aDelegate respondsToSelector:@selector(ccTouchesMoved:withEvent:)] )
 			enabledSelectors_ |= kCCTouchSelectorMovedBit;
-		if( [del respondsToSelector:@selector(ccTouchesEnded:withEvent:)] )
+		if( [aDelegate respondsToSelector:@selector(ccTouchesEnded:withEvent:)] )
 			enabledSelectors_ |= kCCTouchSelectorEndedBit;
-		if( [del respondsToSelector:@selector(ccTouchesCancelled:withEvent:)] )
+		if( [aDelegate respondsToSelector:@selector(ccTouchesCancelled:withEvent:)] )
 			enabledSelectors_ |= kCCTouchSelectorCancelledBit;
 	}
 	return self;
+}
+
+-(id) initWithDelegate:(id)aDelegate priority:(int)aPriority
+{
+	return ([self initWithDelegate:aDelegate priority:aPriority tag:0 disable:NO]); 
 }
 @end
 
@@ -101,14 +119,18 @@
 
 @synthesize swallowsTouches, claimedTouches;
 
-+ (id)handlerWithDelegate:(id)aDelegate priority:(int)priority swallowsTouches:(BOOL)swallow
++ (id)handlerWithDelegate:(id)aDelegate priority:(int)aPriority swallowsTouches:(BOOL)swallow tag:(int)aTag disable:(int)yesOrNo
 {
-	return [[[self alloc] initWithDelegate:aDelegate priority:priority swallowsTouches:swallow] autorelease];
+	return [[[self alloc] initWithDelegate:aDelegate priority:aPriority swallowsTouches:swallow tag:aTag disable:yesOrNo] autorelease];
+}
++ (id)handlerWithDelegate:(id)aDelegate priority:(int)aPriority swallowsTouches:(BOOL)swallow
+{
+	return [[[self alloc] initWithDelegate:aDelegate priority:aPriority swallowsTouches:swallow tag:0 disable:NO] autorelease];
 }
 
-- (id)initWithDelegate:(id)aDelegate priority:(int)aPriority swallowsTouches:(BOOL)swallow
+- (id)initWithDelegate:(id)aDelegate priority:(int)aPriority swallowsTouches:(BOOL)swallow tag:(int)aTag disable:(int)yesOrNo
 {
-	if ((self = [super initWithDelegate:aDelegate priority:aPriority])) {	
+	if ((self = [super initWithDelegate:aDelegate priority:aPriority tag:aTag disable:yesOrNo ])) {	
 		claimedTouches = [[NSMutableSet alloc] initWithCapacity:2];
 		swallowsTouches = swallow;
 		
@@ -125,11 +147,15 @@
 	return self;
 }
 
+- (id)initWithDelegate:(id)aDelegate priority:(int)aPriority swallowsTouches:(BOOL)swallow
+{
+    return( [self initWithDelegate:aDelegate priority:aPriority swallowsTouches:swallow tag:0 disable:NO] ); 	
+}
+
 - (void)dealloc {
 	[claimedTouches release];
 	[super dealloc];
 }
 @end
-
 
 #endif // __IPHONE_OS_VERSION_MAX_ALLOWED
