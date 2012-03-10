@@ -317,21 +317,6 @@ typedef enum
  */
 - (int(*)(const void *, const void *)) usersComparator;
 
-/** get - zOrderComparator 
- Built-in zOrderComparator comparator sorts delegates base on the delegate zOrder.
- If z1>z2>z3 than order is z1,z2,z3,...
- 'reversePriority' parameter is taken under account and it can reverse above order 
- 
- If you want your priorities to be z order dependant use 'setUsersComparator' as follows:
- [[CCTouchDispatcher sharedDispatcher] setUsersComparator:[CCTouchDispatcher sharedDispatcher] zOrderComparator]];
- 
- Notice: If you change the z order of your delegates use
- sortAllDelegates:(ccDispatcherDelegateType)type; to update the priority order.
- 
- @since v1.1.0
- */
-- (int(*)(const void *, const void *)) zOrderComparator;
-
 //--------------------------------------------
 //		debug
 //--------------------------------------------
