@@ -75,6 +75,10 @@ Contributors (alphabetically ordered):
     
 * Rick Smorawski
     Added full unicode support to CCLabelBMFont
+
+* Samuel J. Grabski http://www.sg7.com
+	Created a new touchdispatcher implementation
+    New touchdispatcher performance tests
     
 * Scott Lembcke (AKA slembcke) (http://chipmunk-physics.net/)
 	Improved ARC compatiblity code
@@ -82,8 +86,7 @@ Contributors (alphabetically ordered):
 * Sergey Tikhonov (AKA haqu) (http://haqu.net)
 	Removed warning in CCMenuItem
 
-* slycrel (http://folderapp.blogspot.com/)
-	TMX Map: fixed crash when multiple layers and tiles were used with rotation
+
 
 * Shakthi:
 	Added CCNode#onExitTransitionDidStart method
@@ -92,6 +95,7 @@ Contributors (alphabetically ordered):
 * slycrel (http://geopherlite.blogspot.com/)
 	Added support for flipped tiles in TMX maps. Also added test case
 	Added support for in-memory TMX map creation. Also added a test case
+    TMX Map: fixed crash when multiple layers and tiles were used with rotation
 
 * Stepan Generalov (iPsi) (http://www.itraceur.ru/)
 	FileUtils: Loads -hd resources even if the -sd resource is not present. patch
