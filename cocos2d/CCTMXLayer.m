@@ -266,10 +266,10 @@ int compareInts (const void * a, const void * b);
 				[self appendTileForGID:gid at:ccp(x,y)];
 				
 				// Optimization: update min and max GID rendered by the layer
-				minGID_ = MIN(gid, minGID_);
-				maxGID_ = MAX(gid, maxGID_);
-//				minGID_ = MIN((gid & kFlippedMask), minGID_);
-//				maxGID_ = MAX((gid & kFlippedMask), maxGID_);
+//				minGID_ = MIN(gid, minGID_);
+//				maxGID_ = MAX(gid, maxGID_);
+				minGID_ = MIN((gid & kFlippedMask), minGID_);
+				maxGID_ = MAX((gid & kFlippedMask), maxGID_);
 			}
 		}
 	}
@@ -363,15 +363,45 @@ int compareInts (const void * a, const void * b);
 	[sprite setOpacity:opacity_];
 	
 	//issue 1264, flip can be undone as well
-	if (gid & kFlippedHorizontallyFlag)
-		sprite.flipX = YES;
-	else 
-		sprite.flipX = NO;
-	
-	if (gid & kFlippedVerticallyFlag)
-		sprite.flipY = YES;
+	sprite.flipX = NO;
+	sprite.flipY = NO;
+	sprite.rotation = 0;
+
+	// Rotation in tiled is achieved using 3 flipped states, flipping across the horizontal, vertical, and diagonal axes of the tiles.
+	if (gid & kFlippedAntiDiagonallyFlag)
+	{
+		// put the anchor in the middle for ease of rotation.
+		sprite.anchorPoint = ccp(0.5f,0.5f);
+		[sprite setPositionInPixels: ccp([self positionAt:pos].x + sprite.contentSize.width/2.f, [self positionAt:pos].y + sprite.contentSize.height/2.f)];
+		
+		// handle the 4 diagonally flipped states.
+		if (gid & kFlippedHorizontallyFlag)
+		{
+			sprite.rotation = 90;
+		}
+		else if (gid & kFlippedVerticallyFlag)
+		{
+			sprite.rotation = 270;
+		}
+		else if (gid & kFlippedHorizontallyFlag && gid & kFlippedVerticallyFlag)
+		{
+			sprite.rotation = 90;
+			sprite.flipX = YES;
+		}
+		else
+		{
+			sprite.rotation = 270;
+			sprite.flipX = YES;
+		}
+	}
 	else
-		sprite.flipY = NO;
+	{
+		if (gid & kFlippedHorizontallyFlag)
+			sprite.flipX = YES;
+		
+		if (gid & kFlippedVerticallyFlag)
+			sprite.flipY = YES;
+	}
 }
 
 -(CCSprite*) insertTileForGID:(uint32_t)gid at:(CGPoint)pos
