@@ -93,7 +93,7 @@
 +(void) setiPadSuffix:(NSString*)suffix;
 
 /** Sets the iPad Retina Display suffix to load resources.
- By default it is "-ipad-hd".
+ By default it is "-ipadhd".
  Only valid on iOS. Not valid for OS X.
  
  @since v1.1

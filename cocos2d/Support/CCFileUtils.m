@@ -179,11 +179,13 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 			ret = [self getPath:fullpath forSuffix:__suffixiPhoneRetinaDisplay];
 			*resolutionType = kCCResolutioniPhoneRetinaDisplay;
 		}
-		else
-		{
-			*resolutionType = kCCResolutioniPhone;
-			ret = fullpath;
-		}
+	}
+	
+	// If it is iPhone Non RetinaDisplay, or if the previous "getPath" failed, then use iPhone images.
+	if( ret == nil )
+	{
+		*resolutionType = kCCResolutioniPhone;
+		ret = fullpath;
 	}
 
 	return ret;

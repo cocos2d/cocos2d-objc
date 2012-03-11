@@ -38,6 +38,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 
 * Dusan Lazarevic (AKA crmagicxxx):
 	LabelBMFont y-offset work as expected on RetinaDisplay (patch).
+	Fixed bug in iPad RetinaDisplay code
 
 * Gene Peterson (http://zynga.com)
 	Dimension is a property on CCLabelTTF
