@@ -121,6 +121,7 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 	NSString *newName = [pathWithoutExtension stringByAppendingString:suffix];
 	newName = [newName stringByAppendingPathExtension:extension];
 
+	newName = [NSString stringWithFormat:@"%@/%@", [[NSBundle mainBundle] bundlePath], newName];
 	if( [__localFileManager fileExistsAtPath:newName] )
 		return newName;
 
