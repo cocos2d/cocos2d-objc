@@ -4,6 +4,7 @@ version 1.1-beta2 xx - 2012
 			Animation: Added new animation format that supports delays per frame and notifications per frame
 			Actions: Added ActionTargeted action. Useful to target other nodes from a sequence.
 . [NEW] All: Code is compatible with ARC (issue #1199) 
+. [NEW] ccFileUtiles: new iPad retina file extension (ipadhd)
 . [NEW] DrawPrimitives: Added new functions, ccDrawRect, ccDrawSolidRect, ccDrawSolidPoly
 . [NEW] DrawPrimitives: Added batch drawing of lines, ccDrawLines (issue #1081)
 . [NEW] Node: Added onExitTransitionDidStart (issue #792)
@@ -16,6 +17,7 @@ version 1.1-beta2 xx - 2012
 . [FIX] CCLabelBMFont: full unicode support
 . [FIX] CCTMXXMLParser: removed unused variables in release mode
 . [FIX] ColorLayer: incorrect size in init method
+. [FIX] Director: 3d projection setting for iPad retina
 . [FIX] Denshion: Background music fades ok (issue #1304)
 . [FIX] EAGLView: always destroy and recreate OpenGL buffers completely (issue #1254) 
 . [FIX] MenuItem: removed warning when deleting item
