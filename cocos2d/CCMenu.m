@@ -149,7 +149,7 @@ enum {
 -(CCMenuItem *) itemForTouch: (UITouch *) touch
 {	
 	CCMenuItem* item;
-	CCARRAY_FOREACH(children_, item){
+	CCARRAY_FOREACH_INVERSE(children_, item){
 		// ignore invisible and disabled items: issue #779, #866
 		if ( [item visible] && [item isEnabled] ) {
 			if( CGRectContainsPoint([item boundingBox], [self convertTouchToNodeSpace:touch] ) )
