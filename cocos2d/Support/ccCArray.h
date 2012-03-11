@@ -489,12 +489,13 @@ static inline void memswp(void* a, void* b, size_t width)
 // iterative mergesort arrd on
 //  http://www.inf.fh-flensburg.de/lang/algorithmen/sortieren/merge/mergiter.htm  
 
-static inline int mergesortL(void *arr, size_t nel, size_t width, int (*compar)(const void *, const void *))
+static inline int mergesortL(ccCArray* array, size_t width, int (*compar)(const void *, const void *))
 {
-	NSInteger h, i, j, k, l, m, n = nel;
-	void* A; // points to an element
-	void* B = NSZoneMalloc(NULL,(n/2 + 1) * width); // points to a temp array
-    
+	NSInteger h, i, j, k, l, m, n = array->num;
+    id *arr = array->arr; 
+	id* A; // points to an element
+	//id B = NSZoneMalloc(NULL,(n/2 + 1) * width); // points to a temp array
+    CCARRAY_ID* B = (CCARRAY_ID*) malloc(n * width);
     
 	for (h = 1; h < n; h += h) {
         for (m = n - 1 - h; m >= 0; m -= h + h) {

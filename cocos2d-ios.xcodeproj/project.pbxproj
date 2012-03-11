@@ -1538,8 +1538,6 @@
 		654094D314E9856000FC93EA /* animations in Resources */ = {isa = PBXBuildFile; fileRef = 502C8C9810A701D300D137BA /* animations */; };
 		6540963B14E9E7D000FC93EA /* animations in Resources */ = {isa = PBXBuildFile; fileRef = 502C8C9810A701D300D137BA /* animations */; };
 		6540963C14E9E7D300FC93EA /* animations in Resources */ = {isa = PBXBuildFile; fileRef = 502C8C9810A701D300D137BA /* animations */; };
-		657F1151150BA75D0047F93C /* AppController.m in Sources */ = {isa = PBXBuildFile; fileRef = 657F114E150BA75D0047F93C /* AppController.m */; };
-		657F1152150BA75D0047F93C /* PerformanceDispatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 657F1150150BA75D0047F93C /* PerformanceDispatcher.m */; };
 		6F305B5F0FB9D2790052E700 /* TransformUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 6F305B5D0FB9D2790052E700 /* TransformUtils.h */; };
 		6F305B600FB9D2790052E700 /* TransformUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F305B5E0FB9D2790052E700 /* TransformUtils.m */; };
 		8E3FC8920F7B8BE900B3E5DE /* trance-loop.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 8E3FC8910F7B8BE900B3E5DE /* trance-loop.ogg */; };
@@ -9352,8 +9350,8 @@
 				495E73F6104B74E20012BB52 /* RenderTextureTest */,
 				502C66170DFEFCCA00E4107D /* RotateWorldTest */,
 				506C7FF70E041C9300B48100 /* SceneTest */,
-				508CA7AD1193270F003AC397 /* SchedulerTest */,
 				501C7C6D0F91EFFF0024A296 /* SpriteTest */,
+				508CA7AD1193270F003AC397 /* SchedulerTest */,
 				A0240EF6139E3AE50075D13F /* TestCocos2dExtension */,
 				505B62AB0F2E6A0F001B4104 /* Texture2dTest */,
 				503F5C96101FE930002A37E5 /* TileMapTest */,
@@ -11935,8 +11933,6 @@
 			files = (
 				501C7C860F91EFFF0024A296 /* main.m in Sources */,
 				501C7CA80F91F1B20024A296 /* SpriteTest.m in Sources */,
-				657F1151150BA75D0047F93C /* AppController.m in Sources */,
-				657F1152150BA75D0047F93C /* PerformanceDispatcher.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -62,8 +62,9 @@
 		
 		// double retain to avoid the autorelease pool
 		// also, using: self.textureAtlas supports re-initialization without leaking
-		self.textureAtlas = [[CCTextureAtlas alloc] initWithFile:tile capacity:c];
-		[textureAtlas_ release];
+        CCTextureAtlas *atlas = [[CCTextureAtlas alloc] initWithFile:tile capacity:c];
+		self.textureAtlas = atlas;
+		[atlas release];
 		
 		if( ! textureAtlas_ ) {
 			CCLOG(@"cocos2d: Could not initialize CCAtlasNode. Invalid Texture");
