@@ -24,16 +24,12 @@
  *
  */
 
-// Only compile this code on iOS. These files should NOT be included on your Mac project.
-// But in case they are included, it won't be compiled.
-
 #import <Availability.h>
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 
 #import "CCTouchDispatcher.h"
 #import "CCTouchHandler.h"
 #include <stdlib.h> // qsort
-#import "CCNode.h"  // zOrder
 
 /**   @since v1.1.0 */
 @interface CCHandlersToDo : NSObject // treat as private 

@@ -69,6 +69,7 @@ for(CC_ARC_UNSAFE_RETAINED id *__arr__ = __array__->data->arr, *end = __array__-
 - (id) randomObject;
 - (id) lastObject;
 - (NSArray*) getNSArray;
+/** @since 1.1 */
 - (BOOL) isEqualToArray:(CCArray*)otherArray;
 
 
@@ -101,7 +102,7 @@ for(CC_ARC_UNSAFE_RETAINED id *__arr__ = __array__->data->arr, *end = __array__-
 - (void) reduceMemoryFootprint;
 
 // Sorting Array 
-/** since @1.1 */
+/** all since @1.1 */
 - (void) qsortUsingCFuncComparator:(int(*)(const void *, const void *))comparator;	// c qsort is used for sorting
 - (void) insertionSortUsingCFuncComparator:(int(*)(const void *, const void *))comparator;  // insertion sort 
 - (void) mergesortLUsingCFuncComparator:(int(*)(const void *, const void *))comparator;	// mergesort

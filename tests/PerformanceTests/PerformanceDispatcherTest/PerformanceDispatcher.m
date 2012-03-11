@@ -50,7 +50,8 @@ static NSString *transitions[] = {
 		@"ReorderingOneByOneQSORT",				// 5a slow old api with new sorting algorithm 
 		@"ReorderingOneByOneMERGESORT",			// 5b slow old api with new sorting algorithm 
 		@"UltraFastReordering",					// 5c new api with new sorting algorithm 
-		@"Various",								// 6	
+		@"Various"								// 6	
+
 #endif	
 };
 
@@ -1221,6 +1222,34 @@ int myComparatorArg(const void * first, const void * second)
 		return NSOrderedDescending;
 }
 
+//example of custom sort function, only useful when both delegates have the same parent
+static NSComparisonResult zOrderComparator(const void * first, const void * second)
+{	
+    id fId = ((id *) first)[0];  
+    id sId = ((id *) second)[0]; 	
+	
+	CCTouchHandler *f = (CCTouchHandler*) fId;
+	CCTouchHandler *s = (CCTouchHandler*) sId;
+    
+	int fP = [f.delegate zOrder];   // delegate has to descend from CCNode
+	int sP = [s.delegate zOrder];  
+	
+	if (fP == sP) return NSOrderedSame;
+	
+	if ([[CCTouchDispatcher sharedDispatcher] reversePriority]){
+		if (fP < sP)   // if z1 < z2 < z3   order:  z1,z2,z3 
+			return NSOrderedAscending;
+		else
+			return NSOrderedDescending;
+	}
+	else{ // default
+		if (fP > sP)   // if z1 > z2 > z3   order:  z1,z2,z3 
+			return NSOrderedAscending;
+		else
+			return NSOrderedDescending;
+	}
+}
+
 //run this test in debug mode, else no logs will appear
 -(void) variousTests
 {
@@ -1406,7 +1435,13 @@ int myComparatorArg(const void * first, const void * second)
 	if(nl)		
 		[[CCTouchDispatcher sharedDispatcher] printDebugLog:1 afterEvents:NO type:kCCStandard];	
 	
-	
+	if(nl)		
+		CCLOG(@" 6 Various... sort with kCCAlgMergeLSort zOrderComparator Notice: zOrder(==spriteTag) ");	
+	[[CCTouchDispatcher sharedDispatcher] setReversePriority:NO];	 // reverse sorting	
+	[[CCTouchDispatcher sharedDispatcher] setUsersComparator: zOrderComparator]; // change sorting comparator
+	[[CCTouchDispatcher sharedDispatcher] setSortingAlgorithm:kCCAlgMergeLSort];	
+	[[CCTouchDispatcher sharedDispatcher] sortDelegates:kCCStandard];
+    
 	if(nl)		
 		[[CCTouchDispatcher sharedDispatcher] printDebugLog:1 afterEvents:NO type:kCCStandard];	
 	

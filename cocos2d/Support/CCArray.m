@@ -335,8 +335,7 @@
 	}
 }
 
-
-static int selectorCompare(id object1,id object2,void *userData){
+static inline int selectorCompare(id object1,id object2,void *userData){
     SEL selector=userData;
     
     return (NSComparisonResult)[object1 performSelector:selector withObject:object2];
