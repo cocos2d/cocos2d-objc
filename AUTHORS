@@ -91,6 +91,9 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	Tests: Shader tests center the fragment shader effects on Mac
 	Director: On Mac, CC_DIRECTOR_INIT() centers the main window
 
+* Spencer Ho (https://github.com/spencerho):
+	Fixed gl projection when iPad Retina Display is being used.
+	
 * Steve Kanter (https://github.com/SteveKanter):
 	Added support for iPad Retina Display suffix in CCFileUtils
 

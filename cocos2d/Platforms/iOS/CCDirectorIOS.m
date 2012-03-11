@@ -208,7 +208,9 @@ CGFloat	__ccContentScaleFactor = 1;
 			kmGLMatrixMode(KM_GL_PROJECTION);
 			kmGLLoadIdentity();
 
-			kmMat4PerspectiveProjection( &matrixPerspective, 60, (GLfloat)sizePoint.width/sizePoint.height, 0.5f, 1500.0f );
+//			kmMat4PerspectiveProjection( &matrixPerspective, 60, (GLfloat)sizePoint.width/sizePoint.height, 0.5f, 1500.0f );
+			kmMat4PerspectiveProjection( &matrixPerspective, 60, (GLfloat)sizePoint.width/sizePoint.height, zeye-sizePoint.height/2, zeye+sizePoint.height/2 );
+
 			kmGLMultMatrix(&matrixPerspective);
 
 			kmGLMatrixMode(KM_GL_MODELVIEW);
