@@ -86,8 +86,6 @@ Contributors (alphabetically ordered):
 * Sergey Tikhonov (AKA haqu) (http://haqu.net)
 	Removed warning in CCMenuItem
 
-
-
 * Shakthi:
 	Added CCNode#onExitTransitionDidStart method
 	Fixed fading background music issue
@@ -97,8 +95,14 @@ Contributors (alphabetically ordered):
 	Added support for in-memory TMX map creation. Also added a test case
     TMX Map: fixed crash when multiple layers and tiles were used with rotation
 
+* Spencer Ho
+    fixed 3d projection settings for ipad3 
+
 * Stepan Generalov (iPsi) (http://www.itraceur.ru/)
 	FileUtils: Loads -hd resources even if the -sd resource is not present. patch
+
+* Steve Kanter
+    new file extension for ipad retina
 
 
 cocos2d for iPhone authors for v1.0
