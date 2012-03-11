@@ -308,7 +308,7 @@
 
 - (void) mergesortLUsingCFuncComparator:(int(*)(const void *, const void *))comparator
 {
-    mergesortL(data->arr, data->num, sizeof (id), comparator); 
+    mergesortL(data, sizeof (id), comparator); 
 }
 
 #pragma mark CCArray insertionSort with (SEL)selector
