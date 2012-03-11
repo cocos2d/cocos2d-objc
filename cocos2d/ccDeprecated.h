@@ -207,10 +207,13 @@ DEPRECATED_ATTRIBUTE @interface MacView : CCGLView
 #endif
 @end
 
+#if __CC_PLATFORM_IOS
 @interface CCFileUtils (Deprecated)
 // new: setiPhoneRetinaDisplaySuffix
 +(void) setRetinaDisplaySuffix:(NSString*)suffix DEPRECATED_ATTRIBUTE;
 @end
+#endif
+
 
 #endif // CC_ENABLE_DEPRECATED
 

@@ -4609,8 +4609,8 @@ Class restartAction()
 	// When in iPhone RetinaDisplay, iPad, iPad RetinaDisplay mode, CCFileUtils will append the "-hd", "-ipad", "-ipadhd" to all loaded files
 	// If the -hd, -ipad, -ipadhd files are not found, it will load the non-suffixed version
 	[CCFileUtils setiPhoneRetinaDisplaySuffix:@"-hd"];		// Default on iPhone RetinaDisplay is "-hd"
-	[CCFileUtils setiPadSuffix:@"-ipad"];					// Default on iPad is "" (empty string)
-	[CCFileUtils setiPadRetinaDisplaySuffix:@"-ipadhd"];	// Default on iPad RetinaDisplay is "-ipadhd"
+	[CCFileUtils setiPadSuffix:@""];					// Default on iPad is "" (empty string)
+	[CCFileUtils setiPadRetinaDisplaySuffix:@"-hd"];		// Default on iPad RetinaDisplay is "-ipadhd"
 
 	// Assume that PVR images have premultiplied alpha
 	[CCTexture2D PVRImagesHavePremultipliedAlpha:YES];

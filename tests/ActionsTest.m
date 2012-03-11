@@ -1427,7 +1427,7 @@ Class restartAction()
 	// If the -hd, -ipad, -ipadhd files are not found, it will load the non-suffixed version
 	[CCFileUtils setiPhoneRetinaDisplaySuffix:@"-hd"];		// Default on iPhone RetinaDisplay is "-hd"
 	[CCFileUtils setiPadSuffix:@"-ipad"];					// Default on iPad is "" (empty string)
-	[CCFileUtils setiPadRetinaDisplaySuffix:@"-ipadhd"];	// Default on iPad RetinaDisplay is "-ipadhd"
+	[CCFileUtils setiPadRetinaDisplaySuffix:@"-hd"];		// Default on iPad RetinaDisplay is "-ipadhd"
 
 	CCScene *scene = [CCScene node];
 	[scene addChild: [nextAction() node]];
@@ -1437,10 +1437,10 @@ Class restartAction()
 	return YES;
 }
 
--(BOOL) shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-	return UIInterfaceOrientationIsLandscape(interfaceOrientation);
-}
+//-(BOOL) shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+//{
+//	return UIInterfaceOrientationIsLandscape(interfaceOrientation);
+//}
 @end
 
 #elif defined(__CC_PLATFORM_MAC)

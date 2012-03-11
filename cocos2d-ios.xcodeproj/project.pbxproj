@@ -1352,6 +1352,53 @@
 		A0600CE413C2757D00BB6F49 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		A08C378F14144FC6004538FD /* neon_matrix_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = A08C378E14144FBB004538FD /* neon_matrix_impl.h */; };
 		A08C379114144FDE004538FD /* neon_matrix_impl.c in Sources */ = {isa = PBXBuildFile; fileRef = A08C379014144FDE004538FD /* neon_matrix_impl.c */; };
+		A093FC25150D0ED40039327A /* fps_images-ipadhd.png in Resources */ = {isa = PBXBuildFile; fileRef = A093FC24150D0ED40039327A /* fps_images-ipadhd.png */; };
+		A093FC26150D0ED40039327A /* fps_images-ipadhd.png in Resources */ = {isa = PBXBuildFile; fileRef = A093FC24150D0ED40039327A /* fps_images-ipadhd.png */; };
+		A093FC27150D0ED40039327A /* fps_images-ipadhd.png in Resources */ = {isa = PBXBuildFile; fileRef = A093FC24150D0ED40039327A /* fps_images-ipadhd.png */; };
+		A093FC28150D0ED40039327A /* fps_images-ipadhd.png in Resources */ = {isa = PBXBuildFile; fileRef = A093FC24150D0ED40039327A /* fps_images-ipadhd.png */; };
+		A093FC29150D0ED40039327A /* fps_images-ipadhd.png in Resources */ = {isa = PBXBuildFile; fileRef = A093FC24150D0ED40039327A /* fps_images-ipadhd.png */; };
+		A093FC2A150D0ED40039327A /* fps_images-ipadhd.png in Resources */ = {isa = PBXBuildFile; fileRef = A093FC24150D0ED40039327A /* fps_images-ipadhd.png */; };
+		A093FC2B150D0ED40039327A /* fps_images-ipadhd.png in Resources */ = {isa = PBXBuildFile; fileRef = A093FC24150D0ED40039327A /* fps_images-ipadhd.png */; };
+		A093FC2C150D0ED40039327A /* fps_images-ipadhd.png in Resources */ = {isa = PBXBuildFile; fileRef = A093FC24150D0ED40039327A /* fps_images-ipadhd.png */; };
+		A093FC2D150D0ED40039327A /* fps_images-ipadhd.png in Resources */ = {isa = PBXBuildFile; fileRef = A093FC24150D0ED40039327A /* fps_images-ipadhd.png */; };
+		A093FC2E150D0ED40039327A /* fps_images-ipadhd.png in Resources */ = {isa = PBXBuildFile; fileRef = A093FC24150D0ED40039327A /* fps_images-ipadhd.png */; };
+		A093FC2F150D0ED40039327A /* fps_images-ipadhd.png in Resources */ = {isa = PBXBuildFile; fileRef = A093FC24150D0ED40039327A /* fps_images-ipadhd.png */; };
+		A093FC30150D0ED40039327A /* fps_images-ipadhd.png in Resources */ = {isa = PBXBuildFile; fileRef = A093FC24150D0ED40039327A /* fps_images-ipadhd.png */; };
+		A093FC31150D0ED40039327A /* fps_images-ipadhd.png in Resources */ = {isa = PBXBuildFile; fileRef = A093FC24150D0ED40039327A /* fps_images-ipadhd.png */; };
+		A093FC32150D0ED40039327A /* fps_images-ipadhd.png in Resources */ = {isa = PBXBuildFile; fileRef = A093FC24150D0ED40039327A /* fps_images-ipadhd.png */; };
+		A093FC33150D0ED40039327A /* fps_images-ipadhd.png in Resources */ = {isa = PBXBuildFile; fileRef = A093FC24150D0ED40039327A /* fps_images-ipadhd.png */; };
+		A093FC34150D0ED40039327A /* fps_images-ipadhd.png in Resources */ = {isa = PBXBuildFile; fileRef = A093FC24150D0ED40039327A /* fps_images-ipadhd.png */; };
+		A093FC35150D0ED40039327A /* fps_images-ipadhd.png in Resources */ = {isa = PBXBuildFile; fileRef = A093FC24150D0ED40039327A /* fps_images-ipadhd.png */; };
+		A093FC36150D0ED40039327A /* fps_images-ipadhd.png in Resources */ = {isa = PBXBuildFile; fileRef = A093FC24150D0ED40039327A /* fps_images-ipadhd.png */; };
+		A093FC37150D0ED40039327A /* fps_images-ipadhd.png in Resources */ = {isa = PBXBuildFile; fileRef = A093FC24150D0ED40039327A /* fps_images-ipadhd.png */; };
+		A093FC38150D0ED40039327A /* fps_images-ipadhd.png in Resources */ = {isa = PBXBuildFile; fileRef = A093FC24150D0ED40039327A /* fps_images-ipadhd.png */; };
+		A093FC39150D0ED40039327A /* fps_images-ipadhd.png in Resources */ = {isa = PBXBuildFile; fileRef = A093FC24150D0ED40039327A /* fps_images-ipadhd.png */; };
+		A093FC3A150D0ED40039327A /* fps_images-ipadhd.png in Resources */ = {isa = PBXBuildFile; fileRef = A093FC24150D0ED40039327A /* fps_images-ipadhd.png */; };
+		A093FC3B150D0ED40039327A /* fps_images-ipadhd.png in Resources */ = {isa = PBXBuildFile; fileRef = A093FC24150D0ED40039327A /* fps_images-ipadhd.png */; };
+		A093FC3C150D0ED40039327A /* fps_images-ipadhd.png in Resources */ = {isa = PBXBuildFile; fileRef = A093FC24150D0ED40039327A /* fps_images-ipadhd.png */; };
+		A093FC3D150D0ED40039327A /* fps_images-ipadhd.png in Resources */ = {isa = PBXBuildFile; fileRef = A093FC24150D0ED40039327A /* fps_images-ipadhd.png */; };
+		A093FC3E150D0ED40039327A /* fps_images-ipadhd.png in Resources */ = {isa = PBXBuildFile; fileRef = A093FC24150D0ED40039327A /* fps_images-ipadhd.png */; };
+		A093FC3F150D0ED40039327A /* fps_images-ipadhd.png in Resources */ = {isa = PBXBuildFile; fileRef = A093FC24150D0ED40039327A /* fps_images-ipadhd.png */; };
+		A093FC40150D0ED40039327A /* fps_images-ipadhd.png in Resources */ = {isa = PBXBuildFile; fileRef = A093FC24150D0ED40039327A /* fps_images-ipadhd.png */; };
+		A093FC41150D0ED40039327A /* fps_images-ipadhd.png in Resources */ = {isa = PBXBuildFile; fileRef = A093FC24150D0ED40039327A /* fps_images-ipadhd.png */; };
+		A093FC42150D0ED40039327A /* fps_images-ipadhd.png in Resources */ = {isa = PBXBuildFile; fileRef = A093FC24150D0ED40039327A /* fps_images-ipadhd.png */; };
+		A093FC43150D0ED40039327A /* fps_images-ipadhd.png in Resources */ = {isa = PBXBuildFile; fileRef = A093FC24150D0ED40039327A /* fps_images-ipadhd.png */; };
+		A093FC44150D0ED40039327A /* fps_images-ipadhd.png in Resources */ = {isa = PBXBuildFile; fileRef = A093FC24150D0ED40039327A /* fps_images-ipadhd.png */; };
+		A093FC45150D0ED40039327A /* fps_images-ipadhd.png in Resources */ = {isa = PBXBuildFile; fileRef = A093FC24150D0ED40039327A /* fps_images-ipadhd.png */; };
+		A093FC46150D0ED40039327A /* fps_images-ipadhd.png in Resources */ = {isa = PBXBuildFile; fileRef = A093FC24150D0ED40039327A /* fps_images-ipadhd.png */; };
+		A093FC47150D0ED40039327A /* fps_images-ipadhd.png in Resources */ = {isa = PBXBuildFile; fileRef = A093FC24150D0ED40039327A /* fps_images-ipadhd.png */; };
+		A093FC48150D0ED40039327A /* fps_images-ipadhd.png in Resources */ = {isa = PBXBuildFile; fileRef = A093FC24150D0ED40039327A /* fps_images-ipadhd.png */; };
+		A093FC49150D0ED40039327A /* fps_images-ipadhd.png in Resources */ = {isa = PBXBuildFile; fileRef = A093FC24150D0ED40039327A /* fps_images-ipadhd.png */; };
+		A093FC4A150D0ED40039327A /* fps_images-ipadhd.png in Resources */ = {isa = PBXBuildFile; fileRef = A093FC24150D0ED40039327A /* fps_images-ipadhd.png */; };
+		A093FC4B150D0ED40039327A /* fps_images-ipadhd.png in Resources */ = {isa = PBXBuildFile; fileRef = A093FC24150D0ED40039327A /* fps_images-ipadhd.png */; };
+		A093FC4C150D0ED40039327A /* fps_images-ipadhd.png in Resources */ = {isa = PBXBuildFile; fileRef = A093FC24150D0ED40039327A /* fps_images-ipadhd.png */; };
+		A093FC4D150D0ED40039327A /* fps_images-ipadhd.png in Resources */ = {isa = PBXBuildFile; fileRef = A093FC24150D0ED40039327A /* fps_images-ipadhd.png */; };
+		A093FC4E150D0ED40039327A /* fps_images-ipadhd.png in Resources */ = {isa = PBXBuildFile; fileRef = A093FC24150D0ED40039327A /* fps_images-ipadhd.png */; };
+		A093FC4F150D0ED40039327A /* fps_images-ipadhd.png in Resources */ = {isa = PBXBuildFile; fileRef = A093FC24150D0ED40039327A /* fps_images-ipadhd.png */; };
+		A093FC50150D0ED40039327A /* fps_images-ipadhd.png in Resources */ = {isa = PBXBuildFile; fileRef = A093FC24150D0ED40039327A /* fps_images-ipadhd.png */; };
+		A093FC51150D0ED40039327A /* fps_images-ipadhd.png in Resources */ = {isa = PBXBuildFile; fileRef = A093FC24150D0ED40039327A /* fps_images-ipadhd.png */; };
+		A093FC52150D0ED40039327A /* fps_images-ipadhd.png in Resources */ = {isa = PBXBuildFile; fileRef = A093FC24150D0ED40039327A /* fps_images-ipadhd.png */; };
+		A093FC53150D0ED40039327A /* fps_images-ipadhd.png in Resources */ = {isa = PBXBuildFile; fileRef = A093FC24150D0ED40039327A /* fps_images-ipadhd.png */; };
 		A0980F3914B92C5E004812AD /* ActionsEaseTest.m in Sources */ = {isa = PBXBuildFile; fileRef = A0980F3614B92C5E004812AD /* ActionsEaseTest.m */; };
 		A0980F3B14B92C7B004812AD /* ActionsProgressTest.m in Sources */ = {isa = PBXBuildFile; fileRef = A0980F3814B92C5E004812AD /* ActionsProgressTest.m */; };
 		A09AB76914EA12F7009C8B91 /* ccDeprecated.h in Headers */ = {isa = PBXBuildFile; fileRef = A09AB76714EA12F7009C8B91 /* ccDeprecated.h */; };
@@ -4829,6 +4876,7 @@
 		A07EC9B2141A8D32008C1F12 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		A08C378E14144FBB004538FD /* neon_matrix_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = neon_matrix_impl.h; sourceTree = "<group>"; };
 		A08C379014144FDE004538FD /* neon_matrix_impl.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = neon_matrix_impl.c; sourceTree = "<group>"; };
+		A093FC24150D0ED40039327A /* fps_images-ipadhd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fps_images-ipadhd.png"; sourceTree = "<group>"; };
 		A0980F3514B92C5E004812AD /* ActionsEaseTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ActionsEaseTest.h; path = tests/ActionsEaseTest.h; sourceTree = "<group>"; };
 		A0980F3614B92C5E004812AD /* ActionsEaseTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ActionsEaseTest.m; path = tests/ActionsEaseTest.m; sourceTree = "<group>"; };
 		A0980F3714B92C5E004812AD /* ActionsProgressTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ActionsProgressTest.h; path = tests/ActionsProgressTest.h; sourceTree = "<group>"; };
@@ -6599,6 +6647,7 @@
 			children = (
 				505464301062886600AB7C52 /* fps_images.png */,
 				E087B34E12785BB60076F6FF /* fps_images-hd.png */,
+				A093FC24150D0ED40039327A /* fps_images-ipadhd.png */,
 				E0FDACE6123DAC8300F25BB4 /* larabie-16.png */,
 				E0FDACE5123DAC8300F25BB4 /* larabie-16-hd.png */,
 				505463A11062867800AB7C52 /* tuffy_bold_italic-charmap.png */,
@@ -9178,6 +9227,7 @@
 				A0B0380813EA1FE00073E59A /* f2-ipad.png in Resources */,
 				A0B0383913EA1FE10073E59A /* r1-ipad.png in Resources */,
 				A0B0386A13EA1FE20073E59A /* r2-ipad.png in Resources */,
+				A093FC27150D0ED40039327A /* fps_images-ipadhd.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9230,6 +9280,7 @@
 				A0EC4BB11403239F00EC482A /* PositionTextureColor.fsh in Resources */,
 				A0EC4BB21403239F00EC482A /* PositionTextureColor.vsh in Resources */,
 				A04B0D4A149E701A005EB429 /* bugs in Resources */,
+				A093FC41150D0ED40039327A /* fps_images-ipadhd.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9277,6 +9328,7 @@
 				A0EC4A841403238700EC482A /* PositionTextureA8Color.vsh in Resources */,
 				A0EC4A851403238700EC482A /* PositionTextureColor.fsh in Resources */,
 				A0EC4A861403238700EC482A /* PositionTextureColor.vsh in Resources */,
+				A093FC2A150D0ED40039327A /* fps_images-ipadhd.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9338,6 +9390,7 @@
 				A0EC4C04140323A600EC482A /* PositionTextureA8Color.vsh in Resources */,
 				A0EC4C05140323A600EC482A /* PositionTextureColor.fsh in Resources */,
 				A0EC4C06140323A600EC482A /* PositionTextureColor.vsh in Resources */,
+				A093FC49150D0ED40039327A /* fps_images-ipadhd.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9393,6 +9446,7 @@
 				A0EC4BA51403239E00EC482A /* PositionTextureColor.fsh in Resources */,
 				A0EC4BA61403239E00EC482A /* PositionTextureColor.vsh in Resources */,
 				3BB41AD414E43A51006CD0D8 /* zwoptex in Resources */,
+				A093FC40150D0ED40039327A /* fps_images-ipadhd.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9446,6 +9500,7 @@
 				A0EC4AF01403239100EC482A /* PositionTextureA8Color.vsh in Resources */,
 				A0EC4AF11403239100EC482A /* PositionTextureColor.fsh in Resources */,
 				A0EC4AF21403239100EC482A /* PositionTextureColor.vsh in Resources */,
+				A093FC32150D0ED40039327A /* fps_images-ipadhd.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9522,6 +9577,7 @@
 				A0DABD651426679E00F3FEBE /* grossini_dance_12.png in Resources */,
 				A0DABD661426679E00F3FEBE /* grossini_dance_13.png in Resources */,
 				A0DABD671426679E00F3FEBE /* grossini_dance_14.png in Resources */,
+				A093FC46150D0ED40039327A /* fps_images-ipadhd.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9564,6 +9620,7 @@
 				A0EC4C70140323AF00EC482A /* PositionTextureA8Color.vsh in Resources */,
 				A0EC4C71140323AF00EC482A /* PositionTextureColor.fsh in Resources */,
 				A0EC4C72140323AF00EC482A /* PositionTextureColor.vsh in Resources */,
+				A093FC52150D0ED40039327A /* fps_images-ipadhd.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9613,6 +9670,7 @@
 				A0EC4BBC140323A100EC482A /* PositionTextureA8Color.vsh in Resources */,
 				A0EC4BBD140323A100EC482A /* PositionTextureColor.fsh in Resources */,
 				A0EC4BBE140323A100EC482A /* PositionTextureColor.vsh in Resources */,
+				A093FC42150D0ED40039327A /* fps_images-ipadhd.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9669,6 +9727,7 @@
 				A0EC4BF8140323A500EC482A /* PositionTextureA8Color.vsh in Resources */,
 				A0EC4BF9140323A500EC482A /* PositionTextureColor.fsh in Resources */,
 				A0EC4BFA140323A500EC482A /* PositionTextureColor.vsh in Resources */,
+				A093FC48150D0ED40039327A /* fps_images-ipadhd.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9718,6 +9777,7 @@
 				A0E55EEF1424171E003F1E5A /* f2.png in Resources */,
 				A0E55EF01424171E003F1E5A /* r1.png in Resources */,
 				A0E55EF11424171E003F1E5A /* r2.png in Resources */,
+				A093FC29150D0ED40039327A /* fps_images-ipadhd.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9773,6 +9833,7 @@
 				A0EC4B5C1403239900EC482A /* PositionTextureA8Color.vsh in Resources */,
 				A0EC4B5D1403239900EC482A /* PositionTextureColor.fsh in Resources */,
 				A0EC4B5E1403239900EC482A /* PositionTextureColor.vsh in Resources */,
+				A093FC3A150D0ED40039327A /* fps_images-ipadhd.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9815,6 +9876,7 @@
 				A0EC4A6C1403238500EC482A /* PositionTextureA8Color.vsh in Resources */,
 				A0EC4A6D1403238500EC482A /* PositionTextureColor.fsh in Resources */,
 				A0EC4A6E1403238600EC482A /* PositionTextureColor.vsh in Resources */,
+				A093FC28150D0ED40039327A /* fps_images-ipadhd.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9872,6 +9934,7 @@
 				A0B0380613EA1FE00073E59A /* f2-ipad.png in Resources */,
 				A0B0383713EA1FE10073E59A /* r1-ipad.png in Resources */,
 				A0B0386813EA1FE20073E59A /* r2-ipad.png in Resources */,
+				A093FC25150D0ED40039327A /* fps_images-ipadhd.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9914,6 +9977,7 @@
 				A0EC4AFC1403239200EC482A /* PositionTextureA8Color.vsh in Resources */,
 				A0EC4AFD1403239200EC482A /* PositionTextureColor.fsh in Resources */,
 				A0EC4AFE1403239200EC482A /* PositionTextureColor.vsh in Resources */,
+				A093FC33150D0ED40039327A /* fps_images-ipadhd.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9963,6 +10027,7 @@
 				A0EC4AB41403238A00EC482A /* PositionTextureA8Color.vsh in Resources */,
 				A0EC4AB51403238A00EC482A /* PositionTextureColor.fsh in Resources */,
 				A0EC4AB61403238A00EC482A /* PositionTextureColor.vsh in Resources */,
+				A093FC2D150D0ED40039327A /* fps_images-ipadhd.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10025,6 +10090,7 @@
 				A0EC4AC01403238B00EC482A /* PositionTextureA8Color.vsh in Resources */,
 				A0EC4AC11403238B00EC482A /* PositionTextureColor.fsh in Resources */,
 				A0EC4AC21403238B00EC482A /* PositionTextureColor.vsh in Resources */,
+				A093FC2E150D0ED40039327A /* fps_images-ipadhd.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10072,6 +10138,7 @@
 				A0EC4ACC1403238B00EC482A /* PositionTextureA8Color.vsh in Resources */,
 				A0EC4ACD1403238B00EC482A /* PositionTextureColor.fsh in Resources */,
 				A0EC4ACE1403238B00EC482A /* PositionTextureColor.vsh in Resources */,
+				A093FC2F150D0ED40039327A /* fps_images-ipadhd.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10116,6 +10183,7 @@
 				A0EC4AD81403238C00EC482A /* PositionTextureA8Color.vsh in Resources */,
 				A0EC4AD91403238C00EC482A /* PositionTextureColor.fsh in Resources */,
 				A0EC4ADA1403238C00EC482A /* PositionTextureColor.vsh in Resources */,
+				A093FC30150D0ED40039327A /* fps_images-ipadhd.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10283,6 +10351,7 @@
 				A0EC4A3B1403236C00EC482A /* PositionTextureColor.fsh in Resources */,
 				A0EC4A3C1403236C00EC482A /* PositionTextureColor.vsh in Resources */,
 				A0DC2F5E1491B36A005B814E /* test_image_rgb888.pvr in Resources */,
+				A093FC47150D0ED40039327A /* fps_images-ipadhd.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10339,6 +10408,7 @@
 				A0EC4B081403239200EC482A /* PositionTextureA8Color.vsh in Resources */,
 				A0EC4B091403239200EC482A /* PositionTextureColor.fsh in Resources */,
 				A0EC4B0A1403239200EC482A /* PositionTextureColor.vsh in Resources */,
+				A093FC34150D0ED40039327A /* fps_images-ipadhd.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10407,6 +10477,7 @@
 				A0E431F61460741E00424477 /* background1.jpg in Resources */,
 				A0E431F71460741E00424477 /* background2.jpg in Resources */,
 				A0E431F81460741E00424477 /* background3.jpg in Resources */,
+				A093FC3D150D0ED40039327A /* fps_images-ipadhd.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10497,6 +10568,7 @@
 				A03A1D0A14F5BEFA0019B6F3 /* helvetica-geneva-32.png in Resources */,
 				A03A1D4F14F5E1160019B6F3 /* arial-unicode-26.fnt in Resources */,
 				A03A1D5014F5E1160019B6F3 /* arial-unicode-26.png in Resources */,
+				A093FC39150D0ED40039327A /* fps_images-ipadhd.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10543,6 +10615,7 @@
 				A0EC4AA81403238900EC482A /* PositionTextureA8Color.vsh in Resources */,
 				A0EC4AA91403238900EC482A /* PositionTextureColor.fsh in Resources */,
 				A0EC4AAA1403238900EC482A /* PositionTextureColor.vsh in Resources */,
+				A093FC2C150D0ED40039327A /* fps_images-ipadhd.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10609,6 +10682,7 @@
 				A0EC4B681403239A00EC482A /* PositionTextureA8Color.vsh in Resources */,
 				A0EC4B691403239A00EC482A /* PositionTextureColor.fsh in Resources */,
 				A0EC4B6A1403239A00EC482A /* PositionTextureColor.vsh in Resources */,
+				A093FC3B150D0ED40039327A /* fps_images-ipadhd.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10659,6 +10733,7 @@
 				A0EC4BC8140323A200EC482A /* PositionTextureA8Color.vsh in Resources */,
 				A0EC4BC9140323A200EC482A /* PositionTextureColor.fsh in Resources */,
 				A0EC4BCA140323A200EC482A /* PositionTextureColor.vsh in Resources */,
+				A093FC43150D0ED40039327A /* fps_images-ipadhd.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10711,6 +10786,7 @@
 				A0EC4B381403239500EC482A /* PositionTextureA8Color.vsh in Resources */,
 				A0EC4B391403239500EC482A /* PositionTextureColor.fsh in Resources */,
 				A0EC4B3A1403239500EC482A /* PositionTextureColor.vsh in Resources */,
+				A093FC38150D0ED40039327A /* fps_images-ipadhd.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10767,6 +10843,7 @@
 				A0EC4C64140323AE00EC482A /* PositionTextureA8Color.vsh in Resources */,
 				A0EC4C65140323AE00EC482A /* PositionTextureColor.fsh in Resources */,
 				A0EC4C66140323AE00EC482A /* PositionTextureColor.vsh in Resources */,
+				A093FC51150D0ED40039327A /* fps_images-ipadhd.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10822,6 +10899,7 @@
 				A0EC4C28140323AB00EC482A /* PositionTextureA8Color.vsh in Resources */,
 				A0EC4C29140323AB00EC482A /* PositionTextureColor.fsh in Resources */,
 				A0EC4C2A140323AB00EC482A /* PositionTextureColor.vsh in Resources */,
+				A093FC4C150D0ED40039327A /* fps_images-ipadhd.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10889,6 +10967,7 @@
 				A0EC4BD5140323A300EC482A /* PositionTextureColor.fsh in Resources */,
 				A0EC4BD6140323A300EC482A /* PositionTextureColor.vsh in Resources */,
 				A04B0F9814A2A038005EB429 /* fire.png in Resources */,
+				A093FC44150D0ED40039327A /* fps_images-ipadhd.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10948,6 +11027,7 @@
 				A0EC4B141403239300EC482A /* PositionTextureA8Color.vsh in Resources */,
 				A0EC4B151403239300EC482A /* PositionTextureColor.fsh in Resources */,
 				A0EC4B161403239300EC482A /* PositionTextureColor.vsh in Resources */,
+				A093FC35150D0ED40039327A /* fps_images-ipadhd.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11000,6 +11080,7 @@
 				A0EC4B801403239C00EC482A /* PositionTextureA8Color.vsh in Resources */,
 				A0EC4B811403239C00EC482A /* PositionTextureColor.fsh in Resources */,
 				A0EC4B821403239C00EC482A /* PositionTextureColor.vsh in Resources */,
+				A093FC3C150D0ED40039327A /* fps_images-ipadhd.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11052,6 +11133,7 @@
 				A0E55EE914241719003F1E5A /* f2.png in Resources */,
 				A0E55EEA14241719003F1E5A /* r1.png in Resources */,
 				A0E55EEB14241719003F1E5A /* r2.png in Resources */,
+				A093FC2B150D0ED40039327A /* fps_images-ipadhd.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11107,6 +11189,7 @@
 				A0EC4B8C1403239C00EC482A /* PositionTextureA8Color.vsh in Resources */,
 				A0EC4B8D1403239C00EC482A /* PositionTextureColor.fsh in Resources */,
 				A0EC4B8E1403239C00EC482A /* PositionTextureColor.vsh in Resources */,
+				A093FC3E150D0ED40039327A /* fps_images-ipadhd.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11170,6 +11253,7 @@
 				A0EC4C10140323A700EC482A /* PositionTextureA8Color.vsh in Resources */,
 				A0EC4C11140323A700EC482A /* PositionTextureColor.fsh in Resources */,
 				A0EC4C12140323A700EC482A /* PositionTextureColor.vsh in Resources */,
+				A093FC4A150D0ED40039327A /* fps_images-ipadhd.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11240,6 +11324,7 @@
 				A0B0383813EA1FE10073E59A /* r1-ipad.png in Resources */,
 				A0B0386913EA1FE20073E59A /* r2-ipad.png in Resources */,
 				A0E2A52B14D26D8D003450DF /* animations in Resources */,
+				A093FC26150D0ED40039327A /* fps_images-ipadhd.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11296,6 +11381,7 @@
 				A0EC4C58140323AE00EC482A /* PositionTextureA8Color.vsh in Resources */,
 				A0EC4C59140323AE00EC482A /* PositionTextureColor.fsh in Resources */,
 				A0EC4C5A140323AE00EC482A /* PositionTextureColor.vsh in Resources */,
+				A093FC50150D0ED40039327A /* fps_images-ipadhd.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11355,6 +11441,7 @@
 				A0EC4B201403239400EC482A /* PositionTextureA8Color.vsh in Resources */,
 				A0EC4B211403239400EC482A /* PositionTextureColor.fsh in Resources */,
 				A0EC4B221403239400EC482A /* PositionTextureColor.vsh in Resources */,
+				A093FC36150D0ED40039327A /* fps_images-ipadhd.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11421,6 +11508,7 @@
 				A0EC4B981403239D00EC482A /* PositionTextureA8Color.vsh in Resources */,
 				A0EC4B991403239D00EC482A /* PositionTextureColor.fsh in Resources */,
 				A0EC4B9A1403239D00EC482A /* PositionTextureColor.vsh in Resources */,
+				A093FC3F150D0ED40039327A /* fps_images-ipadhd.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11497,6 +11585,7 @@
 				A01AB908149709E300C93DB6 /* grossini_dance_12.png in Resources */,
 				A01AB909149709E300C93DB6 /* grossini_dance_13.png in Resources */,
 				A01AB90A149709E300C93DB6 /* grossini_dance_14.png in Resources */,
+				A093FC31150D0ED40039327A /* fps_images-ipadhd.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11552,6 +11641,7 @@
 				A0EC4C34140323AB00EC482A /* PositionTextureA8Color.vsh in Resources */,
 				A0EC4C35140323AB00EC482A /* PositionTextureColor.fsh in Resources */,
 				A0EC4C36140323AB00EC482A /* PositionTextureColor.vsh in Resources */,
+				A093FC4D150D0ED40039327A /* fps_images-ipadhd.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11608,6 +11698,7 @@
 				A0EC4B2C1403239400EC482A /* PositionTextureA8Color.vsh in Resources */,
 				A0EC4B2D1403239400EC482A /* PositionTextureColor.fsh in Resources */,
 				A0EC4B2E1403239400EC482A /* PositionTextureColor.vsh in Resources */,
+				A093FC37150D0ED40039327A /* fps_images-ipadhd.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11650,6 +11741,7 @@
 				A0EC4C4C140323AD00EC482A /* PositionTextureA8Color.vsh in Resources */,
 				A0EC4C4D140323AD00EC482A /* PositionTextureColor.fsh in Resources */,
 				A0EC4C4E140323AD00EC482A /* PositionTextureColor.vsh in Resources */,
+				A093FC4F150D0ED40039327A /* fps_images-ipadhd.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11709,6 +11801,7 @@
 				A0EC4C40140323AC00EC482A /* PositionTextureA8Color.vsh in Resources */,
 				A0EC4C41140323AC00EC482A /* PositionTextureColor.fsh in Resources */,
 				A0EC4C42140323AC00EC482A /* PositionTextureColor.vsh in Resources */,
+				A093FC4E150D0ED40039327A /* fps_images-ipadhd.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11789,6 +11882,7 @@
 				A0EC4C8D140323C500EC482A /* example_Twist.vsh in Resources */,
 				A0DB141614FC420E00F7CC49 /* west_england-64.fnt in Resources */,
 				A0DB141714FC420E00F7CC49 /* west_england-64.png in Resources */,
+				A093FC45150D0ED40039327A /* fps_images-ipadhd.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11848,6 +11942,7 @@
 				A0EC4C1C140323A800EC482A /* PositionTextureA8Color.vsh in Resources */,
 				A0EC4C1D140323A800EC482A /* PositionTextureColor.fsh in Resources */,
 				A0EC4C1E140323A800EC482A /* PositionTextureColor.vsh in Resources */,
+				A093FC4B150D0ED40039327A /* fps_images-ipadhd.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11904,6 +11999,7 @@
 				A0EC4C7C140323B000EC482A /* PositionTextureA8Color.vsh in Resources */,
 				A0EC4C7D140323B000EC482A /* PositionTextureColor.fsh in Resources */,
 				A0EC4C7E140323B000EC482A /* PositionTextureColor.vsh in Resources */,
+				A093FC53150D0ED40039327A /* fps_images-ipadhd.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
