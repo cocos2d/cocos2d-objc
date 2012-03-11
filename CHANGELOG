@@ -10,6 +10,7 @@ version 1.1-beta2 xx - 2012
 . [NEW] ParticleSystem: supports animations in new animation format 
 . [NEW] TileMap: supports in-memory TMX map creation (issue #1239)
 . [NEW] TileMap: Flipped tiles can be changed during runtime (issue #1264)
+. [NEW] Touchdispatcher: new implementation, supporting changing dispatchers based on (ranges) of properties, custom sorting and more (full list in online release notes)
 . [NEW] Types: Added convenience function to create a ccColor4F from color components
 . [FIX] Actions: incorrect behavior of CCRepeat
 . [FIX] CCLabelBMFont: full unicode support
@@ -27,6 +28,7 @@ version 1.1-beta2 xx - 2012
 . [FIX] Sprite: fixed adding premade sprite hierarchy to batchnode (issue #1217)
 . [FIX] TileMap: Fixed a problem with multiple layers and multiple tile sets that could cause TMX maps to not load if rotation is used (issue #1302)
 . [FIX] TouchDispatcher: correctly handles addition and removal of handlers when being inside a touch handler (issue #1084, #1139)
+. [FIX] TouchDispatcher: new implementation fixes multiple issues (issue #1173, #1267)
 . [FIX-MAC] LabelTTF: word wrap works on Mac (issue #1074)
 . [FIX-MAC] fix for failed to compile on 32-bit mac builds.
 
