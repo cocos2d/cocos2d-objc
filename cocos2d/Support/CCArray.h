@@ -33,7 +33,7 @@
 
 
 /** @def CCARRAY_FOREACH
- A convience macro to iterate over a CCArray using. It is faster than the "fast enumeration" interface.
+ A convience macro to iterate over a CCArray. It is faster than the "fast enumeration" interface.
  @since v0.99.4
  */
 
@@ -42,6 +42,17 @@ if (__array__ && __array__->data->num > 0)													\
 for(id *__arr__ = __array__->data->arr, *end = __array__->data->arr + __array__->data->num-1;	\
 	__arr__ <= end && ((__object__ = *__arr__) != nil || true);										\
 	__arr__++)
+
+/** @def CCARRAY_FOREACH_INVERSE
+ A convience macro to iterate over a CCArray in the reverse order. It is faster than the "fast enumeration" interface.
+ @since v0.99.4
+ */
+
+#define CCARRAY_FOREACH_INVERSE(__array__, __object__)												\
+if (__array__ && __array__->data->num > 0)													\
+for(id *__arr__ = __array__->data->arr + __array__->data->num-1, *start = __array__->data->arr;	\
+__arr__ >= start && ((__object__ = *__arr__) != nil || true);										\
+__arr__--)
 
 @interface CCArray : NSObject <NSFastEnumeration, NSCoding, NSCopying>
 {
