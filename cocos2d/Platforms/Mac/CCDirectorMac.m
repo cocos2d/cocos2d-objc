@@ -280,6 +280,8 @@
 			kmGLLoadIdentity();
 
 			kmMat4 matrixPerspective, matrixLookup;
+
+			// issue #1334
 			kmMat4PerspectiveProjection( &matrixPerspective, 60, (GLfloat)size.width/size.height, zeye-size.height/2, zeye+size.height/2 );
 
 			kmGLMultMatrix(&matrixPerspective);
