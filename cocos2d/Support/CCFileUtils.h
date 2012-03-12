@@ -88,7 +88,7 @@
  By default it is "".
  Only valid on iOS. Not valid for OS X.
  
- @since v1.1
+
  */
 +(void) setiPadSuffix:(NSString*)suffix;
 
@@ -108,7 +108,7 @@
 
 /** Returns whether or not a given filename exists with the iPad RetinaDisplay suffix.
  Only available on iOS. Not supported on OS X.
- @since v1.1
+ 
  */
 +(BOOL) iPadFileExistsAtPath:(NSString*)filename;
 

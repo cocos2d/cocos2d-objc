@@ -225,8 +225,12 @@ Class restartAction()
 
 	// draw cubic bezier path
 	ccDrawCubicBezier(ccp(s.width/2, s.height/2), ccp(s.width/2+30,s.height/2+50), ccp(s.width/2+60,s.height/2-50),ccp(s.width, s.height/2),100);
-
-	
+    
+    CGPoint vertices3[] = {ccp(60,160), ccp(70,190), ccp(100,190), ccp(90,160)};
+    
+    //draw a solid polygon
+    ccDrawSolidPoly( vertices3, 4, YES );
+        
 	// restore original values
 	glLineWidth(1);
 	glColor4ub(255,255,255,255);
