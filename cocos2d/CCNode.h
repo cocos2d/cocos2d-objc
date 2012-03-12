@@ -181,6 +181,13 @@ enum {
 	
 	// userData is going to be retained.
 	BOOL retainUserData_;
+	
+	@public
+	SEL visitSelector;
+	IMP visitPointer;
+	
+	SEL drawSelector;
+	IMP drawPointer;
 }
 
 /** The z order of the node relative to its "siblings": children of the same parent */

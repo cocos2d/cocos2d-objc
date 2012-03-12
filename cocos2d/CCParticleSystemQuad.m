@@ -74,7 +74,10 @@
 //		[self initTexCoordsWithRect:CGRectMake(0, 0, [texture_ pixelsWide], [texture_ pixelsHigh])];
 
 		[self initIndices];
-		[self initVAO];
+		NSBlockOperation *oper = [NSBlockOperation blockOperationWithBlock:^{
+			[self initVAO];
+		}];
+		[[NSOperationQueue mainQueue] addOperation:oper];
 
 		self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTextureColor];
 	}
@@ -155,7 +158,7 @@
 		}
         
         [self initIndices];
-        [self initVAO];
+        [self performSelectorOnMainThread:@selector(initVAO) withObject:nil waitUntilDone:YES modes:nil];
     }
     else
     {
@@ -195,6 +198,8 @@
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 	CHECK_GL_ERROR_DEBUG();
+	
+	vaoInit_ = YES;
 }
 
 -(void) dealloc
@@ -431,6 +436,8 @@
 
 -(void) postStep
 {
+	if(!vaoInit_) return;
+	
 	glBindBuffer(GL_ARRAY_BUFFER, buffersVBO_[0] );
 	glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(quads_[0])*particleCount, quads_);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -441,6 +448,8 @@
 // overriding draw method
 -(void) draw
 {
+	if(!vaoInit_) return;
+	
 	NSAssert(!batchNode_,@"draw should not be called when added to a particleBatchNode");
 
 	CC_NODE_DRAW_SETUP();

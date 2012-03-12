@@ -151,6 +151,11 @@ static NSUInteger globalOrderOfArrival = 1;
 		CCDirector *director = [CCDirector sharedDirector];
 		self.actionManager = [director actionManager];
 		self.scheduler = [director scheduler];
+		
+		visitSelector = @selector(visit);
+		visitPointer = [self methodForSelector:visitSelector];
+		drawSelector = @selector(draw);
+		drawPointer = [self methodForSelector:drawSelector];
 	}
 
 	return self;
@@ -351,6 +356,15 @@ static NSUInteger globalOrderOfArrival = 1;
 	NSAssert( child != nil, @"Argument must be non-nil");
 	NSAssert( child.parent == nil, @"child already added. It can't be added again");
 
+	if(![NSThread isMainThread]) {
+		[child retain];
+		[[NSThread mainThread] performBlock:^(id param){
+			[self addChild:child z:z tag:aTag];
+		} withObject:nil waitUntilDone:YES];
+		[child release];
+		return;
+	}
+
 	if( ! children_ )
 		[self childrenAlloc];
 
@@ -394,6 +408,13 @@ static NSUInteger globalOrderOfArrival = 1;
 	// explicit nil handling
 	if (child == nil)
 		return;
+	
+	if(![NSThread isMainThread]) {
+		[[NSThread mainThread] performBlock:^(id param){
+			[self removeChild:child cleanup:cleanup];
+		} withObject:nil waitUntilDone:YES];
+		return;
+	}
 
 	if ( [children_ containsObject:child] )
 		[self detachChild:child cleanup:cleanup];
@@ -542,22 +563,22 @@ static NSUInteger globalOrderOfArrival = 1;
 		for( ; i < arrayData->num; i++ ) {
 			CCNode *child = arrayData->arr[i];
 			if ( [child zOrder] < 0 )
-				[child visit];
+				child->visitPointer(child, visitSelector);
 			else
 				break;
 		}
 
 		// self draw
-		[self draw];
+		drawPointer(self, drawSelector);
 
 		// draw children zOrder >= 0
 		for( ; i < arrayData->num; i++ ) {
 			CCNode *child =  arrayData->arr[i];
-			[child visit];
+			child->visitPointer(child, visitSelector);
 		}
 
 	} else
-		[self draw];
+		drawPointer(self, drawSelector);
 
 	// reset for next frame
 	orderOfArrival_ = 0;
