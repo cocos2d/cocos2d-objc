@@ -110,11 +110,13 @@
 
 		[self setupIndices];
 
+		[[NSOperationQueue mainQueue] addOperation:[NSBlockOperation blockOperationWithBlock:^{
 #if CC_TEXTURE_ATLAS_USE_VAO
 		[self setupVBOandVAO];	
 #else	
 		[self setupVBO];
 #endif
+		}]];
 
 		dirty_ = YES;
 	}
@@ -204,6 +206,8 @@
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 	CHECK_GL_ERROR_DEBUG();
+	
+	VAOinitialized_ = YES;
 }
 #else // CC_TEXTURE_ATLAS_USE_VAO
 -(void) setupVBO
@@ -211,6 +215,8 @@
 	glGenBuffers(2, &buffersVBO_[0]);
 	
 	[self mapBuffers];
+	
+	VAOinitialized_ = YES;
 }
 #endif // ! // CC_TEXTURE_ATLAS_USE_VAO
 
@@ -470,6 +476,8 @@
 
 -(void) drawNumberOfQuads: (NSUInteger) n fromIndex: (NSUInteger) start
 {
+	if(!VAOinitialized_) return;
+	
 	ccGLBindTexture2D( [texture_ name] );
 
 #if CC_TEXTURE_ATLAS_USE_VAO
