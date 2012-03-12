@@ -811,7 +811,7 @@ Class restartAction()
 
 -(NSString *) subtitle
 {
-	return @"tag order in console should be 2,1,3,4,5";
+	return @"tag order in console should be 2,3,4,5,1";
 }
 
 @end
