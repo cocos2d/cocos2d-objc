@@ -1,4 +1,4 @@
-version 1.1-beta2 xx - 2012
+version 1.1-beta2 12-Mar-2012
 . [NEW] v2.0 forward ported changes:
 			LabelBMFont: added setFntFile method
 			Animation: Added new animation format that supports delays per frame and notifications per frame
