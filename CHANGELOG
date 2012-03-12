@@ -24,6 +24,7 @@ version 1.1-beta2 12-Mar-2012
 . [FIX] Node: orderOfArrival is @synthezied correctly (issue #1273)
 . [FIX] Node & Sprite: Scale before Skew to prevent issues with negatives scales.
 . [FIX] ParticleSystem: prevent bursts of particles due to too high emitCounter (issue #1201)
+. [FIX] ParticleSystem: CCParticleExamples on armv6 uses quad particle system by default, so CCParticleBatchNode can be used
 . [FIX] ParticleBatchNode: removeChild error and 'freezing' particles (issue #1316)
 . [FIX] ParticleBatchNode: memoryleak (issue #1306)
 . [FIX] Sprite: fixed possible setColor and opacity
