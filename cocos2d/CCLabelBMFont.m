@@ -498,6 +498,18 @@ typedef struct _FontDefHashElement
 	return [self initWithString:theString fntFile:fntFile width:width alignment:alignment imageOffset:CGPointZero];
 }
 
+-(void) basicInit
+{
+    opacity_ = 255;
+    color_ = ccWHITE;
+    
+    contentSize_ = CGSizeZero;
+    
+    opacityModifyRGB_ = [[textureAtlas_ texture] hasPremultipliedAlpha];
+    
+    anchorPoint_ = ccp(0.5f, 0.5f);
+}
+
 -(id) initWithString:(NSString*)theString fntFile:(NSString*)fntFile width:(float)width alignment:(CCTextAlignment)alignment imageOffset:(CGPoint)offset
 {
 	NSAssert(!configuration_, @"re-init is no longer supported");
@@ -514,14 +526,7 @@ typedef struct _FontDefHashElement
         width_ = width;
         alignment_ = alignment;
 
-		opacity_ = 255;
-		color_ = ccWHITE;
-
-		contentSize_ = CGSizeZero;
-
-		opacityModifyRGB_ = [[textureAtlas_ texture] hasPremultipliedAlpha];
-
-		anchorPoint_ = ccp(0.5f, 0.5f);
+		[self basicInit];
 
 		imageOffset_ = offset;
 
@@ -529,6 +534,18 @@ typedef struct _FontDefHashElement
 	}
 
 	return self;
+}
+
+-(id) init
+{
+    if ((self=[super init]))
+    {
+        [self basicInit];
+        
+		imageOffset_ = CGPointZero;
+    }
+    
+    return self;
 }
 
 -(void) dealloc
