@@ -283,6 +283,13 @@ static CCTextureCache *sharedTextureCache;
 	});
 
 	if( ! tex ) {
+		if(![NSThread isMainThread]) {
+			[[NSThread mainThread] performBlock:^(id params) {
+				tex = [self addImage:path];
+			} withObject:nil waitUntilDone:YES];
+			
+			return tex;
+		}
 
 		NSString *lowerCase = [path lowercaseString];
 

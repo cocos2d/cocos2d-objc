@@ -109,6 +109,15 @@
 	string_ = [str copy];
 
 	CCTexture2D *tex;
+	
+	if(![NSThread isMainThread])
+	{
+		[[NSThread mainThread] performBlock:^(id param){
+			[self setString:str];
+		} withObject:nil waitUntilDone:YES];
+		return;
+	}
+	
 	if( CGSizeEqualToSize( dimensions_, CGSizeZero ) )
 		tex = [[CCTexture2D alloc] initWithString:str
 										 fontName:fontName_

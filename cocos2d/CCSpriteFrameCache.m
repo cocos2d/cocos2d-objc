@@ -251,6 +251,13 @@ static CCSpriteFrameCache *sharedSpriteFrameCache_=nil;
 -(void) addSpriteFramesWithFile:(NSString*)plist
 {
 	NSAssert(plist, @"plist filename should not be nil");
+	
+	if(![NSThread isMainThread]) {
+		[[NSThread mainThread] performBlock:^(id params){
+			[self addSpriteFramesWithFile:plist];
+		} withObject:nil waitUntilDone:YES];
+		return;
+	}
 
     NSString *path = [CCFileUtils fullPathFromRelativePath:plist];
     NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:path];
