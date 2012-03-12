@@ -131,3 +131,8 @@
 {
 }
 @end
+
+@interface BMFontInit : AtlasDemo
+{
+}
+@end

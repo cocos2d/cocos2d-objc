@@ -35,6 +35,8 @@ static NSString *transitions[] = {
 
 	// Not a label test. Should be moved to Atlas test
 	@"Atlas1",
+    
+    @"BMFontInit",
 };
 
 enum {
@@ -1475,6 +1477,37 @@ static float menuItemPaddingCenter = 50;
 }
 @end
 
+
+#pragma mark - BMFontInit
+
+@implementation BMFontInit
+
+- (id) init
+{
+    if( (self=[super init]) ) {
+        
+        CGSize s = [[CCDirector sharedDirector] winSize];
+        
+        CCLabelBMFont* bmFont = [[[CCLabelBMFont alloc] init] autorelease];
+        //CCLabelBMFont* bmFont = [CCLabelBMFont labelWithString:@"Foo" fntFile:@"arial-unicode-26.fnt"];
+        bmFont.fntFile = @"helvetica-32.fnt";
+        bmFont.string = @"It is working!";
+        [self addChild:bmFont];
+        [bmFont setPosition:ccp(s.width/2,s.height/4*2)];
+    }
+    return self;
+}
+
+-(NSString*) title
+{
+	return @"CCLabelBMFont init";
+}
+
+-(NSString *) subtitle
+{
+	return @"Test for support of init method without parameters.";
+}
+@end
 
 #pragma mark -
 #pragma mark Application Delegate - iPhone
