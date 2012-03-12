@@ -555,7 +555,7 @@
 			[self addParticle];
 			emitCounter -= rate;
 		}
-		CCLOG(@"emitCounter %f",emitCounter);
+	
 		elapsed += dt;
 		if(duration != -1 && duration < elapsed)
 			[self stopSystem];

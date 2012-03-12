@@ -335,10 +335,10 @@
 	}
 }
 
-static inline int selectorCompare(id object1,id object2,void *userData){
+static inline NSInteger selectorCompare(id object1,id object2,void *userData){
     SEL selector=userData;
     
-    return (NSComparisonResult)[object1 performSelector:selector withObject:object2];
+    return (NSInteger)[object1 performSelector:selector withObject:object2];
 }
 
 -(void)sortUsingSelector:(SEL)selector {
