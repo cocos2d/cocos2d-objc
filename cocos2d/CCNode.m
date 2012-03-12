@@ -74,7 +74,7 @@ static NSUInteger globalOrderOfArrival = 0;
 @synthesize vertexZ = vertexZ_;
 @synthesize isRunning = isRunning_;
 @synthesize userData = userData_;
-@synthesize orderOfArrival = orderOfArrival;
+@synthesize orderOfArrival = orderOfArrival_;
 
 #pragma mark CCNode - Transform related properties
 
