@@ -487,7 +487,8 @@ Class restartTransition()
 
 -(BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-	return UIInterfaceOrientationIsLandscape(interfaceOrientation);
+	return  YES;
+//	return UIInterfaceOrientationIsLandscape(interfaceOrientation);
 }
 @end
 

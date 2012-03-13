@@ -90,8 +90,11 @@ struct _hashUniformEntry;
 	GLint			uniforms_[kCCUniform_MAX];
 }
 
-- (id)initWithVertexShaderFilename:(NSString *)vShaderFilename
-            fragmentShaderFilename:(NSString *)fShaderFilename;
+/** Initializes the CCGLProgram with a vertex and fragment with bytes array */
+- (id)initWithVertexShaderByteArray:(const GLchar*)vShaderByteArray fragmentShaderByteArray:(const GLchar*)fShaderByteArray;
+
+/** Initializes the CCGLProgram with a vertex and fragment with contents of filenames */
+- (id)initWithVertexShaderFilename:(NSString *)vShaderFilename fragmentShaderFilename:(NSString *)fShaderFilename;
 
 /**  It will add a new attribute to the shader */
 - (void)addAttribute:(NSString *)attributeName index:(GLuint)index;

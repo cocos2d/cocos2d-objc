@@ -1,8 +1,7 @@
 /*
  * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
- * Copyright (c) 2008-2010 Ricardo Quesada
- * Copyright (c) 2011 Zynga Inc.
+ * Copyright (c) 2012 Zynga Inc.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,12 +22,24 @@
  * THE SOFTWARE.
  */
 
+#import "Platforms/CCGL.h"
 
-#import <Foundation/Foundation.h>
-#import "cocos2d.h"
-static NSString *version = @"cocos2d v2.0.0-rc0";
+extern const GLchar * ccPosition_uColor_frag;
+extern const GLchar * ccPosition_uColor_vert;
 
-NSString *cocos2dVersion()
-{
-	return version;
-}
+extern const GLchar * ccPositionColor_frag;
+extern const GLchar * ccPositionColor_vert;
+
+extern const GLchar * ccPositionTexture_frag;
+extern const GLchar * ccPositionTexture_vert;
+
+extern const GLchar * ccPositionTextureA8Color_frag;
+extern const GLchar * ccPositionTextureA8Color_vert;
+
+extern const GLchar * ccPositionTextureColor_frag;
+extern const GLchar * ccPositionTextureColor_vert;
+
+extern const GLchar * ccPositionTextureColorAlphaTest_frag;
+
+extern const GLchar * ccPositionTexture_uColor_frag;
+extern const GLchar * ccPositionTexture_uColor_vert;
