@@ -424,8 +424,9 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 
 -(void) recreateLabel
 {
-	CCLabelTTF *label = [CCLabelTTF labelWithString:[label_ string] fontName:fontName_ fontSize:fontSize_];
+	CCLabelTTF *label = [[CCLabelTTF alloc] initWithString:[label_ string] fontName:fontName_ fontSize:fontSize_];
 	self.label = label;
+	[label release];
 }
 
 -(void) setFontSize: (NSUInteger) size
