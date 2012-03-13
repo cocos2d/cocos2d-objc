@@ -430,8 +430,8 @@ enum {
 		blur_ = ccp(1/s.width, 1/s.height);
 		sub_[0] = sub_[1] = sub_[2] = sub_[3] = 0;
 
-		shaderProgram_ = [[CCGLProgram alloc] initWithVertexShaderFilename:@"PositionTextureColor.vsh"
-													 fragmentShaderFilename:@"example_Blur.fsh"];
+		GLchar * fragSource = (GLchar*) [[NSString stringWithContentsOfFile:[CCFileUtils fullPathFromRelativePath:@"example_Blur.fsh"] encoding:NSUTF8StringEncoding error:nil] UTF8String];
+		shaderProgram_ = [[CCGLProgram alloc] initWithVertexShaderByteArray:ccPositionTextureColor_vert fragmentShaderByteArray:fragSource];
 
 
 		CHECK_GL_ERROR_DEBUG();
@@ -627,8 +627,9 @@ enum {
 -(id) init
 {
 	if( (self=[super init] ) ) {
-		CCGLProgram *p = [[CCGLProgram alloc] initWithVertexShaderFilename:@"PositionTexture.vsh"
-									   fragmentShaderFilename:@"example_HorizontalColor.fsh"];
+		
+		GLchar * fragSource = (GLchar*) [[NSString stringWithContentsOfFile:[CCFileUtils fullPathFromRelativePath:@"example_HorizontalColor.fsh"] encoding:NSUTF8StringEncoding error:nil] UTF8String];
+		CCGLProgram *p = [[CCGLProgram alloc] initWithVertexShaderByteArray:ccPositionTexture_vert fragmentShaderByteArray:fragSource];
 		
 		[p addAttribute:kCCAttributeNamePosition index:kCCVertexAttrib_Position];
 		[p addAttribute:kCCAttributeNameTexCoord index:kCCVertexAttrib_TexCoords];
@@ -752,7 +753,8 @@ enum {
 	CCScene *scene = [CCScene node];
 	[scene addChild: [nextAction() node]];
 
-	[director_ runWithScene:scene];
+	[director_ pushScene:scene];
+	[director_ startAnimation];
 }
 @end
 #endif

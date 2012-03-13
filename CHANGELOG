@@ -1,3 +1,7 @@
+version 2.0-rc0a 13-Mar-2012
+. [FIX] PerformanceTest: Compiles and run
+. [FIX] Tests: fixed shaders tests
+
 version 2.0-rc0 12-Mar-2012
 . [NEW] v1.1 Forward-ported changes:
 		Actions: CCRepeat ends as expected (issue #1288)

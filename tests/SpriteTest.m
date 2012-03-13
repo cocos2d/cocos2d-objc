@@ -4647,7 +4647,8 @@ Class restartAction()
 	CCScene *scene = [CCScene node];
 	[scene addChild: [nextAction() node]];
 
-	[director_ runWithScene:scene];
+	[director_ pushScene:scene];
+	[director_ startAnimation];
 }
 @end
 #endif
