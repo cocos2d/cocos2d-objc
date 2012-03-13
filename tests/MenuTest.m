@@ -621,10 +621,14 @@ enum {
 {
 	[super applicationDidFinishLaunching:aNotification];
 
-	CCScene *scene = [CCScene node];
-	[scene addChild: [LayerMainMenu node]];
+	CCScene *scene = [[CCScene alloc] init];
+	
+	id layer = [[LayerMainMenu alloc] init];
+	[scene addChild:layer];
+	[layer release];
 
-	[director_ runWithScene:scene];
+	[director_ runWithScene:scene];	
+	[scene release];
 }
 @end
 #endif
