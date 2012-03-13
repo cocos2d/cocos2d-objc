@@ -46,15 +46,8 @@ GLESDebugDraw::GLESDebugDraw( float32 ratio )
 
 void GLESDebugDraw::initShader( void )
 {
-	mShaderProgram = [[CCGLProgram alloc] initWithVertexShaderFilename:@"Position_uColor.vsh"
-											  fragmentShaderFilename:@"Position_uColor.fsh"];
-
-	[mShaderProgram addAttribute:@"aVertex" index:kCCVertexAttrib_Position];
-
-	[mShaderProgram link];
-
-	[mShaderProgram updateUniforms];
-
+	mShaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_Position_uColor];
+	
 	mColorLocation = glGetUniformLocation( mShaderProgram->program_, "u_color");
 }
 

@@ -50,15 +50,7 @@ static void lazy_init( void )
 		//
 		// Position and 1 color passed as a uniform (to similate glColor4ub )
 		//
-		shader_ = [[CCGLProgram alloc] initWithVertexShaderFilename:@"Position_uColor.vsh"
-									 fragmentShaderFilename:@"Position_uColor.fsh"];
-
-
-		[shader_ addAttribute:@"aVertex" index:kCCVertexAttrib_Position];
-
-		[shader_ link];
-
-		[shader_ updateUniforms];
+		shader_ = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_Position_uColor];
 
 		colorLocation_ = glGetUniformLocation( shader_->program_, "u_color");
 		pointSizeLocation_ = glGetUniformLocation( shader_->program_, "u_pointSize");
