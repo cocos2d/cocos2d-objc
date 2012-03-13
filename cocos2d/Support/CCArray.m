@@ -291,7 +291,7 @@
 
 - (void) insertionSortUsingCFuncComparator:(int(*)(const void *, const void *))comparator
 {
-
+    insertionSort(data, comparator);
 }
 
 #pragma mark CCArray qsortUsingCFuncComparator

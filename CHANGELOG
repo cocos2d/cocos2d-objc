@@ -4,6 +4,7 @@ version 1.1-beta2 12-Mar-2012
 			Animation: Added new animation format that supports delays per frame and notifications per frame
 			Actions: Added ActionTargeted action. Useful to target other nodes from a sequence.
 . [NEW] All: Code is compatible with ARC (issue #1199) 
+. [NEW] CCArray: new sorting methods, replaceObjectAtIndex, isEqualToArray
 . [NEW] ccFileUtiles: new iPad retina file extension (ipadhd)
 . [NEW] DrawPrimitives: Added new functions, ccDrawRect, ccDrawSolidRect, ccDrawSolidPoly
 . [NEW] DrawPrimitives: Added batch drawing of lines, ccDrawLines (issue #1081)
@@ -14,6 +15,8 @@ version 1.1-beta2 12-Mar-2012
 . [NEW] Touchdispatcher: new implementation, supporting changing dispatchers based on (ranges) of properties, custom sorting and more (full list in online release notes)
 . [NEW] Types: Added convenience function to create a ccColor4F from color components
 . [FIX] Actions: incorrect behavior of CCRepeat
+. [FIX] CCArray: equalilty is tested by isEqual instead of comparing pointer addresses
+. [FIX] CCArray: CCARRAY_FOREACH macro is now ARC compatible
 . [FIX] CCLabelBMFont: full unicode support
 . [FIX] CCTMXXMLParser: removed unused variables in release mode
 . [FIX] ColorLayer: incorrect size in init method
