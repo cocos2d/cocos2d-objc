@@ -492,10 +492,10 @@ static inline void memswp(void* a, void* b, size_t width)
 static inline int mergesortL(ccCArray* array, size_t width, int (*compar)(const void *, const void *))
 {
 	NSInteger h, i, j, k, l, m, n = array->num;
-    id *arr = array->arr; 
-	id* A; // points to an element
+    CCARRAY_ID *arr = array->arr; 
+	CCARRAY_ID *A; // points to an element
 	//id B = NSZoneMalloc(NULL,(n/2 + 1) * width); // points to a temp array
-    CCARRAY_ID* B = (CCARRAY_ID*) malloc(n * width);
+    CCARRAY_ID *B = (CCARRAY_ID*) malloc(n * width);
     
 	for (h = 1; h < n; h += h) {
         for (m = n - 1 - h; m >= 0; m -= h + h) {
@@ -536,7 +536,7 @@ static inline void insertionSort(ccCArray* arr, int (*comparator)(const void *, 
 	
 	NSInteger i,j,length = arr->num;
 	
-	id * x = arr->arr;
+	CCARRAY_ID *x = arr->arr;
 	id temp;	
     
 	// insertion sort
