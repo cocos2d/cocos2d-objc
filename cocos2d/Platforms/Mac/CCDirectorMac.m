@@ -309,7 +309,7 @@
 			break;
 
 		default:
-			CCLOG(@"cocos2d: Director: unrecognized projecgtion");
+			CCLOG(@"cocos2d: Director: unrecognized projection");
 			break;
 	}
 
