@@ -64,6 +64,9 @@ Contributors (alphabetically ordered):
 
 * Nicky Weber (https://github.com/nickyEnjoysWoogoo):
 	Added convenience function to create a ccColor4F from color components	
+    
+* Nicolas Barrios (http://wefiends.com)
+    Fix for CCArray for ARC compatibility 
 
 * podhrask...@gmail.com
 	TouchDispatcher: correctly handles addition and removal of handlers when being inside a touch handler. patch
