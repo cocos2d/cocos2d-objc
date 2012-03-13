@@ -187,12 +187,8 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 
 	[shaderProgram_ release];
 
-	if( name_ ) {
-
-		NSAssert( [[CCDirector sharedDirector] runningThread] == [NSThread currentThread], @"cocos2d: Shall not happen. Please report this bug on the cocos2d issue tracker" );
-
+	if( name_ )
 		ccGLDeleteTexture( name_ );
-	}
 
 	[super dealloc];
 }
