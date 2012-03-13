@@ -183,6 +183,22 @@ static CCShaderCache *_sharedShaderCache;
 	[p release];
 
 	CHECK_GL_ERROR_DEBUG();
+	
+	//
+	// Position and 1 color passed as a uniform (to similate glColor4ub )
+	//
+	p = [[CCGLProgram alloc] initWithVertexShaderByteArray:ccPosition_uColor_vert
+								   fragmentShaderByteArray:ccPosition_uColor_frag];	
+	
+	[p addAttribute:@"aVertex" index:kCCVertexAttrib_Position];
+	
+	[p link];
+	[p updateUniforms];
+
+	[programs_ setObject:p forKey:kCCShader_Position_uColor];
+	[p release];
+
+	CHECK_GL_ERROR_DEBUG();
 }
 
 -(CCGLProgram *) programForKey:(NSString*)key
