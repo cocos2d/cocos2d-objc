@@ -147,7 +147,8 @@ enum {
 	NSInteger tag_;
 
 	// user data field
-	id userData_;
+	void *userData_;
+	id userObject_;
 
 	// Shader
 	CCGLProgram	*shaderProgram_;
@@ -177,10 +178,7 @@ enum {
 	// Scenes, Layers and other "whole screen" object don't use it.
 	BOOL isRelativeAnchorPoint_;
 
-	BOOL isReorderChildDirty_;
-	
-	// userData is going to be retained.
-	BOOL retainUserData_;
+	BOOL isReorderChildDirty_;	
 }
 
 /** The z order of the node relative to its "siblings": children of the same parent */
@@ -259,6 +257,9 @@ enum {
 @property(nonatomic,readwrite,assign) NSInteger tag;
 /** A custom user data pointer */
 @property(nonatomic,readwrite,assign) void* userData;
+/** Similar to userData, but instead of holding a void* it holds an id */
+@property(nonatomic,readwrite,retain) id userObject;
+
 /** Shader Program
  @since v2.0
  */
@@ -567,9 +568,4 @@ enum {
  */
 - (CGPoint)convertTouchToNodeSpaceAR:(UITouch *)touch;
 #endif // __CC_PLATFORM_IOS
-
-/** Set the user data. If retainData is YES, "userData" will be treated like an NSObject. Retain/Release will be called.
- @since v2.0
- */
--(void) setUserData:(void *)userData retainData:(BOOL)retainData;
 @end
