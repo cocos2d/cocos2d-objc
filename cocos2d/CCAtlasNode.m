@@ -74,7 +74,9 @@
 		blendFunc_.src = CC_BLEND_SRC;
 		blendFunc_.dst = CC_BLEND_DST;
 
-		self.textureAtlas = [CCTextureAtlas textureAtlasWithFile:tile capacity:c];
+		CCTextureAtlas * newAtlas = [[CCTextureAtlas alloc] initWithFile:tile capacity:c];
+		self.textureAtlas = newAtlas;
+		[newAtlas release];
 
 		if( ! textureAtlas_ ) {
 			CCLOG(@"cocos2d: Could not initialize CCAtlasNode. Invalid Texture");
