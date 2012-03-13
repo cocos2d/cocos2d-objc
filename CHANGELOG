@@ -30,7 +30,7 @@ version 2.0-rc0 XX-Mar-2012
 		Renamed kCCMenuTouchPriority -> kCCMenuHandlerPriority
 . [NEW] MenuItem: SpriteItem: Added setters for enabled,disabled,selected sprites
 		Added setter for targe:selector and block
-. [NEW] Node: userData has the option of being retained and treated like an id.
+. [NEW] Node: Added userObject. Similar to userData, but it holds an id.
 		zOrder property is readwrite
 . [NEW] Particle: It is possible to resize the particle in runtime
 . [NEW] Sprite: spriteWithBatchNode / initWithBatchNode were removed. Use initWithTexture:batch.texture / spriteWithTexture:batch.texture instead
@@ -45,6 +45,7 @@ version 2.0-rc0 XX-Mar-2012
 . [FIX] Director: becomes firstResponder after toggling fullscreen (Mac only) (issue #1189)
 . [FIX] DrawingPrimitives: drawColor4f() uses GLFloat instead of GLbyte (issue #1307)
 . [FIX] GLProgram: report error correctly if vertex shader has compile issues
+		Base shaders are no longer parsed files. Instead they are parsed from memory. Faster and ease the migration to v2.0
 . [FIX] GLView: Fixed memory leak while dispatching events (Mac only)
 . [FIX] GLView: MSAA support is working (issue #1315)
 . [FIX] Label: LabelBMFont fixed y-offset in RetinaDisplay (issue #1309)
