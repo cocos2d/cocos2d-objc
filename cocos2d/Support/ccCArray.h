@@ -45,7 +45,6 @@
 
 #import "../ccMacros.h"
 
-
 #pragma mark -
 #pragma mark ccArray for Objects
 
@@ -468,60 +467,58 @@ static inline void ccCArrayFullRemoveArray(ccCArray *arr, ccCArray *minusArr)
 }
 
 //used by mergesortL
-static inline void memswp(void* a, void* b, size_t width)
+static inline void pointerswap(void* a, void* b, size_t width)
 {
-	if (width == sizeof(void*)) {
-        // Optimization for pointer sized swap:
-        void* tmp;
-        tmp = *(void**)a;
-        *(void**)a = *(void**)b;
-        *(void**)b = tmp;
-        return;
-    }
-	// default uses memcpy:
-	char tmp[width];
-	memcpy(tmp, a, width);
-	memcpy(a, b, width);
-	memcpy(b, tmp, width);
+    void* tmp;
+    tmp = *(void**)a;
+    *(void**)a = *(void**)b;
+    *(void**)b = tmp;
 }
-
 
 // iterative mergesort arrd on
 //  http://www.inf.fh-flensburg.de/lang/algorithmen/sortieren/merge/mergiter.htm  
-
 static inline int mergesortL(ccCArray* array, size_t width, int (*compar)(const void *, const void *))
 {
-	NSInteger h, i, j, k, l, m, n = array->num;
     CCARRAY_ID *arr = array->arr; 
-	CCARRAY_ID *A; // points to an element
-	//id B = NSZoneMalloc(NULL,(n/2 + 1) * width); // points to a temp array
-    CCARRAY_ID *B = (CCARRAY_ID*) malloc(n * width);
+    NSInteger i,j,k,s,m,n= array->num; 
     
-	for (h = 1; h < n; h += h) {
-        for (m = n - 1 - h; m >= 0; m -= h + h) {
-            l = m - h + 1;
-            if (l < 0)
-                l = 0;
+    CCARRAY_ID *B = (CCARRAY_ID*) malloc((n/2 + 1) * width);
+    for (s = 1; s < n; s += s) 
+    {
+        for (m = n-1-s; m >= 0; m -= s+s)
+        {
+            NSInteger lo = MAX(m-(s+1),0); 
+            NSInteger hi = m+s; 
             
-            // Copy first half of the array into helper B:
-            j = m+1;
-            memcpy(B, arr + (l * width), (j-l) * width);
+            j = lo;
+
+            if (m-j > 0)
+            {
+                memcpy(B, &arr[j], (m-j) * width);
+            }
             
-            for (i = 0, k = l; k < j && j <= m + h; k++) {
-                A = arr + (width * j); // A = [self objectAtIndex:j];
-                if (compar(A, B + (i * width)) > 0) {
-                    memswp(arr+(k*width), B+(i*width), width); i+=1;
-                } else {
-                    memswp(arr+(k*width), A, width); j+=1;
+            i = 0;
+            j = m;
+            k = lo; 
+            
+            while (k<j  && j <= hi) 
+            {
+                if (compar(&B[i],&arr[j]) <= 0)
+                {    
+                    pointerswap(&arr[k++],&B[i++], width);
+                }
+             
+                else 
+                {    
+                   pointerswap(&arr[k++],&arr[j++], width);
                 }
             }
             
-            while (k < j) // This loop could be optimized
-                memswp(arr+(k++*width), B+(i++*width), width);
+            while (k<j)
+                pointerswap(&arr[k++],&B[i++],width);
         }
-	}
-    
-	free(B);
+    }
+   	free(B);
 	return 0;
 }
 
