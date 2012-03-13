@@ -4565,7 +4565,7 @@ Class restartAction()
 								   depthFormat:GL_DEPTH_COMPONENT24_OES
 							preserveBackbuffer:NO
 									sharegroup:nil
-								 multiSampling:YES
+								 multiSampling:NO
 							   numberOfSamples:4];
 
 	director_ = (CCDirectorIOS*) [CCDirector sharedDirector];
@@ -4627,7 +4627,8 @@ Class restartAction()
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-	return UIInterfaceOrientationIsLandscape(interfaceOrientation);
+	return YES;
+//	return UIInterfaceOrientationIsLandscape(interfaceOrientation);
 }
 
 @end

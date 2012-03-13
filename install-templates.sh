@@ -72,13 +72,13 @@ check_dst_dir(){
 copy_cocos2d_files(){
 	echo ...copying cocos2d files
 	copy_files cocos2d "$LIBS_DIR"
-    copy_files LICENSE_cocos2d.txt "$LIBS_DIR"
+	copy_files LICENSE_cocos2d.txt "$LIBS_DIR"
 }
 
 copy_cocosdenshion_files(){
 	echo ...copying CocosDenshion files
 	copy_files CocosDenshion/CocosDenshion "$LIBS_DIR"
-    copy_files LICENSE_CocosDenshion.txt "$LIBS_DIR"
+	copy_files LICENSE_CocosDenshion.txt "$LIBS_DIR"
 }
 
 copy_cocosdenshionextras_files(){
@@ -89,13 +89,9 @@ copy_cocosdenshionextras_files(){
 copy_kazmath_files(){
 	echo ...copying Kazmath files
 	copy_files external/kazmath "$LIBS_DIR"
-    copy_files LICENSE_Kazmath.txt "$LIBS_DIR"
+	copy_files LICENSE_Kazmath.txt "$LIBS_DIR"
 }
 
-copy_shaders_files(){
-	echo ...copying cocos2d Shaders files
-	copy_files Resources/Shaders "$LIBS_DIR"
-}
 
 print_template_banner(){
 	echo ''
@@ -116,25 +112,21 @@ copy_xcode4_project_templates(){
     check_dst_dir
 
 	LIBS_DIR="$DST_DIR""lib_cocos2d.xctemplate/libs/"
-    mkdir -p "$LIBS_DIR"
-    copy_cocos2d_files
-
-	LIBS_DIR="$DST_DIR""lib_cocos2d_shaders.xctemplate/"
-    mkdir -p "$LIBS_DIR"
-    copy_shaders_files
+	mkdir -p "$LIBS_DIR"
+	copy_cocos2d_files
 
 
 	LIBS_DIR="$DST_DIR""lib_cocosdenshion.xctemplate/libs/"
-    mkdir -p "$LIBS_DIR"
-    copy_cocosdenshion_files
+	mkdir -p "$LIBS_DIR"
+	copy_cocosdenshion_files
 
 	LIBS_DIR="$DST_DIR""lib_cocosdenshionextras.xctemplate/libs/"
-    mkdir -p "$LIBS_DIR"
-    copy_cocosdenshionextras_files
+	mkdir -p "$LIBS_DIR"
+	copy_cocosdenshionextras_files
 
 	LIBS_DIR="$DST_DIR""lib_kazmath.xctemplate/libs/"
-    mkdir -p "$LIBS_DIR"
-    copy_kazmath_files
+	mkdir -p "$LIBS_DIR"
+	copy_kazmath_files
 
 	echo ...copying template files
 	copy_files templates/Xcode4_templates/ "$DST_DIR"
@@ -149,7 +141,7 @@ copy_xcode4_project_templates(){
 
 	echo ...copying Chipmunk files
 	copy_files external/Chipmunk "$LIBS_DIR"
-    copy_files LICENSE_Chipmunk.txt "$LIBS_DIR"
+	copy_files LICENSE_Chipmunk.txt "$LIBS_DIR"
 
 	echo done!
 
@@ -157,22 +149,22 @@ copy_xcode4_project_templates(){
 
 
 	LIBS_DIR="$DST_DIR""lib_box2d.xctemplate/libs/"
-    mkdir -p "$LIBS_DIR"
+	mkdir -p "$LIBS_DIR"
 
 	echo ...copying Box2d files
 	copy_files external/Box2d/Box2D "$LIBS_DIR"
-    copy_files LICENSE_Box2D.txt "$LIBS_DIR"
+	copy_files LICENSE_Box2D.txt "$LIBS_DIR"
 
 	echo done!
 
 
-    # Move File Templates to correct position
+	# Move File Templates to correct position
 	DST_DIR="$HOME/Library/Developer/Xcode/Templates/File Templates/$COCOS2D_DST_DIR/"
 	OLD_DIR="$HOME/Library/Developer/Xcode/Templates/$COCOS2D_DST_DIR/"
 	
 	print_template_banner "Installing Xcode 4 CCNode file templates..."
 
-    check_dst_dir
+	check_dst_dir
 	
 	mv -f "$OLD_DIR""/CCNode class.xctemplate" "$DST_DIR"
 	
