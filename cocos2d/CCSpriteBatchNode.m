@@ -120,6 +120,11 @@ const NSUInteger defaultCapacity = 29;
 	return [self initWithTexture:tex capacity:capacity];
 }
 
+-(id)init
+{
+    return [self initWithTexture:[[[CCTexture2D alloc] init] autorelease] capacity:0];
+}
+
 - (NSString*) description
 {
 	return [NSString stringWithFormat:@"<%@ = %08X | Tag = %i>", [self class], self, tag_ ];
