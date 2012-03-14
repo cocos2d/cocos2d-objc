@@ -6,17 +6,42 @@ http://www.cocos2d-iphone.org/forum
 
 cocos2d logos by Michael Heald (http://www.fullyillustrated.com)
 
-
-
 cocos2d for iPhone authors for v1.1
 -----------------------------------
 
 Lead Developers:
-	Ricardo Quesada (http://www.zynga.com)
 	Marco Tillemans (http://www.welcometothefabrik.com/)
+	Ricardo Quesada (http://www.cocos2d-iphone.org)
 
 
 Contributors (alphabetically ordered):
+
+* Andreas Herbig (http://www.3spin.de/)
+	fix for incorrect CCRepeat behavior
+	
+* akotiranta 
+	backported CCLabelBMFont implementation from 2.0 branch
+
+* Alexander Carter
+	Sprite: fixed possible opacity bug in setColor
+
+* Christoph Winkler (http://raketenbasis.de)
+	Word Wrap works on LabelTTF on Mac
+	bug fixes for failure to compile on 32-bit mac builds
+	created new drawPrimitives functions, ccDrawRect, ccDrawSolidRect and ccDrawSolidPoly.
+    bug fix for CCTMXXMLParser in release mode
+	
+* Jerrod Putman (http://www.tinytimgames.com)
+	Original author of ARC compatibility code
+	
+* jptsetung (http://www.bonuslevel.org/games/) 
+	Patch for CCSprite, premade hierarchies of sprites will be rendered correctly by a batchNode
+	
+* John Wordsworth ( http://www.johnwordsworth.com/ )
+	CCAnimationCache: Added animation data format. Can be loaded into the animation cache
+
+* Karl Stenerud (http://www.mindsnacks.com/):
+	Author of ActionTargeted
 
 * Marco Tillemans (AKA araker: http://www.welcometothefabrik.com/)
 	Texture2D: drawInRect / drawAtPoint disables color state
@@ -25,23 +50,60 @@ Contributors (alphabetically ordered):
 	Schedule: added support for delay and repeat
 	ESRenderer: don't recreate the renderer when it is not needed
 	Actions: Instant actions can be sequenceables
-	Actions: durtion is not divided by zero
-	Actions: Repeat & RepeatForever work as expectd
+	Actions: duration is not divided by zero
+	Actions: Repeat & RepeatForever work as expected
+	Co-author of animated particle system
 	Author of ParticleBatchNode node
 	Improved ESRenderer layoutSubview
 	Improved Debug Drawing for Sprite batched node	
+	EAGLView destroys and recreates all OpenGL buffers correctly
+	TileMap: flipped tiles can be changed during runtime
+
+* Martin 
+	Co-author of animated particle system
+
+* Nicky Weber (https://github.com/nickyEnjoysWoogoo):
+	Added convenience function to create a ccColor4F from color components	
+    
+* Nicolas Barrios (http://wefiends.com)
+    Fix for CCArray for ARC compatibility 
+
+* podhrask...@gmail.com
+	TouchDispatcher: correctly handles addition and removal of handlers when being inside a touch handler. patch
 
 * Ricardo Ruiz:
 	Added support for RGB888 textures
+    
+* Rick Smorawski
+    Added full unicode support to CCLabelBMFont
+
+* Samuel J. Grabski http://www.sg7.com
+	Created a new touchdispatcher implementation
+    New touchdispatcher performance tests
+    
+* Scott Lembcke (AKA slembcke) (http://chipmunk-physics.net/)
+	Improved ARC compatiblity code
+
+* Sergey Tikhonov (AKA haqu) (http://haqu.net)
+	Removed warning in CCMenuItem
+
+* Shakthi:
+	Added CCNode#onExitTransitionDidStart method
+	Fixed fading background music issue
 
 * slycrel (http://geopherlite.blogspot.com/)
 	Added support for flipped tiles in TMX maps. Also added test case
+	Added support for in-memory TMX map creation. Also added a test case
+    TMX Map: fixed crash when multiple layers and tiles were used with rotation
+
+* Spencer Ho
+    fixed 3d projection settings for ipad3 
 
 * Stepan Generalov (iPsi) (http://www.itraceur.ru/)
 	FileUtils: Loads -hd resources even if the -sd resource is not present. patch
 
-* John Wordsworth ( http://www.johnwordsworth.com/ )
-	CCAnimationCache: Added animation data format. Can be loaded into the animation cache
+* Steve Kanter
+    new file extension for ipad retina
 
 
 cocos2d for iPhone authors for v1.0
@@ -155,6 +217,8 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		actions uses FLT_EPSILON macro. patch.
 	* effervens:
 		patches for Director
+	* effervecents (https://github.com/effervescent):
+		Sprite: Skew is performed after scale
 	* Ernesto Corvi & On-Core (http://www.on-core.com/):
 		author of TGA RLE support
 		patches for TextureMgr

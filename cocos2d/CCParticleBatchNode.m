@@ -348,10 +348,12 @@
 	
 	NSAssert([children_ containsObject:child], @"CCParticleBatchNode doesn't contain the sprite. Can't remove it");
 	
+	// cleanup before removing, issue 1316 clean before calling super
+	[self removeChildFromAtlas:child cleanup:doCleanup];
+	
 	[super removeChild:child cleanup:doCleanup];
 	
-	// cleanup before removing
-	[self removeChildFromAtlas:child cleanup:doCleanup];
+	[self updateAllAtlasIndexes];
 }
 
 -(void)removeChildAtIndex:(NSUInteger)index cleanup:(BOOL) doCleanup
@@ -457,7 +459,6 @@
 	//with no cleanup the particle system could be reused for self rendering
 	if (!doCleanUp) [pSystem useSelfRender];
 	
-	[self updateAllAtlasIndexes];
 }
 
 //rebuild atlas indexes

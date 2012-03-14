@@ -31,7 +31,7 @@
 // local imports
 #import "CLScoreServerPost.h"
 #import "CLScoreServerRequest.h"
-#import "ccMacros.h"
+#import "../cocos2d/ccMacros.h"
 
 @implementation CLScoreServerRequest
 

@@ -103,6 +103,12 @@ typedef struct _ccColor4F {
 	GLfloat b;
 	GLfloat a;
 } ccColor4F;
+//! helper that creates a ccColor4f type
+static inline ccColor4F 
+ccc4f(const GLfloat r, const GLfloat g, const GLfloat b, const GLfloat a)
+{
+	return (ccColor4F){r, g, b, a};
+}
 
 /** Returns a ccColor4F from a ccColor3B. Alpha will be 1.
  @since v0.99.1
@@ -284,18 +290,43 @@ typedef struct _ccBlendFunc
 //! ccResolutionType
 typedef enum
 {
-	//! Unknonw resolution type
-	kCCResolutionUnknown,
-	//! standard (iphone) resolution type
-	kCCResolutionStandard,
-	//! RetinaDisplay resolution type
-	kCCResolutionRetinaDisplay,
-	//! iPad resolution type
-	kCCResolutioniPad,
-	
+    //! Unknonw resolution type
+    kCCResolutionUnknown,
+    //! iPhone resolution type
+    kCCResolutioniPhone,
+    //! RetinaDisplay resolution type
+    kCCResolutioniPhoneRetinaDisplay,
+    //! iPad resolution type
+    kCCResolutioniPad,
+    //! iPad Retina Display resolution type
+    kCCResolutioniPadRetinaDisplay,
+    
 } ccResolutionType;
 
 //! delta time type
 //! if you want more resolution redefine it as a double
 typedef float ccTime;
 //typedef double ccTime;
+
+// types for animation in particle systems
+
+// texture coordinates for a quad
+typedef struct _ccT2F_Quad
+{
+	//! bottom left
+	ccTex2F	bl;
+	//! bottom right
+	ccTex2F	br;
+	//! top left
+	ccTex2F	tl;
+	//! top right
+	ccTex2F	tr;
+} ccT2F_Quad;
+
+// struct that holds the size in pixels, texture coordinates and delays for animated CCParticleSystemQuad
+typedef struct
+{
+	ccT2F_Quad texCoords;
+	ccTime delay;
+	CGSize size; 
+} ccAnimationFrameData;

@@ -116,12 +116,15 @@
 @interface CCTMXMapInfo (Private)
 /* initalises parsing of an XML file, either a tmx (Map) file or tsx (Tileset) file */
 -(void) parseXMLFile:(NSString *)xmlFilename;
+/* initalises parsing of an XML string, either a tmx (Map) string or tsx (Tileset) string */
+- (void) parseXMLString:(NSString *)xmlString;
+/* handles the work of parsing for parseXMLFile: and parseXMLString: */
+- (NSError*) parseXMLData:(NSData*)data;
 @end
-
 
 @implementation CCTMXMapInfo
 
-@synthesize orientation = orientation_, mapSize = mapSize_, layers = layers_, tilesets = tilesets_, tileSize = tileSize_, filename = filename_, objectGroups = objectGroups_, properties = properties_;
+@synthesize orientation = orientation_, mapSize = mapSize_, layers = layers_, tilesets = tilesets_, tileSize = tileSize_, filename = filename_, resources = resources_, objectGroups = objectGroups_, properties = properties_;
 @synthesize tileProperties = tileProperties_;
 
 +(id) formatWithTMXFile:(NSString*)tmxFile
@@ -129,33 +132,53 @@
 	return [[[self alloc] initWithTMXFile:tmxFile] autorelease];
 }
 
++(id) formatWithXML:(NSString*)tmxString resourcePath:(NSString*)resourcePath
+{
+	return [[[self alloc] initWithXML:tmxString resourcePath:resourcePath] autorelease];
+}
+
+- (void) internalInit:(NSString*)tmxFileName resourcePath:(NSString*)resourcePath
+{
+	self.tilesets = [NSMutableArray arrayWithCapacity:4];
+	self.layers = [NSMutableArray arrayWithCapacity:4];
+	self.filename = tmxFileName;
+	self.resources = resourcePath;
+	self.objectGroups = [NSMutableArray arrayWithCapacity:4];
+	self.properties = [NSMutableDictionary dictionaryWithCapacity:5];
+	self.tileProperties = [NSMutableDictionary dictionaryWithCapacity:5];
+	
+	// tmp vars
+	currentString = [[NSMutableString alloc] initWithCapacity:1024];
+	storingCharacters = NO;
+	layerAttribs = TMXLayerAttribNone;
+	parentElement = TMXPropertyNone;
+}
+
+-(id) initWithXML:(NSString *)tmxString resourcePath:(NSString*)resourcePath
+{
+	if( (self=[super init])) {
+		[self internalInit:nil resourcePath:resourcePath];
+		[self parseXMLString:tmxString];		
+	}
+	return self;
+}
+
 -(id) initWithTMXFile:(NSString*)tmxFile
 {
 	if( (self=[super init])) {
-		
-		self.tilesets = [NSMutableArray arrayWithCapacity:4];
-		self.layers = [NSMutableArray arrayWithCapacity:4];
-		self.filename = tmxFile;
-		self.objectGroups = [NSMutableArray arrayWithCapacity:4];
-		self.properties = [NSMutableDictionary dictionaryWithCapacity:5];
-		self.tileProperties = [NSMutableDictionary dictionaryWithCapacity:5];
-	
-		// tmp vars
-		currentString = [[NSMutableString alloc] initWithCapacity:1024];
-		storingCharacters = NO;
-		layerAttribs = TMXLayerAttribNone;
-		parentElement = TMXPropertyNone;
-		
+		[self internalInit:tmxFile resourcePath:nil];
 		[self parseXMLFile:filename_];		
 	}
 	return self;
 }
+
 - (void) dealloc
 {
 	CCLOGINFO(@"cocos2d: deallocing %@", self);
 	[tilesets_ release];
 	[layers_ release];
 	[filename_ release];
+	[resources_ release];
 	[currentString release];
 	[objectGroups_ release];
 	[properties_ release];
@@ -163,22 +186,32 @@
 	[super dealloc];
 }
 
-- (void) parseXMLFile:(NSString *)xmlFilename
+- (void) parseXMLData:(NSData*)data
 {
-  NSURL *url = [NSURL fileURLWithPath:[CCFileUtils fullPathFromRelativePath:xmlFilename] ];
-  NSData *data = [NSData dataWithContentsOfURL:url];
-  NSXMLParser *parser = [[NSXMLParser alloc] initWithData:data];
-
+	NSXMLParser *parser = [[[NSXMLParser alloc] initWithData:data] autorelease];
+	
 	// we'll do the parsing
 	[parser setDelegate:self];
 	[parser setShouldProcessNamespaces:NO];
 	[parser setShouldReportNamespacePrefixes:NO];
 	[parser setShouldResolveExternalEntities:NO];
 	[parser parse];
+	
+     NSAssert1( ![parser parserError], @"Error parsing TMX data: %@.", [NSString stringWithCharacters:[data bytes] length:[data length]] );
+}
 
-	NSAssert1( ! [parser parserError], @"Error parsing file: %@.", xmlFilename );
+- (void) parseXMLString:(NSString *)xmlString
+{
+	NSData* data = [xmlString dataUsingEncoding:NSUTF8StringEncoding];
+	[self parseXMLData:data];
+	
+}
 
-	[parser release];
+- (void) parseXMLFile:(NSString *)xmlFilename
+{
+	NSURL *url = [NSURL fileURLWithPath:[CCFileUtils fullPathFromRelativePath:xmlFilename] ];
+	NSData *data = [NSData dataWithContentsOfURL:url];
+	[self parseXMLData:data];
 }
 
 // the XML parser calls here with all the elements
@@ -212,6 +245,8 @@
 		if (externalTilesetFilename) {
 				// Tileset file will be relative to the map file. So we need to convert it to an absolute path
 				NSString *dir = [filename_ stringByDeletingLastPathComponent];	// Directory of map file
+				if (!dir)
+					dir = resources_;
 				externalTilesetFilename = [dir stringByAppendingPathComponent:externalTilesetFilename];	// Append path to tileset file
 				
 				[self parseXMLFile:externalTilesetFilename];
@@ -286,7 +321,9 @@
 		
 		// build full path
 		NSString *imagename = [attributeDict valueForKey:@"source"];		
-		NSString *path = [filename_ stringByDeletingLastPathComponent];		
+		NSString *path = [filename_ stringByDeletingLastPathComponent];
+		if (!path)
+			path = resources_;
 		tileset.sourceImage = [path stringByAppendingPathComponent:imagename];
 
 	} else if([elementName isEqualToString:@"data"]) {

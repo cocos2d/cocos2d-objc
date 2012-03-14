@@ -395,29 +395,51 @@ typedef struct _ccBezierConfig {
 /** Animates a sprite given the name of an Animation */
 @interface CCAnimate : CCActionInterval <NSCopying>
 {
-	CCAnimation *animation_;
-	id origFrame_;
-	BOOL restoreOriginalFrame_;
+	NSMutableArray		*splitTimes_;
+	NSInteger			nextFrame_;
+	CCAnimation			*animation_;
+	id					origFrame_;
+	BOOL				restoreOriginalFrame_;
 }
 /** animation used for the animage */
 @property (readwrite,nonatomic,retain) CCAnimation * animation;
 
 /** creates the action with an Animation and will restore the original frame when the animation is over */
-+(id) actionWithAnimation:(CCAnimation*) a;
++(id) actionWithAnimation:(CCAnimation*)animation;
 /** initializes the action with an Animation and will restore the original frame when the animtion is over */
--(id) initWithAnimation:(CCAnimation*) a;
+-(id) initWithAnimation:(CCAnimation*)animation;
 /** creates the action with an Animation */
-+(id) actionWithAnimation:(CCAnimation*) a restoreOriginalFrame:(BOOL)b;
++(id) actionWithAnimation:(CCAnimation*)animation restoreOriginalFrame:(BOOL)restoreOriginalFrame;
 /** initializes the action with an Animation */
--(id) initWithAnimation:(CCAnimation*) a restoreOriginalFrame:(BOOL)b;
+-(id) initWithAnimation:(CCAnimation*) a restoreOriginalFrame:(BOOL)restoreOriginalFrame;
 /** creates an action with a duration, animation and depending of the restoreOriginalFrame, it will restore the original frame or not.
  The 'delay' parameter of the animation will be overrided by the duration parameter.
  @since v0.99.0
  */
-+(id) actionWithDuration:(ccTime)duration animation:(CCAnimation*)animation restoreOriginalFrame:(BOOL)b;
++(id) actionWithDuration:(ccTime)duration animation:(CCAnimation*)animation restoreOriginalFrame:(BOOL)restoreOriginalFrame;
 /** initializes an action with a duration, animation and depending of the restoreOriginalFrame, it will restore the original frame or not.
  The 'delay' parameter of the animation will be overrided by the duration parameter.
  @since v0.99.0
  */
--(id) initWithDuration:(ccTime)duration animation:(CCAnimation*)animation restoreOriginalFrame:(BOOL)b;
+-(id) initWithDuration:(ccTime)duration animation:(CCAnimation*)animation restoreOriginalFrame:(BOOL)restoreOriginalFrame;
+@end
+
+/** Overrides the target of an action so that it always runs on the target
+ * specified at action creation rather than the one specified by runAction.
+	@since 1.1
+ */
+@interface CCTargetedAction : CCActionInterval <NSCopying>
+{
+	id forcedTarget_;
+	CCFiniteTimeAction* action_;
+}
+/** This is the target that the action will be forced to run with */
+@property(readwrite,nonatomic,retain) id forcedTarget;
+
+/** Create an action with the specified action and forced target */
++ (id) actionWithTarget:(id) target action:(CCFiniteTimeAction*) action;
+
+/** Init an action with the specified action and forced target */
+- (id) initWithTarget:(id) target action:(CCFiniteTimeAction*) action;
+
 @end

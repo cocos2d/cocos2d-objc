@@ -1049,9 +1049,13 @@ Class restartAction()
 											 lineBreakMode:CCLineBreakModeWordWrap
 												  fontName:@"Marker Felt"
 												  fontSize:16];
-		wordwrap.position = ccp(s.width/2,80);
+		wordwrap.position = ccp(s.width/2,60);
 		
 		[self addChild:wordwrap];
+		
+		CCLabelTTF *label = [CCLabelTTF labelWithString: @"A really long line of text that is longer than the width of the label" dimensions:CGSizeMake(280, 60) alignment:CCTextAlignmentCenter fontName: @"Impact" fontSize: 14];
+		label.position = ccp(s.width/2,90);
+		[self addChild:label];
 
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 		
@@ -1126,10 +1130,11 @@ Class restartAction()
 	// set FPS at 60
 	[director setAnimationInterval:1.0/60];
 	
-	// When in iPad / RetinaDisplay mode, CCFileUtils will append the "-ipad" / "-hd" to all loaded files
-	// If the -ipad  / -hdfile is not found, it will load the non-suffixed version
-	[CCFileUtils setiPadSuffix:@"-ipad"];			// Default on iPad is "" (empty string)
-	[CCFileUtils setRetinaDisplaySuffix:@"-hd"];	// Default on RetinaDisplay is "-hd"
+	// When in iPhone RetinaDisplay, iPad, iPad RetinaDisplay mode, CCFileUtils will append the "-hd", "-ipad", "-ipadhd" to all loaded files
+	// If the -hd, -ipad, -ipadhd files are not found, it will load the non-suffixed version
+	[CCFileUtils setiPhoneRetinaDisplaySuffix:@"-hd"];		// Default on iPhone RetinaDisplay is "-hd"
+	[CCFileUtils setiPadSuffix:@"-ipad"];					// Default on iPad is "" (empty string)
+	[CCFileUtils setiPadRetinaDisplaySuffix:@"-ipadhd"];	// Default on iPad RetinaDisplay is "-ipadhd"
 	
 	// Turn on display FPS
 	[director setDisplayFPS:YES];

@@ -309,7 +309,13 @@ Class restartTransition()
 -(void) onEnterTransitionDidFinish
 {
 	[super onEnterTransitionDidFinish];
-	NSLog(@"Scene 1: transition did finish");
+	NSLog(@"Scene 1: onEnterTransitionDidFinish");
+}
+
+-(void) onExitTransitionDidStart
+{
+	[super onExitTransitionDidStart];
+	NSLog(@"Scene 1: onExitTransitionDidStart");
 }
 
 -(void) onExit
@@ -408,7 +414,13 @@ Class restartTransition()
 -(void) onEnterTransitionDidFinish
 {
 	[super onEnterTransitionDidFinish];
-	NSLog(@"Scene 2: transition did finish");
+	NSLog(@"Scene 2: onEnterTransitionDidFinish");
+}
+
+-(void) onExitTransitionDidStart
+{
+	[super onExitTransitionDidStart];
+	NSLog(@"Scene 2: onExitTransitionDidStart");
 }
 
 -(void) onExit
@@ -467,10 +479,11 @@ Class restartTransition()
 	if( ! [director enableRetinaDisplay:YES] )
 		CCLOG(@"Retina Display Not supported");
 	
-	// When in iPad / RetinaDisplay mode, CCFileUtils will append the "-ipad" / "-hd" to all loaded files
-	// If the -ipad  / -hdfile is not found, it will load the non-suffixed version
-	[CCFileUtils setiPadSuffix:@"-ipad"];			// Default on iPad is "" (empty string)
-	[CCFileUtils setRetinaDisplaySuffix:@"-hd"];	// Default on RetinaDisplay is "-hd"
+    // When in iPhone RetinaDisplay, iPad, iPad RetinaDisplay mode, CCFileUtils will append the "-hd", "-ipad", "-ipadhd" to all loaded files
+	// If the -hd, -ipad, -ipadhd files are not found, it will load the non-suffixed version
+	[CCFileUtils setiPhoneRetinaDisplaySuffix:@"-hd"];		// Default on iPhone RetinaDisplay is "-hd"
+	[CCFileUtils setiPadSuffix:@"-ipad"];					// Default on iPad is "" (empty string)
+	[CCFileUtils setiPadRetinaDisplaySuffix:@"-ipadhd"];	// Default on iPad RetinaDisplay is "-ipadhd"
 
 	// glview is a child of the main window
 	[window addSubview:glView];

@@ -56,12 +56,14 @@
 #import "CCTextureAtlas.h"
 #import "ccMacros.h"
 
+
 // support
 #import "Support/OpenGL_Internal.h"
 #import "Support/CGPointExtension.h"
 #import "Support/base64.h"
 #import "Support/ZipUtils.h"
 #import "Support/CCFileUtils.h"
+
 
 @implementation CCParticleSystem
 @synthesize active, duration;
@@ -75,13 +77,15 @@
 @synthesize totalParticles;
 @synthesize startSize, startSizeVar;
 @synthesize endSize, endSizeVar;
+@synthesize startScale, startScaleVar;
+@synthesize endScale, endScaleVar;
 @synthesize blendFunc = blendFunc_;
 @synthesize positionType = positionType_;
 @synthesize autoRemoveOnFinish = autoRemoveOnFinish_;
 @synthesize emitterMode = emitterMode_;
 @synthesize atlasIndex = atlasIndex_;
 @synthesize useBatchNode = useBatchNode_;
-
+@synthesize animationType=animationType_; 
 
 +(id) particleWithFile:(NSString*) plistFile
 {
@@ -166,6 +170,15 @@
 		startSpinVar = [[dictionary valueForKey:@"rotationStartVariance"] floatValue];
 		endSpin = [[dictionary valueForKey:@"rotationEnd"] floatValue];
 		endSpinVar = [[dictionary valueForKey:@"rotationEndVariance"] floatValue];
+		
+		//v2 additions
+		if ([dictionary valueForKey:@"version"] && [[dictionary valueForKey:@"version"] intValue] == 2)
+		{
+			startScale = [[dictionary valueForKey:@"startScale"] floatValue];
+			startScaleVar = [[dictionary valueForKey:@"startScaleVar"] floatValue];
+			endScale = [[dictionary valueForKey:@"endScale"] floatValue];
+			endScaleVar = [[dictionary valueForKey:@"endScaleVar"] floatValue];	
+		}
 		
 		emitterMode_ = [[dictionary valueForKey:@"emitterType"] intValue];
 
@@ -314,6 +327,12 @@
 		
 		//for batchNode
 		transformSystemDirty_ = NO;
+		
+		// animation 
+		useAnimation_ = NO;
+		totalFrameCount_ = 0;
+		animationFrameData_ = NULL; 
+		animationType_ = kCCParticleAnimationTypeLoop;
 
 		// udpate after action in run!
 		[self scheduleUpdateWithPriority:1];
@@ -325,6 +344,9 @@
 {
 	free( particles );
 
+	if (animationFrameData_) 
+		free(animationFrameData_); 
+	
 	[texture_ release];
 	// profiling
 #if CC_ENABLE_PROFILERS
@@ -383,20 +405,38 @@
 	particle->deltaColor.a = (end.a - start.a) / particle->timeToLive;
 	
 	// size
-	float startS = startSize + startSizeVar * CCRANDOM_MINUS1_1();
-	startS = MAX(0, startS); // No negative value
-	startS *= CC_CONTENT_SCALE_FACTOR();
-	
-	particle->size = startS;
-	if( endSize == kCCParticleStartSizeEqualToEndSize )
-		particle->deltaSize = 0;
-	else {
-		float endS = endSize + endSizeVar * CCRANDOM_MINUS1_1();
-		endS = MAX(0, endS);	// No negative values
-		endS *= CC_CONTENT_SCALE_FACTOR();
-		particle->deltaSize = (endS - startS) / particle->timeToLive;
+	//to limit increase in byte size of particle, size is used as scale during animation
+	if (useAnimation_) 
+	{	
+		float startS = startScale + startScaleVar * CCRANDOM_MINUS1_1();
+		startS = MAX(0, startS); // No negative value
+		
+		particle->size = startS;
+		if( endScale == kCCParticleStartSizeEqualToEndSize )
+			particle->deltaSize = 0;
+		else {
+			float endS = endScale + endScaleVar * CCRANDOM_MINUS1_1();
+			endS = MAX(0, endS);	// No negative values
+			particle->deltaSize = (endS - startS) / particle->timeToLive;
+		}
 	}
-	
+	else 
+	{
+		float startS = startSize + startSizeVar * CCRANDOM_MINUS1_1();
+		startS = MAX(0, startS); // No negative value
+		startS *= CC_CONTENT_SCALE_FACTOR();
+		
+		particle->size = startS;
+		if( endSize == kCCParticleStartSizeEqualToEndSize )
+			particle->deltaSize = 0;
+		else {
+			float endS = endSize + endSizeVar * CCRANDOM_MINUS1_1();
+			endS = MAX(0, endS);	// No negative values
+			endS *= CC_CONTENT_SCALE_FACTOR();
+			particle->deltaSize = (endS - startS) / particle->timeToLive;
+		}
+		
+	}
 	// rotation
 	float startA = startSpin + startSpinVar * CCRANDOM_MINUS1_1();
 	float endA = endSpin + endSpinVar * CCRANDOM_MINUS1_1();
@@ -456,6 +496,27 @@
 	}	
 	
 	particle->z=vertexZ_; 
+	
+	// animation
+	if (useAnimation_)
+	{
+		particle->split = 0;
+		particle->elapsed = 0;
+
+		switch (animationType_) {
+			default:
+			case kCCParticleAnimationTypeOnce:
+			case kCCParticleAnimationTypeLoop: {
+				particle->currentFrame = 0;
+				break;
+			}	
+			case kCCParticleAnimationTypeRandomFrame:
+			case kCCParticleAnimationTypeLoopWithRandomStartFrame: {
+				particle->currentFrame = (NSUInteger) roundf((CCRANDOM_0_1() * (totalFrameCount_ -1)));
+				break;
+			}
+		}
+	}	
 }
 
 -(void) stopSystem
@@ -486,12 +547,15 @@
 {
 	if( active && emissionRate ) {
 		float rate = 1.0f / emissionRate;
-		emitCounter += dt;
+		
+		//issue #1201, prevent bursts of particles, due to too high emitCounter
+		if (particleCount < totalParticles) emitCounter += dt; 
+		
 		while( particleCount < totalParticles && emitCounter > rate ) {
 			[self addParticle];
 			emitCounter -= rate;
 		}
-		
+	
 		elapsed += dt;
 		if(duration != -1 && duration < elapsed)
 			[self stopSystem];
@@ -530,6 +594,54 @@
 			p->timeToLive -= dt;
 
 			if( p->timeToLive > 0 ) {
+				
+				if (useAnimation_) {
+					switch (animationType_) {
+						default:
+						case kCCParticleAnimationTypeLoopWithRandomStartFrame:
+						case kCCParticleAnimationTypeLoop:
+						{
+							p->elapsed += dt; 
+							while (p->elapsed >= p->split) {
+								
+								p->currentFrame++;
+								if (p->currentFrame >= totalFrameCount_) 
+								{	
+									p->currentFrame = 0;
+									p->elapsed = p->elapsed - p->split;
+									p->split = 0.f;
+								}
+								p->split+=animationFrameData_[p->currentFrame].delay; 	
+								
+							}
+							break;
+						}
+						case kCCParticleAnimationTypeOnce:
+						{
+							//stop after one iteration
+							if (p->currentFrame != totalFrameCount_)
+							{	
+								p->elapsed += dt; 
+								while (p->elapsed >= p->split) {
+									
+									p->currentFrame++;
+									if (p->currentFrame >= totalFrameCount_) 
+									{	
+										p->currentFrame = totalFrameCount_;
+										break;
+									}
+									p->split+=animationFrameData_[p->currentFrame].delay; 								
+								}
+							}
+							break;
+						}
+						case kCCParticleAnimationTypeRandomFrame:
+						{
+							// frame does not change in random mode
+							break;
+						}
+					}	
+				}
 				
 				// Mode A: gravity, direction, tangential accel & radial accel
 				if( emitterMode_ == kCCParticleModeGravity ) {
