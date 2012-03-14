@@ -88,9 +88,18 @@ const NSUInteger defaultCapacity = 29;
 	return [[[self alloc] initWithFile:imageFile capacity:defaultCapacity] autorelease];
 }
 
-/*
- * init with CCTexture2D
- */
+-(id)init
+{
+    return [self initWithTexture:[[[CCTexture2D alloc] init] autorelease] capacity:0];
+}
+
+-(id)initWithFile:(NSString *)fileImage capacity:(NSUInteger)capacity
+{
+	CCTexture2D *tex = [[CCTextureCache sharedTextureCache] addImage:fileImage];
+	return [self initWithTexture:tex capacity:capacity];
+}
+
+// Designated initializer
 -(id)initWithTexture:(CCTexture2D *)tex capacity:(NSUInteger)capacity
 {
 	if( (self=[super init])) {
@@ -111,19 +120,6 @@ const NSUInteger defaultCapacity = 29;
 	return self;
 }
 
-/*
- * init with FileImage
- */
--(id)initWithFile:(NSString *)fileImage capacity:(NSUInteger)capacity
-{
-	CCTexture2D *tex = [[CCTextureCache sharedTextureCache] addImage:fileImage];
-	return [self initWithTexture:tex capacity:capacity];
-}
-
--(id)init
-{
-    return [self initWithTexture:[[[CCTexture2D alloc] init] autorelease] capacity:0];
-}
 
 - (NSString*) description
 {
