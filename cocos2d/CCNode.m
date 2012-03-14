@@ -74,7 +74,7 @@ static NSUInteger globalOrderOfArrival = 0;
 @synthesize vertexZ = vertexZ_;
 @synthesize isRunning = isRunning_;
 @synthesize userData = userData_;
-@synthesize orderOfArrival = orderOfArrival;
+@synthesize orderOfArrival = orderOfArrival_;
 
 #pragma mark CCNode - Transform related properties
 
@@ -464,7 +464,10 @@ static NSUInteger globalOrderOfArrival = 0;
 		//  -1st do onExit
 		//  -2nd cleanup
 		if (isRunning_)
+		{
+			[c onExitTransitionDidStart];
 			[c onExit];
+		}
 		
 		if (cleanup)
 			[c cleanup];
@@ -482,7 +485,10 @@ static NSUInteger globalOrderOfArrival = 0;
 	//  -1st do onExit
 	//  -2nd cleanup
 	if (isRunning_)
+	{
+		[child onExitTransitionDidStart];
 		[child onExit];
+	}
 	
 	// If you don't do cleanup, the child's actions will not get removed and the
 	// its scheduledSelectors_ dict will not get released!
@@ -666,6 +672,10 @@ static NSUInteger globalOrderOfArrival = 0;
 	if (rotation_ != 0.0f )
 		glRotatef( -rotation_, 0.0f, 0.0f, 1.0f );
 	
+	// scale
+	if (scaleX_ != 1.0f || scaleY_ != 1.0f)
+		glScalef( scaleX_, scaleY_, 1.0f );
+
 	// skew
 	if ( (skewX_ != 0.0f) || (skewY_ != 0.0f) ) {
 		CGAffineTransform skewMatrix = CGAffineTransformMake( 1.0f, tanf(CC_DEGREES_TO_RADIANS(skewY_)), tanf(CC_DEGREES_TO_RADIANS(skewX_)), 1.0f, 0.0f, 0.0f );
@@ -673,10 +683,6 @@ static NSUInteger globalOrderOfArrival = 0;
 		CGAffineToGL(&skewMatrix, glMatrix);															 
 		glMultMatrixf(glMatrix);
 	}
-	
-	// scale
-	if (scaleX_ != 1.0f || scaleY_ != 1.0f)
-		glScalef( scaleX_, scaleY_, 1.0f );
 	
 	if ( camera_ && !(grid_ && grid_.active) )
 		[camera_ locate];
@@ -704,6 +710,11 @@ static NSUInteger globalOrderOfArrival = 0;
 -(void) onEnterTransitionDidFinish
 {
 	[children_ makeObjectsPerformSelector:@selector(onEnterTransitionDidFinish)];
+}
+
+-(void) onExitTransitionDidStart
+{
+	[children_ makeObjectsPerformSelector:@selector(onExitTransitionDidStart)];
 }
 
 -(void) onExit
@@ -833,15 +844,15 @@ static NSUInteger globalOrderOfArrival = 0;
 		if( rotation_ != 0 )
 			transform_ = CGAffineTransformRotate(transform_, -CC_DEGREES_TO_RADIANS(rotation_));
 		
+		if( ! (scaleX_ == 1 && scaleY_ == 1) ) 
+			transform_ = CGAffineTransformScale(transform_, scaleX_, scaleY_);
+
 		if( skewX_ != 0 || skewY_ != 0 ) {
 			// create a skewed coordinate system
 			CGAffineTransform skew = CGAffineTransformMake(1.0f, tanf(CC_DEGREES_TO_RADIANS(skewY_)), tanf(CC_DEGREES_TO_RADIANS(skewX_)), 1.0f, 0.0f, 0.0f);
 			// apply the skew to the transform
 			transform_ = CGAffineTransformConcat(skew, transform_);
 		}
-		
-		if( ! (scaleX_ == 1 && scaleY_ == 1) ) 
-			transform_ = CGAffineTransformScale(transform_, scaleX_, scaleY_);
 		
 		if( ! CGPointEqualToPoint(anchorPointInPixels_, CGPointZero) )
 			transform_ = CGAffineTransformTranslate(transform_, -anchorPointInPixels_.x, -anchorPointInPixels_.y);

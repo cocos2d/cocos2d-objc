@@ -185,7 +185,6 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 		return NO;
 	
 	context_ = [renderer_ context];
-	[context_ renderbufferStorage:GL_RENDERBUFFER_OES fromDrawable:eaglLayer];
 
 	discardFramebufferSupported_ = [[CCConfiguration sharedConfiguration] supportsDiscardFramebuffer];
 	
@@ -203,9 +202,9 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 - (void) layoutSubviews
 {
-	size_ = [renderer_ backingSize];
-
 	[renderer_ resizeFromLayer:(CAEAGLLayer*)self.layer];
+	
+	size_ = [renderer_ backingSize];
 
 	// Issue #914 #924
 	CCDirector *director = [CCDirector sharedDirector];
@@ -260,9 +259,8 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	}
 	
 #endif // __IPHONE_4_0
-	
 	if(![context_ presentRenderbuffer:GL_RENDERBUFFER_OES])
-		CCLOG(@"cocos2d: Failed to swap renderbuffer in %s\n", __FUNCTION__);
+	CCLOG(@"cocos2d: Failed to swap renderbuffer in %s\n", __FUNCTION__);
 
 #if COCOS2D_DEBUG
 	CHECK_GL_ERROR();

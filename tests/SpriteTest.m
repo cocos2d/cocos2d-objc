@@ -61,8 +61,11 @@ static NSString *transitions[] = {
 	@"SpriteBatchNodeChildrenScale",
 	@"SpriteChildrenChildren",
 	@"SpriteBatchNodeChildrenChildren",
+	@"SpriteSkewNegativeScaleChildren",
+	@"SpriteBatchNodeSkewNegativeScaleChildren",
 	@"SpriteNilTexture",
 	@"SpriteSubclass",
+	@"SpriteBatchBug1217",
 	@"AnimationCache",
 	@"AnimationCacheFile",
 };
@@ -808,7 +811,7 @@ Class restartAction()
 
 -(NSString *) subtitle
 {
-	return @"tag order in console should be 2,1,3,4,5";
+	return @"tag order in console should be 2,3,4,5,1";
 }
 
 @end
@@ -3908,7 +3911,12 @@ Class restartAction()
 
 -(NSString *) title
 {
-	return @"Sprite multiple levels of children";
+	return @"Sprite";
+}
+
+-(NSString *) subtitle
+{
+	return @"Multiple levels of children: Grandparent, parent and child";
 }
 @end
 
@@ -3996,7 +4004,148 @@ Class restartAction()
 
 -(NSString *) title
 {
-	return @"SpriteBatchNode multiple levels of children";
+	return @"SpriteBatchNode";
+}
+
+-(NSString *) subtitle
+{
+	return @"Multiple levels of children: Grandparent, parent and child";
+}
+@end
+
+#pragma mark -
+#pragma mark Example SpriteBatchNodeSkewNegativeScaleChildren
+
+@implementation SpriteBatchNodeSkewNegativeScaleChildren
+
+-(id) init
+{
+	if( (self=[super init]) ) {
+		
+		CGSize s = [[CCDirector sharedDirector] winSize];		
+		
+		CCSpriteFrameCache *cache = [CCSpriteFrameCache sharedSpriteFrameCache];
+		[cache addSpriteFramesWithFile:@"animations/grossini.plist"];
+		[cache addSpriteFramesWithFile:@"animations/grossini_gray.plist" textureFile:@"animations/grossini_gray.png"];
+		
+		CCSpriteBatchNode *spritebatch = [CCSpriteBatchNode batchNodeWithFile:@"animations/grossini.pvr.gz"];
+		[self addChild:spritebatch];
+		
+		for(int i=0;i<2;i++) {
+			CCSprite *sprite = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_01.png"];
+			sprite.position = ccp( s.width/4*(i+1), s.height/2);
+			
+			// Skew
+			id skewX = [CCSkewBy actionWithDuration:2 skewX:45 skewY:0];
+			id skewX_back = [skewX reverse];
+			id skewY = [CCSkewBy actionWithDuration:2 skewX:0 skewY:45];
+			id skewY_back = [skewY reverse];
+			
+			if(i == 1)
+			{
+				[sprite setScale:-1.0f];
+			}
+			
+			id seq_skew = [CCSequence actions:skewX, skewX_back, skewY, skewY_back, nil];
+			[sprite runAction:[CCRepeatForever actionWithAction:seq_skew]];
+			
+			CCSprite *child1 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_01.png"];
+			[child1 setPosition: ccp(sprite.contentSize.width / 2.0f, sprite.contentSize.height / 2.0f)];
+			
+			[child1 setScale:0.8];
+
+			[sprite addChild: child1];
+			
+			[spritebatch addChild:sprite z:i];
+		}
+	}
+	return self;
+}
+
+- (void) dealloc
+{
+	CCSpriteFrameCache *cache = [CCSpriteFrameCache sharedSpriteFrameCache];
+	[cache removeSpriteFramesFromFile:@"animations/grossini.plist"];
+	[cache removeSpriteFramesFromFile:@"animations/grossini_gray.plist"];
+	[super dealloc];
+}
+
+-(NSString *) title
+{
+	return @"SpriteBatchNode + children + skew";
+}
+
+-(NSString *) subtitle
+{
+	return @"SpriteBatchNode skew + negative scale with children";
+}
+@end
+
+#pragma mark -
+#pragma mark Example SpriteSkewNegativeScaleChildren
+
+@implementation SpriteSkewNegativeScaleChildren
+
+-(id) init
+{
+	if( (self=[super init]) ) {
+		
+		CGSize s = [[CCDirector sharedDirector] winSize];		
+		
+		CCSpriteFrameCache *cache = [CCSpriteFrameCache sharedSpriteFrameCache];
+		[cache addSpriteFramesWithFile:@"animations/grossini.plist"];
+		[cache addSpriteFramesWithFile:@"animations/grossini_gray.plist" textureFile:@"animations/grossini_gray.png"];
+		
+		CCNode *parent = [CCNode node];
+		[self addChild:parent];
+		
+		for(int i=0;i<2;i++) {
+			CCSprite *sprite = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_01.png"];
+			sprite.position = ccp( s.width/4*(i+1), s.height/2);
+			
+			// Skew
+			id skewX = [CCSkewBy actionWithDuration:2 skewX:45 skewY:0];
+			id skewX_back = [skewX reverse];
+			id skewY = [CCSkewBy actionWithDuration:2 skewX:0 skewY:45];
+			id skewY_back = [skewY reverse];
+			
+			if(i == 1)
+			{
+				[sprite setScale:-1.0f];
+			}
+			
+			id seq_skew = [CCSequence actions:skewX, skewX_back, skewY, skewY_back, nil];
+			[sprite runAction:[CCRepeatForever actionWithAction:seq_skew]];
+			
+			CCSprite *child1 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_01.png"];
+			[child1 setPosition: ccp(sprite.contentSize.width / 2.0f, sprite.contentSize.height / 2.0f)];
+			
+			[sprite addChild: child1];
+			
+			[child1 setScale:0.8f];
+			
+			[parent addChild:sprite z:i];
+		}
+	}
+	return self;
+}
+
+- (void) dealloc
+{
+	CCSpriteFrameCache *cache = [CCSpriteFrameCache sharedSpriteFrameCache];
+	[cache removeSpriteFramesFromFile:@"animations/grossini.plist"];
+	[cache removeSpriteFramesFromFile:@"animations/grossini_gray.plist"];
+	[super dealloc];
+}
+
+-(NSString *) title
+{
+	return @"Sprite + children + skew";
+}
+
+-(NSString *) subtitle
+{
+	return @"Sprite skew + negative scale with children";
 }
 @end
 
@@ -4294,6 +4443,50 @@ Class restartAction()
 
 @end
 
+#pragma mark - SpriteBatchBug1217
+
+@implementation SpriteBatchBug1217
+-(id) init
+{
+	if( (self=[super init]) ) {
+		
+		CCSpriteBatchNode *bn = [CCSpriteBatchNode batchNodeWithFile:@"grossini_dance_atlas.png" capacity:15];
+		
+		CCSprite * s1 = [CCSprite spriteWithTexture:bn.texture rect:CGRectMake(0, 0, 57, 57)];
+		CCSprite * s2 = [CCSprite spriteWithTexture:bn.texture rect:CGRectMake(0, 0, 57, 57)];
+		CCSprite * s3 = [CCSprite spriteWithTexture:bn.texture rect:CGRectMake(0, 0, 57, 57)];
+		
+		s1.color = ccc3(255, 0, 0);
+		s2.color = ccc3(0, 255, 0);
+		s3.color = ccc3(0, 0, 255);
+		
+		s1.position = ccp(20,200);
+		s2.position = ccp(100,0);
+		s3.position = ccp(100,0);
+		
+		bn.position = ccp(0,0);
+		
+		//!!!!!
+		[s1 addChild:s2];
+		[s2 addChild:s3];
+		[bn addChild:s1];
+		
+		[self addChild:bn];
+	}
+	return self;
+}
+
+-(NSString *) title
+{
+	return @"SpriteBatch - Bug 1217";
+}
+
+-(NSString*) subtitle
+{
+	return @"Adding big family to spritebatch. You shall see 3 heads";
+}
+
+@end
 
 #pragma mark -
 #pragma mark AppDelegate
@@ -4354,10 +4547,11 @@ Class restartAction()
 	// You can change anytime.
 	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA8888];
 	
-	// When in iPad / RetinaDisplay mode, CCFileUtils will append the "-ipad" / "-hd" to all loaded files
-	// If the -ipad  / -hdfile is not found, it will load the non-suffixed version
-	[CCFileUtils setiPadSuffix:@"-ipad"];			// Default on iPad is "" (empty string)
-	[CCFileUtils setRetinaDisplaySuffix:@"-hd"];	// Default on RetinaDisplay is "-hd"
+    // When in iPhone RetinaDisplay, iPad, iPad RetinaDisplay mode, CCFileUtils will append the "-hd", "-ipad", "-ipadhd" to all loaded files
+	// If the -hd, -ipad, -ipadhd files are not found, it will load the non-suffixed version
+	[CCFileUtils setiPhoneRetinaDisplaySuffix:@"-hd"];		// Default on iPhone RetinaDisplay is "-hd"
+	[CCFileUtils setiPadSuffix:@"-ipad"];					// Default on iPad is "" (empty string)
+	[CCFileUtils setiPadRetinaDisplaySuffix:@"-ipadhd"];	// Default on iPad RetinaDisplay is "-ipadhd"
 	
 	// Assume that PVR images have premultiplied alpha
 	[CCTexture2D PVRImagesHavePremultipliedAlpha:YES];

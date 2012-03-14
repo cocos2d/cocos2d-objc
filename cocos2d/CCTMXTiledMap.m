@@ -43,6 +43,7 @@
 @interface CCTMXTiledMap (Private)
 -(id) parseLayer:(CCTMXLayerInfo*)layer map:(CCTMXMapInfo*)mapInfo;
 -(CCTMXTilesetInfo*) tilesetForLayer:(CCTMXLayerInfo*)layerInfo map:(CCTMXMapInfo*)mapInfo;
+-(void) buildWithMapInfo:(CCTMXMapInfo*)mapInfo;
 @end
 
 @implementation CCTMXTiledMap
@@ -57,6 +58,55 @@
 	return [[[self alloc] initWithTMXFile:tmxFile] autorelease];
 }
 
++(id) tiledMapWithXML:(NSString*)tmxString resourcePath:(NSString*)resourcePath
+{
+	return [[[self alloc] initWithXML:tmxString resourcePath:resourcePath] autorelease];
+}
+
+-(void) buildWithMapInfo:(CCTMXMapInfo*)mapInfo
+{
+	mapSize_ = mapInfo.mapSize;
+	tileSize_ = mapInfo.tileSize;
+	mapOrientation_ = mapInfo.orientation;
+	objectGroups_ = [mapInfo.objectGroups retain];
+	properties_ = [mapInfo.properties retain];
+	tileProperties_ = [mapInfo.tileProperties retain];
+	
+	int idx=0;
+	
+	for( CCTMXLayerInfo *layerInfo in mapInfo.layers ) {
+		
+		if( layerInfo.visible ) {
+			CCNode *child = [self parseLayer:layerInfo map:mapInfo];
+			[self addChild:child z:idx tag:idx];
+			
+			// update content size with the max size
+			CGSize childSize = [child contentSize];
+			CGSize currentSize = [self contentSize];
+			currentSize.width = MAX( currentSize.width, childSize.width );
+			currentSize.height = MAX( currentSize.height, childSize.height );
+			[self setContentSize:currentSize];
+			
+			idx++;
+		}			
+	}	
+}
+
+-(id) initWithXML:(NSString*)tmxString resourcePath:(NSString*)resourcePath
+{
+	if ((self=[super init])) {
+		
+		[self setContentSize:CGSizeZero];
+
+		CCTMXMapInfo *mapInfo = [CCTMXMapInfo formatWithXML:tmxString resourcePath:resourcePath];
+		
+		NSAssert( [mapInfo.tilesets count] != 0, @"TMXTiledMap: Map not found. Please check the filename.");
+		[self buildWithMapInfo:mapInfo];
+	}
+	
+	return self;
+}
+
 -(id) initWithTMXFile:(NSString*)tmxFile
 {
 	NSAssert(tmxFile != nil, @"TMXTiledMap: tmx file should not bi nil");
@@ -68,32 +118,7 @@
 		CCTMXMapInfo *mapInfo = [CCTMXMapInfo formatWithTMXFile:tmxFile];
 		
 		NSAssert( [mapInfo.tilesets count] != 0, @"TMXTiledMap: Map not found. Please check the filename.");
-		
-		mapSize_ = mapInfo.mapSize;
-		tileSize_ = mapInfo.tileSize;
-		mapOrientation_ = mapInfo.orientation;
-		objectGroups_ = [mapInfo.objectGroups retain];
-		properties_ = [mapInfo.properties retain];
-		tileProperties_ = [mapInfo.tileProperties retain];
-				
-		int idx=0;
-
-		for( CCTMXLayerInfo *layerInfo in mapInfo.layers ) {
-			
-			if( layerInfo.visible ) {
-				CCNode *child = [self parseLayer:layerInfo map:mapInfo];
-				[self addChild:child z:idx tag:idx];
-				
-				// update content size with the max size
-				CGSize childSize = [child contentSize];
-				CGSize currentSize = [self contentSize];
-				currentSize.width = MAX( currentSize.width, childSize.width );
-				currentSize.height = MAX( currentSize.height, childSize.height );
-				[self setContentSize:currentSize];
-	
-				idx++;
-			}			
-		}		
+		[self buildWithMapInfo:mapInfo];
 	}
 
 	return self;
@@ -145,7 +170,7 @@
 					
 					// Optimization: quick return
 					// if the layer is invalid (more than 1 tileset per layer) an assert will be thrown later
-					if( gid >= tileset.firstGid )
+					if( (gid & kFlippedMask) >= tileset.firstGid )
 						return tileset;
 				}
 			}

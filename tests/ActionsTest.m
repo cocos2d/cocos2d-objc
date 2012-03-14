@@ -18,6 +18,7 @@ Class restartAction(void);
 
 static int sceneIdx=-1;
 static NSString *transitions[] = {
+
 	@"ActionManual",
 	@"ActionMove",
 	@"ActionRotate",
@@ -47,6 +48,7 @@ static NSString *transitions[] = {
 	@"ActionOrbit",
 	@"ActionFollow",
 	@"ActionProperty",
+	@"ActionTargeted"
 };
 
 Class nextAction()
@@ -530,20 +532,47 @@ Class restartAction()
 {
 	[super onEnter];
 	
-	[self centerSprites:1];
+	[self centerSprites:2];
 	
+	// Left: using manual animation.
 	CCAnimation* animation = [CCAnimation animation];
 	for( int i=1;i<15;i++)
 		[animation addFrameWithFilename: [NSString stringWithFormat:@"grossini_dance_%02d.png", i]];
 	
-	id action = [CCAnimate actionWithDuration:3 animation:animation restoreOriginalFrame:NO];
-	id action_back = [action reverse];
+	id action = [CCAnimate actionWithDuration:2.8f animation:animation restoreOriginalFrame:YES];
+	[kathia runAction: [CCSequence actions: action, [action reverse], nil]];
 	
-	[grossini runAction: [CCSequence actions: action, action_back, nil]];
+	
+	// Right: Using new animation system
+	CCAnimationCache *cache = [CCAnimationCache sharedAnimationCache];
+	[cache addAnimationsWithFile:@"animations/animations-2.plist"];
+	CCAnimation *animation2 = [cache animationByName:@"dance_1"];
+	
+	id action2 = [CCAnimate actionWithAnimation:animation2];
+	[tamara runAction: [CCSequence actions: action2, [action2 reverse], nil]];
+	
+	observer_ = [[NSNotificationCenter defaultCenter] addObserverForName:CCAnimationFrameDisplayedNotification object:nil queue:nil usingBlock:^(NSNotification* notification) {
+		
+		NSDictionary *userInfo = [notification userInfo];
+		NSLog(@"object %@ with data %@", [notification object], userInfo );
+	}];
 }
+
+-(void) onExit
+{
+	[super onExit];
+	
+	[[NSNotificationCenter defaultCenter] removeObserver:observer_];
+}
+
 -(NSString *) title
 {
 	return @"Animation";
+}
+
+-(NSString*) subtitle
+{
+	return @"Manual animation, and animation by parsing .plist";
 }
 @end
 
@@ -565,6 +594,10 @@ Class restartAction()
 -(NSString *) title
 {
 	return @"Sequence: Move + Rotate";
+}
+-(NSString*) subtitle
+{
+	return @"Manual animation, and animation by parsing .plist";
 }
 @end
 
@@ -1103,7 +1136,38 @@ Class restartAction()
 
 @end
 
+@implementation ActionTargeted
+-(void) onEnter
+{
+	[super onEnter];
+	
+	[self centerSprites:2];
+	
+	CCJumpBy *jump1 = [CCJumpBy actionWithDuration:2 position:CGPointZero height:100 jumps:3];
+	CCJumpBy *jump2 = [[jump1 copy] autorelease];
+	CCRotateBy *rot1 =  [CCRotateBy actionWithDuration:1 angle:360];
+	CCRotateBy *rot2 = [[rot1 copy] autorelease];
+	
+	CCTargetedAction *t1 = [CCTargetedAction actionWithTarget:kathia action:jump2];
+	CCTargetedAction *t2 = [CCTargetedAction actionWithTarget:kathia action:rot2];
+	
+	
+	CCSequence *seq = [CCSequence actions:jump1, t1, rot1, t2, nil];
+	CCRepeatForever *always = [CCRepeatForever actionWithAction:seq];
+	
+	[tamara runAction:always];
+}
 
+-(NSString *) title
+{
+	return @"ActionTargeted";
+}
+
+-(NSString*) subtitle
+{
+	return @"Action that runs on another target. Useful for sequences";
+}
+@end
 
 // CLASS IMPLEMENTATIONS
 
@@ -1148,10 +1212,11 @@ Class restartAction()
 	// You can change anytime.
 	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA8888];
 	
-	// When in iPad / RetinaDisplay mode, CCFileUtils will append the "-ipad" / "-hd" to all loaded files
-	// If the -ipad  / -hdfile is not found, it will load the non-suffixed version
-	[CCFileUtils setiPadSuffix:@"-ipad"];			// Default on iPad is "" (empty string)
-	[CCFileUtils setRetinaDisplaySuffix:@"-hd"];	// Default on RetinaDisplay is "-hd"
+	// When in iPhone RetinaDisplay, iPad, iPad RetinaDisplay mode, CCFileUtils will append the "-hd", "-ipad", "-ipadhd" to all loaded files
+	// If the -hd, -ipad, -ipadhd files are not found, it will load the non-suffixed version
+	[CCFileUtils setiPhoneRetinaDisplaySuffix:@"-hd"];		// Default on iPhone RetinaDisplay is "-hd"
+	[CCFileUtils setiPadSuffix:@"-ipad"];					// Default on iPad is "" (empty string)
+	[CCFileUtils setiPadRetinaDisplaySuffix:@"-ipadhd"];	// Default on iPad RetinaDisplay is "-ipadhd"
 	
 	CCScene *scene = [CCScene node];
 	[scene addChild: [nextAction() node]];

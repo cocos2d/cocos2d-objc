@@ -55,6 +55,7 @@ static NSString *transitions[] = {
 	@"Issue704",
 	@"Issue872",
 	@"Issue870",
+	@"AnimatedParticles"
 };
 
 Class nextAction(void);
@@ -1444,6 +1445,59 @@ Class restartAction()
 }
 @end
 
+@implementation AnimatedParticles
+-(void) onEnter
+{
+	[super onEnter];
+	
+	[self setColor:ccBLACK];
+	[self removeChild:background cleanup:YES];
+	background = nil;
+	
+	CCSpriteFrameCache* sfc = [CCSpriteFrameCache sharedSpriteFrameCache];
+	[sfc addSpriteFramesWithFile:@"animations/animated_particles.plist"];
+	
+	CCAnimation* anim2 = [CCAnimation animation];
+	
+	[anim2 addFrame:[sfc spriteFrameByName:@"coco_1.png"] delay:0.5f];
+	[anim2 addFrame:[sfc spriteFrameByName:@"coco_2.png"] delay:0.5f];
+	[anim2 addFrame:[sfc spriteFrameByName:@"coco_3.png"] delay:0.5f];
+	[anim2 addFrame:[sfc spriteFrameByName:@"coco_4.png"] delay:0.5f];
+	[anim2 addFrame:[sfc spriteFrameByName:@"coco_5.png"] delay:0.5f];
+	[anim2 addFrame:[sfc spriteFrameByName:@"coco_4.png"] delay:0.5f];
+	[anim2 addFrame:[sfc spriteFrameByName:@"coco_3.png"] delay:0.5f];
+	[anim2 addFrame:[sfc spriteFrameByName:@"coco_2.png"] delay:0.5f];
+		
+	//new properties in plist define startScale, startScaleVar, endScale, endScaleVar
+	for (int i = 0; i < 4; i++)
+	{
+		CCParticleSystemQuad *system = [[CCParticleSystemQuad alloc] initWithFile:@"Particles/OneParticle.plist"];
+		
+		system.emissionRate = 1.f;
+
+		[system setPosition:ccp(30+i*60,200)];
+		[system setTexture: [[sfc spriteFrameByName:@"coco_1.png"] texture]];
+		[system setAnimation:anim2 withAnchorPoint:ccp(0.5f,0.0f)];
+		[system setAnimationType:i]; 
+		
+		[self addChild: system z:10];
+		[system release]; 
+		
+	}	
+}
+
+
+
+-(NSString *) title
+{
+	return @"AnimatedParticles";
+}
+
+-(NSString*) subtitle
+{
+	return @"4 modes";
+}
+@end
 
 
 #pragma mark -
@@ -1485,10 +1539,11 @@ Class restartAction()
 	// You can change anytime.
 	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA8888];
 	
-	// When in iPad / RetinaDisplay mode, CCFileUtils will append the "-ipad" / "-hd" to all loaded files
-	// If the -ipad  / -hdfile is not found, it will load the non-suffixed version
-	[CCFileUtils setiPadSuffix:@"-ipad"];			// Default on iPad is "" (empty string)
-	[CCFileUtils setRetinaDisplaySuffix:@"-hd"];	// Default on RetinaDisplay is "-hd"
+	// When in iPhone RetinaDisplay, iPad, iPad RetinaDisplay mode, CCFileUtils will append the "-hd", "-ipad", "-ipadhd" to all loaded files
+	// If the -hd, -ipad, -ipadhd files are not found, it will load the non-suffixed version
+	[CCFileUtils setiPhoneRetinaDisplaySuffix:@"-hd"];		// Default on iPhone RetinaDisplay is "-hd"
+	[CCFileUtils setiPadSuffix:@"-ipad"];					// Default on iPad is "" (empty string)
+	[CCFileUtils setiPadRetinaDisplaySuffix:@"-ipadhd"];	// Default on iPad RetinaDisplay is "-ipadhd"
 
 	CCScene *scene = [CCScene node];
 	[scene addChild: [nextAction() node]];

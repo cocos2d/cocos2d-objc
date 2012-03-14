@@ -723,7 +723,10 @@ const uint32_t	kZoomActionTag = 0xc0c05002;
 {
 	if( index != selectedIndex_ ) {
 		selectedIndex_=index;
-		[self removeChildByTag:kCurrentItem cleanup:NO];
+		CCMenuItem *currentItem = (CCMenuItem*)[self getChildByTag:kCurrentItem];
+		if( currentItem ) {
+			[currentItem removeFromParentAndCleanup:NO];
+		}
 		
 		CCMenuItem *item = [subItems_ objectAtIndex:selectedIndex_];
 		[self addChild:item z:0 tag:kCurrentItem];

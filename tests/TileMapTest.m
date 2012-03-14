@@ -38,6 +38,8 @@ static NSString *transitions[] = {
 	@"TMXIsoMoveLayer",
 	@"TMXOrthoMoveLayer",
 	@"TMXOrthoFlipTest",
+	@"TMXOrthoFlipRunTimeTest",
+	@"TMXOrthoFromXMLTest",
 	@"TMXBug987",
 	@"TMXBug787",
 
@@ -1393,6 +1395,113 @@ Class restartAction()
 }
 @end
 
+#pragma mark -
+#pragma mark TMXOrthoFlipRunTimeTest
+
+@implementation TMXOrthoFlipRunTimeTest
+-(id) init
+{
+	if( (self=[super init]) ) {		
+		CCTMXTiledMap *map = [CCTMXTiledMap tiledMapWithTMXFile:@"TileMaps/ortho-rotation-test.tmx"];
+		[self addChild:map z:0 tag:kTagTileMap];
+		
+		CGSize s = map.contentSize;
+		NSLog(@"ContentSize: %f, %f", s.width,s.height);
+		
+		for( CCSpriteBatchNode* child in [map children] ) {
+			[[child texture] setAntiAliasTexParameters];
+		}
+		
+		id action = [CCScaleBy actionWithDuration:2 scale:0.5f];
+		[map runAction:action];
+		
+		[self schedule:@selector(flipIt) interval:0.f repeat:0.f delay:2.f]; 
+	}	
+	return self;
+}
+
+-(NSString *) title
+{
+	return @"TMX tile flip run time test";
+}
+
+-(NSString *) subtitle
+{
+	return @"in 2 sec bottom left tiles will flip";
+}
+
+- (void) flipIt 
+{
+	CCTMXTiledMap *map = (CCTMXTiledMap*) [self getChildByTag:kTagTileMap]; 
+	CCTMXLayer *layer = [map layerNamed:@"Layer 0"]; 
+	
+	//blue diamond 
+	CGPoint tileCoord = ccp(1,10);
+	
+	uint32_t GID = [layer tileGIDAt:tileCoord withFlags:NO]; 
+	GID = GID | kFlippedVerticallyFlag;
+	
+	//only the vertical flag is now set
+	[layer setTileGID:GID  at:tileCoord withFlags:YES]; 
+	
+	tileCoord = ccp(2,10);
+	
+	//tile has horizontal flag
+	GID = [layer tileGIDAt:tileCoord withFlags:YES]; 
+	GID = GID | kFlippedVerticallyFlag;
+	
+	//tile has horizontal + vertical flag
+	[layer setTileGID:GID at:tileCoord withFlags:YES]; 
+	
+	//the bug
+	tileCoord = ccp(2,8);
+	
+	//want to reset flip of tile, get original tile gid
+	GID = [layer tileGIDAt:tileCoord withFlags:NO]; 
+	
+	//overwrite the flags by setting withFlags to YES
+	[layer setTileGID:GID  at:tileCoord withFlags:YES]; 
+}
+@end
+
+
+
+#pragma mark -
+#pragma mark TMXOrthoFromXMLTest
+
+@implementation TMXOrthoFromXMLTest
+-(id) init
+{
+	if( (self=[super init]) ) {
+		NSString* resources = @"TileMaps";		// partial paths are OK as resource paths.
+		NSString* file = [resources stringByAppendingPathComponent:@"orthogonal-test1.tmx"];
+		NSError* error = nil;
+		NSString* str = [NSString stringWithContentsOfFile:[CCFileUtils fullPathFromRelativePath:file] encoding:NSUTF8StringEncoding error:&error];
+		NSAssert3(!error, @"Unable to open file %@, %@ (%d)", file, [error localizedDescription], [error code]);
+
+		CCTMXTiledMap *map = [CCTMXTiledMap tiledMapWithXML:str resourcePath:resources];
+		[self addChild:map z:0 tag:kTagTileMap];
+		
+		CGSize s = map.contentSize;
+		NSLog(@"ContentSize: %f, %f", s.width,s.height);
+		
+		for( CCSpriteBatchNode* child in [map children] ) {
+			[[child texture] setAntiAliasTexParameters];
+		}
+		
+		id action = [CCScaleBy actionWithDuration:2 scale:0.5f];
+		[map runAction:action];
+	
+	}	
+	return self;
+}
+
+-(NSString *) title
+{
+	return @"TMX created from XML test";
+}
+@end
+
 
 #pragma mark -
 #pragma mark TMXBug987
@@ -1501,10 +1610,11 @@ Class restartAction()
 	if( ! [director enableRetinaDisplay:YES] )
 		CCLOG(@"Retina Display Not supported");
 	
-	// When in iPad / RetinaDisplay mode, CCFileUtils will append the "-ipad" / "-hd" to all loaded files
-	// If the -ipad  / -hdfile is not found, it will load the non-suffixed version
-	[CCFileUtils setiPadSuffix:@"-ipad"];			// Default on iPad is "" (empty string)
-	[CCFileUtils setRetinaDisplaySuffix:@"-hd"];	// Default on RetinaDisplay is "-hd"
+	// When in iPhone RetinaDisplay, iPad, iPad RetinaDisplay mode, CCFileUtils will append the "-hd", "-ipad", "-ipadhd" to all loaded files
+	// If the -hd, -ipad, -ipadhd files are not found, it will load the non-suffixed version
+	[CCFileUtils setiPhoneRetinaDisplaySuffix:@"-hd"];		// Default on iPhone RetinaDisplay is "-hd"
+	[CCFileUtils setiPadSuffix:@"-ipad"];					// Default on iPad is "" (empty string)
+	[CCFileUtils setiPadRetinaDisplaySuffix:@"-ipadhd"];	// Default on iPad RetinaDisplay is "-ipadhd"
 	
 	// glview is a child of the main window
 	[window addSubview:glView];
