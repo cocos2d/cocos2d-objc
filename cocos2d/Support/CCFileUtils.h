@@ -110,7 +110,7 @@
  Only available on iOS. Not supported on OS X.
  
  */
-+(BOOL) iPadFileExistsAtPath:(NSString*)filename;
++(BOOL) iPadRetinaDisplayFileExistsAtPath:(NSString*)filename;
 
 /** Returns whether or not a given path exists with the iPhone RetinaDisplay suffix.
  Only available on iOS. Not supported on OS X.
