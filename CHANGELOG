@@ -1,3 +1,6 @@
+version 2.0-rc1 XX-Mar-2012
+. [FIX] LabelBMFont: can be "init" without further arguments
+
 version 2.0-rc0a 13-Mar-2012
 . [FIX] PerformanceTest: Compiles and run
 . [FIX] Tests: fixed shaders tests

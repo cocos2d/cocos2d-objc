@@ -107,6 +107,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	LabelTTF can be init without params
 	MenuItem: added setters for target:selctor, block and sprites
 	Node: zOrder property is readwrite
+	LabelBMFont: can be "init" without further arguments
 	
 * zergyo:
 	Grid: Fixed memory leak when setIsTextureFlipped is used
