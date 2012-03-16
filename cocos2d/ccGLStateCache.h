@@ -25,12 +25,7 @@
 
 #import <TargetConditionals.h>
 #import "ccMacros.h"
-#if __CC_PLATFORM_IOS
-#import <OpenGLES/ES2/gl.h>
-#import <OpenGLES/ES2/glext.h>
-#elif __CC_PLATFORM_MAC
-#import <OpenGL/gl.h>
-#endif //
+#import "Platforms/CCGL.h"
 
 @class CCGLProgram;
 

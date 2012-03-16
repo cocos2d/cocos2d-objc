@@ -24,12 +24,11 @@
  */
 
 #import "../ccMacros.h"
+#import "../Platforms/CCGL.h"
 
 #ifdef __CC_PLATFORM_IOS
 #import <UIKit/UIKit.h>
-#import <OpenGLES/ES2/gl.h>
 #elif defined(__CC_PLATFORM_MAC)
-#import <OpenGL/gl.h>
 #import <Foundation/Foundation.h>
 #endif
 
