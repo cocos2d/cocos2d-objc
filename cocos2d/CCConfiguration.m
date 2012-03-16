@@ -145,6 +145,17 @@ static char * glExtensions;
 		CCLOG(@"cocos2d: GL supports NPOT textures: %s", (supportsNPOT_ ? "YES" : "NO") );
 		CCLOG(@"cocos2d: GL supports discard_framebuffer: %s", (supportsDiscardFramebuffer_ ? "YES" : "NO") );
 
+#ifdef __CC_PLATFORM_MAC
+		CCLOG(@"cocos2d: Director's thread: %@",
+#if (CC_DIRECTOR_MAC_THREAD == CC_MAC_USE_MAIN_THREAD)
+			  @"Main thread"
+#elif (CC_DIRECTOR_MAC_THREAD == CC_MAC_USE_OWN_THREAD)
+			  @"Own thread"	
+#elif (CC_DIRECTOR_MAC_THREAD == CC_MAC_USE_DISPLAY_LINK_THREAD)
+			  @"DisplayLink thread"
+#endif //
+			  );
+#endif // Mac
 
 		CCLOG(@"cocos2d: compiled with Profiling Support: %s",
 #if CC_ENABLE_PROFILERS
