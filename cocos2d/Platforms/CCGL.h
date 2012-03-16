@@ -52,8 +52,17 @@
 
 // Mac
 #elif __CC_PLATFORM_MAC
+
+#if 1
 #define glDeleteVertexArrays		glDeleteVertexArraysAPPLE
 #define glGenVertexArrays			glGenVertexArraysAPPLE
 #define glBindVertexArray			glBindVertexArrayAPPLE
+
+#else // OpenGL 3.2 Core Profile
+
+#define glDeleteVertexArrays		glDeleteVertexArrays
+#define glGenVertexArrays			glGenVertexArrays
+#define glBindVertexArray			glBindVertexArray
+#endif
 
 #endif
