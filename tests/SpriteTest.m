@@ -4052,7 +4052,7 @@ Class restartAction()
 			CCSprite *child1 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_01.png"];
 			[child1 setPosition: ccp(sprite.contentSize.width / 2.0f, sprite.contentSize.height / 2.0f)];
 			
-			[child1 setScale:0.8];
+			[child1 setScale:0.8f];
 
 			[sprite addChild: child1];
 			

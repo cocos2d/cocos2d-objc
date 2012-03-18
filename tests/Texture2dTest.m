@@ -1740,6 +1740,7 @@ Class restartAction()
 }
 -(void) dealloc
 {
+    [super dealloc];
 	[tex1_ release];
 	[tex2_ release];
 }
@@ -1784,6 +1785,7 @@ Class restartAction()
 }
 -(void) dealloc
 {
+    [super dealloc];
 	[tex1_ release];
 	[tex2_ release];
 }
