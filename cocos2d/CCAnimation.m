@@ -168,8 +168,9 @@
 
 -(void) addFrame:(CCSpriteFrame*)frame delay:(float) delay
 {
-	if ([frames_ count] == 0)
+	if ([frames_ count] == 0 && delayPerUnit_ == 0)
 	{
+        NSAssert(delay >= 0, @"delay can't be 0 or negative");
 		delayPerUnit_ = delay; 	
 	}
 	
