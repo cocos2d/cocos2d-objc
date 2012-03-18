@@ -19,8 +19,9 @@ Class restartAction(void);
 static int sceneIdx=-1;
 static NSString *transitions[] = {
 
-	@"ActionAnimate",
-
+	@"ActionCatmullRom",
+	@"ActionBezier",
+	
 	@"ActionManual",
 	@"ActionMove",
 	@"ActionRotate",
@@ -29,6 +30,7 @@ static NSString *transitions[] = {
 	@"ActionSkewRotateScale",
 	@"ActionJump",
 	@"ActionBezier",
+	@"ActionCatmullRom",
 	@"ActionBlink",
 	@"ActionFade",
 	@"ActionTint",
@@ -471,6 +473,77 @@ Class restartAction()
 {
 	return @"BezierBy / BezierTo";
 }
+@end
+
+@implementation ActionCatmullRom
+-(void) onEnter
+{
+	[super onEnter];
+	
+	[self centerSprites:2];
+	
+	CGSize s = [[CCDirector sharedDirector] winSize];
+
+	//
+	// sprite 1 (By)
+	//
+	// startPosition can be any coordinate, but since the movement
+	// is relative to the Catmull Rom curve, it is better to start with (0,0).
+	//
+	
+	tamara.position = ccp(50,50);
+	
+	CCCatmullRomConfig *config = [CCCatmullRomConfig configWithCapacity:20];
+
+	[config addCP:ccp(0,0)];
+	[config addCP:ccp(80,80)];
+	[config addCP:ccp(s.width-80,80)];
+	[config addCP:ccp(s.width-80,s.height-80)];
+	[config addCP:ccp(80,s.height-80)];
+	[config addCP:ccp(80,80)];
+	[config addCP:ccp(s.width/2, s.height/2)];
+
+	CCCatmullRomBy *action = [CCCatmullRomBy actionWithDuration:3 configuration:config];
+	id reverse = [action reverse];
+	
+	CCSequence *seq = [CCSequence actions:action, reverse, nil];
+	
+	[tamara runAction: seq];
+	
+	
+	//
+	// sprite 2 (To)
+	//
+	// The startPosition is not important here, because it uses a "To" action.
+	// The initial position will be the 1st point of the Catmull Rom path
+	//
+
+	CCCatmullRomConfig *config2 = [CCCatmullRomConfig configWithCapacity:20];
+	
+	[config2 addCP:ccp(s.width/2, 30)];
+	[config2 addCP:ccp(s.width-80,30)];
+	[config2 addCP:ccp(s.width-80,s.height-80)];
+	[config2 addCP:ccp(s.width/2,s.height-80)];
+	[config2 addCP:ccp(s.width/2, 30)];
+	
+	
+	CCCatmullRomTo *action2 = [CCCatmullRomTo actionWithDuration:3 configuration:config2];
+	id reverse2 = [action2 reverse];
+	
+	CCSequence *seq2 = [CCSequence actions:action2, reverse2, nil];
+	
+	[kathia runAction: seq2];
+
+}
+-(NSString *) title
+{
+	return @"CatmullRomBy / CatmullRomTo";
+}
+-(NSString *) subtitle
+{
+	return @"Catmull Rom spline paths. Testing reverse too";
+}
+
 @end
 
 

@@ -121,6 +121,10 @@
 {}
 @end
 
+@interface ActionCatmullRom : ActionDemo
+{}
+@end
+
 @interface ActionRepeatForever : ActionDemo
 {}
 @end
