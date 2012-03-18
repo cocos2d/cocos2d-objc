@@ -819,7 +819,7 @@
 //	((1 - t) + t)3 = 1
 // Expands to…
 //   (1 - t)3 + 3t(1-t)2 + 3t2(1 - t) + t3 = 1
-static inline float bezierat( float a, float b, float c, float d, ccTime t )
+static inline CGFloat bezierat( float a, float b, float c, float d, ccTime t )
 {
 	return (powf(1-t,3) * a +
 			3*t*(powf(1-t,2))*b +
@@ -858,18 +858,18 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 
 -(void) update: (ccTime) t
 {
-	float xa = 0;
-	float xb = config_.controlPoint_1.x;
-	float xc = config_.controlPoint_2.x;
-	float xd = config_.endPosition.x;
+	CGFloat xa = 0;
+	CGFloat xb = config_.controlPoint_1.x;
+	CGFloat xc = config_.controlPoint_2.x;
+	CGFloat xd = config_.endPosition.x;
 
-	float ya = 0;
-	float yb = config_.controlPoint_1.y;
-	float yc = config_.controlPoint_2.y;
-	float yd = config_.endPosition.y;
+	CGFloat ya = 0;
+	CGFloat yb = config_.controlPoint_1.y;
+	CGFloat yc = config_.controlPoint_2.y;
+	CGFloat yd = config_.endPosition.y;
 
-	float x = bezierat(xa, xb, xc, xd, t);
-	float y = bezierat(ya, yb, yc, yd, t);
+	CGFloat x = bezierat(xa, xb, xc, xd, t);
+	CGFloat y = bezierat(ya, yb, yc, yd, t);
 	[target_ setPosition:  ccpAdd( startPosition_, ccp(x,y))];
 }
 

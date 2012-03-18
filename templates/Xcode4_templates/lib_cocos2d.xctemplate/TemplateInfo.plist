@@ -55,6 +55,28 @@
 			<key>Path</key>
 			<string>libs/cocos2d/CCActionCamera.m</string>
 		</dict>
+		<key>libs/cocos2d/CCActionCatmullRom.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2d</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2d/CCActionCatmullRom.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/cocos2d/CCActionCatmullRom.m</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2d</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2d/CCActionCatmullRom.m</string>
+		</dict>
 		<key>libs/cocos2d/CCActionEase.h</key>
 		<dict>
 			<key>Group</key>
@@ -2157,6 +2179,8 @@
 		<string>libs/cocos2d/CCAction.m</string>
 		<string>libs/cocos2d/CCActionCamera.h</string>
 		<string>libs/cocos2d/CCActionCamera.m</string>
+		<string>libs/cocos2d/CCActionCatmullRom.h</string>
+		<string>libs/cocos2d/CCActionCatmullRom.m</string>
 		<string>libs/cocos2d/CCActionEase.h</string>
 		<string>libs/cocos2d/CCActionEase.m</string>
 		<string>libs/cocos2d/CCActionGrid.h</string>
