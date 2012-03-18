@@ -119,7 +119,7 @@
 /* initalises parsing of an XML string, either a tmx (Map) string or tsx (Tileset) string */
 - (void) parseXMLString:(NSString *)xmlString;
 /* handles the work of parsing for parseXMLFile: and parseXMLString: */
-- (NSError*) parseXMLData:(NSData*)data;
+- (void) parseXMLData:(NSData*)data;
 @end
 
 @implementation CCTMXMapInfo
