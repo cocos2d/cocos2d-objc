@@ -170,7 +170,7 @@
 {
 	if ([frames_ count] == 0 && delayPerUnit_ == 0)
 	{
-        NSAssert(delay >= 0, @"delay can't be 0 or negative");
+        NSAssert(delay >= 0, @"delay can't be 0 or be negative");
 		delayPerUnit_ = delay; 	
 	}
 	
