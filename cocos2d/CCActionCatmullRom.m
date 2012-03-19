@@ -164,7 +164,7 @@
 
 // CatmullRom Spline formula:
 
-static inline CGPoint CatmullRomAt( CGPoint p0, CGPoint p1, CGPoint p2, CGPoint p3, ccTime t )
+inline CGPoint ccCatmullRomAt( CGPoint p0, CGPoint p1, CGPoint p2, CGPoint p3, ccTime t )
 {
 	CGFloat t2 = t * t;
 	CGFloat t3 = t2 * t;
@@ -251,7 +251,7 @@ static inline CGPoint CatmullRomAt( CGPoint p0, CGPoint p1, CGPoint p2, CGPoint 
 	CGPoint pp2 = [configuration_ getControlPointAtIndex:p+1];
 	CGPoint pp3 = [configuration_ getControlPointAtIndex:p+2];
 	
-	CGPoint newPos = CatmullRomAt( pp0, pp1, pp2, pp3,lt);
+	CGPoint newPos = ccCatmullRomAt( pp0, pp1, pp2, pp3,lt);
 	
 	[self updatePosition:newPos];
 }
