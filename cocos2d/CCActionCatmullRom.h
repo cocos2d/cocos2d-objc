@@ -1,6 +1,8 @@
 /*
  * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
+ * Copyright (c) 2008 Radu Gruian
+ *
  * Copyright (c) 2011 Vit Valentin
  *
  *
@@ -22,7 +24,14 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
+ *
+ * Orignal code by Radu Gruian: http://www.codeproject.com/Articles/30838/Overhauser-Catmull-Rom-Splines-for-Camera-Animatio.So
+ *
+ * Adapted to cocos2d-x by Vit Valentin
+ *
+ * Adapted from cocos2d-x to cocos2d-iphone by Ricardo Quesada
  */
+
 
 #import "CCActionInterval.h"
 
