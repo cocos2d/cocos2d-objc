@@ -52,19 +52,19 @@
 -(id) initWithCapacity:(NSUInteger)capacity;
 
 /** appends a control point */
--(void) addCP:(CGPoint)controlPoint;
+-(void) addControlPoint:(CGPoint)controlPoint;
 
 /** inserts a controlPoint at index */
--(void) insertCP:(CGPoint)controlPoint atIndex:(NSUInteger)index;
+-(void) insertControlPoint:(CGPoint)controlPoint atIndex:(NSUInteger)index;
 
 /** replaces an existing controlPoint at index */
--(void) replaceCP:(CGPoint)controlPoint atIndex:(NSUInteger)index;
+-(void) replaceControlPoint:(CGPoint)controlPoint atIndex:(NSUInteger)index;
 
 /** get the value of a controlPoint at a given index */
--(CGPoint) getCPAtIndex:(NSInteger)index;
+-(CGPoint) getControlPointAtIndex:(NSInteger)index;
 
 /** deletes a control point at a given index */
--(void) removeCPAtIndex:(NSUInteger)index;
+-(void) removeControlPointAtIndex:(NSUInteger)index;
 
 /** returns the number of objects of the control point array */
 -(NSUInteger) count;

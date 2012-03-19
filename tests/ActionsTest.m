@@ -495,13 +495,13 @@ Class restartAction()
 	
 	CCCatmullRomConfig *config = [CCCatmullRomConfig configWithCapacity:20];
 
-	[config addCP:ccp(0,0)];
-	[config addCP:ccp(80,80)];
-	[config addCP:ccp(s.width-80,80)];
-	[config addCP:ccp(s.width-80,s.height-80)];
-	[config addCP:ccp(80,s.height-80)];
-	[config addCP:ccp(80,80)];
-	[config addCP:ccp(s.width/2, s.height/2)];
+	[config addControlPoint:ccp(0,0)];
+	[config addControlPoint:ccp(80,80)];
+	[config addControlPoint:ccp(s.width-80,80)];
+	[config addControlPoint:ccp(s.width-80,s.height-80)];
+	[config addControlPoint:ccp(80,s.height-80)];
+	[config addControlPoint:ccp(80,80)];
+	[config addControlPoint:ccp(s.width/2, s.height/2)];
 
 	CCCatmullRomBy *action = [CCCatmullRomBy actionWithDuration:3 configuration:config];
 	id reverse = [action reverse];
@@ -520,11 +520,11 @@ Class restartAction()
 
 	CCCatmullRomConfig *config2 = [CCCatmullRomConfig configWithCapacity:20];
 	
-	[config2 addCP:ccp(s.width/2, 30)];
-	[config2 addCP:ccp(s.width-80,30)];
-	[config2 addCP:ccp(s.width-80,s.height-80)];
-	[config2 addCP:ccp(s.width/2,s.height-80)];
-	[config2 addCP:ccp(s.width/2, 30)];
+	[config2 addControlPoint:ccp(s.width/2, 30)];
+	[config2 addControlPoint:ccp(s.width-80,30)];
+	[config2 addControlPoint:ccp(s.width-80,s.height-80)];
+	[config2 addControlPoint:ccp(s.width/2,s.height-80)];
+	[config2 addControlPoint:ccp(s.width/2, 30)];
 	
 	
 	CCCatmullRomTo *action2 = [CCCatmullRomTo actionWithDuration:3 configuration:config2];
