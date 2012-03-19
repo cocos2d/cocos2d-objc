@@ -80,7 +80,7 @@
 	[super dealloc];
 }
 
--(void) addCP:(CGPoint)controlPoint
+-(void) addControlPoint:(CGPoint)controlPoint
 {
 #ifdef __CC_PLATFORM_MAC
 	NSValue *value = [NSValue valueWithPoint:controlPoint];
@@ -91,7 +91,7 @@
 	[controlPoints_ addObject:value];
 }
 
--(void) insertCP:(CGPoint)controlPoint atIndex:(NSUInteger)index
+-(void) insertControlPoint:(CGPoint)controlPoint atIndex:(NSUInteger)index
 {
 #ifdef __CC_PLATFORM_MAC
 	NSValue *value = [NSValue valueWithPoint:controlPoint];
@@ -103,7 +103,7 @@
 	
 }
 
--(CGPoint) getCPAtIndex:(NSInteger)index
+-(CGPoint) getControlPointAtIndex:(NSInteger)index
 {
 	index = MIN([controlPoints_ count]-1, MAX(index, 0));
 
@@ -118,7 +118,7 @@
 	return point;
 }
 
--(void) replaceCP:(CGPoint)controlPoint atIndex:(NSUInteger)index
+-(void) replaceControlPoint:(CGPoint)controlPoint atIndex:(NSUInteger)index
 {
 #ifdef __CC_PLATFORM_MAC
 	NSValue *value = [NSValue valueWithPoint:controlPoint];
@@ -129,7 +129,7 @@
 	[controlPoints_ replaceObjectAtIndex:index withObject:value];
 }
 
--(void) removeCPAtIndex:(NSUInteger)index
+-(void) removeControlPointAtIndex:(NSUInteger)index
 {
 	[controlPoints_ removeObjectAtIndex:index];
 }
@@ -246,10 +246,10 @@ static inline CGPoint CatmullRomAt( CGPoint p0, CGPoint p1, CGPoint p2, CGPoint 
 	}
 
 	// Interpolate
-	CGPoint pp0 = [configuration_ getCPAtIndex:p-1];
-	CGPoint pp1 = [configuration_ getCPAtIndex:p+0];
-	CGPoint pp2 = [configuration_ getCPAtIndex:p+1];
-	CGPoint pp3 = [configuration_ getCPAtIndex:p+2];
+	CGPoint pp0 = [configuration_ getControlPointAtIndex:p-1];
+	CGPoint pp1 = [configuration_ getControlPointAtIndex:p+0];
+	CGPoint pp2 = [configuration_ getControlPointAtIndex:p+1];
+	CGPoint pp3 = [configuration_ getControlPointAtIndex:p+2];
 	
 	CGPoint newPos = CatmullRomAt( pp0, pp1, pp2, pp3,lt);
 	
@@ -292,12 +292,12 @@ static inline CGPoint CatmullRomAt( CGPoint p0, CGPoint p1, CGPoint p2, CGPoint 
 	//
 	// convert "absolutes" to "diffs"
 	//
-	CGPoint p = [copyConfig getCPAtIndex:0];
+	CGPoint p = [copyConfig getControlPointAtIndex:0];
 	for( NSUInteger i=1; i < [copyConfig count];i++ ) {
 		
-		CGPoint current = [copyConfig getCPAtIndex:i];
+		CGPoint current = [copyConfig getControlPointAtIndex:i];
 		CGPoint diff = ccpSub(current,p);
-		[copyConfig replaceCP:diff atIndex:i];
+		[copyConfig replaceControlPoint:diff atIndex:i];
 		
 		p = current;
 	}
@@ -309,18 +309,18 @@ static inline CGPoint CatmullRomAt( CGPoint p0, CGPoint p1, CGPoint p2, CGPoint 
 	[copyConfig release];
 	
 	// 1st element (which should be 0,0) should be here too
-	p = [reverse getCPAtIndex: [reverse count]-1];
-	[reverse removeCPAtIndex:[reverse count]-1];
+	p = [reverse getControlPointAtIndex: [reverse count]-1];
+	[reverse removeControlPointAtIndex:[reverse count]-1];
 	
 	p = ccpNeg(p);
-	[reverse insertCP:p atIndex:0];
+	[reverse insertControlPoint:p atIndex:0];
 	
 	for( NSUInteger i=1; i < [reverse count];i++ ) {
 		
-		CGPoint current = [reverse getCPAtIndex:i];
+		CGPoint current = [reverse getControlPointAtIndex:i];
 		current = ccpNeg(current);
 		CGPoint abs = ccpAdd( current, p);
-		[reverse replaceCP:abs atIndex:i];
+		[reverse replaceControlPoint:abs atIndex:i];
 		
 		p = abs;
 	}
