@@ -98,3 +98,6 @@
 	CGPoint				startPosition_;
 }
 @end
+
+/** Returns the Catmull Rom position for a given set of points and time */
+CGPoint ccCatmullRomAt( CGPoint p0, CGPoint p1, CGPoint p2, CGPoint p3, ccTime t );

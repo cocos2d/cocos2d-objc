@@ -533,8 +533,32 @@ Class restartAction()
 	CCSequence *seq2 = [CCSequence actions:action2, reverse2, nil];
 	
 	[kathia runAction: seq2];
-
+	
+	configCR1_ = [config retain];
+	configCR2_ = [config2 retain];
 }
+
+-(void) dealloc
+{
+	[configCR1_ release];
+	[configCR2_ release];
+	
+	[super dealloc];
+}
+
+-(void) draw
+{
+	[super draw];
+
+	// move to 50,50 since the "by" path will start at 50,50
+	kmGLPushMatrix();
+	kmGLTranslatef(50, 50, 0);
+	ccDrawCatmullRom(configCR1_,50);
+	kmGLPopMatrix();
+
+	ccDrawCatmullRom(configCR2_,50);
+}
+
 -(NSString *) title
 {
 	return @"CatmullRomBy / CatmullRomTo";
