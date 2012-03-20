@@ -29,13 +29,13 @@
 
 #import "../ccMacros.h"
 
-#ifdef __CC_PLATFORM_IOS
+#if __CC_PLATFORM_IOS
 #import <OpenGLES/ES2/gl.h>
 #import <OpenGLES/ES2/glext.h>
 #import <OpenGLES/EAGL.h>
 #import "iOS/CCGLView.h"
 
-#elif defined(__CC_PLATFORM_MAC)
+#elif __CC_PLATFORM_MAC
 #import <OpenGL/gl.h>
 #import <OpenGL/glu.h>
 #import <Cocoa/Cocoa.h>	// needed for NSOpenGLView
@@ -44,16 +44,25 @@
 
 
 // iOS
-#ifdef __CC_PLATFORM_IOS
+#if __CC_PLATFORM_IOS
 #define	glClearDepth				glClearDepthf
 #define glDeleteVertexArrays		glDeleteVertexArraysOES
 #define glGenVertexArrays			glGenVertexArraysOES
 #define glBindVertexArray			glBindVertexArrayOES
 
 // Mac
-#elif defined(__CC_PLATFORM_MAC)
+#elif __CC_PLATFORM_MAC
+
+#if 1
 #define glDeleteVertexArrays		glDeleteVertexArraysAPPLE
 #define glGenVertexArrays			glGenVertexArraysAPPLE
 #define glBindVertexArray			glBindVertexArrayAPPLE
+
+#else // OpenGL 3.2 Core Profile
+
+#define glDeleteVertexArrays		glDeleteVertexArrays
+#define glGenVertexArrays			glGenVertexArrays
+#define glBindVertexArray			glBindVertexArray
+#endif
 
 #endif

@@ -20,18 +20,37 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-	// CC_DIRECTOR_INIT()
-	//
-	// 1. Initializes an CCGLView with 0-bit depth format, and RGB565 render buffer
-	// 2. CCGLView multiple touches: disabled
-	// 3. creates a UIWindow, and assign it to the "window" var (it must already be declared)
-	// 4. Parents CCGLView to the newly created window
-	// 5. Creates Display Link Director
-	// 6. It will try to run at 60 FPS
-	// 7. Display FPS: NO
-	// 8. Will create a CCDirector and will associate the view with the director
-	// 9. Will create a UINavigationControlView with the director.
-	CC_DIRECTOR_INIT();
+	// Main Window
+	window_ = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+	
+	// Director
+	director_ = (CCDirectorIOS*)[CCDirector sharedDirector];
+	[director_ setDisplayStats:NO];
+	[director_ setAnimationInterval:1.0/60];
+	
+	// GL View
+	CCGLView *__glView = [CCGLView viewWithFrame:[window_ bounds]
+									 pixelFormat:kEAGLColorFormatRGB565
+									 depthFormat:0 /* GL_DEPTH_COMPONENT24_OES */
+							  preserveBackbuffer:NO
+									  sharegroup:nil
+								   multiSampling:NO
+								 numberOfSamples:0
+						  ];
+	
+	[director_ setView:__glView];
+	[director_ setDelegate:self];
+	director_.wantsFullScreenLayout = YES;
+
+	// Retina Display ?
+	[director_ enableRetinaDisplay:!useNonRetinaDisplay_];
+	
+	// Navigation Controller
+	navController_ = [[UINavigationController alloc] initWithRootViewController:director_];
+	navController_.navigationBarHidden = YES;
+
+	[window_ addSubview:navController_.view];
+	[window_ makeKeyAndVisible];
 
 	return YES;
 }

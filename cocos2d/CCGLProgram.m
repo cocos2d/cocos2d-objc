@@ -29,8 +29,8 @@
 #import "CCGLProgram.h"
 #import "ccGLStateCache.h"
 #import "ccMacros.h"
-#import "Support/uthash.h"
 #import "Support/CCFileUtils.h"
+#import "Support/uthash.h"
 #import "Support/OpenGL_Internal.h"
 
 // extern
@@ -58,55 +58,58 @@ typedef void (*GLLogFunction) (GLuint program,
 #pragma mark Private Extension Method Declaration
 
 @interface CCGLProgram()
-- (BOOL)compileShader:(GLuint *)shader
-                 type:(GLenum)type
-                 file:(NSString *)file;
-- (NSString *)logForOpenGLObject:(GLuint)object
-                    infoCallback:(GLInfoFunction)infoFunc
-                         logFunc:(GLLogFunction)logFunc;
+- (BOOL)compileShader:(GLuint *)shader type:(GLenum)type byteArray:(const GLchar*)byteArray;
+
+- (NSString *)logForOpenGLObject:(GLuint)object infoCallback:(GLInfoFunction)infoFunc logFunc:(GLLogFunction)logFunc;
 @end
 
 #pragma mark -
 
 @implementation CCGLProgram
-- (id)initWithVertexShaderFilename:(NSString *)vShaderFilename fragmentShaderFilename:(NSString *)fShaderFilename
+- (id)initWithVertexShaderByteArray:(const GLchar *)vShaderByteArray fragmentShaderByteArray:(const GLchar *)fShaderByteArray
 {
     if ((self = [super init]) )
     {
         program_ = glCreateProgram();
-
+		
 		vertShader_ = fragShader_ = 0;
-
-		if( vShaderFilename ) {
-			NSString *fullname = [CCFileUtils fullPathFromRelativePath:vShaderFilename];
-
+		
+		if( vShaderByteArray ) {
+			
 			if (![self compileShader:&vertShader_
 								type:GL_VERTEX_SHADER
-								file:fullname])
-				CCLOG(@"cocos2d: ERROR: Failed to compile vertex shader: %@", vShaderFilename);
+						   byteArray:vShaderByteArray] )
+				CCLOG(@"cocos2d: ERROR: Failed to compile vertex shader");
 		}
-
+		
         // Create and compile fragment shader
-		if( fShaderFilename ) {
-			NSString *fullname = [CCFileUtils fullPathFromRelativePath:fShaderFilename];
-
+		if( fShaderByteArray ) {
 			if (![self compileShader:&fragShader_
 								type:GL_FRAGMENT_SHADER
-								file:fullname])
-				CCLOG(@"cocos2d: ERROR: Failed to compile fragment shader: %@", fShaderFilename);
-		}
+						   byteArray:fShaderByteArray] )
 
+				CCLOG(@"cocos2d: ERROR: Failed to compile fragment shader");
+		}
+		
 		if( vertShader_ )
 			glAttachShader(program_, vertShader_);
-
+		
 		if( fragShader_ )
 			glAttachShader(program_, fragShader_);
 		
 		hashForUniforms_ = NULL;
-
     }
-
+	
     return self;
+}
+
+- (id)initWithVertexShaderFilename:(NSString *)vShaderFilename fragmentShaderFilename:(NSString *)fShaderFilename
+{
+	
+	const GLchar * vertexSource = (GLchar*) [[NSString stringWithContentsOfFile:[CCFileUtils fullPathFromRelativePath:vShaderFilename] encoding:NSUTF8StringEncoding error:nil] UTF8String];
+	const GLchar * fragmentSource = (GLchar*) [[NSString stringWithContentsOfFile:[CCFileUtils fullPathFromRelativePath:fShaderFilename] encoding:NSUTF8StringEncoding error:nil] UTF8String];
+
+	return [self initWithVertexShaderByteArray:vertexSource fragmentShaderByteArray:fragmentSource];
 }
 
 - (NSString*) description
@@ -115,34 +118,27 @@ typedef void (*GLLogFunction) (GLuint program,
 }
 
 
-- (BOOL)compileShader:(GLuint *)shader
-                 type:(GLenum)type
-                 file:(NSString *)file
+- (BOOL)compileShader:(GLuint *)shader type:(GLenum)type byteArray:(const GLchar *)source
 {
     GLint status;
-    const GLchar *source;
 
-    source =
-      (GLchar *)[[NSString stringWithContentsOfFile:file
-                                           encoding:NSUTF8StringEncoding
-                                              error:nil] UTF8String];
     if (!source)
         return NO;
-
+	
     *shader = glCreateShader(type);
     glShaderSource(*shader, 1, &source, NULL);
     glCompileShader(*shader);
-
+	
     glGetShaderiv(*shader, GL_COMPILE_STATUS, &status);
-
+	
 	if( ! status ) {
 		if( type == GL_VERTEX_SHADER )
-			CCLOG(@"cocos2d: %@: %@", file, [self vertexShaderLog] );
+			CCLOG(@"cocos2d: %@", [self vertexShaderLog] );
 		else
-			CCLOG(@"cocos2d: %@: %@", file, [self fragmentShaderLog] );
-
+			CCLOG(@"cocos2d: %@", [self fragmentShaderLog] );
+		
 	}
-    return status == GL_TRUE;
+    return ( status == GL_TRUE );
 }
 
 #pragma mark -

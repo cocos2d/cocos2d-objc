@@ -19,8 +19,9 @@ Class restartAction(void);
 static int sceneIdx=-1;
 static NSString *transitions[] = {
 
-	@"ActionAnimate",
-
+	@"ActionCatmullRom",
+	@"ActionBezier",
+	
 	@"ActionManual",
 	@"ActionMove",
 	@"ActionRotate",
@@ -29,6 +30,7 @@ static NSString *transitions[] = {
 	@"ActionSkewRotateScale",
 	@"ActionJump",
 	@"ActionBezier",
+	@"ActionCatmullRom",
 	@"ActionBlink",
 	@"ActionFade",
 	@"ActionTint",
@@ -471,6 +473,101 @@ Class restartAction()
 {
 	return @"BezierBy / BezierTo";
 }
+@end
+
+@implementation ActionCatmullRom
+-(void) onEnter
+{
+	[super onEnter];
+	
+	[self centerSprites:2];
+	
+	CGSize s = [[CCDirector sharedDirector] winSize];
+
+	//
+	// sprite 1 (By)
+	//
+	// startPosition can be any coordinate, but since the movement
+	// is relative to the Catmull Rom curve, it is better to start with (0,0).
+	//
+	
+	tamara.position = ccp(50,50);
+	
+	CCCatmullRomConfig *config = [CCCatmullRomConfig configWithCapacity:20];
+
+	[config addControlPoint:ccp(0,0)];
+	[config addControlPoint:ccp(80,80)];
+	[config addControlPoint:ccp(s.width-80,80)];
+	[config addControlPoint:ccp(s.width-80,s.height-80)];
+	[config addControlPoint:ccp(80,s.height-80)];
+	[config addControlPoint:ccp(80,80)];
+	[config addControlPoint:ccp(s.width/2, s.height/2)];
+
+	CCCatmullRomBy *action = [CCCatmullRomBy actionWithDuration:3 configuration:config];
+	id reverse = [action reverse];
+	
+	CCSequence *seq = [CCSequence actions:action, reverse, nil];
+	
+	[tamara runAction: seq];
+	
+	
+	//
+	// sprite 2 (To)
+	//
+	// The startPosition is not important here, because it uses a "To" action.
+	// The initial position will be the 1st point of the Catmull Rom path
+	//
+
+	CCCatmullRomConfig *config2 = [CCCatmullRomConfig configWithCapacity:20];
+	
+	[config2 addControlPoint:ccp(s.width/2, 30)];
+	[config2 addControlPoint:ccp(s.width-80,30)];
+	[config2 addControlPoint:ccp(s.width-80,s.height-80)];
+	[config2 addControlPoint:ccp(s.width/2,s.height-80)];
+	[config2 addControlPoint:ccp(s.width/2, 30)];
+	
+	
+	CCCatmullRomTo *action2 = [CCCatmullRomTo actionWithDuration:3 configuration:config2];
+	id reverse2 = [action2 reverse];
+	
+	CCSequence *seq2 = [CCSequence actions:action2, reverse2, nil];
+	
+	[kathia runAction: seq2];
+	
+	configCR1_ = [config retain];
+	configCR2_ = [config2 retain];
+}
+
+-(void) dealloc
+{
+	[configCR1_ release];
+	[configCR2_ release];
+	
+	[super dealloc];
+}
+
+-(void) draw
+{
+	[super draw];
+
+	// move to 50,50 since the "by" path will start at 50,50
+	kmGLPushMatrix();
+	kmGLTranslatef(50, 50, 0);
+	ccDrawCatmullRom(configCR1_,50);
+	kmGLPopMatrix();
+
+	ccDrawCatmullRom(configCR2_,50);
+}
+
+-(NSString *) title
+{
+	return @"CatmullRomBy / CatmullRomTo";
+}
+-(NSString *) subtitle
+{
+	return @"Catmull Rom spline paths. Testing reverse too";
+}
+
 @end
 
 
@@ -1423,10 +1520,11 @@ Class restartAction()
 	// You can change anytime.
 	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA8888];
 
-	// When in iPad / RetinaDisplay mode, CCFileUtils will append the "-ipad" / "-hd" to all loaded files
-	// If the -ipad  / -hdfile is not found, it will load the non-suffixed version
-	[CCFileUtils setiPadSuffix:@"-ipad"];			// Default on iPad is "" (empty string)
-	[CCFileUtils setRetinaDisplaySuffix:@"-hd"];	// Default on RetinaDisplay is "-hd"
+	// When in iPhone RetinaDisplay, iPad, iPad RetinaDisplay mode, CCFileUtils will append the "-hd", "-ipad", "-ipadhd" to all loaded files
+	// If the -hd, -ipad, -ipadhd files are not found, it will load the non-suffixed version
+	[CCFileUtils setiPhoneRetinaDisplaySuffix:@"-hd"];		// Default on iPhone RetinaDisplay is "-hd"
+	[CCFileUtils setiPadSuffix:@"-ipad"];					// Default on iPad is "" (empty string)
+	[CCFileUtils setiPadRetinaDisplaySuffix:@"-hd"];		// Default on iPad RetinaDisplay is "-ipadhd"
 
 	CCScene *scene = [CCScene node];
 	[scene addChild: [nextAction() node]];
@@ -1436,10 +1534,10 @@ Class restartAction()
 	return YES;
 }
 
--(BOOL) shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-	return UIInterfaceOrientationIsLandscape(interfaceOrientation);
-}
+//-(BOOL) shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+//{
+//	return UIInterfaceOrientationIsLandscape(interfaceOrientation);
+//}
 @end
 
 #elif defined(__CC_PLATFORM_MAC)

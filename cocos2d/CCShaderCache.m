@@ -24,6 +24,7 @@
  */
 
 #import "CCShaderCache.h"
+#import "ccShaders.h"
 #import "CCGLProgram.h"
 #import "ccMacros.h"
 #import "Support/OpenGL_Internal.h"
@@ -83,8 +84,8 @@ static CCShaderCache *_sharedShaderCache;
 -(void) loadDefaultShaders
 {
 	// Position Texture Color shader
-	CCGLProgram *p = [[CCGLProgram alloc] initWithVertexShaderFilename:@"PositionTextureColor.vsh"
-											fragmentShaderFilename:@"PositionTextureColor.fsh"];
+	CCGLProgram *p = [[CCGLProgram alloc] initWithVertexShaderByteArray:ccPositionTextureColor_vert
+												fragmentShaderByteArray:ccPositionTextureColor_frag];
 
 	[p addAttribute:kCCAttributeNamePosition index:kCCVertexAttrib_Position];
 	[p addAttribute:kCCAttributeNameColor index:kCCVertexAttrib_Color];
@@ -99,8 +100,8 @@ static CCShaderCache *_sharedShaderCache;
 	CHECK_GL_ERROR_DEBUG();
 
 	// Position Texture Color alpha test
-	p = [[CCGLProgram alloc] initWithVertexShaderFilename:@"PositionTextureColor.vsh"
-								 fragmentShaderFilename:@"PositionTextureColorAlphaTest.fsh"];
+	p = [[CCGLProgram alloc] initWithVertexShaderByteArray:ccPositionTextureColor_vert
+								   fragmentShaderByteArray:ccPositionTextureColorAlphaTest_frag];
 
 	[p addAttribute:kCCAttributeNamePosition index:kCCVertexAttrib_Position];
 	[p addAttribute:kCCAttributeNameColor index:kCCVertexAttrib_Color];
@@ -117,8 +118,8 @@ static CCShaderCache *_sharedShaderCache;
 	//
 	// Position, Color shader
 	//
-	p = [[CCGLProgram alloc] initWithVertexShaderFilename:@"PositionColor.vsh"
-								 fragmentShaderFilename:@"PositionColor.fsh"];
+	p = [[CCGLProgram alloc] initWithVertexShaderByteArray:ccPositionColor_vert
+								   fragmentShaderByteArray:ccPositionColor_frag];
 
 	[p addAttribute:kCCAttributeNamePosition index:kCCVertexAttrib_Position];
 	[p addAttribute:kCCAttributeNameColor index:kCCVertexAttrib_Color];
@@ -134,8 +135,8 @@ static CCShaderCache *_sharedShaderCache;
 	//
 	// Position Texture shader
 	//
-	p = [[CCGLProgram alloc] initWithVertexShaderFilename:@"PositionTexture.vsh"
-								 fragmentShaderFilename:@"PositionTexture.fsh"];
+	p = [[CCGLProgram alloc] initWithVertexShaderByteArray:ccPositionTexture_vert
+								   fragmentShaderByteArray:ccPositionTexture_frag];
 
 	[p addAttribute:kCCAttributeNamePosition index:kCCVertexAttrib_Position];
 	[p addAttribute:kCCAttributeNameTexCoord index:kCCVertexAttrib_TexCoords];
@@ -151,8 +152,8 @@ static CCShaderCache *_sharedShaderCache;
 	//
 	// Position, Texture attribs, 1 Color as uniform shader
 	//
-	p = [[CCGLProgram alloc] initWithVertexShaderFilename:@"PositionTexture_uColor.vsh"
-								 fragmentShaderFilename:@"PositionTexture_uColor.fsh"];
+	p = [[CCGLProgram alloc] initWithVertexShaderByteArray:ccPositionTexture_uColor_vert
+								   fragmentShaderByteArray:ccPositionTexture_uColor_frag];
 
 	[p addAttribute:kCCAttributeNamePosition index:kCCVertexAttrib_Position];
 	[p addAttribute:kCCAttributeNameTexCoord index:kCCVertexAttrib_TexCoords];
@@ -168,8 +169,8 @@ static CCShaderCache *_sharedShaderCache;
 	//
 	// Position Texture A8 Color shader
 	//
-	p = [[CCGLProgram alloc] initWithVertexShaderFilename:@"PositionTextureA8Color.vsh"
-								 fragmentShaderFilename:@"PositionTextureA8Color.fsh"];
+	p = [[CCGLProgram alloc] initWithVertexShaderByteArray:ccPositionTextureA8Color_vert
+								   fragmentShaderByteArray:ccPositionTextureA8Color_frag];
 
 	[p addAttribute:kCCAttributeNamePosition index:kCCVertexAttrib_Position];
 	[p addAttribute:kCCAttributeNameColor index:kCCVertexAttrib_Color];
@@ -179,6 +180,22 @@ static CCShaderCache *_sharedShaderCache;
 	[p updateUniforms];
 
 	[programs_ setObject:p forKey:kCCShader_PositionTextureA8Color];
+	[p release];
+
+	CHECK_GL_ERROR_DEBUG();
+	
+	//
+	// Position and 1 color passed as a uniform (to similate glColor4ub )
+	//
+	p = [[CCGLProgram alloc] initWithVertexShaderByteArray:ccPosition_uColor_vert
+								   fragmentShaderByteArray:ccPosition_uColor_frag];	
+	
+	[p addAttribute:@"aVertex" index:kCCVertexAttrib_Position];
+	
+	[p link];
+	[p updateUniforms];
+
+	[programs_ setObject:p forKey:kCCShader_Position_uColor];
 	[p release];
 
 	CHECK_GL_ERROR_DEBUG();

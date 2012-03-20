@@ -273,12 +273,19 @@
 		case kCCDirectorProjection3D:
 		{
 
+			float zeye = [self getZEye];
+
 			glViewport(offset.x, offset.y, widthAspect, heightAspect);
 			kmGLMatrixMode(KM_GL_PROJECTION);
 			kmGLLoadIdentity();
 
 			kmMat4 matrixPerspective, matrixLookup;
-			kmMat4PerspectiveProjection( &matrixPerspective, 60, (GLfloat)widthAspect/heightAspect, 0.1f, 1500.0f);
+
+			// issue #1334
+			kmMat4PerspectiveProjection( &matrixPerspective, 60, (GLfloat)size.width/size.height, 0.1f, MAX(zeye*2,1500) );
+//			kmMat4PerspectiveProjection( &matrixPerspective, 60, (GLfloat)size.width/size.height, 0.1f, 1500);
+
+
 			kmGLMultMatrix(&matrixPerspective);
 
 
@@ -286,7 +293,7 @@
 			kmGLLoadIdentity();
 			kmVec3 eye, center, up;
 
-			float eyeZ = size.height * [self getZEye] / winSizeInPixels_.height;
+			float eyeZ = size.height * zeye / winSizeInPixels_.height;
 
 			kmVec3Fill( &eye, size.width/2, size.height/2, eyeZ );
 			kmVec3Fill( &center, size.width/2, size.height/2, 0 );
@@ -302,7 +309,7 @@
 			break;
 
 		default:
-			CCLOG(@"cocos2d: Director: unrecognized projecgtion");
+			CCLOG(@"cocos2d: Director: unrecognized projection");
 			break;
 	}
 

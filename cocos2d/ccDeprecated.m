@@ -304,6 +304,14 @@ void ccGLUniformModelViewProjectionMatrix( CCGLProgram* program )
 #endif
 @end
 
+#if __CC_PLATFORM_IOS
+@implementation CCFileUtils (Deprecated)
++(void) setRetinaDisplaySuffix:(NSString*)suffix
+{
+	return [self setiPhoneRetinaDisplaySuffix:suffix];
+}
+@end
+#endif
 
 
 #if __CC_PLATFORM_IOS

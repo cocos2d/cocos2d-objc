@@ -21,9 +21,8 @@ void main(void)
 	colors[7] = vec4(1,0.5,0,1);
 	colors[8] = vec4(1,0.5,0.5,1);
 	colors[9] = vec4(0.5,0.5,1,1);
-		
-	float y = gl_FragCoord.y;
-	y = mod(y / 3.0, 10.0 );
-	int yy = int(y);
-	gl_FragColor = colors[yy] * texture2D(u_texture, v_texCoord);
+	
+	// inline to prevent "float" loss and keep using lowp
+	int y = int( mod(gl_FragCoord.y / 3.0, 10.0 ) );
+	gl_FragColor = colors[y] * texture2D(u_texture, v_texCoord);
 }

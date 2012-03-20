@@ -42,11 +42,13 @@
 #import "CCShaderCache.h"
 #import "ccGLStateCache.h"
 #import "CCGLProgram.h"
+#import "CCConfiguration.h"
 
 // support
 #import "Support/OpenGL_Internal.h"
 #import "Support/CGPointExtension.h"
 #import "Support/TransformUtils.h"
+#import "Support/NSThread+performBlock.h"
 
 // extern
 #import "kazmath/GL/matrix.h"
@@ -74,10 +76,7 @@
 //		[self initTexCoordsWithRect:CGRectMake(0, 0, [texture_ pixelsWide], [texture_ pixelsHigh])];
 
 		[self initIndices];
-		NSBlockOperation *oper = [NSBlockOperation blockOperationWithBlock:^{
-			[self initVAO];
-		}];
-		[[NSOperationQueue mainQueue] addOperation:oper];
+		[self initVAO];
 
 		self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTextureColor];
 	}
@@ -158,7 +157,7 @@
 		}
         
         [self initIndices];
-        [self performSelectorOnMainThread:@selector(initVAO) withObject:nil waitUntilDone:YES modes:nil];
+        [self initVAO];
     }
     else
     {
@@ -168,38 +167,47 @@
 
 -(void) initVAO
 {
-	glGenVertexArrays(1, &VAOname_);
-	glBindVertexArray(VAOname_);
-
-#define kQuadSize sizeof(quads_[0].bl)
-
-	glGenBuffers(2, &buffersVBO_[0]);
-
-	glBindBuffer(GL_ARRAY_BUFFER, buffersVBO_[0]);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(quads_[0]) * totalParticles, quads_, GL_DYNAMIC_DRAW);
-
-	// vertices
-	glEnableVertexAttribArray(kCCVertexAttrib_Position);
-	glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof( ccV3F_C4B_T2F, vertices));
-
-	// colors
-	glEnableVertexAttribArray(kCCVertexAttrib_Color);
-	glVertexAttribPointer(kCCVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (GLvoid*) offsetof( ccV3F_C4B_T2F, colors));
-
-	// tex coords
-	glEnableVertexAttribArray(kCCVertexAttrib_TexCoords);
-	glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof( ccV3F_C4B_T2F, texCoords));
-
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffersVBO_[1]);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices_[0]) * totalParticles * 6, indices_, GL_STATIC_DRAW);
-
-	glBindVertexArray(0);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-	CHECK_GL_ERROR_DEBUG();
+	// VAO requires GL_APPLE_vertex_array_object in order to be created on a different thread
+	// https://devforums.apple.com/thread/145566?tstart=0
 	
-	vaoInit_ = YES;
+	void (^createVAO)(void) = ^ {
+		glGenVertexArrays(1, &VAOname_);
+		glBindVertexArray(VAOname_);
+
+	#define kQuadSize sizeof(quads_[0].bl)
+
+		glGenBuffers(2, &buffersVBO_[0]);
+
+		glBindBuffer(GL_ARRAY_BUFFER, buffersVBO_[0]);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(quads_[0]) * totalParticles, quads_, GL_DYNAMIC_DRAW);
+
+		// vertices
+		glEnableVertexAttribArray(kCCVertexAttrib_Position);
+		glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof( ccV3F_C4B_T2F, vertices));
+
+		// colors
+		glEnableVertexAttribArray(kCCVertexAttrib_Color);
+		glVertexAttribPointer(kCCVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (GLvoid*) offsetof( ccV3F_C4B_T2F, colors));
+
+		// tex coords
+		glEnableVertexAttribArray(kCCVertexAttrib_TexCoords);
+		glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof( ccV3F_C4B_T2F, texCoords));
+
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffersVBO_[1]);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices_[0]) * totalParticles * 6, indices_, GL_STATIC_DRAW);
+
+		glBindVertexArray(0);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+		CHECK_GL_ERROR_DEBUG();
+	};
+	
+	NSThread *cocos2dThread = [[CCDirector sharedDirector] runningThread];
+	if( cocos2dThread == [NSThread currentThread] || [[CCConfiguration sharedConfiguration] supportsShareableVAO] )
+		createVAO();
+	else 
+		[cocos2dThread performBlock:createVAO waitUntilDone:YES];
 }
 
 -(void) dealloc
@@ -274,48 +282,6 @@
 		// top-right vertex:
 		quads[i].tr.texCoords.u = right;
 		quads[i].tr.texCoords.v = top;
-//=======
-//		CC_SWAP( top, bottom);
-//		
-//		ccV3F_C4B_T2F_Quad *quadCollection; 
-//		NSUInteger start, end; 
-//		if (useBatchNode_)
-//		{
-//			quadCollection = [[batchNode_ textureAtlas] quads]; 
-//			start = atlasIndex_; 
-//			end = atlasIndex_ + totalParticles; 
-//		}
-//		else 
-//		{
-//			quadCollection = quads_; 
-//			start = 0; 
-//			end = totalParticles; 
-//		}
-//		
-//		ccV3F_C4B_T2F_Quad quad;
-//		bzero( &quad, sizeof(quad) );
-//
-//		for(NSInteger i=start; i<end; i++) {
-//			// bottom-left vertex:
-//			quad.bl.texCoords.u = left;
-//			quad.bl.texCoords.v = bottom;
-//			// bottom-right vertex:
-//			quad.br.texCoords.u = right;
-//			quad.br.texCoords.v = bottom;
-//			// top-left vertex:
-//			quad.tl.texCoords.u = left;
-//			quad.tl.texCoords.v = top;
-//			// top-right vertex:
-//			quad.tr.texCoords.u = right;
-//			quad.tr.texCoords.v = top;
-//			
-//			quad.bl.texCoords.u = left;
-//			quad.bl.texCoords.v = bottom;
-//			
-//			quadCollection[i] = quad;
-//		
-//		}
-//>>>>>>> develop
 	}
 }
 
@@ -436,8 +402,6 @@
 
 -(void) postStep
 {
-	if(!vaoInit_) return;
-	
 	glBindBuffer(GL_ARRAY_BUFFER, buffersVBO_[0] );
 	glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(quads_[0])*particleCount, quads_);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -448,8 +412,6 @@
 // overriding draw method
 -(void) draw
 {
-	if(!vaoInit_) return;
-	
 	NSAssert(!batchNode_,@"draw should not be called when added to a particleBatchNode");
 
 	CC_NODE_DRAW_SETUP();

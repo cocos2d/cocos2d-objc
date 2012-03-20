@@ -32,8 +32,7 @@
 #import "../../ccMacros.h"
 #ifdef __CC_PLATFORM_MAC
 
-#import <OpenGL/gl.h>
-
+#import "../../Platforms/CCGL.h"
 #import "CCGLView.h"
 #import "CCDirectorMac.h"
 #import "CCEventDispatcher.h"
@@ -60,10 +59,16 @@
 {
     NSOpenGLPixelFormatAttribute attribs[] =
     {
-		NSOpenGLPFAAccelerated,
-		NSOpenGLPFANoRecovery,
+//		NSOpenGLPFAAccelerated,
+//		NSOpenGLPFANoRecovery,
 		NSOpenGLPFADoubleBuffer,
 		NSOpenGLPFADepthSize, 24,
+
+#if 0
+		// Must specify the 3.2 Core Profile to use OpenGL 3.2
+		NSOpenGLPFAOpenGLProfile,
+		NSOpenGLProfileVersion3_2Core,
+#endif
 
 		0
     };
@@ -77,13 +82,6 @@
 
 		if( context )
 			[self setOpenGLContext:context];
-
-		// Synchronize buffer swaps with vertical refresh rate
-		GLint swapInt = 1;
-		[[self openGLContext] setValues:&swapInt forParameter:NSOpenGLCPSwapInterval];
-
-//		GLint order = -1;
-//		[[self openGLContext] setValues:&order forParameter:NSOpenGLCPSurfaceOrder];
 
 		// event delegate
 		eventDelegate_ = nil;
@@ -103,6 +101,17 @@
 	// XXX: Initialize OpenGL context
 
 	[super prepareOpenGL];
+	
+	// Make this openGL context current to the thread
+	// (i.e. all openGL on this thread calls will go to this context)
+	[[self openGLContext] makeCurrentContext];
+	
+	// Synchronize buffer swaps with vertical refresh rate
+	GLint swapInt = 1;
+	[[self openGLContext] setValues:&swapInt forParameter:NSOpenGLCPSwapInterval];	
+
+//	GLint order = -1;
+//	[[self openGLContext] setValues:&order forParameter:NSOpenGLCPSurfaceOrder];
 }
 
 - (void) reshape
@@ -130,9 +139,9 @@
 {
 	NSOpenGLContext *glContext = [self openGLContext];
 	NSAssert( glContext, @"FATAL: could not get openGL context");
-		
+
+	[glContext makeCurrentContext];
 	CGLLockContext([glContext CGLContextObj]);	
-	[glContext makeCurrentContext];	
 }
 
 -(void) unlockOpenGLContext

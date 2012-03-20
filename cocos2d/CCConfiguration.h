@@ -43,6 +43,7 @@ enum {
 	kCCiOSVersion_4_3_5 = 0x04030500,
 	kCCiOSVersion_5_0   = 0x05000000,
 	kCCiOSVersion_5_0_1 = 0x05000100,
+	kCCiOSVersion_5_1_0 = 0x05010000,
 	
 	kCCMacVersion_10_6  = 0x0a060000,
 	kCCMacVersion_10_7  = 0x0a070000,
@@ -61,6 +62,7 @@ enum {
 	BOOL			supportsNPOT_;
 	BOOL			supportsBGRA8888_;
 	BOOL			supportsDiscardFramebuffer_;
+	BOOL			supportsShareableVAO_;
 	unsigned int	OSVersion_;
 	GLint			maxSamplesAllowed_;
 	GLint			maxTextureUnits_;
@@ -98,6 +100,11 @@ enum {
  @since v0.99.2
  */
 @property (nonatomic, readonly) BOOL supportsDiscardFramebuffer;
+
+/** Whether or not shareable VAOs are supported.
+ @since v2.0.0
+ */
+@property (nonatomic, readonly) BOOL supportsShareableVAO;
 
 /** returns the OS version.
 	- On iOS devices it returns the firmware version.

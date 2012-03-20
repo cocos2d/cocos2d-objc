@@ -108,6 +108,7 @@ typedef struct _FontDefHashElement
 #pragma mark CCBMFontConfiguration
 
 @implementation CCBMFontConfiguration
+@synthesize atlasName=atlasName_;
 
 +(id) configurationWithFNTFile:(NSString*)FNTfile
 {
@@ -488,6 +489,11 @@ typedef struct _FontDefHashElement
     return [[[self alloc] initWithString:string fntFile:fntFile width:width alignment:alignment imageOffset:offset] autorelease];
 }
 
+-(id) init
+{
+	return [self initWithString:nil fntFile:nil width:kCCLabelAutomaticWidth alignment:CCTextAlignmentLeft imageOffset:CGPointZero];
+}
+
 -(id) initWithString:(NSString*)theString fntFile:(NSString*)fntFile
 {
     return [self initWithString:theString fntFile:fntFile width:kCCLabelAutomaticWidth alignment:CCTextAlignmentLeft];
@@ -498,29 +504,41 @@ typedef struct _FontDefHashElement
 	return [self initWithString:theString fntFile:fntFile width:width alignment:alignment imageOffset:CGPointZero];
 }
 
+// designated initializer
 -(id) initWithString:(NSString*)theString fntFile:(NSString*)fntFile width:(float)width alignment:(CCTextAlignment)alignment imageOffset:(CGPoint)offset
 {
 	NSAssert(!configuration_, @"re-init is no longer supported");
+	
+	// if theString && fntfile are both nil, then it is OK
+	NSAssert( (theString && fntFile) || (theString==nil && fntFile==nil), @"Invalid params for CCLabelBMFont");
+	
+	CCTexture2D *texture = nil;
 
-	configuration_ = FNTConfigLoadFile(fntFile);
-	[configuration_ retain];
+	if( fntFile ) {
+		configuration_ = FNTConfigLoadFile(fntFile);
+		[configuration_ retain];
     
-    fntFile_ = [fntFile retain];
+		fntFile_ = [fntFile retain];
 
-	NSAssert( configuration_, @"Error creating config for LabelBMFont");
+		NSAssert( configuration_, @"Error creating config for LabelBMFont");
 
-	if ((self=[super initWithFile:configuration_->atlasName_ capacity:[theString length]])) {
+		texture = [[CCTextureCache sharedTextureCache] addImage:configuration_.atlasName];
 
+	} else
+		texture = [[[CCTexture2D alloc] init] autorelease];
+
+
+	if( (self=[super initWithTexture:texture capacity:[theString length]]) ) {
         width_ = width;
         alignment_ = alignment;
 
 		opacity_ = 255;
 		color_ = ccWHITE;
-
+		
 		contentSize_ = CGSizeZero;
-
+		
 		opacityModifyRGB_ = [[textureAtlas_ texture] hasPremultipliedAlpha];
-
+		
 		anchorPoint_ = ccp(0.5f, 0.5f);
 
 		imageOffset_ = offset;
@@ -903,7 +921,7 @@ typedef struct _FontDefHashElement
 		configuration_ = FNTConfigLoadFile(fntFile);
 		[configuration_ retain];
 	
-		[self setTexture:[[CCTextureCache sharedTextureCache] addImage:configuration_->atlasName_]];
+		[self setTexture:[[CCTextureCache sharedTextureCache] addImage:configuration_.atlasName]];
 		[self createFontChars];
 	}
 }
