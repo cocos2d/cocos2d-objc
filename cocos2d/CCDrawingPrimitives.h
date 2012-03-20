@@ -41,6 +41,9 @@
 extern "C" {
 #endif
 
+@class CCCatmullRomConfig;
+
+	
 /**
  @file
  Drawing OpenGL ES primitives.
@@ -86,14 +89,22 @@ void ccDrawTriangleStrip( const CGPoint *poli, NSUInteger numberOfPoints, ccColo
 void ccDrawCircle( CGPoint center, float radius, float angle, NSUInteger segments, BOOL drawLineToCenter);
 
 /** draws a quad bezier path measured in points.
+ @warning This function could be pretty slow. Use it only for debugging purposes.
  @since v0.8
  */
 void ccDrawQuadBezier(CGPoint origin, CGPoint control, CGPoint destination, NSUInteger segments);
 
 /** draws a cubic bezier path measured in points.
+ @warning This function could be pretty slow. Use it only for debugging purposes.
  @since v0.8
  */
 void ccDrawCubicBezier(CGPoint origin, CGPoint control1, CGPoint control2, CGPoint destination, NSUInteger segments);
+
+/** draws a Catmull Rom path.
+ @warning This function could be pretty slow. Use it only for debugging purposes.
+ @since v2.0
+ */
+void ccDrawCatmullRom( CCCatmullRomConfig *config, NSUInteger segments );
 
 /** set the drawing color with 4 unsigned bytes
  @since v2.0

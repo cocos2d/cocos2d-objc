@@ -61,6 +61,7 @@
 #import "CCActionGrid.h"
 #import "CCActionProgressTimer.h"
 #import "CCActionPageTurn3D.h"
+#import "CCActionCatmullRom.h"
 
 #import "CCAnimation.h"
 #import "CCAnimationCache.h"
@@ -115,6 +116,7 @@
 #import "CCGLProgram.h"
 #import "ccGLStateCache.h"
 #import "CCShaderCache.h"
+#import "ccShaders.h"
 
 //
 // cocos2d macros

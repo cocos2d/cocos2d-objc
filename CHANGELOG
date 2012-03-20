@@ -1,4 +1,14 @@
-version 2.0-rc0 XX-Feb-2012
+version 2.0-rc1 XX-Mar-2012
+. [NEW] Actions: Added Catmull Rom By/To actions
+. [NEW] CCConfiguration: logs in which thread the director is running (Mac only)
+. [NEW] DrawingPrimitives: added ccDrawCatmullRom
+. [FIX] LabelBMFont: can be "init" without further arguments
+
+version 2.0-rc0a 13-Mar-2012
+. [FIX] PerformanceTest: Compiles and run
+. [FIX] Tests: fixed shaders tests
+
+version 2.0-rc0 12-Mar-2012
 . [NEW] v1.1 Forward-ported changes:
 		Actions: CCRepeat ends as expected (issue #1288)
 		ColorLayer: incorrect size in init method
@@ -22,6 +32,7 @@ version 2.0-rc0 XX-Feb-2012
 		Added support for image offset in order to share the texture (issue #762)
 		Added support for any unicode char (issue #770)
 		Consumes less memory. Only defined Glyphs are allocated.
+. [NEW] FileUtils: Added support for iPad RetinaDisplay files (default suffix is: -ipadhd )
 . [NEW] Menu: could be created/initialized using NSArray
 		Menu could be created without items
 		Menu could be enabled/disabled (no events will be accepted when it is disabled)
@@ -29,7 +40,7 @@ version 2.0-rc0 XX-Feb-2012
 		Renamed kCCMenuTouchPriority -> kCCMenuHandlerPriority
 . [NEW] MenuItem: SpriteItem: Added setters for enabled,disabled,selected sprites
 		Added setter for targe:selector and block
-. [NEW] Node: userData has the option of being retained and treated like an id.
+. [NEW] Node: Added userObject. Similar to userData, but it holds an id.
 		zOrder property is readwrite
 . [NEW] Particle: It is possible to resize the particle in runtime
 . [NEW] Sprite: spriteWithBatchNode / initWithBatchNode were removed. Use initWithTexture:batch.texture / spriteWithTexture:batch.texture instead
@@ -44,6 +55,7 @@ version 2.0-rc0 XX-Feb-2012
 . [FIX] Director: becomes firstResponder after toggling fullscreen (Mac only) (issue #1189)
 . [FIX] DrawingPrimitives: drawColor4f() uses GLFloat instead of GLbyte (issue #1307)
 . [FIX] GLProgram: report error correctly if vertex shader has compile issues
+		Base shaders are no longer parsed files. Instead they are parsed from memory. Faster and ease the migration to v2.0
 . [FIX] GLView: Fixed memory leak while dispatching events (Mac only)
 . [FIX] GLView: MSAA support is working (issue #1315)
 . [FIX] Label: LabelBMFont fixed y-offset in RetinaDisplay (issue #1309)

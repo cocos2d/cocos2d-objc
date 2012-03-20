@@ -208,7 +208,10 @@ CGFloat	__ccContentScaleFactor = 1;
 			kmGLMatrixMode(KM_GL_PROJECTION);
 			kmGLLoadIdentity();
 
-			kmMat4PerspectiveProjection( &matrixPerspective, 60, (GLfloat)sizePoint.width/sizePoint.height, 0.5f, 1500.0f );
+			// issue #1334
+			kmMat4PerspectiveProjection( &matrixPerspective, 60, (GLfloat)size.width/size.height, 0.1f, zeye*2);
+//			kmMat4PerspectiveProjection( &matrixPerspective, 60, (GLfloat)size.width/size.height, 0.1f, 1500);
+
 			kmGLMultMatrix(&matrixPerspective);
 
 			kmGLMatrixMode(KM_GL_MODELVIEW);
@@ -228,7 +231,7 @@ CGFloat	__ccContentScaleFactor = 1;
 			break;
 
 		default:
-			CCLOG(@"cocos2d: Director: unrecognized projecgtion");
+			CCLOG(@"cocos2d: Director: unrecognized projection");
 			break;
 	}
 

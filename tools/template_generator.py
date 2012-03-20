@@ -203,7 +203,7 @@ def help():
     print "directory_to_parse"
     print "\nExample:"
     print "\t%s -i kazmathlib --header-path ___PACKAGENAME___/libs/kazmath/include libs" % sys.argv[0]
-    print "\t%s -i cocos2dlib --ancestor com.cocos2d-v2.cocos2dshaders libs" % sys.argv[0]
+    print "\t%s -i cocos2dlib libs" % sys.argv[0]
     sys.exit(-1)
 
 if __name__ == "__main__":

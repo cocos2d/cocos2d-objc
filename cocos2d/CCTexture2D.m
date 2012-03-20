@@ -187,12 +187,8 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 
 	[shaderProgram_ release];
 
-	if( name_ ) {
-
-		NSAssert( [[CCDirector sharedDirector] runningThread] == [NSThread currentThread], @"cocos2d: Shall not happen. Please report this bug on the cocos2d issue tracker" );
-
+	if( name_ )
 		ccGLDeleteTexture( name_ );
-	}
 
 	[super dealloc];
 }
@@ -284,7 +280,7 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 			else
 				pixelFormat = kCCTexture2DPixelFormat_RGB565;
 			
-			CCLOG(@"cocos2d: CCTexture2D: Using %@ texture since image has no alpha", (bpp>=8) ? @"RGBA888" : @"RGB565" );
+			CCLOG(@"cocos2d: CCTexture2D: Using %@ texture since image has no alpha", (bpp>=8) ? @"RGB888" : @"RGB565" );
 				
 		}
 	} else {

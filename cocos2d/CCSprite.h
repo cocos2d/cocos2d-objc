@@ -105,8 +105,8 @@
 	BOOL		opacityModifyRGB_;
 
 	// image is flipped
-	BOOL	flipX_:1;
-	BOOL	flipY_:1;
+	BOOL	flipX_;
+	BOOL	flipY_;
 }
 
 /** whether or not the Sprite needs to be updated in the Atlas */

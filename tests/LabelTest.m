@@ -35,6 +35,8 @@ static NSString *transitions[] = {
 
 	// Not a label test. Should be moved to Atlas test
 	@"Atlas1",
+    
+    @"BMFontInit",
 };
 
 enum {
@@ -1476,6 +1478,37 @@ static float menuItemPaddingCenter = 50;
 @end
 
 
+#pragma mark - BMFontInit
+
+@implementation BMFontInit
+
+- (id) init
+{
+    if( (self=[super init]) ) {
+        
+        CGSize s = [[CCDirector sharedDirector] winSize];
+        
+        CCLabelBMFont* bmFont = [[[CCLabelBMFont alloc] init] autorelease];
+        //CCLabelBMFont* bmFont = [CCLabelBMFont labelWithString:@"Foo" fntFile:@"arial-unicode-26.fnt"];
+        bmFont.fntFile = @"helvetica-32.fnt";
+        bmFont.string = @"It is working!";
+        [self addChild:bmFont];
+        [bmFont setPosition:ccp(s.width/2,s.height/4*2)];
+    }
+    return self;
+}
+
+-(NSString*) title
+{
+	return @"CCLabelBMFont init";
+}
+
+-(NSString *) subtitle
+{
+	return @"Test for support of init method without parameters.";
+}
+@end
+
 #pragma mark -
 #pragma mark Application Delegate - iPhone
 
@@ -1503,10 +1536,11 @@ static float menuItemPaddingCenter = 50;
 	// You can change anytime.
 	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA8888];
 
-	// When in iPad / RetinaDisplay mode, CCFileUtils will append the "-ipad" / "-hd" to all loaded files
-	// If the -ipad  / -hdfile is not found, it will load the non-suffixed version
-	[CCFileUtils setiPadSuffix:@"-ipad"];			// Default on iPad is "" (empty string)
-	[CCFileUtils setRetinaDisplaySuffix:@"-hd"];	// Default on RetinaDisplay is "-hd"
+	// When in iPhone RetinaDisplay, iPad, iPad RetinaDisplay mode, CCFileUtils will append the "-hd", "-ipad", "-ipadhd" to all loaded files
+	// If the -hd, -ipad, -ipadhd files are not found, it will load the non-suffixed version
+	[CCFileUtils setiPhoneRetinaDisplaySuffix:@"-hd"];		// Default on iPhone RetinaDisplay is "-hd"
+	[CCFileUtils setiPadSuffix:@"-ipad"];					// Default on iPad is "" (empty string)
+	[CCFileUtils setiPadRetinaDisplaySuffix:@"-ipadhd"];	// Default on iPad RetinaDisplay is "-ipadhd"
 
 	// Assume that PVR images have premultiplied alpha
 	[CCTexture2D PVRImagesHavePremultipliedAlpha:YES];

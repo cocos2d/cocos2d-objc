@@ -9,10 +9,6 @@
 	<string>com.cocos2d-v2.cocos2dlib</string>
 	<key>Kind</key>
 	<string>Xcode.Xcode3.ProjectTemplateUnitKind</string>
-    <key>Ancestors</key>
-	<array>
-		<string>com.cocos2d-v2.cocos2dshaders</string>
-	</array>
 	<key>Definitions</key>
 	<dict>
 		<key>libs/cocos2d/CCAction.h</key>
@@ -58,6 +54,28 @@
 			</array>
 			<key>Path</key>
 			<string>libs/cocos2d/CCActionCamera.m</string>
+		</dict>
+		<key>libs/cocos2d/CCActionCatmullRom.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2d</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2d/CCActionCatmullRom.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/cocos2d/CCActionCatmullRom.m</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2d</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2d/CCActionCatmullRom.m</string>
 		</dict>
 		<key>libs/cocos2d/CCActionEase.h</key>
 		<dict>
@@ -953,6 +971,162 @@
 			<key>Path</key>
 			<string>libs/cocos2d/CCScheduler.m</string>
 		</dict>
+		<key>libs/cocos2d/ccShader_Position_uColor_frag.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2d</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2d/ccShader_Position_uColor_frag.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/cocos2d/ccShader_Position_uColor_vert.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2d</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2d/ccShader_Position_uColor_vert.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/cocos2d/ccShader_PositionColor_frag.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2d</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2d/ccShader_PositionColor_frag.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/cocos2d/ccShader_PositionColor_vert.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2d</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2d/ccShader_PositionColor_vert.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/cocos2d/ccShader_PositionTexture_frag.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2d</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2d/ccShader_PositionTexture_frag.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/cocos2d/ccShader_PositionTexture_uColor_frag.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2d</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2d/ccShader_PositionTexture_uColor_frag.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/cocos2d/ccShader_PositionTexture_uColor_vert.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2d</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2d/ccShader_PositionTexture_uColor_vert.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/cocos2d/ccShader_PositionTexture_vert.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2d</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2d/ccShader_PositionTexture_vert.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/cocos2d/ccShader_PositionTextureA8Color_frag.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2d</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2d/ccShader_PositionTextureA8Color_frag.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/cocos2d/ccShader_PositionTextureA8Color_vert.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2d</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2d/ccShader_PositionTextureA8Color_vert.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/cocos2d/ccShader_PositionTextureColor_frag.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2d</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2d/ccShader_PositionTextureColor_frag.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/cocos2d/ccShader_PositionTextureColor_vert.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2d</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2d/ccShader_PositionTextureColor_vert.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/cocos2d/ccShader_PositionTextureColorAlphaTest_frag.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2d</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2d/ccShader_PositionTextureColorAlphaTest_frag.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
 		<key>libs/cocos2d/CCShaderCache.h</key>
 		<dict>
 			<key>Group</key>
@@ -974,6 +1148,28 @@
 			</array>
 			<key>Path</key>
 			<string>libs/cocos2d/CCShaderCache.m</string>
+		</dict>
+		<key>libs/cocos2d/ccShaders.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2d</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2d/ccShaders.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/cocos2d/ccShaders.m</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2d</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2d/ccShaders.m</string>
 		</dict>
 		<key>libs/cocos2d/CCSprite.h</key>
 		<dict>
@@ -1983,6 +2179,8 @@
 		<string>libs/cocos2d/CCAction.m</string>
 		<string>libs/cocos2d/CCActionCamera.h</string>
 		<string>libs/cocos2d/CCActionCamera.m</string>
+		<string>libs/cocos2d/CCActionCatmullRom.h</string>
+		<string>libs/cocos2d/CCActionCatmullRom.m</string>
 		<string>libs/cocos2d/CCActionEase.h</string>
 		<string>libs/cocos2d/CCActionEase.m</string>
 		<string>libs/cocos2d/CCActionGrid.h</string>
@@ -2064,8 +2262,23 @@
 		<string>libs/cocos2d/CCScene.m</string>
 		<string>libs/cocos2d/CCScheduler.h</string>
 		<string>libs/cocos2d/CCScheduler.m</string>
+		<string>libs/cocos2d/ccShader_Position_uColor_frag.h</string>
+		<string>libs/cocos2d/ccShader_Position_uColor_vert.h</string>
+		<string>libs/cocos2d/ccShader_PositionColor_frag.h</string>
+		<string>libs/cocos2d/ccShader_PositionColor_vert.h</string>
+		<string>libs/cocos2d/ccShader_PositionTexture_frag.h</string>
+		<string>libs/cocos2d/ccShader_PositionTexture_uColor_frag.h</string>
+		<string>libs/cocos2d/ccShader_PositionTexture_uColor_vert.h</string>
+		<string>libs/cocos2d/ccShader_PositionTexture_vert.h</string>
+		<string>libs/cocos2d/ccShader_PositionTextureA8Color_frag.h</string>
+		<string>libs/cocos2d/ccShader_PositionTextureA8Color_vert.h</string>
+		<string>libs/cocos2d/ccShader_PositionTextureColor_frag.h</string>
+		<string>libs/cocos2d/ccShader_PositionTextureColor_vert.h</string>
+		<string>libs/cocos2d/ccShader_PositionTextureColorAlphaTest_frag.h</string>
 		<string>libs/cocos2d/CCShaderCache.h</string>
 		<string>libs/cocos2d/CCShaderCache.m</string>
+		<string>libs/cocos2d/ccShaders.h</string>
+		<string>libs/cocos2d/ccShaders.m</string>
 		<string>libs/cocos2d/CCSprite.h</string>
 		<string>libs/cocos2d/CCSprite.m</string>
 		<string>libs/cocos2d/CCSpriteBatchNode.h</string>

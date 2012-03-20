@@ -121,6 +121,14 @@
 {}
 @end
 
+@interface ActionCatmullRom : ActionDemo
+{
+	CCCatmullRomConfig *configCR1_;
+	CCCatmullRomConfig *configCR2_;
+
+}
+@end
+
 @interface ActionRepeatForever : ActionDemo
 {}
 @end

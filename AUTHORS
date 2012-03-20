@@ -13,7 +13,7 @@ cocos2d for iPhone 2.0 authors
 ------------------------------
 
 Lead Developer:
-	Ricardo Quesada (http://www.cocos2d-iphone.org/)
+	Ricardo Quesada (http://zynga.com/)
 
 
 People/companies who were/are contributing code to cocos2d for iPhone (alphabetically ordered):
@@ -38,6 +38,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 
 * Dusan Lazarevic (AKA crmagicxxx):
 	LabelBMFont y-offset work as expected on RetinaDisplay (patch).
+	Fixed bug in iPad RetinaDisplay code
 
 * Gene Peterson (http://zynga.com)
 	Dimension is a property on CCLabelTTF
@@ -90,6 +91,12 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	Tests: Shader tests center the fragment shader effects on Mac
 	Director: On Mac, CC_DIRECTOR_INIT() centers the main window
 
+* Spencer Ho (https://github.com/spencerho):
+	Fixed gl projection when iPad Retina Display is being used.
+	
+* Steve Kanter (https://github.com/SteveKanter):
+	Added support for iPad Retina Display suffix in CCFileUtils
+
 * TonicBom:
 	TileMap: TMX obtains poligon and polilines properties
 	
@@ -100,6 +107,10 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	LabelTTF can be init without params
 	MenuItem: added setters for target:selctor, block and sprites
 	Node: zOrder property is readwrite
+	LabelBMFont: can be "init" without further arguments
+	
+* Vit Valentin:
+	Author of cocos2d-x's Catmull Rom actions. 
 	
 * zergyo:
 	Grid: Fixed memory leak when setIsTextureFlipped is used

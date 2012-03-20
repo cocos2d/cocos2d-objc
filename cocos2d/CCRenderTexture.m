@@ -68,10 +68,8 @@
 		CCDirector *director = [CCDirector sharedDirector];
 
 		// XXX multithread
-		if( [director runningThread] != [NSThread currentThread] ) {
-			CCLOG(@"cocos2d: WARNING. CCRenderTexture is running on its own thread. Locking OpenGL context to prevent possible crashes...");
-			[(CCGLView*)[director view] lockOpenGLContext];
-		}
+		if( [director runningThread] != [NSThread currentThread] )
+			CCLOG(@"cocos2d: WARNING. CCRenderTexture is running on its own thread. Make sure that an OpenGL context is being used on this thread!");
 
 		
 		w *= CC_CONTENT_SCALE_FACTOR();
@@ -120,30 +118,13 @@
 		[sprite_ setBlendFunc:(ccBlendFunc){GL_ONE, GL_ONE_MINUS_SRC_ALPHA}];
 
 		glBindFramebuffer(GL_FRAMEBUFFER, oldFBO_);
-		
-
-		// XXX multithread
-		if( [director runningThread] != [NSThread currentThread] )
-			[(CCGLView*)[director view] unlockOpenGLContext];
 	}
 	return self;
 }
 
 -(void)dealloc
 {
-	CCDirector *director = [CCDirector sharedDirector];
-
-	// XXX multithread
-	if( [director runningThread] != [NSThread currentThread] )
-		[(CCGLView*)[director view] lockOpenGLContext];
-
-
 	glDeleteFramebuffers(1, &fbo_);
-	
-
-	// XXX multithread
-	if( [director runningThread] != [NSThread currentThread] )
-		[(CCGLView*)[director view] unlockOpenGLContext];
 
 	[super dealloc];
 }
@@ -151,11 +132,6 @@
 -(void)begin
 {
 	CCDirector *director = [CCDirector sharedDirector];
-	
-	// XXX multithread
-	if( [director runningThread] != [NSThread currentThread] )
-		[(CCGLView*)[director view] lockOpenGLContext];
-
 	
 	// Save the current matrix
 	kmGLPushMatrix();
@@ -183,24 +159,12 @@
 
 	glGetIntegerv(GL_FRAMEBUFFER_BINDING, &oldFBO_);
 	glBindFramebuffer(GL_FRAMEBUFFER, fbo_);
-	
-	
-	// XXX multithread
-	if( [director runningThread] != [NSThread currentThread] )
-		[(CCGLView*)[director view] unlockOpenGLContext];
 }
 
 -(void)beginWithClear:(float)r g:(float)g b:(float)b a:(float)a
 {
 	[self begin];
 
-	CCDirector *director = [CCDirector sharedDirector];
-	
-	// XXX multithread
-	if( [director runningThread] != [NSThread currentThread] )
-		[(CCGLView*)[director view] lockOpenGLContext];
-
-	
 	// save clear color
 	GLfloat	clearColor[4];
 	glGetFloatv(GL_COLOR_CLEAR_VALUE,clearColor);
@@ -210,21 +174,11 @@
 
 	// restore clear color
 	glClearColor(clearColor[0], clearColor[1], clearColor[2], clearColor[3]);
-
-
-	// XXX multithread
-	if( [director runningThread] != [NSThread currentThread] )
-		[(CCGLView*)[director view] unlockOpenGLContext];
 }
 
 -(void)end
 {
 	CCDirector *director = [CCDirector sharedDirector];
-	
-	// XXX multithread
-	if( [director runningThread] != [NSThread currentThread] )
-		[(CCGLView*)[director view] lockOpenGLContext];
-
 	
 	glBindFramebuffer(GL_FRAMEBUFFER, oldFBO_);
 
@@ -239,11 +193,7 @@
 	if ( director.projection == kCCDirectorProjection3D && CC_CONTENT_SCALE_FACTOR() != 1 )
 		glViewport(-size.width/2, -size.height/2, size.width * CC_CONTENT_SCALE_FACTOR(), size.height * CC_CONTENT_SCALE_FACTOR() );
 	
-	[director setProjection:director.projection];
-	
-	// XXX multithread
-	if( [director runningThread] != [NSThread currentThread] )
-		[(CCGLView*)[director view] unlockOpenGLContext];
+	[director setProjection:director.projection];	
 }
 
 -(void)clear:(float)r g:(float)g b:(float)b a:(float)a
@@ -283,17 +233,7 @@
 	[self begin];
 	
 
-	CCDirector *director = [CCDirector sharedDirector];
-
-	// XXX multithread
-	if( [NSThread currentThread] != [director runningThread] )
-		[(CCGLView*)director.view lockOpenGLContext];
-
 	glReadPixels(0,0,tx,ty,GL_RGBA,GL_UNSIGNED_BYTE, buffer);
-
-	// XXX multithread
-	if( [NSThread currentThread] != [director runningThread] )
-		[(CCGLView*)director.view unlockOpenGLContext];
 
 	[self end];
 	

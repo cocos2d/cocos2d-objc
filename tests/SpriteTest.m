@@ -4211,7 +4211,8 @@ Class restartAction()
 	if( (self=[super initWithTexture:texture rect:rect]) ) {
 
 #ifdef __CC_PLATFORM_IOS
-		isHD_ = ( [texture resolutionType] == kCCResolutionRetinaDisplay );
+		ccResolutionType resolutionType = [texture resolutionType];
+		isHD_ = ( resolutionType == kCCResolutioniPhoneRetinaDisplay || resolutionType == kCCResolutioniPadRetinaDisplay );
 #endif
 	}
 
@@ -4564,7 +4565,7 @@ Class restartAction()
 								   depthFormat:GL_DEPTH_COMPONENT24_OES
 							preserveBackbuffer:NO
 									sharegroup:nil
-								 multiSampling:YES
+								 multiSampling:NO
 							   numberOfSamples:4];
 
 	director_ = (CCDirectorIOS*) [CCDirector sharedDirector];
@@ -4605,10 +4606,11 @@ Class restartAction()
 	// You can change anytime.
 	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA8888];
 
-	// When in iPad / RetinaDisplay mode, CCFileUtils will append the "-ipad" / "-hd" to all loaded files
-	// If the -ipad  / -hdfile is not found, it will load the non-suffixed version
-	[CCFileUtils setiPadSuffix:@"-ipad"];			// Default on iPad is "" (empty string)
-	[CCFileUtils setRetinaDisplaySuffix:@"-hd"];	// Default on RetinaDisplay is "-hd"
+	// When in iPhone RetinaDisplay, iPad, iPad RetinaDisplay mode, CCFileUtils will append the "-hd", "-ipad", "-ipadhd" to all loaded files
+	// If the -hd, -ipad, -ipadhd files are not found, it will load the non-suffixed version
+	[CCFileUtils setiPhoneRetinaDisplaySuffix:@"-hd"];		// Default on iPhone RetinaDisplay is "-hd"
+	[CCFileUtils setiPadSuffix:@""];					// Default on iPad is "" (empty string)
+	[CCFileUtils setiPadRetinaDisplaySuffix:@"-hd"];		// Default on iPad RetinaDisplay is "-ipadhd"
 
 	// Assume that PVR images have premultiplied alpha
 	[CCTexture2D PVRImagesHavePremultipliedAlpha:YES];
@@ -4625,7 +4627,8 @@ Class restartAction()
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-	return UIInterfaceOrientationIsLandscape(interfaceOrientation);
+	return YES;
+//	return UIInterfaceOrientationIsLandscape(interfaceOrientation);
 }
 
 @end
@@ -4644,7 +4647,8 @@ Class restartAction()
 	CCScene *scene = [CCScene node];
 	[scene addChild: [nextAction() node]];
 
-	[director_ runWithScene:scene];
+	[director_ pushScene:scene];
+	[director_ startAnimation];
 }
 @end
 #endif
