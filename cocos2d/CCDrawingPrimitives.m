@@ -266,9 +266,13 @@ void ccDrawQuadBezier(CGPoint origin, CGPoint control, CGPoint destination, NSUI
 	CC_INCREMENT_GL_DRAWS(1);
 }
 
-void ccDrawCatmullRom( CCCatmullRomConfig *config, NSUInteger segments )
+void ccDrawCatmullRom( CCPointArray *points, NSUInteger segments )
 {
+	ccDrawCardinalSpline( points, 0.5f, segments );
+}
 
+void ccDrawCardinalSpline( CCPointArray *config, CGFloat tension,  NSUInteger segments )
+{
 	lazy_init();
 	
 	ccVertex2F vertices[segments + 1];
@@ -296,7 +300,7 @@ void ccDrawCatmullRom( CCCatmullRomConfig *config, NSUInteger segments )
 		CGPoint pp2 = [config getControlPointAtIndex:p+1];
 		CGPoint pp3 = [config getControlPointAtIndex:p+2];
 		
-		CGPoint newPos = ccCatmullRomAt( pp0, pp1, pp2, pp3,lt);
+		CGPoint newPos = ccCardinalSplineAt( pp0, pp1, pp2, pp3, tension, lt);
 		vertices[i].x = newPos.x;
 		vertices[i].y = newPos.y;
 	}
@@ -311,7 +315,6 @@ void ccDrawCatmullRom( CCCatmullRomConfig *config, NSUInteger segments )
 	glDrawArrays(GL_LINE_STRIP, 0, (GLsizei) segments + 1);
 	
 	CC_INCREMENT_GL_DRAWS(1);
-
 }
 
 void ccDrawCubicBezier(CGPoint origin, CGPoint control1, CGPoint control2, CGPoint destination, NSUInteger segments)

@@ -19,9 +19,6 @@ Class restartAction(void);
 static int sceneIdx=-1;
 static NSString *transitions[] = {
 
-	@"ActionCatmullRom",
-	@"ActionBezier",
-	
 	@"ActionManual",
 	@"ActionMove",
 	@"ActionRotate",
@@ -29,8 +26,9 @@ static NSString *transitions[] = {
 	@"ActionSkew",
 	@"ActionSkewRotateScale",
 	@"ActionJump",
-	@"ActionBezier",
+	@"ActionCardinalSpline",
 	@"ActionCatmullRom",
+	@"ActionBezier",	
 	@"ActionBlink",
 	@"ActionFade",
 	@"ActionTint",
@@ -493,17 +491,17 @@ Class restartAction()
 	
 	tamara.position = ccp(50,50);
 	
-	CCCatmullRomConfig *config = [CCCatmullRomConfig configWithCapacity:20];
+	CCPointArray *array = [CCPointArray arrayWithCapacity:20];
 
-	[config addControlPoint:ccp(0,0)];
-	[config addControlPoint:ccp(80,80)];
-	[config addControlPoint:ccp(s.width-80,80)];
-	[config addControlPoint:ccp(s.width-80,s.height-80)];
-	[config addControlPoint:ccp(80,s.height-80)];
-	[config addControlPoint:ccp(80,80)];
-	[config addControlPoint:ccp(s.width/2, s.height/2)];
+	[array addControlPoint:ccp(0,0)];
+	[array addControlPoint:ccp(80,80)];
+	[array addControlPoint:ccp(s.width-80,80)];
+	[array addControlPoint:ccp(s.width-80,s.height-80)];
+	[array addControlPoint:ccp(80,s.height-80)];
+	[array addControlPoint:ccp(80,80)];
+	[array addControlPoint:ccp(s.width/2, s.height/2)];
 
-	CCCatmullRomBy *action = [CCCatmullRomBy actionWithDuration:3 configuration:config];
+	CCCatmullRomBy *action = [CCCatmullRomBy actionWithDuration:3 points:array];
 	id reverse = [action reverse];
 	
 	CCSequence *seq = [CCSequence actions:action, reverse, nil];
@@ -518,30 +516,30 @@ Class restartAction()
 	// The initial position will be the 1st point of the Catmull Rom path
 	//
 
-	CCCatmullRomConfig *config2 = [CCCatmullRomConfig configWithCapacity:20];
+	CCPointArray *array2 = [CCPointArray arrayWithCapacity:20];
 	
-	[config2 addControlPoint:ccp(s.width/2, 30)];
-	[config2 addControlPoint:ccp(s.width-80,30)];
-	[config2 addControlPoint:ccp(s.width-80,s.height-80)];
-	[config2 addControlPoint:ccp(s.width/2,s.height-80)];
-	[config2 addControlPoint:ccp(s.width/2, 30)];
+	[array2 addControlPoint:ccp(s.width/2, 30)];
+	[array2 addControlPoint:ccp(s.width-80,30)];
+	[array2 addControlPoint:ccp(s.width-80,s.height-80)];
+	[array2 addControlPoint:ccp(s.width/2,s.height-80)];
+	[array2 addControlPoint:ccp(s.width/2, 30)];
 	
 	
-	CCCatmullRomTo *action2 = [CCCatmullRomTo actionWithDuration:3 configuration:config2];
+	CCCatmullRomTo *action2 = [CCCatmullRomTo actionWithDuration:3 points:array2];
 	id reverse2 = [action2 reverse];
 	
 	CCSequence *seq2 = [CCSequence actions:action2, reverse2, nil];
 	
 	[kathia runAction: seq2];
 	
-	configCR1_ = [config retain];
-	configCR2_ = [config2 retain];
+	array1_ = [array retain];
+	array2_ = [array2 retain];
 }
 
 -(void) dealloc
 {
-	[configCR1_ release];
-	[configCR2_ release];
+	[array1_ release];
+	[array2_ release];
 	
 	[super dealloc];
 }
@@ -553,10 +551,10 @@ Class restartAction()
 	// move to 50,50 since the "by" path will start at 50,50
 	kmGLPushMatrix();
 	kmGLTranslatef(50, 50, 0);
-	ccDrawCatmullRom(configCR1_,50);
+	ccDrawCatmullRom(array1_,50);
 	kmGLPopMatrix();
 
-	ccDrawCatmullRom(configCR2_,50);
+	ccDrawCatmullRom(array2_,50);
 }
 
 -(NSString *) title
@@ -567,9 +565,95 @@ Class restartAction()
 {
 	return @"Catmull Rom spline paths. Testing reverse too";
 }
-
 @end
 
+
+@implementation ActionCardinalSpline
+-(void) onEnter
+{
+	[super onEnter];
+	
+	[self centerSprites:2];
+	
+	CGSize s = [[CCDirector sharedDirector] winSize];
+
+	CCPointArray *array = [CCPointArray arrayWithCapacity:20];
+	
+	[array addControlPoint:ccp(0, 0)];
+	[array addControlPoint:ccp(s.width/2-30,0)];
+	[array addControlPoint:ccp(s.width/2-30,s.height-80)];
+	[array addControlPoint:ccp(0, s.height-80)];
+	[array addControlPoint:ccp(0, 0)];
+	
+
+	//
+	// sprite 1 (By)
+	//
+	// Spline with no tension (tension==0)
+	//
+	
+	
+	CCCatmullRomBy *action = [CCCardinalSplineBy actionWithDuration:3 points:array tension:0];
+	id reverse = [action reverse];
+	
+	CCSequence *seq = [CCSequence actions:action, reverse, nil];
+	
+	tamara.position = ccp(50,50);
+	[tamara runAction: seq];
+	
+	
+	//
+	// sprite 2 (By)
+	//
+	// Spline with high tension (tension==1)
+	//
+		
+	CCCatmullRomBy *action2 = [CCCardinalSplineBy actionWithDuration:3 points:array tension:1];
+	id reverse2 = [action2 reverse];
+	
+	CCSequence *seq2 = [CCSequence actions:action2, reverse2, nil];
+	
+	kathia.position = ccp(s.width/2,50);
+
+	[kathia runAction: seq2];
+	
+	array_ = [array retain];
+}
+
+-(void) dealloc
+{
+	[array_ release];
+	
+	[super dealloc];
+}
+
+-(void) draw
+{
+	[super draw];
+	
+	// move to 50,50 since the "by" path will start at 50,50
+	kmGLPushMatrix();
+	kmGLTranslatef(50, 50, 0);
+	ccDrawCardinalSpline(array_, 0, 100);
+	kmGLPopMatrix();
+
+	CGSize s = [[CCDirector sharedDirector] winSize];
+
+	kmGLPushMatrix();
+	kmGLTranslatef(s.width/2, 50, 0);
+	ccDrawCardinalSpline(array_, 1, 100);
+	kmGLPopMatrix();
+}
+
+-(NSString *) title
+{
+	return @"CardinalSplineBy / CardinalSplineAt";
+}
+-(NSString *) subtitle
+{
+	return @"Cardinal Spline paths. Testing different tensions for one array";
+}
+@end
 
 @implementation ActionBlink
 -(void) onEnter

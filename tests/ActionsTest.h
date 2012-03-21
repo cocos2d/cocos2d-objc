@@ -123,9 +123,14 @@
 
 @interface ActionCatmullRom : ActionDemo
 {
-	CCCatmullRomConfig *configCR1_;
-	CCCatmullRomConfig *configCR2_;
+	CCPointArray *array1_;
+	CCPointArray *array2_;
+}
+@end
 
+@interface ActionCardinalSpline : ActionDemo
+{
+	CCPointArray *array_;
 }
 @end
 
