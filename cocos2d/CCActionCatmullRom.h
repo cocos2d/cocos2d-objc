@@ -35,9 +35,10 @@
 
 #import "CCActionInterval.h"
 
-/** @CatmullRom configuration class
+/** An Array that contain control points.
+ Used by CCCardinalSplineTo and (By) and CCCatmullRomTo (and By) actions.
  */
-@interface CCCatmullRomConfig : NSObject <NSCopying>
+@interface CCPointArray : NSObject <NSCopying>
 {
 	NSMutableArray *controlPoints_;
 }
@@ -45,8 +46,8 @@
 /** Array that contains the control points */
 @property (nonatomic,readwrite,retain) NSMutableArray *controlPoints;
 
-/** creates and initializes a Catmull Rom config with a capacity hint */
-+(id) configWithCapacity:(NSUInteger)capacity;
+/** creates and initializes a Points array with capacity */
+ +(id) arrayWithCapacity:(NSUInteger)capacity;
 
 /** initializes a Catmull Rom config with a capacity hint */
 -(id) initWithCapacity:(NSUInteger)capacity;
@@ -70,34 +71,69 @@
 -(NSUInteger) count;
 
 /** returns a new copy of the array reversed. User is responsible for releasing this copy */
--(CCCatmullRomConfig*) reverse;
+-(CCPointArray*) reverse;
 
 /** reverse the current control point array inline, without generating a new one */
 -(void) reverseInline;
 @end
 
-/** An action that moves the target with a CatmullRom curve to a destination point. */
-@interface CCCatmullRomTo : CCActionInterval
+/** Cardinal Spline path.
+ http://en.wikipedia.org/wiki/Cubic_Hermite_spline#Cardinal_spline
+ */
+@interface CCCardinalSplineTo : CCActionInterval
 {
-	CCCatmullRomConfig	*configuration_;
-	CGFloat				deltaT_;
+	CCPointArray		*points_;
+	CGFloat			deltaT_;
+	CGFloat			tension_;
 }
-/** CatmullRom configuration */
-@property (nonatomic,readwrite,retain) CCCatmullRomConfig *configuration;
 
-/** creates an action with a CatmullRom configuration */
-+(id) actionWithDuration:(ccTime)dt configuration:(CCCatmullRomConfig*)config;
+/** Array of control points */
+ @property (nonatomic,readwrite,retain) CCPointArray *points;
 
-/** initializes the action with a duration and a CatmullRom configuration */
--(id) initWithDuration:(ccTime)dt configuration:(CCCatmullRomConfig*)config;
+/** creates an action with a Cardinal Spline array of points and tension */
++(id) actionWithDuration:(ccTime)duration points:(CCPointArray*)points tension:(CGFloat)tension;
+
+/** initializes the action with a duration and an array of points */
+-(id) initWithDuration:(ccTime)duration points:(CCPointArray*)points tension:(CGFloat)tension;
+
 @end
 
-/** An action that moves the target with a CatmullRom curve by a certain distance. */
-@interface CCCatmullRomBy : CCCatmullRomTo
+/** Cardinal Spline path.
+ http://en.wikipedia.org/wiki/Cubic_Hermite_spline#Cardinal_spline
+ */
+@interface CCCardinalSplineBy : CCCardinalSplineTo
 {
 	CGPoint				startPosition_;
 }
 @end
 
-/** Returns the Catmull Rom position for a given set of points and time */
-CGPoint ccCatmullRomAt( CGPoint p0, CGPoint p1, CGPoint p2, CGPoint p3, ccTime t );
+/** An action that moves the target with a CatmullRom curve to a destination point.
+ A Catmull Rom is a Cardinal Spline with a tension of 0.5.
+ http://en.wikipedia.org/wiki/Cubic_Hermite_spline#Catmull.E2.80.93Rom_spline
+ */
+@interface CCCatmullRomTo : CCCardinalSplineTo
+{
+}
+/** creates an action with a Cardinal Spline array of points and tension */
++(id) actionWithDuration:(ccTime)dt points:(CCPointArray*)points;
+
+/** initializes the action with a duration and an array of points */
+-(id) initWithDuration:(ccTime)dt points:(CCPointArray*)points;
+@end
+
+/** An action that moves the target with a CatmullRom curve by a certain distance.
+  A Catmull Rom is a Cardinal Spline with a tension of 0.5.
+ http://en.wikipedia.org/wiki/Cubic_Hermite_spline#Catmull.E2.80.93Rom_spline
+ */
+@interface CCCatmullRomBy : CCCardinalSplineBy
+{
+}
+/** creates an action with a Cardinal Spline array of points and tension */
++(id) actionWithDuration:(ccTime)dt points:(CCPointArray*)points;
+
+/** initializes the action with a duration and an array of points */
+-(id) initWithDuration:(ccTime)dt points:(CCPointArray*)points;
+@end
+
+/** Returns the Cardinal Spline position for a given set of control points, tension and time */
+ CGPoint ccCardinalSplineAt( CGPoint p0, CGPoint p1, CGPoint p2, CGPoint p3, CGFloat tension, ccTime t );

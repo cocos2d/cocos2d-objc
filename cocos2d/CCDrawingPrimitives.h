@@ -41,7 +41,7 @@
 extern "C" {
 #endif
 
-@class CCCatmullRomConfig;
+@class CCPointArray;
 
 	
 /**
@@ -100,7 +100,13 @@ void ccDrawCubicBezier(CGPoint origin, CGPoint control1, CGPoint control2, CGPoi
  @warning This function could be pretty slow. Use it only for debugging purposes.
  @since v2.0
  */
-void ccDrawCatmullRom( CCCatmullRomConfig *config, NSUInteger segments );
+void ccDrawCatmullRom( CCPointArray *arrayOfControlPoints, NSUInteger segments );
+
+/** draws a Cardinal Spline path.
+ @warning This function could be pretty slow. Use it only for debugging purposes.
+ @since v2.0
+ */
+void ccDrawCardinalSpline( CCPointArray *config, CGFloat tension,  NSUInteger segments );
 
 /** set the drawing color with 4 unsigned bytes
  @since v2.0

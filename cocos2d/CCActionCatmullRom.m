@@ -37,13 +37,13 @@
 #import "Support/CGPointExtension.h"
 #import "CCActionCatmullRom.h"
 
-#pragma mark - CCCatmullRomConfig
+#pragma mark - CCPointArray
 
-@implementation CCCatmullRomConfig
+@implementation CCPointArray
 
 @synthesize controlPoints = controlPoints_;
 
-+(id) configWithCapacity:(NSUInteger)capacity
++(id) arrayWithCapacity:(NSUInteger)capacity
 {
 	return [[[self alloc] initWithCapacity:capacity] autorelease];
 }
@@ -66,11 +66,11 @@
 -(id) copyWithZone:(NSZone *)zone
 {
 	NSMutableArray *newArray = [controlPoints_ mutableCopy];
-	CCCatmullRomConfig *config = [[[self class] allocWithZone:zone] initWithCapacity:10];
-	config.controlPoints = newArray;
+	CCPointArray *points = [[[self class] allocWithZone:zone] initWithCapacity:10];
+	points.controlPoints = newArray;
 	[newArray release];
 	
-	return config;
+	return points;
 }
 
 -(void) dealloc
@@ -139,14 +139,14 @@
 	return [controlPoints_ count];
 }
 
--(CCCatmullRomConfig*) reverse
+-(CCPointArray*) reverse
 {
 	NSMutableArray *newArray = [[NSMutableArray alloc] initWithCapacity:[controlPoints_ count]];
 	NSEnumerator *enumerator = [controlPoints_ reverseObjectEnumerator];
 	for (id element in enumerator)
 		[newArray addObject:element];
 
-	CCCatmullRomConfig *config = [[[self class] alloc] initWithCapacity:0];
+	CCPointArray *config = [[[self class] alloc] initWithCapacity:0];
 	config.controlPoints = newArray;
 
 	[newArray release];
@@ -164,20 +164,20 @@
 
 // CatmullRom Spline formula:
 
-inline CGPoint ccCatmullRomAt( CGPoint p0, CGPoint p1, CGPoint p2, CGPoint p3, ccTime t )
+inline CGPoint ccCardinalSplineAt( CGPoint p0, CGPoint p1, CGPoint p2, CGPoint p3, CGFloat tension, ccTime t )
 {
 	CGFloat t2 = t * t;
 	CGFloat t3 = t2 * t;
 
-//	CGFloat b1 = -0.5 * t3 + t2 - 0.5 * t;
-//	CGFloat b2 =  1.5 * t3 - 2.5 * t2 + 1.0;
-//	CGFloat b3 = -1.5 * t3 + 2.0 * t2 + 0.5 * t;
-//	CGFloat b4 =  0.5 * t3 - 0.5 * t2;
-
-	CGFloat b1 = .5 * (  -t3 + 2*t2 - t);
-	CGFloat b2 = .5 * ( 3*t3 - 5*t2 + 2);
-	CGFloat b3 = .5 * (-3*t3 + 4*t2 + t);
-	CGFloat b4 = .5 * (   t3 -   t2    );
+	/*
+	 * Formula: s(-ttt + 2tt – t)P1 + s(-ttt + tt)P2 + (2ttt – 3tt + 1)P2 + s(ttt – 2tt + t)P3 + (-2ttt + 3tt)P3 + s(ttt – tt)P4
+	 */
+	CGFloat s = (1 - tension) / 2;
+	
+	CGFloat b1 = s * ((-t3 + (2 * t2)) - t);					// s(-t3 + 2 t2 – t)P1
+	CGFloat b2 = s * (-t3 + t2) + (2 * t3 - 3 * t2 + 1);		// s(-t3 + t2)P2 + (2 t3 – 3 t2 + 1)P2
+	CGFloat b3 = s * (t3 - 2 * t2 + t) + (-2 * t3 + 3 * t2);	// s(t3 – 2 t2 + t)P3 + (-2 t3 + 3 t2)P3
+	CGFloat b4 = s * (t3 - t2);									// s(t3 – t2)P4
 
 	CGFloat x = (p0.x*b1 + p1.x*b2 + p2.x*b3 + p3.x*b4); 
 	CGFloat y = (p0.y*b1 + p1.y*b2 + p2.y*b3 + p3.y*b4); 
@@ -187,26 +187,27 @@ inline CGPoint ccCatmullRomAt( CGPoint p0, CGPoint p1, CGPoint p2, CGPoint p3, c
 
 #pragma mark - CCCatmullRomTo
 
-@interface CCCatmullRomTo ()
+@interface CCCardinalSplineTo ()
 -(void) updatePosition:(CGPoint)newPosition;
 @end
 
-@implementation CCCatmullRomTo
+@implementation CCCardinalSplineTo
 
-@synthesize configuration=configuration_;
+@synthesize points=points_;
 
-+(id) actionWithDuration:(ccTime)duration configuration:(CCCatmullRomConfig *)config
++(id) actionWithDuration:(ccTime)duration points:(CCPointArray *)points tension:(CGFloat)tension
 {
-	return [[[self alloc] initWithDuration:duration configuration:config] autorelease];
+	return [[[self alloc] initWithDuration:duration points:points tension:tension ] autorelease];
 }
 
--(id) initWithDuration:(ccTime)duration configuration:(CCCatmullRomConfig *)config									
+-(id) initWithDuration:(ccTime)duration points:(CCPointArray *)points tension:(CGFloat)tension								
 {
-	NSAssert( [config count] > 0, @"Invalid configuration. It must at least have one control point");
+	NSAssert( [points count] > 0, @"Invalid configuration. It must at least have one control point");
 
 	if( (self=[super initWithDuration:duration]) )
 	{
-		self.configuration = config;
+		self.points = points;
+		tension_ = tension;
 	}
 
 	return self;
@@ -214,7 +215,7 @@ inline CGPoint ccCatmullRomAt( CGPoint p0, CGPoint p1, CGPoint p2, CGPoint p3, c
 
 - (void)dealloc
 {
-	[configuration_ release];
+	[points_ release];
     [super dealloc];
 }
 
@@ -222,12 +223,12 @@ inline CGPoint ccCatmullRomAt( CGPoint p0, CGPoint p1, CGPoint p2, CGPoint p3, c
 {
 	[super startWithTarget:target];
 	
-	deltaT_ = (CGFloat) 1 / [configuration_ count];
+	deltaT_ = (CGFloat) 1 / [points_ count];
 }
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	CCAction *copy = [[[self class] allocWithZone: zone] initWithDuration:[self duration] configuration:configuration_];
+	CCAction *copy = [[[self class] allocWithZone: zone] initWithDuration:[self duration] points:points_];
     return copy;
 }
 
@@ -238,7 +239,7 @@ inline CGPoint ccCatmullRomAt( CGPoint p0, CGPoint p1, CGPoint p2, CGPoint p3, c
 	
 	// border
 	if( dt == 1 ) {
-		p = [configuration_ count] - 1;
+		p = [points_ count] - 1;
 		lt = 1;
 	} else {
 		p = dt / deltaT_;
@@ -246,12 +247,12 @@ inline CGPoint ccCatmullRomAt( CGPoint p0, CGPoint p1, CGPoint p2, CGPoint p3, c
 	}
 
 	// Interpolate
-	CGPoint pp0 = [configuration_ getControlPointAtIndex:p-1];
-	CGPoint pp1 = [configuration_ getControlPointAtIndex:p+0];
-	CGPoint pp2 = [configuration_ getControlPointAtIndex:p+1];
-	CGPoint pp3 = [configuration_ getControlPointAtIndex:p+2];
+	CGPoint pp0 = [points_ getControlPointAtIndex:p-1];
+	CGPoint pp1 = [points_ getControlPointAtIndex:p+0];
+	CGPoint pp2 = [points_ getControlPointAtIndex:p+1];
+	CGPoint pp3 = [points_ getControlPointAtIndex:p+2];
 	
-	CGPoint newPos = ccCatmullRomAt( pp0, pp1, pp2, pp3,lt);
+	CGPoint newPos = ccCardinalSplineAt( pp0, pp1, pp2, pp3, tension_, lt );
 	
 	[self updatePosition:newPos];
 }
@@ -263,15 +264,15 @@ inline CGPoint ccCatmullRomAt( CGPoint p0, CGPoint p1, CGPoint p2, CGPoint p3, c
 
 -(CCActionInterval*) reverse
 {
-	CCCatmullRomConfig *reverse = [configuration_ reverse];
+	CCPointArray *reverse = [points_ reverse];
 
-	return [CCCatmullRomTo actionWithDuration:duration_ configuration:reverse];
+	return [[self class] actionWithDuration:duration_ points:reverse tension:tension_];
 }
 @end
 
-#pragma mark - CCCatmullRomBy
+#pragma mark - CCCardinalSplineBy
 
-@implementation CCCatmullRomBy
+@implementation CCCardinalSplineBy
 
 -(void) startWithTarget:(id)target
 {
@@ -287,7 +288,7 @@ inline CGPoint ccCatmullRomAt( CGPoint p0, CGPoint p1, CGPoint p2, CGPoint p3, c
 
 -(CCActionInterval*) reverse
 {
-	CCCatmullRomConfig *copyConfig = [configuration_ copy];
+	CCPointArray *copyConfig = [points_ copy];
 	
 	//
 	// convert "absolutes" to "diffs"
@@ -305,7 +306,7 @@ inline CGPoint ccCatmullRomAt( CGPoint p0, CGPoint p1, CGPoint p2, CGPoint p3, c
 	
 	// convert to "diffs" to "reverse absolute"
 	
-	CCCatmullRomConfig *reverse = [copyConfig reverse];
+	CCPointArray *reverse = [copyConfig reverse];
 	[copyConfig release];
 	
 	// 1st element (which should be 0,0) should be here too
@@ -325,6 +326,38 @@ inline CGPoint ccCatmullRomAt( CGPoint p0, CGPoint p1, CGPoint p2, CGPoint p3, c
 		p = abs;
 	}
 	
-	return [CCCatmullRomBy actionWithDuration:duration_ configuration:reverse];	
+	return [[self class] actionWithDuration:duration_ points:reverse tension:tension_];
+}
+@end
+
+@implementation CCCatmullRomTo
++(id) actionWithDuration:(ccTime)dt points:(CCPointArray *)points
+{
+	return [[[self alloc] initWithDuration:dt points:points] autorelease];
+}
+
+-(id) initWithDuration:(ccTime)dt points:(CCPointArray *)points
+{
+	if( (self=[super initWithDuration:dt points:points tension:0.5f]) ) {
+		
+	}
+	
+	return self;
+}
+@end
+
+@implementation CCCatmullRomBy
++(id) actionWithDuration:(ccTime)dt points:(CCPointArray *)points
+{
+	return [[[self alloc] initWithDuration:dt points:points] autorelease];
+}
+
+-(id) initWithDuration:(ccTime)dt points:(CCPointArray *)points
+{
+	if( (self=[super initWithDuration:dt points:points tension:0.5f]) ) {
+		
+	}
+	
+	return self;
 }
 @end
