@@ -612,10 +612,10 @@ static BOOL PVRHaveAlphaPremultiplied_ = NO;
 {
 #ifdef __CC_PLATFORM_IOS
 	ccResolutionType resolution;
-	NSString *fullpath = [CCFileUtils fullPathFromRelativePath:relPath resolutionType:&resolution];
+	NSString *fullpath = [[CCFileUtils sharedFileUtils] fullPathFromRelativePath:relPath resolutionType:&resolution];
 
 #elif defined(__CC_PLATFORM_MAC)
-	NSString *fullpath = [CCFileUtils fullPathFromRelativePath:relPath];
+	NSString *fullpath = [[CCFileUtils sharedFileUtils] fullPathFromRelativePath:relPath];
 #endif
 
 	if( (self = [super init]) ) {

@@ -167,7 +167,7 @@ typedef struct _FontDefHashElement
 
 - (void)parseConfigFile:(NSString*)fntFile
 {
-	NSString *fullpath = [CCFileUtils fullPathFromRelativePath:fntFile];
+	NSString *fullpath = [[CCFileUtils sharedFileUtils] fullPathFromRelativePath:fntFile];
 	NSError *error;
 	NSString *contents = [NSString stringWithContentsOfFile:fullpath encoding:NSUTF8StringEncoding error:&error];
 
