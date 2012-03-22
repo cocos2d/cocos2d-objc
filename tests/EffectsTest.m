@@ -497,11 +497,15 @@ Class restartAction()
 	// You can change anytime.
 	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA4444];
 
-	// When in iPhone RetinaDisplay, iPad, iPad RetinaDisplay mode, CCFileUtils will append the "-hd", "-ipad", "-ipadhd" to all loaded files
-	// If the -hd, -ipad, -ipadhd files are not found, it will load the non-suffixed version
-	[CCFileUtils setiPhoneRetinaDisplaySuffix:@"-hd"];		// Default on iPhone RetinaDisplay is "-hd"
-	[CCFileUtils setiPadSuffix:@"-ipad"];					// Default on iPad is "" (empty string)
-	[CCFileUtils setiPadRetinaDisplaySuffix:@"-ipadhd"];	// Default on iPad RetinaDisplay is "-ipadhd"
+	// If the 1st suffix is not found, then the fallback suffixes are going to used. If none is found, it will try with the name without suffix.
+	// On iPad HD  : "-ipadhd", "-ipad",  "-hd"
+	// On iPad     : "-ipad", "-hd"
+	// On iPhone HD: "-hd"
+	CCFileUtils *sharedFileUtils = [CCFileUtils sharedFileUtils];
+	[sharedFileUtils setEnableFallbackSuffixes:YES];			// Default: NO. No fallback suffixes are going to be used
+	[sharedFileUtils setiPhoneRetinaDisplaySuffix:@"-hd"];		// Default on iPhone RetinaDisplay is "-hd"
+	[sharedFileUtils setiPadSuffix:@"-ipad"];					// Default on iPad is "ipad"
+	[sharedFileUtils setiPadRetinaDisplaySuffix:@"-ipadhd"];	// Default on iPad RetinaDisplay is "-ipadhd"
 
 	CCScene *scene = [CCScene node];
 	[scene addChild: [TextLayer node] z:0 tag:kTagTextLayer];

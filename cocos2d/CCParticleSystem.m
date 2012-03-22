@@ -89,7 +89,7 @@
 
 -(id) initWithFile:(NSString *)plistFile
 {
-	NSString *path = [CCFileUtils fullPathFromRelativePath:plistFile];
+	NSString *path = [[CCFileUtils sharedFileUtils] fullPathFromRelativePath:plistFile];
 	NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:path];
 
 	NSAssert( dict != nil, @"Particles: file not found");

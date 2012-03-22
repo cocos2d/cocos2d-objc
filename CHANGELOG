@@ -1,8 +1,13 @@
 version 2.0-rc1 XX-Mar-2012
 . [NEW] Actions: Added Catmull Rom By/To and Cardinal Spline By/To actions
-. [NEW] CCConfiguration: logs in which thread the director is running (Mac only)
+. [NEW] Configuration: logs in which thread the director is running (Mac only)
 . [NEW] DrawingPrimitives: added ccDrawCatmullRom, ccDrawCardinalSpline
+. [NEW] FileUtils: It is a singleton (easier to subclass)
+		NSFileManager and NSBundle are properties (can be changed in runtime)
+		Added "fallback suffix" support (disabled by default).
+		On iPad the default suffix is "-ipad". Before it was ""
 . [FIX] LabelBMFont: can be "init" without further arguments
+. [FIX] OpenGL: VAO are initialized on the cocos2d thread on machines that don't support shareables VAOs
 
 version 2.0-rc0a 13-Mar-2012
 . [FIX] PerformanceTest: Compiles and run

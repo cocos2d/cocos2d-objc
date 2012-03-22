@@ -3688,10 +3688,6 @@
 		5001659F0E72DB470085673F /* f1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = f1.png; sourceTree = "<group>"; };
 		500165A00E72DB470085673F /* f2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = f2.png; sourceTree = "<group>"; };
 		5006B87C11BB71E000E488BD /* background3-ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "background3-ipad.png"; sourceTree = "<group>"; };
-		5006BD1C11BCF48D00E488BD /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
-		5006BD1D11BCF48D00E488BD /* AppController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppController.m; sourceTree = "<group>"; };
-		5006BD1E11BCF48D00E488BD /* PerformanceNodeChildrenTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerformanceNodeChildrenTest.h; sourceTree = "<group>"; };
-		5006BD1F11BCF48D00E488BD /* PerformanceNodeChildrenTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PerformanceNodeChildrenTest.m; sourceTree = "<group>"; };
 		5012DA180FE109C100D6DDD1 /* grossini_dance_atlas-mono.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "grossini_dance_atlas-mono.png"; sourceTree = "<group>"; };
 		5012DD3B0FE2994300D6DDD1 /* TouchesTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TouchesTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5012DD3F0FE299EA00D6DDD1 /* Ball.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Ball.h; sourceTree = "<group>"; };
@@ -3788,10 +3784,6 @@
 		503F5CBE101FE930002A37E5 /* TileMapTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TileMapTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		503F5CCF101FE9A9002A37E5 /* TileMapTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = TileMapTest.m; path = tests/TileMapTest.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		503F5CD0101FE9A9002A37E5 /* TileMapTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TileMapTest.h; path = tests/TileMapTest.h; sourceTree = "<group>"; };
-		5040190110FE80650017842A /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
-		5040190210FE80650017842A /* AppController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppController.m; sourceTree = "<group>"; };
-		5040190310FE80650017842A /* MainScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainScene.h; sourceTree = "<group>"; };
-		5040190410FE80650017842A /* MainScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainScene.m; sourceTree = "<group>"; };
 		504055AE0E3230BD00213FEF /* CCParticleExamples.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCParticleExamples.h; sourceTree = "<group>"; };
 		504055AF0E3230BD00213FEF /* CCParticleExamples.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCParticleExamples.m; sourceTree = "<group>"; };
 		50405A130E3296AC00213FEF /* stars.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stars.png; sourceTree = "<group>"; };
@@ -4145,16 +4137,6 @@
 		50E2A14E10A45E7F00D894CE /* CCSpriteFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSpriteFrame.h; sourceTree = "<group>"; };
 		50E2A14F10A45E7F00D894CE /* CCSpriteFrame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCSpriteFrame.m; sourceTree = "<group>"; };
 		50E2A25110A46CC600D894CE /* CCProtocols.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CCProtocols.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		50E2A40710A4A56900D894CE /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
-		50E2A40810A4A56900D894CE /* AppController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppController.m; sourceTree = "<group>"; };
-		50E2A40910A4A56900D894CE /* CocosNodePerformance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocosNodePerformance.h; sourceTree = "<group>"; };
-		50E2A40A10A4A56900D894CE /* CocosNodePerformance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CocosNodePerformance.m; sourceTree = "<group>"; };
-		50E2A40B10A4A56900D894CE /* MainScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainScene.h; sourceTree = "<group>"; };
-		50E2A40C10A4A56900D894CE /* MainScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainScene.m; sourceTree = "<group>"; };
-		50E2A41110A4A58700D894CE /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
-		50E2A41210A4A58700D894CE /* AppController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppController.m; sourceTree = "<group>"; };
-		50E2A41310A4A58700D894CE /* MainScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainScene.h; sourceTree = "<group>"; };
-		50E2A41410A4A58700D894CE /* MainScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainScene.m; sourceTree = "<group>"; };
 		50E2A52610A4AA1700D894CE /* sprite-0-0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sprite-0-0.png"; sourceTree = "<group>"; };
 		50E2A52710A4AA1700D894CE /* sprite-0-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sprite-0-1.png"; sourceTree = "<group>"; };
 		50E2A52810A4AA1700D894CE /* sprite-0-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sprite-0-2.png"; sourceTree = "<group>"; };
@@ -5616,18 +5598,6 @@
 			path = "tests/Box2DTestBed-Cocos2dIntegration";
 			sourceTree = "<group>";
 		};
-		5006BD1B11BCF48D00E488BD /* PerformanceNodeChildrenTest */ = {
-			isa = PBXGroup;
-			children = (
-				5006BD1C11BCF48D00E488BD /* AppController.h */,
-				5006BD1D11BCF48D00E488BD /* AppController.m */,
-				5006BD1E11BCF48D00E488BD /* PerformanceNodeChildrenTest.h */,
-				5006BD1F11BCF48D00E488BD /* PerformanceNodeChildrenTest.m */,
-			);
-			name = PerformanceNodeChildrenTest;
-			path = tests/PerformanceTests/PerformanceNodeChildrenTest;
-			sourceTree = "<group>";
-		};
 		5012DD3E0FE299EA00D6DDD1 /* TouchesTest */ = {
 			isa = PBXGroup;
 			children = (
@@ -5792,18 +5762,6 @@
 			children = (
 			);
 			name = tools;
-			sourceTree = "<group>";
-		};
-		5040190010FE80650017842A /* PerformanceTouchesTest */ = {
-			isa = PBXGroup;
-			children = (
-				5040190110FE80650017842A /* AppController.h */,
-				5040190210FE80650017842A /* AppController.m */,
-				5040190310FE80650017842A /* MainScene.h */,
-				5040190410FE80650017842A /* MainScene.m */,
-			);
-			name = PerformanceTouchesTest;
-			path = tests/PerformanceTests/PerformanceTouchesTest;
 			sourceTree = "<group>";
 		};
 		504828C70F45B15700A30CEF /* attachDemo */ = {
@@ -6426,10 +6384,6 @@
 				500111EA103B878B0059EC2E /* Box2DTestBed-Cocos2dIntegration */,
 				5069C791100B84BC00489758 /* bugs */,
 				504E18E511C4C91200E19835 /* EAGLViewTest */,
-				5006BD1B11BCF48D00E488BD /* PerformanceNodeChildrenTest */,
-				50E2A41010A4A58700D894CE /* PerformanceParticleTest */,
-				50E2A40610A4A56900D894CE /* PerformanceSpriteTest */,
-				5040190010FE80650017842A /* PerformanceTouchesTest */,
 				5012DD3E0FE299EA00D6DDD1 /* TouchesTest */,
 				A0D3A8FD149D2F9D0077CD93 /* BaseAppController.h */,
 				A0D3A8FE149D2FA40077CD93 /* BaseAppController.m */,
@@ -6595,32 +6549,6 @@
 				5018F2680DFDEAFF00C013A5 /* CCTextureCache.m */,
 			);
 			name = Textures;
-			sourceTree = "<group>";
-		};
-		50E2A40610A4A56900D894CE /* PerformanceSpriteTest */ = {
-			isa = PBXGroup;
-			children = (
-				50E2A40710A4A56900D894CE /* AppController.h */,
-				50E2A40810A4A56900D894CE /* AppController.m */,
-				50E2A40910A4A56900D894CE /* CocosNodePerformance.h */,
-				50E2A40A10A4A56900D894CE /* CocosNodePerformance.m */,
-				50E2A40B10A4A56900D894CE /* MainScene.h */,
-				50E2A40C10A4A56900D894CE /* MainScene.m */,
-			);
-			name = PerformanceSpriteTest;
-			path = tests/PerformanceTests/PerformanceSpriteTest;
-			sourceTree = "<group>";
-		};
-		50E2A41010A4A58700D894CE /* PerformanceParticleTest */ = {
-			isa = PBXGroup;
-			children = (
-				50E2A41110A4A58700D894CE /* AppController.h */,
-				50E2A41210A4A58700D894CE /* AppController.m */,
-				50E2A41310A4A58700D894CE /* MainScene.h */,
-				50E2A41410A4A58700D894CE /* MainScene.m */,
-			);
-			name = PerformanceParticleTest;
-			path = tests/PerformanceTests/PerformanceParticleTest;
 			sourceTree = "<group>";
 		};
 		50E2A52510A4AA1700D894CE /* sprites_test */ = {
