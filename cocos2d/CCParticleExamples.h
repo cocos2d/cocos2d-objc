@@ -36,7 +36,7 @@
 
 // ARMv6 use "Point" particle
 #elif __arm__
-	#define ARCH_OPTIMAL_PARTICLE_SYSTEM CCParticleSystemPoint
+	#define ARCH_OPTIMAL_PARTICLE_SYSTEM CCParticleSystemQuad
 #else
 	#error(unknown architecture)
 #endif
