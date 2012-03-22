@@ -231,7 +231,7 @@ static CCSpriteFrameCache *sharedSpriteFrameCache_=nil;
 	NSAssert(textureReference, @"textureReference should not be nil");
 	NSAssert(plist, @"plist filename should not be nil");
 
-	NSString *path = [CCFileUtils fullPathFromRelativePath:plist];
+	NSString *path = [[CCFileUtils sharedFileUtils] fullPathFromRelativePath:plist];
 	NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:path];
 
 	[self addSpriteFramesWithDictionary:dict textureReference:textureReference];
@@ -252,7 +252,7 @@ static CCSpriteFrameCache *sharedSpriteFrameCache_=nil;
 {
 	NSAssert(plist, @"plist filename should not be nil");
 
-    NSString *path = [CCFileUtils fullPathFromRelativePath:plist];
+    NSString *path = [[CCFileUtils sharedFileUtils] fullPathFromRelativePath:plist];
     NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:path];
 
     NSString *texturePath = nil;
@@ -323,7 +323,7 @@ static CCSpriteFrameCache *sharedSpriteFrameCache_=nil;
 
 - (void) removeSpriteFramesFromFile:(NSString*) plist
 {
-	NSString *path = [CCFileUtils fullPathFromRelativePath:plist];
+	NSString *path = [[CCFileUtils sharedFileUtils] fullPathFromRelativePath:plist];
 	NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:path];
 
 	[self removeSpriteFramesFromDictionary:dict];

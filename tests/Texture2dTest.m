@@ -124,9 +124,9 @@ Class restartAction()
 
 		CCMenu *menu = [CCMenu menuWithItems:item1, item2, item3, nil];
 		menu.position = CGPointZero;
-		item1.position = ccp( s.width/2 - 100,30);
-		item2.position = ccp( s.width/2, 30);
-		item3.position = ccp( s.width/2 + 100,30);
+		item1.position = ccp( s.width/2 - item2.contentSize.width*2, item2.contentSize.height/2);
+		item2.position = ccp( s.width/2, item2.contentSize.height/2);
+		item3.position = ccp( s.width/2 + item2.contentSize.width*2, item2.contentSize.height/2);
 		[self addChild: menu z:1];
 
 		CCLayerColor *col = [CCLayerColor layerWithColor:ccc4(128,128,128,255)];
@@ -1925,14 +1925,15 @@ Class restartAction()
 #ifdef __CC_PLATFORM_IOS
 		// Testint CCFileUtils API
 		BOOL ret;
-		ret = [CCFileUtils iPhoneRetinaDisplayFileExistsAtPath:@"bugs/test_issue_1179.png"];
+		CCFileUtils *sharedFileUtils = [CCFileUtils sharedFileUtils];
+		ret = [sharedFileUtils iPhoneRetinaDisplayFileExistsAtPath:@"bugs/test_issue_1179.png"];
 		if( ret )
 			NSLog(@"Test #3: retinaDisplayFileExistsAtPath: OK");
 		else
 			NSLog(@"Test #3: retinaDisplayFileExistsAtPath: FAILED");
 
 
-		ret = [CCFileUtils iPhoneRetinaDisplayFileExistsAtPath:@"grossini-does_no_exist.png"];
+		ret = [sharedFileUtils iPhoneRetinaDisplayFileExistsAtPath:@"grossini-does_no_exist.png"];
 		if( !ret )
 			NSLog(@"Test #4: retinaDisplayFileExistsAtPath: OK");
 		else
@@ -1980,11 +1981,15 @@ Class restartAction()
 	// You can change it at anytime.
 	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA8888];
 
-	// When in iPhone RetinaDisplay, iPad, iPad RetinaDisplay mode, CCFileUtils will append the "-hd", "-ipad", "-ipadhd" to all loaded files
-	// If the -hd, -ipad, -ipadhd files are not found, it will load the non-suffixed version
-	[CCFileUtils setiPhoneRetinaDisplaySuffix:@"-hd"];		// Default on iPhone RetinaDisplay is "-hd"
-	[CCFileUtils setiPadSuffix:@"-ipad"];					// Default on iPad is "" (empty string)
-	[CCFileUtils setiPadRetinaDisplaySuffix:@"-ipadhd"];	// Default on iPad RetinaDisplay is "-ipadhd"
+	// If the 1st suffix is not found, then the fallback suffixes are going to used. If none is found, it will try with the name without suffix.
+	// On iPad HD  : "-ipadhd", "-ipad",  "-hd"
+	// On iPad     : "-ipad", "-hd"
+	// On iPhone HD: "-hd"
+	CCFileUtils *sharedFileUtils = [CCFileUtils sharedFileUtils];
+	[sharedFileUtils setEnableFallbackSuffixes:YES];			// Default: NO. No fallback suffixes are going to be used
+	[sharedFileUtils setiPhoneRetinaDisplaySuffix:@"-hd"];		// Default on iPhone RetinaDisplay is "-hd"
+	[sharedFileUtils setiPadSuffix:@"-ipad"];					// Default on iPad is "ipad"
+	[sharedFileUtils setiPadRetinaDisplaySuffix:@"-ipadhd"];	// Default on iPad RetinaDisplay is "-ipadhd"
 
 	CCScene *scene = [CCScene node];
 	[scene addChild: [nextAction() node]];

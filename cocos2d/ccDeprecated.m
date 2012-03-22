@@ -304,14 +304,41 @@ void ccGLUniformModelViewProjectionMatrix( CCGLProgram* program )
 #endif
 @end
 
-#if __CC_PLATFORM_IOS
 @implementation CCFileUtils (Deprecated)
++(NSString*) fullPathFromRelativePath:(NSString*) relPath
+{
+	return [[self sharedFileUtils] fullPathFromRelativePath:relPath];
+}
+
+#if __CC_PLATFORM_IOS
++(NSString*) fullPathFromRelativePath:(NSString*)relPath resolutionType:(ccResolutionType*)resolutionType
+{
+	return [[self sharedFileUtils] fullPathFromRelativePath:relPath resolutionType:resolutionType];
+}
 +(void) setRetinaDisplaySuffix:(NSString*)suffix
 {
-	return [self setiPhoneRetinaDisplaySuffix:suffix];
+	return [[self sharedFileUtils] setiPhoneRetinaDisplaySuffix:suffix];
 }
-@end
++(NSString *)removeSuffixFromFile:(NSString*) path
+{
+	return [[self sharedFileUtils] removeSuffixFromFile:path];
+}
++(BOOL) iPhoneRetinaDisplayFileExistsAtPath:(NSString*)filename
+{
+	return [[self sharedFileUtils] iPhoneRetinaDisplayFileExistsAtPath:filename];
+}
++(BOOL) iPadFileExistsAtPath:(NSString*)filename
+{
+	return [[self sharedFileUtils] iPadFileExistsAtPath:filename];
+}
++(BOOL) iPadRetinaDisplayFileExistsAtPath:(NSString*)filename
+{
+	return [[self sharedFileUtils] iPadRetinaDisplayFileExistsAtPath:filename];
+}
 #endif
+
+@end
+
 
 
 #if __CC_PLATFORM_IOS
