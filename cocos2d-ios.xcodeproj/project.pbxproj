@@ -14825,7 +14825,6 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = (
 					armv6,
-					armv7,
 					"$(ARCHS_STANDARD_32_BIT)",
 				);
 				COPY_PHASE_STRIP = NO;
@@ -14842,7 +14841,6 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = (
 					armv6,
-					armv7,
 					"$(ARCHS_STANDARD_32_BIT)",
 				);
 				COPY_PHASE_STRIP = YES;
@@ -15861,7 +15859,6 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = (
 					armv6,
-					armv7,
 					"$(ARCHS_STANDARD_32_BIT)",
 				);
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -15903,7 +15900,6 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = (
 					armv6,
-					armv7,
 					"$(ARCHS_STANDARD_32_BIT)",
 				);
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
