@@ -6,6 +6,7 @@ version 2.0-rc1 XX-Mar-2012
 		NSFileManager and NSBundle are properties (can be changed in runtime)
 		Added "fallback suffix" support (disabled by default).
 		On iPad the default suffix is "-ipad". Before it was ""
+. [FIX] NSThread+Block: fixed crash due to block not being copied to the heap
 . [FIX] LabelBMFont: can be "init" without further arguments
 		Glyphs with big yOffset are rendered correctly (issue #1343)
 . [FIX] OpenGL: VAO are initialized on the cocos2d thread on machines that don't support shareables VAOs
