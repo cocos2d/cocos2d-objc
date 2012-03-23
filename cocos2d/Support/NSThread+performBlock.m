@@ -44,7 +44,7 @@ typedef void (^BlockWithParam)(id param);
 {
     [self performSelector:@selector(executeBlock:) 
                  onThread:self
-			   withObject: block
+			   withObject: [[block copy] autorelease]
 			waitUntilDone: wait];
 }
 
