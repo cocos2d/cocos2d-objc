@@ -106,7 +106,6 @@ static char * glExtensions;
 		CCLOG(@"cocos2d: GL_VERSION:  %s", glGetString ( GL_VERSION    ) );
 
 		glExtensions = (char*) glGetString(GL_EXTENSIONS);
-		printf("%s\n",glExtensions);
 
 		glGetIntegerv(GL_MAX_TEXTURE_SIZE, &maxTextureSize_);
 		glGetIntegerv(GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS, &maxTextureUnits_ );

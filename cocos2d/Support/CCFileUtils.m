@@ -32,25 +32,24 @@
 #import "../ccTypes.h"
 
 
-NSString *ccRemoveSuffixFromPath( NSString *suffix, NSString *path);
+#pragma mark - Helper free functions
 
-//
 NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 {
 	NSCAssert( out, @"ccLoadFileIntoMemory: invalid 'out' parameter");
 	NSCAssert( &*out, @"ccLoadFileIntoMemory: invalid 'out' parameter");
-
+	
 	size_t size = 0;
 	FILE *f = fopen(filename, "rb");
 	if( !f ) {
 		*out = NULL;
 		return -1;
 	}
-
+	
 	fseek(f, 0, SEEK_END);
 	size = ftell(f);
 	fseek(f, 0, SEEK_SET);
-
+	
 	*out = malloc(size);
 	size_t read = fread(*out, 1, size, f);
 	if( read != size ) {
@@ -58,12 +57,46 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 		*out = NULL;
 		return -1;
 	}
-
+	
 	fclose(f);
-
+	
 	return size;
 }
 
+#pragma mark - CCCacheValue
+
+@interface CCCacheValue : NSObject
+{
+	NSString			*fullpath_;
+	ccResolutionType	resolutionType_;
+}
+@property (nonatomic, readwrite, retain) NSString *fullpath;
+@property (nonatomic, readwrite ) ccResolutionType resolutionType;
+@end
+
+@implementation CCCacheValue
+@synthesize fullpath = fullpath_;
+@synthesize resolutionType = resolutionType_;
+-(id) initWithFullPath:(NSString*)path resolutionType:(ccResolutionType)resolutionType
+{
+	if( (self=[super init]) )
+	{
+		self.fullpath = path;
+		self.resolutionType = resolutionType;
+	}
+	
+	return self;
+}
+
+- (void)dealloc
+{
+    [fullpath_ release];
+
+    [super dealloc];
+}
+@end
+
+#pragma mark - CCFileUtils
 
 #ifdef __CC_PLATFORM_IOS
 @interface CCFileUtils()
@@ -97,6 +130,9 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 	if( (self=[super init])) {
 		fileManager_ = [[NSFileManager alloc] init];
 
+		fullPathCache_ = [[NSMutableDictionary alloc] initWithCapacity:30];
+		removeSuffixCache_ = [[NSMutableDictionary alloc] initWithCapacity:30];
+
 #ifdef __CC_PLATFORM_IOS	
 		iPhoneRetinaDisplaySuffix_ = @"-hd";
 		iPadSuffix_ = @"-ipad";
@@ -110,10 +146,18 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 	return self;
 }
 
+-(void) purgeCachedEntries
+{
+	[fullPathCache_ removeAllObjects];	
+	[removeSuffixCache_ removeAllObjects];
+}
+
 - (void)dealloc
 {
     [fileManager_ release];
 	[bundle_ release];
+	[fullPathCache_ release];
+	[removeSuffixCache_ release];
 	
 #ifdef __CC_PLATFORM_IOS	
 	[iPhoneRetinaDisplaySuffix_ release];
@@ -166,6 +210,12 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 {
 	NSAssert(relPath != nil, @"CCFileUtils: Invalid path");
 
+	CCCacheValue *value = [fullPathCache_ objectForKey:relPath];
+	if( value ) {
+		*resolutionType = value.resolutionType;
+		return value.fullpath;
+	}
+
 	NSString *fullpath = nil;
 
 	// only if it is not an absolute path
@@ -178,8 +228,6 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 		fullpath = [[NSBundle mainBundle] pathForResource:file
 												   ofType:nil
 											  inDirectory:imageDirectory];
-
-
 	}
 
 	if (fullpath == nil)
@@ -241,15 +289,22 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 		ret = fullpath;
 	}
 
-	return ret;
+	fullpath = ret;
 
 #elif defined(__CC_PLATFORM_MAC)
 
+	
 	*resolutionType = kCCResolutionMac;
 
 	return fullpath;
 
 #endif // __CC_PLATFORM_MAC
+	
+	value = [[CCCacheValue alloc] initWithFullPath:fullpath resolutionType:*resolutionType];
+	[fullPathCache_ setObject:value forKey:relPath];
+	[value release];
+	
+	return fullpath;
 
 }
 
@@ -288,6 +343,10 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 
 -(NSString*) removeSuffixFromFile:(NSString*) path
 {
+	NSString *withoutSuffix = [removeSuffixCache_ objectForKey:path];
+	if( withoutSuffix )
+		return withoutSuffix;
+
 	NSString *ret = nil;
 
 	if( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad )
@@ -304,6 +363,8 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 		else
 			ret = path;
 	}
+	
+	[removeSuffixCache_ setObject:ret forKey:path];
 	
 	return ret;
 }

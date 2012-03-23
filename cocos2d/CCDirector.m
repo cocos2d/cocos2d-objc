@@ -53,6 +53,7 @@
 #import "Support/OpenGL_Internal.h"
 #import "Support/CGPointExtension.h"
 #import "Support/CCProfiling.h"
+#import "Support/CCFileUtils.h"
 
 #ifdef __CC_PLATFORM_IOS
 #import "Platforms/iOS/CCDirectorIOS.h"
@@ -251,6 +252,7 @@ static CCDirector *_sharedDirector = nil;
 {
 	[CCLabelBMFont purgeCachedData];
 	[[CCTextureCache sharedTextureCache] removeUnusedTextures];
+	[[CCFileUtils sharedFileUtils] purgeCachedEntries];
 }
 
 #pragma mark Director - Scene OpenGL Helper
@@ -438,6 +440,7 @@ static CCDirector *_sharedDirector = nil;
 	[CCSpriteFrameCache purgeSharedSpriteFrameCache];
 	[CCTextureCache purgeSharedTextureCache];
 	[CCShaderCache purgeSharedShaderCache];
+	[[CCFileUtils sharedFileUtils] purgeCachedEntries];
 
 	// OpenGL view
 
