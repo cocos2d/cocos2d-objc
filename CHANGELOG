@@ -7,6 +7,7 @@ version 2.0-rc1 XX-Mar-2012
 		Added "fallback suffix" support (disabled by default).
 		On iPad the default suffix is "-ipad". Before it was ""
 . [FIX] LabelBMFont: can be "init" without further arguments
+		Glyphs with big yOffset are rendered correctly (issue #1343)
 . [FIX] OpenGL: VAO are initialized on the cocos2d thread on machines that don't support shareables VAOs
 
 version 2.0-rc0a 13-Mar-2012

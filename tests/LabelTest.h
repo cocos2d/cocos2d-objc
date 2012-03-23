@@ -136,3 +136,8 @@
 {
 }
 @end
+
+@interface Issue1343 : AtlasDemo
+{
+}
+@end
