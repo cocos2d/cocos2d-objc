@@ -590,6 +590,8 @@ static CCDirector *_sharedDirector = nil;
 		[[CCTextureCache sharedTextureCache ] removeTexture:texture];
 		FPSLabel_ = nil;
 		SPFLabel_ = nil;
+		
+		[[CCFileUtils sharedFileUtils] purgeCachedEntries];
 	}
 
 	CCTexture2DPixelFormat currentFormat = [CCTexture2D defaultAlphaPixelFormat];
