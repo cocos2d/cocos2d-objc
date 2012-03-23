@@ -118,6 +118,20 @@
 //
 - (void) setFullScreen:(BOOL)fullscreen
 {
+//	isFullScreen_ = !isFullScreen_;
+//		
+//	if (isFullScreen_)
+//	{
+//		[self.view enterFullScreenMode:[[self.view window] screen] withOptions:nil];
+//	}
+//	else
+//	{
+//		[self.view exitFullScreenModeWithOptions:nil];
+//		[[self.view window] makeFirstResponder: self.view];
+//	}
+//	
+//	return;
+
 	// Mac OS X 10.6 and later offer a simplified mechanism to create full-screen contexts
 #if MAC_OS_X_VERSION_MIN_REQUIRED > MAC_OS_X_VERSION_10_5
 
