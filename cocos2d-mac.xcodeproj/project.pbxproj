@@ -2052,6 +2052,10 @@
 		A0F17004150FFB2A00CE6E92 /* example_Twist.fsh in Sources */ = {isa = PBXBuildFile; fileRef = A0EC4CBB1403278200EC482A /* example_Twist.fsh */; };
 		A0F17005150FFB2A00CE6E92 /* example_Twist.vsh in Sources */ = {isa = PBXBuildFile; fileRef = A0EC4CBC1403278200EC482A /* example_Twist.vsh */; };
 		A0F83F7F151CAACA00EBBFCB /* tuffy_bold_italic-charmap.plist in Resources */ = {isa = PBXBuildFile; fileRef = A0F83F7E151CAAC900EBBFCB /* tuffy_bold_italic-charmap.plist */; };
+		A0F840D2151D2B8F00EBBFCB /* larabie-16-hd.plist in Resources */ = {isa = PBXBuildFile; fileRef = A0F840CE151D2B8F00EBBFCB /* larabie-16-hd.plist */; };
+		A0F840D3151D2B8F00EBBFCB /* larabie-16.plist in Resources */ = {isa = PBXBuildFile; fileRef = A0F840CF151D2B8F00EBBFCB /* larabie-16.plist */; };
+		A0F840D4151D2B8F00EBBFCB /* tuffy_bold_italic-charmap-hd.plist in Resources */ = {isa = PBXBuildFile; fileRef = A0F840D0151D2B8F00EBBFCB /* tuffy_bold_italic-charmap-hd.plist */; };
+		A0F840D5151D2B8F00EBBFCB /* tuffy_bold_italic-charmap-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = A0F840D1151D2B8F00EBBFCB /* tuffy_bold_italic-charmap-hd.png */; };
 		E01E6A3E121EDCD3001A484F /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E01E6A3D121EDCD3001A484F /* ApplicationServices.framework */; };
 		E01E6B36121EDCED001A484F /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E036A79E121B5C870037C5C6 /* QuartzCore.framework */; };
 		E01E6B49121EDCF4001A484F /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E036A79C121B5C720037C5C6 /* OpenGL.framework */; };
@@ -5848,6 +5852,10 @@
 		A0EC4CBB1403278200EC482A /* example_Twist.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_Twist.fsh; sourceTree = "<group>"; };
 		A0EC4CBC1403278200EC482A /* example_Twist.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_Twist.vsh; sourceTree = "<group>"; };
 		A0F83F7E151CAAC900EBBFCB /* tuffy_bold_italic-charmap.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "tuffy_bold_italic-charmap.plist"; sourceTree = "<group>"; };
+		A0F840CE151D2B8F00EBBFCB /* larabie-16-hd.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "larabie-16-hd.plist"; sourceTree = "<group>"; };
+		A0F840CF151D2B8F00EBBFCB /* larabie-16.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "larabie-16.plist"; sourceTree = "<group>"; };
+		A0F840D0151D2B8F00EBBFCB /* tuffy_bold_italic-charmap-hd.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "tuffy_bold_italic-charmap-hd.plist"; sourceTree = "<group>"; };
+		A0F840D1151D2B8F00EBBFCB /* tuffy_bold_italic-charmap-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tuffy_bold_italic-charmap-hd.png"; sourceTree = "<group>"; };
 		A0FBA8A614A51386002DF395 /* libchipmunk.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libchipmunk.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0FBA8AF14A5138F002DF395 /* libbox2d.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libbox2d.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		E01E663D121CA00A001A484F /* libcocos2d.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libcocos2d.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -7608,6 +7616,8 @@
 		E076E7A11225EDD000DE0DA2 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
+				A0F840D0151D2B8F00EBBFCB /* tuffy_bold_italic-charmap-hd.plist */,
+				A0F840D1151D2B8F00EBBFCB /* tuffy_bold_italic-charmap-hd.png */,
 				A0DB13DE14FC418100F7CC49 /* west_england-64.fnt */,
 				A0DB13DF14FC418100F7CC49 /* west_england-64.png */,
 				A03A1D1714F5DF490019B6F3 /* arial-unicode-26.fnt */,
@@ -7626,7 +7636,9 @@
 				E0C60679128ECC110099367C /* konqa32.fnt */,
 				E0C6067A128ECC110099367C /* konqa32.png */,
 				E0C6067B128ECC110099367C /* larabie-16-hd.png */,
+				A0F840CE151D2B8F00EBBFCB /* larabie-16-hd.plist */,
 				E0C6067C128ECC110099367C /* larabie-16.png */,
+				A0F840CF151D2B8F00EBBFCB /* larabie-16.plist */,
 				E076E7A21225EDD000DE0DA2 /* A Damn Mess.ttf */,
 				E076E7A31225EDD000DE0DA2 /* Abberancy.ttf */,
 				E076E7A41225EDD000DE0DA2 /* Abduction.ttf */,
@@ -12484,6 +12496,10 @@
 				A03A1D1914F5DF490019B6F3 /* arial-unicode-26.fnt in Resources */,
 				A03A1D1A14F5DF490019B6F3 /* arial-unicode-26.png in Resources */,
 				A0F83F7F151CAACA00EBBFCB /* tuffy_bold_italic-charmap.plist in Resources */,
+				A0F840D2151D2B8F00EBBFCB /* larabie-16-hd.plist in Resources */,
+				A0F840D3151D2B8F00EBBFCB /* larabie-16.plist in Resources */,
+				A0F840D4151D2B8F00EBBFCB /* tuffy_bold_italic-charmap-hd.plist in Resources */,
+				A0F840D5151D2B8F00EBBFCB /* tuffy_bold_italic-charmap-hd.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

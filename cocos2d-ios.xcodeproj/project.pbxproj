@@ -2015,6 +2015,8 @@
 		A0F37B7913C3B39E00F724DF /* grossini_dance_atlas-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E062F9961247FC5400DE3932 /* grossini_dance_atlas-hd.png */; };
 		A0F83FB5151CAE7300EBBFCB /* tuffy_bold_italic-charmap-hd.plist in Resources */ = {isa = PBXBuildFile; fileRef = A0F83FB3151CAE7300EBBFCB /* tuffy_bold_italic-charmap-hd.plist */; };
 		A0F83FB6151CAE7300EBBFCB /* tuffy_bold_italic-charmap.plist in Resources */ = {isa = PBXBuildFile; fileRef = A0F83FB4151CAE7300EBBFCB /* tuffy_bold_italic-charmap.plist */; };
+		A0F8410B151D2C2E00EBBFCB /* larabie-16-hd.plist in Resources */ = {isa = PBXBuildFile; fileRef = A0F84109151D2C2E00EBBFCB /* larabie-16-hd.plist */; };
+		A0F8410C151D2C2E00EBBFCB /* larabie-16.plist in Resources */ = {isa = PBXBuildFile; fileRef = A0F8410A151D2C2E00EBBFCB /* larabie-16.plist */; };
 		AAEA834B0FD5704400F08728 /* blocks.png in Resources */ = {isa = PBXBuildFile; fileRef = AAEA834A0FD5704400F08728 /* blocks.png */; };
 		DA5F0EC50FFE96D400C7C82E /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB240E10EE4A00AE9530 /* Default.png */; };
 		DA5F0EC60FFE96D400C7C82E /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB250E10EE4A00AE9530 /* Icon.png */; };
@@ -4558,6 +4560,8 @@
 		A0F37B3713C3719A00F724DF /* white-512x512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "white-512x512.png"; sourceTree = "<group>"; };
 		A0F83FB3151CAE7300EBBFCB /* tuffy_bold_italic-charmap-hd.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "tuffy_bold_italic-charmap-hd.plist"; sourceTree = "<group>"; };
 		A0F83FB4151CAE7300EBBFCB /* tuffy_bold_italic-charmap.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "tuffy_bold_italic-charmap.plist"; sourceTree = "<group>"; };
+		A0F84109151D2C2E00EBBFCB /* larabie-16-hd.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "larabie-16-hd.plist"; sourceTree = "<group>"; };
+		A0F8410A151D2C2E00EBBFCB /* larabie-16.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "larabie-16.plist"; sourceTree = "<group>"; };
 		AAEA834A0FD5704400F08728 /* blocks.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blocks.png; sourceTree = "<group>"; };
 		DA90D87B1059A54D0039F26A /* FontTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FontTest.h; path = tests/FontTest.h; sourceTree = "<group>"; };
 		DA90D87C1059A54D0039F26A /* FontTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FontTest.m; path = tests/FontTest.m; sourceTree = "<group>"; };
@@ -6104,7 +6108,9 @@
 				E087B34E12785BB60076F6FF /* fps_images-hd.png */,
 				A093FC24150D0ED40039327A /* fps_images-ipadhd.png */,
 				E0FDACE6123DAC8300F25BB4 /* larabie-16.png */,
+				A0F8410A151D2C2E00EBBFCB /* larabie-16.plist */,
 				E0FDACE5123DAC8300F25BB4 /* larabie-16-hd.png */,
+				A0F84109151D2C2E00EBBFCB /* larabie-16-hd.plist */,
 				505463A11062867800AB7C52 /* tuffy_bold_italic-charmap.png */,
 				A0F83FB4151CAE7300EBBFCB /* tuffy_bold_italic-charmap.plist */,
 				E0FDACED123DAD0000F25BB4 /* tuffy_bold_italic-charmap-hd.png */,
@@ -9725,6 +9731,8 @@
 				A093FC39150D0ED40039327A /* fps_images-ipadhd.png in Resources */,
 				A0F83FB5151CAE7300EBBFCB /* tuffy_bold_italic-charmap-hd.plist in Resources */,
 				A0F83FB6151CAE7300EBBFCB /* tuffy_bold_italic-charmap.plist in Resources */,
+				A0F8410B151D2C2E00EBBFCB /* larabie-16-hd.plist in Resources */,
+				A0F8410C151D2C2E00EBBFCB /* larabie-16.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
