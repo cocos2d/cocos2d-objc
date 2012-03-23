@@ -101,7 +101,7 @@ void ccGLUniformModelViewProjectionMatrix( CCGLProgram* program )
 
 -(CCSpriteFrame*) displayedFrame
 {
-	return [self displayedFrame];
+	return [self displayFrame];
 }
 @end
 
