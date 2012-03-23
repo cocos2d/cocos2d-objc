@@ -98,17 +98,7 @@
 	pos.y = pos.y * ratio.y + offset.y;
 	child.position = pos;
 
-	if(![NSThread isMainThread]) 
-	{
-		[[NSThread mainThread] performBlock:^(id param){
-			[super addChild:child z:z tag:child.tag];
-		} withObject:nil waitUntilDone:YES];
-		return;
-	}
-	else
-	{
-		[super addChild: child z:z tag:child.tag];
-	}
+	[super addChild: child z:z tag:child.tag];
 }
 
 -(void) removeChild:(CCNode*)node cleanup:(BOOL)cleanup

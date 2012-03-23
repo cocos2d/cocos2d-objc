@@ -337,15 +337,6 @@ static NSUInteger globalOrderOfArrival = 1;
 	NSAssert( child != nil, @"Argument must be non-nil");
 	NSAssert( child.parent == nil, @"child already added. It can't be added again");
 
-	if(![NSThread isMainThread]) {
-		[child retain];
-		[[NSThread mainThread] performBlock:^(id param){
-			[self addChild:child z:z tag:aTag];
-		} withObject:nil waitUntilDone:YES];
-		[child release];
-		return;
-	}
-
 	if( ! children_ )
 		[self childrenAlloc];
 
@@ -390,13 +381,6 @@ static NSUInteger globalOrderOfArrival = 1;
 	if (child == nil)
 		return;
 	
-	if(![NSThread isMainThread]) {
-		[[NSThread mainThread] performBlock:^(id param){
-			[self removeChild:child cleanup:cleanup];
-		} withObject:nil waitUntilDone:YES];
-		return;
-	}
-
 	if ( [children_ containsObject:child] )
 		[self detachChild:child cleanup:cleanup];
 }
