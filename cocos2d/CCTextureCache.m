@@ -283,14 +283,6 @@ static CCTextureCache *sharedTextureCache;
 	});
 
 	if( ! tex ) {
-		if(![NSThread isMainThread]) {
-			[[NSThread mainThread] performBlock:^(id params) {
-				tex = [self addImage:path];
-			} withObject:nil waitUntilDone:YES];
-			
-			return tex;
-		}
-
 		NSString *lowerCase = [path lowercaseString];
 
 		// all images are handled by UIKit/AppKit except PVR extension that is handled by cocos2d's handler
