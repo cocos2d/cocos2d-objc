@@ -250,6 +250,8 @@ static CCDirector *_sharedDirector = nil;
 -(void) purgeCachedData
 {
 	[CCLabelBMFont purgeCachedData];
+	[[CCAnimationCache sharedAnimationCache] removeUnusedAnimations];
+	[[CCSpriteFrameCache sharedSpriteFrameCache] removeUnusedSpriteFrames];
 	[[CCTextureCache sharedTextureCache] removeUnusedTextures];
 }
 
