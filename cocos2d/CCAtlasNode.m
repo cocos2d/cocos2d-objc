@@ -64,10 +64,6 @@
 {
 	if( (self=[super init]) ) {
 		
-		CCTextureAtlas * newAtlas = [[CCTextureAtlas alloc] initWithFile:tile capacity:c];
-		self.textureAtlas = newAtlas;
-		[newAtlas release];
-
 		itemWidth_ = w;
 		itemHeight_ = h;
 
@@ -78,7 +74,10 @@
 		blendFunc_.src = CC_BLEND_SRC;
 		blendFunc_.dst = CC_BLEND_DST;
 
-
+		CCTextureAtlas * newAtlas = [[CCTextureAtlas alloc] initWithFile:tile capacity:c];
+		self.textureAtlas = newAtlas;
+		[newAtlas release];		
+		
 		if( ! textureAtlas_ ) {
 			CCLOG(@"cocos2d: Could not initialize CCAtlasNode. Invalid Texture");
 			[self release];
