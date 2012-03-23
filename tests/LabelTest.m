@@ -1168,7 +1168,7 @@ static float menuItemPaddingCenter = 50;
 		CGSize s = [[CCDirector sharedDirector] winSize];
 
 		// CCLabelBMFont
-		CCLabelAtlas *label1 = [CCLabelAtlas labelWithString:@"TESTING RETINA DISPLAY" charMapFile:@"larabie-16.png" itemWidth:10 itemHeight:20 startCharMap:'A'];
+		CCLabelAtlas *label1 = [CCLabelAtlas labelWithString:@"TESTING RETINA DISPLAY" fntFile:@"larabie-16.plist"];
 		label1.anchorPoint = ccp(0.5f, 0.5f);
 
 		[self addChild:label1];
