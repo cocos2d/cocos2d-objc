@@ -250,12 +250,12 @@ Class restartAction()
 {
 	if( (self=[super init] )) {
 
-		CCLabelAtlas *label1 = [CCLabelAtlas labelWithString:@"123 Test" charMapFile:@"tuffy_bold_italic-charmap.png" itemWidth:48 itemHeight:64 startCharMap:' '];
+		CCLabelAtlas *label1 = [CCLabelAtlas labelWithString:@"123 Test" fntFile:@"tuffy_bold_italic-charmap.plist"];
 		[self addChild:label1 z:0 tag:kTagSprite1];
 		label1.position = ccp(10,100);
 		label1.opacity = 200;
 
-		CCLabelAtlas *label2 = [CCLabelAtlas labelWithString:@"0123456789" charMapFile:@"tuffy_bold_italic-charmap.png" itemWidth:48 itemHeight:64 startCharMap:' '];
+		CCLabelAtlas *label2 = [CCLabelAtlas labelWithString:@"0123456789" fntFile:@"tuffy_bold_italic-charmap.plist"];
 		[self addChild:label2 z:0 tag:kTagSprite2];
 		label2.position = ccp(10,200);
 		label2.opacity = 32;
