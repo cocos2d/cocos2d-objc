@@ -61,7 +61,8 @@
 #import "Platforms/Mac/CCDirectorMac.h"
 #define CC_DIRECTOR_DEFAULT CCDirectorDisplayLink
 #endif
-
+#import <mach/mach.h>
+#import <mach/mach_host.h>
 
 #pragma mark -
 #pragma mark Director - global variables (optimization)
@@ -184,6 +185,7 @@ static CCDirector *_sharedDirector = nil;
 	[FPSLabel_ release];
 	[SPFLabel_ release];
 	[drawsLabel_ release];
+	[memoryLabel_ release];
 	[runningScene_ release];
 	[notificationNode_ release];
 	[scenesStack_ release];
@@ -425,7 +427,9 @@ static CCDirector *_sharedDirector = nil;
 	[FPSLabel_ release];
 	[SPFLabel_ release];
 	[drawsLabel_ release];
-	FPSLabel_ = nil, SPFLabel_=nil, drawsLabel_=nil;
+	[memoryLabel_ release];
+
+	FPSLabel_ = nil, SPFLabel_=nil, drawsLabel_=nil,memoryLabel_ = nil;
 
 	[delegate_ release];
 	delegate_ = nil;
@@ -529,6 +533,24 @@ static CCDirector *_sharedDirector = nil;
 	CCLOG(@"cocos2d: Director#setAnimationInterval. Override me");
 }
 
++(natural_t) get_free_memory {
+    mach_port_t host_port;
+    mach_msg_type_number_t host_size;
+    vm_size_t pagesize;
+    host_port = mach_host_self();
+    host_size = sizeof(vm_statistics_data_t) / sizeof(integer_t);
+    host_page_size(host_port, &pagesize);
+    vm_statistics_data_t vm_stat;
+	
+    if (host_statistics(host_port, HOST_VM_INFO, (host_info_t)&vm_stat, &host_size) != KERN_SUCCESS) {
+        NSLog(@"Failed to fetch vm statistics");
+        return 0;
+    }
+	
+    /* Stats in bytes */
+    natural_t mem_free = vm_stat.free_count * pagesize;
+    return mem_free;
+}
 
 // display statistics
 -(void) showStats
@@ -559,8 +581,14 @@ static CCDirector *_sharedDirector = nil;
 			NSString *draws = [[NSString alloc] initWithFormat:@"%4d", __ccNumberOfDraws];
 			[drawsLabel_ setString:draws];
 			[draws release];
+			
+			float memoryRate = [CCDirector get_free_memory ] / (1024.0f*1024.0f);
+			NSString *memory = [[NSString alloc] initWithFormat:@"%.1f", memoryRate];
+			[memoryLabel_ setString:memory];
+			[memory release];
 		}
-
+		
+		[memoryLabel_ visit];
 		[drawsLabel_ visit];
 		[FPSLabel_ visit];
 		[SPFLabel_ visit];
@@ -596,9 +624,11 @@ static CCDirector *_sharedDirector = nil;
 	FPSLabel_ = [[CCLabelAtlas alloc]  initWithString:@"00.0" charMapFile:@"fps_images.png" itemWidth:12 itemHeight:32 startCharMap:'.'];
 	SPFLabel_ = [[CCLabelAtlas alloc]  initWithString:@"0.000" charMapFile:@"fps_images.png" itemWidth:12 itemHeight:32 startCharMap:'.'];
 	drawsLabel_ = [[CCLabelAtlas alloc]  initWithString:@"000" charMapFile:@"fps_images.png" itemWidth:12 itemHeight:32 startCharMap:'.'];
-
+	memoryLabel_ = [[CCLabelAtlas alloc]  initWithString:@"000" charMapFile:@"fps_images.png" itemWidth:12 itemHeight:32 startCharMap:'.'];
+	
 	[CCTexture2D setDefaultAlphaPixelFormat:currentFormat];
-
+	
+	[memoryLabel_ setPosition:ccpAdd( ccp(0,51), CC_DIRECTOR_STATS_POSITION ) ];
 	[drawsLabel_ setPosition: ccpAdd( ccp(0,34), CC_DIRECTOR_STATS_POSITION ) ];
 	[SPFLabel_ setPosition: ccpAdd( ccp(0,17), CC_DIRECTOR_STATS_POSITION ) ];
 	[FPSLabel_ setPosition: CC_DIRECTOR_STATS_POSITION ];
