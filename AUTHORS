@@ -18,6 +18,9 @@ Lead Developer:
 
 People/companies who were/are contributing code to cocos2d for iPhone (alphabetically ordered):
 
+* Andrew0 (https://github.com/andrew0)
+	Fixed crash on NSThread+block
+
 * Atte Kotiranta (https://github.com/akotiranta)
 	EaseActions: Ease Actions works OK with floating point values
 	Improved Texture2D API
