@@ -792,11 +792,12 @@ typedef struct _FontDefHashElement
 			fontChar.opacity = 255;
 		}
 
-		float yOffset = configuration_->commonHeight_ - fontDef.yOffset;
-		CGPoint fontPos = ccp( (float)nextFontPositionX + fontDef.xOffset + fontDef.rect.size.width*0.5f + kerningAmount,
-							  (float)nextFontPositionY + yOffset - rect.size.height*0.5f * CC_CONTENT_SCALE_FACTOR() );
+		// cast needed. See issue 1343 (compiler bug???)
+		CGFloat yOffset = (CGFloat) configuration_->commonHeight_ - (CGFloat)fontDef.yOffset;
+		CGPoint fontPos = ccp( (CGFloat)nextFontPositionX + fontDef.xOffset + fontDef.rect.size.width*0.5f + kerningAmount,
+							  (CGFloat)nextFontPositionY + yOffset - rect.size.height*0.5f * CC_CONTENT_SCALE_FACTOR() );
         fontChar.position = CC_POINT_PIXELS_TO_POINTS(fontPos);
-
+		
 		// update kerning
 		nextFontPositionX += fontDef.xAdvance + kerningAmount;
 		prev = c;

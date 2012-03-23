@@ -32,11 +32,12 @@ static NSString *transitions[] = {
 	@"LabelTTFLineBreak",
 	@"BMFontOneAtlas",
 	@"BMFontUnicode",
+    @"BMFontInit",
+	@"Issue1343",
 
 	// Not a label test. Should be moved to Atlas test
 	@"Atlas1",
     
-    @"BMFontInit",
 };
 
 enum {
@@ -1509,6 +1510,39 @@ static float menuItemPaddingCenter = 50;
 }
 @end
 
+#pragma mark - Issue1343
+
+@implementation Issue1343
+
+- (id) init
+{
+    if( (self=[super init]) ) {
+        
+        CGSize s = [[CCDirector sharedDirector] winSize];
+        
+        CCLabelBMFont* bmFont = [[CCLabelBMFont alloc] init];
+        bmFont.fntFile = @"helvetica-32.fnt";
+        bmFont.string = @"ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890abcdefghijklmnopqrstuvwxyz.,'";
+        [self addChild:bmFont];
+		[bmFont release];
+	
+        [bmFont setPosition:ccp(s.width/2,s.height/4*2)];
+    }
+    return self;
+}
+
+-(NSString*) title
+{
+	return @"Issue 1343";
+}
+
+-(NSString *) subtitle
+{
+	return @"You should see: ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890abcdefghijklmnopqrstuvwxyz.,'";
+}
+@end
+
+
 #pragma mark -
 #pragma mark Application Delegate - iPhone
 
@@ -1541,7 +1575,7 @@ static float menuItemPaddingCenter = 50;
 	// On iPad     : "-ipad", "-hd"
 	// On iPhone HD: "-hd"
 	CCFileUtils *sharedFileUtils = [CCFileUtils sharedFileUtils];
-	[sharedFileUtils setEnableFallbackSuffixes:YES];			// Default: NO. No fallback suffixes are going to be used
+//	[sharedFileUtils setEnableFallbackSuffixes:YES];			// Default: NO. No fallback suffixes are going to be used
 	[sharedFileUtils setiPhoneRetinaDisplaySuffix:@"-hd"];		// Default on iPhone RetinaDisplay is "-hd"
 	[sharedFileUtils setiPadSuffix:@"-ipad"];					// Default on iPad is "ipad"
 	[sharedFileUtils setiPadRetinaDisplaySuffix:@"-ipadhd"];	// Default on iPad RetinaDisplay is "-ipadhd"
