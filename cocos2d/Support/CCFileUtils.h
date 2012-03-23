@@ -33,6 +33,8 @@
 {
 	NSFileManager	*fileManager_;
 	NSBundle		*bundle_;
+	NSMutableDictionary *fullPathCache_;
+	NSMutableDictionary *removeSuffixCache_;
 	
 #ifdef __CC_PLATFORM_IOS
 	BOOL	enableFallbackSuffixes_;
@@ -108,6 +110,12 @@
 
  */
 -(NSString*) fullPathFromRelativePath:(NSString*) relPath;
+
+
+/** Purge cached entries.
+ Will be called automatically by the Director when a memory warning is received
+ */
+-(void) purgeCachedEntries;
 
 
 #ifdef __CC_PLATFORM_IOS
