@@ -67,11 +67,8 @@ static CCAnimationCache *sharedAnimationCache_=nil;
 	for( id key in keys ) {
 		id value = [animations_ objectForKey:key];
 		if( [value retainCount] == 1 ) {
-			NSLog(@"cocos2d: CCSpriteFrameCache: removing unused frame: %@", key);
+			CCLOG(@"cocos2d: CCAnimationCache: removing unused frame: %@", key);
 			[animations_ removeObjectForKey:key];
-		}
-		else {
-			NSLog(@"cocos2d: CCSpriteFrameCache: keeping frame: %@", key);
 		}
 	}
 }
