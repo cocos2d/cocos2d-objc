@@ -36,6 +36,7 @@
 	NSMutableDictionary *fullPathCache_;
 	NSMutableDictionary *removeSuffixCache_;
 	
+	
 #ifdef __CC_PLATFORM_IOS
 	BOOL	enableFallbackSuffixes_;
 	
@@ -43,7 +44,6 @@
 	NSString *iPadSuffix_;
 	NSString *iPadRetinaDisplaySuffix_;
 #endif // __CC_PLATFORM_IOS
-
 }
 
 /** NSBundle used by CCFileUtils. By default it uses [NSBundle mainBundle].

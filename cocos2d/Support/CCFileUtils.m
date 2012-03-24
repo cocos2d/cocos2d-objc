@@ -31,6 +31,12 @@
 #import "../ccConfig.h"
 #import "../ccTypes.h"
 
+enum {
+	kCCiPhone,
+	kCCiPhoneRetinaDisplay,
+	kCCiPad,
+	kCCiPadRetinaDisplay,
+};
 
 #pragma mark - Helper free functions
 
@@ -75,8 +81,7 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 @end
 
 @implementation CCCacheValue
-@synthesize fullpath = fullpath_;
-@synthesize resolutionType = resolutionType_;
+@synthesize fullpath = fullpath_, resolutionType = resolutionType_;
 -(id) initWithFullPath:(NSString*)path resolutionType:(ccResolutionType)resolutionType
 {
 	if( (self=[super init]) )
@@ -102,6 +107,7 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 @interface CCFileUtils()
 -(NSString *) removeSuffix:(NSString*)suffix fromPath:(NSString*)path;
 -(BOOL) fileExistsAtPath:(NSString*)string withSuffix:(NSString*)suffix;
+-(NSInteger) runningDevice;
 @end
 #endif // __CC_PLATFORM_IOS
 
@@ -133,7 +139,7 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 		fullPathCache_ = [[NSMutableDictionary alloc] initWithCapacity:30];
 		removeSuffixCache_ = [[NSMutableDictionary alloc] initWithCapacity:30];
 
-#ifdef __CC_PLATFORM_IOS	
+#ifdef __CC_PLATFORM_IOS
 		iPhoneRetinaDisplaySuffix_ = @"-hd";
 		iPadSuffix_ = @"-ipad";
 		iPadRetinaDisplaySuffix_ = @"-ipadhd";
@@ -234,50 +240,28 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 
 #ifdef __CC_PLATFORM_IOS
 
-	enum {
-		iPhone,
-		iPhoneRetinadisplay,
-		iPad,
-		iPadRetinaDisplay,
-	};
+	NSInteger device = [self runningDevice];
 
-	NSInteger device = -1;
-	
-	if( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-	{
-		if( CC_CONTENT_SCALE_FACTOR() == 2 )
-			device = iPadRetinaDisplay;
-		else
-			device = iPad;
-	}
-	else
-	{
-		if( CC_CONTENT_SCALE_FACTOR() == 2 )
-			device = iPhoneRetinadisplay;
-		else
-			device = iPhone;
-	}
-	
 	// iPad HD ?
-	if( device == iPadRetinaDisplay ) {
+	if( device == kCCiPadRetinaDisplay ) {
 		ret = [self getPath:relPath forSuffix:iPadRetinaDisplaySuffix_];
 		*resolutionType = kCCResolutioniPadRetinaDisplay;
 	}
 
 	// iPad ?
-	if( device == iPad || (enableFallbackSuffixes_ && !ret) ) {
+	if( device == kCCiPad || (enableFallbackSuffixes_ && !ret) ) {
 		ret = [self getPath:relPath forSuffix:iPadSuffix_];
 		*resolutionType = kCCResolutioniPad;
 	}
 	
 	// iPhone HD ?
-	if( device == iPhoneRetinadisplay || (enableFallbackSuffixes_ && !ret) ) {
+	if( device == kCCiPhoneRetinaDisplay || (enableFallbackSuffixes_ && !ret) ) {
 		ret = [self getPath:relPath forSuffix:iPhoneRetinaDisplaySuffix_];
 		*resolutionType = kCCResolutioniPhoneRetinaDisplay;
 	}
 
 	// If it is not Phone HD, or if the previous "getPath" failed, then use iPhone images.
-	if( device == iPhone || !ret )
+	if( device == kCCiPhone || !ret )
 	{
 		ret = [self getPath:relPath forSuffix:@""];
 		*resolutionType = kCCResolutioniPhone;
@@ -311,8 +295,30 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 
 #pragma mark CCFileUtils - Suffix (iOS only)
 
-
 #ifdef __CC_PLATFORM_IOS
+
+// XXX: Optimization: This should be called only once
+-(NSInteger) runningDevice
+{
+	NSInteger ret=-1;
+
+	if( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+	{
+		if( CC_CONTENT_SCALE_FACTOR() == 2 )
+			ret = kCCiPadRetinaDisplay;
+		else
+			ret = kCCiPad;
+	}
+	else
+	{
+		if( CC_CONTENT_SCALE_FACTOR() == 2 )
+			ret = kCCiPhoneRetinaDisplay;
+		else
+			ret = kCCiPhone;
+	}
+	
+	return ret;
+}
 
 -(NSString *) removeSuffix:(NSString*)suffix fromPath:(NSString*)path
 {
@@ -333,7 +339,8 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 		return [pathWithoutLastname stringByAppendingPathComponent:newLastname];
 	}
 
-	return path;
+	// suffix was not removed
+	return nil;
 }
 
 -(NSString*) removeSuffixFromFile:(NSString*) path
@@ -344,22 +351,22 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 
 	NSString *ret = nil;
 
-	if( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad )
-	{
-		if( CC_CONTENT_SCALE_FACTOR() == 2 )
-			ret = [self removeSuffix:iPadRetinaDisplaySuffix_ fromPath:path];
-		else
-			ret = [self removeSuffix:iPadSuffix_ fromPath:path];		
-	}
-	else
-	{
-		if( CC_CONTENT_SCALE_FACTOR() == 2 )
-			ret = [self removeSuffix:iPhoneRetinaDisplaySuffix_ fromPath:path];
-		else
-			ret = path;
-	}
+	NSInteger device = [self runningDevice];
 	
-	[removeSuffixCache_ setObject:ret forKey:path];
+	if( device == kCCiPadRetinaDisplay )
+		ret = [self removeSuffix:iPadRetinaDisplaySuffix_ fromPath:path];
+	
+	if( device == kCCiPad || (enableFallbackSuffixes_ && !ret) )
+	   ret = [self removeSuffix:iPadSuffix_ fromPath:path];
+
+	if( device == kCCiPhoneRetinaDisplay || (enableFallbackSuffixes_ && !ret) )
+		ret = [self removeSuffix:iPhoneRetinaDisplaySuffix_ fromPath:path];
+
+	if( device == kCCiPhone || !ret )
+		ret = path;	
+
+	if( ret )
+		[removeSuffixCache_ setObject:ret forKey:path];
 	
 	return ret;
 }
