@@ -290,15 +290,17 @@ typedef struct _ccBlendFunc
 //! ccResolutionType
 typedef enum
 {
-	//! Unknonw resolution type
-	kCCResolutionUnknown,
-	//! standard (iphone) resolution type
-	kCCResolutionStandard,
-	//! RetinaDisplay resolution type
-	kCCResolutionRetinaDisplay,
-	//! iPad resolution type
-	kCCResolutioniPad,
-	
+    //! Unknonw resolution type
+    kCCResolutionUnknown,
+    //! iPhone resolution type
+    kCCResolutioniPhone,
+    //! RetinaDisplay resolution type
+    kCCResolutioniPhoneRetinaDisplay,
+    //! iPad resolution type
+    kCCResolutioniPad,
+    //! iPad Retina Display resolution type
+    kCCResolutioniPadRetinaDisplay,
+    
 } ccResolutionType;
 
 //! delta time type

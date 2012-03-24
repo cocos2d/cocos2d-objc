@@ -1,30 +1,47 @@
-version 1.1-beta2 xx - 2012
+version 1.1-rc0 .. -..-2012
+. [FIX] CCAnimation: bug in addFrames that resulted in incorrect delayPerUnit (issue #1341)
+. [FIX] CCSprite: CCSprite bug in setDisplayFrameWithAnimationName
+
+version 1.1-beta2b 14-Mar-2012
+. [FIX] CCUtils: missing method declaration
+
+version 1.1-beta2 12-Mar-2012
 . [NEW] v2.0 forward ported changes:
 			LabelBMFont: added setFntFile method
 			Animation: Added new animation format that supports delays per frame and notifications per frame
 			Actions: Added ActionTargeted action. Useful to target other nodes from a sequence.
 . [NEW] All: Code is compatible with ARC (issue #1199) 
+. [NEW] CCArray: new sorting methods, replaceObjectAtIndex, isEqualToArray
+. [NEW] ccFileUtiles: new iPad retina file extension (ipadhd)
 . [NEW] DrawPrimitives: Added new functions, ccDrawRect, ccDrawSolidRect, ccDrawSolidPoly
 . [NEW] DrawPrimitives: Added batch drawing of lines, ccDrawLines (issue #1081)
 . [NEW] Node: Added onExitTransitionDidStart (issue #792)
 . [NEW] ParticleSystem: supports animations in new animation format 
 . [NEW] TileMap: supports in-memory TMX map creation (issue #1239)
 . [NEW] TileMap: Flipped tiles can be changed during runtime (issue #1264)
+. [NEW] Touchdispatcher: new implementation, supporting changing dispatchers based on (ranges) of properties, custom sorting and more (full list in online release notes)
 . [NEW] Types: Added convenience function to create a ccColor4F from color components
 . [FIX] Actions: incorrect behavior of CCRepeat
+. [FIX] CCArray: equalilty is tested by isEqual instead of comparing pointer addresses
+. [FIX] CCArray: CCARRAY_FOREACH macro is now ARC compatible
+. [FIX] CCLabelBMFont: full unicode support
+. [FIX] CCTMXXMLParser: removed unused variables in release mode
 . [FIX] ColorLayer: incorrect size in init method
+. [FIX] Director: 3d projection setting for iPad retina
 . [FIX] Denshion: Background music fades ok (issue #1304)
 . [FIX] EAGLView: always destroy and recreate OpenGL buffers completely (issue #1254) 
 . [FIX] MenuItem: removed warning when deleting item
 . [FIX] Node: orderOfArrival is @synthezied correctly (issue #1273)
 . [FIX] Node & Sprite: Scale before Skew to prevent issues with negatives scales.
 . [FIX] ParticleSystem: prevent bursts of particles due to too high emitCounter (issue #1201)
+. [FIX] ParticleSystem: CCParticleExamples on armv6 uses quad particle system by default, so CCParticleBatchNode can be used
 . [FIX] ParticleBatchNode: removeChild error and 'freezing' particles (issue #1316)
 . [FIX] ParticleBatchNode: memoryleak (issue #1306)
 . [FIX] Sprite: fixed possible setColor and opacity
 . [FIX] Sprite: fixed adding premade sprite hierarchy to batchnode (issue #1217)
 . [FIX] TileMap: Fixed a problem with multiple layers and multiple tile sets that could cause TMX maps to not load if rotation is used (issue #1302)
 . [FIX] TouchDispatcher: correctly handles addition and removal of handlers when being inside a touch handler (issue #1084, #1139)
+. [FIX] TouchDispatcher: new implementation fixes multiple issues (issue #1173, #1267)
 . [FIX-MAC] LabelTTF: word wrap works on Mac (issue #1074)
 . [FIX-MAC] fix for failed to compile on 32-bit mac builds.
 

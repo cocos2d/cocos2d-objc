@@ -6,13 +6,18 @@
 
 #import "cocos2d.h"
 
-Class nextAction();
+//run this in release mode to see the timings clearly
+
+Class nextAction(void);
+Class backAction(void);
+Class restartAction(void);
+int myComparatorArg(const void * first, const void * second);
 
 @class CCProfilingTimer;
 
 enum {
 	kMaxNodes = 15000,
-	kNodesIncrease = 200,
+	kNodesIncrease = 20,
 };
 
 @interface MainScene : CCScene {
@@ -34,7 +39,6 @@ enum {
 -(void) updateQuantityOfNodes;
 
 @end
-
 
 @interface SGSprite : CCSprite <CCTargetedTouchDelegate,CCStandardTouchDelegate> 
 {	

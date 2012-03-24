@@ -811,7 +811,7 @@ Class restartAction()
 
 -(NSString *) subtitle
 {
-	return @"tag order in console should be 2,1,3,4,5";
+	return @"tag order in console should be 2,3,4,5,1";
 }
 
 @end
@@ -4052,7 +4052,7 @@ Class restartAction()
 			CCSprite *child1 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_01.png"];
 			[child1 setPosition: ccp(sprite.contentSize.width / 2.0f, sprite.contentSize.height / 2.0f)];
 			
-			[child1 setScale:0.8];
+			[child1 setScale:0.8f];
 
 			[sprite addChild: child1];
 			
@@ -4547,10 +4547,11 @@ Class restartAction()
 	// You can change anytime.
 	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA8888];
 	
-	// When in iPad / RetinaDisplay mode, CCFileUtils will append the "-ipad" / "-hd" to all loaded files
-	// If the -ipad  / -hdfile is not found, it will load the non-suffixed version
-	[CCFileUtils setiPadSuffix:@"-ipad"];			// Default on iPad is "" (empty string)
-	[CCFileUtils setRetinaDisplaySuffix:@"-hd"];	// Default on RetinaDisplay is "-hd"
+    // When in iPhone RetinaDisplay, iPad, iPad RetinaDisplay mode, CCFileUtils will append the "-hd", "-ipad", "-ipadhd" to all loaded files
+	// If the -hd, -ipad, -ipadhd files are not found, it will load the non-suffixed version
+	[CCFileUtils setiPhoneRetinaDisplaySuffix:@"-hd"];		// Default on iPhone RetinaDisplay is "-hd"
+	[CCFileUtils setiPadSuffix:@"-ipad"];					// Default on iPad is "" (empty string)
+	[CCFileUtils setiPadRetinaDisplaySuffix:@"-ipadhd"];	// Default on iPad RetinaDisplay is "-ipadhd"
 	
 	// Assume that PVR images have premultiplied alpha
 	[CCTexture2D PVRImagesHavePremultipliedAlpha:YES];

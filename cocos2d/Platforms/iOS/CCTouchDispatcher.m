@@ -24,20 +24,30 @@
  *
  */
 
-// Only compile this code on iOS. These files should NOT be included on your Mac project.
-// But in case they are included, it won't be compiled.
-
 #import <Availability.h>
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 
 #import "CCTouchDispatcher.h"
 #import "CCTouchHandler.h"
 #include <stdlib.h> // qsort
-#import "CCNode.h"  // zOrder
+
+/**   @since v1.1.0 */
+@interface CCHandlersToDo : NSObject // treat as private 
+{
+@private
+    ccHandlersToDoType type_;
+    CCTouchHandler *handler_;
+    int arg_; 
+}
+
+@property(nonatomic,readwrite,assign) ccHandlersToDoType type;
+@property(nonatomic,readwrite,retain) CCTouchHandler *handler;
+@property(nonatomic,readwrite,assign) int arg;
+
+@end
 
 static BOOL	reversePriority;			// default is NO;
 
-static NSComparisonResult zOrderComparator(const void * first, const void * second);
 static NSComparisonResult sortByPriority(const void * first, const void * second);
 static BOOL eval(int v, ccOperators op, int arg);
 static ccOperators calcOp1(ccOperators compOp);
@@ -74,7 +84,7 @@ static CCTouchDispatcher *sharedDispatcher = nil;
 -(id) init
 {
 	if((self = [super init])) {
-
+        
 		locked = NO;	
 		dispatchEvents = YES;			
 		int capacity = 30;				
@@ -82,7 +92,7 @@ static CCTouchDispatcher *sharedDispatcher = nil;
 		targetedHandlers = [[CCArray alloc] initWithCapacity:capacity];
 		standardHandlers = [[CCArray alloc] initWithCapacity:capacity];		
 		handlersToDo = [[CCArray alloc] initWithCapacity:capacity];
-
+        
 		actionToDo.targetedRemoval = actionToDo.standardRemoval = 0;		
 		actionToDo.processStandardHandlersFirstFlag = NO;
 		actionToDo.processStandardHandlersFirstArg = processStandardHandlersFirst = NO;
@@ -119,33 +129,6 @@ static CCTouchDispatcher *sharedDispatcher = nil;
 #pragma mark -
 #pragma mark - Changing priority of the added handlers
 
-static NSComparisonResult zOrderComparator(const void * first, const void * second)
-{	
-    id fId = ((id *) first)[0];  
-    id sId = ((id *) second)[0]; 	
-	
-	CCTouchHandler *f = (CCTouchHandler*) fId;
-	CCTouchHandler *s = (CCTouchHandler*) sId;
-
-	int fP = [f.delegate zOrder];   // delegate has to descend from CCNode
-	int sP = [s.delegate zOrder];  
-	
-	if (fP == sP) return NSOrderedSame;
-	
-	if (reversePriority){
-		if (fP < sP)   // if z1 < z2 < z3   order:  z1,z2,z3 
-			return NSOrderedAscending;
-		else
-			return NSOrderedDescending;
-	}
-	else{ // default
-		if (fP > sP)   // if z1 > z2 > z3   order:  z1,z2,z3 
-			return NSOrderedAscending;
-		else
-			return NSOrderedDescending;
-	}
-}
-
 static NSComparisonResult sortByPriority(const void * first, const void * second)
 {	
     id fId = ((id *) first)[0];  // Lord, Have Mercy on Us!
@@ -158,7 +141,7 @@ static NSComparisonResult sortByPriority(const void * first, const void * second
 	int sP = s.priority;
 	
 	if (fP == sP) return NSOrderedSame;	
-		
+    
 	if (reversePriority){
 		if (fP > sP)	// if p1 > p2 > p3   order:  p1,p2,p3 
 			return NSOrderedAscending;
@@ -332,86 +315,86 @@ static NSComparisonResult sortByPriority(const void * first, const void * second
 -(void) debugLog:(ccDispatcherDelegateType)delegateType nr:(int)nr handler:(CCTouchHandler *) h formatType:(int)format
 {
 	switch (delegateType) {
-
-	case kCCTargeted: 		
-		switch (format){
-		case 1:	
-			CCLOG(@"N%3d Trg pri%4d tag%4d dis%2d rem%2d swl%2d eS %02X hF%d rP%d sA%d uC%p %@",
-				  nr, h.priority, h.tag, h.disable, h.remove, ((CCTargetedTouchHandler*)h).swallowsTouches,
-				  ((CCTargetedTouchHandler*)h).enabledSelectors,
-				  processStandardHandlersFirst, reversePriority, sortingAlgorithm, usersComparator,
-				  h.delegate);
-		break;
-		default:		
-		case 0:		
-			CCLOG(@"N%3d Trg pri%4d tag%4d dis%2d rem%2d swl%2d eS %02X hF%d rP%d sA%d uC%p",
-				  nr, h.priority, h.tag, h.disable, h.remove,((CCTargetedTouchHandler*)h).swallowsTouches,
-				  ((CCTargetedTouchHandler*)h).enabledSelectors,
-				  processStandardHandlersFirst, reversePriority, sortingAlgorithm, usersComparator);					
-			break;
-		}
-	break;
+            
+        case kCCTargeted: 		
+            switch (format){
+                case 1:	
+                    CCLOG(@"N%3d Targ  priority%4d tag%4d dis%2d rem%2d swallow%2d enabledSelectors %02X handlersFirst%d revPrio%d sortAlgo%d usersComp%p del %@",
+                          nr, h.priority, h.tag, h.disable, h.remove, ((CCTargetedTouchHandler*)h).swallowsTouches,
+                          ((CCTargetedTouchHandler*)h).enabledSelectors,
+                          processStandardHandlersFirst, reversePriority, sortingAlgorithm, usersComparator,
+                          h.delegate);
+                    break;
+                default:		
+                case 0:		
+                    CCLOG(@"N%3d Targ priority%4d tag%4d dis%2d rem%2d swallow%2d enabledSelectors %02X handlersFirst%d revPrio%d sortAlgo%d usersComp%p",
+                          nr, h.priority, h.tag, h.disable, h.remove,((CCTargetedTouchHandler*)h).swallowsTouches,
+                          ((CCTargetedTouchHandler*)h).enabledSelectors,
+                          processStandardHandlersFirst, reversePriority, sortingAlgorithm, usersComparator);					
+                    break;
+            }
+            break;
 			
-	case kCCStandard:		
-		switch (format){
-		case 1:		
-			CCLOG(@"N%3d Stn pri%4d tag%4d dis%2d rem%2d             hF%d rP%d sA%d uC%p %@",
-				nr, h.priority, h.tag, h.disable, h.remove,
-				processStandardHandlersFirst, reversePriority, sortingAlgorithm, usersComparator, 
-				h.delegate);
-		break;
-		default:		
-		case 0:		
-			CCLOG(@"N%3d Stn pri%4d tag%4d dis%2d rem%2d             hF%d rP%d sA%d uC%p",
-				nr, h.priority, h.tag, h.disable, h.remove,
-				processStandardHandlersFirst, reversePriority, sortingAlgorithm, usersComparator);						
-		break;
-		}
-	break;
+        case kCCStandard:		
+            switch (format){
+                case 1:		
+                    CCLOG(@"N%3d Stnd pri%4d tag%4d dis%2d rem%2d handlersFirst%d revPrio%d sortAlgo%d usersComp%p del %@",
+                          nr, h.priority, h.tag, h.disable, h.remove,
+                          processStandardHandlersFirst, reversePriority, sortingAlgorithm, usersComparator, 
+                          h.delegate);
+                    break;
+                default:		
+                case 0:		
+                    CCLOG(@"N%3d Stnd pri%4d tag%4d dis%2d rem%2d handlersFirst%d revPrio%d sortAlgo%d usersComp%p",
+                          nr, h.priority, h.tag, h.disable, h.remove,
+                          processStandardHandlersFirst, reversePriority, sortingAlgorithm, usersComparator);						
+                    break;
+            }
+            break;
 	} // switch (delegateType)
 }
 
 -(void) debugLog:(ccHandlersToDoType)type nr:(int)cnr handlerToDo:(CCHandlersToDo *)h formatType:(int)format
 {	
 	switch (type) {
-				
-	case kCCAddTargetedHandler: 		
-		switch (format) {
-		case 1:	
-			CCLOG(@"C%3d Trg pri%4d tag%4d dis%2d rem%2d swl%2d eS %02X hF%d rP%d sA%d uC%p %@",
-			  cnr, h.handler.priority, h.handler.tag, h.handler.disable, h.handler.remove,
-			  ((CCTargetedTouchHandler *) h.handler).swallowsTouches,
-			  ((CCTargetedTouchHandler *) h.handler).enabledSelectors,
-			  processStandardHandlersFirst,reversePriority, sortingAlgorithm, usersComparator,
-			  h.handler.delegate);
-		break;
-		default:		
-		case 0:			
-			CCLOG(@"C%3d Trg pri%4d tag%4d dis%2d rem%2d swl%2d eS %02X hF%d rP%d sA%d uC%p",
-			cnr, h.handler.priority, h.handler.tag, h.handler.disable, h.handler.remove,
-			((CCTargetedTouchHandler *) h.handler).swallowsTouches,
-			((CCTargetedTouchHandler *) h.handler).enabledSelectors,
-			processStandardHandlersFirst, reversePriority, sortingAlgorithm, usersComparator);			
-		break;						
-		}
-	break;
+            
+        case kCCAddTargetedHandler: 		
+            switch (format) {
+                case 1:	
+                    CCLOG(@"C%3d Trg pri%4d tag%4d dis%2d rem%2d swl%2d eS %02X hF%d rP%d sA%d uC%p %@",
+                          cnr, h.handler.priority, h.handler.tag, h.handler.disable, h.handler.remove,
+                          ((CCTargetedTouchHandler *) h.handler).swallowsTouches,
+                          ((CCTargetedTouchHandler *) h.handler).enabledSelectors,
+                          processStandardHandlersFirst,reversePriority, sortingAlgorithm, usersComparator,
+                          h.handler.delegate);
+                    break;
+                default:		
+                case 0:			
+                    CCLOG(@"C%3d Trg pri%4d tag%4d dis%2d rem%2d swl%2d eS %02X hF%d rP%d sA%d uC%p",
+                          cnr, h.handler.priority, h.handler.tag, h.handler.disable, h.handler.remove,
+                          ((CCTargetedTouchHandler *) h.handler).swallowsTouches,
+                          ((CCTargetedTouchHandler *) h.handler).enabledSelectors,
+                          processStandardHandlersFirst, reversePriority, sortingAlgorithm, usersComparator);			
+                    break;						
+            }
+            break;
 			
-	case kCCAddStandardHandler:					
-		switch (format) {
-		case 1:		
-			CCLOG(@"C%3d Stn pri%4d tag%4d dis%2d rem%2d             hF%d rP%d sA%d uC%p %@",
-				  cnr, h.handler.priority, h.handler.tag, h.handler.disable, h.handler.remove,
-				  processStandardHandlersFirst, reversePriority, sortingAlgorithm, usersComparator,
-				  h.handler.delegate);
-		break;
-		default:		
-		case 0:	
-			CCLOG(@"C%3d Stn pri%4d tag%4d dis%2d rem%2d             hF%d rP%d sA%d uC%p",
-				  cnr, h.handler.priority, h.handler.tag, h.handler.disable, h.handler.remove,
-				  processStandardHandlersFirst, reversePriority, sortingAlgorithm, usersComparator);			
-		break;	
-		}
-	break;		
+        case kCCAddStandardHandler:					
+            switch (format) {
+                case 1:		
+                    CCLOG(@"C%3d Stn pri%4d tag%4d dis%2d rem%2d             hF%d rP%d sA%d uC%p %@",
+                          cnr, h.handler.priority, h.handler.tag, h.handler.disable, h.handler.remove,
+                          processStandardHandlersFirst, reversePriority, sortingAlgorithm, usersComparator,
+                          h.handler.delegate);
+                    break;
+                default:		
+                case 0:	
+                    CCLOG(@"C%3d Stn pri%4d tag%4d dis%2d rem%2d             hF%d rP%d sA%d uC%p",
+                          cnr, h.handler.priority, h.handler.tag, h.handler.disable, h.handler.remove,
+                          processStandardHandlersFirst, reversePriority, sortingAlgorithm, usersComparator);			
+                    break;	
+            }
+            break;		
 	} //switch (type) 					
 }
 
@@ -536,18 +519,18 @@ static NSComparisonResult sortByPriority(const void * first, const void * second
 	int ret = -1;
 	
 	if (!locked) { // removal can be done now (if not it will be done in the 'processCallbackRequestsToTheDispatcher'
-				
+        
 		switch ( type ) { 
 			case kCCTargeted:
 				ret = actionToDo.targetedRemoval;
 				[self forceRemoveOfMarkedHandlers:kCCTargeted nrOfObjects:actionToDo.targetedRemoval]; 
 				actionToDo.targetedRemoval = 0;  // removal flags are cleared here
-			break;
+                break;
 			case kCCStandard:
 				ret = actionToDo.standardRemoval;
 				[self forceRemoveOfMarkedHandlers:kCCStandard nrOfObjects:actionToDo.standardRemoval]; 
 				actionToDo.standardRemoval = 0;	// removal flags are cleared here			
-			break;
+                break;
 		}						
 	}
 	
@@ -671,8 +654,8 @@ static BOOL evaluate(int v, ccOperators op1, int v1, BOOL useAnd, ccOperators op
 // magic function:
 -(int) alterTouchHandler:(ccDispatcherDelegateType)dType delegate:(id)delegate
 		   fieldToSearch:(ccHandlerFieldName)searchField
-			   arg1:(int)v1 
-			   arg2:(int)v2 
+                    arg1:(int)v1 
+                    arg2:(int)v2 
 				operator:(ccOperators)op 
 			fieldToAlter:(ccHandlerFieldName)fieldToAlter withValue:(int)nV
 {
@@ -743,7 +726,7 @@ static BOOL evaluate(int v, ccOperators op1, int v1, BOOL useAnd, ccOperators op
 				
 		}// search			
 	}//ccarray
-		
+    
 	// handlersToDo array should be empty if we are NOT 'locked'
 	int callback = 0;	// number of object affected in the callback ToDo array 
 	CCHandlersToDo *hToDo;
@@ -821,7 +804,7 @@ static BOOL evaluate(int v, ccOperators op1, int v1, BOOL useAnd, ccOperators op
 	NSUInteger i = 0;	
 	CCTouchHandler *h;	
 	CCARRAY_FOREACH(array, h){ // search all array 
-			
+        
 		if ( usersComparator ) {
 			if ( usersComparator( & h, & handler ) == NSOrderedAscending ){ 
 				i++;  
@@ -829,7 +812,7 @@ static BOOL evaluate(int v, ccOperators op1, int v1, BOOL useAnd, ccOperators op
 		}
 		else {
 			if (reversePriority) { // Descending order.  Priority list looks like: 10, 5, 1 - 5, - 10, - 20
-		
+                
 				if ( h.priority > handler.priority ) {			
 					i++; // count elements which have greater priority than given one 
 				}
@@ -840,7 +823,7 @@ static BOOL evaluate(int v, ccOperators op1, int v1, BOOL useAnd, ccOperators op
 				}
 			}	
 		}
-						
+        
 		NSAssert( h.delegate != handler.delegate, @"Delegate already added to touch dispatcher.");
 	}
 	
@@ -1004,11 +987,6 @@ static BOOL evaluate(int v, ccOperators op1, int v1, BOOL useAnd, ccOperators op
 	return usersComparator;
 }
 
-- (int(*)(const void *, const void *)) zOrderComparator
-{
-	return zOrderComparator;
-}
-
 #pragma mark TouchDispatcher  - retrieveField
 
 // returns value of the field or NSNotFound when delegate does not exist 
@@ -1046,19 +1024,19 @@ static BOOL evaluate(int v, ccOperators op1, int v1, BOOL useAnd, ccOperators op
 				case kCCRemove:
 				case kCCRemoveToDo:				
 					value = handler.remove;
-				break;						
+                    break;						
 				case kCCSwallowsTouches:
 					if(delegateType == kCCTargeted){
 						value = ((CCTargetedTouchHandler *) handler).swallowsTouches;}		
-				break;
+                    break;
 				default:
-				break;
-
+                    break;
+                    
 			}	
 			break; // break the loop if delegate had been found
 		}//if
 	}//ccarray
-		
+    
 	CCHandlersToDo *handlerToDo;
 	CCARRAY_FOREACH(handlersToDo, handlerToDo) {
 		
@@ -1085,18 +1063,18 @@ static BOOL evaluate(int v, ccOperators op1, int v1, BOOL useAnd, ccOperators op
 					case kCCRemove:
 					case kCCRemoveToDo:						
 						value = handlerToDo.handler.remove;
-					break;						
+                        break;						
 					case kCCSwallowsTouches:
 						if(type == kCCAddTargetedHandler){
 							value = ((CCTargetedTouchHandler *) handlerToDo.handler).swallowsTouches;}		
-					break;
+                        break;
 					default:
-					break;																			
+                        break;																			
 				}	
 			}//if
 		}//if 		
 	}//ccarray
-		
+    
 	if (notFound) CCLOG(@"TouchHandler:delegate not found!");	
 	return value;	
 }
@@ -1108,37 +1086,37 @@ static BOOL evaluate(int v, ccOperators op1, int v1, BOOL useAnd, ccOperators op
 - (int) countDelegatesUsage:(ccDispatcherDelegateType)type
 {
 	return ([self alterTouchHandler:type delegate:nil
-		fieldToSearch:kCCNone arg1:CC_UNUSED_ARGUMENT arg2:CC_UNUSED_ARGUMENT operator:kCCTRUE fieldToAlter:kCCNotRemoved withValue:CC_UNUSED_ARGUMENT]);
+                      fieldToSearch:kCCNone arg1:CC_UNUSED_ARGUMENT arg2:CC_UNUSED_ARGUMENT operator:kCCTRUE fieldToAlter:kCCNotRemoved withValue:CC_UNUSED_ARGUMENT]);
 }
 
 -(int) countDelegateUsage:(id)delegate type:(ccDispatcherDelegateType)type
 {	
 	return ([self alterTouchHandler:type delegate:delegate
-		fieldToSearch:kCCDelegate arg1:CC_UNUSED_ARGUMENT arg2:CC_UNUSED_ARGUMENT operator:kCCTRUE fieldToAlter:kCCNotRemoved withValue:CC_UNUSED_ARGUMENT]);
+                      fieldToSearch:kCCDelegate arg1:CC_UNUSED_ARGUMENT arg2:CC_UNUSED_ARGUMENT operator:kCCTRUE fieldToAlter:kCCNotRemoved withValue:CC_UNUSED_ARGUMENT]);
 }
 
 -(int) countTagUsage:(int)tag type:(ccDispatcherDelegateType)type
 {
 	return ([self alterTouchHandler:type delegate:nil
-		fieldToSearch:kCCTag arg1:tag arg2:tag operator:kCCEQ fieldToAlter:kCCNotRemoved withValue:CC_UNUSED_ARGUMENT]);
+                      fieldToSearch:kCCTag arg1:tag arg2:tag operator:kCCEQ fieldToAlter:kCCNotRemoved withValue:CC_UNUSED_ARGUMENT]);
 }
 
 - (int) countPriorityUsage:(int)priority type:(ccDispatcherDelegateType)type
 {
 	return ([self alterTouchHandler:type delegate:nil
-		fieldToSearch:kCCPriority arg1:priority arg2:priority operator:kCCEQ fieldToAlter:kCCNotRemoved withValue:CC_UNUSED_ARGUMENT]);
+                      fieldToSearch:kCCPriority arg1:priority arg2:priority operator:kCCEQ fieldToAlter:kCCNotRemoved withValue:CC_UNUSED_ARGUMENT]);
 }		
 
 - (int) countDisableUsage:(int)aDisable type:(ccDispatcherDelegateType)type
 {
 	return ([self alterTouchHandler:type delegate:nil
-		fieldToSearch:kCCDisable arg1:aDisable arg2:aDisable operator:kCCEQ fieldToAlter:kCCNotRemoved withValue:CC_UNUSED_ARGUMENT]);
+                      fieldToSearch:kCCDisable arg1:aDisable arg2:aDisable operator:kCCEQ fieldToAlter:kCCNotRemoved withValue:CC_UNUSED_ARGUMENT]);
 }
 
 - (int) countFieldUsage:(ccHandlerFieldName)field fieldValue:(int)value type:(ccDispatcherDelegateType)type // power function
 {
 	return ([self alterTouchHandler:type delegate:nil
-		fieldToSearch:field arg1:value arg2:value operator:kCCEQ fieldToAlter:kCCNotRemoved withValue:CC_UNUSED_ARGUMENT]);
+                      fieldToSearch:field arg1:value arg2:value operator:kCCEQ fieldToAlter:kCCNotRemoved withValue:CC_UNUSED_ARGUMENT]);
 }
 
 //-------------------------------------------------------------------------------
@@ -1173,38 +1151,38 @@ static BOOL evaluate(int v, ccOperators op1, int v1, BOOL useAnd, ccOperators op
 - (int) disableDelegate:(id)delegate disable:(int)yesOrNo type:(ccDispatcherDelegateType)type 
 {
 	return ( [self alterTouchHandler:type delegate:delegate fieldToSearch:kCCDelegate 
-			arg1:CC_UNUSED_ARGUMENT arg2:CC_UNUSED_ARGUMENT operator:kCCTRUE fieldToAlter:kCCDisable withValue:yesOrNo] );
+                                arg1:CC_UNUSED_ARGUMENT arg2:CC_UNUSED_ARGUMENT operator:kCCTRUE fieldToAlter:kCCDisable withValue:yesOrNo] );
 }
 
 -(int) disableAllDelegates:(int)yesOrNo type:(ccDispatcherDelegateType)type
 {
 	return ( [self alterTouchHandler:type delegate:nil fieldToSearch:kCCNone
-			arg1:CC_UNUSED_ARGUMENT arg2:CC_UNUSED_ARGUMENT operator:kCCTRUE fieldToAlter:kCCDisable withValue:yesOrNo]);
+                                arg1:CC_UNUSED_ARGUMENT arg2:CC_UNUSED_ARGUMENT operator:kCCTRUE fieldToAlter:kCCDisable withValue:yesOrNo]);
 }
 
 - (int) disableDelegatesWithTag:(int)tag disable:(int) yesOrNo type:(ccDispatcherDelegateType)type
 {
 	return ( [self alterTouchHandler:type delegate:nil fieldToSearch:kCCTag
-				arg1:tag arg2:tag operator:kCCEQ fieldToAlter:kCCDisable withValue:yesOrNo] );
+                                arg1:tag arg2:tag operator:kCCEQ fieldToAlter:kCCDisable withValue:yesOrNo] );
 }
 
 - (int) disableDelegatesWithPriority:(int) priority disable:(int) yesOrNo type:(ccDispatcherDelegateType)type
 {
 	return ( [self alterTouchHandler:type delegate:nil fieldToSearch:kCCPriority
-				arg1:priority arg2:priority operator:kCCEQ fieldToAlter:kCCDisable withValue:yesOrNo] );
+                                arg1:priority arg2:priority operator:kCCEQ fieldToAlter:kCCDisable withValue:yesOrNo] );
 }
 
 -(int) disableRemovedDelegates:(int)yesOrNo type:(ccDispatcherDelegateType)type
 {
 	return ( [self alterTouchHandler:type delegate:nil fieldToSearch:kCCRemove 
-				arg1:YES arg2:YES operator:kCCEQ fieldToAlter:kCCDisable withValue:yesOrNo] );
+                                arg1:YES arg2:YES operator:kCCEQ fieldToAlter:kCCDisable withValue:yesOrNo] );
 }
 
 - (int) disableDelegatesWithField:(ccHandlerFieldName)fieldName arg1:(int)leftEndPoint arg2:(int)rightEndPoint operator:(ccOperators)op
-				disable:(int)yesOrNo type:(ccDispatcherDelegateType)type
+                          disable:(int)yesOrNo type:(ccDispatcherDelegateType)type
 {
 	return ( [self alterTouchHandler:type delegate:nil fieldToSearch:fieldName 
-						   arg1:leftEndPoint arg2:rightEndPoint operator:op fieldToAlter:kCCDisable withValue:yesOrNo] );
+                                arg1:leftEndPoint arg2:rightEndPoint operator:op fieldToAlter:kCCDisable withValue:yesOrNo] );
 }
 
 //---------------------------------
@@ -1223,32 +1201,32 @@ static BOOL evaluate(int v, ccOperators op1, int v1, BOOL useAnd, ccOperators op
 {
 	ccHandlerFieldName r = kCCRemove; if (yesOrNo) r = kCCRemoveToDo; 
 	return ([self alterTouchHandler:delegateType delegate:delegate fieldToSearch:kCCDelegate 
-		arg1:CC_UNUSED_ARGUMENT arg2:CC_UNUSED_ARGUMENT operator:kCCTRUE fieldToAlter:r withValue:YES]);
+                               arg1:CC_UNUSED_ARGUMENT arg2:CC_UNUSED_ARGUMENT operator:kCCTRUE fieldToAlter:r withValue:YES]);
 }
 
 - (int) removeDelegatesWithTag:(int)tag delay:(BOOL)yesOrNo type:(ccDispatcherDelegateType)delegateType
 {
 	ccHandlerFieldName r = kCCRemove; if (yesOrNo) r = kCCRemoveToDo; 
 	return ([self alterTouchHandler:delegateType delegate:nil fieldToSearch:kCCTag 
-		arg1:tag arg2:tag operator:kCCEQ fieldToAlter:r withValue:YES]);
+                               arg1:tag arg2:tag operator:kCCEQ fieldToAlter:r withValue:YES]);
 } 
 
 - (int) removeDelegatesWithPriority:(int)priority delay:(BOOL)yesOrNo type:(ccDispatcherDelegateType)delegateType
 {
 	ccHandlerFieldName r = kCCRemove; if (yesOrNo) r = kCCRemoveToDo; 
 	return ([self alterTouchHandler:delegateType delegate:nil fieldToSearch:kCCPriority 
-		arg1:priority arg2:priority operator:kCCEQ fieldToAlter:r withValue:YES]);
+                               arg1:priority arg2:priority operator:kCCEQ fieldToAlter:r withValue:YES]);
 }
 
 // Only For Eagles - Power API Function
 - (int) removeDelegatesWithField:(ccHandlerFieldName)fieldToSearch arg1:(int)leftV arg2:(int)rightV operator:(ccOperators)op
-			delay:(BOOL)yesOrNo type:(ccDispatcherDelegateType)delegateType 
+                           delay:(BOOL)yesOrNo type:(ccDispatcherDelegateType)delegateType 
 {
 	if (fieldToSearch == kCCDelegate) return -1; // user cannot search this field
 	
 	ccHandlerFieldName r = kCCRemove; if (yesOrNo) r = kCCRemoveToDo; 	
 	return ([self alterTouchHandler:delegateType delegate:nil fieldToSearch:fieldToSearch 
-		arg1:leftV arg2:rightV operator:op fieldToAlter:r withValue:YES]);
+                               arg1:leftV arg2:rightV operator:op fieldToAlter:r withValue:YES]);
 }
 
 //------------------------------------
@@ -1265,33 +1243,33 @@ static BOOL evaluate(int v, ccOperators op1, int v1, BOOL useAnd, ccOperators op
 {	
 	ccHandlerFieldName p = kCCPriority; if (yesOrNo) p = kCCPriorityToDo; 	
 	return [self alterTouchHandler:type delegate:delegate fieldToSearch:kCCDelegate 
-		arg1:CC_UNUSED_ARGUMENT arg2:CC_UNUSED_ARGUMENT operator:kCCTRUE fieldToAlter:p withValue:newValue];
+                              arg1:CC_UNUSED_ARGUMENT arg2:CC_UNUSED_ARGUMENT operator:kCCTRUE fieldToAlter:p withValue:newValue];
 }
 
 - (int) setTag:(int)newValue delegate:(id)delegate type:(ccDispatcherDelegateType)type
 {	
 	return [self alterTouchHandler:type delegate:delegate fieldToSearch:kCCDelegate 
-		arg1:CC_UNUSED_ARGUMENT arg2:CC_UNUSED_ARGUMENT operator:kCCTRUE fieldToAlter:kCCTag withValue:newValue];	
+                              arg1:CC_UNUSED_ARGUMENT arg2:CC_UNUSED_ARGUMENT operator:kCCTRUE fieldToAlter:kCCTag withValue:newValue];	
 }
 
 - (int) setDisable:(int)newValue delegate:(id)delegate type:(ccDispatcherDelegateType)type
 {
 	return [self alterTouchHandler:type delegate:delegate fieldToSearch:kCCDelegate 
-		arg1:CC_UNUSED_ARGUMENT arg2:CC_UNUSED_ARGUMENT operator:kCCTRUE fieldToAlter:kCCDisable withValue:newValue];
+                              arg1:CC_UNUSED_ARGUMENT arg2:CC_UNUSED_ARGUMENT operator:kCCTRUE fieldToAlter:kCCDisable withValue:newValue];
 }
 
 - (int) setRemove:(id)delegate delay:(BOOL)yesOrNo type:(ccDispatcherDelegateType)type
 {
 	ccHandlerFieldName r = kCCRemove; if (yesOrNo) r = kCCRemoveToDo; 
 	return [self alterTouchHandler:type delegate:delegate fieldToSearch:kCCDelegate 
-		arg1:CC_UNUSED_ARGUMENT arg2:CC_UNUSED_ARGUMENT operator:kCCTRUE fieldToAlter:r withValue:YES];
+                              arg1:CC_UNUSED_ARGUMENT arg2:CC_UNUSED_ARGUMENT operator:kCCTRUE fieldToAlter:r withValue:YES];
 }
 
 // generic power function
 - (int) setField:(ccHandlerFieldName)field newValue:(int)newValue delegate:(id)delegate type:(ccDispatcherDelegateType)type
 {
 	return ([self alterTouchHandler:type delegate:delegate fieldToSearch:kCCDelegate
-		arg1:CC_UNUSED_ARGUMENT arg2:CC_UNUSED_ARGUMENT operator:kCCTRUE fieldToAlter:field withValue:newValue]);
+                               arg1:CC_UNUSED_ARGUMENT arg2:CC_UNUSED_ARGUMENT operator:kCCTRUE fieldToAlter:field withValue:newValue]);
 }
 
 //------------------------------------------------------------------------------------------------
@@ -1300,14 +1278,14 @@ static BOOL evaluate(int v, ccOperators op1, int v1, BOOL useAnd, ccOperators op
 - (int)	setTagForPriority:(int)priority newTag:(int)value type:(ccDispatcherDelegateType)delegateType
 {
 	return ([self alterTouchHandler:delegateType delegate:nil
-		fieldToSearch:kCCPriority arg1:priority arg2:priority operator:kCCEQ fieldToAlter:kCCTag withValue:value]);		
+                      fieldToSearch:kCCPriority arg1:priority arg2:priority operator:kCCEQ fieldToAlter:kCCTag withValue:value]);		
 }
 
 - (int)	setPriorityForTag:(int)tag newPriority:(int)value delay:(BOOL)yesOrNo type:(ccDispatcherDelegateType)delegateType
 {
 	ccHandlerFieldName p = kCCPriority; if (yesOrNo) p = kCCPriorityToDo; 	
 	return ([self alterTouchHandler:delegateType delegate:nil
-		fieldToSearch:kCCTag arg1:tag arg2:tag operator:kCCEQ fieldToAlter:p withValue:value]);
+                      fieldToSearch:kCCTag arg1:tag arg2:tag operator:kCCEQ fieldToAlter:p withValue:value]);
 } 
 
 /** Only For Eagles - Power Functions: */
@@ -1316,7 +1294,7 @@ static BOOL evaluate(int v, ccOperators op1, int v1, BOOL useAnd, ccOperators op
 					type:(ccDispatcherDelegateType)type
 {
 	return ([self alterTouchHandler:type delegate:nil fieldToSearch:fieldToSearch
-				arg1:leftEndPoint arg2:rightEndPoint operator:op fieldToAlter:field withValue:newValue]);
+                               arg1:leftEndPoint arg2:rightEndPoint operator:op fieldToAlter:field withValue:newValue]);
 }
 //------------------------------------------------------------------------------------------------
 
@@ -1326,12 +1304,12 @@ static BOOL evaluate(int v, ccOperators op1, int v1, BOOL useAnd, ccOperators op
 	switch(type){	
 		case kCCTargeted: 
 			count = [self setDelegatesField:kCCDebug newValue:format ifField:kCCNone 
-						arg1:CC_UNUSED_ARGUMENT arg2:CC_UNUSED_ARGUMENT operator:kCCTRUE type:type];
-		break;
+                                       arg1:CC_UNUSED_ARGUMENT arg2:CC_UNUSED_ARGUMENT operator:kCCTRUE type:type];
+            break;
 		case kCCStandard:
 			count = [self setDelegatesField:kCCDebug newValue:format ifField:kCCNone 
-						arg1:CC_UNUSED_ARGUMENT arg2:CC_UNUSED_ARGUMENT operator:kCCTRUE type:type];
-		break;
+                                       arg1:CC_UNUSED_ARGUMENT arg2:CC_UNUSED_ARGUMENT operator:kCCTRUE type:type];
+            break;
 	}
 	return count;
 }
@@ -1483,7 +1461,7 @@ static BOOL evaluate(int v, ccOperators op1, int v1, BOOL useAnd, ccOperators op
 	needsMutableSet = (targetedHandlersCount && standardHandlersCount);
 	
 	mutableTouches = (needsMutableSet ? [touches mutableCopy] : touches); // copy is expensive
-
+    
 	helper = handlerHelperData[idx];
 	
 	//
@@ -1545,240 +1523,8 @@ static BOOL evaluate(int v, ccOperators op1, int v1, BOOL useAnd, ccOperators op
 
 -(void) dealloc
 {
-  [handler_ release];
-  [super dealloc];
-}
-@end
-
-
-#pragma mark -
-#pragma mark CCArray (Additions)
-
-@implementation CCArray (Additions)
-
-#pragma mark -
-#pragma mark CCArray replaceObjectAtIndex
-
-- (void) replaceObjectAtIndex:(NSUInteger)index withObject:(id)anObject {
-	[self insertObject:anObject atIndex:index];
-	[self removeObjectAtIndex: index+1];
-}
-
-#pragma mark -
-#pragma mark CCArray isEqualToArray
-- (BOOL) isEqualToArray:(CCArray*)otherArray {
-	for (int i = 0; i< [self count]; i++)
-	{
-		if (![[self objectAtIndex:i] isEqual: [otherArray objectAtIndex:i]])
-		{
-			return FALSE;
-		}
-	}
-	return YES;
-}
-
-#pragma mark -
-#pragma mark CCArray insertionSortUsingCFuncComparator
-
-- (void) insertionSortUsingCFuncComparator:(int(*)(const void *, const void *))comparator
-{
-	// It sorts source array in ascending order
-	
-	// adaptive - performance adapts to the initial order of elements
-	// stable - insertion sort retains relative order of the same elements
-	// in-place - requires constant amount of additional space
-	// online - new elements can be added during the sort
-	
-	NSInteger i,j,length = data->num;
-	
-	id * x = data->arr;
-	id temp;	
-
-	// insertion sort
-	for(i=1; i<length; i++)
-	{
-		j = i;
-		//continue moving element downwards while order is descending 
-		while( j>0 && ( comparator(  &x[j-1],  &x[j]  ) == NSOrderedDescending) )
-		{
-			temp = x[j];
-			x[j] = x[j-1];
-			x[j-1] = temp;
-			j--;
-		}
-	}
-}
-
-#pragma mark CCArray qsortUsingCFuncComparator
-
-- (void) qsortUsingCFuncComparator:(int(*)(const void *, const void *))comparator {
-	
-	// stable c qsort is used - cost of sorting:  best n*log(n), average n*log(n)
-	//  qsort(void *, size_t, size_t, int (*)(const void *arg1, const void *arg2));
-	
-    qsort(data->arr, data->num, sizeof (id), comparator);  
-}
-
-#pragma mark CCArray mergesortLUsingCFuncComparator
-
-- (void) mergesortLUsingCFuncComparator:(int(*)(const void *, const void *))comparator
-{
-   mergesortL(data->arr, data->num, sizeof (id), comparator); 
-}
-
-#pragma mark CCArray insertionSort with (SEL)selector
-
-- (void) insertionSort:(SEL)selector // It sorts source array in ascending order
-{
-	NSInteger i,j,length = data->num;
-	
-	id * x = data->arr;
-	id temp;	
-	
-	// insertion sort
-	for(i=1; i<length; i++)
-	{
-		j = i;
-		// continue moving element downwards while order is descending 
-		while( j>0 && ( (int)([x[j-1] performSelector:selector withObject:x[j]]) == NSOrderedDescending) )
-		{
-			temp = x[j];
-			x[j] = x[j-1];
-			x[j-1] = temp;
-			j--;
-		}
-	}
-}
-
-static inline void memswp(void* a, void* b, size_t width)
-{
-	if (width == sizeof(void*)) {
-			// Optimization for pointer sized swap:
-			void* tmp;
-			tmp = *(void**)a;
-			*(void**)a = *(void**)b;
-			*(void**)b = tmp;
-			return;
-        }
-	// default uses memcpy:
-	char tmp[width];
-	memcpy(tmp, a, width);
-	memcpy(a, b, width);
-	memcpy(b, tmp, width);
-}
-
-#pragma mark CCArray iterative mergesort
-// iterative mergesort based on
-//  http://www.inf.fh-flensburg.de/lang/algorithmen/sortieren/merge/mergiter.htm  
-
-int mergesortL(void *base, size_t nel, size_t width, int (*compar)(const void *, const void *))
-{
-	NSInteger h, i, j, k, l, m, n = nel;
-	void* A; // points to an element
-	void* B = NSZoneMalloc(NULL,(n/2 + 1) * width); // points to a temp array
-        
-
-	for (h = 1; h < n; h += h) {
-			for (m = n - 1 - h; m >= 0; m -= h + h) {
-					l = m - h + 1;
-					if (l < 0)
-							l = 0;
-                        
-					// Copy first half of the array into helper B:
-					j = m+1;
-					memcpy(B, base + (l * width), (j-l) * width);
-                        
-					for (i = 0, k = l; k < j && j <= m + h; k++) {
-							A = base + (width * j); // A = [self objectAtIndex:j];
-							if (compar(A, B + (i * width)) > 0) {
-									memswp(base+(k*width), B+(i*width), width); i+=1;
-							} else {
-									memswp(base+(k*width), A, width); j+=1;
-							}
-					}
-                        
-					while (k < j) // This loop could be optimized
-							memswp(base+(k++*width), B+(i++*width), width);
-			}
-	}
-
-	free(B);
-	return 0;
-}
-//---
-static int selectorCompare(id object1,id object2,void *userData){
-   SEL selector=userData;
-
-   return (NSComparisonResult)[object1 performSelector:selector withObject:object2];
-}
-
--(void)sortUsingSelector:(SEL)selector {
-   [self sortUsingFunction:selectorCompare context:selector];
-}
-
-#pragma mark CCArray sortUsingFunction
-
-// using a comparison function
--(void)sortUsingFunction:(NSInteger (*)(id, id, void *))compare context:(void *)context
-{
-   NSInteger h, i, j, k, l, m, n = [self count];
-   id  A, *B = NSZoneMalloc(NULL,(n/2 + 1) * sizeof(id));
-
-	// to prevent retain counts from temporarily hitting zero.  
-   for(i=0;i<n;i++)
-	   [[self objectAtIndex:i] retain];
-    
-   for (h = 1; h < n; h += h)
-   {
-      for (m = n - 1 - h; m >= 0; m -= h + h)
-      {
-         l = m - h + 1;
-         if (l < 0)
-            l = 0;
-
-         for (i = 0, j = l; j <= m; i++, j++)
-            B[i] = [self objectAtIndex:j];
-
-         for (i = 0, k = l; k < j && j <= m + h; k++)
-         {
-            A = [self objectAtIndex:j];
-            if (compare(A, B[i], context) == NSOrderedDescending)
-               [self replaceObjectAtIndex:k withObject:B[i++]];
-            else
-            {
-               [self replaceObjectAtIndex:k withObject:A];
-               j++;
-            }
-         }
-
-         while (k < j)
-            [self replaceObjectAtIndex:k++ withObject:B[i++]];
-      }
-   }
-   
-   for(i=0;i<n;i++)
-	   [[self objectAtIndex:i] release];
-    
-   free(B);
-}
-
-void shuffle(NSMutableArray *array) {
-    NSUInteger count = [array count];
-    for (NSUInteger i = 0; i < count; ++i) {
-        // Select a random element between i and end of array to swap with.
-        int nElements = count - i;
-        int n = (arc4random() % nElements) + i;
-        [array exchangeObjectAtIndex:i withObjectAtIndex:n];
-    }
-}
-
-- (void) forAllObjectsPerformSelectorWithDelegate:(id)delegate selector:(SEL)aSelector 
-{		
-	if (delegate && aSelector){
-		for( NSUInteger i = 0; i < data->num; i++){		
-			[delegate performSelector:aSelector withObject:data->arr[i]];
-		}
-	}		
+    [handler_ release];
+    [super dealloc];
 }
 @end
 

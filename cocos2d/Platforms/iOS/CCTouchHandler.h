@@ -42,7 +42,7 @@
 /**
  CCTouchHandler
  Object than contains the delegate and priority of the event handler.
-*/
+ */
 @interface CCTouchHandler : NSObject {
 	id				delegate;
 	int				priority;
@@ -101,21 +101,21 @@
 
 /** allocates a TargetedTouchHandler with a delegate, a priority and whether or not it swallows touches or not 
  tag = 0; disabled = NO
-*/
+ */
 + (id)handlerWithDelegate:(id) aDelegate priority:(int)priority swallowsTouches:(BOOL)swallowsTouches;
 /** allocates a TargetedTouchHandler with a delegate, a priority and whether or not it swallows touches or not 
-  allows to set tag and disabled flag	
-*/
+ allows to set tag and disabled flag	
+ */
 + (id)handlerWithDelegate:(id) aDelegate priority:(int)priority swallowsTouches:(BOOL)swallowsTouches
-							 tag:(int)aTag disable:(int)yesOrNo;
+                      tag:(int)aTag disable:(int)yesOrNo;
 /** initializes a TargetedTouchHandler with a delegate, a priority and whether or not it swallows touches or not */
 - (id)initWithDelegate:(id) aDelegate priority:(int)priority swallowsTouches:(BOOL)swallowsTouches;
 
 /** initializes a TargetedTouchHandler with a delegate, a priority and whether or not it swallows touches or not 
-	allows to set tag and disabled flag
-*/
+ allows to set tag and disabled flag
+ */
 - (id)initWithDelegate:(id) aDelegate priority:(int)priority swallowsTouches:(BOOL)swallowsTouches
-							 tag:(int)aTag disable:(int)yesOrNo;
+                   tag:(int)aTag disable:(int)yesOrNo;
 @end
 
 #endif // __IPHONE_OS_VERSION_MAX_ALLOWED

@@ -50,11 +50,12 @@ static NSString *transitions[] = {
 		@"ReorderingOneByOneQSORT",				// 5a slow old api with new sorting algorithm 
 		@"ReorderingOneByOneMERGESORT",			// 5b slow old api with new sorting algorithm 
 		@"UltraFastReordering",					// 5c new api with new sorting algorithm 
-		@"Various",								// 6	
+		@"Various"								// 6	
+
 #endif	
 };
 
-Class nextAction()
+Class nextAction(void)
 {	
 	sceneIdx++;
 	sceneIdx = sceneIdx % ( sizeof(transitions) / sizeof(transitions[0]) );
@@ -63,7 +64,7 @@ Class nextAction()
 	return c;
 }
 
-Class backAction()
+Class backAction(void)
 {
 	sceneIdx--;
 	int total = ( sizeof(transitions) / sizeof(transitions[0]) );
@@ -75,7 +76,7 @@ Class backAction()
 	return c;
 }
 
-Class restartAction()
+Class restartAction(void)
 {
 	NSString *r = transitions[sceneIdx];
 	Class c = NSClassFromString(r);
@@ -343,7 +344,7 @@ Class restartAction()
 		[CCMenuItemFont setFontSize:25];
 
 		CCMenuItemFont *testCallbackProcessing = [CCMenuItemFont itemFromString:@"CallBack - It should not crash" target:self selector:@selector(testCallback:)];
-		
+        		
 		[testCallbackProcessing.label setColor:ccc3(200,0,20)];
 		
 		CCMenu *menu = [CCMenu menuWithItems:testCallbackProcessing,nil];
@@ -1177,13 +1178,14 @@ Class restartAction()
 
 
 
+
 @implementation Various
 
 int myComparatorArg(const void * first, const void * second)
 {
 	// arrange according to tags.
 	// if tags are equal take under consideration the priority 	
-			
+    
     id fId = ((id *) first)[0];  
     id sId = ((id *) second)[0]; 	
 	
@@ -1193,33 +1195,62 @@ int myComparatorArg(const void * first, const void * second)
 	// sprite tag
 	//int fT = [f.delegate tag];   // delegate has to descend from CCNode
 	//int sT = [s.delegate tag];  
-
+    
 	// delegate tag
 	int fT = f.tag;
 	int sT = s.tag;  
-
+    
 	int fP = f.priority;
 	int sP = s.priority;	
 	
 	
 	if (fT == sT) { 		
-			if (fP == sP) {
-				return NSOrderedSame;
-			}
-			else{
-				if (fP < sP)   //  if fT == sT  than  p1 < p2 < p3  order:  p1,p2,p3 
-					return NSOrderedAscending;
-				else 
-					return NSOrderedDescending;											
-			}				
+        if (fP == sP) {
+            return NSOrderedSame;
+        }
+        else{
+            if (fP < sP)   //  if fT == sT  than  p1 < p2 < p3  order:  p1,p2,p3 
+                return NSOrderedAscending;
+            else 
+                return NSOrderedDescending;											
+        }				
 	}
-							
+    
 	if (fT < sT)   // if t1 < t2 < t3   order:  t1,t2,t3 
 		return NSOrderedAscending;
 	else 
 		return NSOrderedDescending;
 }
 
+//example of custom sort function, only useful when both delegates have the same parent
+static NSComparisonResult zOrderComparator(const void * first, const void * second)
+{	
+    id fId = ((id *) first)[0];  
+    id sId = ((id *) second)[0]; 	
+	
+	CCTouchHandler *f = (CCTouchHandler*) fId;
+	CCTouchHandler *s = (CCTouchHandler*) sId;
+    
+	int fP = [f.delegate zOrder];   // delegate has to descend from CCNode
+	int sP = [s.delegate zOrder];  
+	
+	if (fP == sP) return NSOrderedSame;
+	
+	if ([[CCTouchDispatcher sharedDispatcher] reversePriority]){
+		if (fP < sP)   // if z1 < z2 < z3   order:  z1,z2,z3 
+			return NSOrderedAscending;
+		else
+			return NSOrderedDescending;
+	}
+	else{ // default
+		if (fP > sP)   // if z1 > z2 > z3   order:  z1,z2,z3 
+			return NSOrderedAscending;
+		else
+			return NSOrderedDescending;
+	}
+}
+
+//run this test in debug mode, else no logs will appear
 -(void) variousTests
 {
    if ( ![[CCTouchDispatcher sharedDispatcher] respondsToSelector:@selector(locked)])
@@ -1252,6 +1283,8 @@ int myComparatorArg(const void * first, const void * second)
 	srandom(0);
 	
 	ccArray *array = batchNode.children->data;
+    
+    NSAssert(array->num >=15, @"too few elements in array, enlarge kNodesIncrease to 15 or more");
 	SGSprite *sprite;
 	int result;
 	
@@ -1405,9 +1438,10 @@ int myComparatorArg(const void * first, const void * second)
 	if(nl)		
 		CCLOG(@" 6 Various... sort with kCCAlgMergeLSort zOrderComparator Notice: zOrder(==spriteTag) ");	
 	[[CCTouchDispatcher sharedDispatcher] setReversePriority:NO];	 // reverse sorting	
-	[[CCTouchDispatcher sharedDispatcher] setUsersComparator: [[CCTouchDispatcher sharedDispatcher] zOrderComparator]  ]; // change sorting comparator
+	[[CCTouchDispatcher sharedDispatcher] setUsersComparator: zOrderComparator]; // change sorting comparator
 	[[CCTouchDispatcher sharedDispatcher] setSortingAlgorithm:kCCAlgMergeLSort];	
 	[[CCTouchDispatcher sharedDispatcher] sortDelegates:kCCStandard];
+    
 	if(nl)		
 		[[CCTouchDispatcher sharedDispatcher] printDebugLog:1 afterEvents:NO type:kCCStandard];	
 	

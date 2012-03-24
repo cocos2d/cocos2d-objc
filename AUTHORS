@@ -6,13 +6,13 @@ http://www.cocos2d-iphone.org/forum
 
 cocos2d logos by Michael Heald (http://www.fullyillustrated.com)
 
-
-
 cocos2d for iPhone authors for v1.1
 -----------------------------------
 
-Lead Developers:
+Lead Developer:
 	Marco Tillemans (http://www.welcometothefabrik.com/)
+
+Former Lead Developer:
 	Ricardo Quesada (http://www.cocos2d-iphone.org)
 
 
@@ -31,6 +31,7 @@ Contributors (alphabetically ordered):
 	Word Wrap works on LabelTTF on Mac
 	bug fixes for failure to compile on 32-bit mac builds
 	created new drawPrimitives functions, ccDrawRect, ccDrawSolidRect and ccDrawSolidPoly.
+    bug fix for CCTMXXMLParser in release mode
 	
 * Jerrod Putman (http://www.tinytimgames.com)
 	Original author of ARC compatibility code
@@ -65,32 +66,49 @@ Contributors (alphabetically ordered):
 
 * Nicky Weber (https://github.com/nickyEnjoysWoogoo):
 	Added convenience function to create a ccColor4F from color components	
+    
+* Nicolas Barrios (http://wefiends.com)
+    Fix for CCArray for ARC compatibility 
 
 * podhrask...@gmail.com
 	TouchDispatcher: correctly handles addition and removal of handlers when being inside a touch handler. patch
 
 * Ricardo Ruiz:
 	Added support for RGB888 textures
+    
+* Rick Smorawski
+    Added full unicode support to CCLabelBMFont
 
+* Samuel J. Grabski http://www.sg7.com
+	Created a new touchdispatcher implementation
+    New touchdispatcher performance tests
+    
 * Scott Lembcke (AKA slembcke) (http://chipmunk-physics.net/)
 	Improved ARC compatiblity code
 
 * Sergey Tikhonov (AKA haqu) (http://haqu.net)
 	Removed warning in CCMenuItem
 
-* slycrel (http://folderapp.blogspot.com/)
-	TMX Map: fixed crash when multiple layers and tiles were used with rotation
-
 * Shakthi:
 	Added CCNode#onExitTransitionDidStart method
 	Fixed fading background music issue
+    
+* Skyhawk (http://www.hkasoftware.com) 
+    Fix for addFrame method in CCAnimation
 
 * slycrel (http://geopherlite.blogspot.com/)
 	Added support for flipped tiles in TMX maps. Also added test case
 	Added support for in-memory TMX map creation. Also added a test case
+    TMX Map: fixed crash when multiple layers and tiles were used with rotation
+
+* Spencer Ho
+    fixed 3d projection settings for ipad3 
 
 * Stepan Generalov (iPsi) (http://www.itraceur.ru/)
 	FileUtils: Loads -hd resources even if the -sd resource is not present. patch
+
+* Steve Kanter
+    new file extension for ipad retina
 
 
 cocos2d for iPhone authors for v1.0
