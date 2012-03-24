@@ -792,8 +792,8 @@ typedef struct _FontDefHashElement
 			fontChar.opacity = 255;
 		}
 
-		// cast needed. See issue 1343 (compiler bug???)
-		CGFloat yOffset = (CGFloat) configuration_->commonHeight_ - (CGFloat)fontDef.yOffset;
+		// See issue 1343. cast( signed short + unsigned integer ) == unsigned integer (sign is lost!)
+		NSInteger yOffset = configuration_->commonHeight_ - fontDef.yOffset;
 		CGPoint fontPos = ccp( (CGFloat)nextFontPositionX + fontDef.xOffset + fontDef.rect.size.width*0.5f + kerningAmount,
 							  (CGFloat)nextFontPositionY + yOffset - rect.size.height*0.5f * CC_CONTENT_SCALE_FACTOR() );
         fontChar.position = CC_POINT_PIXELS_TO_POINTS(fontPos);
