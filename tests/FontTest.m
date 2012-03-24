@@ -65,16 +65,16 @@ NSString* restartAction()
 	if((self=[super init] )) {
 
 		// menu
-		CGSize size = [CCDirector sharedDirector].winSize;
+		CGSize s = [CCDirector sharedDirector].winSize;
 		CCMenuItemImage *item1 = [CCMenuItemImage itemWithNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
 		CCMenuItemImage *item2 = [CCMenuItemImage itemWithNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
 		CCMenuItemImage *item3 = [CCMenuItemImage itemWithNormalImage:@"f1.png" selectedImage:@"f2.png" target:self selector:@selector(nextCallback:)];
 
 		CCMenu *menu = [CCMenu menuWithItems:item1, item2, item3, nil];
 		menu.position = CGPointZero;
-		item1.position = ccp(size.width/2-100,30);
-		item2.position = ccp(size.width/2, 30);
-		item3.position = ccp(size.width/2+100,30);
+		item1.position = ccp( s.width/2 - item2.contentSize.width*2, item2.contentSize.height/2);
+		item2.position = ccp( s.width/2, item2.contentSize.height/2);
+		item3.position = ccp( s.width/2 + item2.contentSize.width*2, item2.contentSize.height/2);
 		[self addChild: menu z:1];
 
 		[self performSelector:@selector(restartCallback:) withObject:self afterDelay:0.1];

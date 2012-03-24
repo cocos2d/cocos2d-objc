@@ -81,9 +81,9 @@ Class restartAction()
 		CCMenu *menu = [CCMenu menuWithItems:item1, item2, item3, nil];
 
 		menu.position = CGPointZero;
-		item1.position = ccp( s.width/2 - 100,30);
-		item2.position = ccp( s.width/2, 30);
-		item3.position = ccp( s.width/2 + 100,30);
+		item1.position = ccp( s.width/2 - item2.contentSize.width*2, item2.contentSize.height/2);
+		item2.position = ccp( s.width/2, item2.contentSize.height/2);
+		item3.position = ccp( s.width/2 + item2.contentSize.width*2, item2.contentSize.height/2);
 		[self addChild: menu z:1];
 	}
 	return self;
@@ -273,6 +273,8 @@ Class restartAction()
 	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
 	// You can change anytime.
 	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA8888];
+	
+	[director_ setDisplayStats:YES];
 
 	// If the 1st suffix is not found, then the fallback suffixes are going to used. If none is found, it will try with the name without suffix.
 	// On iPad HD  : "-ipadhd", "-ipad",  "-hd"

@@ -48,10 +48,9 @@ Class restartAction()
 	return c;
 }
 
-#pragma mark -
-#pragma mark SpriteDemo
+#pragma mark - FileUtilsDemo
 
-@implementation SpriteDemo
+@implementation FileUtilsDemo
 -(id) init
 {
 	if( (self = [super init]) ) {
@@ -122,85 +121,34 @@ Class restartAction()
 }
 @end
 
-#pragma mark -
-#pragma mark Example Sprite 1
+#pragma mark - Issue1344
 
 
-@implementation Sprite1
+@implementation Issue1344
 
 -(id) init
 {
 	if( (self=[super init]) ) {
-		
-#ifdef __CC_PLATFORM_IOS
-		self.isTouchEnabled = YES;
-#elif defined(__CC_PLATFORM_MAC)
-		self.isMouseEnabled = YES;
-#endif
-		
-		CGSize s = [[CCDirector sharedDirector] winSize];
-		[self addNewSpriteWithCoords:ccp(s.width/2, s.height/2)];
+
+		for( NSUInteger i=1; i < 8 ; i++ ) {
+			NSString *file = [NSString stringWithFormat:@"issue1344-test%d.txt", i];
+			NSString *path = [[CCFileUtils sharedFileUtils] fullPathFromRelativePath:file];
+			NSLog(@"Test number %i: %@ -> %@", i, file, path);
+		}
 	}
 	return self;
 }
 
--(void) addNewSpriteWithCoords:(CGPoint)p
-{
-	int idx = CCRANDOM_0_1() * 1400 / 100;
-	int x = (idx%5) * 85;
-	int y = (idx/5) * 121;
-	
-	
-	CCSprite *sprite = [CCSprite spriteWithFile:@"grossini_dance_atlas.png" rect:CGRectMake(x,y,85,121)];
-	[self addChild:sprite];
-	
-	sprite.position = ccp( p.x, p.y);
-	
-	id action;
-	float rand = CCRANDOM_0_1();
-	
-	if( rand < 0.20 )
-		action = [CCScaleBy actionWithDuration:3 scale:2];
-	else if(rand < 0.40)
-		action = [CCRotateBy actionWithDuration:3 angle:360];
-	else if( rand < 0.60)
-		action = [CCBlink actionWithDuration:1 blinks:3];
-	else if( rand < 0.8 )
-		action = [CCTintBy actionWithDuration:2 red:0 green:-255 blue:-255];
-	else
-		action = [CCFadeOut actionWithDuration:2];
-	id action_back = [action reverse];
-	id seq = [CCSequence actions:action, action_back, nil];
-	
-	[sprite runAction: [CCRepeatForever actionWithAction:seq]];
-}
-
-#ifdef __CC_PLATFORM_IOS
-- (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
-{
-	for( UITouch *touch in touches ) {
-		CGPoint location = [touch locationInView: [touch view]];
-		
-		location = [[CCDirector sharedDirector] convertToGL: location];
-		
-		[self addNewSpriteWithCoords: location];
-	}
-}
-#elif defined(__CC_PLATFORM_MAC)
--(BOOL) ccMouseUp:(NSEvent *)event
-{
-	CGPoint location = [[CCDirector sharedDirector] convertEventToGL:event];
-	[self addNewSpriteWithCoords: location];
-	
-	return YES;
-	
-}
-#endif
-
 -(NSString *) title
 {
-	return @"Sprite (tap screen)";
+	return @"Issue 1344";
 }
+
+-(NSString *) subtitle
+{
+	return @"CCFileUtils should return a valid path. See console";
+}
+
 @end
 
 

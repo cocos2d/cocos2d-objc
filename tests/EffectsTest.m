@@ -353,9 +353,9 @@ Class restartAction()
 
 		float x,y;
 
-		CGSize size = [[CCDirector sharedDirector] winSize];
-		x = size.width;
-		y = size.height;
+		CGSize s = [[CCDirector sharedDirector] winSize];
+		x = s.width;
+		y = s.height;
 
 		CCNode *node = [CCNode node];
 		Class effectClass = restartAction();
@@ -365,7 +365,7 @@ Class restartAction()
 		CCSprite *bg = [CCSprite spriteWithFile:@"background3.png"];
 		[node addChild: bg z:0];
 //		bg.anchorPoint = CGPointZero;
-		bg.position = ccp(size.width/2, size.height/2);
+		bg.position = ccp(s.width/2, s.height/2);
 
 		CCSprite *grossini = [CCSprite spriteWithFile:@"grossinis_sister2.png"];
 		[node addChild:grossini z:1];
@@ -394,9 +394,9 @@ Class restartAction()
 		CCMenuItemImage *item3 = [CCMenuItemImage itemWithNormalImage:@"f1.png" selectedImage:@"f2.png" target:self selector:@selector(nextCallback:)];
 		CCMenu *menu = [CCMenu menuWithItems:item1, item2, item3, nil];
 		menu.position = CGPointZero;
-		item1.position = ccp(size.width/2-100,30);
-		item2.position = ccp(size.width/2, 30);
-		item3.position = ccp(size.width/2+100,30);
+		item1.position = ccp( s.width/2 - item2.contentSize.width*2, item2.contentSize.height/2);
+		item2.position = ccp( s.width/2, item2.contentSize.height/2);
+		item3.position = ccp( s.width/2 + item2.contentSize.width*2, item2.contentSize.height/2);
 		[self addChild: menu z:1];
 
 		[self schedule:@selector(checkAnim:)];
