@@ -241,13 +241,13 @@ Class restartTransition()
 
 		float x,y;
 
-		CGSize size = [[CCDirector sharedDirector] winSize];
-		x = size.width;
-		y = size.height;
+		CGSize s = [[CCDirector sharedDirector] winSize];
+		x = s.width;
+		y = s.height;
 
 		CCSprite *bg1 = [CCSprite spriteWithFile:@"background1.jpg"];
 
-		bg1.position = ccp(size.width/2, size.height/2);
+		bg1.position = ccp(s.width/2, s.height/2);
 		[self addChild:bg1 z:-1];
 
 		CCLabelTTF *title = [CCLabelTTF labelWithString:transitions[sceneIdx] fontName:@"Thonburi" fontSize:40];
@@ -266,9 +266,9 @@ Class restartTransition()
 		CCMenuItemImage *item3 = [CCMenuItemImage itemWithNormalImage:@"f1.png" selectedImage:@"f2.png" target:self selector:@selector(nextCallback:)];
 		CCMenu *menu = [CCMenu menuWithItems:item1, item2, item3, nil];
 		menu.position = CGPointZero;
-		item1.position = ccp( size.width/2 - 100,30);
-		item2.position = ccp( size.width/2, 30);
-		item3.position = ccp( size.width/2 + 100,30);
+		item1.position = ccp( s.width/2 - item2.contentSize.width*2, item2.contentSize.height/2);
+		item2.position = ccp( s.width/2, item2.contentSize.height/2);
+		item3.position = ccp( s.width/2 + item2.contentSize.width*2, item2.contentSize.height/2);
 		[self addChild: menu z:1];
 
 		[self schedule:@selector(step:) interval:1.0f];

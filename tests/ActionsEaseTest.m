@@ -78,9 +78,9 @@ Class restartAction()
 
 		CGSize s = [[CCDirector sharedDirector] winSize];
 
-		[grossini setPosition: ccp(60, 50)];
-		[kathia setPosition: ccp(60, 150)];
-		[tamara setPosition: ccp(60, 250)];
+		[grossini setPosition: ccp(60, s.height*1/5)];
+		[kathia setPosition: ccp(60, s.height*2.5f/5)];
+		[tamara setPosition: ccp(60, s.height*4/5)];
 
  		CCLabelTTF *label = [CCLabelTTF labelWithString:[self title] fontName:@"Arial" fontSize:32];
 		[self addChild: label];
@@ -92,9 +92,9 @@ Class restartAction()
 
 		CCMenu *menu = [CCMenu menuWithItems:item1, item2, item3, nil];
 		menu.position = CGPointZero;
-		item1.position = ccp(s.width/2-100,30);
-		item2.position = ccp(s.width/2, 30);
-		item3.position = ccp(s.width/2+100,30);
+		item1.position = ccp( s.width/2 - item2.contentSize.width*2, item2.contentSize.height/2);
+		item2.position = ccp( s.width/2, item2.contentSize.height/2);
+		item3.position = ccp( s.width/2 + item2.contentSize.width*2, item2.contentSize.height/2);
 		[self addChild: menu z:1];
 		
 //        CCMenuItemLabel *test = [CCMenuItemLabel itemWithLabel:[CCLabelTTF labelWithString:@"Test" fontName:@"Arial" fontSize:32] target:self selector:@selector(test)];
@@ -151,8 +151,10 @@ Class restartAction()
 
 -(void) positionForTwo
 {
-	grossini.position = ccp( 60, 120 );
-	tamara.position = ccp( 60, 220);
+	CGSize s = [[CCDirector sharedDirector] winSize];
+
+	[grossini setPosition: ccp(60, s.height*1/5)];
+	[tamara setPosition: ccp(60, s.height*4/5)];
 	kathia.visible = NO;
 }
 -(NSString*) title
