@@ -2056,6 +2056,10 @@
 		A0F840D3151D2B8F00EBBFCB /* larabie-16.plist in Resources */ = {isa = PBXBuildFile; fileRef = A0F840CF151D2B8F00EBBFCB /* larabie-16.plist */; };
 		A0F840D4151D2B8F00EBBFCB /* tuffy_bold_italic-charmap-hd.plist in Resources */ = {isa = PBXBuildFile; fileRef = A0F840D0151D2B8F00EBBFCB /* tuffy_bold_italic-charmap-hd.plist */; };
 		A0F840D5151D2B8F00EBBFCB /* tuffy_bold_italic-charmap-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = A0F840D1151D2B8F00EBBFCB /* tuffy_bold_italic-charmap-hd.png */; };
+		A0F8420A151D662D00EBBFCB /* font-issue1343-hd.fnt in Resources */ = {isa = PBXBuildFile; fileRef = A0F84206151D662D00EBBFCB /* font-issue1343-hd.fnt */; };
+		A0F8420B151D662D00EBBFCB /* font-issue1343-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = A0F84207151D662D00EBBFCB /* font-issue1343-hd.png */; };
+		A0F8420C151D662D00EBBFCB /* font-issue1343.fnt in Resources */ = {isa = PBXBuildFile; fileRef = A0F84208151D662D00EBBFCB /* font-issue1343.fnt */; };
+		A0F8420D151D662D00EBBFCB /* font-issue1343.png in Resources */ = {isa = PBXBuildFile; fileRef = A0F84209151D662D00EBBFCB /* font-issue1343.png */; };
 		E01E6A3E121EDCD3001A484F /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E01E6A3D121EDCD3001A484F /* ApplicationServices.framework */; };
 		E01E6B36121EDCED001A484F /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E036A79E121B5C870037C5C6 /* QuartzCore.framework */; };
 		E01E6B49121EDCF4001A484F /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E036A79C121B5C720037C5C6 /* OpenGL.framework */; };
@@ -5856,6 +5860,10 @@
 		A0F840CF151D2B8F00EBBFCB /* larabie-16.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "larabie-16.plist"; sourceTree = "<group>"; };
 		A0F840D0151D2B8F00EBBFCB /* tuffy_bold_italic-charmap-hd.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "tuffy_bold_italic-charmap-hd.plist"; sourceTree = "<group>"; };
 		A0F840D1151D2B8F00EBBFCB /* tuffy_bold_italic-charmap-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tuffy_bold_italic-charmap-hd.png"; sourceTree = "<group>"; };
+		A0F84206151D662D00EBBFCB /* font-issue1343-hd.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "font-issue1343-hd.fnt"; sourceTree = "<group>"; };
+		A0F84207151D662D00EBBFCB /* font-issue1343-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "font-issue1343-hd.png"; sourceTree = "<group>"; };
+		A0F84208151D662D00EBBFCB /* font-issue1343.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "font-issue1343.fnt"; sourceTree = "<group>"; };
+		A0F84209151D662D00EBBFCB /* font-issue1343.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "font-issue1343.png"; sourceTree = "<group>"; };
 		A0FBA8A614A51386002DF395 /* libchipmunk.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libchipmunk.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0FBA8AF14A5138F002DF395 /* libbox2d.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libbox2d.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		E01E663D121CA00A001A484F /* libcocos2d.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libcocos2d.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -7616,6 +7624,10 @@
 		E076E7A11225EDD000DE0DA2 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
+				A0F84206151D662D00EBBFCB /* font-issue1343-hd.fnt */,
+				A0F84207151D662D00EBBFCB /* font-issue1343-hd.png */,
+				A0F84208151D662D00EBBFCB /* font-issue1343.fnt */,
+				A0F84209151D662D00EBBFCB /* font-issue1343.png */,
 				A0F840D0151D2B8F00EBBFCB /* tuffy_bold_italic-charmap-hd.plist */,
 				A0F840D1151D2B8F00EBBFCB /* tuffy_bold_italic-charmap-hd.png */,
 				A0DB13DE14FC418100F7CC49 /* west_england-64.fnt */,
@@ -12500,6 +12512,10 @@
 				A0F840D3151D2B8F00EBBFCB /* larabie-16.plist in Resources */,
 				A0F840D4151D2B8F00EBBFCB /* tuffy_bold_italic-charmap-hd.plist in Resources */,
 				A0F840D5151D2B8F00EBBFCB /* tuffy_bold_italic-charmap-hd.png in Resources */,
+				A0F8420A151D662D00EBBFCB /* font-issue1343-hd.fnt in Resources */,
+				A0F8420B151D662D00EBBFCB /* font-issue1343-hd.png in Resources */,
+				A0F8420C151D662D00EBBFCB /* font-issue1343.fnt in Resources */,
+				A0F8420D151D662D00EBBFCB /* font-issue1343.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

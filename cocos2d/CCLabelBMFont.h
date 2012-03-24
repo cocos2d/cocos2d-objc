@@ -88,8 +88,8 @@ typedef struct _BMFontPadding {
 	// BMFont definitions
 	struct _FontDefHashElement	*fontDefDictionary_;
 
-	// FNTConfig: Common Height
-	NSUInteger		commonHeight_;
+	// FNTConfig: Common Height. Should be signed (issue #1343)
+	NSInteger		commonHeight_;
 
 	// Padding
 	ccBMFontPadding	padding_;

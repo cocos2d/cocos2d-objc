@@ -336,6 +336,8 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 	return path;
 }
 
+// XXX: This method is too bugy XXX
+// XXX: It needs to be rewritten XXX
 -(NSString*) removeSuffixFromFile:(NSString*) path
 {
 	NSString *withoutSuffix = [removeSuffixCache_ objectForKey:path];

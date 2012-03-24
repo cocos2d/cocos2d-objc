@@ -2098,6 +2098,10 @@
 		A0F841AE151D419F00EBBFCB /* issue1344-test6-ipad.txt in Resources */ = {isa = PBXBuildFile; fileRef = A0F841AA151D419F00EBBFCB /* issue1344-test6-ipad.txt */; };
 		A0F841AF151D419F00EBBFCB /* issue1344-test7-ipad.txt in Resources */ = {isa = PBXBuildFile; fileRef = A0F841AB151D419F00EBBFCB /* issue1344-test7-ipad.txt */; };
 		A0F841B0151D419F00EBBFCB /* issue1344-test7-ipadhd.txt in Resources */ = {isa = PBXBuildFile; fileRef = A0F841AC151D419F00EBBFCB /* issue1344-test7-ipadhd.txt */; };
+		A0F841F5151D5E4700EBBFCB /* font-issue1343-hd.fnt in Resources */ = {isa = PBXBuildFile; fileRef = A0F841F1151D5E4600EBBFCB /* font-issue1343-hd.fnt */; };
+		A0F841F6151D5E4700EBBFCB /* font-issue1343-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = A0F841F2151D5E4600EBBFCB /* font-issue1343-hd.png */; };
+		A0F841F7151D5E4700EBBFCB /* font-issue1343.fnt in Resources */ = {isa = PBXBuildFile; fileRef = A0F841F3151D5E4600EBBFCB /* font-issue1343.fnt */; };
+		A0F841F8151D5E4700EBBFCB /* font-issue1343.png in Resources */ = {isa = PBXBuildFile; fileRef = A0F841F4151D5E4600EBBFCB /* font-issue1343.png */; };
 		AAEA834B0FD5704400F08728 /* blocks.png in Resources */ = {isa = PBXBuildFile; fileRef = AAEA834A0FD5704400F08728 /* blocks.png */; };
 		DA5F0EC50FFE96D400C7C82E /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB240E10EE4A00AE9530 /* Default.png */; };
 		DA5F0EC60FFE96D400C7C82E /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB250E10EE4A00AE9530 /* Icon.png */; };
@@ -4667,6 +4671,10 @@
 		A0F841AA151D419F00EBBFCB /* issue1344-test6-ipad.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "issue1344-test6-ipad.txt"; sourceTree = "<group>"; };
 		A0F841AB151D419F00EBBFCB /* issue1344-test7-ipad.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "issue1344-test7-ipad.txt"; sourceTree = "<group>"; };
 		A0F841AC151D419F00EBBFCB /* issue1344-test7-ipadhd.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "issue1344-test7-ipadhd.txt"; sourceTree = "<group>"; };
+		A0F841F1151D5E4600EBBFCB /* font-issue1343-hd.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "font-issue1343-hd.fnt"; sourceTree = "<group>"; };
+		A0F841F2151D5E4600EBBFCB /* font-issue1343-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "font-issue1343-hd.png"; sourceTree = "<group>"; };
+		A0F841F3151D5E4600EBBFCB /* font-issue1343.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "font-issue1343.fnt"; sourceTree = "<group>"; };
+		A0F841F4151D5E4600EBBFCB /* font-issue1343.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "font-issue1343.png"; sourceTree = "<group>"; };
 		AAEA834A0FD5704400F08728 /* blocks.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blocks.png; sourceTree = "<group>"; };
 		DA90D87B1059A54D0039F26A /* FontTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FontTest.h; path = tests/FontTest.h; sourceTree = "<group>"; };
 		DA90D87C1059A54D0039F26A /* FontTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FontTest.m; path = tests/FontTest.m; sourceTree = "<group>"; };
@@ -6189,6 +6197,10 @@
 		505463B81062868100AB7C52 /* BMFont fonts */ = {
 			isa = PBXGroup;
 			children = (
+				A0F841F1151D5E4600EBBFCB /* font-issue1343-hd.fnt */,
+				A0F841F2151D5E4600EBBFCB /* font-issue1343-hd.png */,
+				A0F841F3151D5E4600EBBFCB /* font-issue1343.fnt */,
+				A0F841F4151D5E4600EBBFCB /* font-issue1343.png */,
 				A0DB141414FC420E00F7CC49 /* west_england-64.fnt */,
 				A0DB141514FC420E00F7CC49 /* west_england-64.png */,
 				A03A1D4D14F5E1160019B6F3 /* arial-unicode-26.fnt */,
@@ -9897,6 +9909,10 @@
 				A0F83FB6151CAE7300EBBFCB /* tuffy_bold_italic-charmap.plist in Resources */,
 				A0F8410B151D2C2E00EBBFCB /* larabie-16-hd.plist in Resources */,
 				A0F8410C151D2C2E00EBBFCB /* larabie-16.plist in Resources */,
+				A0F841F5151D5E4700EBBFCB /* font-issue1343-hd.fnt in Resources */,
+				A0F841F6151D5E4700EBBFCB /* font-issue1343-hd.png in Resources */,
+				A0F841F7151D5E4700EBBFCB /* font-issue1343.fnt in Resources */,
+				A0F841F8151D5E4700EBBFCB /* font-issue1343.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
