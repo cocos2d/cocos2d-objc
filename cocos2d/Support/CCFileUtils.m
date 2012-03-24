@@ -170,40 +170,54 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 
 -(NSString*) getPath:(NSString*)path forSuffix:(NSString*)suffix
 {
-	// quick return
-	if( ! suffix || [suffix length] == 0 )
-		return path;
-
-	NSString *pathWithoutExtension = [path stringByDeletingPathExtension];
-	NSString *name = [pathWithoutExtension lastPathComponent];
-
-	// check if path already has the suffix.
-	if( [name rangeOfString:suffix].location != NSNotFound ) {
-
-		CCLOG(@"cocos2d: WARNING Filename(%@) already has the suffix %@. Using it.", name, suffix);
-		return path;
-	}
-
-	NSString *extension = [path pathExtension];
-
-	if( [extension isEqualToString:@"ccz"] || [extension isEqualToString:@"gz"] )
+	NSString *newName = path;
+	
+	// only recreate filename if suffix is valid
+	if( suffix && [suffix length] > 0)
 	{
-		// All ccz / gz files should be in the format filename.xxx.ccz
-		// so we need to pull off the .xxx part of the extension as well
-		extension = [NSString stringWithFormat:@"%@.%@", [pathWithoutExtension pathExtension], extension];
-		pathWithoutExtension = [pathWithoutExtension stringByDeletingPathExtension];
+		NSString *pathWithoutExtension = [path stringByDeletingPathExtension];
+		NSString *name = [pathWithoutExtension lastPathComponent];
+
+		// check if path already has the suffix.
+		if( [name rangeOfString:suffix].location == NSNotFound ) {
+			
+
+			NSString *extension = [path pathExtension];
+
+			if( [extension isEqualToString:@"ccz"] || [extension isEqualToString:@"gz"] )
+			{
+				// All ccz / gz files should be in the format filename.xxx.ccz
+				// so we need to pull off the .xxx part of the extension as well
+				extension = [NSString stringWithFormat:@"%@.%@", [pathWithoutExtension pathExtension], extension];
+				pathWithoutExtension = [pathWithoutExtension stringByDeletingPathExtension];
+			}
+
+
+			newName = [pathWithoutExtension stringByAppendingString:suffix];
+			newName = [newName stringByAppendingPathExtension:extension];
+		} else
+			CCLOG(@"cocos2d: WARNING Filename(%@) already has the suffix %@. Using it.", name, suffix);
 	}
 
+	NSString *ret = nil;
+	// only if it is not an absolute path
+	if( ! [path isAbsolutePath] ) {
+		
+		// pathForResource also searches in .lproj directories. issue #1230
+		NSString *imageDirectory = [path stringByDeletingLastPathComponent];
+		
+		// If the file does not exist it will return nil.
+		ret = [[NSBundle mainBundle] pathForResource:[newName lastPathComponent]
+												   ofType:nil
+											  inDirectory:imageDirectory];
+	}
+	else if( [fileManager_ fileExistsAtPath:newName] )
+		ret = newName;
 
-	NSString *newName = [pathWithoutExtension stringByAppendingString:suffix];
-	newName = [newName stringByAppendingPathExtension:extension];
+	if( ! ret )
+		CCLOGINFO(@"cocos2d: CCFileUtils: file not found: %@", [newName lastPathComponent] );
 
-	if( [fileManager_ fileExistsAtPath:newName] )
-		return newName;
-
-	CCLOG(@"cocos2d: CCFileUtils: Warning file not found: %@", [newName lastPathComponent] );
-
-	return nil;
+	return ret;
 }
 
 -(NSString*) fullPathFromRelativePath:(NSString*)relPath resolutionType:(ccResolutionType*)resolutionType
@@ -216,26 +230,9 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 		return value.fullpath;
 	}
 
-	NSString *fullpath = nil;
-
-	// only if it is not an absolute path
-	if( ! [relPath isAbsolutePath] ) {
-
-		// pathForResource also searches in .lproj directories. issue #1230
-		NSString *file = [relPath lastPathComponent];
-		NSString *imageDirectory = [relPath stringByDeletingLastPathComponent];
-
-		fullpath = [[NSBundle mainBundle] pathForResource:file
-												   ofType:nil
-											  inDirectory:imageDirectory];
-	}
-
-	if (fullpath == nil)
-		fullpath = relPath;
+	NSString *ret = nil;
 
 #ifdef __CC_PLATFORM_IOS
-
-	NSString *ret = nil;
 
 	enum {
 		iPhone,
@@ -245,7 +242,6 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 	};
 
 	NSInteger device = -1;
-	BOOL fallback = NO;
 	
 	if( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
 	{
@@ -264,48 +260,47 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 	
 	// iPad HD ?
 	if( device == iPadRetinaDisplay ) {
-		ret = [self getPath:fullpath forSuffix:iPadRetinaDisplaySuffix_];
+		ret = [self getPath:relPath forSuffix:iPadRetinaDisplaySuffix_];
 		*resolutionType = kCCResolutioniPadRetinaDisplay;
-		fallback = !ret;
 	}
 
 	// iPad ?
-	if( device == iPad || (enableFallbackSuffixes_ && fallback) ) {
-		ret = [self getPath:fullpath forSuffix:iPadSuffix_];
+	if( device == iPad || (enableFallbackSuffixes_ && !ret) ) {
+		ret = [self getPath:relPath forSuffix:iPadSuffix_];
 		*resolutionType = kCCResolutioniPad;
-		fallback = !ret;
 	}
 	
 	// iPhone HD ?
-	if( device == iPhoneRetinadisplay || (enableFallbackSuffixes_ && fallback) ) {
-		ret = [self getPath:fullpath forSuffix:iPhoneRetinaDisplaySuffix_];
+	if( device == iPhoneRetinadisplay || (enableFallbackSuffixes_ && !ret) ) {
+		ret = [self getPath:relPath forSuffix:iPhoneRetinaDisplaySuffix_];
 		*resolutionType = kCCResolutioniPhoneRetinaDisplay;
 	}
 
 	// If it is not Phone HD, or if the previous "getPath" failed, then use iPhone images.
-	if( ret == nil )
+	if( device == iPhone || !ret )
 	{
+		ret = [self getPath:relPath forSuffix:@""];
 		*resolutionType = kCCResolutioniPhone;
-		ret = fullpath;
 	}
-
-	fullpath = ret;
-
+	
 #elif defined(__CC_PLATFORM_MAC)
 
-	
 	*resolutionType = kCCResolutionMac;
 
-	return fullpath;
+	ret = [self getPath:relPath forSuffix:@""];
 
 #endif // __CC_PLATFORM_MAC
 	
-	value = [[CCCacheValue alloc] initWithFullPath:fullpath resolutionType:*resolutionType];
+	if( ! ret ) {
+		CCLOG(@"cocos2d: Warning: File not found: %@", relPath);
+		ret = relPath;
+	}
+		
+	value = [[CCCacheValue alloc] initWithFullPath:ret resolutionType:*resolutionType];
 	[fullPathCache_ setObject:value forKey:relPath];
 	[value release];
 	
-	return fullpath;
-
+	return ret;
 }
 
 -(NSString*) fullPathFromRelativePath:(NSString*) relPath
