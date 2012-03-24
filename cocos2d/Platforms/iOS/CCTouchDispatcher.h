@@ -196,12 +196,6 @@ typedef enum
 	
 	// 4, 1 for each type of event
 	struct ccTouchHandlerHelperData handlerHelperData[kCCTouchMax];
-@private
-	unsigned int targetedHandlersCount;
-	unsigned int standardHandlersCount;	
-	BOOL needsMutableSet;	
-	id mutableTouches;	
-	struct ccTouchHandlerHelperData helper;
 }
 
 /** singleton of the CCTouchDispatcher */
