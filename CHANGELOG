@@ -4,7 +4,7 @@ version 2.0-rc1 XX-Mar-2012
 . [NEW] DrawingPrimitives: added ccDrawCatmullRom, ccDrawCardinalSpline
 . [NEW] FileUtils: It is a singleton (easier to subclass)
 		NSFileManager and NSBundle are properties (can be changed in runtime)
-		Added "fallback suffix" support (disabled by default).
+		Added "fallback suffix" support for "get full path" and "remove suffix" (disabled by default).
 		On iPad the default suffix is "-ipad". Before it was ""
 . [NEW] LabelAtlas: added .plist config file support. Easier to migrate games to higher resolutions.
 . [FIX] Deprecated: displayedFrame points to displayFrame avoiding infinite loop (issue #1347)
