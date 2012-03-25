@@ -494,6 +494,8 @@ static inline int mergesortL(ccCArray* array, size_t width, int (*compar)(const 
 
             if (m-j > 0)
             {
+                //triggers a warning when compiled with ARC, B needs to be strong typed, for compiling for obj-c++
+                //memcpy aritmetics aren't allowed on void* types
                 memcpy(B, &arr[j], (m-j) * width);
             }
             
