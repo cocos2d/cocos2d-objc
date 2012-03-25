@@ -119,7 +119,7 @@
 		[self initTexCoordsWithRect:rect];
 		[self initIndices];
 		
-	#if CC_USES_VBO
+#if CC_USES_VBO
 		// create the VBO buffer
 		glGenBuffers(1, &quadsID_);
 		
@@ -127,7 +127,7 @@
 		glBindBuffer(GL_ARRAY_BUFFER, quadsID_);
 		glBufferData(GL_ARRAY_BUFFER, sizeof(quads_[0])*totalParticles, quads_,GL_DYNAMIC_DRAW);	
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
-	#endif
+#endif
 		
 		useBatchNode_ = NO;
 	}
@@ -140,13 +140,13 @@
 		//can't use setTexture here since system isn't added to batchnode yet
 		texture_ = [batchNode.textureAtlas.texture retain];
 		textureRect_ = rect; 
-
+        
 		useBatchNode_ = YES;
 	}
 	
 	particleAnchorPoint_ = ccp(0.5f,0.5f);
 	animation_ = nil;
-
+    
 	return [NSNumber numberWithInt:1];
 }
 
@@ -175,11 +175,11 @@
 								 pointRect.origin.y * CC_CONTENT_SCALE_FACTOR(),
 								 pointRect.size.width * CC_CONTENT_SCALE_FACTOR(),
 								 pointRect.size.height * CC_CONTENT_SCALE_FACTOR() );
-
+        
 		GLfloat wide = [texture_ pixelsWide];
 		GLfloat high = [texture_ pixelsHigh];
 		
-
+        
 #if CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
 		GLfloat left = (rect.origin.x*2+1) / (wide*2);
 		GLfloat bottom = (rect.origin.y*2+1) / (high*2);
@@ -191,8 +191,8 @@
 		GLfloat right = left + rect.size.width / wide;
 		GLfloat top = bottom + rect.size.height / high;
 #endif // ! CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
-	
-	// Important. Texture in cocos2d are inverted, so the Y component should be inverted
+        
+        // Important. Texture in cocos2d are inverted, so the Y component should be inverted
 		CC_SWAP( top, bottom);
 		
 		ccV3F_C4B_T2F_Quad *quadCollection; 
@@ -213,7 +213,7 @@
 		ccV3F_C4B_T2F_Quad quad;
 		//issue 1316
 		bzero( &quad, sizeof(quad) );
-
+        
 		for(NSInteger i=start; i<end; i++) {
 			// bottom-left vertex:
 			quad.bl.texCoords.u = left;
@@ -232,7 +232,7 @@
 			quad.bl.texCoords.v = bottom;
 			
 			quadCollection[i] = quad;
-		
+            
 		}
 	}
 }
@@ -255,7 +255,7 @@
 -(void) setDisplayFrame:(CCSpriteFrame *)spriteFrame
 {
 	NSAssert( CGPointEqualToPoint( spriteFrame.offsetInPixels , CGPointZero ), @"QuadParticle only supports SpriteFrames with no offsets");
-
+    
 	// update texture before updating texture rect
 	if ( spriteFrame.texture.name != texture_.name )
 		[self setTexture: spriteFrame.texture withRect:spriteFrame.rect];	
@@ -300,7 +300,7 @@
 	{
 		//p->size = scale 
 		ccAnimationFrameData frameData = animationFrameData_[p->currentFrame];
-			
+        
 		pos1x = (-particleAnchorPoint_.x *  frameData.size.width) * p->size;
 		pos1y = (-particleAnchorPoint_.y * frameData.size.height) * p->size;	
 		pos2x = ((1.f - particleAnchorPoint_.x) * frameData.size.width) * p->size;
@@ -451,29 +451,29 @@
 -(void) draw
 {	
 	[super draw];
-
+    
 	NSAssert(!useBatchNode_,@"draw should not be called when added to a particleBatchNode"); 
 	
 	// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
 	// Needed states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
 	// Unneeded states: -
-
+    
 	glBindTexture(GL_TEXTURE_2D, [texture_ name]);
-
+    
 #define kQuadSize sizeof(quads_[0].bl)
-
+    
 #if CC_USES_VBO
 	glBindBuffer(GL_ARRAY_BUFFER, quadsID_);
-
+    
 	glVertexPointer(3,GL_FLOAT, kQuadSize, 0);
-
+    
 	glColorPointer(4, GL_UNSIGNED_BYTE, kQuadSize, (GLvoid*) offsetof(ccV3F_C4B_T2F,colors) );
 	
 	glTexCoordPointer(2, GL_FLOAT, kQuadSize, (GLvoid*) offsetof(ccV3F_C4B_T2F,texCoords) );
 #else // vertex array list
-
+    
 	NSUInteger offset = (NSUInteger) quads_;
-
+    
 	// vertex
 	NSUInteger diff = offsetof( ccV3F_C4B_T2F, vertices);
 	glVertexPointer(2,GL_FLOAT, kQuadSize, (GLvoid*) (offset+diff) );
@@ -485,7 +485,7 @@
 	// tex coords
 	diff = offsetof( ccV3F_C4B_T2F, texCoords);
 	glTexCoordPointer(2, GL_FLOAT, kQuadSize, (GLvoid*)(offset + diff));		
-
+    
 #endif // ! CC_USES_VBO
 	
 	BOOL newBlend = blendFunc_.src != CC_BLEND_SRC || blendFunc_.dst != CC_BLEND_DST;
@@ -498,11 +498,11 @@
 	// restore blend state
 	if( newBlend )
 		glBlendFunc( CC_BLEND_SRC, CC_BLEND_DST );
-
+    
 #if CC_USES_VBO
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 #endif
-
+    
 	// restore GL default state
 	// -
 }
@@ -532,20 +532,20 @@
 		
 		if (indices_) free(indices_);
 		indices_ = NULL;
-
+        
 #if CC_USES_VBO
 		glDeleteBuffers(1, &quadsID_);
 #endif
 	}
 }
 
--(void) setAnimation:(CCAnimation*)anim
+-(void) addAnimation:(CCAnimation*) animation 
 {
-	[self setAnimation:anim withAnchorPoint:ccp(0.5f,0.5f)];
+	[self addAnimation:animation withAnchorPoint:ccp(0.5f,0.5f)];
 }
 
 // animation 
--(void) setAnimation:(CCAnimation*)anim withAnchorPoint:(CGPoint) particleAP 
+-(void) addAnimation:(CCAnimation*)anim withAnchorPoint:(CGPoint) particleAP 
 {
 	NSAssert (anim != nil,@"animation is nil");
 	
@@ -557,7 +557,7 @@
 	
 	
 	NSArray* frames = animation_.frames;
-
+    
 	if ([frames count] == 0)
 	{
 		useAnimation_ = NO; 
@@ -570,7 +570,7 @@
 	{	
 		CCLOG(@"Particle animation, offset will not be taken into account"); 
 	}
-			  
+    
 	if (batchNode_)
 	{
 		NSAssert (batchNode_.texture.name == texture_.name,@"CCParticleSystemQuad can only use a animation with the same texture as the batchnode");

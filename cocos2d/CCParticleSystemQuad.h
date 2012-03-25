@@ -34,18 +34,18 @@
 @class CCAnimation;
 
 /** CCParticleSystemQuad is a subclass of CCParticleSystem
-
+ 
  It includes all the features of ParticleSystem.
  
  Special features and Limitations:	
-  - Particle size can be any float number.
-  - The system can be scaled
-  - The particles can be rotated
-  - On 1st and 2nd gen iPhones: It is only a bit slower that CCParticleSystemPoint
-  - On 3rd gen iPhone and iPads: It is MUCH faster than CCParticleSystemPoint
-  - It consumes more RAM and more GPU memory than CCParticleSystemPoint
-  - It supports subrects
-  - It supports batched rendering since 1.1
+ - Particle size can be any float number.
+ - The system can be scaled
+ - The particles can be rotated
+ - On 1st and 2nd gen iPhones: It is only a bit slower that CCParticleSystemPoint
+ - On 3rd gen iPhone and iPads: It is MUCH faster than CCParticleSystemPoint
+ - It consumes more RAM and more GPU memory than CCParticleSystemPoint
+ - It supports subrects
+ - It supports batched rendering since 1.1
  @since v0.8
  */
 @interface CCParticleSystemQuad : CCParticleSystem
@@ -68,9 +68,9 @@
 @property (nonatomic, retain) CCAnimation* animation;
 
 /** create system with properties from plist, batchnode and rect on the sprite sheet 
-   use nil for batchNode to not use batch rendering 
-   if rect is (0.0f,0.0f,0.0f,0.0f) the whole texture width and height will be used
-*/ 
+ use nil for batchNode to not use batch rendering 
+ if rect is (0.0f,0.0f,0.0f,0.0f) the whole texture width and height will be used
+ */ 
 +(id) particleWithFile:(NSString*) plistFile batchNode:(CCParticleBatchNode*) batchNode rect:(CGRect) rect;
 
 -(id) initWithFile:(NSString *)plistFile batchNode:(CCParticleBatchNode*) batchNode rect:(CGRect) rect;
@@ -97,12 +97,14 @@
 
 /** sets a animation that will be used for each particle, default particle anchorpoint of (0.5,0.5)
  @since 1.1
+ 
  */
--(void) setAnimation:(CCAnimation*) anim;
+-(void) addAnimation:(CCAnimation*) animation;
+
 /** sets a animation that will be used for each particle, and the anchor point for each particle
-	Note, offsets of sprite frames are not used
+ Note, offsets of sprite frames are not used
  @since 1.1
  */
--(void) setAnimation:(CCAnimation*) anim withAnchorPoint:(CGPoint) particleAP;
+-(void) addAnimation:(CCAnimation*) anim withAnchorPoint:(CGPoint) particleAP;
 
 @end
