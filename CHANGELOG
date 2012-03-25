@@ -1,7 +1,7 @@
 version 1.1-rc0 .. -..-2012
 . [FIX] CCAnimation: bug in addFrames that resulted in incorrect delayPerUnit (issue #1341)
 . [FIX] CCSprite: CCSprite bug in setDisplayFrameWithAnimationName
-. [FIX] CCParticleSystemQuad: Fixed warning when compiling with ARC
+. [FIX] CCParticleSystemQuad: Changed setAnimation to addAnimation, for compiler warning
 
 version 1.1-beta2b 14-Mar-2012
 . [FIX] CCUtils: missing method declaration
