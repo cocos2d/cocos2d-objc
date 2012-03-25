@@ -496,7 +496,12 @@ static inline int mergesortL(ccCArray* array, size_t width, int (*compar)(const 
             {
                 //triggers a warning when compiled with ARC, B needs to be strong typed, for compiling for obj-c++
                 //memcpy aritmetics aren't allowed on void* types
+                //explicitely casting didn't work
+                #pragma clang diagnostic push
+                #pragma clang diagnostic ignored "-Warc-non-pod-memaccess"
+                
                 memcpy(B, &arr[j], (m-j) * width);
+                #pragma clang diagnostic pop
             }
             
             i = 0;
