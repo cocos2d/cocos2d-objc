@@ -24,6 +24,7 @@
  *
  */
 
+#define USE_CC_CACHE 1
 
 #import "CCNode.h"
 #import "CCAction.h"
