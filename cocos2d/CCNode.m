@@ -150,11 +150,6 @@ static NSUInteger globalOrderOfArrival = 1;
 		CCDirector *director = [CCDirector sharedDirector];
 		self.actionManager = [director actionManager];
 		self.scheduler = [director scheduler];
-		
-		visitSelector = @selector(visit);
-		visitPointer = [self methodForSelector:visitSelector];
-		drawSelector = @selector(draw);
-		drawPointer = [self methodForSelector:drawSelector];
 	}
 
 	return self;
@@ -380,7 +375,7 @@ static NSUInteger globalOrderOfArrival = 1;
 	// explicit nil handling
 	if (child == nil)
 		return;
-	
+
 	if ( [children_ containsObject:child] )
 		[self detachChild:child cleanup:cleanup];
 }
@@ -528,22 +523,22 @@ static NSUInteger globalOrderOfArrival = 1;
 		for( ; i < arrayData->num; i++ ) {
 			CCNode *child = arrayData->arr[i];
 			if ( [child zOrder] < 0 )
-				child->visitPointer(child, visitSelector);
+				[child visit];
 			else
 				break;
 		}
 
 		// self draw
-		drawPointer(self, drawSelector);
+		[self draw];
 
 		// draw children zOrder >= 0
 		for( ; i < arrayData->num; i++ ) {
 			CCNode *child =  arrayData->arr[i];
-			child->visitPointer(child, visitSelector);
+			[child visit];
 		}
 
 	} else
-		drawPointer(self, drawSelector);
+		[self draw];
 
 	// reset for next frame
 	orderOfArrival_ = 0;

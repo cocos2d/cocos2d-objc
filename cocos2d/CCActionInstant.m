@@ -402,19 +402,6 @@
 	return copy;
 }
 
--(void) setBlock:(void(^)())block
-{
-	if(block_ == block)
-		return;
-	
-	if(block_)
-	{
-		[block_ release];
-	}
-	
-	block_ = [block copy];
-}
-
 -(void) update:(ccTime)time
 {
 	[self execute];

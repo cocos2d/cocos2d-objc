@@ -173,9 +173,6 @@ typedef void (*CC_CALLBACK_ND)(id, SEL, id, void *);
  */
 -(id) initWithBlock:(void(^)())block;
 
-/** allow us to reset the block in the action so we can reuse it **/
--(void) setBlock:(void(^)())block;
-
 /** executes the callback */
 -(void) execute;
 @end
