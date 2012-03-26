@@ -1,4 +1,5 @@
 version 1.1-rc0 .. -..-2012
+. [NEW] Macros: made CCLOG a bit more verbose
 . [FIX] CCAnimation: bug in addFrames that resulted in incorrect delayPerUnit (issue #1341)
 . [FIX] CCSprite: CCSprite bug in setDisplayFrameWithAnimationName
 . [FIX] CCParticleSystemQuad: Changed animation property to particleAnimation, for compiler warning

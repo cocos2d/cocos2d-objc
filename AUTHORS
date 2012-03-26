@@ -93,6 +93,7 @@ Contributors (alphabetically ordered):
 * Shakthi:
 	Added CCNode#onExitTransitionDidStart method
 	Fixed fading background music issue
+    Made CCLOG a bit more verbose
     
 * Skyhawk (http://www.hkasoftware.com) 
     Fix for addFrame method in CCAnimation
