@@ -49,21 +49,28 @@
  *		CCLOGERROR() will be enabled
  *		CCLOGINFO()	will be enabled 
  */
+
+
+#define __CCLOGWITHFUNCTION(s, ...) \
+NSLog(@"%s : %@",__FUNCTION__,[NSString stringWithFormat:(s), ##__VA_ARGS__])
+
+
 #if !defined(COCOS2D_DEBUG) || COCOS2D_DEBUG == 0
 #define CCLOG(...) do {} while (0)
 #define CCLOGINFO(...) do {} while (0)
 #define CCLOGERROR(...) do {} while (0)
 
 #elif COCOS2D_DEBUG == 1
-#define CCLOG(...) NSLog(__VA_ARGS__)
-#define CCLOGERROR(...) NSLog(__VA_ARGS__)
+#define CCLOG(...) __CCLOGWITHFUNCTION(__VA_ARGS__)
+#define CCLOGERROR(...) __CCLOGWITHFUNCTION(__VA_ARGS__)
 #define CCLOGINFO(...) do {} while (0)
 
 #elif COCOS2D_DEBUG > 1
-#define CCLOG(...) NSLog(__VA_ARGS__)
-#define CCLOGERROR(...) NSLog(__VA_ARGS__)
-#define CCLOGINFO(...) NSLog(__VA_ARGS__)
+#define CCLOG(...) __CCLOGWITHFUNCTION(__VA_ARGS__)
+#define CCLOGERROR(...) __CCLOGWITHFUNCTION(__VA_ARGS__)
+#define CCLOGINFO(...) __CCLOGWITHFUNCTION(__VA_ARGS__)
 #endif // COCOS2D_DEBUG
+
 
 /** @def CC_SWAP
 simple macro that swaps 2 variables
