@@ -51,7 +51,7 @@
 @implementation CCParticleSystemQuad
 
 @synthesize quads=quads_;
-@synthesize animation=animation_;
+@synthesize particleAnimation=particleAnimation_;
 +(id) particleWithFile:(NSString*) plistFile batchNode:(CCParticleBatchNode*) batchNode rect:(CGRect) rect
 {
 	return [[[self alloc] initWithFile:plistFile batchNode:batchNode rect:rect] autorelease];
@@ -145,7 +145,7 @@
 	}
 	
 	particleAnchorPoint_ = ccp(0.5f,0.5f);
-	animation_ = nil;
+	particleAnimation_ = nil;
     
 	return [NSNumber numberWithInt:1];
 }
@@ -158,7 +158,7 @@
 	if (!useBatchNode_) glDeleteBuffers(1, &quadsID_);
 #endif
 	
-	[animation_ release]; 
+	[particleAnimation_ release]; 
 	[super dealloc];
 }
 
@@ -539,24 +539,24 @@
 	}
 }
 
--(void) addAnimation:(CCAnimation*) animation 
+-(void) setAnimation:(CCAnimation*) animation 
 {
-	[self addAnimation:animation withAnchorPoint:ccp(0.5f,0.5f)];
+	[self setAnimation:animation withAnchorPoint:ccp(0.5f,0.5f)];
 }
 
 // animation 
--(void) addAnimation:(CCAnimation*)anim withAnchorPoint:(CGPoint) particleAP 
+-(void) setAnimation:(CCAnimation*)anim withAnchorPoint:(CGPoint) particleAP 
 {
 	NSAssert (anim != nil,@"animation is nil");
 	
 	[anim retain];
-	[animation_ release];
-	animation_ = anim;
+	[particleAnimation_ release];
+	particleAnimation_ = anim;
 	
 	particleAnchorPoint_ = particleAP;
 	
 	
-	NSArray* frames = animation_.frames;
+	NSArray* frames = particleAnimation_.frames;
     
 	if ([frames count] == 0)
 	{
@@ -595,7 +595,7 @@
 	useAnimation_ = YES;
 	
 	//same as CCAnimate
-	float newUnitOfTimeValue = animation_.duration / animation_.totalDelayUnits;
+	float newUnitOfTimeValue = particleAnimation_.duration / particleAnimation_.totalDelayUnits;
 	
 	for (int i = 0; i < totalFrameCount_; i++) {
 		

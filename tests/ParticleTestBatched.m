@@ -2015,7 +2015,7 @@ Class restartAction()
 		CCParticleSystemQuad *system = [CCParticleSystemQuad particleWithFile:@"Particles/OneParticle.plist" batchNode:batchNode_ rect:rect];
 		system.emissionRate = 1.f;
 		[system setPosition:ccp(30+i*60,200)];
-		[system addAnimation:anim2 withAnchorPoint:ccp(0.5f,0.0f)];
+		[system setAnimation:anim2 withAnchorPoint:ccp(0.5f,0.0f)];
 		[system setAnimationType:i]; 
 		
 		[batchNode_ addChild: system z:10];
@@ -2082,15 +2082,13 @@ Class restartAction()
 	[anim2 addFrame:[sfc spriteFrameByName:@"coco_4.png"] delay:0.3f];
 	[anim2 addFrame:[sfc spriteFrameByName:@"coco_3.png"] delay:0.3f];
 	[anim2 addFrame:[sfc spriteFrameByName:@"coco_2.png"] delay:0.3f];
-	
-	//new properties in plist define startScale, startScaleVar, endScale, endScaleVar
-	
+		
 	CCParticleSystemQuad *system = [CCParticleSystemQuad particleWithFile:@"Particles/SparkParticle.plist" batchNode:batchNode_ rect:rect];
 	system.emissionRate = 1.f;
 	[system setPosition:ccp(130,200)];
     [system setEmissionRate:500];
     [system setPositionType:kCCPositionTypeFree];
-	[system addAnimation:anim2 withAnchorPoint:ccp(0.5f,0.0f)];
+	[system setAnimation:anim2 withAnchorPoint:ccp(0.5f,0.0f)];
 	[system setAnimationType:kCCParticleAnimationTypeOnce]; 
 		
 	[batchNode_ addChild: system z:10];

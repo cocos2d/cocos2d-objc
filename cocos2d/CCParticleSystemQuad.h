@@ -58,14 +58,14 @@
 #endif
 	
 	CGPoint particleAnchorPoint_;
-	CCAnimation			*animation_;
+	CCAnimation			*particleAnimation_;
 }
 
 @property (nonatomic, readwrite) ccV3F_C4B_T2F_Quad* quads;
 /** animation that holds the sprite frames 
  @since 1.1
  */
-@property (nonatomic, retain) CCAnimation* animation;
+@property (nonatomic, retain) CCAnimation* particleAnimation;
 
 /** create system with properties from plist, batchnode and rect on the sprite sheet 
  use nil for batchNode to not use batch rendering 
@@ -99,12 +99,12 @@
  @since 1.1
  
  */
--(void) addAnimation:(CCAnimation*) animation;
+-(void) setAnimation:(CCAnimation*) animation;
 
 /** sets a animation that will be used for each particle, and the anchor point for each particle
  Note, offsets of sprite frames are not used
  @since 1.1
  */
--(void) addAnimation:(CCAnimation*) anim withAnchorPoint:(CGPoint) particleAP;
+-(void) setAnimation:(CCAnimation*) anim withAnchorPoint:(CGPoint) particleAP;
 
 @end
