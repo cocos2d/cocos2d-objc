@@ -283,7 +283,6 @@ static CCTextureCache *sharedTextureCache;
 	});
 
 	if( ! tex ) {
-
 		NSString *lowerCase = [path lowercaseString];
 
 		// all images are handled by UIKit/AppKit except PVR extension that is handled by cocos2d's handler

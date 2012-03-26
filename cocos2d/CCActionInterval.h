@@ -24,6 +24,7 @@
  *
  */
 
+#define USE_CC_CACHE 1
 
 #import "CCNode.h"
 #import "CCAction.h"
@@ -165,6 +166,7 @@ Example:
 +(id) actionWithDuration:(ccTime)duration position:(CGPoint)position;
 /** initializes the action */
 -(id) initWithDuration:(ccTime)duration position:(CGPoint)position;
+-(void) setEndPosition:(CGPoint)p;
 @end
 
 /**  Moves a CCNode object x,y pixels by modifying its position attribute.
