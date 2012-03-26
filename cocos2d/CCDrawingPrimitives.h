@@ -80,7 +80,11 @@ void ccDrawPoly( const CGPoint *vertices, NSUInteger numOfVertices, BOOL closePo
 /** draws a filled polygon given a pointer to CGPoint coordiantes, the number of vertices measured in points, and a color.
  */
 void ccDrawFilledPoly( const CGPoint *poli, NSUInteger numberOfPoints, ccColor4F color );
-    
+
+/** draws a triangle strip given a pointer to CGPoint coordiantes, the number of vertices measured in points, and a color.
+*/	
+void ccDrawTriangleStrip( const CGPoint *poli, NSUInteger numberOfPoints, ccColor4F color );
+
 /** draws a circle given the center, radius and number of segments measured in points */
 void ccDrawCircle( CGPoint center, float radius, float angle, NSUInteger segments, BOOL drawLineToCenter);
 

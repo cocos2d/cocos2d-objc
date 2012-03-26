@@ -178,7 +178,17 @@ enum {
 	// Scenes, Layers and other "whole screen" object don't use it.
 	BOOL isRelativeAnchorPoint_;
 
-	BOOL isReorderChildDirty_;	
+	BOOL isReorderChildDirty_;
+	
+	// userData is going to be retained.
+	BOOL retainUserData_;
+	
+	@public
+	SEL visitSelector;
+	IMP visitPointer;
+	
+	SEL drawSelector;
+	IMP drawPointer;
 }
 
 /** The z order of the node relative to its "siblings": children of the same parent */

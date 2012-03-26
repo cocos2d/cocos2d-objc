@@ -54,6 +54,8 @@
 #if CC_TEXTURE_ATLAS_USE_VAO
 	GLuint				VAOname_;
 #endif
+	
+	BOOL				VAOinitialized_;
 }
 
 /** quantity of quads that are going to be drawn */
