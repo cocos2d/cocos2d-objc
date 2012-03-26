@@ -199,4 +199,7 @@
 @interface AnimatedParticles : ParticleDemoBatch
 {}
 @end
+@interface LotsOfAnimatedParticles : ParticleDemoBatch
+{}
+@end
 
