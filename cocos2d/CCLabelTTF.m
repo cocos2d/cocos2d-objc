@@ -109,7 +109,6 @@
 	string_ = [str copy];
 
 	CCTexture2D *tex;
-	
 	if( CGSizeEqualToSize( dimensions_, CGSizeZero ) )
 		tex = [[CCTexture2D alloc] initWithString:str
 										 fontName:fontName_

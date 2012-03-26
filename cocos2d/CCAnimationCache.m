@@ -61,18 +61,6 @@ static CCAnimationCache *sharedAnimationCache_=nil;
 	sharedAnimationCache_ = nil;
 }
 
--(void) removeUnusedAnimations
-{
-	NSArray *keys = [animations_ allKeys];
-	for( id key in keys ) {
-		id value = [animations_ objectForKey:key];
-		if( [value retainCount] == 1 ) {
-			CCLOG(@"cocos2d: CCAnimationCache: removing unused frame: %@", key);
-			[animations_ removeObjectForKey:key];
-		}
-	}
-}
-
 -(id) init
 {
 	if( (self=[super init]) ) {

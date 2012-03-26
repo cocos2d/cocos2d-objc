@@ -45,13 +45,6 @@
  */
 +(void)purgeSharedAnimationCache;
 
-
-/** Removes unused animations.
- * Animations that have a retain count of 1 will be deleted.
- * It is convenient to call this method after when starting a new Scene.
- */
--(void) removeUnusedAnimations;
-
 /** Adds a CCAnimation with a name.
  */
 -(void) addAnimation:(CCAnimation*)animation name:(NSString*)name;

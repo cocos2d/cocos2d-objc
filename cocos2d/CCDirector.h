@@ -99,7 +99,6 @@ and when to execute the Scenes.
 	CCLabelAtlas *FPSLabel_;
 	CCLabelAtlas *SPFLabel_;
 	CCLabelAtlas *drawsLabel_;
-	CCLabelAtlas *memoryLabel_;
 
 	/* is the running scene paused */
 	BOOL isPaused_;

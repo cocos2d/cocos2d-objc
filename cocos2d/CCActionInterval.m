@@ -34,10 +34,6 @@
 #import "CCNode.h"
 #import "Support/CGPointExtension.h"
 
-#if USE_CC_CACHE
-#include "CCNodeCache.h"
-#endif
-
 //
 // IntervalAction
 //
@@ -55,11 +51,7 @@
 
 +(id) actionWithDuration: (ccTime) d
 {
-#if USE_CC_CACHE
-	return [sNodeCache objectWithClass:[self class] withInitSelector:@selector(initWithDuration:)];
-#else
-	return [[[self alloc] initWithDuration:d] autorelease];
-#endif
+	return [[[self alloc] initWithDuration:d ] autorelease];
 }
 
 -(id) initWithDuration: (ccTime) d
@@ -270,14 +262,7 @@
 
 +(id) actionWithAction:(CCFiniteTimeAction*)action times:(NSUInteger)times
 {
-#if USE_CC_CACHE
-	CCRepeat *obj = [sNodeCache objectWithClass:[self class] withInitSelector:@selector(initWithDuration:)];
-	[obj initWithAction:action times:times];
-	return obj;
-#else
 	return [[[self alloc] initWithAction:action times:times] autorelease];
-#endif
-	
 }
 
 -(id) initWithAction:(CCFiniteTimeAction*)action times:(NSUInteger)times
@@ -494,13 +479,7 @@
 @implementation CCRotateTo
 +(id) actionWithDuration: (ccTime) t angle:(float) a
 {
-#if USE_CC_CACHE
-	CCRotateTo *obj = [sNodeCache objectWithClass:[self class] withInitSelector:@selector(initWithDuration:)];
-	[obj initWithDuration:t angle:a];
-	return obj;
-#else
 	return [[[self alloc] initWithDuration:t angle:a ] autorelease];
-#endif
 }
 
 -(id) initWithDuration: (ccTime) t angle:(float) a
@@ -548,13 +527,7 @@
 @implementation CCRotateBy
 +(id) actionWithDuration: (ccTime) t angle:(float) a
 {
-#if USE_CC_CACHE
-	CCRotateBy *obj = [sNodeCache objectWithClass:[self class] withInitSelector:@selector(initWithDuration:)];
-	[obj initWithDuration:t angle:a];
-	return obj;
-#else
 	return [[[self alloc] initWithDuration:t angle:a ] autorelease];
-#endif
 }
 
 -(id) initWithDuration: (ccTime) t angle:(float) a
@@ -598,13 +571,7 @@
 @implementation CCMoveTo
 +(id) actionWithDuration: (ccTime) t position: (CGPoint) p
 {
-#if USE_CC_CACHE
-	CCMoveTo *obj = [sNodeCache objectWithClass:[self class] withInitSelector:@selector(initWithDuration:)];
-	[obj initWithDuration:t position:p];
-	return obj;
-#else
 	return [[[self alloc] initWithDuration:t position:p ] autorelease];
-#endif
 }
 
 -(id) initWithDuration: (ccTime) t position: (CGPoint) p
@@ -613,11 +580,6 @@
 		endPosition_ = p;
 
 	return self;
-}
-
--(void) setEndPosition:(CGPoint)p
-{
-	endPosition_ = p;
 }
 
 -(id) copyWithZone: (NSZone*) zone
@@ -647,13 +609,7 @@
 @implementation CCMoveBy
 +(id) actionWithDuration: (ccTime) t position: (CGPoint) p
 {
-#if USE_CC_CACHE
-	CCMoveBy *obj = [sNodeCache objectWithClass:[self class] withInitSelector:@selector(initWithDuration:)];
-	[obj initWithDuration:t position:p];
-	return obj;
-#else
 	return [[[self alloc] initWithDuration:t position:p ] autorelease];
-#endif
 }
 
 -(id) initWithDuration: (ccTime) t position: (CGPoint) p
@@ -692,13 +648,7 @@
 @implementation CCSkewTo
 +(id) actionWithDuration:(ccTime)t skewX:(float)sx skewY:(float)sy
 {
-#if USE_CC_CACHE
-	CCSkewTo *obj = [sNodeCache objectWithClass:[self class] withInitSelector:@selector(initWithDuration:)];
-	[obj initWithDuration:t skewX:sx skewY:sy];
-	return obj;
-#else
 	return [[[self alloc] initWithDuration: t skewX:sx skewY:sy] autorelease];
-#endif
 }
 
 -(id) initWithDuration:(ccTime)t skewX:(float)sx skewY:(float)sy
@@ -801,13 +751,7 @@
 @implementation CCJumpBy
 +(id) actionWithDuration: (ccTime) t position: (CGPoint) pos height: (ccTime) h jumps:(NSUInteger)j
 {
-#if USE_CC_CACHE
-	CCJumpBy *obj = [sNodeCache objectWithClass:[self class] withInitSelector:@selector(initWithDuration:)];
-	[obj initWithDuration:t position:pos height:h jumps:j];
-	return obj;
-#else
 	return [[[self alloc] initWithDuration: t position: pos height: h jumps:j] autorelease];
-#endif
 }
 
 -(id) initWithDuration: (ccTime) t position: (CGPoint) pos height: (ccTime) h jumps:(NSUInteger)j
@@ -889,13 +833,7 @@ static inline CGFloat bezierat( float a, float b, float c, float d, ccTime t )
 @implementation CCBezierBy
 +(id) actionWithDuration: (ccTime) t bezier:(ccBezierConfig) c
 {
-#if USE_CC_CACHE
-	CCBezierBy *obj = [sNodeCache objectWithClass:[self class] withInitSelector:@selector(initWithDuration:)];
-	[obj initWithDuration:t bezier:c];
-	return obj;
-#else
 	return [[[self alloc] initWithDuration:t bezier:c ] autorelease];
-#endif
 }
 
 -(id) initWithDuration: (ccTime) t bezier:(ccBezierConfig) c
@@ -970,13 +908,7 @@ static inline CGFloat bezierat( float a, float b, float c, float d, ccTime t )
 @implementation CCScaleTo
 +(id) actionWithDuration: (ccTime) t scale:(float) s
 {
-#if USE_CC_CACHE
-	CCScaleTo *obj = [sNodeCache objectWithClass:[self class] withInitSelector:@selector(initWithDuration:)];
-	[obj initWithDuration:t scale:s];
-	return obj;
-#else
 	return [[[self alloc] initWithDuration: t scale:s] autorelease];
-#endif
 }
 
 -(id) initWithDuration: (ccTime) t scale:(float) s
@@ -990,13 +922,7 @@ static inline CGFloat bezierat( float a, float b, float c, float d, ccTime t )
 
 +(id) actionWithDuration: (ccTime) t scaleX:(float)sx scaleY:(float)sy
 {
-#if USE_CC_CACHE
-	CCScaleTo *obj = [sNodeCache objectWithClass:[self class] withInitSelector:@selector(initWithDuration:)];
-	[obj initWithDuration:t scaleX:sx scaleY:sy];
-	return obj;
-#else
 	return [[[self alloc] initWithDuration: t scaleX:sx scaleY:sy] autorelease];
-#endif
 }
 
 -(id) initWithDuration: (ccTime) t scaleX:(float)sx scaleY:(float)sy
@@ -1055,13 +981,7 @@ static inline CGFloat bezierat( float a, float b, float c, float d, ccTime t )
 @implementation CCBlink
 +(id) actionWithDuration: (ccTime) t blinks: (NSUInteger) b
 {
-#if USE_CC_CACHE
-	CCBlink *obj = [sNodeCache objectWithClass:[self class] withInitSelector:@selector(initWithDuration:)];
-	[obj initWithDuration:t blinks:b];
-	return obj;
-#else
 	return [[[ self alloc] initWithDuration: t blinks: b] autorelease];
-#endif
 }
 
 -(id) initWithDuration: (ccTime) t blinks: (NSUInteger) b
@@ -1133,13 +1053,7 @@ static inline CGFloat bezierat( float a, float b, float c, float d, ccTime t )
 @implementation CCFadeTo
 +(id) actionWithDuration: (ccTime) t opacity: (GLubyte) o
 {
-#if USE_CC_CACHE
-	CCFadeTo *obj = [sNodeCache objectWithClass:[self class] withInitSelector:@selector(initWithDuration:)];
-	[obj initWithDuration:t opacity:o];
-	return obj;
-#else
 	return [[[ self alloc] initWithDuration: t opacity: o] autorelease];
-#endif
 }
 
 -(id) initWithDuration: (ccTime) t opacity: (GLubyte) o
@@ -1175,13 +1089,7 @@ static inline CGFloat bezierat( float a, float b, float c, float d, ccTime t )
 @implementation CCTintTo
 +(id) actionWithDuration:(ccTime)t red:(GLubyte)r green:(GLubyte)g blue:(GLubyte)b
 {
-#if USE_CC_CACHE
-	CCTintTo *obj = [sNodeCache objectWithClass:[self class] withInitSelector:@selector(initWithDuration:)];
-	[obj initWithDuration:t red:r green:g blue:b];
-	return obj;
-#else
 	return [[(CCTintTo*)[ self alloc] initWithDuration:t red:r green:g blue:b] autorelease];
-#endif
 }
 
 -(id) initWithDuration: (ccTime) t red:(GLubyte)r green:(GLubyte)g blue:(GLubyte)b
@@ -1220,13 +1128,7 @@ static inline CGFloat bezierat( float a, float b, float c, float d, ccTime t )
 @implementation CCTintBy
 +(id) actionWithDuration:(ccTime)t red:(GLshort)r green:(GLshort)g blue:(GLshort)b
 {
-#if USE_CC_CACHE
-	CCTintBy *obj = [sNodeCache objectWithClass:[self class] withInitSelector:@selector(initWithDuration:)];
-	[obj initWithDuration:t red:r green:g blue:b];
-	return obj;
-#else
 	return [[(CCTintBy*)[ self alloc] initWithDuration:t red:r green:g blue:b] autorelease];
-#endif
 }
 
 -(id) initWithDuration:(ccTime)t red:(GLshort)r green:(GLshort)g blue:(GLshort)b
@@ -1290,15 +1192,9 @@ static inline CGFloat bezierat( float a, float b, float c, float d, ccTime t )
 @implementation CCReverseTime
 +(id) actionWithAction: (CCFiniteTimeAction*) action
 {
-#if USE_CC_CACHE
-	CCReverseTime *obj = [sNodeCache objectWithClass:[self class] withInitSelector:@selector(initWithDuration:)];
-	[obj initWithAction:action];
-	return obj;
-#else
 	// casting to prevent warnings
 	CCReverseTime *a = [self alloc];
 	return [[a initWithAction:action] autorelease];
-#endif
 }
 
 -(id) initWithAction: (CCFiniteTimeAction*) action
@@ -1360,13 +1256,7 @@ static inline CGFloat bezierat( float a, float b, float c, float d, ccTime t )
 
 +(id) actionWithAnimation: (CCAnimation*)anim
 {
-#if USE_CC_CACHE
-	CCAnimate *obj = [sNodeCache objectWithClass:[self class] withInitSelector:@selector(initWithDuration:)];
-	[obj initWithAnimation:anim];
-	return obj;
-#else
 	return [[[self alloc] initWithAnimation:anim] autorelease];
-#endif
 }
 
 // delegate initializer
@@ -1501,13 +1391,7 @@ static inline CGFloat bezierat( float a, float b, float c, float d, ccTime t )
 
 + (id) actionWithTarget:(id) target action:(CCFiniteTimeAction*) action
 {
-#if USE_CC_CACHE
-	CCTargetedAction *obj = [sNodeCache objectWithClass:[self class] withInitSelector:@selector(initWithDuration:)];
-	[obj initWithTarget:target action:action];
-	return obj;
-#else
 	return [[ (CCTargetedAction*)[self alloc] initWithTarget:target action:action] autorelease];
-#endif
 }
 
 - (id) initWithTarget:(id) targetIn action:(CCFiniteTimeAction*) actionIn

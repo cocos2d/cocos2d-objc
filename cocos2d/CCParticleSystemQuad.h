@@ -52,8 +52,6 @@
 	GLushort			*indices_;		// indices
 	GLuint				VAOname_;
 	GLuint				buffersVBO_[2]; //0: vertex  1: indices
-	
-	BOOL				vaoInit_;
 }
 
 /** initialices the indices for the vertices */

@@ -165,8 +165,7 @@
 #import "kazmath/kazmath.h"
 #import "kazmath/GL/matrix.h"
 
-// Threading
-#import "NSThread+performBlock.h"
+
 
 // free functions
 NSString * cocos2dVersion(void);
