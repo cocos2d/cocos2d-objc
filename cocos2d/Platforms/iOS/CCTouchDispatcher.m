@@ -1394,95 +1394,111 @@ static BOOL evaluate(int v, ccOperators op1, int v1, BOOL useAnd, ccOperators op
 	//------------------------------------------------------------
 }
 
+typedef struct{
+	unsigned int targetedHandlersCount;
+	unsigned int standardHandlersCount;
+	BOOL needsMutableSet;
+	id mutableTouches;
+	struct ccTouchHandlerHelperData helper;
+}ccTouchesHelper; 
+
 #pragma mark -
 #pragma mark TouchDispatcher - Process Targeted Handlers
 
-- (void) processTargetedHandlers:(NSSet*)touches withEvent:(UIEvent*)event withTouchType:(unsigned int)idx
-{	
-	CCTargetedTouchHandler *handler;	
-	if( targetedHandlersCount > 0 ) {
+- (void) processTargetedHandlers:(NSSet*)touches withEvent:(UIEvent*)event withTouchType:(unsigned int)idx localData:(ccTouchesHelper *)d
+{
+	CCTargetedTouchHandler *handler;
+	if( d->targetedHandlersCount > 0 ) {
 		for( UITouch *touch in touches ) {
 			CCARRAY_FOREACH(targetedHandlers, handler) { // speed is critical here
-				
+                
 				if ( handler.disable ) continue; // handlers marked for removal are serviced
-				
+                
 				BOOL claimed = NO;
 				if( idx == kCCTouchBegan ) {
 					claimed = [handler.delegate ccTouchBegan:touch withEvent:event];
 					if( claimed )
 						[handler.claimedTouches addObject:touch];
 				} 
-				
+                
 				// else (moved, ended, cancelled)
 				else if( [handler.claimedTouches containsObject:touch] ) {
 					claimed = YES;
-					if( handler.enabledSelectors & helper.type )
-						[handler.delegate performSelector:helper.touchSel withObject:touch withObject:event];
-					
-					if( helper.type & (kCCTouchSelectorCancelledBit | kCCTouchSelectorEndedBit) )
+					if( handler.enabledSelectors & d->helper.type )
+						[handler.delegate performSelector:d->helper.touchSel withObject:touch withObject:event];
+                    
+					if( d->helper.type & (kCCTouchSelectorCancelledBit | kCCTouchSelectorEndedBit) )
 						[handler.claimedTouches removeObject:touch];
 				}
-				
+                
 				if( claimed && handler.swallowsTouches ) {
-					if( needsMutableSet )
-						[mutableTouches removeObject:touch];
+					if( d->needsMutableSet )
+						[d->mutableTouches removeObject:touch];
 					break;
 				}
 			}
 		}
-	}		
+	}
 }
 
 #pragma mark TouchDispatcher - Process Standard Handlers
 
-- (void) processStandardHandlers:(UIEvent*)event
+- (void) processStandardHandlers:(UIEvent*)event localData:(ccTouchesHelper *)d
 {
 	CCTouchHandler *handler;
-	if( standardHandlersCount > 0 && [mutableTouches count]>0 ) {
-		CCARRAY_FOREACH(standardHandlers, handler) { 
-			if ( handler.disable ) continue; // handlers marked for removal are serviced (default)
-			if( handler.enabledSelectors & helper.type )
-				[handler.delegate performSelector:helper.touchesSel withObject:mutableTouches withObject:event];
+	if( d->standardHandlersCount > 0 && [d->mutableTouches count]>0 ) {
+		CCARRAY_FOREACH(standardHandlers, handler) {
+			if (handler.disable) continue; // handlers marked for removal are serviced (default)
+			if (handler.enabledSelectors & d->helper.type)
+				[handler.delegate performSelector:d->helper.touchesSel withObject:d->mutableTouches withObject:event];
 		}
-	}		
+	}
 }
 
 #pragma mark TouchDispatcher - touches - dispatch events!
 
 -(void) touches:(NSSet*)touches withEvent:(UIEvent*)event withTouchType:(unsigned int)idx
 {
-	NSAssert(idx < 4, @"Invalid idx value");
-	
-	locked = YES; // processing of the touch callbacks is in progress
-	
-	// optimization to prevent a mutable copy when it is not necessary
-	targetedHandlersCount = [targetedHandlers count];
-	standardHandlersCount = [standardHandlers count];	
-	needsMutableSet = (targetedHandlersCount && standardHandlersCount);
-	
-	mutableTouches = (needsMutableSet ? [touches mutableCopy] : touches); // copy is expensive
+    NSAssert(idx < 4, @"Invalid idx value");
     
-	helper = handlerHelperData[idx];
-	
+    BOOL secondLock = NO;
+    if (locked)
+        secondLock = YES;
+    
+    locked = YES; // processing of the touch callbacks is in progress
+    
+    ccTouchesHelper l;
+    l.targetedHandlersCount = [targetedHandlers count];
+	l.standardHandlersCount = [standardHandlers count];
+	l.needsMutableSet = (l.targetedHandlersCount && l.standardHandlersCount);
+    
+	l.mutableTouches = (l.needsMutableSet ? [touches mutableCopy] : touches); // copy is expensive
+    
+	l.helper = handlerHelperData[idx];
+    
 	//
 	// processing touches
 	//
 	if ( processStandardHandlersFirst ) {
-		[self processStandardHandlers:event];
-		[self processTargetedHandlers:touches withEvent:event withTouchType:idx];	
+		[self processStandardHandlers:event localData:&l];
+		[self processTargetedHandlers:touches withEvent:event withTouchType:idx localData:&l];
 	}
-	else{ // this is the default order of the event processing	
-		[self processTargetedHandlers:touches withEvent:event withTouchType:idx];	
-		[self processStandardHandlers:event];
+	else{ // this is the default order of the event processing
+		[self processTargetedHandlers:touches withEvent:event withTouchType:idx localData:&l];
+		[self processStandardHandlers:event localData:&l];
 	}
-	
-	if ( needsMutableSet )
-		[mutableTouches release];
-	
-	locked = NO; // processing of the touch callbacks is done
-	
-	// all critical operations are done after touch callback processing loop is finished 
-	[self safeProcessing];
+    
+    if (l.needsMutableSet)
+		[l.mutableTouches release];    
+    
+    if (secondLock){
+        // skip safeProcessing
+    }
+    else{
+        locked = NO; // processing of the touch callbacks is done
+        // all critical operations are done after touch callback processing loop is finished
+        [self safeProcessing];
+    }
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event

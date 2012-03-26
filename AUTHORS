@@ -82,6 +82,7 @@ Contributors (alphabetically ordered):
 * Samuel J. Grabski http://www.sg7.com
 	Created a new touchdispatcher implementation
     New touchdispatcher performance tests
+    Fix for touchdispatcher
     
 * Scott Lembcke (AKA slembcke) (http://chipmunk-physics.net/)
 	Improved ARC compatiblity code
