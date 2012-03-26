@@ -538,12 +538,8 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 
 #elif defined(__CC_PLATFORM_MAC)
 	{
-
-		NSFont *font = [[NSFontManager sharedFontManager]
-                        fontWithFamily:name
-                        traits:NSUnboldFontMask | NSUnitalicFontMask
-                        weight:0
-                        size:size];
+        NSFont* font = [NSFont fontWithName:name size:size];
+        if (!font) font = [NSFont fontWithName:@"Helvetica" size:size];
 
 		NSDictionary *dict = [NSDictionary dictionaryWithObject:font forKey:NSFontAttributeName];
 
@@ -579,7 +575,8 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 #elif defined(__CC_PLATFORM_MAC)
 
     // select font
-    NSFont *font = [[NSFontManager sharedFontManager] fontWithFamily:name traits:NSUnboldFontMask | NSUnitalicFontMask weight:0 size:size];
+    NSFont *font = [NSFont fontWithName:name size:size];
+    if (!font) font = [NSFont fontWithName:@"Helvetica" size:size];
 
     // create paragraph style
     NSMutableParagraphStyle *pstyle = [[NSMutableParagraphStyle alloc] init];
