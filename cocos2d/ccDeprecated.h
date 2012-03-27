@@ -36,6 +36,7 @@
 #import "CCActionManager.h"
 #import "CCActionInterval.h"
 #import "CCRenderTexture.h"
+#import "CCSpriteFrameCache.h"
 #import "Support/CCFileUtils.h"
 #import "Platforms/Mac/CCDirectorMac.h"
 #import "Platforms/iOS/CCTouchDispatcher.h"
@@ -211,11 +212,12 @@ DEPRECATED_ATTRIBUTE @interface MacView : CCGLView
 
 @interface CCFileUtils (Deprecated)
 
-+(NSString*) fullPathFromRelativePath:(NSString*) relPath;
+// new: -(NSString*) fullPathFromRelativePath:  (instance method, not class method)
++(NSString*) fullPathFromRelativePath:(NSString*) relPath DEPRECATED_ATTRIBUTE;
+// new: -(NSString*) fullPathFromRelativePath:resolutionType  (instance method, not class method)
++(NSString*) fullPathFromRelativePath:(NSString*)relPath resolutionType:(ccResolutionType*)resolutionType DEPRECATED_ATTRIBUTE;
 
 #ifdef __CC_PLATFORM_IOS
-// new: -(NSString*) fullPathFromRelativePath:relPath  (instance method, not class method)
-+(NSString*) fullPathFromRelativePath:(NSString*)relPath resolutionType:(ccResolutionType*)resolutionType DEPRECATED_ATTRIBUTE;
 // new: -(NSString*) removeSuffixFromFile:  (instance method, not class method)
 +(NSString *)removeSuffixFromFile:(NSString*) path DEPRECATED_ATTRIBUTE;
 // new: -(BOOL) iPhoneRetinaDisplayFileExistsAtPath: (instance method, not class method)
@@ -227,6 +229,12 @@ DEPRECATED_ATTRIBUTE @interface MacView : CCGLView
 // new: -(void) setiPhoneRetinaDisplaySuffix: (instance method, not class method)
 +(void) setRetinaDisplaySuffix:(NSString*)suffix DEPRECATED_ATTRIBUTE;
 #endif  //__CC_PLATFORM_IOS
+@end
+
+
+@interface CCSpriteFrameCache (Deprecated)
+-(void) addSpriteFramesWithDictionary:(NSDictionary*)dictionary textureFile:(NSString*)filename DEPRECATED_ATTRIBUTE;
+-(void) addSpriteFramesWithFile:(NSString*)plist textureFile:(NSString*)filename DEPRECATED_ATTRIBUTE;
 @end
 
 #endif // CC_ENABLE_DEPRECATED

@@ -310,11 +310,12 @@ void ccGLUniformModelViewProjectionMatrix( CCGLProgram* program )
 	return [[self sharedFileUtils] fullPathFromRelativePath:relPath];
 }
 
-#if __CC_PLATFORM_IOS
 +(NSString*) fullPathFromRelativePath:(NSString*)relPath resolutionType:(ccResolutionType*)resolutionType
 {
 	return [[self sharedFileUtils] fullPathFromRelativePath:relPath resolutionType:resolutionType];
 }
+
+#if __CC_PLATFORM_IOS
 +(void) setRetinaDisplaySuffix:(NSString*)suffix
 {
 	return [[self sharedFileUtils] setiPhoneRetinaDisplaySuffix:suffix];
@@ -337,8 +338,17 @@ void ccGLUniformModelViewProjectionMatrix( CCGLProgram* program )
 }
 #endif
 
-@end
+@implementation CCSpriteFrameCache (Deprecated)
+-(void) addSpriteFramesWithDictionary:(NSDictionary*)dictionary textureFile:(NSString*)filename
+{
+	[self addSpriteFramesWithDictionary:dictionary textureFilename:filename];
+}
 
+-(void) addSpriteFramesWithFile:(NSString*)plist textureFile:(NSString*)filename
+{
+	[self addSpriteFramesWithFile:plist textureFilename:filename];
+}
+@end
 
 
 #if __CC_PLATFORM_IOS
