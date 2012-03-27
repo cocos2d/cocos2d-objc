@@ -539,7 +539,11 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 #elif defined(__CC_PLATFORM_MAC)
 	{
         NSFont* font = [NSFont fontWithName:name size:size];
-        if (!font) font = [NSFont fontWithName:@"Helvetica" size:size];
+        if( ! font ) {
+            CCLOG(@"cocos2d: Unable to load font %@", name);
+            [self release];
+            return nil;
+        }
 
 		NSDictionary *dict = [NSDictionary dictionaryWithObject:font forKey:NSFontAttributeName];
 
@@ -576,7 +580,11 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 
     // select font
     NSFont *font = [NSFont fontWithName:name size:size];
-    if (!font) font = [NSFont fontWithName:@"Helvetica" size:size];
+    if( ! font ) {
+		CCLOG(@"cocos2d: Unable to load font %@", name);
+		[self release];
+		return nil;
+	}
 
     // create paragraph style
     NSMutableParagraphStyle *pstyle = [[NSMutableParagraphStyle alloc] init];

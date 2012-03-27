@@ -115,7 +115,7 @@
     if ([[fontName lowercaseString] hasSuffix:@".ttf"] || YES)
     {
         // This is a file, register font with font manager
-        NSString* fontFile = [CCFileUtils fullPathFromRelativePath:fontName];
+        NSString* fontFile = [[CCFileUtils sharedFileUtils] fullPathFromRelativePath:fontName];
         NSURL* fontURL = [NSURL fileURLWithPath:fontFile];
         CTFontManagerRegisterFontsForURL((CFURLRef)fontURL, kCTFontManagerScopeProcess, NULL);
         fontName = [[fontFile lastPathComponent] stringByDeletingPathExtension];
