@@ -4,6 +4,7 @@ version 1.1-rc0 .. -..-2012
 . [FIX] CCSprite: CCSprite bug in setDisplayFrameWithAnimationName
 . [FIX] CCParticleSystemQuad: Changed animation property to particleAnimation, for compiler warning
 . [FIX] CCTouchDispatcher: fixed crash after showing UIAlertView (issue #1279)
+. [FIX] CCGrabber: added assert to warn that grabber doesn't work with rgb565
 
 version 1.1-beta2b 14-Mar-2012
 . [FIX] CCUtils: missing method declaration
