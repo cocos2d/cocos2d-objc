@@ -30,6 +30,7 @@
 #import "ccMacros.h"
 #import "CCShaderCache.h"
 #import "CCGLProgram.h"
+#import "CCFileUtils.h"
 
 #ifdef __CC_PLATFORM_IOS
 #import "Platforms/iOS/CCDirectorIOS.h"
@@ -107,18 +108,31 @@
 {
 	[string_ release];
 	string_ = [str copy];
+    
+    NSString* fontName = fontName_;
+    
+#ifdef __CC_PLATFORM_MAC
+    if ([[fontName lowercaseString] hasSuffix:@".ttf"] || YES)
+    {
+        // This is a file, register font with font manager
+        NSString* fontFile = [[CCFileUtils sharedFileUtils] fullPathFromRelativePath:fontName];
+        NSURL* fontURL = [NSURL fileURLWithPath:fontFile];
+        CTFontManagerRegisterFontsForURL((CFURLRef)fontURL, kCTFontManagerScopeProcess, NULL);
+        fontName = [[fontFile lastPathComponent] stringByDeletingPathExtension];
+    }
+#endif
 
 	CCTexture2D *tex;
-	if( CGSizeEqualToSize( dimensions_, CGSizeZero ) )
+	if( dimensions_.width == 0 || dimensions_.height == 0 )
 		tex = [[CCTexture2D alloc] initWithString:str
-										 fontName:fontName_
+										 fontName:fontName
 										 fontSize:fontSize_  * CC_CONTENT_SCALE_FACTOR()];
 	else
 		tex = [[CCTexture2D alloc] initWithString:str
 									   dimensions:CC_SIZE_POINTS_TO_PIXELS(dimensions_)
 										alignment:alignment_
 									lineBreakMode:lineBreakMode_
-										 fontName:fontName_
+										 fontName:fontName
 										 fontSize:fontSize_  * CC_CONTENT_SCALE_FACTOR()];
 
 #ifdef __CC_PLATFORM_IOS
@@ -197,6 +211,22 @@
 -(CGSize) dimensions
 {
     return dimensions_;
+}
+
+-(void) setAlignment:(CCTextAlignment)alignment
+{
+    if (alignment != alignment_)
+    {
+        alignment_ = alignment;
+        
+        // Force update
+        [self setString:[self string]];
+    }
+}
+
+- (CCTextAlignment) alignment
+{
+    return alignment_;
 }
 
 - (void) dealloc
