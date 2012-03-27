@@ -213,7 +213,7 @@
     return dimensions_;
 }
 
--(void) setAlignment:(NSTextAlignment)alignment
+-(void) setAlignment:(CCTextAlignment)alignment
 {
     if (alignment != alignment_)
     {
@@ -224,7 +224,7 @@
     }
 }
 
-- (NSTextAlignment) alignment
+- (CCTextAlignment) alignment
 {
     return alignment_;
 }
