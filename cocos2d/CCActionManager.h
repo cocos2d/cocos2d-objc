@@ -32,8 +32,6 @@
 #import "Support/ccCArray.h"
 #import "Support/uthash.h"
 
-#define kCCActionManagerPriority 0
-
 typedef struct _hashElement
 {
 	struct ccArray	*actions;
