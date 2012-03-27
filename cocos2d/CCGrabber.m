@@ -61,11 +61,13 @@
 
 -(void)beforeRender:(CCTexture2D*)texture
 {
-	glGetIntegerv(CC_GL_FRAMEBUFFER_BINDING, &oldFBO);
-	ccglBindFramebuffer(CC_GL_FRAMEBUFFER, fbo);
-
+    #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 	// BUG XXX: doesn't work with RGB565.
-
+    NSAssert([[[CCDirector sharedDirector] openGLView] pixelFormat] == kEAGLColorFormatRGBA8  , @"grabber doesn't support EAGLView pixelformat rgb565, initialize with RGBA8 instead");
+    #endif
+    
+    glGetIntegerv(CC_GL_FRAMEBUFFER_BINDING, &oldFBO);
+	ccglBindFramebuffer(CC_GL_FRAMEBUFFER, fbo);
 
 	glClearColor(0,0,0,0);
 	
