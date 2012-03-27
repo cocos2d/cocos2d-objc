@@ -110,10 +110,11 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	Added setters/getters for fontName, fontSize, fntFile in LabelBMFont and LabelTTF
 	Added support for MainThread Mac Director
 	Particle can be resized in runtime
-	LabelTTF can be init without params
+	LabelTTF: can be init without params.
 	MenuItem: added setters for target:selctor, block and sprites
 	Node: zOrder property is readwrite
 	LabelBMFont: can be "init" without further arguments
+	LabelTTF: better custom TTF support for Mac
 	
 * Vit Valentin:
 	Author of cocos2d-x's Catmull Rom actions. 

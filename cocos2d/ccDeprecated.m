@@ -337,6 +337,7 @@ void ccGLUniformModelViewProjectionMatrix( CCGLProgram* program )
 	return [[self sharedFileUtils] iPadRetinaDisplayFileExistsAtPath:filename];
 }
 #endif
+@end
 
 @implementation CCSpriteFrameCache (Deprecated)
 -(void) addSpriteFramesWithDictionary:(NSDictionary*)dictionary textureFile:(NSString*)filename
