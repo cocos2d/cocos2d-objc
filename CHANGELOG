@@ -10,6 +10,7 @@ version 2.0-rc1 XX-Mar-2012
 . [FIX] Deprecated: displayedFrame points to displayFrame avoiding infinite loop (issue #1347)
 . [FIX] LabelBMFont: can be "init" without further arguments
 		Glyphs with big yOffset are rendered correctly (issue #1343)
+. [FIX] LabelTTF: Better support for custom TTF (Mac)
 . [FIX] NSThread+Block: fixed crash due to block not being copied to the heap
 . [FIX] OpenGL: VAO are initialized on the cocos2d thread on machines that don't support shareables VAOs
 

@@ -97,6 +97,12 @@
 /** returns the shared file utils instance */
 +(CCFileUtils*) sharedFileUtils;
 
+
+/** Purge cached entries.
+ Will be called automatically by the Director when a memory warning is received
+ */
+-(void) purgeCachedEntries;
+
 /** Returns the fullpath of an filename.
 
  If in iPhoneRetinaDisplay mode, and a RetinaDisplay file is found, it will return that path.
@@ -112,31 +118,24 @@
 -(NSString*) fullPathFromRelativePath:(NSString*) relPath;
 
 
-/** Purge cached entries.
- Will be called automatically by the Director when a memory warning is received
- */
--(void) purgeCachedEntries;
-
-
-#ifdef __CC_PLATFORM_IOS
-
 /** Returns the fullpath of an filename including the resolution of the image.
-
+ 
  If in RetinaDisplay mode, and a RetinaDisplay file is found, it will return that path.
  If in iPad mode, and an iPad file is found, it will return that path.
-
+ 
  Examples:
-
+ 
  * In iPad mode: "image.png" -> "/full/path/image-ipad.png" (in case the -ipad file exists)
  * In iPhone RetinaDisplay mode: "image.png" -> "/full/path/image-hd.png" (in case the -hd file exists)
  * In iPad RetinaDisplay mode: "image.png" -> "/full/path/image-ipadhd.png" (in case the -ipadhd file exists)
-
+ 
  If an iPad file is found, it will set resolution type to kCCResolutioniPad
  If a RetinaDisplay file is found, it will set resolution type to kCCResolutionRetinaDisplay
-
+ 
  */
 -(NSString*) fullPathFromRelativePath:(NSString*)relPath resolutionType:(ccResolutionType*)resolutionType;
 
+#ifdef __CC_PLATFORM_IOS
 
 /** removes the suffix from a path
  * On iPhone RetinaDisplay it will remove the -hd suffix
