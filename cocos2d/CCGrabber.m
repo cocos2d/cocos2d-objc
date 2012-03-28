@@ -63,7 +63,8 @@
 {
     #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 	// BUG XXX: doesn't work with RGB565.
-    NSAssert([[[CCDirector sharedDirector] openGLView] pixelFormat] == kEAGLColorFormatRGBA8  , @"grabber doesn't support EAGLView pixelformat rgb565, initialize with RGBA8 instead");
+    if ([[[CCDirector sharedDirector] openGLView] pixelFormat] != kEAGLColorFormatRGBA8)
+        CCLOG(@"grabber doesn't support transparent parts with EAGLView pixelformat RGB565, initialize with RGBA8 instead");
     #endif
     
     glGetIntegerv(CC_GL_FRAMEBUFFER_BINDING, &oldFBO);
