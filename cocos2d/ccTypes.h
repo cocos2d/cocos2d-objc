@@ -337,6 +337,14 @@ typedef enum
 
 } ccResolutionType;
 
+//! Vertical text alignment type
+typedef enum
+{
+    kCCVerticalTextAlignmentTop,
+    kCCVerticalTextAlignmentMiddle,
+    kCCVerticalTextAlignmentBottom,
+} ccVerticalTextAlignmentType;
+
 //! delta time type
 //! if you want more resolution redefine it as a double
 typedef float ccTime;

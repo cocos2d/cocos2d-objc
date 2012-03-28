@@ -406,7 +406,7 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 
 #ifdef __CC_PLATFORM_IOS
 
-- (id) initWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(CCTextAlignment)alignment lineBreakMode:(CCLineBreakMode)lineBreakMode font:(id)uifont
+- (id) initWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(CCTextAlignment)alignment vertAlignment:(ccVerticalTextAlignmentType) vertAlignment lineBreakMode:(CCLineBreakMode)lineBreakMode font:(id)uifont
 {
 	NSAssert( uifont, @"Invalid font");
 
@@ -439,9 +439,28 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 
 	UIGraphicsPushContext(context);
 
+    CGRect drawArea;
+    if(vertAlignment == kCCVerticalTextAlignmentTop)
+    {
+        drawArea = CGRectMake(0, 0, dimensions.width, dimensions.height);
+    }
+    else
+    {
+        CGSize drawSize = [string sizeWithFont:uifont constrainedToSize:dimensions lineBreakMode:lineBreakMode];
+        
+        if(vertAlignment == kCCVerticalTextAlignmentBottom)
+        {
+            drawArea = CGRectMake(0, dimensions.height - drawSize.height, dimensions.width, drawSize.height);
+        }
+        else // kCCVerticalTextAlignmentMiddle
+        {
+            drawArea = CGRectMake(0, (dimensions.height - drawSize.height) / 2, dimensions.width, drawSize.height);
+        }
+    }
+
 	// normal fonts
 	if( [uifont isKindOfClass:[UIFont class] ] )
-		[string drawInRect:CGRectMake(0, 0, dimensions.width, dimensions.height) withFont:uifont lineBreakMode:lineBreakMode alignment:alignment];
+		[string drawInRect:drawArea withFont:uifont lineBreakMode:lineBreakMode alignment:alignment];
 
 	UIGraphicsPopContext();
 
@@ -465,28 +484,46 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 
 #elif defined(__CC_PLATFORM_MAC)
 
-- (id) initWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(CCTextAlignment)alignment attributedString:(NSAttributedString*)stringWithAttributes
+- (id) initWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(CCTextAlignment)alignment vertAlignment:(ccVerticalTextAlignmentType) vertAlignment attributedString:(NSAttributedString*)stringWithAttributes
 {
 	NSAssert(stringWithAttributes, @"Invalid stringWithAttributes");
 
     // get nearest power of two
     NSSize POTSize = NSMakeSize(ccNextPOT(dimensions.width), ccNextPOT(dimensions.height));
-
-    // get string dimensions
-	NSSize realDimensions = [stringWithAttributes size];
-
+    
+	// Get actual rendered dimensions
+    NSRect boundingRect = [stringWithAttributes boundingRectWithSize:dimensions options:NSStringDrawingUsesLineFragmentOrigin];
+    
 	// Mac crashes if the width or height is 0
-	if (realDimensions.width > 0 && realDimensions.height > 0)
-    {
-		// Disable antialias
-		[[NSGraphicsContext currentContext] setShouldAntialias:NO];
-
-        NSImage *image = [[NSImage alloc] initWithSize:POTSize];
-		[image lockFocus];
-
-        [stringWithAttributes drawInRect:NSMakeRect(0, POTSize.height - dimensions.height, dimensions.width, dimensions.height)]; //POTSize.width, POTSize.height)];
-
-        NSBitmapImageRep *bitmap = [[NSBitmapImageRep alloc] initWithFocusedViewRect:NSMakeRect(0.0f, 0.0f, POTSize.width, POTSize.height)];
+	if( boundingRect.size.width > 0 && boundingRect.size.height > 0 ) {
+        
+        CGSize offset = CGSizeMake(0, POTSize.height - dimensions.height);
+        
+        //Alignment
+		switch (alignment) {
+			case CCTextAlignmentLeft: break;
+			case CCTextAlignmentCenter: offset.width = (dimensions.width-boundingRect.size.width)/2.0f; break;
+			case CCTextAlignmentRight: offset.width = dimensions.width-boundingRect.size.width; break;
+			default: break;
+		}
+		switch (vertAlignment) {
+			case kCCVerticalTextAlignmentTop: offset.height += dimensions.height - boundingRect.size.height; break;
+			case kCCVerticalTextAlignmentMiddle: offset.height += (dimensions.height - boundingRect.size.height) / 2; break;
+			case kCCVerticalTextAlignmentBottom: break;
+			default: break;
+		}
+        
+        CGRect drawArea = CGRectMake(offset.width, offset.height, boundingRect.size.width, boundingRect.size.height);
+		
+		//Disable antialias
+		[[NSGraphicsContext currentContext] setShouldAntialias:NO];	
+		
+		NSImage *image = [[NSImage alloc] initWithSize:POTSize];
+		[image lockFocus];	
+		
+        [stringWithAttributes drawWithRect:drawArea options:NSStringDrawingUsesLineFragmentOrigin];
+		
+		NSBitmapImageRep *bitmap = [[NSBitmapImageRep alloc] initWithFocusedViewRect:NSMakeRect (0.0f, 0.0f, POTSize.width, POTSize.height)];
 		[image unlockFocus];
 
 		unsigned char *data = (unsigned char*) [bitmap bitmapData];  //Use the same buffer to improve the performance.
@@ -534,7 +571,7 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 		return nil;
 	}
 
-	return [self initWithString:string dimensions:dim alignment:CCTextAlignmentCenter lineBreakMode:UILineBreakModeWordWrap font:font];
+	return [self initWithString:string dimensions:dim alignment:CCTextAlignmentCenter vertAlignment:kCCVerticalTextAlignmentTop lineBreakMode:CCLineBreakModeWordWrap font:font];
 
 #elif defined(__CC_PLATFORM_MAC)
 	{
@@ -551,18 +588,18 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 
 		dim = NSSizeToCGSize( [stringWithAttributes size] );
 
-		return [self initWithString:string dimensions:dim alignment:CCTextAlignmentCenter attributedString:stringWithAttributes];
+		return [self initWithString:string dimensions:dim alignment:CCTextAlignmentCenter vertAlignment:kCCVerticalTextAlignmentTop attributedString:stringWithAttributes];
 	}
 #endif // __CC_PLATFORM_MAC
 
 }
 
-- (id) initWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(CCTextAlignment)alignment fontName:(NSString*)name fontSize:(CGFloat)size
+- (id) initWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(CCTextAlignment)alignment vertAlignment:(ccVerticalTextAlignmentType) vertAlignment fontName:(NSString*)name fontSize:(CGFloat)size
 {
-	return [self initWithString:string dimensions:dimensions alignment:alignment lineBreakMode:CCLineBreakModeWordWrap fontName:name fontSize:size];
+	return [self initWithString:string dimensions:dimensions alignment:alignment vertAlignment:vertAlignment lineBreakMode:CCLineBreakModeWordWrap fontName:name fontSize:size];
 }
 
-- (id) initWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(CCTextAlignment)alignment lineBreakMode:(CCLineBreakMode)lineBreakMode fontName:(NSString*)name fontSize:(CGFloat)size
+- (id) initWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(CCTextAlignment)alignment vertAlignment:(ccVerticalTextAlignmentType) vertAlignment lineBreakMode:(CCLineBreakMode)lineBreakMode fontName:(NSString*)name fontSize:(CGFloat)size
 {
 #ifdef __CC_PLATFORM_IOS
 	id						uifont = nil;
@@ -574,7 +611,7 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 		return nil;
 	}
 
-	return [self initWithString:string dimensions:dimensions alignment:alignment lineBreakMode:lineBreakMode font:uifont];
+	return [self initWithString:string dimensions:dimensions alignment:alignment vertAlignment:vertAlignment lineBreakMode:lineBreakMode font:uifont];
 
 #elif defined(__CC_PLATFORM_MAC)
 
@@ -599,7 +636,7 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
     // create string with attributes
     NSAttributedString *stringWithAttributes = [[[NSAttributedString alloc] initWithString:string attributes:attributes] autorelease];
 
-	return [self initWithString:string dimensions:dimensions alignment:alignment attributedString:stringWithAttributes];
+	return [self initWithString:string dimensions:dimensions alignment:alignment vertAlignment:vertAlignment attributedString:stringWithAttributes];
 
 #endif // Mac
 }
