@@ -39,7 +39,7 @@
 
 #define CCARRAY_FOREACH(__array__, __object__)												\
 if (__array__ && __array__->data->num > 0)													\
-for(id *__arr__ = __array__->data->arr, *end = __array__->data->arr + __array__->data->num-1;	\
+for(const CC_ARC_UNSAFE_RETAINED id *__arr__ = __array__->data->arr, *end = __array__->data->arr + __array__->data->num-1;	\
 	__arr__ <= end && ((__object__ = *__arr__) != nil || true);										\
 	__arr__++)
 
@@ -80,6 +80,8 @@ __arr__--)
 - (id) randomObject;
 - (id) lastObject;
 - (NSArray*) getNSArray;
+/** @since 1.1 */
+- (BOOL) isEqualToArray:(CCArray*)otherArray;
 
 
 // Adding Objects
@@ -105,13 +107,24 @@ __arr__--)
 
 - (void) exchangeObject:(id)object1 withObject:(id)object2;
 - (void) exchangeObjectAtIndex:(NSUInteger)index1 withObjectAtIndex:(NSUInteger)index2;
+/** @since 1.1 */
+- (void) replaceObjectAtIndex:(NSUInteger)index withObject:(id)anObject;
 - (void) reverseObjects;
 - (void) reduceMemoryFootprint;
+
+// Sorting Array 
+/** all since @1.1 */
+- (void) qsortUsingCFuncComparator:(int(*)(const void *, const void *))comparator;	// c qsort is used for sorting
+- (void) insertionSortUsingCFuncComparator:(int(*)(const void *, const void *))comparator;  // insertion sort 
+- (void) mergesortLUsingCFuncComparator:(int(*)(const void *, const void *))comparator;	// mergesort
+- (void) insertionSort:(SEL)selector; // It sorts source array in ascending order
+- (void) sortUsingFunction:(NSInteger (*)(id, id, void *))compare context:(void *)context;
 
 // Sending Messages to Elements
 
 - (void) makeObjectsPerformSelector:(SEL)aSelector;
 - (void) makeObjectsPerformSelector:(SEL)aSelector withObject:(id)object;
-
+/** @since 1.1 */
+- (void) makeObjectPerformSelectorWithArrayObjects:(id)object selector:(SEL)aSelector; 
 
 @end

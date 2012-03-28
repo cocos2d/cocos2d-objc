@@ -58,7 +58,8 @@ static NSString *transitions[] = {
 	@"MultipleParticleSystems",
 	@"MultipleParticleSystemsBatched",	
 	@"AddAndDeleteParticleSystems",
-	@"ReorderParticleSystems"
+	@"ReorderParticleSystems",
+	@"AnimatedParticles"
 	
 };
 
@@ -1766,25 +1767,25 @@ Class restartAction()
 	CGRect rect = CGRectMake(0.f,0.f,0.f,0.f);
 	//adds the texture inside the plist to the texture cache
 	[CCParticleBatchNode extractTextureFromPlist:@"Particles/Spiral.plist"];
-	batchNode_ = [CCParticleBatchNode particleBatchNodeWithFile:@"Spiral.png" capacity:20 useQuad:YES additiveBlending:NO];
-
+	batchNode_ = [CCParticleBatchNode particleBatchNodeWithFile:@"Spiral.png" capacity:16000 useQuad:YES additiveBlending:NO];
+	
 	[self addChild:batchNode_ z:1 tag:2];
 	
-	for (int i = 0; i<5; i++) {
+	for (int i = 0; i<6; i++) {
 		
 		CCParticleSystemQuad *particleSystem = [CCParticleSystemQuad particleWithFile:@"Particles/Spiral.plist" batchNode:batchNode_ rect:rect];
 		
 		particleSystem.positionType = kCCPositionTypeGrouped;		 
-		particleSystem.totalParticles = 2;
-
+		particleSystem.totalParticles = 200;
+		
 		particleSystem.position = ccp(i*15 +100,i*15+100);
 		
-		
-		[batchNode_ addChild:particleSystem z:i tag:-1];
+		uint randZ = arc4random() % 100; 
+		[batchNode_ addChild:particleSystem z:randZ tag:-1];
 		
 	}
 	
-	[self schedule:@selector(removeSystem) interval:2];
+	[self schedule:@selector(removeSystem) interval:0.5];
 	emitter_ = nil;
 	
 }
@@ -1794,15 +1795,25 @@ Class restartAction()
 	if ([[batchNode_ children] count] > 0) 
 	{
 		
-		[batchNode_ removeChild:[[batchNode_ children] objectAtIndex:0] cleanup:YES];
+		/*CCARRAY_FOREACH([[batchNode_ children],aSystem) 
+		 {
+		 CCLOG(@"pos %f %f, atlas %i",system.position.x,system.position.y,system.atlasIndex); 
+		 }*/
+		CCLOG(@"remove random system");
+		uint rand = arc4random() % ([[batchNode_ children] count] - 1);
+		[batchNode_ removeChild:[[batchNode_ children] objectAtIndex:rand] cleanup:YES];
 		CCParticleSystemQuad *particleSystem = [CCParticleSystemQuad particleWithFile:@"Particles/Spiral.plist" batchNode:batchNode_ rect:CGRectMake(0.f,0.f,0.f,0.f)];
 		
+		//add new
+		
 		particleSystem.positionType = kCCPositionTypeGrouped;		 
-		particleSystem.totalParticles = 2;
+		particleSystem.totalParticles = 200;
 		
-		particleSystem.position = ccp(150 ,300);
-		
-		//[batchNode_ addChild:particleSystem z:2 tag:-1];
+		particleSystem.position = ccp(arc4random() % 300 ,arc4random() % 400);
+
+		CCLOG(@"add a new system");
+		uint randZ = arc4random() % 100; 
+		[batchNode_ addChild:particleSystem z:randZ tag:-1];
 	}
 }
 
@@ -1831,9 +1842,10 @@ Class restartAction()
 
 -(NSString*) subtitle
 {
-	return @"every 2 sec 2 particles disappear";
+	return @"every 2 sec 1 system disappear, 1 appears";
 }
 @end
+
 
 
 @implementation ReorderParticleSystems
@@ -1967,6 +1979,80 @@ Class restartAction()
 }
 @end
 
+@implementation AnimatedParticles
+-(void) onEnter
+{
+	[super onEnter];
+	
+	[self setColor:ccBLACK];
+	[self removeChild:background cleanup:YES];
+	background = nil;
+	
+	CGRect rect = CGRectMake(0.f,0.f,0.f,0.f);
+	batchNode_ = [CCParticleBatchNode  particleBatchNodeWithFile:@"animations/animated_particles.png" capacity:4 useQuad:YES additiveBlending:NO];
+	
+	[self addChild:batchNode_ z:1 tag:2];
+	
+	
+	CCSpriteFrameCache* sfc = [CCSpriteFrameCache sharedSpriteFrameCache];
+	[sfc addSpriteFramesWithFile:@"animations/animated_particles.plist"];
+	
+	CCAnimation* anim2 = [CCAnimation animation];
+	
+	[anim2 addFrame:[sfc spriteFrameByName:@"coco_1.png"] delay:0.5f];
+	[anim2 addFrame:[sfc spriteFrameByName:@"coco_2.png"] delay:0.5f];
+	[anim2 addFrame:[sfc spriteFrameByName:@"coco_3.png"] delay:0.5f];
+	[anim2 addFrame:[sfc spriteFrameByName:@"coco_4.png"] delay:0.5f];
+	[anim2 addFrame:[sfc spriteFrameByName:@"coco_5.png"] delay:0.5f];
+	[anim2 addFrame:[sfc spriteFrameByName:@"coco_4.png"] delay:0.5f];
+	[anim2 addFrame:[sfc spriteFrameByName:@"coco_3.png"] delay:0.5f];
+	[anim2 addFrame:[sfc spriteFrameByName:@"coco_2.png"] delay:0.5f];
+	
+	//new properties in plist define startScale, startScaleVar, endScale, endScaleVar
+	for (int i = 0; i < 4; i++)
+	{
+		CCParticleSystemQuad *system = [CCParticleSystemQuad particleWithFile:@"Particles/OneParticle.plist" batchNode:batchNode_ rect:rect];
+		system.emissionRate = 1.f;
+		[system setPosition:ccp(30+i*60,200)];
+		[system setAnimation:anim2 withAnchorPoint:ccp(0.5f,0.0f)];
+		[system setAnimationType:i]; 
+		
+		[batchNode_ addChild: system z:10];
+		
+	}	
+}
+
+
+
+-(NSString *) title
+{
+	return @"AnimatedParticles";
+}
+
+-(NSString*) subtitle
+{
+	return @"4 modes";
+}
+
+-(void) update:(ccTime) dt
+{
+	CCLabelAtlas *atlas = (CCLabelAtlas*) [self getChildByTag:kTagLabelAtlas];
+	
+	uint count = 0; 
+	CCNode* item;
+	CCNode* batchNode = [self getChildByTag:2];
+	CCARRAY_FOREACH(batchNode.children, item)
+	{
+		if ([item isKindOfClass:[CCParticleSystem class]])
+		{
+			count += [(CCParticleSystem*) item particleCount];	
+		}
+	}
+	NSString *str = [NSString stringWithFormat:@"%4d", count];
+	[atlas setString:str];
+}
+@end
+
 
 #pragma mark -
 #pragma mark App Delegate
@@ -2007,10 +2093,11 @@ Class restartAction()
 	// You can change anytime.
 	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA8888];
 	
-	// When in iPad / RetinaDisplay mode, CCFileUtils will append the "-ipad" / "-hd" to all loaded files
-	// If the -ipad  / -hdfile is not found, it will load the non-suffixed version
-	[CCFileUtils setiPadSuffix:@"-ipad"];			// Default on iPad is "" (empty string)
-	[CCFileUtils setRetinaDisplaySuffix:@"-hd"];	// Default on RetinaDisplay is "-hd"
+	// When in iPhone RetinaDisplay, iPad, iPad RetinaDisplay mode, CCFileUtils will append the "-hd", "-ipad", "-ipadhd" to all loaded files
+	// If the -hd, -ipad, -ipadhd files are not found, it will load the non-suffixed version
+	[CCFileUtils setiPhoneRetinaDisplaySuffix:@"-hd"];		// Default on iPhone RetinaDisplay is "-hd"
+	[CCFileUtils setiPadSuffix:@"-ipad"];					// Default on iPad is "" (empty string)
+	[CCFileUtils setiPadRetinaDisplaySuffix:@"-ipadhd"];	// Default on iPad RetinaDisplay is "-ipadhd"
 	
 	CCScene *scene = [CCScene node];
 	[scene addChild: [nextAction() node]];

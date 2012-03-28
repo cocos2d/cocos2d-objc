@@ -310,12 +310,18 @@
 			nextDt_ += [innerAction_ duration]/duration_;
 		}
 		
+		//fix for issue #1288, incorrect end value of repeat
+		if(dt == 1.0 && total_ < times_) 
+        {
+            total_++;
+        }
+		
 		//don't set a instantaction back or update it, it has no use because it has no duration
 		if (!isActionInstant_)
 		{
 			if (total_ == times_)
 			{	
-				[innerAction_ update:0];
+				[innerAction_ update:1];
 				[innerAction_ stop];
 			}//issue #390 prevent jerk, use right update
 			else 
@@ -1329,46 +1335,63 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 // Animate
 //
 
-#pragma mark -
-#pragma mark Animate
+#pragma mark - CCAnimate
 @implementation CCAnimate
 
 @synthesize animation = animation_;
 
 +(id) actionWithAnimation: (CCAnimation*)anim
 {
-	return [[[self alloc] initWithAnimation:anim restoreOriginalFrame:YES] autorelease];
+	return [[[self alloc] initWithAnimation:anim restoreOriginalFrame:anim.restoreOriginalFrame] autorelease];
 }
 
-+(id) actionWithAnimation: (CCAnimation*)anim restoreOriginalFrame:(BOOL)b
++(id) actionWithAnimation: (CCAnimation*)anim restoreOriginalFrame:(BOOL)restore
 {
-	return [[[self alloc] initWithAnimation:anim restoreOriginalFrame:b] autorelease];
+	return [[[self alloc] initWithAnimation:anim restoreOriginalFrame:restore] autorelease];
 }
 
-+(id) actionWithDuration:(ccTime)duration animation: (CCAnimation*)anim restoreOriginalFrame:(BOOL)b
++(id) actionWithDuration:(ccTime)duration animation: (CCAnimation*)anim restoreOriginalFrame:(BOOL)restore
 {
-	return [[[self alloc] initWithDuration:duration animation:anim restoreOriginalFrame:b] autorelease];
+	return [[[self alloc] initWithDuration:duration animation:anim restoreOriginalFrame:restore] autorelease];
 }
 
 -(id) initWithAnimation: (CCAnimation*)anim
 {
-	return [self initWithAnimation:anim restoreOriginalFrame:YES];
+	NSAssert( anim!=nil, @"Animate: argument Animation must be non-nil");
+	return [self initWithAnimation:anim restoreOriginalFrame:anim.restoreOriginalFrame];
 }
 
--(id) initWithAnimation: (CCAnimation*)anim restoreOriginalFrame:(BOOL) b
-{
-	return [self initWithDuration:([[anim frames] count]*[anim delay]) animation:anim restoreOriginalFrame:b];
-}
-
--(id) initWithDuration:(ccTime)aDuration animation: (CCAnimation*)anim restoreOriginalFrame:(BOOL) b
+-(id) initWithAnimation: (CCAnimation*)anim restoreOriginalFrame:(BOOL)restoreOriginalFrame
 {
 	NSAssert( anim!=nil, @"Animate: argument Animation must be non-nil");
 	
-	if( (self=[super initWithDuration:aDuration] ) ) {
+	return [self initWithDuration:anim.duration animation:anim restoreOriginalFrame:restoreOriginalFrame];
+}
+
+// delegate initializer
+-(id) initWithDuration:(ccTime)duration animation: (CCAnimation*)anim restoreOriginalFrame:(BOOL)restoreOriginalFrame
+{
+	NSAssert( anim!=nil, @"Animate: argument Animation must be non-nil");
+	
+	if( (self=[super initWithDuration:duration] ) ) {
 		
-		restoreOriginalFrame_ = b;
+		nextFrame_ = 0;
+		restoreOriginalFrame_ = restoreOriginalFrame;
 		self.animation = anim;
 		origFrame_ = nil;
+		
+		splitTimes_ = [[NSMutableArray alloc] initWithCapacity:anim.frames.count];
+		
+		float accumUnitsOfTime = 0;
+		float newUnitOfTimeValue = duration / anim.totalDelayUnits;
+		
+		for( CCAnimationFrame *frame in anim.frames ) {
+			
+			NSNumber *value = [NSNumber numberWithFloat: (accumUnitsOfTime * newUnitOfTimeValue) / duration];
+			accumUnitsOfTime += frame.delayUnits;
+			
+			[splitTimes_ addObject:value];
+		}		
 	}
 	return self;
 }
@@ -1381,6 +1404,7 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 
 -(void) dealloc
 {
+	[splitTimes_ release];
 	[animation_ release];
 	[origFrame_ release];
 	[super dealloc];
@@ -1390,11 +1414,13 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 {
 	[super startWithTarget:aTarget];
 	CCSprite *sprite = target_;
-
+	
 	[origFrame_ release];
-
+	
 	if( restoreOriginalFrame_ )
 		origFrame_ = [[sprite displayedFrame] retain];
+	
+	nextFrame_ = 0;
 }
 
 -(void) stop
@@ -1411,16 +1437,25 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 {
 	NSArray *frames = [animation_ frames];
 	NSUInteger numberOfFrames = [frames count];
+	CCSpriteFrame *frameToDisplay = nil;
 	
-    NSUInteger idx = t * numberOfFrames;
-    if( idx >= numberOfFrames ) {
-        idx = numberOfFrames - 1;
-    }
-    
-	CCSprite *sprite = target_;
-	if (! [sprite isFrameDisplayed: [frames objectAtIndex: idx]] ) {
-		[sprite setDisplayFrame: [frames objectAtIndex:idx]];
-    }
+	for( NSUInteger i=nextFrame_; i < numberOfFrames; i++ ) {
+		NSNumber *splitTime = [splitTimes_ objectAtIndex:i];
+		
+		if( [splitTime floatValue] <= t ) {
+			CCAnimationFrame *frame = [frames objectAtIndex:i];
+			frameToDisplay = [frame spriteFrame];
+			[(CCSprite*)target_ setDisplayFrame: frameToDisplay];
+			
+			NSDictionary *dict = [frame userInfo];
+			if( dict )
+				[[NSNotificationCenter defaultCenter] postNotificationName:CCAnimationFrameDisplayedNotification object:target_ userInfo:dict];
+			
+			nextFrame_ = i+1;
+			
+			break;
+		}
+	}	
 }
 
 - (CCActionInterval *) reverse
@@ -1431,7 +1466,7 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
     for (id element in enumerator)
         [newArray addObject:[[element copy] autorelease]];
 	
-	CCAnimation *newAnim = [CCAnimation animationWithFrames:newArray delay:animation_.delay];
+	CCAnimation *newAnim = [CCAnimation animationWithFrames:newArray delay:animation_.delayPerUnit];
 	return [[self class] actionWithDuration:duration_ animation:newAnim restoreOriginalFrame:restoreOriginalFrame_];
 }
 
@@ -1460,7 +1495,7 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 -(id) initWithRandomStartAnimation:(CCAnimation*)anim factor:(float)factor {
     NSAssert( anim!=nil, @"Animate: argument Animation must be non-nil");
 
-	return [self initWithDuration:[[anim frames] count]*[anim delay]
+	return [self initWithDuration:anim.duration
                         animation:anim
                             start:random()%(int)round([[anim frames] count]*factor)];
 }
@@ -1468,7 +1503,7 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 -(id) initWithAnimation:(CCAnimation*)anim start:(NSInteger)start {
     NSAssert( anim!=nil, @"Animate: argument Animation must be non-nil");
 
-	return [self initWithDuration:[[anim frames] count]*[anim delay] animation:anim start:start];
+	return [self initWithDuration:anim.duration animation:anim start:start];
 }
 
 -(id) initWithDuration:(ccTime)aDuration animation:(CCAnimation*)anim start:(NSInteger)start {
@@ -1536,9 +1571,52 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
     for (id element in enumerator)
         [newArray addObject:[[element copy] autorelease]];
 	
-	CCAnimation *newAnim = [CCAnimation animationWithFrames:newArray delay:animation_.delay];
+	CCAnimation *newAnim = [CCAnimation animationWithFrames:newArray delayPerUnit:animation_.delayPerUnit];
 	return [[self class] actionWithDuration:duration_ animation:newAnim restoreOriginalFrame:restoreOriginalFrame_];
 }
 
 @end
 
+@implementation CCTargetedAction
+
+@synthesize forcedTarget = forcedTarget_;
+
++ (id) actionWithTarget:(id) target action:(CCFiniteTimeAction*) action
+{
+	return [[ (CCTargetedAction*)[self alloc] initWithTarget:target action:action] autorelease];
+}
+
+- (id) initWithTarget:(id) targetIn action:(CCFiniteTimeAction*) actionIn
+{
+	if((self = [super initWithDuration:actionIn.duration]))
+	{
+		forcedTarget_ = [targetIn retain];
+		action_ = [actionIn retain];
+	}
+	return self;
+}
+
+- (void) dealloc
+{
+	[forcedTarget_ release];
+	[action_ release];
+	[super dealloc];
+}
+
+- (void) startWithTarget:(id)aTarget
+{
+	[super startWithTarget:forcedTarget_];
+	[action_ startWithTarget:forcedTarget_];
+}
+
+- (void) stop
+{
+	[action_ stop];
+}
+
+- (void) update:(ccTime) time
+{
+	[action_ update:time];
+}
+
+@end

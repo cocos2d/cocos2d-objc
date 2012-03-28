@@ -317,6 +317,11 @@ enum {
  */
 -(CGPoint) anchoredPosition:(CGPoint)anchorPoint;
 
+/** callback that is called every time the CCNode leaves the 'stage'.
+ If the CCNode leaves the 'stage' with a transition, this callback is called when the transition starts.
+ */
+-(void) onExitTransitionDidStart;
+
 // composition: ADD
 
 /** Adds a child to the container with z-order as 0.

@@ -38,6 +38,7 @@
 #import "CCSpriteFrame.h"
 #import "CCParticleBatchNode.h"
 #import "CCTextureAtlas.h"
+#import "CCAnimation.h"
 
 // support
 #import "Support/OpenGL_Internal.h"
@@ -50,6 +51,7 @@
 @implementation CCParticleSystemQuad
 
 @synthesize quads=quads_;
+@synthesize animation=animation_;
 +(id) particleWithFile:(NSString*) plistFile batchNode:(CCParticleBatchNode*) batchNode rect:(CGRect) rect
 {
 	return [[[self alloc] initWithFile:plistFile batchNode:batchNode rect:rect] autorelease];
@@ -141,6 +143,9 @@
 
 		useBatchNode_ = YES;
 	}
+	
+	particleAnchorPoint_ = ccp(0.5f,0.5f);
+	animation_ = nil;
 
 	return [NSNumber numberWithInt:1];
 }
@@ -153,6 +158,7 @@
 	if (!useBatchNode_) glDeleteBuffers(1, &quadsID_);
 #endif
 	
+	[animation_ release]; 
 	[super dealloc];
 }
 
@@ -203,20 +209,30 @@
 			start = 0; 
 			end = totalParticles; 
 		}
+		
+		ccV3F_C4B_T2F_Quad quad;
+		//issue 1316
+		bzero( &quad, sizeof(quad) );
 
 		for(NSInteger i=start; i<end; i++) {
 			// bottom-left vertex:
-			quadCollection[i].bl.texCoords.u = left;
-			quadCollection[i].bl.texCoords.v = bottom;
+			quad.bl.texCoords.u = left;
+			quad.bl.texCoords.v = bottom;
 			// bottom-right vertex:
-			quadCollection[i].br.texCoords.u = right;
-			quadCollection[i].br.texCoords.v = bottom;
+			quad.br.texCoords.u = right;
+			quad.br.texCoords.v = bottom;
 			// top-left vertex:
-			quadCollection[i].tl.texCoords.u = left;
-			quadCollection[i].tl.texCoords.v = top;
+			quad.tl.texCoords.u = left;
+			quad.tl.texCoords.v = top;
 			// top-right vertex:
-			quadCollection[i].tr.texCoords.u = right;
-			quadCollection[i].tr.texCoords.v = top;
+			quad.tr.texCoords.u = right;
+			quad.tr.texCoords.v = top;
+			
+			quad.bl.texCoords.u = left;
+			quad.bl.texCoords.v = bottom;
+			
+			quadCollection[i] = quad;
+		
 		}
 	}
 }
@@ -264,7 +280,7 @@
 {
 	// colors
 	ccV3F_C4B_T2F_Quad *quad; 
-
+	
 	if (useBatchNode_) 
 	{	
 		ccV3F_C4B_T2F_Quad *batchQuads = [[batchNode_ textureAtlas] quads]; 
@@ -279,23 +295,65 @@
 	quad->tr.colors = color;
 	
 	// vertices
-	GLfloat size_2 = p->size/2;
-	//don't transform particles if type is free
-	if (useBatchNode_ && transformSystemDirty_ && positionType_!=kCCPositionTypeFree)
+	GLfloat pos1x, pos1y, pos2x, pos2y; 
+	if (useAnimation_)
 	{
-		GLfloat x1 = -size_2*scaleX_;
-		GLfloat y1 = -size_2*scaleY_;
+		//p->size = scale 
+		ccAnimationFrameData frameData = animationFrameData_[p->currentFrame];
+			
+		pos1x = (-particleAnchorPoint_.x *  frameData.size.width) * p->size;
+		pos1y = (-particleAnchorPoint_.y * frameData.size.height) * p->size;	
+		pos2x = ((1.f - particleAnchorPoint_.x) * frameData.size.width) * p->size;
+		pos2y = ((1.f - particleAnchorPoint_.y) * frameData.size.height) * p->size;
 		
-		GLfloat x2 = size_2*scaleX_;
-		GLfloat y2 = size_2*scaleY_;
+		// set the texture coordinates to the (new) frame
+		quad->tl.texCoords = frameData.texCoords.tl;
+		quad->tr.texCoords = frameData.texCoords.tr;
+		quad->bl.texCoords = frameData.texCoords.bl;
+		quad->br.texCoords = frameData.texCoords.br;
+		
+	}
+	else 
+	{
+		float size2 = p->size/2.f;
+		pos1x = -size2;//leftside x
+		pos1y  = -size2; //bottom side y	
+		pos2x = size2; //rightside x
+		pos2y = size2; //topside y
+	}
+	
+	GLfloat r; 
+	
+	//positionTypeFree doesn't react to transformations of parent
+	if (useBatchNode_ && positionType_!=kCCPositionTypeFree)
+	{//transformation need to be applied to quad manually 
+		
+		pos1x = pos1x * scaleX_;
+		pos1y = pos1y * scaleY_;
+		
+		pos2x = pos2x * scaleX_;
+		pos2y = pos2y * scaleY_;
+		
+		r = (GLfloat)-CC_DEGREES_TO_RADIANS(p->rotation+rotation_);
+	}
+	else 
+		r = (GLfloat)-CC_DEGREES_TO_RADIANS(p->rotation);
+	
+	//don't transform particles if type is free
+	if (useBatchNode_ )
+	{
+		GLfloat x1 = pos1x;
+		GLfloat y1 = pos1y;
+		
+		GLfloat x2 = pos2x;
+		GLfloat y2 = pos2y;
 		GLfloat x = newPos.x;
 		GLfloat y = newPos.y;
 		
-		GLfloat r = (GLfloat)-CC_DEGREES_TO_RADIANS(p->rotation+rotation_);
-		GLfloat cr = cosf(r) * scaleX_;
-		GLfloat sr = sinf(r) * scaleX_;
-		GLfloat cr2 = cosf(r) * scaleY_;
-		GLfloat sr2 = sinf(r) * scaleY_;
+		GLfloat cr = cosf(r);
+		GLfloat sr = sinf(r);
+		GLfloat cr2 = cosf(r);
+		GLfloat sr2 = sinf(r);
 		GLfloat ax = x1 * cr - y1 * sr2 + x;
 		GLfloat ay = x1 * sr + y1 * cr2 + y;
 		GLfloat bx = x2 * cr - y1 * sr2 + x;
@@ -324,18 +382,19 @@
 		quad->tr.vertices.y = cy;
 		quad->tr.vertices.z = p->z;	
 	}
-	else if( p->rotation ) {
-		GLfloat x1 = -size_2;
-		GLfloat y1 = -size_2;
+	else if( p->rotation) {
+		GLfloat x1 = pos1x;
+		GLfloat y1 = pos1y;
 		
-		GLfloat x2 = size_2;
-		GLfloat y2 = size_2;
+		GLfloat x2 = pos2x;
+		GLfloat y2 = pos2y;
+		
 		GLfloat x = newPos.x;
 		GLfloat y = newPos.y;
 		
-		GLfloat r = (GLfloat)-CC_DEGREES_TO_RADIANS(p->rotation);
 		GLfloat cr = cosf(r);
 		GLfloat sr = sinf(r);
+		
 		GLfloat ax = x1 * cr - y1 * sr + x;
 		GLfloat ay = x1 * sr + y1 * cr + y;
 		GLfloat bx = x2 * cr - y1 * sr + x;
@@ -362,20 +421,20 @@
 		quad->tr.vertices.y = cy;
 	} else {
 		// bottom-left vertex:
-		quad->bl.vertices.x = newPos.x - size_2;
-		quad->bl.vertices.y = newPos.y - size_2;
+		quad->bl.vertices.x = newPos.x + pos1x;
+		quad->bl.vertices.y = newPos.y + pos1y;
 		
 		// bottom-right vertex:
-		quad->br.vertices.x = newPos.x + size_2;
-		quad->br.vertices.y = newPos.y - size_2;
+		quad->br.vertices.x = newPos.x + pos2x;
+		quad->br.vertices.y = newPos.y + pos1y;
 		
 		// top-left vertex:
-		quad->tl.vertices.x = newPos.x - size_2;
-		quad->tl.vertices.y = newPos.y + size_2;
+		quad->tl.vertices.x = newPos.x + pos1x;
+		quad->tl.vertices.y = newPos.y + pos2y;
 		
 		// top-right vertex:
-		quad->tr.vertices.x = newPos.x + size_2;
-		quad->tr.vertices.y = newPos.y + size_2;				
+		quad->tr.vertices.x = newPos.x + pos2x;
+		quad->tr.vertices.y = newPos.y + pos2y;				
 	}
 }
 
@@ -478,6 +537,130 @@
 		glDeleteBuffers(1, &quadsID_);
 #endif
 	}
+}
+
+-(void) setAnimation:(CCAnimation*)anim
+{
+	[self setAnimation:anim withAnchorPoint:ccp(0.5f,0.5f)];
+}
+
+// animation 
+-(void) setAnimation:(CCAnimation*)anim withAnchorPoint:(CGPoint) particleAP 
+{
+	NSAssert (anim != nil,@"animation is nil");
+	
+	[anim retain];
+	[animation_ release];
+	animation_ = anim;
+	
+	particleAnchorPoint_ = particleAP;
+	
+	
+	NSArray* frames = animation_.frames;
+
+	if ([frames count] == 0)
+	{
+		useAnimation_ = NO; 
+		CCLOG(@"no frames in animation");
+		return;
+	}
+	
+	CCSpriteFrame *frame = [[frames objectAtIndex:0] spriteFrame];
+	if ([frame offsetInPixels].x != 0.f || [frame offsetInPixels].y != 0.f)
+	{	
+		CCLOG(@"Particle animation, offset will not be taken into account"); 
+	}
+			  
+	if (batchNode_)
+	{
+		NSAssert (batchNode_.texture.name == texture_.name,@"CCParticleSystemQuad can only use a animation with the same texture as the batchnode");
+	}
+	else 
+	{	
+		CCSpriteFrame* frame = ([[frames objectAtIndex:0] spriteFrame]);
+		self.texture = frame.texture;
+	}
+	
+	totalFrameCount_ = [frames count];
+	
+	if (animationFrameData_)
+	{
+		free(animationFrameData_);	
+		animationFrameData_ = NULL;
+	}
+	
+	// allocate memory for an array that will store data of the animation in the easies usable way for fast per frame updates of the particle system
+	animationFrameData_ = malloc( sizeof(animationFrameData_[0]) * totalFrameCount_ );
+	
+	useAnimation_ = YES;
+	
+	//same as CCAnimate
+	float newUnitOfTimeValue = animation_.duration / animation_.totalDelayUnits;
+	
+	for (int i = 0; i < totalFrameCount_; i++) {
+		
+		CCAnimationFrame *animationFrame = [frames objectAtIndex:i];
+		CCSpriteFrame* frame = animationFrame.spriteFrame; 
+		
+		CGRect rect = [frame rectInPixels];
+		
+		animationFrameData_[i].delay = newUnitOfTimeValue * animationFrame.delayUnits;
+		animationFrameData_[i].size = rect.size; 
+		
+		// now calculate the texture coordinates for the frame
+		float left,right,top,bottom;
+		ccT2F_Quad quad;
+		GLfloat atlasWidth = (GLfloat)texture_.pixelsWide;
+		GLfloat atlasHeight = (GLfloat)texture_.pixelsHigh;
+		
+		if(frame.rotated){
+#if CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
+			left	= (2*rect.origin.x+1)/(2*atlasWidth);
+			right	= left+(rect.size.height*2-2)/(2*atlasWidth);
+			top		= (2*rect.origin.y+1)/(2*atlasHeight);
+			bottom	= top+(rect.size.width*2-2)/(2*atlasHeight);
+#else
+			left	= rect.origin.x/atlasWidth;
+			right	= left+(rect.size.height/atlasWidth);
+			top		= rect.origin.y/atlasHeight;
+			bottom	= top+(rect.size.width/atlasHeight);
+#endif // ! CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
+			
+			quad.bl.u = left;
+			quad.bl.v = top;
+			quad.br.u = left;
+			quad.br.v = bottom;
+			quad.tl.u = right;
+			quad.tl.v = top;
+			quad.tr.u = right;
+			quad.tr.v = bottom;
+			
+		} else {
+#if CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
+			left	= (2*rect.origin.x+1)/(2*atlasWidth);
+			right	= left + (rect.size.width*2-2)/(2*atlasWidth);
+			top		= (2*rect.origin.y+1)/(2*atlasHeight);
+			bottom	= top + (rect.size.height*2-2)/(2*atlasHeight);
+#else
+			left	= rect.origin.x/atlasWidth;
+			right	= left + rect.size.width/atlasWidth;
+			top		= rect.origin.y/atlasHeight;
+			bottom	= top + rect.size.height/atlasHeight;
+#endif // ! CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
+			
+			quad.bl.u = left;
+			quad.bl.v = bottom;
+			quad.br.u = right;
+			quad.br.v = bottom;
+			quad.tl.u = left;
+			quad.tl.v = top;
+			quad.tr.u = right;
+			quad.tr.v = top;
+		}
+		
+		animationFrameData_[i].texCoords = quad;
+		
+	} // for
 }
 
 @end

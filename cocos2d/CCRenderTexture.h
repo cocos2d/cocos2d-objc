@@ -49,6 +49,8 @@ enum
  the render texture to your scene and treat it like any other CocosNode.
  There are also functions for saving the render texture to disk in PNG or JPG format.
  
+ 
+ 
  @since v0.8.1
  */
 @interface CCRenderTexture : CCNode 
@@ -96,9 +98,13 @@ enum
 -(BOOL)saveBuffer:(NSString*)name;
 /** saves the texture into a file. The format can be JPG or PNG */
 -(BOOL)saveBuffer:(NSString*)name format:(int)format;
-/* get buffer as UIImage, can only save a render buffer which has a RGBA8888 pixel format */
+/** get buffer as UIImage, can only save a render buffer which has a RGBA8888 pixel format */
 -(NSData*)getUIImageAsDataFromBuffer:(int) format;
-/* get buffer as UIImage */
+/** get buffer as UIImage 
+ In rare cases getUIImageFromBuffer produces artifacts, a workaround for this is 
+ NSData *imageData = [renderer getUIImageAsDataFromBuffer:kCCImageFormatPNG];
+ UIImage *image = [UIImage imageWithData:imageData];
+ */
 -(UIImage *)getUIImageFromBuffer;
 
 #endif // __IPHONE_OS_VERSION_MAX_ALLOWED

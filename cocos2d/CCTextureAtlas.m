@@ -392,12 +392,13 @@
 
 -(void) fillWithEmptyQuadsFromIndex:(NSUInteger) index amount:(NSUInteger) amount
 {
-	ccV3F_C4B_T2F_Quad *quad = calloc(1,sizeof(ccV3F_C4B_T2F_Quad)); 
+	ccV3F_C4B_T2F_Quad quad;
+	bzero( &quad, sizeof(quad) );
 	
 	NSUInteger to = index + amount;
 	for (NSInteger i = index ; i < to ; i++)
 	{
-		quads_[i] = *quad; 	
+		quads_[i] = quad; 	
 	}
 	
 }
