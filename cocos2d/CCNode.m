@@ -591,6 +591,7 @@ static NSUInteger globalOrderOfArrival = 0;
     if ([children_ count]==0) {
         return 0;
     } else {
+        [self sortAllChildren];
         return ((CCNode*)[children_ lastObject]).zOrder;
     }
 }
