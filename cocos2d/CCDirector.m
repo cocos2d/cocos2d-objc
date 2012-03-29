@@ -165,7 +165,7 @@ static CCDirector *_sharedDirector = nil;
 
 		// action manager
 		actionManager_ = [[CCActionManager alloc] init];
-		[scheduler_ scheduleUpdateForTarget:actionManager_ priority:kCCActionManagerPriority paused:NO];
+		[scheduler_ scheduleUpdateForTarget:actionManager_ priority:kCCPrioritySystem paused:NO];
 
 		winSizeInPixels_ = winSizeInPoints_ = CGSizeZero;
 	}

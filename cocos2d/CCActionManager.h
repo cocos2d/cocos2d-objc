@@ -32,8 +32,6 @@
 #import "Support/ccCArray.h"
 #import "Support/uthash.h"
 
-#define kCCActionManagerPriority 0
-
 typedef struct _hashElement
 {
 	struct ccArray	*actions;
@@ -102,6 +100,14 @@ typedef struct _hashElement
 /** Resumes the target. All queued actions will be resumed.
  */
 -(void) resumeTarget:(id)target;
+
+/** Pauses all running actions, returning a list of targets whose actions were paused.
+ */
+-(NSSet *) pauseAllRunningActions;
+
+/** Resume a set of targets (convenience function to reverse a pauseAllRunningActions call)
+ */
+-(void) resumeTargets:(NSSet *)targetsToResume;
 
 @end
 

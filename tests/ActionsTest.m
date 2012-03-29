@@ -51,6 +51,7 @@ static NSString *transitions[] = {
 	@"ActionFollow",
 	@"ActionProperty",
 	@"ActionTargeted",
+    @"PauseResumeActions",
 
 	@"Issue1305",
 	@"Issue1305_2",
@@ -1378,6 +1379,58 @@ Class restartAction()
 {
 	return @"Action that runs on another target. Useful for sequences";
 }
+@end
+
+#pragma mark - PauseResumeActions
+
+@implementation PauseResumeActions
+
+@synthesize pausedTargets = pausedTargets_;
+
+- (void) dealloc
+{
+    [pausedTargets_ release];
+    [super dealloc];
+}
+
+-(void) onEnter
+{
+	[super onEnter];
+	
+	[self centerSprites:3];
+    
+    [tamara runAction:[CCRepeatForever actionWithAction:[CCRotateBy actionWithDuration:3.0 angle:360]]];
+    [grossini runAction:[CCRepeatForever actionWithAction:[CCRotateBy actionWithDuration:3.0 angle:-360]]];
+    [kathia runAction:[CCRepeatForever actionWithAction:[CCRotateBy actionWithDuration:3.0 angle:360]]];
+
+    [self schedule:@selector(pause:) interval:3 repeat:NO delay:0];
+    [self schedule:@selector(resume:) interval:5 repeat:NO delay:0];
+}
+
+-(NSString *) title
+{
+	return @"PauseResumeActions";
+}
+
+-(NSString*) subtitle
+{
+	return @"All actions pause at 3s and resume at 5s";
+}
+
+-(void) pause:(ccTime)dt
+{
+    NSLog(@"Pausing");
+	CCDirector *director = [CCDirector sharedDirector];
+    self.pausedTargets = [director.actionManager pauseAllRunningActions];
+}
+
+-(void) resume:(ccTime)dt
+{
+    NSLog(@"Resuming");
+	CCDirector *director = [CCDirector sharedDirector];
+    [director.actionManager resumeTargets:self.pausedTargets];
+}
+
 @end
 
 #pragma mark - Issue1305

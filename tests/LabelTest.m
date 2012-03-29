@@ -1229,28 +1229,150 @@ static float menuItemPaddingCenter = 50;
 #pragma mark -
 #pragma mark LabelTTFTest
 
+@interface LabelTTFTest ()
+
+- (void) updateAlignment;
+
+- (NSString*) currentAlignment;
+
+@end
+
 @implementation LabelTTFTest
+
+@synthesize label = label_;
+
 -(id) init
 {
 	if( (self=[super init]) ) {
 
+        CGSize blockSize = CGSizeMake(200, 160);
 		CGSize s = [[CCDirector sharedDirector] winSize];
 
-		// CCLabelBMFont
-		CCLabelTTF *left = [CCLabelTTF labelWithString:@"alignment left" dimensions:CGSizeMake(s.width,50) alignment:CCTextAlignmentLeft fontName:@"Marker Felt" fontSize:32];
-		CCLabelTTF *center = [CCLabelTTF labelWithString:@"alignment center" dimensions:CGSizeMake(s.width,50) alignment:CCTextAlignmentCenter fontName:@"Marker Felt" fontSize:32];
-		CCLabelTTF *right = [CCLabelTTF labelWithString:@"alignment right" dimensions:CGSizeMake(s.width,50) alignment:CCTextAlignmentRight fontName:@"Marker Felt" fontSize:32];
+        CCLayerColor *colorLayer = [CCLayerColor layerWithColor:ccc4(100, 100, 100, 255) width:blockSize.width height:blockSize.height];
+        colorLayer.anchorPoint = ccp(0,0);
+        colorLayer.position = ccp((s.width - blockSize.width) / 2, 60);
 
-		left.position = ccp(s.width/2,200);
-		center.position = ccp(s.width/2,150);
-		right.position = ccp(s.width/2,100);
+        [self addChild:colorLayer];
 
-		[self addChild:left];
-		[self addChild:right];
-		[self addChild:center];
+        [CCMenuItemFont setFontSize:30];
+        CCMenu *menu;
+
+        menu = [CCMenu menuWithItems:
+                [CCMenuItemFont itemWithString:@"Left" target:self selector:@selector(setAlignmentLeft)],
+                [CCMenuItemFont itemWithString:@"Center" target:self selector:@selector(setAlignmentCenter)],
+                [CCMenuItemFont itemWithString:@"Right" target:self selector:@selector(setAlignmentRight)],
+                nil];
+        [menu alignItemsVerticallyWithPadding:4];
+        menu.position = ccp(50, s.height / 2 - 20);
+        [self addChild:menu];
+        
+        menu = [CCMenu menuWithItems:
+                [CCMenuItemFont itemWithString:@"Top" target:self selector:@selector(setAlignmentTop)],
+                [CCMenuItemFont itemWithString:@"Middle" target:self selector:@selector(setAlignmentMiddle)],
+                [CCMenuItemFont itemWithString:@"Bottom" target:self selector:@selector(setAlignmentBottom)],
+                nil];
+        [menu alignItemsVerticallyWithPadding:4];
+        menu.position = ccp(s.width - 50, s.height / 2 - 20);
+        [self addChild:menu];
+        
+        horizAlign = CCTextAlignmentLeft;
+        vertAlign = kCCVerticalTextAlignmentTop;
+        
+        [self updateAlignment];
 	}
 
 	return self;
+}
+
+- (void)dealloc
+{
+    [label_ release];
+    [super dealloc];
+}
+
+- (void) updateAlignment
+{
+    CGSize blockSize = CGSizeMake(200, 160);
+    CGSize s = [[CCDirector sharedDirector] winSize];
+
+    [self.label removeFromParentAndCleanup:YES];
+    self.label = [CCLabelTTF labelWithString:[self currentAlignment]
+                                  dimensions:blockSize
+                                   alignment:horizAlign
+                               vertAlignment:vertAlign
+                                    fontName:@"Marker Felt"
+                                    fontSize:32];
+    self.label.anchorPoint = ccp(0,0);
+    self.label.position = ccp((s.width - blockSize.width) / 2, 60);
+    
+    [self addChild:self.label];
+}
+
+- (void) setAlignmentLeft
+{
+    horizAlign = CCTextAlignmentLeft;
+    [self updateAlignment];
+}
+
+- (void) setAlignmentCenter
+{
+    horizAlign = CCTextAlignmentCenter;
+    [self updateAlignment];
+}
+
+- (void) setAlignmentRight
+{
+    horizAlign = CCTextAlignmentRight;
+    [self updateAlignment];
+}
+
+- (void) setAlignmentTop
+{
+    vertAlign = kCCVerticalTextAlignmentTop;
+    [self updateAlignment];
+}
+
+- (void) setAlignmentMiddle
+{
+    vertAlign = kCCVerticalTextAlignmentMiddle;
+    [self updateAlignment];
+}
+
+- (void) setAlignmentBottom
+{
+    vertAlign = kCCVerticalTextAlignmentBottom;
+    [self updateAlignment];
+}
+
+
+- (NSString*) currentAlignment
+{
+    NSString* vertical;
+    NSString* horizontal;
+    switch (vertAlign) {
+        case kCCVerticalTextAlignmentTop:
+            vertical = @"Top";
+            break;
+        case kCCVerticalTextAlignmentMiddle:
+            vertical = @"Middle";
+            break;
+        case kCCVerticalTextAlignmentBottom:
+            vertical = @"Bottom";
+            break;
+    }
+    switch (horizAlign) {
+        case CCTextAlignmentLeft:
+            horizontal = @"Left";
+            break;
+        case CCTextAlignmentCenter:
+            horizontal = @"Center";
+            break;
+        case CCTextAlignmentRight:
+            horizontal = @"Right";
+            break;
+    }
+    
+    return [NSString stringWithFormat:@"Alignment %@ %@", vertical, horizontal];
 }
 
 -(NSString*) title
@@ -1260,7 +1382,7 @@ static float menuItemPaddingCenter = 50;
 
 -(NSString *) subtitle
 {
-	return @"You should see 3 labels aligned left, center and right";
+	return @"Select the buttons on the sides to change alignment";
 }
 
 @end
@@ -1278,7 +1400,7 @@ static float menuItemPaddingCenter = 50;
 		// CCLabelBMFont
 //		CCLabelTTF *center =  [[CCLabelTTF alloc] initWithString:@"Bla bla bla bla bla bla bla bla bla bla bla (bla)" dimensions:CGSizeMake(150,84) alignment:UITextAlignmentLeft fontName: @"MarkerFelt.ttc" fontSize: 14];
 
-		CCLabelTTF *center = [CCLabelTTF labelWithString:@"word wrap \"testing\" (bla0) bla1 'bla2' [bla3] (bla4) {bla5} {bla6} [bla7] (bla8) [bla9] 'bla0' \"bla1\"" dimensions:CGSizeMake(s.width/2,200) alignment:CCTextAlignmentCenter fontName:@"Paint Boy" fontSize:32];
+		CCLabelTTF *center = [CCLabelTTF labelWithString:@"word wrap \"testing\" (bla0) bla1 'bla2' [bla3] (bla4) {bla5} {bla6} [bla7] (bla8) [bla9] 'bla0' \"bla1\"" dimensions:CGSizeMake(s.width/2,200) alignment:CCTextAlignmentCenter vertAlignment:kCCVerticalTextAlignmentTop fontName:@"Paint Boy" fontSize:32];
 		center.position = ccp(s.width/2,150);
 
 		[self addChild:center];
@@ -1353,6 +1475,7 @@ static float menuItemPaddingCenter = 50;
 		CCLabelTTF *wordwrap = [CCLabelTTF labelWithString:@"Testing line wordwrap mode mode mode mode"
 												dimensions:CGSizeMake(s.width/4,40)
 												 alignment:CCTextAlignmentCenter
+                                             vertAlignment:kCCVerticalTextAlignmentTop
 											 lineBreakMode:CCLineBreakModeWordWrap
 												  fontName:@"Marker Felt"
 												  fontSize:16];
@@ -1360,7 +1483,7 @@ static float menuItemPaddingCenter = 50;
 
 		[self addChild:wordwrap];
 
-		CCLabelTTF *label = [CCLabelTTF labelWithString: @"A really long line of text that is longer than the width of the label" dimensions:CGSizeMake(280, 60) alignment:CCTextAlignmentCenter fontName: @"Impact" fontSize: 14];
+		CCLabelTTF *label = [CCLabelTTF labelWithString: @"A really long line of text that is longer than the width of the label" dimensions:CGSizeMake(280, 60) alignment:CCTextAlignmentCenter vertAlignment:kCCVerticalTextAlignmentTop fontName: @"Impact" fontSize: 14];
 		label.position = ccp(s.width/2,90);
 		[self addChild:label];
 
@@ -1369,6 +1492,7 @@ static float menuItemPaddingCenter = 50;
 		CCLabelTTF *charwrap = [CCLabelTTF labelWithString:@"Testing line character wrap mode mode mode mode"
 											  dimensions:CGSizeMake(s.width/4,40)
 											   alignment:CCTextAlignmentCenter
+                                             vertAlignment:kCCVerticalTextAlignmentTop
 										   lineBreakMode:CCLineBreakModeCharacterWrap
 												fontName:@"Marker Felt"
 												fontSize:16];
@@ -1380,6 +1504,7 @@ static float menuItemPaddingCenter = 50;
 		CCLabelTTF *clip = [CCLabelTTF labelWithString:@"Testing line clip clip clip mode mode mode mode"
 												dimensions:CGSizeMake(s.width/4,40)
 												 alignment:CCTextAlignmentCenter
+                                         vertAlignment:kCCVerticalTextAlignmentTop
 											 lineBreakMode:CCLineBreakModeClip
 												  fontName:@"Marker Felt"
 												  fontSize:16];

@@ -32,6 +32,16 @@ static NSString *fontList[] =
 	@"Schwarzwald",
 	@"Scissor Cuts",
 };
+static int fontCount = sizeof(fontList) / sizeof(*fontList);
+
+static int vAlignIdx = 0;
+static ccVerticalTextAlignmentType verticalAlignment[] =
+{
+    kCCVerticalTextAlignmentTop,
+    kCCVerticalTextAlignmentMiddle,
+    kCCVerticalTextAlignmentBottom,
+};
+static int vAlignCount = sizeof(verticalAlignment) / sizeof(*verticalAlignment);
 
 
 NSString* nextAction(void);
@@ -42,15 +52,22 @@ NSString* restartAction(void);
 NSString* nextAction()
 {
 	fontIdx++;
-	fontIdx = fontIdx % ( sizeof(fontList) / sizeof(fontList[0]) );
+    if(fontIdx >= fontCount) {
+        fontIdx = 0;
+        vAlignIdx = (vAlignIdx + 1) % vAlignCount;
+    }
 	return fontList[fontIdx];
 }
 
 NSString* backAction()
 {
 	fontIdx--;
-	if( fontIdx < 0 )
-		fontIdx += ( sizeof(fontList) / sizeof(fontList[0]) );
+	if( fontIdx < 0 ) {
+        fontIdx = fontCount - 1;
+        vAlignIdx--;
+        if(vAlignIdx < 0)
+            vAlignIdx = vAlignCount - 1;
+    }
 	return fontList[fontIdx];
 }
 
@@ -85,6 +102,8 @@ NSString* restartAction()
 
 - (void)showFont:(NSString *)aFont
 {
+    CGSize blockSize = CGSizeMake(160, 200);
+    CGFloat fontSize = 26;
 
 	[self removeChildByTag:kTagLabel1 cleanup:YES];
 	[self removeChildByTag:kTagLabel2 cleanup:YES];
@@ -93,19 +112,31 @@ NSString* restartAction()
 
 
 	CCLabelTTF *top = [CCLabelTTF labelWithString:aFont fontName:aFont fontSize:24];
-	CCLabelTTF *left = [CCLabelTTF labelWithString:@"alignment left" dimensions:CGSizeMake(480,50) alignment:CCTextAlignmentLeft fontName:aFont fontSize:32];
-	CCLabelTTF *center = [CCLabelTTF labelWithString:@"alignment center" dimensions:CGSizeMake(480,50) alignment:CCTextAlignmentCenter fontName:aFont fontSize:32];
-	CCLabelTTF *right = [CCLabelTTF labelWithString:@"alignment right" dimensions:CGSizeMake(480,50) alignment:CCTextAlignmentRight fontName:aFont fontSize:32];
+	CCLabelTTF *left = [CCLabelTTF labelWithString:@"alignment left" dimensions:blockSize alignment:CCTextAlignmentLeft vertAlignment:verticalAlignment[vAlignIdx] fontName:aFont fontSize:fontSize];
+	CCLabelTTF *center = [CCLabelTTF labelWithString:@"alignment center" dimensions:blockSize alignment:CCTextAlignmentCenter vertAlignment:verticalAlignment[vAlignIdx] fontName:aFont fontSize:fontSize];
+	CCLabelTTF *right = [CCLabelTTF labelWithString:@"alignment right" dimensions:blockSize alignment:CCTextAlignmentRight vertAlignment:verticalAlignment[vAlignIdx] fontName:aFont fontSize:fontSize];
 
+    CCLayerColor *leftColor = [CCLayerColor layerWithColor:ccc4(100, 100, 100, 255) width:blockSize.width height:blockSize.height];
+    CCLayerColor *centerColor = [CCLayerColor layerWithColor:ccc4(200, 100, 100, 255) width:blockSize.width height:blockSize.height];
+    CCLayerColor *rightColor = [CCLayerColor layerWithColor:ccc4(100, 100, 200, 255) width:blockSize.width height:blockSize.height];
+    
 	CGSize s = [[CCDirector sharedDirector] winSize];
 
-	top.position = ccp(s.width/2,250);
-	left.position = ccp(s.width/2,200);
-	center.position = ccp(s.width/2,150);
-	right.position = ccp(s.width/2,100);
+    top.anchorPoint = ccp(0.5, 1);
+    left.anchorPoint = leftColor.anchorPoint = ccp(0,0);
+    center.anchorPoint = centerColor.anchorPoint = ccp(0,0);
+    right.anchorPoint = rightColor.anchorPoint = ccp(0,0);
 
+	top.position = ccp(s.width/2,310);
+	left.position = leftColor.position = ccp(0,60);
+	center.position = centerColor.position = ccp(blockSize.width, 60);
+	right.position = rightColor.position = ccp(blockSize.width*2, 60);
+
+    [self addChild:leftColor z:-1];
 	[self addChild:left z:0 tag:kTagLabel1];
+    [self addChild:rightColor z:-1];
 	[self addChild:right z:0 tag:kTagLabel2];
+	[self addChild:centerColor z:-1];
 	[self addChild:center z:0 tag:kTagLabel3];
 	[self addChild:top z:0 tag:kTagLabel4];
 

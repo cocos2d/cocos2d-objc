@@ -748,7 +748,7 @@
 		A037D1E6141510EB0091B5C7 /* vec2.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vec2.c; sourceTree = "<group>"; };
 		A037D1E7141510EB0091B5C7 /* vec3.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vec3.c; sourceTree = "<group>"; };
 		A037D1E8141510EB0091B5C7 /* vec4.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vec4.c; sourceTree = "<group>"; };
-		A08D161214DD17B60036D9CC /* PerformanceTest-Sprite copy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = "PerformanceTest-Sprite copy.app"; path = MemoryAllocationTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A08D161214DD17B60036D9CC /* MemoryAllocationTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MemoryAllocationTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A08D161714DD186E0036D9CC /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
 		A08D161814DD186E0036D9CC /* AppController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppController.m; sourceTree = "<group>"; };
 		A0A3CF0114BBFCDC0079CD11 /* fps_images-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "fps_images-hd.png"; path = "../../Resources/Fonts/fps_images-hd.png"; sourceTree = "<group>"; };
@@ -1065,7 +1065,7 @@
 				506719FF11B956ED006C0061 /* PerformanceTest-Particle.app */,
 				5006BA5711BBF4DB00E488BD /* PerformanceTest-ChildrenNode.app */,
 				E0B0E64E11F8C3BB00414246 /* PerformanceTest-Texture.app */,
-				A08D161214DD17B60036D9CC /* PerformanceTest-Sprite copy.app */,
+				A08D161214DD17B60036D9CC /* MemoryAllocationTest.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1844,7 +1844,7 @@
 			);
 			name = MemoryAllocationTest;
 			productName = SpritePerformance;
-			productReference = A08D161214DD17B60036D9CC /* PerformanceTest-Sprite copy.app */;
+			productReference = A08D161214DD17B60036D9CC /* MemoryAllocationTest.app */;
 			productType = "com.apple.product-type.application";
 		};
 		E0B0E62C11F8C3BB00414246 /* PerformanceTest-Texture */ = {

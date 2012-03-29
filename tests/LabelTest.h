@@ -103,7 +103,11 @@
 
 @interface LabelTTFTest : AtlasDemo
 {
+    CCLabelTTF *label_;
+    CCTextAlignment horizAlign;
+    ccVerticalTextAlignmentType vertAlign;
 }
+@property(nonatomic,retain) CCLabelTTF *label;
 @end
 
 @interface LabelTTFMultiline : AtlasDemo
