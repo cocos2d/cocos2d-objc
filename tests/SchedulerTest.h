@@ -25,11 +25,31 @@
 {}
 @end
 
+@interface SchedulerPauseResumeAll : SchedulerTest
+{
+    NSSet* pausedTargets_;
+}
+@property(readwrite,retain) NSSet* pausedTargets;
+@end
+
+@interface SchedulerPauseResumeAllUser : SchedulerTest
+{
+    NSSet* pausedTargets_;
+}
+@property(readwrite,retain) NSSet* pausedTargets;
+@end
+
 @interface SchedulerUnscheduleAll : SchedulerTest
 {}
 @end
 
 @interface SchedulerUnscheduleAllHard : SchedulerTest
+{
+    BOOL actionManagerActive;
+}
+@end
+
+@interface SchedulerUnscheduleAllUserLevel : SchedulerTest
 {}
 @end
 

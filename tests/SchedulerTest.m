@@ -18,8 +18,11 @@ static NSString *transitions[] = {
 
 	@"SchedulerAutoremove",
 	@"SchedulerPauseResume",
+	@"SchedulerPauseResumeAll",
+	@"SchedulerPauseResumeAllUser",
 	@"SchedulerUnscheduleAll",
 	@"SchedulerUnscheduleAllHard",
+	@"SchedulerUnscheduleAllUserLevel",
 	@"SchedulerSchedulesAndRemove",
 	@"SchedulerUpdate",
 	@"SchedulerUpdateAndCustom",
@@ -216,6 +219,154 @@ Class restartTest()
 }
 @end
 
+#pragma mark SchedulerPauseResumeAll
+@implementation SchedulerPauseResumeAll
+
+@synthesize pausedTargets = pausedTargets_;
+
+-(id) init
+{
+	if( (self=[super init]) ) {
+        
+		CGSize s = [[CCDirector sharedDirector] winSize];
+        
+        CCSprite *sprite = [CCSprite spriteWithFile:@"grossinis_sister1.png"];
+        sprite.position = ccp(s.width/2, s.height/2);
+        [self addChild:sprite];
+        [sprite runAction:[CCRepeatForever actionWithAction:[CCRotateBy actionWithDuration:3.0 angle:360]]];
+        
+		[self schedule:@selector(tick1:) interval:0.5f];
+		[self schedule:@selector(tick2:) interval:1];
+		[self schedule:@selector(pause:) interval:3 repeat:NO delay:0];
+        [self performSelector:@selector(resume) withObject:nil afterDelay:5];
+	}
+    
+	return self;
+}
+
+- (void) dealloc
+{
+    [pausedTargets_ release];
+    [super dealloc];
+}
+
+- (void) onExit
+{
+    if(self.pausedTargets != nil)
+        [[CCDirector sharedDirector].scheduler resumeTargets:self.pausedTargets];
+}
+
+-(NSString *) title
+{
+	return @"Pause / Resume";
+}
+
+-(NSString *) subtitle
+{
+	return @"Everything will pause after 3s, then resume at 5s. See console";
+}
+
+-(void) tick1:(ccTime)dt
+{
+	NSLog(@"tick1");
+}
+
+-(void) tick2:(ccTime)dt
+{
+	NSLog(@"tick2");
+}
+
+-(void) pause:(ccTime)dt
+{
+    NSLog(@"Pausing");
+	CCDirector *director = [CCDirector sharedDirector];
+    self.pausedTargets = [director.scheduler pauseAllTargets];
+}
+
+- (void) resume
+{
+    NSLog(@"Resuming");
+	CCDirector *director = [CCDirector sharedDirector];
+    [director.scheduler resumeTargets:self.pausedTargets];
+    self.pausedTargets = nil;
+}
+
+@end
+
+#pragma mark SchedulerPauseResumeAllUser
+@implementation SchedulerPauseResumeAllUser
+
+@synthesize pausedTargets = pausedTargets_;
+
+-(id) init
+{
+	if( (self=[super init]) ) {
+        
+		CGSize s = [[CCDirector sharedDirector] winSize];
+        
+        CCSprite *sprite = [CCSprite spriteWithFile:@"grossinis_sister1.png"];
+        sprite.position = ccp(s.width/2, s.height/2);
+        [self addChild:sprite];
+        [sprite runAction:[CCRepeatForever actionWithAction:[CCRotateBy actionWithDuration:3.0 angle:360]]];
+        
+		[self schedule:@selector(tick1:) interval:0.5f];
+		[self schedule:@selector(tick2:) interval:1];
+		[self schedule:@selector(pause:) interval:3 repeat:NO delay:0];
+        [self performSelector:@selector(resume) withObject:nil afterDelay:5];
+	}
+    
+	return self;
+}
+
+- (void) dealloc
+{
+    [pausedTargets_ release];
+    [super dealloc];
+}
+
+- (void) onExit
+{
+    if(self.pausedTargets != nil)
+        [[CCDirector sharedDirector].scheduler resumeTargets:self.pausedTargets];
+}
+
+-(NSString *) title
+{
+	return @"Pause / Resume";
+}
+
+-(NSString *) subtitle
+{
+	return @"Everything except actions will pause after 3s, then resume at 5s. See console";
+}
+
+-(void) tick1:(ccTime)dt
+{
+	NSLog(@"tick1");
+}
+
+-(void) tick2:(ccTime)dt
+{
+	NSLog(@"tick2");
+}
+
+-(void) pause:(ccTime)dt
+{
+    NSLog(@"Pausing");
+	CCDirector *director = [CCDirector sharedDirector];
+    self.pausedTargets = [director.scheduler pauseAllTargetsWithMinPriority:kCCPriorityNonSystemMin];
+}
+
+- (void) resume
+{
+    NSLog(@"Resuming");
+	CCDirector *director = [CCDirector sharedDirector];
+    [director.scheduler resumeTargets:self.pausedTargets];
+    self.pausedTargets = nil;
+}
+
+@end
+
 #pragma mark SchedulerUnscheduleAll
 @implementation SchedulerUnscheduleAll
 -(id) init
@@ -274,6 +425,15 @@ Class restartTest()
 {
 	if( (self=[super init]) ) {
 
+		CGSize s = [[CCDirector sharedDirector] winSize];
+
+        CCSprite *sprite = [CCSprite spriteWithFile:@"grossinis_sister1.png"];
+        sprite.position = ccp(s.width/2, s.height/2);
+        [self addChild:sprite];
+        [sprite runAction:[CCRepeatForever actionWithAction:[CCRotateBy actionWithDuration:3.0 angle:360]]];
+
+        actionManagerActive = YES;
+        
 		[self schedule:@selector(tick1:) interval:0.5f];
 		[self schedule:@selector(tick2:) interval:1];
 		[self schedule:@selector(tick3:) interval:1.5f];
@@ -284,14 +444,23 @@ Class restartTest()
 	return self;
 }
 
+- (void) onExit
+{
+    if(!actionManagerActive) {
+        // Restore the director's action manager.
+        CCDirector* director = [CCDirector sharedDirector];
+        [director.scheduler scheduleUpdateForTarget:director.actionManager priority:kCCPrioritySystem paused:NO];
+    }
+}
+
 -(NSString *) title
 {
-	return @"Unschedule All selectors #2";
+	return @"Unschedule All selectors (HARD)";
 }
 
 -(NSString *) subtitle
 {
-	return @"Unschedules all selectors after 4s. Uses CCScheduler. See console";
+	return @"Unschedules all user selectors after 4s. Action will stop. See console";
 }
 
 -(void) tick1:(ccTime)dt
@@ -318,6 +487,68 @@ Class restartTest()
 {
 	CCDirector *director = [CCDirector sharedDirector];
 	[[director scheduler] unscheduleAllSelectors];
+    actionManagerActive = NO;
+}
+@end
+
+
+#pragma mark SchedulerUnscheduleAllUserLevel
+@implementation SchedulerUnscheduleAllUserLevel
+-(id) init
+{
+	if( (self=[super init]) ) {
+        
+		CGSize s = [[CCDirector sharedDirector] winSize];
+        
+        CCSprite *sprite = [CCSprite spriteWithFile:@"grossinis_sister1.png"];
+        sprite.position = ccp(s.width/2, s.height/2);
+        [self addChild:sprite];
+        [sprite runAction:[CCRepeatForever actionWithAction:[CCRotateBy actionWithDuration:3.0 angle:360]]];
+        
+		[self schedule:@selector(tick1:) interval:0.5f];
+		[self schedule:@selector(tick2:) interval:1];
+		[self schedule:@selector(tick3:) interval:1.5f];
+		[self schedule:@selector(tick4:) interval:1.5f];
+		[self schedule:@selector(unscheduleAll:) interval:4];
+	}
+    
+	return self;
+}
+
+-(NSString *) title
+{
+	return @"Unschedule All user selectors";
+}
+
+-(NSString *) subtitle
+{
+	return @"Unschedules all user selectors after 4s. Action should not stop. See console";
+}
+
+-(void) tick1:(ccTime)dt
+{
+	NSLog(@"tick1");
+}
+
+-(void) tick2:(ccTime)dt
+{
+	NSLog(@"tick2");
+}
+
+-(void) tick3:(ccTime)dt
+{
+	NSLog(@"tick3");
+}
+
+-(void) tick4:(ccTime)dt
+{
+	NSLog(@"tick4");
+}
+
+-(void) unscheduleAll:(ccTime)dt
+{
+	CCDirector *director = [CCDirector sharedDirector];
+	[[director scheduler] unscheduleAllSelectorsWithMinPriority:kCCPriorityNonSystemMin];
 }
 @end
 
