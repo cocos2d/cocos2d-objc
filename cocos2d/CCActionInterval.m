@@ -299,7 +299,7 @@
 {
 	if (dt >= nextDt_) 
 	{
-		while (dt >= nextDt_ && total_ < times_) 
+		while (dt > nextDt_ && total_ < times_) 
 		{
 			
 			[innerAction_ update:1.0f];
@@ -1421,6 +1421,10 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 		origFrame_ = [[sprite displayedFrame] retain];
 	
 	nextFrame_ = 0;
+    if ([target_ isKindOfClass:[WarlockParacelso class]]) {
+        CCLOG(@"nextFrame = 0");
+    }
+
 }
 
 -(void) stop
@@ -1433,8 +1437,9 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 	[super stop];
 }
 
+#import "WarlockParacelso.h"
 -(void) update: (ccTime) t
-{
+{    
 	NSArray *frames = [animation_ frames];
 	NSUInteger numberOfFrames = [frames count];
 	CCSpriteFrame *frameToDisplay = nil;
@@ -1443,7 +1448,12 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 		NSNumber *splitTime = [splitTimes_ objectAtIndex:i];
 		
 		if( [splitTime floatValue] <= t ) {
-			CCAnimationFrame *frame = [frames objectAtIndex:i];
+		    if ([target_ isKindOfClass:[WarlockParacelso class]]) {
+                CCLOG(@"nextFrame: %d, time: %f, frame: %d", nextFrame_, t, i);
+
+            }
+
+            CCAnimationFrame *frame = [frames objectAtIndex:i];
 			frameToDisplay = [frame spriteFrame];
 			[(CCSprite*)target_ setDisplayFrame: frameToDisplay];
 			
