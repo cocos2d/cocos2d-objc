@@ -1559,8 +1559,8 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
     idx = (idx + startIndex_) % numberOfFrames;
 
 	CCSprite *sprite = target_;
-	if (! [sprite isFrameDisplayed: [frames objectAtIndex: idx]] )
-		[sprite setDisplayFrame: [frames objectAtIndex:idx]];
+	if (! [sprite isFrameDisplayed: [[frames objectAtIndex: idx] spriteFrame]] )
+		[sprite setDisplayFrame: [[frames objectAtIndex:idx] spriteFrame]];
 }
 
 - (CCActionInterval *) reverse
