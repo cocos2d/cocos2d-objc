@@ -157,6 +157,13 @@
 {}
 @end
 
+@interface PauseResumeActions : ActionDemo
+{
+    NSSet* pausedTargets_;
+}
+@property(readwrite,retain) NSSet* pausedTargets;
+@end
+
 @interface Issue1305 : ActionDemo
 {
 	CCSprite *spriteTmp_;
