@@ -2,6 +2,7 @@ version 1.1-rc0 .. -..-2012
 . [NEW] Macros: made CCLOG a bit more verbose
 . [FIX] CCAnimation: bug in addFrames that resulted in incorrect delayPerUnit (issue #1341)
 . [FIX] CCSprite: CCSprite bug in setDisplayFrameWithAnimationName
+. [FIX] CCParticleSystem: unschedule update method when deallocated
 . [FIX] CCParticleSystemQuad: Changed animation property to particleAnimation, for compiler warning
 . [FIX] CCTouchDispatcher: fixed crash after showing UIAlertView (issue #1279)
 . [FIX] CCGrabber: added log message to warn that grabber doesn't support transparent parts with a color buffer of RGB565
