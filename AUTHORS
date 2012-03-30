@@ -61,6 +61,8 @@ Contributors (alphabetically ordered):
 	EAGLView destroys and recreates all OpenGL buffers correctly
 	TileMap: flipped tiles can be changed during runtime
 
+* Mark Haylock
+    Fix for CCParticleSystem to unschedule update method when deallocated
 * Martin 
 	Co-author of animated particle system
 
