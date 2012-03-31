@@ -502,8 +502,8 @@ CGFloat	__ccContentScaleFactor = 1;
 // Overriden in order to use a more stable delta time
 -(void) calculateDeltaTime
 {
-    // New delta time
-    if( nextDeltaTimeZero_ ) {
+    // New delta time. Re-fixed issue #1277
+    if( nextDeltaTimeZero_ || lastDisplayTime_==0 ) {
         dt = 0;
         nextDeltaTimeZero_ = NO;
     } else {
