@@ -37,6 +37,8 @@
 #import "CCActionInterval.h"
 #import "CCRenderTexture.h"
 #import "CCSpriteFrameCache.h"
+#import "CCLabelTTF.h"
+#import "CCTexture2D.h"
 #import "Support/CCFileUtils.h"
 #import "Platforms/Mac/CCDirectorMac.h"
 #import "Platforms/iOS/CCTouchDispatcher.h"
@@ -235,6 +237,23 @@ DEPRECATED_ATTRIBUTE @interface MacView : CCGLView
 @interface CCSpriteFrameCache (Deprecated)
 -(void) addSpriteFramesWithDictionary:(NSDictionary*)dictionary textureFile:(NSString*)filename DEPRECATED_ATTRIBUTE;
 -(void) addSpriteFramesWithFile:(NSString*)plist textureFile:(NSString*)filename DEPRECATED_ATTRIBUTE;
+@end
+
+
+@interface CCLabelTTF (Deprecated)
+// new: + (id) labelWithString:(NSString*)string dimensions:hAlignment:fontName:fontSize:
++ (id) labelWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(CCTextAlignment)alignment fontName:(NSString*)name fontSize:(CGFloat)size DEPRECATED_ATTRIBUTE;
+// new: + (id) labelWithString:(NSString*)string dimensions:hAlignment:lineBreakMode:fontName:fontSize:
++ (id) labelWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(CCTextAlignment)alignment lineBreakMode:(CCLineBreakMode)lineBreakMode fontName:(NSString*)name fontSize:(CGFloat)size DEPRECATED_ATTRIBUTE;
+// new: + (id) initWithString:(NSString*)string dimensions:hAlignment:fontName:fontSize:
+- (id) initWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(CCTextAlignment)alignment fontName:(NSString*)name fontSize:(CGFloat)size DEPRECATED_ATTRIBUTE;
+// new: + (id) initWithString:(NSString*)string dimensions:hAlignment:lineBreakMode:fontName:fontSize:
+- (id) initWithString:(NSString*)str dimensions:(CGSize)dimensions alignment:(CCTextAlignment)alignment lineBreakMode:(CCLineBreakMode)lineBreakMode fontName:(NSString*)name fontSize:(CGFloat)size DEPRECATED_ATTRIBUTE;
+@end
+
+@interface CCTexture2D (Deprecated)
+- (id) initWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(CCTextAlignment)alignment lineBreakMode:(CCLineBreakMode)lineBreakMode fontName:(NSString*)name fontSize:(CGFloat)size DEPRECATED_ATTRIBUTE;
+- (id) initWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(CCTextAlignment)alignment fontName:(NSString*)name fontSize:(CGFloat)size DEPRECATED_ATTRIBUTE;
 @end
 
 #endif // CC_ENABLE_DEPRECATED

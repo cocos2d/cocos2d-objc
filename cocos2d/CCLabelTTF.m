@@ -44,28 +44,66 @@
 
 @implementation CCLabelTTF
 
+// -
++ (id) labelWithString:(NSString*)string fontName:(NSString*)name fontSize:(CGFloat)size
+{
+	return [[[self alloc] initWithString:string fontName:name fontSize:size]autorelease];
+}
+
+// hAlignment
++ (id) labelWithString:(NSString*)string dimensions:(CGSize)dimensions hAlignment:(CCTextAlignment)alignment fontName:(NSString*)name fontSize:(CGFloat)size
+{
+	return [[[self alloc] initWithString: string dimensions:dimensions hAlignment:alignment vAlignment:CCVerticalTextAlignmentTop lineBreakMode:CCLineBreakModeWordWrap fontName:name fontSize:size]autorelease];
+}
+
+// hAlignment, vAlignment
++ (id) labelWithString:(NSString*)string dimensions:(CGSize)dimensions hAlignment:(CCTextAlignment)alignment vAlignment:(CCVerticalTextAlignment) vertAlignment fontName:(NSString*)name fontSize:(CGFloat)size
+{
+	return [[[self alloc] initWithString: string dimensions:dimensions hAlignment:alignment vAlignment:vertAlignment fontName:name fontSize:size]autorelease];
+}
+
+// hAlignment, lineBreakMode
++ (id) labelWithString:(NSString*)string dimensions:(CGSize)dimensions hAlignment:(CCTextAlignment)alignment lineBreakMode:(CCLineBreakMode)lineBreakMode fontName:(NSString*)name fontSize:(CGFloat)size;
+{
+	return [[[self alloc] initWithString: string dimensions:dimensions hAlignment:alignment vAlignment:CCVerticalTextAlignmentTop lineBreakMode:lineBreakMode fontName:name fontSize:size]autorelease];
+}
+
+// hAlignment, vAlignment, lineBreakMode
++ (id) labelWithString:(NSString*)string dimensions:(CGSize)dimensions hAlignment:(CCTextAlignment)alignment vAlignment:(CCVerticalTextAlignment) vertAlignment lineBreakMode:(CCLineBreakMode)lineBreakMode fontName:(NSString*)name fontSize:(CGFloat)size;
+{
+	return [[[self alloc] initWithString: string dimensions:dimensions hAlignment:alignment vAlignment:vertAlignment lineBreakMode:lineBreakMode fontName:name fontSize:size]autorelease];
+}
+
 - (id) init
 {
     return [self initWithString:@"" fontName:@"Helvetica" fontSize:12];
 }
 
-+ (id) labelWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(CCTextAlignment)alignment vertAlignment:(ccVerticalTextAlignmentType) vertAlignment lineBreakMode:(CCLineBreakMode)lineBreakMode fontName:(NSString*)name fontSize:(CGFloat)size;
+- (id) initWithString:(NSString*)str fontName:(NSString*)name fontSize:(CGFloat)size
 {
-	return [[[self alloc] initWithString: string dimensions:dimensions alignment:alignment vertAlignment:vertAlignment lineBreakMode:lineBreakMode fontName:name fontSize:size]autorelease];
+	return [self initWithString:str dimensions:CGSizeZero hAlignment:CCTextAlignmentLeft vAlignment:CCVerticalTextAlignmentTop lineBreakMode:CCLineBreakModeWordWrap fontName:name fontSize:size];
 }
 
-+ (id) labelWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(CCTextAlignment)alignment vertAlignment:(ccVerticalTextAlignmentType) vertAlignment fontName:(NSString*)name fontSize:(CGFloat)size
+// hAlignment
+- (id) initWithString:(NSString*)str dimensions:(CGSize)dimensions hAlignment:(CCTextAlignment)alignment fontName:(NSString*)name fontSize:(CGFloat)size
 {
-	return [[[self alloc] initWithString: string dimensions:dimensions alignment:alignment vertAlignment:vertAlignment fontName:name fontSize:size]autorelease];
+	return [self initWithString:str dimensions:dimensions hAlignment:alignment vAlignment:CCVerticalTextAlignmentTop lineBreakMode:CCLineBreakModeWordWrap fontName:name fontSize:size];
 }
 
-+ (id) labelWithString:(NSString*)string fontName:(NSString*)name fontSize:(CGFloat)size
+// hAlignment, vAlignment
+- (id) initWithString:(NSString*)str dimensions:(CGSize)dimensions hAlignment:(CCTextAlignment)alignment vAlignment:(CCVerticalTextAlignment) vertAlignment fontName:(NSString*)name fontSize:(CGFloat)size
 {
-	return [[[self alloc] initWithString: string fontName:name fontSize:size]autorelease];
+	return [self initWithString:str dimensions:dimensions hAlignment:alignment vAlignment:vertAlignment lineBreakMode:CCLineBreakModeWordWrap fontName:name fontSize:size];
 }
 
+// hAlignment, lineBreakMode
+- (id) initWithString:(NSString*)str dimensions:(CGSize)dimensions hAlignment:(CCTextAlignment)alignment lineBreakMode:(CCLineBreakMode)lineBreakMode fontName:(NSString*)name fontSize:(CGFloat)size
+{
+	return [self initWithString:str dimensions:dimensions hAlignment:alignment vAlignment:CCVerticalTextAlignmentTop lineBreakMode:lineBreakMode fontName:name fontSize:size];
+}
 
-- (id) initWithString:(NSString*)str dimensions:(CGSize)dimensions alignment:(CCTextAlignment)alignment vertAlignment:(ccVerticalTextAlignmentType) vertAlignment lineBreakMode:(CCLineBreakMode)lineBreakMode fontName:(NSString*)name fontSize:(CGFloat)size
+// hAlignment, vAligment, lineBreakMode
+- (id) initWithString:(NSString*)str dimensions:(CGSize)dimensions hAlignment:(CCTextAlignment)alignment vAlignment:(CCVerticalTextAlignment) vertAlignment lineBreakMode:(CCLineBreakMode)lineBreakMode fontName:(NSString*)name fontSize:(CGFloat)size
 {
 	if( (self=[super init]) ) {
 
@@ -73,32 +111,11 @@
 		self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:SHADER_PROGRAM];
 
 		dimensions_ = CGSizeMake( dimensions.width, dimensions.height );
-		alignment_ = alignment;
-        verticalAlignment_ = vertAlignment;
+		hAlignment_ = alignment;
+		vAlignment_ = vertAlignment;
 		fontName_ = [name retain];
 		fontSize_ = size;
 		lineBreakMode_ = lineBreakMode;
-
-		[self setString:str];
-	}
-	return self;
-}
-
-- (id) initWithString:(NSString*)str dimensions:(CGSize)dimensions alignment:(CCTextAlignment)alignment vertAlignment:(ccVerticalTextAlignmentType) vertAlignment fontName:(NSString*)name fontSize:(CGFloat)size
-{
-	return [self initWithString:str dimensions:dimensions alignment:alignment vertAlignment:vertAlignment lineBreakMode:CCLineBreakModeWordWrap fontName:name fontSize:size];
-}
-
-- (id) initWithString:(NSString*)str fontName:(NSString*)name fontSize:(CGFloat)size
-{
-	if( (self=[super init]) ) {
-
-		// shader program
-		self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:SHADER_PROGRAM];
-
-		dimensions_ = CGSizeZero;
-		fontName_ = [name retain];
-		fontSize_ = size;
 
 		[self setString:str];
 	}
@@ -131,8 +148,8 @@
 	else
 		tex = [[CCTexture2D alloc] initWithString:str
 									   dimensions:CC_SIZE_POINTS_TO_PIXELS(dimensions_)
-										alignment:alignment_
-                                    vertAlignment:verticalAlignment_
+										hAlignment:hAlignment_
+										vAlignment:vAlignment_
 									lineBreakMode:lineBreakMode_
 										 fontName:fontName
 										 fontSize:fontSize_  * CC_CONTENT_SCALE_FACTOR()];
@@ -215,36 +232,36 @@
     return dimensions_;
 }
 
--(void) setAlignment:(CCTextAlignment)alignment
+-(void) setHorizontalAlignment:(CCTextAlignment)alignment
 {
-    if (alignment != alignment_)
+    if (alignment != hAlignment_)
     {
-        alignment_ = alignment;
+        hAlignment_ = alignment;
         
         // Force update
         [self setString:[self string]];
     }
 }
 
-- (CCTextAlignment) alignment
+- (CCTextAlignment) horizontalAlignment
 {
-    return alignment_;
+    return hAlignment_;
 }
 
--(void) setVerticalAlignment:(ccVerticalTextAlignmentType)verticalAlignment
+-(void) setVerticalAlignment:(CCVerticalTextAlignment)verticalAlignment
 {
-    if (verticalAlignment != verticalAlignment_)
+    if (vAlignment_ != verticalAlignment)
     {
-        verticalAlignment_ = verticalAlignment;
+        vAlignment_ = verticalAlignment;
         
         // Force update
         [self setString:[self string]];
     }
 }
 
-- (ccVerticalTextAlignmentType) verticalAlignment
+- (CCVerticalTextAlignment) verticalAlignment
 {
-    return verticalAlignment_;
+    return vAlignment_;
 }
 
 - (void) dealloc
