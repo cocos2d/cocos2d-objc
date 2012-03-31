@@ -2035,22 +2035,22 @@
 		A0DB13E114FC418200F7CC49 /* west_england-64.png in Resources */ = {isa = PBXBuildFile; fileRef = A0DB13DF14FC418100F7CC49 /* west_england-64.png */; };
 		A0DC2F611491B3FA005B814E /* test_image_rgb888.pvr in Resources */ = {isa = PBXBuildFile; fileRef = A0DC2F601491B3FA005B814E /* test_image_rgb888.pvr */; };
 		A0E95100142698D2009F9607 /* grossini_pvr_rgba8888.pvr in Resources */ = {isa = PBXBuildFile; fileRef = A0E950FF142698D2009F9607 /* grossini_pvr_rgba8888.pvr */; };
-		A0F16FF6150FFB2A00CE6E92 /* example_Blur.fsh in Sources */ = {isa = PBXBuildFile; fileRef = A0EC4CA21403278200EC482A /* example_Blur.fsh */; };
-		A0F16FF7150FFB2A00CE6E92 /* example_Flower.fsh in Sources */ = {isa = PBXBuildFile; fileRef = A0EC4CA31403278200EC482A /* example_Flower.fsh */; };
-		A0F16FF8150FFB2A00CE6E92 /* example_Flower.vsh in Sources */ = {isa = PBXBuildFile; fileRef = A0EC4CA41403278200EC482A /* example_Flower.vsh */; };
-		A0F16FF9150FFB2A00CE6E92 /* example_Heart.fsh in Sources */ = {isa = PBXBuildFile; fileRef = A0EC4CA51403278200EC482A /* example_Heart.fsh */; };
-		A0F16FFA150FFB2A00CE6E92 /* example_Heart.vsh in Sources */ = {isa = PBXBuildFile; fileRef = A0EC4CA61403278200EC482A /* example_Heart.vsh */; };
-		A0F16FFB150FFB2A00CE6E92 /* example_HorizontalColor.fsh in Sources */ = {isa = PBXBuildFile; fileRef = A0DB13DA14FC305900F7CC49 /* example_HorizontalColor.fsh */; };
-		A0F16FFC150FFB2A00CE6E92 /* example_Julia.fsh in Sources */ = {isa = PBXBuildFile; fileRef = A0EC4CA71403278200EC482A /* example_Julia.fsh */; };
-		A0F16FFD150FFB2A00CE6E92 /* example_Julia.vsh in Sources */ = {isa = PBXBuildFile; fileRef = A0EC4CA81403278200EC482A /* example_Julia.vsh */; };
-		A0F16FFE150FFB2A00CE6E92 /* example_Mandelbrot.fsh in Sources */ = {isa = PBXBuildFile; fileRef = A0EC4CA91403278200EC482A /* example_Mandelbrot.fsh */; };
-		A0F16FFF150FFB2A00CE6E92 /* example_Mandelbrot.vsh in Sources */ = {isa = PBXBuildFile; fileRef = A0EC4CAA1403278200EC482A /* example_Mandelbrot.vsh */; };
-		A0F17000150FFB2A00CE6E92 /* example_Monjori.fsh in Sources */ = {isa = PBXBuildFile; fileRef = A0EC4CAB1403278200EC482A /* example_Monjori.fsh */; };
-		A0F17001150FFB2A00CE6E92 /* example_Monjori.vsh in Sources */ = {isa = PBXBuildFile; fileRef = A0EC4CAC1403278200EC482A /* example_Monjori.vsh */; };
-		A0F17002150FFB2A00CE6E92 /* example_Plasma.fsh in Sources */ = {isa = PBXBuildFile; fileRef = A0EC4CAD1403278200EC482A /* example_Plasma.fsh */; };
-		A0F17003150FFB2A00CE6E92 /* example_Plasma.vsh in Sources */ = {isa = PBXBuildFile; fileRef = A0EC4CAE1403278200EC482A /* example_Plasma.vsh */; };
-		A0F17004150FFB2A00CE6E92 /* example_Twist.fsh in Sources */ = {isa = PBXBuildFile; fileRef = A0EC4CBB1403278200EC482A /* example_Twist.fsh */; };
-		A0F17005150FFB2A00CE6E92 /* example_Twist.vsh in Sources */ = {isa = PBXBuildFile; fileRef = A0EC4CBC1403278200EC482A /* example_Twist.vsh */; };
+		A0F16FF6150FFB2A00CE6E92 /* example_Blur.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4CA21403278200EC482A /* example_Blur.fsh */; };
+		A0F16FF7150FFB2A00CE6E92 /* example_Flower.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4CA31403278200EC482A /* example_Flower.fsh */; };
+		A0F16FF8150FFB2A00CE6E92 /* example_Flower.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4CA41403278200EC482A /* example_Flower.vsh */; };
+		A0F16FF9150FFB2A00CE6E92 /* example_Heart.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4CA51403278200EC482A /* example_Heart.fsh */; };
+		A0F16FFA150FFB2A00CE6E92 /* example_Heart.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4CA61403278200EC482A /* example_Heart.vsh */; };
+		A0F16FFB150FFB2A00CE6E92 /* example_HorizontalColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0DB13DA14FC305900F7CC49 /* example_HorizontalColor.fsh */; };
+		A0F16FFC150FFB2A00CE6E92 /* example_Julia.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4CA71403278200EC482A /* example_Julia.fsh */; };
+		A0F16FFD150FFB2A00CE6E92 /* example_Julia.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4CA81403278200EC482A /* example_Julia.vsh */; };
+		A0F16FFE150FFB2A00CE6E92 /* example_Mandelbrot.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4CA91403278200EC482A /* example_Mandelbrot.fsh */; };
+		A0F16FFF150FFB2A00CE6E92 /* example_Mandelbrot.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4CAA1403278200EC482A /* example_Mandelbrot.vsh */; };
+		A0F17000150FFB2A00CE6E92 /* example_Monjori.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4CAB1403278200EC482A /* example_Monjori.fsh */; };
+		A0F17001150FFB2A00CE6E92 /* example_Monjori.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4CAC1403278200EC482A /* example_Monjori.vsh */; };
+		A0F17002150FFB2A00CE6E92 /* example_Plasma.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4CAD1403278200EC482A /* example_Plasma.fsh */; };
+		A0F17003150FFB2A00CE6E92 /* example_Plasma.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4CAE1403278200EC482A /* example_Plasma.vsh */; };
+		A0F17004150FFB2A00CE6E92 /* example_Twist.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4CBB1403278200EC482A /* example_Twist.fsh */; };
+		A0F17005150FFB2A00CE6E92 /* example_Twist.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4CBC1403278200EC482A /* example_Twist.vsh */; };
 		A0F83F7F151CAACA00EBBFCB /* tuffy_bold_italic-charmap.plist in Resources */ = {isa = PBXBuildFile; fileRef = A0F83F7E151CAAC900EBBFCB /* tuffy_bold_italic-charmap.plist */; };
 		A0F840D2151D2B8F00EBBFCB /* larabie-16-hd.plist in Resources */ = {isa = PBXBuildFile; fileRef = A0F840CE151D2B8F00EBBFCB /* larabie-16-hd.plist */; };
 		A0F840D3151D2B8F00EBBFCB /* larabie-16.plist in Resources */ = {isa = PBXBuildFile; fileRef = A0F840CF151D2B8F00EBBFCB /* larabie-16.plist */; };
@@ -10540,6 +10540,22 @@
 				A0DB13DD14FC355300F7CC49 /* konqa32-hd.png in Resources */,
 				A0DB13E014FC418200F7CC49 /* west_england-64.fnt in Resources */,
 				A0DB13E114FC418200F7CC49 /* west_england-64.png in Resources */,
+				A0F16FF6150FFB2A00CE6E92 /* example_Blur.fsh in Resources */,
+				A0F16FF7150FFB2A00CE6E92 /* example_Flower.fsh in Resources */,
+				A0F16FF8150FFB2A00CE6E92 /* example_Flower.vsh in Resources */,
+				A0F16FF9150FFB2A00CE6E92 /* example_Heart.fsh in Resources */,
+				A0F16FFA150FFB2A00CE6E92 /* example_Heart.vsh in Resources */,
+				A0F16FFB150FFB2A00CE6E92 /* example_HorizontalColor.fsh in Resources */,
+				A0F16FFC150FFB2A00CE6E92 /* example_Julia.fsh in Resources */,
+				A0F16FFD150FFB2A00CE6E92 /* example_Julia.vsh in Resources */,
+				A0F16FFE150FFB2A00CE6E92 /* example_Mandelbrot.fsh in Resources */,
+				A0F16FFF150FFB2A00CE6E92 /* example_Mandelbrot.vsh in Resources */,
+				A0F17000150FFB2A00CE6E92 /* example_Monjori.fsh in Resources */,
+				A0F17001150FFB2A00CE6E92 /* example_Monjori.vsh in Resources */,
+				A0F17002150FFB2A00CE6E92 /* example_Plasma.fsh in Resources */,
+				A0F17003150FFB2A00CE6E92 /* example_Plasma.vsh in Resources */,
+				A0F17004150FFB2A00CE6E92 /* example_Twist.fsh in Resources */,
+				A0F17005150FFB2A00CE6E92 /* example_Twist.vsh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -13523,22 +13539,6 @@
 				A0ADF03714584BD3009A71F1 /* main.m in Sources */,
 				A0ADF04A14584C9B009A71F1 /* ShaderTest.m in Sources */,
 				A04443F114A91DB600E62742 /* BaseAppController.m in Sources */,
-				A0F16FF6150FFB2A00CE6E92 /* example_Blur.fsh in Sources */,
-				A0F16FF7150FFB2A00CE6E92 /* example_Flower.fsh in Sources */,
-				A0F16FF8150FFB2A00CE6E92 /* example_Flower.vsh in Sources */,
-				A0F16FF9150FFB2A00CE6E92 /* example_Heart.fsh in Sources */,
-				A0F16FFA150FFB2A00CE6E92 /* example_Heart.vsh in Sources */,
-				A0F16FFB150FFB2A00CE6E92 /* example_HorizontalColor.fsh in Sources */,
-				A0F16FFC150FFB2A00CE6E92 /* example_Julia.fsh in Sources */,
-				A0F16FFD150FFB2A00CE6E92 /* example_Julia.vsh in Sources */,
-				A0F16FFE150FFB2A00CE6E92 /* example_Mandelbrot.fsh in Sources */,
-				A0F16FFF150FFB2A00CE6E92 /* example_Mandelbrot.vsh in Sources */,
-				A0F17000150FFB2A00CE6E92 /* example_Monjori.fsh in Sources */,
-				A0F17001150FFB2A00CE6E92 /* example_Monjori.vsh in Sources */,
-				A0F17002150FFB2A00CE6E92 /* example_Plasma.fsh in Sources */,
-				A0F17003150FFB2A00CE6E92 /* example_Plasma.vsh in Sources */,
-				A0F17004150FFB2A00CE6E92 /* example_Twist.fsh in Sources */,
-				A0F17005150FFB2A00CE6E92 /* example_Twist.vsh in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

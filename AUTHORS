@@ -58,7 +58,11 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	CCArray: Fixed copyWithZone
 	
 * Karl Stenerud (http://www.mindsnacks.com/):
-	Author of ActionTargeted
+	Added vertical alignment support for LabelTTF
+	Added PauseAll/ResumeAll in ActionManager
+	Added SystemPriority to Scheduler
+	Added tests for LabelTTF vertical alignment
+	Added tetts for Scheduler/ActionManager resume/pause all actions
 
 * Lam Pham (http://www.fancyratstudios.com/)
 	CCProgressTimer: Improved API

@@ -105,7 +105,7 @@
 {
     CCLabelTTF *label_;
     CCTextAlignment horizAlign;
-    ccVerticalTextAlignmentType vertAlign;
+	CCVerticalTextAlignment vertAlign;
 }
 @property(nonatomic,retain) CCLabelTTF *label;
 @end

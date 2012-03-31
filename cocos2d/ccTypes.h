@@ -337,13 +337,14 @@ typedef enum
 
 } ccResolutionType;
 
+// XXX: The name shall be ccVerticalTextAligment, but it is using "CC" instead of "cc" in order to be compatible with CCTextAlignment
 //! Vertical text alignment type
 typedef enum
 {
-    kCCVerticalTextAlignmentTop,
-    kCCVerticalTextAlignmentMiddle,
-    kCCVerticalTextAlignmentBottom,
-} ccVerticalTextAlignmentType;
+    CCVerticalTextAlignmentTop,
+    CCVerticalTextAlignmentMiddle,
+    CCVerticalTextAlignmentBottom,
+} CCVerticalTextAlignment;
 
 //! delta time type
 //! if you want more resolution redefine it as a double

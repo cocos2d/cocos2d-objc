@@ -351,6 +351,35 @@ void ccGLUniformModelViewProjectionMatrix( CCGLProgram* program )
 }
 @end
 
+@implementation CCLabelTTF (Deprecated)
++ (id) labelWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(CCTextAlignment)alignment fontName:(NSString*)name fontSize:(CGFloat)size
+{
+	return [self labelWithString:string dimensions:dimensions hAlignment:alignment fontName:name fontSize:size];
+}
++ (id) labelWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(CCTextAlignment)alignment lineBreakMode:(CCLineBreakMode)lineBreakMode fontName:(NSString*)name fontSize:(CGFloat)size
+{
+	return [self labelWithString:string dimensions:dimensions hAlignment:alignment lineBreakMode:lineBreakMode fontName:name fontSize:size];
+}
+- (id) initWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(CCTextAlignment)alignment fontName:(NSString*)name fontSize:(CGFloat)size
+{
+	return [self initWithString:string dimensions:dimensions hAlignment:alignment fontName:name fontSize:size];
+}
+- (id) initWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(CCTextAlignment)alignment lineBreakMode:(CCLineBreakMode)lineBreakMode fontName:(NSString*)name fontSize:(CGFloat)size
+{
+	return [self initWithString:string dimensions:dimensions hAlignment:alignment lineBreakMode:lineBreakMode fontName:name fontSize:size];
+}
+@end
+
+@implementation CCTexture2D (Deprecated)
+- (id) initWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(CCTextAlignment)alignment lineBreakMode:(CCLineBreakMode)lineBreakMode fontName:(NSString*)name fontSize:(CGFloat)size
+{
+	return  [self initWithString:string dimensions:dimensions hAlignment:alignment vAlignment:CCVerticalTextAlignmentTop lineBreakMode:lineBreakMode fontName:name fontSize:size];
+}
+- (id) initWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(CCTextAlignment)alignment fontName:(NSString*)name fontSize:(CGFloat)size
+{
+	return [self initWithString:string dimensions:dimensions hAlignment:alignment vAlignment:CCVerticalTextAlignmentTop fontName:name fontSize:size];
+}
+@end
 
 #if __CC_PLATFORM_IOS
 @implementation EAGLView

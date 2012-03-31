@@ -300,7 +300,7 @@ Class restartAction()
 	UIImage *image = [[UIImage alloc] initWithContentsOfFile:[[CCFileUtils sharedFileUtils] fullPathFromRelativePath: @"test_image.png" ]];
 #elif defined(__CC_PLATFORM_MAC)
 
-	NSString *fullpath = [CCFileUtils fullPathFromRelativePath:@"test_image.png"];
+	NSString *fullpath = [[CCFileUtils sharedFileUtils] fullPathFromRelativePath:@"test_image.png"];
 	NSData *data = [NSData dataWithContentsOfFile:fullpath];
 	NSBitmapImageRep *image = [[NSBitmapImageRep alloc] initWithData:data];
 #endif

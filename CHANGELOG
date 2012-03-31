@@ -1,5 +1,6 @@
 version 2.0-rc1 XX-Mar-2012
 . [NEW] Actions: Added Catmull Rom By/To and Cardinal Spline By/To actions
+. [NEW] ActionManager: Added support for pause/resume all actions of target
 . [NEW] Configuration: logs in which thread the director is running (Mac only)
 . [NEW] DrawingPrimitives: added ccDrawCatmullRom, ccDrawCardinalSpline
 . [NEW] FileUtils: It is a singleton (easier to subclass)
@@ -7,6 +8,7 @@ version 2.0-rc1 XX-Mar-2012
 		Added "fallback suffix" support for "get full path" and "remove suffix" (disabled by default).
 		On iPad the default suffix is "-ipad". Before it was ""
 . [NEW] LabelAtlas: added .plist config file support. Easier to migrate games to higher resolutions.
+. [NEW] LabelTTF: Added support for vertical alignment
 . [FIX] Deprecated: displayedFrame points to displayFrame avoiding infinite loop (issue #1347)
 . [FIX] LabelBMFont: can be "init" without further arguments
 		Glyphs with big yOffset are rendered correctly (issue #1343)
