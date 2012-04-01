@@ -492,7 +492,7 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
     NSSize POTSize = NSMakeSize(ccNextPOT(dimensions.width), ccNextPOT(dimensions.height));
     
 	// Get actual rendered dimensions
-    NSRect boundingRect = [stringWithAttributes boundingRectWithSize:dimensions options:NSStringDrawingUsesLineFragmentOrigin];
+    NSRect boundingRect = [stringWithAttributes boundingRectWithSize:NSSizeFromCGSize(dimensions) options:NSStringDrawingUsesLineFragmentOrigin];
     
 	// Mac crashes if the width or height is 0
 	if( boundingRect.size.width > 0 && boundingRect.size.height > 0 ) {
@@ -521,7 +521,7 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 		NSImage *image = [[NSImage alloc] initWithSize:POTSize];
 		[image lockFocus];	
 		
-        [stringWithAttributes drawWithRect:drawArea options:NSStringDrawingUsesLineFragmentOrigin];
+        [stringWithAttributes drawWithRect:NSRectFromCGRect(drawArea) options:NSStringDrawingUsesLineFragmentOrigin];
 		
 		NSBitmapImageRep *bitmap = [[NSBitmapImageRep alloc] initWithFocusedViewRect:NSMakeRect (0.0f, 0.0f, POTSize.width, POTSize.height)];
 		[image unlockFocus];
