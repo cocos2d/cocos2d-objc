@@ -83,7 +83,7 @@
 -(void) addControlPoint:(CGPoint)controlPoint
 {
 #ifdef __CC_PLATFORM_MAC
-	NSValue *value = [NSValue valueWithPoint:controlPoint];
+	NSValue *value = [NSValue valueWithPoint:NSPointFromCGPoint(controlPoint)];
 #elif defined(__CC_PLATFORM_IOS)
 	NSValue *value = [NSValue valueWithCGPoint:controlPoint];
 #endif
@@ -94,7 +94,7 @@
 -(void) insertControlPoint:(CGPoint)controlPoint atIndex:(NSUInteger)index
 {
 #ifdef __CC_PLATFORM_MAC
-	NSValue *value = [NSValue valueWithPoint:controlPoint];
+	NSValue *value = [NSValue valueWithPoint:NSPointFromCGPoint(controlPoint)];
 #elif defined(__CC_PLATFORM_IOS)
 	NSValue *value = [NSValue valueWithCGPoint:controlPoint];
 #endif
@@ -110,7 +110,7 @@
 	NSValue *value = [controlPoints_ objectAtIndex:index];
 
 #ifdef __CC_PLATFORM_MAC
-	CGPoint point = (CGPoint)[value pointValue];
+	CGPoint point = NSPointToCGPoint([value pointValue]);
 #elif defined(__CC_PLATFORM_IOS)
 	CGPoint point = [value CGPointValue];
 #endif
@@ -121,7 +121,7 @@
 -(void) replaceControlPoint:(CGPoint)controlPoint atIndex:(NSUInteger)index
 {
 #ifdef __CC_PLATFORM_MAC
-	NSValue *value = [NSValue valueWithPoint:controlPoint];
+	NSValue *value = [NSValue valueWithPoint:NSPointFromCGPoint(controlPoint)];
 #elif defined(__CC_PLATFORM_IOS)
 	NSValue *value = [NSValue valueWithCGPoint:controlPoint];
 #endif
