@@ -263,7 +263,6 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 	info = CGImageGetAlphaInfo(cgImage);
 	hasAlpha = ((info == kCGImageAlphaPremultipliedLast) || (info == kCGImageAlphaPremultipliedFirst) || (info == kCGImageAlphaLast) || (info == kCGImageAlphaFirst) ? YES : NO);
 
-	size_t bpp = CGImageGetBitsPerComponent(cgImage);
 	colorSpace = CGImageGetColorSpace(cgImage);
 
 	if(colorSpace) {
@@ -275,12 +274,14 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 		{
 			info = kCGImageAlphaNoneSkipLast;
 
-			if( bpp >= 8 )
-				pixelFormat = kCCTexture2DPixelFormat_RGB888;
-			else
-				pixelFormat = kCCTexture2DPixelFormat_RGB565;
+			// Don't use RGB888 (24-bit) since it is expanded into RGBA8888 (32-bit) internally
+//			size_t bpp = CGImageGetBitsPerComponent(cgImage);
+//			if( bpp >= 8 )
+//				pixelFormat = kCCTexture2DPixelFormat_RGB888;
+//			else
+			pixelFormat = kCCTexture2DPixelFormat_RGB565;
 			
-			CCLOG(@"cocos2d: CCTexture2D: Using %@ texture since image has no alpha", (bpp>=8) ? @"RGB888" : @"RGB565" );
+			CCLOG(@"cocos2d: CCTexture2D: Using RGB565 texture since image has no alpha");
 				
 		}
 	} else {
