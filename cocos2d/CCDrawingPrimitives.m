@@ -174,10 +174,10 @@ void ccDrawRect( CGPoint origin, CGPoint destination )
 void ccDrawSolidRect( CGPoint origin, CGPoint destination )
 {
 	CGPoint vertices[] = {
-		origin.x, origin.y,
-		destination.x, origin.y,
-		destination.x, destination.y,
-		origin.x, destination.y
+		{origin.x, origin.y},
+		{destination.x, origin.y},
+		{destination.x, destination.y},
+		{origin.x, destination.y}
 	};
 	
 	ccDrawSolidPoly(vertices, 4, YES);
