@@ -506,7 +506,9 @@ static inline int mergesortL(ccCArray* array, size_t width, int (*compar)(const 
                 //memcpy aritmetics aren't allowed on void* types
                 //explicitely casting didn't work
                 #pragma clang diagnostic push
+#if defined(__has_feature) && __has_feature(objc_arc)				
                 #pragma clang diagnostic ignored "-Warc-non-pod-memaccess"
+#endif				
                 
                 memcpy(B, &arr[j], (m-j) * width);
                 #pragma clang diagnostic pop
