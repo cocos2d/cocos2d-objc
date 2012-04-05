@@ -138,7 +138,7 @@ typedef struct _FontDefHashElement
 
 - (NSString*) description
 {
-	return [NSString stringWithFormat:@"<%@ = %08X | Glphys:%d Kernings:%d | Image = %@>", [self class], self,
+	return [NSString stringWithFormat:@"<%@ = %p | Glphys:%d Kernings:%d | Image = %@>", [self class], self,
 			HASH_COUNT(fontDefDictionary_),
 			HASH_COUNT(kerningDictionary_),
 			atlasName_];

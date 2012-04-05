@@ -64,7 +64,7 @@
 
 -(NSString*) description
 {
-	return [NSString stringWithFormat:@"<%@ = %08X | SpriteFrame = %08X, delayUnits = %0.2f >", [self class], self, spriteFrame_, delayUnits_ ];
+	return [NSString stringWithFormat:@"<%@ = %p | SpriteFrame = %p, delayUnits = %0.2f >", [self class], self, spriteFrame_, delayUnits_ ];
 }
 @end
 
@@ -142,7 +142,7 @@
 
 - (NSString*) description
 {
-	return [NSString stringWithFormat:@"<%@ = %08X | frames=%d, totalDelayUnits=%d, delayPerUnit=%f, loops=%d>", [self class], self,
+	return [NSString stringWithFormat:@"<%@ = %p | frames=%d, totalDelayUnits=%f, delayPerUnit=%f, loops=%d>", [self class], self,
 			[frames_ count],
 			totalDelayUnits_,
 			delayPerUnit_,

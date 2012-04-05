@@ -102,7 +102,7 @@
 
 - (NSString*) description
 {
-	return [NSString stringWithFormat:@"<%@ = %08X | Texture=%@, Rect = (%.2f,%.2f,%.2f,%.2f)> rotated:%d", [self class], self,
+	return [NSString stringWithFormat:@"<%@ = %p | Texture=%@, Rect = (%.2f,%.2f,%.2f,%.2f)> rotated:%d", [self class], self,
 			textureFilename_,
 			rect_.origin.x,
 			rect_.origin.y,
