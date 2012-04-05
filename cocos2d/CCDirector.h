@@ -102,6 +102,9 @@ and when to execute the Scenes.
 
 	/* is the running scene paused */
 	BOOL isPaused_;
+    
+    /* Is the director running */
+    BOOL isAnimating_;
 
 	/* The running scene */
 	CCScene *runningScene_;
@@ -167,6 +170,8 @@ and when to execute the Scenes.
 @property (nonatomic,readwrite,assign) BOOL nextDeltaTimeZero;
 /** Whether or not the Director is paused */
 @property (nonatomic,readonly) BOOL isPaused;
+/** Whether or not the Director is active (animating) */
+@property (nonatomic,readonly) BOOL isAnimating;
 /** Sets an OpenGL projection */
 @property (nonatomic,readwrite) ccDirectorProjection projection;
 /** How many frames were called since the director started */
