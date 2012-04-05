@@ -129,7 +129,7 @@ typedef struct _hashSelectorEntry
 
 - (NSString*) description
 {
-	return [NSString stringWithFormat:@"<%@ = %08X | target:%@ selector:(%@)>", [self class], self, [target class], NSStringFromSelector(selector)];
+	return [NSString stringWithFormat:@"<%@ = %p | target:%@ selector:(%@)>", [self class], self, [target class], NSStringFromSelector(selector)];
 }
 
 -(void) dealloc
@@ -230,7 +230,7 @@ typedef struct _hashSelectorEntry
 
 - (NSString*) description
 {
-	return [NSString stringWithFormat:@"<%@ = %08X | timeScale = %0.2f >", [self class], self, timeScale_];
+	return [NSString stringWithFormat:@"<%@ = %p | timeScale = %0.2f >", [self class], self, timeScale_];
 }
 
 - (void) dealloc

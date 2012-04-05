@@ -72,7 +72,7 @@ static CCAnimationCache *sharedAnimationCache_=nil;
 
 - (NSString*) description
 {
-	return [NSString stringWithFormat:@"<%@ = %08X | num of animations =  %i>", [self class], self, [animations_ count]];
+	return [NSString stringWithFormat:@"<%@ = %p | num of animations =  %i>", [self class], self, [animations_ count]];
 }
 
 -(void) dealloc
