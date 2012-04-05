@@ -114,7 +114,7 @@ typedef void (*GLLogFunction) (GLuint program,
 
 - (NSString*) description
 {
-	return [NSString stringWithFormat:@"<%@ = %08X | Program = %i, VertexShader = %i, FragmentShader = %i>", [self class], self, program_, vertShader_, fragShader_];
+	return [NSString stringWithFormat:@"<%@ = %p | Program = %i, VertexShader = %i, FragmentShader = %i>", [self class], self, program_, vertShader_, fragShader_];
 }
 
 
