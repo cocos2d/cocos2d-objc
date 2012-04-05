@@ -276,7 +276,9 @@ static inline void ccArrayMakeObjectsPerformSelector(ccArray *arr, SEL sel)
 {
 	for( NSUInteger i = 0; i < arr->num; i++)
 #pragma clang diagnostic push
+#if defined(__has_feature) && __has_feature(objc_arc)				
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+#endif		
 		[arr->arr[i] performSelector:sel];
 #pragma clang diagnostic pop
 }
@@ -285,7 +287,10 @@ static inline void ccArrayMakeObjectsPerformSelectorWithObject(ccArray *arr, SEL
 {
 	for( NSUInteger i = 0; i < arr->num; i++)
 #pragma clang diagnostic push
+		
+#if defined(__has_feature) && __has_feature(objc_arc)		
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+#endif		
 		[arr->arr[i] performSelector:sel withObject:object];
 #pragma clang diagnostic pop
 }
@@ -294,7 +299,10 @@ static inline void ccArrayMakeObjectPerformSelectorWithArrayObjects(ccArray *arr
 {
 	for( NSUInteger i = 0; i < arr->num; i++)
 #pragma clang diagnostic push
+		
+#if defined(__has_feature) && __has_feature(objc_arc)		
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+#endif		
 		[object performSelector:sel withObject:arr->arr[i]];
 #pragma clang diagnostic pop
 }
