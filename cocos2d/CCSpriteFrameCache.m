@@ -82,7 +82,7 @@ static CCSpriteFrameCache *sharedSpriteFrameCache_=nil;
 
 - (NSString*) description
 {
-	return [NSString stringWithFormat:@"<%@ = %08X | num of sprite frames =  %i>", [self class], self, [spriteFrames_ count]];
+	return [NSString stringWithFormat:@"<%@ = %p | num of sprite frames =  %i>", [self class], self, [spriteFrames_ count]];
 }
 
 -(void) dealloc
