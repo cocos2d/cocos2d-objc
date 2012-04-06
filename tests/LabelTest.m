@@ -1347,8 +1347,8 @@ static float menuItemPaddingCenter = 50;
 
 - (NSString*) currentAlignment
 {
-    NSString* vertical;
-    NSString* horizontal;
+    NSString* vertical = nil;
+    NSString* horizontal = nil;
     switch (vertAlign) {
         case CCVerticalTextAlignmentTop:
             vertical = @"Top";
