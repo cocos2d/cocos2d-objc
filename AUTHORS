@@ -58,6 +58,9 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	CCShaderCache: Added addProgram:forKey: method
 	CCArray: Fixed copyWithZone
 	
+* Kaicherry (https://github.com/kaicherry):
+	Fixed compiler warnings with format strings
+
 * Karl Stenerud (http://www.mindsnacks.com/):
 	Added vertical alignment support for LabelTTF
 	Added PauseAll/ResumeAll in ActionManager
