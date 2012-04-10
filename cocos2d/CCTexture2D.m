@@ -677,7 +677,6 @@ static BOOL PVRHaveAlphaPremultiplied_ = NO;
 
 			[pvr release];
 
-			[self setAntiAliasTexParameters];
 		} else {
 
 			CCLOG(@"cocos2d: Couldn't load PVR image: %@", relPath);
