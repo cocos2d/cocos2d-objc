@@ -18,7 +18,8 @@ enum {
 
 static int sceneIdx=-1;
 static NSString *transitions[] = {
-	
+
+	@"TextureMemory",
 	@"TextureAlias",
 	@"TextureMipMap",
 	@"TexturePVRMipMap",
@@ -60,8 +61,6 @@ static NSString *transitions[] = {
 	@"TextureCache1",
 	@"TextureDrawAtPoint",
 	@"TextureDrawInRect",
-
-	@"FileUtilsTest",
 };
 
 #pragma mark Callbacks
@@ -1886,71 +1885,6 @@ Class restartAction()
 -(NSString *) subtitle
 {
 	return @"draws 2 textures using drawInRect";
-}
-@end
-
-
-#pragma mark - FileUtilsTest
-
-@implementation FileUtilsTest
--(id) init
-{
-	if ((self=[super init]) ) {
-
-		// This test is only valid in Retinadisplay
-
-		if( CC_CONTENT_SCALE_FACTOR() == 2 ) {
-
-			CCSprite *sprite = [[CCSprite alloc] initWithFile:@"bugs/test_issue_1179.png"];
-			if( sprite )
-				NSLog(@"Test #1 issue 1179: OK");
-			else
-				NSLog(@"Test #1 issue 1179: FAILED");
-
-			[sprite release];
-
-			sprite = [[CCSprite alloc] initWithFile:@"only_in_hd.pvr.ccz"];
-			if( sprite )
-				NSLog(@"Test #2 issue 1179: OK");
-			else
-				NSLog(@"Test #2 issue 1179: FAILED");
-
-			[sprite release];
-
-		} else {
-			NSLog(@"Test issue #1179 failed. Needs to be tested with RetinaDispaly");
-		}
-
-
-#ifdef __CC_PLATFORM_IOS
-		// Testint CCFileUtils API
-		BOOL ret;
-		CCFileUtils *sharedFileUtils = [CCFileUtils sharedFileUtils];
-		ret = [sharedFileUtils iPhoneRetinaDisplayFileExistsAtPath:@"bugs/test_issue_1179.png"];
-		if( ret )
-			NSLog(@"Test #3: retinaDisplayFileExistsAtPath: OK");
-		else
-			NSLog(@"Test #3: retinaDisplayFileExistsAtPath: FAILED");
-
-
-		ret = [sharedFileUtils iPhoneRetinaDisplayFileExistsAtPath:@"grossini-does_no_exist.png"];
-		if( !ret )
-			NSLog(@"Test #4: retinaDisplayFileExistsAtPath: OK");
-		else
-			NSLog(@"Test #4: retinaDisplayFileExistsAtPath: FAILED");
-#endif // __CC_PLATFORM_IOS
-
-	}
-	return self;
-}
-
--(NSString*) title
-{
-	return @"CCFileUtils: See console";
-}
--(NSString *) subtitle
-{
-	return @"See the console";
 }
 @end
 
