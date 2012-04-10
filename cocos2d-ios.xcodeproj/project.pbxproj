@@ -1402,6 +1402,8 @@
 		A0600C2413C2076E00BB6F49 /* fps_images-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E087B34E12785BB60076F6FF /* fps_images-hd.png */; };
 		A0600CE313C2756E00BB6F49 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		A0600CE413C2757D00BB6F49 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
+		A0601FD01534B2F600C4EECA /* bugs in Resources */ = {isa = PBXBuildFile; fileRef = 50CBA4A711CBD7FB007B009D /* bugs */; };
+		A0601FD21534B31F00C4EECA /* only_in_hd-hd.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = A0B035FA13EA09270073E59A /* only_in_hd-hd.pvr.ccz */; };
 		A08C378F14144FC6004538FD /* neon_matrix_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = A08C378E14144FBB004538FD /* neon_matrix_impl.h */; };
 		A08C379114144FDE004538FD /* neon_matrix_impl.c in Sources */ = {isa = PBXBuildFile; fileRef = A08C379014144FDE004538FD /* neon_matrix_impl.c */; };
 		A093FC25150D0ED40039327A /* fps_images-ipadhd.png in Resources */ = {isa = PBXBuildFile; fileRef = A093FC24150D0ED40039327A /* fps_images-ipadhd.png */; };
@@ -1474,7 +1476,6 @@
 		A0A10B5814F3011F00FA38C1 /* ccGLStateCache.m in Sources */ = {isa = PBXBuildFile; fileRef = A0A10B5614F3011F00FA38C1 /* ccGLStateCache.m */; };
 		A0A7A53C1514F27D00C8BD16 /* CCActionCatmullRom.h in Headers */ = {isa = PBXBuildFile; fileRef = A0A7A53A1514F27D00C8BD16 /* CCActionCatmullRom.h */; };
 		A0A7A53D1514F27D00C8BD16 /* CCActionCatmullRom.m in Sources */ = {isa = PBXBuildFile; fileRef = A0A7A53B1514F27D00C8BD16 /* CCActionCatmullRom.m */; };
-		A0B035FB13EA09270073E59A /* only_in_hd-hd.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = A0B035FA13EA09270073E59A /* only_in_hd-hd.pvr.ccz */; };
 		A0B0377313EA1FDB0073E59A /* b1-ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = A0B0376D13EA1FDB0073E59A /* b1-ipad.png */; };
 		A0B0377413EA1FDB0073E59A /* b1-ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = A0B0376D13EA1FDB0073E59A /* b1-ipad.png */; };
 		A0B0377513EA1FDB0073E59A /* b1-ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = A0B0376D13EA1FDB0073E59A /* b1-ipad.png */; };
@@ -9718,7 +9719,6 @@
 				E0BBADE91282E838007DB81E /* test_image_rgba4444.pvr.ccz in Resources */,
 				E0BBADEA1282E838007DB81E /* test_image_rgba4444.pvr.gz in Resources */,
 				A0600C1513C2076200BB6F49 /* fps_images-hd.png in Resources */,
-				A0B035FB13EA09270073E59A /* only_in_hd-hd.pvr.ccz in Resources */,
 				A0B0379713EA1FDD0073E59A /* b1-ipad.png in Resources */,
 				A0B037C813EA1FDE0073E59A /* b2-ipad.png in Resources */,
 				A0B037F913EA1FDF0073E59A /* f1-ipad.png in Resources */,
@@ -10849,6 +10849,8 @@
 				A0F841AE151D419F00EBBFCB /* issue1344-test6-ipad.txt in Resources */,
 				A0F841AF151D419F00EBBFCB /* issue1344-test7-ipad.txt in Resources */,
 				A0F841B0151D419F00EBBFCB /* issue1344-test7-ipadhd.txt in Resources */,
+				A0601FD01534B2F600C4EECA /* bugs in Resources */,
+				A0601FD21534B31F00C4EECA /* only_in_hd-hd.pvr.ccz in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

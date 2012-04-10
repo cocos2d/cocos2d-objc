@@ -18,3 +18,7 @@
 @interface Issue1344 : FileUtilsDemo
 {}
 @end
+
+@interface Test1 : FileUtilsDemo
+{}
+@end

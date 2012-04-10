@@ -49,6 +49,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
  * Extended PVR formats for cocos2d project ( http://www.cocos2d-iphone.org )
  *	- RGBA8888
  *	- BGRA8888
+ *  - RGB888
  *  - RGBA4444
  *  - RGBA5551
  *  - RGB565
