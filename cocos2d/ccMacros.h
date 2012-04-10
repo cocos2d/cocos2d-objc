@@ -179,6 +179,7 @@ do	{																							\
 #define CC_NODE_DRAW_SETUP()																	\
 do {																							\
 	ccGLEnable( glServerState_ );																\
+    NSAssert(shaderProgram_, @"No shader program set for node: %@", self);                      \
 	[shaderProgram_ use];																		\
 	[shaderProgram_ setUniformForModelViewProjectionMatrix];									\
 } while(0)
