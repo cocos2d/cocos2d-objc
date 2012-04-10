@@ -16,6 +16,8 @@ version 2.0-rc1 XX-Apr-2012
 . [FIX] LabelTTF: Better support for custom TTF (Mac)
 . [FIX] NSThread+Block: fixed crash due to block not being copied to the heap
 . [FIX] OpenGL: VAO are initialized on the cocos2d thread on machines that don't support shareables VAOs
+. [FIX] Texture: If defaultAlpha is RGBA8888 and image has no alpha, use RGBA8 instead of RGB565
+. [FIX] Texture: PVR textures sets the glTexParams before creating the texture. faster and consume less memory
 
 version 2.0-rc0a 13-Mar-2012
 . [FIX] PerformanceTest: Compiles and run
