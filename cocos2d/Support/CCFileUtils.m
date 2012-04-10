@@ -236,7 +236,8 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 		return value.fullpath;
 	}
 
-	NSString *ret = nil;
+	// Initialize to non-nil
+	NSString *ret = @"";
 
 #ifdef __CC_PLATFORM_IOS
 
@@ -349,7 +350,8 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 	if( withoutSuffix )
 		return withoutSuffix;
 
-	NSString *ret = nil;
+	// Initial value should be non-nil
+	NSString *ret = @"";
 
 	NSInteger device = [self runningDevice];
 	
