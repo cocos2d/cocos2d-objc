@@ -191,6 +191,7 @@ typedef struct _PVRTexHeader
 		(uint32_t)gPVRTexIdentifier[2] != ((pvrTag >> 16) & 0xff) ||
 		(uint32_t)gPVRTexIdentifier[3] != ((pvrTag >> 24) & 0xff))
 	{
+		CCLOG(@"Unsupported PVR format. Use the Legacy format until the new format is supported");
 		return FALSE;
 	}
 
