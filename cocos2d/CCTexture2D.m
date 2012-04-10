@@ -274,12 +274,12 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 		{
 			info = kCGImageAlphaNoneSkipLast;
 
-			// Don't use RGB888 (24-bit) since it is expanded into RGBA8888 (32-bit) internally
-//			size_t bpp = CGImageGetBitsPerComponent(cgImage);
-//			if( bpp >= 8 )
-//				pixelFormat = kCCTexture2DPixelFormat_RGB888;
-//			else
-			pixelFormat = kCCTexture2DPixelFormat_RGB565;
+			// Use RGBA8888 if default is RGBA8888, otherwise use RGB565.
+			// DO NOT USE RGB888 since it is the same as RGBA8888, but it is more expensive to create it
+			if( defaultAlphaPixelFormat_ == kCCTexture2DPixelFormat_RGB888 )
+				pixelFormat = kCCTexture2DPixelFormat_RGB888;
+			else
+				pixelFormat = kCCTexture2DPixelFormat_RGB565;
 			
 			CCLOG(@"cocos2d: CCTexture2D: Using RGB565 texture since image has no alpha");
 				
