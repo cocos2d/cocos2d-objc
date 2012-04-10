@@ -19,7 +19,8 @@ enum {
 static int sceneIdx=-1;
 static NSString *transitions[] = {
 
-	@"TextureMemory",
+	@"TextureMemoryNPOT",
+	@"TextureMemoryPOT",
 	@"TextureAlias",
 	@"TextureMipMap",
 	@"TexturePVRMipMap",
@@ -1888,6 +1889,155 @@ Class restartAction()
 }
 @end
 
+
+#pragma mark -
+#pragma mark TextureMemoryNPOT
+
+
+@implementation TextureMemoryNPOT
+-(id) init
+{
+	if ((self=[super init]) ) {
+		
+		background_ = nil;
+		
+		[CCMenuItemFont setFontSize:24];
+
+		CCMenuItem *item1 = [CCMenuItemFont itemWithString:@"RGBA8" target:self selector:@selector(updateImage:)];
+		item1.tag = 0;
+
+		CCMenuItem *item2 = [CCMenuItemFont itemWithString:@"RGBA8" target:self selector:@selector(updateImage:)];
+		item2.tag = 1;
+
+		CCMenuItem *item3 = [CCMenuItemFont itemWithString:@"RGB8" target:self selector:@selector(updateImage:)];
+		item3.tag = 2;
+
+		CCMenuItem *item4 = [CCMenuItemFont itemWithString:@"RGB565" target:self selector:@selector(updateImage:)];
+		item4.tag = 3;
+
+		CCMenuItem *item5 = [CCMenuItemFont itemWithString:@"RGBA4" target:self selector:@selector(updateImage:)];
+		item5.tag = 4;
+
+		CCMenuItem *item6 = [CCMenuItemFont itemWithString:@"RGB5A1" target:self selector:@selector(updateImage:)];
+		item6.tag = 5;
+
+		CCMenu *menu = [CCMenu menuWithItems:item1, item2, item3, item4, item5, item6, nil];
+		[menu alignItemsHorizontally];
+		
+		[self addChild:menu];
+		
+		
+		CCMenuItemFont *aliased = [CCMenuItemFont itemWithString:@"aliased" block:^(id sender) {
+			[[background_ texture] setAliasTexParameters];
+		}];
+
+		CCMenuItemFont *antialiased = [CCMenuItemFont itemWithString:@"anti-aliased" block:^(id sender) {
+			[[background_ texture] setAntiAliasTexParameters];
+		}];
+		
+		CCMenu *menu2 = [CCMenu menuWithItems:aliased, antialiased, nil];
+		
+		[menu2 alignItemsHorizontally];
+		
+		[self addChild:menu2];
+		CGSize s = [[CCDirector sharedDirector] winSize];
+		
+		menu2.position = ccp(s.width/2, s.height/4);
+	}
+	return self;
+}
+							 
+-(void) updateImage:(id) sender
+{
+	[background_ removeFromParentAndCleanup:YES];
+	[[CCTextureCache sharedTextureCache] removeUnusedTextures];
+	
+	int tag = [sender tag];
+	NSString *file = nil;
+	switch( tag ) {
+		case 0:
+			file = @"test_1023x1023.png";
+			break;
+		case 1:
+			file = @"test_1023x1023_rgba8888.pvr.gz";
+			break;
+		case 2:
+			file = @"test_1023x1023_rgb888.pvr.gz";
+			break;
+		case 3:
+			file = @"test_1023x1023_rgb565.pvr.gz";
+			break;
+		case 4:
+			file = @"test_1023x1023_rgba5551.pvr.gz";
+			break;
+		case 5:
+			file = @"test_1023x1023_rgba4444.pvr.gz";
+			break;
+	}
+	background_ = [CCSprite spriteWithFile:file];
+	[self addChild:background_ z:-10];
+	
+	
+	CGSize s = [[CCDirector sharedDirector] winSize];
+	[background_ setPosition:ccp(s.width/2, s.height/2)];
+}
+
+-(NSString*) title
+{
+	return @"NPOT Texture memory";
+}
+-(NSString *) subtitle
+{
+	return @"Testing Texture Memory allocation. Use Instruments + VM Tracker";
+}
+@end
+
+
+#pragma mark -
+#pragma mark TextureMemoryPOT
+
+
+@implementation TextureMemoryPOT
+-(void) updateImage:(id) sender
+{
+	[background_ removeFromParentAndCleanup:YES];
+	[[CCTextureCache sharedTextureCache] removeUnusedTextures];
+	
+	int tag = [sender tag];
+	NSString *file = nil;
+	switch( tag ) {
+		case 0:
+			file = @"test_1024x1024.png";
+			break;
+		case 1:
+			file = @"test_1024x1024_rgba8888.pvr.gz";
+			break;
+		case 2:
+			file = @"test_1024x1024_rgb888.pvr.gz";
+			break;
+		case 3:
+			file = @"test_1024x1024_rgb565.pvr.gz";
+			break;
+		case 4:
+			file = @"test_1024x1024_rgba5551.pvr.gz";
+			break;
+		case 5:
+			file = @"test_1024x1024_rgba4444.pvr.gz";
+			break;
+	}
+	background_ = [CCSprite spriteWithFile:file];
+	[self addChild:background_ z:-10];
+	
+	
+	CGSize s = [[CCDirector sharedDirector] winSize];
+	[background_ setPosition:ccp(s.width/2, s.height/2)];
+}
+
+-(NSString*) title
+{
+	return @"POT Texture memory";
+}
+@end
 
 
 #pragma mark -
