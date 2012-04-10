@@ -192,9 +192,14 @@
 }
 @end
 
-@interface TextureMemory : TextureDemo
+@interface TextureMemoryNPOT : TextureDemo
 {
-	CCTexture2D *tex1_, *tex2_;
+	CCSprite *background_;
+}
+@end
+
+@interface TextureMemoryPOT : TextureMemoryNPOT
+{
 }
 @end
 
