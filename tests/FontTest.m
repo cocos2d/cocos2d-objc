@@ -37,9 +37,9 @@ static int fontCount = sizeof(fontList) / sizeof(*fontList);
 static int vAlignIdx = 0;
 static CCVerticalTextAlignment verticalAlignment[] =
 {
-    CCVerticalTextAlignmentTop,
-    CCVerticalTextAlignmentMiddle,
-    CCVerticalTextAlignmentBottom,
+    kCCVerticalTextAlignmentTop,
+    kCCVerticalTextAlignmentCenter,
+    kCCVerticalTextAlignmentBottom,
 };
 static int vAlignCount = sizeof(verticalAlignment) / sizeof(*verticalAlignment);
 
@@ -112,9 +112,9 @@ NSString* restartAction()
 
 
 	CCLabelTTF *top = [CCLabelTTF labelWithString:aFont fontName:aFont fontSize:24];
-	CCLabelTTF *left = [CCLabelTTF labelWithString:@"alignment left" dimensions:blockSize hAlignment:CCTextAlignmentLeft vAlignment:verticalAlignment[vAlignIdx] fontName:aFont fontSize:fontSize];
-	CCLabelTTF *center = [CCLabelTTF labelWithString:@"alignment center" dimensions:blockSize hAlignment:CCTextAlignmentCenter vAlignment:verticalAlignment[vAlignIdx] fontName:aFont fontSize:fontSize];
-	CCLabelTTF *right = [CCLabelTTF labelWithString:@"alignment right" dimensions:blockSize hAlignment:CCTextAlignmentRight vAlignment:verticalAlignment[vAlignIdx] fontName:aFont fontSize:fontSize];
+	CCLabelTTF *left = [CCLabelTTF labelWithString:@"alignment left" dimensions:blockSize hAlignment:kCCTextAlignmentLeft vAlignment:verticalAlignment[vAlignIdx] fontName:aFont fontSize:fontSize];
+	CCLabelTTF *center = [CCLabelTTF labelWithString:@"alignment center" dimensions:blockSize hAlignment:kCCTextAlignmentCenter vAlignment:verticalAlignment[vAlignIdx] fontName:aFont fontSize:fontSize];
+	CCLabelTTF *right = [CCLabelTTF labelWithString:@"alignment right" dimensions:blockSize hAlignment:kCCTextAlignmentRight vAlignment:verticalAlignment[vAlignIdx] fontName:aFont fontSize:fontSize];
 
     CCLayerColor *leftColor = [CCLayerColor layerWithColor:ccc4(100, 100, 100, 255) width:blockSize.width height:blockSize.height];
     CCLayerColor *centerColor = [CCLayerColor layerWithColor:ccc4(200, 100, 100, 255) width:blockSize.width height:blockSize.height];

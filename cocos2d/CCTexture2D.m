@@ -85,6 +85,9 @@
 #import "Support/ccUtils.h"
 #import "Support/CCFileUtils.h"
 
+#import "ccDeprecated.h"
+
+
 
 #if CC_USE_LA88_LABELS
 #define LABEL_PIXEL_FORMAT kCCTexture2DPixelFormat_AI88
@@ -416,9 +419,12 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 
 #ifdef __CC_PLATFORM_IOS
 
-- (id) initWithString:(NSString*)string dimensions:(CGSize)dimensions hAlignment:(CCTextAlignment)alignment vAlignment:(CCVerticalTextAlignment) vertAlignment lineBreakMode:(CCLineBreakMode)lineBreakMode font:(id)uifont
+- (id) initWithString:(NSString*)string dimensions:(CGSize)dimensions hAlignment:(CCTextAlignment)hAlignment vAlignment:(CCVerticalTextAlignment) vertAlignment lineBreakMode:(CCLineBreakMode)lineBreakMode font:(UIFont*)uifont
 {
 	NSAssert( uifont, @"Invalid font");
+
+	// MUST have the same order declared on ccTypes
+	NSInteger linebreaks[] = {UILineBreakModeWordWrap, UILineBreakModeCharacterWrap, UILineBreakModeClip, UILineBreakModeHeadTruncation, UILineBreakModeTailTruncation, UILineBreakModeMiddleTruncation};
 
 	NSUInteger POTWide = ccNextPOT(dimensions.width);
 	NSUInteger POTHigh = ccNextPOT(dimensions.height);
@@ -450,27 +456,28 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 	UIGraphicsPushContext(context);
 
     CGRect drawArea;
-    if(vertAlignment == CCVerticalTextAlignmentTop)
+    if(vertAlignment == kCCVerticalTextAlignmentTop)
     {
         drawArea = CGRectMake(0, 0, dimensions.width, dimensions.height);
     }
     else
     {
-        CGSize drawSize = [string sizeWithFont:uifont constrainedToSize:dimensions lineBreakMode:lineBreakMode];
+        CGSize drawSize = [string sizeWithFont:uifont constrainedToSize:dimensions lineBreakMode:linebreaks[lineBreakMode] ];
         
-        if(vertAlignment == CCVerticalTextAlignmentBottom)
+        if(vertAlignment == kCCVerticalTextAlignmentBottom)
         {
             drawArea = CGRectMake(0, dimensions.height - drawSize.height, dimensions.width, drawSize.height);
         }
-        else // kCCVerticalTextAlignmentMiddle
+        else // kCCVerticalTextAlignmentCenter
         {
             drawArea = CGRectMake(0, (dimensions.height - drawSize.height) / 2, dimensions.width, drawSize.height);
         }
     }
 
-	// normal fonts
-	if( [uifont isKindOfClass:[UIFont class] ] )
-		[string drawInRect:drawArea withFont:uifont lineBreakMode:lineBreakMode alignment:alignment];
+	// must follow the same order of CCTextureAligment
+	NSUInteger alignConvert[] = { UITextAlignmentLeft, UITextAlignmentCenter, UITextAlignmentRight };
+	
+	[string drawInRect:drawArea withFont:uifont lineBreakMode:linebreaks[lineBreakMode] alignment:alignConvert[hAlignment]];
 
 	UIGraphicsPopContext();
 
@@ -494,7 +501,7 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 
 #elif defined(__CC_PLATFORM_MAC)
 
-- (id) initWithString:(NSString*)string dimensions:(CGSize)dimensions hAlignment:(CCTextAlignment)alignment vAlignment:(CCVerticalTextAlignment) vertAlignment attributedString:(NSAttributedString*)stringWithAttributes
+- (id) initWithString:(NSString*)string dimensions:(CGSize)dimensions hAlignment:(CCTextAlignment)hAlignment vAlignment:(CCVerticalTextAlignment)vAlignment attributedString:(NSAttributedString*)stringWithAttributes
 {
 	NSAssert(stringWithAttributes, @"Invalid stringWithAttributes");
 
@@ -510,16 +517,16 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
         CGSize offset = CGSizeMake(0, POTSize.height - dimensions.height);
         
         //Alignment
-		switch (alignment) {
-			case CCTextAlignmentLeft: break;
-			case CCTextAlignmentCenter: offset.width = (dimensions.width-boundingRect.size.width)/2.0f; break;
-			case CCTextAlignmentRight: offset.width = dimensions.width-boundingRect.size.width; break;
+		switch (hAlignment) {
+			case kCCTextAlignmentLeft: break;
+			case kCCTextAlignmentCenter: offset.width = (dimensions.width-boundingRect.size.width)/2.0f; break;
+			case kCCTextAlignmentRight: offset.width = dimensions.width-boundingRect.size.width; break;
 			default: break;
 		}
-		switch (vertAlignment) {
-			case CCVerticalTextAlignmentTop: offset.height += dimensions.height - boundingRect.size.height; break;
-			case CCVerticalTextAlignmentMiddle: offset.height += (dimensions.height - boundingRect.size.height) / 2; break;
-			case CCVerticalTextAlignmentBottom: break;
+		switch (vAlignment) {
+			case kCCVerticalTextAlignmentTop: offset.height += dimensions.height - boundingRect.size.height; break;
+			case kCCVerticalTextAlignmentCenter: offset.height += (dimensions.height - boundingRect.size.height) / 2; break;
+			case kCCVerticalTextAlignmentBottom: break;
 			default: break;
 		}
         
@@ -581,7 +588,7 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 		return nil;
 	}
 
-	return [self initWithString:string dimensions:dim hAlignment:CCTextAlignmentCenter vAlignment:CCVerticalTextAlignmentTop lineBreakMode:CCLineBreakModeWordWrap font:font];
+	return [self initWithString:string dimensions:dim hAlignment:kCCTextAlignmentCenter vAlignment:kCCVerticalTextAlignmentTop lineBreakMode:kCCLineBreakModeWordWrap font:font];
 
 #elif defined(__CC_PLATFORM_MAC)
 	{
@@ -598,7 +605,7 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 
 		dim = NSSizeToCGSize( [stringWithAttributes size] );
 
-		return [self initWithString:string dimensions:dim hAlignment:CCTextAlignmentCenter vAlignment:CCVerticalTextAlignmentTop attributedString:stringWithAttributes];
+		return [self initWithString:string dimensions:dim hAlignment:kCCTextAlignmentCenter vAlignment:kCCVerticalTextAlignmentTop attributedString:stringWithAttributes];
 	}
 #endif // __CC_PLATFORM_MAC
 
@@ -606,15 +613,13 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 
 - (id) initWithString:(NSString*)string dimensions:(CGSize)dimensions hAlignment:(CCTextAlignment)alignment vAlignment:(CCVerticalTextAlignment) vertAlignment fontName:(NSString*)name fontSize:(CGFloat)size
 {
-	return [self initWithString:string dimensions:dimensions hAlignment:alignment vAlignment:vertAlignment lineBreakMode:CCLineBreakModeWordWrap fontName:name fontSize:size];
+	return [self initWithString:string dimensions:dimensions hAlignment:alignment vAlignment:vertAlignment lineBreakMode:kCCLineBreakModeWordWrap fontName:name fontSize:size];
 }
 
 - (id) initWithString:(NSString*)string dimensions:(CGSize)dimensions hAlignment:(CCTextAlignment)alignment vAlignment:(CCVerticalTextAlignment) vertAlignment lineBreakMode:(CCLineBreakMode)lineBreakMode fontName:(NSString*)name fontSize:(CGFloat)size
 {
 #ifdef __CC_PLATFORM_IOS
-	id						uifont = nil;
-
-	uifont = [UIFont fontWithName:name size:size];
+	UIFont *uifont = [UIFont fontWithName:name size:size];
 	if( ! uifont ) {
 		CCLOG(@"cocos2d: Texture2d: Invalid Font: %@. Verify the .ttf name", name);
 		[self release];
@@ -636,7 +641,9 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
     // create paragraph style
     NSMutableParagraphStyle *pstyle = [[NSMutableParagraphStyle alloc] init];
     [pstyle setAlignment:alignment];
-    [pstyle setLineBreakMode:lineBreakMode];
+	NSInteger linebreaks[] = {NSLineBreakByWordWrapping, -1, -1, -1, -1, -1};
+
+    [pstyle setLineBreakMode: linebreaks[lineBreakMode] ];
 
     // put attributes into a NSDictionary
     NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:font, NSFontAttributeName, pstyle, NSParagraphStyleAttributeName, nil];

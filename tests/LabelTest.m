@@ -358,17 +358,17 @@ Class restartAction()
 	if( (self=[super init] )) {
         CGSize s = [[CCDirector sharedDirector] winSize];
         
-        CCLabelTTF* ttf0 = [CCLabelTTF labelWithString:@"Alignment 0" dimensions:CGSizeMake(256, 16) hAlignment:CCTextAlignmentLeft fontName:@"Helvetica" fontSize:12];
+        CCLabelTTF* ttf0 = [CCLabelTTF labelWithString:@"Alignment 0" dimensions:CGSizeMake(256, 16) hAlignment:0 fontName:@"Helvetica" fontSize:12];
         ttf0.position = ccp(s.width/2,(s.height/6)*2);
         ttf0.anchorPoint = ccp(0.5f,0.5f);
         [self addChild:ttf0];
         
-        CCLabelTTF* ttf1 = [CCLabelTTF labelWithString:@"Alignment 1" dimensions:CGSizeMake(245, 16) hAlignment:CCTextAlignmentCenter fontName:@"Helvetica" fontSize:12];
+        CCLabelTTF* ttf1 = [CCLabelTTF labelWithString:@"Alignment 1" dimensions:CGSizeMake(245, 16) hAlignment:1 fontName:@"Helvetica" fontSize:12];
         ttf1.position = ccp(s.width/2,(s.height/6)*3);
         ttf1.anchorPoint = ccp(0.5f,0.5f);
         [self addChild:ttf1];
         
-        CCLabelTTF* ttf2 = [CCLabelTTF labelWithString:@"Alignment 2" dimensions:CGSizeMake(245, 16) hAlignment:CCTextAlignmentRight fontName:@"Helvetica" fontSize:12];
+        CCLabelTTF* ttf2 = [CCLabelTTF labelWithString:@"Alignment 2" dimensions:CGSizeMake(245, 16) hAlignment:2 fontName:@"Helvetica" fontSize:12];
         ttf2.position = ccp(s.width/2,(s.height/6)*4);
         ttf2.anchorPoint = ccp(0.5f,0.5f);
         [self addChild:ttf2];
@@ -884,7 +884,7 @@ static float menuItemPaddingCenter = 50;
 		CGSize size = [[CCDirector sharedDirector] winSize];
 
 		// create and initialize a Label
-		self.label = [CCLabelBMFont labelWithString:LongSentencesExample fntFile:@"markerFelt.fnt" width:size.width/1.5 alignment:CCTextAlignmentCenter];
+		self.label = [CCLabelBMFont labelWithString:LongSentencesExample fntFile:@"markerFelt.fnt" width:size.width/1.5 alignment:kCCTextAlignmentCenter];
         //self.label.debug = YES;
 
         self.arrowsBar = [CCSprite spriteWithFile:@"arrowsBar.png"];
@@ -985,13 +985,13 @@ static float menuItemPaddingCenter = 50;
 
     switch (item.tag) {
         case LeftAlign:
-            [self.label setAlignment:CCTextAlignmentLeft];
+            [self.label setAlignment:kCCTextAlignmentLeft];
             break;
         case CenterAlign:
-            [self.label setAlignment:CCTextAlignmentCenter];
+            [self.label setAlignment:kCCTextAlignmentCenter];
             break;
         case RightAlign:
-            [self.label setAlignment:CCTextAlignmentRight];
+            [self.label setAlignment:kCCTextAlignmentRight];
             break;
 
         default:
@@ -1322,8 +1322,8 @@ static float menuItemPaddingCenter = 50;
         menu.position = ccp(s.width - 50, s.height / 2 - 20);
         [self addChild:menu];
         
-        horizAlign = CCTextAlignmentLeft;
-        vertAlign = CCVerticalTextAlignmentTop;
+        horizAlign = kCCTextAlignmentLeft;
+        vertAlign = kCCVerticalTextAlignmentTop;
         
         [self updateAlignment];
 	}
@@ -1357,37 +1357,37 @@ static float menuItemPaddingCenter = 50;
 
 - (void) setAlignmentLeft
 {
-    horizAlign = CCTextAlignmentLeft;
+    horizAlign = kCCTextAlignmentLeft;
     [self updateAlignment];
 }
 
 - (void) setAlignmentCenter
 {
-    horizAlign = CCTextAlignmentCenter;
+    horizAlign = kCCTextAlignmentCenter;
     [self updateAlignment];
 }
 
 - (void) setAlignmentRight
 {
-    horizAlign = CCTextAlignmentRight;
+    horizAlign = kCCTextAlignmentRight;
     [self updateAlignment];
 }
 
 - (void) setAlignmentTop
 {
-    vertAlign = CCVerticalTextAlignmentTop;
+    vertAlign = kCCVerticalTextAlignmentTop;
     [self updateAlignment];
 }
 
 - (void) setAlignmentMiddle
 {
-    vertAlign = CCVerticalTextAlignmentMiddle;
+    vertAlign = kCCVerticalTextAlignmentCenter;
     [self updateAlignment];
 }
 
 - (void) setAlignmentBottom
 {
-    vertAlign = CCVerticalTextAlignmentBottom;
+    vertAlign = kCCVerticalTextAlignmentBottom;
     [self updateAlignment];
 }
 
@@ -1397,24 +1397,24 @@ static float menuItemPaddingCenter = 50;
     NSString* vertical = nil;
     NSString* horizontal = nil;
     switch (vertAlign) {
-        case CCVerticalTextAlignmentTop:
+        case kCCVerticalTextAlignmentTop:
             vertical = @"Top";
             break;
-        case CCVerticalTextAlignmentMiddle:
+        case kCCVerticalTextAlignmentCenter:
             vertical = @"Middle";
             break;
-        case CCVerticalTextAlignmentBottom:
+        case kCCVerticalTextAlignmentBottom:
             vertical = @"Bottom";
             break;
     }
     switch (horizAlign) {
-        case CCTextAlignmentLeft:
+        case kCCTextAlignmentLeft:
             horizontal = @"Left";
             break;
-        case CCTextAlignmentCenter:
+        case kCCTextAlignmentCenter:
             horizontal = @"Center";
             break;
-        case CCTextAlignmentRight:
+        case kCCTextAlignmentRight:
             horizontal = @"Right";
             break;
     }
@@ -1447,7 +1447,7 @@ static float menuItemPaddingCenter = 50;
 		// CCLabelBMFont
 //		CCLabelTTF *center =  [[CCLabelTTF alloc] initWithString:@"Bla bla bla bla bla bla bla bla bla bla bla (bla)" dimensions:CGSizeMake(150,84) alignment:UITextAlignmentLeft fontName: @"MarkerFelt.ttc" fontSize: 14];
 
-		CCLabelTTF *center = [CCLabelTTF labelWithString:@"word wrap \"testing\" (bla0) bla1 'bla2' [bla3] (bla4) {bla5} {bla6} [bla7] (bla8) [bla9] 'bla0' \"bla1\"" dimensions:CGSizeMake(s.width/2,200) hAlignment:CCTextAlignmentCenter vAlignment:CCVerticalTextAlignmentTop fontName:@"Paint Boy" fontSize:32];
+		CCLabelTTF *center = [CCLabelTTF labelWithString:@"word wrap \"testing\" (bla0) bla1 'bla2' [bla3] (bla4) {bla5} {bla6} [bla7] (bla8) [bla9] 'bla0' \"bla1\"" dimensions:CGSizeMake(s.width/2,200) hAlignment:kCCTextAlignmentCenter vAlignment:kCCVerticalTextAlignmentTop fontName:@"Paint Boy" fontSize:32];
 		center.position = ccp(s.width/2,150);
 
 		[self addChild:center];
@@ -1521,9 +1521,9 @@ static float menuItemPaddingCenter = 50;
 
 		CCLabelTTF *wordwrap = [CCLabelTTF labelWithString:@"Testing line wordwrap mode mode mode mode"
 												dimensions:CGSizeMake(s.width/4,40)
-												hAlignment:CCTextAlignmentCenter
-												vAlignment:CCVerticalTextAlignmentTop
-											 lineBreakMode:CCLineBreakModeWordWrap
+												hAlignment:kCCTextAlignmentCenter
+												vAlignment:kCCVerticalTextAlignmentTop
+											 lineBreakMode:kCCLineBreakModeWordWrap
 												  fontName:@"Marker Felt"
 												  fontSize:16];
 		wordwrap.position = ccp(s.width/2,60);
@@ -1532,8 +1532,8 @@ static float menuItemPaddingCenter = 50;
 
 		CCLabelTTF *label = [CCLabelTTF labelWithString:@"A really long line of text that is longer than the width of the label"
 											 dimensions:CGSizeMake(280, 60)
-											 hAlignment:CCTextAlignmentCenter
-											 vAlignment:CCVerticalTextAlignmentTop
+											 hAlignment:kCCTextAlignmentCenter
+											 vAlignment:kCCVerticalTextAlignmentTop
 											   fontName:@"Impact"
 											   fontSize:14];
 		label.position = ccp(s.width/2,90);
@@ -1542,24 +1542,24 @@ static float menuItemPaddingCenter = 50;
 #ifdef __CC_PLATFORM_IOS
 
 		CCLabelTTF *charwrap = [CCLabelTTF labelWithString:@"Testing line character wrap mode mode mode mode"
-											  dimensions:CGSizeMake(s.width/4,40)
-												hAlignment:CCTextAlignmentCenter
-												vAlignment:CCVerticalTextAlignmentTop
-										   lineBreakMode:CCLineBreakModeCharacterWrap
-												fontName:@"Marker Felt"
-												fontSize:16];
+												dimensions:CGSizeMake(s.width/4,40)
+												hAlignment:kCCTextAlignmentCenter
+												vAlignment:kCCVerticalTextAlignmentTop
+											 lineBreakMode:kCCLineBreakModeCharacterWrap
+												  fontName:@"Marker Felt"
+												  fontSize:16];
 		charwrap.position = ccp(s.width/2,140);
 
 		[self addChild:charwrap];
 
 
 		CCLabelTTF *clip = [CCLabelTTF labelWithString:@"Testing line clip clip clip mode mode mode mode"
-												dimensions:CGSizeMake(s.width/4,40)
-											 hAlignment:CCTextAlignmentCenter
-											vAlignment:CCVerticalTextAlignmentTop
-											 lineBreakMode:CCLineBreakModeClip
-												  fontName:@"Marker Felt"
-												  fontSize:16];
+											dimensions:CGSizeMake(s.width/4,40)
+											hAlignment:kCCTextAlignmentCenter
+											vAlignment:kCCVerticalTextAlignmentTop
+										 lineBreakMode:kCCLineBreakModeClip
+											  fontName:@"Marker Felt"
+											  fontSize:16];
 		clip.position = ccp(s.width/2,200);
 
 		[self addChild:clip];
@@ -1595,11 +1595,11 @@ static float menuItemPaddingCenter = 50;
 		
 		CGSize s = [[CCDirector sharedDirector] winSize];
 	
-		CCLabelBMFont *label1 = [CCLabelBMFont labelWithString:@"This is Helvetica" fntFile:@"helvetica-32.fnt" width:kCCLabelAutomaticWidth alignment:CCTextAlignmentLeft imageOffset:CGPointZero];
+		CCLabelBMFont *label1 = [CCLabelBMFont labelWithString:@"This is Helvetica" fntFile:@"helvetica-32.fnt" width:kCCLabelAutomaticWidth alignment:kCCTextAlignmentLeft imageOffset:CGPointZero];
 		[self addChild:label1];
 		[label1 setPosition:ccp(s.width/2,s.height/3*2)];
 
-		CCLabelBMFont *label2 = [CCLabelBMFont labelWithString:@"And this is Geneva" fntFile:@"geneva-32.fnt" width:kCCLabelAutomaticWidth alignment:CCTextAlignmentLeft imageOffset:ccp(0,128)];		
+		CCLabelBMFont *label2 = [CCLabelBMFont labelWithString:@"And this is Geneva" fntFile:@"geneva-32.fnt" width:kCCLabelAutomaticWidth alignment:kCCTextAlignmentLeft imageOffset:ccp(0,128)];		
 		[self addChild:label2];
 		[label2 setPosition:ccp(s.width/2,s.height/3*1)];
 	}
