@@ -30,6 +30,9 @@
 }
 @end
 
+@interface LabelTTFAlignment : AtlasDemo
+{}
+@end
 
 @interface Atlas3 : AtlasDemo
 {
