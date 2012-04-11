@@ -1687,6 +1687,7 @@ static float menuItemPaddingCenter = 50;
 }
 @end
 
+
 #pragma mark - Issue1343
 
 @implementation Issue1343
