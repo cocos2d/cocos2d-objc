@@ -26,6 +26,7 @@
 
 #if CC_ENABLE_DEPRECATED
 
+#import "ccTypes.h"
 #import "ccMacros.h"
 #import "CCMenu.h"
 #import "CCDirector.h"
@@ -67,6 +68,27 @@ enum {
 	kCCImageFormatJPG DEPRECATED_ATTRIBUTE = kCCImageFormatJPEG,
 	kCCImageFormatRawData UNAVAILABLE_ATTRIBUTE,
 };
+
+enum {
+	CCTextAlignmentLeft DEPRECATED_ATTRIBUTE = kCCTextAlignmentLeft,
+	CCTextAlignmentCenter DEPRECATED_ATTRIBUTE = kCCTextAlignmentCenter,
+	CCTextAlignmentRight DEPRECATED_ATTRIBUTE = kCCTextAlignmentRight,
+
+	CCVerticalTextAlignmentTop DEPRECATED_ATTRIBUTE = kCCVerticalTextAlignmentTop,
+	CCVerticalTextAlignmentMiddle DEPRECATED_ATTRIBUTE = kCCVerticalTextAlignmentCenter,
+	CCVerticalTextAlignmentBottom DEPRECATED_ATTRIBUTE = kCCVerticalTextAlignmentBottom,
+
+	CCLineBreakModeWordWrap DEPRECATED_ATTRIBUTE = kCCLineBreakModeWordWrap,
+	CCLineBreakModeCharacterWrap DEPRECATED_ATTRIBUTE = kCCLineBreakModeCharacterWrap,
+	CCLineBreakModeClip	DEPRECATED_ATTRIBUTE = kCCLineBreakModeClip,
+	CCLineBreakModeHeadTruncation DEPRECATED_ATTRIBUTE = kCCLineBreakModeHeadTruncation,
+	CCLineBreakModeTailTruncation DEPRECATED_ATTRIBUTE = kCCLineBreakModeTailTruncation,
+	CCLineBreakModeMiddleTruncation DEPRECATED_ATTRIBUTE = kCCLineBreakModeMiddleTruncation,
+};
+
+//DEPRECATED_ATTRIBUTE typedef  ccTextAlignment CCTextAlignment;
+//
+//DEPRECATED_ATTRIBUTE typedef  ccVerticalTextAlignment CCVerticalTextAlignment;
 
 // Free functions
 void ccGLUniformModelViewProjectionMatrix(CCGLProgram* program) DEPRECATED_ATTRIBUTE;

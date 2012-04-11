@@ -337,14 +337,34 @@ typedef enum
 
 } ccResolutionType;
 
-// XXX: The name shall be ccVerticalTextAligment, but it is using "CC" instead of "cc" in order to be compatible with CCTextAlignment
+// XXX: If any of these enums are edited and/or reordered, udpate CCTexture2D.m
 //! Vertical text alignment type
 typedef enum
 {
-    CCVerticalTextAlignmentTop,
-    CCVerticalTextAlignmentMiddle,
-    CCVerticalTextAlignmentBottom,
+    kCCVerticalTextAlignmentTop,
+    kCCVerticalTextAlignmentCenter,
+    kCCVerticalTextAlignmentBottom,
 } CCVerticalTextAlignment;
+
+// XXX: If any of these enums are edited and/or reordered, udpate CCTexture2D.m
+//! Horizontal text alignment type
+typedef enum
+{
+	kCCTextAlignmentLeft,
+	kCCTextAlignmentCenter,
+	kCCTextAlignmentRight,
+} CCTextAlignment;
+
+// XXX: If any of these enums are edited and/or reordered, udpate CCTexture2D.m
+//! Line break modes
+typedef enum {
+	kCCLineBreakModeWordWrap,
+	kCCLineBreakModeCharacterWrap,
+	kCCLineBreakModeClip,
+	kCCLineBreakModeHeadTruncation,
+	kCCLineBreakModeTailTruncation,
+	kCCLineBreakModeMiddleTruncation
+} CCLineBreakMode;
 
 //! delta time type
 //! if you want more resolution redefine it as a double

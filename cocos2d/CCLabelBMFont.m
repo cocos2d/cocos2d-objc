@@ -476,7 +476,7 @@ typedef struct _FontDefHashElement
 
 +(id) labelWithString:(NSString *)string fntFile:(NSString *)fntFile
 {
-	return [[[self alloc] initWithString:string fntFile:fntFile width:kCCLabelAutomaticWidth alignment:CCTextAlignmentLeft imageOffset:CGPointZero] autorelease];
+	return [[[self alloc] initWithString:string fntFile:fntFile width:kCCLabelAutomaticWidth alignment:kCCTextAlignmentLeft imageOffset:CGPointZero] autorelease];
 }
 
 +(id) labelWithString:(NSString*)string fntFile:(NSString*)fntFile width:(float)width alignment:(CCTextAlignment)alignment
@@ -491,12 +491,12 @@ typedef struct _FontDefHashElement
 
 -(id) init
 {
-	return [self initWithString:nil fntFile:nil width:kCCLabelAutomaticWidth alignment:CCTextAlignmentLeft imageOffset:CGPointZero];
+	return [self initWithString:nil fntFile:nil width:kCCLabelAutomaticWidth alignment:kCCTextAlignmentLeft imageOffset:CGPointZero];
 }
 
 -(id) initWithString:(NSString*)theString fntFile:(NSString*)fntFile
 {
-    return [self initWithString:theString fntFile:fntFile width:kCCLabelAutomaticWidth alignment:CCTextAlignmentLeft];
+    return [self initWithString:theString fntFile:fntFile width:kCCLabelAutomaticWidth alignment:kCCTextAlignmentLeft];
 }
 
 -(id) initWithString:(NSString*)theString fntFile:(NSString*)fntFile width:(float)width alignment:(CCTextAlignment)alignment
@@ -654,7 +654,7 @@ typedef struct _FontDefHashElement
 	
     //Step 2: Make alignment
 	
-    if (self.alignment != CCTextAlignmentLeft) {
+    if (self.alignment != kCCTextAlignmentLeft) {
 		
         int i = 0;
         //Number of spaces skipped
@@ -676,10 +676,10 @@ typedef struct _FontDefHashElement
             //Figure out how much to shift each character in this line horizontally
             float shift = 0;
             switch (self.alignment) {
-                case CCTextAlignmentCenter:
+                case kCCTextAlignmentCenter:
                     shift = self.contentSize.width/2 - lineWidth/2;
                     break;
-                case CCTextAlignmentRight:
+                case kCCTextAlignmentRight:
                     shift = self.contentSize.width - lineWidth;
                 default:
                     break;
