@@ -264,7 +264,7 @@ static CCDirector *_sharedDirector = nil;
 
 -(float) getZEye
 {
-	return ( winSizeInPixels_.height / 1.1566f );
+	return ( winSizeInPixels_.height / 1.1566f / CC_CONTENT_SCALE_FACTOR() );
 }
 
 -(void) setProjection:(ccDirectorProjection)projection

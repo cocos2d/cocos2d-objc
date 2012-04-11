@@ -11,6 +11,7 @@ version 2.0-rc1 XX-Apr-2012
 . [NEW] LabelTTF: Added support for vertical alignment
 . [FIX] All: Fixed compiler warnings. Format strings changed from %08X to %p
 . [FIX] Deprecated: displayedFrame points to displayFrame avoiding infinite loop (issue #1347)
+. [FIX] Director: Fixed projection. ViewPort is the size of the screen. Projection adjusted.
 . [FIX] Events: onMouseExit/Enter fixed on Mac
 . [FIX] LabelBMFont: can be "init" without further arguments
 		Glyphs with big yOffset are rendered correctly (issue #1343)
