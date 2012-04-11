@@ -116,11 +116,18 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 - (id) initWithData:(const void*)data pixelFormat:(CCTexture2DPixelFormat)pixelFormat pixelsWide:(NSUInteger)width pixelsHigh:(NSUInteger)height contentSize:(CGSize)size
 {
 	if((self = [super init])) {
-		glPixelStorei(GL_UNPACK_ALIGNMENT,1);
+		if( pixelFormat == kCCTexture2DPixelFormat_RGB888 )
+			glPixelStorei(GL_UNPACK_ALIGNMENT,4);
+		else
+			glPixelStorei(GL_UNPACK_ALIGNMENT,1);
+
 		glGenTextures(1, &name_);
 		ccGLBindTexture2D( name_ );
-
-		[self setAntiAliasTexParameters];
+		
+		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
+		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
+		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE );
+		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE );
 
 		// Specify OpenGL texture image
 
@@ -160,6 +167,8 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 		maxT_ = size.height / (float)height;
 
 		hasPremultipliedAlpha_ = NO;
+
+		hasMipmaps_ = NO;
 
 #ifdef __CC_PLATFORM_IOS
 		resolutionType_ = kCCResolutionUnknown;
@@ -675,6 +684,7 @@ static BOOL PVRHaveAlphaPremultiplied_ = NO;
 			hasPremultipliedAlpha_ = PVRHaveAlphaPremultiplied_;
 			format_ = pvr.format;
 
+			hasMipmaps_ = ( pvr.numberOfMipmaps > 1  );
 			[pvr release];
 
 		} else {
@@ -776,6 +786,7 @@ static BOOL PVRHaveAlphaPremultiplied_ = NO;
 	NSAssert( width_ == ccNextPOT(width_) && height_ == ccNextPOT(height_), @"Mimpap texture only works in POT textures");
 	ccGLBindTexture2D( name_ );
 	glGenerateMipmap(GL_TEXTURE_2D);
+	hasMipmaps_ = YES;
 }
 
 -(void) setTexParameters: (ccTexParams*) texParams
@@ -793,14 +804,26 @@ static BOOL PVRHaveAlphaPremultiplied_ = NO;
 
 -(void) setAliasTexParameters
 {
-	ccTexParams texParams = { GL_NEAREST, GL_NEAREST, GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE };
-	[self setTexParameters: &texParams];
+	ccGLBindTexture2D( name_ );
+
+	if( ! hasMipmaps_ )
+		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
+	else
+		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST_MIPMAP_NEAREST );
+
+	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST );	
 }
 
 -(void) setAntiAliasTexParameters
 {
-	ccTexParams texParams = { GL_LINEAR, GL_LINEAR, GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE };
-	[self setTexParameters: &texParams];
+	ccGLBindTexture2D( name_ );
+
+	if( ! hasMipmaps_ )
+		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
+	else
+		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_NEAREST );
+
+	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );	
 }
 @end
 

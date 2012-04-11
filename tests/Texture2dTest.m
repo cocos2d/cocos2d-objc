@@ -340,11 +340,12 @@ Class restartAction()
 
 	CCTexture2D *texture0 = [[CCTextureCache sharedTextureCache] addImage:@"grossini_dance_atlas.png"];
 	[texture0 generateMipmap];
-	ccTexParams texParams = { GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR, GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE };
-	[texture0 setTexParameters:&texParams];
+	[texture0 setAliasTexParameters];
 
 	CCTexture2D *texture1 = [[CCTextureCache sharedTextureCache] addImage:@"grossini_dance_atlas_nomipmap.png"];
+	[texture1 setAliasTexParameters];
 
+	
 	CCSprite *img0 = [CCSprite spriteWithTexture:texture0];
 	[img0 setTextureRect:CGRectMake(85, 121, 85, 121)];
 	img0.position = ccp( s.width/3.0f, s.height/2.0f);
@@ -354,6 +355,9 @@ Class restartAction()
 	[img1 setTextureRect:CGRectMake(85, 121, 85, 121)];
 	img1.position = ccp( 2*s.width/3.0f, s.height/2.0f);
 	[self addChild:img1];
+	
+	img0.scale = 7;
+	img1.scale = 7;
 
 
 	id scale1 = [CCEaseOut actionWithAction: [CCScaleBy actionWithDuration:4 scale:0.01f] rate:3];
@@ -369,12 +373,12 @@ Class restartAction()
 
 -(NSString *) title
 {
-	return @"Texture Mipmap";
+	return @"Aliased Texture Mipmap";
 }
 
 -(NSString *) subtitle
 {
-	return @"Left image uses mipmap. Right image doesn't";
+	return @"Left image uses mipmap. Right image doesn't. Both are aliased textures";
 }
 @end
 
@@ -391,12 +395,8 @@ Class restartAction()
 
 	CCSprite *imgMipMap = [CCSprite spriteWithFile:@"logo-mipmap.pvr"];
 	if( imgMipMap ) {
-	imgMipMap.position = ccp( s.width/2.0f-100, s.height/2.0f);
+		imgMipMap.position = ccp( s.width/2.0f-100, s.height/2.0f);
 		[self addChild:imgMipMap];
-
-		// support mipmap filtering
-		ccTexParams texParams = { GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR, GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE };
-		[imgMipMap.texture setTexParameters:&texParams];
 	}
 
 	CCSprite *img = [CCSprite spriteWithFile:@"logo-nomipmap.pvr"];
@@ -438,10 +438,6 @@ Class restartAction()
 	CCSprite *imgMipMap = [CCSprite spriteWithFile:@"test_image_rgba4444_mipmap.pvr"];
 	imgMipMap.position = ccp( s.width/2.0f-100, s.height/2.0f);
 	[self addChild:imgMipMap];
-
-	// support mipmap filtering
-	ccTexParams texParams = { GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR, GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE };
-	[imgMipMap.texture setTexParameters:&texParams];
 
 	CCSprite *img = [CCSprite spriteWithFile:@"test_image.png"];
 	img.position = ccp( s.width/2.0f+100, s.height/2.0f);
@@ -896,12 +892,12 @@ Class restartAction()
 
 -(NSString *) title
 {
-	return @"PVR + Non square texture";
+	return @"PVR + Non square texture + mipmap";
 }
 
 -(NSString*) subtitle
 {
-	return @"Loading a 128x256 texture";
+	return @"Loading a 128x256 texture with mipmaps. It should fail.";
 }
 
 @end
@@ -2055,6 +2051,7 @@ Class restartAction()
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+	useNonRetinaDisplay_ = YES;
 	[super application:application didFinishLaunchingWithOptions:launchOptions];
 
 	// Turn on display FPS
