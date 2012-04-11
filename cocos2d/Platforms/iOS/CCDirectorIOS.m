@@ -179,7 +179,7 @@ CGFloat	__ccContentScaleFactor = 1;
 	CGSize size = winSizeInPixels_;
 	CGSize sizePoint = winSizeInPoints_;
 
-	glViewport(0, 0, size.width * CC_CONTENT_SCALE_FACTOR(), size.height * CC_CONTENT_SCALE_FACTOR() );
+	glViewport(0, 0, size.width, size.height );
 
 	switch (projection) {
 		case kCCDirectorProjection2D:
@@ -188,7 +188,7 @@ CGFloat	__ccContentScaleFactor = 1;
 			kmGLLoadIdentity();
 
 			kmMat4 orthoMatrix;
-			kmMat4OrthographicProjection(&orthoMatrix, 0, size.width, 0, size.height, -1024, 1024 );
+			kmMat4OrthographicProjection(&orthoMatrix, 0, size.width / CC_CONTENT_SCALE_FACTOR(), 0, size.height / CC_CONTENT_SCALE_FACTOR(), -1024, 1024 );
 			kmGLMultMatrix( &orthoMatrix );
 
 			kmGLMatrixMode(KM_GL_MODELVIEW);
@@ -197,10 +197,6 @@ CGFloat	__ccContentScaleFactor = 1;
 
 		case kCCDirectorProjection3D:
 		{
-			// reset the viewport if 3d proj & retina display
-			if( CC_CONTENT_SCALE_FACTOR() != 1 )
-				glViewport(-size.width/2, -size.height/2, size.width * CC_CONTENT_SCALE_FACTOR(), size.height * CC_CONTENT_SCALE_FACTOR() );
-
 			float zeye = [self getZEye];
 
 			kmMat4 matrixPerspective, matrixLookup;
