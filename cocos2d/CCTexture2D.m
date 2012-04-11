@@ -119,7 +119,7 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 - (id) initWithData:(const void*)data pixelFormat:(CCTexture2DPixelFormat)pixelFormat pixelsWide:(NSUInteger)width pixelsHigh:(NSUInteger)height contentSize:(CGSize)size
 {
 	if((self = [super init])) {
-		if( pixelFormat == kCCTexture2DPixelFormat_RGB888 )
+		if( pixelFormat == kCCTexture2DPixelFormat_RGBA8888 )
 			glPixelStorei(GL_UNPACK_ALIGNMENT,4);
 		else
 			glPixelStorei(GL_UNPACK_ALIGNMENT,1);
