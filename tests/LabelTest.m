@@ -350,7 +350,7 @@ Class restartAction()
 @end
 
 
-#pragma mark Example LabelTTFAlignment
+#pragma mark LabelTTFAlignment
 
 @implementation LabelTTFAlignment
 -(id) init
@@ -358,17 +358,17 @@ Class restartAction()
 	if( (self=[super init] )) {
         CGSize s = [[CCDirector sharedDirector] winSize];
         
-        CCLabelTTF* ttf0 = [CCLabelTTF labelWithString:@"Alignment 0" dimensions:CGSizeMake(256, 16) hAlignment:0 fontName:@"Helvetica" fontSize:12];
+        CCLabelTTF* ttf0 = [CCLabelTTF labelWithString:@"Alignment 0" dimensions:CGSizeMake(256, 16) hAlignment:CCTextAlignmentLeft fontName:@"Helvetica" fontSize:12];
         ttf0.position = ccp(s.width/2,(s.height/6)*2);
         ttf0.anchorPoint = ccp(0.5f,0.5f);
         [self addChild:ttf0];
         
-        CCLabelTTF* ttf1 = [CCLabelTTF labelWithString:@"Alignment 1" dimensions:CGSizeMake(245, 16) hAlignment:1 fontName:@"Helvetica" fontSize:12];
+        CCLabelTTF* ttf1 = [CCLabelTTF labelWithString:@"Alignment 1" dimensions:CGSizeMake(245, 16) hAlignment:CCTextAlignmentCenter fontName:@"Helvetica" fontSize:12];
         ttf1.position = ccp(s.width/2,(s.height/6)*3);
         ttf1.anchorPoint = ccp(0.5f,0.5f);
         [self addChild:ttf1];
         
-        CCLabelTTF* ttf2 = [CCLabelTTF labelWithString:@"Alignment 2" dimensions:CGSizeMake(245, 16) hAlignment:2 fontName:@"Helvetica" fontSize:12];
+        CCLabelTTF* ttf2 = [CCLabelTTF labelWithString:@"Alignment 2" dimensions:CGSizeMake(245, 16) hAlignment:CCTextAlignmentRight fontName:@"Helvetica" fontSize:12];
         ttf2.position = ccp(s.width/2,(s.height/6)*4);
         ttf2.anchorPoint = ccp(0.5f,0.5f);
         [self addChild:ttf2];
