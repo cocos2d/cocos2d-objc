@@ -11,9 +11,11 @@ version 2.0-rc1 XX-Apr-2012
 . [NEW] LabelTTF: Added support for vertical alignment
 . [FIX] All: Fixed compiler warnings. Format strings changed from %08X to %p
 . [FIX] Deprecated: displayedFrame points to displayFrame avoiding infinite loop (issue #1347)
+. [FIX] Events: onMouseExit/Enter fixed on Mac
 . [FIX] LabelBMFont: can be "init" without further arguments
 		Glyphs with big yOffset are rendered correctly (issue #1343)
 . [FIX] LabelTTF: Better support for custom TTF (Mac)
+		Alignments and LineBreak modes values are the both on iOS and Mac. Needed for editors.
 . [FIX] NSThread+Block: fixed crash due to block not being copied to the heap
 . [FIX] OpenGL: VAO are initialized on the cocos2d thread on machines that don't support shareables VAOs
 . [FIX] Texture: If defaultAlpha is RGBA8888 and image has no alpha, use RGBA8 instead of RGB565
