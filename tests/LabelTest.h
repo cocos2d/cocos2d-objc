@@ -144,11 +144,6 @@
 }
 @end
 
-@interface BMFontInvalidFNT : AtlasDemo
-{
-}
-@end
-
 @interface Issue1343 : AtlasDemo
 {
 }
