@@ -88,7 +88,7 @@ enum {
 @interface CCTexturePVR : NSObject
 {
 	struct CCPVRMipmap	mipmaps_[CC_PVRMIPMAP_MAX];	// pointer to mipmap images
-	int		numberOfMipmaps_;					// number of mipmap used
+	NSUInteger	numberOfMipmaps_;					// number of mipmap used
 
 	unsigned int	tableFormatIndex_;
 	uint32_t width_, height_;
@@ -117,6 +117,8 @@ enum {
 @property (nonatomic,readonly) uint32_t height;
 /** whether or not the texture has alpha */
 @property (nonatomic,readonly) BOOL hasAlpha;
+/** how many mipmaps the texture has. 1 means one level (level 0 */
+@property (nonatomic, readonly) NSUInteger numberOfMipmaps;
 
 // cocos2d integration
 @property (nonatomic,readwrite) BOOL retainName;

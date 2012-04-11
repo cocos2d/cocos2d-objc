@@ -120,6 +120,7 @@ typedef enum {
 	GLfloat						maxS_,
 								maxT_;
 	BOOL						hasPremultipliedAlpha_;
+	BOOL						hasMipmaps_;
 
 #ifdef __CC_PLATFORM_IOS
 	ccResolutionType			resolutionType_;
