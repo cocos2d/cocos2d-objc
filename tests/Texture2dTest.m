@@ -1911,10 +1911,10 @@ Class restartAction()
 		CCMenuItem *item4 = [CCMenuItemFont itemWithString:@"RGB565" target:self selector:@selector(updateImage:)];
 		item4.tag = 3;
 
-		CCMenuItem *item5 = [CCMenuItemFont itemWithString:@"RGBA4" target:self selector:@selector(updateImage:)];
+		CCMenuItem *item5 = [CCMenuItemFont itemWithString:@"RGB5A1" target:self selector:@selector(updateImage:)];
 		item5.tag = 4;
 
-		CCMenuItem *item6 = [CCMenuItemFont itemWithString:@"RGB5A1" target:self selector:@selector(updateImage:)];
+		CCMenuItem *item6 = [CCMenuItemFont itemWithString:@"RGBA4" target:self selector:@selector(updateImage:)];
 		item6.tag = 5;
 
 		CCMenu *menu = [CCMenu menuWithItems:item1, item2, item3, item4, item5, item6, nil];
