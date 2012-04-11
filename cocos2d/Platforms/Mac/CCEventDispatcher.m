@@ -511,7 +511,7 @@ typedef struct _listAddedEntry
 
 		DL_FOREACH_SAFE( mouseDelegates_, entry, tmp ) {
 			if ( entry->flags & kCCImplementsMouseEntered ) {
-				void *swallows = [entry->delegate performSelector:@selector(ccMouseEntered:) withObject:event];
+				void *swallows = [entry->delegate performSelector:@selector(ccMouseExited:) withObject:event];
 				if( swallows )
 					break;
 			}
@@ -526,7 +526,7 @@ typedef struct _listAddedEntry
 
 		DL_FOREACH_SAFE( mouseDelegates_, entry, tmp ) {
 			if ( entry->flags & kCCImplementsMouseExited) {
-				void *swallows = [entry->delegate performSelector:@selector(ccMouseExited:) withObject:event];
+				void *swallows = [entry->delegate performSelector:@selector(ccMouseEntered:) withObject:event];
 				if( swallows )
 					break;
 			}
