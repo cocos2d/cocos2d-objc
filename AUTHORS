@@ -123,6 +123,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	Node: zOrder property is readwrite
 	LabelBMFont: can be "init" without further arguments
 	LabelTTF: better custom TTF support for Mac
+	Mouse Events: onEnter/onExit are propagated correclty
 	
 * Vit Valentin:
 	Author of cocos2d-x's Catmull Rom actions. 
