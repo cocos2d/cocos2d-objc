@@ -18,6 +18,15 @@
 
 @synthesize window=window_, navController=navController_, director=director_;
 
+-(id) init
+{
+	if( (self=[super init]) ) {
+		useRetinaDisplay_ = YES;
+	}
+	
+	return self;
+}
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
 	// Main Window
@@ -43,7 +52,7 @@
 	director_.wantsFullScreenLayout = YES;
 
 	// Retina Display ?
-	[director_ enableRetinaDisplay:!useNonRetinaDisplay_];
+	[director_ enableRetinaDisplay:useRetinaDisplay_];
 	
 	// Navigation Controller
 	navController_ = [[UINavigationController alloc] initWithRootViewController:director_];
