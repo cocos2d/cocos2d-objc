@@ -2051,7 +2051,7 @@ Class restartAction()
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-	useNonRetinaDisplay_ = YES;
+	useRetinaDisplay_ = NO;
 	[super application:application didFinishLaunchingWithOptions:launchOptions];
 
 	// Turn on display FPS

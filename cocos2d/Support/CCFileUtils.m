@@ -138,6 +138,8 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 
 		fullPathCache_ = [[NSMutableDictionary alloc] initWithCapacity:30];
 		removeSuffixCache_ = [[NSMutableDictionary alloc] initWithCapacity:30];
+		
+		bundle_ = [[NSBundle mainBundle] retain];
 
 #ifdef __CC_PLATFORM_IOS
 		iPhoneRetinaDisplaySuffix_ = @"-hd";
@@ -213,7 +215,7 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 		NSString *imageDirectory = [path stringByDeletingLastPathComponent];
 		
 		// If the file does not exist it will return nil.
-		ret = [[NSBundle mainBundle] pathForResource:[newName lastPathComponent]
+		ret = [bundle_ pathForResource:[newName lastPathComponent]
 												   ofType:nil
 											  inDirectory:imageDirectory];
 	}
@@ -383,7 +385,7 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 		NSString *file = [relPath lastPathComponent];
 		NSString *imageDirectory = [relPath stringByDeletingLastPathComponent];
 
-		fullpath = [[NSBundle mainBundle] pathForResource:file
+		fullpath = [bundle_ pathForResource:file
 												   ofType:nil
 											  inDirectory:imageDirectory];
 
