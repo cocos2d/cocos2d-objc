@@ -352,14 +352,16 @@ CGFloat	__ccContentScaleFactor = 1;
 	if( view != view_) {
 		[super setView:view];
 
-		// set size
-		winSizeInPixels_ = CGSizeMake(winSizeInPoints_.width * __ccContentScaleFactor, winSizeInPoints_.height *__ccContentScaleFactor);
+		if( view ) {
+			// set size
+			winSizeInPixels_ = CGSizeMake(winSizeInPoints_.width * __ccContentScaleFactor, winSizeInPoints_.height *__ccContentScaleFactor);
 
-		if( __ccContentScaleFactor != 1 )
-			[self updateContentScaleFactor];
+			if( __ccContentScaleFactor != 1 )
+				[self updateContentScaleFactor];
 
-		[view setTouchDelegate: touchDispatcher_];
-		[touchDispatcher_ setDispatchEvents: YES];
+			[view setTouchDelegate: touchDispatcher_];
+			[touchDispatcher_ setDispatchEvents: YES];
+		}
 	}
 }
 
