@@ -1991,6 +1991,8 @@
 		A0DB141714FC420E00F7CC49 /* west_england-64.png in Resources */ = {isa = PBXBuildFile; fileRef = A0DB141514FC420E00F7CC49 /* west_england-64.png */; };
 		A0DB141A14FC422E00F7CC49 /* example_HorizontalColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0DB141914FC422E00F7CC49 /* example_HorizontalColor.fsh */; };
 		A0DC2F5E1491B36A005B814E /* test_image_rgb888.pvr in Resources */ = {isa = PBXBuildFile; fileRef = A0DC2F5D1491B36A005B814E /* test_image_rgb888.pvr */; };
+		A0DEFC351538DE0000530CC5 /* grossini_dance_atlas_nomipmap-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = A0DEFC341538DE0000530CC5 /* grossini_dance_atlas_nomipmap-hd.png */; };
+		A0DEFC381538E2B300530CC5 /* grossini_pvr_rgba8888.pvr in Resources */ = {isa = PBXBuildFile; fileRef = A0DEFC371538E2B300530CC5 /* grossini_pvr_rgba8888.pvr */; };
 		A0E2A52B14D26D8D003450DF /* animations in Resources */ = {isa = PBXBuildFile; fileRef = 502C8C9810A701D300D137BA /* animations */; };
 		A0E431F31460741E00424477 /* background1-hd.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E0704C29123821EE009C628B /* background1-hd.jpg */; };
 		A0E431F41460741E00424477 /* background2-hd.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E0704C2A123821EE009C628B /* background2-hd.jpg */; };
@@ -4661,6 +4663,8 @@
 		A0DB141514FC420E00F7CC49 /* west_england-64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "west_england-64.png"; sourceTree = "<group>"; };
 		A0DB141914FC422E00F7CC49 /* example_HorizontalColor.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_HorizontalColor.fsh; sourceTree = "<group>"; };
 		A0DC2F5D1491B36A005B814E /* test_image_rgb888.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = test_image_rgb888.pvr; sourceTree = "<group>"; };
+		A0DEFC341538DE0000530CC5 /* grossini_dance_atlas_nomipmap-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "grossini_dance_atlas_nomipmap-hd.png"; sourceTree = "<group>"; };
+		A0DEFC371538E2B300530CC5 /* grossini_pvr_rgba8888.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = grossini_pvr_rgba8888.pvr; sourceTree = "<group>"; };
 		A0EC4A091403236C00EC482A /* example_Blur.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_Blur.fsh; sourceTree = "<group>"; };
 		A0EC4A0A1403236C00EC482A /* example_Flower.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_Flower.fsh; sourceTree = "<group>"; };
 		A0EC4A0B1403236C00EC482A /* example_Flower.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_Flower.vsh; sourceTree = "<group>"; };
@@ -6394,12 +6398,13 @@
 		508A333A0FBADD6A00D574A2 /* grossini images */ = {
 			isa = PBXGroup;
 			children = (
-				E062F9BA124801A300DE3932 /* grossini-hd.png */,
+				A0DEFC371538E2B300530CC5 /* grossini_pvr_rgba8888.pvr */,
 				E062F9BB124801A300DE3932 /* grossinis_sister1-hd.png */,
 				E062F9BC124801A300DE3932 /* grossinis_sister2-hd.png */,
 				50F3B4A5113ABA83006BCDF1 /* grossinis_sister1-testalpha.bmp */,
 				50E676A60F658B68003DAA90 /* grossinis_sister1.pvr */,
 				50B2CB280E10EE4A00AE9530 /* grossini.png */,
+				E062F9BA124801A300DE3932 /* grossini-hd.png */,
 				50B2CB290E10EE4A00AE9530 /* grossinis_sister1.png */,
 				5031631A10272B4A003ACFE7 /* grossinis_sister1-testalpha.png */,
 				5031633A10272C4B003ACFE7 /* grossinis_sister1-testalpha.ppng */,
@@ -6407,6 +6412,7 @@
 				509A7A970F61A2400032F449 /* grossini_dance_atlas.png */,
 				E062F9961247FC5400DE3932 /* grossini_dance_atlas-hd.png */,
 				50CA8B2210B5C17E0072E0D3 /* grossini_dance_atlas_nomipmap.png */,
+				A0DEFC341538DE0000530CC5 /* grossini_dance_atlas_nomipmap-hd.png */,
 				5012DA180FE109C100D6DDD1 /* grossini_dance_atlas-mono.png */,
 				503A2B060F64B26D00E436AB /* grossini_dance_atlas.pvr */,
 				508A331E0FBADD5F00D574A2 /* grossini_dance_01.png */,
@@ -9779,6 +9785,8 @@
 				A0601FE81534C90200C4EECA /* test_1024x1024_rgba5551.pvr.gz in Resources */,
 				A0601FE91534C90200C4EECA /* test_1024x1024_rgba8888.pvr.gz in Resources */,
 				A0601FEA1534C90200C4EECA /* test_1024x1024.png in Resources */,
+				A0DEFC351538DE0000530CC5 /* grossini_dance_atlas_nomipmap-hd.png in Resources */,
+				A0DEFC381538E2B300530CC5 /* grossini_pvr_rgba8888.pvr in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
