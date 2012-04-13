@@ -1923,12 +1923,14 @@ Class restartAction()
 		[self addChild:menu];
 		
 		
-		CCMenuItemFont *aliased = [CCMenuItemFont itemWithString:@"aliased" block:^(id sender) {
-			[[background_ texture] setAliasTexParameters];
+		CCMenuItemFont *aliased = [CCMenuItemFont itemWithString:@"visible" block:^(id sender) {
+			background_.visible = YES;
+//			[[background_ texture] setAliasTexParameters];
 		}];
 
-		CCMenuItemFont *antialiased = [CCMenuItemFont itemWithString:@"anti-aliased" block:^(id sender) {
-			[[background_ texture] setAntiAliasTexParameters];
+		CCMenuItemFont *antialiased = [CCMenuItemFont itemWithString:@"not-visible" block:^(id sender) {
+			background_.visible = NO;
+//			[[background_ texture] setAntiAliasTexParameters];
 		}];
 		
 		CCMenu *menu2 = [CCMenu menuWithItems:aliased, antialiased, nil];
@@ -1973,6 +1975,8 @@ Class restartAction()
 	background_ = [CCSprite spriteWithFile:file];
 	[self addChild:background_ z:-10];
 	
+
+	background_.visible = NO;
 	
 	CGSize s = [[CCDirector sharedDirector] winSize];
 	[background_ setPosition:ccp(s.width/2, s.height/2)];
@@ -2024,6 +2028,8 @@ Class restartAction()
 	background_ = [CCSprite spriteWithFile:file];
 	[self addChild:background_ z:-10];
 	
+	background_.visible = NO;
+
 	
 	CGSize s = [[CCDirector sharedDirector] winSize];
 	[background_ setPosition:ccp(s.width/2, s.height/2)];
@@ -2051,8 +2057,51 @@ Class restartAction()
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-	useRetinaDisplay_ = NO;
-	[super application:application didFinishLaunchingWithOptions:launchOptions];
+	// Don't call super
+	// Init the window
+	window_ = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+		
+	CCGLView *glView = [CCGLView viewWithFrame:[window_ bounds]
+								   pixelFormat:kEAGLColorFormatRGB565
+								   depthFormat:0	// GL_DEPTH_COMPONENT24_OES
+							preserveBackbuffer:NO
+									sharegroup:nil
+								 multiSampling:NO
+							   numberOfSamples:0];
+	
+	director_ = (CCDirectorIOS*) [CCDirector sharedDirector];
+	
+	director_.wantsFullScreenLayout = YES;
+
+	// Display Milliseconds Per Frame
+	[director_ setDisplayStats:YES];
+	
+	// set FPS at 60
+	[director_ setAnimationInterval:1.0/60];
+	
+	// attach the openglView to the director
+	[director_ setView:glView];
+	
+	// for rotation and other messages
+	[director_ setDelegate:self];
+	
+	// 2D projection
+	[director_ setProjection:kCCDirectorProjection2D];
+//	[director setProjection:kCCDirectorProjection3D];
+	
+	// Enables High Res mode (Retina Display) on iPhone 4 and maintains low res on all other devices
+//	if( ! [director_ enableRetinaDisplay:YES] )
+//		CCLOG(@"Retina Display Not supported");
+	
+	navController_ = [[UINavigationController alloc] initWithRootViewController:director_];
+	navController_.navigationBarHidden = YES;
+	
+	// set the Navigation Controller as the root view controller
+	//	[window_ setRootViewController:rootViewController_];
+	[window_ addSubview:navController_.view];
+	
+	// make main window visible
+	[window_ makeKeyAndVisible];
 
 	// Turn on display FPS
 	[director_ setDisplayStats:YES];
