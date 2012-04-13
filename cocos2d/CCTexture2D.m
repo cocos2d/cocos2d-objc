@@ -235,7 +235,7 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 - (id) initWithCGImage:(CGImageRef)cgImage
 #endif
 {
-	NSUInteger				POTWide, POTHigh;
+	NSUInteger				textureWidth, textureHeight;
 	CGContextRef			context = nil;
 	void*					data = nil;
 	CGColorSpaceRef			colorSpace;
@@ -255,26 +255,6 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 
 	CCConfiguration *conf = [CCConfiguration sharedConfiguration];
 
-	if( [conf supportsNPOT] ) {
-		POTWide = CGImageGetWidth(cgImage);
-		POTHigh = CGImageGetHeight(cgImage);
-
-	}
-	else
-	{
-		POTWide = ccNextPOT(CGImageGetWidth(cgImage));
-		POTHigh = ccNextPOT(CGImageGetHeight(cgImage));
-	}
-
-	NSUInteger maxTextureSize = [conf maxTextureSize];
-	if( POTHigh > maxTextureSize || POTWide > maxTextureSize ) {
-		CCLOG(@"cocos2d: WARNING: Image (%lu x %lu) is bigger than the supported %ld x %ld",
-			  (long)POTWide, (long)POTHigh,
-			  (long)maxTextureSize, (long)maxTextureSize);
-		[self release];
-		return nil;
-	}
-
 	info = CGImageGetAlphaInfo(cgImage);
 	hasAlpha = ((info == kCGImageAlphaPremultipliedLast) || (info == kCGImageAlphaPremultipliedFirst) || (info == kCGImageAlphaLast) || (info == kCGImageAlphaFirst) ? YES : NO);
 
@@ -291,8 +271,8 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 
 			// Use RGBA8888 if default is RGBA8888, otherwise use RGB565.
 			// DO NOT USE RGB888 since it is the same as RGBA8888, but it is more expensive to create it
-			if( defaultAlphaPixelFormat_ == kCCTexture2DPixelFormat_RGB888 )
-				pixelFormat = kCCTexture2DPixelFormat_RGB888;
+			if( defaultAlphaPixelFormat_ == kCCTexture2DPixelFormat_RGBA8888 )
+				pixelFormat = kCCTexture2DPixelFormat_RGBA8888;
 			else
 				pixelFormat = kCCTexture2DPixelFormat_RGB565;
 			
@@ -305,6 +285,41 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 		pixelFormat = kCCTexture2DPixelFormat_A8;
 	}
 
+	if( ! [conf supportsNPOT]  )
+	{
+		textureWidth = ccNextPOT(CGImageGetWidth(cgImage));
+		textureHeight = ccNextPOT(CGImageGetHeight(cgImage));
+	}
+	else
+	{
+		textureWidth = CGImageGetWidth(cgImage);
+		textureHeight = CGImageGetHeight(cgImage);
+	}
+
+#ifdef __CC_PLATFORM_IOS
+
+	// iOS BUG:
+	// If Texture is both 16-bit and NPOT on iOS5, then convert it to POT in order to save memory
+	// http://www.cocos2d-iphone.org/forum/topic/31092
+	if( ([conf OSVersion] >= kCCiOSVersion_5_0) &&
+	   (pixelFormat == kCCTexture2DPixelFormat_RGB565 || pixelFormat == kCCTexture2DPixelFormat_RGBA4444 || pixelFormat == kCCTexture2DPixelFormat_RGB5A1) &&
+	   ( (textureHeight != ccNextPOT(textureHeight)) || textureWidth != ccNextPOT(textureWidth) ) )
+	{
+		CCLOG(@"cocos2d: converting NPOT (%d,%d) to POT (%lu,%lu) due to iOS 5.x memory BUG", textureWidth, textureHeight, ccNextPOT(textureWidth), ccNextPOT(textureHeight) );
+		textureWidth = ccNextPOT(textureWidth);
+		textureHeight = ccNextPOT(textureHeight);
+	}   
+#endif // IOS
+   
+   NSUInteger maxTextureSize = [conf maxTextureSize];
+   if( textureHeight > maxTextureSize || textureWidth > maxTextureSize ) {
+	   CCLOG(@"cocos2d: WARNING: Image (%lu x %lu) is bigger than the supported %ld x %ld",
+			 (long)textureWidth, (long)textureHeight,
+			 (long)maxTextureSize, (long)maxTextureSize);
+	   [self release];
+	   return nil;
+   }
+   
 	imageSize = CGSizeMake(CGImageGetWidth(cgImage), CGImageGetHeight(cgImage));
 
 	// Create the bitmap graphics context
@@ -316,34 +331,34 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 		case kCCTexture2DPixelFormat_RGB565:
 		case kCCTexture2DPixelFormat_RGB888:
 			colorSpace = CGColorSpaceCreateDeviceRGB();
-			data = malloc(POTHigh * POTWide * 4);
+			data = malloc(textureHeight * textureWidth * 4);
 //			info = hasAlpha ? kCGImageAlphaPremultipliedLast : kCGImageAlphaNoneSkipLast;
 //			info = kCGImageAlphaPremultipliedLast;  // issue #886. This patch breaks BMP images.
-			context = CGBitmapContextCreate(data, POTWide, POTHigh, 8, 4 * POTWide, colorSpace, info | kCGBitmapByteOrder32Big);
+			context = CGBitmapContextCreate(data, textureWidth, textureHeight, 8, 4 * textureWidth, colorSpace, info | kCGBitmapByteOrder32Big);
 			CGColorSpaceRelease(colorSpace);
 			break;
 		case kCCTexture2DPixelFormat_A8:
-			data = malloc(POTHigh * POTWide);
+			data = malloc(textureHeight * textureWidth);
 			info = kCGImageAlphaOnly;
-			context = CGBitmapContextCreate(data, POTWide, POTHigh, 8, POTWide, NULL, info);
+			context = CGBitmapContextCreate(data, textureWidth, textureHeight, 8, textureWidth, NULL, info);
 			break;
 		default:
 			[NSException raise:NSInternalInconsistencyException format:@"Invalid pixel format"];
 	}
 
 
-	CGContextClearRect(context, CGRectMake(0, 0, POTWide, POTHigh));
-	CGContextTranslateCTM(context, 0, POTHigh - imageSize.height);
+	CGContextClearRect(context, CGRectMake(0, 0, textureWidth, textureHeight));
+	CGContextTranslateCTM(context, 0, textureHeight - imageSize.height);
 	CGContextDrawImage(context, CGRectMake(0, 0, CGImageGetWidth(cgImage), CGImageGetHeight(cgImage)), cgImage);
 
 	// Repack the pixel data into the right format
 
 	if(pixelFormat == kCCTexture2DPixelFormat_RGB565) {
 		//Convert "RRRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA" to "RRRRRGGGGGGBBBBB"
-		tempData = malloc(POTHigh * POTWide * 2);
+		tempData = malloc(textureHeight * textureWidth * 2);
 		inPixel32 = (unsigned int*)data;
 		outPixel16 = (unsigned short*)tempData;
-		for(unsigned int i = 0; i < POTWide * POTHigh; ++i, ++inPixel32)
+		for(unsigned int i = 0; i < textureWidth * textureHeight; ++i, ++inPixel32)
 			*outPixel16++ = ((((*inPixel32 >> 0) & 0xFF) >> 3) << 11) | ((((*inPixel32 >> 8) & 0xFF) >> 2) << 5) | ((((*inPixel32 >> 16) & 0xFF) >> 3) << 0);
 		free(data);
 		data = tempData;
@@ -352,11 +367,11 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 
 	else if(pixelFormat == kCCTexture2DPixelFormat_RGB888) {
 		//Convert "RRRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA" to "RRRRRRRRGGGGGGGGBBBBBBB"
-		tempData = malloc(POTHigh * POTWide * 3);
+		tempData = malloc(textureHeight * textureWidth * 3);
 		char *inData = (char*)data;
 		char *outData = (char*)tempData;
 		int j=0;
-		for(unsigned int i = 0; i < POTWide * POTHigh *4; i++) {
+		for(unsigned int i = 0; i < textureWidth * textureHeight *4; i++) {
 			outData[j++] = inData[i++];
 			outData[j++] = inData[i++];
 			outData[j++] = inData[i++];
@@ -368,10 +383,10 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 
 	else if (pixelFormat == kCCTexture2DPixelFormat_RGBA4444) {
 		//Convert "RRRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA" to "RRRRGGGGBBBBAAAA"
-		tempData = malloc(POTHigh * POTWide * 2);
+		tempData = malloc(textureHeight * textureWidth * 2);
 		inPixel32 = (unsigned int*)data;
 		outPixel16 = (unsigned short*)tempData;
-		for(unsigned int i = 0; i < POTWide * POTHigh; ++i, ++inPixel32)
+		for(unsigned int i = 0; i < textureWidth * textureHeight; ++i, ++inPixel32)
 			*outPixel16++ =
 			((((*inPixel32 >> 0) & 0xFF) >> 4) << 12) | // R
 			((((*inPixel32 >> 8) & 0xFF) >> 4) << 8) | // G
@@ -385,10 +400,10 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 	}
 	else if (pixelFormat == kCCTexture2DPixelFormat_RGB5A1) {
 		//Convert "RRRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA" to "RRRRRGGGGGBBBBBA"
-		tempData = malloc(POTHigh * POTWide * 2);
+		tempData = malloc(textureHeight * textureWidth * 2);
 		inPixel32 = (unsigned int*)data;
 		outPixel16 = (unsigned short*)tempData;
-		for(unsigned int i = 0; i < POTWide * POTHigh; ++i, ++inPixel32)
+		for(unsigned int i = 0; i < textureWidth * textureHeight; ++i, ++inPixel32)
 			*outPixel16++ =
 			((((*inPixel32 >> 0) & 0xFF) >> 3) << 11) | // R
 			((((*inPixel32 >> 8) & 0xFF) >> 3) << 6) | // G
@@ -399,7 +414,7 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 		free(data);
 		data = tempData;
 	}
-	self = [self initWithData:data pixelFormat:pixelFormat pixelsWide:POTWide pixelsHigh:POTHigh contentSize:imageSize];
+	self = [self initWithData:data pixelFormat:pixelFormat pixelsWide:textureWidth pixelsHigh:textureHeight contentSize:imageSize];
 
 	// should be after calling super init
 	hasPremultipliedAlpha_ = (info == kCGImageAlphaPremultipliedLast || info == kCGImageAlphaPremultipliedFirst);
@@ -429,21 +444,21 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 	// MUST have the same order declared on ccTypes
 	NSInteger linebreaks[] = {UILineBreakModeWordWrap, UILineBreakModeCharacterWrap, UILineBreakModeClip, UILineBreakModeHeadTruncation, UILineBreakModeTailTruncation, UILineBreakModeMiddleTruncation};
 
-	NSUInteger POTWide = ccNextPOT(dimensions.width);
-	NSUInteger POTHigh = ccNextPOT(dimensions.height);
+	NSUInteger textureWidth = ccNextPOT(dimensions.width);
+	NSUInteger textureHeight = ccNextPOT(dimensions.height);
 	unsigned char*			data;
 
 	CGContextRef			context;
 	CGColorSpaceRef			colorSpace;
 
 #if CC_USE_LA88_LABELS
-	data = calloc(POTHigh, POTWide * 2);
+	data = calloc(textureHeight, textureWidth * 2);
 #else
-	data = calloc(POTHigh, POTWide);
+	data = calloc(textureHeight, textureWidth);
 #endif
 
 	colorSpace = CGColorSpaceCreateDeviceGray();
-	context = CGBitmapContextCreate(data, POTWide, POTHigh, 8, POTWide, colorSpace, kCGImageAlphaNone);
+	context = CGBitmapContextCreate(data, textureWidth, textureHeight, 8, textureWidth, colorSpace, kCGImageAlphaNone);
 	CGColorSpaceRelease(colorSpace);
 
 	if( ! context ) {
@@ -453,7 +468,7 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 	}
 
 	CGContextSetGrayFillColor(context, 1.0f, 1.0f);
-	CGContextTranslateCTM(context, 0.0f, POTHigh);
+	CGContextTranslateCTM(context, 0.0f, textureHeight);
 	CGContextScaleCTM(context, 1.0f, -1.0f); //NOTE: NSString draws in UIKit referential i.e. renders upside-down compared to CGBitmapContext referential
 
 	UIGraphicsPushContext(context);
@@ -485,14 +500,14 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 	UIGraphicsPopContext();
 
 #if CC_USE_LA88_LABELS
-	NSUInteger textureSize = POTWide*POTHigh;
+	NSUInteger textureSize = textureWidth*textureHeight;
 	unsigned short *la88_data = (unsigned short*)data;
 	for(int i = textureSize-1; i>=0; i--) //Convert A8 to AI88
 		la88_data[i] = (data[i] << 8) | 0xff;
 
 #endif
 
-	self = [self initWithData:data pixelFormat:LABEL_PIXEL_FORMAT pixelsWide:POTWide pixelsHigh:POTHigh contentSize:dimensions];
+	self = [self initWithData:data pixelFormat:LABEL_PIXEL_FORMAT pixelsWide:textureWidth pixelsHigh:textureHeight contentSize:dimensions];
 
 	CGContextRelease(context);
 	[self releaseData:data];
