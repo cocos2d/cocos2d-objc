@@ -119,7 +119,10 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 - (id) initWithData:(const void*)data pixelFormat:(CCTexture2DPixelFormat)pixelFormat pixelsWide:(NSUInteger)width pixelsHigh:(NSUInteger)height contentSize:(CGSize)size
 {
 	if((self = [super init])) {
-		if( pixelFormat == kCCTexture2DPixelFormat_RGBA8888 )
+		
+		
+		// XXX: 32 bits or POT textures uses UNPACK of 4 (is this correct ??? )
+		if( pixelFormat == kCCTexture2DPixelFormat_RGBA8888 || ( ccNextPOT(width)==width && ccNextPOT(height)==height) )
 			glPixelStorei(GL_UNPACK_ALIGNMENT,4);
 		else
 			glPixelStorei(GL_UNPACK_ALIGNMENT,1);
@@ -812,7 +815,7 @@ static BOOL PVRHaveAlphaPremultiplied_ = NO;
 -(void) setAliasTexParameters
 {
 	ccGLBindTexture2D( name_ );
-
+	
 	if( ! hasMipmaps_ )
 		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
 	else
@@ -824,7 +827,7 @@ static BOOL PVRHaveAlphaPremultiplied_ = NO;
 -(void) setAntiAliasTexParameters
 {
 	ccGLBindTexture2D( name_ );
-
+	
 	if( ! hasMipmaps_ )
 		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
 	else
