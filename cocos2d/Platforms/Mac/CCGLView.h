@@ -84,6 +84,9 @@
 /** unlocks the openGL context */
 -(void) unlockOpenGLContext;
 
+/** returns the depth format of the view in BPP */
+- (NSUInteger) depthFormat;
+
 // private
 +(void) load_;
 @end

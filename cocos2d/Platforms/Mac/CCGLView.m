@@ -114,6 +114,11 @@
 //	[[self openGLContext] setValues:&order forParameter:NSOpenGLCPSurfaceOrder];
 }
 
+- (NSUInteger) depthFormat
+{
+	return 24;
+}
+
 - (void) reshape
 {
 	// We draw on a secondary thread through the display link
