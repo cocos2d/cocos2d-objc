@@ -38,7 +38,7 @@ void removeShape( cpBody *body, cpShape *shape, void *data )
 	CGFloat x = body_->p.x;
 	CGFloat y = body_->p.y;
 
-	if ( !isRelativeAnchorPoint_ ) {
+	if ( ignoreAnchorPointForPosition_ ) {
 		x += anchorPointInPoints_.x;
 		y += anchorPointInPoints_.y;
 	}

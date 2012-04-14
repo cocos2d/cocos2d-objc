@@ -746,10 +746,10 @@
 	SET_DIRTY_RECURSIVELY();
 }
 
--(void)setIsRelativeAnchorPoint:(BOOL)relative
+-(void) setIgnoreAnchorPointForPosition:(BOOL)value
 {
-	NSAssert( ! batchNode_, @"relativeTransformAnchor is invalid in CCSprite");
-	[super setIsRelativeAnchorPoint:relative];
+	NSAssert( ! batchNode_, @"ignoreAnchorPointForPosition is invalid in CCSprite");
+	[super setIgnoreAnchorPointForPosition:value];
 }
 
 -(void)setVisible:(BOOL)v

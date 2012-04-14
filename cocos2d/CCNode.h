@@ -173,10 +173,9 @@ enum {
 
 	// is visible
 	BOOL visible_;
-	// If YES the transformtions will be relative to (-transform.x, -transform.y).
-	// Sprites, Labels and any other "small" object uses it.
-	// Scenes, Layers and other "whole screen" object don't use it.
-	BOOL isRelativeAnchorPoint_;
+	// If YES, the Anchor Point will be (0,0) when you position the CCNode.
+	// Used by CCLayer and CCScene
+	BOOL ignoreAnchorPointForPosition_;
 
 	BOOL isReorderChildDirty_;	
 }
@@ -248,11 +247,10 @@ enum {
 @property(nonatomic,readonly) BOOL isRunning;
 /** A weak reference to the parent */
 @property(nonatomic,readwrite,assign) CCNode* parent;
-/** If YES the transformtions will be relative to its anchor point.
- * Sprites, Labels and any other sizeble object use it have it enabled by default.
- * Scenes, Layers and other "whole screen" object don't use it, have it disabled by default.
+/**  If YES, the Anchor Point will be (0,0) when you position the CCNode.
+ Used by CCLayer and CCScene.
  */
-@property(nonatomic,readwrite,assign) BOOL isRelativeAnchorPoint;
+@property(nonatomic,readwrite,assign) BOOL ignoreAnchorPointForPosition;
 /** A tag used to identify the node easily */
 @property(nonatomic,readwrite,assign) NSInteger tag;
 /** A custom user data pointer */

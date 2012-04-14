@@ -135,6 +135,10 @@ DEPRECATED_ATTRIBUTE @interface MacView : CCGLView
 -(void) setDisplayFPS:(BOOL)display DEPRECATED_ATTRIBUTE;
 @end
 
+@interface CCNode (Deprecated)
+-(void) setIsRelativeAnchorPoint:(BOOL)value DEPRECATED_ATTRIBUTE;
+-(BOOL) isRelativeAnchorPoint DEPRECATED_ATTRIBUTE;
+@end
 
 @interface CCSprite (Deprecated)
 // new: spriteWithTexture:rect:

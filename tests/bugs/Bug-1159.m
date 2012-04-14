@@ -32,7 +32,7 @@
 
 		CCLayerColor *sprite_a = [CCLayerColor layerWithColor:ccc4(255, 0, 0, 255) width:700 height:700];
 		sprite_a.anchorPoint = ccp(0.5f, 0.5f);
-		[sprite_a setIsRelativeAnchorPoint:YES];
+		[sprite_a setIgnoreAnchorPointForPosition:NO];
 		sprite_a.position = ccp(0.0f, s.height/2);
 		[self addChild:sprite_a];
 
@@ -43,7 +43,7 @@
 
 		CCLayerColor *sprite_b = [CCLayerColor layerWithColor:ccc4(0, 0, 255, 255) width:400 height:400];
 		sprite_b.anchorPoint = ccp(0.5f, 0.5f);
-		[sprite_b setIsRelativeAnchorPoint:YES];
+		[sprite_b setIgnoreAnchorPointForPosition:NO];
 		sprite_b.position = ccp(s.width/2, s.height/2);
 		[self addChild:sprite_b];
 

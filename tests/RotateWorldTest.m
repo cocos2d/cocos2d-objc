@@ -102,6 +102,7 @@
 		CCNode* green = [CCLayerColor layerWithColor:ccc4(0,255,0,255)];
 		CCNode* white = [CCLayerColor layerWithColor:ccc4(255,255,255,255)];
 
+	
 		[blue setScale: 0.5f];
 		[blue setPosition: ccp(-x/4,-y/4)];
 		[blue addChild: [SpriteLayer node]];
@@ -114,12 +115,14 @@
 		[green addChild: [TextLayer node]];
 
 		[white setScale: 0.5f];
-		[white setPosition: ccp(x/4,y/4)];
+//		[white setPosition: ccp(x/4,y/4)];		
+		white.ignoreAnchorPointForPosition = NO;
+		[white setPosition: ccp(x/4*3,y/4*3)];
 
 		[self addChild: blue z:-1];
-		[self addChild: white];
 		[self addChild: green];
 		[self addChild: red];
+		[self addChild: white];
 
 		CCAction * rot = [CCRotateBy actionWithDuration:8 angle:720];
 
