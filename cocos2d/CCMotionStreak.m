@@ -64,7 +64,7 @@
     {
         [super setPosition:CGPointZero];
         [self setAnchorPoint:CGPointZero];
-        [self setIsRelativeAnchorPoint:NO];
+        [self setIgnoreAnchorPointForPosition:YES];
 
         positionR_ = CGPointZero;
         fastMode_ = YES;

@@ -62,7 +62,7 @@
 		CGSize s = [[CCDirector sharedDirector] winSize];
 		anchorPoint_ = ccp(0.5f, 0.5f);
 		[self setContentSize:s];
-		self.isRelativeAnchorPoint = NO;
+		self.ignoreAnchorPointForPosition = YES;
 
 		isTouchEnabled_ = NO;
 

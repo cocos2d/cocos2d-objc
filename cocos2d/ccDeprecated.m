@@ -83,6 +83,17 @@ void ccGLUniformModelViewProjectionMatrix( CCGLProgram* program )
 }
 @end
 
+@implementation CCNode (Deprecated)
+-(void) setIsRelativeAnchorPoint:(BOOL)value
+{
+	[self setIgnoreAnchorPointForPosition:!value];
+}
+-(BOOL) isRelativeAnchorPoint
+{
+	return ! self.ignoreAnchorPointForPosition;
+}
+@end
+
 @implementation CCSprite (Deprecated)
 
 +(id) spriteWithBatchNode:(CCSpriteBatchNode*)node rect:(CGRect)rect

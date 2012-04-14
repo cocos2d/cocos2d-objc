@@ -88,7 +88,7 @@ static NSUInteger globalOrderOfArrival = 1;
 @synthesize position = position_;
 @synthesize anchorPoint = anchorPoint_, anchorPointInPoints = anchorPointInPoints_;
 @synthesize contentSize = contentSize_;
-@synthesize isRelativeAnchorPoint = isRelativeAnchorPoint_;
+@synthesize ignoreAnchorPointForPosition = ignoreAnchorPointForPosition_;
 @synthesize skewX = skewX_, skewY = skewY_;
 
 #pragma mark CCNode - Init & cleanup
@@ -112,8 +112,8 @@ static NSUInteger globalOrderOfArrival = 1;
 		anchorPointInPoints_ = anchorPoint_ = CGPointZero;
 
 
-		// "whole screen" objects. like Scenes and Layers, should set isRelativeAnchorPoint to NO
-		isRelativeAnchorPoint_ = YES;
+		// "whole screen" objects. like Scenes and Layers, should set ignoreAnchorPointForPosition to YES
+		ignoreAnchorPointForPosition_ = NO;
 
 		isTransformDirty_ = isInverseDirty_ = YES;
 
@@ -230,10 +230,12 @@ static NSUInteger globalOrderOfArrival = 1;
 	isTransformDirty_ = isInverseDirty_ = YES;
 }
 
--(void) setIsRelativeAnchorPoint: (BOOL)newValue
+-(void) setIgnoreAnchorPointForPosition: (BOOL)newValue
 {
-	isRelativeAnchorPoint_ = newValue;
-	isTransformDirty_ = isInverseDirty_ = YES;
+	if( newValue != ignoreAnchorPointForPosition_ ) {
+		ignoreAnchorPointForPosition_ = newValue;
+		isTransformDirty_ = isInverseDirty_ = YES;
+	}
 }
 
 -(void) setAnchorPoint:(CGPoint)point
@@ -758,7 +760,7 @@ static NSUInteger globalOrderOfArrival = 1;
 		float x = position_.x;
 		float y = position_.y;
 
-		if ( !isRelativeAnchorPoint_ ) {
+		if ( ignoreAnchorPointForPosition_ ) {
 			x += anchorPointInPoints_.x;
 			y += anchorPointInPoints_.y;
 		}
