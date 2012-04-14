@@ -85,6 +85,10 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	Added support for alignment in multiline in CCLabelBMFont objects
 	Author of alignment multiline test case
 	
+* Maarten Billemont (lhunath) (http://www.lhunath.com/myst/):
+	Director: Enable depth testing only if the view has depth enabled
+	Texture: More permissive assert on NPOT & CLAMP options
+
 * mlilback:
 	Added KVO pattern for CCDirector#isPaused
 
