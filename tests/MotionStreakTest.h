@@ -14,6 +14,7 @@
 }
 
 -(NSString*) title;
+-(NSString*) subtitle;
 
 -(void) backCallback:(id) sender;
 -(void) nextCallback:(id) sender;
@@ -24,7 +25,6 @@
 {
 	CCNode* root;
 	CCNode* target;
-	CCMotionStreak* streak;
 }
 @end
 
@@ -32,8 +32,17 @@
 {
 	CCNode* root;
 	CCNode* target;
-	CCMotionStreak* streak;
 }
 @end
+
+@interface Issue1358 : MotionStreakTest
+{
+	CGPoint _center;
+	CGFloat _radius;
+	CGFloat _angle;
+}
+@end
+
+
 
 
