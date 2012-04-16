@@ -43,4 +43,13 @@
 -(void)renderScreenShot;
 @end
 
+@interface RenderTextureIssue1358 : RenderTextureTest
+{
+	CCMotionStreak *_streak;
+	CCSprite *_ship;
+	CGPoint _center;
+	CGFloat _radius;
+	CGFloat _angle;
+}
+@end
 
