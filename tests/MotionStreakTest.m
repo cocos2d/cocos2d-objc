@@ -17,6 +17,7 @@ enum {
 
 static int sceneIdx=-1;
 static NSString *transitions[] = {
+	@"Issue1358",
 	@"Test1",
 	@"Test2",
 };
@@ -65,6 +66,13 @@ Class restartAction()
 		CCLabelTTF *label = [CCLabelTTF labelWithString:[self title] fontName:@"Arial" fontSize:32];
 		[self addChild:label z:0 tag:kTagLabel];
 		[label setPosition: ccp(s.width/2, s.height-50)];
+		
+		NSString *subtitle = [self subtitle];
+		if( subtitle ) {
+			CCLabelTTF *l = [CCLabelTTF labelWithString:subtitle fontName:@"Thonburi" fontSize:16];
+			[self addChild:l z:1];
+			[l setPosition:ccp(s.width/2, s.height-80)];
+		}
 
 		CCMenuItemImage *item1 = [CCMenuItemImage itemWithNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
 		CCMenuItemImage *item2 = [CCMenuItemImage itemWithNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
@@ -80,12 +88,12 @@ Class restartAction()
 
 		CCMenuItemToggle *itemMode = [CCMenuItemToggle itemWithTarget:self
 														  selector:@selector(modeCallback:)
-															 items: [CCMenuItemFont itemWithString: @"Fast"], [CCMenuItemFont itemWithString: @"Slow"], nil];
+															 items: [CCMenuItemFont itemWithString: @"Use Fast Mode"], [CCMenuItemFont itemWithString: @"Use Slow Mode"], nil];
 
 		CCMenu *menuMode = [CCMenu menuWithItems:itemMode, nil];
 		[self addChild:menuMode];
 
-		[menuMode setPosition:ccp(30,65)];
+		[menuMode setPosition:ccp(s.width/2,65)];
 
 	}
 	return self;
@@ -127,6 +135,12 @@ Class restartAction()
 {
 	return @"No title";
 }
+
+-(NSString*) subtitle
+{
+	return @"";
+}
+
 @end
 
 
@@ -158,8 +172,8 @@ Class restartAction()
 	[target setPosition:ccp(100,0)];
 
 	// create the streak object and add it to the scene
-	streak = [CCMotionStreak streakWithFade:2 minSeg:3 width:32 color:ccGREEN textureFilename:@"streak.png"];
-	[self addChild:streak];
+	streak_ = [CCMotionStreak streakWithFade:2 minSeg:3 width:32 color:ccGREEN textureFilename:@"streak.png"];
+	[self addChild:streak_];
 
 	// schedule an update on each frame so we can syncronize the streak with the target
 	[self schedule:@selector(onUpdate:)];
@@ -182,16 +196,12 @@ Class restartAction()
                                                                   [CCTintTo actionWithDuration:0.2f red:255 green:255 blue:255],nil
                                                                   ]
                                 ];
-    [streak runAction:colorAction];
-
-
-	// weak ref
-	streak_ = streak;
+    [streak_ runAction:colorAction];
 }
 
 -(void)onUpdate:(ccTime)delta
 {
-	[streak setPosition:[target convertToWorldSpace:CGPointZero]];
+	[streak_ setPosition:[target convertToWorldSpace:CGPointZero]];
 }
 @end
 
@@ -220,14 +230,10 @@ Class restartAction()
 	CGSize s = [[CCDirector sharedDirector] winSize];
 
 	// create the streak object and add it to the scene
-	streak = [CCMotionStreak streakWithFade:3 minSeg:3 width:64 color:ccWHITE textureFilename:@"streak.png"];
-	[self addChild:streak];
+	streak_ = [CCMotionStreak streakWithFade:3 minSeg:3 width:64 color:ccWHITE textureFilename:@"streak.png"];
+	[self addChild:streak_];
 
-	streak.position = ccp(s.width/2, s.height/2);
-
-
-	// weak ref
-	streak_ = streak;
+	streak_.position = ccp(s.width/2, s.height/2);
 }
 
 #ifdef __CC_PLATFORM_IOS
@@ -237,7 +243,7 @@ Class restartAction()
 	CGPoint touchLocation = [touch locationInView: [touch view]];
 	touchLocation = [[CCDirector sharedDirector] convertToGL: touchLocation];
 
-	[streak setPosition:touchLocation];
+	[streak_ setPosition:touchLocation];
 }
 
 #elif defined(__CC_PLATFORM_MAC)
@@ -245,12 +251,62 @@ Class restartAction()
 -(BOOL) ccMouseDragged:(NSEvent *)event
 {
 	CGPoint touchLocation = [[CCDirector sharedDirector] convertEventToGL:event];
-	[streak setPosition:touchLocation];
+	[streak_ setPosition:touchLocation];
 	return YES;
 }
 #endif
 
 @end
+
+
+#pragma mark - Issue1358
+// always call "super" init
+// Apple recommends to re-assign "self" with the "super's" return value
+@implementation Issue1358
+
+-(id) init
+{
+	if( (self=[super init])) {
+		
+		// ask director the the window size
+		CGSize size = [[CCDirector sharedDirector] winSize];
+				
+		streak_ = [CCMotionStreak streakWithFade:2.0f minSeg:1.0f width:50.0f color:ccc3(255, 255, 0) textureFilename:@"Icon-Small-50.png"];
+		[self addChild:streak_];
+		
+		
+		_center  = ccp(size.width/2, size.height/2);
+		_radius = size.width/3;
+		_angle = 0.0f;
+
+		[self schedule:@selector(update:) interval:0];
+	}
+	
+	return self;
+}
+
+
+- (void)update:(ccTime)time
+{
+	_angle += 1.0f;
+	streak_.position = ccp( _center.x + cosf(_angle/180 * M_PI)*_radius,
+						 _center.y + sinf(_angle/ 180 * M_PI)*_radius);
+}
+
+-(NSString*) title
+{
+	return @"Issue 1358";
+}
+
+-(NSString*) subtitle
+{
+	return @"The tail should use the texture";
+}
+
+@end
+
+
+#pragma mark - AppDelegate
 
 #if defined(__CC_PLATFORM_IOS)
 

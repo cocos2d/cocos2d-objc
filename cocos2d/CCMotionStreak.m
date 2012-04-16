@@ -66,8 +66,9 @@
         [self setAnchorPoint:CGPointZero];
         [self setIgnoreAnchorPointForPosition:YES];
 
+		startingPositionInitialized_ = NO;
         positionR_ = CGPointZero;
-        fastMode_ = YES;
+        fastMode_ = NO;
         minSeg_ = (minSeg == -1.0f) ? stroke/5.0f : minSeg;
         minSeg_ *= minSeg_;
 
@@ -93,6 +94,7 @@
         [self setTexture:texture];
         [self setColor:color];
         [self scheduleUpdate];
+		
     }
     return self;
 }
@@ -101,6 +103,7 @@
 
 - (void) setPosition:(CGPoint)position
 {
+	startingPositionInitialized_ = YES;
     positionR_ = position;
 }
 
@@ -138,8 +141,11 @@
 
 - (void) update:(ccTime)delta
 {
-    delta *= fadeDelta_;
+	if( !startingPositionInitialized_ )
+		return;
 
+    delta *= fadeDelta_;
+	
     NSUInteger newIdx, newIdx2, i, i2;
     NSUInteger mov = 0;
 
