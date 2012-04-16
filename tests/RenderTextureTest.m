@@ -13,6 +13,7 @@ static NSString *tests[] = {
 	@"RenderTextureSave",
 	@"RenderTextureIssue937",
 	@"RenderTextureZbuffer",
+	@"RenderTextureIssue1358",
 };
 
 Class nextAction(void);
@@ -635,6 +636,54 @@ Class restartAction()
 }
 @end
 
+
+#pragma mark - RenderTextureIssue1358
+// always call "super" init
+// Apple recommends to re-assign "self" with the "super's" return value
+@implementation RenderTextureIssue1358
+
+-(id) init
+{
+	if( (self=[super init])) {
+		
+		// ask director the the window size
+		CGSize size = [[CCDirector sharedDirector] winSize];
+		
+		_ship = [CCSprite spriteWithFile:@"Icon-72.png" rect:CGRectMake(0, 0, 72, 72)];
+		_ship.position = ccp(size.width/2, size.height/2);
+		[self addChild:_ship];
+		_streak = [CCMotionStreak streakWithFade:2.0f minSeg:50.0f width:50.0f color:ccc3(255, 0, 0) textureFilename:@"Icon-Small-50.png"];
+		[self addChild:_streak];
+		_center  = ccp(size.width/2, size.height/2);
+		_radius = 200.0f;
+		_angle = 0.0f;
+		
+		[self schedule:@selector(update:) interval:0];
+	}
+
+	return self;
+}
+
+
+- (void)update:(ccTime)time
+{
+	_angle += 1.0f;
+	_ship.position = ccp( _center.x + cosf(_angle/180 * M_PI)*_radius,
+						 _center.y + sinf(_angle/ 180 * M_PI)*_radius);
+	_streak.position = _ship.position;
+}
+
+-(NSString*) title
+{
+	return @"Issue 1358";
+}
+
+-(NSString*) subtitle
+{
+	return @"The tail should use the texture";
+}
+
+@end
 
 
 #pragma mark -
