@@ -21,6 +21,7 @@ version 2.0-rc1 XX-Apr-2012
 		Alignments and LineBreak modes values are the both on iOS and Mac. Needed for editors.
 . [FIX] NSThread+Block: fixed crash due to block not being copied to the heap
 . [FIX] OpenGL: VAO are initialized on the cocos2d thread on machines that don't support shareables VAOs
+. [FIX] Scheduler: Logs warnings with better precision (.4f instead of .2f) (issue #1362)
 . [FIX] Templates: LICENSE_cocosdension -> LICENSE_CocosDension (issue #1363)
 . [FIX] Texture: If defaultAlpha is RGBA8888 and image has no alpha, use RGBA8 instead of RGB565
 		PVR textures sets the glTexParams before creating the texture. faster.
