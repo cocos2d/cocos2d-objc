@@ -68,6 +68,9 @@ static NSString *transitions[] = {
 	@"SpriteBatchBug1217",
 	@"AnimationCache",
 	@"AnimationCacheFile",
+    @"AnimationWithDifferentOffsets",
+    @"AnimationWithDifferentOffsets2"
+
 };
 
 enum {
@@ -4487,6 +4490,125 @@ Class restartAction()
 }
 
 @end
+
+#pragma mark -
+#pragma mark AnimationWithDifferentOffsets
+
+@implementation AnimationWithDifferentOffsets
+
+
+-(id) init
+{
+	if( (self=[super init]) ) {
+		
+        //using animation format v2 (texture packer)
+        
+        CCSpriteFrameCache* sfc = [CCSpriteFrameCache sharedSpriteFrameCache];
+        [sfc addSpriteFramesWithFile:@"animations/animated_particles.plist"];
+        
+        CCAnimation* anim2 = [CCAnimation animation];
+        
+        [anim2 addFrame:[sfc spriteFrameByName:@"coco_1.png"] delay:0.5f];
+        [anim2 addFrame:[sfc spriteFrameByName:@"coco_2.png"] delay:0.5f];
+        [anim2 addFrame:[sfc spriteFrameByName:@"coco_3.png"] delay:0.5f];
+        [anim2 addFrame:[sfc spriteFrameByName:@"coco_4.png"] delay:0.5f];
+        [anim2 addFrame:[sfc spriteFrameByName:@"coco_5.png"] delay:0.5f];
+        [anim2 addFrame:[sfc spriteFrameByName:@"coco_4.png"] delay:0.5f];
+        [anim2 addFrame:[sfc spriteFrameByName:@"coco_3.png"] delay:0.5f];
+        [anim2 addFrame:[sfc spriteFrameByName:@"coco_2.png"] delay:0.5f];
+        [anim2 addFrame:[sfc spriteFrameByName:@"coco_1.png"] delay:0.5f];
+        		
+		CCSprite *grossini = [CCSprite node];
+		
+		CGSize winSize = [[CCDirector sharedDirector] winSize];
+		
+		grossini.position = ccp(winSize.width/2, winSize.height/2 - grossini.contentSize.height);
+        
+        [grossini setAnchorPoint:ccp(0.5f,0.f)];
+		
+        [grossini setUseTrimmedFrameForAnchorPoint:YES];
+        
+		[self addChild:grossini];
+		
+		// run the animation
+		[grossini runAction:[CCAnimate actionWithAnimation:anim2]];
+		
+	}
+	
+	return self;
+	
+}
+
+-(NSString *) title
+{
+	return @"Animation - variable size, offset test";
+}
+
+-(NSString*) subtitle
+{
+	return @"Sprite should not wobble";
+}
+
+@end
+
+#pragma mark -
+#pragma mark AnimationWithDifferentOffsets
+
+@implementation AnimationWithDifferentOffsets2
+
+
+-(id) init
+{
+	if( (self=[super init]) ) {
+		
+        //using animation format v3 (zwoptex)
+        CCSpriteFrameCache* sfc = [CCSpriteFrameCache sharedSpriteFrameCache];
+        [sfc addSpriteFramesWithFile:@"animations/BeaconSheet.plist"];
+        
+        CCAnimation* anim2 = [CCAnimation animation];
+        
+        [anim2 addFrame:[sfc spriteFrameByName:@"Beacon-1.png"] delay:0.5f];
+        [anim2 addFrame:[sfc spriteFrameByName:@"Beacon-2.png"] delay:0.5f];
+        [anim2 addFrame:[sfc spriteFrameByName:@"Beacon-3.png"] delay:0.5f];
+        [anim2 addFrame:[sfc spriteFrameByName:@"Beacon-4.png"] delay:0.5f];
+        [anim2 addFrame:[sfc spriteFrameByName:@"Beacon-5.png"] delay:0.5f];
+        [anim2 addFrame:[sfc spriteFrameByName:@"Beacon-4.png"] delay:0.5f];
+        [anim2 addFrame:[sfc spriteFrameByName:@"Beacon-3.png"] delay:0.5f];
+        [anim2 addFrame:[sfc spriteFrameByName:@"Beacon-2.png"] delay:0.5f];
+        [anim2 addFrame:[sfc spriteFrameByName:@"Beacon-1.png"] delay:0.5f];
+        
+		CCSprite *grossini = [CCSprite node];
+		
+		CGSize winSize = [[CCDirector sharedDirector] winSize];
+		
+		grossini.position = ccp(winSize.width/2, winSize.height/2 - grossini.contentSize.height);
+        
+        [grossini setAnchorPoint:ccp(0.5f,0.5f)];
+		
+		[self addChild:grossini];
+		
+        [grossini setUseTrimmedFrameForAnchorPoint:YES];
+		// run the animation
+		[grossini runAction:[CCAnimate actionWithAnimation:anim2]];
+		
+	}
+	
+	return self;
+	
+}
+
+-(NSString *) title
+{
+	return @"Animation - variable offset test";
+}
+
+-(NSString*) subtitle
+{
+	return @"Sprite should not wobble";
+}
+
+@end
+
 
 #pragma mark -
 #pragma mark AppDelegate
