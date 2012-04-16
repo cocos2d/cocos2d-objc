@@ -128,6 +128,8 @@ typedef enum {
 	// image is flipped
 	BOOL	flipX_;
 	BOOL	flipY_;
+    
+    BOOL useTrimmedFrameForAnchorPoint_; 
 		
 @public
 	// used internally
@@ -182,6 +184,12 @@ typedef enum {
  @since v0.99.0
  */
 @property (nonatomic,readonly) CGPoint	offsetPositionInPixels;
+/** normally the original frame size is used to determine the anchorPoint, but when using different offsets and same original frame sizes the ap will be off. 
+    Same for frames with different sizes and different offsets. 
+    @since 1.1
+ *
+ */
+@property (nonatomic,readwrite) BOOL useTrimmedFrameForAnchorPoint;      
 /** conforms to CCTextureProtocol protocol */
 @property (nonatomic,readwrite) ccBlendFunc blendFunc;
 

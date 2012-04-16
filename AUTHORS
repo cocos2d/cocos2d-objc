@@ -32,6 +32,9 @@ Contributors (alphabetically ordered):
 	bug fixes for failure to compile on 32-bit mac builds
 	created new drawPrimitives functions, ccDrawRect, ccDrawSolidRect and ccDrawSolidPoly.
     bug fix for CCTMXXMLParser in release mode
+    
+* Fabian Rueger
+    Provided Beacon.png for new spriteTest
 	
 * Jerrod Putman (http://www.tinytimgames.com)
 	Original author of ARC compatibility code
@@ -96,6 +99,7 @@ Contributors (alphabetically ordered):
 	Added CCNode#onExitTransitionDidStart method
 	Fixed fading background music issue
     Made CCLOG a bit more verbose
+    Fixed unrecognised clang pragma's on LLVM < 2.0. 
     
 * Skyhawk (http://www.hkasoftware.com) 
     Fix for addFrame method in CCAnimation

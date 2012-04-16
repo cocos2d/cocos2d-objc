@@ -302,3 +302,9 @@
 @interface SpriteBatchBug1217 : SpriteDemo
 {}
 @end
+@interface AnimationWithDifferentOffsets : SpriteDemo
+{}
+@end
+@interface AnimationWithDifferentOffsets2 : SpriteDemo
+{}
+@end

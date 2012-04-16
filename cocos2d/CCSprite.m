@@ -79,7 +79,7 @@ static SEL selSortMethod = NULL;
 @synthesize batchNode = batchNode_;
 @synthesize honorParentTransform = honorParentTransform_;
 @synthesize offsetPositionInPixels = offsetPositionInPixels_;
-
+@synthesize useTrimmedFrameForAnchorPoint = useTrimmedFrameForAnchorPoint_;
 
 +(id)spriteWithTexture:(CCTexture2D*)texture
 {
@@ -156,6 +156,8 @@ static SEL selSortMethod = NULL;
 		
 		honorParentTransform_ = CC_HONOR_PARENT_TRANSFORM_ALL;
 		hasChildren_ = NO;
+        
+        useTrimmedFrameForAnchorPoint_ = NO;
 		
 		// Atlas: Color
 		ccColor4B tmpColor = {255,255,255,255};
@@ -329,20 +331,28 @@ static SEL selSortMethod = NULL;
 	rect_ = CC_RECT_PIXELS_TO_POINTS( rect );
 	rectRotated_ = rotated;
 
-	[self setContentSizeInPixels:untrimmedSize];
+    (useTrimmedFrameForAnchorPoint_) ? [self setContentSizeInPixels:rect.size] : [self setContentSizeInPixels:untrimmedSize];
+	
 	[self updateTextureCoords:rectInPixels_];
 
 	CGPoint relativeOffsetInPixels = unflippedOffsetPositionFromCenter_;
 	
-	// issue #732
-	if( flipX_ )
-		relativeOffsetInPixels.x = -relativeOffsetInPixels.x;
-	if( flipY_ )
-		relativeOffsetInPixels.y = -relativeOffsetInPixels.y;
-	
-	offsetPositionInPixels_.x = relativeOffsetInPixels.x + (contentSizeInPixels_.width - rectInPixels_.size.width) / 2;
-	offsetPositionInPixels_.y = relativeOffsetInPixels.y + (contentSizeInPixels_.height - rectInPixels_.size.height) / 2;
-	
+    if (useTrimmedFrameForAnchorPoint_)
+    {
+        //doesn't need to do anything for flipX and Y
+        offsetPositionInPixels_ = ccp(0.f,0.f);
+    }
+    else 
+    {    
+        // issue #732
+        if( flipX_ )
+            relativeOffsetInPixels.x = -relativeOffsetInPixels.x;
+        if( flipY_ )
+            relativeOffsetInPixels.y = -relativeOffsetInPixels.y;
+        
+        offsetPositionInPixels_.x = relativeOffsetInPixels.x + (contentSizeInPixels_.width - rectInPixels_.size.width) / 2;
+        offsetPositionInPixels_.y = relativeOffsetInPixels.y + (contentSizeInPixels_.height - rectInPixels_.size.height) / 2;
+	}
 	
 	// rendering using batch node
 	if( usesBatchNode_ ) {
@@ -961,7 +971,7 @@ static SEL selSortMethod = NULL;
 	if ( newTexture.name != texture_.name )
 		[self setTexture: newTexture];
 	
-	// update rect
+    // update rect
 	rectRotated_ = frame.rotated;
 	[self setTextureRectInPixels:frame.rectInPixels rotated:frame.rotated untrimmedSize:frame.originalSizeInPixels];
 }
@@ -977,6 +987,7 @@ static SEL selSortMethod = NULL;
 	CCAnimationFrame *frame = [[a frames] objectAtIndex:frameIndex];
 	
 	NSAssert( frame, @"CCSprite#setDisplayFrame. Invalid frame");
+
 	
 	[self setDisplayFrame:[frame spriteFrame]];
 }
