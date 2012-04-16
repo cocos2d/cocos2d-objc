@@ -4781,7 +4781,7 @@
 		E0BC7D6F1342CC58001B4DCC /* LICENSE_Box2D.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE_Box2D.txt; sourceTree = "<group>"; };
 		E0BC7D701342CC58001B4DCC /* LICENSE_Chipmunk.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE_Chipmunk.txt; sourceTree = "<group>"; };
 		E0BC7D711342CC58001B4DCC /* LICENSE_cocos2d.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE_cocos2d.txt; sourceTree = "<group>"; };
-		E0BC7D721342CC58001B4DCC /* LICENSE_cocosdenshion.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE_cocosdenshion.txt; sourceTree = "<group>"; };
+		E0BC7D721342CC58001B4DCC /* LICENSE_CocosDenshion.txt */ = {isa = PBXFileReference; path = LICENSE_CocosDenshion.txt; sourceTree = "<group>"; };
 		E0BC7D741342CC58001B4DCC /* LICENSE_libpng.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE_libpng.txt; sourceTree = "<group>"; };
 		E0BC7D991342CE7B001B4DCC /* CCShaderCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCShaderCache.h; sourceTree = "<group>"; };
 		E0BC7D9A1342CE7B001B4DCC /* CCShaderCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCShaderCache.m; sourceTree = "<group>"; };
@@ -5684,7 +5684,7 @@
 				E0BC7D6E1342CC58001B4DCC /* LICENSE_artwork.txt */,
 				E0BC7D6F1342CC58001B4DCC /* LICENSE_Box2D.txt */,
 				E0BC7D701342CC58001B4DCC /* LICENSE_Chipmunk.txt */,
-				E0BC7D721342CC58001B4DCC /* LICENSE_cocosdenshion.txt */,
+				E0BC7D721342CC58001B4DCC /* LICENSE_CocosDenshion.txt */,
 				E0BC7D741342CC58001B4DCC /* LICENSE_libpng.txt */,
 				A060106813C2992800BB6F49 /* LICENSE_Kazmath.txt */,
 				5018F2510DFDEAFF00C013A5 /* cocos2d */,
