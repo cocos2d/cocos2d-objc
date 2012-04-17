@@ -14,6 +14,7 @@ version 2.0-rc1 XX-Apr-2012
 . [FIX] Director: Fixed projection. ViewPort is the size of the screen. Projection adjusted (issue #1355)
 		Fixed crash when calling "end" on RetinaDisplay
 		Only enable DepthTesting is the view has a depth buffer
+		Does not raise assert if startAnimation is called when it is already animated.
 . [FIX] Events: onMouseExit/Enter fixed on Mac
 . [FIX] LabelBMFont: can be "init" without further arguments
 		Glyphs with big yOffset are rendered correctly (issue #1343)
