@@ -29,7 +29,6 @@ static NSString *transitions[] = {
 	@"SchedulerUpdateFromCustom",
 	@"RescheduleSelector",
 	@"SchedulerDelayAndRepeat",
-	@"DirectorStartStopAnimating",
 };
 
 Class nextTest(void);
@@ -849,66 +848,6 @@ Class restartTest()
 -(void) update:(ccTime)dt
 {
 	NSLog(@"update called:%f", dt);
-}
-
-@end
-
-
-#pragma mark DirectorStartStopAnimating
-@implementation DirectorStartStopAnimating
-
--(id) init
-{
-	if( (self=[super init]) ) {
-        
-		CGSize s = [[CCDirector sharedDirector] winSize];
-        
-        CCSprite *sprite = [CCSprite spriteWithFile:@"grossinis_sister1.png"];
-        sprite.position = ccp(s.width/2, s.height/2);
-        [self addChild:sprite];
-        [sprite runAction:[CCRepeatForever actionWithAction:[CCRotateBy actionWithDuration:3.0 angle:360]]];
-        
-		[self schedule:@selector(stop:) interval:3 repeat:NO delay:0];
-        [self performSelectorOnMainThread:@selector(scheduleRestartTimer) withObject:nil waitUntilDone:NO];
-	}
-    
-	return self;
-}
-
-- (void) scheduleRestartTimer
-{
-    // This timer must run on the main thread since the director thread gets killed (on Mac).
-    [NSTimer scheduledTimerWithTimeInterval:5.0 target:self selector:@selector(restart:) userInfo:nil repeats:NO];
-}
-
-- (void) onExit
-{
-    if(![CCDirector sharedDirector].isAnimating)
-        [[CCDirector sharedDirector] startAnimation];
-}
-
--(NSString *) title
-{
-	return @"Start/Stop Animating";
-}
-
--(NSString *) subtitle
-{
-	return @"Everything will stop after 3s, then resume at 5s. See console";
-}
-
--(void) stop:(ccTime)dt
-{
-    NSLog(@"Stopping the director (isAnimating = %d)", [CCDirector sharedDirector].isAnimating);
-	[[CCDirector sharedDirector] stopAnimation];
-    NSLog(@"Director has stopped (isAnimating = %d)", [CCDirector sharedDirector].isAnimating);
-}
-
-- (void) restart:(NSTimer*) timer
-{
-    NSLog(@"Restarting the director (isAnimating = %d)", [CCDirector sharedDirector].isAnimating);
-	[[CCDirector sharedDirector] startAnimation];
-    NSLog(@"Director has restarted (isAnimating = %d)", [CCDirector sharedDirector].isAnimating);
 }
 
 @end

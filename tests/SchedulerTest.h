@@ -80,10 +80,6 @@
 {}
 @end
 
-@interface DirectorStartStopAnimating : SchedulerTest
-{}
-@end
-
 @interface SchedulerTimeScale : SchedulerTest
 {
 #ifdef __CC_PLATFORM_IOS

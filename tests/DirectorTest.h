@@ -28,4 +28,7 @@
 {}
 @end
 
+@interface DirectorStartStopAnimating : DirectorTest
+{}
+@end
 
