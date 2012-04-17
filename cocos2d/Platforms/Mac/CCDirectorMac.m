@@ -421,6 +421,9 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 
 - (void) startAnimation
 {
+    if(isAnimating_)
+        return;
+
 	CCLOG(@"cocos2d: startAnimation");
 #if (CC_DIRECTOR_MAC_THREAD == CC_MAC_USE_OWN_THREAD)
 	runningThread_ = [[NSThread alloc] initWithTarget:self selector:@selector(mainLoop) object:nil];
@@ -445,10 +448,15 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 
 	// Activate the display link
 	CVDisplayLinkStart(displayLink);
+    
+    isAnimating_ = YES;
 }
 
 - (void) stopAnimation
 {
+    if(!isAnimating_)
+        return;
+
 	CCLOG(@"cocos2d: stopAnimation");
 
 	if( displayLink ) {
@@ -464,6 +472,8 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
         runningThread_ = nil;
 #endif
 	}
+    
+    isAnimating_ = NO;
 }
 
 -(void) dealloc
