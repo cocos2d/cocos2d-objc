@@ -457,7 +457,8 @@ CGFloat	__ccContentScaleFactor = 1;
 
 - (void) startAnimation
 {
-	NSAssert( displayLink_ == nil, @"displayLink must be nil. Calling startAnimation twice?");
+    if(isAnimating_)
+        return;
 
 	gettimeofday( &lastUpdate_, NULL);
 
@@ -480,11 +481,14 @@ CGFloat	__ccContentScaleFactor = 1;
 	[displayLink_ addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
 #endif
 
-
+    isAnimating_ = YES;
 }
 
 - (void) stopAnimation
 {
+    if(!isAnimating_)
+        return;
+
 	CCLOG(@"cocos2d: animation stopped");
 
 #if CC_DIRECTOR_IOS_USE_BACKGROUND_THREAD
@@ -495,6 +499,7 @@ CGFloat	__ccContentScaleFactor = 1;
 
 	[displayLink_ invalidate];
 	displayLink_ = nil;
+    isAnimating_ = NO;
 }
 
 // Overriden in order to use a more stable delta time
