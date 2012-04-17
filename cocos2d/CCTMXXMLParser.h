@@ -150,16 +150,7 @@ typedef enum ccTMXTileFlags_ {
  This information is obtained from the TMX file.
 
  */
-#ifdef __CC_PLATFORM_IOS
-#if defined(__IPHONE_4_0)
 @interface CCTMXMapInfo : NSObject <NSXMLParserDelegate>
-#else
-@interface CCTMXMapInfo : NSObject
-#endif
-
-#elif defined(__CC_PLATFORM_MAC)
-@interface CCTMXMapInfo : NSObject <NSXMLParserDelegate>
-#endif
 {
 	NSMutableString	*currentString;
     BOOL				storingCharacters;
