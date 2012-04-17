@@ -5,6 +5,7 @@ version 1.1-rc0 .. -..-2012
 . [FIX] CCSprite: CCSprite bug in setDisplayFrameWithAnimationName
 . [FIX] CCParticleSystem: unschedule update method when deallocated
 . [FIX] CCParticleSystemQuad: Changed animation property to particleAnimation, for compiler warning
+. [FIX] CCRenderTexture: fixed getUIImageFromBuffer
 . [FIX] CCTouchDispatcher: fixed crash after showing UIAlertView (issue #1279)
 . [FIX] CCGrabber: added log message to warn that grabber doesn't support transparent parts with a color buffer of RGB565
 . [FIX] Compiler: fixed unrecognised clang pragmas so cocos can still be compiled with LLVM version < 2.0. 
