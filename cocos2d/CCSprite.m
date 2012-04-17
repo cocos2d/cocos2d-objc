@@ -930,12 +930,13 @@
 
 -(void) setTexture:(CCTexture2D*)texture
 {
-	NSAssert( ! batchNode_, @"CCSprite: setTexture doesn't work when the sprite is rendered using a CCSpriteBatchNode");
+	// If batchnode, then texture id should be the same
+	NSAssert( !batchNode_ || texture.name == batchNode_.texture.name , @"CCSprite: Batched sprites should use the same texture as the batchnode");	
 
 	// accept texture==nil as argument
 	NSAssert( !texture || [texture isKindOfClass:[CCTexture2D class]], @"setTexture expects a CCTexture2D. Invalid argument");
 
-	if( texture_ != texture ) {
+	if( ! batchNode_ && texture_ != texture ) {
 		[texture_ release];
 		texture_ = [texture retain];
 
