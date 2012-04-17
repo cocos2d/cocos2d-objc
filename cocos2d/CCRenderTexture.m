@@ -235,12 +235,23 @@
                                                     colorSpaceRef, bitmapInfo, provider,
                                                     NULL, false,
                                                     kCGRenderingIntentDefault);
+    CGContextRef context = CGBitmapContextCreate(pixels, tx, ty, CGImageGetBitsPerComponent(iref),
+                                                 CGImageGetBytesPerRow(iref), CGImageGetColorSpace(iref),
+                                                 bitmapInfo);
+  
+
+    CGContextDrawImage(context, CGRectMake(0, 0, tx, ty), iref); 
+    //make copy so pixels can be freed        
+    CGImageRef outputRef = CGBitmapContextCreateImage(context);
+  
     
-    UIImage* image					= [[UIImage alloc] initWithCGImage:iref];
-    
+    UIImage* image = [[UIImage alloc] initWithCGImage:outputRef];
+        
     CGImageRelease(iref);	
+    CGContextRelease(context);
     CGColorSpaceRelease(colorSpaceRef);
     CGDataProviderRelease(provider);
+    CGImageRelease(outputRef);
     
     free(pixels);
     free(buffer);
