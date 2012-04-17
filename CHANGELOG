@@ -9,6 +9,7 @@ version 2.0-rc1 XX-Apr-2012
 		On iPad the default suffix is "-ipad". Before it was ""
 . [NEW] LabelAtlas: added .plist config file support. Easier to migrate games to higher resolutions.
 . [NEW] LabelTTF: Added support for vertical alignment
+. [NEW] Tiled: TMX tile rotation is supported
 . [FIX] All: Fixed compiler warnings. Format strings changed from %08X to %p
 . [FIX] Deprecated: displayedFrame points to displayFrame avoiding infinite loop (issue #1347)
 . [FIX] Director: Fixed projection. ViewPort is the size of the screen. Projection adjusted (issue #1355)

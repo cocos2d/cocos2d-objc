@@ -110,6 +110,9 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	Tests: Shader tests center the fragment shader effects on Mac
 	Director: On Mac, CC_DIRECTOR_INIT() centers the main window
 
+* slycrel (http://folderapp.blogspot.com/)
+	Added support for TMX rotated tiles
+
 * Spencer Ho (https://github.com/spencerho):
 	Fixed gl projection when iPad Retina Display is being used.
 	
@@ -207,9 +210,6 @@ Contributors (alphabetically ordered):
 * Sergey Tikhonov (AKA haqu) (http://haqu.net)
 	Removed warning in CCMenuItem
 
-* slycrel (http://folderapp.blogspot.com/)
-	TMX Map: fixed crash when multiple layers and tiles were used with rotation
-
 * Shakthi:
 	Added CCNode#onExitTransitionDidStart method
 	Fixed fading background music issue
@@ -217,6 +217,8 @@ Contributors (alphabetically ordered):
 * slycrel (http://folderapp.blogspot.com/)
 	Added support for flipped tiles in TMX maps. Also added test case
 	Added support for in-memory TMX map creation. Also added a test case
+	TMX Map: fixed crash when multiple layers and tiles were used with rotation
+
 
 * Stepan Generalov (iPsi) (http://www.itraceur.ru/)
 	FileUtils: Loads -hd resources even if the -sd resource is not present. patch
