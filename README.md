@@ -56,9 +56,9 @@ Main features
    * Sound Engine support (CocosDenshion library) based on OpenAL
    * Integrated Slow motion/Fast forward
    * Fast textures: PVR compressed and uncompressed textures
-   * Point based: iPhone4 + RetinaDisplay mode compatible
+   * Point based: RetinaDisplay mode compatible
    * Language: objective-c
-   * Open Source: Compatible with open and closed source projects
+   * Open Source Commercial Friendly: Compatible with open and closed source projects
    * OpenGL ES 2.0 (iOS) / OpenGL 2.1 (Mac) based
 
 
