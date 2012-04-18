@@ -124,8 +124,7 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 	if( [__localFileManager fileExistsAtPath:newName] )
 		return newName;
     
-	CCLOG(@"cocos2d: CCFileUtils: Warning file not found: %@", [newName lastPathComponent] );
-    
+	//CCLOG(@"cocos2d: CCFileUtils: Warning file not found: %@", [newName lastPathComponent] );
 	return nil;
 }
 
@@ -146,7 +145,6 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 												   ofType:nil
 											  inDirectory:imageDirectory];
         
-        
 	}
     
 	if (fullpath == nil)
@@ -155,7 +153,6 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 #ifdef  __IPHONE_OS_VERSION_MAX_ALLOWED
     
 	NSString *ret = nil;
-    
 	// iPad?
 	if( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
 	{
@@ -170,6 +167,12 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 			*resolutionType = kCCResolutioniPad;
 			
 		}
+        // User iPhone retina if no iPad specific assets
+        if (!ret) {
+            ret = [self getPath:fullpath forSuffix:__suffixiPhoneRetinaDisplay];
+            *resolutionType = kCCResolutioniPhoneRetinaDisplay;
+        }
+
 	}
 	// iPhone ?
 	else
@@ -243,7 +246,9 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 		if( CC_CONTENT_SCALE_FACTOR() == 2 )
 			ret = [self removeSuffix:__suffixiPadRetinaDisplay fromPath:path];
 		else
-			ret = [self removeSuffix:__suffixiPad fromPath:path];		
+			ret = [self removeSuffix:__suffixiPad fromPath:path];
+        // Also remove iPhoneRetina
+        ret = [self removeSuffix:__suffixiPhoneRetinaDisplay fromPath:path];
 	}
 	else
 	{

@@ -111,6 +111,7 @@ typedef enum {
 @property (assign) id<CDLongAudioSourceDelegate> delegate;
 /* This long audio source functions as background music */
 @property (readwrite, nonatomic) BOOL backgroundMusic;
+@property(nonatomic, assign, readwrite) NSTimeInterval currentTime;
 
 /** Loads the file into the audio source */
 -(void) load:(NSString*) filePath;
@@ -126,6 +127,10 @@ typedef enum {
 -(void) resume;
 /** Returns whether or not the audio source is playing */
 -(BOOL) isPlaying;
+/** returns the currentTime of background music */
+-(NSTimeInterval) currentTime;
+/** sets the currentTime of background music */
+-(void) setCurrentTime:(NSTimeInterval)time;
 
 @end
 
@@ -216,6 +221,10 @@ typedef enum {
 -(void) resumeBackgroundMusic;
 /** Returns whether or not the background music is playing */
 -(BOOL) isBackgroundMusicPlaying;
+/** returns the currentTime of background music */
+-(NSTimeInterval) backgroundMusicCurrentTime;
+/** sets the currentTime of background music */
+-(void) setBackgroundMusicCurrentTime:(NSTimeInterval)time;
 
 -(void) setBackgroundMusicCompletionListener:(id) listener selector:(SEL) selector;
 

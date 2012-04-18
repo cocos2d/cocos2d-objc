@@ -41,13 +41,12 @@
  */
 -(ccColor3B) color;
 
-/// returns the opacity
--(GLubyte) opacity;
-/** sets the opacity.
+/** sets and returns the opacity.
  @warning If the the texture has premultiplied alpha then, the R, G and B channels will be modifed.
  Values goes from 0 to 255, where 255 means fully opaque.
  */
--(void) setOpacity: (GLubyte) opacity;
+@property (nonatomic, readwrite) GLubyte opacity;
+@property (nonatomic, readonly) GLubyte displayedOpacity;
 @optional
 /** sets the premultipliedAlphaOpacity property.
  If set to NO then opacity will be applied as: glColor(R,G,B,opacity);
@@ -118,8 +117,18 @@
 #pragma mark CCProjectionProtocol
 /** OpenGL projection protocol */
 @protocol CCProjectionProtocol <NSObject>
-/** Called by CCDirector when the porjection is updated, and "custom" projection is used
+/** Called by CCDirector when the projection is updated, and "custom" projection is used
  @since v0.99.5
  */
 -(void) updateProjection;
+@end
+
+#pragma mark -
+#pragma mark CCSceneAutoreleasedProtocol
+/** OpenGL projection protocol */
+@protocol CCSceneAutoreleased
+/** Called by CCDirector for allocating and initializing new scenes added via the pushSceneClass method
+ @since v1.0.0-rsanchez
+ */
++(id) scene;
 @end

@@ -61,31 +61,32 @@ const uint32_t	kZoomActionTag = 0xc0c05002;
 
 -(id) initWithTarget:(id) rec selector:(SEL) cb
 {
-	if((self=[super init]) ) {
+	if (self=[super init]) {
 	
 		anchorPoint_ = ccp(0.5f, 0.5f);
-		NSMethodSignature * sig = nil;
 		
 		if( rec && cb ) {
-			sig = [rec methodSignatureForSelector:cb];
+			NSMethodSignature *sig = [rec methodSignatureForSelector:cb];
 			
 			invocation_ = nil;
 			invocation_ = [NSInvocation invocationWithMethodSignature:sig];
 			[invocation_ setTarget:rec];
 			[invocation_ setSelector:cb];
 #if NS_BLOCKS_AVAILABLE
-			if ([sig numberOfArguments] == 3) 
+			if ([sig numberOfArguments] == 3) {
+                [invocation_ setArgument:&self atIndex:2];
+            }
+#else 
+            [invocation_ setArgument:&self atIndex:2];
 #endif
-			[invocation_ setArgument:&self atIndex:2];
 			
-			[invocation_ retain];
+            [invocation_ retain];
 		}
 		
 		isEnabled_ = YES;
 		isSelected_ = NO;
 	}
-	
-	return self;
+    return self;
 }
 
 #if NS_BLOCKS_AVAILABLE
@@ -235,7 +236,7 @@ const uint32_t	kZoomActionTag = 0xc0c05002;
 		else
 			originalScale_ = self.scale;
 
-		CCAction *zoomAction = [CCScaleTo actionWithDuration:0.1f scale:originalScale_ * 1.2f];
+		CCAction *zoomAction = [CCScaleTo actionWithDuration:0.04f scale:originalScale_ * 0.9f];
 		zoomAction.tag = kZoomActionTag;
 		[self runAction:zoomAction];
 	}
@@ -247,7 +248,7 @@ const uint32_t	kZoomActionTag = 0xc0c05002;
 	if(isEnabled_) {
 		[super unselected];
 		[self stopActionByTag:kZoomActionTag];
-		CCAction *zoomAction = [CCScaleTo actionWithDuration:0.1f scale:originalScale_];
+		CCAction *zoomAction = [CCScaleTo actionWithDuration:0.04f scale:originalScale_];
 		zoomAction.tag = kZoomActionTag;
 		[self runAction:zoomAction];
 	}
@@ -269,12 +270,10 @@ const uint32_t	kZoomActionTag = 0xc0c05002;
 
 - (void) setOpacity: (GLubyte)opacity
 {
-    [label_ setOpacity:opacity];
+    [super setOpacity:opacity];
+    [label_ setOpacity:[label_ opacity]];
 }
--(GLubyte) opacity
-{
-	return [label_ opacity];
-}
+
 -(void) setColor:(ccColor3B)color
 {
 	[label_ setColor:color];
@@ -439,48 +438,48 @@ const uint32_t	kZoomActionTag = 0xc0c05002;
 
 @synthesize normalImage=normalImage_, selectedImage=selectedImage_, disabledImage=disabledImage_;
 
-+(id) itemFromNormalSprite:(CCNode<CCRGBAProtocol>*)normalSprite selectedSprite:(CCNode<CCRGBAProtocol>*)selectedSprite
++(id) itemFromNormalSprite:(CCNode<CCRGBAProtocol,CCTextureProtocol>*)normalSprite selectedSprite:(CCNode<CCRGBAProtocol,CCTextureProtocol>*)selectedSprite
 {
 	return [self itemFromNormalSprite:normalSprite selectedSprite:selectedSprite disabledSprite:nil target:nil selector:nil];
 }
-+(id) itemFromNormalSprite:(CCNode<CCRGBAProtocol>*)normalSprite selectedSprite:(CCNode<CCRGBAProtocol>*)selectedSprite target:(id)target selector:(SEL)selector
++(id) itemFromNormalSprite:(CCNode<CCRGBAProtocol,CCTextureProtocol>*)normalSprite selectedSprite:(CCNode<CCRGBAProtocol,CCTextureProtocol>*)selectedSprite target:(id)target selector:(SEL)selector
 {
 	return [self itemFromNormalSprite:normalSprite selectedSprite:selectedSprite disabledSprite:nil target:target selector:selector];
 }
-+(id) itemFromNormalSprite:(CCNode<CCRGBAProtocol>*)normalSprite selectedSprite:(CCNode<CCRGBAProtocol>*)selectedSprite disabledSprite:(CCNode<CCRGBAProtocol>*)disabledSprite target:(id)target selector:(SEL)selector
++(id) itemFromNormalSprite:(CCNode<CCRGBAProtocol,CCTextureProtocol>*)normalSprite selectedSprite:(CCNode<CCRGBAProtocol,CCTextureProtocol>*)selectedSprite disabledSprite:(CCNode<CCRGBAProtocol,CCTextureProtocol>*)disabledSprite target:(id)target selector:(SEL)selector
 {
 	return [[[self alloc] initFromNormalSprite:normalSprite selectedSprite:selectedSprite disabledSprite:disabledSprite target:target selector:selector] autorelease];
 }
--(id) initFromNormalSprite:(CCNode<CCRGBAProtocol>*)normalSprite selectedSprite:(CCNode<CCRGBAProtocol>*)selectedSprite disabledSprite:(CCNode<CCRGBAProtocol>*)disabledSprite target:(id)target selector:(SEL)selector
+-(id) initFromNormalSprite:(CCNode<CCRGBAProtocol,CCTextureProtocol>*)normalSprite selectedSprite:(CCNode<CCRGBAProtocol,CCTextureProtocol>*)selectedSprite disabledSprite:(CCNode<CCRGBAProtocol,CCTextureProtocol>*)disabledSprite target:(id)target selector:(SEL)selector
 {
 	if( (self=[super initWithTarget:target selector:selector]) ) {
 		
 		self.normalImage = normalSprite;
 		self.selectedImage = selectedSprite;
 		self.disabledImage = disabledSprite;
-		
+        
 		[self setContentSize: [normalImage_ contentSize]];
 	}
 	return self;	
 }
 
 #if NS_BLOCKS_AVAILABLE
-+(id) itemFromNormalSprite:(CCNode<CCRGBAProtocol>*)normalSprite selectedSprite:(CCNode<CCRGBAProtocol>*)selectedSprite block:(void(^)(id sender))block {
++(id) itemFromNormalSprite:(CCNode<CCRGBAProtocol,CCTextureProtocol>*)normalSprite selectedSprite:(CCNode<CCRGBAProtocol,CCTextureProtocol>*)selectedSprite block:(void(^)(id sender))block {
 	return [self itemFromNormalSprite:normalSprite selectedSprite:selectedSprite disabledSprite:nil block:block];
 }
 
-+(id) itemFromNormalSprite:(CCNode<CCRGBAProtocol>*)normalSprite selectedSprite:(CCNode<CCRGBAProtocol>*)selectedSprite disabledSprite:(CCNode<CCRGBAProtocol>*)disabledSprite block:(void(^)(id sender))block {
++(id) itemFromNormalSprite:(CCNode<CCRGBAProtocol,CCTextureProtocol>*)normalSprite selectedSprite:(CCNode<CCRGBAProtocol,CCTextureProtocol>*)selectedSprite disabledSprite:(CCNode<CCRGBAProtocol,CCTextureProtocol>*)disabledSprite block:(void(^)(id sender))block {
 	return [[[self alloc] initFromNormalSprite:normalSprite selectedSprite:selectedSprite disabledSprite:disabledSprite block:block] autorelease];
 }
 
--(id) initFromNormalSprite:(CCNode<CCRGBAProtocol>*)normalSprite selectedSprite:(CCNode<CCRGBAProtocol>*)selectedSprite disabledSprite:(CCNode<CCRGBAProtocol>*)disabledSprite block:(void(^)(id sender))block {
+-(id) initFromNormalSprite:(CCNode<CCRGBAProtocol,CCTextureProtocol>*)normalSprite selectedSprite:(CCNode<CCRGBAProtocol,CCTextureProtocol>*)selectedSprite disabledSprite:(CCNode<CCRGBAProtocol,CCTextureProtocol>*)disabledSprite block:(void(^)(id sender))block {
 	block_ = [block copy];
 	return [self initFromNormalSprite:normalSprite selectedSprite:selectedSprite disabledSprite:disabledSprite target:block_ selector:@selector(ccCallbackBlockWithSender:)];
 }
 #endif // NS_BLOCKS_AVAILABLE
 
 
--(void) setNormalImage:(CCNode <CCRGBAProtocol>*)image
+-(void) setNormalImage:(CCNode <CCRGBAProtocol,CCTextureProtocol>*)image
 {
 	if( image != normalImage_ ) {
 		image.anchorPoint = ccp(0,0);
@@ -493,7 +492,7 @@ const uint32_t	kZoomActionTag = 0xc0c05002;
 	}
 }
 
--(void) setSelectedImage:(CCNode <CCRGBAProtocol>*)image
+-(void) setSelectedImage:(CCNode <CCRGBAProtocol,CCTextureProtocol>*)image
 {
 	if( image != selectedImage_ ) {
 		image.anchorPoint = ccp(0,0);
@@ -506,7 +505,7 @@ const uint32_t	kZoomActionTag = 0xc0c05002;
 	}
 }
 
--(void) setDisabledImage:(CCNode <CCRGBAProtocol>*)image
+-(void) setDisabledImage:(CCNode <CCRGBAProtocol,CCTextureProtocol>*)image
 {
 	if( image != disabledImage_ ) {
 		image.anchorPoint = ccp(0,0);
@@ -522,9 +521,10 @@ const uint32_t	kZoomActionTag = 0xc0c05002;
 #pragma mark CCMenuItemImage - CCRGBAProtocol protocol
 - (void) setOpacity: (GLubyte)opacity
 {
-	[normalImage_ setOpacity:opacity];
-	[selectedImage_ setOpacity:opacity];
-	[disabledImage_ setOpacity:opacity];
+    [super setOpacity:opacity];
+    [normalImage_ setOpacity:[normalImage_ opacity]];
+	[selectedImage_ setOpacity:[selectedImage_ opacity]];
+	[disabledImage_ setOpacity:[disabledImage_ opacity]];
 }
 
 -(void) setColor:(ccColor3B)color
@@ -534,10 +534,7 @@ const uint32_t	kZoomActionTag = 0xc0c05002;
 	[disabledImage_ setColor:color];	
 }
 
--(GLubyte) opacity
-{
-	return [normalImage_ opacity];
-}
+
 
 -(ccColor3B) color
 {
@@ -620,9 +617,9 @@ const uint32_t	kZoomActionTag = 0xc0c05002;
 
 -(id) initFromNormalImage: (NSString*) normalI selectedImage:(NSString*)selectedI disabledImage: (NSString*) disabledI target:(id)t selector:(SEL)sel
 {
-	CCNode<CCRGBAProtocol> *normalImage = [CCSprite spriteWithFile:normalI];
-	CCNode<CCRGBAProtocol> *selectedImage = nil;
-	CCNode<CCRGBAProtocol> *disabledImage = nil;
+	CCNode<CCRGBAProtocol,CCTextureProtocol> *normalImage = [CCSprite spriteWithFile:normalI];
+	CCNode<CCRGBAProtocol,CCTextureProtocol> *selectedImage = nil;
+	CCNode<CCRGBAProtocol,CCTextureProtocol> *disabledImage = nil;
 
 	if( selectedI )
 		selectedImage = [CCSprite spriteWithFile:selectedI]; 
@@ -660,7 +657,6 @@ const uint32_t	kZoomActionTag = 0xc0c05002;
 @implementation CCMenuItemToggle
 
 @synthesize subItems = subItems_;
-@synthesize opacity = opacity_, color = color_;
 
 +(id) itemWithTarget: (id)t selector: (SEL)sel items: (CCMenuItem*) item, ...
 {
@@ -783,9 +779,9 @@ const uint32_t	kZoomActionTag = 0xc0c05002;
 
 - (void) setOpacity: (GLubyte)opacity
 {
-	opacity_ = opacity;
+    [super setOpacity:opacity];
 	for(CCMenuItem<CCRGBAProtocol>* item in subItems_)
-		[item setOpacity:opacity];
+		[item setOpacity:item.opacity];
 }
 
 - (void) setColor:(ccColor3B)color

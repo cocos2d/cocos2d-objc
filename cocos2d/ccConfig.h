@@ -141,7 +141,7 @@
  To enable set it to 1. Enabled by default.
  */
 #ifndef CC_SPRITEBATCHNODE_RENDER_SUBPIXEL
-#define CC_SPRITEBATCHNODE_RENDER_SUBPIXEL	1
+#define CC_SPRITEBATCHNODE_RENDER_SUBPIXEL 1
 #endif
 
 /** @def CC_USES_VBO
@@ -218,6 +218,32 @@
 #ifndef CC_TEXTURE_NPOT_SUPPORT
 #define CC_TEXTURE_NPOT_SUPPORT 0
 #endif
+
+/** @def CC_PROPAGATE_OPACITY
+ If enabled, cocos2d uses transitive opacity.
+ All classes calculate their cumulative opacity from self opacity and parent's opacity.
+ For example, if you setup a CCLayerRGB with an opacity of 127 (50%) and add a children CCSprite with an opacity of 127,
+ it draws like having an opacity of 63 (25%).
+ 
+ For performance reasons, it's recommended to disable it if you don't need the feature.
+ 
+ To enable set it to 1. Use 0 to disable it. Enabled by default.
+ 
+ @since v1.0.1-rsanchez
+ */
+#define CC_PROPAGATE_OPACITY 1
+
+/** @def CC_IPAD_UNIVERSAL_FILENAME_SUFFIX
+ It's the suffix that will be appended to the files in order to load ipad images in universal mode.
+
+ On an iPad, with CC_IPAD_UNIVERSAL_SUPPORT support enabled, the file @"sprite-ip.png" will be loaded instead of @"sprite.png".
+ If the file doesn't exist it will use the retina image, and if not found either the non-retina display image.
+ 
+ Platforms: Only used on universal games that are expected to run on a iPad.
+ 
+ @since v1.0.0-rsanchez
+ */ 
+#define CC_IPAD_UNIVERSAL_FILENAME_SUFFIX @"-ip"
 
 /** @def CC_USE_LA88_LABELS_ON_NEON_ARCH
  If enabled, it will use LA88 (16-bit textures) on Neon devices for CCLabelTTF objects.

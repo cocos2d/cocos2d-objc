@@ -111,6 +111,8 @@
 		self.frames = [NSMutableArray arrayWithCapacity:[array count]];
 		duration_ = [array count] * delay;
 		
+        restoreOriginalFrame_ = NO;
+        totalDelayUnits_ = 0;
 		for( CCSpriteFrame *frame in array ) {
 			CCAnimationFrame *animFrame = [[CCAnimationFrame alloc] initWithSpriteFrame:frame delayUnits:1 userInfo:nil];
 			
@@ -130,6 +132,9 @@
 		delayPerUnit_ = delayPerUnit;
 		self.frames = [NSMutableArray arrayWithArray:arrayOfAnimationFrames];
 		duration_ = 0;
+        
+        restoreOriginalFrame_ = NO;
+        totalDelayUnits_ = 0;
 		for( CCAnimationFrame *animFrame in frames_ ) {
 			duration_ += animFrame.delayUnits * delayPerUnit;
 			totalDelayUnits_ += animFrame.delayUnits;

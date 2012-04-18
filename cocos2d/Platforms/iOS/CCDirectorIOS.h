@@ -31,6 +31,8 @@
 
 #import "../../CCDirector.h"
 
+//#import <mach/mach_time.h>
+
 /** @typedef ccDeviceOrientation
  Possible device orientations
  */
@@ -93,7 +95,7 @@ typedef enum {
 	 * - The interval update can be 1/60, 1/30, 1/15
 	 */	
 	kCCDirectorTypeDisplayLink,
-	
+    
 	/** Default director is the NSTimer directory */
 	kCCDirectorTypeDefault = kCCDirectorTypeNSTimer,
 	
@@ -178,7 +180,6 @@ typedef enum {
 	
 	/* contentScaleFactor could be simulated */
 	BOOL	isContentScaleSupported_;
-	
 }
 @end
 
@@ -191,9 +192,7 @@ typedef enum {
  */
 @interface CCDirectorFast : CCDirectorIOS
 {
-	BOOL isRunning;
-	
-	id autoreleasePool;
+	NSAutoreleasePool	*autoreleasePool;
 }
 -(void) mainLoop;
 @end
@@ -209,7 +208,6 @@ typedef enum {
  */
 @interface CCDirectorFastThreaded : CCDirectorIOS
 {
-	BOOL isRunning;	
 }
 -(void) mainLoop;
 @end

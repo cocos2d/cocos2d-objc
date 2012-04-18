@@ -104,10 +104,10 @@
 	NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:path];
 	
 	NSAssert( dict != nil, @"Particles: file not found");
-	return [self initWithDictionary:dict];
+	return [self initWithDictionary:dict andPath:[path stringByDeletingLastPathComponent]];
 }
 
--(id) initWithDictionary:(NSDictionary *)dictionary
+-(id) initWithDictionary:(NSDictionary *)dictionary andPath:(NSString *)path
 {
 	NSUInteger maxParticles = [[dictionary valueForKey:@"maxParticles"] intValue];
 	// self, not super
@@ -231,13 +231,15 @@
 		
 		// emission Rate
 		emissionRate = totalParticles/life;
+        emitCounter = 0;
 
 		//don't get the internal texture if a batchNode is used
 		if (!batchNode_) 
 		{
 		// texture		
 		// Try to get the texture from the cache
-			NSString *textureName = [dictionary valueForKey:@"textureFileName"];
+            NSString *textureName = [path stringByAppendingPathComponent:[dictionary valueForKey:@"textureFileName"]];
+//			NSString *textureName = [dictionary valueForKey:@"textureFileName"];
 			
 			CCTexture2D *tex = [[CCTextureCache sharedTextureCache] addImage:textureName];
 			
@@ -334,6 +336,9 @@
 		animationFrameData_ = NULL; 
 		animationType_ = kCCParticleAnimationTypeLoop;
 
+        emissionRate = 0;
+        emitCounter = 0;
+        
 		// udpate after action in run!
 		[self scheduleUpdateWithPriority:1];
 	}
@@ -354,6 +359,11 @@
 #endif
 	
 	[super dealloc];
+}
+
+-(void)onEnter {
+    [super onEnter];
+    grandparentInitialPosition_ = [self.parent.parent convertToWorldSpace:CGPointZero];
 }
 
 -(BOOL) addParticle
@@ -444,14 +454,18 @@
 	particle->deltaRotation = (endA - startA) / particle->timeToLive;
 	
 	// position
-	if( positionType_ == kCCPositionTypeFree ) {
+	if (positionType_ == kCCPositionTypeFree) {
 		CGPoint p = [self convertToWorldSpace:CGPointZero];
 		particle->startPos = ccpMult( p, CC_CONTENT_SCALE_FACTOR() );
 	}
-	else if( positionType_ == kCCPositionTypeRelative ) {
+	else if (positionType_ == kCCPositionTypeRelative) {
 		particle->startPos = ccpMult( position_, CC_CONTENT_SCALE_FACTOR() );
 	}
-	
+    // RelativeToGrandparent: Set transformed grandparent initial position
+	else if (positionType_ == kCCPositionTypeRelativeToGrandparent) {
+        CGPoint p = ccpSub([self convertToWorldSpace:CGPointZero], ccpSub(self.parent.parent.position, grandparentInitialPosition_));
+        particle->startPos = ccpMult( p, CC_CONTENT_SCALE_FACTOR() );
+    }
 	// direction
 	float a = CC_DEGREES_TO_RADIANS( angle + angleVar * CCRANDOM_MINUS1_1() );	
 	
@@ -526,6 +540,13 @@
 	emitCounter = 0;
 }
 
+-(void) startSystem
+{
+	active = YES;
+	elapsed = 0;
+	emitCounter = 0;
+}
+
 -(void) resetSystem
 {
 	active = YES;
@@ -580,6 +601,12 @@
 	else if( positionType_ == kCCPositionTypeRelative ) {
 	//currentPosition = [self convertToWorldSpace:CGPointZero];
 		currentPosition = position_;
+		currentPosition.x *= CC_CONTENT_SCALE_FACTOR();
+		currentPosition.y *= CC_CONTENT_SCALE_FACTOR();
+	}
+    // RelativeToGrandparent: Update position (translation) according to grandparent position
+	else if( positionType_ == kCCPositionTypeRelativeToGrandparent) {
+        currentPosition = ccpSub([self convertToWorldSpace:CGPointZero], ccpSub(self.parent.parent.position, grandparentInitialPosition_));
 		currentPosition.x *= CC_CONTENT_SCALE_FACTOR();
 		currentPosition.y *= CC_CONTENT_SCALE_FACTOR();
 	}
@@ -698,13 +725,14 @@
 				
 				CGPoint	newPos;
 				
-				if( positionType_ == kCCPositionTypeFree || positionType_ == kCCPositionTypeRelative ) 
+				if( positionType_ == kCCPositionTypeFree || positionType_ == kCCPositionTypeRelative || positionType_ == kCCPositionTypeRelativeToGrandparent ) 
 				{
 					CGPoint diff = ccpSub( currentPosition, p->startPos );
 					newPos = ccpSub(p->pos, diff);	
-				} else
+                } else {
 					newPos = p->pos;
-				
+				}
+                
 				//translate newPos to correct position, since matrix transform isn't performed in batchnode
 				//don't update the particle with the new position information, it will interfere with the radius and tangential calculations
 				if (useBatchNode_)

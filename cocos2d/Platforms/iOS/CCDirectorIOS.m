@@ -61,10 +61,13 @@ CGFloat	__ccContentScaleFactor = 1;
 #pragma mark -
 #pragma mark Director iOS
 
-@interface CCDirector ()
+@interface CCDirector (private)
+-(void) removeLastSceneWithCachePurge:(BOOL)cachePurge;
+-(void) manageNextScene;
 -(void) setNextScene;
 -(void) showFPS;
 -(void) calculateDeltaTime;
+-(ccTime) getDeltaTimePre;
 @end
 
 @implementation CCDirector (iOSExtensionClassMethods)
@@ -151,13 +154,18 @@ CGFloat	__ccContentScaleFactor = 1;
 	if( ! isPaused_ ) {
 		[[CCScheduler sharedScheduler] tick: dt];	
 	}
-	
+
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    // Dubious optimization, it makes cocos2d SpriteTest to break, need to investigate
+    // Don't clear DEPTH BUFFER if we are not using 3D
+    //glClear(GL_COLOR_BUFFER_BIT );
 	
 	/* to avoid flickr, nextScene MUST be here: after tick and before draw.
 	 XXX: Which bug is this one. It seems that it can't be reproduced with v0.9 */
-	if( nextScene_ )
-		[self setNextScene];
+    //if( nextScene_ )
+	//	[self setNextScene];
+    // 1.0.0-rsanchez: New scene system for handling scene substitutions
+    [self manageNextScene];
 	
 	glPushMatrix();
 	
@@ -485,11 +493,14 @@ CGFloat	__ccContentScaleFactor = 1;
 - (void)startAnimation
 {
 	NSAssert( animationTimer == nil, @"animationTimer must be nil. Calling startAnimation twice?");
+
+    [super startAnimation]; 
 	
-	if( gettimeofday( &lastUpdate_, NULL) != 0 ) {
-		CCLOG(@"cocos2d: Director: Error in gettimeofday");
-	}
-	
+//	if( gettimeofday( &lastUpdate_, NULL) != 0 ) {
+//		CCLOG(@"cocos2d: Director: Error in gettimeofday");
+//	}
+    _lastTime = CACurrentMediaTime();
+
 	animationTimer = [NSTimer scheduledTimerWithTimeInterval:animationInterval_ target:self selector:@selector(mainLoop) userInfo:nil repeats:YES];
 	
 	//
@@ -503,11 +514,15 @@ CGFloat	__ccContentScaleFactor = 1;
 
 -(void) mainLoop
 {
-	[self drawScene];
+    if (isRunning_) {
+        [self drawScene];
+    }
 }
 
 - (void)stopAnimation
 {
+    [super stopAnimation];
+    
 	[animationTimer invalidate];
 	animationTimer = nil;
 }
@@ -544,7 +559,6 @@ CGFloat	__ccContentScaleFactor = 1;
 #else
 		CCLOG(@"cocos2d: Fast Events disabled");
 #endif		
-		isRunning = NO;
 		
 		// XXX:
 		// XXX: Don't create any autorelease object before calling "fast director"
@@ -558,7 +572,7 @@ CGFloat	__ccContentScaleFactor = 1;
 
 - (void) startAnimation
 {
-	NSAssert( isRunning == NO, @"isRunning must be NO. Calling startAnimation twice?");
+    [super startAnimation];
 
 	// XXX:
 	// XXX: release autorelease objects created
@@ -566,13 +580,11 @@ CGFloat	__ccContentScaleFactor = 1;
 	// XXX:
 	[autoreleasePool release];
 	autoreleasePool = nil;
-
-	if ( gettimeofday( &lastUpdate_, NULL) != 0 ) {
-		CCLOG(@"cocos2d: Director: Error in gettimeofday");
-	}
-	
-
-	isRunning = YES;
+    
+//	if ( gettimeofday( &lastUpdate_, NULL) != 0 ) {
+//		CCLOG(@"cocos2d: Director: Error in gettimeofday");
+//	}
+    _lastTime = CACurrentMediaTime();
 
 	SEL selector = @selector(mainLoop);
 	NSMethodSignature* sig = [[[CCDirector sharedDirector] class]
@@ -594,7 +606,7 @@ CGFloat	__ccContentScaleFactor = 1;
 
 -(void) mainLoop
 {
-	while (isRunning) {
+	while (isRunning_) {
 	
 		NSAutoreleasePool *loopPool = [NSAutoreleasePool new];
 
@@ -619,10 +631,6 @@ CGFloat	__ccContentScaleFactor = 1;
 		[loopPool release];
 	}	
 }
-- (void) stopAnimation
-{
-	isRunning = NO;
-}
 
 - (void)setAnimationInterval:(NSTimeInterval)interval
 {
@@ -637,22 +645,19 @@ CGFloat	__ccContentScaleFactor = 1;
 
 - (id) init
 {
-	if(( self = [super init] )) {		
-		isRunning = NO;		
+	if(( self = [super init] )) {
 	}
-	
 	return self;
 }
 
 - (void) startAnimation
 {
-	NSAssert( isRunning == NO, @"isRunning must be NO. Calling startAnimation twice?");
-
-	if ( gettimeofday( &lastUpdate_, NULL) != 0 ) {
-		CCLOG(@"cocos2d: ThreadedFastDirector: Error on gettimeofday");
-	}
-
-	isRunning = YES;
+    [super startAnimation];
+	
+//	if ( gettimeofday( &lastUpdate_, NULL) != 0 ) {
+//		CCLOG(@"cocos2d: ThreadedFastDirector: Error on gettimeofday");
+//	}
+    _lastTime = CACurrentMediaTime();
 
 	NSThread *thread = [[NSThread alloc] initWithTarget:self selector:@selector(mainLoop) object:nil];
 	[thread start];
@@ -662,7 +667,7 @@ CGFloat	__ccContentScaleFactor = 1;
 -(void) mainLoop
 {
 	while( ![[NSThread currentThread] isCancelled] ) {
-		if( isRunning )
+		if( isRunning_ )
 			[self performSelectorOnMainThread:@selector(drawScene) withObject:nil waitUntilDone:YES];
 				
 		if (isPaused_) {
@@ -671,10 +676,6 @@ CGFloat	__ccContentScaleFactor = 1;
 //			usleep(2000);
 		}
 	}	
-}
-- (void) stopAnimation
-{
-	isRunning = NO;
 }
 
 - (void)setAnimationInterval:(NSTimeInterval)interval
@@ -708,30 +709,36 @@ CGFloat	__ccContentScaleFactor = 1;
 
 - (void) startAnimation
 {
-	NSAssert( displayLink == nil, @"displayLink must be nil. Calling startAnimation twice?");
+    [super startAnimation];
 
-	if ( gettimeofday( &lastUpdate_, NULL) != 0 ) {
-		CCLOG(@"cocos2d: DisplayLinkDirector: Error on gettimeofday");
-	}
+//	if ( gettimeofday( &lastUpdate_, NULL) != 0 ) {
+//		CCLOG(@"cocos2d: DisplayLinkDirector: Error on gettimeofday");
+//	}
+    _lastTime = CACurrentMediaTime();
 	
 	// approximate frame rate
 	// assumes device refreshes at 60 fps
 	int frameInterval = (int) floor(animationInterval_ * 60.0f);
-	
+
 	CCLOG(@"cocos2d: Frame interval: %d", frameInterval);
 
 	displayLink = [NSClassFromString(@"CADisplayLink") displayLinkWithTarget:self selector:@selector(mainLoop:)];
 	[displayLink setFrameInterval:frameInterval];
+
 	[displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
 }
 
 -(void) mainLoop:(id)sender
 {
-	[self drawScene];	
+    if (isRunning_) {
+        [self drawScene];
+    }
 }
 
 - (void) stopAnimation
 {
+    [super stopAnimation];
+    
 	[displayLink invalidate];
 	displayLink = nil;
 }

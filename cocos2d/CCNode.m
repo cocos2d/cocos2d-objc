@@ -1,4 +1,4 @@
-/*
+  /*
  * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
  * Copyright (c) 2009 Valentin Milea
@@ -47,7 +47,7 @@
 #if CC_COCOSNODE_RENDER_SUBPIXEL
 #define RENDER_IN_SUBPIXEL
 #else
-#define RENDER_IN_SUBPIXEL (NSInteger)
+#define RENDER_IN_SUBPIXEL(__A__) ( round(__A__))
 #endif
 
 // XXX: Yes, nodes might have a sort problem once per year
@@ -138,8 +138,8 @@ static NSUInteger globalOrderOfArrival = 0;
 	if( CC_CONTENT_SCALE_FACTOR() == 1 )
 		positionInPixels_ = position_;
 	else
-		positionInPixels_ = ccpMult( newPosition,  CC_CONTENT_SCALE_FACTOR() );
-	
+		positionInPixels_ = ccpMult( position_,  CC_CONTENT_SCALE_FACTOR() );
+
 	isTransformDirty_ = isInverseDirty_ = YES;
 #if CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
 	isTransformGLDirty_ = YES;
@@ -159,6 +159,35 @@ static NSUInteger globalOrderOfArrival = 0;
 #if CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
 	isTransformGLDirty_ = YES;
 #endif	
+}
+
+-(void) moveBy: (CGPoint)positionDelta
+{
+    CGPoint positionDeltaInPixels = positionDelta;
+	if( CC_CONTENT_SCALE_FACTOR() != 1 ) {
+		positionDeltaInPixels = ccpMult( positionDeltaInPixels,  CC_CONTENT_SCALE_FACTOR() );
+    }
+    position_ = ccpAdd(position_, positionDelta);
+    positionInPixels_ = ccpAdd(positionInPixels_, positionDeltaInPixels);
+    
+	isTransformDirty_ = isInverseDirty_ = YES;
+#if CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
+	isTransformGLDirty_ = YES;
+#endif	
+}
+
+-(CGPoint) centerPoint {
+    return ccp(contentSize_.width/2, contentSize_.height/2);
+}
+
+-(CGPoint) unanchoredPosition {
+    return ccp(position_.x + (0.5 - anchorPoint_.x) * contentSize_.width,
+               position_.y + (0.5 - anchorPoint_.y) * contentSize_.height);
+}
+
+-(CGPoint) anchoredPosition:(CGPoint)anchorPoint {
+    return ccp(position_.x + (anchorPoint.x - anchorPoint_.x) * contentSize_.width,
+               position_.y + (anchorPoint.y - anchorPoint_.y) * contentSize_.height);
 }
 
 -(void) setIsRelativeAnchorPoint: (BOOL)newValue
@@ -417,15 +446,24 @@ static NSUInteger globalOrderOfArrival = 0;
 	[self addChild:child z:z tag:child.tag];
 }
 
+-(void) addChild: (CCNode*) child tag:(NSInteger)tag
+{
+	NSAssert( child != nil, @"Argument must be non-nil");
+	[self addChild:child z:child.zOrder tag:tag];
+}
+
 -(void) addChild: (CCNode*) child
 {
 	NSAssert( child != nil, @"Argument must be non-nil");
 	[self addChild:child z:child.zOrder tag:child.tag];
 }
 
--(void) removeFromParentAndCleanup:(BOOL)cleanup
-{
+-(void) removeFromParentAndCleanup:(BOOL)cleanup {
 	[parent_ removeChild:self cleanup:cleanup];
+}
+
+-(void) removeFromParent {
+	[self removeFromParentAndCleanup:YES];
 }
 
 /* "remove" logic MUST only be on this method
@@ -552,6 +590,16 @@ static NSUInteger globalOrderOfArrival = 0;
 		
 		isReorderChildDirty_=NO;
 	}
+}
+
+- (int) zOrderOfHighestChildren
+{
+    if ([children_ count]==0) {
+        return 0;
+    } else {
+        [self sortAllChildren];
+        return ((CCNode*)[children_ lastObject]).zOrder;
+    }
 }
 
 #pragma mark CCNode Draw
@@ -701,9 +749,26 @@ static NSUInteger globalOrderOfArrival = 0;
 
 -(void) onEnter
 {
-	[children_ makeObjectsPerformSelector:@selector(onEnter)];	
-	[self resumeSchedulerAndActions];
-	
+    if (children_) {
+        CCArray *tempChildren = [[CCArray alloc] initWithArray:children_];
+        [tempChildren makeObjectsPerformSelector:@selector(onEnter)];	
+        
+        while ([children_ count]>[tempChildren count]) {
+            CCArray *innerTempChildren = [[CCArray alloc] initWithArray:children_];
+            CCNode *child;
+            CCARRAY_FOREACH(innerTempChildren, child) {
+                if (![tempChildren containsObject:child]) {
+                    [child onEnter];
+                }
+            }
+            [tempChildren release];
+            tempChildren = innerTempChildren; 
+        }
+        
+        [tempChildren release];
+    }
+    
+    [self resumeSchedulerAndActions];
 	isRunning_ = YES;
 }
 
@@ -722,7 +787,11 @@ static NSUInteger globalOrderOfArrival = 0;
 	[self pauseSchedulerAndActions];
 	isRunning_ = NO;	
 	
-	[children_ makeObjectsPerformSelector:@selector(onExit)];
+    if (children_) {
+        CCArray *tempChildren = [[CCArray alloc] initWithArray:children_];
+        [tempChildren makeObjectsPerformSelector:@selector(onExit)];
+        [tempChildren release];
+    }
 }
 
 #pragma mark CCNode Actions
@@ -745,16 +814,19 @@ static NSUInteger globalOrderOfArrival = 0;
 	[[CCActionManager sharedManager] removeAction:action];
 }
 
--(void) stopActionByTag:(NSInteger)aTag
+-(void) stopAllActionsByTag:(NSInteger)tag
 {
-	NSAssert( aTag != kCCActionTagInvalid, @"Invalid tag");
-	[[CCActionManager sharedManager] removeActionByTag:aTag target:self];
+    [[CCActionManager sharedManager] removeAllActionsByTag:tag target:self];
 }
 
--(CCAction*) getActionByTag:(NSInteger) aTag
+-(void) stopActionByTag:(NSInteger)tag
 {
-	NSAssert( aTag != kCCActionTagInvalid, @"Invalid tag");
-	return [[CCActionManager sharedManager] getActionByTag:aTag target:self];
+	[[CCActionManager sharedManager] removeActionByTag:tag target:self];
+}
+
+-(CCAction*) getActionByTag:(NSInteger) tag
+{
+	return [[CCActionManager sharedManager] getActionByTag:tag target:self];
 }
 
 -(NSUInteger) numberOfRunningActions
@@ -839,7 +911,7 @@ static NSUInteger globalOrderOfArrival = 0;
 			transform_ = CGAffineTransformTranslate(transform_, anchorPointInPixels_.x, anchorPointInPixels_.y);
 
 		if( ! CGPointEqualToPoint(positionInPixels_, CGPointZero) )
-			transform_ = CGAffineTransformTranslate(transform_, positionInPixels_.x, positionInPixels_.y);
+			transform_ = CGAffineTransformTranslate(transform_, RENDER_IN_SUBPIXEL(positionInPixels_.x), RENDER_IN_SUBPIXEL(positionInPixels_.y));
 		
 		if( rotation_ != 0 )
 			transform_ = CGAffineTransformRotate(transform_, -CC_DEGREES_TO_RADIANS(rotation_));
@@ -855,7 +927,7 @@ static NSUInteger globalOrderOfArrival = 0;
 		}
 		
 		if( ! CGPointEqualToPoint(anchorPointInPixels_, CGPointZero) )
-			transform_ = CGAffineTransformTranslate(transform_, -anchorPointInPixels_.x, -anchorPointInPixels_.y);
+			transform_ = CGAffineTransformTranslate(transform_, RENDER_IN_SUBPIXEL(-anchorPointInPixels_.x), RENDER_IN_SUBPIXEL(-anchorPointInPixels_.y));
 				
 		isTransformDirty_ = NO;
 	}
@@ -952,19 +1024,73 @@ static NSUInteger globalOrderOfArrival = 0;
 
 - (CGPoint)convertTouchToNodeSpace:(UITouch *)touch
 {
-	CGPoint point = [touch locationInView: [touch view]];
+ 	CGPoint point = [touch locationInView: [[CCDirector sharedDirector] openGLView]];
 	point = [[CCDirector sharedDirector] convertToGL: point];
 	return [self convertToNodeSpace:point];
 }
 
 - (CGPoint)convertTouchToNodeSpaceAR:(UITouch *)touch
 {
-	CGPoint point = [touch locationInView: [touch view]];
+ 	CGPoint point = [touch locationInView: [[CCDirector sharedDirector] openGLView]];
 	point = [[CCDirector sharedDirector] convertToGL: point];
 	return [self convertToNodeSpaceAR:point];
 }
 
 #endif // __IPHONE_OS_VERSION_MAX_ALLOWED
 
+@end
+
+
+#pragma mark -
+#pragma mark NodeRGBA
+
+@implementation CCNodeRGBA
+
+@synthesize color = color_;
+
+-(id) init
+{
+	if ((self=[super init]) ) {
+        displayedOpacity_ = realOpacity_ = 255;
+        color_ =  ccWHITE;
+    }
+    return self;
+}
+
+-(void) onEnter {
+    [super onEnter];
+    self.opacity = realOpacity_;
+}
+
+-(GLubyte) opacity
+{
+	return realOpacity_;
+}
+
+-(GLubyte) displayedOpacity
+{
+	return displayedOpacity_;
+}
+
+// Update displayedOpacity_ based on parent's displayedOpacity_
+// and recurse child items
+- (void) setOpacity:(GLubyte)opacity
+{
+	displayedOpacity_ = realOpacity_ = opacity;
+    
+#if CC_PROPAGATE_OPACITY
+    if ([self.parent conformsToProtocol:@protocol(CCRGBAProtocol)]) {
+        displayedOpacity_ = realOpacity_ * ((id<CCRGBAProtocol>)self.parent).displayedOpacity/255.0;
+    }
+	
+	id<CCRGBAProtocol> item;
+	CCARRAY_FOREACH(children_, item) {
+        if ([item conformsToProtocol:@protocol(CCRGBAProtocol)]) {
+            item.opacity=item.opacity;
+        }
+    }
+#endif
+    
+}
 
 @end

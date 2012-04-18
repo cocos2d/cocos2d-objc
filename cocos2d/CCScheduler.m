@@ -218,10 +218,9 @@ static CCScheduler *sharedScheduler;
 	return [super alloc];
 }
 
-+(void)purgeSharedScheduler
-{
++(void)purgeSharedScheduler {
 	[sharedScheduler release];
-	sharedScheduler = nil;
+	sharedScheduler = NULL;
 }
 
 - (id) init
@@ -240,18 +239,22 @@ static CCScheduler *sharedScheduler;
 		hashForUpdates = NULL;
 		
 		// selectors with interval
-		currentTarget = nil;
+		currentTarget = NULL;
 		currentTargetSalvaged = NO;
-		hashForSelectors = nil;
+		hashForSelectors = NULL;
         updateHashLocked = NO;
 	}
+
+//    CCLOG(@"cocos2d: initializing CCScheduler");
+//    CCLOG(@"Initalized sharedScheduler %@", self);
 
 	return self;
 }
 
 - (void) dealloc
 {
-	CCLOG(@"cocos2d: deallocing %@", self);
+//    CCLOG(@"cocos2d: deallocing CCScheduler");
+//	CCLOG(@"cocos2d: deallocing %@", self);
 
 	[self unscheduleAllSelectors];
 
@@ -359,7 +362,7 @@ static CCScheduler *sharedScheduler;
 	}
 	
 	// Not Found
-//	NSLog(@"CCScheduler#unscheduleSelector:forTarget: selector not found: %@", selString);
+    // NSLog(@"CCScheduler#unscheduleSelector:forTarget: selector not found: %@", NSStringFromSelector(selector));
 
 }
 
@@ -500,6 +503,9 @@ static CCScheduler *sharedScheduler;
 //		HASH_DEL( hashForUpdates, element);
 //		free(element);
 	}
+//    else {
+//        NSLog(@"CCScheduler#unscheduleUpdateForTarget: update not scheduled for object %@", target);
+//    }
 }
 
 #pragma mark CCScheduler - Common for Update selector & Custom Selectors
@@ -617,7 +623,7 @@ static CCScheduler *sharedScheduler;
 		dt *= timeScale_;
 	
 	// Iterate all over the Updates selectors
-	tListEntry *entry, *tmp;
+	tListEntry *entry=NULL, *tmp=NULL;
 
 	// updates with priority < 0
 	DL_FOREACH_SAFE( updatesNeg, entry, tmp ) {
@@ -639,8 +645,8 @@ static CCScheduler *sharedScheduler;
 			entry->impMethod( entry->target, updateSelector, dt );
 	}
 	
-	// Iterate all over the  custome selectors
-	for(tHashSelectorEntry *elt=hashForSelectors; elt != NULL; ) {	
+	// Iterate all over the custom selectors
+    for(tHashSelectorEntry *elt=hashForSelectors; elt != NULL; ) {	
 		
 		currentTarget = elt;
 		currentTargetSalvaged = NO;

@@ -137,6 +137,14 @@ NSString * const kCDN_AudioManagerInitialised = @"kCDN_AudioManagerInitialised";
 	return volume;
 }
 
+-(NSTimeInterval) currentTime {
+    return audioSourcePlayer.currentTime;  
+}
+
+-(void) setCurrentTime:(NSTimeInterval)time {
+    audioSourcePlayer.currentTime=time;
+}
+
 #pragma mark Audio Interrupt Protocol
 -(BOOL) mute
 {
@@ -462,6 +470,15 @@ static BOOL configured = FALSE;
 -(BOOL) isBackgroundMusicPlaying {
 	return [self.backgroundMusic isPlaying];
 }	
+
+-(NSTimeInterval) backgroundMusicCurrentTime {
+    return self.backgroundMusic.currentTime;  
+}
+
+-(void) setBackgroundMusicCurrentTime:(NSTimeInterval)time {
+    self.backgroundMusic.currentTime=time;
+}
+
 
 //NB: originally I tried using a route change listener and intended to store the current route,
 //however, on a 3gs running 3.1.2 no route change is generated when the user switches the 

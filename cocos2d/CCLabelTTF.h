@@ -41,11 +41,16 @@
 {
 	CGSize dimensions_;
 	CCTextAlignment alignment_;
-	NSString * fontName_;
+    CCTextVerticalAlignment verticalAlignment_;
+	NSString *fontName_;
 	CGFloat fontSize_;
 	CCLineBreakMode lineBreakMode_;
 	NSString	*string_;
 }
+
+@property (nonatomic, copy) NSString *fontName;
+@property (nonatomic, assign) CGFloat fontSize;
+@property (nonatomic, copy) NSString *string;
 
 /** creates a CCLabel from a fontname, alignment, dimension in points, line break mode, and font size in points.
  Supported lineBreakModes:
@@ -56,6 +61,7 @@
 + (id) labelWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(CCTextAlignment)alignment lineBreakMode:(CCLineBreakMode)lineBreakMode fontName:(NSString*)name fontSize:(CGFloat)size;
 /** creates a CCLabel from a fontname, alignment, dimension in points and font size in points*/
 + (id) labelWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(CCTextAlignment)alignment fontName:(NSString*)name fontSize:(CGFloat)size;
++ (id) labelWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(CCTextAlignment)alignment verticalAlignment:(CCTextVerticalAlignment)verticalAlignment fontName:(NSString*)name fontSize:(CGFloat)size;
 /** creates a CCLabel from a fontname and font size in points*/
 + (id) labelWithString:(NSString*)string fontName:(NSString*)name fontSize:(CGFloat)size;
 /** initializes the CCLabel with a font name, alignment, dimension in points, line brea mode and font size in points.
@@ -66,6 +72,8 @@
  */
 - (id) initWithString:(NSString*)str dimensions:(CGSize)dimensions alignment:(CCTextAlignment)alignment lineBreakMode:(CCLineBreakMode)lineBreakMode fontName:(NSString*)name fontSize:(CGFloat)size;
 /** initializes the CCLabel with a font name, alignment, dimension in points and font size in points */
+- (id) initWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(CCTextAlignment)alignment verticalAlignment:(CCTextVerticalAlignment)verticalAlignment  lineBreakMode:(CCLineBreakMode)lineBreakMode fontName:(NSString*)name fontSize:(CGFloat)size;
+- (id) initWithString:(NSString*)str dimensions:(CGSize)dimensions alignment:(CCTextAlignment)alignment verticalAlignment:(CCTextVerticalAlignment)verticalAlignment fontName:(NSString*)name fontSize:(CGFloat)size;
 - (id) initWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(CCTextAlignment)alignment fontName:(NSString*)name fontSize:(CGFloat)size;
 /** initializes the CCLabel with a font name and font size in points */
 - (id) initWithString:(NSString*)string  fontName:(NSString*)name fontSize:(CGFloat)size;

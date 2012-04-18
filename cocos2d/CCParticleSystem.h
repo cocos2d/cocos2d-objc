@@ -89,7 +89,15 @@ typedef enum {
 	 Use case: Attach an emitter to an sprite, and you want that the emitter follows the sprite.
 	 */
 	kCCPositionTypeRelative,
-	
+
+    /** Living particles are attached to the world but will follow the emitter repositioning.
+     WARNING: This type of emitter doesn't
+        support scaling of the grandparent
+        while the emitter is running.
+	 Use case: Particles on a map.
+	 */
+	kCCPositionTypeRelativeToGrandparent,
+
 	/** Living particles are attached to the emitter and are translated along with it. */
 	kCCPositionTypeGrouped,
 }tCCPositionType;
@@ -205,7 +213,10 @@ typedef void (*CC_UPDATE_PARTICLE_IMP)(id, SEL, tCCParticle*, CGPoint);
 	CGPoint sourcePosition;
 	// Position variance
 	CGPoint posVar;
-	
+    
+    // emitter's parent position
+	CGPoint grandparentInitialPosition_;
+    
 	// The angle (direction) of the particles measured in degrees
 	float angle;
 	// Angle variance measured in degrees;
@@ -490,7 +501,7 @@ typedef void (*CC_UPDATE_PARTICLE_IMP)(id, SEL, tCCParticle*, CGPoint);
 /** initializes a CCQuadParticleSystem from a NSDictionary.
  @since v0.99.3
  */
--(id) initWithDictionary:(NSDictionary*)dictionary;
+-(id) initWithDictionary:(NSDictionary*)dictionary andPath:(NSString*)path;
 
 //! Initializes a system with a fixed number of particles and whether a batchnode is used for rendering
 -(id) initWithTotalParticles:(NSUInteger) numberOfParticles;
@@ -500,6 +511,9 @@ typedef void (*CC_UPDATE_PARTICLE_IMP)(id, SEL, tCCParticle*, CGPoint);
 -(void) initParticle: (tCCParticle*) particle;
 //! stop emitting particles. Running particles will continue to run until they die
 -(void) stopSystem;
+//! restart emitting particles
+// @since 1.0.1-rsanchez
+-(void) startSystem;
 //! Kill all living particles.
 -(void) resetSystem;
 //! whether or not the system is full

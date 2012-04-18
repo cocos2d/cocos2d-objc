@@ -73,6 +73,8 @@ extern NSString * cocos2dVersion(void);
 -(void) showFPS;
 // calculates delta time since last time it was called
 -(void) calculateDeltaTime;
+// gets pre frame delta time since last time calculateDeltaTime was called
+-(ccTime) getDeltaTimePre;
 @end
 
 @implementation CCDirector
@@ -80,6 +82,7 @@ extern NSString * cocos2dVersion(void);
 @synthesize animationInterval = animationInterval_;
 @synthesize runningScene = runningScene_;
 @synthesize displayFPS = displayFPS_;
+@synthesize FPSCustomPosition = FPSCustomPosition_;
 @synthesize nextDeltaTimeZero = nextDeltaTimeZero_;
 @synthesize isPaused = isPaused_;
 @synthesize sendCleanupToScene = sendCleanupToScene_;
@@ -125,7 +128,8 @@ static CCDirector *_sharedDirector = nil;
 		// scenes
 		runningScene_ = nil;
 		nextScene_ = nil;
-		
+		directorNextOperation_=kCCDirectorNextOperationNone;
+        
 		notificationNode_ = nil;
 		
 		oldAnimationInterval_ = animationInterval_ = 1.0 / kDefaultFPS;
@@ -139,15 +143,19 @@ static CCDirector *_sharedDirector = nil;
 
 		// FPS
 		displayFPS_ = NO;
+        FPSCustomPosition_ = ccp(3,3);
 		totalFrames_ = frames_ = 0;
 		
 		// paused ?
 		isPaused_ = NO;
+        isRunning_ = NO;
 		
 		// running thread
 		runningThread_ = nil;
 		
 		winSizeInPixels_ = winSizeInPoints_ = CGSizeZero;
+        
+        //openGLView_ = nil;
 	}
 
 	return self;
@@ -156,6 +164,8 @@ static CCDirector *_sharedDirector = nil;
 - (void) dealloc
 {
 	CCLOGINFO(@"cocos2d: deallocing %@", self);
+
+    [openGLView_ release];
 
 #if CC_DIRECTOR_FAST_FPS
 	[FPSLabel_ release];
@@ -203,20 +213,24 @@ static CCDirector *_sharedDirector = nil;
 
 -(void) calculateDeltaTime
 {
-	struct timeval now;
-	
-	if( gettimeofday( &now, NULL) != 0 ) {
-		CCLOG(@"cocos2d: error in gettimeofday");
-		dt = 0;
-		return;
-	}
-	
+//	struct timeval now;
+//	
+//	if( gettimeofday( &now, NULL) != 0 ) {
+//		CCLOG(@"cocos2d: error in gettimeofday");
+//		dt = 0;
+//		return;
+//	}
+    
+// CFAbsoluteTime newTime = CFAbsoluteTimeGetCurrent();
+    CFTimeInterval newTime = CACurrentMediaTime();
+
 	// new delta time
 	if( nextDeltaTimeZero_ ) {
 		dt = 0;
 		nextDeltaTimeZero_ = NO;
 	} else {
-		dt = (now.tv_sec - lastUpdate_.tv_sec) + (now.tv_usec - lastUpdate_.tv_usec) / 1000000.0f;
+//		dt = (now.tv_sec - lastUpdate_.tv_sec) + (now.tv_usec - lastUpdate_.tv_usec) / 1000000.0f;
+        dt = newTime - _lastTime;
 		dt = MAX(0,dt);
 	}
 
@@ -226,8 +240,22 @@ static CCDirector *_sharedDirector = nil;
 		dt = 1/60.0f;
 #endif
 	
-	lastUpdate_ = now;	
+//	lastUpdate_ = now;	
+    _lastTime = newTime;
 }
+
+-(ccTime) getDeltaTimePre {
+    CFTimeInterval newTime = CACurrentMediaTime();
+    
+	// new delta time
+	if( nextDeltaTimeZero_ ) {
+		nextDeltaTimeZero_ = NO;
+        return 0;
+	} else {
+        return MAX(0, newTime - _lastTime);
+	}
+}
+
 
 #pragma mark Director - Memory Helper
 
@@ -334,13 +362,15 @@ static CCDirector *_sharedDirector = nil;
 
 #pragma mark Director Scene Management
 
+// Deprecated method since 1.0.0-rsanchez
+// startAnimation must be manually called 
 - (void)runWithScene:(CCScene*) scene
 {
+    CCLOG(@"cocos2d 1.0.0-rsanchez: runWithScene is no longer recommended, use pushScene: or pushSceneClass:");
 	NSAssert( scene != nil, @"Argument must be non-nil");
 	NSAssert( runningScene_ == nil, @"You can't run an scene if another Scene is running. Use replaceScene or pushScene instead");
-	
+	    
 	[self pushScene:scene];
-	[self startAnimation];	
 }
 
 -(void) replaceScene: (CCScene*) scene
@@ -351,36 +381,105 @@ static CCDirector *_sharedDirector = nil;
 	
 	sendCleanupToScene_ = YES;
 	[scenesStack_ replaceObjectAtIndex:index-1 withObject:scene];
+    
+    // Set next operation
 	nextScene_ = scene;	// nextScene_ is a weak ref
+    directorNextOperation_ = kCCDirectorNextOperationChangeScene;
 }
 
 - (void) pushScene: (CCScene*) scene
 {
 	NSAssert( scene != nil, @"Argument must be non-nil");
 
+    
 	sendCleanupToScene_ = NO;
 
 	[scenesStack_ addObject: scene];
 	nextScene_ = scene;	// nextScene_ is a weak ref
+    
+    // Set next operation
+    if (directorNextOperation_==kCCDirectorNextOperationRemoveLastScene) {
+        directorNextOperation_=kCCDirectorNextOperationRemoveLastSceneAndChangeScene;
+    } else {
+        if (!isRunning_) {
+            directorNextOperation_ = kCCDirectorNextOperationChangeSceneAndStart;
+        } else {
+            directorNextOperation_ = kCCDirectorNextOperationChangeScene;
+        }
+    }
 }
+
+- (void) pushSceneClass: (Class) sceneClass
+{
+	NSAssert( sceneClass != nil, @"Argument must be non-nil");
+    
+    
+    nextSceneClass_ = sceneClass;	// nextSceneClass_ is a weak class ref
+    
+    // Set next operation
+    if (directorNextOperation_==kCCDirectorNextOperationRemoveLastScene) {
+        directorNextOperation_ = kCCDirectorNextOperationRemoveLastSceneAndChangeSceneClass;
+    } else {
+        if (!isRunning_) {
+            directorNextOperation_ = kCCDirectorNextOperationChangeSceneClassAndStart;
+        } else {
+            directorNextOperation_ = kCCDirectorNextOperationChangeSceneClass;
+        }
+    }
+}
+
 
 -(void) popScene
 {	
-	NSAssert( runningScene_ != nil, @"A running Scene is needed");
+    [self popSceneWithCleanup:YES];
+}
 
+-(void) popSceneWithCleanup:(BOOL)cleanup
+{	
+	NSAssert( runningScene_ != nil, @"A running Scene is needed");
+    
 	[scenesStack_ removeLastObject];
 	NSUInteger c = [scenesStack_ count];
 	
-	if( c == 0 )
-		[self end];
-	else {
-		sendCleanupToScene_ = YES;
+	if( c == 0 ) {
+        directorNextOperation_ = kCCDirectorNextOperationRemoveLastScene;
+        // Do not call [self end] here in order to keep director alive
+        // when popping last scene (so you can optionally purge director data)
+        //[self end];
+	} else {
+		sendCleanupToScene_ = cleanup;
 		nextScene_ = [scenesStack_ objectAtIndex:c-1];
+        directorNextOperation_ = kCCDirectorNextOperationChangeScene;
 	}
+}
+
+// New private method for scene replacement handling (1.0.0-rsanchez) 
+-(void) removeLastSceneWithCachePurge:(BOOL)cachePurge {
+    [runningScene_ onExit];
+	[runningScene_ cleanup];
+	[runningScene_ release];
+    
+	runningScene_ = nil;
+
+    if (cachePurge) {
+        // Purge bitmap cache
+        [CCLabelBMFont purgeCachedData];
+        
+        // Purge all managers
+        [CCAnimationCache purgeSharedAnimationCache];
+        [CCSpriteFrameCache purgeSharedSpriteFrameCache];
+        [CCScheduler purgeSharedScheduler];
+        [CCActionManager purgeSharedManager];
+        [CCTextureCache purgeSharedTextureCache];
+    }
 }
 
 -(void) end
 {
+    // Stop animation before releasing runningScene,
+    // or else CCScheduler tick might try to use unallocated targets
+    [self stopAnimation];
+    
 	[runningScene_ onExit];
 	[runningScene_ cleanup];
 	[runningScene_ release];
@@ -392,15 +491,15 @@ static CCDirector *_sharedDirector = nil;
 	// runWithScene might be executed after 'end'.
 	[scenesStack_ removeAllObjects];
 	
-	[self stopAnimation];
-	
-#if CC_DIRECTOR_FAST_FPS
-	[FPSLabel_ release];
-	FPSLabel_ = nil;
-#endif	
+    // Do not release FPS label here, done on dealloc method
+//#if CC_DIRECTOR_FAST_FPS
+//	[FPSLabel_ release];
+//	FPSLabel_ = nil;
+//#endif	
 
-	[projectionDelegate_ release];
-	projectionDelegate_ = nil;
+    // Do not release the projectionDelegate here, do it on dealloc method
+	// [projectionDelegate_ release];
+	// projectionDelegate_ = nil;
 	
 	// Purge bitmap cache
 	[CCLabelBMFont purgeCachedData];
@@ -415,12 +514,71 @@ static CCDirector *_sharedDirector = nil;
 	
 	// OpenGL view
 	
-	// Since the director doesn't attach the openglview to the window
-	// it shouldn't remove it from the window too.
-//	[openGLView_ removeFromSuperview];
+	// Since the director doesn't automatically attach the openglview to the window
+	// it shouldn't remove it from the window.
+    // [openGLView_ removeFromSuperview];
 
-	[openGLView_ release];
-	openGLView_ = nil;	
+    // Do not release openGLView_ here do it in dealloc instead
+    //	[openGLView_ release];
+    //	openGLView_ = NULL;	
+}
+
+// 1.0.0-rsanchez: New scene system for handling scene substitutions
+// 
+// it allows to:
+//  - allocate the new scene after the old scene has been completely deallocated (via the new pushSceneClass:),
+//    you must pass [yourScene class] as the argument. The class must conform to the CCSceneAutoreleased protocol,
+//     and it must have an argument-less +(id)scene method which allocates and returns the autorelease scene
+//  
+// the old pushScene and popScene work as usual, but the process has been improved a bit:
+// - popping the last scene no longer calls [director end]. Instead, just the caches are purged.
+// - popping the last scene won't purge the caches if you are pushing a scene that has been alread initialized
+//   (because puring the caches would destroy data owned by the new scene) 
+// - pushScene: now acts as runWithScene:, which is now deprecated) (
+//   ([director startAnimation] is automatically called on the first pushScene)
+// - CCDirector end and dealloc methods have been sanitized a little bit to make it more Cocoa like
+-(void) manageNextScene
+{
+    if( directorNextOperation_!=kCCDirectorNextOperationNone) {
+        // Controls popScene and pushScene
+        if (directorNextOperation_==kCCDirectorNextOperationChangeSceneAndStart) {
+            [self setNextScene];
+            [self startAnimation];
+            directorNextOperation_=kCCDirectorNextOperationNone;
+        } else if (directorNextOperation_==kCCDirectorNextOperationChangeScene) {
+            [self setNextScene];
+            directorNextOperation_=kCCDirectorNextOperationNone;
+        } else if (directorNextOperation_==kCCDirectorNextOperationRemoveLastScene) {
+            [self removeLastSceneWithCachePurge:YES];
+            directorNextOperation_=kCCDirectorNextOperationNone;
+        } else if (directorNextOperation_==kCCDirectorNextOperationRemoveLastSceneAndChangeScene) {
+            // Do not purge here becase the new scene already
+            // has been initialized and probably has items in the caches
+            [self removeLastSceneWithCachePurge:NO];
+            [self setNextScene];
+            directorNextOperation_=kCCDirectorNextOperationNone;
+        // new pushSceneClass method
+        } else if (directorNextOperation_==kCCDirectorNextOperationChangeSceneClassAndStart) {
+            [self pushScene:[nextSceneClass_ scene]]; 
+            nextSceneClass_=NULL;
+            [self setNextScene];
+            [self startAnimation];
+            directorNextOperation_=kCCDirectorNextOperationNone;
+        } else if (directorNextOperation_==kCCDirectorNextOperationChangeSceneClass) {
+            [self pushScene:[nextSceneClass_ scene]]; 
+            nextSceneClass_=NULL;
+            [self setNextScene];
+            directorNextOperation_=kCCDirectorNextOperationNone;
+        } else if (directorNextOperation_==kCCDirectorNextOperationRemoveLastSceneAndChangeSceneClass) {
+            // You can safely purge here becase the new scene will
+            // be initialized after cache purging
+            [self removeLastSceneWithCachePurge:YES];
+            [self pushScene:[nextSceneClass_ scene]]; 
+            nextSceneClass_=NULL;
+            [self setNextScene];
+            directorNextOperation_=kCCDirectorNextOperationNone;
+        }
+    }
 }
 
 -(void) setNextScene
@@ -469,9 +627,10 @@ static CCDirector *_sharedDirector = nil;
 	
 	[self setAnimationInterval: oldAnimationInterval_];
 
-	if( gettimeofday( &lastUpdate_, NULL) != 0 ) {
-		CCLOG(@"cocos2d: Director: Error in gettimeofday");
-	}
+//	if( gettimeofday( &lastUpdate_, NULL) != 0 ) {
+//		CCLOG(@"cocos2d: Director: Error in gettimeofday");
+//	}
+    _lastTime = CACurrentMediaTime();
 	
 	isPaused_ = NO;
 	dt = 0;
@@ -479,12 +638,13 @@ static CCDirector *_sharedDirector = nil;
 
 - (void)startAnimation
 {
-	CCLOG(@"cocos2d: Director#startAnimation. Override me");
+//    NSAssert( isRunning_ == NO, @"isRunning must be NO. Calling startAnimation twice?");
+    isRunning_=YES;
 }
 
 - (void)stopAnimation
 {
-	CCLOG(@"cocos2d: Director#stopAnimation. Override me");
+    isRunning_=NO;
 }
 
 - (void)setAnimationInterval:(NSTimeInterval)interval
@@ -514,6 +674,9 @@ static CCDirector *_sharedDirector = nil;
 		[str release];
 	}
 
+    // Translate FPS position
+	glTranslatef(FPSCustomPosition_.x,FPSCustomPosition_.y,0);
+
 	[FPSLabel_ draw];
 }
 #else
@@ -541,7 +704,7 @@ static CCDirector *_sharedDirector = nil;
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	
 	glColor4ub(224,224,244,200);
-	[texture drawAtPoint: ccp(5,2)];
+	[texture drawAtPoint: ccp(FPSCustomPosition_.x,FPSCustomPosition_.y)];
 	[texture release];
 	
 	glBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);
@@ -551,6 +714,25 @@ static CCDirector *_sharedDirector = nil;
 }
 #endif
 
+-(void)setFPSPosition:(ccFPSPosition)FPSPosition {
+    CGSize winSizeInPixels = [[CCDirector sharedDirector] winSizeInPixels];
+    switch (FPSPosition) {
+        case kCCFPSPositionUpperLeft:
+            FPSCustomPosition_ = CGPointMake(3, winSizeInPixels.height - 28);
+            break;
+        case kCCFPSPositionUpperRight:
+            FPSCustomPosition_ = CGPointMake(winSizeInPixels.width - 70, winSizeInPixels.height - 28);
+            break;
+        case kCCFPSPositionLowerLeft:
+            FPSCustomPosition_ = CGPointMake(3,3);
+            break;
+        case kCCFPSPositionLowerRight:
+            FPSCustomPosition_ = CGPointMake(winSizeInPixels.width - 70, 3);
+            break;
+        case kCCFPSPositionCustom:
+            break;
+    }
+}
 
 - (void) showProfilers {
 #if CC_ENABLE_PROFILERS

@@ -145,7 +145,7 @@ typedef struct _BMFontPadding {
 	CCBMFontConfiguration	*configuration_;
     
 	// texture RGBA
-	GLubyte		opacity_;
+	GLubyte		displayedOpacity_, realOpacity_;
 	ccColor3B	color_;
 	BOOL opacityModifyRGB_;
 }

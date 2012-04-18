@@ -89,8 +89,16 @@ typedef struct _hashElement
 /** Removes an action given an action reference.
  */
 -(void) removeAction: (CCAction*) action;
-/** Removes an action given its tag and the target */
--(void) removeActionByTag:(NSInteger)tag target:(id)target;
+/** Removes all actions given a tag and the target
+ @since 1.0.1-rsanchez
+ */
+-(void) removeAllActionsByTag:(NSInteger)tag target:(id)target;
+/** Removes first action given a tag and the target
+ @return NO if an action with that tag could not be found,
+         YES if an action with that tag was removed
+ @since 1.0.1-rsanchez
+ */
+-(BOOL) removeActionByTag:(NSInteger)tag target:(id)target;
 /** Gets an action given its tag an a target
  @return the Action the with the given tag
  */

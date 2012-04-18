@@ -179,6 +179,36 @@ Example:
 -(id) initWithDuration: (ccTime)duration position:(CGPoint)deltaPosition;
 @end
 
+/**  Moves a CCNode object x,y pixels by modifying it's position attribute.
+ x and y are relative to the position of the object.
+    Can be concurrently called.
+    @since 1.0.0-rsanchez
+ */ 
+@interface CCMoveByEx : CCActionInterval <NSCopying>
+{
+    CGPoint positionDelta_;
+    ccTime previousTick_;
+}
+/** creates the action */
++(id) actionWithDuration: (ccTime)duration position:(CGPoint)deltaPosition;
+/** initializes the action */
+-(id) initWithDuration: (ccTime)duration position:(CGPoint)deltaPosition;
+@end
+
+/** Moves a CCNode object to the position x,y. x and y are absolute coordinates by modifying it's position attribute.
+    Can be concurrently called.
+    @since 1.0.0-rsanchez
+ */
+@interface CCMoveToEx : CCMoveByEx
+{
+	CGPoint endPosition;
+}
+/** creates the action */
++(id) actionWithDuration:(ccTime)duration position:(CGPoint)position;
+/** initializes the action */
+-(id) initWithDuration:(ccTime)duration position:(CGPoint)position;
+@end
+
 /** Skews a CCNode object to given angles by modifying it's skewX and skewY attributes
  @since v1.0
  */
@@ -346,6 +376,7 @@ typedef struct _ccBezierConfig {
 	ccColor3B from_;
 }
 /** creates an action with duration and color */
++(id) actionWithDuration:(ccTime)t color:(ccColor3B)color;
 +(id) actionWithDuration:(ccTime)duration red:(GLubyte)red green:(GLubyte)green blue:(GLubyte)blue;
 /** initializes the action with duration and color */
 -(id) initWithDuration:(ccTime)duration red:(GLubyte)red green:(GLubyte)green blue:(GLubyte)blue;
@@ -422,6 +453,30 @@ typedef struct _ccBezierConfig {
  @since v0.99.0
  */
 -(id) initWithDuration:(ccTime)duration animation:(CCAnimation*)animation restoreOriginalFrame:(BOOL)restoreOriginalFrame;
+@end
+
+/** Animates a sprite given the name of an Animation
+   and the starting frame number 
+ @since v1.0.0-rsanchez
+*/
+@interface CCAnimateAt : CCAnimate
+{
+    NSInteger startIndex_;
+}
+
++(id) actionWithRandomStartAnimation:(CCAnimation*)action;
++(id) actionWithRandomStartAnimation:(CCAnimation*)action factor:(float)factor;
+-(id) initWithRandomStartAnimation:(CCAnimation*)action factor:(float)factor;
++(id) actionWithAnimation:(CCAnimation*)action start:(NSInteger)start;
+-(id) initWithAnimation:(CCAnimation*)action start:(NSInteger)start;
+/** creates an action with a duration, animation and start.
+ The 'delay' parameter of the animation will be overrided by the duration parameter.
+ */
++(id) actionWithDuration:(ccTime)duration animation:(CCAnimation*)animation start:(NSInteger)start;
+/** initializes an action with a duration, animation and start.
+ The 'delay' parameter of the animation will be overrided by the duration parameter.
+ */
+-(id) initWithDuration:(ccTime)duration animation:(CCAnimation*)animation start:(NSInteger)start;;
 @end
 
 /** Overrides the target of an action so that it always runs on the target

@@ -54,6 +54,31 @@ typedef enum {
 
 } ccDirectorProjection;
 
+/** @typedef kCCFPSCorner
+ FPS label predefined positions
+ */
+typedef enum {
+	kCCFPSPositionUpperLeft=0,
+	kCCFPSPositionUpperRight,
+	kCCFPSPositionLowerLeft,
+    kCCFPSPositionLowerRight,
+    kCCFPSPositionCustom,
+    kCCFPSCornerDefault = kCCFPSPositionLowerRight
+} ccFPSPosition;
+
+/** @typedef ccNextDirectorOperation
+ Next director operation
+ */
+typedef enum {
+    kCCDirectorNextOperationNone,
+	kCCDirectorNextOperationChangeScene,
+	kCCDirectorNextOperationChangeSceneClass,
+	kCCDirectorNextOperationChangeSceneAndStart,
+	kCCDirectorNextOperationChangeSceneClassAndStart,
+	kCCDirectorNextOperationRemoveLastScene,
+    kCCDirectorNextOperationRemoveLastSceneAndChangeScene,
+    kCCDirectorNextOperationRemoveLastSceneAndChangeSceneClass
+} ccDirectorNextOperation;
 
 @class CCLabelAtlas;
 @class CCScene;
@@ -87,6 +112,7 @@ and when to execute the Scenes.
 	
 	/* display FPS ? */
 	BOOL displayFPS_;
+	CGPoint FPSCustomPosition_;
 
 	NSUInteger frames_;
 	NSUInteger totalFrames_;
@@ -99,7 +125,8 @@ and when to execute the Scenes.
 	
 	/* is the running scene paused */
 	BOOL isPaused_;
-	
+	BOOL isRunning_;
+    
 	/* The running scene */
 	CCScene *runningScene_;
 	
@@ -109,7 +136,9 @@ and when to execute the Scenes.
 	/* will be the next 'runningScene' in the next frame
 	 nextScene is a weak reference. */
 	CCScene *nextScene_;
-	
+    Class<CCSceneAutoreleased> nextSceneClass_;
+	ccDirectorNextOperation directorNextOperation_;
+    
 	/* If YES, then "old" scene will receive the cleanup message */
 	BOOL	sendCleanupToScene_;
 
@@ -117,7 +146,12 @@ and when to execute the Scenes.
 	NSMutableArray *scenesStack_;
 	
 	/* last time the main loop was updated */
-	struct timeval lastUpdate_;
+    //	struct timeval lastUpdate_;
+    // alternative for using CFAbsoluteTimeGetCurrent
+    // CFAbsoluteTime 	  _lastTime;
+    // CFTimeInterval is a double
+    CFTimeInterval 		  _lastTime;
+    
 	/* delta time since last tick to main loop */
 	ccTime dt;
 	/* whether or not the next delta time will be zero */
@@ -156,6 +190,8 @@ and when to execute the Scenes.
 @property (nonatomic,readwrite, assign) NSTimeInterval animationInterval;
 /** Whether or not to display the FPS on the bottom-left corner */
 @property (nonatomic,readwrite, assign) BOOL displayFPS;
+//** To position the FPS label if no corner is set */
+@property (nonatomic,readwrite, assign) CGPoint FPSCustomPosition;
 /** The OpenGLView, where everything is rendered */
 @property (nonatomic,readwrite,retain) CC_GLVIEW *openGLView;
 /** whether or not the next delta time will be zero */
@@ -191,7 +227,15 @@ and when to execute the Scenes.
 /** returns a shared instance of the director */
 +(CCDirector *)sharedDirector;
 
+// FPS Label
 
+/** Set the FPSPosition in any of the predefined locations:
+ kCCFPSPositionUpperLeft,
+ kCCFPSPositionUpperRight,
+ kCCFPSPositionLowerLeft or
+ kCCFPSPositionLowerRight
+ */
+-(void)setFPSPosition:(ccFPSPosition)FPSPosition;
 
 // Window size
 
@@ -229,15 +273,18 @@ and when to execute the Scenes.
 /**Enters the Director's main loop with the given Scene. 
  * Call it to run only your FIRST scene.
  * Don't call it if there is already a running scene.
+ *
+ * Deprecated since 1.0.0-rsanchez
  */
 - (void) runWithScene:(CCScene*) scene;
 
 /**Suspends the execution of the running scene, pushing it on the stack of suspended scenes.
  * The new scene will be executed.
  * Try to avoid big stacks of pushed scenes to reduce memory allocation. 
- * ONLY call it if there is a running scene.
+ * Since 1.0.0-rsanchez you can call it even if there are no running scenes
  */
 - (void) pushScene:(CCScene*) scene;
+- (void) pushSceneClass: (Class) sceneClass;
 
 /**Pops out a scene from the queue.
  * This scene will replace the running one.
@@ -245,6 +292,11 @@ and when to execute the Scenes.
  * ONLY call it if there is a running scene.
  */
 - (void) popScene;
+/** Pops a scene without performing cleanup (useful for persistent retained scenes)
+ * 
+ * @since 1.0.0-rsanchez
+ */
+- (void) popSceneWithCleanup:(BOOL)cleanup;
 
 /** Replaces the running scene with a new one. The running scene is terminated.
  * ONLY call it if there is a running scene.

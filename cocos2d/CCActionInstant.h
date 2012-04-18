@@ -56,6 +56,18 @@
 }
 @end
 
+/** Set an attribute to the desired value
+ @since v1.0.1-rsanchez
+ */
+@interface CCSetValue : CCActionInstant
+{
+    NSString *key_;
+    float value_;
+}
++ (id)actionWithKey:(NSString *)key value:(float)value;
+- (id)initWithKey:(NSString *)key value:(float)value;
+@end
+
 /** Flips the sprite horizontally
  @since v0.99.0
  */

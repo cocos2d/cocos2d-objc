@@ -46,8 +46,6 @@ enum {
 
 @implementation CCMenu
 
-@synthesize opacity = opacity_, color = color_;
-
 - (id) init
 {
 	NSAssert(NO, @"CCMenu: Init not supported.");
@@ -149,20 +147,12 @@ enum {
 }
 
 -(CCMenuItem *) itemForTouch: (UITouch *) touch
-{
-	CGPoint touchLocation = [touch locationInView: [touch view]];
-	touchLocation = [[CCDirector sharedDirector] convertToGL: touchLocation];
-	
+{	
 	CCMenuItem* item;
-	CCARRAY_FOREACH(children_, item){
+	CCARRAY_FOREACH_INVERSE(children_, item){
 		// ignore invisible and disabled items: issue #779, #866
 		if ( [item visible] && [item isEnabled] ) {
-			
-			CGPoint local = [item convertToNodeSpace:touchLocation];
-			CGRect r = [item rect];
-			r.origin = CGPointZero;
-			
-			if( CGRectContainsPoint( r, local ) )
+			if( CGRectContainsPoint([item boundingBox], [self convertTouchToNodeSpace:touch] ) )
 				return item;
 		}
 	}
@@ -218,6 +208,15 @@ enum {
 		selectedItem_ = currentItem;
 		[selectedItem_ selected];
 	}
+}
+
+// Reset menu state so menu doesn't break if
+// touch is disabled while pressing a button
+-(void) setIsTouchEnabled:(BOOL)isTouchEnabled {
+    [selectedItem_ unselected];	
+	state_ = kCCMenuStateWaiting;
+
+    [super setIsTouchEnabled:isTouchEnabled];
 }
 
 #pragma mark Menu - Mouse
@@ -314,8 +313,9 @@ enum {
 	float height = -padding;
 	
 	CCMenuItem *item;
-	CCARRAY_FOREACH(children_, item)
+	CCARRAY_FOREACH(children_, item) {
 	    height += item.contentSize.height * item.scaleY + padding;
+    }
 
 	float y = height / 2.0f;
 	
@@ -504,24 +504,4 @@ enum {
 	[columnHeights release];
 }
 
-#pragma mark Menu - Opacity Protocol
-
-/** Override synthesized setOpacity to recurse items */
-- (void) setOpacity:(GLubyte)newOpacity
-{
-	opacity_ = newOpacity;
-	
-	id<CCRGBAProtocol> item;
-	CCARRAY_FOREACH(children_, item)
-		[item setOpacity:opacity_];
-}
-
--(void) setColor:(ccColor3B)color
-{
-	color_ = color;
-	
-	id<CCRGBAProtocol> item;
-	CCARRAY_FOREACH(children_, item)
-		[item setColor:color_];
-}
 @end

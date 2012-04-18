@@ -289,6 +289,34 @@ enum {
  */
 -(void) onExit;
 
+// Custom methods
+
+/** Updates position by positionDelta.
+ This method is used by CCMoveByEx actions so setPosition can be overriden without interfering with the actions.
+ @since v1.1-rsanchez
+ */
+-(void) moveBy: (CGPoint)positionDelta;
+
+/** Returns contentSize center point.
+ 
+ @since v1.1-rsanchez
+ */
+-(CGPoint) centerPoint;
+
+/** Returns centered sprite position,r egardless of the anchor point.
+
+ @since v1.1-rsanchez
+ */
+-(CGPoint) unanchoredPosition;
+
+/** Returns sprite position,
+    usoig provided anchor point
+ (does't alter anchorPoint variable).
+ 
+ @since v1.1-rsanchez
+ */
+-(CGPoint) anchoredPosition:(CGPoint)anchorPoint;
+
 /** callback that is called every time the CCNode leaves the 'stage'.
  If the CCNode leaves the 'stage' with a transition, this callback is called when the transition starts.
  */
@@ -301,6 +329,12 @@ enum {
  @since v0.7.1
  */
 -(void) addChild: (CCNode*)node;
+
+/** Adds a child to the container with a tag.
+ If the child is added to a 'running' node, then 'onEnter' and 'onEnterTransitionDidFinish' will be called immediately.
+ @since v1.0.0-rsanchez
+ */
+-(void) addChild: (CCNode*)node tag:(NSInteger)tag;
 
 /** Adds a child to the container with a z-order.
  If the child is added to a 'running' node, then 'onEnter' and 'onEnterTransitionDidFinish' will be called immediately.
@@ -321,6 +355,12 @@ enum {
  @since v0.99.3
  */
 -(void) removeFromParentAndCleanup:(BOOL)cleanup;
+
+/** Remove itself from its parent node,also remove all actions and callbacks.
+ If the node orphan, then nothing happens.
+ @since v1.0.0-rsanchez
+ */
+-(void) removeFromParent;
 
 /** Removes a child from the container. It will also cleanup all running actions depending on the cleanup parameter.
  @since v0.7.1
@@ -352,6 +392,11 @@ enum {
 /** performance improvement, Sort the children array once before drawing, instead of every time when a child is added or reordered
  don't call this manually unless a child added needs to be removed in the same frame */
 - (void) sortAllChildren;
+
+/** Returns the z value of the highest children.
+ @since v1.1-rsanchez
+ */
+- (int) zOrderOfHighestChildren;
 
 /** Stops all running actions and schedulers
  @since v0.8
@@ -412,12 +457,16 @@ enum {
  @since v0.7.1
  @return An Action pointer
  */
--(CCAction*) runAction: (CCAction*) action;
+-(CCAction*) runAction: (CCAction*)action;
 /** Removes all actions from the running action list */
 -(void) stopAllActions;
 /** Removes an action from the running action list */
--(void) stopAction: (CCAction*) action;
-/** Removes an action from the running action list given its tag
+-(void) stopAction: (CCAction*)action;
+/** Removes all actions from the running action list given its tag
+ @since v1.0.1-rsanchez
+ */
+-(void) stopAllActionsByTag:(NSInteger)tag;
+/** Removes first action from the running action list that has the tag
  @since v0.7.1
 */
 -(void) stopActionByTag:(NSInteger) tag;
@@ -553,3 +602,32 @@ enum {
 - (CGPoint)convertTouchToNodeSpaceAR:(UITouch *)touch;
 #endif // __IPHONE_OS_VERSION_MAX_ALLOWED
 @end
+
+#pragma mark -
+#pragma mark CCNodeRGBA
+
+/** CCNodeRGBA is a subclass of CCNode that implements the CCRGBAProtocol protocol.
+ 
+ All features from CCNode are valid, plus the following new features:
+ - opacity
+ - RGB colors
+ 
+ Opacity propagates into children that conform to the CCRGBAProtocol if CC_PROPAGATE_OPACITY is enabled
+     in ccConfig.h.
+ @Since 1.0.1-rsanchez
+ */
+@interface CCNodeRGBA : CCNode <CCRGBAProtocol>
+{
+	GLubyte		displayedOpacity_, realOpacity_;
+	ccColor3B	color_;	
+}
+
+/** Opacity: conforms to CCRGBAProtocol protocol */
+@property (nonatomic,readwrite) GLubyte opacity;
+/** Opacity: conforms to CCRGBAProtocol protocol */
+@property (nonatomic,readonly) GLubyte displayedOpacity;
+/** Opacity: conforms to CCRGBAProtocol protocol */
+@property (nonatomic,readwrite) ccColor3B color;
+
+@end
+

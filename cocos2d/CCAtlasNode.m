@@ -53,18 +53,16 @@
 		itemWidth_ = w * CC_CONTENT_SCALE_FACTOR();
 		itemHeight_ = h * CC_CONTENT_SCALE_FACTOR();
 
-		opacity_ = 255;
-		color_ = colorUnmodified_ = ccWHITE;
+		colorUnmodified_ = color_;
 		opacityModifyRGB_ = YES;
 		
 		blendFunc_.src = CC_BLEND_SRC;
 		blendFunc_.dst = CC_BLEND_DST;
 		
-		// double retain to avoid the autorelease pool
-		// also, using: self.textureAtlas supports re-initialization without leaking
-        CCTextureAtlas *atlas = [[CCTextureAtlas alloc] initWithFile:tile capacity:c];
-		self.textureAtlas = atlas;
-		[atlas release];
+		// releasing textureAtlas_ before assignment
+        // supports re-initialization without leaking
+        [textureAtlas_ release];
+		textureAtlas_ = [[CCTextureAtlas alloc] initWithFile:tile capacity:c];
 		
 		if( ! textureAtlas_ ) {
 			CCLOG(@"cocos2d: Could not initialize CCAtlasNode. Invalid Texture");
@@ -114,7 +112,7 @@
 	// Unneeded states: GL_COLOR_ARRAY
 	glDisableClientState(GL_COLOR_ARRAY);
 
-	glColor4ub( color_.r, color_.g, color_.b, opacity_);
+	glColor4ub( color_.r, color_.g, color_.b, displayedOpacity_);
 
 	BOOL newBlend = blendFunc_.src != CC_BLEND_SRC || blendFunc_.dst != CC_BLEND_DST;
 	if( newBlend )
@@ -150,24 +148,18 @@
 	color_ = colorUnmodified_ = color3;
 	
 	if( opacityModifyRGB_ ){
-		color_.r = color3.r * opacity_/255;
-		color_.g = color3.g * opacity_/255;
-		color_.b = color3.b * opacity_/255;
+		color_.r = color3.r * displayedOpacity_/255;
+		color_.g = color3.g * displayedOpacity_/255;
+		color_.b = color3.b * displayedOpacity_/255;
 	}	
 }
 
--(GLubyte) opacity
+-(void) setOpacity:(GLubyte) opacity
 {
-	return opacity_;
-}
-
--(void) setOpacity:(GLubyte) anOpacity
-{
-	opacity_			= anOpacity;
-	
-	// special opacity for premultiplied textures
+	[super setOpacity:opacity];
+    // special opacity for premultiplied textures
 	if( opacityModifyRGB_ )
-		[self setColor: colorUnmodified_];	
+		[self setColor: colorUnmodified_];
 }
 
 -(void) setOpacityModifyRGB:(BOOL)modify

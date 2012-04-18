@@ -73,6 +73,11 @@ static CCActionManager *sharedManager_ = nil;
 	if ((self=[super init]) ) {
 		[[CCScheduler sharedScheduler] scheduleUpdateForTarget:self priority:0 paused:NO];
 		targets = NULL;
+        currentTarget = NULL;
+        currentTargetSalvaged = NO;
+
+//        CCLOG(@"cocos2d: initialized CCActionManager");
+//        CCLOG(@"Initialized: %@",self);
 	}
 	
 	return self;
@@ -80,7 +85,8 @@ static CCActionManager *sharedManager_ = nil;
 
 - (void) dealloc
 {
-	CCLOGINFO( @"cocos2d: deallocing %@", self);
+//    CCLOG( @"cocos2d: deallocing CCActionManager");
+//	CCLOG( @"cocos2d: deallocing %@", self);
 	
 	[self removeAllActions];
 
@@ -233,7 +239,14 @@ static CCActionManager *sharedManager_ = nil;
 //	}
 }
 
--(void) removeActionByTag:(NSInteger)aTag target:(id)target
+-(void) removeAllActionsByTag:(NSInteger)aTag target:(id)target
+{
+	NSAssert( aTag != kCCActionTagInvalid, @"Invalid tag");
+	NSAssert( target != nil, @"Target should be ! nil");
+    while ([self removeActionByTag:aTag target:target]) {}
+}
+
+-(BOOL) removeActionByTag:(NSInteger)aTag target:(id)target
 {
 	NSAssert( aTag != kCCActionTagInvalid, @"Invalid tag");
 	NSAssert( target != nil, @"Target should be ! nil");
@@ -248,11 +261,11 @@ static CCActionManager *sharedManager_ = nil;
 			
 			if( a.tag == aTag && [a originalTarget]==target) {
 				[self removeActionAtIndex:i hashElement:element];
-				break;
+                return YES;
 			}
 		}
-
 	}
+    return NO;
 }
 
 #pragma mark ActionManager - get

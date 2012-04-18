@@ -39,7 +39,7 @@
  *
  *  Subclass CCMenuItem (or any subclass) to create your custom CCMenuItem objects.
  */
-@interface CCMenuItem : CCNode
+@interface CCMenuItem : CCNodeRGBA
 {
 	NSInvocation *invocation_;
 #if NS_BLOCKS_AVAILABLE
@@ -102,7 +102,7 @@
    - CCLabelAtlas
    - CCLabelTTF
  */
-@interface CCMenuItemLabel : CCMenuItem  <CCRGBAProtocol>
+@interface CCMenuItemLabel : CCMenuItem
 {
 	CCNode<CCLabelProtocol, CCRGBAProtocol> *label_;
 	ccColor3B	colorBackup;
@@ -247,42 +247,42 @@
  
  @since v0.8.0
  */
-@interface CCMenuItemSprite : CCMenuItem <CCRGBAProtocol>
+@interface CCMenuItemSprite : CCMenuItem
 {
-	CCNode<CCRGBAProtocol> *normalImage_, *selectedImage_, *disabledImage_;
+	CCNode<CCRGBAProtocol,CCTextureProtocol> *normalImage_, *selectedImage_, *disabledImage_;
 }
 
 // weak references
 
 /** the image used when the item is not selected */
-@property (nonatomic,readwrite,assign) CCNode<CCRGBAProtocol> *normalImage;
+@property (nonatomic,readwrite,assign) CCNode<CCRGBAProtocol,CCTextureProtocol> *normalImage;
 /** the image used when the item is selected */
-@property (nonatomic,readwrite,assign) CCNode<CCRGBAProtocol> *selectedImage;
+@property (nonatomic,readwrite,assign) CCNode<CCRGBAProtocol,CCTextureProtocol> *selectedImage;
 /** the image used when the item is disabled */
-@property (nonatomic,readwrite,assign) CCNode<CCRGBAProtocol> *disabledImage;
+@property (nonatomic,readwrite,assign) CCNode<CCRGBAProtocol,CCTextureProtocol> *disabledImage;
 
 /** creates a menu item with a normal and selected image*/
-+(id) itemFromNormalSprite:(CCNode<CCRGBAProtocol>*)normalSprite selectedSprite:(CCNode<CCRGBAProtocol>*)selectedSprite;
++(id) itemFromNormalSprite:(CCNode<CCRGBAProtocol,CCTextureProtocol>*)normalSprite selectedSprite:(CCNode<CCRGBAProtocol,CCTextureProtocol>*)selectedSprite;
 /** creates a menu item with a normal and selected image with target/selector */
-+(id) itemFromNormalSprite:(CCNode<CCRGBAProtocol>*)normalSprite selectedSprite:(CCNode<CCRGBAProtocol>*)selectedSprite target:(id)target selector:(SEL)selector;
++(id) itemFromNormalSprite:(CCNode<CCRGBAProtocol,CCTextureProtocol>*)normalSprite selectedSprite:(CCNode<CCRGBAProtocol,CCTextureProtocol>*)selectedSprite target:(id)target selector:(SEL)selector;
 /** creates a menu item with a normal,selected  and disabled image with target/selector */
-+(id) itemFromNormalSprite:(CCNode<CCRGBAProtocol>*)normalSprite selectedSprite:(CCNode<CCRGBAProtocol>*)selectedSprite disabledSprite:(CCNode<CCRGBAProtocol>*)disabledSprite target:(id)target selector:(SEL)selector;
++(id) itemFromNormalSprite:(CCNode<CCRGBAProtocol,CCTextureProtocol>*)normalSprite selectedSprite:(CCNode<CCRGBAProtocol,CCTextureProtocol>*)selectedSprite disabledSprite:(CCNode<CCRGBAProtocol,CCTextureProtocol>*)disabledSprite target:(id)target selector:(SEL)selector;
 /** initializes a menu item with a normal, selected  and disabled image with target/selector */
--(id) initFromNormalSprite:(CCNode<CCRGBAProtocol>*)normalSprite selectedSprite:(CCNode<CCRGBAProtocol>*)selectedSprite disabledSprite:(CCNode<CCRGBAProtocol>*)disabledSprite target:(id)target selector:(SEL)selector;
+-(id) initFromNormalSprite:(CCNode<CCRGBAProtocol,CCTextureProtocol>*)normalSprite selectedSprite:(CCNode<CCRGBAProtocol,CCTextureProtocol>*)selectedSprite disabledSprite:(CCNode<CCRGBAProtocol,CCTextureProtocol>*)disabledSprite target:(id)target selector:(SEL)selector;
 
 #if NS_BLOCKS_AVAILABLE
 /** creates a menu item with a normal and selected image with a block.
  The block will be "copied".
  */
-+(id) itemFromNormalSprite:(CCNode<CCRGBAProtocol>*)normalSprite selectedSprite:(CCNode<CCRGBAProtocol>*)selectedSprite block:(void(^)(id sender))block;
++(id) itemFromNormalSprite:(CCNode<CCRGBAProtocol,CCTextureProtocol>*)normalSprite selectedSprite:(CCNode<CCRGBAProtocol,CCTextureProtocol>*)selectedSprite block:(void(^)(id sender))block;
 /** creates a menu item with a normal,selected  and disabled image with a block.
  The block will be "copied".
  */
-+(id) itemFromNormalSprite:(CCNode<CCRGBAProtocol>*)normalSprite selectedSprite:(CCNode<CCRGBAProtocol>*)selectedSprite disabledSprite:(CCNode<CCRGBAProtocol>*)disabledSprite block:(void(^)(id sender))block;
++(id) itemFromNormalSprite:(CCNode<CCRGBAProtocol,CCTextureProtocol>*)normalSprite selectedSprite:(CCNode<CCRGBAProtocol,CCTextureProtocol>*)selectedSprite disabledSprite:(CCNode<CCRGBAProtocol,CCTextureProtocol>*)disabledSprite block:(void(^)(id sender))block;
 /** initializes a menu item with a normal, selected  and disabled image with a block.
  The block will be "copied".
  */
--(id) initFromNormalSprite:(CCNode<CCRGBAProtocol>*)normalSprite selectedSprite:(CCNode<CCRGBAProtocol>*)selectedSprite disabledSprite:(CCNode<CCRGBAProtocol>*)disabledSprite block:(void(^)(id sender))block;
+-(id) initFromNormalSprite:(CCNode<CCRGBAProtocol,CCTextureProtocol>*)normalSprite selectedSprite:(CCNode<CCRGBAProtocol,CCTextureProtocol>*)selectedSprite disabledSprite:(CCNode<CCRGBAProtocol,CCTextureProtocol>*)disabledSprite block:(void(^)(id sender))block;
 #endif
 
 @end
@@ -333,18 +333,11 @@
  A simple container class that "toggles" it's inner items
  The inner itmes can be any MenuItem
  */
-@interface CCMenuItemToggle : CCMenuItem <CCRGBAProtocol>
+@interface CCMenuItemToggle : CCMenuItem
 {
 	NSUInteger selectedIndex_;
 	NSMutableArray* subItems_;
-	GLubyte		opacity_;
-	ccColor3B	color_;
 }
-
-/** conforms with CCRGBAProtocol protocol */
-@property (nonatomic,readonly) GLubyte opacity;
-/** conforms with CCRGBAProtocol protocol */
-@property (nonatomic,readonly) ccColor3B color;
 
 /** returns the selected item */
 @property (nonatomic,readwrite) NSUInteger selectedIndex;

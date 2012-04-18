@@ -49,6 +49,7 @@
 @property (readwrite) float effectsVolume;
 /** If NO it indicates background music will not be played either because no background music is loaded or the audio session does not permit it.*/
 @property (readonly) BOOL willPlayBackgroundMusic;
+@property(nonatomic, assign, readwrite) NSTimeInterval backgroundMusicCurrentTime;
 
 /** returns the shared instance of the SimpleAudioEngine object */
 + (SimpleAudioEngine*) sharedEngine;
@@ -70,6 +71,10 @@
 -(void) rewindBackgroundMusic;
 /** returns whether or not the background music is playing */
 -(BOOL) isBackgroundMusicPlaying;
+/** returns the currentTime of background music */
+-(NSTimeInterval) backgroundMusicCurrentTime;
+/** sets the currentTime of background music */
+-(void) setBackgroundMusicCurrentTime:(NSTimeInterval)time;
 
 /** plays an audio effect with a file path*/
 -(ALuint) playEffect:(NSString*) filePath;

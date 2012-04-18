@@ -34,6 +34,8 @@
 #import "ccMacros.h"
 #import "Support/CGPointExtension.h"
 
+#import "CCMenu.h"
+
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 #import "Platforms/iOS/CCTouchDispatcher.h"
 #import "Platforms/iOS/CCDirectorIOS.h"
@@ -92,6 +94,13 @@
 			else
 				[[UIAccelerometer sharedAccelerometer] setDelegate:nil];
 		}
+        // Propagate to children that support this kind of event (CCLayer and CCMenu mainly)
+        for (id child in [self children]) {
+            if ([child respondsToSelector:@selector(setIsAccelerometerEnabled:)]) {
+                [child setIsAccelerometerEnabled:enabled];
+            }
+        }
+
 	}
 }
 
@@ -110,6 +119,12 @@
 			else
 				[[CCTouchDispatcher sharedDispatcher] removeDelegate:self];
 		}
+//        // Propagate isTouchEnabled to children that support touches (CCLayer and CCMenu mainly)
+//        for (id child in [self children]) {
+//            if ([child respondsToSelector:@selector(setIsTouchEnabled:)]) {
+//                [child setIsTouchEnabled:enabled];
+//            }
+//        }
 	}
 }
 
@@ -138,6 +153,12 @@
 			else
 				[[CCEventDispatcher sharedDispatcher] removeMouseDelegate:self];
 		}
+        // Propagate to children that support this kind of event (CCLayer and CCMenu mainly)
+        for (id child in [self children]) {
+            if ([child respondsToSelector:@selector(setIsMouseEnabled:)]) {
+                [child setIsMouseEnabled:enabled];
+            }
+        }
 	}
 }
 
@@ -162,6 +183,12 @@
 			else
 				[[CCEventDispatcher sharedDispatcher] removeKeyboardDelegate:self];
 		}
+        // Propagate to children that support this kind of event (CCLayer and CCMenu mainly)
+        for (id child in [self children]) {
+            if ([child respondsToSelector:@selector(setIsKeyboardEnabled:)]) {
+                [child setIsKeyboardEnabled:enabled];
+            }
+        }
 	}
 }
 
@@ -185,9 +212,14 @@
 			else
 				[[CCEventDispatcher sharedDispatcher] removeTouchDelegate:self];
 		}
+//        // Propagate isTouchEnabled to children that support touches (CCLayer and CCMenu mainly)
+//        for (id child in [self children]) {
+//            if ([child respondsToSelector:@selector(setIsTouchEnabled:)]) {
+//                [child setIsTouchEnabled:enabled];
+//            }
+//        }
 	}
 }
-
 
 #endif // Mac
 
@@ -264,6 +296,60 @@
 @end
 
 #pragma mark -
+#pragma mark LayerRGBA
+
+@implementation CCLayerRGBA
+
+@synthesize color = color_;
+
+-(id) init
+{
+	if ( (self=[super init]) ) {
+        displayedOpacity_ = realOpacity_ = 255; 
+        color_ = ccWHITE;
+    }
+    return self;
+}
+
+// override to update opacity based on parent's
+- (void) onEnter {
+    [super onEnter];
+    self.opacity = realOpacity_;
+}
+
+-(GLubyte) opacity
+{
+	return realOpacity_;
+}
+
+-(GLubyte) displayedOpacity
+{
+	return displayedOpacity_;
+}
+
+/** Override synthesized setOpacity to recurse items */
+- (void) setOpacity:(GLubyte)opacity
+{
+	displayedOpacity_ = realOpacity_ = opacity;
+
+#if CC_PROPAGATE_OPACITY
+    if ([self.parent conformsToProtocol:@protocol(CCRGBAProtocol)]) {
+        displayedOpacity_ = realOpacity_ * ((id<CCRGBAProtocol>)self.parent).displayedOpacity/255.0;
+    }
+	
+	id<CCRGBAProtocol> item;
+	CCARRAY_FOREACH(children_, item) {
+        if ([item conformsToProtocol:@protocol(CCRGBAProtocol)]) {
+            item.opacity = item.opacity;
+        }
+    }
+#endif
+
+}
+
+@end
+
+#pragma mark -
 #pragma mark LayerColor
 
 @interface CCLayerColor (Private)
@@ -272,10 +358,7 @@
 
 @implementation CCLayerColor
 
-// Opacity and RGB color protocol
-@synthesize opacity = opacity_, color = color_;
 @synthesize blendFunc = blendFunc_;
-
 
 + (id) layerWithColor:(ccColor4B)color width:(GLfloat)w  height:(GLfloat) h
 {
@@ -304,7 +387,7 @@
 		color_.r = color.r;
 		color_.g = color.g;
 		color_.b = color.b;
-		opacity_ = color.a;
+        displayedOpacity_ = realOpacity_ = color.a;
 		
 		for (NSUInteger i = 0; i<sizeof(squareVertices_) / sizeof( squareVertices_[0]); i++ ) {
 			squareVertices_[i].x = 0.0f;
@@ -356,7 +439,7 @@
 		squareColors_[i].r = color_.r;
 		squareColors_[i].g = color_.g;
 		squareColors_[i].b = color_.b;
-		squareColors_[i].a = opacity_;
+		squareColors_[i].a = displayedOpacity_;
 	}
 }
 
@@ -378,7 +461,7 @@
 	if( newBlend )
 		glBlendFunc( blendFunc_.src, blendFunc_.dst );
 	
-	else if( opacity_ != 255 ) {
+	else if( displayedOpacity_ != 255 ) {
 		newBlend = YES;
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	}
@@ -402,11 +485,12 @@
 	[self updateColor];
 }
 
--(void) setOpacity: (GLubyte) o
+-(void) setOpacity: (GLubyte) opacity
 {
-	opacity_ = o;
-	[self updateColor];
+    [super setOpacity:opacity];
+    [self updateColor];
 }
+
 @end
 
 
@@ -467,7 +551,7 @@
 		u = ccpMult(u, h2 * (float)c);
 	}
 	
-	float opacityf = (float)opacity_/255.0f;
+	float opacityf = (float)displayedOpacity_/255.0f;
 	
     ccColor4B S = {
 		color_.r,

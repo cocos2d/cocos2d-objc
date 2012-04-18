@@ -43,7 +43,7 @@
 #if CC_SPRITEBATCHNODE_RENDER_SUBPIXEL
 #define RENDER_IN_SUBPIXEL
 #else
-#define RENDER_IN_SUBPIXEL(__A__) ( (int)(__A__))
+#define RENDER_IN_SUBPIXEL(__A__) ( round(__A__))
 #endif
 
 // XXX: Optmization
@@ -133,9 +133,8 @@ static SEL selSortMethod = NULL;
 		// if the sprite is added to a batchnode, then it will automatically switch to "batchnode Render"
 		[self useSelfRender];
 		
-		opacityModifyRGB_			= YES;
-		opacity_					= 255;
-		color_ = colorUnmodified_	= ccWHITE;
+		opacityModifyRGB_ = YES;
+        colorUnmodified_ = color_;
 		
 		blendFunc_.src = CC_BLEND_SRC;
 		blendFunc_.dst = CC_BLEND_DST;
@@ -620,7 +619,12 @@ static SEL selSortMethod = NULL;
 		ccp(quad_.br.vertices.x,quad_.br.vertices.y),
 		ccp(quad_.tr.vertices.x,quad_.tr.vertices.y),
 	};
+    glColor4ub(0, 255, 0, 255);
 	ccDrawPoly(vertices, 4, YES);
+    ccDrawLine(ccp(quad_.tl.vertices.x,quad_.tl.vertices.y),
+               ccp(quad_.br.vertices.x,quad_.br.vertices.y));
+    ccDrawLine(ccp(quad_.tr.vertices.x,quad_.tr.vertices.y),
+               ccp(quad_.bl.vertices.x,quad_.bl.vertices.y));
 #elif CC_SPRITE_DEBUG_DRAW == 2
 	// draw texture box
 	CGSize s = self.textureRect.size;
@@ -788,6 +792,12 @@ static SEL selSortMethod = NULL;
 	SET_DIRTY_RECURSIVELY();
 }
 
+-(void)moveBy:(CGPoint)positionDelta
+{
+    [super moveBy:positionDelta];
+    SET_DIRTY_RECURSIVELY();
+}
+
 -(void)setRotation:(float)rot
 {
 	[super setRotation:rot];
@@ -878,7 +888,7 @@ static SEL selSortMethod = NULL;
 #pragma mark CCSprite - RGBA protocol
 -(void) updateColor
 {
-	ccColor4B color4 = {color_.r, color_.g, color_.b, opacity_ };
+	ccColor4B color4 = {color_.r, color_.g, color_.b, displayedOpacity_ };
 	
 	quad_.bl.colors = color4;
 	quad_.br.colors = color4;
@@ -898,16 +908,10 @@ static SEL selSortMethod = NULL;
 	// do nothing
 }
 
--(GLubyte) opacity
+-(void) setOpacity:(GLubyte) opacity
 {
-	return opacity_;
-}
-
--(void) setOpacity:(GLubyte) anOpacity
-{
-	opacity_			= anOpacity;
-
-	// special opacity for premultiplied textures
+	[super setOpacity:opacity];
+    // special opacity for premultiplied textures
 	if( opacityModifyRGB_ )
 		[self setColor: colorUnmodified_];
 	
@@ -927,9 +931,9 @@ static SEL selSortMethod = NULL;
 	color_ = colorUnmodified_ = color3;
 	
 	if( opacityModifyRGB_ ){
-		color_.r = color3.r * opacity_/255.0f;
-		color_.g = color3.g * opacity_/255.0f;
-		color_.b = color3.b * opacity_/255.0f;
+		color_.r = color3.r * displayedOpacity_/255.0f;
+		color_.g = color3.g * displayedOpacity_/255.0f;
+		color_.b = color3.b * displayedOpacity_/255.0f;
 	}
 	
 	[self updateColor];
@@ -964,6 +968,11 @@ static SEL selSortMethod = NULL;
 	// update rect
 	rectRotated_ = frame.rotated;
 	[self setTextureRectInPixels:frame.rectInPixels rotated:frame.rotated untrimmedSize:frame.originalSizeInPixels];
+}
+
+-(void) setDisplayFrameWithName:(NSString*)frameName
+{
+    [self setDisplayFrame:[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:frameName]];
 }
 
 -(void) setDisplayFrameWithAnimationName: (NSString*) animationName index:(int) frameIndex

@@ -12,7 +12,7 @@
 
 static int sceneIdx=-1;
 static NSString *transitions[] = {	
-	
+    @"SpriteTestDelayAnimation",
 	@"Sprite1",
 	@"SpriteBatchNode1",
 	@"SpriteFrameTest",
@@ -4379,6 +4379,88 @@ Class restartAction()
 @end
 
 #pragma mark -
+#pragma mark Example SpriteTestDelayAnimation
+
+@implementation SpriteTestDelayAnimation
+
+#define firstSpriteTag 666
+static int currSpriteTag = firstSpriteTag;
+
+-(void) startAnimation
+{
+	CCSprite * sprite = (CCSprite*)[self getChildByTag:currSpriteTag];
+//	NSMutableArray *animFrames = [NSMutableArray array];
+//	for(int i = 0; i < 14; i++) {
+//        
+//		CCSpriteFrame *frame = [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:[NSString stringWithFormat:@"grossini_dance_%02d.png",(i+1)]];
+//		[animFrames addObject:frame];
+//	}
+//    CCAnimation *animation = [CCAnimation animationWithFrames:animFrames];
+    
+    CCLOG(@"totalFrames: %f", [CCDirector sharedDirector].totalFrames/10.0);
+//	[sprite runAction:[CCRepeatForever actionWithAction: [CCAnimate actionWithDuration:1.0f animation:animation restoreOriginalFrame:NO] ]];			
+
+//    [sprite runAction:[CCRepeatForever actionWithAction: [CCRotateBy actionWithDuration:1.0f angle:360] ]];			
+
+    id downScaleAction = [CCScaleTo actionWithDuration:1.0f scale:0.1f]; 
+    
+    id upScaleAction = [CCScaleTo actionWithDuration:2.0f scale:1.0f];
+    
+    id sequenceAction = [CCSequence actionOne:downScaleAction two:upScaleAction];
+    
+    id repeatAction = [CCRepeatForever actionWithAction:sequenceAction];
+    
+    [sprite runAction:repeatAction];
+
+    
+	currSpriteTag++;
+}
+
+-(id) init
+{
+	if( (self=[super init]) )
+	{
+		CGSize s = [[CCDirector sharedDirector] winSize];
+		[[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"animations/grossini.plist"];
+		[[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"animations/grossini_gray.plist"];
+        
+		int sprites = 6;
+		for(int i=0;i<=sprites;i++)
+		{
+			CCSprite *sprite = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_01.png"];
+			sprite.position = ccp( s.width/8*(i+1), s.height/2);
+            
+			CCSprite *point = [CCSprite spriteWithFile:@"r1.png"];
+			point.scale = 0.25f;
+			point.position = sprite.position;
+			//[self addChild:point z:1];
+            
+			[self addChild:sprite z:0 tag:firstSpriteTag + i];
+		}
+        
+		for(int i=0;i<=sprites;i++)
+		{
+            [self runAction:[CCSequence actions:[CCDelayTime actionWithDuration:CCRANDOM_0_1() * .5f],
+							 [CCCallFunc actionWithTarget:self selector:@selector(startAnimation)],nil]];
+            
+		}
+	}
+	return self;
+}
+
+- (void) dealloc
+{
+	[[CCSpriteFrameCache sharedSpriteFrameCache] removeUnusedSpriteFrames];
+	[super dealloc];
+}
+
+-(NSString *) title
+{
+	return @"Sprite test delay";
+}
+
+@end
+
 #pragma mark AnimationCacheFile
 
 @implementation AnimationCacheFile
@@ -4563,7 +4645,7 @@ Class restartAction()
 	
 	// and run it!
 	[director runWithScene: scene];
-	
+	[director startAnimation];
 	return YES;
 }
 
