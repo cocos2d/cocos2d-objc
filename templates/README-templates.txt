@@ -2,7 +2,7 @@ Xcode 4 templates:
 ------------------
 
 
-The Xcode4 template format is not documented, so the the current templates doesn't have all
+The Xcode4 template format is not documented, so the current templates doesn't have all
 the power of the Xcode3 templates. Once the format is documented, more functionality will be added.
 
 
