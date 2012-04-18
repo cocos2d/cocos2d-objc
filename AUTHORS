@@ -77,7 +77,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 
 * manucorporat (manu.valladolid) (http://forzefield.com/):
 	Author of new Retina Display code:
-		Intead of recalculating the position of the nodes, the ViewPort is increased.
+		Intead of recalculating the position of the nodes, the Projection is increased, while the ViewPort has the size of the screen.
 		Code is much simpler to read and maintain
 	Author of new MotionStreak code:
 		Much faster rendering. No need to use Ribbon

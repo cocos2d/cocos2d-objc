@@ -88,7 +88,7 @@ Class restartAction()
 
 		CCMenuItemToggle *itemMode = [CCMenuItemToggle itemWithTarget:self
 														  selector:@selector(modeCallback:)
-															 items: [CCMenuItemFont itemWithString: @"Use Fast Mode"], [CCMenuItemFont itemWithString: @"Use Slow Mode"], nil];
+															 items: [CCMenuItemFont itemWithString: @"Use High Quality Mode"], [CCMenuItemFont itemWithString: @"Use Fast Mode"], nil];
 
 		CCMenu *menuMode = [CCMenu menuWithItems:itemMode, nil];
 		[self addChild:menuMode];

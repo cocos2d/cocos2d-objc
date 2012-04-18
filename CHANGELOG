@@ -21,7 +21,7 @@ version 2.0-rc1 XX-Apr-2012
 		Glyphs with big yOffset are rendered correctly (issue #1343)
 . [FIX] LabelTTF: Better support for custom TTF (Mac)
 		Alignments and LineBreak modes values are the both on iOS and Mac. Needed for editors.
-. [FIX] MotionStreak: Use "slow mode" default (workaround for issue #1358)
+. [FIX] MotionStreak: Fast mode works with textures (issue #1358)
 		The initial position will be the 1st "new" position. Prevents "tail" from (0,0)
 . [FIX] NSThread+Block: fixed crash due to block not being copied to the heap
 . [FIX] OpenGL: VAO are initialized on the cocos2d thread on machines that don't support shareables VAOs

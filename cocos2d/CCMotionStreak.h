@@ -44,6 +44,7 @@
 
     NSUInteger maxPoints_;
     NSUInteger nuPoints_;
+	NSUInteger previousNuPoints_;
 
     /** Pointers */
     CGPoint *pointVertexes_;
