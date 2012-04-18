@@ -68,7 +68,7 @@
 
 		startingPositionInitialized_ = NO;
         positionR_ = CGPointZero;
-        fastMode_ = NO;
+        fastMode_ = YES;
         minSeg_ = (minSeg == -1.0f) ? stroke/5.0f : minSeg;
         minSeg_ *= minSeg_;
 
@@ -76,7 +76,7 @@
         fadeDelta_ = 1.0f/fade;
 
         maxPoints_ = (int)(fade*60.0f)+2;
-        nuPoints_ = 0;
+        nuPoints_ = previousNuPoints_ = 0;
         pointState_ = malloc(sizeof(float) * maxPoints_);
         pointVertexes_ = malloc(sizeof(CGPoint) * maxPoints_);
 
@@ -224,16 +224,28 @@
         if(nuPoints_ > 0 && fastMode_ )
         {
             if(nuPoints_ > 1)
-                ccVertexLineToPolygon(pointVertexes_, stroke_, vertices_, texCoords_, nuPoints_, 1);
+                ccVertexLineToPolygon(pointVertexes_, stroke_, vertices_, nuPoints_, 1);
             else
-                ccVertexLineToPolygon(pointVertexes_, stroke_, vertices_, texCoords_, 0, 2);
+                ccVertexLineToPolygon(pointVertexes_, stroke_, vertices_, 0, 2);
         }
 
         nuPoints_ ++;
     }
 
     if( ! fastMode_ )
-        ccVertexLineToPolygon(pointVertexes_, stroke_, vertices_, texCoords_, 0, nuPoints_);
+        ccVertexLineToPolygon(pointVertexes_, stroke_, vertices_, 0, nuPoints_);
+	
+	
+	// Updated Tex Coords only if they are different than previous step
+	if( nuPoints_  && previousNuPoints_ != nuPoints_ ) {
+		float texDelta = 1.0f / nuPoints_;
+		for( i=0; i < nuPoints_; i++ ) {
+			texCoords_[i*2] = (ccTex2F) {0, texDelta*i};
+			texCoords_[i*2+1] = (ccTex2F) {1, texDelta*i};
+		}
+		
+		previousNuPoints_ = nuPoints_;
+	}
 }
 
 - (void) reset
