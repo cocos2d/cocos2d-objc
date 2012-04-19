@@ -1297,7 +1297,7 @@ static float menuItemPaddingCenter = 50;
 
         CCLayerColor *colorLayer = [CCLayerColor layerWithColor:ccc4(100, 100, 100, 255) width:blockSize.width height:blockSize.height];
         colorLayer.anchorPoint = ccp(0,0);
-        colorLayer.position = ccp((s.width - blockSize.width) / 2, 60);
+        colorLayer.position = ccp((s.width - blockSize.width) / 2, (s.height - blockSize.height) / 2);
 
         [self addChild:colorLayer];
 
@@ -1350,7 +1350,7 @@ static float menuItemPaddingCenter = 50;
                                     fontName:@"Marker Felt"
                                     fontSize:32];
     self.label.anchorPoint = ccp(0,0);
-    self.label.position = ccp((s.width - blockSize.width) / 2, 60);
+    self.label.position = ccp((s.width - blockSize.width) / 2, (s.height - blockSize.height)/2 );
     
     [self addChild:self.label];
 }

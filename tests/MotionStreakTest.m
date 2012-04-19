@@ -93,7 +93,7 @@ Class restartAction()
 		CCMenu *menuMode = [CCMenu menuWithItems:itemMode, nil];
 		[self addChild:menuMode];
 
-		[menuMode setPosition:ccp(s.width/2,65)];
+		[menuMode setPosition:ccp(s.width/2,s.height/4)];
 
 	}
 	return self;
@@ -169,7 +169,7 @@ Class restartAction()
 	// the target object is offset from root, and the streak is moved to follow it
 	target = [CCSprite spriteWithFile:@"r1.png"];
 	[root addChild:target];
-	[target setPosition:ccp(100,0)];
+	[target setPosition:ccp(s.width/4,0)];
 
 	// create the streak object and add it to the scene
 	streak_ = [CCMotionStreak streakWithFade:2 minSeg:3 width:32 color:ccGREEN textureFilename:@"streak.png"];
