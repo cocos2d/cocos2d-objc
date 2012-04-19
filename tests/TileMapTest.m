@@ -1641,7 +1641,7 @@ Class restartAction()
 	// On iPad     : "-ipad", "-hd"
 	// On iPhone HD: "-hd"
 	CCFileUtils *sharedFileUtils = [CCFileUtils sharedFileUtils];
-	[sharedFileUtils setEnableFallbackSuffixes:YES];			// Default: NO. No fallback suffixes are going to be used
+//	[sharedFileUtils setEnableFallbackSuffixes:YES];			// Default: NO. No fallback suffixes are going to be used
 	[sharedFileUtils setiPhoneRetinaDisplaySuffix:@"-hd"];		// Default on iPhone RetinaDisplay is "-hd"
 	[sharedFileUtils setiPadSuffix:@"-ipad"];					// Default on iPad is "ipad"
 	[sharedFileUtils setiPadRetinaDisplaySuffix:@"-ipadhd"];	// Default on iPad RetinaDisplay is "-ipadhd"
