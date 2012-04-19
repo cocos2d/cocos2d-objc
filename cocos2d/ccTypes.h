@@ -314,7 +314,6 @@ typedef struct _ccBlendFunc
 //! ccResolutionType
 typedef enum
 {
-
 	//! Unknonw resolution type
 	kCCResolutionUnknown,
 #ifdef __CC_PLATFORM_IOS

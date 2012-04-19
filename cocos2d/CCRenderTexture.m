@@ -210,8 +210,8 @@
 	int ty = s.height;
 	
 	int bitsPerComponent			= 8;
-	int bitsPerPixel				= 32;
-	int bytesPerPixel				= (bitsPerComponent * 4)/8;
+    int bitsPerPixel                = 4 * 8;
+    int bytesPerPixel               = bitsPerPixel / 8;
 	int bytesPerRow					= bytesPerPixel * tx;
 	NSInteger myDataLength			= bytesPerRow * ty;
 	

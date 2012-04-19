@@ -21,7 +21,7 @@
 
 /**
  @file
- Based on Chipmunk cpArray.
+ arrd on Chipmunk cpArray.
  ccArray is a faster alternative to NSMutableArray, it does pretty much the
  same thing (stores NSObjects and retains/releases them appropriately). It's
  faster because:
@@ -44,7 +44,6 @@
 #import <string.h>
 
 #import "../ccMacros.h"
-
 
 #pragma mark -
 #pragma mark ccArray for Objects
@@ -277,7 +276,9 @@ static inline void ccArrayMakeObjectsPerformSelector(ccArray *arr, SEL sel)
 {
 	for( NSUInteger i = 0; i < arr->num; i++)
 #pragma clang diagnostic push
+#if defined(__has_feature) && __has_feature(objc_arc)				
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+#endif		
 		[arr->arr[i] performSelector:sel];
 #pragma clang diagnostic pop
 }
@@ -286,8 +287,23 @@ static inline void ccArrayMakeObjectsPerformSelectorWithObject(ccArray *arr, SEL
 {
 	for( NSUInteger i = 0; i < arr->num; i++)
 #pragma clang diagnostic push
+		
+#if defined(__has_feature) && __has_feature(objc_arc)		
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+#endif		
 		[arr->arr[i] performSelector:sel withObject:object];
+#pragma clang diagnostic pop
+}
+
+static inline void ccArrayMakeObjectPerformSelectorWithArrayObjects(ccArray *arr, SEL sel, id object)
+{
+	for( NSUInteger i = 0; i < arr->num; i++)
+#pragma clang diagnostic push
+		
+#if defined(__has_feature) && __has_feature(objc_arc)		
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+#endif		
+		[object performSelector:sel withObject:arr->arr[i]];
 #pragma clang diagnostic pop
 }
 
@@ -339,7 +355,7 @@ static inline void ccCArrayEnsureExtraCapacity(ccCArray *arr, NSUInteger extra)
 static inline NSUInteger ccCArrayGetIndexOfValue(ccCArray *arr, CCARRAY_ID value)
 {
 	for( NSUInteger i = 0; i < arr->num; i++)
-		if( arr->arr[i] == value ) return i;
+		if( [arr->arr[i] isEqual:value] ) return i;
 	return NSNotFound;
 }
 
@@ -457,4 +473,99 @@ static inline void ccCArrayFullRemoveArray(ccCArray *arr, ccCArray *minusArr)
 
 	arr->num -= back;
 }
+
+//used by mergesortL
+static inline void pointerswap(void* a, void* b, size_t width)
+{
+    void* tmp;
+    tmp = *(void**)a;
+    *(void**)a = *(void**)b;
+    *(void**)b = tmp;
+}
+
+// iterative mergesort arrd on
+//  http://www.inf.fh-flensburg.de/lang/algorithmen/sortieren/merge/mergiter.htm  
+static inline int mergesortL(ccCArray* array, size_t width, int (*compar)(const void *, const void *))
+{
+    CCARRAY_ID *arr = array->arr; 
+    NSInteger i,j,k,s,m,n= array->num; 
+    
+    CCARRAY_ID *B = (CCARRAY_ID*) malloc((n/2 + 1) * width);
+    for (s = 1; s < n; s += s) 
+    {
+        for (m = n-1-s; m >= 0; m -= s+s)
+        {
+            NSInteger lo = MAX(m-(s+1),0); 
+            NSInteger hi = m+s; 
+            
+            j = lo;
+
+            if (m-j > 0)
+            {
+                //triggers a warning when compiled with ARC, B needs to be strong typed, for compiling for obj-c++
+                //memcpy aritmetics aren't allowed on void* types
+                //explicitely casting didn't work
+                #pragma clang diagnostic push
+#if defined(__has_feature) && __has_feature(objc_arc)				
+                #pragma clang diagnostic ignored "-Warc-non-pod-memaccess"
+#endif				
+                
+                memcpy(B, &arr[j], (m-j) * width);
+                #pragma clang diagnostic pop
+            }
+            
+            i = 0;
+            j = m;
+            k = lo; 
+            
+            while (k<j  && j <= hi) 
+            {
+                if (compar(&B[i],&arr[j]) <= 0)
+                {    
+                    pointerswap(&arr[k++],&B[i++], width);
+                }
+             
+                else 
+                {    
+                   pointerswap(&arr[k++],&arr[j++], width);
+                }
+            }
+            
+            while (k<j)
+                pointerswap(&arr[k++],&B[i++],width);
+        }
+    }
+   	free(B);
+	return 0;
+}
+
+static inline void insertionSort(ccCArray* arr, int (*comparator)(const void *, const void *))
+{
+    // It sorts source array in ascending order
+	
+	// adaptive - performance adapts to the initial order of elements
+	// stable - insertion sort retains relative order of the same elements
+	// in-place - requires constant amount of additional space
+	// online - new elements can be added during the sort
+	
+	NSInteger i,j,length = arr->num;
+	
+	CCARRAY_ID *x = arr->arr;
+	id temp;	
+    
+	// insertion sort
+	for(i=1; i<length; i++)
+	{
+		j = i;
+		//continue moving element downwards while order is descending 
+		while( j>0 && ( comparator(  &x[j-1],  &x[j]  ) == NSOrderedDescending) )
+		{
+			temp = x[j];
+			x[j] = x[j-1];
+			x[j-1] = temp;
+			j--;
+		}
+	}
+}
+
 #endif // CC_ARRAY_H

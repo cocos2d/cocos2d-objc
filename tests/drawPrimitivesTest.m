@@ -206,7 +206,7 @@ Class restartAction()
 	// filled poly
 	glLineWidth(1);
 	CGPoint filledVertices[] = { ccp(0,120), ccp(50,120), ccp(50,170), ccp(25,200), ccp(0,170) };
-	ccDrawFilledPoly(filledVertices, 5, ccc4f(0.5f, 0.5f, 1, 1 ) );
+	ccDrawSolidPoly(filledVertices, 5, ccc4f(0.5f, 0.5f, 1, 1 ) );
 
 
 	// closed purble poly
@@ -227,6 +227,10 @@ Class restartAction()
 
 	CHECK_GL_ERROR_DEBUG();
 
+    //draw a solid polygon
+	CGPoint vertices3[] = {ccp(60,160), ccp(70,190), ccp(100,190), ccp(90,160)};
+    ccDrawSolidPoly( vertices3, 4, ccc4f(1,1,0,1) );
+        
 	// restore original values
 	glLineWidth(1);
 	ccDrawColor4B(255,255,255,255);

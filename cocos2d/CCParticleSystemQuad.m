@@ -250,7 +250,6 @@
 #endif // ! CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
 
 	// Important. Texture in cocos2d are inverted, so the Y component should be inverted
-//<<<<<<< HEAD
 	CC_SWAP( top, bottom);
 
 	ccV3F_C4B_T2F_Quad *quads;
@@ -304,7 +303,7 @@
 {
 
 	NSAssert( CGPointEqualToPoint( spriteFrame.offsetInPixels , CGPointZero ), @"QuadParticle only supports SpriteFrames with no offsets");
-
+    
 	// update texture before updating texture rect
 	if ( spriteFrame.texture.name != texture_.name )
 		[self setTexture: spriteFrame.texture];
