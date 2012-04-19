@@ -135,6 +135,25 @@ void ccDrawLine( CGPoint origin, CGPoint destination )
 	CC_INCREMENT_GL_DRAWS(1);
 }
 
+void ccDrawRect( CGPoint origin, CGPoint destination )
+{
+	ccDrawLine(CGPointMake(origin.x, origin.y), CGPointMake(destination.x, origin.y));
+	ccDrawLine(CGPointMake(destination.x, origin.y), CGPointMake(destination.x, destination.y));
+	ccDrawLine(CGPointMake(destination.x, destination.y), CGPointMake(origin.x, destination.y));
+	ccDrawLine(CGPointMake(origin.x, destination.y), CGPointMake(origin.x, origin.y));
+}
+
+void ccDrawSolidRect( CGPoint origin, CGPoint destination, ccColor4F color )
+{
+	CGPoint vertices[] = {
+		origin,
+		{destination.x, origin.y},
+		destination,
+		{origin.x, destination.y},
+	};
+	
+	ccDrawSolidPoly(vertices, 4, color );
+}
 
 void ccDrawPoly( const CGPoint *poli, NSUInteger numberOfPoints, BOOL closePolygon )
 {
@@ -170,7 +189,7 @@ void ccDrawPoly( const CGPoint *poli, NSUInteger numberOfPoints, BOOL closePolyg
 	CC_INCREMENT_GL_DRAWS(1);
 }
 
-void ccDrawFilledPoly( const CGPoint *poli, NSUInteger numberOfPoints, ccColor4F color )
+void ccDrawSolidPoly( const CGPoint *poli, NSUInteger numberOfPoints, ccColor4F color )
 {
 	lazy_init();
     

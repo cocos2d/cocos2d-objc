@@ -8,7 +8,6 @@ http://www.cocos2d-iphone.org/forum
 cocos2d logos by Michael Heald (http://www.fullyillustrated.com)
 
 
-
 cocos2d for iPhone 2.0 authors
 ------------------------------
 
@@ -143,14 +142,16 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 cocos2d for iPhone authors for v1.1
 -----------------------------------
 
-Lead Developers:
+Lead Developer:
 	Marco Tillemans (http://www.welcometothefabrik.com/)
+
+Former Lead Developer:
 	Ricardo Quesada (http://www.cocos2d-iphone.org)
 
 
 Contributors (alphabetically ordered):
 
-* andy
+* Andreas Herbig (http://www.3spin.de/)
 	fix for incorrect CCRepeat behavior
 	
 * akotiranta 
@@ -163,6 +164,10 @@ Contributors (alphabetically ordered):
 	Word Wrap works on LabelTTF on Mac
 	bug fixes for failure to compile on 32-bit mac builds
 	created new drawPrimitives functions, ccDrawRect, ccDrawSolidRect and ccDrawSolidPoly.
+    bug fix for CCTMXXMLParser in release mode
+    
+* Fabian Rueger
+    Provided Beacon.png for new spriteTest
 	
 * Jerrod Putman (http://www.tinytimgames.com)
 	Original author of ARC compatibility code
@@ -192,18 +197,31 @@ Contributors (alphabetically ordered):
 	EAGLView destroys and recreates all OpenGL buffers correctly
 	TileMap: flipped tiles can be changed during runtime
 
+* Mark Haylock
+    Fix for CCParticleSystem to unschedule update method when deallocated
 * Martin 
 	Co-author of animated particle system
 
 * Nicky Weber (https://github.com/nickyEnjoysWoogoo):
 	Added convenience function to create a ccColor4F from color components	
+    
+* Nicolas Barrios (http://wefiends.com)
+    Fix for CCArray for ARC compatibility 
 
 * podhrask...@gmail.com
 	TouchDispatcher: correctly handles addition and removal of handlers when being inside a touch handler. patch
 
 * Ricardo Ruiz:
 	Added support for RGB888 textures
+    
+* Rick Smorawski
+    Added full unicode support to CCLabelBMFont
 
+* Samuel J. Grabski http://www.sg7.com
+	Created a new touchdispatcher implementation
+    New touchdispatcher performance tests
+    Fix for touchdispatcher
+    
 * Scott Lembcke (AKA slembcke) (http://chipmunk-physics.net/)
 	Improved ARC compatiblity code
 
@@ -213,15 +231,25 @@ Contributors (alphabetically ordered):
 * Shakthi:
 	Added CCNode#onExitTransitionDidStart method
 	Fixed fading background music issue
+    Made CCLOG a bit more verbose
+    Fixed unrecognised clang pragma's on LLVM < 2.0. 
+    
+* Skyhawk (http://www.hkasoftware.com) 
+    Fix for addFrame method in CCAnimation
 
 * slycrel (http://folderapp.blogspot.com/)
 	Added support for flipped tiles in TMX maps. Also added test case
 	Added support for in-memory TMX map creation. Also added a test case
-	TMX Map: fixed crash when multiple layers and tiles were used with rotation
+    TMX Map: fixed crash when multiple layers and tiles were used with rotation
 
+* Spencer Ho
+    fixed 3d projection settings for ipad3 
 
 * Stepan Generalov (iPsi) (http://www.itraceur.ru/)
 	FileUtils: Loads -hd resources even if the -sd resource is not present. patch
+
+* Steve Kanter
+    new file extension for ipad retina
 
 
 cocos2d for iPhone authors for v1.0

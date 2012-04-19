@@ -312,6 +312,8 @@
 
 -(void) dealloc
 {
+	[self unscheduleUpdate];
+
 	free( particles );
 
 	[texture_ release];

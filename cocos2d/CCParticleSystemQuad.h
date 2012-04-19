@@ -33,17 +33,15 @@
 @class CCSpriteFrame;
 
 /** CCParticleSystemQuad is a subclass of CCParticleSystem
-
+ 
  It includes all the features of ParticleSystem.
 
  Special features and Limitations:
   - Particle size can be any float number.
   - The system can be scaled
   - The particles can be rotated
-  - On 1st and 2nd gen iPhones: It is only a bit slower that CCParticleSystemPoint
-  - On 3rd gen iPhone and iPads: It is MUCH faster than CCParticleSystemPoint
-  - It consumes more RAM and more GPU memory than CCParticleSystemPoint
   - It supports subrects
+  - It supports batched rendering since 1.1
  @since v0.8
  */
 @interface CCParticleSystemQuad : CCParticleSystem
