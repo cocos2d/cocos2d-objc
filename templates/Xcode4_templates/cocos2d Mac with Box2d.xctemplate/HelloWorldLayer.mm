@@ -44,7 +44,7 @@ enum {
 	float x = pos.x * PTM_RATIO;
 	float y = pos.y * PTM_RATIO;
 	
-	if ( !isRelativeAnchorPoint_ ) {
+	if ( ignoreAnchorPointForPosition_ ) {
 		x += anchorPointInPoints_.x;
 		y += anchorPointInPoints_.y;
 	}
