@@ -1,4 +1,4 @@
-version 2.0-rc1 XX-Apr-2012
+version 2.0-rc1 19-Apr-2012
 . [NEW] v1.1 Forward-ported changes:
 		CCArray: new sorting methods, replaceObjectAtIndex, isEqualToArray
 		CCArray: equalilty is tested by isEqual instead of comparing pointer addresses
