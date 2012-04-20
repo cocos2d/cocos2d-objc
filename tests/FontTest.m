@@ -102,7 +102,9 @@ NSString* restartAction()
 
 - (void)showFont:(NSString *)aFont
 {
-    CGSize blockSize = CGSizeMake(160, 200);
+	CGSize s = [[CCDirector sharedDirector] winSize];
+
+    CGSize blockSize = CGSizeMake(s.width/3, 200);
     CGFloat fontSize = 26;
 
 	[self removeChildByTag:kTagLabel1 cleanup:YES];
@@ -119,18 +121,21 @@ NSString* restartAction()
     CCLayerColor *leftColor = [CCLayerColor layerWithColor:ccc4(100, 100, 100, 255) width:blockSize.width height:blockSize.height];
     CCLayerColor *centerColor = [CCLayerColor layerWithColor:ccc4(200, 100, 100, 255) width:blockSize.width height:blockSize.height];
     CCLayerColor *rightColor = [CCLayerColor layerWithColor:ccc4(100, 100, 200, 255) width:blockSize.width height:blockSize.height];
+	
+	leftColor.ignoreAnchorPointForPosition = NO;
+	centerColor.ignoreAnchorPointForPosition = NO;
+	rightColor.ignoreAnchorPointForPosition = NO;
+	
     
-	CGSize s = [[CCDirector sharedDirector] winSize];
-
     top.anchorPoint = ccp(0.5, 1);
-    left.anchorPoint = leftColor.anchorPoint = ccp(0,0);
-    center.anchorPoint = centerColor.anchorPoint = ccp(0,0);
-    right.anchorPoint = rightColor.anchorPoint = ccp(0,0);
+    left.anchorPoint = leftColor.anchorPoint = ccp(0,0.5);
+    center.anchorPoint = centerColor.anchorPoint = ccp(0,0.5);
+    right.anchorPoint = rightColor.anchorPoint = ccp(0,0.5);
 
-	top.position = ccp(s.width/2,310);
-	left.position = leftColor.position = ccp(0,60);
-	center.position = centerColor.position = ccp(blockSize.width, 60);
-	right.position = rightColor.position = ccp(blockSize.width*2, 60);
+	top.position = ccp(s.width/2,s.height-20);
+	left.position = leftColor.position = ccp(0,s.height/2);
+	center.position = centerColor.position = ccp(blockSize.width, s.height/2);
+	right.position = rightColor.position = ccp(blockSize.width*2, s.height/2);
 
     [self addChild:leftColor z:-1];
 	[self addChild:left z:0 tag:kTagLabel1];
