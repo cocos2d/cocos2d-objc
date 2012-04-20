@@ -351,7 +351,7 @@ static inline NSInteger selectorCompare(id object1,id object2,void *userData){
 -(void)sortUsingFunction:(NSInteger (*)(id, id, void *))compare context:(void *)context
 {
     NSInteger h, i, j, k, l, m, n = [self count];
-    id  A, *B = NSZoneMalloc(NULL,(n/2 + 1) * sizeof(id));
+    id  A, *B = malloc( (n/2 + 1) * sizeof(id));
     
 	// to prevent retain counts from temporarily hitting zero.  
     for(i=0;i<n;i++)
