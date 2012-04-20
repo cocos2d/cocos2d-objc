@@ -354,8 +354,10 @@ static inline NSInteger selectorCompare(id object1,id object2,void *userData){
     id  A, *B = malloc( (n/2 + 1) * sizeof(id));
     
 	// to prevent retain counts from temporarily hitting zero.  
-    for(i=0;i<n;i++)
-        [[self objectAtIndex:i] retain];
+    for( i=0;i<n;i++)
+        // [[self objectAtIndex:i] retain]; // prevents compiler warning
+		[data->arr[i] retain];
+
     
     for (h = 1; h < n; h += h)
     {
@@ -364,10 +366,9 @@ static inline NSInteger selectorCompare(id object1,id object2,void *userData){
             l = m - h + 1;
             if (l < 0)
                 l = 0;
-            
             for (i = 0, j = l; j <= m; i++, j++)
                 B[i] = [self objectAtIndex:j];
-            
+
             for (i = 0, k = l; k < j && j <= m + h; k++)
             {
                 A = [self objectAtIndex:j];
@@ -386,7 +387,8 @@ static inline NSInteger selectorCompare(id object1,id object2,void *userData){
     }
     
     for(i=0;i<n;i++)
-        [[self objectAtIndex:i] release];
+		// [[self objectAtIndex:i] release]; // prevents compiler warning
+		[data->arr[i] release];
     
     free(B);
 }
