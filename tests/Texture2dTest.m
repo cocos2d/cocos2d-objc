@@ -1126,20 +1126,22 @@ Class restartAction()
 {
 	if( (self=[super init]) ) {
 
+		CGSize s = [[CCDirector sharedDirector] winSize];
+
 		for( int i=0;i < 15;i++ ) {
 
 			// BOTTOM sprites have alpha pre-multiplied
 			// they use by default GL_ONE, GL_ONE_MINUS_SRC_ALPHA
 			CCSprite *cloud = [CCSprite spriteWithFile:@"test_blend.png"];
 			[self addChild:cloud z:i+1 tag:100+i];
-			cloud.position = ccp(50+25*i, 80);
+			cloud.position = ccp(50+25*i, s.height/2+80);
 			cloud.blendFunc = (ccBlendFunc) { GL_ONE, GL_ONE_MINUS_SRC_ALPHA};
 
 			// CENTER sprites have also alpha pre-multiplied
 			// they use by default GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA
 			cloud = [CCSprite spriteWithFile:@"test_blend.png"];
 			[self addChild:cloud z:i+1 tag:200+i];
-			cloud.position = ccp(50+25*i, 160);
+			cloud.position = ccp(50+25*i, s.height/2);
 			[cloud setBlendFunc:(ccBlendFunc){GL_ONE_MINUS_DST_COLOR, GL_ZERO}];
 
 
@@ -1147,7 +1149,7 @@ Class restartAction()
 			// You can set any blend function to your sprites
 			cloud = [CCSprite spriteWithFile:@"test_blend.png"];
 			[self addChild:cloud z:i+1 tag:200+i];
-			cloud.position = ccp(50+25*i, 320-80);
+			cloud.position = ccp(50+25*i, s.height/2-80);
 			cloud.blendFunc = (ccBlendFunc) { GL_SRC_ALPHA, GL_ONE };  // additive blending
 		}
 	}
