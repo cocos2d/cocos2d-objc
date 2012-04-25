@@ -1,3 +1,6 @@
+version 2.0-rc2 XX-May-2012
+. [NEW] Added Javascript test using JSCocoa (Mac only)
+
 version 2.0-rc1 19-Apr-2012
 . [NEW] v1.1 Forward-ported changes:
 		CCArray: new sorting methods, replaceObjectAtIndex, isEqualToArray
