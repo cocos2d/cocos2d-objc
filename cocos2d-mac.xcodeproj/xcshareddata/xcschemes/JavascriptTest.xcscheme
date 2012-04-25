@@ -13,8 +13,8 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "A01DC81415476BDD00258D0E"
-               BuildableName = "JavascriptTest.app"
+               BlueprintIdentifier = "A034160515487C3C00AE4D93"
+               BuildableName = "SpriteTest copy.app"
                BlueprintName = "JavascriptTest"
                ReferencedContainer = "container:cocos2d-mac.xcodeproj">
             </BuildableReference>
@@ -31,8 +31,8 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "A01DC81415476BDD00258D0E"
-            BuildableName = "JavascriptTest.app"
+            BlueprintIdentifier = "A034160515487C3C00AE4D93"
+            BuildableName = "SpriteTest copy.app"
             BlueprintName = "JavascriptTest"
             ReferencedContainer = "container:cocos2d-mac.xcodeproj">
          </BuildableReference>
@@ -50,8 +50,8 @@
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "A01DC81415476BDD00258D0E"
-            BuildableName = "JavascriptTest.app"
+            BlueprintIdentifier = "A034160515487C3C00AE4D93"
+            BuildableName = "SpriteTest copy.app"
             BlueprintName = "JavascriptTest"
             ReferencedContainer = "container:cocos2d-mac.xcodeproj">
          </BuildableReference>
@@ -68,8 +68,8 @@
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "A01DC81415476BDD00258D0E"
-            BuildableName = "JavascriptTest.app"
+            BlueprintIdentifier = "A034160515487C3C00AE4D93"
+            BuildableName = "SpriteTest copy.app"
             BlueprintName = "JavascriptTest"
             ReferencedContainer = "container:cocos2d-mac.xcodeproj">
          </BuildableReference>
