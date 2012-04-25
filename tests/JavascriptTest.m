@@ -138,6 +138,7 @@ Class restartAction()
 		
 		// Eval a string
 		[jsc evalJSString:@"log(NSWorkspace.sharedWorkspace.activeApplication.NSApplicationName)"];
+
 		
 //		// Add an object of ours to the Javascript context
 //		[jsc setObject:self withName:@"controller"];
@@ -155,6 +156,19 @@ Class restartAction()
 
 	}
 	return self;
+}
+
+-(void) onEnter
+{
+	[super onEnter];
+	
+	JSCocoa* jsc = [JSCocoa new];
+	
+	CCFileUtils *fileUtils = [CCFileUtils sharedFileUtils];
+	NSString *path = [fileUtils fullPathFromRelativePath:@"js/test-sprite.js"];
+	[jsc evalJSFile:path];
+	
+	[jsc release];
 }
 
 -(NSString *) title
