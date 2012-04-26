@@ -107,6 +107,12 @@ typedef enum
 /** clears the texture with a color */
 -(void)clear:(float)r g:(float)g b:(float)b a:(float)a;
 
+/** clears the texture with a specified depth value */
+- (void)clearDepth:(float)depthValue;
+
+/** clears the texture with a specified stencil value */
+- (void)clearStencil:(int)stencilValue;
+
 /* creates a new CGImage from with the texture's data.
  Caller is responsible for releasing it by calling CGImageRelease().
  */
