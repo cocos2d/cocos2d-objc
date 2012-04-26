@@ -8,13 +8,22 @@
 
 @interface JSTest: CCLayer
 {
-    CCTextureAtlas	*atlas;
 }
+
 -(NSString*) title;
 -(NSString*) subtitle;
+-(void) setTitle:(NSString*)title;
+-(void) setSubtitle:(NSString*)subtitle;
+
 @end
 
 
 @interface JSSprite : JSTest
-{}
+{
+	NSUInteger testIndex_;
+	NSInteger numberOfTests_;
+}
+
+@property (readonly, nonatomic) NSUInteger testIndex;
+@property (readwrite, nonatomic) NSInteger numberOfTests;
 @end

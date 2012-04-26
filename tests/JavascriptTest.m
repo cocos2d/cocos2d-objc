@@ -11,6 +11,7 @@
 
 #import "JSCocoa.h"
 
+static NSInteger javascriptTest = 0;
 static int sceneIdx=-1;
 static NSString *transitions[] = {
 	@"JSSprite",
@@ -60,13 +61,13 @@ Class restartAction()
 		CGSize s = [[CCDirector sharedDirector] winSize];
 
 		CCLabelTTF *label = [CCLabelTTF labelWithString:[self title] fontName:@"Arial" fontSize:26];
-		[self addChild: label z:1];
+		[self addChild:label z:1 tag:1];
 		[label setPosition: ccp(s.width/2, s.height-50)];
 
 		NSString *subtitle = [self subtitle];
 		if( subtitle ) {
 			CCLabelTTF *l = [CCLabelTTF labelWithString:subtitle fontName:@"Thonburi" fontSize:16];
-			[self addChild:l z:1];
+			[self addChild:l z:1 tag:2];
 			[l setPosition:ccp(s.width/2, s.height-80)];
 		}
 
@@ -85,6 +86,19 @@ Class restartAction()
 	return self;
 }
 
+-(void) setTitle:(NSString*)string
+{
+	CCLabelTTF *label = (CCLabelTTF*) [self getChildByTag:1];
+	[label setString:string];
+}
+
+-(void) setSubtitle:(NSString*)string
+{
+	CCLabelTTF *label = (CCLabelTTF*) [self getChildByTag:2];
+	[label setString:string];
+}
+
+
 -(void) dealloc
 {
 	[super dealloc];
@@ -99,6 +113,8 @@ Class restartAction()
 
 -(void) nextCallback: (id) sender
 {
+	javascriptTest++;
+
 	CCScene *s = [CCScene node];
 	[s addChild: [nextAction() node]];
 	[[CCDirector sharedDirector] replaceScene: s];
@@ -106,6 +122,8 @@ Class restartAction()
 
 -(void) backCallback: (id) sender
 {
+	javascriptTest--;
+
 	CCScene *s = [CCScene node];
 	[s addChild: [backAction() node]];
 	[[CCDirector sharedDirector] replaceScene: s];
@@ -118,7 +136,7 @@ Class restartAction()
 
 -(NSString*) subtitle
 {
-	return nil;
+	return @"";
 }
 @end
 
@@ -126,42 +144,15 @@ Class restartAction()
 
 @implementation JSSprite
 
--(id) init
-{
-	if( (self=[super init]) ) {
-		
-		// Start
-		JSCocoa* jsc = [JSCocoa new];
-		
-		// Eval a file
-//		[jsc evalJSFile:@"path to a file"];
-		
-		// Eval a string
-		[jsc evalJSString:@"log(NSWorkspace.sharedWorkspace.activeApplication.NSApplicationName)"];
-
-		
-//		// Add an object of ours to the Javascript context
-//		[jsc setObject:self withName:@"controller"];
-//		
-//		// Call a Javascript method - we can use any object we added with setObject
-//		JSValueRef returnValue = [jsc callJSFunctionNamed:@"myJavascriptFunction" withArguments:self, nil];
-//	
-//		// The return value might be a raw Javascript value (null, true, false, a number) or an ObjC object
-//		// To get an ObjC object
-//		id resultingObject = [jsc toObject:returnValue];
-//		NSLog(@"resultingObject: %@", resultingObject);
-		
-		// (Cleanup : only needed if you don't use ObjC's Garbage Collection)
-		[jsc release];
-
-	}
-	return self;
-}
+@synthesize testIndex=testIndex_, numberOfTests=numberOfTests_;
 
 -(void) onEnter
 {
 	[super onEnter];
 	
+	if( javascriptTest < 0 )
+		javascriptTest = 0;
+
 	JSCocoa* jsc = [JSCocoa new];
 	
 	CCFileUtils *fileUtils = [CCFileUtils sharedFileUtils];
@@ -171,16 +162,15 @@ Class restartAction()
 	[jsc release];
 }
 
--(NSString *) title
+-(void) setNumberOfTests:(NSInteger)numberOfTests
 {
-	return @"JSSprite";
+	numberOfTests_ = numberOfTests;
 }
 
--(NSString *) subtitle
+-(NSUInteger) testIndex
 {
-	return @"Sprite generated from Javascript";
+	return javascriptTest % numberOfTests_;
 }
-
 @end
 
 #pragma mark - AppDelegate - iOS
