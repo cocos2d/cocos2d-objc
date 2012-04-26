@@ -43,4 +43,7 @@
 -(void)renderScreenShot;
 @end
 
+@interface RenderTextureTestDepthStencil : RenderTextureTest
+@end
+
 
