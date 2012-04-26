@@ -270,6 +270,34 @@
 	[self end];
 }
 
+- (void)clearDepth:(float)depthValue
+{
+  [self begin];
+  //! save old depth value
+  GLfloat depthClearValue;
+  glGetFloatv(GL_DEPTH_CLEAR_VALUE, &depthClearValue);
+
+  glClearDepth(depthValue);
+  glClear(GL_DEPTH_BUFFER_BIT);
+
+  // restore clear color
+  glClearDepth(depthClearValue);
+  [self end];
+}
+
+- (void)clearStencil:(int)stencilValue
+{
+  // save old stencil value
+  int stencilClearValue;
+  glGetIntegerv(GL_STENCIL_CLEAR_VALUE, &stencilClearValue);
+
+  glClearStencil(stencilValue);
+  glClear(GL_STENCIL_BUFFER_BIT);
+
+  // restore clear color
+  glClearStencil(stencilClearValue);
+}
+
 #pragma mark RenderTexture - Save Image
 
 -(CGImageRef) newCGImage
