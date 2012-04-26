@@ -111,7 +111,7 @@
 		// shader program
 		self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:SHADER_PROGRAM];
 
-		dimensions_ = CGSizeMake( dimensions.width, dimensions.height );
+		dimensions_ = dimensions;
 		hAlignment_ = alignment;
 		vAlignment_ = vertAlignment;
 		fontName_ = [name retain];
@@ -125,60 +125,64 @@
 
 - (void) setString:(NSString*)str
 {
-	[string_ release];
-	string_ = [str copy];
-    
-    NSString* fontName = fontName_;
+	NSAssert( str, @"Invalid string" );
+
+	if( string_.hash != str.hash ) {
+		[string_ release];
+		string_ = [str copy];
+		
+		NSString* fontName = fontName_;
     
 #ifdef __CC_PLATFORM_MAC
-    if ([[fontName lowercaseString] hasSuffix:@".ttf"] || YES)
-    {
-        // This is a file, register font with font manager
-        NSString* fontFile = [[CCFileUtils sharedFileUtils] fullPathFromRelativePath:fontName];
-        NSURL* fontURL = [NSURL fileURLWithPath:fontFile];
-        CTFontManagerRegisterFontsForURL((CFURLRef)fontURL, kCTFontManagerScopeProcess, NULL);
-        fontName = [[fontFile lastPathComponent] stringByDeletingPathExtension];
-    }
+		if ([[fontName lowercaseString] hasSuffix:@".ttf"] || YES)
+		{
+			// This is a file, register font with font manager
+			NSString* fontFile = [[CCFileUtils sharedFileUtils] fullPathFromRelativePath:fontName];
+			NSURL* fontURL = [NSURL fileURLWithPath:fontFile];
+			CTFontManagerRegisterFontsForURL((CFURLRef)fontURL, kCTFontManagerScopeProcess, NULL);
+			fontName = [[fontFile lastPathComponent] stringByDeletingPathExtension];
+		}
 #endif
 
-	CCTexture2D *tex;
-	if( dimensions_.width == 0 || dimensions_.height == 0 )
-		tex = [[CCTexture2D alloc] initWithString:str
-										 fontName:fontName
-										 fontSize:fontSize_  * CC_CONTENT_SCALE_FACTOR()];
-	else
-		tex = [[CCTexture2D alloc] initWithString:str
-									   dimensions:CC_SIZE_POINTS_TO_PIXELS(dimensions_)
-										hAlignment:hAlignment_
-										vAlignment:vAlignment_
-									lineBreakMode:lineBreakMode_
-										 fontName:fontName
-										 fontSize:fontSize_  * CC_CONTENT_SCALE_FACTOR()];
+		CCTexture2D *tex;
+		if( dimensions_.width == 0 || dimensions_.height == 0 )
+			tex = [[CCTexture2D alloc] initWithString:str
+											 fontName:fontName
+											 fontSize:fontSize_  * CC_CONTENT_SCALE_FACTOR()];
+		else
+			tex = [[CCTexture2D alloc] initWithString:str
+										   dimensions:CC_SIZE_POINTS_TO_PIXELS(dimensions_)
+											hAlignment:hAlignment_
+											vAlignment:vAlignment_
+										lineBreakMode:lineBreakMode_
+											 fontName:fontName
+											 fontSize:fontSize_  * CC_CONTENT_SCALE_FACTOR()];
 
 #ifdef __CC_PLATFORM_IOS
-	// iPad ?
-	if( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ) {
-		if( CC_CONTENT_SCALE_FACTOR() == 2 )
-			[tex setResolutionType:kCCResolutioniPadRetinaDisplay];
+		// iPad ?
+		if( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ) {
+			if( CC_CONTENT_SCALE_FACTOR() == 2 )
+				[tex setResolutionType:kCCResolutioniPadRetinaDisplay];
+			else
+				[tex setResolutionType:kCCResolutioniPad];
+		}
+		// iPhone ?
 		else
-			[tex setResolutionType:kCCResolutioniPad];
-	}
-	// iPhone ?
-	else
-	{
-		if( CC_CONTENT_SCALE_FACTOR() == 2 )
-			[tex setResolutionType:kCCResolutioniPhoneRetinaDisplay];
-		else
-			[tex setResolutionType:kCCResolutioniPhone];
-	}
+		{
+			if( CC_CONTENT_SCALE_FACTOR() == 2 )
+				[tex setResolutionType:kCCResolutioniPhoneRetinaDisplay];
+			else
+				[tex setResolutionType:kCCResolutioniPhone];
+		}
 #endif
 
-	[self setTexture:tex];
-	[tex release];
+		[self setTexture:tex];
+		[tex release];
 
-	CGRect rect = CGRectZero;
-	rect.size = [texture_ contentSize];
-	[self setTextureRect: rect];
+		CGRect rect = CGRectZero;
+		rect.size = [texture_ contentSize];
+		[self setTextureRect: rect];
+	}
 }
 
 -(NSString*) string
