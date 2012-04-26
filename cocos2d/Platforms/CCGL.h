@@ -50,8 +50,12 @@
 #define glGenVertexArrays			glGenVertexArraysOES
 #define glBindVertexArray			glBindVertexArrayOES
 
+#define CC_GL_DEPTH24_STENCIL8		GL_DEPTH24_STENCIL8_OES
+
 // Mac
 #elif __CC_PLATFORM_MAC
+
+#define CC_GL_DEPTH24_STENCIL8		GL_DEPTH24_STENCIL8
 
 #if 1
 #define glDeleteVertexArrays		glDeleteVertexArraysAPPLE
