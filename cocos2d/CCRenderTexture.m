@@ -79,7 +79,7 @@
 
 		// XXX multithread
 		if( [director runningThread] != [NSThread currentThread] )
-			CCLOG(@"cocos2d: WARNING. CCRenderTexture is running on its own thread. Make sure that an OpenGL context is being used on this thread!");
+			CCLOGWARN(@"cocos2d: WARNING. CCRenderTexture is running on its own thread. Make sure that an OpenGL context is being used on this thread!");
 
 		
 		w *= CC_CONTENT_SCALE_FACTOR();
@@ -106,29 +106,27 @@
 		texture_ = [[CCTexture2D alloc] initWithData:data pixelFormat:pixelFormat_ pixelsWide:powW pixelsHigh:powH contentSize:CGSizeMake(w, h)];
 		free( data );
 
-    GLint oldRBO;
-    glGetIntegerv(GL_RENDERBUFFER_BINDING, &oldRBO);
+		GLint oldRBO;
+		glGetIntegerv(GL_RENDERBUFFER_BINDING, &oldRBO);
 
-    // generate FBO
+		// generate FBO
 		glGenFramebuffers(1, &fbo_);
 		glBindFramebuffer(GL_FRAMEBUFFER, fbo_);
 
 		// associate texture with FBO
 		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texture_.name, 0);
 
-    if (depthStencilFormat != 0) {
-      //create and attach depth buffer
-      glGenRenderbuffers(1, &depthRenderBufffer_);
-      glBindRenderbuffer(GL_RENDERBUFFER, depthRenderBufffer_);
-      glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8_OES, powW, powH);
-      glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, depthRenderBufffer_);
+		if (depthStencilFormat != 0) {
+			//create and attach depth buffer
+			glGenRenderbuffers(1, &depthRenderBufffer_);
+			glBindRenderbuffer(GL_RENDERBUFFER, depthRenderBufffer_);
+			glRenderbufferStorage(GL_RENDERBUFFER, CC_GL_DEPTH24_STENCIL8, powW, powH);
+			glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, depthRenderBufffer_);
 
-      // if depth format is the one with stencil part, bind same render buffer as stencil attachment
-      if (depthStencilFormat == GL_DEPTH24_STENCIL8_OES) {
-        glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_STENCIL_ATTACHMENT,
-            GL_RENDERBUFFER, depthRenderBufffer_);
-      }
-    }
+			// if depth format is the one with stencil part, bind same render buffer as stencil attachment
+			if (depthStencilFormat == CC_GL_DEPTH24_STENCIL8)
+				glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_STENCIL_ATTACHMENT, GL_RENDERBUFFER, depthRenderBufffer_);
+		}
 
 		// check if it worked (probably worth doing :) )
 		NSAssert( glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE, @"Could not attach texture to framebuffer");
@@ -144,7 +142,7 @@
 		// issue #937
 		[sprite_ setBlendFunc:(ccBlendFunc){GL_ONE, GL_ONE_MINUS_SRC_ALPHA}];
 
-    glBindRenderbuffer(GL_RENDERBUFFER, oldRBO);
+		glBindRenderbuffer(GL_RENDERBUFFER, oldRBO);
 		glBindFramebuffer(GL_FRAMEBUFFER, oldFBO_);
 	}
 	return self;
@@ -153,9 +151,9 @@
 -(void)dealloc
 {
 	glDeleteFramebuffers(1, &fbo_);
-  if (depthRenderBufffer_) {
-    glDeleteRenderbuffers(1, &depthRenderBufffer_);
-  }
+	if (depthRenderBufffer_)
+		glDeleteRenderbuffers(1, &depthRenderBufffer_);
+
 	[super dealloc];
 }
 

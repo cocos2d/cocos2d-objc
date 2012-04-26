@@ -650,7 +650,7 @@ Class restartAction()
     CCSprite *sprite = [CCSprite spriteWithFile:@"fire.png"];
     sprite.position = ccp(s.width * 0.25f, 0);
     sprite.scale = 10;
-    CCRenderTexture *rend = [CCRenderTexture renderTextureWithWidth:s.width height:s.height pixelFormat:kCCTexture2DPixelFormat_RGBA4444 depthStencilFormat:GL_DEPTH24_STENCIL8_OES];
+    CCRenderTexture *rend = [CCRenderTexture renderTextureWithWidth:s.width height:s.height pixelFormat:kCCTexture2DPixelFormat_RGBA4444 depthStencilFormat:CC_GL_DEPTH24_STENCIL8];
 
     glStencilMask(0xFF);
     [rend beginWithClear:0 g:0 b:0 a:0 depth:0 stencil:0];
@@ -659,7 +659,7 @@ Class restartAction()
     glEnable(GL_STENCIL_TEST);
     glStencilFunc(GL_ALWAYS, 1, 0xFF);
     glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
-    glColorMask(0, 0, 0, 0);
+    glColorMask(0, 0, 0, 1);
     [sprite visit];
 
     //! move sprite half width and height, and draw only where not marked
