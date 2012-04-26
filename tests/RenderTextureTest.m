@@ -13,6 +13,7 @@ static NSString *tests[] = {
 	@"RenderTextureSave",
 	@"RenderTextureIssue937",
 	@"RenderTextureZbuffer",
+  @"RenderTextureTestDepthStencil"
 };
 
 Class nextAction(void);
@@ -635,7 +636,59 @@ Class restartAction()
 }
 @end
 
+#pragma mark -
+#pragma mark RenderTextureTestDepthStencil
 
+@implementation RenderTextureTestDepthStencil
+
+-(id) init
+{
+  if( (self=[super init]) ) {
+
+    CGSize s = [[CCDirector sharedDirector] winSize];
+
+    CCSprite *sprite = [CCSprite spriteWithFile:@"fire.png"];
+    sprite.position = ccp(s.width * 0.25f, 0);
+    sprite.scale = 10;
+    CCRenderTexture *rend = [CCRenderTexture renderTextureWithWidth:s.width height:s.height pixelFormat:kCCTexture2DPixelFormat_RGBA4444 depthStencilFormat:GL_DEPTH24_STENCIL8_OES];
+
+    glStencilMask(0xFF);
+    [rend beginWithClear:0 g:0 b:0 a:0 depth:0 stencil:0];
+
+    //! mark sprite quad into stencil buffer
+    glEnable(GL_STENCIL_TEST);
+    glStencilFunc(GL_ALWAYS, 1, 0xFF);
+    glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
+    glColorMask(0, 0, 0, 0);
+    [sprite visit];
+
+    //! move sprite half width and height, and draw only where not marked
+    sprite.position = ccpAdd(sprite.position, ccpMult(ccp(sprite.contentSize.width * sprite.scale, sprite.contentSize.height * sprite.scale), 0.5));
+    glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
+    glColorMask(1, 1, 1, 1);
+    [sprite visit];
+
+    [rend end];
+
+    glDisable(GL_STENCIL_TEST);
+
+    rend.position = ccp(s.width * 0.5f, s.height * 0.5f);
+
+    [self addChild:rend];
+  }
+
+  return self;
+}
+-(NSString*) title
+{
+  return @"Testing depthStencil attachment";
+}
+
+-(NSString*) subtitle
+{
+  return @"Circle should be missing 1/4 of its region";
+}
+@end
 
 #pragma mark -
 #pragma mark AppDelegate (iOS)
