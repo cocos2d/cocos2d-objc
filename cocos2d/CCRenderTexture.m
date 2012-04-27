@@ -120,7 +120,7 @@
 			//create and attach depth buffer
 			glGenRenderbuffers(1, &depthRenderBufffer_);
 			glBindRenderbuffer(GL_RENDERBUFFER, depthRenderBufffer_);
-			glRenderbufferStorage(GL_RENDERBUFFER, CC_GL_DEPTH24_STENCIL8, powW, powH);
+			glRenderbufferStorage(GL_RENDERBUFFER, depthStencilFormat, powW, powH);
 			glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, depthRenderBufffer_);
 
 			// if depth format is the one with stencil part, bind same render buffer as stencil attachment
