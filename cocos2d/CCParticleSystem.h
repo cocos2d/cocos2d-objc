@@ -277,6 +277,8 @@ typedef void (*CC_UPDATE_PARTICLE_IMP)(id, SEL, tCCParticle*, CGPoint);
 	CCTexture2D *texture_;
 	// blend function
 	ccBlendFunc	blendFunc_;
+	// Texture alpha behavior
+	BOOL opacityModifyRGB_;
 
 	// movment type: free or grouped
 	tCCPositionType	positionType_;
@@ -380,6 +382,8 @@ typedef void (*CC_UPDATE_PARTICLE_IMP)(id, SEL, tCCParticle*, CGPoint);
 @property (nonatomic,readwrite, retain) CCTexture2D * texture;
 /** conforms to CocosNodeTexture protocol */
 @property (nonatomic,readwrite) ccBlendFunc blendFunc;
+/** does the alpha value modify color */
+@property (nonatomic, readwrite, getter=doesOpacityModifyRGB, assign) BOOL opacityModifyRGB;
 /** whether or not the particles are using blend additive.
  If enabled, the following blending function will be used.
  @code
