@@ -72,6 +72,7 @@
 @synthesize emissionRate;
 @synthesize startSize, startSizeVar;
 @synthesize endSize, endSizeVar;
+@synthesize opacityModifyRGB = opacityModifyRGB_;
 @synthesize blendFunc = blendFunc_;
 @synthesize positionType = positionType_;
 @synthesize autoRemoveOnFinish = autoRemoveOnFinish_;
@@ -215,8 +216,12 @@
 		//don't get the internal texture if a batchNode is used
 		if (!batchNode_)
 		{
-		// texture
-		// Try to get the texture from the cache
+			// Set a compatible default for the alpha transfer
+			opacityModifyRGB_ = NO;
+
+			// texture
+			// Try to get the texture from the cache
+
 			NSString *textureName = [dictionary valueForKey:@"textureFileName"];
 
 			CCTexture2D *tex = [[CCTextureCache sharedTextureCache] addImage:textureName];
@@ -624,6 +629,8 @@
 -(void) setTexture:(CCTexture2D*) texture
 {
 	texture_ = [texture retain];
+
+	opacityModifyRGB_ = [texture hasPremultipliedAlpha];
 
 	// If the new texture has No premultiplied alpha, AND the blendFunc hasn't been changed, then update it
 	if( texture_ && ! [texture hasPremultipliedAlpha] &&
