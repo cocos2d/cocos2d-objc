@@ -50,6 +50,7 @@
 {
 	NSMutableDictionary *spriteFrames_;
 	NSMutableDictionary *spriteFramesAliases_;
+	NSMutableSet		*loadedFilenames_;
 }
 
 /** Retruns ths shared instance of the Sprite Frame cache */
@@ -59,14 +60,6 @@
  */
 +(void)purgeSharedSpriteFrameCache;
 
-
-/** Adds multiple Sprite Frames with a dictionary. The texture filename will be associated with the created sprite frames.
- */
--(void) addSpriteFramesWithDictionary:(NSDictionary*)dictionary textureFilename:(NSString*)filename;
-
-/** Adds multiple Sprite Frames with a dictionary. The texture will be associated with the created sprite frames.
- */
--(void) addSpriteFramesWithDictionary:(NSDictionary *)dictionary texture:(CCTexture2D *)texture;
 
 /** Adds multiple Sprite Frames from a plist file.
  * A texture will be loaded automatically. The texture name will composed by replacing the .plist suffix with .png .
@@ -112,11 +105,6 @@
 * @since v0.99.5
 */
 - (void) removeSpriteFramesFromFile:(NSString*) plist;
-
-/** Removes multiple Sprite Frames from NSDictionary.
- * @since v0.99.5
- */
-- (void) removeSpriteFramesFromDictionary:(NSDictionary*) dictionary;
 
 /** Removes all Sprite Frames associated with the specified textures.
  * It is convinient to call this method when a specific texture needs to be removed.

@@ -202,11 +202,11 @@ typedef struct _PVRTexHeader
 	formatFlags = flags & PVR_TEXTURE_FLAG_TYPE_MASK;
 	BOOL flipped = flags & kPVRTextureFlagVerticalFlip;
 	if( flipped )
-		CCLOG(@"cocos2d: WARNING: Image is flipped. Regenerate it using PVRTexTool");
+		CCLOGWARN(@"cocos2d: WARNING: Image is flipped. Regenerate it using PVRTexTool");
 
 	if( ! [configuration supportsNPOT] &&
 	   ( header->width != ccNextPOT(header->width) || header->height != ccNextPOT(header->height ) ) ) {
-		CCLOG(@"cocos2d: ERROR: Loding an NPOT texture (%dx%d) but is not supported on this device", header->width, header->height);
+		CCLOGWARN(@"cocos2d: ERROR: Loding an NPOT texture (%dx%d) but is not supported on this device", header->width, header->height);
 		return FALSE;
 	}
 
@@ -282,7 +282,7 @@ typedef struct _PVRTexHeader
 	}
 
 	if( ! success )
-		CCLOG(@"cocos2d: WARNING: Unsupported PVR Pixel Format: 0x%2x. Re-encode it with a OpenGL pixel format variant", formatFlags);
+		CCLOGWARN(@"cocos2d: WARNING: Unsupported PVR Pixel Format: 0x%2x. Re-encode it with a OpenGL pixel format variant", formatFlags);
 
 	return success;
 }
@@ -327,7 +327,7 @@ typedef struct _PVRTexHeader
 	for (GLint i=0; i < numberOfMipmaps_; i++)
 	{
 		if( compressed && ! [[CCConfiguration sharedConfiguration] supportsPVRTC] ) {
-			CCLOG(@"cocos2d: WARNING: PVRTC images are not supported");
+			CCLOGWARN(@"cocos2d: WARNING: PVRTC images are not supported");
 			return FALSE;
 		}
 
@@ -340,12 +340,12 @@ typedef struct _PVRTexHeader
 			glTexImage2D(GL_TEXTURE_2D, i, internalFormat, width, height, 0, format, type, data);
 
 		if( i > 0 && (width != height || ccNextPOT(width) != width ) )
-			CCLOG(@"cocos2d: TexturePVR. WARNING. Mipmap level %u is not squared. Texture won't render correctly. width=%u != height=%u", i, width, height);
+			CCLOGWARN(@"cocos2d: TexturePVR. WARNING. Mipmap level %u is not squared. Texture won't render correctly. width=%u != height=%u", i, width, height);
 
 		err = glGetError();
 		if (err != GL_NO_ERROR)
 		{
-			CCLOG(@"cocos2d: TexturePVR: Error uploading compressed texture level: %u . glError: 0x%04X", i, err);
+			CCLOGWARN(@"cocos2d: TexturePVR: Error uploading compressed texture level: %u . glError: 0x%04X", i, err);
 			return FALSE;
 		}
 
