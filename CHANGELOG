@@ -2,6 +2,7 @@ version 2.0-rc2 XX-May-2012
 . [NEW] Added Javascript test using JSCocoa (Mac only)
 . [NEW] RenderTexture: Added support for Depth Stencil
 . [FIX] Macros: CCLOG doesn't log the function name. Only CCLOGWARN
+. [FIX] Particle: Handles premultipled images correctly
 
 version 2.0-rc1 19-Apr-2012
 . [NEW] v1.1 Forward-ported changes:

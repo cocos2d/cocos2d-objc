@@ -95,6 +95,9 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 * mlilback:
 	Added KVO pattern for CCDirector#isPaused
 
+* Nestor Todorov ( https://github.com/supernes ):
+	Particle handle premultiplied + opacity correctly
+
 * Nicky Weber (https://github.com/nickyEnjoysWoogoo):
 	Added ccDrawFilledPoly to DrawingPrimitives
 	
