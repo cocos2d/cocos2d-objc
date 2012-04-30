@@ -353,7 +353,8 @@ void ccGLUniformModelViewProjectionMatrix( CCGLProgram* program )
 @implementation CCSpriteFrameCache (Deprecated)
 -(void) addSpriteFramesWithDictionary:(NSDictionary*)dictionary textureFile:(NSString*)filename
 {
-	[self addSpriteFramesWithDictionary:dictionary textureFilename:filename];
+	NSAssert(NO, @"unimplemented. Use addSpriteFramesWithFile:textureFile: instead");
+//	[self addSpriteFramesWithDictionary:dictionary textureFilename:filename];
 }
 
 -(void) addSpriteFramesWithFile:(NSString*)plist textureFile:(NSString*)filename

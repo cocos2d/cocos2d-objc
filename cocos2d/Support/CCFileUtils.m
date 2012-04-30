@@ -204,7 +204,7 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 			newName = [pathWithoutExtension stringByAppendingString:suffix];
 			newName = [newName stringByAppendingPathExtension:extension];
 		} else
-			CCLOG(@"cocos2d: WARNING Filename(%@) already has the suffix %@. Using it.", name, suffix);
+			CCLOGWARN(@"cocos2d: WARNING Filename(%@) already has the suffix %@. Using it.", name, suffix);
 	}
 
 	NSString *ret = nil;
@@ -279,7 +279,7 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 #endif // __CC_PLATFORM_MAC
 	
 	if( ! ret ) {
-		CCLOG(@"cocos2d: Warning: File not found: %@", relPath);
+		CCLOGWARN(@"cocos2d: Warning: File not found: %@", relPath);
 		ret = relPath;
 	}
 		

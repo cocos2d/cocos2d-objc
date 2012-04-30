@@ -313,7 +313,7 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
    
    NSUInteger maxTextureSize = [conf maxTextureSize];
    if( textureHeight > maxTextureSize || textureWidth > maxTextureSize ) {
-	   CCLOG(@"cocos2d: WARNING: Image (%lu x %lu) is bigger than the supported %ld x %ld",
+	   CCLOGWARN(@"cocos2d: WARNING: Image (%lu x %lu) is bigger than the supported %ld x %ld",
 			 (long)textureWidth, (long)textureHeight,
 			 (long)maxTextureSize, (long)maxTextureSize);
 	   [self release];
