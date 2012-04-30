@@ -1,0 +1,109 @@
+# CocosDenshion Sound Events
+
+Version 1.0
+30 April 2012
+
+© Secret Lab: http://www.tothesecretlab.com
+Coded and written up by Jon Manning.
+
+Questions? Comments? jon@secretlab.com.au
+
+## Introduction
+
+So we happened to be working on a project that involved quite a lot of sound effects, including looped background audio, sound effects and voiceover content. CocosDenshion was our natural choice for a simple-to-use sound system.
+
+However, our audio designers didn't want to have to deal with the pain of rebuilding the application every time they wanted to change a file, and didn't want the app to hard-code the sound file names, since they often named the sound files after what the sounds contained and not when the sound was used. They also wanted to indicate which files should be looped, tweak volume and pitch, and other little things.
+
+We also wanted to have good support for voiceover lines, which have special requirements in that you can't ever have two voiceover lines play at the same time, since they collide badly. So, we added a queue system that gives you better control over how to deal with voiceover lines.
+
+So, we came up with this: a "sound event" system, which separates the audio from the context in which it's used. The way it works is that you create a JSON file that maps sound event names (like "player died") to sound files (like "scream.wav"). If you want to get fancy, you can provide settings that control additional settings.
+
+Finally, the whole thing is set up to allow you to modify both the sound event mapping and the sound files themselves through iTunes File Sharing. You can hand copies of your game to your audio designers, and they can replace and tune files by updating the files stored in your app, without having to get new builds.
+
+## The sound events list
+
+The sound events list is a JSON file called `SoundEvents.json`. You add it to your project, so that it's compiled into the project. If the app finds a file called `SoundEvents.json` in the Documents directory in its sandbox, it will use that file instead.
+
+The sound events list looks like this:
+
+    {
+        "player-died": "scream",
+        "shot": "rifle-shot",
+        "level-intro": {
+            "file":"voiceover-levelintro",
+            "queue":"always"
+        },
+        "level-warning": {
+            "file":"voiceover-watchout",
+            "queue":"never"
+        },
+        "level-background-music": {
+            "file": "levelmusic03",
+            "background": true,
+            "loop": true
+        },
+        "explosion" : {
+            "file":"explode",
+            "gain":0.2,
+            "pitch-variability": 0.1
+        }
+    }
+    
+Each entry in the list can be either a string or a dictionary.
+
+If the entry is a string, the item's name is the sound event, and the item's value is the name of the audio file. So, for the first entry, we're creating a sound event called "player-died", which will play the file "scream.wav" when triggered. (If you don't include ".wav" in the audio file name, CocosDenshion will add it for you.)
+
+If the entry is a dictionary, you can provide additional information about the sound event. The settings you can provide are:
+
+* `file`: String. The name of the audio file that should be played when the sound event is triggered. You must include this setting, or the event won't play a sond.
+* `background`: Boolean. If true, the audio file will play in the background. Only one background audio file may play at once; if you play one when another is currently playing, the first sound will stop.
+* `loop`: Boolean. If true and the file is a background sound, the sound will loop until stopped. This setting is ignored if the sound is not a background sound.
+* `gain`: Number. Setting this value to 0 makes the sound silent, and setting it to 1 (the default) makes the sound play at full volume. 
+* `pitch-variability`: Number. Setting this number to anything greater than 0 will make the sound play at a slightly varied pitch (making it great for things like collision noises or anything you need to play over and over without getting too repetitive). Higher numbers mean more variability.
+* `queue`: String, either "always" or "never". This setting controls whether the sound works with the voiceover queue (see below.)
+
+Note that SoundEvents.json must be valid JSON, or else it won't load. A great OS X JSON editor is "Jason": http://olivierlabs.com/jason/
+
+## Working with sound events
+
+To trigger a sound event, you do this:
+
+    [[SimpleAudioEngine sharedEngine] playSoundForEvent:@"player-died"];
+    
+This makes the sound engine play the sound associated with the provided sound event. The same call is used for background audio and voiceovers.
+
+When you're done with a scene, you do this:
+
+    [[SimpleAudioEngine sharedEngine] stopSounds];
+    
+This stops the background music, and cancels any queued voiceover lines.
+
+That's the entire API - we realised that you want to keep the amount of audio code in the game to an absolute minimum, so the entire thing is based around triggering audio events.
+
+### The voiceover queue
+
+Voiceover lines are somewhat special cases, since if you play two at a time, they collide and you can't understand them. To solve this problem, we added queued audio support.
+
+The philosophy of the system is this: voiceover lines should never overlap, and you shouldn't end up with a situation where repeatedly triggering a voiceover event queues a huge amount of lines up.
+
+In the sound events system, you can mark sound events should participate in the queue. To do this, you provide a `queue` setting in the sound event's dictionary. Here's an example of two (from above):
+
+    "level-intro": {
+        "file":"voiceover-levelintro",
+        "queue":"always"
+    },
+    "level-warning": {
+        "file":"voiceover-watchout",
+        "queue":"never"
+    }
+    
+If you set the `queue` setting to "always", the sound file will be added to the queue. If the queue is empty, the sound file will start playing at once. If the queue is not empty, the sound file will wait until it's ready. Multiple items can be added to the queue at once.
+
+If you set the `queue` setting to "never", the sound file will _only_ play if the queue is empty. If a sound file that's in the queue is currently playing, the sound won't play. 
+
+If you don't provide a `queue` setting, the sound event ignores the queue and plays, overlapping any existing sounds.
+
+This allows you to indicate which voiceover lines are important, and should always be played, and which voiceover lines are less important and can afford to not be heard.
+
+Mad props: This queue system was directly inspired by Darren Korb (@DarrenKorb), from Supergiant Games.
+
