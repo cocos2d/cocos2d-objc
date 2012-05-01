@@ -33,6 +33,7 @@ static NSString *transitions[] = {
 	@"BMFontOneAtlas",
 	@"BMFontUnicode",
     @"BMFontInit",
+    @"TTFFontInit",
 	@"Issue1343",
     @"LabelTTFAlignment",
 
@@ -1679,6 +1680,37 @@ static float menuItemPaddingCenter = 50;
 -(NSString*) title
 {
 	return @"CCLabelBMFont init";
+}
+
+-(NSString *) subtitle
+{
+	return @"Test for support of init method without parameters.";
+}
+@end
+
+#pragma mark - TTFFontInit
+
+@implementation TTFFontInit
+
+- (id) init
+{
+    if( (self=[super init]) ) {
+        
+        CGSize s = [[CCDirector sharedDirector] winSize];
+        
+        CCLabelTTF* font = [[[CCLabelTTF alloc] init] autorelease];
+        font.fontName = @"Marker Felt";
+		font.fontSize = 48;
+        font.string = @"It is working!";
+        [self addChild:font];
+        [font setPosition:ccp(s.width/2,s.height/4*2)];
+    }
+    return self;
+}
+
+-(NSString*) title
+{
+	return @"CCLabelTTF init";
 }
 
 -(NSString *) subtitle

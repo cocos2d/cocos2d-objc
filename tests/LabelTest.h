@@ -144,6 +144,12 @@
 }
 @end
 
+@interface TTFFontInit : AtlasDemo
+{
+}
+@end
+
+
 @interface Issue1343 : AtlasDemo
 {
 }
