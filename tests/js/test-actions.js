@@ -1,6 +1,8 @@
 // http://www.cocos2d-iphone.org
 //
 // Javascript Action tests
+// Test are coded using Javascript, with the exception of MenuCallback which uses Objective-J to handle the callbacks.
+// 
 
 //
 // Helper functions
@@ -47,9 +49,10 @@ function ccp( x, y ) {
 	add_titles( layer, t.title, t.subtitle );
 	t.test( layer );
 	
-	scene.walkSceneGraph(0);
+//	scene.walkSceneGraph(0);
 	
 	director.replaceScene( scene );
+	__jsc__.garbageCollect
 }
 @end
 
@@ -82,7 +85,7 @@ test_manual_properties.prototype.test = function( parent ) {
 	parent.addChild( grossini );
 	grossini.rotation = 120;
 	grossini.position = ccp(winSize.width/2, winSize.height/2);
-//	grossini.color = ccc3( 255,0,0);
+//	grossini.color =  ccc3( 255,0,0 );
 	
 	
 	var kathia = CCSprite.spriteWithFile('grossinis_sister2.png');
@@ -121,6 +124,158 @@ test_move.prototype.test = function( parent ) {
 
 scenes.push( new test_move() );
 
+//
+// Action Rotate
+//
+function test_rotate() {
+	this.title = "RotateTo / RotateBy";
+	this.subtitle = "Testing RotateTo / RotateBy actions";	
+}
+
+test_rotate.prototype.test = function( parent ) {
+	
+	var array = create_sprites( parent, 3 );
+	var grossini = array[0];
+	var tamara = array[1];
+	var kathia = array[2];
+	
+	var actionTo = CCRotateTo.actionWithDuration_angle(2, 45 );
+	var actionTo0 = CCRotateTo.actionWithDuration_angle(2, 0 );
+	tamara.runAction( CCSequence.actionsWithArray( [actionTo, actionTo0] ) );
+	
+	var actionBy = CCRotateBy.actionWithDuration_angle( 2, 360 );
+	var actionByBack = actionBy.reverse;
+	grossini.runAction( CCSequence.actionsWithArray( [actionBy, actionByBack] ) );
+
+	var actionTo2 = CCRotateTo.actionWithDuration_angle(2, -45 );
+	kathia.runAction( CCSequence.actionsWithArray( [actionTo2, actionTo0.copy.autorelease ] ) );
+}
+
+scenes.push( new test_rotate() );
+
+//
+// Action Scale
+//
+function test_scale() {
+	this.title = "ScaleTo / ScaleBy";
+	this.subtitle = "Testing ScaleTo / ScaleBy actions";	
+}
+
+test_scale.prototype.test = function( parent ) {
+	
+	var array = create_sprites( parent, 3 );
+	var grossini = array[0];
+	var tamara = array[1];
+	var kathia = array[2];
+	
+	var actionTo = CCScaleTo.actionWithDuration_scale(2, 0.5 );
+	var actionBy = CCScaleBy.actionWithDuration_scaleX_scaleY(2, 1, 10 );
+	var actionBy2 = CCScaleBy.actionWithDuration_scaleX_scaleY(2, 5, 1 );
+	
+	grossini.runAction( actionTo );
+	tamara.runAction( CCSequence.actionsWithArray( [actionBy, [actionBy reverse] ] ) );
+	
+	kathia.runAction( CCSequence.actionsWithArray( [actionBy2, [actionBy2 reverse] ] ) );
+}
+
+scenes.push( new test_scale() );
+
+//
+// Action Skew
+//
+function test_skew() {
+	this.title = "SkewTo / SkewBy";
+	this.subtitle = "Testing SkewTo / SkewBy actions";	
+}
+
+test_skew.prototype.test = function( parent ) {
+	
+	var array = create_sprites( parent, 3 );
+	var grossini = array[0];
+	var tamara = array[1];
+	var kathia = array[2];
+
+	var actionTo = CCSkewTo.actionWithDuration_skewX_skewY(2, 37.2, -37.2);
+	var actionToBack = CCSkewTo.actionWithDuration_skewX_skewY(2, 0, 0 );
+	var actionBy = CCSkewBy.actionWithDuration_skewX_skewY(2, 0, -90.0 );
+	var actionBy2 = CCSkewBy.actionWithDuration_skewX_skewY(2, 45, 45.0 );
+	var actionByBack = actionBy.reverse;
+	
+	tamara.runAction( CCSequence.actionsWithArray( [actionTo, actionToBack] ) );
+	grossini.runAction( CCSequence.actionsWithArray( [actionBy, actionByBack ] ) );
+	kathia.runAction( CCSequence.actionsWithArray( [actionBy2, [actionBy2 reverse] ] ) );
+}
+
+scenes.push( new test_skew() );
+
+
+//
+// CatmullRom
+//
+function test_catmullrom() {
+	this.title = "CatmullRomTo / CatmullRomBy";
+	this.subtitle = "Testing CatmullRomTo / CatmullRomBy actions";	
+}
+
+test_catmullrom.prototype.test = function( parent ) {
+	
+	var array = create_sprites( parent, 2 );
+	var grossini = array[0];
+	var tamara = array[1];
+	var kathia = array[2];
+
+	
+	//
+	// sprite 1 (By)
+	//
+	// startPosition can be any coordinate, but since the movement
+	// is relative to the Catmull Rom curve, it is better to start with (0,0).
+	//
+
+	tamara.position = ccp(50,50);
+
+	var array = CCPointArray.arrayWithCapacity( 20 );
+
+	array.addControlPoint( ccp(0,0) );
+	array.addControlPoint( ccp(80,80) );
+	array.addControlPoint( ccp(winSize.width-80,80) );
+	array.addControlPoint( ccp(winSize.width-80,winSize.height-80) );
+	array.addControlPoint( ccp(80,winSize.height-80) );
+	array.addControlPoint( ccp(80,80) );
+	array.addControlPoint( ccp( winSize.width/2, winSize.height/2) );
+
+	var action = CCCatmullRomBy.actionWithDuration_points( 3, array );
+	var reverse = action.reverse;
+
+	var seq = CCSequence.actionsWithArray( [action, reverse] );
+
+	tamara.runAction( seq );
+
+	//
+	// sprite 2 (To)
+	//
+	// The startPosition is not important here, because it uses a "To" action.
+	// The initial position will be the 1st point of the Catmull Rom path
+	//
+
+	var array2 = CCPointArray.arrayWithCapacity( 20 );
+
+	array2.addControlPoint( ccp(winSize.width/2, 30) );
+	array2.addControlPoint( ccp(winSize.width-80,30) );
+	array2.addControlPoint( ccp(winSize.width-80, winSize.height-80) );
+	array2.addControlPoint( ccp(winSize.width/2, winSize.height-80) );
+	array2.addControlPoint( ccp(winSize.width/2, 30) );
+
+
+	var action2 = CCCatmullRomTo.actionWithDuration_points(2, array2 );
+	var reverse2 = action2.reverse;
+
+	var seq2 = CCSequence.actionsWithArray( [action2, reverse2] );
+
+	kathia.runAction( seq2 );
+}
+
+scenes.push( new test_catmullrom() );
 
 //
 // Helper functions
@@ -203,8 +358,6 @@ function run()
 	add_titles( layer, t.title, t.subtitle );
 	t.test( layer );
 
-	scene.walkSceneGraph(0);
-	
 	director.runWithScene( scene );
 }
 
