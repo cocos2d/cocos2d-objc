@@ -1,82 +1,81 @@
 // http://www.cocos2d-iphone.org
 //
-// Test Objective-J API
-// http://cappuccino.org/learn/
+// Javascript Action tests
+// Test are coded using Javascript, with the exception of MenuCallback which uses Objective-J to handle the callbacks.
+// 
+
 //
-
-
 // Helper functions
+//
 function ccp( x, y ) {
 	return CGPointMake( x, y );
 }
 
 //
-// Objective-J Test
+// Menu Callback
 //
-function test_objective_j() {
-	this.title = "Objective-J Test";
-	this.subtitle = "Testing the Objective-J + cocos2d";	
+@implementation MenuCallback : NSObject
+- (void)back:(id)sender
+{
+	currentScene = currentScene -1;
+	if( currentScene < 0 )
+		currentScene = scenes.length -1;
+	
+	this.loadScene( currentScene );
+}
+- (void)reset:(id)sender
+{
+	this.loadScene( currentScene );
+}
+- (void)forward:(id)sender
+{
+	currentScene = currentScene + 1;
+	if( currentScene >= scenes.length )
+		currentScene = 0;
+	
+	this.loadScene( currentScene );
 }
 
-test_objective_j.prototype.test = function( layer ) {
-	var director = [CCDirector sharedDirector];
+-(void) loadScene:(int)sceneNumber
+{
+	// update winsize. It might have changed
+	winSize = director.winSize;
 	
-	// create sprite
-	var sprite = [CCSprite spriteWithFile:'grossini.png'];
-	[layer addChild: sprite ];
-	var s = [director winSize];
-	[sprite setPosition: CGPointMake( s.width/2, s.height/2 ) ];
+	var scene = CCScene.node;
+	var layer = CCLayer.node;
 	
+	scene.addChild( layer );
 	
-	// action
-	var rotate = [CCRotateBy actionWithDuration:2 angle:360];
-	var move = [CCMoveBy actionWithDuration:2 position:CGPointMake(200,0)];
-	var jump = [CCJumpBy actionWithDuration:2 position:CGPointMake(-300,0) height:100 jumps:2];
+	var t = scenes[ sceneNumber ];
 	
-	var seq = [CCSequence actionsWithArray: [rotate, move, jump] ];
-	[sprite runAction:seq ];
-};
+	add_menu( layer );
+	add_titles( layer, t.title, t.subtitle );
+	t.test( layer );
+	
+//	scene.walkSceneGraph(0);
+	
+	director.replaceScene( scene );
+	__jsc__.garbageCollect
+}
+@end
+
+// globals
+var director = CCDirector.sharedDirector;
+var winSize = director.winSize;
+var scenes = []
+var currentScene = 0;
+var callback = MenuCallback.instance;
 
 //
-// Javascript Test
+// Sprite: Color + Opacity
 //
-function test_javascript() {
-	this.title = "Javascript Test";
-	this.subtitle = "Testing the Javascript + cocos2d";		
+function test_sprite_color_opacity() {
+	this.title = "Sprite: Color + Opacity";
+	this.subtitle = "Javascript test of Sprite with color and opacity";	
 }
 
-test_javascript.prototype.test = function( layer ) {
-	var director = CCDirector.sharedDirector;
+test_sprite_color_opacity.prototype.test = function( parent ) {
 	
-	// create sprite
-	var sprite = CCSprite.spriteWithFile('grossini.png');
-	layer.addChild( sprite );
-	var s = director.winSize;
-	sprite.setPosition( CGPointMake( s.width/2, s.height/2 ) );
-	
-	
-	// action
-	var rotate = CCRotateBy.actionWithDuration_angle(2, 360 );
-	var move = CCMoveBy.actionWithDuration_position(2, CGPointMake(200,0) );
-	var jump = CCJumpBy.actionWithDuration_position_height_jumps( 2, CGPointMake(-300,0), 100, 2 );
-	
-	var seq = CCSequence.actionsWithArray( [rotate, move, jump] );
-	sprite.runAction( seq );
-}
-
-
-//
-// Sprite Color
-//
-function SpriteColorOpacity() {
-	this.title = "Sprite: Color & Opacity";
-	this.subtitle = "Javascript testing";		
-}
-
-SpriteColorOpacity.prototype.test = function( self ) {
-	
-	var s = CCDirector.sharedDirector.winSize;
-
 	var sprite1 = CCSprite.spriteWithFile_rect("grossini_dance_atlas.png", CGRectMake(85*0, 121*1, 85, 121) );
 	var sprite2 = CCSprite.spriteWithFile_rect("grossini_dance_atlas.png", CGRectMake(85*1, 121*1, 85, 121) );
 	var sprite3 = CCSprite.spriteWithFile_rect("grossini_dance_atlas.png", CGRectMake(85*2, 121*1, 85, 121) );
@@ -87,14 +86,14 @@ SpriteColorOpacity.prototype.test = function( self ) {
 	var sprite7 = CCSprite.spriteWithFile_rect("grossini_dance_atlas.png", CGRectMake(85*2, 121*1, 85, 121) );
 	var sprite8 = CCSprite.spriteWithFile_rect("grossini_dance_atlas.png", CGRectMake(85*3, 121*1, 85, 121) );
 	
-	sprite1.position = ccp( (s.width/5)*1, (s.height/3)*1);
-	sprite2.position = ccp( (s.width/5)*2, (s.height/3)*1);
-	sprite3.position = ccp( (s.width/5)*3, (s.height/3)*1);
-	sprite4.position = ccp( (s.width/5)*4, (s.height/3)*1);
-	sprite5.position = ccp( (s.width/5)*1, (s.height/3)*2);
-	sprite6.position = ccp( (s.width/5)*2, (s.height/3)*2);
-	sprite7.position = ccp( (s.width/5)*3, (s.height/3)*2);
-	sprite8.position = ccp( (s.width/5)*4, (s.height/3)*2);
+	sprite1.position = ccp( (winSize.width/5)*1, (winSize.height/3)*1);
+	sprite2.position = ccp( (winSize.width/5)*2, (winSize.height/3)*1);
+	sprite3.position = ccp( (winSize.width/5)*3, (winSize.height/3)*1);
+	sprite4.position = ccp( (winSize.width/5)*4, (winSize.height/3)*1);
+	sprite5.position = ccp( (winSize.width/5)*1, (winSize.height/3)*2);
+	sprite6.position = ccp( (winSize.width/5)*2, (winSize.height/3)*2);
+	sprite7.position = ccp( (winSize.width/5)*3, (winSize.height/3)*2);
+	sprite8.position = ccp( (winSize.width/5)*4, (winSize.height/3)*2);
 	
 	var action = CCFadeIn.actionWithDuration( 2 );
 	var action_back = action.reverse;
@@ -119,42 +118,377 @@ SpriteColorOpacity.prototype.test = function( self ) {
 	sprite8.runAction( fade );
 	
 	// late add: test dirtyColor and dirtyPosition
-	self.addChild( sprite1 );
-	self.addChild( sprite2 );
-	self.addChild( sprite3 );
-	self.addChild( sprite4 );
-	self.addChild( sprite5 );
-	self.addChild( sprite6 );
-	self.addChild( sprite7 );
-	self.addChild( sprite8 );
+	parent.addChild( sprite1 );
+	parent.addChild( sprite2 );
+	parent.addChild( sprite3 );
+	parent.addChild( sprite4 );
+	parent.addChild( sprite5 );
+	parent.addChild( sprite6 );
+	parent.addChild( sprite7 );
+	parent.addChild( sprite8 );
+}
+scenes.push( new test_sprite_color_opacity() );
+
+
+//
+// SpriteBatch: Color + Opacity
+//
+function test_spritebatch_color_opacity() {
+	this.title = "Batched Sprites: Color + Opacity";
+	this.subtitle = "Javascript test of batched sprites with color and opacity";	
 }
 
+test_spritebatch_color_opacity.prototype.test = function( parent ) {
+	
+	var batch = CCSpriteBatchNode.batchNodeWithFile_capacity( "grossini_dance_atlas.png", 1);
+	parent.addChild( batch );
+
+	var sprite1 = CCSprite.spriteWithFile_rect("grossini_dance_atlas.png", CGRectMake(85*0, 121*1, 85, 121) );
+	var sprite2 = CCSprite.spriteWithFile_rect("grossini_dance_atlas.png", CGRectMake(85*1, 121*1, 85, 121) );
+	var sprite3 = CCSprite.spriteWithFile_rect("grossini_dance_atlas.png", CGRectMake(85*2, 121*1, 85, 121) );
+	var sprite4 = CCSprite.spriteWithFile_rect("grossini_dance_atlas.png", CGRectMake(85*3, 121*1, 85, 121) );
+	
+	var sprite5 = CCSprite.spriteWithFile_rect("grossini_dance_atlas.png", CGRectMake(85*0, 121*1, 85, 121) );
+	var sprite6 = CCSprite.spriteWithFile_rect("grossini_dance_atlas.png", CGRectMake(85*1, 121*1, 85, 121) );
+	var sprite7 = CCSprite.spriteWithFile_rect("grossini_dance_atlas.png", CGRectMake(85*2, 121*1, 85, 121) );
+	var sprite8 = CCSprite.spriteWithFile_rect("grossini_dance_atlas.png", CGRectMake(85*3, 121*1, 85, 121) );
+	
+	sprite1.position = ccp( (winSize.width/5)*1, (winSize.height/3)*1);
+	sprite2.position = ccp( (winSize.width/5)*2, (winSize.height/3)*1);
+	sprite3.position = ccp( (winSize.width/5)*3, (winSize.height/3)*1);
+	sprite4.position = ccp( (winSize.width/5)*4, (winSize.height/3)*1);
+	sprite5.position = ccp( (winSize.width/5)*1, (winSize.height/3)*2);
+	sprite6.position = ccp( (winSize.width/5)*2, (winSize.height/3)*2);
+	sprite7.position = ccp( (winSize.width/5)*3, (winSize.height/3)*2);
+	sprite8.position = ccp( (winSize.width/5)*4, (winSize.height/3)*2);
+	
+	var action = CCFadeIn.actionWithDuration( 2 );
+	var action_back = action.reverse;
+	var fade = CCRepeatForever.actionWithAction( CCSequence.actionsWithArray( [action, action_back] ) );
+	
+	var tintred = CCTintBy.actionWithDuration_red_green_blue(2,0,-255,-255);
+	var tintred_back = tintred.reverse;
+	var red = CCRepeatForever.actionWithAction( CCSequence.actionsWithArray( [tintred, tintred_back] ) );
+	
+	var tintgreen = CCTintBy.actionWithDuration_red_green_blue(2,-255,0,-255);
+	var tintgreen_back = tintgreen.reverse;
+	var green = CCRepeatForever.actionWithAction( CCSequence.actionsWithArray( [tintgreen, tintgreen_back] ) );
+	
+	var tintblue = CCTintBy.actionWithDuration_red_green_blue(2,-255,-255,0);
+	var tintblue_back = tintblue.reverse;
+	var blue = CCRepeatForever.actionWithAction( CCSequence.actionsWithArray( [tintblue, tintblue_back] ) );
+	
+	
+	sprite5.runAction( red );
+	sprite6.runAction( green );
+	sprite7.runAction( blue );
+	sprite8.runAction( fade );
+	
+	// late add: test dirtyColor and dirtyPosition
+	batch.addChild( sprite1 );
+	batch.addChild( sprite2 );
+	batch.addChild( sprite3 );
+	batch.addChild( sprite4 );
+	batch.addChild( sprite5 );
+	batch.addChild( sprite6 );
+	batch.addChild( sprite7 );
+	batch.addChild( sprite8 );
+}
+scenes.push( new test_spritebatch_color_opacity() );
+
 //
-// Main
-// 
-// Returns the main scene
-function get_scene() {
-	var mainScene = CCDirector.sharedDirector.runningScene;
-	return mainScene.children[0];	
+// Sprite: Anchor Point
+//
+function test_sprite_anchorpoint() {
+	this.title = "Sprite: Anchor Point";
+	this.subtitle = "Javascript test of Sprite with different anchor points";	
 }
 
+test_sprite_anchorpoint.prototype.test = function( parent ) {
+	
+	var rotate = CCRotateBy.actionWithDuration_angle(10, 360);
+	var action = CCRepeatForever.actionWithAction( rotate );
+
+	var i=0;
+	for(i=0;i<3;i++) {
+		var sprite = CCSprite.spriteWithFile_rect( "grossini_dance_atlas.png", CGRectMake(85*i, 121*1, 85, 121) );
+		sprite.position = ccp( winSize.width/4*(i+1), winSize.height/2);
+		
+		var point = CCSprite.spriteWithFile( "r1.png" );
+		point.scale = 0.25;
+		point.position = sprite.position;
+		parent.addChild_z(point, 10 );
+		
+		if( i==0) {
+			sprite.anchorPoint = ccp(0,0);
+		}
+		else if( i == 1 ) {
+			sprite.anchorPoint = ccp(0.5, 0.5);
+		}
+		else if( i == 2 ) {
+			sprite.anchorPoint = ccp(1,1);
+		}
+		
+		point.position = sprite.position;
+		
+		var copy = action.copy.autorelease;
+		sprite.runAction( copy );
+		parent.addChild_z( sprite, i );
+	}
+}
+scenes.push( new test_sprite_anchorpoint() );
+
+
 //
-// Test to execute
+// Sprite Batch: Anchor Point
 //
-var array_of_tests = [ test_objective_j, test_javascript, SpriteColorOpacity ];
+function test_spritebatch_anchorpoint() {
+	this.title = "SpriteBatch: Anchor Point";
+	this.subtitle = "Javascript test of SpriteBatch with different anchor points";	
+}
 
-// Get running Layer
-var layer = get_scene();
+test_spritebatch_anchorpoint.prototype.test = function( parent ) {
+	
+	var batch = CCSpriteBatchNode.batchNodeWithFile_capacity("grossini_dance_atlas.png",1);
+	parent.addChild( batch );
 
-layer.numberOfTests = array_of_tests.length;
-var index = layer.testIndex;
+	var rotate = CCRotateBy.actionWithDuration_angle(10, 360);
+	var action = CCRepeatForever.actionWithAction( rotate );
+	
+	var i=0;
+	for(i=0;i<3;i++) {
+		var sprite = CCSprite.spriteWithFile_rect( "grossini_dance_atlas.png", CGRectMake(85*i, 121*1, 85, 121) );
+		sprite.position = ccp( winSize.width/4*(i+1), winSize.height/2);
+		
+		var point = CCSprite.spriteWithFile( "r1.png" );
+		point.scale = 0.25;
+		point.position = sprite.position;
+		parent.addChild_z(point, 10 );
+		
+		if( i==0) {
+			sprite.anchorPoint = ccp(0,0);
+		}
+		else if( i == 1 ) {
+			sprite.anchorPoint = ccp(0.5, 0.5);
+		}
+		else if( i == 2 ) {
+			sprite.anchorPoint = ccp(1,1);
+		}
+		
+		point.position = sprite.position;
+		
+		var copy = action.copy.autorelease;
+		sprite.runAction( copy );
+		batch.addChild_z( sprite, i );
+	}
+}
+scenes.push( new test_spritebatch_anchorpoint() );
 
-// Get Test
-var test = new array_of_tests[index];
 
-// Set Title
-layer.setTitle( test.title );
-layer.setSubtitle( test.subtitle );
+//
+// Sprite: Anchor Point + Skew + Scale
+//
+function test_sprite_anchorpoint_skew_scale() {
+	this.title = "Sprite: Anchor + Skew + Scale";
+	this.subtitle = "Javascript test of Sprite anchor point + skew + scale";	
+}
 
-// Run it
-test.test( layer );
+test_sprite_anchorpoint_skew_scale.prototype.test = function( parent ) {
+
+	var cache = CCSpriteFrameCache.sharedSpriteFrameCache;
+	cache.addSpriteFramesWithFile( "animations/grossini.plist" );
+	cache.addSpriteFramesWithFile_textureFilename( "animations/grossini_gray.plist", "animations/grossini_gray.png" );
+
+	var i=0;
+	for(i=0;i<3;i++) {
+		
+		//
+		// Animation
+		//
+		var sprite = CCSprite.spriteWithSpriteFrameName( "grossini_dance_01.png" );
+		sprite.position = ccp( winSize.width/4*(i+1), winSize.height/2);
+		
+		var point = CCSprite.spriteWithFile( "r1.png" );
+		point.scale = 0.25;
+		point.position = sprite.position;
+		parent.addChild_z( point, 1 );
+		
+		if( i == 0 ) {
+			sprite.anchorPoint = ccp(0,0);
+		}
+		else if( i == 1 ) {
+			sprite.anchorPoint = ccp(0.5, 0.5);
+		}
+		else if (i == 2 ) {
+			sprite.anchorPoint = ccp(1,1);
+		}
+		
+		point.position = sprite.position;
+		
+		var animFrames = NSMutableArray.array;
+		
+		var j=0;
+		for(j = 0; j < 14; j++) {
+			var prefix = (j+1<10) ? '0' : '';
+			var name = 'grossini_dance_' + prefix + (j+1) + '.png';
+			var frame = cache.spriteFrameByName( name );
+			animFrames.addObject( frame );
+		}
+		var animation = CCAnimation.animationWithSpriteFrames_delay(animFrames, 0.3 );
+		sprite.runAction( CCRepeatForever.actionWithAction( CCAnimate.actionWithAnimation( animation ) ) );
+		
+		// Skew
+		var skewX = CCSkewBy.actionWithDuration_skewX_skewY(2, 45, 0 );
+		var skewX_back = skewX.reverse;
+		var skewY = CCSkewBy.actionWithDuration_skewX_skewY(2, 0 , 45 );
+		var skewY_back = skewY.reverse;
+		
+		var seq_skew = CCSequence.actionsWithArray( [skewX, skewX_back, skewY, skewY_back] );
+		sprite.runAction( CCRepeatForever.actionWithAction( seq_skew ) );
+		
+		// Scale
+		var scale = CCScaleBy.actionWithDuration_scale(2, 2);
+		var scale_back = scale.reverse;
+		var seq_scale = CCSequence.actionsWithArray( [scale, scale_back] );
+		sprite.runAction( CCRepeatForever.actionWithAction( seq_scale ) );
+		
+		parent.addChild_z(sprite, 0);
+	}
+}
+scenes.push( new test_sprite_anchorpoint_skew_scale() );
+
+
+//
+// SpriteBatch: Anchor Point + Skew + Scale
+//
+function test_spritebatch_anchorpoint_skew_scale() {
+	this.title = "SpriteBatch: Anchor + Skew + Scale";
+	this.subtitle = "Javascript test of SpriteBatch anchor point + skew + scale";	
+}
+
+test_spritebatch_anchorpoint_skew_scale.prototype.test = function( parent ) {
+	
+	var cache = CCSpriteFrameCache.sharedSpriteFrameCache;
+	cache.addSpriteFramesWithFile( "animations/grossini.plist" );
+	cache.addSpriteFramesWithFile_textureFilename( "animations/grossini_gray.plist", "animations/grossini_gray.png" );
+	
+	
+	var spritebatch = CCSpriteBatchNode.batchNodeWithFile( "animations/grossini.pvr.gz" );
+	parent.addChild( spritebatch );
+
+	var i=0;
+	for(i=0;i<3;i++) {
+		
+		//
+		// Animation
+		//
+		var sprite = CCSprite.spriteWithSpriteFrameName( "grossini_dance_01.png" );
+		sprite.position = ccp( winSize.width/4*(i+1), winSize.height/2);
+		
+		var point = CCSprite.spriteWithFile( "r1.png" );
+		point.scale = 0.25;
+		point.position = sprite.position;
+		parent.addChild_z( point, 1 );
+		
+		if( i == 0 ) {
+			sprite.anchorPoint = ccp(0,0);
+		}
+		else if( i == 1 ) {
+			sprite.anchorPoint = ccp(0.5, 0.5);
+		}
+		else if (i == 2 ) {
+			sprite.anchorPoint = ccp(1,1);
+		}
+		
+		point.position = sprite.position;
+		
+		var animFrames = NSMutableArray.array;
+		
+		var j=0;
+		for(j = 0; j < 14; j++) {
+			var prefix = (j+1<10) ? '0' : '';
+			var name = 'grossini_dance_' + prefix + (j+1) + '.png';
+			var frame = cache.spriteFrameByName( name );
+			animFrames.addObject( frame );
+		}
+		var animation = CCAnimation.animationWithSpriteFrames_delay(animFrames, 0.3 );
+		sprite.runAction( CCRepeatForever.actionWithAction( CCAnimate.actionWithAnimation( animation ) ) );
+		
+		// Skew
+		var skewX = CCSkewBy.actionWithDuration_skewX_skewY(2, 45, 0 );
+		var skewX_back = skewX.reverse;
+		var skewY = CCSkewBy.actionWithDuration_skewX_skewY(2, 0 , 45 );
+		var skewY_back = skewY.reverse;
+		
+		var seq_skew = CCSequence.actionsWithArray( [skewX, skewX_back, skewY, skewY_back] );
+		sprite.runAction( CCRepeatForever.actionWithAction( seq_skew ) );
+		
+		// Scale
+		var scale = CCScaleBy.actionWithDuration_scale(2, 2);
+		var scale_back = scale.reverse;
+		var seq_scale = CCSequence.actionsWithArray( [scale, scale_back] );
+		sprite.runAction( CCRepeatForever.actionWithAction( seq_scale ) );
+		
+		spritebatch.addChild_z(sprite, 0);
+	}
+}
+scenes.push( new test_spritebatch_anchorpoint_skew_scale() );
+
+
+//
+// Helper functions
+//
+function add_menu( parent )
+{
+	var item1 = CCMenuItemImage.itemWithNormalImage_selectedImage("b1.png", "b2.png");
+	var item2 = CCMenuItemImage.itemWithNormalImage_selectedImage("r1.png", "r2.png");
+	var item3 = CCMenuItemImage.itemWithNormalImage_selectedImage("f1.png", "f2.png");
+	
+	item1.setTarget_selector( callback, 'back:');
+	item2.setTarget_selector( callback, 'reset:');
+	item3.setTarget_selector( callback, 'forward:');
+	
+	var menu = CCMenu.menuWithArray( [item1, item2, item3] );
+	
+	menu.position = ccp(0,0);
+	item1.position = ccp( winSize.width/2 - item2.contentSize.width*2, item2.contentSize.height/2);
+	item2.position = ccp( winSize.width/2, item2.contentSize.height/2);
+	item3.position = ccp( winSize.width/2 + item2.contentSize.width*2, item2.contentSize.height/2);
+	
+	parent.addChild( menu );
+}
+
+function add_titles( parent, title, subtitle )
+{
+	// title
+	var label = CCLabelTTF.labelWithString_fontName_fontSize( title, "Arial", 32);
+	parent.addChild( label );
+	
+	label.position = ccp(winSize.width/2, winSize.height-50);
+	
+	// subtitle
+	var l = CCLabelTTF.labelWithString_fontName_fontSize( subtitle, "Thonburi", 16 );
+	parent.addChild( l );
+	l.position = ccp(winSize.width/2, winSize.height-80);
+}
+
+function run()
+{
+	var scene = CCScene.node;
+	var layer = CCLayer.node;
+	
+	scene.addChild( layer );
+	
+	var t = scenes[ currentScene ];
+	
+	add_menu( layer );
+	add_titles( layer, t.title, t.subtitle );
+	t.test( layer );
+	
+	director.runWithScene( scene );
+}
+
+
+//
+run();
+

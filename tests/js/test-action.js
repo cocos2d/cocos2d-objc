@@ -38,6 +38,9 @@ function ccp( x, y ) {
 
 -(void) loadScene:(int)sceneNumber
 {
+	// update winsize. It might have changed
+	winSize = director.winSize;
+
 	var scene = CCScene.node;
 	var layer = CCLayer.node;
 	
