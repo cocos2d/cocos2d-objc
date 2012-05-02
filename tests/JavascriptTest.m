@@ -11,168 +11,6 @@
 
 #import "JSCocoa.h"
 
-static NSInteger javascriptTest = 0;
-static int sceneIdx=-1;
-static NSString *transitions[] = {
-	@"JSSprite",
-};
-
-Class nextAction(void);
-Class backAction(void);
-Class restartAction(void);
-
-Class nextAction()
-{
-
-	sceneIdx++;
-	sceneIdx = sceneIdx % ( sizeof(transitions) / sizeof(transitions[0]) );
-	NSString *r = transitions[sceneIdx];
-	Class c = NSClassFromString(r);
-	return c;
-}
-
-Class backAction()
-{
-	sceneIdx--;
-	int total = ( sizeof(transitions) / sizeof(transitions[0]) );
-	if( sceneIdx < 0 )
-		sceneIdx += total;
-
-	NSString *r = transitions[sceneIdx];
-	Class c = NSClassFromString(r);
-	return c;
-}
-
-Class restartAction()
-{
-	NSString *r = transitions[sceneIdx];
-	Class c = NSClassFromString(r);
-	return c;
-}
-
-#pragma mark - JSTest
-
-@implementation JSTest
--(id) init
-{
-	if( (self = [super init]) ) {
-
-
-		CGSize s = [[CCDirector sharedDirector] winSize];
-
-		CCLabelTTF *label = [CCLabelTTF labelWithString:[self title] fontName:@"Arial" fontSize:26];
-		[self addChild:label z:1 tag:1];
-		[label setPosition: ccp(s.width/2, s.height-50)];
-
-		NSString *subtitle = [self subtitle];
-		if( subtitle ) {
-			CCLabelTTF *l = [CCLabelTTF labelWithString:subtitle fontName:@"Thonburi" fontSize:16];
-			[self addChild:l z:1 tag:2];
-			[l setPosition:ccp(s.width/2, s.height-80)];
-		}
-
-		CCMenuItemImage *item1 = [CCMenuItemImage itemWithNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
-		CCMenuItemImage *item2 = [CCMenuItemImage itemWithNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
-		CCMenuItemImage *item3 = [CCMenuItemImage itemWithNormalImage:@"f1.png" selectedImage:@"f2.png" target:self selector:@selector(nextCallback:)];
-
-		CCMenu *menu = [CCMenu menuWithItems:item1, item2, item3, nil];
-
-		menu.position = CGPointZero;
-		item1.position = ccp( s.width/2 - item2.contentSize.width*2, item2.contentSize.height/2);
-		item2.position = ccp( s.width/2, item2.contentSize.height/2);
-		item3.position = ccp( s.width/2 + item2.contentSize.width*2, item2.contentSize.height/2);
-		[self addChild: menu z:1];
-	}
-	return self;
-}
-
--(void) setTitle:(NSString*)string
-{
-	CCLabelTTF *label = (CCLabelTTF*) [self getChildByTag:1];
-	[label setString:string];
-}
-
--(void) setSubtitle:(NSString*)string
-{
-	CCLabelTTF *label = (CCLabelTTF*) [self getChildByTag:2];
-	[label setString:string];
-}
-
-
--(void) dealloc
-{
-	[super dealloc];
-}
-
--(void) restartCallback: (id) sender
-{
-	CCScene *s = [CCScene node];
-	[s addChild: [restartAction() node]];
-	[[CCDirector sharedDirector] replaceScene: s];
-}
-
--(void) nextCallback: (id) sender
-{
-	javascriptTest++;
-
-	CCScene *s = [CCScene node];
-	[s addChild: [nextAction() node]];
-	[[CCDirector sharedDirector] replaceScene: s];
-}
-
--(void) backCallback: (id) sender
-{
-	javascriptTest--;
-
-	CCScene *s = [CCScene node];
-	[s addChild: [backAction() node]];
-	[[CCDirector sharedDirector] replaceScene: s];
-}
-
--(NSString*) title
-{
-	return @"No title";
-}
-
--(NSString*) subtitle
-{
-	return @"";
-}
-@end
-
-#pragma mark - JSSprite
-
-@implementation JSSprite
-
-@synthesize testIndex=testIndex_, numberOfTests=numberOfTests_;
-
--(void) onEnter
-{
-	[super onEnter];
-	
-	if( javascriptTest < 0 )
-		javascriptTest = 0;
-
-	JSCocoa* jsc = [JSCocoa new];
-	
-	CCFileUtils *fileUtils = [CCFileUtils sharedFileUtils];
-	NSString *path = [fileUtils fullPathFromRelativePath:@"js/test-sprite.js"];
-	[jsc evalJSFile:path];
-	
-	[jsc release];
-}
-
--(void) setNumberOfTests:(NSInteger)numberOfTests
-{
-	numberOfTests_ = numberOfTests;
-}
-
--(NSUInteger) testIndex
-{
-	return javascriptTest % numberOfTests_;
-}
-@end
-
 #pragma mark - AppDelegate - iOS
 
 // CLASS IMPLEMENTATIONS
@@ -276,11 +114,25 @@ Class restartAction()
 {
 	[super applicationDidFinishLaunching:aNotification];
 
-	CCScene *scene = [CCScene node];
-	[scene addChild: [nextAction() node]];
+	// Init Global controller
+	javascriptController_ = [[JSCocoa alloc] init];
+	
+	// Load cocos2d BridgeSupport (not needed I guess)
+	CCFileUtils *fileUtils = [CCFileUtils sharedFileUtils];
+	NSString *cocos2dBridge = [fileUtils fullPathFromRelativePath:@"cocos2d.bridgesupport"];
+	
+	[[BridgeSupportController sharedController] loadBridgeSupport:cocos2dBridge];
+	
+	// execute test
+	NSString *path = [fileUtils fullPathFromRelativePath:@"js/test-actions.js"];
+	[javascriptController_ evalJSFile:path];
+}
 
-	[director_ pushScene:scene];
-	[director_ startAnimation];
+-(void)dealloc
+{
+	[javascriptController_ release];
+
+	[super dealloc];
 }
 @end
 #endif
