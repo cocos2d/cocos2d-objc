@@ -124,7 +124,8 @@
 	[[BridgeSupportController sharedController] loadBridgeSupport:cocos2dBridge];
 	
 	// execute test
-	NSString *path = [fileUtils fullPathFromRelativePath:@"js/test-actions.js"];
+//	NSString *path = [fileUtils fullPathFromRelativePath:@"js/test-action.js"];
+	NSString *path = [fileUtils fullPathFromRelativePath:@"js/test-sprite.js"];
 	[javascriptController_ evalJSFile:path];
 }
 

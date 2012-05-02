@@ -2109,11 +2109,12 @@ Class restartAction()
 
 		CGSize s = [[CCDirector sharedDirector] winSize];
 
-		for(int i=0;i<3;i++) {
-			CCSpriteFrameCache *cache = [CCSpriteFrameCache sharedSpriteFrameCache];
-			[cache addSpriteFramesWithFile:@"animations/grossini.plist"];
-			[cache addSpriteFramesWithFile:@"animations/grossini_gray.plist" textureFilename:@"animations/grossini_gray.png"];
+		CCSpriteFrameCache *cache = [CCSpriteFrameCache sharedSpriteFrameCache];
+		[cache addSpriteFramesWithFile:@"animations/grossini.plist"];
+		[cache addSpriteFramesWithFile:@"animations/grossini_gray.plist" textureFilename:@"animations/grossini_gray.png"];
+		
 
+		for(int i=0;i<3;i++) {
 			//
 			// Animation using Sprite batch
 			//
@@ -2182,10 +2183,14 @@ Class restartAction()
 
 		CGSize s = [[CCDirector sharedDirector] winSize];
 
+		CCSpriteFrameCache *cache = [CCSpriteFrameCache sharedSpriteFrameCache];
+		[cache addSpriteFramesWithFile:@"animations/grossini.plist"];
+		[cache addSpriteFramesWithFile:@"animations/grossini_gray.plist" textureFilename:@"animations/grossini_gray.png"];
+
+		CCSpriteBatchNode *spritebatch = [CCSpriteBatchNode batchNodeWithFile:@"animations/grossini.pvr.gz"];
+		[self addChild:spritebatch];
+		
 		for(int i=0;i<3;i++) {
-			CCSpriteFrameCache *cache = [CCSpriteFrameCache sharedSpriteFrameCache];
-			[cache addSpriteFramesWithFile:@"animations/grossini.plist"];
-			[cache addSpriteFramesWithFile:@"animations/grossini_gray.plist" textureFilename:@"animations/grossini_gray.png"];
 
 			//
 			// Animation using Sprite batch
@@ -2211,9 +2216,6 @@ Class restartAction()
 			}
 
 			point.position = sprite.position;
-
-			CCSpriteBatchNode *spritebatch = [CCSpriteBatchNode batchNodeWithFile:@"animations/grossini.pvr.gz"];
-			[self addChild:spritebatch];
 
 			NSMutableArray *animFrames = [NSMutableArray array];
 			for(int i = 0; i < 14; i++) {
@@ -2257,11 +2259,11 @@ Class restartAction()
 
 		CGSize s = [[CCDirector sharedDirector] winSize];
 
+		CCSpriteFrameCache *cache = [CCSpriteFrameCache sharedSpriteFrameCache];
+		[cache addSpriteFramesWithFile:@"animations/grossini.plist"];
+		[cache addSpriteFramesWithFile:@"animations/grossini_gray.plist" textureFilename:@"animations/grossini_gray.png"];
+		
 		for(int i=0;i<3;i++) {
-			CCSpriteFrameCache *cache = [CCSpriteFrameCache sharedSpriteFrameCache];
-			[cache addSpriteFramesWithFile:@"animations/grossini.plist"];
-			[cache addSpriteFramesWithFile:@"animations/grossini_gray.plist" textureFilename:@"animations/grossini_gray.png"];
-
 			//
 			// Animation using Sprite batch
 			//
@@ -2333,10 +2335,14 @@ Class restartAction()
 
 		CGSize s = [[CCDirector sharedDirector] winSize];
 
+		CCSpriteFrameCache *cache = [CCSpriteFrameCache sharedSpriteFrameCache];
+		[cache addSpriteFramesWithFile:@"animations/grossini.plist"];
+		[cache addSpriteFramesWithFile:@"animations/grossini_gray.plist" textureFilename:@"animations/grossini_gray.png"];
+
+		CCSpriteBatchNode *spritebatch = [CCSpriteBatchNode batchNodeWithFile:@"animations/grossini.pvr.gz"];
+		[self addChild:spritebatch];
+		
 		for(int i=0;i<3;i++) {
-			CCSpriteFrameCache *cache = [CCSpriteFrameCache sharedSpriteFrameCache];
-			[cache addSpriteFramesWithFile:@"animations/grossini.plist"];
-			[cache addSpriteFramesWithFile:@"animations/grossini_gray.plist" textureFilename:@"animations/grossini_gray.png"];
 
 			//
 			// Animation using Sprite batch
@@ -2362,9 +2368,6 @@ Class restartAction()
 			}
 
 			point.position = sprite.position;
-
-			CCSpriteBatchNode *spritebatch = [CCSpriteBatchNode batchNodeWithFile:@"animations/grossini.pvr.gz"];
-			[self addChild:spritebatch];
 
 			NSMutableArray *animFrames = [NSMutableArray array];
 			for(int i = 0; i < 14; i++) {
@@ -2412,11 +2415,11 @@ Class restartAction()
 
 		CGSize s = [[CCDirector sharedDirector] winSize];
 
-		for(int i=0;i<3;i++) {
-			CCSpriteFrameCache *cache = [CCSpriteFrameCache sharedSpriteFrameCache];
-			[cache addSpriteFramesWithFile:@"animations/grossini.plist"];
-			[cache addSpriteFramesWithFile:@"animations/grossini_gray.plist" textureFilename:@"animations/grossini_gray.png"];
+		CCSpriteFrameCache *cache = [CCSpriteFrameCache sharedSpriteFrameCache];
+		[cache addSpriteFramesWithFile:@"animations/grossini.plist"];
+		[cache addSpriteFramesWithFile:@"animations/grossini_gray.plist" textureFilename:@"animations/grossini_gray.png"];
 
+		for(int i=0;i<3;i++) {
 			//
 			// Animation using Sprite batch
 			//
@@ -2491,10 +2494,14 @@ Class restartAction()
 
 		CGSize s = [[CCDirector sharedDirector] winSize];
 
+		CCSpriteFrameCache *cache = [CCSpriteFrameCache sharedSpriteFrameCache];
+		[cache addSpriteFramesWithFile:@"animations/grossini.plist"];
+		[cache addSpriteFramesWithFile:@"animations/grossini_gray.plist" textureFilename:@"animations/grossini_gray.png"];
+
+		CCSpriteBatchNode *spritebatch = [CCSpriteBatchNode batchNodeWithFile:@"animations/grossini.pvr.gz"];
+		[self addChild:spritebatch];
+		
 		for(int i=0;i<3;i++) {
-			CCSpriteFrameCache *cache = [CCSpriteFrameCache sharedSpriteFrameCache];
-			[cache addSpriteFramesWithFile:@"animations/grossini.plist"];
-			[cache addSpriteFramesWithFile:@"animations/grossini_gray.plist" textureFilename:@"animations/grossini_gray.png"];
 
 			//
 			// Animation using Sprite batch
@@ -2520,9 +2527,6 @@ Class restartAction()
 			}
 
 			point.position = sprite.position;
-
-			CCSpriteBatchNode *spritebatch = [CCSpriteBatchNode batchNodeWithFile:@"animations/grossini.pvr.gz"];
-			[self addChild:spritebatch];
 
 			NSMutableArray *animFrames = [NSMutableArray array];
 			for(int i = 0; i < 14; i++) {
@@ -2573,11 +2577,11 @@ Class restartAction()
 
 		CGSize s = [[CCDirector sharedDirector] winSize];
 
+		CCSpriteFrameCache *cache = [CCSpriteFrameCache sharedSpriteFrameCache];
+		[cache addSpriteFramesWithFile:@"animations/grossini.plist"];
+		[cache addSpriteFramesWithFile:@"animations/grossini_gray.plist" textureFilename:@"animations/grossini_gray.png"];
+		
 		for(int i=0;i<3;i++) {
-			CCSpriteFrameCache *cache = [CCSpriteFrameCache sharedSpriteFrameCache];
-			[cache addSpriteFramesWithFile:@"animations/grossini.plist"];
-			[cache addSpriteFramesWithFile:@"animations/grossini_gray.plist" textureFilename:@"animations/grossini_gray.png"];
-
 			//
 			// Animation using Sprite batch
 			//
@@ -2660,10 +2664,14 @@ Class restartAction()
 
 		CGSize s = [[CCDirector sharedDirector] winSize];
 
+		CCSpriteFrameCache *cache = [CCSpriteFrameCache sharedSpriteFrameCache];
+		[cache addSpriteFramesWithFile:@"animations/grossini.plist"];
+		[cache addSpriteFramesWithFile:@"animations/grossini_gray.plist" textureFilename:@"animations/grossini_gray.png"];
+
+		CCSpriteBatchNode *spritebatch = [CCSpriteBatchNode batchNodeWithFile:@"animations/grossini.pvr.gz"];
+		[self addChild:spritebatch];
+
 		for(int i=0;i<3;i++) {
-			CCSpriteFrameCache *cache = [CCSpriteFrameCache sharedSpriteFrameCache];
-			[cache addSpriteFramesWithFile:@"animations/grossini.plist"];
-			[cache addSpriteFramesWithFile:@"animations/grossini_gray.plist" textureFilename:@"animations/grossini_gray.png"];
 
 			//
 			// Animation using Sprite batch
@@ -2690,8 +2698,6 @@ Class restartAction()
 
 			point.position = sprite.position;
 
-			CCSpriteBatchNode *spritebatch = [CCSpriteBatchNode batchNodeWithFile:@"animations/grossini.pvr.gz"];
-			[self addChild:spritebatch];
 
 			NSMutableArray *animFrames = [NSMutableArray array];
 			for(int i = 0; i < 14; i++) {
@@ -2749,11 +2755,11 @@ Class restartAction()
 
 		CGSize s = [[CCDirector sharedDirector] winSize];
 
+		CCSpriteFrameCache *cache = [CCSpriteFrameCache sharedSpriteFrameCache];
+		[cache addSpriteFramesWithFile:@"animations/grossini.plist"];
+		[cache addSpriteFramesWithFile:@"animations/grossini_gray.plist" textureFilename:@"animations/grossini_gray.png"];
+		
 		for(int i=0;i<3;i++) {
-			CCSpriteFrameCache *cache = [CCSpriteFrameCache sharedSpriteFrameCache];
-			[cache addSpriteFramesWithFile:@"animations/grossini.plist"];
-			[cache addSpriteFramesWithFile:@"animations/grossini_gray.plist" textureFilename:@"animations/grossini_gray.png"];
-
 			//
 			// Animation using Sprite batch
 			//
@@ -2832,10 +2838,14 @@ Class restartAction()
 
 		CGSize s = [[CCDirector sharedDirector] winSize];
 
+		CCSpriteFrameCache *cache = [CCSpriteFrameCache sharedSpriteFrameCache];
+		[cache addSpriteFramesWithFile:@"animations/grossini.plist"];
+		[cache addSpriteFramesWithFile:@"animations/grossini_gray.plist" textureFilename:@"animations/grossini_gray.png"];
+
+		CCSpriteBatchNode *spritebatch = [CCSpriteBatchNode batchNodeWithFile:@"animations/grossini.pvr.gz"];
+		[self addChild:spritebatch];
+		
 		for(int i=0;i<3;i++) {
-			CCSpriteFrameCache *cache = [CCSpriteFrameCache sharedSpriteFrameCache];
-			[cache addSpriteFramesWithFile:@"animations/grossini.plist"];
-			[cache addSpriteFramesWithFile:@"animations/grossini_gray.plist" textureFilename:@"animations/grossini_gray.png"];
 
 			//
 			// Animation using Sprite batch
@@ -2861,9 +2871,6 @@ Class restartAction()
 			}
 
 			point.position = sprite.position;
-
-			CCSpriteBatchNode *spritebatch = [CCSpriteBatchNode batchNodeWithFile:@"animations/grossini.pvr.gz"];
-			[self addChild:spritebatch];
 
 			NSMutableArray *animFrames = [NSMutableArray array];
 			for(int i = 0; i < 14; i++) {
