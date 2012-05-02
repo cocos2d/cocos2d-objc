@@ -2,28 +2,11 @@
 #import "BaseAppController.h"
 #import "cocos2d.h"
 
+@class JSCocoa;
+
 //CLASS INTERFACE
 @interface AppController : BaseAppController
-@end
-
-@interface JSTest: CCLayer
 {
+	JSCocoa	*javascriptController_;
 }
-
--(NSString*) title;
--(NSString*) subtitle;
--(void) setTitle:(NSString*)title;
--(void) setSubtitle:(NSString*)subtitle;
-
-@end
-
-
-@interface JSSprite : JSTest
-{
-	NSUInteger testIndex_;
-	NSInteger numberOfTests_;
-}
-
-@property (readonly, nonatomic) NSUInteger testIndex;
-@property (readwrite, nonatomic) NSInteger numberOfTests;
 @end

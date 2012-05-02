@@ -1,0 +1,1749 @@
+<?xml version='1.0'?>
+<!DOCTYPE signatures SYSTEM "file://localhost/System/Library/DTDs/BridgeSupport.dtd">
+<signatures version='1.0'>
+<struct name='CCPVRMipmap' type='{CCPVRMipmap=&quot;address&quot;*&quot;len&quot;I}'/>
+<struct name='CCZHeader' type='{CCZHeader=&quot;sig&quot;[4C]&quot;compression_type&quot;S&quot;version&quot;S&quot;reserved&quot;I&quot;len&quot;I}'/>
+<struct name='UT_hash_bucket' type='{UT_hash_bucket=&quot;hh_head&quot;^{UT_hash_handle}&quot;count&quot;I&quot;expand_mult&quot;I}'/>
+<struct name='UT_hash_handle' type='{UT_hash_handle=&quot;tbl&quot;^{UT_hash_table}&quot;prev&quot;^v&quot;next&quot;^v&quot;hh_prev&quot;^{UT_hash_handle}&quot;hh_next&quot;^{UT_hash_handle}&quot;key&quot;^v&quot;keylen&quot;I&quot;hashv&quot;I}'/>
+<struct name='UT_hash_table' type64='{UT_hash_table=&quot;buckets&quot;^{UT_hash_bucket}&quot;num_buckets&quot;I&quot;log2_num_buckets&quot;I&quot;num_items&quot;I&quot;tail&quot;^{UT_hash_handle}&quot;hho&quot;q&quot;ideal_chain_maxlen&quot;I&quot;nonideal_items&quot;I&quot;ineff_expands&quot;I&quot;noexpand&quot;I&quot;signature&quot;I}' type='{UT_hash_table=&quot;buckets&quot;^{UT_hash_bucket}&quot;num_buckets&quot;I&quot;log2_num_buckets&quot;I&quot;num_items&quot;I&quot;tail&quot;^{UT_hash_handle}&quot;hho&quot;i&quot;ideal_chain_maxlen&quot;I&quot;nonideal_items&quot;I&quot;ineff_expands&quot;I&quot;noexpand&quot;I&quot;signature&quot;I}'/>
+<struct name='ccArray' type64='{ccArray=&quot;num&quot;Q&quot;max&quot;Q&quot;arr&quot;^@}' type='{ccArray=&quot;num&quot;I&quot;max&quot;I&quot;arr&quot;^@}'/>
+<struct name='ccBMFontDef' type64='{_BMFontDef=&quot;charID&quot;S&quot;rect&quot;{CGRect=&quot;origin&quot;{CGPoint=&quot;x&quot;d&quot;y&quot;d}&quot;size&quot;{CGSize=&quot;width&quot;d&quot;height&quot;d}}&quot;xOffset&quot;s&quot;yOffset&quot;s&quot;xAdvance&quot;s}' type='{_BMFontDef=&quot;charID&quot;S&quot;rect&quot;{CGRect=&quot;origin&quot;{CGPoint=&quot;x&quot;f&quot;y&quot;f}&quot;size&quot;{CGSize=&quot;width&quot;f&quot;height&quot;f}}&quot;xOffset&quot;s&quot;yOffset&quot;s&quot;xAdvance&quot;s}'/>
+<struct name='ccBMFontPadding' type='{_BMFontPadding=&quot;left&quot;i&quot;top&quot;i&quot;right&quot;i&quot;bottom&quot;i}'/>
+<struct name='ccBezierConfig' type64='{_ccBezierConfig=&quot;endPosition&quot;{CGPoint=&quot;x&quot;d&quot;y&quot;d}&quot;controlPoint_1&quot;{CGPoint=&quot;x&quot;d&quot;y&quot;d}&quot;controlPoint_2&quot;{CGPoint=&quot;x&quot;d&quot;y&quot;d}}' type='{_ccBezierConfig=&quot;endPosition&quot;{CGPoint=&quot;x&quot;f&quot;y&quot;f}&quot;controlPoint_1&quot;{CGPoint=&quot;x&quot;f&quot;y&quot;f}&quot;controlPoint_2&quot;{CGPoint=&quot;x&quot;f&quot;y&quot;f}}'/>
+<struct name='ccBlendFunc' type='{_ccBlendFunc=&quot;src&quot;I&quot;dst&quot;I}'/>
+<struct name='ccCArray' type64='{ccArray=&quot;num&quot;Q&quot;max&quot;Q&quot;arr&quot;^@}' type='{ccArray=&quot;num&quot;I&quot;max&quot;I&quot;arr&quot;^@}'/>
+<struct name='ccColor3B' type='{_ccColor3B=&quot;r&quot;C&quot;g&quot;C&quot;b&quot;C}'/>
+<struct name='ccColor4B' type='{_ccColor4B=&quot;r&quot;C&quot;g&quot;C&quot;b&quot;C&quot;a&quot;C}'/>
+<struct name='ccColor4F' type='{_ccColor4F=&quot;r&quot;f&quot;g&quot;f&quot;b&quot;f&quot;a&quot;f}'/>
+<struct name='ccGridSize' type64='{_ccGridSize=&quot;x&quot;q&quot;y&quot;q}' type='{_ccGridSize=&quot;x&quot;i&quot;y&quot;i}'/>
+<struct name='ccPointSprite' type='{_ccPointSprite=&quot;pos&quot;{_ccVertex2F=&quot;x&quot;f&quot;y&quot;f}&quot;color&quot;{_ccColor4B=&quot;r&quot;C&quot;g&quot;C&quot;b&quot;C&quot;a&quot;C}&quot;size&quot;f}'/>
+<struct name='ccQuad2' type='{_ccQuad2=&quot;tl&quot;{_ccVertex2F=&quot;x&quot;f&quot;y&quot;f}&quot;tr&quot;{_ccVertex2F=&quot;x&quot;f&quot;y&quot;f}&quot;bl&quot;{_ccVertex2F=&quot;x&quot;f&quot;y&quot;f}&quot;br&quot;{_ccVertex2F=&quot;x&quot;f&quot;y&quot;f}}'/>
+<struct name='ccQuad3' type='{_ccQuad3=&quot;bl&quot;{_ccVertex3F=&quot;x&quot;f&quot;y&quot;f&quot;z&quot;f}&quot;br&quot;{_ccVertex3F=&quot;x&quot;f&quot;y&quot;f&quot;z&quot;f}&quot;tl&quot;{_ccVertex3F=&quot;x&quot;f&quot;y&quot;f&quot;z&quot;f}&quot;tr&quot;{_ccVertex3F=&quot;x&quot;f&quot;y&quot;f&quot;z&quot;f}}'/>
+<struct name='ccTex2F' type='{_ccTex2F=&quot;u&quot;f&quot;v&quot;f}'/>
+<struct name='ccTexParams' type='{_ccTexParams=&quot;minFilter&quot;I&quot;magFilter&quot;I&quot;wrapS&quot;I&quot;wrapT&quot;I}'/>
+<struct name='ccV2F_C4B_T2F' type='{_ccV2F_C4B_T2F=&quot;vertices&quot;{_ccVertex2F=&quot;x&quot;f&quot;y&quot;f}&quot;colors&quot;{_ccColor4B=&quot;r&quot;C&quot;g&quot;C&quot;b&quot;C&quot;a&quot;C}&quot;texCoords&quot;{_ccTex2F=&quot;u&quot;f&quot;v&quot;f}}'/>
+<struct name='ccV2F_C4B_T2F_Quad' type='{_ccV2F_C4B_T2F_Quad=&quot;bl&quot;{_ccV2F_C4B_T2F=&quot;vertices&quot;{_ccVertex2F=&quot;x&quot;f&quot;y&quot;f}&quot;colors&quot;{_ccColor4B=&quot;r&quot;C&quot;g&quot;C&quot;b&quot;C&quot;a&quot;C}&quot;texCoords&quot;{_ccTex2F=&quot;u&quot;f&quot;v&quot;f}}&quot;br&quot;{_ccV2F_C4B_T2F=&quot;vertices&quot;{_ccVertex2F=&quot;x&quot;f&quot;y&quot;f}&quot;colors&quot;{_ccColor4B=&quot;r&quot;C&quot;g&quot;C&quot;b&quot;C&quot;a&quot;C}&quot;texCoords&quot;{_ccTex2F=&quot;u&quot;f&quot;v&quot;f}}&quot;tl&quot;{_ccV2F_C4B_T2F=&quot;vertices&quot;{_ccVertex2F=&quot;x&quot;f&quot;y&quot;f}&quot;colors&quot;{_ccColor4B=&quot;r&quot;C&quot;g&quot;C&quot;b&quot;C&quot;a&quot;C}&quot;texCoords&quot;{_ccTex2F=&quot;u&quot;f&quot;v&quot;f}}&quot;tr&quot;{_ccV2F_C4B_T2F=&quot;vertices&quot;{_ccVertex2F=&quot;x&quot;f&quot;y&quot;f}&quot;colors&quot;{_ccColor4B=&quot;r&quot;C&quot;g&quot;C&quot;b&quot;C&quot;a&quot;C}&quot;texCoords&quot;{_ccTex2F=&quot;u&quot;f&quot;v&quot;f}}}'/>
+<struct name='ccV2F_C4F_T2F' type='{_ccV2F_C4F_T2F=&quot;vertices&quot;{_ccVertex2F=&quot;x&quot;f&quot;y&quot;f}&quot;colors&quot;{_ccColor4F=&quot;r&quot;f&quot;g&quot;f&quot;b&quot;f&quot;a&quot;f}&quot;texCoords&quot;{_ccTex2F=&quot;u&quot;f&quot;v&quot;f}}'/>
+<struct name='ccV2F_C4F_T2F_Quad' type='{_ccV2F_C4F_T2F_Quad=&quot;bl&quot;{_ccV2F_C4F_T2F=&quot;vertices&quot;{_ccVertex2F=&quot;x&quot;f&quot;y&quot;f}&quot;colors&quot;{_ccColor4F=&quot;r&quot;f&quot;g&quot;f&quot;b&quot;f&quot;a&quot;f}&quot;texCoords&quot;{_ccTex2F=&quot;u&quot;f&quot;v&quot;f}}&quot;br&quot;{_ccV2F_C4F_T2F=&quot;vertices&quot;{_ccVertex2F=&quot;x&quot;f&quot;y&quot;f}&quot;colors&quot;{_ccColor4F=&quot;r&quot;f&quot;g&quot;f&quot;b&quot;f&quot;a&quot;f}&quot;texCoords&quot;{_ccTex2F=&quot;u&quot;f&quot;v&quot;f}}&quot;tl&quot;{_ccV2F_C4F_T2F=&quot;vertices&quot;{_ccVertex2F=&quot;x&quot;f&quot;y&quot;f}&quot;colors&quot;{_ccColor4F=&quot;r&quot;f&quot;g&quot;f&quot;b&quot;f&quot;a&quot;f}&quot;texCoords&quot;{_ccTex2F=&quot;u&quot;f&quot;v&quot;f}}&quot;tr&quot;{_ccV2F_C4F_T2F=&quot;vertices&quot;{_ccVertex2F=&quot;x&quot;f&quot;y&quot;f}&quot;colors&quot;{_ccColor4F=&quot;r&quot;f&quot;g&quot;f&quot;b&quot;f&quot;a&quot;f}&quot;texCoords&quot;{_ccTex2F=&quot;u&quot;f&quot;v&quot;f}}}'/>
+<struct name='ccV3F_C4B_T2F' type='{_ccV3F_C4B_T2F=&quot;vertices&quot;{_ccVertex3F=&quot;x&quot;f&quot;y&quot;f&quot;z&quot;f}&quot;colors&quot;{_ccColor4B=&quot;r&quot;C&quot;g&quot;C&quot;b&quot;C&quot;a&quot;C}&quot;texCoords&quot;{_ccTex2F=&quot;u&quot;f&quot;v&quot;f}}'/>
+<struct name='ccV3F_C4B_T2F_Quad' type='{_ccV3F_C4B_T2F_Quad=&quot;tl&quot;{_ccV3F_C4B_T2F=&quot;vertices&quot;{_ccVertex3F=&quot;x&quot;f&quot;y&quot;f&quot;z&quot;f}&quot;colors&quot;{_ccColor4B=&quot;r&quot;C&quot;g&quot;C&quot;b&quot;C&quot;a&quot;C}&quot;texCoords&quot;{_ccTex2F=&quot;u&quot;f&quot;v&quot;f}}&quot;bl&quot;{_ccV3F_C4B_T2F=&quot;vertices&quot;{_ccVertex3F=&quot;x&quot;f&quot;y&quot;f&quot;z&quot;f}&quot;colors&quot;{_ccColor4B=&quot;r&quot;C&quot;g&quot;C&quot;b&quot;C&quot;a&quot;C}&quot;texCoords&quot;{_ccTex2F=&quot;u&quot;f&quot;v&quot;f}}&quot;tr&quot;{_ccV3F_C4B_T2F=&quot;vertices&quot;{_ccVertex3F=&quot;x&quot;f&quot;y&quot;f&quot;z&quot;f}&quot;colors&quot;{_ccColor4B=&quot;r&quot;C&quot;g&quot;C&quot;b&quot;C&quot;a&quot;C}&quot;texCoords&quot;{_ccTex2F=&quot;u&quot;f&quot;v&quot;f}}&quot;br&quot;{_ccV3F_C4B_T2F=&quot;vertices&quot;{_ccVertex3F=&quot;x&quot;f&quot;y&quot;f&quot;z&quot;f}&quot;colors&quot;{_ccColor4B=&quot;r&quot;C&quot;g&quot;C&quot;b&quot;C&quot;a&quot;C}&quot;texCoords&quot;{_ccTex2F=&quot;u&quot;f&quot;v&quot;f}}}'/>
+<struct name='ccV3F_C4F_T2F' type='{_ccV3F_C4F_T2F=&quot;vertices&quot;{_ccVertex3F=&quot;x&quot;f&quot;y&quot;f&quot;z&quot;f}&quot;colors&quot;{_ccColor4F=&quot;r&quot;f&quot;g&quot;f&quot;b&quot;f&quot;a&quot;f}&quot;texCoords&quot;{_ccTex2F=&quot;u&quot;f&quot;v&quot;f}}'/>
+<struct name='ccV3F_C4F_T2F_Quad' type='{_ccV3F_C4F_T2F_Quad=&quot;tl&quot;{_ccV3F_C4F_T2F=&quot;vertices&quot;{_ccVertex3F=&quot;x&quot;f&quot;y&quot;f&quot;z&quot;f}&quot;colors&quot;{_ccColor4F=&quot;r&quot;f&quot;g&quot;f&quot;b&quot;f&quot;a&quot;f}&quot;texCoords&quot;{_ccTex2F=&quot;u&quot;f&quot;v&quot;f}}&quot;bl&quot;{_ccV3F_C4F_T2F=&quot;vertices&quot;{_ccVertex3F=&quot;x&quot;f&quot;y&quot;f&quot;z&quot;f}&quot;colors&quot;{_ccColor4F=&quot;r&quot;f&quot;g&quot;f&quot;b&quot;f&quot;a&quot;f}&quot;texCoords&quot;{_ccTex2F=&quot;u&quot;f&quot;v&quot;f}}&quot;tr&quot;{_ccV3F_C4F_T2F=&quot;vertices&quot;{_ccVertex3F=&quot;x&quot;f&quot;y&quot;f&quot;z&quot;f}&quot;colors&quot;{_ccColor4F=&quot;r&quot;f&quot;g&quot;f&quot;b&quot;f&quot;a&quot;f}&quot;texCoords&quot;{_ccTex2F=&quot;u&quot;f&quot;v&quot;f}}&quot;br&quot;{_ccV3F_C4F_T2F=&quot;vertices&quot;{_ccVertex3F=&quot;x&quot;f&quot;y&quot;f&quot;z&quot;f}&quot;colors&quot;{_ccColor4F=&quot;r&quot;f&quot;g&quot;f&quot;b&quot;f&quot;a&quot;f}&quot;texCoords&quot;{_ccTex2F=&quot;u&quot;f&quot;v&quot;f}}}'/>
+<struct name='ccVertex2F' type='{_ccVertex2F=&quot;x&quot;f&quot;y&quot;f}'/>
+<struct name='ccVertex3F' type='{_ccVertex3F=&quot;x&quot;f&quot;y&quot;f&quot;z&quot;f}'/>
+<struct name='sCCParticle' type64='{sCCParticle=&quot;pos&quot;{CGPoint=&quot;x&quot;d&quot;y&quot;d}&quot;startPos&quot;{CGPoint=&quot;x&quot;d&quot;y&quot;d}&quot;color&quot;{_ccColor4F=&quot;r&quot;f&quot;g&quot;f&quot;b&quot;f&quot;a&quot;f}&quot;deltaColor&quot;{_ccColor4F=&quot;r&quot;f&quot;g&quot;f&quot;b&quot;f&quot;a&quot;f}&quot;size&quot;f&quot;deltaSize&quot;f&quot;rotation&quot;f&quot;deltaRotation&quot;f&quot;timeToLive&quot;f&quot;atlasIndex&quot;Q&quot;mode&quot;(?=&quot;A&quot;{?=&quot;dir&quot;{CGPoint=&quot;x&quot;d&quot;y&quot;d}&quot;radialAccel&quot;f&quot;tangentialAccel&quot;f}&quot;B&quot;{?=&quot;angle&quot;f&quot;degreesPerSecond&quot;f&quot;radius&quot;f&quot;deltaRadius&quot;f})}' type='{sCCParticle=&quot;pos&quot;{CGPoint=&quot;x&quot;f&quot;y&quot;f}&quot;startPos&quot;{CGPoint=&quot;x&quot;f&quot;y&quot;f}&quot;color&quot;{_ccColor4F=&quot;r&quot;f&quot;g&quot;f&quot;b&quot;f&quot;a&quot;f}&quot;deltaColor&quot;{_ccColor4F=&quot;r&quot;f&quot;g&quot;f&quot;b&quot;f&quot;a&quot;f}&quot;size&quot;f&quot;deltaSize&quot;f&quot;rotation&quot;f&quot;deltaRotation&quot;f&quot;timeToLive&quot;f&quot;atlasIndex&quot;I&quot;mode&quot;(?=&quot;A&quot;{?=&quot;dir&quot;{CGPoint=&quot;x&quot;f&quot;y&quot;f}&quot;radialAccel&quot;f&quot;tangentialAccel&quot;f}&quot;B&quot;{?=&quot;angle&quot;f&quot;degreesPerSecond&quot;f&quot;radius&quot;f&quot;deltaRadius&quot;f})}'/>
+<struct name='sImageTGA' type='{sImageTGA=&quot;status&quot;i&quot;type&quot;C&quot;pixelDepth&quot;C&quot;width&quot;s&quot;height&quot;s&quot;imageData&quot;*&quot;flipped&quot;i}'/>
+<struct name='tCCParticle' type64='{sCCParticle=&quot;pos&quot;{CGPoint=&quot;x&quot;d&quot;y&quot;d}&quot;startPos&quot;{CGPoint=&quot;x&quot;d&quot;y&quot;d}&quot;color&quot;{_ccColor4F=&quot;r&quot;f&quot;g&quot;f&quot;b&quot;f&quot;a&quot;f}&quot;deltaColor&quot;{_ccColor4F=&quot;r&quot;f&quot;g&quot;f&quot;b&quot;f&quot;a&quot;f}&quot;size&quot;f&quot;deltaSize&quot;f&quot;rotation&quot;f&quot;deltaRotation&quot;f&quot;timeToLive&quot;f&quot;atlasIndex&quot;Q&quot;mode&quot;(?=&quot;A&quot;{?=&quot;dir&quot;{CGPoint=&quot;x&quot;d&quot;y&quot;d}&quot;radialAccel&quot;f&quot;tangentialAccel&quot;f}&quot;B&quot;{?=&quot;angle&quot;f&quot;degreesPerSecond&quot;f&quot;radius&quot;f&quot;deltaRadius&quot;f})}' type='{sCCParticle=&quot;pos&quot;{CGPoint=&quot;x&quot;f&quot;y&quot;f}&quot;startPos&quot;{CGPoint=&quot;x&quot;f&quot;y&quot;f}&quot;color&quot;{_ccColor4F=&quot;r&quot;f&quot;g&quot;f&quot;b&quot;f&quot;a&quot;f}&quot;deltaColor&quot;{_ccColor4F=&quot;r&quot;f&quot;g&quot;f&quot;b&quot;f&quot;a&quot;f}&quot;size&quot;f&quot;deltaSize&quot;f&quot;rotation&quot;f&quot;deltaRotation&quot;f&quot;timeToLive&quot;f&quot;atlasIndex&quot;I&quot;mode&quot;(?=&quot;A&quot;{?=&quot;dir&quot;{CGPoint=&quot;x&quot;f&quot;y&quot;f}&quot;radialAccel&quot;f&quot;tangentialAccel&quot;f}&quot;B&quot;{?=&quot;angle&quot;f&quot;degreesPerSecond&quot;f&quot;radius&quot;f&quot;deltaRadius&quot;f})}'/>
+<struct name='tHashElement' type64='{_hashElement=&quot;actions&quot;^{ccArray}&quot;actionIndex&quot;Q&quot;currentActionSalvaged&quot;B&quot;paused&quot;B&quot;hh&quot;{UT_hash_handle=&quot;tbl&quot;^{UT_hash_table}&quot;prev&quot;^v&quot;next&quot;^v&quot;hh_prev&quot;^{UT_hash_handle}&quot;hh_next&quot;^{UT_hash_handle}&quot;key&quot;^v&quot;keylen&quot;I&quot;hashv&quot;I}&quot;target&quot;@&quot;currentAction&quot;@&quot;CCAction&quot;}' type='{_hashElement=&quot;actions&quot;^{ccArray}&quot;actionIndex&quot;I&quot;currentActionSalvaged&quot;B&quot;paused&quot;B&quot;hh&quot;{UT_hash_handle=&quot;tbl&quot;^{UT_hash_table}&quot;prev&quot;^v&quot;next&quot;^v&quot;hh_prev&quot;^{UT_hash_handle}&quot;hh_next&quot;^{UT_hash_handle}&quot;key&quot;^v&quot;keylen&quot;I&quot;hashv&quot;I}&quot;target&quot;@&quot;currentAction&quot;@&quot;CCAction&quot;}'/>
+<struct name='tImageTGA' type='{sImageTGA=&quot;status&quot;i&quot;type&quot;C&quot;pixelDepth&quot;C&quot;width&quot;s&quot;height&quot;s&quot;imageData&quot;*&quot;flipped&quot;i}'/>
+<constant name='ccBLACK' type='{_ccColor3B=CCC}'/>
+<constant name='ccBLUE' type='{_ccColor3B=CCC}'/>
+<constant name='ccGRAY' type='{_ccColor3B=CCC}'/>
+<constant name='ccGREEN' type='{_ccColor3B=CCC}'/>
+<constant name='ccMAGENTA' type='{_ccColor3B=CCC}'/>
+<constant name='ccORANGE' type='{_ccColor3B=CCC}'/>
+<constant name='ccPositionColor_frag' type='*'/>
+<constant name='ccPositionColor_vert' type='*'/>
+<constant name='ccPositionTextureA8Color_frag' type='*'/>
+<constant name='ccPositionTextureA8Color_vert' type='*'/>
+<constant name='ccPositionTextureColorAlphaTest_frag' type='*'/>
+<constant name='ccPositionTextureColor_frag' type='*'/>
+<constant name='ccPositionTextureColor_vert' type='*'/>
+<constant name='ccPositionTexture_frag' type='*'/>
+<constant name='ccPositionTexture_uColor_frag' type='*'/>
+<constant name='ccPositionTexture_uColor_vert' type='*'/>
+<constant name='ccPositionTexture_vert' type='*'/>
+<constant name='ccPosition_uColor_frag' type='*'/>
+<constant name='ccPosition_uColor_vert' type='*'/>
+<constant name='ccRED' type='{_ccColor3B=CCC}'/>
+<constant name='ccWHITE' type='{_ccColor3B=CCC}'/>
+<constant name='ccYELLOW' type='{_ccColor3B=CCC}'/>
+<constant name='kCCProfilerCategoryBatchSprite' type='B'/>
+<constant name='kCCProfilerCategoryParticles' type='B'/>
+<constant name='kCCProfilerCategorySprite' type='B'/>
+<string_constant name='CCAnimationFrameDisplayedNotification' nsstring='true' value='CCAnimationFrameDisplayedNotification'/>
+<string_constant name='kCCAttributeNameColor' nsstring='true' value='a_color'/>
+<string_constant name='kCCAttributeNamePosition' nsstring='true' value='a_position'/>
+<string_constant name='kCCAttributeNameTexCoord' nsstring='true' value='a_texCoord'/>
+<string_constant name='kCCShader_PositionColor' nsstring='true' value='ShaderPositionColor'/>
+<string_constant name='kCCShader_PositionTexture' nsstring='true' value='ShaderPositionTexture'/>
+<string_constant name='kCCShader_PositionTextureA8Color' nsstring='true' value='ShaderPositionTextureA8Color'/>
+<string_constant name='kCCShader_PositionTextureColor' nsstring='true' value='ShaderPositionTextureColor'/>
+<string_constant name='kCCShader_PositionTextureColorAlphaTest' nsstring='true' value='ShaderPositionTextureColorAlphaTest'/>
+<string_constant name='kCCShader_PositionTexture_uColor' nsstring='true' value='ShaderPositionTexture_uColor'/>
+<string_constant name='kCCShader_Position_uColor' nsstring='true' value='ShaderPosition_uColor'/>
+<string_constant name='kCCUniformAlphaTestValue' value='u_alpha_value'/>
+<string_constant name='kCCUniformMVPMatrix_s' value='u_MVPMatrix'/>
+<string_constant name='kCCUniformSampler_s' value='u_texture'/>
+<enum name='CCSpriteIndexNotInitialized' value='4294967295'/>
+<enum name='CCTMXOrientationHex' value='1'/>
+<enum name='CCTMXOrientationIso' value='2'/>
+<enum name='CCTMXOrientationOrtho' value='0'/>
+<enum name='CCTextAlignmentLeft' value='0'/>
+<enum name='CCZ_COMPRESSION_BZIP2' value='1'/>
+<enum name='CCZ_COMPRESSION_GZIP' value='2'/>
+<enum name='CCZ_COMPRESSION_NONE' value='3'/>
+<enum name='CCZ_COMPRESSION_ZLIB' value='0'/>
+<enum name='CC_BLEND_DST' value='771'/>
+<enum name='CC_BLEND_SRC' value='1'/>
+<enum name='CC_DIRECTOR_IOS_USE_BACKGROUND_THREAD' value='0'/>
+<enum name='CC_DIRECTOR_MAC_THREAD' value='2'/>
+<enum name='CC_DIRECTOR_STATS_INTERVAL' value='0.1f'/>
+<enum name='CC_ENABLE_DEPRECATED' value='1'/>
+<enum name='CC_ENABLE_GL_STATE_CACHE' value='0'/>
+<enum name='CC_ENABLE_PROFILERS' value='0'/>
+<enum name='CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL' value='0'/>
+<enum name='CC_GL_ALL' value='8'/>
+<enum name='CC_GL_BLEND' value='8'/>
+<enum name='CC_GL_DEPTH24_STENCIL8' value='35056'/>
+<enum name='CC_LABELATLAS_DEBUG_DRAW' value='0'/>
+<enum name='CC_LABELBMFONT_DEBUG_DRAW' value='0'/>
+<enum name='CC_MAC_USE_DISPLAY_LINK_THREAD' value='0'/>
+<enum name='CC_MAC_USE_MAIN_THREAD' value='2'/>
+<enum name='CC_MAC_USE_OWN_THREAD' value='1'/>
+<enum name='CC_NODE_RENDER_SUBPIXEL' value='1'/>
+<enum name='CC_PVRMIPMAP_MAX' value='16'/>
+<enum name='CC_SPRITEBATCHNODE_RENDER_SUBPIXEL' value='1'/>
+<enum name='CC_SPRITE_DEBUG_DRAW' value='0'/>
+<enum name='CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP' value='0'/>
+<enum name='CC_TEXTURE_ATLAS_USE_VAO' value='1'/>
+<enum name='CC_USE_LA88_LABELS' value='1'/>
+<enum name='COCOS2D_VERSION' value='131072'/>
+<enum name='HASH_BKT_CAPACITY_THRESH' value='10'/>
+<enum name='HASH_BLOOM_SIGNATURE' value='2971803890'/>
+<enum name='HASH_INITIAL_NUM_BUCKETS' value='32'/>
+<enum name='HASH_INITIAL_NUM_BUCKETS_LOG2' value='5'/>
+<enum name='HASH_SIGNATURE' value='2685476833'/>
+<enum name='TGA_ERROR_COMPRESSED_FILE' value='5'/>
+<enum name='TGA_ERROR_FILE_OPEN' value='1'/>
+<enum name='TGA_ERROR_INDEXED_COLOR' value='3'/>
+<enum name='TGA_ERROR_MEMORY' value='4'/>
+<enum name='TGA_ERROR_READING_FILE' value='2'/>
+<enum name='TGA_OK' value='0'/>
+<enum name='TMXLayerAttribBase64' value='2'/>
+<enum name='TMXLayerAttribGzip' value='4'/>
+<enum name='TMXLayerAttribNone' value='1'/>
+<enum name='TMXLayerAttribZlib' value='8'/>
+<enum name='TMXPropertyLayer' value='2'/>
+<enum name='TMXPropertyMap' value='1'/>
+<enum name='TMXPropertyNone' value='0'/>
+<enum name='TMXPropertyObject' value='4'/>
+<enum name='TMXPropertyObjectGroup' value='3'/>
+<enum name='TMXPropertyTile' value='5'/>
+<enum name='kCCActionTagInvalid' value='-1'/>
+<enum name='kCCDirectorProjection2D' value='0'/>
+<enum name='kCCDirectorProjection3D' value='1'/>
+<enum name='kCCDirectorProjectionCustom' value='2'/>
+<enum name='kCCDirectorProjectionDefault' value='1'/>
+<enum name='kCCDirectorResize_AutoScale' value='1'/>
+<enum name='kCCDirectorResize_NoScale' value='0'/>
+<enum name='kCCFlipedAll' value='3758096384'/>
+<enum name='kCCFlippedMask' value='536870911'/>
+<enum name='kCCImageFormatJPEG' value='0'/>
+<enum name='kCCImageFormatJPG' value='0'/>
+<enum name='kCCImageFormatPNG' value='1'/>
+<enum name='kCCItemSize' value='32'/>
+<enum name='kCCLabelAutomaticWidth' value='-1'/>
+<enum name='kCCLineBreakModeCharacterWrap' value='1'/>
+<enum name='kCCLineBreakModeClip' value='2'/>
+<enum name='kCCLineBreakModeHeadTruncation' value='3'/>
+<enum name='kCCLineBreakModeMiddleTruncation' value='5'/>
+<enum name='kCCLineBreakModeTailTruncation' value='4'/>
+<enum name='kCCLineBreakModeWordWrap' value='0'/>
+<enum name='kCCMacVersion_10_6' value='168165376'/>
+<enum name='kCCMacVersion_10_7' value='168230912'/>
+<enum name='kCCMacVersion_10_8' value='168296448'/>
+<enum name='kCCMenuHandlerPriority' value='-128'/>
+<enum name='kCCMenuStateTrackingTouch' value='1'/>
+<enum name='kCCMenuStateWaiting' value='0'/>
+<enum name='kCCMenuTouchPriority' value='0'/>
+<enum name='kCCNodeTagInvalid' value='-1'/>
+<enum name='kCCParticleDurationInfinity' value='-1'/>
+<enum name='kCCParticleModeGravity' value='0'/>
+<enum name='kCCParticleModeRadius' value='1'/>
+<enum name='kCCParticleStartRadiusEqualToEndRadius' value='-1'/>
+<enum name='kCCParticleStartSizeEqualToEndSize' value='-1'/>
+<enum name='kCCPositionTypeFree' value='0'/>
+<enum name='kCCPositionTypeGrouped' value='2'/>
+<enum name='kCCPositionTypeRelative' value='1'/>
+<enum name='kCCPriorityNonSystemMin' value='-2147483647'/>
+<enum name='kCCPrioritySystem' value='-2147483648'/>
+<enum name='kCCProgressTimerTypeBar' value='1'/>
+<enum name='kCCProgressTimerTypeRadial' value='0'/>
+<enum name='kCCRepeatForever' value='4294967294'/>
+<enum name='kCCResolutionMac' value='1'/>
+<enum name='kCCResolutionMacRetinaDisplay' value='2'/>
+<enum name='kCCResolutionUnknown' value='0'/>
+<enum name='kCCTMXTileDiagonalFlag' value='536870912'/>
+<enum name='kCCTMXTileHorizontalFlag' value='2147483648'/>
+<enum name='kCCTMXTileVerticalFlag' value='1073741824'/>
+<enum name='kCCTextAlignmentCenter' value='1'/>
+<enum name='kCCTextAlignmentLeft' value='0'/>
+<enum name='kCCTextAlignmentRight' value='2'/>
+<enum name='kCCTexture2DPixelFormat_A8' value='4'/>
+<enum name='kCCTexture2DPixelFormat_AI88' value='6'/>
+<enum name='kCCTexture2DPixelFormat_Automatic' value='0'/>
+<enum name='kCCTexture2DPixelFormat_Default' value='1'/>
+<enum name='kCCTexture2DPixelFormat_I8' value='5'/>
+<enum name='kCCTexture2DPixelFormat_PVRTC2' value='10'/>
+<enum name='kCCTexture2DPixelFormat_PVRTC4' value='9'/>
+<enum name='kCCTexture2DPixelFormat_RGB565' value='2'/>
+<enum name='kCCTexture2DPixelFormat_RGB5A1' value='8'/>
+<enum name='kCCTexture2DPixelFormat_RGB888' value='3'/>
+<enum name='kCCTexture2DPixelFormat_RGBA4444' value='7'/>
+<enum name='kCCTexture2DPixelFormat_RGBA8888' value='1'/>
+<enum name='kCCUniformMVPMatrix' value='0'/>
+<enum name='kCCUniformSampler' value='1'/>
+<enum name='kCCUniform_MAX' value='2'/>
+<enum name='kCCVertexAttribFlag_Color' value='2'/>
+<enum name='kCCVertexAttribFlag_None' value='0'/>
+<enum name='kCCVertexAttribFlag_PosColorTex' value='7'/>
+<enum name='kCCVertexAttribFlag_Position' value='1'/>
+<enum name='kCCVertexAttribFlag_TexCoords' value='4'/>
+<enum name='kCCVertexAttrib_Color' value='1'/>
+<enum name='kCCVertexAttrib_MAX' value='3'/>
+<enum name='kCCVertexAttrib_Position' value='0'/>
+<enum name='kCCVertexAttrib_TexCoords' value='2'/>
+<enum name='kCCVerticalTextAlignmentBottom' value='2'/>
+<enum name='kCCVerticalTextAlignmentCenter' value='1'/>
+<enum name='kCCVerticalTextAlignmentTop' value='0'/>
+<enum name='kCCiOSVersion_4_0' value='67108864'/>
+<enum name='kCCiOSVersion_4_0_1' value='67109120'/>
+<enum name='kCCiOSVersion_4_1' value='67174400'/>
+<enum name='kCCiOSVersion_4_2' value='67239936'/>
+<enum name='kCCiOSVersion_4_2_1' value='67240192'/>
+<enum name='kCCiOSVersion_4_3' value='67305472'/>
+<enum name='kCCiOSVersion_4_3_1' value='67305728'/>
+<enum name='kCCiOSVersion_4_3_2' value='67305984'/>
+<enum name='kCCiOSVersion_4_3_3' value='67306240'/>
+<enum name='kCCiOSVersion_4_3_4' value='67306496'/>
+<enum name='kCCiOSVersion_4_3_5' value='67306752'/>
+<enum name='kCCiOSVersion_5_0' value='83886080'/>
+<enum name='kCCiOSVersion_5_0_1' value='83886336'/>
+<enum name='kCCiOSVersion_5_1_0' value='83951616'/>
+<enum name='kCCiOSVersion_6_0_0' value='100663296'/>
+<enum name='kOrientationDownOver' value='1'/>
+<enum name='kOrientationLeftOver' value='0'/>
+<enum name='kOrientationRightOver' value='1'/>
+<enum name='kOrientationUpOver' value='0'/>
+<enum name='kParticleDurationInfinity' value='-1'/>
+<enum name='kParticleStartSizeEqualToEndSize' value='-1'/>
+<enum name='kPositionTypeFree' value='0'/>
+<enum name='kPositionTypeGrouped' value='2'/>
+<function name='CCProfilingBeginTimingBlock'>
+<arg type='@'/>
+</function>
+<function name='CCProfilingEndTimingBlock'>
+<arg type='@'/>
+</function>
+<function name='CCProfilingResetTimingBlock'>
+<arg type='@'/>
+</function>
+<function name='CGAffineToGL'>
+<arg type64='^{CGAffineTransform=dddddd}' type='^{CGAffineTransform=ffffff}'/>
+<arg type='^f'/>
+</function>
+<function name='FNTConfigLoadFile'>
+<arg type='@'/>
+<retval type='@'/>
+</function>
+<function name='FNTConfigRemoveCache'/>
+<function name='GLToCGAffine'>
+<arg type='^f'/>
+<arg type64='^{CGAffineTransform=dddddd}' type='^{CGAffineTransform=ffffff}'/>
+</function>
+<function name='base64Decode'>
+<arg type='*'/>
+<arg type='I'/>
+<arg type='^*'/>
+<retval type='i'/>
+</function>
+<function name='ccArrayAppendArray' inline='true'>
+<arg type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
+<arg type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
+</function>
+<function name='ccArrayAppendArrayWithResize' inline='true'>
+<arg type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
+<arg type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
+</function>
+<function name='ccArrayAppendObject' inline='true'>
+<arg type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
+<arg type='@'/>
+</function>
+<function name='ccArrayAppendObjectWithResize' inline='true'>
+<arg type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
+<arg type='@'/>
+</function>
+<function name='ccArrayContainsObject' inline='true'>
+<arg type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
+<arg type='@'/>
+<retval type='B'/>
+</function>
+<function name='ccArrayDoubleCapacity' inline='true'>
+<arg type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
+</function>
+<function name='ccArrayEnsureExtraCapacity' inline='true'>
+<arg type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
+<arg type64='Q' type='I'/>
+</function>
+<function name='ccArrayFastRemoveObject' inline='true'>
+<arg type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
+<arg type='@'/>
+</function>
+<function name='ccArrayFastRemoveObjectAtIndex' inline='true'>
+<arg type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
+<arg type64='Q' type='I'/>
+</function>
+<function name='ccArrayFree' inline='true'>
+<arg type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
+</function>
+<function name='ccArrayFullRemoveArray' inline='true'>
+<arg type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
+<arg type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
+</function>
+<function name='ccArrayGetIndexOfObject' inline='true'>
+<arg type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
+<arg type='@'/>
+<retval type64='Q' type='I'/>
+</function>
+<function name='ccArrayInsertObjectAtIndex' inline='true'>
+<arg type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
+<arg type='@'/>
+<arg type64='Q' type='I'/>
+</function>
+<function name='ccArrayMakeObjectPerformSelectorWithArrayObjects' inline='true'>
+<arg type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
+<arg type=':'/>
+<arg type='@'/>
+</function>
+<function name='ccArrayMakeObjectsPerformSelector' inline='true'>
+<arg type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
+<arg type=':'/>
+</function>
+<function name='ccArrayMakeObjectsPerformSelectorWithObject' inline='true'>
+<arg type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
+<arg type=':'/>
+<arg type='@'/>
+</function>
+<function name='ccArrayNew' inline='true'>
+<arg type64='Q' type='I'/>
+<retval type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
+</function>
+<function name='ccArrayRemoveAllObjects' inline='true'>
+<arg type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
+</function>
+<function name='ccArrayRemoveArray' inline='true'>
+<arg type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
+<arg type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
+</function>
+<function name='ccArrayRemoveObject' inline='true'>
+<arg type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
+<arg type='@'/>
+</function>
+<function name='ccArrayRemoveObjectAtIndex' inline='true'>
+<arg type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
+<arg type64='Q' type='I'/>
+</function>
+<function name='ccArrayShrink' inline='true'>
+<arg type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
+</function>
+<function name='ccArraySwapObjectsAtIndexes' inline='true'>
+<arg type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
+<arg type64='Q' type='I'/>
+<arg type64='Q' type='I'/>
+</function>
+<function name='ccCArrayAppendArray' inline='true'>
+<arg type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
+<arg type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
+</function>
+<function name='ccCArrayAppendArrayWithResize' inline='true'>
+<arg type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
+<arg type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
+</function>
+<function name='ccCArrayAppendValue' inline='true'>
+<arg type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
+<arg type='@'/>
+</function>
+<function name='ccCArrayAppendValueWithResize' inline='true'>
+<arg type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
+<arg type='@'/>
+</function>
+<function name='ccCArrayContainsValue' inline='true'>
+<arg type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
+<arg type='@'/>
+<retval type='B'/>
+</function>
+<function name='ccCArrayDoubleCapacity' inline='true'>
+<arg type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
+</function>
+<function name='ccCArrayEnsureExtraCapacity' inline='true'>
+<arg type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
+<arg type64='Q' type='I'/>
+</function>
+<function name='ccCArrayFastRemoveValueAtIndex' inline='true'>
+<arg type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
+<arg type64='Q' type='I'/>
+</function>
+<function name='ccCArrayFree' inline='true'>
+<arg type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
+</function>
+<function name='ccCArrayFullRemoveArray' inline='true'>
+<arg type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
+<arg type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
+</function>
+<function name='ccCArrayGetIndexOfValue' inline='true'>
+<arg type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
+<arg type='@'/>
+<retval type64='Q' type='I'/>
+</function>
+<function name='ccCArrayInsertValueAtIndex' inline='true'>
+<arg type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
+<arg type='@'/>
+<arg type64='Q' type='I'/>
+</function>
+<function name='ccCArrayNew' inline='true'>
+<arg type64='Q' type='I'/>
+<retval type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
+</function>
+<function name='ccCArrayRemoveAllValues' inline='true'>
+<arg type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
+</function>
+<function name='ccCArrayRemoveArray' inline='true'>
+<arg type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
+<arg type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
+</function>
+<function name='ccCArrayRemoveValue' inline='true'>
+<arg type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
+<arg type='@'/>
+</function>
+<function name='ccCArrayRemoveValueAtIndex' inline='true'>
+<arg type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
+<arg type64='Q' type='I'/>
+</function>
+<function name='ccCardinalSplineAt'>
+<arg type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
+<arg type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
+<arg type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
+<arg type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
+<arg type64='d' type='f'/>
+<arg type='f'/>
+<retval type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
+</function>
+<function name='ccDrawCardinalSpline'>
+<arg type='@'/>
+<arg type64='d' type='f'/>
+<arg type64='Q' type='I'/>
+</function>
+<function name='ccDrawCatmullRom'>
+<arg type='@'/>
+<arg type64='Q' type='I'/>
+</function>
+<function name='ccDrawCircle'>
+<arg type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
+<arg type='f'/>
+<arg type='f'/>
+<arg type64='Q' type='I'/>
+<arg type='B'/>
+</function>
+<function name='ccDrawColor4B'>
+<arg type='C'/>
+<arg type='C'/>
+<arg type='C'/>
+<arg type='C'/>
+</function>
+<function name='ccDrawColor4F'>
+<arg type='f'/>
+<arg type='f'/>
+<arg type='f'/>
+<arg type='f'/>
+</function>
+<function name='ccDrawCubicBezier'>
+<arg type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
+<arg type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
+<arg type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
+<arg type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
+<arg type64='Q' type='I'/>
+</function>
+<function name='ccDrawLine'>
+<arg type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
+<arg type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
+</function>
+<function name='ccDrawPoint'>
+<arg type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
+</function>
+<function name='ccDrawPoints'>
+<arg type64='^{CGPoint=dd}' type='^{CGPoint=ff}'/>
+<arg type64='Q' type='I'/>
+</function>
+<function name='ccDrawPoly'>
+<arg type64='^{CGPoint=dd}' type='^{CGPoint=ff}'/>
+<arg type64='Q' type='I'/>
+<arg type='B'/>
+</function>
+<function name='ccDrawQuadBezier'>
+<arg type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
+<arg type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
+<arg type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
+<arg type64='Q' type='I'/>
+</function>
+<function name='ccDrawRect'>
+<arg type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
+<arg type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
+</function>
+<function name='ccDrawSolidPoly'>
+<arg type64='^{CGPoint=dd}' type='^{CGPoint=ff}'/>
+<arg type64='Q' type='I'/>
+<arg type='{_ccColor4F=ffff}'/>
+</function>
+<function name='ccDrawSolidRect'>
+<arg type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
+<arg type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
+<arg type='{_ccColor4F=ffff}'/>
+</function>
+<function name='ccGLActiveTexture'>
+<arg type='I'/>
+</function>
+<function name='ccGLBindTexture2D'>
+<arg type='I'/>
+</function>
+<function name='ccGLBlendFunc'>
+<arg type='I'/>
+<arg type='I'/>
+</function>
+<function name='ccGLDeleteProgram'>
+<arg type='I'/>
+</function>
+<function name='ccGLDeleteTexture'>
+<arg type='I'/>
+</function>
+<function name='ccGLEnable'>
+<arg type='i'/>
+</function>
+<function name='ccGLEnableVertexAttribs'>
+<arg type='I'/>
+</function>
+<function name='ccGLGetActiveTexture'>
+<retval type='I'/>
+</function>
+<function name='ccGLInvalidateStateCache'/>
+<function name='ccGLUniformModelViewProjectionMatrix'>
+<arg type='@'/>
+</function>
+<function name='ccGLUseProgram'>
+<arg type='I'/>
+</function>
+<function name='ccInflateCCZFile'>
+<arg type='*'/>
+<arg type='^*'/>
+<retval type='i'/>
+</function>
+<function name='ccInflateGZipFile'>
+<arg type='*'/>
+<arg type='^*'/>
+<retval type='i'/>
+</function>
+<function name='ccInflateMemory'>
+<arg type='*'/>
+<arg type='I'/>
+<arg type='^*'/>
+<retval type='i'/>
+</function>
+<function name='ccInflateMemoryWithHint'>
+<arg type='*'/>
+<arg type='I'/>
+<arg type='^*'/>
+<arg type='I'/>
+<retval type='i'/>
+</function>
+<function name='ccLoadFileIntoMemory'>
+<arg type='*'/>
+<arg type='^*'/>
+<retval type64='q' type='i'/>
+</function>
+<function name='ccNextPOT'>
+<arg type64='Q' type='L'/>
+<retval type64='Q' type='L'/>
+</function>
+<function name='ccPointSize'>
+<arg type='f'/>
+</function>
+<function name='ccSetProjectionMatrixDirty'/>
+<function name='ccVertexLineIntersect'>
+<arg type='f'/>
+<arg type='f'/>
+<arg type='f'/>
+<arg type='f'/>
+<arg type='f'/>
+<arg type='f'/>
+<arg type='f'/>
+<arg type='f'/>
+<arg type='^f'/>
+<retval type='B'/>
+</function>
+<function name='ccVertexLineToPolygon'>
+<arg type64='^{CGPoint=dd}' type='^{CGPoint=ff}'/>
+<arg type='f'/>
+<arg type='^{_ccVertex2F=ff}'/>
+<arg type64='Q' type='I'/>
+<arg type64='Q' type='I'/>
+</function>
+<function name='ccc3' inline='true'>
+<arg type='C'/>
+<arg type='C'/>
+<arg type='C'/>
+<retval type='{_ccColor3B=CCC}'/>
+</function>
+<function name='ccc4' inline='true'>
+<arg type='C'/>
+<arg type='C'/>
+<arg type='C'/>
+<arg type='C'/>
+<retval type='{_ccColor4B=CCCC}'/>
+</function>
+<function name='ccc4FEqual' inline='true'>
+<arg type='{_ccColor4F=ffff}'/>
+<arg type='{_ccColor4F=ffff}'/>
+<retval type='B'/>
+</function>
+<function name='ccc4FFromccc3B' inline='true'>
+<arg type='{_ccColor3B=CCC}'/>
+<retval type='{_ccColor4F=ffff}'/>
+</function>
+<function name='ccc4FFromccc4B' inline='true'>
+<arg type='{_ccColor4B=CCCC}'/>
+<retval type='{_ccColor4F=ffff}'/>
+</function>
+<function name='ccc4f' inline='true'>
+<arg type='f'/>
+<arg type='f'/>
+<arg type='f'/>
+<arg type='f'/>
+<retval type='{_ccColor4F=ffff}'/>
+</function>
+<function name='ccg' inline='true'>
+<arg type64='q' type='i'/>
+<arg type64='q' type='i'/>
+<retval type64='{_ccGridSize=qq}' type='{_ccGridSize=ii}'/>
+</function>
+<function name='ccpAdd' inline='true'>
+<arg type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
+<arg type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
+<retval type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
+</function>
+<function name='ccpAngle'>
+<arg type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
+<arg type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
+<retval type='f'/>
+</function>
+<function name='ccpAngleSigned'>
+<arg type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
+<arg type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
+<retval type='f'/>
+</function>
+<function name='ccpClamp'>
+<arg type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
+<arg type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
+<arg type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
+<retval type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
+</function>
+<function name='ccpCompMult'>
+<arg type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
+<arg type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
+<retval type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
+</function>
+<function name='ccpCompOp'>
+<arg type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
+<arg function_pointer='true' type='^?'>
+<arg type='f'/>
+<retval type='f'/>
+</arg>
+<retval type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
+</function>
+<function name='ccpCross' inline='true'>
+<arg type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
+<arg type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
+<retval type64='d' type='f'/>
+</function>
+<function name='ccpDistance'>
+<arg type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
+<arg type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
+<retval type64='d' type='f'/>
+</function>
+<function name='ccpDistanceSQ' inline='true'>
+<arg type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
+<arg type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
+<retval type64='d' type='f'/>
+</function>
+<function name='ccpDot' inline='true'>
+<arg type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
+<arg type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
+<retval type64='d' type='f'/>
+</function>
+<function name='ccpForAngle'>
+<arg type64='d' type='f'/>
+<retval type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
+</function>
+<function name='ccpFromSize'>
+<arg type64='{CGSize=dd}' type='{CGSize=ff}'/>
+<retval type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
+</function>
+<function name='ccpFuzzyEqual'>
+<arg type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
+<arg type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
+<arg type='f'/>
+<retval type='B'/>
+</function>
+<function name='ccpIntersectPoint'>
+<arg type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
+<arg type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
+<arg type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
+<arg type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
+<retval type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
+</function>
+<function name='ccpLength'>
+<arg type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
+<retval type64='d' type='f'/>
+</function>
+<function name='ccpLengthSQ' inline='true'>
+<arg type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
+<retval type64='d' type='f'/>
+</function>
+<function name='ccpLerp'>
+<arg type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
+<arg type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
+<arg type='f'/>
+<retval type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
+</function>
+<function name='ccpLineIntersect'>
+<arg type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
+<arg type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
+<arg type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
+<arg type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
+<arg type='^f'/>
+<arg type='^f'/>
+<retval type='B'/>
+</function>
+<function name='ccpMidpoint' inline='true'>
+<arg type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
+<arg type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
+<retval type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
+</function>
+<function name='ccpMult' inline='true'>
+<arg type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
+<arg type64='d' type='f'/>
+<retval type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
+</function>
+<function name='ccpNeg' inline='true'>
+<arg type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
+<retval type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
+</function>
+<function name='ccpNormalize'>
+<arg type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
+<retval type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
+</function>
+<function name='ccpPerp' inline='true'>
+<arg type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
+<retval type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
+</function>
+<function name='ccpProject' inline='true'>
+<arg type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
+<arg type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
+<retval type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
+</function>
+<function name='ccpRPerp' inline='true'>
+<arg type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
+<retval type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
+</function>
+<function name='ccpRotate' inline='true'>
+<arg type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
+<arg type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
+<retval type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
+</function>
+<function name='ccpRotateByAngle'>
+<arg type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
+<arg type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
+<arg type='f'/>
+<retval type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
+</function>
+<function name='ccpSegmentIntersect'>
+<arg type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
+<arg type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
+<arg type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
+<arg type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
+<retval type='B'/>
+</function>
+<function name='ccpSub' inline='true'>
+<arg type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
+<arg type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
+<retval type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
+</function>
+<function name='ccpToAngle'>
+<arg type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
+<retval type64='d' type='f'/>
+</function>
+<function name='ccpUnrotate' inline='true'>
+<arg type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
+<arg type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
+<retval type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
+</function>
+<function name='clampf'>
+<arg type='f'/>
+<arg type='f'/>
+<arg type='f'/>
+<retval type='f'/>
+</function>
+<function name='cocos2dVersion'>
+<retval type='@'/>
+</function>
+<function name='insertionSort' inline='true'>
+<arg type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
+<arg function_pointer='true' type='^?'>
+<arg type='^v'/>
+<arg type='^v'/>
+<retval type='i'/>
+</arg>
+</function>
+<function name='mergesortL' inline='true'>
+<arg type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
+<arg type64='Q' type='L'/>
+<arg function_pointer='true' type='^?'>
+<arg type='^v'/>
+<arg type='^v'/>
+<retval type='i'/>
+</arg>
+<retval type='i'/>
+</function>
+<function name='pointerswap' inline='true'>
+<arg type='^v'/>
+<arg type='^v'/>
+<arg type64='Q' type='L'/>
+</function>
+<function name='tgaDestroy'>
+<arg type='^{sImageTGA=iCCss*i}'/>
+</function>
+<function name='tgaLoad'>
+<arg type='*'/>
+<retval type='^{sImageTGA=iCCss*i}'/>
+</function>
+<function name='tgaLoadHeader'>
+<arg type='^{__sFILE=*iiss{__sbuf=*i}i^v^?^?^?^?{__sbuf=*i}^{__sFILEX}i[3C][1C]{__sbuf=*i}iq}'/>
+<arg type='^{sImageTGA=iCCss*i}'/>
+</function>
+<function name='tgaLoadImageData'>
+<arg type='^{__sFILE=*iiss{__sbuf=*i}i^v^?^?^?^?{__sbuf=*i}^{__sFILEX}i[3C][1C]{__sbuf=*i}iq}'/>
+<arg type='^{sImageTGA=iCCss*i}'/>
+</function>
+<function name='tgaRGBtogreyscale'>
+<arg type='^{sImageTGA=iCCss*i}'/>
+</function>
+<function_alias name='CCNSPointToCGPoint' original='NSPointToCGPoint'/>
+<function_alias name='CCNSRectToCGRect' original='NSRectToCGRect'/>
+<function_alias name='CCNSSizeToCGSize' original='NSSizeToCGSize'/>
+<function_alias name='glBindVertexArray' original='glBindVertexArrayAPPLE'/>
+<function_alias name='glDeleteVertexArrays' original='glDeleteVertexArraysAPPLE'/>
+<function_alias name='glGenVertexArrays' original='glGenVertexArraysAPPLE'/>
+<class name='CCAction'>
+<method selector='isDone'>
+<retval type='B'/>
+</method>
+</class>
+<class name='CCActionInterval'>
+<method selector='isDone'>
+<retval type='B'/>
+</method>
+</class>
+<class name='CCActionManager'>
+<method selector='addAction:target:paused:'>
+<arg type='B' index='2'/>
+</method>
+</class>
+<class name='CCAnimate'>
+<method selector='actionWithAnimation:restoreOriginalFrame:' class_method='true'>
+<arg type='B' index='1'/>
+</method>
+<method selector='actionWithDuration:animation:restoreOriginalFrame:' class_method='true'>
+<arg type='B' index='2'/>
+</method>
+<method selector='initWithAnimation:restoreOriginalFrame:'>
+<arg type='B' index='1'/>
+</method>
+<method selector='initWithDuration:animation:restoreOriginalFrame:'>
+<arg type='B' index='2'/>
+</method>
+</class>
+<class name='CCAnimation'>
+<method selector='restoreOriginalFrame'>
+<retval type='B'/>
+</method>
+<method selector='setRestoreOriginalFrame:'>
+<arg type='B' index='0'/>
+</method>
+</class>
+<class name='CCArray'>
+<method selector='containsObject:'>
+<retval type='B'/>
+</method>
+<method selector='insertionSortUsingCFuncComparator:'>
+<arg function_pointer='true' type='^?' index='0'>
+<arg type='^v'/>
+<arg type='^v'/>
+<retval type='i'/>
+</arg>
+</method>
+<method selector='isEqualToArray:'>
+<retval type='B'/>
+</method>
+<method selector='mergesortLUsingCFuncComparator:'>
+<arg function_pointer='true' type='^?' index='0'>
+<arg type='^v'/>
+<arg type='^v'/>
+<retval type='i'/>
+</arg>
+</method>
+<method selector='qsortUsingCFuncComparator:'>
+<arg function_pointer='true' type='^?' index='0'>
+<arg type='^v'/>
+<arg type='^v'/>
+<retval type='i'/>
+</arg>
+</method>
+<method selector='sortUsingFunction:context:'>
+<arg function_pointer='true' type='^?' index='0'>
+<arg type='@'/>
+<arg type='@'/>
+<arg type='^v'/>
+<retval type64='q' type='i'/>
+</arg>
+</method>
+</class>
+<class name='CCCallBlock'>
+<method selector='actionWithBlock:' class_method='true'>
+<arg function_pointer='true' type='@?' index='0'>
+<retval type='v'/>
+</arg>
+</method>
+<method selector='initWithBlock:'>
+<arg function_pointer='true' type='@?' index='0'>
+<retval type='v'/>
+</arg>
+</method>
+</class>
+<class name='CCCallBlockN'>
+<method selector='actionWithBlock:' class_method='true'>
+<arg function_pointer='true' type='@?' index='0'>
+<arg type='@'/>
+<retval type='v'/>
+</arg>
+</method>
+<method selector='initWithBlock:'>
+<arg function_pointer='true' type='@?' index='0'>
+<arg type='@'/>
+<retval type='v'/>
+</arg>
+</method>
+</class>
+<class name='CCCallBlockO'>
+<method selector='actionWithBlock:object:' class_method='true'>
+<arg function_pointer='true' type='@?' index='0'>
+<arg type='@'/>
+<retval type='v'/>
+</arg>
+</method>
+<method selector='initWithBlock:object:'>
+<arg function_pointer='true' type='@?' index='0'>
+<arg type='@'/>
+<retval type='v'/>
+</arg>
+</method>
+</class>
+<class name='CCCallFuncND'>
+<method selector='setCallbackMethod:'>
+<arg function_pointer='true' type='^?' index='0'>
+<arg type='@'/>
+<arg type=':'/>
+<arg type='@'/>
+<arg type='^v'/>
+<retval type='v'/>
+</arg>
+</method>
+</class>
+<class name='CCCamera'>
+<method selector='dirty'>
+<retval type='B'/>
+</method>
+<method selector='setDirty:'>
+<arg type='B' index='0'/>
+</method>
+</class>
+<class name='CCConfiguration'>
+<method selector='checkForGLExtension:'>
+<retval type='B'/>
+</method>
+<method selector='supportsBGRA8888'>
+<retval type='B'/>
+</method>
+<method selector='supportsDiscardFramebuffer'>
+<retval type='B'/>
+</method>
+<method selector='supportsNPOT'>
+<retval type='B'/>
+</method>
+<method selector='supportsPVRTC'>
+<retval type='B'/>
+</method>
+<method selector='supportsShareableVAO'>
+<retval type='B'/>
+</method>
+</class>
+<class name='CCDirector'>
+<method selector='displayStats'>
+<retval type='B'/>
+</method>
+<method selector='isAnimating'>
+<retval type='B'/>
+</method>
+<method selector='isPaused'>
+<retval type='B'/>
+</method>
+<method selector='nextDeltaTimeZero'>
+<retval type='B'/>
+</method>
+<method selector='sendCleanupToScene'>
+<retval type='B'/>
+</method>
+<method selector='setAlphaBlending:'>
+<arg type='B' index='0'/>
+</method>
+<method selector='setDepthTest:'>
+<arg type='B' index='0'/>
+</method>
+<method selector='setDisplayFPS:'>
+<arg type='B' index='0'/>
+</method>
+<method selector='setDisplayStats:'>
+<arg type='B' index='0'/>
+</method>
+<method selector='setNextDeltaTimeZero:'>
+<arg type='B' index='0'/>
+</method>
+</class>
+<class name='CCDirectorMac'>
+<method selector='isFullScreen'>
+<retval type='B'/>
+</method>
+<method selector='setFullScreen:'>
+<arg type='B' index='0'/>
+</method>
+</class>
+<class name='CCEventDispatcher'>
+<method selector='dispatchEvents'>
+<retval type='B'/>
+</method>
+<method selector='setDispatchEvents:'>
+<arg type='B' index='0'/>
+</method>
+</class>
+<class name='CCFlipX'>
+<method selector='actionWithFlipX:' class_method='true'>
+<arg type='B' index='0'/>
+</method>
+<method selector='initWithFlipX:'>
+<arg type='B' index='0'/>
+</method>
+</class>
+<class name='CCFlipY'>
+<method selector='actionWithFlipY:' class_method='true'>
+<arg type='B' index='0'/>
+</method>
+<method selector='initWithFlipY:'>
+<arg type='B' index='0'/>
+</method>
+</class>
+<class name='CCFollow'>
+<method selector='boundarySet'>
+<retval type='B'/>
+</method>
+<method selector='setBoundarySet:'>
+<arg type='B' index='0'/>
+</method>
+</class>
+<class name='CCGLProgram'>
+<method selector='link'>
+<retval type='B'/>
+</method>
+</class>
+<class name='CCGridBase'>
+<method selector='active'>
+<retval type='B'/>
+</method>
+<method selector='gridWithSize:texture:flippedTexture:' class_method='true'>
+<arg type='B' index='2'/>
+</method>
+<method selector='initWithSize:texture:flippedTexture:'>
+<arg type='B' index='2'/>
+</method>
+<method selector='isTextureFlipped'>
+<retval type='B'/>
+</method>
+<method selector='setActive:'>
+<arg type='B' index='0'/>
+</method>
+<method selector='setIsTextureFlipped:'>
+<arg type='B' index='0'/>
+</method>
+</class>
+<class name='CCLayer'>
+<method selector='isKeyboardEnabled'>
+<retval type='B'/>
+</method>
+<method selector='isMouseEnabled'>
+<retval type='B'/>
+</method>
+<method selector='isTouchEnabled'>
+<retval type='B'/>
+</method>
+<method selector='setIsKeyboardEnabled:'>
+<arg type='B' index='0'/>
+</method>
+<method selector='setIsMouseEnabled:'>
+<arg type='B' index='0'/>
+</method>
+<method selector='setIsTouchEnabled:'>
+<arg type='B' index='0'/>
+</method>
+</class>
+<class name='CCLayerGradient'>
+<method selector='compressedInterpolation'>
+<retval type='B'/>
+</method>
+<method selector='setCompressedInterpolation:'>
+<arg type='B' index='0'/>
+</method>
+</class>
+<class name='CCLayerMultiplex'>
+<method variadic='true' sentinel='0' selector='layerWithLayers:' class_method='true'/>
+</class>
+<class name='CCMenu'>
+<method variadic='true' sentinel='0' selector='alignItemsInColumns:'/>
+<method variadic='true' sentinel='0' selector='alignItemsInRows:'/>
+<method selector='enabled'>
+<retval type='B'/>
+</method>
+<method variadic='true' sentinel='0' selector='menuWithItems:' class_method='true'/>
+<method selector='setEnabled:'>
+<arg type='B' index='0'/>
+</method>
+</class>
+<class name='CCMenuItem'>
+<method selector='initWithBlock:'>
+<arg function_pointer='true' type='@?' index='0'>
+<arg type='@'/>
+<retval type='v'/>
+</arg>
+</method>
+<method selector='isEnabled'>
+<retval type='B'/>
+</method>
+<method selector='isSelected'>
+<retval type='B'/>
+</method>
+<method selector='itemWithBlock:' class_method='true'>
+<arg function_pointer='true' type='@?' index='0'>
+<arg type='@'/>
+<retval type='v'/>
+</arg>
+</method>
+<method selector='setBlock:'>
+<arg function_pointer='true' type='@?' index='0'>
+<arg type='@'/>
+<retval type='v'/>
+</arg>
+</method>
+<method selector='setIsEnabled:'>
+<arg type='B' index='0'/>
+</method>
+</class>
+<class name='CCMenuItemAtlasFont'>
+<method selector='initFromString:charMapFile:itemWidth:itemHeight:startCharMap:block:'>
+<arg function_pointer='true' type='@?' index='5'>
+<arg type='@'/>
+<retval type='v'/>
+</arg>
+</method>
+<method selector='initWithString:charMapFile:itemWidth:itemHeight:startCharMap:block:'>
+<arg function_pointer='true' type='@?' index='5'>
+<arg type='@'/>
+<retval type='v'/>
+</arg>
+</method>
+<method selector='itemFromString:charMapFile:itemWidth:itemHeight:startCharMap:block:' class_method='true'>
+<arg function_pointer='true' type='@?' index='5'>
+<arg type='@'/>
+<retval type='v'/>
+</arg>
+</method>
+<method selector='itemWithString:charMapFile:itemWidth:itemHeight:startCharMap:block:' class_method='true'>
+<arg function_pointer='true' type='@?' index='5'>
+<arg type='@'/>
+<retval type='v'/>
+</arg>
+</method>
+</class>
+<class name='CCMenuItemFont'>
+<method selector='initFromString:block:'>
+<arg function_pointer='true' type='@?' index='1'>
+<arg type='@'/>
+<retval type='v'/>
+</arg>
+</method>
+<method selector='initWithString:block:'>
+<arg function_pointer='true' type='@?' index='1'>
+<arg type='@'/>
+<retval type='v'/>
+</arg>
+</method>
+<method selector='itemFromString:block:' class_method='true'>
+<arg function_pointer='true' type='@?' index='1'>
+<arg type='@'/>
+<retval type='v'/>
+</arg>
+</method>
+<method selector='itemWithString:block:' class_method='true'>
+<arg function_pointer='true' type='@?' index='1'>
+<arg type='@'/>
+<retval type='v'/>
+</arg>
+</method>
+</class>
+<class name='CCMenuItemImage'>
+<method selector='initFromNormalImage:selectedImage:disabledImage:block:'>
+<arg function_pointer='true' type='@?' index='3'>
+<arg type='@'/>
+<retval type='v'/>
+</arg>
+</method>
+<method selector='initWithNormalImage:selectedImage:disabledImage:block:'>
+<arg function_pointer='true' type='@?' index='3'>
+<arg type='@'/>
+<retval type='v'/>
+</arg>
+</method>
+<method selector='itemFromNormalImage:selectedImage:block:' class_method='true'>
+<arg function_pointer='true' type='@?' index='2'>
+<arg type='@'/>
+<retval type='v'/>
+</arg>
+</method>
+<method selector='itemFromNormalImage:selectedImage:disabledImage:block:' class_method='true'>
+<arg function_pointer='true' type='@?' index='3'>
+<arg type='@'/>
+<retval type='v'/>
+</arg>
+</method>
+<method selector='itemWithNormalImage:selectedImage:block:' class_method='true'>
+<arg function_pointer='true' type='@?' index='2'>
+<arg type='@'/>
+<retval type='v'/>
+</arg>
+</method>
+<method selector='itemWithNormalImage:selectedImage:disabledImage:block:' class_method='true'>
+<arg function_pointer='true' type='@?' index='3'>
+<arg type='@'/>
+<retval type='v'/>
+</arg>
+</method>
+</class>
+<class name='CCMenuItemLabel'>
+<method selector='initWithLabel:block:'>
+<arg function_pointer='true' type='@?' index='1'>
+<arg type='@'/>
+<retval type='v'/>
+</arg>
+</method>
+<method selector='itemWithLabel:block:' class_method='true'>
+<arg function_pointer='true' type='@?' index='1'>
+<arg type='@'/>
+<retval type='v'/>
+</arg>
+</method>
+<method selector='setIsEnabled:'>
+<arg type='B' index='0'/>
+</method>
+</class>
+<class name='CCMenuItemSprite'>
+<method selector='initFromNormalSprite:selectedSprite:disabledSprite:block:'>
+<arg function_pointer='true' type='@?' index='3'>
+<arg type='@'/>
+<retval type='v'/>
+</arg>
+</method>
+<method selector='initWithNormalSprite:selectedSprite:disabledSprite:block:'>
+<arg function_pointer='true' type='@?' index='3'>
+<arg type='@'/>
+<retval type='v'/>
+</arg>
+</method>
+<method selector='itemFromNormalSprite:selectedSprite:block:' class_method='true'>
+<arg function_pointer='true' type='@?' index='2'>
+<arg type='@'/>
+<retval type='v'/>
+</arg>
+</method>
+<method selector='itemFromNormalSprite:selectedSprite:disabledSprite:block:' class_method='true'>
+<arg function_pointer='true' type='@?' index='3'>
+<arg type='@'/>
+<retval type='v'/>
+</arg>
+</method>
+<method selector='itemWithNormalSprite:selectedSprite:block:' class_method='true'>
+<arg function_pointer='true' type='@?' index='2'>
+<arg type='@'/>
+<retval type='v'/>
+</arg>
+</method>
+<method selector='itemWithNormalSprite:selectedSprite:disabledSprite:block:' class_method='true'>
+<arg function_pointer='true' type='@?' index='3'>
+<arg type='@'/>
+<retval type='v'/>
+</arg>
+</method>
+</class>
+<class name='CCMenuItemToggle'>
+<method selector='initWithItems:block:'>
+<arg function_pointer='true' type='@?' index='1'>
+<arg type='@'/>
+<retval type='v'/>
+</arg>
+</method>
+<method selector='itemWithItems:block:' class_method='true'>
+<arg function_pointer='true' type='@?' index='1'>
+<arg type='@'/>
+<retval type='v'/>
+</arg>
+</method>
+<method variadic='true' sentinel='0' selector='itemWithTarget:selector:items:' class_method='true'/>
+</class>
+<class name='CCMotionStreak'>
+<method selector='isFastMode'>
+<retval type='B'/>
+</method>
+<method selector='setFastMode:'>
+<arg type='B' index='0'/>
+</method>
+</class>
+<class name='CCNode'>
+<method selector='ignoreAnchorPointForPosition'>
+<retval type='B'/>
+</method>
+<method selector='isRelativeAnchorPoint'>
+<retval type='B'/>
+</method>
+<method selector='isRunning'>
+<retval type='B'/>
+</method>
+<method selector='removeAllChildrenWithCleanup:'>
+<arg type='B' index='0'/>
+</method>
+<method selector='removeChild:cleanup:'>
+<arg type='B' index='1'/>
+</method>
+<method selector='removeChildByTag:cleanup:'>
+<arg type='B' index='1'/>
+</method>
+<method selector='removeFromParentAndCleanup:'>
+<arg type='B' index='0'/>
+</method>
+<method selector='setIgnoreAnchorPointForPosition:'>
+<arg type='B' index='0'/>
+</method>
+<method selector='setIsRelativeAnchorPoint:'>
+<arg type='B' index='0'/>
+</method>
+<method selector='setVisible:'>
+<arg type='B' index='0'/>
+</method>
+<method selector='visible'>
+<retval type='B'/>
+</method>
+</class>
+<class name='CCParticleBatchNode'>
+<method selector='removeChild:cleanup:'>
+<arg type='B' index='1'/>
+</method>
+</class>
+<class name='CCParticleSystem'>
+<method selector='active'>
+<retval type='B'/>
+</method>
+<method selector='autoRemoveOnFinish'>
+<retval type='B'/>
+</method>
+<method selector='blendAdditive'>
+<retval type='B'/>
+</method>
+<method selector='isFull'>
+<retval type='B'/>
+</method>
+<method selector='setAutoRemoveOnFinish:'>
+<arg type='B' index='0'/>
+</method>
+<method selector='setBlendAdditive:'>
+<arg type='B' index='0'/>
+</method>
+</class>
+<class name='CCProgressTimer'>
+<method selector='reverseDirection'>
+<retval type='B'/>
+</method>
+<method selector='setReverseDirection:'>
+<arg type='B' index='0'/>
+</method>
+</class>
+<class name='CCRenderTexture'>
+<method selector='saveBuffer:'>
+<retval type='B'/>
+</method>
+<method selector='saveBuffer:format:'>
+<retval type='B'/>
+</method>
+<method selector='saveToFile:'>
+<retval type='B'/>
+</method>
+<method selector='saveToFile:format:'>
+<retval type='B'/>
+</method>
+</class>
+<class name='CCScheduler'>
+<method selector='isTargetPaused:'>
+<retval type='B'/>
+</method>
+<method selector='scheduleSelector:forTarget:interval:paused:'>
+<arg type='B' index='3'/>
+</method>
+<method selector='scheduleSelector:forTarget:interval:paused:repeat:delay:'>
+<arg type='B' index='3'/>
+</method>
+<method selector='scheduleUpdateForTarget:priority:paused:'>
+<arg type='B' index='2'/>
+</method>
+</class>
+<class name='CCSequence'>
+<method variadic='true' sentinel='0' selector='actions:' class_method='true'/>
+</class>
+<class name='CCShaky3D'>
+<method selector='actionWithRange:shakeZ:grid:duration:' class_method='true'>
+<arg type='B' index='1'/>
+</method>
+<method selector='initWithRange:shakeZ:grid:duration:'>
+<arg type='B' index='1'/>
+</method>
+</class>
+<class name='CCShakyTiles3D'>
+<method selector='actionWithRange:shakeZ:grid:duration:' class_method='true'>
+<arg type='B' index='1'/>
+</method>
+<method selector='initWithRange:shakeZ:grid:duration:'>
+<arg type='B' index='1'/>
+</method>
+</class>
+<class name='CCShatteredTiles3D'>
+<method selector='actionWithRange:shatterZ:grid:duration:' class_method='true'>
+<arg type='B' index='1'/>
+</method>
+<method selector='initWithRange:shatterZ:grid:duration:'>
+<arg type='B' index='1'/>
+</method>
+</class>
+<class name='CCSpawn'>
+<method variadic='true' sentinel='0' selector='actions:' class_method='true'/>
+</class>
+<class name='CCSprite'>
+<method selector='dirty'>
+<retval type='B'/>
+</method>
+<method selector='flipX'>
+<retval type='B'/>
+</method>
+<method selector='flipY'>
+<retval type='B'/>
+</method>
+<method selector='initWithTexture:rect:rotated:'>
+<arg type='B' index='2'/>
+</method>
+<method selector='isFrameDisplayed:'>
+<retval type='B'/>
+</method>
+<method selector='setDirty:'>
+<arg type='B' index='0'/>
+</method>
+<method selector='setFlipX:'>
+<arg type='B' index='0'/>
+</method>
+<method selector='setFlipY:'>
+<arg type='B' index='0'/>
+</method>
+<method selector='setTextureRect:rotated:untrimmedSize:'>
+<arg type='B' index='1'/>
+</method>
+<method selector='textureRectRotated'>
+<retval type='B'/>
+</method>
+</class>
+<class name='CCSpriteBatchNode'>
+<method selector='removeChild:cleanup:'>
+<arg type='B' index='1'/>
+</method>
+<method selector='removeChildAtIndex:cleanup:'>
+<arg type='B' index='1'/>
+</method>
+<method selector='reorderBatch:'>
+<arg type='B' index='0'/>
+</method>
+</class>
+<class name='CCSpriteFrame'>
+<method selector='frameWithTexture:rectInPixels:rotated:offset:originalSize:' class_method='true'>
+<arg type='B' index='2'/>
+</method>
+<method selector='frameWithTextureFilename:rectInPixels:rotated:offset:originalSize:' class_method='true'>
+<arg type='B' index='2'/>
+</method>
+<method selector='initWithTexture:rectInPixels:rotated:offset:originalSize:'>
+<arg type='B' index='2'/>
+</method>
+<method selector='initWithTextureFilename:rectInPixels:rotated:offset:originalSize:'>
+<arg type='B' index='2'/>
+</method>
+<method selector='rotated'>
+<retval type='B'/>
+</method>
+<method selector='setRotated:'>
+<arg type='B' index='0'/>
+</method>
+</class>
+<class name='CCTMXLayerInfo'>
+<method selector='ownTiles'>
+<retval type='B'/>
+</method>
+<method selector='setOwnTiles:'>
+<arg type='B' index='0'/>
+</method>
+<method selector='setVisible:'>
+<arg type='B' index='0'/>
+</method>
+<method selector='visible'>
+<retval type='B'/>
+</method>
+</class>
+<class name='CCTexture2D'>
+<method selector='PVRImagesHavePremultipliedAlpha:' class_method='true'>
+<arg type='B' index='0'/>
+</method>
+<method selector='hasPremultipliedAlpha'>
+<retval type='B'/>
+</method>
+</class>
+<class name='CCTextureAtlas'>
+<method selector='resizeCapacity:'>
+<retval type='B'/>
+</method>
+</class>
+<class name='CCTextureCache'>
+<method selector='addImageAsync:withBlock:'>
+<arg function_pointer='true' type='@?' index='1'>
+<arg type='@'/>
+<retval type='v'/>
+</arg>
+</method>
+</class>
+<class name='CCTexturePVR'>
+<method selector='hasAlpha'>
+<retval type='B'/>
+</method>
+<method selector='retainName'>
+<retval type='B'/>
+</method>
+<method selector='setRetainName:'>
+<arg type='B' index='0'/>
+</method>
+</class>
+<class name='CCTransitionPageTurn'>
+<method selector='initWithDuration:scene:backwards:'>
+<arg type='B' index='2'/>
+</method>
+<method selector='transitionWithDuration:scene:backwards:' class_method='true'>
+<arg type='B' index='2'/>
+</method>
+</class>
+<class name='CCWaves'>
+<method selector='actionWithWaves:amplitude:horizontal:vertical:grid:duration:' class_method='true'>
+<arg type='B' index='2'/>
+<arg type='B' index='3'/>
+</method>
+<method selector='initWithWaves:amplitude:horizontal:vertical:grid:duration:'>
+<arg type='B' index='2'/>
+<arg type='B' index='3'/>
+</method>
+</class>
+<class name='CCWindow'>
+<method selector='initWithFrame:fullscreen:'>
+<arg type='B' index='1'/>
+</method>
+</class>
+<class name='NSObject'>
+<method selector='ccFlagsChanged:'>
+<retval type='B'/>
+</method>
+<method selector='ccKeyDown:'>
+<retval type='B'/>
+</method>
+<method selector='ccKeyUp:'>
+<retval type='B'/>
+</method>
+<method selector='ccMouseDown:'>
+<retval type='B'/>
+</method>
+<method selector='ccMouseDragged:'>
+<retval type='B'/>
+</method>
+<method selector='ccMouseMoved:'>
+<retval type='B'/>
+</method>
+<method selector='ccMouseUp:'>
+<retval type='B'/>
+</method>
+<method selector='ccOtherMouseDown:'>
+<retval type='B'/>
+</method>
+<method selector='ccOtherMouseDragged:'>
+<retval type='B'/>
+</method>
+<method selector='ccOtherMouseUp:'>
+<retval type='B'/>
+</method>
+<method selector='ccRightMouseDown:'>
+<retval type='B'/>
+</method>
+<method selector='ccRightMouseDragged:'>
+<retval type='B'/>
+</method>
+<method selector='ccRightMouseUp:'>
+<retval type='B'/>
+</method>
+<method selector='ccScrollWheel:'>
+<retval type='B'/>
+</method>
+<method selector='ccTouchesBeganWithEvent:'>
+<retval type='B'/>
+</method>
+<method selector='ccTouchesCancelledWithEvent:'>
+<retval type='B'/>
+</method>
+<method selector='ccTouchesEndedWithEvent:'>
+<retval type='B'/>
+</method>
+<method selector='ccTouchesMovedWithEvent:'>
+<retval type='B'/>
+</method>
+<method selector='doesOpacityModifyRGB'>
+<retval type='B'/>
+</method>
+<method selector='setOpacityModifyRGB:'>
+<arg type='B' index='0'/>
+</method>
+</class>
+<class name='NSThread'>
+<method selector='performBlock:'>
+<arg function_pointer='true' type='@?' index='0'>
+<retval type='v'/>
+</arg>
+</method>
+<method selector='performBlock:waitUntilDone:'>
+<arg function_pointer='true' type='@?' index='0'>
+<retval type='v'/>
+</arg>
+<arg type='B' index='1'/>
+</method>
+<method selector='performBlock:withObject:waitUntilDone:'>
+<arg function_pointer='true' type='@?' index='0'>
+<arg type='@'/>
+<retval type='v'/>
+</arg>
+<arg type='B' index='2'/>
+</method>
+</class>
+<informal_protocol name='CCBlendProtocol'>
+<method type64='{_ccBlendFunc=II}16@0:8' type='{_ccBlendFunc=II}8@0:4' selector='blendFunc'/>
+<method type64='v24@0:8{_ccBlendFunc=II}16' type='v16@0:4{_ccBlendFunc=II}8' selector='setBlendFunc:'/>
+</informal_protocol>
+<informal_protocol name='CCDirectorDelegate'>
+<method type64='v16@0:8' type='v8@0:4' selector='updateProjection'/>
+</informal_protocol>
+<informal_protocol name='CCEventDelegate'>
+<method type64='v24@0:8@16' type='v12@0:4@8' selector='flagsChanged:'/>
+<method type64='v24@0:8@16' type='v12@0:4@8' selector='keyDown:'/>
+<method type64='v24@0:8@16' type='v12@0:4@8' selector='keyUp:'/>
+<method type64='v24@0:8@16' type='v12@0:4@8' selector='mouseDown:'/>
+<method type64='v24@0:8@16' type='v12@0:4@8' selector='mouseDragged:'/>
+<method type64='v24@0:8@16' type='v12@0:4@8' selector='mouseEntered:'/>
+<method type64='v24@0:8@16' type='v12@0:4@8' selector='mouseExited:'/>
+<method type64='v24@0:8@16' type='v12@0:4@8' selector='mouseMoved:'/>
+<method type64='v24@0:8@16' type='v12@0:4@8' selector='mouseUp:'/>
+<method type64='v24@0:8@16' type='v12@0:4@8' selector='otherMouseDown:'/>
+<method type64='v24@0:8@16' type='v12@0:4@8' selector='otherMouseDragged:'/>
+<method type64='v24@0:8@16' type='v12@0:4@8' selector='otherMouseUp:'/>
+<method type64='v24@0:8@16' type='v12@0:4@8' selector='rightMouseDown:'/>
+<method type64='v24@0:8@16' type='v12@0:4@8' selector='rightMouseDragged:'/>
+<method type64='v24@0:8@16' type='v12@0:4@8' selector='rightMouseUp:'/>
+<method type64='v24@0:8@16' type='v12@0:4@8' selector='scrollWheel:'/>
+<method type64='v24@0:8@16' type='v12@0:4@8' selector='touchesBeganWithEvent:'/>
+<method type64='v24@0:8@16' type='v12@0:4@8' selector='touchesCancelledWithEvent:'/>
+<method type64='v24@0:8@16' type='v12@0:4@8' selector='touchesEndedWithEvent:'/>
+<method type64='v24@0:8@16' type='v12@0:4@8' selector='touchesMovedWithEvent:'/>
+</informal_protocol>
+<informal_protocol name='CCKeyboardEventDelegate'>
+<method type64='B24@0:8@16' type='B12@0:4@8' selector='ccFlagsChanged:'/>
+<method type64='B24@0:8@16' type='B12@0:4@8' selector='ccKeyDown:'/>
+<method type64='B24@0:8@16' type='B12@0:4@8' selector='ccKeyUp:'/>
+</informal_protocol>
+<informal_protocol name='CCLabelProtocol'>
+<method type64='v24@0:8*16' type='v12@0:4*8' selector='setCString:'/>
+<method type64='v24@0:8@16' type='v12@0:4@8' selector='setString:'/>
+<method type64='@16@0:8' type='@8@0:4' selector='string'/>
+</informal_protocol>
+<informal_protocol name='CCMouseEventDelegate'>
+<method type64='B24@0:8@16' type='B12@0:4@8' selector='ccMouseDown:'/>
+<method type64='B24@0:8@16' type='B12@0:4@8' selector='ccMouseDragged:'/>
+<method type64='v24@0:8@16' type='v12@0:4@8' selector='ccMouseEntered:'/>
+<method type64='v24@0:8@16' type='v12@0:4@8' selector='ccMouseExited:'/>
+<method type64='B24@0:8@16' type='B12@0:4@8' selector='ccMouseMoved:'/>
+<method type64='B24@0:8@16' type='B12@0:4@8' selector='ccMouseUp:'/>
+<method type64='B24@0:8@16' type='B12@0:4@8' selector='ccOtherMouseDown:'/>
+<method type64='B24@0:8@16' type='B12@0:4@8' selector='ccOtherMouseDragged:'/>
+<method type64='B24@0:8@16' type='B12@0:4@8' selector='ccOtherMouseUp:'/>
+<method type64='B24@0:8@16' type='B12@0:4@8' selector='ccRightMouseDown:'/>
+<method type64='B24@0:8@16' type='B12@0:4@8' selector='ccRightMouseDragged:'/>
+<method type64='B24@0:8@16' type='B12@0:4@8' selector='ccRightMouseUp:'/>
+<method type64='B24@0:8@16' type='B12@0:4@8' selector='ccScrollWheel:'/>
+</informal_protocol>
+<informal_protocol name='CCRGBAProtocol'>
+<method type64='{_ccColor3B=CCC}16@0:8' type='{_ccColor3B=CCC}8@0:4' selector='color'/>
+<method type64='B16@0:8' type='B8@0:4' selector='doesOpacityModifyRGB'/>
+<method type64='C16@0:8' type='C8@0:4' selector='opacity'/>
+<method type64='v19@0:8{_ccColor3B=CCC}16' type='v11@0:4{_ccColor3B=CCC}8' selector='setColor:'/>
+<method type64='v20@0:8C16' type='v12@0:4C8' selector='setOpacity:'/>
+<method type64='v20@0:8B16' type='v12@0:4B8' selector='setOpacityModifyRGB:'/>
+</informal_protocol>
+<informal_protocol name='CCTextureProtocol'>
+<method type64='v24@0:8@16' type='v12@0:4@8' selector='setTexture:'/>
+<method type64='@16@0:8' type='@8@0:4' selector='texture'/>
+</informal_protocol>
+<informal_protocol name='CCTouchEventDelegate'>
+<method type64='B24@0:8@16' type='B12@0:4@8' selector='ccTouchesBeganWithEvent:'/>
+<method type64='B24@0:8@16' type='B12@0:4@8' selector='ccTouchesCancelledWithEvent:'/>
+<method type64='B24@0:8@16' type='B12@0:4@8' selector='ccTouchesEndedWithEvent:'/>
+<method type64='B24@0:8@16' type='B12@0:4@8' selector='ccTouchesMovedWithEvent:'/>
+</informal_protocol>
+<informal_protocol name='CCTransitionEaseScene'>
+<method type64='@24@0:8@16' type='@12@0:4@8' selector='easeActionWithAction:'/>
+</informal_protocol>
+</signatures>

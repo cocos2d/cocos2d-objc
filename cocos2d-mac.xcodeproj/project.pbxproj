@@ -468,6 +468,10 @@
 		A03416FA1548803500AE4D93 /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A03416F91548803400AE4D93 /* JavaScriptCore.framework */; };
 		A03416FC1548806D00AE4D93 /* libffi.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A03416FB1548806D00AE4D93 /* libffi.dylib */; };
 		A03416FE1548809000AE4D93 /* js in Resources */ = {isa = PBXBuildFile; fileRef = A03416FD1548809000AE4D93 /* js */; };
+		A037148F154B724600081CBA /* cocos2d.bridgesupport in Resources */ = {isa = PBXBuildFile; fileRef = A037148E154B724600081CBA /* cocos2d.bridgesupport */; };
+		A03714D7154F1D9300081CBA /* CCNode+Debug.h in Headers */ = {isa = PBXBuildFile; fileRef = A03714D5154F1D9300081CBA /* CCNode+Debug.h */; };
+		A03714D8154F1D9300081CBA /* CCNode+Debug.m in Sources */ = {isa = PBXBuildFile; fileRef = A03714D6154F1D9300081CBA /* CCNode+Debug.m */; };
+		A03714E3154F366E00081CBA /* json.js in Resources */ = {isa = PBXBuildFile; fileRef = A03714E2154F366E00081CBA /* json.js */; };
 		A03A1CBA14F5B3F00019B6F3 /* geneva-32.fnt in Resources */ = {isa = PBXBuildFile; fileRef = A03A1CB714F5B3F00019B6F3 /* geneva-32.fnt */; };
 		A03A1CBB14F5B3F00019B6F3 /* helvetica-32.fnt in Resources */ = {isa = PBXBuildFile; fileRef = A03A1CB814F5B3F00019B6F3 /* helvetica-32.fnt */; };
 		A03A1CBC14F5B3F00019B6F3 /* helvetica-geneva-32.png in Resources */ = {isa = PBXBuildFile; fileRef = A03A1CB914F5B3F00019B6F3 /* helvetica-geneva-32.png */; };
@@ -5827,6 +5831,10 @@
 		A03416F91548803400AE4D93 /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		A03416FB1548806D00AE4D93 /* libffi.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libffi.dylib; path = usr/lib/libffi.dylib; sourceTree = SDKROOT; };
 		A03416FD1548809000AE4D93 /* js */ = {isa = PBXFileReference; lastKnownFileType = folder; name = js; path = tests/js; sourceTree = "<group>"; };
+		A037148E154B724600081CBA /* cocos2d.bridgesupport */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = cocos2d.bridgesupport; path = "Resources-Mac/cocos2d.bridgesupport"; sourceTree = "<group>"; };
+		A03714D5154F1D9300081CBA /* CCNode+Debug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CCNode+Debug.h"; sourceTree = "<group>"; };
+		A03714D6154F1D9300081CBA /* CCNode+Debug.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CCNode+Debug.m"; sourceTree = "<group>"; };
+		A03714E2154F366E00081CBA /* json.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = json.js; sourceTree = "<group>"; };
 		A03A1CB714F5B3F00019B6F3 /* geneva-32.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "geneva-32.fnt"; sourceTree = "<group>"; };
 		A03A1CB814F5B3F00019B6F3 /* helvetica-32.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "helvetica-32.fnt"; sourceTree = "<group>"; };
 		A03A1CB914F5B3F00019B6F3 /* helvetica-geneva-32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "helvetica-geneva-32.png"; sourceTree = "<group>"; };
@@ -7101,6 +7109,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				A037148E154B724600081CBA /* cocos2d.bridgesupport */,
 				A0F1615A153CD1FA0077361C /* Icon-Small-50.png */,
 				E02A8537129F11BF00341C97 /* icon.icns */,
 				E076EB2E1225EFF200DE0DA2 /* MainMenu.xib */,
@@ -7135,9 +7144,11 @@
 		A03416E01548801100AE4D93 /* JSCocoa */ = {
 			isa = PBXGroup;
 			children = (
+				A03416E31548801100AE4D93 /* class.js */,
+				A03714E2154F366E00081CBA /* json.js */,
+				A03416F01548801100AE4D93 /* jslint-jscocoa.js */,
 				A03416E11548801100AE4D93 /* BridgeSupportController.h */,
 				A03416E21548801100AE4D93 /* BridgeSupportController.m */,
-				A03416E31548801100AE4D93 /* class.js */,
 				A03416E41548801100AE4D93 /* JSCocoa.h */,
 				A03416E51548801100AE4D93 /* JSCocoa_Prefix.pch */,
 				A03416E61548801100AE4D93 /* JSCocoaController.h */,
@@ -7150,7 +7161,6 @@
 				A03416ED1548801100AE4D93 /* JSCocoaLib.m */,
 				A03416EE1548801100AE4D93 /* JSCocoaPrivateObject.h */,
 				A03416EF1548801100AE4D93 /* JSCocoaPrivateObject.m */,
-				A03416F01548801100AE4D93 /* jslint-jscocoa.js */,
 			);
 			name = JSCocoa;
 			path = external/JSCocoa;
@@ -7903,6 +7913,8 @@
 				E076E6421225EC7400DE0DA2 /* CCAtlasNode.m */,
 				E076E6631225EC7400DE0DA2 /* CCNode.h */,
 				E076E6641225EC7400DE0DA2 /* CCNode.m */,
+				A03714D5154F1D9300081CBA /* CCNode+Debug.h */,
+				A03714D6154F1D9300081CBA /* CCNode+Debug.m */,
 			);
 			name = "Base Nodes";
 			sourceTree = "<group>";
@@ -8471,6 +8483,7 @@
 				A009FB8F150EC87500897349 /* ccShader_PositionTextureColorAlphaTest_frag.h in Headers */,
 				A009FB90150EC87500897349 /* ccShaders.h in Headers */,
 				A0A7A507151416A000C8BD16 /* CCActionCatmullRom.h in Headers */,
+				A03714D7154F1D9300081CBA /* CCNode+Debug.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9379,6 +9392,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A03714E3154F366E00081CBA /* json.js in Resources */,
 				A03416F21548801100AE4D93 /* class.js in Resources */,
 				A03416F81548801100AE4D93 /* jslint-jscocoa.js in Resources */,
 				A034160B15487C3C00AE4D93 /* A Damn Mess.ttf in Resources */,
@@ -9570,6 +9584,7 @@
 				A03416C515487C3C00AE4D93 /* piece.png in Resources */,
 				A03416C615487C3C00AE4D93 /* icon.icns in Resources */,
 				A03416FE1548809000AE4D93 /* js in Resources */,
+				A037148F154B724600081CBA /* cocos2d.bridgesupport in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -14286,6 +14301,7 @@
 				A0C879AD14F98F1C00C0E8B2 /* NSThread+performBlock.m in Sources */,
 				A009FB91150EC87600897349 /* ccShaders.m in Sources */,
 				A0A7A506151416A000C8BD16 /* CCActionCatmullRom.m in Sources */,
+				A03714D8154F1D9300081CBA /* CCNode+Debug.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

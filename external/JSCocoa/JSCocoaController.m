@@ -939,7 +939,7 @@ static id JSCocoaSingleton = NULL;
 	}
 	else if ([object isKindOfClass:[NSDictionary class]]) {
 		NSDictionary* dict	= (NSDictionary*)object;
-		JSObjectRef jsDict	= JSValueToObject(ctx, [self evalJSString:@"[]"], NULL);
+		JSObjectRef jsDict  = JSObjectMake(ctx, NULL, NULL);
 		for (NSString* key in dict) {
 			id value = [dict valueForKey:key];
 			JSValueRef convertedValue = [self _toJS:value];
@@ -1249,8 +1249,16 @@ static id JSCocoaSingleton = NULL;
 		// Skip ObjC argument order
 		if (*argsParser >= '0' && *argsParser <= '9')	continue;
 		else
-		// Skip ObjC 'const', 'oneway' markers
-		if (*argsParser == 'r' || *argsParser == 'V')	continue;
+//		// Skip ObjC 'const', 'oneway' markers
+//		if (*argsParser == 'r' || *argsParser == 'V')	continue;
+		// Skip ObjC type qualifiers - except for _C_CONST these are not defined in runtime.h
+		if (*argsParser == _C_CONST ||
+			*argsParser == 'n' ||
+			*argsParser == 'N' || 
+			*argsParser == 'o' ||
+			*argsParser == 'O' ||
+			*argsParser == 'R' ||
+			*argsParser == 'V')	continue;		
 		else
 		if (*argsParser == '{')
 		{
@@ -4557,7 +4565,7 @@ static JSValueRef jsCocoaObject_callAsFunction_ffi(JSContextRef ctx, JSObjectRef
 //#elif TARGET_IPHONE_SIMULATOR || !TARGET_OS_IPHONE
 //				_super.class	= superSelectorClass;
 #else			
-				_super.super_class	= superSelectorClass;
+				_super.class	= superSelectorClass;
 #endif			
 				superPointer	= &_super;
 				values[0]		= &superPointer;
