@@ -87,7 +87,7 @@
 <enum name='CC_BLEND_DST' value='771'/>
 <enum name='CC_BLEND_SRC' value='1'/>
 <enum name='CC_DIRECTOR_IOS_USE_BACKGROUND_THREAD' value='0'/>
-<enum name='CC_DIRECTOR_MAC_THREAD' value='2'/>
+<enum name='CC_DIRECTOR_MAC_THREAD' value='0'/>
 <enum name='CC_DIRECTOR_STATS_INTERVAL' value='0.1f'/>
 <enum name='CC_ENABLE_DEPRECATED' value='1'/>
 <enum name='CC_ENABLE_GL_STATE_CACHE' value='0'/>
@@ -1381,6 +1381,9 @@
 <method selector='blendAdditive'>
 <retval type='B'/>
 </method>
+<method selector='doesOpacityModifyRGB'>
+<retval type='B'/>
+</method>
 <method selector='isFull'>
 <retval type='B'/>
 </method>
@@ -1388,6 +1391,9 @@
 <arg type='B' index='0'/>
 </method>
 <method selector='setBlendAdditive:'>
+<arg type='B' index='0'/>
+</method>
+<method selector='setOpacityModifyRGB:'>
 <arg type='B' index='0'/>
 </method>
 </class>
@@ -1671,46 +1677,11 @@
 <arg type='B' index='2'/>
 </method>
 </class>
-<informal_protocol name='CCBlendProtocol'>
+<informal_protocol name='NSObject'>
 <method type64='{_ccBlendFunc=II}16@0:8' type='{_ccBlendFunc=II}8@0:4' selector='blendFunc'/>
-<method type64='v24@0:8{_ccBlendFunc=II}16' type='v16@0:4{_ccBlendFunc=II}8' selector='setBlendFunc:'/>
-</informal_protocol>
-<informal_protocol name='CCDirectorDelegate'>
-<method type64='v16@0:8' type='v8@0:4' selector='updateProjection'/>
-</informal_protocol>
-<informal_protocol name='CCEventDelegate'>
-<method type64='v24@0:8@16' type='v12@0:4@8' selector='flagsChanged:'/>
-<method type64='v24@0:8@16' type='v12@0:4@8' selector='keyDown:'/>
-<method type64='v24@0:8@16' type='v12@0:4@8' selector='keyUp:'/>
-<method type64='v24@0:8@16' type='v12@0:4@8' selector='mouseDown:'/>
-<method type64='v24@0:8@16' type='v12@0:4@8' selector='mouseDragged:'/>
-<method type64='v24@0:8@16' type='v12@0:4@8' selector='mouseEntered:'/>
-<method type64='v24@0:8@16' type='v12@0:4@8' selector='mouseExited:'/>
-<method type64='v24@0:8@16' type='v12@0:4@8' selector='mouseMoved:'/>
-<method type64='v24@0:8@16' type='v12@0:4@8' selector='mouseUp:'/>
-<method type64='v24@0:8@16' type='v12@0:4@8' selector='otherMouseDown:'/>
-<method type64='v24@0:8@16' type='v12@0:4@8' selector='otherMouseDragged:'/>
-<method type64='v24@0:8@16' type='v12@0:4@8' selector='otherMouseUp:'/>
-<method type64='v24@0:8@16' type='v12@0:4@8' selector='rightMouseDown:'/>
-<method type64='v24@0:8@16' type='v12@0:4@8' selector='rightMouseDragged:'/>
-<method type64='v24@0:8@16' type='v12@0:4@8' selector='rightMouseUp:'/>
-<method type64='v24@0:8@16' type='v12@0:4@8' selector='scrollWheel:'/>
-<method type64='v24@0:8@16' type='v12@0:4@8' selector='touchesBeganWithEvent:'/>
-<method type64='v24@0:8@16' type='v12@0:4@8' selector='touchesCancelledWithEvent:'/>
-<method type64='v24@0:8@16' type='v12@0:4@8' selector='touchesEndedWithEvent:'/>
-<method type64='v24@0:8@16' type='v12@0:4@8' selector='touchesMovedWithEvent:'/>
-</informal_protocol>
-<informal_protocol name='CCKeyboardEventDelegate'>
 <method type64='B24@0:8@16' type='B12@0:4@8' selector='ccFlagsChanged:'/>
 <method type64='B24@0:8@16' type='B12@0:4@8' selector='ccKeyDown:'/>
 <method type64='B24@0:8@16' type='B12@0:4@8' selector='ccKeyUp:'/>
-</informal_protocol>
-<informal_protocol name='CCLabelProtocol'>
-<method type64='v24@0:8*16' type='v12@0:4*8' selector='setCString:'/>
-<method type64='v24@0:8@16' type='v12@0:4@8' selector='setString:'/>
-<method type64='@16@0:8' type='@8@0:4' selector='string'/>
-</informal_protocol>
-<informal_protocol name='CCMouseEventDelegate'>
 <method type64='B24@0:8@16' type='B12@0:4@8' selector='ccMouseDown:'/>
 <method type64='B24@0:8@16' type='B12@0:4@8' selector='ccMouseDragged:'/>
 <method type64='v24@0:8@16' type='v12@0:4@8' selector='ccMouseEntered:'/>
@@ -1724,26 +1695,41 @@
 <method type64='B24@0:8@16' type='B12@0:4@8' selector='ccRightMouseDragged:'/>
 <method type64='B24@0:8@16' type='B12@0:4@8' selector='ccRightMouseUp:'/>
 <method type64='B24@0:8@16' type='B12@0:4@8' selector='ccScrollWheel:'/>
-</informal_protocol>
-<informal_protocol name='CCRGBAProtocol'>
-<method type64='{_ccColor3B=CCC}16@0:8' type='{_ccColor3B=CCC}8@0:4' selector='color'/>
-<method type64='B16@0:8' type='B8@0:4' selector='doesOpacityModifyRGB'/>
-<method type64='C16@0:8' type='C8@0:4' selector='opacity'/>
-<method type64='v19@0:8{_ccColor3B=CCC}16' type='v11@0:4{_ccColor3B=CCC}8' selector='setColor:'/>
-<method type64='v20@0:8C16' type='v12@0:4C8' selector='setOpacity:'/>
-<method type64='v20@0:8B16' type='v12@0:4B8' selector='setOpacityModifyRGB:'/>
-</informal_protocol>
-<informal_protocol name='CCTextureProtocol'>
-<method type64='v24@0:8@16' type='v12@0:4@8' selector='setTexture:'/>
-<method type64='@16@0:8' type='@8@0:4' selector='texture'/>
-</informal_protocol>
-<informal_protocol name='CCTouchEventDelegate'>
 <method type64='B24@0:8@16' type='B12@0:4@8' selector='ccTouchesBeganWithEvent:'/>
 <method type64='B24@0:8@16' type='B12@0:4@8' selector='ccTouchesCancelledWithEvent:'/>
 <method type64='B24@0:8@16' type='B12@0:4@8' selector='ccTouchesEndedWithEvent:'/>
 <method type64='B24@0:8@16' type='B12@0:4@8' selector='ccTouchesMovedWithEvent:'/>
-</informal_protocol>
-<informal_protocol name='CCTransitionEaseScene'>
+<method type64='{_ccColor3B=CCC}16@0:8' type='{_ccColor3B=CCC}8@0:4' selector='color'/>
+<method type64='B16@0:8' type='B8@0:4' selector='doesOpacityModifyRGB'/>
 <method type64='@24@0:8@16' type='@12@0:4@8' selector='easeActionWithAction:'/>
+<method type64='v24@0:8@16' type='v12@0:4@8' selector='flagsChanged:'/>
+<method type64='v24@0:8@16' type='v12@0:4@8' selector='keyDown:'/>
+<method type64='v24@0:8@16' type='v12@0:4@8' selector='keyUp:'/>
+<method type64='v24@0:8@16' type='v12@0:4@8' selector='mouseDown:'/>
+<method type64='v24@0:8@16' type='v12@0:4@8' selector='mouseDragged:'/>
+<method type64='v24@0:8@16' type='v12@0:4@8' selector='mouseEntered:'/>
+<method type64='v24@0:8@16' type='v12@0:4@8' selector='mouseExited:'/>
+<method type64='v24@0:8@16' type='v12@0:4@8' selector='mouseMoved:'/>
+<method type64='v24@0:8@16' type='v12@0:4@8' selector='mouseUp:'/>
+<method type64='C16@0:8' type='C8@0:4' selector='opacity'/>
+<method type64='v24@0:8@16' type='v12@0:4@8' selector='otherMouseDown:'/>
+<method type64='v24@0:8@16' type='v12@0:4@8' selector='otherMouseDragged:'/>
+<method type64='v24@0:8@16' type='v12@0:4@8' selector='otherMouseUp:'/>
+<method type64='v24@0:8@16' type='v12@0:4@8' selector='rightMouseDown:'/>
+<method type64='v24@0:8@16' type='v12@0:4@8' selector='rightMouseDragged:'/>
+<method type64='v24@0:8@16' type='v12@0:4@8' selector='rightMouseUp:'/>
+<method type64='v24@0:8@16' type='v12@0:4@8' selector='scrollWheel:'/>
+<method type64='v24@0:8{_ccBlendFunc=II}16' type='v16@0:4{_ccBlendFunc=II}8' selector='setBlendFunc:'/>
+<method type64='v24@0:8*16' type='v12@0:4*8' selector='setCString:'/>
+<method type64='v19@0:8{_ccColor3B=CCC}16' type='v11@0:4{_ccColor3B=CCC}8' selector='setColor:'/>
+<method type64='v20@0:8C16' type='v12@0:4C8' selector='setOpacity:'/>
+<method type64='v20@0:8B16' type='v12@0:4B8' selector='setOpacityModifyRGB:'/>
+<method type64='v24@0:8@16' type='v12@0:4@8' selector='setString:'/>
+<method type64='@16@0:8' type='@8@0:4' selector='string'/>
+<method type64='v24@0:8@16' type='v12@0:4@8' selector='touchesBeganWithEvent:'/>
+<method type64='v24@0:8@16' type='v12@0:4@8' selector='touchesCancelledWithEvent:'/>
+<method type64='v24@0:8@16' type='v12@0:4@8' selector='touchesEndedWithEvent:'/>
+<method type64='v24@0:8@16' type='v12@0:4@8' selector='touchesMovedWithEvent:'/>
+<method type64='v16@0:8' type='v8@0:4' selector='updateProjection'/>
 </informal_protocol>
 </signatures>
