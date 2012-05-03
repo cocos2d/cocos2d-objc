@@ -80,6 +80,7 @@
 @synthesize startScale, startScaleVar;
 @synthesize endScale, endScaleVar;
 @synthesize blendFunc = blendFunc_;
+@synthesize opacityModifyRGB = opacityModifyRGB_;
 @synthesize positionType = positionType_;
 @synthesize autoRemoveOnFinish = autoRemoveOnFinish_;
 @synthesize emitterMode = emitterMode_;
@@ -287,7 +288,7 @@
 		totalParticles = numberOfParticles;
 		
 		particles = calloc( totalParticles, sizeof(tCCParticle) );
-
+        
 		if( ! particles ) {
 			NSLog(@"Particle system: not enough memory");
 			[self release];
@@ -308,6 +309,9 @@
 		// default blend function
 		blendFunc_ = (ccBlendFunc) { CC_BLEND_SRC, CC_BLEND_DST };
 		
+        // Set a compatible default for the alpha transfer
+        opacityModifyRGB_ = NO;
+
 		// default movement type;
 		positionType_ = kCCPositionTypeFree;
 		
@@ -779,7 +783,8 @@
 -(void) setTexture:(CCTexture2D*) texture
 {
 	texture_ = [texture retain];
-
+    
+    opacityModifyRGB_ = [texture hasPremultipliedAlpha];
 	// If the new texture has No premultiplied alpha, AND the blendFunc hasn't been changed, then update it
 	if( texture_ && ! [texture hasPremultipliedAlpha] &&		
 	   ( blendFunc_.src == CC_BLEND_SRC && blendFunc_.dst == CC_BLEND_DST ) ) {

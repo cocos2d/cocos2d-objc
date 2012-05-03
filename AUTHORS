@@ -74,6 +74,9 @@ Contributors (alphabetically ordered):
     
 * Nicolas Barrios (http://wefiends.com)
     Fix for CCArray for ARC compatibility 
+    
+* Nestor Todorov    
+    Fix for particles not fading out completely and avoiding dark halo's
 
 * podhrask...@gmail.com
 	TouchDispatcher: correctly handles addition and removal of handlers when being inside a touch handler. patch

@@ -179,4 +179,6 @@
 {}
 @end
 
-
+@interface PremultipliedAlphaTest : ParticleDemo
+{}
+@end
