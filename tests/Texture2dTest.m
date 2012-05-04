@@ -19,8 +19,6 @@ enum {
 static int sceneIdx=-1;
 static NSString *transitions[] = {
 
-	@"TextureMemoryNPOT",
-	@"TextureMemoryPOT",
 	@"TextureAlias",
 	@"TextureMipMap",
 	@"TexturePVRMipMap",
@@ -62,6 +60,9 @@ static NSString *transitions[] = {
 	@"TextureCache1",
 	@"TextureDrawAtPoint",
 	@"TextureDrawInRect",
+	
+	@"TextureMemoryNPOT",
+	@"TextureMemoryPOT",
 };
 
 #pragma mark Callbacks
