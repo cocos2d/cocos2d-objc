@@ -256,6 +256,16 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 	CCConfiguration *conf = [CCConfiguration sharedConfiguration];
 
 	info = CGImageGetAlphaInfo(cgImage);
+
+#ifdef __CC_PLATFORM_IOS
+
+	// Bug #886. It is present on iOS 4 only
+	unsigned int version = [conf OSVersion];
+	if( version >= kCCiOSVersion_4_0 && version < kCCiOSVersion_5_0 )
+		hasAlpha = ((info == kCGImageAlphaNoneSkipLast) || (info == kCGImageAlphaPremultipliedLast) || (info == kCGImageAlphaPremultipliedFirst) || (info == kCGImageAlphaLast) || (info == kCGImageAlphaFirst) ? YES : NO);
+	else
+#endif // __CC_PLATFORM_IOS
+	
 	hasAlpha = ((info == kCGImageAlphaPremultipliedLast) || (info == kCGImageAlphaPremultipliedFirst) || (info == kCGImageAlphaLast) || (info == kCGImageAlphaFirst) ? YES : NO);
 
 	colorSpace = CGImageGetColorSpace(cgImage);
