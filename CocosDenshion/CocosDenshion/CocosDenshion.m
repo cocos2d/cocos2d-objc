@@ -818,7 +818,30 @@ static BOOL _mixerRateSet = NO;
  * 
  */
 - (ALuint)playSound:(int) soundId sourceGroupId:(int)sourceGroupId pitch:(float) pitch pan:(float) pan gain:(float) gain loop:(BOOL) loop {
+    
+#ifdef CD_DEBUG
+	//Sanity check parameters - only in DEBUG
+	NSAssert(pan >= -1 && pan <= 1, @"pan must be between -1 and 1");
+#endif
+    return [self playSound:soundId sourceGroupId:sourceGroupId pitch:pitch x:pan y:0.0f z:0.0f gain:gain loop:loop];
+}
 
+/**
+ * Play a sound.
+ * @param soundId the id of the sound to play (buffer id).
+ * @param SourceGroupId the source group that will be used to play the sound.
+ * @param pitch pitch multiplier. e.g 1.0 is unaltered, 0.5 is 1 octave lower. 
+ * @param x  position. 
+ * @param y  position. 
+ * @param z  position.
+ * @param gain gain multiplier. e.g. 1.0 is unaltered, 0.5 is half the gain
+ * @param loop should the sound be looped or one shot.
+ * @return the id of the source being used to play the sound or CD_MUTE if the sound engine is muted or non functioning 
+ * or CD_NO_SOURCE if a problem occurs setting up the source
+ * 
+ */
+- (ALuint)playSound:(int) soundId sourceGroupId:(int)sourceGroupId pitch:(float) pitch x:(float) x y:(float) y z:(float) z gain:(float) gain loop:(BOOL) loop {
+    
 #ifdef CD_DEBUG
 	//Sanity check parameters - only in DEBUG
 	NSAssert(soundId >= 0, @"soundId can not be negative");
@@ -826,7 +849,6 @@ static BOOL _mixerRateSet = NO;
 	NSAssert(sourceGroupId >= 0, @"sourceGroupId can not be negative");
 	NSAssert(sourceGroupId < _sourceGroupTotal, @"sourceGroupId exceeds limit");
 	NSAssert(pitch > 0, @"pitch must be greater than zero");
-	NSAssert(pan >= -1 && pan <= 1, @"pan must be between -1 and 1");
 	NSAssert(gain >= 0, @"gain can not be negative");
 #endif
 	//If mute or initialisation has failed or buffer is not loaded then do nothing
@@ -840,7 +862,7 @@ static BOOL _mixerRateSet = NO;
 #endif		
 		return CD_MUTE;
 	}	
-
+    
 	int sourceIndex = [self _getSourceIndexForSourceGroup:sourceGroupId];//This method ensures sourceIndex is valid
 	
 	if (sourceIndex != CD_NO_SOURCE) {
@@ -856,7 +878,7 @@ static BOOL _mixerRateSet = NO;
 		alSourcef(source, AL_PITCH, pitch);//Set pitch
 		alSourcei(source, AL_LOOPING, loop);//Set looping
 		alSourcef(source, AL_GAIN, gain);//Set gain/volume
-		float sourcePosAL[] = {pan, 0.0f, 0.0f};//Set position - just using left and right panning
+		float sourcePosAL[] = {x, y, z};
 		alSourcefv(source, AL_POSITION, sourcePosAL);
 		alGetError();//Clear the error code
 		alSourcePlay(source);

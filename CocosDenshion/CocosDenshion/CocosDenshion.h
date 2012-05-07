@@ -242,6 +242,9 @@ typedef struct _sourceInfo {
 /** Initializes the engine with a group definition and a total number of groups */
 -(id)init;
 
+/** Plays a sound in a channel group with a pitch, 3D position and gain. The sound could played looped or not */
+- (ALuint)playSound:(int) soundId sourceGroupId:(int)sourceGroupId pitch:(float) pitch x:(float) x y:(float) y z:(float) z gain:(float) gain loop:(BOOL) loop;
+
 /** Plays a sound in a channel group with a pitch, pan and gain. The sound could played looped or not */
 -(ALuint) playSound:(int) soundId sourceGroupId:(int)sourceGroupId pitch:(float) pitch pan:(float) pan gain:(float) gain loop:(BOOL) loop;
 
