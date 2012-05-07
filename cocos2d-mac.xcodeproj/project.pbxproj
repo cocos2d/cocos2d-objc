@@ -37,6 +37,8 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		6898A4FE154EC6AA00F1DF79 /* SimpleAudioEngine+SoundEvents.h in Headers */ = {isa = PBXBuildFile; fileRef = 6898A4FB154EC6AA00F1DF79 /* SimpleAudioEngine+SoundEvents.h */; };
+		6898A4FF154EC6AA00F1DF79 /* SimpleAudioEngine+SoundEvents.m in Sources */ = {isa = PBXBuildFile; fileRef = 6898A4FC154EC6AA00F1DF79 /* SimpleAudioEngine+SoundEvents.m */; };
 		A02C341D13C918690081CFF7 /* grossini_pvr_rgba8888.pvr in Resources */ = {isa = PBXBuildFile; fileRef = A02C341C13C918550081CFF7 /* grossini_pvr_rgba8888.pvr */; };
 		A0AAB8241451C8C000850F2C /* CCParticleBatchNode.h in Headers */ = {isa = PBXBuildFile; fileRef = A0AAB8221451C8C000850F2C /* CCParticleBatchNode.h */; };
 		A0AAB8251451C8C000850F2C /* CCParticleBatchNode.m in Sources */ = {isa = PBXBuildFile; fileRef = A0AAB8231451C8C000850F2C /* CCParticleBatchNode.m */; };
@@ -3565,6 +3567,9 @@
 		13E42FB307B3F0F600E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		6898A4FB154EC6AA00F1DF79 /* SimpleAudioEngine+SoundEvents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SimpleAudioEngine+SoundEvents.h"; sourceTree = "<group>"; };
+		6898A4FC154EC6AA00F1DF79 /* SimpleAudioEngine+SoundEvents.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SimpleAudioEngine+SoundEvents.m"; sourceTree = "<group>"; };
+		6898A4FD154EC6AA00F1DF79 /* SoundEvents.mdown */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SoundEvents.mdown; sourceTree = "<group>"; };
 		A02C341C13C918550081CFF7 /* grossini_pvr_rgba8888.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = grossini_pvr_rgba8888.pvr; sourceTree = "<group>"; };
 		A0AAB8211451C8A700850F2C /* README.md */ = {isa = PBXFileReference; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		A0AAB8221451C8C000850F2C /* CCParticleBatchNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCParticleBatchNode.h; sourceTree = "<group>"; };
@@ -4776,6 +4781,9 @@
 				E056C7E1134FF53B001C3DFD /* CocosDenshion.m */,
 				E056C7E2134FF53B001C3DFD /* SimpleAudioEngine.h */,
 				E056C7E3134FF53B001C3DFD /* SimpleAudioEngine.m */,
+				6898A4FB154EC6AA00F1DF79 /* SimpleAudioEngine+SoundEvents.h */,
+				6898A4FC154EC6AA00F1DF79 /* SimpleAudioEngine+SoundEvents.m */,
+				6898A4FD154EC6AA00F1DF79 /* SoundEvents.mdown */,
 			);
 			path = CocosDenshion;
 			sourceTree = "<group>";
@@ -5495,6 +5503,7 @@
 				E056C858134FF53B001C3DFD /* SimpleAudioEngine.h in Headers */,
 				E056C85A134FF53B001C3DFD /* CDXMacOSXSupport.h in Headers */,
 				E056C85C134FF53B001C3DFD /* CDXPropertyModifierAction.h in Headers */,
+				6898A4FE154EC6AA00F1DF79 /* SimpleAudioEngine+SoundEvents.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9067,6 +9076,7 @@
 				E056C859134FF53B001C3DFD /* SimpleAudioEngine.m in Sources */,
 				E056C85B134FF53B001C3DFD /* CDXMacOSXSupport.m in Sources */,
 				E056C85D134FF53B001C3DFD /* CDXPropertyModifierAction.m in Sources */,
+				6898A4FF154EC6AA00F1DF79 /* SimpleAudioEngine+SoundEvents.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
