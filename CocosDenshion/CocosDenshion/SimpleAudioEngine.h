@@ -73,12 +73,14 @@
 
 /** plays an audio effect with a file path*/
 -(ALuint) playEffect:(NSString*) filePath;
+/** plays an audio effect with a file path at Position*/
+-(ALuint) playEffect:(NSString*) filePath x:(Float32) x y:(Float32) y z:(Float32) z;
 /** stop a sound that is playing, note you must pass in the soundId that is returned when you started playing the sound with playEffect */
 -(void) stopEffect:(ALuint) soundId;
 /** plays an audio effect with a file path, pitch, pan and gain */
 -(ALuint) playEffect:(NSString*) filePath pitch:(Float32) pitch pan:(Float32) pan gain:(Float32) gain;
-/** preloads an audio effect */
--(void) preloadEffect:(NSString*) filePath;
+/** plays an audio effect with a file path, pitch, position and gain */
+-(ALuint) playEffect:(NSString*) filePath pitch:(Float32) pitch x:(Float32) x y:(Float32) y z:(Float32) z gain:(Float32) gain;-(void) preloadEffect:(NSString*) filePath;
 /** unloads an audio effect from memory */
 -(void) unloadEffect:(NSString*) filePath;
 /** Gets a CDSoundSource object set up to play the specified file. */
