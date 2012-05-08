@@ -23,6 +23,7 @@ static NSString *transitions[] = {
 	@"SchedulerUpdateFromCustom",
 	@"RescheduleSelector",
 	@"SchedulerDelayAndRepeat",
+	@"SchedulerUserdata"
 
 };
 
@@ -613,6 +614,54 @@ Class restartTest()
 -(void) update:(ccTime)dt
 {
 	NSLog(@"update called:%f", dt);
+}
+
+@end
+
+@implementation SchedulerUserdata
+
+-(id) init
+{
+	if( (self=[super init]) ) {
+		[self schedule:@selector(update:data:) interval:1.0f userData:[NSNumber numberWithInt:1]];
+		[self schedule:@selector(update:data:) interval:2.0f userData:[NSNumber numberWithInt:2]];
+		[self schedule:@selector(testNoData:) interval:3.0f ];
+		CCLOG(@"update:data: should be scheduled twice with different userdata, and testNoData: should be scheduled once with no userdata");
+		
+		CCDelayTime* delayTime = [CCDelayTime actionWithDuration:10.0f];
+		CCCallFunc* callAction = [CCCallFunc actionWithTarget:self selector:@selector(unscheduleUpdateWithData1)];
+		[self runAction:[CCSequence actions:delayTime, callAction, nil]];
+		CCLOG(@"update:data: with userdata 1 should be stopped in 10 seconds");		
+	}
+	
+	return self;
+}
+
+-(NSString *) title
+{
+	return @"Scheduler with userdata";
+}
+
+-(NSString *) subtitle
+{
+	return @"The same function should be scheduled twice with 2 different userdatas. Another function scheduled with no userdata.\n"
+	"The userdata function with '1' as the userdata will be stopped after 10 seconds";
+}			
+
+-(void)update:(ccTime)dt data:(id)userData
+{
+	NSLog(@"update:data called with userdata:%d", [userData intValue]);
+}
+
+-(void)testNoData:(ccTime)dt
+{
+	NSLog(@"testNoData called");
+}
+
+-(void)unscheduleUpdateWithData1
+{
+	[self unschedule:@selector(update:data:) userData:[NSNumber numberWithInt:1]];
+	CCLOG(@"update:data: with userData 1 stopped");
 }
 
 @end

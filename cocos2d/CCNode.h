@@ -465,6 +465,7 @@ enum {
  The scheduled selector will be ticked every frame
  */
 -(void) schedule: (SEL) s;
+-(void) schedule: (SEL) s userData:(id)data;
 /** schedules a custom selector with an interval time in seconds.
  If time is 0 it will be ticked every frame.
  If time is 0, it is recommended to use 'scheduleUpdate' instead.
@@ -472,11 +473,13 @@ enum {
  If the selector is already scheduled, then the interval parameter will be updated without scheduling it again.
  */
 -(void) schedule: (SEL) s interval:(ccTime)seconds;
+-(void) schedule: (SEL) s interval:(ccTime)seconds userData:(id)data;
 /**
  repeat will execute the action repeat + 1 times, for a continues action use kCCRepeatForever
  delay is the amount of time the action will wait before execution
  */
 -(void) schedule:(SEL)selector interval:(ccTime)interval repeat: (uint) repeat delay:(ccTime) delay;
+-(void) schedule:(SEL)selector interval:(ccTime)interval repeat: (uint) repeat delay:(ccTime) delay userData:(id)data;
 
 /**
  Schedules a selector that runs only once, with a delay of 0 or larger 
@@ -485,6 +488,7 @@ enum {
 
 /** unschedules a custom selector.*/
 -(void) unschedule: (SEL) s;
+-(void) unschedule: (SEL) s userData:(id)data;
 
 /** unschedule all scheduled selectors: custom selectors, and the 'update' selector.
  Actions are not affected by this method.

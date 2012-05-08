@@ -64,6 +64,9 @@
 {}
 @end
 
+@interface SchedulerUserdata : SchedulerTest
+{}
+@end
 
 
 
