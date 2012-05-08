@@ -90,8 +90,14 @@ Requirements:
 
 #import "CDOpenALSupport.h"
 
-//Tested source limit on 2.2.1 and 3.1.2 with up to 128 sources and appears to work. Older OS versions e.g 2.2 may support only 32
-#define CD_SOURCE_LIMIT 32 //Total number of sources we will ever want, may actually get less
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+// Tested source limit on 2.2.1 and 3.1.2 with up to 128 sources and appears to work. Older OS versions e.g 2.2 may support only 32
+#define CD_SOURCE_LIMIT 32 //Total number of sources
+#else
+// Mac OS X supports 512 sources
+#define CD_SOURCE_LIMIT 512 //Total number of sources
+#endif
+
 #define CD_NO_SOURCE 0xFEEDFAC //Return value indicating playback failed i.e. no source
 #define CD_IGNORE_AUDIO_SESSION 0xBEEFBEE //Used internally to indicate audio session will not be handled
 #define CD_MUTE      0xFEEDBAB //Return value indicating sound engine is muted or non functioning
@@ -101,7 +107,7 @@ Requirements:
 #define CD_SAMPLE_RATE_MID  22050
 #define CD_SAMPLE_RATE_LOW  16000
 #define CD_SAMPLE_RATE_BASIC 8000
-#define CD_SAMPLE_RATE_DEFAULT 44100
+#define CD_SAMPLE_RATE_DEFAULT CD_SAMPLE_RATE_HIGH
 
 extern NSString * const kCDN_BadAlContext;
 extern NSString * const kCDN_AsynchLoadComplete;
@@ -201,8 +207,8 @@ typedef struct _sourceInfo {
  @since v0.8
  */
 @class CDSoundSource;
-@interface CDSoundEngine : NSObject <CDAudioInterruptProtocol> {
-	
+@interface CDSoundEngine : NSObject <CDAudioInterruptProtocol>
+{	
 	bufferInfo		*_buffers;
 	sourceInfo		*_sources;
 	sourceGroup	    *_sourceGroups;
@@ -223,7 +229,6 @@ typedef struct _sourceInfo {
 	//For managing dynamic allocation of sources and buffers
 	int sourceTotal_;
 	int bufferTotal;
-	 
 }
 
 @property (readwrite, nonatomic) ALfloat masterGain;
@@ -286,12 +291,15 @@ typedef struct _sourceInfo {
  
  @since v1.0
  */
-@interface CDSoundSource : NSObject <CDAudioTransportProtocol, CDAudioInterruptProtocol> {
+@interface CDSoundSource : NSObject <CDAudioTransportProtocol, CDAudioInterruptProtocol>
+{
 	ALenum lastError;
+	CDSoundEngine* _engine;
+
 @public
 	ALuint _sourceId;
 	ALuint _sourceIndex;
-	CDSoundEngine* _engine;
+    ALuint _sourceGroupId;
 	int _soundId;
 	float _preMuteGain;
 	BOOL enabled_;
@@ -309,7 +317,7 @@ typedef struct _sourceInfo {
 /** Stores the last error code that occurred. Check against AL_NO_ERROR */
 @property (readonly) ALenum lastError;
 /** Do not init yourself, get an instance from the sourceForSound factory method on CDSoundEngine */
--(id)init:(ALuint) theSourceId sourceIndex:(int) index soundEngine:(CDSoundEngine*) engine;
+-(id)init:(ALuint) theSourceId sourceIndex:(int) index sourceGroupId:(int) sourceGroupId soundEngine:(CDSoundEngine*) engine;
 
 @end
 
@@ -329,9 +337,7 @@ typedef struct _sourceInfo {
 
 #pragma mark CDAsynchBufferLoader
 
-/** CDAsynchBufferLoader
- TODO
- */
+/** CDAsynchBufferLoader */
 @interface CDAsynchBufferLoader : NSOperation {
 	NSArray *_loadRequests;
 	CDSoundEngine *_soundEngine;
@@ -392,8 +398,7 @@ typedef enum {
 	float startValue;
 	float endValue;
 	id target;
-	BOOL stopTargetWhenComplete;
-	
+	BOOL stopTargetWhenComplete;	
 }
 @property (readwrite, nonatomic) BOOL stopTargetWhenComplete;
 @property (readwrite, nonatomic) float startValue;
@@ -414,27 +419,23 @@ typedef enum {
 #pragma mark CDSoundSourceFader
 
 /** Fader for CDSoundSource objects */
-@interface CDSoundSourceFader : CDPropertyModifier{}
+@interface CDSoundSourceFader : CDPropertyModifier {}
 @end
 
 #pragma mark CDSoundSourcePanner
 
 /** Panner for CDSoundSource objects */
-@interface CDSoundSourcePanner : CDPropertyModifier{}
+@interface CDSoundSourcePanner : CDPropertyModifier {}
 @end
 
 #pragma mark CDSoundSourcePitchBender
 
 /** Pitch bender for CDSoundSource objects */
-@interface CDSoundSourcePitchBender : CDPropertyModifier{}
+@interface CDSoundSourcePitchBender : CDPropertyModifier {}
 @end
 
 #pragma mark CDSoundEngineFader
 
 /** Fader for CDSoundEngine objects */
-@interface CDSoundEngineFader : CDPropertyModifier{}
+@interface CDSoundEngineFader : CDPropertyModifier {}
 @end
-
-
-
-
