@@ -203,3 +203,6 @@
 
 @interface PremultipliedAlphaTest : ParticleDemo
 @end
+
+@interface PremultipliedAlphaTest2 : ParticleDemo
+@end

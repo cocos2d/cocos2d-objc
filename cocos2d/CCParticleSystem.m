@@ -61,6 +61,10 @@
 #import "Support/ZipUtils.h"
 #import "Support/CCFileUtils.h"
 
+@interface CCParticleSystem ()
+-(void) updateBlendFunc;
+@end
+
 @implementation CCParticleSystem
 @synthesize active, duration;
 @synthesize sourcePosition, posVar;
@@ -628,16 +632,11 @@
 
 -(void) setTexture:(CCTexture2D*) texture
 {
-	texture_ = [texture retain];
+	if( texture_ != texture ) {
+		[texture_ release];
+		texture_ = [texture retain];
 
-	opacityModifyRGB_ = [texture hasPremultipliedAlpha];
-
-	// If the new texture has No premultiplied alpha, AND the blendFunc hasn't been changed, then update it
-	if( texture_ && ! [texture hasPremultipliedAlpha] &&
-	   ( blendFunc_.src == CC_BLEND_SRC && blendFunc_.dst == CC_BLEND_DST ) ) {
-
-		blendFunc_.src = GL_SRC_ALPHA;
-		blendFunc_.dst = GL_ONE_MINUS_SRC_ALPHA;
+		[self updateBlendFunc];
 	}
 }
 
@@ -670,6 +669,13 @@
 	return( blendFunc_.src == GL_SRC_ALPHA && blendFunc_.dst == GL_ONE);
 }
 
+-(void) setBlendFunc:(ccBlendFunc)blendFunc
+{
+	if( blendFunc_.src != blendFunc.src || blendFunc_.dst != blendFunc.dst ) {
+		blendFunc_ = blendFunc;
+		[self updateBlendFunc];
+	}
+}
 #pragma mark ParticleSystem - Total Particles Property
 
 - (void) setTotalParticles:(NSUInteger)tp
@@ -875,6 +881,26 @@
 {
 	transformSystemDirty_ = YES;
 	[super setScaleY:newScaleY];
+}
+
+#pragma mark Particle - Helpers
+
+-(void) updateBlendFunc
+{
+	NSAssert(! batchNode_, @"Can't change blending functions when the particle is being batched");
+
+	BOOL premultiplied = [texture_ hasPremultipliedAlpha];
+
+	opacityModifyRGB_ = NO;
+
+	if( texture_ && ( blendFunc_.src == CC_BLEND_SRC && blendFunc_.dst == CC_BLEND_DST ) ) {
+		if( premultiplied )
+			opacityModifyRGB_ = YES;
+		else {
+			blendFunc_.src = GL_SRC_ALPHA;
+			blendFunc_.dst = GL_ONE_MINUS_SRC_ALPHA;
+		}
+	}
 }
 
 
