@@ -33,6 +33,11 @@ typedef enum  {
 	kCCMenuStateTrackingTouch
 } tCCMenuState;
 
+typedef enum  {
+	kCCMenuTriggerModeOnPress,
+	kCCMenuTriggerModeOnRelease
+} tCCMenuTriggerMode;
+
 enum {
 	//* priority used by the menu for the touches
 	kCCMenuTouchPriority = -128,
@@ -49,6 +54,7 @@ enum {
  */
 @interface CCMenu : CCLayer <CCRGBAProtocol>
 {
+    tCCMenuTriggerMode triggerMode_;
 	tCCMenuState state_;
 	CCMenuItem	*selectedItem_;
 	GLubyte		opacity_;
@@ -89,5 +95,7 @@ enum {
 @property (nonatomic,readonly) GLubyte opacity;
 /** conforms to CCRGBAProtocol protocol */
 @property (nonatomic,readonly) ccColor3B color;
+/** specify the CCMenu trigger mode for all items in the CCMenu**/
+@property (nonatomic, readwrite, assign) tCCMenuTriggerMode triggerMode;
 
 @end
