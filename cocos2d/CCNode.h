@@ -552,4 +552,8 @@ enum {
  */
 - (CGPoint)convertTouchToNodeSpaceAR:(UITouch *)touch;
 #endif // __IPHONE_OS_VERSION_MAX_ALLOWED
+
+- (void) child:(CCNode*) child resizedFrom:(CGSize) size;
+- (void) child:(CCNode*) child changedScaleFromX:(CGFloat) scaleX y:(CGFloat) y;
+
 @end
