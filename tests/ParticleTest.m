@@ -68,6 +68,7 @@ static NSString *transitions[] = {
 	@"ReorderParticleSystems",
 
 	@"PremultipliedAlphaTest",
+	@"PremultipliedAlphaTest2",
 };
 
 Class nextAction(void);
@@ -2096,6 +2097,8 @@ Class restartAction()
 }
 @end
 
+#pragma mark -
+
 @implementation PremultipliedAlphaTest
 
 -(NSString *) title
@@ -2118,16 +2121,16 @@ Class restartAction()
 
 	self.emitter = [CCParticleSystemQuad particleWithFile:@"Particles/BoilingFoam.plist"];
 
-	NSAssert([self.emitter doesOpacityModifyRGB], @"Particle texture does not have premultiplied alpha, test is useless");
-
 	// Particle Designer "normal" blend func causes black halo on premul textures (ignores multiplication)
 	//self.emitter.blendFunc = (ccBlendFunc){ GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA };
 
 	// Cocos2d "normal" blend func for premul causes alpha to be ignored (oversaturates colors)
 	self.emitter.blendFunc = (ccBlendFunc) { GL_ONE, GL_ONE_MINUS_SRC_ALPHA };
 
+	NSAssert([self.emitter doesOpacityModifyRGB], @"Particle texture does not have premultiplied alpha, test is useless");
+
 	// Toggle next line to see old behavior
-	//self.emitter.opacityModifyRGB = NO;
+//	self.emitter.opacityModifyRGB = NO;
 
 	self.emitter.startColor = ccc4f(1, 1, 1, 1);
 	self.emitter.endColor   = ccc4f(1, 1, 1, 0);
@@ -2136,6 +2139,31 @@ Class restartAction()
 	[self addChild:emitter_ z:10];
 }
 
+@end
+
+#pragma mark -
+
+@implementation PremultipliedAlphaTest2
+-(void) onEnter
+{
+	[super onEnter];
+	
+	[self setColor:ccBLACK];
+	[self removeChild:background cleanup:YES];
+	background = nil;
+	
+	self.emitter = [CCParticleSystemQuad particleWithFile:@"Particles/TestPremultipliedAlpha.plist"];
+	[self addChild:emitter_ z:10];
+}
+
+-(NSString *) title
+{
+	return @"premultiplied alpha 2";
+}
+-(NSString*) subtitle
+{
+	return @"Arrows should be faded";
+}
 @end
 
 
