@@ -19,6 +19,8 @@ enum {
 static int sceneIdx=-1;
 static NSString *transitions[] = {
 
+	@"TextureMemoryAlloc",
+
 	@"TextureAlias",
 	@"TextureMipMap",
 	@"TexturePVRMipMap",
@@ -59,10 +61,7 @@ static NSString *transitions[] = {
 	@"TextureSizeTest",
 	@"TextureCache1",
 	@"TextureDrawAtPoint",
-	@"TextureDrawInRect",
-	
-	@"TextureMemoryNPOT",
-	@"TextureMemoryPOT",
+	@"TextureDrawInRect",	
 };
 
 #pragma mark Callbacks
@@ -1889,11 +1888,10 @@ Class restartAction()
 @end
 
 
-#pragma mark -
-#pragma mark TextureMemoryNPOT
+#pragma mark - TextureMemoryAlloc
 
 
-@implementation TextureMemoryNPOT
+@implementation TextureMemoryAlloc
 -(id) init
 {
 	if ((self=[super init]) ) {
@@ -1902,7 +1900,7 @@ Class restartAction()
 		
 		[CCMenuItemFont setFontSize:24];
 
-		CCMenuItem *item1 = [CCMenuItemFont itemWithString:@"RGBA8" target:self selector:@selector(updateImage:)];
+		CCMenuItem *item1 = [CCMenuItemFont itemWithString:@"PNG" target:self selector:@selector(updateImage:)];
 		item1.tag = 0;
 
 		CCMenuItem *item2 = [CCMenuItemFont itemWithString:@"RGBA8" target:self selector:@selector(updateImage:)];
@@ -1911,16 +1909,13 @@ Class restartAction()
 		CCMenuItem *item3 = [CCMenuItemFont itemWithString:@"RGB8" target:self selector:@selector(updateImage:)];
 		item3.tag = 2;
 
-		CCMenuItem *item4 = [CCMenuItemFont itemWithString:@"RGB565" target:self selector:@selector(updateImage:)];
+		CCMenuItem *item4 = [CCMenuItemFont itemWithString:@"RGBA4" target:self selector:@selector(updateImage:)];
 		item4.tag = 3;
 
-		CCMenuItem *item5 = [CCMenuItemFont itemWithString:@"RGB5A1" target:self selector:@selector(updateImage:)];
+		CCMenuItem *item5 = [CCMenuItemFont itemWithString:@"A8" target:self selector:@selector(updateImage:)];
 		item5.tag = 4;
 
-		CCMenuItem *item6 = [CCMenuItemFont itemWithString:@"RGBA4" target:self selector:@selector(updateImage:)];
-		item6.tag = 5;
-
-		CCMenu *menu = [CCMenu menuWithItems:item1, item2, item3, item4, item5, item6, nil];
+		CCMenu *menu = [CCMenu menuWithItems:item1, item2, item3, item4, item5, nil];
 		[menu alignItemsHorizontally];
 		
 		[self addChild:menu];
@@ -1957,22 +1952,19 @@ Class restartAction()
 	NSString *file = nil;
 	switch( tag ) {
 		case 0:
-			file = @"test_1023x1023.png";
+			file = @"test_1021x1024.png";
 			break;
 		case 1:
-			file = @"test_1023x1023_rgba8888.pvr.gz";
+			file = @"test_1021x1024_rgba8888.pvr.gz";
 			break;
 		case 2:
-			file = @"test_1023x1023_rgb888.pvr.gz";
+			file = @"test_1021x1024_rgb888.pvr.gz";
 			break;
 		case 3:
-			file = @"test_1023x1023_rgb565.pvr.gz";
+			file = @"test_1021x1024_rgba4444.pvr.gz";
 			break;
 		case 4:
-			file = @"test_1023x1023_rgba5551.pvr.gz";
-			break;
-		case 5:
-			file = @"test_1023x1023_rgba4444.pvr.gz";
+			file = @"test_1021x1024_a8.pvr.gz";
 			break;
 	}
 	background_ = [CCSprite spriteWithFile:file];
@@ -1987,60 +1979,11 @@ Class restartAction()
 
 -(NSString*) title
 {
-	return @"NPOT Texture memory";
+	return @"Texture memory";
 }
 -(NSString *) subtitle
 {
 	return @"Testing Texture Memory allocation. Use Instruments + VM Tracker";
-}
-@end
-
-
-#pragma mark -
-#pragma mark TextureMemoryPOT
-
-
-@implementation TextureMemoryPOT
--(void) updateImage:(id) sender
-{
-	[background_ removeFromParentAndCleanup:YES];
-	[[CCTextureCache sharedTextureCache] removeUnusedTextures];
-	
-	int tag = [sender tag];
-	NSString *file = nil;
-	switch( tag ) {
-		case 0:
-			file = @"test_1024x1024.png";
-			break;
-		case 1:
-			file = @"test_1024x1024_rgba8888.pvr.gz";
-			break;
-		case 2:
-			file = @"test_1024x1024_rgb888.pvr.gz";
-			break;
-		case 3:
-			file = @"test_1024x1024_rgb565.pvr.gz";
-			break;
-		case 4:
-			file = @"test_1024x1024_rgba5551.pvr.gz";
-			break;
-		case 5:
-			file = @"test_1024x1024_rgba4444.pvr.gz";
-			break;
-	}
-	background_ = [CCSprite spriteWithFile:file];
-	[self addChild:background_ z:-10];
-	
-	background_.visible = NO;
-
-	
-	CGSize s = [[CCDirector sharedDirector] winSize];
-	[background_ setPosition:ccp(s.width/2, s.height/2)];
-}
-
--(NSString*) title
-{
-	return @"POT Texture memory";
 }
 @end
 
@@ -2112,7 +2055,7 @@ Class restartAction()
 	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
 	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
 	// You can change it at anytime.
-	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA8888];
+	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA4444];
 
 	// If the 1st suffix is not found, then the fallback suffixes are going to used. If none is found, it will try with the name without suffix.
 	// On iPad HD  : "-ipadhd", "-ipad",  "-hd"

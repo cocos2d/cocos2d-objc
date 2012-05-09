@@ -192,14 +192,9 @@
 }
 @end
 
-@interface TextureMemoryNPOT : TextureDemo
+@interface TextureMemoryAlloc : TextureDemo
 {
 	CCSprite *background_;
-}
-@end
-
-@interface TextureMemoryPOT : TextureMemoryNPOT
-{
 }
 @end
 
