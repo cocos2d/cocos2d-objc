@@ -403,7 +403,7 @@ typedef struct _PVRTexHeader
 		if( [conf OSVersion] >= kCCiOSVersion_5_0 )
 		{
 			
-			// iOS BUG:
+			// iOS 5 BUG:
 			// RGB888 textures allocate much more memory than needed on iOS 5
 			// http://www.cocos2d-iphone.org/forum/topic/31092
 			
@@ -415,18 +415,33 @@ typedef struct _PVRTexHeader
 				printf("\n");
 			}
 
-			// iOS BUG:
-			// If Texture is both 16-bit and NPOT on iOS5, then warn the user
-			// http://www.cocos2d-iphone.org/forum/topic/31092
 			
-			else if( (pixelFormat == kCCTexture2DPixelFormat_RGB565 || pixelFormat == kCCTexture2DPixelFormat_RGBA4444 || pixelFormat == kCCTexture2DPixelFormat_RGB5A1) &&
-			   ( (width_ != ccNextPOT(width_)) || height_ != ccNextPOT(height_) ) )
-			{
-				printf("\n");
-				NSLog(@"cocos2d: WARNING. Using 16-bit & NPOT (%d,%d) texture. Convert it to POT (%lu,%lu) in order to save memory", width_, height_, ccNextPOT(width_), ccNextPOT(height_) );
-				NSLog(@"cocos2d: WARNING: File: %@", [path lastPathComponent] );
-				NSLog(@"cocos2d: WARNING: For furhter info visit: http://www.cocos2d-iphone.org/forum/topic/31092");
-				printf("\n");
+			else if( width_ != ccNextPOT(width_) ) {
+				
+				// XXX: Is this applicable for compressed textures ?
+				// Since they are squared and POT (PVRv2) it is not an issue now. Not sure in the future.
+				
+				// iOS 5 BUG:
+				// If width is not word aligned, then log warning.
+				// http://www.cocos2d-iphone.org/forum/topic/31092
+				
+
+				NSUInteger bpp = [CCTexture2D bitsPerPixelForFormat:pixelFormat];
+				NSUInteger bytes = width_ * bpp / 8;
+
+				// XXX: Should it be 4 or sizeof(int) ??
+				NSUInteger mod = bytes % 4;
+				
+				// Not word aligned ?
+				if( mod != 0 ) {
+
+					NSUInteger neededBytes = (4 - mod ) / (bpp/8);
+					printf("\n");
+					NSLog(@"cocos2d: WARNING. Current texture size=(%d,%d). Convert it to size=(%d,%d) in order to save memory", width_, height_, width_ + neededBytes, height_ );
+					NSLog(@"cocos2d: WARNING: File: %@", [path lastPathComponent] );
+					NSLog(@"cocos2d: WARNING: For furhter info visit: http://www.cocos2d-iphone.org/forum/topic/31092");
+					printf("\n");
+				}
 			}
 		}
 #endif // iOS

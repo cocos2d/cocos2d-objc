@@ -74,13 +74,12 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
  Possible texture pixel formats
  */
 typedef enum {
-	kCCTexture2DPixelFormat_Automatic = 0,
 	//! 32-bit texture: RGBA8888
 	kCCTexture2DPixelFormat_RGBA8888,
+	//! 32-bit texture without Alpha channel. Don't use it.
+	kCCTexture2DPixelFormat_RGB888,
 	//! 16-bit texture without Alpha channel
 	kCCTexture2DPixelFormat_RGB565,
-	//! 24-bit texture without Alpha channel
-	kCCTexture2DPixelFormat_RGB888,
 	//! 8-bit textures used as masks
 	kCCTexture2DPixelFormat_A8,
 	//! 8-bit intensity texture
@@ -338,6 +337,18 @@ typedef struct _ccTexParams {
  @since v1.0
  */
 -(NSUInteger) bitsPerPixelForFormat;
+
+/** returns the pixel format in a NSString.
+ @since v2.0
+ */
+-(NSString*) stringForFormat;
+
+
+/** Helper functions that returns bits per pixels for a given format.
+ @since v2.0
+ */
++(NSUInteger) bitsPerPixelForFormat:(CCTexture2DPixelFormat)format;
+
 @end
 
 
