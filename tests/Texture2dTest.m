@@ -1921,17 +1921,11 @@ Class restartAction()
 		[self addChild:menu];
 		
 		
-		CCMenuItemFont *aliased = [CCMenuItemFont itemWithString:@"visible" block:^(id sender) {
+		CCMenuItemFont *warmup = [CCMenuItemFont itemWithString:@"warm up texture" block:^(id sender) {
 			background_.visible = YES;
-//			[[background_ texture] setAliasTexParameters];
-		}];
-
-		CCMenuItemFont *antialiased = [CCMenuItemFont itemWithString:@"not-visible" block:^(id sender) {
-			background_.visible = NO;
-//			[[background_ texture] setAntiAliasTexParameters];
 		}];
 		
-		CCMenu *menu2 = [CCMenu menuWithItems:aliased, antialiased, nil];
+		CCMenu *menu2 = [CCMenu menuWithItems:warmup, nil];
 		
 		[menu2 alignItemsHorizontally];
 		

@@ -24,8 +24,16 @@
 
 #import "CCNode.h"
 
+#ifdef DEBUG
+
+/** Debugging extensions of CCNode.
+ They are available when the DEBUG macro is defined at compile time
+ */
 @interface CCNode (Debug)
 
+/** prints on the debug console the scene graph */
 -(void) walkSceneGraph:(NSUInteger)level;
 
 @end
+
+#endif // DEBUG

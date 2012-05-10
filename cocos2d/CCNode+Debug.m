@@ -24,13 +24,14 @@
 
 #import "CCNode+Debug.h"
 
+#ifdef DEBUG
 
 @implementation CCNode (Debug)
 
 -(void) walkSceneGraph:(NSUInteger)level
 {
-	char buf[20];
-	int i=0;
+	char buf[64];
+	NSUInteger i=0;
 	for( i=0; i<level+1; i++)
 		buf[i] = '-';
 	buf[i] = 0;
@@ -41,7 +42,7 @@
 		[self sortAllChildren];
 		
 		ccArray *arrayData = children_->data;
-		NSUInteger i = 0;
+		i = 0;
 		
 		// draw children zOrder < 0
 		for( ; i < arrayData->num; i++ ) {
@@ -66,3 +67,5 @@
 	
 }
 @end
+
+#endif // DEBUG

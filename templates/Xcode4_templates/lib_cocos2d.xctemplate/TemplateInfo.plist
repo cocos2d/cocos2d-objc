@@ -739,6 +739,28 @@
 			<key>Path</key>
 			<string>libs/cocos2d/CCMotionStreak.m</string>
 		</dict>
+		<key>libs/cocos2d/CCNode+Debug.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2d</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2d/CCNode+Debug.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/cocos2d/CCNode+Debug.m</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2d</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2d/CCNode+Debug.m</string>
+		</dict>
 		<key>libs/cocos2d/CCNode.h</key>
 		<dict>
 			<key>Group</key>
@@ -2241,6 +2263,8 @@
 		<string>libs/cocos2d/CCMenuItem.m</string>
 		<string>libs/cocos2d/CCMotionStreak.h</string>
 		<string>libs/cocos2d/CCMotionStreak.m</string>
+		<string>libs/cocos2d/CCNode+Debug.h</string>
+		<string>libs/cocos2d/CCNode+Debug.m</string>
 		<string>libs/cocos2d/CCNode.h</string>
 		<string>libs/cocos2d/CCNode.m</string>
 		<string>libs/cocos2d/CCParallaxNode.h</string>
