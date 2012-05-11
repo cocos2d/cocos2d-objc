@@ -4,6 +4,7 @@ version 2.0-rc2 XX-May-2012
 . [NEW] RenderTexture: Added support for Depth Stencil
 . [FIX] LabelTTF: improved loading time. Label is updated only if the string is set.
 . [FIX] Macros: CCLOG doesn't log the function name. Only CCLOGWARN
+. [FIX] MenuItem: setIsEnabled can be called before setting the images
 . [FIX] Particle: Handles premultipled images correctly
 		Fixed possible memory leak when changing textures.
 . [FIX] SpriteFrameCache: plist is not loaded again if it was already loaded (performance)
