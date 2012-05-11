@@ -212,7 +212,9 @@
         hAlignment_ = alignment;
         
         // Force update
-        [self setString:[self string]];
+		if( string_ )
+			[self updateTexture];
+
     }
 }
 
@@ -227,8 +229,9 @@
     {
         vAlignment_ = verticalAlignment;
         
-        // Force update
-        [self setString:[self string]];
+		// Force update
+		if( string_ )
+			[self updateTexture];
     }
 }
 
