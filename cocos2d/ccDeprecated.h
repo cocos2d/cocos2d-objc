@@ -225,6 +225,17 @@ DEPRECATED_ATTRIBUTE @interface MacView : CCGLView
 -(id) initWithDuration:(ccTime)duration animation:(CCAnimation*)animation restoreOriginalFrame:(BOOL)restoreOriginalFrame DEPRECATED_ATTRIBUTE;
 @end
 
+@interface CCSequence (Deprecated)
+// new: actionWithArray
++(id) actionsWithArray: (NSArray*) actions DEPRECATED_ATTRIBUTE;
+@end
+
+@interface CCSpawn (Deprecated)
+// new: actionWithArray
++(id) actionsWithArray: (NSArray*) actions DEPRECATED_ATTRIBUTE;
+@end
+
+
 @interface CCRenderTexture (Deprecated)
 // new: saveToFile:
 -(BOOL)saveBuffer:(NSString*)name DEPRECATED_ATTRIBUTE;

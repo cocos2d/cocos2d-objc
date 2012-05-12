@@ -136,7 +136,7 @@
 	return prev;
 }
 
-+(id) actionsWithArray: (NSArray*) actions
++(id) actionWithArray: (NSArray*) actions
 {
 	CCFiniteTimeAction *prev = [actions objectAtIndex:0];
 	
@@ -388,7 +388,7 @@
 	return prev;
 }
 
-+(id) actionsWithArray: (NSArray*) actions
++(id) actionWithArray: (NSArray*) actions
 {
 	CCFiniteTimeAction *prev = [actions objectAtIndex:0];
 
