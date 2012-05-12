@@ -290,6 +290,21 @@ void ccGLUniformModelViewProjectionMatrix( CCGLProgram* program )
 }
 @end
 
+@implementation CCSequence (Deprecated)
+// new: actionWithArray
++(id) actionsWithArray: (NSArray*) actions
+{
+	return [self actionWithArray:actions];
+}
+@end
+
+@implementation CCSpawn (Deprecated)
+// new: actionWithArray
++(id) actionsWithArray: (NSArray*) actions
+{
+	return [self actionWithArray:actions];
+}
+@end
 
 @implementation CCRenderTexture (Deprecated)
 -(BOOL)saveBuffer:(NSString*)name
