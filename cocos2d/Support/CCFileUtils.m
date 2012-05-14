@@ -176,6 +176,13 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
     [super dealloc];
 }
 
+-(NSString*) pathForResource:(NSString*)resource ofType:(NSString *)ext inDirectory:(NSString *)subpath
+{
+    return [bundle_ pathForResource:resource
+                             ofType:ext
+                        inDirectory:subpath];
+}
+
 -(NSString*) getPath:(NSString*)path forSuffix:(NSString*)suffix
 {
 	NSString *newName = path;
@@ -215,7 +222,7 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 		NSString *imageDirectory = [path stringByDeletingLastPathComponent];
 		
 		// If the file does not exist it will return nil.
-		ret = [bundle_ pathForResource:[newName lastPathComponent]
+		ret = [self pathForResource:[newName lastPathComponent]
 												   ofType:nil
 											  inDirectory:imageDirectory];
 	}
