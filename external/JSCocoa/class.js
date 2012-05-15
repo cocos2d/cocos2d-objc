@@ -171,14 +171,14 @@
 		// Get parent class
 		var parentClass = this[parentClassName]
 		if (!parentClass)											throw 'Parent class ' + parentClassName + ' not found'
-		JSCocoaController.log('parentclass=' + parentClass)
+//		JSCocoaController.log('parentclass=' + parentClass)
 
 		var newClass = JSCocoa.createClass_parentClass_(className, parentClassName)
 		for (var method in methods)
 		{
 			var isInstanceMethod = parentClass.instancesRespondToSelector(method)
 			var isOverload = parentClass.respondsToSelector(method) || isInstanceMethod
-			JSCocoaController.log('adding method *' + method + '* to ' + className + ' isOverload=' + isOverload + ' isInstanceMethod=' + isInstanceMethod)
+//			JSCocoaController.log('adding method *' + method + '* to ' + className + ' isOverload=' + isOverload + ' isInstanceMethod=' + isInstanceMethod)
 			
 			if (isOverload)
 			{
