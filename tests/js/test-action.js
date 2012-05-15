@@ -95,6 +95,8 @@ test_manual_properties.prototype.test = function( parent ) {
 	parent.addChild( kathia );
 	kathia.position = ccp(winSize.width-100, winSize.height/2);
 //	kathia.color = ccBLUE;
+//	var color = ccColor3B;
+//	kathia.color = [255,255,0];	
 };
 
 scenes.push( new test_manual_properties() );
@@ -363,7 +365,6 @@ function run()
 
 	director.runWithScene( scene );
 }
-
 
 //
 run();
