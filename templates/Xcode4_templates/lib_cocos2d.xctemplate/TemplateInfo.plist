@@ -1928,6 +1928,17 @@
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
+		<key>libs/cocos2d/Support/ccCArray.m</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2d</string>
+				<string>Support</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2d/Support/ccCArray.m</string>
+		</dict>
 		<key>libs/cocos2d/Support/CCFileUtils.h</key>
 		<dict>
 			<key>Group</key>
@@ -2365,6 +2376,7 @@
 		<string>libs/cocos2d/Support/CCArray.h</string>
 		<string>libs/cocos2d/Support/CCArray.m</string>
 		<string>libs/cocos2d/Support/ccCArray.h</string>
+		<string>libs/cocos2d/Support/ccCArray.m</string>
 		<string>libs/cocos2d/Support/CCFileUtils.h</string>
 		<string>libs/cocos2d/Support/CCFileUtils.m</string>
 		<string>libs/cocos2d/Support/CCProfiling.h</string>

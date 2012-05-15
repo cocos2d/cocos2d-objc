@@ -2236,6 +2236,7 @@
 		A0B532D113C141FF0072EDA4 /* vec4.c in Sources */ = {isa = PBXBuildFile; fileRef = A0B532B813C141FF0072EDA4 /* vec4.c */; };
 		A0BE62FC140552BD00DAA336 /* CCVertex.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BE62FA140552BD00DAA336 /* CCVertex.h */; };
 		A0BE62FD140552BD00DAA336 /* CCVertex.m in Sources */ = {isa = PBXBuildFile; fileRef = A0BE62FB140552BD00DAA336 /* CCVertex.m */; };
+		A0C1EDC91562F979000709DA /* ccCArray.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C1EDC81562F979000709DA /* ccCArray.m */; };
 		A0C491E2146F8C9100C4C037 /* markerFelt-hd.fnt in Resources */ = {isa = PBXBuildFile; fileRef = A0C491DE146F8C9100C4C037 /* markerFelt-hd.fnt */; };
 		A0C491E3146F8C9100C4C037 /* markerFelt-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = A0C491DF146F8C9100C4C037 /* markerFelt-hd.png */; };
 		A0C491E4146F8C9100C4C037 /* markerFelt.fnt in Resources */ = {isa = PBXBuildFile; fileRef = A0C491E0146F8C9100C4C037 /* markerFelt.fnt */; };
@@ -6081,6 +6082,7 @@
 		A0B532B813C141FF0072EDA4 /* vec4.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vec4.c; sourceTree = "<group>"; };
 		A0BE62FA140552BD00DAA336 /* CCVertex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCVertex.h; sourceTree = "<group>"; };
 		A0BE62FB140552BD00DAA336 /* CCVertex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCVertex.m; sourceTree = "<group>"; };
+		A0C1EDC81562F979000709DA /* ccCArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ccCArray.m; sourceTree = "<group>"; };
 		A0C491DE146F8C9100C4C037 /* markerFelt-hd.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "markerFelt-hd.fnt"; sourceTree = "<group>"; };
 		A0C491DF146F8C9100C4C037 /* markerFelt-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "markerFelt-hd.png"; sourceTree = "<group>"; };
 		A0C491E0146F8C9100C4C037 /* markerFelt.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = markerFelt.fnt; sourceTree = "<group>"; };
@@ -7698,6 +7700,7 @@
 			children = (
 				E076E6B91225EC7400DE0DA2 /* base64.c */,
 				E076E6BA1225EC7400DE0DA2 /* base64.h */,
+				A0C1EDC81562F979000709DA /* ccCArray.m */,
 				E076E6BD1225EC7400DE0DA2 /* ccCArray.h */,
 				E076E6C21225EC7400DE0DA2 /* ccUtils.c */,
 				E076E6C31225EC7400DE0DA2 /* ccUtils.h */,
@@ -14274,6 +14277,7 @@
 				A009FB91150EC87600897349 /* ccShaders.m in Sources */,
 				A0A7A506151416A000C8BD16 /* CCActionCatmullRom.m in Sources */,
 				A03714D8154F1D9300081CBA /* CCNode+Debug.m in Sources */,
+				A0C1EDC91562F979000709DA /* ccCArray.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -15298,7 +15302,6 @@
 					"COCOS2D_DEBUG=2",
 				);
 				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -15327,7 +15330,6 @@
 					"CC_ENABLE_GL_STATE_CACHE=1",
 				);
 				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
