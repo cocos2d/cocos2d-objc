@@ -18,7 +18,7 @@ typedef void (^BlockWithParam)(id param);
 	BlockWithParam block;
 	id param;
 }
-@property (nonatomic,copy) id block;
+@property (nonatomic,copy) BlockWithParam block;
 @property (nonatomic,readwrite,retain) id param;
 @end
 

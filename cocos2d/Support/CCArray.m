@@ -291,12 +291,12 @@
 
 - (void) insertionSortUsingCFuncComparator:(int(*)(const void *, const void *))comparator
 {
-    insertionSort(data, comparator);
+	cc_insertionSort(data, comparator);
 }
 
 #pragma mark CCArray qsortUsingCFuncComparator
 
-- (void) qsortUsingCFuncComparator:(int(*)(const void *, const void *))comparator {
+- (void) qsortUsingCFuncComparator:(cc_comparator)comparator {
 	
 	// stable c qsort is used - cost of sorting:  best n*log(n), average n*log(n)
 	//  qsort(void *, size_t, size_t, int (*)(const void *arg1, const void *arg2));
@@ -306,9 +306,9 @@
 
 #pragma mark CCArray mergesortLUsingCFuncComparator
 
-- (void) mergesortLUsingCFuncComparator:(int(*)(const void *, const void *))comparator
+- (void) mergesortLUsingCFuncComparator:(cc_comparator)comparator
 {
-    mergesortL(data, sizeof (id), comparator); 
+	cc_mergesortL(data, sizeof (id), comparator); 
 }
 
 #pragma mark CCArray insertionSort with (SEL)selector
