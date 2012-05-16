@@ -59,6 +59,7 @@ function ccp( x, y ) {
 }
 @end
 
+
 // globals
 var director = CCDirector.sharedDirector;
 var winSize = director.winSize;
@@ -67,11 +68,131 @@ var currentScene = 0;
 var callback = MenuCallback.instance;
 
 //
+// Sprite: Tap screen
+//
+
+@implementation MyLayer : CCLayer
+-(id) init
+{
+	[super init];
+	
+	this.js_proxy = '';
+	
+	return this;
+}
+
+-(BOOL) ccMouseUp:(NSEvent*)event
+{
+	var location = director.convertEventToGL( event );
+	this.js_proxy.ccMouseUp( location );
+
+	return YES;
+}
+@end
+
+function test_sprite_add_sprite() {
+	this.title = "Sprite: Click on the screen";
+	this.subtitle = "Javascript test: sprites + actions + clicks";
+}
+
+test_sprite_add_sprite.prototype.test = function( parent ) {
+	
+	var newParent = CCNode.node;
+	parent.addChild( newParent );
+	this.parent = newParent;
+
+	var layer = MyLayer.node;
+	layer.isMouseEnabled = true;
+	layer.js_proxy = this;
+	parent.addChild( layer );
+
+	this.add_new_sprite_with_coords( ccp( winSize.width/2, winSize.height/2) );
+}
+
+test_sprite_add_sprite.prototype.add_new_sprite_with_coords = function( coords ) {
+
+	var idx = Math.floor( Math.random() * 14 );
+	
+	var x = (idx%5);
+	var y = Math.floor( idx/5 );
+
+	x = x * 85;
+	y = y * 121;
+
+	var sprite = CCSprite.spriteWithFile_rect("grossini_dance_atlas.png", CGRectMake(x,y,85,121) );
+	this.parent.addChild( sprite );
+	
+	sprite.position = coords;
+	
+	var rand = Math.random();
+	
+	var action;
+
+	if( rand < 0.20 ) {
+		action = CCScaleBy.actionWithDuration_scale(3, 2 );
+	} else if(rand < 0.40) {
+		action = CCRotateBy.actionWithDuration_angle(3, 360 );
+	} else if( rand < 0.60) {
+		action = CCBlink.actionWithDuration_blinks(1, 3 );
+	} else if( rand < 0.8 ) {
+		action = CCTintBy.actionWithDuration_red_green_blue(2, 0, -255, -255 );
+	} else {
+		action = CCFadeOut.actionWithDuration( 2 );
+	}
+
+	var action_back = action.reverse;
+		
+	var seq = CCSequence.actionWithArray( [action, action_back] );
+	
+	sprite.runAction( CCRepeatForever.actionWithAction( seq ) );
+}
+
+test_sprite_add_sprite.prototype.ccMouseUp = function( location ) {
+
+	this.add_new_sprite_with_coords( location );
+	
+	return true;
+}
+
+scenes.push( new test_sprite_add_sprite() );
+
+//
+// SpriteBatch: Tap screen
+//
+
+
+function test_sprite_add_sprite_batch() {
+	this.title = "Batched Sprite: Click on the screen";
+	this.subtitle = "Javascript test: batched sprites + actions + clicks";
+}
+
+test_sprite_add_sprite_batch.prototype.test = function( parent ) {
+	
+	var newParent = CCSpriteBatchNode.batchNodeWithFile_capacity( "grossini_dance_atlas.png", 1);
+
+	parent.addChild( newParent );
+	this.parent = newParent;
+	
+	var layer = MyLayer.node;
+	layer.isMouseEnabled = true;
+	layer.js_proxy = this;	
+	parent.addChild( layer );
+
+	this.add_new_sprite_with_coords( ccp( winSize.width/2, winSize.height/2) );
+}
+
+test_sprite_add_sprite_batch.prototype.add_new_sprite_with_coords = test_sprite_add_sprite.prototype.add_new_sprite_with_coords;
+
+test_sprite_add_sprite_batch.prototype.ccMouseUp = test_sprite_add_sprite.prototype.ccMouseUp;
+
+scenes.push( new test_sprite_add_sprite_batch() );
+
+//
 // Sprite: Color + Opacity
 //
 function test_sprite_color_opacity() {
 	this.title = "Sprite: Color + Opacity";
-	this.subtitle = "Javascript test of Sprite with color and opacity";	
+	this.subtitle = "Javascript test: Sprite with color and opacity";	
 }
 
 test_sprite_color_opacity.prototype.test = function( parent ) {
@@ -135,7 +256,7 @@ scenes.push( new test_sprite_color_opacity() );
 //
 function test_spritebatch_color_opacity() {
 	this.title = "Batched Sprites: Color + Opacity";
-	this.subtitle = "Javascript test of batched sprites with color and opacity";	
+	this.subtitle = "Javascript test: Batched sprites with color and opacity";	
 }
 
 test_spritebatch_color_opacity.prototype.test = function( parent ) {
@@ -201,7 +322,7 @@ scenes.push( new test_spritebatch_color_opacity() );
 //
 function test_sprite_anchorpoint() {
 	this.title = "Sprite: Anchor Point";
-	this.subtitle = "Javascript test of Sprite with different anchor points";	
+	this.subtitle = "Javascript test: Sprite with different anchor points";	
 }
 
 test_sprite_anchorpoint.prototype.test = function( parent ) {
@@ -244,7 +365,7 @@ scenes.push( new test_sprite_anchorpoint() );
 //
 function test_spritebatch_anchorpoint() {
 	this.title = "SpriteBatch: Anchor Point";
-	this.subtitle = "Javascript test of SpriteBatch with different anchor points";	
+	this.subtitle = "Javascript test: SpriteBatch with different anchor points";	
 }
 
 test_spritebatch_anchorpoint.prototype.test = function( parent ) {
@@ -290,7 +411,7 @@ scenes.push( new test_spritebatch_anchorpoint() );
 //
 function test_sprite_anchorpoint_skew_scale() {
 	this.title = "Sprite: Anchor + Skew + Scale";
-	this.subtitle = "Javascript test of Sprite anchor point + skew + scale";	
+	this.subtitle = "Javascript test: Sprite anchor point + skew + scale";	
 }
 
 test_sprite_anchorpoint_skew_scale.prototype.test = function( parent ) {
@@ -363,7 +484,7 @@ scenes.push( new test_sprite_anchorpoint_skew_scale() );
 //
 function test_spritebatch_anchorpoint_skew_scale() {
 	this.title = "SpriteBatch: Anchor + Skew + Scale";
-	this.subtitle = "Javascript test of SpriteBatch anchor point + skew + scale";	
+	this.subtitle = "Javascript test: SpriteBatch anchor point + skew + scale";	
 }
 
 test_spritebatch_anchorpoint_skew_scale.prototype.test = function( parent ) {
