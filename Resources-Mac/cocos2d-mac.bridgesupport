@@ -71,7 +71,7 @@
 <field name='max' declared_type='NSUInteger' type64='Q' type='I'/>
 <field name='arr' declared_type='CCARRAY_ID*' type='^@'/>
 </struct>
-<struct name='ccColor3B' type='{ccColor3B=&quot;r&quot;C&quot;g&quot;C&quot;b&quot;C}'>
+<struct name='ccColor3B' type='{_ccColor3B=&quot;r&quot;C&quot;g&quot;C&quot;b&quot;C}'>
 <field name='r' declared_type='GLubyte' type='C'/>
 <field name='g' declared_type='GLubyte' type='C'/>
 <field name='b' declared_type='GLubyte' type='C'/>
@@ -82,7 +82,7 @@
 <field name='b' declared_type='GLubyte' type='C'/>
 <field name='a' declared_type='GLubyte' type='C'/>
 </struct>
-<struct name='ccColor4F' type='{_ccColor4F=&quot;r&quot;f&quot;g&quot;f&quot;b&quot;f&quot;a&quot;f}'>
+<struct name='ccColor4F' type='{ccColor4F=&quot;r&quot;f&quot;g&quot;f&quot;b&quot;f&quot;a&quot;f}'>
 <field name='r' declared_type='GLfloat' type='f'/>
 <field name='g' declared_type='GLfloat' type='f'/>
 <field name='b' declared_type='GLfloat' type='f'/>
@@ -130,16 +130,16 @@
 <field name='tl' declared_type='ccV2F_C4B_T2F' type='{_ccV2F_C4B_T2F=&quot;vertices&quot;{_ccVertex2F=&quot;x&quot;f&quot;y&quot;f}&quot;colors&quot;{_ccColor4B=&quot;r&quot;C&quot;g&quot;C&quot;b&quot;C&quot;a&quot;C}&quot;texCoords&quot;{_ccTex2F=&quot;u&quot;f&quot;v&quot;f}}'/>
 <field name='tr' declared_type='ccV2F_C4B_T2F' type='{_ccV2F_C4B_T2F=&quot;vertices&quot;{_ccVertex2F=&quot;x&quot;f&quot;y&quot;f}&quot;colors&quot;{_ccColor4B=&quot;r&quot;C&quot;g&quot;C&quot;b&quot;C&quot;a&quot;C}&quot;texCoords&quot;{_ccTex2F=&quot;u&quot;f&quot;v&quot;f}}'/>
 </struct>
-<struct name='ccV2F_C4F_T2F' type='{_ccV2F_C4F_T2F=&quot;vertices&quot;{_ccVertex2F=&quot;x&quot;f&quot;y&quot;f}&quot;colors&quot;{_ccColor4F=&quot;r&quot;f&quot;g&quot;f&quot;b&quot;f&quot;a&quot;f}&quot;texCoords&quot;{_ccTex2F=&quot;u&quot;f&quot;v&quot;f}}'>
+<struct name='ccV2F_C4F_T2F' type='{_ccV2F_C4F_T2F=&quot;vertices&quot;{_ccVertex2F=&quot;x&quot;f&quot;y&quot;f}&quot;colors&quot;{ccColor4F=&quot;r&quot;f&quot;g&quot;f&quot;b&quot;f&quot;a&quot;f}&quot;texCoords&quot;{_ccTex2F=&quot;u&quot;f&quot;v&quot;f}}'>
 <field name='vertices' declared_type='ccVertex2F' type='{_ccVertex2F=&quot;x&quot;f&quot;y&quot;f}'/>
-<field name='colors' declared_type='ccColor4F' type='{_ccColor4F=&quot;r&quot;f&quot;g&quot;f&quot;b&quot;f&quot;a&quot;f}'/>
+<field name='colors' declared_type='ccColor4F' type='{ccColor4F=&quot;r&quot;f&quot;g&quot;f&quot;b&quot;f&quot;a&quot;f}'/>
 <field name='texCoords' declared_type='ccTex2F' type='{_ccTex2F=&quot;u&quot;f&quot;v&quot;f}'/>
 </struct>
-<struct name='ccV2F_C4F_T2F_Quad' type='{_ccV2F_C4F_T2F_Quad=&quot;bl&quot;{_ccV2F_C4F_T2F=&quot;vertices&quot;{_ccVertex2F=&quot;x&quot;f&quot;y&quot;f}&quot;colors&quot;{_ccColor4F=&quot;r&quot;f&quot;g&quot;f&quot;b&quot;f&quot;a&quot;f}&quot;texCoords&quot;{_ccTex2F=&quot;u&quot;f&quot;v&quot;f}}&quot;br&quot;{_ccV2F_C4F_T2F=&quot;vertices&quot;{_ccVertex2F=&quot;x&quot;f&quot;y&quot;f}&quot;colors&quot;{_ccColor4F=&quot;r&quot;f&quot;g&quot;f&quot;b&quot;f&quot;a&quot;f}&quot;texCoords&quot;{_ccTex2F=&quot;u&quot;f&quot;v&quot;f}}&quot;tl&quot;{_ccV2F_C4F_T2F=&quot;vertices&quot;{_ccVertex2F=&quot;x&quot;f&quot;y&quot;f}&quot;colors&quot;{_ccColor4F=&quot;r&quot;f&quot;g&quot;f&quot;b&quot;f&quot;a&quot;f}&quot;texCoords&quot;{_ccTex2F=&quot;u&quot;f&quot;v&quot;f}}&quot;tr&quot;{_ccV2F_C4F_T2F=&quot;vertices&quot;{_ccVertex2F=&quot;x&quot;f&quot;y&quot;f}&quot;colors&quot;{_ccColor4F=&quot;r&quot;f&quot;g&quot;f&quot;b&quot;f&quot;a&quot;f}&quot;texCoords&quot;{_ccTex2F=&quot;u&quot;f&quot;v&quot;f}}}'>
-<field name='bl' declared_type='ccV2F_C4F_T2F' type='{_ccV2F_C4F_T2F=&quot;vertices&quot;{_ccVertex2F=&quot;x&quot;f&quot;y&quot;f}&quot;colors&quot;{_ccColor4F=&quot;r&quot;f&quot;g&quot;f&quot;b&quot;f&quot;a&quot;f}&quot;texCoords&quot;{_ccTex2F=&quot;u&quot;f&quot;v&quot;f}}'/>
-<field name='br' declared_type='ccV2F_C4F_T2F' type='{_ccV2F_C4F_T2F=&quot;vertices&quot;{_ccVertex2F=&quot;x&quot;f&quot;y&quot;f}&quot;colors&quot;{_ccColor4F=&quot;r&quot;f&quot;g&quot;f&quot;b&quot;f&quot;a&quot;f}&quot;texCoords&quot;{_ccTex2F=&quot;u&quot;f&quot;v&quot;f}}'/>
-<field name='tl' declared_type='ccV2F_C4F_T2F' type='{_ccV2F_C4F_T2F=&quot;vertices&quot;{_ccVertex2F=&quot;x&quot;f&quot;y&quot;f}&quot;colors&quot;{_ccColor4F=&quot;r&quot;f&quot;g&quot;f&quot;b&quot;f&quot;a&quot;f}&quot;texCoords&quot;{_ccTex2F=&quot;u&quot;f&quot;v&quot;f}}'/>
-<field name='tr' declared_type='ccV2F_C4F_T2F' type='{_ccV2F_C4F_T2F=&quot;vertices&quot;{_ccVertex2F=&quot;x&quot;f&quot;y&quot;f}&quot;colors&quot;{_ccColor4F=&quot;r&quot;f&quot;g&quot;f&quot;b&quot;f&quot;a&quot;f}&quot;texCoords&quot;{_ccTex2F=&quot;u&quot;f&quot;v&quot;f}}'/>
+<struct name='ccV2F_C4F_T2F_Quad' type='{_ccV2F_C4F_T2F_Quad=&quot;bl&quot;{_ccV2F_C4F_T2F=&quot;vertices&quot;{_ccVertex2F=&quot;x&quot;f&quot;y&quot;f}&quot;colors&quot;{ccColor4F=&quot;r&quot;f&quot;g&quot;f&quot;b&quot;f&quot;a&quot;f}&quot;texCoords&quot;{_ccTex2F=&quot;u&quot;f&quot;v&quot;f}}&quot;br&quot;{_ccV2F_C4F_T2F=&quot;vertices&quot;{_ccVertex2F=&quot;x&quot;f&quot;y&quot;f}&quot;colors&quot;{ccColor4F=&quot;r&quot;f&quot;g&quot;f&quot;b&quot;f&quot;a&quot;f}&quot;texCoords&quot;{_ccTex2F=&quot;u&quot;f&quot;v&quot;f}}&quot;tl&quot;{_ccV2F_C4F_T2F=&quot;vertices&quot;{_ccVertex2F=&quot;x&quot;f&quot;y&quot;f}&quot;colors&quot;{ccColor4F=&quot;r&quot;f&quot;g&quot;f&quot;b&quot;f&quot;a&quot;f}&quot;texCoords&quot;{_ccTex2F=&quot;u&quot;f&quot;v&quot;f}}&quot;tr&quot;{_ccV2F_C4F_T2F=&quot;vertices&quot;{_ccVertex2F=&quot;x&quot;f&quot;y&quot;f}&quot;colors&quot;{ccColor4F=&quot;r&quot;f&quot;g&quot;f&quot;b&quot;f&quot;a&quot;f}&quot;texCoords&quot;{_ccTex2F=&quot;u&quot;f&quot;v&quot;f}}}'>
+<field name='bl' declared_type='ccV2F_C4F_T2F' type='{_ccV2F_C4F_T2F=&quot;vertices&quot;{_ccVertex2F=&quot;x&quot;f&quot;y&quot;f}&quot;colors&quot;{ccColor4F=&quot;r&quot;f&quot;g&quot;f&quot;b&quot;f&quot;a&quot;f}&quot;texCoords&quot;{_ccTex2F=&quot;u&quot;f&quot;v&quot;f}}'/>
+<field name='br' declared_type='ccV2F_C4F_T2F' type='{_ccV2F_C4F_T2F=&quot;vertices&quot;{_ccVertex2F=&quot;x&quot;f&quot;y&quot;f}&quot;colors&quot;{ccColor4F=&quot;r&quot;f&quot;g&quot;f&quot;b&quot;f&quot;a&quot;f}&quot;texCoords&quot;{_ccTex2F=&quot;u&quot;f&quot;v&quot;f}}'/>
+<field name='tl' declared_type='ccV2F_C4F_T2F' type='{_ccV2F_C4F_T2F=&quot;vertices&quot;{_ccVertex2F=&quot;x&quot;f&quot;y&quot;f}&quot;colors&quot;{ccColor4F=&quot;r&quot;f&quot;g&quot;f&quot;b&quot;f&quot;a&quot;f}&quot;texCoords&quot;{_ccTex2F=&quot;u&quot;f&quot;v&quot;f}}'/>
+<field name='tr' declared_type='ccV2F_C4F_T2F' type='{_ccV2F_C4F_T2F=&quot;vertices&quot;{_ccVertex2F=&quot;x&quot;f&quot;y&quot;f}&quot;colors&quot;{ccColor4F=&quot;r&quot;f&quot;g&quot;f&quot;b&quot;f&quot;a&quot;f}&quot;texCoords&quot;{_ccTex2F=&quot;u&quot;f&quot;v&quot;f}}'/>
 </struct>
 <struct name='ccV3F_C4B_T2F' type='{_ccV3F_C4B_T2F=&quot;vertices&quot;{_ccVertex3F=&quot;x&quot;f&quot;y&quot;f&quot;z&quot;f}&quot;colors&quot;{_ccColor4B=&quot;r&quot;C&quot;g&quot;C&quot;b&quot;C&quot;a&quot;C}&quot;texCoords&quot;{_ccTex2F=&quot;u&quot;f&quot;v&quot;f}}'>
 <field name='vertices' declared_type='ccVertex3F' type='{_ccVertex3F=&quot;x&quot;f&quot;y&quot;f&quot;z&quot;f}'/>
@@ -152,16 +152,16 @@
 <field name='tr' declared_type='ccV3F_C4B_T2F' type='{_ccV3F_C4B_T2F=&quot;vertices&quot;{_ccVertex3F=&quot;x&quot;f&quot;y&quot;f&quot;z&quot;f}&quot;colors&quot;{_ccColor4B=&quot;r&quot;C&quot;g&quot;C&quot;b&quot;C&quot;a&quot;C}&quot;texCoords&quot;{_ccTex2F=&quot;u&quot;f&quot;v&quot;f}}'/>
 <field name='br' declared_type='ccV3F_C4B_T2F' type='{_ccV3F_C4B_T2F=&quot;vertices&quot;{_ccVertex3F=&quot;x&quot;f&quot;y&quot;f&quot;z&quot;f}&quot;colors&quot;{_ccColor4B=&quot;r&quot;C&quot;g&quot;C&quot;b&quot;C&quot;a&quot;C}&quot;texCoords&quot;{_ccTex2F=&quot;u&quot;f&quot;v&quot;f}}'/>
 </struct>
-<struct name='ccV3F_C4F_T2F' type='{_ccV3F_C4F_T2F=&quot;vertices&quot;{_ccVertex3F=&quot;x&quot;f&quot;y&quot;f&quot;z&quot;f}&quot;colors&quot;{_ccColor4F=&quot;r&quot;f&quot;g&quot;f&quot;b&quot;f&quot;a&quot;f}&quot;texCoords&quot;{_ccTex2F=&quot;u&quot;f&quot;v&quot;f}}'>
+<struct name='ccV3F_C4F_T2F' type='{_ccV3F_C4F_T2F=&quot;vertices&quot;{_ccVertex3F=&quot;x&quot;f&quot;y&quot;f&quot;z&quot;f}&quot;colors&quot;{ccColor4F=&quot;r&quot;f&quot;g&quot;f&quot;b&quot;f&quot;a&quot;f}&quot;texCoords&quot;{_ccTex2F=&quot;u&quot;f&quot;v&quot;f}}'>
 <field name='vertices' declared_type='ccVertex3F' type='{_ccVertex3F=&quot;x&quot;f&quot;y&quot;f&quot;z&quot;f}'/>
-<field name='colors' declared_type='ccColor4F' type='{_ccColor4F=&quot;r&quot;f&quot;g&quot;f&quot;b&quot;f&quot;a&quot;f}'/>
+<field name='colors' declared_type='ccColor4F' type='{ccColor4F=&quot;r&quot;f&quot;g&quot;f&quot;b&quot;f&quot;a&quot;f}'/>
 <field name='texCoords' declared_type='ccTex2F' type='{_ccTex2F=&quot;u&quot;f&quot;v&quot;f}'/>
 </struct>
-<struct name='ccV3F_C4F_T2F_Quad' type='{_ccV3F_C4F_T2F_Quad=&quot;tl&quot;{_ccV3F_C4F_T2F=&quot;vertices&quot;{_ccVertex3F=&quot;x&quot;f&quot;y&quot;f&quot;z&quot;f}&quot;colors&quot;{_ccColor4F=&quot;r&quot;f&quot;g&quot;f&quot;b&quot;f&quot;a&quot;f}&quot;texCoords&quot;{_ccTex2F=&quot;u&quot;f&quot;v&quot;f}}&quot;bl&quot;{_ccV3F_C4F_T2F=&quot;vertices&quot;{_ccVertex3F=&quot;x&quot;f&quot;y&quot;f&quot;z&quot;f}&quot;colors&quot;{_ccColor4F=&quot;r&quot;f&quot;g&quot;f&quot;b&quot;f&quot;a&quot;f}&quot;texCoords&quot;{_ccTex2F=&quot;u&quot;f&quot;v&quot;f}}&quot;tr&quot;{_ccV3F_C4F_T2F=&quot;vertices&quot;{_ccVertex3F=&quot;x&quot;f&quot;y&quot;f&quot;z&quot;f}&quot;colors&quot;{_ccColor4F=&quot;r&quot;f&quot;g&quot;f&quot;b&quot;f&quot;a&quot;f}&quot;texCoords&quot;{_ccTex2F=&quot;u&quot;f&quot;v&quot;f}}&quot;br&quot;{_ccV3F_C4F_T2F=&quot;vertices&quot;{_ccVertex3F=&quot;x&quot;f&quot;y&quot;f&quot;z&quot;f}&quot;colors&quot;{_ccColor4F=&quot;r&quot;f&quot;g&quot;f&quot;b&quot;f&quot;a&quot;f}&quot;texCoords&quot;{_ccTex2F=&quot;u&quot;f&quot;v&quot;f}}}'>
-<field name='tl' declared_type='ccV3F_C4F_T2F' type='{_ccV3F_C4F_T2F=&quot;vertices&quot;{_ccVertex3F=&quot;x&quot;f&quot;y&quot;f&quot;z&quot;f}&quot;colors&quot;{_ccColor4F=&quot;r&quot;f&quot;g&quot;f&quot;b&quot;f&quot;a&quot;f}&quot;texCoords&quot;{_ccTex2F=&quot;u&quot;f&quot;v&quot;f}}'/>
-<field name='bl' declared_type='ccV3F_C4F_T2F' type='{_ccV3F_C4F_T2F=&quot;vertices&quot;{_ccVertex3F=&quot;x&quot;f&quot;y&quot;f&quot;z&quot;f}&quot;colors&quot;{_ccColor4F=&quot;r&quot;f&quot;g&quot;f&quot;b&quot;f&quot;a&quot;f}&quot;texCoords&quot;{_ccTex2F=&quot;u&quot;f&quot;v&quot;f}}'/>
-<field name='tr' declared_type='ccV3F_C4F_T2F' type='{_ccV3F_C4F_T2F=&quot;vertices&quot;{_ccVertex3F=&quot;x&quot;f&quot;y&quot;f&quot;z&quot;f}&quot;colors&quot;{_ccColor4F=&quot;r&quot;f&quot;g&quot;f&quot;b&quot;f&quot;a&quot;f}&quot;texCoords&quot;{_ccTex2F=&quot;u&quot;f&quot;v&quot;f}}'/>
-<field name='br' declared_type='ccV3F_C4F_T2F' type='{_ccV3F_C4F_T2F=&quot;vertices&quot;{_ccVertex3F=&quot;x&quot;f&quot;y&quot;f&quot;z&quot;f}&quot;colors&quot;{_ccColor4F=&quot;r&quot;f&quot;g&quot;f&quot;b&quot;f&quot;a&quot;f}&quot;texCoords&quot;{_ccTex2F=&quot;u&quot;f&quot;v&quot;f}}'/>
+<struct name='ccV3F_C4F_T2F_Quad' type='{_ccV3F_C4F_T2F_Quad=&quot;tl&quot;{_ccV3F_C4F_T2F=&quot;vertices&quot;{_ccVertex3F=&quot;x&quot;f&quot;y&quot;f&quot;z&quot;f}&quot;colors&quot;{ccColor4F=&quot;r&quot;f&quot;g&quot;f&quot;b&quot;f&quot;a&quot;f}&quot;texCoords&quot;{_ccTex2F=&quot;u&quot;f&quot;v&quot;f}}&quot;bl&quot;{_ccV3F_C4F_T2F=&quot;vertices&quot;{_ccVertex3F=&quot;x&quot;f&quot;y&quot;f&quot;z&quot;f}&quot;colors&quot;{ccColor4F=&quot;r&quot;f&quot;g&quot;f&quot;b&quot;f&quot;a&quot;f}&quot;texCoords&quot;{_ccTex2F=&quot;u&quot;f&quot;v&quot;f}}&quot;tr&quot;{_ccV3F_C4F_T2F=&quot;vertices&quot;{_ccVertex3F=&quot;x&quot;f&quot;y&quot;f&quot;z&quot;f}&quot;colors&quot;{ccColor4F=&quot;r&quot;f&quot;g&quot;f&quot;b&quot;f&quot;a&quot;f}&quot;texCoords&quot;{_ccTex2F=&quot;u&quot;f&quot;v&quot;f}}&quot;br&quot;{_ccV3F_C4F_T2F=&quot;vertices&quot;{_ccVertex3F=&quot;x&quot;f&quot;y&quot;f&quot;z&quot;f}&quot;colors&quot;{ccColor4F=&quot;r&quot;f&quot;g&quot;f&quot;b&quot;f&quot;a&quot;f}&quot;texCoords&quot;{_ccTex2F=&quot;u&quot;f&quot;v&quot;f}}}'>
+<field name='tl' declared_type='ccV3F_C4F_T2F' type='{_ccV3F_C4F_T2F=&quot;vertices&quot;{_ccVertex3F=&quot;x&quot;f&quot;y&quot;f&quot;z&quot;f}&quot;colors&quot;{ccColor4F=&quot;r&quot;f&quot;g&quot;f&quot;b&quot;f&quot;a&quot;f}&quot;texCoords&quot;{_ccTex2F=&quot;u&quot;f&quot;v&quot;f}}'/>
+<field name='bl' declared_type='ccV3F_C4F_T2F' type='{_ccV3F_C4F_T2F=&quot;vertices&quot;{_ccVertex3F=&quot;x&quot;f&quot;y&quot;f&quot;z&quot;f}&quot;colors&quot;{ccColor4F=&quot;r&quot;f&quot;g&quot;f&quot;b&quot;f&quot;a&quot;f}&quot;texCoords&quot;{_ccTex2F=&quot;u&quot;f&quot;v&quot;f}}'/>
+<field name='tr' declared_type='ccV3F_C4F_T2F' type='{_ccV3F_C4F_T2F=&quot;vertices&quot;{_ccVertex3F=&quot;x&quot;f&quot;y&quot;f&quot;z&quot;f}&quot;colors&quot;{ccColor4F=&quot;r&quot;f&quot;g&quot;f&quot;b&quot;f&quot;a&quot;f}&quot;texCoords&quot;{_ccTex2F=&quot;u&quot;f&quot;v&quot;f}}'/>
+<field name='br' declared_type='ccV3F_C4F_T2F' type='{_ccV3F_C4F_T2F=&quot;vertices&quot;{_ccVertex3F=&quot;x&quot;f&quot;y&quot;f&quot;z&quot;f}&quot;colors&quot;{ccColor4F=&quot;r&quot;f&quot;g&quot;f&quot;b&quot;f&quot;a&quot;f}&quot;texCoords&quot;{_ccTex2F=&quot;u&quot;f&quot;v&quot;f}}'/>
 </struct>
 <struct name='ccVertex2F' type='{_ccVertex2F=&quot;x&quot;f&quot;y&quot;f}'>
 <field name='x' declared_type='GLfloat' type='f'/>
@@ -172,11 +172,11 @@
 <field name='y' declared_type='GLfloat' type='f'/>
 <field name='z' declared_type='GLfloat' type='f'/>
 </struct>
-<struct name='sCCParticle' type64='{sCCParticle=&quot;pos&quot;{CGPoint=&quot;x&quot;d&quot;y&quot;d}&quot;startPos&quot;{CGPoint=&quot;x&quot;d&quot;y&quot;d}&quot;color&quot;{_ccColor4F=&quot;r&quot;f&quot;g&quot;f&quot;b&quot;f&quot;a&quot;f}&quot;deltaColor&quot;{_ccColor4F=&quot;r&quot;f&quot;g&quot;f&quot;b&quot;f&quot;a&quot;f}&quot;size&quot;f&quot;deltaSize&quot;f&quot;rotation&quot;f&quot;deltaRotation&quot;f&quot;timeToLive&quot;f&quot;atlasIndex&quot;Q&quot;mode&quot;(?=&quot;A&quot;{?=&quot;dir&quot;{CGPoint=&quot;x&quot;d&quot;y&quot;d}&quot;radialAccel&quot;f&quot;tangentialAccel&quot;f}&quot;B&quot;{?=&quot;angle&quot;f&quot;degreesPerSecond&quot;f&quot;radius&quot;f&quot;deltaRadius&quot;f})}' type='{sCCParticle=&quot;pos&quot;{CGPoint=&quot;x&quot;f&quot;y&quot;f}&quot;startPos&quot;{CGPoint=&quot;x&quot;f&quot;y&quot;f}&quot;color&quot;{_ccColor4F=&quot;r&quot;f&quot;g&quot;f&quot;b&quot;f&quot;a&quot;f}&quot;deltaColor&quot;{_ccColor4F=&quot;r&quot;f&quot;g&quot;f&quot;b&quot;f&quot;a&quot;f}&quot;size&quot;f&quot;deltaSize&quot;f&quot;rotation&quot;f&quot;deltaRotation&quot;f&quot;timeToLive&quot;f&quot;atlasIndex&quot;I&quot;mode&quot;(?=&quot;A&quot;{?=&quot;dir&quot;{CGPoint=&quot;x&quot;f&quot;y&quot;f}&quot;radialAccel&quot;f&quot;tangentialAccel&quot;f}&quot;B&quot;{?=&quot;angle&quot;f&quot;degreesPerSecond&quot;f&quot;radius&quot;f&quot;deltaRadius&quot;f})}'>
+<struct name='sCCParticle' type64='{sCCParticle=&quot;pos&quot;{CGPoint=&quot;x&quot;d&quot;y&quot;d}&quot;startPos&quot;{CGPoint=&quot;x&quot;d&quot;y&quot;d}&quot;color&quot;{ccColor4F=&quot;r&quot;f&quot;g&quot;f&quot;b&quot;f&quot;a&quot;f}&quot;deltaColor&quot;{ccColor4F=&quot;r&quot;f&quot;g&quot;f&quot;b&quot;f&quot;a&quot;f}&quot;size&quot;f&quot;deltaSize&quot;f&quot;rotation&quot;f&quot;deltaRotation&quot;f&quot;timeToLive&quot;f&quot;atlasIndex&quot;Q&quot;mode&quot;(?=&quot;A&quot;{?=&quot;dir&quot;{CGPoint=&quot;x&quot;d&quot;y&quot;d}&quot;radialAccel&quot;f&quot;tangentialAccel&quot;f}&quot;B&quot;{?=&quot;angle&quot;f&quot;degreesPerSecond&quot;f&quot;radius&quot;f&quot;deltaRadius&quot;f})}' type='{sCCParticle=&quot;pos&quot;{CGPoint=&quot;x&quot;f&quot;y&quot;f}&quot;startPos&quot;{CGPoint=&quot;x&quot;f&quot;y&quot;f}&quot;color&quot;{ccColor4F=&quot;r&quot;f&quot;g&quot;f&quot;b&quot;f&quot;a&quot;f}&quot;deltaColor&quot;{ccColor4F=&quot;r&quot;f&quot;g&quot;f&quot;b&quot;f&quot;a&quot;f}&quot;size&quot;f&quot;deltaSize&quot;f&quot;rotation&quot;f&quot;deltaRotation&quot;f&quot;timeToLive&quot;f&quot;atlasIndex&quot;I&quot;mode&quot;(?=&quot;A&quot;{?=&quot;dir&quot;{CGPoint=&quot;x&quot;f&quot;y&quot;f}&quot;radialAccel&quot;f&quot;tangentialAccel&quot;f}&quot;B&quot;{?=&quot;angle&quot;f&quot;degreesPerSecond&quot;f&quot;radius&quot;f&quot;deltaRadius&quot;f})}'>
 <field name='pos' declared_type='CGPoint' type64='{CGPoint=&quot;x&quot;d&quot;y&quot;d}' type='{CGPoint=&quot;x&quot;f&quot;y&quot;f}'/>
 <field name='startPos' declared_type='CGPoint' type64='{CGPoint=&quot;x&quot;d&quot;y&quot;d}' type='{CGPoint=&quot;x&quot;f&quot;y&quot;f}'/>
-<field name='color' declared_type='ccColor4F' type='{_ccColor4F=&quot;r&quot;f&quot;g&quot;f&quot;b&quot;f&quot;a&quot;f}'/>
-<field name='deltaColor' declared_type='ccColor4F' type='{_ccColor4F=&quot;r&quot;f&quot;g&quot;f&quot;b&quot;f&quot;a&quot;f}'/>
+<field name='color' declared_type='ccColor4F' type='{ccColor4F=&quot;r&quot;f&quot;g&quot;f&quot;b&quot;f&quot;a&quot;f}'/>
+<field name='deltaColor' declared_type='ccColor4F' type='{ccColor4F=&quot;r&quot;f&quot;g&quot;f&quot;b&quot;f&quot;a&quot;f}'/>
 <field name='size' declared_type='float' type='f'/>
 <field name='deltaSize' declared_type='float' type='f'/>
 <field name='rotation' declared_type='float' type='f'/>
@@ -194,11 +194,11 @@
 <field name='imageData' declared_type='unsigned char*' type='*'/>
 <field name='flipped' declared_type='int' type='i'/>
 </struct>
-<struct name='tCCParticle' type64='{sCCParticle=&quot;pos&quot;{CGPoint=&quot;x&quot;d&quot;y&quot;d}&quot;startPos&quot;{CGPoint=&quot;x&quot;d&quot;y&quot;d}&quot;color&quot;{_ccColor4F=&quot;r&quot;f&quot;g&quot;f&quot;b&quot;f&quot;a&quot;f}&quot;deltaColor&quot;{_ccColor4F=&quot;r&quot;f&quot;g&quot;f&quot;b&quot;f&quot;a&quot;f}&quot;size&quot;f&quot;deltaSize&quot;f&quot;rotation&quot;f&quot;deltaRotation&quot;f&quot;timeToLive&quot;f&quot;atlasIndex&quot;Q&quot;mode&quot;(?=&quot;A&quot;{?=&quot;dir&quot;{CGPoint=&quot;x&quot;d&quot;y&quot;d}&quot;radialAccel&quot;f&quot;tangentialAccel&quot;f}&quot;B&quot;{?=&quot;angle&quot;f&quot;degreesPerSecond&quot;f&quot;radius&quot;f&quot;deltaRadius&quot;f})}' type='{sCCParticle=&quot;pos&quot;{CGPoint=&quot;x&quot;f&quot;y&quot;f}&quot;startPos&quot;{CGPoint=&quot;x&quot;f&quot;y&quot;f}&quot;color&quot;{_ccColor4F=&quot;r&quot;f&quot;g&quot;f&quot;b&quot;f&quot;a&quot;f}&quot;deltaColor&quot;{_ccColor4F=&quot;r&quot;f&quot;g&quot;f&quot;b&quot;f&quot;a&quot;f}&quot;size&quot;f&quot;deltaSize&quot;f&quot;rotation&quot;f&quot;deltaRotation&quot;f&quot;timeToLive&quot;f&quot;atlasIndex&quot;I&quot;mode&quot;(?=&quot;A&quot;{?=&quot;dir&quot;{CGPoint=&quot;x&quot;f&quot;y&quot;f}&quot;radialAccel&quot;f&quot;tangentialAccel&quot;f}&quot;B&quot;{?=&quot;angle&quot;f&quot;degreesPerSecond&quot;f&quot;radius&quot;f&quot;deltaRadius&quot;f})}'>
+<struct name='tCCParticle' type64='{sCCParticle=&quot;pos&quot;{CGPoint=&quot;x&quot;d&quot;y&quot;d}&quot;startPos&quot;{CGPoint=&quot;x&quot;d&quot;y&quot;d}&quot;color&quot;{ccColor4F=&quot;r&quot;f&quot;g&quot;f&quot;b&quot;f&quot;a&quot;f}&quot;deltaColor&quot;{ccColor4F=&quot;r&quot;f&quot;g&quot;f&quot;b&quot;f&quot;a&quot;f}&quot;size&quot;f&quot;deltaSize&quot;f&quot;rotation&quot;f&quot;deltaRotation&quot;f&quot;timeToLive&quot;f&quot;atlasIndex&quot;Q&quot;mode&quot;(?=&quot;A&quot;{?=&quot;dir&quot;{CGPoint=&quot;x&quot;d&quot;y&quot;d}&quot;radialAccel&quot;f&quot;tangentialAccel&quot;f}&quot;B&quot;{?=&quot;angle&quot;f&quot;degreesPerSecond&quot;f&quot;radius&quot;f&quot;deltaRadius&quot;f})}' type='{sCCParticle=&quot;pos&quot;{CGPoint=&quot;x&quot;f&quot;y&quot;f}&quot;startPos&quot;{CGPoint=&quot;x&quot;f&quot;y&quot;f}&quot;color&quot;{ccColor4F=&quot;r&quot;f&quot;g&quot;f&quot;b&quot;f&quot;a&quot;f}&quot;deltaColor&quot;{ccColor4F=&quot;r&quot;f&quot;g&quot;f&quot;b&quot;f&quot;a&quot;f}&quot;size&quot;f&quot;deltaSize&quot;f&quot;rotation&quot;f&quot;deltaRotation&quot;f&quot;timeToLive&quot;f&quot;atlasIndex&quot;I&quot;mode&quot;(?=&quot;A&quot;{?=&quot;dir&quot;{CGPoint=&quot;x&quot;f&quot;y&quot;f}&quot;radialAccel&quot;f&quot;tangentialAccel&quot;f}&quot;B&quot;{?=&quot;angle&quot;f&quot;degreesPerSecond&quot;f&quot;radius&quot;f&quot;deltaRadius&quot;f})}'>
 <field name='pos' declared_type='CGPoint' type64='{CGPoint=&quot;x&quot;d&quot;y&quot;d}' type='{CGPoint=&quot;x&quot;f&quot;y&quot;f}'/>
 <field name='startPos' declared_type='CGPoint' type64='{CGPoint=&quot;x&quot;d&quot;y&quot;d}' type='{CGPoint=&quot;x&quot;f&quot;y&quot;f}'/>
-<field name='color' declared_type='ccColor4F' type='{_ccColor4F=&quot;r&quot;f&quot;g&quot;f&quot;b&quot;f&quot;a&quot;f}'/>
-<field name='deltaColor' declared_type='ccColor4F' type='{_ccColor4F=&quot;r&quot;f&quot;g&quot;f&quot;b&quot;f&quot;a&quot;f}'/>
+<field name='color' declared_type='ccColor4F' type='{ccColor4F=&quot;r&quot;f&quot;g&quot;f&quot;b&quot;f&quot;a&quot;f}'/>
+<field name='deltaColor' declared_type='ccColor4F' type='{ccColor4F=&quot;r&quot;f&quot;g&quot;f&quot;b&quot;f&quot;a&quot;f}'/>
 <field name='size' declared_type='float' type='f'/>
 <field name='deltaSize' declared_type='float' type='f'/>
 <field name='rotation' declared_type='float' type='f'/>
@@ -225,12 +225,12 @@
 <field name='imageData' declared_type='unsigned char*' type='*'/>
 <field name='flipped' declared_type='int' type='i'/>
 </struct>
-<constant name='ccBLACK' declared_type='ccColor3B' const='true' type='{ccColor3B=CCC}'/>
-<constant name='ccBLUE' declared_type='ccColor3B' const='true' type='{ccColor3B=CCC}'/>
-<constant name='ccGRAY' declared_type='ccColor3B' const='true' type='{ccColor3B=CCC}'/>
-<constant name='ccGREEN' declared_type='ccColor3B' const='true' type='{ccColor3B=CCC}'/>
-<constant name='ccMAGENTA' declared_type='ccColor3B' const='true' type='{ccColor3B=CCC}'/>
-<constant name='ccORANGE' declared_type='ccColor3B' const='true' type='{ccColor3B=CCC}'/>
+<constant name='ccBLACK' declared_type='ccColor3B' const='true' type='{_ccColor3B=CCC}'/>
+<constant name='ccBLUE' declared_type='ccColor3B' const='true' type='{_ccColor3B=CCC}'/>
+<constant name='ccGRAY' declared_type='ccColor3B' const='true' type='{_ccColor3B=CCC}'/>
+<constant name='ccGREEN' declared_type='ccColor3B' const='true' type='{_ccColor3B=CCC}'/>
+<constant name='ccMAGENTA' declared_type='ccColor3B' const='true' type='{_ccColor3B=CCC}'/>
+<constant name='ccORANGE' declared_type='ccColor3B' const='true' type='{_ccColor3B=CCC}'/>
 <constant name='ccPositionColor_frag' declared_type='GLchar*' const='true' type='*'/>
 <constant name='ccPositionColor_vert' declared_type='GLchar*' const='true' type='*'/>
 <constant name='ccPositionTextureA8Color_frag' declared_type='GLchar*' const='true' type='*'/>
@@ -244,9 +244,9 @@
 <constant name='ccPositionTexture_vert' declared_type='GLchar*' const='true' type='*'/>
 <constant name='ccPosition_uColor_frag' declared_type='GLchar*' const='true' type='*'/>
 <constant name='ccPosition_uColor_vert' declared_type='GLchar*' const='true' type='*'/>
-<constant name='ccRED' declared_type='ccColor3B' const='true' type='{ccColor3B=CCC}'/>
-<constant name='ccWHITE' declared_type='ccColor3B' const='true' type='{ccColor3B=CCC}'/>
-<constant name='ccYELLOW' declared_type='ccColor3B' const='true' type='{ccColor3B=CCC}'/>
+<constant name='ccRED' declared_type='ccColor3B' const='true' type='{_ccColor3B=CCC}'/>
+<constant name='ccWHITE' declared_type='ccColor3B' const='true' type='{_ccColor3B=CCC}'/>
+<constant name='ccYELLOW' declared_type='ccColor3B' const='true' type='{_ccColor3B=CCC}'/>
 <constant name='kCCProfilerCategoryBatchSprite' declared_type='BOOL' type='B'/>
 <constant name='kCCProfilerCategoryParticles' declared_type='BOOL' type='B'/>
 <constant name='kCCProfilerCategorySprite' declared_type='BOOL' type='B'/>
@@ -453,198 +453,198 @@
 <arg name='out' declared_type='unsigned char**' type='^*'/>
 <retval declared_type='int' type='i'/>
 </function>
-<function name='ccArrayAppendArray' inline='true'>
+<function name='ccArrayAppendArray'>
 <arg name='arr' declared_type='ccArray*' type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
 <arg name='plusArr' declared_type='ccArray*' type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
 <retval declared_type='void' type='v'/>
 </function>
-<function name='ccArrayAppendArrayWithResize' inline='true'>
+<function name='ccArrayAppendArrayWithResize'>
 <arg name='arr' declared_type='ccArray*' type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
 <arg name='plusArr' declared_type='ccArray*' type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
 <retval declared_type='void' type='v'/>
 </function>
-<function name='ccArrayAppendObject' inline='true'>
+<function name='ccArrayAppendObject'>
 <arg name='arr' declared_type='ccArray*' type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
 <arg name='object' declared_type='id' type='@'/>
 <retval declared_type='void' type='v'/>
 </function>
-<function name='ccArrayAppendObjectWithResize' inline='true'>
+<function name='ccArrayAppendObjectWithResize'>
 <arg name='arr' declared_type='ccArray*' type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
 <arg name='object' declared_type='id' type='@'/>
 <retval declared_type='void' type='v'/>
 </function>
-<function name='ccArrayContainsObject' inline='true'>
+<function name='ccArrayContainsObject'>
 <arg name='arr' declared_type='ccArray*' type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
 <arg name='object' declared_type='id' type='@'/>
 <retval declared_type='BOOL' type='B'/>
 </function>
-<function name='ccArrayDoubleCapacity' inline='true'>
+<function name='ccArrayDoubleCapacity'>
 <arg name='arr' declared_type='ccArray*' type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
 <retval declared_type='void' type='v'/>
 </function>
-<function name='ccArrayEnsureExtraCapacity' inline='true'>
+<function name='ccArrayEnsureExtraCapacity'>
 <arg name='arr' declared_type='ccArray*' type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
 <arg name='extra' declared_type='NSUInteger' type64='Q' type='I'/>
 <retval declared_type='void' type='v'/>
 </function>
-<function name='ccArrayFastRemoveObject' inline='true'>
+<function name='ccArrayFastRemoveObject'>
 <arg name='arr' declared_type='ccArray*' type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
 <arg name='object' declared_type='id' type='@'/>
 <retval declared_type='void' type='v'/>
 </function>
-<function name='ccArrayFastRemoveObjectAtIndex' inline='true'>
+<function name='ccArrayFastRemoveObjectAtIndex'>
 <arg name='arr' declared_type='ccArray*' type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
 <arg name='index' declared_type='NSUInteger' type64='Q' type='I'/>
 <retval declared_type='void' type='v'/>
 </function>
-<function name='ccArrayFree' inline='true'>
+<function name='ccArrayFree'>
 <arg name='arr' declared_type='ccArray*' type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
 <retval declared_type='void' type='v'/>
 </function>
-<function name='ccArrayFullRemoveArray' inline='true'>
+<function name='ccArrayFullRemoveArray'>
 <arg name='arr' declared_type='ccArray*' type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
 <arg name='minusArr' declared_type='ccArray*' type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
 <retval declared_type='void' type='v'/>
 </function>
-<function name='ccArrayGetIndexOfObject' inline='true'>
+<function name='ccArrayGetIndexOfObject'>
 <arg name='arr' declared_type='ccArray*' type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
 <arg name='object' declared_type='id' type='@'/>
 <retval declared_type='NSUInteger' type64='Q' type='I'/>
 </function>
-<function name='ccArrayInsertObjectAtIndex' inline='true'>
+<function name='ccArrayInsertObjectAtIndex'>
 <arg name='arr' declared_type='ccArray*' type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
 <arg name='object' declared_type='id' type='@'/>
 <arg name='index' declared_type='NSUInteger' type64='Q' type='I'/>
 <retval declared_type='void' type='v'/>
 </function>
-<function name='ccArrayMakeObjectPerformSelectorWithArrayObjects' inline='true'>
+<function name='ccArrayMakeObjectPerformSelectorWithArrayObjects'>
 <arg name='arr' declared_type='ccArray*' type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
 <arg name='sel' declared_type='SEL' type=':'/>
 <arg name='object' declared_type='id' type='@'/>
 <retval declared_type='void' type='v'/>
 </function>
-<function name='ccArrayMakeObjectsPerformSelector' inline='true'>
+<function name='ccArrayMakeObjectsPerformSelector'>
 <arg name='arr' declared_type='ccArray*' type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
 <arg name='sel' declared_type='SEL' type=':'/>
 <retval declared_type='void' type='v'/>
 </function>
-<function name='ccArrayMakeObjectsPerformSelectorWithObject' inline='true'>
+<function name='ccArrayMakeObjectsPerformSelectorWithObject'>
 <arg name='arr' declared_type='ccArray*' type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
 <arg name='sel' declared_type='SEL' type=':'/>
 <arg name='object' declared_type='id' type='@'/>
 <retval declared_type='void' type='v'/>
 </function>
-<function name='ccArrayNew' inline='true'>
+<function name='ccArrayNew'>
 <arg name='capacity' declared_type='NSUInteger' type64='Q' type='I'/>
 <retval declared_type='ccArray*' type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
 </function>
-<function name='ccArrayRemoveAllObjects' inline='true'>
+<function name='ccArrayRemoveAllObjects'>
 <arg name='arr' declared_type='ccArray*' type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
 <retval declared_type='void' type='v'/>
 </function>
-<function name='ccArrayRemoveArray' inline='true'>
+<function name='ccArrayRemoveArray'>
 <arg name='arr' declared_type='ccArray*' type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
 <arg name='minusArr' declared_type='ccArray*' type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
 <retval declared_type='void' type='v'/>
 </function>
-<function name='ccArrayRemoveObject' inline='true'>
+<function name='ccArrayRemoveObject'>
 <arg name='arr' declared_type='ccArray*' type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
 <arg name='object' declared_type='id' type='@'/>
 <retval declared_type='void' type='v'/>
 </function>
-<function name='ccArrayRemoveObjectAtIndex' inline='true'>
+<function name='ccArrayRemoveObjectAtIndex'>
 <arg name='arr' declared_type='ccArray*' type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
 <arg name='index' declared_type='NSUInteger' type64='Q' type='I'/>
 <retval declared_type='void' type='v'/>
 </function>
-<function name='ccArrayShrink' inline='true'>
+<function name='ccArrayShrink'>
 <arg name='arr' declared_type='ccArray*' type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
 <retval declared_type='void' type='v'/>
 </function>
-<function name='ccArraySwapObjectsAtIndexes' inline='true'>
+<function name='ccArraySwapObjectsAtIndexes'>
 <arg name='arr' declared_type='ccArray*' type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
 <arg name='index1' declared_type='NSUInteger' type64='Q' type='I'/>
 <arg name='index2' declared_type='NSUInteger' type64='Q' type='I'/>
 <retval declared_type='void' type='v'/>
 </function>
-<function name='ccCArrayAppendArray' inline='true'>
+<function name='ccCArrayAppendArray'>
 <arg name='arr' declared_type='ccCArray*' type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
 <arg name='plusArr' declared_type='ccCArray*' type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
 <retval declared_type='void' type='v'/>
 </function>
-<function name='ccCArrayAppendArrayWithResize' inline='true'>
+<function name='ccCArrayAppendArrayWithResize'>
 <arg name='arr' declared_type='ccCArray*' type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
 <arg name='plusArr' declared_type='ccCArray*' type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
 <retval declared_type='void' type='v'/>
 </function>
-<function name='ccCArrayAppendValue' inline='true'>
+<function name='ccCArrayAppendValue'>
 <arg name='arr' declared_type='ccCArray*' type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
 <arg name='value' declared_type='CCARRAY_ID' type='@'/>
 <retval declared_type='void' type='v'/>
 </function>
-<function name='ccCArrayAppendValueWithResize' inline='true'>
+<function name='ccCArrayAppendValueWithResize'>
 <arg name='arr' declared_type='ccCArray*' type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
 <arg name='value' declared_type='CCARRAY_ID' type='@'/>
 <retval declared_type='void' type='v'/>
 </function>
-<function name='ccCArrayContainsValue' inline='true'>
+<function name='ccCArrayContainsValue'>
 <arg name='arr' declared_type='ccCArray*' type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
 <arg name='value' declared_type='CCARRAY_ID' type='@'/>
 <retval declared_type='BOOL' type='B'/>
 </function>
-<function name='ccCArrayDoubleCapacity' inline='true'>
+<function name='ccCArrayDoubleCapacity'>
 <arg name='arr' declared_type='ccCArray*' type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
 <retval declared_type='void' type='v'/>
 </function>
-<function name='ccCArrayEnsureExtraCapacity' inline='true'>
+<function name='ccCArrayEnsureExtraCapacity'>
 <arg name='arr' declared_type='ccCArray*' type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
 <arg name='extra' declared_type='NSUInteger' type64='Q' type='I'/>
 <retval declared_type='void' type='v'/>
 </function>
-<function name='ccCArrayFastRemoveValueAtIndex' inline='true'>
+<function name='ccCArrayFastRemoveValueAtIndex'>
 <arg name='arr' declared_type='ccCArray*' type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
 <arg name='index' declared_type='NSUInteger' type64='Q' type='I'/>
 <retval declared_type='void' type='v'/>
 </function>
-<function name='ccCArrayFree' inline='true'>
+<function name='ccCArrayFree'>
 <arg name='arr' declared_type='ccCArray*' type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
 <retval declared_type='void' type='v'/>
 </function>
-<function name='ccCArrayFullRemoveArray' inline='true'>
+<function name='ccCArrayFullRemoveArray'>
 <arg name='arr' declared_type='ccCArray*' type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
 <arg name='minusArr' declared_type='ccCArray*' type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
 <retval declared_type='void' type='v'/>
 </function>
-<function name='ccCArrayGetIndexOfValue' inline='true'>
+<function name='ccCArrayGetIndexOfValue'>
 <arg name='arr' declared_type='ccCArray*' type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
 <arg name='value' declared_type='CCARRAY_ID' type='@'/>
 <retval declared_type='NSUInteger' type64='Q' type='I'/>
 </function>
-<function name='ccCArrayInsertValueAtIndex' inline='true'>
+<function name='ccCArrayInsertValueAtIndex'>
 <arg name='arr' declared_type='ccCArray*' type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
 <arg name='value' declared_type='CCARRAY_ID' type='@'/>
 <arg name='index' declared_type='NSUInteger' type64='Q' type='I'/>
 <retval declared_type='void' type='v'/>
 </function>
-<function name='ccCArrayNew' inline='true'>
+<function name='ccCArrayNew'>
 <arg name='capacity' declared_type='NSUInteger' type64='Q' type='I'/>
 <retval declared_type='ccCArray*' type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
 </function>
-<function name='ccCArrayRemoveAllValues' inline='true'>
+<function name='ccCArrayRemoveAllValues'>
 <arg name='arr' declared_type='ccCArray*' type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
 <retval declared_type='void' type='v'/>
 </function>
-<function name='ccCArrayRemoveArray' inline='true'>
+<function name='ccCArrayRemoveArray'>
 <arg name='arr' declared_type='ccCArray*' type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
 <arg name='minusArr' declared_type='ccCArray*' type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
 <retval declared_type='void' type='v'/>
 </function>
-<function name='ccCArrayRemoveValue' inline='true'>
+<function name='ccCArrayRemoveValue'>
 <arg name='arr' declared_type='ccCArray*' type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
 <arg name='value' declared_type='CCARRAY_ID' type='@'/>
 <retval declared_type='void' type='v'/>
 </function>
-<function name='ccCArrayRemoveValueAtIndex' inline='true'>
+<function name='ccCArrayRemoveValueAtIndex'>
 <arg name='arr' declared_type='ccCArray*' type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
 <arg name='index' declared_type='NSUInteger' type64='Q' type='I'/>
 <retval declared_type='void' type='v'/>
@@ -734,13 +734,13 @@
 <function name='ccDrawSolidPoly'>
 <arg name='poli' declared_type='CGPoint*' type64='^{CGPoint=dd}' const='true' type='^{CGPoint=ff}'/>
 <arg name='numberOfPoints' declared_type='NSUInteger' type64='Q' type='I'/>
-<arg name='color' declared_type='ccColor4F' type='{_ccColor4F=ffff}'/>
+<arg name='color' declared_type='ccColor4F' type='{ccColor4F=ffff}'/>
 <retval declared_type='void' type='v'/>
 </function>
 <function name='ccDrawSolidRect'>
 <arg name='origin' declared_type='CGPoint' type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
 <arg name='destination' declared_type='CGPoint' type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
-<arg name='color' declared_type='ccColor4F' type='{_ccColor4F=ffff}'/>
+<arg name='color' declared_type='ccColor4F' type='{ccColor4F=ffff}'/>
 <retval declared_type='void' type='v'/>
 </function>
 <function name='ccGLActiveTexture'>
@@ -845,11 +845,36 @@
 <arg name='nuPoints' declared_type='NSUInteger' type64='Q' type='I'/>
 <retval declared_type='void' type='v'/>
 </function>
-<function name='ccc3'>
+<function name='cc_insertionSort'>
+<arg name='arr' declared_type='ccCArray*' type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
+<arg name='comparator' function_pointer='true' declared_type='cc_comparator' type='^?'>
+<arg declared_type='void*' const='true' type='^v'/>
+<arg declared_type='void*' const='true' type='^v'/>
+<retval declared_type='int' type='i'/>
+</arg>
+<retval declared_type='void' type='v'/>
+</function>
+<function name='cc_mergesortL'>
+<arg name='array' declared_type='ccCArray*' type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
+<arg name='width' declared_type='size_t' type64='Q' type='L'/>
+<arg name='comparator' function_pointer='true' declared_type='cc_comparator' type='^?'>
+<arg declared_type='void*' const='true' type='^v'/>
+<arg declared_type='void*' const='true' type='^v'/>
+<retval declared_type='int' type='i'/>
+</arg>
+<retval declared_type='int' type='i'/>
+</function>
+<function name='cc_pointerswap'>
+<arg name='a' declared_type='void*' type='^v'/>
+<arg name='b' declared_type='void*' type='^v'/>
+<arg name='width' declared_type='size_t' type64='Q' type='L'/>
+<retval declared_type='void' type='v'/>
+</function>
+<function name='ccc3' inline='true'>
 <arg name='r' declared_type='GLubyte' const='true' type='C'/>
 <arg name='g' declared_type='GLubyte' const='true' type='C'/>
 <arg name='b' declared_type='GLubyte' const='true' type='C'/>
-<retval declared_type='ccColor3B' type='{ccColor3B=CCC}'/>
+<retval declared_type='ccColor3B' type='{_ccColor3B=CCC}'/>
 </function>
 <function name='ccc4' inline='true'>
 <arg name='r' declared_type='GLubyte' const='true' type='C'/>
@@ -859,24 +884,24 @@
 <retval declared_type='ccColor4B' type='{_ccColor4B=CCCC}'/>
 </function>
 <function name='ccc4FEqual' inline='true'>
-<arg name='a' declared_type='ccColor4F' type='{_ccColor4F=ffff}'/>
-<arg name='b' declared_type='ccColor4F' type='{_ccColor4F=ffff}'/>
+<arg name='a' declared_type='ccColor4F' type='{ccColor4F=ffff}'/>
+<arg name='b' declared_type='ccColor4F' type='{ccColor4F=ffff}'/>
 <retval declared_type='BOOL' type='B'/>
 </function>
 <function name='ccc4FFromccc3B' inline='true'>
-<arg name='c' declared_type='ccColor3B' type='{ccColor3B=CCC}'/>
-<retval declared_type='ccColor4F' type='{_ccColor4F=ffff}'/>
+<arg name='c' declared_type='ccColor3B' type='{_ccColor3B=CCC}'/>
+<retval declared_type='ccColor4F' type='{ccColor4F=ffff}'/>
 </function>
 <function name='ccc4FFromccc4B' inline='true'>
 <arg name='c' declared_type='ccColor4B' type='{_ccColor4B=CCCC}'/>
-<retval declared_type='ccColor4F' type='{_ccColor4F=ffff}'/>
+<retval declared_type='ccColor4F' type='{ccColor4F=ffff}'/>
 </function>
 <function name='ccc4f' inline='true'>
 <arg name='r' declared_type='GLfloat' const='true' type='f'/>
 <arg name='g' declared_type='GLfloat' const='true' type='f'/>
 <arg name='b' declared_type='GLfloat' const='true' type='f'/>
 <arg name='a' declared_type='GLfloat' const='true' type='f'/>
-<retval declared_type='ccColor4F' type='{_ccColor4F=ffff}'/>
+<retval declared_type='ccColor4F' type='{ccColor4F=ffff}'/>
 </function>
 <function name='ccg' inline='true'>
 <arg name='x' declared_type='NSInteger' type64='q' const='true' type='i'/>
@@ -1052,31 +1077,6 @@
 </function>
 <function name='cocos2dVersion'>
 <retval declared_type='NSString*' type='@'/>
-</function>
-<function name='insertionSort' inline='true'>
-<arg name='arr' declared_type='ccCArray*' type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
-<arg name='comparator' function_pointer='true' declared_type='int (*)(void *, void *)' type='^?'>
-<arg declared_type='void*' const='true' type='^v'/>
-<arg declared_type='void*' const='true' type='^v'/>
-<retval declared_type='int' type='i'/>
-</arg>
-<retval declared_type='void' type='v'/>
-</function>
-<function name='mergesortL' inline='true'>
-<arg name='array' declared_type='ccCArray*' type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
-<arg name='width' declared_type='size_t' type64='Q' type='L'/>
-<arg name='compar' function_pointer='true' declared_type='int (*)(void *, void *)' type='^?'>
-<arg declared_type='void*' const='true' type='^v'/>
-<arg declared_type='void*' const='true' type='^v'/>
-<retval declared_type='int' type='i'/>
-</arg>
-<retval declared_type='int' type='i'/>
-</function>
-<function name='pointerswap' inline='true'>
-<arg name='a' declared_type='void*' type='^v'/>
-<arg name='b' declared_type='void*' type='^v'/>
-<arg name='width' declared_type='size_t' type64='Q' type='L'/>
-<retval declared_type='void' type='v'/>
 </function>
 <function name='tgaDestroy'>
 <arg name='info' declared_type='tImageTGA*' type='^{sImageTGA=iCCss*i}'/>
@@ -1681,7 +1681,7 @@
 <retval declared_type='ccBlendFunc' type='{_ccBlendFunc=II}'/>
 </method>
 <method selector='color'>
-<retval declared_type='ccColor3B' type='{ccColor3B=CCC}'/>
+<retval declared_type='ccColor3B' type='{_ccColor3B=CCC}'/>
 </method>
 <method selector='initWithTileFile:tileWidth:tileHeight:itemsToRender:'>
 <arg name='tile' declared_type='NSString*' type='@' index='0'/>
@@ -1701,7 +1701,7 @@
 <retval declared_type='void' type='v'/>
 </method>
 <method selector='setColor:'>
-<arg name='color' declared_type='ccColor3B' type='{ccColor3B=CCC}' index='0'/>
+<arg name='color' declared_type='ccColor3B' type='{_ccColor3B=CCC}' index='0'/>
 <retval declared_type='void' type='v'/>
 </method>
 <method selector='setOpacity:'>
@@ -2832,7 +2832,7 @@
 <retval declared_type='CCTextAlignment' type='i'/>
 </method>
 <method selector='color'>
-<retval declared_type='ccColor3B' type='{ccColor3B=CCC}'/>
+<retval declared_type='ccColor3B' type='{_ccColor3B=CCC}'/>
 </method>
 <method selector='createFontChars'>
 <retval declared_type='void' type='v'/>
@@ -2891,7 +2891,7 @@
 <retval declared_type='void' type='v'/>
 </method>
 <method selector='setColor:'>
-<arg name='color' declared_type='ccColor3B' type='{ccColor3B=CCC}' index='0'/>
+<arg name='color' declared_type='ccColor3B' type='{_ccColor3B=CCC}' index='0'/>
 <retval declared_type='void' type='v'/>
 </method>
 <method selector='setFntFile:'>
@@ -3116,7 +3116,7 @@
 <retval declared_type='void' type='v'/>
 </method>
 <method selector='color'>
-<retval declared_type='ccColor3B' type='{ccColor3B=CCC}'/>
+<retval declared_type='ccColor3B' type='{_ccColor3B=CCC}'/>
 </method>
 <method selector='initWithColor:'>
 <arg name='color' declared_type='ccColor4B' type='{_ccColor4B=CCCC}' index='0'/>
@@ -3151,7 +3151,7 @@
 <retval declared_type='BOOL' type='B'/>
 </method>
 <method selector='endColor'>
-<retval declared_type='ccColor3B' type='{ccColor3B=CCC}'/>
+<retval declared_type='ccColor3B' type='{_ccColor3B=CCC}'/>
 </method>
 <method selector='endOpacity'>
 <retval declared_type='GLubyte' type='C'/>
@@ -3183,7 +3183,7 @@
 <retval declared_type='void' type='v'/>
 </method>
 <method selector='setEndColor:'>
-<arg name='endColor' declared_type='ccColor3B' type='{ccColor3B=CCC}' index='0'/>
+<arg name='endColor' declared_type='ccColor3B' type='{_ccColor3B=CCC}' index='0'/>
 <retval declared_type='void' type='v'/>
 </method>
 <method selector='setEndOpacity:'>
@@ -3191,7 +3191,7 @@
 <retval declared_type='void' type='v'/>
 </method>
 <method selector='setStartColor:'>
-<arg name='startColor' declared_type='ccColor3B' type='{ccColor3B=CCC}' index='0'/>
+<arg name='startColor' declared_type='ccColor3B' type='{_ccColor3B=CCC}' index='0'/>
 <retval declared_type='void' type='v'/>
 </method>
 <method selector='setStartOpacity:'>
@@ -3203,7 +3203,7 @@
 <retval declared_type='void' type='v'/>
 </method>
 <method selector='startColor'>
-<retval declared_type='ccColor3B' type='{ccColor3B=CCC}'/>
+<retval declared_type='ccColor3B' type='{_ccColor3B=CCC}'/>
 </method>
 <method selector='startOpacity'>
 <retval declared_type='GLubyte' type='C'/>
@@ -3325,7 +3325,7 @@
 <retval declared_type='void' type='v'/>
 </method>
 <method selector='color'>
-<retval declared_type='ccColor3B' type='{ccColor3B=CCC}'/>
+<retval declared_type='ccColor3B' type='{_ccColor3B=CCC}'/>
 </method>
 <method selector='enabled'>
 <retval declared_type='BOOL' type='B'/>
@@ -3752,7 +3752,7 @@
 </class>
 <class name='CCMenuItemLabel'>
 <method selector='disabledColor'>
-<retval declared_type='ccColor3B' type='{ccColor3B=CCC}'/>
+<retval declared_type='ccColor3B' type='{_ccColor3B=CCC}'/>
 </method>
 <method selector='initWithLabel:block:'>
 <arg name='label' declared_type='CCNode*' type='@' index='0'/>
@@ -3790,7 +3790,7 @@
 <retval declared_type='CCNode*' type='@'/>
 </method>
 <method selector='setDisabledColor:'>
-<arg name='disabledColor' declared_type='ccColor3B' type='{ccColor3B=CCC}' index='0'/>
+<arg name='disabledColor' declared_type='ccColor3B' type='{_ccColor3B=CCC}' index='0'/>
 <retval declared_type='void' type='v'/>
 </method>
 <method selector='setIsEnabled:'>
@@ -3945,7 +3945,7 @@
 </class>
 <class name='CCMenuItemToggle'>
 <method selector='color'>
-<retval declared_type='ccColor3B' type='{ccColor3B=CCC}'/>
+<retval declared_type='ccColor3B' type='{_ccColor3B=CCC}'/>
 </method>
 <method selector='initWithItems:block:'>
 <arg name='arrayOfItems' declared_type='NSArray*' type='@' index='0'/>
@@ -4005,7 +4005,7 @@
 <arg name='fade' declared_type='float' type='f' index='0'/>
 <arg name='minSeg' declared_type='float' type='f' index='1'/>
 <arg name='stroke' declared_type='float' type='f' index='2'/>
-<arg name='color' declared_type='ccColor3B' type='{ccColor3B=CCC}' index='3'/>
+<arg name='color' declared_type='ccColor3B' type='{_ccColor3B=CCC}' index='3'/>
 <arg name='texture' declared_type='CCTexture2D*' type='@' index='4'/>
 <retval declared_type='id' type='@'/>
 </method>
@@ -4013,7 +4013,7 @@
 <arg name='fade' declared_type='float' type='f' index='0'/>
 <arg name='minSeg' declared_type='float' type='f' index='1'/>
 <arg name='stroke' declared_type='float' type='f' index='2'/>
-<arg name='color' declared_type='ccColor3B' type='{ccColor3B=CCC}' index='3'/>
+<arg name='color' declared_type='ccColor3B' type='{_ccColor3B=CCC}' index='3'/>
 <arg name='path' declared_type='NSString*' type='@' index='4'/>
 <retval declared_type='id' type='@'/>
 </method>
@@ -4039,7 +4039,7 @@
 <arg name='fade' declared_type='float' type='f' index='0'/>
 <arg name='minSeg' declared_type='float' type='f' index='1'/>
 <arg name='stroke' declared_type='float' type='f' index='2'/>
-<arg name='color' declared_type='ccColor3B' type='{ccColor3B=CCC}' index='3'/>
+<arg name='color' declared_type='ccColor3B' type='{_ccColor3B=CCC}' index='3'/>
 <arg name='texture' declared_type='CCTexture2D*' type='@' index='4'/>
 <retval declared_type='id' type='@'/>
 </method>
@@ -4047,7 +4047,7 @@
 <arg name='fade' declared_type='float' type='f' index='0'/>
 <arg name='minSeg' declared_type='float' type='f' index='1'/>
 <arg name='stroke' declared_type='float' type='f' index='2'/>
-<arg name='color' declared_type='ccColor3B' type='{ccColor3B=CCC}' index='3'/>
+<arg name='color' declared_type='ccColor3B' type='{_ccColor3B=CCC}' index='3'/>
 <arg name='path' declared_type='NSString*' type='@' index='4'/>
 <retval declared_type='id' type='@'/>
 </method>
@@ -4055,7 +4055,7 @@
 <retval declared_type='CCTexture2D*' type='@'/>
 </method>
 <method selector='tintWithColor:'>
-<arg name='colors' declared_type='ccColor3B' type='{ccColor3B=CCC}' index='0'/>
+<arg name='colors' declared_type='ccColor3B' type='{_ccColor3B=CCC}' index='0'/>
 <retval declared_type='void' type='v'/>
 </method>
 </class>
@@ -4586,10 +4586,10 @@
 <retval declared_type='NSInteger' type64='q' type='i'/>
 </method>
 <method selector='endColor'>
-<retval declared_type='ccColor4F' type='{_ccColor4F=ffff}'/>
+<retval declared_type='ccColor4F' type='{ccColor4F=ffff}'/>
 </method>
 <method selector='endColorVar'>
-<retval declared_type='ccColor4F' type='{_ccColor4F=ffff}'/>
+<retval declared_type='ccColor4F' type='{ccColor4F=ffff}'/>
 </method>
 <method selector='endRadius'>
 <retval declared_type='float' type='f'/>
@@ -4705,11 +4705,11 @@
 <retval declared_type='void' type='v'/>
 </method>
 <method selector='setEndColor:'>
-<arg name='endColor' declared_type='ccColor4F' type='{_ccColor4F=ffff}' index='0'/>
+<arg name='endColor' declared_type='ccColor4F' type='{ccColor4F=ffff}' index='0'/>
 <retval declared_type='void' type='v'/>
 </method>
 <method selector='setEndColorVar:'>
-<arg name='endColorVar' declared_type='ccColor4F' type='{_ccColor4F=ffff}' index='0'/>
+<arg name='endColorVar' declared_type='ccColor4F' type='{ccColor4F=ffff}' index='0'/>
 <retval declared_type='void' type='v'/>
 </method>
 <method selector='setEndRadius:'>
@@ -4789,11 +4789,11 @@
 <retval declared_type='void' type='v'/>
 </method>
 <method selector='setStartColor:'>
-<arg name='startColor' declared_type='ccColor4F' type='{_ccColor4F=ffff}' index='0'/>
+<arg name='startColor' declared_type='ccColor4F' type='{ccColor4F=ffff}' index='0'/>
 <retval declared_type='void' type='v'/>
 </method>
 <method selector='setStartColorVar:'>
-<arg name='startColorVar' declared_type='ccColor4F' type='{_ccColor4F=ffff}' index='0'/>
+<arg name='startColorVar' declared_type='ccColor4F' type='{ccColor4F=ffff}' index='0'/>
 <retval declared_type='void' type='v'/>
 </method>
 <method selector='setStartRadius:'>
@@ -4846,10 +4846,10 @@
 <retval declared_type='float' type='f'/>
 </method>
 <method selector='startColor'>
-<retval declared_type='ccColor4F' type='{_ccColor4F=ffff}'/>
+<retval declared_type='ccColor4F' type='{ccColor4F=ffff}'/>
 </method>
 <method selector='startColorVar'>
-<retval declared_type='ccColor4F' type='{_ccColor4F=ffff}'/>
+<retval declared_type='ccColor4F' type='{ccColor4F=ffff}'/>
 </method>
 <method selector='startRadius'>
 <retval declared_type='float' type='f'/>
@@ -4889,7 +4889,7 @@
 <retval declared_type='void' type='v'/>
 </method>
 <method selector='updateQuadWithParticle:newPosition:'>
-<arg name='particle' declared_type='tCCParticle*' type64='^{sCCParticle={CGPoint=dd}{CGPoint=dd}{_ccColor4F=ffff}{_ccColor4F=ffff}fffffQ(?={?={CGPoint=dd}ff}{?=ffff})}' type='^{sCCParticle={CGPoint=ff}{CGPoint=ff}{_ccColor4F=ffff}{_ccColor4F=ffff}fffffI(?={?={CGPoint=ff}ff}{?=ffff})}' index='0'/>
+<arg name='particle' declared_type='tCCParticle*' type64='^{sCCParticle={CGPoint=dd}{CGPoint=dd}{ccColor4F=ffff}{ccColor4F=ffff}fffffQ(?={?={CGPoint=dd}ff}{?=ffff})}' type='^{sCCParticle={CGPoint=ff}{CGPoint=ff}{ccColor4F=ffff}{ccColor4F=ffff}fffffI(?={?={CGPoint=ff}ff}{?=ffff})}' index='0'/>
 <arg name='pos' declared_type='CGPoint' type64='{CGPoint=dd}' type='{CGPoint=ff}' index='1'/>
 <retval declared_type='void' type='v'/>
 </method>
@@ -5016,7 +5016,7 @@
 <retval declared_type='CGPoint' type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
 </method>
 <method selector='color'>
-<retval declared_type='ccColor3B' type='{ccColor3B=CCC}'/>
+<retval declared_type='ccColor3B' type='{_ccColor3B=CCC}'/>
 </method>
 <method selector='initWithSprite:'>
 <arg name='sprite' declared_type='CCSprite*' type='@' index='0'/>
@@ -5043,7 +5043,7 @@
 <retval declared_type='void' type='v'/>
 </method>
 <method selector='setColor:'>
-<arg name='color' declared_type='ccColor3B' type='{ccColor3B=CCC}' index='0'/>
+<arg name='color' declared_type='ccColor3B' type='{_ccColor3B=CCC}' index='0'/>
 <retval declared_type='void' type='v'/>
 </method>
 <method selector='setMidpoint:'>
@@ -5632,7 +5632,7 @@
 <retval declared_type='ccBlendFunc' type='{_ccBlendFunc=II}'/>
 </method>
 <method selector='color'>
-<retval declared_type='ccColor3B' type='{ccColor3B=CCC}'/>
+<retval declared_type='ccColor3B' type='{_ccColor3B=CCC}'/>
 </method>
 <method selector='dirty'>
 <retval declared_type='BOOL' type='B'/>
@@ -5717,7 +5717,7 @@
 <retval declared_type='void' type='v'/>
 </method>
 <method selector='setColor:'>
-<arg name='color' declared_type='ccColor3B' type='{ccColor3B=CCC}' index='0'/>
+<arg name='color' declared_type='ccColor3B' type='{_ccColor3B=CCC}' index='0'/>
 <retval declared_type='void' type='v'/>
 </method>
 <method selector='setDirty:'>
@@ -6901,7 +6901,7 @@
 <retval declared_type='void' type='v'/>
 </method>
 <method selector='setTile:at:'>
-<arg name='tile' declared_type='ccColor3B' type='{ccColor3B=CCC}' index='0'/>
+<arg name='tile' declared_type='ccColor3B' type='{_ccColor3B=CCC}' index='0'/>
 <arg name='position' declared_type='ccGridSize' type64='{_ccGridSize=qq}' type='{_ccGridSize=ii}' index='1'/>
 <retval declared_type='void' type='v'/>
 </method>
@@ -6910,7 +6910,7 @@
 </method>
 <method selector='tileAt:'>
 <arg name='position' declared_type='ccGridSize' type64='{_ccGridSize=qq}' type='{_ccGridSize=ii}' index='0'/>
-<retval declared_type='ccColor3B' type='{ccColor3B=CCC}'/>
+<retval declared_type='ccColor3B' type='{_ccColor3B=CCC}'/>
 </method>
 <method selector='tileMapAtlasWithTileFile:mapFile:tileWidth:tileHeight:' class_method='true'>
 <arg name='tile' declared_type='NSString*' type='@' index='0'/>
@@ -7023,13 +7023,13 @@
 <method selector='initWithDuration:scene:withColor:'>
 <arg name='duration' declared_type='ccTime' type='f' index='0'/>
 <arg name='scene' declared_type='CCScene*' type='@' index='1'/>
-<arg name='color' declared_type='ccColor3B' type='{ccColor3B=CCC}' index='2'/>
+<arg name='color' declared_type='ccColor3B' type='{_ccColor3B=CCC}' index='2'/>
 <retval declared_type='id' type='@'/>
 </method>
 <method selector='transitionWithDuration:scene:withColor:' class_method='true'>
 <arg name='duration' declared_type='ccTime' type='f' index='0'/>
 <arg name='scene' declared_type='CCScene*' type='@' index='1'/>
-<arg name='color' declared_type='ccColor3B' type='{ccColor3B=CCC}' index='2'/>
+<arg name='color' declared_type='ccColor3B' type='{_ccColor3B=CCC}' index='2'/>
 <retval declared_type='id' type='@'/>
 </method>
 </class>
@@ -7349,7 +7349,7 @@
 <retval declared_type='BOOL' type='B'/>
 </method>
 <method selector='color'>
-<retval declared_type='ccColor3B' type='{ccColor3B=CCC}'/>
+<retval declared_type='ccColor3B' type='{_ccColor3B=CCC}'/>
 </method>
 <method selector='doesOpacityModifyRGB'>
 <retval declared_type='BOOL' type='B'/>
@@ -7434,7 +7434,7 @@
 <retval declared_type='void' type='v'/>
 </method>
 <method selector='setColor:'>
-<arg name='color' declared_type='ccColor3B' type='{ccColor3B=CCC}' index='0'/>
+<arg name='color' declared_type='ccColor3B' type='{_ccColor3B=CCC}' index='0'/>
 <retval declared_type='void' type='v'/>
 </method>
 <method selector='setOpacity:'>
@@ -7587,8 +7587,8 @@
 <arg name='event' declared_type='NSEvent*' type='@' index='0'/>
 <retval declared_type='BOOL' type='B'/>
 </method>
-<method type64='{ccColor3B=CCC}16@0:8' type='{ccColor3B=CCC}8@0:4' selector='color'>
-<retval declared_type='ccColor3B' type='{ccColor3B=CCC}'/>
+<method type64='{_ccColor3B=CCC}16@0:8' type='{_ccColor3B=CCC}8@0:4' selector='color'>
+<retval declared_type='ccColor3B' type='{_ccColor3B=CCC}'/>
 </method>
 <method type64='B16@0:8' type='B8@0:4' selector='doesOpacityModifyRGB'>
 <retval declared_type='BOOL' type='B'/>
@@ -7672,8 +7672,8 @@
 <arg name='label' declared_type='char*' type='*' index='0'/>
 <retval declared_type='void' type='v'/>
 </method>
-<method type64='v19@0:8{ccColor3B=CCC}16' type='v11@0:4{ccColor3B=CCC}8' selector='setColor:'>
-<arg name='color' declared_type='ccColor3B' type='{ccColor3B=CCC}' index='0'/>
+<method type64='v19@0:8{_ccColor3B=CCC}16' type='v11@0:4{_ccColor3B=CCC}8' selector='setColor:'>
+<arg name='color' declared_type='ccColor3B' type='{_ccColor3B=CCC}' index='0'/>
 <retval declared_type='void' type='v'/>
 </method>
 <method type64='v20@0:8C16' type='v12@0:4C8' selector='setOpacity:'>

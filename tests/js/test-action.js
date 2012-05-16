@@ -88,15 +88,13 @@ test_manual_properties.prototype.test = function( parent ) {
 	parent.addChild( grossini );
 	grossini.rotation = 120;
 	grossini.position = ccp(winSize.width/2, winSize.height/2);
-//	grossini.color =  ccc3( 255,0,0 );
+	grossini.color =  ccc3( 255,0,0 );
 	
 	
 	var kathia = CCSprite.spriteWithFile('grossinis_sister2.png');
 	parent.addChild( kathia );
 	kathia.position = ccp(winSize.width-100, winSize.height/2);
-//	kathia.color = ccBLUE;
-//	var color = ccColor3B;
-//	kathia.color = [255,255,0];	
+	kathia.color = ccc3(0,0,255);
 };
 
 scenes.push( new test_manual_properties() );
@@ -365,6 +363,9 @@ function run()
 
 	director.runWithScene( scene );
 }
+
+a = cocos2dVersion();
+log('Using cocos2d version:' + a );
 
 //
 run();
