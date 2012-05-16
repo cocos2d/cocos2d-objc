@@ -364,8 +364,8 @@ function run()
 	director.runWithScene( scene );
 }
 
-a = cocos2dVersion();
-log('Using cocos2d version:' + a );
+version = cocos2dVersion();
+log('Using cocos2d version:' + version );
 
 //
 run();

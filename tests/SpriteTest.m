@@ -228,7 +228,7 @@ Class restartAction()
 	CCSprite *sprite = [CCSprite spriteWithFile:@"grossini_dance_atlas.png" rect:CGRectMake(x,y,85,121)];
 	[self addChild:sprite];
 
-	sprite.position = ccp( p.x, p.y);
+	sprite.position = p;
 
 	id action;
 	float rand = CCRANDOM_0_1();
