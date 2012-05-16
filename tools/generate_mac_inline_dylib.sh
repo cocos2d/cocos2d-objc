@@ -1,0 +1,1 @@
+gen_bridge_metadata -F dylib --64-bit -c '-D__CC_PLATFORM_MAC -I/Users/rquesada/progs/cocos2d-iphone/cocos2d/Support -I/Users/rquesada/progs/cocos2d-iphone/cocos2d' Support/CGPointExtension.h ccTypes.h -o ../Resources-Mac/cocos2d-mac.dylib

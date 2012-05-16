@@ -589,7 +589,10 @@
 			void* p = ptr;
 			id type = [JSCocoaFFIArgument structureFullTypeEncodingFromStructureTypeEncoding:fullTypeEncoding];
 			// Bail if structure not found
-			if (!type)	return	0;
+			if (!type)	{
+				NSLog(@"Found no structure description for %@", fullTypeEncoding);
+				return	0;
+			}
 
 //			JSObjectRef jsObject = [JSCocoaController jsCocoaPrivateObjectInContext:ctx];
 			JSObjectRef jsObject = [[JSCocoa controllerFromContext:ctx] newPrivateObject];
@@ -984,6 +987,10 @@ static NSMutableDictionary* typeEncodings = nil;
 	id rootElement = [xmlDocument rootElement];
 #if __LP64__	
 	id type = [[rootElement attributeForName:@"type64"] stringValue];
+	// Revert to default type if no 64-bit type is defined (Happens on structures of GLFloats)
+	if (!type)
+		type = [[rootElement attributeForName:@"type"] stringValue];
+	
 #else
 	id type = [[rootElement attributeForName:@"type"] stringValue];
 #endif

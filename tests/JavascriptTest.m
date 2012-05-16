@@ -119,7 +119,7 @@
 	
 	// Load cocos2d BridgeSupport (not needed I guess)
 	CCFileUtils *fileUtils = [CCFileUtils sharedFileUtils];
-	NSString *cocos2dBridge = [fileUtils fullPathFromRelativePath:@"cocos2d.bridgesupport"];
+	NSString *cocos2dBridge = [fileUtils fullPathFromRelativePath:@"cocos2d-mac.bridgesupport"];
 	
 	[[BridgeSupportController sharedController] loadBridgeSupport:cocos2dBridge];
 	
