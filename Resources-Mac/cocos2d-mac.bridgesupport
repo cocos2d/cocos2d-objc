@@ -7503,10 +7503,103 @@
 <retval declared_type='void' type='v'/>
 </method>
 </class>
-<informal_protocol name='NSObject'>
+<informal_protocol name='CCBlendProtocol'>
 <method type64='{_ccBlendFunc=II}16@0:8' type='{_ccBlendFunc=II}8@0:4' selector='blendFunc'>
 <retval declared_type='ccBlendFunc' type='{_ccBlendFunc=II}'/>
 </method>
+<method type64='v24@0:8{_ccBlendFunc=II}16' type='v16@0:4{_ccBlendFunc=II}8' selector='setBlendFunc:'>
+<arg name='blendFunc' declared_type='ccBlendFunc' type='{_ccBlendFunc=II}' index='0'/>
+<retval declared_type='void' type='v'/>
+</method>
+</informal_protocol>
+<informal_protocol name='CCDirectorDelegate'>
+<method type64='v16@0:8' type='v8@0:4' selector='updateProjection'>
+<retval declared_type='void' type='v'/>
+</method>
+</informal_protocol>
+<informal_protocol name='CCEventDelegate'>
+<method type64='v24@0:8@16' type='v12@0:4@8' selector='flagsChanged:'>
+<arg name='theEvent' declared_type='NSEvent*' type='@' index='0'/>
+<retval declared_type='void' type='v'/>
+</method>
+<method type64='v24@0:8@16' type='v12@0:4@8' selector='keyDown:'>
+<arg name='theEvent' declared_type='NSEvent*' type='@' index='0'/>
+<retval declared_type='void' type='v'/>
+</method>
+<method type64='v24@0:8@16' type='v12@0:4@8' selector='keyUp:'>
+<arg name='theEvent' declared_type='NSEvent*' type='@' index='0'/>
+<retval declared_type='void' type='v'/>
+</method>
+<method type64='v24@0:8@16' type='v12@0:4@8' selector='mouseDown:'>
+<arg name='theEvent' declared_type='NSEvent*' type='@' index='0'/>
+<retval declared_type='void' type='v'/>
+</method>
+<method type64='v24@0:8@16' type='v12@0:4@8' selector='mouseDragged:'>
+<arg name='theEvent' declared_type='NSEvent*' type='@' index='0'/>
+<retval declared_type='void' type='v'/>
+</method>
+<method type64='v24@0:8@16' type='v12@0:4@8' selector='mouseEntered:'>
+<arg name='theEvent' declared_type='NSEvent*' type='@' index='0'/>
+<retval declared_type='void' type='v'/>
+</method>
+<method type64='v24@0:8@16' type='v12@0:4@8' selector='mouseExited:'>
+<arg name='theEvent' declared_type='NSEvent*' type='@' index='0'/>
+<retval declared_type='void' type='v'/>
+</method>
+<method type64='v24@0:8@16' type='v12@0:4@8' selector='mouseMoved:'>
+<arg name='theEvent' declared_type='NSEvent*' type='@' index='0'/>
+<retval declared_type='void' type='v'/>
+</method>
+<method type64='v24@0:8@16' type='v12@0:4@8' selector='mouseUp:'>
+<arg name='theEvent' declared_type='NSEvent*' type='@' index='0'/>
+<retval declared_type='void' type='v'/>
+</method>
+<method type64='v24@0:8@16' type='v12@0:4@8' selector='otherMouseDown:'>
+<arg name='event' declared_type='NSEvent*' type='@' index='0'/>
+<retval declared_type='void' type='v'/>
+</method>
+<method type64='v24@0:8@16' type='v12@0:4@8' selector='otherMouseDragged:'>
+<arg name='event' declared_type='NSEvent*' type='@' index='0'/>
+<retval declared_type='void' type='v'/>
+</method>
+<method type64='v24@0:8@16' type='v12@0:4@8' selector='otherMouseUp:'>
+<arg name='event' declared_type='NSEvent*' type='@' index='0'/>
+<retval declared_type='void' type='v'/>
+</method>
+<method type64='v24@0:8@16' type='v12@0:4@8' selector='rightMouseDown:'>
+<arg name='event' declared_type='NSEvent*' type='@' index='0'/>
+<retval declared_type='void' type='v'/>
+</method>
+<method type64='v24@0:8@16' type='v12@0:4@8' selector='rightMouseDragged:'>
+<arg name='event' declared_type='NSEvent*' type='@' index='0'/>
+<retval declared_type='void' type='v'/>
+</method>
+<method type64='v24@0:8@16' type='v12@0:4@8' selector='rightMouseUp:'>
+<arg name='event' declared_type='NSEvent*' type='@' index='0'/>
+<retval declared_type='void' type='v'/>
+</method>
+<method type64='v24@0:8@16' type='v12@0:4@8' selector='scrollWheel:'>
+<arg name='theEvent' declared_type='NSEvent*' type='@' index='0'/>
+<retval declared_type='void' type='v'/>
+</method>
+<method type64='v24@0:8@16' type='v12@0:4@8' selector='touchesBeganWithEvent:'>
+<arg name='event' declared_type='NSEvent*' type='@' index='0'/>
+<retval declared_type='void' type='v'/>
+</method>
+<method type64='v24@0:8@16' type='v12@0:4@8' selector='touchesCancelledWithEvent:'>
+<arg name='event' declared_type='NSEvent*' type='@' index='0'/>
+<retval declared_type='void' type='v'/>
+</method>
+<method type64='v24@0:8@16' type='v12@0:4@8' selector='touchesEndedWithEvent:'>
+<arg name='event' declared_type='NSEvent*' type='@' index='0'/>
+<retval declared_type='void' type='v'/>
+</method>
+<method type64='v24@0:8@16' type='v12@0:4@8' selector='touchesMovedWithEvent:'>
+<arg name='event' declared_type='NSEvent*' type='@' index='0'/>
+<retval declared_type='void' type='v'/>
+</method>
+</informal_protocol>
+<informal_protocol name='CCKeyboardEventDelegate'>
 <method type64='B24@0:8@16' type='B12@0:4@8' selector='ccFlagsChanged:'>
 <arg name='event' declared_type='NSEvent*' type='@' index='0'/>
 <retval declared_type='BOOL' type='B'/>
@@ -7519,6 +7612,21 @@
 <arg name='event' declared_type='NSEvent*' type='@' index='0'/>
 <retval declared_type='BOOL' type='B'/>
 </method>
+</informal_protocol>
+<informal_protocol name='CCLabelProtocol'>
+<method type64='v24@0:8*16' type='v12@0:4*8' selector='setCString:'>
+<arg name='label' declared_type='char*' type='*' index='0'/>
+<retval declared_type='void' type='v'/>
+</method>
+<method type64='v24@0:8@16' type='v12@0:4@8' selector='setString:'>
+<arg name='label' declared_type='NSString*' type='@' index='0'/>
+<retval declared_type='void' type='v'/>
+</method>
+<method type64='@16@0:8' type='@8@0:4' selector='string'>
+<retval declared_type='NSString*' type='@'/>
+</method>
+</informal_protocol>
+<informal_protocol name='CCMouseEventDelegate'>
 <method type64='B24@0:8@16' type='B12@0:4@8' selector='ccMouseDown:'>
 <arg name='event' declared_type='NSEvent*' type='@' index='0'/>
 <retval declared_type='BOOL' type='B'/>
@@ -7571,6 +7679,40 @@
 <arg name='theEvent' declared_type='NSEvent*' type='@' index='0'/>
 <retval declared_type='BOOL' type='B'/>
 </method>
+</informal_protocol>
+<informal_protocol name='CCRGBAProtocol'>
+<method type64='{_ccColor3B=CCC}16@0:8' type='{_ccColor3B=CCC}8@0:4' selector='color'>
+<retval declared_type='ccColor3B' type='{_ccColor3B=CCC}'/>
+</method>
+<method type64='B16@0:8' type='B8@0:4' selector='doesOpacityModifyRGB'>
+<retval declared_type='BOOL' type='B'/>
+</method>
+<method type64='C16@0:8' type='C8@0:4' selector='opacity'>
+<retval declared_type='GLubyte' type='C'/>
+</method>
+<method type64='v19@0:8{_ccColor3B=CCC}16' type='v11@0:4{_ccColor3B=CCC}8' selector='setColor:'>
+<arg name='color' declared_type='ccColor3B' type='{_ccColor3B=CCC}' index='0'/>
+<retval declared_type='void' type='v'/>
+</method>
+<method type64='v20@0:8C16' type='v12@0:4C8' selector='setOpacity:'>
+<arg name='opacity' declared_type='GLubyte' type='C' index='0'/>
+<retval declared_type='void' type='v'/>
+</method>
+<method type64='v20@0:8B16' type='v12@0:4B8' selector='setOpacityModifyRGB:'>
+<arg name='boolean' declared_type='BOOL' type='B' index='0'/>
+<retval declared_type='void' type='v'/>
+</method>
+</informal_protocol>
+<informal_protocol name='CCTextureProtocol'>
+<method type64='v24@0:8@16' type='v12@0:4@8' selector='setTexture:'>
+<arg name='texture' declared_type='CCTexture2D*' type='@' index='0'/>
+<retval declared_type='void' type='v'/>
+</method>
+<method type64='@16@0:8' type='@8@0:4' selector='texture'>
+<retval declared_type='CCTexture2D*' type='@'/>
+</method>
+</informal_protocol>
+<informal_protocol name='CCTouchEventDelegate'>
 <method type64='B24@0:8@16' type='B12@0:4@8' selector='ccTouchesBeganWithEvent:'>
 <arg name='event' declared_type='NSEvent*' type='@' index='0'/>
 <retval declared_type='BOOL' type='B'/>
@@ -7587,128 +7729,11 @@
 <arg name='event' declared_type='NSEvent*' type='@' index='0'/>
 <retval declared_type='BOOL' type='B'/>
 </method>
-<method type64='{_ccColor3B=CCC}16@0:8' type='{_ccColor3B=CCC}8@0:4' selector='color'>
-<retval declared_type='ccColor3B' type='{_ccColor3B=CCC}'/>
-</method>
-<method type64='B16@0:8' type='B8@0:4' selector='doesOpacityModifyRGB'>
-<retval declared_type='BOOL' type='B'/>
-</method>
+</informal_protocol>
+<informal_protocol name='CCTransitionEaseScene'>
 <method type64='@24@0:8@16' type='@12@0:4@8' selector='easeActionWithAction:'>
 <arg name='action' declared_type='CCActionInterval*' type='@' index='0'/>
 <retval declared_type='CCActionInterval*' type='@'/>
-</method>
-<method type64='v24@0:8@16' type='v12@0:4@8' selector='flagsChanged:'>
-<arg name='theEvent' declared_type='NSEvent*' type='@' index='0'/>
-<retval declared_type='void' type='v'/>
-</method>
-<method type64='v24@0:8@16' type='v12@0:4@8' selector='keyDown:'>
-<arg name='theEvent' declared_type='NSEvent*' type='@' index='0'/>
-<retval declared_type='void' type='v'/>
-</method>
-<method type64='v24@0:8@16' type='v12@0:4@8' selector='keyUp:'>
-<arg name='theEvent' declared_type='NSEvent*' type='@' index='0'/>
-<retval declared_type='void' type='v'/>
-</method>
-<method type64='v24@0:8@16' type='v12@0:4@8' selector='mouseDown:'>
-<arg name='theEvent' declared_type='NSEvent*' type='@' index='0'/>
-<retval declared_type='void' type='v'/>
-</method>
-<method type64='v24@0:8@16' type='v12@0:4@8' selector='mouseDragged:'>
-<arg name='theEvent' declared_type='NSEvent*' type='@' index='0'/>
-<retval declared_type='void' type='v'/>
-</method>
-<method type64='v24@0:8@16' type='v12@0:4@8' selector='mouseEntered:'>
-<arg name='theEvent' declared_type='NSEvent*' type='@' index='0'/>
-<retval declared_type='void' type='v'/>
-</method>
-<method type64='v24@0:8@16' type='v12@0:4@8' selector='mouseExited:'>
-<arg name='theEvent' declared_type='NSEvent*' type='@' index='0'/>
-<retval declared_type='void' type='v'/>
-</method>
-<method type64='v24@0:8@16' type='v12@0:4@8' selector='mouseMoved:'>
-<arg name='theEvent' declared_type='NSEvent*' type='@' index='0'/>
-<retval declared_type='void' type='v'/>
-</method>
-<method type64='v24@0:8@16' type='v12@0:4@8' selector='mouseUp:'>
-<arg name='theEvent' declared_type='NSEvent*' type='@' index='0'/>
-<retval declared_type='void' type='v'/>
-</method>
-<method type64='C16@0:8' type='C8@0:4' selector='opacity'>
-<retval declared_type='GLubyte' type='C'/>
-</method>
-<method type64='v24@0:8@16' type='v12@0:4@8' selector='otherMouseDown:'>
-<arg name='event' declared_type='NSEvent*' type='@' index='0'/>
-<retval declared_type='void' type='v'/>
-</method>
-<method type64='v24@0:8@16' type='v12@0:4@8' selector='otherMouseDragged:'>
-<arg name='event' declared_type='NSEvent*' type='@' index='0'/>
-<retval declared_type='void' type='v'/>
-</method>
-<method type64='v24@0:8@16' type='v12@0:4@8' selector='otherMouseUp:'>
-<arg name='event' declared_type='NSEvent*' type='@' index='0'/>
-<retval declared_type='void' type='v'/>
-</method>
-<method type64='v24@0:8@16' type='v12@0:4@8' selector='rightMouseDown:'>
-<arg name='event' declared_type='NSEvent*' type='@' index='0'/>
-<retval declared_type='void' type='v'/>
-</method>
-<method type64='v24@0:8@16' type='v12@0:4@8' selector='rightMouseDragged:'>
-<arg name='event' declared_type='NSEvent*' type='@' index='0'/>
-<retval declared_type='void' type='v'/>
-</method>
-<method type64='v24@0:8@16' type='v12@0:4@8' selector='rightMouseUp:'>
-<arg name='event' declared_type='NSEvent*' type='@' index='0'/>
-<retval declared_type='void' type='v'/>
-</method>
-<method type64='v24@0:8@16' type='v12@0:4@8' selector='scrollWheel:'>
-<arg name='theEvent' declared_type='NSEvent*' type='@' index='0'/>
-<retval declared_type='void' type='v'/>
-</method>
-<method type64='v24@0:8{_ccBlendFunc=II}16' type='v16@0:4{_ccBlendFunc=II}8' selector='setBlendFunc:'>
-<arg name='blendFunc' declared_type='ccBlendFunc' type='{_ccBlendFunc=II}' index='0'/>
-<retval declared_type='void' type='v'/>
-</method>
-<method type64='v24@0:8*16' type='v12@0:4*8' selector='setCString:'>
-<arg name='label' declared_type='char*' type='*' index='0'/>
-<retval declared_type='void' type='v'/>
-</method>
-<method type64='v19@0:8{_ccColor3B=CCC}16' type='v11@0:4{_ccColor3B=CCC}8' selector='setColor:'>
-<arg name='color' declared_type='ccColor3B' type='{_ccColor3B=CCC}' index='0'/>
-<retval declared_type='void' type='v'/>
-</method>
-<method type64='v20@0:8C16' type='v12@0:4C8' selector='setOpacity:'>
-<arg name='opacity' declared_type='GLubyte' type='C' index='0'/>
-<retval declared_type='void' type='v'/>
-</method>
-<method type64='v20@0:8B16' type='v12@0:4B8' selector='setOpacityModifyRGB:'>
-<arg name='boolean' declared_type='BOOL' type='B' index='0'/>
-<retval declared_type='void' type='v'/>
-</method>
-<method type64='v24@0:8@16' type='v12@0:4@8' selector='setString:'>
-<arg name='label' declared_type='NSString*' type='@' index='0'/>
-<retval declared_type='void' type='v'/>
-</method>
-<method type64='@16@0:8' type='@8@0:4' selector='string'>
-<retval declared_type='NSString*' type='@'/>
-</method>
-<method type64='v24@0:8@16' type='v12@0:4@8' selector='touchesBeganWithEvent:'>
-<arg name='event' declared_type='NSEvent*' type='@' index='0'/>
-<retval declared_type='void' type='v'/>
-</method>
-<method type64='v24@0:8@16' type='v12@0:4@8' selector='touchesCancelledWithEvent:'>
-<arg name='event' declared_type='NSEvent*' type='@' index='0'/>
-<retval declared_type='void' type='v'/>
-</method>
-<method type64='v24@0:8@16' type='v12@0:4@8' selector='touchesEndedWithEvent:'>
-<arg name='event' declared_type='NSEvent*' type='@' index='0'/>
-<retval declared_type='void' type='v'/>
-</method>
-<method type64='v24@0:8@16' type='v12@0:4@8' selector='touchesMovedWithEvent:'>
-<arg name='event' declared_type='NSEvent*' type='@' index='0'/>
-<retval declared_type='void' type='v'/>
-</method>
-<method type64='v16@0:8' type='v8@0:4' selector='updateProjection'>
-<retval declared_type='void' type='v'/>
 </method>
 </informal_protocol>
 </signatures>
