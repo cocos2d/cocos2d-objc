@@ -123,9 +123,14 @@
 	
 	[[BridgeSupportController sharedController] loadBridgeSupport:cocos2dBridge];
 	
+	// Load cocos2d dylib
+	NSString *libPath = [fileUtils fullPathFromRelativePath:@"cocos2d-mac.dylib"];
+	dlopen([libPath UTF8String], RTLD_LAZY);
+
+	
 	// execute test
-//	NSString *path = [fileUtils fullPathFromRelativePath:@"js/test-action.js"];
-	NSString *path = [fileUtils fullPathFromRelativePath:@"js/test-sprite.js"];
+	NSString *path = [fileUtils fullPathFromRelativePath:@"js/test-action.js"];
+//	NSString *path = [fileUtils fullPathFromRelativePath:@"js/test-sprite.js"];
 	[javascriptController_ evalJSFile:path];
 }
 
