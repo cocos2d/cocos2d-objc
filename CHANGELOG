@@ -10,6 +10,7 @@ version 2.0-rc2 XX-May-2012
 . [FIX] MenuItem: setIsEnabled can be called before setting the images
 . [FIX] Particle: Handles premultipled images correctly
 		Fixed possible memory leak when changing textures.
+		Examples: Removed ARCH_OPTIMAL_PARTICLE_SYSTEM since PointParticle is no longer supported
 . [FIX] SpriteFrameCache: plist is not loaded again if it was already loaded (performance)
 . [FIX] Texture2d: JPEG are loaded correctly on iOS4 (re-re-fixed issue #886)
 		Improved iOS5 allocation bug warning and internal conversions.
