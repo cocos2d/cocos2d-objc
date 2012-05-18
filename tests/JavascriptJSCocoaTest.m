@@ -7,7 +7,7 @@
 #import "cocos2d.h"
 
 // local import
-#import "JavascriptTest.h"
+#import "JavascriptJSCocoaTest.h"
 
 #import "JSCocoa.h"
 
@@ -129,8 +129,8 @@
 
 	
 	// execute test
-	NSString *path = [fileUtils fullPathFromRelativePath:@"js/test-action.js"];
-//	NSString *path = [fileUtils fullPathFromRelativePath:@"js/test-sprite.js"];
+	NSString *path = [fileUtils fullPathFromRelativePath:@"javascript-jscocoa/test-action.js"];
+//	NSString *path = [fileUtils fullPathFromRelativePath:@"javascript-jscocoa/test-sprite.js"];
 	[javascriptController_ evalJSFile:path];
 }
 
