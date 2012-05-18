@@ -16,6 +16,7 @@ import os
 import re
 import getopt
 import glob
+import ast
 
 
 class ObjC(object):
@@ -25,7 +26,16 @@ class ObjC(object):
         self.output = output_file
         self.exception = exception_file
 
+    def parse_exception_file( self ):
+        if self.exception:
+            f = open( self.exception )
+            self.entries = ast.literal_eval( f.read() )
+            f.close()
+
     def parse( self ):
+
+        self.parse_exception_file()
+
         for filename in self.filenames:
             f = open( filename, 'r' )
             l = f.readlines()
