@@ -1,5 +1,5 @@
 //
-//  ScriptingCore.cpp
+//  ScriptingCore.m
 //  testmonkey
 //
 //  Created by Rolando Abarca on 3/14/12.
@@ -27,25 +27,25 @@ static void reportError(JSContext *cx, const char *message, JSErrorReport *repor
 
 #pragma mark ScriptingCore - Free JS functions
 
-static JSBool log(JSContext *cx, uint32_t argc, jsval *vp)
+JSBool ScriptingCore_log(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	if (argc > 0) {
 		JSString *string = NULL;
 		JS_ConvertArguments(cx, argc, JS_ARGV(cx, vp), "S", &string);
 		if (string) {
 			char *cstr = JS_EncodeString(cx, string);
-			cocos2d::CCLog(cstr);
+			CCLOG(@"%s", cstr);
 		}
 	}
 	return JS_TRUE;
 };
 
-static JSBool executeScript(JSContext *cx, uint32_t argc, jsval *vp)
+JSBool ScriptingCore_executeScript(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	if (argc == 1) {
 		JSString *string;
 		if (JS_ConvertArguments(cx, argc, JS_ARGV(cx, vp), "S", &string) == JS_TRUE) {
-			ScriptingCore::getInstance().runScript(JS_EncodeString(cx, string));
+			[[ScriptingCore sharedInstance]	runScript: [NSString stringWithCString:JS_EncodeString(cx, string) encoding:NSUTF8StringEncoding] ];
 		}
 	}
 	return JS_TRUE;
@@ -53,6 +53,20 @@ static JSBool executeScript(JSContext *cx, uint32_t argc, jsval *vp)
 
 
 @implementation ScriptingCore
+
+@synthesize globalObject = _object;
+@synthesize globalContext = _cx;
+@synthesize runtime = _rt;
+
++ (id)sharedInstance
+{
+	static dispatch_once_t pred;
+	static ScriptingCore *instance = nil;
+	dispatch_once(&pred, ^{
+		instance = [[self alloc] init];
+	});
+	return instance;
+}
 
 -(id) init
 {
@@ -75,19 +89,47 @@ static JSBool executeScript(JSContext *cx, uint32_t argc, jsval *vp)
 					  
 					  
 	  // register some global functions
-	  JS_DefineFunction(_cx, cocos, "log", log, 0, JSPROP_READONLY | JSPROP_PERMANENT);
-	  JS_DefineFunction(_cx, cocos, "executeScript", executeScript, 1, JSPROP_READONLY | JSPROP_PERMANENT);
-	  JS_DefineFunction(_cx, cocos, "addGCRootObject", ScriptingCore::addRootJS, 1, JSPROP_READONLY | JSPROP_PERMANENT);
-	  JS_DefineFunction(_cx, cocos, "removeGCRootObject", ScriptingCore::removeRootJS, 1, JSPROP_READONLY | JSPROP_PERMANENT);
-	  JS_DefineFunction(_cx, cocos, "forceGC", ScriptingCore::forceGC, 0, JSPROP_READONLY | JSPROP_PERMANENT);
+	  JS_DefineFunction(_cx, cocos, "log", ScriptingCore_log, 0, JSPROP_READONLY | JSPROP_PERMANENT);
+	  JS_DefineFunction(_cx, cocos, "executeScript", ScriptingCore_executeScript, 1, JSPROP_READONLY | JSPROP_PERMANENT);
+//	  JS_DefineFunction(_cx, cocos, "addGCRootObject", ScriptingCore::addRootJS, 1, JSPROP_READONLY | JSPROP_PERMANENT);
+//	  JS_DefineFunction(_cx, cocos, "removeGCRootObject", ScriptingCore::removeRootJS, 1, JSPROP_READONLY | JSPROP_PERMANENT);
+//	  JS_DefineFunction(_cx, cocos, "forceGC", ScriptingCore::forceGC, 0, JSPROP_READONLY | JSPROP_PERMANENT);
 	}
 	
 	return self;
 }
 
++(void) reportErrorWithContext:(JSContext*)cx message:(NSString*)message report:(JSErrorReport*)report
+{
+	
+}
 
++(JSBool) logWithContext:(JSContext*)cx argc:(uint32_t)argc vp:(jsval*)vp
+{
+	return JS_TRUE;	
+}
 
--(BOOL) evalString(NSString*)string outval:(jsval*)outVal
++(JSBool) executeScriptWithContext:(JSContext*)cx argc:(uint32_t)argc vp:(jsval*)vp
+{
+	return JS_TRUE;	
+}
+
++(JSBool) addRootJSWithContext:(JSContext*)cx argc:(uint32_t)argc vp:(jsval*)vp
+{
+	return JS_TRUE;
+}
+
++(JSBool) removeRootJSWithContext:(JSContext*)cx argc:(uint32_t)argc vp:(jsval*)vp
+{
+	return JS_TRUE;	
+}
+
++(JSBool) forceGCWithContext:(JSContext*)cx argc:(uint32_t)argc vp:(jsval*)vp
+{
+	return JS_TRUE;
+}
+
+-(BOOL) evalString:(NSString*)string outVal:(jsval*)outVal
 {
 	jsval rval;
 	JSString *str;
@@ -97,16 +139,18 @@ static JSBool executeScript(JSContext *cx, uint32_t argc, jsval *vp)
 	if (outVal == NULL) {
 		outVal = &rval;
 	}
-	ok = JS_EvaluateScript( _cx, _object, [string UTF8Char], strlen([string UTF8Char]), filename, lineno, outVal);
+	const char *cstr = [string UTF8String];
+	ok = JS_EvaluateScript( _cx, _object, cstr, strlen(cstr), filename, lineno, outVal);
 	if (ok == JS_FALSE) {
-		CCLog("error evaluating script:\n%s", string);
+		CCLOGWARN(@"error evaluating script:%@", string);
 	}
-	str = JS_ValueToString(cx, rval);
+	str = JS_ValueToString( _cx, rval);
 	return ok;
 }
 
 -(void) runScript:(NSString*)filename
 {
+	CCFileUtils *fileUtils = [CCFileUtils sharedFileUtils];
 #ifdef DEBUG
 	/**
 	 * dpath should point to the parent directory of the "JS" folder. If this is
@@ -118,18 +162,18 @@ static JSBool executeScript(JSContext *cx, uint32_t argc, jsval *vp)
 //	std::string dpath("/Users/rabarca/Desktop/testjs/testjs/");
 //	std::string dpath("");
 //	dpath += path;
-	NSString fullpath = [[CCFileUtils sharedFileUtils] fullPathFromRelativePath:filename];
+	NSString *fullpath = [fileUtils fullPathFromRelativePath:filename];
 #else
-	NSString fullpath = [[CCFileUtils sharedFileUtils] fullPathFromRelativePath:filename];
+	NSString *fullpath = [fileUtils fullPathFromRelativePath:filename];
 #endif
 	unsigned char *content = NULL;
-	size_t contentSize = CCFileUtils::ccLoadFileIntoMemory(realPath, &content);
+	size_t contentSize = ccLoadFileIntoMemory([fullpath UTF8String], &content);
 	if (content && contentSize) {
 		JSBool ok;
 		jsval rval;
-		ok = JS_EvaluateScript(this->cx, this->global, (char *)content, contentSize, path, 1, &rval);
+		ok = JS_EvaluateScript( _cx, _object, (char *)content, contentSize, [filename UTF8String], 1, &rval);
 		if (ok == JS_FALSE) {
-			CCLog("error evaluating script:\n%s", content);
+			CCLOGWARN(@"error evaluating script: %@", filename);
 		}
 		free(content);
 	}
@@ -143,3 +187,4 @@ static JSBool executeScript(JSContext *cx, uint32_t argc, jsval *vp)
 	JS_DestroyRuntime(_rt);
 	JS_ShutDown();
 }
+@end

@@ -26,7 +26,7 @@
 
 
 /** returns the shared instance */
-+(ScriptingCore*) sharedManager;
++(ScriptingCore*) sharedInstance;
 
 /**
  * @param cx
@@ -46,7 +46,7 @@
 /**
  * run a script from script :)
  */
-+(JSBool) executeScriptWithContext:(JSContext*)cx arcc:uint32_t)argc vp:(jsval*)vp;
++(JSBool) executeScriptWithContext:(JSContext*)cx argc:(uint32_t)argc vp:(jsval*)vp;
 
 /**
  * Register an object as a member of the GC's root set, preventing
@@ -80,6 +80,6 @@
  * will run the specified string
  * @param string The path of the script to be run
  */
--(void) runScript:(NSString*)filename
+-(void) runScript:(NSString*)filename;
 
 @end
