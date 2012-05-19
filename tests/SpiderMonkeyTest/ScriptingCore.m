@@ -2,12 +2,11 @@
 //  ScriptingCore.m
 //  testmonkey
 //
-//  Created by Rolando Abarca on 3/14/12.
-//  Copyright (c) 2012 Zynga Inc. All rights reserved.
-//
 
-#include "cocos2d.h"
-#include "ScriptingCore.h"
+
+#import "cocos2d.h"
+#import "ScriptingCore.h"
+#import "cocos2d_js_bindings.h"
 
 static JSClass global_class = {
 	"global", JSCLASS_GLOBAL_FLAGS,
@@ -51,6 +50,45 @@ JSBool ScriptingCore_executeScript(JSContext *cx, uint32_t argc, jsval *vp)
 	return JS_TRUE;
 };
 
+/* Register an object as a member of the GC's root set, preventing them from being GC'ed */
+JSBool ScriptingCore_addRootJS(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	if (argc == 1) {
+		JSObject *o = NULL;
+		if (JS_ConvertArguments(cx, argc, JS_ARGV(cx, vp), "o", &o) == JS_TRUE) {
+			if (JS_AddObjectRoot(cx, &o) == JS_FALSE) {
+				CCLOGWARN(@"something went wrong when setting an object to the root");
+			}
+		}
+	}
+	return JS_TRUE;
+};
+
+/*
+ * removes an object from the GC's root, allowing them to be GC'ed if no
+ * longer referenced.
+ */
+JSBool ScriptingCore_removeRootJS(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	if (argc == 1) {
+		JSObject *o = NULL;
+		if (JS_ConvertArguments(cx, argc, JS_ARGV(cx, vp), "o", &o) == JS_TRUE) {
+			JS_RemoveObjectRoot(cx, &o);
+		}
+	}
+	return JS_TRUE;
+};
+
+/*
+ * Force a cycle of GC
+ */
+JSBool ScriptingCore_forceGC(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	JS_GC(cx);
+	return JS_TRUE;
+};
+
+
 
 @implementation ScriptingCore
 
@@ -85,15 +123,17 @@ JSBool ScriptingCore_executeScript(JSContext *cx, uint32_t argc, jsval *vp)
 		// create the cocos namespace
 		JSObject *cocos = JS_NewObject( _cx, NULL, NULL, NULL);
 		jsval cocosVal = OBJECT_TO_JSVAL(cocos);
-		JS_SetProperty(_cx, _object, "cocos", &cocosVal);
+		JS_SetProperty(_cx, _object, "cc", &cocosVal);
 					  
-					  
-	  // register some global functions
-	  JS_DefineFunction(_cx, cocos, "log", ScriptingCore_log, 0, JSPROP_READONLY | JSPROP_PERMANENT);
-	  JS_DefineFunction(_cx, cocos, "executeScript", ScriptingCore_executeScript, 1, JSPROP_READONLY | JSPROP_PERMANENT);
-//	  JS_DefineFunction(_cx, cocos, "addGCRootObject", ScriptingCore::addRootJS, 1, JSPROP_READONLY | JSPROP_PERMANENT);
-//	  JS_DefineFunction(_cx, cocos, "removeGCRootObject", ScriptingCore::removeRootJS, 1, JSPROP_READONLY | JSPROP_PERMANENT);
-//	  JS_DefineFunction(_cx, cocos, "forceGC", ScriptingCore::forceGC, 0, JSPROP_READONLY | JSPROP_PERMANENT);
+		// register some global functions
+		JS_DefineFunction(_cx, cocos, "log", ScriptingCore_log, 0, JSPROP_READONLY | JSPROP_PERMANENT);
+		JS_DefineFunction(_cx, cocos, "executeScript", ScriptingCore_executeScript, 1, JSPROP_READONLY | JSPROP_PERMANENT);
+		JS_DefineFunction(_cx, cocos, "addGCRootObject", ScriptingCore_addRootJS, 1, JSPROP_READONLY | JSPROP_PERMANENT);
+		JS_DefineFunction(_cx, cocos, "removeGCRootObject", ScriptingCore_removeRootJS, 1, JSPROP_READONLY | JSPROP_PERMANENT);
+		JS_DefineFunction(_cx, cocos, "forceGC", ScriptingCore_forceGC, 0, JSPROP_READONLY | JSPROP_PERMANENT);
+		
+		// Register classes
+		[JS_CCNode createClassWithContext:_cx object:cocos name:@"Node"];
 	}
 	
 	return self;

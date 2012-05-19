@@ -132,77 +132,6 @@ static JSClass global_class = {
 
 @implementation AppController
 
--(BOOL) testSpiderMonkey
-{
-	/* JSAPI variables. */  
-	JSRuntime *rt;  
-	JSContext *cx;  
-	JSObject  *global;  
-	
-	/* Create a JS runtime. You always need at least one runtime per process. */  
-	rt = JS_NewRuntime(8 * 1024 * 1024);  
-	if (rt == NULL)  
-		return NO;
-	
-	/*  
-	 * Create a context. You always need a context per thread. 
-	 * Note that this program is not multi-threaded. 
-	 */  
-	cx = JS_NewContext(rt, 8192);  
-	if (cx == NULL)  
-		return NO;
-
-	JS_SetOptions(cx, JSOPTION_VAROBJFIX | /* JSOPTION_JIT | */ JSOPTION_METHODJIT);  
-	JS_SetVersion(cx, JSVERSION_LATEST);  
-	JS_SetErrorReporter(cx, reportError);  
-	
-	/* 
-	 * Create the global object in a new compartment. 
-	 * You always need a global object per context. 
-	 */  
-	global = JS_NewCompartmentAndGlobalObject(cx, &global_class, NULL);  
-	if (global == NULL)  
-		return NO;
-	
-	/* 
-	 * Populate the global object with the standard JavaScript 
-	 * function and object classes, such as Object, Array, Date. 
-	 */  
-	if (!JS_InitStandardClasses(cx, global))  
-		return NO;
-	
-	/* Your application code here. This may include JSAPI calls 
-	 * to create your own custom JavaScript objects and to run scripts. 
-	 * 
-	 * The following example code creates a literal JavaScript script, 
-	 * evaluates it, and prints the result to stdout. 
-	 * 
-	 * Errors are conventionally saved in a JSBool variable named ok. 
-	 */  
-	char *script = "'Hello ' + 'World!'";  
-	jsval rval;  
-	JSString *str;  
-	JSBool ok;  
-	const char *filename = "noname";  
-	uint lineno = 0;  
-	
-	ok = JS_EvaluateScript(cx, global, script, strlen(script),  
-						   filename, lineno, &rval);  
-//	if (rval == NULL | rval == JS_FALSE)  
-//		return NO;
-	
-	str = JS_ValueToString(cx, rval);  
-	printf("%s\n", JS_EncodeString(cx, str));  
-	
-	/* End of your application code */  
-	
-	/* Clean things up and shut down SpiderMonkey. */  
-	JS_DestroyContext(cx);  
-	JS_DestroyRuntime(rt);  
-	JS_ShutDown();  
-	return YES;
-}
-
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
 	[super applicationDidFinishLaunching:aNotification];
@@ -211,9 +140,8 @@ static JSClass global_class = {
 //	CCFileUtils *fileUtils = [CCFileUtils sharedFileUtils];
 //	NSString *libPath = [fileUtils fullPathFromRelativePath:@"libmozjs.dylib"];
 //	dlopen([libPath UTF8String], RTLD_NOW | RTLD_GLOBAL);
-	
-	
-	[self testSpiderMonkey];
+
+	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/test.js"];
 }
 
 -(void)dealloc
