@@ -16,6 +16,26 @@
 // SpiderMonkey
 #include "jsapi.h"  
 
+@interface Test : CCLayer
+@end
+
+@implementation Test
+-(void) onEnter
+{
+	[super onEnter];
+		
+	CGSize s = [[CCDirector sharedDirector] winSize];
+	
+	CCSprite *sprite = [CCSprite spriteWithFile:@"grossini.png"];
+	
+	[sprite setPosition:ccp( s.width/2, s.height/2) ];
+	
+	[self addChild:sprite];
+	
+	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/test.js"];	
+}
+@end
+
 #pragma mark - AppDelegate - iOS
 
 // CLASS IMPLEMENTATIONS
@@ -141,12 +161,17 @@ static JSClass global_class = {
 //	NSString *libPath = [fileUtils fullPathFromRelativePath:@"libmozjs.dylib"];
 //	dlopen([libPath UTF8String], RTLD_NOW | RTLD_GLOBAL);
 
-	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/test.js"];
+	CCScene *scene = [CCScene node];
+	Test *test = [Test node];
+	
+	[scene addChild:test];
+	
+	[[CCDirector sharedDirector] runWithScene:scene];
+//	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/test.js"];
 }
 
 -(void)dealloc
 {
-
 	[super dealloc];
 }
 @end

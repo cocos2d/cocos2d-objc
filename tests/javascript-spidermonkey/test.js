@@ -6,3 +6,12 @@
 
 
 cc.log('Hello World');
+
+a = new cc.Node();
+a.init();
+
+a.onEnter = function() {
+	cc.log("On Enter called");
+}
+
+cc.addToRunningScene( a );
