@@ -2267,6 +2267,7 @@
 		A0C491ED146F8CA500C4C037 /* arrowsBar-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = A0C491E9146F8CA500C4C037 /* arrowsBar-hd.png */; };
 		A0C491EE146F8CA500C4C037 /* arrowsBar.png in Resources */ = {isa = PBXBuildFile; fileRef = A0C491EA146F8CA500C4C037 /* arrowsBar.png */; };
 		A0C879AD14F98F1C00C0E8B2 /* NSThread+performBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C879AC14F98F1C00C0E8B2 /* NSThread+performBlock.m */; };
+		A0CBEC21156ABF3B009D35B4 /* JRSwizzle.m in Sources */ = {isa = PBXBuildFile; fileRef = A0CBEC1F156ABF3B009D35B4 /* JRSwizzle.m */; };
 		A0DB13D814FC2B8500F7CC49 /* konqa32.fnt in Resources */ = {isa = PBXBuildFile; fileRef = E0C60679128ECC110099367C /* konqa32.fnt */; };
 		A0DB13D914FC2B8500F7CC49 /* konqa32.png in Resources */ = {isa = PBXBuildFile; fileRef = E0C6067A128ECC110099367C /* konqa32.png */; };
 		A0DB13DC14FC355300F7CC49 /* konqa32-hd.fnt in Resources */ = {isa = PBXBuildFile; fileRef = E0C60677128ECC110099367C /* konqa32-hd.fnt */; };
@@ -6189,6 +6190,9 @@
 		A0C491EA146F8CA500C4C037 /* arrowsBar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrowsBar.png; sourceTree = "<group>"; };
 		A0C879AB14F98F0200C0E8B2 /* NSThread+performBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSThread+performBlock.h"; sourceTree = "<group>"; };
 		A0C879AC14F98F1C00C0E8B2 /* NSThread+performBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSThread+performBlock.m"; sourceTree = "<group>"; };
+		A0CBEC1E156ABF3B009D35B4 /* JRSwizzle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRSwizzle.h; sourceTree = "<group>"; };
+		A0CBEC1F156ABF3B009D35B4 /* JRSwizzle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRSwizzle.m; sourceTree = "<group>"; };
+		A0CBEC20156ABF3B009D35B4 /* README.markdown */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.markdown; sourceTree = "<group>"; };
 		A0DB13DA14FC305900F7CC49 /* example_HorizontalColor.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_HorizontalColor.fsh; sourceTree = "<group>"; };
 		A0DB13DE14FC418100F7CC49 /* west_england-64.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "west_england-64.fnt"; sourceTree = "<group>"; };
 		A0DB13DF14FC418100F7CC49 /* west_england-64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "west_england-64.png"; sourceTree = "<group>"; };
@@ -7754,6 +7758,17 @@
 			path = gl_utils;
 			sourceTree = "<group>";
 		};
+		A0CBEC1D156ABF3B009D35B4 /* JRSwizzle */ = {
+			isa = PBXGroup;
+			children = (
+				A0CBEC1E156ABF3B009D35B4 /* JRSwizzle.h */,
+				A0CBEC1F156ABF3B009D35B4 /* JRSwizzle.m */,
+				A0CBEC20156ABF3B009D35B4 /* README.markdown */,
+			);
+			name = JRSwizzle;
+			path = external/JRSwizzle;
+			sourceTree = "<group>";
+		};
 		A0EC4CA11403278200EC482A /* Shaders */ = {
 			isa = PBXGroup;
 			children = (
@@ -8460,6 +8475,7 @@
 		E076EF801225FF3E00DE0DA2 /* external */ = {
 			isa = PBXGroup;
 			children = (
+				A0CBEC1D156ABF3B009D35B4 /* JRSwizzle */,
 				A09C8D491566FC7300ADFDA9 /* spidermonkey */,
 				A03416E01548801100AE4D93 /* JSCocoa */,
 				A044416314A5158500E62742 /* Box2D */,
@@ -14384,6 +14400,7 @@
 				A09C8D90156715F700ADFDA9 /* JavascriptSpidermonkey.m in Sources */,
 				A09C8D931567165B00ADFDA9 /* ScriptingCore.m in Sources */,
 				A09C8D961567634500ADFDA9 /* cocos2d_js_bindings.m in Sources */,
+				A0CBEC21156ABF3B009D35B4 /* JRSwizzle.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

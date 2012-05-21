@@ -88,6 +88,24 @@ JSBool ScriptingCore_forceGC(JSContext *cx, uint32_t argc, jsval *vp)
 	return JS_TRUE;
 };
 
+JSBool ScriptingCore_addToRunningScene(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	if (argc == 1) {
+		JSObject *o = NULL;
+		if (JS_ConvertArguments(cx, argc, JS_ARGV(cx, vp), "o", &o) == JS_TRUE) {
+			JS_CCNode *proxy = JS_GetPrivate(o);
+			CCNode *node = [proxy realObj];
+
+			CCDirector *director = [CCDirector sharedDirector];
+			
+			[[director runningScene] walkSceneGraph:0];
+			[[director runningScene] addChild:node];
+			[[director runningScene] walkSceneGraph:0];
+		}
+	}
+	return JS_TRUE;
+};
+
 
 
 @implementation ScriptingCore
@@ -124,13 +142,14 @@ JSBool ScriptingCore_forceGC(JSContext *cx, uint32_t argc, jsval *vp)
 		JSObject *cocos = JS_NewObject( _cx, NULL, NULL, NULL);
 		jsval cocosVal = OBJECT_TO_JSVAL(cocos);
 		JS_SetProperty(_cx, _object, "cc", &cocosVal);
-					  
+
 		// register some global functions
 		JS_DefineFunction(_cx, cocos, "log", ScriptingCore_log, 0, JSPROP_READONLY | JSPROP_PERMANENT);
 		JS_DefineFunction(_cx, cocos, "executeScript", ScriptingCore_executeScript, 1, JSPROP_READONLY | JSPROP_PERMANENT);
 		JS_DefineFunction(_cx, cocos, "addGCRootObject", ScriptingCore_addRootJS, 1, JSPROP_READONLY | JSPROP_PERMANENT);
 		JS_DefineFunction(_cx, cocos, "removeGCRootObject", ScriptingCore_removeRootJS, 1, JSPROP_READONLY | JSPROP_PERMANENT);
 		JS_DefineFunction(_cx, cocos, "forceGC", ScriptingCore_forceGC, 0, JSPROP_READONLY | JSPROP_PERMANENT);
+		JS_DefineFunction(_cx, cocos, "addToRunningScene", ScriptingCore_addToRunningScene, 1, JSPROP_READONLY | JSPROP_PERMANENT);
 		
 		// Register classes
 		[JS_CCNode createClassWithContext:_cx object:cocos name:@"Node"];

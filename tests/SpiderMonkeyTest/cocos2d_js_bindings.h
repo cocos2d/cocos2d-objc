@@ -2,16 +2,32 @@
 
 @interface JS_NSObject : NSObject
 {
-	JSObject *_jsobj;
+	JSObject	*_jsObj;
+	id			_realObj;
+	BOOL		_initialized;
 }
--(id) initWithObject:(JSObject*)object;
+
+@property (readonly) JSObject *jsObj;
+@property (readonly) id	realObj;
+@property (nonatomic, readwrite, getter = isInitialized) BOOL initialized;
+
+-(id) initWithJSObject:(JSObject*)object andRealObject:(id)realObject;
 +(void) createClassWithContext:(JSContext*)cx object:(JSObject*)globalObj name:(NSString*)name;
 @end
 
 @interface JS_CCNode : JS_NSObject
 {
-	JSClass *jsClass;
-	JSObject *jsObject;
 }
+
+// callbacks
+-(void) onEnter;
+-(void) onExit;
+
+@end
+
+@interface CCNode (SpiderMonkey)
+
+-(void) onEnter_JS;
+-(void) onExit_JS;
 
 @end
