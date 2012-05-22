@@ -1,6 +1,6 @@
 #include "ScriptingCore.h"
 
-@interface JS_NSObject : NSObject
+@interface ProxyJS_NSObject : NSObject
 {
 	JSObject	*_jsObj;
 	id			_realObj;
@@ -13,21 +13,4 @@
 
 -(id) initWithJSObject:(JSObject*)object andRealObject:(id)realObject;
 +(void) createClassWithContext:(JSContext*)cx object:(JSObject*)globalObj name:(NSString*)name;
-@end
-
-@interface JS_CCNode : JS_NSObject
-{
-}
-
-// callbacks
--(void) onEnter;
--(void) onExit;
-
-@end
-
-@interface CCNode (SpiderMonkey)
-
--(void) onEnter_JS;
--(void) onExit_JS;
-
 @end
