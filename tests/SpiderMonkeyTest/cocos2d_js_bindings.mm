@@ -1,4 +1,6 @@
 
+#import "jstypedarray.h"
+
 #import "cocos2d_js_bindings.h"
 #import <objc/runtime.h>
 #import "JRSwizzle.h"
@@ -114,10 +116,10 @@ void CCNode_jsFinalize(JSContext *cx, JSObject *obj)
 }
 
 // Methods
-JSBool CCNode_jsinit(JSContext *cx, uint32_t argc, jsval *vp) {
+JSBool CCNode_init(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JS_CCNode* proxy = JS_GetPrivate( obj );
+	JS_CCNode* proxy = (JS_CCNode*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( ! [proxy isInitialized], @"Object already initialzied. error");
 
@@ -135,10 +137,10 @@ JSBool CCNode_jsinit(JSContext *cx, uint32_t argc, jsval *vp) {
 	return JS_TRUE;
 }
 
-JSBool CCNode_jsaddChild(JSContext *cx, uint32_t argc, jsval *vp) {
+JSBool CCNode_addChild(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JS_CCNode* proxy = JS_GetPrivate( obj );
+	JS_CCNode* proxy = (JS_CCNode*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy isInitialized], @"Object not initialzied. error");
 
@@ -151,7 +153,7 @@ JSBool CCNode_jsaddChild(JSContext *cx, uint32_t argc, jsval *vp) {
 		int tag = 0;
 		JS_ConvertArguments(cx, 1, JS_ARGV(cx, vp), "o/ii", &arg0, &zorder, &tag);
 		
-		JS_CCNode *arg0_proxy = JS_GetPrivate( arg0 );
+		JS_CCNode *arg0_proxy = (JS_CCNode*) JS_GetPrivate( arg0 );
 		CCNode *arg0_real = (CCNode*) [arg0_proxy realObj];
 		
 		// if no zorder / tag, then just get the values from the node
@@ -175,6 +177,65 @@ JSBool CCNode_jsaddChild(JSContext *cx, uint32_t argc, jsval *vp) {
 }
 
 
+JSBool CCNode_setPosition(JSContext *cx, uint32_t argc, jsval *vp) {
+	
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JS_CCNode* proxy = (JS_CCNode*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy isInitialized], @"Object not initialzied. error");
+	
+	CCNode* real = (CCNode*)[proxy realObj];
+	NSCAssert( real, @"Invalid JS object");
+
+	NSCAssert1( argc == 1, @"Invalid number of arguments: %d", argc );
+
+	JSObject *arg0;
+	if (JS_ConvertArguments(cx, argc, JS_ARGV(cx, vp), "o", &arg0) == JS_TRUE) {
+		
+		NSCAssert( JS_GetTypedArrayByteLength( arg0 ) == 8, @"Invalid length");
+		float *buffer = (float*)JS_GetTypedArrayData(arg0);
+		
+		[real setPosition:ccp(buffer[0], buffer[1])];
+		
+	}
+	return JS_TRUE;
+}
+
+JSBool CCNode_getPosition(JSContext *cx, uint32_t argc, jsval *vp) {
+	
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JS_CCNode* proxy = (JS_CCNode*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy isInitialized], @"Object not initialzied. error");
+	
+	CCNode* real = (CCNode*)[proxy realObj];
+	NSCAssert( real, @"Invalid JS object");
+	
+	NSCAssert1( argc == 0, @"Invalid number of arguments: %d", argc );
+	
+	
+//	JSObject* obj0 = JS_NewObject(cx, NULL, NULL, NULL);
+//	NSCAssert( obj0, "Could not create obj");
+	
+//	JS_SetProperty(cx, ret, "width", &w);
+//	JS_SetProperty(cx, ret, "height", &h);
+//	JS_SetProperty(cx, ret, "data", &data);
+//	js::TypedArray *tdest = js::TypedArray::fromJSObject( ret );
+
+//	JSObject *ret = JS_NewFloat32ArrayFromArray()
+//	JSObject *ret = JS_NewArrayBuffer(cx, 8);
+//	NSCAssert( ret, @"Could not create TypedArray");
+//
+//	float *buffer = (float*)JS_GetTypedArrayData(ret);
+//	CGPoint p = [real position];
+//	buffer[0] = p.x;
+//	buffer[1] = p.y;
+//	
+//	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(ret));
+
+	return JS_TRUE;
+}
+
 
 +(void) createClassWithContext:(JSContext*)cx object:(JSObject*)globalObj name:(NSString*)name
 {
@@ -197,8 +258,11 @@ JSBool CCNode_jsaddChild(JSContext *cx, uint32_t argc, jsval *vp) {
 //	};
 	
 	static JSFunctionSpec funcs[] = {
-		JS_FN("addChild", CCNode_jsaddChild, 1, JSPROP_PERMANENT | JSPROP_SHARED),
-		JS_FN("init", CCNode_jsinit, 1, JSPROP_PERMANENT | JSPROP_SHARED),
+		JS_FN("addChild", CCNode_addChild, 1, JSPROP_PERMANENT | JSPROP_SHARED),
+		JS_FN("init", CCNode_init, 1, JSPROP_PERMANENT | JSPROP_SHARED),
+		JS_FN("setPosition", CCNode_setPosition, 1, JSPROP_PERMANENT | JSPROP_SHARED),
+		JS_FN("getPosition", CCNode_getPosition, 0, JSPROP_PERMANENT | JSPROP_SHARED),
+
 //		JS_FN("initWithDuration", S_CCAnimate::jsinitWithDuration, 3, JSPROP_PERMANENT | JSPROP_SHARED),
 //		JS_FN("startWithTarget", S_CCAnimate::jsstartWithTarget, 1, JSPROP_PERMANENT | JSPROP_SHARED),
 //		JS_FN("stop", S_CCAnimate::jsstop, 0, JSPROP_PERMANENT | JSPROP_SHARED),
