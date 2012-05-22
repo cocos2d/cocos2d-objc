@@ -1,46 +1,10 @@
 
 #import "jstypedarray.h"
 
-#import "cocos2d_js_bindings.h"
+#import "js_bindings_cocos2d.h"
 #import <objc/runtime.h>
 #import "JRSwizzle.h"
-
-
-#pragma mark - JS_NSObject
-
-@implementation JS_NSObject
-
-@synthesize jsObj = _jsObj;
-@synthesize realObj = _realObj;
-@synthesize initialized = _initialized;
-
-+(void) createClassWithContext:(JSContext*)cx object:(JSObject*)globalObj name:(NSString*)name
-{
-}
-
--(id) initWithJSObject:(JSObject*)object andRealObject:(id)realObject
-{
-	self = [super init];
-	if( self )
-	{
-		_jsObj = object;
-		_realObj = [realObject retain];
-		_initialized = NO;
-	}
-	
-	return self;
-}
-
--(void) dealloc
-{
-	CCLOGINFO(@"deallocing: %@", self);
-	
-	[_realObj release];
-	
-	[super dealloc];
-}
-
-@end
+#import "ScriptingCore.h"
 
 
 #pragma mark - CCNode Swizzle
@@ -50,7 +14,7 @@
 static char CCNode_JS_proxy_key;
 -(void) onEnter_JS
 {
-	JS_CCNode *proxy = objc_getAssociatedObject(self, &CCNode_JS_proxy_key);
+	ProxyJS_CCNode *proxy = objc_getAssociatedObject(self, &CCNode_JS_proxy_key);
 	if( proxy )
 		[proxy onEnter];
 	
@@ -59,7 +23,7 @@ static char CCNode_JS_proxy_key;
 
 -(void) onExit_JS
 {
-	JS_CCNode *proxy = objc_getAssociatedObject(self, &CCNode_JS_proxy_key);
+	ProxyJS_CCNode *proxy = objc_getAssociatedObject(self, &CCNode_JS_proxy_key);
 	if( proxy )
 		[proxy onExit];
 	
@@ -67,9 +31,9 @@ static char CCNode_JS_proxy_key;
 }
 @end
 
-#pragma mark - JS_CCNode
+#pragma mark - ProxyJS_CCNode
 
-@implementation JS_CCNode
+@implementation ProxyJS_CCNode
 
 JSClass* CCNode_jsClass = NULL;
 JSObject* CCNode_jsObject = NULL;
@@ -86,7 +50,7 @@ JSBool CCNode_jsConstructor(JSContext *cx, uint32_t argc, jsval *vp)
 	if( ! [CCNode jr_swizzleMethod:@selector(onExit) withMethod:@selector(onExit_JS) error:&error] )
 		NSLog(@"Error swizzling %@", error);
 
-	JS_CCNode *proxy = [[JS_CCNode alloc] initWithJSObject:jsobj andRealObject:realObj];
+	ProxyJS_CCNode *proxy = [[ProxyJS_CCNode alloc] initWithJSObject:jsobj andRealObject:realObj];
 
 	[realObj release];
 
@@ -101,7 +65,7 @@ JSBool CCNode_jsConstructor(JSContext *cx, uint32_t argc, jsval *vp)
 // Destructor
 void CCNode_jsFinalize(JSContext *cx, JSObject *obj)
 {
-	JS_CCNode *pt = (JS_CCNode*)JS_GetPrivate(obj);
+	ProxyJS_CCNode *pt = (ProxyJS_CCNode*)JS_GetPrivate(obj);
 	if (pt) {
 		id real = [pt realObj];
 		
@@ -119,7 +83,7 @@ void CCNode_jsFinalize(JSContext *cx, JSObject *obj)
 JSBool CCNode_init(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JS_CCNode* proxy = (JS_CCNode*) JS_GetPrivate( obj );
+	ProxyJS_CCNode* proxy = (ProxyJS_CCNode*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( ! [proxy isInitialized], @"Object already initialzied. error");
 
@@ -140,7 +104,7 @@ JSBool CCNode_init(JSContext *cx, uint32_t argc, jsval *vp) {
 JSBool CCNode_addChild(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JS_CCNode* proxy = (JS_CCNode*) JS_GetPrivate( obj );
+	ProxyJS_CCNode* proxy = (ProxyJS_CCNode*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy isInitialized], @"Object not initialzied. error");
 
@@ -153,7 +117,7 @@ JSBool CCNode_addChild(JSContext *cx, uint32_t argc, jsval *vp) {
 		int tag = 0;
 		JS_ConvertArguments(cx, 1, JS_ARGV(cx, vp), "o/ii", &arg0, &zorder, &tag);
 		
-		JS_CCNode *arg0_proxy = (JS_CCNode*) JS_GetPrivate( arg0 );
+		ProxyJS_CCNode *arg0_proxy = (ProxyJS_CCNode*) JS_GetPrivate( arg0 );
 		CCNode *arg0_real = (CCNode*) [arg0_proxy realObj];
 		
 		// if no zorder / tag, then just get the values from the node
@@ -180,7 +144,7 @@ JSBool CCNode_addChild(JSContext *cx, uint32_t argc, jsval *vp) {
 JSBool CCNode_setPosition(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JS_CCNode* proxy = (JS_CCNode*) JS_GetPrivate( obj );
+	ProxyJS_CCNode* proxy = (ProxyJS_CCNode*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy isInitialized], @"Object not initialzied. error");
 	
@@ -204,7 +168,7 @@ JSBool CCNode_setPosition(JSContext *cx, uint32_t argc, jsval *vp) {
 JSBool CCNode_getPosition(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JS_CCNode* proxy = (JS_CCNode*) JS_GetPrivate( obj );
+	ProxyJS_CCNode* proxy = (ProxyJS_CCNode*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy isInitialized], @"Object not initialzied. error");
 	
@@ -213,25 +177,16 @@ JSBool CCNode_getPosition(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	NSCAssert1( argc == 0, @"Invalid number of arguments: %d", argc );
 	
-	
-//	JSObject* obj0 = JS_NewObject(cx, NULL, NULL, NULL);
-//	NSCAssert( obj0, "Could not create obj");
-	
-//	JS_SetProperty(cx, ret, "width", &w);
-//	JS_SetProperty(cx, ret, "height", &h);
-//	JS_SetProperty(cx, ret, "data", &data);
-//	js::TypedArray *tdest = js::TypedArray::fromJSObject( ret );
+	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 2 );
+	float *buffer = (float*)JS_GetTypedArrayData(typedArray);
+	CGPoint p = [real position];
+	buffer[0] = p.x;
+	buffer[1] = p.y;
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(typedArray));
 
-//	JSObject *ret = JS_NewFloat32ArrayFromArray()
-//	JSObject *ret = JS_NewArrayBuffer(cx, 8);
-//	NSCAssert( ret, @"Could not create TypedArray");
-//
-//	float *buffer = (float*)JS_GetTypedArrayData(ret);
-//	CGPoint p = [real position];
-//	buffer[0] = p.x;
-//	buffer[1] = p.y;
-//	
-//	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(ret));
+//	jsval width;
+//	JS_NewNumberValue(cx, buffer[0], &width );
+//	JS_SetProperty(cx, typedArray, "width", &width );
 
 	return JS_TRUE;
 }

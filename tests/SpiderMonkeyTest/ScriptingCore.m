@@ -6,7 +6,7 @@
 
 #import "cocos2d.h"
 #import "ScriptingCore.h"
-#import "cocos2d_js_bindings.h"
+#import "js_bindings_cocos2d.h"
 
 static JSClass global_class = {
 	"global", JSCLASS_GLOBAL_FLAGS,
@@ -93,7 +93,7 @@ JSBool ScriptingCore_addToRunningScene(JSContext *cx, uint32_t argc, jsval *vp)
 	if (argc == 1) {
 		JSObject *o = NULL;
 		if (JS_ConvertArguments(cx, argc, JS_ARGV(cx, vp), "o", &o) == JS_TRUE) {
-			JS_CCNode *proxy = JS_GetPrivate(o);
+			ProxyJS_CCNode *proxy = JS_GetPrivate(o);
 			CCNode *node = [proxy realObj];
 
 			CCDirector *director = [CCDirector sharedDirector];
@@ -152,7 +152,7 @@ JSBool ScriptingCore_addToRunningScene(JSContext *cx, uint32_t argc, jsval *vp)
 		JS_DefineFunction(_cx, cocos, "addToRunningScene", ScriptingCore_addToRunningScene, 1, JSPROP_READONLY | JSPROP_PERMANENT);
 		
 		// Register classes
-		[JS_CCNode createClassWithContext:_cx object:cocos name:@"Node"];
+		[ProxyJS_CCNode createClassWithContext:_cx object:cocos name:@"Node"];
 	}
 	
 	return self;
