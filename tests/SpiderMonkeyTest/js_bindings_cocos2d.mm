@@ -11,7 +11,7 @@
 
 @implementation CCNode (SpiderMonkey)
 
-static char CCNode_JS_proxy_key;
+static char *CCNode_JS_proxy_key;
 -(void) onEnter_JS
 {
 	ProxyJS_CCNode *proxy = objc_getAssociatedObject(self, &CCNode_JS_proxy_key);
