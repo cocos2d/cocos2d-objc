@@ -1061,6 +1061,8 @@
 		A04FA985156309E700EC18D4 /* cocos2d-mac.bridgesupport in Resources */ = {isa = PBXBuildFile; fileRef = A04FA983156309E700EC18D4 /* cocos2d-mac.bridgesupport */; };
 		A04FA986156309E700EC18D4 /* cocos2d-mac.dylib in Resources */ = {isa = PBXBuildFile; fileRef = A04FA984156309E700EC18D4 /* cocos2d-mac.dylib */; };
 		A04FA98715630BD800EC18D4 /* libffi.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A03416FB1548806D00AE4D93 /* libffi.dylib */; };
+		A05B59EC156D6BEE00ADAB65 /* js_bindings_CCNode.mm in Sources */ = {isa = PBXBuildFile; fileRef = A05B59EB156D6BEE00ADAB65 /* js_bindings_CCNode.mm */; };
+		A05B59EF156D8BEB00ADAB65 /* js_bindings_CCSprite.mm in Sources */ = {isa = PBXBuildFile; fileRef = A05B59EE156D8BEB00ADAB65 /* js_bindings_CCSprite.mm */; };
 		A064312713C1418200CC5554 /* libkazmath.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A06430E713C1414300CC5554 /* libkazmath.a */; };
 		A07273DD155B23A8003E961F /* test_1021x1024_a8.pvr.gz in Resources */ = {isa = PBXBuildFile; fileRef = A07273D8155B23A8003E961F /* test_1021x1024_a8.pvr.gz */; };
 		A07273DE155B23A8003E961F /* test_1021x1024_rgb888.pvr.gz in Resources */ = {isa = PBXBuildFile; fileRef = A07273D9155B23A8003E961F /* test_1021x1024_rgb888.pvr.gz */; };
@@ -6059,6 +6061,10 @@
 		A04B0F6214A29BEB005EB429 /* SchedulerTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SchedulerTest.h; path = tests/SchedulerTest.h; sourceTree = "<group>"; };
 		A04FA983156309E700EC18D4 /* cocos2d-mac.bridgesupport */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = "cocos2d-mac.bridgesupport"; path = "Resources-Mac/cocos2d-mac.bridgesupport"; sourceTree = "<group>"; };
 		A04FA984156309E700EC18D4 /* cocos2d-mac.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "cocos2d-mac.dylib"; path = "Resources-Mac/cocos2d-mac.dylib"; sourceTree = "<group>"; };
+		A05B59EA156D6BEE00ADAB65 /* js_bindings_CCNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_CCNode.h; sourceTree = "<group>"; };
+		A05B59EB156D6BEE00ADAB65 /* js_bindings_CCNode.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = js_bindings_CCNode.mm; sourceTree = "<group>"; };
+		A05B59ED156D8BEB00ADAB65 /* js_bindings_CCSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_CCSprite.h; sourceTree = "<group>"; };
+		A05B59EE156D8BEB00ADAB65 /* js_bindings_CCSprite.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = js_bindings_CCSprite.mm; sourceTree = "<group>"; };
 		A06430E713C1414300CC5554 /* libkazmath.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libkazmath.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		A07273D8155B23A8003E961F /* test_1021x1024_a8.pvr.gz */ = {isa = PBXFileReference; lastKnownFileType = archive.gzip; path = test_1021x1024_a8.pvr.gz; sourceTree = "<group>"; };
 		A07273D9155B23A8003E961F /* test_1021x1024_rgb888.pvr.gz */ = {isa = PBXFileReference; lastKnownFileType = archive.gzip; path = test_1021x1024_rgb888.pvr.gz; sourceTree = "<group>"; };
@@ -7669,6 +7675,10 @@
 		A09C8D8D156715F700ADFDA9 /* SpiderMonkeyTest */ = {
 			isa = PBXGroup;
 			children = (
+				A05B59ED156D8BEB00ADAB65 /* js_bindings_CCSprite.h */,
+				A05B59EE156D8BEB00ADAB65 /* js_bindings_CCSprite.mm */,
+				A05B59EA156D6BEE00ADAB65 /* js_bindings_CCNode.h */,
+				A05B59EB156D6BEE00ADAB65 /* js_bindings_CCNode.mm */,
 				A0CBEC2D156C2812009D35B4 /* javascript-spidermonkey */,
 				A0CBEC2F156C2903009D35B4 /* js_bindings_NSObject.h */,
 				A0CBEC30156C2904009D35B4 /* js_bindings_NSObject.mm */,
@@ -14407,6 +14417,8 @@
 				A09C8D961567634500ADFDA9 /* js_bindings_cocos2d.mm in Sources */,
 				A0CBEC21156ABF3B009D35B4 /* JRSwizzle.m in Sources */,
 				A0CBEC31156C2904009D35B4 /* js_bindings_NSObject.mm in Sources */,
+				A05B59EC156D6BEE00ADAB65 /* js_bindings_CCNode.mm in Sources */,
+				A05B59EF156D8BEB00ADAB65 /* js_bindings_CCSprite.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -1,6 +1,6 @@
 #include "ScriptingCore.h"
 
-@interface ProxyJS_NSObject : NSObject
+@interface JSPROXY_NSObject : NSObject
 {
 	JSObject	*_jsObj;
 	id			_realObj;
