@@ -2,9 +2,9 @@
 
 #import "js_bindings_NSObject.h"
 
-#pragma mark - ProxyJS_NSObject
+#pragma mark - JSPROXY_NSObject
 
-@implementation ProxyJS_NSObject
+@implementation JSPROXY_NSObject
 
 @synthesize jsObj = _jsObj;
 @synthesize realObj = _realObj;

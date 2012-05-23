@@ -1,7 +1,7 @@
 #import "js_bindings_NSObject.h"
 
 
-@interface ProxyJS_CCNode : ProxyJS_NSObject
+@interface ProxyJS_CCNode : JSPROXY_NSObject
 {
 }
 
