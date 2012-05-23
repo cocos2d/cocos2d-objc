@@ -80,26 +80,26 @@ def help():
     print "%s v1.0 - An utility to obtain superclass and protocols from an Objective-C interface" % sys.argv[0]
     print "Usage:"
     print "\t-o --output\tFile that will have the output. Default: stdout"
-    print "\t-e --exceptions\tFile that contains rules for the parser."
+    print "\t-i --input\tFile that contains rules for the parser."
     print "\t\t\tUseful if the parser generates invalid or wrong info for certain classes."
     print "\nExample:"
-    print "\t%s -o output.txt -e particle_override_rules.txt cocos2d/*.h" % sys.argv[0]
+    print "\t%s -o output.txt -i particle_override_rules.txt cocos2d/*.h" % sys.argv[0]
     sys.exit(-1)
 
 if __name__ == "__main__":
     if len( sys.argv ) == 1:
         help()
 
-    exception_file = None
+    input_file = None
     output_file = None
 
     argv = sys.argv[1:]
     try:                                
-        opts, args = getopt.getopt(argv, "e:o:", ["exceptions=","output="])
+        opts, args = getopt.getopt(argv, "i:o:", ["input=","output="])
 
         for opt, arg in opts:
-            if opt in ("-e","--exceptions"):
-                exception_file = arg
+            if opt in ("-i","--input"):
+                input_file = arg
             if opt in  ("-o", "--output"):
                 output_file = arg
     except getopt.GetoptError,e:
@@ -109,6 +109,6 @@ if __name__ == "__main__":
     if args == None:
         help()
 
-    instance = ObjC( args, exception_file, output_file )
+    instance = ObjC( args, input_file, output_file )
     instance.parse()
 
