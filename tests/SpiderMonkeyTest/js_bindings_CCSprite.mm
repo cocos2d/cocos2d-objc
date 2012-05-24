@@ -78,7 +78,7 @@ void JSPROXY_CCSprite_finalize(JSContext *cx, JSObject *obj)
 		JS_FS_END
 	};
 
-	JSPROXY_CCSprite_object = JS_InitClass(cx, globalObj, NULL, JSPROXY_CCSprite_class, JSPROXY_CCSprite_constructor,0,properties,funcs,NULL,st_funcs);
+	JSPROXY_CCSprite_object = JS_InitClass(cx, globalObj, JSPROXY_CCNode_object, JSPROXY_CCSprite_class, JSPROXY_CCSprite_constructor,0,properties,funcs,NULL,st_funcs);
 }
 
 @end
