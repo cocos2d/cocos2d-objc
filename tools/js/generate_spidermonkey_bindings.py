@@ -166,6 +166,31 @@ void %s_finalize(JSContext *cx, JSObject *obj)
         proxy_class_name = '%s%s' % (PROXY_PREFIX, class_name )
         self.mm_file.write( destructor_template % ( proxy_class_name, proxy_class_name, proxy_class_name, '/* no callbacks */' ) )
 
+    def generate_call_to_real_object( self, selector_name, num_of_args, ret_native_type ):
+        prefix = ''
+        if ret_native_type:
+            prefix = 'ret_val = '
+
+        args = selector_name.split(':')
+        call = prefix + '[real '
+
+        # sanity check
+        if num_of_args+1 != len(args):
+            raise Exception('Error parsing...')
+
+
+        for i,arg in enumerate(args):
+            if num_of_args == 0:
+                call += arg
+            elif arg:   # empty
+                call += '%s:arg%d ' % (arg,i)
+
+        call += ' ];';
+
+        return call
+            
+
+
     def generate_method( self, class_name, method ):
 
         # JSPROXY_CCNode, setPosition
@@ -186,20 +211,10 @@ JSBool %s_%s(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( argc == %d, @"Invalid number of arguments" );
 '''
 
-        # Arguments: int arg0; float arg1; BOOL arg2;...
         # Arguments ids: 'ifB' (int, float, Bool)
         # Arguments addresses: &arg0, &arg1, &arg2
-        # ret value + Selector + arguments:  setPosition:arg0 precision:arg1 restorOriginal:arg2]
         arguments_template = '''
-    %s
-	if (JS_ConvertArguments(cx, argc, JS_ARGV(cx, vp), %s, %s) == JS_TRUE) {
-		
-		NSCAssert( JS_GetTypedArrayByteLength( arg0 ) == 8, @"Invalid length");
-		float *buffer = (float*)JS_GetTypedArrayData(arg0);
-		
-		%s [real %s];
-		
-	}
+	JS_ConvertArguments(cx, argc, JS_ARGV(cx, vp), "%s", %s);
     '''
 
         return_template = '''
@@ -210,57 +225,78 @@ JSBool %s_%s(JSContext *cx, uint32_t argc, jsval *vp) {
 }
 '''
         supported_types = {
-            'f' : 'f',      # float
-            'd' : 'f',      # double
-            'i' : 'i',      # integer
-            'I' : 'i',      # unsigned integer
-            'c' : 'c',      # char
-            'C' : 'c',      # unsigned char
-            'B' : 'b',      # BOOL
-            'v' : '',       # void (for retval)
+            'f' : ['f', 'float'],           # float
+            'd' : ['f', 'double'],          # double
+            'i' : ['i', 'int'],             # integer
+            'I' : ['i', 'unsigned int'],    # unsigned integer
+            'c' : ['c', 'char'],            # char
+            'C' : ['c', 'unsigned char'],   # unsigned char
+            'B' : ['b', 'BOOL'],            # BOOL
+            'v' : ['', 'void'],             # void (for retval)
             }
 
         s = method['selector']
         retval = None
         args = None
 
-        num_of_args = 0
-        args_type = []
-        ret_type = ''
+        args_js_type = []
+        args_native_type = []
+        ret_js_type = None
+        ret_native_type = None
         supported_args = True
         if 'arg' in method:
             args = method['arg']
-            num_of_args = len(args)
             for arg in args:
                 t = arg['type']
                 if not t in supported_types:
                     supported_args = False
                     break
                 else:
-                    args_type.append( supported_types[t] )
+                    args_js_type.append( supported_types[t][0] )
+                    args_native_type.append( supported_types[t][1] )
 
         if 'retval' in method:
             retval = method['retval']
             t = retval[0]['type']
             if not t in supported_types:
                 supported_args = False
-            else:
-                ret_type = supported_types[t]
+            elif supported_types[t][1] != 'void':
+                ret_js_type = supported_types[t][0]
+                ret_native_type = supported_types[t][1]
 
         if supported_args:
-            print 'OK:' + method['selector'] + ' args:' + str(args_type) + ' ret:' + str(ret_type)
+            print 'OK:' + method['selector'] + ' args:' + str(args_js_type) + ' ret:' + str(ret_js_type)
         else:
             print 'NOT OK:' + method['selector']
             return False
 
         
         # writing...
-        s = s.replace(':','_')
+        converted_name = s.replace(':','_')
 
-        self.mm_file.write( method_template % ( PROXY_PREFIX+class_name, s, class_name, class_name, num_of_args ) )
-        if num_of_args > 0:
-            self.mm_file.write( arguments_template )
-        if ret_type is not '':
+        num_of_args = len( args_native_type )
+        self.mm_file.write( method_template % ( PROXY_PREFIX+class_name, converted_name, class_name, class_name, num_of_args ) )
+
+        arguments_types = '\t%s arg%d;\n'
+        arguments_to_convert = ''
+        for i,arg in enumerate(args_native_type):
+            self.mm_file.write( arguments_types % ( arg, i ) )
+            if i==0:
+                arguments_to_convert = '&arg0'
+            else:
+                arguments_to_convert = '%s, &arg%d' % (arguments_to_convert, i)
+
+        if ret_native_type:
+            self.mm_file.write( '\t%s ret_val;\n' % ret_native_type )
+
+        call_real = self.generate_call_to_real_object( s, num_of_args, ret_native_type )
+
+        if  num_of_args > 0:
+            self.mm_file.write( arguments_template % ( ''.join(args_js_type), arguments_to_convert ) )
+
+        self.mm_file.write( '\n\t%s\n' % call_real )
+
+        if ret_js_type:
             self.mm_file.write( return_template )
         self.mm_file.write( end_template )
 
