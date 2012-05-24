@@ -1,4 +1,9 @@
+//
+// File manually generated.
+//
 #include "ScriptingCore.h"
+
+extern JSObject* JSPROXY_NSObject_object;
 
 @interface JSPROXY_NSObject : NSObject
 {
@@ -14,3 +19,4 @@
 -(id) initWithJSObject:(JSObject*)object andRealObject:(id)realObject;
 +(void) createClassWithContext:(JSContext*)cx object:(JSObject*)globalObj name:(NSString*)name;
 @end
+

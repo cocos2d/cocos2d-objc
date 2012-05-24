@@ -7,6 +7,8 @@
 
 #import "js_bindings_NSObject.h"
 
+extern JSObject *JSPROXY_CCNode_object;
+
 /* Proxy class */
 @interface JSPROXY_CCNode : JSPROXY_NSObject
 {

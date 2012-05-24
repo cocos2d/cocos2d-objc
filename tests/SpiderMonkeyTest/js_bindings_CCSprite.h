@@ -7,6 +7,8 @@
 
 #import "js_bindings_CCNode.h"
 
+extern JSObject *JSPROXY_CCSprite_object;
+
 /* Proxy class */
 @interface JSPROXY_CCSprite : JSPROXY_CCNode
 {

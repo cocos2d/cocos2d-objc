@@ -6,7 +6,9 @@
 
 #import "cocos2d.h"
 #import "ScriptingCore.h"
-#import "js_bindings_cocos2d.h"
+#import "js_bindings_NSObject.h"
+#import "js_bindings_CCNode.h"
+#import "js_bindings_CCSprite.h"
 
 static JSClass global_class = {
 	"global", JSCLASS_GLOBAL_FLAGS,
@@ -93,7 +95,7 @@ JSBool ScriptingCore_addToRunningScene(JSContext *cx, uint32_t argc, jsval *vp)
 	if (argc == 1) {
 		JSObject *o = NULL;
 		if (JS_ConvertArguments(cx, argc, JS_ARGV(cx, vp), "o", &o) == JS_TRUE) {
-			ProxyJS_CCNode *proxy = JS_GetPrivate(o);
+			JSPROXY_CCNode *proxy = JS_GetPrivate(o);
 			CCNode *node = [proxy realObj];
 
 			CCDirector *director = [CCDirector sharedDirector];
@@ -150,9 +152,12 @@ JSBool ScriptingCore_addToRunningScene(JSContext *cx, uint32_t argc, jsval *vp)
 		JS_DefineFunction(_cx, cocos, "removeGCRootObject", ScriptingCore_removeRootJS, 1, JSPROP_READONLY | JSPROP_PERMANENT);
 		JS_DefineFunction(_cx, cocos, "forceGC", ScriptingCore_forceGC, 0, JSPROP_READONLY | JSPROP_PERMANENT);
 		JS_DefineFunction(_cx, cocos, "addToRunningScene", ScriptingCore_addToRunningScene, 1, JSPROP_READONLY | JSPROP_PERMANENT);
-		
-		// Register classes
-		[ProxyJS_CCNode createClassWithContext:_cx object:cocos name:@"Node"];
+
+				
+		// Register classes: base classes should be registered first
+		[JSPROXY_NSObject createClassWithContext:_cx object:cocos name:@"Object"];
+		[JSPROXY_CCNode createClassWithContext:_cx object:cocos name:@"Node"];
+		[JSPROXY_CCSprite createClassWithContext:_cx object:cocos name:@"Sprite"];
 	}
 	
 	return self;
