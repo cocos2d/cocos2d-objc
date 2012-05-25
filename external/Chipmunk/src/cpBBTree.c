@@ -308,7 +308,7 @@ NodeReplaceChild(Node *parent, Node *child, Node *value, cpBBTree *tree)
 static inline cpFloat
 cpBBProximity(cpBB a, cpBB b)
 {
-	return cpfabs(a.l + a.r - b.l - b.r) + cpfabs(a.b + b.t - b.b - b.t);
+	return cpfabs(a.l + a.r - b.l - b.r) + cpfabs(a.b + a.t - b.b - b.t);
 }
 
 static Node *
@@ -659,13 +659,6 @@ cpBBTreeReindexObject(cpBBTree *tree, void *obj, cpHashValue hashid)
 //MARK: Query
 
 static void
-cpBBTreePointQuery(cpBBTree *tree, cpVect point, cpSpatialIndexQueryFunc func, void *data)
-{
-	Node *root = tree->root;
-	if(root) SubtreeQuery(root, &point, cpBBNew(point.x, point.y, point.x, point.y), func, data);
-}
-
-static void
 cpBBTreeSegmentQuery(cpBBTree *tree, void *obj, cpVect a, cpVect b, cpFloat t_exit, cpSpatialIndexSegmentQueryFunc func, void *data)
 {
 	Node *root = tree->root;
@@ -714,9 +707,8 @@ static cpSpatialIndexClass klass = {
 	(cpSpatialIndexReindexObjectImpl)cpBBTreeReindexObject,
 	(cpSpatialIndexReindexQueryImpl)cpBBTreeReindexQuery,
 	
-	(cpSpatialIndexPointQueryImpl)cpBBTreePointQuery,
-	(cpSpatialIndexSegmentQueryImpl)cpBBTreeSegmentQuery,
 	(cpSpatialIndexQueryImpl)cpBBTreeQuery,
+	(cpSpatialIndexSegmentQueryImpl)cpBBTreeSegmentQuery,
 };
 
 static inline cpSpatialIndexClass *Klass(){return &klass;}
