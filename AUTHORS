@@ -110,6 +110,9 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 * Scott Lembcke (AKA slembcke) (http://chipmunk-physics.net/)
 	Mentor & contributor of new Physics + cocos2d integration via nodeToParentTransform
 
+* Serg Scout (http://kidstamatic.com/):
+	Fixed texture alpha when converting RGBA8 textures to RGB5A1
+
 * Sergey Tikhonov (AKA haqu) (http://haqu.net)
 	Tests: Improved Shader test. Fixed memory leak in Guassian Blur test
 	Tests: Shader tests center the fragment shader effects on Mac

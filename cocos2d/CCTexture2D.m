@@ -432,8 +432,8 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 		tempData = malloc(textureHeight * textureWidth * 2);
 		inPixel32 = (unsigned int*)data;
 		outPixel16 = (unsigned short*)tempData;
-		for(unsigned int i = 0; i < textureWidth * textureHeight; ++i, ++inPixel32)
-			if (((((*inPixel32 >> 24) & 0xFF) >> 7) << 0)) // A can be 1 or 0
+		for(unsigned int i = 0; i < textureWidth * textureHeight; ++i, ++inPixel32) {
+			if ((*inPixel32 >> 31))// A can be 1 or 0
 				*outPixel16++ =
 				((((*inPixel32 >> 0) & 0xFF) >> 3) << 11) | // R
 				((((*inPixel32 >> 8) & 0xFF) >> 3) << 6) | // G
@@ -441,6 +441,7 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 				1; // A
 			else
 				*outPixel16++ = 0;
+		}
 		
 		free(data);
 		data = tempData;
