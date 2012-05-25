@@ -33,11 +33,6 @@ void JSPROXY_NSObject_finalize(JSContext *cx, JSObject *obj)
 {
 	JSPROXY_NSObject *pt = (JSPROXY_NSObject*)JS_GetPrivate(obj);
 	if (pt) {
-		id real = [pt realObj];
-		
-		/* no callbacks */
-		
-		[real release];
 		
 		[pt release];
 		

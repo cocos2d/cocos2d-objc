@@ -19,9 +19,6 @@
  * SOFTWARE.
  */
  
-#include <stdlib.h>
-#include <assert.h>
-
 #include "chipmunk_private.h"
 #include "prime.h"
 

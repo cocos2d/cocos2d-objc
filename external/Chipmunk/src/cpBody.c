@@ -19,9 +19,7 @@
  * SOFTWARE.
  */
  
-#include <stdlib.h>
 #include <float.h>
-#include <math.h>
 
 #include "chipmunk_private.h"
 #include "constraints/util.h"
@@ -126,7 +124,7 @@ cpBodySanityCheck(cpBody *body)
 	cpAssertSoft(body->w == body->w && cpfabs(body->w) != INFINITY, "Body's angular velocity is invalid.");
 	cpAssertSoft(body->t == body->t && cpfabs(body->t) != INFINITY, "Body's torque is invalid.");
 	
-	cpv_assert_sane(body->rot, "Internal error: Body's rotation vector is invalid.");
+	cpv_assert_sane(body->rot, "Body's rotation vector is invalid.");
 	
 	cpAssertSoft(body->v_limit == body->v_limit, "Body's velocity limit is invalid.");
 	cpAssertSoft(body->w_limit == body->w_limit, "Body's angular velocity limit is invalid.");

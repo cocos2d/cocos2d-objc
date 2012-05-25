@@ -19,9 +19,6 @@
  * SOFTWARE.
  */
 
-#include <math.h>
-#include <stdlib.h>
-
 #include "chipmunk_private.h"
 
 static inline cpSpatialIndexClass *Klass();
@@ -191,12 +188,6 @@ cpSweep1DQuery(cpSweep1D *sweep, void *obj, cpBB bb, cpSpatialIndexQueryFunc fun
 }
 
 static void
-cpSweep1DPointQuery(cpSweep1D *sweep, cpVect point, cpSpatialIndexQueryFunc func, void *data)
-{
-	cpSweep1DQuery(sweep, &point, cpBBNew(point.x, point.y, point.x, point.y), func, data);
-}
-
-static void
 cpSweep1DSegmentQuery(cpSweep1D *sweep, void *obj, cpVect a, cpVect b, cpFloat t_exit, cpSpatialIndexSegmentQueryFunc func, void *data)
 {
 	cpBB bb = cpBBExpand(cpBBNew(a.x, a.y, a.x, a.y), b);
@@ -255,9 +246,8 @@ static cpSpatialIndexClass klass = {
 	(cpSpatialIndexReindexObjectImpl)cpSweep1DReindexObject,
 	(cpSpatialIndexReindexQueryImpl)cpSweep1DReindexQuery,
 	
-	(cpSpatialIndexPointQueryImpl)cpSweep1DPointQuery,
-	(cpSpatialIndexSegmentQueryImpl)cpSweep1DSegmentQuery,
 	(cpSpatialIndexQueryImpl)cpSweep1DQuery,
+	(cpSpatialIndexSegmentQueryImpl)cpSweep1DSegmentQuery,
 };
 
 static inline cpSpatialIndexClass *Klass(){return &klass;}

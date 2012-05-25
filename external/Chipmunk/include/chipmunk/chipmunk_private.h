@@ -99,15 +99,41 @@ void cpBodyRemoveConstraint(cpBody *body, cpConstraint *constraint);
 
 //MARK: Shape/Collision Functions
 
+// TODO should move this to the cpVect API. It's pretty useful.
+static inline cpVect
+cpClosetPointOnSegment(const cpVect p, const cpVect a, const cpVect b)
+{
+	cpVect delta = cpvsub(a, b);
+	cpFloat t = cpfclamp01(cpvdot(delta, cpvsub(p, b))/cpvlengthsq(delta));
+	return cpvadd(b, cpvmult(delta, t));
+}
+
 cpShape* cpShapeInit(cpShape *shape, const cpShapeClass *klass, cpBody *body);
 
 static inline cpBool
 cpShapeActive(cpShape *shape)
 {
-	return shape->prev || shape->body->shapeList == shape;
+	return shape->prev || (shape->body && shape->body->shapeList == shape);
 }
 
 int cpCollideShapes(const cpShape *a, const cpShape *b, cpContact *arr);
+
+// TODO doesn't really need to be inline, but need a better place to put this function
+static inline cpSplittingPlane
+cpSplittingPlaneNew(cpVect a, cpVect b)
+{
+	cpVect n = cpvnormalize(cpvperp(cpvsub(b, a)));
+	cpSplittingPlane plane = {n, cpvdot(n, a)};
+	return plane;
+}
+
+static inline cpFloat
+cpSplittingPlaneCompare(cpSplittingPlane plane, cpVect v)
+{
+	return cpvdot(plane.n, v) - plane.d;
+}
+
+void cpLoopIndexes(cpVect *verts, int count, int *start, int *end);
 
 static inline cpFloat
 cpPolyShapeValueOnAxis(const cpPolyShape *poly, const cpVect n, const cpFloat d)
@@ -125,10 +151,10 @@ cpPolyShapeValueOnAxis(const cpPolyShape *poly, const cpVect n, const cpFloat d)
 static inline cpBool
 cpPolyShapeContainsVert(const cpPolyShape *poly, const cpVect v)
 {
-	cpPolyShapeAxis *axes = poly->tAxes;
+	cpSplittingPlane *planes = poly->tPlanes;
 	
 	for(int i=0; i<poly->numVerts; i++){
-		cpFloat dist = cpvdot(axes[i].n, v) - axes[i].d;
+		cpFloat dist = cpSplittingPlaneCompare(planes[i], v);
 		if(dist > 0.0f) return cpFalse;
 	}
 	
@@ -138,11 +164,11 @@ cpPolyShapeContainsVert(const cpPolyShape *poly, const cpVect v)
 static inline cpBool
 cpPolyShapeContainsVertPartial(const cpPolyShape *poly, const cpVect v, const cpVect n)
 {
-	cpPolyShapeAxis *axes = poly->tAxes;
+	cpSplittingPlane *planes = poly->tPlanes;
 	
 	for(int i=0; i<poly->numVerts; i++){
-		if(cpvdot(axes[i].n, n) < 0.0f) continue;
-		cpFloat dist = cpvdot(axes[i].n, v) - axes[i].d;
+		if(cpvdot(planes[i].n, n) < 0.0f) continue;
+		cpFloat dist = cpSplittingPlaneCompare(planes[i], v);
 		if(dist > 0.0f) return cpFalse;
 	}
 	
@@ -162,7 +188,7 @@ void cpSpacePushFreshContactBuffer(cpSpace *space);
 cpContact *cpContactBufferGetArray(cpSpace *space);
 void cpSpacePushContacts(cpSpace *space, int count);
 
-void *cpSpaceGetPostStepData(cpSpace *space, void *obj);
+void *cpSpaceGetPostStepData(cpSpace *space, void *key);
 
 cpBool cpSpaceArbiterSetFilter(cpArbiter *arb, cpSpace *space);
 void cpSpaceFilterArbiters(cpSpace *space, cpBody *body, cpShape *filter);

@@ -38,12 +38,10 @@ void JSPROXY_CCNode_finalize(JSContext *cx, JSObject *obj)
 {
 	JSPROXY_CCNode *pt = (JSPROXY_CCNode*)JS_GetPrivate(obj);
 	if (pt) {
-		id real = [pt realObj];
+		// id real = [pt realObj];
 	
-	/* no callbacks */
+		/* no callbacks */
 
-		[real release];
-	
 		[pt release];
 
 		JS_free(cx, pt);
