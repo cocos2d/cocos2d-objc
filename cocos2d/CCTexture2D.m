@@ -420,17 +420,28 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 	}
 	else if (pixelFormat == kCCTexture2DPixelFormat_RGB5A1) {
 		//Convert "RRRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA" to "RRRRRGGGGGBBBBBA"
+		/*
+		 Here was a bug.
+		 When you convert RGBA8888 texture to RGB5A1 texture and then render it on black background, you'll see a "ghost" image as if the texture is still RGBA8888. 
+		 On background lighter than the pixel color this effect disappers.
+		 This happens because the old convertion function doesn't premultiply old RGB with new A.
+		 As Result = sourceRGB + destination*(1-source A), then
+		 if Destination = 0000, then Result = source. Here comes the ghost!
+		 We need to check new alpha value first (it may be 1 or 0) and depending on it whether convert RGB values or just set pixel to 0 
+		 */
 		tempData = malloc(textureHeight * textureWidth * 2);
 		inPixel32 = (unsigned int*)data;
 		outPixel16 = (unsigned short*)tempData;
 		for(unsigned int i = 0; i < textureWidth * textureHeight; ++i, ++inPixel32)
-			*outPixel16++ =
-			((((*inPixel32 >> 0) & 0xFF) >> 3) << 11) | // R
-			((((*inPixel32 >> 8) & 0xFF) >> 3) << 6) | // G
-			((((*inPixel32 >> 16) & 0xFF) >> 3) << 1) | // B
-			((((*inPixel32 >> 24) & 0xFF) >> 7) << 0); // A
-
-
+			if (((((*inPixel32 >> 24) & 0xFF) >> 7) << 0)) // A can be 1 or 0
+				*outPixel16++ =
+				((((*inPixel32 >> 0) & 0xFF) >> 3) << 11) | // R
+				((((*inPixel32 >> 8) & 0xFF) >> 3) << 6) | // G
+				((((*inPixel32 >> 16) & 0xFF) >> 3) << 1) | // B
+				1; // A
+			else
+				*outPixel16++ = 0;
+		
 		free(data);
 		data = tempData;
 	}
