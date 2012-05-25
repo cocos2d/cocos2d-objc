@@ -19,11 +19,8 @@ JSObject* JSPROXY_CCNode_object = NULL;
 JSBool JSPROXY_CCNode_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCNode_class, JSPROXY_CCNode_object, NULL);
-    CCNode *realObj = [CCNode alloc];
 
-    JSPROXY_CCNode *proxy = [[JSPROXY_CCNode alloc] initWithJSObject:jsobj andRealObject:realObj];
-
-    [realObj release];
+    JSPROXY_CCNode *proxy = [[JSPROXY_CCNode alloc] initWithJSObject:jsobj];
 
     JS_SetPrivate(jsobj, proxy);
     JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -55,15 +52,11 @@ JSBool JSPROXY_CCNode_cleanup(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert(  [proxy isInitialized], @"Object not initialzied. error");
-    
-	
-	CCNode * real = (CCNode*)[proxy realObj];
-	NSCAssert( real, @"Invalid real object");
-
+	NSCAssert(  [proxy realObj], @"Object not initialzied. error");
 	NSCAssert( argc == 0, @"Invalid number of arguments" );
 
-	[real cleanup ];
+	CCNode *real = (CCNode*) [proxy realObj];
+[real cleanup ];
 	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
@@ -75,15 +68,11 @@ JSBool JSPROXY_CCNode_draw(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert(  [proxy isInitialized], @"Object not initialzied. error");
-    
-	
-	CCNode * real = (CCNode*)[proxy realObj];
-	NSCAssert( real, @"Invalid real object");
-
+	NSCAssert(  [proxy realObj], @"Object not initialzied. error");
 	NSCAssert( argc == 0, @"Invalid number of arguments" );
 
-	[real draw ];
+	CCNode *real = (CCNode*) [proxy realObj];
+[real draw ];
 	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
@@ -95,15 +84,11 @@ JSBool JSPROXY_CCNode_glServerState(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert(  [proxy isInitialized], @"Object not initialzied. error");
-    
-	
-	CCNode * real = (CCNode*)[proxy realObj];
-	NSCAssert( real, @"Invalid real object");
-
+	NSCAssert(  [proxy realObj], @"Object not initialzied. error");
 	NSCAssert( argc == 0, @"Invalid number of arguments" );
 	ccGLServerState ret_val;
 
+	CCNode *real = (CCNode*) [proxy realObj];
 	ret_val = [real glServerState ];
 	JS_SET_RVAL(cx, vp, INT_TO_JSVAL(ret_val));
 	return JS_TRUE;
@@ -116,15 +101,11 @@ JSBool JSPROXY_CCNode_ignoreAnchorPointForPosition(JSContext *cx, uint32_t argc,
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert(  [proxy isInitialized], @"Object not initialzied. error");
-    
-	
-	CCNode * real = (CCNode*)[proxy realObj];
-	NSCAssert( real, @"Invalid real object");
-
+	NSCAssert(  [proxy realObj], @"Object not initialzied. error");
 	NSCAssert( argc == 0, @"Invalid number of arguments" );
 	BOOL ret_val;
 
+	CCNode *real = (CCNode*) [proxy realObj];
 	ret_val = [real ignoreAnchorPointForPosition ];
 	JS_SET_RVAL(cx, vp, BOOLEAN_TO_JSVAL(ret_val));
 	return JS_TRUE;
@@ -137,15 +118,13 @@ JSBool JSPROXY_CCNode_init(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert( ! [proxy isInitialized], @"Object not initialzied. error");
-    proxy.initialized = YES;
-	
-	CCNode * real = (CCNode*)[proxy realObj];
-	NSCAssert( real, @"Invalid real object");
-
+	NSCAssert( ! [proxy realObj], @"Object not initialzied. error");
 	NSCAssert( argc == 0, @"Invalid number of arguments" );
 
-	[real init ];
+	CCNode *real = [[CCNode alloc] init ];
+	[proxy setRealObj: real];
+	[real release];
+
 	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
@@ -157,15 +136,11 @@ JSBool JSPROXY_CCNode_isRunning(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert(  [proxy isInitialized], @"Object not initialzied. error");
-    
-	
-	CCNode * real = (CCNode*)[proxy realObj];
-	NSCAssert( real, @"Invalid real object");
-
+	NSCAssert(  [proxy realObj], @"Object not initialzied. error");
 	NSCAssert( argc == 0, @"Invalid number of arguments" );
 	BOOL ret_val;
 
+	CCNode *real = (CCNode*) [proxy realObj];
 	ret_val = [real isRunning ];
 	JS_SET_RVAL(cx, vp, BOOLEAN_TO_JSVAL(ret_val));
 	return JS_TRUE;
@@ -178,15 +153,11 @@ JSBool JSPROXY_CCNode_numberOfRunningActions(JSContext *cx, uint32_t argc, jsval
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert(  [proxy isInitialized], @"Object not initialzied. error");
-    
-	
-	CCNode * real = (CCNode*)[proxy realObj];
-	NSCAssert( real, @"Invalid real object");
-
+	NSCAssert(  [proxy realObj], @"Object not initialzied. error");
 	NSCAssert( argc == 0, @"Invalid number of arguments" );
 	NSUInteger ret_val;
 
+	CCNode *real = (CCNode*) [proxy realObj];
 	ret_val = [real numberOfRunningActions ];
 	JS_SET_RVAL(cx, vp, INT_TO_JSVAL(ret_val));
 	return JS_TRUE;
@@ -199,15 +170,11 @@ JSBool JSPROXY_CCNode_onEnter(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert(  [proxy isInitialized], @"Object not initialzied. error");
-    
-	
-	CCNode * real = (CCNode*)[proxy realObj];
-	NSCAssert( real, @"Invalid real object");
-
+	NSCAssert(  [proxy realObj], @"Object not initialzied. error");
 	NSCAssert( argc == 0, @"Invalid number of arguments" );
 
-	[real onEnter ];
+	CCNode *real = (CCNode*) [proxy realObj];
+[real onEnter ];
 	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
@@ -219,15 +186,11 @@ JSBool JSPROXY_CCNode_onEnterTransitionDidFinish(JSContext *cx, uint32_t argc, j
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert(  [proxy isInitialized], @"Object not initialzied. error");
-    
-	
-	CCNode * real = (CCNode*)[proxy realObj];
-	NSCAssert( real, @"Invalid real object");
-
+	NSCAssert(  [proxy realObj], @"Object not initialzied. error");
 	NSCAssert( argc == 0, @"Invalid number of arguments" );
 
-	[real onEnterTransitionDidFinish ];
+	CCNode *real = (CCNode*) [proxy realObj];
+[real onEnterTransitionDidFinish ];
 	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
@@ -239,15 +202,11 @@ JSBool JSPROXY_CCNode_onExit(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert(  [proxy isInitialized], @"Object not initialzied. error");
-    
-	
-	CCNode * real = (CCNode*)[proxy realObj];
-	NSCAssert( real, @"Invalid real object");
-
+	NSCAssert(  [proxy realObj], @"Object not initialzied. error");
 	NSCAssert( argc == 0, @"Invalid number of arguments" );
 
-	[real onExit ];
+	CCNode *real = (CCNode*) [proxy realObj];
+[real onExit ];
 	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
@@ -259,15 +218,11 @@ JSBool JSPROXY_CCNode_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsv
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert(  [proxy isInitialized], @"Object not initialzied. error");
-    
-	
-	CCNode * real = (CCNode*)[proxy realObj];
-	NSCAssert( real, @"Invalid real object");
-
+	NSCAssert(  [proxy realObj], @"Object not initialzied. error");
 	NSCAssert( argc == 0, @"Invalid number of arguments" );
 
-	[real onExitTransitionDidStart ];
+	CCNode *real = (CCNode*) [proxy realObj];
+[real onExitTransitionDidStart ];
 	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
@@ -279,15 +234,11 @@ JSBool JSPROXY_CCNode_orderOfArrival(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert(  [proxy isInitialized], @"Object not initialzied. error");
-    
-	
-	CCNode * real = (CCNode*)[proxy realObj];
-	NSCAssert( real, @"Invalid real object");
-
+	NSCAssert(  [proxy realObj], @"Object not initialzied. error");
 	NSCAssert( argc == 0, @"Invalid number of arguments" );
 	NSUInteger ret_val;
 
+	CCNode *real = (CCNode*) [proxy realObj];
 	ret_val = [real orderOfArrival ];
 	JS_SET_RVAL(cx, vp, INT_TO_JSVAL(ret_val));
 	return JS_TRUE;
@@ -300,15 +251,11 @@ JSBool JSPROXY_CCNode_pauseSchedulerAndActions(JSContext *cx, uint32_t argc, jsv
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert(  [proxy isInitialized], @"Object not initialzied. error");
-    
-	
-	CCNode * real = (CCNode*)[proxy realObj];
-	NSCAssert( real, @"Invalid real object");
-
+	NSCAssert(  [proxy realObj], @"Object not initialzied. error");
 	NSCAssert( argc == 0, @"Invalid number of arguments" );
 
-	[real pauseSchedulerAndActions ];
+	CCNode *real = (CCNode*) [proxy realObj];
+[real pauseSchedulerAndActions ];
 	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
@@ -320,16 +267,12 @@ JSBool JSPROXY_CCNode_removeAllChildrenWithCleanup_(JSContext *cx, uint32_t argc
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert(  [proxy isInitialized], @"Object not initialzied. error");
-    
-	
-	CCNode * real = (CCNode*)[proxy realObj];
-	NSCAssert( real, @"Invalid real object");
-
+	NSCAssert(  [proxy realObj], @"Object not initialzied. error");
 	NSCAssert( argc == 1, @"Invalid number of arguments" );
 	JSBool arg0; JS_ValueToBoolean( cx, vp[2], &arg0 );
 
-	[real removeAllChildrenWithCleanup:(BOOL)arg0  ];
+	CCNode *real = (CCNode*) [proxy realObj];
+[real removeAllChildrenWithCleanup:(BOOL)arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
@@ -341,17 +284,13 @@ JSBool JSPROXY_CCNode_removeChildByTag_cleanup_(JSContext *cx, uint32_t argc, js
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert(  [proxy isInitialized], @"Object not initialzied. error");
-    
-	
-	CCNode * real = (CCNode*)[proxy realObj];
-	NSCAssert( real, @"Invalid real object");
-
+	NSCAssert(  [proxy realObj], @"Object not initialzied. error");
 	NSCAssert( argc == 2, @"Invalid number of arguments" );
 	int32_t arg0; JS_ValueToECMAInt32( cx, vp[2], &arg0 );
 	JSBool arg1; JS_ValueToBoolean( cx, vp[3], &arg1 );
 
-	[real removeChildByTag:(NSInteger)arg0 cleanup:(BOOL)arg1  ];
+	CCNode *real = (CCNode*) [proxy realObj];
+[real removeChildByTag:(NSInteger)arg0 cleanup:(BOOL)arg1  ];
 	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
@@ -363,16 +302,12 @@ JSBool JSPROXY_CCNode_removeFromParentAndCleanup_(JSContext *cx, uint32_t argc, 
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert(  [proxy isInitialized], @"Object not initialzied. error");
-    
-	
-	CCNode * real = (CCNode*)[proxy realObj];
-	NSCAssert( real, @"Invalid real object");
-
+	NSCAssert(  [proxy realObj], @"Object not initialzied. error");
 	NSCAssert( argc == 1, @"Invalid number of arguments" );
 	JSBool arg0; JS_ValueToBoolean( cx, vp[2], &arg0 );
 
-	[real removeFromParentAndCleanup:(BOOL)arg0  ];
+	CCNode *real = (CCNode*) [proxy realObj];
+[real removeFromParentAndCleanup:(BOOL)arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
@@ -384,15 +319,11 @@ JSBool JSPROXY_CCNode_resumeSchedulerAndActions(JSContext *cx, uint32_t argc, js
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert(  [proxy isInitialized], @"Object not initialzied. error");
-    
-	
-	CCNode * real = (CCNode*)[proxy realObj];
-	NSCAssert( real, @"Invalid real object");
-
+	NSCAssert(  [proxy realObj], @"Object not initialzied. error");
 	NSCAssert( argc == 0, @"Invalid number of arguments" );
 
-	[real resumeSchedulerAndActions ];
+	CCNode *real = (CCNode*) [proxy realObj];
+[real resumeSchedulerAndActions ];
 	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
@@ -404,15 +335,11 @@ JSBool JSPROXY_CCNode_rotation(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert(  [proxy isInitialized], @"Object not initialzied. error");
-    
-	
-	CCNode * real = (CCNode*)[proxy realObj];
-	NSCAssert( real, @"Invalid real object");
-
+	NSCAssert(  [proxy realObj], @"Object not initialzied. error");
 	NSCAssert( argc == 0, @"Invalid number of arguments" );
 	float ret_val;
 
+	CCNode *real = (CCNode*) [proxy realObj];
 	ret_val = [real rotation ];
 	JS_SET_RVAL(cx, vp, DOUBLE_TO_JSVAL(ret_val));
 	return JS_TRUE;
@@ -425,15 +352,11 @@ JSBool JSPROXY_CCNode_scale(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert(  [proxy isInitialized], @"Object not initialzied. error");
-    
-	
-	CCNode * real = (CCNode*)[proxy realObj];
-	NSCAssert( real, @"Invalid real object");
-
+	NSCAssert(  [proxy realObj], @"Object not initialzied. error");
 	NSCAssert( argc == 0, @"Invalid number of arguments" );
 	float ret_val;
 
+	CCNode *real = (CCNode*) [proxy realObj];
 	ret_val = [real scale ];
 	JS_SET_RVAL(cx, vp, DOUBLE_TO_JSVAL(ret_val));
 	return JS_TRUE;
@@ -446,15 +369,11 @@ JSBool JSPROXY_CCNode_scaleX(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert(  [proxy isInitialized], @"Object not initialzied. error");
-    
-	
-	CCNode * real = (CCNode*)[proxy realObj];
-	NSCAssert( real, @"Invalid real object");
-
+	NSCAssert(  [proxy realObj], @"Object not initialzied. error");
 	NSCAssert( argc == 0, @"Invalid number of arguments" );
 	float ret_val;
 
+	CCNode *real = (CCNode*) [proxy realObj];
 	ret_val = [real scaleX ];
 	JS_SET_RVAL(cx, vp, DOUBLE_TO_JSVAL(ret_val));
 	return JS_TRUE;
@@ -467,15 +386,11 @@ JSBool JSPROXY_CCNode_scaleY(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert(  [proxy isInitialized], @"Object not initialzied. error");
-    
-	
-	CCNode * real = (CCNode*)[proxy realObj];
-	NSCAssert( real, @"Invalid real object");
-
+	NSCAssert(  [proxy realObj], @"Object not initialzied. error");
 	NSCAssert( argc == 0, @"Invalid number of arguments" );
 	float ret_val;
 
+	CCNode *real = (CCNode*) [proxy realObj];
 	ret_val = [real scaleY ];
 	JS_SET_RVAL(cx, vp, DOUBLE_TO_JSVAL(ret_val));
 	return JS_TRUE;
@@ -488,15 +403,11 @@ JSBool JSPROXY_CCNode_scheduleUpdate(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert(  [proxy isInitialized], @"Object not initialzied. error");
-    
-	
-	CCNode * real = (CCNode*)[proxy realObj];
-	NSCAssert( real, @"Invalid real object");
-
+	NSCAssert(  [proxy realObj], @"Object not initialzied. error");
 	NSCAssert( argc == 0, @"Invalid number of arguments" );
 
-	[real scheduleUpdate ];
+	CCNode *real = (CCNode*) [proxy realObj];
+[real scheduleUpdate ];
 	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
@@ -508,16 +419,12 @@ JSBool JSPROXY_CCNode_scheduleUpdateWithPriority_(JSContext *cx, uint32_t argc, 
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert(  [proxy isInitialized], @"Object not initialzied. error");
-    
-	
-	CCNode * real = (CCNode*)[proxy realObj];
-	NSCAssert( real, @"Invalid real object");
-
+	NSCAssert(  [proxy realObj], @"Object not initialzied. error");
 	NSCAssert( argc == 1, @"Invalid number of arguments" );
 	int32_t arg0; JS_ValueToECMAInt32( cx, vp[2], &arg0 );
 
-	[real scheduleUpdateWithPriority:(NSInteger)arg0  ];
+	CCNode *real = (CCNode*) [proxy realObj];
+[real scheduleUpdateWithPriority:(NSInteger)arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
@@ -529,16 +436,12 @@ JSBool JSPROXY_CCNode_setGlServerState_(JSContext *cx, uint32_t argc, jsval *vp)
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert(  [proxy isInitialized], @"Object not initialzied. error");
-    
-	
-	CCNode * real = (CCNode*)[proxy realObj];
-	NSCAssert( real, @"Invalid real object");
-
+	NSCAssert(  [proxy realObj], @"Object not initialzied. error");
 	NSCAssert( argc == 1, @"Invalid number of arguments" );
 	int32_t arg0; JS_ValueToECMAInt32( cx, vp[2], &arg0 );
 
-	[real setGlServerState:(ccGLServerState)arg0  ];
+	CCNode *real = (CCNode*) [proxy realObj];
+[real setGlServerState:(ccGLServerState)arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
@@ -550,16 +453,12 @@ JSBool JSPROXY_CCNode_setIgnoreAnchorPointForPosition_(JSContext *cx, uint32_t a
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert(  [proxy isInitialized], @"Object not initialzied. error");
-    
-	
-	CCNode * real = (CCNode*)[proxy realObj];
-	NSCAssert( real, @"Invalid real object");
-
+	NSCAssert(  [proxy realObj], @"Object not initialzied. error");
 	NSCAssert( argc == 1, @"Invalid number of arguments" );
 	JSBool arg0; JS_ValueToBoolean( cx, vp[2], &arg0 );
 
-	[real setIgnoreAnchorPointForPosition:(BOOL)arg0  ];
+	CCNode *real = (CCNode*) [proxy realObj];
+[real setIgnoreAnchorPointForPosition:(BOOL)arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
@@ -571,16 +470,12 @@ JSBool JSPROXY_CCNode_setOrderOfArrival_(JSContext *cx, uint32_t argc, jsval *vp
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert(  [proxy isInitialized], @"Object not initialzied. error");
-    
-	
-	CCNode * real = (CCNode*)[proxy realObj];
-	NSCAssert( real, @"Invalid real object");
-
+	NSCAssert(  [proxy realObj], @"Object not initialzied. error");
 	NSCAssert( argc == 1, @"Invalid number of arguments" );
 	uint32_t arg0; JS_ValueToECMAUint32( cx, vp[2], &arg0 );
 
-	[real setOrderOfArrival:(NSUInteger)arg0  ];
+	CCNode *real = (CCNode*) [proxy realObj];
+[real setOrderOfArrival:(NSUInteger)arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
@@ -592,16 +487,12 @@ JSBool JSPROXY_CCNode_setRotation_(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert(  [proxy isInitialized], @"Object not initialzied. error");
-    
-	
-	CCNode * real = (CCNode*)[proxy realObj];
-	NSCAssert( real, @"Invalid real object");
-
+	NSCAssert(  [proxy realObj], @"Object not initialzied. error");
 	NSCAssert( argc == 1, @"Invalid number of arguments" );
 	double arg0; JS_ValueToNumber( cx, vp[2], &arg0 );
 
-	[real setRotation:(float)arg0  ];
+	CCNode *real = (CCNode*) [proxy realObj];
+[real setRotation:(float)arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
@@ -613,16 +504,12 @@ JSBool JSPROXY_CCNode_setScale_(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert(  [proxy isInitialized], @"Object not initialzied. error");
-    
-	
-	CCNode * real = (CCNode*)[proxy realObj];
-	NSCAssert( real, @"Invalid real object");
-
+	NSCAssert(  [proxy realObj], @"Object not initialzied. error");
 	NSCAssert( argc == 1, @"Invalid number of arguments" );
 	double arg0; JS_ValueToNumber( cx, vp[2], &arg0 );
 
-	[real setScale:(float)arg0  ];
+	CCNode *real = (CCNode*) [proxy realObj];
+[real setScale:(float)arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
@@ -634,16 +521,12 @@ JSBool JSPROXY_CCNode_setScaleX_(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert(  [proxy isInitialized], @"Object not initialzied. error");
-    
-	
-	CCNode * real = (CCNode*)[proxy realObj];
-	NSCAssert( real, @"Invalid real object");
-
+	NSCAssert(  [proxy realObj], @"Object not initialzied. error");
 	NSCAssert( argc == 1, @"Invalid number of arguments" );
 	double arg0; JS_ValueToNumber( cx, vp[2], &arg0 );
 
-	[real setScaleX:(float)arg0  ];
+	CCNode *real = (CCNode*) [proxy realObj];
+[real setScaleX:(float)arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
@@ -655,16 +538,12 @@ JSBool JSPROXY_CCNode_setScaleY_(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert(  [proxy isInitialized], @"Object not initialzied. error");
-    
-	
-	CCNode * real = (CCNode*)[proxy realObj];
-	NSCAssert( real, @"Invalid real object");
-
+	NSCAssert(  [proxy realObj], @"Object not initialzied. error");
 	NSCAssert( argc == 1, @"Invalid number of arguments" );
 	double arg0; JS_ValueToNumber( cx, vp[2], &arg0 );
 
-	[real setScaleY:(float)arg0  ];
+	CCNode *real = (CCNode*) [proxy realObj];
+[real setScaleY:(float)arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
@@ -676,16 +555,12 @@ JSBool JSPROXY_CCNode_setSkewX_(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert(  [proxy isInitialized], @"Object not initialzied. error");
-    
-	
-	CCNode * real = (CCNode*)[proxy realObj];
-	NSCAssert( real, @"Invalid real object");
-
+	NSCAssert(  [proxy realObj], @"Object not initialzied. error");
 	NSCAssert( argc == 1, @"Invalid number of arguments" );
 	double arg0; JS_ValueToNumber( cx, vp[2], &arg0 );
 
-	[real setSkewX:(float)arg0  ];
+	CCNode *real = (CCNode*) [proxy realObj];
+[real setSkewX:(float)arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
@@ -697,16 +572,12 @@ JSBool JSPROXY_CCNode_setSkewY_(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert(  [proxy isInitialized], @"Object not initialzied. error");
-    
-	
-	CCNode * real = (CCNode*)[proxy realObj];
-	NSCAssert( real, @"Invalid real object");
-
+	NSCAssert(  [proxy realObj], @"Object not initialzied. error");
 	NSCAssert( argc == 1, @"Invalid number of arguments" );
 	double arg0; JS_ValueToNumber( cx, vp[2], &arg0 );
 
-	[real setSkewY:(float)arg0  ];
+	CCNode *real = (CCNode*) [proxy realObj];
+[real setSkewY:(float)arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
@@ -718,16 +589,12 @@ JSBool JSPROXY_CCNode_setTag_(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert(  [proxy isInitialized], @"Object not initialzied. error");
-    
-	
-	CCNode * real = (CCNode*)[proxy realObj];
-	NSCAssert( real, @"Invalid real object");
-
+	NSCAssert(  [proxy realObj], @"Object not initialzied. error");
 	NSCAssert( argc == 1, @"Invalid number of arguments" );
 	int32_t arg0; JS_ValueToECMAInt32( cx, vp[2], &arg0 );
 
-	[real setTag:(NSInteger)arg0  ];
+	CCNode *real = (CCNode*) [proxy realObj];
+[real setTag:(NSInteger)arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
@@ -739,16 +606,12 @@ JSBool JSPROXY_CCNode_setVertexZ_(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert(  [proxy isInitialized], @"Object not initialzied. error");
-    
-	
-	CCNode * real = (CCNode*)[proxy realObj];
-	NSCAssert( real, @"Invalid real object");
-
+	NSCAssert(  [proxy realObj], @"Object not initialzied. error");
 	NSCAssert( argc == 1, @"Invalid number of arguments" );
 	double arg0; JS_ValueToNumber( cx, vp[2], &arg0 );
 
-	[real setVertexZ:(float)arg0  ];
+	CCNode *real = (CCNode*) [proxy realObj];
+[real setVertexZ:(float)arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
@@ -760,16 +623,12 @@ JSBool JSPROXY_CCNode_setVisible_(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert(  [proxy isInitialized], @"Object not initialzied. error");
-    
-	
-	CCNode * real = (CCNode*)[proxy realObj];
-	NSCAssert( real, @"Invalid real object");
-
+	NSCAssert(  [proxy realObj], @"Object not initialzied. error");
 	NSCAssert( argc == 1, @"Invalid number of arguments" );
 	JSBool arg0; JS_ValueToBoolean( cx, vp[2], &arg0 );
 
-	[real setVisible:(BOOL)arg0  ];
+	CCNode *real = (CCNode*) [proxy realObj];
+[real setVisible:(BOOL)arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
@@ -781,16 +640,12 @@ JSBool JSPROXY_CCNode_setZOrder_(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert(  [proxy isInitialized], @"Object not initialzied. error");
-    
-	
-	CCNode * real = (CCNode*)[proxy realObj];
-	NSCAssert( real, @"Invalid real object");
-
+	NSCAssert(  [proxy realObj], @"Object not initialzied. error");
 	NSCAssert( argc == 1, @"Invalid number of arguments" );
 	uint32_t arg0; JS_ValueToECMAUint32( cx, vp[2], &arg0 );
 
-	[real setZOrder:(NSUInteger)arg0  ];
+	CCNode *real = (CCNode*) [proxy realObj];
+[real setZOrder:(NSUInteger)arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
@@ -802,15 +657,11 @@ JSBool JSPROXY_CCNode_skewX(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert(  [proxy isInitialized], @"Object not initialzied. error");
-    
-	
-	CCNode * real = (CCNode*)[proxy realObj];
-	NSCAssert( real, @"Invalid real object");
-
+	NSCAssert(  [proxy realObj], @"Object not initialzied. error");
 	NSCAssert( argc == 0, @"Invalid number of arguments" );
 	float ret_val;
 
+	CCNode *real = (CCNode*) [proxy realObj];
 	ret_val = [real skewX ];
 	JS_SET_RVAL(cx, vp, DOUBLE_TO_JSVAL(ret_val));
 	return JS_TRUE;
@@ -823,15 +674,11 @@ JSBool JSPROXY_CCNode_skewY(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert(  [proxy isInitialized], @"Object not initialzied. error");
-    
-	
-	CCNode * real = (CCNode*)[proxy realObj];
-	NSCAssert( real, @"Invalid real object");
-
+	NSCAssert(  [proxy realObj], @"Object not initialzied. error");
 	NSCAssert( argc == 0, @"Invalid number of arguments" );
 	float ret_val;
 
+	CCNode *real = (CCNode*) [proxy realObj];
 	ret_val = [real skewY ];
 	JS_SET_RVAL(cx, vp, DOUBLE_TO_JSVAL(ret_val));
 	return JS_TRUE;
@@ -844,15 +691,11 @@ JSBool JSPROXY_CCNode_sortAllChildren(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert(  [proxy isInitialized], @"Object not initialzied. error");
-    
-	
-	CCNode * real = (CCNode*)[proxy realObj];
-	NSCAssert( real, @"Invalid real object");
-
+	NSCAssert(  [proxy realObj], @"Object not initialzied. error");
 	NSCAssert( argc == 0, @"Invalid number of arguments" );
 
-	[real sortAllChildren ];
+	CCNode *real = (CCNode*) [proxy realObj];
+[real sortAllChildren ];
 	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
@@ -864,16 +707,12 @@ JSBool JSPROXY_CCNode_stopActionByTag_(JSContext *cx, uint32_t argc, jsval *vp) 
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert(  [proxy isInitialized], @"Object not initialzied. error");
-    
-	
-	CCNode * real = (CCNode*)[proxy realObj];
-	NSCAssert( real, @"Invalid real object");
-
+	NSCAssert(  [proxy realObj], @"Object not initialzied. error");
 	NSCAssert( argc == 1, @"Invalid number of arguments" );
 	int32_t arg0; JS_ValueToECMAInt32( cx, vp[2], &arg0 );
 
-	[real stopActionByTag:(NSInteger)arg0  ];
+	CCNode *real = (CCNode*) [proxy realObj];
+[real stopActionByTag:(NSInteger)arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
@@ -885,15 +724,11 @@ JSBool JSPROXY_CCNode_stopAllActions(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert(  [proxy isInitialized], @"Object not initialzied. error");
-    
-	
-	CCNode * real = (CCNode*)[proxy realObj];
-	NSCAssert( real, @"Invalid real object");
-
+	NSCAssert(  [proxy realObj], @"Object not initialzied. error");
 	NSCAssert( argc == 0, @"Invalid number of arguments" );
 
-	[real stopAllActions ];
+	CCNode *real = (CCNode*) [proxy realObj];
+[real stopAllActions ];
 	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
@@ -905,15 +740,11 @@ JSBool JSPROXY_CCNode_tag(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert(  [proxy isInitialized], @"Object not initialzied. error");
-    
-	
-	CCNode * real = (CCNode*)[proxy realObj];
-	NSCAssert( real, @"Invalid real object");
-
+	NSCAssert(  [proxy realObj], @"Object not initialzied. error");
 	NSCAssert( argc == 0, @"Invalid number of arguments" );
 	NSInteger ret_val;
 
+	CCNode *real = (CCNode*) [proxy realObj];
 	ret_val = [real tag ];
 	JS_SET_RVAL(cx, vp, INT_TO_JSVAL(ret_val));
 	return JS_TRUE;
@@ -926,15 +757,11 @@ JSBool JSPROXY_CCNode_transform(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert(  [proxy isInitialized], @"Object not initialzied. error");
-    
-	
-	CCNode * real = (CCNode*)[proxy realObj];
-	NSCAssert( real, @"Invalid real object");
-
+	NSCAssert(  [proxy realObj], @"Object not initialzied. error");
 	NSCAssert( argc == 0, @"Invalid number of arguments" );
 
-	[real transform ];
+	CCNode *real = (CCNode*) [proxy realObj];
+[real transform ];
 	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
@@ -946,15 +773,11 @@ JSBool JSPROXY_CCNode_transformAncestors(JSContext *cx, uint32_t argc, jsval *vp
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert(  [proxy isInitialized], @"Object not initialzied. error");
-    
-	
-	CCNode * real = (CCNode*)[proxy realObj];
-	NSCAssert( real, @"Invalid real object");
-
+	NSCAssert(  [proxy realObj], @"Object not initialzied. error");
 	NSCAssert( argc == 0, @"Invalid number of arguments" );
 
-	[real transformAncestors ];
+	CCNode *real = (CCNode*) [proxy realObj];
+[real transformAncestors ];
 	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
@@ -966,15 +789,11 @@ JSBool JSPROXY_CCNode_unscheduleAllSelectors(JSContext *cx, uint32_t argc, jsval
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert(  [proxy isInitialized], @"Object not initialzied. error");
-    
-	
-	CCNode * real = (CCNode*)[proxy realObj];
-	NSCAssert( real, @"Invalid real object");
-
+	NSCAssert(  [proxy realObj], @"Object not initialzied. error");
 	NSCAssert( argc == 0, @"Invalid number of arguments" );
 
-	[real unscheduleAllSelectors ];
+	CCNode *real = (CCNode*) [proxy realObj];
+[real unscheduleAllSelectors ];
 	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
@@ -986,15 +805,11 @@ JSBool JSPROXY_CCNode_unscheduleUpdate(JSContext *cx, uint32_t argc, jsval *vp) 
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert(  [proxy isInitialized], @"Object not initialzied. error");
-    
-	
-	CCNode * real = (CCNode*)[proxy realObj];
-	NSCAssert( real, @"Invalid real object");
-
+	NSCAssert(  [proxy realObj], @"Object not initialzied. error");
 	NSCAssert( argc == 0, @"Invalid number of arguments" );
 
-	[real unscheduleUpdate ];
+	CCNode *real = (CCNode*) [proxy realObj];
+[real unscheduleUpdate ];
 	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
@@ -1006,15 +821,11 @@ JSBool JSPROXY_CCNode_vertexZ(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert(  [proxy isInitialized], @"Object not initialzied. error");
-    
-	
-	CCNode * real = (CCNode*)[proxy realObj];
-	NSCAssert( real, @"Invalid real object");
-
+	NSCAssert(  [proxy realObj], @"Object not initialzied. error");
 	NSCAssert( argc == 0, @"Invalid number of arguments" );
 	float ret_val;
 
+	CCNode *real = (CCNode*) [proxy realObj];
 	ret_val = [real vertexZ ];
 	JS_SET_RVAL(cx, vp, DOUBLE_TO_JSVAL(ret_val));
 	return JS_TRUE;
@@ -1027,15 +838,11 @@ JSBool JSPROXY_CCNode_visible(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert(  [proxy isInitialized], @"Object not initialzied. error");
-    
-	
-	CCNode * real = (CCNode*)[proxy realObj];
-	NSCAssert( real, @"Invalid real object");
-
+	NSCAssert(  [proxy realObj], @"Object not initialzied. error");
 	NSCAssert( argc == 0, @"Invalid number of arguments" );
 	BOOL ret_val;
 
+	CCNode *real = (CCNode*) [proxy realObj];
 	ret_val = [real visible ];
 	JS_SET_RVAL(cx, vp, BOOLEAN_TO_JSVAL(ret_val));
 	return JS_TRUE;
@@ -1048,15 +855,11 @@ JSBool JSPROXY_CCNode_visit(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert(  [proxy isInitialized], @"Object not initialzied. error");
-    
-	
-	CCNode * real = (CCNode*)[proxy realObj];
-	NSCAssert( real, @"Invalid real object");
-
+	NSCAssert(  [proxy realObj], @"Object not initialzied. error");
 	NSCAssert( argc == 0, @"Invalid number of arguments" );
 
-	[real visit ];
+	CCNode *real = (CCNode*) [proxy realObj];
+[real visit ];
 	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
@@ -1068,15 +871,11 @@ JSBool JSPROXY_CCNode_zOrder(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert(  [proxy isInitialized], @"Object not initialzied. error");
-    
-	
-	CCNode * real = (CCNode*)[proxy realObj];
-	NSCAssert( real, @"Invalid real object");
-
+	NSCAssert(  [proxy realObj], @"Object not initialzied. error");
 	NSCAssert( argc == 0, @"Invalid number of arguments" );
 	NSInteger ret_val;
 
+	CCNode *real = (CCNode*) [proxy realObj];
 	ret_val = [real zOrder ];
 	JS_SET_RVAL(cx, vp, INT_TO_JSVAL(ret_val));
 	return JS_TRUE;

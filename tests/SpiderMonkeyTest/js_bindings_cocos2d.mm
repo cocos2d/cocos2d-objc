@@ -50,9 +50,7 @@ JSBool CCNode_jsConstructor(JSContext *cx, uint32_t argc, jsval *vp)
 	if( ! [CCNode jr_swizzleMethod:@selector(onExit) withMethod:@selector(onExit_JS) error:&error] )
 		NSLog(@"Error swizzling %@", error);
 
-	ProxyJS_CCNode *proxy = [[ProxyJS_CCNode alloc] initWithJSObject:jsobj andRealObject:realObj];
-
-	[realObj release];
+	ProxyJS_CCNode *proxy = [[ProxyJS_CCNode alloc] initWithJSObject:jsobj];
 
 	// Weak reference
 	objc_setAssociatedObject(realObj, &CCNode_JS_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
@@ -85,10 +83,8 @@ JSBool CCNode_init(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	ProxyJS_CCNode* proxy = (ProxyJS_CCNode*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert( ! [proxy isInitialized], @"Object already initialzied. error");
+	NSCAssert( ! [proxy realObj], @"Object already initialzied. error");
 
-	proxy.initialized = YES;
-	
 	CCNode* real = (CCNode*)[proxy realObj];
 	NSCAssert( real, @"Invalid JS object");
 
@@ -106,7 +102,7 @@ JSBool CCNode_addChild(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	ProxyJS_CCNode* proxy = (ProxyJS_CCNode*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert( [proxy isInitialized], @"Object not initialzied. error");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 
 	CCNode* real = (CCNode*)[proxy realObj];
 	NSCAssert( real, @"Invalid JS object");
@@ -146,7 +142,7 @@ JSBool CCNode_setPosition(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	ProxyJS_CCNode* proxy = (ProxyJS_CCNode*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert( [proxy isInitialized], @"Object not initialzied. error");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	
 	CCNode* real = (CCNode*)[proxy realObj];
 	NSCAssert( real, @"Invalid JS object");
@@ -170,7 +166,7 @@ JSBool CCNode_getPosition(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	ProxyJS_CCNode* proxy = (ProxyJS_CCNode*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert( [proxy isInitialized], @"Object not initialzied. error");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	
 	CCNode* real = (CCNode*)[proxy realObj];
 	NSCAssert( real, @"Invalid JS object");

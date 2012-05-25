@@ -127,18 +127,14 @@ JSObject* %s_object = NULL;
 
         # 1: JSPROXY_CCNode,
         # 2: JSPROXY_CCNode, 3: JSPROXY_CCNode
-        # 4: CCNode, 5: CCNode
         # 6: JSPROXY_CCNode,  7: JSPROXY_CCNode
         # 8: possible callback code
         constructor_template = ''' // Constructor
 JSBool %s_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JSObject *jsobj = JS_NewObject(cx, %s_class, %s_object, NULL);
-    %s *realObj = [%s alloc];
 
-    %s *proxy = [[%s alloc] initWithJSObject:jsobj andRealObject:realObj];
-
-    [realObj release];
+    %s *proxy = [[%s alloc] initWithJSObject:jsobj];
 
     JS_SetPrivate(jsobj, proxy);
     JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -150,7 +146,7 @@ JSBool %s_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 '''
         proxy_class_name = '%s%s' % (PROXY_PREFIX, class_name )
         self.mm_file.write( constructor_globals % ( proxy_class_name, proxy_class_name ) )
-        self.mm_file.write( constructor_template % ( proxy_class_name, proxy_class_name, proxy_class_name, class_name, class_name, proxy_class_name, proxy_class_name, '/* no callbacks */' ) )
+        self.mm_file.write( constructor_template % ( proxy_class_name, proxy_class_name, proxy_class_name, proxy_class_name, proxy_class_name, '/* no callbacks */' ) )
 
     def generate_destructor( self, class_name ):
         # 1: JSPROXY_CCNode,
@@ -178,18 +174,26 @@ void %s_finalize(JSContext *cx, JSObject *obj)
     #
     # Method generator functions
     #
-    def generate_call_to_real_object( self, selector_name, num_of_args, ret_declared_type, args_declared_type ):
-        prefix = ''
-        if ret_declared_type:
-            prefix = 'ret_val = '
+    def generate_call_to_real_object( self, selector_name, num_of_args, ret_declared_type, args_declared_type, is_init, class_name ):
 
         args = selector_name.split(':')
-        call = prefix + '[real '
+
+        if is_init:
+            prefix = '\t%s *real = [[%s alloc] ' % (class_name, class_name )
+            suffix = '\n\t[proxy setRealObj: real];\n\t[real release];\n'
+        else:
+            prefix = '\t%s *real = (%s*) [proxy realObj];\n' % (class_name, class_name)
+            suffix = ''
+            if ret_declared_type:
+                prefix = prefix + '\tret_val = '
+
+            prefix = prefix + '[real '
 
         # sanity check
         if num_of_args+1 != len(args):
             raise Exception('Error parsing...')
 
+        call = ''
 
         for i,arg in enumerate(args):
             if num_of_args == 0:
@@ -200,7 +204,7 @@ void %s_finalize(JSContext *cx, JSObject *obj)
 
         call += ' ];';
 
-        return call
+        return '%s%s%s' % (prefix, call, suffix )
             
     def generate_return_string( self, declared_type, js_type ):
         convert = {
@@ -322,7 +326,6 @@ void %s_finalize(JSContext *cx, JSObject *obj)
         # JSPROXY_CCNode, setPosition
         # "!" or ""
         # proxy.initialized = YES (or nothing)
-        # CCNode, CCNode
         # 1  (number of arguments)
         method_template = '''
 JSBool %s_%s(JSContext *cx, uint32_t argc, jsval *vp) {
@@ -330,17 +333,20 @@ JSBool %s_%s(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert( %s [proxy isInitialized], @"Object not initialzied. error");
-    %s
-	
-	%s * real = (%s*)[proxy realObj];
-	NSCAssert( real, @"Invalid real object");
-
+	NSCAssert( %s [proxy realObj], @"Object not initialzied. error");
 	NSCAssert( argc == %d, @"Invalid number of arguments" );
 '''
 
-        return_template = '''
-        '''
+        already_initialized_template = '''
+	%s * real = (%s*)[proxy realObj];
+	NSCAssert( real, @"Invalid real object");
+'''
+        not_initialized_template = '''
+	%s* real = [[%s alloc] %s];
+	NSCAssert( real, @"Invalid real object");
+	[proxy setRealObj:real];
+	[real release];
+'''
 
         end_template = '''
 	return JS_TRUE;
@@ -392,12 +398,12 @@ JSBool %s_%s(JSContext *cx, uint32_t argc, jsval *vp) {
 
         if self.is_method_initializer(method):
             assert_init = '!'
-            init_proxy = 'proxy.initialized = YES;'
+            is_init_method = True
         else:
             assert_init = ''
-            init_proxy = ''
+            is_init_method = False
 
-        self.mm_file.write( method_template % ( PROXY_PREFIX+class_name, converted_name, assert_init, init_proxy, class_name, class_name, num_of_args ) )
+        self.mm_file.write( method_template % ( PROXY_PREFIX+class_name, converted_name, assert_init, num_of_args ) )
 
         for i,arg in enumerate(args_js_type):
 
@@ -414,9 +420,9 @@ JSBool %s_%s(JSContext *cx, uint32_t argc, jsval *vp) {
         if ret_declared_type:
             self.mm_file.write( '\t%s ret_val;\n' % ret_declared_type )
 
-        call_real = self.generate_call_to_real_object( s, num_of_args, ret_declared_type, args_declared_type )
+        call_real = self.generate_call_to_real_object( s, num_of_args, ret_declared_type, args_declared_type, is_init_method, class_name )
 
-        self.mm_file.write( '\n\t%s\n' % call_real )
+        self.mm_file.write( '\n%s\n' % call_real )
 
         ret_string = self.generate_return_string( ret_declared_type, ret_js_type )
         self.mm_file.write( ret_string )
