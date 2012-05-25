@@ -90,9 +90,6 @@ enum {
 {
 	CGSize s = [[CCDirector sharedDirector] winSize];
 	
-	// init chipmunk
-	cpInitChipmunk();
-	
 	space_ = cpSpaceNew();
 	
 	space_->gravity = ccp(0, -100);

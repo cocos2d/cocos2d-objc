@@ -159,12 +159,10 @@ void %s_finalize(JSContext *cx, JSObject *obj)
 {
 	%s *pt = (%s*)JS_GetPrivate(obj);
 	if (pt) {
-		id real = [pt realObj];
+		// id real = [pt realObj];
 	
-	%s
+		%s
 
-		[real release];
-	
 		[pt release];
 
 		JS_free(cx, pt);

@@ -152,7 +152,6 @@ MAKE_REF(cpSpatialIndexInsert);
 MAKE_REF(cpSpatialIndexRemove);
 MAKE_REF(cpSpatialIndexReindex);
 MAKE_REF(cpSpatialIndexReindexObject);
-MAKE_REF(cpSpatialIndexPointQuery);
 MAKE_REF(cpSpatialIndexSegmentQuery);
 MAKE_REF(cpSpatialIndexQuery);
 MAKE_REF(cpSpatialIndexReindexQuery);
