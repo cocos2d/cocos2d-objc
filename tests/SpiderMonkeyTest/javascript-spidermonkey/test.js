@@ -44,6 +44,11 @@ if (value != ret) {
 }
 
 
+var s = new cc.Sprite();
+s.initWithFile("grossini.png");
+
+
+
 //a.setPosition( ccp(100,200) );
 //
 //p = a.getPosition();
@@ -55,3 +60,5 @@ a.onEnter = function() {
 
 
 cc.addToRunningScene( a );
+cc.addToRunningScene( s );
+

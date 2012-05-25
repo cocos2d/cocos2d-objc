@@ -273,8 +273,8 @@ void %s_finalize(JSContext *cx, JSObject *obj)
             t = retval[0]['type']
             dt = retval[0]['declared_type']
 
-            # Special case for -(id) initXXX methods
-            if s.startswith('init') and dt == 'id':
+            # Special case for initializer methods
+            if self.is_method_initializer(method ):
                 ret_js_type = None
                 ret_declared_type = None
              
@@ -303,6 +303,16 @@ void %s_finalize(JSContext *cx, JSObject *obj)
     def generate_argument_string( self, i, arg_js_type ):
         self.mm_file.write( '\tJSString *tmp_arg%d = JS_ValueToString( cx, vp[%d] );\n\tNSString *arg%d = [NSString stringWithUTF8String: JS_EncodeString(cx, tmp_arg%d)];\n' % ( i, i+2, i, i ) )
 
+    # whether or not the method is an initializer
+    def is_method_initializer( self, method ):
+        if 'retval' in method:
+            retval = method['retval']
+            dt = retval[0]['declared_type']
+
+            if method['selector'].startswith('init') and dt == 'id':
+                return True
+        return False
+
     def generate_method( self, class_name, method ):
 
         method_description = '''
@@ -310,7 +320,8 @@ void %s_finalize(JSContext *cx, JSObject *obj)
 // Ret value: %s'''
 
         # JSPROXY_CCNode, setPosition
-        # CCNode
+        # "!" or ""
+        # proxy.initialized = YES (or nothing)
         # CCNode, CCNode
         # 1  (number of arguments)
         method_template = '''
@@ -319,7 +330,8 @@ JSBool %s_%s(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert( [proxy isInitialized], @"Object not initialzied. error");
+	NSCAssert( %s [proxy isInitialized], @"Object not initialzied. error");
+    %s
 	
 	%s * real = (%s*)[proxy realObj];
 	NSCAssert( real, @"Invalid real object");
@@ -358,8 +370,6 @@ JSBool %s_%s(JSContext *cx, uint32_t argc, jsval *vp) {
             'j' : ['int32_t',   'JS_ValueToECMAInt32'],
             'u' : ['uint32_t',  'JS_ValueToECMAUint32'],
             'c' : ['uint16_t',  'JS_ValueToUint16'],
-            's' : ['char*',     'XXX'],
-            'o' : ['JSObject*', 'XXX'],
             }
 
         js_special_type_conversions =  {
@@ -380,7 +390,14 @@ JSBool %s_%s(JSContext *cx, uint32_t argc, jsval *vp) {
         num_of_args = len( args_declared_type )
         self.mm_file.write( method_description % ( ', '.join(args_declared_type), ret_declared_type ) )
 
-        self.mm_file.write( method_template % ( PROXY_PREFIX+class_name, converted_name, class_name, class_name, num_of_args ) )
+        if self.is_method_initializer(method):
+            assert_init = '!'
+            init_proxy = 'proxy.initialized = YES;'
+        else:
+            assert_init = ''
+            init_proxy = ''
+
+        self.mm_file.write( method_template % ( PROXY_PREFIX+class_name, converted_name, assert_init, init_proxy, class_name, class_name, num_of_args ) )
 
         for i,arg in enumerate(args_js_type):
 
