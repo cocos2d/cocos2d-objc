@@ -104,6 +104,14 @@ class SpiderMonkey(object):
 
         return self.ancestors( subclass, list_of_ancestors )
 
+    #
+    # Helper
+    #
+    def convert_selector_name_to_native( self, name ):
+        return name.replace(':','_')
+
+    def convert_selector_name_to_js( self, name ):
+        return name.replace(':','')
 
     def generate_constructor( self, class_name ):
 
@@ -166,9 +174,9 @@ void %s_finalize(JSContext *cx, JSObject *obj)
         proxy_class_name = '%s%s' % (PROXY_PREFIX, class_name )
         self.mm_file.write( destructor_template % ( proxy_class_name, proxy_class_name, proxy_class_name, '/* no callbacks */' ) )
 
-    def generate_call_to_real_object( self, selector_name, num_of_args, ret_native_type ):
+    def generate_call_to_real_object( self, selector_name, num_of_args, ret_declared_type, args_declared_type ):
         prefix = ''
-        if ret_native_type:
+        if ret_declared_type:
             prefix = 'ret_val = '
 
         args = selector_name.split(':')
@@ -182,16 +190,36 @@ void %s_finalize(JSContext *cx, JSObject *obj)
         for i,arg in enumerate(args):
             if num_of_args == 0:
                 call += arg
-            elif arg:   # empty
-                call += '%s:arg%d ' % (arg,i)
+            elif arg:   # empty arg?
+                # cast needed to prevent compiler errors
+                call += '%s:(%s)arg%d ' % (arg, args_declared_type[i], i)
 
         call += ' ];';
 
         return call
             
+    def generate_return_string( self, declared_type, js_type ):
+        convert = {
+            'i' : 'INT_TO_JSVAL(ret_val)',
+            'u' : 'INT_TO_JSVAL(ret_val)',
+            'b' : 'BOOLEAN_TO_JSVAL(ret_val)',
+            'o' : 'OBJECT_TO_JSVAL(ret_val)',
+            's' : 'STRING_TO_JSVAL(ret_val)',
+            'd' : 'DOUBLE_TO_JSVAL(ret_val)',
+#            'f' : 'FUNCTION_TO_JSVAL(ret_val)',
+            None : 'JSVAL_TRUE',
+            }
+        if js_type not in convert:
+            raise Exception("Invalid key: %s" % js_type )
 
+        s = convert[ js_type ]
+        return '\tJS_SET_RVAL(cx, vp, %s);' % s
 
     def generate_method( self, class_name, method ):
+
+        method_description = '''
+// Arguments: %s
+// Ret value: %s'''
 
         # JSPROXY_CCNode, setPosition
         # CCNode
@@ -211,12 +239,6 @@ JSBool %s_%s(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( argc == %d, @"Invalid number of arguments" );
 '''
 
-        # Arguments ids: 'ifB' (int, float, Bool)
-        # Arguments addresses: &arg0, &arg1, &arg2
-        arguments_template = '''
-	JS_ConvertArguments(cx, argc, JS_ARGV(cx, vp), "%s", %s);
-    '''
-
         return_template = '''
         '''
 
@@ -224,25 +246,53 @@ JSBool %s_%s(JSContext *cx, uint32_t argc, jsval *vp) {
 	return JS_TRUE;
 }
 '''
+
+        # b      JSBool          Boolean
+        # c      uint16_t/jschar ECMA uint16_t, Unicode char
+        # i      int32_t         ECMA int32_t
+        # u      uint32_t        ECMA uint32_t
+        # j      int32_t         Rounded int32_t (coordinate)
+        # d      double          IEEE double
+        # I      double          Integral IEEE double
+        # S      JSString *      Unicode string, accessed by a JSString pointer
+        # W      jschar *        Unicode character vector, 0-terminated (W for wide)
+        # o      JSObject *      Object reference
+        # f      JSFunction *    Function private
+        # v      jsval           Argument value (no conversion)
+        # *      N/A             Skip this argument (no vararg)
+        # /      N/A             End of required arguments
         supported_types = {
-            'f' : ['f', 'float'],           # float
-            'd' : ['f', 'double'],          # double
-            'i' : ['i', 'int'],             # integer
-            'I' : ['i', 'unsigned int'],    # unsigned integer
-            'c' : ['c', 'char'],            # char
-            'C' : ['c', 'unsigned char'],   # unsigned char
-            'B' : ['b', 'BOOL'],            # BOOL
-            'v' : ['', 'void'],             # void (for retval)
+            'f' : 'd',  # float
+            'd' : 'd',  # double
+            'i' : 'i',  # integer
+            'I' : 'u',  # unsigned integer
+            'c' : 'c',  # char
+            'C' : 'c',  # unsigned char
+            'B' : 'b',  # BOOL
+            'v' :  None,  # void (for retval)
+            }
+
+        # More info:
+        # https://developer.mozilla.org/en/SpiderMonkey/JSAPI_Reference/JS_ConvertArguments
+        js_types_conversions = {
+            'b' : ['JSBool',      'JS_ValueToBoolean'],
+            'd' : ['double',    'JS_ValueToNumber'],
+            'I' : ['double',    'JS_ValueToNumber'],    # double converted to string
+            'i' : ['int32_t',   'JS_ValueToECMAInt32'],
+            'j' : ['int32_t',   'JS_ValueToECMAInt32'],
+            'u' : ['uint32_t',  'JS_ValueToECMAUint32'],
+            'c' : ['uint16_t',  'JS_ValueToUint16'],
+            's' : ['char*',     'XXX'],
+            'o' : ['JSObject*', 'XXX'],
             }
 
         s = method['selector']
         retval = None
         args = None
-
         args_js_type = []
-        args_native_type = []
+        args_declared_type = []
         ret_js_type = None
-        ret_native_type = None
+        ret_declared_type = None
         supported_args = True
         if 'arg' in method:
             args = method['arg']
@@ -252,59 +302,57 @@ JSBool %s_%s(JSContext *cx, uint32_t argc, jsval *vp) {
                     supported_args = False
                     break
                 else:
-                    args_js_type.append( supported_types[t][0] )
-                    args_native_type.append( supported_types[t][1] )
+                    args_js_type.append( supported_types[t] )
+                    args_declared_type.append( arg['declared_type'] )
 
         if 'retval' in method:
             retval = method['retval']
             t = retval[0]['type']
             if not t in supported_types:
                 supported_args = False
-            elif supported_types[t][1] != 'void':
-                ret_js_type = supported_types[t][0]
-                ret_native_type = supported_types[t][1]
+            elif supported_types[t] != None:    # void type
+                ret_js_type = supported_types[t]
+                ret_declared_type = retval[0]['declared_type']
 
-        if supported_args:
-            print 'OK:' + method['selector'] + ' args:' + str(args_js_type) + ' ret:' + str(ret_js_type)
-        else:
+        if not supported_args:
             print 'NOT OK:' + method['selector']
             return False
 
         
         # writing...
-        converted_name = s.replace(':','_')
+        converted_name = self.convert_selector_name_to_native( s )
 
-        num_of_args = len( args_native_type )
+        num_of_args = len( args_declared_type )
+        self.mm_file.write( method_description % ( ', '.join(args_declared_type), ret_declared_type ) )
+
         self.mm_file.write( method_template % ( PROXY_PREFIX+class_name, converted_name, class_name, class_name, num_of_args ) )
 
-        arguments_types = '\t%s arg%d;\n'
-        arguments_to_convert = ''
-        for i,arg in enumerate(args_native_type):
-            self.mm_file.write( arguments_types % ( arg, i ) )
-            if i==0:
-                arguments_to_convert = '&arg0'
-            else:
-                arguments_to_convert = '%s, &arg%d' % (arguments_to_convert, i)
+        for i,arg in enumerate(args_js_type):
+            t = js_types_conversions[arg]
+            self.mm_file.write( '\t%s arg%d; %s( cx, vp[%d], &arg%d );\n' % ( t[0], i, t[1], i+2, i ) )
 
-        if ret_native_type:
-            self.mm_file.write( '\t%s ret_val;\n' % ret_native_type )
+        if ret_declared_type:
+            self.mm_file.write( '\t%s ret_val;\n' % ret_declared_type )
 
-        call_real = self.generate_call_to_real_object( s, num_of_args, ret_native_type )
-
-        if  num_of_args > 0:
-            self.mm_file.write( arguments_template % ( ''.join(args_js_type), arguments_to_convert ) )
+        call_real = self.generate_call_to_real_object( s, num_of_args, ret_declared_type, args_declared_type )
 
         self.mm_file.write( '\n\t%s\n' % call_real )
 
-        if ret_js_type:
-            self.mm_file.write( return_template )
+        ret_string = self.generate_return_string( ret_declared_type, ret_js_type )
+        self.mm_file.write( ret_string )
+
         self.mm_file.write( end_template )
 
         return True
 
     def generate_methods( self, class_name, klass ):
+        ok_methods = []
         for m in klass['method']:
-            self.generate_method( class_name, m )
+            ok = self.generate_method( class_name, m )
+            if ok:
+                ok_methods.append( m )
+        return ok_methods
+
 
     def generate_header( self, class_name, parent_name ):
         # js_bindindings_CCNode
@@ -336,7 +384,7 @@ extern JSObject *%s_object;
         # callback code should be added here
         self.h_file.write( header_template_end )
 
-    def generate_implementation( self, class_name, parent_name ):
+    def generate_implementation( self, class_name, parent_name, ok_methods ):
         # 1-12: JSPROXY_CCNode
         implementation_template = '''
 +(void) createClassWithContext:(JSContext*)cx object:(JSObject*)globalObj name:(NSString*)name
@@ -360,11 +408,11 @@ extern JSObject *%s_object;
 		{0, 0, 0, 0, 0}
 	};
 '''
-        functions_template = '''
+        functions_template_start = '''
 	static JSFunctionSpec funcs[] = {
-		JS_FS_END
-	};
 '''
+        functions_template_end = '\t\tJS_FS_END\n\t};\n'
+
         static_functions_template = '''
 	static JSFunctionSpec st_funcs[] = {
 		JS_FS_END
@@ -388,7 +436,15 @@ extern JSObject *%s_object;
                                                         proxy_class_name, proxy_class_name, proxy_class_name ) )
 
         self.mm_file.write( properties_template )
-        self.mm_file.write( functions_template )
+        self.mm_file.write( functions_template_start )
+
+        js_fn = '\t\tJS_FN("%s", %s, 1, JSPROP_PERMANENT | JSPROP_SHARED),\n'
+        for method in ok_methods:
+            js_name = self.convert_selector_name_to_js( method['selector'] )
+            cb_name = self.convert_selector_name_to_native( method['selector'] )
+            self.mm_file.write( js_fn % (js_name, proxy_class_name + '_' + cb_name) )
+
+        self.mm_file.write( functions_template_end )
         self.mm_file.write( static_functions_template )
         self.mm_file.write( init_class_template % ( proxy_class_name, proxy_parent_name, proxy_class_name, proxy_class_name ) )
 
@@ -425,9 +481,9 @@ extern JSObject *%s_object;
         self.generate_constructor( class_name )
         self.generate_destructor( class_name )
 
-        self.generate_methods( class_name, klass )
+        ok_methods = self.generate_methods( class_name, klass )
 
-        self.generate_implementation( class_name, parent_name )
+        self.generate_implementation( class_name, parent_name, ok_methods )
 
         self.h_file.close()
         self.mm_file.close()

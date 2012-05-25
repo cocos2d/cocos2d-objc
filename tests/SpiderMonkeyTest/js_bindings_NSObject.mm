@@ -45,6 +45,28 @@ void JSPROXY_NSObject_finalize(JSContext *cx, JSObject *obj)
 	}
 }
 
+// Methods
+JSBool JSPROXY_NSObject_init(JSContext *cx, uint32_t argc, jsval *vp) {
+	
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject* proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( ! [proxy isInitialized], @"Object already initialzied. error");
+	
+	proxy.initialized = YES;
+	
+	NSObject* real = (NSObject*)[proxy realObj];
+	NSCAssert( real, @"Invalid JS object");
+	
+	NSCAssert1( argc == 0, @"Invalid number of arguments: %d", argc );
+	
+	[real init];
+	
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	
+	return JS_TRUE;
+}
+
 
 @implementation JSPROXY_NSObject
 
@@ -71,6 +93,7 @@ void JSPROXY_NSObject_finalize(JSContext *cx, JSObject *obj)
 	};
 	
 	static JSFunctionSpec funcs[] = {
+		JS_FN("init", JSPROXY_NSObject_init, 1, JSPROP_PERMANENT | JSPROP_SHARED),
 		JS_FS_END
 	};
 	

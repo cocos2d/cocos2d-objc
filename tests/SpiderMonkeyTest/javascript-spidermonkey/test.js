@@ -27,10 +27,25 @@ cc.log('Hello World');
 a = new cc.Node();
 a.init();
 
-a.setPosition( ccp(100,200) );
+var value = 90
+a.setRotation( 90 )
+var ret = a.rotation()
+if (value != ret ) {
+	cc.log('Error in setRotation / rotation');
+}
 
-p = a.getPosition();
-cc.log('position is: ' + p[0] + ', ' + p[1] )
+value = 5;
+a.setScaleX( 5 );
+ret = a.scaleX();
+if (value != ret) {
+	cc.log('Error in setScaleX / scaleX ');
+}
+
+
+//a.setPosition( ccp(100,200) );
+//
+//p = a.getPosition();
+//cc.log('position is: ' + p[0] + ', ' + p[1] )
 
 a.onEnter = function() {
 	cc.log("On Enter called");
