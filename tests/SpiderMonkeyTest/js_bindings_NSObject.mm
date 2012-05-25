@@ -14,11 +14,8 @@ JSObject* JSPROXY_NSObject_object = NULL;
 JSBool JSPROXY_NSObject_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JSObject *jsobj = JS_NewObject(cx, JSPROXY_NSObject_class, JSPROXY_NSObject_object, NULL);
-    NSObject *realObj = [NSObject alloc];
 	
-    JSPROXY_NSObject *proxy = [[JSPROXY_NSObject alloc] initWithJSObject:jsobj andRealObject:realObj];
-	
-    [realObj release];
+    JSPROXY_NSObject *proxy = [[JSPROXY_NSObject alloc] initWithJSObject:jsobj];
 	
     JS_SetPrivate(jsobj, proxy);
     JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -46,17 +43,17 @@ JSBool JSPROXY_NSObject_init(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject* proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert( ! [proxy isInitialized], @"Object already initialzied. error");
+	NSCAssert( ! [proxy realObj], @"Object already initialzied. error");
 	
-	proxy.initialized = YES;
 	
-	NSObject* real = (NSObject*)[proxy realObj];
+	NSObject* real = [[NSObject alloc] init];
+	[proxy setRealObj:real];
+	[real release];
+	
 	NSCAssert( real, @"Invalid JS object");
 	
 	NSCAssert1( argc == 0, @"Invalid number of arguments: %d", argc );
-	
-	[real init];
-	
+		
 	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	
 	return JS_TRUE;
@@ -67,7 +64,6 @@ JSBool JSPROXY_NSObject_init(JSContext *cx, uint32_t argc, jsval *vp) {
 
 @synthesize jsObj = _jsObj;
 @synthesize realObj = _realObj;
-@synthesize initialized = _initialized;
 
 +(void) createClassWithContext:(JSContext*)cx object:(JSObject*)globalObj name:(NSString*)name
 {
@@ -99,14 +95,12 @@ JSBool JSPROXY_NSObject_init(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSPROXY_NSObject_object = JS_InitClass(cx, globalObj, NULL, JSPROXY_NSObject_class, JSPROXY_NSObject_constructor,0,properties,funcs,NULL,st_funcs);
 }
 
--(id) initWithJSObject:(JSObject*)object andRealObject:(id)realObject
+-(id) initWithJSObject:(JSObject*)object
 {
 	self = [super init];
 	if( self )
 	{
 		_jsObj = object;
-		_realObj = [realObject retain];
-		_initialized = NO;
 	}
 	
 	return self;

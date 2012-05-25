@@ -9,14 +9,12 @@ extern JSObject* JSPROXY_NSObject_object;
 {
 	JSObject	*_jsObj;
 	id			_realObj;
-	BOOL		_initialized;
 }
 
 @property (readonly) JSObject *jsObj;
-@property (readonly) id	realObj;
-@property (nonatomic, readwrite, getter = isInitialized) BOOL initialized;
+@property (nonatomic, readwrite, retain) id	realObj;
 
--(id) initWithJSObject:(JSObject*)object andRealObject:(id)realObject;
+-(id) initWithJSObject:(JSObject*)object;
 +(void) createClassWithContext:(JSContext*)cx object:(JSObject*)globalObj name:(NSString*)name;
 @end
 
