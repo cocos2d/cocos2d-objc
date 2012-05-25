@@ -156,18 +156,6 @@ static inline void cpArbiterGetBodies(const cpArbiter *arb, cpBody **a, cpBody *
 /// A macro shortcut for defining and retrieving the bodies from an arbiter.
 #define CP_ARBITER_GET_BODIES(arb, a, b) cpBody *a, *b; cpArbiterGetBodies(arb, &a, &b);
 
-/// Returns true if this is the first step a pair of objects started colliding.
-static inline cpBool cpArbiterIsFirstContact(const cpArbiter *arb)
-{
-	return arb->CP_PRIVATE(state) == cpArbiterStateFirstColl;
-}
-
-/// Get the number of contact points for this arbiter.
-static inline int cpArbiterGetCount(const cpArbiter *arb)
-{
-	return arb->CP_PRIVATE(numContacts);
-}
-
 /// A struct that wraps up the important collision data for an arbiter.
 typedef struct cpContactPointSet {
 	/// The number of contact points in the set.
@@ -186,6 +174,10 @@ typedef struct cpContactPointSet {
 /// Return a contact set from an arbiter.
 cpContactPointSet cpArbiterGetContactPointSet(const cpArbiter *arb);
 
+/// Returns true if this is the first step a pair of objects started colliding.
+cpBool cpArbiterIsFirstContact(const cpArbiter *arb);
+/// Get the number of contact points for this arbiter.
+int cpArbiterGetCount(const cpArbiter *arb);
 /// Get the normal of the @c ith contact point.
 cpVect cpArbiterGetNormal(const cpArbiter *arb, int i);
 /// Get the position of the @c ith contact point.

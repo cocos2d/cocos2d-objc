@@ -19,9 +19,6 @@
  * SOFTWARE.
  */
 
-#include <stdlib.h>
-#include <math.h>
-
 #include "chipmunk_private.h"
 #include "constraints/util.h"
 
@@ -47,6 +44,7 @@ cpConstraintInit(cpConstraint *constraint, const cpConstraintClass *klass, cpBod
 	
 	constraint->a = a;
 	constraint->b = b;
+	constraint->space = NULL;
 	
 	constraint->next_a = NULL;
 	constraint->next_b = NULL;

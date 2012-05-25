@@ -110,6 +110,8 @@ static inline void cpConstraint##Set##name(cpConstraint *constraint, type value)
 CP_DefineConstraintStructGetter(type, member, name) \
 CP_DefineConstraintStructSetter(type, member, name)
 
+CP_DefineConstraintStructGetter(cpSpace*, CP_PRIVATE(space), Space);
+
 CP_DefineConstraintStructGetter(cpBody*, a, A);
 CP_DefineConstraintStructGetter(cpBody*, b, B);
 CP_DefineConstraintStructProperty(cpFloat, maxForce, MaxForce);

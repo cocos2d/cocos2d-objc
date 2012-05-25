@@ -168,6 +168,9 @@ static inline void cpBodySet##name(cpBody *body, const type value){ \
 CP_DefineBodyStructGetter(type, member, name) \
 CP_DefineBodyStructSetter(type, member, name)
 
+// TODO add to docs
+CP_DefineBodyStructGetter(cpSpace*, CP_PRIVATE(space), Space);
+
 CP_DefineBodyStructGetter(cpFloat, m, Mass);
 /// Set the mass of a body.
 void cpBodySetMass(cpBody *body, cpFloat m);

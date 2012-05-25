@@ -131,7 +131,7 @@ void removeShape( cpBody *body, cpShape *shape, void *data )
 	CGSize s = [[CCDirector sharedDirector] winSize];
 
 	// init chipmunk
-	cpInitChipmunk();
+//	cpInitChipmunk();
 
 	space_ = cpSpaceNew();
 

@@ -19,9 +19,6 @@
  * SOFTWARE.
  */
 
-#include <stdlib.h>
-#include <math.h>
-
 #include "chipmunk_private.h"
 #include "constraints/util.h"
 
@@ -68,10 +65,21 @@ cpArbiterUnthread(cpArbiter *arb)
 	unthreadHelper(arb, arb->body_b);
 }
 
+cpBool cpArbiterIsFirstContact(const cpArbiter *arb)
+{
+	return arb->CP_PRIVATE(state) == cpArbiterStateFirstColl;
+}
+
+int cpArbiterGetCount(const cpArbiter *arb)
+{
+	// Return 0 contacts if we are in a separate callback.
+	return (arb->CP_PRIVATE(state) != cpArbiterStateCached ? arb->CP_PRIVATE(numContacts) : 0);
+}
+
 cpVect
 cpArbiterGetNormal(const cpArbiter *arb, int i)
 {
-	cpAssertHard(0 <= i && i < arb->numContacts, "Index error: The specified contact index is invalid for this arbiter");
+	cpAssertHard(0 <= i && i < cpArbiterGetCount(arb), "Index error: The specified contact index is invalid for this arbiter");
 	
 	cpVect n = arb->contacts[i].n;
 	return arb->swappedColl ? cpvneg(n) : n;
@@ -80,7 +88,7 @@ cpArbiterGetNormal(const cpArbiter *arb, int i)
 cpVect
 cpArbiterGetPoint(const cpArbiter *arb, int i)
 {
-	cpAssertHard(0 <= i && i < arb->numContacts, "Index error: The specified contact index is invalid for this arbiter");
+	cpAssertHard(0 <= i && i < cpArbiterGetCount(arb), "Index error: The specified contact index is invalid for this arbiter");
 	
 	return arb->CP_PRIVATE(contacts)[i].CP_PRIVATE(p);
 }
@@ -88,7 +96,7 @@ cpArbiterGetPoint(const cpArbiter *arb, int i)
 cpFloat
 cpArbiterGetDepth(const cpArbiter *arb, int i)
 {
-	cpAssertHard(0 <= i && i < arb->numContacts, "Index error: The specified contact index is invalid for this arbiter");
+	cpAssertHard(0 <= i && i < cpArbiterGetCount(arb), "Index error: The specified contact index is invalid for this arbiter");
 	
 	return arb->CP_PRIVATE(contacts)[i].CP_PRIVATE(dist);
 }
@@ -116,7 +124,7 @@ cpArbiterTotalImpulse(const cpArbiter *arb)
 	cpContact *contacts = arb->contacts;
 	cpVect sum = cpvzero;
 	
-	for(int i=0, count=arb->numContacts; i<count; i++){
+	for(int i=0, count=cpArbiterGetCount(arb); i<count; i++){
 		cpContact *con = &contacts[i];
 		sum = cpvadd(sum, cpvmult(con->n, con->jnAcc));
 	}
@@ -130,7 +138,7 @@ cpArbiterTotalImpulseWithFriction(const cpArbiter *arb)
 	cpContact *contacts = arb->contacts;
 	cpVect sum = cpvzero;
 	
-	for(int i=0, count=arb->numContacts; i<count; i++){
+	for(int i=0, count=cpArbiterGetCount(arb); i<count; i++){
 		cpContact *con = &contacts[i];
 		sum = cpvadd(sum, cpvrotate(con->n, cpv(con->jnAcc, con->jtAcc)));
 	}
@@ -145,7 +153,7 @@ cpArbiterTotalKE(const cpArbiter *arb)
 	cpFloat sum = 0.0;
 	
 	cpContact *contacts = arb->contacts;
-	for(int i=0, count=arb->numContacts; i<count; i++){
+	for(int i=0, count=cpArbiterGetCount(arb); i<count; i++){
 		cpContact *con = &contacts[i];
 		cpFloat jnAcc = con->jnAcc;
 		cpFloat jtAcc = con->jtAcc;

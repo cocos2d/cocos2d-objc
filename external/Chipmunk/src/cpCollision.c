@@ -19,10 +19,6 @@
  * SOFTWARE.
  */
  
-#include <stdlib.h>
-#include <math.h>
-//#include <stdio.h>
-
 #include "chipmunk_private.h"
 
 typedef int (*collisionFunc)(const cpShape *, const cpShape *, cpContact *);
@@ -104,14 +100,14 @@ nextContactPoint(cpContact *arr, int *numPtr)
 
 // Find the minimum separating axis for the give poly and axis list.
 static inline int
-findMSA(const cpPolyShape *poly, const cpPolyShapeAxis *axes, const int num, cpFloat *min_out)
+findMSA(const cpPolyShape *poly, const cpSplittingPlane *planes, const int num, cpFloat *min_out)
 {
 	int min_index = 0;
-	cpFloat min = cpPolyShapeValueOnAxis(poly, axes->n, axes->d);
+	cpFloat min = cpPolyShapeValueOnAxis(poly, planes->n, planes->d);
 	if(min > 0.0f) return -1;
 	
 	for(int i=1; i<num; i++){
-		cpFloat dist = cpPolyShapeValueOnAxis(poly, axes[i].n, axes[i].d);
+		cpFloat dist = cpPolyShapeValueOnAxis(poly, planes[i].n, planes[i].d);
 		if(dist > 0.0f) {
 			return -1;
 		} else if(dist > min){
@@ -176,18 +172,18 @@ poly2poly(const cpShape *shape1, const cpShape *shape2, cpContact *arr)
 	cpPolyShape *poly2 = (cpPolyShape *)shape2;
 	
 	cpFloat min1;
-	int mini1 = findMSA(poly2, poly1->tAxes, poly1->numVerts, &min1);
+	int mini1 = findMSA(poly2, poly1->tPlanes, poly1->numVerts, &min1);
 	if(mini1 == -1) return 0;
 	
 	cpFloat min2;
-	int mini2 = findMSA(poly1, poly2->tAxes, poly2->numVerts, &min2);
+	int mini2 = findMSA(poly1, poly2->tPlanes, poly2->numVerts, &min2);
 	if(mini2 == -1) return 0;
 	
 	// There is overlap, find the penetrating verts
 	if(min1 > min2)
-		return findVerts(arr, poly1, poly2, poly1->tAxes[mini1].n, min1);
+		return findVerts(arr, poly1, poly2, poly1->tPlanes[mini1].n, min1);
 	else
-		return findVerts(arr, poly1, poly2, cpvneg(poly2->tAxes[mini2].n), min2);
+		return findVerts(arr, poly1, poly2, cpvneg(poly2->tPlanes[mini2].n), min2);
 }
 
 // Like cpPolyValueOnAxis(), but for segments.
@@ -225,7 +221,7 @@ seg2poly(const cpShape *shape1, const cpShape *shape2, cpContact *arr)
 {
 	cpSegmentShape *seg = (cpSegmentShape *)shape1;
 	cpPolyShape *poly = (cpPolyShape *)shape2;
-	cpPolyShapeAxis *axes = poly->tAxes;
+	cpSplittingPlane *planes = poly->tPlanes;
 	
 	cpFloat segD = cpvdot(seg->tn, seg->ta);
 	cpFloat minNorm = cpPolyShapeValueOnAxis(poly, seg->tn, segD) - seg->r;
@@ -233,10 +229,10 @@ seg2poly(const cpShape *shape1, const cpShape *shape2, cpContact *arr)
 	if(minNeg > 0.0f || minNorm > 0.0f) return 0;
 	
 	int mini = 0;
-	cpFloat poly_min = segValueOnAxis(seg, axes->n, axes->d);
+	cpFloat poly_min = segValueOnAxis(seg, planes->n, planes->d);
 	if(poly_min > 0.0f) return 0;
 	for(int i=0; i<poly->numVerts; i++){
-		cpFloat dist = segValueOnAxis(seg, axes[i].n, axes[i].d);
+		cpFloat dist = segValueOnAxis(seg, planes[i].n, planes[i].d);
 		if(dist > 0.0f){
 			return 0;
 		} else if(dist > poly_min){
@@ -247,7 +243,7 @@ seg2poly(const cpShape *shape1, const cpShape *shape2, cpContact *arr)
 	
 	int num = 0;
 	
-	cpVect poly_n = cpvneg(axes[mini].n);
+	cpVect poly_n = cpvneg(planes[mini].n);
 	
 	cpVect va = cpvadd(seg->ta, cpvmult(poly_n, seg->r));
 	cpVect vb = cpvadd(seg->tb, cpvmult(poly_n, seg->r));
@@ -288,12 +284,12 @@ circle2poly(const cpShape *shape1, const cpShape *shape2, cpContact *con)
 {
 	cpCircleShape *circ = (cpCircleShape *)shape1;
 	cpPolyShape *poly = (cpPolyShape *)shape2;
-	cpPolyShapeAxis *axes = poly->tAxes;
+	cpSplittingPlane *planes = poly->tPlanes;
 	
 	int mini = 0;
-	cpFloat min = cpvdot(axes->n, circ->tc) - axes->d - circ->r;
+	cpFloat min = cpSplittingPlaneCompare(planes[0], circ->tc) - circ->r;
 	for(int i=0; i<poly->numVerts; i++){
-		cpFloat dist = cpvdot(axes[i].n, circ->tc) - axes[i].d - circ->r;
+		cpFloat dist = cpSplittingPlaneCompare(planes[i], circ->tc) - circ->r;
 		if(dist > 0.0f){
 			return 0;
 		} else if(dist > min) {
@@ -302,7 +298,7 @@ circle2poly(const cpShape *shape1, const cpShape *shape2, cpContact *con)
 		}
 	}
 	
-	cpVect n = axes[mini].n;
+	cpVect n = planes[mini].n;
 	cpVect a = poly->tVerts[mini];
 	cpVect b = poly->tVerts[(mini + 1)%poly->numVerts];
 	cpFloat dta = cpvcross(n, a);

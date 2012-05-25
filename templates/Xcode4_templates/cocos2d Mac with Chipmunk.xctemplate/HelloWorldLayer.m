@@ -134,10 +134,7 @@ void removeShape( cpBody *body, cpShape *shape, void *data )
 -(void) initPhysics
 {
 	CGSize s = [[CCDirector sharedDirector] winSize];
-	
-	// init chipmunk
-	cpInitChipmunk();
-	
+
 	space_ = cpSpaceNew();
 	
 	space_->gravity = cpv(0, -100);
