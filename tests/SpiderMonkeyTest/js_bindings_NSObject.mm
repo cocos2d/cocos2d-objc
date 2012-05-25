@@ -93,7 +93,7 @@ JSBool JSPROXY_NSObject_init(JSContext *cx, uint32_t argc, jsval *vp) {
 	};
 	
 	static JSFunctionSpec funcs[] = {
-		JS_FN("init", JSPROXY_NSObject_init, 1, JSPROP_PERMANENT | JSPROP_SHARED),
+		JS_FN("init", JSPROXY_NSObject_init, 0, JSPROP_PERMANENT | JSPROP_SHARED),
 		JS_FS_END
 	};
 	

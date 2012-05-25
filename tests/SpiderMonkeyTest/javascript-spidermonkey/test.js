@@ -25,6 +25,8 @@ function ccp(x, y)
 cc.log('Hello World');
 
 a = new cc.Node();
+//a = Node.new();
+
 a.init();
 
 var value = 90
