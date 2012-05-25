@@ -50,6 +50,8 @@ void JSPROXY_CCNode_finalize(JSContext *cx, JSObject *obj)
 	}
 }
 
+// Arguments: 
+// Ret value: None
 JSBool JSPROXY_CCNode_cleanup(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -63,10 +65,12 @@ JSBool JSPROXY_CCNode_cleanup(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( argc == 0, @"Invalid number of arguments" );
 
 	[real cleanup ];
-
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
 
+// Arguments: 
+// Ret value: None
 JSBool JSPROXY_CCNode_draw(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -80,10 +84,12 @@ JSBool JSPROXY_CCNode_draw(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( argc == 0, @"Invalid number of arguments" );
 
 	[real draw ];
-
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
 
+// Arguments: 
+// Ret value: ccGLServerState
 JSBool JSPROXY_CCNode_glServerState(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -95,14 +101,15 @@ JSBool JSPROXY_CCNode_glServerState(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( real, @"Invalid real object");
 
 	NSCAssert( argc == 0, @"Invalid number of arguments" );
-	int ret_val;
+	ccGLServerState ret_val;
 
 	ret_val = [real glServerState ];
-
-        
+	JS_SET_RVAL(cx, vp, INT_TO_JSVAL(ret_val));
 	return JS_TRUE;
 }
 
+// Arguments: 
+// Ret value: BOOL
 JSBool JSPROXY_CCNode_ignoreAnchorPointForPosition(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -117,30 +124,12 @@ JSBool JSPROXY_CCNode_ignoreAnchorPointForPosition(JSContext *cx, uint32_t argc,
 	BOOL ret_val;
 
 	ret_val = [real ignoreAnchorPointForPosition ];
-
-        
+	JS_SET_RVAL(cx, vp, BOOLEAN_TO_JSVAL(ret_val));
 	return JS_TRUE;
 }
 
-JSBool JSPROXY_CCNode_isRelativeAnchorPoint(JSContext *cx, uint32_t argc, jsval *vp) {
-	
-	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
-	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert( [proxy isInitialized], @"Object not initialzied. error");
-	
-	CCNode * real = (CCNode*)[proxy realObj];
-	NSCAssert( real, @"Invalid real object");
-
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
-	BOOL ret_val;
-
-	ret_val = [real isRelativeAnchorPoint ];
-
-        
-	return JS_TRUE;
-}
-
+// Arguments: 
+// Ret value: BOOL
 JSBool JSPROXY_CCNode_isRunning(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -155,11 +144,12 @@ JSBool JSPROXY_CCNode_isRunning(JSContext *cx, uint32_t argc, jsval *vp) {
 	BOOL ret_val;
 
 	ret_val = [real isRunning ];
-
-        
+	JS_SET_RVAL(cx, vp, BOOLEAN_TO_JSVAL(ret_val));
 	return JS_TRUE;
 }
 
+// Arguments: 
+// Ret value: NSUInteger
 JSBool JSPROXY_CCNode_numberOfRunningActions(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -171,14 +161,15 @@ JSBool JSPROXY_CCNode_numberOfRunningActions(JSContext *cx, uint32_t argc, jsval
 	NSCAssert( real, @"Invalid real object");
 
 	NSCAssert( argc == 0, @"Invalid number of arguments" );
-	unsigned int ret_val;
+	NSUInteger ret_val;
 
 	ret_val = [real numberOfRunningActions ];
-
-        
+	JS_SET_RVAL(cx, vp, INT_TO_JSVAL(ret_val));
 	return JS_TRUE;
 }
 
+// Arguments: 
+// Ret value: None
 JSBool JSPROXY_CCNode_onEnter(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -192,10 +183,12 @@ JSBool JSPROXY_CCNode_onEnter(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( argc == 0, @"Invalid number of arguments" );
 
 	[real onEnter ];
-
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
 
+// Arguments: 
+// Ret value: None
 JSBool JSPROXY_CCNode_onEnterTransitionDidFinish(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -209,10 +202,12 @@ JSBool JSPROXY_CCNode_onEnterTransitionDidFinish(JSContext *cx, uint32_t argc, j
 	NSCAssert( argc == 0, @"Invalid number of arguments" );
 
 	[real onEnterTransitionDidFinish ];
-
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
 
+// Arguments: 
+// Ret value: None
 JSBool JSPROXY_CCNode_onExit(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -226,10 +221,12 @@ JSBool JSPROXY_CCNode_onExit(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( argc == 0, @"Invalid number of arguments" );
 
 	[real onExit ];
-
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
 
+// Arguments: 
+// Ret value: None
 JSBool JSPROXY_CCNode_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -243,10 +240,12 @@ JSBool JSPROXY_CCNode_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsv
 	NSCAssert( argc == 0, @"Invalid number of arguments" );
 
 	[real onExitTransitionDidStart ];
-
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
 
+// Arguments: 
+// Ret value: NSUInteger
 JSBool JSPROXY_CCNode_orderOfArrival(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -258,14 +257,15 @@ JSBool JSPROXY_CCNode_orderOfArrival(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( real, @"Invalid real object");
 
 	NSCAssert( argc == 0, @"Invalid number of arguments" );
-	unsigned int ret_val;
+	NSUInteger ret_val;
 
 	ret_val = [real orderOfArrival ];
-
-        
+	JS_SET_RVAL(cx, vp, INT_TO_JSVAL(ret_val));
 	return JS_TRUE;
 }
 
+// Arguments: 
+// Ret value: None
 JSBool JSPROXY_CCNode_pauseSchedulerAndActions(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -279,10 +279,12 @@ JSBool JSPROXY_CCNode_pauseSchedulerAndActions(JSContext *cx, uint32_t argc, jsv
 	NSCAssert( argc == 0, @"Invalid number of arguments" );
 
 	[real pauseSchedulerAndActions ];
-
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
 
+// Arguments: BOOL
+// Ret value: None
 JSBool JSPROXY_CCNode_removeAllChildrenWithCleanup_(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -294,15 +296,15 @@ JSBool JSPROXY_CCNode_removeAllChildrenWithCleanup_(JSContext *cx, uint32_t argc
 	NSCAssert( real, @"Invalid real object");
 
 	NSCAssert( argc == 1, @"Invalid number of arguments" );
-	BOOL arg0;
+	JSBool arg0; JS_ValueToBoolean( cx, vp[2], &arg0 );
 
-	JS_ConvertArguments(cx, argc, JS_ARGV(cx, vp), "b", &arg0);
-    
-	[real removeAllChildrenWithCleanup:arg0  ];
-
+	[real removeAllChildrenWithCleanup:(BOOL)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
 
+// Arguments: NSInteger, BOOL
+// Ret value: None
 JSBool JSPROXY_CCNode_removeChildByTag_cleanup_(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -314,16 +316,16 @@ JSBool JSPROXY_CCNode_removeChildByTag_cleanup_(JSContext *cx, uint32_t argc, js
 	NSCAssert( real, @"Invalid real object");
 
 	NSCAssert( argc == 2, @"Invalid number of arguments" );
-	int arg0;
-	BOOL arg1;
+	int32_t arg0; JS_ValueToECMAInt32( cx, vp[2], &arg0 );
+	JSBool arg1; JS_ValueToBoolean( cx, vp[3], &arg1 );
 
-	JS_ConvertArguments(cx, argc, JS_ARGV(cx, vp), "ib", &arg0, &arg1);
-    
-	[real removeChildByTag:arg0 cleanup:arg1  ];
-
+	[real removeChildByTag:(NSInteger)arg0 cleanup:(BOOL)arg1  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
 
+// Arguments: BOOL
+// Ret value: None
 JSBool JSPROXY_CCNode_removeFromParentAndCleanup_(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -335,15 +337,15 @@ JSBool JSPROXY_CCNode_removeFromParentAndCleanup_(JSContext *cx, uint32_t argc, 
 	NSCAssert( real, @"Invalid real object");
 
 	NSCAssert( argc == 1, @"Invalid number of arguments" );
-	BOOL arg0;
+	JSBool arg0; JS_ValueToBoolean( cx, vp[2], &arg0 );
 
-	JS_ConvertArguments(cx, argc, JS_ARGV(cx, vp), "b", &arg0);
-    
-	[real removeFromParentAndCleanup:arg0  ];
-
+	[real removeFromParentAndCleanup:(BOOL)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
 
+// Arguments: 
+// Ret value: None
 JSBool JSPROXY_CCNode_resumeSchedulerAndActions(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -357,10 +359,12 @@ JSBool JSPROXY_CCNode_resumeSchedulerAndActions(JSContext *cx, uint32_t argc, js
 	NSCAssert( argc == 0, @"Invalid number of arguments" );
 
 	[real resumeSchedulerAndActions ];
-
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
 
+// Arguments: 
+// Ret value: float
 JSBool JSPROXY_CCNode_rotation(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -375,11 +379,12 @@ JSBool JSPROXY_CCNode_rotation(JSContext *cx, uint32_t argc, jsval *vp) {
 	float ret_val;
 
 	ret_val = [real rotation ];
-
-        
+	JS_SET_RVAL(cx, vp, DOUBLE_TO_JSVAL(ret_val));
 	return JS_TRUE;
 }
 
+// Arguments: 
+// Ret value: float
 JSBool JSPROXY_CCNode_scale(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -394,11 +399,12 @@ JSBool JSPROXY_CCNode_scale(JSContext *cx, uint32_t argc, jsval *vp) {
 	float ret_val;
 
 	ret_val = [real scale ];
-
-        
+	JS_SET_RVAL(cx, vp, DOUBLE_TO_JSVAL(ret_val));
 	return JS_TRUE;
 }
 
+// Arguments: 
+// Ret value: float
 JSBool JSPROXY_CCNode_scaleX(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -413,11 +419,12 @@ JSBool JSPROXY_CCNode_scaleX(JSContext *cx, uint32_t argc, jsval *vp) {
 	float ret_val;
 
 	ret_val = [real scaleX ];
-
-        
+	JS_SET_RVAL(cx, vp, DOUBLE_TO_JSVAL(ret_val));
 	return JS_TRUE;
 }
 
+// Arguments: 
+// Ret value: float
 JSBool JSPROXY_CCNode_scaleY(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -432,11 +439,12 @@ JSBool JSPROXY_CCNode_scaleY(JSContext *cx, uint32_t argc, jsval *vp) {
 	float ret_val;
 
 	ret_val = [real scaleY ];
-
-        
+	JS_SET_RVAL(cx, vp, DOUBLE_TO_JSVAL(ret_val));
 	return JS_TRUE;
 }
 
+// Arguments: 
+// Ret value: None
 JSBool JSPROXY_CCNode_scheduleUpdate(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -450,10 +458,12 @@ JSBool JSPROXY_CCNode_scheduleUpdate(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( argc == 0, @"Invalid number of arguments" );
 
 	[real scheduleUpdate ];
-
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
 
+// Arguments: NSInteger
+// Ret value: None
 JSBool JSPROXY_CCNode_scheduleUpdateWithPriority_(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -465,15 +475,15 @@ JSBool JSPROXY_CCNode_scheduleUpdateWithPriority_(JSContext *cx, uint32_t argc, 
 	NSCAssert( real, @"Invalid real object");
 
 	NSCAssert( argc == 1, @"Invalid number of arguments" );
-	int arg0;
+	int32_t arg0; JS_ValueToECMAInt32( cx, vp[2], &arg0 );
 
-	JS_ConvertArguments(cx, argc, JS_ARGV(cx, vp), "i", &arg0);
-    
-	[real scheduleUpdateWithPriority:arg0  ];
-
+	[real scheduleUpdateWithPriority:(NSInteger)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
 
+// Arguments: ccGLServerState
+// Ret value: None
 JSBool JSPROXY_CCNode_setGlServerState_(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -485,15 +495,15 @@ JSBool JSPROXY_CCNode_setGlServerState_(JSContext *cx, uint32_t argc, jsval *vp)
 	NSCAssert( real, @"Invalid real object");
 
 	NSCAssert( argc == 1, @"Invalid number of arguments" );
-	int arg0;
+	int32_t arg0; JS_ValueToECMAInt32( cx, vp[2], &arg0 );
 
-	JS_ConvertArguments(cx, argc, JS_ARGV(cx, vp), "i", &arg0);
-    
-	[real setGlServerState:arg0  ];
-
+	[real setGlServerState:(ccGLServerState)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
 
+// Arguments: BOOL
+// Ret value: None
 JSBool JSPROXY_CCNode_setIgnoreAnchorPointForPosition_(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -505,35 +515,15 @@ JSBool JSPROXY_CCNode_setIgnoreAnchorPointForPosition_(JSContext *cx, uint32_t a
 	NSCAssert( real, @"Invalid real object");
 
 	NSCAssert( argc == 1, @"Invalid number of arguments" );
-	BOOL arg0;
+	JSBool arg0; JS_ValueToBoolean( cx, vp[2], &arg0 );
 
-	JS_ConvertArguments(cx, argc, JS_ARGV(cx, vp), "b", &arg0);
-    
-	[real setIgnoreAnchorPointForPosition:arg0  ];
-
+	[real setIgnoreAnchorPointForPosition:(BOOL)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
 
-JSBool JSPROXY_CCNode_setIsRelativeAnchorPoint_(JSContext *cx, uint32_t argc, jsval *vp) {
-	
-	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
-	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert( [proxy isInitialized], @"Object not initialzied. error");
-	
-	CCNode * real = (CCNode*)[proxy realObj];
-	NSCAssert( real, @"Invalid real object");
-
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
-	BOOL arg0;
-
-	JS_ConvertArguments(cx, argc, JS_ARGV(cx, vp), "b", &arg0);
-    
-	[real setIsRelativeAnchorPoint:arg0  ];
-
-	return JS_TRUE;
-}
-
+// Arguments: NSUInteger
+// Ret value: None
 JSBool JSPROXY_CCNode_setOrderOfArrival_(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -545,15 +535,15 @@ JSBool JSPROXY_CCNode_setOrderOfArrival_(JSContext *cx, uint32_t argc, jsval *vp
 	NSCAssert( real, @"Invalid real object");
 
 	NSCAssert( argc == 1, @"Invalid number of arguments" );
-	unsigned int arg0;
+	uint32_t arg0; JS_ValueToECMAUint32( cx, vp[2], &arg0 );
 
-	JS_ConvertArguments(cx, argc, JS_ARGV(cx, vp), "i", &arg0);
-    
-	[real setOrderOfArrival:arg0  ];
-
+	[real setOrderOfArrival:(NSUInteger)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
 
+// Arguments: float
+// Ret value: None
 JSBool JSPROXY_CCNode_setRotation_(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -565,15 +555,15 @@ JSBool JSPROXY_CCNode_setRotation_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( real, @"Invalid real object");
 
 	NSCAssert( argc == 1, @"Invalid number of arguments" );
-	float arg0;
+	double arg0; JS_ValueToNumber( cx, vp[2], &arg0 );
 
-	JS_ConvertArguments(cx, argc, JS_ARGV(cx, vp), "f", &arg0);
-    
-	[real setRotation:arg0  ];
-
+	[real setRotation:(float)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
 
+// Arguments: float
+// Ret value: None
 JSBool JSPROXY_CCNode_setScale_(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -585,15 +575,15 @@ JSBool JSPROXY_CCNode_setScale_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( real, @"Invalid real object");
 
 	NSCAssert( argc == 1, @"Invalid number of arguments" );
-	float arg0;
+	double arg0; JS_ValueToNumber( cx, vp[2], &arg0 );
 
-	JS_ConvertArguments(cx, argc, JS_ARGV(cx, vp), "f", &arg0);
-    
-	[real setScale:arg0  ];
-
+	[real setScale:(float)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
 
+// Arguments: float
+// Ret value: None
 JSBool JSPROXY_CCNode_setScaleX_(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -605,15 +595,15 @@ JSBool JSPROXY_CCNode_setScaleX_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( real, @"Invalid real object");
 
 	NSCAssert( argc == 1, @"Invalid number of arguments" );
-	float arg0;
+	double arg0; JS_ValueToNumber( cx, vp[2], &arg0 );
 
-	JS_ConvertArguments(cx, argc, JS_ARGV(cx, vp), "f", &arg0);
-    
-	[real setScaleX:arg0  ];
-
+	[real setScaleX:(float)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
 
+// Arguments: float
+// Ret value: None
 JSBool JSPROXY_CCNode_setScaleY_(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -625,15 +615,15 @@ JSBool JSPROXY_CCNode_setScaleY_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( real, @"Invalid real object");
 
 	NSCAssert( argc == 1, @"Invalid number of arguments" );
-	float arg0;
+	double arg0; JS_ValueToNumber( cx, vp[2], &arg0 );
 
-	JS_ConvertArguments(cx, argc, JS_ARGV(cx, vp), "f", &arg0);
-    
-	[real setScaleY:arg0  ];
-
+	[real setScaleY:(float)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
 
+// Arguments: float
+// Ret value: None
 JSBool JSPROXY_CCNode_setSkewX_(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -645,15 +635,15 @@ JSBool JSPROXY_CCNode_setSkewX_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( real, @"Invalid real object");
 
 	NSCAssert( argc == 1, @"Invalid number of arguments" );
-	float arg0;
+	double arg0; JS_ValueToNumber( cx, vp[2], &arg0 );
 
-	JS_ConvertArguments(cx, argc, JS_ARGV(cx, vp), "f", &arg0);
-    
-	[real setSkewX:arg0  ];
-
+	[real setSkewX:(float)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
 
+// Arguments: float
+// Ret value: None
 JSBool JSPROXY_CCNode_setSkewY_(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -665,15 +655,15 @@ JSBool JSPROXY_CCNode_setSkewY_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( real, @"Invalid real object");
 
 	NSCAssert( argc == 1, @"Invalid number of arguments" );
-	float arg0;
+	double arg0; JS_ValueToNumber( cx, vp[2], &arg0 );
 
-	JS_ConvertArguments(cx, argc, JS_ARGV(cx, vp), "f", &arg0);
-    
-	[real setSkewY:arg0  ];
-
+	[real setSkewY:(float)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
 
+// Arguments: NSInteger
+// Ret value: None
 JSBool JSPROXY_CCNode_setTag_(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -685,15 +675,15 @@ JSBool JSPROXY_CCNode_setTag_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( real, @"Invalid real object");
 
 	NSCAssert( argc == 1, @"Invalid number of arguments" );
-	int arg0;
+	int32_t arg0; JS_ValueToECMAInt32( cx, vp[2], &arg0 );
 
-	JS_ConvertArguments(cx, argc, JS_ARGV(cx, vp), "i", &arg0);
-    
-	[real setTag:arg0  ];
-
+	[real setTag:(NSInteger)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
 
+// Arguments: float
+// Ret value: None
 JSBool JSPROXY_CCNode_setVertexZ_(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -705,15 +695,15 @@ JSBool JSPROXY_CCNode_setVertexZ_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( real, @"Invalid real object");
 
 	NSCAssert( argc == 1, @"Invalid number of arguments" );
-	float arg0;
+	double arg0; JS_ValueToNumber( cx, vp[2], &arg0 );
 
-	JS_ConvertArguments(cx, argc, JS_ARGV(cx, vp), "f", &arg0);
-    
-	[real setVertexZ:arg0  ];
-
+	[real setVertexZ:(float)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
 
+// Arguments: BOOL
+// Ret value: None
 JSBool JSPROXY_CCNode_setVisible_(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -725,15 +715,15 @@ JSBool JSPROXY_CCNode_setVisible_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( real, @"Invalid real object");
 
 	NSCAssert( argc == 1, @"Invalid number of arguments" );
-	BOOL arg0;
+	JSBool arg0; JS_ValueToBoolean( cx, vp[2], &arg0 );
 
-	JS_ConvertArguments(cx, argc, JS_ARGV(cx, vp), "b", &arg0);
-    
-	[real setVisible:arg0  ];
-
+	[real setVisible:(BOOL)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
 
+// Arguments: NSUInteger
+// Ret value: None
 JSBool JSPROXY_CCNode_setZOrder_(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -745,15 +735,15 @@ JSBool JSPROXY_CCNode_setZOrder_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( real, @"Invalid real object");
 
 	NSCAssert( argc == 1, @"Invalid number of arguments" );
-	unsigned int arg0;
+	uint32_t arg0; JS_ValueToECMAUint32( cx, vp[2], &arg0 );
 
-	JS_ConvertArguments(cx, argc, JS_ARGV(cx, vp), "i", &arg0);
-    
-	[real setZOrder:arg0  ];
-
+	[real setZOrder:(NSUInteger)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
 
+// Arguments: 
+// Ret value: float
 JSBool JSPROXY_CCNode_skewX(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -768,11 +758,12 @@ JSBool JSPROXY_CCNode_skewX(JSContext *cx, uint32_t argc, jsval *vp) {
 	float ret_val;
 
 	ret_val = [real skewX ];
-
-        
+	JS_SET_RVAL(cx, vp, DOUBLE_TO_JSVAL(ret_val));
 	return JS_TRUE;
 }
 
+// Arguments: 
+// Ret value: float
 JSBool JSPROXY_CCNode_skewY(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -787,11 +778,12 @@ JSBool JSPROXY_CCNode_skewY(JSContext *cx, uint32_t argc, jsval *vp) {
 	float ret_val;
 
 	ret_val = [real skewY ];
-
-        
+	JS_SET_RVAL(cx, vp, DOUBLE_TO_JSVAL(ret_val));
 	return JS_TRUE;
 }
 
+// Arguments: 
+// Ret value: None
 JSBool JSPROXY_CCNode_sortAllChildren(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -805,10 +797,12 @@ JSBool JSPROXY_CCNode_sortAllChildren(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( argc == 0, @"Invalid number of arguments" );
 
 	[real sortAllChildren ];
-
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
 
+// Arguments: NSInteger
+// Ret value: None
 JSBool JSPROXY_CCNode_stopActionByTag_(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -820,15 +814,15 @@ JSBool JSPROXY_CCNode_stopActionByTag_(JSContext *cx, uint32_t argc, jsval *vp) 
 	NSCAssert( real, @"Invalid real object");
 
 	NSCAssert( argc == 1, @"Invalid number of arguments" );
-	int arg0;
+	int32_t arg0; JS_ValueToECMAInt32( cx, vp[2], &arg0 );
 
-	JS_ConvertArguments(cx, argc, JS_ARGV(cx, vp), "i", &arg0);
-    
-	[real stopActionByTag:arg0  ];
-
+	[real stopActionByTag:(NSInteger)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
 
+// Arguments: 
+// Ret value: None
 JSBool JSPROXY_CCNode_stopAllActions(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -842,10 +836,12 @@ JSBool JSPROXY_CCNode_stopAllActions(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( argc == 0, @"Invalid number of arguments" );
 
 	[real stopAllActions ];
-
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
 
+// Arguments: 
+// Ret value: NSInteger
 JSBool JSPROXY_CCNode_tag(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -857,14 +853,15 @@ JSBool JSPROXY_CCNode_tag(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( real, @"Invalid real object");
 
 	NSCAssert( argc == 0, @"Invalid number of arguments" );
-	int ret_val;
+	NSInteger ret_val;
 
 	ret_val = [real tag ];
-
-        
+	JS_SET_RVAL(cx, vp, INT_TO_JSVAL(ret_val));
 	return JS_TRUE;
 }
 
+// Arguments: 
+// Ret value: None
 JSBool JSPROXY_CCNode_transform(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -878,10 +875,12 @@ JSBool JSPROXY_CCNode_transform(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( argc == 0, @"Invalid number of arguments" );
 
 	[real transform ];
-
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
 
+// Arguments: 
+// Ret value: None
 JSBool JSPROXY_CCNode_transformAncestors(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -895,10 +894,12 @@ JSBool JSPROXY_CCNode_transformAncestors(JSContext *cx, uint32_t argc, jsval *vp
 	NSCAssert( argc == 0, @"Invalid number of arguments" );
 
 	[real transformAncestors ];
-
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
 
+// Arguments: 
+// Ret value: None
 JSBool JSPROXY_CCNode_unscheduleAllSelectors(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -912,10 +913,12 @@ JSBool JSPROXY_CCNode_unscheduleAllSelectors(JSContext *cx, uint32_t argc, jsval
 	NSCAssert( argc == 0, @"Invalid number of arguments" );
 
 	[real unscheduleAllSelectors ];
-
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
 
+// Arguments: 
+// Ret value: None
 JSBool JSPROXY_CCNode_unscheduleUpdate(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -929,10 +932,12 @@ JSBool JSPROXY_CCNode_unscheduleUpdate(JSContext *cx, uint32_t argc, jsval *vp) 
 	NSCAssert( argc == 0, @"Invalid number of arguments" );
 
 	[real unscheduleUpdate ];
-
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
 
+// Arguments: 
+// Ret value: float
 JSBool JSPROXY_CCNode_vertexZ(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -947,11 +952,12 @@ JSBool JSPROXY_CCNode_vertexZ(JSContext *cx, uint32_t argc, jsval *vp) {
 	float ret_val;
 
 	ret_val = [real vertexZ ];
-
-        
+	JS_SET_RVAL(cx, vp, DOUBLE_TO_JSVAL(ret_val));
 	return JS_TRUE;
 }
 
+// Arguments: 
+// Ret value: BOOL
 JSBool JSPROXY_CCNode_visible(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -966,11 +972,12 @@ JSBool JSPROXY_CCNode_visible(JSContext *cx, uint32_t argc, jsval *vp) {
 	BOOL ret_val;
 
 	ret_val = [real visible ];
-
-        
+	JS_SET_RVAL(cx, vp, BOOLEAN_TO_JSVAL(ret_val));
 	return JS_TRUE;
 }
 
+// Arguments: 
+// Ret value: None
 JSBool JSPROXY_CCNode_visit(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -984,10 +991,12 @@ JSBool JSPROXY_CCNode_visit(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( argc == 0, @"Invalid number of arguments" );
 
 	[real visit ];
-
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
 
+// Arguments: 
+// Ret value: NSInteger
 JSBool JSPROXY_CCNode_zOrder(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -999,11 +1008,10 @@ JSBool JSPROXY_CCNode_zOrder(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( real, @"Invalid real object");
 
 	NSCAssert( argc == 0, @"Invalid number of arguments" );
-	int ret_val;
+	NSInteger ret_val;
 
 	ret_val = [real zOrder ];
-
-        
+	JS_SET_RVAL(cx, vp, INT_TO_JSVAL(ret_val));
 	return JS_TRUE;
 }
 
@@ -1028,6 +1036,55 @@ JSBool JSPROXY_CCNode_zOrder(JSContext *cx, uint32_t argc, jsval *vp) {
 	};
 
 	static JSFunctionSpec funcs[] = {
+		JS_FN("cleanup", JSPROXY_CCNode_cleanup, 1, JSPROP_PERMANENT | JSPROP_SHARED),
+		JS_FN("draw", JSPROXY_CCNode_draw, 1, JSPROP_PERMANENT | JSPROP_SHARED),
+		JS_FN("glServerState", JSPROXY_CCNode_glServerState, 1, JSPROP_PERMANENT | JSPROP_SHARED),
+		JS_FN("ignoreAnchorPointForPosition", JSPROXY_CCNode_ignoreAnchorPointForPosition, 1, JSPROP_PERMANENT | JSPROP_SHARED),
+		JS_FN("isRunning", JSPROXY_CCNode_isRunning, 1, JSPROP_PERMANENT | JSPROP_SHARED),
+		JS_FN("numberOfRunningActions", JSPROXY_CCNode_numberOfRunningActions, 1, JSPROP_PERMANENT | JSPROP_SHARED),
+		JS_FN("onEnter", JSPROXY_CCNode_onEnter, 1, JSPROP_PERMANENT | JSPROP_SHARED),
+		JS_FN("onEnterTransitionDidFinish", JSPROXY_CCNode_onEnterTransitionDidFinish, 1, JSPROP_PERMANENT | JSPROP_SHARED),
+		JS_FN("onExit", JSPROXY_CCNode_onExit, 1, JSPROP_PERMANENT | JSPROP_SHARED),
+		JS_FN("onExitTransitionDidStart", JSPROXY_CCNode_onExitTransitionDidStart, 1, JSPROP_PERMANENT | JSPROP_SHARED),
+		JS_FN("orderOfArrival", JSPROXY_CCNode_orderOfArrival, 1, JSPROP_PERMANENT | JSPROP_SHARED),
+		JS_FN("pauseSchedulerAndActions", JSPROXY_CCNode_pauseSchedulerAndActions, 1, JSPROP_PERMANENT | JSPROP_SHARED),
+		JS_FN("removeAllChildrenWithCleanup", JSPROXY_CCNode_removeAllChildrenWithCleanup_, 1, JSPROP_PERMANENT | JSPROP_SHARED),
+		JS_FN("removeChildByTagcleanup", JSPROXY_CCNode_removeChildByTag_cleanup_, 1, JSPROP_PERMANENT | JSPROP_SHARED),
+		JS_FN("removeFromParentAndCleanup", JSPROXY_CCNode_removeFromParentAndCleanup_, 1, JSPROP_PERMANENT | JSPROP_SHARED),
+		JS_FN("resumeSchedulerAndActions", JSPROXY_CCNode_resumeSchedulerAndActions, 1, JSPROP_PERMANENT | JSPROP_SHARED),
+		JS_FN("rotation", JSPROXY_CCNode_rotation, 1, JSPROP_PERMANENT | JSPROP_SHARED),
+		JS_FN("scale", JSPROXY_CCNode_scale, 1, JSPROP_PERMANENT | JSPROP_SHARED),
+		JS_FN("scaleX", JSPROXY_CCNode_scaleX, 1, JSPROP_PERMANENT | JSPROP_SHARED),
+		JS_FN("scaleY", JSPROXY_CCNode_scaleY, 1, JSPROP_PERMANENT | JSPROP_SHARED),
+		JS_FN("scheduleUpdate", JSPROXY_CCNode_scheduleUpdate, 1, JSPROP_PERMANENT | JSPROP_SHARED),
+		JS_FN("scheduleUpdateWithPriority", JSPROXY_CCNode_scheduleUpdateWithPriority_, 1, JSPROP_PERMANENT | JSPROP_SHARED),
+		JS_FN("setGlServerState", JSPROXY_CCNode_setGlServerState_, 1, JSPROP_PERMANENT | JSPROP_SHARED),
+		JS_FN("setIgnoreAnchorPointForPosition", JSPROXY_CCNode_setIgnoreAnchorPointForPosition_, 1, JSPROP_PERMANENT | JSPROP_SHARED),
+		JS_FN("setOrderOfArrival", JSPROXY_CCNode_setOrderOfArrival_, 1, JSPROP_PERMANENT | JSPROP_SHARED),
+		JS_FN("setRotation", JSPROXY_CCNode_setRotation_, 1, JSPROP_PERMANENT | JSPROP_SHARED),
+		JS_FN("setScale", JSPROXY_CCNode_setScale_, 1, JSPROP_PERMANENT | JSPROP_SHARED),
+		JS_FN("setScaleX", JSPROXY_CCNode_setScaleX_, 1, JSPROP_PERMANENT | JSPROP_SHARED),
+		JS_FN("setScaleY", JSPROXY_CCNode_setScaleY_, 1, JSPROP_PERMANENT | JSPROP_SHARED),
+		JS_FN("setSkewX", JSPROXY_CCNode_setSkewX_, 1, JSPROP_PERMANENT | JSPROP_SHARED),
+		JS_FN("setSkewY", JSPROXY_CCNode_setSkewY_, 1, JSPROP_PERMANENT | JSPROP_SHARED),
+		JS_FN("setTag", JSPROXY_CCNode_setTag_, 1, JSPROP_PERMANENT | JSPROP_SHARED),
+		JS_FN("setVertexZ", JSPROXY_CCNode_setVertexZ_, 1, JSPROP_PERMANENT | JSPROP_SHARED),
+		JS_FN("setVisible", JSPROXY_CCNode_setVisible_, 1, JSPROP_PERMANENT | JSPROP_SHARED),
+		JS_FN("setZOrder", JSPROXY_CCNode_setZOrder_, 1, JSPROP_PERMANENT | JSPROP_SHARED),
+		JS_FN("skewX", JSPROXY_CCNode_skewX, 1, JSPROP_PERMANENT | JSPROP_SHARED),
+		JS_FN("skewY", JSPROXY_CCNode_skewY, 1, JSPROP_PERMANENT | JSPROP_SHARED),
+		JS_FN("sortAllChildren", JSPROXY_CCNode_sortAllChildren, 1, JSPROP_PERMANENT | JSPROP_SHARED),
+		JS_FN("stopActionByTag", JSPROXY_CCNode_stopActionByTag_, 1, JSPROP_PERMANENT | JSPROP_SHARED),
+		JS_FN("stopAllActions", JSPROXY_CCNode_stopAllActions, 1, JSPROP_PERMANENT | JSPROP_SHARED),
+		JS_FN("tag", JSPROXY_CCNode_tag, 1, JSPROP_PERMANENT | JSPROP_SHARED),
+		JS_FN("transform", JSPROXY_CCNode_transform, 1, JSPROP_PERMANENT | JSPROP_SHARED),
+		JS_FN("transformAncestors", JSPROXY_CCNode_transformAncestors, 1, JSPROP_PERMANENT | JSPROP_SHARED),
+		JS_FN("unscheduleAllSelectors", JSPROXY_CCNode_unscheduleAllSelectors, 1, JSPROP_PERMANENT | JSPROP_SHARED),
+		JS_FN("unscheduleUpdate", JSPROXY_CCNode_unscheduleUpdate, 1, JSPROP_PERMANENT | JSPROP_SHARED),
+		JS_FN("vertexZ", JSPROXY_CCNode_vertexZ, 1, JSPROP_PERMANENT | JSPROP_SHARED),
+		JS_FN("visible", JSPROXY_CCNode_visible, 1, JSPROP_PERMANENT | JSPROP_SHARED),
+		JS_FN("visit", JSPROXY_CCNode_visit, 1, JSPROP_PERMANENT | JSPROP_SHARED),
+		JS_FN("zOrder", JSPROXY_CCNode_zOrder, 1, JSPROP_PERMANENT | JSPROP_SHARED),
 		JS_FS_END
 	};
 

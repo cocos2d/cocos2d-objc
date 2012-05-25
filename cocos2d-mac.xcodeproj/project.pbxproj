@@ -7675,13 +7675,13 @@
 		A09C8D8D156715F700ADFDA9 /* SpiderMonkeyTest */ = {
 			isa = PBXGroup;
 			children = (
+				A0CBEC2D156C2812009D35B4 /* javascript-spidermonkey */,
 				A0CBEC2F156C2903009D35B4 /* js_bindings_NSObject.h */,
 				A0CBEC30156C2904009D35B4 /* js_bindings_NSObject.mm */,
 				A05B59ED156D8BEB00ADAB65 /* js_bindings_CCSprite.h */,
 				A05B59EE156D8BEB00ADAB65 /* js_bindings_CCSprite.mm */,
 				A05B59EA156D6BEE00ADAB65 /* js_bindings_CCNode.h */,
 				A05B59EB156D6BEE00ADAB65 /* js_bindings_CCNode.mm */,
-				A0CBEC2D156C2812009D35B4 /* javascript-spidermonkey */,
 				A09C8D941567634500ADFDA9 /* js_bindings_cocos2d.h */,
 				A09C8D951567634500ADFDA9 /* js_bindings_cocos2d.mm */,
 				A09C8D911567165B00ADFDA9 /* ScriptingCore.h */,
