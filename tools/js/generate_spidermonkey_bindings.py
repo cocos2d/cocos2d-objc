@@ -113,6 +113,9 @@ class SpiderMonkey(object):
     def convert_selector_name_to_js( self, name ):
         return name.replace(':','')
 
+    #
+    # "class" constructor and destructor
+    #
     def generate_constructor( self, class_name ):
 
         # Global Variables
@@ -172,6 +175,9 @@ void %s_finalize(JSContext *cx, JSObject *obj)
         proxy_class_name = '%s%s' % (PROXY_PREFIX, class_name )
         self.mm_file.write( destructor_template % ( proxy_class_name, proxy_class_name, proxy_class_name, '/* no callbacks */' ) )
 
+    #
+    # Method generator functions
+    #
     def generate_call_to_real_object( self, selector_name, num_of_args, ret_declared_type, args_declared_type ):
         prefix = ''
         if ret_declared_type:
@@ -204,6 +210,7 @@ void %s_finalize(JSContext *cx, JSObject *obj)
             'o' : 'OBJECT_TO_JSVAL(ret_val)',
             's' : 'STRING_TO_JSVAL(ret_val)',
             'd' : 'DOUBLE_TO_JSVAL(ret_val)',
+            'c' : 'INT_TO_JSVAL(ret_val)',
 #            'f' : 'FUNCTION_TO_JSVAL(ret_val)',
             None : 'JSVAL_TRUE',
             }
@@ -212,6 +219,89 @@ void %s_finalize(JSContext *cx, JSObject *obj)
 
         s = convert[ js_type ]
         return '\tJS_SET_RVAL(cx, vp, %s);' % s
+
+    def parse_method_arguments_and_retval( self, method ):
+        # Left column: BridgeSupport types
+        # Right column: JS types
+        supported_types = {
+            'f' : 'd',  # float
+            'd' : 'd',  # double
+            'i' : 'i',  # integer
+            'I' : 'u',  # unsigned integer
+            'c' : 'c',  # char
+            'C' : 'c',  # unsigned char
+            'B' : 'b',  # BOOL
+            'v' :  None,  # void (for retval)
+            }
+
+        supported_declared_types = { 
+            'NSString*' : 'S',
+            }
+
+        s = method['selector']
+
+        args_js_type = []
+        args_declared_type = []
+        ret_js_type = None
+        ret_declared_type = None
+
+        found = True
+
+        # parse arguments
+        if 'arg' in method:
+            args = method['arg']
+            for arg in args:
+                t = arg['type']
+                dt = arg['declared_type']
+                if t in supported_types:
+                    args_js_type.append( supported_types[t] )
+                    args_declared_type.append( dt )
+                elif dt in supported_declared_types:
+                    args_js_type.append( supported_declared_types[dt] )
+                    args_declared_type.append( dt )
+                else:
+                    found = False
+                    break
+
+        if not found:
+            return (None, None, None, None)
+
+
+        # parse ret value
+        if 'retval' in method:
+            retval = method['retval']
+            t = retval[0]['type']
+            dt = retval[0]['declared_type']
+
+            # Special case for -(id) initXXX methods
+            if s.startswith('init') and dt == 'id':
+                ret_js_type = None
+                ret_declared_type = None
+             
+            # Part of supported types ?
+            elif t in supported_types:
+                if supported_types[t] == None:  # void type
+                    ret_js_type = None
+                    ret_declared_type = None
+                else:
+                    ret_js_type = supported_types[t]
+                    ret_declared_type = retval[0]['declared_type']
+
+            # Part of supported declared types ?
+            elif dt in supported_declared_types:
+                ret_js_type.append( supported_declared_types[t] )
+                ret_declared_type.append( dt )
+            else:
+                found = False
+
+        if not found:
+            return (None, None, None, None)
+
+        return (args_js_type, args_declared_type, ret_js_type, ret_declared_type )
+
+    # Special case for string to NSString generator
+    def generate_argument_string( self, i, arg_js_type ):
+        self.mm_file.write( '\tJSString *tmp_arg%d = JS_ValueToString( cx, vp[%d] );\n\tNSString *arg%d = [NSString stringWithUTF8String: JS_EncodeString(cx, tmp_arg%d)];\n' % ( i, i+2, i, i ) )
 
     def generate_method( self, class_name, method ):
 
@@ -244,7 +334,6 @@ JSBool %s_%s(JSContext *cx, uint32_t argc, jsval *vp) {
 	return JS_TRUE;
 }
 '''
-
         # b      JSBool          Boolean
         # c      uint16_t/jschar ECMA uint16_t, Unicode char
         # i      int32_t         ECMA int32_t
@@ -259,21 +348,10 @@ JSBool %s_%s(JSContext *cx, uint32_t argc, jsval *vp) {
         # v      jsval           Argument value (no conversion)
         # *      N/A             Skip this argument (no vararg)
         # /      N/A             End of required arguments
-        supported_types = {
-            'f' : 'd',  # float
-            'd' : 'd',  # double
-            'i' : 'i',  # integer
-            'I' : 'u',  # unsigned integer
-            'c' : 'c',  # char
-            'C' : 'c',  # unsigned char
-            'B' : 'b',  # BOOL
-            'v' :  None,  # void (for retval)
-            }
-
         # More info:
         # https://developer.mozilla.org/en/SpiderMonkey/JSAPI_Reference/JS_ConvertArguments
         js_types_conversions = {
-            'b' : ['JSBool',      'JS_ValueToBoolean'],
+            'b' : ['JSBool',    'JS_ValueToBoolean'],
             'd' : ['double',    'JS_ValueToNumber'],
             'I' : ['double',    'JS_ValueToNumber'],    # double converted to string
             'i' : ['int32_t',   'JS_ValueToECMAInt32'],
@@ -284,39 +362,18 @@ JSBool %s_%s(JSContext *cx, uint32_t argc, jsval *vp) {
             'o' : ['JSObject*', 'XXX'],
             }
 
-        s = method['selector']
-        retval = None
-        args = None
-        args_js_type = []
-        args_declared_type = []
-        ret_js_type = None
-        ret_declared_type = None
-        supported_args = True
-        if 'arg' in method:
-            args = method['arg']
-            for arg in args:
-                t = arg['type']
-                if not t in supported_types:
-                    supported_args = False
-                    break
-                else:
-                    args_js_type.append( supported_types[t] )
-                    args_declared_type.append( arg['declared_type'] )
+        js_special_type_conversions =  {
+            'S' : self.generate_argument_string,
+        }
 
-        if 'retval' in method:
-            retval = method['retval']
-            t = retval[0]['type']
-            if not t in supported_types:
-                supported_args = False
-            elif supported_types[t] != None:    # void type
-                ret_js_type = supported_types[t]
-                ret_declared_type = retval[0]['declared_type']
+        args_js_type, args_declared_type, ret_js_type, ret_declared_type = self.parse_method_arguments_and_retval( method )
 
-        if not supported_args:
+        if args_js_type == None:
             print 'NOT OK:' + method['selector']
             return False
+       
+        s = method['selector']
 
-        
         # writing...
         converted_name = self.convert_selector_name_to_native( s )
 
@@ -326,8 +383,16 @@ JSBool %s_%s(JSContext *cx, uint32_t argc, jsval *vp) {
         self.mm_file.write( method_template % ( PROXY_PREFIX+class_name, converted_name, class_name, class_name, num_of_args ) )
 
         for i,arg in enumerate(args_js_type):
-            t = js_types_conversions[arg]
-            self.mm_file.write( '\t%s arg%d; %s( cx, vp[%d], &arg%d );\n' % ( t[0], i, t[1], i+2, i ) )
+
+            # XXX: Hack. This "+2" seems to do the trick... don't know why.
+            # XXX: FRAGILE CODE. MY BREAK IN FUTURE VERSIONS OF SPIDERMONKEY
+            if arg in js_types_conversions:
+                t = js_types_conversions[arg]
+                self.mm_file.write( '\t%s arg%d; %s( cx, vp[%d], &arg%d );\n' % ( t[0], i, t[1], i+2, i ) )
+            elif arg in js_special_type_conversions:
+                js_special_type_conversions[arg]( i, arg )
+            else:
+                raise Exception('Unsupported type: %s' % arg )
 
         if ret_declared_type:
             self.mm_file.write( '\t%s ret_val;\n' % ret_declared_type )
