@@ -106,10 +106,10 @@ typedef struct cpSpace cpSpace;
 
 #include "cpSpace.h"
 
-// Chipmunk 6.1.0
+// Chipmunk 6.1.1
 #define CP_VERSION_MAJOR 6
 #define CP_VERSION_MINOR 1
-#define CP_VERSION_RELEASE 0
+#define CP_VERSION_RELEASE 1
 
 /// Version string.
 extern const char *cpVersionString;
@@ -175,25 +175,25 @@ int __count_var__ = cpConvexHull(__count__, __verts__, __verts_var__, NULL, 0.0)
 // Collision handlers are post-step callbacks are not included to avoid memory management issues.
 // If you want to use blocks for those and are aware of how to correctly manage the memory, the implementation is trivial. 
 
-void cpSpaceEachBodyBlock(cpSpace *space, void (^block)(cpBody *body));
-void cpSpaceEachShapeBlock(cpSpace *space, void (^block)(cpShape *shape));
-void cpSpaceEachConstraintBlock(cpSpace *space, void (^block)(cpConstraint *constraint));
+void cpSpaceEachBody_b(cpSpace *space, void (^block)(cpBody *body));
+void cpSpaceEachShape_b(cpSpace *space, void (^block)(cpShape *shape));
+void cpSpaceEachConstraint_b(cpSpace *space, void (^block)(cpConstraint *constraint));
 
-void cpBodyEachShapeBlock(cpBody *body, void (^block)(cpShape *shape));
-void cpBodyEachConstraintBlock(cpBody *body, void (^block)(cpConstraint *constraint));
-void cpBodyEachArbiterBlock(cpBody *body, void (^block)(cpArbiter *arbiter));
+void cpBodyEachShape_b(cpBody *body, void (^block)(cpShape *shape));
+void cpBodyEachConstraint_b(cpBody *body, void (^block)(cpConstraint *constraint));
+void cpBodyEachArbiter_b(cpBody *body, void (^block)(cpArbiter *arbiter));
 
-typedef void (^cpSpaceNearestPointQueryBlockFunc)(cpShape *shape, cpFloat distance, cpVect point);
-void cpSpaceNearestPointQueryBlock(cpSpace *space, cpVect point, cpFloat maxDistance, cpLayers layers, cpGroup group, cpSpaceNearestPointQueryBlockFunc block);
+typedef void (^cpSpaceNearestPointQueryBlock)(cpShape *shape, cpFloat distance, cpVect point);
+void cpSpaceNearestPointQuery_b(cpSpace *space, cpVect point, cpFloat maxDistance, cpLayers layers, cpGroup group, cpSpaceNearestPointQueryBlock block);
 
-typedef void (^cpSpaceSegmentQueryBlockFunc)(cpShape *shape, cpFloat t, cpVect n);
-void cpSpaceSegmentQueryBlock(cpSpace *space, cpVect start, cpVect end, cpLayers layers, cpGroup group, cpSpaceSegmentQueryBlockFunc block);
+typedef void (^cpSpaceSegmentQueryBlock)(cpShape *shape, cpFloat t, cpVect n);
+void cpSpaceSegmentQuery_b(cpSpace *space, cpVect start, cpVect end, cpLayers layers, cpGroup group, cpSpaceSegmentQueryBlock block);
 
-typedef void (^cpSpaceBBQueryBlockFunc)(cpShape *shape);
-void cpSpaceBBQueryBlock(cpSpace *space, cpBB bb, cpLayers layers, cpGroup group, cpSpaceBBQueryBlockFunc block);
+typedef void (^cpSpaceBBQueryBlock)(cpShape *shape);
+void cpSpaceBBQuery_b(cpSpace *space, cpBB bb, cpLayers layers, cpGroup group, cpSpaceBBQueryBlock block);
 
-typedef void (^cpSpaceShapeQueryBlockFunc)(cpShape *shape, cpContactPointSet *points);
-cpBool cpSpaceShapeQueryBlock(cpSpace *space, cpShape *shape, cpSpaceShapeQueryBlockFunc block);
+typedef void (^cpSpaceShapeQueryBlock)(cpShape *shape, cpContactPointSet *points);
+cpBool cpSpaceShapeQuery_b(cpSpace *space, cpShape *shape, cpSpaceShapeQueryBlock block);
 
 #endif
 #endif
