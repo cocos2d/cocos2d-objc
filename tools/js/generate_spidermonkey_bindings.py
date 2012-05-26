@@ -80,6 +80,7 @@ class SpiderMonkey(object):
         self.hierarchy = {}
         
         self.classes_to_bind = set(classes_to_bind)
+        self.supported_classes = set(['NSObject'])
 
     def parse_hierarchy_file( self ):
         f = open( self.hierarchy_file )
@@ -182,10 +183,10 @@ void %s_finalize(JSContext *cx, JSObject *obj)
             prefix = '\t%s *real = [[%s alloc] ' % (class_name, class_name )
             suffix = '\n\t[proxy setRealObj: real];\n\t[real release];\n'
         else:
-            prefix = '\t%s *real = (%s*) [proxy realObj];\n' % (class_name, class_name)
+            prefix = '\t%s *real = (%s*) [proxy realObj];\n\t' % (class_name, class_name)
             suffix = ''
             if ret_declared_type:
-                prefix = prefix + '\tret_val = '
+                prefix = prefix + 'ret_val = '
 
             prefix = prefix + '[real '
 
@@ -205,28 +206,58 @@ void %s_finalize(JSContext *cx, JSObject *obj)
         call += ' ];';
 
         return '%s%s%s' % (prefix, call, suffix )
-            
-    def generate_return_string( self, declared_type, js_type ):
-        convert = {
+
+    # special case: returning Object
+    def generate_retval_object( self, declared_type, js_type ):
+
+        class_name = declared_type.replace('*','')
+        proxy_class_name = PROXY_PREFIX + class_name
+
+        object_template = '''
+	JSObject *jsobj = JS_NewObject(cx, %s_class, %s_object, NULL);
+	%s *ret_proxy = [[%s alloc] initWithJSObject:jsobj];
+	[proxy setRealObj:real];
+	JS_SetPrivate(jsobj, ret_proxy);
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+'''
+        return object_template % ( proxy_class_name, proxy_class_name, proxy_class_name, proxy_class_name )
+    
+
+    # special case: returning String
+    def generate_retval_string( self, declared_type, js_type ):
+        raise Exception("Not implemented")
+
+    def generate_retval( self, declared_type, js_type ):
+        direct_convert = {
             'i' : 'INT_TO_JSVAL(ret_val)',
             'u' : 'INT_TO_JSVAL(ret_val)',
             'b' : 'BOOLEAN_TO_JSVAL(ret_val)',
-            'o' : 'OBJECT_TO_JSVAL(ret_val)',
             's' : 'STRING_TO_JSVAL(ret_val)',
             'd' : 'DOUBLE_TO_JSVAL(ret_val)',
             'c' : 'INT_TO_JSVAL(ret_val)',
-#            'f' : 'FUNCTION_TO_JSVAL(ret_val)',
             None : 'JSVAL_TRUE',
             }
-        if js_type not in convert:
+        special_convert = {
+            'o' : self.generate_retval_object,
+            'S' : self.generate_retval_string,
+        }
+        ret = ''
+        if js_type in special_convert:
+            ret = special_convert[js_type]( declared_type, js_type )
+        elif js_type in direct_convert:
+            s = direct_convert[ js_type ]
+            ret = '\tJS_SET_RVAL(cx, vp, %s);' % s
+        else:
             raise Exception("Invalid key: %s" % js_type )
 
-        s = convert[ js_type ]
-        return '\tJS_SET_RVAL(cx, vp, %s);' % s
+        return ret
 
     def parse_method_arguments_and_retval( self, method ):
         # Left column: BridgeSupport types
         # Right column: JS types
+        supported_declared_types = { 
+            'NSString*' : 'S',
+            }
         supported_types = {
             'f' : 'd',  # float
             'd' : 'd',  # double
@@ -236,10 +267,6 @@ void %s_finalize(JSContext *cx, JSObject *obj)
             'C' : 'c',  # unsigned char
             'B' : 'b',  # BOOL
             'v' :  None,  # void (for retval)
-            }
-
-        supported_declared_types = { 
-            'NSString*' : 'S',
             }
 
         s = method['selector']
@@ -257,11 +284,19 @@ void %s_finalize(JSContext *cx, JSObject *obj)
             for arg in args:
                 t = arg['type']
                 dt = arg['declared_type']
-                if t in supported_types:
+                dt_class_name = dt.replace('*','')
+
+                # IMPORTANT: 1st search on declared types.
+                # NSString should be treat as a special case, not as a generic object
+                if dt in supported_declared_types:
+                    args_js_type.append( supported_declared_types[dt] )
+                    args_declared_type.append( dt )
+                elif t in supported_types:
                     args_js_type.append( supported_types[t] )
                     args_declared_type.append( dt )
-                elif dt in supported_declared_types:
-                    args_js_type.append( supported_declared_types[dt] )
+                # special case for Objects
+                elif t == '@' and dt_class_name in self.supported_classes:
+                    args_js_type.append( 'o' )
                     args_declared_type.append( dt )
                 else:
                     found = False
@@ -276,12 +311,18 @@ void %s_finalize(JSContext *cx, JSObject *obj)
             retval = method['retval']
             t = retval[0]['type']
             dt = retval[0]['declared_type']
+            dt_class_name = dt.replace('*','')
 
             # Special case for initializer methods
             if self.is_method_initializer(method ):
                 ret_js_type = None
                 ret_declared_type = None
              
+            # Part of supported declared types ?
+            elif dt in supported_declared_types:
+                ret_js_type.append( supported_declared_types[t] )
+                ret_declared_type.append( dt )
+
             # Part of supported types ?
             elif t in supported_types:
                 if supported_types[t] == None:  # void type
@@ -291,10 +332,10 @@ void %s_finalize(JSContext *cx, JSObject *obj)
                     ret_js_type = supported_types[t]
                     ret_declared_type = retval[0]['declared_type']
 
-            # Part of supported declared types ?
-            elif dt in supported_declared_types:
-                ret_js_type.append( supported_declared_types[t] )
-                ret_declared_type.append( dt )
+            # special case for Objects
+            elif t == '@' and dt_class_name in self.supported_classes:
+                ret_js_type = 'o'
+                ret_declared_type = dt 
             else:
                 found = False
 
@@ -304,8 +345,22 @@ void %s_finalize(JSContext *cx, JSObject *obj)
         return (args_js_type, args_declared_type, ret_js_type, ret_declared_type )
 
     # Special case for string to NSString generator
-    def generate_argument_string( self, i, arg_js_type ):
+    def generate_argument_string( self, i, arg_js_type, arg_declared_type ):
         self.mm_file.write( '\tJSString *tmp_arg%d = JS_ValueToString( cx, vp[%d] );\n\tNSString *arg%d = [NSString stringWithUTF8String: JS_EncodeString(cx, tmp_arg%d)];\n' % ( i, i+2, i, i ) )
+
+    # Special case for objects
+    def generate_argument_object( self, i, arg_js_type, arg_declared_type ):
+        object_template = '''
+	JSObject *tmp_arg%d;
+	JS_ValueToObject( cx, vp[%d], &tmp_arg%d );
+	%s proxy_arg%d = (%s) JS_GetPrivate( tmp_arg%d ); 
+    %s arg%d = (%s) [proxy_arg%d realObj];
+'''
+        proxy_class_name = PROXY_PREFIX + arg_declared_type
+        self.mm_file.write( object_template % (i,
+                        i+2, i,
+                        proxy_class_name , i, proxy_class_name, i,
+                        arg_declared_type, i, arg_declared_type, i ) )
 
     # whether or not the method is an initializer
     def is_method_initializer( self, method ):
@@ -333,7 +388,7 @@ JSBool %s_%s(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert( %s [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( %s[proxy realObj], @"Object not initialzied. error");
 	NSCAssert( argc == %d, @"Invalid number of arguments" );
 '''
 
@@ -380,12 +435,12 @@ JSBool %s_%s(JSContext *cx, uint32_t argc, jsval *vp) {
 
         js_special_type_conversions =  {
             'S' : self.generate_argument_string,
+            'o' : self.generate_argument_object,
         }
 
         args_js_type, args_declared_type, ret_js_type, ret_declared_type = self.parse_method_arguments_and_retval( method )
 
         if args_js_type == None:
-            print 'NOT OK:' + method['selector']
             return False
        
         s = method['selector']
@@ -413,7 +468,7 @@ JSBool %s_%s(JSContext *cx, uint32_t argc, jsval *vp) {
                 t = js_types_conversions[arg]
                 self.mm_file.write( '\t%s arg%d; %s( cx, vp[%d], &arg%d );\n' % ( t[0], i, t[1], i+2, i ) )
             elif arg in js_special_type_conversions:
-                js_special_type_conversions[arg]( i, arg )
+                js_special_type_conversions[arg]( i, arg, args_declared_type[i] )
             else:
                 raise Exception('Unsupported type: %s' % arg )
 
@@ -424,7 +479,10 @@ JSBool %s_%s(JSContext *cx, uint32_t argc, jsval *vp) {
 
         self.mm_file.write( '\n%s\n' % call_real )
 
-        ret_string = self.generate_return_string( ret_declared_type, ret_js_type )
+        ret_string = self.generate_retval( ret_declared_type, ret_js_type )
+        if not ret_string:
+            return False
+
         self.mm_file.write( ret_string )
 
         self.mm_file.write( end_template )
@@ -437,6 +495,8 @@ JSBool %s_%s(JSContext *cx, uint32_t argc, jsval *vp) {
             ok = self.generate_method( class_name, m )
             if ok:
                 ok_methods.append( m )
+            else:
+                print 'NOT OK:' + m['selector']
         return ok_methods
 
 
@@ -588,6 +648,8 @@ extern JSObject *%s_object;
             if i.startswith('NS'):
                 print 'Removing %s from bindings...' % i
                 s.remove( i )
+
+        self.supported_classes = self.supported_classes.union( s )
 
         for klass in s:
             self.generate_class_binding( klass )
