@@ -271,48 +271,48 @@ cpConvexHull(int count, cpVect *verts, cpVect *result, int *first, cpFloat tol)
 
 static void IteratorFunc(void *ptr, void (^block)(void *ptr)){block(ptr);}
 
-void cpSpaceEachBodyBlock(cpSpace *space, void (^block)(cpBody *body)){
+void cpSpaceEachBody_b(cpSpace *space, void (^block)(cpBody *body)){
 	cpSpaceEachBody(space, (cpSpaceBodyIteratorFunc)IteratorFunc, block);
 }
 
-void cpSpaceEachShapeBlock(cpSpace *space, void (^block)(cpShape *shape)){
+void cpSpaceEachShape_b(cpSpace *space, void (^block)(cpShape *shape)){
 	cpSpaceEachShape(space, (cpSpaceShapeIteratorFunc)IteratorFunc, block);
 }
 
-void cpSpaceEachConstraintBlock(cpSpace *space, void (^block)(cpConstraint *constraint)){
+void cpSpaceEachConstraint_b(cpSpace *space, void (^block)(cpConstraint *constraint)){
 	cpSpaceEachConstraint(space, (cpSpaceConstraintIteratorFunc)IteratorFunc, block);
 }
 
 static void BodyIteratorFunc(cpBody *body, void *ptr, void (^block)(void *ptr)){block(ptr);}
 
-void cpBodyEachShapeBlock(cpBody *body, void (^block)(cpShape *shape)){
+void cpBodyEachShape_b(cpBody *body, void (^block)(cpShape *shape)){
 	cpBodyEachShape(body, (cpBodyShapeIteratorFunc)BodyIteratorFunc, block);
 }
 
-void cpBodyEachConstraintBlock(cpBody *body, void (^block)(cpConstraint *constraint)){
+void cpBodyEachConstraint_b(cpBody *body, void (^block)(cpConstraint *constraint)){
 	cpBodyEachConstraint(body, (cpBodyConstraintIteratorFunc)BodyIteratorFunc, block);
 }
 
-void cpBodyEachArbiterBlock(cpBody *body, void (^block)(cpArbiter *arbiter)){
+void cpBodyEachArbiter_b(cpBody *body, void (^block)(cpArbiter *arbiter)){
 	cpBodyEachArbiter(body, (cpBodyArbiterIteratorFunc)BodyIteratorFunc, block);
 }
 
-static void NearestPointQueryIteratorFunc(cpShape *shape, cpFloat distance, cpVect point, cpSpaceNearestPointQueryBlockFunc block){block(shape, distance, point);}
-void cpSpaceNearestPointQueryBlock(cpSpace *space, cpVect point, cpFloat maxDistance, cpLayers layers, cpGroup group, cpSpaceNearestPointQueryBlockFunc block){
+static void NearestPointQueryIteratorFunc(cpShape *shape, cpFloat distance, cpVect point, cpSpaceNearestPointQueryBlock block){block(shape, distance, point);}
+void cpSpaceNearestPointQuery_b(cpSpace *space, cpVect point, cpFloat maxDistance, cpLayers layers, cpGroup group, cpSpaceNearestPointQueryBlock block){
 	cpSpaceNearestPointQuery(space, point, maxDistance, layers, group, (cpSpaceNearestPointQueryFunc)NearestPointQueryIteratorFunc, block);
 }
 
-static void SegmentQueryIteratorFunc(cpShape *shape, cpFloat t, cpVect n, cpSpaceSegmentQueryBlockFunc block){block(shape, t, n);}
-void cpSpaceSegmentQueryBlock(cpSpace *space, cpVect start, cpVect end, cpLayers layers, cpGroup group, cpSpaceSegmentQueryBlockFunc block){
+static void SegmentQueryIteratorFunc(cpShape *shape, cpFloat t, cpVect n, cpSpaceSegmentQueryBlock block){block(shape, t, n);}
+void cpSpaceSegmentQuery_b(cpSpace *space, cpVect start, cpVect end, cpLayers layers, cpGroup group, cpSpaceSegmentQueryBlock block){
 	cpSpaceSegmentQuery(space, start, end, layers, group, (cpSpaceSegmentQueryFunc)SegmentQueryIteratorFunc, block);
 }
 
-void cpSpaceBBQueryBlock(cpSpace *space, cpBB bb, cpLayers layers, cpGroup group, cpSpaceBBQueryBlockFunc block){
+void cpSpaceBBQuery_b(cpSpace *space, cpBB bb, cpLayers layers, cpGroup group, cpSpaceBBQueryBlock block){
 	cpSpaceBBQuery(space, bb, layers, group, (cpSpaceBBQueryFunc)IteratorFunc, block);
 }
 
-static void ShapeQueryIteratorFunc(cpShape *shape, cpContactPointSet *points, cpSpaceShapeQueryBlockFunc block){block(shape, points);}
-cpBool cpSpaceShapeQueryBlock(cpSpace *space, cpShape *shape, cpSpaceShapeQueryBlockFunc block){
+static void ShapeQueryIteratorFunc(cpShape *shape, cpContactPointSet *points, cpSpaceShapeQueryBlock block){block(shape, points);}
+cpBool cpSpaceShapeQuery_b(cpSpace *space, cpShape *shape, cpSpaceShapeQueryBlock block){
 	return cpSpaceShapeQuery(space, shape, (cpSpaceShapeQueryFunc)ShapeQueryIteratorFunc, block);
 }
 

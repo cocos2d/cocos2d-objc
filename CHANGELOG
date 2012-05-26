@@ -15,7 +15,7 @@ version 2.0-rc2 XX-May-2012
 . [FIX] Texture2d: JPEG are loaded correctly on iOS4 (re-re-fixed issue #886)
 		Improved iOS5 allocation bug warning and internal conversions.
 		Fixed alpha when converting RGBA8 textures to RGB5A1
-. [3RD] Chipmunk Physics: Updated to v6.1
+. [3RD] Chipmunk Physics: Updated to v6.1.1
 
 version 2.0-rc1 19-Apr-2012
 . [NEW] v1.1 Forward-ported changes:
