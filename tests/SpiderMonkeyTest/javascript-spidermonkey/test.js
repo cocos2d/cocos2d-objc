@@ -25,8 +25,6 @@ function ccp(x, y)
 cc.log('Hello World');
 
 a = new cc.Node();
-//a = Node.new();
-
 a.init();
 
 var value = 90
@@ -48,7 +46,6 @@ var s = new cc.Sprite();
 s.initWithFile("grossini.png");
 
 
-
 //a.setPosition( ccp(100,200) );
 //
 //p = a.getPosition();
@@ -59,6 +56,6 @@ a.onEnter = function() {
 }
 
 
+a.addChild( s );
 cc.addToRunningScene( a );
-cc.addToRunningScene( s );
 
