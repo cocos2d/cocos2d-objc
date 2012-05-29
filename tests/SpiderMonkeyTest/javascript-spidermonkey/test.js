@@ -13,6 +13,7 @@ Float32Array.prototype.y = function () {
 	return this[1];
 };
 
+// cocos2d Helper
 function ccp(x, y)
 {
 	var floats = new Float32Array(2);
@@ -20,6 +21,27 @@ function ccp(x, y)
 	floats[1] = y;
 	
 	return floats;
+}
+
+function ccc3(r, g, b)
+{
+	var colors = new Uint8Array(3)
+	colors[0] = r;
+	colors[1] = g;
+	colors[2] = b;
+	
+	return colors;
+}
+
+function ccc4f(r, g, b, a)
+{
+	var colors = new Float32Array(4)
+	colors[0] = r;
+	colors[1] = g;
+	colors[2] = b;
+	colors[3] = a;
+	
+	return colors;
 }
 
 cc.log('Hello World');
@@ -45,6 +67,7 @@ if (value != ret) {
 var s = new cc.Sprite();
 s.initWithFile("grossini.png");
 
+s.setColor( ccc3(255,0,0) );
 
 a.setPosition( ccp(100,200) );
 

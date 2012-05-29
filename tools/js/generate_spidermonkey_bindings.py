@@ -106,8 +106,69 @@ class SpiderMonkey(object):
         return self.ancestors( subclass, list_of_ancestors )
 
     #
-    # Helper
+    # Helpers
     #
+    def get_struct_type_and_num_of_elements( self, struct ):
+        # PRECOND: Structure must be valid
+        
+        # BridgeSupport to TypedArray
+        bs_to_type_array =  { 'c' : 'TYPE_INT8',
+                              'C' : 'TYPE_UINT8',
+                              's' : 'TYPE_INT16',
+                              'S' : 'TYPE_UINT16',
+                              'i' : 'TYPE_INT32',
+                              'I' : 'TYPE_UINT32',
+                              'f' : 'TYPE_FLOAT32',
+                              'd' : 'TYPE_FLOAT64',
+                              }
+                              
+        inner = struct.replace('{', '')            
+        inner = inner.replace('{', '')
+        key,value = inner.split('=')
+        
+        k = value[0]
+        if not k in bs_to_type_array:
+            raise Exception('Structure cannot be converted')
+
+        # returns type of structure and len
+        return (bs_to_type_array[k], len(value) )
+        
+    def is_valid_structure( self, struct ):
+        # Only support non-nested structures of only one type
+        # valids:
+        #   {xxx=CCC}
+        #   {xxx=ff}
+        # invalids:
+        #   {xxx=CC{yyy=C}}
+        #   {xxx=fC}
+
+        if not struct:
+            return False
+
+        if struct[0] == '{' and struct[-1] == '}' and len( struct.split('{') ) == 2:
+            inner = struct.replace('{', '')            
+            inner = inner.replace('{', '')
+            key,value = inner.split('=')
+            # values should be of the same type
+            previous = None
+            for c in value:
+                if previous != None:
+                    if previous != c:
+                        return False
+                    previous = c
+            return True
+        return False
+
+    # whether or not the method is an initializer
+    def is_method_initializer( self, method ):
+        if 'retval' in method:
+            retval = method['retval']
+            dt = retval[0]['declared_type']
+
+            if method['selector'].startswith('init') and dt == 'id':
+                return True
+        return False
+
     def convert_selector_name_to_native( self, name ):
         return name.replace(':','_')
 
@@ -237,7 +298,17 @@ void %s_finalize(JSContext *cx, JSObject *obj)
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(typedArray));
 '''
         return template
-       
+
+    def generate_retval_structure( self, declared_type, js_type ):
+        template = '''
+	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::%s, %d );
+	%s* buffer = (%s*)JS_GetTypedArrayData(typedArray);
+	*buffer = ret_val;
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(typedArray));    
+	'''
+        t, l = self.get_struct_type_and_num_of_elements( js_type )
+        return template % (t, l,
+                           declared_type, declared_type )
 
     def generate_retval( self, declared_type, js_type ):
         direct_convert = {
@@ -261,6 +332,8 @@ void %s_finalize(JSContext *cx, JSObject *obj)
         ret = ''
         if declared_type in special_declared_types:
             ret = special_declared_types[ declared_type ]( declared_type, js_type )
+        elif self.is_valid_structure( js_type ):
+            ret = self.generate_retval_structure( declared_type, js_type )
         elif js_type in special_convert:
             ret = special_convert[js_type]( declared_type, js_type )
         elif js_type in direct_convert:
@@ -310,6 +383,9 @@ void %s_finalize(JSContext *cx, JSObject *obj)
                 # NSString should be treat as a special case, not as a generic object
                 if dt in supported_declared_types:
                     args_js_type.append( supported_declared_types[dt] )
+                    args_declared_type.append( dt )
+                elif self.is_valid_structure( t ):
+                    args_js_type.append( '{}' )
                     args_declared_type.append( dt )
                 elif t in supported_types:
                     args_js_type.append( supported_types[t] )
@@ -427,15 +503,6 @@ void %s_finalize(JSContext *cx, JSObject *obj)
                             i+2, i,
                             arg_declared_type, i, arg_declared_type, i ) )
 
-    # whether or not the method is an initializer
-    def is_method_initializer( self, method ):
-        if 'retval' in method:
-            retval = method['retval']
-            dt = retval[0]['declared_type']
-
-            if method['selector'].startswith('init') and dt == 'id':
-                return True
-        return False
 
     def generate_method( self, class_name, method ):
 

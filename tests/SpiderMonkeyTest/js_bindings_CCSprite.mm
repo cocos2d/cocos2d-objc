@@ -210,6 +210,46 @@ JSBool JSPROXY_CCSprite_setAtlasIndex_(JSContext *cx, uint32_t argc, jsval *vp) 
 	return JS_TRUE;
 }
 
+// Arguments: ccBlendFunc
+// Ret value: None
+JSBool JSPROXY_CCSprite_setBlendFunc_(JSContext *cx, uint32_t argc, jsval *vp) {
+	
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+
+	JSObject *tmp_arg0;
+	JS_ValueToObject( cx, vp[2], &tmp_arg0 );
+	ccBlendFunc arg0 = *(ccBlendFunc*)JS_GetTypedArrayData( tmp_arg0);
+
+	CCSprite *real = (CCSprite*) [proxy realObj];
+	[real setBlendFunc:(ccBlendFunc)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: ccColor3B
+// Ret value: None
+JSBool JSPROXY_CCSprite_setColor_(JSContext *cx, uint32_t argc, jsval *vp) {
+	
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+
+	JSObject *tmp_arg0;
+	JS_ValueToObject( cx, vp[2], &tmp_arg0 );
+	ccColor3B arg0 = *(ccColor3B*)JS_GetTypedArrayData( tmp_arg0);
+
+	CCSprite *real = (CCSprite*) [proxy realObj];
+	[real setColor:(ccColor3B)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
 // Arguments: BOOL
 // Ret value: None
 JSBool JSPROXY_CCSprite_setDirty_(JSContext *cx, uint32_t argc, jsval *vp) {
@@ -360,6 +400,8 @@ JSBool JSPROXY_CCSprite_updateTransform(JSContext *cx, uint32_t argc, jsval *vp)
 		JS_FN("offsetPosition", JSPROXY_CCSprite_offsetPosition, 1, JSPROP_PERMANENT | JSPROP_SHARED),
 		JS_FN("opacity", JSPROXY_CCSprite_opacity, 1, JSPROP_PERMANENT | JSPROP_SHARED),
 		JS_FN("setAtlasIndex", JSPROXY_CCSprite_setAtlasIndex_, 1, JSPROP_PERMANENT | JSPROP_SHARED),
+		JS_FN("setBlendFunc", JSPROXY_CCSprite_setBlendFunc_, 1, JSPROP_PERMANENT | JSPROP_SHARED),
+		JS_FN("setColor", JSPROXY_CCSprite_setColor_, 1, JSPROP_PERMANENT | JSPROP_SHARED),
 		JS_FN("setDirty", JSPROXY_CCSprite_setDirty_, 1, JSPROP_PERMANENT | JSPROP_SHARED),
 		JS_FN("setDisplayFrameWithAnimationNameindex", JSPROXY_CCSprite_setDisplayFrameWithAnimationName_index_, 1, JSPROP_PERMANENT | JSPROP_SHARED),
 		JS_FN("setFlipX", JSPROXY_CCSprite_setFlipX_, 1, JSPROP_PERMANENT | JSPROP_SHARED),
