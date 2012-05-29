@@ -823,6 +823,26 @@ JSBool JSPROXY_CCNode_setAnchorPoint_(JSContext *cx, uint32_t argc, jsval *vp) {
 	return JS_TRUE;
 }
 
+// Arguments: CGSize
+// Ret value: None
+JSBool JSPROXY_CCNode_setContentSize_(JSContext *cx, uint32_t argc, jsval *vp) {
+	
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+
+	JSObject *tmp_arg0;
+	JS_ValueToObject( cx, vp[2], &tmp_arg0 );
+	CGSize arg0 = *(CGSize*)JS_GetTypedArrayData( tmp_arg0);
+
+	CCNode *real = (CCNode*) [proxy realObj];
+	[real setContentSize:(CGSize)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
 // Arguments: ccGLServerState
 // Ret value: None
 JSBool JSPROXY_CCNode_setGlServerState_(JSContext *cx, uint32_t argc, jsval *vp) {
@@ -1383,6 +1403,7 @@ JSBool JSPROXY_CCNode_zOrder(JSContext *cx, uint32_t argc, jsval *vp) {
 		JS_FN("scheduleUpdate", JSPROXY_CCNode_scheduleUpdate, 1, JSPROP_PERMANENT | JSPROP_SHARED),
 		JS_FN("scheduleUpdateWithPriority", JSPROXY_CCNode_scheduleUpdateWithPriority_, 1, JSPROP_PERMANENT | JSPROP_SHARED),
 		JS_FN("setAnchorPoint", JSPROXY_CCNode_setAnchorPoint_, 1, JSPROP_PERMANENT | JSPROP_SHARED),
+		JS_FN("setContentSize", JSPROXY_CCNode_setContentSize_, 1, JSPROP_PERMANENT | JSPROP_SHARED),
 		JS_FN("setGlServerState", JSPROXY_CCNode_setGlServerState_, 1, JSPROP_PERMANENT | JSPROP_SHARED),
 		JS_FN("setIgnoreAnchorPointForPosition", JSPROXY_CCNode_setIgnoreAnchorPointForPosition_, 1, JSPROP_PERMANENT | JSPROP_SHARED),
 		JS_FN("setOrderOfArrival", JSPROXY_CCNode_setOrderOfArrival_, 1, JSPROP_PERMANENT | JSPROP_SHARED),
