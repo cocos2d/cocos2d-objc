@@ -227,6 +227,18 @@ void %s_finalize(JSContext *cx, JSObject *obj)
     def generate_retval_string( self, declared_type, js_type ):
         raise Exception("Not implemented")
 
+    # special case: returning CGPoint
+    def generate_retval_cgpoint( self, declared_type, js_type ):
+        template = '''
+	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 2 );
+	float *buffer = (float*)JS_GetTypedArrayData(typedArray);
+	buffer[0] = ret_val.x;
+	buffer[1] = ret_val.y;
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(typedArray));
+'''
+        return template
+       
+
     def generate_retval( self, declared_type, js_type ):
         direct_convert = {
             'i' : 'INT_TO_JSVAL(ret_val)',
@@ -241,8 +253,15 @@ void %s_finalize(JSContext *cx, JSObject *obj)
             'o' : self.generate_retval_object,
             'S' : self.generate_retval_string,
         }
+
+        special_declared_types = {
+            'CGPoint' : self.generate_retval_cgpoint,
+        }
+
         ret = ''
-        if js_type in special_convert:
+        if declared_type in special_declared_types:
+            ret = special_declared_types[ declared_type ]( declared_type, js_type )
+        elif js_type in special_convert:
             ret = special_convert[js_type]( declared_type, js_type )
         elif js_type in direct_convert:
             s = direct_convert[ js_type ]
@@ -255,8 +274,9 @@ void %s_finalize(JSContext *cx, JSObject *obj)
     def parse_method_arguments_and_retval( self, method ):
         # Left column: BridgeSupport types
         # Right column: JS types
-        supported_declared_types = { 
+        supported_declared_types = {
             'NSString*' : 'S',
+            'CGPoint'   : '{}',
             }
         supported_types = {
             'f' : 'd',  # float
@@ -320,8 +340,8 @@ void %s_finalize(JSContext *cx, JSObject *obj)
              
             # Part of supported declared types ?
             elif dt in supported_declared_types:
-                ret_js_type.append( supported_declared_types[t] )
-                ret_declared_type.append( dt )
+                ret_js_type = supported_declared_types[dt]
+                ret_declared_type = dt 
 
             # Part of supported types ?
             elif t in supported_types:
@@ -354,13 +374,58 @@ void %s_finalize(JSContext *cx, JSObject *obj)
 	JSObject *tmp_arg%d;
 	JS_ValueToObject( cx, vp[%d], &tmp_arg%d );
 	%s proxy_arg%d = (%s) JS_GetPrivate( tmp_arg%d ); 
-    %s arg%d = (%s) [proxy_arg%d realObj];
+	%s arg%d = (%s) [proxy_arg%d realObj];
 '''
         proxy_class_name = PROXY_PREFIX + arg_declared_type
         self.mm_file.write( object_template % (i,
                         i+2, i,
                         proxy_class_name , i, proxy_class_name, i,
                         arg_declared_type, i, arg_declared_type, i ) )
+
+    # CGPoint needs an special case since its internal structure changes
+    # on the platform. On Mac it uses doubles and on iOS it uses floats
+    # This function expect floats.
+    def generate_argument_struct_cgpoint( self, i, arg_js_type, arg_declared_type ):
+        template = '''
+	JSObject *tmp_arg%d;
+	JS_ValueToObject( cx, vp[%d], &tmp_arg%d );
+	NSCAssert( JS_GetTypedArrayByteLength( tmp_arg%d ) == 8, @"Invalid length");
+#ifdef __CC_PLATFORM_IOS
+	CGPoint arg%d = *(CGPoint*)JS_GetTypedArrayData( tmp_arg%d );
+#elif defined(__CC_PLATFORM_MAC)
+	float* arg%d_array = (float*)JS_GetTypedArrayData( tmp_arg%d );
+	CGPoint arg%d = ccp(arg%d_array[0], arg%d_array[1] );
+#else
+#error Unsupported Platform
+#endif  
+'''
+        proxy_class_name = PROXY_PREFIX + arg_declared_type
+                
+        self.mm_file.write( template % (i,
+                        i+2, i,
+                        i,
+                        i, i,
+                        i, i, i,
+                        i, i ) )
+
+    def generate_argument_struct( self, i, arg_js_type, arg_declared_type ):
+        # This template assumes that the types will be the same on all platforms (eg: 64 and 32-bit platforms)
+        template = '''
+	JSObject *tmp_arg%d;
+	JS_ValueToObject( cx, vp[%d], &tmp_arg%d );
+	%s arg%d = *(%s*)JS_GetTypedArrayData( tmp_arg%d);
+'''
+        special_case_structs = { 'CGPoint' : self.generate_argument_struct_cgpoint,
+                              }
+
+        proxy_class_name = PROXY_PREFIX + arg_declared_type
+                
+        if arg_declared_type in special_case_structs:
+            special_case_structs[ arg_declared_type ]( i, arg_js_type, arg_declared_type )
+        else:
+            self.mm_file.write( template % (i,
+                            i+2, i,
+                            arg_declared_type, i, arg_declared_type, i ) )
 
     # whether or not the method is an initializer
     def is_method_initializer( self, method ):
@@ -436,6 +501,7 @@ JSBool %s_%s(JSContext *cx, uint32_t argc, jsval *vp) {
         js_special_type_conversions =  {
             'S' : self.generate_argument_string,
             'o' : self.generate_argument_object,
+            '{}': self.generate_argument_struct,
         }
 
         args_js_type, args_declared_type, ret_js_type, ret_declared_type = self.parse_method_arguments_and_retval( method )

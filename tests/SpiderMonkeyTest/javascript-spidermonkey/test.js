@@ -46,10 +46,10 @@ var s = new cc.Sprite();
 s.initWithFile("grossini.png");
 
 
-//a.setPosition( ccp(100,200) );
-//
-//p = a.getPosition();
-//cc.log('position is: ' + p[0] + ', ' + p[1] )
+a.setPosition( ccp(100,200) );
+
+p = a.position();
+cc.log('position is: ' + p[0] + ', ' + p[1] )
 
 a.onEnter = function() {
 	cc.log("On Enter called");
