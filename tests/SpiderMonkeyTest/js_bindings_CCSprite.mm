@@ -47,9 +47,8 @@ void JSPROXY_CCSprite_finalize(JSContext *cx, JSObject *obj)
 
 // Arguments: 
 // Ret value: NSUInteger
-
 JSBool JSPROXY_CCSprite_atlasIndex(JSContext *cx, uint32_t argc, jsval *vp) {
-	
+
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
@@ -65,9 +64,8 @@ JSBool JSPROXY_CCSprite_atlasIndex(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: 
 // Ret value: BOOL
-
 JSBool JSPROXY_CCSprite_dirty(JSContext *cx, uint32_t argc, jsval *vp) {
-	
+
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
@@ -83,9 +81,8 @@ JSBool JSPROXY_CCSprite_dirty(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: 
 // Ret value: BOOL
-
 JSBool JSPROXY_CCSprite_flipX(JSContext *cx, uint32_t argc, jsval *vp) {
-	
+
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
@@ -101,9 +98,8 @@ JSBool JSPROXY_CCSprite_flipX(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: 
 // Ret value: BOOL
-
 JSBool JSPROXY_CCSprite_flipY(JSContext *cx, uint32_t argc, jsval *vp) {
-	
+
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
@@ -119,9 +115,8 @@ JSBool JSPROXY_CCSprite_flipY(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: NSString*
 // Ret value: None
-
 JSBool JSPROXY_CCSprite_initWithFile_(JSContext *cx, uint32_t argc, jsval *vp) {
-	
+
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
@@ -140,9 +135,8 @@ JSBool JSPROXY_CCSprite_initWithFile_(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: NSString*
 // Ret value: None
-
 JSBool JSPROXY_CCSprite_initWithSpriteFrameName_(JSContext *cx, uint32_t argc, jsval *vp) {
-	
+
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
@@ -161,9 +155,8 @@ JSBool JSPROXY_CCSprite_initWithSpriteFrameName_(JSContext *cx, uint32_t argc, j
 
 // Arguments: 
 // Ret value: CGPoint
-
 JSBool JSPROXY_CCSprite_offsetPosition(JSContext *cx, uint32_t argc, jsval *vp) {
-	
+
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
@@ -185,9 +178,8 @@ JSBool JSPROXY_CCSprite_offsetPosition(JSContext *cx, uint32_t argc, jsval *vp) 
 
 // Arguments: 
 // Ret value: GLubyte
-
 JSBool JSPROXY_CCSprite_opacity(JSContext *cx, uint32_t argc, jsval *vp) {
-	
+
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
@@ -203,9 +195,8 @@ JSBool JSPROXY_CCSprite_opacity(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: NSUInteger
 // Ret value: None
-
 JSBool JSPROXY_CCSprite_setAtlasIndex_(JSContext *cx, uint32_t argc, jsval *vp) {
-	
+
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
@@ -221,9 +212,8 @@ JSBool JSPROXY_CCSprite_setAtlasIndex_(JSContext *cx, uint32_t argc, jsval *vp) 
 
 // Arguments: ccBlendFunc
 // Ret value: None
-
 JSBool JSPROXY_CCSprite_setBlendFunc_(JSContext *cx, uint32_t argc, jsval *vp) {
-	
+
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
@@ -242,9 +232,8 @@ JSBool JSPROXY_CCSprite_setBlendFunc_(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: ccColor3B
 // Ret value: None
-
 JSBool JSPROXY_CCSprite_setColor_(JSContext *cx, uint32_t argc, jsval *vp) {
-	
+
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
@@ -263,9 +252,8 @@ JSBool JSPROXY_CCSprite_setColor_(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: BOOL
 // Ret value: None
-
 JSBool JSPROXY_CCSprite_setDirty_(JSContext *cx, uint32_t argc, jsval *vp) {
-	
+
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
@@ -281,9 +269,8 @@ JSBool JSPROXY_CCSprite_setDirty_(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: NSString*, int
 // Ret value: None
-
 JSBool JSPROXY_CCSprite_setDisplayFrameWithAnimationName_index_(JSContext *cx, uint32_t argc, jsval *vp) {
-	
+
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
@@ -301,9 +288,8 @@ JSBool JSPROXY_CCSprite_setDisplayFrameWithAnimationName_index_(JSContext *cx, u
 
 // Arguments: BOOL
 // Ret value: None
-
 JSBool JSPROXY_CCSprite_setFlipX_(JSContext *cx, uint32_t argc, jsval *vp) {
-	
+
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
@@ -319,9 +305,8 @@ JSBool JSPROXY_CCSprite_setFlipX_(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: BOOL
 // Ret value: None
-
 JSBool JSPROXY_CCSprite_setFlipY_(JSContext *cx, uint32_t argc, jsval *vp) {
-	
+
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
@@ -337,9 +322,8 @@ JSBool JSPROXY_CCSprite_setFlipY_(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: GLubyte
 // Ret value: None
-
 JSBool JSPROXY_CCSprite_setOpacity_(JSContext *cx, uint32_t argc, jsval *vp) {
-	
+
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
@@ -353,11 +337,46 @@ JSBool JSPROXY_CCSprite_setOpacity_(JSContext *cx, uint32_t argc, jsval *vp) {
 	return JS_TRUE;
 }
 
+// Arguments: NSString*
+// Ret value: CCSprite
+JSBool JSPROXY_CCSprite_spriteWithFile_(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	JSString *tmp_arg0 = JS_ValueToString( cx, vp[2] );
+	NSString *arg0 = [NSString stringWithUTF8String: JS_EncodeString(cx, tmp_arg0)];
+
+	CCSprite *real = [CCSprite spriteWithFile:(NSString*)arg0  ];
+
+	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCSprite_class, JSPROXY_CCSprite_object, NULL);
+	JSPROXY_CCSprite *ret_proxy = [[JSPROXY_CCSprite alloc] initWithJSObject:jsobj];
+	[ret_proxy setRealObj: real];
+	JS_SetPrivate(jsobj, ret_proxy);
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+	return JS_TRUE;
+}
+
+// Arguments: NSString*
+// Ret value: CCSprite
+JSBool JSPROXY_CCSprite_spriteWithSpriteFrameName_(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	JSString *tmp_arg0 = JS_ValueToString( cx, vp[2] );
+	NSString *arg0 = [NSString stringWithUTF8String: JS_EncodeString(cx, tmp_arg0)];
+
+	CCSprite *real = [CCSprite spriteWithSpriteFrameName:(NSString*)arg0  ];
+
+	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCSprite_class, JSPROXY_CCSprite_object, NULL);
+	JSPROXY_CCSprite *ret_proxy = [[JSPROXY_CCSprite alloc] initWithJSObject:jsobj];
+	[ret_proxy setRealObj: real];
+	JS_SetPrivate(jsobj, ret_proxy);
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+	return JS_TRUE;
+}
+
 // Arguments: 
 // Ret value: BOOL
-
 JSBool JSPROXY_CCSprite_textureRectRotated(JSContext *cx, uint32_t argc, jsval *vp) {
-	
+
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
@@ -373,9 +392,8 @@ JSBool JSPROXY_CCSprite_textureRectRotated(JSContext *cx, uint32_t argc, jsval *
 
 // Arguments: 
 // Ret value: None
-
 JSBool JSPROXY_CCSprite_updateTransform(JSContext *cx, uint32_t argc, jsval *vp) {
-	
+
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
@@ -407,7 +425,6 @@ JSBool JSPROXY_CCSprite_updateTransform(JSContext *cx, uint32_t argc, jsval *vp)
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
 	};
-
 	static JSFunctionSpec funcs[] = {
 		JS_FN("atlasIndex", JSPROXY_CCSprite_atlasIndex, 1, JSPROP_PERMANENT | JSPROP_SHARED),
 		JS_FN("dirty", JSPROXY_CCSprite_dirty, 1, JSPROP_PERMANENT | JSPROP_SHARED),
@@ -429,8 +446,9 @@ JSBool JSPROXY_CCSprite_updateTransform(JSContext *cx, uint32_t argc, jsval *vp)
 		JS_FN("updateTransform", JSPROXY_CCSprite_updateTransform, 1, JSPROP_PERMANENT | JSPROP_SHARED),
 		JS_FS_END
 	};
-
 	static JSFunctionSpec st_funcs[] = {
+		JS_FN("spriteWithFile", JSPROXY_CCSprite_spriteWithFile_, 1, JSPROP_PERMANENT | JSPROP_SHARED),
+		JS_FN("spriteWithSpriteFrameName", JSPROXY_CCSprite_spriteWithSpriteFrameName_, 1, JSPROP_PERMANENT | JSPROP_SHARED),
 		JS_FS_END
 	};
 

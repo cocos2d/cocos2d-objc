@@ -27,8 +27,12 @@ import itertools
 import copy
 import datetime
 
+#
+# Globals
+#
 BINDINGS_PREFIX = 'js_bindings_'
 PROXY_PREFIX = 'JSPROXY_'
+METHOD_CONSTRUCTOR, METHOD_CLASS, METHOD_INIT, METHOD_REGULAR = xrange(4)
 
 #
 # Templates
@@ -81,6 +85,9 @@ class SpiderMonkey(object):
         
         self.classes_to_bind = set(classes_to_bind)
         self.supported_classes = set(['NSObject'])
+	
+	# Current method that is being parsed
+	self.current_method = None
 
     def parse_hierarchy_file( self ):
         f = open( self.hierarchy_file )
@@ -159,6 +166,17 @@ class SpiderMonkey(object):
             return True
         return False
 
+    # whether or not the method is a constructor
+    def is_class_constructor( self, method ):
+	if self.is_class_method( method ) and 'retval' in method:
+	    retval = method['retval']
+	    dt = retval[0]['declared_type']
+
+	    # Should also check the naming convention. eg: 'spriteWith...'
+	    if dt == 'id':
+		return True
+        return False
+
     # whether or not the method is an initializer
     def is_method_initializer( self, method ):
         if 'retval' in method:
@@ -168,6 +186,22 @@ class SpiderMonkey(object):
             if method['selector'].startswith('init') and dt == 'id':
                 return True
         return False
+    
+    def is_class_method( self, method ):
+	return 'class_method' in method and method['class_method'] == 'true'
+    
+    def get_method_type( self, method ):
+	if self.is_class_constructor( method ):
+            method_type = METHOD_CONSTRUCTOR
+        elif self.is_class_method( method ):
+            method_type = METHOD_CLASS
+        elif self.is_method_initializer(method):
+            method_type = METHOD_INIT
+        else:
+            method_type = METHOD_REGULAR
+	    
+	return method_type
+	
 
     def convert_selector_name_to_native( self, name ):
         return name.replace(':','_')
@@ -236,20 +270,24 @@ void %s_finalize(JSContext *cx, JSObject *obj)
     #
     # Method generator functions
     #
-    def generate_call_to_real_object( self, selector_name, num_of_args, ret_declared_type, args_declared_type, is_init, class_name ):
+    def generate_call_to_real_object( self, selector_name, num_of_args, ret_declared_type, args_declared_type, class_name, method_type ):
 
         args = selector_name.split(':')
 
-        if is_init:
+        if method_type == METHOD_INIT:
             prefix = '\t%s *real = [[%s alloc] ' % (class_name, class_name )
             suffix = '\n\t[proxy setRealObj: real];\n\t[real release];\n'
-        else:
+        elif method_type == METHOD_REGULAR:
             prefix = '\t%s *real = (%s*) [proxy realObj];\n\t' % (class_name, class_name)
             suffix = ''
             if ret_declared_type:
                 prefix = prefix + 'ret_val = '
-
             prefix = prefix + '[real '
+	elif method_type == METHOD_CLASS or method_type == METHOD_CONSTRUCTOR:
+	    prefix = '\t%s *real = [%s ' % (class_name, class_name )
+	    suffix = ''
+	else:
+	    raise Exception('Invalid method type')
 
         # sanity check
         if num_of_args+1 != len(args):
@@ -277,12 +315,17 @@ void %s_finalize(JSContext *cx, JSObject *obj)
         object_template = '''
 	JSObject *jsobj = JS_NewObject(cx, %s_class, %s_object, NULL);
 	%s *ret_proxy = [[%s alloc] initWithJSObject:jsobj];
-	[proxy setRealObj:real];
+	[ret_proxy setRealObj: %s];
 	JS_SetPrivate(jsobj, ret_proxy);
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 '''
-        return object_template % ( proxy_class_name, proxy_class_name, proxy_class_name, proxy_class_name )
-    
+	method_type = self.get_method_type( self.current_method ) 
+
+	ret_object = 'ret_val' if method_type==METHOD_REGULAR else 'real'
+	
+        return object_template % ( proxy_class_name, proxy_class_name,
+	                           proxy_class_name, proxy_class_name,
+	                           ret_object )    
 
     # special case: returning String
     def generate_retval_string( self, declared_type, js_type ):
@@ -344,7 +387,7 @@ void %s_finalize(JSContext *cx, JSObject *obj)
 
         return ret
 
-    def parse_method_arguments_and_retval( self, method ):
+    def parse_method_arguments_and_retval( self, method, class_name ):
         # Left column: BridgeSupport types
         # Right column: JS types
         supported_declared_types = {
@@ -414,6 +457,11 @@ void %s_finalize(JSContext *cx, JSObject *obj)
             if self.is_method_initializer(method ):
                 ret_js_type = None
                 ret_declared_type = None
+	    
+	    # Special case for class constructors
+	    elif self.is_class_constructor( method ):
+		ret_js_type = 'o'
+		ret_declared_type = class_name
              
             # Part of supported declared types ?
             elif dt in supported_declared_types:
@@ -543,21 +591,32 @@ void %s_finalize(JSContext *cx, JSObject *obj)
         }
 '''
         
-    def generate_method_prefix( self, class_name, converted_name, assert_init, num_of_args ):
+    def generate_method_prefix( self, class_name, converted_name, num_of_args, method_type ):
         # JSPROXY_CCNode, setPosition
         # "!" or ""
         # proxy.initialized = YES (or nothing)
-        # 1  (number of arguments)
-        method_template = '''
+        template_methodname = '''
 JSBool %s_%s(JSContext *cx, uint32_t argc, jsval *vp) {
-	
+'''
+	template_init = '''
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( %s[proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == %d, @"Invalid number of arguments" );
 '''
-        self.mm_file.write( method_template % ( PROXY_PREFIX+class_name, converted_name, assert_init, num_of_args ) )
+	
+	# method name
+	self.mm_file.write( template_methodname % ( PROXY_PREFIX+class_name, converted_name ) )
+
+	# method asserts for instance methods
+        if method_type == METHOD_INIT or method_type == METHOD_REGULAR:
+	    assert_init = '!' if method_type == METHOD_INIT else ''
+            self.mm_file.write( template_init % assert_init )
+	    
+	# Number of arguments
+	method_assert_on_arguments = '\tNSCAssert( argc == %d, @"Invalid number of arguments" );\n'
+	self.mm_file.write( method_assert_on_arguments % num_of_args )
+	    
    
     def generate_method_suffix( self ):
         end_template = '''
@@ -600,15 +659,15 @@ JSBool %s_%s(JSContext *cx, uint32_t argc, jsval *vp) {
             '{}': self.generate_argument_struct,
         }
 
-        args_js_type, args_declared_type, ret_js_type, ret_declared_type = self.parse_method_arguments_and_retval( method )
+        args_js_type, args_declared_type, ret_js_type, ret_declared_type = self.parse_method_arguments_and_retval( method, class_name )
 
         if args_js_type == None:
             return False
-       
+
+        
+        method_type = self.get_method_type( method )
+
         s = method['selector']
-        is_class_method = False
-        if 'class_method' in method and method['class_method'] == 'true':
-            is_class_method = True
 
         # writing...
         converted_name = self.convert_selector_name_to_native( s )
@@ -616,16 +675,10 @@ JSBool %s_%s(JSContext *cx, uint32_t argc, jsval *vp) {
         num_of_args = len( args_declared_type )
         
         # writes method description
-        self.mm_file.write( '\n// Arguments: %s\n// Ret value: %s\n' % ( ', '.join(args_declared_type), ret_declared_type ) )
+        self.mm_file.write( '\n// Arguments: %s\n// Ret value: %s' % ( ', '.join(args_declared_type), ret_declared_type ) )
 
-        if self.is_method_initializer(method):
-            assert_init = '!'
-            is_init_method = True
-        else:
-            assert_init = ''
-            is_init_method = False
 
-        self.generate_method_prefix( class_name, converted_name, assert_init, num_of_args )
+        self.generate_method_prefix( class_name, converted_name, num_of_args, method_type )
 
         for i,arg in enumerate(args_js_type):
 
@@ -639,10 +692,10 @@ JSBool %s_%s(JSContext *cx, uint32_t argc, jsval *vp) {
             else:
                 raise Exception('Unsupported type: %s' % arg )
 
-        if ret_declared_type:
+        if ret_declared_type and method_type==METHOD_REGULAR:
             self.mm_file.write( '\t%s ret_val;\n' % ret_declared_type )
 
-        call_real = self.generate_call_to_real_object( s, num_of_args, ret_declared_type, args_declared_type, is_init_method, class_name )
+        call_real = self.generate_call_to_real_object( s, num_of_args, ret_declared_type, args_declared_type, class_name, method_type )
 
         self.mm_file.write( '\n%s\n' % call_real )
 
@@ -657,13 +710,16 @@ JSBool %s_%s(JSContext *cx, uint32_t argc, jsval *vp) {
         return True
 
     def generate_methods( self, class_name, klass ):
-        ok_methods = []
+	ok_methods = []
         for m in klass['method']:
+	    self.current_method = m
             ok = self.generate_method( class_name, m )
             if ok:
                 ok_methods.append( m )
             else:
                 print 'NOT OK:' + m['selector']
+
+	self.current_method = None
         return ok_methods
 
 
@@ -726,16 +782,12 @@ extern JSClass *%s_class;
 		{0, 0, 0, 0, 0}
 	};
 '''
-        functions_template_start = '''
-	static JSFunctionSpec funcs[] = {
-'''
+        functions_template_start = '\tstatic JSFunctionSpec funcs[] = {\n'
         functions_template_end = '\t\tJS_FS_END\n\t};\n'
 
-        static_functions_template = '''
-	static JSFunctionSpec st_funcs[] = {
-		JS_FS_END
-	};
-'''
+        static_functions_template_start = '\tstatic JSFunctionSpec st_funcs[] = {\n'
+        static_functions_template_end = '\t\tJS_FS_END\n\t};\n'
+	
         # 1: JSPROXY_CCNode
         # 2: JSPROXY_NSObject
         # 3-4: JSPROXY_CCNode
@@ -754,16 +806,31 @@ extern JSClass *%s_class;
                                                         proxy_class_name, proxy_class_name, proxy_class_name ) )
 
         self.mm_file.write( properties_template )
-        self.mm_file.write( functions_template_start )
 
-        js_fn = '\t\tJS_FN("%s", %s, 1, JSPROP_PERMANENT | JSPROP_SHARED),\n'
-        for method in ok_methods:
+	js_fn = '\t\tJS_FN("%s", %s, 1, JSPROP_PERMANENT | JSPROP_SHARED),\n'
+
+	# XXX Arghh
+	instance_method_buffer = ''
+	class_method_buffer = ''
+	for method in ok_methods:
             js_name = self.convert_selector_name_to_js( method['selector'] )
             cb_name = self.convert_selector_name_to_native( method['selector'] )
-            self.mm_file.write( js_fn % (js_name, proxy_class_name + '_' + cb_name) )
-
+	    entry = js_fn % (js_name, proxy_class_name + '_' + cb_name)
+	    if self.is_class_method( method ):
+		class_method_buffer += entry
+	    else:
+		instance_method_buffer += entry
+	
+	# instance methods entry point
+	self.mm_file.write( functions_template_start )
+	self.mm_file.write( instance_method_buffer )
         self.mm_file.write( functions_template_end )
-        self.mm_file.write( static_functions_template )
+
+	# class methods entry point    
+        self.mm_file.write( static_functions_template_start )
+	self.mm_file.write( class_method_buffer )	
+	self.mm_file.write( static_functions_template_end )
+    
         self.mm_file.write( init_class_template % ( proxy_class_name, proxy_parent_name, proxy_class_name, proxy_class_name ) )
 
         self.mm_file.write( '\n@end\n' )

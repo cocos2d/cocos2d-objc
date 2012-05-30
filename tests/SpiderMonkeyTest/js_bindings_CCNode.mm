@@ -13,7 +13,6 @@
 #import "js_bindings_CCNode.h"
 #import "js_bindings_CCAction.h"
 
-
 JSClass* JSPROXY_CCNode_class = NULL;
 JSObject* JSPROXY_CCNode_object = NULL;
  // Constructor
@@ -48,9 +47,8 @@ void JSPROXY_CCNode_finalize(JSContext *cx, JSObject *obj)
 
 // Arguments: CCNode*
 // Ret value: None
-
 JSBool JSPROXY_CCNode_addChild_(JSContext *cx, uint32_t argc, jsval *vp) {
-	
+
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
@@ -70,9 +68,8 @@ JSBool JSPROXY_CCNode_addChild_(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: CCNode*, NSInteger
 // Ret value: None
-
 JSBool JSPROXY_CCNode_addChild_z_(JSContext *cx, uint32_t argc, jsval *vp) {
-	
+
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
@@ -93,9 +90,8 @@ JSBool JSPROXY_CCNode_addChild_z_(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: CCNode*, NSInteger, NSInteger
 // Ret value: None
-
 JSBool JSPROXY_CCNode_addChild_z_tag_(JSContext *cx, uint32_t argc, jsval *vp) {
-	
+
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
@@ -117,9 +113,8 @@ JSBool JSPROXY_CCNode_addChild_z_tag_(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: 
 // Ret value: CGPoint
-
 JSBool JSPROXY_CCNode_anchorPoint(JSContext *cx, uint32_t argc, jsval *vp) {
-	
+
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
@@ -141,9 +136,8 @@ JSBool JSPROXY_CCNode_anchorPoint(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: 
 // Ret value: CGPoint
-
 JSBool JSPROXY_CCNode_anchorPointInPoints(JSContext *cx, uint32_t argc, jsval *vp) {
-	
+
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
@@ -165,9 +159,8 @@ JSBool JSPROXY_CCNode_anchorPointInPoints(JSContext *cx, uint32_t argc, jsval *v
 
 // Arguments: 
 // Ret value: None
-
 JSBool JSPROXY_CCNode_cleanup(JSContext *cx, uint32_t argc, jsval *vp) {
-	
+
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
@@ -182,9 +175,8 @@ JSBool JSPROXY_CCNode_cleanup(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: CGPoint
 // Ret value: CGPoint
-
 JSBool JSPROXY_CCNode_convertToNodeSpace_(JSContext *cx, uint32_t argc, jsval *vp) {
-	
+
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
@@ -218,9 +210,8 @@ JSBool JSPROXY_CCNode_convertToNodeSpace_(JSContext *cx, uint32_t argc, jsval *v
 
 // Arguments: CGPoint
 // Ret value: CGPoint
-
 JSBool JSPROXY_CCNode_convertToNodeSpaceAR_(JSContext *cx, uint32_t argc, jsval *vp) {
-	
+
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
@@ -254,9 +245,8 @@ JSBool JSPROXY_CCNode_convertToNodeSpaceAR_(JSContext *cx, uint32_t argc, jsval 
 
 // Arguments: CGPoint
 // Ret value: CGPoint
-
 JSBool JSPROXY_CCNode_convertToWorldSpace_(JSContext *cx, uint32_t argc, jsval *vp) {
-	
+
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
@@ -290,9 +280,8 @@ JSBool JSPROXY_CCNode_convertToWorldSpace_(JSContext *cx, uint32_t argc, jsval *
 
 // Arguments: CGPoint
 // Ret value: CGPoint
-
 JSBool JSPROXY_CCNode_convertToWorldSpaceAR_(JSContext *cx, uint32_t argc, jsval *vp) {
-	
+
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
@@ -326,9 +315,8 @@ JSBool JSPROXY_CCNode_convertToWorldSpaceAR_(JSContext *cx, uint32_t argc, jsval
 
 // Arguments: 
 // Ret value: None
-
 JSBool JSPROXY_CCNode_draw(JSContext *cx, uint32_t argc, jsval *vp) {
-	
+
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
@@ -343,9 +331,8 @@ JSBool JSPROXY_CCNode_draw(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: NSInteger
 // Ret value: CCAction*
-
 JSBool JSPROXY_CCNode_getActionByTag_(JSContext *cx, uint32_t argc, jsval *vp) {
-	
+
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
@@ -359,7 +346,7 @@ JSBool JSPROXY_CCNode_getActionByTag_(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCAction_class, JSPROXY_CCAction_object, NULL);
 	JSPROXY_CCAction *ret_proxy = [[JSPROXY_CCAction alloc] initWithJSObject:jsobj];
-	[proxy setRealObj:real];
+	[ret_proxy setRealObj: ret_val];
 	JS_SetPrivate(jsobj, ret_proxy);
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
@@ -368,9 +355,8 @@ JSBool JSPROXY_CCNode_getActionByTag_(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: NSInteger
 // Ret value: CCNode*
-
 JSBool JSPROXY_CCNode_getChildByTag_(JSContext *cx, uint32_t argc, jsval *vp) {
-	
+
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
@@ -384,7 +370,7 @@ JSBool JSPROXY_CCNode_getChildByTag_(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCNode_class, JSPROXY_CCNode_object, NULL);
 	JSPROXY_CCNode *ret_proxy = [[JSPROXY_CCNode alloc] initWithJSObject:jsobj];
-	[proxy setRealObj:real];
+	[ret_proxy setRealObj: ret_val];
 	JS_SetPrivate(jsobj, ret_proxy);
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
@@ -393,9 +379,8 @@ JSBool JSPROXY_CCNode_getChildByTag_(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: 
 // Ret value: ccGLServerState
-
 JSBool JSPROXY_CCNode_glServerState(JSContext *cx, uint32_t argc, jsval *vp) {
-	
+
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
@@ -411,9 +396,8 @@ JSBool JSPROXY_CCNode_glServerState(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: 
 // Ret value: BOOL
-
 JSBool JSPROXY_CCNode_ignoreAnchorPointForPosition(JSContext *cx, uint32_t argc, jsval *vp) {
-	
+
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
@@ -429,9 +413,8 @@ JSBool JSPROXY_CCNode_ignoreAnchorPointForPosition(JSContext *cx, uint32_t argc,
 
 // Arguments: 
 // Ret value: None
-
 JSBool JSPROXY_CCNode_init(JSContext *cx, uint32_t argc, jsval *vp) {
-	
+
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
@@ -448,9 +431,8 @@ JSBool JSPROXY_CCNode_init(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: 
 // Ret value: BOOL
-
 JSBool JSPROXY_CCNode_isRunning(JSContext *cx, uint32_t argc, jsval *vp) {
-	
+
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
@@ -465,10 +447,25 @@ JSBool JSPROXY_CCNode_isRunning(JSContext *cx, uint32_t argc, jsval *vp) {
 }
 
 // Arguments: 
-// Ret value: NSUInteger
+// Ret value: CCNode
+JSBool JSPROXY_CCNode_node(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 0, @"Invalid number of arguments" );
 
+	CCNode *real = [CCNode node ];
+
+	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCNode_class, JSPROXY_CCNode_object, NULL);
+	JSPROXY_CCNode *ret_proxy = [[JSPROXY_CCNode alloc] initWithJSObject:jsobj];
+	[ret_proxy setRealObj: real];
+	JS_SetPrivate(jsobj, ret_proxy);
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+	return JS_TRUE;
+}
+
+// Arguments: 
+// Ret value: NSUInteger
 JSBool JSPROXY_CCNode_numberOfRunningActions(JSContext *cx, uint32_t argc, jsval *vp) {
-	
+
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
@@ -484,9 +481,8 @@ JSBool JSPROXY_CCNode_numberOfRunningActions(JSContext *cx, uint32_t argc, jsval
 
 // Arguments: 
 // Ret value: None
-
 JSBool JSPROXY_CCNode_onEnter(JSContext *cx, uint32_t argc, jsval *vp) {
-	
+
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
@@ -501,9 +497,8 @@ JSBool JSPROXY_CCNode_onEnter(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: 
 // Ret value: None
-
 JSBool JSPROXY_CCNode_onEnterTransitionDidFinish(JSContext *cx, uint32_t argc, jsval *vp) {
-	
+
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
@@ -518,9 +513,8 @@ JSBool JSPROXY_CCNode_onEnterTransitionDidFinish(JSContext *cx, uint32_t argc, j
 
 // Arguments: 
 // Ret value: None
-
 JSBool JSPROXY_CCNode_onExit(JSContext *cx, uint32_t argc, jsval *vp) {
-	
+
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
@@ -535,9 +529,8 @@ JSBool JSPROXY_CCNode_onExit(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: 
 // Ret value: None
-
 JSBool JSPROXY_CCNode_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsval *vp) {
-	
+
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
@@ -552,9 +545,8 @@ JSBool JSPROXY_CCNode_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsv
 
 // Arguments: 
 // Ret value: NSUInteger
-
 JSBool JSPROXY_CCNode_orderOfArrival(JSContext *cx, uint32_t argc, jsval *vp) {
-	
+
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
@@ -570,9 +562,8 @@ JSBool JSPROXY_CCNode_orderOfArrival(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: 
 // Ret value: CCNode*
-
 JSBool JSPROXY_CCNode_parent(JSContext *cx, uint32_t argc, jsval *vp) {
-	
+
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
@@ -585,7 +576,7 @@ JSBool JSPROXY_CCNode_parent(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCNode_class, JSPROXY_CCNode_object, NULL);
 	JSPROXY_CCNode *ret_proxy = [[JSPROXY_CCNode alloc] initWithJSObject:jsobj];
-	[proxy setRealObj:real];
+	[ret_proxy setRealObj: ret_val];
 	JS_SetPrivate(jsobj, ret_proxy);
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
@@ -594,9 +585,8 @@ JSBool JSPROXY_CCNode_parent(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: 
 // Ret value: None
-
 JSBool JSPROXY_CCNode_pauseSchedulerAndActions(JSContext *cx, uint32_t argc, jsval *vp) {
-	
+
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
@@ -611,9 +601,8 @@ JSBool JSPROXY_CCNode_pauseSchedulerAndActions(JSContext *cx, uint32_t argc, jsv
 
 // Arguments: 
 // Ret value: CGPoint
-
 JSBool JSPROXY_CCNode_position(JSContext *cx, uint32_t argc, jsval *vp) {
-	
+
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
@@ -635,9 +624,8 @@ JSBool JSPROXY_CCNode_position(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: BOOL
 // Ret value: None
-
 JSBool JSPROXY_CCNode_removeAllChildrenWithCleanup_(JSContext *cx, uint32_t argc, jsval *vp) {
-	
+
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
@@ -653,9 +641,8 @@ JSBool JSPROXY_CCNode_removeAllChildrenWithCleanup_(JSContext *cx, uint32_t argc
 
 // Arguments: CCNode*, BOOL
 // Ret value: None
-
 JSBool JSPROXY_CCNode_removeChild_cleanup_(JSContext *cx, uint32_t argc, jsval *vp) {
-	
+
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
@@ -676,9 +663,8 @@ JSBool JSPROXY_CCNode_removeChild_cleanup_(JSContext *cx, uint32_t argc, jsval *
 
 // Arguments: NSInteger, BOOL
 // Ret value: None
-
 JSBool JSPROXY_CCNode_removeChildByTag_cleanup_(JSContext *cx, uint32_t argc, jsval *vp) {
-	
+
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
@@ -695,9 +681,8 @@ JSBool JSPROXY_CCNode_removeChildByTag_cleanup_(JSContext *cx, uint32_t argc, js
 
 // Arguments: BOOL
 // Ret value: None
-
 JSBool JSPROXY_CCNode_removeFromParentAndCleanup_(JSContext *cx, uint32_t argc, jsval *vp) {
-	
+
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
@@ -713,9 +698,8 @@ JSBool JSPROXY_CCNode_removeFromParentAndCleanup_(JSContext *cx, uint32_t argc, 
 
 // Arguments: CCNode*, NSInteger
 // Ret value: None
-
 JSBool JSPROXY_CCNode_reorderChild_z_(JSContext *cx, uint32_t argc, jsval *vp) {
-	
+
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
@@ -736,9 +720,8 @@ JSBool JSPROXY_CCNode_reorderChild_z_(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: 
 // Ret value: None
-
 JSBool JSPROXY_CCNode_resumeSchedulerAndActions(JSContext *cx, uint32_t argc, jsval *vp) {
-	
+
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
@@ -753,9 +736,8 @@ JSBool JSPROXY_CCNode_resumeSchedulerAndActions(JSContext *cx, uint32_t argc, js
 
 // Arguments: 
 // Ret value: float
-
 JSBool JSPROXY_CCNode_rotation(JSContext *cx, uint32_t argc, jsval *vp) {
-	
+
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
@@ -771,9 +753,8 @@ JSBool JSPROXY_CCNode_rotation(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: CCAction*
 // Ret value: CCAction*
-
 JSBool JSPROXY_CCNode_runAction_(JSContext *cx, uint32_t argc, jsval *vp) {
-	
+
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
@@ -791,7 +772,7 @@ JSBool JSPROXY_CCNode_runAction_(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCAction_class, JSPROXY_CCAction_object, NULL);
 	JSPROXY_CCAction *ret_proxy = [[JSPROXY_CCAction alloc] initWithJSObject:jsobj];
-	[proxy setRealObj:real];
+	[ret_proxy setRealObj: ret_val];
 	JS_SetPrivate(jsobj, ret_proxy);
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
@@ -800,9 +781,8 @@ JSBool JSPROXY_CCNode_runAction_(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: 
 // Ret value: float
-
 JSBool JSPROXY_CCNode_scale(JSContext *cx, uint32_t argc, jsval *vp) {
-	
+
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
@@ -818,9 +798,8 @@ JSBool JSPROXY_CCNode_scale(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: 
 // Ret value: float
-
 JSBool JSPROXY_CCNode_scaleX(JSContext *cx, uint32_t argc, jsval *vp) {
-	
+
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
@@ -836,9 +815,8 @@ JSBool JSPROXY_CCNode_scaleX(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: 
 // Ret value: float
-
 JSBool JSPROXY_CCNode_scaleY(JSContext *cx, uint32_t argc, jsval *vp) {
-	
+
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
@@ -854,9 +832,8 @@ JSBool JSPROXY_CCNode_scaleY(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: 
 // Ret value: None
-
 JSBool JSPROXY_CCNode_scheduleUpdate(JSContext *cx, uint32_t argc, jsval *vp) {
-	
+
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
@@ -871,9 +848,8 @@ JSBool JSPROXY_CCNode_scheduleUpdate(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: NSInteger
 // Ret value: None
-
 JSBool JSPROXY_CCNode_scheduleUpdateWithPriority_(JSContext *cx, uint32_t argc, jsval *vp) {
-	
+
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
@@ -889,9 +865,8 @@ JSBool JSPROXY_CCNode_scheduleUpdateWithPriority_(JSContext *cx, uint32_t argc, 
 
 // Arguments: CGPoint
 // Ret value: None
-
 JSBool JSPROXY_CCNode_setAnchorPoint_(JSContext *cx, uint32_t argc, jsval *vp) {
-	
+
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
@@ -918,9 +893,8 @@ JSBool JSPROXY_CCNode_setAnchorPoint_(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: CGSize
 // Ret value: None
-
 JSBool JSPROXY_CCNode_setContentSize_(JSContext *cx, uint32_t argc, jsval *vp) {
-	
+
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
@@ -939,9 +913,8 @@ JSBool JSPROXY_CCNode_setContentSize_(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: ccGLServerState
 // Ret value: None
-
 JSBool JSPROXY_CCNode_setGlServerState_(JSContext *cx, uint32_t argc, jsval *vp) {
-	
+
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
@@ -957,9 +930,8 @@ JSBool JSPROXY_CCNode_setGlServerState_(JSContext *cx, uint32_t argc, jsval *vp)
 
 // Arguments: BOOL
 // Ret value: None
-
 JSBool JSPROXY_CCNode_setIgnoreAnchorPointForPosition_(JSContext *cx, uint32_t argc, jsval *vp) {
-	
+
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
@@ -975,9 +947,8 @@ JSBool JSPROXY_CCNode_setIgnoreAnchorPointForPosition_(JSContext *cx, uint32_t a
 
 // Arguments: NSUInteger
 // Ret value: None
-
 JSBool JSPROXY_CCNode_setOrderOfArrival_(JSContext *cx, uint32_t argc, jsval *vp) {
-	
+
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
@@ -993,9 +964,8 @@ JSBool JSPROXY_CCNode_setOrderOfArrival_(JSContext *cx, uint32_t argc, jsval *vp
 
 // Arguments: CCNode*
 // Ret value: None
-
 JSBool JSPROXY_CCNode_setParent_(JSContext *cx, uint32_t argc, jsval *vp) {
-	
+
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
@@ -1015,9 +985,8 @@ JSBool JSPROXY_CCNode_setParent_(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: CGPoint
 // Ret value: None
-
 JSBool JSPROXY_CCNode_setPosition_(JSContext *cx, uint32_t argc, jsval *vp) {
-	
+
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
@@ -1044,9 +1013,8 @@ JSBool JSPROXY_CCNode_setPosition_(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: float
 // Ret value: None
-
 JSBool JSPROXY_CCNode_setRotation_(JSContext *cx, uint32_t argc, jsval *vp) {
-	
+
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
@@ -1062,9 +1030,8 @@ JSBool JSPROXY_CCNode_setRotation_(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: float
 // Ret value: None
-
 JSBool JSPROXY_CCNode_setScale_(JSContext *cx, uint32_t argc, jsval *vp) {
-	
+
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
@@ -1080,9 +1047,8 @@ JSBool JSPROXY_CCNode_setScale_(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: float
 // Ret value: None
-
 JSBool JSPROXY_CCNode_setScaleX_(JSContext *cx, uint32_t argc, jsval *vp) {
-	
+
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
@@ -1098,9 +1064,8 @@ JSBool JSPROXY_CCNode_setScaleX_(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: float
 // Ret value: None
-
 JSBool JSPROXY_CCNode_setScaleY_(JSContext *cx, uint32_t argc, jsval *vp) {
-	
+
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
@@ -1116,9 +1081,8 @@ JSBool JSPROXY_CCNode_setScaleY_(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: float
 // Ret value: None
-
 JSBool JSPROXY_CCNode_setSkewX_(JSContext *cx, uint32_t argc, jsval *vp) {
-	
+
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
@@ -1134,9 +1098,8 @@ JSBool JSPROXY_CCNode_setSkewX_(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: float
 // Ret value: None
-
 JSBool JSPROXY_CCNode_setSkewY_(JSContext *cx, uint32_t argc, jsval *vp) {
-	
+
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
@@ -1152,9 +1115,8 @@ JSBool JSPROXY_CCNode_setSkewY_(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: NSInteger
 // Ret value: None
-
 JSBool JSPROXY_CCNode_setTag_(JSContext *cx, uint32_t argc, jsval *vp) {
-	
+
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
@@ -1170,9 +1132,8 @@ JSBool JSPROXY_CCNode_setTag_(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: float
 // Ret value: None
-
 JSBool JSPROXY_CCNode_setVertexZ_(JSContext *cx, uint32_t argc, jsval *vp) {
-	
+
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
@@ -1188,9 +1149,8 @@ JSBool JSPROXY_CCNode_setVertexZ_(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: BOOL
 // Ret value: None
-
 JSBool JSPROXY_CCNode_setVisible_(JSContext *cx, uint32_t argc, jsval *vp) {
-	
+
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
@@ -1206,9 +1166,8 @@ JSBool JSPROXY_CCNode_setVisible_(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: NSUInteger
 // Ret value: None
-
 JSBool JSPROXY_CCNode_setZOrder_(JSContext *cx, uint32_t argc, jsval *vp) {
-	
+
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
@@ -1224,9 +1183,8 @@ JSBool JSPROXY_CCNode_setZOrder_(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: 
 // Ret value: float
-
 JSBool JSPROXY_CCNode_skewX(JSContext *cx, uint32_t argc, jsval *vp) {
-	
+
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
@@ -1242,9 +1200,8 @@ JSBool JSPROXY_CCNode_skewX(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: 
 // Ret value: float
-
 JSBool JSPROXY_CCNode_skewY(JSContext *cx, uint32_t argc, jsval *vp) {
-	
+
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
@@ -1260,9 +1217,8 @@ JSBool JSPROXY_CCNode_skewY(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: 
 // Ret value: None
-
 JSBool JSPROXY_CCNode_sortAllChildren(JSContext *cx, uint32_t argc, jsval *vp) {
-	
+
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
@@ -1277,9 +1233,8 @@ JSBool JSPROXY_CCNode_sortAllChildren(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: CCAction*
 // Ret value: None
-
 JSBool JSPROXY_CCNode_stopAction_(JSContext *cx, uint32_t argc, jsval *vp) {
-	
+
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
@@ -1299,9 +1254,8 @@ JSBool JSPROXY_CCNode_stopAction_(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: NSInteger
 // Ret value: None
-
 JSBool JSPROXY_CCNode_stopActionByTag_(JSContext *cx, uint32_t argc, jsval *vp) {
-	
+
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
@@ -1317,9 +1271,8 @@ JSBool JSPROXY_CCNode_stopActionByTag_(JSContext *cx, uint32_t argc, jsval *vp) 
 
 // Arguments: 
 // Ret value: None
-
 JSBool JSPROXY_CCNode_stopAllActions(JSContext *cx, uint32_t argc, jsval *vp) {
-	
+
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
@@ -1334,9 +1287,8 @@ JSBool JSPROXY_CCNode_stopAllActions(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: 
 // Ret value: NSInteger
-
 JSBool JSPROXY_CCNode_tag(JSContext *cx, uint32_t argc, jsval *vp) {
-	
+
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
@@ -1352,9 +1304,8 @@ JSBool JSPROXY_CCNode_tag(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: 
 // Ret value: None
-
 JSBool JSPROXY_CCNode_transform(JSContext *cx, uint32_t argc, jsval *vp) {
-	
+
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
@@ -1369,9 +1320,8 @@ JSBool JSPROXY_CCNode_transform(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: 
 // Ret value: None
-
 JSBool JSPROXY_CCNode_transformAncestors(JSContext *cx, uint32_t argc, jsval *vp) {
-	
+
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
@@ -1386,9 +1336,8 @@ JSBool JSPROXY_CCNode_transformAncestors(JSContext *cx, uint32_t argc, jsval *vp
 
 // Arguments: 
 // Ret value: None
-
 JSBool JSPROXY_CCNode_unscheduleAllSelectors(JSContext *cx, uint32_t argc, jsval *vp) {
-	
+
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
@@ -1403,9 +1352,8 @@ JSBool JSPROXY_CCNode_unscheduleAllSelectors(JSContext *cx, uint32_t argc, jsval
 
 // Arguments: 
 // Ret value: None
-
 JSBool JSPROXY_CCNode_unscheduleUpdate(JSContext *cx, uint32_t argc, jsval *vp) {
-	
+
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
@@ -1420,9 +1368,8 @@ JSBool JSPROXY_CCNode_unscheduleUpdate(JSContext *cx, uint32_t argc, jsval *vp) 
 
 // Arguments: 
 // Ret value: float
-
 JSBool JSPROXY_CCNode_vertexZ(JSContext *cx, uint32_t argc, jsval *vp) {
-	
+
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
@@ -1438,9 +1385,8 @@ JSBool JSPROXY_CCNode_vertexZ(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: 
 // Ret value: BOOL
-
 JSBool JSPROXY_CCNode_visible(JSContext *cx, uint32_t argc, jsval *vp) {
-	
+
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
@@ -1456,9 +1402,8 @@ JSBool JSPROXY_CCNode_visible(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: 
 // Ret value: None
-
 JSBool JSPROXY_CCNode_visit(JSContext *cx, uint32_t argc, jsval *vp) {
-	
+
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
@@ -1473,9 +1418,8 @@ JSBool JSPROXY_CCNode_visit(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: 
 // Ret value: NSInteger
-
 JSBool JSPROXY_CCNode_zOrder(JSContext *cx, uint32_t argc, jsval *vp) {
-	
+
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
@@ -1508,7 +1452,6 @@ JSBool JSPROXY_CCNode_zOrder(JSContext *cx, uint32_t argc, jsval *vp) {
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
 	};
-
 	static JSFunctionSpec funcs[] = {
 		JS_FN("addChild", JSPROXY_CCNode_addChild_, 1, JSPROP_PERMANENT | JSPROP_SHARED),
 		JS_FN("addChildz", JSPROXY_CCNode_addChild_z_, 1, JSPROP_PERMANENT | JSPROP_SHARED),
@@ -1583,8 +1526,8 @@ JSBool JSPROXY_CCNode_zOrder(JSContext *cx, uint32_t argc, jsval *vp) {
 		JS_FN("zOrder", JSPROXY_CCNode_zOrder, 1, JSPROP_PERMANENT | JSPROP_SHARED),
 		JS_FS_END
 	};
-
 	static JSFunctionSpec st_funcs[] = {
+		JS_FN("node", JSPROXY_CCNode_node, 1, JSPROP_PERMANENT | JSPROP_SHARED),
 		JS_FS_END
 	};
 

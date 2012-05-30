@@ -46,10 +46,27 @@ void JSPROXY_CCRotateBy_finalize(JSContext *cx, JSObject *obj)
 }
 
 // Arguments: ccTime, float
-// Ret value: None
+// Ret value: CCRotateBy
+JSBool JSPROXY_CCRotateBy_actionWithDuration_angle_(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	double arg0; JS_ValueToNumber( cx, vp[2], &arg0 );
+	double arg1; JS_ValueToNumber( cx, vp[3], &arg1 );
 
+	CCRotateBy *real = [CCRotateBy actionWithDuration:(ccTime)arg0 angle:(float)arg1  ];
+
+	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCRotateBy_class, JSPROXY_CCRotateBy_object, NULL);
+	JSPROXY_CCRotateBy *ret_proxy = [[JSPROXY_CCRotateBy alloc] initWithJSObject:jsobj];
+	[ret_proxy setRealObj: real];
+	JS_SetPrivate(jsobj, ret_proxy);
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+	return JS_TRUE;
+}
+
+// Arguments: ccTime, float
+// Ret value: None
 JSBool JSPROXY_CCRotateBy_initWithDuration_angle_(JSContext *cx, uint32_t argc, jsval *vp) {
-	
+
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
@@ -85,13 +102,12 @@ JSBool JSPROXY_CCRotateBy_initWithDuration_angle_(JSContext *cx, uint32_t argc, 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
 	};
-
 	static JSFunctionSpec funcs[] = {
 		JS_FN("initWithDurationangle", JSPROXY_CCRotateBy_initWithDuration_angle_, 1, JSPROP_PERMANENT | JSPROP_SHARED),
 		JS_FS_END
 	};
-
 	static JSFunctionSpec st_funcs[] = {
+		JS_FN("actionWithDurationangle", JSPROXY_CCRotateBy_actionWithDuration_angle_, 1, JSPROP_PERMANENT | JSPROP_SHARED),
 		JS_FS_END
 	};
 

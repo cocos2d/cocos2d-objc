@@ -45,6 +45,22 @@ void JSPROXY_CCScene_finalize(JSContext *cx, JSObject *obj)
 	}
 }
 
+// Arguments: 
+// Ret value: CCScene
+JSBool JSPROXY_CCScene_node(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 0, @"Invalid number of arguments" );
+
+	CCScene *real = [CCScene node ];
+
+	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCScene_class, JSPROXY_CCScene_object, NULL);
+	JSPROXY_CCScene *ret_proxy = [[JSPROXY_CCScene alloc] initWithJSObject:jsobj];
+	[ret_proxy setRealObj: real];
+	JS_SetPrivate(jsobj, ret_proxy);
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+	return JS_TRUE;
+}
+
 @implementation JSPROXY_CCScene
 
 +(void) createClassWithContext:(JSContext*)cx object:(JSObject*)globalObj name:(NSString*)name
@@ -64,12 +80,11 @@ void JSPROXY_CCScene_finalize(JSContext *cx, JSObject *obj)
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
 	};
-
 	static JSFunctionSpec funcs[] = {
 		JS_FS_END
 	};
-
 	static JSFunctionSpec st_funcs[] = {
+		JS_FN("node", JSPROXY_CCScene_node, 1, JSPROP_PERMANENT | JSPROP_SHARED),
 		JS_FS_END
 	};
 
