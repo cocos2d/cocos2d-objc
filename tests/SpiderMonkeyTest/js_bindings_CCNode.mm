@@ -11,6 +11,7 @@
 #import "ScriptingCore.h"   
 
 #import "js_bindings_CCNode.h"
+#import "js_bindings_CCAction.h"
 
 
 JSClass* JSPROXY_CCNode_class = NULL;
@@ -326,6 +327,30 @@ JSBool JSPROXY_CCNode_draw(JSContext *cx, uint32_t argc, jsval *vp) {
 	CCNode *real = (CCNode*) [proxy realObj];
 	[real draw ];
 	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: NSInteger
+// Ret value: CCAction*
+JSBool JSPROXY_CCNode_getActionByTag_(JSContext *cx, uint32_t argc, jsval *vp) {
+	
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	int32_t arg0; JS_ValueToECMAInt32( cx, vp[2], &arg0 );
+	CCAction* ret_val;
+
+	CCNode *real = (CCNode*) [proxy realObj];
+	ret_val = [real getActionByTag:(NSInteger)arg0  ];
+
+	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCAction_class, JSPROXY_CCAction_object, NULL);
+	JSPROXY_CCAction *ret_proxy = [[JSPROXY_CCAction alloc] initWithJSObject:jsobj];
+	[proxy setRealObj:real];
+	JS_SetPrivate(jsobj, ret_proxy);
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
 	return JS_TRUE;
 }
 
@@ -708,6 +733,34 @@ JSBool JSPROXY_CCNode_rotation(JSContext *cx, uint32_t argc, jsval *vp) {
 	CCNode *real = (CCNode*) [proxy realObj];
 	ret_val = [real rotation ];
 	JS_SET_RVAL(cx, vp, DOUBLE_TO_JSVAL(ret_val));
+	return JS_TRUE;
+}
+
+// Arguments: CCAction*
+// Ret value: CCAction*
+JSBool JSPROXY_CCNode_runAction_(JSContext *cx, uint32_t argc, jsval *vp) {
+	
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+
+	JSObject *tmp_arg0;
+	JS_ValueToObject( cx, vp[2], &tmp_arg0 );
+	JSPROXY_CCAction* proxy_arg0 = (JSPROXY_CCAction*) JS_GetPrivate( tmp_arg0 ); 
+	CCAction* arg0 = (CCAction*) [proxy_arg0 realObj];
+	CCAction* ret_val;
+
+	CCNode *real = (CCNode*) [proxy realObj];
+	ret_val = [real runAction:(CCAction*)arg0  ];
+
+	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCAction_class, JSPROXY_CCAction_object, NULL);
+	JSPROXY_CCAction *ret_proxy = [[JSPROXY_CCAction alloc] initWithJSObject:jsobj];
+	[proxy setRealObj:real];
+	JS_SetPrivate(jsobj, ret_proxy);
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
 	return JS_TRUE;
 }
 
@@ -1163,6 +1216,27 @@ JSBool JSPROXY_CCNode_sortAllChildren(JSContext *cx, uint32_t argc, jsval *vp) {
 	return JS_TRUE;
 }
 
+// Arguments: CCAction*
+// Ret value: None
+JSBool JSPROXY_CCNode_stopAction_(JSContext *cx, uint32_t argc, jsval *vp) {
+	
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+
+	JSObject *tmp_arg0;
+	JS_ValueToObject( cx, vp[2], &tmp_arg0 );
+	JSPROXY_CCAction* proxy_arg0 = (JSPROXY_CCAction*) JS_GetPrivate( tmp_arg0 ); 
+	CCAction* arg0 = (CCAction*) [proxy_arg0 realObj];
+
+	CCNode *real = (CCNode*) [proxy realObj];
+	[real stopAction:(CCAction*)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
 // Arguments: NSInteger
 // Ret value: None
 JSBool JSPROXY_CCNode_stopActionByTag_(JSContext *cx, uint32_t argc, jsval *vp) {
@@ -1376,6 +1450,7 @@ JSBool JSPROXY_CCNode_zOrder(JSContext *cx, uint32_t argc, jsval *vp) {
 		JS_FN("convertToWorldSpace", JSPROXY_CCNode_convertToWorldSpace_, 1, JSPROP_PERMANENT | JSPROP_SHARED),
 		JS_FN("convertToWorldSpaceAR", JSPROXY_CCNode_convertToWorldSpaceAR_, 1, JSPROP_PERMANENT | JSPROP_SHARED),
 		JS_FN("draw", JSPROXY_CCNode_draw, 1, JSPROP_PERMANENT | JSPROP_SHARED),
+		JS_FN("getActionByTag", JSPROXY_CCNode_getActionByTag_, 1, JSPROP_PERMANENT | JSPROP_SHARED),
 		JS_FN("getChildByTag", JSPROXY_CCNode_getChildByTag_, 1, JSPROP_PERMANENT | JSPROP_SHARED),
 		JS_FN("glServerState", JSPROXY_CCNode_glServerState, 1, JSPROP_PERMANENT | JSPROP_SHARED),
 		JS_FN("ignoreAnchorPointForPosition", JSPROXY_CCNode_ignoreAnchorPointForPosition, 1, JSPROP_PERMANENT | JSPROP_SHARED),
@@ -1397,6 +1472,7 @@ JSBool JSPROXY_CCNode_zOrder(JSContext *cx, uint32_t argc, jsval *vp) {
 		JS_FN("reorderChildz", JSPROXY_CCNode_reorderChild_z_, 1, JSPROP_PERMANENT | JSPROP_SHARED),
 		JS_FN("resumeSchedulerAndActions", JSPROXY_CCNode_resumeSchedulerAndActions, 1, JSPROP_PERMANENT | JSPROP_SHARED),
 		JS_FN("rotation", JSPROXY_CCNode_rotation, 1, JSPROP_PERMANENT | JSPROP_SHARED),
+		JS_FN("runAction", JSPROXY_CCNode_runAction_, 1, JSPROP_PERMANENT | JSPROP_SHARED),
 		JS_FN("scale", JSPROXY_CCNode_scale, 1, JSPROP_PERMANENT | JSPROP_SHARED),
 		JS_FN("scaleX", JSPROXY_CCNode_scaleX, 1, JSPROP_PERMANENT | JSPROP_SHARED),
 		JS_FN("scaleY", JSPROXY_CCNode_scaleY, 1, JSPROP_PERMANENT | JSPROP_SHARED),
@@ -1422,6 +1498,7 @@ JSBool JSPROXY_CCNode_zOrder(JSContext *cx, uint32_t argc, jsval *vp) {
 		JS_FN("skewX", JSPROXY_CCNode_skewX, 1, JSPROP_PERMANENT | JSPROP_SHARED),
 		JS_FN("skewY", JSPROXY_CCNode_skewY, 1, JSPROP_PERMANENT | JSPROP_SHARED),
 		JS_FN("sortAllChildren", JSPROXY_CCNode_sortAllChildren, 1, JSPROP_PERMANENT | JSPROP_SHARED),
+		JS_FN("stopAction", JSPROXY_CCNode_stopAction_, 1, JSPROP_PERMANENT | JSPROP_SHARED),
 		JS_FN("stopActionByTag", JSPROXY_CCNode_stopActionByTag_, 1, JSPROP_PERMANENT | JSPROP_SHARED),
 		JS_FN("stopAllActions", JSPROXY_CCNode_stopAllActions, 1, JSPROP_PERMANENT | JSPROP_SHARED),
 		JS_FN("tag", JSPROXY_CCNode_tag, 1, JSPROP_PERMANENT | JSPROP_SHARED),
