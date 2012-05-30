@@ -40,7 +40,7 @@ class ObjC(object):
             f = open( filename, 'r' )
             l = f.readlines()
 
-            regex_objc_class = "^@interface\s+([\S]+)\s+:\s+([\S]+)\s+(<.*>)*"
+            regex_objc_class = "^@interface\s+([\S]+)\s*:\s*([\S]+)\s*(<.*>)*"
             for line in l:
                 a = re.search( regex_objc_class, line )
                 if a:

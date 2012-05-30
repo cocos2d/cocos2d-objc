@@ -78,6 +78,10 @@ a.onEnter = function() {
 	cc.log("On Enter called");
 }
 
+var action = new cc.RotateBy()
+action.initWithDurationangle(2, 360 )
+
+s.runAction( action )
 
 a.addChild( s );
 cc.addToRunningScene( a );
