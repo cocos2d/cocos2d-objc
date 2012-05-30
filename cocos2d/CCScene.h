@@ -40,4 +40,8 @@
 @interface CCScene : CCNode
 {
 }
+/** allocates and initializes a node.
+ The node will be created as "autorelease".
+ */
++(id) node;
 @end
