@@ -47,6 +47,7 @@ void JSPROXY_CCRotateBy_finalize(JSContext *cx, JSObject *obj)
 
 // Arguments: ccTime, float
 // Ret value: None
+
 JSBool JSPROXY_CCRotateBy_initWithDuration_angle_(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);

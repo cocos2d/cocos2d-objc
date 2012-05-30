@@ -47,6 +47,7 @@ void JSPROXY_CCFiniteTimeAction_finalize(JSContext *cx, JSObject *obj)
 
 // Arguments: 
 // Ret value: ccTime
+
 JSBool JSPROXY_CCFiniteTimeAction_duration(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -64,6 +65,7 @@ JSBool JSPROXY_CCFiniteTimeAction_duration(JSContext *cx, uint32_t argc, jsval *
 
 // Arguments: 
 // Ret value: CCFiniteTimeAction*
+
 JSBool JSPROXY_CCFiniteTimeAction_reverse(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -87,6 +89,7 @@ JSBool JSPROXY_CCFiniteTimeAction_reverse(JSContext *cx, uint32_t argc, jsval *v
 
 // Arguments: ccTime
 // Ret value: None
+
 JSBool JSPROXY_CCFiniteTimeAction_setDuration_(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);

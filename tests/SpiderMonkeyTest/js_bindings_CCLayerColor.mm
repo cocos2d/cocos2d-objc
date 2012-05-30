@@ -47,6 +47,7 @@ void JSPROXY_CCLayerColor_finalize(JSContext *cx, JSObject *obj)
 
 // Arguments: GLfloat
 // Ret value: None
+
 JSBool JSPROXY_CCLayerColor_changeHeight_(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -64,6 +65,7 @@ JSBool JSPROXY_CCLayerColor_changeHeight_(JSContext *cx, uint32_t argc, jsval *v
 
 // Arguments: GLfloat
 // Ret value: None
+
 JSBool JSPROXY_CCLayerColor_changeWidth_(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -81,6 +83,7 @@ JSBool JSPROXY_CCLayerColor_changeWidth_(JSContext *cx, uint32_t argc, jsval *vp
 
 // Arguments: GLfloat, GLfloat
 // Ret value: None
+
 JSBool JSPROXY_CCLayerColor_changeWidth_height_(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -99,6 +102,7 @@ JSBool JSPROXY_CCLayerColor_changeWidth_height_(JSContext *cx, uint32_t argc, js
 
 // Arguments: ccColor4B
 // Ret value: None
+
 JSBool JSPROXY_CCLayerColor_initWithColor_(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -121,6 +125,7 @@ JSBool JSPROXY_CCLayerColor_initWithColor_(JSContext *cx, uint32_t argc, jsval *
 
 // Arguments: ccColor4B, GLfloat, GLfloat
 // Ret value: None
+
 JSBool JSPROXY_CCLayerColor_initWithColor_width_height_(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -145,6 +150,7 @@ JSBool JSPROXY_CCLayerColor_initWithColor_width_height_(JSContext *cx, uint32_t 
 
 // Arguments: 
 // Ret value: GLubyte
+
 JSBool JSPROXY_CCLayerColor_opacity(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -162,6 +168,7 @@ JSBool JSPROXY_CCLayerColor_opacity(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: ccBlendFunc
 // Ret value: None
+
 JSBool JSPROXY_CCLayerColor_setBlendFunc_(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
