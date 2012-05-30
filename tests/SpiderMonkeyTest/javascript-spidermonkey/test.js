@@ -80,18 +80,24 @@ a.onEnter = function() {
 
 var action = new cc.RotateBy();
 action.initWithDurationangle(2, 360 );
+//
+//var action2 = new cc.RotateBy();
+//action2.initWithDurationangle(1, -360 );
+//
+//var action3 = new cc.RotateBy();
+//action3.initWithDurationangle(2, 180 );
+//
+//var seq = new cc.Sequence();
+//seq.initWithArray( [action, action2, action3] );
 
-var action2 = new cc.RotateBy();
-action2.initWithDurationangle(1, -360 );
-
-var action3 = new cc.RotateBy();
-action3.initWithDurationangle(2, 180 );
-
-var seq = new cc.Sequence();
-seq.initWithArray( [action, action2, action3] );
-
-s.runAction( seq )
+s.runAction( action )
 
 a.addChild( s );
-cc.addToRunningScene( a );
+
+//cc.addToRunningScene( a );
+
+var director = cc.Director.sharedDirector();
+var scene = director.runningScene();
+cc.log( scene.position() );
+scene.addChild( a );
 
