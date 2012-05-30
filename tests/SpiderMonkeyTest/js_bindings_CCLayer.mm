@@ -47,6 +47,7 @@ void JSPROXY_CCLayer_finalize(JSContext *cx, JSObject *obj)
 
 // Arguments: 
 // Ret value: BOOL
+
 JSBool JSPROXY_CCLayer_isKeyboardEnabled(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -64,6 +65,7 @@ JSBool JSPROXY_CCLayer_isKeyboardEnabled(JSContext *cx, uint32_t argc, jsval *vp
 
 // Arguments: 
 // Ret value: BOOL
+
 JSBool JSPROXY_CCLayer_isMouseEnabled(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -81,6 +83,7 @@ JSBool JSPROXY_CCLayer_isMouseEnabled(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: 
 // Ret value: BOOL
+
 JSBool JSPROXY_CCLayer_isTouchEnabled(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -98,6 +101,7 @@ JSBool JSPROXY_CCLayer_isTouchEnabled(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: 
 // Ret value: NSInteger
+
 JSBool JSPROXY_CCLayer_keyboardDelegatePriority(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -115,6 +119,7 @@ JSBool JSPROXY_CCLayer_keyboardDelegatePriority(JSContext *cx, uint32_t argc, js
 
 // Arguments: 
 // Ret value: NSInteger
+
 JSBool JSPROXY_CCLayer_mouseDelegatePriority(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -132,6 +137,7 @@ JSBool JSPROXY_CCLayer_mouseDelegatePriority(JSContext *cx, uint32_t argc, jsval
 
 // Arguments: BOOL
 // Ret value: None
+
 JSBool JSPROXY_CCLayer_setIsKeyboardEnabled_(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -149,6 +155,7 @@ JSBool JSPROXY_CCLayer_setIsKeyboardEnabled_(JSContext *cx, uint32_t argc, jsval
 
 // Arguments: BOOL
 // Ret value: None
+
 JSBool JSPROXY_CCLayer_setIsMouseEnabled_(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -166,6 +173,7 @@ JSBool JSPROXY_CCLayer_setIsMouseEnabled_(JSContext *cx, uint32_t argc, jsval *v
 
 // Arguments: BOOL
 // Ret value: None
+
 JSBool JSPROXY_CCLayer_setIsTouchEnabled_(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -183,6 +191,7 @@ JSBool JSPROXY_CCLayer_setIsTouchEnabled_(JSContext *cx, uint32_t argc, jsval *v
 
 // Arguments: 
 // Ret value: NSInteger
+
 JSBool JSPROXY_CCLayer_touchDelegatePriority(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);

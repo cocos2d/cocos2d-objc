@@ -47,6 +47,7 @@ void JSPROXY_CCAction_finalize(JSContext *cx, JSObject *obj)
 
 // Arguments: 
 // Ret value: None
+
 JSBool JSPROXY_CCAction_init(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -65,6 +66,7 @@ JSBool JSPROXY_CCAction_init(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: 
 // Ret value: BOOL
+
 JSBool JSPROXY_CCAction_isDone(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -82,6 +84,7 @@ JSBool JSPROXY_CCAction_isDone(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: NSInteger
 // Ret value: None
+
 JSBool JSPROXY_CCAction_setTag_(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -99,6 +102,7 @@ JSBool JSPROXY_CCAction_setTag_(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: ccTime
 // Ret value: None
+
 JSBool JSPROXY_CCAction_step_(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -116,6 +120,7 @@ JSBool JSPROXY_CCAction_step_(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: 
 // Ret value: None
+
 JSBool JSPROXY_CCAction_stop(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -132,6 +137,7 @@ JSBool JSPROXY_CCAction_stop(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: 
 // Ret value: NSInteger
+
 JSBool JSPROXY_CCAction_tag(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -149,6 +155,7 @@ JSBool JSPROXY_CCAction_tag(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: ccTime
 // Ret value: None
+
 JSBool JSPROXY_CCAction_update_(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);

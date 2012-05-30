@@ -268,7 +268,6 @@
 <enum name='CCTMXOrientationHex' value='1'/>
 <enum name='CCTMXOrientationIso' value='2'/>
 <enum name='CCTMXOrientationOrtho' value='0'/>
-<enum name='CCTextAlignmentLeft' value='0'/>
 <enum name='CCZ_COMPRESSION_BZIP2' value='1'/>
 <enum name='CCZ_COMPRESSION_GZIP' value='2'/>
 <enum name='CCZ_COMPRESSION_NONE' value='3'/>
@@ -329,7 +328,6 @@
 <enum name='kCCFlipedAll' value='3758096384'/>
 <enum name='kCCFlippedMask' value='536870911'/>
 <enum name='kCCImageFormatJPEG' value='0'/>
-<enum name='kCCImageFormatJPG' value='0'/>
 <enum name='kCCImageFormatPNG' value='1'/>
 <enum name='kCCItemSize' value='32'/>
 <enum name='kCCLabelAutomaticWidth' value='-1'/>
@@ -345,7 +343,6 @@
 <enum name='kCCMenuHandlerPriority' value='-128'/>
 <enum name='kCCMenuStateTrackingTouch' value='1'/>
 <enum name='kCCMenuStateWaiting' value='0'/>
-<enum name='kCCMenuTouchPriority' value='0'/>
 <enum name='kCCNodeTagInvalid' value='-1'/>
 <enum name='kCCParticleDurationInfinity' value='-1'/>
 <enum name='kCCParticleModeGravity' value='0'/>
@@ -776,10 +773,6 @@
 <retval declared_type='GLenum' type='I'/>
 </function>
 <function name='ccGLInvalidateStateCache'>
-<retval declared_type='void' type='v'/>
-</function>
-<function name='ccGLUniformModelViewProjectionMatrix'>
-<arg name='program' declared_type='CCGLProgram*' type='@'/>
 <retval declared_type='void' type='v'/>
 </function>
 <function name='ccGLUseProgram'>
@@ -1263,9 +1256,6 @@
 <arg name='targetsToResume' declared_type='NSSet*' type='@' index='0'/>
 <retval declared_type='void' type='v'/>
 </method>
-<method selector='sharedManager' class_method='true'>
-<retval declared_type='CCActionManager*' type='@'/>
-</method>
 </class>
 <class name='CCActionTween'>
 <method selector='actionWithDuration:key:from:to:' class_method='true'>
@@ -1288,33 +1278,11 @@
 <arg name='animation' declared_type='CCAnimation*' type='@' index='0'/>
 <retval declared_type='id' type='@'/>
 </method>
-<method selector='actionWithAnimation:restoreOriginalFrame:' class_method='true'>
-<arg name='animation' declared_type='CCAnimation*' type='@' index='0'/>
-<arg name='restoreOriginalFrame' declared_type='BOOL' type='B' index='1'/>
-<retval declared_type='id' type='@'/>
-</method>
-<method selector='actionWithDuration:animation:restoreOriginalFrame:' class_method='true'>
-<arg name='duration' declared_type='ccTime' type='f' index='0'/>
-<arg name='animation' declared_type='CCAnimation*' type='@' index='1'/>
-<arg name='restoreOriginalFrame' declared_type='BOOL' type='B' index='2'/>
-<retval declared_type='id' type='@'/>
-</method>
 <method selector='animation'>
 <retval declared_type='CCAnimation*' type='@'/>
 </method>
 <method selector='initWithAnimation:'>
 <arg name='animation' declared_type='CCAnimation*' type='@' index='0'/>
-<retval declared_type='id' type='@'/>
-</method>
-<method selector='initWithAnimation:restoreOriginalFrame:'>
-<arg name='a' declared_type='CCAnimation*' type='@' index='0'/>
-<arg name='restoreOriginalFrame' declared_type='BOOL' type='B' index='1'/>
-<retval declared_type='id' type='@'/>
-</method>
-<method selector='initWithDuration:animation:restoreOriginalFrame:'>
-<arg name='duration' declared_type='ccTime' type='f' index='0'/>
-<arg name='animation' declared_type='CCAnimation*' type='@' index='1'/>
-<arg name='restoreOriginalFrame' declared_type='BOOL' type='B' index='2'/>
 <retval declared_type='id' type='@'/>
 </method>
 <method selector='setAnimation:'>
@@ -1323,19 +1291,6 @@
 </method>
 </class>
 <class name='CCAnimation'>
-<method selector='addFrame:'>
-<arg name='frame' declared_type='CCSpriteFrame*' type='@' index='0'/>
-<retval declared_type='void' type='v'/>
-</method>
-<method selector='addFrameWithFilename:'>
-<arg name='filename' declared_type='NSString*' type='@' index='0'/>
-<retval declared_type='void' type='v'/>
-</method>
-<method selector='addFrameWithTexture:rect:'>
-<arg name='texture' declared_type='CCTexture2D*' type='@' index='0'/>
-<arg name='rect' declared_type='CGRect' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' type='{CGRect={CGPoint=ff}{CGSize=ff}}' index='1'/>
-<retval declared_type='void' type='v'/>
-</method>
 <method selector='addSpriteFrame:'>
 <arg name='frame' declared_type='CCSpriteFrame*' type='@' index='0'/>
 <retval declared_type='void' type='v'/>
@@ -1356,15 +1311,6 @@
 <arg name='arrayOfAnimationFrames' declared_type='NSArray*' type='@' index='0'/>
 <arg name='delayPerUnit' declared_type='float' type='f' index='1'/>
 <arg name='loops' declared_type='NSUInteger' type64='Q' type='I' index='2'/>
-<retval declared_type='id' type='@'/>
-</method>
-<method selector='animationWithFrames:' class_method='true'>
-<arg name='arrayOfSpriteFrameNames' declared_type='NSArray*' type='@' index='0'/>
-<retval declared_type='id' type='@'/>
-</method>
-<method selector='animationWithFrames:delay:' class_method='true'>
-<arg name='arrayOfSpriteFrameNames' declared_type='NSArray*' type='@' index='0'/>
-<arg name='delay' declared_type='float' type='f' index='1'/>
 <retval declared_type='id' type='@'/>
 </method>
 <method selector='animationWithSpriteFrames:' class_method='true'>
@@ -1389,15 +1335,6 @@
 <arg name='arrayOfAnimationFrames' declared_type='NSArray*' type='@' index='0'/>
 <arg name='delayPerUnit' declared_type='float' type='f' index='1'/>
 <arg name='loops' declared_type='NSUInteger' type64='Q' type='I' index='2'/>
-<retval declared_type='id' type='@'/>
-</method>
-<method selector='initWithFrames:'>
-<arg name='arrayOfSpriteFrameNames' declared_type='NSArray*' type='@' index='0'/>
-<retval declared_type='id' type='@'/>
-</method>
-<method selector='initWithFrames:delay:'>
-<arg name='arrayOfSpriteFrameNames' declared_type='NSArray*' type='@' index='0'/>
-<arg name='delay' declared_type='float' type='f' index='1'/>
 <retval declared_type='id' type='@'/>
 </method>
 <method selector='initWithSpriteFrames:'>
@@ -2110,9 +2047,6 @@
 <method selector='notificationNode'>
 <retval declared_type='id' type='@'/>
 </method>
-<method selector='openGLView'>
-<retval declared_type='CCGLView*' type='@'/>
-</method>
 <method selector='pause'>
 <retval declared_type='void' type='v'/>
 </method>
@@ -2179,10 +2113,6 @@
 <arg name='on' declared_type='BOOL' type='B' index='0'/>
 <retval declared_type='void' type='v'/>
 </method>
-<method selector='setDisplayFPS:'>
-<arg name='display' declared_type='BOOL' type='B' index='0'/>
-<retval declared_type='void' type='v'/>
-</method>
 <method selector='setDisplayStats:'>
 <arg name='displayStats' declared_type='BOOL' type='B' index='0'/>
 <retval declared_type='void' type='v'/>
@@ -2200,10 +2130,6 @@
 </method>
 <method selector='setNotificationNode:'>
 <arg name='notificationNode' declared_type='id' type='@' index='0'/>
-<retval declared_type='void' type='v'/>
-</method>
-<method selector='setOpenGLView:'>
-<arg name='view' declared_type='CCGLView*' type='@' index='0'/>
 <retval declared_type='void' type='v'/>
 </method>
 <method selector='setProjection:'>
@@ -2353,9 +2279,6 @@
 <arg name='dispatchEvents' declared_type='BOOL' type='B' index='0'/>
 <retval declared_type='void' type='v'/>
 </method>
-<method selector='sharedDispatcher' class_method='true'>
-<retval declared_type='CCEventDispatcher*' type='@'/>
-</method>
 </class>
 <class name='CCFadeTo'>
 <method selector='actionWithDuration:opacity:' class_method='true'>
@@ -2376,17 +2299,8 @@
 <method selector='fileManager'>
 <retval declared_type='NSFileManager*' type='@'/>
 </method>
-<method selector='fullPathFromRelativePath:' class_method='true'>
-<arg name='relPath' declared_type='NSString*' type='@' index='0'/>
-<retval declared_type='NSString*' type='@'/>
-</method>
 <method selector='fullPathFromRelativePath:'>
 <arg name='relPath' declared_type='NSString*' type='@' index='0'/>
-<retval declared_type='NSString*' type='@'/>
-</method>
-<method selector='fullPathFromRelativePath:resolutionType:' class_method='true'>
-<arg name='relPath' declared_type='NSString*' type='@' index='0'/>
-<arg name='resolutionType' declared_type='ccResolutionType*' type='^i' index='1'/>
 <retval declared_type='NSString*' type='@'/>
 </method>
 <method selector='fullPathFromRelativePath:resolutionType:'>
@@ -2920,23 +2834,6 @@
 <method selector='horizontalAlignment'>
 <retval declared_type='CCTextAlignment' type='i'/>
 </method>
-<method selector='initWithString:dimensions:alignment:fontName:fontSize:'>
-<arg name='string' declared_type='NSString*' type='@' index='0'/>
-<arg name='dimensions' declared_type='CGSize' type64='{CGSize=dd}' type='{CGSize=ff}' index='1'/>
-<arg name='alignment' declared_type='CCTextAlignment' type='i' index='2'/>
-<arg name='name' declared_type='NSString*' type='@' index='3'/>
-<arg name='size' declared_type='CGFloat' type64='d' type='f' index='4'/>
-<retval declared_type='id' type='@'/>
-</method>
-<method selector='initWithString:dimensions:alignment:lineBreakMode:fontName:fontSize:'>
-<arg name='str' declared_type='NSString*' type='@' index='0'/>
-<arg name='dimensions' declared_type='CGSize' type64='{CGSize=dd}' type='{CGSize=ff}' index='1'/>
-<arg name='alignment' declared_type='CCTextAlignment' type='i' index='2'/>
-<arg name='lineBreakMode' declared_type='CCLineBreakMode' type='i' index='3'/>
-<arg name='name' declared_type='NSString*' type='@' index='4'/>
-<arg name='size' declared_type='CGFloat' type64='d' type='f' index='5'/>
-<retval declared_type='id' type='@'/>
-</method>
 <method selector='initWithString:dimensions:hAlignment:fontName:fontSize:'>
 <arg name='string' declared_type='NSString*' type='@' index='0'/>
 <arg name='dimensions' declared_type='CGSize' type64='{CGSize=dd}' type='{CGSize=ff}' index='1'/>
@@ -2977,23 +2874,6 @@
 <arg name='string' declared_type='NSString*' type='@' index='0'/>
 <arg name='name' declared_type='NSString*' type='@' index='1'/>
 <arg name='size' declared_type='CGFloat' type64='d' type='f' index='2'/>
-<retval declared_type='id' type='@'/>
-</method>
-<method selector='labelWithString:dimensions:alignment:fontName:fontSize:' class_method='true'>
-<arg name='string' declared_type='NSString*' type='@' index='0'/>
-<arg name='dimensions' declared_type='CGSize' type64='{CGSize=dd}' type='{CGSize=ff}' index='1'/>
-<arg name='alignment' declared_type='CCTextAlignment' type='i' index='2'/>
-<arg name='name' declared_type='NSString*' type='@' index='3'/>
-<arg name='size' declared_type='CGFloat' type64='d' type='f' index='4'/>
-<retval declared_type='id' type='@'/>
-</method>
-<method selector='labelWithString:dimensions:alignment:lineBreakMode:fontName:fontSize:' class_method='true'>
-<arg name='string' declared_type='NSString*' type='@' index='0'/>
-<arg name='dimensions' declared_type='CGSize' type64='{CGSize=dd}' type='{CGSize=ff}' index='1'/>
-<arg name='alignment' declared_type='CCTextAlignment' type='i' index='2'/>
-<arg name='lineBreakMode' declared_type='CCLineBreakMode' type='i' index='3'/>
-<arg name='name' declared_type='NSString*' type='@' index='4'/>
-<arg name='size' declared_type='CGFloat' type64='d' type='f' index='5'/>
 <retval declared_type='id' type='@'/>
 </method>
 <method selector='labelWithString:dimensions:hAlignment:fontName:fontSize:' class_method='true'>
@@ -3423,28 +3303,6 @@
 </method>
 </class>
 <class name='CCMenuItemAtlasFont'>
-<method selector='initFromString:charMapFile:itemWidth:itemHeight:startCharMap:block:'>
-<arg name='value' declared_type='NSString*' type='@' index='0'/>
-<arg name='charMapFile' declared_type='NSString*' type='@' index='1'/>
-<arg name='itemWidth' declared_type='int' type='i' index='2'/>
-<arg name='itemHeight' declared_type='int' type='i' index='3'/>
-<arg name='startCharMap' declared_type='char' type='c' index='4'/>
-<arg name='block' function_pointer='true' declared_type='void (^)(id)' type='@?' index='5'>
-<arg declared_type='id' type='@'/>
-<retval declared_type='void' type='v'/>
-</arg>
-<retval declared_type='id' type='@'/>
-</method>
-<method selector='initFromString:charMapFile:itemWidth:itemHeight:startCharMap:target:selector:'>
-<arg name='value' declared_type='NSString*' type='@' index='0'/>
-<arg name='charMapFile' declared_type='NSString*' type='@' index='1'/>
-<arg name='itemWidth' declared_type='int' type='i' index='2'/>
-<arg name='itemHeight' declared_type='int' type='i' index='3'/>
-<arg name='startCharMap' declared_type='char' type='c' index='4'/>
-<arg name='rec' declared_type='id' type='@' index='5'/>
-<arg name='cb' declared_type='SEL' type=':' index='6'/>
-<retval declared_type='id' type='@'/>
-</method>
 <method selector='initWithString:charMapFile:itemWidth:itemHeight:startCharMap:block:'>
 <arg name='value' declared_type='NSString*' type='@' index='0'/>
 <arg name='charMapFile' declared_type='NSString*' type='@' index='1'/>
@@ -3465,36 +3323,6 @@
 <arg name='startCharMap' declared_type='char' type='c' index='4'/>
 <arg name='target' declared_type='id' type='@' index='5'/>
 <arg name='selector' declared_type='SEL' type=':' index='6'/>
-<retval declared_type='id' type='@'/>
-</method>
-<method selector='itemFromString:charMapFile:itemWidth:itemHeight:startCharMap:' class_method='true'>
-<arg name='value' declared_type='NSString*' type='@' index='0'/>
-<arg name='charMapFile' declared_type='NSString*' type='@' index='1'/>
-<arg name='itemWidth' declared_type='int' type='i' index='2'/>
-<arg name='itemHeight' declared_type='int' type='i' index='3'/>
-<arg name='startCharMap' declared_type='char' type='c' index='4'/>
-<retval declared_type='id' type='@'/>
-</method>
-<method selector='itemFromString:charMapFile:itemWidth:itemHeight:startCharMap:block:' class_method='true'>
-<arg name='value' declared_type='NSString*' type='@' index='0'/>
-<arg name='charMapFile' declared_type='NSString*' type='@' index='1'/>
-<arg name='itemWidth' declared_type='int' type='i' index='2'/>
-<arg name='itemHeight' declared_type='int' type='i' index='3'/>
-<arg name='startCharMap' declared_type='char' type='c' index='4'/>
-<arg name='block' function_pointer='true' declared_type='void (^)(id)' type='@?' index='5'>
-<arg declared_type='id' type='@'/>
-<retval declared_type='void' type='v'/>
-</arg>
-<retval declared_type='id' type='@'/>
-</method>
-<method selector='itemFromString:charMapFile:itemWidth:itemHeight:startCharMap:target:selector:' class_method='true'>
-<arg name='value' declared_type='NSString*' type='@' index='0'/>
-<arg name='charMapFile' declared_type='NSString*' type='@' index='1'/>
-<arg name='itemWidth' declared_type='int' type='i' index='2'/>
-<arg name='itemHeight' declared_type='int' type='i' index='3'/>
-<arg name='startCharMap' declared_type='char' type='c' index='4'/>
-<arg name='rec' declared_type='id' type='@' index='5'/>
-<arg name='cb' declared_type='SEL' type=':' index='6'/>
 <retval declared_type='id' type='@'/>
 </method>
 <method selector='itemWithString:charMapFile:itemWidth:itemHeight:startCharMap:' class_method='true'>
@@ -3541,20 +3369,6 @@
 <method selector='fontSize'>
 <retval declared_type='NSUInteger' type64='Q' type='I'/>
 </method>
-<method selector='initFromString:block:'>
-<arg name='value' declared_type='NSString*' type='@' index='0'/>
-<arg name='block' function_pointer='true' declared_type='void (^)(id)' type='@?' index='1'>
-<arg declared_type='id' type='@'/>
-<retval declared_type='void' type='v'/>
-</arg>
-<retval declared_type='id' type='@'/>
-</method>
-<method selector='initFromString:target:selector:'>
-<arg name='value' declared_type='NSString*' type='@' index='0'/>
-<arg name='r' declared_type='id' type='@' index='1'/>
-<arg name='s' declared_type='SEL' type=':' index='2'/>
-<retval declared_type='id' type='@'/>
-</method>
 <method selector='initWithString:block:'>
 <arg name='value' declared_type='NSString*' type='@' index='0'/>
 <arg name='block' function_pointer='true' declared_type='void (^)(id)' type='@?' index='1'>
@@ -3564,24 +3378,6 @@
 <retval declared_type='id' type='@'/>
 </method>
 <method selector='initWithString:target:selector:'>
-<arg name='value' declared_type='NSString*' type='@' index='0'/>
-<arg name='r' declared_type='id' type='@' index='1'/>
-<arg name='s' declared_type='SEL' type=':' index='2'/>
-<retval declared_type='id' type='@'/>
-</method>
-<method selector='itemFromString:' class_method='true'>
-<arg name='value' declared_type='NSString*' type='@' index='0'/>
-<retval declared_type='id' type='@'/>
-</method>
-<method selector='itemFromString:block:' class_method='true'>
-<arg name='value' declared_type='NSString*' type='@' index='0'/>
-<arg name='block' function_pointer='true' declared_type='void (^)(id)' type='@?' index='1'>
-<arg declared_type='id' type='@'/>
-<retval declared_type='void' type='v'/>
-</arg>
-<retval declared_type='id' type='@'/>
-</method>
-<method selector='itemFromString:target:selector:' class_method='true'>
 <arg name='value' declared_type='NSString*' type='@' index='0'/>
 <arg name='r' declared_type='id' type='@' index='1'/>
 <arg name='s' declared_type='SEL' type=':' index='2'/>
@@ -3623,24 +3419,6 @@
 </method>
 </class>
 <class name='CCMenuItemImage'>
-<method selector='initFromNormalImage:selectedImage:disabledImage:block:'>
-<arg name='value' declared_type='NSString*' type='@' index='0'/>
-<arg name='value2' declared_type='NSString*' type='@' index='1'/>
-<arg name='value3' declared_type='NSString*' type='@' index='2'/>
-<arg name='block' function_pointer='true' declared_type='void (^)(id)' type='@?' index='3'>
-<arg declared_type='id' type='@'/>
-<retval declared_type='void' type='v'/>
-</arg>
-<retval declared_type='id' type='@'/>
-</method>
-<method selector='initFromNormalImage:selectedImage:disabledImage:target:selector:'>
-<arg name='value' declared_type='NSString*' type='@' index='0'/>
-<arg name='value2' declared_type='NSString*' type='@' index='1'/>
-<arg name='value3' declared_type='NSString*' type='@' index='2'/>
-<arg name='r' declared_type='id' type='@' index='3'/>
-<arg name='s' declared_type='SEL' type=':' index='4'/>
-<retval declared_type='id' type='@'/>
-</method>
 <method selector='initWithNormalImage:selectedImage:disabledImage:block:'>
 <arg name='value' declared_type='NSString*' type='@' index='0'/>
 <arg name='value2' declared_type='NSString*' type='@' index='1'/>
@@ -3657,45 +3435,6 @@
 <arg name='value3' declared_type='NSString*' type='@' index='2'/>
 <arg name='r' declared_type='id' type='@' index='3'/>
 <arg name='s' declared_type='SEL' type=':' index='4'/>
-<retval declared_type='id' type='@'/>
-</method>
-<method selector='itemFromNormalImage:selectedImage:' class_method='true'>
-<arg name='value' declared_type='NSString*' type='@' index='0'/>
-<arg name='value2' declared_type='NSString*' type='@' index='1'/>
-<retval declared_type='id' type='@'/>
-</method>
-<method selector='itemFromNormalImage:selectedImage:block:' class_method='true'>
-<arg name='value' declared_type='NSString*' type='@' index='0'/>
-<arg name='value2' declared_type='NSString*' type='@' index='1'/>
-<arg name='block' function_pointer='true' declared_type='void (^)(id)' type='@?' index='2'>
-<arg declared_type='id' type='@'/>
-<retval declared_type='void' type='v'/>
-</arg>
-<retval declared_type='id' type='@'/>
-</method>
-<method selector='itemFromNormalImage:selectedImage:disabledImage:block:' class_method='true'>
-<arg name='value' declared_type='NSString*' type='@' index='0'/>
-<arg name='value2' declared_type='NSString*' type='@' index='1'/>
-<arg name='value3' declared_type='NSString*' type='@' index='2'/>
-<arg name='block' function_pointer='true' declared_type='void (^)(id)' type='@?' index='3'>
-<arg declared_type='id' type='@'/>
-<retval declared_type='void' type='v'/>
-</arg>
-<retval declared_type='id' type='@'/>
-</method>
-<method selector='itemFromNormalImage:selectedImage:disabledImage:target:selector:' class_method='true'>
-<arg name='value' declared_type='NSString*' type='@' index='0'/>
-<arg name='value2' declared_type='NSString*' type='@' index='1'/>
-<arg name='value3' declared_type='NSString*' type='@' index='2'/>
-<arg name='r' declared_type='id' type='@' index='3'/>
-<arg name='s' declared_type='SEL' type=':' index='4'/>
-<retval declared_type='id' type='@'/>
-</method>
-<method selector='itemFromNormalImage:selectedImage:target:selector:' class_method='true'>
-<arg name='value' declared_type='NSString*' type='@' index='0'/>
-<arg name='value2' declared_type='NSString*' type='@' index='1'/>
-<arg name='r' declared_type='id' type='@' index='2'/>
-<arg name='s' declared_type='SEL' type=':' index='3'/>
 <retval declared_type='id' type='@'/>
 </method>
 <method selector='itemWithNormalImage:selectedImage:' class_method='true'>
@@ -3810,24 +3549,6 @@
 <method selector='disabledImage'>
 <retval declared_type='CCNode*' type='@'/>
 </method>
-<method selector='initFromNormalSprite:selectedSprite:disabledSprite:block:'>
-<arg name='normalSprite' declared_type='CCNode*' type='@' index='0'/>
-<arg name='selectedSprite' declared_type='CCNode*' type='@' index='1'/>
-<arg name='disabledSprite' declared_type='CCNode*' type='@' index='2'/>
-<arg name='block' function_pointer='true' declared_type='void (^)(id)' type='@?' index='3'>
-<arg declared_type='id' type='@'/>
-<retval declared_type='void' type='v'/>
-</arg>
-<retval declared_type='id' type='@'/>
-</method>
-<method selector='initFromNormalSprite:selectedSprite:disabledSprite:target:selector:'>
-<arg name='normalSprite' declared_type='CCNode*' type='@' index='0'/>
-<arg name='selectedSprite' declared_type='CCNode*' type='@' index='1'/>
-<arg name='disabledSprite' declared_type='CCNode*' type='@' index='2'/>
-<arg name='target' declared_type='id' type='@' index='3'/>
-<arg name='selector' declared_type='SEL' type=':' index='4'/>
-<retval declared_type='id' type='@'/>
-</method>
 <method selector='initWithNormalSprite:selectedSprite:disabledSprite:block:'>
 <arg name='normalSprite' declared_type='CCNode*' type='@' index='0'/>
 <arg name='selectedSprite' declared_type='CCNode*' type='@' index='1'/>
@@ -3844,45 +3565,6 @@
 <arg name='disabledSprite' declared_type='CCNode*' type='@' index='2'/>
 <arg name='target' declared_type='id' type='@' index='3'/>
 <arg name='selector' declared_type='SEL' type=':' index='4'/>
-<retval declared_type='id' type='@'/>
-</method>
-<method selector='itemFromNormalSprite:selectedSprite:' class_method='true'>
-<arg name='normalSprite' declared_type='CCNode*' type='@' index='0'/>
-<arg name='selectedSprite' declared_type='CCNode*' type='@' index='1'/>
-<retval declared_type='id' type='@'/>
-</method>
-<method selector='itemFromNormalSprite:selectedSprite:block:' class_method='true'>
-<arg name='normalSprite' declared_type='CCNode*' type='@' index='0'/>
-<arg name='selectedSprite' declared_type='CCNode*' type='@' index='1'/>
-<arg name='block' function_pointer='true' declared_type='void (^)(id)' type='@?' index='2'>
-<arg declared_type='id' type='@'/>
-<retval declared_type='void' type='v'/>
-</arg>
-<retval declared_type='id' type='@'/>
-</method>
-<method selector='itemFromNormalSprite:selectedSprite:disabledSprite:block:' class_method='true'>
-<arg name='normalSprite' declared_type='CCNode*' type='@' index='0'/>
-<arg name='selectedSprite' declared_type='CCNode*' type='@' index='1'/>
-<arg name='disabledSprite' declared_type='CCNode*' type='@' index='2'/>
-<arg name='block' function_pointer='true' declared_type='void (^)(id)' type='@?' index='3'>
-<arg declared_type='id' type='@'/>
-<retval declared_type='void' type='v'/>
-</arg>
-<retval declared_type='id' type='@'/>
-</method>
-<method selector='itemFromNormalSprite:selectedSprite:disabledSprite:target:selector:' class_method='true'>
-<arg name='normalSprite' declared_type='CCNode*' type='@' index='0'/>
-<arg name='selectedSprite' declared_type='CCNode*' type='@' index='1'/>
-<arg name='disabledSprite' declared_type='CCNode*' type='@' index='2'/>
-<arg name='target' declared_type='id' type='@' index='3'/>
-<arg name='selector' declared_type='SEL' type=':' index='4'/>
-<retval declared_type='id' type='@'/>
-</method>
-<method selector='itemFromNormalSprite:selectedSprite:target:selector:' class_method='true'>
-<arg name='normalSprite' declared_type='CCNode*' type='@' index='0'/>
-<arg name='selectedSprite' declared_type='CCNode*' type='@' index='1'/>
-<arg name='target' declared_type='id' type='@' index='2'/>
-<arg name='selector' declared_type='SEL' type=':' index='3'/>
 <retval declared_type='id' type='@'/>
 </method>
 <method selector='itemWithNormalSprite:selectedSprite:' class_method='true'>
@@ -4162,9 +3844,6 @@
 <method selector='init'>
 <retval declared_type='id' type='@'/>
 </method>
-<method selector='isRelativeAnchorPoint'>
-<retval declared_type='BOOL' type='B'/>
-</method>
 <method selector='isRunning'>
 <retval declared_type='BOOL' type='B'/>
 </method>
@@ -4302,10 +3981,6 @@
 </method>
 <method selector='setIgnoreAnchorPointForPosition:'>
 <arg name='ignoreAnchorPointForPosition' declared_type='BOOL' type='B' index='0'/>
-<retval declared_type='void' type='v'/>
-</method>
-<method selector='setIsRelativeAnchorPoint:'>
-<arg name='value' declared_type='BOOL' type='B' index='0'/>
 <retval declared_type='void' type='v'/>
 </method>
 <method selector='setOrderOfArrival:'>
@@ -5175,15 +4850,6 @@
 <arg name='depthStencilFormat' declared_type='GLuint' type='I' index='3'/>
 <retval declared_type='id' type='@'/>
 </method>
-<method selector='saveBuffer:'>
-<arg name='name' declared_type='NSString*' type='@' index='0'/>
-<retval declared_type='BOOL' type='B'/>
-</method>
-<method selector='saveBuffer:format:'>
-<arg name='name' declared_type='NSString*' type='@' index='0'/>
-<arg name='format' declared_type='int' type='i' index='1'/>
-<retval declared_type='BOOL' type='B'/>
-</method>
 <method selector='saveToFile:'>
 <arg name='name' declared_type='NSString*' type='@' index='0'/>
 <retval declared_type='BOOL' type='B'/>
@@ -5401,9 +5067,6 @@
 <arg name='timeScale' declared_type='ccTime' type='f' index='0'/>
 <retval declared_type='void' type='v'/>
 </method>
-<method selector='sharedScheduler' class_method='true'>
-<retval declared_type='CCScheduler*' type='@'/>
-</method>
 <method selector='timeScale'>
 <retval declared_type='ccTime' type='f'/>
 </method>
@@ -5444,10 +5107,6 @@
 </method>
 <method variadic='true' sentinel='0' selector='actions:' class_method='true'>
 <arg name='action1' declared_type='CCFiniteTimeAction*' type='@' index='0'/>
-<retval declared_type='id' type='@'/>
-</method>
-<method selector='actionsWithArray:' class_method='true'>
-<arg name='actions' declared_type='NSArray*' type='@' index='0'/>
 <retval declared_type='id' type='@'/>
 </method>
 <method selector='initOne:two:'>
@@ -5566,10 +5225,6 @@
 <arg name='action1' declared_type='CCFiniteTimeAction*' type='@' index='0'/>
 <retval declared_type='id' type='@'/>
 </method>
-<method selector='actionsWithArray:' class_method='true'>
-<arg name='actions' declared_type='NSArray*' type='@' index='0'/>
-<retval declared_type='id' type='@'/>
-</method>
 <method selector='initOne:two:'>
 <arg name='one' declared_type='CCFiniteTimeAction*' type='@' index='0'/>
 <arg name='two' declared_type='CCFiniteTimeAction*' type='@' index='1'/>
@@ -5645,19 +5300,11 @@
 <method selector='displayFrame'>
 <retval declared_type='CCSpriteFrame*' type='@'/>
 </method>
-<method selector='displayedFrame'>
-<retval declared_type='CCSpriteFrame*' type='@'/>
-</method>
 <method selector='flipX'>
 <retval declared_type='BOOL' type='B'/>
 </method>
 <method selector='flipY'>
 <retval declared_type='BOOL' type='B'/>
-</method>
-<method selector='initWithBatchNode:rect:'>
-<arg name='node' declared_type='CCSpriteBatchNode*' type='@' index='0'/>
-<arg name='rect' declared_type='CGRect' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' type='{CGRect={CGPoint=ff}{CGSize=ff}}' index='1'/>
-<retval declared_type='id' type='@'/>
 </method>
 <method selector='initWithCGImage:key:'>
 <arg name='image' declared_type='CGImageRef' type='^{CGImage=}' index='0'/>
@@ -5767,11 +5414,6 @@
 <method selector='setVertexRect:'>
 <arg name='rect' declared_type='CGRect' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' type='{CGRect={CGPoint=ff}{CGSize=ff}}' index='0'/>
 <retval declared_type='void' type='v'/>
-</method>
-<method selector='spriteWithBatchNode:rect:' class_method='true'>
-<arg name='node' declared_type='CCSpriteBatchNode*' type='@' index='0'/>
-<arg name='rect' declared_type='CGRect' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' type='{CGRect={CGPoint=ff}{CGSize=ff}}' index='1'/>
-<retval declared_type='id' type='@'/>
 </method>
 <method selector='spriteWithCGImage:key:' class_method='true'>
 <arg name='image' declared_type='CGImageRef' type='^{CGImage=}' index='0'/>
@@ -6034,11 +5676,6 @@
 <arg name='frameName' declared_type='NSString*' type='@' index='1'/>
 <retval declared_type='void' type='v'/>
 </method>
-<method selector='addSpriteFramesWithDictionary:textureFile:'>
-<arg name='dictionary' declared_type='NSDictionary*' type='@' index='0'/>
-<arg name='filename' declared_type='NSString*' type='@' index='1'/>
-<retval declared_type='void' type='v'/>
-</method>
 <method selector='addSpriteFramesWithFile:'>
 <arg name='plist' declared_type='NSString*' type='@' index='0'/>
 <retval declared_type='void' type='v'/>
@@ -6046,11 +5683,6 @@
 <method selector='addSpriteFramesWithFile:texture:'>
 <arg name='plist' declared_type='NSString*' type='@' index='0'/>
 <arg name='texture' declared_type='CCTexture2D*' type='@' index='1'/>
-<retval declared_type='void' type='v'/>
-</method>
-<method selector='addSpriteFramesWithFile:textureFile:'>
-<arg name='plist' declared_type='NSString*' type='@' index='0'/>
-<arg name='filename' declared_type='NSString*' type='@' index='1'/>
 <retval declared_type='void' type='v'/>
 </method>
 <method selector='addSpriteFramesWithFile:textureFilename:'>
@@ -6580,23 +6212,6 @@
 </method>
 <method selector='initWithPVRFile:'>
 <arg name='file' declared_type='NSString*' type='@' index='0'/>
-<retval declared_type='id' type='@'/>
-</method>
-<method selector='initWithString:dimensions:alignment:fontName:fontSize:'>
-<arg name='string' declared_type='NSString*' type='@' index='0'/>
-<arg name='dimensions' declared_type='CGSize' type64='{CGSize=dd}' type='{CGSize=ff}' index='1'/>
-<arg name='alignment' declared_type='CCTextAlignment' type='i' index='2'/>
-<arg name='name' declared_type='NSString*' type='@' index='3'/>
-<arg name='size' declared_type='CGFloat' type64='d' type='f' index='4'/>
-<retval declared_type='id' type='@'/>
-</method>
-<method selector='initWithString:dimensions:alignment:lineBreakMode:fontName:fontSize:'>
-<arg name='string' declared_type='NSString*' type='@' index='0'/>
-<arg name='dimensions' declared_type='CGSize' type64='{CGSize=dd}' type='{CGSize=ff}' index='1'/>
-<arg name='alignment' declared_type='CCTextAlignment' type='i' index='2'/>
-<arg name='lineBreakMode' declared_type='CCLineBreakMode' type='i' index='3'/>
-<arg name='name' declared_type='NSString*' type='@' index='4'/>
-<arg name='size' declared_type='CGFloat' type64='d' type='f' index='5'/>
 <retval declared_type='id' type='@'/>
 </method>
 <method selector='initWithString:dimensions:hAlignment:vAlignment:fontName:fontSize:'>

@@ -348,8 +348,9 @@ void %s_finalize(JSContext *cx, JSObject *obj)
         # Left column: BridgeSupport types
         # Right column: JS types
         supported_declared_types = {
-            'NSString*' : 'S',
             'CGPoint'   : '{}',
+            'NSString*' : 'S',
+            'NSArray*'  : '-',            
             }
         supported_types = {
             'f' : 'd',  # float
@@ -380,7 +381,7 @@ void %s_finalize(JSContext *cx, JSObject *obj)
                 dt_class_name = dt.replace('*','')
 
                 # IMPORTANT: 1st search on declared types.
-                # NSString should be treat as a special case, not as a generic object
+                # NSString should be treated as a special case, not as a generic object
                 if dt in supported_declared_types:
                     args_js_type.append( supported_declared_types[dt] )
                     args_declared_type.append( dt )
@@ -504,12 +505,45 @@ void %s_finalize(JSContext *cx, JSObject *obj)
                             arg_declared_type, i, arg_declared_type, i ) )
 
 
-    def generate_method( self, class_name, method ):
-
-        method_description = '''
-// Arguments: %s
-// Ret value: %s'''
-
+    def generate_argument_array( self, i, arg_js_type, arg_declared_type ):
+        template = '''
+        JSBool JSPROXY_CCSequence_initWithArray(JSContext *cx, uint32_t argc, jsval *vp) {
+                
+                JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+                JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+                NSCAssert( proxy, @"Invalid Proxy object");
+                NSCAssert( ![proxy realObj], @"Object not initialzied. error");
+                NSCAssert( argc == 1, @"Invalid number of arguments" );
+                
+                JSObject *tmp_arg0;
+                JS_ValueToObject( cx, vp[2], &tmp_arg0 );
+                NSCAssert( JS_IsArrayObject( cx, tmp_arg0), @"Invalid argument. It is not an array" );
+                
+                uint32_t arg0_length;
+                JS_GetArrayLength(cx, tmp_arg0, &arg0_length);
+                NSMutableArray *array = [NSMutableArray arrayWithCapacity:arg0_length];
+                for( uint32_t i=0; i< arg0_length;i++ ) {		
+                        jsval val_arg0;
+                        JS_GetElement(cx, tmp_arg0, i, &val_arg0);
+        
+                        JSObject *tmp_real_arg0;
+                        JS_ValueToObject( cx, val_arg0, &tmp_real_arg0 );
+                        JSPROXY_CCFiniteTimeAction* tmp_proxy_arg0 = (JSPROXY_CCFiniteTimeAction*) JS_GetPrivate( tmp_real_arg0 );
+                        id real_arg0 = (id) [tmp_proxy_arg0 realObj];
+                        
+                        [array addObject:real_arg0];
+                }
+                
+                CCSequence *real = [[CCSequence alloc] initWithArray:array];
+                [proxy setRealObj: real];
+                [real release];
+                
+                JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+                return JS_TRUE;
+        }
+'''
+        
+    def generate_method_prefix( self, class_name, converted_name, assert_init, num_of_args ):
         # JSPROXY_CCNode, setPosition
         # "!" or ""
         # proxy.initialized = YES (or nothing)
@@ -523,22 +557,17 @@ JSBool %s_%s(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( %s[proxy realObj], @"Object not initialzied. error");
 	NSCAssert( argc == %d, @"Invalid number of arguments" );
 '''
-
-        already_initialized_template = '''
-	%s * real = (%s*)[proxy realObj];
-	NSCAssert( real, @"Invalid real object");
-'''
-        not_initialized_template = '''
-	%s* real = [[%s alloc] %s];
-	NSCAssert( real, @"Invalid real object");
-	[proxy setRealObj:real];
-	[real release];
-'''
-
+        self.mm_file.write( method_template % ( PROXY_PREFIX+class_name, converted_name, assert_init, num_of_args ) )
+   
+    def generate_method_suffix( self ):
         end_template = '''
 	return JS_TRUE;
 }
 '''
+        self.mm_file.write( end_template )
+       
+        
+    def generate_method( self, class_name, method ):
         # b      JSBool          Boolean
         # c      uint16_t/jschar ECMA uint16_t, Unicode char
         # i      int32_t         ECMA int32_t
@@ -577,12 +606,17 @@ JSBool %s_%s(JSContext *cx, uint32_t argc, jsval *vp) {
             return False
        
         s = method['selector']
+        is_class_method = False
+        if 'class_method' in method and method['class_method'] == 'true':
+            is_class_method = True
 
         # writing...
         converted_name = self.convert_selector_name_to_native( s )
 
         num_of_args = len( args_declared_type )
-        self.mm_file.write( method_description % ( ', '.join(args_declared_type), ret_declared_type ) )
+        
+        # writes method description
+        self.mm_file.write( '\n// Arguments: %s\n// Ret value: %s\n' % ( ', '.join(args_declared_type), ret_declared_type ) )
 
         if self.is_method_initializer(method):
             assert_init = '!'
@@ -591,7 +625,7 @@ JSBool %s_%s(JSContext *cx, uint32_t argc, jsval *vp) {
             assert_init = ''
             is_init_method = False
 
-        self.mm_file.write( method_template % ( PROXY_PREFIX+class_name, converted_name, assert_init, num_of_args ) )
+        self.generate_method_prefix( class_name, converted_name, assert_init, num_of_args )
 
         for i,arg in enumerate(args_js_type):
 
@@ -618,7 +652,7 @@ JSBool %s_%s(JSContext *cx, uint32_t argc, jsval *vp) {
 
         self.mm_file.write( ret_string )
 
-        self.mm_file.write( end_template )
+        self.generate_method_suffix()
 
         return True
 

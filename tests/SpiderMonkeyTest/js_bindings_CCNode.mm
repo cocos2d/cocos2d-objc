@@ -13,6 +13,7 @@
 #import "js_bindings_CCNode.h"
 #import "js_bindings_CCAction.h"
 
+
 JSClass* JSPROXY_CCNode_class = NULL;
 JSObject* JSPROXY_CCNode_object = NULL;
  // Constructor
@@ -47,6 +48,7 @@ void JSPROXY_CCNode_finalize(JSContext *cx, JSObject *obj)
 
 // Arguments: CCNode*
 // Ret value: None
+
 JSBool JSPROXY_CCNode_addChild_(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -68,6 +70,7 @@ JSBool JSPROXY_CCNode_addChild_(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: CCNode*, NSInteger
 // Ret value: None
+
 JSBool JSPROXY_CCNode_addChild_z_(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -90,6 +93,7 @@ JSBool JSPROXY_CCNode_addChild_z_(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: CCNode*, NSInteger, NSInteger
 // Ret value: None
+
 JSBool JSPROXY_CCNode_addChild_z_tag_(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -113,6 +117,7 @@ JSBool JSPROXY_CCNode_addChild_z_tag_(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: 
 // Ret value: CGPoint
+
 JSBool JSPROXY_CCNode_anchorPoint(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -136,6 +141,7 @@ JSBool JSPROXY_CCNode_anchorPoint(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: 
 // Ret value: CGPoint
+
 JSBool JSPROXY_CCNode_anchorPointInPoints(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -159,6 +165,7 @@ JSBool JSPROXY_CCNode_anchorPointInPoints(JSContext *cx, uint32_t argc, jsval *v
 
 // Arguments: 
 // Ret value: None
+
 JSBool JSPROXY_CCNode_cleanup(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -175,6 +182,7 @@ JSBool JSPROXY_CCNode_cleanup(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: CGPoint
 // Ret value: CGPoint
+
 JSBool JSPROXY_CCNode_convertToNodeSpace_(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -210,6 +218,7 @@ JSBool JSPROXY_CCNode_convertToNodeSpace_(JSContext *cx, uint32_t argc, jsval *v
 
 // Arguments: CGPoint
 // Ret value: CGPoint
+
 JSBool JSPROXY_CCNode_convertToNodeSpaceAR_(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -245,6 +254,7 @@ JSBool JSPROXY_CCNode_convertToNodeSpaceAR_(JSContext *cx, uint32_t argc, jsval 
 
 // Arguments: CGPoint
 // Ret value: CGPoint
+
 JSBool JSPROXY_CCNode_convertToWorldSpace_(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -280,6 +290,7 @@ JSBool JSPROXY_CCNode_convertToWorldSpace_(JSContext *cx, uint32_t argc, jsval *
 
 // Arguments: CGPoint
 // Ret value: CGPoint
+
 JSBool JSPROXY_CCNode_convertToWorldSpaceAR_(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -315,6 +326,7 @@ JSBool JSPROXY_CCNode_convertToWorldSpaceAR_(JSContext *cx, uint32_t argc, jsval
 
 // Arguments: 
 // Ret value: None
+
 JSBool JSPROXY_CCNode_draw(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -331,6 +343,7 @@ JSBool JSPROXY_CCNode_draw(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: NSInteger
 // Ret value: CCAction*
+
 JSBool JSPROXY_CCNode_getActionByTag_(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -355,6 +368,7 @@ JSBool JSPROXY_CCNode_getActionByTag_(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: NSInteger
 // Ret value: CCNode*
+
 JSBool JSPROXY_CCNode_getChildByTag_(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -379,6 +393,7 @@ JSBool JSPROXY_CCNode_getChildByTag_(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: 
 // Ret value: ccGLServerState
+
 JSBool JSPROXY_CCNode_glServerState(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -396,6 +411,7 @@ JSBool JSPROXY_CCNode_glServerState(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: 
 // Ret value: BOOL
+
 JSBool JSPROXY_CCNode_ignoreAnchorPointForPosition(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -413,6 +429,7 @@ JSBool JSPROXY_CCNode_ignoreAnchorPointForPosition(JSContext *cx, uint32_t argc,
 
 // Arguments: 
 // Ret value: None
+
 JSBool JSPROXY_CCNode_init(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -431,23 +448,7 @@ JSBool JSPROXY_CCNode_init(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: 
 // Ret value: BOOL
-JSBool JSPROXY_CCNode_isRelativeAnchorPoint(JSContext *cx, uint32_t argc, jsval *vp) {
-	
-	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
-	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
-	BOOL ret_val;
 
-	CCNode *real = (CCNode*) [proxy realObj];
-	ret_val = [real isRelativeAnchorPoint ];
-	JS_SET_RVAL(cx, vp, BOOLEAN_TO_JSVAL(ret_val));
-	return JS_TRUE;
-}
-
-// Arguments: 
-// Ret value: BOOL
 JSBool JSPROXY_CCNode_isRunning(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -465,6 +466,7 @@ JSBool JSPROXY_CCNode_isRunning(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: 
 // Ret value: NSUInteger
+
 JSBool JSPROXY_CCNode_numberOfRunningActions(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -482,6 +484,7 @@ JSBool JSPROXY_CCNode_numberOfRunningActions(JSContext *cx, uint32_t argc, jsval
 
 // Arguments: 
 // Ret value: None
+
 JSBool JSPROXY_CCNode_onEnter(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -498,6 +501,7 @@ JSBool JSPROXY_CCNode_onEnter(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: 
 // Ret value: None
+
 JSBool JSPROXY_CCNode_onEnterTransitionDidFinish(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -514,6 +518,7 @@ JSBool JSPROXY_CCNode_onEnterTransitionDidFinish(JSContext *cx, uint32_t argc, j
 
 // Arguments: 
 // Ret value: None
+
 JSBool JSPROXY_CCNode_onExit(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -530,6 +535,7 @@ JSBool JSPROXY_CCNode_onExit(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: 
 // Ret value: None
+
 JSBool JSPROXY_CCNode_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -546,6 +552,7 @@ JSBool JSPROXY_CCNode_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsv
 
 // Arguments: 
 // Ret value: NSUInteger
+
 JSBool JSPROXY_CCNode_orderOfArrival(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -563,6 +570,7 @@ JSBool JSPROXY_CCNode_orderOfArrival(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: 
 // Ret value: CCNode*
+
 JSBool JSPROXY_CCNode_parent(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -586,6 +594,7 @@ JSBool JSPROXY_CCNode_parent(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: 
 // Ret value: None
+
 JSBool JSPROXY_CCNode_pauseSchedulerAndActions(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -602,6 +611,7 @@ JSBool JSPROXY_CCNode_pauseSchedulerAndActions(JSContext *cx, uint32_t argc, jsv
 
 // Arguments: 
 // Ret value: CGPoint
+
 JSBool JSPROXY_CCNode_position(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -625,6 +635,7 @@ JSBool JSPROXY_CCNode_position(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: BOOL
 // Ret value: None
+
 JSBool JSPROXY_CCNode_removeAllChildrenWithCleanup_(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -642,6 +653,7 @@ JSBool JSPROXY_CCNode_removeAllChildrenWithCleanup_(JSContext *cx, uint32_t argc
 
 // Arguments: CCNode*, BOOL
 // Ret value: None
+
 JSBool JSPROXY_CCNode_removeChild_cleanup_(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -664,6 +676,7 @@ JSBool JSPROXY_CCNode_removeChild_cleanup_(JSContext *cx, uint32_t argc, jsval *
 
 // Arguments: NSInteger, BOOL
 // Ret value: None
+
 JSBool JSPROXY_CCNode_removeChildByTag_cleanup_(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -682,6 +695,7 @@ JSBool JSPROXY_CCNode_removeChildByTag_cleanup_(JSContext *cx, uint32_t argc, js
 
 // Arguments: BOOL
 // Ret value: None
+
 JSBool JSPROXY_CCNode_removeFromParentAndCleanup_(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -699,6 +713,7 @@ JSBool JSPROXY_CCNode_removeFromParentAndCleanup_(JSContext *cx, uint32_t argc, 
 
 // Arguments: CCNode*, NSInteger
 // Ret value: None
+
 JSBool JSPROXY_CCNode_reorderChild_z_(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -721,6 +736,7 @@ JSBool JSPROXY_CCNode_reorderChild_z_(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: 
 // Ret value: None
+
 JSBool JSPROXY_CCNode_resumeSchedulerAndActions(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -737,6 +753,7 @@ JSBool JSPROXY_CCNode_resumeSchedulerAndActions(JSContext *cx, uint32_t argc, js
 
 // Arguments: 
 // Ret value: float
+
 JSBool JSPROXY_CCNode_rotation(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -754,6 +771,7 @@ JSBool JSPROXY_CCNode_rotation(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: CCAction*
 // Ret value: CCAction*
+
 JSBool JSPROXY_CCNode_runAction_(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -782,6 +800,7 @@ JSBool JSPROXY_CCNode_runAction_(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: 
 // Ret value: float
+
 JSBool JSPROXY_CCNode_scale(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -799,6 +818,7 @@ JSBool JSPROXY_CCNode_scale(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: 
 // Ret value: float
+
 JSBool JSPROXY_CCNode_scaleX(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -816,6 +836,7 @@ JSBool JSPROXY_CCNode_scaleX(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: 
 // Ret value: float
+
 JSBool JSPROXY_CCNode_scaleY(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -833,6 +854,7 @@ JSBool JSPROXY_CCNode_scaleY(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: 
 // Ret value: None
+
 JSBool JSPROXY_CCNode_scheduleUpdate(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -849,6 +871,7 @@ JSBool JSPROXY_CCNode_scheduleUpdate(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: NSInteger
 // Ret value: None
+
 JSBool JSPROXY_CCNode_scheduleUpdateWithPriority_(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -866,6 +889,7 @@ JSBool JSPROXY_CCNode_scheduleUpdateWithPriority_(JSContext *cx, uint32_t argc, 
 
 // Arguments: CGPoint
 // Ret value: None
+
 JSBool JSPROXY_CCNode_setAnchorPoint_(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -894,6 +918,7 @@ JSBool JSPROXY_CCNode_setAnchorPoint_(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: CGSize
 // Ret value: None
+
 JSBool JSPROXY_CCNode_setContentSize_(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -914,6 +939,7 @@ JSBool JSPROXY_CCNode_setContentSize_(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: ccGLServerState
 // Ret value: None
+
 JSBool JSPROXY_CCNode_setGlServerState_(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -931,6 +957,7 @@ JSBool JSPROXY_CCNode_setGlServerState_(JSContext *cx, uint32_t argc, jsval *vp)
 
 // Arguments: BOOL
 // Ret value: None
+
 JSBool JSPROXY_CCNode_setIgnoreAnchorPointForPosition_(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -946,25 +973,9 @@ JSBool JSPROXY_CCNode_setIgnoreAnchorPointForPosition_(JSContext *cx, uint32_t a
 	return JS_TRUE;
 }
 
-// Arguments: BOOL
-// Ret value: None
-JSBool JSPROXY_CCNode_setIsRelativeAnchorPoint_(JSContext *cx, uint32_t argc, jsval *vp) {
-	
-	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
-	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
-	JSBool arg0; JS_ValueToBoolean( cx, vp[2], &arg0 );
-
-	CCNode *real = (CCNode*) [proxy realObj];
-	[real setIsRelativeAnchorPoint:(BOOL)arg0  ];
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
-	return JS_TRUE;
-}
-
 // Arguments: NSUInteger
 // Ret value: None
+
 JSBool JSPROXY_CCNode_setOrderOfArrival_(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -982,6 +993,7 @@ JSBool JSPROXY_CCNode_setOrderOfArrival_(JSContext *cx, uint32_t argc, jsval *vp
 
 // Arguments: CCNode*
 // Ret value: None
+
 JSBool JSPROXY_CCNode_setParent_(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -1003,6 +1015,7 @@ JSBool JSPROXY_CCNode_setParent_(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: CGPoint
 // Ret value: None
+
 JSBool JSPROXY_CCNode_setPosition_(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -1031,6 +1044,7 @@ JSBool JSPROXY_CCNode_setPosition_(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: float
 // Ret value: None
+
 JSBool JSPROXY_CCNode_setRotation_(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -1048,6 +1062,7 @@ JSBool JSPROXY_CCNode_setRotation_(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: float
 // Ret value: None
+
 JSBool JSPROXY_CCNode_setScale_(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -1065,6 +1080,7 @@ JSBool JSPROXY_CCNode_setScale_(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: float
 // Ret value: None
+
 JSBool JSPROXY_CCNode_setScaleX_(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -1082,6 +1098,7 @@ JSBool JSPROXY_CCNode_setScaleX_(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: float
 // Ret value: None
+
 JSBool JSPROXY_CCNode_setScaleY_(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -1099,6 +1116,7 @@ JSBool JSPROXY_CCNode_setScaleY_(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: float
 // Ret value: None
+
 JSBool JSPROXY_CCNode_setSkewX_(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -1116,6 +1134,7 @@ JSBool JSPROXY_CCNode_setSkewX_(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: float
 // Ret value: None
+
 JSBool JSPROXY_CCNode_setSkewY_(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -1133,6 +1152,7 @@ JSBool JSPROXY_CCNode_setSkewY_(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: NSInteger
 // Ret value: None
+
 JSBool JSPROXY_CCNode_setTag_(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -1150,6 +1170,7 @@ JSBool JSPROXY_CCNode_setTag_(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: float
 // Ret value: None
+
 JSBool JSPROXY_CCNode_setVertexZ_(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -1167,6 +1188,7 @@ JSBool JSPROXY_CCNode_setVertexZ_(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: BOOL
 // Ret value: None
+
 JSBool JSPROXY_CCNode_setVisible_(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -1184,6 +1206,7 @@ JSBool JSPROXY_CCNode_setVisible_(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: NSUInteger
 // Ret value: None
+
 JSBool JSPROXY_CCNode_setZOrder_(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -1201,6 +1224,7 @@ JSBool JSPROXY_CCNode_setZOrder_(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: 
 // Ret value: float
+
 JSBool JSPROXY_CCNode_skewX(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -1218,6 +1242,7 @@ JSBool JSPROXY_CCNode_skewX(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: 
 // Ret value: float
+
 JSBool JSPROXY_CCNode_skewY(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -1235,6 +1260,7 @@ JSBool JSPROXY_CCNode_skewY(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: 
 // Ret value: None
+
 JSBool JSPROXY_CCNode_sortAllChildren(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -1251,6 +1277,7 @@ JSBool JSPROXY_CCNode_sortAllChildren(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: CCAction*
 // Ret value: None
+
 JSBool JSPROXY_CCNode_stopAction_(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -1272,6 +1299,7 @@ JSBool JSPROXY_CCNode_stopAction_(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: NSInteger
 // Ret value: None
+
 JSBool JSPROXY_CCNode_stopActionByTag_(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -1289,6 +1317,7 @@ JSBool JSPROXY_CCNode_stopActionByTag_(JSContext *cx, uint32_t argc, jsval *vp) 
 
 // Arguments: 
 // Ret value: None
+
 JSBool JSPROXY_CCNode_stopAllActions(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -1305,6 +1334,7 @@ JSBool JSPROXY_CCNode_stopAllActions(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: 
 // Ret value: NSInteger
+
 JSBool JSPROXY_CCNode_tag(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -1322,6 +1352,7 @@ JSBool JSPROXY_CCNode_tag(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: 
 // Ret value: None
+
 JSBool JSPROXY_CCNode_transform(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -1338,6 +1369,7 @@ JSBool JSPROXY_CCNode_transform(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: 
 // Ret value: None
+
 JSBool JSPROXY_CCNode_transformAncestors(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -1354,6 +1386,7 @@ JSBool JSPROXY_CCNode_transformAncestors(JSContext *cx, uint32_t argc, jsval *vp
 
 // Arguments: 
 // Ret value: None
+
 JSBool JSPROXY_CCNode_unscheduleAllSelectors(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -1370,6 +1403,7 @@ JSBool JSPROXY_CCNode_unscheduleAllSelectors(JSContext *cx, uint32_t argc, jsval
 
 // Arguments: 
 // Ret value: None
+
 JSBool JSPROXY_CCNode_unscheduleUpdate(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -1386,6 +1420,7 @@ JSBool JSPROXY_CCNode_unscheduleUpdate(JSContext *cx, uint32_t argc, jsval *vp) 
 
 // Arguments: 
 // Ret value: float
+
 JSBool JSPROXY_CCNode_vertexZ(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -1403,6 +1438,7 @@ JSBool JSPROXY_CCNode_vertexZ(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: 
 // Ret value: BOOL
+
 JSBool JSPROXY_CCNode_visible(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -1420,6 +1456,7 @@ JSBool JSPROXY_CCNode_visible(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: 
 // Ret value: None
+
 JSBool JSPROXY_CCNode_visit(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -1436,6 +1473,7 @@ JSBool JSPROXY_CCNode_visit(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: 
 // Ret value: NSInteger
+
 JSBool JSPROXY_CCNode_zOrder(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -1488,7 +1526,6 @@ JSBool JSPROXY_CCNode_zOrder(JSContext *cx, uint32_t argc, jsval *vp) {
 		JS_FN("glServerState", JSPROXY_CCNode_glServerState, 1, JSPROP_PERMANENT | JSPROP_SHARED),
 		JS_FN("ignoreAnchorPointForPosition", JSPROXY_CCNode_ignoreAnchorPointForPosition, 1, JSPROP_PERMANENT | JSPROP_SHARED),
 		JS_FN("init", JSPROXY_CCNode_init, 1, JSPROP_PERMANENT | JSPROP_SHARED),
-		JS_FN("isRelativeAnchorPoint", JSPROXY_CCNode_isRelativeAnchorPoint, 1, JSPROP_PERMANENT | JSPROP_SHARED),
 		JS_FN("isRunning", JSPROXY_CCNode_isRunning, 1, JSPROP_PERMANENT | JSPROP_SHARED),
 		JS_FN("numberOfRunningActions", JSPROXY_CCNode_numberOfRunningActions, 1, JSPROP_PERMANENT | JSPROP_SHARED),
 		JS_FN("onEnter", JSPROXY_CCNode_onEnter, 1, JSPROP_PERMANENT | JSPROP_SHARED),
@@ -1516,7 +1553,6 @@ JSBool JSPROXY_CCNode_zOrder(JSContext *cx, uint32_t argc, jsval *vp) {
 		JS_FN("setContentSize", JSPROXY_CCNode_setContentSize_, 1, JSPROP_PERMANENT | JSPROP_SHARED),
 		JS_FN("setGlServerState", JSPROXY_CCNode_setGlServerState_, 1, JSPROP_PERMANENT | JSPROP_SHARED),
 		JS_FN("setIgnoreAnchorPointForPosition", JSPROXY_CCNode_setIgnoreAnchorPointForPosition_, 1, JSPROP_PERMANENT | JSPROP_SHARED),
-		JS_FN("setIsRelativeAnchorPoint", JSPROXY_CCNode_setIsRelativeAnchorPoint_, 1, JSPROP_PERMANENT | JSPROP_SHARED),
 		JS_FN("setOrderOfArrival", JSPROXY_CCNode_setOrderOfArrival_, 1, JSPROP_PERMANENT | JSPROP_SHARED),
 		JS_FN("setParent", JSPROXY_CCNode_setParent_, 1, JSPROP_PERMANENT | JSPROP_SHARED),
 		JS_FN("setPosition", JSPROXY_CCNode_setPosition_, 1, JSPROP_PERMANENT | JSPROP_SHARED),

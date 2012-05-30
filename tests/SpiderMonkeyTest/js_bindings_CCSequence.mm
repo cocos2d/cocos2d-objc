@@ -47,6 +47,7 @@ void JSPROXY_CCSequence_finalize(JSContext *cx, JSObject *obj)
 
 // Arguments: CCFiniteTimeAction*, CCFiniteTimeAction*
 // Ret value: None
+
 JSBool JSPROXY_CCSequence_initOne_two_(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);

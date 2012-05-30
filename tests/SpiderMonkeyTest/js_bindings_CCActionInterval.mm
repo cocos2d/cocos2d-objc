@@ -47,6 +47,7 @@ void JSPROXY_CCActionInterval_finalize(JSContext *cx, JSObject *obj)
 
 // Arguments: 
 // Ret value: ccTime
+
 JSBool JSPROXY_CCActionInterval_elapsed(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -64,6 +65,7 @@ JSBool JSPROXY_CCActionInterval_elapsed(JSContext *cx, uint32_t argc, jsval *vp)
 
 // Arguments: ccTime
 // Ret value: None
+
 JSBool JSPROXY_CCActionInterval_initWithDuration_(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -83,6 +85,7 @@ JSBool JSPROXY_CCActionInterval_initWithDuration_(JSContext *cx, uint32_t argc, 
 
 // Arguments: 
 // Ret value: BOOL
+
 JSBool JSPROXY_CCActionInterval_isDone(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -100,6 +103,7 @@ JSBool JSPROXY_CCActionInterval_isDone(JSContext *cx, uint32_t argc, jsval *vp) 
 
 // Arguments: 
 // Ret value: CCActionInterval*
+
 JSBool JSPROXY_CCActionInterval_reverse(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);

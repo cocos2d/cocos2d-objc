@@ -2260,6 +2260,7 @@
 		A0BCCB8815769D2A00CCE291 /* js_bindings_CCLayerColor.mm in Sources */ = {isa = PBXBuildFile; fileRef = A0BCCB8215769D2900CCE291 /* js_bindings_CCLayerColor.mm */; };
 		A0BCCB8915769D2A00CCE291 /* js_bindings_CCScene.mm in Sources */ = {isa = PBXBuildFile; fileRef = A0BCCB8415769D2A00CCE291 /* js_bindings_CCScene.mm */; };
 		A0BCCB8A15769D2A00CCE291 /* js_bindings_CCSequence.mm in Sources */ = {isa = PBXBuildFile; fileRef = A0BCCB8615769D2A00CCE291 /* js_bindings_CCSequence.mm */; };
+		A0BCCB911576BD9700CCE291 /* js_bindings_CCDirector.mm in Sources */ = {isa = PBXBuildFile; fileRef = A0BCCB901576BD9700CCE291 /* js_bindings_CCDirector.mm */; };
 		A0BE62FC140552BD00DAA336 /* CCVertex.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BE62FA140552BD00DAA336 /* CCVertex.h */; };
 		A0BE62FD140552BD00DAA336 /* CCVertex.m in Sources */ = {isa = PBXBuildFile; fileRef = A0BE62FB140552BD00DAA336 /* CCVertex.m */; };
 		A0C1EDC91562F979000709DA /* ccCArray.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C1EDC81562F979000709DA /* ccCArray.m */; };
@@ -6199,6 +6200,8 @@
 		A0BCCB8415769D2A00CCE291 /* js_bindings_CCScene.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = js_bindings_CCScene.mm; sourceTree = "<group>"; };
 		A0BCCB8515769D2A00CCE291 /* js_bindings_CCSequence.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_CCSequence.h; sourceTree = "<group>"; };
 		A0BCCB8615769D2A00CCE291 /* js_bindings_CCSequence.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = js_bindings_CCSequence.mm; sourceTree = "<group>"; };
+		A0BCCB8F1576BD9700CCE291 /* js_bindings_CCDirector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_CCDirector.h; sourceTree = "<group>"; };
+		A0BCCB901576BD9700CCE291 /* js_bindings_CCDirector.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = js_bindings_CCDirector.mm; sourceTree = "<group>"; };
 		A0BE62FA140552BD00DAA336 /* CCVertex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCVertex.h; sourceTree = "<group>"; };
 		A0BE62FB140552BD00DAA336 /* CCVertex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCVertex.m; sourceTree = "<group>"; };
 		A0C1EDC81562F979000709DA /* ccCArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ccCArray.m; sourceTree = "<group>"; };
@@ -7690,6 +7693,8 @@
 				A0CBEC2D156C2812009D35B4 /* javascript-spidermonkey */,
 				A0CBEC2F156C2903009D35B4 /* js_bindings_NSObject.h */,
 				A0CBEC30156C2904009D35B4 /* js_bindings_NSObject.mm */,
+				A0BCCB8F1576BD9700CCE291 /* js_bindings_CCDirector.h */,
+				A0BCCB901576BD9700CCE291 /* js_bindings_CCDirector.mm */,
 				A0BCCB7F15769D2900CCE291 /* js_bindings_CCLayer.h */,
 				A0BCCB8015769D2900CCE291 /* js_bindings_CCLayer.mm */,
 				A0BCCB8115769D2900CCE291 /* js_bindings_CCLayerColor.h */,
@@ -14451,6 +14456,7 @@
 				A0BCCB8815769D2A00CCE291 /* js_bindings_CCLayerColor.mm in Sources */,
 				A0BCCB8915769D2A00CCE291 /* js_bindings_CCScene.mm in Sources */,
 				A0BCCB8A15769D2A00CCE291 /* js_bindings_CCSequence.mm in Sources */,
+				A0BCCB911576BD9700CCE291 /* js_bindings_CCDirector.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

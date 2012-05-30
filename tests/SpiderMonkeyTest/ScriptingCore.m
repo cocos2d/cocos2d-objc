@@ -11,6 +11,7 @@
 #import "js_bindings_CCSprite.h"
 #import "js_bindings_CCAction.h"
 #import "js_bindings_CCRotateBy.h"
+#import "js_bindings_CCSequence.h"
 
 static JSClass global_class = {
 	"global", JSCLASS_GLOBAL_FLAGS,
@@ -162,6 +163,7 @@ JSBool ScriptingCore_addToRunningScene(JSContext *cx, uint32_t argc, jsval *vp)
 		[JSPROXY_CCSprite createClassWithContext:_cx object:cocos name:@"Sprite"];
 		[JSPROXY_CCAction createClassWithContext:_cx object:cocos name:@"Action"];
 		[JSPROXY_CCRotateBy createClassWithContext:_cx object:cocos name:@"RotateBy"];
+		[JSPROXY_CCSequence createClassWithContext:_cx object:cocos name:@"Sequence"];
 
 	}
 	
