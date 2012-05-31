@@ -49,7 +49,8 @@ void JSPROXY_CCActionInterval_finalize(JSContext *cx, JSObject *obj)
 // Ret value: CCActionInterval
 JSBool JSPROXY_CCActionInterval_actionWithDuration_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( argc == 1, @"Invalid number of arguments" );
-	double arg0; JS_ValueToNumber( cx, vp[2], &arg0 );
+	vp = JS_ARGV(cx,vp);
+	double arg0; JS_ValueToNumber( cx, *vp++, &arg0 );
 
 	CCActionInterval *real = [CCActionInterval actionWithDuration:(ccTime)arg0  ];
 
@@ -88,7 +89,8 @@ JSBool JSPROXY_CCActionInterval_initWithDuration_(JSContext *cx, uint32_t argc, 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	NSCAssert( argc == 1, @"Invalid number of arguments" );
-	double arg0; JS_ValueToNumber( cx, vp[2], &arg0 );
+	vp = JS_ARGV(cx,vp);
+	double arg0; JS_ValueToNumber( cx, *vp++, &arg0 );
 
 	CCActionInterval *real = [[CCActionInterval alloc] initWithDuration:(ccTime)arg0  ];
 	[proxy setRealObj: real];

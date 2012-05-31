@@ -105,7 +105,8 @@ JSBool JSPROXY_CCAction_setTag_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	NSCAssert( argc == 1, @"Invalid number of arguments" );
-	int32_t arg0; JS_ValueToECMAInt32( cx, vp[2], &arg0 );
+	vp = JS_ARGV(cx,vp);
+	int32_t arg0; JS_ValueToECMAInt32( cx, *vp++, &arg0 );
 
 	CCAction *real = (CCAction*) [proxy realObj];
 	[real setTag:(NSInteger)arg0  ];
@@ -122,7 +123,8 @@ JSBool JSPROXY_CCAction_step_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	NSCAssert( argc == 1, @"Invalid number of arguments" );
-	double arg0; JS_ValueToNumber( cx, vp[2], &arg0 );
+	vp = JS_ARGV(cx,vp);
+	double arg0; JS_ValueToNumber( cx, *vp++, &arg0 );
 
 	CCAction *real = (CCAction*) [proxy realObj];
 	[real step:(ccTime)arg0  ];
@@ -172,7 +174,8 @@ JSBool JSPROXY_CCAction_update_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	NSCAssert( argc == 1, @"Invalid number of arguments" );
-	double arg0; JS_ValueToNumber( cx, vp[2], &arg0 );
+	vp = JS_ARGV(cx,vp);
+	double arg0; JS_ValueToNumber( cx, *vp++, &arg0 );
 
 	CCAction *real = (CCAction*) [proxy realObj];
 	[real update:(ccTime)arg0  ];

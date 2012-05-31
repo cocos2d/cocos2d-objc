@@ -122,7 +122,8 @@ JSBool JSPROXY_CCSprite_initWithFile_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	NSCAssert( argc == 1, @"Invalid number of arguments" );
-	JSString *tmp_arg0 = JS_ValueToString( cx, vp[2] );
+	vp = JS_ARGV(cx,vp);
+	JSString *tmp_arg0 = JS_ValueToString( cx, *vp++ );
 	NSString *arg0 = [NSString stringWithUTF8String: JS_EncodeString(cx, tmp_arg0)];
 
 	CCSprite *real = [[CCSprite alloc] initWithFile:(NSString*)arg0  ];
@@ -142,7 +143,8 @@ JSBool JSPROXY_CCSprite_initWithSpriteFrameName_(JSContext *cx, uint32_t argc, j
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	NSCAssert( argc == 1, @"Invalid number of arguments" );
-	JSString *tmp_arg0 = JS_ValueToString( cx, vp[2] );
+	vp = JS_ARGV(cx,vp);
+	JSString *tmp_arg0 = JS_ValueToString( cx, *vp++ );
 	NSString *arg0 = [NSString stringWithUTF8String: JS_EncodeString(cx, tmp_arg0)];
 
 	CCSprite *real = [[CCSprite alloc] initWithSpriteFrameName:(NSString*)arg0  ];
@@ -202,7 +204,8 @@ JSBool JSPROXY_CCSprite_setAtlasIndex_(JSContext *cx, uint32_t argc, jsval *vp) 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	NSCAssert( argc == 1, @"Invalid number of arguments" );
-	uint32_t arg0; JS_ValueToECMAUint32( cx, vp[2], &arg0 );
+	vp = JS_ARGV(cx,vp);
+	uint32_t arg0; JS_ValueToECMAUint32( cx, *vp++, &arg0 );
 
 	CCSprite *real = (CCSprite*) [proxy realObj];
 	[real setAtlasIndex:(NSUInteger)arg0  ];
@@ -219,9 +222,10 @@ JSBool JSPROXY_CCSprite_setBlendFunc_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	vp = JS_ARGV(cx,vp);
 
 	JSObject *tmp_arg0;
-	JS_ValueToObject( cx, vp[2], &tmp_arg0 );
+	JS_ValueToObject( cx, *vp++, &tmp_arg0 );
 	ccBlendFunc arg0 = *(ccBlendFunc*)JS_GetTypedArrayData( tmp_arg0);
 
 	CCSprite *real = (CCSprite*) [proxy realObj];
@@ -239,9 +243,10 @@ JSBool JSPROXY_CCSprite_setColor_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	vp = JS_ARGV(cx,vp);
 
 	JSObject *tmp_arg0;
-	JS_ValueToObject( cx, vp[2], &tmp_arg0 );
+	JS_ValueToObject( cx, *vp++, &tmp_arg0 );
 	ccColor3B arg0 = *(ccColor3B*)JS_GetTypedArrayData( tmp_arg0);
 
 	CCSprite *real = (CCSprite*) [proxy realObj];
@@ -259,7 +264,8 @@ JSBool JSPROXY_CCSprite_setDirty_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	NSCAssert( argc == 1, @"Invalid number of arguments" );
-	JSBool arg0; JS_ValueToBoolean( cx, vp[2], &arg0 );
+	vp = JS_ARGV(cx,vp);
+	JSBool arg0; JS_ValueToBoolean( cx, *vp++, &arg0 );
 
 	CCSprite *real = (CCSprite*) [proxy realObj];
 	[real setDirty:(BOOL)arg0  ];
@@ -276,9 +282,10 @@ JSBool JSPROXY_CCSprite_setDisplayFrameWithAnimationName_index_(JSContext *cx, u
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	NSCAssert( argc == 2, @"Invalid number of arguments" );
-	JSString *tmp_arg0 = JS_ValueToString( cx, vp[2] );
+	vp = JS_ARGV(cx,vp);
+	JSString *tmp_arg0 = JS_ValueToString( cx, *vp++ );
 	NSString *arg0 = [NSString stringWithUTF8String: JS_EncodeString(cx, tmp_arg0)];
-	int32_t arg1; JS_ValueToECMAInt32( cx, vp[3], &arg1 );
+	int32_t arg1; JS_ValueToECMAInt32( cx, *vp++, &arg1 );
 
 	CCSprite *real = (CCSprite*) [proxy realObj];
 	[real setDisplayFrameWithAnimationName:(NSString*)arg0 index:(int)arg1  ];
@@ -295,7 +302,8 @@ JSBool JSPROXY_CCSprite_setFlipX_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	NSCAssert( argc == 1, @"Invalid number of arguments" );
-	JSBool arg0; JS_ValueToBoolean( cx, vp[2], &arg0 );
+	vp = JS_ARGV(cx,vp);
+	JSBool arg0; JS_ValueToBoolean( cx, *vp++, &arg0 );
 
 	CCSprite *real = (CCSprite*) [proxy realObj];
 	[real setFlipX:(BOOL)arg0  ];
@@ -312,7 +320,8 @@ JSBool JSPROXY_CCSprite_setFlipY_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	NSCAssert( argc == 1, @"Invalid number of arguments" );
-	JSBool arg0; JS_ValueToBoolean( cx, vp[2], &arg0 );
+	vp = JS_ARGV(cx,vp);
+	JSBool arg0; JS_ValueToBoolean( cx, *vp++, &arg0 );
 
 	CCSprite *real = (CCSprite*) [proxy realObj];
 	[real setFlipY:(BOOL)arg0  ];
@@ -329,7 +338,8 @@ JSBool JSPROXY_CCSprite_setOpacity_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	NSCAssert( argc == 1, @"Invalid number of arguments" );
-	uint16_t arg0; JS_ValueToUint16( cx, vp[2], &arg0 );
+	vp = JS_ARGV(cx,vp);
+	uint16_t arg0; JS_ValueToUint16( cx, *vp++, &arg0 );
 
 	CCSprite *real = (CCSprite*) [proxy realObj];
 	[real setOpacity:(GLubyte)arg0  ];
@@ -341,7 +351,8 @@ JSBool JSPROXY_CCSprite_setOpacity_(JSContext *cx, uint32_t argc, jsval *vp) {
 // Ret value: CCSprite
 JSBool JSPROXY_CCSprite_spriteWithFile_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( argc == 1, @"Invalid number of arguments" );
-	JSString *tmp_arg0 = JS_ValueToString( cx, vp[2] );
+	vp = JS_ARGV(cx,vp);
+	JSString *tmp_arg0 = JS_ValueToString( cx, *vp++ );
 	NSString *arg0 = [NSString stringWithUTF8String: JS_EncodeString(cx, tmp_arg0)];
 
 	CCSprite *real = [CCSprite spriteWithFile:(NSString*)arg0  ];
@@ -359,7 +370,8 @@ JSBool JSPROXY_CCSprite_spriteWithFile_(JSContext *cx, uint32_t argc, jsval *vp)
 // Ret value: CCSprite
 JSBool JSPROXY_CCSprite_spriteWithSpriteFrameName_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( argc == 1, @"Invalid number of arguments" );
-	JSString *tmp_arg0 = JS_ValueToString( cx, vp[2] );
+	vp = JS_ARGV(cx,vp);
+	JSString *tmp_arg0 = JS_ValueToString( cx, *vp++ );
 	NSString *arg0 = [NSString stringWithUTF8String: JS_EncodeString(cx, tmp_arg0)];
 
 	CCSprite *real = [CCSprite spriteWithSpriteFrameName:(NSString*)arg0  ];
