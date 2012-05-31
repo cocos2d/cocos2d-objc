@@ -296,8 +296,14 @@ void %s_finalize(JSContext *cx, JSObject *obj)
             if ret_declared_type:
                 prefix = prefix + 'ret_val = '
             prefix = prefix + '[real '
-        elif method_type == METHOD_CLASS or method_type == METHOD_CONSTRUCTOR:
+        elif method_type == METHOD_CONSTRUCTOR:
             prefix = '\t%s *real = [%s ' % (class_name, class_name )
+            suffix = ''
+        elif method_type == METHOD_CLASS:
+	    if not ret_declared_type or ret_declared_type == 'void':
+		prefix = '\t[%s ' % (class_name)
+	    else:
+		prefix = '\t%s real = [%s ' % (ret_declared_type, class_name )
             suffix = ''
         else:
             raise Exception('Invalid method type')
@@ -342,7 +348,11 @@ void %s_finalize(JSContext *cx, JSObject *obj)
 
     # special case: returning String
     def generate_retval_string( self, declared_type, js_type ):
-        raise Exception("Not implemented")
+        template = '''
+	JSString *ret_obj = JS_NewStringCopyZ(cx, [ret_val UTF8String]);
+	JS_SET_RVAL(cx, vp, STRING_TO_JSVAL(ret_obj) );
+'''
+        return template
 
     # special case: returning CGPoint
     def generate_retval_cgpoint( self, declared_type, js_type ):
@@ -406,8 +416,8 @@ void %s_finalize(JSContext *cx, JSObject *obj)
         supported_declared_types = {
             'CGPoint'   : '{}',
             'NSString*' : 'S',
-            'NSArray*'  : '-',            
             }
+
         supported_types = {
             'f' : 'd',  # float
             'd' : 'd',  # double
@@ -822,14 +832,19 @@ extern JSClass *%s_class;
 
         self.mm_file.write( properties_template )
 
-        js_fn = '\t\tJS_FN("%s", %s, 1, JSPROP_PERMANENT | JSPROP_SHARED),\n'
+        js_fn = '\t\tJS_FN("%s", %s, 1, JSPROP_PERMANENT | JSPROP_SHARED %s),\n'
 
         instance_method_buffer = ''
         class_method_buffer = ''
         for method in ok_methods:
             js_name = self.convert_selector_name_to_js( method['selector'] )
             cb_name = self.convert_selector_name_to_native( method['selector'] )
-            entry = js_fn % (js_name, proxy_class_name + '_' + cb_name)
+
+	    if self.is_class_constructor( method ):
+		entry = js_fn % (js_name, proxy_class_name + '_' + cb_name, '| JSFUN_CONSTRUCTOR' )
+	    else:
+		entry = js_fn % (js_name, proxy_class_name + '_' + cb_name, '' )
+		
             if self.is_class_method( method ):
                 class_method_buffer += entry
             else:

@@ -87,7 +87,7 @@ JSBool JSPROXY_CCScaleBy_initWithDuration_scale_(JSContext *cx, uint32_t argc, j
 		{0, 0, 0, 0, 0}
 	};
 	static JSFunctionSpec funcs[] = {
-		JS_FN("initWithDurationScale", JSPROXY_CCScaleBy_initWithDuration_scale_, 1, JSPROP_PERMANENT | JSPROP_SHARED),
+		JS_FN("initWithDurationScale", JSPROXY_CCScaleBy_initWithDuration_scale_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {

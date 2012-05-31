@@ -128,11 +128,11 @@ JSBool JSPROXY_CCMoveBy_initWithDuration_position_(JSContext *cx, uint32_t argc,
 		{0, 0, 0, 0, 0}
 	};
 	static JSFunctionSpec funcs[] = {
-		JS_FN("initWithDurationPosition", JSPROXY_CCMoveBy_initWithDuration_position_, 1, JSPROP_PERMANENT | JSPROP_SHARED),
+		JS_FN("initWithDurationPosition", JSPROXY_CCMoveBy_initWithDuration_position_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
-		JS_FN("actionWithDurationPosition", JSPROXY_CCMoveBy_actionWithDuration_position_, 1, JSPROP_PERMANENT | JSPROP_SHARED),
+		JS_FN("actionWithDurationPosition", JSPROXY_CCMoveBy_actionWithDuration_position_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSFUN_CONSTRUCTOR),
 		JS_FS_END
 	};
 

@@ -64,6 +64,29 @@ JSBool JSPROXY_CCSprite_atlasIndex(JSContext *cx, uint32_t argc, jsval *vp) {
 }
 
 // Arguments: 
+// Ret value: CCSpriteBatchNode*
+JSBool JSPROXY_CCSprite_batchNode(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	CCSpriteBatchNode* ret_val;
+
+	CCSprite *real = (CCSprite*) [proxy realObj];
+	ret_val = [real batchNode ];
+
+	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCSpriteBatchNode_class, JSPROXY_CCSpriteBatchNode_object, NULL);
+	JSPROXY_CCSpriteBatchNode *ret_proxy = [[JSPROXY_CCSpriteBatchNode alloc] initWithJSObject:jsobj];
+	[ret_proxy setRealObj: ret_val];
+	JS_SetPrivate(jsobj, ret_proxy);
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+	return JS_TRUE;
+}
+
+// Arguments: 
 // Ret value: BOOL
 JSBool JSPROXY_CCSprite_dirty(JSContext *cx, uint32_t argc, jsval *vp) {
 
@@ -210,6 +233,28 @@ JSBool JSPROXY_CCSprite_setAtlasIndex_(JSContext *cx, uint32_t argc, jsval *vp) 
 
 	CCSprite *real = (CCSprite*) [proxy realObj];
 	[real setAtlasIndex:(NSUInteger)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: CCSpriteBatchNode*
+// Ret value: None
+JSBool JSPROXY_CCSprite_setBatchNode_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+
+	JSObject *tmp_arg0;
+	JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
+	JSPROXY_CCSpriteBatchNode* proxy_arg0 = (JSPROXY_CCSpriteBatchNode*) JS_GetPrivate( tmp_arg0 ); 
+	CCSpriteBatchNode* arg0 = (CCSpriteBatchNode*) [proxy_arg0 realObj];
+
+	CCSprite *real = (CCSprite*) [proxy realObj];
+	[real setBatchNode:(CCSpriteBatchNode*)arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
@@ -439,29 +484,31 @@ JSBool JSPROXY_CCSprite_updateTransform(JSContext *cx, uint32_t argc, jsval *vp)
 		{0, 0, 0, 0, 0}
 	};
 	static JSFunctionSpec funcs[] = {
-		JS_FN("atlasIndex", JSPROXY_CCSprite_atlasIndex, 1, JSPROP_PERMANENT | JSPROP_SHARED),
-		JS_FN("dirty", JSPROXY_CCSprite_dirty, 1, JSPROP_PERMANENT | JSPROP_SHARED),
-		JS_FN("flipX", JSPROXY_CCSprite_flipX, 1, JSPROP_PERMANENT | JSPROP_SHARED),
-		JS_FN("flipY", JSPROXY_CCSprite_flipY, 1, JSPROP_PERMANENT | JSPROP_SHARED),
-		JS_FN("initWithFile", JSPROXY_CCSprite_initWithFile_, 1, JSPROP_PERMANENT | JSPROP_SHARED),
-		JS_FN("initWithSpriteFrameName", JSPROXY_CCSprite_initWithSpriteFrameName_, 1, JSPROP_PERMANENT | JSPROP_SHARED),
-		JS_FN("offsetPosition", JSPROXY_CCSprite_offsetPosition, 1, JSPROP_PERMANENT | JSPROP_SHARED),
-		JS_FN("opacity", JSPROXY_CCSprite_opacity, 1, JSPROP_PERMANENT | JSPROP_SHARED),
-		JS_FN("setAtlasIndex", JSPROXY_CCSprite_setAtlasIndex_, 1, JSPROP_PERMANENT | JSPROP_SHARED),
-		JS_FN("setBlendFunc", JSPROXY_CCSprite_setBlendFunc_, 1, JSPROP_PERMANENT | JSPROP_SHARED),
-		JS_FN("setColor", JSPROXY_CCSprite_setColor_, 1, JSPROP_PERMANENT | JSPROP_SHARED),
-		JS_FN("setDirty", JSPROXY_CCSprite_setDirty_, 1, JSPROP_PERMANENT | JSPROP_SHARED),
-		JS_FN("setDisplayFrameWithAnimationNameIndex", JSPROXY_CCSprite_setDisplayFrameWithAnimationName_index_, 1, JSPROP_PERMANENT | JSPROP_SHARED),
-		JS_FN("setFlipX", JSPROXY_CCSprite_setFlipX_, 1, JSPROP_PERMANENT | JSPROP_SHARED),
-		JS_FN("setFlipY", JSPROXY_CCSprite_setFlipY_, 1, JSPROP_PERMANENT | JSPROP_SHARED),
-		JS_FN("setOpacity", JSPROXY_CCSprite_setOpacity_, 1, JSPROP_PERMANENT | JSPROP_SHARED),
-		JS_FN("textureRectRotated", JSPROXY_CCSprite_textureRectRotated, 1, JSPROP_PERMANENT | JSPROP_SHARED),
-		JS_FN("updateTransform", JSPROXY_CCSprite_updateTransform, 1, JSPROP_PERMANENT | JSPROP_SHARED),
+		JS_FN("atlasIndex", JSPROXY_CCSprite_atlasIndex, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("batchNode", JSPROXY_CCSprite_batchNode, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("dirty", JSPROXY_CCSprite_dirty, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("flipX", JSPROXY_CCSprite_flipX, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("flipY", JSPROXY_CCSprite_flipY, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("initWithFile", JSPROXY_CCSprite_initWithFile_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("initWithSpriteFrameName", JSPROXY_CCSprite_initWithSpriteFrameName_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("offsetPosition", JSPROXY_CCSprite_offsetPosition, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("opacity", JSPROXY_CCSprite_opacity, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("setAtlasIndex", JSPROXY_CCSprite_setAtlasIndex_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("setBatchNode", JSPROXY_CCSprite_setBatchNode_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("setBlendFunc", JSPROXY_CCSprite_setBlendFunc_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("setColor", JSPROXY_CCSprite_setColor_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("setDirty", JSPROXY_CCSprite_setDirty_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("setDisplayFrameWithAnimationNameIndex", JSPROXY_CCSprite_setDisplayFrameWithAnimationName_index_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("setFlipX", JSPROXY_CCSprite_setFlipX_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("setFlipY", JSPROXY_CCSprite_setFlipY_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("setOpacity", JSPROXY_CCSprite_setOpacity_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("textureRectRotated", JSPROXY_CCSprite_textureRectRotated, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("updateTransform", JSPROXY_CCSprite_updateTransform, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
-		JS_FN("spriteWithFile", JSPROXY_CCSprite_spriteWithFile_, 1, JSPROP_PERMANENT | JSPROP_SHARED),
-		JS_FN("spriteWithSpriteFrameName", JSPROXY_CCSprite_spriteWithSpriteFrameName_, 1, JSPROP_PERMANENT | JSPROP_SHARED),
+		JS_FN("spriteWithFile", JSPROXY_CCSprite_spriteWithFile_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSFUN_CONSTRUCTOR),
+		JS_FN("spriteWithSpriteFrameName", JSPROXY_CCSprite_spriteWithSpriteFrameName_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSFUN_CONSTRUCTOR),
 		JS_FS_END
 	};
 

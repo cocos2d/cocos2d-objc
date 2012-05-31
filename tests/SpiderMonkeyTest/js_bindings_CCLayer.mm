@@ -222,15 +222,15 @@ JSBool JSPROXY_CCLayer_touchDelegatePriority(JSContext *cx, uint32_t argc, jsval
 		{0, 0, 0, 0, 0}
 	};
 	static JSFunctionSpec funcs[] = {
-		JS_FN("isKeyboardEnabled", JSPROXY_CCLayer_isKeyboardEnabled, 1, JSPROP_PERMANENT | JSPROP_SHARED),
-		JS_FN("isMouseEnabled", JSPROXY_CCLayer_isMouseEnabled, 1, JSPROP_PERMANENT | JSPROP_SHARED),
-		JS_FN("isTouchEnabled", JSPROXY_CCLayer_isTouchEnabled, 1, JSPROP_PERMANENT | JSPROP_SHARED),
-		JS_FN("keyboardDelegatePriority", JSPROXY_CCLayer_keyboardDelegatePriority, 1, JSPROP_PERMANENT | JSPROP_SHARED),
-		JS_FN("mouseDelegatePriority", JSPROXY_CCLayer_mouseDelegatePriority, 1, JSPROP_PERMANENT | JSPROP_SHARED),
-		JS_FN("setIsKeyboardEnabled", JSPROXY_CCLayer_setIsKeyboardEnabled_, 1, JSPROP_PERMANENT | JSPROP_SHARED),
-		JS_FN("setIsMouseEnabled", JSPROXY_CCLayer_setIsMouseEnabled_, 1, JSPROP_PERMANENT | JSPROP_SHARED),
-		JS_FN("setIsTouchEnabled", JSPROXY_CCLayer_setIsTouchEnabled_, 1, JSPROP_PERMANENT | JSPROP_SHARED),
-		JS_FN("touchDelegatePriority", JSPROXY_CCLayer_touchDelegatePriority, 1, JSPROP_PERMANENT | JSPROP_SHARED),
+		JS_FN("isKeyboardEnabled", JSPROXY_CCLayer_isKeyboardEnabled, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("isMouseEnabled", JSPROXY_CCLayer_isMouseEnabled, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("isTouchEnabled", JSPROXY_CCLayer_isTouchEnabled, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("keyboardDelegatePriority", JSPROXY_CCLayer_keyboardDelegatePriority, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("mouseDelegatePriority", JSPROXY_CCLayer_mouseDelegatePriority, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("setIsKeyboardEnabled", JSPROXY_CCLayer_setIsKeyboardEnabled_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("setIsMouseEnabled", JSPROXY_CCLayer_setIsMouseEnabled_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("setIsTouchEnabled", JSPROXY_CCLayer_setIsTouchEnabled_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("touchDelegatePriority", JSPROXY_CCLayer_touchDelegatePriority, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {

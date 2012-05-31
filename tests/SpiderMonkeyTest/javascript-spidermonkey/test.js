@@ -63,8 +63,7 @@ if (value != ret) {
 	cc.log('Error in setScaleX / scaleX ');
 }
 
-var s = new cc.Sprite();
-s.initWithFile("grossini.png");
+var s = new cc.Sprite.spriteWithFile("grossini.png");
 
 s.setColor( ccc3(255,0,0) );
 
