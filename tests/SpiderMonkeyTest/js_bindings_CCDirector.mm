@@ -11,7 +11,7 @@
 #import "ScriptingCore.h"   
 
 #import "js_bindings_CCDirector.h"
-#import "js_bindings_CCScene.h"
+#import "js_bindings_cocos2d.h"
 
 
 JSClass* JSPROXY_CCDirector_class = NULL;
@@ -72,10 +72,10 @@ JSBool JSPROXY_CCDirector_convertToGL_(JSContext *cx, uint32_t argc, jsval *vp) 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	NSCAssert( argc == 1, @"Invalid number of arguments" );
-	vp = JS_ARGV(cx,vp);
+	jsval *argvp = JS_ARGV(cx,vp);
 
 	JSObject *tmp_arg0;
-	JS_ValueToObject( cx, *vp++, &tmp_arg0 );
+	JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
 	NSCAssert( JS_GetTypedArrayByteLength( tmp_arg0 ) == 8, @"Invalid length");
 #ifdef __CC_PLATFORM_IOS
 	CGPoint arg0 = *(CGPoint*)JS_GetTypedArrayData( tmp_arg0 );
@@ -108,10 +108,10 @@ JSBool JSPROXY_CCDirector_convertToUI_(JSContext *cx, uint32_t argc, jsval *vp) 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	NSCAssert( argc == 1, @"Invalid number of arguments" );
-	vp = JS_ARGV(cx,vp);
+	jsval *argvp = JS_ARGV(cx,vp);
 
 	JSObject *tmp_arg0;
-	JS_ValueToObject( cx, *vp++, &tmp_arg0 );
+	JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
 	NSCAssert( JS_GetTypedArrayByteLength( tmp_arg0 ) == 8, @"Invalid length");
 #ifdef __CC_PLATFORM_IOS
 	CGPoint arg0 = *(CGPoint*)JS_GetTypedArrayData( tmp_arg0 );
@@ -342,10 +342,10 @@ JSBool JSPROXY_CCDirector_pushScene_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	NSCAssert( argc == 1, @"Invalid number of arguments" );
-	vp = JS_ARGV(cx,vp);
+	jsval *argvp = JS_ARGV(cx,vp);
 
 	JSObject *tmp_arg0;
-	JS_ValueToObject( cx, *vp++, &tmp_arg0 );
+	JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
 	JSPROXY_CCScene* proxy_arg0 = (JSPROXY_CCScene*) JS_GetPrivate( tmp_arg0 ); 
 	CCScene* arg0 = (CCScene*) [proxy_arg0 realObj];
 
@@ -364,10 +364,10 @@ JSBool JSPROXY_CCDirector_replaceScene_(JSContext *cx, uint32_t argc, jsval *vp)
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	NSCAssert( argc == 1, @"Invalid number of arguments" );
-	vp = JS_ARGV(cx,vp);
+	jsval *argvp = JS_ARGV(cx,vp);
 
 	JSObject *tmp_arg0;
-	JS_ValueToObject( cx, *vp++, &tmp_arg0 );
+	JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
 	JSPROXY_CCScene* proxy_arg0 = (JSPROXY_CCScene*) JS_GetPrivate( tmp_arg0 ); 
 	CCScene* arg0 = (CCScene*) [proxy_arg0 realObj];
 
@@ -386,10 +386,10 @@ JSBool JSPROXY_CCDirector_reshapeProjection_(JSContext *cx, uint32_t argc, jsval
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	NSCAssert( argc == 1, @"Invalid number of arguments" );
-	vp = JS_ARGV(cx,vp);
+	jsval *argvp = JS_ARGV(cx,vp);
 
 	JSObject *tmp_arg0;
-	JS_ValueToObject( cx, *vp++, &tmp_arg0 );
+	JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
 	CGSize arg0 = *(CGSize*)JS_GetTypedArrayData( tmp_arg0);
 
 	CCDirector *real = (CCDirector*) [proxy realObj];
@@ -423,10 +423,10 @@ JSBool JSPROXY_CCDirector_runWithScene_(JSContext *cx, uint32_t argc, jsval *vp)
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	NSCAssert( argc == 1, @"Invalid number of arguments" );
-	vp = JS_ARGV(cx,vp);
+	jsval *argvp = JS_ARGV(cx,vp);
 
 	JSObject *tmp_arg0;
-	JS_ValueToObject( cx, *vp++, &tmp_arg0 );
+	JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
 	JSPROXY_CCScene* proxy_arg0 = (JSPROXY_CCScene*) JS_GetPrivate( tmp_arg0 ); 
 	CCScene* arg0 = (CCScene*) [proxy_arg0 realObj];
 
@@ -502,8 +502,8 @@ JSBool JSPROXY_CCDirector_setAlphaBlending_(JSContext *cx, uint32_t argc, jsval 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	NSCAssert( argc == 1, @"Invalid number of arguments" );
-	vp = JS_ARGV(cx,vp);
-	JSBool arg0; JS_ValueToBoolean( cx, *vp++, &arg0 );
+	jsval *argvp = JS_ARGV(cx,vp);
+	JSBool arg0; JS_ValueToBoolean( cx, *argvp++, &arg0 );
 
 	CCDirector *real = (CCDirector*) [proxy realObj];
 	[real setAlphaBlending:(BOOL)arg0  ];
@@ -520,8 +520,8 @@ JSBool JSPROXY_CCDirector_setAnimationInterval_(JSContext *cx, uint32_t argc, js
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	NSCAssert( argc == 1, @"Invalid number of arguments" );
-	vp = JS_ARGV(cx,vp);
-	double arg0; JS_ValueToNumber( cx, *vp++, &arg0 );
+	jsval *argvp = JS_ARGV(cx,vp);
+	double arg0; JS_ValueToNumber( cx, *argvp++, &arg0 );
 
 	CCDirector *real = (CCDirector*) [proxy realObj];
 	[real setAnimationInterval:(NSTimeInterval)arg0  ];
@@ -538,8 +538,8 @@ JSBool JSPROXY_CCDirector_setDepthTest_(JSContext *cx, uint32_t argc, jsval *vp)
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	NSCAssert( argc == 1, @"Invalid number of arguments" );
-	vp = JS_ARGV(cx,vp);
-	JSBool arg0; JS_ValueToBoolean( cx, *vp++, &arg0 );
+	jsval *argvp = JS_ARGV(cx,vp);
+	JSBool arg0; JS_ValueToBoolean( cx, *argvp++, &arg0 );
 
 	CCDirector *real = (CCDirector*) [proxy realObj];
 	[real setDepthTest:(BOOL)arg0  ];
@@ -556,8 +556,8 @@ JSBool JSPROXY_CCDirector_setDisplayStats_(JSContext *cx, uint32_t argc, jsval *
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	NSCAssert( argc == 1, @"Invalid number of arguments" );
-	vp = JS_ARGV(cx,vp);
-	JSBool arg0; JS_ValueToBoolean( cx, *vp++, &arg0 );
+	jsval *argvp = JS_ARGV(cx,vp);
+	JSBool arg0; JS_ValueToBoolean( cx, *argvp++, &arg0 );
 
 	CCDirector *real = (CCDirector*) [proxy realObj];
 	[real setDisplayStats:(BOOL)arg0  ];
@@ -590,8 +590,8 @@ JSBool JSPROXY_CCDirector_setNextDeltaTimeZero_(JSContext *cx, uint32_t argc, js
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	NSCAssert( argc == 1, @"Invalid number of arguments" );
-	vp = JS_ARGV(cx,vp);
-	JSBool arg0; JS_ValueToBoolean( cx, *vp++, &arg0 );
+	jsval *argvp = JS_ARGV(cx,vp);
+	JSBool arg0; JS_ValueToBoolean( cx, *argvp++, &arg0 );
 
 	CCDirector *real = (CCDirector*) [proxy realObj];
 	[real setNextDeltaTimeZero:(BOOL)arg0  ];
@@ -608,8 +608,8 @@ JSBool JSPROXY_CCDirector_setProjection_(JSContext *cx, uint32_t argc, jsval *vp
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	NSCAssert( argc == 1, @"Invalid number of arguments" );
-	vp = JS_ARGV(cx,vp);
-	int32_t arg0; JS_ValueToECMAInt32( cx, *vp++, &arg0 );
+	jsval *argvp = JS_ARGV(cx,vp);
+	int32_t arg0; JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
 
 	CCDirector *real = (CCDirector*) [proxy realObj];
 	[real setProjection:(ccDirectorProjection)arg0  ];

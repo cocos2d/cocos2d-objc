@@ -1,7 +1,7 @@
 
 #import "jstypedarray.h"
 
-#import "js_bindings_cocos2d.h"
+#import "js_bindings_old_manual.h"
 #import <objc/runtime.h>
 #import "JRSwizzle.h"
 #import "ScriptingCore.h"

@@ -2136,7 +2136,7 @@
 		A09C8D881567123B00ADFDA9 /* libmozjs.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A09C8D841566FC7400ADFDA9 /* libmozjs.dylib */; settings = {ATTRIBUTES = (Weak, ); }; };
 		A09C8D90156715F700ADFDA9 /* JavascriptSpidermonkey.m in Sources */ = {isa = PBXBuildFile; fileRef = A09C8D8F156715F700ADFDA9 /* JavascriptSpidermonkey.m */; };
 		A09C8D931567165B00ADFDA9 /* ScriptingCore.m in Sources */ = {isa = PBXBuildFile; fileRef = A09C8D921567165B00ADFDA9 /* ScriptingCore.m */; };
-		A09C8D961567634500ADFDA9 /* js_bindings_cocos2d.mm in Sources */ = {isa = PBXBuildFile; fileRef = A09C8D951567634500ADFDA9 /* js_bindings_cocos2d.mm */; };
+		A09C8D961567634500ADFDA9 /* js_bindings_old_manual.mm in Sources */ = {isa = PBXBuildFile; fileRef = A09C8D951567634500ADFDA9 /* js_bindings_old_manual.mm */; };
 		A0A10B2014F3003600FA38C1 /* ccDeprecated.h in Headers */ = {isa = PBXBuildFile; fileRef = A0A10B1E14F3003600FA38C1 /* ccDeprecated.h */; };
 		A0A10B2114F3003600FA38C1 /* ccDeprecated.m in Sources */ = {isa = PBXBuildFile; fileRef = A0A10B1F14F3003600FA38C1 /* ccDeprecated.m */; };
 		A0A7A506151416A000C8BD16 /* CCActionCatmullRom.m in Sources */ = {isa = PBXBuildFile; fileRef = A0A7A504151416A000C8BD16 /* CCActionCatmullRom.m */; };
@@ -6148,8 +6148,8 @@
 		A09C8D8F156715F700ADFDA9 /* JavascriptSpidermonkey.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JavascriptSpidermonkey.m; sourceTree = "<group>"; };
 		A09C8D911567165B00ADFDA9 /* ScriptingCore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScriptingCore.h; sourceTree = "<group>"; };
 		A09C8D921567165B00ADFDA9 /* ScriptingCore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScriptingCore.m; sourceTree = "<group>"; };
-		A09C8D941567634500ADFDA9 /* js_bindings_cocos2d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_cocos2d.h; sourceTree = "<group>"; };
-		A09C8D951567634500ADFDA9 /* js_bindings_cocos2d.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = js_bindings_cocos2d.mm; sourceTree = "<group>"; };
+		A09C8D941567634500ADFDA9 /* js_bindings_old_manual.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_old_manual.h; sourceTree = "<group>"; };
+		A09C8D951567634500ADFDA9 /* js_bindings_old_manual.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = js_bindings_old_manual.mm; sourceTree = "<group>"; };
 		A0A10B1E14F3003600FA38C1 /* ccDeprecated.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccDeprecated.h; sourceTree = "<group>"; };
 		A0A10B1F14F3003600FA38C1 /* ccDeprecated.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ccDeprecated.m; sourceTree = "<group>"; };
 		A0A7A504151416A000C8BD16 /* CCActionCatmullRom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCActionCatmullRom.m; sourceTree = "<group>"; };
@@ -6202,6 +6202,7 @@
 		A0BCCB8615769D2A00CCE291 /* js_bindings_CCSequence.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = js_bindings_CCSequence.mm; sourceTree = "<group>"; };
 		A0BCCB8F1576BD9700CCE291 /* js_bindings_CCDirector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_CCDirector.h; sourceTree = "<group>"; };
 		A0BCCB901576BD9700CCE291 /* js_bindings_CCDirector.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = js_bindings_CCDirector.mm; sourceTree = "<group>"; };
+		A0BCCB921576F9B700CCE291 /* js_bindings_cocos2d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_cocos2d.h; sourceTree = "<group>"; };
 		A0BE62FA140552BD00DAA336 /* CCVertex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCVertex.h; sourceTree = "<group>"; };
 		A0BE62FB140552BD00DAA336 /* CCVertex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCVertex.m; sourceTree = "<group>"; };
 		A0C1EDC81562F979000709DA /* ccCArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ccCArray.m; sourceTree = "<group>"; };
@@ -7691,6 +7692,7 @@
 			isa = PBXGroup;
 			children = (
 				A0CBEC2D156C2812009D35B4 /* javascript-spidermonkey */,
+				A0BCCB921576F9B700CCE291 /* js_bindings_cocos2d.h */,
 				A0CBEC2F156C2903009D35B4 /* js_bindings_NSObject.h */,
 				A0CBEC30156C2904009D35B4 /* js_bindings_NSObject.mm */,
 				A0BCCB8F1576BD9700CCE291 /* js_bindings_CCDirector.h */,
@@ -7715,8 +7717,8 @@
 				A05B59EE156D8BEB00ADAB65 /* js_bindings_CCSprite.mm */,
 				A05B59EA156D6BEE00ADAB65 /* js_bindings_CCNode.h */,
 				A05B59EB156D6BEE00ADAB65 /* js_bindings_CCNode.mm */,
-				A09C8D941567634500ADFDA9 /* js_bindings_cocos2d.h */,
-				A09C8D951567634500ADFDA9 /* js_bindings_cocos2d.mm */,
+				A09C8D941567634500ADFDA9 /* js_bindings_old_manual.h */,
+				A09C8D951567634500ADFDA9 /* js_bindings_old_manual.mm */,
 				A09C8D911567165B00ADFDA9 /* ScriptingCore.h */,
 				A09C8D921567165B00ADFDA9 /* ScriptingCore.m */,
 				A09C8D8E156715F700ADFDA9 /* JavascriptSpidermonkey.h */,
@@ -14443,7 +14445,7 @@
 				A09C8D291566FB4100ADFDA9 /* BaseAppController.m in Sources */,
 				A09C8D90156715F700ADFDA9 /* JavascriptSpidermonkey.m in Sources */,
 				A09C8D931567165B00ADFDA9 /* ScriptingCore.m in Sources */,
-				A09C8D961567634500ADFDA9 /* js_bindings_cocos2d.mm in Sources */,
+				A09C8D961567634500ADFDA9 /* js_bindings_old_manual.mm in Sources */,
 				A0CBEC21156ABF3B009D35B4 /* JRSwizzle.m in Sources */,
 				A0CBEC31156C2904009D35B4 /* js_bindings_NSObject.mm in Sources */,
 				A05B59EC156D6BEE00ADAB65 /* js_bindings_CCNode.mm in Sources */,

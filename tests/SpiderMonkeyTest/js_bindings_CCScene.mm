@@ -11,6 +11,7 @@
 #import "ScriptingCore.h"   
 
 #import "js_bindings_CCScene.h"
+#import "js_bindings_cocos2d.h"
 
 
 JSClass* JSPROXY_CCScene_class = NULL;

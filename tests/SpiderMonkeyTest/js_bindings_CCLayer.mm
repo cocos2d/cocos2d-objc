@@ -11,6 +11,7 @@
 #import "ScriptingCore.h"   
 
 #import "js_bindings_CCLayer.h"
+#import "js_bindings_cocos2d.h"
 
 
 JSClass* JSPROXY_CCLayer_class = NULL;
@@ -139,8 +140,8 @@ JSBool JSPROXY_CCLayer_setIsKeyboardEnabled_(JSContext *cx, uint32_t argc, jsval
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	NSCAssert( argc == 1, @"Invalid number of arguments" );
-	vp = JS_ARGV(cx,vp);
-	JSBool arg0; JS_ValueToBoolean( cx, *vp++, &arg0 );
+	jsval *argvp = JS_ARGV(cx,vp);
+	JSBool arg0; JS_ValueToBoolean( cx, *argvp++, &arg0 );
 
 	CCLayer *real = (CCLayer*) [proxy realObj];
 	[real setIsKeyboardEnabled:(BOOL)arg0  ];
@@ -157,8 +158,8 @@ JSBool JSPROXY_CCLayer_setIsMouseEnabled_(JSContext *cx, uint32_t argc, jsval *v
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	NSCAssert( argc == 1, @"Invalid number of arguments" );
-	vp = JS_ARGV(cx,vp);
-	JSBool arg0; JS_ValueToBoolean( cx, *vp++, &arg0 );
+	jsval *argvp = JS_ARGV(cx,vp);
+	JSBool arg0; JS_ValueToBoolean( cx, *argvp++, &arg0 );
 
 	CCLayer *real = (CCLayer*) [proxy realObj];
 	[real setIsMouseEnabled:(BOOL)arg0  ];
@@ -175,8 +176,8 @@ JSBool JSPROXY_CCLayer_setIsTouchEnabled_(JSContext *cx, uint32_t argc, jsval *v
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	NSCAssert( argc == 1, @"Invalid number of arguments" );
-	vp = JS_ARGV(cx,vp);
-	JSBool arg0; JS_ValueToBoolean( cx, *vp++, &arg0 );
+	jsval *argvp = JS_ARGV(cx,vp);
+	JSBool arg0; JS_ValueToBoolean( cx, *argvp++, &arg0 );
 
 	CCLayer *real = (CCLayer*) [proxy realObj];
 	[real setIsTouchEnabled:(BOOL)arg0  ];
