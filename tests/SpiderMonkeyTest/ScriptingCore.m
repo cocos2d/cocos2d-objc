@@ -7,15 +7,7 @@
 #import "cocos2d.h"
 #import "ScriptingCore.h"
 #import "js_bindings_NSObject.h"
-#import "js_bindings_CCNode.h"
-#import "js_bindings_CCSprite.h"
-#import "js_bindings_CCScene.h"
-#import "js_bindings_CCLayer.h"
-
-#import "js_bindings_CCAction.h"
-#import "js_bindings_CCRotateBy.h"
-#import "js_bindings_CCSequence.h"
-#import "js_bindings_CCDirector.h"
+#import "js_bindings_cocos2d.h"
 
 static JSClass global_class = {
 	"global", JSCLASS_GLOBAL_FLAGS,
@@ -170,7 +162,7 @@ JSBool ScriptingCore_addToRunningScene(JSContext *cx, uint32_t argc, jsval *vp)
 		
 		[JSPROXY_CCAction createClassWithContext:_cx object:cocos name:@"Action"];
 		[JSPROXY_CCRotateBy createClassWithContext:_cx object:cocos name:@"RotateBy"];
-		[JSPROXY_CCSequence createClassWithContext:_cx object:cocos name:@"Sequence"];
+		[JSPROXY_CCScaleBy createClassWithContext:_cx object:cocos name:@"ScaleBy"];
 
 		[JSPROXY_CCDirector createClassWithContext:_cx object:cocos name:@"Director"];
 

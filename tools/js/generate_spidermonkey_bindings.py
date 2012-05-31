@@ -81,16 +81,16 @@ class SpiderMonkey(object):
         self.bridgesupport_file = bridgesupport_file
         self.bs = {}
 
-	self.namespace = namespace
+        self.namespace = namespace
 
         self.hierarchy_file = hierarchy_file
         self.hierarchy = {}
         
         self.classes_to_bind = set(classes_to_bind)
         self.supported_classes = set(['NSObject'])
-	
-	# Current method that is being parsed
-	self.current_method = None
+
+        # Current method that is being parsed
+        self.current_method = None
 
     def parse_hierarchy_file( self ):
         f = open( self.hierarchy_file )
@@ -171,13 +171,13 @@ class SpiderMonkey(object):
 
     # whether or not the method is a constructor
     def is_class_constructor( self, method ):
-	if self.is_class_method( method ) and 'retval' in method:
-	    retval = method['retval']
-	    dt = retval[0]['declared_type']
+        if self.is_class_method( method ) and 'retval' in method:
+            retval = method['retval']
+            dt = retval[0]['declared_type']
 
-	    # Should also check the naming convention. eg: 'spriteWith...'
-	    if dt == 'id':
-		return True
+            # Should also check the naming convention. eg: 'spriteWith...'
+            if dt == 'id':
+                return True
         return False
 
     # whether or not the method is an initializer
@@ -189,12 +189,12 @@ class SpiderMonkey(object):
             if method['selector'].startswith('init') and dt == 'id':
                 return True
         return False
-    
+
     def is_class_method( self, method ):
-	return 'class_method' in method and method['class_method'] == 'true'
-    
+        return 'class_method' in method and method['class_method'] == 'true'
+
     def get_method_type( self, method ):
-	if self.is_class_constructor( method ):
+        if self.is_class_constructor( method ):
             method_type = METHOD_CONSTRUCTOR
         elif self.is_class_method( method ):
             method_type = METHOD_CLASS
@@ -202,15 +202,23 @@ class SpiderMonkey(object):
             method_type = METHOD_INIT
         else:
             method_type = METHOD_REGULAR
-	    
-	return method_type
-	
+
+        return method_type
+
 
     def convert_selector_name_to_native( self, name ):
         return name.replace(':','_')
 
-    def convert_selector_name_to_js( self, name ):
-        return name.replace(':','')
+    def convert_selector_name_to_js( self, selector ):
+        name = ''
+        parts = selector.split(':')
+        for i,arg in enumerate(parts):
+            if i==0:
+	        name += arg
+	    else:
+                name += arg.capitalize()
+
+        return name
 
     #
     # "class" constructor and destructor
@@ -286,11 +294,11 @@ void %s_finalize(JSContext *cx, JSObject *obj)
             if ret_declared_type:
                 prefix = prefix + 'ret_val = '
             prefix = prefix + '[real '
-	elif method_type == METHOD_CLASS or method_type == METHOD_CONSTRUCTOR:
-	    prefix = '\t%s *real = [%s ' % (class_name, class_name )
-	    suffix = ''
-	else:
-	    raise Exception('Invalid method type')
+        elif method_type == METHOD_CLASS or method_type == METHOD_CONSTRUCTOR:
+            prefix = '\t%s *real = [%s ' % (class_name, class_name )
+            suffix = ''
+        else:
+            raise Exception('Invalid method type')
 
         # sanity check
         if num_of_args+1 != len(args):
@@ -322,13 +330,13 @@ void %s_finalize(JSContext *cx, JSObject *obj)
 	JS_SetPrivate(jsobj, ret_proxy);
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 '''
-	method_type = self.get_method_type( self.current_method ) 
+        method_type = self.get_method_type( self.current_method ) 
 
-	ret_object = 'ret_val' if method_type==METHOD_REGULAR else 'real'
-	
+        ret_object = 'ret_val' if method_type==METHOD_REGULAR else 'real'
+
         return object_template % ( proxy_class_name, proxy_class_name,
-	                           proxy_class_name, proxy_class_name,
-	                           ret_object )    
+                                   proxy_class_name, proxy_class_name,
+                                   ret_object )    
 
     # special case: returning String
     def generate_retval_string( self, declared_type, js_type ):
@@ -460,12 +468,12 @@ void %s_finalize(JSContext *cx, JSObject *obj)
             if self.is_method_initializer(method ):
                 ret_js_type = None
                 ret_declared_type = None
-	    
-	    # Special case for class constructors
-	    elif self.is_class_constructor( method ):
-		ret_js_type = 'o'
-		ret_declared_type = class_name
-             
+
+            # Special case for class constructors
+            elif self.is_class_constructor( method ):
+                ret_js_type = 'o'
+                ret_declared_type = class_name
+
             # Part of supported declared types ?
             elif dt in supported_declared_types:
                 ret_js_type = supported_declared_types[dt]
@@ -506,7 +514,7 @@ void %s_finalize(JSContext *cx, JSObject *obj)
 '''
         proxy_class_name = PROXY_PREFIX + arg_declared_type
         self.mm_file.write( object_template % (i,
-	                i,
+                        i,
                         proxy_class_name , i, proxy_class_name, i,
                         arg_declared_type, i, arg_declared_type, i ) )
 
@@ -530,7 +538,7 @@ void %s_finalize(JSContext *cx, JSObject *obj)
         proxy_class_name = PROXY_PREFIX + arg_declared_type
                 
         self.mm_file.write( template % (i,
-	                i,
+                        i,
                         i,
                         i, i,
                         i, i, i,
@@ -607,20 +615,20 @@ JSBool %s_%s(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( %s[proxy realObj], @"Object not initialzied. error");
 '''
-	
-	# method name
-	self.mm_file.write( template_methodname % ( PROXY_PREFIX+class_name, converted_name ) )
 
-	# method asserts for instance methods
+        # method name
+        self.mm_file.write( template_methodname % ( PROXY_PREFIX+class_name, converted_name ) )
+
+        # method asserts for instance methods
         if method_type == METHOD_INIT or method_type == METHOD_REGULAR:
-	    assert_init = '!' if method_type == METHOD_INIT else ''
+            assert_init = '!' if method_type == METHOD_INIT else ''
             self.mm_file.write( template_init % assert_init )
-	    
-	# Number of arguments
-	method_assert_on_arguments = '\tNSCAssert( argc == %d, @"Invalid number of arguments" );\n'
-	self.mm_file.write( method_assert_on_arguments % num_of_args )
-	    
-   
+
+        # Number of arguments
+        method_assert_on_arguments = '\tNSCAssert( argc == %d, @"Invalid number of arguments" );\n'
+        self.mm_file.write( method_assert_on_arguments % num_of_args )
+
+
     def generate_method_suffix( self ):
         end_template = '''
 	return JS_TRUE;
@@ -684,10 +692,10 @@ JSBool %s_%s(JSContext *cx, uint32_t argc, jsval *vp) {
         self.generate_method_prefix( class_name, converted_name, num_of_args, method_type )
 
         for i,arg in enumerate(args_js_type):
-	    
-	    # First  time
-	    if i==0:
-		self.mm_file.write('\tjsval *argvp = JS_ARGV(cx,vp);\n')
+
+            # First  time
+            if i==0:
+                self.mm_file.write('\tjsval *argvp = JS_ARGV(cx,vp);\n')
 
             if arg in js_types_conversions:
                 t = js_types_conversions[arg]
@@ -715,16 +723,16 @@ JSBool %s_%s(JSContext *cx, uint32_t argc, jsval *vp) {
         return True
 
     def generate_methods( self, class_name, klass ):
-	ok_methods = []
+        ok_methods = []
         for m in klass['method']:
-	    self.current_method = m
+            self.current_method = m
             ok = self.generate_method( class_name, m )
             if ok:
                 ok_methods.append( m )
             else:
                 print 'NOT OK:' + m['selector']
 
-	self.current_method = None
+        self.current_method = None
         return ok_methods
 
 
@@ -792,7 +800,7 @@ extern JSClass *%s_class;
 
         static_functions_template_start = '\tstatic JSFunctionSpec st_funcs[] = {\n'
         static_functions_template_end = '\t\tJS_FS_END\n\t};\n'
-	
+
         # 1: JSPROXY_CCNode
         # 2: JSPROXY_NSObject
         # 3-4: JSPROXY_CCNode
@@ -812,34 +820,33 @@ extern JSClass *%s_class;
 
         self.mm_file.write( properties_template )
 
-	js_fn = '\t\tJS_FN("%s", %s, 1, JSPROP_PERMANENT | JSPROP_SHARED),\n'
+        js_fn = '\t\tJS_FN("%s", %s, 1, JSPROP_PERMANENT | JSPROP_SHARED),\n'
 
-	# XXX Arghh
-	instance_method_buffer = ''
-	class_method_buffer = ''
-	for method in ok_methods:
+        instance_method_buffer = ''
+        class_method_buffer = ''
+        for method in ok_methods:
             js_name = self.convert_selector_name_to_js( method['selector'] )
             cb_name = self.convert_selector_name_to_native( method['selector'] )
-	    entry = js_fn % (js_name, proxy_class_name + '_' + cb_name)
-	    if self.is_class_method( method ):
-		class_method_buffer += entry
-	    else:
-		instance_method_buffer += entry
-	
-	# instance methods entry point
-	self.mm_file.write( functions_template_start )
-	self.mm_file.write( instance_method_buffer )
+            entry = js_fn % (js_name, proxy_class_name + '_' + cb_name)
+            if self.is_class_method( method ):
+                class_method_buffer += entry
+            else:
+                instance_method_buffer += entry
+
+        # instance methods entry point
+        self.mm_file.write( functions_template_start )
+        self.mm_file.write( instance_method_buffer )
         self.mm_file.write( functions_template_end )
 
-	# class methods entry point    
+        # class methods entry point    
         self.mm_file.write( static_functions_template_start )
-	self.mm_file.write( class_method_buffer )	
-	self.mm_file.write( static_functions_template_end )
-    
+        self.mm_file.write( class_method_buffer )	
+        self.mm_file.write( static_functions_template_end )
+
         self.mm_file.write( init_class_template % ( proxy_class_name, proxy_parent_name, proxy_class_name, proxy_class_name ) )
 
         self.mm_file.write( '\n@end\n' )
-    
+
     def generate_class_binding( self, class_name ):
 
         self.h_file = open( '%s%s.h' % ( BINDINGS_PREFIX, class_name), 'w' )
@@ -881,15 +888,23 @@ extern JSClass *%s_class;
         self.h_file.close()
         self.mm_file.close()
 
-    def generate_namespace_include_file( self, classes ):
+    def generate_namespace_include_file( self ):
         f = open( '%s%s.h' % (BINDINGS_PREFIX, self.namespace), 'w' )
         f.write( autogenerated_template %( sys.argv[0], datetime.date.today() ) )
-	
-        for klass in classes:
-	    print klass
-	    f.write('#import "%s%s.h"\n' % ( BINDINGS_PREFIX, klass) )
-	
+
+        for klass in self.supported_classes:
+            f.write('#import "%s%s.h"\n' % ( BINDINGS_PREFIX, klass) )
+
         f.close()
+
+    def generate_scriptcore_template( self ):
+        f = open( '%s%s_register_classes.h' % (BINDINGS_PREFIX, self.namespace), 'w' )
+        f.write( autogenerated_template %( sys.argv[0], datetime.date.today() ) )
+
+        for klass in self.supported_classes:
+           f.write('\t[%s%s createClassWithContext:_cx object:%s name:@"%s"];\n' % ( PROXY_PREFIX, klass, namespace, klass ) )
+        f.close()
+
 
     def generate_bindings( self ):
         ancestors = []
@@ -907,12 +922,13 @@ extern JSClass *%s_class;
                 s.remove( i )
 
         self.supported_classes = self.supported_classes.union( s )
-	
+
         for klass in s:
             self.generate_class_binding( klass )
 
-	    
-	self.generate_namespace_include_file( self.supported_classes )
+
+        self.generate_namespace_include_file()
+        self.generate_scriptcore_template()
 
 
     def parse( self ):
@@ -949,8 +965,8 @@ if __name__ == "__main__":
                 bridgesupport_file = arg
             elif opt in  ("-j", "--hierarchy"):
                 hierarchy_file = arg
-	    elif opt in  ("-n", "--namespace"):
-		namespace = arg
+            elif opt in  ("-n", "--namespace"):
+                namespace = arg
     except getopt.GetoptError,e:
         print e
         opts, args = getopt.getopt(argv, "", [])

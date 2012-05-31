@@ -451,7 +451,7 @@ JSBool JSPROXY_CCSprite_updateTransform(JSContext *cx, uint32_t argc, jsval *vp)
 		JS_FN("setBlendFunc", JSPROXY_CCSprite_setBlendFunc_, 1, JSPROP_PERMANENT | JSPROP_SHARED),
 		JS_FN("setColor", JSPROXY_CCSprite_setColor_, 1, JSPROP_PERMANENT | JSPROP_SHARED),
 		JS_FN("setDirty", JSPROXY_CCSprite_setDirty_, 1, JSPROP_PERMANENT | JSPROP_SHARED),
-		JS_FN("setDisplayFrameWithAnimationNameindex", JSPROXY_CCSprite_setDisplayFrameWithAnimationName_index_, 1, JSPROP_PERMANENT | JSPROP_SHARED),
+		JS_FN("setDisplayFrameWithAnimationNameIndex", JSPROXY_CCSprite_setDisplayFrameWithAnimationName_index_, 1, JSPROP_PERMANENT | JSPROP_SHARED),
 		JS_FN("setFlipX", JSPROXY_CCSprite_setFlipX_, 1, JSPROP_PERMANENT | JSPROP_SHARED),
 		JS_FN("setFlipY", JSPROXY_CCSprite_setFlipY_, 1, JSPROP_PERMANENT | JSPROP_SHARED),
 		JS_FN("setOpacity", JSPROXY_CCSprite_setOpacity_, 1, JSPROP_PERMANENT | JSPROP_SHARED),

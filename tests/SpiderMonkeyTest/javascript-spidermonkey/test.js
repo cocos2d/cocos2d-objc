@@ -79,7 +79,11 @@ a.onEnter = function() {
 }
 
 var action = new cc.RotateBy();
-action.initWithDurationangle(2, 360 );
+action.initWithDurationAngle(2, 360 );
+
+var action2 = new cc.ScaleBy()
+action2.initWithDurationScale(4, 0.2 );
+
 //
 //var action2 = new cc.RotateBy();
 //action2.initWithDurationangle(1, -360 );
@@ -91,6 +95,7 @@ action.initWithDurationangle(2, 360 );
 //seq.initWithArray( [action, action2, action3] );
 
 s.runAction( action )
+s.runAction( action2 )
 
 a.addChild( s );
 

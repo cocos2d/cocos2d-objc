@@ -1689,6 +1689,13 @@
 <retval declared_type='id' type='@'/>
 </method>
 </class>
+<class name='CCBezierTo'>
+<method selector='initWithDuration:bezier:'>
+<arg name='t' declared_type='ccTime' type='f' index='0'/>
+<arg name='c' declared_type='ccBezierConfig' type64='{_ccBezierConfig={CGPoint=dd}{CGPoint=dd}{CGPoint=dd}}' type='{_ccBezierConfig={CGPoint=ff}{CGPoint=ff}{CGPoint=ff}}' index='1'/>
+<retval declared_type='id' type='@'/>
+</method>
+</class>
 <class name='CCBlink'>
 <method selector='actionWithDuration:blinks:' class_method='true'>
 <arg name='duration' declared_type='ccTime' type='f' index='0'/>
@@ -1995,6 +2002,12 @@
 <retval declared_type='void' type='v'/>
 </method>
 </class>
+<class name='CCDelayTime'>
+<method selector='initWithDuration:'>
+<arg name='d' declared_type='ccTime' type='f' index='0'/>
+<retval declared_type='id' type='@'/>
+</method>
+</class>
 <class name='CCDirector'>
 <method selector='actionManager'>
 <retval declared_type='CCActionManager*' type='@'/>
@@ -2278,6 +2291,18 @@
 <method selector='setDispatchEvents:'>
 <arg name='dispatchEvents' declared_type='BOOL' type='B' index='0'/>
 <retval declared_type='void' type='v'/>
+</method>
+</class>
+<class name='CCFadeIn'>
+<method selector='initWithDuration:'>
+<arg name='d' declared_type='ccTime' type='f' index='0'/>
+<retval declared_type='id' type='@'/>
+</method>
+</class>
+<class name='CCFadeOut'>
+<method selector='initWithDuration:'>
+<arg name='d' declared_type='ccTime' type='f' index='0'/>
+<retval declared_type='id' type='@'/>
 </method>
 </class>
 <class name='CCFadeTo'>
@@ -2711,6 +2736,15 @@
 <method selector='setAmplitudeRate:'>
 <arg name='amplitudeRate' declared_type='float' type='f' index='0'/>
 <retval declared_type='void' type='v'/>
+</method>
+</class>
+<class name='CCJumpTo'>
+<method selector='initWithDuration:position:height:jumps:'>
+<arg name='duration' declared_type='ccTime' type='f' index='0'/>
+<arg name='position' declared_type='CGPoint' type64='{CGPoint=dd}' type='{CGPoint=ff}' index='1'/>
+<arg name='height' declared_type='ccTime' type='f' index='2'/>
+<arg name='jumps' declared_type='NSUInteger' type64='Q' type='I' index='3'/>
+<retval declared_type='id' type='@'/>
 </method>
 </class>
 <class name='CCLabelAtlas'>
@@ -4988,6 +5022,13 @@
 <retval declared_type='id' type='@'/>
 </method>
 </class>
+<class name='CCScaleBy'>
+<method selector='initWithDuration:scale:'>
+<arg name='duration' declared_type='ccTime' type='f' index='0'/>
+<arg name='s' declared_type='float' type='f' index='1'/>
+<retval declared_type='id' type='@'/>
+</method>
+</class>
 <class name='CCScaleTo'>
 <method selector='actionWithDuration:scale:' class_method='true'>
 <arg name='duration' declared_type='ccTime' type='f' index='0'/>
@@ -5194,6 +5235,14 @@
 <arg name='s' declared_type='int' type='i' index='0'/>
 <arg name='gridSize' declared_type='ccGridSize' type64='{_ccGridSize=qq}' type='{_ccGridSize=ii}' index='1'/>
 <arg name='d' declared_type='ccTime' type='f' index='2'/>
+<retval declared_type='id' type='@'/>
+</method>
+</class>
+<class name='CCSkewBy'>
+<method selector='initWithDuration:skewX:skewY:'>
+<arg name='t' declared_type='ccTime' type='f' index='0'/>
+<arg name='sx' declared_type='float' type='f' index='1'/>
+<arg name='sy' declared_type='float' type='f' index='2'/>
 <retval declared_type='id' type='@'/>
 </method>
 </class>
