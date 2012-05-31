@@ -2270,6 +2270,8 @@
 		A0BCCBA81578164A00CCE291 /* js_bindings_CCSpriteBatchNode.mm in Sources */ = {isa = PBXBuildFile; fileRef = A0BCCBA51578164900CCE291 /* js_bindings_CCSpriteBatchNode.mm */; };
 		A0BCCBAD1578188000CCE291 /* js_bindings_CCLabelBMFont.mm in Sources */ = {isa = PBXBuildFile; fileRef = A0BCCBAA1578187E00CCE291 /* js_bindings_CCLabelBMFont.mm */; };
 		A0BCCBAE1578188000CCE291 /* js_bindings_CCLabelTTF.mm in Sources */ = {isa = PBXBuildFile; fileRef = A0BCCBAC1578187F00CCE291 /* js_bindings_CCLabelTTF.mm */; };
+		A0BCCBAF157837EB00CCE291 /* konqa32.png in Resources */ = {isa = PBXBuildFile; fileRef = E0C6067A128ECC110099367C /* konqa32.png */; };
+		A0BCCBB0157837EF00CCE291 /* konqa32.fnt in Resources */ = {isa = PBXBuildFile; fileRef = E0C60679128ECC110099367C /* konqa32.fnt */; };
 		A0BE62FC140552BD00DAA336 /* CCVertex.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BE62FA140552BD00DAA336 /* CCVertex.h */; };
 		A0BE62FD140552BD00DAA336 /* CCVertex.m in Sources */ = {isa = PBXBuildFile; fileRef = A0BE62FB140552BD00DAA336 /* CCVertex.m */; };
 		A0C1EDC91562F979000709DA /* ccCArray.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C1EDC81562F979000709DA /* ccCArray.m */; };
@@ -11383,6 +11385,8 @@
 				A09C8D221566FB4100ADFDA9 /* piece.png in Resources */,
 				A09C8D231566FB4100ADFDA9 /* icon.icns in Resources */,
 				A0CBEC2E156C2812009D35B4 /* javascript-spidermonkey in Resources */,
+				A0BCCBAF157837EB00CCE291 /* konqa32.png in Resources */,
+				A0BCCBB0157837EF00CCE291 /* konqa32.fnt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
