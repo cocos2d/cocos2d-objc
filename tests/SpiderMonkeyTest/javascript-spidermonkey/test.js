@@ -63,7 +63,6 @@ if (value != ret) {
 	cc.log('Error in setScaleX / scaleX ');
 }
 
-
 var s = new cc.Sprite();
 s.initWithFile("grossini.png");
 
