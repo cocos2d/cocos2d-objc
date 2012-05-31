@@ -46,19 +46,20 @@ function ccc4f(r, g, b, a)
 
 cc.log('Hello World');
 
-a = new cc.Node();
-a.init();
+var parent1 = new cc.Node.node();
+var parent2 = new cc.Node.node();
+
 
 var value = 90
-a.setRotation( 90 )
-var ret = a.rotation()
+parent1.setRotation( 90 )
+var ret = parent1.rotation()
 if (value != ret ) {
 	cc.log('Error in setRotation / rotation');
 }
 
 value = 5;
-a.setScaleX( 5 );
-ret = a.scaleX();
+parent1.setScaleX( 5 );
+ret = parent1.scaleX();
 if (value != ret) {
 	cc.log('Error in setScaleX / scaleX ');
 }
@@ -67,20 +68,18 @@ var s = new cc.Sprite.spriteWithFile("grossini.png");
 
 s.setColor( ccc3(255,0,0) );
 
-a.setPosition( ccp(100,200) );
+parent1.setPosition( ccp(100,200) );
 
-p = a.position();
+p = parent1.position();
 cc.log('position is: ' + p[0] + ', ' + p[1] )
 
-a.onEnter = function() {
+parent1.onEnter = function() {
 	cc.log("On Enter called");
 }
 
-var action = new cc.RotateBy();
-action.initWithDurationAngle(2, 360 );
+var action = new cc.RotateBy.actionWithDurationAngle(2, 360 );
 
-var action2 = new cc.ScaleBy()
-action2.initWithDurationScale(4, 0.2 );
+var action2 = new cc.ScaleTo.actionWithDurationScale(4, 0.2 );
 
 //
 //var action2 = new cc.RotateBy();
@@ -95,12 +94,19 @@ action2.initWithDurationScale(4, 0.2 );
 s.runAction( action )
 s.runAction( action2 )
 
-a.addChild( s );
+parent1.addChild( s );
+
+// Labels
+var l = new cc.LabelBMFont.labelWithStringFntfile("Testing Javascript", "konqa32.fnt");
+l.setPosition( ccp(200,100 ) );
+parent2.addChild( l )
+
 
 //cc.addToRunningScene( a );
 
 var director = cc.Director.sharedDirector();
 var scene = director.runningScene();
 cc.log( scene.position() );
-scene.addChild( a );
+scene.addChild( parent1 );
+scene.addChild( parent2 );
 
