@@ -11,6 +11,7 @@
 #import "ScriptingCore.h"   
 
 #import "js_bindings_CCFiniteTimeAction.h"
+#import "js_bindings_cocos2d.h"
 
 
 JSClass* JSPROXY_CCFiniteTimeAction_class = NULL;
@@ -94,8 +95,8 @@ JSBool JSPROXY_CCFiniteTimeAction_setDuration_(JSContext *cx, uint32_t argc, jsv
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	NSCAssert( argc == 1, @"Invalid number of arguments" );
-	vp = JS_ARGV(cx,vp);
-	double arg0; JS_ValueToNumber( cx, *vp++, &arg0 );
+	jsval *argvp = JS_ARGV(cx,vp);
+	double arg0; JS_ValueToNumber( cx, *argvp++, &arg0 );
 
 	CCFiniteTimeAction *real = (CCFiniteTimeAction*) [proxy realObj];
 	[real setDuration:(ccTime)arg0  ];
