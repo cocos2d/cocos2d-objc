@@ -204,17 +204,17 @@ JSBool JSPROXY_CCAction_update_(JSContext *cx, uint32_t argc, jsval *vp) {
 		{0, 0, 0, 0, 0}
 	};
 	static JSFunctionSpec funcs[] = {
-		JS_FN("init", JSPROXY_CCAction_init, 1, JSPROP_PERMANENT | JSPROP_SHARED),
-		JS_FN("isDone", JSPROXY_CCAction_isDone, 1, JSPROP_PERMANENT | JSPROP_SHARED),
-		JS_FN("setTag", JSPROXY_CCAction_setTag_, 1, JSPROP_PERMANENT | JSPROP_SHARED),
-		JS_FN("step", JSPROXY_CCAction_step_, 1, JSPROP_PERMANENT | JSPROP_SHARED),
-		JS_FN("stop", JSPROXY_CCAction_stop, 1, JSPROP_PERMANENT | JSPROP_SHARED),
-		JS_FN("tag", JSPROXY_CCAction_tag, 1, JSPROP_PERMANENT | JSPROP_SHARED),
-		JS_FN("update", JSPROXY_CCAction_update_, 1, JSPROP_PERMANENT | JSPROP_SHARED),
+		JS_FN("init", JSPROXY_CCAction_init, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("isDone", JSPROXY_CCAction_isDone, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("setTag", JSPROXY_CCAction_setTag_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("step", JSPROXY_CCAction_step_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("stop", JSPROXY_CCAction_stop, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("tag", JSPROXY_CCAction_tag, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("update", JSPROXY_CCAction_update_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
-		JS_FN("action", JSPROXY_CCAction_action, 1, JSPROP_PERMANENT | JSPROP_SHARED),
+		JS_FN("action", JSPROXY_CCAction_action, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSFUN_CONSTRUCTOR),
 		JS_FS_END
 	};
 

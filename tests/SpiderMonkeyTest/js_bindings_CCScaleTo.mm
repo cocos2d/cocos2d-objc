@@ -148,13 +148,13 @@ JSBool JSPROXY_CCScaleTo_initWithDuration_scaleX_scaleY_(JSContext *cx, uint32_t
 		{0, 0, 0, 0, 0}
 	};
 	static JSFunctionSpec funcs[] = {
-		JS_FN("initWithDurationScale", JSPROXY_CCScaleTo_initWithDuration_scale_, 1, JSPROP_PERMANENT | JSPROP_SHARED),
-		JS_FN("initWithDurationScalexScaley", JSPROXY_CCScaleTo_initWithDuration_scaleX_scaleY_, 1, JSPROP_PERMANENT | JSPROP_SHARED),
+		JS_FN("initWithDurationScale", JSPROXY_CCScaleTo_initWithDuration_scale_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("initWithDurationScalexScaley", JSPROXY_CCScaleTo_initWithDuration_scaleX_scaleY_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
-		JS_FN("actionWithDurationScale", JSPROXY_CCScaleTo_actionWithDuration_scale_, 1, JSPROP_PERMANENT | JSPROP_SHARED),
-		JS_FN("actionWithDurationScalexScaley", JSPROXY_CCScaleTo_actionWithDuration_scaleX_scaleY_, 1, JSPROP_PERMANENT | JSPROP_SHARED),
+		JS_FN("actionWithDurationScale", JSPROXY_CCScaleTo_actionWithDuration_scale_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSFUN_CONSTRUCTOR),
+		JS_FN("actionWithDurationScalexScaley", JSPROXY_CCScaleTo_actionWithDuration_scaleX_scaleY_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSFUN_CONSTRUCTOR),
 		JS_FS_END
 	};
 

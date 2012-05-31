@@ -161,14 +161,14 @@ JSBool JSPROXY_CCActionInterval_reverse(JSContext *cx, uint32_t argc, jsval *vp)
 		{0, 0, 0, 0, 0}
 	};
 	static JSFunctionSpec funcs[] = {
-		JS_FN("elapsed", JSPROXY_CCActionInterval_elapsed, 1, JSPROP_PERMANENT | JSPROP_SHARED),
-		JS_FN("initWithDuration", JSPROXY_CCActionInterval_initWithDuration_, 1, JSPROP_PERMANENT | JSPROP_SHARED),
-		JS_FN("isDone", JSPROXY_CCActionInterval_isDone, 1, JSPROP_PERMANENT | JSPROP_SHARED),
-		JS_FN("reverse", JSPROXY_CCActionInterval_reverse, 1, JSPROP_PERMANENT | JSPROP_SHARED),
+		JS_FN("elapsed", JSPROXY_CCActionInterval_elapsed, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("initWithDuration", JSPROXY_CCActionInterval_initWithDuration_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("isDone", JSPROXY_CCActionInterval_isDone, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("reverse", JSPROXY_CCActionInterval_reverse, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
-		JS_FN("actionWithDuration", JSPROXY_CCActionInterval_actionWithDuration_, 1, JSPROP_PERMANENT | JSPROP_SHARED),
+		JS_FN("actionWithDuration", JSPROXY_CCActionInterval_actionWithDuration_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSFUN_CONSTRUCTOR),
 		JS_FS_END
 	};
 

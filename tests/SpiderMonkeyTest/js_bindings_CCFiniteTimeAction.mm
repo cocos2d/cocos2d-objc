@@ -124,9 +124,9 @@ JSBool JSPROXY_CCFiniteTimeAction_setDuration_(JSContext *cx, uint32_t argc, jsv
 		{0, 0, 0, 0, 0}
 	};
 	static JSFunctionSpec funcs[] = {
-		JS_FN("duration", JSPROXY_CCFiniteTimeAction_duration, 1, JSPROP_PERMANENT | JSPROP_SHARED),
-		JS_FN("reverse", JSPROXY_CCFiniteTimeAction_reverse, 1, JSPROP_PERMANENT | JSPROP_SHARED),
-		JS_FN("setDuration", JSPROXY_CCFiniteTimeAction_setDuration_, 1, JSPROP_PERMANENT | JSPROP_SHARED),
+		JS_FN("duration", JSPROXY_CCFiniteTimeAction_duration, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("reverse", JSPROXY_CCFiniteTimeAction_reverse, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("setDuration", JSPROXY_CCFiniteTimeAction_setDuration_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {

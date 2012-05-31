@@ -85,7 +85,7 @@ JSBool JSPROXY_CCScene_node(JSContext *cx, uint32_t argc, jsval *vp) {
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
-		JS_FN("node", JSPROXY_CCScene_node, 1, JSPROP_PERMANENT | JSPROP_SHARED),
+		JS_FN("node", JSPROXY_CCScene_node, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSFUN_CONSTRUCTOR),
 		JS_FS_END
 	};
 

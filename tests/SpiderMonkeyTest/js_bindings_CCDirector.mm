@@ -622,7 +622,7 @@ JSBool JSPROXY_CCDirector_setProjection_(JSContext *cx, uint32_t argc, jsval *vp
 JSBool JSPROXY_CCDirector_sharedDirector(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( argc == 0, @"Invalid number of arguments" );
 
-	CCDirector *real = [CCDirector sharedDirector ];
+	CCDirector* real = [CCDirector sharedDirector ];
 
 	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCDirector_class, JSPROXY_CCDirector_object, NULL);
 	JSPROXY_CCDirector *ret_proxy = [[JSPROXY_CCDirector alloc] initWithJSObject:jsobj];
@@ -702,43 +702,43 @@ JSBool JSPROXY_CCDirector_totalFrames(JSContext *cx, uint32_t argc, jsval *vp) {
 		{0, 0, 0, 0, 0}
 	};
 	static JSFunctionSpec funcs[] = {
-		JS_FN("animationInterval", JSPROXY_CCDirector_animationInterval, 1, JSPROP_PERMANENT | JSPROP_SHARED),
-		JS_FN("convertToGL", JSPROXY_CCDirector_convertToGL_, 1, JSPROP_PERMANENT | JSPROP_SHARED),
-		JS_FN("convertToUI", JSPROXY_CCDirector_convertToUI_, 1, JSPROP_PERMANENT | JSPROP_SHARED),
-		JS_FN("createStatsLabel", JSPROXY_CCDirector_createStatsLabel, 1, JSPROP_PERMANENT | JSPROP_SHARED),
-		JS_FN("displayStats", JSPROXY_CCDirector_displayStats, 1, JSPROP_PERMANENT | JSPROP_SHARED),
-		JS_FN("drawScene", JSPROXY_CCDirector_drawScene, 1, JSPROP_PERMANENT | JSPROP_SHARED),
-		JS_FN("end", JSPROXY_CCDirector_end, 1, JSPROP_PERMANENT | JSPROP_SHARED),
-		JS_FN("getZEye", JSPROXY_CCDirector_getZEye, 1, JSPROP_PERMANENT | JSPROP_SHARED),
-		JS_FN("isAnimating", JSPROXY_CCDirector_isAnimating, 1, JSPROP_PERMANENT | JSPROP_SHARED),
-		JS_FN("isPaused", JSPROXY_CCDirector_isPaused, 1, JSPROP_PERMANENT | JSPROP_SHARED),
-		JS_FN("nextDeltaTimeZero", JSPROXY_CCDirector_nextDeltaTimeZero, 1, JSPROP_PERMANENT | JSPROP_SHARED),
-		JS_FN("pause", JSPROXY_CCDirector_pause, 1, JSPROP_PERMANENT | JSPROP_SHARED),
-		JS_FN("popScene", JSPROXY_CCDirector_popScene, 1, JSPROP_PERMANENT | JSPROP_SHARED),
-		JS_FN("projection", JSPROXY_CCDirector_projection, 1, JSPROP_PERMANENT | JSPROP_SHARED),
-		JS_FN("purgeCachedData", JSPROXY_CCDirector_purgeCachedData, 1, JSPROP_PERMANENT | JSPROP_SHARED),
-		JS_FN("pushScene", JSPROXY_CCDirector_pushScene_, 1, JSPROP_PERMANENT | JSPROP_SHARED),
-		JS_FN("replaceScene", JSPROXY_CCDirector_replaceScene_, 1, JSPROP_PERMANENT | JSPROP_SHARED),
-		JS_FN("reshapeProjection", JSPROXY_CCDirector_reshapeProjection_, 1, JSPROP_PERMANENT | JSPROP_SHARED),
-		JS_FN("resume", JSPROXY_CCDirector_resume, 1, JSPROP_PERMANENT | JSPROP_SHARED),
-		JS_FN("runWithScene", JSPROXY_CCDirector_runWithScene_, 1, JSPROP_PERMANENT | JSPROP_SHARED),
-		JS_FN("runningScene", JSPROXY_CCDirector_runningScene, 1, JSPROP_PERMANENT | JSPROP_SHARED),
-		JS_FN("secondsPerFrame", JSPROXY_CCDirector_secondsPerFrame, 1, JSPROP_PERMANENT | JSPROP_SHARED),
-		JS_FN("sendCleanupToScene", JSPROXY_CCDirector_sendCleanupToScene, 1, JSPROP_PERMANENT | JSPROP_SHARED),
-		JS_FN("setAlphaBlending", JSPROXY_CCDirector_setAlphaBlending_, 1, JSPROP_PERMANENT | JSPROP_SHARED),
-		JS_FN("setAnimationInterval", JSPROXY_CCDirector_setAnimationInterval_, 1, JSPROP_PERMANENT | JSPROP_SHARED),
-		JS_FN("setDepthTest", JSPROXY_CCDirector_setDepthTest_, 1, JSPROP_PERMANENT | JSPROP_SHARED),
-		JS_FN("setDisplayStats", JSPROXY_CCDirector_setDisplayStats_, 1, JSPROP_PERMANENT | JSPROP_SHARED),
-		JS_FN("setGLDefaultValues", JSPROXY_CCDirector_setGLDefaultValues, 1, JSPROP_PERMANENT | JSPROP_SHARED),
-		JS_FN("setNextDeltaTimeZero", JSPROXY_CCDirector_setNextDeltaTimeZero_, 1, JSPROP_PERMANENT | JSPROP_SHARED),
-		JS_FN("setProjection", JSPROXY_CCDirector_setProjection_, 1, JSPROP_PERMANENT | JSPROP_SHARED),
-		JS_FN("startAnimation", JSPROXY_CCDirector_startAnimation, 1, JSPROP_PERMANENT | JSPROP_SHARED),
-		JS_FN("stopAnimation", JSPROXY_CCDirector_stopAnimation, 1, JSPROP_PERMANENT | JSPROP_SHARED),
-		JS_FN("totalFrames", JSPROXY_CCDirector_totalFrames, 1, JSPROP_PERMANENT | JSPROP_SHARED),
+		JS_FN("animationInterval", JSPROXY_CCDirector_animationInterval, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("convertToGL", JSPROXY_CCDirector_convertToGL_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("convertToUI", JSPROXY_CCDirector_convertToUI_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("createStatsLabel", JSPROXY_CCDirector_createStatsLabel, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("displayStats", JSPROXY_CCDirector_displayStats, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("drawScene", JSPROXY_CCDirector_drawScene, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("end", JSPROXY_CCDirector_end, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("getZEye", JSPROXY_CCDirector_getZEye, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("isAnimating", JSPROXY_CCDirector_isAnimating, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("isPaused", JSPROXY_CCDirector_isPaused, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("nextDeltaTimeZero", JSPROXY_CCDirector_nextDeltaTimeZero, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("pause", JSPROXY_CCDirector_pause, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("popScene", JSPROXY_CCDirector_popScene, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("projection", JSPROXY_CCDirector_projection, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("purgeCachedData", JSPROXY_CCDirector_purgeCachedData, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("pushScene", JSPROXY_CCDirector_pushScene_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("replaceScene", JSPROXY_CCDirector_replaceScene_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("reshapeProjection", JSPROXY_CCDirector_reshapeProjection_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("resume", JSPROXY_CCDirector_resume, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("runWithScene", JSPROXY_CCDirector_runWithScene_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("runningScene", JSPROXY_CCDirector_runningScene, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("secondsPerFrame", JSPROXY_CCDirector_secondsPerFrame, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("sendCleanupToScene", JSPROXY_CCDirector_sendCleanupToScene, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("setAlphaBlending", JSPROXY_CCDirector_setAlphaBlending_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("setAnimationInterval", JSPROXY_CCDirector_setAnimationInterval_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("setDepthTest", JSPROXY_CCDirector_setDepthTest_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("setDisplayStats", JSPROXY_CCDirector_setDisplayStats_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("setGLDefaultValues", JSPROXY_CCDirector_setGLDefaultValues, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("setNextDeltaTimeZero", JSPROXY_CCDirector_setNextDeltaTimeZero_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("setProjection", JSPROXY_CCDirector_setProjection_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("startAnimation", JSPROXY_CCDirector_startAnimation, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("stopAnimation", JSPROXY_CCDirector_stopAnimation, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("totalFrames", JSPROXY_CCDirector_totalFrames, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
-		JS_FN("sharedDirector", JSPROXY_CCDirector_sharedDirector, 1, JSPROP_PERMANENT | JSPROP_SHARED),
+		JS_FN("sharedDirector", JSPROXY_CCDirector_sharedDirector, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
 		JS_FS_END
 	};
 

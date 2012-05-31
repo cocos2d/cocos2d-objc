@@ -106,11 +106,11 @@ JSBool JSPROXY_CCRotateBy_initWithDuration_angle_(JSContext *cx, uint32_t argc, 
 		{0, 0, 0, 0, 0}
 	};
 	static JSFunctionSpec funcs[] = {
-		JS_FN("initWithDurationAngle", JSPROXY_CCRotateBy_initWithDuration_angle_, 1, JSPROP_PERMANENT | JSPROP_SHARED),
+		JS_FN("initWithDurationAngle", JSPROXY_CCRotateBy_initWithDuration_angle_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
-		JS_FN("actionWithDurationAngle", JSPROXY_CCRotateBy_actionWithDuration_angle_, 1, JSPROP_PERMANENT | JSPROP_SHARED),
+		JS_FN("actionWithDurationAngle", JSPROXY_CCRotateBy_actionWithDuration_angle_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSFUN_CONSTRUCTOR),
 		JS_FS_END
 	};
 
