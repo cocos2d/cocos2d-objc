@@ -6215,6 +6215,7 @@
 		A0BCCB981577025200CCE291 /* js_bindings_CCScaleBy.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = js_bindings_CCScaleBy.mm; sourceTree = "<group>"; };
 		A0BCCB991577025300CCE291 /* js_bindings_CCScaleTo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_CCScaleTo.h; sourceTree = "<group>"; };
 		A0BCCB9A1577025300CCE291 /* js_bindings_CCScaleTo.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = js_bindings_CCScaleTo.mm; sourceTree = "<group>"; };
+		A0BCCB9F1577FA9E00CCE291 /* js_bindings_class_registration_cocos2d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_class_registration_cocos2d.h; sourceTree = "<group>"; };
 		A0BE62FA140552BD00DAA336 /* CCVertex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCVertex.h; sourceTree = "<group>"; };
 		A0BE62FB140552BD00DAA336 /* CCVertex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCVertex.m; sourceTree = "<group>"; };
 		A0C1EDC81562F979000709DA /* ccCArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ccCArray.m; sourceTree = "<group>"; };
@@ -7705,6 +7706,7 @@
 			children = (
 				A0CBEC2D156C2812009D35B4 /* javascript-spidermonkey */,
 				A0BCCB921576F9B700CCE291 /* js_bindings_cocos2d.h */,
+				A0BCCB9F1577FA9E00CCE291 /* js_bindings_class_registration_cocos2d.h */,
 				A0CBEC2F156C2903009D35B4 /* js_bindings_NSObject.h */,
 				A0CBEC30156C2904009D35B4 /* js_bindings_NSObject.mm */,
 				A0BCCB931577025000CCE291 /* js_bindings_CCMoveBy.h */,

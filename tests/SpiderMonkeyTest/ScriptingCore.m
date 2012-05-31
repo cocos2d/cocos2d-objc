@@ -140,31 +140,21 @@ JSBool ScriptingCore_addToRunningScene(JSContext *cx, uint32_t argc, jsval *vp)
 			CCLOGWARN(@"js error");
 		}
 		// create the cocos namespace
-		JSObject *cocos = JS_NewObject( _cx, NULL, NULL, NULL);
-		jsval cocosVal = OBJECT_TO_JSVAL(cocos);
+		JSObject *cocos2d = JS_NewObject( _cx, NULL, NULL, NULL);
+		jsval cocosVal = OBJECT_TO_JSVAL(cocos2d);
 		JS_SetProperty(_cx, _object, "cc", &cocosVal);
 
 		// register some global functions
-		JS_DefineFunction(_cx, cocos, "log", ScriptingCore_log, 0, JSPROP_READONLY | JSPROP_PERMANENT);
-		JS_DefineFunction(_cx, cocos, "executeScript", ScriptingCore_executeScript, 1, JSPROP_READONLY | JSPROP_PERMANENT);
-		JS_DefineFunction(_cx, cocos, "addGCRootObject", ScriptingCore_addRootJS, 1, JSPROP_READONLY | JSPROP_PERMANENT);
-		JS_DefineFunction(_cx, cocos, "removeGCRootObject", ScriptingCore_removeRootJS, 1, JSPROP_READONLY | JSPROP_PERMANENT);
-		JS_DefineFunction(_cx, cocos, "forceGC", ScriptingCore_forceGC, 0, JSPROP_READONLY | JSPROP_PERMANENT);
-		JS_DefineFunction(_cx, cocos, "addToRunningScene", ScriptingCore_addToRunningScene, 1, JSPROP_READONLY | JSPROP_PERMANENT);
+		JS_DefineFunction(_cx, cocos2d, "log", ScriptingCore_log, 0, JSPROP_READONLY | JSPROP_PERMANENT);
+		JS_DefineFunction(_cx, cocos2d, "executeScript", ScriptingCore_executeScript, 1, JSPROP_READONLY | JSPROP_PERMANENT);
+		JS_DefineFunction(_cx, cocos2d, "addGCRootObject", ScriptingCore_addRootJS, 1, JSPROP_READONLY | JSPROP_PERMANENT);
+		JS_DefineFunction(_cx, cocos2d, "removeGCRootObject", ScriptingCore_removeRootJS, 1, JSPROP_READONLY | JSPROP_PERMANENT);
+		JS_DefineFunction(_cx, cocos2d, "forceGC", ScriptingCore_forceGC, 0, JSPROP_READONLY | JSPROP_PERMANENT);
+		JS_DefineFunction(_cx, cocos2d, "addToRunningScene", ScriptingCore_addToRunningScene, 1, JSPROP_READONLY | JSPROP_PERMANENT);
 
 				
 		// Register classes: base classes should be registered first
-		[JSPROXY_NSObject createClassWithContext:_cx object:cocos name:@"Object"];
-		[JSPROXY_CCNode createClassWithContext:_cx object:cocos name:@"Node"];
-		[JSPROXY_CCSprite createClassWithContext:_cx object:cocos name:@"Sprite"];
-		[JSPROXY_CCScene createClassWithContext:_cx object:cocos name:@"Scene"];
-		[JSPROXY_CCLayer createClassWithContext:_cx object:cocos name:@"Layer"];
-		
-		[JSPROXY_CCAction createClassWithContext:_cx object:cocos name:@"Action"];
-		[JSPROXY_CCRotateBy createClassWithContext:_cx object:cocos name:@"RotateBy"];
-		[JSPROXY_CCScaleBy createClassWithContext:_cx object:cocos name:@"ScaleBy"];
-
-		[JSPROXY_CCDirector createClassWithContext:_cx object:cocos name:@"Director"];
+#import "js_bindings_class_registration_cocos2d.h"
 
 	}
 	
