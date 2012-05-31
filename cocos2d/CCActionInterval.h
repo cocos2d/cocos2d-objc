@@ -196,7 +196,7 @@ Example:
 }
 /** creates the action */
 +(id) actionWithDuration:(ccTime)t skewX:(float)sx skewY:(float)sy;
-/** initializes the action */
+/** initializes the action with duration, skew X and skew Y */
 -(id) initWithDuration:(ccTime)t skewX:(float)sx skewY:(float)sy;
 @end
 
@@ -206,6 +206,8 @@ Example:
 @interface CCSkewBy : CCSkewTo <NSCopying>
 {
 }
+/** initializes the action with duration, skew X and skew Y */
+-(id) initWithDuration:(ccTime)t skewX:(float)sx skewY:(float)sy;
 @end
 
 /** Moves a CCNode object simulating a parabolic jump movement by modifying its position attribute.
@@ -228,6 +230,8 @@ Example:
  @interface CCJumpTo : CCJumpBy <NSCopying>
 {
 }
+// XXX: Added to prevent bug on BridgeSupport
+-(void) startWithTarget:(CCNode *)aTarget;
 @end
 
 /** bezier configuration structure
@@ -262,6 +266,8 @@ typedef struct _ccBezierConfig {
 @interface CCBezierTo : CCBezierBy
 {
 }
+// XXX: Added to prevent bug on BridgeSupport
+-(void) startWithTarget:(CCNode *)aTarget;
 @end
 
 /** Scales a CCNode object to a zoom factor by modifying its scale attribute.
@@ -293,6 +299,8 @@ typedef struct _ccBezierConfig {
 @interface CCScaleBy : CCScaleTo <NSCopying>
 {
 }
+// XXX: Added to prevent bug on BridgeSupport
+-(void) startWithTarget:(CCNode *)aTarget;
 @end
 
 /** Blinks a CCNode object by modifying its visible attribute
@@ -313,6 +321,8 @@ typedef struct _ccBezierConfig {
 @interface CCFadeIn : CCActionInterval <NSCopying>
 {
 }
+// XXX: Added to prevent bug on BridgeSupport
+-(void) update:(ccTime)dt;
 @end
 
 /** Fades Out an object that implements the CCRGBAProtocol protocol. It modifies the opacity from 255 to 0.
@@ -321,6 +331,8 @@ typedef struct _ccBezierConfig {
 @interface CCFadeOut : CCActionInterval <NSCopying>
 {
 }
+// XXX: Added to prevent bug on BridgeSupport
+-(void) update:(ccTime)dt;
 @end
 
 /** Fades an object that implements the CCRGBAProtocol protocol. It modifies the opacity from the current value to a custom one.
@@ -371,6 +383,8 @@ typedef struct _ccBezierConfig {
 @interface CCDelayTime : CCActionInterval <NSCopying>
 {
 }
+// XXX: Added to prevent bug on BridgeSupport
+-(void) update:(ccTime)dt;
 @end
 
 /** Executes an action in reverse order, from time=duration to time=0
