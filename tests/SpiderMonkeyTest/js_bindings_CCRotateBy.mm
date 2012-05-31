@@ -49,8 +49,9 @@ void JSPROXY_CCRotateBy_finalize(JSContext *cx, JSObject *obj)
 // Ret value: CCRotateBy
 JSBool JSPROXY_CCRotateBy_actionWithDuration_angle_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( argc == 2, @"Invalid number of arguments" );
-	double arg0; JS_ValueToNumber( cx, vp[2], &arg0 );
-	double arg1; JS_ValueToNumber( cx, vp[3], &arg1 );
+	vp = JS_ARGV(cx,vp);
+	double arg0; JS_ValueToNumber( cx, *vp++, &arg0 );
+	double arg1; JS_ValueToNumber( cx, *vp++, &arg1 );
 
 	CCRotateBy *real = [CCRotateBy actionWithDuration:(ccTime)arg0 angle:(float)arg1  ];
 
@@ -72,8 +73,9 @@ JSBool JSPROXY_CCRotateBy_initWithDuration_angle_(JSContext *cx, uint32_t argc, 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	NSCAssert( argc == 2, @"Invalid number of arguments" );
-	double arg0; JS_ValueToNumber( cx, vp[2], &arg0 );
-	double arg1; JS_ValueToNumber( cx, vp[3], &arg1 );
+	vp = JS_ARGV(cx,vp);
+	double arg0; JS_ValueToNumber( cx, *vp++, &arg0 );
+	double arg1; JS_ValueToNumber( cx, *vp++, &arg1 );
 
 	CCRotateBy *real = [[CCRotateBy alloc] initWithDuration:(ccTime)arg0 angle:(float)arg1  ];
 	[proxy setRealObj: real];

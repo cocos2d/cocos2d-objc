@@ -491,19 +491,19 @@ void %s_finalize(JSContext *cx, JSObject *obj)
 
     # Special case for string to NSString generator
     def generate_argument_string( self, i, arg_js_type, arg_declared_type ):
-        self.mm_file.write( '\tJSString *tmp_arg%d = JS_ValueToString( cx, vp[%d] );\n\tNSString *arg%d = [NSString stringWithUTF8String: JS_EncodeString(cx, tmp_arg%d)];\n' % ( i, i+2, i, i ) )
+        self.mm_file.write( '\tJSString *tmp_arg%d = JS_ValueToString( cx, *vp++ );\n\tNSString *arg%d = [NSString stringWithUTF8String: JS_EncodeString(cx, tmp_arg%d)];\n' % ( i, i, i ) )
 
     # Special case for objects
     def generate_argument_object( self, i, arg_js_type, arg_declared_type ):
         object_template = '''
 	JSObject *tmp_arg%d;
-	JS_ValueToObject( cx, vp[%d], &tmp_arg%d );
+	JS_ValueToObject( cx, *vp++, &tmp_arg%d );
 	%s proxy_arg%d = (%s) JS_GetPrivate( tmp_arg%d ); 
 	%s arg%d = (%s) [proxy_arg%d realObj];
 '''
         proxy_class_name = PROXY_PREFIX + arg_declared_type
         self.mm_file.write( object_template % (i,
-                        i+2, i,
+	                i,
                         proxy_class_name , i, proxy_class_name, i,
                         arg_declared_type, i, arg_declared_type, i ) )
 
@@ -513,7 +513,7 @@ void %s_finalize(JSContext *cx, JSObject *obj)
     def generate_argument_struct_cgpoint( self, i, arg_js_type, arg_declared_type ):
         template = '''
 	JSObject *tmp_arg%d;
-	JS_ValueToObject( cx, vp[%d], &tmp_arg%d );
+	JS_ValueToObject( cx, *vp++, &tmp_arg%d );
 	NSCAssert( JS_GetTypedArrayByteLength( tmp_arg%d ) == 8, @"Invalid length");
 #ifdef __CC_PLATFORM_IOS
 	CGPoint arg%d = *(CGPoint*)JS_GetTypedArrayData( tmp_arg%d );
@@ -527,7 +527,7 @@ void %s_finalize(JSContext *cx, JSObject *obj)
         proxy_class_name = PROXY_PREFIX + arg_declared_type
                 
         self.mm_file.write( template % (i,
-                        i+2, i,
+	                i,
                         i,
                         i, i,
                         i, i, i,
@@ -537,7 +537,7 @@ void %s_finalize(JSContext *cx, JSObject *obj)
         # This template assumes that the types will be the same on all platforms (eg: 64 and 32-bit platforms)
         template = '''
 	JSObject *tmp_arg%d;
-	JS_ValueToObject( cx, vp[%d], &tmp_arg%d );
+	JS_ValueToObject( cx, *vp++, &tmp_arg%d );
 	%s arg%d = *(%s*)JS_GetTypedArrayData( tmp_arg%d);
 '''
         special_case_structs = { 'CGPoint' : self.generate_argument_struct_cgpoint,
@@ -549,7 +549,7 @@ void %s_finalize(JSContext *cx, JSObject *obj)
             special_case_structs[ arg_declared_type ]( i, arg_js_type, arg_declared_type )
         else:
             self.mm_file.write( template % (i,
-                            i+2, i,
+                            i,
                             arg_declared_type, i, arg_declared_type, i ) )
 
 
@@ -681,12 +681,14 @@ JSBool %s_%s(JSContext *cx, uint32_t argc, jsval *vp) {
         self.generate_method_prefix( class_name, converted_name, num_of_args, method_type )
 
         for i,arg in enumerate(args_js_type):
+	    
+	    # First  time
+	    if i==0:
+		self.mm_file.write('\tvp = JS_ARGV(cx,vp);\n')
 
-            # XXX: Hack. This "+2" seems to do the trick... don't know why.
-            # XXX: FRAGILE CODE. MY BREAK IN FUTURE VERSIONS OF SPIDERMONKEY
             if arg in js_types_conversions:
                 t = js_types_conversions[arg]
-                self.mm_file.write( '\t%s arg%d; %s( cx, vp[%d], &arg%d );\n' % ( t[0], i, t[1], i+2, i ) )
+                self.mm_file.write( '\t%s arg%d; %s( cx, *vp++, &arg%d );\n' % ( t[0], i, t[1], i ) )
             elif arg in js_special_type_conversions:
                 js_special_type_conversions[arg]( i, arg, args_declared_type[i] )
             else:
