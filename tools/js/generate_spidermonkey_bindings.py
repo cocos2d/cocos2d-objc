@@ -226,36 +226,47 @@ JSObject* %s_object = NULL;
 
         # 1: JSPROXY_CCNode,
         # 2: JSPROXY_CCNode, 3: JSPROXY_CCNode
+        # 6: JSPROXY_CCNode,  7: JSPROXY_CCNode
+        # 8: possible callback code
         constructor_template = ''' // Constructor
 JSBool %s_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JSObject *jsobj = JS_NewObject(cx, %s_class, %s_object, NULL);
 
+    %s *proxy = [[%s alloc] initWithJSObject:jsobj];
+
+    JS_SetPrivate(jsobj, proxy);
     JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
+    %s
+    
     return JS_TRUE;
 }
 '''
         proxy_class_name = '%s%s' % (PROXY_PREFIX, class_name )
         self.mm_file.write( constructor_globals % ( proxy_class_name, proxy_class_name ) )
-        self.mm_file.write( constructor_template % ( proxy_class_name, proxy_class_name, proxy_class_name ) )
+        self.mm_file.write( constructor_template % ( proxy_class_name, proxy_class_name, proxy_class_name, proxy_class_name, proxy_class_name, '/* no callbacks */' ) )
 
     def generate_destructor( self, class_name ):
         # 1: JSPROXY_CCNode,
         # 2: JSPROXY_CCNode, 3: JSPROXY_CCNode
+        # 4: possible callback code
         destructor_template = '''
 // Destructor
 void %s_finalize(JSContext *cx, JSObject *obj)
 {
-	%s *real= (%s*)JS_GetPrivate(obj);
-	if (real) {
-		CCLOGINFO(@"spidermonkey: deallocing %%@", real);	
-		[real release];
+	%s *pt = (%s*)JS_GetPrivate(obj);
+	if (pt) {
+		// id real = [pt realObj];
+	
+		%s
+
+		[pt release];
 	}
 }
 '''
         proxy_class_name = '%s%s' % (PROXY_PREFIX, class_name )
-        self.mm_file.write( destructor_template % ( proxy_class_name, proxy_class_name, proxy_class_name) )
+        self.mm_file.write( destructor_template % ( proxy_class_name, proxy_class_name, proxy_class_name, '/* no callbacks */' ) )
 
     #
     # Method generator functions
@@ -264,25 +275,23 @@ void %s_finalize(JSContext *cx, JSObject *obj)
 
         args = selector_name.split(':')
 
-	prefix_class_name = PROXY_PREFIX + class_name 
-
         if method_type == METHOD_INIT:
-            prefix = '\treal = [[%s alloc] ' % prefix_class_name
-            suffix = '\n\tJS_SetPrivate(jsthis, real);'
+            prefix = '\t%s *real = [[%s alloc] ' % (class_name, class_name )
+            suffix = '\n\t[proxy setRealObj: real];\n\t[real release];\n'
         elif method_type == METHOD_REGULAR:
-            prefix = '\t'
+            prefix = '\t%s *real = (%s*) [proxy realObj];\n\t' % (class_name, class_name)
             suffix = ''
             if ret_declared_type:
                 prefix = prefix + 'ret_val = '
             prefix = prefix + '[real '
         elif method_type == METHOD_CONSTRUCTOR:
-            prefix = '\t%s *real = [%s ' % (prefix_class_name, prefix_class_name )
-            suffix = '\n\t[real retain];'
+            prefix = '\t%s *real = [%s ' % (class_name, class_name )
+            suffix = ''
         elif method_type == METHOD_CLASS:
 	    if not ret_declared_type or ret_declared_type == 'void':
-		prefix = '\t[%s ' % (prefix_class_name)
+		prefix = '\t[%s ' % (class_name)
 	    else:
-		prefix = '\t%s real = [%s ' % (ret_declared_type, prefix_class_name )
+		prefix = '\t%s real = [%s ' % (ret_declared_type, class_name )
             suffix = ''
         else:
             raise Exception('Invalid method type')
@@ -312,7 +321,9 @@ void %s_finalize(JSContext *cx, JSObject *obj)
 
         object_template = '''
 	JSObject *jsobj = JS_NewObject(cx, %s_class, %s_object, NULL);
-	JS_SetPrivate(jsobj, %s);
+	%s *ret_proxy = [[%s alloc] initWithJSObject:jsobj];
+	[ret_proxy setRealObj: %s];
+	JS_SetPrivate(jsobj, ret_proxy);
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 '''
         method_type = self.get_method_type( self.current_method ) 
@@ -320,6 +331,7 @@ void %s_finalize(JSContext *cx, JSObject *obj)
         ret_object = 'ret_val' if method_type==METHOD_REGULAR else 'real'
 
         return object_template % ( proxy_class_name, proxy_class_name,
+                                   proxy_class_name, proxy_class_name,
                                    ret_object )    
 
     # special case: returning String
@@ -331,7 +343,6 @@ void %s_finalize(JSContext *cx, JSObject *obj)
         return template
 
     def generate_retval_array( self, declared_type, js_type ):
-	raise Exception("Not Implemented")
         template = '''
 	JSObject *ret_obj = JS_NewArrayObject(cx, 0, NULL);
 	JS_SET_RVAL(cx, vp, STRING_TO_JSVAL(ret_obj) );
@@ -522,12 +533,14 @@ void %s_finalize(JSContext *cx, JSObject *obj)
         object_template = '''
 	JSObject *tmp_arg%d;
 	JS_ValueToObject( cx, *argvp++, &tmp_arg%d );
-	%s arg%d = (%s) JS_GetPrivate( tmp_arg%d ); 
+	%s proxy_arg%d = (%s) JS_GetPrivate( tmp_arg%d ); 
+	%s arg%d = (%s) [proxy_arg%d realObj];
 '''
         proxy_class_name = PROXY_PREFIX + arg_declared_type
         self.mm_file.write( object_template % (i,
                         i,
-                        proxy_class_name , i, proxy_class_name, i ) )
+                        proxy_class_name , i, proxy_class_name, i,
+                        arg_declared_type, i, arg_declared_type, i ) )
 
     # CGPoint needs an special case since its internal structure changes
     # on the platform. On Mac it uses doubles and on iOS it uses floats
@@ -612,7 +625,6 @@ void %s_finalize(JSContext *cx, JSObject *obj)
                 return JS_TRUE;
         }
 '''
-	raise Exception("Not Implemented")
         
     def generate_method_prefix( self, class_name, converted_name, num_of_args, method_type ):
         # JSPROXY_CCNode, setPosition
@@ -622,20 +634,19 @@ void %s_finalize(JSContext *cx, JSObject *obj)
 JSBool %s_%s(JSContext *cx, uint32_t argc, jsval *vp) {
 '''
 	template_init = '''
-	JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	%s *real = (%s*) JS_GetPrivate( jsthis );
-	NSCAssert( %sreal, @"Object not initialzied. error");
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( %s[proxy realObj], @"Object not initialzied. error");
 '''
 
-	proxy_class_name = PROXY_PREFIX + class_name
-
         # method name
-        self.mm_file.write( template_methodname % ( proxy_class_name, converted_name ) )
+        self.mm_file.write( template_methodname % ( PROXY_PREFIX+class_name, converted_name ) )
 
         # method asserts for instance methods
         if method_type == METHOD_INIT or method_type == METHOD_REGULAR:
             assert_init = '!' if method_type == METHOD_INIT else ''
-            self.mm_file.write( template_init % (proxy_class_name, proxy_class_name, assert_init) )
+            self.mm_file.write( template_init % assert_init )
 
         # Number of arguments
         method_assert_on_arguments = '\tNSCAssert( argc == %d, @"Invalid number of arguments" );\n'
@@ -751,6 +762,10 @@ JSBool %s_%s(JSContext *cx, uint32_t argc, jsval *vp) {
 
     def generate_mm_prefix( self ):
 	import_template = '''
+// needed for callbacks from objective-c to JS
+#import <objc/runtime.h>
+#import "JRSwizzle.h"
+
 #import "jstypedarray.h"
 #import "ScriptingCore.h"   
 
@@ -776,18 +791,15 @@ JSBool %s_%s(JSContext *cx, uint32_t argc, jsval *vp) {
     def generate_header( self, class_name, parent_name ):
         # JSPROXXY_CCNode
         # JSPROXXY_CCNode
-        # JSPROXY_CCNode, NSObject
+        # JSPROXY_CCNode, JSPROXY_NSObject
         header_template = '''
 extern JSObject *%s_object;
 extern JSClass *%s_class;
-void %s_createClass( JSContext* cx, JSObject* globalObj, const char* name );
 
-/* Callback class */
+/* Proxy class */
 @interface %s : %s
 {
-        JSObject *jsObject_;
 }
-@property (nonatomic, readwrite, assign) JSObject *jsObject;
 '''
         header_template_end = '''
 @end
@@ -802,28 +814,17 @@ void %s_createClass( JSContext* cx, JSObject* globalObj, const char* name );
 
         self.h_file.write( header_template % (  proxy_class_name,
                                                 proxy_class_name,
-	                                        proxy_class_name,
-                                                proxy_class_name, class_name ) )
+                                                proxy_class_name, PROXY_PREFIX + parent_name  ) )
         # callback code should be added here
         self.h_file.write( header_template_end )
 
-    def generate_implementation( self, class_name ):
-
-	proxy_class_name = '%s%s' % (PROXY_PREFIX, class_name )
-
-        self.mm_file.write( '\n@implementation %s\n@synthesize jsObject = jsObject_;\n' % proxy_class_name )
-
-	# XXX: Add callbacks here
-
-        self.mm_file.write( '\n@end\n' )
-	
-    def generate_createClass_function( self, class_name, parent_name, ok_methods ):
+    def generate_implementation( self, class_name, parent_name, ok_methods ):
         # 1-12: JSPROXY_CCNode
         implementation_template = '''
-void %s_createClass(JSContext *cx, JSObject* globalObj, const char* name )
++(void) createClassWithContext:(JSContext*)cx object:(JSObject*)globalObj name:(NSString*)name
 {
 	%s_class = (JSClass *)calloc(1, sizeof(JSClass));
-	%s_class->name = name;
+	%s_class->name = [name UTF8String];
 	%s_class->addProperty = JS_PropertyStub;
 	%s_class->delProperty = JS_PropertyStub;
 	%s_class->getProperty = JS_PropertyStub;
@@ -857,8 +858,9 @@ void %s_createClass(JSContext *cx, JSObject* globalObj, const char* name )
         proxy_class_name = '%s%s' % (PROXY_PREFIX, class_name )
         proxy_parent_name = '%s%s' % (PROXY_PREFIX, parent_name )
 
-        self.mm_file.write( implementation_template % ( proxy_class_name,
-	                                                proxy_class_name, proxy_class_name, proxy_class_name,
+        self.mm_file.write( '\n@implementation %s\n' % proxy_class_name )
+
+        self.mm_file.write( implementation_template % ( proxy_class_name, proxy_class_name, proxy_class_name,
                                                         proxy_class_name, proxy_class_name, proxy_class_name, 
                                                         proxy_class_name, proxy_class_name, proxy_class_name, 
                                                         proxy_class_name, proxy_class_name, proxy_class_name ) )
@@ -894,6 +896,8 @@ void %s_createClass(JSContext *cx, JSObject* globalObj, const char* name )
         self.mm_file.write( static_functions_template_end )
 
         self.mm_file.write( init_class_template % ( proxy_class_name, proxy_parent_name, proxy_class_name, proxy_class_name ) )
+
+        self.mm_file.write( '\n@end\n' )
 
     def generate_class_binding( self, class_name ):
 
@@ -939,11 +943,10 @@ void %s_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 	self.generate_pragma_mark( class_name, self.mm_file )
         self.generate_constructor( class_name )
         self.generate_destructor( class_name )
-	
+
         ok_methods = self.generate_methods( class_name, klass )
 
-	self.generate_createClass_function( class_name, parent_name, ok_methods )
-        self.generate_implementation( class_name )
+        self.generate_implementation( class_name, parent_name, ok_methods )
 
 	if not self.onefile:
 	    self.h_file.close()
@@ -971,7 +974,7 @@ void %s_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 	    if klass.startswith( prefix ):
 		klass_wo_prefix = klass[len(prefix) : ]
 	    
-	    self.class_registration_file.write('%s%s_createClass(_cx, %s, "%s");\n' % ( PROXY_PREFIX, klass, namespace, klass_wo_prefix ) )
+	    self.class_registration_file.write('\t[%s%s createClassWithContext:_cx object:%s name:@"%s"];\n' % ( PROXY_PREFIX, klass, namespace, klass_wo_prefix ) )
 	    self.classes_registered.append( klass )
 
     def generate_classes_registration( self ):
@@ -1036,9 +1039,8 @@ def help():
     print "{class to parse}\tName of the classes to generate. If no classes are "
     print "\t-n --namespace\tNamespace for the parsed objects. Default: None"
     print "\t-p --prefix\tPrefix of the classes to be parsed. The prefix will be removed for the JS Class. Default: ''"
-    print "\t-1 --onefile Whether or not to generate one file per class, or just one file for all the classes. Default: One file per class"
     print "\nExample:"
-    print "\t%s -b cocos2d-mac.bridgesupport -1 -p CC -n cocos2d -j cocos2d-mac_hierarchy.txt CCNode CCSprite" % sys.argv[0]
+    print "\t%s -b cocos2d-mac.bridgesupport -p CC -n cocos2d -j cocos2d-mac_hierarchy.txt CCNode CCSprite" % sys.argv[0]
     sys.exit(-1)
 
 if __name__ == "__main__":
