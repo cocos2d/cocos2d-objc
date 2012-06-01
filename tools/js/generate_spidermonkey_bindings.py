@@ -248,8 +248,10 @@ JSBool %s_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 void %s_finalize(JSContext *cx, JSObject *obj)
 {
 	%s *real= (%s*)JS_GetPrivate(obj);
-	if (real)
+	if (real) {
+		CCLOGINFO(@"spidermonkey: deallocing %%@", real);	
 		[real release];
+	}
 }
 '''
         proxy_class_name = '%s%s' % (PROXY_PREFIX, class_name )
