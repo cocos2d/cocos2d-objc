@@ -50,6 +50,7 @@ var parent1 = new cc.Node.node();
 var parent2 = new cc.Node.node();
 
 
+// Testing Rotation
 var value = 90
 parent1.setRotation( 90 )
 var ret = parent1.rotation()
@@ -57,6 +58,7 @@ if (value != ret ) {
 	cc.log('Error in setRotation / rotation');
 }
 
+// Testing ScaleX
 value = 5;
 parent1.setScaleX( 5 );
 ret = parent1.scaleX();
@@ -65,11 +67,10 @@ if (value != ret) {
 }
 
 var s = new cc.Sprite.spriteWithFile("grossini.png");
-
 s.setColor( ccc3(255,0,0) );
 
+// Testing Position
 parent1.setPosition( ccp(100,200) );
-
 p = parent1.position();
 cc.log('position is: ' + p[0] + ', ' + p[1] )
 
@@ -96,11 +97,11 @@ s.runAction( action2 )
 
 parent1.addChild( s );
 
+
 // Labels
 var l = new cc.LabelBMFont.labelWithStringFntfile("Testing Javascript", "konqa32.fnt");
 l.setPosition( ccp(200,100 ) );
 parent2.addChild( l )
-
 
 //cc.addToRunningScene( a );
 
@@ -109,4 +110,14 @@ var scene = director.runningScene();
 cc.log( scene.position() );
 scene.addChild( parent1 );
 scene.addChild( parent2 );
+
+// Testing GC #1. Global properties
+tmp = cc.Sprite.spriteWithFile("grossini.png");
+delete tmp;
+cc.forceGC();
+
+// Testing GC #2. Variables
+var tmp = cc.Sprite.spriteWithFile("grossini.png");
+tmp = null;
+cc.forceGC();
 
