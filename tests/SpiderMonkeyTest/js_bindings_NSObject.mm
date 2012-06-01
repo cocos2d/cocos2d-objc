@@ -31,9 +31,7 @@ void JSPROXY_NSObject_finalize(JSContext *cx, JSObject *obj)
 	JSPROXY_NSObject *pt = (JSPROXY_NSObject*)JS_GetPrivate(obj);
 	if (pt) {
 		
-		[pt release];
-		
-		JS_free(cx, pt);
+		[pt release];		
 	}
 }
 
@@ -109,7 +107,7 @@ JSBool JSPROXY_NSObject_init(JSContext *cx, uint32_t argc, jsval *vp) {
 -(void) dealloc
 {
 	// If the compiler gives you an error, you can safely remove the following line
-	CCLOGINFO(@"deallocing: %@", self);
+	CCLOGINFO(@"spidermonkey: deallocing %@", self);
 	
 	[_realObj release];
 	

@@ -257,11 +257,9 @@ void %s_finalize(JSContext *cx, JSObject *obj)
 {
 	%s *pt = (%s*)JS_GetPrivate(obj);
 	if (pt) {
-		// id real = [pt realObj];
-	
-		%s
+	        %s
 
-		[pt release];
+	        [pt release];
 	}
 }
 '''
@@ -793,8 +791,20 @@ JSBool %s_%s(JSContext *cx, uint32_t argc, jsval *vp) {
         # JSPROXXY_CCNode
         # JSPROXY_CCNode, JSPROXY_NSObject
         header_template = '''
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+void %s_createClass(JSContext *cx, JSObject* globalObj, const char* name );
+
 extern JSObject *%s_object;
 extern JSClass *%s_class;
+
+#ifdef __cplusplus
+}
+#endif
+
 
 /* Proxy class */
 @interface %s : %s
@@ -813,18 +823,29 @@ extern JSClass *%s_class;
 	self.generate_pragma_mark( class_name, self.h_file )
 
         self.h_file.write( header_template % (  proxy_class_name,
+	                                        proxy_class_name,
                                                 proxy_class_name,
                                                 proxy_class_name, PROXY_PREFIX + parent_name  ) )
         # callback code should be added here
         self.h_file.write( header_template_end )
 
-    def generate_implementation( self, class_name, parent_name, ok_methods ):
+    def generate_implementation( self, class_name ):
+
+	proxy_class_name = '%s%s' % (PROXY_PREFIX, class_name )
+
+        self.mm_file.write( '\n@implementation %s\n' % proxy_class_name )
+
+	# XXX: Add callbacks here
+
+        self.mm_file.write( '\n@end\n' )
+	
+    def generate_createClass_function( self, class_name, parent_name, ok_methods ):
         # 1-12: JSPROXY_CCNode
         implementation_template = '''
-+(void) createClassWithContext:(JSContext*)cx object:(JSObject*)globalObj name:(NSString*)name
+void %s_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	%s_class = (JSClass *)calloc(1, sizeof(JSClass));
-	%s_class->name = [name UTF8String];
+	%s_class->name = name;
 	%s_class->addProperty = JS_PropertyStub;
 	%s_class->delProperty = JS_PropertyStub;
 	%s_class->getProperty = JS_PropertyStub;
@@ -858,9 +879,8 @@ extern JSClass *%s_class;
         proxy_class_name = '%s%s' % (PROXY_PREFIX, class_name )
         proxy_parent_name = '%s%s' % (PROXY_PREFIX, parent_name )
 
-        self.mm_file.write( '\n@implementation %s\n' % proxy_class_name )
-
-        self.mm_file.write( implementation_template % ( proxy_class_name, proxy_class_name, proxy_class_name,
+        self.mm_file.write( implementation_template % ( proxy_class_name,
+	                                                proxy_class_name, proxy_class_name, proxy_class_name,
                                                         proxy_class_name, proxy_class_name, proxy_class_name, 
                                                         proxy_class_name, proxy_class_name, proxy_class_name, 
                                                         proxy_class_name, proxy_class_name, proxy_class_name ) )
@@ -896,8 +916,6 @@ extern JSClass *%s_class;
         self.mm_file.write( static_functions_template_end )
 
         self.mm_file.write( init_class_template % ( proxy_class_name, proxy_parent_name, proxy_class_name, proxy_class_name ) )
-
-        self.mm_file.write( '\n@end\n' )
 
     def generate_class_binding( self, class_name ):
 
@@ -946,7 +964,8 @@ extern JSClass *%s_class;
 
         ok_methods = self.generate_methods( class_name, klass )
 
-        self.generate_implementation( class_name, parent_name, ok_methods )
+	self.generate_createClass_function( class_name, parent_name, ok_methods )
+        self.generate_implementation( class_name )
 
 	if not self.onefile:
 	    self.h_file.close()
@@ -974,7 +993,7 @@ extern JSClass *%s_class;
 	    if klass.startswith( prefix ):
 		klass_wo_prefix = klass[len(prefix) : ]
 	    
-	    self.class_registration_file.write('\t[%s%s createClassWithContext:_cx object:%s name:@"%s"];\n' % ( PROXY_PREFIX, klass, namespace, klass_wo_prefix ) )
+	    self.class_registration_file.write('%s%s_createClass(_cx, %s, "%s");\n' % ( PROXY_PREFIX, klass, namespace, klass_wo_prefix ) )
 	    self.classes_registered.append( klass )
 
     def generate_classes_registration( self ):
