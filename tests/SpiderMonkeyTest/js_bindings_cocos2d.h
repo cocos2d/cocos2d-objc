@@ -11,11 +11,14 @@
 
 extern JSObject *JSPROXY_CCDirector_object;
 extern JSClass *JSPROXY_CCDirector_class;
+void JSPROXY_CCDirector_createClass( JSContext* cx, JSObject* globalObj, const char* name );
 
-/* Proxy class */
-@interface JSPROXY_CCDirector : JSPROXY_NSObject
+/* Callback class */
+@interface JSPROXY_CCDirector : CCDirector
 {
+        JSObject *jsObject_;
 }
+@property (nonatomic, readwrite, assign) JSObject *jsObject;
 
 @end
 
@@ -26,11 +29,14 @@ extern JSClass *JSPROXY_CCDirector_class;
 
 extern JSObject *JSPROXY_CCNode_object;
 extern JSClass *JSPROXY_CCNode_class;
+void JSPROXY_CCNode_createClass( JSContext* cx, JSObject* globalObj, const char* name );
 
-/* Proxy class */
-@interface JSPROXY_CCNode : JSPROXY_NSObject
+/* Callback class */
+@interface JSPROXY_CCNode : CCNode
 {
+        JSObject *jsObject_;
 }
+@property (nonatomic, readwrite, assign) JSObject *jsObject;
 
 @end
 
@@ -41,11 +47,14 @@ extern JSClass *JSPROXY_CCNode_class;
 
 extern JSObject *JSPROXY_CCSprite_object;
 extern JSClass *JSPROXY_CCSprite_class;
+void JSPROXY_CCSprite_createClass( JSContext* cx, JSObject* globalObj, const char* name );
 
-/* Proxy class */
-@interface JSPROXY_CCSprite : JSPROXY_CCNode
+/* Callback class */
+@interface JSPROXY_CCSprite : CCSprite
 {
+        JSObject *jsObject_;
 }
+@property (nonatomic, readwrite, assign) JSObject *jsObject;
 
 @end
 
@@ -56,11 +65,14 @@ extern JSClass *JSPROXY_CCSprite_class;
 
 extern JSObject *JSPROXY_CCAction_object;
 extern JSClass *JSPROXY_CCAction_class;
+void JSPROXY_CCAction_createClass( JSContext* cx, JSObject* globalObj, const char* name );
 
-/* Proxy class */
-@interface JSPROXY_CCAction : JSPROXY_NSObject
+/* Callback class */
+@interface JSPROXY_CCAction : CCAction
 {
+        JSObject *jsObject_;
 }
+@property (nonatomic, readwrite, assign) JSObject *jsObject;
 
 @end
 
@@ -71,11 +83,14 @@ extern JSClass *JSPROXY_CCAction_class;
 
 extern JSObject *JSPROXY_CCFiniteTimeAction_object;
 extern JSClass *JSPROXY_CCFiniteTimeAction_class;
+void JSPROXY_CCFiniteTimeAction_createClass( JSContext* cx, JSObject* globalObj, const char* name );
 
-/* Proxy class */
-@interface JSPROXY_CCFiniteTimeAction : JSPROXY_CCAction
+/* Callback class */
+@interface JSPROXY_CCFiniteTimeAction : CCFiniteTimeAction
 {
+        JSObject *jsObject_;
 }
+@property (nonatomic, readwrite, assign) JSObject *jsObject;
 
 @end
 
@@ -86,11 +101,14 @@ extern JSClass *JSPROXY_CCFiniteTimeAction_class;
 
 extern JSObject *JSPROXY_CCActionInterval_object;
 extern JSClass *JSPROXY_CCActionInterval_class;
+void JSPROXY_CCActionInterval_createClass( JSContext* cx, JSObject* globalObj, const char* name );
 
-/* Proxy class */
-@interface JSPROXY_CCActionInterval : JSPROXY_CCFiniteTimeAction
+/* Callback class */
+@interface JSPROXY_CCActionInterval : CCActionInterval
 {
+        JSObject *jsObject_;
 }
+@property (nonatomic, readwrite, assign) JSObject *jsObject;
 
 @end
 
@@ -101,11 +119,14 @@ extern JSClass *JSPROXY_CCActionInterval_class;
 
 extern JSObject *JSPROXY_CCScaleTo_object;
 extern JSClass *JSPROXY_CCScaleTo_class;
+void JSPROXY_CCScaleTo_createClass( JSContext* cx, JSObject* globalObj, const char* name );
 
-/* Proxy class */
-@interface JSPROXY_CCScaleTo : JSPROXY_CCActionInterval
+/* Callback class */
+@interface JSPROXY_CCScaleTo : CCScaleTo
 {
+        JSObject *jsObject_;
 }
+@property (nonatomic, readwrite, assign) JSObject *jsObject;
 
 @end
 
@@ -116,11 +137,14 @@ extern JSClass *JSPROXY_CCScaleTo_class;
 
 extern JSObject *JSPROXY_CCScaleBy_object;
 extern JSClass *JSPROXY_CCScaleBy_class;
+void JSPROXY_CCScaleBy_createClass( JSContext* cx, JSObject* globalObj, const char* name );
 
-/* Proxy class */
-@interface JSPROXY_CCScaleBy : JSPROXY_CCScaleTo
+/* Callback class */
+@interface JSPROXY_CCScaleBy : CCScaleBy
 {
+        JSObject *jsObject_;
 }
+@property (nonatomic, readwrite, assign) JSObject *jsObject;
 
 @end
 
@@ -131,11 +155,14 @@ extern JSClass *JSPROXY_CCScaleBy_class;
 
 extern JSObject *JSPROXY_CCLayer_object;
 extern JSClass *JSPROXY_CCLayer_class;
+void JSPROXY_CCLayer_createClass( JSContext* cx, JSObject* globalObj, const char* name );
 
-/* Proxy class */
-@interface JSPROXY_CCLayer : JSPROXY_CCNode
+/* Callback class */
+@interface JSPROXY_CCLayer : CCLayer
 {
+        JSObject *jsObject_;
 }
+@property (nonatomic, readwrite, assign) JSObject *jsObject;
 
 @end
 
@@ -146,11 +173,14 @@ extern JSClass *JSPROXY_CCLayer_class;
 
 extern JSObject *JSPROXY_CCMoveTo_object;
 extern JSClass *JSPROXY_CCMoveTo_class;
+void JSPROXY_CCMoveTo_createClass( JSContext* cx, JSObject* globalObj, const char* name );
 
-/* Proxy class */
-@interface JSPROXY_CCMoveTo : JSPROXY_CCActionInterval
+/* Callback class */
+@interface JSPROXY_CCMoveTo : CCMoveTo
 {
+        JSObject *jsObject_;
 }
+@property (nonatomic, readwrite, assign) JSObject *jsObject;
 
 @end
 
@@ -161,11 +191,14 @@ extern JSClass *JSPROXY_CCMoveTo_class;
 
 extern JSObject *JSPROXY_CCMoveBy_object;
 extern JSClass *JSPROXY_CCMoveBy_class;
+void JSPROXY_CCMoveBy_createClass( JSContext* cx, JSObject* globalObj, const char* name );
 
-/* Proxy class */
-@interface JSPROXY_CCMoveBy : JSPROXY_CCMoveTo
+/* Callback class */
+@interface JSPROXY_CCMoveBy : CCMoveBy
 {
+        JSObject *jsObject_;
 }
+@property (nonatomic, readwrite, assign) JSObject *jsObject;
 
 @end
 
@@ -176,11 +209,14 @@ extern JSClass *JSPROXY_CCMoveBy_class;
 
 extern JSObject *JSPROXY_CCScene_object;
 extern JSClass *JSPROXY_CCScene_class;
+void JSPROXY_CCScene_createClass( JSContext* cx, JSObject* globalObj, const char* name );
 
-/* Proxy class */
-@interface JSPROXY_CCScene : JSPROXY_CCNode
+/* Callback class */
+@interface JSPROXY_CCScene : CCScene
 {
+        JSObject *jsObject_;
 }
+@property (nonatomic, readwrite, assign) JSObject *jsObject;
 
 @end
 
@@ -191,11 +227,14 @@ extern JSClass *JSPROXY_CCScene_class;
 
 extern JSObject *JSPROXY_CCLabelTTF_object;
 extern JSClass *JSPROXY_CCLabelTTF_class;
+void JSPROXY_CCLabelTTF_createClass( JSContext* cx, JSObject* globalObj, const char* name );
 
-/* Proxy class */
-@interface JSPROXY_CCLabelTTF : JSPROXY_CCSprite
+/* Callback class */
+@interface JSPROXY_CCLabelTTF : CCLabelTTF
 {
+        JSObject *jsObject_;
 }
+@property (nonatomic, readwrite, assign) JSObject *jsObject;
 
 @end
 
@@ -206,11 +245,14 @@ extern JSClass *JSPROXY_CCLabelTTF_class;
 
 extern JSObject *JSPROXY_CCSpriteBatchNode_object;
 extern JSClass *JSPROXY_CCSpriteBatchNode_class;
+void JSPROXY_CCSpriteBatchNode_createClass( JSContext* cx, JSObject* globalObj, const char* name );
 
-/* Proxy class */
-@interface JSPROXY_CCSpriteBatchNode : JSPROXY_CCNode
+/* Callback class */
+@interface JSPROXY_CCSpriteBatchNode : CCSpriteBatchNode
 {
+        JSObject *jsObject_;
 }
+@property (nonatomic, readwrite, assign) JSObject *jsObject;
 
 @end
 
@@ -221,11 +263,14 @@ extern JSClass *JSPROXY_CCSpriteBatchNode_class;
 
 extern JSObject *JSPROXY_CCLabelBMFont_object;
 extern JSClass *JSPROXY_CCLabelBMFont_class;
+void JSPROXY_CCLabelBMFont_createClass( JSContext* cx, JSObject* globalObj, const char* name );
 
-/* Proxy class */
-@interface JSPROXY_CCLabelBMFont : JSPROXY_CCSpriteBatchNode
+/* Callback class */
+@interface JSPROXY_CCLabelBMFont : CCLabelBMFont
 {
+        JSObject *jsObject_;
 }
+@property (nonatomic, readwrite, assign) JSObject *jsObject;
 
 @end
 
@@ -236,11 +281,14 @@ extern JSClass *JSPROXY_CCLabelBMFont_class;
 
 extern JSObject *JSPROXY_CCParticleSystem_object;
 extern JSClass *JSPROXY_CCParticleSystem_class;
+void JSPROXY_CCParticleSystem_createClass( JSContext* cx, JSObject* globalObj, const char* name );
 
-/* Proxy class */
-@interface JSPROXY_CCParticleSystem : JSPROXY_CCNode
+/* Callback class */
+@interface JSPROXY_CCParticleSystem : CCParticleSystem
 {
+        JSObject *jsObject_;
 }
+@property (nonatomic, readwrite, assign) JSObject *jsObject;
 
 @end
 
@@ -251,11 +299,14 @@ extern JSClass *JSPROXY_CCParticleSystem_class;
 
 extern JSObject *JSPROXY_CCParticleSystemQuad_object;
 extern JSClass *JSPROXY_CCParticleSystemQuad_class;
+void JSPROXY_CCParticleSystemQuad_createClass( JSContext* cx, JSObject* globalObj, const char* name );
 
-/* Proxy class */
-@interface JSPROXY_CCParticleSystemQuad : JSPROXY_CCParticleSystem
+/* Callback class */
+@interface JSPROXY_CCParticleSystemQuad : CCParticleSystemQuad
 {
+        JSObject *jsObject_;
 }
+@property (nonatomic, readwrite, assign) JSObject *jsObject;
 
 @end
 
@@ -266,10 +317,13 @@ extern JSClass *JSPROXY_CCParticleSystemQuad_class;
 
 extern JSObject *JSPROXY_CCRotateBy_object;
 extern JSClass *JSPROXY_CCRotateBy_class;
+void JSPROXY_CCRotateBy_createClass( JSContext* cx, JSObject* globalObj, const char* name );
 
-/* Proxy class */
-@interface JSPROXY_CCRotateBy : JSPROXY_CCActionInterval
+/* Callback class */
+@interface JSPROXY_CCRotateBy : CCRotateBy
 {
+        JSObject *jsObject_;
 }
+@property (nonatomic, readwrite, assign) JSObject *jsObject;
 
 @end

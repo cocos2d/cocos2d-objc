@@ -94,8 +94,7 @@ JSBool ScriptingCore_addToRunningScene(JSContext *cx, uint32_t argc, jsval *vp)
 	if (argc == 1) {
 		JSObject *o = NULL;
 		if (JS_ConvertArguments(cx, argc, JS_ARGV(cx, vp), "o", &o) == JS_TRUE) {
-			JSPROXY_CCNode *proxy = JS_GetPrivate(o);
-			CCNode *node = [proxy realObj];
+			JSPROXY_CCNode *node = (JSPROXY_CCNode*)JS_GetPrivate(o);
 
 			CCDirector *director = [CCDirector sharedDirector];
 			
