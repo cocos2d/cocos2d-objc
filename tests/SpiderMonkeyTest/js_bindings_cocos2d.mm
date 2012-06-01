@@ -40,11 +40,9 @@ void JSPROXY_CCDirector_finalize(JSContext *cx, JSObject *obj)
 {
 	JSPROXY_CCDirector *pt = (JSPROXY_CCDirector*)JS_GetPrivate(obj);
 	if (pt) {
-		// id real = [pt realObj];
-	
-		/* no callbacks */
+	        /* no callbacks */
 
-		[pt release];
+	        [pt release];
 	}
 }
 
@@ -684,12 +682,10 @@ JSBool JSPROXY_CCDirector_totalFrames(JSContext *cx, uint32_t argc, jsval *vp) {
 	return JS_TRUE;
 }
 
-@implementation JSPROXY_CCDirector
-
-+(void) createClassWithContext:(JSContext*)cx object:(JSObject*)globalObj name:(NSString*)name
+void JSPROXY_CCDirector_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCDirector_class = (JSClass *)calloc(1, sizeof(JSClass));
-	JSPROXY_CCDirector_class->name = [name UTF8String];
+	JSPROXY_CCDirector_class->name = name;
 	JSPROXY_CCDirector_class->addProperty = JS_PropertyStub;
 	JSPROXY_CCDirector_class->delProperty = JS_PropertyStub;
 	JSPROXY_CCDirector_class->getProperty = JS_PropertyStub;
@@ -747,6 +743,8 @@ JSBool JSPROXY_CCDirector_totalFrames(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSPROXY_CCDirector_object = JS_InitClass(cx, globalObj, JSPROXY_NSObject_object, JSPROXY_CCDirector_class, JSPROXY_CCDirector_constructor,0,properties,funcs,NULL,st_funcs);
 }
 
+@implementation JSPROXY_CCDirector
+
 @end
 
 /*
@@ -776,11 +774,9 @@ void JSPROXY_CCNode_finalize(JSContext *cx, JSObject *obj)
 {
 	JSPROXY_CCNode *pt = (JSPROXY_CCNode*)JS_GetPrivate(obj);
 	if (pt) {
-		// id real = [pt realObj];
-	
-		/* no callbacks */
+	        /* no callbacks */
 
-		[pt release];
+	        [pt release];
 	}
 }
 
@@ -2207,12 +2203,10 @@ JSBool JSPROXY_CCNode_zOrder(JSContext *cx, uint32_t argc, jsval *vp) {
 	return JS_TRUE;
 }
 
-@implementation JSPROXY_CCNode
-
-+(void) createClassWithContext:(JSContext*)cx object:(JSObject*)globalObj name:(NSString*)name
+void JSPROXY_CCNode_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCNode_class = (JSClass *)calloc(1, sizeof(JSClass));
-	JSPROXY_CCNode_class->name = [name UTF8String];
+	JSPROXY_CCNode_class->name = name;
 	JSPROXY_CCNode_class->addProperty = JS_PropertyStub;
 	JSPROXY_CCNode_class->delProperty = JS_PropertyStub;
 	JSPROXY_CCNode_class->getProperty = JS_PropertyStub;
@@ -2308,6 +2302,8 @@ JSBool JSPROXY_CCNode_zOrder(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSPROXY_CCNode_object = JS_InitClass(cx, globalObj, JSPROXY_NSObject_object, JSPROXY_CCNode_class, JSPROXY_CCNode_constructor,0,properties,funcs,NULL,st_funcs);
 }
 
+@implementation JSPROXY_CCNode
+
 @end
 
 /*
@@ -2337,11 +2333,9 @@ void JSPROXY_CCSprite_finalize(JSContext *cx, JSObject *obj)
 {
 	JSPROXY_CCSprite *pt = (JSPROXY_CCSprite*)JS_GetPrivate(obj);
 	if (pt) {
-		// id real = [pt realObj];
-	
-		/* no callbacks */
+	        /* no callbacks */
 
-		[pt release];
+	        [pt release];
 	}
 }
 
@@ -2763,12 +2757,10 @@ JSBool JSPROXY_CCSprite_updateTransform(JSContext *cx, uint32_t argc, jsval *vp)
 	return JS_TRUE;
 }
 
-@implementation JSPROXY_CCSprite
-
-+(void) createClassWithContext:(JSContext*)cx object:(JSObject*)globalObj name:(NSString*)name
+void JSPROXY_CCSprite_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCSprite_class = (JSClass *)calloc(1, sizeof(JSClass));
-	JSPROXY_CCSprite_class->name = [name UTF8String];
+	JSPROXY_CCSprite_class->name = name;
 	JSPROXY_CCSprite_class->addProperty = JS_PropertyStub;
 	JSPROXY_CCSprite_class->delProperty = JS_PropertyStub;
 	JSPROXY_CCSprite_class->getProperty = JS_PropertyStub;
@@ -2814,6 +2806,8 @@ JSBool JSPROXY_CCSprite_updateTransform(JSContext *cx, uint32_t argc, jsval *vp)
 	JSPROXY_CCSprite_object = JS_InitClass(cx, globalObj, JSPROXY_CCNode_object, JSPROXY_CCSprite_class, JSPROXY_CCSprite_constructor,0,properties,funcs,NULL,st_funcs);
 }
 
+@implementation JSPROXY_CCSprite
+
 @end
 
 /*
@@ -2843,11 +2837,9 @@ void JSPROXY_CCAction_finalize(JSContext *cx, JSObject *obj)
 {
 	JSPROXY_CCAction *pt = (JSPROXY_CCAction*)JS_GetPrivate(obj);
 	if (pt) {
-		// id real = [pt realObj];
-	
-		/* no callbacks */
+	        /* no callbacks */
 
-		[pt release];
+	        [pt release];
 	}
 }
 
@@ -2989,12 +2981,10 @@ JSBool JSPROXY_CCAction_update_(JSContext *cx, uint32_t argc, jsval *vp) {
 	return JS_TRUE;
 }
 
-@implementation JSPROXY_CCAction
-
-+(void) createClassWithContext:(JSContext*)cx object:(JSObject*)globalObj name:(NSString*)name
+void JSPROXY_CCAction_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCAction_class = (JSClass *)calloc(1, sizeof(JSClass));
-	JSPROXY_CCAction_class->name = [name UTF8String];
+	JSPROXY_CCAction_class->name = name;
 	JSPROXY_CCAction_class->addProperty = JS_PropertyStub;
 	JSPROXY_CCAction_class->delProperty = JS_PropertyStub;
 	JSPROXY_CCAction_class->getProperty = JS_PropertyStub;
@@ -3026,6 +3016,8 @@ JSBool JSPROXY_CCAction_update_(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSPROXY_CCAction_object = JS_InitClass(cx, globalObj, JSPROXY_NSObject_object, JSPROXY_CCAction_class, JSPROXY_CCAction_constructor,0,properties,funcs,NULL,st_funcs);
 }
 
+@implementation JSPROXY_CCAction
+
 @end
 
 /*
@@ -3055,11 +3047,9 @@ void JSPROXY_CCFiniteTimeAction_finalize(JSContext *cx, JSObject *obj)
 {
 	JSPROXY_CCFiniteTimeAction *pt = (JSPROXY_CCFiniteTimeAction*)JS_GetPrivate(obj);
 	if (pt) {
-		// id real = [pt realObj];
-	
-		/* no callbacks */
+	        /* no callbacks */
 
-		[pt release];
+	        [pt release];
 	}
 }
 
@@ -3121,12 +3111,10 @@ JSBool JSPROXY_CCFiniteTimeAction_setDuration_(JSContext *cx, uint32_t argc, jsv
 	return JS_TRUE;
 }
 
-@implementation JSPROXY_CCFiniteTimeAction
-
-+(void) createClassWithContext:(JSContext*)cx object:(JSObject*)globalObj name:(NSString*)name
+void JSPROXY_CCFiniteTimeAction_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCFiniteTimeAction_class = (JSClass *)calloc(1, sizeof(JSClass));
-	JSPROXY_CCFiniteTimeAction_class->name = [name UTF8String];
+	JSPROXY_CCFiniteTimeAction_class->name = name;
 	JSPROXY_CCFiniteTimeAction_class->addProperty = JS_PropertyStub;
 	JSPROXY_CCFiniteTimeAction_class->delProperty = JS_PropertyStub;
 	JSPROXY_CCFiniteTimeAction_class->getProperty = JS_PropertyStub;
@@ -3152,6 +3140,8 @@ JSBool JSPROXY_CCFiniteTimeAction_setDuration_(JSContext *cx, uint32_t argc, jsv
 
 	JSPROXY_CCFiniteTimeAction_object = JS_InitClass(cx, globalObj, JSPROXY_CCAction_object, JSPROXY_CCFiniteTimeAction_class, JSPROXY_CCFiniteTimeAction_constructor,0,properties,funcs,NULL,st_funcs);
 }
+
+@implementation JSPROXY_CCFiniteTimeAction
 
 @end
 
@@ -3182,11 +3172,9 @@ void JSPROXY_CCActionInterval_finalize(JSContext *cx, JSObject *obj)
 {
 	JSPROXY_CCActionInterval *pt = (JSPROXY_CCActionInterval*)JS_GetPrivate(obj);
 	if (pt) {
-		// id real = [pt realObj];
-	
-		/* no callbacks */
+	        /* no callbacks */
 
-		[pt release];
+	        [pt release];
 	}
 }
 
@@ -3285,12 +3273,10 @@ JSBool JSPROXY_CCActionInterval_reverse(JSContext *cx, uint32_t argc, jsval *vp)
 	return JS_TRUE;
 }
 
-@implementation JSPROXY_CCActionInterval
-
-+(void) createClassWithContext:(JSContext*)cx object:(JSObject*)globalObj name:(NSString*)name
+void JSPROXY_CCActionInterval_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCActionInterval_class = (JSClass *)calloc(1, sizeof(JSClass));
-	JSPROXY_CCActionInterval_class->name = [name UTF8String];
+	JSPROXY_CCActionInterval_class->name = name;
 	JSPROXY_CCActionInterval_class->addProperty = JS_PropertyStub;
 	JSPROXY_CCActionInterval_class->delProperty = JS_PropertyStub;
 	JSPROXY_CCActionInterval_class->getProperty = JS_PropertyStub;
@@ -3318,6 +3304,8 @@ JSBool JSPROXY_CCActionInterval_reverse(JSContext *cx, uint32_t argc, jsval *vp)
 
 	JSPROXY_CCActionInterval_object = JS_InitClass(cx, globalObj, JSPROXY_CCFiniteTimeAction_object, JSPROXY_CCActionInterval_class, JSPROXY_CCActionInterval_constructor,0,properties,funcs,NULL,st_funcs);
 }
+
+@implementation JSPROXY_CCActionInterval
 
 @end
 
@@ -3348,11 +3336,9 @@ void JSPROXY_CCScaleTo_finalize(JSContext *cx, JSObject *obj)
 {
 	JSPROXY_CCScaleTo *pt = (JSPROXY_CCScaleTo*)JS_GetPrivate(obj);
 	if (pt) {
-		// id real = [pt realObj];
-	
-		/* no callbacks */
+	        /* no callbacks */
 
-		[pt release];
+	        [pt release];
 	}
 }
 
@@ -3438,12 +3424,10 @@ JSBool JSPROXY_CCScaleTo_initWithDuration_scaleX_scaleY_(JSContext *cx, uint32_t
 	return JS_TRUE;
 }
 
-@implementation JSPROXY_CCScaleTo
-
-+(void) createClassWithContext:(JSContext*)cx object:(JSObject*)globalObj name:(NSString*)name
+void JSPROXY_CCScaleTo_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCScaleTo_class = (JSClass *)calloc(1, sizeof(JSClass));
-	JSPROXY_CCScaleTo_class->name = [name UTF8String];
+	JSPROXY_CCScaleTo_class->name = name;
 	JSPROXY_CCScaleTo_class->addProperty = JS_PropertyStub;
 	JSPROXY_CCScaleTo_class->delProperty = JS_PropertyStub;
 	JSPROXY_CCScaleTo_class->getProperty = JS_PropertyStub;
@@ -3470,6 +3454,8 @@ JSBool JSPROXY_CCScaleTo_initWithDuration_scaleX_scaleY_(JSContext *cx, uint32_t
 
 	JSPROXY_CCScaleTo_object = JS_InitClass(cx, globalObj, JSPROXY_CCActionInterval_object, JSPROXY_CCScaleTo_class, JSPROXY_CCScaleTo_constructor,0,properties,funcs,NULL,st_funcs);
 }
+
+@implementation JSPROXY_CCScaleTo
 
 @end
 
@@ -3500,11 +3486,9 @@ void JSPROXY_CCScaleBy_finalize(JSContext *cx, JSObject *obj)
 {
 	JSPROXY_CCScaleBy *pt = (JSPROXY_CCScaleBy*)JS_GetPrivate(obj);
 	if (pt) {
-		// id real = [pt realObj];
-	
-		/* no callbacks */
+	        /* no callbacks */
 
-		[pt release];
+	        [pt release];
 	}
 }
 
@@ -3529,12 +3513,10 @@ JSBool JSPROXY_CCScaleBy_initWithDuration_scale_(JSContext *cx, uint32_t argc, j
 	return JS_TRUE;
 }
 
-@implementation JSPROXY_CCScaleBy
-
-+(void) createClassWithContext:(JSContext*)cx object:(JSObject*)globalObj name:(NSString*)name
+void JSPROXY_CCScaleBy_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCScaleBy_class = (JSClass *)calloc(1, sizeof(JSClass));
-	JSPROXY_CCScaleBy_class->name = [name UTF8String];
+	JSPROXY_CCScaleBy_class->name = name;
 	JSPROXY_CCScaleBy_class->addProperty = JS_PropertyStub;
 	JSPROXY_CCScaleBy_class->delProperty = JS_PropertyStub;
 	JSPROXY_CCScaleBy_class->getProperty = JS_PropertyStub;
@@ -3558,6 +3540,8 @@ JSBool JSPROXY_CCScaleBy_initWithDuration_scale_(JSContext *cx, uint32_t argc, j
 
 	JSPROXY_CCScaleBy_object = JS_InitClass(cx, globalObj, JSPROXY_CCScaleTo_object, JSPROXY_CCScaleBy_class, JSPROXY_CCScaleBy_constructor,0,properties,funcs,NULL,st_funcs);
 }
+
+@implementation JSPROXY_CCScaleBy
 
 @end
 
@@ -3588,11 +3572,9 @@ void JSPROXY_CCLayer_finalize(JSContext *cx, JSObject *obj)
 {
 	JSPROXY_CCLayer *pt = (JSPROXY_CCLayer*)JS_GetPrivate(obj);
 	if (pt) {
-		// id real = [pt realObj];
-	
-		/* no callbacks */
+	        /* no callbacks */
 
-		[pt release];
+	        [pt release];
 	}
 }
 
@@ -3752,12 +3734,10 @@ JSBool JSPROXY_CCLayer_touchDelegatePriority(JSContext *cx, uint32_t argc, jsval
 	return JS_TRUE;
 }
 
-@implementation JSPROXY_CCLayer
-
-+(void) createClassWithContext:(JSContext*)cx object:(JSObject*)globalObj name:(NSString*)name
+void JSPROXY_CCLayer_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCLayer_class = (JSClass *)calloc(1, sizeof(JSClass));
-	JSPROXY_CCLayer_class->name = [name UTF8String];
+	JSPROXY_CCLayer_class->name = name;
 	JSPROXY_CCLayer_class->addProperty = JS_PropertyStub;
 	JSPROXY_CCLayer_class->delProperty = JS_PropertyStub;
 	JSPROXY_CCLayer_class->getProperty = JS_PropertyStub;
@@ -3790,6 +3770,8 @@ JSBool JSPROXY_CCLayer_touchDelegatePriority(JSContext *cx, uint32_t argc, jsval
 	JSPROXY_CCLayer_object = JS_InitClass(cx, globalObj, JSPROXY_CCNode_object, JSPROXY_CCLayer_class, JSPROXY_CCLayer_constructor,0,properties,funcs,NULL,st_funcs);
 }
 
+@implementation JSPROXY_CCLayer
+
 @end
 
 /*
@@ -3819,11 +3801,9 @@ void JSPROXY_CCMoveTo_finalize(JSContext *cx, JSObject *obj)
 {
 	JSPROXY_CCMoveTo *pt = (JSPROXY_CCMoveTo*)JS_GetPrivate(obj);
 	if (pt) {
-		// id real = [pt realObj];
-	
-		/* no callbacks */
+	        /* no callbacks */
 
-		[pt release];
+	        [pt release];
 	}
 }
 
@@ -3889,12 +3869,10 @@ JSBool JSPROXY_CCMoveTo_initWithDuration_position_(JSContext *cx, uint32_t argc,
 	return JS_TRUE;
 }
 
-@implementation JSPROXY_CCMoveTo
-
-+(void) createClassWithContext:(JSContext*)cx object:(JSObject*)globalObj name:(NSString*)name
+void JSPROXY_CCMoveTo_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCMoveTo_class = (JSClass *)calloc(1, sizeof(JSClass));
-	JSPROXY_CCMoveTo_class->name = [name UTF8String];
+	JSPROXY_CCMoveTo_class->name = name;
 	JSPROXY_CCMoveTo_class->addProperty = JS_PropertyStub;
 	JSPROXY_CCMoveTo_class->delProperty = JS_PropertyStub;
 	JSPROXY_CCMoveTo_class->getProperty = JS_PropertyStub;
@@ -3919,6 +3897,8 @@ JSBool JSPROXY_CCMoveTo_initWithDuration_position_(JSContext *cx, uint32_t argc,
 
 	JSPROXY_CCMoveTo_object = JS_InitClass(cx, globalObj, JSPROXY_CCActionInterval_object, JSPROXY_CCMoveTo_class, JSPROXY_CCMoveTo_constructor,0,properties,funcs,NULL,st_funcs);
 }
+
+@implementation JSPROXY_CCMoveTo
 
 @end
 
@@ -3949,11 +3929,9 @@ void JSPROXY_CCMoveBy_finalize(JSContext *cx, JSObject *obj)
 {
 	JSPROXY_CCMoveBy *pt = (JSPROXY_CCMoveBy*)JS_GetPrivate(obj);
 	if (pt) {
-		// id real = [pt realObj];
-	
-		/* no callbacks */
+	        /* no callbacks */
 
-		[pt release];
+	        [pt release];
 	}
 }
 
@@ -4019,12 +3997,10 @@ JSBool JSPROXY_CCMoveBy_initWithDuration_position_(JSContext *cx, uint32_t argc,
 	return JS_TRUE;
 }
 
-@implementation JSPROXY_CCMoveBy
-
-+(void) createClassWithContext:(JSContext*)cx object:(JSObject*)globalObj name:(NSString*)name
+void JSPROXY_CCMoveBy_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCMoveBy_class = (JSClass *)calloc(1, sizeof(JSClass));
-	JSPROXY_CCMoveBy_class->name = [name UTF8String];
+	JSPROXY_CCMoveBy_class->name = name;
 	JSPROXY_CCMoveBy_class->addProperty = JS_PropertyStub;
 	JSPROXY_CCMoveBy_class->delProperty = JS_PropertyStub;
 	JSPROXY_CCMoveBy_class->getProperty = JS_PropertyStub;
@@ -4049,6 +4025,8 @@ JSBool JSPROXY_CCMoveBy_initWithDuration_position_(JSContext *cx, uint32_t argc,
 
 	JSPROXY_CCMoveBy_object = JS_InitClass(cx, globalObj, JSPROXY_CCMoveTo_object, JSPROXY_CCMoveBy_class, JSPROXY_CCMoveBy_constructor,0,properties,funcs,NULL,st_funcs);
 }
+
+@implementation JSPROXY_CCMoveBy
 
 @end
 
@@ -4079,11 +4057,9 @@ void JSPROXY_CCScene_finalize(JSContext *cx, JSObject *obj)
 {
 	JSPROXY_CCScene *pt = (JSPROXY_CCScene*)JS_GetPrivate(obj);
 	if (pt) {
-		// id real = [pt realObj];
-	
-		/* no callbacks */
+	        /* no callbacks */
 
-		[pt release];
+	        [pt release];
 	}
 }
 
@@ -4103,12 +4079,10 @@ JSBool JSPROXY_CCScene_node(JSContext *cx, uint32_t argc, jsval *vp) {
 	return JS_TRUE;
 }
 
-@implementation JSPROXY_CCScene
-
-+(void) createClassWithContext:(JSContext*)cx object:(JSObject*)globalObj name:(NSString*)name
+void JSPROXY_CCScene_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCScene_class = (JSClass *)calloc(1, sizeof(JSClass));
-	JSPROXY_CCScene_class->name = [name UTF8String];
+	JSPROXY_CCScene_class->name = name;
 	JSPROXY_CCScene_class->addProperty = JS_PropertyStub;
 	JSPROXY_CCScene_class->delProperty = JS_PropertyStub;
 	JSPROXY_CCScene_class->getProperty = JS_PropertyStub;
@@ -4132,6 +4106,8 @@ JSBool JSPROXY_CCScene_node(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	JSPROXY_CCScene_object = JS_InitClass(cx, globalObj, JSPROXY_CCNode_object, JSPROXY_CCScene_class, JSPROXY_CCScene_constructor,0,properties,funcs,NULL,st_funcs);
 }
+
+@implementation JSPROXY_CCScene
 
 @end
 
@@ -4162,11 +4138,9 @@ void JSPROXY_CCLabelTTF_finalize(JSContext *cx, JSObject *obj)
 {
 	JSPROXY_CCLabelTTF *pt = (JSPROXY_CCLabelTTF*)JS_GetPrivate(obj);
 	if (pt) {
-		// id real = [pt realObj];
-	
-		/* no callbacks */
+	        /* no callbacks */
 
-		[pt release];
+	        [pt release];
 	}
 }
 
@@ -4632,12 +4606,10 @@ JSBool JSPROXY_CCLabelTTF_verticalAlignment(JSContext *cx, uint32_t argc, jsval 
 	return JS_TRUE;
 }
 
-@implementation JSPROXY_CCLabelTTF
-
-+(void) createClassWithContext:(JSContext*)cx object:(JSObject*)globalObj name:(NSString*)name
+void JSPROXY_CCLabelTTF_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCLabelTTF_class = (JSClass *)calloc(1, sizeof(JSClass));
-	JSPROXY_CCLabelTTF_class->name = [name UTF8String];
+	JSPROXY_CCLabelTTF_class->name = name;
 	JSPROXY_CCLabelTTF_class->addProperty = JS_PropertyStub;
 	JSPROXY_CCLabelTTF_class->delProperty = JS_PropertyStub;
 	JSPROXY_CCLabelTTF_class->getProperty = JS_PropertyStub;
@@ -4681,6 +4653,8 @@ JSBool JSPROXY_CCLabelTTF_verticalAlignment(JSContext *cx, uint32_t argc, jsval 
 	JSPROXY_CCLabelTTF_object = JS_InitClass(cx, globalObj, JSPROXY_CCSprite_object, JSPROXY_CCLabelTTF_class, JSPROXY_CCLabelTTF_constructor,0,properties,funcs,NULL,st_funcs);
 }
 
+@implementation JSPROXY_CCLabelTTF
+
 @end
 
 /*
@@ -4710,11 +4684,9 @@ void JSPROXY_CCSpriteBatchNode_finalize(JSContext *cx, JSObject *obj)
 {
 	JSPROXY_CCSpriteBatchNode *pt = (JSPROXY_CCSpriteBatchNode*)JS_GetPrivate(obj);
 	if (pt) {
-		// id real = [pt realObj];
-	
-		/* no callbacks */
+	        /* no callbacks */
 
-		[pt release];
+	        [pt release];
 	}
 }
 
@@ -5014,12 +4986,10 @@ JSBool JSPROXY_CCSpriteBatchNode_setBlendFunc_(JSContext *cx, uint32_t argc, jsv
 	return JS_TRUE;
 }
 
-@implementation JSPROXY_CCSpriteBatchNode
-
-+(void) createClassWithContext:(JSContext*)cx object:(JSObject*)globalObj name:(NSString*)name
+void JSPROXY_CCSpriteBatchNode_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCSpriteBatchNode_class = (JSClass *)calloc(1, sizeof(JSClass));
-	JSPROXY_CCSpriteBatchNode_class->name = [name UTF8String];
+	JSPROXY_CCSpriteBatchNode_class->name = name;
 	JSPROXY_CCSpriteBatchNode_class->addProperty = JS_PropertyStub;
 	JSPROXY_CCSpriteBatchNode_class->delProperty = JS_PropertyStub;
 	JSPROXY_CCSpriteBatchNode_class->getProperty = JS_PropertyStub;
@@ -5057,6 +5027,8 @@ JSBool JSPROXY_CCSpriteBatchNode_setBlendFunc_(JSContext *cx, uint32_t argc, jsv
 	JSPROXY_CCSpriteBatchNode_object = JS_InitClass(cx, globalObj, JSPROXY_CCNode_object, JSPROXY_CCSpriteBatchNode_class, JSPROXY_CCSpriteBatchNode_constructor,0,properties,funcs,NULL,st_funcs);
 }
 
+@implementation JSPROXY_CCSpriteBatchNode
+
 @end
 
 /*
@@ -5086,11 +5058,9 @@ void JSPROXY_CCLabelBMFont_finalize(JSContext *cx, JSObject *obj)
 {
 	JSPROXY_CCLabelBMFont *pt = (JSPROXY_CCLabelBMFont*)JS_GetPrivate(obj);
 	if (pt) {
-		// id real = [pt realObj];
-	
-		/* no callbacks */
+	        /* no callbacks */
 
-		[pt release];
+	        [pt release];
 	}
 }
 
@@ -5432,12 +5402,10 @@ JSBool JSPROXY_CCLabelBMFont_setWidth_(JSContext *cx, uint32_t argc, jsval *vp) 
 	return JS_TRUE;
 }
 
-@implementation JSPROXY_CCLabelBMFont
-
-+(void) createClassWithContext:(JSContext*)cx object:(JSObject*)globalObj name:(NSString*)name
+void JSPROXY_CCLabelBMFont_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCLabelBMFont_class = (JSClass *)calloc(1, sizeof(JSClass));
-	JSPROXY_CCLabelBMFont_class->name = [name UTF8String];
+	JSPROXY_CCLabelBMFont_class->name = name;
 	JSPROXY_CCLabelBMFont_class->addProperty = JS_PropertyStub;
 	JSPROXY_CCLabelBMFont_class->delProperty = JS_PropertyStub;
 	JSPROXY_CCLabelBMFont_class->getProperty = JS_PropertyStub;
@@ -5477,6 +5445,8 @@ JSBool JSPROXY_CCLabelBMFont_setWidth_(JSContext *cx, uint32_t argc, jsval *vp) 
 	JSPROXY_CCLabelBMFont_object = JS_InitClass(cx, globalObj, JSPROXY_CCSpriteBatchNode_object, JSPROXY_CCLabelBMFont_class, JSPROXY_CCLabelBMFont_constructor,0,properties,funcs,NULL,st_funcs);
 }
 
+@implementation JSPROXY_CCLabelBMFont
+
 @end
 
 /*
@@ -5506,11 +5476,9 @@ void JSPROXY_CCParticleSystem_finalize(JSContext *cx, JSObject *obj)
 {
 	JSPROXY_CCParticleSystem *pt = (JSPROXY_CCParticleSystem*)JS_GetPrivate(obj);
 	if (pt) {
-		// id real = [pt realObj];
-	
-		/* no callbacks */
+	        /* no callbacks */
 
-		[pt release];
+	        [pt release];
 	}
 }
 
@@ -7123,12 +7091,10 @@ JSBool JSPROXY_CCParticleSystem_updateWithNoTime(JSContext *cx, uint32_t argc, j
 	return JS_TRUE;
 }
 
-@implementation JSPROXY_CCParticleSystem
-
-+(void) createClassWithContext:(JSContext*)cx object:(JSObject*)globalObj name:(NSString*)name
+void JSPROXY_CCParticleSystem_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCParticleSystem_class = (JSClass *)calloc(1, sizeof(JSClass));
-	JSPROXY_CCParticleSystem_class->name = [name UTF8String];
+	JSPROXY_CCParticleSystem_class->name = name;
 	JSPROXY_CCParticleSystem_class->addProperty = JS_PropertyStub;
 	JSPROXY_CCParticleSystem_class->delProperty = JS_PropertyStub;
 	JSPROXY_CCParticleSystem_class->getProperty = JS_PropertyStub;
@@ -7240,6 +7206,8 @@ JSBool JSPROXY_CCParticleSystem_updateWithNoTime(JSContext *cx, uint32_t argc, j
 	JSPROXY_CCParticleSystem_object = JS_InitClass(cx, globalObj, JSPROXY_CCNode_object, JSPROXY_CCParticleSystem_class, JSPROXY_CCParticleSystem_constructor,0,properties,funcs,NULL,st_funcs);
 }
 
+@implementation JSPROXY_CCParticleSystem
+
 @end
 
 /*
@@ -7269,11 +7237,9 @@ void JSPROXY_CCParticleSystemQuad_finalize(JSContext *cx, JSObject *obj)
 {
 	JSPROXY_CCParticleSystemQuad *pt = (JSPROXY_CCParticleSystemQuad*)JS_GetPrivate(obj);
 	if (pt) {
-		// id real = [pt realObj];
-	
-		/* no callbacks */
+	        /* no callbacks */
 
-		[pt release];
+	        [pt release];
 	}
 }
 
@@ -7293,12 +7259,10 @@ JSBool JSPROXY_CCParticleSystemQuad_initIndices(JSContext *cx, uint32_t argc, js
 	return JS_TRUE;
 }
 
-@implementation JSPROXY_CCParticleSystemQuad
-
-+(void) createClassWithContext:(JSContext*)cx object:(JSObject*)globalObj name:(NSString*)name
+void JSPROXY_CCParticleSystemQuad_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCParticleSystemQuad_class = (JSClass *)calloc(1, sizeof(JSClass));
-	JSPROXY_CCParticleSystemQuad_class->name = [name UTF8String];
+	JSPROXY_CCParticleSystemQuad_class->name = name;
 	JSPROXY_CCParticleSystemQuad_class->addProperty = JS_PropertyStub;
 	JSPROXY_CCParticleSystemQuad_class->delProperty = JS_PropertyStub;
 	JSPROXY_CCParticleSystemQuad_class->getProperty = JS_PropertyStub;
@@ -7322,6 +7286,8 @@ JSBool JSPROXY_CCParticleSystemQuad_initIndices(JSContext *cx, uint32_t argc, js
 
 	JSPROXY_CCParticleSystemQuad_object = JS_InitClass(cx, globalObj, JSPROXY_CCParticleSystem_object, JSPROXY_CCParticleSystemQuad_class, JSPROXY_CCParticleSystemQuad_constructor,0,properties,funcs,NULL,st_funcs);
 }
+
+@implementation JSPROXY_CCParticleSystemQuad
 
 @end
 
@@ -7352,11 +7318,9 @@ void JSPROXY_CCRotateBy_finalize(JSContext *cx, JSObject *obj)
 {
 	JSPROXY_CCRotateBy *pt = (JSPROXY_CCRotateBy*)JS_GetPrivate(obj);
 	if (pt) {
-		// id real = [pt realObj];
-	
-		/* no callbacks */
+	        /* no callbacks */
 
-		[pt release];
+	        [pt release];
 	}
 }
 
@@ -7400,12 +7364,10 @@ JSBool JSPROXY_CCRotateBy_initWithDuration_angle_(JSContext *cx, uint32_t argc, 
 	return JS_TRUE;
 }
 
-@implementation JSPROXY_CCRotateBy
-
-+(void) createClassWithContext:(JSContext*)cx object:(JSObject*)globalObj name:(NSString*)name
+void JSPROXY_CCRotateBy_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCRotateBy_class = (JSClass *)calloc(1, sizeof(JSClass));
-	JSPROXY_CCRotateBy_class->name = [name UTF8String];
+	JSPROXY_CCRotateBy_class->name = name;
 	JSPROXY_CCRotateBy_class->addProperty = JS_PropertyStub;
 	JSPROXY_CCRotateBy_class->delProperty = JS_PropertyStub;
 	JSPROXY_CCRotateBy_class->getProperty = JS_PropertyStub;
@@ -7430,5 +7392,7 @@ JSBool JSPROXY_CCRotateBy_initWithDuration_angle_(JSContext *cx, uint32_t argc, 
 
 	JSPROXY_CCRotateBy_object = JS_InitClass(cx, globalObj, JSPROXY_CCActionInterval_object, JSPROXY_CCRotateBy_class, JSPROXY_CCRotateBy_constructor,0,properties,funcs,NULL,st_funcs);
 }
+
+@implementation JSPROXY_CCRotateBy
 
 @end
