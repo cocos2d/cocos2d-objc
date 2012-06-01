@@ -344,6 +344,14 @@ void %s_finalize(JSContext *cx, JSObject *obj)
 '''
         return template
 
+    def generate_retval_array( self, declared_type, js_type ):
+        template = '''
+	JSObject *ret_obj = JS_NewArrayObject(cx, 0, NULL);
+	JS_SET_RVAL(cx, vp, STRING_TO_JSVAL(ret_obj) );
+'''
+        return template
+
+    
     # special case: returning CGPoint
     def generate_retval_cgpoint( self, declared_type, js_type ):
         template = '''
@@ -379,6 +387,7 @@ void %s_finalize(JSContext *cx, JSObject *obj)
         special_convert = {
             'o' : self.generate_retval_object,
             'S' : self.generate_retval_string,
+	    '[]': self.generate_retval_array,
         }
 
         special_declared_types = {
@@ -400,13 +409,15 @@ void %s_finalize(JSContext *cx, JSObject *obj)
 
         return ret
 
-    def parse_method_arguments_and_retval( self, method, class_name ):
+    def parse_method_retval( self, method, class_name ):
         # Left column: BridgeSupport types
         # Right column: JS types
         supported_declared_types = {
             'CGPoint'   : '{}',
             'NSString*' : 'S',
-            }
+#	    'NSArray*'  : '[]',
+#	    'CCArray*'  : '[]',
+	}
 
         supported_types = {
             'f' : 'd',  # float
@@ -421,43 +432,8 @@ void %s_finalize(JSContext *cx, JSObject *obj)
 
         s = method['selector']
 
-        args_js_type = []
-        args_declared_type = []
         ret_js_type = None
         ret_declared_type = None
-
-        found = True
-
-        # parse arguments
-        if 'arg' in method:
-            args = method['arg']
-            for arg in args:
-                t = arg['type']
-                dt = arg['declared_type']
-                dt_class_name = dt.replace('*','')
-
-                # IMPORTANT: 1st search on declared types.
-                # NSString should be treated as a special case, not as a generic object
-                if dt in supported_declared_types:
-                    args_js_type.append( supported_declared_types[dt] )
-                    args_declared_type.append( dt )
-                elif self.is_valid_structure( t ):
-                    args_js_type.append( '{}' )
-                    args_declared_type.append( dt )
-                elif t in supported_types:
-                    args_js_type.append( supported_types[t] )
-                    args_declared_type.append( dt )
-                # special case for Objects
-                elif t == '@' and dt_class_name in self.supported_classes:
-                    args_js_type.append( 'o' )
-                    args_declared_type.append( dt )
-                else:
-                    found = False
-                    break
-
-        if not found:
-            return (None, None, None, None)
-
 
         # parse ret value
         if 'retval' in method:
@@ -495,12 +471,60 @@ void %s_finalize(JSContext *cx, JSObject *obj)
                 ret_js_type = 'o'
                 ret_declared_type = dt 
             else:
-                found = False
+		raise Exception('Unsupported return value')
 
-        if not found:
-            return (None, None, None, None)
+        return (ret_js_type, ret_declared_type )
 
-        return (args_js_type, args_declared_type, ret_js_type, ret_declared_type )
+    def parse_method_arguments( self, method, class_name ):
+        # Left column: BridgeSupport types
+        # Right column: JS types
+        supported_declared_types = {
+            'CGPoint'   : '{}',
+            'NSString*' : 'S',
+            }
+
+        supported_types = {
+            'f' : 'd',  # float
+            'd' : 'd',  # double
+            'i' : 'i',  # integer
+            'I' : 'u',  # unsigned integer
+            'c' : 'c',  # char
+            'C' : 'c',  # unsigned char
+            'B' : 'b',  # BOOL
+            }
+
+        s = method['selector']
+
+        args_js_type = []
+        args_declared_type = []
+
+        # parse arguments
+        if 'arg' in method:
+            args = method['arg']
+            for arg in args:
+                t = arg['type']
+                dt = arg['declared_type']
+                dt_class_name = dt.replace('*','')
+
+                # IMPORTANT: 1st search on declared types.
+                # NSString should be treated as a special case, not as a generic object
+                if dt in supported_declared_types:
+                    args_js_type.append( supported_declared_types[dt] )
+                    args_declared_type.append( dt )
+                elif self.is_valid_structure( t ):
+                    args_js_type.append( '{}' )
+                    args_declared_type.append( dt )
+                elif t in supported_types:
+                    args_js_type.append( supported_types[t] )
+                    args_declared_type.append( dt )
+                # special case for Objects
+                elif t == '@' and dt_class_name in self.supported_classes:
+                    args_js_type.append( 'o' )
+                    args_declared_type.append( dt )
+                else:
+		    raise Exception("Unsupported argument: %s" % dt)
+
+        return (args_js_type, args_declared_type)
 
     # Special case for string to NSString generator
     def generate_argument_string( self, i, arg_js_type, arg_declared_type ):
@@ -672,10 +696,11 @@ JSBool %s_%s(JSContext *cx, uint32_t argc, jsval *vp) {
             '{}': self.generate_argument_struct,
         }
 
-        args_js_type, args_declared_type, ret_js_type, ret_declared_type = self.parse_method_arguments_and_retval( method, class_name )
-
-        if args_js_type == None:
-            return False
+	try:
+	    args_js_type, args_declared_type = self.parse_method_arguments(method, class_name )
+	    ret_js_type, ret_declared_type = self.parse_method_retval( method, class_name )
+	except Exception, error:
+	    return False
 
         
         method_type = self.get_method_type( method )
