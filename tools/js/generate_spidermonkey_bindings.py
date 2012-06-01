@@ -26,6 +26,7 @@ import xml.etree.ElementTree as ET
 import itertools
 import copy
 import datetime
+import ConfigParser
 
 #
 # Globals
@@ -54,28 +55,79 @@ def xml2d(e):
 
 
 class SpiderMonkey(object):
-    def __init__(self, bridgesupport_file, hierarchy_file, namespace, prefix, onefile, classes_to_bind=[] ):
-        self.bridgesupport_file = bridgesupport_file
+    
+    @classmethod
+    def parse_config_file( cls, config_file ):
+	cp = ConfigParser.ConfigParser()
+	cp.read(config_file)
+
+	
+	supported_options = {'namespace' : '',
+	                     'obj_class_prefix_to_remove': '',
+	                     'classes_to_parse' : [],
+	                     'callback_methods' : [],
+	                     'classes_to_ignore' : [],
+	                     'one_file_for_all_classes' : True,
+	                     'bridge_support_file' : '',
+	                     'hierarchy_protocol_file' : '',
+	                     }
+
+
+	
+	for s in cp.sections():
+	    config = copy.copy( supported_options )
+
+	    for o in cp.options(s):
+		if not o in config:
+		    print 'Ignoring unrecognized option: %s' % o
+		    continue
+		
+		t = type( config[o] )
+		if t == type(True):
+		    v = cp.getboolean(s, o)
+		elif t == type(1):
+		    v = cp.getint(s, o )
+		elif t == type(''):
+		    v = cp.get(s, o )
+		elif t == type([]):
+		    v = cp.get(s, o )
+		    l = v.split(' ')
+		    v = l
+		else:
+		    raise Exception('Unsupported type' % str(t) )
+		config[ o ] = v
+	    
+	    sp = SpiderMonkey( config )
+	    sp.parse()
+
+    def __init__(self, config ):
+
+        self.bridgesupport_file = config['bridge_support_file']
         self.bs = {}
 
-        self.namespace = namespace
-	
-	self.onefile = onefile
-
-	self.prefix = prefix
-
-        self.hierarchy_file = hierarchy_file
+	self.hierarchy_file = config['hierarchy_protocol_file']
         self.hierarchy = {}
+
+        self.namespace = config['namespace']
+	
+	self.onefile = config['one_file_for_all_classes']
+
+	self.prefix = config['obj_class_prefix_to_remove']
+
         
-        self.classes_to_bind = set(classes_to_bind)
+        self.classes_to_bind = set( config['classes_to_parse'] )
         self.supported_classes = set(['NSObject'])
+	
+	self.classes_to_ignore = config['classes_to_ignore']
+	
+	self.callback_methods = config['callback_methods']
 	
 	# In order to prevent parsing a class many times
 	self.parsed_classes = []
 
         # Current method that is being parsed
         self.current_method = None
-
+    
     def parse_hierarchy_file( self ):
         f = open( self.hierarchy_file )
         self.hierarchy = ast.literal_eval( f.read() )
@@ -990,10 +1042,10 @@ void %s_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 	    self.generate_class_registration( parent )
 
 	    klass_wo_prefix = klass
-	    if klass.startswith( prefix ):
-		klass_wo_prefix = klass[len(prefix) : ]
+	    if klass.startswith( self.prefix ):
+		klass_wo_prefix = klass[len( self.prefix) : ]
 	    
-	    self.class_registration_file.write('%s%s_createClass(_cx, %s, "%s");\n' % ( PROXY_PREFIX, klass, namespace, klass_wo_prefix ) )
+	    self.class_registration_file.write('%s%s_createClass(_cx, %s, "%s");\n' % ( PROXY_PREFIX, klass, self.namespace, klass_wo_prefix ) )
 	    self.classes_registered.append( klass )
 
     def generate_classes_registration( self ):
@@ -1027,9 +1079,9 @@ void %s_createClass(JSContext *cx, JSObject* globalObj, const char* name )
         self.supported_classes = self.supported_classes.union( s )
 
 	if self.onefile:
-	    self.h_file = open( '%s%s.h' % ( BINDINGS_PREFIX, namespace), 'w' )
+	    self.h_file = open( '%s%s.h' % ( BINDINGS_PREFIX, self.namespace), 'w' )
 	    self.generate_header_prefix( 'NSObject' )
-	    self.mm_file = open( '%s%s.mm' % (BINDINGS_PREFIX, namespace), 'w' )
+	    self.mm_file = open( '%s%s.mm' % (BINDINGS_PREFIX, self.namespace), 'w' )
 	    self.generate_mm_prefix()
 	else:
 	    self.generate_namespace_include_file()
@@ -1066,27 +1118,15 @@ if __name__ == "__main__":
     if len( sys.argv ) == 1:
         help()
 
-    bridgesupport_file = None
-    hierarchy_file = None
-    namespace = None
-    prefix = ''
-    onefile = False
+    configfile = None
 
     argv = sys.argv[1:]
     try:                                
-        opts, args = getopt.getopt(argv, "b:j:n:p:1", ["bridgesupport=","hierarchy=","namespace=","prefix=","onefile"])
+        opts, args = getopt.getopt(argv, "c:", ["config-file="])
 
         for opt, arg in opts:
-            if opt in ("-b","--bridgesupport"):
-                bridgesupport_file = arg
-            elif opt in ("-j", "--hierarchy"):
-                hierarchy_file = arg
-            elif opt in ("-n", "--namespace"):
-                namespace = arg
-	    elif opt in ("-p", "--prefix"):
-		prefix = arg
-	    elif opt in ("-1", "--one-file"):
-		onefile = True
+	    if opt in ("-c", "--config-file"):
+		configfile = arg
     except getopt.GetoptError,e:
         print e
         opts, args = getopt.getopt(argv, "", [])
@@ -1094,6 +1134,4 @@ if __name__ == "__main__":
     if args == None:
         help()
 
-    instance = SpiderMonkey(bridgesupport_file, hierarchy_file, namespace, prefix, onefile, args )
-    instance.parse()
-
+    SpiderMonkey.parse_config_file( configfile )
