@@ -2,9 +2,14 @@
 //  ScriptingCore.h
 //
 
+#import <objc/runtime.h>
+#import "jsapi.h"
 
-#include "jsapi.h"
-#include "cocos2d.h"
+#import "cocos2d.h"
+
+// Globals
+// one shared key for associations
+extern char * JSPROXY_association_proxy_key;
 
 /**
  */
@@ -83,3 +88,18 @@
 -(void) runScript:(NSString*)filename;
 
 @end
+
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+/** Creates a JSObject, a ProxyObject and associates them with the real object */
+extern JSObject* create_jsobject_from_realobj( Class klass,id realObj, JSContext* context );
+
+/** Gets or Creates a JSObject, a ProxyObject and associates them with the real object */
+extern JSObject * get_or_create_jsobject_from_realobj( id realObj, JSContext *cx );
+
+#ifdef __cplusplus
+}
+#endif

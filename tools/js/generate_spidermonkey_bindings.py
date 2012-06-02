@@ -62,8 +62,7 @@ class SpiderMonkey(object):
 	cp.read(config_file)
 
 	
-	supported_options = {'namespace' : '',
-	                     'obj_class_prefix_to_remove': '',
+	supported_options = {'obj_class_prefix_to_remove': '',
 	                     'classes_to_parse' : [],
 	                     'callback_methods' : [],
 	                     'classes_to_ignore' : [],
@@ -77,6 +76,9 @@ class SpiderMonkey(object):
 	for s in cp.sections():
 	    config = copy.copy( supported_options )
 
+	    # Section is the config namespace
+	    config['namespace'] = s
+	    
 	    for o in cp.options(s):
 		if not o in config:
 		    print 'Ignoring unrecognized option: %s' % o
@@ -270,24 +272,22 @@ class SpiderMonkey(object):
     def generate_constructor( self, class_name ):
 
         # Global Variables
-        # 1: JSPROXY_CCNode  2: JSPROXY_CCNode
-        constructor_globals = '''
+        # JSPROXY_CCNode
+	# JSPROXY_CCNode
+	# JSPROXY_CCNode
+	constructor_globals = '''
 JSClass* %s_class = NULL;
 JSObject* %s_object = NULL;
+static char *%s_proxy_key = NULL;
 '''
 
         # 1: JSPROXY_CCNode,
-        # 2: JSPROXY_CCNode, 3: JSPROXY_CCNode
-        # 6: JSPROXY_CCNode,  7: JSPROXY_CCNode
+        # 2: JSPROXY_CCNode,
         # 8: possible callback code
         constructor_template = ''' // Constructor
 JSBool %s_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
-    JSObject *jsobj = JS_NewObject(cx, %s_class, %s_object, NULL);
-
-    %s *proxy = [[%s alloc] initWithJSObject:jsobj];
-
-    JS_SetPrivate(jsobj, proxy);
+    JSObject *jsobj = [%s createJSObjectWithRealObject:nil context:cx];
     JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
     %s
@@ -296,27 +296,30 @@ JSBool %s_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 }
 '''
         proxy_class_name = '%s%s' % (PROXY_PREFIX, class_name )
-        self.mm_file.write( constructor_globals % ( proxy_class_name, proxy_class_name ) )
-        self.mm_file.write( constructor_template % ( proxy_class_name, proxy_class_name, proxy_class_name, proxy_class_name, proxy_class_name, '/* no callbacks */' ) )
+        self.mm_file.write( constructor_globals % ( proxy_class_name, proxy_class_name, proxy_class_name ) )
+        self.mm_file.write( constructor_template % ( proxy_class_name, proxy_class_name, '/* no callbacks */' ) )
 
     def generate_destructor( self, class_name ):
         # 1: JSPROXY_CCNode,
         # 2: JSPROXY_CCNode, 3: JSPROXY_CCNode
+	# JSPROXY_CCNode,
         # 4: possible callback code
         destructor_template = '''
 // Destructor
 void %s_finalize(JSContext *cx, JSObject *obj)
 {
-	%s *pt = (%s*)JS_GetPrivate(obj);
-	if (pt) {
-	        %s
-
-	        [pt release];
+	%s *proxy = (%s*)JS_GetPrivate(obj);
+	if (proxy) {
+		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_ASSIGN);
+		%s
+		[proxy release];
 	}
 }
 '''
         proxy_class_name = '%s%s' % (PROXY_PREFIX, class_name )
-        self.mm_file.write( destructor_template % ( proxy_class_name, proxy_class_name, proxy_class_name, '/* no callbacks */' ) )
+        self.mm_file.write( destructor_template % ( proxy_class_name,
+	                                            proxy_class_name, proxy_class_name,
+	                                            '/* no callbacks */' ) )
 
     #
     # Method generator functions
@@ -369,20 +372,25 @@ void %s_finalize(JSContext *cx, JSObject *obj)
         class_name = declared_type.replace('*','')
         proxy_class_name = PROXY_PREFIX + class_name
 
-        object_template = '''
-	JSObject *jsobj = JS_NewObject(cx, %s_class, %s_object, NULL);
-	%s *ret_proxy = [[%s alloc] initWithJSObject:jsobj];
-	[ret_proxy setRealObj: %s];
-	JS_SetPrivate(jsobj, ret_proxy);
+#        object_template = '''
+#	JSObject *jsobj = JS_NewObject(cx, %s_class, %s_object, NULL);
+#	%s *ret_proxy = [[%s alloc] initWithJSObject:jsobj];
+#	[ret_proxy setRealObj: %s];
+#	JS_SetPrivate(jsobj, ret_proxy);
+#	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+#'''
+	object_template = '''
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( %s, cx );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 '''
         method_type = self.get_method_type( self.current_method ) 
 
         ret_object = 'ret_val' if method_type==METHOD_REGULAR else 'real'
 
-        return object_template % ( proxy_class_name, proxy_class_name,
-                                   proxy_class_name, proxy_class_name,
-                                   ret_object )    
+	return object_template % ( ret_object )
+#        return object_template % ( proxy_class_name, proxy_class_name,
+#                                   proxy_class_name, proxy_class_name,
+#                                   ret_object )    
 
     # special case: returning String
     def generate_retval_string( self, declared_type, js_type ):
@@ -882,12 +890,23 @@ extern JSClass *%s_class;
         self.h_file.write( header_template_end )
 
     def generate_implementation( self, class_name ):
-
+	create_object_template = '''
++(JSObject*) createJSObjectWithRealObject:(id)realObj context:(JSContext*)cx
+{
+	JSObject *jsobj = JS_NewObject(cx, %s_class, %s_object, NULL);
+	%s *proxy = [[%s alloc] initWithJSObject:jsobj];
+	[proxy setRealObj:realObj];
+	objc_setAssociatedObject(realObj, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
+	JS_SetPrivate(jsobj, proxy);	
+	return jsobj;
+}
+'''	
 	proxy_class_name = '%s%s' % (PROXY_PREFIX, class_name )
 
         self.mm_file.write( '\n@implementation %s\n' % proxy_class_name )
-
-	# XXX: Add callbacks here
+	
+	self.mm_file.write( create_object_template % (proxy_class_name, proxy_class_name,
+	                                              proxy_class_name, proxy_class_name) )
 
         self.mm_file.write( '\n@end\n' )
 	

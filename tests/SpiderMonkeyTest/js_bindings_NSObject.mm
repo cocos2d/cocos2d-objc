@@ -7,9 +7,9 @@
 
 #pragma mark - JSPROXY_NSObject
 
-
 JSClass* JSPROXY_NSObject_class = NULL;
 JSObject* JSPROXY_NSObject_object = NULL;
+
 // Constructor
 JSBool JSPROXY_NSObject_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
@@ -58,12 +58,7 @@ JSBool JSPROXY_NSObject_init(JSContext *cx, uint32_t argc, jsval *vp) {
 }
 
 
-@implementation JSPROXY_NSObject
-
-@synthesize jsObj = _jsObj;
-@synthesize realObj = _realObj;
-
-+(void) createClassWithContext:(JSContext*)cx object:(JSObject*)globalObj name:(NSString*)name
+void createClass(JSContext* cx, JSObject* globalObj, NSString* name )
 {
 	JSPROXY_NSObject_class = (JSClass *)calloc(1, sizeof(JSClass));
 	JSPROXY_NSObject_class->name = [name UTF8String];
@@ -91,6 +86,22 @@ JSBool JSPROXY_NSObject_init(JSContext *cx, uint32_t argc, jsval *vp) {
 	};
 	
 	JSPROXY_NSObject_object = JS_InitClass(cx, globalObj, NULL, JSPROXY_NSObject_class, JSPROXY_NSObject_constructor,0,properties,funcs,NULL,st_funcs);
+}
+
+@implementation JSPROXY_NSObject
+
+@synthesize jsObj = _jsObj;
+@synthesize realObj = _realObj;
+
++(JSObject*) createJSObjectWithRealObject:(id)realObj context:(JSContext*)cx
+{
+	JSObject *jsobj = JS_NewObject(cx, JSPROXY_NSObject_class, JSPROXY_NSObject_object, NULL);
+    JSPROXY_NSObject *proxy = [[JSPROXY_NSObject alloc] initWithJSObject:jsobj];	
+    JS_SetPrivate(jsobj, proxy);
+	
+	[proxy setRealObj:realObj];
+
+	return jsobj;
 }
 
 -(id) initWithJSObject:(JSObject*)object

@@ -121,3 +121,12 @@ var tmp = cc.Sprite.spriteWithFile("grossini.png");
 tmp = null;
 cc.forceGC();
 
+// Testing same object
+var sprite3 = new cc.Sprite.spriteWithFile("grossinis_sister1.png");
+sprite3.I_was_here = 'Oh Yeah';
+parent2.addChildZTag( sprite3, 0, 100 );
+sprite3.setPosition( ccp( 300,200) );
+
+var sameSprite = parent2.getChildByTag( 100 );
+cc.log( sameSprite.I_was_here );
+
