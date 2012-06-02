@@ -258,7 +258,7 @@ JSObject* create_jsobject_from_realobj( Class klass,id realObj, JSContext* conte
 	NSString *proxied_class = [NSString stringWithFormat:@"JSPROXY_%@", klass];
 	Class class = NSClassFromString(proxied_class);
 	if( class )
-	return [class createJSObjectWithRealObject:realObj context:context];
+		return [class createJSObjectWithRealObject:realObj context:context];
 
 	CCLOGWARN(@"Proxied class not found: %@. Trying with parent class", proxied_class );
 	return create_jsobject_from_realobj([klass superclass], realObj, context );
