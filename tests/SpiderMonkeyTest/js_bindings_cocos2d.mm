@@ -28,7 +28,7 @@ JSBool JSPROXY_CCDirector_constructor(JSContext *cx, uint32_t argc, jsval *vp)
     JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
     /* no callbacks */
-    
+
     return JS_TRUE;
 }
 
@@ -763,7 +763,7 @@ JSBool JSPROXY_CCNode_constructor(JSContext *cx, uint32_t argc, jsval *vp)
     JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
     /* no callbacks */
-    
+
     return JS_TRUE;
 }
 
@@ -2314,7 +2314,7 @@ JSBool JSPROXY_CCSprite_constructor(JSContext *cx, uint32_t argc, jsval *vp)
     JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
     /* no callbacks */
-    
+
     return JS_TRUE;
 }
 
@@ -2816,7 +2816,7 @@ JSBool JSPROXY_CCAction_constructor(JSContext *cx, uint32_t argc, jsval *vp)
     JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
     /* no callbacks */
-    
+
     return JS_TRUE;
 }
 
@@ -3030,7 +3030,7 @@ JSBool JSPROXY_CCFiniteTimeAction_constructor(JSContext *cx, uint32_t argc, jsva
     JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
     /* no callbacks */
-    
+
     return JS_TRUE;
 }
 
@@ -3159,7 +3159,7 @@ JSBool JSPROXY_CCActionInterval_constructor(JSContext *cx, uint32_t argc, jsval 
     JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
     /* no callbacks */
-    
+
     return JS_TRUE;
 }
 
@@ -3324,7 +3324,7 @@ JSBool JSPROXY_CCScaleTo_constructor(JSContext *cx, uint32_t argc, jsval *vp)
     JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
     /* no callbacks */
-    
+
     return JS_TRUE;
 }
 
@@ -3475,7 +3475,7 @@ JSBool JSPROXY_CCScaleBy_constructor(JSContext *cx, uint32_t argc, jsval *vp)
     JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
     /* no callbacks */
-    
+
     return JS_TRUE;
 }
 
@@ -3568,7 +3568,7 @@ JSBool JSPROXY_CCLayer_constructor(JSContext *cx, uint32_t argc, jsval *vp)
     JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
     /* no callbacks */
-    
+
     return JS_TRUE;
 }
 
@@ -3804,7 +3804,7 @@ JSBool JSPROXY_CCMoveTo_constructor(JSContext *cx, uint32_t argc, jsval *vp)
     JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
     /* no callbacks */
-    
+
     return JS_TRUE;
 }
 
@@ -3936,7 +3936,7 @@ JSBool JSPROXY_CCMoveBy_constructor(JSContext *cx, uint32_t argc, jsval *vp)
     JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
     /* no callbacks */
-    
+
     return JS_TRUE;
 }
 
@@ -4068,7 +4068,7 @@ JSBool JSPROXY_CCScene_constructor(JSContext *cx, uint32_t argc, jsval *vp)
     JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
     /* no callbacks */
-    
+
     return JS_TRUE;
 }
 
@@ -4153,7 +4153,7 @@ JSBool JSPROXY_CCLabelTTF_constructor(JSContext *cx, uint32_t argc, jsval *vp)
     JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
     /* no callbacks */
-    
+
     return JS_TRUE;
 }
 
@@ -4691,7 +4691,7 @@ JSBool JSPROXY_CCSpriteBatchNode_constructor(JSContext *cx, uint32_t argc, jsval
     JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
     /* no callbacks */
-    
+
     return JS_TRUE;
 }
 
@@ -5066,7 +5066,7 @@ JSBool JSPROXY_CCLabelBMFont_constructor(JSContext *cx, uint32_t argc, jsval *vp
     JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
     /* no callbacks */
-    
+
     return JS_TRUE;
 }
 
@@ -5482,7 +5482,7 @@ JSBool JSPROXY_CCParticleSystem_constructor(JSContext *cx, uint32_t argc, jsval 
     JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
     /* no callbacks */
-    
+
     return JS_TRUE;
 }
 
@@ -7247,7 +7247,7 @@ JSBool JSPROXY_CCParticleSystemQuad_constructor(JSContext *cx, uint32_t argc, js
     JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
     /* no callbacks */
-    
+
     return JS_TRUE;
 }
 
@@ -7335,7 +7335,7 @@ JSBool JSPROXY_CCRotateBy_constructor(JSContext *cx, uint32_t argc, jsval *vp)
     JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
     /* no callbacks */
-    
+
     return JS_TRUE;
 }
 

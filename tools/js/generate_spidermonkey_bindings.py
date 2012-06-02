@@ -55,81 +55,81 @@ def xml2d(e):
 
 
 class SpiderMonkey(object):
-    
+
     @classmethod
     def parse_config_file( cls, config_file ):
-	cp = ConfigParser.ConfigParser()
-	cp.read(config_file)
-
-	
-	supported_options = {'obj_class_prefix_to_remove': '',
-	                     'classes_to_parse' : [],
-	                     'callback_methods' : [],
-	                     'classes_to_ignore' : [],
-	                     'one_file_for_all_classes' : True,
-	                     'bridge_support_file' : '',
-	                     'hierarchy_protocol_file' : '',
-	                     }
+        cp = ConfigParser.ConfigParser()
+        cp.read(config_file)
 
 
-	
-	for s in cp.sections():
-	    config = copy.copy( supported_options )
+        supported_options = {'obj_class_prefix_to_remove': '',
+                             'classes_to_parse' : [],
+                             'callback_methods' : [],
+                             'classes_to_ignore' : [],
+                             'one_file_for_all_classes' : True,
+                             'bridge_support_file' : '',
+                             'hierarchy_protocol_file' : '',
+                             }
 
-	    # Section is the config namespace
-	    config['namespace'] = s
-	    
-	    for o in cp.options(s):
-		if not o in config:
-		    print 'Ignoring unrecognized option: %s' % o
-		    continue
-		
-		t = type( config[o] )
-		if t == type(True):
-		    v = cp.getboolean(s, o)
-		elif t == type(1):
-		    v = cp.getint(s, o )
-		elif t == type(''):
-		    v = cp.get(s, o )
-		elif t == type([]):
-		    v = cp.get(s, o )
-		    l = v.split(' ')
-		    v = l
-		else:
-		    raise Exception('Unsupported type' % str(t) )
-		config[ o ] = v
-	    
-	    sp = SpiderMonkey( config )
-	    sp.parse()
+
+
+        for s in cp.sections():
+            config = copy.copy( supported_options )
+
+            # Section is the config namespace
+            config['namespace'] = s
+
+            for o in cp.options(s):
+                if not o in config:
+                    print 'Ignoring unrecognized option: %s' % o
+                    continue
+
+                t = type( config[o] )
+                if t == type(True):
+                    v = cp.getboolean(s, o)
+                elif t == type(1):
+                    v = cp.getint(s, o )
+                elif t == type(''):
+                    v = cp.get(s, o )
+                elif t == type([]):
+                    v = cp.get(s, o )
+                    l = v.split(' ')
+                    v = l
+                else:
+                    raise Exception('Unsupported type' % str(t) )
+                config[ o ] = v
+
+            sp = SpiderMonkey( config )
+            sp.parse()
 
     def __init__(self, config ):
 
         self.bridgesupport_file = config['bridge_support_file']
         self.bs = {}
 
-	self.hierarchy_file = config['hierarchy_protocol_file']
+        self.hierarchy_file = config['hierarchy_protocol_file']
         self.hierarchy = {}
 
         self.namespace = config['namespace']
-	
-	self.onefile = config['one_file_for_all_classes']
 
-	self.prefix = config['obj_class_prefix_to_remove']
+        self.onefile = config['one_file_for_all_classes']
 
-        
+        self.prefix = config['obj_class_prefix_to_remove']
+
+
         self.classes_to_bind = set( config['classes_to_parse'] )
         self.supported_classes = set(['NSObject'])
-	
-	self.classes_to_ignore = config['classes_to_ignore']
-	
-	self.callback_methods = config['callback_methods']
-	
-	# In order to prevent parsing a class many times
-	self.parsed_classes = []
+
+        self.classes_to_ignore = config['classes_to_ignore']
+
+        self.callback_methods = config['callback_methods']
+
+        # In order to prevent parsing a class many times
+        self.parsed_classes = []
 
         # Current method that is being parsed
         self.current_method = None
-    
+
     def parse_hierarchy_file( self ):
         f = open( self.hierarchy_file )
         self.hierarchy = ast.literal_eval( f.read() )
@@ -158,7 +158,7 @@ class SpiderMonkey(object):
     #
     def get_struct_type_and_num_of_elements( self, struct ):
         # PRECOND: Structure must be valid
-        
+
         # BridgeSupport to TypedArray
         bs_to_type_array =  { 'c' : 'TYPE_INT8',
                               'C' : 'TYPE_UINT8',
@@ -169,18 +169,18 @@ class SpiderMonkey(object):
                               'f' : 'TYPE_FLOAT32',
                               'd' : 'TYPE_FLOAT64',
                               }
-                              
+
         inner = struct.replace('{', '')            
         inner = inner.replace('{', '')
         key,value = inner.split('=')
-        
+
         k = value[0]
         if not k in bs_to_type_array:
             raise Exception('Structure cannot be converted')
 
         # returns type of structure and len
         return (bs_to_type_array[k], len(value) )
-        
+
     def is_valid_structure( self, struct ):
         # Only support non-nested structures of only one type
         # valids:
@@ -252,14 +252,14 @@ class SpiderMonkey(object):
         parts = selector.split(':')
         for i,arg in enumerate(parts):
             if i==0:
-	        name += arg
-	    else:
+                name += arg
+            else:
                 name += arg.capitalize()
 
         return name
 
     def generate_autogenerate_prefix( self, fd ):
-	autogenerated_template = '''/*
+        autogenerated_template = '''/*
 * AUTOGENERATED FILE. DO NOT EDIT IT
 * Generated by %s on %s
 */
@@ -273,9 +273,9 @@ class SpiderMonkey(object):
 
         # Global Variables
         # JSPROXY_CCNode
-	# JSPROXY_CCNode
-	# JSPROXY_CCNode
-	constructor_globals = '''
+        # JSPROXY_CCNode
+        # JSPROXY_CCNode
+        constructor_globals = '''
 JSClass* %s_class = NULL;
 JSObject* %s_object = NULL;
 static char *%s_proxy_key = NULL;
@@ -291,7 +291,7 @@ JSBool %s_constructor(JSContext *cx, uint32_t argc, jsval *vp)
     JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
     %s
-    
+
     return JS_TRUE;
 }
 '''
@@ -302,7 +302,7 @@ JSBool %s_constructor(JSContext *cx, uint32_t argc, jsval *vp)
     def generate_destructor( self, class_name ):
         # 1: JSPROXY_CCNode,
         # 2: JSPROXY_CCNode, 3: JSPROXY_CCNode
-	# JSPROXY_CCNode,
+        # JSPROXY_CCNode,
         # 4: possible callback code
         destructor_template = '''
 // Destructor
@@ -318,8 +318,8 @@ void %s_finalize(JSContext *cx, JSObject *obj)
 '''
         proxy_class_name = '%s%s' % (PROXY_PREFIX, class_name )
         self.mm_file.write( destructor_template % ( proxy_class_name,
-	                                            proxy_class_name, proxy_class_name,
-	                                            '/* no callbacks */' ) )
+                                                    proxy_class_name, proxy_class_name,
+                                                    '/* no callbacks */' ) )
 
     #
     # Method generator functions
@@ -341,10 +341,10 @@ void %s_finalize(JSContext *cx, JSObject *obj)
             prefix = '\t%s *real = [%s ' % (class_name, class_name )
             suffix = ''
         elif method_type == METHOD_CLASS:
-	    if not ret_declared_type or ret_declared_type == 'void':
-		prefix = '\t[%s ' % (class_name)
-	    else:
-		prefix = '\t%s real = [%s ' % (ret_declared_type, class_name )
+            if not ret_declared_type or ret_declared_type == 'void':
+                prefix = '\t[%s ' % (class_name)
+            else:
+                prefix = '\t%s real = [%s ' % (ret_declared_type, class_name )
             suffix = ''
         else:
             raise Exception('Invalid method type')
@@ -379,7 +379,7 @@ void %s_finalize(JSContext *cx, JSObject *obj)
 #	JS_SetPrivate(jsobj, ret_proxy);
 #	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 #'''
-	object_template = '''
+        object_template = '''
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( %s, cx );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 '''
@@ -387,7 +387,7 @@ void %s_finalize(JSContext *cx, JSObject *obj)
 
         ret_object = 'ret_val' if method_type==METHOD_REGULAR else 'real'
 
-	return object_template % ( ret_object )
+        return object_template % ( ret_object )
 #        return object_template % ( proxy_class_name, proxy_class_name,
 #                                   proxy_class_name, proxy_class_name,
 #                                   ret_object )    
@@ -407,7 +407,7 @@ void %s_finalize(JSContext *cx, JSObject *obj)
 '''
         return template
 
-    
+
     # special case: returning CGPoint
     def generate_retval_cgpoint( self, declared_type, js_type ):
         template = '''
@@ -439,11 +439,11 @@ void %s_finalize(JSContext *cx, JSObject *obj)
             'd' : 'DOUBLE_TO_JSVAL(ret_val)',
             'c' : 'INT_TO_JSVAL(ret_val)',
             None : 'JSVAL_TRUE',
-            }
+        }
         special_convert = {
             'o' : self.generate_retval_object,
             'S' : self.generate_retval_string,
-	    '[]': self.generate_retval_array,
+            '[]': self.generate_retval_array,
         }
 
         special_declared_types = {
@@ -473,7 +473,7 @@ void %s_finalize(JSContext *cx, JSObject *obj)
             'NSString*' : 'S',
 #	    'NSArray*'  : '[]',
 #	    'CCArray*'  : '[]',
-	}
+        }
 
         supported_types = {
             'f' : 'd',  # float
@@ -484,7 +484,7 @@ void %s_finalize(JSContext *cx, JSObject *obj)
             'C' : 'c',  # unsigned char
             'B' : 'b',  # BOOL
             'v' :  None,  # void (for retval)
-            }
+        }
 
         s = method['selector']
 
@@ -527,7 +527,7 @@ void %s_finalize(JSContext *cx, JSObject *obj)
                 ret_js_type = 'o'
                 ret_declared_type = dt 
             else:
-		raise Exception('Unsupported return value')
+                raise Exception('Unsupported return value')
 
         return (ret_js_type, ret_declared_type )
 
@@ -537,7 +537,7 @@ void %s_finalize(JSContext *cx, JSObject *obj)
         supported_declared_types = {
             'CGPoint'   : '{}',
             'NSString*' : 'S',
-            }
+        }
 
         supported_types = {
             'f' : 'd',  # float
@@ -547,7 +547,7 @@ void %s_finalize(JSContext *cx, JSObject *obj)
             'c' : 'c',  # char
             'C' : 'c',  # unsigned char
             'B' : 'b',  # BOOL
-            }
+        }
 
         s = method['selector']
 
@@ -578,7 +578,7 @@ void %s_finalize(JSContext *cx, JSObject *obj)
                     args_js_type.append( 'o' )
                     args_declared_type.append( dt )
                 else:
-		    raise Exception("Unsupported argument: %s" % dt)
+                    raise Exception("Unsupported argument: %s" % dt)
 
         return (args_js_type, args_declared_type)
 
@@ -596,9 +596,9 @@ void %s_finalize(JSContext *cx, JSObject *obj)
 '''
         proxy_class_name = PROXY_PREFIX + arg_declared_type
         self.mm_file.write( object_template % (i,
-                        i,
-                        proxy_class_name , i, proxy_class_name, i,
-                        arg_declared_type, i, arg_declared_type, i ) )
+                                               i,
+                                               proxy_class_name , i, proxy_class_name, i,
+                                               arg_declared_type, i, arg_declared_type, i ) )
 
     # CGPoint needs an special case since its internal structure changes
     # on the platform. On Mac it uses doubles and on iOS it uses floats
@@ -618,13 +618,13 @@ void %s_finalize(JSContext *cx, JSObject *obj)
 #endif  
 '''
         proxy_class_name = PROXY_PREFIX + arg_declared_type
-                
+
         self.mm_file.write( template % (i,
-                        i,
-                        i,
-                        i, i,
-                        i, i, i,
-                        i, i ) )
+                                        i,
+                                        i,
+                                        i, i,
+                                        i, i, i,
+                                        i, i ) )
 
     def generate_argument_struct( self, i, arg_js_type, arg_declared_type ):
         # This template assumes that the types will be the same on all platforms (eg: 64 and 32-bit platforms)
@@ -634,56 +634,56 @@ void %s_finalize(JSContext *cx, JSObject *obj)
 	%s arg%d = *(%s*)JS_GetTypedArrayData( tmp_arg%d);
 '''
         special_case_structs = { 'CGPoint' : self.generate_argument_struct_cgpoint,
-                              }
+                                 }
 
         proxy_class_name = PROXY_PREFIX + arg_declared_type
-                
+
         if arg_declared_type in special_case_structs:
             special_case_structs[ arg_declared_type ]( i, arg_js_type, arg_declared_type )
         else:
             self.mm_file.write( template % (i,
-                            i,
-                            arg_declared_type, i, arg_declared_type, i ) )
+                                            i,
+                                            arg_declared_type, i, arg_declared_type, i ) )
 
 
     def generate_argument_array( self, i, arg_js_type, arg_declared_type ):
         template = '''
         JSBool JSPROXY_CCSequence_initWithArray(JSContext *cx, uint32_t argc, jsval *vp) {
-                
+
                 JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
                 JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
                 NSCAssert( proxy, @"Invalid Proxy object");
                 NSCAssert( ![proxy realObj], @"Object not initialzied. error");
                 NSCAssert( argc == 1, @"Invalid number of arguments" );
-                
+
                 JSObject *tmp_arg0;
                 JS_ValueToObject( cx, vp[2], &tmp_arg0 );
                 NSCAssert( JS_IsArrayObject( cx, tmp_arg0), @"Invalid argument. It is not an array" );
-                
+
                 uint32_t arg0_length;
                 JS_GetArrayLength(cx, tmp_arg0, &arg0_length);
                 NSMutableArray *array = [NSMutableArray arrayWithCapacity:arg0_length];
                 for( uint32_t i=0; i< arg0_length;i++ ) {		
                         jsval val_arg0;
                         JS_GetElement(cx, tmp_arg0, i, &val_arg0);
-        
+
                         JSObject *tmp_real_arg0;
                         JS_ValueToObject( cx, val_arg0, &tmp_real_arg0 );
                         JSPROXY_CCFiniteTimeAction* tmp_proxy_arg0 = (JSPROXY_CCFiniteTimeAction*) JS_GetPrivate( tmp_real_arg0 );
                         id real_arg0 = (id) [tmp_proxy_arg0 realObj];
-                        
+
                         [array addObject:real_arg0];
                 }
-                
+
                 CCSequence *real = [[CCSequence alloc] initWithArray:array];
                 [proxy setRealObj: real];
                 [real release];
-                
+
                 JS_SET_RVAL(cx, vp, JSVAL_TRUE);
                 return JS_TRUE;
         }
 '''
-        
+
     def generate_method_prefix( self, class_name, converted_name, num_of_args, method_type ):
         # JSPROXY_CCNode, setPosition
         # "!" or ""
@@ -691,7 +691,7 @@ void %s_finalize(JSContext *cx, JSObject *obj)
         template_methodname = '''
 JSBool %s_%s(JSContext *cx, uint32_t argc, jsval *vp) {
 '''
-	template_init = '''
+        template_init = '''
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
@@ -717,8 +717,8 @@ JSBool %s_%s(JSContext *cx, uint32_t argc, jsval *vp) {
 }
 '''
         self.mm_file.write( end_template )
-       
-        
+
+
     def generate_method( self, class_name, method ):
         # b      JSBool          Boolean
         # c      uint16_t/jschar ECMA uint16_t, Unicode char
@@ -744,7 +744,7 @@ JSBool %s_%s(JSContext *cx, uint32_t argc, jsval *vp) {
             'j' : ['int32_t',   'JS_ValueToECMAInt32'],
             'u' : ['uint32_t',  'JS_ValueToECMAUint32'],
             'c' : ['uint16_t',  'JS_ValueToUint16'],
-            }
+        }
 
         js_special_type_conversions =  {
             'S' : self.generate_argument_string,
@@ -752,13 +752,13 @@ JSBool %s_%s(JSContext *cx, uint32_t argc, jsval *vp) {
             '{}': self.generate_argument_struct,
         }
 
-	try:
-	    args_js_type, args_declared_type = self.parse_method_arguments(method, class_name )
-	    ret_js_type, ret_declared_type = self.parse_method_retval( method, class_name )
-	except Exception, error:
-	    return False
+        try:
+            args_js_type, args_declared_type = self.parse_method_arguments(method, class_name )
+            ret_js_type, ret_declared_type = self.parse_method_retval( method, class_name )
+        except Exception, error:
+            return False
 
-        
+
         method_type = self.get_method_type( method )
 
         s = method['selector']
@@ -767,7 +767,7 @@ JSBool %s_%s(JSContext *cx, uint32_t argc, jsval *vp) {
         converted_name = self.convert_selector_name_to_native( s )
 
         num_of_args = len( args_declared_type )
-        
+
         # writes method description
         self.mm_file.write( '\n// Arguments: %s\n// Ret value: %s' % ( ', '.join(args_declared_type), ret_declared_type ) )
 
@@ -819,7 +819,7 @@ JSBool %s_%s(JSContext *cx, uint32_t argc, jsval *vp) {
         return ok_methods
 
     def generate_mm_prefix( self ):
-	import_template = '''
+        import_template = '''
 // needed for callbacks from objective-c to JS
 #import <objc/runtime.h>
 #import "JRSwizzle.h"
@@ -830,21 +830,21 @@ JSBool %s_%s(JSContext *cx, uint32_t argc, jsval *vp) {
 #import "%s%s.h"
 
 '''
-	self.generate_autogenerate_prefix( self.mm_file )
-	self.mm_file.write( import_template % (BINDINGS_PREFIX, self.namespace) )
+        self.generate_autogenerate_prefix( self.mm_file )
+        self.mm_file.write( import_template % (BINDINGS_PREFIX, self.namespace) )
 
     def generate_pragma_mark( self, class_name, fd ):
-	pragm_mark = '''
+        pragm_mark = '''
 /*
  * %s
  */
 #pragma mark - %s
 '''
-	fd.write( pragm_mark % (class_name, class_name) )
+        fd.write( pragm_mark % (class_name, class_name) )
 
     def generate_header_prefix( self, parent_name ):
-	self.generate_autogenerate_prefix( self.h_file )
-	self.h_file.write('#import "%s.h"\n' % (BINDINGS_PREFIX + parent_name) )
+        self.generate_autogenerate_prefix( self.h_file )
+        self.h_file.write('#import "%s.h"\n' % (BINDINGS_PREFIX + parent_name) )
 
     def generate_header( self, class_name, parent_name ):
         # JSPROXXY_CCNode
@@ -877,20 +877,20 @@ extern JSClass *%s_class;
         proxy_class_name = '%s%s' % (PROXY_PREFIX, class_name )
 
         # Header file
-	if not self.onefile:
-	    self.generate_header_prefix( parent_name )
+        if not self.onefile:
+            self.generate_header_prefix( parent_name )
 
-	self.generate_pragma_mark( class_name, self.h_file )
+        self.generate_pragma_mark( class_name, self.h_file )
 
         self.h_file.write( header_template % (  proxy_class_name,
-	                                        proxy_class_name,
+                                                proxy_class_name,
                                                 proxy_class_name,
                                                 proxy_class_name, PROXY_PREFIX + parent_name  ) )
         # callback code should be added here
         self.h_file.write( header_template_end )
 
     def generate_implementation( self, class_name ):
-	create_object_template = '''
+        create_object_template = '''
 +(JSObject*) createJSObjectWithRealObject:(id)realObj context:(JSContext*)cx
 {
 	JSObject *jsobj = JS_NewObject(cx, %s_class, %s_object, NULL);
@@ -901,15 +901,15 @@ extern JSClass *%s_class;
 	return jsobj;
 }
 '''	
-	proxy_class_name = '%s%s' % (PROXY_PREFIX, class_name )
+        proxy_class_name = '%s%s' % (PROXY_PREFIX, class_name )
 
         self.mm_file.write( '\n@implementation %s\n' % proxy_class_name )
-	
-	self.mm_file.write( create_object_template % (proxy_class_name, proxy_class_name,
-	                                              proxy_class_name, proxy_class_name) )
+
+        self.mm_file.write( create_object_template % (proxy_class_name, proxy_class_name,
+                                                      proxy_class_name, proxy_class_name) )
 
         self.mm_file.write( '\n@end\n' )
-	
+
     def generate_createClass_function( self, class_name, parent_name, ok_methods ):
         # 1-12: JSPROXY_CCNode
         implementation_template = '''
@@ -951,7 +951,7 @@ void %s_createClass(JSContext *cx, JSObject* globalObj, const char* name )
         proxy_parent_name = '%s%s' % (PROXY_PREFIX, parent_name )
 
         self.mm_file.write( implementation_template % ( proxy_class_name,
-	                                                proxy_class_name, proxy_class_name, proxy_class_name,
+                                                        proxy_class_name, proxy_class_name, proxy_class_name,
                                                         proxy_class_name, proxy_class_name, proxy_class_name, 
                                                         proxy_class_name, proxy_class_name, proxy_class_name, 
                                                         proxy_class_name, proxy_class_name, proxy_class_name ) )
@@ -966,11 +966,11 @@ void %s_createClass(JSContext *cx, JSObject* globalObj, const char* name )
             js_name = self.convert_selector_name_to_js( method['selector'] )
             cb_name = self.convert_selector_name_to_native( method['selector'] )
 
-	    if self.is_class_constructor( method ):
-		entry = js_fn % (js_name, proxy_class_name + '_' + cb_name, '| JSFUN_CONSTRUCTOR' )
-	    else:
-		entry = js_fn % (js_name, proxy_class_name + '_' + cb_name, '' )
-		
+            if self.is_class_constructor( method ):
+                entry = js_fn % (js_name, proxy_class_name + '_' + cb_name, '| JSFUN_CONSTRUCTOR' )
+            else:
+                entry = js_fn % (js_name, proxy_class_name + '_' + cb_name, '' )
+
             if self.is_class_method( method ):
                 class_method_buffer += entry
             else:
@@ -988,20 +988,34 @@ void %s_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 
         self.mm_file.write( init_class_template % ( proxy_class_name, proxy_parent_name, proxy_class_name, proxy_class_name ) )
 
+    def generate_mm( self, klass, class_name, parent_name ):
+        # Implementation file
+        if not self.onefile:
+            self.generate_mm_prefix()
+
+        self.generate_pragma_mark( class_name, self.mm_file )
+        self.generate_constructor( class_name )
+        self.generate_destructor( class_name )
+
+        ok_methods = self.generate_methods( class_name, klass )
+
+        self.generate_createClass_function( class_name, parent_name, ok_methods )
+        self.generate_implementation( class_name )
+
     def generate_class_binding( self, class_name ):
 
-	# Ignore NSObject. Already registerd
-	if not class_name or class_name == 'NSObject' or class_name in self.parsed_classes:
-	    return
-	
-	parent = self.hierarchy[class_name]['subclass']
-	self.generate_class_binding( parent )
+        # Ignore NSObject. Already registerd
+        if not class_name or class_name in self.classes_to_ignore or class_name in self.parsed_classes:
+            return
 
-	self.parsed_classes.append( class_name )	
-	
-	if not self.onefile:
-	    self.h_file = open( '%s%s.h' % ( BINDINGS_PREFIX, class_name), 'w' )
-	    self.mm_file = open( '%s%s.mm' % (BINDINGS_PREFIX, class_name), 'w' )
+        parent = self.hierarchy[class_name]['subclass']
+        self.generate_class_binding( parent )
+
+        self.parsed_classes.append( class_name )	
+
+        if not self.onefile:
+            self.h_file = open( '%s%s.h' % ( BINDINGS_PREFIX, class_name), 'w' )
+            self.mm_file = open( '%s%s.mm' % (BINDINGS_PREFIX, class_name), 'w' )
 
         signatures = self.bs['signatures']
         classes = signatures['class']
@@ -1014,7 +1028,7 @@ void %s_createClass(JSContext *cx, JSObject* globalObj, const char* name )
             if c['name'] == class_name:
                 klass = c
                 break
-            
+
         if not klass:
             raise Exception("Class not found: '%s'. Check file: '%s'" % (class_name, self.bridgesupport_file ) )
 
@@ -1022,61 +1036,48 @@ void %s_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 
         proxy_class_name = '%s%s' % (PROXY_PREFIX, class_name )
 
-
+        self.generate_mm( klass, class_name, parent_name )
         self.generate_header( class_name, parent_name )
 
-        # Implementation file
-	if not self.onefile:
-	    self.generate_mm_prefix()
-
-	self.generate_pragma_mark( class_name, self.mm_file )
-        self.generate_constructor( class_name )
-        self.generate_destructor( class_name )
-
-        ok_methods = self.generate_methods( class_name, klass )
-
-	self.generate_createClass_function( class_name, parent_name, ok_methods )
-        self.generate_implementation( class_name )
-
-	if not self.onefile:
-	    self.h_file.close()
-	    self.mm_file.close()
+        if not self.onefile:
+            self.h_file.close()
+            self.mm_file.close()
 
     def generate_namespace_include_file( self ):
         f = open( '%s%s.h' % (BINDINGS_PREFIX, self.namespace), 'w' )
-	self.generate_autogenerate_prefix( f )
+        self.generate_autogenerate_prefix( f )
 
         for klass in self.supported_classes:
             f.write('#import "%s%s.h"\n' % ( BINDINGS_PREFIX, klass) )
 
         f.close()	    
-	
+
     def generate_class_registration( self, klass ):
-	# Ignore NSObject. Already registerd
-	if not klass or klass == 'NSObject':
-	    return
+        # Ignore NSObject. Already registerd
+        if not klass or klass == 'NSObject':
+            return
 
-	if not klass in self.classes_registered:
-	    parent = self.hierarchy[klass]['subclass']
-	    self.generate_class_registration( parent )
+        if not klass in self.classes_registered:
+            parent = self.hierarchy[klass]['subclass']
+            self.generate_class_registration( parent )
 
-	    klass_wo_prefix = klass
-	    if klass.startswith( self.prefix ):
-		klass_wo_prefix = klass[len( self.prefix) : ]
-	    
-	    self.class_registration_file.write('%s%s_createClass(_cx, %s, "%s");\n' % ( PROXY_PREFIX, klass, self.namespace, klass_wo_prefix ) )
-	    self.classes_registered.append( klass )
+            klass_wo_prefix = klass
+            if klass.startswith( self.prefix ):
+                klass_wo_prefix = klass[len( self.prefix) : ]
+
+            self.class_registration_file.write('%s%s_createClass(_cx, %s, "%s");\n' % ( PROXY_PREFIX, klass, self.namespace, klass_wo_prefix ) )
+            self.classes_registered.append( klass )
 
     def generate_classes_registration( self ):
-	
-	self.classes_registered = []
-	
-	self.class_registration_file = open( '%sclass_registration_%s.h' % (BINDINGS_PREFIX, self.namespace), 'w' )
-	self.generate_autogenerate_prefix( self.class_registration_file )
-	
+
+        self.classes_registered = []
+
+        self.class_registration_file = open( '%sclass_registration_%s.h' % (BINDINGS_PREFIX, self.namespace), 'w' )
+        self.generate_autogenerate_prefix( self.class_registration_file )
+
         for klass in self.supported_classes:
-	    self.generate_class_registration( klass )
-		
+            self.generate_class_registration( klass )
+
         self.class_registration_file.close()
 
 
@@ -1097,20 +1098,20 @@ void %s_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 
         self.supported_classes = self.supported_classes.union( s )
 
-	if self.onefile:
-	    self.h_file = open( '%s%s.h' % ( BINDINGS_PREFIX, self.namespace), 'w' )
-	    self.generate_header_prefix( 'NSObject' )
-	    self.mm_file = open( '%s%s.mm' % (BINDINGS_PREFIX, self.namespace), 'w' )
-	    self.generate_mm_prefix()
-	else:
-	    self.generate_namespace_include_file()
-	    
+        if self.onefile:
+            self.h_file = open( '%s%s.h' % ( BINDINGS_PREFIX, self.namespace), 'w' )
+            self.generate_header_prefix( 'NSObject' )
+            self.mm_file = open( '%s%s.mm' % (BINDINGS_PREFIX, self.namespace), 'w' )
+            self.generate_mm_prefix()
+        else:
+            self.generate_namespace_include_file()
+
         for klass in s:
             self.generate_class_binding( klass )
-	    
-	if self.onefile:
-	    self.h_file.close()
-	    self.mm_file.close()
+
+        if self.onefile:
+            self.h_file.close()
+            self.mm_file.close()
 
         self.generate_classes_registration()
 
@@ -1122,15 +1123,11 @@ void %s_createClass(JSContext *cx, JSObject* globalObj, const char* name )
         self.generate_bindings()
 
 def help():
-    print "%s v1.0 - An utility to generate SpiderMonkey JS bindings for BridgeSupport files" % sys.argv[0]
+    print "%s v0.1 - Script that generates glue code between Objective-C and Javascript (Spidermonkey)" % sys.argv[0]
     print "Usage:"
-    print "\t-b --bridgesupport\tBridgesupport file to parse"
-    print "\t-j --hierarchy\tFile that contains the hierarchy class and used protocols"
-    print "{class to parse}\tName of the classes to generate. If no classes are "
-    print "\t-n --namespace\tNamespace for the parsed objects. Default: None"
-    print "\t-p --prefix\tPrefix of the classes to be parsed. The prefix will be removed for the JS Class. Default: ''"
+    print "\t-c --config-file\tConfiguration file needed to generate the glue code."
     print "\nExample:"
-    print "\t%s -b cocos2d-mac.bridgesupport -p CC -n cocos2d -j cocos2d-mac_hierarchy.txt CCNode CCSprite" % sys.argv[0]
+    print "\t%s -c cocos2d-config.ini" % sys.argv[0]
     sys.exit(-1)
 
 if __name__ == "__main__":
@@ -1144,8 +1141,8 @@ if __name__ == "__main__":
         opts, args = getopt.getopt(argv, "c:", ["config-file="])
 
         for opt, arg in opts:
-	    if opt in ("-c", "--config-file"):
-		configfile = arg
+            if opt in ("-c", "--config-file"):
+                configfile = arg
     except getopt.GetoptError,e:
         print e
         opts, args = getopt.getopt(argv, "", [])
