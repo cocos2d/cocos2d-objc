@@ -9,6 +9,9 @@
 #import "js_bindings_NSObject.h"
 #import "js_bindings_cocos2d.h"
 
+// Globals
+char * JSPROXY_association_proxy_key = NULL;
+
 static JSClass global_class = {
 	"global", JSCLASS_GLOBAL_FLAGS,
 	JS_PropertyStub, JS_PropertyStub, JS_PropertyStub, JS_StrictPropertyStub,
@@ -154,8 +157,7 @@ JSBool ScriptingCore_addToRunningScene(JSContext *cx, uint32_t argc, jsval *vp)
 
 				
 		// Register classes: base classes should be registered first
-#import "js_bindings_class_registration_cocos2d.h"
-
+#import "js_bindings_class_registration_cocos2d.h"		
 	}
 	
 	return self;
@@ -250,3 +252,23 @@ JSBool ScriptingCore_addToRunningScene(JSContext *cx, uint32_t argc, jsval *vp)
 	JS_ShutDown();
 }
 @end
+
+JSObject* create_jsobject_from_realobj( Class klass,id realObj, JSContext* context )
+{
+	NSString *proxied_class = [NSString stringWithFormat:@"JSPROXY_%@", klass];
+	Class class = NSClassFromString(proxied_class);
+	if( class )
+	return [class createJSObjectWithRealObject:realObj context:context];
+
+	CCLOGWARN(@"Proxied class not found: %@. Trying with parent class", proxied_class );
+	return create_jsobject_from_realobj([klass superclass], realObj, context );
+}
+
+JSObject * get_or_create_jsobject_from_realobj( id realObj, JSContext *cx )
+{
+	JSPROXY_NSObject *proxy = objc_getAssociatedObject(realObj, &JSPROXY_association_proxy_key );
+	if( proxy )
+		return [proxy jsObj];
+	
+	return create_jsobject_from_realobj( [realObj class], realObj, cx );
+}

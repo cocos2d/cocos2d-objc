@@ -20,14 +20,11 @@
 
 JSClass* JSPROXY_CCDirector_class = NULL;
 JSObject* JSPROXY_CCDirector_object = NULL;
+static char *JSPROXY_CCDirector_proxy_key = NULL;
  // Constructor
 JSBool JSPROXY_CCDirector_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
-    JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCDirector_class, JSPROXY_CCDirector_object, NULL);
-
-    JSPROXY_CCDirector *proxy = [[JSPROXY_CCDirector alloc] initWithJSObject:jsobj];
-
-    JS_SetPrivate(jsobj, proxy);
+    JSObject *jsobj = [JSPROXY_CCDirector createJSObjectWithRealObject:nil context:cx];
     JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
     /* no callbacks */
@@ -38,11 +35,11 @@ JSBool JSPROXY_CCDirector_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 // Destructor
 void JSPROXY_CCDirector_finalize(JSContext *cx, JSObject *obj)
 {
-	JSPROXY_CCDirector *pt = (JSPROXY_CCDirector*)JS_GetPrivate(obj);
-	if (pt) {
-	        /* no callbacks */
-
-	        [pt release];
+	JSPROXY_CCDirector *proxy = (JSPROXY_CCDirector*)JS_GetPrivate(obj);
+	if (proxy) {
+		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_ASSIGN);
+		/* no callbacks */
+		[proxy release];
 	}
 }
 
@@ -450,10 +447,7 @@ JSBool JSPROXY_CCDirector_runningScene(JSContext *cx, uint32_t argc, jsval *vp) 
 	CCDirector *real = (CCDirector*) [proxy realObj];
 	ret_val = [real runningScene ];
 
-	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCScene_class, JSPROXY_CCScene_object, NULL);
-	JSPROXY_CCScene *ret_proxy = [[JSPROXY_CCScene alloc] initWithJSObject:jsobj];
-	[ret_proxy setRealObj: ret_val];
-	JS_SetPrivate(jsobj, ret_proxy);
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -624,10 +618,7 @@ JSBool JSPROXY_CCDirector_sharedDirector(JSContext *cx, uint32_t argc, jsval *vp
 
 	CCDirector* real = [CCDirector sharedDirector ];
 
-	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCDirector_class, JSPROXY_CCDirector_object, NULL);
-	JSPROXY_CCDirector *ret_proxy = [[JSPROXY_CCDirector alloc] initWithJSObject:jsobj];
-	[ret_proxy setRealObj: real];
-	JS_SetPrivate(jsobj, ret_proxy);
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( real, cx );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -745,6 +736,16 @@ void JSPROXY_CCDirector_createClass(JSContext *cx, JSObject* globalObj, const ch
 
 @implementation JSPROXY_CCDirector
 
++(JSObject*) createJSObjectWithRealObject:(id)realObj context:(JSContext*)cx
+{
+	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCDirector_class, JSPROXY_CCDirector_object, NULL);
+	JSPROXY_CCDirector *proxy = [[JSPROXY_CCDirector alloc] initWithJSObject:jsobj];
+	[proxy setRealObj:realObj];
+	objc_setAssociatedObject(realObj, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
+	JS_SetPrivate(jsobj, proxy);	
+	return jsobj;
+}
+
 @end
 
 /*
@@ -754,14 +755,11 @@ void JSPROXY_CCDirector_createClass(JSContext *cx, JSObject* globalObj, const ch
 
 JSClass* JSPROXY_CCNode_class = NULL;
 JSObject* JSPROXY_CCNode_object = NULL;
+static char *JSPROXY_CCNode_proxy_key = NULL;
  // Constructor
 JSBool JSPROXY_CCNode_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
-    JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCNode_class, JSPROXY_CCNode_object, NULL);
-
-    JSPROXY_CCNode *proxy = [[JSPROXY_CCNode alloc] initWithJSObject:jsobj];
-
-    JS_SetPrivate(jsobj, proxy);
+    JSObject *jsobj = [JSPROXY_CCNode createJSObjectWithRealObject:nil context:cx];
     JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
     /* no callbacks */
@@ -772,11 +770,11 @@ JSBool JSPROXY_CCNode_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 // Destructor
 void JSPROXY_CCNode_finalize(JSContext *cx, JSObject *obj)
 {
-	JSPROXY_CCNode *pt = (JSPROXY_CCNode*)JS_GetPrivate(obj);
-	if (pt) {
-	        /* no callbacks */
-
-	        [pt release];
+	JSPROXY_CCNode *proxy = (JSPROXY_CCNode*)JS_GetPrivate(obj);
+	if (proxy) {
+		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_ASSIGN);
+		/* no callbacks */
+		[proxy release];
 	}
 }
 
@@ -1087,10 +1085,7 @@ JSBool JSPROXY_CCNode_getActionByTag_(JSContext *cx, uint32_t argc, jsval *vp) {
 	CCNode *real = (CCNode*) [proxy realObj];
 	ret_val = [real getActionByTag:(NSInteger)arg0  ];
 
-	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCAction_class, JSPROXY_CCAction_object, NULL);
-	JSPROXY_CCAction *ret_proxy = [[JSPROXY_CCAction alloc] initWithJSObject:jsobj];
-	[ret_proxy setRealObj: ret_val];
-	JS_SetPrivate(jsobj, ret_proxy);
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -1112,10 +1107,7 @@ JSBool JSPROXY_CCNode_getChildByTag_(JSContext *cx, uint32_t argc, jsval *vp) {
 	CCNode *real = (CCNode*) [proxy realObj];
 	ret_val = [real getChildByTag:(NSInteger)arg0  ];
 
-	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCNode_class, JSPROXY_CCNode_object, NULL);
-	JSPROXY_CCNode *ret_proxy = [[JSPROXY_CCNode alloc] initWithJSObject:jsobj];
-	[ret_proxy setRealObj: ret_val];
-	JS_SetPrivate(jsobj, ret_proxy);
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -1197,10 +1189,7 @@ JSBool JSPROXY_CCNode_node(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	CCNode *real = [CCNode node ];
 
-	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCNode_class, JSPROXY_CCNode_object, NULL);
-	JSPROXY_CCNode *ret_proxy = [[JSPROXY_CCNode alloc] initWithJSObject:jsobj];
-	[ret_proxy setRealObj: real];
-	JS_SetPrivate(jsobj, ret_proxy);
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( real, cx );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -1318,10 +1307,7 @@ JSBool JSPROXY_CCNode_parent(JSContext *cx, uint32_t argc, jsval *vp) {
 	CCNode *real = (CCNode*) [proxy realObj];
 	ret_val = [real parent ];
 
-	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCNode_class, JSPROXY_CCNode_object, NULL);
-	JSPROXY_CCNode *ret_proxy = [[JSPROXY_CCNode alloc] initWithJSObject:jsobj];
-	[ret_proxy setRealObj: ret_val];
-	JS_SetPrivate(jsobj, ret_proxy);
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -1520,10 +1506,7 @@ JSBool JSPROXY_CCNode_runAction_(JSContext *cx, uint32_t argc, jsval *vp) {
 	CCNode *real = (CCNode*) [proxy realObj];
 	ret_val = [real runAction:(CCAction*)arg0  ];
 
-	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCAction_class, JSPROXY_CCAction_object, NULL);
-	JSPROXY_CCAction *ret_proxy = [[JSPROXY_CCAction alloc] initWithJSObject:jsobj];
-	[ret_proxy setRealObj: ret_val];
-	JS_SetPrivate(jsobj, ret_proxy);
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -2304,6 +2287,16 @@ void JSPROXY_CCNode_createClass(JSContext *cx, JSObject* globalObj, const char* 
 
 @implementation JSPROXY_CCNode
 
++(JSObject*) createJSObjectWithRealObject:(id)realObj context:(JSContext*)cx
+{
+	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCNode_class, JSPROXY_CCNode_object, NULL);
+	JSPROXY_CCNode *proxy = [[JSPROXY_CCNode alloc] initWithJSObject:jsobj];
+	[proxy setRealObj:realObj];
+	objc_setAssociatedObject(realObj, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
+	JS_SetPrivate(jsobj, proxy);	
+	return jsobj;
+}
+
 @end
 
 /*
@@ -2313,14 +2306,11 @@ void JSPROXY_CCNode_createClass(JSContext *cx, JSObject* globalObj, const char* 
 
 JSClass* JSPROXY_CCSprite_class = NULL;
 JSObject* JSPROXY_CCSprite_object = NULL;
+static char *JSPROXY_CCSprite_proxy_key = NULL;
  // Constructor
 JSBool JSPROXY_CCSprite_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
-    JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCSprite_class, JSPROXY_CCSprite_object, NULL);
-
-    JSPROXY_CCSprite *proxy = [[JSPROXY_CCSprite alloc] initWithJSObject:jsobj];
-
-    JS_SetPrivate(jsobj, proxy);
+    JSObject *jsobj = [JSPROXY_CCSprite createJSObjectWithRealObject:nil context:cx];
     JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
     /* no callbacks */
@@ -2331,11 +2321,11 @@ JSBool JSPROXY_CCSprite_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 // Destructor
 void JSPROXY_CCSprite_finalize(JSContext *cx, JSObject *obj)
 {
-	JSPROXY_CCSprite *pt = (JSPROXY_CCSprite*)JS_GetPrivate(obj);
-	if (pt) {
-	        /* no callbacks */
-
-	        [pt release];
+	JSPROXY_CCSprite *proxy = (JSPROXY_CCSprite*)JS_GetPrivate(obj);
+	if (proxy) {
+		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_ASSIGN);
+		/* no callbacks */
+		[proxy release];
 	}
 }
 
@@ -2370,10 +2360,7 @@ JSBool JSPROXY_CCSprite_batchNode(JSContext *cx, uint32_t argc, jsval *vp) {
 	CCSprite *real = (CCSprite*) [proxy realObj];
 	ret_val = [real batchNode ];
 
-	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCSpriteBatchNode_class, JSPROXY_CCSpriteBatchNode_object, NULL);
-	JSPROXY_CCSpriteBatchNode *ret_proxy = [[JSPROXY_CCSpriteBatchNode alloc] initWithJSObject:jsobj];
-	[ret_proxy setRealObj: ret_val];
-	JS_SetPrivate(jsobj, ret_proxy);
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -2696,10 +2683,7 @@ JSBool JSPROXY_CCSprite_spriteWithFile_(JSContext *cx, uint32_t argc, jsval *vp)
 
 	CCSprite *real = [CCSprite spriteWithFile:(NSString*)arg0  ];
 
-	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCSprite_class, JSPROXY_CCSprite_object, NULL);
-	JSPROXY_CCSprite *ret_proxy = [[JSPROXY_CCSprite alloc] initWithJSObject:jsobj];
-	[ret_proxy setRealObj: real];
-	JS_SetPrivate(jsobj, ret_proxy);
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( real, cx );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -2715,10 +2699,7 @@ JSBool JSPROXY_CCSprite_spriteWithSpriteFrameName_(JSContext *cx, uint32_t argc,
 
 	CCSprite *real = [CCSprite spriteWithSpriteFrameName:(NSString*)arg0  ];
 
-	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCSprite_class, JSPROXY_CCSprite_object, NULL);
-	JSPROXY_CCSprite *ret_proxy = [[JSPROXY_CCSprite alloc] initWithJSObject:jsobj];
-	[ret_proxy setRealObj: real];
-	JS_SetPrivate(jsobj, ret_proxy);
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( real, cx );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -2808,6 +2789,16 @@ void JSPROXY_CCSprite_createClass(JSContext *cx, JSObject* globalObj, const char
 
 @implementation JSPROXY_CCSprite
 
++(JSObject*) createJSObjectWithRealObject:(id)realObj context:(JSContext*)cx
+{
+	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCSprite_class, JSPROXY_CCSprite_object, NULL);
+	JSPROXY_CCSprite *proxy = [[JSPROXY_CCSprite alloc] initWithJSObject:jsobj];
+	[proxy setRealObj:realObj];
+	objc_setAssociatedObject(realObj, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
+	JS_SetPrivate(jsobj, proxy);	
+	return jsobj;
+}
+
 @end
 
 /*
@@ -2817,14 +2808,11 @@ void JSPROXY_CCSprite_createClass(JSContext *cx, JSObject* globalObj, const char
 
 JSClass* JSPROXY_CCAction_class = NULL;
 JSObject* JSPROXY_CCAction_object = NULL;
+static char *JSPROXY_CCAction_proxy_key = NULL;
  // Constructor
 JSBool JSPROXY_CCAction_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
-    JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCAction_class, JSPROXY_CCAction_object, NULL);
-
-    JSPROXY_CCAction *proxy = [[JSPROXY_CCAction alloc] initWithJSObject:jsobj];
-
-    JS_SetPrivate(jsobj, proxy);
+    JSObject *jsobj = [JSPROXY_CCAction createJSObjectWithRealObject:nil context:cx];
     JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
     /* no callbacks */
@@ -2835,11 +2823,11 @@ JSBool JSPROXY_CCAction_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 // Destructor
 void JSPROXY_CCAction_finalize(JSContext *cx, JSObject *obj)
 {
-	JSPROXY_CCAction *pt = (JSPROXY_CCAction*)JS_GetPrivate(obj);
-	if (pt) {
-	        /* no callbacks */
-
-	        [pt release];
+	JSPROXY_CCAction *proxy = (JSPROXY_CCAction*)JS_GetPrivate(obj);
+	if (proxy) {
+		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_ASSIGN);
+		/* no callbacks */
+		[proxy release];
 	}
 }
 
@@ -2850,10 +2838,7 @@ JSBool JSPROXY_CCAction_action(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	CCAction *real = [CCAction action ];
 
-	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCAction_class, JSPROXY_CCAction_object, NULL);
-	JSPROXY_CCAction *ret_proxy = [[JSPROXY_CCAction alloc] initWithJSObject:jsobj];
-	[ret_proxy setRealObj: real];
-	JS_SetPrivate(jsobj, ret_proxy);
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( real, cx );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -3018,6 +3003,16 @@ void JSPROXY_CCAction_createClass(JSContext *cx, JSObject* globalObj, const char
 
 @implementation JSPROXY_CCAction
 
++(JSObject*) createJSObjectWithRealObject:(id)realObj context:(JSContext*)cx
+{
+	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCAction_class, JSPROXY_CCAction_object, NULL);
+	JSPROXY_CCAction *proxy = [[JSPROXY_CCAction alloc] initWithJSObject:jsobj];
+	[proxy setRealObj:realObj];
+	objc_setAssociatedObject(realObj, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
+	JS_SetPrivate(jsobj, proxy);	
+	return jsobj;
+}
+
 @end
 
 /*
@@ -3027,14 +3022,11 @@ void JSPROXY_CCAction_createClass(JSContext *cx, JSObject* globalObj, const char
 
 JSClass* JSPROXY_CCFiniteTimeAction_class = NULL;
 JSObject* JSPROXY_CCFiniteTimeAction_object = NULL;
+static char *JSPROXY_CCFiniteTimeAction_proxy_key = NULL;
  // Constructor
 JSBool JSPROXY_CCFiniteTimeAction_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
-    JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCFiniteTimeAction_class, JSPROXY_CCFiniteTimeAction_object, NULL);
-
-    JSPROXY_CCFiniteTimeAction *proxy = [[JSPROXY_CCFiniteTimeAction alloc] initWithJSObject:jsobj];
-
-    JS_SetPrivate(jsobj, proxy);
+    JSObject *jsobj = [JSPROXY_CCFiniteTimeAction createJSObjectWithRealObject:nil context:cx];
     JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
     /* no callbacks */
@@ -3045,11 +3037,11 @@ JSBool JSPROXY_CCFiniteTimeAction_constructor(JSContext *cx, uint32_t argc, jsva
 // Destructor
 void JSPROXY_CCFiniteTimeAction_finalize(JSContext *cx, JSObject *obj)
 {
-	JSPROXY_CCFiniteTimeAction *pt = (JSPROXY_CCFiniteTimeAction*)JS_GetPrivate(obj);
-	if (pt) {
-	        /* no callbacks */
-
-	        [pt release];
+	JSPROXY_CCFiniteTimeAction *proxy = (JSPROXY_CCFiniteTimeAction*)JS_GetPrivate(obj);
+	if (proxy) {
+		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_ASSIGN);
+		/* no callbacks */
+		[proxy release];
 	}
 }
 
@@ -3084,10 +3076,7 @@ JSBool JSPROXY_CCFiniteTimeAction_reverse(JSContext *cx, uint32_t argc, jsval *v
 	CCFiniteTimeAction *real = (CCFiniteTimeAction*) [proxy realObj];
 	ret_val = [real reverse ];
 
-	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCFiniteTimeAction_class, JSPROXY_CCFiniteTimeAction_object, NULL);
-	JSPROXY_CCFiniteTimeAction *ret_proxy = [[JSPROXY_CCFiniteTimeAction alloc] initWithJSObject:jsobj];
-	[ret_proxy setRealObj: ret_val];
-	JS_SetPrivate(jsobj, ret_proxy);
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -3143,6 +3132,16 @@ void JSPROXY_CCFiniteTimeAction_createClass(JSContext *cx, JSObject* globalObj, 
 
 @implementation JSPROXY_CCFiniteTimeAction
 
++(JSObject*) createJSObjectWithRealObject:(id)realObj context:(JSContext*)cx
+{
+	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCFiniteTimeAction_class, JSPROXY_CCFiniteTimeAction_object, NULL);
+	JSPROXY_CCFiniteTimeAction *proxy = [[JSPROXY_CCFiniteTimeAction alloc] initWithJSObject:jsobj];
+	[proxy setRealObj:realObj];
+	objc_setAssociatedObject(realObj, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
+	JS_SetPrivate(jsobj, proxy);	
+	return jsobj;
+}
+
 @end
 
 /*
@@ -3152,14 +3151,11 @@ void JSPROXY_CCFiniteTimeAction_createClass(JSContext *cx, JSObject* globalObj, 
 
 JSClass* JSPROXY_CCActionInterval_class = NULL;
 JSObject* JSPROXY_CCActionInterval_object = NULL;
+static char *JSPROXY_CCActionInterval_proxy_key = NULL;
  // Constructor
 JSBool JSPROXY_CCActionInterval_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
-    JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCActionInterval_class, JSPROXY_CCActionInterval_object, NULL);
-
-    JSPROXY_CCActionInterval *proxy = [[JSPROXY_CCActionInterval alloc] initWithJSObject:jsobj];
-
-    JS_SetPrivate(jsobj, proxy);
+    JSObject *jsobj = [JSPROXY_CCActionInterval createJSObjectWithRealObject:nil context:cx];
     JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
     /* no callbacks */
@@ -3170,11 +3166,11 @@ JSBool JSPROXY_CCActionInterval_constructor(JSContext *cx, uint32_t argc, jsval 
 // Destructor
 void JSPROXY_CCActionInterval_finalize(JSContext *cx, JSObject *obj)
 {
-	JSPROXY_CCActionInterval *pt = (JSPROXY_CCActionInterval*)JS_GetPrivate(obj);
-	if (pt) {
-	        /* no callbacks */
-
-	        [pt release];
+	JSPROXY_CCActionInterval *proxy = (JSPROXY_CCActionInterval*)JS_GetPrivate(obj);
+	if (proxy) {
+		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_ASSIGN);
+		/* no callbacks */
+		[proxy release];
 	}
 }
 
@@ -3187,10 +3183,7 @@ JSBool JSPROXY_CCActionInterval_actionWithDuration_(JSContext *cx, uint32_t argc
 
 	CCActionInterval *real = [CCActionInterval actionWithDuration:(ccTime)arg0  ];
 
-	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCActionInterval_class, JSPROXY_CCActionInterval_object, NULL);
-	JSPROXY_CCActionInterval *ret_proxy = [[JSPROXY_CCActionInterval alloc] initWithJSObject:jsobj];
-	[ret_proxy setRealObj: real];
-	JS_SetPrivate(jsobj, ret_proxy);
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( real, cx );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -3264,10 +3257,7 @@ JSBool JSPROXY_CCActionInterval_reverse(JSContext *cx, uint32_t argc, jsval *vp)
 	CCActionInterval *real = (CCActionInterval*) [proxy realObj];
 	ret_val = [real reverse ];
 
-	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCActionInterval_class, JSPROXY_CCActionInterval_object, NULL);
-	JSPROXY_CCActionInterval *ret_proxy = [[JSPROXY_CCActionInterval alloc] initWithJSObject:jsobj];
-	[ret_proxy setRealObj: ret_val];
-	JS_SetPrivate(jsobj, ret_proxy);
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -3307,6 +3297,16 @@ void JSPROXY_CCActionInterval_createClass(JSContext *cx, JSObject* globalObj, co
 
 @implementation JSPROXY_CCActionInterval
 
++(JSObject*) createJSObjectWithRealObject:(id)realObj context:(JSContext*)cx
+{
+	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCActionInterval_class, JSPROXY_CCActionInterval_object, NULL);
+	JSPROXY_CCActionInterval *proxy = [[JSPROXY_CCActionInterval alloc] initWithJSObject:jsobj];
+	[proxy setRealObj:realObj];
+	objc_setAssociatedObject(realObj, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
+	JS_SetPrivate(jsobj, proxy);	
+	return jsobj;
+}
+
 @end
 
 /*
@@ -3316,14 +3316,11 @@ void JSPROXY_CCActionInterval_createClass(JSContext *cx, JSObject* globalObj, co
 
 JSClass* JSPROXY_CCScaleTo_class = NULL;
 JSObject* JSPROXY_CCScaleTo_object = NULL;
+static char *JSPROXY_CCScaleTo_proxy_key = NULL;
  // Constructor
 JSBool JSPROXY_CCScaleTo_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
-    JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCScaleTo_class, JSPROXY_CCScaleTo_object, NULL);
-
-    JSPROXY_CCScaleTo *proxy = [[JSPROXY_CCScaleTo alloc] initWithJSObject:jsobj];
-
-    JS_SetPrivate(jsobj, proxy);
+    JSObject *jsobj = [JSPROXY_CCScaleTo createJSObjectWithRealObject:nil context:cx];
     JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
     /* no callbacks */
@@ -3334,11 +3331,11 @@ JSBool JSPROXY_CCScaleTo_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 // Destructor
 void JSPROXY_CCScaleTo_finalize(JSContext *cx, JSObject *obj)
 {
-	JSPROXY_CCScaleTo *pt = (JSPROXY_CCScaleTo*)JS_GetPrivate(obj);
-	if (pt) {
-	        /* no callbacks */
-
-	        [pt release];
+	JSPROXY_CCScaleTo *proxy = (JSPROXY_CCScaleTo*)JS_GetPrivate(obj);
+	if (proxy) {
+		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_ASSIGN);
+		/* no callbacks */
+		[proxy release];
 	}
 }
 
@@ -3352,10 +3349,7 @@ JSBool JSPROXY_CCScaleTo_actionWithDuration_scale_(JSContext *cx, uint32_t argc,
 
 	CCScaleTo *real = [CCScaleTo actionWithDuration:(ccTime)arg0 scale:(float)arg1  ];
 
-	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCScaleTo_class, JSPROXY_CCScaleTo_object, NULL);
-	JSPROXY_CCScaleTo *ret_proxy = [[JSPROXY_CCScaleTo alloc] initWithJSObject:jsobj];
-	[ret_proxy setRealObj: real];
-	JS_SetPrivate(jsobj, ret_proxy);
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( real, cx );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -3372,10 +3366,7 @@ JSBool JSPROXY_CCScaleTo_actionWithDuration_scaleX_scaleY_(JSContext *cx, uint32
 
 	CCScaleTo *real = [CCScaleTo actionWithDuration:(ccTime)arg0 scaleX:(float)arg1 scaleY:(float)arg2  ];
 
-	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCScaleTo_class, JSPROXY_CCScaleTo_object, NULL);
-	JSPROXY_CCScaleTo *ret_proxy = [[JSPROXY_CCScaleTo alloc] initWithJSObject:jsobj];
-	[ret_proxy setRealObj: real];
-	JS_SetPrivate(jsobj, ret_proxy);
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( real, cx );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -3457,6 +3448,16 @@ void JSPROXY_CCScaleTo_createClass(JSContext *cx, JSObject* globalObj, const cha
 
 @implementation JSPROXY_CCScaleTo
 
++(JSObject*) createJSObjectWithRealObject:(id)realObj context:(JSContext*)cx
+{
+	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCScaleTo_class, JSPROXY_CCScaleTo_object, NULL);
+	JSPROXY_CCScaleTo *proxy = [[JSPROXY_CCScaleTo alloc] initWithJSObject:jsobj];
+	[proxy setRealObj:realObj];
+	objc_setAssociatedObject(realObj, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
+	JS_SetPrivate(jsobj, proxy);	
+	return jsobj;
+}
+
 @end
 
 /*
@@ -3466,14 +3467,11 @@ void JSPROXY_CCScaleTo_createClass(JSContext *cx, JSObject* globalObj, const cha
 
 JSClass* JSPROXY_CCScaleBy_class = NULL;
 JSObject* JSPROXY_CCScaleBy_object = NULL;
+static char *JSPROXY_CCScaleBy_proxy_key = NULL;
  // Constructor
 JSBool JSPROXY_CCScaleBy_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
-    JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCScaleBy_class, JSPROXY_CCScaleBy_object, NULL);
-
-    JSPROXY_CCScaleBy *proxy = [[JSPROXY_CCScaleBy alloc] initWithJSObject:jsobj];
-
-    JS_SetPrivate(jsobj, proxy);
+    JSObject *jsobj = [JSPROXY_CCScaleBy createJSObjectWithRealObject:nil context:cx];
     JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
     /* no callbacks */
@@ -3484,11 +3482,11 @@ JSBool JSPROXY_CCScaleBy_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 // Destructor
 void JSPROXY_CCScaleBy_finalize(JSContext *cx, JSObject *obj)
 {
-	JSPROXY_CCScaleBy *pt = (JSPROXY_CCScaleBy*)JS_GetPrivate(obj);
-	if (pt) {
-	        /* no callbacks */
-
-	        [pt release];
+	JSPROXY_CCScaleBy *proxy = (JSPROXY_CCScaleBy*)JS_GetPrivate(obj);
+	if (proxy) {
+		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_ASSIGN);
+		/* no callbacks */
+		[proxy release];
 	}
 }
 
@@ -3543,6 +3541,16 @@ void JSPROXY_CCScaleBy_createClass(JSContext *cx, JSObject* globalObj, const cha
 
 @implementation JSPROXY_CCScaleBy
 
++(JSObject*) createJSObjectWithRealObject:(id)realObj context:(JSContext*)cx
+{
+	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCScaleBy_class, JSPROXY_CCScaleBy_object, NULL);
+	JSPROXY_CCScaleBy *proxy = [[JSPROXY_CCScaleBy alloc] initWithJSObject:jsobj];
+	[proxy setRealObj:realObj];
+	objc_setAssociatedObject(realObj, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
+	JS_SetPrivate(jsobj, proxy);	
+	return jsobj;
+}
+
 @end
 
 /*
@@ -3552,14 +3560,11 @@ void JSPROXY_CCScaleBy_createClass(JSContext *cx, JSObject* globalObj, const cha
 
 JSClass* JSPROXY_CCLayer_class = NULL;
 JSObject* JSPROXY_CCLayer_object = NULL;
+static char *JSPROXY_CCLayer_proxy_key = NULL;
  // Constructor
 JSBool JSPROXY_CCLayer_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
-    JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCLayer_class, JSPROXY_CCLayer_object, NULL);
-
-    JSPROXY_CCLayer *proxy = [[JSPROXY_CCLayer alloc] initWithJSObject:jsobj];
-
-    JS_SetPrivate(jsobj, proxy);
+    JSObject *jsobj = [JSPROXY_CCLayer createJSObjectWithRealObject:nil context:cx];
     JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
     /* no callbacks */
@@ -3570,11 +3575,11 @@ JSBool JSPROXY_CCLayer_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 // Destructor
 void JSPROXY_CCLayer_finalize(JSContext *cx, JSObject *obj)
 {
-	JSPROXY_CCLayer *pt = (JSPROXY_CCLayer*)JS_GetPrivate(obj);
-	if (pt) {
-	        /* no callbacks */
-
-	        [pt release];
+	JSPROXY_CCLayer *proxy = (JSPROXY_CCLayer*)JS_GetPrivate(obj);
+	if (proxy) {
+		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_ASSIGN);
+		/* no callbacks */
+		[proxy release];
 	}
 }
 
@@ -3772,6 +3777,16 @@ void JSPROXY_CCLayer_createClass(JSContext *cx, JSObject* globalObj, const char*
 
 @implementation JSPROXY_CCLayer
 
++(JSObject*) createJSObjectWithRealObject:(id)realObj context:(JSContext*)cx
+{
+	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCLayer_class, JSPROXY_CCLayer_object, NULL);
+	JSPROXY_CCLayer *proxy = [[JSPROXY_CCLayer alloc] initWithJSObject:jsobj];
+	[proxy setRealObj:realObj];
+	objc_setAssociatedObject(realObj, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
+	JS_SetPrivate(jsobj, proxy);	
+	return jsobj;
+}
+
 @end
 
 /*
@@ -3781,14 +3796,11 @@ void JSPROXY_CCLayer_createClass(JSContext *cx, JSObject* globalObj, const char*
 
 JSClass* JSPROXY_CCMoveTo_class = NULL;
 JSObject* JSPROXY_CCMoveTo_object = NULL;
+static char *JSPROXY_CCMoveTo_proxy_key = NULL;
  // Constructor
 JSBool JSPROXY_CCMoveTo_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
-    JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCMoveTo_class, JSPROXY_CCMoveTo_object, NULL);
-
-    JSPROXY_CCMoveTo *proxy = [[JSPROXY_CCMoveTo alloc] initWithJSObject:jsobj];
-
-    JS_SetPrivate(jsobj, proxy);
+    JSObject *jsobj = [JSPROXY_CCMoveTo createJSObjectWithRealObject:nil context:cx];
     JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
     /* no callbacks */
@@ -3799,11 +3811,11 @@ JSBool JSPROXY_CCMoveTo_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 // Destructor
 void JSPROXY_CCMoveTo_finalize(JSContext *cx, JSObject *obj)
 {
-	JSPROXY_CCMoveTo *pt = (JSPROXY_CCMoveTo*)JS_GetPrivate(obj);
-	if (pt) {
-	        /* no callbacks */
-
-	        [pt release];
+	JSPROXY_CCMoveTo *proxy = (JSPROXY_CCMoveTo*)JS_GetPrivate(obj);
+	if (proxy) {
+		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_ASSIGN);
+		/* no callbacks */
+		[proxy release];
 	}
 }
 
@@ -3828,10 +3840,7 @@ JSBool JSPROXY_CCMoveTo_actionWithDuration_position_(JSContext *cx, uint32_t arg
 
 	CCMoveTo *real = [CCMoveTo actionWithDuration:(ccTime)arg0 position:(CGPoint)arg1  ];
 
-	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCMoveTo_class, JSPROXY_CCMoveTo_object, NULL);
-	JSPROXY_CCMoveTo *ret_proxy = [[JSPROXY_CCMoveTo alloc] initWithJSObject:jsobj];
-	[ret_proxy setRealObj: real];
-	JS_SetPrivate(jsobj, ret_proxy);
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( real, cx );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -3900,6 +3909,16 @@ void JSPROXY_CCMoveTo_createClass(JSContext *cx, JSObject* globalObj, const char
 
 @implementation JSPROXY_CCMoveTo
 
++(JSObject*) createJSObjectWithRealObject:(id)realObj context:(JSContext*)cx
+{
+	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCMoveTo_class, JSPROXY_CCMoveTo_object, NULL);
+	JSPROXY_CCMoveTo *proxy = [[JSPROXY_CCMoveTo alloc] initWithJSObject:jsobj];
+	[proxy setRealObj:realObj];
+	objc_setAssociatedObject(realObj, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
+	JS_SetPrivate(jsobj, proxy);	
+	return jsobj;
+}
+
 @end
 
 /*
@@ -3909,14 +3928,11 @@ void JSPROXY_CCMoveTo_createClass(JSContext *cx, JSObject* globalObj, const char
 
 JSClass* JSPROXY_CCMoveBy_class = NULL;
 JSObject* JSPROXY_CCMoveBy_object = NULL;
+static char *JSPROXY_CCMoveBy_proxy_key = NULL;
  // Constructor
 JSBool JSPROXY_CCMoveBy_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
-    JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCMoveBy_class, JSPROXY_CCMoveBy_object, NULL);
-
-    JSPROXY_CCMoveBy *proxy = [[JSPROXY_CCMoveBy alloc] initWithJSObject:jsobj];
-
-    JS_SetPrivate(jsobj, proxy);
+    JSObject *jsobj = [JSPROXY_CCMoveBy createJSObjectWithRealObject:nil context:cx];
     JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
     /* no callbacks */
@@ -3927,11 +3943,11 @@ JSBool JSPROXY_CCMoveBy_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 // Destructor
 void JSPROXY_CCMoveBy_finalize(JSContext *cx, JSObject *obj)
 {
-	JSPROXY_CCMoveBy *pt = (JSPROXY_CCMoveBy*)JS_GetPrivate(obj);
-	if (pt) {
-	        /* no callbacks */
-
-	        [pt release];
+	JSPROXY_CCMoveBy *proxy = (JSPROXY_CCMoveBy*)JS_GetPrivate(obj);
+	if (proxy) {
+		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_ASSIGN);
+		/* no callbacks */
+		[proxy release];
 	}
 }
 
@@ -3956,10 +3972,7 @@ JSBool JSPROXY_CCMoveBy_actionWithDuration_position_(JSContext *cx, uint32_t arg
 
 	CCMoveBy *real = [CCMoveBy actionWithDuration:(ccTime)arg0 position:(CGPoint)arg1  ];
 
-	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCMoveBy_class, JSPROXY_CCMoveBy_object, NULL);
-	JSPROXY_CCMoveBy *ret_proxy = [[JSPROXY_CCMoveBy alloc] initWithJSObject:jsobj];
-	[ret_proxy setRealObj: real];
-	JS_SetPrivate(jsobj, ret_proxy);
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( real, cx );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -4028,6 +4041,16 @@ void JSPROXY_CCMoveBy_createClass(JSContext *cx, JSObject* globalObj, const char
 
 @implementation JSPROXY_CCMoveBy
 
++(JSObject*) createJSObjectWithRealObject:(id)realObj context:(JSContext*)cx
+{
+	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCMoveBy_class, JSPROXY_CCMoveBy_object, NULL);
+	JSPROXY_CCMoveBy *proxy = [[JSPROXY_CCMoveBy alloc] initWithJSObject:jsobj];
+	[proxy setRealObj:realObj];
+	objc_setAssociatedObject(realObj, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
+	JS_SetPrivate(jsobj, proxy);	
+	return jsobj;
+}
+
 @end
 
 /*
@@ -4037,14 +4060,11 @@ void JSPROXY_CCMoveBy_createClass(JSContext *cx, JSObject* globalObj, const char
 
 JSClass* JSPROXY_CCScene_class = NULL;
 JSObject* JSPROXY_CCScene_object = NULL;
+static char *JSPROXY_CCScene_proxy_key = NULL;
  // Constructor
 JSBool JSPROXY_CCScene_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
-    JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCScene_class, JSPROXY_CCScene_object, NULL);
-
-    JSPROXY_CCScene *proxy = [[JSPROXY_CCScene alloc] initWithJSObject:jsobj];
-
-    JS_SetPrivate(jsobj, proxy);
+    JSObject *jsobj = [JSPROXY_CCScene createJSObjectWithRealObject:nil context:cx];
     JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
     /* no callbacks */
@@ -4055,11 +4075,11 @@ JSBool JSPROXY_CCScene_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 // Destructor
 void JSPROXY_CCScene_finalize(JSContext *cx, JSObject *obj)
 {
-	JSPROXY_CCScene *pt = (JSPROXY_CCScene*)JS_GetPrivate(obj);
-	if (pt) {
-	        /* no callbacks */
-
-	        [pt release];
+	JSPROXY_CCScene *proxy = (JSPROXY_CCScene*)JS_GetPrivate(obj);
+	if (proxy) {
+		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_ASSIGN);
+		/* no callbacks */
+		[proxy release];
 	}
 }
 
@@ -4070,10 +4090,7 @@ JSBool JSPROXY_CCScene_node(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	CCScene *real = [CCScene node ];
 
-	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCScene_class, JSPROXY_CCScene_object, NULL);
-	JSPROXY_CCScene *ret_proxy = [[JSPROXY_CCScene alloc] initWithJSObject:jsobj];
-	[ret_proxy setRealObj: real];
-	JS_SetPrivate(jsobj, ret_proxy);
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( real, cx );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -4109,6 +4126,16 @@ void JSPROXY_CCScene_createClass(JSContext *cx, JSObject* globalObj, const char*
 
 @implementation JSPROXY_CCScene
 
++(JSObject*) createJSObjectWithRealObject:(id)realObj context:(JSContext*)cx
+{
+	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCScene_class, JSPROXY_CCScene_object, NULL);
+	JSPROXY_CCScene *proxy = [[JSPROXY_CCScene alloc] initWithJSObject:jsobj];
+	[proxy setRealObj:realObj];
+	objc_setAssociatedObject(realObj, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
+	JS_SetPrivate(jsobj, proxy);	
+	return jsobj;
+}
+
 @end
 
 /*
@@ -4118,14 +4145,11 @@ void JSPROXY_CCScene_createClass(JSContext *cx, JSObject* globalObj, const char*
 
 JSClass* JSPROXY_CCLabelTTF_class = NULL;
 JSObject* JSPROXY_CCLabelTTF_object = NULL;
+static char *JSPROXY_CCLabelTTF_proxy_key = NULL;
  // Constructor
 JSBool JSPROXY_CCLabelTTF_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
-    JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCLabelTTF_class, JSPROXY_CCLabelTTF_object, NULL);
-
-    JSPROXY_CCLabelTTF *proxy = [[JSPROXY_CCLabelTTF alloc] initWithJSObject:jsobj];
-
-    JS_SetPrivate(jsobj, proxy);
+    JSObject *jsobj = [JSPROXY_CCLabelTTF createJSObjectWithRealObject:nil context:cx];
     JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
     /* no callbacks */
@@ -4136,11 +4160,11 @@ JSBool JSPROXY_CCLabelTTF_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 // Destructor
 void JSPROXY_CCLabelTTF_finalize(JSContext *cx, JSObject *obj)
 {
-	JSPROXY_CCLabelTTF *pt = (JSPROXY_CCLabelTTF*)JS_GetPrivate(obj);
-	if (pt) {
-	        /* no callbacks */
-
-	        [pt release];
+	JSPROXY_CCLabelTTF *proxy = (JSPROXY_CCLabelTTF*)JS_GetPrivate(obj);
+	if (proxy) {
+		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_ASSIGN);
+		/* no callbacks */
+		[proxy release];
 	}
 }
 
@@ -4360,10 +4384,7 @@ JSBool JSPROXY_CCLabelTTF_labelWithString_dimensions_hAlignment_fontName_fontSiz
 
 	CCLabelTTF *real = [CCLabelTTF labelWithString:(NSString*)arg0 dimensions:(CGSize)arg1 hAlignment:(CCTextAlignment)arg2 fontName:(NSString*)arg3 fontSize:(CGFloat)arg4  ];
 
-	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCLabelTTF_class, JSPROXY_CCLabelTTF_object, NULL);
-	JSPROXY_CCLabelTTF *ret_proxy = [[JSPROXY_CCLabelTTF alloc] initWithJSObject:jsobj];
-	[ret_proxy setRealObj: real];
-	JS_SetPrivate(jsobj, ret_proxy);
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( real, cx );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -4388,10 +4409,7 @@ JSBool JSPROXY_CCLabelTTF_labelWithString_dimensions_hAlignment_lineBreakMode_fo
 
 	CCLabelTTF *real = [CCLabelTTF labelWithString:(NSString*)arg0 dimensions:(CGSize)arg1 hAlignment:(CCTextAlignment)arg2 lineBreakMode:(CCLineBreakMode)arg3 fontName:(NSString*)arg4 fontSize:(CGFloat)arg5  ];
 
-	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCLabelTTF_class, JSPROXY_CCLabelTTF_object, NULL);
-	JSPROXY_CCLabelTTF *ret_proxy = [[JSPROXY_CCLabelTTF alloc] initWithJSObject:jsobj];
-	[ret_proxy setRealObj: real];
-	JS_SetPrivate(jsobj, ret_proxy);
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( real, cx );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -4416,10 +4434,7 @@ JSBool JSPROXY_CCLabelTTF_labelWithString_dimensions_hAlignment_vAlignment_fontN
 
 	CCLabelTTF *real = [CCLabelTTF labelWithString:(NSString*)arg0 dimensions:(CGSize)arg1 hAlignment:(CCTextAlignment)arg2 vAlignment:(CCVerticalTextAlignment)arg3 fontName:(NSString*)arg4 fontSize:(CGFloat)arg5  ];
 
-	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCLabelTTF_class, JSPROXY_CCLabelTTF_object, NULL);
-	JSPROXY_CCLabelTTF *ret_proxy = [[JSPROXY_CCLabelTTF alloc] initWithJSObject:jsobj];
-	[ret_proxy setRealObj: real];
-	JS_SetPrivate(jsobj, ret_proxy);
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( real, cx );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -4445,10 +4460,7 @@ JSBool JSPROXY_CCLabelTTF_labelWithString_dimensions_hAlignment_vAlignment_lineB
 
 	CCLabelTTF *real = [CCLabelTTF labelWithString:(NSString*)arg0 dimensions:(CGSize)arg1 hAlignment:(CCTextAlignment)arg2 vAlignment:(CCVerticalTextAlignment)arg3 lineBreakMode:(CCLineBreakMode)arg4 fontName:(NSString*)arg5 fontSize:(CGFloat)arg6  ];
 
-	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCLabelTTF_class, JSPROXY_CCLabelTTF_object, NULL);
-	JSPROXY_CCLabelTTF *ret_proxy = [[JSPROXY_CCLabelTTF alloc] initWithJSObject:jsobj];
-	[ret_proxy setRealObj: real];
-	JS_SetPrivate(jsobj, ret_proxy);
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( real, cx );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -4467,10 +4479,7 @@ JSBool JSPROXY_CCLabelTTF_labelWithString_fontName_fontSize_(JSContext *cx, uint
 
 	CCLabelTTF *real = [CCLabelTTF labelWithString:(NSString*)arg0 fontName:(NSString*)arg1 fontSize:(CGFloat)arg2  ];
 
-	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCLabelTTF_class, JSPROXY_CCLabelTTF_object, NULL);
-	JSPROXY_CCLabelTTF *ret_proxy = [[JSPROXY_CCLabelTTF alloc] initWithJSObject:jsobj];
-	[ret_proxy setRealObj: real];
-	JS_SetPrivate(jsobj, ret_proxy);
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( real, cx );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -4655,6 +4664,16 @@ void JSPROXY_CCLabelTTF_createClass(JSContext *cx, JSObject* globalObj, const ch
 
 @implementation JSPROXY_CCLabelTTF
 
++(JSObject*) createJSObjectWithRealObject:(id)realObj context:(JSContext*)cx
+{
+	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCLabelTTF_class, JSPROXY_CCLabelTTF_object, NULL);
+	JSPROXY_CCLabelTTF *proxy = [[JSPROXY_CCLabelTTF alloc] initWithJSObject:jsobj];
+	[proxy setRealObj:realObj];
+	objc_setAssociatedObject(realObj, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
+	JS_SetPrivate(jsobj, proxy);	
+	return jsobj;
+}
+
 @end
 
 /*
@@ -4664,14 +4683,11 @@ void JSPROXY_CCLabelTTF_createClass(JSContext *cx, JSObject* globalObj, const ch
 
 JSClass* JSPROXY_CCSpriteBatchNode_class = NULL;
 JSObject* JSPROXY_CCSpriteBatchNode_object = NULL;
+static char *JSPROXY_CCSpriteBatchNode_proxy_key = NULL;
  // Constructor
 JSBool JSPROXY_CCSpriteBatchNode_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
-    JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCSpriteBatchNode_class, JSPROXY_CCSpriteBatchNode_object, NULL);
-
-    JSPROXY_CCSpriteBatchNode *proxy = [[JSPROXY_CCSpriteBatchNode alloc] initWithJSObject:jsobj];
-
-    JS_SetPrivate(jsobj, proxy);
+    JSObject *jsobj = [JSPROXY_CCSpriteBatchNode createJSObjectWithRealObject:nil context:cx];
     JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
     /* no callbacks */
@@ -4682,11 +4698,11 @@ JSBool JSPROXY_CCSpriteBatchNode_constructor(JSContext *cx, uint32_t argc, jsval
 // Destructor
 void JSPROXY_CCSpriteBatchNode_finalize(JSContext *cx, JSObject *obj)
 {
-	JSPROXY_CCSpriteBatchNode *pt = (JSPROXY_CCSpriteBatchNode*)JS_GetPrivate(obj);
-	if (pt) {
-	        /* no callbacks */
-
-	        [pt release];
+	JSPROXY_CCSpriteBatchNode *proxy = (JSPROXY_CCSpriteBatchNode*)JS_GetPrivate(obj);
+	if (proxy) {
+		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_ASSIGN);
+		/* no callbacks */
+		[proxy release];
 	}
 }
 
@@ -4769,10 +4785,7 @@ JSBool JSPROXY_CCSpriteBatchNode_batchNodeWithFile_(JSContext *cx, uint32_t argc
 
 	CCSpriteBatchNode *real = [CCSpriteBatchNode batchNodeWithFile:(NSString*)arg0  ];
 
-	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCSpriteBatchNode_class, JSPROXY_CCSpriteBatchNode_object, NULL);
-	JSPROXY_CCSpriteBatchNode *ret_proxy = [[JSPROXY_CCSpriteBatchNode alloc] initWithJSObject:jsobj];
-	[ret_proxy setRealObj: real];
-	JS_SetPrivate(jsobj, ret_proxy);
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( real, cx );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -4789,10 +4802,7 @@ JSBool JSPROXY_CCSpriteBatchNode_batchNodeWithFile_capacity_(JSContext *cx, uint
 
 	CCSpriteBatchNode *real = [CCSpriteBatchNode batchNodeWithFile:(NSString*)arg0 capacity:(NSUInteger)arg1  ];
 
-	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCSpriteBatchNode_class, JSPROXY_CCSpriteBatchNode_object, NULL);
-	JSPROXY_CCSpriteBatchNode *ret_proxy = [[JSPROXY_CCSpriteBatchNode alloc] initWithJSObject:jsobj];
-	[ret_proxy setRealObj: real];
-	JS_SetPrivate(jsobj, ret_proxy);
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( real, cx );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -5029,6 +5039,16 @@ void JSPROXY_CCSpriteBatchNode_createClass(JSContext *cx, JSObject* globalObj, c
 
 @implementation JSPROXY_CCSpriteBatchNode
 
++(JSObject*) createJSObjectWithRealObject:(id)realObj context:(JSContext*)cx
+{
+	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCSpriteBatchNode_class, JSPROXY_CCSpriteBatchNode_object, NULL);
+	JSPROXY_CCSpriteBatchNode *proxy = [[JSPROXY_CCSpriteBatchNode alloc] initWithJSObject:jsobj];
+	[proxy setRealObj:realObj];
+	objc_setAssociatedObject(realObj, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
+	JS_SetPrivate(jsobj, proxy);	
+	return jsobj;
+}
+
 @end
 
 /*
@@ -5038,14 +5058,11 @@ void JSPROXY_CCSpriteBatchNode_createClass(JSContext *cx, JSObject* globalObj, c
 
 JSClass* JSPROXY_CCLabelBMFont_class = NULL;
 JSObject* JSPROXY_CCLabelBMFont_object = NULL;
+static char *JSPROXY_CCLabelBMFont_proxy_key = NULL;
  // Constructor
 JSBool JSPROXY_CCLabelBMFont_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
-    JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCLabelBMFont_class, JSPROXY_CCLabelBMFont_object, NULL);
-
-    JSPROXY_CCLabelBMFont *proxy = [[JSPROXY_CCLabelBMFont alloc] initWithJSObject:jsobj];
-
-    JS_SetPrivate(jsobj, proxy);
+    JSObject *jsobj = [JSPROXY_CCLabelBMFont createJSObjectWithRealObject:nil context:cx];
     JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
     /* no callbacks */
@@ -5056,11 +5073,11 @@ JSBool JSPROXY_CCLabelBMFont_constructor(JSContext *cx, uint32_t argc, jsval *vp
 // Destructor
 void JSPROXY_CCLabelBMFont_finalize(JSContext *cx, JSObject *obj)
 {
-	JSPROXY_CCLabelBMFont *pt = (JSPROXY_CCLabelBMFont*)JS_GetPrivate(obj);
-	if (pt) {
-	        /* no callbacks */
-
-	        [pt release];
+	JSPROXY_CCLabelBMFont *proxy = (JSPROXY_CCLabelBMFont*)JS_GetPrivate(obj);
+	if (proxy) {
+		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_ASSIGN);
+		/* no callbacks */
+		[proxy release];
 	}
 }
 
@@ -5214,10 +5231,7 @@ JSBool JSPROXY_CCLabelBMFont_labelWithString_fntFile_(JSContext *cx, uint32_t ar
 
 	CCLabelBMFont *real = [CCLabelBMFont labelWithString:(NSString*)arg0 fntFile:(NSString*)arg1  ];
 
-	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCLabelBMFont_class, JSPROXY_CCLabelBMFont_object, NULL);
-	JSPROXY_CCLabelBMFont *ret_proxy = [[JSPROXY_CCLabelBMFont alloc] initWithJSObject:jsobj];
-	[ret_proxy setRealObj: real];
-	JS_SetPrivate(jsobj, ret_proxy);
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( real, cx );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -5237,10 +5251,7 @@ JSBool JSPROXY_CCLabelBMFont_labelWithString_fntFile_width_alignment_(JSContext 
 
 	CCLabelBMFont *real = [CCLabelBMFont labelWithString:(NSString*)arg0 fntFile:(NSString*)arg1 width:(float)arg2 alignment:(CCTextAlignment)arg3  ];
 
-	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCLabelBMFont_class, JSPROXY_CCLabelBMFont_object, NULL);
-	JSPROXY_CCLabelBMFont *ret_proxy = [[JSPROXY_CCLabelBMFont alloc] initWithJSObject:jsobj];
-	[ret_proxy setRealObj: real];
-	JS_SetPrivate(jsobj, ret_proxy);
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( real, cx );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -5272,10 +5283,7 @@ JSBool JSPROXY_CCLabelBMFont_labelWithString_fntFile_width_alignment_imageOffset
 
 	CCLabelBMFont *real = [CCLabelBMFont labelWithString:(NSString*)arg0 fntFile:(NSString*)arg1 width:(float)arg2 alignment:(CCTextAlignment)arg3 imageOffset:(CGPoint)arg4  ];
 
-	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCLabelBMFont_class, JSPROXY_CCLabelBMFont_object, NULL);
-	JSPROXY_CCLabelBMFont *ret_proxy = [[JSPROXY_CCLabelBMFont alloc] initWithJSObject:jsobj];
-	[ret_proxy setRealObj: real];
-	JS_SetPrivate(jsobj, ret_proxy);
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( real, cx );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -5447,6 +5455,16 @@ void JSPROXY_CCLabelBMFont_createClass(JSContext *cx, JSObject* globalObj, const
 
 @implementation JSPROXY_CCLabelBMFont
 
++(JSObject*) createJSObjectWithRealObject:(id)realObj context:(JSContext*)cx
+{
+	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCLabelBMFont_class, JSPROXY_CCLabelBMFont_object, NULL);
+	JSPROXY_CCLabelBMFont *proxy = [[JSPROXY_CCLabelBMFont alloc] initWithJSObject:jsobj];
+	[proxy setRealObj:realObj];
+	objc_setAssociatedObject(realObj, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
+	JS_SetPrivate(jsobj, proxy);	
+	return jsobj;
+}
+
 @end
 
 /*
@@ -5456,14 +5474,11 @@ void JSPROXY_CCLabelBMFont_createClass(JSContext *cx, JSObject* globalObj, const
 
 JSClass* JSPROXY_CCParticleSystem_class = NULL;
 JSObject* JSPROXY_CCParticleSystem_object = NULL;
+static char *JSPROXY_CCParticleSystem_proxy_key = NULL;
  // Constructor
 JSBool JSPROXY_CCParticleSystem_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
-    JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCParticleSystem_class, JSPROXY_CCParticleSystem_object, NULL);
-
-    JSPROXY_CCParticleSystem *proxy = [[JSPROXY_CCParticleSystem alloc] initWithJSObject:jsobj];
-
-    JS_SetPrivate(jsobj, proxy);
+    JSObject *jsobj = [JSPROXY_CCParticleSystem createJSObjectWithRealObject:nil context:cx];
     JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
     /* no callbacks */
@@ -5474,11 +5489,11 @@ JSBool JSPROXY_CCParticleSystem_constructor(JSContext *cx, uint32_t argc, jsval 
 // Destructor
 void JSPROXY_CCParticleSystem_finalize(JSContext *cx, JSObject *obj)
 {
-	JSPROXY_CCParticleSystem *pt = (JSPROXY_CCParticleSystem*)JS_GetPrivate(obj);
-	if (pt) {
-	        /* no callbacks */
-
-	        [pt release];
+	JSPROXY_CCParticleSystem *proxy = (JSPROXY_CCParticleSystem*)JS_GetPrivate(obj);
+	if (proxy) {
+		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_ASSIGN);
+		/* no callbacks */
+		[proxy release];
 	}
 }
 
@@ -5896,10 +5911,7 @@ JSBool JSPROXY_CCParticleSystem_particleWithFile_(JSContext *cx, uint32_t argc, 
 
 	CCParticleSystem *real = [CCParticleSystem particleWithFile:(NSString*)arg0  ];
 
-	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCParticleSystem_class, JSPROXY_CCParticleSystem_object, NULL);
-	JSPROXY_CCParticleSystem *ret_proxy = [[JSPROXY_CCParticleSystem alloc] initWithJSObject:jsobj];
-	[ret_proxy setRealObj: real];
-	JS_SetPrivate(jsobj, ret_proxy);
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( real, cx );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -7208,6 +7220,16 @@ void JSPROXY_CCParticleSystem_createClass(JSContext *cx, JSObject* globalObj, co
 
 @implementation JSPROXY_CCParticleSystem
 
++(JSObject*) createJSObjectWithRealObject:(id)realObj context:(JSContext*)cx
+{
+	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCParticleSystem_class, JSPROXY_CCParticleSystem_object, NULL);
+	JSPROXY_CCParticleSystem *proxy = [[JSPROXY_CCParticleSystem alloc] initWithJSObject:jsobj];
+	[proxy setRealObj:realObj];
+	objc_setAssociatedObject(realObj, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
+	JS_SetPrivate(jsobj, proxy);	
+	return jsobj;
+}
+
 @end
 
 /*
@@ -7217,14 +7239,11 @@ void JSPROXY_CCParticleSystem_createClass(JSContext *cx, JSObject* globalObj, co
 
 JSClass* JSPROXY_CCParticleSystemQuad_class = NULL;
 JSObject* JSPROXY_CCParticleSystemQuad_object = NULL;
+static char *JSPROXY_CCParticleSystemQuad_proxy_key = NULL;
  // Constructor
 JSBool JSPROXY_CCParticleSystemQuad_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
-    JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCParticleSystemQuad_class, JSPROXY_CCParticleSystemQuad_object, NULL);
-
-    JSPROXY_CCParticleSystemQuad *proxy = [[JSPROXY_CCParticleSystemQuad alloc] initWithJSObject:jsobj];
-
-    JS_SetPrivate(jsobj, proxy);
+    JSObject *jsobj = [JSPROXY_CCParticleSystemQuad createJSObjectWithRealObject:nil context:cx];
     JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
     /* no callbacks */
@@ -7235,11 +7254,11 @@ JSBool JSPROXY_CCParticleSystemQuad_constructor(JSContext *cx, uint32_t argc, js
 // Destructor
 void JSPROXY_CCParticleSystemQuad_finalize(JSContext *cx, JSObject *obj)
 {
-	JSPROXY_CCParticleSystemQuad *pt = (JSPROXY_CCParticleSystemQuad*)JS_GetPrivate(obj);
-	if (pt) {
-	        /* no callbacks */
-
-	        [pt release];
+	JSPROXY_CCParticleSystemQuad *proxy = (JSPROXY_CCParticleSystemQuad*)JS_GetPrivate(obj);
+	if (proxy) {
+		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_ASSIGN);
+		/* no callbacks */
+		[proxy release];
 	}
 }
 
@@ -7289,6 +7308,16 @@ void JSPROXY_CCParticleSystemQuad_createClass(JSContext *cx, JSObject* globalObj
 
 @implementation JSPROXY_CCParticleSystemQuad
 
++(JSObject*) createJSObjectWithRealObject:(id)realObj context:(JSContext*)cx
+{
+	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCParticleSystemQuad_class, JSPROXY_CCParticleSystemQuad_object, NULL);
+	JSPROXY_CCParticleSystemQuad *proxy = [[JSPROXY_CCParticleSystemQuad alloc] initWithJSObject:jsobj];
+	[proxy setRealObj:realObj];
+	objc_setAssociatedObject(realObj, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
+	JS_SetPrivate(jsobj, proxy);	
+	return jsobj;
+}
+
 @end
 
 /*
@@ -7298,14 +7327,11 @@ void JSPROXY_CCParticleSystemQuad_createClass(JSContext *cx, JSObject* globalObj
 
 JSClass* JSPROXY_CCRotateBy_class = NULL;
 JSObject* JSPROXY_CCRotateBy_object = NULL;
+static char *JSPROXY_CCRotateBy_proxy_key = NULL;
  // Constructor
 JSBool JSPROXY_CCRotateBy_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
-    JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCRotateBy_class, JSPROXY_CCRotateBy_object, NULL);
-
-    JSPROXY_CCRotateBy *proxy = [[JSPROXY_CCRotateBy alloc] initWithJSObject:jsobj];
-
-    JS_SetPrivate(jsobj, proxy);
+    JSObject *jsobj = [JSPROXY_CCRotateBy createJSObjectWithRealObject:nil context:cx];
     JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
     /* no callbacks */
@@ -7316,11 +7342,11 @@ JSBool JSPROXY_CCRotateBy_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 // Destructor
 void JSPROXY_CCRotateBy_finalize(JSContext *cx, JSObject *obj)
 {
-	JSPROXY_CCRotateBy *pt = (JSPROXY_CCRotateBy*)JS_GetPrivate(obj);
-	if (pt) {
-	        /* no callbacks */
-
-	        [pt release];
+	JSPROXY_CCRotateBy *proxy = (JSPROXY_CCRotateBy*)JS_GetPrivate(obj);
+	if (proxy) {
+		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_ASSIGN);
+		/* no callbacks */
+		[proxy release];
 	}
 }
 
@@ -7334,10 +7360,7 @@ JSBool JSPROXY_CCRotateBy_actionWithDuration_angle_(JSContext *cx, uint32_t argc
 
 	CCRotateBy *real = [CCRotateBy actionWithDuration:(ccTime)arg0 angle:(float)arg1  ];
 
-	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCRotateBy_class, JSPROXY_CCRotateBy_object, NULL);
-	JSPROXY_CCRotateBy *ret_proxy = [[JSPROXY_CCRotateBy alloc] initWithJSObject:jsobj];
-	[ret_proxy setRealObj: real];
-	JS_SetPrivate(jsobj, ret_proxy);
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( real, cx );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -7394,5 +7417,15 @@ void JSPROXY_CCRotateBy_createClass(JSContext *cx, JSObject* globalObj, const ch
 }
 
 @implementation JSPROXY_CCRotateBy
+
++(JSObject*) createJSObjectWithRealObject:(id)realObj context:(JSContext*)cx
+{
+	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCRotateBy_class, JSPROXY_CCRotateBy_object, NULL);
+	JSPROXY_CCRotateBy *proxy = [[JSPROXY_CCRotateBy alloc] initWithJSObject:jsobj];
+	[proxy setRealObj:realObj];
+	objc_setAssociatedObject(realObj, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
+	JS_SetPrivate(jsobj, proxy);	
+	return jsobj;
+}
 
 @end

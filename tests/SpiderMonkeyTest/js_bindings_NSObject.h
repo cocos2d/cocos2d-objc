@@ -4,6 +4,7 @@
 #include "ScriptingCore.h"
 
 extern JSObject* JSPROXY_NSObject_object;
+extern JSClass* JSPROXY_NSObject_class;
 
 @interface JSPROXY_NSObject : NSObject
 {
@@ -15,6 +16,6 @@ extern JSObject* JSPROXY_NSObject_object;
 @property (nonatomic, readwrite, retain) id	realObj;
 
 -(id) initWithJSObject:(JSObject*)object;
-+(void) createClassWithContext:(JSContext*)cx object:(JSObject*)globalObj name:(NSString*)name;
++(JSObject*) createJSObjectWithRealObject:(id)realObj context:(JSContext*)JSContext;
 @end
 
