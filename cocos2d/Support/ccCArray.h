@@ -45,6 +45,10 @@
 
 #import "../ccMacros.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #pragma mark -
 #pragma mark ccArray for Objects
 
@@ -217,4 +221,9 @@ void cc_insertionSort(ccCArray* arr, cc_comparator comparator);
 
 void cc_pointerswap(void* a, void* b, size_t width);
 
+#ifdef __cplusplus
+}
+#endif
+
+	
 #endif // CC_ARRAY_H

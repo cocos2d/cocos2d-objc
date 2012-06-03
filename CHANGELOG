@@ -1,10 +1,17 @@
-version 2.0-rc2 XX-May-2012
+version 2.0-rc2 03-Jun-2012
 . [NEW] Added Javascript test using JSCocoa (Mac only)
 			ActionTests, SpriteTests (WIP)
+. [NEW] Director: Added popToRootScene method
 . [NEW] RenderTexture: Added support for Depth Stencil
+. [FIX] Actions: CardinalSpline#copy uses tension (issue #1377)
+			CallFunc: fixed possible crash when releasing the action (issue #1369)
 . [FIX] ccArray: Implementation is no longer inlined. Needed for gen_bridge_metada.
 		Make it compatible with C99
+		Added __cplusplus #ifdef in header
+. [FIX] CocosDenshion: Fixed buffer overrun while resizing buffer (issue #1372)
+. [FIX] Director: Fixed memory leak when createStatsLabel was called more than once (issue #1373)
 . [FIX] FileUtils: easier to override the search folder
+		Added __cplusplus #ifdef in header
 . [FIX] LabelTTF: improved loading time. Label is updated only if the string is set.
 . [FIX] Macros: CCLOG doesn't log the function name. Only CCLOGWARN
 . [FIX] MenuItem: setIsEnabled can be called before setting the images

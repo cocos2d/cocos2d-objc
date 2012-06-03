@@ -31,3 +31,18 @@
 {
 }
 @end
+
+@interface LayerIgnoreAnchorPointPos : LayerTest
+{
+}
+@end
+
+@interface LayerIgnoreAnchorPointRot : LayerTest
+{
+}
+@end
+
+@interface LayerIgnoreAnchorPointScale : LayerTest
+{
+}
+@end
