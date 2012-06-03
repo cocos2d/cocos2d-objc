@@ -3,6 +3,7 @@ version 2.0-rc2 03-Jun-2012
 			ActionTests, SpriteTests (WIP)
 . [NEW] Director: Added popToRootScene method
 . [NEW] RenderTexture: Added support for Depth Stencil
+. [FIX] Actions: CardinalSpline#copy uses tension (issue #1377)
 . [FIX] ccArray: Implementation is no longer inlined. Needed for gen_bridge_metada.
 		Make it compatible with C99
 		Added __cplusplus #ifdef in header
