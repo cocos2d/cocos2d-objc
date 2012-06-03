@@ -262,6 +262,13 @@ and when to execute the Scenes.
  */
 - (void) popScene;
 
+/**Pops out all scenes from the queue until the root scene in the queue.
+ * This scene will replace the running one.
+ * The running scene will be deleted. If there are no more scenes in the stack the execution is terminated.
+ * ONLY call it if there is a running scene.
+ */
+- (void) popToRootScene;
+
 /** Replaces the running scene with a new one. The running scene is terminated.
  * ONLY call it if there is a running scene.
  */

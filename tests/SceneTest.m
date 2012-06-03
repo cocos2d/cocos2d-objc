@@ -169,18 +169,28 @@
 -(id) init
 {
 	if( (self=[super initWithColor: ccc4(0,0,255,255)]) ) {
-		
-#if defined(__CC_PLATFORM_IOS)
-		self.isTouchEnabled = YES;
-#elif defined(__CC_PLATFORM_MAC)
-		self.isMouseEnabled = YES;
-#endif
 
-		id label = [CCLabelTTF labelWithString:@"Touch to popScene" fontName:@"Marker Felt" fontSize:32];
-		[self addChild:label];
 		CGSize s = [[CCDirector sharedDirector] winSize];
-		[label setPosition:ccp(s.width/2, s.height/2)];
 
+		CCMenuItemFont *item0 = [CCMenuItemFont itemWithString:@"Touch to pushScene (self)" block:^(id sender) {
+			CCScene *new = [CCScene node];
+			[new addChild:[Layer3 node]];
+			[[CCDirector sharedDirector] pushScene:[CCTransitionFade transitionWithDuration:0.5 scene:new withColor:ccc3(0,255,255)] ];
+		}];
+
+		
+		CCMenuItemFont *item1 = [CCMenuItemFont itemWithString:@"Touch to popScene" block:^(id sender) {
+			[[CCDirector sharedDirector] popScene];
+		}];
+		
+		CCMenuItemFont *item2 = [CCMenuItemFont itemWithString:@"Touch to popToRootScene" block:^(id sender) {
+			[[CCDirector sharedDirector] popToRootScene];
+		}];
+
+		CCMenu *menu = [CCMenu menuWithItems:item0, item1, item2, nil ];
+		[self addChild:menu];
+		[menu alignItemsVertically];
+								 
 		[self schedule:@selector(testDealloc:)];
 
 		CCSprite *sprite = [CCSprite spriteWithFile:@"grossini.png"];
@@ -204,19 +214,6 @@
 {
 	NSLog(@"Layer3:testDealloc");
 }
-
-#if defined(__CC_PLATFORM_IOS)
-- (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
-{
-	[[CCDirector sharedDirector] popScene];
-}
-#elif defined(__CC_PLATFORM_MAC)
-- (BOOL) ccMouseUp:(NSEvent *)event
-{
-	[[CCDirector sharedDirector] popScene];
-	return YES;
-}
-#endif
 @end
 
 

@@ -1,6 +1,7 @@
 version 2.0-rc2 03-Jun-2012
 . [NEW] Added Javascript test using JSCocoa (Mac only)
 			ActionTests, SpriteTests (WIP)
+. [NEW] Director: Added popToRootScene method
 . [NEW] RenderTexture: Added support for Depth Stencil
 . [FIX] ccArray: Implementation is no longer inlined. Needed for gen_bridge_metada.
 		Make it compatible with C99
