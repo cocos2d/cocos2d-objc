@@ -45,7 +45,10 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 
 * Gene Peterson (http://zynga.com)
 	Dimension is a property on CCLabelTTF
-	
+
+* geraldtjy
+	Added Director.popToRootScene method
+
 * Giles Hammond:
 	iOS Director uses DisplayLink timestamp for more stable delta times
 
