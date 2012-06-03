@@ -20,6 +20,9 @@ static NSString *transitions[] = {
 	@"LayerTest2",
 	@"LayerTestBlend",
 	@"LayerGradient",
+	@"LayerIgnoreAnchorPointPos",
+	@"LayerIgnoreAnchorPointRot",
+	@"LayerIgnoreAnchorPointScale",
 
 };
 
@@ -398,6 +401,155 @@ Class restartAction()
 -(NSString *) subtitle
 {
 	return @"Touch the screen and move your finger";
+}
+@end
+
+#pragma mark -
+#pragma mark Example LayerIgnoreAnchorPointPos
+
+@implementation LayerIgnoreAnchorPointPos
+-(id) init
+{
+	if( (self=[super init] )) {
+		CGSize s = [[CCDirector sharedDirector] winSize];
+		
+		CCLayerColor *l = [CCLayerColor layerWithColor:ccc4(255, 0, 0, 255) width:150 height:150];
+		
+		l.anchorPoint = ccp(0.5f, 0.5f);
+		l.position = ccp( s.width/2, s.height/2);
+		
+		CCMoveBy *move = [CCMoveBy actionWithDuration:2 position:ccp(100,2)];
+		id back = [move reverse];
+		CCSequence *seq = [CCSequence actions:move, back, nil];
+		[l runAction: [CCRepeatForever actionWithAction:seq]];
+		[self addChild:l];
+		
+		CCSprite *child = [CCSprite spriteWithFile:@"grossini.png"];
+		[l addChild:child];
+		CGSize lsize = [l contentSize];
+		[child setPosition:ccp(lsize.width/2, lsize.height/2)];
+		
+		CCMenuItemFont *item = [CCMenuItemFont itemWithString:@"Toogle ignore anchor point" block:^(id sender) {
+			BOOL ignore = [l ignoreAnchorPointForPosition];
+			[l setIgnoreAnchorPointForPosition: ! ignore];
+		}
+								];
+		CCMenu *menu = [CCMenu menuWithItems:item, nil];
+		[self addChild:menu];
+		
+		[menu setPosition:ccp(s.width/2, s.height/2)];
+	}
+	return self;
+}
+
+-(NSString *) title
+{
+	return @"IgnoreAnchorPoint - Position";
+}
+
+-(NSString *) subtitle
+{
+	return @"Ignoring Anchor Point for position";
+}
+@end
+
+#pragma mark -
+#pragma mark Example LayerIgnoreAnchorPointRot
+
+@implementation LayerIgnoreAnchorPointRot
+-(id) init
+{
+	if( (self=[super init] )) {
+		CGSize s = [[CCDirector sharedDirector] winSize];
+		
+		CCLayerColor *l = [CCLayerColor layerWithColor:ccc4(255, 0, 0, 255) width:200 height:200];
+		
+		l.anchorPoint = ccp(0.5f, 0.5f);
+		l.position = ccp( s.width/2, s.height/2);
+		
+		[self addChild:l];
+		
+		CCRotateBy *rot = [CCRotateBy actionWithDuration:2 angle:360];
+		[l runAction: [CCRepeatForever actionWithAction:rot]];
+		
+		
+		CCSprite *child = [CCSprite spriteWithFile:@"grossini.png"];
+		[l addChild:child];
+		CGSize lsize = [l contentSize];
+		[child setPosition:ccp(lsize.width/2, lsize.height/2)];
+
+		CCMenuItemFont *item = [CCMenuItemFont itemWithString:@"Toogle ignore anchor point" block:^(id sender) {
+			BOOL ignore = [l ignoreAnchorPointForPosition];
+			[l setIgnoreAnchorPointForPosition: ! ignore];
+		}
+								];		
+		CCMenu *menu = [CCMenu menuWithItems:item, nil];
+		[self addChild:menu];
+		
+		[menu setPosition:ccp(s.width/2, s.height/2)];
+	}
+	return self;
+}
+
+-(NSString *) title
+{
+	return @"IgnoreAnchorPoint - Rotation";
+}
+
+-(NSString *) subtitle
+{
+	return @"Ignoring Anchor Point for rotations";
+}
+@end
+
+#pragma mark -
+#pragma mark Example LayerIgnoreAnchorPointScale
+
+@implementation LayerIgnoreAnchorPointScale
+-(id) init
+{
+	if( (self=[super init] )) {
+		CGSize s = [[CCDirector sharedDirector] winSize];
+		
+		CCLayerColor *l = [CCLayerColor layerWithColor:ccc4(255, 0, 0, 255) width:200 height:200];
+		
+		l.anchorPoint = ccp(0.5f, 1.0f);
+		
+		l.position = ccp( s.width/2, s.height/2);
+		
+		CCScaleBy *scale = [CCScaleBy actionWithDuration:2 scale:2];
+		id back = [scale reverse];
+		CCSequence *seq = [CCSequence actions:scale, back, nil];
+		
+		[l runAction: [CCRepeatForever actionWithAction:seq]];
+		[self addChild:l];
+
+		CCSprite *child = [CCSprite spriteWithFile:@"grossini.png"];
+		[l addChild:child];
+		CGSize lsize = [l contentSize];
+		[child setPosition:ccp(lsize.width/2, lsize.height/2)];
+
+		CCMenuItemFont *item = [CCMenuItemFont itemWithString:@"Toogle ignore anchor point" block:^(id sender) {
+			BOOL ignore = [l ignoreAnchorPointForPosition];
+			[l setIgnoreAnchorPointForPosition: ! ignore];
+		}
+								];		
+		CCMenu *menu = [CCMenu menuWithItems:item, nil];
+		[self addChild:menu];
+		
+		[menu setPosition:ccp(s.width/2, s.height/2)];
+	}
+	return self;
+}
+
+-(NSString *) title
+{
+	return @"IgnoreAnchorPoint - Scale";
+}
+
+-(NSString *) subtitle
+{
+	return @"Ignoring Anchor Point for scale";
 }
 @end
 
