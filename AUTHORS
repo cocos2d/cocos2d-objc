@@ -28,6 +28,9 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 * Brian Chapados (http://chapados.org/):
 	Made easier to port to cocos2d v2.x from v1.x by adding alpha testing shader, added missing CCSpriteFrameCache
 
+* calinseciu:
+	Fixed memory leak on CCDirector#createStatsLabel
+
 * Chere Loque:
 	Added support for NPOT texture in CCRenderTexture
 	Added image offset in CCLabelBMFont in order to share the same texture
