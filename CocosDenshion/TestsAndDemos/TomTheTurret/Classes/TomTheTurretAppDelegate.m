@@ -26,6 +26,9 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+	// Display retina Display
+	useRetinaDisplay_ = NO;
+
 	[super application:application didFinishLaunchingWithOptions:launchOptions];
 
 	//Kick off sound initialisation, this will happen in a separate thread
@@ -64,6 +67,11 @@
     self.storyScene = [[[StoryScene alloc] init] autorelease];
     self.actionScene = [[[ActionScene alloc] init] autorelease];
 
+}
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+	return UIInterfaceOrientationIsLandscape(interfaceOrientation);
 }
 
 - (void)launchMainMenu {
