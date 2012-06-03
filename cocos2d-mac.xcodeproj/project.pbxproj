@@ -13,6 +13,8 @@
 			buildPhases = (
 			);
 			dependencies = (
+				A0BCD251157C19DF00CCE291 /* PBXTargetDependency */,
+				A0BCD253157C19DF00CCE291 /* PBXTargetDependency */,
 				A098134014B9DECD004812AD /* PBXTargetDependency */,
 				A098134214B9DECD004812AD /* PBXTargetDependency */,
 				A098134414B9DECD004812AD /* PBXTargetDependency */,
@@ -5452,6 +5454,20 @@
 			proxyType = 1;
 			remoteGlobalIDString = E01E663C121CA00A001A484F;
 			remoteInfo = cocos2d;
+		};
+		A0BCD250157C19DF00CCE291 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A034160515487C3C00AE4D93;
+			remoteInfo = JavascriptJSCocoaTest;
+		};
+		A0BCD252157C19DF00CCE291 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A009432F15181C8D0029A5C6;
+			remoteInfo = MultithreadTest;
 		};
 		E026443512A59DA7009D04FE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -14448,6 +14464,16 @@
 			isa = PBXTargetDependency;
 			target = E01E663C121CA00A001A484F /* cocos2d */;
 			targetProxy = A0ADEF6214584BD3009A71F1 /* PBXContainerItemProxy */;
+		};
+		A0BCD251157C19DF00CCE291 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A034160515487C3C00AE4D93 /* JavascriptJSCocoaTest */;
+			targetProxy = A0BCD250157C19DF00CCE291 /* PBXContainerItemProxy */;
+		};
+		A0BCD253157C19DF00CCE291 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A009432F15181C8D0029A5C6 /* MultithreadTest */;
+			targetProxy = A0BCD252157C19DF00CCE291 /* PBXContainerItemProxy */;
 		};
 		E026443412A59DA7009D04FE /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
