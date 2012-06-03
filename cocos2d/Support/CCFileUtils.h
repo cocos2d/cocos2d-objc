@@ -185,5 +185,3 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out);
 #ifdef __cplusplus
 }
 #endif
-
-

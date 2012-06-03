@@ -361,9 +361,9 @@
 		bottom	= top+(rect.size.width*2-2)/(2*atlasHeight);
 #else
 		left	= rect.origin.x/atlasWidth;
-		right	= left+(rect.size.height/atlasWidth);
+		right	= (rect.origin.x+rect.size.height) / atlasWidth;
 		top		= rect.origin.y/atlasHeight;
-		bottom	= top+(rect.size.width/atlasHeight);
+		bottom	= (rect.origin.y+rect.size.width) / atlasHeight;
 #endif // ! CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
 
 		if( flipX_)
@@ -387,9 +387,9 @@
 		bottom	= top + (rect.size.height*2-2)/(2*atlasHeight);
 #else
 		left	= rect.origin.x/atlasWidth;
-		right	= left + rect.size.width/atlasWidth;
+		right	= (rect.origin.x + rect.size.width) / atlasWidth;
 		top		= rect.origin.y/atlasHeight;
-		bottom	= top + rect.size.height/atlasHeight;
+		bottom	= (rect.origin.y + rect.size.height) / atlasHeight;
 #endif // ! CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
 
 		if( flipX_)

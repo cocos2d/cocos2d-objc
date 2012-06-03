@@ -28,6 +28,9 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 * Brian Chapados (http://chapados.org/):
 	Made easier to port to cocos2d v2.x from v1.x by adding alpha testing shader, added missing CCSpriteFrameCache
 
+* calinseciu:
+	Fixed memory leak on CCDirector#createStatsLabel
+
 * Chere Loque:
 	Added support for NPOT texture in CCRenderTexture
 	Added image offset in CCLabelBMFont in order to share the same texture
@@ -45,7 +48,10 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 
 * Gene Peterson (http://zynga.com)
 	Dimension is a property on CCLabelTTF
-	
+
+* geraldtjy
+	Added Director.popToRootScene method
+
 * Giles Hammond:
 	iOS Director uses DisplayLink timestamp for more stable delta times
 
@@ -109,6 +115,9 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	
 * Scott Lembcke (AKA slembcke) (http://chipmunk-physics.net/)
 	Mentor & contributor of new Physics + cocos2d integration via nodeToParentTransform
+
+* Sebastian Goztyla:
+	Fixed buffer overrun in CocosDenshion
 
 * Serg Scout (http://kidstamatic.com/):
 	Fixed texture alpha when converting RGBA8 textures to RGB5A1

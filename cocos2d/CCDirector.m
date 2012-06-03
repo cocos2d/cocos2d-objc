@@ -408,6 +408,29 @@ static CCDirector *_sharedDirector = nil;
 	}
 }
 
+-(void) popToRootScene
+{
+	NSAssert(runningScene_ != nil, @"A running Scene is needed");
+	NSUInteger c = [scenesStack_ count];
+	
+    if (c == 1) {
+        [scenesStack_ removeLastObject];
+        [self end];
+    } else {
+        while (c > 1) {
+			CCScene *current = [scenesStack_ lastObject];
+			if( [current isRunning] )
+				[current onExit];
+			[current cleanup];
+			
+			[scenesStack_ removeLastObject];
+			c--;
+        }
+		nextScene_ = [scenesStack_ lastObject];
+		sendCleanupToScene_ = NO;
+    }
+}
+
 -(void) end
 {
 	[runningScene_ onExit];
@@ -588,9 +611,11 @@ static CCDirector *_sharedDirector = nil;
 
 		[FPSLabel_ release];
 		[SPFLabel_ release];
+		[drawsLabel_ release];
 		[[CCTextureCache sharedTextureCache ] removeTexture:texture];
 		FPSLabel_ = nil;
 		SPFLabel_ = nil;
+		drawsLabel_ = nil;
 		
 		[[CCFileUtils sharedFileUtils] purgeCachedEntries];
 	}
