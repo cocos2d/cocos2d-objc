@@ -116,6 +116,9 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 * Scott Lembcke (AKA slembcke) (http://chipmunk-physics.net/)
 	Mentor & contributor of new Physics + cocos2d integration via nodeToParentTransform
 
+* Sebastian Goztyla:
+	Fixed buffer overrun in CocosDenshion
+
 * Serg Scout (http://kidstamatic.com/):
 	Fixed texture alpha when converting RGBA8 textures to RGB5A1
 

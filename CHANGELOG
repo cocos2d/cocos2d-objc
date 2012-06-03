@@ -7,6 +7,7 @@ version 2.0-rc2 03-Jun-2012
 . [FIX] ccArray: Implementation is no longer inlined. Needed for gen_bridge_metada.
 		Make it compatible with C99
 		Added __cplusplus #ifdef in header
+. [FIX] CocosDenshion: Fixed buffer overrun while resizing buffer (issue #1372)
 . [FIX] Director: Fixed memory leak when createStatsLabel was called more than once (issue #1373)
 . [FIX] FileUtils: easier to override the search folder
 		Added __cplusplus #ifdef in header
