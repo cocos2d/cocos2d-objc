@@ -1,10 +1,12 @@
-version 2.0-rc2 XX-May-2012
+version 2.0-rc2 03-Jun-2012
 . [NEW] Added Javascript test using JSCocoa (Mac only)
 			ActionTests, SpriteTests (WIP)
 . [NEW] RenderTexture: Added support for Depth Stencil
 . [FIX] ccArray: Implementation is no longer inlined. Needed for gen_bridge_metada.
 		Make it compatible with C99
+		Added __cplusplus #ifdef in header
 . [FIX] FileUtils: easier to override the search folder
+		Added __cplusplus #ifdef in header
 . [FIX] LabelTTF: improved loading time. Label is updated only if the string is set.
 . [FIX] Macros: CCLOG doesn't log the function name. Only CCLOGWARN
 . [FIX] MenuItem: setIsEnabled can be called before setting the images

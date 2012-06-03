@@ -170,6 +170,11 @@
 
 @end
 
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /** loads a file into memory.
  the caller should release the allocated buffer.
 
@@ -178,3 +183,6 @@
  */
 NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out);
 
+#ifdef __cplusplus
+}
+#endif
