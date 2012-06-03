@@ -611,9 +611,11 @@ static CCDirector *_sharedDirector = nil;
 
 		[FPSLabel_ release];
 		[SPFLabel_ release];
+		[drawsLabel_ release];
 		[[CCTextureCache sharedTextureCache ] removeTexture:texture];
 		FPSLabel_ = nil;
 		SPFLabel_ = nil;
+		drawsLabel_ = nil;
 		
 		[[CCFileUtils sharedFileUtils] purgeCachedEntries];
 	}
