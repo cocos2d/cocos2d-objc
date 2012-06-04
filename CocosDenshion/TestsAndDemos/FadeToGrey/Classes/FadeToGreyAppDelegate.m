@@ -14,6 +14,9 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+	// Display retina Display
+	useRetinaDisplay_ = NO;
+
 	[super application:application didFinishLaunchingWithOptions:launchOptions];
 
 	// display FPS (useful when debugging)
