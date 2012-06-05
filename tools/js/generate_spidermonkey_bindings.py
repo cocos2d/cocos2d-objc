@@ -756,6 +756,10 @@ JSBool %s_%s(JSContext *cx, uint32_t argc, jsval *vp) {
             '{}': self.generate_argument_struct,
         }
 
+	# Variadic methods are not supported
+	if 'variadic' in method and method['variadic'] == 'true':
+	    return False
+	    
 	s = method['selector']
 
 	# Don't generate methods that are defined as callbacks

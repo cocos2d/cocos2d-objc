@@ -17,6 +17,7 @@ JSPROXY_CCParticleSystem_createClass(_cx, cocos2d, "ParticleSystem");
 JSPROXY_CCParticleSystemQuad_createClass(_cx, cocos2d, "ParticleSystemQuad");
 JSPROXY_CCSprite_createClass(_cx, cocos2d, "Sprite");
 JSPROXY_CCRotateBy_createClass(_cx, cocos2d, "RotateBy");
+JSPROXY_CCSequence_createClass(_cx, cocos2d, "Sequence");
 JSPROXY_CCScene_createClass(_cx, cocos2d, "Scene");
 JSPROXY_CCLabelTTF_createClass(_cx, cocos2d, "LabelTTF");
 JSPROXY_CCScaleBy_createClass(_cx, cocos2d, "ScaleBy");
