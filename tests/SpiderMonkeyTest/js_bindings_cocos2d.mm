@@ -340,10 +340,7 @@ JSBool JSPROXY_CCDirector_pushScene_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 
-	JSObject *tmp_arg0;
-	JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
-	JSPROXY_CCScene* proxy_arg0 = (JSPROXY_CCScene*) JS_GetPrivate( tmp_arg0 ); 
-	CCScene* arg0 = (CCScene*) [proxy_arg0 realObj];
+	CCScene* arg0 = (CCScene*) jsval_to_nsobject( *argvp++, cx);
 
 	CCDirector *real = (CCDirector*) [proxy realObj];
 	[real pushScene:(CCScene*)arg0  ];
@@ -362,10 +359,7 @@ JSBool JSPROXY_CCDirector_replaceScene_(JSContext *cx, uint32_t argc, jsval *vp)
 	NSCAssert( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 
-	JSObject *tmp_arg0;
-	JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
-	JSPROXY_CCScene* proxy_arg0 = (JSPROXY_CCScene*) JS_GetPrivate( tmp_arg0 ); 
-	CCScene* arg0 = (CCScene*) [proxy_arg0 realObj];
+	CCScene* arg0 = (CCScene*) jsval_to_nsobject( *argvp++, cx);
 
 	CCDirector *real = (CCDirector*) [proxy realObj];
 	[real replaceScene:(CCScene*)arg0  ];
@@ -421,10 +415,7 @@ JSBool JSPROXY_CCDirector_runWithScene_(JSContext *cx, uint32_t argc, jsval *vp)
 	NSCAssert( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 
-	JSObject *tmp_arg0;
-	JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
-	JSPROXY_CCScene* proxy_arg0 = (JSPROXY_CCScene*) JS_GetPrivate( tmp_arg0 ); 
-	CCScene* arg0 = (CCScene*) [proxy_arg0 realObj];
+	CCScene* arg0 = (CCScene*) jsval_to_nsobject( *argvp++, cx);
 
 	CCDirector *real = (CCDirector*) [proxy realObj];
 	[real runWithScene:(CCScene*)arg0  ];
@@ -792,10 +783,7 @@ JSBool JSPROXY_CCNode_addChild_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 
-	JSObject *tmp_arg0;
-	JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
-	JSPROXY_CCNode* proxy_arg0 = (JSPROXY_CCNode*) JS_GetPrivate( tmp_arg0 ); 
-	CCNode* arg0 = (CCNode*) [proxy_arg0 realObj];
+	CCNode* arg0 = (CCNode*) jsval_to_nsobject( *argvp++, cx);
 
 	CCNode *real = (CCNode*) [proxy realObj];
 	[real addChild:(CCNode*)arg0  ];
@@ -814,10 +802,7 @@ JSBool JSPROXY_CCNode_addChild_z_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 
-	JSObject *tmp_arg0;
-	JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
-	JSPROXY_CCNode* proxy_arg0 = (JSPROXY_CCNode*) JS_GetPrivate( tmp_arg0 ); 
-	CCNode* arg0 = (CCNode*) [proxy_arg0 realObj];
+	CCNode* arg0 = (CCNode*) jsval_to_nsobject( *argvp++, cx);
 	int32_t arg1; JS_ValueToECMAInt32( cx, *argvp++, &arg1 );
 
 	CCNode *real = (CCNode*) [proxy realObj];
@@ -837,10 +822,7 @@ JSBool JSPROXY_CCNode_addChild_z_tag_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( argc == 3, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 
-	JSObject *tmp_arg0;
-	JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
-	JSPROXY_CCNode* proxy_arg0 = (JSPROXY_CCNode*) JS_GetPrivate( tmp_arg0 ); 
-	CCNode* arg0 = (CCNode*) [proxy_arg0 realObj];
+	CCNode* arg0 = (CCNode*) jsval_to_nsobject( *argvp++, cx);
 	int32_t arg1; JS_ValueToECMAInt32( cx, *argvp++, &arg1 );
 	int32_t arg2; JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
 
@@ -1353,10 +1335,7 @@ JSBool JSPROXY_CCNode_removeChild_cleanup_(JSContext *cx, uint32_t argc, jsval *
 	NSCAssert( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 
-	JSObject *tmp_arg0;
-	JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
-	JSPROXY_CCNode* proxy_arg0 = (JSPROXY_CCNode*) JS_GetPrivate( tmp_arg0 ); 
-	CCNode* arg0 = (CCNode*) [proxy_arg0 realObj];
+	CCNode* arg0 = (CCNode*) jsval_to_nsobject( *argvp++, cx);
 	JSBool arg1; JS_ValueToBoolean( cx, *argvp++, &arg1 );
 
 	CCNode *real = (CCNode*) [proxy realObj];
@@ -1413,10 +1392,7 @@ JSBool JSPROXY_CCNode_reorderChild_z_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 
-	JSObject *tmp_arg0;
-	JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
-	JSPROXY_CCNode* proxy_arg0 = (JSPROXY_CCNode*) JS_GetPrivate( tmp_arg0 ); 
-	CCNode* arg0 = (CCNode*) [proxy_arg0 realObj];
+	CCNode* arg0 = (CCNode*) jsval_to_nsobject( *argvp++, cx);
 	int32_t arg1; JS_ValueToECMAInt32( cx, *argvp++, &arg1 );
 
 	CCNode *real = (CCNode*) [proxy realObj];
@@ -1469,10 +1445,7 @@ JSBool JSPROXY_CCNode_runAction_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 
-	JSObject *tmp_arg0;
-	JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
-	JSPROXY_CCAction* proxy_arg0 = (JSPROXY_CCAction*) JS_GetPrivate( tmp_arg0 ); 
-	CCAction* arg0 = (CCAction*) [proxy_arg0 realObj];
+	CCAction* arg0 = (CCAction*) jsval_to_nsobject( *argvp++, cx);
 	CCAction* ret_val;
 
 	CCNode *real = (CCNode*) [proxy realObj];
@@ -1684,10 +1657,7 @@ JSBool JSPROXY_CCNode_setParent_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 
-	JSObject *tmp_arg0;
-	JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
-	JSPROXY_CCNode* proxy_arg0 = (JSPROXY_CCNode*) JS_GetPrivate( tmp_arg0 ); 
-	CCNode* arg0 = (CCNode*) [proxy_arg0 realObj];
+	CCNode* arg0 = (CCNode*) jsval_to_nsobject( *argvp++, cx);
 
 	CCNode *real = (CCNode*) [proxy realObj];
 	[real setParent:(CCNode*)arg0  ];
@@ -1965,10 +1935,7 @@ JSBool JSPROXY_CCNode_stopAction_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 
-	JSObject *tmp_arg0;
-	JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
-	JSPROXY_CCAction* proxy_arg0 = (JSPROXY_CCAction*) JS_GetPrivate( tmp_arg0 ); 
-	CCAction* arg0 = (CCAction*) [proxy_arg0 realObj];
+	CCAction* arg0 = (CCAction*) jsval_to_nsobject( *argvp++, cx);
 
 	CCNode *real = (CCNode*) [proxy realObj];
 	[real stopAction:(CCAction*)arg0  ];
@@ -2467,8 +2434,8 @@ JSBool JSPROXY_CCSprite_initWithFile_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	NSCAssert( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSString *tmp_arg0 = JS_ValueToString( cx, *argvp++ );
-	NSString *arg0 = [NSString stringWithUTF8String: JS_EncodeString(cx, tmp_arg0)];
+
+	NSString *arg0 = jsval_to_nsstring( *argvp++, cx );
 
 	CCSprite *real = [[CCSprite alloc] initWithFile:(NSString*)arg0  ];
 	[proxy setRealObj: real];
@@ -2489,8 +2456,8 @@ JSBool JSPROXY_CCSprite_initWithSpriteFrameName_(JSContext *cx, uint32_t argc, j
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	NSCAssert( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSString *tmp_arg0 = JS_ValueToString( cx, *argvp++ );
-	NSString *arg0 = [NSString stringWithUTF8String: JS_EncodeString(cx, tmp_arg0)];
+
+	NSString *arg0 = jsval_to_nsstring( *argvp++, cx );
 
 	CCSprite *real = [[CCSprite alloc] initWithSpriteFrameName:(NSString*)arg0  ];
 	[proxy setRealObj: real];
@@ -2570,10 +2537,7 @@ JSBool JSPROXY_CCSprite_setBatchNode_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 
-	JSObject *tmp_arg0;
-	JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
-	JSPROXY_CCSpriteBatchNode* proxy_arg0 = (JSPROXY_CCSpriteBatchNode*) JS_GetPrivate( tmp_arg0 ); 
-	CCSpriteBatchNode* arg0 = (CCSpriteBatchNode*) [proxy_arg0 realObj];
+	CCSpriteBatchNode* arg0 = (CCSpriteBatchNode*) jsval_to_nsobject( *argvp++, cx);
 
 	CCSprite *real = (CCSprite*) [proxy realObj];
 	[real setBatchNode:(CCSpriteBatchNode*)arg0  ];
@@ -2651,8 +2615,8 @@ JSBool JSPROXY_CCSprite_setDisplayFrameWithAnimationName_index_(JSContext *cx, u
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	NSCAssert( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSString *tmp_arg0 = JS_ValueToString( cx, *argvp++ );
-	NSString *arg0 = [NSString stringWithUTF8String: JS_EncodeString(cx, tmp_arg0)];
+
+	NSString *arg0 = jsval_to_nsstring( *argvp++, cx );
 	int32_t arg1; JS_ValueToECMAInt32( cx, *argvp++, &arg1 );
 
 	CCSprite *real = (CCSprite*) [proxy realObj];
@@ -2720,8 +2684,8 @@ JSBool JSPROXY_CCSprite_setOpacity_(JSContext *cx, uint32_t argc, jsval *vp) {
 JSBool JSPROXY_CCSprite_spriteWithFile_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSString *tmp_arg0 = JS_ValueToString( cx, *argvp++ );
-	NSString *arg0 = [NSString stringWithUTF8String: JS_EncodeString(cx, tmp_arg0)];
+
+	NSString *arg0 = jsval_to_nsstring( *argvp++, cx );
 
 	CCSprite *real = [CCSprite spriteWithFile:(NSString*)arg0  ];
 
@@ -2736,8 +2700,8 @@ JSBool JSPROXY_CCSprite_spriteWithFile_(JSContext *cx, uint32_t argc, jsval *vp)
 JSBool JSPROXY_CCSprite_spriteWithSpriteFrameName_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSString *tmp_arg0 = JS_ValueToString( cx, *argvp++ );
-	NSString *arg0 = [NSString stringWithUTF8String: JS_EncodeString(cx, tmp_arg0)];
+
+	NSString *arg0 = jsval_to_nsstring( *argvp++, cx );
 
 	CCSprite *real = [CCSprite spriteWithSpriteFrameName:(NSString*)arg0  ];
 
@@ -4321,15 +4285,15 @@ JSBool JSPROXY_CCLabelTTF_initWithString_dimensions_hAlignment_fontName_fontSize
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	NSCAssert( argc == 5, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSString *tmp_arg0 = JS_ValueToString( cx, *argvp++ );
-	NSString *arg0 = [NSString stringWithUTF8String: JS_EncodeString(cx, tmp_arg0)];
+
+	NSString *arg0 = jsval_to_nsstring( *argvp++, cx );
 
 	JSObject *tmp_arg1;
 	JS_ValueToObject( cx, *argvp++, &tmp_arg1 );
 	CGSize arg1 = *(CGSize*)JS_GetTypedArrayData( tmp_arg1);
 	int32_t arg2; JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
-	JSString *tmp_arg3 = JS_ValueToString( cx, *argvp++ );
-	NSString *arg3 = [NSString stringWithUTF8String: JS_EncodeString(cx, tmp_arg3)];
+
+	NSString *arg3 = jsval_to_nsstring( *argvp++, cx );
 	double arg4; JS_ValueToNumber( cx, *argvp++, &arg4 );
 
 	CCLabelTTF *real = [[CCLabelTTF alloc] initWithString:(NSString*)arg0 dimensions:(CGSize)arg1 hAlignment:(CCTextAlignment)arg2 fontName:(NSString*)arg3 fontSize:(CGFloat)arg4  ];
@@ -4351,16 +4315,16 @@ JSBool JSPROXY_CCLabelTTF_initWithString_dimensions_hAlignment_lineBreakMode_fon
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	NSCAssert( argc == 6, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSString *tmp_arg0 = JS_ValueToString( cx, *argvp++ );
-	NSString *arg0 = [NSString stringWithUTF8String: JS_EncodeString(cx, tmp_arg0)];
+
+	NSString *arg0 = jsval_to_nsstring( *argvp++, cx );
 
 	JSObject *tmp_arg1;
 	JS_ValueToObject( cx, *argvp++, &tmp_arg1 );
 	CGSize arg1 = *(CGSize*)JS_GetTypedArrayData( tmp_arg1);
 	int32_t arg2; JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
 	int32_t arg3; JS_ValueToECMAInt32( cx, *argvp++, &arg3 );
-	JSString *tmp_arg4 = JS_ValueToString( cx, *argvp++ );
-	NSString *arg4 = [NSString stringWithUTF8String: JS_EncodeString(cx, tmp_arg4)];
+
+	NSString *arg4 = jsval_to_nsstring( *argvp++, cx );
 	double arg5; JS_ValueToNumber( cx, *argvp++, &arg5 );
 
 	CCLabelTTF *real = [[CCLabelTTF alloc] initWithString:(NSString*)arg0 dimensions:(CGSize)arg1 hAlignment:(CCTextAlignment)arg2 lineBreakMode:(CCLineBreakMode)arg3 fontName:(NSString*)arg4 fontSize:(CGFloat)arg5  ];
@@ -4382,16 +4346,16 @@ JSBool JSPROXY_CCLabelTTF_initWithString_dimensions_hAlignment_vAlignment_fontNa
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	NSCAssert( argc == 6, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSString *tmp_arg0 = JS_ValueToString( cx, *argvp++ );
-	NSString *arg0 = [NSString stringWithUTF8String: JS_EncodeString(cx, tmp_arg0)];
+
+	NSString *arg0 = jsval_to_nsstring( *argvp++, cx );
 
 	JSObject *tmp_arg1;
 	JS_ValueToObject( cx, *argvp++, &tmp_arg1 );
 	CGSize arg1 = *(CGSize*)JS_GetTypedArrayData( tmp_arg1);
 	int32_t arg2; JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
 	int32_t arg3; JS_ValueToECMAInt32( cx, *argvp++, &arg3 );
-	JSString *tmp_arg4 = JS_ValueToString( cx, *argvp++ );
-	NSString *arg4 = [NSString stringWithUTF8String: JS_EncodeString(cx, tmp_arg4)];
+
+	NSString *arg4 = jsval_to_nsstring( *argvp++, cx );
 	double arg5; JS_ValueToNumber( cx, *argvp++, &arg5 );
 
 	CCLabelTTF *real = [[CCLabelTTF alloc] initWithString:(NSString*)arg0 dimensions:(CGSize)arg1 hAlignment:(CCTextAlignment)arg2 vAlignment:(CCVerticalTextAlignment)arg3 fontName:(NSString*)arg4 fontSize:(CGFloat)arg5  ];
@@ -4413,8 +4377,8 @@ JSBool JSPROXY_CCLabelTTF_initWithString_dimensions_hAlignment_vAlignment_lineBr
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	NSCAssert( argc == 7, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSString *tmp_arg0 = JS_ValueToString( cx, *argvp++ );
-	NSString *arg0 = [NSString stringWithUTF8String: JS_EncodeString(cx, tmp_arg0)];
+
+	NSString *arg0 = jsval_to_nsstring( *argvp++, cx );
 
 	JSObject *tmp_arg1;
 	JS_ValueToObject( cx, *argvp++, &tmp_arg1 );
@@ -4422,8 +4386,8 @@ JSBool JSPROXY_CCLabelTTF_initWithString_dimensions_hAlignment_vAlignment_lineBr
 	int32_t arg2; JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
 	int32_t arg3; JS_ValueToECMAInt32( cx, *argvp++, &arg3 );
 	int32_t arg4; JS_ValueToECMAInt32( cx, *argvp++, &arg4 );
-	JSString *tmp_arg5 = JS_ValueToString( cx, *argvp++ );
-	NSString *arg5 = [NSString stringWithUTF8String: JS_EncodeString(cx, tmp_arg5)];
+
+	NSString *arg5 = jsval_to_nsstring( *argvp++, cx );
 	double arg6; JS_ValueToNumber( cx, *argvp++, &arg6 );
 
 	CCLabelTTF *real = [[CCLabelTTF alloc] initWithString:(NSString*)arg0 dimensions:(CGSize)arg1 hAlignment:(CCTextAlignment)arg2 vAlignment:(CCVerticalTextAlignment)arg3 lineBreakMode:(CCLineBreakMode)arg4 fontName:(NSString*)arg5 fontSize:(CGFloat)arg6  ];
@@ -4445,10 +4409,10 @@ JSBool JSPROXY_CCLabelTTF_initWithString_fontName_fontSize_(JSContext *cx, uint3
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	NSCAssert( argc == 3, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSString *tmp_arg0 = JS_ValueToString( cx, *argvp++ );
-	NSString *arg0 = [NSString stringWithUTF8String: JS_EncodeString(cx, tmp_arg0)];
-	JSString *tmp_arg1 = JS_ValueToString( cx, *argvp++ );
-	NSString *arg1 = [NSString stringWithUTF8String: JS_EncodeString(cx, tmp_arg1)];
+
+	NSString *arg0 = jsval_to_nsstring( *argvp++, cx );
+
+	NSString *arg1 = jsval_to_nsstring( *argvp++, cx );
 	double arg2; JS_ValueToNumber( cx, *argvp++, &arg2 );
 
 	CCLabelTTF *real = [[CCLabelTTF alloc] initWithString:(NSString*)arg0 fontName:(NSString*)arg1 fontSize:(CGFloat)arg2  ];
@@ -4465,15 +4429,15 @@ JSBool JSPROXY_CCLabelTTF_initWithString_fontName_fontSize_(JSContext *cx, uint3
 JSBool JSPROXY_CCLabelTTF_labelWithString_dimensions_hAlignment_fontName_fontSize_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( argc == 5, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSString *tmp_arg0 = JS_ValueToString( cx, *argvp++ );
-	NSString *arg0 = [NSString stringWithUTF8String: JS_EncodeString(cx, tmp_arg0)];
+
+	NSString *arg0 = jsval_to_nsstring( *argvp++, cx );
 
 	JSObject *tmp_arg1;
 	JS_ValueToObject( cx, *argvp++, &tmp_arg1 );
 	CGSize arg1 = *(CGSize*)JS_GetTypedArrayData( tmp_arg1);
 	int32_t arg2; JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
-	JSString *tmp_arg3 = JS_ValueToString( cx, *argvp++ );
-	NSString *arg3 = [NSString stringWithUTF8String: JS_EncodeString(cx, tmp_arg3)];
+
+	NSString *arg3 = jsval_to_nsstring( *argvp++, cx );
 	double arg4; JS_ValueToNumber( cx, *argvp++, &arg4 );
 
 	CCLabelTTF *real = [CCLabelTTF labelWithString:(NSString*)arg0 dimensions:(CGSize)arg1 hAlignment:(CCTextAlignment)arg2 fontName:(NSString*)arg3 fontSize:(CGFloat)arg4  ];
@@ -4489,16 +4453,16 @@ JSBool JSPROXY_CCLabelTTF_labelWithString_dimensions_hAlignment_fontName_fontSiz
 JSBool JSPROXY_CCLabelTTF_labelWithString_dimensions_hAlignment_lineBreakMode_fontName_fontSize_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( argc == 6, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSString *tmp_arg0 = JS_ValueToString( cx, *argvp++ );
-	NSString *arg0 = [NSString stringWithUTF8String: JS_EncodeString(cx, tmp_arg0)];
+
+	NSString *arg0 = jsval_to_nsstring( *argvp++, cx );
 
 	JSObject *tmp_arg1;
 	JS_ValueToObject( cx, *argvp++, &tmp_arg1 );
 	CGSize arg1 = *(CGSize*)JS_GetTypedArrayData( tmp_arg1);
 	int32_t arg2; JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
 	int32_t arg3; JS_ValueToECMAInt32( cx, *argvp++, &arg3 );
-	JSString *tmp_arg4 = JS_ValueToString( cx, *argvp++ );
-	NSString *arg4 = [NSString stringWithUTF8String: JS_EncodeString(cx, tmp_arg4)];
+
+	NSString *arg4 = jsval_to_nsstring( *argvp++, cx );
 	double arg5; JS_ValueToNumber( cx, *argvp++, &arg5 );
 
 	CCLabelTTF *real = [CCLabelTTF labelWithString:(NSString*)arg0 dimensions:(CGSize)arg1 hAlignment:(CCTextAlignment)arg2 lineBreakMode:(CCLineBreakMode)arg3 fontName:(NSString*)arg4 fontSize:(CGFloat)arg5  ];
@@ -4514,16 +4478,16 @@ JSBool JSPROXY_CCLabelTTF_labelWithString_dimensions_hAlignment_lineBreakMode_fo
 JSBool JSPROXY_CCLabelTTF_labelWithString_dimensions_hAlignment_vAlignment_fontName_fontSize_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( argc == 6, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSString *tmp_arg0 = JS_ValueToString( cx, *argvp++ );
-	NSString *arg0 = [NSString stringWithUTF8String: JS_EncodeString(cx, tmp_arg0)];
+
+	NSString *arg0 = jsval_to_nsstring( *argvp++, cx );
 
 	JSObject *tmp_arg1;
 	JS_ValueToObject( cx, *argvp++, &tmp_arg1 );
 	CGSize arg1 = *(CGSize*)JS_GetTypedArrayData( tmp_arg1);
 	int32_t arg2; JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
 	int32_t arg3; JS_ValueToECMAInt32( cx, *argvp++, &arg3 );
-	JSString *tmp_arg4 = JS_ValueToString( cx, *argvp++ );
-	NSString *arg4 = [NSString stringWithUTF8String: JS_EncodeString(cx, tmp_arg4)];
+
+	NSString *arg4 = jsval_to_nsstring( *argvp++, cx );
 	double arg5; JS_ValueToNumber( cx, *argvp++, &arg5 );
 
 	CCLabelTTF *real = [CCLabelTTF labelWithString:(NSString*)arg0 dimensions:(CGSize)arg1 hAlignment:(CCTextAlignment)arg2 vAlignment:(CCVerticalTextAlignment)arg3 fontName:(NSString*)arg4 fontSize:(CGFloat)arg5  ];
@@ -4539,8 +4503,8 @@ JSBool JSPROXY_CCLabelTTF_labelWithString_dimensions_hAlignment_vAlignment_fontN
 JSBool JSPROXY_CCLabelTTF_labelWithString_dimensions_hAlignment_vAlignment_lineBreakMode_fontName_fontSize_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( argc == 7, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSString *tmp_arg0 = JS_ValueToString( cx, *argvp++ );
-	NSString *arg0 = [NSString stringWithUTF8String: JS_EncodeString(cx, tmp_arg0)];
+
+	NSString *arg0 = jsval_to_nsstring( *argvp++, cx );
 
 	JSObject *tmp_arg1;
 	JS_ValueToObject( cx, *argvp++, &tmp_arg1 );
@@ -4548,8 +4512,8 @@ JSBool JSPROXY_CCLabelTTF_labelWithString_dimensions_hAlignment_vAlignment_lineB
 	int32_t arg2; JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
 	int32_t arg3; JS_ValueToECMAInt32( cx, *argvp++, &arg3 );
 	int32_t arg4; JS_ValueToECMAInt32( cx, *argvp++, &arg4 );
-	JSString *tmp_arg5 = JS_ValueToString( cx, *argvp++ );
-	NSString *arg5 = [NSString stringWithUTF8String: JS_EncodeString(cx, tmp_arg5)];
+
+	NSString *arg5 = jsval_to_nsstring( *argvp++, cx );
 	double arg6; JS_ValueToNumber( cx, *argvp++, &arg6 );
 
 	CCLabelTTF *real = [CCLabelTTF labelWithString:(NSString*)arg0 dimensions:(CGSize)arg1 hAlignment:(CCTextAlignment)arg2 vAlignment:(CCVerticalTextAlignment)arg3 lineBreakMode:(CCLineBreakMode)arg4 fontName:(NSString*)arg5 fontSize:(CGFloat)arg6  ];
@@ -4565,10 +4529,10 @@ JSBool JSPROXY_CCLabelTTF_labelWithString_dimensions_hAlignment_vAlignment_lineB
 JSBool JSPROXY_CCLabelTTF_labelWithString_fontName_fontSize_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( argc == 3, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSString *tmp_arg0 = JS_ValueToString( cx, *argvp++ );
-	NSString *arg0 = [NSString stringWithUTF8String: JS_EncodeString(cx, tmp_arg0)];
-	JSString *tmp_arg1 = JS_ValueToString( cx, *argvp++ );
-	NSString *arg1 = [NSString stringWithUTF8String: JS_EncodeString(cx, tmp_arg1)];
+
+	NSString *arg0 = jsval_to_nsstring( *argvp++, cx );
+
+	NSString *arg1 = jsval_to_nsstring( *argvp++, cx );
 	double arg2; JS_ValueToNumber( cx, *argvp++, &arg2 );
 
 	CCLabelTTF *real = [CCLabelTTF labelWithString:(NSString*)arg0 fontName:(NSString*)arg1 fontSize:(CGFloat)arg2  ];
@@ -4610,8 +4574,8 @@ JSBool JSPROXY_CCLabelTTF_setFontName_(JSContext *cx, uint32_t argc, jsval *vp) 
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	NSCAssert( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSString *tmp_arg0 = JS_ValueToString( cx, *argvp++ );
-	NSString *arg0 = [NSString stringWithUTF8String: JS_EncodeString(cx, tmp_arg0)];
+
+	NSString *arg0 = jsval_to_nsstring( *argvp++, cx );
 
 	CCLabelTTF *real = (CCLabelTTF*) [proxy realObj];
 	[real setFontName:(NSString*)arg0  ];
@@ -4665,8 +4629,8 @@ JSBool JSPROXY_CCLabelTTF_setString_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	NSCAssert( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSString *tmp_arg0 = JS_ValueToString( cx, *argvp++ );
-	NSString *arg0 = [NSString stringWithUTF8String: JS_EncodeString(cx, tmp_arg0)];
+
+	NSString *arg0 = jsval_to_nsstring( *argvp++, cx );
 
 	CCLabelTTF *real = (CCLabelTTF*) [proxy realObj];
 	[real setString:(NSString*)arg0  ];
@@ -4815,10 +4779,7 @@ JSBool JSPROXY_CCSpriteBatchNode_addQuadFromSprite_quadIndex_(JSContext *cx, uin
 	NSCAssert( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 
-	JSObject *tmp_arg0;
-	JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
-	JSPROXY_CCSprite* proxy_arg0 = (JSPROXY_CCSprite*) JS_GetPrivate( tmp_arg0 ); 
-	CCSprite* arg0 = (CCSprite*) [proxy_arg0 realObj];
+	CCSprite* arg0 = (CCSprite*) jsval_to_nsobject( *argvp++, cx);
 	uint32_t arg1; JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
 
 	CCSpriteBatchNode *real = (CCSpriteBatchNode*) [proxy realObj];
@@ -4838,10 +4799,7 @@ JSBool JSPROXY_CCSpriteBatchNode_appendChild_(JSContext *cx, uint32_t argc, jsva
 	NSCAssert( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 
-	JSObject *tmp_arg0;
-	JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
-	JSPROXY_CCSprite* proxy_arg0 = (JSPROXY_CCSprite*) JS_GetPrivate( tmp_arg0 ); 
-	CCSprite* arg0 = (CCSprite*) [proxy_arg0 realObj];
+	CCSprite* arg0 = (CCSprite*) jsval_to_nsobject( *argvp++, cx);
 
 	CCSpriteBatchNode *real = (CCSpriteBatchNode*) [proxy realObj];
 	[real appendChild:(CCSprite*)arg0  ];
@@ -4860,10 +4818,7 @@ JSBool JSPROXY_CCSpriteBatchNode_atlasIndexForChild_atZ_(JSContext *cx, uint32_t
 	NSCAssert( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 
-	JSObject *tmp_arg0;
-	JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
-	JSPROXY_CCSprite* proxy_arg0 = (JSPROXY_CCSprite*) JS_GetPrivate( tmp_arg0 ); 
-	CCSprite* arg0 = (CCSprite*) [proxy_arg0 realObj];
+	CCSprite* arg0 = (CCSprite*) jsval_to_nsobject( *argvp++, cx);
 	int32_t arg1; JS_ValueToECMAInt32( cx, *argvp++, &arg1 );
 	NSUInteger ret_val;
 
@@ -4878,8 +4833,8 @@ JSBool JSPROXY_CCSpriteBatchNode_atlasIndexForChild_atZ_(JSContext *cx, uint32_t
 JSBool JSPROXY_CCSpriteBatchNode_batchNodeWithFile_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSString *tmp_arg0 = JS_ValueToString( cx, *argvp++ );
-	NSString *arg0 = [NSString stringWithUTF8String: JS_EncodeString(cx, tmp_arg0)];
+
+	NSString *arg0 = jsval_to_nsstring( *argvp++, cx );
 
 	CCSpriteBatchNode *real = [CCSpriteBatchNode batchNodeWithFile:(NSString*)arg0  ];
 
@@ -4894,8 +4849,8 @@ JSBool JSPROXY_CCSpriteBatchNode_batchNodeWithFile_(JSContext *cx, uint32_t argc
 JSBool JSPROXY_CCSpriteBatchNode_batchNodeWithFile_capacity_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSString *tmp_arg0 = JS_ValueToString( cx, *argvp++ );
-	NSString *arg0 = [NSString stringWithUTF8String: JS_EncodeString(cx, tmp_arg0)];
+
+	NSString *arg0 = jsval_to_nsstring( *argvp++, cx );
 	uint32_t arg1; JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
 
 	CCSpriteBatchNode *real = [CCSpriteBatchNode batchNodeWithFile:(NSString*)arg0 capacity:(NSUInteger)arg1  ];
@@ -4932,8 +4887,8 @@ JSBool JSPROXY_CCSpriteBatchNode_initWithFile_capacity_(JSContext *cx, uint32_t 
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	NSCAssert( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSString *tmp_arg0 = JS_ValueToString( cx, *argvp++ );
-	NSString *arg0 = [NSString stringWithUTF8String: JS_EncodeString(cx, tmp_arg0)];
+
+	NSString *arg0 = jsval_to_nsstring( *argvp++, cx );
 	uint32_t arg1; JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
 
 	CCSpriteBatchNode *real = [[CCSpriteBatchNode alloc] initWithFile:(NSString*)arg0 capacity:(NSUInteger)arg1  ];
@@ -4956,10 +4911,7 @@ JSBool JSPROXY_CCSpriteBatchNode_insertChild_inAtlasAtIndex_(JSContext *cx, uint
 	NSCAssert( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 
-	JSObject *tmp_arg0;
-	JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
-	JSPROXY_CCSprite* proxy_arg0 = (JSPROXY_CCSprite*) JS_GetPrivate( tmp_arg0 ); 
-	CCSprite* arg0 = (CCSprite*) [proxy_arg0 realObj];
+	CCSprite* arg0 = (CCSprite*) jsval_to_nsobject( *argvp++, cx);
 	uint32_t arg1; JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
 
 	CCSpriteBatchNode *real = (CCSpriteBatchNode*) [proxy realObj];
@@ -4979,10 +4931,7 @@ JSBool JSPROXY_CCSpriteBatchNode_rebuildIndexInOrder_atlasIndex_(JSContext *cx, 
 	NSCAssert( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 
-	JSObject *tmp_arg0;
-	JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
-	JSPROXY_CCSprite* proxy_arg0 = (JSPROXY_CCSprite*) JS_GetPrivate( tmp_arg0 ); 
-	CCSprite* arg0 = (CCSprite*) [proxy_arg0 realObj];
+	CCSprite* arg0 = (CCSprite*) jsval_to_nsobject( *argvp++, cx);
 	uint32_t arg1; JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
 	NSUInteger ret_val;
 
@@ -5003,10 +4952,7 @@ JSBool JSPROXY_CCSpriteBatchNode_removeChild_cleanup_(JSContext *cx, uint32_t ar
 	NSCAssert( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 
-	JSObject *tmp_arg0;
-	JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
-	JSPROXY_CCSprite* proxy_arg0 = (JSPROXY_CCSprite*) JS_GetPrivate( tmp_arg0 ); 
-	CCSprite* arg0 = (CCSprite*) [proxy_arg0 realObj];
+	CCSprite* arg0 = (CCSprite*) jsval_to_nsobject( *argvp++, cx);
 	JSBool arg1; JS_ValueToBoolean( cx, *argvp++, &arg1 );
 
 	CCSpriteBatchNode *real = (CCSpriteBatchNode*) [proxy realObj];
@@ -5045,10 +4991,7 @@ JSBool JSPROXY_CCSpriteBatchNode_removeSpriteFromAtlas_(JSContext *cx, uint32_t 
 	NSCAssert( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 
-	JSObject *tmp_arg0;
-	JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
-	JSPROXY_CCSprite* proxy_arg0 = (JSPROXY_CCSprite*) JS_GetPrivate( tmp_arg0 ); 
-	CCSprite* arg0 = (CCSprite*) [proxy_arg0 realObj];
+	CCSprite* arg0 = (CCSprite*) jsval_to_nsobject( *argvp++, cx);
 
 	CCSpriteBatchNode *real = (CCSpriteBatchNode*) [proxy realObj];
 	[real removeSpriteFromAtlas:(CCSprite*)arg0  ];
@@ -5247,10 +5190,10 @@ JSBool JSPROXY_CCLabelBMFont_initWithString_fntFile_(JSContext *cx, uint32_t arg
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	NSCAssert( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSString *tmp_arg0 = JS_ValueToString( cx, *argvp++ );
-	NSString *arg0 = [NSString stringWithUTF8String: JS_EncodeString(cx, tmp_arg0)];
-	JSString *tmp_arg1 = JS_ValueToString( cx, *argvp++ );
-	NSString *arg1 = [NSString stringWithUTF8String: JS_EncodeString(cx, tmp_arg1)];
+
+	NSString *arg0 = jsval_to_nsstring( *argvp++, cx );
+
+	NSString *arg1 = jsval_to_nsstring( *argvp++, cx );
 
 	CCLabelBMFont *real = [[CCLabelBMFont alloc] initWithString:(NSString*)arg0 fntFile:(NSString*)arg1  ];
 	[proxy setRealObj: real];
@@ -5271,10 +5214,10 @@ JSBool JSPROXY_CCLabelBMFont_initWithString_fntFile_width_alignment_(JSContext *
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	NSCAssert( argc == 4, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSString *tmp_arg0 = JS_ValueToString( cx, *argvp++ );
-	NSString *arg0 = [NSString stringWithUTF8String: JS_EncodeString(cx, tmp_arg0)];
-	JSString *tmp_arg1 = JS_ValueToString( cx, *argvp++ );
-	NSString *arg1 = [NSString stringWithUTF8String: JS_EncodeString(cx, tmp_arg1)];
+
+	NSString *arg0 = jsval_to_nsstring( *argvp++, cx );
+
+	NSString *arg1 = jsval_to_nsstring( *argvp++, cx );
 	double arg2; JS_ValueToNumber( cx, *argvp++, &arg2 );
 	int32_t arg3; JS_ValueToECMAInt32( cx, *argvp++, &arg3 );
 
@@ -5297,10 +5240,10 @@ JSBool JSPROXY_CCLabelBMFont_initWithString_fntFile_width_alignment_imageOffset_
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	NSCAssert( argc == 5, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSString *tmp_arg0 = JS_ValueToString( cx, *argvp++ );
-	NSString *arg0 = [NSString stringWithUTF8String: JS_EncodeString(cx, tmp_arg0)];
-	JSString *tmp_arg1 = JS_ValueToString( cx, *argvp++ );
-	NSString *arg1 = [NSString stringWithUTF8String: JS_EncodeString(cx, tmp_arg1)];
+
+	NSString *arg0 = jsval_to_nsstring( *argvp++, cx );
+
+	NSString *arg1 = jsval_to_nsstring( *argvp++, cx );
 	double arg2; JS_ValueToNumber( cx, *argvp++, &arg2 );
 	int32_t arg3; JS_ValueToECMAInt32( cx, *argvp++, &arg3 );
 
@@ -5330,10 +5273,10 @@ JSBool JSPROXY_CCLabelBMFont_initWithString_fntFile_width_alignment_imageOffset_
 JSBool JSPROXY_CCLabelBMFont_labelWithString_fntFile_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSString *tmp_arg0 = JS_ValueToString( cx, *argvp++ );
-	NSString *arg0 = [NSString stringWithUTF8String: JS_EncodeString(cx, tmp_arg0)];
-	JSString *tmp_arg1 = JS_ValueToString( cx, *argvp++ );
-	NSString *arg1 = [NSString stringWithUTF8String: JS_EncodeString(cx, tmp_arg1)];
+
+	NSString *arg0 = jsval_to_nsstring( *argvp++, cx );
+
+	NSString *arg1 = jsval_to_nsstring( *argvp++, cx );
 
 	CCLabelBMFont *real = [CCLabelBMFont labelWithString:(NSString*)arg0 fntFile:(NSString*)arg1  ];
 
@@ -5348,10 +5291,10 @@ JSBool JSPROXY_CCLabelBMFont_labelWithString_fntFile_(JSContext *cx, uint32_t ar
 JSBool JSPROXY_CCLabelBMFont_labelWithString_fntFile_width_alignment_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( argc == 4, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSString *tmp_arg0 = JS_ValueToString( cx, *argvp++ );
-	NSString *arg0 = [NSString stringWithUTF8String: JS_EncodeString(cx, tmp_arg0)];
-	JSString *tmp_arg1 = JS_ValueToString( cx, *argvp++ );
-	NSString *arg1 = [NSString stringWithUTF8String: JS_EncodeString(cx, tmp_arg1)];
+
+	NSString *arg0 = jsval_to_nsstring( *argvp++, cx );
+
+	NSString *arg1 = jsval_to_nsstring( *argvp++, cx );
 	double arg2; JS_ValueToNumber( cx, *argvp++, &arg2 );
 	int32_t arg3; JS_ValueToECMAInt32( cx, *argvp++, &arg3 );
 
@@ -5368,10 +5311,10 @@ JSBool JSPROXY_CCLabelBMFont_labelWithString_fntFile_width_alignment_(JSContext 
 JSBool JSPROXY_CCLabelBMFont_labelWithString_fntFile_width_alignment_imageOffset_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( argc == 5, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSString *tmp_arg0 = JS_ValueToString( cx, *argvp++ );
-	NSString *arg0 = [NSString stringWithUTF8String: JS_EncodeString(cx, tmp_arg0)];
-	JSString *tmp_arg1 = JS_ValueToString( cx, *argvp++ );
-	NSString *arg1 = [NSString stringWithUTF8String: JS_EncodeString(cx, tmp_arg1)];
+
+	NSString *arg0 = jsval_to_nsstring( *argvp++, cx );
+
+	NSString *arg1 = jsval_to_nsstring( *argvp++, cx );
 	double arg2; JS_ValueToNumber( cx, *argvp++, &arg2 );
 	int32_t arg3; JS_ValueToECMAInt32( cx, *argvp++, &arg3 );
 
@@ -5471,8 +5414,8 @@ JSBool JSPROXY_CCLabelBMFont_setFntFile_(JSContext *cx, uint32_t argc, jsval *vp
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	NSCAssert( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSString *tmp_arg0 = JS_ValueToString( cx, *argvp++ );
-	NSString *arg0 = [NSString stringWithUTF8String: JS_EncodeString(cx, tmp_arg0)];
+
+	NSString *arg0 = jsval_to_nsstring( *argvp++, cx );
 
 	CCLabelBMFont *real = (CCLabelBMFont*) [proxy realObj];
 	[real setFntFile:(NSString*)arg0  ];
@@ -5912,8 +5855,8 @@ JSBool JSPROXY_CCParticleSystem_initWithFile_(JSContext *cx, uint32_t argc, jsva
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	NSCAssert( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSString *tmp_arg0 = JS_ValueToString( cx, *argvp++ );
-	NSString *arg0 = [NSString stringWithUTF8String: JS_EncodeString(cx, tmp_arg0)];
+
+	NSString *arg0 = jsval_to_nsstring( *argvp++, cx );
 
 	CCParticleSystem *real = [[CCParticleSystem alloc] initWithFile:(NSString*)arg0  ];
 	[proxy setRealObj: real];
@@ -6018,8 +5961,8 @@ JSBool JSPROXY_CCParticleSystem_particleCount(JSContext *cx, uint32_t argc, jsva
 JSBool JSPROXY_CCParticleSystem_particleWithFile_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSString *tmp_arg0 = JS_ValueToString( cx, *argvp++ );
-	NSString *arg0 = [NSString stringWithUTF8String: JS_EncodeString(cx, tmp_arg0)];
+
+	NSString *arg0 = jsval_to_nsstring( *argvp++, cx );
 
 	CCParticleSystem *real = [CCParticleSystem particleWithFile:(NSString*)arg0  ];
 
@@ -7591,15 +7534,9 @@ JSBool JSPROXY_CCSequence_actionOne_two_(JSContext *cx, uint32_t argc, jsval *vp
 	NSCAssert( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 
-	JSObject *tmp_arg0;
-	JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
-	JSPROXY_CCFiniteTimeAction* proxy_arg0 = (JSPROXY_CCFiniteTimeAction*) JS_GetPrivate( tmp_arg0 ); 
-	CCFiniteTimeAction* arg0 = (CCFiniteTimeAction*) [proxy_arg0 realObj];
+	CCFiniteTimeAction* arg0 = (CCFiniteTimeAction*) jsval_to_nsobject( *argvp++, cx);
 
-	JSObject *tmp_arg1;
-	JS_ValueToObject( cx, *argvp++, &tmp_arg1 );
-	JSPROXY_CCFiniteTimeAction* proxy_arg1 = (JSPROXY_CCFiniteTimeAction*) JS_GetPrivate( tmp_arg1 ); 
-	CCFiniteTimeAction* arg1 = (CCFiniteTimeAction*) [proxy_arg1 realObj];
+	CCFiniteTimeAction* arg1 = (CCFiniteTimeAction*) jsval_to_nsobject( *argvp++, cx);
 
 	CCSequence *real = [CCSequence actionOne:(CCFiniteTimeAction*)arg0 two:(CCFiniteTimeAction*)arg1  ];
 
@@ -7616,7 +7553,7 @@ JSBool JSPROXY_CCSequence_actionWithArray_(JSContext *cx, uint32_t argc, jsval *
 	jsval *argvp = JS_ARGV(cx,vp);
 
 	// Parsing sequence
-	NSArray *arg0 = js_argv_to_nsarray( *argvp++, cx );
+	NSArray *arg0 = jsval_to_nsarray( *argvp++, cx );
 
 	CCSequence *real = [CCSequence actionWithArray:(NSArray*)arg0  ];
 
@@ -7637,15 +7574,9 @@ JSBool JSPROXY_CCSequence_initOne_two_(JSContext *cx, uint32_t argc, jsval *vp) 
 	NSCAssert( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 
-	JSObject *tmp_arg0;
-	JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
-	JSPROXY_CCFiniteTimeAction* proxy_arg0 = (JSPROXY_CCFiniteTimeAction*) JS_GetPrivate( tmp_arg0 ); 
-	CCFiniteTimeAction* arg0 = (CCFiniteTimeAction*) [proxy_arg0 realObj];
+	CCFiniteTimeAction* arg0 = (CCFiniteTimeAction*) jsval_to_nsobject( *argvp++, cx);
 
-	JSObject *tmp_arg1;
-	JS_ValueToObject( cx, *argvp++, &tmp_arg1 );
-	JSPROXY_CCFiniteTimeAction* proxy_arg1 = (JSPROXY_CCFiniteTimeAction*) JS_GetPrivate( tmp_arg1 ); 
-	CCFiniteTimeAction* arg1 = (CCFiniteTimeAction*) [proxy_arg1 realObj];
+	CCFiniteTimeAction* arg1 = (CCFiniteTimeAction*) jsval_to_nsobject( *argvp++, cx);
 
 	CCSequence *real = [[CCSequence alloc] initOne:(CCFiniteTimeAction*)arg0 two:(CCFiniteTimeAction*)arg1  ];
 	[proxy setRealObj: real];
