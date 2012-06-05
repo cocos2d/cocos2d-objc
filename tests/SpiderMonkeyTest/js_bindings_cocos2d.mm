@@ -740,9 +740,11 @@ void JSPROXY_CCDirector_createClass(JSContext *cx, JSObject* globalObj, const ch
 	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCDirector_class, JSPROXY_CCDirector_object, NULL);
 	JSPROXY_CCDirector *proxy = [[JSPROXY_CCDirector alloc] initWithJSObject:jsobj];
 	[proxy setRealObj:realObj];
-	objc_setAssociatedObject(realObj, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
 	JS_SetPrivate(jsobj, proxy);
-	
+
+	if( realObj )
+		objc_setAssociatedObject(realObj, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
+
 	[self swizzleMethods];
 
 	return jsobj;
@@ -1162,6 +1164,7 @@ JSBool JSPROXY_CCNode_init(JSContext *cx, uint32_t argc, jsval *vp) {
 	[proxy setRealObj: real];
 	[real release];
 
+	objc_setAssociatedObject(real, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
 	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
@@ -2259,9 +2262,11 @@ void JSPROXY_CCNode_createClass(JSContext *cx, JSObject* globalObj, const char* 
 	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCNode_class, JSPROXY_CCNode_object, NULL);
 	JSPROXY_CCNode *proxy = [[JSPROXY_CCNode alloc] initWithJSObject:jsobj];
 	[proxy setRealObj:realObj];
-	objc_setAssociatedObject(realObj, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
 	JS_SetPrivate(jsobj, proxy);
-	
+
+	if( realObj )
+		objc_setAssociatedObject(realObj, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
+
 	[self swizzleMethods];
 
 	return jsobj;
@@ -2469,6 +2474,7 @@ JSBool JSPROXY_CCSprite_initWithFile_(JSContext *cx, uint32_t argc, jsval *vp) {
 	[proxy setRealObj: real];
 	[real release];
 
+	objc_setAssociatedObject(real, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
 	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
@@ -2490,6 +2496,7 @@ JSBool JSPROXY_CCSprite_initWithSpriteFrameName_(JSContext *cx, uint32_t argc, j
 	[proxy setRealObj: real];
 	[real release];
 
+	objc_setAssociatedObject(real, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
 	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
@@ -2829,9 +2836,11 @@ void JSPROXY_CCSprite_createClass(JSContext *cx, JSObject* globalObj, const char
 	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCSprite_class, JSPROXY_CCSprite_object, NULL);
 	JSPROXY_CCSprite *proxy = [[JSPROXY_CCSprite alloc] initWithJSObject:jsobj];
 	[proxy setRealObj:realObj];
-	objc_setAssociatedObject(realObj, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
 	JS_SetPrivate(jsobj, proxy);
-	
+
+	if( realObj )
+		objc_setAssociatedObject(realObj, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
+
 	[self swizzleMethods];
 
 	return jsobj;
@@ -2895,6 +2904,7 @@ JSBool JSPROXY_CCAction_init(JSContext *cx, uint32_t argc, jsval *vp) {
 	[proxy setRealObj: real];
 	[real release];
 
+	objc_setAssociatedObject(real, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
 	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
@@ -3045,9 +3055,11 @@ void JSPROXY_CCAction_createClass(JSContext *cx, JSObject* globalObj, const char
 	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCAction_class, JSPROXY_CCAction_object, NULL);
 	JSPROXY_CCAction *proxy = [[JSPROXY_CCAction alloc] initWithJSObject:jsobj];
 	[proxy setRealObj:realObj];
-	objc_setAssociatedObject(realObj, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
 	JS_SetPrivate(jsobj, proxy);
-	
+
+	if( realObj )
+		objc_setAssociatedObject(realObj, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
+
 	[self swizzleMethods];
 
 	return jsobj;
@@ -3176,9 +3188,11 @@ void JSPROXY_CCFiniteTimeAction_createClass(JSContext *cx, JSObject* globalObj, 
 	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCFiniteTimeAction_class, JSPROXY_CCFiniteTimeAction_object, NULL);
 	JSPROXY_CCFiniteTimeAction *proxy = [[JSPROXY_CCFiniteTimeAction alloc] initWithJSObject:jsobj];
 	[proxy setRealObj:realObj];
-	objc_setAssociatedObject(realObj, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
 	JS_SetPrivate(jsobj, proxy);
-	
+
+	if( realObj )
+		objc_setAssociatedObject(realObj, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
+
 	[self swizzleMethods];
 
 	return jsobj;
@@ -3263,6 +3277,7 @@ JSBool JSPROXY_CCActionInterval_initWithDuration_(JSContext *cx, uint32_t argc, 
 	[proxy setRealObj: real];
 	[real release];
 
+	objc_setAssociatedObject(real, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
 	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
@@ -3343,9 +3358,11 @@ void JSPROXY_CCActionInterval_createClass(JSContext *cx, JSObject* globalObj, co
 	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCActionInterval_class, JSPROXY_CCActionInterval_object, NULL);
 	JSPROXY_CCActionInterval *proxy = [[JSPROXY_CCActionInterval alloc] initWithJSObject:jsobj];
 	[proxy setRealObj:realObj];
-	objc_setAssociatedObject(realObj, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
 	JS_SetPrivate(jsobj, proxy);
-	
+
+	if( realObj )
+		objc_setAssociatedObject(realObj, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
+
 	[self swizzleMethods];
 
 	return jsobj;
@@ -3432,6 +3449,7 @@ JSBool JSPROXY_CCScaleTo_initWithDuration_scale_(JSContext *cx, uint32_t argc, j
 	[proxy setRealObj: real];
 	[real release];
 
+	objc_setAssociatedObject(real, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
 	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
@@ -3454,6 +3472,7 @@ JSBool JSPROXY_CCScaleTo_initWithDuration_scaleX_scaleY_(JSContext *cx, uint32_t
 	[proxy setRealObj: real];
 	[real release];
 
+	objc_setAssociatedObject(real, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
 	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
@@ -3496,9 +3515,11 @@ void JSPROXY_CCScaleTo_createClass(JSContext *cx, JSObject* globalObj, const cha
 	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCScaleTo_class, JSPROXY_CCScaleTo_object, NULL);
 	JSPROXY_CCScaleTo *proxy = [[JSPROXY_CCScaleTo alloc] initWithJSObject:jsobj];
 	[proxy setRealObj:realObj];
-	objc_setAssociatedObject(realObj, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
 	JS_SetPrivate(jsobj, proxy);
-	
+
+	if( realObj )
+		objc_setAssociatedObject(realObj, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
+
 	[self swizzleMethods];
 
 	return jsobj;
@@ -3552,6 +3573,7 @@ JSBool JSPROXY_CCScaleBy_initWithDuration_scale_(JSContext *cx, uint32_t argc, j
 	[proxy setRealObj: real];
 	[real release];
 
+	objc_setAssociatedObject(real, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
 	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
@@ -3591,9 +3613,11 @@ void JSPROXY_CCScaleBy_createClass(JSContext *cx, JSObject* globalObj, const cha
 	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCScaleBy_class, JSPROXY_CCScaleBy_object, NULL);
 	JSPROXY_CCScaleBy *proxy = [[JSPROXY_CCScaleBy alloc] initWithJSObject:jsobj];
 	[proxy setRealObj:realObj];
-	objc_setAssociatedObject(realObj, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
 	JS_SetPrivate(jsobj, proxy);
-	
+
+	if( realObj )
+		objc_setAssociatedObject(realObj, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
+
 	[self swizzleMethods];
 
 	return jsobj;
@@ -3829,9 +3853,11 @@ void JSPROXY_CCLayer_createClass(JSContext *cx, JSObject* globalObj, const char*
 	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCLayer_class, JSPROXY_CCLayer_object, NULL);
 	JSPROXY_CCLayer *proxy = [[JSPROXY_CCLayer alloc] initWithJSObject:jsobj];
 	[proxy setRealObj:realObj];
-	objc_setAssociatedObject(realObj, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
 	JS_SetPrivate(jsobj, proxy);
-	
+
+	if( realObj )
+		objc_setAssociatedObject(realObj, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
+
 	[self swizzleMethods];
 
 	return jsobj;
@@ -3923,6 +3949,7 @@ JSBool JSPROXY_CCMoveTo_initWithDuration_position_(JSContext *cx, uint32_t argc,
 	[proxy setRealObj: real];
 	[real release];
 
+	objc_setAssociatedObject(real, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
 	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
@@ -3963,9 +3990,11 @@ void JSPROXY_CCMoveTo_createClass(JSContext *cx, JSObject* globalObj, const char
 	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCMoveTo_class, JSPROXY_CCMoveTo_object, NULL);
 	JSPROXY_CCMoveTo *proxy = [[JSPROXY_CCMoveTo alloc] initWithJSObject:jsobj];
 	[proxy setRealObj:realObj];
-	objc_setAssociatedObject(realObj, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
 	JS_SetPrivate(jsobj, proxy);
-	
+
+	if( realObj )
+		objc_setAssociatedObject(realObj, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
+
 	[self swizzleMethods];
 
 	return jsobj;
@@ -4057,6 +4086,7 @@ JSBool JSPROXY_CCMoveBy_initWithDuration_position_(JSContext *cx, uint32_t argc,
 	[proxy setRealObj: real];
 	[real release];
 
+	objc_setAssociatedObject(real, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
 	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
@@ -4097,9 +4127,11 @@ void JSPROXY_CCMoveBy_createClass(JSContext *cx, JSObject* globalObj, const char
 	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCMoveBy_class, JSPROXY_CCMoveBy_object, NULL);
 	JSPROXY_CCMoveBy *proxy = [[JSPROXY_CCMoveBy alloc] initWithJSObject:jsobj];
 	[proxy setRealObj:realObj];
-	objc_setAssociatedObject(realObj, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
 	JS_SetPrivate(jsobj, proxy);
-	
+
+	if( realObj )
+		objc_setAssociatedObject(realObj, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
+
 	[self swizzleMethods];
 
 	return jsobj;
@@ -4184,9 +4216,11 @@ void JSPROXY_CCScene_createClass(JSContext *cx, JSObject* globalObj, const char*
 	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCScene_class, JSPROXY_CCScene_object, NULL);
 	JSPROXY_CCScene *proxy = [[JSPROXY_CCScene alloc] initWithJSObject:jsobj];
 	[proxy setRealObj:realObj];
-	objc_setAssociatedObject(realObj, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
 	JS_SetPrivate(jsobj, proxy);
-	
+
+	if( realObj )
+		objc_setAssociatedObject(realObj, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
+
 	[self swizzleMethods];
 
 	return jsobj;
@@ -4302,6 +4336,7 @@ JSBool JSPROXY_CCLabelTTF_initWithString_dimensions_hAlignment_fontName_fontSize
 	[proxy setRealObj: real];
 	[real release];
 
+	objc_setAssociatedObject(real, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
 	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
@@ -4332,6 +4367,7 @@ JSBool JSPROXY_CCLabelTTF_initWithString_dimensions_hAlignment_lineBreakMode_fon
 	[proxy setRealObj: real];
 	[real release];
 
+	objc_setAssociatedObject(real, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
 	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
@@ -4362,6 +4398,7 @@ JSBool JSPROXY_CCLabelTTF_initWithString_dimensions_hAlignment_vAlignment_fontNa
 	[proxy setRealObj: real];
 	[real release];
 
+	objc_setAssociatedObject(real, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
 	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
@@ -4393,6 +4430,7 @@ JSBool JSPROXY_CCLabelTTF_initWithString_dimensions_hAlignment_vAlignment_lineBr
 	[proxy setRealObj: real];
 	[real release];
 
+	objc_setAssociatedObject(real, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
 	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
@@ -4417,6 +4455,7 @@ JSBool JSPROXY_CCLabelTTF_initWithString_fontName_fontSize_(JSContext *cx, uint3
 	[proxy setRealObj: real];
 	[real release];
 
+	objc_setAssociatedObject(real, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
 	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
@@ -4724,9 +4763,11 @@ void JSPROXY_CCLabelTTF_createClass(JSContext *cx, JSObject* globalObj, const ch
 	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCLabelTTF_class, JSPROXY_CCLabelTTF_object, NULL);
 	JSPROXY_CCLabelTTF *proxy = [[JSPROXY_CCLabelTTF alloc] initWithJSObject:jsobj];
 	[proxy setRealObj:realObj];
-	objc_setAssociatedObject(realObj, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
 	JS_SetPrivate(jsobj, proxy);
-	
+
+	if( realObj )
+		objc_setAssociatedObject(realObj, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
+
 	[self swizzleMethods];
 
 	return jsobj;
@@ -4899,6 +4940,7 @@ JSBool JSPROXY_CCSpriteBatchNode_initWithFile_capacity_(JSContext *cx, uint32_t 
 	[proxy setRealObj: real];
 	[real release];
 
+	objc_setAssociatedObject(real, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
 	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
@@ -5101,9 +5143,11 @@ void JSPROXY_CCSpriteBatchNode_createClass(JSContext *cx, JSObject* globalObj, c
 	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCSpriteBatchNode_class, JSPROXY_CCSpriteBatchNode_object, NULL);
 	JSPROXY_CCSpriteBatchNode *proxy = [[JSPROXY_CCSpriteBatchNode alloc] initWithJSObject:jsobj];
 	[proxy setRealObj:realObj];
-	objc_setAssociatedObject(realObj, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
 	JS_SetPrivate(jsobj, proxy);
-	
+
+	if( realObj )
+		objc_setAssociatedObject(realObj, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
+
 	[self swizzleMethods];
 
 	return jsobj;
@@ -5212,6 +5256,7 @@ JSBool JSPROXY_CCLabelBMFont_initWithString_fntFile_(JSContext *cx, uint32_t arg
 	[proxy setRealObj: real];
 	[real release];
 
+	objc_setAssociatedObject(real, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
 	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
@@ -5237,6 +5282,7 @@ JSBool JSPROXY_CCLabelBMFont_initWithString_fntFile_width_alignment_(JSContext *
 	[proxy setRealObj: real];
 	[real release];
 
+	objc_setAssociatedObject(real, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
 	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
@@ -5274,6 +5320,7 @@ JSBool JSPROXY_CCLabelBMFont_initWithString_fntFile_width_alignment_imageOffset_
 	[proxy setRealObj: real];
 	[real release];
 
+	objc_setAssociatedObject(real, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
 	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
@@ -5519,9 +5566,11 @@ void JSPROXY_CCLabelBMFont_createClass(JSContext *cx, JSObject* globalObj, const
 	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCLabelBMFont_class, JSPROXY_CCLabelBMFont_object, NULL);
 	JSPROXY_CCLabelBMFont *proxy = [[JSPROXY_CCLabelBMFont alloc] initWithJSObject:jsobj];
 	[proxy setRealObj:realObj];
-	objc_setAssociatedObject(realObj, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
 	JS_SetPrivate(jsobj, proxy);
-	
+
+	if( realObj )
+		objc_setAssociatedObject(realObj, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
+
 	[self swizzleMethods];
 
 	return jsobj;
@@ -5870,6 +5919,7 @@ JSBool JSPROXY_CCParticleSystem_initWithFile_(JSContext *cx, uint32_t argc, jsva
 	[proxy setRealObj: real];
 	[real release];
 
+	objc_setAssociatedObject(real, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
 	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
@@ -5890,6 +5940,7 @@ JSBool JSPROXY_CCParticleSystem_initWithTotalParticles_(JSContext *cx, uint32_t 
 	[proxy setRealObj: real];
 	[real release];
 
+	objc_setAssociatedObject(real, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
 	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
@@ -7286,9 +7337,11 @@ void JSPROXY_CCParticleSystem_createClass(JSContext *cx, JSObject* globalObj, co
 	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCParticleSystem_class, JSPROXY_CCParticleSystem_object, NULL);
 	JSPROXY_CCParticleSystem *proxy = [[JSPROXY_CCParticleSystem alloc] initWithJSObject:jsobj];
 	[proxy setRealObj:realObj];
-	objc_setAssociatedObject(realObj, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
 	JS_SetPrivate(jsobj, proxy);
-	
+
+	if( realObj )
+		objc_setAssociatedObject(realObj, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
+
 	[self swizzleMethods];
 
 	return jsobj;
@@ -7376,9 +7429,11 @@ void JSPROXY_CCParticleSystemQuad_createClass(JSContext *cx, JSObject* globalObj
 	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCParticleSystemQuad_class, JSPROXY_CCParticleSystemQuad_object, NULL);
 	JSPROXY_CCParticleSystemQuad *proxy = [[JSPROXY_CCParticleSystemQuad alloc] initWithJSObject:jsobj];
 	[proxy setRealObj:realObj];
-	objc_setAssociatedObject(realObj, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
 	JS_SetPrivate(jsobj, proxy);
-	
+
+	if( realObj )
+		objc_setAssociatedObject(realObj, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
+
 	[self swizzleMethods];
 
 	return jsobj;
@@ -7448,6 +7503,7 @@ JSBool JSPROXY_CCRotateBy_initWithDuration_angle_(JSContext *cx, uint32_t argc, 
 	[proxy setRealObj: real];
 	[real release];
 
+	objc_setAssociatedObject(real, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
 	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
@@ -7488,9 +7544,11 @@ void JSPROXY_CCRotateBy_createClass(JSContext *cx, JSObject* globalObj, const ch
 	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCRotateBy_class, JSPROXY_CCRotateBy_object, NULL);
 	JSPROXY_CCRotateBy *proxy = [[JSPROXY_CCRotateBy alloc] initWithJSObject:jsobj];
 	[proxy setRealObj:realObj];
-	objc_setAssociatedObject(realObj, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
 	JS_SetPrivate(jsobj, proxy);
-	
+
+	if( realObj )
+		objc_setAssociatedObject(realObj, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
+
 	[self swizzleMethods];
 
 	return jsobj;
@@ -7551,6 +7609,23 @@ JSBool JSPROXY_CCSequence_actionOne_two_(JSContext *cx, uint32_t argc, jsval *vp
 	return JS_TRUE;
 }
 
+// Arguments: NSArray*
+// Ret value: CCSequence
+JSBool JSPROXY_CCSequence_actionWithArray_(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+
+	// Parsing sequence
+	NSArray *arg0 = js_argv_to_nsarray( *argvp++, cx );
+
+	CCSequence *real = [CCSequence actionWithArray:(NSArray*)arg0  ];
+
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( real, cx );
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+	return JS_TRUE;
+}
+
 // Arguments: CCFiniteTimeAction*, CCFiniteTimeAction*
 // Ret value: None
 JSBool JSPROXY_CCSequence_initOne_two_(JSContext *cx, uint32_t argc, jsval *vp) {
@@ -7576,6 +7651,7 @@ JSBool JSPROXY_CCSequence_initOne_two_(JSContext *cx, uint32_t argc, jsval *vp) 
 	[proxy setRealObj: real];
 	[real release];
 
+	objc_setAssociatedObject(real, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
 	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
@@ -7603,6 +7679,7 @@ void JSPROXY_CCSequence_createClass(JSContext *cx, JSObject* globalObj, const ch
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("actionOneTwo", JSPROXY_CCSequence_actionOne_two_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSFUN_CONSTRUCTOR),
+		JS_FN("actionWithArray", JSPROXY_CCSequence_actionWithArray_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSFUN_CONSTRUCTOR),
 		JS_FS_END
 	};
 
@@ -7616,9 +7693,11 @@ void JSPROXY_CCSequence_createClass(JSContext *cx, JSObject* globalObj, const ch
 	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCSequence_class, JSPROXY_CCSequence_object, NULL);
 	JSPROXY_CCSequence *proxy = [[JSPROXY_CCSequence alloc] initWithJSObject:jsobj];
 	[proxy setRealObj:realObj];
-	objc_setAssociatedObject(realObj, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
 	JS_SetPrivate(jsobj, proxy);
-	
+
+	if( realObj )
+		objc_setAssociatedObject(realObj, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
+
 	[self swizzleMethods];
 
 	return jsobj;

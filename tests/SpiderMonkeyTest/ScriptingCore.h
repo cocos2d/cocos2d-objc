@@ -100,6 +100,12 @@ extern JSObject* create_jsobject_from_realobj( Class klass,id realObj, JSContext
 /** Gets or Creates a JSObject, a ProxyObject and associates them with the real object */
 extern JSObject * get_or_create_jsobject_from_realobj( id realObj, JSContext *cx );
 
+NSString *js_argv_to_nsstring(jsval vp, JSContext *cx );
+
+id js_argv_to_object( jsval vp, JSContext *cx );
+
+NSMutableArray* js_argv_to_nsarray( jsval vp, JSContext *cx );
+	
 #ifdef __cplusplus
 }
 #endif

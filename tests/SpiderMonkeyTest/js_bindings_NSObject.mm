@@ -46,6 +46,7 @@ JSBool JSPROXY_NSObject_init(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	NSObject* real = [[NSObject alloc] init];
 	[proxy setRealObj:real];
+	objc_setAssociatedObject(real, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN); // TITO
 	[real release];
 	
 	NSCAssert( real, @"Invalid JS object");
@@ -100,6 +101,8 @@ void createClass(JSContext* cx, JSObject* globalObj, NSString* name )
     JS_SetPrivate(jsobj, proxy);
 	
 	[proxy setRealObj:realObj];
+	if( realObj )
+		objc_setAssociatedObject(realObj, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
 	
 	[self swizzleMethods];
 
