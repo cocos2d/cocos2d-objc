@@ -17,5 +17,6 @@ extern JSClass* JSPROXY_NSObject_class;
 
 -(id) initWithJSObject:(JSObject*)object;
 +(JSObject*) createJSObjectWithRealObject:(id)realObj context:(JSContext*)JSContext;
++(void) swizzleMethods;
 @end
 
