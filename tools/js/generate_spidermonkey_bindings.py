@@ -122,7 +122,13 @@ class SpiderMonkey(object):
 
         self.classes_to_ignore = config['classes_to_ignore']
 
-        self.callback_methods = config['callback_methods']
+        self.callback_methods = {}
+        callback_methods = config['callback_methods']
+        for c in callback_methods:
+            c,m = c.split('#')
+            if not c in self.callback_methods:
+                self.callback_methods[ c ] = []
+            self.callback_methods[ c ].append( m )
 
         # In order to prevent parsing a class many times
         self.parsed_classes = []
@@ -274,11 +280,9 @@ class SpiderMonkey(object):
         # Global Variables
         # JSPROXY_CCNode
         # JSPROXY_CCNode
-        # JSPROXY_CCNode
         constructor_globals = '''
 JSClass* %s_class = NULL;
 JSObject* %s_object = NULL;
-static char *%s_proxy_key = NULL;
 '''
 
         # 1: JSPROXY_CCNode,
@@ -296,7 +300,7 @@ JSBool %s_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 }
 '''
         proxy_class_name = '%s%s' % (PROXY_PREFIX, class_name )
-        self.mm_file.write( constructor_globals % ( proxy_class_name, proxy_class_name, proxy_class_name ) )
+        self.mm_file.write( constructor_globals % ( proxy_class_name, proxy_class_name ) )
         self.mm_file.write( constructor_template % ( proxy_class_name, proxy_class_name, '/* no callbacks */' ) )
 
     def generate_destructor( self, class_name ):
@@ -889,15 +893,70 @@ extern JSClass *%s_class;
         # callback code should be added here
         self.h_file.write( header_template_end )
 
+    def generate_implementation_callback( self, class_name ):
+        # onEnter
+        # onEnter
+        # onEnter
+        template = '''
+-(void) %s
+{
+	if (_jsObj) {
+		JSContext* cx = [[ScriptingCore sharedInstance] globalContext];
+		JSBool found;
+		JS_HasProperty(cx, _jsObj, "%s", &found);
+		if (found == JS_TRUE) {
+			jsval rval, fval;
+			JS_GetProperty(cx, _jsObj, "%s", &fval);
+			JS_CallFunctionValue(cx, _jsObj, fval, 0, 0, &rval);
+		}
+	}	
+}
+'''
+        if class_name in self.callback_methods:
+            for m in self.callback_methods[ class_name ]:
+                self.mm_file.write( template % ( m,
+                                                 m,
+                                                 m ) )
+                
+    def generate_implementation_swizzle( self, class_name ):
+	# CCNode
+	# CCNode
+        template_prefix = '''
+	static BOOL %s_already_swizzled = NO;
+	if( ! %s_already_swizzled ) {
+		NSError *error;
+'''
+	# CCNode, onEnter, onEnter
+	template_middle = '''
+		if( ! [%s jr_swizzleMethod:@selector(%s) withMethod:@selector(%s_JSHook) error:&error] ) 
+			NSLog(@"Error swizzling %%@", error);
+'''
+	# CCNode
+	template_suffix = '''
+		%s_already_swizzled = YES;
+	}
+        '''
+	
+	if class_name in self.callback_methods:
+	    self.mm_file.write(  template_prefix % ( class_name, class_name ) )
+	    for m in self.callback_methods[ class_name ]:
+		self.mm_file.write( template_middle % ( class_name, m, m ) )
+		
+	    self.mm_file.write(  template_suffix % ( class_name ) )
+
     def generate_implementation( self, class_name ):
-        create_object_template = '''
+
+        create_object_template_prefix = '''
 +(JSObject*) createJSObjectWithRealObject:(id)realObj context:(JSContext*)cx
 {
 	JSObject *jsobj = JS_NewObject(cx, %s_class, %s_object, NULL);
 	%s *proxy = [[%s alloc] initWithJSObject:jsobj];
 	[proxy setRealObj:realObj];
 	objc_setAssociatedObject(realObj, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
-	JS_SetPrivate(jsobj, proxy);	
+	JS_SetPrivate(jsobj, proxy);
+'''
+
+        create_object_template_suffix = '''
 	return jsobj;
 }
 '''	
@@ -905,9 +964,15 @@ extern JSClass *%s_class;
 
         self.mm_file.write( '\n@implementation %s\n' % proxy_class_name )
 
-        self.mm_file.write( create_object_template % (proxy_class_name, proxy_class_name,
+        self.mm_file.write( create_object_template_prefix % (proxy_class_name, proxy_class_name,
                                                       proxy_class_name, proxy_class_name) )
 
+        self.generate_implementation_swizzle( class_name )
+    
+        self.mm_file.write( create_object_template_suffix )
+
+        self.generate_implementation_callback( class_name )
+    
         self.mm_file.write( '\n@end\n' )
 
     def generate_createClass_function( self, class_name, parent_name, ok_methods ):
@@ -988,6 +1053,37 @@ void %s_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 
         self.mm_file.write( init_class_template % ( proxy_class_name, proxy_parent_name, proxy_class_name, proxy_class_name ) )
 
+    def generate_callback_code( self, class_name ):
+        # CCNode
+        template_prefix = '@implementation %s (SpiderMonkey)\n'
+        
+        # onEnter
+        # PROXYJS_CCNode
+        template = '''
+-(void) %s_JSHook
+{
+	%s *proxy = objc_getAssociatedObject(self, &JSPROXY_association_proxy_key);
+	if( proxy )
+		[proxy %s];
+	
+	[self %s_JSHook];
+}
+'''
+        template_suffix = '@end\n'
+        
+        proxy_class_name = PROXY_PREFIX + class_name
+
+        if class_name in self.callback_methods:
+            
+            self.mm_file.write( template_prefix % class_name )
+            for m in self.callback_methods[ class_name ]:
+                self.mm_file.write( template % ( m,
+                                                 proxy_class_name,
+                                                 m,
+                                                 m) )
+
+            self.mm_file.write( template_suffix )
+
     def generate_mm( self, klass, class_name, parent_name ):
         # Implementation file
         if not self.onefile:
@@ -1001,6 +1097,8 @@ void %s_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 
         self.generate_createClass_function( class_name, parent_name, ok_methods )
         self.generate_implementation( class_name )
+        
+        self.generate_callback_code( class_name )
 
     def generate_class_binding( self, class_name ):
 
