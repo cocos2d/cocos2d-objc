@@ -100,8 +100,15 @@ void createClass(JSContext* cx, JSObject* globalObj, NSString* name )
     JS_SetPrivate(jsobj, proxy);
 	
 	[proxy setRealObj:realObj];
+	
+	[self swizzleMethods];
 
 	return jsobj;
+}
+
++(void) swizzleMethods
+{
+	// override
 }
 
 -(id) initWithJSObject:(JSObject*)object

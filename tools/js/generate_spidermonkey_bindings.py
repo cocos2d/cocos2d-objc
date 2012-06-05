@@ -756,6 +756,13 @@ JSBool %s_%s(JSContext *cx, uint32_t argc, jsval *vp) {
             '{}': self.generate_argument_struct,
         }
 
+	s = method['selector']
+
+	# Don't generate methods that are defined as callbacks
+	if class_name in self.callback_methods:
+	    if s in self.callback_methods[ class_name ]:
+		return False
+
         try:
             args_js_type, args_declared_type = self.parse_method_arguments(method, class_name )
             ret_js_type, ret_declared_type = self.parse_method_retval( method, class_name )
@@ -765,7 +772,6 @@ JSBool %s_%s(JSContext *cx, uint32_t argc, jsval *vp) {
 
         method_type = self.get_method_type( method )
 
-        s = method['selector']
 
         # writing...
         converted_name = self.convert_selector_name_to_native( s )
@@ -922,6 +928,10 @@ extern JSClass *%s_class;
 	# CCNode
 	# CCNode
         template_prefix = '''
++(void) swizzleMethods
+{
+	[super swizzleMethods];
+
 	static BOOL %s_already_swizzled = NO;
 	if( ! %s_already_swizzled ) {
 		NSError *error;
@@ -935,7 +945,8 @@ extern JSClass *%s_class;
 	template_suffix = '''
 		%s_already_swizzled = YES;
 	}
-        '''
+}
+'''
 	
 	if class_name in self.callback_methods:
 	    self.mm_file.write(  template_prefix % ( class_name, class_name ) )
@@ -954,6 +965,8 @@ extern JSClass *%s_class;
 	[proxy setRealObj:realObj];
 	objc_setAssociatedObject(realObj, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
 	JS_SetPrivate(jsobj, proxy);
+	
+	[self swizzleMethods];
 '''
 
         create_object_template_suffix = '''
@@ -967,9 +980,9 @@ extern JSClass *%s_class;
         self.mm_file.write( create_object_template_prefix % (proxy_class_name, proxy_class_name,
                                                       proxy_class_name, proxy_class_name) )
 
-        self.generate_implementation_swizzle( class_name )
-    
         self.mm_file.write( create_object_template_suffix )
+
+	self.generate_implementation_swizzle( class_name )    
 
         self.generate_implementation_callback( class_name )
     
