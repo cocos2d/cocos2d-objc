@@ -130,3 +130,6 @@ sprite3.setPosition( ccp( 300,200) );
 var sameSprite = parent2.getChildByTag( 100 );
 cc.log( sameSprite.I_was_here );
 
+sprite3.onEnter = function() {
+	cc.log("Sprite3#onEnter was called");
+}
