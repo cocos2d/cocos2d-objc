@@ -335,6 +335,7 @@ void %s_finalize(JSContext *cx, JSObject *obj)
         if method_type == METHOD_INIT:
             prefix = '\t%s *real = [[%s alloc] ' % (class_name, class_name )
             suffix = '\n\t[proxy setRealObj: real];\n\t[real release];\n'
+	    suffix += '\n\tobjc_setAssociatedObject(real, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);'
         elif method_type == METHOD_REGULAR:
             prefix = '\t%s *real = (%s*) [proxy realObj];\n\t' % (class_name, class_name)
             suffix = ''
@@ -541,6 +542,8 @@ void %s_finalize(JSContext *cx, JSObject *obj)
         supported_declared_types = {
             'CGPoint'   : '{}',
             'NSString*' : 'S',
+	    'NSArray*'  : '[]',
+	    'CCArray*'  : '[]',
         }
 
         supported_types = {
@@ -652,41 +655,11 @@ void %s_finalize(JSContext *cx, JSObject *obj)
 
     def generate_argument_array( self, i, arg_js_type, arg_declared_type ):
         template = '''
-        JSBool JSPROXY_CCSequence_initWithArray(JSContext *cx, uint32_t argc, jsval *vp) {
-
-                JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-                JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
-                NSCAssert( proxy, @"Invalid Proxy object");
-                NSCAssert( ![proxy realObj], @"Object not initialzied. error");
-                NSCAssert( argc == 1, @"Invalid number of arguments" );
-
-                JSObject *tmp_arg0;
-                JS_ValueToObject( cx, vp[2], &tmp_arg0 );
-                NSCAssert( JS_IsArrayObject( cx, tmp_arg0), @"Invalid argument. It is not an array" );
-
-                uint32_t arg0_length;
-                JS_GetArrayLength(cx, tmp_arg0, &arg0_length);
-                NSMutableArray *array = [NSMutableArray arrayWithCapacity:arg0_length];
-                for( uint32_t i=0; i< arg0_length;i++ ) {		
-                        jsval val_arg0;
-                        JS_GetElement(cx, tmp_arg0, i, &val_arg0);
-
-                        JSObject *tmp_real_arg0;
-                        JS_ValueToObject( cx, val_arg0, &tmp_real_arg0 );
-                        JSPROXY_CCFiniteTimeAction* tmp_proxy_arg0 = (JSPROXY_CCFiniteTimeAction*) JS_GetPrivate( tmp_real_arg0 );
-                        id real_arg0 = (id) [tmp_proxy_arg0 realObj];
-
-                        [array addObject:real_arg0];
-                }
-
-                CCSequence *real = [[CCSequence alloc] initWithArray:array];
-                [proxy setRealObj: real];
-                [real release];
-
-                JS_SET_RVAL(cx, vp, JSVAL_TRUE);
-                return JS_TRUE;
-        }
+	// Parsing sequence
+	NSArray *arg%d = js_argv_to_nsarray( *argvp++, cx );
 '''
+	self.mm_file.write( template % (i) )
+	
 
     def generate_method_prefix( self, class_name, converted_name, num_of_args, method_type ):
         # JSPROXY_CCNode, setPosition
@@ -754,6 +727,7 @@ JSBool %s_%s(JSContext *cx, uint32_t argc, jsval *vp) {
             'S' : self.generate_argument_string,
             'o' : self.generate_argument_object,
             '{}': self.generate_argument_struct,
+	    '[]': self.generate_argument_array,
         }
 
 	# Variadic methods are not supported
@@ -967,9 +941,11 @@ extern JSClass *%s_class;
 	JSObject *jsobj = JS_NewObject(cx, %s_class, %s_object, NULL);
 	%s *proxy = [[%s alloc] initWithJSObject:jsobj];
 	[proxy setRealObj:realObj];
-	objc_setAssociatedObject(realObj, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
 	JS_SetPrivate(jsobj, proxy);
-	
+
+	if( realObj )
+		objc_setAssociatedObject(realObj, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
+
 	[self swizzleMethods];
 '''
 

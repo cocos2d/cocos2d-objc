@@ -80,20 +80,15 @@ parent1.onEnter = function() {
 
 var action = new cc.RotateBy.actionWithDurationAngle(2, 360 );
 
-var action2 = new cc.ScaleTo.actionWithDurationScale(4, 0.2 );
+var action2 = new cc.RotateBy();
+action2.initWithDurationAngle(1, -360 );
 
-//
-//var action2 = new cc.RotateBy();
-//action2.initWithDurationangle(1, -360 );
-//
-//var action3 = new cc.RotateBy();
-//action3.initWithDurationangle(2, 180 );
-//
-//var seq = new cc.Sequence();
-//seq.initWithArray( [action, action2, action3] );
+var action3 = new cc.RotateBy();
+action3.initWithDurationAngle(2, 180 );
 
-s.runAction( action )
-s.runAction( action2 )
+var seq = new cc.Sequence.actionWithArray( [action, action2, action3] );
+
+s.runAction( seq )
 
 parent1.addChild( s );
 

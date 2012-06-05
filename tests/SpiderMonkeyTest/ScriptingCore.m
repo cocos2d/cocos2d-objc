@@ -272,3 +272,41 @@ JSObject * get_or_create_jsobject_from_realobj( id realObj, JSContext *cx )
 	
 	return create_jsobject_from_realobj( [realObj class], realObj, cx );
 }
+
+
+// Convert function
+NSString *js_argv_to_nsstring(jsval vp, JSContext *cx )
+{
+	JSString *jsstr = JS_ValueToString( cx, vp );
+	return [NSString stringWithUTF8String: JS_EncodeString(cx, jsstr)];
+}
+
+id js_argv_to_object( jsval vp, JSContext *cx )
+{
+	JSObject *jsobj;
+	JS_ValueToObject( cx, vp, &jsobj );
+	JSPROXY_NSObject* proxy = (JSPROXY_NSObject*) JS_GetPrivate( jsobj ); 
+	return [proxy realObj];
+}
+
+NSMutableArray* js_argv_to_nsarray( jsval vp, JSContext *cx )
+{
+	// Parsing sequence
+	JSObject *jsobj;
+	JS_ValueToObject( cx, vp, &jsobj );
+	
+	NSCAssert( JS_IsArrayObject( cx, jsobj), @"Invalid argument. It is not an array" );
+	uint32_t len;
+	JS_GetArrayLength(cx, jsobj,&len);
+	NSMutableArray *array = [NSMutableArray arrayWithCapacity:len];
+	for( uint32_t i=0; i< len;i++ ) {		
+		jsval valarg;
+		JS_GetElement(cx, jsobj, i, &valarg);
+		
+		// XXX: forcing them to be objects, but they could also be NSString, NSDictionary or NSArray
+		id real_obj = js_argv_to_object( valarg, cx);
+		
+		[array addObject:real_obj];
+	}
+	return array;
+}
