@@ -1,3 +1,6 @@
+version 2.0 XX-Jun-2012
+. [FIX] Macros: CCLOGERROR defined in ccDeprecated as CCLOGWARN
+
 version 2.0-rc2 03-Jun-2012
 . [NEW] Added Javascript test using JSCocoa (Mac only)
 			ActionTests, SpriteTests (WIP)

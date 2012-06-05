@@ -54,6 +54,9 @@
  *
  */
 
+// CCLOGERROR is no longer supported.
+#define CCLOGERROR CCLOGWARN
+
 // ccTypes.h
 enum {
 #ifdef __CC_PLATFORM_IOS
