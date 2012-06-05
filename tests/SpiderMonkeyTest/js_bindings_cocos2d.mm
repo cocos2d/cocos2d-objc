@@ -7497,3 +7497,131 @@ void JSPROXY_CCRotateBy_createClass(JSContext *cx, JSObject* globalObj, const ch
 }
 
 @end
+
+/*
+ * CCSequence
+ */
+#pragma mark - CCSequence
+
+JSClass* JSPROXY_CCSequence_class = NULL;
+JSObject* JSPROXY_CCSequence_object = NULL;
+ // Constructor
+JSBool JSPROXY_CCSequence_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JSObject *jsobj = [JSPROXY_CCSequence createJSObjectWithRealObject:nil context:cx];
+    JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+    /* no callbacks */
+
+    return JS_TRUE;
+}
+
+// Destructor
+void JSPROXY_CCSequence_finalize(JSContext *cx, JSObject *obj)
+{
+	JSPROXY_CCSequence *proxy = (JSPROXY_CCSequence*)JS_GetPrivate(obj);
+	if (proxy) {
+		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_ASSIGN);
+		/* no callbacks */
+		[proxy release];
+	}
+}
+
+// Arguments: CCFiniteTimeAction*, CCFiniteTimeAction*
+// Ret value: CCSequence
+JSBool JSPROXY_CCSequence_actionOne_two_(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+
+	JSObject *tmp_arg0;
+	JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
+	JSPROXY_CCFiniteTimeAction* proxy_arg0 = (JSPROXY_CCFiniteTimeAction*) JS_GetPrivate( tmp_arg0 ); 
+	CCFiniteTimeAction* arg0 = (CCFiniteTimeAction*) [proxy_arg0 realObj];
+
+	JSObject *tmp_arg1;
+	JS_ValueToObject( cx, *argvp++, &tmp_arg1 );
+	JSPROXY_CCFiniteTimeAction* proxy_arg1 = (JSPROXY_CCFiniteTimeAction*) JS_GetPrivate( tmp_arg1 ); 
+	CCFiniteTimeAction* arg1 = (CCFiniteTimeAction*) [proxy_arg1 realObj];
+
+	CCSequence *real = [CCSequence actionOne:(CCFiniteTimeAction*)arg0 two:(CCFiniteTimeAction*)arg1  ];
+
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( real, cx );
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+	return JS_TRUE;
+}
+
+// Arguments: CCFiniteTimeAction*, CCFiniteTimeAction*
+// Ret value: None
+JSBool JSPROXY_CCSequence_initOne_two_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+
+	JSObject *tmp_arg0;
+	JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
+	JSPROXY_CCFiniteTimeAction* proxy_arg0 = (JSPROXY_CCFiniteTimeAction*) JS_GetPrivate( tmp_arg0 ); 
+	CCFiniteTimeAction* arg0 = (CCFiniteTimeAction*) [proxy_arg0 realObj];
+
+	JSObject *tmp_arg1;
+	JS_ValueToObject( cx, *argvp++, &tmp_arg1 );
+	JSPROXY_CCFiniteTimeAction* proxy_arg1 = (JSPROXY_CCFiniteTimeAction*) JS_GetPrivate( tmp_arg1 ); 
+	CCFiniteTimeAction* arg1 = (CCFiniteTimeAction*) [proxy_arg1 realObj];
+
+	CCSequence *real = [[CCSequence alloc] initOne:(CCFiniteTimeAction*)arg0 two:(CCFiniteTimeAction*)arg1  ];
+	[proxy setRealObj: real];
+	[real release];
+
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+void JSPROXY_CCSequence_createClass(JSContext *cx, JSObject* globalObj, const char* name )
+{
+	JSPROXY_CCSequence_class = (JSClass *)calloc(1, sizeof(JSClass));
+	JSPROXY_CCSequence_class->name = name;
+	JSPROXY_CCSequence_class->addProperty = JS_PropertyStub;
+	JSPROXY_CCSequence_class->delProperty = JS_PropertyStub;
+	JSPROXY_CCSequence_class->getProperty = JS_PropertyStub;
+	JSPROXY_CCSequence_class->setProperty = JS_StrictPropertyStub;
+	JSPROXY_CCSequence_class->enumerate = JS_EnumerateStub;
+	JSPROXY_CCSequence_class->resolve = JS_ResolveStub;
+	JSPROXY_CCSequence_class->convert = JS_ConvertStub;
+	JSPROXY_CCSequence_class->finalize = JSPROXY_CCSequence_finalize;
+	JSPROXY_CCSequence_class->flags = JSCLASS_HAS_PRIVATE;
+
+	static JSPropertySpec properties[] = {
+		{0, 0, 0, 0, 0}
+	};
+	static JSFunctionSpec funcs[] = {
+		JS_FN("initOneTwo", JSPROXY_CCSequence_initOne_two_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FS_END
+	};
+	static JSFunctionSpec st_funcs[] = {
+		JS_FN("actionOneTwo", JSPROXY_CCSequence_actionOne_two_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSFUN_CONSTRUCTOR),
+		JS_FS_END
+	};
+
+	JSPROXY_CCSequence_object = JS_InitClass(cx, globalObj, JSPROXY_CCActionInterval_object, JSPROXY_CCSequence_class, JSPROXY_CCSequence_constructor,0,properties,funcs,NULL,st_funcs);
+}
+
+@implementation JSPROXY_CCSequence
+
++(JSObject*) createJSObjectWithRealObject:(id)realObj context:(JSContext*)cx
+{
+	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCSequence_class, JSPROXY_CCSequence_object, NULL);
+	JSPROXY_CCSequence *proxy = [[JSPROXY_CCSequence alloc] initWithJSObject:jsobj];
+	[proxy setRealObj:realObj];
+	objc_setAssociatedObject(realObj, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
+	JS_SetPrivate(jsobj, proxy);
+	
+	[self swizzleMethods];
+
+	return jsobj;
+}
+
+@end

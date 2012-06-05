@@ -489,3 +489,30 @@ extern JSClass *JSPROXY_CCRotateBy_class;
 }
 
 @end
+
+/*
+ * CCSequence
+ */
+#pragma mark - CCSequence
+
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+void JSPROXY_CCSequence_createClass(JSContext *cx, JSObject* globalObj, const char* name );
+
+extern JSObject *JSPROXY_CCSequence_object;
+extern JSClass *JSPROXY_CCSequence_class;
+
+#ifdef __cplusplus
+}
+#endif
+
+
+/* Proxy class */
+@interface JSPROXY_CCSequence : JSPROXY_CCActionInterval
+{
+}
+
+@end
