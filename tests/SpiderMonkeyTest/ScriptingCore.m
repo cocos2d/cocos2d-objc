@@ -275,13 +275,13 @@ JSObject * get_or_create_jsobject_from_realobj( id realObj, JSContext *cx )
 
 
 // Convert function
-NSString *js_argv_to_nsstring(jsval vp, JSContext *cx )
+NSString *jsval_to_nsstring(jsval vp, JSContext *cx )
 {
 	JSString *jsstr = JS_ValueToString( cx, vp );
 	return [NSString stringWithUTF8String: JS_EncodeString(cx, jsstr)];
 }
 
-id js_argv_to_object( jsval vp, JSContext *cx )
+id jsval_to_nsobject( jsval vp, JSContext *cx )
 {
 	JSObject *jsobj;
 	JS_ValueToObject( cx, vp, &jsobj );
@@ -289,7 +289,7 @@ id js_argv_to_object( jsval vp, JSContext *cx )
 	return [proxy realObj];
 }
 
-NSMutableArray* js_argv_to_nsarray( jsval vp, JSContext *cx )
+NSMutableArray* jsval_to_nsarray( jsval vp, JSContext *cx )
 {
 	// Parsing sequence
 	JSObject *jsobj;
@@ -304,7 +304,7 @@ NSMutableArray* js_argv_to_nsarray( jsval vp, JSContext *cx )
 		JS_GetElement(cx, jsobj, i, &valarg);
 		
 		// XXX: forcing them to be objects, but they could also be NSString, NSDictionary or NSArray
-		id real_obj = js_argv_to_object( valarg, cx);
+		id real_obj = jsval_to_nsobject( valarg, cx);
 		
 		[array addObject:real_obj];
 	}

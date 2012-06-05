@@ -591,21 +591,17 @@ void %s_finalize(JSContext *cx, JSObject *obj)
 
     # Special case for string to NSString generator
     def generate_argument_string( self, i, arg_js_type, arg_declared_type ):
-        self.mm_file.write( '\tJSString *tmp_arg%d = JS_ValueToString( cx, *argvp++ );\n\tNSString *arg%d = [NSString stringWithUTF8String: JS_EncodeString(cx, tmp_arg%d)];\n' % ( i, i, i ) )
+	template = '''
+	NSString *arg%d = jsval_to_nsstring( *argvp++, cx );
+'''
+        self.mm_file.write( template % i )
 
     # Special case for objects
     def generate_argument_object( self, i, arg_js_type, arg_declared_type ):
         object_template = '''
-	JSObject *tmp_arg%d;
-	JS_ValueToObject( cx, *argvp++, &tmp_arg%d );
-	%s proxy_arg%d = (%s) JS_GetPrivate( tmp_arg%d ); 
-	%s arg%d = (%s) [proxy_arg%d realObj];
+	%s arg%d = (%s) jsval_to_nsobject( *argvp++, cx);
 '''
-        proxy_class_name = PROXY_PREFIX + arg_declared_type
-        self.mm_file.write( object_template % (i,
-                                               i,
-                                               proxy_class_name , i, proxy_class_name, i,
-                                               arg_declared_type, i, arg_declared_type, i ) )
+        self.mm_file.write( object_template % (arg_declared_type, i, arg_declared_type ) )
 
     # CGPoint needs an special case since its internal structure changes
     # on the platform. On Mac it uses doubles and on iOS it uses floats
@@ -656,7 +652,7 @@ void %s_finalize(JSContext *cx, JSObject *obj)
     def generate_argument_array( self, i, arg_js_type, arg_declared_type ):
         template = '''
 	// Parsing sequence
-	NSArray *arg%d = js_argv_to_nsarray( *argvp++, cx );
+	NSArray *arg%d = jsval_to_nsarray( *argvp++, cx );
 '''
 	self.mm_file.write( template % (i) )
 	
