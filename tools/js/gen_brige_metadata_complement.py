@@ -59,7 +59,7 @@ class ObjC(object):
                             protocols = protocols.replace(' ', '')
 
                             # split by ','
-                            list_of_protocols = protocols.split(',')
+                            protocols = protocols.split(',')
                         else:
                             protocols = []
 
@@ -83,7 +83,7 @@ def help():
     print "\t-i --input\tFile that contains rules for the parser."
     print "\t\t\tUseful if the parser generates invalid or wrong info for certain classes."
     print "\nExample:"
-    print "\t%s -o output.txt -i particle_override_rules.txt cocos2d/*.h" % sys.argv[0]
+    print "\t%s -o cocos2d-mac-class_hierarchy-protocols.txt -i cocos2d-mac-class_hierarchy-protocols-exceptions.txt cocos2d/*.h" % sys.argv[0]
     sys.exit(-1)
 
 if __name__ == "__main__":

@@ -1,7 +1,6 @@
 #!/usr/bin/python
 # ----------------------------------------------------------------------------
-# Simple regular expression that obtains super class and protocols from Obj-C
-# interfaces
+# Generates SpiderMonkey glue code after Objective-C code
 #
 # Author: Ricardo Quesada
 # Copyright 2012 (C) Zynga, Inc
@@ -9,7 +8,7 @@
 # Dual License: MIT or GPL v2.
 # ----------------------------------------------------------------------------
 '''
-Obtains 
+Generates SpiderMonkey glue code after Objective-C code
 '''
 
 __docformat__ = 'restructuredtext'
@@ -782,16 +781,49 @@ JSBool %s_%s%s(JSContext *cx, uint32_t argc, jsval *vp) {
 
     def generate_methods( self, class_name, klass ):
         ok_methods = []
+	ok_method_name = []
+    
+	# Parse methods defined in the Class
+	self.is_a_protocol = False
         for m in klass['method']:
             self.current_method = m
             ok = self.generate_method( class_name, m )
             if ok:
                 ok_methods.append( m )
+		ok_method_name.append( m['selector'] )
             else:
                 print 'NOT OK:' + m['selector']
 
         self.current_method = None
-        return ok_methods
+
+	self.is_a_protocol = True
+
+	# Parse methods defined in the Protocol
+	if class_name in self.hierarchy:
+	    list_of_protocols = self.bs['signatures']['informal_protocol']
+	    protocols = self.hierarchy[ class_name ]['protocols']
+	    for protocol in protocols:
+		for p in list_of_protocols:
+		    # XXX Super slow
+		    if p['name'] == protocol:
+			
+			# Get the method object
+			for m in p['method']:
+			    method_name = m['selector']
+			    
+			    # avoid possible duplicates between Protocols and Classes
+			    if not method_name in ok_method_name:
+				self.current_method = m
+				ok = self.generate_method( class_name, m )
+				if ok:
+				    ok_methods.append( m )
+				else:
+				    print 'NOT OK:' + m['selector']
+
+        self.current_method = None
+	self.is_a_protocol = False
+
+	return ok_methods
 
     def generate_mm_prefix( self ):
         import_template = '''
