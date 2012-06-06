@@ -4499,6 +4499,97 @@ JSBool JSPROXY_CCMenuItemSprite_setSelectedImage_(JSContext *cx, uint32_t argc, 
 	return JS_TRUE;
 }
 
+// Arguments: 
+// Ret value: BOOL
+JSBool JSPROXY_CCMenuItemSprite_doesOpacityModifyRGB(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	BOOL ret_val;
+
+	CCMenuItemSprite *real = (CCMenuItemSprite*) [proxy realObj];
+	ret_val = [real doesOpacityModifyRGB ];
+	JS_SET_RVAL(cx, vp, BOOLEAN_TO_JSVAL(ret_val));
+	return JS_TRUE;
+}
+
+// Arguments: 
+// Ret value: GLubyte
+JSBool JSPROXY_CCMenuItemSprite_opacity(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	GLubyte ret_val;
+
+	CCMenuItemSprite *real = (CCMenuItemSprite*) [proxy realObj];
+	ret_val = [real opacity ];
+	JS_SET_RVAL(cx, vp, INT_TO_JSVAL(ret_val));
+	return JS_TRUE;
+}
+
+// Arguments: ccColor3B
+// Ret value: None
+JSBool JSPROXY_CCMenuItemSprite_setColor_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+
+	JSObject *tmp_arg0;
+	JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
+	ccColor3B arg0 = *(ccColor3B*)JS_GetTypedArrayData( tmp_arg0);
+
+	CCMenuItemSprite *real = (CCMenuItemSprite*) [proxy realObj];
+	[real setColor:(ccColor3B)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: GLubyte
+// Ret value: None
+JSBool JSPROXY_CCMenuItemSprite_setOpacity_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	uint16_t arg0; JS_ValueToUint16( cx, *argvp++, &arg0 );
+
+	CCMenuItemSprite *real = (CCMenuItemSprite*) [proxy realObj];
+	[real setOpacity:(GLubyte)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: BOOL
+// Ret value: None
+JSBool JSPROXY_CCMenuItemSprite_setOpacityModifyRGB_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	JSBool arg0; JS_ValueToBoolean( cx, *argvp++, &arg0 );
+
+	CCMenuItemSprite *real = (CCMenuItemSprite*) [proxy realObj];
+	[real setOpacityModifyRGB:(BOOL)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
 void JSPROXY_CCMenuItemSprite_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCMenuItemSprite_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -4524,6 +4615,11 @@ void JSPROXY_CCMenuItemSprite_createClass(JSContext *cx, JSObject* globalObj, co
 		JS_FN("setDisabledImage", JSPROXY_CCMenuItemSprite_setDisabledImage_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
 		JS_FN("setNormalImage", JSPROXY_CCMenuItemSprite_setNormalImage_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
 		JS_FN("setSelectedImage", JSPROXY_CCMenuItemSprite_setSelectedImage_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("doesOpacityModifyRGB", JSPROXY_CCMenuItemSprite_doesOpacityModifyRGB, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("opacity", JSPROXY_CCMenuItemSprite_opacity, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("setColor", JSPROXY_CCMenuItemSprite_setColor_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("setOpacity", JSPROXY_CCMenuItemSprite_setOpacity_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("setOpacityModifyRGB", JSPROXY_CCMenuItemSprite_setOpacityModifyRGB_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
@@ -6757,6 +6853,97 @@ JSBool JSPROXY_CCMenuItemLabel_setString_(JSContext *cx, uint32_t argc, jsval *v
 	return JS_TRUE;
 }
 
+// Arguments: 
+// Ret value: BOOL
+JSBool JSPROXY_CCMenuItemLabel_doesOpacityModifyRGB(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	BOOL ret_val;
+
+	CCMenuItemLabel *real = (CCMenuItemLabel*) [proxy realObj];
+	ret_val = [real doesOpacityModifyRGB ];
+	JS_SET_RVAL(cx, vp, BOOLEAN_TO_JSVAL(ret_val));
+	return JS_TRUE;
+}
+
+// Arguments: 
+// Ret value: GLubyte
+JSBool JSPROXY_CCMenuItemLabel_opacity(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	GLubyte ret_val;
+
+	CCMenuItemLabel *real = (CCMenuItemLabel*) [proxy realObj];
+	ret_val = [real opacity ];
+	JS_SET_RVAL(cx, vp, INT_TO_JSVAL(ret_val));
+	return JS_TRUE;
+}
+
+// Arguments: ccColor3B
+// Ret value: None
+JSBool JSPROXY_CCMenuItemLabel_setColor_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+
+	JSObject *tmp_arg0;
+	JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
+	ccColor3B arg0 = *(ccColor3B*)JS_GetTypedArrayData( tmp_arg0);
+
+	CCMenuItemLabel *real = (CCMenuItemLabel*) [proxy realObj];
+	[real setColor:(ccColor3B)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: GLubyte
+// Ret value: None
+JSBool JSPROXY_CCMenuItemLabel_setOpacity_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	uint16_t arg0; JS_ValueToUint16( cx, *argvp++, &arg0 );
+
+	CCMenuItemLabel *real = (CCMenuItemLabel*) [proxy realObj];
+	[real setOpacity:(GLubyte)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: BOOL
+// Ret value: None
+JSBool JSPROXY_CCMenuItemLabel_setOpacityModifyRGB_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	JSBool arg0; JS_ValueToBoolean( cx, *argvp++, &arg0 );
+
+	CCMenuItemLabel *real = (CCMenuItemLabel*) [proxy realObj];
+	[real setOpacityModifyRGB:(BOOL)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
 void JSPROXY_CCMenuItemLabel_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCMenuItemLabel_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -6781,6 +6968,11 @@ void JSPROXY_CCMenuItemLabel_createClass(JSContext *cx, JSObject* globalObj, con
 		JS_FN("setIsEnabled", JSPROXY_CCMenuItemLabel_setIsEnabled_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
 		JS_FN("setLabel", JSPROXY_CCMenuItemLabel_setLabel_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
 		JS_FN("setString", JSPROXY_CCMenuItemLabel_setString_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("doesOpacityModifyRGB", JSPROXY_CCMenuItemLabel_doesOpacityModifyRGB, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("opacity", JSPROXY_CCMenuItemLabel_opacity, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("setColor", JSPROXY_CCMenuItemLabel_setColor_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("setOpacity", JSPROXY_CCMenuItemLabel_setOpacity_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("setOpacityModifyRGB", JSPROXY_CCMenuItemLabel_setOpacityModifyRGB_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
@@ -7526,6 +7718,80 @@ JSBool JSPROXY_CCMenu_setHandlerPriority_(JSContext *cx, uint32_t argc, jsval *v
 	return JS_TRUE;
 }
 
+// Arguments: 
+// Ret value: BOOL
+JSBool JSPROXY_CCMenu_doesOpacityModifyRGB(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	BOOL ret_val;
+
+	CCMenu *real = (CCMenu*) [proxy realObj];
+	ret_val = [real doesOpacityModifyRGB ];
+	JS_SET_RVAL(cx, vp, BOOLEAN_TO_JSVAL(ret_val));
+	return JS_TRUE;
+}
+
+// Arguments: ccColor3B
+// Ret value: None
+JSBool JSPROXY_CCMenu_setColor_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+
+	JSObject *tmp_arg0;
+	JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
+	ccColor3B arg0 = *(ccColor3B*)JS_GetTypedArrayData( tmp_arg0);
+
+	CCMenu *real = (CCMenu*) [proxy realObj];
+	[real setColor:(ccColor3B)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: GLubyte
+// Ret value: None
+JSBool JSPROXY_CCMenu_setOpacity_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	uint16_t arg0; JS_ValueToUint16( cx, *argvp++, &arg0 );
+
+	CCMenu *real = (CCMenu*) [proxy realObj];
+	[real setOpacity:(GLubyte)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: BOOL
+// Ret value: None
+JSBool JSPROXY_CCMenu_setOpacityModifyRGB_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	JSBool arg0; JS_ValueToBoolean( cx, *argvp++, &arg0 );
+
+	CCMenu *real = (CCMenu*) [proxy realObj];
+	[real setOpacityModifyRGB:(BOOL)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
 void JSPROXY_CCMenu_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCMenu_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -7553,6 +7819,10 @@ void JSPROXY_CCMenu_createClass(JSContext *cx, JSObject* globalObj, const char* 
 		JS_FN("opacity", JSPROXY_CCMenu_opacity, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
 		JS_FN("setEnabled", JSPROXY_CCMenu_setEnabled_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
 		JS_FN("setHandlerPriority", JSPROXY_CCMenu_setHandlerPriority_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("doesOpacityModifyRGB", JSPROXY_CCMenu_doesOpacityModifyRGB, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("setColor", JSPROXY_CCMenu_setColor_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("setOpacity", JSPROXY_CCMenu_setOpacity_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("setOpacityModifyRGB", JSPROXY_CCMenu_setOpacityModifyRGB_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
@@ -8057,6 +8327,80 @@ JSBool JSPROXY_CCSprite_updateTransform(JSContext *cx, uint32_t argc, jsval *vp)
 	return JS_TRUE;
 }
 
+// Arguments: 
+// Ret value: BOOL
+JSBool JSPROXY_CCSprite_doesOpacityModifyRGB(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	BOOL ret_val;
+
+	CCSprite *real = (CCSprite*) [proxy realObj];
+	ret_val = [real doesOpacityModifyRGB ];
+	JS_SET_RVAL(cx, vp, BOOLEAN_TO_JSVAL(ret_val));
+	return JS_TRUE;
+}
+
+// Arguments: BOOL
+// Ret value: None
+JSBool JSPROXY_CCSprite_setOpacityModifyRGB_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	JSBool arg0; JS_ValueToBoolean( cx, *argvp++, &arg0 );
+
+	CCSprite *real = (CCSprite*) [proxy realObj];
+	[real setOpacityModifyRGB:(BOOL)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: CCTexture2D*
+// Ret value: None
+JSBool JSPROXY_CCSprite_setTexture_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+
+	CCTexture2D* arg0 = (CCTexture2D*) jsval_to_nsobject( *argvp++, cx);
+
+	CCSprite *real = (CCSprite*) [proxy realObj];
+	[real setTexture:(CCTexture2D*)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: 
+// Ret value: CCTexture2D*
+JSBool JSPROXY_CCSprite_texture(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	CCTexture2D* ret_val;
+
+	CCSprite *real = (CCSprite*) [proxy realObj];
+	ret_val = [real texture ];
+
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+	return JS_TRUE;
+}
+
 void JSPROXY_CCSprite_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCSprite_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -8096,6 +8440,10 @@ void JSPROXY_CCSprite_createClass(JSContext *cx, JSObject* globalObj, const char
 		JS_FN("setOpacity", JSPROXY_CCSprite_setOpacity_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
 		JS_FN("textureRectRotated", JSPROXY_CCSprite_textureRectRotated, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
 		JS_FN("updateTransform", JSPROXY_CCSprite_updateTransform, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("doesOpacityModifyRGB", JSPROXY_CCSprite_doesOpacityModifyRGB, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("setOpacityModifyRGB", JSPROXY_CCSprite_setOpacityModifyRGB_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("setTexture", JSPROXY_CCSprite_setTexture_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("texture", JSPROXY_CCSprite_texture, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
@@ -8608,6 +8956,26 @@ JSBool JSPROXY_CCLabelTTF_verticalAlignment(JSContext *cx, uint32_t argc, jsval 
 	return JS_TRUE;
 }
 
+// Arguments: 
+// Ret value: NSString*
+JSBool JSPROXY_CCLabelTTF_string(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	NSString* ret_val;
+
+	CCLabelTTF *real = (CCLabelTTF*) [proxy realObj];
+	ret_val = [real string ];
+
+	JSString *ret_obj = JS_NewStringCopyZ(cx, [ret_val UTF8String]);
+	JS_SET_RVAL(cx, vp, STRING_TO_JSVAL(ret_obj) );
+
+	return JS_TRUE;
+}
+
 void JSPROXY_CCLabelTTF_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCLabelTTF_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -8641,6 +9009,7 @@ void JSPROXY_CCLabelTTF_createClass(JSContext *cx, JSObject* globalObj, const ch
 		JS_FN("setString", JSPROXY_CCLabelTTF_setString_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
 		JS_FN("setVerticalAlignment", JSPROXY_CCLabelTTF_setVerticalAlignment_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
 		JS_FN("verticalAlignment", JSPROXY_CCLabelTTF_verticalAlignment, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("string", JSPROXY_CCLabelTTF_string, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
@@ -9356,6 +9725,45 @@ JSBool JSPROXY_CCSpriteBatchNode_setBlendFunc_(JSContext *cx, uint32_t argc, jsv
 	return JS_TRUE;
 }
 
+// Arguments: CCTexture2D*
+// Ret value: None
+JSBool JSPROXY_CCSpriteBatchNode_setTexture_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+
+	CCTexture2D* arg0 = (CCTexture2D*) jsval_to_nsobject( *argvp++, cx);
+
+	CCSpriteBatchNode *real = (CCSpriteBatchNode*) [proxy realObj];
+	[real setTexture:(CCTexture2D*)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: 
+// Ret value: CCTexture2D*
+JSBool JSPROXY_CCSpriteBatchNode_texture(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	CCTexture2D* ret_val;
+
+	CCSpriteBatchNode *real = (CCSpriteBatchNode*) [proxy realObj];
+	ret_val = [real texture ];
+
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+	return JS_TRUE;
+}
+
 void JSPROXY_CCSpriteBatchNode_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCSpriteBatchNode_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -9387,6 +9795,8 @@ void JSPROXY_CCSpriteBatchNode_createClass(JSContext *cx, JSObject* globalObj, c
 		JS_FN("removeSpriteFromAtlas", JSPROXY_CCSpriteBatchNode_removeSpriteFromAtlas_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
 		JS_FN("reorderBatch", JSPROXY_CCSpriteBatchNode_reorderBatch_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
 		JS_FN("setBlendFunc", JSPROXY_CCSpriteBatchNode_setBlendFunc_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("setTexture", JSPROXY_CCSpriteBatchNode_setTexture_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("texture", JSPROXY_CCSpriteBatchNode_texture, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
@@ -9780,6 +10190,80 @@ JSBool JSPROXY_CCLabelBMFont_setWidth_(JSContext *cx, uint32_t argc, jsval *vp) 
 	return JS_TRUE;
 }
 
+// Arguments: NSString*
+// Ret value: None
+JSBool JSPROXY_CCLabelBMFont_setString_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+
+	NSString *arg0 = jsval_to_nsstring( *argvp++, cx );
+
+	CCLabelBMFont *real = (CCLabelBMFont*) [proxy realObj];
+	[real setString:(NSString*)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: 
+// Ret value: NSString*
+JSBool JSPROXY_CCLabelBMFont_string(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	NSString* ret_val;
+
+	CCLabelBMFont *real = (CCLabelBMFont*) [proxy realObj];
+	ret_val = [real string ];
+
+	JSString *ret_obj = JS_NewStringCopyZ(cx, [ret_val UTF8String]);
+	JS_SET_RVAL(cx, vp, STRING_TO_JSVAL(ret_obj) );
+
+	return JS_TRUE;
+}
+
+// Arguments: 
+// Ret value: BOOL
+JSBool JSPROXY_CCLabelBMFont_doesOpacityModifyRGB(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	BOOL ret_val;
+
+	CCLabelBMFont *real = (CCLabelBMFont*) [proxy realObj];
+	ret_val = [real doesOpacityModifyRGB ];
+	JS_SET_RVAL(cx, vp, BOOLEAN_TO_JSVAL(ret_val));
+	return JS_TRUE;
+}
+
+// Arguments: BOOL
+// Ret value: None
+JSBool JSPROXY_CCLabelBMFont_setOpacityModifyRGB_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	JSBool arg0; JS_ValueToBoolean( cx, *argvp++, &arg0 );
+
+	CCLabelBMFont *real = (CCLabelBMFont*) [proxy realObj];
+	[real setOpacityModifyRGB:(BOOL)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
 void JSPROXY_CCLabelBMFont_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCLabelBMFont_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -9810,6 +10294,10 @@ void JSPROXY_CCLabelBMFont_createClass(JSContext *cx, JSObject* globalObj, const
 		JS_FN("setFntFile", JSPROXY_CCLabelBMFont_setFntFile_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
 		JS_FN("setOpacity", JSPROXY_CCLabelBMFont_setOpacity_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
 		JS_FN("setWidth", JSPROXY_CCLabelBMFont_setWidth_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("setString", JSPROXY_CCLabelBMFont_setString_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("string", JSPROXY_CCLabelBMFont_string, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("doesOpacityModifyRGB", JSPROXY_CCLabelBMFont_doesOpacityModifyRGB, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("setOpacityModifyRGB", JSPROXY_CCLabelBMFont_setOpacityModifyRGB_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
@@ -11474,6 +11962,97 @@ JSBool JSPROXY_CCMotionStreak_tintWithColor_(JSContext *cx, uint32_t argc, jsval
 	return JS_TRUE;
 }
 
+// Arguments: 
+// Ret value: BOOL
+JSBool JSPROXY_CCMotionStreak_doesOpacityModifyRGB(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	BOOL ret_val;
+
+	CCMotionStreak *real = (CCMotionStreak*) [proxy realObj];
+	ret_val = [real doesOpacityModifyRGB ];
+	JS_SET_RVAL(cx, vp, BOOLEAN_TO_JSVAL(ret_val));
+	return JS_TRUE;
+}
+
+// Arguments: 
+// Ret value: GLubyte
+JSBool JSPROXY_CCMotionStreak_opacity(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	GLubyte ret_val;
+
+	CCMotionStreak *real = (CCMotionStreak*) [proxy realObj];
+	ret_val = [real opacity ];
+	JS_SET_RVAL(cx, vp, INT_TO_JSVAL(ret_val));
+	return JS_TRUE;
+}
+
+// Arguments: ccColor3B
+// Ret value: None
+JSBool JSPROXY_CCMotionStreak_setColor_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+
+	JSObject *tmp_arg0;
+	JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
+	ccColor3B arg0 = *(ccColor3B*)JS_GetTypedArrayData( tmp_arg0);
+
+	CCMotionStreak *real = (CCMotionStreak*) [proxy realObj];
+	[real setColor:(ccColor3B)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: GLubyte
+// Ret value: None
+JSBool JSPROXY_CCMotionStreak_setOpacity_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	uint16_t arg0; JS_ValueToUint16( cx, *argvp++, &arg0 );
+
+	CCMotionStreak *real = (CCMotionStreak*) [proxy realObj];
+	[real setOpacity:(GLubyte)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: BOOL
+// Ret value: None
+JSBool JSPROXY_CCMotionStreak_setOpacityModifyRGB_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	JSBool arg0; JS_ValueToBoolean( cx, *argvp++, &arg0 );
+
+	CCMotionStreak *real = (CCMotionStreak*) [proxy realObj];
+	[real setOpacityModifyRGB:(BOOL)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
 void JSPROXY_CCMotionStreak_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCMotionStreak_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -11501,6 +12080,11 @@ void JSPROXY_CCMotionStreak_createClass(JSContext *cx, JSObject* globalObj, cons
 		JS_FN("setTexture", JSPROXY_CCMotionStreak_setTexture_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
 		JS_FN("texture", JSPROXY_CCMotionStreak_texture, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
 		JS_FN("tintWithColor", JSPROXY_CCMotionStreak_tintWithColor_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("doesOpacityModifyRGB", JSPROXY_CCMotionStreak_doesOpacityModifyRGB, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("opacity", JSPROXY_CCMotionStreak_opacity, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("setColor", JSPROXY_CCMotionStreak_setColor_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("setOpacity", JSPROXY_CCMotionStreak_setOpacity_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("setOpacityModifyRGB", JSPROXY_CCMotionStreak_setOpacityModifyRGB_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
