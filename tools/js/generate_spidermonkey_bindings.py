@@ -526,6 +526,7 @@ void %s_finalize(JSContext *cx, JSObject *obj)
             'NSString*' : 'S',
 	    'NSArray*'  : '[]',
 	    'CCArray*'  : '[]',
+	    'void (^)(id)' : 'f',
         }
 
         supported_types = {
@@ -638,6 +639,12 @@ void %s_finalize(JSContext *cx, JSObject *obj)
 '''
 	self.mm_file.write( template % (i) )
 	
+    def generate_argument_function( self, i, arg_js_type, arg_declared_type ):
+        template = '''
+	// Parsing function
+	js_block arg%d = jsval_to_block( *argvp++, cx, JS_THIS_OBJECT(cx, vp) );
+'''
+	self.mm_file.write( template % (i) )
 
     def generate_method_prefix( self, class_name, converted_name, num_of_args, method_type ):
         # JSPROXY_CCNode, setPosition
@@ -707,6 +714,7 @@ JSBool %s_%s%s(JSContext *cx, uint32_t argc, jsval *vp) {
             'o' : self.generate_argument_object,
             '{}': self.generate_argument_struct,
 	    '[]': self.generate_argument_array,
+	    'f' : self.generate_argument_function,
         }
 
 	# Variadic methods are not supported
