@@ -22,23 +22,26 @@
  * THE SOFTWARE.
  */
 
-#import "ScriptingCore.h"
-#import "js_obj_convertions.h"
 
-extern JSObject* JSPROXY_NSObject_object;
-extern JSClass* JSPROXY_NSObject_class;
+#ifdef __cplusplus
+extern "C" {
+#endif
 
-@interface JSPROXY_NSObject : NSObject
-{
-	JSObject	*_jsObj;
-	id			_realObj;
+/** Creates a JSObject, a ProxyObject and associates them with the real object */
+JSObject* create_jsobject_from_realobj( Class klass,id realObj, JSContext* context );
+
+/** Gets or Creates a JSObject, a ProxyObject and associates them with the real object */
+JSObject * get_or_create_jsobject_from_realobj( id realObj, JSContext *cx );
+
+/** converts a jsval to a NSString */
+NSString *jsval_to_nsstring(jsval vp, JSContext *cx );
+
+/** converts a jsval to a NSObject */
+id jsval_to_nsobject( jsval vp, JSContext *cx );
+
+/** converts a jsval to a NSArray */
+NSArray* jsval_to_nsarray( jsval vp, JSContext *cx );
+	
+#ifdef __cplusplus
 }
-
-@property (readonly) JSObject *jsObj;
-@property (nonatomic, readwrite, retain) id	realObj;
-
--(id) initWithJSObject:(JSObject*)object;
-+(JSObject*) createJSObjectWithRealObject:(id)realObj context:(JSContext*)JSContext;
-+(void) swizzleMethods;
-@end
-
+#endif

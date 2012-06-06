@@ -32,33 +32,6 @@ extern JSClass *JSPROXY_CCDirector_class;
 @end
 
 /*
- * CCNode
- */
-#pragma mark - CCNode
-
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-void JSPROXY_CCNode_createClass(JSContext *cx, JSObject* globalObj, const char* name );
-
-extern JSObject *JSPROXY_CCNode_object;
-extern JSClass *JSPROXY_CCNode_class;
-
-#ifdef __cplusplus
-}
-#endif
-
-
-/* Proxy class */
-@interface JSPROXY_CCNode : JSPROXY_NSObject
-{
-}
-
-@end
-
-/*
  * CCAction
  */
 #pragma mark - CCAction
@@ -140,6 +113,60 @@ extern JSClass *JSPROXY_CCActionInterval_class;
 @end
 
 /*
+ * CCRepeat
+ */
+#pragma mark - CCRepeat
+
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+void JSPROXY_CCRepeat_createClass(JSContext *cx, JSObject* globalObj, const char* name );
+
+extern JSObject *JSPROXY_CCRepeat_object;
+extern JSClass *JSPROXY_CCRepeat_class;
+
+#ifdef __cplusplus
+}
+#endif
+
+
+/* Proxy class */
+@interface JSPROXY_CCRepeat : JSPROXY_CCActionInterval
+{
+}
+
+@end
+
+/*
+ * CCNode
+ */
+#pragma mark - CCNode
+
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+void JSPROXY_CCNode_createClass(JSContext *cx, JSObject* globalObj, const char* name );
+
+extern JSObject *JSPROXY_CCNode_object;
+extern JSClass *JSPROXY_CCNode_class;
+
+#ifdef __cplusplus
+}
+#endif
+
+
+/* Proxy class */
+@interface JSPROXY_CCNode : JSPROXY_NSObject
+{
+}
+
+@end
+
+/*
  * CCMoveTo
  */
 #pragma mark - CCMoveTo
@@ -215,6 +242,60 @@ extern JSClass *JSPROXY_CCScaleTo_class;
 
 /* Proxy class */
 @interface JSPROXY_CCScaleTo : JSPROXY_CCActionInterval
+{
+}
+
+@end
+
+/*
+ * CCRepeatForever
+ */
+#pragma mark - CCRepeatForever
+
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+void JSPROXY_CCRepeatForever_createClass(JSContext *cx, JSObject* globalObj, const char* name );
+
+extern JSObject *JSPROXY_CCRepeatForever_object;
+extern JSClass *JSPROXY_CCRepeatForever_class;
+
+#ifdef __cplusplus
+}
+#endif
+
+
+/* Proxy class */
+@interface JSPROXY_CCRepeatForever : JSPROXY_CCAction
+{
+}
+
+@end
+
+/*
+ * CCTextureCache
+ */
+#pragma mark - CCTextureCache
+
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+void JSPROXY_CCTextureCache_createClass(JSContext *cx, JSObject* globalObj, const char* name );
+
+extern JSObject *JSPROXY_CCTextureCache_object;
+extern JSClass *JSPROXY_CCTextureCache_class;
+
+#ifdef __cplusplus
+}
+#endif
+
+
+/* Proxy class */
+@interface JSPROXY_CCTextureCache : JSPROXY_NSObject
 {
 }
 
@@ -518,6 +599,33 @@ extern JSClass *JSPROXY_CCLabelTTF_class;
 @end
 
 /*
+ * CCSpawn
+ */
+#pragma mark - CCSpawn
+
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+void JSPROXY_CCSpawn_createClass(JSContext *cx, JSObject* globalObj, const char* name );
+
+extern JSObject *JSPROXY_CCSpawn_object;
+extern JSClass *JSPROXY_CCSpawn_class;
+
+#ifdef __cplusplus
+}
+#endif
+
+
+/* Proxy class */
+@interface JSPROXY_CCSpawn : JSPROXY_CCActionInterval
+{
+}
+
+@end
+
+/*
  * CCScaleBy
  */
 #pragma mark - CCScaleBy
@@ -626,6 +734,33 @@ extern JSClass *JSPROXY_CCLabelBMFont_class;
 @end
 
 /*
+ * CCTexture2D
+ */
+#pragma mark - CCTexture2D
+
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+void JSPROXY_CCTexture2D_createClass(JSContext *cx, JSObject* globalObj, const char* name );
+
+extern JSObject *JSPROXY_CCTexture2D_object;
+extern JSClass *JSPROXY_CCTexture2D_class;
+
+#ifdef __cplusplus
+}
+#endif
+
+
+/* Proxy class */
+@interface JSPROXY_CCTexture2D : JSPROXY_NSObject
+{
+}
+
+@end
+
+/*
  * CCSequence
  */
 #pragma mark - CCSequence
@@ -647,6 +782,141 @@ extern JSClass *JSPROXY_CCSequence_class;
 
 /* Proxy class */
 @interface JSPROXY_CCSequence : JSPROXY_CCActionInterval
+{
+}
+
+@end
+
+/*
+ * CCRenderTexture
+ */
+#pragma mark - CCRenderTexture
+
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+void JSPROXY_CCRenderTexture_createClass(JSContext *cx, JSObject* globalObj, const char* name );
+
+extern JSObject *JSPROXY_CCRenderTexture_object;
+extern JSClass *JSPROXY_CCRenderTexture_class;
+
+#ifdef __cplusplus
+}
+#endif
+
+
+/* Proxy class */
+@interface JSPROXY_CCRenderTexture : JSPROXY_CCNode
+{
+}
+
+@end
+
+/*
+ * CCScheduler
+ */
+#pragma mark - CCScheduler
+
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+void JSPROXY_CCScheduler_createClass(JSContext *cx, JSObject* globalObj, const char* name );
+
+extern JSObject *JSPROXY_CCScheduler_object;
+extern JSClass *JSPROXY_CCScheduler_class;
+
+#ifdef __cplusplus
+}
+#endif
+
+
+/* Proxy class */
+@interface JSPROXY_CCScheduler : JSPROXY_NSObject
+{
+}
+
+@end
+
+/*
+ * CCRotateTo
+ */
+#pragma mark - CCRotateTo
+
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+void JSPROXY_CCRotateTo_createClass(JSContext *cx, JSObject* globalObj, const char* name );
+
+extern JSObject *JSPROXY_CCRotateTo_object;
+extern JSClass *JSPROXY_CCRotateTo_class;
+
+#ifdef __cplusplus
+}
+#endif
+
+
+/* Proxy class */
+@interface JSPROXY_CCRotateTo : JSPROXY_CCActionInterval
+{
+}
+
+@end
+
+/*
+ * CCMotionStreak
+ */
+#pragma mark - CCMotionStreak
+
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+void JSPROXY_CCMotionStreak_createClass(JSContext *cx, JSObject* globalObj, const char* name );
+
+extern JSObject *JSPROXY_CCMotionStreak_object;
+extern JSClass *JSPROXY_CCMotionStreak_class;
+
+#ifdef __cplusplus
+}
+#endif
+
+
+/* Proxy class */
+@interface JSPROXY_CCMotionStreak : JSPROXY_CCNode
+{
+}
+
+@end
+
+/*
+ * CCActionManager
+ */
+#pragma mark - CCActionManager
+
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+void JSPROXY_CCActionManager_createClass(JSContext *cx, JSObject* globalObj, const char* name );
+
+extern JSObject *JSPROXY_CCActionManager_object;
+extern JSClass *JSPROXY_CCActionManager_class;
+
+#ifdef __cplusplus
+}
+#endif
+
+
+/* Proxy class */
+@interface JSPROXY_CCActionManager : JSPROXY_NSObject
 {
 }
 
