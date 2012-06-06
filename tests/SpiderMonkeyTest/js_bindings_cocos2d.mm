@@ -603,12 +603,12 @@ JSBool JSPROXY_CCDirector_setProjection_(JSContext *cx, uint32_t argc, jsval *vp
 
 // Arguments: 
 // Ret value: CCDirector*
-JSBool JSPROXY_CCDirector_sharedDirector(JSContext *cx, uint32_t argc, jsval *vp) {
+JSBool JSPROXY_CCDirector_sharedDirector_static(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( argc == 0, @"Invalid number of arguments" );
 
-	CCDirector* real = [CCDirector sharedDirector ];
+	CCDirector* ret_val = [CCDirector sharedDirector ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( real, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -717,7 +717,7 @@ void JSPROXY_CCDirector_createClass(JSContext *cx, JSObject* globalObj, const ch
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
-		JS_FN("sharedDirector", JSPROXY_CCDirector_sharedDirector, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("sharedDirector", JSPROXY_CCDirector_sharedDirector_static, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
 		JS_FS_END
 	};
 
@@ -1170,12 +1170,12 @@ JSBool JSPROXY_CCNode_isRunning(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: 
 // Ret value: CCNode
-JSBool JSPROXY_CCNode_node(JSContext *cx, uint32_t argc, jsval *vp) {
+JSBool JSPROXY_CCNode_node_static(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( argc == 0, @"Invalid number of arguments" );
 
-	CCNode *real = [CCNode node ];
+	CCNode *ret_val = [CCNode node ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( real, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -2215,7 +2215,7 @@ void JSPROXY_CCNode_createClass(JSContext *cx, JSObject* globalObj, const char* 
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
-		JS_FN("node", JSPROXY_CCNode_node, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSFUN_CONSTRUCTOR),
+		JS_FN("node", JSPROXY_CCNode_node_static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSFUN_CONSTRUCTOR),
 		JS_FS_END
 	};
 
@@ -2308,511 +2308,6 @@ void JSPROXY_CCNode_createClass(JSContext *cx, JSObject* globalObj, const char* 
 @end
 
 /*
- * CCSprite
- */
-#pragma mark - CCSprite
-
-JSClass* JSPROXY_CCSprite_class = NULL;
-JSObject* JSPROXY_CCSprite_object = NULL;
- // Constructor
-JSBool JSPROXY_CCSprite_constructor(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JSObject *jsobj = [JSPROXY_CCSprite createJSObjectWithRealObject:nil context:cx];
-    JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-    /* no callbacks */
-
-    return JS_TRUE;
-}
-
-// Destructor
-void JSPROXY_CCSprite_finalize(JSContext *cx, JSObject *obj)
-{
-	JSPROXY_CCSprite *proxy = (JSPROXY_CCSprite*)JS_GetPrivate(obj);
-	if (proxy) {
-		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_ASSIGN);
-		/* no callbacks */
-		[proxy release];
-	}
-}
-
-// Arguments: 
-// Ret value: NSUInteger
-JSBool JSPROXY_CCSprite_atlasIndex(JSContext *cx, uint32_t argc, jsval *vp) {
-
-	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
-	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
-	NSUInteger ret_val;
-
-	CCSprite *real = (CCSprite*) [proxy realObj];
-	ret_val = [real atlasIndex ];
-	JS_SET_RVAL(cx, vp, INT_TO_JSVAL(ret_val));
-	return JS_TRUE;
-}
-
-// Arguments: 
-// Ret value: CCSpriteBatchNode*
-JSBool JSPROXY_CCSprite_batchNode(JSContext *cx, uint32_t argc, jsval *vp) {
-
-	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
-	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
-	CCSpriteBatchNode* ret_val;
-
-	CCSprite *real = (CCSprite*) [proxy realObj];
-	ret_val = [real batchNode ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: 
-// Ret value: BOOL
-JSBool JSPROXY_CCSprite_dirty(JSContext *cx, uint32_t argc, jsval *vp) {
-
-	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
-	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
-	BOOL ret_val;
-
-	CCSprite *real = (CCSprite*) [proxy realObj];
-	ret_val = [real dirty ];
-	JS_SET_RVAL(cx, vp, BOOLEAN_TO_JSVAL(ret_val));
-	return JS_TRUE;
-}
-
-// Arguments: 
-// Ret value: BOOL
-JSBool JSPROXY_CCSprite_flipX(JSContext *cx, uint32_t argc, jsval *vp) {
-
-	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
-	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
-	BOOL ret_val;
-
-	CCSprite *real = (CCSprite*) [proxy realObj];
-	ret_val = [real flipX ];
-	JS_SET_RVAL(cx, vp, BOOLEAN_TO_JSVAL(ret_val));
-	return JS_TRUE;
-}
-
-// Arguments: 
-// Ret value: BOOL
-JSBool JSPROXY_CCSprite_flipY(JSContext *cx, uint32_t argc, jsval *vp) {
-
-	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
-	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
-	BOOL ret_val;
-
-	CCSprite *real = (CCSprite*) [proxy realObj];
-	ret_val = [real flipY ];
-	JS_SET_RVAL(cx, vp, BOOLEAN_TO_JSVAL(ret_val));
-	return JS_TRUE;
-}
-
-// Arguments: NSString*
-// Ret value: None
-JSBool JSPROXY_CCSprite_initWithFile_(JSContext *cx, uint32_t argc, jsval *vp) {
-
-	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
-	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-
-	NSString *arg0 = jsval_to_nsstring( *argvp++, cx );
-
-	CCSprite *real = [[CCSprite alloc] initWithFile:(NSString*)arg0  ];
-	[proxy setRealObj: real];
-	[real release];
-
-	objc_setAssociatedObject(real, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
-	return JS_TRUE;
-}
-
-// Arguments: NSString*
-// Ret value: None
-JSBool JSPROXY_CCSprite_initWithSpriteFrameName_(JSContext *cx, uint32_t argc, jsval *vp) {
-
-	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
-	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-
-	NSString *arg0 = jsval_to_nsstring( *argvp++, cx );
-
-	CCSprite *real = [[CCSprite alloc] initWithSpriteFrameName:(NSString*)arg0  ];
-	[proxy setRealObj: real];
-	[real release];
-
-	objc_setAssociatedObject(real, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
-	return JS_TRUE;
-}
-
-// Arguments: 
-// Ret value: CGPoint
-JSBool JSPROXY_CCSprite_offsetPosition(JSContext *cx, uint32_t argc, jsval *vp) {
-
-	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
-	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
-	CGPoint ret_val;
-
-	CCSprite *real = (CCSprite*) [proxy realObj];
-	ret_val = [real offsetPosition ];
-
-	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 2 );
-	float *buffer = (float*)JS_GetTypedArrayData(typedArray);
-	buffer[0] = ret_val.x;
-	buffer[1] = ret_val.y;
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(typedArray));
-
-	return JS_TRUE;
-}
-
-// Arguments: 
-// Ret value: GLubyte
-JSBool JSPROXY_CCSprite_opacity(JSContext *cx, uint32_t argc, jsval *vp) {
-
-	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
-	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
-	GLubyte ret_val;
-
-	CCSprite *real = (CCSprite*) [proxy realObj];
-	ret_val = [real opacity ];
-	JS_SET_RVAL(cx, vp, INT_TO_JSVAL(ret_val));
-	return JS_TRUE;
-}
-
-// Arguments: NSUInteger
-// Ret value: None
-JSBool JSPROXY_CCSprite_setAtlasIndex_(JSContext *cx, uint32_t argc, jsval *vp) {
-
-	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
-	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	uint32_t arg0; JS_ValueToECMAUint32( cx, *argvp++, &arg0 );
-
-	CCSprite *real = (CCSprite*) [proxy realObj];
-	[real setAtlasIndex:(NSUInteger)arg0  ];
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
-	return JS_TRUE;
-}
-
-// Arguments: CCSpriteBatchNode*
-// Ret value: None
-JSBool JSPROXY_CCSprite_setBatchNode_(JSContext *cx, uint32_t argc, jsval *vp) {
-
-	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
-	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-
-	CCSpriteBatchNode* arg0 = (CCSpriteBatchNode*) jsval_to_nsobject( *argvp++, cx);
-
-	CCSprite *real = (CCSprite*) [proxy realObj];
-	[real setBatchNode:(CCSpriteBatchNode*)arg0  ];
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
-	return JS_TRUE;
-}
-
-// Arguments: ccBlendFunc
-// Ret value: None
-JSBool JSPROXY_CCSprite_setBlendFunc_(JSContext *cx, uint32_t argc, jsval *vp) {
-
-	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
-	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-
-	JSObject *tmp_arg0;
-	JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
-	ccBlendFunc arg0 = *(ccBlendFunc*)JS_GetTypedArrayData( tmp_arg0);
-
-	CCSprite *real = (CCSprite*) [proxy realObj];
-	[real setBlendFunc:(ccBlendFunc)arg0  ];
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
-	return JS_TRUE;
-}
-
-// Arguments: ccColor3B
-// Ret value: None
-JSBool JSPROXY_CCSprite_setColor_(JSContext *cx, uint32_t argc, jsval *vp) {
-
-	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
-	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-
-	JSObject *tmp_arg0;
-	JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
-	ccColor3B arg0 = *(ccColor3B*)JS_GetTypedArrayData( tmp_arg0);
-
-	CCSprite *real = (CCSprite*) [proxy realObj];
-	[real setColor:(ccColor3B)arg0  ];
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
-	return JS_TRUE;
-}
-
-// Arguments: BOOL
-// Ret value: None
-JSBool JSPROXY_CCSprite_setDirty_(JSContext *cx, uint32_t argc, jsval *vp) {
-
-	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
-	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool arg0; JS_ValueToBoolean( cx, *argvp++, &arg0 );
-
-	CCSprite *real = (CCSprite*) [proxy realObj];
-	[real setDirty:(BOOL)arg0  ];
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
-	return JS_TRUE;
-}
-
-// Arguments: NSString*, int
-// Ret value: None
-JSBool JSPROXY_CCSprite_setDisplayFrameWithAnimationName_index_(JSContext *cx, uint32_t argc, jsval *vp) {
-
-	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
-	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 2, @"Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-
-	NSString *arg0 = jsval_to_nsstring( *argvp++, cx );
-	int32_t arg1; JS_ValueToECMAInt32( cx, *argvp++, &arg1 );
-
-	CCSprite *real = (CCSprite*) [proxy realObj];
-	[real setDisplayFrameWithAnimationName:(NSString*)arg0 index:(int)arg1  ];
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
-	return JS_TRUE;
-}
-
-// Arguments: BOOL
-// Ret value: None
-JSBool JSPROXY_CCSprite_setFlipX_(JSContext *cx, uint32_t argc, jsval *vp) {
-
-	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
-	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool arg0; JS_ValueToBoolean( cx, *argvp++, &arg0 );
-
-	CCSprite *real = (CCSprite*) [proxy realObj];
-	[real setFlipX:(BOOL)arg0  ];
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
-	return JS_TRUE;
-}
-
-// Arguments: BOOL
-// Ret value: None
-JSBool JSPROXY_CCSprite_setFlipY_(JSContext *cx, uint32_t argc, jsval *vp) {
-
-	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
-	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool arg0; JS_ValueToBoolean( cx, *argvp++, &arg0 );
-
-	CCSprite *real = (CCSprite*) [proxy realObj];
-	[real setFlipY:(BOOL)arg0  ];
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
-	return JS_TRUE;
-}
-
-// Arguments: GLubyte
-// Ret value: None
-JSBool JSPROXY_CCSprite_setOpacity_(JSContext *cx, uint32_t argc, jsval *vp) {
-
-	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
-	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	uint16_t arg0; JS_ValueToUint16( cx, *argvp++, &arg0 );
-
-	CCSprite *real = (CCSprite*) [proxy realObj];
-	[real setOpacity:(GLubyte)arg0  ];
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
-	return JS_TRUE;
-}
-
-// Arguments: NSString*
-// Ret value: CCSprite
-JSBool JSPROXY_CCSprite_spriteWithFile_(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-
-	NSString *arg0 = jsval_to_nsstring( *argvp++, cx );
-
-	CCSprite *real = [CCSprite spriteWithFile:(NSString*)arg0  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( real, cx );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: NSString*
-// Ret value: CCSprite
-JSBool JSPROXY_CCSprite_spriteWithSpriteFrameName_(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-
-	NSString *arg0 = jsval_to_nsstring( *argvp++, cx );
-
-	CCSprite *real = [CCSprite spriteWithSpriteFrameName:(NSString*)arg0  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( real, cx );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: 
-// Ret value: BOOL
-JSBool JSPROXY_CCSprite_textureRectRotated(JSContext *cx, uint32_t argc, jsval *vp) {
-
-	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
-	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
-	BOOL ret_val;
-
-	CCSprite *real = (CCSprite*) [proxy realObj];
-	ret_val = [real textureRectRotated ];
-	JS_SET_RVAL(cx, vp, BOOLEAN_TO_JSVAL(ret_val));
-	return JS_TRUE;
-}
-
-// Arguments: 
-// Ret value: None
-JSBool JSPROXY_CCSprite_updateTransform(JSContext *cx, uint32_t argc, jsval *vp) {
-
-	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
-	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
-
-	CCSprite *real = (CCSprite*) [proxy realObj];
-	[real updateTransform ];
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
-	return JS_TRUE;
-}
-
-void JSPROXY_CCSprite_createClass(JSContext *cx, JSObject* globalObj, const char* name )
-{
-	JSPROXY_CCSprite_class = (JSClass *)calloc(1, sizeof(JSClass));
-	JSPROXY_CCSprite_class->name = name;
-	JSPROXY_CCSprite_class->addProperty = JS_PropertyStub;
-	JSPROXY_CCSprite_class->delProperty = JS_PropertyStub;
-	JSPROXY_CCSprite_class->getProperty = JS_PropertyStub;
-	JSPROXY_CCSprite_class->setProperty = JS_StrictPropertyStub;
-	JSPROXY_CCSprite_class->enumerate = JS_EnumerateStub;
-	JSPROXY_CCSprite_class->resolve = JS_ResolveStub;
-	JSPROXY_CCSprite_class->convert = JS_ConvertStub;
-	JSPROXY_CCSprite_class->finalize = JSPROXY_CCSprite_finalize;
-	JSPROXY_CCSprite_class->flags = JSCLASS_HAS_PRIVATE;
-
-	static JSPropertySpec properties[] = {
-		{0, 0, 0, 0, 0}
-	};
-	static JSFunctionSpec funcs[] = {
-		JS_FN("atlasIndex", JSPROXY_CCSprite_atlasIndex, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
-		JS_FN("batchNode", JSPROXY_CCSprite_batchNode, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
-		JS_FN("dirty", JSPROXY_CCSprite_dirty, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
-		JS_FN("flipX", JSPROXY_CCSprite_flipX, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
-		JS_FN("flipY", JSPROXY_CCSprite_flipY, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
-		JS_FN("initWithFile", JSPROXY_CCSprite_initWithFile_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
-		JS_FN("initWithSpriteFrameName", JSPROXY_CCSprite_initWithSpriteFrameName_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
-		JS_FN("offsetPosition", JSPROXY_CCSprite_offsetPosition, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
-		JS_FN("opacity", JSPROXY_CCSprite_opacity, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
-		JS_FN("setAtlasIndex", JSPROXY_CCSprite_setAtlasIndex_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
-		JS_FN("setBatchNode", JSPROXY_CCSprite_setBatchNode_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
-		JS_FN("setBlendFunc", JSPROXY_CCSprite_setBlendFunc_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
-		JS_FN("setColor", JSPROXY_CCSprite_setColor_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
-		JS_FN("setDirty", JSPROXY_CCSprite_setDirty_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
-		JS_FN("setDisplayFrameWithAnimationNameIndex", JSPROXY_CCSprite_setDisplayFrameWithAnimationName_index_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
-		JS_FN("setFlipX", JSPROXY_CCSprite_setFlipX_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
-		JS_FN("setFlipY", JSPROXY_CCSprite_setFlipY_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
-		JS_FN("setOpacity", JSPROXY_CCSprite_setOpacity_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
-		JS_FN("textureRectRotated", JSPROXY_CCSprite_textureRectRotated, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
-		JS_FN("updateTransform", JSPROXY_CCSprite_updateTransform, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
-		JS_FS_END
-	};
-	static JSFunctionSpec st_funcs[] = {
-		JS_FN("spriteWithFile", JSPROXY_CCSprite_spriteWithFile_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSFUN_CONSTRUCTOR),
-		JS_FN("spriteWithSpriteFrameName", JSPROXY_CCSprite_spriteWithSpriteFrameName_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSFUN_CONSTRUCTOR),
-		JS_FS_END
-	};
-
-	JSPROXY_CCSprite_object = JS_InitClass(cx, globalObj, JSPROXY_CCNode_object, JSPROXY_CCSprite_class, JSPROXY_CCSprite_constructor,0,properties,funcs,NULL,st_funcs);
-}
-
-@implementation JSPROXY_CCSprite
-
-+(JSObject*) createJSObjectWithRealObject:(id)realObj context:(JSContext*)cx
-{
-	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCSprite_class, JSPROXY_CCSprite_object, NULL);
-	JSPROXY_CCSprite *proxy = [[JSPROXY_CCSprite alloc] initWithJSObject:jsobj];
-	[proxy setRealObj:realObj];
-	JS_SetPrivate(jsobj, proxy);
-
-	if( realObj )
-		objc_setAssociatedObject(realObj, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
-
-	[self swizzleMethods];
-
-	return jsobj;
-}
-
-@end
-
-/*
  * CCAction
  */
 #pragma mark - CCAction
@@ -2843,12 +2338,12 @@ void JSPROXY_CCAction_finalize(JSContext *cx, JSObject *obj)
 
 // Arguments: 
 // Ret value: CCAction
-JSBool JSPROXY_CCAction_action(JSContext *cx, uint32_t argc, jsval *vp) {
+JSBool JSPROXY_CCAction_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( argc == 0, @"Invalid number of arguments" );
 
-	CCAction *real = [CCAction action ];
+	CCAction *ret_val = [CCAction action ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( real, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -3005,7 +2500,7 @@ void JSPROXY_CCAction_createClass(JSContext *cx, JSObject* globalObj, const char
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
-		JS_FN("action", JSPROXY_CCAction_action, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSFUN_CONSTRUCTOR),
+		JS_FN("action", JSPROXY_CCAction_action_static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSFUN_CONSTRUCTOR),
 		JS_FS_END
 	};
 
@@ -3195,14 +2690,14 @@ void JSPROXY_CCActionInterval_finalize(JSContext *cx, JSObject *obj)
 
 // Arguments: ccTime
 // Ret value: CCActionInterval
-JSBool JSPROXY_CCActionInterval_actionWithDuration_(JSContext *cx, uint32_t argc, jsval *vp) {
+JSBool JSPROXY_CCActionInterval_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	double arg0; JS_ValueToNumber( cx, *argvp++, &arg0 );
 
-	CCActionInterval *real = [CCActionInterval actionWithDuration:(ccTime)arg0  ];
+	CCActionInterval *ret_val = [CCActionInterval actionWithDuration:(ccTime)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( real, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -3308,7 +2803,7 @@ void JSPROXY_CCActionInterval_createClass(JSContext *cx, JSObject* globalObj, co
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
-		JS_FN("actionWithDuration", JSPROXY_CCActionInterval_actionWithDuration_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSFUN_CONSTRUCTOR),
+		JS_FN("actionWithDuration", JSPROXY_CCActionInterval_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSFUN_CONSTRUCTOR),
 		JS_FS_END
 	};
 
@@ -3321,6 +2816,280 @@ void JSPROXY_CCActionInterval_createClass(JSContext *cx, JSObject* globalObj, co
 {
 	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCActionInterval_class, JSPROXY_CCActionInterval_object, NULL);
 	JSPROXY_CCActionInterval *proxy = [[JSPROXY_CCActionInterval alloc] initWithJSObject:jsobj];
+	[proxy setRealObj:realObj];
+	JS_SetPrivate(jsobj, proxy);
+
+	if( realObj )
+		objc_setAssociatedObject(realObj, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
+
+	[self swizzleMethods];
+
+	return jsobj;
+}
+
+@end
+
+/*
+ * CCMoveTo
+ */
+#pragma mark - CCMoveTo
+
+JSClass* JSPROXY_CCMoveTo_class = NULL;
+JSObject* JSPROXY_CCMoveTo_object = NULL;
+ // Constructor
+JSBool JSPROXY_CCMoveTo_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JSObject *jsobj = [JSPROXY_CCMoveTo createJSObjectWithRealObject:nil context:cx];
+    JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+    /* no callbacks */
+
+    return JS_TRUE;
+}
+
+// Destructor
+void JSPROXY_CCMoveTo_finalize(JSContext *cx, JSObject *obj)
+{
+	JSPROXY_CCMoveTo *proxy = (JSPROXY_CCMoveTo*)JS_GetPrivate(obj);
+	if (proxy) {
+		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_ASSIGN);
+		/* no callbacks */
+		[proxy release];
+	}
+}
+
+// Arguments: ccTime, CGPoint
+// Ret value: CCMoveTo
+JSBool JSPROXY_CCMoveTo_actionWithDuration_position__static(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	double arg0; JS_ValueToNumber( cx, *argvp++, &arg0 );
+
+	JSObject *tmp_arg1;
+	JS_ValueToObject( cx, *argvp++, &tmp_arg1 );
+	NSCAssert( JS_GetTypedArrayByteLength( tmp_arg1 ) == 8, @"Invalid length");
+#ifdef __CC_PLATFORM_IOS
+	CGPoint arg1 = *(CGPoint*)JS_GetTypedArrayData( tmp_arg1 );
+#elif defined(__CC_PLATFORM_MAC)
+	float* arg1_array = (float*)JS_GetTypedArrayData( tmp_arg1 );
+	CGPoint arg1 = ccp(arg1_array[0], arg1_array[1] );
+#else
+#error Unsupported Platform
+#endif  
+
+	CCMoveTo *ret_val = [CCMoveTo actionWithDuration:(ccTime)arg0 position:(CGPoint)arg1  ];
+
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+	return JS_TRUE;
+}
+
+// Arguments: ccTime, CGPoint
+// Ret value: None
+JSBool JSPROXY_CCMoveTo_initWithDuration_position_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	double arg0; JS_ValueToNumber( cx, *argvp++, &arg0 );
+
+	JSObject *tmp_arg1;
+	JS_ValueToObject( cx, *argvp++, &tmp_arg1 );
+	NSCAssert( JS_GetTypedArrayByteLength( tmp_arg1 ) == 8, @"Invalid length");
+#ifdef __CC_PLATFORM_IOS
+	CGPoint arg1 = *(CGPoint*)JS_GetTypedArrayData( tmp_arg1 );
+#elif defined(__CC_PLATFORM_MAC)
+	float* arg1_array = (float*)JS_GetTypedArrayData( tmp_arg1 );
+	CGPoint arg1 = ccp(arg1_array[0], arg1_array[1] );
+#else
+#error Unsupported Platform
+#endif  
+
+	CCMoveTo *real = [[CCMoveTo alloc] initWithDuration:(ccTime)arg0 position:(CGPoint)arg1  ];
+	[proxy setRealObj: real];
+	[real release];
+
+	objc_setAssociatedObject(real, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+void JSPROXY_CCMoveTo_createClass(JSContext *cx, JSObject* globalObj, const char* name )
+{
+	JSPROXY_CCMoveTo_class = (JSClass *)calloc(1, sizeof(JSClass));
+	JSPROXY_CCMoveTo_class->name = name;
+	JSPROXY_CCMoveTo_class->addProperty = JS_PropertyStub;
+	JSPROXY_CCMoveTo_class->delProperty = JS_PropertyStub;
+	JSPROXY_CCMoveTo_class->getProperty = JS_PropertyStub;
+	JSPROXY_CCMoveTo_class->setProperty = JS_StrictPropertyStub;
+	JSPROXY_CCMoveTo_class->enumerate = JS_EnumerateStub;
+	JSPROXY_CCMoveTo_class->resolve = JS_ResolveStub;
+	JSPROXY_CCMoveTo_class->convert = JS_ConvertStub;
+	JSPROXY_CCMoveTo_class->finalize = JSPROXY_CCMoveTo_finalize;
+	JSPROXY_CCMoveTo_class->flags = JSCLASS_HAS_PRIVATE;
+
+	static JSPropertySpec properties[] = {
+		{0, 0, 0, 0, 0}
+	};
+	static JSFunctionSpec funcs[] = {
+		JS_FN("initWithDurationPosition", JSPROXY_CCMoveTo_initWithDuration_position_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FS_END
+	};
+	static JSFunctionSpec st_funcs[] = {
+		JS_FN("actionWithDurationPosition", JSPROXY_CCMoveTo_actionWithDuration_position__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSFUN_CONSTRUCTOR),
+		JS_FS_END
+	};
+
+	JSPROXY_CCMoveTo_object = JS_InitClass(cx, globalObj, JSPROXY_CCActionInterval_object, JSPROXY_CCMoveTo_class, JSPROXY_CCMoveTo_constructor,0,properties,funcs,NULL,st_funcs);
+}
+
+@implementation JSPROXY_CCMoveTo
+
++(JSObject*) createJSObjectWithRealObject:(id)realObj context:(JSContext*)cx
+{
+	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCMoveTo_class, JSPROXY_CCMoveTo_object, NULL);
+	JSPROXY_CCMoveTo *proxy = [[JSPROXY_CCMoveTo alloc] initWithJSObject:jsobj];
+	[proxy setRealObj:realObj];
+	JS_SetPrivate(jsobj, proxy);
+
+	if( realObj )
+		objc_setAssociatedObject(realObj, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
+
+	[self swizzleMethods];
+
+	return jsobj;
+}
+
+@end
+
+/*
+ * CCMoveBy
+ */
+#pragma mark - CCMoveBy
+
+JSClass* JSPROXY_CCMoveBy_class = NULL;
+JSObject* JSPROXY_CCMoveBy_object = NULL;
+ // Constructor
+JSBool JSPROXY_CCMoveBy_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JSObject *jsobj = [JSPROXY_CCMoveBy createJSObjectWithRealObject:nil context:cx];
+    JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+    /* no callbacks */
+
+    return JS_TRUE;
+}
+
+// Destructor
+void JSPROXY_CCMoveBy_finalize(JSContext *cx, JSObject *obj)
+{
+	JSPROXY_CCMoveBy *proxy = (JSPROXY_CCMoveBy*)JS_GetPrivate(obj);
+	if (proxy) {
+		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_ASSIGN);
+		/* no callbacks */
+		[proxy release];
+	}
+}
+
+// Arguments: ccTime, CGPoint
+// Ret value: CCMoveBy
+JSBool JSPROXY_CCMoveBy_actionWithDuration_position__static(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	double arg0; JS_ValueToNumber( cx, *argvp++, &arg0 );
+
+	JSObject *tmp_arg1;
+	JS_ValueToObject( cx, *argvp++, &tmp_arg1 );
+	NSCAssert( JS_GetTypedArrayByteLength( tmp_arg1 ) == 8, @"Invalid length");
+#ifdef __CC_PLATFORM_IOS
+	CGPoint arg1 = *(CGPoint*)JS_GetTypedArrayData( tmp_arg1 );
+#elif defined(__CC_PLATFORM_MAC)
+	float* arg1_array = (float*)JS_GetTypedArrayData( tmp_arg1 );
+	CGPoint arg1 = ccp(arg1_array[0], arg1_array[1] );
+#else
+#error Unsupported Platform
+#endif  
+
+	CCMoveBy *ret_val = [CCMoveBy actionWithDuration:(ccTime)arg0 position:(CGPoint)arg1  ];
+
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+	return JS_TRUE;
+}
+
+// Arguments: ccTime, CGPoint
+// Ret value: None
+JSBool JSPROXY_CCMoveBy_initWithDuration_position_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	double arg0; JS_ValueToNumber( cx, *argvp++, &arg0 );
+
+	JSObject *tmp_arg1;
+	JS_ValueToObject( cx, *argvp++, &tmp_arg1 );
+	NSCAssert( JS_GetTypedArrayByteLength( tmp_arg1 ) == 8, @"Invalid length");
+#ifdef __CC_PLATFORM_IOS
+	CGPoint arg1 = *(CGPoint*)JS_GetTypedArrayData( tmp_arg1 );
+#elif defined(__CC_PLATFORM_MAC)
+	float* arg1_array = (float*)JS_GetTypedArrayData( tmp_arg1 );
+	CGPoint arg1 = ccp(arg1_array[0], arg1_array[1] );
+#else
+#error Unsupported Platform
+#endif  
+
+	CCMoveBy *real = [[CCMoveBy alloc] initWithDuration:(ccTime)arg0 position:(CGPoint)arg1  ];
+	[proxy setRealObj: real];
+	[real release];
+
+	objc_setAssociatedObject(real, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+void JSPROXY_CCMoveBy_createClass(JSContext *cx, JSObject* globalObj, const char* name )
+{
+	JSPROXY_CCMoveBy_class = (JSClass *)calloc(1, sizeof(JSClass));
+	JSPROXY_CCMoveBy_class->name = name;
+	JSPROXY_CCMoveBy_class->addProperty = JS_PropertyStub;
+	JSPROXY_CCMoveBy_class->delProperty = JS_PropertyStub;
+	JSPROXY_CCMoveBy_class->getProperty = JS_PropertyStub;
+	JSPROXY_CCMoveBy_class->setProperty = JS_StrictPropertyStub;
+	JSPROXY_CCMoveBy_class->enumerate = JS_EnumerateStub;
+	JSPROXY_CCMoveBy_class->resolve = JS_ResolveStub;
+	JSPROXY_CCMoveBy_class->convert = JS_ConvertStub;
+	JSPROXY_CCMoveBy_class->finalize = JSPROXY_CCMoveBy_finalize;
+	JSPROXY_CCMoveBy_class->flags = JSCLASS_HAS_PRIVATE;
+
+	static JSPropertySpec properties[] = {
+		{0, 0, 0, 0, 0}
+	};
+	static JSFunctionSpec funcs[] = {
+		JS_FN("initWithDurationPosition", JSPROXY_CCMoveBy_initWithDuration_position_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FS_END
+	};
+	static JSFunctionSpec st_funcs[] = {
+		JS_FN("actionWithDurationPosition", JSPROXY_CCMoveBy_actionWithDuration_position__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSFUN_CONSTRUCTOR),
+		JS_FS_END
+	};
+
+	JSPROXY_CCMoveBy_object = JS_InitClass(cx, globalObj, JSPROXY_CCMoveTo_object, JSPROXY_CCMoveBy_class, JSPROXY_CCMoveBy_constructor,0,properties,funcs,NULL,st_funcs);
+}
+
+@implementation JSPROXY_CCMoveBy
+
++(JSObject*) createJSObjectWithRealObject:(id)realObj context:(JSContext*)cx
+{
+	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCMoveBy_class, JSPROXY_CCMoveBy_object, NULL);
+	JSPROXY_CCMoveBy *proxy = [[JSPROXY_CCMoveBy alloc] initWithJSObject:jsobj];
 	[proxy setRealObj:realObj];
 	JS_SetPrivate(jsobj, proxy);
 
@@ -3365,15 +3134,15 @@ void JSPROXY_CCScaleTo_finalize(JSContext *cx, JSObject *obj)
 
 // Arguments: ccTime, float
 // Ret value: CCScaleTo
-JSBool JSPROXY_CCScaleTo_actionWithDuration_scale_(JSContext *cx, uint32_t argc, jsval *vp) {
+JSBool JSPROXY_CCScaleTo_actionWithDuration_scale__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	double arg0; JS_ValueToNumber( cx, *argvp++, &arg0 );
 	double arg1; JS_ValueToNumber( cx, *argvp++, &arg1 );
 
-	CCScaleTo *real = [CCScaleTo actionWithDuration:(ccTime)arg0 scale:(float)arg1  ];
+	CCScaleTo *ret_val = [CCScaleTo actionWithDuration:(ccTime)arg0 scale:(float)arg1  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( real, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -3381,16 +3150,16 @@ JSBool JSPROXY_CCScaleTo_actionWithDuration_scale_(JSContext *cx, uint32_t argc,
 
 // Arguments: ccTime, float, float
 // Ret value: CCScaleTo
-JSBool JSPROXY_CCScaleTo_actionWithDuration_scaleX_scaleY_(JSContext *cx, uint32_t argc, jsval *vp) {
+JSBool JSPROXY_CCScaleTo_actionWithDuration_scaleX_scaleY__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( argc == 3, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	double arg0; JS_ValueToNumber( cx, *argvp++, &arg0 );
 	double arg1; JS_ValueToNumber( cx, *argvp++, &arg1 );
 	double arg2; JS_ValueToNumber( cx, *argvp++, &arg2 );
 
-	CCScaleTo *real = [CCScaleTo actionWithDuration:(ccTime)arg0 scaleX:(float)arg1 scaleY:(float)arg2  ];
+	CCScaleTo *ret_val = [CCScaleTo actionWithDuration:(ccTime)arg0 scaleX:(float)arg1 scaleY:(float)arg2  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( real, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -3464,8 +3233,8 @@ void JSPROXY_CCScaleTo_createClass(JSContext *cx, JSObject* globalObj, const cha
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
-		JS_FN("actionWithDurationScale", JSPROXY_CCScaleTo_actionWithDuration_scale_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSFUN_CONSTRUCTOR),
-		JS_FN("actionWithDurationScalexScaley", JSPROXY_CCScaleTo_actionWithDuration_scaleX_scaleY_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSFUN_CONSTRUCTOR),
+		JS_FN("actionWithDurationScale", JSPROXY_CCScaleTo_actionWithDuration_scale__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSFUN_CONSTRUCTOR),
+		JS_FN("actionWithDurationScalexScaley", JSPROXY_CCScaleTo_actionWithDuration_scaleX_scaleY__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSFUN_CONSTRUCTOR),
 		JS_FS_END
 	};
 
@@ -3492,16 +3261,16 @@ void JSPROXY_CCScaleTo_createClass(JSContext *cx, JSObject* globalObj, const cha
 @end
 
 /*
- * CCScaleBy
+ * CCMenuItem
  */
-#pragma mark - CCScaleBy
+#pragma mark - CCMenuItem
 
-JSClass* JSPROXY_CCScaleBy_class = NULL;
-JSObject* JSPROXY_CCScaleBy_object = NULL;
+JSClass* JSPROXY_CCMenuItem_class = NULL;
+JSObject* JSPROXY_CCMenuItem_object = NULL;
  // Constructor
-JSBool JSPROXY_CCScaleBy_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+JSBool JSPROXY_CCMenuItem_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
-    JSObject *jsobj = [JSPROXY_CCScaleBy createJSObjectWithRealObject:nil context:cx];
+    JSObject *jsobj = [JSPROXY_CCMenuItem createJSObjectWithRealObject:nil context:cx];
     JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
     /* no callbacks */
@@ -3510,107 +3279,9 @@ JSBool JSPROXY_CCScaleBy_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 }
 
 // Destructor
-void JSPROXY_CCScaleBy_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCMenuItem_finalize(JSContext *cx, JSObject *obj)
 {
-	JSPROXY_CCScaleBy *proxy = (JSPROXY_CCScaleBy*)JS_GetPrivate(obj);
-	if (proxy) {
-		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_ASSIGN);
-		/* no callbacks */
-		[proxy release];
-	}
-}
-
-// Arguments: ccTime, float
-// Ret value: None
-JSBool JSPROXY_CCScaleBy_initWithDuration_scale_(JSContext *cx, uint32_t argc, jsval *vp) {
-
-	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
-	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 2, @"Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	double arg0; JS_ValueToNumber( cx, *argvp++, &arg0 );
-	double arg1; JS_ValueToNumber( cx, *argvp++, &arg1 );
-
-	CCScaleBy *real = [[CCScaleBy alloc] initWithDuration:(ccTime)arg0 scale:(float)arg1  ];
-	[proxy setRealObj: real];
-	[real release];
-
-	objc_setAssociatedObject(real, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
-	return JS_TRUE;
-}
-
-void JSPROXY_CCScaleBy_createClass(JSContext *cx, JSObject* globalObj, const char* name )
-{
-	JSPROXY_CCScaleBy_class = (JSClass *)calloc(1, sizeof(JSClass));
-	JSPROXY_CCScaleBy_class->name = name;
-	JSPROXY_CCScaleBy_class->addProperty = JS_PropertyStub;
-	JSPROXY_CCScaleBy_class->delProperty = JS_PropertyStub;
-	JSPROXY_CCScaleBy_class->getProperty = JS_PropertyStub;
-	JSPROXY_CCScaleBy_class->setProperty = JS_StrictPropertyStub;
-	JSPROXY_CCScaleBy_class->enumerate = JS_EnumerateStub;
-	JSPROXY_CCScaleBy_class->resolve = JS_ResolveStub;
-	JSPROXY_CCScaleBy_class->convert = JS_ConvertStub;
-	JSPROXY_CCScaleBy_class->finalize = JSPROXY_CCScaleBy_finalize;
-	JSPROXY_CCScaleBy_class->flags = JSCLASS_HAS_PRIVATE;
-
-	static JSPropertySpec properties[] = {
-		{0, 0, 0, 0, 0}
-	};
-	static JSFunctionSpec funcs[] = {
-		JS_FN("initWithDurationScale", JSPROXY_CCScaleBy_initWithDuration_scale_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
-		JS_FS_END
-	};
-	static JSFunctionSpec st_funcs[] = {
-		JS_FS_END
-	};
-
-	JSPROXY_CCScaleBy_object = JS_InitClass(cx, globalObj, JSPROXY_CCScaleTo_object, JSPROXY_CCScaleBy_class, JSPROXY_CCScaleBy_constructor,0,properties,funcs,NULL,st_funcs);
-}
-
-@implementation JSPROXY_CCScaleBy
-
-+(JSObject*) createJSObjectWithRealObject:(id)realObj context:(JSContext*)cx
-{
-	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCScaleBy_class, JSPROXY_CCScaleBy_object, NULL);
-	JSPROXY_CCScaleBy *proxy = [[JSPROXY_CCScaleBy alloc] initWithJSObject:jsobj];
-	[proxy setRealObj:realObj];
-	JS_SetPrivate(jsobj, proxy);
-
-	if( realObj )
-		objc_setAssociatedObject(realObj, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
-
-	[self swizzleMethods];
-
-	return jsobj;
-}
-
-@end
-
-/*
- * CCLayer
- */
-#pragma mark - CCLayer
-
-JSClass* JSPROXY_CCLayer_class = NULL;
-JSObject* JSPROXY_CCLayer_object = NULL;
- // Constructor
-JSBool JSPROXY_CCLayer_constructor(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JSObject *jsobj = [JSPROXY_CCLayer createJSObjectWithRealObject:nil context:cx];
-    JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-    /* no callbacks */
-
-    return JS_TRUE;
-}
-
-// Destructor
-void JSPROXY_CCLayer_finalize(JSContext *cx, JSObject *obj)
-{
-	JSPROXY_CCLayer *proxy = (JSPROXY_CCLayer*)JS_GetPrivate(obj);
+	JSPROXY_CCMenuItem *proxy = (JSPROXY_CCMenuItem*)JS_GetPrivate(obj);
 	if (proxy) {
 		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_ASSIGN);
 		/* no callbacks */
@@ -3619,8 +3290,40 @@ void JSPROXY_CCLayer_finalize(JSContext *cx, JSObject *obj)
 }
 
 // Arguments: 
+// Ret value: None
+JSBool JSPROXY_CCMenuItem_activate(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 0, @"Invalid number of arguments" );
+
+	CCMenuItem *real = (CCMenuItem*) [proxy realObj];
+	[real activate ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: 
+// Ret value: None
+JSBool JSPROXY_CCMenuItem_cleanup(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 0, @"Invalid number of arguments" );
+
+	CCMenuItem *real = (CCMenuItem*) [proxy realObj];
+	[real cleanup ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: 
 // Ret value: BOOL
-JSBool JSPROXY_CCLayer_isKeyboardEnabled(JSContext *cx, uint32_t argc, jsval *vp) {
+JSBool JSPROXY_CCMenuItem_isEnabled(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
@@ -3629,15 +3332,15 @@ JSBool JSPROXY_CCLayer_isKeyboardEnabled(JSContext *cx, uint32_t argc, jsval *vp
 	NSCAssert( argc == 0, @"Invalid number of arguments" );
 	BOOL ret_val;
 
-	CCLayer *real = (CCLayer*) [proxy realObj];
-	ret_val = [real isKeyboardEnabled ];
+	CCMenuItem *real = (CCMenuItem*) [proxy realObj];
+	ret_val = [real isEnabled ];
 	JS_SET_RVAL(cx, vp, BOOLEAN_TO_JSVAL(ret_val));
 	return JS_TRUE;
 }
 
 // Arguments: 
 // Ret value: BOOL
-JSBool JSPROXY_CCLayer_isMouseEnabled(JSContext *cx, uint32_t argc, jsval *vp) {
+JSBool JSPROXY_CCMenuItem_isSelected(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
@@ -3646,66 +3349,31 @@ JSBool JSPROXY_CCLayer_isMouseEnabled(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( argc == 0, @"Invalid number of arguments" );
 	BOOL ret_val;
 
-	CCLayer *real = (CCLayer*) [proxy realObj];
-	ret_val = [real isMouseEnabled ];
+	CCMenuItem *real = (CCMenuItem*) [proxy realObj];
+	ret_val = [real isSelected ];
 	JS_SET_RVAL(cx, vp, BOOLEAN_TO_JSVAL(ret_val));
 	return JS_TRUE;
 }
 
 // Arguments: 
-// Ret value: BOOL
-JSBool JSPROXY_CCLayer_isTouchEnabled(JSContext *cx, uint32_t argc, jsval *vp) {
+// Ret value: None
+JSBool JSPROXY_CCMenuItem_selected(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	NSCAssert( argc == 0, @"Invalid number of arguments" );
-	BOOL ret_val;
 
-	CCLayer *real = (CCLayer*) [proxy realObj];
-	ret_val = [real isTouchEnabled ];
-	JS_SET_RVAL(cx, vp, BOOLEAN_TO_JSVAL(ret_val));
-	return JS_TRUE;
-}
-
-// Arguments: 
-// Ret value: NSInteger
-JSBool JSPROXY_CCLayer_keyboardDelegatePriority(JSContext *cx, uint32_t argc, jsval *vp) {
-
-	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
-	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
-	NSInteger ret_val;
-
-	CCLayer *real = (CCLayer*) [proxy realObj];
-	ret_val = [real keyboardDelegatePriority ];
-	JS_SET_RVAL(cx, vp, INT_TO_JSVAL(ret_val));
-	return JS_TRUE;
-}
-
-// Arguments: 
-// Ret value: NSInteger
-JSBool JSPROXY_CCLayer_mouseDelegatePriority(JSContext *cx, uint32_t argc, jsval *vp) {
-
-	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
-	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
-	NSInteger ret_val;
-
-	CCLayer *real = (CCLayer*) [proxy realObj];
-	ret_val = [real mouseDelegatePriority ];
-	JS_SET_RVAL(cx, vp, INT_TO_JSVAL(ret_val));
+	CCMenuItem *real = (CCMenuItem*) [proxy realObj];
+	[real selected ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
 
 // Arguments: BOOL
 // Ret value: None
-JSBool JSPROXY_CCLayer_setIsKeyboardEnabled_(JSContext *cx, uint32_t argc, jsval *vp) {
+JSBool JSPROXY_CCMenuItem_setIsEnabled_(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
@@ -3715,107 +3383,68 @@ JSBool JSPROXY_CCLayer_setIsKeyboardEnabled_(JSContext *cx, uint32_t argc, jsval
 	jsval *argvp = JS_ARGV(cx,vp);
 	JSBool arg0; JS_ValueToBoolean( cx, *argvp++, &arg0 );
 
-	CCLayer *real = (CCLayer*) [proxy realObj];
-	[real setIsKeyboardEnabled:(BOOL)arg0  ];
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
-	return JS_TRUE;
-}
-
-// Arguments: BOOL
-// Ret value: None
-JSBool JSPROXY_CCLayer_setIsMouseEnabled_(JSContext *cx, uint32_t argc, jsval *vp) {
-
-	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
-	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool arg0; JS_ValueToBoolean( cx, *argvp++, &arg0 );
-
-	CCLayer *real = (CCLayer*) [proxy realObj];
-	[real setIsMouseEnabled:(BOOL)arg0  ];
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
-	return JS_TRUE;
-}
-
-// Arguments: BOOL
-// Ret value: None
-JSBool JSPROXY_CCLayer_setIsTouchEnabled_(JSContext *cx, uint32_t argc, jsval *vp) {
-
-	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
-	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool arg0; JS_ValueToBoolean( cx, *argvp++, &arg0 );
-
-	CCLayer *real = (CCLayer*) [proxy realObj];
-	[real setIsTouchEnabled:(BOOL)arg0  ];
+	CCMenuItem *real = (CCMenuItem*) [proxy realObj];
+	[real setIsEnabled:(BOOL)arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
 
 // Arguments: 
-// Ret value: NSInteger
-JSBool JSPROXY_CCLayer_touchDelegatePriority(JSContext *cx, uint32_t argc, jsval *vp) {
+// Ret value: None
+JSBool JSPROXY_CCMenuItem_unselected(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	NSCAssert( argc == 0, @"Invalid number of arguments" );
-	NSInteger ret_val;
 
-	CCLayer *real = (CCLayer*) [proxy realObj];
-	ret_val = [real touchDelegatePriority ];
-	JS_SET_RVAL(cx, vp, INT_TO_JSVAL(ret_val));
+	CCMenuItem *real = (CCMenuItem*) [proxy realObj];
+	[real unselected ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
 
-void JSPROXY_CCLayer_createClass(JSContext *cx, JSObject* globalObj, const char* name )
+void JSPROXY_CCMenuItem_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
-	JSPROXY_CCLayer_class = (JSClass *)calloc(1, sizeof(JSClass));
-	JSPROXY_CCLayer_class->name = name;
-	JSPROXY_CCLayer_class->addProperty = JS_PropertyStub;
-	JSPROXY_CCLayer_class->delProperty = JS_PropertyStub;
-	JSPROXY_CCLayer_class->getProperty = JS_PropertyStub;
-	JSPROXY_CCLayer_class->setProperty = JS_StrictPropertyStub;
-	JSPROXY_CCLayer_class->enumerate = JS_EnumerateStub;
-	JSPROXY_CCLayer_class->resolve = JS_ResolveStub;
-	JSPROXY_CCLayer_class->convert = JS_ConvertStub;
-	JSPROXY_CCLayer_class->finalize = JSPROXY_CCLayer_finalize;
-	JSPROXY_CCLayer_class->flags = JSCLASS_HAS_PRIVATE;
+	JSPROXY_CCMenuItem_class = (JSClass *)calloc(1, sizeof(JSClass));
+	JSPROXY_CCMenuItem_class->name = name;
+	JSPROXY_CCMenuItem_class->addProperty = JS_PropertyStub;
+	JSPROXY_CCMenuItem_class->delProperty = JS_PropertyStub;
+	JSPROXY_CCMenuItem_class->getProperty = JS_PropertyStub;
+	JSPROXY_CCMenuItem_class->setProperty = JS_StrictPropertyStub;
+	JSPROXY_CCMenuItem_class->enumerate = JS_EnumerateStub;
+	JSPROXY_CCMenuItem_class->resolve = JS_ResolveStub;
+	JSPROXY_CCMenuItem_class->convert = JS_ConvertStub;
+	JSPROXY_CCMenuItem_class->finalize = JSPROXY_CCMenuItem_finalize;
+	JSPROXY_CCMenuItem_class->flags = JSCLASS_HAS_PRIVATE;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
 	};
 	static JSFunctionSpec funcs[] = {
-		JS_FN("isKeyboardEnabled", JSPROXY_CCLayer_isKeyboardEnabled, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
-		JS_FN("isMouseEnabled", JSPROXY_CCLayer_isMouseEnabled, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
-		JS_FN("isTouchEnabled", JSPROXY_CCLayer_isTouchEnabled, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
-		JS_FN("keyboardDelegatePriority", JSPROXY_CCLayer_keyboardDelegatePriority, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
-		JS_FN("mouseDelegatePriority", JSPROXY_CCLayer_mouseDelegatePriority, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
-		JS_FN("setIsKeyboardEnabled", JSPROXY_CCLayer_setIsKeyboardEnabled_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
-		JS_FN("setIsMouseEnabled", JSPROXY_CCLayer_setIsMouseEnabled_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
-		JS_FN("setIsTouchEnabled", JSPROXY_CCLayer_setIsTouchEnabled_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
-		JS_FN("touchDelegatePriority", JSPROXY_CCLayer_touchDelegatePriority, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("activate", JSPROXY_CCMenuItem_activate, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("cleanup", JSPROXY_CCMenuItem_cleanup, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("isEnabled", JSPROXY_CCMenuItem_isEnabled, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("isSelected", JSPROXY_CCMenuItem_isSelected, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("selected", JSPROXY_CCMenuItem_selected, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("setIsEnabled", JSPROXY_CCMenuItem_setIsEnabled_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("unselected", JSPROXY_CCMenuItem_unselected, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FS_END
 	};
 
-	JSPROXY_CCLayer_object = JS_InitClass(cx, globalObj, JSPROXY_CCNode_object, JSPROXY_CCLayer_class, JSPROXY_CCLayer_constructor,0,properties,funcs,NULL,st_funcs);
+	JSPROXY_CCMenuItem_object = JS_InitClass(cx, globalObj, JSPROXY_CCNode_object, JSPROXY_CCMenuItem_class, JSPROXY_CCMenuItem_constructor,0,properties,funcs,NULL,st_funcs);
 }
 
-@implementation JSPROXY_CCLayer
+@implementation JSPROXY_CCMenuItem
 
 +(JSObject*) createJSObjectWithRealObject:(id)realObj context:(JSContext*)cx
 {
-	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCLayer_class, JSPROXY_CCLayer_object, NULL);
-	JSPROXY_CCLayer *proxy = [[JSPROXY_CCLayer alloc] initWithJSObject:jsobj];
+	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCMenuItem_class, JSPROXY_CCMenuItem_object, NULL);
+	JSPROXY_CCMenuItem *proxy = [[JSPROXY_CCMenuItem alloc] initWithJSObject:jsobj];
 	[proxy setRealObj:realObj];
 	JS_SetPrivate(jsobj, proxy);
 
@@ -3830,16 +3459,16 @@ void JSPROXY_CCLayer_createClass(JSContext *cx, JSObject* globalObj, const char*
 @end
 
 /*
- * CCMoveTo
+ * CCMenuItemSprite
  */
-#pragma mark - CCMoveTo
+#pragma mark - CCMenuItemSprite
 
-JSClass* JSPROXY_CCMoveTo_class = NULL;
-JSObject* JSPROXY_CCMoveTo_object = NULL;
+JSClass* JSPROXY_CCMenuItemSprite_class = NULL;
+JSObject* JSPROXY_CCMenuItemSprite_object = NULL;
  // Constructor
-JSBool JSPROXY_CCMoveTo_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+JSBool JSPROXY_CCMenuItemSprite_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
-    JSObject *jsobj = [JSPROXY_CCMoveTo createJSObjectWithRealObject:nil context:cx];
+    JSObject *jsobj = [JSPROXY_CCMenuItemSprite createJSObjectWithRealObject:nil context:cx];
     JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
     /* no callbacks */
@@ -3848,283 +3477,9 @@ JSBool JSPROXY_CCMoveTo_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 }
 
 // Destructor
-void JSPROXY_CCMoveTo_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCMenuItemSprite_finalize(JSContext *cx, JSObject *obj)
 {
-	JSPROXY_CCMoveTo *proxy = (JSPROXY_CCMoveTo*)JS_GetPrivate(obj);
-	if (proxy) {
-		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_ASSIGN);
-		/* no callbacks */
-		[proxy release];
-	}
-}
-
-// Arguments: ccTime, CGPoint
-// Ret value: CCMoveTo
-JSBool JSPROXY_CCMoveTo_actionWithDuration_position_(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 2, @"Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	double arg0; JS_ValueToNumber( cx, *argvp++, &arg0 );
-
-	JSObject *tmp_arg1;
-	JS_ValueToObject( cx, *argvp++, &tmp_arg1 );
-	NSCAssert( JS_GetTypedArrayByteLength( tmp_arg1 ) == 8, @"Invalid length");
-#ifdef __CC_PLATFORM_IOS
-	CGPoint arg1 = *(CGPoint*)JS_GetTypedArrayData( tmp_arg1 );
-#elif defined(__CC_PLATFORM_MAC)
-	float* arg1_array = (float*)JS_GetTypedArrayData( tmp_arg1 );
-	CGPoint arg1 = ccp(arg1_array[0], arg1_array[1] );
-#else
-#error Unsupported Platform
-#endif  
-
-	CCMoveTo *real = [CCMoveTo actionWithDuration:(ccTime)arg0 position:(CGPoint)arg1  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( real, cx );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: ccTime, CGPoint
-// Ret value: None
-JSBool JSPROXY_CCMoveTo_initWithDuration_position_(JSContext *cx, uint32_t argc, jsval *vp) {
-
-	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
-	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 2, @"Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	double arg0; JS_ValueToNumber( cx, *argvp++, &arg0 );
-
-	JSObject *tmp_arg1;
-	JS_ValueToObject( cx, *argvp++, &tmp_arg1 );
-	NSCAssert( JS_GetTypedArrayByteLength( tmp_arg1 ) == 8, @"Invalid length");
-#ifdef __CC_PLATFORM_IOS
-	CGPoint arg1 = *(CGPoint*)JS_GetTypedArrayData( tmp_arg1 );
-#elif defined(__CC_PLATFORM_MAC)
-	float* arg1_array = (float*)JS_GetTypedArrayData( tmp_arg1 );
-	CGPoint arg1 = ccp(arg1_array[0], arg1_array[1] );
-#else
-#error Unsupported Platform
-#endif  
-
-	CCMoveTo *real = [[CCMoveTo alloc] initWithDuration:(ccTime)arg0 position:(CGPoint)arg1  ];
-	[proxy setRealObj: real];
-	[real release];
-
-	objc_setAssociatedObject(real, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
-	return JS_TRUE;
-}
-
-void JSPROXY_CCMoveTo_createClass(JSContext *cx, JSObject* globalObj, const char* name )
-{
-	JSPROXY_CCMoveTo_class = (JSClass *)calloc(1, sizeof(JSClass));
-	JSPROXY_CCMoveTo_class->name = name;
-	JSPROXY_CCMoveTo_class->addProperty = JS_PropertyStub;
-	JSPROXY_CCMoveTo_class->delProperty = JS_PropertyStub;
-	JSPROXY_CCMoveTo_class->getProperty = JS_PropertyStub;
-	JSPROXY_CCMoveTo_class->setProperty = JS_StrictPropertyStub;
-	JSPROXY_CCMoveTo_class->enumerate = JS_EnumerateStub;
-	JSPROXY_CCMoveTo_class->resolve = JS_ResolveStub;
-	JSPROXY_CCMoveTo_class->convert = JS_ConvertStub;
-	JSPROXY_CCMoveTo_class->finalize = JSPROXY_CCMoveTo_finalize;
-	JSPROXY_CCMoveTo_class->flags = JSCLASS_HAS_PRIVATE;
-
-	static JSPropertySpec properties[] = {
-		{0, 0, 0, 0, 0}
-	};
-	static JSFunctionSpec funcs[] = {
-		JS_FN("initWithDurationPosition", JSPROXY_CCMoveTo_initWithDuration_position_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
-		JS_FS_END
-	};
-	static JSFunctionSpec st_funcs[] = {
-		JS_FN("actionWithDurationPosition", JSPROXY_CCMoveTo_actionWithDuration_position_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSFUN_CONSTRUCTOR),
-		JS_FS_END
-	};
-
-	JSPROXY_CCMoveTo_object = JS_InitClass(cx, globalObj, JSPROXY_CCActionInterval_object, JSPROXY_CCMoveTo_class, JSPROXY_CCMoveTo_constructor,0,properties,funcs,NULL,st_funcs);
-}
-
-@implementation JSPROXY_CCMoveTo
-
-+(JSObject*) createJSObjectWithRealObject:(id)realObj context:(JSContext*)cx
-{
-	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCMoveTo_class, JSPROXY_CCMoveTo_object, NULL);
-	JSPROXY_CCMoveTo *proxy = [[JSPROXY_CCMoveTo alloc] initWithJSObject:jsobj];
-	[proxy setRealObj:realObj];
-	JS_SetPrivate(jsobj, proxy);
-
-	if( realObj )
-		objc_setAssociatedObject(realObj, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
-
-	[self swizzleMethods];
-
-	return jsobj;
-}
-
-@end
-
-/*
- * CCMoveBy
- */
-#pragma mark - CCMoveBy
-
-JSClass* JSPROXY_CCMoveBy_class = NULL;
-JSObject* JSPROXY_CCMoveBy_object = NULL;
- // Constructor
-JSBool JSPROXY_CCMoveBy_constructor(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JSObject *jsobj = [JSPROXY_CCMoveBy createJSObjectWithRealObject:nil context:cx];
-    JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-    /* no callbacks */
-
-    return JS_TRUE;
-}
-
-// Destructor
-void JSPROXY_CCMoveBy_finalize(JSContext *cx, JSObject *obj)
-{
-	JSPROXY_CCMoveBy *proxy = (JSPROXY_CCMoveBy*)JS_GetPrivate(obj);
-	if (proxy) {
-		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_ASSIGN);
-		/* no callbacks */
-		[proxy release];
-	}
-}
-
-// Arguments: ccTime, CGPoint
-// Ret value: CCMoveBy
-JSBool JSPROXY_CCMoveBy_actionWithDuration_position_(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 2, @"Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	double arg0; JS_ValueToNumber( cx, *argvp++, &arg0 );
-
-	JSObject *tmp_arg1;
-	JS_ValueToObject( cx, *argvp++, &tmp_arg1 );
-	NSCAssert( JS_GetTypedArrayByteLength( tmp_arg1 ) == 8, @"Invalid length");
-#ifdef __CC_PLATFORM_IOS
-	CGPoint arg1 = *(CGPoint*)JS_GetTypedArrayData( tmp_arg1 );
-#elif defined(__CC_PLATFORM_MAC)
-	float* arg1_array = (float*)JS_GetTypedArrayData( tmp_arg1 );
-	CGPoint arg1 = ccp(arg1_array[0], arg1_array[1] );
-#else
-#error Unsupported Platform
-#endif  
-
-	CCMoveBy *real = [CCMoveBy actionWithDuration:(ccTime)arg0 position:(CGPoint)arg1  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( real, cx );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: ccTime, CGPoint
-// Ret value: None
-JSBool JSPROXY_CCMoveBy_initWithDuration_position_(JSContext *cx, uint32_t argc, jsval *vp) {
-
-	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
-	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 2, @"Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	double arg0; JS_ValueToNumber( cx, *argvp++, &arg0 );
-
-	JSObject *tmp_arg1;
-	JS_ValueToObject( cx, *argvp++, &tmp_arg1 );
-	NSCAssert( JS_GetTypedArrayByteLength( tmp_arg1 ) == 8, @"Invalid length");
-#ifdef __CC_PLATFORM_IOS
-	CGPoint arg1 = *(CGPoint*)JS_GetTypedArrayData( tmp_arg1 );
-#elif defined(__CC_PLATFORM_MAC)
-	float* arg1_array = (float*)JS_GetTypedArrayData( tmp_arg1 );
-	CGPoint arg1 = ccp(arg1_array[0], arg1_array[1] );
-#else
-#error Unsupported Platform
-#endif  
-
-	CCMoveBy *real = [[CCMoveBy alloc] initWithDuration:(ccTime)arg0 position:(CGPoint)arg1  ];
-	[proxy setRealObj: real];
-	[real release];
-
-	objc_setAssociatedObject(real, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
-	return JS_TRUE;
-}
-
-void JSPROXY_CCMoveBy_createClass(JSContext *cx, JSObject* globalObj, const char* name )
-{
-	JSPROXY_CCMoveBy_class = (JSClass *)calloc(1, sizeof(JSClass));
-	JSPROXY_CCMoveBy_class->name = name;
-	JSPROXY_CCMoveBy_class->addProperty = JS_PropertyStub;
-	JSPROXY_CCMoveBy_class->delProperty = JS_PropertyStub;
-	JSPROXY_CCMoveBy_class->getProperty = JS_PropertyStub;
-	JSPROXY_CCMoveBy_class->setProperty = JS_StrictPropertyStub;
-	JSPROXY_CCMoveBy_class->enumerate = JS_EnumerateStub;
-	JSPROXY_CCMoveBy_class->resolve = JS_ResolveStub;
-	JSPROXY_CCMoveBy_class->convert = JS_ConvertStub;
-	JSPROXY_CCMoveBy_class->finalize = JSPROXY_CCMoveBy_finalize;
-	JSPROXY_CCMoveBy_class->flags = JSCLASS_HAS_PRIVATE;
-
-	static JSPropertySpec properties[] = {
-		{0, 0, 0, 0, 0}
-	};
-	static JSFunctionSpec funcs[] = {
-		JS_FN("initWithDurationPosition", JSPROXY_CCMoveBy_initWithDuration_position_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
-		JS_FS_END
-	};
-	static JSFunctionSpec st_funcs[] = {
-		JS_FN("actionWithDurationPosition", JSPROXY_CCMoveBy_actionWithDuration_position_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSFUN_CONSTRUCTOR),
-		JS_FS_END
-	};
-
-	JSPROXY_CCMoveBy_object = JS_InitClass(cx, globalObj, JSPROXY_CCMoveTo_object, JSPROXY_CCMoveBy_class, JSPROXY_CCMoveBy_constructor,0,properties,funcs,NULL,st_funcs);
-}
-
-@implementation JSPROXY_CCMoveBy
-
-+(JSObject*) createJSObjectWithRealObject:(id)realObj context:(JSContext*)cx
-{
-	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCMoveBy_class, JSPROXY_CCMoveBy_object, NULL);
-	JSPROXY_CCMoveBy *proxy = [[JSPROXY_CCMoveBy alloc] initWithJSObject:jsobj];
-	[proxy setRealObj:realObj];
-	JS_SetPrivate(jsobj, proxy);
-
-	if( realObj )
-		objc_setAssociatedObject(realObj, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
-
-	[self swizzleMethods];
-
-	return jsobj;
-}
-
-@end
-
-/*
- * CCScene
- */
-#pragma mark - CCScene
-
-JSClass* JSPROXY_CCScene_class = NULL;
-JSObject* JSPROXY_CCScene_object = NULL;
- // Constructor
-JSBool JSPROXY_CCScene_constructor(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JSObject *jsobj = [JSPROXY_CCScene createJSObjectWithRealObject:nil context:cx];
-    JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-    /* no callbacks */
-
-    return JS_TRUE;
-}
-
-// Destructor
-void JSPROXY_CCScene_finalize(JSContext *cx, JSObject *obj)
-{
-	JSPROXY_CCScene *proxy = (JSPROXY_CCScene*)JS_GetPrivate(obj);
+	JSPROXY_CCMenuItemSprite *proxy = (JSPROXY_CCMenuItemSprite*)JS_GetPrivate(obj);
 	if (proxy) {
 		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_ASSIGN);
 		/* no callbacks */
@@ -4133,1381 +3488,180 @@ void JSPROXY_CCScene_finalize(JSContext *cx, JSObject *obj)
 }
 
 // Arguments: 
-// Ret value: CCScene
-JSBool JSPROXY_CCScene_node(JSContext *cx, uint32_t argc, jsval *vp) {
+// Ret value: CCNode*
+JSBool JSPROXY_CCMenuItemSprite_disabledImage(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	CCNode* ret_val;
 
-	CCScene *real = [CCScene node ];
+	CCMenuItemSprite *real = (CCMenuItemSprite*) [proxy realObj];
+	ret_val = [real disabledImage ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( real, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
 }
 
-void JSPROXY_CCScene_createClass(JSContext *cx, JSObject* globalObj, const char* name )
+// Arguments: CCNode*, CCNode*
+// Ret value: CCMenuItemSprite
+JSBool JSPROXY_CCMenuItemSprite_itemWithNormalSprite_selectedSprite__static(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+
+	CCNode* arg0 = (CCNode*) jsval_to_nsobject( *argvp++, cx);
+
+	CCNode* arg1 = (CCNode*) jsval_to_nsobject( *argvp++, cx);
+
+	CCMenuItemSprite *ret_val = [CCMenuItemSprite itemWithNormalSprite:(CCNode*)arg0 selectedSprite:(CCNode*)arg1  ];
+
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+	return JS_TRUE;
+}
+
+// Arguments: 
+// Ret value: CCNode*
+JSBool JSPROXY_CCMenuItemSprite_normalImage(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	CCNode* ret_val;
+
+	CCMenuItemSprite *real = (CCMenuItemSprite*) [proxy realObj];
+	ret_val = [real normalImage ];
+
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+	return JS_TRUE;
+}
+
+// Arguments: 
+// Ret value: CCNode*
+JSBool JSPROXY_CCMenuItemSprite_selectedImage(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	CCNode* ret_val;
+
+	CCMenuItemSprite *real = (CCMenuItemSprite*) [proxy realObj];
+	ret_val = [real selectedImage ];
+
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+	return JS_TRUE;
+}
+
+// Arguments: CCNode*
+// Ret value: None
+JSBool JSPROXY_CCMenuItemSprite_setDisabledImage_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+
+	CCNode* arg0 = (CCNode*) jsval_to_nsobject( *argvp++, cx);
+
+	CCMenuItemSprite *real = (CCMenuItemSprite*) [proxy realObj];
+	[real setDisabledImage:(CCNode*)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: CCNode*
+// Ret value: None
+JSBool JSPROXY_CCMenuItemSprite_setNormalImage_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+
+	CCNode* arg0 = (CCNode*) jsval_to_nsobject( *argvp++, cx);
+
+	CCMenuItemSprite *real = (CCMenuItemSprite*) [proxy realObj];
+	[real setNormalImage:(CCNode*)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: CCNode*
+// Ret value: None
+JSBool JSPROXY_CCMenuItemSprite_setSelectedImage_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+
+	CCNode* arg0 = (CCNode*) jsval_to_nsobject( *argvp++, cx);
+
+	CCMenuItemSprite *real = (CCMenuItemSprite*) [proxy realObj];
+	[real setSelectedImage:(CCNode*)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+void JSPROXY_CCMenuItemSprite_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
-	JSPROXY_CCScene_class = (JSClass *)calloc(1, sizeof(JSClass));
-	JSPROXY_CCScene_class->name = name;
-	JSPROXY_CCScene_class->addProperty = JS_PropertyStub;
-	JSPROXY_CCScene_class->delProperty = JS_PropertyStub;
-	JSPROXY_CCScene_class->getProperty = JS_PropertyStub;
-	JSPROXY_CCScene_class->setProperty = JS_StrictPropertyStub;
-	JSPROXY_CCScene_class->enumerate = JS_EnumerateStub;
-	JSPROXY_CCScene_class->resolve = JS_ResolveStub;
-	JSPROXY_CCScene_class->convert = JS_ConvertStub;
-	JSPROXY_CCScene_class->finalize = JSPROXY_CCScene_finalize;
-	JSPROXY_CCScene_class->flags = JSCLASS_HAS_PRIVATE;
+	JSPROXY_CCMenuItemSprite_class = (JSClass *)calloc(1, sizeof(JSClass));
+	JSPROXY_CCMenuItemSprite_class->name = name;
+	JSPROXY_CCMenuItemSprite_class->addProperty = JS_PropertyStub;
+	JSPROXY_CCMenuItemSprite_class->delProperty = JS_PropertyStub;
+	JSPROXY_CCMenuItemSprite_class->getProperty = JS_PropertyStub;
+	JSPROXY_CCMenuItemSprite_class->setProperty = JS_StrictPropertyStub;
+	JSPROXY_CCMenuItemSprite_class->enumerate = JS_EnumerateStub;
+	JSPROXY_CCMenuItemSprite_class->resolve = JS_ResolveStub;
+	JSPROXY_CCMenuItemSprite_class->convert = JS_ConvertStub;
+	JSPROXY_CCMenuItemSprite_class->finalize = JSPROXY_CCMenuItemSprite_finalize;
+	JSPROXY_CCMenuItemSprite_class->flags = JSCLASS_HAS_PRIVATE;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
 	};
 	static JSFunctionSpec funcs[] = {
+		JS_FN("disabledImage", JSPROXY_CCMenuItemSprite_disabledImage, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("normalImage", JSPROXY_CCMenuItemSprite_normalImage, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("selectedImage", JSPROXY_CCMenuItemSprite_selectedImage, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("setDisabledImage", JSPROXY_CCMenuItemSprite_setDisabledImage_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("setNormalImage", JSPROXY_CCMenuItemSprite_setNormalImage_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("setSelectedImage", JSPROXY_CCMenuItemSprite_setSelectedImage_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
-		JS_FN("node", JSPROXY_CCScene_node, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSFUN_CONSTRUCTOR),
+		JS_FN("itemWithNormalSpriteSelectedsprite", JSPROXY_CCMenuItemSprite_itemWithNormalSprite_selectedSprite__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSFUN_CONSTRUCTOR),
 		JS_FS_END
 	};
 
-	JSPROXY_CCScene_object = JS_InitClass(cx, globalObj, JSPROXY_CCNode_object, JSPROXY_CCScene_class, JSPROXY_CCScene_constructor,0,properties,funcs,NULL,st_funcs);
+	JSPROXY_CCMenuItemSprite_object = JS_InitClass(cx, globalObj, JSPROXY_CCMenuItem_object, JSPROXY_CCMenuItemSprite_class, JSPROXY_CCMenuItemSprite_constructor,0,properties,funcs,NULL,st_funcs);
 }
 
-@implementation JSPROXY_CCScene
+@implementation JSPROXY_CCMenuItemSprite
 
 +(JSObject*) createJSObjectWithRealObject:(id)realObj context:(JSContext*)cx
 {
-	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCScene_class, JSPROXY_CCScene_object, NULL);
-	JSPROXY_CCScene *proxy = [[JSPROXY_CCScene alloc] initWithJSObject:jsobj];
-	[proxy setRealObj:realObj];
-	JS_SetPrivate(jsobj, proxy);
-
-	if( realObj )
-		objc_setAssociatedObject(realObj, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
-
-	[self swizzleMethods];
-
-	return jsobj;
-}
-
-@end
-
-/*
- * CCLabelTTF
- */
-#pragma mark - CCLabelTTF
-
-JSClass* JSPROXY_CCLabelTTF_class = NULL;
-JSObject* JSPROXY_CCLabelTTF_object = NULL;
- // Constructor
-JSBool JSPROXY_CCLabelTTF_constructor(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JSObject *jsobj = [JSPROXY_CCLabelTTF createJSObjectWithRealObject:nil context:cx];
-    JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-    /* no callbacks */
-
-    return JS_TRUE;
-}
-
-// Destructor
-void JSPROXY_CCLabelTTF_finalize(JSContext *cx, JSObject *obj)
-{
-	JSPROXY_CCLabelTTF *proxy = (JSPROXY_CCLabelTTF*)JS_GetPrivate(obj);
-	if (proxy) {
-		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_ASSIGN);
-		/* no callbacks */
-		[proxy release];
-	}
-}
-
-// Arguments: 
-// Ret value: NSString*
-JSBool JSPROXY_CCLabelTTF_fontName(JSContext *cx, uint32_t argc, jsval *vp) {
-
-	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
-	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
-	NSString* ret_val;
-
-	CCLabelTTF *real = (CCLabelTTF*) [proxy realObj];
-	ret_val = [real fontName ];
-
-	JSString *ret_obj = JS_NewStringCopyZ(cx, [ret_val UTF8String]);
-	JS_SET_RVAL(cx, vp, STRING_TO_JSVAL(ret_obj) );
-
-	return JS_TRUE;
-}
-
-// Arguments: 
-// Ret value: float
-JSBool JSPROXY_CCLabelTTF_fontSize(JSContext *cx, uint32_t argc, jsval *vp) {
-
-	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
-	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
-	float ret_val;
-
-	CCLabelTTF *real = (CCLabelTTF*) [proxy realObj];
-	ret_val = [real fontSize ];
-	JS_SET_RVAL(cx, vp, DOUBLE_TO_JSVAL(ret_val));
-	return JS_TRUE;
-}
-
-// Arguments: 
-// Ret value: CCTextAlignment
-JSBool JSPROXY_CCLabelTTF_horizontalAlignment(JSContext *cx, uint32_t argc, jsval *vp) {
-
-	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
-	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
-	CCTextAlignment ret_val;
-
-	CCLabelTTF *real = (CCLabelTTF*) [proxy realObj];
-	ret_val = [real horizontalAlignment ];
-	JS_SET_RVAL(cx, vp, INT_TO_JSVAL(ret_val));
-	return JS_TRUE;
-}
-
-// Arguments: NSString*, CGSize, CCTextAlignment, NSString*, CGFloat
-// Ret value: None
-JSBool JSPROXY_CCLabelTTF_initWithString_dimensions_hAlignment_fontName_fontSize_(JSContext *cx, uint32_t argc, jsval *vp) {
-
-	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
-	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 5, @"Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-
-	NSString *arg0 = jsval_to_nsstring( *argvp++, cx );
-
-	JSObject *tmp_arg1;
-	JS_ValueToObject( cx, *argvp++, &tmp_arg1 );
-	CGSize arg1 = *(CGSize*)JS_GetTypedArrayData( tmp_arg1);
-	int32_t arg2; JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
-
-	NSString *arg3 = jsval_to_nsstring( *argvp++, cx );
-	double arg4; JS_ValueToNumber( cx, *argvp++, &arg4 );
-
-	CCLabelTTF *real = [[CCLabelTTF alloc] initWithString:(NSString*)arg0 dimensions:(CGSize)arg1 hAlignment:(CCTextAlignment)arg2 fontName:(NSString*)arg3 fontSize:(CGFloat)arg4  ];
-	[proxy setRealObj: real];
-	[real release];
-
-	objc_setAssociatedObject(real, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
-	return JS_TRUE;
-}
-
-// Arguments: NSString*, CGSize, CCTextAlignment, CCLineBreakMode, NSString*, CGFloat
-// Ret value: None
-JSBool JSPROXY_CCLabelTTF_initWithString_dimensions_hAlignment_lineBreakMode_fontName_fontSize_(JSContext *cx, uint32_t argc, jsval *vp) {
-
-	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
-	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 6, @"Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-
-	NSString *arg0 = jsval_to_nsstring( *argvp++, cx );
-
-	JSObject *tmp_arg1;
-	JS_ValueToObject( cx, *argvp++, &tmp_arg1 );
-	CGSize arg1 = *(CGSize*)JS_GetTypedArrayData( tmp_arg1);
-	int32_t arg2; JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
-	int32_t arg3; JS_ValueToECMAInt32( cx, *argvp++, &arg3 );
-
-	NSString *arg4 = jsval_to_nsstring( *argvp++, cx );
-	double arg5; JS_ValueToNumber( cx, *argvp++, &arg5 );
-
-	CCLabelTTF *real = [[CCLabelTTF alloc] initWithString:(NSString*)arg0 dimensions:(CGSize)arg1 hAlignment:(CCTextAlignment)arg2 lineBreakMode:(CCLineBreakMode)arg3 fontName:(NSString*)arg4 fontSize:(CGFloat)arg5  ];
-	[proxy setRealObj: real];
-	[real release];
-
-	objc_setAssociatedObject(real, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
-	return JS_TRUE;
-}
-
-// Arguments: NSString*, CGSize, CCTextAlignment, CCVerticalTextAlignment, NSString*, CGFloat
-// Ret value: None
-JSBool JSPROXY_CCLabelTTF_initWithString_dimensions_hAlignment_vAlignment_fontName_fontSize_(JSContext *cx, uint32_t argc, jsval *vp) {
-
-	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
-	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 6, @"Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-
-	NSString *arg0 = jsval_to_nsstring( *argvp++, cx );
-
-	JSObject *tmp_arg1;
-	JS_ValueToObject( cx, *argvp++, &tmp_arg1 );
-	CGSize arg1 = *(CGSize*)JS_GetTypedArrayData( tmp_arg1);
-	int32_t arg2; JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
-	int32_t arg3; JS_ValueToECMAInt32( cx, *argvp++, &arg3 );
-
-	NSString *arg4 = jsval_to_nsstring( *argvp++, cx );
-	double arg5; JS_ValueToNumber( cx, *argvp++, &arg5 );
-
-	CCLabelTTF *real = [[CCLabelTTF alloc] initWithString:(NSString*)arg0 dimensions:(CGSize)arg1 hAlignment:(CCTextAlignment)arg2 vAlignment:(CCVerticalTextAlignment)arg3 fontName:(NSString*)arg4 fontSize:(CGFloat)arg5  ];
-	[proxy setRealObj: real];
-	[real release];
-
-	objc_setAssociatedObject(real, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
-	return JS_TRUE;
-}
-
-// Arguments: NSString*, CGSize, CCTextAlignment, CCVerticalTextAlignment, CCLineBreakMode, NSString*, CGFloat
-// Ret value: None
-JSBool JSPROXY_CCLabelTTF_initWithString_dimensions_hAlignment_vAlignment_lineBreakMode_fontName_fontSize_(JSContext *cx, uint32_t argc, jsval *vp) {
-
-	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
-	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 7, @"Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-
-	NSString *arg0 = jsval_to_nsstring( *argvp++, cx );
-
-	JSObject *tmp_arg1;
-	JS_ValueToObject( cx, *argvp++, &tmp_arg1 );
-	CGSize arg1 = *(CGSize*)JS_GetTypedArrayData( tmp_arg1);
-	int32_t arg2; JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
-	int32_t arg3; JS_ValueToECMAInt32( cx, *argvp++, &arg3 );
-	int32_t arg4; JS_ValueToECMAInt32( cx, *argvp++, &arg4 );
-
-	NSString *arg5 = jsval_to_nsstring( *argvp++, cx );
-	double arg6; JS_ValueToNumber( cx, *argvp++, &arg6 );
-
-	CCLabelTTF *real = [[CCLabelTTF alloc] initWithString:(NSString*)arg0 dimensions:(CGSize)arg1 hAlignment:(CCTextAlignment)arg2 vAlignment:(CCVerticalTextAlignment)arg3 lineBreakMode:(CCLineBreakMode)arg4 fontName:(NSString*)arg5 fontSize:(CGFloat)arg6  ];
-	[proxy setRealObj: real];
-	[real release];
-
-	objc_setAssociatedObject(real, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
-	return JS_TRUE;
-}
-
-// Arguments: NSString*, NSString*, CGFloat
-// Ret value: None
-JSBool JSPROXY_CCLabelTTF_initWithString_fontName_fontSize_(JSContext *cx, uint32_t argc, jsval *vp) {
-
-	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
-	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 3, @"Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-
-	NSString *arg0 = jsval_to_nsstring( *argvp++, cx );
-
-	NSString *arg1 = jsval_to_nsstring( *argvp++, cx );
-	double arg2; JS_ValueToNumber( cx, *argvp++, &arg2 );
-
-	CCLabelTTF *real = [[CCLabelTTF alloc] initWithString:(NSString*)arg0 fontName:(NSString*)arg1 fontSize:(CGFloat)arg2  ];
-	[proxy setRealObj: real];
-	[real release];
-
-	objc_setAssociatedObject(real, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
-	return JS_TRUE;
-}
-
-// Arguments: NSString*, CGSize, CCTextAlignment, NSString*, CGFloat
-// Ret value: CCLabelTTF
-JSBool JSPROXY_CCLabelTTF_labelWithString_dimensions_hAlignment_fontName_fontSize_(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 5, @"Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-
-	NSString *arg0 = jsval_to_nsstring( *argvp++, cx );
-
-	JSObject *tmp_arg1;
-	JS_ValueToObject( cx, *argvp++, &tmp_arg1 );
-	CGSize arg1 = *(CGSize*)JS_GetTypedArrayData( tmp_arg1);
-	int32_t arg2; JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
-
-	NSString *arg3 = jsval_to_nsstring( *argvp++, cx );
-	double arg4; JS_ValueToNumber( cx, *argvp++, &arg4 );
-
-	CCLabelTTF *real = [CCLabelTTF labelWithString:(NSString*)arg0 dimensions:(CGSize)arg1 hAlignment:(CCTextAlignment)arg2 fontName:(NSString*)arg3 fontSize:(CGFloat)arg4  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( real, cx );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: NSString*, CGSize, CCTextAlignment, CCLineBreakMode, NSString*, CGFloat
-// Ret value: CCLabelTTF
-JSBool JSPROXY_CCLabelTTF_labelWithString_dimensions_hAlignment_lineBreakMode_fontName_fontSize_(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 6, @"Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-
-	NSString *arg0 = jsval_to_nsstring( *argvp++, cx );
-
-	JSObject *tmp_arg1;
-	JS_ValueToObject( cx, *argvp++, &tmp_arg1 );
-	CGSize arg1 = *(CGSize*)JS_GetTypedArrayData( tmp_arg1);
-	int32_t arg2; JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
-	int32_t arg3; JS_ValueToECMAInt32( cx, *argvp++, &arg3 );
-
-	NSString *arg4 = jsval_to_nsstring( *argvp++, cx );
-	double arg5; JS_ValueToNumber( cx, *argvp++, &arg5 );
-
-	CCLabelTTF *real = [CCLabelTTF labelWithString:(NSString*)arg0 dimensions:(CGSize)arg1 hAlignment:(CCTextAlignment)arg2 lineBreakMode:(CCLineBreakMode)arg3 fontName:(NSString*)arg4 fontSize:(CGFloat)arg5  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( real, cx );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: NSString*, CGSize, CCTextAlignment, CCVerticalTextAlignment, NSString*, CGFloat
-// Ret value: CCLabelTTF
-JSBool JSPROXY_CCLabelTTF_labelWithString_dimensions_hAlignment_vAlignment_fontName_fontSize_(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 6, @"Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-
-	NSString *arg0 = jsval_to_nsstring( *argvp++, cx );
-
-	JSObject *tmp_arg1;
-	JS_ValueToObject( cx, *argvp++, &tmp_arg1 );
-	CGSize arg1 = *(CGSize*)JS_GetTypedArrayData( tmp_arg1);
-	int32_t arg2; JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
-	int32_t arg3; JS_ValueToECMAInt32( cx, *argvp++, &arg3 );
-
-	NSString *arg4 = jsval_to_nsstring( *argvp++, cx );
-	double arg5; JS_ValueToNumber( cx, *argvp++, &arg5 );
-
-	CCLabelTTF *real = [CCLabelTTF labelWithString:(NSString*)arg0 dimensions:(CGSize)arg1 hAlignment:(CCTextAlignment)arg2 vAlignment:(CCVerticalTextAlignment)arg3 fontName:(NSString*)arg4 fontSize:(CGFloat)arg5  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( real, cx );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: NSString*, CGSize, CCTextAlignment, CCVerticalTextAlignment, CCLineBreakMode, NSString*, CGFloat
-// Ret value: CCLabelTTF
-JSBool JSPROXY_CCLabelTTF_labelWithString_dimensions_hAlignment_vAlignment_lineBreakMode_fontName_fontSize_(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 7, @"Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-
-	NSString *arg0 = jsval_to_nsstring( *argvp++, cx );
-
-	JSObject *tmp_arg1;
-	JS_ValueToObject( cx, *argvp++, &tmp_arg1 );
-	CGSize arg1 = *(CGSize*)JS_GetTypedArrayData( tmp_arg1);
-	int32_t arg2; JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
-	int32_t arg3; JS_ValueToECMAInt32( cx, *argvp++, &arg3 );
-	int32_t arg4; JS_ValueToECMAInt32( cx, *argvp++, &arg4 );
-
-	NSString *arg5 = jsval_to_nsstring( *argvp++, cx );
-	double arg6; JS_ValueToNumber( cx, *argvp++, &arg6 );
-
-	CCLabelTTF *real = [CCLabelTTF labelWithString:(NSString*)arg0 dimensions:(CGSize)arg1 hAlignment:(CCTextAlignment)arg2 vAlignment:(CCVerticalTextAlignment)arg3 lineBreakMode:(CCLineBreakMode)arg4 fontName:(NSString*)arg5 fontSize:(CGFloat)arg6  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( real, cx );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: NSString*, NSString*, CGFloat
-// Ret value: CCLabelTTF
-JSBool JSPROXY_CCLabelTTF_labelWithString_fontName_fontSize_(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 3, @"Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-
-	NSString *arg0 = jsval_to_nsstring( *argvp++, cx );
-
-	NSString *arg1 = jsval_to_nsstring( *argvp++, cx );
-	double arg2; JS_ValueToNumber( cx, *argvp++, &arg2 );
-
-	CCLabelTTF *real = [CCLabelTTF labelWithString:(NSString*)arg0 fontName:(NSString*)arg1 fontSize:(CGFloat)arg2  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( real, cx );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: CGSize
-// Ret value: None
-JSBool JSPROXY_CCLabelTTF_setDimensions_(JSContext *cx, uint32_t argc, jsval *vp) {
-
-	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
-	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-
-	JSObject *tmp_arg0;
-	JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
-	CGSize arg0 = *(CGSize*)JS_GetTypedArrayData( tmp_arg0);
-
-	CCLabelTTF *real = (CCLabelTTF*) [proxy realObj];
-	[real setDimensions:(CGSize)arg0  ];
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
-	return JS_TRUE;
-}
-
-// Arguments: NSString*
-// Ret value: None
-JSBool JSPROXY_CCLabelTTF_setFontName_(JSContext *cx, uint32_t argc, jsval *vp) {
-
-	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
-	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-
-	NSString *arg0 = jsval_to_nsstring( *argvp++, cx );
-
-	CCLabelTTF *real = (CCLabelTTF*) [proxy realObj];
-	[real setFontName:(NSString*)arg0  ];
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
-	return JS_TRUE;
-}
-
-// Arguments: float
-// Ret value: None
-JSBool JSPROXY_CCLabelTTF_setFontSize_(JSContext *cx, uint32_t argc, jsval *vp) {
-
-	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
-	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	double arg0; JS_ValueToNumber( cx, *argvp++, &arg0 );
-
-	CCLabelTTF *real = (CCLabelTTF*) [proxy realObj];
-	[real setFontSize:(float)arg0  ];
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
-	return JS_TRUE;
-}
-
-// Arguments: CCTextAlignment
-// Ret value: None
-JSBool JSPROXY_CCLabelTTF_setHorizontalAlignment_(JSContext *cx, uint32_t argc, jsval *vp) {
-
-	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
-	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	int32_t arg0; JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
-
-	CCLabelTTF *real = (CCLabelTTF*) [proxy realObj];
-	[real setHorizontalAlignment:(CCTextAlignment)arg0  ];
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
-	return JS_TRUE;
-}
-
-// Arguments: NSString*
-// Ret value: None
-JSBool JSPROXY_CCLabelTTF_setString_(JSContext *cx, uint32_t argc, jsval *vp) {
-
-	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
-	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-
-	NSString *arg0 = jsval_to_nsstring( *argvp++, cx );
-
-	CCLabelTTF *real = (CCLabelTTF*) [proxy realObj];
-	[real setString:(NSString*)arg0  ];
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
-	return JS_TRUE;
-}
-
-// Arguments: CCVerticalTextAlignment
-// Ret value: None
-JSBool JSPROXY_CCLabelTTF_setVerticalAlignment_(JSContext *cx, uint32_t argc, jsval *vp) {
-
-	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
-	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	int32_t arg0; JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
-
-	CCLabelTTF *real = (CCLabelTTF*) [proxy realObj];
-	[real setVerticalAlignment:(CCVerticalTextAlignment)arg0  ];
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
-	return JS_TRUE;
-}
-
-// Arguments: 
-// Ret value: CCVerticalTextAlignment
-JSBool JSPROXY_CCLabelTTF_verticalAlignment(JSContext *cx, uint32_t argc, jsval *vp) {
-
-	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
-	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
-	CCVerticalTextAlignment ret_val;
-
-	CCLabelTTF *real = (CCLabelTTF*) [proxy realObj];
-	ret_val = [real verticalAlignment ];
-	JS_SET_RVAL(cx, vp, INT_TO_JSVAL(ret_val));
-	return JS_TRUE;
-}
-
-void JSPROXY_CCLabelTTF_createClass(JSContext *cx, JSObject* globalObj, const char* name )
-{
-	JSPROXY_CCLabelTTF_class = (JSClass *)calloc(1, sizeof(JSClass));
-	JSPROXY_CCLabelTTF_class->name = name;
-	JSPROXY_CCLabelTTF_class->addProperty = JS_PropertyStub;
-	JSPROXY_CCLabelTTF_class->delProperty = JS_PropertyStub;
-	JSPROXY_CCLabelTTF_class->getProperty = JS_PropertyStub;
-	JSPROXY_CCLabelTTF_class->setProperty = JS_StrictPropertyStub;
-	JSPROXY_CCLabelTTF_class->enumerate = JS_EnumerateStub;
-	JSPROXY_CCLabelTTF_class->resolve = JS_ResolveStub;
-	JSPROXY_CCLabelTTF_class->convert = JS_ConvertStub;
-	JSPROXY_CCLabelTTF_class->finalize = JSPROXY_CCLabelTTF_finalize;
-	JSPROXY_CCLabelTTF_class->flags = JSCLASS_HAS_PRIVATE;
-
-	static JSPropertySpec properties[] = {
-		{0, 0, 0, 0, 0}
-	};
-	static JSFunctionSpec funcs[] = {
-		JS_FN("fontName", JSPROXY_CCLabelTTF_fontName, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
-		JS_FN("fontSize", JSPROXY_CCLabelTTF_fontSize, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
-		JS_FN("horizontalAlignment", JSPROXY_CCLabelTTF_horizontalAlignment, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
-		JS_FN("initWithStringDimensionsHalignmentFontnameFontsize", JSPROXY_CCLabelTTF_initWithString_dimensions_hAlignment_fontName_fontSize_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
-		JS_FN("initWithStringDimensionsHalignmentLinebreakmodeFontnameFontsize", JSPROXY_CCLabelTTF_initWithString_dimensions_hAlignment_lineBreakMode_fontName_fontSize_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
-		JS_FN("initWithStringDimensionsHalignmentValignmentFontnameFontsize", JSPROXY_CCLabelTTF_initWithString_dimensions_hAlignment_vAlignment_fontName_fontSize_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
-		JS_FN("initWithStringDimensionsHalignmentValignmentLinebreakmodeFontnameFontsize", JSPROXY_CCLabelTTF_initWithString_dimensions_hAlignment_vAlignment_lineBreakMode_fontName_fontSize_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
-		JS_FN("initWithStringFontnameFontsize", JSPROXY_CCLabelTTF_initWithString_fontName_fontSize_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
-		JS_FN("setDimensions", JSPROXY_CCLabelTTF_setDimensions_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
-		JS_FN("setFontName", JSPROXY_CCLabelTTF_setFontName_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
-		JS_FN("setFontSize", JSPROXY_CCLabelTTF_setFontSize_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
-		JS_FN("setHorizontalAlignment", JSPROXY_CCLabelTTF_setHorizontalAlignment_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
-		JS_FN("setString", JSPROXY_CCLabelTTF_setString_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
-		JS_FN("setVerticalAlignment", JSPROXY_CCLabelTTF_setVerticalAlignment_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
-		JS_FN("verticalAlignment", JSPROXY_CCLabelTTF_verticalAlignment, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
-		JS_FS_END
-	};
-	static JSFunctionSpec st_funcs[] = {
-		JS_FN("labelWithStringDimensionsHalignmentFontnameFontsize", JSPROXY_CCLabelTTF_labelWithString_dimensions_hAlignment_fontName_fontSize_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSFUN_CONSTRUCTOR),
-		JS_FN("labelWithStringDimensionsHalignmentLinebreakmodeFontnameFontsize", JSPROXY_CCLabelTTF_labelWithString_dimensions_hAlignment_lineBreakMode_fontName_fontSize_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSFUN_CONSTRUCTOR),
-		JS_FN("labelWithStringDimensionsHalignmentValignmentFontnameFontsize", JSPROXY_CCLabelTTF_labelWithString_dimensions_hAlignment_vAlignment_fontName_fontSize_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSFUN_CONSTRUCTOR),
-		JS_FN("labelWithStringDimensionsHalignmentValignmentLinebreakmodeFontnameFontsize", JSPROXY_CCLabelTTF_labelWithString_dimensions_hAlignment_vAlignment_lineBreakMode_fontName_fontSize_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSFUN_CONSTRUCTOR),
-		JS_FN("labelWithStringFontnameFontsize", JSPROXY_CCLabelTTF_labelWithString_fontName_fontSize_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSFUN_CONSTRUCTOR),
-		JS_FS_END
-	};
-
-	JSPROXY_CCLabelTTF_object = JS_InitClass(cx, globalObj, JSPROXY_CCSprite_object, JSPROXY_CCLabelTTF_class, JSPROXY_CCLabelTTF_constructor,0,properties,funcs,NULL,st_funcs);
-}
-
-@implementation JSPROXY_CCLabelTTF
-
-+(JSObject*) createJSObjectWithRealObject:(id)realObj context:(JSContext*)cx
-{
-	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCLabelTTF_class, JSPROXY_CCLabelTTF_object, NULL);
-	JSPROXY_CCLabelTTF *proxy = [[JSPROXY_CCLabelTTF alloc] initWithJSObject:jsobj];
-	[proxy setRealObj:realObj];
-	JS_SetPrivate(jsobj, proxy);
-
-	if( realObj )
-		objc_setAssociatedObject(realObj, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
-
-	[self swizzleMethods];
-
-	return jsobj;
-}
-
-@end
-
-/*
- * CCSpriteBatchNode
- */
-#pragma mark - CCSpriteBatchNode
-
-JSClass* JSPROXY_CCSpriteBatchNode_class = NULL;
-JSObject* JSPROXY_CCSpriteBatchNode_object = NULL;
- // Constructor
-JSBool JSPROXY_CCSpriteBatchNode_constructor(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JSObject *jsobj = [JSPROXY_CCSpriteBatchNode createJSObjectWithRealObject:nil context:cx];
-    JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-    /* no callbacks */
-
-    return JS_TRUE;
-}
-
-// Destructor
-void JSPROXY_CCSpriteBatchNode_finalize(JSContext *cx, JSObject *obj)
-{
-	JSPROXY_CCSpriteBatchNode *proxy = (JSPROXY_CCSpriteBatchNode*)JS_GetPrivate(obj);
-	if (proxy) {
-		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_ASSIGN);
-		/* no callbacks */
-		[proxy release];
-	}
-}
-
-// Arguments: CCSprite*, NSUInteger
-// Ret value: None
-JSBool JSPROXY_CCSpriteBatchNode_addQuadFromSprite_quadIndex_(JSContext *cx, uint32_t argc, jsval *vp) {
-
-	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
-	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 2, @"Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-
-	CCSprite* arg0 = (CCSprite*) jsval_to_nsobject( *argvp++, cx);
-	uint32_t arg1; JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
-
-	CCSpriteBatchNode *real = (CCSpriteBatchNode*) [proxy realObj];
-	[real addQuadFromSprite:(CCSprite*)arg0 quadIndex:(NSUInteger)arg1  ];
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
-	return JS_TRUE;
-}
-
-// Arguments: CCSprite*
-// Ret value: None
-JSBool JSPROXY_CCSpriteBatchNode_appendChild_(JSContext *cx, uint32_t argc, jsval *vp) {
-
-	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
-	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-
-	CCSprite* arg0 = (CCSprite*) jsval_to_nsobject( *argvp++, cx);
-
-	CCSpriteBatchNode *real = (CCSpriteBatchNode*) [proxy realObj];
-	[real appendChild:(CCSprite*)arg0  ];
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
-	return JS_TRUE;
-}
-
-// Arguments: CCSprite*, NSInteger
-// Ret value: NSUInteger
-JSBool JSPROXY_CCSpriteBatchNode_atlasIndexForChild_atZ_(JSContext *cx, uint32_t argc, jsval *vp) {
-
-	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
-	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 2, @"Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-
-	CCSprite* arg0 = (CCSprite*) jsval_to_nsobject( *argvp++, cx);
-	int32_t arg1; JS_ValueToECMAInt32( cx, *argvp++, &arg1 );
-	NSUInteger ret_val;
-
-	CCSpriteBatchNode *real = (CCSpriteBatchNode*) [proxy realObj];
-	ret_val = [real atlasIndexForChild:(CCSprite*)arg0 atZ:(NSInteger)arg1  ];
-	JS_SET_RVAL(cx, vp, INT_TO_JSVAL(ret_val));
-	return JS_TRUE;
-}
-
-// Arguments: NSString*
-// Ret value: CCSpriteBatchNode
-JSBool JSPROXY_CCSpriteBatchNode_batchNodeWithFile_(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-
-	NSString *arg0 = jsval_to_nsstring( *argvp++, cx );
-
-	CCSpriteBatchNode *real = [CCSpriteBatchNode batchNodeWithFile:(NSString*)arg0  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( real, cx );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: NSString*, NSUInteger
-// Ret value: CCSpriteBatchNode
-JSBool JSPROXY_CCSpriteBatchNode_batchNodeWithFile_capacity_(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 2, @"Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-
-	NSString *arg0 = jsval_to_nsstring( *argvp++, cx );
-	uint32_t arg1; JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
-
-	CCSpriteBatchNode *real = [CCSpriteBatchNode batchNodeWithFile:(NSString*)arg0 capacity:(NSUInteger)arg1  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( real, cx );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: 
-// Ret value: None
-JSBool JSPROXY_CCSpriteBatchNode_increaseAtlasCapacity(JSContext *cx, uint32_t argc, jsval *vp) {
-
-	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
-	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
-
-	CCSpriteBatchNode *real = (CCSpriteBatchNode*) [proxy realObj];
-	[real increaseAtlasCapacity ];
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
-	return JS_TRUE;
-}
-
-// Arguments: NSString*, NSUInteger
-// Ret value: None
-JSBool JSPROXY_CCSpriteBatchNode_initWithFile_capacity_(JSContext *cx, uint32_t argc, jsval *vp) {
-
-	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
-	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 2, @"Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-
-	NSString *arg0 = jsval_to_nsstring( *argvp++, cx );
-	uint32_t arg1; JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
-
-	CCSpriteBatchNode *real = [[CCSpriteBatchNode alloc] initWithFile:(NSString*)arg0 capacity:(NSUInteger)arg1  ];
-	[proxy setRealObj: real];
-	[real release];
-
-	objc_setAssociatedObject(real, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
-	return JS_TRUE;
-}
-
-// Arguments: CCSprite*, NSUInteger
-// Ret value: None
-JSBool JSPROXY_CCSpriteBatchNode_insertChild_inAtlasAtIndex_(JSContext *cx, uint32_t argc, jsval *vp) {
-
-	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
-	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 2, @"Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-
-	CCSprite* arg0 = (CCSprite*) jsval_to_nsobject( *argvp++, cx);
-	uint32_t arg1; JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
-
-	CCSpriteBatchNode *real = (CCSpriteBatchNode*) [proxy realObj];
-	[real insertChild:(CCSprite*)arg0 inAtlasAtIndex:(NSUInteger)arg1  ];
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
-	return JS_TRUE;
-}
-
-// Arguments: CCSprite*, NSUInteger
-// Ret value: NSUInteger
-JSBool JSPROXY_CCSpriteBatchNode_rebuildIndexInOrder_atlasIndex_(JSContext *cx, uint32_t argc, jsval *vp) {
-
-	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
-	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 2, @"Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-
-	CCSprite* arg0 = (CCSprite*) jsval_to_nsobject( *argvp++, cx);
-	uint32_t arg1; JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
-	NSUInteger ret_val;
-
-	CCSpriteBatchNode *real = (CCSpriteBatchNode*) [proxy realObj];
-	ret_val = [real rebuildIndexInOrder:(CCSprite*)arg0 atlasIndex:(NSUInteger)arg1  ];
-	JS_SET_RVAL(cx, vp, INT_TO_JSVAL(ret_val));
-	return JS_TRUE;
-}
-
-// Arguments: CCSprite*, BOOL
-// Ret value: None
-JSBool JSPROXY_CCSpriteBatchNode_removeChild_cleanup_(JSContext *cx, uint32_t argc, jsval *vp) {
-
-	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
-	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 2, @"Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-
-	CCSprite* arg0 = (CCSprite*) jsval_to_nsobject( *argvp++, cx);
-	JSBool arg1; JS_ValueToBoolean( cx, *argvp++, &arg1 );
-
-	CCSpriteBatchNode *real = (CCSpriteBatchNode*) [proxy realObj];
-	[real removeChild:(CCSprite*)arg0 cleanup:(BOOL)arg1  ];
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
-	return JS_TRUE;
-}
-
-// Arguments: NSUInteger, BOOL
-// Ret value: None
-JSBool JSPROXY_CCSpriteBatchNode_removeChildAtIndex_cleanup_(JSContext *cx, uint32_t argc, jsval *vp) {
-
-	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
-	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 2, @"Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	uint32_t arg0; JS_ValueToECMAUint32( cx, *argvp++, &arg0 );
-	JSBool arg1; JS_ValueToBoolean( cx, *argvp++, &arg1 );
-
-	CCSpriteBatchNode *real = (CCSpriteBatchNode*) [proxy realObj];
-	[real removeChildAtIndex:(NSUInteger)arg0 cleanup:(BOOL)arg1  ];
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
-	return JS_TRUE;
-}
-
-// Arguments: CCSprite*
-// Ret value: None
-JSBool JSPROXY_CCSpriteBatchNode_removeSpriteFromAtlas_(JSContext *cx, uint32_t argc, jsval *vp) {
-
-	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
-	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-
-	CCSprite* arg0 = (CCSprite*) jsval_to_nsobject( *argvp++, cx);
-
-	CCSpriteBatchNode *real = (CCSpriteBatchNode*) [proxy realObj];
-	[real removeSpriteFromAtlas:(CCSprite*)arg0  ];
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
-	return JS_TRUE;
-}
-
-// Arguments: BOOL
-// Ret value: None
-JSBool JSPROXY_CCSpriteBatchNode_reorderBatch_(JSContext *cx, uint32_t argc, jsval *vp) {
-
-	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
-	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool arg0; JS_ValueToBoolean( cx, *argvp++, &arg0 );
-
-	CCSpriteBatchNode *real = (CCSpriteBatchNode*) [proxy realObj];
-	[real reorderBatch:(BOOL)arg0  ];
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
-	return JS_TRUE;
-}
-
-// Arguments: ccBlendFunc
-// Ret value: None
-JSBool JSPROXY_CCSpriteBatchNode_setBlendFunc_(JSContext *cx, uint32_t argc, jsval *vp) {
-
-	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
-	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-
-	JSObject *tmp_arg0;
-	JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
-	ccBlendFunc arg0 = *(ccBlendFunc*)JS_GetTypedArrayData( tmp_arg0);
-
-	CCSpriteBatchNode *real = (CCSpriteBatchNode*) [proxy realObj];
-	[real setBlendFunc:(ccBlendFunc)arg0  ];
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
-	return JS_TRUE;
-}
-
-void JSPROXY_CCSpriteBatchNode_createClass(JSContext *cx, JSObject* globalObj, const char* name )
-{
-	JSPROXY_CCSpriteBatchNode_class = (JSClass *)calloc(1, sizeof(JSClass));
-	JSPROXY_CCSpriteBatchNode_class->name = name;
-	JSPROXY_CCSpriteBatchNode_class->addProperty = JS_PropertyStub;
-	JSPROXY_CCSpriteBatchNode_class->delProperty = JS_PropertyStub;
-	JSPROXY_CCSpriteBatchNode_class->getProperty = JS_PropertyStub;
-	JSPROXY_CCSpriteBatchNode_class->setProperty = JS_StrictPropertyStub;
-	JSPROXY_CCSpriteBatchNode_class->enumerate = JS_EnumerateStub;
-	JSPROXY_CCSpriteBatchNode_class->resolve = JS_ResolveStub;
-	JSPROXY_CCSpriteBatchNode_class->convert = JS_ConvertStub;
-	JSPROXY_CCSpriteBatchNode_class->finalize = JSPROXY_CCSpriteBatchNode_finalize;
-	JSPROXY_CCSpriteBatchNode_class->flags = JSCLASS_HAS_PRIVATE;
-
-	static JSPropertySpec properties[] = {
-		{0, 0, 0, 0, 0}
-	};
-	static JSFunctionSpec funcs[] = {
-		JS_FN("addQuadFromSpriteQuadindex", JSPROXY_CCSpriteBatchNode_addQuadFromSprite_quadIndex_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
-		JS_FN("appendChild", JSPROXY_CCSpriteBatchNode_appendChild_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
-		JS_FN("atlasIndexForChildAtz", JSPROXY_CCSpriteBatchNode_atlasIndexForChild_atZ_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
-		JS_FN("increaseAtlasCapacity", JSPROXY_CCSpriteBatchNode_increaseAtlasCapacity, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
-		JS_FN("initWithFileCapacity", JSPROXY_CCSpriteBatchNode_initWithFile_capacity_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
-		JS_FN("insertChildInatlasatindex", JSPROXY_CCSpriteBatchNode_insertChild_inAtlasAtIndex_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
-		JS_FN("rebuildIndexInOrderAtlasindex", JSPROXY_CCSpriteBatchNode_rebuildIndexInOrder_atlasIndex_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
-		JS_FN("removeChildCleanup", JSPROXY_CCSpriteBatchNode_removeChild_cleanup_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
-		JS_FN("removeChildAtIndexCleanup", JSPROXY_CCSpriteBatchNode_removeChildAtIndex_cleanup_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
-		JS_FN("removeSpriteFromAtlas", JSPROXY_CCSpriteBatchNode_removeSpriteFromAtlas_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
-		JS_FN("reorderBatch", JSPROXY_CCSpriteBatchNode_reorderBatch_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
-		JS_FN("setBlendFunc", JSPROXY_CCSpriteBatchNode_setBlendFunc_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
-		JS_FS_END
-	};
-	static JSFunctionSpec st_funcs[] = {
-		JS_FN("batchNodeWithFile", JSPROXY_CCSpriteBatchNode_batchNodeWithFile_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSFUN_CONSTRUCTOR),
-		JS_FN("batchNodeWithFileCapacity", JSPROXY_CCSpriteBatchNode_batchNodeWithFile_capacity_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSFUN_CONSTRUCTOR),
-		JS_FS_END
-	};
-
-	JSPROXY_CCSpriteBatchNode_object = JS_InitClass(cx, globalObj, JSPROXY_CCNode_object, JSPROXY_CCSpriteBatchNode_class, JSPROXY_CCSpriteBatchNode_constructor,0,properties,funcs,NULL,st_funcs);
-}
-
-@implementation JSPROXY_CCSpriteBatchNode
-
-+(JSObject*) createJSObjectWithRealObject:(id)realObj context:(JSContext*)cx
-{
-	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCSpriteBatchNode_class, JSPROXY_CCSpriteBatchNode_object, NULL);
-	JSPROXY_CCSpriteBatchNode *proxy = [[JSPROXY_CCSpriteBatchNode alloc] initWithJSObject:jsobj];
-	[proxy setRealObj:realObj];
-	JS_SetPrivate(jsobj, proxy);
-
-	if( realObj )
-		objc_setAssociatedObject(realObj, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
-
-	[self swizzleMethods];
-
-	return jsobj;
-}
-
-@end
-
-/*
- * CCLabelBMFont
- */
-#pragma mark - CCLabelBMFont
-
-JSClass* JSPROXY_CCLabelBMFont_class = NULL;
-JSObject* JSPROXY_CCLabelBMFont_object = NULL;
- // Constructor
-JSBool JSPROXY_CCLabelBMFont_constructor(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JSObject *jsobj = [JSPROXY_CCLabelBMFont createJSObjectWithRealObject:nil context:cx];
-    JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-    /* no callbacks */
-
-    return JS_TRUE;
-}
-
-// Destructor
-void JSPROXY_CCLabelBMFont_finalize(JSContext *cx, JSObject *obj)
-{
-	JSPROXY_CCLabelBMFont *proxy = (JSPROXY_CCLabelBMFont*)JS_GetPrivate(obj);
-	if (proxy) {
-		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_ASSIGN);
-		/* no callbacks */
-		[proxy release];
-	}
-}
-
-// Arguments: 
-// Ret value: CCTextAlignment
-JSBool JSPROXY_CCLabelBMFont_alignment(JSContext *cx, uint32_t argc, jsval *vp) {
-
-	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
-	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
-	CCTextAlignment ret_val;
-
-	CCLabelBMFont *real = (CCLabelBMFont*) [proxy realObj];
-	ret_val = [real alignment ];
-	JS_SET_RVAL(cx, vp, INT_TO_JSVAL(ret_val));
-	return JS_TRUE;
-}
-
-// Arguments: 
-// Ret value: None
-JSBool JSPROXY_CCLabelBMFont_createFontChars(JSContext *cx, uint32_t argc, jsval *vp) {
-
-	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
-	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
-
-	CCLabelBMFont *real = (CCLabelBMFont*) [proxy realObj];
-	[real createFontChars ];
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
-	return JS_TRUE;
-}
-
-// Arguments: 
-// Ret value: NSString*
-JSBool JSPROXY_CCLabelBMFont_fntFile(JSContext *cx, uint32_t argc, jsval *vp) {
-
-	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
-	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
-	NSString* ret_val;
-
-	CCLabelBMFont *real = (CCLabelBMFont*) [proxy realObj];
-	ret_val = [real fntFile ];
-
-	JSString *ret_obj = JS_NewStringCopyZ(cx, [ret_val UTF8String]);
-	JS_SET_RVAL(cx, vp, STRING_TO_JSVAL(ret_obj) );
-
-	return JS_TRUE;
-}
-
-// Arguments: NSString*, NSString*
-// Ret value: None
-JSBool JSPROXY_CCLabelBMFont_initWithString_fntFile_(JSContext *cx, uint32_t argc, jsval *vp) {
-
-	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
-	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 2, @"Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-
-	NSString *arg0 = jsval_to_nsstring( *argvp++, cx );
-
-	NSString *arg1 = jsval_to_nsstring( *argvp++, cx );
-
-	CCLabelBMFont *real = [[CCLabelBMFont alloc] initWithString:(NSString*)arg0 fntFile:(NSString*)arg1  ];
-	[proxy setRealObj: real];
-	[real release];
-
-	objc_setAssociatedObject(real, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
-	return JS_TRUE;
-}
-
-// Arguments: NSString*, NSString*, float, CCTextAlignment
-// Ret value: None
-JSBool JSPROXY_CCLabelBMFont_initWithString_fntFile_width_alignment_(JSContext *cx, uint32_t argc, jsval *vp) {
-
-	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
-	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 4, @"Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-
-	NSString *arg0 = jsval_to_nsstring( *argvp++, cx );
-
-	NSString *arg1 = jsval_to_nsstring( *argvp++, cx );
-	double arg2; JS_ValueToNumber( cx, *argvp++, &arg2 );
-	int32_t arg3; JS_ValueToECMAInt32( cx, *argvp++, &arg3 );
-
-	CCLabelBMFont *real = [[CCLabelBMFont alloc] initWithString:(NSString*)arg0 fntFile:(NSString*)arg1 width:(float)arg2 alignment:(CCTextAlignment)arg3  ];
-	[proxy setRealObj: real];
-	[real release];
-
-	objc_setAssociatedObject(real, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
-	return JS_TRUE;
-}
-
-// Arguments: NSString*, NSString*, float, CCTextAlignment, CGPoint
-// Ret value: None
-JSBool JSPROXY_CCLabelBMFont_initWithString_fntFile_width_alignment_imageOffset_(JSContext *cx, uint32_t argc, jsval *vp) {
-
-	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
-	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 5, @"Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-
-	NSString *arg0 = jsval_to_nsstring( *argvp++, cx );
-
-	NSString *arg1 = jsval_to_nsstring( *argvp++, cx );
-	double arg2; JS_ValueToNumber( cx, *argvp++, &arg2 );
-	int32_t arg3; JS_ValueToECMAInt32( cx, *argvp++, &arg3 );
-
-	JSObject *tmp_arg4;
-	JS_ValueToObject( cx, *argvp++, &tmp_arg4 );
-	NSCAssert( JS_GetTypedArrayByteLength( tmp_arg4 ) == 8, @"Invalid length");
-#ifdef __CC_PLATFORM_IOS
-	CGPoint arg4 = *(CGPoint*)JS_GetTypedArrayData( tmp_arg4 );
-#elif defined(__CC_PLATFORM_MAC)
-	float* arg4_array = (float*)JS_GetTypedArrayData( tmp_arg4 );
-	CGPoint arg4 = ccp(arg4_array[0], arg4_array[1] );
-#else
-#error Unsupported Platform
-#endif  
-
-	CCLabelBMFont *real = [[CCLabelBMFont alloc] initWithString:(NSString*)arg0 fntFile:(NSString*)arg1 width:(float)arg2 alignment:(CCTextAlignment)arg3 imageOffset:(CGPoint)arg4  ];
-	[proxy setRealObj: real];
-	[real release];
-
-	objc_setAssociatedObject(real, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
-	return JS_TRUE;
-}
-
-// Arguments: NSString*, NSString*
-// Ret value: CCLabelBMFont
-JSBool JSPROXY_CCLabelBMFont_labelWithString_fntFile_(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 2, @"Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-
-	NSString *arg0 = jsval_to_nsstring( *argvp++, cx );
-
-	NSString *arg1 = jsval_to_nsstring( *argvp++, cx );
-
-	CCLabelBMFont *real = [CCLabelBMFont labelWithString:(NSString*)arg0 fntFile:(NSString*)arg1  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( real, cx );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: NSString*, NSString*, float, CCTextAlignment
-// Ret value: CCLabelBMFont
-JSBool JSPROXY_CCLabelBMFont_labelWithString_fntFile_width_alignment_(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 4, @"Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-
-	NSString *arg0 = jsval_to_nsstring( *argvp++, cx );
-
-	NSString *arg1 = jsval_to_nsstring( *argvp++, cx );
-	double arg2; JS_ValueToNumber( cx, *argvp++, &arg2 );
-	int32_t arg3; JS_ValueToECMAInt32( cx, *argvp++, &arg3 );
-
-	CCLabelBMFont *real = [CCLabelBMFont labelWithString:(NSString*)arg0 fntFile:(NSString*)arg1 width:(float)arg2 alignment:(CCTextAlignment)arg3  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( real, cx );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: NSString*, NSString*, float, CCTextAlignment, CGPoint
-// Ret value: CCLabelBMFont
-JSBool JSPROXY_CCLabelBMFont_labelWithString_fntFile_width_alignment_imageOffset_(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 5, @"Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-
-	NSString *arg0 = jsval_to_nsstring( *argvp++, cx );
-
-	NSString *arg1 = jsval_to_nsstring( *argvp++, cx );
-	double arg2; JS_ValueToNumber( cx, *argvp++, &arg2 );
-	int32_t arg3; JS_ValueToECMAInt32( cx, *argvp++, &arg3 );
-
-	JSObject *tmp_arg4;
-	JS_ValueToObject( cx, *argvp++, &tmp_arg4 );
-	NSCAssert( JS_GetTypedArrayByteLength( tmp_arg4 ) == 8, @"Invalid length");
-#ifdef __CC_PLATFORM_IOS
-	CGPoint arg4 = *(CGPoint*)JS_GetTypedArrayData( tmp_arg4 );
-#elif defined(__CC_PLATFORM_MAC)
-	float* arg4_array = (float*)JS_GetTypedArrayData( tmp_arg4 );
-	CGPoint arg4 = ccp(arg4_array[0], arg4_array[1] );
-#else
-#error Unsupported Platform
-#endif  
-
-	CCLabelBMFont *real = [CCLabelBMFont labelWithString:(NSString*)arg0 fntFile:(NSString*)arg1 width:(float)arg2 alignment:(CCTextAlignment)arg3 imageOffset:(CGPoint)arg4  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( real, cx );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: 
-// Ret value: GLubyte
-JSBool JSPROXY_CCLabelBMFont_opacity(JSContext *cx, uint32_t argc, jsval *vp) {
-
-	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
-	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
-	GLubyte ret_val;
-
-	CCLabelBMFont *real = (CCLabelBMFont*) [proxy realObj];
-	ret_val = [real opacity ];
-	JS_SET_RVAL(cx, vp, INT_TO_JSVAL(ret_val));
-	return JS_TRUE;
-}
-
-// Arguments: 
-// Ret value: None
-JSBool JSPROXY_CCLabelBMFont_purgeCachedData(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
-
-	[CCLabelBMFont purgeCachedData ];
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
-	return JS_TRUE;
-}
-
-// Arguments: CCTextAlignment
-// Ret value: None
-JSBool JSPROXY_CCLabelBMFont_setAlignment_(JSContext *cx, uint32_t argc, jsval *vp) {
-
-	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
-	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	int32_t arg0; JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
-
-	CCLabelBMFont *real = (CCLabelBMFont*) [proxy realObj];
-	[real setAlignment:(CCTextAlignment)arg0  ];
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
-	return JS_TRUE;
-}
-
-// Arguments: ccColor3B
-// Ret value: None
-JSBool JSPROXY_CCLabelBMFont_setColor_(JSContext *cx, uint32_t argc, jsval *vp) {
-
-	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
-	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-
-	JSObject *tmp_arg0;
-	JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
-	ccColor3B arg0 = *(ccColor3B*)JS_GetTypedArrayData( tmp_arg0);
-
-	CCLabelBMFont *real = (CCLabelBMFont*) [proxy realObj];
-	[real setColor:(ccColor3B)arg0  ];
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
-	return JS_TRUE;
-}
-
-// Arguments: NSString*
-// Ret value: None
-JSBool JSPROXY_CCLabelBMFont_setFntFile_(JSContext *cx, uint32_t argc, jsval *vp) {
-
-	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
-	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-
-	NSString *arg0 = jsval_to_nsstring( *argvp++, cx );
-
-	CCLabelBMFont *real = (CCLabelBMFont*) [proxy realObj];
-	[real setFntFile:(NSString*)arg0  ];
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
-	return JS_TRUE;
-}
-
-// Arguments: GLubyte
-// Ret value: None
-JSBool JSPROXY_CCLabelBMFont_setOpacity_(JSContext *cx, uint32_t argc, jsval *vp) {
-
-	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
-	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	uint16_t arg0; JS_ValueToUint16( cx, *argvp++, &arg0 );
-
-	CCLabelBMFont *real = (CCLabelBMFont*) [proxy realObj];
-	[real setOpacity:(GLubyte)arg0  ];
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
-	return JS_TRUE;
-}
-
-// Arguments: float
-// Ret value: None
-JSBool JSPROXY_CCLabelBMFont_setWidth_(JSContext *cx, uint32_t argc, jsval *vp) {
-
-	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
-	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	double arg0; JS_ValueToNumber( cx, *argvp++, &arg0 );
-
-	CCLabelBMFont *real = (CCLabelBMFont*) [proxy realObj];
-	[real setWidth:(float)arg0  ];
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
-	return JS_TRUE;
-}
-
-void JSPROXY_CCLabelBMFont_createClass(JSContext *cx, JSObject* globalObj, const char* name )
-{
-	JSPROXY_CCLabelBMFont_class = (JSClass *)calloc(1, sizeof(JSClass));
-	JSPROXY_CCLabelBMFont_class->name = name;
-	JSPROXY_CCLabelBMFont_class->addProperty = JS_PropertyStub;
-	JSPROXY_CCLabelBMFont_class->delProperty = JS_PropertyStub;
-	JSPROXY_CCLabelBMFont_class->getProperty = JS_PropertyStub;
-	JSPROXY_CCLabelBMFont_class->setProperty = JS_StrictPropertyStub;
-	JSPROXY_CCLabelBMFont_class->enumerate = JS_EnumerateStub;
-	JSPROXY_CCLabelBMFont_class->resolve = JS_ResolveStub;
-	JSPROXY_CCLabelBMFont_class->convert = JS_ConvertStub;
-	JSPROXY_CCLabelBMFont_class->finalize = JSPROXY_CCLabelBMFont_finalize;
-	JSPROXY_CCLabelBMFont_class->flags = JSCLASS_HAS_PRIVATE;
-
-	static JSPropertySpec properties[] = {
-		{0, 0, 0, 0, 0}
-	};
-	static JSFunctionSpec funcs[] = {
-		JS_FN("alignment", JSPROXY_CCLabelBMFont_alignment, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
-		JS_FN("createFontChars", JSPROXY_CCLabelBMFont_createFontChars, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
-		JS_FN("fntFile", JSPROXY_CCLabelBMFont_fntFile, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
-		JS_FN("initWithStringFntfile", JSPROXY_CCLabelBMFont_initWithString_fntFile_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
-		JS_FN("initWithStringFntfileWidthAlignment", JSPROXY_CCLabelBMFont_initWithString_fntFile_width_alignment_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
-		JS_FN("initWithStringFntfileWidthAlignmentImageoffset", JSPROXY_CCLabelBMFont_initWithString_fntFile_width_alignment_imageOffset_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
-		JS_FN("opacity", JSPROXY_CCLabelBMFont_opacity, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
-		JS_FN("setAlignment", JSPROXY_CCLabelBMFont_setAlignment_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
-		JS_FN("setColor", JSPROXY_CCLabelBMFont_setColor_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
-		JS_FN("setFntFile", JSPROXY_CCLabelBMFont_setFntFile_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
-		JS_FN("setOpacity", JSPROXY_CCLabelBMFont_setOpacity_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
-		JS_FN("setWidth", JSPROXY_CCLabelBMFont_setWidth_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
-		JS_FS_END
-	};
-	static JSFunctionSpec st_funcs[] = {
-		JS_FN("labelWithStringFntfile", JSPROXY_CCLabelBMFont_labelWithString_fntFile_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSFUN_CONSTRUCTOR),
-		JS_FN("labelWithStringFntfileWidthAlignment", JSPROXY_CCLabelBMFont_labelWithString_fntFile_width_alignment_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSFUN_CONSTRUCTOR),
-		JS_FN("labelWithStringFntfileWidthAlignmentImageoffset", JSPROXY_CCLabelBMFont_labelWithString_fntFile_width_alignment_imageOffset_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSFUN_CONSTRUCTOR),
-		JS_FN("purgeCachedData", JSPROXY_CCLabelBMFont_purgeCachedData, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
-		JS_FS_END
-	};
-
-	JSPROXY_CCLabelBMFont_object = JS_InitClass(cx, globalObj, JSPROXY_CCSpriteBatchNode_object, JSPROXY_CCLabelBMFont_class, JSPROXY_CCLabelBMFont_constructor,0,properties,funcs,NULL,st_funcs);
-}
-
-@implementation JSPROXY_CCLabelBMFont
-
-+(JSObject*) createJSObjectWithRealObject:(id)realObj context:(JSContext*)cx
-{
-	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCLabelBMFont_class, JSPROXY_CCLabelBMFont_object, NULL);
-	JSPROXY_CCLabelBMFont *proxy = [[JSPROXY_CCLabelBMFont alloc] initWithJSObject:jsobj];
+	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCMenuItemSprite_class, JSPROXY_CCMenuItemSprite_object, NULL);
+	JSPROXY_CCMenuItemSprite *proxy = [[JSPROXY_CCMenuItemSprite alloc] initWithJSObject:jsobj];
 	[proxy setRealObj:realObj];
 	JS_SetPrivate(jsobj, proxy);
 
@@ -5958,15 +4112,15 @@ JSBool JSPROXY_CCParticleSystem_particleCount(JSContext *cx, uint32_t argc, jsva
 
 // Arguments: NSString*
 // Ret value: CCParticleSystem
-JSBool JSPROXY_CCParticleSystem_particleWithFile_(JSContext *cx, uint32_t argc, jsval *vp) {
+JSBool JSPROXY_CCParticleSystem_particleWithFile__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 
 	NSString *arg0 = jsval_to_nsstring( *argvp++, cx );
 
-	CCParticleSystem *real = [CCParticleSystem particleWithFile:(NSString*)arg0  ];
+	CCParticleSystem *ret_val = [CCParticleSystem particleWithFile:(NSString*)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( real, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -7266,7 +5420,7 @@ void JSPROXY_CCParticleSystem_createClass(JSContext *cx, JSObject* globalObj, co
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
-		JS_FN("particleWithFile", JSPROXY_CCParticleSystem_particleWithFile_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSFUN_CONSTRUCTOR),
+		JS_FN("particleWithFile", JSPROXY_CCParticleSystem_particleWithFile__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSFUN_CONSTRUCTOR),
 		JS_FS_END
 	};
 
@@ -7279,6 +5433,2279 @@ void JSPROXY_CCParticleSystem_createClass(JSContext *cx, JSObject* globalObj, co
 {
 	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCParticleSystem_class, JSPROXY_CCParticleSystem_object, NULL);
 	JSPROXY_CCParticleSystem *proxy = [[JSPROXY_CCParticleSystem alloc] initWithJSObject:jsobj];
+	[proxy setRealObj:realObj];
+	JS_SetPrivate(jsobj, proxy);
+
+	if( realObj )
+		objc_setAssociatedObject(realObj, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
+
+	[self swizzleMethods];
+
+	return jsobj;
+}
+
+@end
+
+/*
+ * CCScene
+ */
+#pragma mark - CCScene
+
+JSClass* JSPROXY_CCScene_class = NULL;
+JSObject* JSPROXY_CCScene_object = NULL;
+ // Constructor
+JSBool JSPROXY_CCScene_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JSObject *jsobj = [JSPROXY_CCScene createJSObjectWithRealObject:nil context:cx];
+    JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+    /* no callbacks */
+
+    return JS_TRUE;
+}
+
+// Destructor
+void JSPROXY_CCScene_finalize(JSContext *cx, JSObject *obj)
+{
+	JSPROXY_CCScene *proxy = (JSPROXY_CCScene*)JS_GetPrivate(obj);
+	if (proxy) {
+		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_ASSIGN);
+		/* no callbacks */
+		[proxy release];
+	}
+}
+
+// Arguments: 
+// Ret value: CCScene
+JSBool JSPROXY_CCScene_node_static(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 0, @"Invalid number of arguments" );
+
+	CCScene *ret_val = [CCScene node ];
+
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+	return JS_TRUE;
+}
+
+void JSPROXY_CCScene_createClass(JSContext *cx, JSObject* globalObj, const char* name )
+{
+	JSPROXY_CCScene_class = (JSClass *)calloc(1, sizeof(JSClass));
+	JSPROXY_CCScene_class->name = name;
+	JSPROXY_CCScene_class->addProperty = JS_PropertyStub;
+	JSPROXY_CCScene_class->delProperty = JS_PropertyStub;
+	JSPROXY_CCScene_class->getProperty = JS_PropertyStub;
+	JSPROXY_CCScene_class->setProperty = JS_StrictPropertyStub;
+	JSPROXY_CCScene_class->enumerate = JS_EnumerateStub;
+	JSPROXY_CCScene_class->resolve = JS_ResolveStub;
+	JSPROXY_CCScene_class->convert = JS_ConvertStub;
+	JSPROXY_CCScene_class->finalize = JSPROXY_CCScene_finalize;
+	JSPROXY_CCScene_class->flags = JSCLASS_HAS_PRIVATE;
+
+	static JSPropertySpec properties[] = {
+		{0, 0, 0, 0, 0}
+	};
+	static JSFunctionSpec funcs[] = {
+		JS_FS_END
+	};
+	static JSFunctionSpec st_funcs[] = {
+		JS_FN("node", JSPROXY_CCScene_node_static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSFUN_CONSTRUCTOR),
+		JS_FS_END
+	};
+
+	JSPROXY_CCScene_object = JS_InitClass(cx, globalObj, JSPROXY_CCNode_object, JSPROXY_CCScene_class, JSPROXY_CCScene_constructor,0,properties,funcs,NULL,st_funcs);
+}
+
+@implementation JSPROXY_CCScene
+
++(JSObject*) createJSObjectWithRealObject:(id)realObj context:(JSContext*)cx
+{
+	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCScene_class, JSPROXY_CCScene_object, NULL);
+	JSPROXY_CCScene *proxy = [[JSPROXY_CCScene alloc] initWithJSObject:jsobj];
+	[proxy setRealObj:realObj];
+	JS_SetPrivate(jsobj, proxy);
+
+	if( realObj )
+		objc_setAssociatedObject(realObj, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
+
+	[self swizzleMethods];
+
+	return jsobj;
+}
+
+@end
+
+/*
+ * CCRotateBy
+ */
+#pragma mark - CCRotateBy
+
+JSClass* JSPROXY_CCRotateBy_class = NULL;
+JSObject* JSPROXY_CCRotateBy_object = NULL;
+ // Constructor
+JSBool JSPROXY_CCRotateBy_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JSObject *jsobj = [JSPROXY_CCRotateBy createJSObjectWithRealObject:nil context:cx];
+    JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+    /* no callbacks */
+
+    return JS_TRUE;
+}
+
+// Destructor
+void JSPROXY_CCRotateBy_finalize(JSContext *cx, JSObject *obj)
+{
+	JSPROXY_CCRotateBy *proxy = (JSPROXY_CCRotateBy*)JS_GetPrivate(obj);
+	if (proxy) {
+		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_ASSIGN);
+		/* no callbacks */
+		[proxy release];
+	}
+}
+
+// Arguments: ccTime, float
+// Ret value: CCRotateBy
+JSBool JSPROXY_CCRotateBy_actionWithDuration_angle__static(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	double arg0; JS_ValueToNumber( cx, *argvp++, &arg0 );
+	double arg1; JS_ValueToNumber( cx, *argvp++, &arg1 );
+
+	CCRotateBy *ret_val = [CCRotateBy actionWithDuration:(ccTime)arg0 angle:(float)arg1  ];
+
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+	return JS_TRUE;
+}
+
+// Arguments: ccTime, float
+// Ret value: None
+JSBool JSPROXY_CCRotateBy_initWithDuration_angle_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	double arg0; JS_ValueToNumber( cx, *argvp++, &arg0 );
+	double arg1; JS_ValueToNumber( cx, *argvp++, &arg1 );
+
+	CCRotateBy *real = [[CCRotateBy alloc] initWithDuration:(ccTime)arg0 angle:(float)arg1  ];
+	[proxy setRealObj: real];
+	[real release];
+
+	objc_setAssociatedObject(real, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+void JSPROXY_CCRotateBy_createClass(JSContext *cx, JSObject* globalObj, const char* name )
+{
+	JSPROXY_CCRotateBy_class = (JSClass *)calloc(1, sizeof(JSClass));
+	JSPROXY_CCRotateBy_class->name = name;
+	JSPROXY_CCRotateBy_class->addProperty = JS_PropertyStub;
+	JSPROXY_CCRotateBy_class->delProperty = JS_PropertyStub;
+	JSPROXY_CCRotateBy_class->getProperty = JS_PropertyStub;
+	JSPROXY_CCRotateBy_class->setProperty = JS_StrictPropertyStub;
+	JSPROXY_CCRotateBy_class->enumerate = JS_EnumerateStub;
+	JSPROXY_CCRotateBy_class->resolve = JS_ResolveStub;
+	JSPROXY_CCRotateBy_class->convert = JS_ConvertStub;
+	JSPROXY_CCRotateBy_class->finalize = JSPROXY_CCRotateBy_finalize;
+	JSPROXY_CCRotateBy_class->flags = JSCLASS_HAS_PRIVATE;
+
+	static JSPropertySpec properties[] = {
+		{0, 0, 0, 0, 0}
+	};
+	static JSFunctionSpec funcs[] = {
+		JS_FN("initWithDurationAngle", JSPROXY_CCRotateBy_initWithDuration_angle_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FS_END
+	};
+	static JSFunctionSpec st_funcs[] = {
+		JS_FN("actionWithDurationAngle", JSPROXY_CCRotateBy_actionWithDuration_angle__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSFUN_CONSTRUCTOR),
+		JS_FS_END
+	};
+
+	JSPROXY_CCRotateBy_object = JS_InitClass(cx, globalObj, JSPROXY_CCActionInterval_object, JSPROXY_CCRotateBy_class, JSPROXY_CCRotateBy_constructor,0,properties,funcs,NULL,st_funcs);
+}
+
+@implementation JSPROXY_CCRotateBy
+
++(JSObject*) createJSObjectWithRealObject:(id)realObj context:(JSContext*)cx
+{
+	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCRotateBy_class, JSPROXY_CCRotateBy_object, NULL);
+	JSPROXY_CCRotateBy *proxy = [[JSPROXY_CCRotateBy alloc] initWithJSObject:jsobj];
+	[proxy setRealObj:realObj];
+	JS_SetPrivate(jsobj, proxy);
+
+	if( realObj )
+		objc_setAssociatedObject(realObj, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
+
+	[self swizzleMethods];
+
+	return jsobj;
+}
+
+@end
+
+/*
+ * CCMenuItemLabel
+ */
+#pragma mark - CCMenuItemLabel
+
+JSClass* JSPROXY_CCMenuItemLabel_class = NULL;
+JSObject* JSPROXY_CCMenuItemLabel_object = NULL;
+ // Constructor
+JSBool JSPROXY_CCMenuItemLabel_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JSObject *jsobj = [JSPROXY_CCMenuItemLabel createJSObjectWithRealObject:nil context:cx];
+    JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+    /* no callbacks */
+
+    return JS_TRUE;
+}
+
+// Destructor
+void JSPROXY_CCMenuItemLabel_finalize(JSContext *cx, JSObject *obj)
+{
+	JSPROXY_CCMenuItemLabel *proxy = (JSPROXY_CCMenuItemLabel*)JS_GetPrivate(obj);
+	if (proxy) {
+		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_ASSIGN);
+		/* no callbacks */
+		[proxy release];
+	}
+}
+
+// Arguments: CCNode*
+// Ret value: CCMenuItemLabel
+JSBool JSPROXY_CCMenuItemLabel_itemWithLabel__static(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+
+	CCNode* arg0 = (CCNode*) jsval_to_nsobject( *argvp++, cx);
+
+	CCMenuItemLabel *ret_val = [CCMenuItemLabel itemWithLabel:(CCNode*)arg0  ];
+
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+	return JS_TRUE;
+}
+
+// Arguments: 
+// Ret value: CCNode*
+JSBool JSPROXY_CCMenuItemLabel_label(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	CCNode* ret_val;
+
+	CCMenuItemLabel *real = (CCMenuItemLabel*) [proxy realObj];
+	ret_val = [real label ];
+
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+	return JS_TRUE;
+}
+
+// Arguments: ccColor3B
+// Ret value: None
+JSBool JSPROXY_CCMenuItemLabel_setDisabledColor_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+
+	JSObject *tmp_arg0;
+	JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
+	ccColor3B arg0 = *(ccColor3B*)JS_GetTypedArrayData( tmp_arg0);
+
+	CCMenuItemLabel *real = (CCMenuItemLabel*) [proxy realObj];
+	[real setDisabledColor:(ccColor3B)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: BOOL
+// Ret value: None
+JSBool JSPROXY_CCMenuItemLabel_setIsEnabled_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	JSBool arg0; JS_ValueToBoolean( cx, *argvp++, &arg0 );
+
+	CCMenuItemLabel *real = (CCMenuItemLabel*) [proxy realObj];
+	[real setIsEnabled:(BOOL)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: CCNode*
+// Ret value: None
+JSBool JSPROXY_CCMenuItemLabel_setLabel_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+
+	CCNode* arg0 = (CCNode*) jsval_to_nsobject( *argvp++, cx);
+
+	CCMenuItemLabel *real = (CCMenuItemLabel*) [proxy realObj];
+	[real setLabel:(CCNode*)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: NSString*
+// Ret value: None
+JSBool JSPROXY_CCMenuItemLabel_setString_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+
+	NSString *arg0 = jsval_to_nsstring( *argvp++, cx );
+
+	CCMenuItemLabel *real = (CCMenuItemLabel*) [proxy realObj];
+	[real setString:(NSString*)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+void JSPROXY_CCMenuItemLabel_createClass(JSContext *cx, JSObject* globalObj, const char* name )
+{
+	JSPROXY_CCMenuItemLabel_class = (JSClass *)calloc(1, sizeof(JSClass));
+	JSPROXY_CCMenuItemLabel_class->name = name;
+	JSPROXY_CCMenuItemLabel_class->addProperty = JS_PropertyStub;
+	JSPROXY_CCMenuItemLabel_class->delProperty = JS_PropertyStub;
+	JSPROXY_CCMenuItemLabel_class->getProperty = JS_PropertyStub;
+	JSPROXY_CCMenuItemLabel_class->setProperty = JS_StrictPropertyStub;
+	JSPROXY_CCMenuItemLabel_class->enumerate = JS_EnumerateStub;
+	JSPROXY_CCMenuItemLabel_class->resolve = JS_ResolveStub;
+	JSPROXY_CCMenuItemLabel_class->convert = JS_ConvertStub;
+	JSPROXY_CCMenuItemLabel_class->finalize = JSPROXY_CCMenuItemLabel_finalize;
+	JSPROXY_CCMenuItemLabel_class->flags = JSCLASS_HAS_PRIVATE;
+
+	static JSPropertySpec properties[] = {
+		{0, 0, 0, 0, 0}
+	};
+	static JSFunctionSpec funcs[] = {
+		JS_FN("label", JSPROXY_CCMenuItemLabel_label, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("setDisabledColor", JSPROXY_CCMenuItemLabel_setDisabledColor_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("setIsEnabled", JSPROXY_CCMenuItemLabel_setIsEnabled_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("setLabel", JSPROXY_CCMenuItemLabel_setLabel_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("setString", JSPROXY_CCMenuItemLabel_setString_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FS_END
+	};
+	static JSFunctionSpec st_funcs[] = {
+		JS_FN("itemWithLabel", JSPROXY_CCMenuItemLabel_itemWithLabel__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSFUN_CONSTRUCTOR),
+		JS_FS_END
+	};
+
+	JSPROXY_CCMenuItemLabel_object = JS_InitClass(cx, globalObj, JSPROXY_CCMenuItem_object, JSPROXY_CCMenuItemLabel_class, JSPROXY_CCMenuItemLabel_constructor,0,properties,funcs,NULL,st_funcs);
+}
+
+@implementation JSPROXY_CCMenuItemLabel
+
++(JSObject*) createJSObjectWithRealObject:(id)realObj context:(JSContext*)cx
+{
+	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCMenuItemLabel_class, JSPROXY_CCMenuItemLabel_object, NULL);
+	JSPROXY_CCMenuItemLabel *proxy = [[JSPROXY_CCMenuItemLabel alloc] initWithJSObject:jsobj];
+	[proxy setRealObj:realObj];
+	JS_SetPrivate(jsobj, proxy);
+
+	if( realObj )
+		objc_setAssociatedObject(realObj, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
+
+	[self swizzleMethods];
+
+	return jsobj;
+}
+
+@end
+
+/*
+ * CCMenuItemFont
+ */
+#pragma mark - CCMenuItemFont
+
+JSClass* JSPROXY_CCMenuItemFont_class = NULL;
+JSObject* JSPROXY_CCMenuItemFont_object = NULL;
+ // Constructor
+JSBool JSPROXY_CCMenuItemFont_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JSObject *jsobj = [JSPROXY_CCMenuItemFont createJSObjectWithRealObject:nil context:cx];
+    JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+    /* no callbacks */
+
+    return JS_TRUE;
+}
+
+// Destructor
+void JSPROXY_CCMenuItemFont_finalize(JSContext *cx, JSObject *obj)
+{
+	JSPROXY_CCMenuItemFont *proxy = (JSPROXY_CCMenuItemFont*)JS_GetPrivate(obj);
+	if (proxy) {
+		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_ASSIGN);
+		/* no callbacks */
+		[proxy release];
+	}
+}
+
+// Arguments: 
+// Ret value: NSString*
+JSBool JSPROXY_CCMenuItemFont_fontName_static(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 0, @"Invalid number of arguments" );
+
+	NSString* ret_val = [CCMenuItemFont fontName ];
+
+	JSString *ret_obj = JS_NewStringCopyZ(cx, [ret_val UTF8String]);
+	JS_SET_RVAL(cx, vp, STRING_TO_JSVAL(ret_obj) );
+
+	return JS_TRUE;
+}
+
+// Arguments: 
+// Ret value: NSString*
+JSBool JSPROXY_CCMenuItemFont_fontName(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	NSString* ret_val;
+
+	CCMenuItemFont *real = (CCMenuItemFont*) [proxy realObj];
+	ret_val = [real fontName ];
+
+	JSString *ret_obj = JS_NewStringCopyZ(cx, [ret_val UTF8String]);
+	JS_SET_RVAL(cx, vp, STRING_TO_JSVAL(ret_obj) );
+
+	return JS_TRUE;
+}
+
+// Arguments: 
+// Ret value: NSUInteger
+JSBool JSPROXY_CCMenuItemFont_fontSize_static(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 0, @"Invalid number of arguments" );
+
+	NSUInteger ret_val = [CCMenuItemFont fontSize ];
+	JS_SET_RVAL(cx, vp, INT_TO_JSVAL(ret_val));
+	return JS_TRUE;
+}
+
+// Arguments: 
+// Ret value: NSUInteger
+JSBool JSPROXY_CCMenuItemFont_fontSize(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	NSUInteger ret_val;
+
+	CCMenuItemFont *real = (CCMenuItemFont*) [proxy realObj];
+	ret_val = [real fontSize ];
+	JS_SET_RVAL(cx, vp, INT_TO_JSVAL(ret_val));
+	return JS_TRUE;
+}
+
+// Arguments: NSString*
+// Ret value: CCMenuItemFont
+JSBool JSPROXY_CCMenuItemFont_itemWithString__static(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+
+	NSString *arg0 = jsval_to_nsstring( *argvp++, cx );
+
+	CCMenuItemFont *ret_val = [CCMenuItemFont itemWithString:(NSString*)arg0  ];
+
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+	return JS_TRUE;
+}
+
+// Arguments: NSString*
+// Ret value: None
+JSBool JSPROXY_CCMenuItemFont_setFontName__static(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+
+	NSString *arg0 = jsval_to_nsstring( *argvp++, cx );
+
+	[CCMenuItemFont setFontName:(NSString*)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: NSString*
+// Ret value: None
+JSBool JSPROXY_CCMenuItemFont_setFontName_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+
+	NSString *arg0 = jsval_to_nsstring( *argvp++, cx );
+
+	CCMenuItemFont *real = (CCMenuItemFont*) [proxy realObj];
+	[real setFontName:(NSString*)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: NSUInteger
+// Ret value: None
+JSBool JSPROXY_CCMenuItemFont_setFontSize__static(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	uint32_t arg0; JS_ValueToECMAUint32( cx, *argvp++, &arg0 );
+
+	[CCMenuItemFont setFontSize:(NSUInteger)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: NSUInteger
+// Ret value: None
+JSBool JSPROXY_CCMenuItemFont_setFontSize_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	uint32_t arg0; JS_ValueToECMAUint32( cx, *argvp++, &arg0 );
+
+	CCMenuItemFont *real = (CCMenuItemFont*) [proxy realObj];
+	[real setFontSize:(NSUInteger)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+void JSPROXY_CCMenuItemFont_createClass(JSContext *cx, JSObject* globalObj, const char* name )
+{
+	JSPROXY_CCMenuItemFont_class = (JSClass *)calloc(1, sizeof(JSClass));
+	JSPROXY_CCMenuItemFont_class->name = name;
+	JSPROXY_CCMenuItemFont_class->addProperty = JS_PropertyStub;
+	JSPROXY_CCMenuItemFont_class->delProperty = JS_PropertyStub;
+	JSPROXY_CCMenuItemFont_class->getProperty = JS_PropertyStub;
+	JSPROXY_CCMenuItemFont_class->setProperty = JS_StrictPropertyStub;
+	JSPROXY_CCMenuItemFont_class->enumerate = JS_EnumerateStub;
+	JSPROXY_CCMenuItemFont_class->resolve = JS_ResolveStub;
+	JSPROXY_CCMenuItemFont_class->convert = JS_ConvertStub;
+	JSPROXY_CCMenuItemFont_class->finalize = JSPROXY_CCMenuItemFont_finalize;
+	JSPROXY_CCMenuItemFont_class->flags = JSCLASS_HAS_PRIVATE;
+
+	static JSPropertySpec properties[] = {
+		{0, 0, 0, 0, 0}
+	};
+	static JSFunctionSpec funcs[] = {
+		JS_FN("fontName", JSPROXY_CCMenuItemFont_fontName, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("fontSize", JSPROXY_CCMenuItemFont_fontSize, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("setFontName", JSPROXY_CCMenuItemFont_setFontName_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("setFontSize", JSPROXY_CCMenuItemFont_setFontSize_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FS_END
+	};
+	static JSFunctionSpec st_funcs[] = {
+		JS_FN("fontName", JSPROXY_CCMenuItemFont_fontName_static, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("fontSize", JSPROXY_CCMenuItemFont_fontSize_static, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("itemWithString", JSPROXY_CCMenuItemFont_itemWithString__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSFUN_CONSTRUCTOR),
+		JS_FN("setFontName", JSPROXY_CCMenuItemFont_setFontName__static, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("setFontSize", JSPROXY_CCMenuItemFont_setFontSize__static, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FS_END
+	};
+
+	JSPROXY_CCMenuItemFont_object = JS_InitClass(cx, globalObj, JSPROXY_CCMenuItemLabel_object, JSPROXY_CCMenuItemFont_class, JSPROXY_CCMenuItemFont_constructor,0,properties,funcs,NULL,st_funcs);
+}
+
+@implementation JSPROXY_CCMenuItemFont
+
++(JSObject*) createJSObjectWithRealObject:(id)realObj context:(JSContext*)cx
+{
+	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCMenuItemFont_class, JSPROXY_CCMenuItemFont_object, NULL);
+	JSPROXY_CCMenuItemFont *proxy = [[JSPROXY_CCMenuItemFont alloc] initWithJSObject:jsobj];
+	[proxy setRealObj:realObj];
+	JS_SetPrivate(jsobj, proxy);
+
+	if( realObj )
+		objc_setAssociatedObject(realObj, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
+
+	[self swizzleMethods];
+
+	return jsobj;
+}
+
+@end
+
+/*
+ * CCLayer
+ */
+#pragma mark - CCLayer
+
+JSClass* JSPROXY_CCLayer_class = NULL;
+JSObject* JSPROXY_CCLayer_object = NULL;
+ // Constructor
+JSBool JSPROXY_CCLayer_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JSObject *jsobj = [JSPROXY_CCLayer createJSObjectWithRealObject:nil context:cx];
+    JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+    /* no callbacks */
+
+    return JS_TRUE;
+}
+
+// Destructor
+void JSPROXY_CCLayer_finalize(JSContext *cx, JSObject *obj)
+{
+	JSPROXY_CCLayer *proxy = (JSPROXY_CCLayer*)JS_GetPrivate(obj);
+	if (proxy) {
+		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_ASSIGN);
+		/* no callbacks */
+		[proxy release];
+	}
+}
+
+// Arguments: 
+// Ret value: BOOL
+JSBool JSPROXY_CCLayer_isKeyboardEnabled(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	BOOL ret_val;
+
+	CCLayer *real = (CCLayer*) [proxy realObj];
+	ret_val = [real isKeyboardEnabled ];
+	JS_SET_RVAL(cx, vp, BOOLEAN_TO_JSVAL(ret_val));
+	return JS_TRUE;
+}
+
+// Arguments: 
+// Ret value: BOOL
+JSBool JSPROXY_CCLayer_isMouseEnabled(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	BOOL ret_val;
+
+	CCLayer *real = (CCLayer*) [proxy realObj];
+	ret_val = [real isMouseEnabled ];
+	JS_SET_RVAL(cx, vp, BOOLEAN_TO_JSVAL(ret_val));
+	return JS_TRUE;
+}
+
+// Arguments: 
+// Ret value: BOOL
+JSBool JSPROXY_CCLayer_isTouchEnabled(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	BOOL ret_val;
+
+	CCLayer *real = (CCLayer*) [proxy realObj];
+	ret_val = [real isTouchEnabled ];
+	JS_SET_RVAL(cx, vp, BOOLEAN_TO_JSVAL(ret_val));
+	return JS_TRUE;
+}
+
+// Arguments: 
+// Ret value: NSInteger
+JSBool JSPROXY_CCLayer_keyboardDelegatePriority(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	NSInteger ret_val;
+
+	CCLayer *real = (CCLayer*) [proxy realObj];
+	ret_val = [real keyboardDelegatePriority ];
+	JS_SET_RVAL(cx, vp, INT_TO_JSVAL(ret_val));
+	return JS_TRUE;
+}
+
+// Arguments: 
+// Ret value: NSInteger
+JSBool JSPROXY_CCLayer_mouseDelegatePriority(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	NSInteger ret_val;
+
+	CCLayer *real = (CCLayer*) [proxy realObj];
+	ret_val = [real mouseDelegatePriority ];
+	JS_SET_RVAL(cx, vp, INT_TO_JSVAL(ret_val));
+	return JS_TRUE;
+}
+
+// Arguments: BOOL
+// Ret value: None
+JSBool JSPROXY_CCLayer_setIsKeyboardEnabled_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	JSBool arg0; JS_ValueToBoolean( cx, *argvp++, &arg0 );
+
+	CCLayer *real = (CCLayer*) [proxy realObj];
+	[real setIsKeyboardEnabled:(BOOL)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: BOOL
+// Ret value: None
+JSBool JSPROXY_CCLayer_setIsMouseEnabled_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	JSBool arg0; JS_ValueToBoolean( cx, *argvp++, &arg0 );
+
+	CCLayer *real = (CCLayer*) [proxy realObj];
+	[real setIsMouseEnabled:(BOOL)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: BOOL
+// Ret value: None
+JSBool JSPROXY_CCLayer_setIsTouchEnabled_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	JSBool arg0; JS_ValueToBoolean( cx, *argvp++, &arg0 );
+
+	CCLayer *real = (CCLayer*) [proxy realObj];
+	[real setIsTouchEnabled:(BOOL)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: 
+// Ret value: NSInteger
+JSBool JSPROXY_CCLayer_touchDelegatePriority(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	NSInteger ret_val;
+
+	CCLayer *real = (CCLayer*) [proxy realObj];
+	ret_val = [real touchDelegatePriority ];
+	JS_SET_RVAL(cx, vp, INT_TO_JSVAL(ret_val));
+	return JS_TRUE;
+}
+
+void JSPROXY_CCLayer_createClass(JSContext *cx, JSObject* globalObj, const char* name )
+{
+	JSPROXY_CCLayer_class = (JSClass *)calloc(1, sizeof(JSClass));
+	JSPROXY_CCLayer_class->name = name;
+	JSPROXY_CCLayer_class->addProperty = JS_PropertyStub;
+	JSPROXY_CCLayer_class->delProperty = JS_PropertyStub;
+	JSPROXY_CCLayer_class->getProperty = JS_PropertyStub;
+	JSPROXY_CCLayer_class->setProperty = JS_StrictPropertyStub;
+	JSPROXY_CCLayer_class->enumerate = JS_EnumerateStub;
+	JSPROXY_CCLayer_class->resolve = JS_ResolveStub;
+	JSPROXY_CCLayer_class->convert = JS_ConvertStub;
+	JSPROXY_CCLayer_class->finalize = JSPROXY_CCLayer_finalize;
+	JSPROXY_CCLayer_class->flags = JSCLASS_HAS_PRIVATE;
+
+	static JSPropertySpec properties[] = {
+		{0, 0, 0, 0, 0}
+	};
+	static JSFunctionSpec funcs[] = {
+		JS_FN("isKeyboardEnabled", JSPROXY_CCLayer_isKeyboardEnabled, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("isMouseEnabled", JSPROXY_CCLayer_isMouseEnabled, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("isTouchEnabled", JSPROXY_CCLayer_isTouchEnabled, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("keyboardDelegatePriority", JSPROXY_CCLayer_keyboardDelegatePriority, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("mouseDelegatePriority", JSPROXY_CCLayer_mouseDelegatePriority, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("setIsKeyboardEnabled", JSPROXY_CCLayer_setIsKeyboardEnabled_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("setIsMouseEnabled", JSPROXY_CCLayer_setIsMouseEnabled_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("setIsTouchEnabled", JSPROXY_CCLayer_setIsTouchEnabled_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("touchDelegatePriority", JSPROXY_CCLayer_touchDelegatePriority, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FS_END
+	};
+	static JSFunctionSpec st_funcs[] = {
+		JS_FS_END
+	};
+
+	JSPROXY_CCLayer_object = JS_InitClass(cx, globalObj, JSPROXY_CCNode_object, JSPROXY_CCLayer_class, JSPROXY_CCLayer_constructor,0,properties,funcs,NULL,st_funcs);
+}
+
+@implementation JSPROXY_CCLayer
+
++(JSObject*) createJSObjectWithRealObject:(id)realObj context:(JSContext*)cx
+{
+	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCLayer_class, JSPROXY_CCLayer_object, NULL);
+	JSPROXY_CCLayer *proxy = [[JSPROXY_CCLayer alloc] initWithJSObject:jsobj];
+	[proxy setRealObj:realObj];
+	JS_SetPrivate(jsobj, proxy);
+
+	if( realObj )
+		objc_setAssociatedObject(realObj, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
+
+	[self swizzleMethods];
+
+	return jsobj;
+}
+
+@end
+
+/*
+ * CCMenu
+ */
+#pragma mark - CCMenu
+
+JSClass* JSPROXY_CCMenu_class = NULL;
+JSObject* JSPROXY_CCMenu_object = NULL;
+ // Constructor
+JSBool JSPROXY_CCMenu_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JSObject *jsobj = [JSPROXY_CCMenu createJSObjectWithRealObject:nil context:cx];
+    JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+    /* no callbacks */
+
+    return JS_TRUE;
+}
+
+// Destructor
+void JSPROXY_CCMenu_finalize(JSContext *cx, JSObject *obj)
+{
+	JSPROXY_CCMenu *proxy = (JSPROXY_CCMenu*)JS_GetPrivate(obj);
+	if (proxy) {
+		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_ASSIGN);
+		/* no callbacks */
+		[proxy release];
+	}
+}
+
+// Arguments: 
+// Ret value: None
+JSBool JSPROXY_CCMenu_alignItemsHorizontally(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 0, @"Invalid number of arguments" );
+
+	CCMenu *real = (CCMenu*) [proxy realObj];
+	[real alignItemsHorizontally ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: float
+// Ret value: None
+JSBool JSPROXY_CCMenu_alignItemsHorizontallyWithPadding_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	double arg0; JS_ValueToNumber( cx, *argvp++, &arg0 );
+
+	CCMenu *real = (CCMenu*) [proxy realObj];
+	[real alignItemsHorizontallyWithPadding:(float)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: 
+// Ret value: None
+JSBool JSPROXY_CCMenu_alignItemsVertically(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 0, @"Invalid number of arguments" );
+
+	CCMenu *real = (CCMenu*) [proxy realObj];
+	[real alignItemsVertically ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: float
+// Ret value: None
+JSBool JSPROXY_CCMenu_alignItemsVerticallyWithPadding_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	double arg0; JS_ValueToNumber( cx, *argvp++, &arg0 );
+
+	CCMenu *real = (CCMenu*) [proxy realObj];
+	[real alignItemsVerticallyWithPadding:(float)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: 
+// Ret value: BOOL
+JSBool JSPROXY_CCMenu_enabled(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	BOOL ret_val;
+
+	CCMenu *real = (CCMenu*) [proxy realObj];
+	ret_val = [real enabled ];
+	JS_SET_RVAL(cx, vp, BOOLEAN_TO_JSVAL(ret_val));
+	return JS_TRUE;
+}
+
+// Arguments: NSArray*
+// Ret value: None
+JSBool JSPROXY_CCMenu_initWithArray_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+
+	// Parsing sequence
+	NSArray *arg0 = jsval_to_nsarray( *argvp++, cx );
+
+	CCMenu *real = [[CCMenu alloc] initWithArray:(NSArray*)arg0  ];
+	[proxy setRealObj: real];
+	[real release];
+
+	objc_setAssociatedObject(real, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: NSArray*
+// Ret value: CCMenu
+JSBool JSPROXY_CCMenu_menuWithArray__static(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+
+	// Parsing sequence
+	NSArray *arg0 = jsval_to_nsarray( *argvp++, cx );
+
+	CCMenu *ret_val = [CCMenu menuWithArray:(NSArray*)arg0  ];
+
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+	return JS_TRUE;
+}
+
+// Arguments: 
+// Ret value: GLubyte
+JSBool JSPROXY_CCMenu_opacity(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	GLubyte ret_val;
+
+	CCMenu *real = (CCMenu*) [proxy realObj];
+	ret_val = [real opacity ];
+	JS_SET_RVAL(cx, vp, INT_TO_JSVAL(ret_val));
+	return JS_TRUE;
+}
+
+// Arguments: BOOL
+// Ret value: None
+JSBool JSPROXY_CCMenu_setEnabled_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	JSBool arg0; JS_ValueToBoolean( cx, *argvp++, &arg0 );
+
+	CCMenu *real = (CCMenu*) [proxy realObj];
+	[real setEnabled:(BOOL)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: NSInteger
+// Ret value: None
+JSBool JSPROXY_CCMenu_setHandlerPriority_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	int32_t arg0; JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
+
+	CCMenu *real = (CCMenu*) [proxy realObj];
+	[real setHandlerPriority:(NSInteger)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+void JSPROXY_CCMenu_createClass(JSContext *cx, JSObject* globalObj, const char* name )
+{
+	JSPROXY_CCMenu_class = (JSClass *)calloc(1, sizeof(JSClass));
+	JSPROXY_CCMenu_class->name = name;
+	JSPROXY_CCMenu_class->addProperty = JS_PropertyStub;
+	JSPROXY_CCMenu_class->delProperty = JS_PropertyStub;
+	JSPROXY_CCMenu_class->getProperty = JS_PropertyStub;
+	JSPROXY_CCMenu_class->setProperty = JS_StrictPropertyStub;
+	JSPROXY_CCMenu_class->enumerate = JS_EnumerateStub;
+	JSPROXY_CCMenu_class->resolve = JS_ResolveStub;
+	JSPROXY_CCMenu_class->convert = JS_ConvertStub;
+	JSPROXY_CCMenu_class->finalize = JSPROXY_CCMenu_finalize;
+	JSPROXY_CCMenu_class->flags = JSCLASS_HAS_PRIVATE;
+
+	static JSPropertySpec properties[] = {
+		{0, 0, 0, 0, 0}
+	};
+	static JSFunctionSpec funcs[] = {
+		JS_FN("alignItemsHorizontally", JSPROXY_CCMenu_alignItemsHorizontally, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("alignItemsHorizontallyWithPadding", JSPROXY_CCMenu_alignItemsHorizontallyWithPadding_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("alignItemsVertically", JSPROXY_CCMenu_alignItemsVertically, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("alignItemsVerticallyWithPadding", JSPROXY_CCMenu_alignItemsVerticallyWithPadding_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("enabled", JSPROXY_CCMenu_enabled, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("initWithArray", JSPROXY_CCMenu_initWithArray_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("opacity", JSPROXY_CCMenu_opacity, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("setEnabled", JSPROXY_CCMenu_setEnabled_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("setHandlerPriority", JSPROXY_CCMenu_setHandlerPriority_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FS_END
+	};
+	static JSFunctionSpec st_funcs[] = {
+		JS_FN("menuWithArray", JSPROXY_CCMenu_menuWithArray__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSFUN_CONSTRUCTOR),
+		JS_FS_END
+	};
+
+	JSPROXY_CCMenu_object = JS_InitClass(cx, globalObj, JSPROXY_CCLayer_object, JSPROXY_CCMenu_class, JSPROXY_CCMenu_constructor,0,properties,funcs,NULL,st_funcs);
+}
+
+@implementation JSPROXY_CCMenu
+
++(JSObject*) createJSObjectWithRealObject:(id)realObj context:(JSContext*)cx
+{
+	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCMenu_class, JSPROXY_CCMenu_object, NULL);
+	JSPROXY_CCMenu *proxy = [[JSPROXY_CCMenu alloc] initWithJSObject:jsobj];
+	[proxy setRealObj:realObj];
+	JS_SetPrivate(jsobj, proxy);
+
+	if( realObj )
+		objc_setAssociatedObject(realObj, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
+
+	[self swizzleMethods];
+
+	return jsobj;
+}
+
+@end
+
+/*
+ * CCSprite
+ */
+#pragma mark - CCSprite
+
+JSClass* JSPROXY_CCSprite_class = NULL;
+JSObject* JSPROXY_CCSprite_object = NULL;
+ // Constructor
+JSBool JSPROXY_CCSprite_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JSObject *jsobj = [JSPROXY_CCSprite createJSObjectWithRealObject:nil context:cx];
+    JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+    /* no callbacks */
+
+    return JS_TRUE;
+}
+
+// Destructor
+void JSPROXY_CCSprite_finalize(JSContext *cx, JSObject *obj)
+{
+	JSPROXY_CCSprite *proxy = (JSPROXY_CCSprite*)JS_GetPrivate(obj);
+	if (proxy) {
+		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_ASSIGN);
+		/* no callbacks */
+		[proxy release];
+	}
+}
+
+// Arguments: 
+// Ret value: NSUInteger
+JSBool JSPROXY_CCSprite_atlasIndex(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	NSUInteger ret_val;
+
+	CCSprite *real = (CCSprite*) [proxy realObj];
+	ret_val = [real atlasIndex ];
+	JS_SET_RVAL(cx, vp, INT_TO_JSVAL(ret_val));
+	return JS_TRUE;
+}
+
+// Arguments: 
+// Ret value: CCSpriteBatchNode*
+JSBool JSPROXY_CCSprite_batchNode(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	CCSpriteBatchNode* ret_val;
+
+	CCSprite *real = (CCSprite*) [proxy realObj];
+	ret_val = [real batchNode ];
+
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+	return JS_TRUE;
+}
+
+// Arguments: 
+// Ret value: BOOL
+JSBool JSPROXY_CCSprite_dirty(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	BOOL ret_val;
+
+	CCSprite *real = (CCSprite*) [proxy realObj];
+	ret_val = [real dirty ];
+	JS_SET_RVAL(cx, vp, BOOLEAN_TO_JSVAL(ret_val));
+	return JS_TRUE;
+}
+
+// Arguments: 
+// Ret value: BOOL
+JSBool JSPROXY_CCSprite_flipX(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	BOOL ret_val;
+
+	CCSprite *real = (CCSprite*) [proxy realObj];
+	ret_val = [real flipX ];
+	JS_SET_RVAL(cx, vp, BOOLEAN_TO_JSVAL(ret_val));
+	return JS_TRUE;
+}
+
+// Arguments: 
+// Ret value: BOOL
+JSBool JSPROXY_CCSprite_flipY(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	BOOL ret_val;
+
+	CCSprite *real = (CCSprite*) [proxy realObj];
+	ret_val = [real flipY ];
+	JS_SET_RVAL(cx, vp, BOOLEAN_TO_JSVAL(ret_val));
+	return JS_TRUE;
+}
+
+// Arguments: NSString*
+// Ret value: None
+JSBool JSPROXY_CCSprite_initWithFile_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+
+	NSString *arg0 = jsval_to_nsstring( *argvp++, cx );
+
+	CCSprite *real = [[CCSprite alloc] initWithFile:(NSString*)arg0  ];
+	[proxy setRealObj: real];
+	[real release];
+
+	objc_setAssociatedObject(real, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: NSString*
+// Ret value: None
+JSBool JSPROXY_CCSprite_initWithSpriteFrameName_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+
+	NSString *arg0 = jsval_to_nsstring( *argvp++, cx );
+
+	CCSprite *real = [[CCSprite alloc] initWithSpriteFrameName:(NSString*)arg0  ];
+	[proxy setRealObj: real];
+	[real release];
+
+	objc_setAssociatedObject(real, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: 
+// Ret value: CGPoint
+JSBool JSPROXY_CCSprite_offsetPosition(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	CGPoint ret_val;
+
+	CCSprite *real = (CCSprite*) [proxy realObj];
+	ret_val = [real offsetPosition ];
+
+	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 2 );
+	float *buffer = (float*)JS_GetTypedArrayData(typedArray);
+	buffer[0] = ret_val.x;
+	buffer[1] = ret_val.y;
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(typedArray));
+
+	return JS_TRUE;
+}
+
+// Arguments: 
+// Ret value: GLubyte
+JSBool JSPROXY_CCSprite_opacity(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	GLubyte ret_val;
+
+	CCSprite *real = (CCSprite*) [proxy realObj];
+	ret_val = [real opacity ];
+	JS_SET_RVAL(cx, vp, INT_TO_JSVAL(ret_val));
+	return JS_TRUE;
+}
+
+// Arguments: NSUInteger
+// Ret value: None
+JSBool JSPROXY_CCSprite_setAtlasIndex_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	uint32_t arg0; JS_ValueToECMAUint32( cx, *argvp++, &arg0 );
+
+	CCSprite *real = (CCSprite*) [proxy realObj];
+	[real setAtlasIndex:(NSUInteger)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: CCSpriteBatchNode*
+// Ret value: None
+JSBool JSPROXY_CCSprite_setBatchNode_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+
+	CCSpriteBatchNode* arg0 = (CCSpriteBatchNode*) jsval_to_nsobject( *argvp++, cx);
+
+	CCSprite *real = (CCSprite*) [proxy realObj];
+	[real setBatchNode:(CCSpriteBatchNode*)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: ccBlendFunc
+// Ret value: None
+JSBool JSPROXY_CCSprite_setBlendFunc_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+
+	JSObject *tmp_arg0;
+	JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
+	ccBlendFunc arg0 = *(ccBlendFunc*)JS_GetTypedArrayData( tmp_arg0);
+
+	CCSprite *real = (CCSprite*) [proxy realObj];
+	[real setBlendFunc:(ccBlendFunc)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: ccColor3B
+// Ret value: None
+JSBool JSPROXY_CCSprite_setColor_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+
+	JSObject *tmp_arg0;
+	JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
+	ccColor3B arg0 = *(ccColor3B*)JS_GetTypedArrayData( tmp_arg0);
+
+	CCSprite *real = (CCSprite*) [proxy realObj];
+	[real setColor:(ccColor3B)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: BOOL
+// Ret value: None
+JSBool JSPROXY_CCSprite_setDirty_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	JSBool arg0; JS_ValueToBoolean( cx, *argvp++, &arg0 );
+
+	CCSprite *real = (CCSprite*) [proxy realObj];
+	[real setDirty:(BOOL)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: NSString*, int
+// Ret value: None
+JSBool JSPROXY_CCSprite_setDisplayFrameWithAnimationName_index_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+
+	NSString *arg0 = jsval_to_nsstring( *argvp++, cx );
+	int32_t arg1; JS_ValueToECMAInt32( cx, *argvp++, &arg1 );
+
+	CCSprite *real = (CCSprite*) [proxy realObj];
+	[real setDisplayFrameWithAnimationName:(NSString*)arg0 index:(int)arg1  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: BOOL
+// Ret value: None
+JSBool JSPROXY_CCSprite_setFlipX_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	JSBool arg0; JS_ValueToBoolean( cx, *argvp++, &arg0 );
+
+	CCSprite *real = (CCSprite*) [proxy realObj];
+	[real setFlipX:(BOOL)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: BOOL
+// Ret value: None
+JSBool JSPROXY_CCSprite_setFlipY_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	JSBool arg0; JS_ValueToBoolean( cx, *argvp++, &arg0 );
+
+	CCSprite *real = (CCSprite*) [proxy realObj];
+	[real setFlipY:(BOOL)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: GLubyte
+// Ret value: None
+JSBool JSPROXY_CCSprite_setOpacity_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	uint16_t arg0; JS_ValueToUint16( cx, *argvp++, &arg0 );
+
+	CCSprite *real = (CCSprite*) [proxy realObj];
+	[real setOpacity:(GLubyte)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: NSString*
+// Ret value: CCSprite
+JSBool JSPROXY_CCSprite_spriteWithFile__static(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+
+	NSString *arg0 = jsval_to_nsstring( *argvp++, cx );
+
+	CCSprite *ret_val = [CCSprite spriteWithFile:(NSString*)arg0  ];
+
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+	return JS_TRUE;
+}
+
+// Arguments: NSString*
+// Ret value: CCSprite
+JSBool JSPROXY_CCSprite_spriteWithSpriteFrameName__static(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+
+	NSString *arg0 = jsval_to_nsstring( *argvp++, cx );
+
+	CCSprite *ret_val = [CCSprite spriteWithSpriteFrameName:(NSString*)arg0  ];
+
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+	return JS_TRUE;
+}
+
+// Arguments: 
+// Ret value: BOOL
+JSBool JSPROXY_CCSprite_textureRectRotated(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	BOOL ret_val;
+
+	CCSprite *real = (CCSprite*) [proxy realObj];
+	ret_val = [real textureRectRotated ];
+	JS_SET_RVAL(cx, vp, BOOLEAN_TO_JSVAL(ret_val));
+	return JS_TRUE;
+}
+
+// Arguments: 
+// Ret value: None
+JSBool JSPROXY_CCSprite_updateTransform(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 0, @"Invalid number of arguments" );
+
+	CCSprite *real = (CCSprite*) [proxy realObj];
+	[real updateTransform ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+void JSPROXY_CCSprite_createClass(JSContext *cx, JSObject* globalObj, const char* name )
+{
+	JSPROXY_CCSprite_class = (JSClass *)calloc(1, sizeof(JSClass));
+	JSPROXY_CCSprite_class->name = name;
+	JSPROXY_CCSprite_class->addProperty = JS_PropertyStub;
+	JSPROXY_CCSprite_class->delProperty = JS_PropertyStub;
+	JSPROXY_CCSprite_class->getProperty = JS_PropertyStub;
+	JSPROXY_CCSprite_class->setProperty = JS_StrictPropertyStub;
+	JSPROXY_CCSprite_class->enumerate = JS_EnumerateStub;
+	JSPROXY_CCSprite_class->resolve = JS_ResolveStub;
+	JSPROXY_CCSprite_class->convert = JS_ConvertStub;
+	JSPROXY_CCSprite_class->finalize = JSPROXY_CCSprite_finalize;
+	JSPROXY_CCSprite_class->flags = JSCLASS_HAS_PRIVATE;
+
+	static JSPropertySpec properties[] = {
+		{0, 0, 0, 0, 0}
+	};
+	static JSFunctionSpec funcs[] = {
+		JS_FN("atlasIndex", JSPROXY_CCSprite_atlasIndex, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("batchNode", JSPROXY_CCSprite_batchNode, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("dirty", JSPROXY_CCSprite_dirty, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("flipX", JSPROXY_CCSprite_flipX, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("flipY", JSPROXY_CCSprite_flipY, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("initWithFile", JSPROXY_CCSprite_initWithFile_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("initWithSpriteFrameName", JSPROXY_CCSprite_initWithSpriteFrameName_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("offsetPosition", JSPROXY_CCSprite_offsetPosition, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("opacity", JSPROXY_CCSprite_opacity, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("setAtlasIndex", JSPROXY_CCSprite_setAtlasIndex_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("setBatchNode", JSPROXY_CCSprite_setBatchNode_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("setBlendFunc", JSPROXY_CCSprite_setBlendFunc_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("setColor", JSPROXY_CCSprite_setColor_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("setDirty", JSPROXY_CCSprite_setDirty_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("setDisplayFrameWithAnimationNameIndex", JSPROXY_CCSprite_setDisplayFrameWithAnimationName_index_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("setFlipX", JSPROXY_CCSprite_setFlipX_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("setFlipY", JSPROXY_CCSprite_setFlipY_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("setOpacity", JSPROXY_CCSprite_setOpacity_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("textureRectRotated", JSPROXY_CCSprite_textureRectRotated, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("updateTransform", JSPROXY_CCSprite_updateTransform, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FS_END
+	};
+	static JSFunctionSpec st_funcs[] = {
+		JS_FN("spriteWithFile", JSPROXY_CCSprite_spriteWithFile__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSFUN_CONSTRUCTOR),
+		JS_FN("spriteWithSpriteFrameName", JSPROXY_CCSprite_spriteWithSpriteFrameName__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSFUN_CONSTRUCTOR),
+		JS_FS_END
+	};
+
+	JSPROXY_CCSprite_object = JS_InitClass(cx, globalObj, JSPROXY_CCNode_object, JSPROXY_CCSprite_class, JSPROXY_CCSprite_constructor,0,properties,funcs,NULL,st_funcs);
+}
+
+@implementation JSPROXY_CCSprite
+
++(JSObject*) createJSObjectWithRealObject:(id)realObj context:(JSContext*)cx
+{
+	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCSprite_class, JSPROXY_CCSprite_object, NULL);
+	JSPROXY_CCSprite *proxy = [[JSPROXY_CCSprite alloc] initWithJSObject:jsobj];
+	[proxy setRealObj:realObj];
+	JS_SetPrivate(jsobj, proxy);
+
+	if( realObj )
+		objc_setAssociatedObject(realObj, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
+
+	[self swizzleMethods];
+
+	return jsobj;
+}
+
+@end
+
+/*
+ * CCLabelTTF
+ */
+#pragma mark - CCLabelTTF
+
+JSClass* JSPROXY_CCLabelTTF_class = NULL;
+JSObject* JSPROXY_CCLabelTTF_object = NULL;
+ // Constructor
+JSBool JSPROXY_CCLabelTTF_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JSObject *jsobj = [JSPROXY_CCLabelTTF createJSObjectWithRealObject:nil context:cx];
+    JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+    /* no callbacks */
+
+    return JS_TRUE;
+}
+
+// Destructor
+void JSPROXY_CCLabelTTF_finalize(JSContext *cx, JSObject *obj)
+{
+	JSPROXY_CCLabelTTF *proxy = (JSPROXY_CCLabelTTF*)JS_GetPrivate(obj);
+	if (proxy) {
+		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_ASSIGN);
+		/* no callbacks */
+		[proxy release];
+	}
+}
+
+// Arguments: 
+// Ret value: NSString*
+JSBool JSPROXY_CCLabelTTF_fontName(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	NSString* ret_val;
+
+	CCLabelTTF *real = (CCLabelTTF*) [proxy realObj];
+	ret_val = [real fontName ];
+
+	JSString *ret_obj = JS_NewStringCopyZ(cx, [ret_val UTF8String]);
+	JS_SET_RVAL(cx, vp, STRING_TO_JSVAL(ret_obj) );
+
+	return JS_TRUE;
+}
+
+// Arguments: 
+// Ret value: float
+JSBool JSPROXY_CCLabelTTF_fontSize(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	float ret_val;
+
+	CCLabelTTF *real = (CCLabelTTF*) [proxy realObj];
+	ret_val = [real fontSize ];
+	JS_SET_RVAL(cx, vp, DOUBLE_TO_JSVAL(ret_val));
+	return JS_TRUE;
+}
+
+// Arguments: 
+// Ret value: CCTextAlignment
+JSBool JSPROXY_CCLabelTTF_horizontalAlignment(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	CCTextAlignment ret_val;
+
+	CCLabelTTF *real = (CCLabelTTF*) [proxy realObj];
+	ret_val = [real horizontalAlignment ];
+	JS_SET_RVAL(cx, vp, INT_TO_JSVAL(ret_val));
+	return JS_TRUE;
+}
+
+// Arguments: NSString*, CGSize, CCTextAlignment, NSString*, CGFloat
+// Ret value: None
+JSBool JSPROXY_CCLabelTTF_initWithString_dimensions_hAlignment_fontName_fontSize_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 5, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+
+	NSString *arg0 = jsval_to_nsstring( *argvp++, cx );
+
+	JSObject *tmp_arg1;
+	JS_ValueToObject( cx, *argvp++, &tmp_arg1 );
+	CGSize arg1 = *(CGSize*)JS_GetTypedArrayData( tmp_arg1);
+	int32_t arg2; JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
+
+	NSString *arg3 = jsval_to_nsstring( *argvp++, cx );
+	double arg4; JS_ValueToNumber( cx, *argvp++, &arg4 );
+
+	CCLabelTTF *real = [[CCLabelTTF alloc] initWithString:(NSString*)arg0 dimensions:(CGSize)arg1 hAlignment:(CCTextAlignment)arg2 fontName:(NSString*)arg3 fontSize:(CGFloat)arg4  ];
+	[proxy setRealObj: real];
+	[real release];
+
+	objc_setAssociatedObject(real, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: NSString*, CGSize, CCTextAlignment, CCLineBreakMode, NSString*, CGFloat
+// Ret value: None
+JSBool JSPROXY_CCLabelTTF_initWithString_dimensions_hAlignment_lineBreakMode_fontName_fontSize_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 6, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+
+	NSString *arg0 = jsval_to_nsstring( *argvp++, cx );
+
+	JSObject *tmp_arg1;
+	JS_ValueToObject( cx, *argvp++, &tmp_arg1 );
+	CGSize arg1 = *(CGSize*)JS_GetTypedArrayData( tmp_arg1);
+	int32_t arg2; JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
+	int32_t arg3; JS_ValueToECMAInt32( cx, *argvp++, &arg3 );
+
+	NSString *arg4 = jsval_to_nsstring( *argvp++, cx );
+	double arg5; JS_ValueToNumber( cx, *argvp++, &arg5 );
+
+	CCLabelTTF *real = [[CCLabelTTF alloc] initWithString:(NSString*)arg0 dimensions:(CGSize)arg1 hAlignment:(CCTextAlignment)arg2 lineBreakMode:(CCLineBreakMode)arg3 fontName:(NSString*)arg4 fontSize:(CGFloat)arg5  ];
+	[proxy setRealObj: real];
+	[real release];
+
+	objc_setAssociatedObject(real, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: NSString*, CGSize, CCTextAlignment, CCVerticalTextAlignment, NSString*, CGFloat
+// Ret value: None
+JSBool JSPROXY_CCLabelTTF_initWithString_dimensions_hAlignment_vAlignment_fontName_fontSize_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 6, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+
+	NSString *arg0 = jsval_to_nsstring( *argvp++, cx );
+
+	JSObject *tmp_arg1;
+	JS_ValueToObject( cx, *argvp++, &tmp_arg1 );
+	CGSize arg1 = *(CGSize*)JS_GetTypedArrayData( tmp_arg1);
+	int32_t arg2; JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
+	int32_t arg3; JS_ValueToECMAInt32( cx, *argvp++, &arg3 );
+
+	NSString *arg4 = jsval_to_nsstring( *argvp++, cx );
+	double arg5; JS_ValueToNumber( cx, *argvp++, &arg5 );
+
+	CCLabelTTF *real = [[CCLabelTTF alloc] initWithString:(NSString*)arg0 dimensions:(CGSize)arg1 hAlignment:(CCTextAlignment)arg2 vAlignment:(CCVerticalTextAlignment)arg3 fontName:(NSString*)arg4 fontSize:(CGFloat)arg5  ];
+	[proxy setRealObj: real];
+	[real release];
+
+	objc_setAssociatedObject(real, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: NSString*, CGSize, CCTextAlignment, CCVerticalTextAlignment, CCLineBreakMode, NSString*, CGFloat
+// Ret value: None
+JSBool JSPROXY_CCLabelTTF_initWithString_dimensions_hAlignment_vAlignment_lineBreakMode_fontName_fontSize_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 7, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+
+	NSString *arg0 = jsval_to_nsstring( *argvp++, cx );
+
+	JSObject *tmp_arg1;
+	JS_ValueToObject( cx, *argvp++, &tmp_arg1 );
+	CGSize arg1 = *(CGSize*)JS_GetTypedArrayData( tmp_arg1);
+	int32_t arg2; JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
+	int32_t arg3; JS_ValueToECMAInt32( cx, *argvp++, &arg3 );
+	int32_t arg4; JS_ValueToECMAInt32( cx, *argvp++, &arg4 );
+
+	NSString *arg5 = jsval_to_nsstring( *argvp++, cx );
+	double arg6; JS_ValueToNumber( cx, *argvp++, &arg6 );
+
+	CCLabelTTF *real = [[CCLabelTTF alloc] initWithString:(NSString*)arg0 dimensions:(CGSize)arg1 hAlignment:(CCTextAlignment)arg2 vAlignment:(CCVerticalTextAlignment)arg3 lineBreakMode:(CCLineBreakMode)arg4 fontName:(NSString*)arg5 fontSize:(CGFloat)arg6  ];
+	[proxy setRealObj: real];
+	[real release];
+
+	objc_setAssociatedObject(real, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: NSString*, NSString*, CGFloat
+// Ret value: None
+JSBool JSPROXY_CCLabelTTF_initWithString_fontName_fontSize_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 3, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+
+	NSString *arg0 = jsval_to_nsstring( *argvp++, cx );
+
+	NSString *arg1 = jsval_to_nsstring( *argvp++, cx );
+	double arg2; JS_ValueToNumber( cx, *argvp++, &arg2 );
+
+	CCLabelTTF *real = [[CCLabelTTF alloc] initWithString:(NSString*)arg0 fontName:(NSString*)arg1 fontSize:(CGFloat)arg2  ];
+	[proxy setRealObj: real];
+	[real release];
+
+	objc_setAssociatedObject(real, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: NSString*, CGSize, CCTextAlignment, NSString*, CGFloat
+// Ret value: CCLabelTTF
+JSBool JSPROXY_CCLabelTTF_labelWithString_dimensions_hAlignment_fontName_fontSize__static(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 5, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+
+	NSString *arg0 = jsval_to_nsstring( *argvp++, cx );
+
+	JSObject *tmp_arg1;
+	JS_ValueToObject( cx, *argvp++, &tmp_arg1 );
+	CGSize arg1 = *(CGSize*)JS_GetTypedArrayData( tmp_arg1);
+	int32_t arg2; JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
+
+	NSString *arg3 = jsval_to_nsstring( *argvp++, cx );
+	double arg4; JS_ValueToNumber( cx, *argvp++, &arg4 );
+
+	CCLabelTTF *ret_val = [CCLabelTTF labelWithString:(NSString*)arg0 dimensions:(CGSize)arg1 hAlignment:(CCTextAlignment)arg2 fontName:(NSString*)arg3 fontSize:(CGFloat)arg4  ];
+
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+	return JS_TRUE;
+}
+
+// Arguments: NSString*, CGSize, CCTextAlignment, CCLineBreakMode, NSString*, CGFloat
+// Ret value: CCLabelTTF
+JSBool JSPROXY_CCLabelTTF_labelWithString_dimensions_hAlignment_lineBreakMode_fontName_fontSize__static(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 6, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+
+	NSString *arg0 = jsval_to_nsstring( *argvp++, cx );
+
+	JSObject *tmp_arg1;
+	JS_ValueToObject( cx, *argvp++, &tmp_arg1 );
+	CGSize arg1 = *(CGSize*)JS_GetTypedArrayData( tmp_arg1);
+	int32_t arg2; JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
+	int32_t arg3; JS_ValueToECMAInt32( cx, *argvp++, &arg3 );
+
+	NSString *arg4 = jsval_to_nsstring( *argvp++, cx );
+	double arg5; JS_ValueToNumber( cx, *argvp++, &arg5 );
+
+	CCLabelTTF *ret_val = [CCLabelTTF labelWithString:(NSString*)arg0 dimensions:(CGSize)arg1 hAlignment:(CCTextAlignment)arg2 lineBreakMode:(CCLineBreakMode)arg3 fontName:(NSString*)arg4 fontSize:(CGFloat)arg5  ];
+
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+	return JS_TRUE;
+}
+
+// Arguments: NSString*, CGSize, CCTextAlignment, CCVerticalTextAlignment, NSString*, CGFloat
+// Ret value: CCLabelTTF
+JSBool JSPROXY_CCLabelTTF_labelWithString_dimensions_hAlignment_vAlignment_fontName_fontSize__static(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 6, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+
+	NSString *arg0 = jsval_to_nsstring( *argvp++, cx );
+
+	JSObject *tmp_arg1;
+	JS_ValueToObject( cx, *argvp++, &tmp_arg1 );
+	CGSize arg1 = *(CGSize*)JS_GetTypedArrayData( tmp_arg1);
+	int32_t arg2; JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
+	int32_t arg3; JS_ValueToECMAInt32( cx, *argvp++, &arg3 );
+
+	NSString *arg4 = jsval_to_nsstring( *argvp++, cx );
+	double arg5; JS_ValueToNumber( cx, *argvp++, &arg5 );
+
+	CCLabelTTF *ret_val = [CCLabelTTF labelWithString:(NSString*)arg0 dimensions:(CGSize)arg1 hAlignment:(CCTextAlignment)arg2 vAlignment:(CCVerticalTextAlignment)arg3 fontName:(NSString*)arg4 fontSize:(CGFloat)arg5  ];
+
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+	return JS_TRUE;
+}
+
+// Arguments: NSString*, CGSize, CCTextAlignment, CCVerticalTextAlignment, CCLineBreakMode, NSString*, CGFloat
+// Ret value: CCLabelTTF
+JSBool JSPROXY_CCLabelTTF_labelWithString_dimensions_hAlignment_vAlignment_lineBreakMode_fontName_fontSize__static(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 7, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+
+	NSString *arg0 = jsval_to_nsstring( *argvp++, cx );
+
+	JSObject *tmp_arg1;
+	JS_ValueToObject( cx, *argvp++, &tmp_arg1 );
+	CGSize arg1 = *(CGSize*)JS_GetTypedArrayData( tmp_arg1);
+	int32_t arg2; JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
+	int32_t arg3; JS_ValueToECMAInt32( cx, *argvp++, &arg3 );
+	int32_t arg4; JS_ValueToECMAInt32( cx, *argvp++, &arg4 );
+
+	NSString *arg5 = jsval_to_nsstring( *argvp++, cx );
+	double arg6; JS_ValueToNumber( cx, *argvp++, &arg6 );
+
+	CCLabelTTF *ret_val = [CCLabelTTF labelWithString:(NSString*)arg0 dimensions:(CGSize)arg1 hAlignment:(CCTextAlignment)arg2 vAlignment:(CCVerticalTextAlignment)arg3 lineBreakMode:(CCLineBreakMode)arg4 fontName:(NSString*)arg5 fontSize:(CGFloat)arg6  ];
+
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+	return JS_TRUE;
+}
+
+// Arguments: NSString*, NSString*, CGFloat
+// Ret value: CCLabelTTF
+JSBool JSPROXY_CCLabelTTF_labelWithString_fontName_fontSize__static(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 3, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+
+	NSString *arg0 = jsval_to_nsstring( *argvp++, cx );
+
+	NSString *arg1 = jsval_to_nsstring( *argvp++, cx );
+	double arg2; JS_ValueToNumber( cx, *argvp++, &arg2 );
+
+	CCLabelTTF *ret_val = [CCLabelTTF labelWithString:(NSString*)arg0 fontName:(NSString*)arg1 fontSize:(CGFloat)arg2  ];
+
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+	return JS_TRUE;
+}
+
+// Arguments: CGSize
+// Ret value: None
+JSBool JSPROXY_CCLabelTTF_setDimensions_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+
+	JSObject *tmp_arg0;
+	JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
+	CGSize arg0 = *(CGSize*)JS_GetTypedArrayData( tmp_arg0);
+
+	CCLabelTTF *real = (CCLabelTTF*) [proxy realObj];
+	[real setDimensions:(CGSize)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: NSString*
+// Ret value: None
+JSBool JSPROXY_CCLabelTTF_setFontName_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+
+	NSString *arg0 = jsval_to_nsstring( *argvp++, cx );
+
+	CCLabelTTF *real = (CCLabelTTF*) [proxy realObj];
+	[real setFontName:(NSString*)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: float
+// Ret value: None
+JSBool JSPROXY_CCLabelTTF_setFontSize_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	double arg0; JS_ValueToNumber( cx, *argvp++, &arg0 );
+
+	CCLabelTTF *real = (CCLabelTTF*) [proxy realObj];
+	[real setFontSize:(float)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: CCTextAlignment
+// Ret value: None
+JSBool JSPROXY_CCLabelTTF_setHorizontalAlignment_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	int32_t arg0; JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
+
+	CCLabelTTF *real = (CCLabelTTF*) [proxy realObj];
+	[real setHorizontalAlignment:(CCTextAlignment)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: NSString*
+// Ret value: None
+JSBool JSPROXY_CCLabelTTF_setString_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+
+	NSString *arg0 = jsval_to_nsstring( *argvp++, cx );
+
+	CCLabelTTF *real = (CCLabelTTF*) [proxy realObj];
+	[real setString:(NSString*)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: CCVerticalTextAlignment
+// Ret value: None
+JSBool JSPROXY_CCLabelTTF_setVerticalAlignment_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	int32_t arg0; JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
+
+	CCLabelTTF *real = (CCLabelTTF*) [proxy realObj];
+	[real setVerticalAlignment:(CCVerticalTextAlignment)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: 
+// Ret value: CCVerticalTextAlignment
+JSBool JSPROXY_CCLabelTTF_verticalAlignment(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	CCVerticalTextAlignment ret_val;
+
+	CCLabelTTF *real = (CCLabelTTF*) [proxy realObj];
+	ret_val = [real verticalAlignment ];
+	JS_SET_RVAL(cx, vp, INT_TO_JSVAL(ret_val));
+	return JS_TRUE;
+}
+
+void JSPROXY_CCLabelTTF_createClass(JSContext *cx, JSObject* globalObj, const char* name )
+{
+	JSPROXY_CCLabelTTF_class = (JSClass *)calloc(1, sizeof(JSClass));
+	JSPROXY_CCLabelTTF_class->name = name;
+	JSPROXY_CCLabelTTF_class->addProperty = JS_PropertyStub;
+	JSPROXY_CCLabelTTF_class->delProperty = JS_PropertyStub;
+	JSPROXY_CCLabelTTF_class->getProperty = JS_PropertyStub;
+	JSPROXY_CCLabelTTF_class->setProperty = JS_StrictPropertyStub;
+	JSPROXY_CCLabelTTF_class->enumerate = JS_EnumerateStub;
+	JSPROXY_CCLabelTTF_class->resolve = JS_ResolveStub;
+	JSPROXY_CCLabelTTF_class->convert = JS_ConvertStub;
+	JSPROXY_CCLabelTTF_class->finalize = JSPROXY_CCLabelTTF_finalize;
+	JSPROXY_CCLabelTTF_class->flags = JSCLASS_HAS_PRIVATE;
+
+	static JSPropertySpec properties[] = {
+		{0, 0, 0, 0, 0}
+	};
+	static JSFunctionSpec funcs[] = {
+		JS_FN("fontName", JSPROXY_CCLabelTTF_fontName, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("fontSize", JSPROXY_CCLabelTTF_fontSize, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("horizontalAlignment", JSPROXY_CCLabelTTF_horizontalAlignment, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("initWithStringDimensionsHalignmentFontnameFontsize", JSPROXY_CCLabelTTF_initWithString_dimensions_hAlignment_fontName_fontSize_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("initWithStringDimensionsHalignmentLinebreakmodeFontnameFontsize", JSPROXY_CCLabelTTF_initWithString_dimensions_hAlignment_lineBreakMode_fontName_fontSize_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("initWithStringDimensionsHalignmentValignmentFontnameFontsize", JSPROXY_CCLabelTTF_initWithString_dimensions_hAlignment_vAlignment_fontName_fontSize_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("initWithStringDimensionsHalignmentValignmentLinebreakmodeFontnameFontsize", JSPROXY_CCLabelTTF_initWithString_dimensions_hAlignment_vAlignment_lineBreakMode_fontName_fontSize_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("initWithStringFontnameFontsize", JSPROXY_CCLabelTTF_initWithString_fontName_fontSize_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("setDimensions", JSPROXY_CCLabelTTF_setDimensions_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("setFontName", JSPROXY_CCLabelTTF_setFontName_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("setFontSize", JSPROXY_CCLabelTTF_setFontSize_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("setHorizontalAlignment", JSPROXY_CCLabelTTF_setHorizontalAlignment_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("setString", JSPROXY_CCLabelTTF_setString_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("setVerticalAlignment", JSPROXY_CCLabelTTF_setVerticalAlignment_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("verticalAlignment", JSPROXY_CCLabelTTF_verticalAlignment, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FS_END
+	};
+	static JSFunctionSpec st_funcs[] = {
+		JS_FN("labelWithStringDimensionsHalignmentFontnameFontsize", JSPROXY_CCLabelTTF_labelWithString_dimensions_hAlignment_fontName_fontSize__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSFUN_CONSTRUCTOR),
+		JS_FN("labelWithStringDimensionsHalignmentLinebreakmodeFontnameFontsize", JSPROXY_CCLabelTTF_labelWithString_dimensions_hAlignment_lineBreakMode_fontName_fontSize__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSFUN_CONSTRUCTOR),
+		JS_FN("labelWithStringDimensionsHalignmentValignmentFontnameFontsize", JSPROXY_CCLabelTTF_labelWithString_dimensions_hAlignment_vAlignment_fontName_fontSize__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSFUN_CONSTRUCTOR),
+		JS_FN("labelWithStringDimensionsHalignmentValignmentLinebreakmodeFontnameFontsize", JSPROXY_CCLabelTTF_labelWithString_dimensions_hAlignment_vAlignment_lineBreakMode_fontName_fontSize__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSFUN_CONSTRUCTOR),
+		JS_FN("labelWithStringFontnameFontsize", JSPROXY_CCLabelTTF_labelWithString_fontName_fontSize__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSFUN_CONSTRUCTOR),
+		JS_FS_END
+	};
+
+	JSPROXY_CCLabelTTF_object = JS_InitClass(cx, globalObj, JSPROXY_CCSprite_object, JSPROXY_CCLabelTTF_class, JSPROXY_CCLabelTTF_constructor,0,properties,funcs,NULL,st_funcs);
+}
+
+@implementation JSPROXY_CCLabelTTF
+
++(JSObject*) createJSObjectWithRealObject:(id)realObj context:(JSContext*)cx
+{
+	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCLabelTTF_class, JSPROXY_CCLabelTTF_object, NULL);
+	JSPROXY_CCLabelTTF *proxy = [[JSPROXY_CCLabelTTF alloc] initWithJSObject:jsobj];
+	[proxy setRealObj:realObj];
+	JS_SetPrivate(jsobj, proxy);
+
+	if( realObj )
+		objc_setAssociatedObject(realObj, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
+
+	[self swizzleMethods];
+
+	return jsobj;
+}
+
+@end
+
+/*
+ * CCScaleBy
+ */
+#pragma mark - CCScaleBy
+
+JSClass* JSPROXY_CCScaleBy_class = NULL;
+JSObject* JSPROXY_CCScaleBy_object = NULL;
+ // Constructor
+JSBool JSPROXY_CCScaleBy_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JSObject *jsobj = [JSPROXY_CCScaleBy createJSObjectWithRealObject:nil context:cx];
+    JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+    /* no callbacks */
+
+    return JS_TRUE;
+}
+
+// Destructor
+void JSPROXY_CCScaleBy_finalize(JSContext *cx, JSObject *obj)
+{
+	JSPROXY_CCScaleBy *proxy = (JSPROXY_CCScaleBy*)JS_GetPrivate(obj);
+	if (proxy) {
+		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_ASSIGN);
+		/* no callbacks */
+		[proxy release];
+	}
+}
+
+// Arguments: ccTime, float
+// Ret value: None
+JSBool JSPROXY_CCScaleBy_initWithDuration_scale_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	double arg0; JS_ValueToNumber( cx, *argvp++, &arg0 );
+	double arg1; JS_ValueToNumber( cx, *argvp++, &arg1 );
+
+	CCScaleBy *real = [[CCScaleBy alloc] initWithDuration:(ccTime)arg0 scale:(float)arg1  ];
+	[proxy setRealObj: real];
+	[real release];
+
+	objc_setAssociatedObject(real, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+void JSPROXY_CCScaleBy_createClass(JSContext *cx, JSObject* globalObj, const char* name )
+{
+	JSPROXY_CCScaleBy_class = (JSClass *)calloc(1, sizeof(JSClass));
+	JSPROXY_CCScaleBy_class->name = name;
+	JSPROXY_CCScaleBy_class->addProperty = JS_PropertyStub;
+	JSPROXY_CCScaleBy_class->delProperty = JS_PropertyStub;
+	JSPROXY_CCScaleBy_class->getProperty = JS_PropertyStub;
+	JSPROXY_CCScaleBy_class->setProperty = JS_StrictPropertyStub;
+	JSPROXY_CCScaleBy_class->enumerate = JS_EnumerateStub;
+	JSPROXY_CCScaleBy_class->resolve = JS_ResolveStub;
+	JSPROXY_CCScaleBy_class->convert = JS_ConvertStub;
+	JSPROXY_CCScaleBy_class->finalize = JSPROXY_CCScaleBy_finalize;
+	JSPROXY_CCScaleBy_class->flags = JSCLASS_HAS_PRIVATE;
+
+	static JSPropertySpec properties[] = {
+		{0, 0, 0, 0, 0}
+	};
+	static JSFunctionSpec funcs[] = {
+		JS_FN("initWithDurationScale", JSPROXY_CCScaleBy_initWithDuration_scale_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FS_END
+	};
+	static JSFunctionSpec st_funcs[] = {
+		JS_FS_END
+	};
+
+	JSPROXY_CCScaleBy_object = JS_InitClass(cx, globalObj, JSPROXY_CCScaleTo_object, JSPROXY_CCScaleBy_class, JSPROXY_CCScaleBy_constructor,0,properties,funcs,NULL,st_funcs);
+}
+
+@implementation JSPROXY_CCScaleBy
+
++(JSObject*) createJSObjectWithRealObject:(id)realObj context:(JSContext*)cx
+{
+	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCScaleBy_class, JSPROXY_CCScaleBy_object, NULL);
+	JSPROXY_CCScaleBy *proxy = [[JSPROXY_CCScaleBy alloc] initWithJSObject:jsobj];
 	[proxy setRealObj:realObj];
 	JS_SetPrivate(jsobj, proxy);
 
@@ -7385,16 +7812,16 @@ void JSPROXY_CCParticleSystemQuad_createClass(JSContext *cx, JSObject* globalObj
 @end
 
 /*
- * CCRotateBy
+ * CCSpriteBatchNode
  */
-#pragma mark - CCRotateBy
+#pragma mark - CCSpriteBatchNode
 
-JSClass* JSPROXY_CCRotateBy_class = NULL;
-JSObject* JSPROXY_CCRotateBy_object = NULL;
+JSClass* JSPROXY_CCSpriteBatchNode_class = NULL;
+JSObject* JSPROXY_CCSpriteBatchNode_object = NULL;
  // Constructor
-JSBool JSPROXY_CCRotateBy_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+JSBool JSPROXY_CCSpriteBatchNode_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
-    JSObject *jsobj = [JSPROXY_CCRotateBy createJSObjectWithRealObject:nil context:cx];
+    JSObject *jsobj = [JSPROXY_CCSpriteBatchNode createJSObjectWithRealObject:nil context:cx];
     JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
     /* no callbacks */
@@ -7403,9 +7830,9 @@ JSBool JSPROXY_CCRotateBy_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 }
 
 // Destructor
-void JSPROXY_CCRotateBy_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCSpriteBatchNode_finalize(JSContext *cx, JSObject *obj)
 {
-	JSPROXY_CCRotateBy *proxy = (JSPROXY_CCRotateBy*)JS_GetPrivate(obj);
+	JSPROXY_CCSpriteBatchNode *proxy = (JSPROXY_CCSpriteBatchNode*)JS_GetPrivate(obj);
 	if (proxy) {
 		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_ASSIGN);
 		/* no callbacks */
@@ -7413,25 +7840,118 @@ void JSPROXY_CCRotateBy_finalize(JSContext *cx, JSObject *obj)
 	}
 }
 
-// Arguments: ccTime, float
-// Ret value: CCRotateBy
-JSBool JSPROXY_CCRotateBy_actionWithDuration_angle_(JSContext *cx, uint32_t argc, jsval *vp) {
+// Arguments: CCSprite*, NSUInteger
+// Ret value: None
+JSBool JSPROXY_CCSpriteBatchNode_addQuadFromSprite_quadIndex_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	NSCAssert( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	double arg0; JS_ValueToNumber( cx, *argvp++, &arg0 );
-	double arg1; JS_ValueToNumber( cx, *argvp++, &arg1 );
 
-	CCRotateBy *real = [CCRotateBy actionWithDuration:(ccTime)arg0 angle:(float)arg1  ];
+	CCSprite* arg0 = (CCSprite*) jsval_to_nsobject( *argvp++, cx);
+	uint32_t arg1; JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( real, cx );
+	CCSpriteBatchNode *real = (CCSpriteBatchNode*) [proxy realObj];
+	[real addQuadFromSprite:(CCSprite*)arg0 quadIndex:(NSUInteger)arg1  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: CCSprite*
+// Ret value: None
+JSBool JSPROXY_CCSpriteBatchNode_appendChild_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+
+	CCSprite* arg0 = (CCSprite*) jsval_to_nsobject( *argvp++, cx);
+
+	CCSpriteBatchNode *real = (CCSpriteBatchNode*) [proxy realObj];
+	[real appendChild:(CCSprite*)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: CCSprite*, NSInteger
+// Ret value: NSUInteger
+JSBool JSPROXY_CCSpriteBatchNode_atlasIndexForChild_atZ_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+
+	CCSprite* arg0 = (CCSprite*) jsval_to_nsobject( *argvp++, cx);
+	int32_t arg1; JS_ValueToECMAInt32( cx, *argvp++, &arg1 );
+	NSUInteger ret_val;
+
+	CCSpriteBatchNode *real = (CCSpriteBatchNode*) [proxy realObj];
+	ret_val = [real atlasIndexForChild:(CCSprite*)arg0 atZ:(NSInteger)arg1  ];
+	JS_SET_RVAL(cx, vp, INT_TO_JSVAL(ret_val));
+	return JS_TRUE;
+}
+
+// Arguments: NSString*
+// Ret value: CCSpriteBatchNode
+JSBool JSPROXY_CCSpriteBatchNode_batchNodeWithFile__static(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+
+	NSString *arg0 = jsval_to_nsstring( *argvp++, cx );
+
+	CCSpriteBatchNode *ret_val = [CCSpriteBatchNode batchNodeWithFile:(NSString*)arg0  ];
+
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
 }
 
-// Arguments: ccTime, float
+// Arguments: NSString*, NSUInteger
+// Ret value: CCSpriteBatchNode
+JSBool JSPROXY_CCSpriteBatchNode_batchNodeWithFile_capacity__static(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+
+	NSString *arg0 = jsval_to_nsstring( *argvp++, cx );
+	uint32_t arg1; JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
+
+	CCSpriteBatchNode *ret_val = [CCSpriteBatchNode batchNodeWithFile:(NSString*)arg0 capacity:(NSUInteger)arg1  ];
+
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+	return JS_TRUE;
+}
+
+// Arguments: 
 // Ret value: None
-JSBool JSPROXY_CCRotateBy_initWithDuration_angle_(JSContext *cx, uint32_t argc, jsval *vp) {
+JSBool JSPROXY_CCSpriteBatchNode_increaseAtlasCapacity(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 0, @"Invalid number of arguments" );
+
+	CCSpriteBatchNode *real = (CCSpriteBatchNode*) [proxy realObj];
+	[real increaseAtlasCapacity ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: NSString*, NSUInteger
+// Ret value: None
+JSBool JSPROXY_CCSpriteBatchNode_initWithFile_capacity_(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
@@ -7439,10 +7959,11 @@ JSBool JSPROXY_CCRotateBy_initWithDuration_angle_(JSContext *cx, uint32_t argc, 
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	NSCAssert( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	double arg0; JS_ValueToNumber( cx, *argvp++, &arg0 );
-	double arg1; JS_ValueToNumber( cx, *argvp++, &arg1 );
 
-	CCRotateBy *real = [[CCRotateBy alloc] initWithDuration:(ccTime)arg0 angle:(float)arg1  ];
+	NSString *arg0 = jsval_to_nsstring( *argvp++, cx );
+	uint32_t arg1; JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
+
+	CCSpriteBatchNode *real = [[CCSpriteBatchNode alloc] initWithFile:(NSString*)arg0 capacity:(NSUInteger)arg1  ];
 	[proxy setRealObj: real];
 	[real release];
 
@@ -7451,41 +7972,614 @@ JSBool JSPROXY_CCRotateBy_initWithDuration_angle_(JSContext *cx, uint32_t argc, 
 	return JS_TRUE;
 }
 
-void JSPROXY_CCRotateBy_createClass(JSContext *cx, JSObject* globalObj, const char* name )
+// Arguments: CCSprite*, NSUInteger
+// Ret value: None
+JSBool JSPROXY_CCSpriteBatchNode_insertChild_inAtlasAtIndex_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+
+	CCSprite* arg0 = (CCSprite*) jsval_to_nsobject( *argvp++, cx);
+	uint32_t arg1; JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
+
+	CCSpriteBatchNode *real = (CCSpriteBatchNode*) [proxy realObj];
+	[real insertChild:(CCSprite*)arg0 inAtlasAtIndex:(NSUInteger)arg1  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: CCSprite*, NSUInteger
+// Ret value: NSUInteger
+JSBool JSPROXY_CCSpriteBatchNode_rebuildIndexInOrder_atlasIndex_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+
+	CCSprite* arg0 = (CCSprite*) jsval_to_nsobject( *argvp++, cx);
+	uint32_t arg1; JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
+	NSUInteger ret_val;
+
+	CCSpriteBatchNode *real = (CCSpriteBatchNode*) [proxy realObj];
+	ret_val = [real rebuildIndexInOrder:(CCSprite*)arg0 atlasIndex:(NSUInteger)arg1  ];
+	JS_SET_RVAL(cx, vp, INT_TO_JSVAL(ret_val));
+	return JS_TRUE;
+}
+
+// Arguments: CCSprite*, BOOL
+// Ret value: None
+JSBool JSPROXY_CCSpriteBatchNode_removeChild_cleanup_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+
+	CCSprite* arg0 = (CCSprite*) jsval_to_nsobject( *argvp++, cx);
+	JSBool arg1; JS_ValueToBoolean( cx, *argvp++, &arg1 );
+
+	CCSpriteBatchNode *real = (CCSpriteBatchNode*) [proxy realObj];
+	[real removeChild:(CCSprite*)arg0 cleanup:(BOOL)arg1  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: NSUInteger, BOOL
+// Ret value: None
+JSBool JSPROXY_CCSpriteBatchNode_removeChildAtIndex_cleanup_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	uint32_t arg0; JS_ValueToECMAUint32( cx, *argvp++, &arg0 );
+	JSBool arg1; JS_ValueToBoolean( cx, *argvp++, &arg1 );
+
+	CCSpriteBatchNode *real = (CCSpriteBatchNode*) [proxy realObj];
+	[real removeChildAtIndex:(NSUInteger)arg0 cleanup:(BOOL)arg1  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: CCSprite*
+// Ret value: None
+JSBool JSPROXY_CCSpriteBatchNode_removeSpriteFromAtlas_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+
+	CCSprite* arg0 = (CCSprite*) jsval_to_nsobject( *argvp++, cx);
+
+	CCSpriteBatchNode *real = (CCSpriteBatchNode*) [proxy realObj];
+	[real removeSpriteFromAtlas:(CCSprite*)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: BOOL
+// Ret value: None
+JSBool JSPROXY_CCSpriteBatchNode_reorderBatch_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	JSBool arg0; JS_ValueToBoolean( cx, *argvp++, &arg0 );
+
+	CCSpriteBatchNode *real = (CCSpriteBatchNode*) [proxy realObj];
+	[real reorderBatch:(BOOL)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: ccBlendFunc
+// Ret value: None
+JSBool JSPROXY_CCSpriteBatchNode_setBlendFunc_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+
+	JSObject *tmp_arg0;
+	JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
+	ccBlendFunc arg0 = *(ccBlendFunc*)JS_GetTypedArrayData( tmp_arg0);
+
+	CCSpriteBatchNode *real = (CCSpriteBatchNode*) [proxy realObj];
+	[real setBlendFunc:(ccBlendFunc)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+void JSPROXY_CCSpriteBatchNode_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
-	JSPROXY_CCRotateBy_class = (JSClass *)calloc(1, sizeof(JSClass));
-	JSPROXY_CCRotateBy_class->name = name;
-	JSPROXY_CCRotateBy_class->addProperty = JS_PropertyStub;
-	JSPROXY_CCRotateBy_class->delProperty = JS_PropertyStub;
-	JSPROXY_CCRotateBy_class->getProperty = JS_PropertyStub;
-	JSPROXY_CCRotateBy_class->setProperty = JS_StrictPropertyStub;
-	JSPROXY_CCRotateBy_class->enumerate = JS_EnumerateStub;
-	JSPROXY_CCRotateBy_class->resolve = JS_ResolveStub;
-	JSPROXY_CCRotateBy_class->convert = JS_ConvertStub;
-	JSPROXY_CCRotateBy_class->finalize = JSPROXY_CCRotateBy_finalize;
-	JSPROXY_CCRotateBy_class->flags = JSCLASS_HAS_PRIVATE;
+	JSPROXY_CCSpriteBatchNode_class = (JSClass *)calloc(1, sizeof(JSClass));
+	JSPROXY_CCSpriteBatchNode_class->name = name;
+	JSPROXY_CCSpriteBatchNode_class->addProperty = JS_PropertyStub;
+	JSPROXY_CCSpriteBatchNode_class->delProperty = JS_PropertyStub;
+	JSPROXY_CCSpriteBatchNode_class->getProperty = JS_PropertyStub;
+	JSPROXY_CCSpriteBatchNode_class->setProperty = JS_StrictPropertyStub;
+	JSPROXY_CCSpriteBatchNode_class->enumerate = JS_EnumerateStub;
+	JSPROXY_CCSpriteBatchNode_class->resolve = JS_ResolveStub;
+	JSPROXY_CCSpriteBatchNode_class->convert = JS_ConvertStub;
+	JSPROXY_CCSpriteBatchNode_class->finalize = JSPROXY_CCSpriteBatchNode_finalize;
+	JSPROXY_CCSpriteBatchNode_class->flags = JSCLASS_HAS_PRIVATE;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
 	};
 	static JSFunctionSpec funcs[] = {
-		JS_FN("initWithDurationAngle", JSPROXY_CCRotateBy_initWithDuration_angle_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("addQuadFromSpriteQuadindex", JSPROXY_CCSpriteBatchNode_addQuadFromSprite_quadIndex_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("appendChild", JSPROXY_CCSpriteBatchNode_appendChild_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("atlasIndexForChildAtz", JSPROXY_CCSpriteBatchNode_atlasIndexForChild_atZ_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("increaseAtlasCapacity", JSPROXY_CCSpriteBatchNode_increaseAtlasCapacity, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("initWithFileCapacity", JSPROXY_CCSpriteBatchNode_initWithFile_capacity_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("insertChildInatlasatindex", JSPROXY_CCSpriteBatchNode_insertChild_inAtlasAtIndex_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("rebuildIndexInOrderAtlasindex", JSPROXY_CCSpriteBatchNode_rebuildIndexInOrder_atlasIndex_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("removeChildCleanup", JSPROXY_CCSpriteBatchNode_removeChild_cleanup_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("removeChildAtIndexCleanup", JSPROXY_CCSpriteBatchNode_removeChildAtIndex_cleanup_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("removeSpriteFromAtlas", JSPROXY_CCSpriteBatchNode_removeSpriteFromAtlas_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("reorderBatch", JSPROXY_CCSpriteBatchNode_reorderBatch_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("setBlendFunc", JSPROXY_CCSpriteBatchNode_setBlendFunc_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
-		JS_FN("actionWithDurationAngle", JSPROXY_CCRotateBy_actionWithDuration_angle_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSFUN_CONSTRUCTOR),
+		JS_FN("batchNodeWithFile", JSPROXY_CCSpriteBatchNode_batchNodeWithFile__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSFUN_CONSTRUCTOR),
+		JS_FN("batchNodeWithFileCapacity", JSPROXY_CCSpriteBatchNode_batchNodeWithFile_capacity__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSFUN_CONSTRUCTOR),
 		JS_FS_END
 	};
 
-	JSPROXY_CCRotateBy_object = JS_InitClass(cx, globalObj, JSPROXY_CCActionInterval_object, JSPROXY_CCRotateBy_class, JSPROXY_CCRotateBy_constructor,0,properties,funcs,NULL,st_funcs);
+	JSPROXY_CCSpriteBatchNode_object = JS_InitClass(cx, globalObj, JSPROXY_CCNode_object, JSPROXY_CCSpriteBatchNode_class, JSPROXY_CCSpriteBatchNode_constructor,0,properties,funcs,NULL,st_funcs);
 }
 
-@implementation JSPROXY_CCRotateBy
+@implementation JSPROXY_CCSpriteBatchNode
 
 +(JSObject*) createJSObjectWithRealObject:(id)realObj context:(JSContext*)cx
 {
-	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCRotateBy_class, JSPROXY_CCRotateBy_object, NULL);
-	JSPROXY_CCRotateBy *proxy = [[JSPROXY_CCRotateBy alloc] initWithJSObject:jsobj];
+	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCSpriteBatchNode_class, JSPROXY_CCSpriteBatchNode_object, NULL);
+	JSPROXY_CCSpriteBatchNode *proxy = [[JSPROXY_CCSpriteBatchNode alloc] initWithJSObject:jsobj];
+	[proxy setRealObj:realObj];
+	JS_SetPrivate(jsobj, proxy);
+
+	if( realObj )
+		objc_setAssociatedObject(realObj, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
+
+	[self swizzleMethods];
+
+	return jsobj;
+}
+
+@end
+
+/*
+ * CCLabelBMFont
+ */
+#pragma mark - CCLabelBMFont
+
+JSClass* JSPROXY_CCLabelBMFont_class = NULL;
+JSObject* JSPROXY_CCLabelBMFont_object = NULL;
+ // Constructor
+JSBool JSPROXY_CCLabelBMFont_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JSObject *jsobj = [JSPROXY_CCLabelBMFont createJSObjectWithRealObject:nil context:cx];
+    JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+    /* no callbacks */
+
+    return JS_TRUE;
+}
+
+// Destructor
+void JSPROXY_CCLabelBMFont_finalize(JSContext *cx, JSObject *obj)
+{
+	JSPROXY_CCLabelBMFont *proxy = (JSPROXY_CCLabelBMFont*)JS_GetPrivate(obj);
+	if (proxy) {
+		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_ASSIGN);
+		/* no callbacks */
+		[proxy release];
+	}
+}
+
+// Arguments: 
+// Ret value: CCTextAlignment
+JSBool JSPROXY_CCLabelBMFont_alignment(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	CCTextAlignment ret_val;
+
+	CCLabelBMFont *real = (CCLabelBMFont*) [proxy realObj];
+	ret_val = [real alignment ];
+	JS_SET_RVAL(cx, vp, INT_TO_JSVAL(ret_val));
+	return JS_TRUE;
+}
+
+// Arguments: 
+// Ret value: None
+JSBool JSPROXY_CCLabelBMFont_createFontChars(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 0, @"Invalid number of arguments" );
+
+	CCLabelBMFont *real = (CCLabelBMFont*) [proxy realObj];
+	[real createFontChars ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: 
+// Ret value: NSString*
+JSBool JSPROXY_CCLabelBMFont_fntFile(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	NSString* ret_val;
+
+	CCLabelBMFont *real = (CCLabelBMFont*) [proxy realObj];
+	ret_val = [real fntFile ];
+
+	JSString *ret_obj = JS_NewStringCopyZ(cx, [ret_val UTF8String]);
+	JS_SET_RVAL(cx, vp, STRING_TO_JSVAL(ret_obj) );
+
+	return JS_TRUE;
+}
+
+// Arguments: NSString*, NSString*
+// Ret value: None
+JSBool JSPROXY_CCLabelBMFont_initWithString_fntFile_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+
+	NSString *arg0 = jsval_to_nsstring( *argvp++, cx );
+
+	NSString *arg1 = jsval_to_nsstring( *argvp++, cx );
+
+	CCLabelBMFont *real = [[CCLabelBMFont alloc] initWithString:(NSString*)arg0 fntFile:(NSString*)arg1  ];
+	[proxy setRealObj: real];
+	[real release];
+
+	objc_setAssociatedObject(real, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: NSString*, NSString*, float, CCTextAlignment
+// Ret value: None
+JSBool JSPROXY_CCLabelBMFont_initWithString_fntFile_width_alignment_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 4, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+
+	NSString *arg0 = jsval_to_nsstring( *argvp++, cx );
+
+	NSString *arg1 = jsval_to_nsstring( *argvp++, cx );
+	double arg2; JS_ValueToNumber( cx, *argvp++, &arg2 );
+	int32_t arg3; JS_ValueToECMAInt32( cx, *argvp++, &arg3 );
+
+	CCLabelBMFont *real = [[CCLabelBMFont alloc] initWithString:(NSString*)arg0 fntFile:(NSString*)arg1 width:(float)arg2 alignment:(CCTextAlignment)arg3  ];
+	[proxy setRealObj: real];
+	[real release];
+
+	objc_setAssociatedObject(real, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: NSString*, NSString*, float, CCTextAlignment, CGPoint
+// Ret value: None
+JSBool JSPROXY_CCLabelBMFont_initWithString_fntFile_width_alignment_imageOffset_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 5, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+
+	NSString *arg0 = jsval_to_nsstring( *argvp++, cx );
+
+	NSString *arg1 = jsval_to_nsstring( *argvp++, cx );
+	double arg2; JS_ValueToNumber( cx, *argvp++, &arg2 );
+	int32_t arg3; JS_ValueToECMAInt32( cx, *argvp++, &arg3 );
+
+	JSObject *tmp_arg4;
+	JS_ValueToObject( cx, *argvp++, &tmp_arg4 );
+	NSCAssert( JS_GetTypedArrayByteLength( tmp_arg4 ) == 8, @"Invalid length");
+#ifdef __CC_PLATFORM_IOS
+	CGPoint arg4 = *(CGPoint*)JS_GetTypedArrayData( tmp_arg4 );
+#elif defined(__CC_PLATFORM_MAC)
+	float* arg4_array = (float*)JS_GetTypedArrayData( tmp_arg4 );
+	CGPoint arg4 = ccp(arg4_array[0], arg4_array[1] );
+#else
+#error Unsupported Platform
+#endif  
+
+	CCLabelBMFont *real = [[CCLabelBMFont alloc] initWithString:(NSString*)arg0 fntFile:(NSString*)arg1 width:(float)arg2 alignment:(CCTextAlignment)arg3 imageOffset:(CGPoint)arg4  ];
+	[proxy setRealObj: real];
+	[real release];
+
+	objc_setAssociatedObject(real, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: NSString*, NSString*
+// Ret value: CCLabelBMFont
+JSBool JSPROXY_CCLabelBMFont_labelWithString_fntFile__static(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+
+	NSString *arg0 = jsval_to_nsstring( *argvp++, cx );
+
+	NSString *arg1 = jsval_to_nsstring( *argvp++, cx );
+
+	CCLabelBMFont *ret_val = [CCLabelBMFont labelWithString:(NSString*)arg0 fntFile:(NSString*)arg1  ];
+
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+	return JS_TRUE;
+}
+
+// Arguments: NSString*, NSString*, float, CCTextAlignment
+// Ret value: CCLabelBMFont
+JSBool JSPROXY_CCLabelBMFont_labelWithString_fntFile_width_alignment__static(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 4, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+
+	NSString *arg0 = jsval_to_nsstring( *argvp++, cx );
+
+	NSString *arg1 = jsval_to_nsstring( *argvp++, cx );
+	double arg2; JS_ValueToNumber( cx, *argvp++, &arg2 );
+	int32_t arg3; JS_ValueToECMAInt32( cx, *argvp++, &arg3 );
+
+	CCLabelBMFont *ret_val = [CCLabelBMFont labelWithString:(NSString*)arg0 fntFile:(NSString*)arg1 width:(float)arg2 alignment:(CCTextAlignment)arg3  ];
+
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+	return JS_TRUE;
+}
+
+// Arguments: NSString*, NSString*, float, CCTextAlignment, CGPoint
+// Ret value: CCLabelBMFont
+JSBool JSPROXY_CCLabelBMFont_labelWithString_fntFile_width_alignment_imageOffset__static(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 5, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+
+	NSString *arg0 = jsval_to_nsstring( *argvp++, cx );
+
+	NSString *arg1 = jsval_to_nsstring( *argvp++, cx );
+	double arg2; JS_ValueToNumber( cx, *argvp++, &arg2 );
+	int32_t arg3; JS_ValueToECMAInt32( cx, *argvp++, &arg3 );
+
+	JSObject *tmp_arg4;
+	JS_ValueToObject( cx, *argvp++, &tmp_arg4 );
+	NSCAssert( JS_GetTypedArrayByteLength( tmp_arg4 ) == 8, @"Invalid length");
+#ifdef __CC_PLATFORM_IOS
+	CGPoint arg4 = *(CGPoint*)JS_GetTypedArrayData( tmp_arg4 );
+#elif defined(__CC_PLATFORM_MAC)
+	float* arg4_array = (float*)JS_GetTypedArrayData( tmp_arg4 );
+	CGPoint arg4 = ccp(arg4_array[0], arg4_array[1] );
+#else
+#error Unsupported Platform
+#endif  
+
+	CCLabelBMFont *ret_val = [CCLabelBMFont labelWithString:(NSString*)arg0 fntFile:(NSString*)arg1 width:(float)arg2 alignment:(CCTextAlignment)arg3 imageOffset:(CGPoint)arg4  ];
+
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+	return JS_TRUE;
+}
+
+// Arguments: 
+// Ret value: GLubyte
+JSBool JSPROXY_CCLabelBMFont_opacity(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	GLubyte ret_val;
+
+	CCLabelBMFont *real = (CCLabelBMFont*) [proxy realObj];
+	ret_val = [real opacity ];
+	JS_SET_RVAL(cx, vp, INT_TO_JSVAL(ret_val));
+	return JS_TRUE;
+}
+
+// Arguments: 
+// Ret value: None
+JSBool JSPROXY_CCLabelBMFont_purgeCachedData_static(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 0, @"Invalid number of arguments" );
+
+	[CCLabelBMFont purgeCachedData ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: CCTextAlignment
+// Ret value: None
+JSBool JSPROXY_CCLabelBMFont_setAlignment_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	int32_t arg0; JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
+
+	CCLabelBMFont *real = (CCLabelBMFont*) [proxy realObj];
+	[real setAlignment:(CCTextAlignment)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: ccColor3B
+// Ret value: None
+JSBool JSPROXY_CCLabelBMFont_setColor_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+
+	JSObject *tmp_arg0;
+	JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
+	ccColor3B arg0 = *(ccColor3B*)JS_GetTypedArrayData( tmp_arg0);
+
+	CCLabelBMFont *real = (CCLabelBMFont*) [proxy realObj];
+	[real setColor:(ccColor3B)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: NSString*
+// Ret value: None
+JSBool JSPROXY_CCLabelBMFont_setFntFile_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+
+	NSString *arg0 = jsval_to_nsstring( *argvp++, cx );
+
+	CCLabelBMFont *real = (CCLabelBMFont*) [proxy realObj];
+	[real setFntFile:(NSString*)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: GLubyte
+// Ret value: None
+JSBool JSPROXY_CCLabelBMFont_setOpacity_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	uint16_t arg0; JS_ValueToUint16( cx, *argvp++, &arg0 );
+
+	CCLabelBMFont *real = (CCLabelBMFont*) [proxy realObj];
+	[real setOpacity:(GLubyte)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: float
+// Ret value: None
+JSBool JSPROXY_CCLabelBMFont_setWidth_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	double arg0; JS_ValueToNumber( cx, *argvp++, &arg0 );
+
+	CCLabelBMFont *real = (CCLabelBMFont*) [proxy realObj];
+	[real setWidth:(float)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+void JSPROXY_CCLabelBMFont_createClass(JSContext *cx, JSObject* globalObj, const char* name )
+{
+	JSPROXY_CCLabelBMFont_class = (JSClass *)calloc(1, sizeof(JSClass));
+	JSPROXY_CCLabelBMFont_class->name = name;
+	JSPROXY_CCLabelBMFont_class->addProperty = JS_PropertyStub;
+	JSPROXY_CCLabelBMFont_class->delProperty = JS_PropertyStub;
+	JSPROXY_CCLabelBMFont_class->getProperty = JS_PropertyStub;
+	JSPROXY_CCLabelBMFont_class->setProperty = JS_StrictPropertyStub;
+	JSPROXY_CCLabelBMFont_class->enumerate = JS_EnumerateStub;
+	JSPROXY_CCLabelBMFont_class->resolve = JS_ResolveStub;
+	JSPROXY_CCLabelBMFont_class->convert = JS_ConvertStub;
+	JSPROXY_CCLabelBMFont_class->finalize = JSPROXY_CCLabelBMFont_finalize;
+	JSPROXY_CCLabelBMFont_class->flags = JSCLASS_HAS_PRIVATE;
+
+	static JSPropertySpec properties[] = {
+		{0, 0, 0, 0, 0}
+	};
+	static JSFunctionSpec funcs[] = {
+		JS_FN("alignment", JSPROXY_CCLabelBMFont_alignment, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("createFontChars", JSPROXY_CCLabelBMFont_createFontChars, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("fntFile", JSPROXY_CCLabelBMFont_fntFile, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("initWithStringFntfile", JSPROXY_CCLabelBMFont_initWithString_fntFile_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("initWithStringFntfileWidthAlignment", JSPROXY_CCLabelBMFont_initWithString_fntFile_width_alignment_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("initWithStringFntfileWidthAlignmentImageoffset", JSPROXY_CCLabelBMFont_initWithString_fntFile_width_alignment_imageOffset_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("opacity", JSPROXY_CCLabelBMFont_opacity, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("setAlignment", JSPROXY_CCLabelBMFont_setAlignment_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("setColor", JSPROXY_CCLabelBMFont_setColor_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("setFntFile", JSPROXY_CCLabelBMFont_setFntFile_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("setOpacity", JSPROXY_CCLabelBMFont_setOpacity_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("setWidth", JSPROXY_CCLabelBMFont_setWidth_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FS_END
+	};
+	static JSFunctionSpec st_funcs[] = {
+		JS_FN("labelWithStringFntfile", JSPROXY_CCLabelBMFont_labelWithString_fntFile__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSFUN_CONSTRUCTOR),
+		JS_FN("labelWithStringFntfileWidthAlignment", JSPROXY_CCLabelBMFont_labelWithString_fntFile_width_alignment__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSFUN_CONSTRUCTOR),
+		JS_FN("labelWithStringFntfileWidthAlignmentImageoffset", JSPROXY_CCLabelBMFont_labelWithString_fntFile_width_alignment_imageOffset__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSFUN_CONSTRUCTOR),
+		JS_FN("purgeCachedData", JSPROXY_CCLabelBMFont_purgeCachedData_static, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FS_END
+	};
+
+	JSPROXY_CCLabelBMFont_object = JS_InitClass(cx, globalObj, JSPROXY_CCSpriteBatchNode_object, JSPROXY_CCLabelBMFont_class, JSPROXY_CCLabelBMFont_constructor,0,properties,funcs,NULL,st_funcs);
+}
+
+@implementation JSPROXY_CCLabelBMFont
+
++(JSObject*) createJSObjectWithRealObject:(id)realObj context:(JSContext*)cx
+{
+	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCLabelBMFont_class, JSPROXY_CCLabelBMFont_object, NULL);
+	JSPROXY_CCLabelBMFont *proxy = [[JSPROXY_CCLabelBMFont alloc] initWithJSObject:jsobj];
 	[proxy setRealObj:realObj];
 	JS_SetPrivate(jsobj, proxy);
 
@@ -7530,7 +8624,7 @@ void JSPROXY_CCSequence_finalize(JSContext *cx, JSObject *obj)
 
 // Arguments: CCFiniteTimeAction*, CCFiniteTimeAction*
 // Ret value: CCSequence
-JSBool JSPROXY_CCSequence_actionOne_two_(JSContext *cx, uint32_t argc, jsval *vp) {
+JSBool JSPROXY_CCSequence_actionOne_two__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 
@@ -7538,9 +8632,9 @@ JSBool JSPROXY_CCSequence_actionOne_two_(JSContext *cx, uint32_t argc, jsval *vp
 
 	CCFiniteTimeAction* arg1 = (CCFiniteTimeAction*) jsval_to_nsobject( *argvp++, cx);
 
-	CCSequence *real = [CCSequence actionOne:(CCFiniteTimeAction*)arg0 two:(CCFiniteTimeAction*)arg1  ];
+	CCSequence *ret_val = [CCSequence actionOne:(CCFiniteTimeAction*)arg0 two:(CCFiniteTimeAction*)arg1  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( real, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -7548,16 +8642,16 @@ JSBool JSPROXY_CCSequence_actionOne_two_(JSContext *cx, uint32_t argc, jsval *vp
 
 // Arguments: NSArray*
 // Ret value: CCSequence
-JSBool JSPROXY_CCSequence_actionWithArray_(JSContext *cx, uint32_t argc, jsval *vp) {
+JSBool JSPROXY_CCSequence_actionWithArray__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 
 	// Parsing sequence
 	NSArray *arg0 = jsval_to_nsarray( *argvp++, cx );
 
-	CCSequence *real = [CCSequence actionWithArray:(NSArray*)arg0  ];
+	CCSequence *ret_val = [CCSequence actionWithArray:(NSArray*)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( real, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -7609,8 +8703,8 @@ void JSPROXY_CCSequence_createClass(JSContext *cx, JSObject* globalObj, const ch
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
-		JS_FN("actionOneTwo", JSPROXY_CCSequence_actionOne_two_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSFUN_CONSTRUCTOR),
-		JS_FN("actionWithArray", JSPROXY_CCSequence_actionWithArray_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSFUN_CONSTRUCTOR),
+		JS_FN("actionOneTwo", JSPROXY_CCSequence_actionOne_two__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSFUN_CONSTRUCTOR),
+		JS_FN("actionWithArray", JSPROXY_CCSequence_actionWithArray__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSFUN_CONSTRUCTOR),
 		JS_FS_END
 	};
 

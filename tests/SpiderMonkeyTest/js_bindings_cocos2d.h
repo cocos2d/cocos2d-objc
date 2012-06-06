@@ -59,33 +59,6 @@ extern JSClass *JSPROXY_CCNode_class;
 @end
 
 /*
- * CCSprite
- */
-#pragma mark - CCSprite
-
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-void JSPROXY_CCSprite_createClass(JSContext *cx, JSObject* globalObj, const char* name );
-
-extern JSObject *JSPROXY_CCSprite_object;
-extern JSClass *JSPROXY_CCSprite_class;
-
-#ifdef __cplusplus
-}
-#endif
-
-
-/* Proxy class */
-@interface JSPROXY_CCSprite : JSPROXY_CCNode
-{
-}
-
-@end
-
-/*
  * CCAction
  */
 #pragma mark - CCAction
@@ -167,87 +140,6 @@ extern JSClass *JSPROXY_CCActionInterval_class;
 @end
 
 /*
- * CCScaleTo
- */
-#pragma mark - CCScaleTo
-
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-void JSPROXY_CCScaleTo_createClass(JSContext *cx, JSObject* globalObj, const char* name );
-
-extern JSObject *JSPROXY_CCScaleTo_object;
-extern JSClass *JSPROXY_CCScaleTo_class;
-
-#ifdef __cplusplus
-}
-#endif
-
-
-/* Proxy class */
-@interface JSPROXY_CCScaleTo : JSPROXY_CCActionInterval
-{
-}
-
-@end
-
-/*
- * CCScaleBy
- */
-#pragma mark - CCScaleBy
-
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-void JSPROXY_CCScaleBy_createClass(JSContext *cx, JSObject* globalObj, const char* name );
-
-extern JSObject *JSPROXY_CCScaleBy_object;
-extern JSClass *JSPROXY_CCScaleBy_class;
-
-#ifdef __cplusplus
-}
-#endif
-
-
-/* Proxy class */
-@interface JSPROXY_CCScaleBy : JSPROXY_CCScaleTo
-{
-}
-
-@end
-
-/*
- * CCLayer
- */
-#pragma mark - CCLayer
-
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-void JSPROXY_CCLayer_createClass(JSContext *cx, JSObject* globalObj, const char* name );
-
-extern JSObject *JSPROXY_CCLayer_object;
-extern JSClass *JSPROXY_CCLayer_class;
-
-#ifdef __cplusplus
-}
-#endif
-
-
-/* Proxy class */
-@interface JSPROXY_CCLayer : JSPROXY_CCNode
-{
-}
-
-@end
-
-/*
  * CCMoveTo
  */
 #pragma mark - CCMoveTo
@@ -302,6 +194,114 @@ extern JSClass *JSPROXY_CCMoveBy_class;
 @end
 
 /*
+ * CCScaleTo
+ */
+#pragma mark - CCScaleTo
+
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+void JSPROXY_CCScaleTo_createClass(JSContext *cx, JSObject* globalObj, const char* name );
+
+extern JSObject *JSPROXY_CCScaleTo_object;
+extern JSClass *JSPROXY_CCScaleTo_class;
+
+#ifdef __cplusplus
+}
+#endif
+
+
+/* Proxy class */
+@interface JSPROXY_CCScaleTo : JSPROXY_CCActionInterval
+{
+}
+
+@end
+
+/*
+ * CCMenuItem
+ */
+#pragma mark - CCMenuItem
+
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+void JSPROXY_CCMenuItem_createClass(JSContext *cx, JSObject* globalObj, const char* name );
+
+extern JSObject *JSPROXY_CCMenuItem_object;
+extern JSClass *JSPROXY_CCMenuItem_class;
+
+#ifdef __cplusplus
+}
+#endif
+
+
+/* Proxy class */
+@interface JSPROXY_CCMenuItem : JSPROXY_CCNode
+{
+}
+
+@end
+
+/*
+ * CCMenuItemSprite
+ */
+#pragma mark - CCMenuItemSprite
+
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+void JSPROXY_CCMenuItemSprite_createClass(JSContext *cx, JSObject* globalObj, const char* name );
+
+extern JSObject *JSPROXY_CCMenuItemSprite_object;
+extern JSClass *JSPROXY_CCMenuItemSprite_class;
+
+#ifdef __cplusplus
+}
+#endif
+
+
+/* Proxy class */
+@interface JSPROXY_CCMenuItemSprite : JSPROXY_CCMenuItem
+{
+}
+
+@end
+
+/*
+ * CCParticleSystem
+ */
+#pragma mark - CCParticleSystem
+
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+void JSPROXY_CCParticleSystem_createClass(JSContext *cx, JSObject* globalObj, const char* name );
+
+extern JSObject *JSPROXY_CCParticleSystem_object;
+extern JSClass *JSPROXY_CCParticleSystem_class;
+
+#ifdef __cplusplus
+}
+#endif
+
+
+/* Proxy class */
+@interface JSPROXY_CCParticleSystem : JSPROXY_CCNode
+{
+}
+
+@end
+
+/*
  * CCScene
  */
 #pragma mark - CCScene
@@ -329,6 +329,168 @@ extern JSClass *JSPROXY_CCScene_class;
 @end
 
 /*
+ * CCRotateBy
+ */
+#pragma mark - CCRotateBy
+
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+void JSPROXY_CCRotateBy_createClass(JSContext *cx, JSObject* globalObj, const char* name );
+
+extern JSObject *JSPROXY_CCRotateBy_object;
+extern JSClass *JSPROXY_CCRotateBy_class;
+
+#ifdef __cplusplus
+}
+#endif
+
+
+/* Proxy class */
+@interface JSPROXY_CCRotateBy : JSPROXY_CCActionInterval
+{
+}
+
+@end
+
+/*
+ * CCMenuItemLabel
+ */
+#pragma mark - CCMenuItemLabel
+
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+void JSPROXY_CCMenuItemLabel_createClass(JSContext *cx, JSObject* globalObj, const char* name );
+
+extern JSObject *JSPROXY_CCMenuItemLabel_object;
+extern JSClass *JSPROXY_CCMenuItemLabel_class;
+
+#ifdef __cplusplus
+}
+#endif
+
+
+/* Proxy class */
+@interface JSPROXY_CCMenuItemLabel : JSPROXY_CCMenuItem
+{
+}
+
+@end
+
+/*
+ * CCMenuItemFont
+ */
+#pragma mark - CCMenuItemFont
+
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+void JSPROXY_CCMenuItemFont_createClass(JSContext *cx, JSObject* globalObj, const char* name );
+
+extern JSObject *JSPROXY_CCMenuItemFont_object;
+extern JSClass *JSPROXY_CCMenuItemFont_class;
+
+#ifdef __cplusplus
+}
+#endif
+
+
+/* Proxy class */
+@interface JSPROXY_CCMenuItemFont : JSPROXY_CCMenuItemLabel
+{
+}
+
+@end
+
+/*
+ * CCLayer
+ */
+#pragma mark - CCLayer
+
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+void JSPROXY_CCLayer_createClass(JSContext *cx, JSObject* globalObj, const char* name );
+
+extern JSObject *JSPROXY_CCLayer_object;
+extern JSClass *JSPROXY_CCLayer_class;
+
+#ifdef __cplusplus
+}
+#endif
+
+
+/* Proxy class */
+@interface JSPROXY_CCLayer : JSPROXY_CCNode
+{
+}
+
+@end
+
+/*
+ * CCMenu
+ */
+#pragma mark - CCMenu
+
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+void JSPROXY_CCMenu_createClass(JSContext *cx, JSObject* globalObj, const char* name );
+
+extern JSObject *JSPROXY_CCMenu_object;
+extern JSClass *JSPROXY_CCMenu_class;
+
+#ifdef __cplusplus
+}
+#endif
+
+
+/* Proxy class */
+@interface JSPROXY_CCMenu : JSPROXY_CCLayer
+{
+}
+
+@end
+
+/*
+ * CCSprite
+ */
+#pragma mark - CCSprite
+
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+void JSPROXY_CCSprite_createClass(JSContext *cx, JSObject* globalObj, const char* name );
+
+extern JSObject *JSPROXY_CCSprite_object;
+extern JSClass *JSPROXY_CCSprite_class;
+
+#ifdef __cplusplus
+}
+#endif
+
+
+/* Proxy class */
+@interface JSPROXY_CCSprite : JSPROXY_CCNode
+{
+}
+
+@end
+
+/*
  * CCLabelTTF
  */
 #pragma mark - CCLabelTTF
@@ -350,6 +512,60 @@ extern JSClass *JSPROXY_CCLabelTTF_class;
 
 /* Proxy class */
 @interface JSPROXY_CCLabelTTF : JSPROXY_CCSprite
+{
+}
+
+@end
+
+/*
+ * CCScaleBy
+ */
+#pragma mark - CCScaleBy
+
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+void JSPROXY_CCScaleBy_createClass(JSContext *cx, JSObject* globalObj, const char* name );
+
+extern JSObject *JSPROXY_CCScaleBy_object;
+extern JSClass *JSPROXY_CCScaleBy_class;
+
+#ifdef __cplusplus
+}
+#endif
+
+
+/* Proxy class */
+@interface JSPROXY_CCScaleBy : JSPROXY_CCScaleTo
+{
+}
+
+@end
+
+/*
+ * CCParticleSystemQuad
+ */
+#pragma mark - CCParticleSystemQuad
+
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+void JSPROXY_CCParticleSystemQuad_createClass(JSContext *cx, JSObject* globalObj, const char* name );
+
+extern JSObject *JSPROXY_CCParticleSystemQuad_object;
+extern JSClass *JSPROXY_CCParticleSystemQuad_class;
+
+#ifdef __cplusplus
+}
+#endif
+
+
+/* Proxy class */
+@interface JSPROXY_CCParticleSystemQuad : JSPROXY_CCParticleSystem
 {
 }
 
@@ -404,87 +620,6 @@ extern JSClass *JSPROXY_CCLabelBMFont_class;
 
 /* Proxy class */
 @interface JSPROXY_CCLabelBMFont : JSPROXY_CCSpriteBatchNode
-{
-}
-
-@end
-
-/*
- * CCParticleSystem
- */
-#pragma mark - CCParticleSystem
-
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-void JSPROXY_CCParticleSystem_createClass(JSContext *cx, JSObject* globalObj, const char* name );
-
-extern JSObject *JSPROXY_CCParticleSystem_object;
-extern JSClass *JSPROXY_CCParticleSystem_class;
-
-#ifdef __cplusplus
-}
-#endif
-
-
-/* Proxy class */
-@interface JSPROXY_CCParticleSystem : JSPROXY_CCNode
-{
-}
-
-@end
-
-/*
- * CCParticleSystemQuad
- */
-#pragma mark - CCParticleSystemQuad
-
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-void JSPROXY_CCParticleSystemQuad_createClass(JSContext *cx, JSObject* globalObj, const char* name );
-
-extern JSObject *JSPROXY_CCParticleSystemQuad_object;
-extern JSClass *JSPROXY_CCParticleSystemQuad_class;
-
-#ifdef __cplusplus
-}
-#endif
-
-
-/* Proxy class */
-@interface JSPROXY_CCParticleSystemQuad : JSPROXY_CCParticleSystem
-{
-}
-
-@end
-
-/*
- * CCRotateBy
- */
-#pragma mark - CCRotateBy
-
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-void JSPROXY_CCRotateBy_createClass(JSContext *cx, JSObject* globalObj, const char* name );
-
-extern JSObject *JSPROXY_CCRotateBy_object;
-extern JSClass *JSPROXY_CCRotateBy_class;
-
-#ifdef __cplusplus
-}
-#endif
-
-
-/* Proxy class */
-@interface JSPROXY_CCRotateBy : JSPROXY_CCActionInterval
 {
 }
 

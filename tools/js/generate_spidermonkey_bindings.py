@@ -343,13 +343,13 @@ void %s_finalize(JSContext *cx, JSObject *obj)
                 prefix = prefix + 'ret_val = '
             prefix = prefix + '[real '
         elif method_type == METHOD_CONSTRUCTOR:
-            prefix = '\t%s *real = [%s ' % (class_name, class_name )
+            prefix = '\t%s *ret_val = [%s ' % (class_name, class_name )
             suffix = ''
         elif method_type == METHOD_CLASS:
             if not ret_declared_type or ret_declared_type == 'void':
                 prefix = '\t[%s ' % (class_name)
             else:
-                prefix = '\t%s real = [%s ' % (ret_declared_type, class_name )
+                prefix = '\t%s ret_val = [%s ' % (ret_declared_type, class_name )
             suffix = ''
         else:
             raise Exception('Invalid method type')
@@ -373,29 +373,11 @@ void %s_finalize(JSContext *cx, JSObject *obj)
 
     # special case: returning Object
     def generate_retval_object( self, declared_type, js_type ):
-
-        class_name = declared_type.replace('*','')
-        proxy_class_name = PROXY_PREFIX + class_name
-
-#        object_template = '''
-#	JSObject *jsobj = JS_NewObject(cx, %s_class, %s_object, NULL);
-#	%s *ret_proxy = [[%s alloc] initWithJSObject:jsobj];
-#	[ret_proxy setRealObj: %s];
-#	JS_SetPrivate(jsobj, ret_proxy);
-#	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-#'''
         object_template = '''
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( %s, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 '''
-        method_type = self.get_method_type( self.current_method ) 
-
-        ret_object = 'ret_val' if method_type==METHOD_REGULAR else 'real'
-
-        return object_template % ( ret_object )
-#        return object_template % ( proxy_class_name, proxy_class_name,
-#                                   proxy_class_name, proxy_class_name,
-#                                   ret_object )    
+        return object_template
 
     # special case: returning String
     def generate_retval_string( self, declared_type, js_type ):
@@ -662,7 +644,7 @@ void %s_finalize(JSContext *cx, JSObject *obj)
         # "!" or ""
         # proxy.initialized = YES (or nothing)
         template_methodname = '''
-JSBool %s_%s(JSContext *cx, uint32_t argc, jsval *vp) {
+JSBool %s_%s%s(JSContext *cx, uint32_t argc, jsval *vp) {
 '''
         template_init = '''
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -672,7 +654,8 @@ JSBool %s_%s(JSContext *cx, uint32_t argc, jsval *vp) {
 '''
 
         # method name
-        self.mm_file.write( template_methodname % ( PROXY_PREFIX+class_name, converted_name ) )
+	class_method = '_static' if self.is_class_method(self.current_method) else ''
+        self.mm_file.write( template_methodname % ( PROXY_PREFIX+class_name, converted_name, class_method ) )
 
         # method asserts for instance methods
         if method_type == METHOD_INIT or method_type == METHOD_REGULAR:
@@ -1014,16 +997,20 @@ void %s_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 
         js_fn = '\t\tJS_FN("%s", %s, 1, JSPROP_PERMANENT | JSPROP_SHARED %s),\n'
 
+
         instance_method_buffer = ''
         class_method_buffer = ''
         for method in ok_methods:
+	    
+	    class_method = '_static' if self.is_class_method(method) else ''
+
             js_name = self.convert_selector_name_to_js( method['selector'] )
             cb_name = self.convert_selector_name_to_native( method['selector'] )
 
             if self.is_class_constructor( method ):
-                entry = js_fn % (js_name, proxy_class_name + '_' + cb_name, '| JSFUN_CONSTRUCTOR' )
+                entry = js_fn % (js_name, proxy_class_name + '_' + cb_name + class_method, '| JSFUN_CONSTRUCTOR' )
             else:
-                entry = js_fn % (js_name, proxy_class_name + '_' + cb_name, '' )
+                entry = js_fn % (js_name, proxy_class_name + '_' + cb_name + class_method, '' )
 
             if self.is_class_method( method ):
                 class_method_buffer += entry
