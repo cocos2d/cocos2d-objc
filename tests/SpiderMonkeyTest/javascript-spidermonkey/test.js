@@ -128,3 +128,17 @@ cc.log( sameSprite.I_was_here );
 sprite3.onEnter = function() {
 	cc.log("Sprite3#onEnter was called");
 }
+
+// Testing Menu
+
+var item1 = cc.MenuItemFont.itemWithStringBlock( "Click Me", function( sender )
+												   {
+												cc.log("Clicked me from" + sender );
+												   } );
+
+var item2 = cc.MenuItemFont.itemWithString( "Click Me 2" );
+
+var menu = cc.Menu.menuWithArray( [item1, item2] );
+menu.alignItemsHorizontally();
+menu.setPosition( ccp(200,200) );
+parent2.addChild( menu );

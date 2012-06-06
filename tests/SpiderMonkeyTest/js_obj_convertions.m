@@ -83,3 +83,17 @@ NSMutableArray* jsval_to_nsarray( jsval vp, JSContext *cx )
 	}
 	return array;
 }
+
+js_block jsval_to_block( jsval vp, JSContext *cx, JSObject *jsthis )
+{
+	js_block block = ^(id sender) {
+		jsval rval;
+		
+		JSObject *jsobj = get_or_create_jsobject_from_realobj( sender, cx );
+		jsval val = OBJECT_TO_JSVAL(jsobj);
+		
+		JS_CallFunctionValue(cx, jsthis, vp, 1, &val, &rval);
+	};
+	
+	return [[block copy] autorelease];
+}

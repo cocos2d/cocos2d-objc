@@ -22,11 +22,14 @@
  * THE SOFTWARE.
  */
 
+#import <Foundation/Foundation.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
+typedef void (^js_block)(id sender);
+	
 /** Creates a JSObject, a ProxyObject and associates them with the real object */
 JSObject* create_jsobject_from_realobj( Class klass,id realObj, JSContext* context );
 
@@ -41,7 +44,10 @@ id jsval_to_nsobject( jsval vp, JSContext *cx );
 
 /** converts a jsval to a NSArray */
 NSArray* jsval_to_nsarray( jsval vp, JSContext *cx );
-	
+
+/** converts a jsval to a block */
+js_block jsval_to_block( jsval vp, JSContext *cx, JSObject *jsthis );
+
 #ifdef __cplusplus
 }
 #endif
