@@ -31,7 +31,7 @@ extern "C" {
 typedef void (^js_block)(id sender);
 	
 /** Creates a JSObject, a ProxyObject and associates them with the real object */
-JSObject* create_jsobject_from_realobj( Class klass,id realObj, JSContext* context );
+JSObject* create_jsobject_from_realobj( Class klass, id realObj, JSContext* context );
 
 /** Gets or Creates a JSObject, a ProxyObject and associates them with the real object */
 JSObject * get_or_create_jsobject_from_realobj( id realObj, JSContext *cx );
@@ -47,6 +47,10 @@ NSArray* jsval_to_nsarray( jsval vp, JSContext *cx );
 
 /** converts a jsval to a block */
 js_block jsval_to_block( jsval vp, JSContext *cx, JSObject *jsthis );
+
+jsval CGPoint_to_jsval( JSContext *cx, CGPoint p );
+
+jsval CGSize_to_jsval( JSContext *cx, CGSize s);
 
 #ifdef __cplusplus
 }

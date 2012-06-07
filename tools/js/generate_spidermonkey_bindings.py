@@ -397,15 +397,19 @@ void %s_finalize(JSContext *cx, JSObject *obj)
 '''
         return template
 
-
     # special case: returning CGPoint
     def generate_retval_cgpoint( self, declared_type, js_type ):
         template = '''
-	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 2 );
-	float *buffer = (float*)JS_GetTypedArrayData(typedArray);
-	buffer[0] = ret_val.x;
-	buffer[1] = ret_val.y;
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(typedArray));
+	jsval ret_jsval = CGPoint_to_jsval( cx, ret_val );
+	JS_SET_RVAL(cx, vp, ret_jsval);
+'''
+        return template
+
+    # special case: returning CGSize
+    def generate_retval_cgsize( self, declared_type, js_type ):
+        template = '''
+	jsval ret_jsval = CGSize_to_jsval( cx, ret_val );
+	JS_SET_RVAL(cx, vp, ret_jsval);
 '''
         return template
 
@@ -438,6 +442,7 @@ void %s_finalize(JSContext *cx, JSObject *obj)
 
         special_declared_types = {
             'CGPoint' : self.generate_retval_cgpoint,
+	    'CGSize' :  self.generate_retval_cgsize,
         }
 
         ret = ''
@@ -460,6 +465,7 @@ void %s_finalize(JSContext *cx, JSObject *obj)
         # Right column: JS types
         supported_declared_types = {
             'CGPoint'   : '{}',
+	    'CGSize'   : '{}',
             'NSString*' : 'S',
 #	    'NSArray*'  : '[]',
 #	    'CCArray*'  : '[]',
@@ -526,6 +532,7 @@ void %s_finalize(JSContext *cx, JSObject *obj)
         # Right column: JS types
         supported_declared_types = {
             'CGPoint'   : '{}',
+	    'CGSize'   : '{}',
             'NSString*' : 'S',
 	    'NSArray*'  : '[]',
 	    'CCArray*'  : '[]',
@@ -793,7 +800,7 @@ JSBool %s_%s%s(JSContext *cx, uint32_t argc, jsval *vp) {
                 ok_methods.append( m )
 		ok_method_name.append( m['selector'] )
 	    except ParseException, e:
-                print 'NOT OK: %s  Error: %s' % ( m['selector'], str(e) )
+                sys.stderr.write( 'NOT OK: "%s" Error: %s\n' % ( m['selector'], str(e) ) )
 
         self.current_method = None
 
@@ -819,7 +826,7 @@ JSBool %s_%s%s(JSContext *cx, uint32_t argc, jsval *vp) {
 				    ok = self.generate_method( class_name, m )
 				    ok_methods.append( m )
 				except ParseException, e:
-				    print 'NOT OK: %s  Error: %s' % ( m['selector'], str(e) )
+				    sys.stderr.write( 'NOT OK: "%s" Error: %s\n' % ( m['selector'], str(e) ) )
 
         self.current_method = None
 	self.is_a_protocol = False
