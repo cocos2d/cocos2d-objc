@@ -22,16 +22,20 @@
  * THE SOFTWARE.
  */
 
+#import "jsapi.h"
+#import "jstypedarray.h"
 #import "ScriptingCore.h"
 #import "js_bindings_NSObject.h"
 
 
+#pragma mark - helpers
+
 JSObject* create_jsobject_from_realobj( Class klass,id realObj, JSContext* context )
 {
 	NSString *proxied_class = [NSString stringWithFormat:@"JSPROXY_%@", klass];
-	Class class = NSClassFromString(proxied_class);
-	if( class )
-		return [class createJSObjectWithRealObject:realObj context:context];
+	Class newKlass = NSClassFromString(proxied_class);
+	if( newKlass )
+		return [newKlass createJSObjectWithRealObject:realObj context:context];
 
 	CCLOGWARN(@"Proxied class not found: %@. Trying with parent class", proxied_class );
 	return create_jsobject_from_realobj([klass superclass], realObj, context );
@@ -46,6 +50,8 @@ JSObject * get_or_create_jsobject_from_realobj( id realObj, JSContext *cx )
 	return create_jsobject_from_realobj( [realObj class], realObj, cx );
 }
 
+
+#pragma mark - jsval to native
 
 // Convert function
 NSString *jsval_to_nsstring(jsval vp, JSContext *cx )
@@ -62,7 +68,7 @@ id jsval_to_nsobject( jsval vp, JSContext *cx )
 	return [proxy realObj];
 }
 
-NSMutableArray* jsval_to_nsarray( jsval vp, JSContext *cx )
+NSArray* jsval_to_nsarray( jsval vp, JSContext *cx )
 {
 	// Parsing sequence
 	JSObject *jsobj;
@@ -96,4 +102,24 @@ js_block jsval_to_block( jsval vp, JSContext *cx, JSObject *jsthis )
 	};
 	
 	return [[block copy] autorelease];
+}
+
+#pragma mark - native to jsval
+
+jsval CGPoint_to_jsval( JSContext *cx, CGPoint p)
+{
+	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 2 );
+	float *buffer = (float*)JS_GetTypedArrayData(typedArray);
+	buffer[0] = p.x;
+	buffer[1] = p.y;
+	return OBJECT_TO_JSVAL(typedArray);
+}
+
+jsval CGSize_to_jsval( JSContext *cx, CGSize s)
+{
+	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 2 );
+	float *buffer = (float*)JS_GetTypedArrayData(typedArray);
+	buffer[0] = s.width;
+	buffer[1] = s.height;
+	return OBJECT_TO_JSVAL(typedArray);
 }
