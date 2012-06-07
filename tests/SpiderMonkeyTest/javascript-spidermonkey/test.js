@@ -106,6 +106,11 @@ cc.log( scene.position() );
 scene.addChild( parent1 );
 scene.addChild( parent2 );
 
+var size = director.winSize;
+cc.log( 'carrrrrlos' );
+cc.log( size );
+cc.log( 'carrrrrlos' );
+
 // Testing GC #1. Global properties
 tmp = cc.Sprite.spriteWithFile("grossini.png");
 delete tmp;

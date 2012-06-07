@@ -27,6 +27,9 @@ import copy
 import datetime
 import ConfigParser
 
+class ParseException( Exception ):
+    pass
+
 #
 # Globals
 #
@@ -514,7 +517,7 @@ void %s_finalize(JSContext *cx, JSObject *obj)
                 ret_js_type = 'o'
                 ret_declared_type = dt 
             else:
-                raise Exception('Unsupported return value')
+                raise ParseException('Unsupported return value %s' % dt)
 
         return (ret_js_type, ret_declared_type )
 
@@ -569,7 +572,7 @@ void %s_finalize(JSContext *cx, JSObject *obj)
                     args_js_type.append( 'o' )
                     args_declared_type.append( dt )
                 else:
-                    raise Exception("Unsupported argument: %s" % dt)
+                    raise ParseException("Unsupported argument: %s" % dt)
 
         return (args_js_type, args_declared_type)
 
@@ -720,24 +723,19 @@ JSBool %s_%s%s(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	# Variadic methods are not supported
 	if 'variadic' in method and method['variadic'] == 'true':
-	    return False
+	    raise ParseException('variadic arguemnts not supported')
 	    
 	s = method['selector']
 
 	# Don't generate methods that are defined as callbacks
 	if class_name in self.callback_methods:
 	    if s in self.callback_methods[ class_name ]:
-		return False
+		raise ParseException('Method defined as callback.')
 
-        try:
-            args_js_type, args_declared_type = self.parse_method_arguments(method, class_name )
-            ret_js_type, ret_declared_type = self.parse_method_retval( method, class_name )
-        except Exception, error:
-            return False
-
+	args_js_type, args_declared_type = self.parse_method_arguments(method, class_name )
+	ret_js_type, ret_declared_type = self.parse_method_retval( method, class_name )
 
         method_type = self.get_method_type( method )
-
 
         # writing...
         converted_name = self.convert_selector_name_to_native( s )
@@ -762,7 +760,7 @@ JSBool %s_%s%s(JSContext *cx, uint32_t argc, jsval *vp) {
             elif arg in js_special_type_conversions:
                 js_special_type_conversions[arg]( i, arg, args_declared_type[i] )
             else:
-                raise Exception('Unsupported type: %s' % arg )
+                raise ParseException('Unsupported type: %s' % arg )
 
         if ret_declared_type and method_type==METHOD_REGULAR:
             self.mm_file.write( '\t%s ret_val;\n' % ret_declared_type )
@@ -773,7 +771,7 @@ JSBool %s_%s%s(JSContext *cx, uint32_t argc, jsval *vp) {
 
         ret_string = self.generate_retval( ret_declared_type, ret_js_type )
         if not ret_string:
-            return False
+            raise ParseException('invalid return string')
 
         self.mm_file.write( ret_string )
 
@@ -789,12 +787,13 @@ JSBool %s_%s%s(JSContext *cx, uint32_t argc, jsval *vp) {
 	self.is_a_protocol = False
         for m in klass['method']:
             self.current_method = m
-            ok = self.generate_method( class_name, m )
-            if ok:
+
+	    try:
+		self.generate_method( class_name, m )
                 ok_methods.append( m )
 		ok_method_name.append( m['selector'] )
-            else:
-                print 'NOT OK:' + m['selector']
+	    except ParseException, e:
+                print 'NOT OK: %s  Error: %s' % ( m['selector'], str(e) )
 
         self.current_method = None
 
@@ -816,11 +815,11 @@ JSBool %s_%s%s(JSContext *cx, uint32_t argc, jsval *vp) {
 			    # avoid possible duplicates between Protocols and Classes
 			    if not method_name in ok_method_name:
 				self.current_method = m
-				ok = self.generate_method( class_name, m )
-				if ok:
+				try:
+				    ok = self.generate_method( class_name, m )
 				    ok_methods.append( m )
-				else:
-				    print 'NOT OK:' + m['selector']
+				except ParseException, e:
+				    print 'NOT OK: %s  Error: %s' % ( m['selector'], str(e) )
 
         self.current_method = None
 	self.is_a_protocol = False
