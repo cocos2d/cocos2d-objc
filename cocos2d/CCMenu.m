@@ -177,7 +177,7 @@ enum {
 
 -(CCMenuItem *) itemForTouch: (UITouch *) touch
 {
-	CGPoint touchLocation = [touch locationInView: [touch view]];
+	CGPoint touchLocation = [touch locationInView: [[CCDirector sharedDirector] view]];
 	touchLocation = [[CCDirector sharedDirector] convertToGL: touchLocation];
 
 	CCMenuItem* item;
