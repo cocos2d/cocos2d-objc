@@ -59,6 +59,60 @@ extern JSClass *JSPROXY_CCAction_class;
 @end
 
 /*
+ * CCRepeatForever
+ */
+#pragma mark - CCRepeatForever
+
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+void JSPROXY_CCRepeatForever_createClass(JSContext *cx, JSObject* globalObj, const char* name );
+
+extern JSObject *JSPROXY_CCRepeatForever_object;
+extern JSClass *JSPROXY_CCRepeatForever_class;
+
+#ifdef __cplusplus
+}
+#endif
+
+
+/* Proxy class */
+@interface JSPROXY_CCRepeatForever : JSPROXY_CCAction
+{
+}
+
+@end
+
+/*
+ * CCNode
+ */
+#pragma mark - CCNode
+
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+void JSPROXY_CCNode_createClass(JSContext *cx, JSObject* globalObj, const char* name );
+
+extern JSObject *JSPROXY_CCNode_object;
+extern JSClass *JSPROXY_CCNode_class;
+
+#ifdef __cplusplus
+}
+#endif
+
+
+/* Proxy class */
+@interface JSPROXY_CCNode : JSPROXY_NSObject
+{
+}
+
+@end
+
+/*
  * CCFiniteTimeAction
  */
 #pragma mark - CCFiniteTimeAction
@@ -107,60 +161,6 @@ extern JSClass *JSPROXY_CCActionInterval_class;
 
 /* Proxy class */
 @interface JSPROXY_CCActionInterval : JSPROXY_CCFiniteTimeAction
-{
-}
-
-@end
-
-/*
- * CCRepeat
- */
-#pragma mark - CCRepeat
-
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-void JSPROXY_CCRepeat_createClass(JSContext *cx, JSObject* globalObj, const char* name );
-
-extern JSObject *JSPROXY_CCRepeat_object;
-extern JSClass *JSPROXY_CCRepeat_class;
-
-#ifdef __cplusplus
-}
-#endif
-
-
-/* Proxy class */
-@interface JSPROXY_CCRepeat : JSPROXY_CCActionInterval
-{
-}
-
-@end
-
-/*
- * CCNode
- */
-#pragma mark - CCNode
-
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-void JSPROXY_CCNode_createClass(JSContext *cx, JSObject* globalObj, const char* name );
-
-extern JSObject *JSPROXY_CCNode_object;
-extern JSClass *JSPROXY_CCNode_class;
-
-#ifdef __cplusplus
-}
-#endif
-
-
-/* Proxy class */
-@interface JSPROXY_CCNode : JSPROXY_NSObject
 {
 }
 
@@ -248,19 +248,19 @@ extern JSClass *JSPROXY_CCScaleTo_class;
 @end
 
 /*
- * CCRepeatForever
+ * CCRepeat
  */
-#pragma mark - CCRepeatForever
+#pragma mark - CCRepeat
 
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-void JSPROXY_CCRepeatForever_createClass(JSContext *cx, JSObject* globalObj, const char* name );
+void JSPROXY_CCRepeat_createClass(JSContext *cx, JSObject* globalObj, const char* name );
 
-extern JSObject *JSPROXY_CCRepeatForever_object;
-extern JSClass *JSPROXY_CCRepeatForever_class;
+extern JSObject *JSPROXY_CCRepeat_object;
+extern JSClass *JSPROXY_CCRepeat_class;
 
 #ifdef __cplusplus
 }
@@ -268,7 +268,7 @@ extern JSClass *JSPROXY_CCRepeatForever_class;
 
 
 /* Proxy class */
-@interface JSPROXY_CCRepeatForever : JSPROXY_CCAction
+@interface JSPROXY_CCRepeat : JSPROXY_CCActionInterval
 {
 }
 
@@ -431,6 +431,33 @@ extern JSClass *JSPROXY_CCRotateBy_class;
 
 /* Proxy class */
 @interface JSPROXY_CCRotateBy : JSPROXY_CCActionInterval
+{
+}
+
+@end
+
+/*
+ * CCTintBy
+ */
+#pragma mark - CCTintBy
+
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+void JSPROXY_CCTintBy_createClass(JSContext *cx, JSObject* globalObj, const char* name );
+
+extern JSObject *JSPROXY_CCTintBy_object;
+extern JSClass *JSPROXY_CCTintBy_class;
+
+#ifdef __cplusplus
+}
+#endif
+
+
+/* Proxy class */
+@interface JSPROXY_CCTintBy : JSPROXY_CCActionInterval
 {
 }
 

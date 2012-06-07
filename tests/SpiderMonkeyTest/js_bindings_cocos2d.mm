@@ -1045,16 +1045,16 @@ void JSPROXY_CCAction_createClass(JSContext *cx, JSObject* globalObj, const char
 @end
 
 /*
- * CCFiniteTimeAction
+ * CCRepeatForever
  */
-#pragma mark - CCFiniteTimeAction
+#pragma mark - CCRepeatForever
 
-JSClass* JSPROXY_CCFiniteTimeAction_class = NULL;
-JSObject* JSPROXY_CCFiniteTimeAction_object = NULL;
+JSClass* JSPROXY_CCRepeatForever_class = NULL;
+JSObject* JSPROXY_CCRepeatForever_object = NULL;
  // Constructor
-JSBool JSPROXY_CCFiniteTimeAction_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+JSBool JSPROXY_CCRepeatForever_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
-    JSObject *jsobj = [JSPROXY_CCFiniteTimeAction createJSObjectWithRealObject:nil context:cx];
+    JSObject *jsobj = [JSPROXY_CCRepeatForever createJSObjectWithRealObject:nil context:cx];
     JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
     /* no callbacks */
@@ -1063,9 +1063,9 @@ JSBool JSPROXY_CCFiniteTimeAction_constructor(JSContext *cx, uint32_t argc, jsva
 }
 
 // Destructor
-void JSPROXY_CCFiniteTimeAction_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCRepeatForever_finalize(JSContext *cx, JSObject *obj)
 {
-	JSPROXY_CCFiniteTimeAction *proxy = (JSPROXY_CCFiniteTimeAction*)JS_GetPrivate(obj);
+	JSPROXY_CCRepeatForever *proxy = (JSPROXY_CCRepeatForever*)JS_GetPrivate(obj);
 	if (proxy) {
 		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_ASSIGN);
 		/* no callbacks */
@@ -1073,36 +1073,15 @@ void JSPROXY_CCFiniteTimeAction_finalize(JSContext *cx, JSObject *obj)
 	}
 }
 
-// Arguments: 
-// Ret value: ccTime
-JSBool JSPROXY_CCFiniteTimeAction_duration(JSContext *cx, uint32_t argc, jsval *vp) {
+// Arguments: CCActionInterval*
+// Ret value: CCRepeatForever
+JSBool JSPROXY_CCRepeatForever_actionWithAction__static(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
 
-	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
-	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
-	ccTime ret_val;
+	CCActionInterval* arg0 = (CCActionInterval*) jsval_to_nsobject( *argvp++, cx);
 
-	CCFiniteTimeAction *real = (CCFiniteTimeAction*) [proxy realObj];
-	ret_val = [real duration ];
-	JS_SET_RVAL(cx, vp, DOUBLE_TO_JSVAL(ret_val));
-	return JS_TRUE;
-}
-
-// Arguments: 
-// Ret value: CCFiniteTimeAction*
-JSBool JSPROXY_CCFiniteTimeAction_reverse(JSContext *cx, uint32_t argc, jsval *vp) {
-
-	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
-	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
-	CCFiniteTimeAction* ret_val;
-
-	CCFiniteTimeAction *real = (CCFiniteTimeAction*) [proxy realObj];
-	ret_val = [real reverse ];
+	CCRepeatForever *ret_val = [CCRepeatForever actionWithAction:(CCActionInterval*)arg0  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -1110,137 +1089,9 @@ JSBool JSPROXY_CCFiniteTimeAction_reverse(JSContext *cx, uint32_t argc, jsval *v
 	return JS_TRUE;
 }
 
-// Arguments: ccTime
+// Arguments: CCActionInterval*
 // Ret value: None
-JSBool JSPROXY_CCFiniteTimeAction_setDuration_(JSContext *cx, uint32_t argc, jsval *vp) {
-
-	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
-	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	double arg0; JS_ValueToNumber( cx, *argvp++, &arg0 );
-
-	CCFiniteTimeAction *real = (CCFiniteTimeAction*) [proxy realObj];
-	[real setDuration:(ccTime)arg0  ];
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
-	return JS_TRUE;
-}
-
-void JSPROXY_CCFiniteTimeAction_createClass(JSContext *cx, JSObject* globalObj, const char* name )
-{
-	JSPROXY_CCFiniteTimeAction_class = (JSClass *)calloc(1, sizeof(JSClass));
-	JSPROXY_CCFiniteTimeAction_class->name = name;
-	JSPROXY_CCFiniteTimeAction_class->addProperty = JS_PropertyStub;
-	JSPROXY_CCFiniteTimeAction_class->delProperty = JS_PropertyStub;
-	JSPROXY_CCFiniteTimeAction_class->getProperty = JS_PropertyStub;
-	JSPROXY_CCFiniteTimeAction_class->setProperty = JS_StrictPropertyStub;
-	JSPROXY_CCFiniteTimeAction_class->enumerate = JS_EnumerateStub;
-	JSPROXY_CCFiniteTimeAction_class->resolve = JS_ResolveStub;
-	JSPROXY_CCFiniteTimeAction_class->convert = JS_ConvertStub;
-	JSPROXY_CCFiniteTimeAction_class->finalize = JSPROXY_CCFiniteTimeAction_finalize;
-	JSPROXY_CCFiniteTimeAction_class->flags = JSCLASS_HAS_PRIVATE;
-
-	static JSPropertySpec properties[] = {
-		{0, 0, 0, 0, 0}
-	};
-	static JSFunctionSpec funcs[] = {
-		JS_FN("duration", JSPROXY_CCFiniteTimeAction_duration, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
-		JS_FN("reverse", JSPROXY_CCFiniteTimeAction_reverse, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
-		JS_FN("setDuration", JSPROXY_CCFiniteTimeAction_setDuration_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
-		JS_FS_END
-	};
-	static JSFunctionSpec st_funcs[] = {
-		JS_FS_END
-	};
-
-	JSPROXY_CCFiniteTimeAction_object = JS_InitClass(cx, globalObj, JSPROXY_CCAction_object, JSPROXY_CCFiniteTimeAction_class, JSPROXY_CCFiniteTimeAction_constructor,0,properties,funcs,NULL,st_funcs);
-}
-
-@implementation JSPROXY_CCFiniteTimeAction
-
-+(JSObject*) createJSObjectWithRealObject:(id)realObj context:(JSContext*)cx
-{
-	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCFiniteTimeAction_class, JSPROXY_CCFiniteTimeAction_object, NULL);
-	JSPROXY_CCFiniteTimeAction *proxy = [[JSPROXY_CCFiniteTimeAction alloc] initWithJSObject:jsobj];
-	[proxy setRealObj:realObj];
-	JS_SetPrivate(jsobj, proxy);
-
-	if( realObj )
-		objc_setAssociatedObject(realObj, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
-
-	[self swizzleMethods];
-
-	return jsobj;
-}
-
-@end
-
-/*
- * CCActionInterval
- */
-#pragma mark - CCActionInterval
-
-JSClass* JSPROXY_CCActionInterval_class = NULL;
-JSObject* JSPROXY_CCActionInterval_object = NULL;
- // Constructor
-JSBool JSPROXY_CCActionInterval_constructor(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JSObject *jsobj = [JSPROXY_CCActionInterval createJSObjectWithRealObject:nil context:cx];
-    JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-    /* no callbacks */
-
-    return JS_TRUE;
-}
-
-// Destructor
-void JSPROXY_CCActionInterval_finalize(JSContext *cx, JSObject *obj)
-{
-	JSPROXY_CCActionInterval *proxy = (JSPROXY_CCActionInterval*)JS_GetPrivate(obj);
-	if (proxy) {
-		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_ASSIGN);
-		/* no callbacks */
-		[proxy release];
-	}
-}
-
-// Arguments: ccTime
-// Ret value: CCActionInterval
-JSBool JSPROXY_CCActionInterval_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	double arg0; JS_ValueToNumber( cx, *argvp++, &arg0 );
-
-	CCActionInterval *ret_val = [CCActionInterval actionWithDuration:(ccTime)arg0  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: 
-// Ret value: ccTime
-JSBool JSPROXY_CCActionInterval_elapsed(JSContext *cx, uint32_t argc, jsval *vp) {
-
-	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
-	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
-	ccTime ret_val;
-
-	CCActionInterval *real = (CCActionInterval*) [proxy realObj];
-	ret_val = [real elapsed ];
-	JS_SET_RVAL(cx, vp, DOUBLE_TO_JSVAL(ret_val));
-	return JS_TRUE;
-}
-
-// Arguments: ccTime
-// Ret value: None
-JSBool JSPROXY_CCActionInterval_initWithDuration_(JSContext *cx, uint32_t argc, jsval *vp) {
+JSBool JSPROXY_CCRepeatForever_initWithAction_(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
@@ -1248,9 +1099,10 @@ JSBool JSPROXY_CCActionInterval_initWithDuration_(JSContext *cx, uint32_t argc, 
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	NSCAssert( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	double arg0; JS_ValueToNumber( cx, *argvp++, &arg0 );
 
-	CCActionInterval *real = [[CCActionInterval alloc] initWithDuration:(ccTime)arg0  ];
+	CCActionInterval* arg0 = (CCActionInterval*) jsval_to_nsobject( *argvp++, cx);
+
+	CCRepeatForever *real = [[CCRepeatForever alloc] initWithAction:(CCActionInterval*)arg0  ];
 	[proxy setRealObj: real];
 	[real release];
 
@@ -1260,25 +1112,8 @@ JSBool JSPROXY_CCActionInterval_initWithDuration_(JSContext *cx, uint32_t argc, 
 }
 
 // Arguments: 
-// Ret value: BOOL
-JSBool JSPROXY_CCActionInterval_isDone(JSContext *cx, uint32_t argc, jsval *vp) {
-
-	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
-	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
-	BOOL ret_val;
-
-	CCActionInterval *real = (CCActionInterval*) [proxy realObj];
-	ret_val = [real isDone ];
-	JS_SET_RVAL(cx, vp, BOOLEAN_TO_JSVAL(ret_val));
-	return JS_TRUE;
-}
-
-// Arguments: 
 // Ret value: CCActionInterval*
-JSBool JSPROXY_CCActionInterval_reverse(JSContext *cx, uint32_t argc, jsval *vp) {
+JSBool JSPROXY_CCRepeatForever_innerAction(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
@@ -1287,147 +1122,7 @@ JSBool JSPROXY_CCActionInterval_reverse(JSContext *cx, uint32_t argc, jsval *vp)
 	NSCAssert( argc == 0, @"Invalid number of arguments" );
 	CCActionInterval* ret_val;
 
-	CCActionInterval *real = (CCActionInterval*) [proxy realObj];
-	ret_val = [real reverse ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-void JSPROXY_CCActionInterval_createClass(JSContext *cx, JSObject* globalObj, const char* name )
-{
-	JSPROXY_CCActionInterval_class = (JSClass *)calloc(1, sizeof(JSClass));
-	JSPROXY_CCActionInterval_class->name = name;
-	JSPROXY_CCActionInterval_class->addProperty = JS_PropertyStub;
-	JSPROXY_CCActionInterval_class->delProperty = JS_PropertyStub;
-	JSPROXY_CCActionInterval_class->getProperty = JS_PropertyStub;
-	JSPROXY_CCActionInterval_class->setProperty = JS_StrictPropertyStub;
-	JSPROXY_CCActionInterval_class->enumerate = JS_EnumerateStub;
-	JSPROXY_CCActionInterval_class->resolve = JS_ResolveStub;
-	JSPROXY_CCActionInterval_class->convert = JS_ConvertStub;
-	JSPROXY_CCActionInterval_class->finalize = JSPROXY_CCActionInterval_finalize;
-	JSPROXY_CCActionInterval_class->flags = JSCLASS_HAS_PRIVATE;
-
-	static JSPropertySpec properties[] = {
-		{0, 0, 0, 0, 0}
-	};
-	static JSFunctionSpec funcs[] = {
-		JS_FN("elapsed", JSPROXY_CCActionInterval_elapsed, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
-		JS_FN("initWithDuration", JSPROXY_CCActionInterval_initWithDuration_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
-		JS_FN("isDone", JSPROXY_CCActionInterval_isDone, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
-		JS_FN("reverse", JSPROXY_CCActionInterval_reverse, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
-		JS_FS_END
-	};
-	static JSFunctionSpec st_funcs[] = {
-		JS_FN("actionWithDuration", JSPROXY_CCActionInterval_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSFUN_CONSTRUCTOR),
-		JS_FS_END
-	};
-
-	JSPROXY_CCActionInterval_object = JS_InitClass(cx, globalObj, JSPROXY_CCFiniteTimeAction_object, JSPROXY_CCActionInterval_class, JSPROXY_CCActionInterval_constructor,0,properties,funcs,NULL,st_funcs);
-}
-
-@implementation JSPROXY_CCActionInterval
-
-+(JSObject*) createJSObjectWithRealObject:(id)realObj context:(JSContext*)cx
-{
-	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCActionInterval_class, JSPROXY_CCActionInterval_object, NULL);
-	JSPROXY_CCActionInterval *proxy = [[JSPROXY_CCActionInterval alloc] initWithJSObject:jsobj];
-	[proxy setRealObj:realObj];
-	JS_SetPrivate(jsobj, proxy);
-
-	if( realObj )
-		objc_setAssociatedObject(realObj, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
-
-	[self swizzleMethods];
-
-	return jsobj;
-}
-
-@end
-
-/*
- * CCRepeat
- */
-#pragma mark - CCRepeat
-
-JSClass* JSPROXY_CCRepeat_class = NULL;
-JSObject* JSPROXY_CCRepeat_object = NULL;
- // Constructor
-JSBool JSPROXY_CCRepeat_constructor(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JSObject *jsobj = [JSPROXY_CCRepeat createJSObjectWithRealObject:nil context:cx];
-    JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-    /* no callbacks */
-
-    return JS_TRUE;
-}
-
-// Destructor
-void JSPROXY_CCRepeat_finalize(JSContext *cx, JSObject *obj)
-{
-	JSPROXY_CCRepeat *proxy = (JSPROXY_CCRepeat*)JS_GetPrivate(obj);
-	if (proxy) {
-		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_ASSIGN);
-		/* no callbacks */
-		[proxy release];
-	}
-}
-
-// Arguments: CCFiniteTimeAction*, NSUInteger
-// Ret value: CCRepeat
-JSBool JSPROXY_CCRepeat_actionWithAction_times__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 2, @"Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-
-	CCFiniteTimeAction* arg0 = (CCFiniteTimeAction*) jsval_to_nsobject( *argvp++, cx);
-	uint32_t arg1; JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
-
-	CCRepeat *ret_val = [CCRepeat actionWithAction:(CCFiniteTimeAction*)arg0 times:(NSUInteger)arg1  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: CCFiniteTimeAction*, NSUInteger
-// Ret value: None
-JSBool JSPROXY_CCRepeat_initWithAction_times_(JSContext *cx, uint32_t argc, jsval *vp) {
-
-	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
-	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 2, @"Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-
-	CCFiniteTimeAction* arg0 = (CCFiniteTimeAction*) jsval_to_nsobject( *argvp++, cx);
-	uint32_t arg1; JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
-
-	CCRepeat *real = [[CCRepeat alloc] initWithAction:(CCFiniteTimeAction*)arg0 times:(NSUInteger)arg1  ];
-	[proxy setRealObj: real];
-	[real release];
-
-	objc_setAssociatedObject(real, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
-	return JS_TRUE;
-}
-
-// Arguments: 
-// Ret value: CCFiniteTimeAction*
-JSBool JSPROXY_CCRepeat_innerAction(JSContext *cx, uint32_t argc, jsval *vp) {
-
-	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
-	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
-	CCFiniteTimeAction* ret_val;
-
-	CCRepeat *real = (CCRepeat*) [proxy realObj];
+	CCRepeatForever *real = (CCRepeatForever*) [proxy realObj];
 	ret_val = [real innerAction ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
@@ -1436,9 +1131,9 @@ JSBool JSPROXY_CCRepeat_innerAction(JSContext *cx, uint32_t argc, jsval *vp) {
 	return JS_TRUE;
 }
 
-// Arguments: CCFiniteTimeAction*
+// Arguments: CCActionInterval*
 // Ret value: None
-JSBool JSPROXY_CCRepeat_setInnerAction_(JSContext *cx, uint32_t argc, jsval *vp) {
+JSBool JSPROXY_CCRepeatForever_setInnerAction_(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
@@ -1447,51 +1142,51 @@ JSBool JSPROXY_CCRepeat_setInnerAction_(JSContext *cx, uint32_t argc, jsval *vp)
 	NSCAssert( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 
-	CCFiniteTimeAction* arg0 = (CCFiniteTimeAction*) jsval_to_nsobject( *argvp++, cx);
+	CCActionInterval* arg0 = (CCActionInterval*) jsval_to_nsobject( *argvp++, cx);
 
-	CCRepeat *real = (CCRepeat*) [proxy realObj];
-	[real setInnerAction:(CCFiniteTimeAction*)arg0  ];
+	CCRepeatForever *real = (CCRepeatForever*) [proxy realObj];
+	[real setInnerAction:(CCActionInterval*)arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
 
-void JSPROXY_CCRepeat_createClass(JSContext *cx, JSObject* globalObj, const char* name )
+void JSPROXY_CCRepeatForever_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
-	JSPROXY_CCRepeat_class = (JSClass *)calloc(1, sizeof(JSClass));
-	JSPROXY_CCRepeat_class->name = name;
-	JSPROXY_CCRepeat_class->addProperty = JS_PropertyStub;
-	JSPROXY_CCRepeat_class->delProperty = JS_PropertyStub;
-	JSPROXY_CCRepeat_class->getProperty = JS_PropertyStub;
-	JSPROXY_CCRepeat_class->setProperty = JS_StrictPropertyStub;
-	JSPROXY_CCRepeat_class->enumerate = JS_EnumerateStub;
-	JSPROXY_CCRepeat_class->resolve = JS_ResolveStub;
-	JSPROXY_CCRepeat_class->convert = JS_ConvertStub;
-	JSPROXY_CCRepeat_class->finalize = JSPROXY_CCRepeat_finalize;
-	JSPROXY_CCRepeat_class->flags = JSCLASS_HAS_PRIVATE;
+	JSPROXY_CCRepeatForever_class = (JSClass *)calloc(1, sizeof(JSClass));
+	JSPROXY_CCRepeatForever_class->name = name;
+	JSPROXY_CCRepeatForever_class->addProperty = JS_PropertyStub;
+	JSPROXY_CCRepeatForever_class->delProperty = JS_PropertyStub;
+	JSPROXY_CCRepeatForever_class->getProperty = JS_PropertyStub;
+	JSPROXY_CCRepeatForever_class->setProperty = JS_StrictPropertyStub;
+	JSPROXY_CCRepeatForever_class->enumerate = JS_EnumerateStub;
+	JSPROXY_CCRepeatForever_class->resolve = JS_ResolveStub;
+	JSPROXY_CCRepeatForever_class->convert = JS_ConvertStub;
+	JSPROXY_CCRepeatForever_class->finalize = JSPROXY_CCRepeatForever_finalize;
+	JSPROXY_CCRepeatForever_class->flags = JSCLASS_HAS_PRIVATE;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
 	};
 	static JSFunctionSpec funcs[] = {
-		JS_FN("initWithActionTimes", JSPROXY_CCRepeat_initWithAction_times_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
-		JS_FN("innerAction", JSPROXY_CCRepeat_innerAction, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
-		JS_FN("setInnerAction", JSPROXY_CCRepeat_setInnerAction_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("initWithAction", JSPROXY_CCRepeatForever_initWithAction_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("innerAction", JSPROXY_CCRepeatForever_innerAction, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("setInnerAction", JSPROXY_CCRepeatForever_setInnerAction_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
-		JS_FN("actionWithActionTimes", JSPROXY_CCRepeat_actionWithAction_times__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSFUN_CONSTRUCTOR),
+		JS_FN("actionWithAction", JSPROXY_CCRepeatForever_actionWithAction__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSFUN_CONSTRUCTOR),
 		JS_FS_END
 	};
 
-	JSPROXY_CCRepeat_object = JS_InitClass(cx, globalObj, JSPROXY_CCActionInterval_object, JSPROXY_CCRepeat_class, JSPROXY_CCRepeat_constructor,0,properties,funcs,NULL,st_funcs);
+	JSPROXY_CCRepeatForever_object = JS_InitClass(cx, globalObj, JSPROXY_CCAction_object, JSPROXY_CCRepeatForever_class, JSPROXY_CCRepeatForever_constructor,0,properties,funcs,NULL,st_funcs);
 }
 
-@implementation JSPROXY_CCRepeat
+@implementation JSPROXY_CCRepeatForever
 
 +(JSObject*) createJSObjectWithRealObject:(id)realObj context:(JSContext*)cx
 {
-	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCRepeat_class, JSPROXY_CCRepeat_object, NULL);
-	JSPROXY_CCRepeat *proxy = [[JSPROXY_CCRepeat alloc] initWithJSObject:jsobj];
+	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCRepeatForever_class, JSPROXY_CCRepeatForever_object, NULL);
+	JSPROXY_CCRepeatForever *proxy = [[JSPROXY_CCRepeatForever alloc] initWithJSObject:jsobj];
 	[proxy setRealObj:realObj];
 	JS_SetPrivate(jsobj, proxy);
 
@@ -3152,6 +2847,309 @@ void JSPROXY_CCNode_createClass(JSContext *cx, JSObject* globalObj, const char* 
 @end
 
 /*
+ * CCFiniteTimeAction
+ */
+#pragma mark - CCFiniteTimeAction
+
+JSClass* JSPROXY_CCFiniteTimeAction_class = NULL;
+JSObject* JSPROXY_CCFiniteTimeAction_object = NULL;
+ // Constructor
+JSBool JSPROXY_CCFiniteTimeAction_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JSObject *jsobj = [JSPROXY_CCFiniteTimeAction createJSObjectWithRealObject:nil context:cx];
+    JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+    /* no callbacks */
+
+    return JS_TRUE;
+}
+
+// Destructor
+void JSPROXY_CCFiniteTimeAction_finalize(JSContext *cx, JSObject *obj)
+{
+	JSPROXY_CCFiniteTimeAction *proxy = (JSPROXY_CCFiniteTimeAction*)JS_GetPrivate(obj);
+	if (proxy) {
+		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_ASSIGN);
+		/* no callbacks */
+		[proxy release];
+	}
+}
+
+// Arguments: 
+// Ret value: ccTime
+JSBool JSPROXY_CCFiniteTimeAction_duration(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	ccTime ret_val;
+
+	CCFiniteTimeAction *real = (CCFiniteTimeAction*) [proxy realObj];
+	ret_val = [real duration ];
+	JS_SET_RVAL(cx, vp, DOUBLE_TO_JSVAL(ret_val));
+	return JS_TRUE;
+}
+
+// Arguments: 
+// Ret value: CCFiniteTimeAction*
+JSBool JSPROXY_CCFiniteTimeAction_reverse(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	CCFiniteTimeAction* ret_val;
+
+	CCFiniteTimeAction *real = (CCFiniteTimeAction*) [proxy realObj];
+	ret_val = [real reverse ];
+
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+	return JS_TRUE;
+}
+
+// Arguments: ccTime
+// Ret value: None
+JSBool JSPROXY_CCFiniteTimeAction_setDuration_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	double arg0; JS_ValueToNumber( cx, *argvp++, &arg0 );
+
+	CCFiniteTimeAction *real = (CCFiniteTimeAction*) [proxy realObj];
+	[real setDuration:(ccTime)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+void JSPROXY_CCFiniteTimeAction_createClass(JSContext *cx, JSObject* globalObj, const char* name )
+{
+	JSPROXY_CCFiniteTimeAction_class = (JSClass *)calloc(1, sizeof(JSClass));
+	JSPROXY_CCFiniteTimeAction_class->name = name;
+	JSPROXY_CCFiniteTimeAction_class->addProperty = JS_PropertyStub;
+	JSPROXY_CCFiniteTimeAction_class->delProperty = JS_PropertyStub;
+	JSPROXY_CCFiniteTimeAction_class->getProperty = JS_PropertyStub;
+	JSPROXY_CCFiniteTimeAction_class->setProperty = JS_StrictPropertyStub;
+	JSPROXY_CCFiniteTimeAction_class->enumerate = JS_EnumerateStub;
+	JSPROXY_CCFiniteTimeAction_class->resolve = JS_ResolveStub;
+	JSPROXY_CCFiniteTimeAction_class->convert = JS_ConvertStub;
+	JSPROXY_CCFiniteTimeAction_class->finalize = JSPROXY_CCFiniteTimeAction_finalize;
+	JSPROXY_CCFiniteTimeAction_class->flags = JSCLASS_HAS_PRIVATE;
+
+	static JSPropertySpec properties[] = {
+		{0, 0, 0, 0, 0}
+	};
+	static JSFunctionSpec funcs[] = {
+		JS_FN("duration", JSPROXY_CCFiniteTimeAction_duration, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("reverse", JSPROXY_CCFiniteTimeAction_reverse, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("setDuration", JSPROXY_CCFiniteTimeAction_setDuration_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FS_END
+	};
+	static JSFunctionSpec st_funcs[] = {
+		JS_FS_END
+	};
+
+	JSPROXY_CCFiniteTimeAction_object = JS_InitClass(cx, globalObj, JSPROXY_CCAction_object, JSPROXY_CCFiniteTimeAction_class, JSPROXY_CCFiniteTimeAction_constructor,0,properties,funcs,NULL,st_funcs);
+}
+
+@implementation JSPROXY_CCFiniteTimeAction
+
++(JSObject*) createJSObjectWithRealObject:(id)realObj context:(JSContext*)cx
+{
+	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCFiniteTimeAction_class, JSPROXY_CCFiniteTimeAction_object, NULL);
+	JSPROXY_CCFiniteTimeAction *proxy = [[JSPROXY_CCFiniteTimeAction alloc] initWithJSObject:jsobj];
+	[proxy setRealObj:realObj];
+	JS_SetPrivate(jsobj, proxy);
+
+	if( realObj )
+		objc_setAssociatedObject(realObj, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
+
+	[self swizzleMethods];
+
+	return jsobj;
+}
+
+@end
+
+/*
+ * CCActionInterval
+ */
+#pragma mark - CCActionInterval
+
+JSClass* JSPROXY_CCActionInterval_class = NULL;
+JSObject* JSPROXY_CCActionInterval_object = NULL;
+ // Constructor
+JSBool JSPROXY_CCActionInterval_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JSObject *jsobj = [JSPROXY_CCActionInterval createJSObjectWithRealObject:nil context:cx];
+    JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+    /* no callbacks */
+
+    return JS_TRUE;
+}
+
+// Destructor
+void JSPROXY_CCActionInterval_finalize(JSContext *cx, JSObject *obj)
+{
+	JSPROXY_CCActionInterval *proxy = (JSPROXY_CCActionInterval*)JS_GetPrivate(obj);
+	if (proxy) {
+		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_ASSIGN);
+		/* no callbacks */
+		[proxy release];
+	}
+}
+
+// Arguments: ccTime
+// Ret value: CCActionInterval
+JSBool JSPROXY_CCActionInterval_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	double arg0; JS_ValueToNumber( cx, *argvp++, &arg0 );
+
+	CCActionInterval *ret_val = [CCActionInterval actionWithDuration:(ccTime)arg0  ];
+
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+	return JS_TRUE;
+}
+
+// Arguments: 
+// Ret value: ccTime
+JSBool JSPROXY_CCActionInterval_elapsed(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	ccTime ret_val;
+
+	CCActionInterval *real = (CCActionInterval*) [proxy realObj];
+	ret_val = [real elapsed ];
+	JS_SET_RVAL(cx, vp, DOUBLE_TO_JSVAL(ret_val));
+	return JS_TRUE;
+}
+
+// Arguments: ccTime
+// Ret value: None
+JSBool JSPROXY_CCActionInterval_initWithDuration_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	double arg0; JS_ValueToNumber( cx, *argvp++, &arg0 );
+
+	CCActionInterval *real = [[CCActionInterval alloc] initWithDuration:(ccTime)arg0  ];
+	[proxy setRealObj: real];
+	[real release];
+
+	objc_setAssociatedObject(real, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: 
+// Ret value: BOOL
+JSBool JSPROXY_CCActionInterval_isDone(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	BOOL ret_val;
+
+	CCActionInterval *real = (CCActionInterval*) [proxy realObj];
+	ret_val = [real isDone ];
+	JS_SET_RVAL(cx, vp, BOOLEAN_TO_JSVAL(ret_val));
+	return JS_TRUE;
+}
+
+// Arguments: 
+// Ret value: CCActionInterval*
+JSBool JSPROXY_CCActionInterval_reverse(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	CCActionInterval* ret_val;
+
+	CCActionInterval *real = (CCActionInterval*) [proxy realObj];
+	ret_val = [real reverse ];
+
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+	return JS_TRUE;
+}
+
+void JSPROXY_CCActionInterval_createClass(JSContext *cx, JSObject* globalObj, const char* name )
+{
+	JSPROXY_CCActionInterval_class = (JSClass *)calloc(1, sizeof(JSClass));
+	JSPROXY_CCActionInterval_class->name = name;
+	JSPROXY_CCActionInterval_class->addProperty = JS_PropertyStub;
+	JSPROXY_CCActionInterval_class->delProperty = JS_PropertyStub;
+	JSPROXY_CCActionInterval_class->getProperty = JS_PropertyStub;
+	JSPROXY_CCActionInterval_class->setProperty = JS_StrictPropertyStub;
+	JSPROXY_CCActionInterval_class->enumerate = JS_EnumerateStub;
+	JSPROXY_CCActionInterval_class->resolve = JS_ResolveStub;
+	JSPROXY_CCActionInterval_class->convert = JS_ConvertStub;
+	JSPROXY_CCActionInterval_class->finalize = JSPROXY_CCActionInterval_finalize;
+	JSPROXY_CCActionInterval_class->flags = JSCLASS_HAS_PRIVATE;
+
+	static JSPropertySpec properties[] = {
+		{0, 0, 0, 0, 0}
+	};
+	static JSFunctionSpec funcs[] = {
+		JS_FN("elapsed", JSPROXY_CCActionInterval_elapsed, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("initWithDuration", JSPROXY_CCActionInterval_initWithDuration_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("isDone", JSPROXY_CCActionInterval_isDone, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("reverse", JSPROXY_CCActionInterval_reverse, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FS_END
+	};
+	static JSFunctionSpec st_funcs[] = {
+		JS_FN("actionWithDuration", JSPROXY_CCActionInterval_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSFUN_CONSTRUCTOR),
+		JS_FS_END
+	};
+
+	JSPROXY_CCActionInterval_object = JS_InitClass(cx, globalObj, JSPROXY_CCFiniteTimeAction_object, JSPROXY_CCActionInterval_class, JSPROXY_CCActionInterval_constructor,0,properties,funcs,NULL,st_funcs);
+}
+
+@implementation JSPROXY_CCActionInterval
+
++(JSObject*) createJSObjectWithRealObject:(id)realObj context:(JSContext*)cx
+{
+	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCActionInterval_class, JSPROXY_CCActionInterval_object, NULL);
+	JSPROXY_CCActionInterval *proxy = [[JSPROXY_CCActionInterval alloc] initWithJSObject:jsobj];
+	[proxy setRealObj:realObj];
+	JS_SetPrivate(jsobj, proxy);
+
+	if( realObj )
+		objc_setAssociatedObject(realObj, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
+
+	[self swizzleMethods];
+
+	return jsobj;
+}
+
+@end
+
+/*
  * CCMoveTo
  */
 #pragma mark - CCMoveTo
@@ -3583,16 +3581,16 @@ void JSPROXY_CCScaleTo_createClass(JSContext *cx, JSObject* globalObj, const cha
 @end
 
 /*
- * CCRepeatForever
+ * CCRepeat
  */
-#pragma mark - CCRepeatForever
+#pragma mark - CCRepeat
 
-JSClass* JSPROXY_CCRepeatForever_class = NULL;
-JSObject* JSPROXY_CCRepeatForever_object = NULL;
+JSClass* JSPROXY_CCRepeat_class = NULL;
+JSObject* JSPROXY_CCRepeat_object = NULL;
  // Constructor
-JSBool JSPROXY_CCRepeatForever_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+JSBool JSPROXY_CCRepeat_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
-    JSObject *jsobj = [JSPROXY_CCRepeatForever createJSObjectWithRealObject:nil context:cx];
+    JSObject *jsobj = [JSPROXY_CCRepeat createJSObjectWithRealObject:nil context:cx];
     JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
     /* no callbacks */
@@ -3601,9 +3599,9 @@ JSBool JSPROXY_CCRepeatForever_constructor(JSContext *cx, uint32_t argc, jsval *
 }
 
 // Destructor
-void JSPROXY_CCRepeatForever_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCRepeat_finalize(JSContext *cx, JSObject *obj)
 {
-	JSPROXY_CCRepeatForever *proxy = (JSPROXY_CCRepeatForever*)JS_GetPrivate(obj);
+	JSPROXY_CCRepeat *proxy = (JSPROXY_CCRepeat*)JS_GetPrivate(obj);
 	if (proxy) {
 		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_ASSIGN);
 		/* no callbacks */
@@ -3611,15 +3609,16 @@ void JSPROXY_CCRepeatForever_finalize(JSContext *cx, JSObject *obj)
 	}
 }
 
-// Arguments: CCActionInterval*
-// Ret value: CCRepeatForever
-JSBool JSPROXY_CCRepeatForever_actionWithAction__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
+// Arguments: CCFiniteTimeAction*, NSUInteger
+// Ret value: CCRepeat
+JSBool JSPROXY_CCRepeat_actionWithAction_times__static(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 
-	CCActionInterval* arg0 = (CCActionInterval*) jsval_to_nsobject( *argvp++, cx);
+	CCFiniteTimeAction* arg0 = (CCFiniteTimeAction*) jsval_to_nsobject( *argvp++, cx);
+	uint32_t arg1; JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
 
-	CCRepeatForever *ret_val = [CCRepeatForever actionWithAction:(CCActionInterval*)arg0  ];
+	CCRepeat *ret_val = [CCRepeat actionWithAction:(CCFiniteTimeAction*)arg0 times:(NSUInteger)arg1  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -3627,20 +3626,21 @@ JSBool JSPROXY_CCRepeatForever_actionWithAction__static(JSContext *cx, uint32_t 
 	return JS_TRUE;
 }
 
-// Arguments: CCActionInterval*
+// Arguments: CCFiniteTimeAction*, NSUInteger
 // Ret value: None
-JSBool JSPROXY_CCRepeatForever_initWithAction_(JSContext *cx, uint32_t argc, jsval *vp) {
+JSBool JSPROXY_CCRepeat_initWithAction_times_(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	NSCAssert( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 
-	CCActionInterval* arg0 = (CCActionInterval*) jsval_to_nsobject( *argvp++, cx);
+	CCFiniteTimeAction* arg0 = (CCFiniteTimeAction*) jsval_to_nsobject( *argvp++, cx);
+	uint32_t arg1; JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
 
-	CCRepeatForever *real = [[CCRepeatForever alloc] initWithAction:(CCActionInterval*)arg0  ];
+	CCRepeat *real = [[CCRepeat alloc] initWithAction:(CCFiniteTimeAction*)arg0 times:(NSUInteger)arg1  ];
 	[proxy setRealObj: real];
 	[real release];
 
@@ -3650,17 +3650,17 @@ JSBool JSPROXY_CCRepeatForever_initWithAction_(JSContext *cx, uint32_t argc, jsv
 }
 
 // Arguments: 
-// Ret value: CCActionInterval*
-JSBool JSPROXY_CCRepeatForever_innerAction(JSContext *cx, uint32_t argc, jsval *vp) {
+// Ret value: CCFiniteTimeAction*
+JSBool JSPROXY_CCRepeat_innerAction(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	NSCAssert( argc == 0, @"Invalid number of arguments" );
-	CCActionInterval* ret_val;
+	CCFiniteTimeAction* ret_val;
 
-	CCRepeatForever *real = (CCRepeatForever*) [proxy realObj];
+	CCRepeat *real = (CCRepeat*) [proxy realObj];
 	ret_val = [real innerAction ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
@@ -3669,9 +3669,9 @@ JSBool JSPROXY_CCRepeatForever_innerAction(JSContext *cx, uint32_t argc, jsval *
 	return JS_TRUE;
 }
 
-// Arguments: CCActionInterval*
+// Arguments: CCFiniteTimeAction*
 // Ret value: None
-JSBool JSPROXY_CCRepeatForever_setInnerAction_(JSContext *cx, uint32_t argc, jsval *vp) {
+JSBool JSPROXY_CCRepeat_setInnerAction_(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
@@ -3680,51 +3680,51 @@ JSBool JSPROXY_CCRepeatForever_setInnerAction_(JSContext *cx, uint32_t argc, jsv
 	NSCAssert( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 
-	CCActionInterval* arg0 = (CCActionInterval*) jsval_to_nsobject( *argvp++, cx);
+	CCFiniteTimeAction* arg0 = (CCFiniteTimeAction*) jsval_to_nsobject( *argvp++, cx);
 
-	CCRepeatForever *real = (CCRepeatForever*) [proxy realObj];
-	[real setInnerAction:(CCActionInterval*)arg0  ];
+	CCRepeat *real = (CCRepeat*) [proxy realObj];
+	[real setInnerAction:(CCFiniteTimeAction*)arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
 
-void JSPROXY_CCRepeatForever_createClass(JSContext *cx, JSObject* globalObj, const char* name )
+void JSPROXY_CCRepeat_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
-	JSPROXY_CCRepeatForever_class = (JSClass *)calloc(1, sizeof(JSClass));
-	JSPROXY_CCRepeatForever_class->name = name;
-	JSPROXY_CCRepeatForever_class->addProperty = JS_PropertyStub;
-	JSPROXY_CCRepeatForever_class->delProperty = JS_PropertyStub;
-	JSPROXY_CCRepeatForever_class->getProperty = JS_PropertyStub;
-	JSPROXY_CCRepeatForever_class->setProperty = JS_StrictPropertyStub;
-	JSPROXY_CCRepeatForever_class->enumerate = JS_EnumerateStub;
-	JSPROXY_CCRepeatForever_class->resolve = JS_ResolveStub;
-	JSPROXY_CCRepeatForever_class->convert = JS_ConvertStub;
-	JSPROXY_CCRepeatForever_class->finalize = JSPROXY_CCRepeatForever_finalize;
-	JSPROXY_CCRepeatForever_class->flags = JSCLASS_HAS_PRIVATE;
+	JSPROXY_CCRepeat_class = (JSClass *)calloc(1, sizeof(JSClass));
+	JSPROXY_CCRepeat_class->name = name;
+	JSPROXY_CCRepeat_class->addProperty = JS_PropertyStub;
+	JSPROXY_CCRepeat_class->delProperty = JS_PropertyStub;
+	JSPROXY_CCRepeat_class->getProperty = JS_PropertyStub;
+	JSPROXY_CCRepeat_class->setProperty = JS_StrictPropertyStub;
+	JSPROXY_CCRepeat_class->enumerate = JS_EnumerateStub;
+	JSPROXY_CCRepeat_class->resolve = JS_ResolveStub;
+	JSPROXY_CCRepeat_class->convert = JS_ConvertStub;
+	JSPROXY_CCRepeat_class->finalize = JSPROXY_CCRepeat_finalize;
+	JSPROXY_CCRepeat_class->flags = JSCLASS_HAS_PRIVATE;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
 	};
 	static JSFunctionSpec funcs[] = {
-		JS_FN("initWithAction", JSPROXY_CCRepeatForever_initWithAction_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
-		JS_FN("innerAction", JSPROXY_CCRepeatForever_innerAction, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
-		JS_FN("setInnerAction", JSPROXY_CCRepeatForever_setInnerAction_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("initWithActionTimes", JSPROXY_CCRepeat_initWithAction_times_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("innerAction", JSPROXY_CCRepeat_innerAction, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FN("setInnerAction", JSPROXY_CCRepeat_setInnerAction_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
-		JS_FN("actionWithAction", JSPROXY_CCRepeatForever_actionWithAction__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSFUN_CONSTRUCTOR),
+		JS_FN("actionWithActionTimes", JSPROXY_CCRepeat_actionWithAction_times__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSFUN_CONSTRUCTOR),
 		JS_FS_END
 	};
 
-	JSPROXY_CCRepeatForever_object = JS_InitClass(cx, globalObj, JSPROXY_CCAction_object, JSPROXY_CCRepeatForever_class, JSPROXY_CCRepeatForever_constructor,0,properties,funcs,NULL,st_funcs);
+	JSPROXY_CCRepeat_object = JS_InitClass(cx, globalObj, JSPROXY_CCActionInterval_object, JSPROXY_CCRepeat_class, JSPROXY_CCRepeat_constructor,0,properties,funcs,NULL,st_funcs);
 }
 
-@implementation JSPROXY_CCRepeatForever
+@implementation JSPROXY_CCRepeat
 
 +(JSObject*) createJSObjectWithRealObject:(id)realObj context:(JSContext*)cx
 {
-	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCRepeatForever_class, JSPROXY_CCRepeatForever_object, NULL);
-	JSPROXY_CCRepeatForever *proxy = [[JSPROXY_CCRepeatForever alloc] initWithJSObject:jsobj];
+	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCRepeat_class, JSPROXY_CCRepeat_object, NULL);
+	JSPROXY_CCRepeat *proxy = [[JSPROXY_CCRepeat alloc] initWithJSObject:jsobj];
 	[proxy setRealObj:realObj];
 	JS_SetPrivate(jsobj, proxy);
 
@@ -6654,6 +6654,125 @@ void JSPROXY_CCRotateBy_createClass(JSContext *cx, JSObject* globalObj, const ch
 {
 	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCRotateBy_class, JSPROXY_CCRotateBy_object, NULL);
 	JSPROXY_CCRotateBy *proxy = [[JSPROXY_CCRotateBy alloc] initWithJSObject:jsobj];
+	[proxy setRealObj:realObj];
+	JS_SetPrivate(jsobj, proxy);
+
+	if( realObj )
+		objc_setAssociatedObject(realObj, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
+
+	[self swizzleMethods];
+
+	return jsobj;
+}
+
+@end
+
+/*
+ * CCTintBy
+ */
+#pragma mark - CCTintBy
+
+JSClass* JSPROXY_CCTintBy_class = NULL;
+JSObject* JSPROXY_CCTintBy_object = NULL;
+ // Constructor
+JSBool JSPROXY_CCTintBy_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JSObject *jsobj = [JSPROXY_CCTintBy createJSObjectWithRealObject:nil context:cx];
+    JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+    /* no callbacks */
+
+    return JS_TRUE;
+}
+
+// Destructor
+void JSPROXY_CCTintBy_finalize(JSContext *cx, JSObject *obj)
+{
+	JSPROXY_CCTintBy *proxy = (JSPROXY_CCTintBy*)JS_GetPrivate(obj);
+	if (proxy) {
+		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_ASSIGN);
+		/* no callbacks */
+		[proxy release];
+	}
+}
+
+// Arguments: ccTime, GLshort, GLshort, GLshort
+// Ret value: CCTintBy
+JSBool JSPROXY_CCTintBy_actionWithDuration_red_green_blue__static(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 4, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	double arg0; JS_ValueToNumber( cx, *argvp++, &arg0 );
+	uint16_t arg1; JS_ValueToUint16( cx, *argvp++, &arg1 );
+	uint16_t arg2; JS_ValueToUint16( cx, *argvp++, &arg2 );
+	uint16_t arg3; JS_ValueToUint16( cx, *argvp++, &arg3 );
+
+	CCTintBy *ret_val = [CCTintBy actionWithDuration:(ccTime)arg0 red:(GLshort)arg1 green:(GLshort)arg2 blue:(GLshort)arg3  ];
+
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+	return JS_TRUE;
+}
+
+// Arguments: ccTime, GLshort, GLshort, GLshort
+// Ret value: None
+JSBool JSPROXY_CCTintBy_initWithDuration_red_green_blue_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 4, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	double arg0; JS_ValueToNumber( cx, *argvp++, &arg0 );
+	uint16_t arg1; JS_ValueToUint16( cx, *argvp++, &arg1 );
+	uint16_t arg2; JS_ValueToUint16( cx, *argvp++, &arg2 );
+	uint16_t arg3; JS_ValueToUint16( cx, *argvp++, &arg3 );
+
+	CCTintBy *real = [[CCTintBy alloc] initWithDuration:(ccTime)arg0 red:(GLshort)arg1 green:(GLshort)arg2 blue:(GLshort)arg3  ];
+	[proxy setRealObj: real];
+	[real release];
+
+	objc_setAssociatedObject(real, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+void JSPROXY_CCTintBy_createClass(JSContext *cx, JSObject* globalObj, const char* name )
+{
+	JSPROXY_CCTintBy_class = (JSClass *)calloc(1, sizeof(JSClass));
+	JSPROXY_CCTintBy_class->name = name;
+	JSPROXY_CCTintBy_class->addProperty = JS_PropertyStub;
+	JSPROXY_CCTintBy_class->delProperty = JS_PropertyStub;
+	JSPROXY_CCTintBy_class->getProperty = JS_PropertyStub;
+	JSPROXY_CCTintBy_class->setProperty = JS_StrictPropertyStub;
+	JSPROXY_CCTintBy_class->enumerate = JS_EnumerateStub;
+	JSPROXY_CCTintBy_class->resolve = JS_ResolveStub;
+	JSPROXY_CCTintBy_class->convert = JS_ConvertStub;
+	JSPROXY_CCTintBy_class->finalize = JSPROXY_CCTintBy_finalize;
+	JSPROXY_CCTintBy_class->flags = JSCLASS_HAS_PRIVATE;
+
+	static JSPropertySpec properties[] = {
+		{0, 0, 0, 0, 0}
+	};
+	static JSFunctionSpec funcs[] = {
+		JS_FN("initWithDurationRedGreenBlue", JSPROXY_CCTintBy_initWithDuration_red_green_blue_, 1, JSPROP_PERMANENT | JSPROP_SHARED ),
+		JS_FS_END
+	};
+	static JSFunctionSpec st_funcs[] = {
+		JS_FN("actionWithDurationRedGreenBlue", JSPROXY_CCTintBy_actionWithDuration_red_green_blue__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSFUN_CONSTRUCTOR),
+		JS_FS_END
+	};
+
+	JSPROXY_CCTintBy_object = JS_InitClass(cx, globalObj, JSPROXY_CCActionInterval_object, JSPROXY_CCTintBy_class, JSPROXY_CCTintBy_constructor,0,properties,funcs,NULL,st_funcs);
+}
+
+@implementation JSPROXY_CCTintBy
+
++(JSObject*) createJSObjectWithRealObject:(id)realObj context:(JSContext*)cx
+{
+	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCTintBy_class, JSPROXY_CCTintBy_object, NULL);
+	JSPROXY_CCTintBy *proxy = [[JSPROXY_CCTintBy alloc] initWithJSObject:jsobj];
 	[proxy setRealObj:realObj];
 	JS_SetPrivate(jsobj, proxy);
 

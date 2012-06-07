@@ -92,8 +92,9 @@ class SpiderMonkey(object):
                     v = cp.get(s, o )
                 elif t == type([]):
                     v = cp.get(s, o )
-                    l = v.split(' ')
-                    v = l
+		    v = v.replace('\t',' ')
+		    v = v.replace('\n',' ')
+                    v = v.split(' ')
                 else:
                     raise Exception('Unsupported type' % str(t) )
                 config[ o ] = v
@@ -536,6 +537,7 @@ void %s_finalize(JSContext *cx, JSObject *obj)
             'c' : 'c',  # char
             'C' : 'c',  # unsigned char
             'B' : 'b',  # BOOL
+	    's' : 'c',  # short
         }
 
         s = method['selector']
