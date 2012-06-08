@@ -64,7 +64,9 @@ id jsval_to_nsobject( jsval vp, JSContext *cx )
 {
 	JSObject *jsobj;
 	JS_ValueToObject( cx, vp, &jsobj );
-	JSPROXY_NSObject* proxy = (JSPROXY_NSObject*) JS_GetPrivate( jsobj ); 
+//	JSPROXY_NSObject* proxy = (JSPROXY_NSObject*) JS_GetPrivate( jsobj ); 
+	JSPROXY_NSObject* proxy = get_proxy_for_jsobject(jsobj);
+
 	return [proxy realObj];
 }
 

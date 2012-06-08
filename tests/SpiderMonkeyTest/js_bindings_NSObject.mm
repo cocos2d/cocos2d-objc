@@ -37,7 +37,8 @@ JSBool JSPROXY_NSObject_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 	
     JSPROXY_NSObject *proxy = [[JSPROXY_NSObject alloc] initWithJSObject:jsobj];
 	
-    JS_SetPrivate(jsobj, proxy);
+	set_proxy_for_jsobject(proxy, jsobj);
+//    JS_SetPrivate(jsobj, proxy);
     JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 	
     /* no callbacks */
@@ -48,10 +49,12 @@ JSBool JSPROXY_NSObject_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 // Destructor
 void JSPROXY_NSObject_finalize(JSContext *cx, JSObject *obj)
 {
-	JSPROXY_NSObject *pt = (JSPROXY_NSObject*)JS_GetPrivate(obj);
-	if (pt) {
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+	
+	if (proxy) {
+		del_proxy_for_jsobject( obj );
 		
-		[pt release];		
+		[proxy release];		
 	}
 }
 
@@ -59,7 +62,8 @@ void JSPROXY_NSObject_finalize(JSContext *cx, JSObject *obj)
 JSBool JSPROXY_NSObject_init(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject* proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+//	JSPROXY_NSObject* proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( ! [proxy realObj], @"Object already initialzied. error");
 	
@@ -79,10 +83,10 @@ JSBool JSPROXY_NSObject_init(JSContext *cx, uint32_t argc, jsval *vp) {
 }
 
 
-void createClass(JSContext* cx, JSObject* globalObj, NSString* name )
+void JSPROXY_NSObject_createClass(JSContext* cx, JSObject* globalObj, const char *name )
 {
 	JSPROXY_NSObject_class = (JSClass *)calloc(1, sizeof(JSClass));
-	JSPROXY_NSObject_class->name = [name UTF8String];
+	JSPROXY_NSObject_class->name = name;
 	JSPROXY_NSObject_class->addProperty = JS_PropertyStub;
 	JSPROXY_NSObject_class->delProperty = JS_PropertyStub;
 	JSPROXY_NSObject_class->getProperty = JS_PropertyStub;
@@ -118,7 +122,9 @@ void createClass(JSContext* cx, JSObject* globalObj, NSString* name )
 {
 	JSObject *jsobj = JS_NewObject(cx, JSPROXY_NSObject_class, JSPROXY_NSObject_object, NULL);
     JSPROXY_NSObject *proxy = [[JSPROXY_NSObject alloc] initWithJSObject:jsobj];	
-    JS_SetPrivate(jsobj, proxy);
+//    JS_SetPrivate(jsobj, proxy);
+	set_proxy_for_jsobject(proxy, jsobj);
+
 	
 	[proxy setRealObj:realObj];
 	if( realObj )

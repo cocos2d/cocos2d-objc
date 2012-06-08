@@ -25,20 +25,31 @@
 #import "ScriptingCore.h"
 #import "js_obj_convertions.h"
 
-extern JSObject* JSPROXY_NSObject_object;
-extern JSClass* JSPROXY_NSObject_class;
-
 @interface JSPROXY_NSObject : NSObject
 {
 	JSObject	*_jsObj;
 	id			_realObj;
 }
 
-@property (readonly) JSObject *jsObj;
+@property (nonatomic, readwrite, assign) JSObject *jsObj;
 @property (nonatomic, readwrite, retain) id	realObj;
 
 -(id) initWithJSObject:(JSObject*)object;
 +(JSObject*) createJSObjectWithRealObject:(id)realObj context:(JSContext*)JSContext;
 +(void) swizzleMethods;
 @end
+
+
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+	
+void JSPROXY_NSObject_createClass(JSContext* cx, JSObject* globalObj, const char * name );
+extern JSObject* JSPROXY_NSObject_object;
+extern JSClass* JSPROXY_NSObject_class;
+
+#ifdef __cplusplus
+}
+#endif
 
