@@ -29,7 +29,7 @@
 
 #import <Availability.h>
 
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#if defined (__IPHONE_OS_VERSION_MAX_ALLOWED) || defined (__STELLA_VERSION_MAX_ALLOWED)
 #import <OpenGLES/ES1/gl.h>
 #import <OpenGLES/ES1/glext.h>
 #import <OpenGLES/EAGL.h>
@@ -45,7 +45,7 @@
 
 
 // iOS
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#if defined (__IPHONE_OS_VERSION_MAX_ALLOWED) || defined (__STELLA_VERSION_MAX_ALLOWED)
 #define CC_GLVIEW					EAGLView
 #define ccglOrtho					glOrthof
 #define	ccglClearDepth				glClearDepthf

@@ -36,7 +36,7 @@
 #import "Support/CGPointExtension.h"
 #import "Support/ccUtils.h"
 
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#if defined (__IPHONE_OS_VERSION_MAX_ALLOWED) || defined (__STELLA_VERSION_MAX_ALLOWED)
 #import "Platforms/iOS/CCDirectorIOS.h"
 #endif // __IPHONE_OS_VERSION_MAX_ALLOWED
 
@@ -92,7 +92,7 @@
 	unsigned long POTWide = ccNextPOT(s.width);
 	unsigned long POTHigh = ccNextPOT(s.height);
 	
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#if defined (__IPHONE_OS_VERSION_MAX_ALLOWED) || defined (__STELLA_VERSION_MAX_ALLOWED)
 	EAGLView *glview = [[CCDirector sharedDirector] openGLView];
 	NSString *pixelFormat = [glview pixelFormat];
 
@@ -169,7 +169,7 @@
 }
 
 // This routine can be merged with Director
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#if defined (__IPHONE_OS_VERSION_MAX_ALLOWED) || defined (__STELLA_VERSION_MAX_ALLOWED)
 -(void)applyLandscape
 {
 	CCDirector *director = [CCDirector sharedDirector];
@@ -245,7 +245,7 @@
 	[grabber_ afterRender:texture_];
 	
 	[self set3DProjection];
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#if defined (__IPHONE_OS_VERSION_MAX_ALLOWED) || defined (__STELLA_VERSION_MAX_ALLOWED)
 	[self applyLandscape];
 #endif
 

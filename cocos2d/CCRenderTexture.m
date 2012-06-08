@@ -174,7 +174,7 @@
 
 #pragma mark RenderTexture - Save Image
 
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#if defined (__IPHONE_OS_VERSION_MAX_ALLOWED) || defined (__STELLA_VERSION_MAX_ALLOWED)
 -(BOOL)saveBuffer:(NSString*)name
 {
 	return [self saveBuffer:name format:kCCImageFormatJPG];

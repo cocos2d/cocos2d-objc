@@ -34,7 +34,7 @@
 
 static NSFileManager *__localFileManager=nil;
 
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#if defined (__IPHONE_OS_VERSION_MAX_ALLOWED) || defined (__STELLA_VERSION_MAX_ALLOWED)
 
 static NSString *__suffixRetinaDisplay =@"-hd";
 static NSString *__suffixiPad =@"-ipad";
@@ -75,7 +75,7 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 }
 
 
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#if defined (__IPHONE_OS_VERSION_MAX_ALLOWED) || defined (__STELLA_VERSION_MAX_ALLOWED)
 @interface CCFileUtils()
 +(NSString *) removeSuffix:(NSString*)suffix fromPath:(NSString*)path;
 +(BOOL) fileExistsAtPath:(NSString*)string withSuffix:(NSString*)suffix;
@@ -152,7 +152,7 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 	if (fullpath == nil)
 		fullpath = relPath;
 	
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#if defined (__IPHONE_OS_VERSION_MAX_ALLOWED) || defined (__STELLA_VERSION_MAX_ALLOWED)
 	
 	NSString *ret = nil;
 	
@@ -198,7 +198,7 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 #pragma mark CCFileUtils - Suffix (iOS only)
 
 
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#if defined (__IPHONE_OS_VERSION_MAX_ALLOWED) || defined (__STELLA_VERSION_MAX_ALLOWED)
 
 +(NSString *) removeSuffix:(NSString*)suffix fromPath:(NSString*)path
 {

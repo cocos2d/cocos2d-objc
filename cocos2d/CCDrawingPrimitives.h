@@ -30,7 +30,7 @@
 #import <Availability.h>
 #import <Foundation/Foundation.h>
 
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#if defined (__IPHONE_OS_VERSION_MAX_ALLOWED) || defined (__STELLA_VERSION_MAX_ALLOWED)
 #import <CoreGraphics/CGGeometry.h>	// for CGPoint
 #endif
 

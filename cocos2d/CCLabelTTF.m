@@ -31,7 +31,7 @@
 #import "Support/CGPointExtension.h"
 #import "ccMacros.h"
 
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#if defined (__IPHONE_OS_VERSION_MAX_ALLOWED) || defined (__STELLA_VERSION_MAX_ALLOWED)
 #import "Platforms/iOS/CCDirectorIOS.h"
 #endif
 
@@ -111,7 +111,7 @@
 										 fontName:fontName_
 										 fontSize:fontSize_];
 
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#if defined (__IPHONE_OS_VERSION_MAX_ALLOWED) || defined (__STELLA_VERSION_MAX_ALLOWED)
 	if( CC_CONTENT_SCALE_FACTOR() == 2 )
 		[tex setResolutionType:kCCResolutionRetinaDisplay];
 	else

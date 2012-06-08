@@ -151,7 +151,7 @@ default gl blend src function. Compatible with premultiplied alpha images.
  @since v0.99.4
  */
 
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#if defined (__IPHONE_OS_VERSION_MAX_ALLOWED) || defined (__STELLA_VERSION_MAX_ALLOWED)
 
 #define CC_DIRECTOR_INIT()																		\
 do	{																							\

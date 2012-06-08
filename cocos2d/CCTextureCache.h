@@ -26,7 +26,7 @@
 
 #import <Availability.h>
 
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#if defined (__IPHONE_OS_VERSION_MAX_ALLOWED) || defined (__STELLA_VERSION_MAX_ALLOWED)
 #import <CoreGraphics/CGImage.h>
 #endif
 
@@ -126,7 +126,7 @@
  *
  * @deprecated Will be removed in 2.0. Use addPVRImage instead.
  */
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#if defined (__IPHONE_OS_VERSION_MAX_ALLOWED) || defined (__STELLA_VERSION_MAX_ALLOWED)
 -(CCTexture2D*) addPVRTCImage:(NSString*)fileimage bpp:(int)bpp hasAlpha:(BOOL)alpha width:(int)w;
 #endif // __IPHONE_OS_VERSION_MAX_ALLOWED
 

@@ -39,7 +39,7 @@
 #import "ccMacros.h"
 
 #import <Availability.h>
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#if defined (__IPHONE_OS_VERSION_MAX_ALLOWED) || defined (__STELLA_VERSION_MAX_ALLOWED)
 #import "Platforms/iOS/CCDirectorIOS.h"
 #endif
 
@@ -904,7 +904,7 @@
 
 // convenience methods which take a UITouch instead of CGPoint
 
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#if defined (__IPHONE_OS_VERSION_MAX_ALLOWED) || defined (__STELLA_VERSION_MAX_ALLOWED)
 
 - (CGPoint)convertTouchToNodeSpace:(UITouch *)touch
 {

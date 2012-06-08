@@ -25,7 +25,7 @@
 
 #import <Availability.h>
 
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#if defined (__IPHONE_OS_VERSION_MAX_ALLOWED) || defined (__STELLA_VERSION_MAX_ALLOWED)
 #import <UIKit/UIKit.h>		// Needed for UIDevice
 #endif
 
@@ -68,7 +68,7 @@ static char * glExtensions;
 }
 
 
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#if defined (__IPHONE_OS_VERSION_MAX_ALLOWED) || defined (__STELLA_VERSION_MAX_ALLOWED)
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 - (NSString*)getMacVersion
 {
@@ -87,7 +87,7 @@ static char * glExtensions;
 		
 		// Obtain iOS version
 		OSVersion_ = 0;
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#if defined (__IPHONE_OS_VERSION_MAX_ALLOWED) || defined (__STELLA_VERSION_MAX_ALLOWED)
 		NSString *OSVer = [[UIDevice currentDevice] systemVersion];
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 		NSString *OSVer = [self getMacVersion];
@@ -109,7 +109,7 @@ static char * glExtensions;
 		
 		glGetIntegerv(GL_MAX_TEXTURE_SIZE, &maxTextureSize_);
 		glGetIntegerv(GL_MAX_MODELVIEW_STACK_DEPTH, &maxModelviewStackDepth_);
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#if defined (__IPHONE_OS_VERSION_MAX_ALLOWED) || defined (__STELLA_VERSION_MAX_ALLOWED)
 		if( OSVersion_ >= kCCiOSVersion_4_0 )
 			glGetIntegerv(GL_MAX_SAMPLES_APPLE, &maxSamplesAllowed_);
 		else
@@ -119,7 +119,7 @@ static char * glExtensions;
 #endif
 		
 		supportsPVRTC_ = [self checkForGLExtension:@"GL_IMG_texture_compression_pvrtc"];
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#if defined (__IPHONE_OS_VERSION_MAX_ALLOWED) || defined (__STELLA_VERSION_MAX_ALLOWED)
 		supportsNPOT_ = [self checkForGLExtension:@"GL_APPLE_texture_2D_limited_npot"];
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 		supportsNPOT_ = [self checkForGLExtension:@"GL_ARB_texture_non_power_of_two"];
@@ -127,7 +127,7 @@ static char * glExtensions;
 		// It seems that somewhere between firmware iOS 3.0 and 4.2 Apple renamed
 		// GL_IMG_... to GL_APPLE.... So we should check both names
 		
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#if defined (__IPHONE_OS_VERSION_MAX_ALLOWED) || defined (__STELLA_VERSION_MAX_ALLOWED)
 		BOOL bgra8a = [self checkForGLExtension:@"GL_IMG_texture_format_BGRA8888"];
 		BOOL bgra8b = [self checkForGLExtension:@"GL_APPLE_texture_format_BGRA8888"];
 		supportsBGRA8888_ = bgra8a | bgra8b;

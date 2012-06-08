@@ -40,7 +40,7 @@
 #import "Support/CGPointExtension.h"
 
 #import <Availability.h>
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#if defined (__IPHONE_OS_VERSION_MAX_ALLOWED) || defined (__STELLA_VERSION_MAX_ALLOWED)
 #import "Platforms/iOS/CCTouchDispatcher.h"
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 #import "Platforms/Mac/CCEventDispatcher.h"
@@ -76,7 +76,7 @@ const uint32_t kSceneFade = 0xFADEFADE;
 		NSAssert( inScene_ != outScene_, @"Incoming scene must be different from the outgoing scene" );
 
 		// disable events while transitions
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#if defined (__IPHONE_OS_VERSION_MAX_ALLOWED) || defined (__STELLA_VERSION_MAX_ALLOWED)
 		[[CCTouchDispatcher sharedDispatcher] setDispatchEvents: NO];
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 		[[CCEventDispatcher sharedDispatcher] setDispatchEvents: NO];
@@ -134,7 +134,7 @@ const uint32_t kSceneFade = 0xFADEFADE;
 	[director replaceScene: inScene_];
 
 	// enable events while transitions
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#if defined (__IPHONE_OS_VERSION_MAX_ALLOWED) || defined (__STELLA_VERSION_MAX_ALLOWED)
 	[[CCTouchDispatcher sharedDispatcher] setDispatchEvents: YES];
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 	[[CCEventDispatcher sharedDispatcher] setDispatchEvents: YES];

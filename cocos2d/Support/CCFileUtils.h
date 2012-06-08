@@ -47,7 +47,7 @@
 +(NSString*) fullPathFromRelativePath:(NSString*) relPath;
 
 
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#if defined (__IPHONE_OS_VERSION_MAX_ALLOWED) || defined (__STELLA_VERSION_MAX_ALLOWED)
 
 /** Returns the fullpath of an filename including the resolution of the image.
 
