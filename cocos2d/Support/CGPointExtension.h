@@ -46,8 +46,10 @@
 
 #import <Availability.h>
 
-#if defined (__IPHONE_OS_VERSION_MAX_ALLOWED) || defined (__STELLA_VERSION_MAX_ALLOWED)
+#if defined (__IPHONE_OS_VERSION_MAX_ALLOWED) /* COREGRAPHICS */
 #import <CoreGraphics/CGGeometry.h>
+#elif defined (__STELLA_VERSION_MAX_ALLOWED) /* COREGRAPHICS */
+#import <StellaGraphics/SGGeometry.h>
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 #import <Foundation/Foundation.h>
 #endif

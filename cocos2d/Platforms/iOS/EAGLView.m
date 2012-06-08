@@ -66,7 +66,11 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #import <Availability.h>
 #if defined (__IPHONE_OS_VERSION_MAX_ALLOWED) || defined (__STELLA_VERSION_MAX_ALLOWED)
 
+#if defined (__STELLA_VERSION_MAX_ALLOWED)
+#import <StellaAnimation/StellaAnimation.h>
+#else
 #import <QuartzCore/QuartzCore.h>
+#endif
 
 #import "EAGLView.h"
 #import "ES1Renderer.h"

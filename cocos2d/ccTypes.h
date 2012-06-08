@@ -32,8 +32,10 @@
 #import <Availability.h>
 #import <Foundation/Foundation.h>
 
-#if defined (__IPHONE_OS_VERSION_MAX_ALLOWED) || defined (__STELLA_VERSION_MAX_ALLOWED)
+#if defined (__IPHONE_OS_VERSION_MAX_ALLOWED) /* COREGRAPHICS */
 #import <CoreGraphics/CGGeometry.h>	// CGPoint
+#elif defined (__STELLA_VERSION_MAX_ALLOWED) /* COREGRAPHICS */
+#import <StellaGraphics/SGGeometry.h>	// CGPoint
 #endif
 
 #import "Platforms/CCGL.h"
