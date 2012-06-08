@@ -4,45 +4,7 @@
 // Test are coded using Javascript, with the exception of MenuCallback which uses Objective-J to handle the callbacks.
 // 
 
-
-Float32Array.prototype.x = function () {
-	return this[0];
-};
-
-Float32Array.prototype.y = function () {
-	return this[1];
-};
-
-// cocos2d Helper
-function ccp(x, y)
-{
-	var floats = new Float32Array(2);
-	floats[0] = x;
-	floats[1] = y;
-	
-	return floats;
-}
-
-function ccc3(r, g, b)
-{
-	var colors = new Uint8Array(3)
-	colors[0] = r;
-	colors[1] = g;
-	colors[2] = b;
-	
-	return colors;
-}
-
-function ccc4f(r, g, b, a)
-{
-	var colors = new Float32Array(4)
-	colors[0] = r;
-	colors[1] = g;
-	colors[2] = b;
-	colors[3] = a;
-	
-	return colors;
-}
+require("javascript-spidermonkey/helper.js");
 
 cc.log('Hello World');
 
@@ -145,3 +107,47 @@ var menu = cc.Menu.menuWithArray( [item1, item2] );
 menu.alignItemsHorizontally();
 menu.setPosition( ccp(200,200) );
 parent2.addChild( menu );
+
+
+
+//
+// Google "subclassing"
+//
+cc.log("hola");
+var subclass = function() {
+	cc.base(this);
+	this.initWithFile("grossini.png");
+	this.setPosition( ccp(100, 100) );
+	this.setScale( 3 );
+}
+cc.inherits(subclass, cc.Sprite );
+
+//for( var i in cc.Sprite ) { cc.log( "---->" + cc.Sprite[ i ] + "..." + i ); }
+//var sprite = new subclass();
+
+var sprite = new subclass();
+sprite.setPosition( ccp(300,300) );
+sprite.setRotation( 90 );
+p = sprite.position();
+cc.log( p );
+parent2.addChild( sprite );
+//cc.addToRunningScene( sprite );
+
+
+//
+// cocos2d-html5 subclassing
+//
+var subclass2 = cc.Sprite.extend({
+	ctor:function() {
+//		this.initWithFile("grossini.png");
+		cc.log("OHHHHHHH YESSSSS");
+		this.initWithFile("grossini.png");
+    }
+});
+//cc.log( Object.keys( subclass2.prototype ).join(',') );
+//var sprite3 = subclass2.spriteWithFile("grossini.png");
+var sprite3 = new subclass2();
+sprite3.setPosition( ccp(300,100) );
+sprite3.setRotation( 180 );
+parent2.addChild( sprite3 );
+

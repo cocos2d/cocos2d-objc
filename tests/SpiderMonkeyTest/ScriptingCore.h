@@ -109,3 +109,16 @@ extern char * JSPROXY_association_proxy_key;
 -(void) runScript:(NSString*)filename;
 
 @end
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+	@class JSPROXY_NSObject;
+	JSPROXY_NSObject* get_proxy_for_jsobject(JSObject *jsobj);
+	void set_proxy_for_jsobject(JSPROXY_NSObject* proxy, JSObject *jsobj);
+	void del_proxy_for_jsobject(JSObject *jsobj);
+	
+#ifdef __cplusplus
+}
+#endif
+

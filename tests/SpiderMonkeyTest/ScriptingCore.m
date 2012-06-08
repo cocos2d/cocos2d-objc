@@ -72,6 +72,25 @@ JSBool ScriptingCore_executeScript(JSContext *cx, uint32_t argc, jsval *vp)
 	return JS_TRUE;
 };
 
+JSBool ScriptingCore_associateObjectWithNative(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	if (argc == 2) {
+		
+		jsval *argvp = JS_ARGV(cx,vp);
+		JSObject *pureJSObj;
+		JSObject *nativeJSObj;
+		JS_ValueToObject( cx, *argvp++, &pureJSObj );
+		JS_ValueToObject( cx, *argvp++, &nativeJSObj );
+		
+		JSPROXY_NSObject *proxy = get_proxy_for_jsobject( nativeJSObj );
+//		JSPROXY_NSObject *proxy = JS_GetPrivate( nativeJSObj );
+		set_proxy_for_jsobject( proxy, pureJSObj );
+		[proxy setJsObj:pureJSObj];
+	}
+	return JS_TRUE;
+};
+
+
 /* Register an object as a member of the GC's root set, preventing them from being GC'ed */
 JSBool ScriptingCore_addRootJS(JSContext *cx, uint32_t argc, jsval *vp)
 {
@@ -115,7 +134,8 @@ JSBool ScriptingCore_addToRunningScene(JSContext *cx, uint32_t argc, jsval *vp)
 	if (argc == 1) {
 		JSObject *o = NULL;
 		if (JS_ConvertArguments(cx, argc, JS_ARGV(cx, vp), "o", &o) == JS_TRUE) {
-			JSPROXY_CCNode *proxy = JS_GetPrivate(o);
+			JSPROXY_NSObject *proxy = get_proxy_for_jsobject( o );
+//			JSPROXY_CCNode *proxy = JS_GetPrivate(o);
 			CCNode *node = [proxy realObj];
 
 			CCDirector *director = [CCDirector sharedDirector];
@@ -166,6 +186,9 @@ JSBool ScriptingCore_addToRunningScene(JSContext *cx, uint32_t argc, jsval *vp)
 		JS_SetProperty(_cx, _object, "cc", &cocosVal);
 
 		// register some global functions
+		JS_DefineFunction(_cx, _object, "require", ScriptingCore_executeScript, 1, JSPROP_READONLY | JSPROP_PERMANENT);
+		JS_DefineFunction(_cx, _object, "__associateObjWithNative", ScriptingCore_associateObjectWithNative, 2, JSPROP_READONLY | JSPROP_PERMANENT);
+
 		JS_DefineFunction(_cx, cocos2d, "log", ScriptingCore_log, 0, JSPROP_READONLY | JSPROP_PERMANENT);
 		JS_DefineFunction(_cx, cocos2d, "executeScript", ScriptingCore_executeScript, 1, JSPROP_READONLY | JSPROP_PERMANENT);
 		JS_DefineFunction(_cx, cocos2d, "addGCRootObject", ScriptingCore_addRootJS, 1, JSPROP_READONLY | JSPROP_PERMANENT);
@@ -173,6 +196,7 @@ JSBool ScriptingCore_addToRunningScene(JSContext *cx, uint32_t argc, jsval *vp)
 		JS_DefineFunction(_cx, cocos2d, "forceGC", ScriptingCore_forceGC, 0, JSPROP_READONLY | JSPROP_PERMANENT);
 		JS_DefineFunction(_cx, cocos2d, "addToRunningScene", ScriptingCore_addToRunningScene, 1, JSPROP_READONLY | JSPROP_PERMANENT);
 
+		JSPROXY_NSObject_createClass(_cx, cocos2d, "Object");
 				
 		// Register classes: base classes should be registered first
 #import "js_bindings_class_registration_cocos2d.h"		
@@ -270,4 +294,47 @@ JSBool ScriptingCore_addToRunningScene(JSContext *cx, uint32_t argc, jsval *vp)
 	JS_ShutDown();
 }
 @end
+
+
+typedef struct _hashJSObject
+{
+	JSObject			*jsObject;
+	JSPROXY_NSObject	*proxy;
+	UT_hash_handle		hh;
+} tHashJSObject;
+
+static tHashJSObject *hash = NULL;
+
+JSPROXY_NSObject* get_proxy_for_jsobject(JSObject *obj)
+{
+	tHashJSObject *element = NULL;
+	HASH_FIND_INT(hash, &obj, element);
+	
+	if( element )
+		return element->proxy;
+	return nil;
+}
+
+void set_proxy_for_jsobject(JSPROXY_NSObject *proxy, JSObject *obj)
+{
+	NSCAssert( !get_proxy_for_jsobject(obj), @"Already added. abort");
+	
+	tHashJSObject *element = malloc( sizeof( *element ) );
+	element->proxy = [proxy retain];
+	element->jsObject = obj;
+
+	HASH_ADD_INT( hash, jsObject, element );
+}
+
+void del_proxy_for_jsobject(JSObject *obj)
+{
+	tHashJSObject *element = NULL;
+	HASH_FIND_INT(hash, &obj, element);
+	if( element ) {
+		[element->proxy release];
+
+		HASH_DEL(hash, element);
+		free(element);
+	}
+}
 

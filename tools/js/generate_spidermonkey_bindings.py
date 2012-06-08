@@ -315,8 +315,11 @@ JSBool %s_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 // Destructor
 void %s_finalize(JSContext *cx, JSObject *obj)
 {
-	%s *proxy = (%s*)JS_GetPrivate(obj);
+//	%%s *proxy = (%%s*)JS_GetPrivate(obj);
+	%s *proxy = (%s*)get_proxy_for_jsobject(obj);
+
 	if (proxy) {
+		del_proxy_for_jsobject( obj );
 		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_ASSIGN);
 		%s
 		[proxy release];
@@ -666,7 +669,9 @@ JSBool %s_%s%s(JSContext *cx, uint32_t argc, jsval *vp) {
 '''
         template_init = '''
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+//	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( %s[proxy realObj], @"Object not initialzied. error");
 '''
@@ -968,7 +973,8 @@ extern JSClass *%s_class;
 	JSObject *jsobj = JS_NewObject(cx, %s_class, %s_object, NULL);
 	%s *proxy = [[%s alloc] initWithJSObject:jsobj];
 	[proxy setRealObj:realObj];
-	JS_SetPrivate(jsobj, proxy);
+//	JS_SetPrivate(jsobj, proxy);
+	set_proxy_for_jsobject(proxy, jsobj);
 
 	if( realObj )
 		objc_setAssociatedObject(realObj, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
@@ -1056,9 +1062,9 @@ void %s_createClass(JSContext *cx, JSObject* globalObj, const char* name )
             cb_name = self.convert_selector_name_to_native( method['selector'] )
 
             if self.is_class_constructor( method ):
-                entry = js_fn % (js_name, proxy_class_name + '_' + cb_name + class_method, '| JSFUN_CONSTRUCTOR' )
+                entry = js_fn % (js_name, proxy_class_name + '_' + cb_name + class_method, '| JSFUN_CONSTRUCTOR | JSPROP_ENUMERATE' )
             else:
-                entry = js_fn % (js_name, proxy_class_name + '_' + cb_name + class_method, '' )
+                entry = js_fn % (js_name, proxy_class_name + '_' + cb_name + class_method, '| JSPROP_ENUMERATE' )
 
             if self.is_class_method( method ):
                 class_method_buffer += entry
