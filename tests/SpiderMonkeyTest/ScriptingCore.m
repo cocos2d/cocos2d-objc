@@ -199,22 +199,30 @@ JSBool ScriptingCore_addToRunningScene(JSContext *cx, uint32_t argc, jsval *vp)
 		if (!JS_InitStandardClasses( _cx, _object)) {
 			CCLOGWARN(@"js error");
 		}
-		// create the cocos namespace
-		JSObject *cocos2d = JS_NewObject( _cx, NULL, NULL, NULL);
-		jsval cocosVal = OBJECT_TO_JSVAL(cocos2d);
-		JS_SetProperty(_cx, _object, "cc", &cocosVal);
-
+		
+		
 		// register some global functions
 		JS_DefineFunction(_cx, _object, "require", ScriptingCore_executeScript, 1, JSPROP_READONLY | JSPROP_PERMANENT);
 		JS_DefineFunction(_cx, _object, "__associateObjWithNative", ScriptingCore_associateObjectWithNative, 2, JSPROP_READONLY | JSPROP_PERMANENT);
 		JS_DefineFunction(_cx, _object, "__address", ScriptingCore_address, 2, JSPROP_READONLY | JSPROP_PERMANENT);
 
-		JS_DefineFunction(_cx, cocos2d, "log", ScriptingCore_log, 0, JSPROP_READONLY | JSPROP_PERMANENT);
-		JS_DefineFunction(_cx, cocos2d, "executeScript", ScriptingCore_executeScript, 1, JSPROP_READONLY | JSPROP_PERMANENT);
-		JS_DefineFunction(_cx, cocos2d, "addGCRootObject", ScriptingCore_addRootJS, 1, JSPROP_READONLY | JSPROP_PERMANENT);
-		JS_DefineFunction(_cx, cocos2d, "removeGCRootObject", ScriptingCore_removeRootJS, 1, JSPROP_READONLY | JSPROP_PERMANENT);
-		JS_DefineFunction(_cx, cocos2d, "forceGC", ScriptingCore_forceGC, 0, JSPROP_READONLY | JSPROP_PERMANENT);
-		JS_DefineFunction(_cx, cocos2d, "addToRunningScene", ScriptingCore_addToRunningScene, 1, JSPROP_READONLY | JSPROP_PERMANENT);
+		// create the "__jsc__" namescpae (Javascript controller)
+		JSObject *jsc = JS_NewObject( _cx, NULL, NULL, NULL);
+		jsval jscVal = OBJECT_TO_JSVAL(jsc);
+		JS_SetProperty(_cx, _object, "__jsc__", &jscVal);
+
+		JS_DefineFunction(_cx, jsc, "garbageCollect", ScriptingCore_forceGC, 0, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
+		JS_DefineFunction(_cx, jsc, "addGCRootObject", ScriptingCore_addRootJS, 1, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
+		JS_DefineFunction(_cx, jsc, "removeGCRootObject", ScriptingCore_removeRootJS, 1, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
+		JS_DefineFunction(_cx, jsc, "executeScript", ScriptingCore_executeScript, 1, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
+
+		// create the cocos namespace
+		JSObject *cocos2d = JS_NewObject( _cx, NULL, NULL, NULL);
+		jsval cocosVal = OBJECT_TO_JSVAL(cocos2d);
+		JS_SetProperty(_cx, _object, "cc", &cocosVal);
+
+		JS_DefineFunction(_cx, cocos2d, "log", ScriptingCore_log, 0, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
+		JS_DefineFunction(_cx, cocos2d, "addToRunningScene", ScriptingCore_addToRunningScene, 1, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
 
 		JSPROXY_NSObject_createClass(_cx, cocos2d, "Object");
 				

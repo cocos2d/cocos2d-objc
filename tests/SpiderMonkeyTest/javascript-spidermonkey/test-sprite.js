@@ -10,6 +10,42 @@ var director = cc.Director.sharedDirector();
 var _winSize = director.winSize();
 var winSize = {width:_winSize[0], height:_winSize[1]};
 
+var scenes = []
+var currentScene = 0;
+
+var nextSpriteTestAction = function () {
+    currentScene = currentScene + 1;
+    if( currentScene >= scenes.length )
+        currentScene = 0;
+
+    loadScene(currentScene);
+};
+var backSpriteTestAction = function () {
+    currentScene = currentScene -1;
+    if( currentScene < 0 )
+        currentScene = scenes.length -1;
+
+    loadScene(currentScene);
+};
+var restartSpriteTestAction = function () {
+    loadScene( currentScene );
+};
+
+var loadScene = function (sceneIdx)
+{
+    var scene = new cc.Scene();
+    scene.init();
+    var layer = new scenes[ sceneIdx ]();
+
+    scene.addChild( layer );
+
+//	scene.walkSceneGraph(0);
+
+    director.replaceScene( scene );
+//    __jsc__.garbageCollect();
+}
+
+
 //------------------------------------------------------------------
 //
 // SpriteTestDemo
@@ -58,22 +94,15 @@ var SpriteTestDemo = cc.Layer.extend({
 
     restartCallback:function (sender) {
         cc.log("restart called");
-//        var s = new SpriteTestScene();
-//        s.addChild(restartSpriteTestAction());
-//
-//        cc.Director.sharedDirector().replaceScene(s);
+        restartSpriteTestAction();
     },
     nextCallback:function (sender) {
         cc.log("next called");
-//        var s = new SpriteTestScene();
-//        s.addChild(nextSpriteTestAction());
-//        cc.Director.sharedDirector().replaceScene(s);
+        nextSpriteTestAction();
     },
     backCallback:function (sender) {
         cc.log("back called");
-//        var s = new SpriteTestScene();
-//        s.addChild(backSpriteTestAction());
-//        cc.Director.sharedDirector().replaceScene(s);
+        backSpriteTestAction();
     }
 });
 
@@ -154,11 +183,98 @@ var SpriteColorOpacity = SpriteTestDemo.extend({
     }
 
 });
+scenes.push( SpriteColorOpacity );
 
 
-var myLayer = new SpriteColorOpacity();
-//var myLayer = new SpriteTestDemo();
-cc.log('---' + myLayer['__nativeObject'] );
+//------------------------------------------------------------------
+//
+// SpriteColorOpacity
+//
+//------------------------------------------------------------------
+var SpriteBatchColorOpacity = SpriteTestDemo.extend({
+    ctor:function () {
 
-var scene = director.runningScene();
-scene.addChild( myLayer );
+        this._super();
+
+//        var sprite1 = cc.Sprite.spriteWithFile(s_grossini_dance_atlas, cc.RectMake(85 * 0, 121 * 1, 85, 121));
+//        var sprite2 = cc.Sprite.spriteWithFile(s_grossini_dance_atlas, cc.RectMake(85 * 1, 121 * 1, 85, 121));
+//        var sprite3 = cc.Sprite.spriteWithFile(s_grossini_dance_atlas, cc.RectMake(85 * 2, 121 * 1, 85, 121));
+//        var sprite4 = cc.Sprite.spriteWithFile(s_grossini_dance_atlas, cc.RectMake(85 * 3, 121 * 1, 85, 121));
+//
+//        var sprite5 = cc.Sprite.spriteWithFile(s_grossini_dance_atlas, cc.RectMake(85 * 0, 121 * 1, 85, 121));
+//        var sprite6 = cc.Sprite.spriteWithFile(s_grossini_dance_atlas, cc.RectMake(85 * 1, 121 * 1, 85, 121));
+//        var sprite7 = cc.Sprite.spriteWithFile(s_grossini_dance_atlas, cc.RectMake(85 * 2, 121 * 1, 85, 121));
+//        var sprite8 = cc.Sprite.spriteWithFile(s_grossini_dance_atlas, cc.RectMake(85 * 3, 121 * 1, 85, 121));
+
+        var batch = cc.SpriteBatchNode.batchNodeWithFile("grossini.png");
+        var sprite1 = cc.Sprite.spriteWithFile("grossini.png");
+        var sprite2 = cc.Sprite.spriteWithFile("grossini.png");
+        var sprite3 = cc.Sprite.spriteWithFile("grossini.png");
+        var sprite4 = cc.Sprite.spriteWithFile("grossini.png");
+        var sprite5 = cc.Sprite.spriteWithFile("grossini.png");
+        var sprite6 = cc.Sprite.spriteWithFile("grossini.png");
+        var sprite7 = cc.Sprite.spriteWithFile("grossini.png");
+        var sprite8 = cc.Sprite.spriteWithFile("grossini.png");
+
+        sprite1.setPosition(ccp((winSize.width / 5) * 1, (winSize.height / 3) * 1));
+        sprite2.setPosition(ccp((winSize.width / 5) * 2, (winSize.height / 3) * 1));
+        sprite3.setPosition(ccp((winSize.width / 5) * 3, (winSize.height / 3) * 1));
+        sprite4.setPosition(ccp((winSize.width / 5) * 4, (winSize.height / 3) * 1));
+        sprite5.setPosition(ccp((winSize.width / 5) * 1, (winSize.height / 3) * 2));
+        sprite6.setPosition(ccp((winSize.width / 5) * 2, (winSize.height / 3) * 2));
+        sprite7.setPosition(ccp((winSize.width / 5) * 3, (winSize.height / 3) * 2));
+        sprite8.setPosition(ccp((winSize.width / 5) * 4, (winSize.height / 3) * 2));
+
+        var action = cc.FadeIn.actionWithDuration(2);
+        var action_back = action.reverse();
+        var fade = cc.RepeatForever.actionWithAction( cc.Sequence.actionWithArray([action, action_back] ) );
+
+        var tintRed = cc.TintBy.actionWithDurationRedGreenBlue(2, 0, -255, -255);
+        var tintRedBack = tintRed.reverse();
+        var red = cc.RepeatForever.actionWithAction(cc.Sequence.actionWithArray([tintRed, tintRedBack] ) );
+
+        var tintGreen = cc.TintBy.actionWithDurationRedGreenBlue(2, -255, 0, -255);
+        var tintGreenBack = tintGreen.reverse();
+        var green = cc.RepeatForever.actionWithAction(cc.Sequence.actionWithArray([tintGreen, tintGreenBack] ) );
+
+        var tintBlue = cc.TintBy.actionWithDurationRedGreenBlue(2, -255, -255, 0);
+        var tintBlueBack = tintBlue.reverse();
+        var blue = cc.RepeatForever.actionWithAction(cc.Sequence.actionWithArray([tintBlue, tintBlueBack]) );
+
+        sprite5.runAction(red);
+        sprite6.runAction(green);
+        sprite7.runAction(blue);
+        sprite8.runAction(fade);
+
+        this.addChild(batch);
+        batch.addChild(sprite1);
+        batch.addChild(sprite2);
+        batch.addChild(sprite3);
+        batch.addChild(sprite4);
+        batch.addChild(sprite5);
+        batch.addChild(sprite6);
+        batch.addChild(sprite7);
+        batch.addChild(sprite8);
+    },
+    title:function () {
+        return "Sprite: Color & Opacity";
+    },
+    subtitle:function () {
+        return "testing opacity and color with Sprite Batches";
+    }
+
+});
+scenes.push( SpriteBatchColorOpacity );
+
+
+function run()
+{
+    var scene = new cc.Scene();
+    scene.init();
+    var layer = new scenes[currentScene]();
+    scene.addChild( layer );
+
+    director.runWithScene( scene );
+}
+
+run();

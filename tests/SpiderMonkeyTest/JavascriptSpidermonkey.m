@@ -160,14 +160,17 @@ static JSClass global_class = {
 //	CCFileUtils *fileUtils = [CCFileUtils sharedFileUtils];
 //	NSString *libPath = [fileUtils fullPathFromRelativePath:@"libmozjs.dylib"];
 //	dlopen([libPath UTF8String], RTLD_NOW | RTLD_GLOBAL);
-
-	CCScene *scene = [CCScene node];
-	Test *test = [Test node];
-	
-	[scene addChild:test];
-	
-	[[CCDirector sharedDirector] runWithScene:scene];
+//
+//	CCScene *scene = [CCScene node];
+//	Test *test = [Test node];
+//	
+//	[scene addChild:test];
+//	
+//	[[CCDirector sharedDirector] runWithScene:scene];
 //	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/test.js"];
+
+	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/test-sprite.js"];	
+
 }
 
 -(void)dealloc
