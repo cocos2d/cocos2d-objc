@@ -19,10 +19,9 @@ var SpriteTestDemo = cc.Layer.extend({
     _title:"",
 
     ctor:function () {
-//        this._super();
-        cc.log("SpriteTestDemo");
-        __address(this);
+        __associateObjWithNative( this, this['__nativeObject'] );
         this.init();
+//        this._super();
     },
     title:function () {
         return "No title";
@@ -85,13 +84,9 @@ var SpriteTestDemo = cc.Layer.extend({
 //------------------------------------------------------------------
 var SpriteColorOpacity = SpriteTestDemo.extend({
     ctor:function () {
-        cc.log("SpriteColorOpacity");
-        __address(this);
-        __address(this._super);
-        for( var i in this) {
-            cc.log( "properties: " + i + " type: " + typeof(this[i]) );
-        }
+
         this._super();
+
 //        var sprite1 = cc.Sprite.spriteWithFile(s_grossini_dance_atlas, cc.RectMake(85 * 0, 121 * 1, 85, 121));
 //        var sprite2 = cc.Sprite.spriteWithFile(s_grossini_dance_atlas, cc.RectMake(85 * 1, 121 * 1, 85, 121));
 //        var sprite3 = cc.Sprite.spriteWithFile(s_grossini_dance_atlas, cc.RectMake(85 * 2, 121 * 1, 85, 121));
@@ -130,7 +125,7 @@ var SpriteColorOpacity = SpriteTestDemo.extend({
 
         var tintGreen = cc.TintBy.actionWithDurationRedGreenBlue(2, -255, 0, -255);
         var tintGreenBack = tintGreen.reverse();
-        var green = cc.RepeatForever.actionWithAction(cc.Sequence.actionsWithArray([tintGreen, tintGreenBack] ) );
+        var green = cc.RepeatForever.actionWithAction(cc.Sequence.actionWithArray([tintGreen, tintGreenBack] ) );
 
         var tintBlue = cc.TintBy.actionWithDurationRedGreenBlue(2, -255, -255, 0);
         var tintBlueBack = tintBlue.reverse();
@@ -161,8 +156,9 @@ var SpriteColorOpacity = SpriteTestDemo.extend({
 });
 
 
-//var myLayer = new SpriteColorOpacity();
-var myLayer = new SpriteTestDemo();
-cc.log('---' + myLayer['nativeObject'] );
+var myLayer = new SpriteColorOpacity();
+//var myLayer = new SpriteTestDemo();
+cc.log('---' + myLayer['__nativeObject'] );
+
 var scene = director.runningScene();
 scene.addChild( myLayer );

@@ -92,7 +92,7 @@ JSBool ScriptingCore_associateObjectWithNative(JSContext *cx, uint32_t argc, jsv
 
 JSBool ScriptingCore_address(JSContext *cx, uint32_t argc, jsval *vp)
 {
-	if (argc == 1) {
+	if (argc==1 || argc==2) {
 		
 		JSObject* jsThis = (JSObject *)JS_THIS_OBJECT(cx, vp);
 
@@ -100,7 +100,11 @@ JSBool ScriptingCore_address(JSContext *cx, uint32_t argc, jsval *vp)
 		JSObject *jsObj;
 		JS_ValueToObject( cx, *argvp++, &jsObj);
 
-		NSLog(@"Address this:%p arg:%p", jsThis, jsObj);
+		NSString *str = @"-";
+		if( argc == 2 ) {
+			str = jsval_to_nsstring(*argvp++, cx);
+		}
+		NSLog(@"Address this:%p arg:%p - %@", jsThis, jsObj, str);
 	}
 	return JS_TRUE;
 };
@@ -203,7 +207,7 @@ JSBool ScriptingCore_addToRunningScene(JSContext *cx, uint32_t argc, jsval *vp)
 		// register some global functions
 		JS_DefineFunction(_cx, _object, "require", ScriptingCore_executeScript, 1, JSPROP_READONLY | JSPROP_PERMANENT);
 		JS_DefineFunction(_cx, _object, "__associateObjWithNative", ScriptingCore_associateObjectWithNative, 2, JSPROP_READONLY | JSPROP_PERMANENT);
-		JS_DefineFunction(_cx, _object, "__address", ScriptingCore_address, 1, JSPROP_READONLY | JSPROP_PERMANENT);
+		JS_DefineFunction(_cx, _object, "__address", ScriptingCore_address, 2, JSPROP_READONLY | JSPROP_PERMANENT);
 
 		JS_DefineFunction(_cx, cocos2d, "log", ScriptingCore_log, 0, JSPROP_READONLY | JSPROP_PERMANENT);
 		JS_DefineFunction(_cx, cocos2d, "executeScript", ScriptingCore_executeScript, 1, JSPROP_READONLY | JSPROP_PERMANENT);

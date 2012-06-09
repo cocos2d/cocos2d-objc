@@ -29,12 +29,17 @@ function ccc4f(r, g, b, a)
 	return colors;
 }
 
+// From: http://stackoverflow.com/questions/332422/how-do-i-get-the-name-of-an-objects-type-in-javascript
+function type(obj){
+    return Object.prototype.toString.call(obj).match(/^\[object (.*)\]$/)[1]
+}
 /* Simple JavaScript Inheritance
  * By John Resig http://ejohn.org/
  * MIT Licensed.
  */
 // Inspired by base2 and Prototype
 // var cc = cc = cc || {};
+
 (function () {
     var initializing = false, fnTest = /xyz/.test(function () {
         xyz;
@@ -48,6 +53,13 @@ function ccc4f(r, g, b, a)
         // don't run the init constructor)
         initializing = true;
         var prototype = new this();
+
+        var t = type(prototype);
+        if( t == 'Object' ) {
+            prototype['__nativeObject'] = _super;
+        } else {
+            prototype['__nativeObject'] = prototype;
+        }
         initializing = false;
 
         // Copy the properties over onto the new prototype
@@ -79,11 +91,7 @@ function ccc4f(r, g, b, a)
         function Class() {
             // All construction is actually done in the init method
 			if (!initializing && this.ctor) {
-                cc.log("Hook");
-				__address(prototype);
-				__associateObjWithNative( this, prototype );
-				this.ctor.apply(this, arguments);
-                this['nativeObject'] = prototype;
+                this.ctor.apply(this, arguments);
 			}
         }
 
