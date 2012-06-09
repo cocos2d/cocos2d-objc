@@ -90,6 +90,21 @@ JSBool ScriptingCore_associateObjectWithNative(JSContext *cx, uint32_t argc, jsv
 	return JS_TRUE;
 };
 
+JSBool ScriptingCore_address(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	if (argc == 1) {
+		
+		JSObject* jsThis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+
+		jsval *argvp = JS_ARGV(cx,vp);
+		JSObject *jsObj;
+		JS_ValueToObject( cx, *argvp++, &jsObj);
+
+		NSLog(@"Address this:%p arg:%p", jsThis, jsObj);
+	}
+	return JS_TRUE;
+};
+
 
 /* Register an object as a member of the GC's root set, preventing them from being GC'ed */
 JSBool ScriptingCore_addRootJS(JSContext *cx, uint32_t argc, jsval *vp)
@@ -188,6 +203,7 @@ JSBool ScriptingCore_addToRunningScene(JSContext *cx, uint32_t argc, jsval *vp)
 		// register some global functions
 		JS_DefineFunction(_cx, _object, "require", ScriptingCore_executeScript, 1, JSPROP_READONLY | JSPROP_PERMANENT);
 		JS_DefineFunction(_cx, _object, "__associateObjWithNative", ScriptingCore_associateObjectWithNative, 2, JSPROP_READONLY | JSPROP_PERMANENT);
+		JS_DefineFunction(_cx, _object, "__address", ScriptingCore_address, 1, JSPROP_READONLY | JSPROP_PERMANENT);
 
 		JS_DefineFunction(_cx, cocos2d, "log", ScriptingCore_log, 0, JSPROP_READONLY | JSPROP_PERMANENT);
 		JS_DefineFunction(_cx, cocos2d, "executeScript", ScriptingCore_executeScript, 1, JSPROP_READONLY | JSPROP_PERMANENT);

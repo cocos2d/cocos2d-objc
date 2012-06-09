@@ -339,7 +339,7 @@ void %s_finalize(JSContext *cx, JSObject *obj)
         args = selector_name.split(':')
 
         if method_type == METHOD_INIT:
-            prefix = '\t%s *real = [[%s alloc] ' % (class_name, class_name )
+            prefix = '\t%s *real = [(%s*)[proxy.klass alloc] ' % (class_name, class_name )
             suffix = '\n\t[proxy setRealObj: real];\n\t[real release];\n'
 	    suffix += '\n\tobjc_setAssociatedObject(real, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);'
         elif method_type == METHOD_REGULAR:
@@ -971,7 +971,7 @@ extern JSClass *%s_class;
 +(JSObject*) createJSObjectWithRealObject:(id)realObj context:(JSContext*)cx
 {
 	JSObject *jsobj = JS_NewObject(cx, %s_class, %s_object, NULL);
-	%s *proxy = [[%s alloc] initWithJSObject:jsobj];
+	%s *proxy = [[%s alloc] initWithJSObject:jsobj class:[%s class]];
 	[proxy setRealObj:realObj];
 //	JS_SetPrivate(jsobj, proxy);
 	set_proxy_for_jsobject(proxy, jsobj);
@@ -991,7 +991,9 @@ extern JSClass *%s_class;
         self.mm_file.write( '\n@implementation %s\n' % proxy_class_name )
 
         self.mm_file.write( create_object_template_prefix % (proxy_class_name, proxy_class_name,
-                                                      proxy_class_name, proxy_class_name) )
+                                                      proxy_class_name, proxy_class_name,
+	                                              class_name
+	                                              ) )
 
         self.mm_file.write( create_object_template_suffix )
 

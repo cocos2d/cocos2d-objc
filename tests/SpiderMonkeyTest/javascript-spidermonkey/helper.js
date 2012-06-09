@@ -52,6 +52,7 @@ function ccc4f(r, g, b, a)
 
         // Copy the properties over onto the new prototype
         for (var name in prop) {
+            cc.log( "name: " + name);
             // Check if we're overwriting an existing function
             prototype[name] = typeof prop[name] == "function" &&
                 typeof _super[name] == "function" && fnTest.test(prop[name]) ?
@@ -78,8 +79,11 @@ function ccc4f(r, g, b, a)
         function Class() {
             // All construction is actually done in the init method
 			if (!initializing && this.ctor) {
+                cc.log("Hook");
+				__address(prototype);
 				__associateObjWithNative( this, prototype );
 				this.ctor.apply(this, arguments);
+                this['nativeObject'] = prototype;
 			}
         }
 

@@ -29,12 +29,14 @@
 {
 	JSObject	*_jsObj;
 	id			_realObj;
+	Class		_klass;
 }
 
 @property (nonatomic, readwrite, assign) JSObject *jsObj;
 @property (nonatomic, readwrite, retain) id	realObj;
+@property (nonatomic, readonly) Class klass;
 
--(id) initWithJSObject:(JSObject*)object;
+-(id) initWithJSObject:(JSObject*)object class:(Class)klass;
 +(JSObject*) createJSObjectWithRealObject:(id)realObj context:(JSContext*)JSContext;
 +(void) swizzleMethods;
 @end
