@@ -27,6 +27,10 @@
 
 #pragma mark - JSPROXY_NSObject
 
+enum {
+	kJSPropertyNativeObject = 1,
+};
+
 JSClass* JSPROXY_NSObject_class = NULL;
 JSObject* JSPROXY_NSObject_object = NULL;
 
@@ -35,7 +39,7 @@ JSBool JSPROXY_NSObject_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JSObject *jsobj = JS_NewObject(cx, JSPROXY_NSObject_class, JSPROXY_NSObject_object, NULL);
 	
-    JSPROXY_NSObject *proxy = [[JSPROXY_NSObject alloc] initWithJSObject:jsobj];
+    JSPROXY_NSObject *proxy = [[JSPROXY_NSObject alloc] initWithJSObject:jsobj class:[NSObject class]];
 	
 	set_proxy_for_jsobject(proxy, jsobj);
 //    JS_SetPrivate(jsobj, proxy);
@@ -82,6 +86,62 @@ JSBool JSPROXY_NSObject_init(JSContext *cx, uint32_t argc, jsval *vp) {
 	return JS_TRUE;
 }
 
+JSBool JSPROXY_NSObject_getProperty(JSContext *cx, JSObject *obj, jsid _id, jsval *val)
+{
+	JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, val);
+//	JSPROXY_NSObject* proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(jsthis);
+	if( ! proxy ) {
+		JS_SET_RVAL(cx, val, INT_TO_JSVAL(10));
+		return JS_TRUE;
+	}
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( ! [proxy realObj], @"Object already initialzied. error");
+	if (!jsthis)
+		return JS_FALSE;
+
+	int32_t propId = JSID_TO_INT(_id);
+	switch(propId) {
+		case kJSPropertyNativeObject:
+		{
+			JSObject *j = get_or_create_jsobject_from_realobj( [proxy realObj], cx );
+			JS_SET_RVAL(cx, val, OBJECT_TO_JSVAL(j));
+			break;
+		}
+		default:
+			break;
+	}
+	return JS_TRUE;
+}
+
+JSBool JSPROXY_NSObject_setProperty(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val)
+{
+	JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, val);
+//	JSPROXY_NSObject* proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(jsthis);
+	if (!proxy) {
+		NSLog(@"no proxy");
+	} else {
+		NSLog(@"with proxy");
+	}
+
+	int32_t propId = JSID_TO_INT(_id);
+	switch(propId) {
+		case kJSPropertyNativeObject:
+		{
+			JSObject *j = JSVAL_TO_OBJECT(*val);
+			JSPROXY_NSObject *newProxy = get_proxy_for_jsobject( j );
+			id newReal = [newProxy realObj];
+			[proxy setRealObj:newReal];
+			break;
+		}
+		default:
+			break;
+	}
+	return JS_TRUE;
+}
+
+
 
 void JSPROXY_NSObject_createClass(JSContext* cx, JSObject* globalObj, const char *name )
 {
@@ -98,8 +158,10 @@ void JSPROXY_NSObject_createClass(JSContext* cx, JSObject* globalObj, const char
 	JSPROXY_NSObject_class->flags = JSCLASS_HAS_PRIVATE;
 	
 	static JSPropertySpec properties[] = {
+		{"nativeObject", kJSPropertyNativeObject, JSPROP_PERMANENT | JSPROP_ENUMERATE | JSPROP_SHARED, JSPROXY_NSObject_getProperty, JSPROXY_NSObject_setProperty},
 		{0, 0, 0, 0, 0}
 	};
+
 	
 	static JSFunctionSpec funcs[] = {
 		JS_FN("init", JSPROXY_NSObject_init, 0, JSPROP_PERMANENT | JSPROP_SHARED),
@@ -117,11 +179,12 @@ void JSPROXY_NSObject_createClass(JSContext* cx, JSObject* globalObj, const char
 
 @synthesize jsObj = _jsObj;
 @synthesize realObj = _realObj;
+@synthesize klass = _klass;
 
 +(JSObject*) createJSObjectWithRealObject:(id)realObj context:(JSContext*)cx
 {
 	JSObject *jsobj = JS_NewObject(cx, JSPROXY_NSObject_class, JSPROXY_NSObject_object, NULL);
-    JSPROXY_NSObject *proxy = [[JSPROXY_NSObject alloc] initWithJSObject:jsobj];	
+    JSPROXY_NSObject *proxy = [[JSPROXY_NSObject alloc] initWithJSObject:jsobj class:[NSObject class]];
 //    JS_SetPrivate(jsobj, proxy);
 	set_proxy_for_jsobject(proxy, jsobj);
 
@@ -140,12 +203,13 @@ void JSPROXY_NSObject_createClass(JSContext* cx, JSObject* globalObj, const char
 	// override
 }
 
--(id) initWithJSObject:(JSObject*)object
+-(id) initWithJSObject:(JSObject*)object class:(Class)klass
 {
 	self = [super init];
 	if( self )
 	{
 		_jsObj = object;
+		_klass = klass;
 	}
 	
 	return self;

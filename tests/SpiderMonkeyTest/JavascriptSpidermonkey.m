@@ -32,7 +32,7 @@
 	
 	[self addChild:sprite];
 	
-	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/test.js"];	
+	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/test-sprite.js"];	
 }
 @end
 
