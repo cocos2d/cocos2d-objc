@@ -2265,7 +2265,7 @@ JSBool JSPROXY_CCNode_init(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
 
 	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
+//	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	NSCAssert( argc == 0, @"Invalid number of arguments" );
 
 	CCNode *real = [(CCNode*)[proxy.klass alloc] init ];
