@@ -45,13 +45,18 @@ id jsval_to_nsobject( jsval vp, JSContext *cx );
 /** converts a jsval to a NSArray */
 NSArray* jsval_to_nsarray( jsval vp, JSContext *cx );
 
+CGPoint jsval_to_CGPoint( jsval vp, JSContext *cx );
+CGSize jsval_to_CGSize( jsval vp, JSContext *cx );
+CGRect jsval_to_CGRect( jsval vp, JSContext *cx );
+	
 /** converts a jsval to a block */
 js_block jsval_to_block( jsval vp, JSContext *cx, JSObject *jsthis );
 
 jsval CGPoint_to_jsval( JSContext *cx, CGPoint p );
-
 jsval CGSize_to_jsval( JSContext *cx, CGSize s);
+jsval CGRect_to_jsval( JSContext *cx, CGRect r);
 
+	
 #ifdef __cplusplus
 }
 #endif

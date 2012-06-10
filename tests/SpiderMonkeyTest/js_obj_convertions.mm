@@ -106,6 +106,60 @@ js_block jsval_to_block( jsval vp, JSContext *cx, JSObject *jsthis )
 	return [[block copy] autorelease];
 }
 
+CGPoint jsval_to_CGPoint( jsval vp, JSContext *cx )
+{
+	JSObject *tmp_arg;
+	JS_ValueToObject( cx, vp, &tmp_arg );
+	NSCAssert( JS_GetTypedArrayByteLength( tmp_arg ) == sizeof(float)*2, @"Invalid length");
+	
+	CGPoint ret;
+#ifdef __CC_PLATFORM_IOS
+	ret = *(CGPoint*)JS_GetTypedArrayData( tmp_arg );
+#elif defined(__CC_PLATFORM_MAC)
+	float* arg_array = (float*)JS_GetTypedArrayData( tmp_arg );
+	ret = ccp(arg_array[0], arg_array[1] );	
+#else
+#error Unsupported Platform
+#endif
+	return ret;
+}
+
+CGSize jsval_to_CGSize( jsval vp, JSContext *cx )
+{
+	JSObject *tmp_arg;
+	JS_ValueToObject( cx, vp, &tmp_arg );
+	NSCAssert( JS_GetTypedArrayByteLength( tmp_arg ) == sizeof(float)*2, @"Invalid length");
+	
+	CGSize ret;
+#ifdef __CC_PLATFORM_IOS
+	ret = *(CGSize*)JS_GetTypedArrayData( tmp_arg );
+#elif defined(__CC_PLATFORM_MAC)
+	float* arg_array = (float*)JS_GetTypedArrayData( tmp_arg );
+	ret = CGSizeMake( arg_array[0], arg_array[1] );
+#else
+#error Unsupported Platform
+#endif
+	return ret;	
+}
+
+CGRect jsval_to_CGRect( jsval vp, JSContext *cx )
+{
+	JSObject *tmp_arg;
+	JS_ValueToObject( cx, vp, &tmp_arg );
+	NSCAssert( JS_GetTypedArrayByteLength( tmp_arg ) == sizeof(float)*4, @"Invalid length");
+	
+	CGRect ret;
+#ifdef __CC_PLATFORM_IOS
+	ret = *(CGSize*)JS_GetTypedArrayData( tmp_arg );
+#elif defined(__CC_PLATFORM_MAC)
+	float* arg_array = (float*)JS_GetTypedArrayData( tmp_arg );
+	ret = CGRectMake( arg_array[0], arg_array[1], arg_array[2], arg_array[3] );
+#else
+#error Unsupported Platform
+#endif
+	return ret;		
+}
+
 #pragma mark - native to jsval
 
 jsval CGPoint_to_jsval( JSContext *cx, CGPoint p)
@@ -123,5 +177,16 @@ jsval CGSize_to_jsval( JSContext *cx, CGSize s)
 	float *buffer = (float*)JS_GetTypedArrayData(typedArray);
 	buffer[0] = s.width;
 	buffer[1] = s.height;
+	return OBJECT_TO_JSVAL(typedArray);
+}
+
+jsval CGRect_to_jsval( JSContext *cx, CGRect s)
+{
+	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 4 );
+	float *buffer = (float*)JS_GetTypedArrayData(typedArray);
+	buffer[0] = s.origin.x;
+	buffer[1] = s.origin.y;
+	buffer[2] = s.size.width;
+	buffer[3] = s.size.height;
 	return OBJECT_TO_JSVAL(typedArray);
 }
