@@ -400,7 +400,9 @@ void %s_finalize(JSContext *cx, JSObject *obj)
 '''
         return template
 
+    # 
     # special case: returning CGPoint
+    #
     def generate_retval_cgpoint( self, declared_type, js_type ):
         template = '''
 	jsval ret_jsval = CGPoint_to_jsval( cx, ret_val );
@@ -412,6 +414,13 @@ void %s_finalize(JSContext *cx, JSObject *obj)
     def generate_retval_cgsize( self, declared_type, js_type ):
         template = '''
 	jsval ret_jsval = CGSize_to_jsval( cx, ret_val );
+	JS_SET_RVAL(cx, vp, ret_jsval);
+'''
+        return template
+
+    def generate_retval_cgrect( self, declared_type, js_type ):
+        template = '''
+	jsval ret_jsval = CGRect_to_jsval( cx, ret_val );
 	JS_SET_RVAL(cx, vp, ret_jsval);
 '''
         return template
@@ -446,6 +455,7 @@ void %s_finalize(JSContext *cx, JSObject *obj)
         special_declared_types = {
             'CGPoint' : self.generate_retval_cgpoint,
 	    'CGSize' :  self.generate_retval_cgsize,
+	    'CGRect' :  self.generate_retval_cgrect,
         }
 
         ret = ''
@@ -468,7 +478,8 @@ void %s_finalize(JSContext *cx, JSObject *obj)
         # Right column: JS types
         supported_declared_types = {
             'CGPoint'   : '{}',
-	    'CGSize'   : '{}',
+	    'CGSize'    : '{}',
+	    'CGRect'    : '{}',
             'NSString*' : 'S',
 #	    'NSArray*'  : '[]',
 #	    'CCArray*'  : '[]',
@@ -535,7 +546,8 @@ void %s_finalize(JSContext *cx, JSObject *obj)
         # Right column: JS types
         supported_declared_types = {
             'CGPoint'   : '{}',
-	    'CGSize'   : '{}',
+	    'CGSize'    : '{}',
+	    'CGRect'    : '{}',
             'NSString*' : 'S',
 	    'NSArray*'  : '[]',
 	    'CCArray*'  : '[]',
@@ -605,26 +617,21 @@ void %s_finalize(JSContext *cx, JSObject *obj)
     # This function expect floats.
     def generate_argument_struct_cgpoint( self, i, arg_js_type, arg_declared_type ):
         template = '''
-	JSObject *tmp_arg%d;
-	JS_ValueToObject( cx, *argvp++, &tmp_arg%d );
-	NSCAssert( JS_GetTypedArrayByteLength( tmp_arg%d ) == 8, @"Invalid length");
-#ifdef __CC_PLATFORM_IOS
-	CGPoint arg%d = *(CGPoint*)JS_GetTypedArrayData( tmp_arg%d );
-#elif defined(__CC_PLATFORM_MAC)
-	float* arg%d_array = (float*)JS_GetTypedArrayData( tmp_arg%d );
-	CGPoint arg%d = ccp(arg%d_array[0], arg%d_array[1] );
-#else
-#error Unsupported Platform
-#endif  
+	CGPoint arg%d = jsval_to_CGPoint( *argvp++, cx );
 '''
-        proxy_class_name = PROXY_PREFIX + arg_declared_type
+	self.mm_file.write( template % i )
 
-        self.mm_file.write( template % (i,
-                                        i,
-                                        i,
-                                        i, i,
-                                        i, i, i,
-                                        i, i ) )
+    def generate_argument_struct_cgsize( self, i, arg_js_type, arg_declared_type ):
+        template = '''
+	CGSize arg%d = jsval_to_CGSize( *argvp++, cx );
+'''
+	self.mm_file.write( template % i )
+
+    def generate_argument_struct_cgrect( self, i, arg_js_type, arg_declared_type ):
+        template = '''
+	CGRect arg%d = jsval_to_CGRect( *argvp++, cx );
+'''
+	self.mm_file.write( template % i )
 
     def generate_argument_struct( self, i, arg_js_type, arg_declared_type ):
         # This template assumes that the types will be the same on all platforms (eg: 64 and 32-bit platforms)
@@ -633,7 +640,10 @@ void %s_finalize(JSContext *cx, JSObject *obj)
 	JS_ValueToObject( cx, *argvp++, &tmp_arg%d );
 	%s arg%d = *(%s*)JS_GetTypedArrayData( tmp_arg%d);
 '''
-        special_case_structs = { 'CGPoint' : self.generate_argument_struct_cgpoint,
+        special_case_structs = { 
+	    'CGPoint' : self.generate_argument_struct_cgpoint,
+	    'CGSize' : self.generate_argument_struct_cgsize,
+	    'CGRect' : self.generate_argument_struct_cgrect,
                                  }
 
         proxy_class_name = PROXY_PREFIX + arg_declared_type
