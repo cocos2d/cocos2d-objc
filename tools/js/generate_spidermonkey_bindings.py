@@ -71,6 +71,7 @@ class SpiderMonkey(object):
                              'one_file_for_all_classes' : True,
                              'bridge_support_file' : '',
                              'hierarchy_protocol_file' : '',
+	                     'inherit_class_methods' : True,
                              }
 
 
@@ -118,7 +119,8 @@ class SpiderMonkey(object):
         self.onefile = config['one_file_for_all_classes']
 
         self.prefix = config['obj_class_prefix_to_remove']
-
+	
+	self.inherit_class_methods = config['inherit_class_methods']
 
         self.classes_to_bind = set( config['classes_to_parse'] )
         self.supported_classes = set(['NSObject'])
@@ -165,6 +167,30 @@ class SpiderMonkey(object):
     #
     # Helpers
     #
+    def get_parent_class( self, class_name ):
+	try:
+	    parent = self.hierarchy[class_name]['subclass']
+	except KeyError, e:
+	    return None
+	return parent
+    
+    def get_class_method( self, class_name ):
+	class_methods = []
+
+	klass = None
+	list_of_classes = self.bs['signatures']['class']
+	for k in list_of_classes:
+	    if k['name'] == class_name:
+		klass = k
+
+	if not klass:
+	    raise Exception("Base class not found: %s" % class_name )
+	
+	for m in klass['method']:
+	    if self.is_class_method( m ):
+		class_methods.append( m )
+	return class_methods
+
     def get_struct_type_and_num_of_elements( self, struct ):
         # PRECOND: Structure must be valid
 
@@ -840,9 +866,26 @@ JSBool %s_%s%s(JSContext *cx, uint32_t argc, jsval *vp) {
 				try:
 				    ok = self.generate_method( class_name, m )
 				    ok_methods.append( m )
+				    ok_method_name.append( m['selector'] )
 				except ParseException, e:
 				    sys.stderr.write( 'NOT OK: "%s" Error: %s\n' % ( m['selector'], str(e) ) )
 
+	# Parse class methods from base classes
+	if self.inherit_class_methods:
+	    parent = self.get_parent_class( class_name )
+	    while (parent != None) and (not parent in self.classes_to_ignore):
+		class_methods = self.get_class_method( parent )
+		for cm in class_methods:
+		    if not cm['selector'] in ok_method_name:
+			self.current_method = cm
+			try:
+			    ok = self.generate_method( class_name, cm )
+			    ok_methods.append( cm )
+			    ok_method_name.append( cm['selector'] )
+			except ParseException, e:
+			    sys.stderr.write( 'NOT OK: "%s" Error: %s\n' % ( cm['selector'], str(e) ) )
+		parent = self.get_parent_class( parent )
+	
         self.current_method = None
 	self.is_a_protocol = False
 
