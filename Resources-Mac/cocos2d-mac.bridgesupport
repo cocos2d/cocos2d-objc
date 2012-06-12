@@ -1180,6 +1180,12 @@
 <retval declared_type='void' type='v'/>
 </method>
 </class>
+<class name='CCActionCamera'>
+<method selector='startWithTarget:'>
+<arg name='aTarget' declared_type='id' type='@' index='0'/>
+<retval declared_type='void' type='v'/>
+</method>
+</class>
 <class name='CCActionEase'>
 <method selector='actionWithAction:' class_method='true'>
 <arg name='action' declared_type='CCActionInterval*' type='@' index='0'/>
@@ -1187,6 +1193,11 @@
 </method>
 <method selector='initWithAction:'>
 <arg name='action' declared_type='CCActionInterval*' type='@' index='0'/>
+<retval declared_type='id' type='@'/>
+</method>
+</class>
+<class name='CCActionInstant'>
+<method selector='init'>
 <retval declared_type='id' type='@'/>
 </method>
 </class>
@@ -1791,6 +1802,11 @@
 </method>
 <method selector='targetCallback'>
 <retval declared_type='id' type='@'/>
+</method>
+</class>
+<class name='CCCallFuncN'>
+<method selector='execute'>
+<retval declared_type='void' type='v'/>
 </method>
 </class>
 <class name='CCCallFuncND'>
@@ -2706,6 +2722,12 @@
 </method>
 <method selector='texture'>
 <retval declared_type='CCTexture2D*' type='@'/>
+</method>
+</class>
+<class name='CCHide'>
+<method selector='update:'>
+<arg name='time' declared_type='ccTime' type='f' index='0'/>
+<retval declared_type='void' type='v'/>
 </method>
 </class>
 <class name='CCJumpBy'>
@@ -5236,6 +5258,12 @@
 <retval declared_type='id' type='@'/>
 </method>
 </class>
+<class name='CCShow'>
+<method selector='update:'>
+<arg name='time' declared_type='ccTime' type='f' index='0'/>
+<retval declared_type='void' type='v'/>
+</method>
+</class>
 <class name='CCShuffleTiles'>
 <method selector='actionWithSeed:grid:duration:' class_method='true'>
 <arg name='s' declared_type='int' type='i' index='0'/>
@@ -6698,6 +6726,12 @@
 <arg name='green' declared_type='GLubyte' type='C' index='2'/>
 <arg name='blue' declared_type='GLubyte' type='C' index='3'/>
 <retval declared_type='id' type='@'/>
+</method>
+</class>
+<class name='CCToggleVisibility'>
+<method selector='update:'>
+<arg name='time' declared_type='ccTime' type='f' index='0'/>
+<retval declared_type='void' type='v'/>
 </method>
 </class>
 <class name='CCTransitionFade'>
