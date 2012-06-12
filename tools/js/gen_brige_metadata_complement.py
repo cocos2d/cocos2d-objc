@@ -4,7 +4,7 @@
 # interfaces
 # ----------------------------------------------------------------------------
 '''
-Obtains 
+Obtains
 '''
 
 __docformat__ = 'restructuredtext'
@@ -40,9 +40,9 @@ class ObjC(object):
             f = open( filename, 'r' )
             l = f.readlines()
 
-            regex_objc_class = "^@interface\s+([\S]+)\s*:\s*([\S]+)\s*(<.*>)*"
+            regex_objc_class = "^\s*@interface\s+([\S]+)\s*:\s*([\w]+)\s*(<.*>)*"
             for line in l:
-                a = re.search( regex_objc_class, line )
+                a = re.match( regex_objc_class, line )
                 if a:
                     classname = a.group(1)
                     subclass = a.group(2)
@@ -94,7 +94,7 @@ if __name__ == "__main__":
     output_file = None
 
     argv = sys.argv[1:]
-    try:                                
+    try:
         opts, args = getopt.getopt(argv, "i:o:", ["input=","output="])
 
         for opt, arg in opts:

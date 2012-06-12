@@ -125,12 +125,11 @@ class SpiderMonkey(object):
 
         self.inherit_class_methods = config['inherit_class_methods']
 
+        # Add here manually generated classes
         self.supported_classes = set(['NSObject'])
-        self._classes_to_bind = set( config['classes_to_parse'] )
-        self.classes_to_bind = self.expand_class_names( self._classes_to_bind )
 
-        self._classes_to_ignore = config['classes_to_ignore']
-        self.classes_to_ignore = self.expand_class_names( self._classes_to_ignore )
+        self.generate_classes_to_bind( config['classes_to_parse'] )
+        self.generate_classes_to_ignore( config['classes_to_ignore'] )
 
         self.callback_methods = {}
         callback_methods = config['callback_methods']
@@ -146,7 +145,6 @@ class SpiderMonkey(object):
         # Current method that is being parsed
         self.current_method = None
 
-
     def parse_hierarchy_file( self ):
         f = open( self.hierarchy_file )
         self.hierarchy = ast.literal_eval( f.read() )
@@ -157,25 +155,35 @@ class SpiderMonkey(object):
         root = p.getroot()
         self.bs = xml2d( root )
 
-    def expand_class_names( self, l ):
-        valid = []
-        all_class_names = []
+    def generate_classes_to_bind( self, klasses ):
+        self._classes_to_bind = set( klasses )
+        ref_list = []
         for k in self.bs['signatures']['class']:
-            n = k['name']
-            for regexp in l:
-                # if last char is not a regexp modifier,
-                # then append '$' to regexp
-                last_char = regexp[-1]
-                if last_char in string.letters or last_char in string.digits:
-                    result = re.match( regexp + '$', n )
-                else:
-                    result = re.match( regexp, n )
-                if result:
-                    valid.append( n )
+            ref_list.append( k['name'] )
+        self.classes_to_bind = self.expand_class_names( self._classes_to_bind, ref_list )
+        l = self.ancestors_of_classes_to_bind()
+        s = set( self.classes_to_bind )
+        self.classes_to_bind = s.union( set(l) )
 
-        ret = list( set( valid ) )
-        print ret
-        return ret
+    def generate_classes_to_ignore( self, klasses ):
+        self._classes_to_ignore = klasses
+        self.classes_to_ignore = self.expand_class_names( self._classes_to_ignore, self.classes_to_bind )
+
+        copy_set = copy.copy( self.classes_to_bind )
+        for i in self.classes_to_bind:
+            if i in self.classes_to_ignore:
+                print 'Explicity removing %s from bindings...' % i
+                copy_set.remove( i )
+
+        self.classes_to_bind = copy_set
+        self.supported_classes = self.supported_classes.union( copy_set )
+
+    def ancestors_of_classes_to_bind ( self ):
+        ancestors = []
+        for klass in self.classes_to_bind:
+            new_list = self.ancestors( klass, [klass] )
+            ancestors.extend( new_list )
+        return ancestors
 
     def ancestors( self, klass, list_of_ancestors ):
         if klass not in self.hierarchy:
@@ -189,6 +197,24 @@ class SpiderMonkey(object):
         list_of_ancestors.append( subclass )
 
         return self.ancestors( subclass, list_of_ancestors )
+
+    def expand_class_names( self, names_to_expand, list_of_names ):
+        valid = []
+        all_class_names = []
+        for n in list_of_names:
+            for regexp in names_to_expand:
+                # if last char is not a regexp modifier,
+                # then append '$' to regexp
+                last_char = regexp[-1]
+                if last_char in string.letters or last_char in string.digits:
+                    result = re.match( regexp + '$', n )
+                else:
+                    result = re.match( regexp, n )
+                if result:
+                    valid.append( n )
+
+        ret = list( set( valid ) )
+        return ret
 
     #
     # Helpers
@@ -867,7 +893,7 @@ JSBool %s_%s%s(JSContext *cx, uint32_t argc, jsval *vp) {
                 ok_methods.append( m )
                 ok_method_name.append( m['selector'] )
             except ParseException, e:
-                sys.stderr.write( 'NOT OK: "%s" Error: %s\n' % ( m['selector'], str(e) ) )
+                sys.stderr.write( 'NOT OK: "%s#%s" Error: %s\n' % ( class_name, m['selector'], str(e) ) )
 
         self.current_method = None
 
@@ -894,7 +920,7 @@ JSBool %s_%s%s(JSContext *cx, uint32_t argc, jsval *vp) {
                                     ok_methods.append( m )
                                     ok_method_name.append( m['selector'] )
                                 except ParseException, e:
-                                    sys.stderr.write( 'NOT OK: "%s" Error: %s\n' % ( m['selector'], str(e) ) )
+                                    sys.stderr.write( 'NOT OK: "%s#%s" Error: %s\n' % ( class_name, m['selector'], str(e) ) )
 
         # Parse class methods from base classes
         if self.inherit_class_methods:
@@ -909,7 +935,7 @@ JSBool %s_%s%s(JSContext *cx, uint32_t argc, jsval *vp) {
                             ok_methods.append( cm )
                             ok_method_name.append( cm['selector'] )
                         except ParseException, e:
-                            sys.stderr.write( 'NOT OK: "%s" Error: %s\n' % ( cm['selector'], str(e) ) )
+                            sys.stderr.write( 'NOT OK: "%s#%s" Error: %s\n' % ( class_name, cm['selector'], str(e) ) )
                 parent = self.get_parent_class( parent )
 
         self.current_method = None
@@ -1262,8 +1288,8 @@ void %s_createClass(JSContext *cx, JSObject* globalObj, const char* name )
         f.close()
 
     def generate_class_registration( self, klass ):
-        # Ignore NSObject. Already registerd
-        if not klass or klass == 'NSObject':
+        # only supported classes
+        if not klass or klass in self.classes_to_ignore:
             return
 
         if not klass in self.classes_registered:
@@ -1291,21 +1317,6 @@ void %s_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 
 
     def generate_bindings( self ):
-        ancestors = []
-        for klass in self.classes_to_bind:
-            new_list = self.ancestors( klass, [klass] )
-            ancestors.extend( new_list )
-
-        s = set(ancestors)
-
-        # Explicity remove NSObject. It is generated manually
-        copy_set = copy.copy(s)
-        for i in copy_set:
-            if i.startswith('NS'):
-                print 'Removing %s from bindings...' % i
-                s.remove( i )
-
-        self.supported_classes = self.supported_classes.union( s )
 
         if self.onefile:
             self.h_file = open( '%s%s.h' % ( BINDINGS_PREFIX, self.namespace), 'w' )
@@ -1315,7 +1326,7 @@ void %s_createClass(JSContext *cx, JSObject* globalObj, const char* name )
         else:
             self.generate_namespace_include_file()
 
-        for klass in s:
+        for klass in self.classes_to_bind:
             self.generate_class_binding( klass )
 
         if self.onefile:
