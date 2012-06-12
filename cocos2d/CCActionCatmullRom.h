@@ -105,6 +105,8 @@
 {
 	CGPoint				startPosition_;
 }
+// XXX: To make BridgeSupport happy
+-(void) startWithTarget:(id)target;
 @end
 
 /** An action that moves the target with a CatmullRom curve to a destination point.
