@@ -1901,6 +1901,12 @@
 <retval declared_type='void' type='v'/>
 </method>
 </class>
+<class name='CCCardinalSplineBy'>
+<method selector='startWithTarget:'>
+<arg name='target' declared_type='id' type='@' index='0'/>
+<retval declared_type='void' type='v'/>
+</method>
+</class>
 <class name='CCCardinalSplineTo'>
 <method selector='actionWithDuration:points:tension:' class_method='true'>
 <arg name='duration' declared_type='ccTime' type='f' index='0'/>

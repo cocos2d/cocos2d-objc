@@ -212,7 +212,7 @@ Example:
 
 /** Moves a CCNode object simulating a parabolic jump movement by modifying its position attribute.
 */
- @interface CCJumpBy : CCActionInterval <NSCopying>
+@interface CCJumpBy : CCActionInterval <NSCopying>
 {
 	CGPoint startPosition_;
 	CGPoint delta_;
@@ -227,7 +227,7 @@ Example:
 
 /** Moves a CCNode object to a parabolic position simulating a jump movement by modifying its position attribute.
 */
- @interface CCJumpTo : CCJumpBy <NSCopying>
+@interface CCJumpTo : CCJumpBy <NSCopying>
 {
 }
 // XXX: Added to prevent bug on BridgeSupport
