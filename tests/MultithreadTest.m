@@ -214,6 +214,8 @@ Class restartAction()
 	[NSOpenGLContext clearCurrentContext];
 	
 #endif // __CC_PLATFORM_MAC
+
+	[auxGLcontext release];
 	
 	[autoreleasepool release];
 }
