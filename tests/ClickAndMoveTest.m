@@ -77,7 +77,7 @@ enum
 
 	UIAlertView*			alertView;
 	alertView = [[UIAlertView alloc] initWithTitle:@"Welcome" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"Start", nil];
-	[alertView setMessage:[NSString stringWithFormat:@"Click on the screen\nto move and rotate Grossini", [[UIDevice currentDevice] model]]];
+	[alertView setMessage:[NSString stringWithFormat:@"Click on the screen\nto move and rotate Grossini\n%@", [[UIDevice currentDevice] model]]];
 	[alertView show];
 	[alertView release];
 
