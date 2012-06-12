@@ -1,5 +1,7 @@
 version 2.0 XX-Jun-2012
 . [FIX] Macros: CCLOGERROR defined in ccDeprecated as CCLOGWARN
+. [FIX] Xcode: Fixed compile errors in Xcode 4.5
+. [FIX] TexturePVR: wrong type when calculating PVR lenght
 
 version 2.0-rc2 03-Jun-2012
 . [NEW] Added Javascript test using JSCocoa (Mac only)
