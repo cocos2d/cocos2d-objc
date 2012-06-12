@@ -122,6 +122,7 @@ JSPROXY_CCTransitionPageTurn_createClass(_cx, cocos2d, "TransitionPageTurn");
 JSPROXY_CCMenuItemToggle_createClass(_cx, cocos2d, "MenuItemToggle");
 JSPROXY_CCTintTo_createClass(_cx, cocos2d, "TintTo");
 JSPROXY_CCBlink_createClass(_cx, cocos2d, "Blink");
+JSPROXY_CCTextureAtlas_createClass(_cx, cocos2d, "TextureAtlas");
 JSPROXY_CCGrid3D_createClass(_cx, cocos2d, "Grid3D");
 JSPROXY_CCTransitionSlideInL_createClass(_cx, cocos2d, "TransitionSlideInL");
 JSPROXY_CCLiquid_createClass(_cx, cocos2d, "Liquid");

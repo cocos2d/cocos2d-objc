@@ -55,6 +55,7 @@ js_block jsval_to_block( jsval vp, JSContext *cx, JSObject *jsthis );
 jsval CGPoint_to_jsval( JSContext *cx, CGPoint p );
 jsval CGSize_to_jsval( JSContext *cx, CGSize s);
 jsval CGRect_to_jsval( JSContext *cx, CGRect r);
+jsval NSArray_to_jsval( JSContext *cx, NSArray *array);
 
 	
 #ifdef __cplusplus

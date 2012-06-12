@@ -162,6 +162,19 @@ CGRect jsval_to_CGRect( jsval vp, JSContext *cx )
 
 #pragma mark - native to jsval
 
+jsval NSArray_to_jsval( JSContext *cx, NSArray *array)
+{
+	JSObject *jsobj = JS_NewArrayObject(cx, 0, NULL);
+	uint32_t index = 0;
+	for( id obj in array ) {
+		JSObject *s = get_or_create_jsobject_from_realobj( obj, cx );
+		jsval val = OBJECT_TO_JSVAL(s);
+		JS_SetElement(cx, jsobj, index++, &val);
+	}
+	
+	return OBJECT_TO_JSVAL(jsobj);
+}
+
 jsval CGPoint_to_jsval( JSContext *cx, CGPoint p)
 {
 	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 2 );
