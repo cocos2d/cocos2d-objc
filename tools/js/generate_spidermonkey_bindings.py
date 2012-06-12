@@ -473,8 +473,8 @@ void %s_finalize(JSContext *cx, JSObject *obj)
 
     def generate_retval_array( self, declared_type, js_type ):
         template = '''
-	JSObject *ret_obj = JS_NewArrayObject(cx, 0, NULL);
-	JS_SET_RVAL(cx, vp, STRING_TO_JSVAL(ret_obj) );
+	jsval ret_jsval = NSArray_to_jsval( cx, (NSArray*) ret_val );
+	JS_SET_RVAL(cx, vp, ret_jsval );
 '''
         return template
 
@@ -559,8 +559,9 @@ void %s_finalize(JSContext *cx, JSObject *obj)
             'CGSize'    : '{}',
             'CGRect'    : '{}',
             'NSString*' : 'S',
-#	    'NSArray*'  : '[]',
-#	    'CCArray*'  : '[]',
+	    'NSArray*'  : '[]',
+            'NSMutableArray*' : '[]',
+	    'CCArray*'  : '[]',
         }
 
         supported_types = {
@@ -629,7 +630,9 @@ void %s_finalize(JSContext *cx, JSObject *obj)
             'NSString*' : 'S',
             'NSArray*'  : '[]',
             'CCArray*'  : '[]',
+            'NSMutableArray*' : '[]',
             'void (^)(id)' : 'f',
+            'void (^)(CCNode *)' : 'f',
         }
 
         supported_types = {

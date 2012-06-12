@@ -175,6 +175,9 @@ var SpriteColorOpacity = SpriteTestDemo.extend({
         this.addChild(sprite6);
         this.addChild(sprite7);
         this.addChild(sprite8);
+											   
+											   l = this.children();
+											   cc.log("Children: " + l );
     },
     title:function () {
         return "Sprite: Color & Opacity";

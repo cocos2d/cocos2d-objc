@@ -222,6 +222,28 @@ JSBool JSPROXY_CCNode_camera(JSContext *cx, uint32_t argc, jsval *vp) {
 }
 
 // Arguments: 
+// Ret value: CCArray*
+JSBool JSPROXY_CCNode_children(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+//	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	CCArray* ret_val;
+
+	CCNode *real = (CCNode*) [proxy realObj];
+	ret_val = [real children ];
+
+	jsval ret_jsval = NSArray_to_jsval( cx, (NSArray*) ret_val );
+	JS_SET_RVAL(cx, vp, ret_jsval );
+
+	return JS_TRUE;
+}
+
+// Arguments: 
 // Ret value: None
 JSBool JSPROXY_CCNode_cleanup(JSContext *cx, uint32_t argc, jsval *vp) {
 
@@ -1717,6 +1739,7 @@ void JSPROXY_CCNode_createClass(JSContext *cx, JSObject* globalObj, const char* 
 		JS_FN("anchorPointInPoints", JSPROXY_CCNode_anchorPointInPoints, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("boundingBox", JSPROXY_CCNode_boundingBox, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("camera", JSPROXY_CCNode_camera, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("children", JSPROXY_CCNode_children, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("cleanup", JSPROXY_CCNode_cleanup, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("contentSize", JSPROXY_CCNode_contentSize, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("convertToNodeSpace", JSPROXY_CCNode_convertToNodeSpace_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
@@ -2882,6 +2905,28 @@ JSBool JSPROXY_CCTMXObjectGroup_groupName(JSContext *cx, uint32_t argc, jsval *v
 }
 
 // Arguments: 
+// Ret value: NSMutableArray*
+JSBool JSPROXY_CCTMXObjectGroup_objects(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+//	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	NSMutableArray* ret_val;
+
+	CCTMXObjectGroup *real = (CCTMXObjectGroup*) [proxy realObj];
+	ret_val = [real objects ];
+
+	jsval ret_jsval = NSArray_to_jsval( cx, (NSArray*) ret_val );
+	JS_SET_RVAL(cx, vp, ret_jsval );
+
+	return JS_TRUE;
+}
+
+// Arguments: 
 // Ret value: CGPoint
 JSBool JSPROXY_CCTMXObjectGroup_positionOffset(JSContext *cx, uint32_t argc, jsval *vp) {
 
@@ -2920,6 +2965,28 @@ JSBool JSPROXY_CCTMXObjectGroup_setGroupName_(JSContext *cx, uint32_t argc, jsva
 
 	CCTMXObjectGroup *real = (CCTMXObjectGroup*) [proxy realObj];
 	[real setGroupName:(NSString*)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: NSMutableArray*
+// Ret value: None
+JSBool JSPROXY_CCTMXObjectGroup_setObjects_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+//	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+
+	// Parsing sequence
+	NSArray *arg0 = jsval_to_nsarray( *argvp++, cx );
+
+	CCTMXObjectGroup *real = (CCTMXObjectGroup*) [proxy realObj];
+	[real setObjects:(NSMutableArray*)arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
@@ -2964,8 +3031,10 @@ void JSPROXY_CCTMXObjectGroup_createClass(JSContext *cx, JSObject* globalObj, co
 	};
 	static JSFunctionSpec funcs[] = {
 		JS_FN("groupName", JSPROXY_CCTMXObjectGroup_groupName, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("objects", JSPROXY_CCTMXObjectGroup_objects, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("positionOffset", JSPROXY_CCTMXObjectGroup_positionOffset, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setGroupName", JSPROXY_CCTMXObjectGroup_setGroupName_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("setObjects", JSPROXY_CCTMXObjectGroup_setObjects_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setPositionOffset", JSPROXY_CCTMXObjectGroup_setPositionOffset_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
@@ -7012,6 +7081,27 @@ JSBool JSPROXY_CCSprite_setOpacity_(JSContext *cx, uint32_t argc, jsval *vp) {
 	return JS_TRUE;
 }
 
+// Arguments: CCTextureAtlas*
+// Ret value: None
+JSBool JSPROXY_CCSprite_setTextureAtlas_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+//	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+
+	CCTextureAtlas* arg0 = (CCTextureAtlas*) jsval_to_nsobject( *argvp++, cx);
+
+	CCSprite *real = (CCSprite*) [proxy realObj];
+	[real setTextureAtlas:(CCTextureAtlas*)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
 // Arguments: CGRect
 // Ret value: None
 JSBool JSPROXY_CCSprite_setTextureRect_(JSContext *cx, uint32_t argc, jsval *vp) {
@@ -7171,6 +7261,28 @@ JSBool JSPROXY_CCSprite_spriteWithTexture_rect__static(JSContext *cx, uint32_t a
 	CGRect arg1 = jsval_to_CGRect( *argvp++, cx );
 
 	CCSprite *ret_val = [CCSprite spriteWithTexture:(CCTexture2D*)arg0 rect:(CGRect)arg1  ];
+
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+	return JS_TRUE;
+}
+
+// Arguments: 
+// Ret value: CCTextureAtlas*
+JSBool JSPROXY_CCSprite_textureAtlas(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+//	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	CCTextureAtlas* ret_val;
+
+	CCSprite *real = (CCSprite*) [proxy realObj];
+	ret_val = [real textureAtlas ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -7376,9 +7488,11 @@ void JSPROXY_CCSprite_createClass(JSContext *cx, JSObject* globalObj, const char
 		JS_FN("setFlipX", JSPROXY_CCSprite_setFlipX_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setFlipY", JSPROXY_CCSprite_setFlipY_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setOpacity", JSPROXY_CCSprite_setOpacity_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("setTextureAtlas", JSPROXY_CCSprite_setTextureAtlas_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setTextureRect", JSPROXY_CCSprite_setTextureRect_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setTextureRectRotatedUntrimmedsize", JSPROXY_CCSprite_setTextureRect_rotated_untrimmedSize_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setVertexRect", JSPROXY_CCSprite_setVertexRect_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("textureAtlas", JSPROXY_CCSprite_textureAtlas, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("textureRect", JSPROXY_CCSprite_textureRect, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("textureRectRotated", JSPROXY_CCSprite_textureRectRotated, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("updateTransform", JSPROXY_CCSprite_updateTransform, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
@@ -10420,6 +10534,28 @@ JSBool JSPROXY_CCSpriteBatchNode_batchNodeWithTexture_capacity__static(JSContext
 }
 
 // Arguments: 
+// Ret value: CCArray*
+JSBool JSPROXY_CCSpriteBatchNode_descendants(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+//	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	CCArray* ret_val;
+
+	CCSpriteBatchNode *real = (CCSpriteBatchNode*) [proxy realObj];
+	ret_val = [real descendants ];
+
+	jsval ret_jsval = NSArray_to_jsval( cx, (NSArray*) ret_val );
+	JS_SET_RVAL(cx, vp, ret_jsval );
+
+	return JS_TRUE;
+}
+
+// Arguments: 
 // Ret value: None
 JSBool JSPROXY_CCSpriteBatchNode_increaseAtlasCapacity(JSContext *cx, uint32_t argc, jsval *vp) {
 
@@ -10639,6 +10775,49 @@ JSBool JSPROXY_CCSpriteBatchNode_setBlendFunc_(JSContext *cx, uint32_t argc, jsv
 	return JS_TRUE;
 }
 
+// Arguments: CCTextureAtlas*
+// Ret value: None
+JSBool JSPROXY_CCSpriteBatchNode_setTextureAtlas_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+//	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+
+	CCTextureAtlas* arg0 = (CCTextureAtlas*) jsval_to_nsobject( *argvp++, cx);
+
+	CCSpriteBatchNode *real = (CCSpriteBatchNode*) [proxy realObj];
+	[real setTextureAtlas:(CCTextureAtlas*)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: 
+// Ret value: CCTextureAtlas*
+JSBool JSPROXY_CCSpriteBatchNode_textureAtlas(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+//	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	CCTextureAtlas* ret_val;
+
+	CCSpriteBatchNode *real = (CCSpriteBatchNode*) [proxy realObj];
+	ret_val = [real textureAtlas ];
+
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+	return JS_TRUE;
+}
+
 // Arguments: CCTexture2D*
 // Ret value: None
 JSBool JSPROXY_CCSpriteBatchNode_setTexture_(JSContext *cx, uint32_t argc, jsval *vp) {
@@ -10716,6 +10895,7 @@ void JSPROXY_CCSpriteBatchNode_createClass(JSContext *cx, JSObject* globalObj, c
 		JS_FN("addQuadFromSpriteQuadindex", JSPROXY_CCSpriteBatchNode_addQuadFromSprite_quadIndex_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("appendChild", JSPROXY_CCSpriteBatchNode_appendChild_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("atlasIndexForChildAtz", JSPROXY_CCSpriteBatchNode_atlasIndexForChild_atZ_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("descendants", JSPROXY_CCSpriteBatchNode_descendants, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("increaseAtlasCapacity", JSPROXY_CCSpriteBatchNode_increaseAtlasCapacity, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("initWithFileCapacity", JSPROXY_CCSpriteBatchNode_initWithFile_capacity_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("initWithTextureCapacity", JSPROXY_CCSpriteBatchNode_initWithTexture_capacity_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
@@ -10726,6 +10906,8 @@ void JSPROXY_CCSpriteBatchNode_createClass(JSContext *cx, JSObject* globalObj, c
 		JS_FN("removeSpriteFromAtlas", JSPROXY_CCSpriteBatchNode_removeSpriteFromAtlas_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("reorderBatch", JSPROXY_CCSpriteBatchNode_reorderBatch_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setBlendFunc", JSPROXY_CCSpriteBatchNode_setBlendFunc_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("setTextureAtlas", JSPROXY_CCSpriteBatchNode_setTextureAtlas_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("textureAtlas", JSPROXY_CCSpriteBatchNode_textureAtlas, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setTexture", JSPROXY_CCSpriteBatchNode_setTexture_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("texture", JSPROXY_CCSpriteBatchNode_texture, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
@@ -10976,6 +11158,28 @@ JSBool JSPROXY_CCTMXLayer_positionAt_(JSContext *cx, uint32_t argc, jsval *vp) {
 }
 
 // Arguments: 
+// Ret value: NSMutableArray*
+JSBool JSPROXY_CCTMXLayer_properties(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+//	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	NSMutableArray* ret_val;
+
+	CCTMXLayer *real = (CCTMXLayer*) [proxy realObj];
+	ret_val = [real properties ];
+
+	jsval ret_jsval = NSArray_to_jsval( cx, (NSArray*) ret_val );
+	JS_SET_RVAL(cx, vp, ret_jsval );
+
+	return JS_TRUE;
+}
+
+// Arguments: 
 // Ret value: None
 JSBool JSPROXY_CCTMXLayer_releaseMap(JSContext *cx, uint32_t argc, jsval *vp) {
 
@@ -11093,6 +11297,28 @@ JSBool JSPROXY_CCTMXLayer_setMapTileSize_(JSContext *cx, uint32_t argc, jsval *v
 
 	CCTMXLayer *real = (CCTMXLayer*) [proxy realObj];
 	[real setMapTileSize:(CGSize)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: NSMutableArray*
+// Ret value: None
+JSBool JSPROXY_CCTMXLayer_setProperties_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+//	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+
+	// Parsing sequence
+	NSArray *arg0 = jsval_to_nsarray( *argvp++, cx );
+
+	CCTMXLayer *real = (CCTMXLayer*) [proxy realObj];
+	[real setProperties:(NSMutableArray*)arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
@@ -11354,12 +11580,14 @@ void JSPROXY_CCTMXLayer_createClass(JSContext *cx, JSObject* globalObj, const ch
 		JS_FN("layerSize", JSPROXY_CCTMXLayer_layerSize, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("mapTileSize", JSPROXY_CCTMXLayer_mapTileSize, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("positionAt", JSPROXY_CCTMXLayer_positionAt_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("properties", JSPROXY_CCTMXLayer_properties, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("releaseMap", JSPROXY_CCTMXLayer_releaseMap, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("removeTileAt", JSPROXY_CCTMXLayer_removeTileAt_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setLayerName", JSPROXY_CCTMXLayer_setLayerName_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setLayerOrientation", JSPROXY_CCTMXLayer_setLayerOrientation_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setLayerSize", JSPROXY_CCTMXLayer_setLayerSize_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setMapTileSize", JSPROXY_CCTMXLayer_setMapTileSize_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("setProperties", JSPROXY_CCTMXLayer_setProperties_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setTileGIDAt", JSPROXY_CCTMXLayer_setTileGID_at_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setTileGIDAtWithflags", JSPROXY_CCTMXLayer_setTileGID_at_withFlags_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setTileset", JSPROXY_CCTMXLayer_setTileset_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
@@ -13065,6 +13293,49 @@ JSBool JSPROXY_CCParticleBatchNode_setBlendFunc_(JSContext *cx, uint32_t argc, j
 	return JS_TRUE;
 }
 
+// Arguments: CCTextureAtlas*
+// Ret value: None
+JSBool JSPROXY_CCParticleBatchNode_setTextureAtlas_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+//	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+
+	CCTextureAtlas* arg0 = (CCTextureAtlas*) jsval_to_nsobject( *argvp++, cx);
+
+	CCParticleBatchNode *real = (CCParticleBatchNode*) [proxy realObj];
+	[real setTextureAtlas:(CCTextureAtlas*)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: 
+// Ret value: CCTextureAtlas*
+JSBool JSPROXY_CCParticleBatchNode_textureAtlas(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+//	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	CCTextureAtlas* ret_val;
+
+	CCParticleBatchNode *real = (CCParticleBatchNode*) [proxy realObj];
+	ret_val = [real textureAtlas ];
+
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+	return JS_TRUE;
+}
+
 // Arguments: CCTexture2D*
 // Ret value: None
 JSBool JSPROXY_CCParticleBatchNode_setTexture_(JSContext *cx, uint32_t argc, jsval *vp) {
@@ -13146,6 +13417,8 @@ void JSPROXY_CCParticleBatchNode_createClass(JSContext *cx, JSObject* globalObj,
 		JS_FN("insertChildInatlasatindex", JSPROXY_CCParticleBatchNode_insertChild_inAtlasAtIndex_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("removeChildCleanup", JSPROXY_CCParticleBatchNode_removeChild_cleanup_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setBlendFunc", JSPROXY_CCParticleBatchNode_setBlendFunc_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("setTextureAtlas", JSPROXY_CCParticleBatchNode_setTextureAtlas_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("textureAtlas", JSPROXY_CCParticleBatchNode_textureAtlas, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setTexture", JSPROXY_CCParticleBatchNode_setTexture_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("texture", JSPROXY_CCParticleBatchNode_texture, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
@@ -16623,6 +16896,49 @@ JSBool JSPROXY_CCAtlasNode_setQuadsToDraw_(JSContext *cx, uint32_t argc, jsval *
 	return JS_TRUE;
 }
 
+// Arguments: CCTextureAtlas*
+// Ret value: None
+JSBool JSPROXY_CCAtlasNode_setTextureAtlas_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+//	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+
+	CCTextureAtlas* arg0 = (CCTextureAtlas*) jsval_to_nsobject( *argvp++, cx);
+
+	CCAtlasNode *real = (CCAtlasNode*) [proxy realObj];
+	[real setTextureAtlas:(CCTextureAtlas*)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: 
+// Ret value: CCTextureAtlas*
+JSBool JSPROXY_CCAtlasNode_textureAtlas(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+//	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	CCTextureAtlas* ret_val;
+
+	CCAtlasNode *real = (CCAtlasNode*) [proxy realObj];
+	ret_val = [real textureAtlas ];
+
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+	return JS_TRUE;
+}
+
 // Arguments: 
 // Ret value: None
 JSBool JSPROXY_CCAtlasNode_updateAtlasValues(JSContext *cx, uint32_t argc, jsval *vp) {
@@ -16761,6 +17077,8 @@ void JSPROXY_CCAtlasNode_createClass(JSContext *cx, JSObject* globalObj, const c
 		JS_FN("setColor", JSPROXY_CCAtlasNode_setColor_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setOpacity", JSPROXY_CCAtlasNode_setOpacity_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setQuadsToDraw", JSPROXY_CCAtlasNode_setQuadsToDraw_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("setTextureAtlas", JSPROXY_CCAtlasNode_setTextureAtlas_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("textureAtlas", JSPROXY_CCAtlasNode_textureAtlas, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("updateAtlasValues", JSPROXY_CCAtlasNode_updateAtlasValues, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("doesOpacityModifyRGB", JSPROXY_CCAtlasNode_doesOpacityModifyRGB, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setOpacityModifyRGB", JSPROXY_CCAtlasNode_setOpacityModifyRGB_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
@@ -17076,6 +17394,28 @@ JSBool JSPROXY_CCPointArray_arrayWithCapacity__static(JSContext *cx, uint32_t ar
 }
 
 // Arguments: 
+// Ret value: NSMutableArray*
+JSBool JSPROXY_CCPointArray_controlPoints(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+//	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	NSMutableArray* ret_val;
+
+	CCPointArray *real = (CCPointArray*) [proxy realObj];
+	ret_val = [real controlPoints ];
+
+	jsval ret_jsval = NSArray_to_jsval( cx, (NSArray*) ret_val );
+	JS_SET_RVAL(cx, vp, ret_jsval );
+
+	return JS_TRUE;
+}
+
+// Arguments: 
 // Ret value: NSUInteger
 JSBool JSPROXY_CCPointArray_count(JSContext *cx, uint32_t argc, jsval *vp) {
 
@@ -17245,6 +17585,28 @@ JSBool JSPROXY_CCPointArray_reverseInline(JSContext *cx, uint32_t argc, jsval *v
 	return JS_TRUE;
 }
 
+// Arguments: NSMutableArray*
+// Ret value: None
+JSBool JSPROXY_CCPointArray_setControlPoints_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+//	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+
+	// Parsing sequence
+	NSArray *arg0 = jsval_to_nsarray( *argvp++, cx );
+
+	CCPointArray *real = (CCPointArray*) [proxy realObj];
+	[real setControlPoints:(NSMutableArray*)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
 void JSPROXY_CCPointArray_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCPointArray_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -17264,6 +17626,7 @@ void JSPROXY_CCPointArray_createClass(JSContext *cx, JSObject* globalObj, const 
 	};
 	static JSFunctionSpec funcs[] = {
 		JS_FN("addControlPoint", JSPROXY_CCPointArray_addControlPoint_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("controlPoints", JSPROXY_CCPointArray_controlPoints, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("count", JSPROXY_CCPointArray_count, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("getControlPointAtIndex", JSPROXY_CCPointArray_getControlPointAtIndex_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("initWithCapacity", JSPROXY_CCPointArray_initWithCapacity_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
@@ -17272,6 +17635,7 @@ void JSPROXY_CCPointArray_createClass(JSContext *cx, JSObject* globalObj, const 
 		JS_FN("replaceControlPointAtindex", JSPROXY_CCPointArray_replaceControlPoint_atIndex_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("reverse", JSPROXY_CCPointArray_reverse, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("reverseInline", JSPROXY_CCPointArray_reverseInline, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("setControlPoints", JSPROXY_CCPointArray_setControlPoints_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
@@ -29205,6 +29569,28 @@ JSBool JSPROXY_CCTMXMapInfo_initWithXML_resourcePath_(JSContext *cx, uint32_t ar
 }
 
 // Arguments: 
+// Ret value: NSMutableArray*
+JSBool JSPROXY_CCTMXMapInfo_layers(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+//	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	NSMutableArray* ret_val;
+
+	CCTMXMapInfo *real = (CCTMXMapInfo*) [proxy realObj];
+	ret_val = [real layers ];
+
+	jsval ret_jsval = NSArray_to_jsval( cx, (NSArray*) ret_val );
+	JS_SET_RVAL(cx, vp, ret_jsval );
+
+	return JS_TRUE;
+}
+
+// Arguments: 
 // Ret value: CGSize
 JSBool JSPROXY_CCTMXMapInfo_mapSize(JSContext *cx, uint32_t argc, jsval *vp) {
 
@@ -29222,6 +29608,28 @@ JSBool JSPROXY_CCTMXMapInfo_mapSize(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	jsval ret_jsval = CGSize_to_jsval( cx, ret_val );
 	JS_SET_RVAL(cx, vp, ret_jsval);
+
+	return JS_TRUE;
+}
+
+// Arguments: 
+// Ret value: NSMutableArray*
+JSBool JSPROXY_CCTMXMapInfo_objectGroups(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+//	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	NSMutableArray* ret_val;
+
+	CCTMXMapInfo *real = (CCTMXMapInfo*) [proxy realObj];
+	ret_val = [real objectGroups ];
+
+	jsval ret_jsval = NSArray_to_jsval( cx, (NSArray*) ret_val );
+	JS_SET_RVAL(cx, vp, ret_jsval );
 
 	return JS_TRUE;
 }
@@ -29288,6 +29696,28 @@ JSBool JSPROXY_CCTMXMapInfo_setFilename_(JSContext *cx, uint32_t argc, jsval *vp
 	return JS_TRUE;
 }
 
+// Arguments: NSMutableArray*
+// Ret value: None
+JSBool JSPROXY_CCTMXMapInfo_setLayers_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+//	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+
+	// Parsing sequence
+	NSArray *arg0 = jsval_to_nsarray( *argvp++, cx );
+
+	CCTMXMapInfo *real = (CCTMXMapInfo*) [proxy realObj];
+	[real setLayers:(NSMutableArray*)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
 // Arguments: CGSize
 // Ret value: None
 JSBool JSPROXY_CCTMXMapInfo_setMapSize_(JSContext *cx, uint32_t argc, jsval *vp) {
@@ -29305,6 +29735,28 @@ JSBool JSPROXY_CCTMXMapInfo_setMapSize_(JSContext *cx, uint32_t argc, jsval *vp)
 
 	CCTMXMapInfo *real = (CCTMXMapInfo*) [proxy realObj];
 	[real setMapSize:(CGSize)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: NSMutableArray*
+// Ret value: None
+JSBool JSPROXY_CCTMXMapInfo_setObjectGroups_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+//	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+
+	// Parsing sequence
+	NSArray *arg0 = jsval_to_nsarray( *argvp++, cx );
+
+	CCTMXMapInfo *real = (CCTMXMapInfo*) [proxy realObj];
+	[real setObjectGroups:(NSMutableArray*)arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
@@ -29371,6 +29823,28 @@ JSBool JSPROXY_CCTMXMapInfo_setTileSize_(JSContext *cx, uint32_t argc, jsval *vp
 	return JS_TRUE;
 }
 
+// Arguments: NSMutableArray*
+// Ret value: None
+JSBool JSPROXY_CCTMXMapInfo_setTilesets_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+//	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+
+	// Parsing sequence
+	NSArray *arg0 = jsval_to_nsarray( *argvp++, cx );
+
+	CCTMXMapInfo *real = (CCTMXMapInfo*) [proxy realObj];
+	[real setTilesets:(NSMutableArray*)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
 // Arguments: 
 // Ret value: CGSize
 JSBool JSPROXY_CCTMXMapInfo_tileSize(JSContext *cx, uint32_t argc, jsval *vp) {
@@ -29389,6 +29863,28 @@ JSBool JSPROXY_CCTMXMapInfo_tileSize(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	jsval ret_jsval = CGSize_to_jsval( cx, ret_val );
 	JS_SET_RVAL(cx, vp, ret_jsval);
+
+	return JS_TRUE;
+}
+
+// Arguments: 
+// Ret value: NSMutableArray*
+JSBool JSPROXY_CCTMXMapInfo_tilesets(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+//	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	NSMutableArray* ret_val;
+
+	CCTMXMapInfo *real = (CCTMXMapInfo*) [proxy realObj];
+	ret_val = [real tilesets ];
+
+	jsval ret_jsval = NSArray_to_jsval( cx, (NSArray*) ret_val );
+	JS_SET_RVAL(cx, vp, ret_jsval );
 
 	return JS_TRUE;
 }
@@ -29414,15 +29910,21 @@ void JSPROXY_CCTMXMapInfo_createClass(JSContext *cx, JSObject* globalObj, const 
 		JS_FN("filename", JSPROXY_CCTMXMapInfo_filename, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("initWithTMXFile", JSPROXY_CCTMXMapInfo_initWithTMXFile_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("initWithXMLResourcepath", JSPROXY_CCTMXMapInfo_initWithXML_resourcePath_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("layers", JSPROXY_CCTMXMapInfo_layers, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("mapSize", JSPROXY_CCTMXMapInfo_mapSize, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("objectGroups", JSPROXY_CCTMXMapInfo_objectGroups, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("orientation", JSPROXY_CCTMXMapInfo_orientation, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("resources", JSPROXY_CCTMXMapInfo_resources, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setFilename", JSPROXY_CCTMXMapInfo_setFilename_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("setLayers", JSPROXY_CCTMXMapInfo_setLayers_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setMapSize", JSPROXY_CCTMXMapInfo_setMapSize_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("setObjectGroups", JSPROXY_CCTMXMapInfo_setObjectGroups_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setOrientation", JSPROXY_CCTMXMapInfo_setOrientation_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setResources", JSPROXY_CCTMXMapInfo_setResources_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setTileSize", JSPROXY_CCTMXMapInfo_setTileSize_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("setTilesets", JSPROXY_CCTMXMapInfo_setTilesets_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("tileSize", JSPROXY_CCTMXMapInfo_tileSize, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("tilesets", JSPROXY_CCTMXMapInfo_tilesets, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
@@ -30613,6 +31115,23 @@ void JSPROXY_CCCallBlockN_finalize(JSContext *cx, JSObject *obj)
 	}
 }
 
+// Arguments: void (^)(CCNode *)
+// Ret value: CCCallBlockN
+JSBool JSPROXY_CCCallBlockN_actionWithBlock__static(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+
+	// Parsing function
+	js_block arg0 = jsval_to_block( *argvp++, cx, JS_THIS_OBJECT(cx, vp) );
+
+	CCCallBlockN *ret_val = [CCCallBlockN actionWithBlock:(void (^)(CCNode *))arg0  ];
+
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+	return JS_TRUE;
+}
+
 // Arguments: 
 // Ret value: None
 JSBool JSPROXY_CCCallBlockN_execute(JSContext *cx, uint32_t argc, jsval *vp) {
@@ -30627,6 +31146,31 @@ JSBool JSPROXY_CCCallBlockN_execute(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	CCCallBlockN *real = (CCCallBlockN*) [proxy realObj];
 	[real execute ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: void (^)(CCNode *)
+// Ret value: None
+JSBool JSPROXY_CCCallBlockN_initWithBlock_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+//	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+
+	// Parsing function
+	js_block arg0 = jsval_to_block( *argvp++, cx, JS_THIS_OBJECT(cx, vp) );
+
+	CCCallBlockN *real = [(CCCallBlockN*)[proxy.klass alloc] initWithBlock:(void (^)(CCNode *))arg0  ];
+	[proxy setRealObj: real];
+	[real release];
+
+	objc_setAssociatedObject(real, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
 	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
@@ -30663,9 +31207,11 @@ void JSPROXY_CCCallBlockN_createClass(JSContext *cx, JSObject* globalObj, const 
 	};
 	static JSFunctionSpec funcs[] = {
 		JS_FN("execute", JSPROXY_CCCallBlockN_execute, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("initWithBlock", JSPROXY_CCCallBlockN_initWithBlock_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
+		JS_FN("actionWithBlock", JSPROXY_CCCallBlockN_actionWithBlock__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSFUN_CONSTRUCTOR | JSPROP_ENUMERATE),
 		JS_FN("action", JSPROXY_CCCallBlockN_action_static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSFUN_CONSTRUCTOR | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
@@ -31219,6 +31765,50 @@ JSBool JSPROXY_CCMenuItemToggle_setSelectedIndex_(JSContext *cx, uint32_t argc, 
 	return JS_TRUE;
 }
 
+// Arguments: NSMutableArray*
+// Ret value: None
+JSBool JSPROXY_CCMenuItemToggle_setSubItems_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+//	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+
+	// Parsing sequence
+	NSArray *arg0 = jsval_to_nsarray( *argvp++, cx );
+
+	CCMenuItemToggle *real = (CCMenuItemToggle*) [proxy realObj];
+	[real setSubItems:(NSMutableArray*)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: 
+// Ret value: NSMutableArray*
+JSBool JSPROXY_CCMenuItemToggle_subItems(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+//	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	NSMutableArray* ret_val;
+
+	CCMenuItemToggle *real = (CCMenuItemToggle*) [proxy realObj];
+	ret_val = [real subItems ];
+
+	jsval ret_jsval = NSArray_to_jsval( cx, (NSArray*) ret_val );
+	JS_SET_RVAL(cx, vp, ret_jsval );
+
+	return JS_TRUE;
+}
+
 // Arguments: 
 // Ret value: BOOL
 JSBool JSPROXY_CCMenuItemToggle_doesOpacityModifyRGB(JSContext *cx, uint32_t argc, jsval *vp) {
@@ -31354,6 +31944,8 @@ void JSPROXY_CCMenuItemToggle_createClass(JSContext *cx, JSObject* globalObj, co
 		JS_FN("selectedIndex", JSPROXY_CCMenuItemToggle_selectedIndex, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("selectedItem", JSPROXY_CCMenuItemToggle_selectedItem, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setSelectedIndex", JSPROXY_CCMenuItemToggle_setSelectedIndex_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("setSubItems", JSPROXY_CCMenuItemToggle_setSubItems_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("subItems", JSPROXY_CCMenuItemToggle_subItems, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("doesOpacityModifyRGB", JSPROXY_CCMenuItemToggle_doesOpacityModifyRGB, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setColor", JSPROXY_CCMenuItemToggle_setColor_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setOpacity", JSPROXY_CCMenuItemToggle_setOpacity_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
@@ -31682,6 +32274,514 @@ void JSPROXY_CCBlink_createClass(JSContext *cx, JSObject* globalObj, const char*
 {
 	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCBlink_class, JSPROXY_CCBlink_object, NULL);
 	JSPROXY_CCBlink *proxy = [[JSPROXY_CCBlink alloc] initWithJSObject:jsobj class:[CCBlink class]];
+	[proxy setRealObj:realObj];
+//	JS_SetPrivate(jsobj, proxy);
+	set_proxy_for_jsobject(proxy, jsobj);
+
+	if( realObj )
+		objc_setAssociatedObject(realObj, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
+
+	[self swizzleMethods];
+
+	return jsobj;
+}
+
+@end
+
+/*
+ * CCTextureAtlas
+ */
+#pragma mark - CCTextureAtlas
+
+JSClass* JSPROXY_CCTextureAtlas_class = NULL;
+JSObject* JSPROXY_CCTextureAtlas_object = NULL;
+ // Constructor
+JSBool JSPROXY_CCTextureAtlas_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JSObject *jsobj = [JSPROXY_CCTextureAtlas createJSObjectWithRealObject:nil context:cx];
+    JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+    /* no callbacks */
+
+    return JS_TRUE;
+}
+
+// Destructor
+void JSPROXY_CCTextureAtlas_finalize(JSContext *cx, JSObject *obj)
+{
+//	%s *proxy = (%s*)JS_GetPrivate(obj);
+	JSPROXY_CCTextureAtlas *proxy = (JSPROXY_CCTextureAtlas*)get_proxy_for_jsobject(obj);
+
+	if (proxy) {
+		del_proxy_for_jsobject( obj );
+		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_ASSIGN);
+		/* no callbacks */
+		[proxy release];
+	}
+}
+
+// Arguments: 
+// Ret value: NSUInteger
+JSBool JSPROXY_CCTextureAtlas_capacity(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+//	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	NSUInteger ret_val;
+
+	CCTextureAtlas *real = (CCTextureAtlas*) [proxy realObj];
+	ret_val = [real capacity ];
+	JS_SET_RVAL(cx, vp, INT_TO_JSVAL(ret_val));
+	return JS_TRUE;
+}
+
+// Arguments: NSUInteger
+// Ret value: None
+JSBool JSPROXY_CCTextureAtlas_drawNumberOfQuads_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+//	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	uint32_t arg0; JS_ValueToECMAUint32( cx, *argvp++, &arg0 );
+
+	CCTextureAtlas *real = (CCTextureAtlas*) [proxy realObj];
+	[real drawNumberOfQuads:(NSUInteger)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: NSUInteger, NSUInteger
+// Ret value: None
+JSBool JSPROXY_CCTextureAtlas_drawNumberOfQuads_fromIndex_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+//	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	uint32_t arg0; JS_ValueToECMAUint32( cx, *argvp++, &arg0 );
+	uint32_t arg1; JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
+
+	CCTextureAtlas *real = (CCTextureAtlas*) [proxy realObj];
+	[real drawNumberOfQuads:(NSUInteger)arg0 fromIndex:(NSUInteger)arg1  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: 
+// Ret value: None
+JSBool JSPROXY_CCTextureAtlas_drawQuads(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+//	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 0, @"Invalid number of arguments" );
+
+	CCTextureAtlas *real = (CCTextureAtlas*) [proxy realObj];
+	[real drawQuads ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: NSUInteger, NSUInteger
+// Ret value: None
+JSBool JSPROXY_CCTextureAtlas_fillWithEmptyQuadsFromIndex_amount_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+//	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	uint32_t arg0; JS_ValueToECMAUint32( cx, *argvp++, &arg0 );
+	uint32_t arg1; JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
+
+	CCTextureAtlas *real = (CCTextureAtlas*) [proxy realObj];
+	[real fillWithEmptyQuadsFromIndex:(NSUInteger)arg0 amount:(NSUInteger)arg1  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: NSUInteger
+// Ret value: None
+JSBool JSPROXY_CCTextureAtlas_increaseTotalQuadsWith_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+//	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	uint32_t arg0; JS_ValueToECMAUint32( cx, *argvp++, &arg0 );
+
+	CCTextureAtlas *real = (CCTextureAtlas*) [proxy realObj];
+	[real increaseTotalQuadsWith:(NSUInteger)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: NSString*, NSUInteger
+// Ret value: None
+JSBool JSPROXY_CCTextureAtlas_initWithFile_capacity_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+//	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+
+	NSString *arg0 = jsval_to_nsstring( *argvp++, cx );
+	uint32_t arg1; JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
+
+	CCTextureAtlas *real = [(CCTextureAtlas*)[proxy.klass alloc] initWithFile:(NSString*)arg0 capacity:(NSUInteger)arg1  ];
+	[proxy setRealObj: real];
+	[real release];
+
+	objc_setAssociatedObject(real, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: CCTexture2D*, NSUInteger
+// Ret value: None
+JSBool JSPROXY_CCTextureAtlas_initWithTexture_capacity_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+//	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+
+	CCTexture2D* arg0 = (CCTexture2D*) jsval_to_nsobject( *argvp++, cx);
+	uint32_t arg1; JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
+
+	CCTextureAtlas *real = [(CCTextureAtlas*)[proxy.klass alloc] initWithTexture:(CCTexture2D*)arg0 capacity:(NSUInteger)arg1  ];
+	[proxy setRealObj: real];
+	[real release];
+
+	objc_setAssociatedObject(real, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: NSUInteger, NSUInteger
+// Ret value: None
+JSBool JSPROXY_CCTextureAtlas_insertQuadFromIndex_atIndex_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+//	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	uint32_t arg0; JS_ValueToECMAUint32( cx, *argvp++, &arg0 );
+	uint32_t arg1; JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
+
+	CCTextureAtlas *real = (CCTextureAtlas*) [proxy realObj];
+	[real insertQuadFromIndex:(NSUInteger)arg0 atIndex:(NSUInteger)arg1  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: NSUInteger, NSUInteger, NSUInteger
+// Ret value: None
+JSBool JSPROXY_CCTextureAtlas_moveQuadsFromIndex_amount_atIndex_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+//	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 3, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	uint32_t arg0; JS_ValueToECMAUint32( cx, *argvp++, &arg0 );
+	uint32_t arg1; JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
+	uint32_t arg2; JS_ValueToECMAUint32( cx, *argvp++, &arg2 );
+
+	CCTextureAtlas *real = (CCTextureAtlas*) [proxy realObj];
+	[real moveQuadsFromIndex:(NSUInteger)arg0 amount:(NSUInteger)arg1 atIndex:(NSUInteger)arg2  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: NSUInteger, NSUInteger
+// Ret value: None
+JSBool JSPROXY_CCTextureAtlas_moveQuadsFromIndex_to_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+//	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	uint32_t arg0; JS_ValueToECMAUint32( cx, *argvp++, &arg0 );
+	uint32_t arg1; JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
+
+	CCTextureAtlas *real = (CCTextureAtlas*) [proxy realObj];
+	[real moveQuadsFromIndex:(NSUInteger)arg0 to:(NSUInteger)arg1  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: 
+// Ret value: None
+JSBool JSPROXY_CCTextureAtlas_removeAllQuads(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+//	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 0, @"Invalid number of arguments" );
+
+	CCTextureAtlas *real = (CCTextureAtlas*) [proxy realObj];
+	[real removeAllQuads ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: NSUInteger
+// Ret value: None
+JSBool JSPROXY_CCTextureAtlas_removeQuadAtIndex_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+//	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	uint32_t arg0; JS_ValueToECMAUint32( cx, *argvp++, &arg0 );
+
+	CCTextureAtlas *real = (CCTextureAtlas*) [proxy realObj];
+	[real removeQuadAtIndex:(NSUInteger)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: NSUInteger, NSUInteger
+// Ret value: None
+JSBool JSPROXY_CCTextureAtlas_removeQuadsAtIndex_amount_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+//	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	uint32_t arg0; JS_ValueToECMAUint32( cx, *argvp++, &arg0 );
+	uint32_t arg1; JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
+
+	CCTextureAtlas *real = (CCTextureAtlas*) [proxy realObj];
+	[real removeQuadsAtIndex:(NSUInteger)arg0 amount:(NSUInteger)arg1  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: NSUInteger
+// Ret value: BOOL
+JSBool JSPROXY_CCTextureAtlas_resizeCapacity_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+//	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	uint32_t arg0; JS_ValueToECMAUint32( cx, *argvp++, &arg0 );
+	BOOL ret_val;
+
+	CCTextureAtlas *real = (CCTextureAtlas*) [proxy realObj];
+	ret_val = [real resizeCapacity:(NSUInteger)arg0  ];
+	JS_SET_RVAL(cx, vp, BOOLEAN_TO_JSVAL(ret_val));
+	return JS_TRUE;
+}
+
+// Arguments: CCTexture2D*
+// Ret value: None
+JSBool JSPROXY_CCTextureAtlas_setTexture_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+//	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+
+	CCTexture2D* arg0 = (CCTexture2D*) jsval_to_nsobject( *argvp++, cx);
+
+	CCTextureAtlas *real = (CCTextureAtlas*) [proxy realObj];
+	[real setTexture:(CCTexture2D*)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: 
+// Ret value: CCTexture2D*
+JSBool JSPROXY_CCTextureAtlas_texture(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+//	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	CCTexture2D* ret_val;
+
+	CCTextureAtlas *real = (CCTextureAtlas*) [proxy realObj];
+	ret_val = [real texture ];
+
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+	return JS_TRUE;
+}
+
+// Arguments: NSString*, NSUInteger
+// Ret value: CCTextureAtlas
+JSBool JSPROXY_CCTextureAtlas_textureAtlasWithFile_capacity__static(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+
+	NSString *arg0 = jsval_to_nsstring( *argvp++, cx );
+	uint32_t arg1; JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
+
+	CCTextureAtlas *ret_val = [CCTextureAtlas textureAtlasWithFile:(NSString*)arg0 capacity:(NSUInteger)arg1  ];
+
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+	return JS_TRUE;
+}
+
+// Arguments: CCTexture2D*, NSUInteger
+// Ret value: CCTextureAtlas
+JSBool JSPROXY_CCTextureAtlas_textureAtlasWithTexture_capacity__static(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+
+	CCTexture2D* arg0 = (CCTexture2D*) jsval_to_nsobject( *argvp++, cx);
+	uint32_t arg1; JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
+
+	CCTextureAtlas *ret_val = [CCTextureAtlas textureAtlasWithTexture:(CCTexture2D*)arg0 capacity:(NSUInteger)arg1  ];
+
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+	return JS_TRUE;
+}
+
+// Arguments: 
+// Ret value: NSUInteger
+JSBool JSPROXY_CCTextureAtlas_totalQuads(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+//	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	NSUInteger ret_val;
+
+	CCTextureAtlas *real = (CCTextureAtlas*) [proxy realObj];
+	ret_val = [real totalQuads ];
+	JS_SET_RVAL(cx, vp, INT_TO_JSVAL(ret_val));
+	return JS_TRUE;
+}
+
+void JSPROXY_CCTextureAtlas_createClass(JSContext *cx, JSObject* globalObj, const char* name )
+{
+	JSPROXY_CCTextureAtlas_class = (JSClass *)calloc(1, sizeof(JSClass));
+	JSPROXY_CCTextureAtlas_class->name = name;
+	JSPROXY_CCTextureAtlas_class->addProperty = JS_PropertyStub;
+	JSPROXY_CCTextureAtlas_class->delProperty = JS_PropertyStub;
+	JSPROXY_CCTextureAtlas_class->getProperty = JS_PropertyStub;
+	JSPROXY_CCTextureAtlas_class->setProperty = JS_StrictPropertyStub;
+	JSPROXY_CCTextureAtlas_class->enumerate = JS_EnumerateStub;
+	JSPROXY_CCTextureAtlas_class->resolve = JS_ResolveStub;
+	JSPROXY_CCTextureAtlas_class->convert = JS_ConvertStub;
+	JSPROXY_CCTextureAtlas_class->finalize = JSPROXY_CCTextureAtlas_finalize;
+	JSPROXY_CCTextureAtlas_class->flags = JSCLASS_HAS_PRIVATE;
+
+	static JSPropertySpec properties[] = {
+		{0, 0, 0, 0, 0}
+	};
+	static JSFunctionSpec funcs[] = {
+		JS_FN("capacity", JSPROXY_CCTextureAtlas_capacity, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("drawNumberOfQuads", JSPROXY_CCTextureAtlas_drawNumberOfQuads_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("drawNumberOfQuadsFromindex", JSPROXY_CCTextureAtlas_drawNumberOfQuads_fromIndex_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("drawQuads", JSPROXY_CCTextureAtlas_drawQuads, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("fillWithEmptyQuadsFromIndexAmount", JSPROXY_CCTextureAtlas_fillWithEmptyQuadsFromIndex_amount_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("increaseTotalQuadsWith", JSPROXY_CCTextureAtlas_increaseTotalQuadsWith_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("initWithFileCapacity", JSPROXY_CCTextureAtlas_initWithFile_capacity_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("initWithTextureCapacity", JSPROXY_CCTextureAtlas_initWithTexture_capacity_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("insertQuadFromIndexAtindex", JSPROXY_CCTextureAtlas_insertQuadFromIndex_atIndex_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("moveQuadsFromIndexAmountAtindex", JSPROXY_CCTextureAtlas_moveQuadsFromIndex_amount_atIndex_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("moveQuadsFromIndexTo", JSPROXY_CCTextureAtlas_moveQuadsFromIndex_to_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("removeAllQuads", JSPROXY_CCTextureAtlas_removeAllQuads, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("removeQuadAtIndex", JSPROXY_CCTextureAtlas_removeQuadAtIndex_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("removeQuadsAtIndexAmount", JSPROXY_CCTextureAtlas_removeQuadsAtIndex_amount_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("resizeCapacity", JSPROXY_CCTextureAtlas_resizeCapacity_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("setTexture", JSPROXY_CCTextureAtlas_setTexture_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("texture", JSPROXY_CCTextureAtlas_texture, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("totalQuads", JSPROXY_CCTextureAtlas_totalQuads, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FS_END
+	};
+	static JSFunctionSpec st_funcs[] = {
+		JS_FN("textureAtlasWithFileCapacity", JSPROXY_CCTextureAtlas_textureAtlasWithFile_capacity__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSFUN_CONSTRUCTOR | JSPROP_ENUMERATE),
+		JS_FN("textureAtlasWithTextureCapacity", JSPROXY_CCTextureAtlas_textureAtlasWithTexture_capacity__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSFUN_CONSTRUCTOR | JSPROP_ENUMERATE),
+		JS_FS_END
+	};
+
+	JSPROXY_CCTextureAtlas_object = JS_InitClass(cx, globalObj, JSPROXY_NSObject_object, JSPROXY_CCTextureAtlas_class, JSPROXY_CCTextureAtlas_constructor,0,properties,funcs,NULL,st_funcs);
+}
+
+@implementation JSPROXY_CCTextureAtlas
+
++(JSObject*) createJSObjectWithRealObject:(id)realObj context:(JSContext*)cx
+{
+	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCTextureAtlas_class, JSPROXY_CCTextureAtlas_object, NULL);
+	JSPROXY_CCTextureAtlas *proxy = [[JSPROXY_CCTextureAtlas alloc] initWithJSObject:jsobj class:[CCTextureAtlas class]];
 	[proxy setRealObj:realObj];
 //	JS_SetPrivate(jsobj, proxy);
 	set_proxy_for_jsobject(proxy, jsobj);
@@ -33039,6 +34139,28 @@ JSBool JSPROXY_CCAnimation_duration(JSContext *cx, uint32_t argc, jsval *vp) {
 	return JS_TRUE;
 }
 
+// Arguments: 
+// Ret value: NSMutableArray*
+JSBool JSPROXY_CCAnimation_frames(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+//	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	NSMutableArray* ret_val;
+
+	CCAnimation *real = (CCAnimation*) [proxy realObj];
+	ret_val = [real frames ];
+
+	jsval ret_jsval = NSArray_to_jsval( cx, (NSArray*) ret_val );
+	JS_SET_RVAL(cx, vp, ret_jsval );
+
+	return JS_TRUE;
+}
+
 // Arguments: NSArray*, float, NSUInteger
 // Ret value: None
 JSBool JSPROXY_CCAnimation_initWithAnimationFrames_delayPerUnit_loops_(JSContext *cx, uint32_t argc, jsval *vp) {
@@ -33175,6 +34297,28 @@ JSBool JSPROXY_CCAnimation_setDelayPerUnit_(JSContext *cx, uint32_t argc, jsval 
 	return JS_TRUE;
 }
 
+// Arguments: NSMutableArray*
+// Ret value: None
+JSBool JSPROXY_CCAnimation_setFrames_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+//	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+
+	// Parsing sequence
+	NSArray *arg0 = jsval_to_nsarray( *argvp++, cx );
+
+	CCAnimation *real = (CCAnimation*) [proxy realObj];
+	[real setFrames:(NSMutableArray*)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
 // Arguments: NSUInteger
 // Ret value: None
 JSBool JSPROXY_CCAnimation_setLoops_(JSContext *cx, uint32_t argc, jsval *vp) {
@@ -33257,12 +34401,14 @@ void JSPROXY_CCAnimation_createClass(JSContext *cx, JSObject* globalObj, const c
 		JS_FN("addSpriteFrameWithTextureRect", JSPROXY_CCAnimation_addSpriteFrameWithTexture_rect_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("delayPerUnit", JSPROXY_CCAnimation_delayPerUnit, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("duration", JSPROXY_CCAnimation_duration, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("frames", JSPROXY_CCAnimation_frames, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("initWithAnimationFramesDelayperunitLoops", JSPROXY_CCAnimation_initWithAnimationFrames_delayPerUnit_loops_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("initWithSpriteFrames", JSPROXY_CCAnimation_initWithSpriteFrames_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("initWithSpriteFramesDelay", JSPROXY_CCAnimation_initWithSpriteFrames_delay_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("loops", JSPROXY_CCAnimation_loops, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("restoreOriginalFrame", JSPROXY_CCAnimation_restoreOriginalFrame, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setDelayPerUnit", JSPROXY_CCAnimation_setDelayPerUnit_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("setFrames", JSPROXY_CCAnimation_setFrames_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setLoops", JSPROXY_CCAnimation_setLoops_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setRestoreOriginalFrame", JSPROXY_CCAnimation_setRestoreOriginalFrame_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("totalDelayUnits", JSPROXY_CCAnimation_totalDelayUnits, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
@@ -35670,6 +36816,50 @@ JSBool JSPROXY_CCTMXTiledMap_objectGroupNamed_(JSContext *cx, uint32_t argc, jsv
 }
 
 // Arguments: 
+// Ret value: NSMutableArray*
+JSBool JSPROXY_CCTMXTiledMap_objectGroups(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+//	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	NSMutableArray* ret_val;
+
+	CCTMXTiledMap *real = (CCTMXTiledMap*) [proxy realObj];
+	ret_val = [real objectGroups ];
+
+	jsval ret_jsval = NSArray_to_jsval( cx, (NSArray*) ret_val );
+	JS_SET_RVAL(cx, vp, ret_jsval );
+
+	return JS_TRUE;
+}
+
+// Arguments: NSMutableArray*
+// Ret value: None
+JSBool JSPROXY_CCTMXTiledMap_setObjectGroups_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+//	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+
+	// Parsing sequence
+	NSArray *arg0 = jsval_to_nsarray( *argvp++, cx );
+
+	CCTMXTiledMap *real = (CCTMXTiledMap*) [proxy realObj];
+	[real setObjectGroups:(NSMutableArray*)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: 
 // Ret value: CGSize
 JSBool JSPROXY_CCTMXTiledMap_tileSize(JSContext *cx, uint32_t argc, jsval *vp) {
 
@@ -35762,6 +36952,8 @@ void JSPROXY_CCTMXTiledMap_createClass(JSContext *cx, JSObject* globalObj, const
 		JS_FN("mapOrientation", JSPROXY_CCTMXTiledMap_mapOrientation, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("mapSize", JSPROXY_CCTMXTiledMap_mapSize, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("objectGroupNamed", JSPROXY_CCTMXTiledMap_objectGroupNamed_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("objectGroups", JSPROXY_CCTMXTiledMap_objectGroups, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("setObjectGroups", JSPROXY_CCTMXTiledMap_setObjectGroups_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("tileSize", JSPROXY_CCTMXTiledMap_tileSize, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};

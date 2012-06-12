@@ -3245,6 +3245,33 @@ extern JSClass *JSPROXY_CCBlink_class;
 @end
 
 /*
+ * CCTextureAtlas
+ */
+#pragma mark - CCTextureAtlas
+
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+void JSPROXY_CCTextureAtlas_createClass(JSContext *cx, JSObject* globalObj, const char* name );
+
+extern JSObject *JSPROXY_CCTextureAtlas_object;
+extern JSClass *JSPROXY_CCTextureAtlas_class;
+
+#ifdef __cplusplus
+}
+#endif
+
+
+/* Proxy class */
+@interface JSPROXY_CCTextureAtlas : JSPROXY_NSObject
+{
+}
+
+@end
+
+/*
  * CCTransitionSlideInL
  */
 #pragma mark - CCTransitionSlideInL
