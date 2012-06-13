@@ -1,5 +1,5 @@
 
-Installing libpng version 1.2.44 - June 26, 2010
+Installing libpng version 1.2.49 - March 29, 2012
 
 On Unix/Linux and similar systems, you can simply type
 
@@ -46,7 +46,7 @@ to have access to the zlib.h and zconf.h include files that
 correspond to the version of zlib that's installed.
 
 You can rename the directories that you downloaded (they
-might be called "libpng-1.2.44" or "libpng12" and "zlib-1.2.3"
+might be called "libpng-1.2.49" or "libpng12" and "zlib-1.2.3"
 or "zlib123") so that you have directories called "zlib" and "libpng".
 
 Your directory structure should look like this:
@@ -141,3 +141,23 @@ instead, as demonstrated in contrib/visupng of the libpng distribution.
 Further information can be found in the README and libpng.txt
 files, in the individual makefiles, in png.h, and the manual pages
 libpng.3 and png.5.
+
+
+Using the ./configure script -- 16 December 2002.
+=================================================
+
+
+The ./configure script should work compatibly with what scripts/makefile.*
+did, however there are some options you need to add to configure explicitly,
+which previously was done semi-automatically (if you didn't edit
+scripts/makefile.* yourself, that is)
+
+
+CFLAGS="-Wall -O -funroll-loops \
+-malign-loops=2 -malign-functions=2" ./configure --prefix=/usr/include \
+--with-pkgconfigdir=/usr/lib/pkgconfig --includedir=/usr/include
+
+You can alternatively specify --includedir=/usr/include, /usr/local/include,
+/usr/include/png12, or whatever.
+
+

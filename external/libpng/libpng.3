@@ -1,6 +1,6 @@
-.TH LIBPNG 3 "June 26, 2010"
+.TH LIBPNG 3 "March 29, 2012"
 .SH NAME
-libpng \- Portable Network Graphics (PNG) Reference Library 1.2.44
+libpng \- Portable Network Graphics (PNG) Reference Library 1.2.49
 .SH SYNOPSIS
 \fI\fB
 
@@ -821,7 +821,7 @@ Following is a copy of the libpng.txt file that accompanies libpng.
 .SH LIBPNG.TXT
 libpng.txt - A description on how to use and modify libpng
 
- libpng version 1.2.44 - June 26, 2010
+ libpng version 1.2.49 - March 29, 2012
  Updated and distributed by Glenn Randers-Pehrson
  <glennrp at users.sourceforge.net>
  Copyright (c) 1998-2009 Glenn Randers-Pehrson
@@ -832,7 +832,7 @@ libpng.txt - A description on how to use and modify libpng
 
  Based on:
 
- libpng versions 0.97, January 1998, through 1.2.44 - June 26, 2010
+ libpng versions 0.97, January 1998, through 1.2.49 - March 29, 2012
  Updated and distributed by Glenn Randers-Pehrson
  Copyright (c) 1998-2009 Glenn Randers-Pehrson
 
@@ -1699,7 +1699,7 @@ things.
 As of libpng version 1.2.9, png_set_expand_gray_1_2_4_to_8() was
 added.  It expands the sample depth without changing tRNS to alpha.
 
-As of libpng version 1.2.44, not all possible expansions are supported.
+As of libpng version 1.2.49, not all possible expansions are supported.
 
 In the following table, the 01 means grayscale with depth<8, 31 means
 indexed with depth<8, other numerals represent the color type, "T" means
@@ -3976,8 +3976,8 @@ above the comment that says
   /* Maintainer: Put new private prototypes here ^ and in libpngpf.3 */
 
 The names of all exported functions and variables begin
-with  "png_", and all publicly visible C preprocessor
-macros begin with "PNG_".
+with "png_", and all publicly visible C preprocessor
+macros begin with "PNG".
 
 We put a space after each comma and after each semicolon
 in "for" statments, and we put spaces before and after each
@@ -4000,13 +4000,13 @@ Other rules can be inferred by inspecting the libpng source.
 
 .SH XIII. Y2K Compliance in libpng
 
-June 26, 2010
+March 29, 2012
 
 Since the PNG Development group is an ad-hoc body, we can't make
 an official declaration.
 
 This is your unofficial assurance that libpng from version 0.71 and
-upward through 1.2.44 are Y2K compliant.  It is my belief that earlier
+upward through 1.2.49 are Y2K compliant.  It is my belief that earlier
 versions were also Y2K compliant.
 
 Libpng only has three year fields.  One is a 2-byte unsigned integer that
@@ -4275,7 +4275,7 @@ the first widely used release:
  1.2.37beta01-03     13    10237  12.so.0.37[.0]
  1.2.37rc01          13    10237  12.so.0.37[.0]
  1.2.37              13    10237  12.so.0.37[.0]
- 1.2.45              10    10045  12.so.0.45[.0]
+ 1.0.45              10    10045  12.so.0.45[.0]
  1.0.46              10    10046  10.so.0.46[.0]
  1.2.38beta01        13    10238  12.so.0.38[.0]
  1.2.38rc01-03       13    10238  12.so.0.38[.0]
@@ -4307,6 +4307,26 @@ the first widely used release:
  1.2.44beta01-03     13    10244  12.so.0.44[.0]
  1.2.44rc01-03       13    10244  12.so.0.44[.0]
  1.2.44              13    10244  12.so.0.44[.0]
+ 1.2.45beta01-03     13    10245  12.so.0.45[.0]
+ 1.0.55rc01          10    10055  10.so.0.55[.0]
+ 1.2.45rc01          13    10245  12.so.0.45[.0]
+ 1.0.55              10    10055  10.so.0.55[.0]
+ 1.2.45              13    10245  12.so.0.45[.0]
+ 1.2.46rc01-02       13    10246  12.so.0.46[.0]
+ 1.0.56              10    10056  10.so.0.56[.0]
+ 1.2.46              13    10246  12.so.0.46[.0]
+ 1.2.47beta01        13    10247  12.so.0.47[.0]
+ 1.2.47rc01          13    10247  12.so.0.47[.0]
+ 1.0.57rc01          10    10057  10.so.0.57[.0]
+ 1.2.47              13    10247  12.so.0.47[.0]
+ 1.0.57              10    10057  10.so.0.57[.0]
+ 1.2.48beta01        13    10248  12.so.0.48[.0]
+ 1.2.48rc01-02       13    10248  12.so.0.48[.0]
+ 1.0.58              10    10058  10.so.0.58[.0]
+ 1.2.48              13    10248  12.so.0.48[.0]
+ 1.2.49rc01          13    10249  12.so.0.49[.0]
+ 1.0.59              10    10059  10.so.0.59[.0]
+ 1.2.49              13    10249  12.so.0.49[.0]
 
 Henceforth the source version will match the shared-library minor
 and patch numbers; the shared-library major version number will be
@@ -4316,7 +4336,7 @@ for applications, is an unsigned integer of the form xyyzz corresponding
 to the source version x.y.z (leading zeros in y and z).  Beta versions
 were given the previous public release number plus a letter, until
 version 1.0.6j; from then on they were given the upcoming public
-release number plus "betaNN" or "rcN".
+release number plus "betaNN" or "rcNN".
 
 .SH "SEE ALSO"
 .IR libpngpf(3) ", " png(5)
@@ -4362,7 +4382,7 @@ possible without all of you.
 
 Thanks to Frank J. T. Wojcik for helping with the documentation.
 
-Libpng version 1.2.44 - June 26, 2010:
+Libpng version 1.2.49 - March 29, 2012:
 Initially created in 1995 by Guy Eric Schalnat, then of Group 42, Inc.
 Currently maintained by Glenn Randers-Pehrson (glennrp at users.sourceforge.net).
 
@@ -4385,7 +4405,7 @@ this sentence.
 
 This code is released under the libpng license.
 
-libpng versions 1.2.6, August 15, 2004, through 1.2.44, June 26, 2010, are
+libpng versions 1.2.6, August 15, 2004, through 1.2.49, March 29, 2012, are
 Copyright (c) 2004,2006-2008 Glenn Randers-Pehrson, and are
 distributed according to the same disclaimer and license as libpng-1.2.5
 with the following individual added to the list of Contributing Authors
@@ -4484,7 +4504,7 @@ certification mark of the Open Source Initiative.
 
 Glenn Randers-Pehrson
 glennrp at users.sourceforge.net
-June 26, 2010
+March 29, 2012
 
 .\" end of man page
 

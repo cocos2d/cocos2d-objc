@@ -1942,7 +1942,7 @@ Class restartAction()
 	[background_ removeFromParentAndCleanup:YES];
 	[[CCTextureCache sharedTextureCache] removeUnusedTextures];
 	
-	int tag = [sender tag];
+	NSInteger tag = [sender tag];
 	NSString *file = nil;
 	switch( tag ) {
 		case 0:

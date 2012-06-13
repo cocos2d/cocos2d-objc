@@ -1,4 +1,4 @@
-/*
+#if 0
 CHANGES - changes for libpng
 
 version 0.2
@@ -1478,7 +1478,7 @@ version 1.2.9beta5 [March 4, 2006]
   Removed trailing blanks from source files.
   Put version and date of latest change in each source file, and changed
     copyright year accordingly.
-  More cleanup of configure.ac, Makefile.ac, and associated scripts.
+  More cleanup of configure.ac, Makefile.am, and associated scripts.
   Restored scripts/makefile.elf which was inadvertently deleted.
 
 version 1.2.9beta6 [March 6, 2006]
@@ -2704,6 +2704,77 @@ version 1.2.44rc03 [June 23, 2010]
 version 1.2.44 [June 26, 2010]
   Updated some of the "last changed" dates.
 
+version 1.2.45beta01 [June 7, 2011]
+  Fixed uninitialized memory read in png_format_buffer() (Bug
+    report by Frank Busse, related to CVE-2004-0421).
+  Pass "" instead of '\0' to png_default_error() in png_err().  This mistake
+    was introduced in libpng-1.2.20beta01.
+  Check for up->location !PNG_AFTER_IDAT when writing unknown chunks
+    before IDAT.
+  Ported bugfix in pngrtran.c from 1.5.3: when expanding a paletted image,
+    always expand to RGBA if transparency is present.
+
+version 1.2.45beta02 [June 8, 2011]
+  Check for integer overflow in png_set_rgb_to_gray().
+
+version 1.2.45beta03 [June 19, 2011]
+  Check for sCAL chunk too short.
+
+version 1.2.45rc01 and 1.0.55rc01 [June 30, 2011]
+  Updated "last changed" dates and copyright year.
+
+version 1.2.45 and 1.0.55 [July 7, 2011]
+  No changes.
+
+version 1.2.46rc01 and 1.0.56rc01 [July 8, 2011]
+  Reverted changes to Makefile.am and Makefile.in to libpng-1.2.44 versions.
+
+version 1.2.46rc02 and 1.0.56rc02 [July 8, 2011]
+  Added CMakeLists.txt, projects/xcode, and pnggccrd.c to EXTRA_DIST in
+    Makefile.am and Makefile.in
+
+version 1.2.46 and 1.0.56 [July 9, 2011]
+  Udated copyright year to 2011.
+
+version 1.2.47beta01 [February 17, 2012]
+  Updated contrib/pngminus/makefile.std (Samuli Souminen)
+
+version 1.0.57rc01 and 1.2.47rc01 [February 17, 2012]
+  Fixed CVE-2011-3026 buffer overrun bug.
+  Fixed CVE-2011-3026 buffer overrun bug.  This bug was introduced when
+    iCCP chunk support was added at libpng-1.0.6.
+
+version 1.0.57 and 1.2.47 [February 18, 2012]
+  No changes.
+
+version 1.2.48beta01 [February 27, 2012]
+  Removed two useless #ifdef directives from pngread.c and one from pngrutil.c
+  Eliminated redundant png_push_read_tEXt|zTXt|iTXt|unknown code from
+    pngpread.c and use the sequential png_handle_tEXt, etc., in pngrutil.c;
+    now that png_ptr->buffer is inaccessible to applications, the special
+    handling is no longer useful.
+  Fixed bug with png_handle_hIST with odd chunk length (Frank Busse).
+  Fixed incorrect type (int copy should be png_size_t copy) in png_inflate().
+  Fixed off-by-one bug in png_handle_sCAL() when using fixed point arithmetic,
+    causing out-of-bounds read in png_set_sCAL() because of failure to copy
+    the string terminators.  This bug was introduced in libpng-1.0.6 (Frank
+    Busse).
+
+version 1.2.48rc01 [March 2, 2012]
+  Removed the png_free() of unused png_ptr->current_text from pngread.c.
+  Added libpng license text to pnggccrd.c and pngvcrd.c (requested by Chrome).
+
+version 1.2.48rc02 [March 2, 2012]
+  Removed all of the assembler code from pnggccrd.c and just "return 2;".
+
+version 1.0.58 and 1.2.48 [March 8, 2012]
+  No changes.
+
+version 1.2.49rc01 [March 29, 2012]
+  Revised png_set_text_2() to avoid potential memory corruption (fixes
+    CVE-2011-3048).
+  Prevent PNG_EXPAND+PNG_SHIFT doing the shift twice.
+
 Send comments/corrections/commendations to png-mng-implement at lists.sf.net
 (subscription required; visit
 https://lists.sourceforge.net/lists/listinfo/png-mng-implement
@@ -2711,4 +2782,4 @@ to subscribe)
 or to glennrp at users.sourceforge.net
 
 Glenn R-P
-*/
+#endif
