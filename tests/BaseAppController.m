@@ -58,7 +58,10 @@
 	navController_ = [[UINavigationController alloc] initWithRootViewController:director_];
 	navController_.navigationBarHidden = YES;
 
-	[window_ addSubview:navController_.view];
+	// AddSubView doesn't work on iOS6
+//	[window_ addSubview:navController_.view];
+	[window_ setRootViewController:navController_];
+
 	[window_ makeKeyAndVisible];
 
 	return YES;
