@@ -123,7 +123,7 @@ const NSUInteger defaultCapacity = 29;
 
 - (NSString*) description
 {
-	return [NSString stringWithFormat:@"<%@ = %p | Tag = %i>", [self class], self, tag_ ];
+	return [NSString stringWithFormat:@"<%@ = %p | Tag = %ld>", [self class], self, (long)tag_ ];
 }
 
 -(void)dealloc
