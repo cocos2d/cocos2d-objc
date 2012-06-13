@@ -323,7 +323,6 @@ typedef struct _ccBezierConfig {
 }
 // XXX: Added to prevent bug on BridgeSupport
 -(void) update:(ccTime)dt;
-+(id)actionWithDuration:(ccTime)d;
 @end
 
 /** Fades Out an object that implements the CCRGBAProtocol protocol. It modifies the opacity from 255 to 0.
@@ -334,7 +333,6 @@ typedef struct _ccBezierConfig {
 }
 // XXX: Added to prevent bug on BridgeSupport
 -(void) update:(ccTime)dt;
-+(id)actionWithDuration:(ccTime)d;
 @end
 
 /** Fades an object that implements the CCRGBAProtocol protocol. It modifies the opacity from the current value to a custom one.

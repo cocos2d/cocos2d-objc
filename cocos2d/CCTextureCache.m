@@ -113,10 +113,10 @@ static CCTextureCache *sharedTextureCache;
 {
 	__block NSString *desc = nil;
 	dispatch_sync(_dictQueue, ^{
-		desc = [NSString stringWithFormat:@"<%@ = %p | num of textures =  %i | keys: %@>",
+		desc = [NSString stringWithFormat:@"<%@ = %p | num of textures =  %lu | keys: %@>",
 			[self class],
 			self,
-			[textures_ count],
+			(unsigned long)[textures_ count],
 			[textures_ allKeys]
 			];
 	});
