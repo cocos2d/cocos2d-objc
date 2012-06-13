@@ -261,7 +261,7 @@ typedef struct _PVRTexHeader
 					heightBlocks = 2;
 
 				dataSize = widthBlocks * heightBlocks * ((blockSize  * bpp) / 8);
-				float packetLength = (dataLength-dataOffset);
+				unsigned int packetLength = (dataLength-dataOffset);
 				packetLength = packetLength > dataSize ? dataSize : packetLength;
 
 				mipmaps_[numberOfMipmaps_].address = bytes+dataOffset;
