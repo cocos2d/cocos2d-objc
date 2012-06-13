@@ -4129,7 +4129,7 @@
 		508EAC2F1193F8B0007F058D /* utlist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = utlist.h; sourceTree = "<group>"; };
 		509807081175041800EA7266 /* libbuild all tests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libbuild all tests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		509A79950F6188420032F449 /* CCSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CCSprite.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		509A79960F6188420032F449 /* CCSprite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CCSprite.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		509A79960F6188420032F449 /* CCSprite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CCSprite.m; sourceTree = "<group>"; };
 		509A7A970F61A2400032F449 /* grossini_dance_atlas.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grossini_dance_atlas.png; sourceTree = "<group>"; };
 		509D0816101E4FCE007E1749 /* CCTMXTiledMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTMXTiledMap.h; sourceTree = "<group>"; };
 		509D0817101E4FCE007E1749 /* CCTMXTiledMap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCTMXTiledMap.m; sourceTree = "<group>"; };
@@ -4183,7 +4183,7 @@
 		50A783C40F3AFCE500104C45 /* MotionStreakTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MotionStreakTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		50A783DC0F3AFDD700104C45 /* streak.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = streak.png; sourceTree = "<group>"; };
 		50AB6299109B75EC0036FD11 /* CCTileMapAtlas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CCTileMapAtlas.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		50AB629A109B75EC0036FD11 /* CCTileMapAtlas.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CCTileMapAtlas.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		50AB629A109B75EC0036FD11 /* CCTileMapAtlas.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CCTileMapAtlas.m; sourceTree = "<group>"; };
 		50AC0A500EC34DD400EB5EDC /* DONORS */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = DONORS; sourceTree = "<group>"; };
 		50B2C4D10E100AEA00AE9530 /* libChipmunk.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libChipmunk.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		50B2C5E80E100EF000AE9530 /* ChipmunkAccelTouchTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChipmunkAccelTouchTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
