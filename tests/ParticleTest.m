@@ -233,7 +233,7 @@ Class restartAction()
 {
 	CCLabelAtlas *atlas = (CCLabelAtlas*) [self getChildByTag:kTagParticleCount];
 
-	NSString *str = [NSString stringWithFormat:@"%4d", emitter_.particleCount];
+	NSString *str = [NSString stringWithFormat:@"%4ld", (unsigned long)emitter_.particleCount];
 	[atlas setString:str];
 }
 

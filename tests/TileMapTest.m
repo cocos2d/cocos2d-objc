@@ -1484,7 +1484,7 @@ Class restartAction()
 		NSString* file = [resources stringByAppendingPathComponent:@"orthogonal-test1.tmx"];
 		NSError* error = nil;
 		NSString* str = [NSString stringWithContentsOfFile:[[CCFileUtils sharedFileUtils] fullPathFromRelativePath:file] encoding:NSUTF8StringEncoding error:&error];
-		NSAssert3(!error, @"Unable to open file %@, %@ (%d)", file, [error localizedDescription], [error code]);
+		NSAssert3(!error, @"Unable to open file %@, %@ (%ld)", file, [error localizedDescription], (long)[error code]);
 
 		CCTMXTiledMap *map = [CCTMXTiledMap tiledMapWithXML:str resourcePath:resources];
 		[self addChild:map z:0 tag:kTagTileMap];
