@@ -1,7 +1,6 @@
 version 2.0 XX-Jun-2012
 . [FIX] Macros: CCLOGERROR defined in ccDeprecated as CCLOGWARN
 . [FIX] TexturePVR: wrong type when calculating PVR lenght
-. [FIX] ViewController: uses setRootViewController instead of addChild (iOS6 bug?)
 . [FIX] Xcode: Fixed compile errors and warnings in Xcode 4.5
 . [3RD] libpng: updated to 1.2.49
 
