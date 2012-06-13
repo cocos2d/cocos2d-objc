@@ -1484,7 +1484,7 @@ Class restartAction()
 		NSString* file = [resources stringByAppendingPathComponent:@"orthogonal-test1.tmx"];
 		NSError* error = nil;
 		NSString* str = [NSString stringWithContentsOfFile:[[CCFileUtils sharedFileUtils] fullPathFromRelativePath:file] encoding:NSUTF8StringEncoding error:&error];
-		NSAssert3(!error, @"Unable to open file %@, %@ (%d)", file, [error localizedDescription], [error code]);
+		NSAssert3(!error, @"Unable to open file %@, %@ (%ld)", file, [error localizedDescription], (long)[error code]);
 
 		CCTMXTiledMap *map = [CCTMXTiledMap tiledMapWithXML:str resourcePath:resources];
 		[self addChild:map z:0 tag:kTagTileMap];
@@ -1625,8 +1625,8 @@ Class restartAction()
 	navController_.navigationBarHidden = YES;
 
 	// set the Navigation Controller as the root view controller
-	//	[window_ setRootViewController:rootViewController_];
-	[window_ addSubview:navController_.view];
+//	[window_ addSubview:navController_.view];
+	[window_ setRootViewController:navController_];	// iOS6 bug: Needs setRootViewController
 
 	// make main window visible
 	[window_ makeKeyAndVisible];

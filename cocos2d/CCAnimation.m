@@ -142,11 +142,11 @@
 
 - (NSString*) description
 {
-	return [NSString stringWithFormat:@"<%@ = %p | frames=%d, totalDelayUnits=%f, delayPerUnit=%f, loops=%d>", [self class], self,
-			[frames_ count],
+	return [NSString stringWithFormat:@"<%@ = %p | frames=%lu, totalDelayUnits=%f, delayPerUnit=%f, loops=%lu>", [self class], self,
+			(unsigned long)[frames_ count],
 			totalDelayUnits_,
 			delayPerUnit_,
-			loops_
+			(unsigned long)loops_
 			];
 }
 

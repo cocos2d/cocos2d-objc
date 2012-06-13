@@ -581,7 +581,7 @@ static CCDirector *_sharedDirector = nil;
 			[FPSLabel_ setString:fpsstr];
 			[fpsstr release];
 			
-			NSString *draws = [[NSString alloc] initWithFormat:@"%4d", __ccNumberOfDraws];
+			NSString *draws = [[NSString alloc] initWithFormat:@"%4lu", (unsigned long)__ccNumberOfDraws];
 			[drawsLabel_ setString:draws];
 			[draws release];
 		}

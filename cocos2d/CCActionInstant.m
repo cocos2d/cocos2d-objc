@@ -248,10 +248,10 @@
 
 -(NSString*) description
 {
-	return [NSString stringWithFormat:@"<%@ = %p | Tag = %i | selector = %@>",
+	return [NSString stringWithFormat:@"<%@ = %p | Tag = %ld | selector = %@>",
 			[self class],
 			self,
-			tag_,
+			(long)tag_,
 			NSStringFromSelector(selector_)
 			];
 }

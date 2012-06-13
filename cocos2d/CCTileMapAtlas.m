@@ -140,7 +140,7 @@
 
 		// XXX: this method consumes a lot of memory
 		// XXX: a tree of something like that shall be impolemented
-		NSNumber *num = [posToAtlasIndex objectForKey: [NSString stringWithFormat:@"%d,%d", pos.x, pos.y]];
+		NSNumber *num = [posToAtlasIndex objectForKey: [NSString stringWithFormat:@"%ld,%ld", (long)pos.x, (long)pos.y]];
 		[self updateAtlasValueAt:pos withValue:tile withIndex: [num integerValue]];
 	}
 }
