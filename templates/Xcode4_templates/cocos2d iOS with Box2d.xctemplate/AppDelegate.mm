@@ -59,8 +59,8 @@
 	navController_.navigationBarHidden = YES;
 	
 	// set the Navigation Controller as the root view controller
-//	[window_ addSubview:navController_.view];
-	[window_ setRootViewController:navController_];	// iOS6 bug: Needs setRootViewController
+	[window_ addSubview:navController_.view];
+//	[window_ setRootViewController:navController_];	// iOS6 bug: Needs setRootViewController
 
 	
 	// make main window visible
