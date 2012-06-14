@@ -845,7 +845,7 @@ JSBool %s_%s%s(JSContext *cx, uint32_t argc, jsval *vp) {
 
         # Variadic methods are not supported
         if 'variadic' in method and method['variadic'] == 'true':
-            raise ParseException('variadic arguemnts not supported. Add va_list alternative')
+            raise ParseException('variadic arguemnts not supported.')
 
         s = method['selector']
 
