@@ -2,7 +2,7 @@
 //
 // Javascript Action tests
 // Test are coded using Javascript, with the exception of MenuCallback which uses Objective-J to handle the callbacks.
-// 
+//
 
 require("javascript-spidermonkey/helper.js");
 
@@ -149,7 +149,7 @@ var SpriteColorOpacity = SpriteTestDemo.extend({
         var fade = cc.RepeatForever.actionWithAction( cc.Sequence.actionWithArray([action, action_back] ) );
 
 //        var tintRed = cc.TintBy.actionWithDurationRedGreenBlue(2, 0, -255, -255);
-        var tintRed = cc.RotateBy.actionWithDurationAngle(2, 360 );							
+        var tintRed = cc.RotateBy.actionWithDurationAngle(2, 360 );
         var tintRedBack = tintRed.reverse();
         var red = cc.RepeatForever.actionWithAction(cc.Sequence.actionWithArray([tintRed, tintRedBack] ) );
 
@@ -175,9 +175,9 @@ var SpriteColorOpacity = SpriteTestDemo.extend({
         this.addChild(sprite6);
         this.addChild(sprite7);
         this.addChild(sprite8);
-											   
-											   l = this.children();
-											   cc.log("Children: " + l );
+
+        l = this.children();
+        cc.log("Children: " + l );
     },
     title:function () {
         return "Sprite: Color & Opacity";

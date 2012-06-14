@@ -403,6 +403,7 @@
 
 /** creates a menu item from a list of items with a target/selector */
 +(id) itemWithTarget:(id)target selector:(SEL)selector items:(CCMenuItem*) item, ... NS_REQUIRES_NIL_TERMINATION;
++(id) itemWithTarget:(id)target selector:(SEL)selector items:(CCMenuItem*) item vaList:(va_list)args;
 
 /** creates a menu item from a list of items and executes the given block when the item is selected.
  The block will be "copied".

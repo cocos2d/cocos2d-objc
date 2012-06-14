@@ -76,6 +76,8 @@ Example:
 }
 /** helper contructor to create an array of sequenceable actions */
 +(id) actions: (CCFiniteTimeAction*) action1, ... NS_REQUIRES_NIL_TERMINATION;
+/** helper contructor to create an array of sequenceable actions */
++(id) actions: (CCFiniteTimeAction*) action1 vaList:(va_list) args;
 /** helper contructor to create an array of sequenceable actions given an array */
 +(id) actionWithArray: (NSArray*) arrayOfActions;
 /** creates the action */
@@ -116,6 +118,8 @@ Example:
 }
 /** helper constructor to create an array of spawned actions */
 +(id) actions: (CCFiniteTimeAction*) action1, ... NS_REQUIRES_NIL_TERMINATION;
+/** helper constructor to create an array of spawned actions */
++(id) actions: (CCFiniteTimeAction*) action1 vaList:(va_list)args;
 /** helper contructor to create an array of spawned actions given an array */
 +(id) actionWithArray: (NSArray*) arrayOfActions;
 /** creates the Spawn action */

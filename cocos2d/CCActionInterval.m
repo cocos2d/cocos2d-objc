@@ -119,22 +119,32 @@
 @implementation CCSequence
 +(id) actions: (CCFiniteTimeAction*) action1, ...
 {
-	va_list params;
-	va_start(params,action1);
-	
+	va_list args;
+	va_start(args, action1);
+
+	id ret = [self actions:action1 vaList:args];
+
+	va_end(args);
+
+	return  ret;
+}
+
++(id) actions: (CCFiniteTimeAction*) action1 vaList:(va_list)args
+{
 	CCFiniteTimeAction *now;
 	CCFiniteTimeAction *prev = action1;
 	
 	while( action1 ) {
-		now = va_arg(params,CCFiniteTimeAction*);
+		now = va_arg(args,CCFiniteTimeAction*);
 		if ( now )
 			prev = [self actionOne: prev two: now];
 		else
 			break;
 	}
-	va_end(params);
+
 	return prev;
 }
+
 
 +(id) actionWithArray: (NSArray*) actions
 {
@@ -371,22 +381,31 @@
 @implementation CCSpawn
 +(id) actions: (CCFiniteTimeAction*) action1, ...
 {
-	va_list params;
-	va_start(params,action1);
+	va_list args;
+	va_start(args, action1);
 
+	id ret = [self actions:action1 vaList:args];
+
+	va_end(args);
+	return ret;
+}
+
++(id) actions: (CCFiniteTimeAction*) action1 vaList:(va_list)args
+{
 	CCFiniteTimeAction *now;
 	CCFiniteTimeAction *prev = action1;
-
+	
 	while( action1 ) {
-		now = va_arg(params,CCFiniteTimeAction*);
+		now = va_arg(args,CCFiniteTimeAction*);
 		if ( now )
 			prev = [self actionOne: prev two: now];
 		else
 			break;
 	}
-	va_end(params);
+
 	return prev;
 }
+
 
 +(id) actionWithArray: (NSArray*) actions
 {

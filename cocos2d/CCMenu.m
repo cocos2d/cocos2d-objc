@@ -59,18 +59,14 @@ enum {
 	va_list args;
 	va_start(args,item);
 
-	id s = [[[self alloc] initWithItems: item vaList:args] autorelease];
+	id ret = [self menuWithItems:item vaList:args];
 
 	va_end(args);
-	return s;
+	
+	return ret;
 }
 
--(id) init
-{
-	return [self initWithArray:nil];
-}
-
--(id) initWithItems: (CCMenuItem*) item vaList: (va_list) args
++(id) menuWithItems: (CCMenuItem*) item vaList: (va_list) args
 {
 	NSMutableArray *array = nil;
 	if( item ) {
@@ -81,9 +77,15 @@ enum {
 			i = va_arg(args, CCMenuItem*);
 		}
 	}
-
-	return [self initWithArray:array];
+	
+	return [[[self alloc] initWithArray:array] autorelease];
 }
+
+-(id) init
+{
+	return [self initWithArray:nil];
+}
+
 
 -(id) initWithArray:(NSArray *)arrayOfItems
 {
