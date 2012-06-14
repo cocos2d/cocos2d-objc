@@ -60,14 +60,14 @@ enum {
 /** whether or not the menu will receive events */
 @property (nonatomic, readwrite) BOOL enabled;
 
-/** creates a CCMenu with its items */
+/** creates a CCMenu with CCMenuItem objects */
 + (id) menuWithItems: (CCMenuItem*) item, ... NS_REQUIRES_NIL_TERMINATION;
+
+/** creates a CCMenu with CCMenuItem objects */
++ (id) menuWithItems: (CCMenuItem*) firstItem vaList: (va_list) args;
 
 /** creates a CCMenu with a NSArray of CCMenuItem objects */
 + (id) menuWithArray:(NSArray*)arrayOfItems;
-
-/** initializes a CCMenu with its items */
-- (id) initWithItems: (CCMenuItem*) item vaList: (va_list) args;
 
 /** initializes a CCMenu with a NSArray of CCMenuItem objects */
 - (id) initWithArray:(NSArray*)arrayOfItems;
