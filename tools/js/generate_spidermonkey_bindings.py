@@ -555,9 +555,9 @@ void %s_finalize(JSContext *cx, JSObject *obj)
         # Left column: BridgeSupport types
         # Right column: JS types
         supported_declared_types = {
-            'CGPoint'   : '{}',
-            'CGSize'    : '{}',
-            'CGRect'    : '{}',
+            'CGPoint'   : 'N/A',
+            'CGSize'    : 'N/A',
+            'CGRect'    : 'N/A',
             'NSString*' : 'S',
             'NSArray*'  : '[]',
             'NSMutableArray*' : '[]',
@@ -627,9 +627,9 @@ void %s_finalize(JSContext *cx, JSObject *obj)
         # Left column: BridgeSupport types
         # Right column: JS types
         supported_declared_types = {
-            'CGPoint'   : '{}',
-            'CGSize'    : '{}',
-            'CGRect'    : '{}',
+            'CGPoint'   : 'N/A',
+            'CGSize'    : 'N/A',
+            'CGRect'    : 'N/A',
             'NSString*' : 'S',
             'NSArray*'  : '[]',
             'CCArray*'  : '[]',
