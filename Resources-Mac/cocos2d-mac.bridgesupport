@@ -2318,20 +2318,12 @@
 </method>
 </class>
 <class name='CCFadeIn'>
-<method selector='actionWithDuration:' class_method='true'>
-<arg name='d' declared_type='ccTime' type='f' index='0'/>
-<retval declared_type='id' type='@'/>
-</method>
 <method selector='update:'>
 <arg name='dt' declared_type='ccTime' type='f' index='0'/>
 <retval declared_type='void' type='v'/>
 </method>
 </class>
 <class name='CCFadeOut'>
-<method selector='actionWithDuration:' class_method='true'>
-<arg name='d' declared_type='ccTime' type='f' index='0'/>
-<retval declared_type='id' type='@'/>
-</method>
 <method selector='update:'>
 <arg name='dt' declared_type='ccTime' type='f' index='0'/>
 <retval declared_type='void' type='v'/>
@@ -3283,17 +3275,17 @@
 <arg name='arrayOfItems' declared_type='NSArray*' type='@' index='0'/>
 <retval declared_type='id' type='@'/>
 </method>
-<method selector='initWithItems:vaList:'>
-<arg name='item' declared_type='CCMenuItem*' type='@' index='0'/>
-<arg name='args' declared_type='va_list' type64='^{__va_list_tag=II^v^v}' type='*' index='1' declared_type64='__va_list_tag*'/>
-<retval declared_type='id' type='@'/>
-</method>
 <method selector='menuWithArray:' class_method='true'>
 <arg name='arrayOfItems' declared_type='NSArray*' type='@' index='0'/>
 <retval declared_type='id' type='@'/>
 </method>
 <method variadic='true' sentinel='0' selector='menuWithItems:' class_method='true'>
 <arg name='item' declared_type='CCMenuItem*' type='@' index='0'/>
+<retval declared_type='id' type='@'/>
+</method>
+<method selector='menuWithItems:vaList:' class_method='true'>
+<arg name='firstItem' declared_type='CCMenuItem*' type='@' index='0'/>
+<arg name='args' declared_type='va_list' type64='^{__va_list_tag=II^v^v}' type='*' index='1' declared_type64='__va_list_tag*'/>
 <retval declared_type='id' type='@'/>
 </method>
 <method selector='opacity'>
@@ -3725,6 +3717,13 @@
 <arg name='target' declared_type='id' type='@' index='0'/>
 <arg name='selector' declared_type='SEL' type=':' index='1'/>
 <arg name='item' declared_type='CCMenuItem*' type='@' index='2'/>
+<retval declared_type='id' type='@'/>
+</method>
+<method selector='itemWithTarget:selector:items:vaList:' class_method='true'>
+<arg name='target' declared_type='id' type='@' index='0'/>
+<arg name='selector' declared_type='SEL' type=':' index='1'/>
+<arg name='item' declared_type='CCMenuItem*' type='@' index='2'/>
+<arg name='args' declared_type='va_list' type64='^{__va_list_tag=II^v^v}' type='*' index='3' declared_type64='__va_list_tag*'/>
 <retval declared_type='id' type='@'/>
 </method>
 <method selector='opacity'>
@@ -5184,6 +5183,11 @@
 <arg name='action1' declared_type='CCFiniteTimeAction*' type='@' index='0'/>
 <retval declared_type='id' type='@'/>
 </method>
+<method selector='actions:vaList:' class_method='true'>
+<arg name='action1' declared_type='CCFiniteTimeAction*' type='@' index='0'/>
+<arg name='args' declared_type='va_list' type64='^{__va_list_tag=II^v^v}' type='*' index='1' declared_type64='__va_list_tag*'/>
+<retval declared_type='id' type='@'/>
+</method>
 <method selector='initOne:two:'>
 <arg name='actionOne' declared_type='CCFiniteTimeAction*' type='@' index='0'/>
 <arg name='actionTwo' declared_type='CCFiniteTimeAction*' type='@' index='1'/>
@@ -5312,6 +5316,11 @@
 </method>
 <method variadic='true' sentinel='0' selector='actions:' class_method='true'>
 <arg name='action1' declared_type='CCFiniteTimeAction*' type='@' index='0'/>
+<retval declared_type='id' type='@'/>
+</method>
+<method selector='actions:vaList:' class_method='true'>
+<arg name='action1' declared_type='CCFiniteTimeAction*' type='@' index='0'/>
+<arg name='args' declared_type='va_list' type64='^{__va_list_tag=II^v^v}' type='*' index='1' declared_type64='__va_list_tag*'/>
 <retval declared_type='id' type='@'/>
 </method>
 <method selector='initOne:two:'>

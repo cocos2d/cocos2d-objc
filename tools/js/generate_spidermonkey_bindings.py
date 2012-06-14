@@ -559,9 +559,9 @@ void %s_finalize(JSContext *cx, JSObject *obj)
             'CGSize'    : '{}',
             'CGRect'    : '{}',
             'NSString*' : 'S',
-	    'NSArray*'  : '[]',
+            'NSArray*'  : '[]',
             'NSMutableArray*' : '[]',
-	    'CCArray*'  : '[]',
+            'CCArray*'  : '[]',
         }
 
         supported_types = {
@@ -615,6 +615,9 @@ void %s_finalize(JSContext *cx, JSObject *obj)
             elif t == '@' and dt_class_name in self.supported_classes:
                 ret_js_type = 'o'
                 ret_declared_type = dt
+            elif self.is_valid_structure( t ):
+                ret_js_type = t
+                ret_declared_type =  dt
             else:
                 raise ParseException('Unsupported return value %s' % dt)
 
@@ -665,7 +668,7 @@ void %s_finalize(JSContext *cx, JSObject *obj)
                     args_js_type.append( supported_declared_types[dt] )
                     args_declared_type.append( dt )
                 elif self.is_valid_structure( t ):
-                    args_js_type.append( '{}' )
+                    args_js_type.append( t )
                     args_declared_type.append( dt )
                 elif t in supported_types:
                     args_js_type.append( supported_types[t] )
@@ -696,19 +699,19 @@ void %s_finalize(JSContext *cx, JSObject *obj)
     # CGPoint needs an special case since its internal structure changes
     # on the platform. On Mac it uses doubles and on iOS it uses floats
     # This function expect floats.
-    def generate_argument_struct_cgpoint( self, i, arg_js_type, arg_declared_type ):
+    def generate_argument_cgpoint( self, i, arg_js_type, arg_declared_type ):
         template = '''
 	CGPoint arg%d = jsval_to_CGPoint( *argvp++, cx );
 '''
         self.mm_file.write( template % i )
 
-    def generate_argument_struct_cgsize( self, i, arg_js_type, arg_declared_type ):
+    def generate_argument_cgsize( self, i, arg_js_type, arg_declared_type ):
         template = '''
 	CGSize arg%d = jsval_to_CGSize( *argvp++, cx );
 '''
         self.mm_file.write( template % i )
 
-    def generate_argument_struct_cgrect( self, i, arg_js_type, arg_declared_type ):
+    def generate_argument_cgrect( self, i, arg_js_type, arg_declared_type ):
         template = '''
 	CGRect arg%d = jsval_to_CGRect( *argvp++, cx );
 '''
@@ -721,20 +724,11 @@ void %s_finalize(JSContext *cx, JSObject *obj)
 	JS_ValueToObject( cx, *argvp++, &tmp_arg%d );
 	%s arg%d = *(%s*)JS_GetTypedArrayData( tmp_arg%d);
 '''
-        special_case_structs = {
-            'CGPoint' : self.generate_argument_struct_cgpoint,
-            'CGSize' : self.generate_argument_struct_cgsize,
-            'CGRect' : self.generate_argument_struct_cgrect,
-        }
-
         proxy_class_name = PROXY_PREFIX + arg_declared_type
 
-        if arg_declared_type in special_case_structs:
-            special_case_structs[ arg_declared_type ]( i, arg_js_type, arg_declared_type )
-        else:
-            self.mm_file.write( template % (i,
-                                            i,
-                                            arg_declared_type, i, arg_declared_type, i ) )
+        self.mm_file.write( template % (i,
+                                        i,
+                                        arg_declared_type, i, arg_declared_type, i ) )
 
 
     def generate_argument_array( self, i, arg_js_type, arg_declared_type ):
@@ -750,6 +744,64 @@ void %s_finalize(JSContext *cx, JSObject *obj)
 	js_block arg%d = jsval_to_block( *argvp++, cx, JS_THIS_OBJECT(cx, vp) );
 '''
         self.mm_file.write( template % (i) )
+
+    def generate_arguments( self, args_declared_type, args_js_type ):
+        # b      JSBool          Boolean
+        # c      uint16_t/jschar ECMA uint16_t, Unicode char
+        # i      int32_t         ECMA int32_t
+        # u      uint32_t        ECMA uint32_t
+        # j      int32_t         Rounded int32_t (coordinate)
+        # d      double          IEEE double
+        # I      double          Integral IEEE double
+        # S      JSString *      Unicode string, accessed by a JSString pointer
+        # W      jschar *        Unicode character vector, 0-terminated (W for wide)
+        # o      JSObject *      Object reference
+        # f      JSFunction *    Function private
+        # v      jsval           Argument value (no conversion)
+        # *      N/A             Skip this argument (no vararg)
+        # /      N/A             End of required arguments
+        # More info:
+        # https://developer.mozilla.org/en/SpiderMonkey/JSAPI_Reference/JS_ConvertArguments
+        js_types_conversions = {
+            'b' : ['JSBool',    'JS_ValueToBoolean'],
+            'd' : ['double',    'JS_ValueToNumber'],
+            'I' : ['double',    'JS_ValueToNumber'],    # double converted to string
+            'i' : ['int32_t',   'JS_ValueToECMAInt32'],
+            'j' : ['int32_t',   'JS_ValueToECMAInt32'],
+            'u' : ['uint32_t',  'JS_ValueToECMAUint32'],
+            'c' : ['uint16_t',  'JS_ValueToUint16'],
+        }
+
+        js_special_type_conversions =  {
+            'S' : self.generate_argument_string,
+            'o' : self.generate_argument_object,
+            '[]': self.generate_argument_array,
+            'f' : self.generate_argument_function,
+        }
+
+        js_declared_types_conversions = {
+            'CGPoint' : self.generate_argument_cgpoint,
+            'CGSize'  : self.generate_argument_cgsize,
+            'CGRect'  : self.generate_argument_cgrect,
+        }
+
+        # First  time
+        self.mm_file.write('\tjsval *argvp = JS_ARGV(cx,vp);\n')
+
+        for i,arg in enumerate(args_js_type):
+
+            if arg in js_types_conversions:
+                t = js_types_conversions[arg]
+                self.mm_file.write( '\t%s arg%d; %s( cx, *argvp++, &arg%d );\n' % ( t[0], i, t[1], i ) )
+            elif arg in js_special_type_conversions:
+                js_special_type_conversions[arg]( i, arg, args_declared_type[i] )
+            elif args_declared_type[i] in js_declared_types_conversions:
+                f = js_declared_types_conversions[ args_declared_type[i] ]
+                f( i, arg, args_declared_type[i] )
+            elif self.is_valid_structure( arg ):
+                self.generate_argument_struct( i, arg, args_declared_type[i] )
+            else:
+                raise ParseException('Unsupported type: %s' % arg )
 
     def generate_method_prefix( self, class_name, converted_name, num_of_args, method_type ):
         # JSPROXY_CCNode, setPosition
@@ -790,50 +842,17 @@ JSBool %s_%s%s(JSContext *cx, uint32_t argc, jsval *vp) {
 
 
     def generate_method( self, class_name, method ):
-        # b      JSBool          Boolean
-        # c      uint16_t/jschar ECMA uint16_t, Unicode char
-        # i      int32_t         ECMA int32_t
-        # u      uint32_t        ECMA uint32_t
-        # j      int32_t         Rounded int32_t (coordinate)
-        # d      double          IEEE double
-        # I      double          Integral IEEE double
-        # S      JSString *      Unicode string, accessed by a JSString pointer
-        # W      jschar *        Unicode character vector, 0-terminated (W for wide)
-        # o      JSObject *      Object reference
-        # f      JSFunction *    Function private
-        # v      jsval           Argument value (no conversion)
-        # *      N/A             Skip this argument (no vararg)
-        # /      N/A             End of required arguments
-        # More info:
-        # https://developer.mozilla.org/en/SpiderMonkey/JSAPI_Reference/JS_ConvertArguments
-        js_types_conversions = {
-            'b' : ['JSBool',    'JS_ValueToBoolean'],
-            'd' : ['double',    'JS_ValueToNumber'],
-            'I' : ['double',    'JS_ValueToNumber'],    # double converted to string
-            'i' : ['int32_t',   'JS_ValueToECMAInt32'],
-            'j' : ['int32_t',   'JS_ValueToECMAInt32'],
-            'u' : ['uint32_t',  'JS_ValueToECMAUint32'],
-            'c' : ['uint16_t',  'JS_ValueToUint16'],
-        }
-
-        js_special_type_conversions =  {
-            'S' : self.generate_argument_string,
-            'o' : self.generate_argument_object,
-            '{}': self.generate_argument_struct,
-            '[]': self.generate_argument_array,
-            'f' : self.generate_argument_function,
-        }
 
         # Variadic methods are not supported
         if 'variadic' in method and method['variadic'] == 'true':
-            raise ParseException('variadic arguemnts not supported')
+            raise ParseException('variadic arguemnts not supported. Add va_list alternative')
 
         s = method['selector']
 
         # Don't generate methods that are defined as callbacks
         if class_name in self.callback_methods:
             if s in self.callback_methods[ class_name ]:
-                raise ParseException('Method defined as callback.')
+                raise ParseException('Method defined as callback. Ignoring.')
 
         args_js_type, args_declared_type = self.parse_method_arguments(method, class_name )
         ret_js_type, ret_declared_type = self.parse_method_retval( method, class_name )
@@ -848,22 +867,10 @@ JSBool %s_%s%s(JSContext *cx, uint32_t argc, jsval *vp) {
         # writes method description
         self.mm_file.write( '\n// Arguments: %s\n// Ret value: %s' % ( ', '.join(args_declared_type), ret_declared_type ) )
 
-
         self.generate_method_prefix( class_name, converted_name, num_of_args, method_type )
 
-        for i,arg in enumerate(args_js_type):
-
-            # First  time
-            if i==0:
-                self.mm_file.write('\tjsval *argvp = JS_ARGV(cx,vp);\n')
-
-            if arg in js_types_conversions:
-                t = js_types_conversions[arg]
-                self.mm_file.write( '\t%s arg%d; %s( cx, *argvp++, &arg%d );\n' % ( t[0], i, t[1], i ) )
-            elif arg in js_special_type_conversions:
-                js_special_type_conversions[arg]( i, arg, args_declared_type[i] )
-            else:
-                raise ParseException('Unsupported type: %s' % arg )
+        if len(args_js_type) > 0:
+            self.generate_arguments( args_declared_type, args_js_type );
 
         if ret_declared_type and method_type==METHOD_REGULAR:
             self.mm_file.write( '\t%s ret_val;\n' % ret_declared_type )
