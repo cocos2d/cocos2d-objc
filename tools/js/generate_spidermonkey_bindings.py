@@ -69,10 +69,11 @@ class SpiderMonkey(object):
                              'classes_to_parse' : [],
                              'callback_methods' : [],
                              'classes_to_ignore' : [],
-                             'one_file_for_all_classes' : True,
                              'bridge_support_file' : '',
                              'hierarchy_protocol_file' : '',
                              'inherit_class_methods' : True,
+                             'functions_to_parse' : [],
+                             'functions_to_ignore' : [],
                              }
 
 
@@ -119,17 +120,16 @@ class SpiderMonkey(object):
 
         self.namespace = config['namespace']
 
-        self.onefile = config['one_file_for_all_classes']
-
+        #
+        # Classes related
+        #
         self.prefix = config['obj_class_prefix_to_remove']
-
         self.inherit_class_methods = config['inherit_class_methods']
 
         # Add here manually generated classes
         self.supported_classes = set(['NSObject'])
-
-        self.generate_classes_to_bind( config['classes_to_parse'] )
-        self.generate_classes_to_ignore( config['classes_to_ignore'] )
+        self.init_classes_to_bind( config['classes_to_parse'] )
+        self.init_classes_to_ignore( config['classes_to_ignore'] )
 
         self.callback_methods = {}
         callback_methods = config['callback_methods']
@@ -145,6 +145,12 @@ class SpiderMonkey(object):
         # Current method that is being parsed
         self.current_method = None
 
+        #
+        # function related
+        #
+        self.init_functions_to_bind( config['functions_to_parse'] )
+        self.init_functions_to_ignore( config['functions_to_ignore'] )
+
     def parse_hierarchy_file( self ):
         f = open( self.hierarchy_file )
         self.hierarchy = ast.literal_eval( f.read() )
@@ -155,19 +161,39 @@ class SpiderMonkey(object):
         root = p.getroot()
         self.bs = xml2d( root )
 
-    def generate_classes_to_bind( self, klasses ):
+    def init_functions_to_bind( self, functions ):
+        self._functions_to_bind = set( functions )
+        ref_list = []
+        for k in self.bs['signatures']['function']:
+            ref_list.append( k['name'] )
+        self.functions_to_bind = self.expand_regexp_names( self._functions_to_bind, ref_list )
+
+    def init_functions_to_ignore( self, klasses ):
+        self._functions_to_ignore = klasses
+        self.functions_to_ignore = self.expand_regexp_names( self._functions_to_ignore, self.functions_to_bind )
+
+        print self.functions_to_ignore
+        copy_set = copy.copy( self.functions_to_bind )
+        for i in self.functions_to_bind:
+            if i in self.functions_to_ignore:
+                print 'Explicity removing %s from bindings...' % i
+                copy_set.remove( i )
+
+        self.functions_to_bind = copy_set
+
+    def init_classes_to_bind( self, klasses ):
         self._classes_to_bind = set( klasses )
         ref_list = []
         for k in self.bs['signatures']['class']:
             ref_list.append( k['name'] )
-        self.classes_to_bind = self.expand_class_names( self._classes_to_bind, ref_list )
+        self.classes_to_bind = self.expand_regexp_names( self._classes_to_bind, ref_list )
         l = self.ancestors_of_classes_to_bind()
         s = set( self.classes_to_bind )
         self.classes_to_bind = s.union( set(l) )
 
-    def generate_classes_to_ignore( self, klasses ):
+    def init_classes_to_ignore( self, klasses ):
         self._classes_to_ignore = klasses
-        self.classes_to_ignore = self.expand_class_names( self._classes_to_ignore, self.classes_to_bind )
+        self.classes_to_ignore = self.expand_regexp_names( self._classes_to_ignore, self.classes_to_bind )
 
         copy_set = copy.copy( self.classes_to_bind )
         for i in self.classes_to_bind:
@@ -198,15 +224,17 @@ class SpiderMonkey(object):
 
         return self.ancestors( subclass, list_of_ancestors )
 
-    def expand_class_names( self, names_to_expand, list_of_names ):
+    def expand_regexp_names( self, names_to_expand, list_of_names ):
         valid = []
         all_class_names = []
         for n in list_of_names:
             for regexp in names_to_expand:
+                if not regexp or regexp=='':
+                    continue
                 # if last char is not a regexp modifier,
                 # then append '$' to regexp
                 last_char = regexp[-1]
-                if last_char in string.letters or last_char in string.digits:
+                if last_char in string.letters or last_char in string.digits or last_char=='_':
                     result = re.match( regexp + '$', n )
                 else:
                     result = re.match( regexp, n )
@@ -962,7 +990,7 @@ JSBool %s_%s%s(JSContext *cx, uint32_t argc, jsval *vp) {
 #import "jstypedarray.h"
 #import "ScriptingCore.h"
 
-#import "%s%s.h"
+#import "%s%s_classes.h"
 
 '''
         self.generate_autogenerate_prefix( self.mm_file )
@@ -1010,10 +1038,6 @@ extern JSClass *%s_class;
 @end
 '''
         proxy_class_name = '%s%s' % (PROXY_PREFIX, class_name )
-
-        # Header file
-        if not self.onefile:
-            self.generate_header_prefix( parent_name )
 
         self.generate_pragma_mark( class_name, self.h_file )
 
@@ -1179,7 +1203,7 @@ void %s_createClass(JSContext *cx, JSObject* globalObj, const char* name )
             cb_name = self.convert_selector_name_to_native( method['selector'] )
 
             if self.is_class_constructor( method ):
-                entry = js_fn % (js_name, proxy_class_name + '_' + cb_name + class_method, '| JSFUN_CONSTRUCTOR | JSPROP_ENUMERATE' )
+                entry = js_fn % (js_name, proxy_class_name + '_' + cb_name + class_method, '| JSPROP_ENUMERATE' ) # | JSFUN_CONSTRUCTOR
             else:
                 entry = js_fn % (js_name, proxy_class_name + '_' + cb_name + class_method, '| JSPROP_ENUMERATE' )
 
@@ -1232,9 +1256,6 @@ void %s_createClass(JSContext *cx, JSObject* globalObj, const char* name )
             self.mm_file.write( template_suffix )
 
     def generate_mm( self, klass, class_name, parent_name ):
-        # Implementation file
-        if not self.onefile:
-            self.generate_mm_prefix()
 
         self.generate_pragma_mark( class_name, self.mm_file )
         self.generate_constructor( class_name )
@@ -1258,10 +1279,6 @@ void %s_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 
         self.parsed_classes.append( class_name )
 
-        if not self.onefile:
-            self.h_file = open( '%s%s.h' % ( BINDINGS_PREFIX, class_name), 'w' )
-            self.mm_file = open( '%s%s.mm' % (BINDINGS_PREFIX, class_name), 'w' )
-
         signatures = self.bs['signatures']
         classes = signatures['class']
         klass = None
@@ -1284,19 +1301,6 @@ void %s_createClass(JSContext *cx, JSObject* globalObj, const char* name )
         self.generate_mm( klass, class_name, parent_name )
         self.generate_header( class_name, parent_name )
 
-        if not self.onefile:
-            self.h_file.close()
-            self.mm_file.close()
-
-    def generate_namespace_include_file( self ):
-        f = open( '%s%s.h' % (BINDINGS_PREFIX, self.namespace), 'w' )
-        self.generate_autogenerate_prefix( f )
-
-        for klass in self.supported_classes:
-            f.write('#import "%s%s.h"\n' % ( BINDINGS_PREFIX, klass) )
-
-        f.close()
-
     def generate_class_registration( self, klass ):
         # only supported classes
         if not klass or klass in self.classes_to_ignore:
@@ -1317,7 +1321,7 @@ void %s_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 
         self.classes_registered = []
 
-        self.class_registration_file = open( '%sclass_registration_%s.h' % (BINDINGS_PREFIX, self.namespace), 'w' )
+        self.class_registration_file = open( '%s%s_classes_registration.h' % (BINDINGS_PREFIX, self.namespace), 'w' )
         self.generate_autogenerate_prefix( self.class_registration_file )
 
         for klass in self.supported_classes:
@@ -1325,25 +1329,28 @@ void %s_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 
         self.class_registration_file.close()
 
+    def generate_function_registration( self, function ):
+        print 'loco ' + function
+
+    def generate_functions_registration( self ):
+        for func in self.functions_to_bind:
+            self.generate_function_registration( func )
 
     def generate_bindings( self ):
 
-        if self.onefile:
-            self.h_file = open( '%s%s.h' % ( BINDINGS_PREFIX, self.namespace), 'w' )
-            self.generate_header_prefix( 'NSObject' )
-            self.mm_file = open( '%s%s.mm' % (BINDINGS_PREFIX, self.namespace), 'w' )
-            self.generate_mm_prefix()
-        else:
-            self.generate_namespace_include_file()
+        self.h_file = open( '%s%s_classes.h' % ( BINDINGS_PREFIX, self.namespace), 'w' )
+        self.generate_header_prefix( 'NSObject' )
+        self.mm_file = open( '%s%s_classes.mm' % (BINDINGS_PREFIX, self.namespace), 'w' )
+        self.generate_mm_prefix()
 
         for klass in self.classes_to_bind:
             self.generate_class_binding( klass )
 
-        if self.onefile:
-            self.h_file.close()
-            self.mm_file.close()
+        self.h_file.close()
+        self.mm_file.close()
 
         self.generate_classes_registration()
+        self.generate_functions_registration()
 
 
     def parse( self ):
