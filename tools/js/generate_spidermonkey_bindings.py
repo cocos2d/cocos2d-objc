@@ -151,6 +151,7 @@ class SpiderMonkey(object):
         self.init_functions_to_bind( config['functions_to_parse'] )
         self.init_functions_to_ignore( config['functions_to_ignore'] )
         self.current_function = None
+        self.callback_functions = []
 
 
     def parse_hierarchy_file( self ):
@@ -653,7 +654,7 @@ void %s_finalize(JSContext *cx, JSObject *obj)
 
         return (ret_js_type, ret_declared_type )
 
-    def parse_method_arguments( self, method, class_name ):
+    def validate_arguments( self, method ):
         # Left column: BridgeSupport types
         # Right column: JS types
         supported_declared_types = {
@@ -678,8 +679,6 @@ void %s_finalize(JSContext *cx, JSObject *obj)
             'B' : 'b',  # BOOL
             's' : 'c',  # short
         }
-
-        s = method['selector']
 
         args_js_type = []
         args_declared_type = []
@@ -884,7 +883,7 @@ JSBool %s_%s%s(JSContext *cx, uint32_t argc, jsval *vp) {
             if s in self.callback_methods[ class_name ]:
                 raise ParseException('Method defined as callback. Ignoring.')
 
-        args_js_type, args_declared_type = self.parse_method_arguments(method, class_name )
+        args_js_type, args_declared_type = self.validate_arguments( method )
         ret_js_type, ret_declared_type = self.parse_method_retval( method, class_name )
 
         method_type = self.get_method_type( method )
@@ -983,7 +982,7 @@ JSBool %s_%s%s(JSContext *cx, uint32_t argc, jsval *vp) {
 
         return ok_methods
 
-    def generate_mm_prefix( self ):
+    def generate_class_mm_prefix( self ):
         import_template = '''
 // needed for callbacks from objective-c to JS
 #import <objc/runtime.h>
@@ -1007,11 +1006,11 @@ JSBool %s_%s%s(JSContext *cx, uint32_t argc, jsval *vp) {
 '''
         fd.write( pragm_mark % (class_name, class_name) )
 
-    def generate_header_prefix( self, parent_name ):
+    def generate_class_header_prefix( self, parent_name ):
         self.generate_autogenerate_prefix( self.h_file )
         self.h_file.write('#import "%s.h"\n' % (BINDINGS_PREFIX + parent_name) )
 
-    def generate_header( self, class_name, parent_name ):
+    def generate_class_header( self, class_name, parent_name ):
         # JSPROXXY_CCNode
         # JSPROXXY_CCNode
         # JSPROXY_CCNode, JSPROXY_NSObject
@@ -1257,7 +1256,7 @@ void %s_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 
             self.mm_file.write( template_suffix )
 
-    def generate_mm( self, klass, class_name, parent_name ):
+    def generate_class_mm( self, klass, class_name, parent_name ):
 
         self.generate_pragma_mark( class_name, self.mm_file )
         self.generate_constructor( class_name )
@@ -1300,8 +1299,8 @@ void %s_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 
         proxy_class_name = '%s%s' % (PROXY_PREFIX, class_name )
 
-        self.generate_mm( klass, class_name, parent_name )
-        self.generate_header( class_name, parent_name )
+        self.generate_class_mm( klass, class_name, parent_name )
+        self.generate_class_header( class_name, parent_name )
 
     def generate_class_registration( self, klass ):
         # only supported classes
@@ -1332,7 +1331,16 @@ void %s_createClass(JSContext *cx, JSObject* globalObj, const char* name )
         self.class_registration_file.close()
 
     def generate_function_binding( self, function ):
-        pass
+
+        func_name = function['name']
+
+        # Don't generate functions that are defined as callbacks
+        if func_name in self.callback_functions:
+            raise ParseException('Function defined as callback. Ignoring %s' % func_name)
+
+        args_js_type, args_declared_type = self.validate_arguments( function )
+
+        return True
 
     def generate_function_registration( self, function ):
         pass
@@ -1347,9 +1355,9 @@ void %s_createClass(JSContext *cx, JSObject* globalObj, const char* name )
         # Classes
         #
         self.h_file = open( '%s%s_classes.h' % ( BINDINGS_PREFIX, self.namespace), 'w' )
-        self.generate_header_prefix( 'NSObject' )
+        self.generate_class_header_prefix( 'NSObject' )
         self.mm_file = open( '%s%s_classes.mm' % (BINDINGS_PREFIX, self.namespace), 'w' )
-        self.generate_mm_prefix()
+        self.generate_class_mm_prefix()
 
         for klass in self.classes_to_bind:
             self.generate_class_binding( klass )
@@ -1363,10 +1371,16 @@ void %s_createClass(JSContext *cx, JSObject* globalObj, const char* name )
         # Free Functions
         #
         self.h_file = open( '%s%s_functions.h' % ( BINDINGS_PREFIX, self.namespace), 'w' )
+        self.generate_class_header_prefix( 'NSObject' )
         self.mm_file = open( '%s%s_functions.mm' % (BINDINGS_PREFIX, self.namespace), 'w' )
+        self.generate_class_mm_prefix()
 
-        for function in self.functions_to_bind:
-            self.generate_function_binding( function )
+        for f in self.bs['signatures']['function']:
+            if f['name'] in self.functions_to_bind:
+                try:
+                    self.generate_function_binding( f )
+                except ParseException, e:
+                    sys.stderr.write( 'NOT OK: "%s" Error: %s\n' % (  f['name'], str(e) ) )
 
         self.h_file.close()
         self.mm_file.close()
