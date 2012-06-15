@@ -410,9 +410,6 @@
  */
 +(id) itemWithItems:(NSArray*)arrayOfItems block:(void(^)(id sender))block;
 
-/** initializes a menu item from a list of items with a target selector */
--(id) initWithTarget:(id)target selector:(SEL)selector items:(CCMenuItem*) item vaList:(va_list) args;
-
 /** initializes a menu item from a list of items with a block.
  The block will be "copied".
  */
