@@ -338,6 +338,10 @@ class SpiderMonkey(object):
 
     # whether or not the method is an initializer
     def is_method_initializer( self, method ):
+        # Is this is a method ?
+        if not 'selector' in method:
+            return False
+
         if 'retval' in method:
             retval = method['retval']
             dt = retval[0]['declared_type']
@@ -582,7 +586,7 @@ void %s_finalize(JSContext *cx, JSObject *obj)
 
         return ret
 
-    def parse_method_retval( self, method, class_name ):
+    def validate_retval( self, method, class_name = None ):
         # Left column: BridgeSupport types
         # Right column: JS types
         supported_declared_types = {
@@ -606,7 +610,7 @@ void %s_finalize(JSContext *cx, JSObject *obj)
             'v' :  None,  # void (for retval)
         }
 
-        s = method['selector']
+#        s = method['selector']
 
         ret_js_type = None
         ret_declared_type = None
@@ -884,7 +888,7 @@ JSBool %s_%s%s(JSContext *cx, uint32_t argc, jsval *vp) {
                 raise ParseException('Method defined as callback. Ignoring.')
 
         args_js_type, args_declared_type = self.validate_arguments( method )
-        ret_js_type, ret_declared_type = self.parse_method_retval( method, class_name )
+        ret_js_type, ret_declared_type = self.validate_retval( method, class_name )
 
         method_type = self.get_method_type( method )
 
@@ -1339,6 +1343,7 @@ void %s_createClass(JSContext *cx, JSObject* globalObj, const char* name )
             raise ParseException('Function defined as callback. Ignoring %s' % func_name)
 
         args_js_type, args_declared_type = self.validate_arguments( function )
+        ret_js_type, ret_declared_type = self.validate_retval( function )
 
         return True
 
