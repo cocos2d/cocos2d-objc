@@ -704,6 +704,18 @@
 	SET_DIRTY_RECURSIVELY();
 }
 
+-(void)setRotationX:(float)rot
+{
+	[super setRotationX:rot];
+	SET_DIRTY_RECURSIVELY();
+}
+
+-(void)setRotationY:(float)rot
+{
+	[super setRotationY:rot];
+	SET_DIRTY_RECURSIVELY();
+}
+
 -(void)setSkewX:(float)sx
 {
 	[super setSkewX:sx];

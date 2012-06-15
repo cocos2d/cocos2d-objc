@@ -130,27 +130,41 @@ Example:
 */
 @interface CCRotateTo : CCActionInterval <NSCopying>
 {
-	float dstAngle_;
-	float startAngle_;
-	float diffAngle_;
+	float dstAngleX_;
+	float startAngleX_;
+	float diffAngleX_;
+  
+	float dstAngleY_;
+	float startAngleY_;
+	float diffAngleY_;
 }
 /** creates the action */
 +(id) actionWithDuration:(ccTime)duration angle:(float)angle;
 /** initializes the action */
 -(id) initWithDuration:(ccTime)duration angle:(float)angle;
+
+/** creates the action with seperate rotation angles */
++(id) actionWithDuration: (ccTime) t angleX:(float) aX angleY:(float) aY;
+-(id) initWithDuration: (ccTime) t angleX:(float) aX angleY:(float) aY;
 @end
 
 /** Rotates a CCNode object clockwise a number of degrees by modiying its rotation attribute.
 */
 @interface CCRotateBy : CCActionInterval <NSCopying>
 {
-	float angle_;
-	float startAngle_;
+	float angleX_;
+	float startAngleX_;
+	float angleY_;
+	float startAngleY_;
 }
 /** creates the action */
 +(id) actionWithDuration:(ccTime)duration angle:(float)deltaAngle;
 /** initializes the action */
 -(id) initWithDuration:(ccTime)duration angle:(float)deltaAngle;
+
+/** creates the action with seperate rotation angles */
++(id) actionWithDuration: (ccTime) t angleX:(float) aX angleY:(float) aY;
+-(id) initWithDuration: (ccTime) t angleX:(float) aX angleY:(float) aY;
 @end
 
 /** Moves a CCNode object to the position x,y. x and y are absolute coordinates by modifying its position attribute.
