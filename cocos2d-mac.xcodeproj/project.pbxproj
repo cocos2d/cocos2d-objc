@@ -259,6 +259,7 @@
 		A009FB8F150EC87500897349 /* ccShader_PositionTextureColorAlphaTest_frag.h in Headers */ = {isa = PBXBuildFile; fileRef = A009FB80150EC87500897349 /* ccShader_PositionTextureColorAlphaTest_frag.h */; };
 		A009FB90150EC87500897349 /* ccShaders.h in Headers */ = {isa = PBXBuildFile; fileRef = A009FB81150EC87500897349 /* ccShaders.h */; };
 		A009FB91150EC87600897349 /* ccShaders.m in Sources */ = {isa = PBXBuildFile; fileRef = A009FB82150EC87500897349 /* ccShaders.m */; };
+		A01D2CC3158BF30F005FCA72 /* libjs_static.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A01D2CC2158BF30F005FCA72 /* libjs_static.a */; };
 		A034160B15487C3C00AE4D93 /* A Damn Mess.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E076E7A21225EDD000DE0DA2 /* A Damn Mess.ttf */; };
 		A034160C15487C3C00AE4D93 /* Abberancy.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E076E7A31225EDD000DE0DA2 /* Abberancy.ttf */; };
 		A034160D15487C3C00AE4D93 /* Abduction.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E076E7A41225EDD000DE0DA2 /* Abduction.ttf */; };
@@ -2133,7 +2134,6 @@
 		A09C8D391566FB4100ADFDA9 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E0F9256D1224207200EF2362 /* libz.dylib */; };
 		A09C8D3A1566FB4100ADFDA9 /* liblibpng.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E076EDB91225FEAA00DE0DA2 /* liblibpng.a */; };
 		A09C8D461566FBF400ADFDA9 /* JavascriptJSCocoaTest.m in Sources */ = {isa = PBXBuildFile; fileRef = A03416DC15487F4A00AE4D93 /* JavascriptJSCocoaTest.m */; };
-		A09C8D881567123B00ADFDA9 /* libmozjs.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A09C8D841566FC7400ADFDA9 /* libmozjs.dylib */; settings = {ATTRIBUTES = (Weak, ); }; };
 		A09C8D90156715F700ADFDA9 /* JavascriptSpidermonkey.m in Sources */ = {isa = PBXBuildFile; fileRef = A09C8D8F156715F700ADFDA9 /* JavascriptSpidermonkey.m */; };
 		A09C8D961567634500ADFDA9 /* js_bindings_old_manual.mm in Sources */ = {isa = PBXBuildFile; fileRef = A09C8D951567634500ADFDA9 /* js_bindings_old_manual.mm */; };
 		A0A10B2014F3003600FA38C1 /* ccDeprecated.h in Headers */ = {isa = PBXBuildFile; fileRef = A0A10B1E14F3003600FA38C1 /* ccDeprecated.h */; };
@@ -5841,6 +5841,7 @@
 		A009FB80150EC87500897349 /* ccShader_PositionTextureColorAlphaTest_frag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccShader_PositionTextureColorAlphaTest_frag.h; sourceTree = "<group>"; };
 		A009FB81150EC87500897349 /* ccShaders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccShaders.h; sourceTree = "<group>"; };
 		A009FB82150EC87500897349 /* ccShaders.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ccShaders.m; sourceTree = "<group>"; };
+		A01D2CC2158BF30F005FCA72 /* libjs_static.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libjs_static.a; sourceTree = "<group>"; };
 		A03416D615487C3C00AE4D93 /* JavascriptJSCocoaTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JavascriptJSCocoaTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A03416DA15487F2800AE4D93 /* JavascriptJSCocoaTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JavascriptJSCocoaTest.h; path = tests/JavascriptJSCocoaTest.h; sourceTree = "<group>"; };
 		A03416DC15487F4A00AE4D93 /* JavascriptJSCocoaTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JavascriptJSCocoaTest.m; path = tests/JavascriptJSCocoaTest.m; sourceTree = "<group>"; };
@@ -6138,7 +6139,6 @@
 		A09C8D801566FC7400ADFDA9 /* StandardInteger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StandardInteger.h; sourceTree = "<group>"; };
 		A09C8D811566FC7400ADFDA9 /* Types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Types.h; sourceTree = "<group>"; };
 		A09C8D821566FC7400ADFDA9 /* Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Util.h; sourceTree = "<group>"; };
-		A09C8D841566FC7400ADFDA9 /* libmozjs.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libmozjs.dylib; sourceTree = "<group>"; };
 		A09C8D8E156715F700ADFDA9 /* JavascriptSpidermonkey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JavascriptSpidermonkey.h; sourceTree = "<group>"; };
 		A09C8D8F156715F700ADFDA9 /* JavascriptSpidermonkey.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JavascriptSpidermonkey.m; sourceTree = "<group>"; };
 		A09C8D911567165B00ADFDA9 /* ScriptingCore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScriptingCore.h; sourceTree = "<group>"; };
@@ -6179,7 +6179,7 @@
 		A0B532B713C141FF0072EDA4 /* vec3.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vec3.c; sourceTree = "<group>"; };
 		A0B532B813C141FF0072EDA4 /* vec4.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vec4.c; sourceTree = "<group>"; };
 		A0BCCBCF15792F5300CCE291 /* ScriptingCore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScriptingCore.m; sourceTree = "<group>"; };
-		A0BCD719157FDBC600CCE291 /* js_obj_conversions.h */ = {isa = PBXFileReference; fileEncoding = 4; path = js_obj_conversions.h; sourceTree = "<group>"; };
+		A0BCD719157FDBC600CCE291 /* js_obj_conversions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_obj_conversions.h; sourceTree = "<group>"; };
 		A0BCD71A157FDBC700CCE291 /* js_obj_conversions.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = js_obj_conversions.mm; sourceTree = "<group>"; };
 		A0BE62FA140552BD00DAA336 /* CCVertex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCVertex.h; sourceTree = "<group>"; };
 		A0BE62FB140552BD00DAA336 /* CCVertex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCVertex.m; sourceTree = "<group>"; };
@@ -6868,7 +6868,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A09C8D881567123B00ADFDA9 /* libmozjs.dylib in Frameworks */,
 				A09C8D341566FB4100ADFDA9 /* Cocoa.framework in Frameworks */,
 				A09C8D351566FB4100ADFDA9 /* OpenGL.framework in Frameworks */,
 				A09C8D361566FB4100ADFDA9 /* QuartzCore.framework in Frameworks */,
@@ -6876,6 +6875,7 @@
 				A09C8D381566FB4100ADFDA9 /* ApplicationServices.framework in Frameworks */,
 				A09C8D391566FB4100ADFDA9 /* libz.dylib in Frameworks */,
 				A09C8D3A1566FB4100ADFDA9 /* liblibpng.a in Frameworks */,
+				A01D2CC3158BF30F005FCA72 /* libjs_static.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7661,7 +7661,7 @@
 		A09C8D831566FC7400ADFDA9 /* lib */ = {
 			isa = PBXGroup;
 			children = (
-				A09C8D841566FC7400ADFDA9 /* libmozjs.dylib */,
+				A01D2CC2158BF30F005FCA72 /* libjs_static.a */,
 			);
 			path = lib;
 			sourceTree = "<group>";
