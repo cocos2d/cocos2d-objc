@@ -159,7 +159,13 @@ static JSClass global_class = {
 	// Load cocos2d BridgeSupport (not needed I guess)
 //	CCFileUtils *fileUtils = [CCFileUtils sharedFileUtils];
 //	NSString *libPath = [fileUtils fullPathFromRelativePath:@"libmozjs.dylib"];
-//	dlopen([libPath UTF8String], RTLD_NOW | RTLD_GLOBAL);
+//	void *handle = dlopen([libPath UTF8String], RTLD_NOW | RTLD_GLOBAL);
+//	if( ! handle ) {
+//		printf("\n**** FATAL ****\n");
+//		printf("Can't load libmozjs.dylib");
+//		NSAssert(NO, @"Fatal error: no libmozjs.dylib");
+//	}
+
 //
 //	CCScene *scene = [CCScene node];
 //	Test *test = [Test node];
