@@ -84,7 +84,7 @@ static NSUInteger globalOrderOfArrival = 1;
 
 #pragma mark CCNode - Transform related properties
 
-@synthesize rotation = rotation_, scaleX = scaleX_, scaleY = scaleY_;
+@synthesize rotationX = rotationX_, rotationY = rotationY_, scaleX = scaleX_, scaleY = scaleY_;
 @synthesize position = position_;
 @synthesize anchorPoint = anchorPoint_, anchorPointInPoints = anchorPointInPoints_;
 @synthesize contentSize = contentSize_;
@@ -105,7 +105,7 @@ static NSUInteger globalOrderOfArrival = 1;
 		isRunning_ = NO;
 
 		skewX_ = skewY_ = 0.0f;
-		rotation_ = 0.0f;
+		rotationX_ = rotationY_ = 0.0f;
 		scaleX_ = scaleY_ = 1.0f;
         position_ = CGPointZero;
         contentSize_ = CGSizeZero;
@@ -196,7 +196,25 @@ static NSUInteger globalOrderOfArrival = 1;
 // getters synthesized, setters explicit
 -(void) setRotation: (float)newRotation
 {
-	rotation_ = newRotation;
+	rotationX_ = rotationY_ = newRotation;
+	isTransformDirty_ = isInverseDirty_ = YES;
+}
+
+-(float) rotation
+{
+	NSAssert( rotationX_ == rotationY_, @"CCNode#rotation. RotationX != RotationY. Don't know which one to return");
+	return rotationX_;
+}
+
+-(void) setRotationX: (float)newX
+{
+	rotationX_ = newX;
+	isTransformDirty_ = isInverseDirty_ = YES;
+}
+
+-(void) setRotationY: (float)newY
+{
+	rotationY_ = newY;
 	isTransformDirty_ = isInverseDirty_ = YES;
 }
 
@@ -764,30 +782,37 @@ static NSUInteger globalOrderOfArrival = 1;
 			x += anchorPointInPoints_.x;
 			y += anchorPointInPoints_.y;
 		}
-
-		// Rotation values
-		float c = 1, s = 0;
-		if( rotation_ ) {
-			float radians = -CC_DEGREES_TO_RADIANS(rotation_);
-			c = cosf(radians);
-			s = sinf(radians);
-		}
+    
+    // Rotation values
+    // Change rotation code to handle X and Y
+    // If we skew with the exact same value for both x and y then we're simply just rotating
+    float cx = 1, sx = 0, cy = 1, sy = 0;
+    if( rotationX_ || rotationY_ ) {
+      float radiansX = -CC_DEGREES_TO_RADIANS(rotationX_);
+      float radiansY = -CC_DEGREES_TO_RADIANS(rotationY_);
+      cx = cosf(radiansX);
+      sx = sinf(radiansX);
+      cy = cosf(radiansY);
+      sy = sinf(radiansY);
+    }
 
 		BOOL needsSkewMatrix = ( skewX_ || skewY_ );
 
 
 		// optimization:
 		// inline anchor point calculation if skew is not needed
-		if( !needsSkewMatrix && !CGPointEqualToPoint(anchorPointInPoints_, CGPointZero) ) {
-			x += c * -anchorPointInPoints_.x * scaleX_ + -s * -anchorPointInPoints_.y * scaleY_;
-			y += s * -anchorPointInPoints_.x * scaleX_ +  c * -anchorPointInPoints_.y * scaleY_;
-		}
+    // Adjusted transform calculation for rotational skew
+    if( !needsSkewMatrix && !CGPointEqualToPoint(anchorPointInPoints_, CGPointZero) ) {
+      x += cy * -anchorPointInPoints_.x * scaleX_ + -sx * -anchorPointInPoints_.y * scaleY_;
+      y += sy * -anchorPointInPoints_.x * scaleX_ +  cx * -anchorPointInPoints_.y * scaleY_;
+    }
 
 
 		// Build Transform Matrix
-		transform_ = CGAffineTransformMake( c * scaleX_,  s * scaleX_,
-										   -s * scaleY_, c * scaleY_,
-										   x, y );
+    // Adjusted transfor m calculation for rotational skew
+    transform_ = CGAffineTransformMake( cy * scaleX_,  sy * scaleX_,
+                                         -sx * scaleY_, cx * scaleY_,
+                                         x, y );
 
 		// XXX: Try to inline skew
 		// If skew is needed, apply skew and then anchor point
