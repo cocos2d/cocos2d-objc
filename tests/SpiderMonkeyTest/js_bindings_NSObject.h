@@ -23,7 +23,7 @@
  */
 
 #import "ScriptingCore.h"
-#import "js_obj_convertions.h"
+#import "js_obj_conversions.h"
 
 @interface JSPROXY_NSObject : NSObject
 {

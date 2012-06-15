@@ -447,7 +447,7 @@ void %s_finalize(JSContext *cx, JSObject *obj)
     #
     # Method generator functions
     #
-    def generate_call_to_real_object( self, selector_name, num_of_args, ret_declared_type, args_declared_type, class_name, method_type ):
+    def generate_method_call_to_real_object( self, selector_name, num_of_args, ret_declared_type, args_declared_type, class_name, method_type ):
 
         args = selector_name.split(':')
 
@@ -717,37 +717,27 @@ void %s_finalize(JSContext *cx, JSObject *obj)
 
     # Special case for string to NSString generator
     def generate_argument_string( self, i, arg_js_type, arg_declared_type ):
-        template = '''
-	NSString *arg%d = jsval_to_nsstring( *argvp++, cx );
-'''
+        template = '\tNSString *arg%d = jsval_to_nsstring( *argvp++, cx );\n'
         self.mm_file.write( template % i )
 
     # Special case for objects
     def generate_argument_object( self, i, arg_js_type, arg_declared_type ):
-        object_template = '''
-	%s arg%d = (%s) jsval_to_nsobject( *argvp++, cx);
-'''
+        object_template = '\t%s arg%d = (%s) jsval_to_nsobject( *argvp++, cx);\n'
         self.mm_file.write( object_template % (arg_declared_type, i, arg_declared_type ) )
 
     # CGPoint needs an special case since its internal structure changes
     # on the platform. On Mac it uses doubles and on iOS it uses floats
     # This function expect floats.
     def generate_argument_cgpoint( self, i, arg_js_type, arg_declared_type ):
-        template = '''
-	CGPoint arg%d = jsval_to_CGPoint( *argvp++, cx );
-'''
+        template = '\tCGPoint arg%d = jsval_to_CGPoint( *argvp++, cx );\n'
         self.mm_file.write( template % i )
 
     def generate_argument_cgsize( self, i, arg_js_type, arg_declared_type ):
-        template = '''
-	CGSize arg%d = jsval_to_CGSize( *argvp++, cx );
-'''
+        template = '\tCGSize arg%d = jsval_to_CGSize( *argvp++, cx );\n'
         self.mm_file.write( template % i )
 
     def generate_argument_cgrect( self, i, arg_js_type, arg_declared_type ):
-        template = '''
-	CGRect arg%d = jsval_to_CGRect( *argvp++, cx );
-'''
+        template = '\tCGRect arg%d = jsval_to_CGRect( *argvp++, cx );\n'
         self.mm_file.write( template % i )
 
     def generate_argument_struct( self, i, arg_js_type, arg_declared_type ):
@@ -765,17 +755,11 @@ void %s_finalize(JSContext *cx, JSObject *obj)
 
 
     def generate_argument_array( self, i, arg_js_type, arg_declared_type ):
-        template = '''
-	// Parsing sequence
-	NSArray *arg%d = jsval_to_nsarray( *argvp++, cx );
-'''
+        template = '\tNSArray *arg%d = jsval_to_nsarray( *argvp++, cx );\n'
         self.mm_file.write( template % (i) )
 
     def generate_argument_function( self, i, arg_js_type, arg_declared_type ):
-        template = '''
-	// Parsing function
-	js_block arg%d = jsval_to_block( *argvp++, cx, JS_THIS_OBJECT(cx, vp) );
-'''
+        template = '\tjs_block arg%d = jsval_to_block( *argvp++, cx, JS_THIS_OBJECT(cx, vp) );\n'
         self.mm_file.write( template % (i) )
 
     def generate_arguments( self, args_declared_type, args_js_type ):
@@ -908,7 +892,7 @@ JSBool %s_%s%s(JSContext *cx, uint32_t argc, jsval *vp) {
         if ret_declared_type and method_type==METHOD_REGULAR:
             self.mm_file.write( '\t%s ret_val;\n' % ret_declared_type )
 
-        call_real = self.generate_call_to_real_object( s, num_of_args, ret_declared_type, args_declared_type, class_name, method_type )
+        call_real = self.generate_method_call_to_real_object( s, num_of_args, ret_declared_type, args_declared_type, class_name, method_type )
 
         self.mm_file.write( '\n%s\n' % call_real )
 
@@ -1010,9 +994,9 @@ JSBool %s_%s%s(JSContext *cx, uint32_t argc, jsval *vp) {
 '''
         fd.write( pragm_mark % (class_name, class_name) )
 
-    def generate_class_header_prefix( self, parent_name ):
+    def generate_class_header_prefix( self ):
         self.generate_autogenerate_prefix( self.h_file )
-        self.h_file.write('#import "%s.h"\n' % (BINDINGS_PREFIX + parent_name) )
+        self.h_file.write('#import "%sNSObject.h"\n' % BINDINGS_PREFIX )
 
     def generate_class_header( self, class_name, parent_name ):
         # JSPROXXY_CCNode
@@ -1334,6 +1318,72 @@ void %s_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 
         self.class_registration_file.close()
 
+    def generate_function_mm_prefix( self ):
+        import_template = '''
+#import "jstypedarray.h"
+#import "ScriptingCore.h"
+#import "js_obj_conversions.h"
+#import "%s%s_functions.h"
+'''
+        self.generate_autogenerate_prefix( self.mm_file )
+        self.mm_file.write( import_template % (BINDINGS_PREFIX, self.namespace) )
+
+    def generate_function_header_prefix( self ):
+        self.generate_autogenerate_prefix( self.h_file )
+        self.h_file.write('''
+#ifdef __cplusplus
+extern "C" {
+#endif
+''')
+
+    def generate_function_header_suffix( self ):
+        self.h_file.write('''
+#ifdef __cplusplus
+}
+#endif
+''')
+
+    def generate_function_declaration( self, func_name ):
+        # JSPROXY_ccDrawPoint
+        template_funcname = 'JSBool %s%s(JSContext *cx, uint32_t argc, jsval *vp);\n'
+        self.h_file.write( template_funcname % ( PROXY_PREFIX, func_name ) )
+
+    def generate_function_call_to_real_object( self, func_name, num_of_args, ret_declared_type, args_declared_type ):
+
+        if ret_declared_type:
+            prefix = '\tret_val = %s(' % func_name
+        else:
+            prefix = '\t%s(' % func_name
+
+        call = ''
+
+        for i,dt in enumerate(args_declared_type):
+            # cast needed to prevent compiler errors
+            if i >0:
+                call += ', '
+            call += '(%s)arg%d ' % (dt, i)
+
+        call += ' );';
+
+        return '%s%s' % (prefix, call )
+
+    def generate_function_prefix( self, func_name, num_of_args ):
+        # JSPROXY_ccDrawPoint
+        template_funcname = '''
+JSBool %s%s(JSContext *cx, uint32_t argc, jsval *vp) {
+'''
+        self.mm_file.write( template_funcname % ( PROXY_PREFIX, func_name ) )
+
+        # Number of arguments
+        self.mm_file.write( '\tNSCAssert( argc == %d, @"Invalid number of arguments" );\n' % num_of_args )
+
+    def generate_function_suffix( self ):
+        end_template = '''
+	return JS_TRUE;
+}
+'''
+        self.mm_file.write( end_template )
+
     def generate_function_binding( self, function ):
 
         func_name = function['name']
@@ -1344,6 +1394,30 @@ void %s_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 
         args_js_type, args_declared_type = self.validate_arguments( function )
         ret_js_type, ret_declared_type = self.validate_retval( function )
+
+        num_of_args = len( args_declared_type )
+
+        # writes method description
+        self.mm_file.write( '\n// Arguments: %s\n// Ret value: %s' % ( ', '.join(args_declared_type), ret_declared_type ) )
+
+        self.generate_function_prefix( func_name, num_of_args )
+
+        if len(args_js_type) > 0:
+            self.generate_arguments( args_declared_type, args_js_type );
+
+        if ret_declared_type:
+            self.mm_file.write( '\t%s ret_val;\n' % ret_declared_type )
+
+        call_real = self.generate_function_call_to_real_object( func_name, num_of_args, ret_declared_type, args_declared_type )
+        self.mm_file.write( '\n%s\n' % call_real )
+
+        ret_string = self.generate_retval( ret_declared_type, ret_js_type )
+        if not ret_string:
+            raise ParseException('invalid return string')
+
+        self.mm_file.write( ret_string )
+
+        self.generate_function_suffix()
 
         return True
 
@@ -1360,7 +1434,7 @@ void %s_createClass(JSContext *cx, JSObject* globalObj, const char* name )
         # Classes
         #
         self.h_file = open( '%s%s_classes.h' % ( BINDINGS_PREFIX, self.namespace), 'w' )
-        self.generate_class_header_prefix( 'NSObject' )
+        self.generate_class_header_prefix()
         self.mm_file = open( '%s%s_classes.mm' % (BINDINGS_PREFIX, self.namespace), 'w' )
         self.generate_class_mm_prefix()
 
@@ -1376,17 +1450,19 @@ void %s_createClass(JSContext *cx, JSObject* globalObj, const char* name )
         # Free Functions
         #
         self.h_file = open( '%s%s_functions.h' % ( BINDINGS_PREFIX, self.namespace), 'w' )
-        self.generate_class_header_prefix( 'NSObject' )
+        self.generate_function_header_prefix()
         self.mm_file = open( '%s%s_functions.mm' % (BINDINGS_PREFIX, self.namespace), 'w' )
-        self.generate_class_mm_prefix()
+        self.generate_function_mm_prefix()
 
         for f in self.bs['signatures']['function']:
             if f['name'] in self.functions_to_bind:
                 try:
                     self.generate_function_binding( f )
+                    self.generate_function_declaration( f['name'] )
                 except ParseException, e:
                     sys.stderr.write( 'NOT OK: "%s" Error: %s\n' % (  f['name'], str(e) ) )
 
+        self.generate_function_header_suffix()
         self.h_file.close()
         self.mm_file.close()
 

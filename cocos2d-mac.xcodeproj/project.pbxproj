@@ -2254,7 +2254,7 @@
 		A0BCCBAF157837EB00CCE291 /* konqa32.png in Resources */ = {isa = PBXBuildFile; fileRef = E0C6067A128ECC110099367C /* konqa32.png */; };
 		A0BCCBB0157837EF00CCE291 /* konqa32.fnt in Resources */ = {isa = PBXBuildFile; fileRef = E0C60679128ECC110099367C /* konqa32.fnt */; };
 		A0BCCBD015792F5300CCE291 /* ScriptingCore.m in Sources */ = {isa = PBXBuildFile; fileRef = A0BCCBCF15792F5300CCE291 /* ScriptingCore.m */; };
-		A0BCD71B157FDBC700CCE291 /* js_obj_convertions.mm in Sources */ = {isa = PBXBuildFile; fileRef = A0BCD71A157FDBC700CCE291 /* js_obj_convertions.mm */; };
+		A0BCD71B157FDBC700CCE291 /* js_obj_conversions.mm in Sources */ = {isa = PBXBuildFile; fileRef = A0BCD71A157FDBC700CCE291 /* js_obj_conversions.mm */; };
 		A0BE62FC140552BD00DAA336 /* CCVertex.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BE62FA140552BD00DAA336 /* CCVertex.h */; };
 		A0BE62FD140552BD00DAA336 /* CCVertex.m in Sources */ = {isa = PBXBuildFile; fileRef = A0BE62FB140552BD00DAA336 /* CCVertex.m */; };
 		A0C1EDC91562F979000709DA /* ccCArray.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C1EDC81562F979000709DA /* ccCArray.m */; };
@@ -6179,8 +6179,8 @@
 		A0B532B713C141FF0072EDA4 /* vec3.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vec3.c; sourceTree = "<group>"; };
 		A0B532B813C141FF0072EDA4 /* vec4.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vec4.c; sourceTree = "<group>"; };
 		A0BCCBCF15792F5300CCE291 /* ScriptingCore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScriptingCore.m; sourceTree = "<group>"; };
-		A0BCD719157FDBC600CCE291 /* js_obj_convertions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_obj_convertions.h; sourceTree = "<group>"; };
-		A0BCD71A157FDBC700CCE291 /* js_obj_convertions.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = js_obj_convertions.mm; sourceTree = "<group>"; };
+		A0BCD719157FDBC600CCE291 /* js_obj_conversions.h */ = {isa = PBXFileReference; fileEncoding = 4; path = js_obj_conversions.h; sourceTree = "<group>"; };
+		A0BCD71A157FDBC700CCE291 /* js_obj_conversions.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = js_obj_conversions.mm; sourceTree = "<group>"; };
 		A0BE62FA140552BD00DAA336 /* CCVertex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCVertex.h; sourceTree = "<group>"; };
 		A0BE62FB140552BD00DAA336 /* CCVertex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCVertex.m; sourceTree = "<group>"; };
 		A0C1EDC81562F979000709DA /* ccCArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ccCArray.m; sourceTree = "<group>"; };
@@ -7679,8 +7679,8 @@
 				A0CBEC30156C2904009D35B4 /* js_bindings_NSObject.mm */,
 				A09C8D941567634500ADFDA9 /* js_bindings_old_manual.h */,
 				A09C8D951567634500ADFDA9 /* js_bindings_old_manual.mm */,
-				A0BCD719157FDBC600CCE291 /* js_obj_convertions.h */,
-				A0BCD71A157FDBC700CCE291 /* js_obj_convertions.mm */,
+				A0BCD719157FDBC600CCE291 /* js_obj_conversions.h */,
+				A0BCD71A157FDBC700CCE291 /* js_obj_conversions.mm */,
 				A09C8D911567165B00ADFDA9 /* ScriptingCore.h */,
 				A0BCCBCF15792F5300CCE291 /* ScriptingCore.m */,
 				A09C8D8E156715F700ADFDA9 /* JavascriptSpidermonkey.h */,
@@ -14412,7 +14412,7 @@
 				A0CBEC21156ABF3B009D35B4 /* JRSwizzle.m in Sources */,
 				A0CBEC31156C2904009D35B4 /* js_bindings_NSObject.mm in Sources */,
 				A0BCCBD015792F5300CCE291 /* ScriptingCore.m in Sources */,
-				A0BCD71B157FDBC700CCE291 /* js_obj_convertions.mm in Sources */,
+				A0BCD71B157FDBC700CCE291 /* js_obj_conversions.mm in Sources */,
 				A08ECD0A158AAB48000D8892 /* js_bindings_cocos2d_classes.mm in Sources */,
 				A08ECD0D158AEEF9000D8892 /* js_bindings_cocos2d_functions.mm in Sources */,
 			);

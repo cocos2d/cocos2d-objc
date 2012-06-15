@@ -50,7 +50,7 @@ JSBool CCNode_jsConstructor(JSContext *cx, uint32_t argc, jsval *vp)
 	if( ! [CCNode jr_swizzleMethod:@selector(onExit) withMethod:@selector(onExit_JS) error:&error] )
 		NSLog(@"Error swizzling %@", error);
 
-	ProxyJS_CCNode *proxy = [[ProxyJS_CCNode alloc] initWithJSObject:jsobj];
+	ProxyJS_CCNode *proxy = [[ProxyJS_CCNode alloc] initWithJSObject:jsobj class:[CCNode class]];
 
 	// Weak reference
 	objc_setAssociatedObject(realObj, &CCNode_JS_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
