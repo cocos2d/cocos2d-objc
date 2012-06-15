@@ -150,6 +150,8 @@ class SpiderMonkey(object):
         #
         self.init_functions_to_bind( config['functions_to_parse'] )
         self.init_functions_to_ignore( config['functions_to_ignore'] )
+        self.current_function = None
+
 
     def parse_hierarchy_file( self ):
         f = open( self.hierarchy_file )
@@ -1329,8 +1331,11 @@ void %s_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 
         self.class_registration_file.close()
 
+    def generate_function_binding( self, function ):
+        pass
+
     def generate_function_registration( self, function ):
-        print 'loco ' + function
+        pass
 
     def generate_functions_registration( self ):
         for func in self.functions_to_bind:
@@ -1338,6 +1343,9 @@ void %s_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 
     def generate_bindings( self ):
 
+        #
+        # Classes
+        #
         self.h_file = open( '%s%s_classes.h' % ( BINDINGS_PREFIX, self.namespace), 'w' )
         self.generate_header_prefix( 'NSObject' )
         self.mm_file = open( '%s%s_classes.mm' % (BINDINGS_PREFIX, self.namespace), 'w' )
@@ -1350,6 +1358,19 @@ void %s_createClass(JSContext *cx, JSObject* globalObj, const char* name )
         self.mm_file.close()
 
         self.generate_classes_registration()
+
+        #
+        # Free Functions
+        #
+        self.h_file = open( '%s%s_functions.h' % ( BINDINGS_PREFIX, self.namespace), 'w' )
+        self.mm_file = open( '%s%s_functions.mm' % (BINDINGS_PREFIX, self.namespace), 'w' )
+
+        for function in self.functions_to_bind:
+            self.generate_function_binding( function )
+
+        self.h_file.close()
+        self.mm_file.close()
+
         self.generate_functions_registration()
 
 
