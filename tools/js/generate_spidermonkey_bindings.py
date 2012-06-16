@@ -513,13 +513,13 @@ void %s_finalize(JSContext *cx, JSObject *obj)
                 prefix = prefix + 'ret_val = '
             prefix = prefix + '[real '
         elif method_type == METHOD_CONSTRUCTOR:
-            prefix = '\t%s *ret_val = [%s ' % (class_name, class_name )
+            prefix = '\tret_val = [%s ' % (class_name )
             suffix = ''
         elif method_type == METHOD_CLASS:
             if not ret_declared_type or ret_declared_type == 'void':
                 prefix = '\t[%s ' % (class_name)
             else:
-                prefix = '\t%s ret_val = [%s ' % (ret_declared_type, class_name )
+                prefix = '\tret_val = [%s ' % (class_name )
             suffix = ''
         else:
             raise Exception('Invalid method type')
@@ -681,7 +681,7 @@ void %s_finalize(JSContext *cx, JSObject *obj)
             # Special case for class constructors
             elif self.is_class_constructor( method ):
                 ret_js_type = 'o'
-                ret_declared_type = class_name
+                ret_declared_type = class_name + '*'
 
             # Part of supported declared types ?
             elif dt in supported_declared_types:
@@ -944,7 +944,7 @@ JSBool %s_%s%s(JSContext *cx, uint32_t argc, jsval *vp) {
         if len(args_js_type) > 0:
             self.generate_arguments( args_declared_type, args_js_type );
 
-        if ret_declared_type and method_type==METHOD_REGULAR:
+        if ret_declared_type: #and method_type==METHOD_REGULAR:
             self.mm_file.write( '\t%s ret_val;\n' % ret_declared_type )
 
         call_real = self.generate_method_call_to_real_object( s, num_of_args, ret_declared_type, args_declared_type, class_name, method_type )
