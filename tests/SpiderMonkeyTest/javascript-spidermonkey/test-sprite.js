@@ -82,7 +82,7 @@ var SpriteTestDemo = cc.Layer.extend({
         var item2 = cc.MenuItemImage.itemWithNormalImageSelectedimageBlock("r1.png", "r2.png", this.restartCallback);
         var item3 = cc.MenuItemImage.itemWithNormalImageSelectedimageBlock("f1.png", "f2.png", this.nextCallback);
 
-        var menu = cc.Menu.menuWithArray( [item1, item2, item3] );
+        var menu = cc.Menu.create( [item1, item2, item3] );
 
         menu.setPosition( ccp(0,0) );
         item1.setPosition( ccp(winSize.width / 2 - 100, 30));
@@ -146,20 +146,20 @@ var SpriteColorOpacity = SpriteTestDemo.extend({
 
         var action = cc.FadeIn.actionWithDuration(2);
         var action_back = action.reverse();
-        var fade = cc.RepeatForever.actionWithAction( cc.Sequence.actionWithArray([action, action_back] ) );
+        var fade = cc.RepeatForever.actionWithAction( cc.Sequence.create([action, action_back] ) );
 
 //        var tintRed = cc.TintBy.actionWithDurationRedGreenBlue(2, 0, -255, -255);
         var tintRed = cc.RotateBy.actionWithDurationAngle(2, 360 );
         var tintRedBack = tintRed.reverse();
-        var red = cc.RepeatForever.actionWithAction(cc.Sequence.actionWithArray([tintRed, tintRedBack] ) );
+        var red = cc.RepeatForever.actionWithAction(cc.Sequence.create([tintRed, tintRedBack] ) );
 
         var tintGreen = cc.TintBy.actionWithDurationRedGreenBlue(2, -255, 0, -255);
         var tintGreenBack = tintGreen.reverse();
-        var green = cc.RepeatForever.actionWithAction(cc.Sequence.actionWithArray([tintGreen, tintGreenBack] ) );
+        var green = cc.RepeatForever.actionWithAction(cc.Sequence.create([tintGreen, tintGreenBack] ) );
 
         var tintBlue = cc.TintBy.actionWithDurationRedGreenBlue(2, -255, -255, 0);
         var tintBlueBack = tintBlue.reverse();
-        var blue = cc.RepeatForever.actionWithAction(cc.Sequence.actionWithArray([tintBlue, tintBlueBack]) );
+        var blue = cc.RepeatForever.actionWithAction(cc.Sequence.create([tintBlue, tintBlueBack]) );
 
         sprite5.runAction(red);
         sprite6.runAction(green);
@@ -231,19 +231,19 @@ var SpriteBatchColorOpacity = SpriteTestDemo.extend({
 
         var action = cc.FadeIn.actionWithDuration(2);
         var action_back = action.reverse();
-        var fade = cc.RepeatForever.actionWithAction( cc.Sequence.actionWithArray([action, action_back] ) );
+        var fade = cc.RepeatForever.actionWithAction( cc.Sequence.create([action, action_back] ) );
 
         var tintRed = cc.TintBy.actionWithDurationRedGreenBlue(2, 0, -255, -255);
         var tintRedBack = tintRed.reverse();
-        var red = cc.RepeatForever.actionWithAction(cc.Sequence.actionWithArray([tintRed, tintRedBack] ) );
+        var red = cc.RepeatForever.actionWithAction(cc.Sequence.create([tintRed, tintRedBack] ) );
 
         var tintGreen = cc.TintBy.actionWithDurationRedGreenBlue(2, -255, 0, -255);
         var tintGreenBack = tintGreen.reverse();
-        var green = cc.RepeatForever.actionWithAction(cc.Sequence.actionWithArray([tintGreen, tintGreenBack] ) );
+        var green = cc.RepeatForever.actionWithAction(cc.Sequence.create([tintGreen, tintGreenBack] ) );
 
         var tintBlue = cc.TintBy.actionWithDurationRedGreenBlue(2, -255, -255, 0);
         var tintBlueBack = tintBlue.reverse();
-        var blue = cc.RepeatForever.actionWithAction(cc.Sequence.actionWithArray([tintBlue, tintBlueBack]) );
+        var blue = cc.RepeatForever.actionWithAction(cc.Sequence.create([tintBlue, tintBlueBack]) );
 
         sprite5.runAction(red);
         sprite6.runAction(green);
