@@ -768,27 +768,27 @@ void %s_finalize(JSContext *cx, JSObject *obj)
 
     # Special case for string to NSString generator
     def generate_argument_string( self, i, arg_js_type, arg_declared_type ):
-        template = '\tNSString *arg%d = jsval_to_nsstring( *argvp++, cx );\n'
+        template = '\targ%d = jsval_to_nsstring( *argvp++, cx );\n'
         self.mm_file.write( template % i )
 
     # Special case for objects
     def generate_argument_object( self, i, arg_js_type, arg_declared_type ):
-        object_template = '\t%s arg%d = (%s) jsval_to_nsobject( *argvp++, cx);\n'
-        self.mm_file.write( object_template % (arg_declared_type, i, arg_declared_type ) )
+        object_template = '\targ%d = (%s) jsval_to_nsobject( *argvp++, cx);\n'
+        self.mm_file.write( object_template % (i, arg_declared_type ) )
 
     # CGPoint needs an special case since its internal structure changes
     # on the platform. On Mac it uses doubles and on iOS it uses floats
     # This function expect floats.
     def generate_argument_cgpoint( self, i, arg_js_type, arg_declared_type ):
-        template = '\tCGPoint arg%d = jsval_to_CGPoint( *argvp++, cx );\n'
+        template = '\targ%d = jsval_to_CGPoint( *argvp++, cx );\n'
         self.mm_file.write( template % i )
 
     def generate_argument_cgsize( self, i, arg_js_type, arg_declared_type ):
-        template = '\tCGSize arg%d = jsval_to_CGSize( *argvp++, cx );\n'
+        template = '\targ%d = jsval_to_CGSize( *argvp++, cx );\n'
         self.mm_file.write( template % i )
 
     def generate_argument_cgrect( self, i, arg_js_type, arg_declared_type ):
-        template = '\tCGRect arg%d = jsval_to_CGRect( *argvp++, cx );\n'
+        template = '\targ%d = jsval_to_CGRect( *argvp++, cx );\n'
         self.mm_file.write( template % i )
 
     def generate_argument_struct( self, i, arg_js_type, arg_declared_type ):
@@ -796,21 +796,21 @@ void %s_finalize(JSContext *cx, JSObject *obj)
         template = '''
 	JSObject *tmp_arg%d;
 	JS_ValueToObject( cx, *argvp++, &tmp_arg%d );
-	%s arg%d = *(%s*)JS_GetTypedArrayData( tmp_arg%d);
+	arg%d = *(%s*)JS_GetTypedArrayData( tmp_arg%d);
 '''
         proxy_class_name = PROXY_PREFIX + arg_declared_type
 
         self.mm_file.write( template % (i,
                                         i,
-                                        arg_declared_type, i, arg_declared_type, i ) )
+                                        i, arg_declared_type, i ) )
 
 
     def generate_argument_array( self, i, arg_js_type, arg_declared_type ):
-        template = '\tNSArray *arg%d = jsval_to_nsarray( *argvp++, cx );\n'
+        template = '\targ%d = jsval_to_nsarray( *argvp++, cx );\n'
         self.mm_file.write( template % (i) )
 
     def generate_argument_function( self, i, arg_js_type, arg_declared_type ):
-        template = '\tjs_block arg%d = jsval_to_block( *argvp++, cx, JS_THIS_OBJECT(cx, vp) );\n'
+        template = '\targ%d = jsval_to_block( *argvp++, cx, JS_THIS_OBJECT(cx, vp) );\n'
         self.mm_file.write( template % (i) )
 
     def generate_arguments( self, args_declared_type, args_js_type ):
@@ -841,10 +841,10 @@ void %s_finalize(JSContext *cx, JSObject *obj)
         }
 
         js_special_type_conversions =  {
-            'S' : self.generate_argument_string,
-            'o' : self.generate_argument_object,
-            '[]': self.generate_argument_array,
-            'f' : self.generate_argument_function,
+            'S' : [self.generate_argument_string, 'NSString*'],
+            'o' : [self.generate_argument_object, 'id'],
+            '[]': [self.generate_argument_array, 'NSArray*'],
+            'f' : [self.generate_argument_function, 'js_block'],
         }
 
         js_declared_types_conversions = {
@@ -856,13 +856,28 @@ void %s_finalize(JSContext *cx, JSObject *obj)
         # First  time
         self.mm_file.write('\tjsval *argvp = JS_ARGV(cx,vp);\n')
 
+        # Declare variables
+        declared_vars = '\t'
+        for i,arg in enumerate(args_js_type):
+            if arg in js_types_conversions:
+                declared_vars += '%s arg%d;' % (js_types_conversions[arg][0], i)
+            elif arg in js_special_type_conversions:
+                declared_vars += '%s arg%d;' % ( js_special_type_conversions[arg][1], i )
+            elif args_declared_type[i] in js_declared_types_conversions:
+                declared_vars += '%s arg%d;' % ( args_declared_type[i], i )
+            elif self.is_valid_structure( arg ):
+                declared_vars += '%s arg%d;' % ( args_declared_type[i], i )
+            declared_vars += ' '
+        self.mm_file.write( '%s\n\n' % declared_vars )
+
+        # Use variables
         for i,arg in enumerate(args_js_type):
 
             if arg in js_types_conversions:
                 t = js_types_conversions[arg]
-                self.mm_file.write( '\t%s arg%d; %s( cx, *argvp++, &arg%d );\n' % ( t[0], i, t[1], i ) )
+                self.mm_file.write( '\t%s( cx, *argvp++, &arg%d );\n' % ( t[1], i ) )
             elif arg in js_special_type_conversions:
-                js_special_type_conversions[arg]( i, arg, args_declared_type[i] )
+                js_special_type_conversions[arg][0]( i, arg, args_declared_type[i] )
             elif args_declared_type[i] in js_declared_types_conversions:
                 f = js_declared_types_conversions[ args_declared_type[i] ]
                 f( i, arg, args_declared_type[i] )
@@ -944,7 +959,7 @@ JSBool %s_%s%s(JSContext *cx, uint32_t argc, jsval *vp) {
         if len(args_js_type) > 0:
             self.generate_arguments( args_declared_type, args_js_type );
 
-        if ret_declared_type: #and method_type==METHOD_REGULAR:
+        if ret_declared_type:
             self.mm_file.write( '\t%s ret_val;\n' % ret_declared_type )
 
         call_real = self.generate_method_call_to_real_object( s, num_of_args, ret_declared_type, args_declared_type, class_name, method_type )
