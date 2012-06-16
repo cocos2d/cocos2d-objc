@@ -404,6 +404,11 @@ class SpiderMonkey(object):
 
         return method_type
 
+    def get_number_of_arguments( self, function ):
+        ret = 0
+        if 'arg' in function:
+            return len( function['arg'] )
+        return ret
 
     def convert_selector_name_to_native( self, name ):
         return name.replace(':','_')
@@ -912,10 +917,12 @@ JSBool %s_%s%s(JSContext *cx, uint32_t argc, jsval *vp) {
 
         s = method['selector']
 
-        # Don't generate methods that are defined as callbacks
+        # Skip 'callback' and 'ignore' methods
         try:
-            v = self.method_properties[class_name][s]['callback']
-            raise ParseException('Method defined as callback. Ignoring.')
+            if 'callback' in self.method_properties[class_name][s]:
+                raise ParseException( 'Method defined as callback. Ignoring.' )
+            if 'ignore' in self.method_properties[class_name][s]:
+                raise ParseException( 'Explicity ignoring method' )
         except KeyError, e:
             pass
 
@@ -1227,12 +1234,13 @@ void %s_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 
         self.mm_file.write( properties_template )
 
-        js_fn = '\t\tJS_FN("%s", %s, 1, JSPROP_PERMANENT | JSPROP_SHARED %s),\n'
-
+        js_fn = '\t\tJS_FN("%s", %s, %d, JSPROP_PERMANENT | JSPROP_SHARED %s),\n'
 
         instance_method_buffer = ''
         class_method_buffer = ''
         for method in ok_methods:
+
+            num_args = self.get_number_of_arguments( method )
 
             class_method = '_static' if self.is_class_method(method) else ''
 
@@ -1240,9 +1248,9 @@ void %s_createClass(JSContext *cx, JSObject* globalObj, const char* name )
             cb_name = self.convert_selector_name_to_native( method['selector'] )
 
             if self.is_class_constructor( method ):
-                entry = js_fn % (js_name, proxy_class_name + '_' + cb_name + class_method, '| JSPROP_ENUMERATE' ) # | JSFUN_CONSTRUCTOR
+                entry = js_fn % (js_name, proxy_class_name + '_' + cb_name + class_method, num_args, '| JSPROP_ENUMERATE' ) # | JSFUN_CONSTRUCTOR
             else:
-                entry = js_fn % (js_name, proxy_class_name + '_' + cb_name + class_method, '| JSPROP_ENUMERATE' )
+                entry = js_fn % (js_name, proxy_class_name + '_' + cb_name + class_method, num_args, '| JSPROP_ENUMERATE' )
 
             if self.is_class_method( method ):
                 class_method_buffer += entry
