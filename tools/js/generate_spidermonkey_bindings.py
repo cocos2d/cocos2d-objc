@@ -408,7 +408,14 @@ class SpiderMonkey(object):
     def convert_selector_name_to_native( self, name ):
         return name.replace(':','_')
 
-    def convert_selector_name_to_js( self, selector ):
+    def convert_selector_name_to_js( self, class_name, selector ):
+
+        # Does it have a rename rule ?
+        try:
+            return self.method_properties[ class_name ][ selector ][ 'name' ]
+        except KeyError, e:
+            pass
+
         name = ''
         parts = selector.split(':')
         for i,arg in enumerate(parts):
@@ -1229,7 +1236,7 @@ void %s_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 
             class_method = '_static' if self.is_class_method(method) else ''
 
-            js_name = self.convert_selector_name_to_js( method['selector'] )
+            js_name = self.convert_selector_name_to_js( class_name, method['selector'] )
             cb_name = self.convert_selector_name_to_native( method['selector'] )
 
             if self.is_class_constructor( method ):

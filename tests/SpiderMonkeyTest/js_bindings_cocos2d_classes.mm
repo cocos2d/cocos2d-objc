@@ -7682,9 +7682,9 @@ void JSPROXY_CCSprite_createClass(JSContext *cx, JSObject* globalObj, const char
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("spriteWithFile", JSPROXY_CCSprite_spriteWithFile__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("spriteWithFileRect", JSPROXY_CCSprite_spriteWithFile_rect__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("create", JSPROXY_CCSprite_spriteWithFile_rect__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("spriteWithSpriteFrame", JSPROXY_CCSprite_spriteWithSpriteFrame__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("spriteWithSpriteFrameName", JSPROXY_CCSprite_spriteWithSpriteFrameName__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("createWithSpriteFrameName", JSPROXY_CCSprite_spriteWithSpriteFrameName__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("spriteWithTexture", JSPROXY_CCSprite_spriteWithTexture__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("spriteWithTextureRect", JSPROXY_CCSprite_spriteWithTexture_rect__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("node", JSPROXY_CCSprite_node_static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
@@ -9561,7 +9561,7 @@ void JSPROXY_CCSequence_createClass(JSContext *cx, JSObject* globalObj, const ch
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("actionOneTwo", JSPROXY_CCSequence_actionOne_two__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("actionWithArray", JSPROXY_CCSequence_actionWithArray__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("create", JSPROXY_CCSequence_actionWithArray__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("actionWithDuration", JSPROXY_CCSequence_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("action", JSPROXY_CCSequence_action_static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
@@ -20967,7 +20967,7 @@ void JSPROXY_CCSpawn_createClass(JSContext *cx, JSObject* globalObj, const char*
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("actionOneTwo", JSPROXY_CCSpawn_actionOne_two__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("actionWithArray", JSPROXY_CCSpawn_actionWithArray__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("create", JSPROXY_CCSpawn_actionWithArray__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("actionWithDuration", JSPROXY_CCSpawn_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("action", JSPROXY_CCSpawn_action_static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
@@ -23946,7 +23946,7 @@ void JSPROXY_CCMenu_createClass(JSContext *cx, JSObject* globalObj, const char* 
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
-		JS_FN("menuWithArray", JSPROXY_CCMenu_menuWithArray__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("create", JSPROXY_CCMenu_menuWithArray__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("node", JSPROXY_CCMenu_node_static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
