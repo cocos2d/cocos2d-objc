@@ -67,13 +67,13 @@ class SpiderMonkey(object):
 
         supported_options = {'obj_class_prefix_to_remove': '',
                              'classes_to_parse' : [],
-                             'callback_methods' : [],
                              'classes_to_ignore' : [],
                              'bridge_support_file' : '',
                              'hierarchy_protocol_file' : '',
                              'inherit_class_methods' : True,
                              'functions_to_parse' : [],
                              'functions_to_ignore' : [],
+                             'method_properties' : [],
                              }
 
 
@@ -98,9 +98,10 @@ class SpiderMonkey(object):
                     v = cp.get(s, o )
                 elif t == type([]):
                     v = cp.get(s, o )
-                    v = v.replace('\t',' ')
-                    v = v.replace('\n',' ')
-                    v = v.split(' ')
+                    v = v.replace('\t','')
+                    v = v.replace('\n','')
+                    v = v.replace(' ','')
+                    v = v.split(',')
                 else:
                     raise Exception('Unsupported type' % str(t) )
                 config[ o ] = v
@@ -131,17 +132,15 @@ class SpiderMonkey(object):
         self.init_classes_to_bind( config['classes_to_parse'] )
         self.init_classes_to_ignore( config['classes_to_ignore'] )
 
-        self.callback_methods = {}
-        callback_methods = config['callback_methods']
-        for c in callback_methods:
-            c,m = c.split('#')
-            if not c in self.callback_methods:
-                self.callback_methods[ c ] = []
-            self.callback_methods[ c ].append( m )
-
         # In order to prevent parsing a class many times
         self.parsed_classes = []
 
+        #
+        # Method related
+        #
+        self.init_method_properties( config['method_properties'] )
+
+        self.init_callback_methods()
         # Current method that is being parsed
         self.current_method = None
 
@@ -163,6 +162,46 @@ class SpiderMonkey(object):
         p = ET.parse( self.bridgesupport_file )
         root = p.getroot()
         self.bs = xml2d( root )
+
+    def init_callback_methods( self ):
+        self.callback_methods = {}
+
+        for class_name in self.method_properties:
+            methods = self.method_properties[ class_name ]
+            for method in methods:
+                if 'callback' in self.method_properties[ class_name ][ method ]:
+                    if not self.callback_methods.has_key( class_name ):
+                        self.callback_methods[ class_name ] = []
+                    self.callback_methods[ class_name ].append( method )
+
+    def init_method_properties( self, properties ):
+        self.method_properties = {}
+        for prop in properties:
+            # key value
+            if not prop or len(prop)==0:
+                continue
+            key,value = prop.split('=')
+
+            # From Key get: Class # method
+            klass,method = key.split('#')
+
+            opts = {}
+            # From value get options
+            options = value.split(';')
+            for o in options:
+                # Options can have their own Key Value
+                if ':' in o:
+                    o_key, o_val = o.split(':')
+                    o_val = o_val.replace('"', '')    # remove possible "
+                else:
+                    o_key = o
+                    o_val = None
+                opts[ o_key ] = o_val
+            if not klass in self.method_properties:
+                self.method_properties[klass] = {}
+            if not method in self.method_properties[klass]:
+                self.method_properties[klass][method] = {}
+            self.method_properties[klass][method] = opts
 
     def init_functions_to_bind( self, functions ):
         self._functions_to_bind = set( functions )
@@ -867,9 +906,11 @@ JSBool %s_%s%s(JSContext *cx, uint32_t argc, jsval *vp) {
         s = method['selector']
 
         # Don't generate methods that are defined as callbacks
-        if class_name in self.callback_methods:
-            if s in self.callback_methods[ class_name ]:
-                raise ParseException('Method defined as callback. Ignoring.')
+        try:
+            v = self.method_properties[class_name][s]['callback']
+            raise ParseException('Method defined as callback. Ignoring.')
+        except KeyError, e:
+            pass
 
         args_js_type, args_declared_type = self.validate_arguments( method )
         ret_js_type, ret_declared_type = self.validate_retval( method, class_name )
