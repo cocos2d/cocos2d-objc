@@ -126,14 +126,14 @@ var SpriteColorOpacity = SpriteTestDemo.extend({
 //        var sprite7 = cc.Sprite.spriteWithFile(s_grossini_dance_atlas, cc.RectMake(85 * 2, 121 * 1, 85, 121));
 //        var sprite8 = cc.Sprite.spriteWithFile(s_grossini_dance_atlas, cc.RectMake(85 * 3, 121 * 1, 85, 121));
 
-        var sprite1 = cc.Sprite.spriteWithFile("grossini.png");
-        var sprite2 = cc.Sprite.spriteWithFile("grossini.png");
-        var sprite3 = cc.Sprite.spriteWithFile("grossini.png");
-        var sprite4 = cc.Sprite.spriteWithFile("grossini.png");
-        var sprite5 = cc.Sprite.spriteWithFile("grossini.png");
-        var sprite6 = cc.Sprite.spriteWithFile("grossini.png");
-        var sprite7 = cc.Sprite.spriteWithFile("grossini.png");
-        var sprite8 = cc.Sprite.spriteWithFile("grossini.png");
+        var sprite1 = cc.Sprite.create("grossini.png");
+        var sprite2 = cc.Sprite.create("grossini.png");
+        var sprite3 = cc.Sprite.create("grossini.png");
+        var sprite4 = cc.Sprite.create("grossini.png");
+        var sprite5 = cc.Sprite.create("grossini.png");
+        var sprite6 = cc.Sprite.create("grossini.png");
+        var sprite7 = cc.Sprite.create("grossini.png");
+        var sprite8 = cc.Sprite.create("grossini.png");
 
         sprite1.setPosition(ccp((winSize.width / 5) * 1, (winSize.height / 3) * 1));
         sprite2.setPosition(ccp((winSize.width / 5) * 2, (winSize.height / 3) * 1));
@@ -211,14 +211,14 @@ var SpriteBatchColorOpacity = SpriteTestDemo.extend({
 //        var sprite8 = cc.Sprite.spriteWithFile(s_grossini_dance_atlas, cc.RectMake(85 * 3, 121 * 1, 85, 121));
 
         var batch = cc.SpriteBatchNode.batchNodeWithFile("grossini.png");
-        var sprite1 = cc.Sprite.spriteWithFile("grossini.png");
-        var sprite2 = cc.Sprite.spriteWithFile("grossini.png");
-        var sprite3 = cc.Sprite.spriteWithFile("grossini.png");
-        var sprite4 = cc.Sprite.spriteWithFile("grossini.png");
-        var sprite5 = cc.Sprite.spriteWithFile("grossini.png");
-        var sprite6 = cc.Sprite.spriteWithFile("grossini.png");
-        var sprite7 = cc.Sprite.spriteWithFile("grossini.png");
-        var sprite8 = cc.Sprite.spriteWithFile("grossini.png");
+        var sprite1 = cc.Sprite.create("grossini.png");
+        var sprite2 = cc.Sprite.create("grossini.png");
+        var sprite3 = cc.Sprite.create("grossini.png");
+        var sprite4 = cc.Sprite.create("grossini.png");
+        var sprite5 = cc.Sprite.create("grossini.png");
+        var sprite6 = cc.Sprite.create("grossini.png");
+        var sprite7 = cc.Sprite.create("grossini.png");
+        var sprite8 = cc.Sprite.create("grossini.png");
 
         sprite1.setPosition(ccp((winSize.width / 5) * 1, (winSize.height / 3) * 1));
         sprite2.setPosition(ccp((winSize.width / 5) * 2, (winSize.height / 3) * 1));
