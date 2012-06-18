@@ -92,6 +92,18 @@ NSArray* jsval_to_nsarray( jsval vp, JSContext *cx )
 	return array;
 }
 
+NSArray* jsvals_variadic_to_nsarray( JSContext *cx, jsval *vp, int argc )
+{
+	NSMutableArray *array = [NSMutableArray arrayWithCapacity:argc];
+	
+	for( int i=0; i < argc; i++ )
+	{
+		id obj = jsval_to_nsobject( *vp++, cx);
+		[array addObject:obj];
+	}
+	return array;
+}
+
 js_block jsval_to_block( jsval vp, JSContext *cx, JSObject *jsthis )
 {
 	js_block block = ^(id sender) {
