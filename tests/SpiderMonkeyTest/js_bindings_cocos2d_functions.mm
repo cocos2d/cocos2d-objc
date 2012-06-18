@@ -5,7 +5,7 @@
 
 #import "jstypedarray.h"
 #import "ScriptingCore.h"
-#import "js_obj_conversions.h"
+#import "js_manual_conversions.h"
 #import "js_bindings_cocos2d_functions.h"
 
 // Arguments: CGPoint, CGPoint, CGPoint, CGPoint, CGFloat, ccTime
@@ -15,10 +15,10 @@ JSBool JSPROXY_ccCardinalSplineAt(JSContext *cx, uint32_t argc, jsval *vp) {
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGPoint arg0; CGPoint arg1; CGPoint arg2; CGPoint arg3; double arg4; double arg5; 
 
-	arg0 = jsval_to_CGPoint( *argvp++, cx );
-	arg1 = jsval_to_CGPoint( *argvp++, cx );
-	arg2 = jsval_to_CGPoint( *argvp++, cx );
-	arg3 = jsval_to_CGPoint( *argvp++, cx );
+	arg0 = jsval_to_CGPoint( cx, *argvp++ );
+	arg1 = jsval_to_CGPoint( cx, *argvp++ );
+	arg2 = jsval_to_CGPoint( cx, *argvp++ );
+	arg3 = jsval_to_CGPoint( cx, *argvp++ );
 	JS_ValueToNumber( cx, *argvp++, &arg4 );
 	JS_ValueToNumber( cx, *argvp++, &arg5 );
 	CGPoint ret_val;
@@ -38,7 +38,7 @@ JSBool JSPROXY_ccDrawCardinalSpline(JSContext *cx, uint32_t argc, jsval *vp) {
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; double arg1; uint32_t arg2; 
 
-	arg0 = (CCPointArray*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCPointArray*) jsval_to_nsobject( cx, *argvp++);
 	JS_ValueToNumber( cx, *argvp++, &arg1 );
 	JS_ValueToECMAUint32( cx, *argvp++, &arg2 );
 
@@ -54,7 +54,7 @@ JSBool JSPROXY_ccDrawCatmullRom(JSContext *cx, uint32_t argc, jsval *vp) {
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; uint32_t arg1; 
 
-	arg0 = (CCPointArray*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCPointArray*) jsval_to_nsobject( cx, *argvp++);
 	JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
 
 	ccDrawCatmullRom((CCPointArray*)arg0 , (NSUInteger)arg1  );
@@ -69,7 +69,7 @@ JSBool JSPROXY_ccDrawCircle(JSContext *cx, uint32_t argc, jsval *vp) {
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGPoint arg0; double arg1; double arg2; uint32_t arg3; JSBool arg4; 
 
-	arg0 = jsval_to_CGPoint( *argvp++, cx );
+	arg0 = jsval_to_CGPoint( cx, *argvp++ );
 	JS_ValueToNumber( cx, *argvp++, &arg1 );
 	JS_ValueToNumber( cx, *argvp++, &arg2 );
 	JS_ValueToECMAUint32( cx, *argvp++, &arg3 );
@@ -121,10 +121,10 @@ JSBool JSPROXY_ccDrawCubicBezier(JSContext *cx, uint32_t argc, jsval *vp) {
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGPoint arg0; CGPoint arg1; CGPoint arg2; CGPoint arg3; uint32_t arg4; 
 
-	arg0 = jsval_to_CGPoint( *argvp++, cx );
-	arg1 = jsval_to_CGPoint( *argvp++, cx );
-	arg2 = jsval_to_CGPoint( *argvp++, cx );
-	arg3 = jsval_to_CGPoint( *argvp++, cx );
+	arg0 = jsval_to_CGPoint( cx, *argvp++ );
+	arg1 = jsval_to_CGPoint( cx, *argvp++ );
+	arg2 = jsval_to_CGPoint( cx, *argvp++ );
+	arg3 = jsval_to_CGPoint( cx, *argvp++ );
 	JS_ValueToECMAUint32( cx, *argvp++, &arg4 );
 
 	ccDrawCubicBezier((CGPoint)arg0 , (CGPoint)arg1 , (CGPoint)arg2 , (CGPoint)arg3 , (NSUInteger)arg4  );
@@ -139,8 +139,8 @@ JSBool JSPROXY_ccDrawLine(JSContext *cx, uint32_t argc, jsval *vp) {
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGPoint arg0; CGPoint arg1; 
 
-	arg0 = jsval_to_CGPoint( *argvp++, cx );
-	arg1 = jsval_to_CGPoint( *argvp++, cx );
+	arg0 = jsval_to_CGPoint( cx, *argvp++ );
+	arg1 = jsval_to_CGPoint( cx, *argvp++ );
 
 	ccDrawLine((CGPoint)arg0 , (CGPoint)arg1  );
 	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
@@ -154,7 +154,7 @@ JSBool JSPROXY_ccDrawPoint(JSContext *cx, uint32_t argc, jsval *vp) {
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGPoint arg0; 
 
-	arg0 = jsval_to_CGPoint( *argvp++, cx );
+	arg0 = jsval_to_CGPoint( cx, *argvp++ );
 
 	ccDrawPoint((CGPoint)arg0  );
 	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
@@ -168,9 +168,9 @@ JSBool JSPROXY_ccDrawQuadBezier(JSContext *cx, uint32_t argc, jsval *vp) {
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGPoint arg0; CGPoint arg1; CGPoint arg2; uint32_t arg3; 
 
-	arg0 = jsval_to_CGPoint( *argvp++, cx );
-	arg1 = jsval_to_CGPoint( *argvp++, cx );
-	arg2 = jsval_to_CGPoint( *argvp++, cx );
+	arg0 = jsval_to_CGPoint( cx, *argvp++ );
+	arg1 = jsval_to_CGPoint( cx, *argvp++ );
+	arg2 = jsval_to_CGPoint( cx, *argvp++ );
 	JS_ValueToECMAUint32( cx, *argvp++, &arg3 );
 
 	ccDrawQuadBezier((CGPoint)arg0 , (CGPoint)arg1 , (CGPoint)arg2 , (NSUInteger)arg3  );
@@ -185,8 +185,8 @@ JSBool JSPROXY_ccDrawRect(JSContext *cx, uint32_t argc, jsval *vp) {
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGPoint arg0; CGPoint arg1; 
 
-	arg0 = jsval_to_CGPoint( *argvp++, cx );
-	arg1 = jsval_to_CGPoint( *argvp++, cx );
+	arg0 = jsval_to_CGPoint( cx, *argvp++ );
+	arg1 = jsval_to_CGPoint( cx, *argvp++ );
 
 	ccDrawRect((CGPoint)arg0 , (CGPoint)arg1  );
 	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
@@ -200,8 +200,8 @@ JSBool JSPROXY_ccDrawSolidRect(JSContext *cx, uint32_t argc, jsval *vp) {
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGPoint arg0; CGPoint arg1; ccColor4F arg2; 
 
-	arg0 = jsval_to_CGPoint( *argvp++, cx );
-	arg1 = jsval_to_CGPoint( *argvp++, cx );
+	arg0 = jsval_to_CGPoint( cx, *argvp++ );
+	arg1 = jsval_to_CGPoint( cx, *argvp++ );
 
 	JSObject *tmp_arg2;
 	JS_ValueToObject( cx, *argvp++, &tmp_arg2 );
@@ -534,8 +534,8 @@ JSBool JSPROXY_ccpAdd(JSContext *cx, uint32_t argc, jsval *vp) {
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGPoint arg0; CGPoint arg1; 
 
-	arg0 = jsval_to_CGPoint( *argvp++, cx );
-	arg1 = jsval_to_CGPoint( *argvp++, cx );
+	arg0 = jsval_to_CGPoint( cx, *argvp++ );
+	arg1 = jsval_to_CGPoint( cx, *argvp++ );
 	CGPoint ret_val;
 
 	ret_val = ccpAdd((CGPoint)arg0 , (CGPoint)arg1  );
@@ -553,8 +553,8 @@ JSBool JSPROXY_ccpAngle(JSContext *cx, uint32_t argc, jsval *vp) {
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGPoint arg0; CGPoint arg1; 
 
-	arg0 = jsval_to_CGPoint( *argvp++, cx );
-	arg1 = jsval_to_CGPoint( *argvp++, cx );
+	arg0 = jsval_to_CGPoint( cx, *argvp++ );
+	arg1 = jsval_to_CGPoint( cx, *argvp++ );
 	float ret_val;
 
 	ret_val = ccpAngle((CGPoint)arg0 , (CGPoint)arg1  );
@@ -569,8 +569,8 @@ JSBool JSPROXY_ccpAngleSigned(JSContext *cx, uint32_t argc, jsval *vp) {
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGPoint arg0; CGPoint arg1; 
 
-	arg0 = jsval_to_CGPoint( *argvp++, cx );
-	arg1 = jsval_to_CGPoint( *argvp++, cx );
+	arg0 = jsval_to_CGPoint( cx, *argvp++ );
+	arg1 = jsval_to_CGPoint( cx, *argvp++ );
 	float ret_val;
 
 	ret_val = ccpAngleSigned((CGPoint)arg0 , (CGPoint)arg1  );
@@ -585,9 +585,9 @@ JSBool JSPROXY_ccpClamp(JSContext *cx, uint32_t argc, jsval *vp) {
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGPoint arg0; CGPoint arg1; CGPoint arg2; 
 
-	arg0 = jsval_to_CGPoint( *argvp++, cx );
-	arg1 = jsval_to_CGPoint( *argvp++, cx );
-	arg2 = jsval_to_CGPoint( *argvp++, cx );
+	arg0 = jsval_to_CGPoint( cx, *argvp++ );
+	arg1 = jsval_to_CGPoint( cx, *argvp++ );
+	arg2 = jsval_to_CGPoint( cx, *argvp++ );
 	CGPoint ret_val;
 
 	ret_val = ccpClamp((CGPoint)arg0 , (CGPoint)arg1 , (CGPoint)arg2  );
@@ -605,8 +605,8 @@ JSBool JSPROXY_ccpCompMult(JSContext *cx, uint32_t argc, jsval *vp) {
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGPoint arg0; CGPoint arg1; 
 
-	arg0 = jsval_to_CGPoint( *argvp++, cx );
-	arg1 = jsval_to_CGPoint( *argvp++, cx );
+	arg0 = jsval_to_CGPoint( cx, *argvp++ );
+	arg1 = jsval_to_CGPoint( cx, *argvp++ );
 	CGPoint ret_val;
 
 	ret_val = ccpCompMult((CGPoint)arg0 , (CGPoint)arg1  );
@@ -624,8 +624,8 @@ JSBool JSPROXY_ccpCross(JSContext *cx, uint32_t argc, jsval *vp) {
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGPoint arg0; CGPoint arg1; 
 
-	arg0 = jsval_to_CGPoint( *argvp++, cx );
-	arg1 = jsval_to_CGPoint( *argvp++, cx );
+	arg0 = jsval_to_CGPoint( cx, *argvp++ );
+	arg1 = jsval_to_CGPoint( cx, *argvp++ );
 	CGFloat ret_val;
 
 	ret_val = ccpCross((CGPoint)arg0 , (CGPoint)arg1  );
@@ -640,8 +640,8 @@ JSBool JSPROXY_ccpDistance(JSContext *cx, uint32_t argc, jsval *vp) {
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGPoint arg0; CGPoint arg1; 
 
-	arg0 = jsval_to_CGPoint( *argvp++, cx );
-	arg1 = jsval_to_CGPoint( *argvp++, cx );
+	arg0 = jsval_to_CGPoint( cx, *argvp++ );
+	arg1 = jsval_to_CGPoint( cx, *argvp++ );
 	CGFloat ret_val;
 
 	ret_val = ccpDistance((CGPoint)arg0 , (CGPoint)arg1  );
@@ -656,8 +656,8 @@ JSBool JSPROXY_ccpDistanceSQ(JSContext *cx, uint32_t argc, jsval *vp) {
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGPoint arg0; CGPoint arg1; 
 
-	arg0 = jsval_to_CGPoint( *argvp++, cx );
-	arg1 = jsval_to_CGPoint( *argvp++, cx );
+	arg0 = jsval_to_CGPoint( cx, *argvp++ );
+	arg1 = jsval_to_CGPoint( cx, *argvp++ );
 	CGFloat ret_val;
 
 	ret_val = ccpDistanceSQ((CGPoint)arg0 , (CGPoint)arg1  );
@@ -672,8 +672,8 @@ JSBool JSPROXY_ccpDot(JSContext *cx, uint32_t argc, jsval *vp) {
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGPoint arg0; CGPoint arg1; 
 
-	arg0 = jsval_to_CGPoint( *argvp++, cx );
-	arg1 = jsval_to_CGPoint( *argvp++, cx );
+	arg0 = jsval_to_CGPoint( cx, *argvp++ );
+	arg1 = jsval_to_CGPoint( cx, *argvp++ );
 	CGFloat ret_val;
 
 	ret_val = ccpDot((CGPoint)arg0 , (CGPoint)arg1  );
@@ -706,7 +706,7 @@ JSBool JSPROXY_ccpFromSize(JSContext *cx, uint32_t argc, jsval *vp) {
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGSize arg0; 
 
-	arg0 = jsval_to_CGSize( *argvp++, cx );
+	arg0 = jsval_to_CGSize( cx, *argvp++ );
 	CGPoint ret_val;
 
 	ret_val = ccpFromSize((CGSize)arg0  );
@@ -724,8 +724,8 @@ JSBool JSPROXY_ccpFuzzyEqual(JSContext *cx, uint32_t argc, jsval *vp) {
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGPoint arg0; CGPoint arg1; double arg2; 
 
-	arg0 = jsval_to_CGPoint( *argvp++, cx );
-	arg1 = jsval_to_CGPoint( *argvp++, cx );
+	arg0 = jsval_to_CGPoint( cx, *argvp++ );
+	arg1 = jsval_to_CGPoint( cx, *argvp++ );
 	JS_ValueToNumber( cx, *argvp++, &arg2 );
 	BOOL ret_val;
 
@@ -741,10 +741,10 @@ JSBool JSPROXY_ccpIntersectPoint(JSContext *cx, uint32_t argc, jsval *vp) {
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGPoint arg0; CGPoint arg1; CGPoint arg2; CGPoint arg3; 
 
-	arg0 = jsval_to_CGPoint( *argvp++, cx );
-	arg1 = jsval_to_CGPoint( *argvp++, cx );
-	arg2 = jsval_to_CGPoint( *argvp++, cx );
-	arg3 = jsval_to_CGPoint( *argvp++, cx );
+	arg0 = jsval_to_CGPoint( cx, *argvp++ );
+	arg1 = jsval_to_CGPoint( cx, *argvp++ );
+	arg2 = jsval_to_CGPoint( cx, *argvp++ );
+	arg3 = jsval_to_CGPoint( cx, *argvp++ );
 	CGPoint ret_val;
 
 	ret_val = ccpIntersectPoint((CGPoint)arg0 , (CGPoint)arg1 , (CGPoint)arg2 , (CGPoint)arg3  );
@@ -762,7 +762,7 @@ JSBool JSPROXY_ccpLength(JSContext *cx, uint32_t argc, jsval *vp) {
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGPoint arg0; 
 
-	arg0 = jsval_to_CGPoint( *argvp++, cx );
+	arg0 = jsval_to_CGPoint( cx, *argvp++ );
 	CGFloat ret_val;
 
 	ret_val = ccpLength((CGPoint)arg0  );
@@ -777,7 +777,7 @@ JSBool JSPROXY_ccpLengthSQ(JSContext *cx, uint32_t argc, jsval *vp) {
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGPoint arg0; 
 
-	arg0 = jsval_to_CGPoint( *argvp++, cx );
+	arg0 = jsval_to_CGPoint( cx, *argvp++ );
 	CGFloat ret_val;
 
 	ret_val = ccpLengthSQ((CGPoint)arg0  );
@@ -792,8 +792,8 @@ JSBool JSPROXY_ccpLerp(JSContext *cx, uint32_t argc, jsval *vp) {
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGPoint arg0; CGPoint arg1; double arg2; 
 
-	arg0 = jsval_to_CGPoint( *argvp++, cx );
-	arg1 = jsval_to_CGPoint( *argvp++, cx );
+	arg0 = jsval_to_CGPoint( cx, *argvp++ );
+	arg1 = jsval_to_CGPoint( cx, *argvp++ );
 	JS_ValueToNumber( cx, *argvp++, &arg2 );
 	CGPoint ret_val;
 
@@ -812,8 +812,8 @@ JSBool JSPROXY_ccpMidpoint(JSContext *cx, uint32_t argc, jsval *vp) {
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGPoint arg0; CGPoint arg1; 
 
-	arg0 = jsval_to_CGPoint( *argvp++, cx );
-	arg1 = jsval_to_CGPoint( *argvp++, cx );
+	arg0 = jsval_to_CGPoint( cx, *argvp++ );
+	arg1 = jsval_to_CGPoint( cx, *argvp++ );
 	CGPoint ret_val;
 
 	ret_val = ccpMidpoint((CGPoint)arg0 , (CGPoint)arg1  );
@@ -831,7 +831,7 @@ JSBool JSPROXY_ccpMult(JSContext *cx, uint32_t argc, jsval *vp) {
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGPoint arg0; double arg1; 
 
-	arg0 = jsval_to_CGPoint( *argvp++, cx );
+	arg0 = jsval_to_CGPoint( cx, *argvp++ );
 	JS_ValueToNumber( cx, *argvp++, &arg1 );
 	CGPoint ret_val;
 
@@ -850,7 +850,7 @@ JSBool JSPROXY_ccpNeg(JSContext *cx, uint32_t argc, jsval *vp) {
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGPoint arg0; 
 
-	arg0 = jsval_to_CGPoint( *argvp++, cx );
+	arg0 = jsval_to_CGPoint( cx, *argvp++ );
 	CGPoint ret_val;
 
 	ret_val = ccpNeg((CGPoint)arg0  );
@@ -868,7 +868,7 @@ JSBool JSPROXY_ccpNormalize(JSContext *cx, uint32_t argc, jsval *vp) {
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGPoint arg0; 
 
-	arg0 = jsval_to_CGPoint( *argvp++, cx );
+	arg0 = jsval_to_CGPoint( cx, *argvp++ );
 	CGPoint ret_val;
 
 	ret_val = ccpNormalize((CGPoint)arg0  );
@@ -886,7 +886,7 @@ JSBool JSPROXY_ccpPerp(JSContext *cx, uint32_t argc, jsval *vp) {
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGPoint arg0; 
 
-	arg0 = jsval_to_CGPoint( *argvp++, cx );
+	arg0 = jsval_to_CGPoint( cx, *argvp++ );
 	CGPoint ret_val;
 
 	ret_val = ccpPerp((CGPoint)arg0  );
@@ -904,8 +904,8 @@ JSBool JSPROXY_ccpProject(JSContext *cx, uint32_t argc, jsval *vp) {
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGPoint arg0; CGPoint arg1; 
 
-	arg0 = jsval_to_CGPoint( *argvp++, cx );
-	arg1 = jsval_to_CGPoint( *argvp++, cx );
+	arg0 = jsval_to_CGPoint( cx, *argvp++ );
+	arg1 = jsval_to_CGPoint( cx, *argvp++ );
 	CGPoint ret_val;
 
 	ret_val = ccpProject((CGPoint)arg0 , (CGPoint)arg1  );
@@ -923,7 +923,7 @@ JSBool JSPROXY_ccpRPerp(JSContext *cx, uint32_t argc, jsval *vp) {
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGPoint arg0; 
 
-	arg0 = jsval_to_CGPoint( *argvp++, cx );
+	arg0 = jsval_to_CGPoint( cx, *argvp++ );
 	CGPoint ret_val;
 
 	ret_val = ccpRPerp((CGPoint)arg0  );
@@ -941,8 +941,8 @@ JSBool JSPROXY_ccpRotate(JSContext *cx, uint32_t argc, jsval *vp) {
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGPoint arg0; CGPoint arg1; 
 
-	arg0 = jsval_to_CGPoint( *argvp++, cx );
-	arg1 = jsval_to_CGPoint( *argvp++, cx );
+	arg0 = jsval_to_CGPoint( cx, *argvp++ );
+	arg1 = jsval_to_CGPoint( cx, *argvp++ );
 	CGPoint ret_val;
 
 	ret_val = ccpRotate((CGPoint)arg0 , (CGPoint)arg1  );
@@ -960,8 +960,8 @@ JSBool JSPROXY_ccpRotateByAngle(JSContext *cx, uint32_t argc, jsval *vp) {
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGPoint arg0; CGPoint arg1; double arg2; 
 
-	arg0 = jsval_to_CGPoint( *argvp++, cx );
-	arg1 = jsval_to_CGPoint( *argvp++, cx );
+	arg0 = jsval_to_CGPoint( cx, *argvp++ );
+	arg1 = jsval_to_CGPoint( cx, *argvp++ );
 	JS_ValueToNumber( cx, *argvp++, &arg2 );
 	CGPoint ret_val;
 
@@ -980,10 +980,10 @@ JSBool JSPROXY_ccpSegmentIntersect(JSContext *cx, uint32_t argc, jsval *vp) {
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGPoint arg0; CGPoint arg1; CGPoint arg2; CGPoint arg3; 
 
-	arg0 = jsval_to_CGPoint( *argvp++, cx );
-	arg1 = jsval_to_CGPoint( *argvp++, cx );
-	arg2 = jsval_to_CGPoint( *argvp++, cx );
-	arg3 = jsval_to_CGPoint( *argvp++, cx );
+	arg0 = jsval_to_CGPoint( cx, *argvp++ );
+	arg1 = jsval_to_CGPoint( cx, *argvp++ );
+	arg2 = jsval_to_CGPoint( cx, *argvp++ );
+	arg3 = jsval_to_CGPoint( cx, *argvp++ );
 	BOOL ret_val;
 
 	ret_val = ccpSegmentIntersect((CGPoint)arg0 , (CGPoint)arg1 , (CGPoint)arg2 , (CGPoint)arg3  );
@@ -998,8 +998,8 @@ JSBool JSPROXY_ccpSub(JSContext *cx, uint32_t argc, jsval *vp) {
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGPoint arg0; CGPoint arg1; 
 
-	arg0 = jsval_to_CGPoint( *argvp++, cx );
-	arg1 = jsval_to_CGPoint( *argvp++, cx );
+	arg0 = jsval_to_CGPoint( cx, *argvp++ );
+	arg1 = jsval_to_CGPoint( cx, *argvp++ );
 	CGPoint ret_val;
 
 	ret_val = ccpSub((CGPoint)arg0 , (CGPoint)arg1  );
@@ -1017,7 +1017,7 @@ JSBool JSPROXY_ccpToAngle(JSContext *cx, uint32_t argc, jsval *vp) {
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGPoint arg0; 
 
-	arg0 = jsval_to_CGPoint( *argvp++, cx );
+	arg0 = jsval_to_CGPoint( cx, *argvp++ );
 	CGFloat ret_val;
 
 	ret_val = ccpToAngle((CGPoint)arg0  );
@@ -1032,8 +1032,8 @@ JSBool JSPROXY_ccpUnrotate(JSContext *cx, uint32_t argc, jsval *vp) {
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGPoint arg0; CGPoint arg1; 
 
-	arg0 = jsval_to_CGPoint( *argvp++, cx );
-	arg1 = jsval_to_CGPoint( *argvp++, cx );
+	arg0 = jsval_to_CGPoint( cx, *argvp++ );
+	arg1 = jsval_to_CGPoint( cx, *argvp++ );
 	CGPoint ret_val;
 
 	ret_val = ccpUnrotate((CGPoint)arg0 , (CGPoint)arg1  );

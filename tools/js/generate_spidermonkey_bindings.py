@@ -542,7 +542,7 @@ void %s_finalize(JSContext *cx, JSObject *obj)
     # special case: returning Object
     def generate_retval_object( self, declared_type, js_type ):
         object_template = '''
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 '''
         return object_template
@@ -770,27 +770,27 @@ void %s_finalize(JSContext *cx, JSObject *obj)
 
     # Special case for string to NSString generator
     def generate_argument_string( self, i, arg_js_type, arg_declared_type ):
-        template = '\targ%d = jsval_to_nsstring( *argvp++, cx );\n'
+        template = '\targ%d = jsval_to_nsstring( cx, *argvp++ );\n'
         self.mm_file.write( template % i )
 
     # Special case for objects
     def generate_argument_object( self, i, arg_js_type, arg_declared_type ):
-        object_template = '\targ%d = (%s) jsval_to_nsobject( *argvp++, cx);\n'
+        object_template = '\targ%d = (%s) jsval_to_nsobject( cx, *argvp++);\n'
         self.mm_file.write( object_template % (i, arg_declared_type ) )
 
     # CGPoint needs an special case since its internal structure changes
     # on the platform. On Mac it uses doubles and on iOS it uses floats
     # This function expect floats.
     def generate_argument_cgpoint( self, i, arg_js_type, arg_declared_type ):
-        template = '\targ%d = jsval_to_CGPoint( *argvp++, cx );\n'
+        template = '\targ%d = jsval_to_CGPoint( cx, *argvp++ );\n'
         self.mm_file.write( template % i )
 
     def generate_argument_cgsize( self, i, arg_js_type, arg_declared_type ):
-        template = '\targ%d = jsval_to_CGSize( *argvp++, cx );\n'
+        template = '\targ%d = jsval_to_CGSize( cx, *argvp++ );\n'
         self.mm_file.write( template % i )
 
     def generate_argument_cgrect( self, i, arg_js_type, arg_declared_type ):
-        template = '\targ%d = jsval_to_CGRect( *argvp++, cx );\n'
+        template = '\targ%d = jsval_to_CGRect( cx, *argvp++ );\n'
         self.mm_file.write( template % i )
 
     def generate_argument_struct( self, i, arg_js_type, arg_declared_type ):
@@ -808,11 +808,11 @@ void %s_finalize(JSContext *cx, JSObject *obj)
 
 
     def generate_argument_array( self, i, arg_js_type, arg_declared_type ):
-        template = '\targ%d = jsval_to_nsarray( *argvp++, cx );\n'
+        template = '\targ%d = jsval_to_nsarray( cx, *argvp++ );\n'
         self.mm_file.write( template % (i) )
 
     def generate_argument_function( self, i, arg_js_type, arg_declared_type ):
-        template = '\targ%d = jsval_to_block( *argvp++, cx, JS_THIS_OBJECT(cx, vp) );\n'
+        template = '\targ%d = jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp) );\n'
         self.mm_file.write( template % (i) )
 
     def generate_arguments( self, args_declared_type, args_js_type, properties = {} ):
@@ -1443,7 +1443,7 @@ void %s_createClass(JSContext *cx, JSObject* globalObj, const char* name )
         import_template = '''
 #import "jstypedarray.h"
 #import "ScriptingCore.h"
-#import "js_obj_conversions.h"
+#import "js_manual_conversions.h"
 #import "%s%s_functions.h"
 '''
         self.generate_autogenerate_prefix( self.mm_file )

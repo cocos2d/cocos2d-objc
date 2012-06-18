@@ -61,7 +61,7 @@ JSBool JSPROXY_CCNode_actionManager(JSContext *cx, uint32_t argc, jsval *vp) {
 	CCNode *real = (CCNode*) [proxy realObj];
 	ret_val = [real actionManager ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -81,7 +81,7 @@ JSBool JSPROXY_CCNode_addChild_(JSContext *cx, uint32_t argc, jsval *vp) {
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; 
 
-	arg0 = (CCNode*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCNode*) jsval_to_nsobject( cx, *argvp++);
 
 	CCNode *real = (CCNode*) [proxy realObj];
 	[real addChild:(CCNode*)arg0  ];
@@ -103,7 +103,7 @@ JSBool JSPROXY_CCNode_addChild_z_(JSContext *cx, uint32_t argc, jsval *vp) {
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; int32_t arg1; 
 
-	arg0 = (CCNode*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCNode*) jsval_to_nsobject( cx, *argvp++);
 	JS_ValueToECMAInt32( cx, *argvp++, &arg1 );
 
 	CCNode *real = (CCNode*) [proxy realObj];
@@ -126,7 +126,7 @@ JSBool JSPROXY_CCNode_addChild_z_tag_(JSContext *cx, uint32_t argc, jsval *vp) {
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; int32_t arg1; int32_t arg2; 
 
-	arg0 = (CCNode*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCNode*) jsval_to_nsobject( cx, *argvp++);
 	JS_ValueToECMAInt32( cx, *argvp++, &arg1 );
 	JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
 
@@ -218,7 +218,7 @@ JSBool JSPROXY_CCNode_camera(JSContext *cx, uint32_t argc, jsval *vp) {
 	CCNode *real = (CCNode*) [proxy realObj];
 	ret_val = [real camera ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -300,7 +300,7 @@ JSBool JSPROXY_CCNode_convertToNodeSpace_(JSContext *cx, uint32_t argc, jsval *v
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGPoint arg0; 
 
-	arg0 = jsval_to_CGPoint( *argvp++, cx );
+	arg0 = jsval_to_CGPoint( cx, *argvp++ );
 	CGPoint ret_val;
 
 	CCNode *real = (CCNode*) [proxy realObj];
@@ -326,7 +326,7 @@ JSBool JSPROXY_CCNode_convertToNodeSpaceAR_(JSContext *cx, uint32_t argc, jsval 
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGPoint arg0; 
 
-	arg0 = jsval_to_CGPoint( *argvp++, cx );
+	arg0 = jsval_to_CGPoint( cx, *argvp++ );
 	CGPoint ret_val;
 
 	CCNode *real = (CCNode*) [proxy realObj];
@@ -352,7 +352,7 @@ JSBool JSPROXY_CCNode_convertToWorldSpace_(JSContext *cx, uint32_t argc, jsval *
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGPoint arg0; 
 
-	arg0 = jsval_to_CGPoint( *argvp++, cx );
+	arg0 = jsval_to_CGPoint( cx, *argvp++ );
 	CGPoint ret_val;
 
 	CCNode *real = (CCNode*) [proxy realObj];
@@ -378,7 +378,7 @@ JSBool JSPROXY_CCNode_convertToWorldSpaceAR_(JSContext *cx, uint32_t argc, jsval
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGPoint arg0; 
 
-	arg0 = jsval_to_CGPoint( *argvp++, cx );
+	arg0 = jsval_to_CGPoint( cx, *argvp++ );
 	CGPoint ret_val;
 
 	CCNode *real = (CCNode*) [proxy realObj];
@@ -428,7 +428,7 @@ JSBool JSPROXY_CCNode_getActionByTag_(JSContext *cx, uint32_t argc, jsval *vp) {
 	CCNode *real = (CCNode*) [proxy realObj];
 	ret_val = [real getActionByTag:(NSInteger)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -454,7 +454,7 @@ JSBool JSPROXY_CCNode_getChildByTag_(JSContext *cx, uint32_t argc, jsval *vp) {
 	CCNode *real = (CCNode*) [proxy realObj];
 	ret_val = [real getChildByTag:(NSInteger)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -495,7 +495,7 @@ JSBool JSPROXY_CCNode_grid(JSContext *cx, uint32_t argc, jsval *vp) {
 	CCNode *real = (CCNode*) [proxy realObj];
 	ret_val = [real grid ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -568,7 +568,7 @@ JSBool JSPROXY_CCNode_node_static(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	ret_val = [CCNode node ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -712,7 +712,7 @@ JSBool JSPROXY_CCNode_parent(JSContext *cx, uint32_t argc, jsval *vp) {
 	CCNode *real = (CCNode*) [proxy realObj];
 	ret_val = [real parent ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -818,7 +818,7 @@ JSBool JSPROXY_CCNode_removeChild_cleanup_(JSContext *cx, uint32_t argc, jsval *
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; JSBool arg1; 
 
-	arg0 = (CCNode*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCNode*) jsval_to_nsobject( cx, *argvp++);
 	JS_ValueToBoolean( cx, *argvp++, &arg1 );
 
 	CCNode *real = (CCNode*) [proxy realObj];
@@ -886,7 +886,7 @@ JSBool JSPROXY_CCNode_reorderChild_z_(JSContext *cx, uint32_t argc, jsval *vp) {
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; int32_t arg1; 
 
-	arg0 = (CCNode*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCNode*) jsval_to_nsobject( cx, *argvp++);
 	JS_ValueToECMAInt32( cx, *argvp++, &arg1 );
 
 	CCNode *real = (CCNode*) [proxy realObj];
@@ -946,13 +946,13 @@ JSBool JSPROXY_CCNode_runAction_(JSContext *cx, uint32_t argc, jsval *vp) {
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; 
 
-	arg0 = (CCAction*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCAction*) jsval_to_nsobject( cx, *argvp++);
 	CCAction* ret_val;
 
 	CCNode *real = (CCNode*) [proxy realObj];
 	ret_val = [real runAction:(CCAction*)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -1071,7 +1071,7 @@ JSBool JSPROXY_CCNode_scheduler(JSContext *cx, uint32_t argc, jsval *vp) {
 	CCNode *real = (CCNode*) [proxy realObj];
 	ret_val = [real scheduler ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -1091,7 +1091,7 @@ JSBool JSPROXY_CCNode_setActionManager_(JSContext *cx, uint32_t argc, jsval *vp)
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; 
 
-	arg0 = (CCActionManager*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCActionManager*) jsval_to_nsobject( cx, *argvp++);
 
 	CCNode *real = (CCNode*) [proxy realObj];
 	[real setActionManager:(CCActionManager*)arg0  ];
@@ -1113,7 +1113,7 @@ JSBool JSPROXY_CCNode_setAnchorPoint_(JSContext *cx, uint32_t argc, jsval *vp) {
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGPoint arg0; 
 
-	arg0 = jsval_to_CGPoint( *argvp++, cx );
+	arg0 = jsval_to_CGPoint( cx, *argvp++ );
 
 	CCNode *real = (CCNode*) [proxy realObj];
 	[real setAnchorPoint:(CGPoint)arg0  ];
@@ -1135,7 +1135,7 @@ JSBool JSPROXY_CCNode_setContentSize_(JSContext *cx, uint32_t argc, jsval *vp) {
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGSize arg0; 
 
-	arg0 = jsval_to_CGSize( *argvp++, cx );
+	arg0 = jsval_to_CGSize( cx, *argvp++ );
 
 	CCNode *real = (CCNode*) [proxy realObj];
 	[real setContentSize:(CGSize)arg0  ];
@@ -1179,7 +1179,7 @@ JSBool JSPROXY_CCNode_setGrid_(JSContext *cx, uint32_t argc, jsval *vp) {
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; 
 
-	arg0 = (CCGridBase*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCGridBase*) jsval_to_nsobject( cx, *argvp++);
 
 	CCNode *real = (CCNode*) [proxy realObj];
 	[real setGrid:(CCGridBase*)arg0  ];
@@ -1245,7 +1245,7 @@ JSBool JSPROXY_CCNode_setParent_(JSContext *cx, uint32_t argc, jsval *vp) {
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; 
 
-	arg0 = (CCNode*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCNode*) jsval_to_nsobject( cx, *argvp++);
 
 	CCNode *real = (CCNode*) [proxy realObj];
 	[real setParent:(CCNode*)arg0  ];
@@ -1267,7 +1267,7 @@ JSBool JSPROXY_CCNode_setPosition_(JSContext *cx, uint32_t argc, jsval *vp) {
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGPoint arg0; 
 
-	arg0 = jsval_to_CGPoint( *argvp++, cx );
+	arg0 = jsval_to_CGPoint( cx, *argvp++ );
 
 	CCNode *real = (CCNode*) [proxy realObj];
 	[real setPosition:(CGPoint)arg0  ];
@@ -1377,7 +1377,7 @@ JSBool JSPROXY_CCNode_setScheduler_(JSContext *cx, uint32_t argc, jsval *vp) {
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; 
 
-	arg0 = (CCScheduler*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCScheduler*) jsval_to_nsobject( cx, *argvp++);
 
 	CCNode *real = (CCNode*) [proxy realObj];
 	[real setScheduler:(CCScheduler*)arg0  ];
@@ -1399,7 +1399,7 @@ JSBool JSPROXY_CCNode_setShaderProgram_(JSContext *cx, uint32_t argc, jsval *vp)
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; 
 
-	arg0 = (CCGLProgram*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCGLProgram*) jsval_to_nsobject( cx, *argvp++);
 
 	CCNode *real = (CCNode*) [proxy realObj];
 	[real setShaderProgram:(CCGLProgram*)arg0  ];
@@ -1555,7 +1555,7 @@ JSBool JSPROXY_CCNode_shaderProgram(JSContext *cx, uint32_t argc, jsval *vp) {
 	CCNode *real = (CCNode*) [proxy realObj];
 	ret_val = [real shaderProgram ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -1631,7 +1631,7 @@ JSBool JSPROXY_CCNode_stopAction_(JSContext *cx, uint32_t argc, jsval *vp) {
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; 
 
-	arg0 = (CCAction*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCAction*) jsval_to_nsobject( cx, *argvp++);
 
 	CCNode *real = (CCNode*) [proxy realObj];
 	[real stopAction:(CCAction*)arg0  ];
@@ -2150,7 +2150,7 @@ JSBool JSPROXY_CCMenuItem_initWithBlock_(JSContext *cx, uint32_t argc, jsval *vp
 	jsval *argvp = JS_ARGV(cx,vp);
 	js_block arg0; 
 
-	arg0 = jsval_to_block( *argvp++, cx, JS_THIS_OBJECT(cx, vp) );
+	arg0 = jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp) );
 
 	CCMenuItem *real = [(CCMenuItem*)[proxy.klass alloc] initWithBlock:(void (^)(id))arg0  ];
 	[proxy setRealObj: real];
@@ -2206,12 +2206,12 @@ JSBool JSPROXY_CCMenuItem_itemWithBlock__static(JSContext *cx, uint32_t argc, js
 	jsval *argvp = JS_ARGV(cx,vp);
 	js_block arg0; 
 
-	arg0 = jsval_to_block( *argvp++, cx, JS_THIS_OBJECT(cx, vp) );
+	arg0 = jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp) );
 	CCMenuItem* ret_val;
 
 	ret_val = [CCMenuItem itemWithBlock:(void (^)(id))arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -2271,7 +2271,7 @@ JSBool JSPROXY_CCMenuItem_setBlock_(JSContext *cx, uint32_t argc, jsval *vp) {
 	jsval *argvp = JS_ARGV(cx,vp);
 	js_block arg0; 
 
-	arg0 = jsval_to_block( *argvp++, cx, JS_THIS_OBJECT(cx, vp) );
+	arg0 = jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp) );
 
 	CCMenuItem *real = (CCMenuItem*) [proxy realObj];
 	[real setBlock:(void (^)(id))arg0  ];
@@ -2327,7 +2327,7 @@ JSBool JSPROXY_CCMenuItem_node_static(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	ret_val = [CCMenuItem node ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -2462,8 +2462,8 @@ JSBool JSPROXY_CCMenuItemLabel_initWithLabel_block_(JSContext *cx, uint32_t argc
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; js_block arg1; 
 
-	arg0 = (CCNode*) jsval_to_nsobject( *argvp++, cx);
-	arg1 = jsval_to_block( *argvp++, cx, JS_THIS_OBJECT(cx, vp) );
+	arg0 = (CCNode*) jsval_to_nsobject( cx, *argvp++);
+	arg1 = jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp) );
 
 	CCMenuItemLabel *real = [(CCMenuItemLabel*)[proxy.klass alloc] initWithLabel:(CCNode*)arg0 block:(void (^)(id))arg1  ];
 	[proxy setRealObj: real];
@@ -2481,12 +2481,12 @@ JSBool JSPROXY_CCMenuItemLabel_itemWithLabel__static(JSContext *cx, uint32_t arg
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; 
 
-	arg0 = (CCNode*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCNode*) jsval_to_nsobject( cx, *argvp++);
 	CCMenuItemLabel* ret_val;
 
 	ret_val = [CCMenuItemLabel itemWithLabel:(CCNode*)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -2499,13 +2499,13 @@ JSBool JSPROXY_CCMenuItemLabel_itemWithLabel_block__static(JSContext *cx, uint32
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; js_block arg1; 
 
-	arg0 = (CCNode*) jsval_to_nsobject( *argvp++, cx);
-	arg1 = jsval_to_block( *argvp++, cx, JS_THIS_OBJECT(cx, vp) );
+	arg0 = (CCNode*) jsval_to_nsobject( cx, *argvp++);
+	arg1 = jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp) );
 	CCMenuItemLabel* ret_val;
 
 	ret_val = [CCMenuItemLabel itemWithLabel:(CCNode*)arg0 block:(void (^)(id))arg1  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -2527,7 +2527,7 @@ JSBool JSPROXY_CCMenuItemLabel_label(JSContext *cx, uint32_t argc, jsval *vp) {
 	CCMenuItemLabel *real = (CCMenuItemLabel*) [proxy realObj];
 	ret_val = [real label ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -2594,7 +2594,7 @@ JSBool JSPROXY_CCMenuItemLabel_setLabel_(JSContext *cx, uint32_t argc, jsval *vp
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; 
 
-	arg0 = (CCNode*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCNode*) jsval_to_nsobject( cx, *argvp++);
 
 	CCMenuItemLabel *real = (CCMenuItemLabel*) [proxy realObj];
 	[real setLabel:(CCNode*)arg0  ];
@@ -2616,7 +2616,7 @@ JSBool JSPROXY_CCMenuItemLabel_setString_(JSContext *cx, uint32_t argc, jsval *v
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
 
 	CCMenuItemLabel *real = (CCMenuItemLabel*) [proxy realObj];
 	[real setString:(NSString*)arg0  ];
@@ -2762,12 +2762,12 @@ JSBool JSPROXY_CCMenuItemLabel_itemWithBlock__static(JSContext *cx, uint32_t arg
 	jsval *argvp = JS_ARGV(cx,vp);
 	js_block arg0; 
 
-	arg0 = jsval_to_block( *argvp++, cx, JS_THIS_OBJECT(cx, vp) );
+	arg0 = jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp) );
 	CCMenuItemLabel* ret_val;
 
 	ret_val = [CCMenuItemLabel itemWithBlock:(void (^)(id))arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -2781,7 +2781,7 @@ JSBool JSPROXY_CCMenuItemLabel_node_static(JSContext *cx, uint32_t argc, jsval *
 
 	ret_val = [CCMenuItemLabel node ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -2897,12 +2897,12 @@ JSBool JSPROXY_CCMenuItemAtlasFont_initWithString_charMapFile_itemWidth_itemHeig
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; NSString* arg1; int32_t arg2; int32_t arg3; uint16_t arg4; js_block arg5; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
-	arg1 = jsval_to_nsstring( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
+	arg1 = jsval_to_nsstring( cx, *argvp++ );
 	JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
 	JS_ValueToECMAInt32( cx, *argvp++, &arg3 );
 	JS_ValueToUint16( cx, *argvp++, &arg4 );
-	arg5 = jsval_to_block( *argvp++, cx, JS_THIS_OBJECT(cx, vp) );
+	arg5 = jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp) );
 
 	CCMenuItemAtlasFont *real = [(CCMenuItemAtlasFont*)[proxy.klass alloc] initWithString:(NSString*)arg0 charMapFile:(NSString*)arg1 itemWidth:(int)arg2 itemHeight:(int)arg3 startCharMap:(char)arg4 block:(void (^)(id))arg5  ];
 	[proxy setRealObj: real];
@@ -2920,8 +2920,8 @@ JSBool JSPROXY_CCMenuItemAtlasFont_itemWithString_charMapFile_itemWidth_itemHeig
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; NSString* arg1; int32_t arg2; int32_t arg3; uint16_t arg4; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
-	arg1 = jsval_to_nsstring( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
+	arg1 = jsval_to_nsstring( cx, *argvp++ );
 	JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
 	JS_ValueToECMAInt32( cx, *argvp++, &arg3 );
 	JS_ValueToUint16( cx, *argvp++, &arg4 );
@@ -2929,7 +2929,7 @@ JSBool JSPROXY_CCMenuItemAtlasFont_itemWithString_charMapFile_itemWidth_itemHeig
 
 	ret_val = [CCMenuItemAtlasFont itemWithString:(NSString*)arg0 charMapFile:(NSString*)arg1 itemWidth:(int)arg2 itemHeight:(int)arg3 startCharMap:(char)arg4  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -2942,17 +2942,17 @@ JSBool JSPROXY_CCMenuItemAtlasFont_itemWithString_charMapFile_itemWidth_itemHeig
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; NSString* arg1; int32_t arg2; int32_t arg3; uint16_t arg4; js_block arg5; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
-	arg1 = jsval_to_nsstring( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
+	arg1 = jsval_to_nsstring( cx, *argvp++ );
 	JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
 	JS_ValueToECMAInt32( cx, *argvp++, &arg3 );
 	JS_ValueToUint16( cx, *argvp++, &arg4 );
-	arg5 = jsval_to_block( *argvp++, cx, JS_THIS_OBJECT(cx, vp) );
+	arg5 = jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp) );
 	CCMenuItemAtlasFont* ret_val;
 
 	ret_val = [CCMenuItemAtlasFont itemWithString:(NSString*)arg0 charMapFile:(NSString*)arg1 itemWidth:(int)arg2 itemHeight:(int)arg3 startCharMap:(char)arg4 block:(void (^)(id))arg5  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -2965,12 +2965,12 @@ JSBool JSPROXY_CCMenuItemAtlasFont_itemWithLabel__static(JSContext *cx, uint32_t
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; 
 
-	arg0 = (CCNode*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCNode*) jsval_to_nsobject( cx, *argvp++);
 	CCMenuItemAtlasFont* ret_val;
 
 	ret_val = [CCMenuItemAtlasFont itemWithLabel:(CCNode*)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -2983,13 +2983,13 @@ JSBool JSPROXY_CCMenuItemAtlasFont_itemWithLabel_block__static(JSContext *cx, ui
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; js_block arg1; 
 
-	arg0 = (CCNode*) jsval_to_nsobject( *argvp++, cx);
-	arg1 = jsval_to_block( *argvp++, cx, JS_THIS_OBJECT(cx, vp) );
+	arg0 = (CCNode*) jsval_to_nsobject( cx, *argvp++);
+	arg1 = jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp) );
 	CCMenuItemAtlasFont* ret_val;
 
 	ret_val = [CCMenuItemAtlasFont itemWithLabel:(CCNode*)arg0 block:(void (^)(id))arg1  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -3002,12 +3002,12 @@ JSBool JSPROXY_CCMenuItemAtlasFont_itemWithBlock__static(JSContext *cx, uint32_t
 	jsval *argvp = JS_ARGV(cx,vp);
 	js_block arg0; 
 
-	arg0 = jsval_to_block( *argvp++, cx, JS_THIS_OBJECT(cx, vp) );
+	arg0 = jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp) );
 	CCMenuItemAtlasFont* ret_val;
 
 	ret_val = [CCMenuItemAtlasFont itemWithBlock:(void (^)(id))arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -3021,7 +3021,7 @@ JSBool JSPROXY_CCMenuItemAtlasFont_node_static(JSContext *cx, uint32_t argc, jsv
 
 	ret_val = [CCMenuItemAtlasFont node ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -3193,7 +3193,7 @@ JSBool JSPROXY_CCTMXObjectGroup_setGroupName_(JSContext *cx, uint32_t argc, jsva
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
 
 	CCTMXObjectGroup *real = (CCTMXObjectGroup*) [proxy realObj];
 	[real setGroupName:(NSString*)arg0  ];
@@ -3215,7 +3215,7 @@ JSBool JSPROXY_CCTMXObjectGroup_setObjects_(JSContext *cx, uint32_t argc, jsval 
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSArray* arg0; 
 
-	arg0 = jsval_to_nsarray( *argvp++, cx );
+	arg0 = jsval_to_nsarray( cx, *argvp++ );
 
 	CCTMXObjectGroup *real = (CCTMXObjectGroup*) [proxy realObj];
 	[real setObjects:(NSMutableArray*)arg0  ];
@@ -3237,7 +3237,7 @@ JSBool JSPROXY_CCTMXObjectGroup_setPositionOffset_(JSContext *cx, uint32_t argc,
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGPoint arg0; 
 
-	arg0 = jsval_to_CGPoint( *argvp++, cx );
+	arg0 = jsval_to_CGPoint( cx, *argvp++ );
 
 	CCTMXObjectGroup *real = (CCTMXObjectGroup*) [proxy realObj];
 	[real setPositionOffset:(CGPoint)arg0  ];
@@ -3338,7 +3338,7 @@ JSBool JSPROXY_CCAction_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	ret_val = [CCAction action ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -3609,7 +3609,7 @@ JSBool JSPROXY_CCFiniteTimeAction_reverse(JSContext *cx, uint32_t argc, jsval *v
 	CCFiniteTimeAction *real = (CCFiniteTimeAction*) [proxy realObj];
 	ret_val = [real reverse ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -3645,7 +3645,7 @@ JSBool JSPROXY_CCFiniteTimeAction_action_static(JSContext *cx, uint32_t argc, js
 
 	ret_val = [CCFiniteTimeAction action ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -3746,7 +3746,7 @@ JSBool JSPROXY_CCActionInterval_actionWithDuration__static(JSContext *cx, uint32
 
 	ret_val = [CCActionInterval actionWithDuration:(ccTime)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -3831,7 +3831,7 @@ JSBool JSPROXY_CCActionInterval_reverse(JSContext *cx, uint32_t argc, jsval *vp)
 	CCActionInterval *real = (CCActionInterval*) [proxy realObj];
 	ret_val = [real reverse ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -3845,7 +3845,7 @@ JSBool JSPROXY_CCActionInterval_action_static(JSContext *cx, uint32_t argc, jsva
 
 	ret_val = [CCActionInterval action ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -3944,12 +3944,12 @@ JSBool JSPROXY_CCMoveTo_actionWithDuration_position__static(JSContext *cx, uint3
 	double arg0; CGPoint arg1; 
 
 	JS_ValueToNumber( cx, *argvp++, &arg0 );
-	arg1 = jsval_to_CGPoint( *argvp++, cx );
+	arg1 = jsval_to_CGPoint( cx, *argvp++ );
 	CCMoveTo* ret_val;
 
 	ret_val = [CCMoveTo actionWithDuration:(ccTime)arg0 position:(CGPoint)arg1  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -3970,7 +3970,7 @@ JSBool JSPROXY_CCMoveTo_initWithDuration_position_(JSContext *cx, uint32_t argc,
 	double arg0; CGPoint arg1; 
 
 	JS_ValueToNumber( cx, *argvp++, &arg0 );
-	arg1 = jsval_to_CGPoint( *argvp++, cx );
+	arg1 = jsval_to_CGPoint( cx, *argvp++ );
 
 	CCMoveTo *real = [(CCMoveTo*)[proxy.klass alloc] initWithDuration:(ccTime)arg0 position:(CGPoint)arg1  ];
 	[proxy setRealObj: real];
@@ -3993,7 +3993,7 @@ JSBool JSPROXY_CCMoveTo_actionWithDuration__static(JSContext *cx, uint32_t argc,
 
 	ret_val = [CCMoveTo actionWithDuration:(ccTime)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -4007,7 +4007,7 @@ JSBool JSPROXY_CCMoveTo_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	ret_val = [CCMoveTo action ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -4104,12 +4104,12 @@ JSBool JSPROXY_CCMoveBy_actionWithDuration_position__static(JSContext *cx, uint3
 	double arg0; CGPoint arg1; 
 
 	JS_ValueToNumber( cx, *argvp++, &arg0 );
-	arg1 = jsval_to_CGPoint( *argvp++, cx );
+	arg1 = jsval_to_CGPoint( cx, *argvp++ );
 	CCMoveBy* ret_val;
 
 	ret_val = [CCMoveBy actionWithDuration:(ccTime)arg0 position:(CGPoint)arg1  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -4130,7 +4130,7 @@ JSBool JSPROXY_CCMoveBy_initWithDuration_position_(JSContext *cx, uint32_t argc,
 	double arg0; CGPoint arg1; 
 
 	JS_ValueToNumber( cx, *argvp++, &arg0 );
-	arg1 = jsval_to_CGPoint( *argvp++, cx );
+	arg1 = jsval_to_CGPoint( cx, *argvp++ );
 
 	CCMoveBy *real = [(CCMoveBy*)[proxy.klass alloc] initWithDuration:(ccTime)arg0 position:(CGPoint)arg1  ];
 	[proxy setRealObj: real];
@@ -4153,7 +4153,7 @@ JSBool JSPROXY_CCMoveBy_actionWithDuration__static(JSContext *cx, uint32_t argc,
 
 	ret_val = [CCMoveBy actionWithDuration:(ccTime)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -4167,7 +4167,7 @@ JSBool JSPROXY_CCMoveBy_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	ret_val = [CCMoveBy action ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -4263,13 +4263,13 @@ JSBool JSPROXY_CCAccelDeccelAmplitude_actionWithAction_duration__static(JSContex
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; double arg1; 
 
-	arg0 = (CCAction*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCAction*) jsval_to_nsobject( cx, *argvp++);
 	JS_ValueToNumber( cx, *argvp++, &arg1 );
 	CCAccelDeccelAmplitude* ret_val;
 
 	ret_val = [CCAccelDeccelAmplitude actionWithAction:(CCAction*)arg0 duration:(ccTime)arg1  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -4289,7 +4289,7 @@ JSBool JSPROXY_CCAccelDeccelAmplitude_initWithAction_duration_(JSContext *cx, ui
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; double arg1; 
 
-	arg0 = (CCAction*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCAction*) jsval_to_nsobject( cx, *argvp++);
 	JS_ValueToNumber( cx, *argvp++, &arg1 );
 
 	CCAccelDeccelAmplitude *real = [(CCAccelDeccelAmplitude*)[proxy.klass alloc] initWithAction:(CCAction*)arg0 duration:(ccTime)arg1  ];
@@ -4354,7 +4354,7 @@ JSBool JSPROXY_CCAccelDeccelAmplitude_actionWithDuration__static(JSContext *cx, 
 
 	ret_val = [CCAccelDeccelAmplitude actionWithDuration:(ccTime)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -4368,7 +4368,7 @@ JSBool JSPROXY_CCAccelDeccelAmplitude_action_static(JSContext *cx, uint32_t argc
 
 	ret_val = [CCAccelDeccelAmplitude action ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -4466,12 +4466,12 @@ JSBool JSPROXY_CCReverseTime_actionWithAction__static(JSContext *cx, uint32_t ar
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; 
 
-	arg0 = (CCFiniteTimeAction*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCFiniteTimeAction*) jsval_to_nsobject( cx, *argvp++);
 	CCReverseTime* ret_val;
 
 	ret_val = [CCReverseTime actionWithAction:(CCFiniteTimeAction*)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -4491,7 +4491,7 @@ JSBool JSPROXY_CCReverseTime_initWithAction_(JSContext *cx, uint32_t argc, jsval
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; 
 
-	arg0 = (CCFiniteTimeAction*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCFiniteTimeAction*) jsval_to_nsobject( cx, *argvp++);
 
 	CCReverseTime *real = [(CCReverseTime*)[proxy.klass alloc] initWithAction:(CCFiniteTimeAction*)arg0  ];
 	[proxy setRealObj: real];
@@ -4514,7 +4514,7 @@ JSBool JSPROXY_CCReverseTime_actionWithDuration__static(JSContext *cx, uint32_t 
 
 	ret_val = [CCReverseTime actionWithDuration:(ccTime)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -4528,7 +4528,7 @@ JSBool JSPROXY_CCReverseTime_action_static(JSContext *cx, uint32_t argc, jsval *
 
 	ret_val = [CCReverseTime action ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -4624,13 +4624,13 @@ JSBool JSPROXY_CCRepeat_actionWithAction_times__static(JSContext *cx, uint32_t a
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; uint32_t arg1; 
 
-	arg0 = (CCFiniteTimeAction*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCFiniteTimeAction*) jsval_to_nsobject( cx, *argvp++);
 	JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
 	CCRepeat* ret_val;
 
 	ret_val = [CCRepeat actionWithAction:(CCFiniteTimeAction*)arg0 times:(NSUInteger)arg1  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -4650,7 +4650,7 @@ JSBool JSPROXY_CCRepeat_initWithAction_times_(JSContext *cx, uint32_t argc, jsva
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; uint32_t arg1; 
 
-	arg0 = (CCFiniteTimeAction*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCFiniteTimeAction*) jsval_to_nsobject( cx, *argvp++);
 	JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
 
 	CCRepeat *real = [(CCRepeat*)[proxy.klass alloc] initWithAction:(CCFiniteTimeAction*)arg0 times:(NSUInteger)arg1  ];
@@ -4678,7 +4678,7 @@ JSBool JSPROXY_CCRepeat_innerAction(JSContext *cx, uint32_t argc, jsval *vp) {
 	CCRepeat *real = (CCRepeat*) [proxy realObj];
 	ret_val = [real innerAction ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -4698,7 +4698,7 @@ JSBool JSPROXY_CCRepeat_setInnerAction_(JSContext *cx, uint32_t argc, jsval *vp)
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; 
 
-	arg0 = (CCFiniteTimeAction*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCFiniteTimeAction*) jsval_to_nsobject( cx, *argvp++);
 
 	CCRepeat *real = (CCRepeat*) [proxy realObj];
 	[real setInnerAction:(CCFiniteTimeAction*)arg0  ];
@@ -4718,7 +4718,7 @@ JSBool JSPROXY_CCRepeat_actionWithDuration__static(JSContext *cx, uint32_t argc,
 
 	ret_val = [CCRepeat actionWithDuration:(ccTime)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -4732,7 +4732,7 @@ JSBool JSPROXY_CCRepeat_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	ret_val = [CCRepeat action ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -5011,7 +5011,7 @@ JSBool JSPROXY_CCLayer_node_static(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	ret_val = [CCLayer node ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -5294,7 +5294,7 @@ JSBool JSPROXY_CCLayerColor_layerWithColor__static(JSContext *cx, uint32_t argc,
 
 	ret_val = [CCLayerColor layerWithColor:(ccColor4B)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -5317,7 +5317,7 @@ JSBool JSPROXY_CCLayerColor_layerWithColor_width_height__static(JSContext *cx, u
 
 	ret_val = [CCLayerColor layerWithColor:(ccColor4B)arg0 width:(GLfloat)arg1 height:(GLfloat)arg2  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -5463,7 +5463,7 @@ JSBool JSPROXY_CCLayerColor_node_static(JSContext *cx, uint32_t argc, jsval *vp)
 
 	ret_val = [CCLayerColor node ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -5577,7 +5577,7 @@ JSBool JSPROXY_CCProgressTo_actionWithDuration_percent__static(JSContext *cx, ui
 
 	ret_val = [CCProgressTo actionWithDuration:(ccTime)arg0 percent:(float)arg1  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -5621,7 +5621,7 @@ JSBool JSPROXY_CCProgressTo_actionWithDuration__static(JSContext *cx, uint32_t a
 
 	ret_val = [CCProgressTo actionWithDuration:(ccTime)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -5635,7 +5635,7 @@ JSBool JSPROXY_CCProgressTo_action_static(JSContext *cx, uint32_t argc, jsval *v
 
 	ret_val = [CCProgressTo action ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -5753,7 +5753,7 @@ JSBool JSPROXY_CCScene_node_static(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	ret_val = [CCScene node ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -5869,7 +5869,7 @@ JSBool JSPROXY_CCActionInstant_action_static(JSContext *cx, uint32_t argc, jsval
 
 	ret_val = [CCActionInstant action ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -5968,7 +5968,7 @@ JSBool JSPROXY_CCFlipX_actionWithFlipX__static(JSContext *cx, uint32_t argc, jsv
 
 	ret_val = [CCFlipX actionWithFlipX:(BOOL)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -6007,7 +6007,7 @@ JSBool JSPROXY_CCFlipX_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	ret_val = [CCFlipX action ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -6107,7 +6107,7 @@ JSBool JSPROXY_CCFlipY_actionWithFlipY__static(JSContext *cx, uint32_t argc, jsv
 
 	ret_val = [CCFlipY actionWithFlipY:(BOOL)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -6146,7 +6146,7 @@ JSBool JSPROXY_CCFlipY_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	ret_val = [CCFlipY action ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -6250,7 +6250,7 @@ JSBool JSPROXY_CCGridAction_actionWithSize_duration__static(JSContext *cx, uint3
 
 	ret_val = [CCGridAction actionWithSize:(ccGridSize)arg0 duration:(ccTime)arg1  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -6272,7 +6272,7 @@ JSBool JSPROXY_CCGridAction_grid(JSContext *cx, uint32_t argc, jsval *vp) {
 	CCGridAction *real = (CCGridAction*) [proxy realObj];
 	ret_val = [real grid ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -6368,7 +6368,7 @@ JSBool JSPROXY_CCGridAction_actionWithDuration__static(JSContext *cx, uint32_t a
 
 	ret_val = [CCGridAction actionWithDuration:(ccTime)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -6382,7 +6382,7 @@ JSBool JSPROXY_CCGridAction_action_static(JSContext *cx, uint32_t argc, jsval *v
 
 	ret_val = [CCGridAction action ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -6490,7 +6490,7 @@ JSBool JSPROXY_CCTiledGrid3DAction_actionWithSize_duration__static(JSContext *cx
 
 	ret_val = [CCTiledGrid3DAction actionWithSize:(ccGridSize)arg0 duration:(ccTime)arg1  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -6508,7 +6508,7 @@ JSBool JSPROXY_CCTiledGrid3DAction_actionWithDuration__static(JSContext *cx, uin
 
 	ret_val = [CCTiledGrid3DAction actionWithDuration:(ccTime)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -6522,7 +6522,7 @@ JSBool JSPROXY_CCTiledGrid3DAction_action_static(JSContext *cx, uint32_t argc, j
 
 	ret_val = [CCTiledGrid3DAction action ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -6628,7 +6628,7 @@ JSBool JSPROXY_CCShakyTiles3D_actionWithRange_shakeZ_grid_duration__static(JSCon
 
 	ret_val = [CCShakyTiles3D actionWithRange:(int)arg0 shakeZ:(BOOL)arg1 grid:(ccGridSize)arg2 duration:(ccTime)arg3  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -6681,7 +6681,7 @@ JSBool JSPROXY_CCShakyTiles3D_actionWithSize_duration__static(JSContext *cx, uin
 
 	ret_val = [CCShakyTiles3D actionWithSize:(ccGridSize)arg0 duration:(ccTime)arg1  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -6699,7 +6699,7 @@ JSBool JSPROXY_CCShakyTiles3D_actionWithDuration__static(JSContext *cx, uint32_t
 
 	ret_val = [CCShakyTiles3D actionWithDuration:(ccTime)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -6713,7 +6713,7 @@ JSBool JSPROXY_CCShakyTiles3D_action_static(JSContext *cx, uint32_t argc, jsval 
 
 	ret_val = [CCShakyTiles3D action ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -6811,14 +6811,14 @@ JSBool JSPROXY_CCJumpBy_actionWithDuration_position_height_jumps__static(JSConte
 	double arg0; CGPoint arg1; double arg2; uint32_t arg3; 
 
 	JS_ValueToNumber( cx, *argvp++, &arg0 );
-	arg1 = jsval_to_CGPoint( *argvp++, cx );
+	arg1 = jsval_to_CGPoint( cx, *argvp++ );
 	JS_ValueToNumber( cx, *argvp++, &arg2 );
 	JS_ValueToECMAUint32( cx, *argvp++, &arg3 );
 	CCJumpBy* ret_val;
 
 	ret_val = [CCJumpBy actionWithDuration:(ccTime)arg0 position:(CGPoint)arg1 height:(ccTime)arg2 jumps:(NSUInteger)arg3  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -6839,7 +6839,7 @@ JSBool JSPROXY_CCJumpBy_initWithDuration_position_height_jumps_(JSContext *cx, u
 	double arg0; CGPoint arg1; double arg2; uint32_t arg3; 
 
 	JS_ValueToNumber( cx, *argvp++, &arg0 );
-	arg1 = jsval_to_CGPoint( *argvp++, cx );
+	arg1 = jsval_to_CGPoint( cx, *argvp++ );
 	JS_ValueToNumber( cx, *argvp++, &arg2 );
 	JS_ValueToECMAUint32( cx, *argvp++, &arg3 );
 
@@ -6864,7 +6864,7 @@ JSBool JSPROXY_CCJumpBy_actionWithDuration__static(JSContext *cx, uint32_t argc,
 
 	ret_val = [CCJumpBy actionWithDuration:(ccTime)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -6878,7 +6878,7 @@ JSBool JSPROXY_CCJumpBy_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	ret_val = [CCJumpBy action ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -7002,7 +7002,7 @@ JSBool JSPROXY_CCSprite_batchNode(JSContext *cx, uint32_t argc, jsval *vp) {
 	CCSprite *real = (CCSprite*) [proxy realObj];
 	ret_val = [real batchNode ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -7091,7 +7091,7 @@ JSBool JSPROXY_CCSprite_displayFrame(JSContext *cx, uint32_t argc, jsval *vp) {
 	CCSprite *real = (CCSprite*) [proxy realObj];
 	ret_val = [real displayFrame ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -7149,7 +7149,7 @@ JSBool JSPROXY_CCSprite_initWithFile_(JSContext *cx, uint32_t argc, jsval *vp) {
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
 
 	CCSprite *real = [(CCSprite*)[proxy.klass alloc] initWithFile:(NSString*)arg0  ];
 	[proxy setRealObj: real];
@@ -7174,8 +7174,8 @@ JSBool JSPROXY_CCSprite_initWithFile_rect_(JSContext *cx, uint32_t argc, jsval *
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; CGRect arg1; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
-	arg1 = jsval_to_CGRect( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
+	arg1 = jsval_to_CGRect( cx, *argvp++ );
 
 	CCSprite *real = [(CCSprite*)[proxy.klass alloc] initWithFile:(NSString*)arg0 rect:(CGRect)arg1  ];
 	[proxy setRealObj: real];
@@ -7200,7 +7200,7 @@ JSBool JSPROXY_CCSprite_initWithSpriteFrame_(JSContext *cx, uint32_t argc, jsval
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; 
 
-	arg0 = (CCSpriteFrame*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCSpriteFrame*) jsval_to_nsobject( cx, *argvp++);
 
 	CCSprite *real = [(CCSprite*)[proxy.klass alloc] initWithSpriteFrame:(CCSpriteFrame*)arg0  ];
 	[proxy setRealObj: real];
@@ -7225,7 +7225,7 @@ JSBool JSPROXY_CCSprite_initWithSpriteFrameName_(JSContext *cx, uint32_t argc, j
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
 
 	CCSprite *real = [(CCSprite*)[proxy.klass alloc] initWithSpriteFrameName:(NSString*)arg0  ];
 	[proxy setRealObj: real];
@@ -7250,7 +7250,7 @@ JSBool JSPROXY_CCSprite_initWithTexture_(JSContext *cx, uint32_t argc, jsval *vp
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; 
 
-	arg0 = (CCTexture2D*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCTexture2D*) jsval_to_nsobject( cx, *argvp++);
 
 	CCSprite *real = [(CCSprite*)[proxy.klass alloc] initWithTexture:(CCTexture2D*)arg0  ];
 	[proxy setRealObj: real];
@@ -7275,8 +7275,8 @@ JSBool JSPROXY_CCSprite_initWithTexture_rect_(JSContext *cx, uint32_t argc, jsva
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; CGRect arg1; 
 
-	arg0 = (CCTexture2D*) jsval_to_nsobject( *argvp++, cx);
-	arg1 = jsval_to_CGRect( *argvp++, cx );
+	arg0 = (CCTexture2D*) jsval_to_nsobject( cx, *argvp++);
+	arg1 = jsval_to_CGRect( cx, *argvp++ );
 
 	CCSprite *real = [(CCSprite*)[proxy.klass alloc] initWithTexture:(CCTexture2D*)arg0 rect:(CGRect)arg1  ];
 	[proxy setRealObj: real];
@@ -7301,8 +7301,8 @@ JSBool JSPROXY_CCSprite_initWithTexture_rect_rotated_(JSContext *cx, uint32_t ar
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; CGRect arg1; JSBool arg2; 
 
-	arg0 = (CCTexture2D*) jsval_to_nsobject( *argvp++, cx);
-	arg1 = jsval_to_CGRect( *argvp++, cx );
+	arg0 = (CCTexture2D*) jsval_to_nsobject( cx, *argvp++);
+	arg1 = jsval_to_CGRect( cx, *argvp++ );
 	JS_ValueToBoolean( cx, *argvp++, &arg2 );
 
 	CCSprite *real = [(CCSprite*)[proxy.klass alloc] initWithTexture:(CCTexture2D*)arg0 rect:(CGRect)arg1 rotated:(BOOL)arg2  ];
@@ -7328,7 +7328,7 @@ JSBool JSPROXY_CCSprite_isFrameDisplayed_(JSContext *cx, uint32_t argc, jsval *v
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; 
 
-	arg0 = (CCSpriteFrame*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCSpriteFrame*) jsval_to_nsobject( cx, *argvp++);
 	BOOL ret_val;
 
 	CCSprite *real = (CCSprite*) [proxy realObj];
@@ -7414,7 +7414,7 @@ JSBool JSPROXY_CCSprite_setBatchNode_(JSContext *cx, uint32_t argc, jsval *vp) {
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; 
 
-	arg0 = (CCSpriteBatchNode*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCSpriteBatchNode*) jsval_to_nsobject( cx, *argvp++);
 
 	CCSprite *real = (CCSprite*) [proxy realObj];
 	[real setBatchNode:(CCSpriteBatchNode*)arg0  ];
@@ -7508,7 +7508,7 @@ JSBool JSPROXY_CCSprite_setDisplayFrame_(JSContext *cx, uint32_t argc, jsval *vp
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; 
 
-	arg0 = (CCSpriteFrame*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCSpriteFrame*) jsval_to_nsobject( cx, *argvp++);
 
 	CCSprite *real = (CCSprite*) [proxy realObj];
 	[real setDisplayFrame:(CCSpriteFrame*)arg0  ];
@@ -7530,7 +7530,7 @@ JSBool JSPROXY_CCSprite_setDisplayFrameWithAnimationName_index_(JSContext *cx, u
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; int32_t arg1; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
 	JS_ValueToECMAInt32( cx, *argvp++, &arg1 );
 
 	CCSprite *real = (CCSprite*) [proxy realObj];
@@ -7619,7 +7619,7 @@ JSBool JSPROXY_CCSprite_setTextureAtlas_(JSContext *cx, uint32_t argc, jsval *vp
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; 
 
-	arg0 = (CCTextureAtlas*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCTextureAtlas*) jsval_to_nsobject( cx, *argvp++);
 
 	CCSprite *real = (CCSprite*) [proxy realObj];
 	[real setTextureAtlas:(CCTextureAtlas*)arg0  ];
@@ -7641,7 +7641,7 @@ JSBool JSPROXY_CCSprite_setTextureRect_(JSContext *cx, uint32_t argc, jsval *vp)
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGRect arg0; 
 
-	arg0 = jsval_to_CGRect( *argvp++, cx );
+	arg0 = jsval_to_CGRect( cx, *argvp++ );
 
 	CCSprite *real = (CCSprite*) [proxy realObj];
 	[real setTextureRect:(CGRect)arg0  ];
@@ -7663,9 +7663,9 @@ JSBool JSPROXY_CCSprite_setTextureRect_rotated_untrimmedSize_(JSContext *cx, uin
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGRect arg0; JSBool arg1; CGSize arg2; 
 
-	arg0 = jsval_to_CGRect( *argvp++, cx );
+	arg0 = jsval_to_CGRect( cx, *argvp++ );
 	JS_ValueToBoolean( cx, *argvp++, &arg1 );
-	arg2 = jsval_to_CGSize( *argvp++, cx );
+	arg2 = jsval_to_CGSize( cx, *argvp++ );
 
 	CCSprite *real = (CCSprite*) [proxy realObj];
 	[real setTextureRect:(CGRect)arg0 rotated:(BOOL)arg1 untrimmedSize:(CGSize)arg2  ];
@@ -7687,7 +7687,7 @@ JSBool JSPROXY_CCSprite_setVertexRect_(JSContext *cx, uint32_t argc, jsval *vp) 
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGRect arg0; 
 
-	arg0 = jsval_to_CGRect( *argvp++, cx );
+	arg0 = jsval_to_CGRect( cx, *argvp++ );
 
 	CCSprite *real = (CCSprite*) [proxy realObj];
 	[real setVertexRect:(CGRect)arg0  ];
@@ -7702,9 +7702,9 @@ JSBool JSPROXY_CCSprite_spriteWithFile_rect__static(JSContext *cx, uint32_t argc
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; CGRect arg1; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
 	if (argc >= 2) {
-		arg1 = jsval_to_CGRect( *argvp++, cx );
+		arg1 = jsval_to_CGRect( cx, *argvp++ );
 	}
 	CCSprite* ret_val;
 
@@ -7714,7 +7714,7 @@ JSBool JSPROXY_CCSprite_spriteWithFile_rect__static(JSContext *cx, uint32_t argc
 	if( argc == 2 )
 		ret_val = [CCSprite spriteWithFile:(NSString*)arg0 rect:(CGRect)arg1  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -7727,12 +7727,12 @@ JSBool JSPROXY_CCSprite_spriteWithSpriteFrame__static(JSContext *cx, uint32_t ar
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; 
 
-	arg0 = (CCSpriteFrame*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCSpriteFrame*) jsval_to_nsobject( cx, *argvp++);
 	CCSprite* ret_val;
 
 	ret_val = [CCSprite spriteWithSpriteFrame:(CCSpriteFrame*)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -7745,12 +7745,12 @@ JSBool JSPROXY_CCSprite_spriteWithSpriteFrameName__static(JSContext *cx, uint32_
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
 	CCSprite* ret_val;
 
 	ret_val = [CCSprite spriteWithSpriteFrameName:(NSString*)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -7772,7 +7772,7 @@ JSBool JSPROXY_CCSprite_textureAtlas(JSContext *cx, uint32_t argc, jsval *vp) {
 	CCSprite *real = (CCSprite*) [proxy realObj];
 	ret_val = [real textureAtlas ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -7892,7 +7892,7 @@ JSBool JSPROXY_CCSprite_setTexture_(JSContext *cx, uint32_t argc, jsval *vp) {
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; 
 
-	arg0 = (CCTexture2D*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCTexture2D*) jsval_to_nsobject( cx, *argvp++);
 
 	CCSprite *real = (CCSprite*) [proxy realObj];
 	[real setTexture:(CCTexture2D*)arg0  ];
@@ -7916,7 +7916,7 @@ JSBool JSPROXY_CCSprite_texture(JSContext *cx, uint32_t argc, jsval *vp) {
 	CCSprite *real = (CCSprite*) [proxy realObj];
 	ret_val = [real texture ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -7930,7 +7930,7 @@ JSBool JSPROXY_CCSprite_node_static(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	ret_val = [CCSprite node ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -8155,10 +8155,10 @@ JSBool JSPROXY_CCLabelTTF_initWithString_dimensions_hAlignment_fontName_fontSize
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; CGSize arg1; int32_t arg2; NSString* arg3; double arg4; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
-	arg1 = jsval_to_CGSize( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
+	arg1 = jsval_to_CGSize( cx, *argvp++ );
 	JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
-	arg3 = jsval_to_nsstring( *argvp++, cx );
+	arg3 = jsval_to_nsstring( cx, *argvp++ );
 	JS_ValueToNumber( cx, *argvp++, &arg4 );
 
 	CCLabelTTF *real = [(CCLabelTTF*)[proxy.klass alloc] initWithString:(NSString*)arg0 dimensions:(CGSize)arg1 hAlignment:(CCTextAlignment)arg2 fontName:(NSString*)arg3 fontSize:(CGFloat)arg4  ];
@@ -8184,11 +8184,11 @@ JSBool JSPROXY_CCLabelTTF_initWithString_dimensions_hAlignment_lineBreakMode_fon
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; CGSize arg1; int32_t arg2; int32_t arg3; NSString* arg4; double arg5; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
-	arg1 = jsval_to_CGSize( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
+	arg1 = jsval_to_CGSize( cx, *argvp++ );
 	JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
 	JS_ValueToECMAInt32( cx, *argvp++, &arg3 );
-	arg4 = jsval_to_nsstring( *argvp++, cx );
+	arg4 = jsval_to_nsstring( cx, *argvp++ );
 	JS_ValueToNumber( cx, *argvp++, &arg5 );
 
 	CCLabelTTF *real = [(CCLabelTTF*)[proxy.klass alloc] initWithString:(NSString*)arg0 dimensions:(CGSize)arg1 hAlignment:(CCTextAlignment)arg2 lineBreakMode:(CCLineBreakMode)arg3 fontName:(NSString*)arg4 fontSize:(CGFloat)arg5  ];
@@ -8214,11 +8214,11 @@ JSBool JSPROXY_CCLabelTTF_initWithString_dimensions_hAlignment_vAlignment_fontNa
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; CGSize arg1; int32_t arg2; int32_t arg3; NSString* arg4; double arg5; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
-	arg1 = jsval_to_CGSize( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
+	arg1 = jsval_to_CGSize( cx, *argvp++ );
 	JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
 	JS_ValueToECMAInt32( cx, *argvp++, &arg3 );
-	arg4 = jsval_to_nsstring( *argvp++, cx );
+	arg4 = jsval_to_nsstring( cx, *argvp++ );
 	JS_ValueToNumber( cx, *argvp++, &arg5 );
 
 	CCLabelTTF *real = [(CCLabelTTF*)[proxy.klass alloc] initWithString:(NSString*)arg0 dimensions:(CGSize)arg1 hAlignment:(CCTextAlignment)arg2 vAlignment:(CCVerticalTextAlignment)arg3 fontName:(NSString*)arg4 fontSize:(CGFloat)arg5  ];
@@ -8244,12 +8244,12 @@ JSBool JSPROXY_CCLabelTTF_initWithString_dimensions_hAlignment_vAlignment_lineBr
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; CGSize arg1; int32_t arg2; int32_t arg3; int32_t arg4; NSString* arg5; double arg6; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
-	arg1 = jsval_to_CGSize( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
+	arg1 = jsval_to_CGSize( cx, *argvp++ );
 	JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
 	JS_ValueToECMAInt32( cx, *argvp++, &arg3 );
 	JS_ValueToECMAInt32( cx, *argvp++, &arg4 );
-	arg5 = jsval_to_nsstring( *argvp++, cx );
+	arg5 = jsval_to_nsstring( cx, *argvp++ );
 	JS_ValueToNumber( cx, *argvp++, &arg6 );
 
 	CCLabelTTF *real = [(CCLabelTTF*)[proxy.klass alloc] initWithString:(NSString*)arg0 dimensions:(CGSize)arg1 hAlignment:(CCTextAlignment)arg2 vAlignment:(CCVerticalTextAlignment)arg3 lineBreakMode:(CCLineBreakMode)arg4 fontName:(NSString*)arg5 fontSize:(CGFloat)arg6  ];
@@ -8275,8 +8275,8 @@ JSBool JSPROXY_CCLabelTTF_initWithString_fontName_fontSize_(JSContext *cx, uint3
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; NSString* arg1; double arg2; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
-	arg1 = jsval_to_nsstring( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
+	arg1 = jsval_to_nsstring( cx, *argvp++ );
 	JS_ValueToNumber( cx, *argvp++, &arg2 );
 
 	CCLabelTTF *real = [(CCLabelTTF*)[proxy.klass alloc] initWithString:(NSString*)arg0 fontName:(NSString*)arg1 fontSize:(CGFloat)arg2  ];
@@ -8295,16 +8295,16 @@ JSBool JSPROXY_CCLabelTTF_labelWithString_dimensions_hAlignment_fontName_fontSiz
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; CGSize arg1; int32_t arg2; NSString* arg3; double arg4; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
-	arg1 = jsval_to_CGSize( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
+	arg1 = jsval_to_CGSize( cx, *argvp++ );
 	JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
-	arg3 = jsval_to_nsstring( *argvp++, cx );
+	arg3 = jsval_to_nsstring( cx, *argvp++ );
 	JS_ValueToNumber( cx, *argvp++, &arg4 );
 	CCLabelTTF* ret_val;
 
 	ret_val = [CCLabelTTF labelWithString:(NSString*)arg0 dimensions:(CGSize)arg1 hAlignment:(CCTextAlignment)arg2 fontName:(NSString*)arg3 fontSize:(CGFloat)arg4  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -8317,17 +8317,17 @@ JSBool JSPROXY_CCLabelTTF_labelWithString_dimensions_hAlignment_lineBreakMode_fo
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; CGSize arg1; int32_t arg2; int32_t arg3; NSString* arg4; double arg5; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
-	arg1 = jsval_to_CGSize( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
+	arg1 = jsval_to_CGSize( cx, *argvp++ );
 	JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
 	JS_ValueToECMAInt32( cx, *argvp++, &arg3 );
-	arg4 = jsval_to_nsstring( *argvp++, cx );
+	arg4 = jsval_to_nsstring( cx, *argvp++ );
 	JS_ValueToNumber( cx, *argvp++, &arg5 );
 	CCLabelTTF* ret_val;
 
 	ret_val = [CCLabelTTF labelWithString:(NSString*)arg0 dimensions:(CGSize)arg1 hAlignment:(CCTextAlignment)arg2 lineBreakMode:(CCLineBreakMode)arg3 fontName:(NSString*)arg4 fontSize:(CGFloat)arg5  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -8340,17 +8340,17 @@ JSBool JSPROXY_CCLabelTTF_labelWithString_dimensions_hAlignment_vAlignment_fontN
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; CGSize arg1; int32_t arg2; int32_t arg3; NSString* arg4; double arg5; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
-	arg1 = jsval_to_CGSize( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
+	arg1 = jsval_to_CGSize( cx, *argvp++ );
 	JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
 	JS_ValueToECMAInt32( cx, *argvp++, &arg3 );
-	arg4 = jsval_to_nsstring( *argvp++, cx );
+	arg4 = jsval_to_nsstring( cx, *argvp++ );
 	JS_ValueToNumber( cx, *argvp++, &arg5 );
 	CCLabelTTF* ret_val;
 
 	ret_val = [CCLabelTTF labelWithString:(NSString*)arg0 dimensions:(CGSize)arg1 hAlignment:(CCTextAlignment)arg2 vAlignment:(CCVerticalTextAlignment)arg3 fontName:(NSString*)arg4 fontSize:(CGFloat)arg5  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -8363,18 +8363,18 @@ JSBool JSPROXY_CCLabelTTF_labelWithString_dimensions_hAlignment_vAlignment_lineB
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; CGSize arg1; int32_t arg2; int32_t arg3; int32_t arg4; NSString* arg5; double arg6; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
-	arg1 = jsval_to_CGSize( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
+	arg1 = jsval_to_CGSize( cx, *argvp++ );
 	JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
 	JS_ValueToECMAInt32( cx, *argvp++, &arg3 );
 	JS_ValueToECMAInt32( cx, *argvp++, &arg4 );
-	arg5 = jsval_to_nsstring( *argvp++, cx );
+	arg5 = jsval_to_nsstring( cx, *argvp++ );
 	JS_ValueToNumber( cx, *argvp++, &arg6 );
 	CCLabelTTF* ret_val;
 
 	ret_val = [CCLabelTTF labelWithString:(NSString*)arg0 dimensions:(CGSize)arg1 hAlignment:(CCTextAlignment)arg2 vAlignment:(CCVerticalTextAlignment)arg3 lineBreakMode:(CCLineBreakMode)arg4 fontName:(NSString*)arg5 fontSize:(CGFloat)arg6  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -8387,14 +8387,14 @@ JSBool JSPROXY_CCLabelTTF_labelWithString_fontName_fontSize__static(JSContext *c
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; NSString* arg1; double arg2; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
-	arg1 = jsval_to_nsstring( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
+	arg1 = jsval_to_nsstring( cx, *argvp++ );
 	JS_ValueToNumber( cx, *argvp++, &arg2 );
 	CCLabelTTF* ret_val;
 
 	ret_val = [CCLabelTTF labelWithString:(NSString*)arg0 fontName:(NSString*)arg1 fontSize:(CGFloat)arg2  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -8414,7 +8414,7 @@ JSBool JSPROXY_CCLabelTTF_setDimensions_(JSContext *cx, uint32_t argc, jsval *vp
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGSize arg0; 
 
-	arg0 = jsval_to_CGSize( *argvp++, cx );
+	arg0 = jsval_to_CGSize( cx, *argvp++ );
 
 	CCLabelTTF *real = (CCLabelTTF*) [proxy realObj];
 	[real setDimensions:(CGSize)arg0  ];
@@ -8436,7 +8436,7 @@ JSBool JSPROXY_CCLabelTTF_setFontName_(JSContext *cx, uint32_t argc, jsval *vp) 
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
 
 	CCLabelTTF *real = (CCLabelTTF*) [proxy realObj];
 	[real setFontName:(NSString*)arg0  ];
@@ -8502,7 +8502,7 @@ JSBool JSPROXY_CCLabelTTF_setString_(JSContext *cx, uint32_t argc, jsval *vp) {
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
 
 	CCLabelTTF *real = (CCLabelTTF*) [proxy realObj];
 	[real setString:(NSString*)arg0  ];
@@ -8580,12 +8580,12 @@ JSBool JSPROXY_CCLabelTTF_spriteWithFile__static(JSContext *cx, uint32_t argc, j
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
 	CCLabelTTF* ret_val;
 
 	ret_val = [CCLabelTTF spriteWithFile:(NSString*)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -8598,13 +8598,13 @@ JSBool JSPROXY_CCLabelTTF_spriteWithFile_rect__static(JSContext *cx, uint32_t ar
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; CGRect arg1; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
-	arg1 = jsval_to_CGRect( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
+	arg1 = jsval_to_CGRect( cx, *argvp++ );
 	CCLabelTTF* ret_val;
 
 	ret_val = [CCLabelTTF spriteWithFile:(NSString*)arg0 rect:(CGRect)arg1  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -8617,12 +8617,12 @@ JSBool JSPROXY_CCLabelTTF_spriteWithSpriteFrame__static(JSContext *cx, uint32_t 
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; 
 
-	arg0 = (CCSpriteFrame*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCSpriteFrame*) jsval_to_nsobject( cx, *argvp++);
 	CCLabelTTF* ret_val;
 
 	ret_val = [CCLabelTTF spriteWithSpriteFrame:(CCSpriteFrame*)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -8635,12 +8635,12 @@ JSBool JSPROXY_CCLabelTTF_spriteWithSpriteFrameName__static(JSContext *cx, uint3
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
 	CCLabelTTF* ret_val;
 
 	ret_val = [CCLabelTTF spriteWithSpriteFrameName:(NSString*)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -8653,12 +8653,12 @@ JSBool JSPROXY_CCLabelTTF_spriteWithTexture__static(JSContext *cx, uint32_t argc
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; 
 
-	arg0 = (CCTexture2D*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCTexture2D*) jsval_to_nsobject( cx, *argvp++);
 	CCLabelTTF* ret_val;
 
 	ret_val = [CCLabelTTF spriteWithTexture:(CCTexture2D*)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -8671,13 +8671,13 @@ JSBool JSPROXY_CCLabelTTF_spriteWithTexture_rect__static(JSContext *cx, uint32_t
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; CGRect arg1; 
 
-	arg0 = (CCTexture2D*) jsval_to_nsobject( *argvp++, cx);
-	arg1 = jsval_to_CGRect( *argvp++, cx );
+	arg0 = (CCTexture2D*) jsval_to_nsobject( cx, *argvp++);
+	arg1 = jsval_to_CGRect( cx, *argvp++ );
 	CCLabelTTF* ret_val;
 
 	ret_val = [CCLabelTTF spriteWithTexture:(CCTexture2D*)arg0 rect:(CGRect)arg1  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -8691,7 +8691,7 @@ JSBool JSPROXY_CCLabelTTF_node_static(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	ret_val = [CCLabelTTF node ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -8819,7 +8819,7 @@ JSBool JSPROXY_CCProgressFromTo_actionWithDuration_from_to__static(JSContext *cx
 
 	ret_val = [CCProgressFromTo actionWithDuration:(ccTime)arg0 from:(float)arg1 to:(float)arg2  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -8864,7 +8864,7 @@ JSBool JSPROXY_CCProgressFromTo_actionWithDuration__static(JSContext *cx, uint32
 
 	ret_val = [CCProgressFromTo actionWithDuration:(ccTime)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -8878,7 +8878,7 @@ JSBool JSPROXY_CCProgressFromTo_action_static(JSContext *cx, uint32_t argc, jsva
 
 	ret_val = [CCProgressFromTo action ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -8981,8 +8981,8 @@ JSBool JSPROXY_CCShaderCache_addProgram_forKey_(JSContext *cx, uint32_t argc, js
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; NSString* arg1; 
 
-	arg0 = (CCGLProgram*) jsval_to_nsobject( *argvp++, cx);
-	arg1 = jsval_to_nsstring( *argvp++, cx );
+	arg0 = (CCGLProgram*) jsval_to_nsobject( cx, *argvp++);
+	arg1 = jsval_to_nsstring( cx, *argvp++ );
 
 	CCShaderCache *real = (CCShaderCache*) [proxy realObj];
 	[real addProgram:(CCGLProgram*)arg0 forKey:(NSString*)arg1  ];
@@ -9022,13 +9022,13 @@ JSBool JSPROXY_CCShaderCache_programForKey_(JSContext *cx, uint32_t argc, jsval 
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
 	CCGLProgram* ret_val;
 
 	CCShaderCache *real = (CCShaderCache*) [proxy realObj];
 	ret_val = [real programForKey:(NSString*)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -9052,7 +9052,7 @@ JSBool JSPROXY_CCShaderCache_sharedShaderCache_static(JSContext *cx, uint32_t ar
 
 	ret_val = [CCShaderCache sharedShaderCache ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -9193,7 +9193,7 @@ JSBool JSPROXY_CCTransitionScene_initWithDuration_scene_(JSContext *cx, uint32_t
 	double arg0; id arg1; 
 
 	JS_ValueToNumber( cx, *argvp++, &arg0 );
-	arg1 = (CCScene*) jsval_to_nsobject( *argvp++, cx);
+	arg1 = (CCScene*) jsval_to_nsobject( cx, *argvp++);
 
 	CCTransitionScene *real = [(CCTransitionScene*)[proxy.klass alloc] initWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
 	[proxy setRealObj: real];
@@ -9212,12 +9212,12 @@ JSBool JSPROXY_CCTransitionScene_transitionWithDuration_scene__static(JSContext 
 	double arg0; id arg1; 
 
 	JS_ValueToNumber( cx, *argvp++, &arg0 );
-	arg1 = (CCScene*) jsval_to_nsobject( *argvp++, cx);
+	arg1 = (CCScene*) jsval_to_nsobject( cx, *argvp++);
 	CCTransitionScene* ret_val;
 
 	ret_val = [CCTransitionScene transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -9231,7 +9231,7 @@ JSBool JSPROXY_CCTransitionScene_node_static(JSContext *cx, uint32_t argc, jsval
 
 	ret_val = [CCTransitionScene node ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -9344,7 +9344,7 @@ JSBool JSPROXY_CCTransitionFadeTR_actionWithSize_(JSContext *cx, uint32_t argc, 
 	CCTransitionFadeTR *real = (CCTransitionFadeTR*) [proxy realObj];
 	ret_val = [real actionWithSize:(ccGridSize)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -9364,13 +9364,13 @@ JSBool JSPROXY_CCTransitionFadeTR_easeActionWithAction_(JSContext *cx, uint32_t 
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; 
 
-	arg0 = (CCActionInterval*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCActionInterval*) jsval_to_nsobject( cx, *argvp++);
 	CCActionInterval* ret_val;
 
 	CCTransitionFadeTR *real = (CCTransitionFadeTR*) [proxy realObj];
 	ret_val = [real easeActionWithAction:(CCActionInterval*)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -9384,12 +9384,12 @@ JSBool JSPROXY_CCTransitionFadeTR_transitionWithDuration_scene__static(JSContext
 	double arg0; id arg1; 
 
 	JS_ValueToNumber( cx, *argvp++, &arg0 );
-	arg1 = (CCScene*) jsval_to_nsobject( *argvp++, cx);
+	arg1 = (CCScene*) jsval_to_nsobject( cx, *argvp++);
 	CCTransitionFadeTR* ret_val;
 
 	ret_val = [CCTransitionFadeTR transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -9403,7 +9403,7 @@ JSBool JSPROXY_CCTransitionFadeTR_node_static(JSContext *cx, uint32_t argc, jsva
 
 	ret_val = [CCTransitionFadeTR node ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -9505,7 +9505,7 @@ JSBool JSPROXY_CCScaleTo_actionWithDuration_scale__static(JSContext *cx, uint32_
 
 	ret_val = [CCScaleTo actionWithDuration:(ccTime)arg0 scale:(float)arg1  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -9525,7 +9525,7 @@ JSBool JSPROXY_CCScaleTo_actionWithDuration_scaleX_scaleY__static(JSContext *cx,
 
 	ret_val = [CCScaleTo actionWithDuration:(ccTime)arg0 scaleX:(float)arg1 scaleY:(float)arg2  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -9596,7 +9596,7 @@ JSBool JSPROXY_CCScaleTo_actionWithDuration__static(JSContext *cx, uint32_t argc
 
 	ret_val = [CCScaleTo actionWithDuration:(ccTime)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -9610,7 +9610,7 @@ JSBool JSPROXY_CCScaleTo_action_static(JSContext *cx, uint32_t argc, jsval *vp) 
 
 	ret_val = [CCScaleTo action ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -9715,7 +9715,7 @@ JSBool JSPROXY_CCScaleBy_startWithTarget_(JSContext *cx, uint32_t argc, jsval *v
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; 
 
-	arg0 = (CCNode*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCNode*) jsval_to_nsobject( cx, *argvp++);
 
 	CCScaleBy *real = (CCScaleBy*) [proxy realObj];
 	[real startWithTarget:(CCNode*)arg0  ];
@@ -9736,7 +9736,7 @@ JSBool JSPROXY_CCScaleBy_actionWithDuration_scale__static(JSContext *cx, uint32_
 
 	ret_val = [CCScaleBy actionWithDuration:(ccTime)arg0 scale:(float)arg1  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -9756,7 +9756,7 @@ JSBool JSPROXY_CCScaleBy_actionWithDuration_scaleX_scaleY__static(JSContext *cx,
 
 	ret_val = [CCScaleBy actionWithDuration:(ccTime)arg0 scaleX:(float)arg1 scaleY:(float)arg2  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -9774,7 +9774,7 @@ JSBool JSPROXY_CCScaleBy_actionWithDuration__static(JSContext *cx, uint32_t argc
 
 	ret_val = [CCScaleBy actionWithDuration:(ccTime)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -9788,7 +9788,7 @@ JSBool JSPROXY_CCScaleBy_action_static(JSContext *cx, uint32_t argc, jsval *vp) 
 
 	ret_val = [CCScaleBy action ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -9885,13 +9885,13 @@ JSBool JSPROXY_CCSequence_actionOne_two__static(JSContext *cx, uint32_t argc, js
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; id arg1; 
 
-	arg0 = (CCFiniteTimeAction*) jsval_to_nsobject( *argvp++, cx);
-	arg1 = (CCFiniteTimeAction*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCFiniteTimeAction*) jsval_to_nsobject( cx, *argvp++);
+	arg1 = (CCFiniteTimeAction*) jsval_to_nsobject( cx, *argvp++);
 	CCSequence* ret_val;
 
 	ret_val = [CCSequence actionOne:(CCFiniteTimeAction*)arg0 two:(CCFiniteTimeAction*)arg1  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -9909,7 +9909,7 @@ JSBool JSPROXY_CCSequence_actionWithArray__static(JSContext *cx, uint32_t argc, 
 
 	ret_val = [CCSequence actionWithArray:(NSArray*)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -9929,8 +9929,8 @@ JSBool JSPROXY_CCSequence_initOne_two_(JSContext *cx, uint32_t argc, jsval *vp) 
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; id arg1; 
 
-	arg0 = (CCFiniteTimeAction*) jsval_to_nsobject( *argvp++, cx);
-	arg1 = (CCFiniteTimeAction*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCFiniteTimeAction*) jsval_to_nsobject( cx, *argvp++);
+	arg1 = (CCFiniteTimeAction*) jsval_to_nsobject( cx, *argvp++);
 
 	CCSequence *real = [(CCSequence*)[proxy.klass alloc] initOne:(CCFiniteTimeAction*)arg0 two:(CCFiniteTimeAction*)arg1  ];
 	[proxy setRealObj: real];
@@ -9953,7 +9953,7 @@ JSBool JSPROXY_CCSequence_actionWithDuration__static(JSContext *cx, uint32_t arg
 
 	ret_val = [CCSequence actionWithDuration:(ccTime)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -9967,7 +9967,7 @@ JSBool JSPROXY_CCSequence_action_static(JSContext *cx, uint32_t argc, jsval *vp)
 
 	ret_val = [CCSequence action ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -10091,7 +10091,7 @@ JSBool JSPROXY_CCDelayTime_actionWithDuration__static(JSContext *cx, uint32_t ar
 
 	ret_val = [CCDelayTime actionWithDuration:(ccTime)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -10105,7 +10105,7 @@ JSBool JSPROXY_CCDelayTime_action_static(JSContext *cx, uint32_t argc, jsval *vp
 
 	ret_val = [CCDelayTime action ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -10209,7 +10209,7 @@ JSBool JSPROXY_CCTransitionSplitCols_action(JSContext *cx, uint32_t argc, jsval 
 	CCTransitionSplitCols *real = (CCTransitionSplitCols*) [proxy realObj];
 	ret_val = [real action ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -10229,13 +10229,13 @@ JSBool JSPROXY_CCTransitionSplitCols_easeActionWithAction_(JSContext *cx, uint32
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; 
 
-	arg0 = (CCActionInterval*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCActionInterval*) jsval_to_nsobject( cx, *argvp++);
 	CCActionInterval* ret_val;
 
 	CCTransitionSplitCols *real = (CCTransitionSplitCols*) [proxy realObj];
 	ret_val = [real easeActionWithAction:(CCActionInterval*)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -10249,12 +10249,12 @@ JSBool JSPROXY_CCTransitionSplitCols_transitionWithDuration_scene__static(JSCont
 	double arg0; id arg1; 
 
 	JS_ValueToNumber( cx, *argvp++, &arg0 );
-	arg1 = (CCScene*) jsval_to_nsobject( *argvp++, cx);
+	arg1 = (CCScene*) jsval_to_nsobject( cx, *argvp++);
 	CCTransitionSplitCols* ret_val;
 
 	ret_val = [CCTransitionSplitCols transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -10268,7 +10268,7 @@ JSBool JSPROXY_CCTransitionSplitCols_node_static(JSContext *cx, uint32_t argc, j
 
 	ret_val = [CCTransitionSplitCols node ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -10365,13 +10365,13 @@ JSBool JSPROXY_CCCardinalSplineTo_actionWithDuration_points_tension__static(JSCo
 	double arg0; id arg1; double arg2; 
 
 	JS_ValueToNumber( cx, *argvp++, &arg0 );
-	arg1 = (CCPointArray*) jsval_to_nsobject( *argvp++, cx);
+	arg1 = (CCPointArray*) jsval_to_nsobject( cx, *argvp++);
 	JS_ValueToNumber( cx, *argvp++, &arg2 );
 	CCCardinalSplineTo* ret_val;
 
 	ret_val = [CCCardinalSplineTo actionWithDuration:(ccTime)arg0 points:(CCPointArray*)arg1 tension:(CGFloat)arg2  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -10392,7 +10392,7 @@ JSBool JSPROXY_CCCardinalSplineTo_initWithDuration_points_tension_(JSContext *cx
 	double arg0; id arg1; double arg2; 
 
 	JS_ValueToNumber( cx, *argvp++, &arg0 );
-	arg1 = (CCPointArray*) jsval_to_nsobject( *argvp++, cx);
+	arg1 = (CCPointArray*) jsval_to_nsobject( cx, *argvp++);
 	JS_ValueToNumber( cx, *argvp++, &arg2 );
 
 	CCCardinalSplineTo *real = [(CCCardinalSplineTo*)[proxy.klass alloc] initWithDuration:(ccTime)arg0 points:(CCPointArray*)arg1 tension:(CGFloat)arg2  ];
@@ -10420,7 +10420,7 @@ JSBool JSPROXY_CCCardinalSplineTo_points(JSContext *cx, uint32_t argc, jsval *vp
 	CCCardinalSplineTo *real = (CCCardinalSplineTo*) [proxy realObj];
 	ret_val = [real points ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -10440,7 +10440,7 @@ JSBool JSPROXY_CCCardinalSplineTo_setPoints_(JSContext *cx, uint32_t argc, jsval
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; 
 
-	arg0 = (CCPointArray*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCPointArray*) jsval_to_nsobject( cx, *argvp++);
 
 	CCCardinalSplineTo *real = (CCCardinalSplineTo*) [proxy realObj];
 	[real setPoints:(CCPointArray*)arg0  ];
@@ -10460,7 +10460,7 @@ JSBool JSPROXY_CCCardinalSplineTo_actionWithDuration__static(JSContext *cx, uint
 
 	ret_val = [CCCardinalSplineTo actionWithDuration:(ccTime)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -10474,7 +10474,7 @@ JSBool JSPROXY_CCCardinalSplineTo_action_static(JSContext *cx, uint32_t argc, js
 
 	ret_val = [CCCardinalSplineTo action ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -10573,13 +10573,13 @@ JSBool JSPROXY_CCCardinalSplineBy_actionWithDuration_points_tension__static(JSCo
 	double arg0; id arg1; double arg2; 
 
 	JS_ValueToNumber( cx, *argvp++, &arg0 );
-	arg1 = (CCPointArray*) jsval_to_nsobject( *argvp++, cx);
+	arg1 = (CCPointArray*) jsval_to_nsobject( cx, *argvp++);
 	JS_ValueToNumber( cx, *argvp++, &arg2 );
 	CCCardinalSplineBy* ret_val;
 
 	ret_val = [CCCardinalSplineBy actionWithDuration:(ccTime)arg0 points:(CCPointArray*)arg1 tension:(CGFloat)arg2  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -10597,7 +10597,7 @@ JSBool JSPROXY_CCCardinalSplineBy_actionWithDuration__static(JSContext *cx, uint
 
 	ret_val = [CCCardinalSplineBy actionWithDuration:(ccTime)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -10611,7 +10611,7 @@ JSBool JSPROXY_CCCardinalSplineBy_action_static(JSContext *cx, uint32_t argc, js
 
 	ret_val = [CCCardinalSplineBy action ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -10707,12 +10707,12 @@ JSBool JSPROXY_CCCatmullRomBy_actionWithDuration_points__static(JSContext *cx, u
 	double arg0; id arg1; 
 
 	JS_ValueToNumber( cx, *argvp++, &arg0 );
-	arg1 = (CCPointArray*) jsval_to_nsobject( *argvp++, cx);
+	arg1 = (CCPointArray*) jsval_to_nsobject( cx, *argvp++);
 	CCCatmullRomBy* ret_val;
 
 	ret_val = [CCCatmullRomBy actionWithDuration:(ccTime)arg0 points:(CCPointArray*)arg1  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -10733,7 +10733,7 @@ JSBool JSPROXY_CCCatmullRomBy_initWithDuration_points_(JSContext *cx, uint32_t a
 	double arg0; id arg1; 
 
 	JS_ValueToNumber( cx, *argvp++, &arg0 );
-	arg1 = (CCPointArray*) jsval_to_nsobject( *argvp++, cx);
+	arg1 = (CCPointArray*) jsval_to_nsobject( cx, *argvp++);
 
 	CCCatmullRomBy *real = [(CCCatmullRomBy*)[proxy.klass alloc] initWithDuration:(ccTime)arg0 points:(CCPointArray*)arg1  ];
 	[proxy setRealObj: real];
@@ -10752,13 +10752,13 @@ JSBool JSPROXY_CCCatmullRomBy_actionWithDuration_points_tension__static(JSContex
 	double arg0; id arg1; double arg2; 
 
 	JS_ValueToNumber( cx, *argvp++, &arg0 );
-	arg1 = (CCPointArray*) jsval_to_nsobject( *argvp++, cx);
+	arg1 = (CCPointArray*) jsval_to_nsobject( cx, *argvp++);
 	JS_ValueToNumber( cx, *argvp++, &arg2 );
 	CCCatmullRomBy* ret_val;
 
 	ret_val = [CCCatmullRomBy actionWithDuration:(ccTime)arg0 points:(CCPointArray*)arg1 tension:(CGFloat)arg2  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -10776,7 +10776,7 @@ JSBool JSPROXY_CCCatmullRomBy_actionWithDuration__static(JSContext *cx, uint32_t
 
 	ret_val = [CCCatmullRomBy actionWithDuration:(ccTime)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -10790,7 +10790,7 @@ JSBool JSPROXY_CCCatmullRomBy_action_static(JSContext *cx, uint32_t argc, jsval 
 
 	ret_val = [CCCatmullRomBy action ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -10910,7 +10910,7 @@ JSBool JSPROXY_CCHide_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	ret_val = [CCHide action ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -11011,7 +11011,7 @@ JSBool JSPROXY_CCSpriteBatchNode_addQuadFromSprite_quadIndex_(JSContext *cx, uin
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; uint32_t arg1; 
 
-	arg0 = (CCSprite*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCSprite*) jsval_to_nsobject( cx, *argvp++);
 	JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
 
 	CCSpriteBatchNode *real = (CCSpriteBatchNode*) [proxy realObj];
@@ -11034,7 +11034,7 @@ JSBool JSPROXY_CCSpriteBatchNode_appendChild_(JSContext *cx, uint32_t argc, jsva
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; 
 
-	arg0 = (CCSprite*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCSprite*) jsval_to_nsobject( cx, *argvp++);
 
 	CCSpriteBatchNode *real = (CCSpriteBatchNode*) [proxy realObj];
 	[real appendChild:(CCSprite*)arg0  ];
@@ -11056,7 +11056,7 @@ JSBool JSPROXY_CCSpriteBatchNode_atlasIndexForChild_atZ_(JSContext *cx, uint32_t
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; int32_t arg1; 
 
-	arg0 = (CCSprite*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCSprite*) jsval_to_nsobject( cx, *argvp++);
 	JS_ValueToECMAInt32( cx, *argvp++, &arg1 );
 	NSUInteger ret_val;
 
@@ -11073,12 +11073,12 @@ JSBool JSPROXY_CCSpriteBatchNode_batchNodeWithFile__static(JSContext *cx, uint32
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
 	CCSpriteBatchNode* ret_val;
 
 	ret_val = [CCSpriteBatchNode batchNodeWithFile:(NSString*)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -11091,13 +11091,13 @@ JSBool JSPROXY_CCSpriteBatchNode_batchNodeWithFile_capacity__static(JSContext *c
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; uint32_t arg1; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
 	JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
 	CCSpriteBatchNode* ret_val;
 
 	ret_val = [CCSpriteBatchNode batchNodeWithFile:(NSString*)arg0 capacity:(NSUInteger)arg1  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -11110,12 +11110,12 @@ JSBool JSPROXY_CCSpriteBatchNode_batchNodeWithTexture__static(JSContext *cx, uin
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; 
 
-	arg0 = (CCTexture2D*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCTexture2D*) jsval_to_nsobject( cx, *argvp++);
 	CCSpriteBatchNode* ret_val;
 
 	ret_val = [CCSpriteBatchNode batchNodeWithTexture:(CCTexture2D*)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -11128,13 +11128,13 @@ JSBool JSPROXY_CCSpriteBatchNode_batchNodeWithTexture_capacity__static(JSContext
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; uint32_t arg1; 
 
-	arg0 = (CCTexture2D*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCTexture2D*) jsval_to_nsobject( cx, *argvp++);
 	JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
 	CCSpriteBatchNode* ret_val;
 
 	ret_val = [CCSpriteBatchNode batchNodeWithTexture:(CCTexture2D*)arg0 capacity:(NSUInteger)arg1  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -11218,7 +11218,7 @@ JSBool JSPROXY_CCSpriteBatchNode_initWithFile_capacity_(JSContext *cx, uint32_t 
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; uint32_t arg1; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
 	JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
 
 	CCSpriteBatchNode *real = [(CCSpriteBatchNode*)[proxy.klass alloc] initWithFile:(NSString*)arg0 capacity:(NSUInteger)arg1  ];
@@ -11244,7 +11244,7 @@ JSBool JSPROXY_CCSpriteBatchNode_initWithTexture_capacity_(JSContext *cx, uint32
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; uint32_t arg1; 
 
-	arg0 = (CCTexture2D*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCTexture2D*) jsval_to_nsobject( cx, *argvp++);
 	JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
 
 	CCSpriteBatchNode *real = [(CCSpriteBatchNode*)[proxy.klass alloc] initWithTexture:(CCTexture2D*)arg0 capacity:(NSUInteger)arg1  ];
@@ -11270,7 +11270,7 @@ JSBool JSPROXY_CCSpriteBatchNode_insertChild_inAtlasAtIndex_(JSContext *cx, uint
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; uint32_t arg1; 
 
-	arg0 = (CCSprite*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCSprite*) jsval_to_nsobject( cx, *argvp++);
 	JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
 
 	CCSpriteBatchNode *real = (CCSpriteBatchNode*) [proxy realObj];
@@ -11293,7 +11293,7 @@ JSBool JSPROXY_CCSpriteBatchNode_rebuildIndexInOrder_atlasIndex_(JSContext *cx, 
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; uint32_t arg1; 
 
-	arg0 = (CCSprite*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCSprite*) jsval_to_nsobject( cx, *argvp++);
 	JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
 	NSUInteger ret_val;
 
@@ -11317,7 +11317,7 @@ JSBool JSPROXY_CCSpriteBatchNode_removeChild_cleanup_(JSContext *cx, uint32_t ar
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; JSBool arg1; 
 
-	arg0 = (CCSprite*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCSprite*) jsval_to_nsobject( cx, *argvp++);
 	JS_ValueToBoolean( cx, *argvp++, &arg1 );
 
 	CCSpriteBatchNode *real = (CCSpriteBatchNode*) [proxy realObj];
@@ -11363,7 +11363,7 @@ JSBool JSPROXY_CCSpriteBatchNode_removeSpriteFromAtlas_(JSContext *cx, uint32_t 
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; 
 
-	arg0 = (CCSprite*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCSprite*) jsval_to_nsobject( cx, *argvp++);
 
 	CCSpriteBatchNode *real = (CCSpriteBatchNode*) [proxy realObj];
 	[real removeSpriteFromAtlas:(CCSprite*)arg0  ];
@@ -11432,7 +11432,7 @@ JSBool JSPROXY_CCSpriteBatchNode_setTextureAtlas_(JSContext *cx, uint32_t argc, 
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; 
 
-	arg0 = (CCTextureAtlas*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCTextureAtlas*) jsval_to_nsobject( cx, *argvp++);
 
 	CCSpriteBatchNode *real = (CCSpriteBatchNode*) [proxy realObj];
 	[real setTextureAtlas:(CCTextureAtlas*)arg0  ];
@@ -11456,7 +11456,7 @@ JSBool JSPROXY_CCSpriteBatchNode_textureAtlas(JSContext *cx, uint32_t argc, jsva
 	CCSpriteBatchNode *real = (CCSpriteBatchNode*) [proxy realObj];
 	ret_val = [real textureAtlas ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -11476,7 +11476,7 @@ JSBool JSPROXY_CCSpriteBatchNode_setTexture_(JSContext *cx, uint32_t argc, jsval
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; 
 
-	arg0 = (CCTexture2D*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCTexture2D*) jsval_to_nsobject( cx, *argvp++);
 
 	CCSpriteBatchNode *real = (CCSpriteBatchNode*) [proxy realObj];
 	[real setTexture:(CCTexture2D*)arg0  ];
@@ -11500,7 +11500,7 @@ JSBool JSPROXY_CCSpriteBatchNode_texture(JSContext *cx, uint32_t argc, jsval *vp
 	CCSpriteBatchNode *real = (CCSpriteBatchNode*) [proxy realObj];
 	ret_val = [real texture ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -11514,7 +11514,7 @@ JSBool JSPROXY_CCSpriteBatchNode_node_static(JSContext *cx, uint32_t argc, jsval
 
 	ret_val = [CCSpriteBatchNode node ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -11637,7 +11637,7 @@ JSBool JSPROXY_CCTMXLayer_addChild_z_tag_(JSContext *cx, uint32_t argc, jsval *v
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; int32_t arg1; int32_t arg2; 
 
-	arg0 = (CCNode*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCNode*) jsval_to_nsobject( cx, *argvp++);
 	JS_ValueToECMAInt32( cx, *argvp++, &arg1 );
 	JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
 
@@ -11661,9 +11661,9 @@ JSBool JSPROXY_CCTMXLayer_initWithTilesetInfo_layerInfo_mapInfo_(JSContext *cx, 
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; id arg1; id arg2; 
 
-	arg0 = (CCTMXTilesetInfo*) jsval_to_nsobject( *argvp++, cx);
-	arg1 = (CCTMXLayerInfo*) jsval_to_nsobject( *argvp++, cx);
-	arg2 = (CCTMXMapInfo*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCTMXTilesetInfo*) jsval_to_nsobject( cx, *argvp++);
+	arg1 = (CCTMXLayerInfo*) jsval_to_nsobject( cx, *argvp++);
+	arg2 = (CCTMXMapInfo*) jsval_to_nsobject( cx, *argvp++);
 
 	CCTMXLayer *real = [(CCTMXLayer*)[proxy.klass alloc] initWithTilesetInfo:(CCTMXTilesetInfo*)arg0 layerInfo:(CCTMXLayerInfo*)arg1 mapInfo:(CCTMXMapInfo*)arg2  ];
 	[proxy setRealObj: real];
@@ -11744,14 +11744,14 @@ JSBool JSPROXY_CCTMXLayer_layerWithTilesetInfo_layerInfo_mapInfo__static(JSConte
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; id arg1; id arg2; 
 
-	arg0 = (CCTMXTilesetInfo*) jsval_to_nsobject( *argvp++, cx);
-	arg1 = (CCTMXLayerInfo*) jsval_to_nsobject( *argvp++, cx);
-	arg2 = (CCTMXMapInfo*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCTMXTilesetInfo*) jsval_to_nsobject( cx, *argvp++);
+	arg1 = (CCTMXLayerInfo*) jsval_to_nsobject( cx, *argvp++);
+	arg2 = (CCTMXMapInfo*) jsval_to_nsobject( cx, *argvp++);
 	CCTMXLayer* ret_val;
 
 	ret_val = [CCTMXLayer layerWithTilesetInfo:(CCTMXTilesetInfo*)arg0 layerInfo:(CCTMXLayerInfo*)arg1 mapInfo:(CCTMXMapInfo*)arg2  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -11793,7 +11793,7 @@ JSBool JSPROXY_CCTMXLayer_positionAt_(JSContext *cx, uint32_t argc, jsval *vp) {
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGPoint arg0; 
 
-	arg0 = jsval_to_CGPoint( *argvp++, cx );
+	arg0 = jsval_to_CGPoint( cx, *argvp++ );
 	CGPoint ret_val;
 
 	CCTMXLayer *real = (CCTMXLayer*) [proxy realObj];
@@ -11859,7 +11859,7 @@ JSBool JSPROXY_CCTMXLayer_removeTileAt_(JSContext *cx, uint32_t argc, jsval *vp)
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGPoint arg0; 
 
-	arg0 = jsval_to_CGPoint( *argvp++, cx );
+	arg0 = jsval_to_CGPoint( cx, *argvp++ );
 
 	CCTMXLayer *real = (CCTMXLayer*) [proxy realObj];
 	[real removeTileAt:(CGPoint)arg0  ];
@@ -11881,7 +11881,7 @@ JSBool JSPROXY_CCTMXLayer_setLayerName_(JSContext *cx, uint32_t argc, jsval *vp)
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
 
 	CCTMXLayer *real = (CCTMXLayer*) [proxy realObj];
 	[real setLayerName:(NSString*)arg0  ];
@@ -11925,7 +11925,7 @@ JSBool JSPROXY_CCTMXLayer_setLayerSize_(JSContext *cx, uint32_t argc, jsval *vp)
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGSize arg0; 
 
-	arg0 = jsval_to_CGSize( *argvp++, cx );
+	arg0 = jsval_to_CGSize( cx, *argvp++ );
 
 	CCTMXLayer *real = (CCTMXLayer*) [proxy realObj];
 	[real setLayerSize:(CGSize)arg0  ];
@@ -11947,7 +11947,7 @@ JSBool JSPROXY_CCTMXLayer_setMapTileSize_(JSContext *cx, uint32_t argc, jsval *v
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGSize arg0; 
 
-	arg0 = jsval_to_CGSize( *argvp++, cx );
+	arg0 = jsval_to_CGSize( cx, *argvp++ );
 
 	CCTMXLayer *real = (CCTMXLayer*) [proxy realObj];
 	[real setMapTileSize:(CGSize)arg0  ];
@@ -11969,7 +11969,7 @@ JSBool JSPROXY_CCTMXLayer_setProperties_(JSContext *cx, uint32_t argc, jsval *vp
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSArray* arg0; 
 
-	arg0 = jsval_to_nsarray( *argvp++, cx );
+	arg0 = jsval_to_nsarray( cx, *argvp++ );
 
 	CCTMXLayer *real = (CCTMXLayer*) [proxy realObj];
 	[real setProperties:(NSMutableArray*)arg0  ];
@@ -11992,7 +11992,7 @@ JSBool JSPROXY_CCTMXLayer_setTileGID_at_(JSContext *cx, uint32_t argc, jsval *vp
 	uint32_t arg0; CGPoint arg1; 
 
 	JS_ValueToECMAUint32( cx, *argvp++, &arg0 );
-	arg1 = jsval_to_CGPoint( *argvp++, cx );
+	arg1 = jsval_to_CGPoint( cx, *argvp++ );
 
 	CCTMXLayer *real = (CCTMXLayer*) [proxy realObj];
 	[real setTileGID:(uint32_t)arg0 at:(CGPoint)arg1  ];
@@ -12015,7 +12015,7 @@ JSBool JSPROXY_CCTMXLayer_setTileGID_at_withFlags_(JSContext *cx, uint32_t argc,
 	uint32_t arg0; CGPoint arg1; int32_t arg2; 
 
 	JS_ValueToECMAUint32( cx, *argvp++, &arg0 );
-	arg1 = jsval_to_CGPoint( *argvp++, cx );
+	arg1 = jsval_to_CGPoint( cx, *argvp++ );
 	JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
 
 	CCTMXLayer *real = (CCTMXLayer*) [proxy realObj];
@@ -12038,7 +12038,7 @@ JSBool JSPROXY_CCTMXLayer_setTileset_(JSContext *cx, uint32_t argc, jsval *vp) {
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; 
 
-	arg0 = (CCTMXTilesetInfo*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCTMXTilesetInfo*) jsval_to_nsobject( cx, *argvp++);
 
 	CCTMXLayer *real = (CCTMXLayer*) [proxy realObj];
 	[real setTileset:(CCTMXTilesetInfo*)arg0  ];
@@ -12078,13 +12078,13 @@ JSBool JSPROXY_CCTMXLayer_tileAt_(JSContext *cx, uint32_t argc, jsval *vp) {
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGPoint arg0; 
 
-	arg0 = jsval_to_CGPoint( *argvp++, cx );
+	arg0 = jsval_to_CGPoint( cx, *argvp++ );
 	CCSprite* ret_val;
 
 	CCTMXLayer *real = (CCTMXLayer*) [proxy realObj];
 	ret_val = [real tileAt:(CGPoint)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -12104,7 +12104,7 @@ JSBool JSPROXY_CCTMXLayer_tileGIDAt_(JSContext *cx, uint32_t argc, jsval *vp) {
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGPoint arg0; 
 
-	arg0 = jsval_to_CGPoint( *argvp++, cx );
+	arg0 = jsval_to_CGPoint( cx, *argvp++ );
 	uint32_t ret_val;
 
 	CCTMXLayer *real = (CCTMXLayer*) [proxy realObj];
@@ -12129,7 +12129,7 @@ JSBool JSPROXY_CCTMXLayer_tileset(JSContext *cx, uint32_t argc, jsval *vp) {
 	CCTMXLayer *real = (CCTMXLayer*) [proxy realObj];
 	ret_val = [real tileset ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -12142,12 +12142,12 @@ JSBool JSPROXY_CCTMXLayer_batchNodeWithFile__static(JSContext *cx, uint32_t argc
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
 	CCTMXLayer* ret_val;
 
 	ret_val = [CCTMXLayer batchNodeWithFile:(NSString*)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -12160,13 +12160,13 @@ JSBool JSPROXY_CCTMXLayer_batchNodeWithFile_capacity__static(JSContext *cx, uint
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; uint32_t arg1; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
 	JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
 	CCTMXLayer* ret_val;
 
 	ret_val = [CCTMXLayer batchNodeWithFile:(NSString*)arg0 capacity:(NSUInteger)arg1  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -12179,12 +12179,12 @@ JSBool JSPROXY_CCTMXLayer_batchNodeWithTexture__static(JSContext *cx, uint32_t a
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; 
 
-	arg0 = (CCTexture2D*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCTexture2D*) jsval_to_nsobject( cx, *argvp++);
 	CCTMXLayer* ret_val;
 
 	ret_val = [CCTMXLayer batchNodeWithTexture:(CCTexture2D*)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -12197,13 +12197,13 @@ JSBool JSPROXY_CCTMXLayer_batchNodeWithTexture_capacity__static(JSContext *cx, u
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; uint32_t arg1; 
 
-	arg0 = (CCTexture2D*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCTexture2D*) jsval_to_nsobject( cx, *argvp++);
 	JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
 	CCTMXLayer* ret_val;
 
 	ret_val = [CCTMXLayer batchNodeWithTexture:(CCTexture2D*)arg0 capacity:(NSUInteger)arg1  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -12217,7 +12217,7 @@ JSBool JSPROXY_CCTMXLayer_node_static(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	ret_val = [CCTMXLayer node ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -12447,7 +12447,7 @@ JSBool JSPROXY_CCTexture2D_drawAtPoint_(JSContext *cx, uint32_t argc, jsval *vp)
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGPoint arg0; 
 
-	arg0 = jsval_to_CGPoint( *argvp++, cx );
+	arg0 = jsval_to_CGPoint( cx, *argvp++ );
 
 	CCTexture2D *real = (CCTexture2D*) [proxy realObj];
 	[real drawAtPoint:(CGPoint)arg0  ];
@@ -12469,7 +12469,7 @@ JSBool JSPROXY_CCTexture2D_drawInRect_(JSContext *cx, uint32_t argc, jsval *vp) 
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGRect arg0; 
 
-	arg0 = jsval_to_CGRect( *argvp++, cx );
+	arg0 = jsval_to_CGRect( cx, *argvp++ );
 
 	CCTexture2D *real = (CCTexture2D*) [proxy realObj];
 	[real drawInRect:(CGRect)arg0  ];
@@ -12528,7 +12528,7 @@ JSBool JSPROXY_CCTexture2D_initWithPVRFile_(JSContext *cx, uint32_t argc, jsval 
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
 
 	CCTexture2D *real = [(CCTexture2D*)[proxy.klass alloc] initWithPVRFile:(NSString*)arg0  ];
 	[proxy setRealObj: real];
@@ -12553,11 +12553,11 @@ JSBool JSPROXY_CCTexture2D_initWithString_dimensions_hAlignment_vAlignment_fontN
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; CGSize arg1; int32_t arg2; int32_t arg3; NSString* arg4; double arg5; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
-	arg1 = jsval_to_CGSize( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
+	arg1 = jsval_to_CGSize( cx, *argvp++ );
 	JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
 	JS_ValueToECMAInt32( cx, *argvp++, &arg3 );
-	arg4 = jsval_to_nsstring( *argvp++, cx );
+	arg4 = jsval_to_nsstring( cx, *argvp++ );
 	JS_ValueToNumber( cx, *argvp++, &arg5 );
 
 	CCTexture2D *real = [(CCTexture2D*)[proxy.klass alloc] initWithString:(NSString*)arg0 dimensions:(CGSize)arg1 hAlignment:(CCTextAlignment)arg2 vAlignment:(CCVerticalTextAlignment)arg3 fontName:(NSString*)arg4 fontSize:(CGFloat)arg5  ];
@@ -12583,12 +12583,12 @@ JSBool JSPROXY_CCTexture2D_initWithString_dimensions_hAlignment_vAlignment_lineB
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; CGSize arg1; int32_t arg2; int32_t arg3; int32_t arg4; NSString* arg5; double arg6; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
-	arg1 = jsval_to_CGSize( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
+	arg1 = jsval_to_CGSize( cx, *argvp++ );
 	JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
 	JS_ValueToECMAInt32( cx, *argvp++, &arg3 );
 	JS_ValueToECMAInt32( cx, *argvp++, &arg4 );
-	arg5 = jsval_to_nsstring( *argvp++, cx );
+	arg5 = jsval_to_nsstring( cx, *argvp++ );
 	JS_ValueToNumber( cx, *argvp++, &arg6 );
 
 	CCTexture2D *real = [(CCTexture2D*)[proxy.klass alloc] initWithString:(NSString*)arg0 dimensions:(CGSize)arg1 hAlignment:(CCTextAlignment)arg2 vAlignment:(CCVerticalTextAlignment)arg3 lineBreakMode:(CCLineBreakMode)arg4 fontName:(NSString*)arg5 fontSize:(CGFloat)arg6  ];
@@ -12614,8 +12614,8 @@ JSBool JSPROXY_CCTexture2D_initWithString_fontName_fontSize_(JSContext *cx, uint
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; NSString* arg1; double arg2; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
-	arg1 = jsval_to_nsstring( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
+	arg1 = jsval_to_nsstring( cx, *argvp++ );
 	JS_ValueToNumber( cx, *argvp++, &arg2 );
 
 	CCTexture2D *real = [(CCTexture2D*)[proxy.klass alloc] initWithString:(NSString*)arg0 fontName:(NSString*)arg1 fontSize:(CGFloat)arg2  ];
@@ -12849,7 +12849,7 @@ JSBool JSPROXY_CCTexture2D_setShaderProgram_(JSContext *cx, uint32_t argc, jsval
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; 
 
-	arg0 = (CCGLProgram*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCGLProgram*) jsval_to_nsobject( cx, *argvp++);
 
 	CCTexture2D *real = (CCTexture2D*) [proxy realObj];
 	[real setShaderProgram:(CCGLProgram*)arg0  ];
@@ -12873,7 +12873,7 @@ JSBool JSPROXY_CCTexture2D_shaderProgram(JSContext *cx, uint32_t argc, jsval *vp
 	CCTexture2D *real = (CCTexture2D*) [proxy realObj];
 	ret_val = [real shaderProgram ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -13273,7 +13273,7 @@ JSBool JSPROXY_CCJumpTiles3D_actionWithJumps_amplitude_grid_duration__static(JSC
 
 	ret_val = [CCJumpTiles3D actionWithJumps:(int)arg0 amplitude:(float)arg1 grid:(ccGridSize)arg2 duration:(ccTime)arg3  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -13408,7 +13408,7 @@ JSBool JSPROXY_CCJumpTiles3D_actionWithSize_duration__static(JSContext *cx, uint
 
 	ret_val = [CCJumpTiles3D actionWithSize:(ccGridSize)arg0 duration:(ccTime)arg1  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -13426,7 +13426,7 @@ JSBool JSPROXY_CCJumpTiles3D_actionWithDuration__static(JSContext *cx, uint32_t 
 
 	ret_val = [CCJumpTiles3D actionWithDuration:(ccTime)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -13440,7 +13440,7 @@ JSBool JSPROXY_CCJumpTiles3D_action_static(JSContext *cx, uint32_t argc, jsval *
 
 	ret_val = [CCJumpTiles3D action ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -13546,7 +13546,7 @@ JSBool JSPROXY_CCBezierBy_actionWithDuration__static(JSContext *cx, uint32_t arg
 
 	ret_val = [CCBezierBy actionWithDuration:(ccTime)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -13560,7 +13560,7 @@ JSBool JSPROXY_CCBezierBy_action_static(JSContext *cx, uint32_t argc, jsval *vp)
 
 	ret_val = [CCBezierBy action ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -13661,7 +13661,7 @@ JSBool JSPROXY_CCBezierTo_startWithTarget_(JSContext *cx, uint32_t argc, jsval *
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; 
 
-	arg0 = (CCNode*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCNode*) jsval_to_nsobject( cx, *argvp++);
 
 	CCBezierTo *real = (CCBezierTo*) [proxy realObj];
 	[real startWithTarget:(CCNode*)arg0  ];
@@ -13681,7 +13681,7 @@ JSBool JSPROXY_CCBezierTo_actionWithDuration__static(JSContext *cx, uint32_t arg
 
 	ret_val = [CCBezierTo actionWithDuration:(ccTime)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -13695,7 +13695,7 @@ JSBool JSPROXY_CCBezierTo_action_static(JSContext *cx, uint32_t argc, jsval *vp)
 
 	ret_val = [CCBezierTo action ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -13797,7 +13797,7 @@ JSBool JSPROXY_CCParticleBatchNode_addChild_z_tag_(JSContext *cx, uint32_t argc,
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; int32_t arg1; int32_t arg2; 
 
-	arg0 = (CCParticleSystem*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCParticleSystem*) jsval_to_nsobject( cx, *argvp++);
 	JS_ValueToECMAInt32( cx, *argvp++, &arg1 );
 	JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
 
@@ -13814,12 +13814,12 @@ JSBool JSPROXY_CCParticleBatchNode_batchNodeWithFile__static(JSContext *cx, uint
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
 	CCParticleBatchNode* ret_val;
 
 	ret_val = [CCParticleBatchNode batchNodeWithFile:(NSString*)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -13832,13 +13832,13 @@ JSBool JSPROXY_CCParticleBatchNode_batchNodeWithFile_capacity__static(JSContext 
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; uint32_t arg1; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
 	JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
 	CCParticleBatchNode* ret_val;
 
 	ret_val = [CCParticleBatchNode batchNodeWithFile:(NSString*)arg0 capacity:(NSUInteger)arg1  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -13851,12 +13851,12 @@ JSBool JSPROXY_CCParticleBatchNode_batchNodeWithTexture__static(JSContext *cx, u
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; 
 
-	arg0 = (CCTexture2D*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCTexture2D*) jsval_to_nsobject( cx, *argvp++);
 	CCParticleBatchNode* ret_val;
 
 	ret_val = [CCParticleBatchNode batchNodeWithTexture:(CCTexture2D*)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -13869,13 +13869,13 @@ JSBool JSPROXY_CCParticleBatchNode_batchNodeWithTexture_capacity__static(JSConte
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; uint32_t arg1; 
 
-	arg0 = (CCTexture2D*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCTexture2D*) jsval_to_nsobject( cx, *argvp++);
 	JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
 	CCParticleBatchNode* ret_val;
 
 	ret_val = [CCParticleBatchNode batchNodeWithTexture:(CCTexture2D*)arg0 capacity:(NSUInteger)arg1  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -13941,7 +13941,7 @@ JSBool JSPROXY_CCParticleBatchNode_initWithFile_capacity_(JSContext *cx, uint32_
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; uint32_t arg1; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
 	JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
 
 	CCParticleBatchNode *real = [(CCParticleBatchNode*)[proxy.klass alloc] initWithFile:(NSString*)arg0 capacity:(NSUInteger)arg1  ];
@@ -13967,7 +13967,7 @@ JSBool JSPROXY_CCParticleBatchNode_initWithTexture_capacity_(JSContext *cx, uint
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; uint32_t arg1; 
 
-	arg0 = (CCTexture2D*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCTexture2D*) jsval_to_nsobject( cx, *argvp++);
 	JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
 
 	CCParticleBatchNode *real = [(CCParticleBatchNode*)[proxy.klass alloc] initWithTexture:(CCTexture2D*)arg0 capacity:(NSUInteger)arg1  ];
@@ -13993,7 +13993,7 @@ JSBool JSPROXY_CCParticleBatchNode_insertChild_inAtlasAtIndex_(JSContext *cx, ui
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; uint32_t arg1; 
 
-	arg0 = (CCParticleSystem*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCParticleSystem*) jsval_to_nsobject( cx, *argvp++);
 	JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
 
 	CCParticleBatchNode *real = (CCParticleBatchNode*) [proxy realObj];
@@ -14016,7 +14016,7 @@ JSBool JSPROXY_CCParticleBatchNode_removeChild_cleanup_(JSContext *cx, uint32_t 
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; JSBool arg1; 
 
-	arg0 = (CCParticleSystem*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCParticleSystem*) jsval_to_nsobject( cx, *argvp++);
 	JS_ValueToBoolean( cx, *argvp++, &arg1 );
 
 	CCParticleBatchNode *real = (CCParticleBatchNode*) [proxy realObj];
@@ -14064,7 +14064,7 @@ JSBool JSPROXY_CCParticleBatchNode_setTextureAtlas_(JSContext *cx, uint32_t argc
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; 
 
-	arg0 = (CCTextureAtlas*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCTextureAtlas*) jsval_to_nsobject( cx, *argvp++);
 
 	CCParticleBatchNode *real = (CCParticleBatchNode*) [proxy realObj];
 	[real setTextureAtlas:(CCTextureAtlas*)arg0  ];
@@ -14088,7 +14088,7 @@ JSBool JSPROXY_CCParticleBatchNode_textureAtlas(JSContext *cx, uint32_t argc, js
 	CCParticleBatchNode *real = (CCParticleBatchNode*) [proxy realObj];
 	ret_val = [real textureAtlas ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -14108,7 +14108,7 @@ JSBool JSPROXY_CCParticleBatchNode_setTexture_(JSContext *cx, uint32_t argc, jsv
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; 
 
-	arg0 = (CCTexture2D*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCTexture2D*) jsval_to_nsobject( cx, *argvp++);
 
 	CCParticleBatchNode *real = (CCParticleBatchNode*) [proxy realObj];
 	[real setTexture:(CCTexture2D*)arg0  ];
@@ -14132,7 +14132,7 @@ JSBool JSPROXY_CCParticleBatchNode_texture(JSContext *cx, uint32_t argc, jsval *
 	CCParticleBatchNode *real = (CCParticleBatchNode*) [proxy realObj];
 	ret_val = [real texture ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -14146,7 +14146,7 @@ JSBool JSPROXY_CCParticleBatchNode_node_static(JSContext *cx, uint32_t argc, jsv
 
 	ret_val = [CCParticleBatchNode node ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -14277,12 +14277,12 @@ JSBool JSPROXY_CCBMFontConfiguration_configurationWithFNTFile__static(JSContext 
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
 	CCBMFontConfiguration* ret_val;
 
 	ret_val = [CCBMFontConfiguration configurationWithFNTFile:(NSString*)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -14302,7 +14302,7 @@ JSBool JSPROXY_CCBMFontConfiguration_initWithFNTfile_(JSContext *cx, uint32_t ar
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
 
 	CCBMFontConfiguration *real = [(CCBMFontConfiguration*)[proxy.klass alloc] initWithFNTfile:(NSString*)arg0  ];
 	[proxy setRealObj: real];
@@ -14327,7 +14327,7 @@ JSBool JSPROXY_CCBMFontConfiguration_setAtlasName_(JSContext *cx, uint32_t argc,
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
 
 	CCBMFontConfiguration *real = (CCBMFontConfiguration*) [proxy realObj];
 	[real setAtlasName:(NSString*)arg0  ];
@@ -14444,7 +14444,7 @@ JSBool JSPROXY_CCCallFunc_action_static(JSContext *cx, uint32_t argc, jsval *vp)
 
 	ret_val = [CCCallFunc action ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -14557,7 +14557,7 @@ JSBool JSPROXY_CCCallFuncN_action_static(JSContext *cx, uint32_t argc, jsval *vp
 
 	ret_val = [CCCallFuncN action ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -14652,7 +14652,7 @@ JSBool JSPROXY_CCCallFuncND_action_static(JSContext *cx, uint32_t argc, jsval *v
 
 	ret_val = [CCCallFuncND action ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -14752,13 +14752,13 @@ JSBool JSPROXY_CCProfiler_createAndAddTimerWithName_(JSContext *cx, uint32_t arg
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
 	CCProfilingTimer* ret_val;
 
 	CCProfiler *real = (CCProfiler*) [proxy realObj];
 	ret_val = [real createAndAddTimerWithName:(NSString*)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -14814,7 +14814,7 @@ JSBool JSPROXY_CCProfiler_releaseTimer_(JSContext *cx, uint32_t argc, jsval *vp)
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
 
 	CCProfiler *real = (CCProfiler*) [proxy realObj];
 	[real releaseTimer:(NSString*)arg0  ];
@@ -14830,7 +14830,7 @@ JSBool JSPROXY_CCProfiler_sharedProfiler_static(JSContext *cx, uint32_t argc, js
 
 	ret_val = [CCProfiler sharedProfiler ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -14927,13 +14927,13 @@ JSBool JSPROXY_CCSpeed_actionWithAction_speed__static(JSContext *cx, uint32_t ar
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; double arg1; 
 
-	arg0 = (CCActionInterval*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCActionInterval*) jsval_to_nsobject( cx, *argvp++);
 	JS_ValueToNumber( cx, *argvp++, &arg1 );
 	CCSpeed* ret_val;
 
 	ret_val = [CCSpeed actionWithAction:(CCActionInterval*)arg0 speed:(float)arg1  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -14953,7 +14953,7 @@ JSBool JSPROXY_CCSpeed_initWithAction_speed_(JSContext *cx, uint32_t argc, jsval
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; double arg1; 
 
-	arg0 = (CCActionInterval*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCActionInterval*) jsval_to_nsobject( cx, *argvp++);
 	JS_ValueToNumber( cx, *argvp++, &arg1 );
 
 	CCSpeed *real = [(CCSpeed*)[proxy.klass alloc] initWithAction:(CCActionInterval*)arg0 speed:(float)arg1  ];
@@ -14981,7 +14981,7 @@ JSBool JSPROXY_CCSpeed_innerAction(JSContext *cx, uint32_t argc, jsval *vp) {
 	CCSpeed *real = (CCSpeed*) [proxy realObj];
 	ret_val = [real innerAction ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -15001,7 +15001,7 @@ JSBool JSPROXY_CCSpeed_setInnerAction_(JSContext *cx, uint32_t argc, jsval *vp) 
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; 
 
-	arg0 = (CCActionInterval*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCActionInterval*) jsval_to_nsobject( cx, *argvp++);
 
 	CCSpeed *real = (CCSpeed*) [proxy realObj];
 	[real setInnerAction:(CCActionInterval*)arg0  ];
@@ -15058,7 +15058,7 @@ JSBool JSPROXY_CCSpeed_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	ret_val = [CCSpeed action ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -15163,7 +15163,7 @@ JSBool JSPROXY_CCRotateTo_actionWithDuration_angle__static(JSContext *cx, uint32
 
 	ret_val = [CCRotateTo actionWithDuration:(ccTime)arg0 angle:(float)arg1  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -15207,7 +15207,7 @@ JSBool JSPROXY_CCRotateTo_actionWithDuration__static(JSContext *cx, uint32_t arg
 
 	ret_val = [CCRotateTo actionWithDuration:(ccTime)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -15221,7 +15221,7 @@ JSBool JSPROXY_CCRotateTo_action_static(JSContext *cx, uint32_t argc, jsval *vp)
 
 	ret_val = [CCRotateTo action ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -15322,7 +15322,7 @@ JSBool JSPROXY_CCActionCamera_actionWithDuration__static(JSContext *cx, uint32_t
 
 	ret_val = [CCActionCamera actionWithDuration:(ccTime)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -15336,7 +15336,7 @@ JSBool JSPROXY_CCActionCamera_action_static(JSContext *cx, uint32_t argc, jsval 
 
 	ret_val = [CCActionCamera action ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -15453,7 +15453,7 @@ JSBool JSPROXY_CCShow_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	ret_val = [CCShow action ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -15547,13 +15547,13 @@ JSBool JSPROXY_CCAccelAmplitude_actionWithAction_duration__static(JSContext *cx,
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; double arg1; 
 
-	arg0 = (CCAction*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCAction*) jsval_to_nsobject( cx, *argvp++);
 	JS_ValueToNumber( cx, *argvp++, &arg1 );
 	CCAccelAmplitude* ret_val;
 
 	ret_val = [CCAccelAmplitude actionWithAction:(CCAction*)arg0 duration:(ccTime)arg1  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -15573,7 +15573,7 @@ JSBool JSPROXY_CCAccelAmplitude_initWithAction_duration_(JSContext *cx, uint32_t
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; double arg1; 
 
-	arg0 = (CCAction*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCAction*) jsval_to_nsobject( cx, *argvp++);
 	JS_ValueToNumber( cx, *argvp++, &arg1 );
 
 	CCAccelAmplitude *real = [(CCAccelAmplitude*)[proxy.klass alloc] initWithAction:(CCAction*)arg0 duration:(ccTime)arg1  ];
@@ -15638,7 +15638,7 @@ JSBool JSPROXY_CCAccelAmplitude_actionWithDuration__static(JSContext *cx, uint32
 
 	ret_val = [CCAccelAmplitude actionWithDuration:(ccTime)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -15652,7 +15652,7 @@ JSBool JSPROXY_CCAccelAmplitude_action_static(JSContext *cx, uint32_t argc, jsva
 
 	ret_val = [CCAccelAmplitude action ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -15776,7 +15776,7 @@ JSBool JSPROXY_CCGridBase_afterDraw_(JSContext *cx, uint32_t argc, jsval *vp) {
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; 
 
-	arg0 = (CCNode*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCNode*) jsval_to_nsobject( cx, *argvp++);
 
 	CCGridBase *real = (CCGridBase*) [proxy realObj];
 	[real afterDraw:(CCNode*)arg0  ];
@@ -15854,7 +15854,7 @@ JSBool JSPROXY_CCGridBase_grabber(JSContext *cx, uint32_t argc, jsval *vp) {
 	CCGridBase *real = (CCGridBase*) [proxy realObj];
 	ret_val = [real grabber ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -15899,7 +15899,7 @@ JSBool JSPROXY_CCGridBase_gridWithSize__static(JSContext *cx, uint32_t argc, jsv
 
 	ret_val = [CCGridBase gridWithSize:(ccGridSize)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -15916,13 +15916,13 @@ JSBool JSPROXY_CCGridBase_gridWithSize_texture_flippedTexture__static(JSContext 
 	JSObject *tmp_arg0;
 	JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
 	arg0 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg0);
-	arg1 = (CCTexture2D*) jsval_to_nsobject( *argvp++, cx);
+	arg1 = (CCTexture2D*) jsval_to_nsobject( cx, *argvp++);
 	JS_ValueToBoolean( cx, *argvp++, &arg2 );
 	CCGridBase* ret_val;
 
 	ret_val = [CCGridBase gridWithSize:(ccGridSize)arg0 texture:(CCTexture2D*)arg1 flippedTexture:(BOOL)arg2  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -15974,7 +15974,7 @@ JSBool JSPROXY_CCGridBase_initWithSize_texture_flippedTexture_(JSContext *cx, ui
 	JSObject *tmp_arg0;
 	JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
 	arg0 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg0);
-	arg1 = (CCTexture2D*) jsval_to_nsobject( *argvp++, cx);
+	arg1 = (CCTexture2D*) jsval_to_nsobject( cx, *argvp++);
 	JS_ValueToBoolean( cx, *argvp++, &arg2 );
 
 	CCGridBase *real = [(CCGridBase*)[proxy.klass alloc] initWithSize:(ccGridSize)arg0 texture:(CCTexture2D*)arg1 flippedTexture:(BOOL)arg2  ];
@@ -16078,7 +16078,7 @@ JSBool JSPROXY_CCGridBase_setGrabber_(JSContext *cx, uint32_t argc, jsval *vp) {
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; 
 
-	arg0 = (CCGrabber*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCGrabber*) jsval_to_nsobject( cx, *argvp++);
 
 	CCGridBase *real = (CCGridBase*) [proxy realObj];
 	[real setGrabber:(CCGrabber*)arg0  ];
@@ -16144,7 +16144,7 @@ JSBool JSPROXY_CCGridBase_setShaderProgram_(JSContext *cx, uint32_t argc, jsval 
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; 
 
-	arg0 = (CCGLProgram*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCGLProgram*) jsval_to_nsobject( cx, *argvp++);
 
 	CCGridBase *real = (CCGridBase*) [proxy realObj];
 	[real setShaderProgram:(CCGLProgram*)arg0  ];
@@ -16166,7 +16166,7 @@ JSBool JSPROXY_CCGridBase_setStep_(JSContext *cx, uint32_t argc, jsval *vp) {
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGPoint arg0; 
 
-	arg0 = jsval_to_CGPoint( *argvp++, cx );
+	arg0 = jsval_to_CGPoint( cx, *argvp++ );
 
 	CCGridBase *real = (CCGridBase*) [proxy realObj];
 	[real setStep:(CGPoint)arg0  ];
@@ -16188,7 +16188,7 @@ JSBool JSPROXY_CCGridBase_setTexture_(JSContext *cx, uint32_t argc, jsval *vp) {
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; 
 
-	arg0 = (CCTexture2D*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCTexture2D*) jsval_to_nsobject( cx, *argvp++);
 
 	CCGridBase *real = (CCGridBase*) [proxy realObj];
 	[real setTexture:(CCTexture2D*)arg0  ];
@@ -16212,7 +16212,7 @@ JSBool JSPROXY_CCGridBase_shaderProgram(JSContext *cx, uint32_t argc, jsval *vp)
 	CCGridBase *real = (CCGridBase*) [proxy realObj];
 	ret_val = [real shaderProgram ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -16256,7 +16256,7 @@ JSBool JSPROXY_CCGridBase_texture(JSContext *cx, uint32_t argc, jsval *vp) {
 	CCGridBase *real = (CCGridBase*) [proxy realObj];
 	ret_val = [real texture ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -16380,7 +16380,7 @@ JSBool JSPROXY_CCTiledGrid3D_gridWithSize__static(JSContext *cx, uint32_t argc, 
 
 	ret_val = [CCTiledGrid3D gridWithSize:(ccGridSize)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -16397,13 +16397,13 @@ JSBool JSPROXY_CCTiledGrid3D_gridWithSize_texture_flippedTexture__static(JSConte
 	JSObject *tmp_arg0;
 	JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
 	arg0 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg0);
-	arg1 = (CCTexture2D*) jsval_to_nsobject( *argvp++, cx);
+	arg1 = (CCTexture2D*) jsval_to_nsobject( cx, *argvp++);
 	JS_ValueToBoolean( cx, *argvp++, &arg2 );
 	CCTiledGrid3D* ret_val;
 
 	ret_val = [CCTiledGrid3D gridWithSize:(ccGridSize)arg0 texture:(CCTexture2D*)arg1 flippedTexture:(BOOL)arg2  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -16524,7 +16524,7 @@ JSBool JSPROXY_CCFadeOut_actionWithDuration__static(JSContext *cx, uint32_t argc
 
 	ret_val = [CCFadeOut actionWithDuration:(ccTime)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -16538,7 +16538,7 @@ JSBool JSPROXY_CCFadeOut_action_static(JSContext *cx, uint32_t argc, jsval *vp) 
 
 	ret_val = [CCFadeOut action ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -16819,8 +16819,8 @@ JSBool JSPROXY_CCAnimationCache_addAnimation_name_(JSContext *cx, uint32_t argc,
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; NSString* arg1; 
 
-	arg0 = (CCAnimation*) jsval_to_nsobject( *argvp++, cx);
-	arg1 = jsval_to_nsstring( *argvp++, cx );
+	arg0 = (CCAnimation*) jsval_to_nsobject( cx, *argvp++);
+	arg1 = jsval_to_nsstring( cx, *argvp++ );
 
 	CCAnimationCache *real = (CCAnimationCache*) [proxy realObj];
 	[real addAnimation:(CCAnimation*)arg0 name:(NSString*)arg1  ];
@@ -16842,7 +16842,7 @@ JSBool JSPROXY_CCAnimationCache_addAnimationsWithFile_(JSContext *cx, uint32_t a
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
 
 	CCAnimationCache *real = (CCAnimationCache*) [proxy realObj];
 	[real addAnimationsWithFile:(NSString*)arg0  ];
@@ -16864,13 +16864,13 @@ JSBool JSPROXY_CCAnimationCache_animationByName_(JSContext *cx, uint32_t argc, j
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
 	CCAnimation* ret_val;
 
 	CCAnimationCache *real = (CCAnimationCache*) [proxy realObj];
 	ret_val = [real animationByName:(NSString*)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -16900,7 +16900,7 @@ JSBool JSPROXY_CCAnimationCache_removeAnimationByName_(JSContext *cx, uint32_t a
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
 
 	CCAnimationCache *real = (CCAnimationCache*) [proxy realObj];
 	[real removeAnimationByName:(NSString*)arg0  ];
@@ -16916,7 +16916,7 @@ JSBool JSPROXY_CCAnimationCache_sharedAnimationCache_static(JSContext *cx, uint3
 
 	ret_val = [CCAnimationCache sharedAnimationCache ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -17014,12 +17014,12 @@ JSBool JSPROXY_CCRepeatForever_actionWithAction__static(JSContext *cx, uint32_t 
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; 
 
-	arg0 = (CCActionInterval*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCActionInterval*) jsval_to_nsobject( cx, *argvp++);
 	CCRepeatForever* ret_val;
 
 	ret_val = [CCRepeatForever actionWithAction:(CCActionInterval*)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -17039,7 +17039,7 @@ JSBool JSPROXY_CCRepeatForever_initWithAction_(JSContext *cx, uint32_t argc, jsv
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; 
 
-	arg0 = (CCActionInterval*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCActionInterval*) jsval_to_nsobject( cx, *argvp++);
 
 	CCRepeatForever *real = [(CCRepeatForever*)[proxy.klass alloc] initWithAction:(CCActionInterval*)arg0  ];
 	[proxy setRealObj: real];
@@ -17066,7 +17066,7 @@ JSBool JSPROXY_CCRepeatForever_innerAction(JSContext *cx, uint32_t argc, jsval *
 	CCRepeatForever *real = (CCRepeatForever*) [proxy realObj];
 	ret_val = [real innerAction ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -17086,7 +17086,7 @@ JSBool JSPROXY_CCRepeatForever_setInnerAction_(JSContext *cx, uint32_t argc, jsv
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; 
 
-	arg0 = (CCActionInterval*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCActionInterval*) jsval_to_nsobject( cx, *argvp++);
 
 	CCRepeatForever *real = (CCRepeatForever*) [proxy realObj];
 	[real setInnerAction:(CCActionInterval*)arg0  ];
@@ -17102,7 +17102,7 @@ JSBool JSPROXY_CCRepeatForever_action_static(JSContext *cx, uint32_t argc, jsval
 
 	ret_val = [CCRepeatForever action ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -17226,7 +17226,7 @@ JSBool JSPROXY_CCFadeIn_actionWithDuration__static(JSContext *cx, uint32_t argc,
 
 	ret_val = [CCFadeIn actionWithDuration:(ccTime)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -17240,7 +17240,7 @@ JSBool JSPROXY_CCFadeIn_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	ret_val = [CCFadeIn action ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -17380,7 +17380,7 @@ JSBool JSPROXY_CCLayerMultiplex_node_static(JSContext *cx, uint32_t argc, jsval 
 
 	ret_val = [CCLayerMultiplex node ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -17482,7 +17482,7 @@ JSBool JSPROXY_CCFileUtils_fullPathFromRelativePath_(JSContext *cx, uint32_t arg
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
 	NSString* ret_val;
 
 	CCFileUtils *real = (CCFileUtils*) [proxy realObj];
@@ -17520,7 +17520,7 @@ JSBool JSPROXY_CCFileUtils_sharedFileUtils_static(JSContext *cx, uint32_t argc, 
 
 	ret_val = [CCFileUtils sharedFileUtils ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -17615,7 +17615,7 @@ JSBool JSPROXY_CCAtlasNode_atlasWithTileFile_tileWidth_tileHeight_itemsToRender_
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; uint32_t arg1; uint32_t arg2; uint32_t arg3; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
 	JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
 	JS_ValueToECMAUint32( cx, *argvp++, &arg2 );
 	JS_ValueToECMAUint32( cx, *argvp++, &arg3 );
@@ -17623,7 +17623,7 @@ JSBool JSPROXY_CCAtlasNode_atlasWithTileFile_tileWidth_tileHeight_itemsToRender_
 
 	ret_val = [CCAtlasNode atlasWithTileFile:(NSString*)arg0 tileWidth:(NSUInteger)arg1 tileHeight:(NSUInteger)arg2 itemsToRender:(NSUInteger)arg3  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -17691,7 +17691,7 @@ JSBool JSPROXY_CCAtlasNode_initWithTileFile_tileWidth_tileHeight_itemsToRender_(
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; uint32_t arg1; uint32_t arg2; uint32_t arg3; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
 	JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
 	JS_ValueToECMAUint32( cx, *argvp++, &arg2 );
 	JS_ValueToECMAUint32( cx, *argvp++, &arg3 );
@@ -17851,7 +17851,7 @@ JSBool JSPROXY_CCAtlasNode_setTextureAtlas_(JSContext *cx, uint32_t argc, jsval 
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; 
 
-	arg0 = (CCTextureAtlas*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCTextureAtlas*) jsval_to_nsobject( cx, *argvp++);
 
 	CCAtlasNode *real = (CCAtlasNode*) [proxy realObj];
 	[real setTextureAtlas:(CCTextureAtlas*)arg0  ];
@@ -17875,7 +17875,7 @@ JSBool JSPROXY_CCAtlasNode_textureAtlas(JSContext *cx, uint32_t argc, jsval *vp)
 	CCAtlasNode *real = (CCAtlasNode*) [proxy realObj];
 	ret_val = [real textureAtlas ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -17954,7 +17954,7 @@ JSBool JSPROXY_CCAtlasNode_setTexture_(JSContext *cx, uint32_t argc, jsval *vp) 
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; 
 
-	arg0 = (CCTexture2D*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCTexture2D*) jsval_to_nsobject( cx, *argvp++);
 
 	CCAtlasNode *real = (CCAtlasNode*) [proxy realObj];
 	[real setTexture:(CCTexture2D*)arg0  ];
@@ -17978,7 +17978,7 @@ JSBool JSPROXY_CCAtlasNode_texture(JSContext *cx, uint32_t argc, jsval *vp) {
 	CCAtlasNode *real = (CCAtlasNode*) [proxy realObj];
 	ret_val = [real texture ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -17992,7 +17992,7 @@ JSBool JSPROXY_CCAtlasNode_node_static(JSContext *cx, uint32_t argc, jsval *vp) 
 
 	ret_val = [CCAtlasNode node ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -18109,8 +18109,8 @@ JSBool JSPROXY_CCTileMapAtlas_initWithTileFile_mapFile_tileWidth_tileHeight_(JSC
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; NSString* arg1; int32_t arg2; int32_t arg3; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
-	arg1 = jsval_to_nsstring( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
+	arg1 = jsval_to_nsstring( cx, *argvp++ );
 	JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
 	JS_ValueToECMAInt32( cx, *argvp++, &arg3 );
 
@@ -18208,15 +18208,15 @@ JSBool JSPROXY_CCTileMapAtlas_tileMapAtlasWithTileFile_mapFile_tileWidth_tileHei
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; NSString* arg1; int32_t arg2; int32_t arg3; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
-	arg1 = jsval_to_nsstring( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
+	arg1 = jsval_to_nsstring( cx, *argvp++ );
 	JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
 	JS_ValueToECMAInt32( cx, *argvp++, &arg3 );
 	CCTileMapAtlas* ret_val;
 
 	ret_val = [CCTileMapAtlas tileMapAtlasWithTileFile:(NSString*)arg0 mapFile:(NSString*)arg1 tileWidth:(int)arg2 tileHeight:(int)arg3  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -18229,7 +18229,7 @@ JSBool JSPROXY_CCTileMapAtlas_atlasWithTileFile_tileWidth_tileHeight_itemsToRend
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; uint32_t arg1; uint32_t arg2; uint32_t arg3; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
 	JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
 	JS_ValueToECMAUint32( cx, *argvp++, &arg2 );
 	JS_ValueToECMAUint32( cx, *argvp++, &arg3 );
@@ -18237,7 +18237,7 @@ JSBool JSPROXY_CCTileMapAtlas_atlasWithTileFile_tileWidth_tileHeight_itemsToRend
 
 	ret_val = [CCTileMapAtlas atlasWithTileFile:(NSString*)arg0 tileWidth:(NSUInteger)arg1 tileHeight:(NSUInteger)arg2 itemsToRender:(NSUInteger)arg3  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -18251,7 +18251,7 @@ JSBool JSPROXY_CCTileMapAtlas_node_static(JSContext *cx, uint32_t argc, jsval *v
 
 	ret_val = [CCTileMapAtlas node ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -18357,7 +18357,7 @@ JSBool JSPROXY_CCPointArray_addControlPoint_(JSContext *cx, uint32_t argc, jsval
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGPoint arg0; 
 
-	arg0 = jsval_to_CGPoint( *argvp++, cx );
+	arg0 = jsval_to_CGPoint( cx, *argvp++ );
 
 	CCPointArray *real = (CCPointArray*) [proxy realObj];
 	[real addControlPoint:(CGPoint)arg0  ];
@@ -18377,7 +18377,7 @@ JSBool JSPROXY_CCPointArray_arrayWithCapacity__static(JSContext *cx, uint32_t ar
 
 	ret_val = [CCPointArray arrayWithCapacity:(NSUInteger)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -18489,7 +18489,7 @@ JSBool JSPROXY_CCPointArray_insertControlPoint_atIndex_(JSContext *cx, uint32_t 
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGPoint arg0; uint32_t arg1; 
 
-	arg0 = jsval_to_CGPoint( *argvp++, cx );
+	arg0 = jsval_to_CGPoint( cx, *argvp++ );
 	JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
 
 	CCPointArray *real = (CCPointArray*) [proxy realObj];
@@ -18534,7 +18534,7 @@ JSBool JSPROXY_CCPointArray_replaceControlPoint_atIndex_(JSContext *cx, uint32_t
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGPoint arg0; uint32_t arg1; 
 
-	arg0 = jsval_to_CGPoint( *argvp++, cx );
+	arg0 = jsval_to_CGPoint( cx, *argvp++ );
 	JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
 
 	CCPointArray *real = (CCPointArray*) [proxy realObj];
@@ -18559,7 +18559,7 @@ JSBool JSPROXY_CCPointArray_reverse(JSContext *cx, uint32_t argc, jsval *vp) {
 	CCPointArray *real = (CCPointArray*) [proxy realObj];
 	ret_val = [real reverse ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -18597,7 +18597,7 @@ JSBool JSPROXY_CCPointArray_setControlPoints_(JSContext *cx, uint32_t argc, jsva
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSArray* arg0; 
 
-	arg0 = jsval_to_nsarray( *argvp++, cx );
+	arg0 = jsval_to_nsarray( cx, *argvp++ );
 
 	CCPointArray *real = (CCPointArray*) [proxy realObj];
 	[real setControlPoints:(NSMutableArray*)arg0  ];
@@ -18722,7 +18722,7 @@ JSBool JSPROXY_CCCallBlock_action_static(JSContext *cx, uint32_t argc, jsval *vp
 
 	ret_val = [CCCallBlock action ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -18920,7 +18920,7 @@ JSBool JSPROXY_CCParticleSystem_batchNode(JSContext *cx, uint32_t argc, jsval *v
 	CCParticleSystem *real = (CCParticleSystem*) [proxy realObj];
 	ret_val = [real batchNode ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -19243,7 +19243,7 @@ JSBool JSPROXY_CCParticleSystem_initWithFile_(JSContext *cx, uint32_t argc, jsva
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
 
 	CCParticleSystem *real = [(CCParticleSystem*)[proxy.klass alloc] initWithFile:(NSString*)arg0  ];
 	[proxy setRealObj: real];
@@ -19362,12 +19362,12 @@ JSBool JSPROXY_CCParticleSystem_particleWithFile__static(JSContext *cx, uint32_t
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
 	CCParticleSystem* ret_val;
 
 	ret_val = [CCParticleSystem particleWithFile:(NSString*)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -19628,7 +19628,7 @@ JSBool JSPROXY_CCParticleSystem_setBatchNode_(JSContext *cx, uint32_t argc, jsva
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; 
 
-	arg0 = (CCParticleBatchNode*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCParticleBatchNode*) jsval_to_nsobject( cx, *argvp++);
 
 	CCParticleSystem *real = (CCParticleSystem*) [proxy realObj];
 	[real setBatchNode:(CCParticleBatchNode*)arg0  ];
@@ -19945,7 +19945,7 @@ JSBool JSPROXY_CCParticleSystem_setGravity_(JSContext *cx, uint32_t argc, jsval 
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGPoint arg0; 
 
-	arg0 = jsval_to_CGPoint( *argvp++, cx );
+	arg0 = jsval_to_CGPoint( cx, *argvp++ );
 
 	CCParticleSystem *real = (CCParticleSystem*) [proxy realObj];
 	[real setGravity:(CGPoint)arg0  ];
@@ -20033,7 +20033,7 @@ JSBool JSPROXY_CCParticleSystem_setPosVar_(JSContext *cx, uint32_t argc, jsval *
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGPoint arg0; 
 
-	arg0 = jsval_to_CGPoint( *argvp++, cx );
+	arg0 = jsval_to_CGPoint( cx, *argvp++ );
 
 	CCParticleSystem *real = (CCParticleSystem*) [proxy realObj];
 	[real setPosVar:(CGPoint)arg0  ];
@@ -20165,7 +20165,7 @@ JSBool JSPROXY_CCParticleSystem_setSourcePosition_(JSContext *cx, uint32_t argc,
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGPoint arg0; 
 
-	arg0 = jsval_to_CGPoint( *argvp++, cx );
+	arg0 = jsval_to_CGPoint( cx, *argvp++ );
 
 	CCParticleSystem *real = (CCParticleSystem*) [proxy realObj];
 	[real setSourcePosition:(CGPoint)arg0  ];
@@ -20457,7 +20457,7 @@ JSBool JSPROXY_CCParticleSystem_setTexture_(JSContext *cx, uint32_t argc, jsval 
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; 
 
-	arg0 = (CCTexture2D*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCTexture2D*) jsval_to_nsobject( cx, *argvp++);
 
 	CCParticleSystem *real = (CCParticleSystem*) [proxy realObj];
 	[real setTexture:(CCTexture2D*)arg0  ];
@@ -20781,7 +20781,7 @@ JSBool JSPROXY_CCParticleSystem_texture(JSContext *cx, uint32_t argc, jsval *vp)
 	CCParticleSystem *real = (CCParticleSystem*) [proxy realObj];
 	ret_val = [real texture ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -20854,7 +20854,7 @@ JSBool JSPROXY_CCParticleSystem_node_static(JSContext *cx, uint32_t argc, jsval 
 
 	ret_val = [CCParticleSystem node ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -21117,8 +21117,8 @@ JSBool JSPROXY_CCMenuItemFont_initWithString_block_(JSContext *cx, uint32_t argc
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; js_block arg1; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
-	arg1 = jsval_to_block( *argvp++, cx, JS_THIS_OBJECT(cx, vp) );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
+	arg1 = jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp) );
 
 	CCMenuItemFont *real = [(CCMenuItemFont*)[proxy.klass alloc] initWithString:(NSString*)arg0 block:(void (^)(id))arg1  ];
 	[proxy setRealObj: real];
@@ -21136,12 +21136,12 @@ JSBool JSPROXY_CCMenuItemFont_itemWithString__static(JSContext *cx, uint32_t arg
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
 	CCMenuItemFont* ret_val;
 
 	ret_val = [CCMenuItemFont itemWithString:(NSString*)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -21154,13 +21154,13 @@ JSBool JSPROXY_CCMenuItemFont_itemWithString_block__static(JSContext *cx, uint32
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; js_block arg1; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
-	arg1 = jsval_to_block( *argvp++, cx, JS_THIS_OBJECT(cx, vp) );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
+	arg1 = jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp) );
 	CCMenuItemFont* ret_val;
 
 	ret_val = [CCMenuItemFont itemWithString:(NSString*)arg0 block:(void (^)(id))arg1  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -21173,7 +21173,7 @@ JSBool JSPROXY_CCMenuItemFont_setFontName__static(JSContext *cx, uint32_t argc, 
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
 
 	[CCMenuItemFont setFontName:(NSString*)arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
@@ -21194,7 +21194,7 @@ JSBool JSPROXY_CCMenuItemFont_setFontName_(JSContext *cx, uint32_t argc, jsval *
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
 
 	CCMenuItemFont *real = (CCMenuItemFont*) [proxy realObj];
 	[real setFontName:(NSString*)arg0  ];
@@ -21245,12 +21245,12 @@ JSBool JSPROXY_CCMenuItemFont_itemWithLabel__static(JSContext *cx, uint32_t argc
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; 
 
-	arg0 = (CCNode*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCNode*) jsval_to_nsobject( cx, *argvp++);
 	CCMenuItemFont* ret_val;
 
 	ret_val = [CCMenuItemFont itemWithLabel:(CCNode*)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -21263,13 +21263,13 @@ JSBool JSPROXY_CCMenuItemFont_itemWithLabel_block__static(JSContext *cx, uint32_
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; js_block arg1; 
 
-	arg0 = (CCNode*) jsval_to_nsobject( *argvp++, cx);
-	arg1 = jsval_to_block( *argvp++, cx, JS_THIS_OBJECT(cx, vp) );
+	arg0 = (CCNode*) jsval_to_nsobject( cx, *argvp++);
+	arg1 = jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp) );
 	CCMenuItemFont* ret_val;
 
 	ret_val = [CCMenuItemFont itemWithLabel:(CCNode*)arg0 block:(void (^)(id))arg1  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -21282,12 +21282,12 @@ JSBool JSPROXY_CCMenuItemFont_itemWithBlock__static(JSContext *cx, uint32_t argc
 	jsval *argvp = JS_ARGV(cx,vp);
 	js_block arg0; 
 
-	arg0 = jsval_to_block( *argvp++, cx, JS_THIS_OBJECT(cx, vp) );
+	arg0 = jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp) );
 	CCMenuItemFont* ret_val;
 
 	ret_val = [CCMenuItemFont itemWithBlock:(void (^)(id))arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -21301,7 +21301,7 @@ JSBool JSPROXY_CCMenuItemFont_node_static(JSContext *cx, uint32_t argc, jsval *v
 
 	ret_val = [CCMenuItemFont node ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -21413,7 +21413,7 @@ JSBool JSPROXY_CCTargetedAction_actionWithDuration__static(JSContext *cx, uint32
 
 	ret_val = [CCTargetedAction actionWithDuration:(ccTime)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -21427,7 +21427,7 @@ JSBool JSPROXY_CCTargetedAction_action_static(JSContext *cx, uint32_t argc, jsva
 
 	ret_val = [CCTargetedAction action ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -21528,7 +21528,7 @@ JSBool JSPROXY_CCSkewTo_actionWithDuration_skewX_skewY__static(JSContext *cx, ui
 
 	ret_val = [CCSkewTo actionWithDuration:(ccTime)arg0 skewX:(float)arg1 skewY:(float)arg2  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -21573,7 +21573,7 @@ JSBool JSPROXY_CCSkewTo_actionWithDuration__static(JSContext *cx, uint32_t argc,
 
 	ret_val = [CCSkewTo actionWithDuration:(ccTime)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -21587,7 +21587,7 @@ JSBool JSPROXY_CCSkewTo_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	ret_val = [CCSkewTo action ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -21717,7 +21717,7 @@ JSBool JSPROXY_CCSkewBy_actionWithDuration_skewX_skewY__static(JSContext *cx, ui
 
 	ret_val = [CCSkewBy actionWithDuration:(ccTime)arg0 skewX:(float)arg1 skewY:(float)arg2  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -21735,7 +21735,7 @@ JSBool JSPROXY_CCSkewBy_actionWithDuration__static(JSContext *cx, uint32_t argc,
 
 	ret_val = [CCSkewBy actionWithDuration:(ccTime)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -21749,7 +21749,7 @@ JSBool JSPROXY_CCSkewBy_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	ret_val = [CCSkewBy action ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -21845,13 +21845,13 @@ JSBool JSPROXY_CCSpawn_actionOne_two__static(JSContext *cx, uint32_t argc, jsval
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; id arg1; 
 
-	arg0 = (CCFiniteTimeAction*) jsval_to_nsobject( *argvp++, cx);
-	arg1 = (CCFiniteTimeAction*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCFiniteTimeAction*) jsval_to_nsobject( cx, *argvp++);
+	arg1 = (CCFiniteTimeAction*) jsval_to_nsobject( cx, *argvp++);
 	CCSpawn* ret_val;
 
 	ret_val = [CCSpawn actionOne:(CCFiniteTimeAction*)arg0 two:(CCFiniteTimeAction*)arg1  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -21869,7 +21869,7 @@ JSBool JSPROXY_CCSpawn_actionWithArray__static(JSContext *cx, uint32_t argc, jsv
 
 	ret_val = [CCSpawn actionWithArray:(NSArray*)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -21889,8 +21889,8 @@ JSBool JSPROXY_CCSpawn_initOne_two_(JSContext *cx, uint32_t argc, jsval *vp) {
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; id arg1; 
 
-	arg0 = (CCFiniteTimeAction*) jsval_to_nsobject( *argvp++, cx);
-	arg1 = (CCFiniteTimeAction*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCFiniteTimeAction*) jsval_to_nsobject( cx, *argvp++);
+	arg1 = (CCFiniteTimeAction*) jsval_to_nsobject( cx, *argvp++);
 
 	CCSpawn *real = [(CCSpawn*)[proxy.klass alloc] initOne:(CCFiniteTimeAction*)arg0 two:(CCFiniteTimeAction*)arg1  ];
 	[proxy setRealObj: real];
@@ -21913,7 +21913,7 @@ JSBool JSPROXY_CCSpawn_actionWithDuration__static(JSContext *cx, uint32_t argc, 
 
 	ret_val = [CCSpawn actionWithDuration:(ccTime)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -21927,7 +21927,7 @@ JSBool JSPROXY_CCSpawn_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	ret_val = [CCSpawn action ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -22062,7 +22062,7 @@ JSBool JSPROXY_CCMotionStreak_initWithFade_minSeg_width_color_texture_(JSContext
 	JSObject *tmp_arg3;
 	JS_ValueToObject( cx, *argvp++, &tmp_arg3 );
 	arg3 = *(ccColor3B*)JS_GetTypedArrayData( tmp_arg3);
-	arg4 = (CCTexture2D*) jsval_to_nsobject( *argvp++, cx);
+	arg4 = (CCTexture2D*) jsval_to_nsobject( cx, *argvp++);
 
 	CCMotionStreak *real = [(CCMotionStreak*)[proxy.klass alloc] initWithFade:(float)arg0 minSeg:(float)arg1 width:(float)arg2 color:(ccColor3B)arg3 texture:(CCTexture2D*)arg4  ];
 	[proxy setRealObj: real];
@@ -22094,7 +22094,7 @@ JSBool JSPROXY_CCMotionStreak_initWithFade_minSeg_width_color_textureFilename_(J
 	JSObject *tmp_arg3;
 	JS_ValueToObject( cx, *argvp++, &tmp_arg3 );
 	arg3 = *(ccColor3B*)JS_GetTypedArrayData( tmp_arg3);
-	arg4 = jsval_to_nsstring( *argvp++, cx );
+	arg4 = jsval_to_nsstring( cx, *argvp++ );
 
 	CCMotionStreak *real = [(CCMotionStreak*)[proxy.klass alloc] initWithFade:(float)arg0 minSeg:(float)arg1 width:(float)arg2 color:(ccColor3B)arg3 textureFilename:(NSString*)arg4  ];
 	[proxy setRealObj: real];
@@ -22203,7 +22203,7 @@ JSBool JSPROXY_CCMotionStreak_setTexture_(JSContext *cx, uint32_t argc, jsval *v
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; 
 
-	arg0 = (CCTexture2D*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCTexture2D*) jsval_to_nsobject( cx, *argvp++);
 
 	CCMotionStreak *real = (CCMotionStreak*) [proxy realObj];
 	[real setTexture:(CCTexture2D*)arg0  ];
@@ -22225,12 +22225,12 @@ JSBool JSPROXY_CCMotionStreak_streakWithFade_minSeg_width_color_texture__static(
 	JSObject *tmp_arg3;
 	JS_ValueToObject( cx, *argvp++, &tmp_arg3 );
 	arg3 = *(ccColor3B*)JS_GetTypedArrayData( tmp_arg3);
-	arg4 = (CCTexture2D*) jsval_to_nsobject( *argvp++, cx);
+	arg4 = (CCTexture2D*) jsval_to_nsobject( cx, *argvp++);
 	CCMotionStreak* ret_val;
 
 	ret_val = [CCMotionStreak streakWithFade:(float)arg0 minSeg:(float)arg1 width:(float)arg2 color:(ccColor3B)arg3 texture:(CCTexture2D*)arg4  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -22250,12 +22250,12 @@ JSBool JSPROXY_CCMotionStreak_streakWithFade_minSeg_width_color_textureFilename_
 	JSObject *tmp_arg3;
 	JS_ValueToObject( cx, *argvp++, &tmp_arg3 );
 	arg3 = *(ccColor3B*)JS_GetTypedArrayData( tmp_arg3);
-	arg4 = jsval_to_nsstring( *argvp++, cx );
+	arg4 = jsval_to_nsstring( cx, *argvp++ );
 	CCMotionStreak* ret_val;
 
 	ret_val = [CCMotionStreak streakWithFade:(float)arg0 minSeg:(float)arg1 width:(float)arg2 color:(ccColor3B)arg3 textureFilename:(NSString*)arg4  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -22277,7 +22277,7 @@ JSBool JSPROXY_CCMotionStreak_texture(JSContext *cx, uint32_t argc, jsval *vp) {
 	CCMotionStreak *real = (CCMotionStreak*) [proxy realObj];
 	ret_val = [real texture ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -22447,7 +22447,7 @@ JSBool JSPROXY_CCMotionStreak_node_static(JSContext *cx, uint32_t argc, jsval *v
 
 	ret_val = [CCMotionStreak node ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -22667,7 +22667,7 @@ JSBool JSPROXY_CCLayerGradient_initWithColor_fadingTo_alongVector_(JSContext *cx
 	JSObject *tmp_arg1;
 	JS_ValueToObject( cx, *argvp++, &tmp_arg1 );
 	arg1 = *(ccColor4B*)JS_GetTypedArrayData( tmp_arg1);
-	arg2 = jsval_to_CGPoint( *argvp++, cx );
+	arg2 = jsval_to_CGPoint( cx, *argvp++ );
 
 	CCLayerGradient *real = [(CCLayerGradient*)[proxy.klass alloc] initWithColor:(ccColor4B)arg0 fadingTo:(ccColor4B)arg1 alongVector:(CGPoint)arg2  ];
 	[proxy setRealObj: real];
@@ -22697,7 +22697,7 @@ JSBool JSPROXY_CCLayerGradient_layerWithColor_fadingTo__static(JSContext *cx, ui
 
 	ret_val = [CCLayerGradient layerWithColor:(ccColor4B)arg0 fadingTo:(ccColor4B)arg1  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -22718,12 +22718,12 @@ JSBool JSPROXY_CCLayerGradient_layerWithColor_fadingTo_alongVector__static(JSCon
 	JSObject *tmp_arg1;
 	JS_ValueToObject( cx, *argvp++, &tmp_arg1 );
 	arg1 = *(ccColor4B*)JS_GetTypedArrayData( tmp_arg1);
-	arg2 = jsval_to_CGPoint( *argvp++, cx );
+	arg2 = jsval_to_CGPoint( cx, *argvp++ );
 	CCLayerGradient* ret_val;
 
 	ret_val = [CCLayerGradient layerWithColor:(ccColor4B)arg0 fadingTo:(ccColor4B)arg1 alongVector:(CGPoint)arg2  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -22859,7 +22859,7 @@ JSBool JSPROXY_CCLayerGradient_setVector_(JSContext *cx, uint32_t argc, jsval *v
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGPoint arg0; 
 
-	arg0 = jsval_to_CGPoint( *argvp++, cx );
+	arg0 = jsval_to_CGPoint( cx, *argvp++ );
 
 	CCLayerGradient *real = (CCLayerGradient*) [proxy realObj];
 	[real setVector:(CGPoint)arg0  ];
@@ -22947,7 +22947,7 @@ JSBool JSPROXY_CCLayerGradient_layerWithColor__static(JSContext *cx, uint32_t ar
 
 	ret_val = [CCLayerGradient layerWithColor:(ccColor4B)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -22970,7 +22970,7 @@ JSBool JSPROXY_CCLayerGradient_layerWithColor_width_height__static(JSContext *cx
 
 	ret_val = [CCLayerGradient layerWithColor:(ccColor4B)arg0 width:(GLfloat)arg1 height:(GLfloat)arg2  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -22984,7 +22984,7 @@ JSBool JSPROXY_CCLayerGradient_node_static(JSContext *cx, uint32_t argc, jsval *
 
 	ret_val = [CCLayerGradient node ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -23118,7 +23118,7 @@ JSBool JSPROXY_CCToggleVisibility_action_static(JSContext *cx, uint32_t argc, js
 
 	ret_val = [CCToggleVisibility action ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -23220,7 +23220,7 @@ JSBool JSPROXY_CCTransitionFade_initWithDuration_scene_withColor_(JSContext *cx,
 	double arg0; id arg1; ccColor3B arg2; 
 
 	JS_ValueToNumber( cx, *argvp++, &arg0 );
-	arg1 = (CCScene*) jsval_to_nsobject( *argvp++, cx);
+	arg1 = (CCScene*) jsval_to_nsobject( cx, *argvp++);
 
 	JSObject *tmp_arg2;
 	JS_ValueToObject( cx, *argvp++, &tmp_arg2 );
@@ -23243,7 +23243,7 @@ JSBool JSPROXY_CCTransitionFade_transitionWithDuration_scene_withColor__static(J
 	double arg0; id arg1; ccColor3B arg2; 
 
 	JS_ValueToNumber( cx, *argvp++, &arg0 );
-	arg1 = (CCScene*) jsval_to_nsobject( *argvp++, cx);
+	arg1 = (CCScene*) jsval_to_nsobject( cx, *argvp++);
 
 	JSObject *tmp_arg2;
 	JS_ValueToObject( cx, *argvp++, &tmp_arg2 );
@@ -23252,7 +23252,7 @@ JSBool JSPROXY_CCTransitionFade_transitionWithDuration_scene_withColor__static(J
 
 	ret_val = [CCTransitionFade transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1 withColor:(ccColor3B)arg2  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -23266,12 +23266,12 @@ JSBool JSPROXY_CCTransitionFade_transitionWithDuration_scene__static(JSContext *
 	double arg0; id arg1; 
 
 	JS_ValueToNumber( cx, *argvp++, &arg0 );
-	arg1 = (CCScene*) jsval_to_nsobject( *argvp++, cx);
+	arg1 = (CCScene*) jsval_to_nsobject( cx, *argvp++);
 	CCTransitionFade* ret_val;
 
 	ret_val = [CCTransitionFade transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -23285,7 +23285,7 @@ JSBool JSPROXY_CCTransitionFade_node_static(JSContext *cx, uint32_t argc, jsval 
 
 	ret_val = [CCTransitionFade node ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -23406,7 +23406,7 @@ JSBool JSPROXY_CCParticleSystemQuad_initTexCoordsWithRect_(JSContext *cx, uint32
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGRect arg0; 
 
-	arg0 = jsval_to_CGRect( *argvp++, cx );
+	arg0 = jsval_to_CGRect( cx, *argvp++ );
 
 	CCParticleSystemQuad *real = (CCParticleSystemQuad*) [proxy realObj];
 	[real initTexCoordsWithRect:(CGRect)arg0  ];
@@ -23428,7 +23428,7 @@ JSBool JSPROXY_CCParticleSystemQuad_setDisplayFrame_(JSContext *cx, uint32_t arg
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; 
 
-	arg0 = (CCSpriteFrame*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCSpriteFrame*) jsval_to_nsobject( cx, *argvp++);
 
 	CCParticleSystemQuad *real = (CCParticleSystemQuad*) [proxy realObj];
 	[real setDisplayFrame:(CCSpriteFrame*)arg0  ];
@@ -23450,8 +23450,8 @@ JSBool JSPROXY_CCParticleSystemQuad_setTexture_withRect_(JSContext *cx, uint32_t
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; CGRect arg1; 
 
-	arg0 = (CCTexture2D*) jsval_to_nsobject( *argvp++, cx);
-	arg1 = jsval_to_CGRect( *argvp++, cx );
+	arg0 = (CCTexture2D*) jsval_to_nsobject( cx, *argvp++);
+	arg1 = jsval_to_CGRect( cx, *argvp++ );
 
 	CCParticleSystemQuad *real = (CCParticleSystemQuad*) [proxy realObj];
 	[real setTexture:(CCTexture2D*)arg0 withRect:(CGRect)arg1  ];
@@ -23466,12 +23466,12 @@ JSBool JSPROXY_CCParticleSystemQuad_particleWithFile__static(JSContext *cx, uint
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
 	CCParticleSystemQuad* ret_val;
 
 	ret_val = [CCParticleSystemQuad particleWithFile:(NSString*)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -23485,7 +23485,7 @@ JSBool JSPROXY_CCParticleSystemQuad_node_static(JSContext *cx, uint32_t argc, js
 
 	ret_val = [CCParticleSystemQuad node ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -23583,12 +23583,12 @@ JSBool JSPROXY_CCPlace_actionWithPosition__static(JSContext *cx, uint32_t argc, 
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGPoint arg0; 
 
-	arg0 = jsval_to_CGPoint( *argvp++, cx );
+	arg0 = jsval_to_CGPoint( cx, *argvp++ );
 	CCPlace* ret_val;
 
 	ret_val = [CCPlace actionWithPosition:(CGPoint)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -23608,7 +23608,7 @@ JSBool JSPROXY_CCPlace_initWithPosition_(JSContext *cx, uint32_t argc, jsval *vp
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGPoint arg0; 
 
-	arg0 = jsval_to_CGPoint( *argvp++, cx );
+	arg0 = jsval_to_CGPoint( cx, *argvp++ );
 
 	CCPlace *real = [(CCPlace*)[proxy.klass alloc] initWithPosition:(CGPoint)arg0  ];
 	[proxy setRealObj: real];
@@ -23627,7 +23627,7 @@ JSBool JSPROXY_CCPlace_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	ret_val = [CCPlace action ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -23723,12 +23723,12 @@ JSBool JSPROXY_CCCatmullRomTo_actionWithDuration_points__static(JSContext *cx, u
 	double arg0; id arg1; 
 
 	JS_ValueToNumber( cx, *argvp++, &arg0 );
-	arg1 = (CCPointArray*) jsval_to_nsobject( *argvp++, cx);
+	arg1 = (CCPointArray*) jsval_to_nsobject( cx, *argvp++);
 	CCCatmullRomTo* ret_val;
 
 	ret_val = [CCCatmullRomTo actionWithDuration:(ccTime)arg0 points:(CCPointArray*)arg1  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -23749,7 +23749,7 @@ JSBool JSPROXY_CCCatmullRomTo_initWithDuration_points_(JSContext *cx, uint32_t a
 	double arg0; id arg1; 
 
 	JS_ValueToNumber( cx, *argvp++, &arg0 );
-	arg1 = (CCPointArray*) jsval_to_nsobject( *argvp++, cx);
+	arg1 = (CCPointArray*) jsval_to_nsobject( cx, *argvp++);
 
 	CCCatmullRomTo *real = [(CCCatmullRomTo*)[proxy.klass alloc] initWithDuration:(ccTime)arg0 points:(CCPointArray*)arg1  ];
 	[proxy setRealObj: real];
@@ -23768,13 +23768,13 @@ JSBool JSPROXY_CCCatmullRomTo_actionWithDuration_points_tension__static(JSContex
 	double arg0; id arg1; double arg2; 
 
 	JS_ValueToNumber( cx, *argvp++, &arg0 );
-	arg1 = (CCPointArray*) jsval_to_nsobject( *argvp++, cx);
+	arg1 = (CCPointArray*) jsval_to_nsobject( cx, *argvp++);
 	JS_ValueToNumber( cx, *argvp++, &arg2 );
 	CCCatmullRomTo* ret_val;
 
 	ret_val = [CCCatmullRomTo actionWithDuration:(ccTime)arg0 points:(CCPointArray*)arg1 tension:(CGFloat)arg2  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -23792,7 +23792,7 @@ JSBool JSPROXY_CCCatmullRomTo_actionWithDuration__static(JSContext *cx, uint32_t
 
 	ret_val = [CCCatmullRomTo actionWithDuration:(ccTime)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -23806,7 +23806,7 @@ JSBool JSPROXY_CCCatmullRomTo_action_static(JSContext *cx, uint32_t argc, jsval 
 
 	ret_val = [CCCatmullRomTo action ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -24180,8 +24180,8 @@ JSBool JSPROXY_CCLabelBMFont_initWithString_fntFile_(JSContext *cx, uint32_t arg
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; NSString* arg1; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
-	arg1 = jsval_to_nsstring( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
+	arg1 = jsval_to_nsstring( cx, *argvp++ );
 
 	CCLabelBMFont *real = [(CCLabelBMFont*)[proxy.klass alloc] initWithString:(NSString*)arg0 fntFile:(NSString*)arg1  ];
 	[proxy setRealObj: real];
@@ -24206,8 +24206,8 @@ JSBool JSPROXY_CCLabelBMFont_initWithString_fntFile_width_alignment_(JSContext *
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; NSString* arg1; double arg2; int32_t arg3; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
-	arg1 = jsval_to_nsstring( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
+	arg1 = jsval_to_nsstring( cx, *argvp++ );
 	JS_ValueToNumber( cx, *argvp++, &arg2 );
 	JS_ValueToECMAInt32( cx, *argvp++, &arg3 );
 
@@ -24234,11 +24234,11 @@ JSBool JSPROXY_CCLabelBMFont_initWithString_fntFile_width_alignment_imageOffset_
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; NSString* arg1; double arg2; int32_t arg3; CGPoint arg4; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
-	arg1 = jsval_to_nsstring( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
+	arg1 = jsval_to_nsstring( cx, *argvp++ );
 	JS_ValueToNumber( cx, *argvp++, &arg2 );
 	JS_ValueToECMAInt32( cx, *argvp++, &arg3 );
-	arg4 = jsval_to_CGPoint( *argvp++, cx );
+	arg4 = jsval_to_CGPoint( cx, *argvp++ );
 
 	CCLabelBMFont *real = [(CCLabelBMFont*)[proxy.klass alloc] initWithString:(NSString*)arg0 fntFile:(NSString*)arg1 width:(float)arg2 alignment:(CCTextAlignment)arg3 imageOffset:(CGPoint)arg4  ];
 	[proxy setRealObj: real];
@@ -24256,13 +24256,13 @@ JSBool JSPROXY_CCLabelBMFont_labelWithString_fntFile__static(JSContext *cx, uint
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; NSString* arg1; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
-	arg1 = jsval_to_nsstring( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
+	arg1 = jsval_to_nsstring( cx, *argvp++ );
 	CCLabelBMFont* ret_val;
 
 	ret_val = [CCLabelBMFont labelWithString:(NSString*)arg0 fntFile:(NSString*)arg1  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -24275,15 +24275,15 @@ JSBool JSPROXY_CCLabelBMFont_labelWithString_fntFile_width_alignment__static(JSC
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; NSString* arg1; double arg2; int32_t arg3; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
-	arg1 = jsval_to_nsstring( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
+	arg1 = jsval_to_nsstring( cx, *argvp++ );
 	JS_ValueToNumber( cx, *argvp++, &arg2 );
 	JS_ValueToECMAInt32( cx, *argvp++, &arg3 );
 	CCLabelBMFont* ret_val;
 
 	ret_val = [CCLabelBMFont labelWithString:(NSString*)arg0 fntFile:(NSString*)arg1 width:(float)arg2 alignment:(CCTextAlignment)arg3  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -24296,16 +24296,16 @@ JSBool JSPROXY_CCLabelBMFont_labelWithString_fntFile_width_alignment_imageOffset
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; NSString* arg1; double arg2; int32_t arg3; CGPoint arg4; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
-	arg1 = jsval_to_nsstring( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
+	arg1 = jsval_to_nsstring( cx, *argvp++ );
 	JS_ValueToNumber( cx, *argvp++, &arg2 );
 	JS_ValueToECMAInt32( cx, *argvp++, &arg3 );
-	arg4 = jsval_to_CGPoint( *argvp++, cx );
+	arg4 = jsval_to_CGPoint( cx, *argvp++ );
 	CCLabelBMFont* ret_val;
 
 	ret_val = [CCLabelBMFont labelWithString:(NSString*)arg0 fntFile:(NSString*)arg1 width:(float)arg2 alignment:(CCTextAlignment)arg3 imageOffset:(CGPoint)arg4  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -24401,7 +24401,7 @@ JSBool JSPROXY_CCLabelBMFont_setFntFile_(JSContext *cx, uint32_t argc, jsval *vp
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
 
 	CCLabelBMFont *real = (CCLabelBMFont*) [proxy realObj];
 	[real setFntFile:(NSString*)arg0  ];
@@ -24467,7 +24467,7 @@ JSBool JSPROXY_CCLabelBMFont_setString_(JSContext *cx, uint32_t argc, jsval *vp)
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
 
 	CCLabelBMFont *real = (CCLabelBMFont*) [proxy realObj];
 	[real setString:(NSString*)arg0  ];
@@ -24545,12 +24545,12 @@ JSBool JSPROXY_CCLabelBMFont_batchNodeWithFile__static(JSContext *cx, uint32_t a
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
 	CCLabelBMFont* ret_val;
 
 	ret_val = [CCLabelBMFont batchNodeWithFile:(NSString*)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -24563,13 +24563,13 @@ JSBool JSPROXY_CCLabelBMFont_batchNodeWithFile_capacity__static(JSContext *cx, u
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; uint32_t arg1; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
 	JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
 	CCLabelBMFont* ret_val;
 
 	ret_val = [CCLabelBMFont batchNodeWithFile:(NSString*)arg0 capacity:(NSUInteger)arg1  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -24582,12 +24582,12 @@ JSBool JSPROXY_CCLabelBMFont_batchNodeWithTexture__static(JSContext *cx, uint32_
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; 
 
-	arg0 = (CCTexture2D*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCTexture2D*) jsval_to_nsobject( cx, *argvp++);
 	CCLabelBMFont* ret_val;
 
 	ret_val = [CCLabelBMFont batchNodeWithTexture:(CCTexture2D*)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -24600,13 +24600,13 @@ JSBool JSPROXY_CCLabelBMFont_batchNodeWithTexture_capacity__static(JSContext *cx
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; uint32_t arg1; 
 
-	arg0 = (CCTexture2D*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCTexture2D*) jsval_to_nsobject( cx, *argvp++);
 	JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
 	CCLabelBMFont* ret_val;
 
 	ret_val = [CCLabelBMFont batchNodeWithTexture:(CCTexture2D*)arg0 capacity:(NSUInteger)arg1  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -24620,7 +24620,7 @@ JSBool JSPROXY_CCLabelBMFont_node_static(JSContext *cx, uint32_t argc, jsval *vp
 
 	ret_val = [CCLabelBMFont node ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -24868,7 +24868,7 @@ JSBool JSPROXY_CCMenu_initWithArray_(JSContext *cx, uint32_t argc, jsval *vp) {
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSArray* arg0; 
 
-	arg0 = jsval_to_nsarray( *argvp++, cx );
+	arg0 = jsval_to_nsarray( cx, *argvp++ );
 
 	CCMenu *real = [(CCMenu*)[proxy.klass alloc] initWithArray:(NSArray*)arg0  ];
 	[proxy setRealObj: real];
@@ -24891,7 +24891,7 @@ JSBool JSPROXY_CCMenu_menuWithArray__static(JSContext *cx, uint32_t argc, jsval 
 
 	ret_val = [CCMenu menuWithArray:(NSArray*)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -25056,7 +25056,7 @@ JSBool JSPROXY_CCMenu_node_static(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	ret_val = [CCMenu node ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -25164,12 +25164,12 @@ JSBool JSPROXY_CCActionEase_actionWithAction__static(JSContext *cx, uint32_t arg
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; 
 
-	arg0 = (CCActionInterval*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCActionInterval*) jsval_to_nsobject( cx, *argvp++);
 	CCActionEase* ret_val;
 
 	ret_val = [CCActionEase actionWithAction:(CCActionInterval*)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -25189,7 +25189,7 @@ JSBool JSPROXY_CCActionEase_initWithAction_(JSContext *cx, uint32_t argc, jsval 
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; 
 
-	arg0 = (CCActionInterval*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCActionInterval*) jsval_to_nsobject( cx, *argvp++);
 
 	CCActionEase *real = [(CCActionEase*)[proxy.klass alloc] initWithAction:(CCActionInterval*)arg0  ];
 	[proxy setRealObj: real];
@@ -25212,7 +25212,7 @@ JSBool JSPROXY_CCActionEase_actionWithDuration__static(JSContext *cx, uint32_t a
 
 	ret_val = [CCActionEase actionWithDuration:(ccTime)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -25226,7 +25226,7 @@ JSBool JSPROXY_CCActionEase_action_static(JSContext *cx, uint32_t argc, jsval *v
 
 	ret_val = [CCActionEase action ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -25331,7 +25331,7 @@ JSBool JSPROXY_CCDirector_actionManager(JSContext *cx, uint32_t argc, jsval *vp)
 	CCDirector *real = (CCDirector*) [proxy realObj];
 	ret_val = [real actionManager ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -25370,7 +25370,7 @@ JSBool JSPROXY_CCDirector_convertToGL_(JSContext *cx, uint32_t argc, jsval *vp) 
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGPoint arg0; 
 
-	arg0 = jsval_to_CGPoint( *argvp++, cx );
+	arg0 = jsval_to_CGPoint( cx, *argvp++ );
 	CGPoint ret_val;
 
 	CCDirector *real = (CCDirector*) [proxy realObj];
@@ -25396,7 +25396,7 @@ JSBool JSPROXY_CCDirector_convertToUI_(JSContext *cx, uint32_t argc, jsval *vp) 
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGPoint arg0; 
 
-	arg0 = jsval_to_CGPoint( *argvp++, cx );
+	arg0 = jsval_to_CGPoint( cx, *argvp++ );
 	CGPoint ret_val;
 
 	CCDirector *real = (CCDirector*) [proxy realObj];
@@ -25497,7 +25497,7 @@ JSBool JSPROXY_CCDirector_eventDispatcher(JSContext *cx, uint32_t argc, jsval *v
 	CCDirector *real = (CCDirector*) [proxy realObj];
 	ret_val = [real eventDispatcher ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -25684,7 +25684,7 @@ JSBool JSPROXY_CCDirector_pushScene_(JSContext *cx, uint32_t argc, jsval *vp) {
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; 
 
-	arg0 = (CCScene*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCScene*) jsval_to_nsobject( cx, *argvp++);
 
 	CCDirector *real = (CCDirector*) [proxy realObj];
 	[real pushScene:(CCScene*)arg0  ];
@@ -25706,7 +25706,7 @@ JSBool JSPROXY_CCDirector_replaceScene_(JSContext *cx, uint32_t argc, jsval *vp)
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; 
 
-	arg0 = (CCScene*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCScene*) jsval_to_nsobject( cx, *argvp++);
 
 	CCDirector *real = (CCDirector*) [proxy realObj];
 	[real replaceScene:(CCScene*)arg0  ];
@@ -25728,7 +25728,7 @@ JSBool JSPROXY_CCDirector_reshapeProjection_(JSContext *cx, uint32_t argc, jsval
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGSize arg0; 
 
-	arg0 = jsval_to_CGSize( *argvp++, cx );
+	arg0 = jsval_to_CGSize( cx, *argvp++ );
 
 	CCDirector *real = (CCDirector*) [proxy realObj];
 	[real reshapeProjection:(CGSize)arg0  ];
@@ -25768,7 +25768,7 @@ JSBool JSPROXY_CCDirector_runWithScene_(JSContext *cx, uint32_t argc, jsval *vp)
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; 
 
-	arg0 = (CCScene*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCScene*) jsval_to_nsobject( cx, *argvp++);
 
 	CCDirector *real = (CCDirector*) [proxy realObj];
 	[real runWithScene:(CCScene*)arg0  ];
@@ -25792,7 +25792,7 @@ JSBool JSPROXY_CCDirector_runningScene(JSContext *cx, uint32_t argc, jsval *vp) 
 	CCDirector *real = (CCDirector*) [proxy realObj];
 	ret_val = [real runningScene ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -25814,7 +25814,7 @@ JSBool JSPROXY_CCDirector_scheduler(JSContext *cx, uint32_t argc, jsval *vp) {
 	CCDirector *real = (CCDirector*) [proxy realObj];
 	ret_val = [real scheduler ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -25872,7 +25872,7 @@ JSBool JSPROXY_CCDirector_setActionManager_(JSContext *cx, uint32_t argc, jsval 
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; 
 
-	arg0 = (CCActionManager*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCActionManager*) jsval_to_nsobject( cx, *argvp++);
 
 	CCDirector *real = (CCDirector*) [proxy realObj];
 	[real setActionManager:(CCActionManager*)arg0  ];
@@ -25982,7 +25982,7 @@ JSBool JSPROXY_CCDirector_setEventDispatcher_(JSContext *cx, uint32_t argc, jsva
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; 
 
-	arg0 = (CCEventDispatcher*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCEventDispatcher*) jsval_to_nsobject( cx, *argvp++);
 
 	CCDirector *real = (CCDirector*) [proxy realObj];
 	[real setEventDispatcher:(CCEventDispatcher*)arg0  ];
@@ -26066,7 +26066,7 @@ JSBool JSPROXY_CCDirector_setScheduler_(JSContext *cx, uint32_t argc, jsval *vp)
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; 
 
-	arg0 = (CCScheduler*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCScheduler*) jsval_to_nsobject( cx, *argvp++);
 
 	CCDirector *real = (CCDirector*) [proxy realObj];
 	[real setScheduler:(CCScheduler*)arg0  ];
@@ -26082,7 +26082,7 @@ JSBool JSPROXY_CCDirector_sharedDirector_static(JSContext *cx, uint32_t argc, js
 
 	ret_val = [CCDirector sharedDirector ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -26323,7 +26323,7 @@ JSBool JSPROXY_CCDirectorMac_convertToLogicalCoordinates_(JSContext *cx, uint32_
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGPoint arg0; 
 
-	arg0 = jsval_to_CGPoint( *argvp++, cx );
+	arg0 = jsval_to_CGPoint( cx, *argvp++ );
 	CGPoint ret_val;
 
 	CCDirectorMac *real = (CCDirectorMac*) [proxy realObj];
@@ -26431,7 +26431,7 @@ JSBool JSPROXY_CCDirectorMac_setOriginalWinSize_(JSContext *cx, uint32_t argc, j
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGSize arg0; 
 
-	arg0 = jsval_to_CGSize( *argvp++, cx );
+	arg0 = jsval_to_CGSize( cx, *argvp++ );
 
 	CCDirectorMac *real = (CCDirectorMac*) [proxy realObj];
 	[real setOriginalWinSize:(CGSize)arg0  ];
@@ -26469,7 +26469,7 @@ JSBool JSPROXY_CCDirectorMac_sharedDirector_static(JSContext *cx, uint32_t argc,
 
 	ret_val = [CCDirectorMac sharedDirector ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -26576,8 +26576,8 @@ JSBool JSPROXY_CCLabelAtlas_initWithString_charMapFile_itemWidth_itemHeight_star
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; NSString* arg1; uint32_t arg2; uint32_t arg3; uint32_t arg4; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
-	arg1 = jsval_to_nsstring( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
+	arg1 = jsval_to_nsstring( cx, *argvp++ );
 	JS_ValueToECMAUint32( cx, *argvp++, &arg2 );
 	JS_ValueToECMAUint32( cx, *argvp++, &arg3 );
 	JS_ValueToECMAUint32( cx, *argvp++, &arg4 );
@@ -26605,8 +26605,8 @@ JSBool JSPROXY_CCLabelAtlas_initWithString_fntFile_(JSContext *cx, uint32_t argc
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; NSString* arg1; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
-	arg1 = jsval_to_nsstring( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
+	arg1 = jsval_to_nsstring( cx, *argvp++ );
 
 	CCLabelAtlas *real = [(CCLabelAtlas*)[proxy.klass alloc] initWithString:(NSString*)arg0 fntFile:(NSString*)arg1  ];
 	[proxy setRealObj: real];
@@ -26624,8 +26624,8 @@ JSBool JSPROXY_CCLabelAtlas_labelWithString_charMapFile_itemWidth_itemHeight_sta
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; NSString* arg1; uint32_t arg2; uint32_t arg3; uint32_t arg4; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
-	arg1 = jsval_to_nsstring( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
+	arg1 = jsval_to_nsstring( cx, *argvp++ );
 	JS_ValueToECMAUint32( cx, *argvp++, &arg2 );
 	JS_ValueToECMAUint32( cx, *argvp++, &arg3 );
 	JS_ValueToECMAUint32( cx, *argvp++, &arg4 );
@@ -26633,7 +26633,7 @@ JSBool JSPROXY_CCLabelAtlas_labelWithString_charMapFile_itemWidth_itemHeight_sta
 
 	ret_val = [CCLabelAtlas labelWithString:(NSString*)arg0 charMapFile:(NSString*)arg1 itemWidth:(NSUInteger)arg2 itemHeight:(NSUInteger)arg3 startCharMap:(NSUInteger)arg4  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -26646,13 +26646,13 @@ JSBool JSPROXY_CCLabelAtlas_labelWithString_fntFile__static(JSContext *cx, uint3
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; NSString* arg1; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
-	arg1 = jsval_to_nsstring( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
+	arg1 = jsval_to_nsstring( cx, *argvp++ );
 	CCLabelAtlas* ret_val;
 
 	ret_val = [CCLabelAtlas labelWithString:(NSString*)arg0 fntFile:(NSString*)arg1  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -26672,7 +26672,7 @@ JSBool JSPROXY_CCLabelAtlas_setString_(JSContext *cx, uint32_t argc, jsval *vp) 
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
 
 	CCLabelAtlas *real = (CCLabelAtlas*) [proxy realObj];
 	[real setString:(NSString*)arg0  ];
@@ -26709,7 +26709,7 @@ JSBool JSPROXY_CCLabelAtlas_atlasWithTileFile_tileWidth_tileHeight_itemsToRender
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; uint32_t arg1; uint32_t arg2; uint32_t arg3; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
 	JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
 	JS_ValueToECMAUint32( cx, *argvp++, &arg2 );
 	JS_ValueToECMAUint32( cx, *argvp++, &arg3 );
@@ -26717,7 +26717,7 @@ JSBool JSPROXY_CCLabelAtlas_atlasWithTileFile_tileWidth_tileHeight_itemsToRender
 
 	ret_val = [CCLabelAtlas atlasWithTileFile:(NSString*)arg0 tileWidth:(NSUInteger)arg1 tileHeight:(NSUInteger)arg2 itemsToRender:(NSUInteger)arg3  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -26731,7 +26731,7 @@ JSBool JSPROXY_CCLabelAtlas_node_static(JSContext *cx, uint32_t argc, jsval *vp)
 
 	ret_val = [CCLabelAtlas node ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -26831,12 +26831,12 @@ JSBool JSPROXY_CCFollow_actionWithTarget__static(JSContext *cx, uint32_t argc, j
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; 
 
-	arg0 = (CCNode*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCNode*) jsval_to_nsobject( cx, *argvp++);
 	CCFollow* ret_val;
 
 	ret_val = [CCFollow actionWithTarget:(CCNode*)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -26849,13 +26849,13 @@ JSBool JSPROXY_CCFollow_actionWithTarget_worldBoundary__static(JSContext *cx, ui
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; CGRect arg1; 
 
-	arg0 = (CCNode*) jsval_to_nsobject( *argvp++, cx);
-	arg1 = jsval_to_CGRect( *argvp++, cx );
+	arg0 = (CCNode*) jsval_to_nsobject( cx, *argvp++);
+	arg1 = jsval_to_CGRect( cx, *argvp++ );
 	CCFollow* ret_val;
 
 	ret_val = [CCFollow actionWithTarget:(CCNode*)arg0 worldBoundary:(CGRect)arg1  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -26894,7 +26894,7 @@ JSBool JSPROXY_CCFollow_initWithTarget_(JSContext *cx, uint32_t argc, jsval *vp)
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; 
 
-	arg0 = (CCNode*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCNode*) jsval_to_nsobject( cx, *argvp++);
 
 	CCFollow *real = [(CCFollow*)[proxy.klass alloc] initWithTarget:(CCNode*)arg0  ];
 	[proxy setRealObj: real];
@@ -26919,8 +26919,8 @@ JSBool JSPROXY_CCFollow_initWithTarget_worldBoundary_(JSContext *cx, uint32_t ar
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; CGRect arg1; 
 
-	arg0 = (CCNode*) jsval_to_nsobject( *argvp++, cx);
-	arg1 = jsval_to_CGRect( *argvp++, cx );
+	arg0 = (CCNode*) jsval_to_nsobject( cx, *argvp++);
+	arg1 = jsval_to_CGRect( cx, *argvp++ );
 
 	CCFollow *real = [(CCFollow*)[proxy.klass alloc] initWithTarget:(CCNode*)arg0 worldBoundary:(CGRect)arg1  ];
 	[proxy setRealObj: real];
@@ -26961,7 +26961,7 @@ JSBool JSPROXY_CCFollow_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	ret_val = [CCFollow action ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -27071,7 +27071,7 @@ JSBool JSPROXY_CCOrbitCamera_actionWithDuration_radius_deltaRadius_angleZ_deltaA
 
 	ret_val = [CCOrbitCamera actionWithDuration:(float)arg0 radius:(float)arg1 deltaRadius:(float)arg2 angleZ:(float)arg3 deltaAngleZ:(float)arg4 angleX:(float)arg5 deltaAngleX:(float)arg6  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -27120,7 +27120,7 @@ JSBool JSPROXY_CCOrbitCamera_actionWithDuration__static(JSContext *cx, uint32_t 
 
 	ret_val = [CCOrbitCamera actionWithDuration:(ccTime)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -27134,7 +27134,7 @@ JSBool JSPROXY_CCOrbitCamera_action_static(JSContext *cx, uint32_t argc, jsval *
 
 	ret_val = [CCOrbitCamera action ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -27278,7 +27278,7 @@ JSBool JSPROXY_CCAnimationFrame_setSpriteFrame_(JSContext *cx, uint32_t argc, js
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; 
 
-	arg0 = (CCSpriteFrame*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCSpriteFrame*) jsval_to_nsobject( cx, *argvp++);
 
 	CCAnimationFrame *real = (CCAnimationFrame*) [proxy realObj];
 	[real setSpriteFrame:(CCSpriteFrame*)arg0  ];
@@ -27302,7 +27302,7 @@ JSBool JSPROXY_CCAnimationFrame_spriteFrame(JSContext *cx, uint32_t argc, jsval 
 	CCAnimationFrame *real = (CCAnimationFrame*) [proxy realObj];
 	ret_val = [real spriteFrame ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -27407,7 +27407,7 @@ JSBool JSPROXY_CCTransitionMoveInL_action(JSContext *cx, uint32_t argc, jsval *v
 	CCTransitionMoveInL *real = (CCTransitionMoveInL*) [proxy realObj];
 	ret_val = [real action ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -27445,13 +27445,13 @@ JSBool JSPROXY_CCTransitionMoveInL_easeActionWithAction_(JSContext *cx, uint32_t
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; 
 
-	arg0 = (CCActionInterval*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCActionInterval*) jsval_to_nsobject( cx, *argvp++);
 	CCActionInterval* ret_val;
 
 	CCTransitionMoveInL *real = (CCTransitionMoveInL*) [proxy realObj];
 	ret_val = [real easeActionWithAction:(CCActionInterval*)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -27465,12 +27465,12 @@ JSBool JSPROXY_CCTransitionMoveInL_transitionWithDuration_scene__static(JSContex
 	double arg0; id arg1; 
 
 	JS_ValueToNumber( cx, *argvp++, &arg0 );
-	arg1 = (CCScene*) jsval_to_nsobject( *argvp++, cx);
+	arg1 = (CCScene*) jsval_to_nsobject( cx, *argvp++);
 	CCTransitionMoveInL* ret_val;
 
 	ret_val = [CCTransitionMoveInL transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -27484,7 +27484,7 @@ JSBool JSPROXY_CCTransitionMoveInL_node_static(JSContext *cx, uint32_t argc, jsv
 
 	ret_val = [CCTransitionMoveInL node ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -27588,10 +27588,10 @@ JSBool JSPROXY_CCParallaxNode_addChild_z_parallaxRatio_positionOffset_(JSContext
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; int32_t arg1; CGPoint arg2; CGPoint arg3; 
 
-	arg0 = (CCNode*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCNode*) jsval_to_nsobject( cx, *argvp++);
 	JS_ValueToECMAInt32( cx, *argvp++, &arg1 );
-	arg2 = jsval_to_CGPoint( *argvp++, cx );
-	arg3 = jsval_to_CGPoint( *argvp++, cx );
+	arg2 = jsval_to_CGPoint( cx, *argvp++ );
+	arg3 = jsval_to_CGPoint( cx, *argvp++ );
 
 	CCParallaxNode *real = (CCParallaxNode*) [proxy realObj];
 	[real addChild:(CCNode*)arg0 z:(NSInteger)arg1 parallaxRatio:(CGPoint)arg2 positionOffset:(CGPoint)arg3  ];
@@ -27607,7 +27607,7 @@ JSBool JSPROXY_CCParallaxNode_node_static(JSContext *cx, uint32_t argc, jsval *v
 
 	ret_val = [CCParallaxNode node ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -27701,13 +27701,13 @@ JSBool JSPROXY_CCEaseElastic_actionWithAction_period__static(JSContext *cx, uint
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; double arg1; 
 
-	arg0 = (CCActionInterval*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCActionInterval*) jsval_to_nsobject( cx, *argvp++);
 	JS_ValueToNumber( cx, *argvp++, &arg1 );
 	CCEaseElastic* ret_val;
 
 	ret_val = [CCEaseElastic actionWithAction:(CCActionInterval*)arg0 period:(float)arg1  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -27727,7 +27727,7 @@ JSBool JSPROXY_CCEaseElastic_initWithAction_period_(JSContext *cx, uint32_t argc
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; double arg1; 
 
-	arg0 = (CCActionInterval*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCActionInterval*) jsval_to_nsobject( cx, *argvp++);
 	JS_ValueToNumber( cx, *argvp++, &arg1 );
 
 	CCEaseElastic *real = [(CCEaseElastic*)[proxy.klass alloc] initWithAction:(CCActionInterval*)arg0 period:(float)arg1  ];
@@ -27787,12 +27787,12 @@ JSBool JSPROXY_CCEaseElastic_actionWithAction__static(JSContext *cx, uint32_t ar
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; 
 
-	arg0 = (CCActionInterval*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCActionInterval*) jsval_to_nsobject( cx, *argvp++);
 	CCEaseElastic* ret_val;
 
 	ret_val = [CCEaseElastic actionWithAction:(CCActionInterval*)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -27810,7 +27810,7 @@ JSBool JSPROXY_CCEaseElastic_actionWithDuration__static(JSContext *cx, uint32_t 
 
 	ret_val = [CCEaseElastic actionWithDuration:(ccTime)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -27824,7 +27824,7 @@ JSBool JSPROXY_CCEaseElastic_action_static(JSContext *cx, uint32_t argc, jsval *
 
 	ret_val = [CCEaseElastic action ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -27934,7 +27934,7 @@ JSBool JSPROXY_CCShatteredTiles3D_actionWithRange_shatterZ_grid_duration__static
 
 	ret_val = [CCShatteredTiles3D actionWithRange:(int)arg0 shatterZ:(BOOL)arg1 grid:(ccGridSize)arg2 duration:(ccTime)arg3  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -27987,7 +27987,7 @@ JSBool JSPROXY_CCShatteredTiles3D_actionWithSize_duration__static(JSContext *cx,
 
 	ret_val = [CCShatteredTiles3D actionWithSize:(ccGridSize)arg0 duration:(ccTime)arg1  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -28005,7 +28005,7 @@ JSBool JSPROXY_CCShatteredTiles3D_actionWithDuration__static(JSContext *cx, uint
 
 	ret_val = [CCShatteredTiles3D actionWithDuration:(ccTime)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -28019,7 +28019,7 @@ JSBool JSPROXY_CCShatteredTiles3D_action_static(JSContext *cx, uint32_t argc, js
 
 	ret_val = [CCShatteredTiles3D action ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -28216,7 +28216,7 @@ JSBool JSPROXY_CCGrid3DAction_actionWithSize_duration__static(JSContext *cx, uin
 
 	ret_val = [CCGrid3DAction actionWithSize:(ccGridSize)arg0 duration:(ccTime)arg1  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -28234,7 +28234,7 @@ JSBool JSPROXY_CCGrid3DAction_actionWithDuration__static(JSContext *cx, uint32_t
 
 	ret_val = [CCGrid3DAction actionWithDuration:(ccTime)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -28248,7 +28248,7 @@ JSBool JSPROXY_CCGrid3DAction_action_static(JSContext *cx, uint32_t argc, jsval 
 
 	ret_val = [CCGrid3DAction action ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -28357,7 +28357,7 @@ JSBool JSPROXY_CCLiquid_actionWithWaves_amplitude_grid_duration__static(JSContex
 
 	ret_val = [CCLiquid actionWithWaves:(int)arg0 amplitude:(float)arg1 grid:(ccGridSize)arg2 duration:(ccTime)arg3  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -28492,7 +28492,7 @@ JSBool JSPROXY_CCLiquid_actionWithSize_duration__static(JSContext *cx, uint32_t 
 
 	ret_val = [CCLiquid actionWithSize:(ccGridSize)arg0 duration:(ccTime)arg1  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -28510,7 +28510,7 @@ JSBool JSPROXY_CCLiquid_actionWithDuration__static(JSContext *cx, uint32_t argc,
 
 	ret_val = [CCLiquid actionWithDuration:(ccTime)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -28524,7 +28524,7 @@ JSBool JSPROXY_CCLiquid_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	ret_val = [CCLiquid action ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -28625,13 +28625,13 @@ JSBool JSPROXY_CCSpriteFrame_frameWithTexture_rect__static(JSContext *cx, uint32
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; CGRect arg1; 
 
-	arg0 = (CCTexture2D*) jsval_to_nsobject( *argvp++, cx);
-	arg1 = jsval_to_CGRect( *argvp++, cx );
+	arg0 = (CCTexture2D*) jsval_to_nsobject( cx, *argvp++);
+	arg1 = jsval_to_CGRect( cx, *argvp++ );
 	CCSpriteFrame* ret_val;
 
 	ret_val = [CCSpriteFrame frameWithTexture:(CCTexture2D*)arg0 rect:(CGRect)arg1  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -28644,16 +28644,16 @@ JSBool JSPROXY_CCSpriteFrame_frameWithTexture_rectInPixels_rotated_offset_origin
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; CGRect arg1; JSBool arg2; CGPoint arg3; CGSize arg4; 
 
-	arg0 = (CCTexture2D*) jsval_to_nsobject( *argvp++, cx);
-	arg1 = jsval_to_CGRect( *argvp++, cx );
+	arg0 = (CCTexture2D*) jsval_to_nsobject( cx, *argvp++);
+	arg1 = jsval_to_CGRect( cx, *argvp++ );
 	JS_ValueToBoolean( cx, *argvp++, &arg2 );
-	arg3 = jsval_to_CGPoint( *argvp++, cx );
-	arg4 = jsval_to_CGSize( *argvp++, cx );
+	arg3 = jsval_to_CGPoint( cx, *argvp++ );
+	arg4 = jsval_to_CGSize( cx, *argvp++ );
 	CCSpriteFrame* ret_val;
 
 	ret_val = [CCSpriteFrame frameWithTexture:(CCTexture2D*)arg0 rectInPixels:(CGRect)arg1 rotated:(BOOL)arg2 offset:(CGPoint)arg3 originalSize:(CGSize)arg4  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -28666,13 +28666,13 @@ JSBool JSPROXY_CCSpriteFrame_frameWithTextureFilename_rect__static(JSContext *cx
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; CGRect arg1; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
-	arg1 = jsval_to_CGRect( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
+	arg1 = jsval_to_CGRect( cx, *argvp++ );
 	CCSpriteFrame* ret_val;
 
 	ret_val = [CCSpriteFrame frameWithTextureFilename:(NSString*)arg0 rect:(CGRect)arg1  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -28685,16 +28685,16 @@ JSBool JSPROXY_CCSpriteFrame_frameWithTextureFilename_rectInPixels_rotated_offse
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; CGRect arg1; JSBool arg2; CGPoint arg3; CGSize arg4; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
-	arg1 = jsval_to_CGRect( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
+	arg1 = jsval_to_CGRect( cx, *argvp++ );
 	JS_ValueToBoolean( cx, *argvp++, &arg2 );
-	arg3 = jsval_to_CGPoint( *argvp++, cx );
-	arg4 = jsval_to_CGSize( *argvp++, cx );
+	arg3 = jsval_to_CGPoint( cx, *argvp++ );
+	arg4 = jsval_to_CGSize( cx, *argvp++ );
 	CCSpriteFrame* ret_val;
 
 	ret_val = [CCSpriteFrame frameWithTextureFilename:(NSString*)arg0 rectInPixels:(CGRect)arg1 rotated:(BOOL)arg2 offset:(CGPoint)arg3 originalSize:(CGSize)arg4  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -28714,8 +28714,8 @@ JSBool JSPROXY_CCSpriteFrame_initWithTexture_rect_(JSContext *cx, uint32_t argc,
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; CGRect arg1; 
 
-	arg0 = (CCTexture2D*) jsval_to_nsobject( *argvp++, cx);
-	arg1 = jsval_to_CGRect( *argvp++, cx );
+	arg0 = (CCTexture2D*) jsval_to_nsobject( cx, *argvp++);
+	arg1 = jsval_to_CGRect( cx, *argvp++ );
 
 	CCSpriteFrame *real = [(CCSpriteFrame*)[proxy.klass alloc] initWithTexture:(CCTexture2D*)arg0 rect:(CGRect)arg1  ];
 	[proxy setRealObj: real];
@@ -28740,11 +28740,11 @@ JSBool JSPROXY_CCSpriteFrame_initWithTexture_rectInPixels_rotated_offset_origina
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; CGRect arg1; JSBool arg2; CGPoint arg3; CGSize arg4; 
 
-	arg0 = (CCTexture2D*) jsval_to_nsobject( *argvp++, cx);
-	arg1 = jsval_to_CGRect( *argvp++, cx );
+	arg0 = (CCTexture2D*) jsval_to_nsobject( cx, *argvp++);
+	arg1 = jsval_to_CGRect( cx, *argvp++ );
 	JS_ValueToBoolean( cx, *argvp++, &arg2 );
-	arg3 = jsval_to_CGPoint( *argvp++, cx );
-	arg4 = jsval_to_CGSize( *argvp++, cx );
+	arg3 = jsval_to_CGPoint( cx, *argvp++ );
+	arg4 = jsval_to_CGSize( cx, *argvp++ );
 
 	CCSpriteFrame *real = [(CCSpriteFrame*)[proxy.klass alloc] initWithTexture:(CCTexture2D*)arg0 rectInPixels:(CGRect)arg1 rotated:(BOOL)arg2 offset:(CGPoint)arg3 originalSize:(CGSize)arg4  ];
 	[proxy setRealObj: real];
@@ -28769,8 +28769,8 @@ JSBool JSPROXY_CCSpriteFrame_initWithTextureFilename_rect_(JSContext *cx, uint32
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; CGRect arg1; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
-	arg1 = jsval_to_CGRect( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
+	arg1 = jsval_to_CGRect( cx, *argvp++ );
 
 	CCSpriteFrame *real = [(CCSpriteFrame*)[proxy.klass alloc] initWithTextureFilename:(NSString*)arg0 rect:(CGRect)arg1  ];
 	[proxy setRealObj: real];
@@ -28795,11 +28795,11 @@ JSBool JSPROXY_CCSpriteFrame_initWithTextureFilename_rectInPixels_rotated_offset
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; CGRect arg1; JSBool arg2; CGPoint arg3; CGSize arg4; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
-	arg1 = jsval_to_CGRect( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
+	arg1 = jsval_to_CGRect( cx, *argvp++ );
 	JS_ValueToBoolean( cx, *argvp++, &arg2 );
-	arg3 = jsval_to_CGPoint( *argvp++, cx );
-	arg4 = jsval_to_CGSize( *argvp++, cx );
+	arg3 = jsval_to_CGPoint( cx, *argvp++ );
+	arg4 = jsval_to_CGSize( cx, *argvp++ );
 
 	CCSpriteFrame *real = [(CCSpriteFrame*)[proxy.klass alloc] initWithTextureFilename:(NSString*)arg0 rectInPixels:(CGRect)arg1 rotated:(BOOL)arg2 offset:(CGPoint)arg3 originalSize:(CGSize)arg4  ];
 	[proxy setRealObj: real];
@@ -28975,7 +28975,7 @@ JSBool JSPROXY_CCSpriteFrame_setOffset_(JSContext *cx, uint32_t argc, jsval *vp)
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGPoint arg0; 
 
-	arg0 = jsval_to_CGPoint( *argvp++, cx );
+	arg0 = jsval_to_CGPoint( cx, *argvp++ );
 
 	CCSpriteFrame *real = (CCSpriteFrame*) [proxy realObj];
 	[real setOffset:(CGPoint)arg0  ];
@@ -28997,7 +28997,7 @@ JSBool JSPROXY_CCSpriteFrame_setOffsetInPixels_(JSContext *cx, uint32_t argc, js
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGPoint arg0; 
 
-	arg0 = jsval_to_CGPoint( *argvp++, cx );
+	arg0 = jsval_to_CGPoint( cx, *argvp++ );
 
 	CCSpriteFrame *real = (CCSpriteFrame*) [proxy realObj];
 	[real setOffsetInPixels:(CGPoint)arg0  ];
@@ -29019,7 +29019,7 @@ JSBool JSPROXY_CCSpriteFrame_setOriginalSize_(JSContext *cx, uint32_t argc, jsva
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGSize arg0; 
 
-	arg0 = jsval_to_CGSize( *argvp++, cx );
+	arg0 = jsval_to_CGSize( cx, *argvp++ );
 
 	CCSpriteFrame *real = (CCSpriteFrame*) [proxy realObj];
 	[real setOriginalSize:(CGSize)arg0  ];
@@ -29041,7 +29041,7 @@ JSBool JSPROXY_CCSpriteFrame_setOriginalSizeInPixels_(JSContext *cx, uint32_t ar
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGSize arg0; 
 
-	arg0 = jsval_to_CGSize( *argvp++, cx );
+	arg0 = jsval_to_CGSize( cx, *argvp++ );
 
 	CCSpriteFrame *real = (CCSpriteFrame*) [proxy realObj];
 	[real setOriginalSizeInPixels:(CGSize)arg0  ];
@@ -29063,7 +29063,7 @@ JSBool JSPROXY_CCSpriteFrame_setRect_(JSContext *cx, uint32_t argc, jsval *vp) {
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGRect arg0; 
 
-	arg0 = jsval_to_CGRect( *argvp++, cx );
+	arg0 = jsval_to_CGRect( cx, *argvp++ );
 
 	CCSpriteFrame *real = (CCSpriteFrame*) [proxy realObj];
 	[real setRect:(CGRect)arg0  ];
@@ -29085,7 +29085,7 @@ JSBool JSPROXY_CCSpriteFrame_setRectInPixels_(JSContext *cx, uint32_t argc, jsva
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGRect arg0; 
 
-	arg0 = jsval_to_CGRect( *argvp++, cx );
+	arg0 = jsval_to_CGRect( cx, *argvp++ );
 
 	CCSpriteFrame *real = (CCSpriteFrame*) [proxy realObj];
 	[real setRectInPixels:(CGRect)arg0  ];
@@ -29129,7 +29129,7 @@ JSBool JSPROXY_CCSpriteFrame_setTexture_(JSContext *cx, uint32_t argc, jsval *vp
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; 
 
-	arg0 = (CCTexture2D*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCTexture2D*) jsval_to_nsobject( cx, *argvp++);
 
 	CCSpriteFrame *real = (CCSpriteFrame*) [proxy realObj];
 	[real setTexture:(CCTexture2D*)arg0  ];
@@ -29153,7 +29153,7 @@ JSBool JSPROXY_CCSpriteFrame_texture(JSContext *cx, uint32_t argc, jsval *vp) {
 	CCSpriteFrame *real = (CCSpriteFrame*) [proxy realObj];
 	ret_val = [real texture ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -29298,7 +29298,7 @@ JSBool JSPROXY_CCSplitRows_actionWithRows_duration__static(JSContext *cx, uint32
 
 	ret_val = [CCSplitRows actionWithRows:(int)arg0 duration:(ccTime)arg1  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -29346,7 +29346,7 @@ JSBool JSPROXY_CCSplitRows_actionWithSize_duration__static(JSContext *cx, uint32
 
 	ret_val = [CCSplitRows actionWithSize:(ccGridSize)arg0 duration:(ccTime)arg1  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -29364,7 +29364,7 @@ JSBool JSPROXY_CCSplitRows_actionWithDuration__static(JSContext *cx, uint32_t ar
 
 	ret_val = [CCSplitRows actionWithDuration:(ccTime)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -29378,7 +29378,7 @@ JSBool JSPROXY_CCSplitRows_action_static(JSContext *cx, uint32_t argc, jsval *vp
 
 	ret_val = [CCSplitRows action ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -29482,13 +29482,13 @@ JSBool JSPROXY_CCTextureCache_addImage_(JSContext *cx, uint32_t argc, jsval *vp)
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
 	CCTexture2D* ret_val;
 
 	CCTextureCache *real = (CCTextureCache*) [proxy realObj];
 	ret_val = [real addImage:(NSString*)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -29508,13 +29508,13 @@ JSBool JSPROXY_CCTextureCache_addPVRImage_(JSContext *cx, uint32_t argc, jsval *
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
 	CCTexture2D* ret_val;
 
 	CCTextureCache *real = (CCTextureCache*) [proxy realObj];
 	ret_val = [real addPVRImage:(NSString*)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -29580,7 +29580,7 @@ JSBool JSPROXY_CCTextureCache_removeTexture_(JSContext *cx, uint32_t argc, jsval
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; 
 
-	arg0 = (CCTexture2D*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCTexture2D*) jsval_to_nsobject( cx, *argvp++);
 
 	CCTextureCache *real = (CCTextureCache*) [proxy realObj];
 	[real removeTexture:(CCTexture2D*)arg0  ];
@@ -29602,7 +29602,7 @@ JSBool JSPROXY_CCTextureCache_removeTextureForKey_(JSContext *cx, uint32_t argc,
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
 
 	CCTextureCache *real = (CCTextureCache*) [proxy realObj];
 	[real removeTextureForKey:(NSString*)arg0  ];
@@ -29636,7 +29636,7 @@ JSBool JSPROXY_CCTextureCache_sharedTextureCache_static(JSContext *cx, uint32_t 
 
 	ret_val = [CCTextureCache sharedTextureCache ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -29656,13 +29656,13 @@ JSBool JSPROXY_CCTextureCache_textureForKey_(JSContext *cx, uint32_t argc, jsval
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
 	CCTexture2D* ret_val;
 
 	CCTextureCache *real = (CCTextureCache*) [proxy realObj];
 	ret_val = [real textureForKey:(NSString*)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -29773,7 +29773,7 @@ JSBool JSPROXY_CCMenuItemSprite_disabledImage(JSContext *cx, uint32_t argc, jsva
 	CCMenuItemSprite *real = (CCMenuItemSprite*) [proxy realObj];
 	ret_val = [real disabledImage ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -29793,10 +29793,10 @@ JSBool JSPROXY_CCMenuItemSprite_initWithNormalSprite_selectedSprite_disabledSpri
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; id arg1; id arg2; js_block arg3; 
 
-	arg0 = (CCNode*) jsval_to_nsobject( *argvp++, cx);
-	arg1 = (CCNode*) jsval_to_nsobject( *argvp++, cx);
-	arg2 = (CCNode*) jsval_to_nsobject( *argvp++, cx);
-	arg3 = jsval_to_block( *argvp++, cx, JS_THIS_OBJECT(cx, vp) );
+	arg0 = (CCNode*) jsval_to_nsobject( cx, *argvp++);
+	arg1 = (CCNode*) jsval_to_nsobject( cx, *argvp++);
+	arg2 = (CCNode*) jsval_to_nsobject( cx, *argvp++);
+	arg3 = jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp) );
 
 	CCMenuItemSprite *real = [(CCMenuItemSprite*)[proxy.klass alloc] initWithNormalSprite:(CCNode*)arg0 selectedSprite:(CCNode*)arg1 disabledSprite:(CCNode*)arg2 block:(void (^)(id))arg3  ];
 	[proxy setRealObj: real];
@@ -29814,13 +29814,13 @@ JSBool JSPROXY_CCMenuItemSprite_itemWithNormalSprite_selectedSprite__static(JSCo
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; id arg1; 
 
-	arg0 = (CCNode*) jsval_to_nsobject( *argvp++, cx);
-	arg1 = (CCNode*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCNode*) jsval_to_nsobject( cx, *argvp++);
+	arg1 = (CCNode*) jsval_to_nsobject( cx, *argvp++);
 	CCMenuItemSprite* ret_val;
 
 	ret_val = [CCMenuItemSprite itemWithNormalSprite:(CCNode*)arg0 selectedSprite:(CCNode*)arg1  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -29833,14 +29833,14 @@ JSBool JSPROXY_CCMenuItemSprite_itemWithNormalSprite_selectedSprite_block__stati
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; id arg1; js_block arg2; 
 
-	arg0 = (CCNode*) jsval_to_nsobject( *argvp++, cx);
-	arg1 = (CCNode*) jsval_to_nsobject( *argvp++, cx);
-	arg2 = jsval_to_block( *argvp++, cx, JS_THIS_OBJECT(cx, vp) );
+	arg0 = (CCNode*) jsval_to_nsobject( cx, *argvp++);
+	arg1 = (CCNode*) jsval_to_nsobject( cx, *argvp++);
+	arg2 = jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp) );
 	CCMenuItemSprite* ret_val;
 
 	ret_val = [CCMenuItemSprite itemWithNormalSprite:(CCNode*)arg0 selectedSprite:(CCNode*)arg1 block:(void (^)(id))arg2  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -29853,15 +29853,15 @@ JSBool JSPROXY_CCMenuItemSprite_itemWithNormalSprite_selectedSprite_disabledSpri
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; id arg1; id arg2; js_block arg3; 
 
-	arg0 = (CCNode*) jsval_to_nsobject( *argvp++, cx);
-	arg1 = (CCNode*) jsval_to_nsobject( *argvp++, cx);
-	arg2 = (CCNode*) jsval_to_nsobject( *argvp++, cx);
-	arg3 = jsval_to_block( *argvp++, cx, JS_THIS_OBJECT(cx, vp) );
+	arg0 = (CCNode*) jsval_to_nsobject( cx, *argvp++);
+	arg1 = (CCNode*) jsval_to_nsobject( cx, *argvp++);
+	arg2 = (CCNode*) jsval_to_nsobject( cx, *argvp++);
+	arg3 = jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp) );
 	CCMenuItemSprite* ret_val;
 
 	ret_val = [CCMenuItemSprite itemWithNormalSprite:(CCNode*)arg0 selectedSprite:(CCNode*)arg1 disabledSprite:(CCNode*)arg2 block:(void (^)(id))arg3  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -29883,7 +29883,7 @@ JSBool JSPROXY_CCMenuItemSprite_normalImage(JSContext *cx, uint32_t argc, jsval 
 	CCMenuItemSprite *real = (CCMenuItemSprite*) [proxy realObj];
 	ret_val = [real normalImage ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -29905,7 +29905,7 @@ JSBool JSPROXY_CCMenuItemSprite_selectedImage(JSContext *cx, uint32_t argc, jsva
 	CCMenuItemSprite *real = (CCMenuItemSprite*) [proxy realObj];
 	ret_val = [real selectedImage ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -29925,7 +29925,7 @@ JSBool JSPROXY_CCMenuItemSprite_setDisabledImage_(JSContext *cx, uint32_t argc, 
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; 
 
-	arg0 = (CCNode*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCNode*) jsval_to_nsobject( cx, *argvp++);
 
 	CCMenuItemSprite *real = (CCMenuItemSprite*) [proxy realObj];
 	[real setDisabledImage:(CCNode*)arg0  ];
@@ -29947,7 +29947,7 @@ JSBool JSPROXY_CCMenuItemSprite_setNormalImage_(JSContext *cx, uint32_t argc, js
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; 
 
-	arg0 = (CCNode*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCNode*) jsval_to_nsobject( cx, *argvp++);
 
 	CCMenuItemSprite *real = (CCMenuItemSprite*) [proxy realObj];
 	[real setNormalImage:(CCNode*)arg0  ];
@@ -29969,7 +29969,7 @@ JSBool JSPROXY_CCMenuItemSprite_setSelectedImage_(JSContext *cx, uint32_t argc, 
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; 
 
-	arg0 = (CCNode*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCNode*) jsval_to_nsobject( cx, *argvp++);
 
 	CCMenuItemSprite *real = (CCMenuItemSprite*) [proxy realObj];
 	[real setSelectedImage:(CCNode*)arg0  ];
@@ -30115,12 +30115,12 @@ JSBool JSPROXY_CCMenuItemSprite_itemWithBlock__static(JSContext *cx, uint32_t ar
 	jsval *argvp = JS_ARGV(cx,vp);
 	js_block arg0; 
 
-	arg0 = jsval_to_block( *argvp++, cx, JS_THIS_OBJECT(cx, vp) );
+	arg0 = jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp) );
 	CCMenuItemSprite* ret_val;
 
 	ret_val = [CCMenuItemSprite itemWithBlock:(void (^)(id))arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -30134,7 +30134,7 @@ JSBool JSPROXY_CCMenuItemSprite_node_static(JSContext *cx, uint32_t argc, jsval 
 
 	ret_val = [CCMenuItemSprite node ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -30244,7 +30244,7 @@ JSBool JSPROXY_CCRipple3D_actionWithPosition_radius_waves_amplitude_grid_duratio
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGPoint arg0; double arg1; int32_t arg2; double arg3; ccGridSize arg4; double arg5; 
 
-	arg0 = jsval_to_CGPoint( *argvp++, cx );
+	arg0 = jsval_to_CGPoint( cx, *argvp++ );
 	JS_ValueToNumber( cx, *argvp++, &arg1 );
 	JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
 	JS_ValueToNumber( cx, *argvp++, &arg3 );
@@ -30257,7 +30257,7 @@ JSBool JSPROXY_CCRipple3D_actionWithPosition_radius_waves_amplitude_grid_duratio
 
 	ret_val = [CCRipple3D actionWithPosition:(CGPoint)arg0 radius:(float)arg1 waves:(int)arg2 amplitude:(float)arg3 grid:(ccGridSize)arg4 duration:(ccTime)arg5  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -30315,7 +30315,7 @@ JSBool JSPROXY_CCRipple3D_initWithPosition_radius_waves_amplitude_grid_duration_
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGPoint arg0; double arg1; int32_t arg2; double arg3; ccGridSize arg4; double arg5; 
 
-	arg0 = jsval_to_CGPoint( *argvp++, cx );
+	arg0 = jsval_to_CGPoint( cx, *argvp++ );
 	JS_ValueToNumber( cx, *argvp++, &arg1 );
 	JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
 	JS_ValueToNumber( cx, *argvp++, &arg3 );
@@ -30414,7 +30414,7 @@ JSBool JSPROXY_CCRipple3D_setPosition_(JSContext *cx, uint32_t argc, jsval *vp) 
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGPoint arg0; 
 
-	arg0 = jsval_to_CGPoint( *argvp++, cx );
+	arg0 = jsval_to_CGPoint( cx, *argvp++ );
 
 	CCRipple3D *real = (CCRipple3D*) [proxy realObj];
 	[real setPosition:(CGPoint)arg0  ];
@@ -30438,7 +30438,7 @@ JSBool JSPROXY_CCRipple3D_actionWithSize_duration__static(JSContext *cx, uint32_
 
 	ret_val = [CCRipple3D actionWithSize:(ccGridSize)arg0 duration:(ccTime)arg1  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -30456,7 +30456,7 @@ JSBool JSPROXY_CCRipple3D_actionWithDuration__static(JSContext *cx, uint32_t arg
 
 	ret_val = [CCRipple3D actionWithDuration:(ccTime)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -30470,7 +30470,7 @@ JSBool JSPROXY_CCRipple3D_action_static(JSContext *cx, uint32_t argc, jsval *vp)
 
 	ret_val = [CCRipple3D action ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -30579,7 +30579,7 @@ JSBool JSPROXY_CCRotateBy_actionWithDuration_angle__static(JSContext *cx, uint32
 
 	ret_val = [CCRotateBy actionWithDuration:(ccTime)arg0 angle:(float)arg1  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -30623,7 +30623,7 @@ JSBool JSPROXY_CCRotateBy_actionWithDuration__static(JSContext *cx, uint32_t arg
 
 	ret_val = [CCRotateBy actionWithDuration:(ccTime)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -30637,7 +30637,7 @@ JSBool JSPROXY_CCRotateBy_action_static(JSContext *cx, uint32_t argc, jsval *vp)
 
 	ret_val = [CCRotateBy action ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -30882,7 +30882,7 @@ JSBool JSPROXY_CCTMXLayerInfo_setLayerSize_(JSContext *cx, uint32_t argc, jsval 
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGSize arg0; 
 
-	arg0 = jsval_to_CGSize( *argvp++, cx );
+	arg0 = jsval_to_CGSize( cx, *argvp++ );
 
 	CCTMXLayerInfo *real = (CCTMXLayerInfo*) [proxy realObj];
 	[real setLayerSize:(CGSize)arg0  ];
@@ -30948,7 +30948,7 @@ JSBool JSPROXY_CCTMXLayerInfo_setName_(JSContext *cx, uint32_t argc, jsval *vp) 
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
 
 	CCTMXLayerInfo *real = (CCTMXLayerInfo*) [proxy realObj];
 	[real setName:(NSString*)arg0  ];
@@ -30970,7 +30970,7 @@ JSBool JSPROXY_CCTMXLayerInfo_setOffset_(JSContext *cx, uint32_t argc, jsval *vp
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGPoint arg0; 
 
-	arg0 = jsval_to_CGPoint( *argvp++, cx );
+	arg0 = jsval_to_CGPoint( cx, *argvp++ );
 
 	CCTMXLayerInfo *real = (CCTMXLayerInfo*) [proxy realObj];
 	[real setOffset:(CGPoint)arg0  ];
@@ -31166,7 +31166,7 @@ JSBool JSPROXY_CCCallFuncO_action_static(JSContext *cx, uint32_t argc, jsval *vp
 
 	ret_val = [CCCallFuncO action ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -31281,12 +31281,12 @@ JSBool JSPROXY_CCTMXMapInfo_formatWithTMXFile__static(JSContext *cx, uint32_t ar
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
 	CCTMXMapInfo* ret_val;
 
 	ret_val = [CCTMXMapInfo formatWithTMXFile:(NSString*)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -31299,13 +31299,13 @@ JSBool JSPROXY_CCTMXMapInfo_formatWithXML_resourcePath__static(JSContext *cx, ui
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; NSString* arg1; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
-	arg1 = jsval_to_nsstring( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
+	arg1 = jsval_to_nsstring( cx, *argvp++ );
 	CCTMXMapInfo* ret_val;
 
 	ret_val = [CCTMXMapInfo formatWithXML:(NSString*)arg0 resourcePath:(NSString*)arg1  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -31325,7 +31325,7 @@ JSBool JSPROXY_CCTMXMapInfo_initWithTMXFile_(JSContext *cx, uint32_t argc, jsval
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
 
 	CCTMXMapInfo *real = [(CCTMXMapInfo*)[proxy.klass alloc] initWithTMXFile:(NSString*)arg0  ];
 	[proxy setRealObj: real];
@@ -31350,8 +31350,8 @@ JSBool JSPROXY_CCTMXMapInfo_initWithXML_resourcePath_(JSContext *cx, uint32_t ar
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; NSString* arg1; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
-	arg1 = jsval_to_nsstring( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
+	arg1 = jsval_to_nsstring( cx, *argvp++ );
 
 	CCTMXMapInfo *real = [(CCTMXMapInfo*)[proxy.klass alloc] initWithXML:(NSString*)arg0 resourcePath:(NSString*)arg1  ];
 	[proxy setRealObj: real];
@@ -31483,7 +31483,7 @@ JSBool JSPROXY_CCTMXMapInfo_setFilename_(JSContext *cx, uint32_t argc, jsval *vp
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
 
 	CCTMXMapInfo *real = (CCTMXMapInfo*) [proxy realObj];
 	[real setFilename:(NSString*)arg0  ];
@@ -31505,7 +31505,7 @@ JSBool JSPROXY_CCTMXMapInfo_setLayers_(JSContext *cx, uint32_t argc, jsval *vp) 
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSArray* arg0; 
 
-	arg0 = jsval_to_nsarray( *argvp++, cx );
+	arg0 = jsval_to_nsarray( cx, *argvp++ );
 
 	CCTMXMapInfo *real = (CCTMXMapInfo*) [proxy realObj];
 	[real setLayers:(NSMutableArray*)arg0  ];
@@ -31527,7 +31527,7 @@ JSBool JSPROXY_CCTMXMapInfo_setMapSize_(JSContext *cx, uint32_t argc, jsval *vp)
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGSize arg0; 
 
-	arg0 = jsval_to_CGSize( *argvp++, cx );
+	arg0 = jsval_to_CGSize( cx, *argvp++ );
 
 	CCTMXMapInfo *real = (CCTMXMapInfo*) [proxy realObj];
 	[real setMapSize:(CGSize)arg0  ];
@@ -31549,7 +31549,7 @@ JSBool JSPROXY_CCTMXMapInfo_setObjectGroups_(JSContext *cx, uint32_t argc, jsval
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSArray* arg0; 
 
-	arg0 = jsval_to_nsarray( *argvp++, cx );
+	arg0 = jsval_to_nsarray( cx, *argvp++ );
 
 	CCTMXMapInfo *real = (CCTMXMapInfo*) [proxy realObj];
 	[real setObjectGroups:(NSMutableArray*)arg0  ];
@@ -31593,7 +31593,7 @@ JSBool JSPROXY_CCTMXMapInfo_setResources_(JSContext *cx, uint32_t argc, jsval *v
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
 
 	CCTMXMapInfo *real = (CCTMXMapInfo*) [proxy realObj];
 	[real setResources:(NSString*)arg0  ];
@@ -31615,7 +31615,7 @@ JSBool JSPROXY_CCTMXMapInfo_setTileSize_(JSContext *cx, uint32_t argc, jsval *vp
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGSize arg0; 
 
-	arg0 = jsval_to_CGSize( *argvp++, cx );
+	arg0 = jsval_to_CGSize( cx, *argvp++ );
 
 	CCTMXMapInfo *real = (CCTMXMapInfo*) [proxy realObj];
 	[real setTileSize:(CGSize)arg0  ];
@@ -31637,7 +31637,7 @@ JSBool JSPROXY_CCTMXMapInfo_setTilesets_(JSContext *cx, uint32_t argc, jsval *vp
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSArray* arg0; 
 
-	arg0 = jsval_to_nsarray( *argvp++, cx );
+	arg0 = jsval_to_nsarray( cx, *argvp++ );
 
 	CCTMXMapInfo *real = (CCTMXMapInfo*) [proxy realObj];
 	[real setTilesets:(NSMutableArray*)arg0  ];
@@ -31800,7 +31800,7 @@ JSBool JSPROXY_CCReuseGrid_actionWithTimes__static(JSContext *cx, uint32_t argc,
 
 	ret_val = [CCReuseGrid actionWithTimes:(int)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -31839,7 +31839,7 @@ JSBool JSPROXY_CCReuseGrid_action_static(JSContext *cx, uint32_t argc, jsval *vp
 
 	ret_val = [CCReuseGrid action ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -31944,7 +31944,7 @@ JSBool JSPROXY_CCShuffleTiles_actionWithSeed_grid_duration__static(JSContext *cx
 
 	ret_val = [CCShuffleTiles actionWithSeed:(int)arg0 grid:(ccGridSize)arg1 duration:(ccTime)arg2  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -31996,7 +31996,7 @@ JSBool JSPROXY_CCShuffleTiles_actionWithSize_duration__static(JSContext *cx, uin
 
 	ret_val = [CCShuffleTiles actionWithSize:(ccGridSize)arg0 duration:(ccTime)arg1  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -32014,7 +32014,7 @@ JSBool JSPROXY_CCShuffleTiles_actionWithDuration__static(JSContext *cx, uint32_t
 
 	ret_val = [CCShuffleTiles actionWithDuration:(ccTime)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -32028,7 +32028,7 @@ JSBool JSPROXY_CCShuffleTiles_action_static(JSContext *cx, uint32_t argc, jsval 
 
 	ret_val = [CCShuffleTiles action ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -32151,7 +32151,7 @@ JSBool JSPROXY_CCConfiguration_checkForGLExtension_(JSContext *cx, uint32_t argc
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
 	BOOL ret_val;
 
 	CCConfiguration *real = (CCConfiguration*) [proxy realObj];
@@ -32225,7 +32225,7 @@ JSBool JSPROXY_CCConfiguration_sharedConfiguration_static(JSContext *cx, uint32_
 
 	ret_val = [CCConfiguration sharedConfiguration ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -32423,13 +32423,13 @@ JSBool JSPROXY_CCEaseRateAction_actionWithAction_rate__static(JSContext *cx, uin
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; double arg1; 
 
-	arg0 = (CCActionInterval*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCActionInterval*) jsval_to_nsobject( cx, *argvp++);
 	JS_ValueToNumber( cx, *argvp++, &arg1 );
 	CCEaseRateAction* ret_val;
 
 	ret_val = [CCEaseRateAction actionWithAction:(CCActionInterval*)arg0 rate:(float)arg1  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -32449,7 +32449,7 @@ JSBool JSPROXY_CCEaseRateAction_initWithAction_rate_(JSContext *cx, uint32_t arg
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; double arg1; 
 
-	arg0 = (CCActionInterval*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCActionInterval*) jsval_to_nsobject( cx, *argvp++);
 	JS_ValueToNumber( cx, *argvp++, &arg1 );
 
 	CCEaseRateAction *real = [(CCEaseRateAction*)[proxy.klass alloc] initWithAction:(CCActionInterval*)arg0 rate:(float)arg1  ];
@@ -32509,12 +32509,12 @@ JSBool JSPROXY_CCEaseRateAction_actionWithAction__static(JSContext *cx, uint32_t
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; 
 
-	arg0 = (CCActionInterval*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCActionInterval*) jsval_to_nsobject( cx, *argvp++);
 	CCEaseRateAction* ret_val;
 
 	ret_val = [CCEaseRateAction actionWithAction:(CCActionInterval*)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -32532,7 +32532,7 @@ JSBool JSPROXY_CCEaseRateAction_actionWithDuration__static(JSContext *cx, uint32
 
 	ret_val = [CCEaseRateAction actionWithDuration:(ccTime)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -32546,7 +32546,7 @@ JSBool JSPROXY_CCEaseRateAction_action_static(JSContext *cx, uint32_t argc, jsva
 
 	ret_val = [CCEaseRateAction action ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -32645,12 +32645,12 @@ JSBool JSPROXY_CCAnimate_actionWithAnimation__static(JSContext *cx, uint32_t arg
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; 
 
-	arg0 = (CCAnimation*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCAnimation*) jsval_to_nsobject( cx, *argvp++);
 	CCAnimate* ret_val;
 
 	ret_val = [CCAnimate actionWithAnimation:(CCAnimation*)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -32672,7 +32672,7 @@ JSBool JSPROXY_CCAnimate_animation(JSContext *cx, uint32_t argc, jsval *vp) {
 	CCAnimate *real = (CCAnimate*) [proxy realObj];
 	ret_val = [real animation ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -32692,7 +32692,7 @@ JSBool JSPROXY_CCAnimate_initWithAnimation_(JSContext *cx, uint32_t argc, jsval 
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; 
 
-	arg0 = (CCAnimation*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCAnimation*) jsval_to_nsobject( cx, *argvp++);
 
 	CCAnimate *real = [(CCAnimate*)[proxy.klass alloc] initWithAnimation:(CCAnimation*)arg0  ];
 	[proxy setRealObj: real];
@@ -32717,7 +32717,7 @@ JSBool JSPROXY_CCAnimate_setAnimation_(JSContext *cx, uint32_t argc, jsval *vp) 
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; 
 
-	arg0 = (CCAnimation*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCAnimation*) jsval_to_nsobject( cx, *argvp++);
 
 	CCAnimate *real = (CCAnimate*) [proxy realObj];
 	[real setAnimation:(CCAnimation*)arg0  ];
@@ -32737,7 +32737,7 @@ JSBool JSPROXY_CCAnimate_actionWithDuration__static(JSContext *cx, uint32_t argc
 
 	ret_val = [CCAnimate actionWithDuration:(ccTime)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -32751,7 +32751,7 @@ JSBool JSPROXY_CCAnimate_action_static(JSContext *cx, uint32_t argc, jsval *vp) 
 
 	ret_val = [CCAnimate action ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -32868,7 +32868,7 @@ JSBool JSPROXY_CCCallBlockO_action_static(JSContext *cx, uint32_t argc, jsval *v
 
 	ret_val = [CCCallBlockO action ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -32962,12 +32962,12 @@ JSBool JSPROXY_CCCallBlockN_actionWithBlock__static(JSContext *cx, uint32_t argc
 	jsval *argvp = JS_ARGV(cx,vp);
 	js_block arg0; 
 
-	arg0 = jsval_to_block( *argvp++, cx, JS_THIS_OBJECT(cx, vp) );
+	arg0 = jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp) );
 	CCCallBlockN* ret_val;
 
 	ret_val = [CCCallBlockN actionWithBlock:(void (^)(CCNode *))arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -33005,7 +33005,7 @@ JSBool JSPROXY_CCCallBlockN_initWithBlock_(JSContext *cx, uint32_t argc, jsval *
 	jsval *argvp = JS_ARGV(cx,vp);
 	js_block arg0; 
 
-	arg0 = jsval_to_block( *argvp++, cx, JS_THIS_OBJECT(cx, vp) );
+	arg0 = jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp) );
 
 	CCCallBlockN *real = [(CCCallBlockN*)[proxy.klass alloc] initWithBlock:(void (^)(CCNode *))arg0  ];
 	[proxy setRealObj: real];
@@ -33024,7 +33024,7 @@ JSBool JSPROXY_CCCallBlockN_action_static(JSContext *cx, uint32_t argc, jsval *v
 
 	ret_val = [CCCallBlockN action ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -33131,7 +33131,7 @@ JSBool JSPROXY_CCShaky3D_actionWithRange_shakeZ_grid_duration__static(JSContext 
 
 	ret_val = [CCShaky3D actionWithRange:(int)arg0 shakeZ:(BOOL)arg1 grid:(ccGridSize)arg2 duration:(ccTime)arg3  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -33184,7 +33184,7 @@ JSBool JSPROXY_CCShaky3D_actionWithSize_duration__static(JSContext *cx, uint32_t
 
 	ret_val = [CCShaky3D actionWithSize:(ccGridSize)arg0 duration:(ccTime)arg1  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -33202,7 +33202,7 @@ JSBool JSPROXY_CCShaky3D_actionWithDuration__static(JSContext *cx, uint32_t argc
 
 	ret_val = [CCShaky3D actionWithDuration:(ccTime)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -33216,7 +33216,7 @@ JSBool JSPROXY_CCShaky3D_action_static(JSContext *cx, uint32_t argc, jsval *vp) 
 
 	ret_val = [CCShaky3D action ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -33329,7 +33329,7 @@ JSBool JSPROXY_CCTransitionPageTurn_actionWithSize_(JSContext *cx, uint32_t argc
 	CCTransitionPageTurn *real = (CCTransitionPageTurn*) [proxy realObj];
 	ret_val = [real actionWithSize:(ccGridSize)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -33350,7 +33350,7 @@ JSBool JSPROXY_CCTransitionPageTurn_initWithDuration_scene_backwards_(JSContext 
 	double arg0; id arg1; JSBool arg2; 
 
 	JS_ValueToNumber( cx, *argvp++, &arg0 );
-	arg1 = (CCScene*) jsval_to_nsobject( *argvp++, cx);
+	arg1 = (CCScene*) jsval_to_nsobject( cx, *argvp++);
 	JS_ValueToBoolean( cx, *argvp++, &arg2 );
 
 	CCTransitionPageTurn *real = [(CCTransitionPageTurn*)[proxy.klass alloc] initWithDuration:(ccTime)arg0 scene:(CCScene*)arg1 backwards:(BOOL)arg2  ];
@@ -33370,13 +33370,13 @@ JSBool JSPROXY_CCTransitionPageTurn_transitionWithDuration_scene_backwards__stat
 	double arg0; id arg1; JSBool arg2; 
 
 	JS_ValueToNumber( cx, *argvp++, &arg0 );
-	arg1 = (CCScene*) jsval_to_nsobject( *argvp++, cx);
+	arg1 = (CCScene*) jsval_to_nsobject( cx, *argvp++);
 	JS_ValueToBoolean( cx, *argvp++, &arg2 );
 	CCTransitionPageTurn* ret_val;
 
 	ret_val = [CCTransitionPageTurn transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1 backwards:(BOOL)arg2  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -33390,12 +33390,12 @@ JSBool JSPROXY_CCTransitionPageTurn_transitionWithDuration_scene__static(JSConte
 	double arg0; id arg1; 
 
 	JS_ValueToNumber( cx, *argvp++, &arg0 );
-	arg1 = (CCScene*) jsval_to_nsobject( *argvp++, cx);
+	arg1 = (CCScene*) jsval_to_nsobject( cx, *argvp++);
 	CCTransitionPageTurn* ret_val;
 
 	ret_val = [CCTransitionPageTurn transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -33409,7 +33409,7 @@ JSBool JSPROXY_CCTransitionPageTurn_node_static(JSContext *cx, uint32_t argc, js
 
 	ret_val = [CCTransitionPageTurn node ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -33537,8 +33537,8 @@ JSBool JSPROXY_CCMenuItemToggle_initWithItems_block_(JSContext *cx, uint32_t arg
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSArray* arg0; js_block arg1; 
 
-	arg0 = jsval_to_nsarray( *argvp++, cx );
-	arg1 = jsval_to_block( *argvp++, cx, JS_THIS_OBJECT(cx, vp) );
+	arg0 = jsval_to_nsarray( cx, *argvp++ );
+	arg1 = jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp) );
 
 	CCMenuItemToggle *real = [(CCMenuItemToggle*)[proxy.klass alloc] initWithItems:(NSArray*)arg0 block:(void (^)(id))arg1  ];
 	[proxy setRealObj: real];
@@ -33556,13 +33556,13 @@ JSBool JSPROXY_CCMenuItemToggle_itemWithItems_block__static(JSContext *cx, uint3
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSArray* arg0; js_block arg1; 
 
-	arg0 = jsval_to_nsarray( *argvp++, cx );
-	arg1 = jsval_to_block( *argvp++, cx, JS_THIS_OBJECT(cx, vp) );
+	arg0 = jsval_to_nsarray( cx, *argvp++ );
+	arg1 = jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp) );
 	CCMenuItemToggle* ret_val;
 
 	ret_val = [CCMenuItemToggle itemWithItems:(NSArray*)arg0 block:(void (^)(id))arg1  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -33622,7 +33622,7 @@ JSBool JSPROXY_CCMenuItemToggle_selectedItem(JSContext *cx, uint32_t argc, jsval
 	CCMenuItemToggle *real = (CCMenuItemToggle*) [proxy realObj];
 	ret_val = [real selectedItem ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -33664,7 +33664,7 @@ JSBool JSPROXY_CCMenuItemToggle_setSubItems_(JSContext *cx, uint32_t argc, jsval
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSArray* arg0; 
 
-	arg0 = jsval_to_nsarray( *argvp++, cx );
+	arg0 = jsval_to_nsarray( cx, *argvp++ );
 
 	CCMenuItemToggle *real = (CCMenuItemToggle*) [proxy realObj];
 	[real setSubItems:(NSMutableArray*)arg0  ];
@@ -33789,12 +33789,12 @@ JSBool JSPROXY_CCMenuItemToggle_itemWithBlock__static(JSContext *cx, uint32_t ar
 	jsval *argvp = JS_ARGV(cx,vp);
 	js_block arg0; 
 
-	arg0 = jsval_to_block( *argvp++, cx, JS_THIS_OBJECT(cx, vp) );
+	arg0 = jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp) );
 	CCMenuItemToggle* ret_val;
 
 	ret_val = [CCMenuItemToggle itemWithBlock:(void (^)(id))arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -33808,7 +33808,7 @@ JSBool JSPROXY_CCMenuItemToggle_node_static(JSContext *cx, uint32_t argc, jsval 
 
 	ret_val = [CCMenuItemToggle node ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -33923,7 +33923,7 @@ JSBool JSPROXY_CCTintTo_actionWithDuration_red_green_blue__static(JSContext *cx,
 
 	ret_val = [CCTintTo actionWithDuration:(ccTime)arg0 red:(GLubyte)arg1 green:(GLubyte)arg2 blue:(GLubyte)arg3  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -33969,7 +33969,7 @@ JSBool JSPROXY_CCTintTo_actionWithDuration__static(JSContext *cx, uint32_t argc,
 
 	ret_val = [CCTintTo actionWithDuration:(ccTime)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -33983,7 +33983,7 @@ JSBool JSPROXY_CCTintTo_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	ret_val = [CCTintTo action ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -34085,7 +34085,7 @@ JSBool JSPROXY_CCBlink_actionWithDuration_blinks__static(JSContext *cx, uint32_t
 
 	ret_val = [CCBlink actionWithDuration:(ccTime)arg0 blinks:(NSUInteger)arg1  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -34129,7 +34129,7 @@ JSBool JSPROXY_CCBlink_actionWithDuration__static(JSContext *cx, uint32_t argc, 
 
 	ret_val = [CCBlink actionWithDuration:(ccTime)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -34143,7 +34143,7 @@ JSBool JSPROXY_CCBlink_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	ret_val = [CCBlink action ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -34373,7 +34373,7 @@ JSBool JSPROXY_CCTextureAtlas_initWithFile_capacity_(JSContext *cx, uint32_t arg
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; uint32_t arg1; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
 	JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
 
 	CCTextureAtlas *real = [(CCTextureAtlas*)[proxy.klass alloc] initWithFile:(NSString*)arg0 capacity:(NSUInteger)arg1  ];
@@ -34399,7 +34399,7 @@ JSBool JSPROXY_CCTextureAtlas_initWithTexture_capacity_(JSContext *cx, uint32_t 
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; uint32_t arg1; 
 
-	arg0 = (CCTexture2D*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCTexture2D*) jsval_to_nsobject( cx, *argvp++);
 	JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
 
 	CCTextureAtlas *real = [(CCTextureAtlas*)[proxy.klass alloc] initWithTexture:(CCTexture2D*)arg0 capacity:(NSUInteger)arg1  ];
@@ -34581,7 +34581,7 @@ JSBool JSPROXY_CCTextureAtlas_setTexture_(JSContext *cx, uint32_t argc, jsval *v
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; 
 
-	arg0 = (CCTexture2D*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCTexture2D*) jsval_to_nsobject( cx, *argvp++);
 
 	CCTextureAtlas *real = (CCTextureAtlas*) [proxy realObj];
 	[real setTexture:(CCTexture2D*)arg0  ];
@@ -34605,7 +34605,7 @@ JSBool JSPROXY_CCTextureAtlas_texture(JSContext *cx, uint32_t argc, jsval *vp) {
 	CCTextureAtlas *real = (CCTextureAtlas*) [proxy realObj];
 	ret_val = [real texture ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -34618,13 +34618,13 @@ JSBool JSPROXY_CCTextureAtlas_textureAtlasWithFile_capacity__static(JSContext *c
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; uint32_t arg1; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
 	JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
 	CCTextureAtlas* ret_val;
 
 	ret_val = [CCTextureAtlas textureAtlasWithFile:(NSString*)arg0 capacity:(NSUInteger)arg1  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -34637,13 +34637,13 @@ JSBool JSPROXY_CCTextureAtlas_textureAtlasWithTexture_capacity__static(JSContext
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; uint32_t arg1; 
 
-	arg0 = (CCTexture2D*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCTexture2D*) jsval_to_nsobject( cx, *argvp++);
 	JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
 	CCTextureAtlas* ret_val;
 
 	ret_val = [CCTextureAtlas textureAtlasWithTexture:(CCTexture2D*)arg0 capacity:(NSUInteger)arg1  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -34783,7 +34783,7 @@ JSBool JSPROXY_CCTransitionSlideInL_action(JSContext *cx, uint32_t argc, jsval *
 	CCTransitionSlideInL *real = (CCTransitionSlideInL*) [proxy realObj];
 	ret_val = [real action ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -34821,13 +34821,13 @@ JSBool JSPROXY_CCTransitionSlideInL_easeActionWithAction_(JSContext *cx, uint32_
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; 
 
-	arg0 = (CCActionInterval*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCActionInterval*) jsval_to_nsobject( cx, *argvp++);
 	CCActionInterval* ret_val;
 
 	CCTransitionSlideInL *real = (CCTransitionSlideInL*) [proxy realObj];
 	ret_val = [real easeActionWithAction:(CCActionInterval*)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -34841,12 +34841,12 @@ JSBool JSPROXY_CCTransitionSlideInL_transitionWithDuration_scene__static(JSConte
 	double arg0; id arg1; 
 
 	JS_ValueToNumber( cx, *argvp++, &arg0 );
-	arg1 = (CCScene*) jsval_to_nsobject( *argvp++, cx);
+	arg1 = (CCScene*) jsval_to_nsobject( cx, *argvp++);
 	CCTransitionSlideInL* ret_val;
 
 	ret_val = [CCTransitionSlideInL transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -34860,7 +34860,7 @@ JSBool JSPROXY_CCTransitionSlideInL_node_static(JSContext *cx, uint32_t argc, js
 
 	ret_val = [CCTransitionSlideInL node ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -35155,7 +35155,7 @@ JSBool JSPROXY_CCProgressTimer_initWithSprite_(JSContext *cx, uint32_t argc, jsv
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; 
 
-	arg0 = (CCSprite*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCSprite*) jsval_to_nsobject( cx, *argvp++);
 
 	CCProgressTimer *real = [(CCProgressTimer*)[proxy.klass alloc] initWithSprite:(CCSprite*)arg0  ];
 	[proxy setRealObj: real];
@@ -35233,12 +35233,12 @@ JSBool JSPROXY_CCProgressTimer_progressWithSprite__static(JSContext *cx, uint32_
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; 
 
-	arg0 = (CCSprite*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCSprite*) jsval_to_nsobject( cx, *argvp++);
 	CCProgressTimer* ret_val;
 
 	ret_val = [CCProgressTimer progressWithSprite:(CCSprite*)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -35277,7 +35277,7 @@ JSBool JSPROXY_CCProgressTimer_setBarChangeRate_(JSContext *cx, uint32_t argc, j
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGPoint arg0; 
 
-	arg0 = jsval_to_CGPoint( *argvp++, cx );
+	arg0 = jsval_to_CGPoint( cx, *argvp++ );
 
 	CCProgressTimer *real = (CCProgressTimer*) [proxy realObj];
 	[real setBarChangeRate:(CGPoint)arg0  ];
@@ -35324,7 +35324,7 @@ JSBool JSPROXY_CCProgressTimer_setMidpoint_(JSContext *cx, uint32_t argc, jsval 
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGPoint arg0; 
 
-	arg0 = jsval_to_CGPoint( *argvp++, cx );
+	arg0 = jsval_to_CGPoint( cx, *argvp++ );
 
 	CCProgressTimer *real = (CCProgressTimer*) [proxy realObj];
 	[real setMidpoint:(CGPoint)arg0  ];
@@ -35412,7 +35412,7 @@ JSBool JSPROXY_CCProgressTimer_setSprite_(JSContext *cx, uint32_t argc, jsval *v
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; 
 
-	arg0 = (CCSprite*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCSprite*) jsval_to_nsobject( cx, *argvp++);
 
 	CCProgressTimer *real = (CCProgressTimer*) [proxy realObj];
 	[real setSprite:(CCSprite*)arg0  ];
@@ -35458,7 +35458,7 @@ JSBool JSPROXY_CCProgressTimer_sprite(JSContext *cx, uint32_t argc, jsval *vp) {
 	CCProgressTimer *real = (CCProgressTimer*) [proxy realObj];
 	ret_val = [real sprite ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -35551,7 +35551,7 @@ JSBool JSPROXY_CCProgressTimer_node_static(JSContext *cx, uint32_t argc, jsval *
 
 	ret_val = [CCProgressTimer node ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -35666,14 +35666,14 @@ JSBool JSPROXY_CCActionTween_actionWithDuration_key_from_to__static(JSContext *c
 	double arg0; NSString* arg1; double arg2; double arg3; 
 
 	JS_ValueToNumber( cx, *argvp++, &arg0 );
-	arg1 = jsval_to_nsstring( *argvp++, cx );
+	arg1 = jsval_to_nsstring( cx, *argvp++ );
 	JS_ValueToNumber( cx, *argvp++, &arg2 );
 	JS_ValueToNumber( cx, *argvp++, &arg3 );
 	CCActionTween* ret_val;
 
 	ret_val = [CCActionTween actionWithDuration:(ccTime)arg0 key:(NSString*)arg1 from:(float)arg2 to:(float)arg3  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -35694,7 +35694,7 @@ JSBool JSPROXY_CCActionTween_initWithDuration_key_from_to_(JSContext *cx, uint32
 	double arg0; NSString* arg1; double arg2; double arg3; 
 
 	JS_ValueToNumber( cx, *argvp++, &arg0 );
-	arg1 = jsval_to_nsstring( *argvp++, cx );
+	arg1 = jsval_to_nsstring( cx, *argvp++ );
 	JS_ValueToNumber( cx, *argvp++, &arg2 );
 	JS_ValueToNumber( cx, *argvp++, &arg3 );
 
@@ -35719,7 +35719,7 @@ JSBool JSPROXY_CCActionTween_actionWithDuration__static(JSContext *cx, uint32_t 
 
 	ret_val = [CCActionTween actionWithDuration:(ccTime)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -35733,7 +35733,7 @@ JSBool JSPROXY_CCActionTween_action_static(JSContext *cx, uint32_t argc, jsval *
 
 	ret_val = [CCActionTween action ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -35836,7 +35836,7 @@ JSBool JSPROXY_CCGrabber_afterRender_(JSContext *cx, uint32_t argc, jsval *vp) {
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; 
 
-	arg0 = (CCTexture2D*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCTexture2D*) jsval_to_nsobject( cx, *argvp++);
 
 	CCGrabber *real = (CCGrabber*) [proxy realObj];
 	[real afterRender:(CCTexture2D*)arg0  ];
@@ -35858,7 +35858,7 @@ JSBool JSPROXY_CCGrabber_beforeRender_(JSContext *cx, uint32_t argc, jsval *vp) 
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; 
 
-	arg0 = (CCTexture2D*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCTexture2D*) jsval_to_nsobject( cx, *argvp++);
 
 	CCGrabber *real = (CCGrabber*) [proxy realObj];
 	[real beforeRender:(CCTexture2D*)arg0  ];
@@ -35880,7 +35880,7 @@ JSBool JSPROXY_CCGrabber_grab_(JSContext *cx, uint32_t argc, jsval *vp) {
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; 
 
-	arg0 = (CCTexture2D*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCTexture2D*) jsval_to_nsobject( cx, *argvp++);
 
 	CCGrabber *real = (CCGrabber*) [proxy realObj];
 	[real grab:(CCTexture2D*)arg0  ];
@@ -35984,7 +35984,7 @@ JSBool JSPROXY_CCAnimation_addSpriteFrame_(JSContext *cx, uint32_t argc, jsval *
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; 
 
-	arg0 = (CCSpriteFrame*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCSpriteFrame*) jsval_to_nsobject( cx, *argvp++);
 
 	CCAnimation *real = (CCAnimation*) [proxy realObj];
 	[real addSpriteFrame:(CCSpriteFrame*)arg0  ];
@@ -36006,7 +36006,7 @@ JSBool JSPROXY_CCAnimation_addSpriteFrameWithFilename_(JSContext *cx, uint32_t a
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
 
 	CCAnimation *real = (CCAnimation*) [proxy realObj];
 	[real addSpriteFrameWithFilename:(NSString*)arg0  ];
@@ -36028,8 +36028,8 @@ JSBool JSPROXY_CCAnimation_addSpriteFrameWithTexture_rect_(JSContext *cx, uint32
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; CGRect arg1; 
 
-	arg0 = (CCTexture2D*) jsval_to_nsobject( *argvp++, cx);
-	arg1 = jsval_to_CGRect( *argvp++, cx );
+	arg0 = (CCTexture2D*) jsval_to_nsobject( cx, *argvp++);
+	arg1 = jsval_to_CGRect( cx, *argvp++ );
 
 	CCAnimation *real = (CCAnimation*) [proxy realObj];
 	[real addSpriteFrameWithTexture:(CCTexture2D*)arg0 rect:(CGRect)arg1  ];
@@ -36045,7 +36045,7 @@ JSBool JSPROXY_CCAnimation_animation_static(JSContext *cx, uint32_t argc, jsval 
 
 	ret_val = [CCAnimation animation ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -36058,14 +36058,14 @@ JSBool JSPROXY_CCAnimation_animationWithAnimationFrames_delayPerUnit_loops__stat
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSArray* arg0; double arg1; uint32_t arg2; 
 
-	arg0 = jsval_to_nsarray( *argvp++, cx );
+	arg0 = jsval_to_nsarray( cx, *argvp++ );
 	JS_ValueToNumber( cx, *argvp++, &arg1 );
 	JS_ValueToECMAUint32( cx, *argvp++, &arg2 );
 	CCAnimation* ret_val;
 
 	ret_val = [CCAnimation animationWithAnimationFrames:(NSArray*)arg0 delayPerUnit:(float)arg1 loops:(NSUInteger)arg2  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -36078,12 +36078,12 @@ JSBool JSPROXY_CCAnimation_animationWithSpriteFrames__static(JSContext *cx, uint
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSArray* arg0; 
 
-	arg0 = jsval_to_nsarray( *argvp++, cx );
+	arg0 = jsval_to_nsarray( cx, *argvp++ );
 	CCAnimation* ret_val;
 
 	ret_val = [CCAnimation animationWithSpriteFrames:(NSArray*)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -36096,13 +36096,13 @@ JSBool JSPROXY_CCAnimation_animationWithSpriteFrames_delay__static(JSContext *cx
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSArray* arg0; double arg1; 
 
-	arg0 = jsval_to_nsarray( *argvp++, cx );
+	arg0 = jsval_to_nsarray( cx, *argvp++ );
 	JS_ValueToNumber( cx, *argvp++, &arg1 );
 	CCAnimation* ret_val;
 
 	ret_val = [CCAnimation animationWithSpriteFrames:(NSArray*)arg0 delay:(float)arg1  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -36182,7 +36182,7 @@ JSBool JSPROXY_CCAnimation_initWithAnimationFrames_delayPerUnit_loops_(JSContext
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSArray* arg0; double arg1; uint32_t arg2; 
 
-	arg0 = jsval_to_nsarray( *argvp++, cx );
+	arg0 = jsval_to_nsarray( cx, *argvp++ );
 	JS_ValueToNumber( cx, *argvp++, &arg1 );
 	JS_ValueToECMAUint32( cx, *argvp++, &arg2 );
 
@@ -36209,7 +36209,7 @@ JSBool JSPROXY_CCAnimation_initWithSpriteFrames_(JSContext *cx, uint32_t argc, j
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSArray* arg0; 
 
-	arg0 = jsval_to_nsarray( *argvp++, cx );
+	arg0 = jsval_to_nsarray( cx, *argvp++ );
 
 	CCAnimation *real = [(CCAnimation*)[proxy.klass alloc] initWithSpriteFrames:(NSArray*)arg0  ];
 	[proxy setRealObj: real];
@@ -36234,7 +36234,7 @@ JSBool JSPROXY_CCAnimation_initWithSpriteFrames_delay_(JSContext *cx, uint32_t a
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSArray* arg0; double arg1; 
 
-	arg0 = jsval_to_nsarray( *argvp++, cx );
+	arg0 = jsval_to_nsarray( cx, *argvp++ );
 	JS_ValueToNumber( cx, *argvp++, &arg1 );
 
 	CCAnimation *real = [(CCAnimation*)[proxy.klass alloc] initWithSpriteFrames:(NSArray*)arg0 delay:(float)arg1  ];
@@ -36320,7 +36320,7 @@ JSBool JSPROXY_CCAnimation_setFrames_(JSContext *cx, uint32_t argc, jsval *vp) {
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSArray* arg0; 
 
-	arg0 = jsval_to_nsarray( *argvp++, cx );
+	arg0 = jsval_to_nsarray( cx, *argvp++ );
 
 	CCAnimation *real = (CCAnimation*) [proxy realObj];
 	[real setFrames:(NSMutableArray*)arg0  ];
@@ -36503,7 +36503,7 @@ JSBool JSPROXY_CCFadeTo_actionWithDuration_opacity__static(JSContext *cx, uint32
 
 	ret_val = [CCFadeTo actionWithDuration:(ccTime)arg0 opacity:(GLubyte)arg1  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -36547,7 +36547,7 @@ JSBool JSPROXY_CCFadeTo_actionWithDuration__static(JSContext *cx, uint32_t argc,
 
 	ret_val = [CCFadeTo actionWithDuration:(ccTime)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -36561,7 +36561,7 @@ JSBool JSPROXY_CCFadeTo_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	ret_val = [CCFadeTo action ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -36662,7 +36662,7 @@ JSBool JSPROXY_CCFlipX3D_actionWithDuration__static(JSContext *cx, uint32_t argc
 
 	ret_val = [CCFlipX3D actionWithDuration:(ccTime)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -36709,7 +36709,7 @@ JSBool JSPROXY_CCFlipX3D_actionWithSize_duration__static(JSContext *cx, uint32_t
 
 	ret_val = [CCFlipX3D actionWithSize:(ccGridSize)arg0 duration:(ccTime)arg1  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -36723,7 +36723,7 @@ JSBool JSPROXY_CCFlipX3D_action_static(JSContext *cx, uint32_t argc, jsval *vp) 
 
 	ret_val = [CCFlipX3D action ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -36930,7 +36930,7 @@ JSBool JSPROXY_CCWaves_actionWithWaves_amplitude_horizontal_vertical_grid_durati
 
 	ret_val = [CCWaves actionWithWaves:(int)arg0 amplitude:(float)arg1 horizontal:(BOOL)arg2 vertical:(BOOL)arg3 grid:(ccGridSize)arg4 duration:(ccTime)arg5  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -37067,7 +37067,7 @@ JSBool JSPROXY_CCWaves_actionWithSize_duration__static(JSContext *cx, uint32_t a
 
 	ret_val = [CCWaves actionWithSize:(ccGridSize)arg0 duration:(ccTime)arg1  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -37085,7 +37085,7 @@ JSBool JSPROXY_CCWaves_actionWithDuration__static(JSContext *cx, uint32_t argc, 
 
 	ret_val = [CCWaves actionWithDuration:(ccTime)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -37099,7 +37099,7 @@ JSBool JSPROXY_CCWaves_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	ret_val = [CCWaves action ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -37208,7 +37208,7 @@ JSBool JSPROXY_CCTransitionSceneOriented_initWithDuration_scene_orientation_(JSC
 	double arg0; id arg1; int32_t arg2; 
 
 	JS_ValueToNumber( cx, *argvp++, &arg0 );
-	arg1 = (CCScene*) jsval_to_nsobject( *argvp++, cx);
+	arg1 = (CCScene*) jsval_to_nsobject( cx, *argvp++);
 	JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
 
 	CCTransitionSceneOriented *real = [(CCTransitionSceneOriented*)[proxy.klass alloc] initWithDuration:(ccTime)arg0 scene:(CCScene*)arg1 orientation:(tOrientation)arg2  ];
@@ -37228,13 +37228,13 @@ JSBool JSPROXY_CCTransitionSceneOriented_transitionWithDuration_scene_orientatio
 	double arg0; id arg1; int32_t arg2; 
 
 	JS_ValueToNumber( cx, *argvp++, &arg0 );
-	arg1 = (CCScene*) jsval_to_nsobject( *argvp++, cx);
+	arg1 = (CCScene*) jsval_to_nsobject( cx, *argvp++);
 	JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
 	CCTransitionSceneOriented* ret_val;
 
 	ret_val = [CCTransitionSceneOriented transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1 orientation:(tOrientation)arg2  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -37248,12 +37248,12 @@ JSBool JSPROXY_CCTransitionSceneOriented_transitionWithDuration_scene__static(JS
 	double arg0; id arg1; 
 
 	JS_ValueToNumber( cx, *argvp++, &arg0 );
-	arg1 = (CCScene*) jsval_to_nsobject( *argvp++, cx);
+	arg1 = (CCScene*) jsval_to_nsobject( cx, *argvp++);
 	CCTransitionSceneOriented* ret_val;
 
 	ret_val = [CCTransitionSceneOriented transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -37267,7 +37267,7 @@ JSBool JSPROXY_CCTransitionSceneOriented_node_static(JSContext *cx, uint32_t arg
 
 	ret_val = [CCTransitionSceneOriented node ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -37370,10 +37370,10 @@ JSBool JSPROXY_CCMenuItemImage_initWithNormalImage_selectedImage_disabledImage_b
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; NSString* arg1; NSString* arg2; js_block arg3; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
-	arg1 = jsval_to_nsstring( *argvp++, cx );
-	arg2 = jsval_to_nsstring( *argvp++, cx );
-	arg3 = jsval_to_block( *argvp++, cx, JS_THIS_OBJECT(cx, vp) );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
+	arg1 = jsval_to_nsstring( cx, *argvp++ );
+	arg2 = jsval_to_nsstring( cx, *argvp++ );
+	arg3 = jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp) );
 
 	CCMenuItemImage *real = [(CCMenuItemImage*)[proxy.klass alloc] initWithNormalImage:(NSString*)arg0 selectedImage:(NSString*)arg1 disabledImage:(NSString*)arg2 block:(void (^)(id))arg3  ];
 	[proxy setRealObj: real];
@@ -37391,13 +37391,13 @@ JSBool JSPROXY_CCMenuItemImage_itemWithNormalImage_selectedImage__static(JSConte
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; NSString* arg1; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
-	arg1 = jsval_to_nsstring( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
+	arg1 = jsval_to_nsstring( cx, *argvp++ );
 	CCMenuItemImage* ret_val;
 
 	ret_val = [CCMenuItemImage itemWithNormalImage:(NSString*)arg0 selectedImage:(NSString*)arg1  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -37410,14 +37410,14 @@ JSBool JSPROXY_CCMenuItemImage_itemWithNormalImage_selectedImage_block__static(J
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; NSString* arg1; js_block arg2; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
-	arg1 = jsval_to_nsstring( *argvp++, cx );
-	arg2 = jsval_to_block( *argvp++, cx, JS_THIS_OBJECT(cx, vp) );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
+	arg1 = jsval_to_nsstring( cx, *argvp++ );
+	arg2 = jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp) );
 	CCMenuItemImage* ret_val;
 
 	ret_val = [CCMenuItemImage itemWithNormalImage:(NSString*)arg0 selectedImage:(NSString*)arg1 block:(void (^)(id))arg2  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -37430,15 +37430,15 @@ JSBool JSPROXY_CCMenuItemImage_itemWithNormalImage_selectedImage_disabledImage_b
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; NSString* arg1; NSString* arg2; js_block arg3; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
-	arg1 = jsval_to_nsstring( *argvp++, cx );
-	arg2 = jsval_to_nsstring( *argvp++, cx );
-	arg3 = jsval_to_block( *argvp++, cx, JS_THIS_OBJECT(cx, vp) );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
+	arg1 = jsval_to_nsstring( cx, *argvp++ );
+	arg2 = jsval_to_nsstring( cx, *argvp++ );
+	arg3 = jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp) );
 	CCMenuItemImage* ret_val;
 
 	ret_val = [CCMenuItemImage itemWithNormalImage:(NSString*)arg0 selectedImage:(NSString*)arg1 disabledImage:(NSString*)arg2 block:(void (^)(id))arg3  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -37458,7 +37458,7 @@ JSBool JSPROXY_CCMenuItemImage_setDisabledSpriteFrame_(JSContext *cx, uint32_t a
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; 
 
-	arg0 = (CCSpriteFrame*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCSpriteFrame*) jsval_to_nsobject( cx, *argvp++);
 
 	CCMenuItemImage *real = (CCMenuItemImage*) [proxy realObj];
 	[real setDisabledSpriteFrame:(CCSpriteFrame*)arg0  ];
@@ -37480,7 +37480,7 @@ JSBool JSPROXY_CCMenuItemImage_setNormalSpriteFrame_(JSContext *cx, uint32_t arg
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; 
 
-	arg0 = (CCSpriteFrame*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCSpriteFrame*) jsval_to_nsobject( cx, *argvp++);
 
 	CCMenuItemImage *real = (CCMenuItemImage*) [proxy realObj];
 	[real setNormalSpriteFrame:(CCSpriteFrame*)arg0  ];
@@ -37502,7 +37502,7 @@ JSBool JSPROXY_CCMenuItemImage_setSelectedSpriteFrame_(JSContext *cx, uint32_t a
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; 
 
-	arg0 = (CCSpriteFrame*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCSpriteFrame*) jsval_to_nsobject( cx, *argvp++);
 
 	CCMenuItemImage *real = (CCMenuItemImage*) [proxy realObj];
 	[real setSelectedSpriteFrame:(CCSpriteFrame*)arg0  ];
@@ -37517,13 +37517,13 @@ JSBool JSPROXY_CCMenuItemImage_itemWithNormalSprite_selectedSprite__static(JSCon
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; id arg1; 
 
-	arg0 = (CCNode*) jsval_to_nsobject( *argvp++, cx);
-	arg1 = (CCNode*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCNode*) jsval_to_nsobject( cx, *argvp++);
+	arg1 = (CCNode*) jsval_to_nsobject( cx, *argvp++);
 	CCMenuItemImage* ret_val;
 
 	ret_val = [CCMenuItemImage itemWithNormalSprite:(CCNode*)arg0 selectedSprite:(CCNode*)arg1  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -37536,14 +37536,14 @@ JSBool JSPROXY_CCMenuItemImage_itemWithNormalSprite_selectedSprite_block__static
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; id arg1; js_block arg2; 
 
-	arg0 = (CCNode*) jsval_to_nsobject( *argvp++, cx);
-	arg1 = (CCNode*) jsval_to_nsobject( *argvp++, cx);
-	arg2 = jsval_to_block( *argvp++, cx, JS_THIS_OBJECT(cx, vp) );
+	arg0 = (CCNode*) jsval_to_nsobject( cx, *argvp++);
+	arg1 = (CCNode*) jsval_to_nsobject( cx, *argvp++);
+	arg2 = jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp) );
 	CCMenuItemImage* ret_val;
 
 	ret_val = [CCMenuItemImage itemWithNormalSprite:(CCNode*)arg0 selectedSprite:(CCNode*)arg1 block:(void (^)(id))arg2  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -37556,15 +37556,15 @@ JSBool JSPROXY_CCMenuItemImage_itemWithNormalSprite_selectedSprite_disabledSprit
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; id arg1; id arg2; js_block arg3; 
 
-	arg0 = (CCNode*) jsval_to_nsobject( *argvp++, cx);
-	arg1 = (CCNode*) jsval_to_nsobject( *argvp++, cx);
-	arg2 = (CCNode*) jsval_to_nsobject( *argvp++, cx);
-	arg3 = jsval_to_block( *argvp++, cx, JS_THIS_OBJECT(cx, vp) );
+	arg0 = (CCNode*) jsval_to_nsobject( cx, *argvp++);
+	arg1 = (CCNode*) jsval_to_nsobject( cx, *argvp++);
+	arg2 = (CCNode*) jsval_to_nsobject( cx, *argvp++);
+	arg3 = jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp) );
 	CCMenuItemImage* ret_val;
 
 	ret_val = [CCMenuItemImage itemWithNormalSprite:(CCNode*)arg0 selectedSprite:(CCNode*)arg1 disabledSprite:(CCNode*)arg2 block:(void (^)(id))arg3  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -37577,12 +37577,12 @@ JSBool JSPROXY_CCMenuItemImage_itemWithBlock__static(JSContext *cx, uint32_t arg
 	jsval *argvp = JS_ARGV(cx,vp);
 	js_block arg0; 
 
-	arg0 = jsval_to_block( *argvp++, cx, JS_THIS_OBJECT(cx, vp) );
+	arg0 = jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp) );
 	CCMenuItemImage* ret_val;
 
 	ret_val = [CCMenuItemImage itemWithBlock:(void (^)(id))arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -37596,7 +37596,7 @@ JSBool JSPROXY_CCMenuItemImage_node_static(JSContext *cx, uint32_t argc, jsval *
 
 	ret_val = [CCMenuItemImage node ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -37700,13 +37700,13 @@ JSBool JSPROXY_CCDeccelAmplitude_actionWithAction_duration__static(JSContext *cx
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; double arg1; 
 
-	arg0 = (CCAction*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCAction*) jsval_to_nsobject( cx, *argvp++);
 	JS_ValueToNumber( cx, *argvp++, &arg1 );
 	CCDeccelAmplitude* ret_val;
 
 	ret_val = [CCDeccelAmplitude actionWithAction:(CCAction*)arg0 duration:(ccTime)arg1  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -37726,7 +37726,7 @@ JSBool JSPROXY_CCDeccelAmplitude_initWithAction_duration_(JSContext *cx, uint32_
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; double arg1; 
 
-	arg0 = (CCAction*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCAction*) jsval_to_nsobject( cx, *argvp++);
 	JS_ValueToNumber( cx, *argvp++, &arg1 );
 
 	CCDeccelAmplitude *real = [(CCDeccelAmplitude*)[proxy.klass alloc] initWithAction:(CCAction*)arg0 duration:(ccTime)arg1  ];
@@ -37791,7 +37791,7 @@ JSBool JSPROXY_CCDeccelAmplitude_actionWithDuration__static(JSContext *cx, uint3
 
 	ret_val = [CCDeccelAmplitude actionWithDuration:(ccTime)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -37805,7 +37805,7 @@ JSBool JSPROXY_CCDeccelAmplitude_action_static(JSContext *cx, uint32_t argc, jsv
 
 	ret_val = [CCDeccelAmplitude action ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -37903,7 +37903,7 @@ JSBool JSPROXY_CCLens3D_actionWithPosition_radius_grid_duration__static(JSContex
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGPoint arg0; double arg1; ccGridSize arg2; double arg3; 
 
-	arg0 = jsval_to_CGPoint( *argvp++, cx );
+	arg0 = jsval_to_CGPoint( cx, *argvp++ );
 	JS_ValueToNumber( cx, *argvp++, &arg1 );
 
 	JSObject *tmp_arg2;
@@ -37914,7 +37914,7 @@ JSBool JSPROXY_CCLens3D_actionWithPosition_radius_grid_duration__static(JSContex
 
 	ret_val = [CCLens3D actionWithPosition:(CGPoint)arg0 radius:(float)arg1 grid:(ccGridSize)arg2 duration:(ccTime)arg3  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -37934,7 +37934,7 @@ JSBool JSPROXY_CCLens3D_initWithPosition_radius_grid_duration_(JSContext *cx, ui
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGPoint arg0; double arg1; ccGridSize arg2; double arg3; 
 
-	arg0 = jsval_to_CGPoint( *argvp++, cx );
+	arg0 = jsval_to_CGPoint( cx, *argvp++ );
 	JS_ValueToNumber( cx, *argvp++, &arg1 );
 
 	JSObject *tmp_arg2;
@@ -38028,7 +38028,7 @@ JSBool JSPROXY_CCLens3D_setPosition_(JSContext *cx, uint32_t argc, jsval *vp) {
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGPoint arg0; 
 
-	arg0 = jsval_to_CGPoint( *argvp++, cx );
+	arg0 = jsval_to_CGPoint( cx, *argvp++ );
 
 	CCLens3D *real = (CCLens3D*) [proxy realObj];
 	[real setPosition:(CGPoint)arg0  ];
@@ -38052,7 +38052,7 @@ JSBool JSPROXY_CCLens3D_actionWithSize_duration__static(JSContext *cx, uint32_t 
 
 	ret_val = [CCLens3D actionWithSize:(ccGridSize)arg0 duration:(ccTime)arg1  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -38070,7 +38070,7 @@ JSBool JSPROXY_CCLens3D_actionWithDuration__static(JSContext *cx, uint32_t argc,
 
 	ret_val = [CCLens3D actionWithDuration:(ccTime)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -38084,7 +38084,7 @@ JSBool JSPROXY_CCLens3D_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	ret_val = [CCLens3D action ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -38196,7 +38196,7 @@ JSBool JSPROXY_CCWaves3D_actionWithWaves_amplitude_grid_duration__static(JSConte
 
 	ret_val = [CCWaves3D actionWithWaves:(int)arg0 amplitude:(float)arg1 grid:(ccGridSize)arg2 duration:(ccTime)arg3  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -38331,7 +38331,7 @@ JSBool JSPROXY_CCWaves3D_actionWithSize_duration__static(JSContext *cx, uint32_t
 
 	ret_val = [CCWaves3D actionWithSize:(ccGridSize)arg0 duration:(ccTime)arg1  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -38349,7 +38349,7 @@ JSBool JSPROXY_CCWaves3D_actionWithDuration__static(JSContext *cx, uint32_t argc
 
 	ret_val = [CCWaves3D actionWithDuration:(ccTime)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -38363,7 +38363,7 @@ JSBool JSPROXY_CCWaves3D_action_static(JSContext *cx, uint32_t argc, jsval *vp) 
 
 	ret_val = [CCWaves3D action ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -38471,7 +38471,7 @@ JSBool JSPROXY_CCJumpTo_startWithTarget_(JSContext *cx, uint32_t argc, jsval *vp
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; 
 
-	arg0 = (CCNode*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCNode*) jsval_to_nsobject( cx, *argvp++);
 
 	CCJumpTo *real = (CCJumpTo*) [proxy realObj];
 	[real startWithTarget:(CCNode*)arg0  ];
@@ -38487,14 +38487,14 @@ JSBool JSPROXY_CCJumpTo_actionWithDuration_position_height_jumps__static(JSConte
 	double arg0; CGPoint arg1; double arg2; uint32_t arg3; 
 
 	JS_ValueToNumber( cx, *argvp++, &arg0 );
-	arg1 = jsval_to_CGPoint( *argvp++, cx );
+	arg1 = jsval_to_CGPoint( cx, *argvp++ );
 	JS_ValueToNumber( cx, *argvp++, &arg2 );
 	JS_ValueToECMAUint32( cx, *argvp++, &arg3 );
 	CCJumpTo* ret_val;
 
 	ret_val = [CCJumpTo actionWithDuration:(ccTime)arg0 position:(CGPoint)arg1 height:(ccTime)arg2 jumps:(NSUInteger)arg3  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -38512,7 +38512,7 @@ JSBool JSPROXY_CCJumpTo_actionWithDuration__static(JSContext *cx, uint32_t argc,
 
 	ret_val = [CCJumpTo actionWithDuration:(ccTime)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -38526,7 +38526,7 @@ JSBool JSPROXY_CCJumpTo_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	ret_val = [CCJumpTo action ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -38630,7 +38630,7 @@ JSBool JSPROXY_CCTintBy_actionWithDuration_red_green_blue__static(JSContext *cx,
 
 	ret_val = [CCTintBy actionWithDuration:(ccTime)arg0 red:(GLshort)arg1 green:(GLshort)arg2 blue:(GLshort)arg3  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -38676,7 +38676,7 @@ JSBool JSPROXY_CCTintBy_actionWithDuration__static(JSContext *cx, uint32_t argc,
 
 	ret_val = [CCTintBy actionWithDuration:(ccTime)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -38690,7 +38690,7 @@ JSBool JSPROXY_CCTintBy_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	ret_val = [CCTintBy action ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -38793,7 +38793,7 @@ JSBool JSPROXY_CCTMXTiledMap_initWithTMXFile_(JSContext *cx, uint32_t argc, jsva
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
 
 	CCTMXTiledMap *real = [(CCTMXTiledMap*)[proxy.klass alloc] initWithTMXFile:(NSString*)arg0  ];
 	[proxy setRealObj: real];
@@ -38818,8 +38818,8 @@ JSBool JSPROXY_CCTMXTiledMap_initWithXML_resourcePath_(JSContext *cx, uint32_t a
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; NSString* arg1; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
-	arg1 = jsval_to_nsstring( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
+	arg1 = jsval_to_nsstring( cx, *argvp++ );
 
 	CCTMXTiledMap *real = [(CCTMXTiledMap*)[proxy.klass alloc] initWithXML:(NSString*)arg0 resourcePath:(NSString*)arg1  ];
 	[proxy setRealObj: real];
@@ -38844,13 +38844,13 @@ JSBool JSPROXY_CCTMXTiledMap_layerNamed_(JSContext *cx, uint32_t argc, jsval *vp
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
 	CCTMXLayer* ret_val;
 
 	CCTMXTiledMap *real = (CCTMXTiledMap*) [proxy realObj];
 	ret_val = [real layerNamed:(NSString*)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -38911,13 +38911,13 @@ JSBool JSPROXY_CCTMXTiledMap_objectGroupNamed_(JSContext *cx, uint32_t argc, jsv
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
 	CCTMXObjectGroup* ret_val;
 
 	CCTMXTiledMap *real = (CCTMXTiledMap*) [proxy realObj];
 	ret_val = [real objectGroupNamed:(NSString*)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -38959,7 +38959,7 @@ JSBool JSPROXY_CCTMXTiledMap_setObjectGroups_(JSContext *cx, uint32_t argc, jsva
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSArray* arg0; 
 
-	arg0 = jsval_to_nsarray( *argvp++, cx );
+	arg0 = jsval_to_nsarray( cx, *argvp++ );
 
 	CCTMXTiledMap *real = (CCTMXTiledMap*) [proxy realObj];
 	[real setObjectGroups:(NSMutableArray*)arg0  ];
@@ -38996,12 +38996,12 @@ JSBool JSPROXY_CCTMXTiledMap_tiledMapWithTMXFile__static(JSContext *cx, uint32_t
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
 	CCTMXTiledMap* ret_val;
 
 	ret_val = [CCTMXTiledMap tiledMapWithTMXFile:(NSString*)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -39014,13 +39014,13 @@ JSBool JSPROXY_CCTMXTiledMap_tiledMapWithXML_resourcePath__static(JSContext *cx,
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; NSString* arg1; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
-	arg1 = jsval_to_nsstring( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
+	arg1 = jsval_to_nsstring( cx, *argvp++ );
 	CCTMXTiledMap* ret_val;
 
 	ret_val = [CCTMXTiledMap tiledMapWithXML:(NSString*)arg0 resourcePath:(NSString*)arg1  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -39034,7 +39034,7 @@ JSBool JSPROXY_CCTMXTiledMap_node_static(JSContext *cx, uint32_t argc, jsval *vp
 
 	ret_val = [CCTMXTiledMap node ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -39149,7 +39149,7 @@ JSBool JSPROXY_CCWavesTiles3D_actionWithWaves_amplitude_grid_duration__static(JS
 
 	ret_val = [CCWavesTiles3D actionWithWaves:(int)arg0 amplitude:(float)arg1 grid:(ccGridSize)arg2 duration:(ccTime)arg3  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -39284,7 +39284,7 @@ JSBool JSPROXY_CCWavesTiles3D_actionWithSize_duration__static(JSContext *cx, uin
 
 	ret_val = [CCWavesTiles3D actionWithSize:(ccGridSize)arg0 duration:(ccTime)arg1  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -39302,7 +39302,7 @@ JSBool JSPROXY_CCWavesTiles3D_actionWithDuration__static(JSContext *cx, uint32_t
 
 	ret_val = [CCWavesTiles3D actionWithDuration:(ccTime)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -39316,7 +39316,7 @@ JSBool JSPROXY_CCWavesTiles3D_action_static(JSContext *cx, uint32_t argc, jsval 
 
 	ret_val = [CCWavesTiles3D action ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -39427,7 +39427,7 @@ JSBool JSPROXY_CCTurnOffTiles_actionWithSeed_grid_duration__static(JSContext *cx
 
 	ret_val = [CCTurnOffTiles actionWithSeed:(int)arg0 grid:(ccGridSize)arg1 duration:(ccTime)arg2  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -39479,7 +39479,7 @@ JSBool JSPROXY_CCTurnOffTiles_actionWithSize_duration__static(JSContext *cx, uin
 
 	ret_val = [CCTurnOffTiles actionWithSize:(ccGridSize)arg0 duration:(ccTime)arg1  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -39497,7 +39497,7 @@ JSBool JSPROXY_CCTurnOffTiles_actionWithDuration__static(JSContext *cx, uint32_t
 
 	ret_val = [CCTurnOffTiles actionWithDuration:(ccTime)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -39511,7 +39511,7 @@ JSBool JSPROXY_CCTurnOffTiles_action_static(JSContext *cx, uint32_t argc, jsval 
 
 	ret_val = [CCTurnOffTiles action ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -39614,7 +39614,7 @@ JSBool JSPROXY_CCSplitCols_actionWithCols_duration__static(JSContext *cx, uint32
 
 	ret_val = [CCSplitCols actionWithCols:(int)arg0 duration:(ccTime)arg1  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -39662,7 +39662,7 @@ JSBool JSPROXY_CCSplitCols_actionWithSize_duration__static(JSContext *cx, uint32
 
 	ret_val = [CCSplitCols actionWithSize:(ccGridSize)arg0 duration:(ccTime)arg1  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -39680,7 +39680,7 @@ JSBool JSPROXY_CCSplitCols_actionWithDuration__static(JSContext *cx, uint32_t ar
 
 	ret_val = [CCSplitCols actionWithDuration:(ccTime)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -39694,7 +39694,7 @@ JSBool JSPROXY_CCSplitCols_action_static(JSContext *cx, uint32_t argc, jsval *vp
 
 	ret_val = [CCSplitCols action ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -40035,7 +40035,7 @@ JSBool JSPROXY_CCRenderTexture_renderTextureWithWidth_height__static(JSContext *
 
 	ret_val = [CCRenderTexture renderTextureWithWidth:(int)arg0 height:(int)arg1  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -40055,7 +40055,7 @@ JSBool JSPROXY_CCRenderTexture_renderTextureWithWidth_height_pixelFormat__static
 
 	ret_val = [CCRenderTexture renderTextureWithWidth:(int)arg0 height:(int)arg1 pixelFormat:(CCTexture2DPixelFormat)arg2  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -40076,7 +40076,7 @@ JSBool JSPROXY_CCRenderTexture_renderTextureWithWidth_height_pixelFormat_depthSt
 
 	ret_val = [CCRenderTexture renderTextureWithWidth:(int)arg0 height:(int)arg1 pixelFormat:(CCTexture2DPixelFormat)arg2 depthStencilFormat:(GLuint)arg3  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -40096,7 +40096,7 @@ JSBool JSPROXY_CCRenderTexture_saveToFile_(JSContext *cx, uint32_t argc, jsval *
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
 	BOOL ret_val;
 
 	CCRenderTexture *real = (CCRenderTexture*) [proxy realObj];
@@ -40119,7 +40119,7 @@ JSBool JSPROXY_CCRenderTexture_saveToFile_format_(JSContext *cx, uint32_t argc, 
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; int32_t arg1; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
 	JS_ValueToECMAInt32( cx, *argvp++, &arg1 );
 	BOOL ret_val;
 
@@ -40143,7 +40143,7 @@ JSBool JSPROXY_CCRenderTexture_setSprite_(JSContext *cx, uint32_t argc, jsval *v
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; 
 
-	arg0 = (CCSprite*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCSprite*) jsval_to_nsobject( cx, *argvp++);
 
 	CCRenderTexture *real = (CCRenderTexture*) [proxy realObj];
 	[real setSprite:(CCSprite*)arg0  ];
@@ -40167,7 +40167,7 @@ JSBool JSPROXY_CCRenderTexture_sprite(JSContext *cx, uint32_t argc, jsval *vp) {
 	CCRenderTexture *real = (CCRenderTexture*) [proxy realObj];
 	ret_val = [real sprite ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -40181,7 +40181,7 @@ JSBool JSPROXY_CCRenderTexture_node_static(JSContext *cx, uint32_t argc, jsval *
 
 	ret_val = [CCRenderTexture node ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -40291,7 +40291,7 @@ JSBool JSPROXY_CCTwirl_actionWithPosition_twirls_amplitude_grid_duration__static
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGPoint arg0; int32_t arg1; double arg2; ccGridSize arg3; double arg4; 
 
-	arg0 = jsval_to_CGPoint( *argvp++, cx );
+	arg0 = jsval_to_CGPoint( cx, *argvp++ );
 	JS_ValueToECMAInt32( cx, *argvp++, &arg1 );
 	JS_ValueToNumber( cx, *argvp++, &arg2 );
 
@@ -40303,7 +40303,7 @@ JSBool JSPROXY_CCTwirl_actionWithPosition_twirls_amplitude_grid_duration__static
 
 	ret_val = [CCTwirl actionWithPosition:(CGPoint)arg0 twirls:(int)arg1 amplitude:(float)arg2 grid:(ccGridSize)arg3 duration:(ccTime)arg4  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -40361,7 +40361,7 @@ JSBool JSPROXY_CCTwirl_initWithPosition_twirls_amplitude_grid_duration_(JSContex
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGPoint arg0; int32_t arg1; double arg2; ccGridSize arg3; double arg4; 
 
-	arg0 = jsval_to_CGPoint( *argvp++, cx );
+	arg0 = jsval_to_CGPoint( cx, *argvp++ );
 	JS_ValueToECMAInt32( cx, *argvp++, &arg1 );
 	JS_ValueToNumber( cx, *argvp++, &arg2 );
 
@@ -40459,7 +40459,7 @@ JSBool JSPROXY_CCTwirl_setPosition_(JSContext *cx, uint32_t argc, jsval *vp) {
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGPoint arg0; 
 
-	arg0 = jsval_to_CGPoint( *argvp++, cx );
+	arg0 = jsval_to_CGPoint( cx, *argvp++ );
 
 	CCTwirl *real = (CCTwirl*) [proxy realObj];
 	[real setPosition:(CGPoint)arg0  ];
@@ -40483,7 +40483,7 @@ JSBool JSPROXY_CCTwirl_actionWithSize_duration__static(JSContext *cx, uint32_t a
 
 	ret_val = [CCTwirl actionWithSize:(ccGridSize)arg0 duration:(ccTime)arg1  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -40501,7 +40501,7 @@ JSBool JSPROXY_CCTwirl_actionWithDuration__static(JSContext *cx, uint32_t argc, 
 
 	ret_val = [CCTwirl actionWithDuration:(ccTime)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -40515,7 +40515,7 @@ JSBool JSPROXY_CCTwirl_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	ret_val = [CCTwirl action ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -40755,7 +40755,7 @@ JSBool JSPROXY_CCTMXTilesetInfo_setImageSize_(JSContext *cx, uint32_t argc, jsva
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGSize arg0; 
 
-	arg0 = jsval_to_CGSize( *argvp++, cx );
+	arg0 = jsval_to_CGSize( cx, *argvp++ );
 
 	CCTMXTilesetInfo *real = (CCTMXTilesetInfo*) [proxy realObj];
 	[real setImageSize:(CGSize)arg0  ];
@@ -40799,7 +40799,7 @@ JSBool JSPROXY_CCTMXTilesetInfo_setName_(JSContext *cx, uint32_t argc, jsval *vp
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
 
 	CCTMXTilesetInfo *real = (CCTMXTilesetInfo*) [proxy realObj];
 	[real setName:(NSString*)arg0  ];
@@ -40821,7 +40821,7 @@ JSBool JSPROXY_CCTMXTilesetInfo_setSourceImage_(JSContext *cx, uint32_t argc, js
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
 
 	CCTMXTilesetInfo *real = (CCTMXTilesetInfo*) [proxy realObj];
 	[real setSourceImage:(NSString*)arg0  ];
@@ -40865,7 +40865,7 @@ JSBool JSPROXY_CCTMXTilesetInfo_setTileSize_(JSContext *cx, uint32_t argc, jsval
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGSize arg0; 
 
-	arg0 = jsval_to_CGSize( *argvp++, cx );
+	arg0 = jsval_to_CGSize( cx, *argvp++ );
 
 	CCTMXTilesetInfo *real = (CCTMXTilesetInfo*) [proxy realObj];
 	[real setTileSize:(CGSize)arg0  ];
@@ -41101,7 +41101,7 @@ JSBool JSPROXY_CCTexturePVR_initWithContentsOfFile_(JSContext *cx, uint32_t argc
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
 
 	CCTexturePVR *real = [(CCTexturePVR*)[proxy.klass alloc] initWithContentsOfFile:(NSString*)arg0  ];
 	[proxy setRealObj: real];
@@ -41157,12 +41157,12 @@ JSBool JSPROXY_CCTexturePVR_pvrTextureWithContentsOfFile__static(JSContext *cx, 
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
 	CCTexturePVR* ret_val;
 
 	ret_val = [CCTexturePVR pvrTextureWithContentsOfFile:(NSString*)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -41331,7 +41331,7 @@ JSBool JSPROXY_CCGLProgram_addAttribute_index_(JSContext *cx, uint32_t argc, jsv
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; uint32_t arg1; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
 	JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
 
 	CCGLProgram *real = (CCGLProgram*) [proxy realObj];
@@ -41376,8 +41376,8 @@ JSBool JSPROXY_CCGLProgram_initWithVertexShaderFilename_fragmentShaderFilename_(
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; NSString* arg1; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
-	arg1 = jsval_to_nsstring( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
+	arg1 = jsval_to_nsstring( cx, *argvp++ );
 
 	CCGLProgram *real = [(CCGLProgram*)[proxy.klass alloc] initWithVertexShaderFilename:(NSString*)arg0 fragmentShaderFilename:(NSString*)arg1  ];
 	[proxy setRealObj: real];
@@ -41825,7 +41825,7 @@ JSBool JSPROXY_CCGrid3D_gridWithSize__static(JSContext *cx, uint32_t argc, jsval
 
 	ret_val = [CCGrid3D gridWithSize:(ccGridSize)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -41842,13 +41842,13 @@ JSBool JSPROXY_CCGrid3D_gridWithSize_texture_flippedTexture__static(JSContext *c
 	JSObject *tmp_arg0;
 	JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
 	arg0 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg0);
-	arg1 = (CCTexture2D*) jsval_to_nsobject( *argvp++, cx);
+	arg1 = (CCTexture2D*) jsval_to_nsobject( cx, *argvp++);
 	JS_ValueToBoolean( cx, *argvp++, &arg2 );
 	CCGrid3D* ret_val;
 
 	ret_val = [CCGrid3D gridWithSize:(ccGridSize)arg0 texture:(CCTexture2D*)arg1 flippedTexture:(BOOL)arg2  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -41952,7 +41952,7 @@ JSBool JSPROXY_CCActionManager_removeAction_(JSContext *cx, uint32_t argc, jsval
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; 
 
-	arg0 = (CCAction*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCAction*) jsval_to_nsobject( cx, *argvp++);
 
 	CCActionManager *real = (CCActionManager*) [proxy realObj];
 	[real removeAction:(CCAction*)arg0  ];
@@ -42073,8 +42073,8 @@ JSBool JSPROXY_CCSpriteFrameCache_addSpriteFrame_name_(JSContext *cx, uint32_t a
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; NSString* arg1; 
 
-	arg0 = (CCSpriteFrame*) jsval_to_nsobject( *argvp++, cx);
-	arg1 = jsval_to_nsstring( *argvp++, cx );
+	arg0 = (CCSpriteFrame*) jsval_to_nsobject( cx, *argvp++);
+	arg1 = jsval_to_nsstring( cx, *argvp++ );
 
 	CCSpriteFrameCache *real = (CCSpriteFrameCache*) [proxy realObj];
 	[real addSpriteFrame:(CCSpriteFrame*)arg0 name:(NSString*)arg1  ];
@@ -42096,7 +42096,7 @@ JSBool JSPROXY_CCSpriteFrameCache_addSpriteFramesWithFile_(JSContext *cx, uint32
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
 
 	CCSpriteFrameCache *real = (CCSpriteFrameCache*) [proxy realObj];
 	[real addSpriteFramesWithFile:(NSString*)arg0  ];
@@ -42118,8 +42118,8 @@ JSBool JSPROXY_CCSpriteFrameCache_addSpriteFramesWithFile_texture_(JSContext *cx
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; id arg1; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
-	arg1 = (CCTexture2D*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
+	arg1 = (CCTexture2D*) jsval_to_nsobject( cx, *argvp++);
 
 	CCSpriteFrameCache *real = (CCSpriteFrameCache*) [proxy realObj];
 	[real addSpriteFramesWithFile:(NSString*)arg0 texture:(CCTexture2D*)arg1  ];
@@ -42141,8 +42141,8 @@ JSBool JSPROXY_CCSpriteFrameCache_addSpriteFramesWithFile_textureFilename_(JSCon
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; NSString* arg1; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
-	arg1 = jsval_to_nsstring( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
+	arg1 = jsval_to_nsstring( cx, *argvp++ );
 
 	CCSpriteFrameCache *real = (CCSpriteFrameCache*) [proxy realObj];
 	[real addSpriteFramesWithFile:(NSString*)arg0 textureFilename:(NSString*)arg1  ];
@@ -42174,7 +42174,7 @@ JSBool JSPROXY_CCSpriteFrameCache_removeSpriteFrameByName_(JSContext *cx, uint32
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
 
 	CCSpriteFrameCache *real = (CCSpriteFrameCache*) [proxy realObj];
 	[real removeSpriteFrameByName:(NSString*)arg0  ];
@@ -42214,7 +42214,7 @@ JSBool JSPROXY_CCSpriteFrameCache_removeSpriteFramesFromFile_(JSContext *cx, uin
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
 
 	CCSpriteFrameCache *real = (CCSpriteFrameCache*) [proxy realObj];
 	[real removeSpriteFramesFromFile:(NSString*)arg0  ];
@@ -42236,7 +42236,7 @@ JSBool JSPROXY_CCSpriteFrameCache_removeSpriteFramesFromTexture_(JSContext *cx, 
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; 
 
-	arg0 = (CCTexture2D*) jsval_to_nsobject( *argvp++, cx);
+	arg0 = (CCTexture2D*) jsval_to_nsobject( cx, *argvp++);
 
 	CCSpriteFrameCache *real = (CCSpriteFrameCache*) [proxy realObj];
 	[real removeSpriteFramesFromTexture:(CCTexture2D*)arg0  ];
@@ -42270,7 +42270,7 @@ JSBool JSPROXY_CCSpriteFrameCache_sharedSpriteFrameCache_static(JSContext *cx, u
 
 	ret_val = [CCSpriteFrameCache sharedSpriteFrameCache ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
@@ -42290,13 +42290,13 @@ JSBool JSPROXY_CCSpriteFrameCache_spriteFrameByName_(JSContext *cx, uint32_t arg
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; 
 
-	arg0 = jsval_to_nsstring( *argvp++, cx );
+	arg0 = jsval_to_nsstring( cx, *argvp++ );
 	CCSpriteFrame* ret_val;
 
 	CCSpriteFrameCache *real = (CCSpriteFrameCache*) [proxy realObj];
 	ret_val = [real spriteFrameByName:(NSString*)arg0  ];
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( ret_val, cx );
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
 	return JS_TRUE;
