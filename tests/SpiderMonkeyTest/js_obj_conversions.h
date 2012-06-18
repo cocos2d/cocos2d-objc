@@ -45,6 +45,10 @@ id jsval_to_nsobject( jsval vp, JSContext *cx );
 /** converts a jsval to a NSArray */
 NSArray* jsval_to_nsarray( jsval vp, JSContext *cx );
 
+/** converts a variadic jsvals to a NSArray */
+NSArray* jsvals_variadic_to_nsarray( JSContext *cx, jsval *vp, int argc );
+	
+	
 CGPoint jsval_to_CGPoint( jsval vp, JSContext *cx );
 CGSize jsval_to_CGSize( jsval vp, JSContext *cx );
 CGRect jsval_to_CGRect( jsval vp, JSContext *cx );

@@ -9900,11 +9900,11 @@ JSBool JSPROXY_CCSequence_actionOne_two__static(JSContext *cx, uint32_t argc, js
 // Arguments: NSArray*
 // Ret value: CCSequence*
 JSBool JSPROXY_CCSequence_actionWithArray__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	NSCAssert( argc > 0, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSArray* arg0; 
 
-	arg0 = jsval_to_nsarray( *argvp++, cx );
+	arg0 = jsvals_variadic_to_nsarray( cx, argvp, argc );
 	CCSequence* ret_val;
 
 	ret_val = [CCSequence actionWithArray:(NSArray*)arg0  ];
@@ -21860,11 +21860,11 @@ JSBool JSPROXY_CCSpawn_actionOne_two__static(JSContext *cx, uint32_t argc, jsval
 // Arguments: NSArray*
 // Ret value: CCSpawn*
 JSBool JSPROXY_CCSpawn_actionWithArray__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	NSCAssert( argc > 0, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSArray* arg0; 
 
-	arg0 = jsval_to_nsarray( *argvp++, cx );
+	arg0 = jsvals_variadic_to_nsarray( cx, argvp, argc );
 	CCSpawn* ret_val;
 
 	ret_val = [CCSpawn actionWithArray:(NSArray*)arg0  ];
@@ -24882,11 +24882,11 @@ JSBool JSPROXY_CCMenu_initWithArray_(JSContext *cx, uint32_t argc, jsval *vp) {
 // Arguments: NSArray*
 // Ret value: CCMenu*
 JSBool JSPROXY_CCMenu_menuWithArray__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	NSCAssert( argc > 0, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSArray* arg0; 
 
-	arg0 = jsval_to_nsarray( *argvp++, cx );
+	arg0 = jsvals_variadic_to_nsarray( cx, argvp, argc );
 	CCMenu* ret_val;
 
 	ret_val = [CCMenu menuWithArray:(NSArray*)arg0  ];

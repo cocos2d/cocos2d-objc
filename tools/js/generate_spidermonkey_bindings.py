@@ -524,10 +524,6 @@ void %s_finalize(JSContext *cx, JSObject *obj)
         else:
             raise Exception('Invalid method type')
 
-        # sanity check
-#        if num_of_args+1 != len(args):
-#            raise Exception('Error parsing...')
-
         call = ''
 
         for i,arg in enumerate(args):
@@ -768,6 +764,10 @@ void %s_finalize(JSContext *cx, JSObject *obj)
 
         return (args_js_type, args_declared_type)
 
+    def generate_argument_variadic_2_nsarray( self ):
+        template = '\targ0 = jsvals_variadic_to_nsarray( cx, argvp, argc );\n'
+        self.mm_file.write( template )
+
     # Special case for string to NSString generator
     def generate_argument_string( self, i, arg_js_type, arg_declared_type ):
         template = '\targ%d = jsval_to_nsstring( *argvp++, cx );\n'
@@ -872,31 +872,39 @@ void %s_finalize(JSContext *cx, JSObject *obj)
             declared_vars += ' '
         self.mm_file.write( '%s\n\n' % declared_vars )
 
-        try:
+
+        if 'optional_args_since' in properties:
             optional_args_since = int( properties['optional_args_since'] )
-        except KeyError, e:
+        else:
             optional_args_since = None
 
         # Use variables
-        for i,arg in enumerate(args_js_type):
 
-            if optional_args_since and i >= optional_args_since-1:
-                self.mm_file.write('\tif (argc >= %d) {\n\t' % (i+1) )
-            if arg in js_types_conversions:
-                t = js_types_conversions[arg]
-                self.mm_file.write( '\t%s( cx, *argvp++, &arg%d );\n' % ( t[1], i ) )
-            elif arg in js_special_type_conversions:
-                js_special_type_conversions[arg][0]( i, arg, args_declared_type[i] )
-            elif args_declared_type[i] in js_declared_types_conversions:
-                f = js_declared_types_conversions[ args_declared_type[i] ]
-                f( i, arg, args_declared_type[i] )
-            elif self.is_valid_structure( arg ):
-                self.generate_argument_struct( i, arg, args_declared_type[i] )
-            else:
-                raise ParseException('Unsupported type: %s' % arg )
+        # Special case for variadic_2_nsarray
+        if 'variadic_2_array' in properties:
+            self.generate_argument_variadic_2_nsarray()
 
-            if optional_args_since and i >= optional_args_since-1:
-                self.mm_file.write('\t}\n' )
+        else:
+            for i,arg in enumerate(args_js_type):
+
+                if optional_args_since and i >= optional_args_since-1:
+                    self.mm_file.write('\tif (argc >= %d) {\n\t' % (i+1) )
+
+                if arg in js_types_conversions:
+                    t = js_types_conversions[arg]
+                    self.mm_file.write( '\t%s( cx, *argvp++, &arg%d );\n' % ( t[1], i ) )
+                elif arg in js_special_type_conversions:
+                    js_special_type_conversions[arg][0]( i, arg, args_declared_type[i] )
+                elif args_declared_type[i] in js_declared_types_conversions:
+                    f = js_declared_types_conversions[ args_declared_type[i] ]
+                    f( i, arg, args_declared_type[i] )
+                elif self.is_valid_structure( arg ):
+                    self.generate_argument_struct( i, arg, args_declared_type[i] )
+                else:
+                    raise ParseException('Unsupported type: %s' % arg )
+
+                if optional_args_since and i >= optional_args_since-1:
+                    self.mm_file.write('\t}\n' )
 
 
     def generate_method_prefix( self, class_name, method, num_of_args, method_type ):
@@ -929,9 +937,16 @@ JSBool %s_%s%s(JSContext *cx, uint32_t argc, jsval *vp) {
 
         try:
             # Does it have optional arguments ?
-            optional_args_since = int( self.method_properties[class_name][selector]['optional_args_since'] )
-            required_args = num_of_args - (optional_args_since-1)
-            method_assert_on_arguments = '\tNSCAssert( argc >= %d && argc <= %d , @"Invalid number of arguments" );\n' % (required_args, num_of_args)
+            properties = self.method_properties[class_name][selector]
+            if 'optional_args_since' in properties:
+                optional_args_since = int( properties['optional_args_since'] )
+                required_args = num_of_args - (optional_args_since-1)
+                method_assert_on_arguments = '\tNSCAssert( argc >= %d && argc <= %d , @"Invalid number of arguments" );\n' % (required_args, num_of_args)
+            elif 'variadic_2_array' in properties:
+                method_assert_on_arguments = '\tNSCAssert( argc > 0, @"Invalid number of arguments" );\n'
+            else:
+                # default
+                method_assert_on_arguments = '\tNSCAssert( argc == %d, @"Invalid number of arguments" );\n' % num_of_args
         except KeyError, e:
             # No, it only has required arguments
             method_assert_on_arguments = '\tNSCAssert( argc == %d, @"Invalid number of arguments" );\n' % num_of_args
