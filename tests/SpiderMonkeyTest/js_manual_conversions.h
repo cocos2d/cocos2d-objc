@@ -31,30 +31,30 @@ extern "C" {
 typedef void (^js_block)(id sender);
 	
 /** Creates a JSObject, a ProxyObject and associates them with the real object */
-JSObject* create_jsobject_from_realobj( Class klass, id realObj, JSContext* context );
+JSObject* create_jsobject_from_realobj( JSContext* context, Class klass, id realObj );
 
 /** Gets or Creates a JSObject, a ProxyObject and associates them with the real object */
-JSObject * get_or_create_jsobject_from_realobj( id realObj, JSContext *cx );
+JSObject * get_or_create_jsobject_from_realobj( JSContext *cx, id realObj);
 
 /** converts a jsval to a NSString */
-NSString *jsval_to_nsstring(jsval vp, JSContext *cx );
+NSString *jsval_to_nsstring( JSContext *cx , jsval vp );
 
 /** converts a jsval to a NSObject */
-id jsval_to_nsobject( jsval vp, JSContext *cx );
+id jsval_to_nsobject( JSContext *cx, jsval vp );
 
 /** converts a jsval to a NSArray */
-NSArray* jsval_to_nsarray( jsval vp, JSContext *cx );
+NSArray* jsval_to_nsarray( JSContext *cx , jsval vp );
 
 /** converts a variadic jsvals to a NSArray */
 NSArray* jsvals_variadic_to_nsarray( JSContext *cx, jsval *vp, int argc );
 	
 	
-CGPoint jsval_to_CGPoint( jsval vp, JSContext *cx );
-CGSize jsval_to_CGSize( jsval vp, JSContext *cx );
-CGRect jsval_to_CGRect( jsval vp, JSContext *cx );
+CGPoint jsval_to_CGPoint( JSContext *cx, jsval vp );
+CGSize jsval_to_CGSize( JSContext *cx, jsval vp );
+CGRect jsval_to_CGRect( JSContext *cx, jsval vp );
 	
 /** converts a jsval to a block */
-js_block jsval_to_block( jsval vp, JSContext *cx, JSObject *jsthis );
+js_block jsval_to_block( JSContext *cx, jsval vp, JSObject *jsthis );
 
 jsval CGPoint_to_jsval( JSContext *cx, CGPoint p );
 jsval CGSize_to_jsval( JSContext *cx, CGSize s);

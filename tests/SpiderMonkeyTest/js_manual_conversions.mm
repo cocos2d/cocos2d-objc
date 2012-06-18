@@ -30,7 +30,7 @@
 
 #pragma mark - helpers
 
-JSObject* create_jsobject_from_realobj( Class klass,id realObj, JSContext* context )
+JSObject* create_jsobject_from_realobj( JSContext* context, Class klass,id realObj )
 {
 	NSString *proxied_class = [NSString stringWithFormat:@"JSPROXY_%@", klass];
 	Class newKlass = NSClassFromString(proxied_class);
@@ -38,29 +38,29 @@ JSObject* create_jsobject_from_realobj( Class klass,id realObj, JSContext* conte
 		return [newKlass createJSObjectWithRealObject:realObj context:context];
 
 	CCLOGWARN(@"Proxied class not found: %@. Trying with parent class", proxied_class );
-	return create_jsobject_from_realobj([klass superclass], realObj, context );
+	return create_jsobject_from_realobj( context, [klass superclass], realObj  );
 }
 
-JSObject * get_or_create_jsobject_from_realobj( id realObj, JSContext *cx )
+JSObject * get_or_create_jsobject_from_realobj( JSContext *cx, id realObj )
 {
 	JSPROXY_NSObject *proxy = objc_getAssociatedObject(realObj, &JSPROXY_association_proxy_key );
 	if( proxy )
 		return [proxy jsObj];
 	
-	return create_jsobject_from_realobj( [realObj class], realObj, cx );
+	return create_jsobject_from_realobj( cx, [realObj class], realObj );
 }
 
 
 #pragma mark - jsval to native
 
 // Convert function
-NSString *jsval_to_nsstring(jsval vp, JSContext *cx )
+NSString *jsval_to_nsstring( JSContext *cx, jsval vp )
 {
 	JSString *jsstr = JS_ValueToString( cx, vp );
 	return [NSString stringWithUTF8String: JS_EncodeString(cx, jsstr)];
 }
 
-id jsval_to_nsobject( jsval vp, JSContext *cx )
+id jsval_to_nsobject( JSContext *cx, jsval vp )
 {
 	JSObject *jsobj;
 	JS_ValueToObject( cx, vp, &jsobj );
@@ -70,7 +70,7 @@ id jsval_to_nsobject( jsval vp, JSContext *cx )
 	return [proxy realObj];
 }
 
-NSArray* jsval_to_nsarray( jsval vp, JSContext *cx )
+NSArray* jsval_to_nsarray( JSContext *cx, jsval vp )
 {
 	// Parsing sequence
 	JSObject *jsobj;
@@ -85,7 +85,7 @@ NSArray* jsval_to_nsarray( jsval vp, JSContext *cx )
 		JS_GetElement(cx, jsobj, i, &valarg);
 		
 		// XXX: forcing them to be objects, but they could also be NSString, NSDictionary or NSArray
-		id real_obj = jsval_to_nsobject( valarg, cx);
+		id real_obj = jsval_to_nsobject( cx, valarg );
 		
 		[array addObject:real_obj];
 	}
@@ -98,18 +98,18 @@ NSArray* jsvals_variadic_to_nsarray( JSContext *cx, jsval *vp, int argc )
 	
 	for( int i=0; i < argc; i++ )
 	{
-		id obj = jsval_to_nsobject( *vp++, cx);
+		id obj = jsval_to_nsobject( cx, *vp++ );
 		[array addObject:obj];
 	}
 	return array;
 }
 
-js_block jsval_to_block( jsval vp, JSContext *cx, JSObject *jsthis )
+js_block jsval_to_block( JSContext *cx, jsval vp, JSObject *jsthis )
 {
 	js_block block = ^(id sender) {
 		jsval rval;
 		
-		JSObject *jsobj = get_or_create_jsobject_from_realobj( sender, cx );
+		JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, sender );
 		jsval val = OBJECT_TO_JSVAL(jsobj);
 		
 		JS_CallFunctionValue(cx, jsthis, vp, 1, &val, &rval);
@@ -118,7 +118,7 @@ js_block jsval_to_block( jsval vp, JSContext *cx, JSObject *jsthis )
 	return [[block copy] autorelease];
 }
 
-CGPoint jsval_to_CGPoint( jsval vp, JSContext *cx )
+CGPoint jsval_to_CGPoint( JSContext *cx, jsval vp )
 {
 	JSObject *tmp_arg;
 	JS_ValueToObject( cx, vp, &tmp_arg );
@@ -136,7 +136,7 @@ CGPoint jsval_to_CGPoint( jsval vp, JSContext *cx )
 	return ret;
 }
 
-CGSize jsval_to_CGSize( jsval vp, JSContext *cx )
+CGSize jsval_to_CGSize( JSContext *cx, jsval vp )
 {
 	JSObject *tmp_arg;
 	JS_ValueToObject( cx, vp, &tmp_arg );
@@ -154,7 +154,7 @@ CGSize jsval_to_CGSize( jsval vp, JSContext *cx )
 	return ret;	
 }
 
-CGRect jsval_to_CGRect( jsval vp, JSContext *cx )
+CGRect jsval_to_CGRect( JSContext *cx, jsval vp )
 {
 	JSObject *tmp_arg;
 	JS_ValueToObject( cx, vp, &tmp_arg );
@@ -179,7 +179,7 @@ jsval NSArray_to_jsval( JSContext *cx, NSArray *array)
 	JSObject *jsobj = JS_NewArrayObject(cx, 0, NULL);
 	uint32_t index = 0;
 	for( id obj in array ) {
-		JSObject *s = get_or_create_jsobject_from_realobj( obj, cx );
+		JSObject *s = get_or_create_jsobject_from_realobj( cx, obj );
 		jsval val = OBJECT_TO_JSVAL(s);
 		JS_SetElement(cx, jsobj, index++, &val);
 	}
