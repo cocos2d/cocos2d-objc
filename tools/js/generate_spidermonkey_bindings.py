@@ -113,11 +113,11 @@ class SpiderMonkey(object):
 
         self.hierarchy_file = config['hierarchy_protocol_file']
         self.hierarchy = {}
-        self.parse_hierarchy_file()
+        self.init_hierarchy_file()
 
         self.bridgesupport_file = config['bridge_support_file']
         self.bs = {}
-        self.parse_bridgesupport_file()
+        self.init_bridgesupport_file()
 
         self.namespace = config['namespace']
 
@@ -153,12 +153,12 @@ class SpiderMonkey(object):
         self.callback_functions = []
 
 
-    def parse_hierarchy_file( self ):
+    def init_hierarchy_file( self ):
         f = open( self.hierarchy_file )
         self.hierarchy = ast.literal_eval( f.read() )
         f.close()
 
-    def parse_bridgesupport_file( self ):
+    def init_bridgesupport_file( self ):
         p = ET.parse( self.bridgesupport_file )
         root = p.getroot()
         self.bs = xml2d( root )
@@ -525,14 +525,16 @@ void %s_finalize(JSContext *cx, JSObject *obj)
             raise Exception('Invalid method type')
 
         # sanity check
-        if num_of_args+1 != len(args):
-            raise Exception('Error parsing...')
+#        if num_of_args+1 != len(args):
+#            raise Exception('Error parsing...')
 
         call = ''
 
         for i,arg in enumerate(args):
             if num_of_args == 0:
                 call += arg
+            elif i+1 > num_of_args:
+                break
             elif arg:   # empty arg?
                 # cast needed to prevent compiler errors
                 call += '%s:(%s)arg%d ' % (arg, args_declared_type[i], i)
@@ -813,7 +815,7 @@ void %s_finalize(JSContext *cx, JSObject *obj)
         template = '\targ%d = jsval_to_block( *argvp++, cx, JS_THIS_OBJECT(cx, vp) );\n'
         self.mm_file.write( template % (i) )
 
-    def generate_arguments( self, args_declared_type, args_js_type ):
+    def generate_arguments( self, args_declared_type, args_js_type, properties = {} ):
         # b      JSBool          Boolean
         # c      uint16_t/jschar ECMA uint16_t, Unicode char
         # i      int32_t         ECMA int32_t
@@ -870,9 +872,16 @@ void %s_finalize(JSContext *cx, JSObject *obj)
             declared_vars += ' '
         self.mm_file.write( '%s\n\n' % declared_vars )
 
+        try:
+            optional_args_since = int( properties['optional_args_since'] )
+        except KeyError, e:
+            optional_args_since = None
+
         # Use variables
         for i,arg in enumerate(args_js_type):
 
+            if optional_args_since and i >= optional_args_since-1:
+                self.mm_file.write('\tif (argc >= %d) {\n\t' % (i+1) )
             if arg in js_types_conversions:
                 t = js_types_conversions[arg]
                 self.mm_file.write( '\t%s( cx, *argvp++, &arg%d );\n' % ( t[1], i ) )
@@ -886,7 +895,11 @@ void %s_finalize(JSContext *cx, JSObject *obj)
             else:
                 raise ParseException('Unsupported type: %s' % arg )
 
-    def generate_method_prefix( self, class_name, converted_name, num_of_args, method_type ):
+            if optional_args_since and i >= optional_args_since-1:
+                self.mm_file.write('\t}\n' )
+
+
+    def generate_method_prefix( self, class_name, method, num_of_args, method_type ):
         # JSPROXY_CCNode, setPosition
         # "!" or ""
         # proxy.initialized = YES (or nothing)
@@ -902,6 +915,9 @@ JSBool %s_%s%s(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( %s[proxy realObj], @"Object not initialzied. error");
 '''
 
+        selector = method['selector']
+        converted_name = self.convert_selector_name_to_native( selector )
+
         # method name
         class_method = '_static' if self.is_class_method(self.current_method) else ''
         self.mm_file.write( template_methodname % ( PROXY_PREFIX+class_name, converted_name, class_method ) )
@@ -911,9 +927,15 @@ JSBool %s_%s%s(JSContext *cx, uint32_t argc, jsval *vp) {
             assert_init = '!' if method_type == METHOD_INIT else ''
             self.mm_file.write( template_init % assert_init )
 
-        # Number of arguments
-        method_assert_on_arguments = '\tNSCAssert( argc == %d, @"Invalid number of arguments" );\n'
-        self.mm_file.write( method_assert_on_arguments % num_of_args )
+        try:
+            # Does it have optional arguments ?
+            optional_args_since = int( self.method_properties[class_name][selector]['optional_args_since'] )
+            required_args = num_of_args - (optional_args_since-1)
+            method_assert_on_arguments = '\tNSCAssert( argc >= %d && argc <= %d , @"Invalid number of arguments" );\n' % (required_args, num_of_args)
+        except KeyError, e:
+            # No, it only has required arguments
+            method_assert_on_arguments = '\tNSCAssert( argc == %d, @"Invalid number of arguments" );\n' % num_of_args
+        self.mm_file.write( method_assert_on_arguments )
 
 
     def generate_method_suffix( self ):
@@ -946,25 +968,38 @@ JSBool %s_%s%s(JSContext *cx, uint32_t argc, jsval *vp) {
 
         method_type = self.get_method_type( method )
 
-        # writing...
-        converted_name = self.convert_selector_name_to_native( s )
-
         num_of_args = len( args_declared_type )
 
         # writes method description
         self.mm_file.write( '\n// Arguments: %s\n// Ret value: %s' % ( ', '.join(args_declared_type), ret_declared_type ) )
 
-        self.generate_method_prefix( class_name, converted_name, num_of_args, method_type )
+        self.generate_method_prefix( class_name, method, num_of_args, method_type )
 
-        if len(args_js_type) > 0:
-            self.generate_arguments( args_declared_type, args_js_type );
+        try:
+            properties = self.method_properties[class_name][method['selector']]
+        except KeyError, e:
+            properties = {}
+
+        # Optional Args ?
+        try:
+            optional_args_since = int( properties['optional_args_since'] )
+        except KeyError, e:
+            optional_args_since = None
+
+        total_args = self.get_number_of_arguments( method )
+        if total_args > 0:
+            self.generate_arguments( args_declared_type, args_js_type, properties )
 
         if ret_declared_type:
             self.mm_file.write( '\t%s ret_val;\n' % ret_declared_type )
 
-        call_real = self.generate_method_call_to_real_object( s, num_of_args, ret_declared_type, args_declared_type, class_name, method_type )
-
-        self.mm_file.write( '\n%s\n' % call_real )
+        if optional_args_since:
+            for i in xrange(total_args):
+                call_real = self.generate_method_call_to_real_object( s, i+1, ret_declared_type, args_declared_type, class_name, method_type )
+                self.mm_file.write( '\n\tif( argc == %d )\n\t%s\n' % (i+1, call_real) )
+        else:
+            call_real = self.generate_method_call_to_real_object( s, num_of_args, ret_declared_type, args_declared_type, class_name, method_type )
+            self.mm_file.write( '\n%s\n' % call_real )
 
         ret_string = self.generate_retval( ret_declared_type, ret_js_type )
         if not ret_string:
