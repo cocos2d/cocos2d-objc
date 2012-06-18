@@ -4,7 +4,7 @@ function ccp(x, y)
 	var floats = new Float32Array(2);
 	floats[0] = x;
 	floats[1] = y;
-	
+
 	return floats;
 }
 
@@ -14,7 +14,18 @@ function ccc3(r, g, b)
 	colors[0] = r;
 	colors[1] = g;
 	colors[2] = b;
-	
+
+	return colors;
+}
+
+function ccc4b(r, g, b, a)
+{
+	var colors = new Uint8Array(4)
+	colors[0] = r;
+	colors[1] = g;
+	colors[2] = b;
+	colors[3] = a;
+
 	return colors;
 }
 
@@ -25,7 +36,7 @@ function ccc4f(r, g, b, a)
 	colors[1] = g;
 	colors[2] = b;
 	colors[3] = a;
-	
+
 	return colors;
 }
 
@@ -137,12 +148,12 @@ cc.base = function(me, opt_methodName, var_args) {
 	if (caller.superClass_) {
 		// This is a constructor. Call the superclass constructor.
 		ret =  caller.superClass_.constructor.apply( me, Array.prototype.slice.call(arguments, 1));
-		
+
 		// XXX: SpiderMonkey bindings extensions
 		__associateObjWithNative( me, ret );
 		return ret;
 	}
-	
+
 	var args = Array.prototype.slice.call(arguments, 2);
 	var foundCaller = false;
 	for (var ctor = me.constructor;
@@ -153,7 +164,7 @@ cc.base = function(me, opt_methodName, var_args) {
 			return ctor.prototype[opt_methodName].apply(me, args);
 		}
 	}
-	
+
 	// If we did not find the caller in the prototype chain,
 	// then one of two things happened:
 	// 1) The caller is an instance method.

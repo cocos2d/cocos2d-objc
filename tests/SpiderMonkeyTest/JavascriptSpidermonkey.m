@@ -174,7 +174,7 @@ static JSClass global_class = {
 //	
 //	[[CCDirector sharedDirector] runWithScene:scene];
 //	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/test.js"];
-
+//	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/test2.js"];
 	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/test-sprite.js"];	
 
 }
