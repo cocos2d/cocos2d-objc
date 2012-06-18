@@ -43,6 +43,9 @@ JSObject* create_jsobject_from_realobj( JSContext* context, Class klass,id realO
 
 JSObject * get_or_create_jsobject_from_realobj( JSContext *cx, id realObj )
 {
+	if( ! realObj )
+		return NULL;
+		
 	JSPROXY_NSObject *proxy = objc_getAssociatedObject(realObj, &JSPROXY_association_proxy_key );
 	if( proxy )
 		return [proxy jsObj];

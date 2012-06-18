@@ -57,8 +57,10 @@ JSBool ScriptingCore_log(JSContext *cx, uint32_t argc, jsval *vp)
 			char *cstr = JS_EncodeString(cx, string);
 			CCLOG(@"%s", cstr);
 		}
+		
+		return JS_TRUE;
 	}
-	return JS_TRUE;
+	return JS_FALSE;
 };
 
 JSBool ScriptingCore_executeScript(JSContext *cx, uint32_t argc, jsval *vp)
@@ -68,8 +70,11 @@ JSBool ScriptingCore_executeScript(JSContext *cx, uint32_t argc, jsval *vp)
 		if (JS_ConvertArguments(cx, argc, JS_ARGV(cx, vp), "S", &string) == JS_TRUE) {
 			[[ScriptingCore sharedInstance]	runScript: [NSString stringWithCString:JS_EncodeString(cx, string) encoding:NSUTF8StringEncoding] ];
 		}
+		
+		return JS_TRUE;
 	}
-	return JS_TRUE;
+	
+	return JS_FALSE;
 };
 
 JSBool ScriptingCore_associateObjectWithNative(JSContext *cx, uint32_t argc, jsval *vp)
@@ -86,8 +91,11 @@ JSBool ScriptingCore_associateObjectWithNative(JSContext *cx, uint32_t argc, jsv
 //		JSPROXY_NSObject *proxy = JS_GetPrivate( nativeJSObj );
 		set_proxy_for_jsobject( proxy, pureJSObj );
 		[proxy setJsObj:pureJSObj];
+		
+		return JS_TRUE;
 	}
-	return JS_TRUE;
+	
+	return JS_FALSE;
 };
 
 JSBool ScriptingCore_address(JSContext *cx, uint32_t argc, jsval *vp)
@@ -105,8 +113,11 @@ JSBool ScriptingCore_address(JSContext *cx, uint32_t argc, jsval *vp)
 			str = jsval_to_nsstring( cx, *argvp++ );
 		}
 		NSLog(@"Address this:%p arg:%p - %@", jsThis, jsObj, str);
+
+		return JS_TRUE;
 	}
-	return JS_TRUE;
+
+	return JS_FALSE;
 };
 
 
@@ -120,8 +131,10 @@ JSBool ScriptingCore_addRootJS(JSContext *cx, uint32_t argc, jsval *vp)
 				CCLOGWARN(@"something went wrong when setting an object to the root");
 			}
 		}
+		
+		return JS_TRUE;
 	}
-	return JS_TRUE;
+	return JS_FALSE;
 };
 
 /*
@@ -135,8 +148,9 @@ JSBool ScriptingCore_removeRootJS(JSContext *cx, uint32_t argc, jsval *vp)
 		if (JS_ConvertArguments(cx, argc, JS_ARGV(cx, vp), "o", &o) == JS_TRUE) {
 			JS_RemoveObjectRoot(cx, &o);
 		}
+		return JS_TRUE;
 	}
-	return JS_TRUE;
+	return JS_FALSE;
 };
 
 /*
@@ -163,8 +177,9 @@ JSBool ScriptingCore_addToRunningScene(JSContext *cx, uint32_t argc, jsval *vp)
 			[[director runningScene] addChild:node];
 			[[director runningScene] walkSceneGraph:0];
 		}
+		return JS_TRUE;
 	}
-	return JS_TRUE;
+	return JS_FALSE;
 };
 
 

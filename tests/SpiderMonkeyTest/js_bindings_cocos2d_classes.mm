@@ -4195,7 +4195,7 @@ void JSPROXY_CCMoveBy_createClass(JSContext *cx, JSObject* globalObj, const char
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
-		JS_FN("actionWithDurationPosition", JSPROXY_CCMoveBy_actionWithDuration_position__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("create", JSPROXY_CCMoveBy_actionWithDuration_position__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("actionWithDuration", JSPROXY_CCMoveBy_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("action", JSPROXY_CCMoveBy_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
@@ -9816,7 +9816,7 @@ void JSPROXY_CCScaleBy_createClass(JSContext *cx, JSObject* globalObj, const cha
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
-		JS_FN("actionWithDurationScale", JSPROXY_CCScaleBy_actionWithDuration_scale__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("create", JSPROXY_CCScaleBy_actionWithDuration_scale__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("actionWithDurationScalexScaley", JSPROXY_CCScaleBy_actionWithDuration_scaleX_scaleY__static, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("actionWithDuration", JSPROXY_CCScaleBy_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("action", JSPROXY_CCScaleBy_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
@@ -16566,7 +16566,7 @@ void JSPROXY_CCFadeOut_createClass(JSContext *cx, JSObject* globalObj, const cha
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
-		JS_FN("actionWithDuration", JSPROXY_CCFadeOut_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("create", JSPROXY_CCFadeOut_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("action", JSPROXY_CCFadeOut_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
@@ -17132,7 +17132,7 @@ void JSPROXY_CCRepeatForever_createClass(JSContext *cx, JSObject* globalObj, con
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
-		JS_FN("actionWithAction", JSPROXY_CCRepeatForever_actionWithAction__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("create", JSPROXY_CCRepeatForever_actionWithAction__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("action", JSPROXY_CCRepeatForever_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
@@ -17268,7 +17268,7 @@ void JSPROXY_CCFadeIn_createClass(JSContext *cx, JSObject* globalObj, const char
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
-		JS_FN("actionWithDuration", JSPROXY_CCFadeIn_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("create", JSPROXY_CCFadeIn_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("action", JSPROXY_CCFadeIn_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
@@ -30665,7 +30665,7 @@ void JSPROXY_CCRotateBy_createClass(JSContext *cx, JSObject* globalObj, const ch
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
-		JS_FN("actionWithDurationAngle", JSPROXY_CCRotateBy_actionWithDuration_angle__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("create", JSPROXY_CCRotateBy_actionWithDuration_angle__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("actionWithDuration", JSPROXY_CCRotateBy_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("action", JSPROXY_CCRotateBy_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
@@ -38718,7 +38718,7 @@ void JSPROXY_CCTintBy_createClass(JSContext *cx, JSObject* globalObj, const char
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
-		JS_FN("actionWithDurationRedGreenBlue", JSPROXY_CCTintBy_actionWithDuration_red_green_blue__static, 4, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("create", JSPROXY_CCTintBy_actionWithDuration_red_green_blue__static, 4, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("actionWithDuration", JSPROXY_CCTintBy_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("action", JSPROXY_CCTintBy_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
