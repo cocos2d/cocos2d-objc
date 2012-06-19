@@ -162,6 +162,21 @@ JSBool ScriptingCore_forceGC(JSContext *cx, uint32_t argc, jsval *vp)
 	return JS_TRUE;
 };
 
+/*
+ * Force a cycle of GC
+ */
+static void dumpNamedRoot(const char *name, void *addr,  JSGCRootType type, void *data)
+{
+    printf("There is a root named '%s' at %p\n", name, addr);
+}
+JSBool ScriptingCore_dumpRoot(JSContext *cx, uint32_t argc, jsval *vp)
+{
+//	JSRuntime *rt = [[ScriptingCore sharedInstance] runtime];
+//	JS_DumpNamedRoots(rt, dumpNamedRoot, NULL);
+	return JS_TRUE;
+};
+
+
 JSBool ScriptingCore_addToRunningScene(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	if (argc == 1) {
@@ -227,6 +242,7 @@ JSBool ScriptingCore_addToRunningScene(JSContext *cx, uint32_t argc, jsval *vp)
 		JS_SetProperty(_cx, _object, "__jsc__", &jscVal);
 
 		JS_DefineFunction(_cx, jsc, "garbageCollect", ScriptingCore_forceGC, 0, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
+		JS_DefineFunction(_cx, jsc, "dumpRoot", ScriptingCore_dumpRoot, 0, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
 		JS_DefineFunction(_cx, jsc, "addGCRootObject", ScriptingCore_addRootJS, 1, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
 		JS_DefineFunction(_cx, jsc, "removeGCRootObject", ScriptingCore_removeRootJS, 1, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
 		JS_DefineFunction(_cx, jsc, "executeScript", ScriptingCore_executeScript, 1, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );

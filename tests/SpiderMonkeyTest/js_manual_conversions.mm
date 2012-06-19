@@ -60,13 +60,22 @@ JSObject * get_or_create_jsobject_from_realobj( JSContext *cx, id realObj )
 NSString *jsval_to_nsstring( JSContext *cx, jsval vp )
 {
 	JSString *jsstr = JS_ValueToString( cx, vp );
+	
+	// root it
+	vp = STRING_TO_JSVAL(jsstr);
+
 	return [NSString stringWithUTF8String: JS_EncodeString(cx, jsstr)];
 }
 
 id jsval_to_nsobject( JSContext *cx, jsval vp )
 {
 	JSObject *jsobj;
-	JS_ValueToObject( cx, vp, &jsobj );
+	if( ! JS_ValueToObject( cx, vp, &jsobj ) )
+		return nil;
+	
+	// root it
+	vp = OBJECT_TO_JSVAL(jsobj);
+	
 //	JSPROXY_NSObject* proxy = (JSPROXY_NSObject*) JS_GetPrivate( jsobj ); 
 	JSPROXY_NSObject* proxy = get_proxy_for_jsobject(jsobj);
 
@@ -109,12 +118,15 @@ NSArray* jsvals_variadic_to_nsarray( JSContext *cx, jsval *vp, int argc )
 
 js_block jsval_to_block( JSContext *cx, jsval vp, JSObject *jsthis )
 {
+	NSCAssert( JS_ValueToFunction(cx, vp ), @"Should be a function");
+
 	js_block block = ^(id sender) {
+
 		jsval rval;
 		
 		JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, sender );
 		jsval val = OBJECT_TO_JSVAL(jsobj);
-		
+
 		JS_CallFunctionValue(cx, jsthis, vp, 1, &val, &rval);
 	};
 	
