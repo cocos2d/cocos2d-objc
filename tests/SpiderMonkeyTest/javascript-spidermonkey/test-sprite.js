@@ -42,7 +42,7 @@ var loadScene = function (sceneIdx)
 //	scene.walkSceneGraph(0);
 
     director.replaceScene( scene );
-//    __jsc__.garbageCollect();
+    __jsc__.garbageCollect();
 }
 
 

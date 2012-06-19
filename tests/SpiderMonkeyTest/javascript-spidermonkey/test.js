@@ -2,14 +2,14 @@
 //
 // Javascript Action tests
 // Test are coded using Javascript, with the exception of MenuCallback which uses Objective-J to handle the callbacks.
-// 
+//
 
 require("javascript-spidermonkey/helper.js");
 
 cc.log('Hello World');
 
-var parent1 = new cc.Node.node();
-var parent2 = new cc.Node.node();
+var parent1 = cc.Node.create();
+var parent2 = cc.Node.create();
 
 
 // Testing Rotation
@@ -28,7 +28,7 @@ if (value != ret) {
 	cc.log('Error in setScaleX / scaleX ');
 }
 
-var s = new cc.Sprite.spriteWithFile("grossini.png");
+var s = cc.Sprite.create("grossini.png");
 s.setColor( ccc3(255,0,0) );
 
 // Testing Position
@@ -40,7 +40,7 @@ parent1.onEnter = function() {
 	cc.log("On Enter called");
 }
 
-var action = new cc.RotateBy.actionWithDurationAngle(2, 360 );
+var action = cc.RotateBy.create(2, 360 );
 
 var action2 = new cc.RotateBy();
 action2.initWithDurationAngle(1, -360 );
@@ -48,7 +48,7 @@ action2.initWithDurationAngle(1, -360 );
 var action3 = new cc.RotateBy();
 action3.initWithDurationAngle(2, 180 );
 
-var seq = new cc.Sequence.actionWithArray( [action, action2, action3] );
+var seq = cc.Sequence.create( action, action2, action3 );
 
 s.runAction( seq )
 
@@ -56,7 +56,7 @@ parent1.addChild( s );
 
 
 // Labels
-var l = new cc.LabelBMFont.labelWithStringFntfile("Testing Javascript", "konqa32.fnt");
+var l = cc.LabelBMFont.labelWithStringFntfile("Testing Javascript", "konqa32.fnt");
 l.setPosition( ccp(200,100 ) );
 parent2.addChild( l )
 
@@ -72,17 +72,17 @@ var size = director.winSize();
 cc.log( 'WinSize: ' + size[0] + ' ' + size[1] )
 
 // Testing GC #1. Global properties
-tmp = cc.Sprite.spriteWithFile("grossini.png");
+tmp = cc.Sprite.create("grossini.png");
 delete tmp;
-cc.forceGC();
+__jsc__.garbageCollect();
 
 // Testing GC #2. Variables
-var tmp = cc.Sprite.spriteWithFile("grossini.png");
+var tmp = cc.Sprite.create("grossini.png");
 tmp = null;
-cc.forceGC();
+__jsc__.garbageCollect();
 
 // Testing same object
-var sprite3 = new cc.Sprite.spriteWithFile("grossinis_sister1.png");
+var sprite3 = cc.Sprite.create("grossinis_sister1.png");
 sprite3.I_was_here = 'Oh Yeah';
 parent2.addChildZTag( sprite3, 0, 100 );
 sprite3.setPosition( ccp( 300,200) );
@@ -97,13 +97,17 @@ sprite3.onEnter = function() {
 // Testing Menu
 
 var item1 = cc.MenuItemFont.itemWithStringBlock( "Click Me", function( sender )
-												   {
-												cc.log("Clicked me from" + sender );
-												   } );
+	{
+		cc.log("Clicked me from" + sender );
+	} );
 
-var item2 = cc.MenuItemFont.itemWithString( "Click Me 2" );
+var item2 = new cc.MenuItemFont();
+item2.callback = function( sender ) {
+	cc.log("Item 2 clicked!");
+}
+item2.initWithStringBlock( "Click Me 2", item2.callback );
 
-var menu = cc.Menu.menuWithArray( [item1, item2] );
+var menu = cc.Menu.create( item1, item2 );
 menu.alignItemsHorizontally();
 menu.setPosition( ccp(200,200) );
 parent2.addChild( menu );
@@ -139,9 +143,10 @@ parent2.addChild( sprite );
 //
 var subclass2 = cc.Sprite.extend({
 	ctor:function() {
-//		this.initWithFile("grossini.png");
-		cc.log("OHHHHHHH YESSSSS");
+        __associateObjWithNative( this, this['__nativeObject'] );
 		this.initWithFile("grossini.png");
+		cc.log("OHHHHHHH YESSSSS");
+//		this.initWithFile("grossini.png");
     }
 });
 //cc.log( Object.keys( subclass2.prototype ).join(',') );
@@ -151,3 +156,4 @@ sprite3.setPosition( ccp(300,100) );
 sprite3.setRotation( 180 );
 parent2.addChild( sprite3 );
 
+__jsc__.garbageCollect();

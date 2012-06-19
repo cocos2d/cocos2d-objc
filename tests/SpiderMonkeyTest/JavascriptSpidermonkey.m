@@ -32,6 +32,8 @@
 	
 	[self addChild:sprite];
 	
+//	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/test.js"];	
+//	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/test2.js"];	
 	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/test-sprite.js"];	
 }
 @end
@@ -167,14 +169,14 @@ static JSClass global_class = {
 //	}
 
 //
-//	CCScene *scene = [CCScene node];
-//	Test *test = [Test node];
-//	
-//	[scene addChild:test];
-//	
-//	[[CCDirector sharedDirector] runWithScene:scene];
+	CCScene *scene = [CCScene node];
+	Test *test = [Test node];
+	
+	[scene addChild:test];	
+	[[CCDirector sharedDirector] runWithScene:scene];
+
 //	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/test.js"];
-	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/test2.js"];
+//	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/test2.js"];
 //	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/test-sprite.js"];
 
 }
