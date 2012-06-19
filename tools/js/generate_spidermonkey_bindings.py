@@ -206,9 +206,13 @@ class SpiderMonkey(object):
     def init_functions_to_bind( self, functions ):
         self._functions_to_bind = set( functions )
         ref_list = []
-        for k in self.bs['signatures']['function']:
-            ref_list.append( k['name'] )
-        self.functions_to_bind = self.expand_regexp_names( self._functions_to_bind, ref_list )
+
+        if 'function' in self.bs['signatures']:
+            for k in self.bs['signatures']['function']:
+                ref_list.append( k['name'] )
+            self.functions_to_bind = self.expand_regexp_names( self._functions_to_bind, ref_list )
+        else:
+            self.functions_to_bind = []
 
     def init_functions_to_ignore( self, klasses ):
         self._functions_to_ignore = klasses
@@ -1575,19 +1579,20 @@ JSBool %s%s(JSContext *cx, uint32_t argc, jsval *vp) {
         self.mm_file = open( '%s%s_functions.mm' % (BINDINGS_PREFIX, self.namespace), 'w' )
         self.generate_function_mm_prefix()
 
-        for f in self.bs['signatures']['function']:
-            if f['name'] in self.functions_to_bind:
-                try:
-                    self.generate_function_binding( f )
-                    self.generate_function_declaration( f['name'] )
-                except ParseException, e:
-                    sys.stderr.write( 'NOT OK: "%s" Error: %s\n' % (  f['name'], str(e) ) )
+        if 'function' in self.bs['signatures']:
+            for f in self.bs['signatures']['function']:
+                if f['name'] in self.functions_to_bind:
+                    try:
+                        self.generate_function_binding( f )
+                        self.generate_function_declaration( f['name'] )
+                    except ParseException, e:
+                        sys.stderr.write( 'NOT OK: "%s" Error: %s\n' % (  f['name'], str(e) ) )
 
-        self.generate_function_header_suffix()
-        self.h_file.close()
-        self.mm_file.close()
+            self.generate_function_header_suffix()
+            self.h_file.close()
+            self.mm_file.close()
 
-        self.generate_functions_registration()
+            self.generate_functions_registration()
 
 
     def parse( self ):
