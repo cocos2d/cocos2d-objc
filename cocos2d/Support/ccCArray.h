@@ -488,9 +488,9 @@ static inline void pointerswap(void* a, void* b, size_t width)
 static inline int mergesortL(ccCArray* array, size_t width, int (*compar)(const void *, const void *))
 {
     CCARRAY_ID *arr = array->arr; 
-    NSInteger i,j,k,s,m,n= array->num; 
+    NSInteger i,j,k,s,m,n= (NSInteger)array->num; 
     
-    CCARRAY_ID *B = (CCARRAY_ID*) malloc((n/2 + 1) * width);
+    CCARRAY_ID *B = (CCARRAY_ID*) malloc(((unsigned long)n/2 + 1) * width);
     for (s = 1; s < n; s += s) 
     {
         for (m = n-1-s; m >= 0; m -= s+s)
@@ -510,7 +510,7 @@ static inline int mergesortL(ccCArray* array, size_t width, int (*compar)(const 
                 #pragma clang diagnostic ignored "-Warc-non-pod-memaccess"
 #endif				
                 
-                memcpy(B, &arr[j], (m-j) * width);
+                memcpy(B, &arr[j], (unsigned long)(m-j) * width);
                 #pragma clang diagnostic pop
             }
             
@@ -548,7 +548,7 @@ static inline void insertionSort(ccCArray* arr, int (*comparator)(const void *, 
 	// in-place - requires constant amount of additional space
 	// online - new elements can be added during the sort
 	
-	NSInteger i,j,length = arr->num;
+	NSInteger i,j,length = (NSInteger)arr->num;
 	
 	CCARRAY_ID *x = arr->arr;
 	id temp;	
