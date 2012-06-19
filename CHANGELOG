@@ -1,5 +1,6 @@
 version 2.0 XX-Jun-2012
 . [FIX] Macros: CCLOGERROR defined in ccDeprecated as CCLOGWARN
+. [FIX] Scheduler: removeUpdateFromHash calls [target release] at the very end to prevent a possible crash
 . [FIX] TexturePVR: wrong type when calculating PVR lenght
 . [FIX] Xcode: Fixed compile errors and warnings in Xcode 4.5
 . [3RD] libpng: updated to 1.2.49
