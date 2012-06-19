@@ -51,6 +51,13 @@ function type(obj){
 // Inspired by base2 and Prototype
 // var cc = cc = cc || {};
 
+function copy_properties( parent, child ) {
+	for( name in parent ) {
+		child[name] = parent[name];
+	}
+	child['_super'] = parent;
+}
+
 (function () {
     var initializing = false, fnTest = /xyz/.test(function () {
         xyz;
