@@ -30,7 +30,7 @@
 
 #pragma mark - helpers
 
-JSObject* create_jsobject_from_realobj( JSContext* context, Class klass,id realObj )
+JSObject* create_jsobject_from_realobj( JSContext* context, Class klass, id realObj )
 {
 	NSString *proxied_class = [NSString stringWithFormat:@"JSPROXY_%@", klass];
 	Class newKlass = NSClassFromString(proxied_class);
