@@ -445,19 +445,23 @@ typedef struct _hashSelectorEntry
 
 - (void) removeUpdateFromHash:(tListEntry*)entry
 {
-    tHashUpdateEntry * element = NULL;
-
-    HASH_FIND_INT(hashForUpdates, &entry->target, element);
-    if( element ) {
-        // list entry
-        DL_DELETE( *element->list, element->entry );
-        free( element->entry );
-
-        // hash entry
-        [element->target release];
-        HASH_DEL( hashForUpdates, element);
-        free(element);
-    }
+	tHashUpdateEntry * element = NULL;
+	
+	HASH_FIND_INT(hashForUpdates, &entry->target, element);
+	if( element ) {
+		// list entry
+		DL_DELETE( *element->list, element->entry );
+		free( element->entry );
+		
+		// hash entry
+		id target = element->target;
+		HASH_DEL( hashForUpdates, element);
+		free(element);
+		
+		// target#release should be the last one to prevent
+		// a possible double-free. eg: If the [target dealloc] might want to remove it itself from there
+		[target release];
+	}
 }
 
 -(void) unscheduleUpdateForTarget:(id)target
