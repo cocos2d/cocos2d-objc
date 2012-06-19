@@ -148,8 +148,8 @@ var SpriteColorOpacity = SpriteTestDemo.extend({
         var action_back = action.reverse();
         var fade = cc.RepeatForever.create( cc.Sequence.create( action, action_back ) );
 
-//        var tintRed = cc.TintBy.create(2, 0, -255, -255);
-        var tintRed = cc.RotateBy.create(2, 360 );
+        var tintRed = cc.TintBy.create(2, 0, -255, -255);
+//        var tintRed = cc.RotateBy.create(2, 360 );
         var tintRedBack = tintRed.reverse();
         var red = cc.RepeatForever.create(cc.Sequence.create( tintRed, tintRedBack ) );
 
