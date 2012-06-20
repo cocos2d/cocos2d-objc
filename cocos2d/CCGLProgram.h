@@ -43,6 +43,10 @@ enum {
 	kCCUniformPMatrix,
 	kCCUniformMVMatrix,
 	kCCUniformMVPMatrix,
+	kCCUniformTime,
+	kCCUniformSinTime,
+	kCCUniformCosTime,
+	kCCUniformRandom01,
 	kCCUniformSampler,
 
 	kCCUniform_MAX,
@@ -57,10 +61,14 @@ enum {
 #define kCCShader_Position_uColor				@"ShaderPosition_uColor"
 
 // uniform names
-#define kCCUniformPMatrix_s			  "u_PMatrix"
-#define kCCUniformMVMatrix_s			"u_MVMatrix"
-#define kCCUniformMVPMatrix_s			"u_MVPMatrix"
-#define kCCUniformSampler_s				"u_texture"
+#define kCCUniformPMatrix_s			  "CC_PMatrix"
+#define kCCUniformMVMatrix_s			"CC_MVMatrix"
+#define kCCUniformMVPMatrix_s			"CC_MVPMatrix"
+#define kCCUniformTime_s          "CC_Time"
+#define kCCUniformSinTime_s       "CC_SinTime"
+#define kCCUniformCosTime_s       "CC_CosTime"
+#define kCCUniformRandom01_s      "CC_Random01"
+#define kCCUniformSampler_s				"CC_Texture0"
 #define kCCUniformAlphaTestValue	"u_alpha_value"
 
 // Attribute names
@@ -87,7 +95,10 @@ struct _hashUniformEntry;
 					fragShader_;
 
 	GLint			uniforms_[kCCUniform_MAX];
+	BOOL usesTime_;
 }
+
+@property(nonatomic, readonly) GLint program;
 
 /** Initializes the CCGLProgram with a vertex and fragment with bytes array */
 - (id)initWithVertexShaderByteArray:(const GLchar*)vShaderByteArray fragmentShaderByteArray:(const GLchar*)fShaderByteArray;
@@ -104,9 +115,10 @@ struct _hashUniformEntry;
 /** it will call glUseProgram() */
 - (void)use;
 
-/** It will create 3 uniforms:
+/** It will create 4 uniforms:
 	- kCCUniformPMatrix
 	- kCCUniformMVMatrix
+	- kCCUniformMVPMatrix
 	- kCCUniformSampler
 
  And it will bind "kCCUniformSampler" to 0
@@ -142,6 +154,9 @@ struct _hashUniformEntry;
 
 /** will update the builtin uniforms if they are different than the previous call for this same shader program. */
 -(void) setUniformsForBuiltins;
+
+/** Deprecated alias for setUniformsForBuiltins */
+-(void)setUniformForModelViewProjectionMatrix __attribute__((__deprecated__));
 
 /** returns the vertexShader error log */
 - (NSString *)vertexShaderLog;
