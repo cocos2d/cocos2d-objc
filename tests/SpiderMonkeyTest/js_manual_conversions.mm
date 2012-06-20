@@ -140,13 +140,11 @@ CGPoint jsval_to_CGPoint( JSContext *cx, jsval vp )
 	NSCAssert( JS_GetTypedArrayByteLength( tmp_arg ) == sizeof(float)*2, @"Invalid length");
 	
 	CGPoint ret;
-#ifdef __CC_PLATFORM_IOS
-	ret = *(CGPoint*)JS_GetTypedArrayData( tmp_arg );
-#elif defined(__CC_PLATFORM_MAC)
+#ifdef __LP64__
 	float* arg_array = (float*)JS_GetTypedArrayData( tmp_arg );
 	ret = ccp(arg_array[0], arg_array[1] );	
 #else
-#error Unsupported Platform
+	ret = *(CGPoint*)JS_GetTypedArrayData( tmp_arg );
 #endif
 	return ret;
 }
@@ -158,13 +156,11 @@ CGSize jsval_to_CGSize( JSContext *cx, jsval vp )
 	NSCAssert( JS_GetTypedArrayByteLength( tmp_arg ) == sizeof(float)*2, @"Invalid length");
 	
 	CGSize ret;
-#ifdef __CC_PLATFORM_IOS
-	ret = *(CGSize*)JS_GetTypedArrayData( tmp_arg );
-#elif defined(__CC_PLATFORM_MAC)
+#ifdef __LP64__
 	float* arg_array = (float*)JS_GetTypedArrayData( tmp_arg );
 	ret = CGSizeMake( arg_array[0], arg_array[1] );
 #else
-#error Unsupported Platform
+	ret = *(CGSize*)JS_GetTypedArrayData( tmp_arg );
 #endif
 	return ret;	
 }
@@ -176,15 +172,34 @@ CGRect jsval_to_CGRect( JSContext *cx, jsval vp )
 	NSCAssert( JS_GetTypedArrayByteLength( tmp_arg ) == sizeof(float)*4, @"Invalid length");
 	
 	CGRect ret;
-#ifdef __CC_PLATFORM_IOS
-	ret = *(CGSize*)JS_GetTypedArrayData( tmp_arg );
-#elif defined(__CC_PLATFORM_MAC)
+#ifdef __LP64__
 	float* arg_array = (float*)JS_GetTypedArrayData( tmp_arg );
 	ret = CGRectMake( arg_array[0], arg_array[1], arg_array[2], arg_array[3] );
+
 #else
-#error Unsupported Platform
+	ret = *(CGSize*)JS_GetTypedArrayData( tmp_arg );
 #endif
 	return ret;		
+}
+
+void * jsval_to_opaque( JSContext *cx, jsval vp )
+{
+#ifdef __LP64__
+	JSObject *tmp_arg;
+	JS_ValueToObject( cx, vp, &tmp_arg );
+	NSCAssert( JS_GetTypedArrayByteLength( tmp_arg ) == sizeof(int), @"Invalid Typed Array lenght");
+	
+	int32_t* arg_array = (int32_t*)JS_GetTypedArrayData( tmp_arg );
+	uint64 ret =  arg_array[0];
+	ret = ret << 32;
+	ret |= arg_array[1];
+	
+	return (void*) ret;
+#else
+	NSCAssert( sizeof(int)==4, @"fatal!");
+	int32_t ret = JSVAL_TO_INT(vp);
+	return (void*) ret;
+#endif
 }
 
 #pragma mark - native to jsval
@@ -229,4 +244,20 @@ jsval CGRect_to_jsval( JSContext *cx, CGRect s)
 	buffer[2] = s.size.width;
 	buffer[3] = s.size.height;
 	return OBJECT_TO_JSVAL(typedArray);
+}
+
+jsval opaque_to_jsval( JSContext *cx, void *opaque )
+{
+#ifdef __LP64__
+	uint64_t number = (uint64_t)opaque;
+	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_UINT32, 2);
+	int32_t *buffer = (int32_t*)JS_GetTypedArrayData(typedArray);
+	buffer[0] = number >> 32;
+	buffer[1] = number & 0xffffffff;
+	return OBJECT_TO_JSVAL(typedArray);		
+#else
+	NSCAssert( sizeof(int)==4, @"Error!");
+	int32_t number = (int32_t) opaque;
+	return INT_TO_JSVAL(number);
+#endif
 }
