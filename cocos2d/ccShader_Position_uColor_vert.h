@@ -1,6 +1,5 @@
 "													\n\
 attribute vec4 a_position;							\n\
-uniform	mat4 u_MVPMatrix;							\n\
 uniform	vec4 u_color;								\n\
 uniform float u_pointSize;							\n\
 													\n\
