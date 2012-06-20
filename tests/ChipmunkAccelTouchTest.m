@@ -35,8 +35,9 @@ void removeShape( cpBody *body, cpShape *shape, void *data )
 // returns the transform matrix according the Chipmunk Body values
 -(CGAffineTransform) nodeToParentTransform
 {
-	CGFloat x = body_->p.x;
-	CGFloat y = body_->p.y;
+	cpVect pos = cpBodyGetPos( body_);
+	CGFloat x = pos.x;
+	CGFloat y = pos.y;
 
 	if ( ignoreAnchorPointForPosition_ ) {
 		x += anchorPointInPoints_.x;
@@ -44,8 +45,9 @@ void removeShape( cpBody *body, cpShape *shape, void *data )
 	}
 
 	// Make matrix
-	CGFloat c = body_->rot.x;
-	CGFloat s = body_->rot.y;
+	cpVect rot = cpBodyGetRot(body_);
+	CGFloat c = rot.x;
+	CGFloat s = rot.y;
 
 	if( ! CGPointEqualToPoint(anchorPointInPoints_, CGPointZero) ){
 		x += c*-anchorPointInPoints_.x + -s*-anchorPointInPoints_.y;
@@ -135,7 +137,7 @@ void removeShape( cpBody *body, cpShape *shape, void *data )
 
 	space_ = cpSpaceNew();
 
-	space_->gravity = cpv(0, -100);
+	cpSpaceSetGravity(space_, cpv(0, -100) );
 
 	//
 	// rogue shapes
@@ -229,11 +231,12 @@ void removeShape( cpBody *body, cpShape *shape, void *data )
 
 	cpBody *body = cpBodyNew(1.0f, cpMomentForPoly(1.0f, num, verts, cpvzero));
 
-	body->p = cpv(pos.x, pos.y);
+	cpBodySetPos(body, cpv(pos.x, pos.y) );
 	cpSpaceAddBody(space_, body);
 
 	cpShape* shape = cpPolyShapeNew(body, num, verts, cpvzero);
-	shape->e = 0.5f; shape->u = 0.5f;
+	cpShapeSetElasticity(shape, 0.5f);
+	cpShapeSetFriction(shape, 0.5f);
 	cpSpaceAddShape(space_, shape);
 
 	[sprite setPhysicsBody:body];
@@ -274,7 +277,7 @@ void removeShape( cpBody *body, cpShape *shape, void *data )
 
 	CGPoint v = ccp( accelX, accelY);
 
-	space_->gravity = ccpMult(v, 200);
+	cpSpaceSetGravity( space_, ccpMult(v, 200) );
 }
 
 #elif defined(__CC_PLATFORM_MAC)

@@ -80,6 +80,7 @@ class SpiderMonkey(object):
                              'functions_to_parse' : [],
                              'functions_to_ignore' : [],
                              'method_properties' : [],
+                             'opaque_structures' : [],
                              }
 
 
@@ -155,6 +156,7 @@ class SpiderMonkey(object):
         #
         self.init_functions_to_bind( config['functions_to_parse'] )
         self.init_functions_to_ignore( config['functions_to_ignore'] )
+        self.init_opaque_structures( config['opaque_structures'] )
         self.current_function = None
         self.callback_functions = []
 
@@ -235,6 +237,10 @@ class SpiderMonkey(object):
                 copy_set.remove( i )
 
         self.functions_to_bind = copy_set
+
+    def init_opaque_structures( self, structs ):
+        # convert structures into structure pointers
+        self.opaque_structures = [item + '*' for item in structs]
 
     def init_classes_to_bind( self, klasses ):
         self._classes_to_bind = set( klasses )
@@ -612,6 +618,13 @@ void %s_finalize(JSContext *cx, JSObject *obj)
         return template % (t, l,
                            declared_type, declared_type )
 
+    def generate_retval_opaque( self, declared_type, js_type ):
+        template = '''
+	jsval ret_jsval = opaque_to_jsval( cx, ret_val );
+	JS_SET_RVAL(cx, vp, ret_jsval);
+	'''
+        return template
+
     def generate_retval( self, declared_type, js_type ):
         direct_convert = {
             'i' : 'INT_TO_JSVAL(ret_val)',
@@ -635,7 +648,9 @@ void %s_finalize(JSContext *cx, JSObject *obj)
         }
 
         ret = ''
-        if declared_type in special_declared_types:
+        if declared_type in self.opaque_structures:
+            ret = self.generate_retval_opaque( declared_type, js_type )
+        elif declared_type in special_declared_types:
             ret = special_declared_types[ declared_type ]( declared_type, js_type )
         elif self.is_valid_structure( js_type ):
             ret = self.generate_retval_structure( declared_type, js_type )
@@ -716,6 +731,9 @@ void %s_finalize(JSContext *cx, JSObject *obj)
             elif self.is_valid_structure( t ):
                 ret_js_type = t
                 ret_declared_type =  dt
+            elif dt in self.opaque_structures:
+                ret_js_type = 'N/A'
+                ret_declared_type = dt
             else:
                 raise ParseException('Unsupported return value %s' % dt)
 
@@ -773,6 +791,9 @@ void %s_finalize(JSContext *cx, JSObject *obj)
                 elif t == '@' and dt_class_name in self.supported_classes:
                     args_js_type.append( 'o' )
                     args_declared_type.append( dt )
+                elif dt in self.opaque_structures:
+                    args_js_type.append( 'N/A')
+                    args_declared_type.append( dt )
                 else:
                     raise ParseException("Unsupported argument: %s" % dt)
 
@@ -829,6 +850,10 @@ void %s_finalize(JSContext *cx, JSObject *obj)
         template = '\targ%d = jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp) );\n'
         self.mm_file.write( template % (i) )
 
+    def generate_argument_opaque( self, i, arg_js_type, arg_declared_type ):
+        template = '\targ%d = (%s) jsval_to_opaque( cx, *argvp++ );\n'
+        self.mm_file.write( template % (i, arg_declared_type) )
+
     def generate_arguments( self, args_declared_type, args_js_type, properties = {} ):
         # b      JSBool          Boolean
         # c      uint16_t/jschar ECMA uint16_t, Unicode char
@@ -875,7 +900,9 @@ void %s_finalize(JSContext *cx, JSObject *obj)
         # Declare variables
         declared_vars = '\t'
         for i,arg in enumerate(args_js_type):
-            if arg in js_types_conversions:
+            if args_declared_type[i] in self.opaque_structures:
+                declared_vars += '%s arg%d;' % ( args_declared_type[i], i )
+            elif arg in js_types_conversions:
                 declared_vars += '%s arg%d;' % (js_types_conversions[arg][0], i)
             elif arg in js_special_type_conversions:
                 declared_vars += '%s arg%d;' % ( js_special_type_conversions[arg][1], i )
@@ -904,7 +931,9 @@ void %s_finalize(JSContext *cx, JSObject *obj)
                 if optional_args_since and i >= optional_args_since-1:
                     self.mm_file.write('\tif (argc >= %d) {\n\t' % (i+1) )
 
-                if arg in js_types_conversions:
+                if args_declared_type[i] in self.opaque_structures:
+                    self.generate_argument_opaque( i, arg, args_declared_type[i] )
+                elif arg in js_types_conversions:
                     t = js_types_conversions[arg]
                     self.mm_file.write( '\t%s( cx, *argvp++, &arg%d );\n' % ( t[1], i ) )
                 elif arg in js_special_type_conversions:

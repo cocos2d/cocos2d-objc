@@ -52,6 +52,7 @@ NSArray* jsvals_variadic_to_nsarray( JSContext *cx, jsval *vp, int argc );
 CGPoint jsval_to_CGPoint( JSContext *cx, jsval vp );
 CGSize jsval_to_CGSize( JSContext *cx, jsval vp );
 CGRect jsval_to_CGRect( JSContext *cx, jsval vp );
+void * jsval_to_opaque( JSContext *cx, jsval vp );
 	
 /** converts a jsval to a block */
 js_block jsval_to_block( JSContext *cx, jsval vp, JSObject *jsthis );
@@ -60,6 +61,7 @@ jsval CGPoint_to_jsval( JSContext *cx, CGPoint p );
 jsval CGSize_to_jsval( JSContext *cx, CGSize s);
 jsval CGRect_to_jsval( JSContext *cx, CGRect r);
 jsval NSArray_to_jsval( JSContext *cx, NSArray *array);
+jsval opaque_to_jsval( JSContext *cx, void* opaque);
 
 	
 #ifdef __cplusplus
