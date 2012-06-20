@@ -31,7 +31,7 @@
 // Free functions
 void ccGLUniformModelViewProjectionMatrix( CCGLProgram* program )
 {
-	[program setUniformForModelViewProjectionMatrix];
+	[program setUniformsForBuiltins];
 }
 
 @implementation CCScheduler (Deprecated)

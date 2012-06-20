@@ -2,7 +2,6 @@
 attribute vec4 a_position;							\n\
 attribute vec2 a_texCoord;							\n\
 attribute vec4 a_color;								\n\
-uniform		mat4 u_MVPMatrix;						\n\
 													\n\
 #ifdef GL_ES										\n\
 varying lowp vec4 v_fragmentColor;					\n\
