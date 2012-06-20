@@ -81,6 +81,7 @@ class SpiderMonkey(object):
                              'functions_to_ignore' : [],
                              'method_properties' : [],
                              'opaque_structures' : [],
+                             'function_prefix_to_remove' : '',
                              }
 
 
@@ -131,7 +132,7 @@ class SpiderMonkey(object):
         #
         # Classes related
         #
-        self.prefix = config['obj_class_prefix_to_remove']
+        self.class_prefix = config['obj_class_prefix_to_remove']
         self.inherit_class_methods = config['inherit_class_methods']
 
         # Add here manually generated classes
@@ -154,6 +155,7 @@ class SpiderMonkey(object):
         #
         # function related
         #
+        self.function_prefix = config['function_prefix_to_remove']
         self.init_functions_to_bind( config['functions_to_parse'] )
         self.init_functions_to_ignore( config['functions_to_ignore'] )
         self.init_opaque_structures( config['opaque_structures'] )
@@ -452,6 +454,13 @@ class SpiderMonkey(object):
             else:
                 name += arg.capitalize()
 
+        return name
+
+    def convert_function_name_to_js( self, function_name ):
+        name = function_name
+        if function_name.startswith( self.function_prefix ):
+            name = name[ len(self.function_prefix) : ]
+            name = name[0].lower() + name[1:]
         return name
 
     def generate_autogenerate_prefix( self, fd ):
@@ -1467,8 +1476,8 @@ void %s_createClass(JSContext *cx, JSObject* globalObj, const char* name )
             self.generate_class_registration( parent )
 
             klass_wo_prefix = klass
-            if klass.startswith( self.prefix ):
-                klass_wo_prefix = klass[len( self.prefix) : ]
+            if klass.startswith( self.class_prefix ):
+                klass_wo_prefix = klass[len( self.class_prefix) : ]
 
             self.class_registration_file.write('%s%s_createClass(_cx, %s, "%s");\n' % ( PROXY_PREFIX, klass, self.namespace, klass_wo_prefix ) )
             self.classes_registered.append( klass )
@@ -1598,7 +1607,10 @@ JSBool %s%s(JSContext *cx, uint32_t argc, jsval *vp) {
 
         num_args = self.get_number_of_arguments( function )
         template = 'JS_DefineFunction(_cx, %s, "%s", %s, %d, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );\n' % \
-                 ( self.namespace,  PROXY_PREFIX + func_name, PROXY_PREFIX + func_name, num_args )
+                 ( self.namespace,
+                   self.convert_function_name_to_js( func_name),
+                   PROXY_PREFIX + func_name,
+                   num_args )
 
         self.function_registration_file.write( template )
 
