@@ -490,6 +490,194 @@ JSBool JSPROXY_cpBodyFree(JSContext *cx, uint32_t argc, jsval *vp) {
 	return JS_TRUE;
 }
 
+// Arguments: cpBody*
+// Ret value: cpFloat
+JSBool JSPROXY_cpBodyGetAngVel(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpBody* arg0; 
+
+	arg0 = (cpBody*) jsval_to_opaque( cx, *argvp++ );
+	cpFloat ret_val;
+
+	ret_val = cpBodyGetAngVel((cpBody*)arg0  );
+	JS_SET_RVAL(cx, vp, DOUBLE_TO_JSVAL(ret_val));
+	return JS_TRUE;
+}
+
+// Arguments: cpBody*
+// Ret value: cpFloat
+JSBool JSPROXY_cpBodyGetAngVelLimit(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpBody* arg0; 
+
+	arg0 = (cpBody*) jsval_to_opaque( cx, *argvp++ );
+	cpFloat ret_val;
+
+	ret_val = cpBodyGetAngVelLimit((cpBody*)arg0  );
+	JS_SET_RVAL(cx, vp, DOUBLE_TO_JSVAL(ret_val));
+	return JS_TRUE;
+}
+
+// Arguments: cpBody*
+// Ret value: cpFloat
+JSBool JSPROXY_cpBodyGetAngle(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpBody* arg0; 
+
+	arg0 = (cpBody*) jsval_to_opaque( cx, *argvp++ );
+	cpFloat ret_val;
+
+	ret_val = cpBodyGetAngle((cpBody*)arg0  );
+	JS_SET_RVAL(cx, vp, DOUBLE_TO_JSVAL(ret_val));
+	return JS_TRUE;
+}
+
+// Arguments: cpBody*
+// Ret value: cpVect
+JSBool JSPROXY_cpBodyGetForce(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpBody* arg0; 
+
+	arg0 = (cpBody*) jsval_to_opaque( cx, *argvp++ );
+	cpVect ret_val;
+
+	ret_val = cpBodyGetForce((cpBody*)arg0  );
+
+	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 3 );
+	cpVect* buffer = (cpVect*)JS_GetTypedArrayData(typedArray);
+	*buffer = ret_val;
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(typedArray));
+	
+	return JS_TRUE;
+}
+
+// Arguments: cpBody*
+// Ret value: cpFloat
+JSBool JSPROXY_cpBodyGetMass(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpBody* arg0; 
+
+	arg0 = (cpBody*) jsval_to_opaque( cx, *argvp++ );
+	cpFloat ret_val;
+
+	ret_val = cpBodyGetMass((cpBody*)arg0  );
+	JS_SET_RVAL(cx, vp, DOUBLE_TO_JSVAL(ret_val));
+	return JS_TRUE;
+}
+
+// Arguments: cpBody*
+// Ret value: cpFloat
+JSBool JSPROXY_cpBodyGetMoment(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpBody* arg0; 
+
+	arg0 = (cpBody*) jsval_to_opaque( cx, *argvp++ );
+	cpFloat ret_val;
+
+	ret_val = cpBodyGetMoment((cpBody*)arg0  );
+	JS_SET_RVAL(cx, vp, DOUBLE_TO_JSVAL(ret_val));
+	return JS_TRUE;
+}
+
+// Arguments: cpBody*
+// Ret value: cpVect
+JSBool JSPROXY_cpBodyGetPos(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpBody* arg0; 
+
+	arg0 = (cpBody*) jsval_to_opaque( cx, *argvp++ );
+	cpVect ret_val;
+
+	ret_val = cpBodyGetPos((cpBody*)arg0  );
+
+	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 3 );
+	cpVect* buffer = (cpVect*)JS_GetTypedArrayData(typedArray);
+	*buffer = ret_val;
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(typedArray));
+	
+	return JS_TRUE;
+}
+
+// Arguments: cpBody*
+// Ret value: cpVect
+JSBool JSPROXY_cpBodyGetRot(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpBody* arg0; 
+
+	arg0 = (cpBody*) jsval_to_opaque( cx, *argvp++ );
+	cpVect ret_val;
+
+	ret_val = cpBodyGetRot((cpBody*)arg0  );
+
+	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 3 );
+	cpVect* buffer = (cpVect*)JS_GetTypedArrayData(typedArray);
+	*buffer = ret_val;
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(typedArray));
+	
+	return JS_TRUE;
+}
+
+// Arguments: cpBody*
+// Ret value: cpSpace*
+JSBool JSPROXY_cpBodyGetSpace(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpBody* arg0; 
+
+	arg0 = (cpBody*) jsval_to_opaque( cx, *argvp++ );
+	cpSpace* ret_val;
+
+	ret_val = cpBodyGetSpace((cpBody*)arg0  );
+
+	jsval ret_jsval = opaque_to_jsval( cx, ret_val );
+	JS_SET_RVAL(cx, vp, ret_jsval);
+	
+	return JS_TRUE;
+}
+
+// Arguments: cpBody*
+// Ret value: cpFloat
+JSBool JSPROXY_cpBodyGetTorque(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpBody* arg0; 
+
+	arg0 = (cpBody*) jsval_to_opaque( cx, *argvp++ );
+	cpFloat ret_val;
+
+	ret_val = cpBodyGetTorque((cpBody*)arg0  );
+	JS_SET_RVAL(cx, vp, DOUBLE_TO_JSVAL(ret_val));
+	return JS_TRUE;
+}
+
+// Arguments: cpBody*
+// Ret value: cpVect
+JSBool JSPROXY_cpBodyGetVel(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpBody* arg0; 
+
+	arg0 = (cpBody*) jsval_to_opaque( cx, *argvp++ );
+	cpVect ret_val;
+
+	ret_val = cpBodyGetVel((cpBody*)arg0  );
+
+	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 3 );
+	cpVect* buffer = (cpVect*)JS_GetTypedArrayData(typedArray);
+	*buffer = ret_val;
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(typedArray));
+	
+	return JS_TRUE;
+}
+
 // Arguments: cpBody*, cpVect
 // Ret value: cpVect
 JSBool JSPROXY_cpBodyGetVelAtLocalPoint(JSContext *cx, uint32_t argc, jsval *vp) {
@@ -535,6 +723,21 @@ JSBool JSPROXY_cpBodyGetVelAtWorldPoint(JSContext *cx, uint32_t argc, jsval *vp)
 	*buffer = ret_val;
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(typedArray));
 	
+	return JS_TRUE;
+}
+
+// Arguments: cpBody*
+// Ret value: cpFloat
+JSBool JSPROXY_cpBodyGetVelLimit(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpBody* arg0; 
+
+	arg0 = (cpBody*) jsval_to_opaque( cx, *argvp++ );
+	cpFloat ret_val;
+
+	ret_val = cpBodyGetVelLimit((cpBody*)arg0  );
+	JS_SET_RVAL(cx, vp, DOUBLE_TO_JSVAL(ret_val));
 	return JS_TRUE;
 }
 
@@ -738,6 +941,36 @@ JSBool JSPROXY_cpBodySanityCheck(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: cpBody*, cpFloat
 // Ret value: None
+JSBool JSPROXY_cpBodySetAngVel(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpBody* arg0; double arg1; 
+
+	arg0 = (cpBody*) jsval_to_opaque( cx, *argvp++ );
+	JS_ValueToNumber( cx, *argvp++, &arg1 );
+
+	cpBodySetAngVel((cpBody*)arg0 , (cpFloat)arg1  );
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: cpBody*, cpFloat
+// Ret value: None
+JSBool JSPROXY_cpBodySetAngVelLimit(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpBody* arg0; double arg1; 
+
+	arg0 = (cpBody*) jsval_to_opaque( cx, *argvp++ );
+	JS_ValueToNumber( cx, *argvp++, &arg1 );
+
+	cpBodySetAngVelLimit((cpBody*)arg0 , (cpFloat)arg1  );
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: cpBody*, cpFloat
+// Ret value: None
 JSBool JSPROXY_cpBodySetAngle(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
@@ -747,6 +980,24 @@ JSBool JSPROXY_cpBodySetAngle(JSContext *cx, uint32_t argc, jsval *vp) {
 	JS_ValueToNumber( cx, *argvp++, &arg1 );
 
 	cpBodySetAngle((cpBody*)arg0 , (cpFloat)arg1  );
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: cpBody*, cpVect
+// Ret value: None
+JSBool JSPROXY_cpBodySetForce(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpBody* arg0; cpVect arg1; 
+
+	arg0 = (cpBody*) jsval_to_opaque( cx, *argvp++ );
+
+	JSObject *tmp_arg1;
+	JS_ValueToObject( cx, *argvp++, &tmp_arg1 );
+	arg1 = *(cpVect*)JS_GetTypedArrayData( tmp_arg1);
+
+	cpBodySetForce((cpBody*)arg0 , (cpVect)arg1  );
 	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
@@ -795,6 +1046,54 @@ JSBool JSPROXY_cpBodySetPos(JSContext *cx, uint32_t argc, jsval *vp) {
 	arg1 = *(cpVect*)JS_GetTypedArrayData( tmp_arg1);
 
 	cpBodySetPos((cpBody*)arg0 , (cpVect)arg1  );
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: cpBody*, cpFloat
+// Ret value: None
+JSBool JSPROXY_cpBodySetTorque(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpBody* arg0; double arg1; 
+
+	arg0 = (cpBody*) jsval_to_opaque( cx, *argvp++ );
+	JS_ValueToNumber( cx, *argvp++, &arg1 );
+
+	cpBodySetTorque((cpBody*)arg0 , (cpFloat)arg1  );
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: cpBody*, cpVect
+// Ret value: None
+JSBool JSPROXY_cpBodySetVel(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpBody* arg0; cpVect arg1; 
+
+	arg0 = (cpBody*) jsval_to_opaque( cx, *argvp++ );
+
+	JSObject *tmp_arg1;
+	JS_ValueToObject( cx, *argvp++, &tmp_arg1 );
+	arg1 = *(cpVect*)JS_GetTypedArrayData( tmp_arg1);
+
+	cpBodySetVel((cpBody*)arg0 , (cpVect)arg1  );
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: cpBody*, cpFloat
+// Ret value: None
+JSBool JSPROXY_cpBodySetVelLimit(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpBody* arg0; double arg1; 
+
+	arg0 = (cpBody*) jsval_to_opaque( cx, *argvp++ );
+	JS_ValueToNumber( cx, *argvp++, &arg1 );
+
+	cpBodySetVelLimit((cpBody*)arg0 , (cpFloat)arg1  );
 	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
@@ -926,6 +1225,41 @@ JSBool JSPROXY_cpBoxShapeNew2(JSContext *cx, uint32_t argc, jsval *vp) {
 	jsval ret_jsval = opaque_to_jsval( cx, ret_val );
 	JS_SET_RVAL(cx, vp, ret_jsval);
 	
+	return JS_TRUE;
+}
+
+// Arguments: cpShape*
+// Ret value: cpVect
+JSBool JSPROXY_cpCircleShapeGetOffset(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpShape* arg0; 
+
+	arg0 = (cpShape*) jsval_to_opaque( cx, *argvp++ );
+	cpVect ret_val;
+
+	ret_val = cpCircleShapeGetOffset((cpShape*)arg0  );
+
+	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 3 );
+	cpVect* buffer = (cpVect*)JS_GetTypedArrayData(typedArray);
+	*buffer = ret_val;
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(typedArray));
+	
+	return JS_TRUE;
+}
+
+// Arguments: cpShape*
+// Ret value: cpFloat
+JSBool JSPROXY_cpCircleShapeGetRadius(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpShape* arg0; 
+
+	arg0 = (cpShape*) jsval_to_opaque( cx, *argvp++ );
+	cpFloat ret_val;
+
+	ret_val = cpCircleShapeGetRadius((cpShape*)arg0  );
+	JS_SET_RVAL(cx, vp, DOUBLE_TO_JSVAL(ret_val));
 	return JS_TRUE;
 }
 
@@ -1121,6 +1455,81 @@ JSBool JSPROXY_cpResetShapeIdCounter(JSContext *cx, uint32_t argc, jsval *vp) {
 	return JS_TRUE;
 }
 
+// Arguments: cpShape*
+// Ret value: cpVect
+JSBool JSPROXY_cpSegmentShapeGetA(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpShape* arg0; 
+
+	arg0 = (cpShape*) jsval_to_opaque( cx, *argvp++ );
+	cpVect ret_val;
+
+	ret_val = cpSegmentShapeGetA((cpShape*)arg0  );
+
+	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 3 );
+	cpVect* buffer = (cpVect*)JS_GetTypedArrayData(typedArray);
+	*buffer = ret_val;
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(typedArray));
+	
+	return JS_TRUE;
+}
+
+// Arguments: cpShape*
+// Ret value: cpVect
+JSBool JSPROXY_cpSegmentShapeGetB(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpShape* arg0; 
+
+	arg0 = (cpShape*) jsval_to_opaque( cx, *argvp++ );
+	cpVect ret_val;
+
+	ret_val = cpSegmentShapeGetB((cpShape*)arg0  );
+
+	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 3 );
+	cpVect* buffer = (cpVect*)JS_GetTypedArrayData(typedArray);
+	*buffer = ret_val;
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(typedArray));
+	
+	return JS_TRUE;
+}
+
+// Arguments: cpShape*
+// Ret value: cpVect
+JSBool JSPROXY_cpSegmentShapeGetNormal(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpShape* arg0; 
+
+	arg0 = (cpShape*) jsval_to_opaque( cx, *argvp++ );
+	cpVect ret_val;
+
+	ret_val = cpSegmentShapeGetNormal((cpShape*)arg0  );
+
+	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 3 );
+	cpVect* buffer = (cpVect*)JS_GetTypedArrayData(typedArray);
+	*buffer = ret_val;
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(typedArray));
+	
+	return JS_TRUE;
+}
+
+// Arguments: cpShape*
+// Ret value: cpFloat
+JSBool JSPROXY_cpSegmentShapeGetRadius(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpShape* arg0; 
+
+	arg0 = (cpShape*) jsval_to_opaque( cx, *argvp++ );
+	cpFloat ret_val;
+
+	ret_val = cpSegmentShapeGetRadius((cpShape*)arg0  );
+	JS_SET_RVAL(cx, vp, DOUBLE_TO_JSVAL(ret_val));
+	return JS_TRUE;
+}
+
 // Arguments: cpBody*, cpVect, cpVect, cpFloat
 // Ret value: cpShape*
 JSBool JSPROXY_cpSegmentShapeNew(JSContext *cx, uint32_t argc, jsval *vp) {
@@ -1270,6 +1679,142 @@ JSBool JSPROXY_cpShapeFree(JSContext *cx, uint32_t argc, jsval *vp) {
 	return JS_TRUE;
 }
 
+// Arguments: cpShape*
+// Ret value: cpBB
+JSBool JSPROXY_cpShapeGetBB(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpShape* arg0; 
+
+	arg0 = (cpShape*) jsval_to_opaque( cx, *argvp++ );
+	cpBB ret_val;
+
+	ret_val = cpShapeGetBB((cpShape*)arg0  );
+
+	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 5 );
+	cpBB* buffer = (cpBB*)JS_GetTypedArrayData(typedArray);
+	*buffer = ret_val;
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(typedArray));
+	
+	return JS_TRUE;
+}
+
+// Arguments: cpShape*
+// Ret value: cpBody*
+JSBool JSPROXY_cpShapeGetBody(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpShape* arg0; 
+
+	arg0 = (cpShape*) jsval_to_opaque( cx, *argvp++ );
+	cpBody* ret_val;
+
+	ret_val = cpShapeGetBody((cpShape*)arg0  );
+
+	jsval ret_jsval = opaque_to_jsval( cx, ret_val );
+	JS_SET_RVAL(cx, vp, ret_jsval);
+	
+	return JS_TRUE;
+}
+
+// Arguments: cpShape*
+// Ret value: cpFloat
+JSBool JSPROXY_cpShapeGetElasticity(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpShape* arg0; 
+
+	arg0 = (cpShape*) jsval_to_opaque( cx, *argvp++ );
+	cpFloat ret_val;
+
+	ret_val = cpShapeGetElasticity((cpShape*)arg0  );
+	JS_SET_RVAL(cx, vp, DOUBLE_TO_JSVAL(ret_val));
+	return JS_TRUE;
+}
+
+// Arguments: cpShape*
+// Ret value: cpFloat
+JSBool JSPROXY_cpShapeGetFriction(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpShape* arg0; 
+
+	arg0 = (cpShape*) jsval_to_opaque( cx, *argvp++ );
+	cpFloat ret_val;
+
+	ret_val = cpShapeGetFriction((cpShape*)arg0  );
+	JS_SET_RVAL(cx, vp, DOUBLE_TO_JSVAL(ret_val));
+	return JS_TRUE;
+}
+
+// Arguments: cpShape*
+// Ret value: cpLayers
+JSBool JSPROXY_cpShapeGetLayers(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpShape* arg0; 
+
+	arg0 = (cpShape*) jsval_to_opaque( cx, *argvp++ );
+	cpLayers ret_val;
+
+	ret_val = cpShapeGetLayers((cpShape*)arg0  );
+	JS_SET_RVAL(cx, vp, INT_TO_JSVAL(ret_val));
+	return JS_TRUE;
+}
+
+// Arguments: cpShape*
+// Ret value: cpBool
+JSBool JSPROXY_cpShapeGetSensor(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpShape* arg0; 
+
+	arg0 = (cpShape*) jsval_to_opaque( cx, *argvp++ );
+	cpBool ret_val;
+
+	ret_val = cpShapeGetSensor((cpShape*)arg0  );
+	JS_SET_RVAL(cx, vp, INT_TO_JSVAL(ret_val));
+	return JS_TRUE;
+}
+
+// Arguments: cpShape*
+// Ret value: cpSpace*
+JSBool JSPROXY_cpShapeGetSpace(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpShape* arg0; 
+
+	arg0 = (cpShape*) jsval_to_opaque( cx, *argvp++ );
+	cpSpace* ret_val;
+
+	ret_val = cpShapeGetSpace((cpShape*)arg0  );
+
+	jsval ret_jsval = opaque_to_jsval( cx, ret_val );
+	JS_SET_RVAL(cx, vp, ret_jsval);
+	
+	return JS_TRUE;
+}
+
+// Arguments: cpShape*
+// Ret value: cpVect
+JSBool JSPROXY_cpShapeGetSurfaceVelocity(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpShape* arg0; 
+
+	arg0 = (cpShape*) jsval_to_opaque( cx, *argvp++ );
+	cpVect ret_val;
+
+	ret_val = cpShapeGetSurfaceVelocity((cpShape*)arg0  );
+
+	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 3 );
+	cpVect* buffer = (cpVect*)JS_GetTypedArrayData(typedArray);
+	*buffer = ret_val;
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(typedArray));
+	
+	return JS_TRUE;
+}
+
 // Arguments: cpShape*, cpVect
 // Ret value: cpBool
 JSBool JSPROXY_cpShapePointQuery(JSContext *cx, uint32_t argc, jsval *vp) {
@@ -1300,6 +1845,84 @@ JSBool JSPROXY_cpShapeSetBody(JSContext *cx, uint32_t argc, jsval *vp) {
 	arg1 = (cpBody*) jsval_to_opaque( cx, *argvp++ );
 
 	cpShapeSetBody((cpShape*)arg0 , (cpBody*)arg1  );
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: cpShape*, cpFloat
+// Ret value: None
+JSBool JSPROXY_cpShapeSetElasticity(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpShape* arg0; double arg1; 
+
+	arg0 = (cpShape*) jsval_to_opaque( cx, *argvp++ );
+	JS_ValueToNumber( cx, *argvp++, &arg1 );
+
+	cpShapeSetElasticity((cpShape*)arg0 , (cpFloat)arg1  );
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: cpShape*, cpFloat
+// Ret value: None
+JSBool JSPROXY_cpShapeSetFriction(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpShape* arg0; double arg1; 
+
+	arg0 = (cpShape*) jsval_to_opaque( cx, *argvp++ );
+	JS_ValueToNumber( cx, *argvp++, &arg1 );
+
+	cpShapeSetFriction((cpShape*)arg0 , (cpFloat)arg1  );
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: cpShape*, cpLayers
+// Ret value: None
+JSBool JSPROXY_cpShapeSetLayers(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpShape* arg0; uint32_t arg1; 
+
+	arg0 = (cpShape*) jsval_to_opaque( cx, *argvp++ );
+	JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
+
+	cpShapeSetLayers((cpShape*)arg0 , (cpLayers)arg1  );
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: cpShape*, cpBool
+// Ret value: None
+JSBool JSPROXY_cpShapeSetSensor(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpShape* arg0; int32_t arg1; 
+
+	arg0 = (cpShape*) jsval_to_opaque( cx, *argvp++ );
+	JS_ValueToECMAInt32( cx, *argvp++, &arg1 );
+
+	cpShapeSetSensor((cpShape*)arg0 , (cpBool)arg1  );
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: cpShape*, cpVect
+// Ret value: None
+JSBool JSPROXY_cpShapeSetSurfaceVelocity(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpShape* arg0; cpVect arg1; 
+
+	arg0 = (cpShape*) jsval_to_opaque( cx, *argvp++ );
+
+	JSObject *tmp_arg1;
+	JS_ValueToObject( cx, *argvp++, &tmp_arg1 );
+	arg1 = *(cpVect*)JS_GetTypedArrayData( tmp_arg1);
+
+	cpShapeSetSurfaceVelocity((cpShape*)arg0 , (cpVect)arg1  );
 	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
@@ -1479,6 +2102,179 @@ JSBool JSPROXY_cpSpaceFree(JSContext *cx, uint32_t argc, jsval *vp) {
 }
 
 // Arguments: cpSpace*
+// Ret value: cpFloat
+JSBool JSPROXY_cpSpaceGetCollisionBias(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpSpace* arg0; 
+
+	arg0 = (cpSpace*) jsval_to_opaque( cx, *argvp++ );
+	cpFloat ret_val;
+
+	ret_val = cpSpaceGetCollisionBias((cpSpace*)arg0  );
+	JS_SET_RVAL(cx, vp, DOUBLE_TO_JSVAL(ret_val));
+	return JS_TRUE;
+}
+
+// Arguments: cpSpace*
+// Ret value: cpTimestamp
+JSBool JSPROXY_cpSpaceGetCollisionPersistence(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpSpace* arg0; 
+
+	arg0 = (cpSpace*) jsval_to_opaque( cx, *argvp++ );
+	cpTimestamp ret_val;
+
+	ret_val = cpSpaceGetCollisionPersistence((cpSpace*)arg0  );
+	JS_SET_RVAL(cx, vp, INT_TO_JSVAL(ret_val));
+	return JS_TRUE;
+}
+
+// Arguments: cpSpace*
+// Ret value: cpFloat
+JSBool JSPROXY_cpSpaceGetCollisionSlop(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpSpace* arg0; 
+
+	arg0 = (cpSpace*) jsval_to_opaque( cx, *argvp++ );
+	cpFloat ret_val;
+
+	ret_val = cpSpaceGetCollisionSlop((cpSpace*)arg0  );
+	JS_SET_RVAL(cx, vp, DOUBLE_TO_JSVAL(ret_val));
+	return JS_TRUE;
+}
+
+// Arguments: cpSpace*
+// Ret value: cpFloat
+JSBool JSPROXY_cpSpaceGetCurrentTimeStep(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpSpace* arg0; 
+
+	arg0 = (cpSpace*) jsval_to_opaque( cx, *argvp++ );
+	cpFloat ret_val;
+
+	ret_val = cpSpaceGetCurrentTimeStep((cpSpace*)arg0  );
+	JS_SET_RVAL(cx, vp, DOUBLE_TO_JSVAL(ret_val));
+	return JS_TRUE;
+}
+
+// Arguments: cpSpace*
+// Ret value: cpFloat
+JSBool JSPROXY_cpSpaceGetDamping(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpSpace* arg0; 
+
+	arg0 = (cpSpace*) jsval_to_opaque( cx, *argvp++ );
+	cpFloat ret_val;
+
+	ret_val = cpSpaceGetDamping((cpSpace*)arg0  );
+	JS_SET_RVAL(cx, vp, DOUBLE_TO_JSVAL(ret_val));
+	return JS_TRUE;
+}
+
+// Arguments: cpSpace*
+// Ret value: cpBool
+JSBool JSPROXY_cpSpaceGetEnableContactGraph(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpSpace* arg0; 
+
+	arg0 = (cpSpace*) jsval_to_opaque( cx, *argvp++ );
+	cpBool ret_val;
+
+	ret_val = cpSpaceGetEnableContactGraph((cpSpace*)arg0  );
+	JS_SET_RVAL(cx, vp, INT_TO_JSVAL(ret_val));
+	return JS_TRUE;
+}
+
+// Arguments: cpSpace*
+// Ret value: cpVect
+JSBool JSPROXY_cpSpaceGetGravity(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpSpace* arg0; 
+
+	arg0 = (cpSpace*) jsval_to_opaque( cx, *argvp++ );
+	cpVect ret_val;
+
+	ret_val = cpSpaceGetGravity((cpSpace*)arg0  );
+
+	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 3 );
+	cpVect* buffer = (cpVect*)JS_GetTypedArrayData(typedArray);
+	*buffer = ret_val;
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(typedArray));
+	
+	return JS_TRUE;
+}
+
+// Arguments: cpSpace*
+// Ret value: cpFloat
+JSBool JSPROXY_cpSpaceGetIdleSpeedThreshold(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpSpace* arg0; 
+
+	arg0 = (cpSpace*) jsval_to_opaque( cx, *argvp++ );
+	cpFloat ret_val;
+
+	ret_val = cpSpaceGetIdleSpeedThreshold((cpSpace*)arg0  );
+	JS_SET_RVAL(cx, vp, DOUBLE_TO_JSVAL(ret_val));
+	return JS_TRUE;
+}
+
+// Arguments: cpSpace*
+// Ret value: int
+JSBool JSPROXY_cpSpaceGetIterations(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpSpace* arg0; 
+
+	arg0 = (cpSpace*) jsval_to_opaque( cx, *argvp++ );
+	int ret_val;
+
+	ret_val = cpSpaceGetIterations((cpSpace*)arg0  );
+	JS_SET_RVAL(cx, vp, INT_TO_JSVAL(ret_val));
+	return JS_TRUE;
+}
+
+// Arguments: cpSpace*
+// Ret value: cpFloat
+JSBool JSPROXY_cpSpaceGetSleepTimeThreshold(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpSpace* arg0; 
+
+	arg0 = (cpSpace*) jsval_to_opaque( cx, *argvp++ );
+	cpFloat ret_val;
+
+	ret_val = cpSpaceGetSleepTimeThreshold((cpSpace*)arg0  );
+	JS_SET_RVAL(cx, vp, DOUBLE_TO_JSVAL(ret_val));
+	return JS_TRUE;
+}
+
+// Arguments: cpSpace*
+// Ret value: cpBody*
+JSBool JSPROXY_cpSpaceGetStaticBody(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpSpace* arg0; 
+
+	arg0 = (cpSpace*) jsval_to_opaque( cx, *argvp++ );
+	cpBody* ret_val;
+
+	ret_val = cpSpaceGetStaticBody((cpSpace*)arg0  );
+
+	jsval ret_jsval = opaque_to_jsval( cx, ret_val );
+	JS_SET_RVAL(cx, vp, ret_jsval);
+	
+	return JS_TRUE;
+}
+
+// Arguments: cpSpace*
 // Ret value: cpSpace*
 JSBool JSPROXY_cpSpaceInit(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( argc == 1, @"Invalid number of arguments" );
@@ -1610,6 +2406,144 @@ JSBool JSPROXY_cpSpaceRemoveStaticShape(JSContext *cx, uint32_t argc, jsval *vp)
 	arg1 = (cpShape*) jsval_to_opaque( cx, *argvp++ );
 
 	cpSpaceRemoveStaticShape((cpSpace*)arg0 , (cpShape*)arg1  );
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: cpSpace*, cpFloat
+// Ret value: None
+JSBool JSPROXY_cpSpaceSetCollisionBias(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpSpace* arg0; double arg1; 
+
+	arg0 = (cpSpace*) jsval_to_opaque( cx, *argvp++ );
+	JS_ValueToNumber( cx, *argvp++, &arg1 );
+
+	cpSpaceSetCollisionBias((cpSpace*)arg0 , (cpFloat)arg1  );
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: cpSpace*, cpTimestamp
+// Ret value: None
+JSBool JSPROXY_cpSpaceSetCollisionPersistence(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpSpace* arg0; uint32_t arg1; 
+
+	arg0 = (cpSpace*) jsval_to_opaque( cx, *argvp++ );
+	JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
+
+	cpSpaceSetCollisionPersistence((cpSpace*)arg0 , (cpTimestamp)arg1  );
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: cpSpace*, cpFloat
+// Ret value: None
+JSBool JSPROXY_cpSpaceSetCollisionSlop(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpSpace* arg0; double arg1; 
+
+	arg0 = (cpSpace*) jsval_to_opaque( cx, *argvp++ );
+	JS_ValueToNumber( cx, *argvp++, &arg1 );
+
+	cpSpaceSetCollisionSlop((cpSpace*)arg0 , (cpFloat)arg1  );
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: cpSpace*, cpFloat
+// Ret value: None
+JSBool JSPROXY_cpSpaceSetDamping(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpSpace* arg0; double arg1; 
+
+	arg0 = (cpSpace*) jsval_to_opaque( cx, *argvp++ );
+	JS_ValueToNumber( cx, *argvp++, &arg1 );
+
+	cpSpaceSetDamping((cpSpace*)arg0 , (cpFloat)arg1  );
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: cpSpace*, cpBool
+// Ret value: None
+JSBool JSPROXY_cpSpaceSetEnableContactGraph(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpSpace* arg0; int32_t arg1; 
+
+	arg0 = (cpSpace*) jsval_to_opaque( cx, *argvp++ );
+	JS_ValueToECMAInt32( cx, *argvp++, &arg1 );
+
+	cpSpaceSetEnableContactGraph((cpSpace*)arg0 , (cpBool)arg1  );
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: cpSpace*, cpVect
+// Ret value: None
+JSBool JSPROXY_cpSpaceSetGravity(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpSpace* arg0; cpVect arg1; 
+
+	arg0 = (cpSpace*) jsval_to_opaque( cx, *argvp++ );
+
+	JSObject *tmp_arg1;
+	JS_ValueToObject( cx, *argvp++, &tmp_arg1 );
+	arg1 = *(cpVect*)JS_GetTypedArrayData( tmp_arg1);
+
+	cpSpaceSetGravity((cpSpace*)arg0 , (cpVect)arg1  );
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: cpSpace*, cpFloat
+// Ret value: None
+JSBool JSPROXY_cpSpaceSetIdleSpeedThreshold(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpSpace* arg0; double arg1; 
+
+	arg0 = (cpSpace*) jsval_to_opaque( cx, *argvp++ );
+	JS_ValueToNumber( cx, *argvp++, &arg1 );
+
+	cpSpaceSetIdleSpeedThreshold((cpSpace*)arg0 , (cpFloat)arg1  );
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: cpSpace*, int
+// Ret value: None
+JSBool JSPROXY_cpSpaceSetIterations(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpSpace* arg0; int32_t arg1; 
+
+	arg0 = (cpSpace*) jsval_to_opaque( cx, *argvp++ );
+	JS_ValueToECMAInt32( cx, *argvp++, &arg1 );
+
+	cpSpaceSetIterations((cpSpace*)arg0 , (int)arg1  );
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: cpSpace*, cpFloat
+// Ret value: None
+JSBool JSPROXY_cpSpaceSetSleepTimeThreshold(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpSpace* arg0; double arg1; 
+
+	arg0 = (cpSpace*) jsval_to_opaque( cx, *argvp++ );
+	JS_ValueToNumber( cx, *argvp++, &arg1 );
+
+	cpSpaceSetSleepTimeThreshold((cpSpace*)arg0 , (cpFloat)arg1  );
 	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
