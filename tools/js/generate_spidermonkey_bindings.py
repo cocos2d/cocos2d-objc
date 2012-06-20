@@ -31,6 +31,12 @@ import string
 class ParseException( Exception ):
     pass
 
+# append sys argv0 to path, unless path is absolute
+def get_path_for( path ):
+    if not os.path.isabs( path ):
+        return os.path.join( os.path.dirname( sys.argv[0] ), path )
+    return path
+
 #
 # Globals
 #
@@ -154,12 +160,15 @@ class SpiderMonkey(object):
 
 
     def init_hierarchy_file( self ):
-        f = open( self.hierarchy_file )
-        self.hierarchy = ast.literal_eval( f.read() )
-        f.close()
+        if self.hierarchy_file:
+            f = open( get_path_for( self.hierarchy_file ) )
+            self.hierarchy = ast.literal_eval( f.read() )
+            f.close()
+        else:
+            self.hierarchy = {}
 
     def init_bridgesupport_file( self ):
-        p = ET.parse( self.bridgesupport_file )
+        p = ET.parse( get_path_for( self.bridgesupport_file ) )
         root = p.getroot()
         self.bs = xml2d( root )
 
@@ -230,8 +239,9 @@ class SpiderMonkey(object):
     def init_classes_to_bind( self, klasses ):
         self._classes_to_bind = set( klasses )
         ref_list = []
-        for k in self.bs['signatures']['class']:
-            ref_list.append( k['name'] )
+        if 'class' in self.bs['signatures']:
+            for k in self.bs['signatures']['class']:
+                ref_list.append( k['name'] )
         self.classes_to_bind = self.expand_regexp_names( self._classes_to_bind, ref_list )
         l = self.ancestors_of_classes_to_bind()
         s = set( self.classes_to_bind )
@@ -1558,28 +1568,36 @@ JSBool %s%s(JSContext *cx, uint32_t argc, jsval *vp) {
         #
         # Classes
         #
-        self.h_file = open( '%s%s_classes.h' % ( BINDINGS_PREFIX, self.namespace), 'w' )
-        self.generate_class_header_prefix()
-        self.mm_file = open( '%s%s_classes.mm' % (BINDINGS_PREFIX, self.namespace), 'w' )
-        self.generate_class_mm_prefix()
 
-        for klass in self.classes_to_bind:
-            self.generate_class_binding( klass )
+        # is there any class to register
+        if 'class' in self.bs['signatures']:
 
-        self.h_file.close()
-        self.mm_file.close()
+            self.h_file = open( '%s%s_classes.h' % ( BINDINGS_PREFIX, self.namespace), 'w' )
+            self.generate_class_header_prefix()
+            self.mm_file = open( '%s%s_classes.mm' % (BINDINGS_PREFIX, self.namespace), 'w' )
+            self.generate_class_mm_prefix()
 
-        self.generate_classes_registration()
+            for klass in self.classes_to_bind:
+                self.generate_class_binding( klass )
+
+            self.h_file.close()
+            self.mm_file.close()
+
+            self.generate_classes_registration()
+
 
         #
         # Free Functions
         #
-        self.h_file = open( '%s%s_functions.h' % ( BINDINGS_PREFIX, self.namespace), 'w' )
-        self.generate_function_header_prefix()
-        self.mm_file = open( '%s%s_functions.mm' % (BINDINGS_PREFIX, self.namespace), 'w' )
-        self.generate_function_mm_prefix()
 
+        # Is there any function to register:
         if 'function' in self.bs['signatures']:
+
+            self.h_file = open( '%s%s_functions.h' % ( BINDINGS_PREFIX, self.namespace), 'w' )
+            self.generate_function_header_prefix()
+            self.mm_file = open( '%s%s_functions.mm' % (BINDINGS_PREFIX, self.namespace), 'w' )
+            self.generate_function_mm_prefix()
+
             for f in self.bs['signatures']['function']:
                 if f['name'] in self.functions_to_bind:
                     try:
@@ -1593,7 +1611,6 @@ JSBool %s%s(JSContext *cx, uint32_t argc, jsval *vp) {
             self.mm_file.close()
 
             self.generate_functions_registration()
-
 
     def parse( self ):
         self.generate_bindings()

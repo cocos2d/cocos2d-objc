@@ -27,6 +27,7 @@
 #import "jsapi.h"
 
 #import "cocos2d.h"
+#import "chipmunk.h"
 
 // Globals
 // one shared key for associations
