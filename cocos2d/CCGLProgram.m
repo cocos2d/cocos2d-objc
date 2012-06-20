@@ -33,6 +33,8 @@
 #import "Support/uthash.h"
 #import "Support/OpenGL_Internal.h"
 
+#import "CCDirector.h"
+
 // extern
 #import "kazmath/GL/matrix.h"
 #import "kazmath/kazmath.h"
@@ -66,6 +68,9 @@ typedef void (*GLLogFunction) (GLuint program,
 #pragma mark -
 
 @implementation CCGLProgram
+
+@synthesize program = _program;
+
 - (id)initWithVertexShaderByteArray:(const GLchar *)vShaderByteArray fragmentShaderByteArray:(const GLchar *)fShaderByteArray
 {
     if ((self = [super init]) )
@@ -127,9 +132,13 @@ typedef void (*GLLogFunction) (GLuint program,
 		
 		const GLchar *sources[] = {
 			(type == GL_VERTEX_SHADER ? "precision highp float;\n" : "precision mediump float;\n"),
-			"uniform mat4 u_PMatrix;\n"
-			"uniform mat4 u_MVMatrix;\n"
-			"uniform mat4 u_MVPMatrix;\n"
+			"uniform mat4 CC_PMatrix;\n"
+			"uniform mat4 CC_MVMatrix;\n"
+			"uniform mat4 CC_MVPMatrix;\n"
+			"uniform vec4 CC_Time;\n"
+			"uniform vec4 CC_SinTime;\n"
+			"uniform vec4 CC_CosTime;\n"
+			"uniform vec4 CC_Random01;\n"
 			"//CC INCLUDES END\n\n",
 			source,
 		};
@@ -169,16 +178,22 @@ typedef void (*GLLogFunction) (GLuint program,
 
 -(void) updateUniforms
 {
-	// Since sample most probably won't change, set it to 0 now.
-
-	uniforms_[  kCCUniformPMatrix] = glGetUniformLocation(program_,   kCCUniformPMatrix_s);
-	uniforms_[ kCCUniformMVMatrix] = glGetUniformLocation(program_,  kCCUniformMVMatrix_s);
+	uniforms_[  kCCUniformPMatrix] = glGetUniformLocation(program_, kCCUniformPMatrix_s);
+	uniforms_[ kCCUniformMVMatrix] = glGetUniformLocation(program_, kCCUniformMVMatrix_s);
 	uniforms_[kCCUniformMVPMatrix] = glGetUniformLocation(program_, kCCUniformMVPMatrix_s);
+	
+	uniforms_[kCCUniformTime] = glGetUniformLocation(program_, kCCUniformTime_s);
+	uniforms_[kCCUniformSinTime] = glGetUniformLocation(program_, kCCUniformSinTime_s);
+	uniforms_[kCCUniformCosTime] = glGetUniformLocation(program_, kCCUniformCosTime_s);
+	usesTime_ = !(uniforms_[kCCUniformTime] == uniforms_[kCCUniformSinTime] == uniforms_[kCCUniformCosTime] == -1);
+
+	uniforms_[kCCUniformRandom01] = glGetUniformLocation(program_, kCCUniformRandom01_s);
 	
 	uniforms_[kCCUniformSampler] = glGetUniformLocation(program_, kCCUniformSampler_s);
 
 	[self use];
 	
+	// Since sample most probably won't change, set it to 0 now.
 	[self setUniformLocation:uniforms_[kCCUniformSampler] withI1:0];
 }
 
@@ -379,6 +394,27 @@ typedef void (*GLLogFunction) (GLuint program,
 	[self setUniformLocation:uniforms_[  kCCUniformPMatrix] withMatrix4fv:  matrixP.mat count:1];
 	[self setUniformLocation:uniforms_[ kCCUniformMVMatrix] withMatrix4fv: matrixMV.mat count:1];
 	[self setUniformLocation:uniforms_[kCCUniformMVPMatrix] withMatrix4fv:matrixMVP.mat count:1];
+	
+	if(usesTime_){
+		CCDirector *director = [CCDirector sharedDirector];
+		// This doesn't give the most accurate global time value.
+		// Cocos2D doesn't store a high precision time value, so this will have to do.
+		// Getting Mach time per frame per shader using time could be extremely expensive.
+		ccTime time = director.totalFrames*director.animationInterval;
+		
+		[self setUniformLocation:uniforms_[kCCUniformTime] withF1:time/10.0 f2:time f3:time*2 f4:time*4];
+		[self setUniformLocation:uniforms_[kCCUniformSinTime] withF1:sinf(time/8.0) f2:sinf(time/4.0) f3:sinf(time/2.0) f4:sinf(time)];
+		[self setUniformLocation:uniforms_[kCCUniformCosTime] withF1:cosf(time/8.0) f2:cosf(time/4.0) f3:cosf(time/2.0) f4:cosf(time)];
+	}
+	
+	if(uniforms_[kCCUniformRandom01] != -1){
+		[self setUniformLocation:uniforms_[kCCUniformRandom01] withF1:CCRANDOM_0_1() f2:CCRANDOM_0_1() f3:CCRANDOM_0_1() f4:CCRANDOM_0_1()];
+	}
+}
+
+-(void)setUniformForModelViewProjectionMatrix;
+{
+	[self setUniformsForBuiltins];
 }
 
 
