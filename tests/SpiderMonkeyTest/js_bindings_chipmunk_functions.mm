@@ -84,7 +84,7 @@ JSBool JSPROXY_cpBBClampVect(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	ret_val = cpBBClampVect((cpBB)arg0 , (cpVect)arg1  );
 
-	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 3 );
+	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 2 );
 	cpVect* buffer = (cpVect*)JS_GetTypedArrayData(typedArray);
 	*buffer = ret_val;
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(typedArray));
@@ -155,7 +155,7 @@ JSBool JSPROXY_cpBBExpand(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	ret_val = cpBBExpand((cpBB)arg0 , (cpVect)arg1  );
 
-	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 5 );
+	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 4 );
 	cpBB* buffer = (cpBB*)JS_GetTypedArrayData(typedArray);
 	*buffer = ret_val;
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(typedArray));
@@ -230,7 +230,7 @@ JSBool JSPROXY_cpBBMerge(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	ret_val = cpBBMerge((cpBB)arg0 , (cpBB)arg1  );
 
-	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 5 );
+	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 4 );
 	cpBB* buffer = (cpBB*)JS_GetTypedArrayData(typedArray);
 	*buffer = ret_val;
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(typedArray));
@@ -275,7 +275,7 @@ JSBool JSPROXY_cpBBNew(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	ret_val = cpBBNew((cpFloat)arg0 , (cpFloat)arg1 , (cpFloat)arg2 , (cpFloat)arg3  );
 
-	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 5 );
+	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 4 );
 	cpBB* buffer = (cpBB*)JS_GetTypedArrayData(typedArray);
 	*buffer = ret_val;
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(typedArray));
@@ -299,7 +299,7 @@ JSBool JSPROXY_cpBBNewForCircle(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	ret_val = cpBBNewForCircle((cpVect)arg0 , (cpFloat)arg1  );
 
-	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 5 );
+	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 4 );
 	cpBB* buffer = (cpBB*)JS_GetTypedArrayData(typedArray);
 	*buffer = ret_val;
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(typedArray));
@@ -352,7 +352,7 @@ JSBool JSPROXY_cpBBWrapVect(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	ret_val = cpBBWrapVect((cpBB)arg0 , (cpVect)arg1  );
 
-	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 3 );
+	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 2 );
 	cpVect* buffer = (cpVect*)JS_GetTypedArrayData(typedArray);
 	*buffer = ret_val;
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(typedArray));
@@ -385,21 +385,6 @@ JSBool JSPROXY_cpBodyActivateStatic(JSContext *cx, uint32_t argc, jsval *vp) {
 	arg1 = (cpShape*) jsval_to_opaque( cx, *argvp++ );
 
 	cpBodyActivateStatic((cpBody*)arg0 , (cpShape*)arg1  );
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
-	return JS_TRUE;
-}
-
-// Arguments: cpBody*, cpShape*
-// Ret value: None
-JSBool JSPROXY_cpBodyAddShape(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 2, @"Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	cpBody* arg0; cpShape* arg1; 
-
-	arg0 = (cpBody*) jsval_to_opaque( cx, *argvp++ );
-	arg1 = (cpShape*) jsval_to_opaque( cx, *argvp++ );
-
-	cpBodyAddShape((cpBody*)arg0 , (cpShape*)arg1  );
 	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
@@ -547,7 +532,7 @@ JSBool JSPROXY_cpBodyGetForce(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	ret_val = cpBodyGetForce((cpBody*)arg0  );
 
-	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 3 );
+	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 2 );
 	cpVect* buffer = (cpVect*)JS_GetTypedArrayData(typedArray);
 	*buffer = ret_val;
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(typedArray));
@@ -597,7 +582,7 @@ JSBool JSPROXY_cpBodyGetPos(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	ret_val = cpBodyGetPos((cpBody*)arg0  );
 
-	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 3 );
+	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 2 );
 	cpVect* buffer = (cpVect*)JS_GetTypedArrayData(typedArray);
 	*buffer = ret_val;
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(typedArray));
@@ -617,7 +602,7 @@ JSBool JSPROXY_cpBodyGetRot(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	ret_val = cpBodyGetRot((cpBody*)arg0  );
 
-	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 3 );
+	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 2 );
 	cpVect* buffer = (cpVect*)JS_GetTypedArrayData(typedArray);
 	*buffer = ret_val;
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(typedArray));
@@ -670,7 +655,7 @@ JSBool JSPROXY_cpBodyGetVel(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	ret_val = cpBodyGetVel((cpBody*)arg0  );
 
-	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 3 );
+	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 2 );
 	cpVect* buffer = (cpVect*)JS_GetTypedArrayData(typedArray);
 	*buffer = ret_val;
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(typedArray));
@@ -694,7 +679,7 @@ JSBool JSPROXY_cpBodyGetVelAtLocalPoint(JSContext *cx, uint32_t argc, jsval *vp)
 
 	ret_val = cpBodyGetVelAtLocalPoint((cpBody*)arg0 , (cpVect)arg1  );
 
-	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 3 );
+	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 2 );
 	cpVect* buffer = (cpVect*)JS_GetTypedArrayData(typedArray);
 	*buffer = ret_val;
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(typedArray));
@@ -718,7 +703,7 @@ JSBool JSPROXY_cpBodyGetVelAtWorldPoint(JSContext *cx, uint32_t argc, jsval *vp)
 
 	ret_val = cpBodyGetVelAtWorldPoint((cpBody*)arg0 , (cpVect)arg1  );
 
-	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 3 );
+	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 2 );
 	cpVect* buffer = (cpVect*)JS_GetTypedArrayData(typedArray);
 	*buffer = ret_val;
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(typedArray));
@@ -855,7 +840,7 @@ JSBool JSPROXY_cpBodyLocal2World(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	ret_val = cpBodyLocal2World((cpBody*)arg0 , (cpVect)arg1  );
 
-	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 3 );
+	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 2 );
 	cpVect* buffer = (cpVect*)JS_GetTypedArrayData(typedArray);
 	*buffer = ret_val;
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(typedArray));
@@ -893,21 +878,6 @@ JSBool JSPROXY_cpBodyNewStatic(JSContext *cx, uint32_t argc, jsval *vp) {
 	jsval ret_jsval = opaque_to_jsval( cx, ret_val );
 	JS_SET_RVAL(cx, vp, ret_jsval);
 	
-	return JS_TRUE;
-}
-
-// Arguments: cpBody*, cpShape*
-// Ret value: None
-JSBool JSPROXY_cpBodyRemoveShape(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 2, @"Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	cpBody* arg0; cpShape* arg1; 
-
-	arg0 = (cpBody*) jsval_to_opaque( cx, *argvp++ );
-	arg1 = (cpShape*) jsval_to_opaque( cx, *argvp++ );
-
-	cpBodyRemoveShape((cpBody*)arg0 , (cpShape*)arg1  );
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
 
@@ -1178,7 +1148,7 @@ JSBool JSPROXY_cpBodyWorld2Local(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	ret_val = cpBodyWorld2Local((cpBody*)arg0 , (cpVect)arg1  );
 
-	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 3 );
+	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 2 );
 	cpVect* buffer = (cpVect*)JS_GetTypedArrayData(typedArray);
 	*buffer = ret_val;
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(typedArray));
@@ -1240,7 +1210,7 @@ JSBool JSPROXY_cpCircleShapeGetOffset(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	ret_val = cpCircleShapeGetOffset((cpShape*)arg0  );
 
-	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 3 );
+	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 2 );
 	cpVect* buffer = (cpVect*)JS_GetTypedArrayData(typedArray);
 	*buffer = ret_val;
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(typedArray));
@@ -1283,39 +1253,6 @@ JSBool JSPROXY_cpCircleShapeNew(JSContext *cx, uint32_t argc, jsval *vp) {
 	jsval ret_jsval = opaque_to_jsval( cx, ret_val );
 	JS_SET_RVAL(cx, vp, ret_jsval);
 	
-	return JS_TRUE;
-}
-
-// Arguments: cpShape*, cpVect
-// Ret value: None
-JSBool JSPROXY_cpCircleShapeSetOffset(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 2, @"Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	cpShape* arg0; cpVect arg1; 
-
-	arg0 = (cpShape*) jsval_to_opaque( cx, *argvp++ );
-
-	JSObject *tmp_arg1;
-	JS_ValueToObject( cx, *argvp++, &tmp_arg1 );
-	arg1 = *(cpVect*)JS_GetTypedArrayData( tmp_arg1);
-
-	cpCircleShapeSetOffset((cpShape*)arg0 , (cpVect)arg1  );
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
-	return JS_TRUE;
-}
-
-// Arguments: cpShape*, cpFloat
-// Ret value: None
-JSBool JSPROXY_cpCircleShapeSetRadius(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 2, @"Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	cpShape* arg0; double arg1; 
-
-	arg0 = (cpShape*) jsval_to_opaque( cx, *argvp++ );
-	JS_ValueToNumber( cx, *argvp++, &arg1 );
-
-	cpCircleShapeSetRadius((cpShape*)arg0 , (cpFloat)arg1  );
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
 
@@ -1437,7 +1374,7 @@ JSBool JSPROXY_cpPolyShapeGetVert(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	ret_val = cpPolyShapeGetVert((cpShape*)arg0 , (int)arg1  );
 
-	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 3 );
+	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 2 );
 	cpVect* buffer = (cpVect*)JS_GetTypedArrayData(typedArray);
 	*buffer = ret_val;
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(typedArray));
@@ -1467,7 +1404,7 @@ JSBool JSPROXY_cpSegmentShapeGetA(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	ret_val = cpSegmentShapeGetA((cpShape*)arg0  );
 
-	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 3 );
+	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 2 );
 	cpVect* buffer = (cpVect*)JS_GetTypedArrayData(typedArray);
 	*buffer = ret_val;
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(typedArray));
@@ -1487,7 +1424,7 @@ JSBool JSPROXY_cpSegmentShapeGetB(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	ret_val = cpSegmentShapeGetB((cpShape*)arg0  );
 
-	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 3 );
+	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 2 );
 	cpVect* buffer = (cpVect*)JS_GetTypedArrayData(typedArray);
 	*buffer = ret_val;
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(typedArray));
@@ -1507,7 +1444,7 @@ JSBool JSPROXY_cpSegmentShapeGetNormal(JSContext *cx, uint32_t argc, jsval *vp) 
 
 	ret_val = cpSegmentShapeGetNormal((cpShape*)arg0  );
 
-	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 3 );
+	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 2 );
 	cpVect* buffer = (cpVect*)JS_GetTypedArrayData(typedArray);
 	*buffer = ret_val;
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(typedArray));
@@ -1559,28 +1496,6 @@ JSBool JSPROXY_cpSegmentShapeNew(JSContext *cx, uint32_t argc, jsval *vp) {
 
 // Arguments: cpShape*, cpVect, cpVect
 // Ret value: None
-JSBool JSPROXY_cpSegmentShapeSetEndpoints(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 3, @"Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	cpShape* arg0; cpVect arg1; cpVect arg2; 
-
-	arg0 = (cpShape*) jsval_to_opaque( cx, *argvp++ );
-
-	JSObject *tmp_arg1;
-	JS_ValueToObject( cx, *argvp++, &tmp_arg1 );
-	arg1 = *(cpVect*)JS_GetTypedArrayData( tmp_arg1);
-
-	JSObject *tmp_arg2;
-	JS_ValueToObject( cx, *argvp++, &tmp_arg2 );
-	arg2 = *(cpVect*)JS_GetTypedArrayData( tmp_arg2);
-
-	cpSegmentShapeSetEndpoints((cpShape*)arg0 , (cpVect)arg1 , (cpVect)arg2  );
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
-	return JS_TRUE;
-}
-
-// Arguments: cpShape*, cpVect, cpVect
-// Ret value: None
 JSBool JSPROXY_cpSegmentShapeSetNeighbors(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( argc == 3, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
@@ -1601,36 +1516,6 @@ JSBool JSPROXY_cpSegmentShapeSetNeighbors(JSContext *cx, uint32_t argc, jsval *v
 	return JS_TRUE;
 }
 
-// Arguments: cpShape*, cpFloat
-// Ret value: None
-JSBool JSPROXY_cpSegmentShapeSetRadius(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 2, @"Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	cpShape* arg0; double arg1; 
-
-	arg0 = (cpShape*) jsval_to_opaque( cx, *argvp++ );
-	JS_ValueToNumber( cx, *argvp++, &arg1 );
-
-	cpSegmentShapeSetRadius((cpShape*)arg0 , (cpFloat)arg1  );
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
-	return JS_TRUE;
-}
-
-// Arguments: cpShape*
-// Ret value: cpBool
-JSBool JSPROXY_cpShapeActive(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	cpShape* arg0; 
-
-	arg0 = (cpShape*) jsval_to_opaque( cx, *argvp++ );
-	cpBool ret_val;
-
-	ret_val = cpShapeActive((cpShape*)arg0  );
-	JS_SET_RVAL(cx, vp, INT_TO_JSVAL(ret_val));
-	return JS_TRUE;
-}
-
 // Arguments: cpShape*
 // Ret value: cpBB
 JSBool JSPROXY_cpShapeCacheBB(JSContext *cx, uint32_t argc, jsval *vp) {
@@ -1643,7 +1528,7 @@ JSBool JSPROXY_cpShapeCacheBB(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	ret_val = cpShapeCacheBB((cpShape*)arg0  );
 
-	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 5 );
+	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 4 );
 	cpBB* buffer = (cpBB*)JS_GetTypedArrayData(typedArray);
 	*buffer = ret_val;
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(typedArray));
@@ -1691,7 +1576,7 @@ JSBool JSPROXY_cpShapeGetBB(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	ret_val = cpShapeGetBB((cpShape*)arg0  );
 
-	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 5 );
+	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 4 );
 	cpBB* buffer = (cpBB*)JS_GetTypedArrayData(typedArray);
 	*buffer = ret_val;
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(typedArray));
@@ -1807,7 +1692,7 @@ JSBool JSPROXY_cpShapeGetSurfaceVelocity(JSContext *cx, uint32_t argc, jsval *vp
 
 	ret_val = cpShapeGetSurfaceVelocity((cpShape*)arg0  );
 
-	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 3 );
+	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 2 );
 	cpVect* buffer = (cpVect*)JS_GetTypedArrayData(typedArray);
 	*buffer = ret_val;
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(typedArray));
@@ -1947,7 +1832,7 @@ JSBool JSPROXY_cpShapeUpdate(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	ret_val = cpShapeUpdate((cpShape*)arg0 , (cpVect)arg1 , (cpVect)arg2  );
 
-	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 5 );
+	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 4 );
 	cpBB* buffer = (cpBB*)JS_GetTypedArrayData(typedArray);
 	*buffer = ret_val;
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(typedArray));
@@ -2203,7 +2088,7 @@ JSBool JSPROXY_cpSpaceGetGravity(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	ret_val = cpSpaceGetGravity((cpSpace*)arg0  );
 
-	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 3 );
+	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 2 );
 	cpVect* buffer = (cpVect*)JS_GetTypedArrayData(typedArray);
 	*buffer = ret_val;
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(typedArray));
@@ -2705,7 +2590,7 @@ JSBool JSPROXY_cpv(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	ret_val = cpv((cpFloat)arg0 , (cpFloat)arg1  );
 
-	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 3 );
+	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 2 );
 	cpVect* buffer = (cpVect*)JS_GetTypedArrayData(typedArray);
 	*buffer = ret_val;
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(typedArray));
@@ -2732,7 +2617,7 @@ JSBool JSPROXY_cpvadd(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	ret_val = cpvadd((cpVect)arg0 , (cpVect)arg1  );
 
-	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 3 );
+	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 2 );
 	cpVect* buffer = (cpVect*)JS_GetTypedArrayData(typedArray);
 	*buffer = ret_val;
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(typedArray));
@@ -2756,7 +2641,7 @@ JSBool JSPROXY_cpvclamp(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	ret_val = cpvclamp((cpVect)arg0 , (cpFloat)arg1  );
 
-	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 3 );
+	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 2 );
 	cpVect* buffer = (cpVect*)JS_GetTypedArrayData(typedArray);
 	*buffer = ret_val;
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(typedArray));
@@ -2886,7 +2771,7 @@ JSBool JSPROXY_cpvforangle(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	ret_val = cpvforangle((cpFloat)arg0  );
 
-	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 3 );
+	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 2 );
 	cpVect* buffer = (cpVect*)JS_GetTypedArrayData(typedArray);
 	*buffer = ret_val;
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(typedArray));
@@ -2950,7 +2835,7 @@ JSBool JSPROXY_cpvlerp(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	ret_val = cpvlerp((cpVect)arg0 , (cpVect)arg1 , (cpFloat)arg2  );
 
-	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 3 );
+	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 2 );
 	cpVect* buffer = (cpVect*)JS_GetTypedArrayData(typedArray);
 	*buffer = ret_val;
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(typedArray));
@@ -2978,7 +2863,7 @@ JSBool JSPROXY_cpvlerpconst(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	ret_val = cpvlerpconst((cpVect)arg0 , (cpVect)arg1 , (cpFloat)arg2  );
 
-	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 3 );
+	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 2 );
 	cpVect* buffer = (cpVect*)JS_GetTypedArrayData(typedArray);
 	*buffer = ret_val;
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(typedArray));
@@ -3002,7 +2887,7 @@ JSBool JSPROXY_cpvmult(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	ret_val = cpvmult((cpVect)arg0 , (cpFloat)arg1  );
 
-	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 3 );
+	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 2 );
 	cpVect* buffer = (cpVect*)JS_GetTypedArrayData(typedArray);
 	*buffer = ret_val;
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(typedArray));
@@ -3048,7 +2933,7 @@ JSBool JSPROXY_cpvneg(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	ret_val = cpvneg((cpVect)arg0  );
 
-	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 3 );
+	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 2 );
 	cpVect* buffer = (cpVect*)JS_GetTypedArrayData(typedArray);
 	*buffer = ret_val;
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(typedArray));
@@ -3071,7 +2956,7 @@ JSBool JSPROXY_cpvnormalize(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	ret_val = cpvnormalize((cpVect)arg0  );
 
-	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 3 );
+	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 2 );
 	cpVect* buffer = (cpVect*)JS_GetTypedArrayData(typedArray);
 	*buffer = ret_val;
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(typedArray));
@@ -3094,7 +2979,7 @@ JSBool JSPROXY_cpvnormalize_safe(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	ret_val = cpvnormalize_safe((cpVect)arg0  );
 
-	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 3 );
+	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 2 );
 	cpVect* buffer = (cpVect*)JS_GetTypedArrayData(typedArray);
 	*buffer = ret_val;
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(typedArray));
@@ -3117,7 +3002,7 @@ JSBool JSPROXY_cpvperp(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	ret_val = cpvperp((cpVect)arg0  );
 
-	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 3 );
+	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 2 );
 	cpVect* buffer = (cpVect*)JS_GetTypedArrayData(typedArray);
 	*buffer = ret_val;
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(typedArray));
@@ -3144,7 +3029,7 @@ JSBool JSPROXY_cpvproject(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	ret_val = cpvproject((cpVect)arg0 , (cpVect)arg1  );
 
-	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 3 );
+	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 2 );
 	cpVect* buffer = (cpVect*)JS_GetTypedArrayData(typedArray);
 	*buffer = ret_val;
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(typedArray));
@@ -3171,7 +3056,7 @@ JSBool JSPROXY_cpvrotate(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	ret_val = cpvrotate((cpVect)arg0 , (cpVect)arg1  );
 
-	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 3 );
+	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 2 );
 	cpVect* buffer = (cpVect*)JS_GetTypedArrayData(typedArray);
 	*buffer = ret_val;
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(typedArray));
@@ -3194,7 +3079,7 @@ JSBool JSPROXY_cpvrperp(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	ret_val = cpvrperp((cpVect)arg0  );
 
-	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 3 );
+	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 2 );
 	cpVect* buffer = (cpVect*)JS_GetTypedArrayData(typedArray);
 	*buffer = ret_val;
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(typedArray));
@@ -3222,7 +3107,7 @@ JSBool JSPROXY_cpvslerp(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	ret_val = cpvslerp((cpVect)arg0 , (cpVect)arg1 , (cpFloat)arg2  );
 
-	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 3 );
+	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 2 );
 	cpVect* buffer = (cpVect*)JS_GetTypedArrayData(typedArray);
 	*buffer = ret_val;
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(typedArray));
@@ -3250,7 +3135,7 @@ JSBool JSPROXY_cpvslerpconst(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	ret_val = cpvslerpconst((cpVect)arg0 , (cpVect)arg1 , (cpFloat)arg2  );
 
-	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 3 );
+	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 2 );
 	cpVect* buffer = (cpVect*)JS_GetTypedArrayData(typedArray);
 	*buffer = ret_val;
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(typedArray));
@@ -3277,7 +3162,7 @@ JSBool JSPROXY_cpvsub(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	ret_val = cpvsub((cpVect)arg0 , (cpVect)arg1  );
 
-	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 3 );
+	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 2 );
 	cpVect* buffer = (cpVect*)JS_GetTypedArrayData(typedArray);
 	*buffer = ret_val;
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(typedArray));
@@ -3322,7 +3207,7 @@ JSBool JSPROXY_cpvunrotate(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	ret_val = cpvunrotate((cpVect)arg0 , (cpVect)arg1  );
 
-	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 3 );
+	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 2 );
 	cpVect* buffer = (cpVect*)JS_GetTypedArrayData(typedArray);
 	*buffer = ret_val;
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(typedArray));

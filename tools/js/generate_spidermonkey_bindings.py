@@ -224,6 +224,7 @@ class SpiderMonkey(object):
             self.functions_to_bind = self.expand_regexp_names( self._functions_to_bind, ref_list )
         else:
             self.functions_to_bind = []
+        self.functions_bound = []
 
     def init_functions_to_ignore( self, klasses ):
         self._functions_to_ignore = klasses
@@ -349,6 +350,7 @@ class SpiderMonkey(object):
 
         inner = struct.replace('{', '')
         inner = inner.replace('{', '')
+        inner = inner.replace('}','')
         key,value = inner.split('=')
 
         k = value[0]
@@ -373,6 +375,7 @@ class SpiderMonkey(object):
         if struct[0] == '{' and struct[-1] == '}' and len( struct.split('{') ) == 2:
             inner = struct.replace('{', '')
             inner = inner.replace('{', '')
+            inner = inner.replace('}', '')
             key,value = inner.split('=')
             # values should be of the same type
             previous = None
@@ -1585,12 +1588,30 @@ JSBool %s%s(JSContext *cx, uint32_t argc, jsval *vp) {
 
         return True
 
-    def generate_function_registration( self, function ):
-        pass
+    def generate_function_registration( self, func_name ):
+
+        function = None
+        for func in self.bs['signatures']['function']:
+            if func['name'] == func_name:
+                function = func
+                break
+
+        num_args = self.get_number_of_arguments( function )
+        template = 'JS_DefineFunction(_cx, %s, "%s", %s, %d, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );\n' % \
+                 ( self.namespace,  PROXY_PREFIX + func_name, PROXY_PREFIX + func_name, num_args )
+
+        self.function_registration_file.write( template )
 
     def generate_functions_registration( self ):
-        for func in self.functions_to_bind:
+
+        self.function_registration_file = open( '%s%s_functions_registration.h' % (BINDINGS_PREFIX, self.namespace), 'w' )
+        self.generate_autogenerate_prefix( self.function_registration_file )
+
+        for func in self.functions_bound:
             self.generate_function_registration( func )
+
+        self.function_registration_file.close()
+
 
     def generate_bindings( self ):
 
@@ -1632,6 +1653,7 @@ JSBool %s%s(JSContext *cx, uint32_t argc, jsval *vp) {
                     try:
                         self.generate_function_binding( f )
                         self.generate_function_declaration( f['name'] )
+                        self.functions_bound.append( f['name'] )
                     except ParseException, e:
                         sys.stderr.write( 'NOT OK: "%s" Error: %s\n' % (  f['name'], str(e) ) )
 

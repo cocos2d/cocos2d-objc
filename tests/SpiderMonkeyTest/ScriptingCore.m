@@ -26,6 +26,8 @@
 #import "ScriptingCore.h"
 #import "js_bindings_NSObject.h"
 #import "js_bindings_cocos2d_classes.h"
+#import "js_bindings_cocos2d_functions.h"
+#import "js_bindings_chipmunk_functions.h"
 
 // Globals
 char * JSPROXY_association_proxy_key = NULL;
@@ -259,6 +261,16 @@ JSBool ScriptingCore_addToRunningScene(JSContext *cx, uint32_t argc, jsval *vp)
 				
 		// Register classes: base classes should be registered first
 #import "js_bindings_cocos2d_classes_registration.h"
+#import "js_bindings_cocos2d_functions_registration.h"
+		
+		
+		// create the cocos namespace
+		JSObject *chipmunk = JS_NewObject( _cx, NULL, NULL, NULL);
+		jsval chipmunkVal = OBJECT_TO_JSVAL(chipmunk);
+		JS_SetProperty(_cx, _object, "cp", &chipmunkVal);
+
+#import "js_bindings_chipmunk_functions_registration.h"
+
 	}
 	
 	return self;
