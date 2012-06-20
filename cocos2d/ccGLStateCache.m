@@ -90,6 +90,15 @@ void ccGLUseProgram( GLuint program )
 #endif // CC_ENABLE_GL_STATE_CACHE
 }
 
+static void SetBlending(GLenum sfactor, GLenum dfactor)
+{
+	if(sfactor == GL_ONE && dfactor == GL_ZERO){
+		glDisable(GL_BLEND);
+	} else {
+		glEnable(GL_BLEND);
+		glBlendFunc( sfactor, dfactor );
+	}
+}
 
 void ccGLBlendFunc(GLenum sfactor, GLenum dfactor)
 {
@@ -97,36 +106,22 @@ void ccGLBlendFunc(GLenum sfactor, GLenum dfactor)
 	if( sfactor != _ccBlendingSource || dfactor != _ccBlendingDest ) {
 		_ccBlendingSource = sfactor;
 		_ccBlendingDest = dfactor;
-		glBlendFunc( sfactor, dfactor );
+		SetBlending( sfactor, dfactor );
 	}
 #else
-	glBlendFunc( sfactor, dfactor );
+	SetBlending( sfactor, dfactor );
 #endif // CC_ENABLE_GL_STATE_CACHE
 }
 
-//GLenum ccGLGetActiveTexture( void )
-//{
-//#if CC_ENABLE_GL_STATE_CACHE
-//	return _ccCurrentActiveTexture + GL_TEXTURE0;
-//#else
-//	GLenum activeTexture;
-//	glGetIntegerv(GL_ACTIVE_TEXTURE, (GLint*)&activeTexture);
-//	return activeTexture;
-//#endif
-//}
-//
-//void ccGLActiveTexture( GLenum textureEnum )
-//{
-//#if CC_ENABLE_GL_STATE_CACHE
-//	NSCAssert1( (textureEnum - GL_TEXTURE0) < kCCMaxActiveTexture, @"cocos2d ERROR: Increase kCCMaxActiveTexture to %d!", (textureEnum-GL_TEXTURE0) );
-//	if( (textureEnum - GL_TEXTURE0) != _ccCurrentActiveTexture ) {
-//		_ccCurrentActiveTexture = (textureEnum - GL_TEXTURE0);
-//		glActiveTexture( textureEnum );
-//	}
-//#else
-//	glActiveTexture( textureEnum );
-//#endif
-//}
+void ccGLBlendResetToCache(void)
+{
+	glBlendEquation(GL_FUNC_ADD);
+#if CC_ENABLE_GL_STATE_CACHE
+	SetBlending( _ccBlendingSource, _ccBlendingDest );
+#else
+	SetBlending( CC_BLEND_SRC, CC_BLEND_DST );
+#endif // CC_ENABLE_GL_STATE_CACHE
+}
 
 void ccGLBindTexture2D( GLuint textureId )
 {
@@ -173,24 +168,24 @@ void ccGLEnable( ccGLServerState flags )
 {
 #if CC_ENABLE_GL_STATE_CACHE
 
-	BOOL enabled = NO;
-
-	/* GL_BLEND */
-	if( (enabled=(flags & CC_GL_BLEND)) != (_ccGLServerState & CC_GL_BLEND) ) {
-		if( enabled ) {
-			glEnable( GL_BLEND );
-			_ccGLServerState |= CC_GL_BLEND;
-		} else {
-			glDisable( GL_BLEND );
-			_ccGLServerState &=  ~CC_GL_BLEND;
-		}
-	}
+//	BOOL enabled = NO;
+//
+//	/* GL_BLEND */
+//	if( (enabled=(flags & CC_GL_BLEND)) != (_ccGLServerState & CC_GL_BLEND) ) {
+//		if( enabled ) {
+//			glEnable( GL_BLEND );
+//			_ccGLServerState |= CC_GL_BLEND;
+//		} else {
+//			glDisable( GL_BLEND );
+//			_ccGLServerState &=  ~CC_GL_BLEND;
+//		}
+//	}
 
 #else
-	if( flags & CC_GL_BLEND )
-		glEnable( GL_BLEND );
-	else
-		glDisable( GL_BLEND );
+//	if( flags & CC_GL_BLEND )
+//		glEnable( GL_BLEND );
+//	else
+//		glDisable( GL_BLEND );
 #endif
 }
 

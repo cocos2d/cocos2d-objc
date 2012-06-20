@@ -45,11 +45,12 @@ typedef enum {
 //	CC_GL_SCISSOR_TEST = 1 << 0,
 //	CC_GL_STENCIL_TEST = 1 << 1,
 //	CC_GL_DEPTH_TEST = 1 << 2,
-	CC_GL_BLEND = 1 << 3,
+//	CC_GL_BLEND = 1 << 3,
 //	CC_GL_DITHER = 1 << 4,
 
 //	CC_GL_ALL = ( CC_GL_SCISSOR_TEST | CC_GL_STENCIL_TEST | CC_GL_DEPTH_TEST | CC_GL_BLEND | CC_GL_DITHER ),
-	CC_GL_ALL = ( CC_GL_BLEND ),
+//	CC_GL_ALL = ( CC_GL_BLEND ),
+	CC_GL_ALL = 0,
 
 } ccGLServerState;
 
@@ -84,6 +85,12 @@ void ccGLDeleteProgram( GLuint program );
  */
 void ccGLBlendFunc(GLenum sfactor, GLenum dfactor);
 
+/** Resets the blending mode back to the cached state in case you used glBlendFuncSeparate() or glBlendEquation().
+ If CC_ENABLE_GL_STATE_CACHE is disabled, it will just set the default blending mode using GL_FUNC_ADD.
+ @since v2.0.0
+ */
+void ccGLBlendResetToCache(void);
+
 /** sets the projection matrix as dirty
  @since v2.0.0
  */
@@ -101,19 +108,6 @@ void ccSetProjectionMatrixDirty( void );
  @since v2.0.0
  */
 void ccGLEnableVertexAttribs( unsigned int flags );
-
-///** If the active texture is not textureEnum, then it will active it.
-// If CC_ENABLE_GL_STATE_CACHE is disabled, it will call glActiveTexture() directly.
-// @since v2.0.0
-// */
-//void ccGLActiveTexture(GLenum textureEnum );
-//
-///** Returns the active texture.
-// If CC_ENABLE_GL_STATE_CACHE is disabled, it will call glGetIntegerv(GL_ACTIVE_TEXTURE);
-// @since v2.0.0
-// */
-//GLenum ccGLGetActiveTexture( void );
-
 
 /** If the texture is not already bound to texture unit 0, it binds it.
  If CC_ENABLE_GL_STATE_CACHE is disabled, it will call glBindTexture() directly.

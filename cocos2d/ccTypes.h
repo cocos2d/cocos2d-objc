@@ -312,6 +312,8 @@ typedef struct _ccBlendFunc
 	GLenum dst;
 } ccBlendFunc;
 
+static const ccBlendFunc kCCBlendFuncDisable = {GL_ONE, GL_ZERO};
+
 //! ccResolutionType
 typedef enum
 {
