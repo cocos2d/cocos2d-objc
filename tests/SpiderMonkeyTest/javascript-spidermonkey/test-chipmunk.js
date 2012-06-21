@@ -35,20 +35,6 @@ var physics = {
 		// Gravity
 		cp.spaceSetGravity( physics.space, cp.v(0, -100) );
 	},
-
-	addSprite : function( pos ) {
-		var body = cp.bodyNew(1, cp.momentForBox(1, 20, 20) );
-		cp.bodySetPos( body, pos );
-		cp.spaceAddBody( physics.space, body );
-		var shape = cp.boxShapeNew( body, 48, 108);
-		cp.shapeSetElasticity( shape, 0.5 );
-		cp.shapeSetFriction( shape, 0.5 );
-		cp.spaceAddShape( physics.space, shape );
-
-		var sprite = cc.ChipmunkSprite.create("grossini.png");
-		sprite.setBody( body );
-		return sprite;
-	},
 };
 
 var MyLayer = {
@@ -63,7 +49,7 @@ var MyLayer = {
 			physics.init( this );
 			this.scheduleUpdate();
 			for(var i=0; i<10; i++) {
-				var sprite = physics.addSprite( cp.v(winSize.width/2, winSize.height/2) );
+				var sprite = MyLayer.addSprite( cp.v(winSize.width/2, winSize.height/2) );
 				this.addChild( sprite );
 			}
 		};
@@ -88,7 +74,21 @@ var MyLayer = {
 		var rep = cc.RepeatForever.create( cc.Sequence.create( rot, rev ) );
 
 		target.runAction( rep );
-	}
+	},
+
+	addSprite : function( pos ) {
+		var body = cp.bodyNew(1, cp.momentForBox(1, 20, 20) );
+		cp.bodySetPos( body, pos );
+		cp.spaceAddBody( physics.space, body );
+		var shape = cp.boxShapeNew( body, 48, 108);
+		cp.shapeSetElasticity( shape, 0.5 );
+		cp.shapeSetFriction( shape, 0.5 );
+		cp.spaceAddShape( physics.space, shape );
+
+		var sprite = cc.ChipmunkSprite.create("grossini.png");
+		sprite.setBody( body );
+		return sprite;
+	},
 }
 
 
