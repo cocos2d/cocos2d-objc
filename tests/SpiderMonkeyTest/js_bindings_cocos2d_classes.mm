@@ -5786,36 +5786,24 @@ JSBool JSPROXY_ChipmunkSprite_setIgnoreBodyRotation_(JSContext *cx, uint32_t arg
 	return JS_TRUE;
 }
 
-// Arguments: NSString*
-// Ret value: ChipmunkSprite*
-JSBool JSPROXY_ChipmunkSprite_spriteWithFile__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	NSString* arg0; 
-
-	arg0 = jsval_to_nsstring( cx, *argvp++ );
-	ChipmunkSprite* ret_val;
-
-	ret_val = [ChipmunkSprite spriteWithFile:(NSString*)arg0  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 // Arguments: NSString*, CGRect
 // Ret value: ChipmunkSprite*
 JSBool JSPROXY_ChipmunkSprite_spriteWithFile_rect__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	NSCAssert( argc >= 1 && argc <= 2 , @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; CGRect arg1; 
 
 	arg0 = jsval_to_nsstring( cx, *argvp++ );
-	arg1 = jsval_to_CGRect( cx, *argvp++ );
+	if (argc >= 2) {
+		arg1 = jsval_to_CGRect( cx, *argvp++ );
+	}
 	ChipmunkSprite* ret_val;
 
-	ret_val = [ChipmunkSprite spriteWithFile:(NSString*)arg0 rect:(CGRect)arg1  ];
+	if( argc == 1 )
+		ret_val = [ChipmunkSprite spriteWithFile:(NSString*)arg0  ];
+
+	if( argc == 2 )
+		ret_val = [ChipmunkSprite spriteWithFile:(NSString*)arg0 rect:(CGRect)arg1  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -5852,43 +5840,6 @@ JSBool JSPROXY_ChipmunkSprite_spriteWithSpriteFrameName__static(JSContext *cx, u
 	ChipmunkSprite* ret_val;
 
 	ret_val = [ChipmunkSprite spriteWithSpriteFrameName:(NSString*)arg0  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: CCTexture2D*
-// Ret value: ChipmunkSprite*
-JSBool JSPROXY_ChipmunkSprite_spriteWithTexture__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	id arg0; 
-
-	arg0 = (CCTexture2D*) jsval_to_nsobject( cx, *argvp++);
-	ChipmunkSprite* ret_val;
-
-	ret_val = [ChipmunkSprite spriteWithTexture:(CCTexture2D*)arg0  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: CCTexture2D*, CGRect
-// Ret value: ChipmunkSprite*
-JSBool JSPROXY_ChipmunkSprite_spriteWithTexture_rect__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 2, @"Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	id arg0; CGRect arg1; 
-
-	arg0 = (CCTexture2D*) jsval_to_nsobject( cx, *argvp++);
-	arg1 = jsval_to_CGRect( cx, *argvp++ );
-	ChipmunkSprite* ret_val;
-
-	ret_val = [ChipmunkSprite spriteWithTexture:(CCTexture2D*)arg0 rect:(CGRect)arg1  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -5935,12 +5886,9 @@ void JSPROXY_ChipmunkSprite_createClass(JSContext *cx, JSObject* globalObj, cons
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
-		JS_FN("spriteWithFile", JSPROXY_ChipmunkSprite_spriteWithFile__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("spriteWithFileRect", JSPROXY_ChipmunkSprite_spriteWithFile_rect__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("create", JSPROXY_ChipmunkSprite_spriteWithFile_rect__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("spriteWithSpriteFrame", JSPROXY_ChipmunkSprite_spriteWithSpriteFrame__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("spriteWithSpriteFrameName", JSPROXY_ChipmunkSprite_spriteWithSpriteFrameName__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("spriteWithTexture", JSPROXY_ChipmunkSprite_spriteWithTexture__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("spriteWithTextureRect", JSPROXY_ChipmunkSprite_spriteWithTexture_rect__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("createWithSpriteFrameName", JSPROXY_ChipmunkSprite_spriteWithSpriteFrameName__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("node", JSPROXY_ChipmunkSprite_node_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
