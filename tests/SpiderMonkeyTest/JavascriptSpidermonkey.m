@@ -23,18 +23,12 @@
 -(void) onEnter
 {
 	[super onEnter];
-		
-	CGSize s = [[CCDirector sharedDirector] winSize];
-	
-	CCSprite *sprite = [CCSprite spriteWithFile:@"grossini.png"];
-	
-	[sprite setPosition:ccp( s.width/2, s.height/2) ];
-	
-	[self addChild:sprite];
-	
+			
 //	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/test.js"];	
 //	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/test2.js"];	
-	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/test-sprite.js"];	
+//	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/test-sprite.js"];	
+	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/test-chipmunk.js"];	
+
 }
 @end
 
