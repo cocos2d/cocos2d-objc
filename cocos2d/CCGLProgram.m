@@ -185,7 +185,12 @@ typedef void (*GLLogFunction) (GLuint program,
 	uniforms_[kCCUniformTime] = glGetUniformLocation(program_, kCCUniformTime_s);
 	uniforms_[kCCUniformSinTime] = glGetUniformLocation(program_, kCCUniformSinTime_s);
 	uniforms_[kCCUniformCosTime] = glGetUniformLocation(program_, kCCUniformCosTime_s);
-	usesTime_ = !(uniforms_[kCCUniformTime] == uniforms_[kCCUniformSinTime] == uniforms_[kCCUniformCosTime] == -1);
+	
+	usesTime_ = (
+		uniforms_[kCCUniformTime] != -1 ||
+		uniforms_[kCCUniformSinTime] != -1 ||
+		uniforms_[kCCUniformCosTime] != -1
+	);
 
 	uniforms_[kCCUniformRandom01] = glGetUniformLocation(program_, kCCUniformRandom01_s);
 	
