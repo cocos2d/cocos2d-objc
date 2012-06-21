@@ -3,13 +3,13 @@
 // Shows how to use Chipmunk + cocos2d
 //
 
-//require("javascript-spidermonkey/helper.js");
+require("javascript-spidermonkey/helper.js");
 
 var director = cc.Director.sharedDirector();
 var _winSize = director.winSize();
 var winSize = {width:_winSize[0], height:_winSize[1]};
 
-physics = {
+var physics = {
 	// "instance" variables
 	space : null,
 
@@ -34,15 +34,13 @@ physics = {
 
 		// Gravity
 		cp.spaceSetGravity( physics.space, cp.v(0, -100) );
-		var sprite = this.addSprite( cp.v(winSize.width/2, winSize.height/2) );
-		layer.addChild( sprite );
 	},
 
 	addSprite : function( pos ) {
 		var body = cp.bodyNew(1, cp.momentForBox(1, 20, 20) );
 		cp.bodySetPos( body, pos );
 		cp.spaceAddBody( physics.space, body );
-		var shape = cp.boxShapeNew( body, 20, 20);
+		var shape = cp.boxShapeNew( body, 48, 108);
 		cp.shapeSetElasticity( shape, 0.5 );
 		cp.shapeSetFriction( shape, 0.5 );
 		cp.spaceAddShape( physics.space, shape );
@@ -53,20 +51,49 @@ physics = {
 	},
 };
 
-var layer1 = cc.Layer.create();
-layer1.onEnter = function () {
-	cc.log("onEnter called");
-	__jsc__.garbageCollect();
+var MyLayer = {
 
-	physics.init( this );
-	this.scheduleUpdate();
-};
+	// constructor
+	create : function() {
+		var layer1 = cc.Layer.create();
+		layer1.onEnter = function () {
+			cc.log("onEnter called");
+			__jsc__.garbageCollect();
 
-layer1.update = function( delta ) {
-	cp.spaceStep( physics.space, delta );
-};
+			physics.init( this );
+			this.scheduleUpdate();
+			for(var i=0; i<10; i++) {
+				var sprite = physics.addSprite( cp.v(winSize.width/2, winSize.height/2) );
+				this.addChild( sprite );
+			}
+		};
+
+		layer1.update = function( delta ) {
+			cp.spaceStep( physics.space, delta );
+		};
+
+		var label = cc.LabelTTF.labelWithStringFontnameFontsize("Javascript: cocos2d + Chipmunk", "Arial", 28);
+		label.setPosition( ccp( winSize.width/2, winSize.height-30) );
+		layer1.addChild( label );
+
+		label.setRotation( 2 );
+		this.runAction( label );
+
+		return layer1;
+	},
+
+	runAction : function( target ) {
+		var rot = cc.RotateBy.create( 0.2, -4 );
+		var rev = rot.reverse();
+		var rep = cc.RepeatForever.create( cc.Sequence.create( rot, rev ) );
+
+		target.runAction( rep );
+	}
+}
+
 
 var scene = cc.Scene.create();
-scene.addChild( layer1 );
+var layer = MyLayer.create();
+scene.addChild( layer );
 
 director.replaceScene( scene );
