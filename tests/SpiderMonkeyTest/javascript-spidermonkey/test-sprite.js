@@ -188,7 +188,7 @@ var SpriteColorOpacity = SpriteTestDemo.extend({
         return "testing opacity and color";
     },
     update:function(delta) {
-        cc.log("yeahhhh");
+        cc.log("delta: " + delta );
     }
 
 });
