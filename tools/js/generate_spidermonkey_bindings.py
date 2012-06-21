@@ -312,6 +312,16 @@ class SpiderMonkey(object):
     #
     # Helpers
     #
+    def get_callback_args_for_method( self, method ):
+        full_args = []
+        args = []
+        if 'arg' in method:
+            for arg in method['arg']:
+                full_args.append( '(' + arg['declared_type'] + ')' )
+                full_args.append( arg['name'] )
+                args.append( arg['name'] )
+        return [''.join(full_args), ''.join(args) ]
+
     def get_parent_class( self, class_name ):
         try:
             parent = self.hierarchy[class_name]['subclass']
@@ -417,6 +427,14 @@ class SpiderMonkey(object):
     def is_class_method( self, method ):
         return 'class_method' in method and method['class_method'] == 'true'
 
+    def get_method( self,class_name, method_name ):
+        for klass in self.bs['signatures']['class']:
+            if klass['name'] == class_name:
+                for m in klass['method']:
+                    if m['selector'] == method_name:
+                        return m
+        raise Exception("Method not found for %s # %s" % (class_name, method_name) )
+
     def get_method_type( self, method ):
         if self.is_class_constructor( method ):
             method_type = METHOD_CONSTRUCTOR
@@ -493,14 +511,12 @@ JSBool %s_constructor(JSContext *cx, uint32_t argc, jsval *vp)
     JSObject *jsobj = [%s createJSObjectWithRealObject:nil context:cx];
     JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
-    %s
-
     return JS_TRUE;
 }
 '''
         proxy_class_name = '%s%s' % (PROXY_PREFIX, class_name )
         self.mm_file.write( constructor_globals % ( proxy_class_name, proxy_class_name ) )
-        self.mm_file.write( constructor_template % ( proxy_class_name, proxy_class_name, '/* no callbacks */' ) )
+        self.mm_file.write( constructor_template % ( proxy_class_name, proxy_class_name ) )
 
     def generate_destructor( self, class_name ):
         # 1: JSPROXY_CCNode,
@@ -517,15 +533,13 @@ void %s_finalize(JSContext *cx, JSObject *obj)
 	if (proxy) {
 		del_proxy_for_jsobject( obj );
 		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_ASSIGN);
-		%s
 		[proxy release];
 	}
 }
 '''
         proxy_class_name = '%s%s' % (PROXY_PREFIX, class_name )
         self.mm_file.write( destructor_template % ( proxy_class_name,
-                                                    proxy_class_name, proxy_class_name,
-                                                    '/* no callbacks */' ) )
+                                                    proxy_class_name, proxy_class_name ) )
 
     #
     # Method generator functions
@@ -1217,7 +1231,7 @@ extern JSClass *%s_class;
         # onEnter
         # onEnter
         template = '''
--(void) %s
+-(void) %s%s
 {
 	if (_jsObj) {
 		JSContext* cx = [[ScriptingCore sharedInstance] globalContext];
@@ -1233,9 +1247,14 @@ extern JSClass *%s_class;
 '''
         if class_name in self.callback_methods:
             for m in self.callback_methods[ class_name ]:
-                self.mm_file.write( template % ( m,
-                                                 m,
-                                                 m ) )
+
+                method = self.get_method( class_name, m )
+                full_args, args = self.get_callback_args_for_method( method )
+
+                js_name = self.convert_selector_name_to_js( class_name, m )
+                self.mm_file.write( template % ( m, full_args,
+                                                 js_name,
+                                                 js_name ) )
 
     def generate_implementation_swizzle( self, class_name ):
         # CCNode
@@ -1251,7 +1270,7 @@ extern JSClass *%s_class;
 '''
         # CCNode, onEnter, onEnter
         template_middle = '''
-		if( ! [%s jr_swizzleMethod:@selector(%s) withMethod:@selector(%s_JSHook) error:&error] )
+		if( ! [%s jr_swizzleMethod:@selector(%s) withMethod:@selector(JSHook_%s) error:&error] )
 			NSLog(@"Error swizzling %%@", error);
 '''
         # CCNode
@@ -1396,13 +1415,13 @@ void %s_createClass(JSContext *cx, JSObject* globalObj, const char* name )
         # onEnter
         # PROXYJS_CCNode
         template = '''
--(void) %s_JSHook
+-(void) JSHook_%s%s
 {
 	%s *proxy = objc_getAssociatedObject(self, &JSPROXY_association_proxy_key);
 	if( proxy )
-		[proxy %s];
+		[proxy %s%s];
 
-	[self %s_JSHook];
+	[self JSHook_%s%s];
 }
 '''
         template_suffix = '@end\n'
@@ -1413,10 +1432,13 @@ void %s_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 
             self.mm_file.write( template_prefix % class_name )
             for m in self.callback_methods[ class_name ]:
-                self.mm_file.write( template % ( m,
+
+                real_method = self.get_method( class_name,m )
+                fullargs, args = self.get_callback_args_for_method( real_method )
+                self.mm_file.write( template % ( m, fullargs,
                                                  proxy_class_name,
-                                                 m,
-                                                 m) )
+                                                 m, args,
+                                                 m, args) )
 
             self.mm_file.write( template_suffix )
 

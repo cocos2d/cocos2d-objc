@@ -511,7 +511,7 @@ version 0.99.5 - 16-Dec-2010
 . [FIX] FileUtils: loads .gz / .ccz files correctly in RetinaDisplay mode (issue #1037)
 . [FIX] FileUtils: fixed big memory leaks on .ccz inflater
 . [FIX] FileUtils: removes -hd suffix if the filename already has it (issue #1040)
-. [FIX] Node: udpated doxygen strings regarding default anchorPoint (issue #1049)
+. [FIX] Node: updated doxygen strings regarding default anchorPoint (issue #1049)
 . [FIX] Sprite: updateTransform can be overriden (issue #824)
 . [FIX] Sprite: Assert if an sprite initialized with a batchnode and it is not using it (issue #1053)
 . [FIX] Sprite: correctly overrides setIsRelativeAnchorPoint (issue #1055)
@@ -855,7 +855,7 @@ version 0.99.1-rc - 12-Mar-2010
  . [FIX] TMX: TMXLayer raises exception if it receives the addChild message (issue #808)
  . [FIX] Texture2D: removed NSLog when image was NULL (issue #802)
  . [FIX] Xcode: hardware requirements in .plist: doesn't contain disabled features (issue #769)
- . [3RD] Box2d: udpated to r66 (issue #795)
+ . [3RD] Box2d: updated to r66 (issue #795)
  . [3RD] Chipmunk: updated to v5.2 (issue #784)
 
 version 0.99.0 - 18-Feb-2010
