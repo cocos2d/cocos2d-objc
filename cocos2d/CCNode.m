@@ -750,6 +750,11 @@ static NSUInteger globalOrderOfArrival = 1;
 	[actionManager_ pauseTarget:self];
 }
 
+/* override me */
+-(void) update:(ccTime)delta
+{
+}
+
 #pragma mark CCNode Transform
 
 - (CGAffineTransform)nodeToParentTransform

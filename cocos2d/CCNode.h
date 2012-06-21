@@ -454,7 +454,7 @@ enum {
 
 /** schedules the "update" method. It will use the order number 0. This method will be called every frame.
  Scheduled methods with a lower order value will be called before the ones that have a higher order value.
- Only one "udpate" method could be scheduled per node.
+ Only one "update" method could be scheduled per node.
 
  @since v0.99.3
  */
@@ -462,7 +462,7 @@ enum {
 
 /** schedules the "update" selector with a custom priority. This selector will be called every frame.
  Scheduled selectors with a lower priority will be called before the ones that have a higher value.
- Only one "udpate" selector could be scheduled per node (You can't have 2 'update' selectors).
+ Only one "update" selector could be scheduled per node (You can't have 2 'update' selectors).
 
  @since v0.99.3
  */
@@ -473,7 +473,6 @@ enum {
  @since v0.99.3
  */
 -(void) unscheduleUpdate;
-
 
 /** schedules a selector.
  The scheduled selector will be ticked every frame
@@ -515,6 +514,9 @@ enum {
  */
 -(void) pauseSchedulerAndActions;
 
+/* Update will be called automatically every frame if "scheduleUpdate" is called, and the node is "live"
+ */
+-(void) update:(ccTime)delta;
 
 // transformation methods
 

@@ -178,12 +178,17 @@ var SpriteColorOpacity = SpriteTestDemo.extend({
 
         l = this.children();
         cc.log("Children: " + l );
+
+        this.scheduleUpdate();
     },
     title:function () {
         return "Sprite: Color & Opacity";
     },
     subtitle:function () {
         return "testing opacity and color";
+    },
+    update:function(delta) {
+        cc.log("yeahhhh");
     }
 
 });
@@ -261,7 +266,7 @@ var SpriteBatchColorOpacity = SpriteTestDemo.extend({
         batch.addChild(sprite8);
     },
     title:function () {
-        return "Sprite: Color & Opacity";
+        return "Sprite Batch: Color & Opacity";
     },
     subtitle:function () {
         return "testing opacity and color with Sprite Batches";
