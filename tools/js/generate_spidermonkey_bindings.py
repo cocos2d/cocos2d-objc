@@ -120,11 +120,9 @@ class SpiderMonkey(object):
     def __init__(self, config ):
 
         self.hierarchy_files = config['hierarchy_protocol_file']
-        self.hierarchy = {}
         self.init_hierarchy_file()
 
         self.bridgesupport_files = config['bridge_support_file']
-        self.bs = {}
         self.init_bridgesupport_file()
 
         self.namespace = config['namespace']
@@ -175,10 +173,22 @@ class SpiderMonkey(object):
             fd.close()
 
     def init_bridgesupport_file( self ):
+        self.bs = {}
+        self.bs['signatures'] = {}
+
         for f in self.bridgesupport_files:
             p = ET.parse( get_path_for( f ) )
             root = p.getroot()
-            self.bs.update( xml2d( root ) )
+            xml = xml2d( root )
+            for key in xml['signatures']:
+                # More than 1 file can be loaded
+                # So, older keys should not be overwritten
+                if not key in self.bs['signatures']:
+                    self.bs['signatures'][key] = xml['signatures'][key]
+                else:
+                    l = self.bs['signatures'][key]
+                    if type(l) == type([]):
+                        self.bs['signatures'][key].extend( xml['signatures'][key] )
 
     def init_callback_methods( self ):
         self.callback_methods = {}

@@ -28,6 +28,7 @@
 
 #import "cocos2d.h"
 #import "chipmunk.h"
+#import "ChipmunkSprite.h"
 
 // Globals
 // one shared key for associations
