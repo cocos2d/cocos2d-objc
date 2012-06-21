@@ -1226,6 +1226,32 @@ extern JSClass *%s_class;
         # callback code should be added here
         self.h_file.write( header_template_end )
 
+    def generate_callback_args( self, method ):
+        no_args ='jsval *argv = NULL; unsigned argc=0;\n'
+        with_args = '''unsigned argc=%d;
+			jsval argv_ok = %s
+			jsval *argv = &argv_ok;
+'''
+
+        convert = {
+            'i' : 'INT_TO_JSVAL(%s);',
+            'b' : 'BOOLEAN_TO_JSVAL(%s);',
+            'f' : 'DOUBLE_TO_JSVAL(%s);',
+            'd' : 'DOUBLE_TO_JSVAL(%s);',
+            'c' : 'INT_TO_JSVAL(%s);',
+        }
+
+        # XXX Only support 0 or 1 argument, and only a limited amount of parameters
+        if 'arg' in method:
+            for arg in method['arg']:
+                t = arg['type'].lower()
+                if t in convert:
+                    tmp = convert[t] % arg['name']
+                    return with_args % (1, tmp  )
+
+        return no_args
+
+
     def generate_implementation_callback( self, class_name ):
         # onEnter
         # onEnter
@@ -1239,8 +1265,9 @@ extern JSClass *%s_class;
 		JS_HasProperty(cx, _jsObj, "%s", &found);
 		if (found == JS_TRUE) {
 			jsval rval, fval;
+			%s
 			JS_GetProperty(cx, _jsObj, "%s", &fval);
-			JS_CallFunctionValue(cx, _jsObj, fval, 0, 0, &rval);
+			JS_CallFunctionValue(cx, _jsObj, fval, argc, argv, &rval);
 		}
 	}
 }
@@ -1251,9 +1278,12 @@ extern JSClass *%s_class;
                 method = self.get_method( class_name, m )
                 full_args, args = self.get_callback_args_for_method( method )
 
+                converted_args = self.generate_callback_args( method )
+
                 js_name = self.convert_selector_name_to_js( class_name, m )
                 self.mm_file.write( template % ( m, full_args,
                                                  js_name,
+                                                 converted_args,
                                                  js_name ) )
 
     def generate_implementation_swizzle( self, class_name ):

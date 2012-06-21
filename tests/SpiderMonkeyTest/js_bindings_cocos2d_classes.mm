@@ -2026,8 +2026,12 @@ void JSPROXY_CCNode_createClass(JSContext *cx, JSObject* globalObj, const char* 
 		JS_HasProperty(cx, _jsObj, "update", &found);
 		if (found == JS_TRUE) {
 			jsval rval, fval;
+			unsigned argc=1;
+			jsval argv_ok = DOUBLE_TO_JSVAL(delta);
+			jsval *argv = &argv_ok;
+
 			JS_GetProperty(cx, _jsObj, "update", &fval);
-			JS_CallFunctionValue(cx, _jsObj, fval, 0, 0, &rval);
+			JS_CallFunctionValue(cx, _jsObj, fval, argc, argv, &rval);
 		}
 	}
 }
@@ -2040,8 +2044,10 @@ void JSPROXY_CCNode_createClass(JSContext *cx, JSObject* globalObj, const char* 
 		JS_HasProperty(cx, _jsObj, "onEnter", &found);
 		if (found == JS_TRUE) {
 			jsval rval, fval;
+			jsval *argv = NULL; unsigned argc=0;
+
 			JS_GetProperty(cx, _jsObj, "onEnter", &fval);
-			JS_CallFunctionValue(cx, _jsObj, fval, 0, 0, &rval);
+			JS_CallFunctionValue(cx, _jsObj, fval, argc, argv, &rval);
 		}
 	}
 }
@@ -2054,8 +2060,10 @@ void JSPROXY_CCNode_createClass(JSContext *cx, JSObject* globalObj, const char* 
 		JS_HasProperty(cx, _jsObj, "onExit", &found);
 		if (found == JS_TRUE) {
 			jsval rval, fval;
+			jsval *argv = NULL; unsigned argc=0;
+
 			JS_GetProperty(cx, _jsObj, "onExit", &fval);
-			JS_CallFunctionValue(cx, _jsObj, fval, 0, 0, &rval);
+			JS_CallFunctionValue(cx, _jsObj, fval, argc, argv, &rval);
 		}
 	}
 }
