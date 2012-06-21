@@ -80,7 +80,7 @@ class SpiderMonkey(object):
                              'functions_to_parse' : [],
                              'functions_to_ignore' : [],
                              'method_properties' : [],
-                             'opaque_structures' : [],
+                             'struct_properties' : [],
                              'function_prefix_to_remove' : '',
                              }
 
@@ -158,9 +158,13 @@ class SpiderMonkey(object):
         self.function_prefix = config['function_prefix_to_remove']
         self.init_functions_to_bind( config['functions_to_parse'] )
         self.init_functions_to_ignore( config['functions_to_ignore'] )
-        self.init_opaque_structures( config['opaque_structures'] )
         self.current_function = None
         self.callback_functions = []
+
+        #
+        # struct related
+        #
+        self.init_struct_properties( config['struct_properties'] )
 
 
     def init_hierarchy_file( self ):
@@ -216,6 +220,37 @@ class SpiderMonkey(object):
                 self.method_properties[klass][method] = {}
             self.method_properties[klass][method] = opts
 
+    def init_struct_properties( self, properties ):
+        self.struct_properties = {}
+        self.struct_opaque = []
+        self.struct_manual = []
+        for prop in properties:
+            # key value
+            if not prop or len(prop)==0:
+                continue
+            key,value = prop.split('=')
+
+            opts = {}
+            # From value get options
+            options = value.split(';')
+            for o in options:
+                # Options can have their own Key Value
+                if ':' in o:
+                    o_key, o_val = o.split(':')
+                    o_val = o_val.replace('"', '')    # remove possible "
+                else:
+                    o_key = o
+                    o_val = None
+                opts[ o_key ] = o_val
+
+                # populate lists. easier to code
+                if o_key == 'opaque':
+                    # '*' is needed for opaque structs
+                    self.struct_opaque.append( key + '*' )
+                elif o_key == 'manual':
+                    self.struct_manual.append( key )
+            self.struct_properties[key] = opts
+
     def init_functions_to_bind( self, functions ):
         self._functions_to_bind = set( functions )
         ref_list = []
@@ -240,10 +275,6 @@ class SpiderMonkey(object):
                 copy_set.remove( i )
 
         self.functions_to_bind = copy_set
-
-    def init_opaque_structures( self, structs ):
-        # convert structures into structure pointers
-        self.opaque_structures = [item + '*' for item in structs]
 
     def init_classes_to_bind( self, klasses ):
         self._classes_to_bind = set( klasses )
@@ -609,31 +640,20 @@ void %s_finalize(JSContext *cx, JSObject *obj)
         return template
 
     #
-    # special case: returning CGPoint
+    # special case: manual bindings for these structs
+    #  eg: CGRect, CGSize, CGPoint, cpVect
     #
-    def generate_retval_cgpoint( self, declared_type, js_type ):
+    def generate_retval_struct_manual( self, declared_type, js_type ):
         template = '''
-	jsval ret_jsval = CGPoint_to_jsval( cx, ret_val );
+	jsval ret_jsval = %s_to_jsval( cx, ret_val );
 	JS_SET_RVAL(cx, vp, ret_jsval);
-'''
+''' % declared_type
         return template
 
-    # special case: returning CGSize
-    def generate_retval_cgsize( self, declared_type, js_type ):
-        template = '''
-	jsval ret_jsval = CGSize_to_jsval( cx, ret_val );
-	JS_SET_RVAL(cx, vp, ret_jsval);
-'''
-        return template
-
-    def generate_retval_cgrect( self, declared_type, js_type ):
-        template = '''
-	jsval ret_jsval = CGRect_to_jsval( cx, ret_val );
-	JS_SET_RVAL(cx, vp, ret_jsval);
-'''
-        return template
-
-    def generate_retval_structure( self, declared_type, js_type ):
+    #
+    # Non manual bound structures
+    #
+    def generate_retval_struct_automatic( self, declared_type, js_type ):
         template = '''
 	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::%s, %d );
 	%s* buffer = (%s*)JS_GetTypedArrayData(typedArray);
@@ -644,6 +664,9 @@ void %s_finalize(JSContext *cx, JSObject *obj)
         return template % (t, l,
                            declared_type, declared_type )
 
+    #
+    # Structures that should be treated as "opaque"
+    #
     def generate_retval_opaque( self, declared_type, js_type ):
         template = '''
 	jsval ret_jsval = opaque_to_jsval( cx, ret_val );
@@ -667,19 +690,13 @@ void %s_finalize(JSContext *cx, JSObject *obj)
             '[]': self.generate_retval_array,
         }
 
-        special_declared_types = {
-            'CGPoint' : self.generate_retval_cgpoint,
-            'CGSize' :  self.generate_retval_cgsize,
-            'CGRect' :  self.generate_retval_cgrect,
-        }
-
         ret = ''
-        if declared_type in self.opaque_structures:
+        if declared_type in self.struct_opaque:
             ret = self.generate_retval_opaque( declared_type, js_type )
-        elif declared_type in special_declared_types:
-            ret = special_declared_types[ declared_type ]( declared_type, js_type )
+        elif declared_type in self.struct_manual:
+            ret =  self.generate_retval_struct_manual( declared_type, js_type )
         elif self.is_valid_structure( js_type ):
-            ret = self.generate_retval_structure( declared_type, js_type )
+            ret = self.generate_retval_struct_automatic( declared_type, js_type )
         elif js_type in special_convert:
             ret = special_convert[js_type]( declared_type, js_type )
         elif js_type in direct_convert:
@@ -694,9 +711,6 @@ void %s_finalize(JSContext *cx, JSObject *obj)
         # Left column: BridgeSupport types
         # Right column: JS types
         supported_declared_types = {
-            'CGPoint'   : 'N/A',
-            'CGSize'    : 'N/A',
-            'CGRect'    : 'N/A',
             'NSString*' : 'S',
             'NSArray*'  : '[]',
             'NSMutableArray*' : '[]',
@@ -754,12 +768,22 @@ void %s_finalize(JSContext *cx, JSObject *obj)
             elif t == '@' and dt_class_name in self.supported_classes:
                 ret_js_type = 'o'
                 ret_declared_type = dt
+
+            # valid automatic struct ?
             elif self.is_valid_structure( t ):
                 ret_js_type = t
                 ret_declared_type =  dt
-            elif dt in self.opaque_structures:
+
+            # valid opaque struct ?
+            elif dt in self.struct_opaque:
                 ret_js_type = 'N/A'
                 ret_declared_type = dt
+
+            # valid manual struct ?
+            elif dt in self.struct_manual:
+                ret_js_type = 'N/A'
+                ret_declared_type = dt
+
             else:
                 raise ParseException('Unsupported return value %s' % dt)
 
@@ -769,9 +793,6 @@ void %s_finalize(JSContext *cx, JSObject *obj)
         # Left column: BridgeSupport types
         # Right column: JS types
         supported_declared_types = {
-            'CGPoint'   : 'N/A',
-            'CGSize'    : 'N/A',
-            'CGRect'    : 'N/A',
             'NSString*' : 'S',
             'NSArray*'  : '[]',
             'CCArray*'  : '[]',
@@ -807,9 +828,6 @@ void %s_finalize(JSContext *cx, JSObject *obj)
                 if dt in supported_declared_types:
                     args_js_type.append( supported_declared_types[dt] )
                     args_declared_type.append( dt )
-                elif self.is_valid_structure( t ):
-                    args_js_type.append( t )
-                    args_declared_type.append( dt )
                 elif t in supported_types:
                     args_js_type.append( supported_types[t] )
                     args_declared_type.append( dt )
@@ -817,9 +835,22 @@ void %s_finalize(JSContext *cx, JSObject *obj)
                 elif t == '@' and dt_class_name in self.supported_classes:
                     args_js_type.append( 'o' )
                     args_declared_type.append( dt )
-                elif dt in self.opaque_structures:
-                    args_js_type.append( 'N/A')
+
+                # valid 'opaque' struct ?
+                elif dt in self.struct_opaque:
+                    args_js_type.append('N/A')
                     args_declared_type.append( dt )
+
+                # valid manual struct ?
+                elif dt in self.struct_manual:
+                    args_js_type.append('N/A')
+                    args_declared_type.append( dt )
+
+                # valid automatic struct ?
+                elif self.is_valid_structure( t ):
+                    args_js_type.append( t )
+                    args_declared_type.append( dt )
+
                 else:
                     raise ParseException("Unsupported argument: %s" % dt)
 
@@ -839,22 +870,12 @@ void %s_finalize(JSContext *cx, JSObject *obj)
         object_template = '\targ%d = (%s) jsval_to_nsobject( cx, *argvp++);\n'
         self.mm_file.write( object_template % (i, arg_declared_type ) )
 
-    # CGPoint needs an special case since its internal structure changes
-    # on the platform. On Mac it uses doubles and on iOS it uses floats
-    # This function expect floats.
-    def generate_argument_cgpoint( self, i, arg_js_type, arg_declared_type ):
-        template = '\targ%d = jsval_to_CGPoint( cx, *argvp++ );\n'
-        self.mm_file.write( template % i )
+    # Manual conversion for struct
+    def generate_argument_struct_manual( self, i, arg_js_type, arg_declared_type ):
+        template = '\targ%d = jsval_to_%s( cx, *argvp++ );\n' % (i, arg_declared_type)
+        self.mm_file.write( template )
 
-    def generate_argument_cgsize( self, i, arg_js_type, arg_declared_type ):
-        template = '\targ%d = jsval_to_CGSize( cx, *argvp++ );\n'
-        self.mm_file.write( template % i )
-
-    def generate_argument_cgrect( self, i, arg_js_type, arg_declared_type ):
-        template = '\targ%d = jsval_to_CGRect( cx, *argvp++ );\n'
-        self.mm_file.write( template % i )
-
-    def generate_argument_struct( self, i, arg_js_type, arg_declared_type ):
+    def generate_argument_struct_automatic( self, i, arg_js_type, arg_declared_type ):
         # This template assumes that the types will be the same on all platforms (eg: 64 and 32-bit platforms)
         template = '''
 	JSObject *tmp_arg%d;
@@ -914,25 +935,19 @@ void %s_finalize(JSContext *cx, JSObject *obj)
             'f' : [self.generate_argument_function, 'js_block'],
         }
 
-        js_declared_types_conversions = {
-            'CGPoint' : self.generate_argument_cgpoint,
-            'CGSize'  : self.generate_argument_cgsize,
-            'CGRect'  : self.generate_argument_cgrect,
-        }
-
         # First  time
         self.mm_file.write('\tjsval *argvp = JS_ARGV(cx,vp);\n')
 
         # Declare variables
         declared_vars = '\t'
         for i,arg in enumerate(args_js_type):
-            if args_declared_type[i] in self.opaque_structures:
+            if args_declared_type[i] in self.struct_opaque:
                 declared_vars += '%s arg%d;' % ( args_declared_type[i], i )
             elif arg in js_types_conversions:
                 declared_vars += '%s arg%d;' % (js_types_conversions[arg][0], i)
             elif arg in js_special_type_conversions:
                 declared_vars += '%s arg%d;' % ( js_special_type_conversions[arg][1], i )
-            elif args_declared_type[i] in js_declared_types_conversions:
+            elif args_declared_type[i] in self.struct_manual:
                 declared_vars += '%s arg%d;' % ( args_declared_type[i], i )
             elif self.is_valid_structure( arg ):
                 declared_vars += '%s arg%d;' % ( args_declared_type[i], i )
@@ -957,18 +972,17 @@ void %s_finalize(JSContext *cx, JSObject *obj)
                 if optional_args_since and i >= optional_args_since-1:
                     self.mm_file.write('\tif (argc >= %d) {\n\t' % (i+1) )
 
-                if args_declared_type[i] in self.opaque_structures:
+                if args_declared_type[i] in self.struct_opaque:
                     self.generate_argument_opaque( i, arg, args_declared_type[i] )
                 elif arg in js_types_conversions:
                     t = js_types_conversions[arg]
                     self.mm_file.write( '\t%s( cx, *argvp++, &arg%d );\n' % ( t[1], i ) )
                 elif arg in js_special_type_conversions:
                     js_special_type_conversions[arg][0]( i, arg, args_declared_type[i] )
-                elif args_declared_type[i] in js_declared_types_conversions:
-                    f = js_declared_types_conversions[ args_declared_type[i] ]
-                    f( i, arg, args_declared_type[i] )
+                elif args_declared_type[i] in self.struct_manual:
+                    self.generate_argument_struct_manual( i, arg, args_declared_type[i] )
                 elif self.is_valid_structure( arg ):
-                    self.generate_argument_struct( i, arg, args_declared_type[i] )
+                    self.generate_argument_struct_automatic( i, arg, args_declared_type[i] )
                 else:
                     raise ParseException('Unsupported type: %s' % arg )
 
