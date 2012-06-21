@@ -267,7 +267,6 @@ class SpiderMonkey(object):
         self._functions_to_ignore = klasses
         self.functions_to_ignore = self.expand_regexp_names( self._functions_to_ignore, self.functions_to_bind )
 
-        print self.functions_to_ignore
         copy_set = copy.copy( self.functions_to_bind )
         for i in self.functions_to_bind:
             if i in self.functions_to_ignore:
