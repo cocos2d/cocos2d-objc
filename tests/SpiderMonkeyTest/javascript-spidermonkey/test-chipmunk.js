@@ -14,7 +14,7 @@ physics = {
 	space : null,
 
 	// init physics
-	init : function() {
+	init : function( layer ) {
 		physics.space =  cp.spaceNew();
 		cc.log( physics.space );
 		var staticBody = cp.spaceGetStaticBody( physics.space );
@@ -34,7 +34,8 @@ physics = {
 
 		// Gravity
 		cp.spaceSetGravity( physics.space, cp.v(0, -100) );
-		this.addSprite( cp.v(winSize.width/2, winSize.height/2) );
+		var sprite = this.addSprite( cp.v(winSize.width/2, winSize.height/2) );
+		layer.addChild( sprite );
 	},
 
 	addSprite : function( pos ) {
@@ -45,6 +46,10 @@ physics = {
 		cp.shapeSetElasticity( shape, 0.5 );
 		cp.shapeSetFriction( shape, 0.5 );
 		cp.spaceAddShape( physics.space, shape );
+
+		var sprite = cc.ChipmunkSprite.create("grossini.png");
+		sprite.setBody( body );
+		return sprite;
 	},
 };
 
@@ -53,7 +58,7 @@ layer1.onEnter = function () {
 	cc.log("onEnter called");
 	__jsc__.garbageCollect();
 
-	physics.init();
+	physics.init( this );
 	this.scheduleUpdate();
 };
 
