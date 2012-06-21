@@ -74,8 +74,8 @@ class SpiderMonkey(object):
         supported_options = {'obj_class_prefix_to_remove': '',
                              'classes_to_parse' : [],
                              'classes_to_ignore' : [],
-                             'bridge_support_file' : '',
-                             'hierarchy_protocol_file' : '',
+                             'bridge_support_file' : [],
+                             'hierarchy_protocol_file' : [],
                              'inherit_class_methods' : True,
                              'functions_to_parse' : [],
                              'functions_to_ignore' : [],
@@ -119,11 +119,11 @@ class SpiderMonkey(object):
 
     def __init__(self, config ):
 
-        self.hierarchy_file = config['hierarchy_protocol_file']
+        self.hierarchy_files = config['hierarchy_protocol_file']
         self.hierarchy = {}
         self.init_hierarchy_file()
 
-        self.bridgesupport_file = config['bridge_support_file']
+        self.bridgesupport_files = config['bridge_support_file']
         self.bs = {}
         self.init_bridgesupport_file()
 
@@ -168,17 +168,17 @@ class SpiderMonkey(object):
 
 
     def init_hierarchy_file( self ):
-        if self.hierarchy_file:
-            f = open( get_path_for( self.hierarchy_file ) )
-            self.hierarchy = ast.literal_eval( f.read() )
-            f.close()
-        else:
-            self.hierarchy = {}
+        self.hierarchy = {}
+        for f in self.hierarchy_files:
+            fd = open( get_path_for( f ) )
+            self.hierarchy.update( ast.literal_eval( fd.read() ) )
+            fd.close()
 
     def init_bridgesupport_file( self ):
-        p = ET.parse( get_path_for( self.bridgesupport_file ) )
-        root = p.getroot()
-        self.bs = xml2d( root )
+        for f in self.bridgesupport_files:
+            p = ET.parse( get_path_for( f ) )
+            root = p.getroot()
+            self.bs.update( xml2d( root ) )
 
     def init_callback_methods( self ):
         self.callback_methods = {}
