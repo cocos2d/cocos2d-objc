@@ -43,7 +43,7 @@ var MyLayer = {
 
 	// constructor
 	create : function() {
-		var layer1 = cc._Layer.create();
+		var layer1 = cc.Layer.create();
 		layer1.onEnter = function () {
 			cc.log("onEnter called");
 			__jsc__.garbageCollect();
@@ -61,6 +61,18 @@ var MyLayer = {
 
 		layer1.update = function( delta ) {
 			cp.spaceStep( physics.space, delta );
+		};
+
+		layer1.mouseDown = function( event ) {
+			cc.log("Mouse Down");
+		};
+
+		layer1.mouseDragged = function( event ) {
+			cc.log("Mouse Dragged");
+		};
+
+		layer1.mouseUp = function( event ) {
+			cc.log("Mouse Up");
 		};
 
 		var label = cc.LabelTTF.labelWithStringFontnameFontsize("Javascript: cocos2d + Chipmunk", "Arial", 28);
