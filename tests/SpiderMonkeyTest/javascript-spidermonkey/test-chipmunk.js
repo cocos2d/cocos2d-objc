@@ -68,16 +68,19 @@ var MyLayer = {
 			cc.log("Mouse Down:" + pos );
 			sprite = MyLayer.addSprite( pos );
 			this.addChild( sprite );
+			__jsc__.garbageCollect();
 		};
 
 		layer1.mouseDragged = function( event ) {
 			pos = director.convertEventToGL( event );
 			cc.log("Mouse Dragged:" + pos );
+			__jsc__.garbageCollect();
 		};
 
 		layer1.mouseUp = function( event ) {
 			pos = director.convertEventToGL( event );
 			cc.log("Mouse Up:" + pos );
+			__jsc__.garbageCollect();
 		};
 
 		var label = cc.LabelTTF.labelWithStringFontnameFontsize("Javascript: cocos2d + Chipmunk", "Arial", 28);
@@ -99,7 +102,7 @@ var MyLayer = {
 	},
 
 	addSprite : function( pos ) {
-		var body = cp.bodyNew(1, cp.momentForBox(1, 20, 20) );
+		var body = cp.bodyNew(1, cp.momentForBox(1, 48, 108) );
 		cp.bodySetPos( body, pos );
 		cp.spaceAddBody( physics.space, body );
 		var shape = cp.boxShapeNew( body, 48, 108);
