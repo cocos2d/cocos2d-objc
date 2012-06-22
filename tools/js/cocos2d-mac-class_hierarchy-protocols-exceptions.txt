@@ -1,1 +1,4 @@
-{'CCDirector': {'protocols': [], 'subclass': 'NSObject'}}
+{
+'CCDirector': {'protocols': [], 'subclass': 'NSObject'},
+'CCLayer': {'protocols': [], 'subclass': 'CCNode'}
+}

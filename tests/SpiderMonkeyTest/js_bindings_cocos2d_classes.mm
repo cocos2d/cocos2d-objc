@@ -6328,6 +6328,464 @@ JSBool JSPROXY_CCLayer_touchDelegatePriority(JSContext *cx, uint32_t argc, jsval
 	return JS_TRUE;
 }
 
+// Arguments: NSEvent*
+// Ret value: BOOL
+JSBool JSPROXY_CCLayer_ccFlagsChanged_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+//	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	id arg0; 
+
+	arg0 = (NSEvent*) jsval_to_nsobject( cx, *argvp++);
+	BOOL ret_val;
+
+	CCLayer *real = (CCLayer*) [proxy realObj];
+	ret_val = [real ccFlagsChanged:(NSEvent*)arg0  ];
+	JS_SET_RVAL(cx, vp, BOOLEAN_TO_JSVAL(ret_val));
+	return JS_TRUE;
+}
+
+// Arguments: NSEvent*
+// Ret value: BOOL
+JSBool JSPROXY_CCLayer_ccKeyDown_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+//	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	id arg0; 
+
+	arg0 = (NSEvent*) jsval_to_nsobject( cx, *argvp++);
+	BOOL ret_val;
+
+	CCLayer *real = (CCLayer*) [proxy realObj];
+	ret_val = [real ccKeyDown:(NSEvent*)arg0  ];
+	JS_SET_RVAL(cx, vp, BOOLEAN_TO_JSVAL(ret_val));
+	return JS_TRUE;
+}
+
+// Arguments: NSEvent*
+// Ret value: BOOL
+JSBool JSPROXY_CCLayer_ccKeyUp_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+//	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	id arg0; 
+
+	arg0 = (NSEvent*) jsval_to_nsobject( cx, *argvp++);
+	BOOL ret_val;
+
+	CCLayer *real = (CCLayer*) [proxy realObj];
+	ret_val = [real ccKeyUp:(NSEvent*)arg0  ];
+	JS_SET_RVAL(cx, vp, BOOLEAN_TO_JSVAL(ret_val));
+	return JS_TRUE;
+}
+
+// Arguments: NSEvent*
+// Ret value: BOOL
+JSBool JSPROXY_CCLayer_ccMouseDown_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+//	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	id arg0; 
+
+	arg0 = (NSEvent*) jsval_to_nsobject( cx, *argvp++);
+	BOOL ret_val;
+
+	CCLayer *real = (CCLayer*) [proxy realObj];
+	ret_val = [real ccMouseDown:(NSEvent*)arg0  ];
+	JS_SET_RVAL(cx, vp, BOOLEAN_TO_JSVAL(ret_val));
+	return JS_TRUE;
+}
+
+// Arguments: NSEvent*
+// Ret value: BOOL
+JSBool JSPROXY_CCLayer_ccMouseDragged_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+//	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	id arg0; 
+
+	arg0 = (NSEvent*) jsval_to_nsobject( cx, *argvp++);
+	BOOL ret_val;
+
+	CCLayer *real = (CCLayer*) [proxy realObj];
+	ret_val = [real ccMouseDragged:(NSEvent*)arg0  ];
+	JS_SET_RVAL(cx, vp, BOOLEAN_TO_JSVAL(ret_val));
+	return JS_TRUE;
+}
+
+// Arguments: NSEvent*
+// Ret value: None
+JSBool JSPROXY_CCLayer_ccMouseEntered_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+//	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	id arg0; 
+
+	arg0 = (NSEvent*) jsval_to_nsobject( cx, *argvp++);
+
+	CCLayer *real = (CCLayer*) [proxy realObj];
+	[real ccMouseEntered:(NSEvent*)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: NSEvent*
+// Ret value: None
+JSBool JSPROXY_CCLayer_ccMouseExited_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+//	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	id arg0; 
+
+	arg0 = (NSEvent*) jsval_to_nsobject( cx, *argvp++);
+
+	CCLayer *real = (CCLayer*) [proxy realObj];
+	[real ccMouseExited:(NSEvent*)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: NSEvent*
+// Ret value: BOOL
+JSBool JSPROXY_CCLayer_ccMouseMoved_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+//	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	id arg0; 
+
+	arg0 = (NSEvent*) jsval_to_nsobject( cx, *argvp++);
+	BOOL ret_val;
+
+	CCLayer *real = (CCLayer*) [proxy realObj];
+	ret_val = [real ccMouseMoved:(NSEvent*)arg0  ];
+	JS_SET_RVAL(cx, vp, BOOLEAN_TO_JSVAL(ret_val));
+	return JS_TRUE;
+}
+
+// Arguments: NSEvent*
+// Ret value: BOOL
+JSBool JSPROXY_CCLayer_ccMouseUp_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+//	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	id arg0; 
+
+	arg0 = (NSEvent*) jsval_to_nsobject( cx, *argvp++);
+	BOOL ret_val;
+
+	CCLayer *real = (CCLayer*) [proxy realObj];
+	ret_val = [real ccMouseUp:(NSEvent*)arg0  ];
+	JS_SET_RVAL(cx, vp, BOOLEAN_TO_JSVAL(ret_val));
+	return JS_TRUE;
+}
+
+// Arguments: NSEvent*
+// Ret value: BOOL
+JSBool JSPROXY_CCLayer_ccOtherMouseDown_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+//	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	id arg0; 
+
+	arg0 = (NSEvent*) jsval_to_nsobject( cx, *argvp++);
+	BOOL ret_val;
+
+	CCLayer *real = (CCLayer*) [proxy realObj];
+	ret_val = [real ccOtherMouseDown:(NSEvent*)arg0  ];
+	JS_SET_RVAL(cx, vp, BOOLEAN_TO_JSVAL(ret_val));
+	return JS_TRUE;
+}
+
+// Arguments: NSEvent*
+// Ret value: BOOL
+JSBool JSPROXY_CCLayer_ccOtherMouseDragged_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+//	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	id arg0; 
+
+	arg0 = (NSEvent*) jsval_to_nsobject( cx, *argvp++);
+	BOOL ret_val;
+
+	CCLayer *real = (CCLayer*) [proxy realObj];
+	ret_val = [real ccOtherMouseDragged:(NSEvent*)arg0  ];
+	JS_SET_RVAL(cx, vp, BOOLEAN_TO_JSVAL(ret_val));
+	return JS_TRUE;
+}
+
+// Arguments: NSEvent*
+// Ret value: BOOL
+JSBool JSPROXY_CCLayer_ccOtherMouseUp_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+//	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	id arg0; 
+
+	arg0 = (NSEvent*) jsval_to_nsobject( cx, *argvp++);
+	BOOL ret_val;
+
+	CCLayer *real = (CCLayer*) [proxy realObj];
+	ret_val = [real ccOtherMouseUp:(NSEvent*)arg0  ];
+	JS_SET_RVAL(cx, vp, BOOLEAN_TO_JSVAL(ret_val));
+	return JS_TRUE;
+}
+
+// Arguments: NSEvent*
+// Ret value: BOOL
+JSBool JSPROXY_CCLayer_ccRightMouseDown_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+//	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	id arg0; 
+
+	arg0 = (NSEvent*) jsval_to_nsobject( cx, *argvp++);
+	BOOL ret_val;
+
+	CCLayer *real = (CCLayer*) [proxy realObj];
+	ret_val = [real ccRightMouseDown:(NSEvent*)arg0  ];
+	JS_SET_RVAL(cx, vp, BOOLEAN_TO_JSVAL(ret_val));
+	return JS_TRUE;
+}
+
+// Arguments: NSEvent*
+// Ret value: BOOL
+JSBool JSPROXY_CCLayer_ccRightMouseDragged_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+//	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	id arg0; 
+
+	arg0 = (NSEvent*) jsval_to_nsobject( cx, *argvp++);
+	BOOL ret_val;
+
+	CCLayer *real = (CCLayer*) [proxy realObj];
+	ret_val = [real ccRightMouseDragged:(NSEvent*)arg0  ];
+	JS_SET_RVAL(cx, vp, BOOLEAN_TO_JSVAL(ret_val));
+	return JS_TRUE;
+}
+
+// Arguments: NSEvent*
+// Ret value: BOOL
+JSBool JSPROXY_CCLayer_ccRightMouseUp_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+//	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	id arg0; 
+
+	arg0 = (NSEvent*) jsval_to_nsobject( cx, *argvp++);
+	BOOL ret_val;
+
+	CCLayer *real = (CCLayer*) [proxy realObj];
+	ret_val = [real ccRightMouseUp:(NSEvent*)arg0  ];
+	JS_SET_RVAL(cx, vp, BOOLEAN_TO_JSVAL(ret_val));
+	return JS_TRUE;
+}
+
+// Arguments: NSEvent*
+// Ret value: BOOL
+JSBool JSPROXY_CCLayer_ccScrollWheel_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+//	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	id arg0; 
+
+	arg0 = (NSEvent*) jsval_to_nsobject( cx, *argvp++);
+	BOOL ret_val;
+
+	CCLayer *real = (CCLayer*) [proxy realObj];
+	ret_val = [real ccScrollWheel:(NSEvent*)arg0  ];
+	JS_SET_RVAL(cx, vp, BOOLEAN_TO_JSVAL(ret_val));
+	return JS_TRUE;
+}
+
+// Arguments: NSEvent*
+// Ret value: BOOL
+JSBool JSPROXY_CCLayer_ccTouchesBeganWithEvent_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+//	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	id arg0; 
+
+	arg0 = (NSEvent*) jsval_to_nsobject( cx, *argvp++);
+	BOOL ret_val;
+
+	CCLayer *real = (CCLayer*) [proxy realObj];
+	ret_val = [real ccTouchesBeganWithEvent:(NSEvent*)arg0  ];
+	JS_SET_RVAL(cx, vp, BOOLEAN_TO_JSVAL(ret_val));
+	return JS_TRUE;
+}
+
+// Arguments: NSEvent*
+// Ret value: BOOL
+JSBool JSPROXY_CCLayer_ccTouchesCancelledWithEvent_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+//	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	id arg0; 
+
+	arg0 = (NSEvent*) jsval_to_nsobject( cx, *argvp++);
+	BOOL ret_val;
+
+	CCLayer *real = (CCLayer*) [proxy realObj];
+	ret_val = [real ccTouchesCancelledWithEvent:(NSEvent*)arg0  ];
+	JS_SET_RVAL(cx, vp, BOOLEAN_TO_JSVAL(ret_val));
+	return JS_TRUE;
+}
+
+// Arguments: NSEvent*
+// Ret value: BOOL
+JSBool JSPROXY_CCLayer_ccTouchesEndedWithEvent_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+//	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	id arg0; 
+
+	arg0 = (NSEvent*) jsval_to_nsobject( cx, *argvp++);
+	BOOL ret_val;
+
+	CCLayer *real = (CCLayer*) [proxy realObj];
+	ret_val = [real ccTouchesEndedWithEvent:(NSEvent*)arg0  ];
+	JS_SET_RVAL(cx, vp, BOOLEAN_TO_JSVAL(ret_val));
+	return JS_TRUE;
+}
+
+// Arguments: NSEvent*
+// Ret value: BOOL
+JSBool JSPROXY_CCLayer_ccTouchesMovedWithEvent_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+//	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	id arg0; 
+
+	arg0 = (NSEvent*) jsval_to_nsobject( cx, *argvp++);
+	BOOL ret_val;
+
+	CCLayer *real = (CCLayer*) [proxy realObj];
+	ret_val = [real ccTouchesMovedWithEvent:(NSEvent*)arg0  ];
+	JS_SET_RVAL(cx, vp, BOOLEAN_TO_JSVAL(ret_val));
+	return JS_TRUE;
+}
+
 // Arguments: 
 // Ret value: CCLayer*
 JSBool JSPROXY_CCLayer_node_static(JSContext *cx, uint32_t argc, jsval *vp) {
@@ -6369,6 +6827,26 @@ void JSPROXY_CCLayer_createClass(JSContext *cx, JSObject* globalObj, const char*
 		JS_FN("setIsMouseEnabled", JSPROXY_CCLayer_setIsMouseEnabled_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setIsTouchEnabled", JSPROXY_CCLayer_setIsTouchEnabled_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("touchDelegatePriority", JSPROXY_CCLayer_touchDelegatePriority, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("ccFlagsChanged", JSPROXY_CCLayer_ccFlagsChanged_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("ccKeyDown", JSPROXY_CCLayer_ccKeyDown_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("ccKeyUp", JSPROXY_CCLayer_ccKeyUp_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("ccMouseDown", JSPROXY_CCLayer_ccMouseDown_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("ccMouseDragged", JSPROXY_CCLayer_ccMouseDragged_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("ccMouseEntered", JSPROXY_CCLayer_ccMouseEntered_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("ccMouseExited", JSPROXY_CCLayer_ccMouseExited_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("ccMouseMoved", JSPROXY_CCLayer_ccMouseMoved_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("ccMouseUp", JSPROXY_CCLayer_ccMouseUp_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("ccOtherMouseDown", JSPROXY_CCLayer_ccOtherMouseDown_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("ccOtherMouseDragged", JSPROXY_CCLayer_ccOtherMouseDragged_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("ccOtherMouseUp", JSPROXY_CCLayer_ccOtherMouseUp_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("ccRightMouseDown", JSPROXY_CCLayer_ccRightMouseDown_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("ccRightMouseDragged", JSPROXY_CCLayer_ccRightMouseDragged_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("ccRightMouseUp", JSPROXY_CCLayer_ccRightMouseUp_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("ccScrollWheel", JSPROXY_CCLayer_ccScrollWheel_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("ccTouchesBeganWithEvent", JSPROXY_CCLayer_ccTouchesBeganWithEvent_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("ccTouchesCancelledWithEvent", JSPROXY_CCLayer_ccTouchesCancelledWithEvent_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("ccTouchesEndedWithEvent", JSPROXY_CCLayer_ccTouchesEndedWithEvent_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("ccTouchesMovedWithEvent", JSPROXY_CCLayer_ccTouchesMovedWithEvent_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
@@ -16816,6 +17294,446 @@ JSBool JSPROXY_CCEventDispatcher_setDispatchEvents_(JSContext *cx, uint32_t argc
 	return JS_TRUE;
 }
 
+// Arguments: NSEvent*
+// Ret value: None
+JSBool JSPROXY_CCEventDispatcher_flagsChanged_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+//	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	id arg0; 
+
+	arg0 = (NSEvent*) jsval_to_nsobject( cx, *argvp++);
+
+	CCEventDispatcher *real = (CCEventDispatcher*) [proxy realObj];
+	[real flagsChanged:(NSEvent*)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: NSEvent*
+// Ret value: None
+JSBool JSPROXY_CCEventDispatcher_keyDown_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+//	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	id arg0; 
+
+	arg0 = (NSEvent*) jsval_to_nsobject( cx, *argvp++);
+
+	CCEventDispatcher *real = (CCEventDispatcher*) [proxy realObj];
+	[real keyDown:(NSEvent*)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: NSEvent*
+// Ret value: None
+JSBool JSPROXY_CCEventDispatcher_keyUp_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+//	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	id arg0; 
+
+	arg0 = (NSEvent*) jsval_to_nsobject( cx, *argvp++);
+
+	CCEventDispatcher *real = (CCEventDispatcher*) [proxy realObj];
+	[real keyUp:(NSEvent*)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: NSEvent*
+// Ret value: None
+JSBool JSPROXY_CCEventDispatcher_mouseDown_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+//	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	id arg0; 
+
+	arg0 = (NSEvent*) jsval_to_nsobject( cx, *argvp++);
+
+	CCEventDispatcher *real = (CCEventDispatcher*) [proxy realObj];
+	[real mouseDown:(NSEvent*)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: NSEvent*
+// Ret value: None
+JSBool JSPROXY_CCEventDispatcher_mouseDragged_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+//	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	id arg0; 
+
+	arg0 = (NSEvent*) jsval_to_nsobject( cx, *argvp++);
+
+	CCEventDispatcher *real = (CCEventDispatcher*) [proxy realObj];
+	[real mouseDragged:(NSEvent*)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: NSEvent*
+// Ret value: None
+JSBool JSPROXY_CCEventDispatcher_mouseEntered_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+//	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	id arg0; 
+
+	arg0 = (NSEvent*) jsval_to_nsobject( cx, *argvp++);
+
+	CCEventDispatcher *real = (CCEventDispatcher*) [proxy realObj];
+	[real mouseEntered:(NSEvent*)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: NSEvent*
+// Ret value: None
+JSBool JSPROXY_CCEventDispatcher_mouseExited_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+//	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	id arg0; 
+
+	arg0 = (NSEvent*) jsval_to_nsobject( cx, *argvp++);
+
+	CCEventDispatcher *real = (CCEventDispatcher*) [proxy realObj];
+	[real mouseExited:(NSEvent*)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: NSEvent*
+// Ret value: None
+JSBool JSPROXY_CCEventDispatcher_mouseMoved_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+//	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	id arg0; 
+
+	arg0 = (NSEvent*) jsval_to_nsobject( cx, *argvp++);
+
+	CCEventDispatcher *real = (CCEventDispatcher*) [proxy realObj];
+	[real mouseMoved:(NSEvent*)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: NSEvent*
+// Ret value: None
+JSBool JSPROXY_CCEventDispatcher_mouseUp_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+//	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	id arg0; 
+
+	arg0 = (NSEvent*) jsval_to_nsobject( cx, *argvp++);
+
+	CCEventDispatcher *real = (CCEventDispatcher*) [proxy realObj];
+	[real mouseUp:(NSEvent*)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: NSEvent*
+// Ret value: None
+JSBool JSPROXY_CCEventDispatcher_otherMouseDown_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+//	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	id arg0; 
+
+	arg0 = (NSEvent*) jsval_to_nsobject( cx, *argvp++);
+
+	CCEventDispatcher *real = (CCEventDispatcher*) [proxy realObj];
+	[real otherMouseDown:(NSEvent*)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: NSEvent*
+// Ret value: None
+JSBool JSPROXY_CCEventDispatcher_otherMouseDragged_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+//	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	id arg0; 
+
+	arg0 = (NSEvent*) jsval_to_nsobject( cx, *argvp++);
+
+	CCEventDispatcher *real = (CCEventDispatcher*) [proxy realObj];
+	[real otherMouseDragged:(NSEvent*)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: NSEvent*
+// Ret value: None
+JSBool JSPROXY_CCEventDispatcher_otherMouseUp_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+//	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	id arg0; 
+
+	arg0 = (NSEvent*) jsval_to_nsobject( cx, *argvp++);
+
+	CCEventDispatcher *real = (CCEventDispatcher*) [proxy realObj];
+	[real otherMouseUp:(NSEvent*)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: NSEvent*
+// Ret value: None
+JSBool JSPROXY_CCEventDispatcher_rightMouseDown_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+//	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	id arg0; 
+
+	arg0 = (NSEvent*) jsval_to_nsobject( cx, *argvp++);
+
+	CCEventDispatcher *real = (CCEventDispatcher*) [proxy realObj];
+	[real rightMouseDown:(NSEvent*)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: NSEvent*
+// Ret value: None
+JSBool JSPROXY_CCEventDispatcher_rightMouseDragged_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+//	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	id arg0; 
+
+	arg0 = (NSEvent*) jsval_to_nsobject( cx, *argvp++);
+
+	CCEventDispatcher *real = (CCEventDispatcher*) [proxy realObj];
+	[real rightMouseDragged:(NSEvent*)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: NSEvent*
+// Ret value: None
+JSBool JSPROXY_CCEventDispatcher_rightMouseUp_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+//	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	id arg0; 
+
+	arg0 = (NSEvent*) jsval_to_nsobject( cx, *argvp++);
+
+	CCEventDispatcher *real = (CCEventDispatcher*) [proxy realObj];
+	[real rightMouseUp:(NSEvent*)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: NSEvent*
+// Ret value: None
+JSBool JSPROXY_CCEventDispatcher_scrollWheel_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+//	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	id arg0; 
+
+	arg0 = (NSEvent*) jsval_to_nsobject( cx, *argvp++);
+
+	CCEventDispatcher *real = (CCEventDispatcher*) [proxy realObj];
+	[real scrollWheel:(NSEvent*)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: NSEvent*
+// Ret value: None
+JSBool JSPROXY_CCEventDispatcher_touchesBeganWithEvent_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+//	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	id arg0; 
+
+	arg0 = (NSEvent*) jsval_to_nsobject( cx, *argvp++);
+
+	CCEventDispatcher *real = (CCEventDispatcher*) [proxy realObj];
+	[real touchesBeganWithEvent:(NSEvent*)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: NSEvent*
+// Ret value: None
+JSBool JSPROXY_CCEventDispatcher_touchesCancelledWithEvent_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+//	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	id arg0; 
+
+	arg0 = (NSEvent*) jsval_to_nsobject( cx, *argvp++);
+
+	CCEventDispatcher *real = (CCEventDispatcher*) [proxy realObj];
+	[real touchesCancelledWithEvent:(NSEvent*)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: NSEvent*
+// Ret value: None
+JSBool JSPROXY_CCEventDispatcher_touchesEndedWithEvent_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+//	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	id arg0; 
+
+	arg0 = (NSEvent*) jsval_to_nsobject( cx, *argvp++);
+
+	CCEventDispatcher *real = (CCEventDispatcher*) [proxy realObj];
+	[real touchesEndedWithEvent:(NSEvent*)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: NSEvent*
+// Ret value: None
+JSBool JSPROXY_CCEventDispatcher_touchesMovedWithEvent_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+//	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	id arg0; 
+
+	arg0 = (NSEvent*) jsval_to_nsobject( cx, *argvp++);
+
+	CCEventDispatcher *real = (CCEventDispatcher*) [proxy realObj];
+	[real touchesMovedWithEvent:(NSEvent*)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
 void JSPROXY_CCEventDispatcher_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCEventDispatcher_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -16839,6 +17757,26 @@ void JSPROXY_CCEventDispatcher_createClass(JSContext *cx, JSObject* globalObj, c
 		JS_FN("removeAllMouseDelegates", JSPROXY_CCEventDispatcher_removeAllMouseDelegates, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("removeAllTouchDelegates", JSPROXY_CCEventDispatcher_removeAllTouchDelegates, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setDispatchEvents", JSPROXY_CCEventDispatcher_setDispatchEvents_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("flagsChanged", JSPROXY_CCEventDispatcher_flagsChanged_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("keyDown", JSPROXY_CCEventDispatcher_keyDown_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("keyUp", JSPROXY_CCEventDispatcher_keyUp_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("mouseDown", JSPROXY_CCEventDispatcher_mouseDown_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("mouseDragged", JSPROXY_CCEventDispatcher_mouseDragged_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("mouseEntered", JSPROXY_CCEventDispatcher_mouseEntered_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("mouseExited", JSPROXY_CCEventDispatcher_mouseExited_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("mouseMoved", JSPROXY_CCEventDispatcher_mouseMoved_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("mouseUp", JSPROXY_CCEventDispatcher_mouseUp_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("otherMouseDown", JSPROXY_CCEventDispatcher_otherMouseDown_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("otherMouseDragged", JSPROXY_CCEventDispatcher_otherMouseDragged_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("otherMouseUp", JSPROXY_CCEventDispatcher_otherMouseUp_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("rightMouseDown", JSPROXY_CCEventDispatcher_rightMouseDown_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("rightMouseDragged", JSPROXY_CCEventDispatcher_rightMouseDragged_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("rightMouseUp", JSPROXY_CCEventDispatcher_rightMouseUp_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("scrollWheel", JSPROXY_CCEventDispatcher_scrollWheel_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("touchesBeganWithEvent", JSPROXY_CCEventDispatcher_touchesBeganWithEvent_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("touchesCancelledWithEvent", JSPROXY_CCEventDispatcher_touchesCancelledWithEvent_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("touchesEndedWithEvent", JSPROXY_CCEventDispatcher_touchesEndedWithEvent_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("touchesMovedWithEvent", JSPROXY_CCEventDispatcher_touchesMovedWithEvent_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
@@ -25370,6 +26308,32 @@ JSBool JSPROXY_CCDirector_animationInterval(JSContext *cx, uint32_t argc, jsval 
 	return JS_TRUE;
 }
 
+// Arguments: NSEvent*
+// Ret value: CGPoint
+JSBool JSPROXY_CCDirector_convertEventToGL_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+//	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	id arg0; 
+
+	arg0 = (NSEvent*) jsval_to_nsobject( cx, *argvp++);
+	CGPoint ret_val;
+
+	CCDirector *real = (CCDirector*) [proxy realObj];
+	ret_val = [real convertEventToGL:(NSEvent*)arg0  ];
+
+	jsval ret_jsval = CGPoint_to_jsval( cx, ret_val );
+	JS_SET_RVAL(cx, vp, ret_jsval);
+
+	return JS_TRUE;
+}
+
 // Arguments: CGPoint
 // Ret value: CGPoint
 JSBool JSPROXY_CCDirector_convertToGL_(JSContext *cx, uint32_t argc, jsval *vp) {
@@ -26221,6 +27185,7 @@ void JSPROXY_CCDirector_createClass(JSContext *cx, JSObject* globalObj, const ch
 	static JSFunctionSpec funcs[] = {
 		JS_FN("actionManager", JSPROXY_CCDirector_actionManager, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("animationInterval", JSPROXY_CCDirector_animationInterval, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("convertEventToGL", JSPROXY_CCDirector_convertEventToGL_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("convertToGL", JSPROXY_CCDirector_convertToGL_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("convertToUI", JSPROXY_CCDirector_convertToUI_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("createStatsLabel", JSPROXY_CCDirector_createStatsLabel, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),

@@ -136,7 +136,7 @@ class SpiderMonkey(object):
         self.inherit_class_methods = config['inherit_class_methods']
 
         # Add here manually generated classes
-        self.init_class_properties( config['method_properties'] )
+        self.init_class_properties( config['class_properties'] )
         self.init_classes_to_bind( config['classes_to_parse'] )
         self.init_classes_to_ignore( config['classes_to_ignore'] )
 
@@ -291,6 +291,7 @@ class SpiderMonkey(object):
 
     def init_class_properties( self, properties ):
         self.supported_classes = set()
+        self.class_manual = []
         self.class_properties = {}
         for prop in properties:
             # key value
@@ -315,6 +316,7 @@ class SpiderMonkey(object):
                 if o_key == 'manual':
                     # '*' is needed for opaque structs
                     self.supported_classes.add( key )
+                    self.class_manual.append( key )
 
             self.class_properties[key] = opts
 
@@ -506,6 +508,20 @@ class SpiderMonkey(object):
                 for m in klass['method']:
                     if m['selector'] == method_name:
                         return m
+
+        # Not found... search in protocols
+        list_of_protocols = self.bs['signatures']['informal_protocol']
+        if 'protocols' in self.hierarchy[ class_name ]:
+            protocols = self.hierarchy[ class_name ]['protocols']
+            for protocol in protocols:
+                for ip in list_of_protocols:
+                    # protocol match ?
+                    if ip['name'] == protocol:
+                        # traverse method then
+                        for m in ip['method']:
+                            if m['selector'] == method_name:
+                                return m
+
         raise Exception("Method not found for %s # %s" % (class_name, method_name) )
 
     def get_method_type( self, method ):
@@ -1576,7 +1592,7 @@ void %s_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 
     def generate_class_registration( self, klass ):
         # only supported classes
-        if not klass or klass in self.classes_to_ignore:
+        if not klass or klass in self.classes_to_ignore or klass in self.class_manual:
             return
 
         if not klass in self.classes_registered:

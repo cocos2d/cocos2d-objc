@@ -4125,6 +4125,28 @@ void JSPROXY_CDAudioInterruptTargetGroup_finalize(JSContext *cx, JSObject *obj)
 	}
 }
 
+// Arguments: NSObject*
+// Ret value: None
+JSBool JSPROXY_CDAudioInterruptTargetGroup_addAudioInterruptTarget_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+//	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	id arg0; 
+
+	arg0 = (NSObject*) jsval_to_nsobject( cx, *argvp++);
+
+	CDAudioInterruptTargetGroup *real = (CDAudioInterruptTargetGroup*) [proxy realObj];
+	[real addAudioInterruptTarget:(NSObject*)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
 // Arguments: 
 // Ret value: BOOL
 JSBool JSPROXY_CDAudioInterruptTargetGroup_enabled(JSContext *cx, uint32_t argc, jsval *vp) {
@@ -4225,6 +4247,7 @@ void JSPROXY_CDAudioInterruptTargetGroup_createClass(JSContext *cx, JSObject* gl
 		{0, 0, 0, 0, 0}
 	};
 	static JSFunctionSpec funcs[] = {
+		JS_FN("addAudioInterruptTarget", JSPROXY_CDAudioInterruptTargetGroup_addAudioInterruptTarget_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("enabled", JSPROXY_CDAudioInterruptTargetGroup_enabled, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("mute", JSPROXY_CDAudioInterruptTargetGroup_mute, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setEnabled", JSPROXY_CDAudioInterruptTargetGroup_setEnabled_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
