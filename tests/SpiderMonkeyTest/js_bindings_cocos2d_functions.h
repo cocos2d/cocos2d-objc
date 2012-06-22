@@ -37,6 +37,7 @@ JSBool JSPROXY_ccc4FFromccc3B(JSContext *cx, uint32_t argc, jsval *vp);
 JSBool JSPROXY_ccc4FFromccc4B(JSContext *cx, uint32_t argc, jsval *vp);
 JSBool JSPROXY_ccc4f(JSContext *cx, uint32_t argc, jsval *vp);
 JSBool JSPROXY_ccg(JSContext *cx, uint32_t argc, jsval *vp);
+JSBool JSPROXY_ccp(JSContext *cx, uint32_t argc, jsval *vp);
 JSBool JSPROXY_ccpAdd(JSContext *cx, uint32_t argc, jsval *vp);
 JSBool JSPROXY_ccpAngle(JSContext *cx, uint32_t argc, jsval *vp);
 JSBool JSPROXY_ccpAngleSigned(JSContext *cx, uint32_t argc, jsval *vp);

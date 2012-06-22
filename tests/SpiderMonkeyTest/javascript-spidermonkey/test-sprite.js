@@ -69,13 +69,13 @@ var SpriteTestDemo = cc.Layer.extend({
 
         var label = cc.LabelTTF.labelWithStringFontnameFontsize(this.title(), "Arial", 28);
         this.addChildZ(label, 1);
-        label.setPosition( ccp(winSize.width / 2, winSize.height - 50));
+        label.setPosition( cc.p(winSize.width / 2, winSize.height - 50));
 
         var strSubtitle = this.subtitle();
         if (strSubtitle != "") {
             var l = cc.LabelTTF.labelWithStringFontnameFontsize(strSubtitle, "Thonburi", 16);
             this.addChildZ(l, 1);
-            l.setPosition( ccp(winSize.width / 2, winSize.height - 80));
+            l.setPosition( cc.p(winSize.width / 2, winSize.height - 80));
         }
 
         var item1 = cc.MenuItemImage.itemWithNormalImageSelectedimageBlock("b1.png", "b2.png", this.backCallback);
@@ -84,10 +84,10 @@ var SpriteTestDemo = cc.Layer.extend({
 
         var menu = cc.Menu.create( item1, item2, item3 );
 
-        menu.setPosition( ccp(0,0) );
-        item1.setPosition( ccp(winSize.width / 2 - 100, 30));
-        item2.setPosition( ccp(winSize.width / 2, 30));
-        item3.setPosition( ccp(winSize.width / 2 + 100, 30));
+        menu.setPosition( cc.p(0,0) );
+        item1.setPosition( cc.p(winSize.width / 2 - 100, 30));
+        item2.setPosition( cc.p(winSize.width / 2, 30));
+        item3.setPosition( cc.p(winSize.width / 2 + 100, 30));
 
         this.addChildZ(menu, 1);
     },
@@ -135,14 +135,14 @@ var SpriteColorOpacity = SpriteTestDemo.extend({
         var sprite7 = cc.Sprite.create("grossini.png");
         var sprite8 = cc.Sprite.create("grossini.png");
 
-        sprite1.setPosition(ccp((winSize.width / 5) * 1, (winSize.height / 3) * 1));
-        sprite2.setPosition(ccp((winSize.width / 5) * 2, (winSize.height / 3) * 1));
-        sprite3.setPosition(ccp((winSize.width / 5) * 3, (winSize.height / 3) * 1));
-        sprite4.setPosition(ccp((winSize.width / 5) * 4, (winSize.height / 3) * 1));
-        sprite5.setPosition(ccp((winSize.width / 5) * 1, (winSize.height / 3) * 2));
-        sprite6.setPosition(ccp((winSize.width / 5) * 2, (winSize.height / 3) * 2));
-        sprite7.setPosition(ccp((winSize.width / 5) * 3, (winSize.height / 3) * 2));
-        sprite8.setPosition(ccp((winSize.width / 5) * 4, (winSize.height / 3) * 2));
+        sprite1.setPosition(cc.p((winSize.width / 5) * 1, (winSize.height / 3) * 1));
+        sprite2.setPosition(cc.p((winSize.width / 5) * 2, (winSize.height / 3) * 1));
+        sprite3.setPosition(cc.p((winSize.width / 5) * 3, (winSize.height / 3) * 1));
+        sprite4.setPosition(cc.p((winSize.width / 5) * 4, (winSize.height / 3) * 1));
+        sprite5.setPosition(cc.p((winSize.width / 5) * 1, (winSize.height / 3) * 2));
+        sprite6.setPosition(cc.p((winSize.width / 5) * 2, (winSize.height / 3) * 2));
+        sprite7.setPosition(cc.p((winSize.width / 5) * 3, (winSize.height / 3) * 2));
+        sprite8.setPosition(cc.p((winSize.width / 5) * 4, (winSize.height / 3) * 2));
 
         var action = cc.FadeIn.create(2);
         var action_back = action.reverse();
@@ -225,14 +225,14 @@ var SpriteBatchColorOpacity = SpriteTestDemo.extend({
         var sprite7 = cc.Sprite.create("grossini.png");
         var sprite8 = cc.Sprite.create("grossini.png");
 
-        sprite1.setPosition(ccp((winSize.width / 5) * 1, (winSize.height / 3) * 1));
-        sprite2.setPosition(ccp((winSize.width / 5) * 2, (winSize.height / 3) * 1));
-        sprite3.setPosition(ccp((winSize.width / 5) * 3, (winSize.height / 3) * 1));
-        sprite4.setPosition(ccp((winSize.width / 5) * 4, (winSize.height / 3) * 1));
-        sprite5.setPosition(ccp((winSize.width / 5) * 1, (winSize.height / 3) * 2));
-        sprite6.setPosition(ccp((winSize.width / 5) * 2, (winSize.height / 3) * 2));
-        sprite7.setPosition(ccp((winSize.width / 5) * 3, (winSize.height / 3) * 2));
-        sprite8.setPosition(ccp((winSize.width / 5) * 4, (winSize.height / 3) * 2));
+        sprite1.setPosition(cc.p((winSize.width / 5) * 1, (winSize.height / 3) * 1));
+        sprite2.setPosition(cc.p((winSize.width / 5) * 2, (winSize.height / 3) * 1));
+        sprite3.setPosition(cc.p((winSize.width / 5) * 3, (winSize.height / 3) * 1));
+        sprite4.setPosition(cc.p((winSize.width / 5) * 4, (winSize.height / 3) * 1));
+        sprite5.setPosition(cc.p((winSize.width / 5) * 1, (winSize.height / 3) * 2));
+        sprite6.setPosition(cc.p((winSize.width / 5) * 2, (winSize.height / 3) * 2));
+        sprite7.setPosition(cc.p((winSize.width / 5) * 3, (winSize.height / 3) * 2));
+        sprite8.setPosition(cc.p((winSize.width / 5) * 4, (winSize.height / 3) * 2));
 
         var action = cc.FadeIn.create(2);
         var action_back = action.reverse();

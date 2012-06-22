@@ -3,7 +3,7 @@
 // Shows how to use Chipmunk + cocos2d
 //
 
-require("javascript-spidermonkey/helper.js");
+//require("javascript-spidermonkey/helper.js");
 
 var director = cc.Director.sharedDirector();
 var _winSize = director.winSize();
@@ -61,7 +61,7 @@ var MyLayer = {
 		};
 
 		var label = cc.LabelTTF.labelWithStringFontnameFontsize("Javascript: cocos2d + Chipmunk", "Arial", 28);
-		label.setPosition( ccp( winSize.width/2, winSize.height-30) );
+		label.setPosition( cc.p( winSize.width/2, winSize.height-30) );
 		layer1.addChild( label );
 
 		label.setRotation( 2 );
