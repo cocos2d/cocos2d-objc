@@ -28,6 +28,7 @@
 #import "js_bindings_cocos2d_classes.h"
 #import "js_bindings_cocos2d_functions.h"
 #import "js_bindings_chipmunk_functions.h"
+#import "js_bindings_CocosDenshion_classes.h"
 
 // Globals
 char * JSPROXY_association_proxy_key = NULL;
@@ -249,7 +250,7 @@ JSBool ScriptingCore_addToRunningScene(JSContext *cx, uint32_t argc, jsval *vp)
 		JS_DefineFunction(_cx, jsc, "removeGCRootObject", ScriptingCore_removeRootJS, 1, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
 		JS_DefineFunction(_cx, jsc, "executeScript", ScriptingCore_executeScript, 1, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
 
-		// create the cocos namespace
+		// create the cocos2d namespace
 		JSObject *cocos2d = JS_NewObject( _cx, NULL, NULL, NULL);
 		jsval cocosVal = OBJECT_TO_JSVAL(cocos2d);
 		JS_SetProperty(_cx, _object, "cc", &cocosVal);
@@ -258,18 +259,24 @@ JSBool ScriptingCore_addToRunningScene(JSContext *cx, uint32_t argc, jsval *vp)
 		JS_DefineFunction(_cx, cocos2d, "addToRunningScene", ScriptingCore_addToRunningScene, 1, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
 
 		JSPROXY_NSObject_createClass(_cx, cocos2d, "Object");
-				
 		// Register classes: base classes should be registered first
 #import "js_bindings_cocos2d_classes_registration.h"
 #import "js_bindings_cocos2d_functions_registration.h"
 		
-		
-		// create the cocos namespace
+
+		// create the chipmunk namespace
 		JSObject *chipmunk = JS_NewObject( _cx, NULL, NULL, NULL);
 		jsval chipmunkVal = OBJECT_TO_JSVAL(chipmunk);
 		JS_SetProperty(_cx, _object, "cp", &chipmunkVal);
-
 #import "js_bindings_chipmunk_functions_registration.h"
+
+
+		// create the CocosDenshion namespace
+		JSObject *CocosDenshion = JS_NewObject( _cx, NULL, NULL, NULL);
+		jsval denshionVal = OBJECT_TO_JSVAL(CocosDenshion);
+		JS_SetProperty(_cx, _object, "cd", &denshionVal);
+#import "js_bindings_CocosDenshion_classes_registration.h"
+
 
 	}
 	
