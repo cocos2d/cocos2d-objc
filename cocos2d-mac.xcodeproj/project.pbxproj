@@ -2166,6 +2166,7 @@
 		A0A7A507151416A000C8BD16 /* CCActionCatmullRom.h in Headers */ = {isa = PBXBuildFile; fileRef = A0A7A505151416A000C8BD16 /* CCActionCatmullRom.h */; };
 		A0AAB80B1451BD3600850F2C /* CCParticleBatchNode.h in Headers */ = {isa = PBXBuildFile; fileRef = A0AAB8091451BD3600850F2C /* CCParticleBatchNode.h */; };
 		A0AAB80C1451BD3600850F2C /* CCParticleBatchNode.m in Sources */ = {isa = PBXBuildFile; fileRef = A0AAB80A1451BD3600850F2C /* CCParticleBatchNode.m */; };
+		A0ADE7411593F64600D4FAC9 /* Cyber Advance!.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A0ADE7401593F64600D4FAC9 /* Cyber Advance!.mp3 */; };
 		A0ADEF7314584BD3009A71F1 /* A Damn Mess.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E076E7A21225EDD000DE0DA2 /* A Damn Mess.ttf */; };
 		A0ADEF7414584BD3009A71F1 /* Abberancy.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E076E7A31225EDD000DE0DA2 /* Abberancy.ttf */; };
 		A0ADEF7514584BD3009A71F1 /* Abduction.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E076E7A41225EDD000DE0DA2 /* Abduction.ttf */; };
@@ -6220,6 +6221,7 @@
 		A0A7A505151416A000C8BD16 /* CCActionCatmullRom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCActionCatmullRom.h; sourceTree = "<group>"; };
 		A0AAB8091451BD3600850F2C /* CCParticleBatchNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCParticleBatchNode.h; sourceTree = "<group>"; };
 		A0AAB80A1451BD3600850F2C /* CCParticleBatchNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCParticleBatchNode.m; sourceTree = "<group>"; };
+		A0ADE7401593F64600D4FAC9 /* Cyber Advance!.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = "Cyber Advance!.mp3"; path = "CocosDenshion/TestsAndDemos/FancyRatMeteringDemo/Resources/Cyber Advance!.mp3"; sourceTree = "<group>"; };
 		A0ADF04414584BD3009A71F1 /* ShaderTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShaderTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0ADF04814584C9B009A71F1 /* ShaderTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ShaderTest.h; path = tests/ShaderTest.h; sourceTree = "<group>"; };
 		A0ADF04914584C9B009A71F1 /* ShaderTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ShaderTest.m; path = tests/ShaderTest.m; sourceTree = "<group>"; };
@@ -7309,6 +7311,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				A0ADE7401593F64600D4FAC9 /* Cyber Advance!.mp3 */,
 				A0186FC31593F3EF00DEEE51 /* cocos2d-mac.bridgesupport */,
 				A04FA984156309E700EC18D4 /* cocos2d-mac.dylib */,
 				A0F1615A153CD1FA0077361C /* Icon-Small-50.png */,
@@ -11471,6 +11474,7 @@
 				A0CBEC2E156C2812009D35B4 /* javascript-spidermonkey in Resources */,
 				A0BCCBAF157837EB00CCE291 /* konqa32.png in Resources */,
 				A0BCCBB0157837EF00CCE291 /* konqa32.fnt in Resources */,
+				A0ADE7411593F64600D4FAC9 /* Cyber Advance!.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
