@@ -64,15 +64,20 @@ var MyLayer = {
 		};
 
 		layer1.mouseDown = function( event ) {
-			cc.log("Mouse Down");
+			pos = director.convertEventToGL( event );
+			cc.log("Mouse Down:" + pos );
+			sprite = MyLayer.addSprite( pos );
+			this.addChild( sprite );
 		};
 
 		layer1.mouseDragged = function( event ) {
-			cc.log("Mouse Dragged");
+			pos = director.convertEventToGL( event );
+			cc.log("Mouse Dragged:" + pos );
 		};
 
 		layer1.mouseUp = function( event ) {
-			cc.log("Mouse Up");
+			pos = director.convertEventToGL( event );
+			cc.log("Mouse Up:" + pos );
 		};
 
 		var label = cc.LabelTTF.labelWithStringFontnameFontsize("Javascript: cocos2d + Chipmunk", "Arial", 28);
