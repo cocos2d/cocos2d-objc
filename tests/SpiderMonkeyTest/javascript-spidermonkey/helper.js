@@ -1,12 +1,12 @@
 // cocos2d Helper
-function ccp(x, y)
-{
-	var floats = new Float32Array(2);
-	floats[0] = x;
-	floats[1] = y;
-
-	return floats;
-}
+//function ccp(x, y)
+//{
+//	var floats = new Float32Array(2);
+//	floats[0] = x;
+//	floats[1] = y;
+//
+//	return floats;
+//}
 
 function ccc3(r, g, b)
 {
